@@ -59,106 +59,97 @@ LAB_8288458c:
 
 // 82884668  MarkBits  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/allocate.cpp:122)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void D3D::MarkBits(Edram *param_1,ulong param_2,ulong param_3,int param_4)
 
 {
-  ulonglong uVar1;
+  uint uVar1;
+  ulong *puVar3;
   longlong lVar2;
-  ulonglong uVar3;
-  ulonglong uVar4;
-  uint uVar5;
-  ulonglong uVar6;
+  ulong *puVar4;
+  ulong *puVar5;
+  uint uVar6;
   longlong lVar7;
-  uint *puVar9;
-  ulonglong uVar8;
-  uint uVar10;
-  longlong lVar11;
   
-  uVar4 = (ulonglong)(int)param_3;
-  uVar3 = (ulonglong)(int)param_2;
-  lVar2 = __savegprlr_28(param_1);
-  uVar8 = (uVar4 & 0xffffffff) >> 5;
-  uVar1 = (uVar3 & 0xffffffff) >> 5;
-  uVar6 = (uVar8 + 8) * 4 + lVar2;
-  uVar5 = (uint)uVar3 & 0x1f;
-  uVar10 = (uint)uVar4 & 0x1f;
-  lVar2 = (uVar1 + 8) * 4 + lVar2;
-  puVar9 = (uint *)lVar2;
+  uVar6 = param_3 >> 5;
+  uVar1 = param_2 >> 5;
+  puVar3 = param_1->BitArray + uVar6;
+  puVar5 = param_1->BitArray + uVar1;
   if (param_4 == 0) {
-    if (uVar1 == uVar8) {
-      uVar10 = *puVar9 & ~(0xffffffffU >> uVar5 & ~(0xffffffffU >> uVar10));
+    if (uVar1 == uVar6) {
+      uVar6 = *puVar5 & ~(0xffffffffU >> (param_2 & 0x1f) & ~(0xffffffffU >> (param_3 & 0x1f)));
     }
     else {
-      *puVar9 = *puVar9 & ~(0xffffffffU >> uVar5);
-      uVar8 = lVar2 + 4;
-      puVar9 = (uint *)uVar8;
-      if ((uVar8 & 0xffffffff) < (uVar6 & 0xffffffff)) {
-        lVar7 = (((uVar6 - uVar8) - 1 & 0xffffffff) >> 2) + 1;
-        for (lVar11 = lVar7; lVar11 != 0; lVar11 = lVar11 + -1) {
-          lVar2 = lVar2 + 4;
-          *(undefined4 *)lVar2 = 0;
+      *puVar5 = *puVar5 & ~(0xffffffffU >> (param_2 & 0x1f));
+      puVar4 = puVar5 + 1;
+      if (puVar4 < puVar3) {
+        lVar2 = (ulonglong)((uint)((int)puVar3 + (-1 - (int)puVar4)) >> 2) + 1;
+        for (lVar7 = lVar2; lVar7 != 0; lVar7 = lVar7 + -1) {
+          puVar5 = puVar5 + 1;
+          *puVar5 = 0;
         }
-        puVar9 = puVar9 + (int)lVar7;
+        puVar4 = puVar4 + (int)lVar2;
       }
-      uVar10 = 0xffffffffU >> uVar10 & *puVar9;
+      puVar5 = puVar4;
+      uVar6 = 0xffffffffU >> (param_3 & 0x1f) & *puVar5;
     }
   }
-  else if (uVar1 == uVar8) {
-    uVar10 = 0xffffffffU >> uVar5 & ~(0xffffffffU >> uVar10) | *puVar9;
+  else if (uVar1 == uVar6) {
+    uVar6 = 0xffffffffU >> (param_2 & 0x1f) & ~(0xffffffffU >> (param_3 & 0x1f)) | *puVar5;
   }
   else {
-    *puVar9 = 0xffffffffU >> uVar5 | *puVar9;
-    uVar8 = lVar2 + 4;
-    puVar9 = (uint *)uVar8;
-    if ((uVar8 & 0xffffffff) < (uVar6 & 0xffffffff)) {
-      lVar7 = (((uVar6 - uVar8) - 1 & 0xffffffff) >> 2) + 1;
-      for (lVar11 = lVar7; lVar11 != 0; lVar11 = lVar11 + -1) {
-        lVar2 = lVar2 + 4;
-        *(undefined4 *)lVar2 = 0xffffffff;
+    *puVar5 = 0xffffffffU >> (param_2 & 0x1f) | *puVar5;
+    puVar4 = puVar5 + 1;
+    if (puVar4 < puVar3) {
+      lVar2 = (ulonglong)((uint)((int)puVar3 + (-1 - (int)puVar4)) >> 2) + 1;
+      for (lVar7 = lVar2; lVar7 != 0; lVar7 = lVar7 + -1) {
+        puVar5 = puVar5 + 1;
+        *puVar5 = 0xffffffff;
       }
-      puVar9 = puVar9 + (int)lVar7;
+      puVar4 = puVar4 + (int)lVar2;
     }
-    uVar10 = *puVar9 | ~(0xffffffffU >> uVar10);
+    puVar5 = puVar4;
+    uVar6 = *puVar5 | ~(0xffffffffU >> (param_3 & 0x1f));
   }
-  *puVar9 = uVar10;
-  __restgprlr_28();
+  *puVar5 = uVar6;
   return;
 }
 
 
 // 82884820  AllocateEdramMemory  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/allocate.cpp:230)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
+
 int D3D::AllocateEdramMemory(ulong param_1,ulong *param_2)
 
 {
   Edram *pEVar1;
+  void *pvVar2;
   uint uVar3;
-  void *pvVar4;
-  longlong lVar2;
-  uint uVar5;
-  int iVar6;
+  longlong lVar4;
+  ulonglong uVar5;
+  uint uVar6;
   ulonglong uVar7;
-  uint uVar8;
-  ulonglong uVar9;
-  ulonglong uVar10;
+  ulonglong uVar8;
   char in_RESERVE;
-  byte bVar11;
+  byte bVar9;
   ulong local_50 [20];
   
-  uVar3 = __savegprlr_25(param_1);
-  uVar7 = 0xffffffffffffffff;
-  uVar10 = ZEXT48(g_pEdram);
-  if (uVar10 == 0) {
-    pvVar4 = XMemAlloc(0x324,0x64800000);
-    uVar10 = (ulonglong)(int)pvVar4;
-    bVar11 = (uVar10 == 0) << 1;
-    if (uVar10 == 0) {
-      lVar2 = 0;
-      goto LAB_82884998;
+  uVar5 = 0xffffffffffffffff;
+  uVar8 = ZEXT48(g_pEdram);
+  if (uVar8 == 0) {
+    pvVar2 = XMemAlloc(0x324,0x64800000);
+    uVar8 = (ulonglong)(int)pvVar2;
+    bVar9 = (uVar8 == 0) << 1;
+    if (uVar8 == 0) {
+      return 0;
     }
-    RtlInitializeCriticalSection(uVar10);
-    *(undefined4 *)((int)pvVar4 + 0x1c) = 0x1800;
-    *(undefined4 *)((int)pvVar4 + 800) = 0x55555555;
+    RtlInitializeCriticalSection(uVar8);
+    *(undefined4 *)((int)pvVar2 + 0x1c) = 0x1800;
+    *(undefined4 *)((int)pvVar2 + 800) = 0x55555555;
     do {
       pEVar1 = g_pEdram;
       if (g_pEdram != (Edram *)0x0) {
@@ -168,63 +159,60 @@ int D3D::AllocateEdramMemory(ulong param_1,ulong *param_2)
         break;
       }
       if (in_RESERVE != '\0') {
-        g_pEdram = (Edram *)storeWordConditionalIndexed(uVar10,0,0xffffffff84891380);
-        bVar11 = 2;
+        g_pEdram = (Edram *)storeWordConditionalIndexed(uVar8,0,0xffffffff84891380);
+        bVar9 = 2;
       }
-    } while (!(bool)(bVar11 >> 1 & 1));
+    } while (!(bool)(bVar9 >> 1 & 1));
     if (pEVar1 != (Edram *)0x0) {
-      XMemFree(pvVar4,0x64800000);
-      uVar10 = ZEXT48(g_pEdram);
+      XMemFree(pvVar2,0x64800000);
+      uVar8 = ZEXT48(g_pEdram);
     }
   }
-  RtlEnterCriticalSection(uVar10);
-  pEVar1 = (Edram *)uVar10;
-  if (uVar3 <= pEVar1->FreeMemory) {
+  RtlEnterCriticalSection(uVar8);
+  pEVar1 = (Edram *)uVar8;
+  if (param_1 <= pEVar1->FreeMemory) {
     local_50[0] = 0;
-    uVar9 = 0;
-    uVar8 = 0xffffffff;
-    uVar5 = FindFreeChunk(pEVar1,local_50);
-    if (uVar5 != 0) {
+    uVar7 = 0;
+    uVar6 = 0xffffffff;
+    uVar3 = FindFreeChunk(pEVar1,local_50);
+    if (uVar3 != 0) {
       do {
-        if ((uVar3 <= uVar5) && (uVar5 < uVar8)) {
-          uVar9 = (ulonglong)local_50[0];
-          uVar8 = uVar5;
+        if ((param_1 <= uVar3) && (uVar3 < uVar6)) {
+          uVar7 = (ulonglong)local_50[0];
+          uVar6 = uVar3;
         }
-        local_50[0] = uVar5 + local_50[0];
-        uVar5 = FindFreeChunk(pEVar1,local_50);
-      } while (uVar5 != 0);
-      if (uVar8 != 0xffffffff) {
-        pEVar1->FreeMemory = pEVar1->FreeMemory - uVar3;
-        MarkBits(pEVar1,(ulong)uVar9,(ulong)uVar9 + uVar3,1);
-        uVar7 = uVar9;
+        local_50[0] = uVar3 + local_50[0];
+        uVar3 = FindFreeChunk(pEVar1,local_50);
+      } while (uVar3 != 0);
+      if (uVar6 != 0xffffffff) {
+        pEVar1->FreeMemory = pEVar1->FreeMemory - param_1;
+        MarkBits(pEVar1,(ulong)uVar7,(ulong)uVar7 + param_1,1);
+        uVar5 = uVar7;
       }
     }
   }
-  RtlLeaveCriticalSection(uVar10);
-  lVar2 = -uVar7 + -1;
-  *param_2 = (ulong)uVar7;
-  lVar2 = lVar2 + (-(ulonglong)(lVar2 == 0) - (-uVar7 + -2));
-LAB_82884998:
-  iVar6 = __restgprlr_25(lVar2);
-  return iVar6;
+  RtlLeaveCriticalSection(uVar8);
+  lVar4 = -uVar5 + -1;
+  *param_2 = (ulong)uVar5;
+  return (int)lVar4 + (-(uint)(lVar4 == 0) - ((int)-uVar5 + -2));
 }
 
 
 // 828847C0  FreeEdramMemory  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/allocate.cpp:358)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void D3D::FreeEdramMemory(ulong param_1,ulong param_2)
 
 {
   Edram *pEVar1;
-  ulong uVar2;
   
-  uVar2 = __savegprlr_29(param_1);
   pEVar1 = g_pEdram;
   RtlEnterCriticalSection();
   pEVar1->FreeMemory = param_2 + pEVar1->FreeMemory;
-  MarkBits(pEVar1,uVar2,uVar2 + param_2,0);
+  MarkBits(pEVar1,param_1,param_1 + param_2,0);
   RtlLeaveCriticalSection(pEVar1);
-  __restgprlr_29();
   return;
 }
 

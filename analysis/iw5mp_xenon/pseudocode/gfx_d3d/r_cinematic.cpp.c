@@ -21,20 +21,19 @@ void R_Cinematic_CheckBinkError(void)
 
 // 8271ED38  CinematicHunk_Open  (gfx_d3d/r_cinematic.cpp:236)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void CinematicHunk_Open(CinematicHunk *param_1,void *param_2,int param_3)
 
 {
-  int *piVar1;
-  
-  piVar1 = (int *)__savegprlr_29(param_1);
-  if (*piVar1 != 0) {
+  if (param_1->base != (void *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_cinematic.cpp",0xed,
                     0,"%s");
   }
-  *piVar1 = (int)param_2;
-  piVar1[2] = param_3;
-  piVar1[1] = 0;
-  __restgprlr_29();
+  param_1->base = param_2;
+  param_1->end = param_3;
+  param_1->atFront = 0;
   return;
 }
 
@@ -57,6 +56,8 @@ void CinematicHunk_Close(CinematicHunk *param_1)
 
 // 8271EE18  R_Cinematic_LockRead  (gfx_d3d/r_cinematic.cpp:254)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void R_Cinematic_LockRead(void)
@@ -64,7 +65,6 @@ void R_Cinematic_LockRead(void)
 {
   int iVar1;
   
-  __savegprlr_29();
   iVar1 = R_HasDeviceOwnership();
   if (iVar1 != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_cinematic.cpp",0x100
@@ -76,7 +76,6 @@ void R_Cinematic_LockRead(void)
   }
   cinematicGlob.lockRead = 1;
   Sys_LockFileRead();
-  __restgprlr_29();
   return;
 }
 
@@ -100,44 +99,41 @@ void R_Cinematic_UnlockRead(void)
 
 // 8271EF10  CinematicHunk_Alloc  (gfx_d3d/r_cinematic.cpp:275)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 void * CinematicHunk_Alloc(CinematicHunk *param_1,int param_2,int param_3,char *param_4)
 
 {
-  uint uVar1;
-  uint *puVar2;
+  void *pvVar1;
+  uint uVar2;
   char *pcVar3;
   int iVar4;
   void *pvVar5;
-  longlong lVar6;
-  longlong lVar7;
-  uint uVar8;
-  ulonglong uVar9;
+  uint uVar6;
   
-  lVar7 = (longlong)param_3;
-  lVar6 = (longlong)param_2;
-  puVar2 = (uint *)__savegprlr_26(param_1,lVar6,lVar7,param_4);
-  if (*puVar2 == 0) {
+  if (param_1->base == (void *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_cinematic.cpp",0x116
                     ,0,"%s");
   }
-  if ((int)lVar6 < 0) {
+  if (param_2 < 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_cinematic.cpp",0x117
                     ,0,"%s");
   }
-  if ((uint)lVar7 == 0) {
+  if (param_3 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_cinematic.cpp",0x118
                     ,0,"%s");
   }
-  uVar9 = lVar7 - 1;
-  if (((uint)uVar9 & (uint)lVar7) != 0) {
+  uVar6 = param_3 - 1;
+  if ((uVar6 & param_3) != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_cinematic.cpp",0x119
                     ,0,"%s");
   }
-  uVar1 = *puVar2;
-  uVar9 = uVar9 + puVar2[1] & ~uVar9;
-  uVar8 = (int)uVar9 + (int)lVar6;
-  puVar2[1] = uVar8;
-  if ((int)puVar2[2] < (int)uVar8) {
+  pvVar1 = param_1->base;
+  uVar6 = uVar6 + param_1->atFront & ~uVar6;
+  iVar4 = uVar6 + param_2;
+  param_1->atFront = iVar4;
+  if (param_1->end < iVar4) {
     if (db_MovieMemory != (uchar *)0x0) {
       pcVar3 = va("CinematicHunk_Alloc failed for size %d bytes");
                     /* WARNING: Subroutine does not return */
@@ -148,21 +144,20 @@ void * CinematicHunk_Alloc(CinematicHunk *param_1,int param_2,int param_3,char *
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_cinematic.cpp",
                       0x130,0,"%s");
     }
-    uVar8 = (puVar2[1] - puVar2[2]) + 0xfff & 0xfffff000;
-    pvVar5 = PMem_AllocFromSource_NoDebug(uVar8,0x1000,4,PMEM_SOURCE_MOVIE);
-    if (pvVar5 != (void *)(*puVar2 + puVar2[2])) {
+    uVar2 = (param_1->atFront - param_1->end) + 0xfffU & 0xfffff000;
+    pvVar5 = PMem_AllocFromSource_NoDebug(uVar2,0x1000,4,PMEM_SOURCE_MOVIE);
+    if (pvVar5 != (void *)((int)param_1->base + param_1->end)) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_cinematic.cpp",
                       0x137,0,"%s");
     }
-    uVar8 = uVar8 + puVar2[2];
-    puVar2[2] = uVar8;
-    if ((int)uVar8 < (int)puVar2[1]) {
+    iVar4 = uVar2 + param_1->end;
+    param_1->end = iVar4;
+    if (iVar4 < param_1->atFront) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_cinematic.cpp",
                       0x139,0,"%s");
     }
   }
-  pvVar5 = (void *)__restgprlr_26(uVar1 + uVar9);
-  return pvVar5;
+  return (void *)((int)pvVar1 + uVar6);
 }
 
 
@@ -181,12 +176,12 @@ void * CinematicHunk_Alloc_GpuAligned(CinematicHunk *param_1,int param_2,char *p
 
 // 8271F0E8  R_StreamBeginUsingBufferForMoviePlayback  (gfx_d3d/r_cinematic.cpp:333)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void R_StreamBeginUsingBufferForMoviePlayback(void **param_1)
 
 {
-  undefined4 *puVar1;
-  
-  puVar1 = (undefined4 *)__savegprlr_27(param_1);
   if (db_MovieMemory == (uchar *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_cinematic.cpp",0x14f
                     ,0,"%s");
@@ -195,25 +190,24 @@ void R_StreamBeginUsingBufferForMoviePlayback(void **param_1)
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_cinematic.cpp",0x150
                     ,0,"%s");
     db_MovieMemoryInuse = 1;
-    *puVar1 = db_MovieMemory;
-    __restgprlr_27();
+    *param_1 = db_MovieMemory;
     return;
   }
   db_MovieMemoryInuse = 1;
-  *puVar1 = db_MovieMemory;
-  __restgprlr_27();
+  *param_1 = db_MovieMemory;
   return;
 }
 
 
 // 8271F190  R_StreamEndUsingBufferForMoviePlayback  (gfx_d3d/r_cinematic.cpp:345)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void R_StreamEndUsingBufferForMoviePlayback(void)
 
 {
-  __savegprlr_29();
   if (db_MovieMemory == (uchar *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_cinematic.cpp",0x15b
                     ,0,"%s");
@@ -223,13 +217,14 @@ void R_StreamEndUsingBufferForMoviePlayback(void)
                     ,0,"%s");
   }
   db_MovieMemoryInuse = 0;
-  __restgprlr_29();
   return;
 }
 
 
 // 8271F218  R_Cinematic_HunksOpen  (gfx_d3d/r_cinematic.cpp:357)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void R_Cinematic_HunksOpen(void)
@@ -238,7 +233,6 @@ void R_Cinematic_HunksOpen(void)
   int iVar1;
   uchar *puVar2;
   
-  __savegprlr_28();
   if (db_MovieMemoryInuse != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_cinematic.cpp",0x170
                     ,0,"%s");
@@ -271,15 +265,16 @@ void R_Cinematic_HunksOpen(void)
     }
     cinematicGlob.masterHunk.end = 0xa00000;
   }
-  cinematicGlob.masterHunk.atFront = 0;
   cinematicGlob.masterHunk.base = puVar2;
-  __restgprlr_28();
+  cinematicGlob.masterHunk.atFront = 0;
   return;
 }
 
 
 // 8271F378  R_Cinematic_HunksClose  (gfx_d3d/r_cinematic.cpp:398)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void R_Cinematic_HunksClose(void)
@@ -290,7 +285,6 @@ void R_Cinematic_HunksClose(void)
   longlong lVar3;
   int *piVar4;
   
-  __savegprlr_28();
   CinematicHunk_Close(&cinematicGlob.masterHunk);
   if (db_MovieMemoryInuse == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_cinematic.cpp",0x19d
@@ -299,7 +293,6 @@ void R_Cinematic_HunksClose(void)
   db_MovieMemoryInuse = 0;
   if (db_MovieMemory == (uchar *)0x0) {
     PMem_Free(g_movieName,0);
-    __restgprlr_28();
     return;
   }
   lVar3 = 2;
@@ -314,13 +307,14 @@ void R_Cinematic_HunksClose(void)
     lVar3 = lVar3 + -1;
     piVar4 = piVar4 + 1;
   } while (lVar3 != 0);
-  __restgprlr_28();
   return;
 }
 
 
 // 8271F448  R_Cinematic_MakeBinkTexture  (gfx_d3d/r_cinematic.cpp:444)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 
 void R_Cinematic_MakeBinkTexture
@@ -328,57 +322,51 @@ void R_Cinematic_MakeBinkTexture
 
 {
   uint uVar1;
-  D3DResource *pDVar2;
-  uint uVar3;
-  void *pvVar4;
-  ulonglong uVar5;
-  ulonglong uVar6;
-  char *pcVar7;
+  uint uVar2;
+  uchar *puVar3;
+  char *pcVar4;
   uint in_stack_ffffff48;
   D3DTexture *in_stack_ffffff4c;
   uint *in_stack_ffffff50;
   uint *in_stack_ffffff54;
   
-  uVar6 = (ulonglong)(int)param_3;
-  uVar5 = (ulonglong)(int)param_2;
-  pDVar2 = (D3DResource *)__savegprlr_24(param_1);
-  if (pDVar2 == (D3DResource *)0x0) {
+  if (param_1 == (GfxImage *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_cinematic.cpp",0x1c1
                     ,0,"%s");
   }
-  pcVar7 = &DAT_00000004;
-  uVar3 = XGSetTextureHeader((uint)uVar5,(uint)uVar6,1,4,D3DFMT_LIN_L8,0,0,0xffffffff,
-                             in_stack_ffffff48,in_stack_ffffff4c,in_stack_ffffff50,in_stack_ffffff54
-                            );
-  pvVar4 = CinematicHunk_Alloc(&cinematicGlob.masterHunk,uVar3,0x1000,pcVar7);
-  XGOffsetResourceAddress(pDVar2,pvVar4);
-  pDVar2[2].ReadFence = uVar3;
-  *(short *)&pDVar2[2].Identifier = (short)uVar5;
-  *(undefined1 *)((int)&pDVar2[2].Fence + 2) = 7;
-  *(undefined2 *)&pDVar2[2].BaseFlush = 1;
-  if ((uVar5 & 0xffffffff) != (uVar5 & 0xffff)) {
+  pcVar4 = &DAT_00000004;
+  uVar2 = XGSetTextureHeader(param_2,param_3,1,4,D3DFMT_LIN_L8,0,0,0xffffffff,in_stack_ffffff48,
+                             in_stack_ffffff4c,in_stack_ffffff50,in_stack_ffffff54);
+  puVar3 = CinematicHunk_Alloc(&cinematicGlob.masterHunk,uVar2,0x1000,pcVar4);
+  XGOffsetResourceAddress((D3DResource *)param_1,puVar3);
+  (param_1->cardMemory).platform[0] = uVar2;
+  param_1->width = (ushort)param_2;
+  param_1->category = '\a';
+  param_1->depth = 1;
+  if (param_2 != (param_2 & 0xffff)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_cinematic.cpp",0x1cc
                     ,0,"%s\n\t(width) = %i");
   }
-  *(short *)((int)&pDVar2[2].Identifier + 2) = (short)uVar6;
-  if ((uVar6 & 0xffffffff) != (uVar6 & 0xffff)) {
+  param_1->height = (ushort)param_3;
+  if (param_3 != (param_3 & 0xffff)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_cinematic.cpp",0x1ce
                     ,0,"%s\n\t(height) = %i");
   }
-  uVar1 = pDVar2[1].ReferenceCount;
-  pDVar2[3].Common = (ulong)pvVar4;
-  *(undefined1 *)&pDVar2[2].Fence = 3;
-  pDVar2[4].ReadFence = (ulong)"R_Cinematic_MakeBinkTexture";
-  *(undefined1 *)((int)&pDVar2[2].Fence + 1) = 2;
+  uVar1 = *(uint *)((int)&param_1->texture + 0x1c);
+  param_1->pixels = puVar3;
+  param_1->mapType = '\x03';
+  param_1->name = "R_Cinematic_MakeBinkTexture";
+  param_1->semantic = '\x02';
   *param_4 = uVar1 >> 0x11 & 0x3fe0;
-  *param_5 = uVar3;
-  __restgprlr_24();
+  *param_5 = uVar2;
   return;
 }
 
 
 // 8271F5B8  R_Cinematic_InitBinkTextures  (gfx_d3d/r_cinematic.cpp:537)
 
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void R_Cinematic_InitBinkTextures(void)
@@ -405,7 +393,6 @@ void R_Cinematic_InitBinkTextures(void)
   uint local_a0;
   uint local_9c [39];
   
-  __savegprlr();
   if ((cinematicGlob.binkTextureSet.bink_buffers.TotalFrames != 2) &&
      (MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_cinematic.cpp",
                       0x21f,0,"%s"), cinematicGlob.binkTextureSet.bink_buffers.TotalFrames != 2)) {
@@ -495,7 +482,6 @@ void R_Cinematic_InitBinkTextures(void)
     ppDVar10 = ppDVar10 + 8;
     ppuVar9 = ppuVar9 + 0x1c;
   } while ((CinematicTextureSet *)pBVar12 != &cinematicGlob.textureSet);
-  __restgprlr();
   return;
 }
 
@@ -537,80 +523,71 @@ int R_Cinematic_IsValidFrame(void)
 
 // 8271F920  RB_Cinematic_SetRendererImagesToFrame  (gfx_d3d/r_cinematic.cpp:728)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 
 void RB_Cinematic_SetRendererImagesToFrame(int param_1)
 
 {
-  int iVar1;
-  ulonglong uVar2;
-  int iVar3;
-  ulonglong uVar4;
-  longlong lVar5;
-  ulonglong uVar6;
-  ulonglong uVar7;
+  ulonglong uVar1;
+  longlong lVar2;
+  ulonglong uVar3;
   
-  uVar2 = __savegprlr_29(param_1);
-  iVar3 = (int)uVar2;
-  if ((iVar3 != -1) && (cinematicGlob.status.startFrame < cinematicGlob.status.frameNum)) {
-    *(int *)((int)cinematicGlob.codeImageSwapFrame + (int)((uVar2 & 0xffffffff) << 2)) =
-         backEndData->endSwapFrame;
+  if ((param_1 != -1) && (cinematicGlob.status.startFrame < cinematicGlob.status.frameNum)) {
+    cinematicGlob.codeImageSwapFrame[param_1] = backEndData->endSwapFrame;
     sync(1);
-    uVar6 = uVar2 * 0x70 - 0x7ba5ee84;
-    gfxCmdBufInput.codeImages[0x16] = (GfxImage *)uVar6;
-    uVar7 = ZEXT48(gfxCmdBufInput.codeImages[0x16][6].pixels);
-    iVar1 = (int)((uVar2 & 0x7ffffff) << 5);
-    uVar4 = *(uint *)((int)&cinematicGlob.binkTextureSet.textures[0].Asize + iVar1) + uVar7;
-    if (uVar7 < (uVar4 & 0xffffffff)) {
-      lVar5 = (((uVar4 - uVar7) - 1 & 0xffffffff) >> 7) + 1;
+    gfxCmdBufInput.codeImages[0x16] = cinematicGlob.textureSet.imageY + param_1;
+    uVar3 = ZEXT48(cinematicGlob.textureSet.imageA[param_1].pixels);
+    uVar1 = cinematicGlob.binkTextureSet.textures[param_1].Asize + uVar3;
+    if (uVar3 < (uVar1 & 0xffffffff)) {
+      lVar2 = (((uVar1 - uVar3) - 1 & 0xffffffff) >> 7) + 1;
       do {
-        dataCacheBlockStore(uVar7);
-        uVar7 = uVar7 + 0x80;
-        lVar5 = lVar5 + -1;
-      } while (lVar5 != 0);
+        dataCacheBlockStore(uVar3);
+        uVar3 = uVar3 + 0x80;
+        lVar2 = lVar2 + -1;
+      } while (lVar2 != 0);
     }
-    uVar7 = ZEXT48(gfxCmdBufInput.codeImages[0x16]->pixels);
-    uVar4 = *(uint *)((int)&cinematicGlob.binkTextureSet.textures[0].Ysize + iVar1) + uVar7;
-    if (uVar7 < (uVar4 & 0xffffffff)) {
-      lVar5 = (((uVar4 - uVar7) - 1 & 0xffffffff) >> 7) + 1;
+    uVar3 = (ulonglong)*(uint *)((int)(&cinematicGlob.binkTextureSet + 1) + param_1 * 0x70 + 0x60);
+    uVar1 = cinematicGlob.binkTextureSet.textures[param_1].Ysize + uVar3;
+    if (uVar3 < (uVar1 & 0xffffffff)) {
+      lVar2 = (((uVar1 - uVar3) - 1 & 0xffffffff) >> 7) + 1;
       do {
-        dataCacheBlockStore(uVar7);
-        uVar7 = uVar7 + 0x80;
-        lVar5 = lVar5 + -1;
-      } while (lVar5 != 0);
+        dataCacheBlockStore(uVar3);
+        uVar3 = uVar3 + 0x80;
+        lVar2 = lVar2 + -1;
+      } while (lVar2 != 0);
     }
-    uVar7 = ZEXT48(gfxCmdBufInput.codeImages[0x16][2].pixels);
-    uVar4 = *(uint *)((int)&cinematicGlob.binkTextureSet.textures[0].cRsize + iVar1) + uVar7;
-    if (uVar7 < (uVar4 & 0xffffffff)) {
-      lVar5 = (((uVar4 - uVar7) - 1 & 0xffffffff) >> 7) + 1;
+    uVar3 = ZEXT48(cinematicGlob.textureSet.imageCr[param_1].pixels);
+    uVar1 = cinematicGlob.binkTextureSet.textures[param_1].cRsize + uVar3;
+    if (uVar3 < (uVar1 & 0xffffffff)) {
+      lVar2 = (((uVar1 - uVar3) - 1 & 0xffffffff) >> 7) + 1;
       do {
-        dataCacheBlockStore(uVar7);
-        uVar7 = uVar7 + 0x80;
-        lVar5 = lVar5 + -1;
-      } while (lVar5 != 0);
+        dataCacheBlockStore(uVar3);
+        uVar3 = uVar3 + 0x80;
+        lVar2 = lVar2 + -1;
+      } while (lVar2 != 0);
     }
-    uVar7 = ZEXT48(gfxCmdBufInput.codeImages[0x16][4].pixels);
-    uVar4 = *(uint *)((int)&cinematicGlob.binkTextureSet.textures[0].cBsize + iVar1) + uVar7;
-    if (uVar7 < (uVar4 & 0xffffffff)) {
-      lVar5 = (((uVar4 - uVar7) - 1 & 0xffffffff) >> 7) + 1;
+    uVar3 = ZEXT48(cinematicGlob.textureSet.imageCb[param_1].pixels);
+    uVar1 = cinematicGlob.binkTextureSet.textures[param_1].cBsize + uVar3;
+    if (uVar3 < (uVar1 & 0xffffffff)) {
+      lVar2 = (((uVar1 - uVar3) - 1 & 0xffffffff) >> 7) + 1;
       do {
-        dataCacheBlockStore(uVar7);
-        uVar7 = uVar7 + 0x80;
-        lVar5 = lVar5 + -1;
-      } while (lVar5 != 0);
+        dataCacheBlockStore(uVar3);
+        uVar3 = uVar3 + 0x80;
+        lVar2 = lVar2 + -1;
+      } while (lVar2 != 0);
     }
     sync(1);
-    gfxCmdBufInput.codeImages[0x19] = cinematicGlob.textureSet.imageA + iVar3;
-    uVar2 = uVar2 * 0x70 - 0x7ba5eda4;
-    gfxCmdBufInput.codeImages[0x18] = cinematicGlob.textureSet.imageCb + iVar3;
-    gfxCmdBufInput.codeImages[0x17] = (GfxImage *)uVar2;
-    if ((uVar6 & 0xffffffff) == 0) {
+    gfxCmdBufInput.codeImages[0x19] = cinematicGlob.textureSet.imageA + param_1;
+    gfxCmdBufInput.codeImages[0x17] = cinematicGlob.textureSet.imageCr + param_1;
+    gfxCmdBufInput.codeImages[0x18] = cinematicGlob.textureSet.imageCb + param_1;
+    if (gfxCmdBufInput.codeImages[0x16] == (GfxImage *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_cinematic.cpp",
                       0x303,0,"%s");
-      uVar2 = ZEXT48(gfxCmdBufInput.codeImages[0x17]);
     }
-    if ((uVar2 & 0xffffffff) == 0) {
+    if (gfxCmdBufInput.codeImages[0x17] == (GfxImage *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_cinematic.cpp",
                       0x304,0,"%s");
     }
@@ -623,7 +600,6 @@ void RB_Cinematic_SetRendererImagesToFrame(int param_1)
                       0x306,0,"%s");
     }
     sync(1);
-    __restgprlr_29();
     return;
   }
   sync(1);
@@ -631,14 +607,13 @@ void RB_Cinematic_SetRendererImagesToFrame(int param_1)
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_cinematic.cpp",0x2df
                     ,0,"%s");
   }
-  gfxCmdBufInput.codeImages[0x16] = rgp.blackImage;
+  gfxCmdBufInput.codeImages[0x19] = rgp.blackImage;
   if ((com_cinematicEndInWhite->current).enabled != false) {
-    gfxCmdBufInput.codeImages[0x16] = rgp.whiteImage;
+    gfxCmdBufInput.codeImages[0x19] = rgp.whiteImage;
   }
+  gfxCmdBufInput.codeImages[0x16] = gfxCmdBufInput.codeImages[0x19];
   gfxCmdBufInput.codeImages[0x17] = rgp.grayImage;
   gfxCmdBufInput.codeImages[0x18] = rgp.grayImage;
-  gfxCmdBufInput.codeImages[0x19] = gfxCmdBufInput.codeImages[0x16];
-  __restgprlr_29();
   return;
 }
 
@@ -671,13 +646,14 @@ uint R_Cinematic_GetPercentageFull_FromBinkRealtime(BINKREALTIME *param_1)
 
 // 8271FC58  R_Cinematic_SeizeIO  (gfx_d3d/r_cinematic.cpp:813)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void R_Cinematic_SeizeIO(void)
 
 {
-  __savegprlr_29();
-  if (cinematicGlob.hasFileIO != false) {
+  if (cinematicGlob.hasFileIO) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_cinematic.cpp",0x32e
                     ,0,"%s");
   }
@@ -690,20 +666,20 @@ void R_Cinematic_SeizeIO(void)
   BinkControlBackgroundIO(cinematicGlob.bink,2);
   R_Cinematic_CheckBinkError();
   cinematicGlob.hasFileIO = true;
-  __restgprlr_29();
   return;
 }
 
 
 // 8271FCF8  R_Cinematic_RelinquishIO  (gfx_d3d/r_cinematic.cpp:832)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void R_Cinematic_RelinquishIO(void)
 
 {
-  __savegprlr_29();
-  if (cinematicGlob.hasFileIO == false) {
+  if (!cinematicGlob.hasFileIO) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_cinematic.cpp",0x341
                     ,0,"%s");
   }
@@ -715,7 +691,6 @@ void R_Cinematic_RelinquishIO(void)
   R_Cinematic_CheckBinkError();
   cinematicGlob.hasFileIO = false;
   R_Cinematic_UnlockRead();
-  __restgprlr_29();
   return;
 }
 
@@ -749,6 +724,8 @@ void R_Cinematic_UpdateTimeInMsec(BINKREALTIME *param_1)
 
 // 8271FE70  R_Cinematic_Advance  (gfx_d3d/r_cinematic.cpp:872)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 bool R_Cinematic_Advance(void)
@@ -757,14 +734,12 @@ bool R_Cinematic_Advance(void)
   bool bVar1;
   CinematicEnum CVar2;
   int iVar3;
-  undefined1 uVar5;
   uint uVar4;
-  undefined8 uVar6;
-  longlong lVar7;
-  ulonglong uVar8;
+  undefined8 uVar5;
+  longlong lVar6;
+  ulonglong uVar7;
   BINKREALTIME aBStack_70 [2];
   
-  __savegprlr_26();
   Profile_Begin(0x88);
   CVar2 = cinematicGlob.targetPaused;
   if (((cinematicGlob.targetPaused != CINEMATIC_INGAME_PAUSED) &&
@@ -785,13 +760,13 @@ bool R_Cinematic_Advance(void)
   }
   if (CVar2 != cinematicGlob.currentPaused) {
     if ((int)CVar2 < 1) {
-      uVar6 = 0;
+      uVar5 = 0;
 LAB_8271ff74:
-      BinkPause(cinematicGlob.bink,uVar6);
+      BinkPause(cinematicGlob.bink,uVar5);
       R_Cinematic_CheckBinkError();
     }
     else if ((int)cinematicGlob.currentPaused < 1) {
-      uVar6 = 1;
+      uVar5 = 1;
       goto LAB_8271ff74;
     }
     cinematicGlob.currentPaused = CVar2;
@@ -808,13 +783,13 @@ LAB_8271ffa4:
   }
   Profile_EndInternal((double *)0x0);
   if (!bVar1) goto LAB_82720158;
-  uVar8 = (ulonglong)
+  uVar7 = (ulonglong)
           *(uint *)((int)cinematicGlob.codeImageSwapFrame +
                    (cinematicGlob.binkTextureSet.bink_buffers.FrameNum << 2 ^ 4));
-  lVar7 = (uint)g_gpuSwapFrame - uVar8;
-  while (lVar7 < 0) {
+  lVar6 = (uint)g_gpuSwapFrame - uVar7;
+  while (lVar6 < 0) {
     Sys_Sleep(1);
-    lVar7 = (uint)g_gpuSwapFrame - uVar8;
+    lVar6 = (uint)g_gpuSwapFrame - uVar7;
   }
   bVar1 = false;
   if ((cinematicGlob.fullScreen == 0) &&
@@ -874,8 +849,7 @@ LAB_82720158:
       R_ReleaseDeviceOwnership();
     }
     Profile_EndInternal((double *)0x0);
-    uVar5 = __restgprlr_26(0);
-    return (bool)uVar5;
+    return false;
   }
   if (cinematicGlob.bink == (BINK *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_cinematic.cpp",0x3f4
@@ -903,13 +877,11 @@ LAB_82720158:
     if (bVar1) {
       R_ReleaseDeviceOwnership();
       Profile_EndInternal((double *)0x0);
-      uVar5 = __restgprlr_26(1);
-      return (bool)uVar5;
+      return true;
     }
   }
   Profile_EndInternal((double *)0x0);
-  uVar5 = __restgprlr_26(1);
-  return (bool)uVar5;
+  return true;
 }
 
 
@@ -963,147 +935,131 @@ int R_Cinematic_StopPlayback_Now(void)
 
 // 82720360  R_Cinematic_BinkOpenPath_MemoryResident  (gfx_d3d/r_cinematic.cpp:1185)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
+
 bool R_Cinematic_BinkOpenPath_MemoryResident(char *param_1,void **param_2,char *param_3,int param_4)
 
 {
   uint uVar1;
-  char *pcVar2;
-  void *pvVar3;
-  undefined1 uVar6;
-  ulong uVar4;
-  void *pvVar5;
-  ulonglong uVar7;
-  undefined4 *puVar8;
-  ulonglong uVar9;
-  char *pcVar10;
-  longlong lVar11;
-  uint *puVar12;
+  void *pvVar2;
+  ulong uVar3;
+  void *pvVar4;
+  char *pcVar5;
+  longlong lVar6;
+  uint *puVar7;
   ulong local_50 [20];
   
-  uVar9 = (ulonglong)(int)param_3;
-  uVar7 = (ulonglong)(int)param_2;
-  pcVar2 = (char *)__savegprlr_25(param_1);
-  pcVar10 = (char *)param_4;
-  if ((uVar7 & 0xffffffff) == 0) {
-    pcVar10 = "%s";
+  pcVar5 = (char *)param_4;
+  if (param_2 == (void **)0x0) {
+    pcVar5 = "%s";
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_cinematic.cpp",0x4ae
                     ,0,"%s");
   }
   R_Cinematic_LockRead();
   DB_FlushOutstandingRead((uint)LZCOUNT(db_MovieMemory) >> 5);
-  pvVar3 = FileWrapper_OpenReadBinary_Core(pcVar2,0x20000000);
-  puVar8 = (undefined4 *)uVar7;
-  pcVar2 = (char *)uVar9;
-  if (pvVar3 == (void *)0x0) {
+  pvVar2 = FileWrapper_OpenReadBinary_Core(param_1,0x20000000);
+  if (pvVar2 == (void *)0x0) {
     R_Cinematic_UnlockRead();
-    if ((uVar9 & 0xffffffff) != 0) {
-      Com_sprintf(pcVar2,param_4,"Open failed");
+    if (param_3 != (char *)0x0) {
+      Com_sprintf(param_3,param_4,"Open failed");
     }
-    *puVar8 = 0;
-    uVar6 = __restgprlr_25(0);
-    return (bool)uVar6;
+    *param_2 = (void *)0x0;
+    return false;
   }
-  uVar4 = GetFileSize(pvVar3,(ulong *)0x0);
-  if ((int)uVar4 < 1) {
+  uVar3 = GetFileSize(pvVar2,(ulong *)0x0);
+  if ((int)uVar3 < 1) {
     R_Cinematic_UnlockRead();
-    if ((uVar9 & 0xffffffff) != 0) {
-      if (uVar4 == 0) {
-        Com_sprintf(pcVar2,param_4,"Zero file size");
+    if (param_3 != (char *)0x0) {
+      if (uVar3 == 0) {
+        Com_sprintf(param_3,param_4,"Zero file size");
       }
       else {
-        Com_sprintf(pcVar2,param_4,"GetFileSize failed (%i)");
+        Com_sprintf(param_3,param_4,"GetFileSize failed (%i)");
       }
     }
-    CloseHandle(pvVar3);
-    *puVar8 = 0;
-    uVar6 = __restgprlr_25(0);
-    return (bool)uVar6;
+    CloseHandle(pvVar2);
+    *param_2 = (void *)0x0;
+    return false;
   }
-  uVar1 = uVar4 + 0x7ff & 0xfffff800;
-  pvVar5 = CinematicHunk_Alloc(&cinematicGlob.masterHunk,uVar1,0x20,pcVar10);
-  *puVar8 = pvVar5;
-  ReadFile(pvVar3,pvVar5,uVar1,local_50,(_OVERLAPPED *)0x0);
+  uVar1 = uVar3 + 0x7ff & 0xfffff800;
+  pvVar4 = CinematicHunk_Alloc(&cinematicGlob.masterHunk,uVar1,0x20,pcVar5);
+  *param_2 = pvVar4;
+  ReadFile(pvVar2,pvVar4,uVar1,local_50,(_OVERLAPPED *)0x0);
   R_Cinematic_UnlockRead();
-  CloseHandle(pvVar3);
-  if (local_50[0] != uVar4) {
-    if ((uVar9 & 0xffffffff) != 0) {
-      Com_sprintf(pcVar2,param_4,"Read was short (wanted %i got %i)");
+  CloseHandle(pvVar2);
+  if (local_50[0] != uVar3) {
+    if (param_3 != (char *)0x0) {
+      Com_sprintf(param_3,param_4,"Read was short (wanted %i got %i)");
     }
-    uVar6 = __restgprlr_25(0);
-    return (bool)uVar6;
+    return false;
   }
-  lVar11 = (longlong)((int)(local_50[0] + 3) >> 2);
-  if (lVar11 != 0) {
-    puVar12 = (uint *)((int)pvVar5 + -4);
+  lVar6 = (longlong)((int)(local_50[0] + 3) >> 2);
+  if (lVar6 != 0) {
+    puVar7 = (uint *)((int)pvVar4 + -4);
     do {
-      uVar1 = puVar12[1];
-      puVar12 = puVar12 + 1;
-      *puVar12 = uVar1 >> 0x18 | uVar1 >> 8 & 0xff00 |
-                 ((uVar1 << 0x10 | uVar1 & 0xffff) & 0xffff00) << 8;
-      lVar11 = lVar11 + -1;
-    } while (lVar11 != 0);
+      uVar1 = puVar7[1];
+      puVar7 = puVar7 + 1;
+      *puVar7 = (uVar1 >> 0x10 | uVar1 & 0xffff0000) >> 8 & 0xffff |
+                ((uVar1 << 0x10 | uVar1 & 0xffff) & 0xffff00) << 8;
+      lVar6 = lVar6 + -1;
+    } while (lVar6 != 0);
   }
-  uVar6 = __restgprlr_25(1);
-  return (bool)uVar6;
+  return true;
 }
 
 
 // 82720548  R_Cinematic_BinkOpenPath  (gfx_d3d/r_cinematic.cpp:1277)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 bool R_Cinematic_BinkOpenPath(char *param_1,uint param_2,char *param_3,int param_4)
 
 {
-  undefined8 uVar1;
-  bool bVar2;
-  undefined1 uVar3;
-  ulonglong uVar4;
-  ulonglong uVar5;
-  char *pcVar6;
+  bool bVar1;
   void *local_30 [12];
   
-  uVar5 = (ulonglong)(int)param_3;
-  uVar4 = (ulonglong)(int)param_2;
-  uVar1 = __savegprlr_28(param_1);
-  pcVar6 = (char *)uVar5;
-  if ((uVar4 & 4) == 0) {
+  if ((param_2 & 4) == 0) {
     R_Cinematic_LockRead();
     cinematicGlob.hasFileIO = true;
     DB_FlushOutstandingRead((uint)LZCOUNT(db_MovieMemory) >> 5);
     BinkSetIOSize(0x400000);
     PMem_EnableSoundAlloc();
     Com_Printf(8,"BinkOpen: \'%s\'\n");
-    cinematicGlob.bink = (BINK *)BinkOpen(uVar1,0x1104400);
+    cinematicGlob.bink = (BINK *)BinkOpen(param_1,0x1104400);
     PMem_DisableSoundAlloc();
     if (cinematicGlob.bink == (BINK *)0x0) {
-      if ((uVar5 & 0xffffffff) != 0) {
+      if (param_3 != (char *)0x0) {
         BinkGetError();
-        Com_sprintf(pcVar6,param_4,"BinkOpen: %s");
+        Com_sprintf(param_3,param_4,"BinkOpen: %s");
       }
       R_Cinematic_UnlockRead();
       cinematicGlob.hasFileIO = false;
     }
   }
   else {
-    bVar2 = R_Cinematic_BinkOpenPath_MemoryResident((char *)uVar1,local_30,pcVar6,param_4);
-    if (!bVar2) {
-      uVar3 = __restgprlr_28(0);
-      return (bool)uVar3;
+    bVar1 = R_Cinematic_BinkOpenPath_MemoryResident(param_1,local_30,param_3,param_4);
+    if (!bVar1) {
+      return false;
     }
     PMem_EnableSoundAlloc();
     cinematicGlob.bink = (BINK *)BinkOpen(local_30[0],0x4104400);
     PMem_DisableSoundAlloc();
-    if ((cinematicGlob.bink == (BINK *)0x0) && ((uVar5 & 0xffffffff) != 0)) {
+    if ((cinematicGlob.bink == (BINK *)0x0) && (param_3 != (char *)0x0)) {
       BinkGetError();
-      Com_sprintf(pcVar6,param_4,"BinkOpen: %s");
+      Com_sprintf(param_3,param_4,"BinkOpen: %s");
     }
   }
   BinkSetError(0xffffffff820068af);
-  uVar3 = __restgprlr_28(cinematicGlob.bink != (BINK *)0x0);
-  return (bool)uVar3;
+  return (bool)('\x01' - (cinematicGlob.bink == (BINK *)0x0));
 }
 
 
 // 827206A0  R_Cinematic_BinkOpen  (gfx_d3d/r_cinematic.cpp:1350)
+
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 
 bool R_Cinematic_BinkOpen(char *param_1,uint param_2,char *param_3,int param_4)
 
@@ -1111,10 +1067,8 @@ bool R_Cinematic_BinkOpen(char *param_1,uint param_2,char *param_3,int param_4)
   int iVar1;
   char *pcVar2;
   bool bVar3;
-  undefined1 uVar4;
   char acStack_130 [304];
   
-  __savegprlr_27(param_1);
   pcVar2 = Sys_Cwd();
   if (pcVar2 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_cinematic.cpp",0x54c
@@ -1124,12 +1078,10 @@ bool R_Cinematic_BinkOpen(char *param_1,uint param_2,char *param_3,int param_4)
   iVar1 = cinematicGlob.masterHunk.atFront;
   bVar3 = R_Cinematic_BinkOpenPath(acStack_130,param_2,param_3,param_4);
   if (bVar3) {
-    uVar4 = __restgprlr_27(1);
-    return (bool)uVar4;
+    return true;
   }
   cinematicGlob.masterHunk.atFront = iVar1;
-  uVar4 = __restgprlr_27(0);
-  return (bool)uVar4;
+  return false;
 }
 
 
@@ -1179,22 +1131,23 @@ void R_Cinematic_InitBinkVolumes(BINK *param_1)
 
 // 827208C0  R_Cinematic_GotoFrame  (gfx_d3d/r_cinematic.cpp:1490)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 int R_Cinematic_GotoFrame(int param_1)
 
 {
-  undefined8 uVar1;
-  ulonglong uVar2;
-  int iVar3;
-  ulonglong uVar4;
-  longlong lVar5;
+  ulonglong uVar1;
+  int iVar2;
+  ulonglong uVar3;
+  longlong lVar4;
   
-  uVar1 = __savegprlr_27(param_1);
   if (cinematicGlob.bink == (BINK *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_cinematic.cpp",0x5d7
                     ,0,"%s");
   }
-  uVar2 = BinkGetKeyFrame(cinematicGlob.bink,uVar1,1);
-  if ((ulonglong)(cinematicGlob.bink)->FrameNum <= (uVar2 & 0xffffffff)) {
+  uVar1 = BinkGetKeyFrame(cinematicGlob.bink,param_1,1);
+  if ((ulonglong)(cinematicGlob.bink)->FrameNum <= (uVar1 & 0xffffffff)) {
     if (cinematicGlob.hasFileIO == false) {
       R_Cinematic_SeizeIO();
     }
@@ -1202,51 +1155,46 @@ int R_Cinematic_GotoFrame(int param_1)
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_cinematic.cpp",
                       0x5e2,0,"%s");
     }
-    uVar4 = (ulonglong)(cinematicGlob.bink)->FrameRateDiv * 1000;
-    trapWord(6,uVar4,0);
-    lVar5 = uVar2 - ((ulonglong)(cinematicGlob.bink)->FrameRate * 600 & 0xffffffff) /
-                    (uVar4 & 0xffffffff);
-    if ((int)lVar5 < 1) {
-      lVar5 = 1;
+    uVar3 = (ulonglong)(cinematicGlob.bink)->FrameRateDiv * 1000;
+    trapWord(6,uVar3,0);
+    lVar4 = uVar1 - ((ulonglong)(cinematicGlob.bink)->FrameRate * 600 & 0xffffffff) /
+                    (uVar3 & 0xffffffff);
+    if ((int)lVar4 < 1) {
+      lVar4 = 1;
     }
-    iVar3 = BinkWait(cinematicGlob.bink);
-    while (iVar3 != 0) {
+    iVar2 = BinkWait(cinematicGlob.bink);
+    while (iVar2 != 0) {
       Sys_Sleep(1);
-      iVar3 = BinkWait(cinematicGlob.bink);
+      iVar2 = BinkWait(cinematicGlob.bink);
     }
-    BinkGoto(cinematicGlob.bink,lVar5,1);
+    BinkGoto(cinematicGlob.bink,lVar4,1);
     R_Cinematic_CheckBinkError();
     cinematicGlob.status.frameNum = (cinematicGlob.bink)->FrameNum;
-    iVar3 = __restgprlr_27(uVar2);
-    return iVar3;
+    return (int)uVar1;
   }
-  iVar3 = __restgprlr_27(0);
-  return iVar3;
+  return 0;
 }
 
 
 // 82720A00  R_Cinematic_StartPlayback_Now  (gfx_d3d/r_cinematic.cpp:1523)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
+
 bool R_Cinematic_StartPlayback_Now(char *param_1,uint param_2,uint param_3,int *param_4)
 
 {
   uint uVar1;
-  char *pcVar2;
-  bool bVar5;
-  undefined1 uVar6;
-  BINK *pBVar3;
-  int iVar4;
-  ulonglong uVar7;
-  ulonglong uVar8;
+  bool bVar4;
+  BINK *pBVar2;
+  int iVar3;
+  ulonglong uVar5;
   undefined4 local_e0;
   undefined4 local_dc;
   undefined4 local_d8;
   undefined4 local_d4;
   char local_d0 [208];
   
-  uVar8 = (ulonglong)(int)param_3;
-  uVar7 = (ulonglong)(int)param_2;
-  pcVar2 = (char *)__savegprlr_23(param_1);
   local_e0 = 0;
   local_d8 = 2;
   local_dc = 1;
@@ -1270,12 +1218,12 @@ bool R_Cinematic_StartPlayback_Now(char *param_1,uint param_2,uint param_3,int *
   BinkSetSoundTrack(4,&local_e0);
   R_Cinematic_CheckBinkError();
   local_d0[0] = '\0';
-  bVar5 = R_Cinematic_BinkOpen(pcVar2,(uint)uVar7,local_d0,0x80);
-  if (!bVar5) {
+  bVar4 = R_Cinematic_BinkOpen(param_1,param_2,local_d0,0x80);
+  if (!bVar4) {
     Com_PrintWarning(8,"R_Cinematic_BinkOpen \'%s\' failed: %s; trying default.\n");
     local_d0[0] = '\0';
-    bVar5 = R_Cinematic_BinkOpen("default",(uint)uVar7,local_d0,0x80);
-    if (!bVar5) {
+    bVar4 = R_Cinematic_BinkOpen("default",param_2,local_d0,0x80);
+    if (!bVar4) {
       Com_PrintWarning(8,"R_Cinematic_BinkOpen \'%s\' failed: %s; not playing movie.\n");
       if (db_MovieMemory == (uchar *)0x0) {
         PMem_EndAlloc(g_movieName,0);
@@ -1289,19 +1237,18 @@ bool R_Cinematic_StartPlayback_Now(char *param_1,uint param_2,uint param_3,int *
       cinematicGlob.finishedId = cinematicGlob.stopId;
       sync(1);
       cinematicGlob.cinematicFinished = true;
-      uVar6 = __restgprlr_23(0);
-      return (bool)uVar6;
+      return false;
     }
   }
-  pBVar3 = (BINK *)(int)bVar5;
+  pBVar2 = (BINK *)(int)bVar4;
   R_Cinematic_CheckBinkError();
   if (cinematicGlob.bink == (BINK *)0x0) {
-    pBVar3 = (BINK *)"c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_cinematic.cpp";
+    pBVar2 = (BINK *)"c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_cinematic.cpp";
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_cinematic.cpp",0x635
                     ,0,"%s");
   }
   cinematicGlob.status.frameNum = (cinematicGlob.bink)->FrameNum;
-  R_Cinematic_InitBinkVolumes(pBVar3);
+  R_Cinematic_InitBinkVolumes(pBVar2);
   memset();
   BinkGetFrameBuffersInfo(cinematicGlob.bink,0xffffffff845a10ec);
   R_Cinematic_CheckBinkError();
@@ -1313,38 +1260,36 @@ bool R_Cinematic_StartPlayback_Now(char *param_1,uint param_2,uint param_3,int *
     DB_LeaveStreaming();
   }
   cinematicGlob.currentPaused = CINEMATIC_NOT_PAUSED;
-  iVar4 = *param_4;
+  iVar3 = *param_4;
   *param_4 = 0;
-  if ((uVar8 & 0xffffffff) != 0) {
+  if (param_3 != 0) {
     if ((cinematicGlob.bink)->FrameRateDiv == 0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_cinematic.cpp",
                       0x652,0,"%s");
     }
-    uVar8 = ((longlong)
+    uVar5 = ((longlong)
              (((float)(cinematicGlob.bink)->FrameRate / (float)(cinematicGlob.bink)->FrameRateDiv) *
-              0.001 * (float)(uVar8 & 0xffffffff) + 0.5) & 0xffffffffU) + 1;
-    if ((uVar7 & 2) != 0) {
+              0.001 * (float)param_3 + 0.5) & 0xffffffffU) + 1;
+    if ((param_2 & 2) != 0) {
       if ((cinematicGlob.bink)->Frames == 0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_cinematic.cpp",
                         0x656,0,"%s");
       }
       uVar1 = (cinematicGlob.bink)->Frames;
       trapWord(6,(ulonglong)uVar1,0);
-      uVar8 = uVar8 - (longlong)(int)((uVar8 & 0xffffffff) / (ulonglong)uVar1) *
+      uVar5 = uVar5 - (longlong)(int)((uVar5 & 0xffffffff) / (ulonglong)uVar1) *
                       (longlong)(int)uVar1;
     }
-    BinkGoto(cinematicGlob.bink,uVar8,0);
+    BinkGoto(cinematicGlob.bink,uVar5,0);
     R_Cinematic_CheckBinkError();
     cinematicGlob.status.frameNum = (cinematicGlob.bink)->FrameNum;
-    uVar6 = __restgprlr_23(1);
-    return (bool)uVar6;
+    return true;
   }
-  if (iVar4 != 0) {
-    iVar4 = R_Cinematic_GotoFrame(iVar4);
-    *param_4 = iVar4;
+  if (iVar3 != 0) {
+    iVar3 = R_Cinematic_GotoFrame(iVar3);
+    *param_4 = iVar3;
   }
-  uVar6 = __restgprlr_23(1);
-  return (bool)uVar6;
+  return true;
 }
 
 
@@ -1361,6 +1306,8 @@ void R_Cinematic_ReserveMemory(void)
 
 // 82720DC8  R_Cinematic_UpdateFrame_Core2  (gfx_d3d/r_cinematic.cpp:1648)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void R_Cinematic_UpdateFrame_Core2(void)
@@ -1373,7 +1320,6 @@ void R_Cinematic_UpdateFrame_Core2(void)
   int local_140 [4];
   char local_130 [304];
   
-  __savegprlr_27();
   if (cinematicGlob.target[1].changed != 0) {
     Sys_EnterCriticalSection(CRITSECT_CINEMATIC_TARGET_CHANGE_BACKEND);
     memcpy();
@@ -1410,7 +1356,6 @@ void R_Cinematic_UpdateFrame_Core2(void)
         cinematicGlob.status.timeInMsec = 0;
         cinematicGlob.status.startFrame = iVar2;
         Sys_LeaveCriticalSection(CRITSECT_CINEMATIC_STATUS);
-        __restgprlr_27();
         return;
       }
       local_130[0] = '\0';
@@ -1462,36 +1407,36 @@ void R_Cinematic_UpdateFrame_Core2(void)
       cinematicGlob.cinematicFinished = true;
     }
   }
-  __restgprlr_27();
   return;
 }
 
 
 // 827210A8  R_Cinematic_StartPlayback_Internal  (gfx_d3d/r_cinematic.cpp:1777)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void R_Cinematic_StartPlayback_Internal(char *param_1,uint param_2,uint param_3)
 
 {
-  char *pcVar1;
-  
-  pcVar1 = (char *)__savegprlr_28(param_1);
   cinematicGlob.cinematicFinished = false;
   cinematicGlob.cinematicPending = true;
   Sys_EnterCriticalSection(CRITSECT_CINEMATIC_PAUSE);
   cinematicGlob.targetPaused = param_2 >> 3 & CINEMATIC_INGAME_PAUSED;
   Sys_LeaveCriticalSection(CRITSECT_CINEMATIC_PAUSE);
   Sys_EnterCriticalSection(CRITSECT_CINEMATIC_TARGET_CHANGE_COMMAND);
-  I_strncpyz((char *)&cinematicGlob,pcVar1,0x100);
+  I_strncpyz((char *)&cinematicGlob,param_1,0x100);
   cinematicGlob.target[0].changed = 1;
   cinematicGlob.target[0].playbackFlags = param_2;
   cinematicGlob.target[0].startOffsetMsec = param_3;
   Sys_LeaveCriticalSection(CRITSECT_CINEMATIC_TARGET_CHANGE_COMMAND);
-  __restgprlr_28();
   return;
 }
 
 
 // 82721128  R_Cinematic_Thread  (gfx_d3d/r_cinematic.cpp:1807)
+
+/* WARNING: Function: __savegprlr_20 replaced with injection: xenon_save_restore */
 
 void R_Cinematic_Thread(uint param_1)
 
@@ -1504,9 +1449,8 @@ void R_Cinematic_Thread(uint param_1)
   int local_180 [4];
   char local_170 [368];
   
-  iVar2 = __savegprlr_20(param_1);
   iVar3 = 0;
-  if (iVar2 != 6) {
+  if (param_1 != 6) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_cinematic.cpp",0x71c
                     ,0,"threadContext == THREAD_CONTEXT_CINEMATIC\n\t%i, %i");
   }
@@ -1614,14 +1558,13 @@ LAB_82721310:
 
 // 82721470  R_Cinematic_Init  (gfx_d3d/r_cinematic.cpp:1855)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void R_Cinematic_Init(void)
 
 {
-  bool bVar1;
-  
-  __savegprlr_29();
   cinematicGlob.activeImageFrame = -1;
   cinematicGlob.lastFinishedId = 0;
   cinematicGlob.finishedId = 1;
@@ -1634,8 +1577,7 @@ void R_Cinematic_Init(void)
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_cinematic.cpp",0x752
                     ,0,"%s");
   }
-  bVar1 = Sys_SpawnCinematicsThread(R_Cinematic_Thread);
-  __restgprlr_29(bVar1);
+  Sys_SpawnCinematicsThread(R_Cinematic_Thread);
   return;
 }
 
@@ -1653,26 +1595,24 @@ void R_Cinematic_Shutdown(void)
 
 // 82721520  R_Cinematic_StartPlayback  (gfx_d3d/r_cinematic.cpp:1913)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* void __cdecl R_Cinematic_StartPlayback(char const *,unsigned int,unsigned int) */
 
 void R_Cinematic_StartPlayback(char *param_1,uint param_2,uint param_3)
 
 {
-  char *pcVar1;
-  
-  pcVar1 = (char *)__savegprlr_28(param_1);
   cinematicGlob.cinematicFinished = false;
   cinematicGlob.cinematicPending = true;
   Sys_EnterCriticalSection(CRITSECT_CINEMATIC_PAUSE);
   cinematicGlob.targetPaused = param_2 >> 3 & CINEMATIC_INGAME_PAUSED;
   Sys_LeaveCriticalSection(CRITSECT_CINEMATIC_PAUSE);
   Sys_EnterCriticalSection(CRITSECT_CINEMATIC_TARGET_CHANGE_COMMAND);
-  I_strncpyz((char *)&cinematicGlob,pcVar1,0x100);
+  I_strncpyz((char *)&cinematicGlob,param_1,0x100);
   cinematicGlob.target[0].changed = 1;
   cinematicGlob.target[0].playbackFlags = param_2;
   cinematicGlob.target[0].startOffsetMsec = param_3;
   Sys_LeaveCriticalSection(CRITSECT_CINEMATIC_TARGET_CHANGE_COMMAND);
-  __restgprlr_28();
   return;
 }
 
@@ -1698,17 +1638,16 @@ bool R_Cinematic_StartNextPlayback(void)
 
 // 827215A8  R_Cinematic_SetNextPlayback  (gfx_d3d/r_cinematic.cpp:1935)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void R_Cinematic_SetNextPlayback(char *param_1,uint param_2)
 
 {
-  char *pcVar1;
-  
-  pcVar1 = (char *)__savegprlr_29(param_1);
   Sys_EnterCriticalSection(CRITSECT_CINEMATIC_SERVER);
-  I_strncpyz(cinematicGlob.server.name,pcVar1,0x100);
+  I_strncpyz(cinematicGlob.server.name,param_1,0x100);
   cinematicGlob.server.playbackFlags = param_2;
   Sys_LeaveCriticalSection(CRITSECT_CINEMATIC_SERVER);
-  __restgprlr_29();
   return;
 }
 
@@ -1826,6 +1765,8 @@ int R_Cinematic_PendingSyncFrame(void)
 
 // 82721888  RB_Cinematic_UpdateFrame  (gfx_d3d/r_cinematic.cpp:2022)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 
@@ -1834,16 +1775,14 @@ void RB_Cinematic_UpdateFrame(int param_1)
 {
   int iVar1;
   int iVar2;
-  int iVar3;
-  ulonglong uVar4;
-  int iVar5;
+  ulonglong uVar3;
+  int iVar4;
   
-  iVar2 = __savegprlr_25(param_1);
-  if (r_glob.startedRenderThread != false) {
+  if (r_glob.startedRenderThread) {
     Profile_Begin(0x87);
     Sys_EnterCriticalSection(CRITSECT_CINEMATIC_TARGET_CHANGE_BACKEND);
     iVar1 = cinematicGlob.target[0].changed;
-    iVar5 = 0;
+    iVar4 = 0;
     if (cinematicGlob.target[0].changed != 0) {
       cinematicGlob.syncFrame = 1;
       sync(1);
@@ -1852,20 +1791,20 @@ void RB_Cinematic_UpdateFrame(int param_1)
       cinematicGlob.target[0].changed = 0;
       Sys_LeaveCriticalSection(CRITSECT_CINEMATIC_TARGET_CHANGE_COMMAND);
     }
-    iVar3 = cinematicGlob.activeImageFrame;
+    iVar2 = cinematicGlob.activeImageFrame;
     if (cinematicGlob.target[1].changed != 0) {
-      iVar3 = -1;
+      iVar2 = -1;
     }
     Sys_LeaveCriticalSection(CRITSECT_CINEMATIC_TARGET_CHANGE_BACKEND);
     if (iVar1 != 0) {
-      iVar5 = 0;
-      if ((iVar2 == 0) && ((cinematicGlob.target[1].playbackFlags & 1) != 0)) {
-        iVar5 = 1;
+      iVar4 = 0;
+      if ((param_1 == 0) && ((cinematicGlob.target[1].playbackFlags & 1) != 0)) {
+        iVar4 = 1;
       }
       RB_UnbindAllImages();
     }
-    cinematicGlob.syncFrame = iVar5;
-    if (iVar2 != 0) {
+    cinematicGlob.syncFrame = iVar4;
+    if (param_1 != 0) {
       if (r_glob.startedRenderThread == false) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_cinematic.cpp",
                         0x816,0,"%s");
@@ -1885,11 +1824,11 @@ void RB_Cinematic_UpdateFrame(int param_1)
       }
       r_glob.allowRenderThreadReleaseDevice = r_glob.allowRenderThreadReleaseDevice + 1;
       R_ReleaseDeviceOwnership();
-      iVar3 = R_Cinematic_SyncNow();
+      iVar2 = R_Cinematic_SyncNow();
       R_AcquireDeviceOwnership();
-      uVar4 = (ulonglong)(uint)r_glob.allowRenderThreadReleaseDevice;
-      r_glob.allowRenderThreadReleaseDevice = (int)(uVar4 - 1);
-      if ((longlong)(uVar4 - 1) < 0) {
+      uVar3 = (ulonglong)(uint)r_glob.allowRenderThreadReleaseDevice;
+      r_glob.allowRenderThreadReleaseDevice = (int)(uVar3 - 1);
+      if ((longlong)(uVar3 - 1) < 0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_cinematic.cpp",
                         0x82e,0,"%s\n\t(r_glob.allowRenderThreadReleaseDevice) = %i");
       }
@@ -1900,16 +1839,17 @@ void RB_Cinematic_UpdateFrame(int param_1)
                         0x833,0,"%s\n\t(r_glob.stopUpdatingSamplers) = %i");
       }
     }
-    RB_Cinematic_SetRendererImagesToFrame(iVar3);
-    iVar2 = Profile_EndInternal((double *)0x0);
+    RB_Cinematic_SetRendererImagesToFrame(iVar2);
+    Profile_EndInternal((double *)0x0);
   }
-  __restgprlr_25(iVar2);
   return;
 }
 
 
 // 82721AC8  RB_Cinematic_UpdateFrame2  (gfx_d3d/r_cinematic.cpp:2110)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
@@ -1920,7 +1860,6 @@ void RB_Cinematic_UpdateFrame2(void)
   int iVar1;
   ulonglong uVar2;
   
-  __savegprlr_25();
   iVar1 = R_HasDeviceOwnership();
   if (iVar1 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_cinematic.cpp",0x842
@@ -1955,49 +1894,50 @@ void RB_Cinematic_UpdateFrame2(void)
     }
     RB_Cinematic_SetRendererImagesToFrame(iVar1);
   }
-  __restgprlr_25();
   return;
 }
 
 
 // 82721C38  R_Cinematic_DrawLetterbox_OptionalCinematic  (gfx_d3d/r_cinematic.cpp:2151)
 
+/* WARNING: Function: __savefpr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_26 replaced with injection: xenon_save_restore */
+
 void R_Cinematic_DrawLetterbox_OptionalCinematic(bool param_1,float param_2)
 
 {
   float fVar1;
   float *pfVar2;
-  float *pfVar3;
   Material *in_r4;
+  double dVar3;
   double dVar4;
   double dVar5;
   double dVar6;
   double dVar7;
   double dVar8;
-  double dVar9;
   
-  pfVar2 = (float *)__savefpr_26((double)param_2,param_1);
-  dVar6 = (double)vidConfig.displayWidth;
-  dVar5 = (double)vidConfig.displayHeight;
-  dVar4 = (double)((float)((double)vidConfig.aspectRatioDisplayPixel * dVar6) * 0.5625);
-  if (dVar5 < dVar4) {
-    dVar4 = dVar5;
+  pfVar2 = (float *)(int)param_1;
+  dVar5 = (double)vidConfig.displayWidth;
+  dVar4 = (double)vidConfig.displayHeight;
+  dVar3 = (double)((float)((double)vidConfig.aspectRatioDisplayPixel * dVar5) * 0.5625);
+  if (dVar4 < dVar3) {
+    dVar3 = dVar4;
   }
-  dVar9 = 0.0;
-  dVar8 = 1.0;
-  fVar1 = (float)(dVar5 - dVar4) * 0.5;
-  dVar7 = (double)fVar1;
-  pfVar3 = pfVar2;
-  R_AddCmdDrawStretchPic(0.0,0.0,(float)vidConfig.displayWidth,fVar1,0.0,0.0,1.0,1.0,pfVar2,in_r4);
+  dVar8 = 0.0;
+  dVar7 = 1.0;
+  fVar1 = (float)(dVar4 - dVar3) * 0.5;
+  dVar6 = (double)fVar1;
   R_AddCmdDrawStretchPic
-            ((float)dVar9,(float)(dVar5 - dVar7),(float)dVar6,(float)dVar7,(float)dVar9,(float)dVar9
-             ,(float)dVar8,(float)dVar8,pfVar3,in_r4);
-  if (((uint)pfVar2 & 0xff) != 0) {
+            (0.0,0.0,(float)vidConfig.displayWidth,fVar1,0.0,0.0,1.0,1.0,(float *)(int)param_1,in_r4
+            );
+  R_AddCmdDrawStretchPic
+            ((float)dVar8,(float)(dVar4 - dVar6),(float)dVar5,(float)dVar6,(float)dVar8,(float)dVar8
+             ,(float)dVar7,(float)dVar7,pfVar2,in_r4);
+  if (param_1) {
     R_AddCmdDrawStretchPic
-              ((float)dVar9,(float)dVar7,(float)dVar6,(float)dVar4,(float)dVar9,(float)dVar9,
-               (float)dVar8,(float)dVar8,pfVar3,in_r4);
+              ((float)dVar8,(float)dVar6,(float)dVar5,(float)dVar3,(float)dVar8,(float)dVar8,
+               (float)dVar7,(float)dVar7,pfVar2,in_r4);
   }
-  __restfpr_26();
   return;
 }
 
@@ -2026,21 +1966,19 @@ void R_Cinematic_DrawStretchPic_Letterboxed(LocalClientNum_t param_1)
 
 // 82721E68  R_Cinematic_GetFilenameAndTimeInMsec  (gfx_d3d/r_cinematic.cpp:2210)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 bool R_Cinematic_GetFilenameAndTimeInMsec(char *param_1,int param_2,uint *param_3)
 
 {
   bool bVar1;
-  char *pcVar2;
-  undefined1 uVar3;
-  ulonglong uVar4;
   
-  uVar4 = (ulonglong)(int)param_3;
-  pcVar2 = (char *)__savegprlr_27(param_1);
-  if ((uVar4 & 0xffffffff) == 0) {
+  if (param_3 == (uint *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_cinematic.cpp",0x8a3
                     ,0,"%s");
   }
-  if (pcVar2 == (char *)0x0) {
+  if (param_1 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_cinematic.cpp",0x8a4
                     ,0,"%s");
   }
@@ -2055,16 +1993,14 @@ bool R_Cinematic_GetFilenameAndTimeInMsec(char *param_1,int param_2,uint *param_
   if (bVar1) {
     Sys_EnterCriticalSection(CRITSECT_CINEMATIC_STATUS);
     if (cinematicGlob.status.name[0] != '\0') {
-      *(uint *)uVar4 = cinematicGlob.status.timeInMsec;
-      I_strncpyz(pcVar2,cinematicGlob.status.name,param_2);
+      *param_3 = cinematicGlob.status.timeInMsec;
+      I_strncpyz(param_1,cinematicGlob.status.name,param_2);
       Sys_LeaveCriticalSection(CRITSECT_CINEMATIC_STATUS);
-      uVar3 = __restgprlr_27(1);
-      return (bool)uVar3;
+      return true;
     }
     Sys_LeaveCriticalSection(CRITSECT_CINEMATIC_STATUS);
   }
-  uVar3 = __restgprlr_27(0);
-  return (bool)uVar3;
+  return false;
 }
 
 

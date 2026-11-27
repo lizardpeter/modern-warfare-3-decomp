@@ -2,26 +2,26 @@
 
 // 827222A8  SkipToNextDrawGroup  (gfx_d3d/r_cloudsurfiter.cpp:6)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 void GfxCloudSurfIter::SkipToNextDrawGroup(GfxCloudSurfIter *param_1)
 
 {
   uint uVar1;
-  uint uVar2;
-  uint *puVar3;
-  uint *puVar4;
+  GfxCloudSurf *pGVar2;
+  GfxCloudSurf *pGVar3;
   
-  puVar3 = (uint *)__savegprlr_26(param_1);
-  uVar1 = *(uint *)*puVar3;
+  uVar1 = param_1->current->packed;
   do {
-    if (puVar3[1] <= *puVar3) {
+    if (param_1->end <= param_1->current) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_cloudsurfiter_inline.h"
                       ,0x4d,0,"%s");
     }
-    uVar2 = *puVar3;
-    puVar4 = (uint *)(uVar2 + 4);
-    *puVar3 = (uint)puVar4;
-  } while ((uVar2 + 4 != puVar3[1]) && ((*puVar4 & 0xffff00ff) == (uVar1 & 0xffff00ff)));
-  __restgprlr_26();
+    pGVar2 = param_1->current;
+    pGVar3 = pGVar2 + 1;
+    param_1->current = pGVar3;
+  } while ((pGVar2 + 1 != param_1->end) && ((pGVar3->packed & 0xffff00ff) == (uVar1 & 0xffff00ff)));
   return;
 }
 

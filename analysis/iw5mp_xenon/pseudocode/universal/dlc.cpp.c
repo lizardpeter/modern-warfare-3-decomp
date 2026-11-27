@@ -56,43 +56,42 @@ int Content_GetAvailableContentPacks(void)
 
 // 825FA9D0  Content_GetEnabledContentPacks  (universal/dlc.cpp:93)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 int Content_GetEnabledContentPacks(void)
 
 {
-  bool bVar2;
-  int iVar1;
+  bool bVar1;
+  uint uVar2;
   uint uVar3;
-  uint uVar4;
-  int *piVar5;
+  int *piVar4;
+  int iVar5;
   
-  __savegprlr_28();
-  uVar4 = 0;
-  iVar1 = 0;
+  uVar3 = 0;
+  iVar5 = 0;
   if (0 < knownContentPackCount) {
-    piVar5 = &knownContentPackData[0].contentPack;
+    piVar4 = &knownContentPackData[0].contentPack;
     do {
-      bVar2 = Content_IsIndexedContentPackEnabled(iVar1);
-      if (bVar2) {
-        if (iVar1 < knownContentPackCount) {
-          uVar3 = *piVar5;
+      bVar1 = Content_IsIndexedContentPackEnabled(iVar5);
+      if (bVar1) {
+        if (iVar5 < knownContentPackCount) {
+          uVar2 = *piVar4;
         }
         else {
-          uVar3 = 1;
+          uVar2 = 1;
         }
-        uVar4 = uVar3 | uVar4;
+        uVar3 = uVar2 | uVar3;
       }
-      iVar1 = iVar1 + 1;
-      piVar5 = piVar5 + 0x22;
-    } while (iVar1 < knownContentPackCount);
-    if (uVar4 != 0) {
-      iVar1 = __restgprlr_28(uVar4);
-      return iVar1;
+      iVar5 = iVar5 + 1;
+      piVar4 = piVar4 + 0x22;
+    } while (iVar5 < knownContentPackCount);
+    if (uVar3 != 0) {
+      return uVar3;
     }
   }
-  iVar1 = __restgprlr_28(2);
-  return iVar1;
+  return 2;
 }
 
 
@@ -281,59 +280,59 @@ LAB_825f9434:
 
 // 825F9468  Content_SetIndexedContentPackEnabled  (universal/dlc.cpp:236)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void Content_SetIndexedContentPackEnabled(int param_1,bool param_2)
 
 {
-  uint uVar1;
-  bool bVar2;
+  bool bVar1;
+  int iVar2;
   int iVar3;
-  int iVar4;
-  char cVar5;
+  char cVar4;
   
-  uVar1 = __savegprlr_27(param_1);
-  if ((uint)knownContentPackCount <= uVar1) {
+  if ((uint)knownContentPackCount <= (uint)param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\dlc.cpp",0xed,0,
                     "index doesn\'t index knownContentPackCount\n\t%i not in [0, %i)");
   }
-  if ((int)uVar1 < knownContentPackCount) {
-    cVar5 = knownContentPackData[uVar1].available;
+  if (param_1 < knownContentPackCount) {
+    cVar4 = knownContentPackData[param_1].available;
   }
   else {
-    cVar5 = '\0';
+    cVar4 = '\0';
   }
-  if (cVar5 == '\0') {
+  if (cVar4 == '\0') {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\dlc.cpp",0xef,0,"%s"
                    );
   }
-  iVar4 = uVar1 * 0x88;
-  iVar3 = -0x7bfadce3;
-  knownContentPackData[uVar1].enabled = param_2;
-  bVar2 = Content_AnyMapPacksEnabled();
-  if (!bVar2) {
-    *(undefined1 *)(iVar4 + iVar3) = 1;
-    bVar2 = Content_AnyMapPacksEnabled();
-    if (!bVar2) {
+  iVar3 = param_1 * 0x88;
+  iVar2 = -0x7bfadce3;
+  *(bool *)(iVar3 + -0x7bfadce3) = param_2;
+  bVar1 = Content_AnyMapPacksEnabled();
+  if (!bVar1) {
+    *(undefined1 *)(iVar3 + iVar2) = 1;
+    bVar1 = Content_AnyMapPacksEnabled();
+    if (!bVar1) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\dlc.cpp",0xf6,0,
                       "%s");
     }
   }
-  __restgprlr_27();
   return;
 }
 
 
 // 825F9560  Content_DoWeHaveContentPack  (universal/dlc.cpp:252)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 bool Content_DoWeHaveContentPack(int param_1)
 
 {
   int iVar1;
-  undefined1 uVar2;
-  int iVar3;
-  int *piVar4;
+  int *piVar2;
   
-  iVar1 = __savegprlr_29(param_1);
-  if (iVar1 == 2) {
+  if (param_1 == 2) {
     if (knownContentPackData[0].contentPack != 2) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\dlc.cpp",0xff,0,
                       "%s");
@@ -342,46 +341,43 @@ bool Content_DoWeHaveContentPack(int param_1)
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\dlc.cpp",0x100,0,
                       "%s");
     }
-    uVar2 = __restgprlr_29(1);
-    return (bool)uVar2;
+    return true;
   }
-  iVar3 = 0;
+  iVar1 = 0;
   if (0 < knownContentPackCount) {
-    piVar4 = &knownContentPackData[0].contentPack;
+    piVar2 = &knownContentPackData[0].contentPack;
     do {
-      if (*piVar4 == iVar1) {
-        uVar2 = __restgprlr_29(knownContentPackData[iVar3].available);
-        return (bool)uVar2;
+      if (*piVar2 == param_1) {
+        return knownContentPackData[iVar1].available;
       }
-      iVar3 = iVar3 + 1;
-      piVar4 = piVar4 + 0x22;
-    } while (iVar3 < knownContentPackCount);
+      iVar1 = iVar1 + 1;
+      piVar2 = piVar2 + 0x22;
+    } while (iVar1 < knownContentPackCount);
   }
-  uVar2 = __restgprlr_29(0);
-  return (bool)uVar2;
+  return false;
 }
 
 
 // 825F9648  Content_GetMountedFilename  (universal/dlc.cpp:272)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 char * Content_GetMountedFilename(int param_1,char *param_2)
 
 {
-  int iVar1;
-  char *pcVar2;
+  char *pcVar1;
   
-  iVar1 = __savegprlr_27(param_1,param_2);
-  if (iVar1 < 1) {
+  if (param_1 < 1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\dlc.cpp",0x111,0,
                     "%s");
   }
-  if (knownContentPackCount <= iVar1) {
+  if (knownContentPackCount <= param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\dlc.cpp",0x112,0,
                     "%s");
   }
-  pcVar2 = va("%s:\\%s");
-  pcVar2 = (char *)__restgprlr_27(pcVar2);
-  return pcVar2;
+  pcVar1 = va("%s:\\%s");
+  return pcVar1;
 }
 
 
@@ -459,30 +455,29 @@ bool Content_ReadIdentityFileFromDrive(char *param_1,int param_2)
 
 // 825F97E8  Content_DetermineContentIdentity  (universal/dlc.cpp:326)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 int Content_DetermineContentIdentity(char *param_1)
 
 {
   char *pcVar1;
   void *pvVar2;
-  int iVar3;
-  uint uVar4;
+  uint uVar3;
   
-  __savegprlr_28(param_1);
-  uVar4 = 1;
+  uVar3 = 1;
   do {
     va("dlc%d.id");
     pcVar1 = va("%s:\\%s");
     pvVar2 = Sys_OpenFileReliable(pcVar1);
     if (pvVar2 != (void *)0xffffffff) {
       CloseHandle(pvVar2);
-      iVar3 = __restgprlr_28(2 << (uVar4 & 0x3f));
-      return iVar3;
+      return 2 << (uVar3 & 0x3f);
     }
-    uVar4 = uVar4 + 1;
-  } while ((int)uVar4 < 7);
+    uVar3 = uVar3 + 1;
+  } while ((int)uVar3 < 7);
   Com_PrintWarning(0x10,"Unable to determine map pack identity\n");
-  iVar3 = __restgprlr_28(1);
-  return iVar3;
+  return 1;
 }
 
 
@@ -527,6 +522,8 @@ int Content_GetFreePackIndex(void)
 
 // 825F9920  Content_CheckIfMountedContentPacksAreGone  (universal/dlc.cpp:364)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void Content_CheckIfMountedContentPacksAreGone(void)
@@ -535,222 +532,214 @@ void Content_CheckIfMountedContentPacksAreGone(void)
   ulong uVar1;
   ulong *puVar2;
   
-  __savegprlr_29();
   puVar2 = &contentPacks[0].deviceID;
-  do {
-    if (*(bool *)(puVar2 + 1) != false) {
-      uVar1 = XContentGetDeviceState(*puVar2,(_XOVERLAPPED *)0x0);
-      if (uVar1 == 0x48f) {
-                    /* WARNING: Subroutine does not return */
-        Sys_Error("@DLC_DLCREMOVED");
-      }
-    }
+  while ((*(bool *)(puVar2 + 1) == false ||
+         (uVar1 = XContentGetDeviceState(*puVar2,(_XOVERLAPPED *)0x0), uVar1 != 0x48f))) {
     puVar2 = puVar2 + 0x12;
-  } while ((int)puVar2 < -0x7bfb03a8);
-  __restgprlr_29();
-  return;
+    if (-0x7bfb03a9 < (int)puVar2) {
+      return;
+    }
+  }
+                    /* WARNING: Subroutine does not return */
+  Sys_Error("@DLC_DLCREMOVED");
 }
 
 
 // 825F9980  Content_FoundContent  (universal/dlc.cpp:379)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
+
 void Content_FoundContent(int param_1,_XCONTENT_DATA *param_2,char *param_3)
 
 {
-  _XCONTENT_DATA *p_Var1;
-  ulong uVar2;
-  int iVar3;
-  overlappedTask *poVar4;
-  _XOVERLAPPED *p_Var5;
-  _XUSER_SIGNIN_STATE _Var6;
-  longlong lVar7;
-  char *pcVar8;
+  int iVar1;
+  overlappedTask *poVar2;
+  _XOVERLAPPED *p_Var3;
+  ulong uVar4;
+  _XUSER_SIGNIN_STATE _Var5;
+  char *pcVar6;
   
-  lVar7 = (longlong)(int)param_2;
-  uVar2 = __savegprlr_23(param_1,lVar7,param_3);
   if ((disableDLC->current).enabled == false) {
-    p_Var1 = (_XCONTENT_DATA *)lVar7;
-    pcVar8 = contentPacks[0].filename;
+    pcVar6 = contentPacks[0].filename;
     do {
-      iVar3 = I_strcmp(pcVar8,p_Var1->szFileName);
-      if (iVar3 == 0) goto LAB_825f9b4c;
-      pcVar8 = pcVar8 + 0x48;
-    } while ((int)pcVar8 < -0x7bfb03e4);
-    iVar3 = Content_GetFreePackIndex();
-    if (iVar3 < 0) {
+      iVar1 = I_strcmp(pcVar6,param_2->szFileName);
+      if (iVar1 == 0) {
+        return;
+      }
+      pcVar6 = pcVar6 + 0x48;
+    } while ((int)pcVar6 < -0x7bfb03e4);
+    iVar1 = Content_GetFreePackIndex();
+    if (iVar1 < 0) {
       Com_Error(ERR_DROP,"Couldn\'t get free content pack index");
-      __restgprlr_23();
       return;
     }
     Com_Printf(0x10,"Found a content pack\n");
     highestMapPackNum = highestMapPackNum + 1;
-    Com_sprintf(contentPacks[iVar3].drivename,0xc,"dlc%i");
-    I_strncpyz(contentPacks[iVar3].filename,p_Var1->szFileName,0x2b);
-    contentPacks[iVar3].contentPack = 1;
-    contentPacks[iVar3].mounted = false;
-    contentPacks[iVar3].deviceID = p_Var1->DeviceID;
-    poVar4 = TaskManager_GetOpenTaskSlot(&overlappedTasks,uVar2,2);
-    p_Var5 = TaskManager_TaskToXOverlapped(poVar4);
-    poVar4 = TaskManager_TaskFromXOverlapped(&overlappedTasks,p_Var5);
-    TaskManager_SetTaskData(poVar4,contentPacks + iVar3);
+    Com_sprintf(contentPacks[iVar1].drivename,0xc,"dlc%i");
+    I_strncpyz(contentPacks[iVar1].filename,param_2->szFileName,0x2b);
+    contentPacks[iVar1].contentPack = 1;
+    contentPacks[iVar1].mounted = false;
+    contentPacks[iVar1].deviceID = param_2->DeviceID;
+    poVar2 = TaskManager_GetOpenTaskSlot(&overlappedTasks,param_1,2);
+    p_Var3 = TaskManager_TaskToXOverlapped(poVar2);
+    poVar2 = TaskManager_TaskFromXOverlapped(&overlappedTasks,p_Var3);
+    TaskManager_SetTaskData(poVar2,contentPacks + iVar1);
     Com_Printf(0x10,"Mounting %s as drive \'%s\'\n");
-    uVar2 = XContentCreate(uVar2,contentPacks[iVar3].drivename,p_Var1,3,(ulong *)0x0,
-                           &contentPacks[iVar3].licenseMask,p_Var5);
-    if ((uVar2 != 0) && (uVar2 != 0x3e5)) {
+    uVar4 = XContentCreate(param_1,contentPacks[iVar1].drivename,param_2,3,(ulong *)0x0,
+                           &contentPacks[iVar1].licenseMask,p_Var3);
+    if ((uVar4 != 0) && (uVar4 != 0x3e5)) {
       Com_Error(ERR_DROP,"Xbox 360 Error %llx while trying to call XContentCreate()");
     }
-    uVar2 = 0;
+    uVar4 = 0;
     do {
-      _Var6 = XUserGetSigninState(uVar2);
-      if (0 < (int)_Var6) goto LAB_825f9b4c;
-      uVar2 = uVar2 + 1;
-    } while (uVar2 < 4);
+      _Var5 = XUserGetSigninState(uVar4);
+      if (0 < (int)_Var5) {
+        return;
+      }
+      uVar4 = uVar4 + 1;
+    } while (uVar4 < 4);
     Com_PrintError(0x10,"Unable to find signed in user to call XContentCreate() with.");
   }
-LAB_825f9b4c:
-  __restgprlr_23();
   return;
 }
 
 
 // 825F9B58  Content_AddKnownContentPackage  (universal/dlc.cpp:437)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void Content_AddKnownContentPackage(int param_1)
 
 {
   int iVar1;
-  int iVar2;
-  char *pcVar3;
-  uint uVar4;
+  char *pcVar2;
+  uint uVar3;
   
-  iVar2 = __savegprlr_29(param_1);
   iVar1 = knownContentPackCount;
   if (5 < knownContentPackCount) {
     Com_Error(ERR_DROP,"Found %i content packages!\n");
   }
-  uVar4 = 1;
+  uVar3 = 1;
   knownContentPackData[iVar1].enabled = true;
-  knownContentPackData[iVar1].contentPack = iVar2;
+  knownContentPackData[iVar1].contentPack = param_1;
   knownContentPackData[iVar1].available = true;
   do {
-    if (iVar2 == 2 << (uVar4 & 0x3f)) {
-      if (uVar4 != 0) {
-        pcVar3 = va("DLC_%d");
+    if (param_1 == 2 << (uVar3 & 0x3f)) {
+      if (uVar3 != 0) {
+        pcVar2 = va("DLC_%d");
         goto LAB_825f9be0;
       }
       break;
     }
-    uVar4 = uVar4 + 1;
-  } while ((int)uVar4 < 7);
-  pcVar3 = "DLC_UNKNOWN";
+    uVar3 = uVar3 + 1;
+  } while ((int)uVar3 < 7);
+  pcVar2 = "DLC_UNKNOWN";
 LAB_825f9be0:
-  I_strncpyz(knownContentPackData[iVar1].contentName,pcVar3,0x80);
+  I_strncpyz(knownContentPackData[iVar1].contentName,pcVar2,0x80);
   knownContentPackCount = knownContentPackCount + 1;
-  __restgprlr_29();
   return;
 }
 
 
 // 825F9C20  Content_MountingContentPackComplete  (universal/dlc.cpp:453)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 taskCompleteResults Content_MountingContentPackComplete(int param_1)
 
 {
-  int iVar1;
-  _XOVERLAPPED *p_Var2;
-  taskCompleteResults tVar3;
-  overlappedTask *poVar4;
-  int *piVar5;
-  ulong uVar6;
-  char *pcVar7;
-  bool bVar8;
+  _XOVERLAPPED *p_Var1;
+  overlappedTask *poVar2;
+  int *piVar3;
+  ulong uVar4;
+  char *pcVar5;
+  int iVar6;
+  bool bVar7;
   
-  iVar1 = __savegprlr_27(param_1);
-  p_Var2 = TaskManager_TaskToXOverlapped(overlappedTasks.tasks + iVar1);
-  if (p_Var2 == (_XOVERLAPPED *)0x0) {
+  p_Var1 = TaskManager_TaskToXOverlapped(overlappedTasks.tasks + param_1);
+  if (p_Var1 == (_XOVERLAPPED *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\dlc.cpp",0x1cb,0,
                     "%s");
   }
-  if (overlappedTasks.tasks[iVar1].active == false) {
+  if (overlappedTasks.tasks[param_1].active == false) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\dlc.cpp",0x1cd,0,
                     "%s");
   }
-  if (overlappedTasks.tasks[iVar1].type != 2) {
+  if (overlappedTasks.tasks[param_1].type != 2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\dlc.cpp",0x1ce,0,
                     "%s");
   }
-  if (p_Var2->InternalLow != 0x3e5) {
-    poVar4 = TaskManager_TaskFromXOverlapped(&overlappedTasks,p_Var2);
-    piVar5 = TaskManager_GetTaskData(poVar4);
-    if (piVar5 == (int *)0x0) {
+  if (p_Var1->InternalLow != 0x3e5) {
+    poVar2 = TaskManager_TaskFromXOverlapped(&overlappedTasks,p_Var1);
+    piVar3 = TaskManager_GetTaskData(poVar2);
+    if (piVar3 == (int *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\dlc.cpp",0x1d4,0,
                       "%s");
     }
-    uVar6 = XGetOverlappedResult(p_Var2,(ulong *)0x0,0);
-    if (uVar6 != 0x3e4) {
-      poVar4 = TaskManager_TaskFromXOverlapped(&overlappedTasks,p_Var2);
-      TaskManager_ClearTask(poVar4);
-      uVar6 = XGetOverlappedExtendedError(p_Var2);
-      if (uVar6 != 0) {
+    uVar4 = XGetOverlappedResult(p_Var1,(ulong *)0x0,0);
+    if (uVar4 != 0x3e4) {
+      poVar2 = TaskManager_TaskFromXOverlapped(&overlappedTasks,p_Var1);
+      TaskManager_ClearTask(poVar2);
+      uVar4 = XGetOverlappedExtendedError(p_Var1);
+      if (uVar4 != 0) {
         if (alwaysfails == 0) {
-          pcVar7 = va("Failed to mount content package %s");
+          pcVar5 = va("Failed to mount content package %s");
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\dlc.cpp",0x1df
-                          ,0,pcVar7);
+                          ,0,pcVar5);
         }
-        *(undefined1 *)(piVar5 + 1) = 0;
-        tVar3 = __restgprlr_27(2);
-        return tVar3;
+        *(undefined1 *)(piVar3 + 1) = 0;
+        return TASK_ERROR;
       }
-      pcVar7 = (char *)((int)piVar5 + 0x2f);
-      iVar1 = Content_DetermineContentIdentity(pcVar7);
-      *piVar5 = iVar1;
-      if (iVar1 == 1) {
+      pcVar5 = (char *)((int)piVar3 + 0x2f);
+      iVar6 = Content_DetermineContentIdentity(pcVar5);
+      *piVar3 = iVar6;
+      if (iVar6 == 1) {
         Com_Printf(0x10,"Closing drive %s because we couldn\'t determine the identity\n");
-        XContentClose(pcVar7,(_XOVERLAPPED *)0x0);
-        *(undefined1 *)(piVar5 + 1) = 0;
-        tVar3 = __restgprlr_27(2);
-        return tVar3;
+        XContentClose(pcVar5,(_XOVERLAPPED *)0x0);
+        *(undefined1 *)(piVar3 + 1) = 0;
+        return TASK_ERROR;
       }
-      bVar8 = Content_DoWeHaveContentPack(iVar1);
-      if (bVar8) {
+      bVar7 = Content_DoWeHaveContentPack(iVar6);
+      if (bVar7) {
         Com_Printf(0x10,"Closing drive %s because we already have it mounted as a different drive\n"
                   );
-        *piVar5 = 1;
-        XContentClose(pcVar7,(_XOVERLAPPED *)0x0);
-        *(undefined1 *)(piVar5 + 1) = 0;
-        tVar3 = __restgprlr_27(2);
-        return tVar3;
+        *piVar3 = 1;
+        XContentClose(pcVar5,(_XOVERLAPPED *)0x0);
+        *(undefined1 *)(piVar3 + 1) = 0;
+        return TASK_ERROR;
       }
-      *(undefined1 *)(piVar5 + 0x11) = 1;
-      Content_AddKnownContentPackage(*piVar5);
+      *(undefined1 *)(piVar3 + 0x11) = 1;
+      Content_AddKnownContentPackage(*piVar3);
       Com_Printf(0x10,"Mounted drive %s as dlc %s\n");
-      tVar3 = __restgprlr_27(1);
-      return tVar3;
+      return TASK_COMPLETE;
     }
   }
-  tVar3 = __restgprlr_27(0);
-  return tVar3;
+  return TASK_NOTCOMPLETE;
 }
 
 
 // 825F9E90  Content_FindContentPackComplete  (universal/dlc.cpp:512)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
+
 taskCompleteResults Content_FindContentPackComplete(int param_1)
 
 {
   byte bVar1;
-  int iVar2;
-  _XOVERLAPPED *p_Var3;
-  taskCompleteResults tVar4;
-  ulong uVar5;
-  overlappedTask *poVar6;
+  _XOVERLAPPED *p_Var2;
+  ulong uVar3;
+  overlappedTask *poVar4;
+  int iVar5;
+  int iVar6;
   int iVar7;
-  int iVar8;
   char acStack_90 [144];
   
-  iVar2 = __savegprlr_24(param_1);
-  p_Var3 = TaskManager_TaskToXOverlapped(overlappedTasks.tasks + iVar2);
-  if (p_Var3 == (_XOVERLAPPED *)0x0) {
+  p_Var2 = TaskManager_TaskToXOverlapped(overlappedTasks.tasks + param_1);
+  if (p_Var2 == (_XOVERLAPPED *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\dlc.cpp",0x20e,0,
                     "%s");
   }
@@ -758,79 +747,75 @@ taskCompleteResults Content_FindContentPackComplete(int param_1)
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\dlc.cpp",0x210,0,
                     "%s");
   }
-  if (overlappedTasks.tasks[iVar2].active == false) {
+  if (overlappedTasks.tasks[param_1].active == false) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\dlc.cpp",0x211,0,
                     "%s");
   }
-  if (overlappedTasks.tasks[iVar2].type != 1) {
+  if (overlappedTasks.tasks[param_1].type != 1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\dlc.cpp",0x212,0,
                     "%s");
   }
-  bVar1 = overlappedTasks.tasks[iVar2].controllerIndex;
-  if ((p_Var3->InternalLow != 0x3e5) &&
-     (uVar5 = XGetOverlappedResult(p_Var3,(ulong *)0x0,0), uVar5 != 0x3e4)) {
-    uVar5 = XGetOverlappedExtendedError(p_Var3);
-    if ((uVar5 == 0x3e4) || (uVar5 == 0x3e5)) {
+  bVar1 = overlappedTasks.tasks[param_1].controllerIndex;
+  if ((p_Var2->InternalLow != 0x3e5) &&
+     (uVar3 = XGetOverlappedResult(p_Var2,(ulong *)0x0,0), uVar3 != 0x3e4)) {
+    uVar3 = XGetOverlappedExtendedError(p_Var2);
+    if ((uVar3 == 0x3e4) || (uVar3 == 0x3e5)) {
       va("Error %i from XGetOverlappedExtendedError() when we shouldn\'t have gotten that here");
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\dlc.cpp",0x21e,0,
                       "%s\n\t%s");
     }
-    poVar6 = TaskManager_TaskFromXOverlapped(&overlappedTasks,p_Var3);
-    TaskManager_ClearTask(poVar6);
+    poVar4 = TaskManager_TaskFromXOverlapped(&overlappedTasks,p_Var2);
+    TaskManager_ClearTask(poVar4);
     CloseHandle(s_contentDiscoveryHandle);
     s_contentDiscoveryHandle = (void *)0x0;
-    if (uVar5 == 0x80070012) {
+    if (uVar3 == 0x80070012) {
       Com_Printf(0x10,"No content packs found\n");
-      tVar4 = __restgprlr_24(1);
-      return tVar4;
+      return TASK_COMPLETE;
     }
-    if (uVar5 != 0) {
+    if (uVar3 != 0) {
       Com_Error(ERR_DROP,"Microsoft Error finding content - error %x\n");
-      tVar4 = __restgprlr_24(2);
-      return tVar4;
+      return TASK_ERROR;
     }
-    iVar2 = 0;
+    iVar7 = 0;
     if (contentDiscoveryBuffer[0].dwContentType != 0) {
-      iVar8 = 0;
+      iVar6 = 0;
       do {
-        iVar7 = WideCharToMultiByte(0,0,(wchar_t *)
-                                        ((int)contentDiscoveryBuffer[0].szDisplayName + iVar8),-1,
+        iVar5 = WideCharToMultiByte(0,0,(wchar_t *)
+                                        ((int)contentDiscoveryBuffer[0].szDisplayName + iVar6),-1,
                                     acStack_90,0x40,(char *)0x0,(int *)0x0);
-        if (iVar7 == 0) {
+        if (iVar5 == 0) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\dlc.cpp",0x255
                           ,0,"%s");
         }
         Com_Printf(0x10,"Found content pack %s\n");
         Content_FoundContent
                   ((uint)bVar1,
-                   (_XCONTENT_DATA *)((int)contentDiscoveryBuffer[0].szDisplayName + iVar8 + -8),
+                   (_XCONTENT_DATA *)((int)contentDiscoveryBuffer[0].szDisplayName + iVar6 + -8),
                    acStack_90);
-        iVar2 = iVar2 + 1;
-        iVar8 = iVar2 * 0x134;
-      } while (contentDiscoveryBuffer[iVar2].dwContentType != 0);
+        iVar7 = iVar7 + 1;
+        iVar6 = iVar7 * 0x134;
+      } while (contentDiscoveryBuffer[iVar7].dwContentType != 0);
     }
-    tVar4 = __restgprlr_24(1);
-    return tVar4;
+    return TASK_COMPLETE;
   }
-  tVar4 = __restgprlr_24(0);
-  return tVar4;
+  return TASK_NOTCOMPLETE;
 }
 
 
 // 825FA130  Content_FindSavedContentComplete  (universal/dlc.cpp:609)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 taskCompleteResults Content_FindSavedContentComplete(int param_1)
 
 {
-  int iVar1;
-  _XOVERLAPPED *p_Var2;
-  taskCompleteResults tVar3;
-  ulong uVar4;
-  overlappedTask *poVar5;
+  _XOVERLAPPED *p_Var1;
+  ulong uVar2;
+  overlappedTask *poVar3;
   
-  iVar1 = __savegprlr_26(param_1);
-  p_Var2 = TaskManager_TaskToXOverlapped(overlappedTasks.tasks + iVar1);
-  if (p_Var2 == (_XOVERLAPPED *)0x0) {
+  p_Var1 = TaskManager_TaskToXOverlapped(overlappedTasks.tasks + param_1);
+  if (p_Var1 == (_XOVERLAPPED *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\dlc.cpp",0x267,0,
                     "%s");
   }
@@ -838,74 +823,70 @@ taskCompleteResults Content_FindSavedContentComplete(int param_1)
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\dlc.cpp",0x269,0,
                     "%s");
   }
-  if (overlappedTasks.tasks[iVar1].active == false) {
+  if (overlappedTasks.tasks[param_1].active == false) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\dlc.cpp",0x26a,0,
                     "%s");
   }
-  if (overlappedTasks.tasks[iVar1].type != 3) {
+  if (overlappedTasks.tasks[param_1].type != 3) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\dlc.cpp",0x26b,0,
                     "%s");
   }
-  if ((p_Var2->InternalLow != 0x3e5) &&
-     (uVar4 = XGetOverlappedResult(p_Var2,(ulong *)0x0,0), uVar4 != 0x3e4)) {
-    uVar4 = XGetOverlappedExtendedError(p_Var2);
-    if ((uVar4 == 0x3e4) || (uVar4 == 0x3e5)) {
+  if ((p_Var1->InternalLow != 0x3e5) &&
+     (uVar2 = XGetOverlappedResult(p_Var1,(ulong *)0x0,0), uVar2 != 0x3e4)) {
+    uVar2 = XGetOverlappedExtendedError(p_Var1);
+    if ((uVar2 == 0x3e4) || (uVar2 == 0x3e5)) {
       va("Error %i from XGetOverlappedExtendedError() when we shouldn\'t have gotten that here");
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\dlc.cpp",0x277,0,
                       "%s\n\t%s");
     }
-    poVar5 = TaskManager_TaskFromXOverlapped(&overlappedTasks,p_Var2);
-    TaskManager_ClearTask(poVar5);
+    poVar3 = TaskManager_TaskFromXOverlapped(&overlappedTasks,p_Var1);
+    TaskManager_ClearTask(poVar3);
     CloseHandle(s_savedContentDiscoveryHandle);
     s_savedContentDiscoveryHandle = (void *)0x0;
-    if (uVar4 == 0x80070012) {
+    if (uVar2 == 0x80070012) {
       Com_Printf(0x10,"No saved content found\n");
     }
-    else if (uVar4 != 0) {
+    else if (uVar2 != 0) {
       Com_Error(ERR_DROP,"Microsoft Error finding content - error %x\n");
-      tVar3 = __restgprlr_26(2);
-      return tVar3;
+      return TASK_ERROR;
     }
-    tVar3 = __restgprlr_26(1);
-    return tVar3;
+    return TASK_COMPLETE;
   }
-  tVar3 = __restgprlr_26(0);
-  return tVar3;
+  return TASK_NOTCOMPLETE;
 }
 
 
 // 825FA310  Content_FindContentPacks  (universal/dlc.cpp:655)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void Content_FindContentPacks(int param_1)
 
 {
+  bool bVar5;
   ulong uVar1;
-  bool bVar6;
-  ulong uVar2;
-  _XUSER_SIGNIN_STATE _Var3;
-  overlappedTask *poVar4;
-  _XOVERLAPPED *p_Var5;
+  _XUSER_SIGNIN_STATE _Var2;
+  overlappedTask *poVar3;
+  _XOVERLAPPED *p_Var4;
   uint local_30 [12];
   
-  uVar1 = __savegprlr_28(param_1);
-  bVar6 = TaskManager_TaskIsInProgress(&overlappedTasks,1);
-  if (bVar6) {
+  bVar5 = TaskManager_TaskIsInProgress(&overlappedTasks,1);
+  if (bVar5) {
     Com_Printf(0x10,"Not looking for content pack, since one is already in progress\n");
-    __restgprlr_28();
     return;
   }
-  uVar2 = XContentCreateEnumerator(uVar1,0,2,0,6,local_30,&s_contentDiscoveryHandle);
-  if (uVar2 != 0) {
-    while (uVar2 == 0x525) {
-      _Var3 = XUserGetSigninState(uVar1);
-      if (_Var3 == eXUserSigninState_NotSignedIn) {
+  uVar1 = XContentCreateEnumerator(param_1,0,2,0,6,local_30,&s_contentDiscoveryHandle);
+  if (uVar1 != 0) {
+    while (uVar1 == 0x525) {
+      _Var2 = XUserGetSigninState(param_1);
+      if (_Var2 == eXUserSigninState_NotSignedIn) {
         Com_Printf(0x10,"Aborting looking for content pack, since not signed in.\n");
-        __restgprlr_28();
         return;
       }
-      uVar2 = XContentCreateEnumerator(uVar1,0,2,0,6,local_30,&s_contentDiscoveryHandle);
+      uVar1 = XContentCreateEnumerator(param_1,0,2,0,6,local_30,&s_contentDiscoveryHandle);
     }
-    if (uVar2 != 0) {
+    if (uVar1 != 0) {
       Com_Error(ERR_DROP,"Xbox 360 Error %llx while trying to create content enumerator");
     }
   }
@@ -919,44 +900,42 @@ void Content_FindContentPacks(int param_1)
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\dlc.cpp",0x2ac,0,
                     "%s");
   }
-  poVar4 = TaskManager_GetOpenTaskSlot(&overlappedTasks,uVar1,1);
-  p_Var5 = TaskManager_TaskToXOverlapped(poVar4);
-  uVar1 = XEnumerate(s_contentDiscoveryHandle,contentDiscoveryBuffer,0x738,(ulong *)0x0,p_Var5);
+  poVar3 = TaskManager_GetOpenTaskSlot(&overlappedTasks,param_1,1);
+  p_Var4 = TaskManager_TaskToXOverlapped(poVar3);
+  uVar1 = XEnumerate(s_contentDiscoveryHandle,contentDiscoveryBuffer,0x738,(ulong *)0x0,p_Var4);
   if ((uVar1 != 0) && (uVar1 != 0x3e5)) {
     Com_Error(ERR_DROP,"Xbox 360 Error %llx while trying to enumerate content");
   }
-  __restgprlr_28();
   return;
 }
 
 
 // 825FA4D0  Content_FindSavedContent  (universal/dlc.cpp:696)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void Content_FindSavedContent(int param_1)
 
 {
+  bool bVar4;
   ulong uVar1;
-  bool bVar5;
-  ulong uVar2;
-  overlappedTask *poVar3;
-  _XOVERLAPPED *p_Var4;
+  overlappedTask *poVar2;
+  _XOVERLAPPED *p_Var3;
   uint local_40 [16];
   
-  uVar1 = __savegprlr_27(param_1);
-  bVar5 = TaskManager_TaskIsInProgress(&overlappedTasks,3);
-  if (bVar5) {
+  bVar4 = TaskManager_TaskIsInProgress(&overlappedTasks,3);
+  if (bVar4) {
     Com_Printf(0x10,"Not looking for saved content, since one is already in progress\n");
-    __restgprlr_27();
     return;
   }
   memset();
-  uVar2 = XContentCreateEnumerator(uVar1,0,1,0,6,local_40,&s_savedContentDiscoveryHandle);
-  if (uVar2 != 0) {
-    if (uVar2 == 0x525) {
+  uVar1 = XContentCreateEnumerator(param_1,0,1,0,6,local_40,&s_savedContentDiscoveryHandle);
+  if (uVar1 != 0) {
+    if (uVar1 == 0x525) {
       Com_Printf(0x10,
                  "Failed to find saved content because the current controller (#%i) is signed out\n"
                 );
-      __restgprlr_27();
       return;
     }
     Com_Error(ERR_DROP,"Xbox 360 Error %llx while trying to create content enumerator");
@@ -971,14 +950,13 @@ void Content_FindSavedContent(int param_1)
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\dlc.cpp",0x2d1,0,
                     "%s");
   }
-  poVar3 = TaskManager_GetOpenTaskSlot(&overlappedTasks,uVar1,3);
-  p_Var4 = TaskManager_TaskToXOverlapped(poVar3);
+  poVar2 = TaskManager_GetOpenTaskSlot(&overlappedTasks,param_1,3);
+  p_Var3 = TaskManager_TaskToXOverlapped(poVar2);
   uVar1 = XEnumerate(s_savedContentDiscoveryHandle,savedContentDiscoveryBuffer,0x2680,(ulong *)0x0,
-                     p_Var4);
+                     p_Var3);
   if ((uVar1 != 0) && (uVar1 != 0x3e5)) {
     Com_Error(ERR_DROP,"Xbox 360 Error %llx while trying to enumerate saved content");
   }
-  __restgprlr_27();
   return;
 }
 
@@ -1002,6 +980,8 @@ bool Content_MountingContentPacksInProgress(void)
 
 // 825FA6D0  Content_CheckOngoingSessionTasks  (universal/dlc.cpp:740)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void Content_CheckOngoingSessionTasks(void)
@@ -1014,8 +994,7 @@ void Content_CheckOngoingSessionTasks(void)
   int *piVar5;
   int iVar6;
   
-  __savegprlr_23();
-  if ((s_requiresRestart != false) && (bVar4 = Content_MountingContentPacksInProgress(), !bVar4)) {
+  if ((s_requiresRestart) && (bVar4 = Content_MountingContentPacksInProgress(), !bVar4)) {
     s_requiresRestart = bVar4;
     Com_Error(ERR_DISCONNECT,"Restarting to load map packs");
   }
@@ -1053,7 +1032,6 @@ LAB_825fa7f0:
     piVar5 = piVar5 + 0x28;
     iVar6 = iVar6 + 1;
     if (-0x7bfabe59 < (int)piVar5) {
-      __restgprlr_23();
       return;
     }
   } while( true );
@@ -1062,6 +1040,8 @@ LAB_825fa7f0:
 
 // 825FA818  Content_Init  (universal/dlc.cpp:826)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void Content_Init(void)
@@ -1069,7 +1049,6 @@ void Content_Init(void)
 {
   bool *pbVar1;
   
-  __savegprlr_27();
   disableDLC = Dvar_RegisterBool("disableDLC",false,0,"");
   TaskManager_ConstructTaskSet(&overlappedTasks,"Content_Init");
   pbVar1 = &contentPacks[0].mounted;
@@ -1086,12 +1065,14 @@ void Content_Init(void)
   I_strncpyz(knownContentPackData[0].contentName,"MP_ORIGINAL_MAPS",0x80);
   knownContentPackCount = knownContentPackCount + 1;
   track_static_alloc_internal(contentDiscoveryBuffer,0x738,"contentDiscoveryBuffer",9);
-  __restgprlr_27();
   return;
 }
 
 
 // 825FA900  Content_CreateFile  (universal/dlc.cpp:900)
+
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 
 void * Content_CreateFile(char *param_1)
 
@@ -1101,7 +1082,6 @@ void * Content_CreateFile(char *param_1)
   char *pcVar3;
   char acStack_140 [320];
   
-  __savegprlr_25(param_1);
   if (com_allowReadContentPacks != 0) {
     sync(1);
     pcVar3 = contentPacks[0].filename;
@@ -1114,15 +1094,14 @@ void * Content_CreateFile(char *param_1)
       if (*pcVar3 != 0) {
         Com_sprintf(acStack_140,0x100,"%s:\\%s");
         pvVar2 = Sys_OpenFileReliable(acStack_140);
-        if (pvVar2 != (void *)0xffffffff) goto LAB_825fa9c8;
+        if (pvVar2 != (void *)0xffffffff) {
+          return pvVar2;
+        }
       }
       pcVar3 = pcVar3 + 0x48;
     } while ((int)pcVar3 < -0x7bfb03e4);
   }
-  pvVar2 = (void *)0xffffffff;
-LAB_825fa9c8:
-  pvVar2 = (void *)__restgprlr_25(pvVar2);
-  return pvVar2;
+  return (void *)0xffffffff;
 }
 
 

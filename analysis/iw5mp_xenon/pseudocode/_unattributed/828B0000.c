@@ -2,7 +2,9 @@
 
 // 828B0014  FUN_828b0014  (line unknown)
 
-void FUN_828b0014(undefined8 param_1,undefined8 param_2,uint param_3)
+/* WARNING: Function: __restgprlr_21 replaced with injection: xenon_save_restore */
+
+long FUN_828b0014(undefined8 param_1,undefined8 param_2,uint param_3)
 
 {
   long lVar1;
@@ -78,8 +80,7 @@ LAB_828b0050:
     ;
   }
   *(ulong *)(unaff_r22 + 0x44) = unaff_r24;
-  __restgprlr_21(lVar1);
-  return;
+  return lVar1;
 }
 
 

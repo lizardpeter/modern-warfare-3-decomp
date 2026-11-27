@@ -16,6 +16,8 @@ void SV_Netchan_OutgoingSequenceIncremented(client_t *param_1,netchan_t *param_2
 
 // 8257DAE8  SV_Netchan_TransmitNextFragment  (server_mp/sv_net_chan_mp.cpp:102)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
@@ -25,41 +27,38 @@ bool SV_Netchan_TransmitNextFragment(client_t *param_1,netchan_t *param_2)
 {
   uint uVar1;
   int iVar2;
-  int iVar3;
-  bool bVar4;
-  undefined1 uVar5;
-  longlong lVar6;
+  bool bVar3;
+  longlong lVar4;
   
-  iVar3 = __savegprlr_27(param_1);
   uVar1 = param_2->unsentFragmentStart;
   iVar2 = param_2->unsentLength;
-  bVar4 = Netchan_TransmitNextFragment(param_2);
+  bVar3 = Netchan_TransmitNextFragment(param_2);
   if (param_2->unsentFragments == 0) {
-    Com_Memset((void *)((param_2->outgoingSequence & svs.packetBackupMask) * 0x3380 + iVar3 +
-                       0x35300),0,0x3380);
+    Com_Memset(param_1->frames + (param_2->outgoingSequence & svs.packetBackupMask),0,0x3380);
   }
-  if ((bVar4) || ((param_2->remoteAddress).type == NA_BOT)) {
+  if ((bVar3) || ((param_2->remoteAddress).type == NA_BOT)) {
     if (iVar2 != param_2->unsentLength) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_net_chan_mp.cpp"
                       ,0x79,0,"previousLen == chan->unsentLength\n\t%i, %i");
     }
-    lVar6 = (ulonglong)(uint)param_2->unsentFragmentStart - (ulonglong)uVar1;
-    if (lVar6 < 1) {
+    lVar4 = (ulonglong)(uint)param_2->unsentFragmentStart - (ulonglong)uVar1;
+    if (lVar4 < 1) {
       Com_PrintWarning(0xf,
                        "SV_Netchan_TransmitNextFragment - Did not report a valid amount of data sent (%i)\n"
                       );
     }
-    iVar2 = (int)lVar6;
+    iVar2 = (int)lVar4;
     sv.bpsTotalBytesForTwoFrames = sv.bpsTotalBytesForTwoFrames + iVar2;
     sv.bpsTotalBytes = sv.bpsTotalBytes + iVar2;
   }
-  uVar5 = __restgprlr_27(bVar4);
-  return (bool)uVar5;
+  return bVar3;
 }
 
 
 // 8257DC08  SV_Netchan_Transmit  (server_mp/sv_net_chan_mp.cpp:145)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
@@ -67,22 +66,21 @@ bool SV_Netchan_TransmitNextFragment(client_t *param_1,netchan_t *param_2)
 bool SV_Netchan_Transmit(client_t *param_1,uchar *param_2,int param_3)
 
 {
-  int iVar1;
+  netchan_t *pnVar1;
   bool bVar2;
-  undefined1 uVar3;
   
-  iVar1 = __savegprlr_28(param_1);
-  bVar2 = Netchan_Transmit((netchan_t *)(iVar1 + 0x18),param_3,param_2);
-  if (*(int *)(iVar1 + 0x48) == 0) {
-    Com_Memset((void *)((svs.packetBackupMask & ((netchan_t *)(iVar1 + 0x18))->outgoingSequence) *
-                        0x3380 + iVar1 + 0x35300),0,0x3380);
+  pnVar1 = &(param_1->header).netchan;
+  bVar2 = Netchan_Transmit(pnVar1,param_3,param_2);
+  if ((param_1->header).netchan.unsentFragments == 0) {
+    Com_Memset(param_1->frames + (svs.packetBackupMask & pnVar1->outgoingSequence),0,0x3380);
   }
   if ((sv_hugeSnapshotSize->current).integer < param_3) {
-    *(undefined4 *)(iVar1 + 0x14) = 1;
+    (param_1->header).hugeSnapshotSent = 1;
   }
-  if ((bVar2) || (*(int *)(iVar1 + 0x28) == 0)) {
-    if (*(int *)(iVar1 + 0x48) != 0) {
-      param_3 = (*(int *)(iVar1 + 0x4c) - *(int *)(iVar1 + 0x50)) + param_3;
+  if ((bVar2) || ((param_1->header).netchan.remoteAddress.type == NA_BOT)) {
+    if ((param_1->header).netchan.unsentFragments != 0) {
+      param_3 = ((param_1->header).netchan.unsentFragmentStart -
+                (param_1->header).netchan.unsentLength) + param_3;
     }
     if (param_3 < 1) {
       Com_PrintWarning(0xf,
@@ -92,8 +90,7 @@ bool SV_Netchan_Transmit(client_t *param_1,uchar *param_2,int param_3)
     sv.bpsTotalBytesForTwoFrames = sv.bpsTotalBytesForTwoFrames + param_3;
     sv.bpsTotalBytes = sv.bpsTotalBytes + param_3;
   }
-  uVar3 = __restgprlr_28(bVar2);
-  return (bool)uVar3;
+  return bVar2;
 }
 
 
@@ -116,6 +113,8 @@ void SV_Netchan_AddOOBProfilePacket(int param_1)
 
 // 8257DDA8  SV_Netchan_SendOOBPacket  (server_mp/sv_net_chan_mp.cpp:203)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
@@ -123,26 +122,25 @@ void SV_Netchan_AddOOBProfilePacket(int param_1)
 void SV_Netchan_SendOOBPacket(int param_1,void *param_2,netadr_t param_3)
 
 {
-  int iVar1;
   netadr_t in_stack_ffffff88;
   
-  iVar1 = __savegprlr_27(param_1);
   if (*(int *)param_2 != -1) {
     Com_Printf(0xf,"SV_Netchan_SendOOBPacket used to send non-OOB packet.\n");
   }
   NetProf_PrepProfiling(&svs.OOBProf);
-  NET_SendPacket(NS_MAXCLIENTS,iVar1,param_2,in_stack_ffffff88);
+  NET_SendPacket(NS_MAXCLIENTS,param_1,param_2,in_stack_ffffff88);
   if ((net_profile->current).integer != 0) {
     NetProf_PrepProfiling(&svs.OOBProf);
-    NetProf_AddPacket(&svs.OOBProf.send,iVar1,0);
+    NetProf_AddPacket(&svs.OOBProf.send,param_1,0);
   }
-  __restgprlr_27();
   return;
 }
 
 
 // 8257DE48  SV_Netchan_UpdateProfileStats  (server_mp/sv_net_chan_mp.cpp:224)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
@@ -155,7 +153,6 @@ void SV_Netchan_UpdateProfileStats(void)
   int iVar2;
   client_t *pcVar3;
   
-  __savegprlr_28();
   if ((svs.clients != (client_t *)0x0) && ((net_profile->current).integer != 0)) {
     NetProf_UpdateStatistics(&svs.OOBProf.send);
     NetProf_UpdateStatistics(&svs.OOBProf.recieve);
@@ -178,7 +175,6 @@ void SV_Netchan_UpdateProfileStats(void)
       } while (iVar2 < iVar1);
     }
   }
-  __restgprlr_28();
   return;
 }
 

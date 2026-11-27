@@ -89,64 +89,62 @@ void R_ShowGridCorner(uint param_1,uint param_2,uint param_3,float param_4,float
 
 // 827A22C0  R_ShowLightGrid  (gfx_d3d/rb_light.cpp:258)
 
+/* WARNING: Function: __savegprlr_19 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_19 replaced with injection: xenon_save_restore */
+
 void R_ShowLightGrid(GfxLightGrid *param_1,uint *param_2,float *param_3,GfxLightGridEntry **param_4,
                     bool *param_5,bool param_6)
 
 {
-  int iVar1;
-  ulonglong uVar2;
+  ulonglong uVar1;
+  uint uVar2;
   uint uVar3;
   uint uVar4;
-  longlong lVar5;
-  uint uVar6;
+  double dVar5;
+  double dVar6;
   double dVar7;
   double dVar8;
-  double dVar9;
-  double dVar10;
   
-  lVar5 = (longlong)(int)param_4;
-  iVar1 = __savegprlr_19(param_1);
   R_ShowGridOrigin(param_3);
   R_ShowGridBox(param_2);
   if (rgp.world == (GfxWorld *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_light.cpp",0x10e,0,
                     "%s");
   }
-  if (*(int *)(iVar1 + 0x14) == 0) {
-    uVar4 = 4;
-    uVar3 = 2;
+  if (param_1->rowAxis == 0) {
+    uVar3 = 4;
+    uVar2 = 2;
   }
   else {
-    uVar4 = 2;
-    uVar3 = 4;
+    uVar3 = 2;
+    uVar2 = 4;
   }
-  dVar8 = 1.0;
-  dVar9 = 0.8999999761581421;
-  dVar10 = 1.100000023841858;
-  uVar6 = 0;
-  uVar2 = 1;
+  dVar6 = 1.0;
+  dVar7 = 0.8999999761581421;
+  dVar8 = 1.100000023841858;
+  uVar4 = 0;
+  uVar1 = 1;
   do {
-    dVar7 = dVar10;
-    if (param_5[uVar6] == false) {
-      if (*(int *)lVar5 != 0) {
-        dVar7 = dVar8;
-        if (((uint)*(byte *)(*(int *)lVar5 + 3) & (uint)uVar2) == 0) {
-          dVar7 = dVar9;
+    dVar5 = dVar8;
+    if (param_5[uVar4] == false) {
+      if (*param_4 != (GfxLightGridEntry *)0x0) {
+        dVar5 = dVar6;
+        if (((uint)(*param_4)->needsTrace & (uint)uVar1) == 0) {
+          dVar5 = dVar7;
         }
         goto LAB_827a2424;
       }
     }
     else {
 LAB_827a2424:
-      R_ShowGridCorner((uint)((uVar6 & uVar4) != 0) + *param_2,
-                       (uint)((float *)(uVar6 & uVar3) != (float *)0x0) + param_2[1],
-                       (uVar6 & 1) + param_2[2],(float)dVar7,(float *)(uVar6 & uVar3));
+      R_ShowGridCorner((uint)((uVar4 & uVar3) != 0) + *param_2,
+                       (uint)((float *)(uVar4 & uVar2) != (float *)0x0) + param_2[1],
+                       (uVar4 & 1) + param_2[2],(float)dVar5,(float *)(uVar4 & uVar2));
     }
-    uVar6 = uVar6 + 1;
-    lVar5 = lVar5 + 4;
-    uVar2 = (uVar2 & 0x7fffffff) << 1 | uVar2 >> 0x1f;
-    if (7 < uVar6) {
-      __restgprlr_19();
+    uVar4 = uVar4 + 1;
+    param_4 = param_4 + 1;
+    uVar1 = (uVar1 & 0x7fffffff) << 1 | uVar1 >> 0x1f;
+    if (7 < uVar4) {
       return;
     }
   } while( true );
@@ -205,6 +203,9 @@ void R_ShowDetailedGridBox(uint *param_1)
 
 // 827A25F0  R_GetLightGridAverageColorByIndexes  (gfx_d3d/rb_light.cpp:338)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
+
 void R_GetLightGridAverageColorByIndexes
                (GfxLightGrid *param_1,ushort param_2,uint *param_3,uint param_4,float *param_5)
 
@@ -212,58 +213,54 @@ void R_GetLightGridAverageColorByIndexes
   byte bVar1;
   byte bVar2;
   byte bVar3;
-  uint uVar4;
-  byte *pbVar5;
-  int iVar6;
-  ulonglong uVar7;
-  longlong lVar8;
-  ulonglong uVar9;
+  GfxLightGridColors *pGVar4;
+  uint uVar5;
+  uchar (*pauVar6) [3];
+  longlong lVar7;
+  double dVar8;
+  double dVar9;
   double dVar10;
-  double dVar11;
-  double dVar12;
   
-  uVar9 = (ulonglong)(int)param_4;
-  lVar8 = (longlong)(int)param_3;
-  uVar7 = (ulonglong)(short)param_2;
-  iVar6 = __savegprlr_24(param_1);
-  if ((ulonglong)*(uint *)(iVar6 + 0x30) <= (uVar7 & 0xffff)) {
+  lVar7 = (longlong)(int)param_4;
+  if (param_1->colorCount <= (uint)param_2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_light.cpp",0x16d,0,
                     "%s");
   }
-  iVar6 = *(int *)(iVar6 + 0x34);
+  pGVar4 = param_1->colors;
   *param_5 = 0.0;
   param_5[1] = 0.0;
   param_5[2] = 0.0;
   param_5[3] = 0.0;
-  dVar12 = (double)(float)(1.0 / (double)(uVar9 & 0xffffffff));
-  if ((uVar9 & 0xffffffff) != 0) {
-    dVar10 = (double)(float)(dVar12 * 1.0);
-    dVar11 = 0.003921568859368563;
+  dVar10 = (double)(float)(1.0 / (double)param_4);
+  if (param_4 != 0) {
+    dVar8 = (double)(float)(dVar10 * 1.0);
+    dVar9 = 0.003921568859368563;
     do {
-      uVar4 = *(uint *)lVar8;
-      if (0x37 < uVar4) {
+      uVar5 = *param_3;
+      if (0x37 < uVar5) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_light.cpp",
                         0x179,0,"%s");
       }
-      uVar9 = uVar9 - 1;
-      pbVar5 = (byte *)(uVar4 * 3 + (int)(uVar7 & 0xffff) * 0xa8 + iVar6);
-      lVar8 = lVar8 + 4;
-      bVar1 = pbVar5[1];
-      bVar2 = pbVar5[2];
-      bVar3 = *pbVar5;
-      param_5[3] = (float)(dVar10 + (double)param_5[3]);
-      *param_5 = (float)((double)(float)((double)bVar3 * dVar11) * dVar12 + (double)*param_5);
-      param_5[2] = (float)((double)(float)((double)bVar2 * dVar11) * dVar12 + (double)param_5[2]);
-      param_5[1] = (float)((double)(float)((double)bVar1 * dVar11) * dVar12 + (double)param_5[1]);
-    } while (uVar9 != 0);
+      lVar7 = lVar7 + -1;
+      pauVar6 = pGVar4[param_2].rgb + uVar5;
+      param_3 = param_3 + 1;
+      bVar1 = (*pauVar6)[1];
+      bVar2 = (*pauVar6)[2];
+      bVar3 = (*pauVar6)[0];
+      param_5[3] = (float)(dVar8 + (double)param_5[3]);
+      *param_5 = (float)((double)(float)((double)bVar3 * dVar9) * dVar10 + (double)*param_5);
+      param_5[2] = (float)((double)(float)((double)bVar2 * dVar9) * dVar10 + (double)param_5[2]);
+      param_5[1] = (float)((double)(float)((double)bVar1 * dVar9) * dVar10 + (double)param_5[1]);
+    } while (lVar7 != 0);
   }
-  __restgprlr_24();
   return;
 }
 
 
 // 827A2798  R_ShowDetailedGridCornerLine  (gfx_d3d/rb_light.cpp:391)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 
@@ -271,33 +268,26 @@ void R_ShowDetailedGridCornerLine
                (float *param_1,uint param_2,uint param_3,uint param_4,float *param_5)
 
 {
-  float *pfVar1;
-  ulonglong uVar2;
-  ulonglong uVar3;
-  ulonglong uVar4;
   float local_48;
   float local_44;
   float local_40;
   
-  uVar4 = (ulonglong)(int)param_4;
-  uVar3 = (ulonglong)(int)param_3;
-  uVar2 = (ulonglong)(int)param_2;
-  pfVar1 = (float *)__savegprlr_26(param_1);
   if (frontEndDataOut == (GfxBackEndData *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_light.cpp",0x18a,0,
                     "%s");
   }
-  local_40 = (float)(uVar4 & 0xffffffff) * 64.0 - 131072.0;
-  local_48 = (float)(uVar2 & 0xffffffff) * 32.0 - 131072.0;
-  local_44 = (float)(uVar3 & 0xffffffff) * 32.0 - 131072.0;
-  R_AddDebugLine(&frontEndDataOut->debugGlobals,pfVar1,&local_48,param_5);
-  __restgprlr_26();
+  local_40 = (float)param_4 * 64.0 - 131072.0;
+  local_48 = (float)param_2 * 32.0 - 131072.0;
+  local_44 = (float)param_3 * 32.0 - 131072.0;
+  R_AddDebugLine(&frontEndDataOut->debugGlobals,param_1,&local_48,param_5);
   return;
 }
 
 
 // 827A5750  R_ShowPrimaryLightLine  (gfx_d3d/rb_light.cpp:405)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 
@@ -305,14 +295,12 @@ void R_ShowPrimaryLightLine(float *param_1,uint param_2)
 
 {
   float fVar1;
-  float *pfVar2;
-  ComPrimaryLight *pCVar3;
-  char *pcVar4;
-  uint uVar5;
-  ulonglong uVar6;
+  ComPrimaryLight *pCVar2;
+  char *pcVar3;
+  uint uVar4;
+  double dVar5;
+  double dVar6;
   double dVar7;
-  double dVar8;
-  double dVar9;
   float local_50;
   float local_4c;
   float local_48;
@@ -321,55 +309,52 @@ void R_ShowPrimaryLightLine(float *param_1,uint param_2)
   float local_38;
   float local_34;
   
-  uVar6 = (ulonglong)(int)param_2;
-  pfVar2 = (float *)__savegprlr_28(param_1);
-  if ((0x100 - (ulonglong)s_world.lastSunPrimaryLightIndex & 0xffffffff) <= (uVar6 & 0xffffffff)) {
-    uVar6 = (s_world.lastSunPrimaryLightIndex + uVar6) - 0xff;
+  if (0x100 - s_world.lastSunPrimaryLightIndex <= param_2) {
+    param_2 = (s_world.lastSunPrimaryLightIndex + param_2) - 0xff;
   }
-  if ((uVar6 & 0xffffffff) != 0) {
-    pCVar3 = Com_GetPrimaryLight((uint)uVar6);
-    if (pCVar3 == (ComPrimaryLight *)0x0) {
+  if (param_2 != 0) {
+    pCVar2 = Com_GetPrimaryLight(param_2);
+    if (pCVar2 == (ComPrimaryLight *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_light.cpp",0x19f,
                       0,"%s\n\t(primaryLightIndex) = %i");
     }
-    uVar5 = (uint)pCVar3->type;
-    dVar9 = 1.0;
-    if (uVar5 - 1 < 6) {
-      if (((uVar5 == 2) || (uVar5 == 3)) || ((uVar5 != 4 && ((uVar5 == 5 || (uVar5 != 1)))))) {
-        local_50 = pCVar3->origin[0] - *pfVar2;
-        local_4c = pCVar3->origin[1] - pfVar2[1];
-        local_48 = pCVar3->origin[2] - pfVar2[2];
-        dVar8 = (double)SQRT(local_4c * local_4c + local_48 * local_48 + local_50 * local_50);
-        dVar7 = dVar9;
-        if (-dVar8 < 0.0) {
-          dVar7 = dVar8;
+    uVar4 = (uint)pCVar2->type;
+    dVar7 = 1.0;
+    if (uVar4 - 1 < 6) {
+      if (((uVar4 == 2) || (uVar4 == 3)) || ((uVar4 != 4 && ((uVar4 == 5 || (uVar4 != 1)))))) {
+        local_50 = pCVar2->origin[0] - *param_1;
+        local_4c = pCVar2->origin[1] - param_1[1];
+        local_48 = pCVar2->origin[2] - param_1[2];
+        dVar6 = (double)SQRT(local_4c * local_4c + local_48 * local_48 + local_50 * local_50);
+        dVar5 = dVar7;
+        if (-dVar6 < 0.0) {
+          dVar5 = dVar6;
         }
-        fVar1 = (float)(1.0 / dVar7);
+        fVar1 = (float)(1.0 / dVar5);
         local_4c = fVar1 * local_4c;
         local_50 = fVar1 * local_50;
         local_48 = local_48 * fVar1;
       }
       else {
-        local_50 = pCVar3->dir[0];
-        local_4c = pCVar3->dir[1];
-        local_48 = pCVar3->dir[2];
+        local_50 = pCVar2->dir[0];
+        local_4c = pCVar2->dir[1];
+        local_48 = pCVar2->dir[2];
       }
     }
     else if (alwaysfails == 0) {
-      pcVar4 = va("Unknown primary light type: %d");
+      pcVar3 = va("Unknown primary light type: %d");
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_light.cpp",0x1ae,
-                      0,pcVar4);
+                      0,pcVar3);
     }
-    local_48 = pfVar2[2] + local_48 * 20.0;
-    local_50 = *pfVar2 + local_50 * 20.0;
-    local_4c = pfVar2[1] + local_4c * 20.0;
-    local_40 = pCVar3->color[0];
-    local_3c = pCVar3->color[1];
-    local_38 = pCVar3->color[2];
-    local_34 = (float)dVar9;
-    R_AddDebugLine(&frontEndDataOut->debugGlobals,&local_50,pfVar2,&local_40);
+    local_48 = param_1[2] + local_48 * 20.0;
+    local_50 = *param_1 + local_50 * 20.0;
+    local_4c = param_1[1] + local_4c * 20.0;
+    local_40 = pCVar2->color[0];
+    local_3c = pCVar2->color[1];
+    local_38 = pCVar2->color[2];
+    local_34 = (float)dVar7;
+    R_AddDebugLine(&frontEndDataOut->debugGlobals,&local_50,param_1,&local_40);
   }
-  __restgprlr_28();
   return;
 }
 
@@ -401,6 +386,10 @@ void R_ShowSamplePosPrimaryLightLine(float *param_1,uint param_2)
 
 // 827A5A10  R_ShowDetailedGridCorner  (gfx_d3d/rb_light.cpp:450)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 
@@ -411,18 +400,13 @@ void R_ShowDetailedGridCorner
 {
   float fVar1;
   float fVar2;
-  GfxLightGrid *pGVar3;
-  ulonglong uVar4;
-  ulonglong uVar5;
-  ulonglong uVar6;
-  ulonglong uVar7;
+  double dVar3;
+  double dVar4;
+  double dVar5;
+  double dVar6;
+  double dVar7;
   double dVar8;
   double dVar9;
-  double dVar10;
-  double dVar11;
-  double dVar12;
-  double dVar13;
-  double dVar14;
   float *in_stack_00000054;
   float local_d0;
   float fStack_cc;
@@ -441,34 +425,28 @@ void R_ShowDetailedGridCorner
   float local_88;
   float local_84;
   
-  uVar7 = (ulonglong)param_8;
-  uVar6 = (ulonglong)(int)param_7;
-  uVar5 = (ulonglong)(int)param_6;
-  uVar4 = (ulonglong)(int)param_5;
-  __savegprlr_25(param_1);
-  pGVar3 = (GfxLightGrid *)__savefpr_25();
-  fVar2 = (float)(uVar5 & 0xffffffff) * 32.0 - 131072.0;
-  dVar9 = (double)fVar2;
-  fVar1 = (float)(uVar4 & 0xffffffff) * 32.0 - 131072.0;
-  dVar10 = (double)fVar1;
+  fVar2 = (float)param_6 * 32.0 - 131072.0;
+  dVar4 = (double)fVar2;
+  fVar1 = (float)param_5 * 32.0 - 131072.0;
+  dVar5 = (double)fVar1;
   _local_d0 = CONCAT44(fVar1,fVar2);
-  local_c8 = (float)(uVar6 & 0xffffffff) * 64.0 - 131072.0;
-  dVar8 = (double)local_c8;
+  local_c8 = (float)param_7 * 64.0 - 131072.0;
+  dVar3 = (double)local_c8;
   if (frontEndDataOut == (GfxBackEndData *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_light.cpp",0x1d2,0,
                     "%s");
   }
-  dVar14 = 3.0;
-  local_ac = (float)(dVar9 - 3.0);
-  dVar12 = (double)local_ac;
-  local_90 = (float)(dVar8 - 3.0);
-  dVar11 = (double)local_90;
-  local_b0 = (float)(dVar10 - 3.0);
-  dVar13 = (double)local_b0;
-  local_a0 = (float)(dVar9 + 3.0);
-  dVar9 = (double)local_a0;
-  local_a8 = (float)(dVar8 + 3.0);
-  dVar8 = (double)local_a8;
+  dVar9 = 3.0;
+  local_ac = (float)(dVar4 - 3.0);
+  dVar7 = (double)local_ac;
+  local_90 = (float)(dVar3 - 3.0);
+  dVar6 = (double)local_90;
+  local_b0 = (float)(dVar5 - 3.0);
+  dVar8 = (double)local_b0;
+  local_a0 = (float)(dVar4 + 3.0);
+  dVar4 = (double)local_a0;
+  local_a8 = (float)(dVar3 + 3.0);
+  dVar3 = (double)local_a8;
   local_a4 = local_b0;
   local_9c = local_a8;
   local_98 = local_b0;
@@ -476,91 +454,91 @@ void R_ShowDetailedGridCorner
   local_8c = local_b0;
   local_88 = local_ac;
   local_84 = local_90;
-  R_GetLightGridAverageColorByIndexes(pGVar3,param_2,g_lightGridSamples_NegX,4,afStack_c0);
+  R_GetLightGridAverageColorByIndexes(param_1,param_2,g_lightGridSamples_NegX,4,afStack_c0);
   R_AddDebugPolygon(&frontEndDataOut->debugGlobals,afStack_c0,4,(float (*) [3])&local_b0,false);
-  local_b0 = (float)(dVar10 + dVar14);
-  dVar10 = (double)local_b0;
-  local_ac = (float)dVar12;
-  local_a8 = (float)dVar11;
-  local_a0 = (float)dVar9;
-  local_9c = (float)dVar11;
-  local_94 = (float)dVar9;
-  local_90 = (float)dVar8;
-  local_88 = (float)dVar12;
-  local_84 = (float)dVar8;
+  local_b0 = (float)(dVar5 + dVar9);
+  dVar5 = (double)local_b0;
+  local_ac = (float)dVar7;
+  local_a8 = (float)dVar6;
+  local_a0 = (float)dVar4;
+  local_9c = (float)dVar6;
+  local_94 = (float)dVar4;
+  local_90 = (float)dVar3;
+  local_88 = (float)dVar7;
+  local_84 = (float)dVar3;
   local_a4 = local_b0;
   local_98 = local_b0;
   local_8c = local_b0;
-  R_GetLightGridAverageColorByIndexes(pGVar3,param_2,g_lightGridSamples_PosX,4,afStack_c0);
+  R_GetLightGridAverageColorByIndexes(param_1,param_2,g_lightGridSamples_PosX,4,afStack_c0);
   R_AddDebugPolygon(&frontEndDataOut->debugGlobals,afStack_c0,4,(float (*) [3])&local_b0,false);
-  local_b0 = (float)dVar13;
-  local_ac = (float)dVar12;
-  local_a8 = (float)dVar11;
-  local_a4 = (float)dVar10;
-  local_a0 = (float)dVar12;
-  local_9c = (float)dVar11;
-  local_98 = (float)dVar10;
-  local_94 = (float)dVar12;
-  local_90 = (float)dVar8;
-  local_8c = (float)dVar13;
-  local_88 = (float)dVar12;
-  local_84 = (float)dVar8;
-  R_GetLightGridAverageColorByIndexes(pGVar3,param_2,g_lightGridSamples_NegY,4,afStack_c0);
+  local_b0 = (float)dVar8;
+  local_ac = (float)dVar7;
+  local_a8 = (float)dVar6;
+  local_a4 = (float)dVar5;
+  local_a0 = (float)dVar7;
+  local_9c = (float)dVar6;
+  local_98 = (float)dVar5;
+  local_94 = (float)dVar7;
+  local_90 = (float)dVar3;
+  local_8c = (float)dVar8;
+  local_88 = (float)dVar7;
+  local_84 = (float)dVar3;
+  R_GetLightGridAverageColorByIndexes(param_1,param_2,g_lightGridSamples_NegY,4,afStack_c0);
   R_AddDebugPolygon(&frontEndDataOut->debugGlobals,afStack_c0,4,(float (*) [3])&local_b0,false);
-  local_8c = (float)dVar13;
-  local_88 = (float)dVar9;
-  local_84 = (float)dVar11;
-  local_98 = (float)dVar10;
-  local_94 = (float)dVar9;
-  local_90 = (float)dVar11;
-  local_a4 = (float)dVar10;
-  local_a0 = (float)dVar9;
-  local_9c = (float)dVar8;
-  local_b0 = (float)dVar13;
-  local_ac = (float)dVar9;
-  local_a8 = (float)dVar8;
-  R_GetLightGridAverageColorByIndexes(pGVar3,param_2,g_lightGridSamples_PosY,4,afStack_c0);
+  local_8c = (float)dVar8;
+  local_88 = (float)dVar4;
+  local_84 = (float)dVar6;
+  local_98 = (float)dVar5;
+  local_94 = (float)dVar4;
+  local_90 = (float)dVar6;
+  local_a4 = (float)dVar5;
+  local_a0 = (float)dVar4;
+  local_9c = (float)dVar3;
+  local_b0 = (float)dVar8;
+  local_ac = (float)dVar4;
+  local_a8 = (float)dVar3;
+  R_GetLightGridAverageColorByIndexes(param_1,param_2,g_lightGridSamples_PosY,4,afStack_c0);
   R_AddDebugPolygon(&frontEndDataOut->debugGlobals,afStack_c0,4,(float (*) [3])&local_b0,false);
-  local_8c = (float)dVar13;
-  local_88 = (float)dVar12;
-  local_84 = (float)dVar11;
-  local_98 = (float)dVar10;
-  local_94 = (float)dVar12;
-  local_90 = (float)dVar11;
-  local_a4 = (float)dVar10;
-  local_a0 = (float)dVar9;
-  local_9c = (float)dVar11;
-  local_b0 = (float)dVar13;
-  local_ac = (float)dVar9;
-  local_a8 = (float)dVar11;
-  R_GetLightGridAverageColorByIndexes(pGVar3,param_2,g_lightGridSamples_NegZ,4,afStack_c0);
+  local_8c = (float)dVar8;
+  local_88 = (float)dVar7;
+  local_84 = (float)dVar6;
+  local_98 = (float)dVar5;
+  local_94 = (float)dVar7;
+  local_90 = (float)dVar6;
+  local_a4 = (float)dVar5;
+  local_a0 = (float)dVar4;
+  local_9c = (float)dVar6;
+  local_b0 = (float)dVar8;
+  local_ac = (float)dVar4;
+  local_a8 = (float)dVar6;
+  R_GetLightGridAverageColorByIndexes(param_1,param_2,g_lightGridSamples_NegZ,4,afStack_c0);
   R_AddDebugPolygon(&frontEndDataOut->debugGlobals,afStack_c0,4,(float (*) [3])&local_b0,false);
-  local_b0 = (float)dVar13;
-  local_ac = (float)dVar12;
-  local_a8 = (float)dVar8;
-  local_a4 = (float)dVar10;
-  local_a0 = (float)dVar12;
-  local_9c = (float)dVar8;
-  local_98 = (float)dVar10;
-  local_94 = (float)dVar9;
-  local_90 = (float)dVar8;
-  local_8c = (float)dVar13;
-  local_88 = (float)dVar9;
-  local_84 = (float)dVar8;
-  R_GetLightGridAverageColorByIndexes(pGVar3,param_2,g_lightGridSamples_PosZ,4,afStack_c0);
+  local_b0 = (float)dVar8;
+  local_ac = (float)dVar7;
+  local_a8 = (float)dVar3;
+  local_a4 = (float)dVar5;
+  local_a0 = (float)dVar7;
+  local_9c = (float)dVar3;
+  local_98 = (float)dVar5;
+  local_94 = (float)dVar4;
+  local_90 = (float)dVar3;
+  local_8c = (float)dVar8;
+  local_88 = (float)dVar4;
+  local_84 = (float)dVar3;
+  R_GetLightGridAverageColorByIndexes(param_1,param_2,g_lightGridSamples_PosZ,4,afStack_c0);
   R_AddDebugPolygon(&frontEndDataOut->debugGlobals,afStack_c0,4,(float (*) [3])&local_b0,false);
-  if ((in_stack_00000054 != (float *)0x0) && ((uVar7 & 0xff) != 0)) {
+  if ((in_stack_00000054 != (float *)0x0) && (param_8)) {
     R_AddDebugLine(&frontEndDataOut->debugGlobals,param_4,&local_d0,in_stack_00000054);
   }
   R_ShowPrimaryLightLine(&local_d0,param_3);
-  __restfpr_25();
-  __restgprlr_25();
   return;
 }
 
 
 // 827A5DB0  R_ShowDetailedLightGrid  (gfx_d3d/rb_light.cpp:527)
 
+/* WARNING: Function: __savegprlr_21 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_21 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 
@@ -570,30 +548,18 @@ void R_ShowDetailedLightGrid
 
 {
   ushort uVar1;
-  int iVar2;
-  ushort *puVar3;
-  GfxLightGrid *pGVar4;
+  uint uVar2;
+  uint uVar3;
+  uint uVar4;
   uint uVar5;
-  float *pfVar6;
+  ulonglong uVar6;
   uint uVar7;
-  ulonglong uVar8;
+  uint uVar8;
   uint uVar9;
-  ulonglong uVar10;
-  uint uVar11;
-  ulonglong uVar12;
-  uint uVar13;
-  uint uVar14;
-  longlong lVar15;
-  uint uVar16;
   float *in_stack_ffffff08;
   float local_a0 [5];
   char local_8c [140];
   
-  uVar10 = (ulonglong)param_7;
-  uVar8 = (ulonglong)(int)param_6;
-  lVar15 = (longlong)(int)param_4;
-  uVar12 = (ulonglong)(int)param_3;
-  pGVar4 = (GfxLightGrid *)__savegprlr_21(param_1);
   local_8c[0xc] = '\0';
   local_8c[0xd] = '\0';
   local_8c[0xe] = '\0';
@@ -642,82 +608,83 @@ void R_ShowDetailedLightGrid
   if ((r_showLightGrid->current).integer == 3) {
     R_AddDebugBox(&frontEndDataOut->debugGlobals,&g_lightGridDebugBounds,colorMdGrey);
   }
-  if ((uVar12 & 0xffffffff) == 0) {
+  if (param_3 == (uint *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\../universal/bounds_inline.h"
                     ,0x1de,0,"%s");
   }
-  pfVar6 = (float *)uVar12;
-  if (((ABS(*pfVar6 - g_lightGridDebugBounds.midPoint[0]) <= g_lightGridDebugBounds.halfSize[0]) &&
-      (ABS(pfVar6[1] - g_lightGridDebugBounds.midPoint[1]) <= g_lightGridDebugBounds.halfSize[1]))
-     && (ABS(pfVar6[2] - g_lightGridDebugBounds.midPoint[2]) <= g_lightGridDebugBounds.halfSize[2]))
-  {
-    R_ShowDetailedGridOrigin(pfVar6);
+  if (((ABS((float)*param_3 - g_lightGridDebugBounds.midPoint[0]) <=
+        g_lightGridDebugBounds.halfSize[0]) &&
+      (ABS((float)param_3[1] - g_lightGridDebugBounds.midPoint[1]) <=
+       g_lightGridDebugBounds.halfSize[1])) &&
+     (ABS((float)param_3[2] - g_lightGridDebugBounds.midPoint[2]) <=
+      g_lightGridDebugBounds.halfSize[2])) {
+    R_ShowDetailedGridOrigin((float *)param_3);
     R_ShowDetailedGridBox((uint *)param_2);
-    if ((uVar10 & 0xffffffff) != 0) {
-      R_AddDebugLine(&frontEndDataOut->debugGlobals,pfVar6,(float *)uVar10,colorMagenta);
+    if (param_7) {
+      R_AddDebugLine(&frontEndDataOut->debugGlobals,(float *)param_3,(float *)0x1,colorMagenta);
     }
     if (rgp.world == (GfxWorld *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_light.cpp",0x22b,
                       0,"%s");
     }
-    if (pGVar4->rowAxis == 0) {
-      uVar14 = 4;
-      uVar13 = 2;
+    if (param_1->rowAxis == 0) {
+      uVar8 = 4;
+      uVar7 = 2;
     }
     else {
-      uVar14 = 2;
-      uVar13 = 4;
+      uVar8 = 2;
+      uVar7 = 4;
     }
-    uVar16 = 0;
-    uVar12 = 1;
+    uVar9 = 0;
+    uVar6 = 1;
     do {
-      uVar5 = (uint)((uVar16 & uVar14) != 0) + *(uint *)param_2;
-      uVar11 = (uVar16 & 1) + *(uint *)(param_2 + 8);
-      uVar9 = (uint)((uVar16 & uVar13) != 0) + *(uint *)(param_2 + 4);
-      if (*(char *)(uVar16 + (int)param_5) == '\0') {
-        iVar2 = *(int *)lVar15;
-        if (iVar2 != 0) {
-          puVar3 = (ushort *)*(int *)lVar15;
-          uVar1 = *puVar3;
-          uVar7 = (uint)*(byte *)(puVar3 + 1);
-          if (((uint)*(byte *)(iVar2 + 3) & (uint)uVar12) == 0) {
+      uVar2 = (uint)((uVar9 & uVar8) != 0) + *(int *)param_2;
+      uVar5 = (uVar9 & 1) + *(int *)(param_2 + 8);
+      uVar4 = (uint)((uVar9 & uVar7) != 0) + *(int *)(param_2 + 4);
+      if (*(char *)(uVar9 + (int)param_5) == '\0') {
+        if (*param_4 != 0.0) {
+          uVar1 = *(ushort *)*param_4;
+          uVar3 = (uint)*(byte *)((ushort *)*param_4 + 1);
+          if (((uint)*(byte *)((int)*param_4 + 3) & (uint)uVar6) == 0) {
             R_ShowDetailedGridCorner
-                      (pGVar4,uVar1,uVar7,pfVar6,uVar5,uVar9,uVar11,true,in_stack_ffffff08);
+                      (param_1,uVar1,uVar3,(float *)param_3,uVar2,uVar4,uVar5,true,in_stack_ffffff08
+                      );
           }
           else {
             R_ShowDetailedGridCorner
-                      (pGVar4,uVar1,uVar7,pfVar6,uVar5,uVar9,uVar11,true,in_stack_ffffff08);
+                      (param_1,uVar1,uVar3,(float *)param_3,uVar2,uVar4,uVar5,true,in_stack_ffffff08
+                      );
           }
         }
       }
-      else if ((uVar8 & 0xff) == 0) {
-        R_ShowDetailedGridCornerLine(pfVar6,uVar5,uVar9,uVar11,local_a0 + 4);
+      else if (((uint)param_6 & 0xff) == 0) {
+        R_ShowDetailedGridCornerLine((float *)param_3,uVar2,uVar4,uVar5,local_a0 + 4);
       }
       else {
-        R_ShowDetailedGridCornerLine(pfVar6,uVar5,uVar9,uVar11,local_a0);
+        R_ShowDetailedGridCornerLine((float *)param_3,uVar2,uVar4,uVar5,local_a0);
       }
-      uVar16 = uVar16 + 1;
-      lVar15 = lVar15 + 4;
-      uVar12 = (uVar12 & 0x7fffffff) << 1 | uVar12 >> 0x1f;
-    } while (uVar16 < 8);
+      uVar9 = uVar9 + 1;
+      param_4 = param_4 + 1;
+      uVar6 = (uVar6 & 0x7fffffff) << 1 | uVar6 >> 0x1f;
+    } while (uVar9 < 8);
   }
-  __restgprlr_21();
   return;
 }
 
 
 // 827A2878  R_LightGridDebugEnable  (gfx_d3d/rb_light.cpp:597)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 void R_LightGridDebugEnable(float *param_1,int param_2)
 
 {
-  float *pfVar1;
+  double dVar1;
   double dVar2;
   double dVar3;
   double dVar4;
-  double dVar5;
   
-  pfVar1 = (float *)__savegprlr_26(param_1);
   if (param_2 == 2) {
     g_lightGridDebugBounds.halfSize[0] = 131072.0;
     g_lightGridDebugBounds.midPoint[0] = 0.0;
@@ -731,21 +698,21 @@ void R_LightGridDebugEnable(float *param_1,int param_2)
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_light.cpp",600,0,
                       "%s");
     }
-    dVar5 = 32.0;
+    dVar4 = 32.0;
     g_lightGridDebugBounds.halfSize[0] = 16.0;
     g_lightGridDebugBounds.halfSize[1] = 16.0;
     g_lightGridDebugBounds.halfSize[2] = 32.0;
-    dVar2 = floor((double)*pfVar1);
-    dVar3 = floor((double)pfVar1[1]);
-    dVar4 = floor((double)pfVar1[2]);
+    dVar1 = floor((double)*param_1);
+    dVar2 = floor((double)param_1[1]);
+    dVar3 = floor((double)param_1[2]);
     g_lightGridDebugBounds.midPoint[0] =
-         (float)((double)(longlong)((int)dVar2 + 0x20000 >> 5) * dVar5 - 131072.0) +
+         (float)((double)(longlong)((int)dVar1 + 0x20000 >> 5) * dVar4 - 131072.0) +
          g_lightGridDebugBounds.halfSize[0];
     g_lightGridDebugBounds.midPoint[1] =
-         (float)((double)(longlong)((int)dVar3 + 0x20000 >> 5) * dVar5 - 131072.0) +
+         (float)((double)(longlong)((int)dVar2 + 0x20000 >> 5) * dVar4 - 131072.0) +
          g_lightGridDebugBounds.halfSize[1];
     g_lightGridDebugBounds.midPoint[2] =
-         (float)((double)(longlong)((int)dVar4 + 0x20000 >> 6) * 64.0 - 131072.0) +
+         (float)((double)(longlong)((int)dVar3 + 0x20000 >> 6) * 64.0 - 131072.0) +
          g_lightGridDebugBounds.halfSize[2];
   }
   Dvar_SetInt(r_showLightGrid,param_2);
@@ -754,7 +721,6 @@ void R_LightGridDebugEnable(float *param_1,int param_2)
   Dvar_SetBool(sm_enable,false);
   Dvar_SetBool(r_cacheModelLighting,false);
   Dvar_SetBool(r_cacheSModelLighting,false);
-  __restgprlr_26();
   return;
 }
 
@@ -802,93 +768,84 @@ LAB_827a2b28:
 
 // 827A2B30  R_AddSortedHistoryEntry  (gfx_d3d/rb_light.cpp:677)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 bool R_AddSortedHistoryEntry(int param_1,int param_2,int param_3,int param_4)
 
 {
-  int iVar1;
-  undefined2 uVar2;
-  undefined1 uVar3;
-  undefined2 uVar4;
-  undefined2 uVar5;
-  ulonglong uVar6;
-  
-  uVar6 = (ulonglong)param_4;
-  uVar5 = (undefined2)param_3;
-  uVar4 = (undefined2)param_2;
-  uVar2 = __savegprlr_27(param_1);
   if (0xfffff < s_vc_log.count) {
     R_WarnOncePerFrame(R_WARN_TOO_MANY_LIGHT_GRID_POINTS);
-    uVar3 = __restgprlr_27(0);
-    return (bool)uVar3;
+    return false;
   }
   memmove();
-  iVar1 = (int)((uVar6 + (uVar6 & 0x7fffffff) * 2 & 0x7fffffff) << 1);
-  *(undefined2 *)((int)*s_vc_log.history + iVar1) = uVar2;
-  *(undefined2 *)((int)*s_vc_log.history + iVar1 + 2) = uVar4;
-  *(undefined2 *)((int)*s_vc_log.history + iVar1 + 4) = uVar5;
+  s_vc_log.history[param_4][0] = (ushort)param_1;
+  s_vc_log.history[param_4][1] = (ushort)param_2;
+  s_vc_log.history[param_4][2] = (ushort)param_3;
   s_vc_log.count = s_vc_log.count + 1;
-  uVar3 = __restgprlr_27(1);
-  return (bool)uVar3;
+  return true;
 }
 
 
 // 827A2BD8  R_SortedHistoryEntry  (gfx_d3d/rb_light.cpp:694)
+
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 
 int R_SortedHistoryEntry(int param_1,int param_2,int param_3,GfxSortedHistoryAdd param_4)
 
 {
   uint uVar1;
   longlong lVar2;
-  longlong lVar3;
-  bool bVar5;
-  int iVar4;
+  bool bVar3;
+  longlong lVar4;
+  longlong lVar5;
   longlong lVar6;
-  longlong lVar7;
-  longlong lVar8;
-  longlong lVar9;
-  longlong lVar10;
+  int iVar7;
   
-  lVar7 = (longlong)param_3;
-  lVar6 = (longlong)param_2;
-  lVar2 = __savegprlr_27(param_1);
-  lVar10 = 0;
-  lVar8 = (ulonglong)(uint)s_vc_log.count - 1;
-  lVar3 = lVar10;
-  if (-1 < lVar8) {
+  lVar6 = 0;
+  iVar7 = 0;
+  lVar4 = (ulonglong)(uint)s_vc_log.count - 1;
+  if (-1 < lVar4) {
     do {
-      uVar1 = (int)lVar10 + (int)lVar8 >> 1;
-      lVar3 = (longlong)(int)uVar1;
-      iVar4 = (int)((lVar3 + ((ulonglong)uVar1 & 0x7fffffff) * 2 & 0x7fffffff) << 1);
-      lVar9 = lVar2 - (ulonglong)*(ushort *)((int)*s_vc_log.history + iVar4);
-      if (((lVar9 == 0) &&
-          (lVar9 = lVar6 - (ulonglong)*(ushort *)((int)*s_vc_log.history + iVar4 + 2), lVar9 == 0))
-         && (lVar9 = lVar7 - (ulonglong)*(ushort *)((int)*s_vc_log.history + iVar4 + 4), lVar9 == 0)
-         ) goto LAB_827a2cc8;
-      if ((int)lVar9 < 0) {
-        lVar8 = lVar3 + -1;
+      uVar1 = (int)lVar6 + (int)lVar4 >> 1;
+      lVar2 = (longlong)(int)uVar1;
+      iVar7 = (int)((lVar2 + ((ulonglong)uVar1 & 0x7fffffff) * 2 & 0x7fffffff) << 1);
+      lVar5 = (longlong)param_1 - (ulonglong)*(ushort *)((int)*s_vc_log.history + iVar7);
+      if (((lVar5 == 0) &&
+          (lVar5 = (longlong)param_2 - (ulonglong)*(ushort *)((int)*s_vc_log.history + iVar7 + 2),
+          lVar5 == 0)) &&
+         (lVar5 = (longlong)param_3 - (ulonglong)*(ushort *)((int)*s_vc_log.history + iVar7 + 4),
+         lVar5 == 0)) {
+        return uVar1;
+      }
+      if ((int)lVar5 < 0) {
+        lVar4 = lVar2 + -1;
       }
       else {
-        lVar10 = lVar3 + 1;
+        lVar6 = lVar2 + 1;
       }
-      lVar3 = lVar10;
-    } while ((int)lVar10 <= (int)lVar8);
+      iVar7 = (int)lVar6;
+    } while (iVar7 <= (int)lVar4);
   }
-  if ((int)lVar3 != (int)lVar8 + 1) {
+  if (iVar7 != (int)lVar4 + 1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_light.cpp",0x2d3,0,
                     "%s");
   }
   if ((param_4 == SH_ADD_NEVER) ||
-     (bVar5 = R_AddSortedHistoryEntry((int)lVar2,(int)lVar6,(int)lVar7,(int)lVar3), !bVar5)) {
-    lVar3 = -1;
+     (bVar3 = R_AddSortedHistoryEntry(param_1,param_2,param_3,iVar7), !bVar3)) {
+    iVar7 = -1;
   }
-LAB_827a2cc8:
-  iVar4 = __restgprlr_27(lVar3);
-  return iVar4;
+  return iVar7;
 }
 
 
 // 827A2CD0  R_ShowLightVisCachePoints  (gfx_d3d/rb_light.cpp:735)
 
+/* WARNING: Function: __savegprlr_15 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_15 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 
@@ -896,19 +853,19 @@ void R_ShowLightVisCachePoints(float *param_1,DpvsPlane *param_2,int param_3)
 
 {
   uint uVar1;
-  float *pfVar2;
-  bool bVar4;
-  int iVar3;
-  uint uVar6;
-  ulonglong uVar5;
-  char *pcVar7;
-  int iVar8;
+  bool bVar3;
+  int iVar2;
+  ulonglong uVar4;
+  float *pfVar5;
+  char *pcVar6;
+  int iVar7;
+  longlong lVar8;
   longlong lVar9;
-  longlong lVar10;
-  uint uVar11;
-  longlong lVar12;
+  uint uVar10;
+  longlong lVar11;
+  ulonglong uVar12;
   ulonglong uVar13;
-  ulonglong uVar14;
+  double dVar14;
   double dVar15;
   double dVar16;
   double dVar17;
@@ -916,166 +873,151 @@ void R_ShowLightVisCachePoints(float *param_1,DpvsPlane *param_2,int param_3)
   double dVar19;
   double dVar20;
   double dVar21;
-  double dVar22;
   float local_c8;
   float local_c4;
   float local_c0;
   
-  lVar9 = (longlong)(int)param_2;
-  __savegprlr_15(param_1,lVar9,param_3);
-  uVar6 = (uint)lVar9;
-  pfVar2 = (float *)__savefpr_27();
-  bVar4 = Sys_IsRenderThread();
-  if (bVar4) {
+  bVar3 = Sys_IsRenderThread();
+  if (bVar3) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_light.cpp",0x2ec,0,
                     "%s");
   }
   if (s_vc_log.history != (ushort (*) [3])0x0) {
     uVar1 = (r_vc_showlog->current).integer;
     if (0 < (int)uVar1) {
-      dVar21 = -131072.0;
-      dVar20 = 0.5;
-      dVar15 = floor((double)((*pfVar2 - -131072.0) + 0.5));
-      dVar16 = floor((double)(float)((double)(float)((double)pfVar2[1] - dVar21) + dVar20));
-      dVar17 = floor((double)(float)((double)pfVar2[2] - dVar21));
-      uVar5 = 0xffffffff82000000;
-      dVar21 = 32.0;
-      dVar22 = 131072.0;
-      dVar20 = 64.0;
-      local_c8 = (float)((double)(uint)((int)dVar15 >> 5) * 32.0 - 131072.0);
-      local_c4 = (float)((double)(uint)((int)dVar16 >> 5) * 32.0 - 131072.0);
-      local_c0 = (float)((double)(uint)((int)dVar17 >> 6) * 64.0 - 131072.0);
+      dVar20 = -131072.0;
+      dVar19 = 0.5;
+      dVar14 = floor((double)((*param_1 - -131072.0) + 0.5));
+      dVar15 = floor((double)(float)((double)(float)((double)param_1[1] - dVar20) + dVar19));
+      dVar16 = floor((double)(float)((double)param_1[2] - dVar20));
+      uVar4 = 0xffffffff82000000;
+      dVar20 = 32.0;
+      dVar21 = 131072.0;
+      dVar19 = 64.0;
+      local_c8 = (float)((double)(uint)((int)dVar14 >> 5) * 32.0 - 131072.0);
+      local_c4 = (float)((double)(uint)((int)dVar15 >> 5) * 32.0 - 131072.0);
+      local_c0 = (float)((double)(uint)((int)dVar16 >> 6) * 64.0 - 131072.0);
       if (frontEndDataOut == (GfxBackEndData *)0x0) {
-        uVar5 = 0x2fd;
+        uVar4 = 0x2fd;
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_light.cpp",
                         0x2fd,0,"%s");
       }
-      dVar18 = 1.0;
-      iVar8 = -1;
-      dVar19 = 0.0;
+      dVar17 = 1.0;
+      iVar7 = -1;
+      dVar18 = 0.0;
       do {
-        uVar11 = iVar8 + ((int)dVar17 >> 6);
-        if (uVar11 < 0x1001) {
-          lVar10 = -(ulonglong)uVar1;
-          lVar9 = lVar10;
-          iVar3 = (int)lVar10;
-          while (iVar3 <= (int)uVar1) {
-            uVar13 = lVar9 + ((int)dVar16 >> 5);
-            if (((uVar13 & 0xffffffff) < 0x2001) && ((int)lVar10 <= (int)uVar1)) {
-              uVar14 = lVar10 + ((int)dVar15 >> 5);
-              lVar12 = (ulonglong)uVar1 * 2 + 1;
+        uVar10 = iVar7 + ((int)dVar16 >> 6);
+        if (uVar10 < 0x1001) {
+          lVar9 = -(ulonglong)uVar1;
+          lVar8 = lVar9;
+          iVar2 = (int)lVar9;
+          while (iVar2 <= (int)uVar1) {
+            uVar12 = lVar8 + ((int)dVar15 >> 5);
+            if (((uVar12 & 0xffffffff) < 0x2001) && ((int)lVar9 <= (int)uVar1)) {
+              uVar13 = lVar9 + ((int)dVar14 >> 5);
+              lVar11 = (ulonglong)uVar1 * 2 + 1;
               do {
-                if ((uVar14 & 0xffffffff) < 0x2001) {
-                  local_c8 = (float)((double)(uVar14 & 0xffffffff) * dVar21 - dVar22);
-                  local_c0 = (float)((double)uVar11 * dVar20 - dVar22);
-                  local_c4 = (float)((double)(uVar13 & 0xffffffff) * dVar21 - dVar22);
-                  bVar4 = R_CullPointAndRadius(&local_c8,(float)dVar19,(DpvsPlane *)uVar5,uVar6);
-                  if (!bVar4) {
-                    pcVar7 = (char *)0x0;
-                    uVar5 = uVar13;
-                    iVar3 = R_SortedHistoryEntry((int)uVar14,(int)uVar13,uVar11,SH_ADD_NEVER);
-                    if (iVar3 < 0) {
-                      if ((iVar8 == 0) || (pfVar2 = colorYellow, iVar8 == 1)) {
-                        pfVar2 = colorGreen;
+                if ((uVar13 & 0xffffffff) < 0x2001) {
+                  local_c8 = (float)((double)(uVar13 & 0xffffffff) * dVar20 - dVar21);
+                  local_c0 = (float)((double)uVar10 * dVar19 - dVar21);
+                  local_c4 = (float)((double)(uVar12 & 0xffffffff) * dVar20 - dVar21);
+                  bVar3 = R_CullPointAndRadius
+                                    (&local_c8,(float)dVar18,(DpvsPlane *)uVar4,(uint)param_2);
+                  if (!bVar3) {
+                    pcVar6 = (char *)0x0;
+                    uVar4 = uVar12;
+                    iVar2 = R_SortedHistoryEntry((int)uVar13,(int)uVar12,uVar10,SH_ADD_NEVER);
+                    if (iVar2 < 0) {
+                      if ((iVar7 == 0) || (pfVar5 = colorYellow, iVar7 == 1)) {
+                        pfVar5 = colorGreen;
                       }
-                      uVar5 = ZEXT48(&stack0x00000000) - 200;
-                      R_AddDebugString(&frontEndDataOut->debugGlobals,(float *)uVar5,pfVar2,
-                                       (float)dVar18,pcVar7);
+                      uVar4 = ZEXT48(&stack0x00000000) - 200;
+                      R_AddDebugString(&frontEndDataOut->debugGlobals,(float *)uVar4,pfVar5,
+                                       (float)dVar17,pcVar6);
                     }
                   }
                 }
-                lVar12 = lVar12 + -1;
-                uVar14 = uVar14 + 1;
-              } while (lVar12 != 0);
+                lVar11 = lVar11 + -1;
+                uVar13 = uVar13 + 1;
+              } while (lVar11 != 0);
             }
-            lVar9 = lVar9 + 1;
-            iVar3 = (int)lVar9;
+            lVar8 = lVar8 + 1;
+            iVar2 = (int)lVar8;
           }
         }
-        iVar8 = iVar8 + 1;
-      } while (iVar8 < 2);
+        iVar7 = iVar7 + 1;
+      } while (iVar7 < 2);
     }
   }
-  __restfpr_27();
-  __restgprlr_15();
   return;
 }
 
 
 // 827A2FC8  R_UpdateVisHistory  (gfx_d3d/rb_light.cpp:802)
 
+/* WARNING: Function: __savegprlr_20 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_20 replaced with injection: xenon_save_restore */
+
 void R_UpdateVisHistory(GfxLightGrid *param_1,uint *param_2,GfxLightGridEntry **param_3)
 
 {
-  int iVar2;
   longlong lVar1;
-  bool bVar3;
-  longlong lVar4;
-  uint *puVar5;
-  ulonglong uVar6;
+  ushort (*pauVar2) [3];
+  longlong lVar3;
+  ulonglong uVar4;
+  ulonglong uVar5;
+  longlong lVar6;
   longlong lVar7;
-  ushort (*pauVar8) [3];
+  ulonglong uVar8;
   longlong lVar9;
-  ulonglong uVar10;
-  ulonglong uVar11;
-  longlong lVar12;
-  longlong lVar13;
-  ulonglong uVar14;
-  longlong lVar15;
-  longlong lVar16;
+  longlong lVar10;
+  int iVar11;
   
-  lVar4 = (longlong)(int)param_2;
-  iVar2 = __savegprlr_20(param_1,lVar4,param_3);
-  if (*(int *)(iVar2 + 0x14) == 0) {
-    uVar11 = 4;
-    uVar10 = 2;
+  if (param_1->rowAxis == 0) {
+    uVar5 = 4;
+    uVar4 = 2;
   }
   else {
-    uVar11 = 2;
-    uVar10 = 4;
+    uVar5 = 2;
+    uVar4 = 4;
   }
-  uVar14 = 0;
+  uVar8 = 0;
   do {
-    puVar5 = (uint *)lVar4;
-    uVar6 = uVar14 & uVar10;
-    lVar1 = uVar6 - 1;
-    lVar15 = (ulonglong)((uVar14 & uVar11) != 0) + (ulonglong)*puVar5;
-    lVar7 = (ulonglong)(uint)s_vc_log.count - 1;
-    lVar13 = (uVar6 - (lVar1 + (ulonglong)(uVar6 == 0))) + (ulonglong)puVar5[1];
-    lVar12 = (uVar14 & 1) + (ulonglong)puVar5[2];
-    lVar16 = 0;
-    iVar2 = 0;
-    if (-1 < lVar7) {
+    lVar9 = (ulonglong)((uVar8 & uVar5) != 0) + (ulonglong)*param_2;
+    lVar1 = (ulonglong)(uint)s_vc_log.count - 1;
+    lVar7 = (ulonglong)((uVar8 & uVar4) != 0) + (ulonglong)param_2[1];
+    lVar6 = (uVar8 & 1) + (ulonglong)param_2[2];
+    lVar10 = 0;
+    iVar11 = 0;
+    if (-1 < lVar1) {
       do {
-        iVar2 = (int)lVar16 + (int)lVar7 >> 1;
-        pauVar8 = s_vc_log.history + iVar2;
-        lVar9 = lVar15 - (ulonglong)(*pauVar8)[0];
-        if (lVar9 == 0) {
-          lVar9 = lVar13 - (ulonglong)(*pauVar8)[1];
-          if (lVar9 == 0) {
-            lVar9 = lVar12 - (ulonglong)(*pauVar8)[2];
-            if (lVar9 == 0) goto LAB_827a30f4;
+        iVar11 = (int)lVar10 + (int)lVar1 >> 1;
+        pauVar2 = s_vc_log.history + iVar11;
+        lVar3 = lVar9 - (ulonglong)(*pauVar2)[0];
+        if (lVar3 == 0) {
+          lVar3 = lVar7 - (ulonglong)(*pauVar2)[1];
+          if (lVar3 == 0) {
+            lVar3 = lVar6 - (ulonglong)(*pauVar2)[2];
+            if (lVar3 == 0) goto LAB_827a30f4;
           }
         }
-        if ((int)lVar9 < 0) {
-          lVar7 = (longlong)iVar2 + -1;
+        if ((int)lVar3 < 0) {
+          lVar1 = (longlong)iVar11 + -1;
         }
         else {
-          lVar16 = (longlong)iVar2 + 1;
+          lVar10 = (longlong)iVar11 + 1;
         }
-        iVar2 = (int)lVar16;
-      } while (iVar2 <= (int)lVar7);
+        iVar11 = (int)lVar10;
+      } while (iVar11 <= (int)lVar1);
     }
-    if (iVar2 != (int)lVar7 + 1) {
+    if (iVar11 != (int)lVar1 + 1) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_light.cpp",0x2d3,
                       0,"%s");
     }
-    bVar3 = R_AddSortedHistoryEntry((int)lVar15,(int)lVar13,(int)lVar12,iVar2);
-    lVar1 = (longlong)bVar3;
+    R_AddSortedHistoryEntry((int)lVar9,(int)lVar7,(int)lVar6,iVar11);
 LAB_827a30f4:
-    uVar14 = uVar14 + 1;
-    if (7 < (uVar14 & 0xffffffff)) {
-      __restgprlr_20(lVar1);
+    uVar8 = uVar8 + 1;
+    if (7 < (uVar8 & 0xffffffff)) {
       return;
     }
   } while( true );
@@ -1376,81 +1318,10 @@ void R_SetLightGridColors(GfxLightGridColors *param_1,uchar param_2,uchar *param
 
 // 827A3BC8  R_ScaleLightGridColors  (gfx_d3d/rb_light.cpp:1175)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void R_ScaleLightGridColors(GfxLightGridColors *param_1,ushort param_2,ushort *param_3)
-
-{
-  int iVar1;
-  byte *pbVar2;
-  int iVar3;
-  longlong lVar4;
-  int iVar5;
-  longlong lVar6;
-  
-  lVar4 = (longlong)(int)param_3;
-  iVar3 = __savegprlr_28(param_1);
-  iVar5 = 0;
-  lVar6 = 0x15;
-  lVar4 = lVar4 + -2;
-  do {
-    iVar1 = (int)lVar4;
-    *(ushort *)(iVar1 + 2) = *(byte *)(iVar5 + iVar3) * param_2;
-    *(ushort *)(iVar1 + 4) = *(byte *)(iVar3 + 1 + iVar5) * param_2;
-    *(ushort *)(iVar1 + 6) = *(byte *)(iVar3 + 2 + iVar5) * param_2;
-    *(ushort *)(iVar1 + 8) = *(byte *)(iVar3 + 3 + iVar5) * param_2;
-    *(ushort *)(iVar1 + 10) = *(byte *)(iVar3 + 4 + iVar5) * param_2;
-    *(ushort *)(iVar1 + 0xc) = *(byte *)(iVar3 + 5 + iVar5) * param_2;
-    *(ushort *)(iVar1 + 0xe) = *(byte *)(iVar3 + 6 + iVar5) * param_2;
-    pbVar2 = (byte *)(iVar3 + 7 + iVar5);
-    iVar5 = iVar5 + 8;
-    lVar4 = lVar4 + 0x10;
-    *(short *)lVar4 = *pbVar2 * param_2;
-    lVar6 = lVar6 + -1;
-  } while (lVar6 != 0);
-  __restgprlr_28();
-  return;
-}
-
-
-// 827A3C70  R_WeightedAccumulateLightGridColors  (gfx_d3d/rb_light.cpp:1196)
-
-void R_WeightedAccumulateLightGridColors(GfxLightGridColors *param_1,ushort param_2,ushort *param_3)
-
-{
-  int iVar1;
-  byte *pbVar2;
-  int iVar3;
-  int iVar4;
-  longlong lVar5;
-  longlong lVar6;
-  
-  lVar5 = (longlong)(int)param_3;
-  iVar3 = __savegprlr_20(param_1);
-  iVar4 = 0;
-  lVar6 = 0x15;
-  lVar5 = lVar5 + -2;
-  do {
-    iVar1 = (int)lVar5;
-    *(ushort *)(iVar1 + 2) = *(byte *)(iVar4 + iVar3) * param_2 + *(short *)(iVar1 + 2);
-    *(ushort *)(iVar1 + 4) = *(byte *)(iVar3 + 1 + iVar4) * param_2 + *(short *)(iVar1 + 4);
-    *(ushort *)(iVar1 + 6) = *(byte *)(iVar3 + 2 + iVar4) * param_2 + *(short *)(iVar1 + 6);
-    *(ushort *)(iVar1 + 8) = *(byte *)(iVar3 + 3 + iVar4) * param_2 + *(short *)(iVar1 + 8);
-    *(ushort *)(iVar1 + 10) = *(byte *)(iVar3 + 4 + iVar4) * param_2 + *(short *)(iVar1 + 10);
-    *(ushort *)(iVar1 + 0xc) = *(byte *)(iVar3 + 5 + iVar4) * param_2 + *(short *)(iVar1 + 0xc);
-    *(ushort *)(iVar1 + 0xe) = *(byte *)(iVar3 + 6 + iVar4) * param_2 + *(short *)(iVar1 + 0xe);
-    pbVar2 = (byte *)(iVar3 + 7 + iVar4);
-    iVar4 = iVar4 + 8;
-    lVar5 = lVar5 + 0x10;
-    *(short *)lVar5 = *pbVar2 * param_2 + *(short *)(iVar1 + 0x10);
-    lVar6 = lVar6 + -1;
-  } while (lVar6 != 0);
-  __restgprlr_20();
-  return;
-}
-
-
-// 827A3D80  R_PackAccumulatedLightGridColors  (gfx_d3d/rb_light.cpp:1217)
-
-void R_PackAccumulatedLightGridColors(ushort *param_1,GfxLightGridColors *param_2)
 
 {
   int iVar1;
@@ -1458,24 +1329,91 @@ void R_PackAccumulatedLightGridColors(ushort *param_1,GfxLightGridColors *param_
   int iVar3;
   longlong lVar4;
   
-  iVar1 = __savegprlr_29(param_1);
   iVar3 = 0;
   lVar4 = 0x15;
-  puVar2 = (ushort *)(iVar1 + -2);
+  puVar2 = param_3 + -1;
   do {
-    param_2->rgb[0][iVar3] = (uchar)(puVar2[1] + 0x7f >> 8);
-    param_2->rgb[0][iVar3 + 1] = (uchar)(puVar2[2] + 0x7f >> 8);
-    param_2->rgb[0][iVar3 + 2] = (uchar)(puVar2[3] + 0x7f >> 8);
-    param_2->rgb[1][iVar3] = (uchar)(puVar2[4] + 0x7f >> 8);
-    param_2->rgb[1][iVar3 + 1] = (uchar)(puVar2[5] + 0x7f >> 8);
-    param_2->rgb[1][iVar3 + 2] = (uchar)(puVar2[6] + 0x7f >> 8);
-    param_2->rgb[2][iVar3] = (uchar)(puVar2[7] + 0x7f >> 8);
-    puVar2 = puVar2 + 8;
-    param_2->rgb[2][iVar3 + 1] = (uchar)(*puVar2 + 0x7f >> 8);
+    puVar2[1] = param_1->rgb[0][iVar3] * param_2;
+    puVar2[2] = param_1->rgb[0][iVar3 + 1] * param_2;
+    puVar2[3] = param_1->rgb[0][iVar3 + 2] * param_2;
+    puVar2[4] = param_1->rgb[1][iVar3] * param_2;
+    puVar2[5] = param_1->rgb[1][iVar3 + 1] * param_2;
+    puVar2[6] = param_1->rgb[1][iVar3 + 2] * param_2;
+    puVar2[7] = param_1->rgb[2][iVar3] * param_2;
+    iVar1 = iVar3 + 1;
     iVar3 = iVar3 + 8;
+    puVar2 = puVar2 + 8;
+    *puVar2 = param_1->rgb[2][iVar1] * param_2;
     lVar4 = lVar4 + -1;
   } while (lVar4 != 0);
-  __restgprlr_29();
+  return;
+}
+
+
+// 827A3C70  R_WeightedAccumulateLightGridColors  (gfx_d3d/rb_light.cpp:1196)
+
+/* WARNING: Function: __savegprlr_20 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_20 replaced with injection: xenon_save_restore */
+
+void R_WeightedAccumulateLightGridColors(GfxLightGridColors *param_1,ushort param_2,ushort *param_3)
+
+{
+  ushort *puVar1;
+  int iVar2;
+  int iVar3;
+  ushort *puVar4;
+  longlong lVar5;
+  
+  iVar3 = 0;
+  lVar5 = 0x15;
+  puVar4 = param_3 + -1;
+  do {
+    puVar1 = puVar4 + 8;
+    puVar4[1] = param_1->rgb[0][iVar3] * param_2 + puVar4[1];
+    puVar4[2] = param_1->rgb[0][iVar3 + 1] * param_2 + puVar4[2];
+    puVar4[3] = param_1->rgb[0][iVar3 + 2] * param_2 + puVar4[3];
+    puVar4[4] = param_1->rgb[1][iVar3] * param_2 + puVar4[4];
+    puVar4[5] = param_1->rgb[1][iVar3 + 1] * param_2 + puVar4[5];
+    puVar4[6] = param_1->rgb[1][iVar3 + 2] * param_2 + puVar4[6];
+    puVar4[7] = param_1->rgb[2][iVar3] * param_2 + puVar4[7];
+    iVar2 = iVar3 + 1;
+    iVar3 = iVar3 + 8;
+    puVar4 = puVar4 + 8;
+    *puVar4 = param_1->rgb[2][iVar2] * param_2 + *puVar1;
+    lVar5 = lVar5 + -1;
+  } while (lVar5 != 0);
+  return;
+}
+
+
+// 827A3D80  R_PackAccumulatedLightGridColors  (gfx_d3d/rb_light.cpp:1217)
+
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
+void R_PackAccumulatedLightGridColors(ushort *param_1,GfxLightGridColors *param_2)
+
+{
+  ushort *puVar1;
+  int iVar2;
+  longlong lVar3;
+  
+  iVar2 = 0;
+  lVar3 = 0x15;
+  puVar1 = param_1 + -1;
+  do {
+    param_2->rgb[0][iVar2] = (uchar)(puVar1[1] + 0x7f >> 8);
+    param_2->rgb[0][iVar2 + 1] = (uchar)(puVar1[2] + 0x7f >> 8);
+    param_2->rgb[0][iVar2 + 2] = (uchar)(puVar1[3] + 0x7f >> 8);
+    param_2->rgb[1][iVar2] = (uchar)(puVar1[4] + 0x7f >> 8);
+    param_2->rgb[1][iVar2 + 1] = (uchar)(puVar1[5] + 0x7f >> 8);
+    param_2->rgb[1][iVar2 + 2] = (uchar)(puVar1[6] + 0x7f >> 8);
+    param_2->rgb[2][iVar2] = (uchar)(puVar1[7] + 0x7f >> 8);
+    puVar1 = puVar1 + 8;
+    param_2->rgb[2][iVar2 + 1] = (uchar)(*puVar1 + 0x7f >> 8);
+    iVar2 = iVar2 + 8;
+    lVar3 = lVar3 + -1;
+  } while (lVar3 != 0);
   return;
 }
 
@@ -1523,81 +1461,83 @@ void R_GetLightGridColorsFixedPointBlendWeights
 
 // 827A3EE8  R_AdjustLightColorSamples  (gfx_d3d/rb_light.cpp:1282)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void R_AdjustLightColorSamples(ushort *param_1)
 
 {
   int iVar1;
-  uint uVar2;
+  ushort *puVar2;
   uint uVar3;
   uint uVar4;
   uint uVar5;
   uint uVar6;
   uint uVar7;
   uint uVar8;
-  undefined2 *puVar9;
+  uint uVar9;
   int iVar10;
   int iVar11;
   uint uVar12;
   longlong lVar13;
   ushort uStack_3a;
   
-  iVar1 = __savegprlr_27(param_1);
   iVar11 = 0;
-  puVar9 = (undefined2 *)(iVar1 + -2);
+  puVar2 = param_1 + -1;
   lVar13 = 0x15;
   uStack_3a = (ushort)(longlong)((r_lightGridIntensity->current).value * 256.0 + 0.5);
   do {
-    uVar2 = (int)((uint)(ushort)puVar9[1] * (uint)uStack_3a) >> 8;
-    if (0xff00 < (int)uVar2) {
-      uVar2 = 0xff00;
-    }
-    puVar9[1] = (short)uVar2;
-    uVar3 = (int)((uint)(ushort)puVar9[2] * (uint)uStack_3a) >> 8;
+    uVar3 = (int)((uint)puVar2[1] * (uint)uStack_3a) >> 8;
     if (0xff00 < (int)uVar3) {
       uVar3 = 0xff00;
     }
-    uVar12 = (uint)uStack_3a;
-    puVar9[2] = (short)uVar3;
-    uVar4 = (int)((ushort)puVar9[3] * uVar12) >> 8;
+    puVar2[1] = (ushort)uVar3;
+    uVar4 = (int)((uint)puVar2[2] * (uint)uStack_3a) >> 8;
     if (0xff00 < (int)uVar4) {
       uVar4 = 0xff00;
     }
-    puVar9[3] = (short)uVar4;
-    uVar5 = (int)((ushort)puVar9[4] * uVar12) >> 8;
+    uVar12 = (uint)uStack_3a;
+    puVar2[2] = (ushort)uVar4;
+    uVar5 = (int)(puVar2[3] * uVar12) >> 8;
     if (0xff00 < (int)uVar5) {
       uVar5 = 0xff00;
     }
-    puVar9[4] = (short)uVar5;
-    uVar6 = (int)((ushort)puVar9[5] * uVar12) >> 8;
+    puVar2[3] = (ushort)uVar5;
+    uVar6 = (int)(puVar2[4] * uVar12) >> 8;
     if (0xff00 < (int)uVar6) {
       uVar6 = 0xff00;
     }
-    puVar9[5] = (short)uVar6;
-    uVar12 = (int)((ushort)puVar9[6] * uVar12) >> 8;
-    if (0xff00 < (int)uVar12) {
-      uVar12 = 0xff00;
-    }
-    puVar9[6] = (short)uVar12;
-    uVar7 = (int)((uint)(ushort)puVar9[7] * (uint)uStack_3a) >> 8;
+    puVar2[4] = (ushort)uVar6;
+    uVar7 = (int)(puVar2[5] * uVar12) >> 8;
     if (0xff00 < (int)uVar7) {
       uVar7 = 0xff00;
     }
-    puVar9[7] = (short)uVar7;
-    uVar8 = (int)((uint)(ushort)puVar9[8] * (uint)uStack_3a) >> 8;
+    puVar2[5] = (ushort)uVar7;
+    uVar12 = (int)(puVar2[6] * uVar12) >> 8;
+    if (0xff00 < (int)uVar12) {
+      uVar12 = 0xff00;
+    }
+    puVar2[6] = (ushort)uVar12;
+    uVar8 = (int)((uint)puVar2[7] * (uint)uStack_3a) >> 8;
     if (0xff00 < (int)uVar8) {
       uVar8 = 0xff00;
     }
-    puVar9 = puVar9 + 8;
-    *puVar9 = (short)uVar8;
-    iVar11 = (uVar8 & 0xffff) + (uVar7 & 0xffff) + (uVar12 & 0xffff) + (uVar6 & 0xffff) +
-             (uVar5 & 0xffff) + (uVar4 & 0xffff) + (uVar3 & 0xffff) + (uVar2 & 0xffff) + iVar11;
+    puVar2[7] = (ushort)uVar8;
+    uVar9 = (int)((uint)puVar2[8] * (uint)uStack_3a) >> 8;
+    if (0xff00 < (int)uVar9) {
+      uVar9 = 0xff00;
+    }
+    puVar2 = puVar2 + 8;
+    *puVar2 = (ushort)uVar9;
+    iVar11 = (uVar9 & 0xffff) + (uVar8 & 0xffff) + (uVar12 & 0xffff) + (uVar7 & 0xffff) +
+             (uVar6 & 0xffff) + (uVar5 & 0xffff) + (uVar4 & 0xffff) + (uVar3 & 0xffff) + iVar11;
     lVar13 = lVar13 + -1;
   } while (lVar13 != 0);
-  puVar9 = (undefined2 *)(iVar1 + -2);
+  puVar2 = param_1 + -1;
   lVar13 = 0xa8;
   iVar1 = (int)(((r_lightGridContrast->current).value + 1.0) * 256.0 + 0.5);
   do {
-    iVar10 = ((int)((uint)(ushort)puVar9[1] * iVar1) >> 8) +
+    iVar10 = ((int)((uint)puVar2[1] * iVar1) >> 8) +
              (iVar11 / 0xa8 - ((iVar11 / 0xa8) * iVar1 >> 8));
     if (iVar10 < 0xff00) {
       if (iVar10 < 1) {
@@ -1607,16 +1547,18 @@ void R_AdjustLightColorSamples(ushort *param_1)
     else {
       iVar10 = 0xff00;
     }
-    puVar9 = puVar9 + 1;
-    *puVar9 = (short)iVar10;
+    puVar2 = puVar2 + 1;
+    *puVar2 = (ushort)iVar10;
     lVar13 = lVar13 + -1;
   } while (lVar13 != 0);
-  __restgprlr_27();
   return;
 }
 
 
 // 827A4100  R_ApplyLightGridTweaksToLightGridColors  (gfx_d3d/rb_light.cpp:1362)
+
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 
 void R_ApplyLightGridTweaksToLightGridColors
                (GfxLightGrid *param_1,uint param_2,GfxLightGridColors *param_3,
@@ -1624,18 +1566,12 @@ void R_ApplyLightGridTweaksToLightGridColors
                )
 
 {
-  int iVar1;
-  ulonglong uVar2;
-  ulonglong uVar3;
   ushort auStack_190 [200];
   
-  uVar3 = (ulonglong)(int)param_7;
-  uVar2 = (ulonglong)(int)param_2;
-  iVar1 = __savegprlr_25(param_1);
-  if (((r_heroLighting->current).enabled != false) || ((uVar3 & 0xffffffff) != 0)) {
+  if (((r_heroLighting->current).enabled != false) || (param_7 != (float (*) [3])0x0)) {
     R_ScaleLightGridColors(*param_4,0x100,auStack_190);
-    if ((uVar2 & 0xffffffff) != (ulonglong)(*(int *)(iVar1 + 0x30) - 1)) {
-      R_AddHeroOnlyLightsToGridColors(auStack_190,param_5,param_6,(float (*) [3])uVar3);
+    if (param_2 != param_1->colorCount - 1) {
+      R_AddHeroOnlyLightsToGridColors(auStack_190,param_5,param_6,param_7);
     }
     if (((r_lightGridEnableTweaks->current).enabled != false) &&
        ((r_lightGridUseTweakedValues->current).enabled != false)) {
@@ -1644,7 +1580,6 @@ void R_ApplyLightGridTweaksToLightGridColors
     R_PackAccumulatedLightGridColors(auStack_190,param_3);
     *param_4 = param_3;
   }
-  __restgprlr_25();
   return;
 }
 
@@ -1682,76 +1617,65 @@ uint R_SetLightGridColorsFromIndex
 
 // 827A4268  R_FixedPointBlendLightGridColors  (gfx_d3d/rb_light.cpp:1519)
 
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
+
 void R_FixedPointBlendLightGridColors
                (GfxLightGrid *param_1,ushort *param_2,ushort *param_3,uint param_4,
                GfxLightGridColors *param_5,float *param_6,float (*param_7) [3],float (*param_8) [3])
 
 {
   int iVar1;
-  ushort *puVar2;
-  ulonglong uVar3;
-  ulonglong uVar4;
-  ulonglong uVar5;
-  ulonglong uVar6;
-  ulonglong uVar7;
-  longlong lVar8;
+  uint uVar2;
   ushort auStack_1b0 [216];
   
-  uVar6 = (ulonglong)(int)param_8;
-  uVar5 = (ulonglong)(int)param_7;
-  uVar4 = (ulonglong)(int)param_6;
-  uVar3 = (ulonglong)(int)param_4;
-  lVar8 = (longlong)(int)param_2;
-  iVar1 = __savegprlr_22(param_1);
-  puVar2 = (ushort *)lVar8;
-  R_ScaleLightGridColors
-            ((GfxLightGridColors *)((uint)*puVar2 * 0xa8 + *(int *)(iVar1 + 0x34)),*param_3,
-             auStack_1b0);
-  uVar7 = 1;
+  R_ScaleLightGridColors(param_1->colors + *param_2,*param_3,auStack_1b0);
+  uVar2 = 1;
+  iVar1 = (int)param_3 - (int)param_2;
   do {
-    lVar8 = lVar8 + 2;
+    param_2 = param_2 + 1;
     R_WeightedAccumulateLightGridColors
-              ((GfxLightGridColors *)((uint)*(ushort *)lVar8 * 0xa8 + *(int *)(iVar1 + 0x34)),
-               *(ushort *)(((int)param_3 - (int)puVar2) + (int)(ushort *)lVar8),auStack_1b0);
-    uVar7 = uVar7 + 1;
-  } while ((uVar7 & 0xffffffff) < (uVar3 & 0xffffffff));
-  if (((((uVar6 & 0xffffffff) != 0) || ((uVar5 & 0xffffffff) != 0)) || ((uVar4 & 0xffffffff) != 0))
-     && (((R_AddHeroOnlyLightsToGridColors
-                     (auStack_1b0,(float *)uVar4,(float (*) [3])uVar5,(float (*) [3])uVar6),
-          (r_lightGridEnableTweaks->current).enabled != false &&
-          ((r_lightGridUseTweakedValues->current).enabled != false)) &&
-         ((r_heroLighting->current).enabled != false)))) {
+              (param_1->colors + *param_2,*(ushort *)(iVar1 + (int)param_2),auStack_1b0);
+    uVar2 = uVar2 + 1;
+  } while (uVar2 < param_4);
+  if ((((param_8 != (float (*) [3])0x0) || (param_7 != (float (*) [3])0x0)) ||
+      (param_6 != (float *)0x0)) &&
+     (((R_AddHeroOnlyLightsToGridColors(auStack_1b0,param_6,param_7,param_8),
+       (r_lightGridEnableTweaks->current).enabled != false &&
+       ((r_lightGridUseTweakedValues->current).enabled != false)) &&
+      ((r_heroLighting->current).enabled != false)))) {
     R_AdjustLightColorSamples(auStack_1b0);
   }
   R_PackAccumulatedLightGridColors(auStack_1b0,param_5);
-  __restgprlr_22();
   return;
 }
 
 
 // 827A4370  R_BlendLightGridColors  (gfx_d3d/rb_light.cpp:1610)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 void R_BlendLightGridColors
                (GfxLightGrid *param_1,ushort *param_2,float *param_3,uint param_4,float param_5,
                GfxLightGridColors *param_6,float *param_7,float (*param_8) [3],float (*param_9) [3])
 
 {
-  GfxLightGrid *pGVar1;
-  double extraout_f1;
   float (*in_stack_00000054) [3];
   ushort auStack_50 [40];
   
-  pGVar1 = (GfxLightGrid *)__savegprlr_26((double)param_5,param_1);
-  R_GetLightGridColorsFixedPointBlendWeights(param_3,param_4,(float)extraout_f1,(ushort *)param_3);
+  R_GetLightGridColorsFixedPointBlendWeights(param_3,param_4,param_5,(ushort *)param_3);
   R_FixedPointBlendLightGridColors
-            (pGVar1,param_2,auStack_50,param_4,(GfxLightGridColors *)param_7,*param_8,param_9,
+            (param_1,param_2,auStack_50,param_4,(GfxLightGridColors *)param_7,*param_8,param_9,
              in_stack_00000054);
-  __restgprlr_26();
   return;
 }
 
 
 // 827A43D0  R_BlendAndAverageLightGridColors  (gfx_d3d/rb_light.cpp:1644)
+
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 
 void R_BlendAndAverageLightGridColors
                (GfxLightGrid *param_1,ushort *param_2,float *param_3,uint param_4,float param_5,
@@ -1759,45 +1683,37 @@ void R_BlendAndAverageLightGridColors
 
 {
   int iVar1;
-  ushort *puVar2;
-  GfxLightGridColors *pGVar3;
-  ulonglong uVar4;
-  ulonglong uVar5;
-  longlong lVar6;
-  double extraout_f1;
-  double dVar7;
-  double dVar8;
-  ushort local_250 [8];
+  GfxLightGridColors *pGVar2;
+  uint uVar3;
+  double dVar4;
+  ushort local_250;
+  ushort auStack_24e [7];
   GfxLightGridColors GStack_240;
   ushort auStack_190 [200];
   
-  dVar7 = (double)param_6;
-  uVar4 = (ulonglong)(int)param_4;
-  lVar6 = (longlong)(int)param_2;
-  iVar1 = __savegprlr_26((double)param_5,param_1);
-  dVar8 = extraout_f1;
-  R_GetLightGridColorsFixedPointBlendWeights(param_3,(uint)uVar4,(float)dVar7,(ushort *)param_3);
-  puVar2 = (ushort *)lVar6;
-  R_ScaleLightGridColors
-            ((GfxLightGridColors *)((uint)*puVar2 * 0xa8 + *(int *)(iVar1 + 0x34)),local_250[0],
-             auStack_190);
-  uVar5 = 1;
+  dVar4 = (double)param_5;
+  R_GetLightGridColorsFixedPointBlendWeights(param_3,param_4,param_6,(ushort *)param_3);
+  R_ScaleLightGridColors(param_1->colors + *param_2,local_250,auStack_190);
+  uVar3 = 1;
+  iVar1 = -2 - (int)param_2;
   do {
-    lVar6 = lVar6 + 2;
+    param_2 = param_2 + 1;
     R_WeightedAccumulateLightGridColors
-              ((GfxLightGridColors *)((uint)*(ushort *)lVar6 * 0xa8 + *(int *)(iVar1 + 0x34)),
-               *(ushort *)(((int)local_250 - (int)puVar2) + (int)(ushort *)lVar6),auStack_190);
-    uVar5 = uVar5 + 1;
-  } while ((uVar5 & 0xffffffff) < (uVar4 & 0xffffffff));
-  pGVar3 = &GStack_240;
-  R_PackAccumulatedLightGridColors(auStack_190,pGVar3);
-  R_AverageLightGridColors(&GStack_240,(float)dVar8,(uchar *)pGVar3);
-  __restgprlr_26();
+              (param_1->colors + *param_2,*(ushort *)((int)auStack_24e + iVar1 + (int)param_2),
+               auStack_190);
+    uVar3 = uVar3 + 1;
+  } while (uVar3 < param_4);
+  pGVar2 = &GStack_240;
+  R_PackAccumulatedLightGridColors(auStack_190,pGVar2);
+  R_AverageLightGridColors(&GStack_240,(float)dVar4,(uchar *)pGVar2);
   return;
 }
 
 
 // 827A4480  R_BlendAndSetLightGridColors  (gfx_d3d/rb_light.cpp:1660)
+
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 
 uint R_BlendAndSetLightGridColors
                (GfxLightGrid *param_1,ushort *param_2,float *param_3,uint param_4,float param_5,
@@ -1806,27 +1722,21 @@ uint R_BlendAndSetLightGridColors
 
 {
   uchar uVar1;
-  GfxLightGrid *pGVar2;
-  uint uVar3;
-  double extraout_f1;
-  double dVar4;
+  uint uVar2;
   float (*in_stack_00000054) [3];
   float (*in_stack_0000005c) [3];
   undefined8 local_f0;
   GfxLightGridColors GStack_e0;
   
-  dVar4 = (double)param_6;
-  pGVar2 = (GfxLightGrid *)__savegprlr_26((double)param_5,param_1);
-  local_f0 = (longlong)(extraout_f1 * 255.0 + 0.5);
+  local_f0 = (longlong)(param_5 * 255.0 + 0.5);
   uVar1 = (uchar)local_f0;
-  R_GetLightGridColorsFixedPointBlendWeights(param_3,param_4,(float)dVar4,(ushort *)param_3);
+  R_GetLightGridColorsFixedPointBlendWeights(param_3,param_4,param_6,(ushort *)param_3);
   R_FixedPointBlendLightGridColors
-            (pGVar2,param_2,(ushort *)&local_f0,param_4,&GStack_e0,*param_10,in_stack_00000054,
+            (param_1,param_2,(ushort *)&local_f0,param_4,&GStack_e0,*param_10,in_stack_00000054,
              in_stack_0000005c);
   R_SetLightGridColors(&GStack_e0,uVar1,(uchar *)param_9);
-  uVar3 = R_GetGridAmbientColor(&GStack_e0,uVar1);
-  uVar3 = __restgprlr_26(uVar3);
-  return uVar3;
+  uVar2 = R_GetGridAmbientColor(&GStack_e0,uVar1);
+  return uVar2;
 }
 
 
@@ -1907,206 +1817,205 @@ uint R_AddLightGridSample(ushort *param_1,float *param_2,uint param_3,ushort par
 
 // 827A46D8  R_GetLightGridSampleEntryQuad  (gfx_d3d/rb_light.cpp:1973)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
+
 void R_GetLightGridSampleEntryQuad
                (GfxLightGrid *param_1,uint *param_2,GfxLightGridEntry **param_3,uint *param_4)
 
 {
-  int iVar1;
+  byte bVar1;
   ulonglong uVar2;
   uint uVar3;
   ulonglong uVar4;
-  longlong lVar5;
+  GfxLightGridEntry *pGVar5;
   ulonglong uVar6;
-  int iVar7;
-  uint uVar8;
-  uint uVar9;
-  GfxLightGridEntry *pGVar10;
-  ushort *puVar11;
-  ulonglong uVar12;
-  int iVar13;
-  ushort *puVar14;
+  uint uVar7;
+  int iVar8;
+  ushort *puVar9;
+  ulonglong uVar10;
+  int iVar11;
+  ushort *puVar12;
   
-  iVar1 = __savegprlr_25(param_1);
-  uVar9 = *(uint *)(iVar1 + 0x14);
-  uVar3 = (uint)*(ushort *)((int)(((ulonglong)uVar9 + 4 & 0xffffffff) << 1) + iVar1);
-  uVar8 = param_2[uVar9] - uVar3;
-  if (uVar8 < (*(ushort *)((int)(((ulonglong)uVar9 + 7 & 0xffffffff) << 1) + iVar1) - uVar3) + 1) {
-    iVar13 = uVar8 * 2;
-    uVar9 = (uint)*(ushort *)(*(int *)(iVar1 + 0x1c) + iVar13);
-    if (uVar9 == 0xffff) goto LAB_827a4b18;
-    if (*(uint *)(iVar1 + 0x20) <= uVar9 << 2) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_light.cpp",0x7cd,
-                      0,
-                      "lightGrid->rowDataStart[rowIndex] * 4 doesn\'t index lightGrid->rawRowDataSize\n\t%i not in [0, %i)"
-                     );
-    }
-    puVar14 = (ushort *)
-              ((uint)*(ushort *)(*(int *)(iVar1 + 0x1c) + iVar13) * 4 + *(int *)(iVar1 + 0x24));
-    if (*(uint *)(iVar1 + 0x28) <= *(uint *)(puVar14 + 4)) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_light.cpp",1999,0
-                      ,"row->firstEntry doesn\'t index lightGrid->entryCount\n\t%i not in [0, %i)");
-    }
-    uVar12 = (ulonglong)param_2[2] - (ulonglong)puVar14[2];
-    uVar9 = param_2[*(int *)(iVar1 + 0x18)] - (uint)*puVar14;
-    if ((uint)puVar14[1] < uVar9 + 1) goto LAB_827a4b18;
-    uVar4 = (ulonglong)puVar14[3];
-    if (uVar4 < (uVar12 + 1 & 0xffffffff)) {
-      *param_3 = (GfxLightGridEntry *)0x0;
-      param_3[1] = (GfxLightGridEntry *)0x0;
-      param_3[2] = (GfxLightGridEntry *)0x0;
-      param_3[3] = (GfxLightGridEntry *)0x0;
-      if ((param_2[2] < (uint)puVar14[2]) && (*(char *)(iVar1 + 1) == '\0')) {
-        *param_4 = 0;
-        __restgprlr_25();
-        return;
+  uVar3 = param_1->rowAxis;
+  uVar7 = param_2[uVar3] - (uint)param_1->mins[uVar3];
+  if (uVar7 < ((uint)param_1->maxs[uVar3] - (uint)param_1->mins[uVar3]) + 1) {
+    if (param_1->rowDataStart[uVar7] != 0xffff) {
+      if (param_1->rawRowDataSize <= (uint)param_1->rowDataStart[uVar7] << 2) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_light.cpp",
+                        0x7cd,0,
+                        "lightGrid->rowDataStart[rowIndex] * 4 doesn\'t index lightGrid->rawRowDataSize\n\t%i not in [0, %i)"
+                       );
       }
-      goto LAB_827a4b2c;
-    }
-    uVar2 = (ulonglong)*(uint *)(puVar14 + 4);
-    puVar11 = puVar14 + 6;
-    if (uVar9 == 0xffffffff) {
-      param_3[1] = (GfxLightGridEntry *)0x0;
-      *param_3 = (GfxLightGridEntry *)0x0;
-      uVar4 = (ulonglong)*(byte *)(puVar14 + 7);
-      if (0xff < puVar14[3]) {
-        uVar4 = (ulonglong)*(byte *)((int)puVar14 + 0xf) * 0x100 + uVar4;
+      puVar12 = (ushort *)(param_1->rawRowData + (uint)param_1->rowDataStart[uVar7] * 4);
+      if (param_1->entryCount <= *(uint *)(puVar12 + 4)) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_light.cpp",1999
+                        ,0,
+                        "row->firstEntry doesn\'t index lightGrid->entryCount\n\t%i not in [0, %i)")
+        ;
       }
-      uVar6 = uVar12 - uVar4;
-      if ((uVar6 & 0xffffffff) < (ulonglong)*(byte *)((int)puVar14 + 0xd)) {
-        pGVar10 = (GfxLightGridEntry *)
-                  ((int)((uVar6 + uVar2 & 0xffffffff) << 2) + *(int *)(iVar1 + 0x2c));
-      }
-      else {
-        pGVar10 = (GfxLightGridEntry *)0x0;
-      }
-      param_3[2] = pGVar10;
-      if ((uVar6 + 1 & 0xffffffff) < (ulonglong)*(byte *)((int)puVar14 + 0xd)) {
-        pGVar10 = (GfxLightGridEntry *)
-                  ((int)((uVar6 + uVar2 + 1 & 0xffffffff) << 2) + *(int *)(iVar1 + 0x2c));
-      }
-      else {
-        pGVar10 = (GfxLightGridEntry *)0x0;
-      }
-      param_3[3] = pGVar10;
-      if ((uVar12 & 0xffffffff) < uVar4) {
-        *param_4 = 0;
-        __restgprlr_25();
-        return;
-      }
-      goto LAB_827a4b2c;
-    }
-    uVar3 = (uint)*(byte *)puVar11;
-    iVar13 = (-(uint)(0xff < uVar4) & 1) + 3;
-    if (uVar3 <= uVar9) {
-      do {
-        uVar9 = uVar9 - uVar3;
-        uVar2 = (longlong)(int)(uint)(byte)*puVar11 * (longlong)(int)uVar3 + uVar2;
-        iVar7 = 2;
-        if ((byte)*puVar11 != 0) {
-          iVar7 = iVar13;
-        }
-        puVar11 = (ushort *)((int)puVar11 + iVar7);
-        uVar3 = (uint)*(byte *)puVar11;
-      } while (uVar3 <= uVar9);
-    }
-    if ((byte)*puVar11 == 0) {
-      param_3[1] = (GfxLightGridEntry *)0x0;
-      *param_3 = (GfxLightGridEntry *)0x0;
-      if ((ulonglong)*(byte *)((int)puVar11 + 3) != 0) {
-        uVar4 = (ulonglong)*(byte *)(puVar11 + 2);
-        if (0xff < puVar14[3]) {
-          uVar4 = (ulonglong)*(byte *)((int)puVar11 + 5) * 0x100 + uVar4;
-        }
-        if ((uVar12 & 0xffffffff) < *(byte *)((int)puVar11 + 3) + uVar4) {
+      uVar10 = (ulonglong)param_2[2] - (ulonglong)puVar12[2];
+      uVar3 = param_2[param_1->colAxis] - (uint)*puVar12;
+      if (uVar3 + 1 <= (uint)puVar12[1]) {
+        uVar4 = (ulonglong)puVar12[3];
+        if (uVar4 < (uVar10 + 1 & 0xffffffff)) {
+          *param_3 = (GfxLightGridEntry *)0x0;
+          param_3[1] = (GfxLightGridEntry *)0x0;
+          param_3[2] = (GfxLightGridEntry *)0x0;
+          param_3[3] = (GfxLightGridEntry *)0x0;
+          if ((uint)puVar12[2] <= param_2[2]) {
+            return;
+          }
+          if (param_1->useSkyForLowZ != false) {
+            return;
+          }
           *param_4 = 0;
-        }
-      }
-      uVar3 = (uint)*(byte *)puVar11;
-      if (uVar3 <= uVar9 + 1) goto LAB_827a4974;
-    }
-    else {
-      uVar6 = (ulonglong)*(byte *)(puVar11 + 1);
-      if (0xff < uVar4) {
-        uVar6 = (ulonglong)*(byte *)((int)puVar11 + 3) * 0x100 + uVar6;
-      }
-      if ((uVar12 & 0xffffffff) < uVar6) {
-        *param_4 = 0;
-      }
-      uVar6 = uVar12 - uVar6;
-      uVar4 = (longlong)(int)(uint)(byte)*puVar11 * (longlong)(int)uVar9 + uVar6 + uVar2;
-      if ((uVar6 & 0xffffffff) < (ulonglong)(uint)(byte)*puVar11) {
-        pGVar10 = (GfxLightGridEntry *)((int)((uVar4 & 0xffffffff) << 2) + *(int *)(iVar1 + 0x2c));
-      }
-      else {
-        pGVar10 = (GfxLightGridEntry *)0x0;
-      }
-      *param_3 = pGVar10;
-      if ((uVar6 + 1 & 0xffffffff) < (ulonglong)(byte)*puVar11) {
-        pGVar10 = (GfxLightGridEntry *)
-                  ((int)((uVar4 + 1 & 0xffffffff) << 2) + *(int *)(iVar1 + 0x2c));
-      }
-      else {
-        pGVar10 = (GfxLightGridEntry *)0x0;
-      }
-      param_3[1] = pGVar10;
-      uVar3 = (uint)*(byte *)puVar11;
-      if (uVar9 + 1 < uVar3) {
-        lVar5 = (byte)*puVar11 + uVar4;
-        if ((uVar6 & 0xffffffff) < (ulonglong)(byte)*puVar11) {
-          pGVar10 = (GfxLightGridEntry *)((int)lVar5 * 4 + *(int *)(iVar1 + 0x2c));
-        }
-        else {
-          pGVar10 = (GfxLightGridEntry *)0x0;
-        }
-        param_3[2] = pGVar10;
-        if ((ulonglong)(byte)*puVar11 <= (uVar6 + 1 & 0xffffffff)) {
-          param_3[3] = (GfxLightGridEntry *)0x0;
-          __restgprlr_25();
           return;
         }
-        goto LAB_827a4acc;
-      }
-LAB_827a4974:
-      if (param_2[*(int *)(iVar1 + 0x18)] + 1 != (uint)*puVar14 + (uint)puVar14[1]) {
-        iVar7 = 2;
-        if ((byte)*puVar11 != 0) {
-          iVar7 = iVar13;
-        }
-        uVar4 = (ulonglong)*(byte *)((int)puVar11 + iVar7 + 2);
-        if (0xff < puVar14[3]) {
-          uVar4 = (ulonglong)*(byte *)((int)puVar11 + iVar7 + 3) * 0x100 + uVar4;
-        }
-        uVar12 = uVar12 - uVar4;
-        lVar5 = uVar12 + (longlong)(int)(uint)(byte)*puVar11 * (longlong)(int)uVar3 + uVar2;
-        if ((uVar12 & 0xffffffff) < (ulonglong)*(byte *)((int)puVar11 + iVar7 + 1)) {
-          pGVar10 = (GfxLightGridEntry *)((int)lVar5 * 4 + *(int *)(iVar1 + 0x2c));
-        }
-        else {
-          pGVar10 = (GfxLightGridEntry *)0x0;
-        }
-        param_3[2] = pGVar10;
-        if ((ulonglong)*(byte *)((int)puVar11 + iVar7 + 1) <= (uVar12 + 1 & 0xffffffff)) {
-          param_3[3] = (GfxLightGridEntry *)0x0;
-          __restgprlr_25();
+        uVar2 = (ulonglong)*(uint *)(puVar12 + 4);
+        puVar9 = puVar12 + 6;
+        if (uVar3 == 0xffffffff) {
+          param_3[1] = (GfxLightGridEntry *)0x0;
+          *param_3 = (GfxLightGridEntry *)0x0;
+          uVar4 = (ulonglong)*(byte *)(puVar12 + 7);
+          if (0xff < puVar12[3]) {
+            uVar4 = (ulonglong)*(byte *)((int)puVar12 + 0xf) * 0x100 + uVar4;
+          }
+          uVar6 = uVar10 - uVar4;
+          if ((uVar6 & 0xffffffff) < (ulonglong)*(byte *)((int)puVar12 + 0xd)) {
+            pGVar5 = (GfxLightGridEntry *)
+                     ((int)&param_1->entries->colorsIndex + (int)((uVar6 + uVar2 & 0xffffffff) << 2)
+                     );
+          }
+          else {
+            pGVar5 = (GfxLightGridEntry *)0x0;
+          }
+          param_3[2] = pGVar5;
+          if ((uVar6 + 1 & 0xffffffff) < (ulonglong)*(byte *)((int)puVar12 + 0xd)) {
+            pGVar5 = (GfxLightGridEntry *)
+                     ((int)&param_1->entries->colorsIndex +
+                     (int)((uVar6 + uVar2 + 1 & 0xffffffff) << 2));
+          }
+          else {
+            pGVar5 = (GfxLightGridEntry *)0x0;
+          }
+          param_3[3] = pGVar5;
+          if (uVar4 <= (uVar10 & 0xffffffff)) {
+            return;
+          }
+          *param_4 = 0;
           return;
         }
+        uVar7 = (uint)*(byte *)puVar9;
+        iVar11 = (-(uint)(0xff < uVar4) & 1) + 3;
+        if (uVar7 <= uVar3) {
+          do {
+            uVar3 = uVar3 - uVar7;
+            uVar2 = (longlong)(int)(uint)(byte)*puVar9 * (longlong)(int)uVar7 + uVar2;
+            iVar8 = 2;
+            if ((byte)*puVar9 != 0) {
+              iVar8 = iVar11;
+            }
+            puVar9 = (ushort *)((int)puVar9 + iVar8);
+            uVar7 = (uint)*(byte *)puVar9;
+          } while (uVar7 <= uVar3);
+        }
+        if ((byte)*puVar9 == 0) {
+          param_3[1] = (GfxLightGridEntry *)0x0;
+          *param_3 = (GfxLightGridEntry *)0x0;
+          if ((ulonglong)*(byte *)((int)puVar9 + 3) != 0) {
+            uVar4 = (ulonglong)*(byte *)(puVar9 + 2);
+            if (0xff < puVar12[3]) {
+              uVar4 = (ulonglong)*(byte *)((int)puVar9 + 5) * 0x100 + uVar4;
+            }
+            if ((uVar10 & 0xffffffff) < *(byte *)((int)puVar9 + 3) + uVar4) {
+              *param_4 = 0;
+            }
+          }
+          bVar1 = *(byte *)puVar9;
+          if (uVar3 + 1 < (uint)bVar1) goto LAB_827a4b24;
+        }
+        else {
+          uVar6 = (ulonglong)*(byte *)(puVar9 + 1);
+          if (0xff < uVar4) {
+            uVar6 = (ulonglong)*(byte *)((int)puVar9 + 3) * 0x100 + uVar6;
+          }
+          if ((uVar10 & 0xffffffff) < uVar6) {
+            *param_4 = 0;
+          }
+          uVar6 = uVar10 - uVar6;
+          uVar4 = (longlong)(int)(uint)(byte)*puVar9 * (longlong)(int)uVar3 + uVar6 + uVar2;
+          if ((uVar6 & 0xffffffff) < (ulonglong)(uint)(byte)*puVar9) {
+            pGVar5 = (GfxLightGridEntry *)
+                     ((int)&param_1->entries->colorsIndex + (int)((uVar4 & 0xffffffff) << 2));
+          }
+          else {
+            pGVar5 = (GfxLightGridEntry *)0x0;
+          }
+          *param_3 = pGVar5;
+          if ((uVar6 + 1 & 0xffffffff) < (ulonglong)(byte)*puVar9) {
+            pGVar5 = (GfxLightGridEntry *)
+                     ((int)&param_1->entries->colorsIndex + (int)((uVar4 + 1 & 0xffffffff) << 2));
+          }
+          else {
+            pGVar5 = (GfxLightGridEntry *)0x0;
+          }
+          param_3[1] = pGVar5;
+          bVar1 = *(byte *)puVar9;
+          if (uVar3 + 1 < (uint)bVar1) {
+            uVar4 = (byte)*puVar9 + uVar4;
+            if ((uVar6 & 0xffffffff) < (ulonglong)(byte)*puVar9) {
+              pGVar5 = (GfxLightGridEntry *)
+                       ((int)&param_1->entries->colorsIndex + (int)((uVar4 & 0xffffffff) << 2));
+            }
+            else {
+              pGVar5 = (GfxLightGridEntry *)0x0;
+            }
+            param_3[2] = pGVar5;
+            if ((ulonglong)(byte)*puVar9 <= (uVar6 + 1 & 0xffffffff)) {
+              param_3[3] = (GfxLightGridEntry *)0x0;
+              return;
+            }
+            goto LAB_827a4acc;
+          }
+        }
+        if (param_2[param_1->colAxis] + 1 != (uint)*puVar12 + (uint)puVar12[1]) {
+          iVar8 = 2;
+          if ((byte)*puVar9 != 0) {
+            iVar8 = iVar11;
+          }
+          uVar4 = (ulonglong)*(byte *)((int)puVar9 + iVar8 + 2);
+          if (0xff < puVar12[3]) {
+            uVar4 = (ulonglong)*(byte *)((int)puVar9 + iVar8 + 3) * 0x100 + uVar4;
+          }
+          uVar10 = uVar10 - uVar4;
+          uVar4 = uVar10 + (longlong)(int)(uint)(byte)*puVar9 * (longlong)(int)(uint)bVar1 + uVar2;
+          if ((uVar10 & 0xffffffff) < (ulonglong)*(byte *)((int)puVar9 + iVar8 + 1)) {
+            pGVar5 = (GfxLightGridEntry *)
+                     ((int)&param_1->entries->colorsIndex + (int)((uVar4 & 0xffffffff) << 2));
+          }
+          else {
+            pGVar5 = (GfxLightGridEntry *)0x0;
+          }
+          param_3[2] = pGVar5;
+          if ((ulonglong)*(byte *)((int)puVar9 + iVar8 + 1) <= (uVar10 + 1 & 0xffffffff)) {
+            param_3[3] = (GfxLightGridEntry *)0x0;
+            return;
+          }
 LAB_827a4acc:
-        param_3[3] = (GfxLightGridEntry *)
-                     ((int)((lVar5 + 1U & 0xffffffff) << 2) + *(int *)(iVar1 + 0x2c));
-        __restgprlr_25();
-        return;
+          param_3[3] = (GfxLightGridEntry *)
+                       ((int)&param_1->entries->colorsIndex + (int)((uVar4 + 1 & 0xffffffff) << 2));
+          return;
+        }
+        goto LAB_827a4b24;
       }
     }
   }
-  else {
-LAB_827a4b18:
-    param_3[1] = (GfxLightGridEntry *)0x0;
-    *param_3 = (GfxLightGridEntry *)0x0;
-  }
+  param_3[1] = (GfxLightGridEntry *)0x0;
+  *param_3 = (GfxLightGridEntry *)0x0;
+LAB_827a4b24:
   param_3[3] = (GfxLightGridEntry *)0x0;
   param_3[2] = (GfxLightGridEntry *)0x0;
-LAB_827a4b2c:
-  __restgprlr_25();
   return;
 }
 
@@ -2203,6 +2112,9 @@ int R_LightSightTrace(int param_1,float *param_2,float *param_3,Bounds *param_4,
 
 // 827A4C28  R_IsValidLightGridSample  (gfx_d3d/rb_light.cpp:2188)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 bool R_IsValidLightGridSample
                (GfxLightGrid *param_1,GfxLightGridEntry *param_2,int param_3,uint *param_4,
                float *param_5)
@@ -2211,41 +2123,37 @@ bool R_IsValidLightGridSample
   float fVar1;
   float fVar2;
   float fVar3;
-  int iVar4;
+  uint uVar4;
   float fVar5;
   float fVar6;
   int iVar7;
-  undefined1 uVar8;
-  ulonglong uVar9;
   float local_58 [4];
   float local_48;
   float local_44;
   float local_40;
   
-  uVar9 = (ulonglong)(int)param_2;
-  iVar7 = __savegprlr_27(param_1);
-  if (iVar7 == 0) {
+  if (param_1 == (GfxLightGrid *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_light.cpp",0x891,0,
                     "%s");
   }
-  if (2 < *(uint *)(iVar7 + 0x14)) {
+  if (2 < param_1->rowAxis) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_light.cpp",0x892,0,
                     "lightGrid->rowAxis doesn\'t index 3\n\t%i not in [0, %i)");
   }
-  if (2 < *(uint *)(iVar7 + 0x18)) {
+  if (2 < param_1->colAxis) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_light.cpp",0x893,0,
                     "lightGrid->colAxis doesn\'t index 3\n\t%i not in [0, %i)");
   }
   fVar1 = (float)*param_4;
-  iVar4 = *(int *)(iVar7 + 0x18);
+  uVar4 = param_1->colAxis;
   fVar2 = (float)param_4[2];
   fVar3 = (float)param_4[1];
   local_58[2] = (float)*(uint *)(param_3 + 8) * 64.0 - 131072.0;
   local_58[1] = (float)*(uint *)(param_3 + 4) * 32.0 - 131072.0;
   local_58[0] = (float)*(uint *)param_3 * 32.0 - 131072.0;
-  local_58[*(int *)(iVar7 + 0x14)] = (float)((uVar9 & 4) << 3) + local_58[*(int *)(iVar7 + 0x14)];
-  local_58[iVar4] = (float)((uVar9 & 2) << 4) + local_58[iVar4];
-  local_40 = (float)((uVar9 & 1) << 6) + local_58[2];
+  local_58[param_1->rowAxis] = (float)((ZEXT48(param_2) & 4) << 3) + local_58[param_1->rowAxis];
+  local_58[uVar4] = (float)((ZEXT48(param_2) & 2) << 4) + local_58[uVar4];
+  local_40 = (float)((ZEXT48(param_2) & 1) << 6) + local_58[2];
   fVar1 = fVar1 - local_58[0];
   fVar3 = fVar3 - local_58[1];
   fVar2 = fVar2 - local_40;
@@ -2259,13 +2167,14 @@ bool R_IsValidLightGridSample
   local_44 = fVar5 * fVar3 * 0.01 + local_58[1];
   local_40 = fVar2 * fVar5 * 0.01 + local_40;
   iVar7 = CG_BrushModelSightTrace(0,(float *)param_4,&local_48,&bounds_origin,0,0x2001);
-  uVar8 = __restgprlr_27(iVar7 == 0);
-  return (bool)uVar8;
+  return iVar7 == 0;
 }
 
 
 // 827A6070  R_LightGridLookup  (gfx_d3d/rb_light.cpp:2215)
 
+/* WARNING: Function: __savegprlr_19 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_19 replaced with injection: xenon_save_restore */
 /* WARNING: Restarted to delay deadcode elimination for space: stack */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
@@ -2274,168 +2183,156 @@ uchar R_LightGridLookup(GfxLightGrid *param_1,float *param_2,float *param_3,
                        GfxLightGridEntry **param_4,uint *param_5,float *param_6)
 
 {
-  int iVar1;
-  uint uVar2;
-  int iVar3;
-  uint uVar4;
+  uint uVar1;
+  int iVar2;
+  uint uVar3;
+  float fVar4;
   float fVar5;
   float fVar6;
   float fVar7;
   float fVar8;
   float fVar9;
   float fVar10;
-  float fVar11;
-  float *pfVar12;
-  bool bVar13;
-  GfxLightGrid *pGVar14;
-  bool bVar15;
-  uchar uVar16;
-  ulonglong uVar17;
-  undefined1 uVar19;
-  ulonglong uVar18;
-  ulonglong uVar20;
-  byte bVar21;
-  bool *pbVar22;
-  ulonglong uVar23;
-  GfxLightGridEntry *pGVar24;
-  longlong lVar25;
-  double dVar26;
-  double dVar27;
+  bool bVar11;
+  bool bVar12;
+  ulonglong uVar13;
+  ulonglong uVar14;
+  ulonglong uVar15;
+  byte bVar16;
+  int iVar17;
+  bool *pbVar18;
+  ulonglong uVar19;
+  GfxLightGridEntry *pGVar20;
+  double dVar21;
+  double dVar22;
   GfxLightGridEntry *local_a0 [2];
   uint local_98 [38];
   
-  uVar19 = SUB41(param_6,0);
-  lVar25 = (longlong)(int)param_3;
-  pGVar14 = (GfxLightGrid *)__savegprlr_19(param_1);
-  if (pGVar14 == (GfxLightGrid *)0x0) {
+  if (param_1 == (GfxLightGrid *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_light.cpp",0x8b6,0,
                     "%s");
   }
-  dVar26 = floor((double)*param_2);
-  local_98[0] = (int)dVar26 + 0x20000 >> 5;
-  dVar26 = floor((double)param_2[1]);
-  local_98[1] = (int)dVar26 + 0x20000 >> 5;
-  dVar26 = floor((double)param_2[2]);
-  uVar4 = (int)dVar26 + 0x20000 >> 6;
-  local_98[2] = uVar4;
-  if (((pGVar14->rowAxis != 0) || (pGVar14->colAxis != 1)) &&
-     ((pGVar14->rowAxis != 1 || (pGVar14->colAxis != 0)))) {
+  dVar21 = floor((double)*param_2);
+  local_98[0] = (int)dVar21 + 0x20000 >> 5;
+  dVar21 = floor((double)param_2[1]);
+  local_98[1] = (int)dVar21 + 0x20000 >> 5;
+  dVar21 = floor((double)param_2[2]);
+  uVar3 = (int)dVar21 + 0x20000 >> 6;
+  local_98[2] = uVar3;
+  if (((param_1->rowAxis != 0) || (param_1->colAxis != 1)) &&
+     ((param_1->rowAxis != 1 || (param_1->colAxis != 0)))) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_light.cpp",0x8bf,1,
                     "%s");
   }
-  fVar5 = (param_2[2] - -131072.0) * 0.015625 - (float)uVar4;
-  fVar7 = (param_2[pGVar14->rowAxis] - -131072.0) * 0.03125 - (float)local_98[pGVar14->rowAxis];
-  fVar6 = (param_2[pGVar14->colAxis] - -131072.0) * 0.03125 - (float)local_98[pGVar14->colAxis];
-  fVar11 = 1.0 - fVar7;
-  fVar10 = (1.0 - fVar5) * fVar6;
-  fVar9 = (1.0 - fVar6) * (1.0 - fVar5);
-  fVar8 = (1.0 - fVar6) * fVar5;
-  pfVar12 = (float *)lVar25;
-  pfVar12[6] = fVar10 * fVar7;
-  pfVar12[7] = fVar5 * fVar6 * fVar7;
-  pfVar12[2] = fVar11 * fVar10;
-  pfVar12[4] = fVar9 * fVar7;
-  pfVar12[5] = fVar8 * fVar7;
-  *pfVar12 = fVar11 * fVar9;
-  pfVar12[1] = fVar11 * fVar8;
-  pfVar12[3] = fVar11 * fVar5 * fVar6;
+  fVar4 = (param_2[2] - -131072.0) * 0.015625 - (float)uVar3;
+  fVar6 = (param_2[param_1->rowAxis] - -131072.0) * 0.03125 - (float)local_98[param_1->rowAxis];
+  fVar5 = (param_2[param_1->colAxis] - -131072.0) * 0.03125 - (float)local_98[param_1->colAxis];
+  fVar10 = 1.0 - fVar6;
+  fVar9 = (1.0 - fVar4) * fVar5;
+  fVar8 = (1.0 - fVar5) * (1.0 - fVar4);
+  fVar7 = (1.0 - fVar5) * fVar4;
+  param_3[6] = fVar9 * fVar6;
+  param_3[7] = fVar4 * fVar5 * fVar6;
+  param_3[2] = fVar10 * fVar9;
+  param_3[4] = fVar8 * fVar6;
+  param_3[5] = fVar7 * fVar6;
+  *param_3 = fVar10 * fVar8;
+  param_3[1] = fVar10 * fVar7;
+  param_3[3] = fVar10 * fVar4 * fVar5;
   *param_5 = 1;
-  R_GetLightGridSampleEntryQuad(pGVar14,local_98,param_4,param_5);
-  local_98[pGVar14->rowAxis] = local_98[pGVar14->rowAxis] + 1;
-  R_GetLightGridSampleEntryQuad(pGVar14,local_98,param_4 + 4,param_5);
-  uVar4 = pGVar14->rowAxis;
-  uVar17 = (ulonglong)uVar4;
-  iVar1 = (r_vc_makelog->current).integer;
-  uVar2 = local_98[uVar4];
-  local_98[uVar4] = uVar2 - 1;
-  if (iVar1 != 0) {
-    R_UpdateVisHistory(pGVar14,local_98,(GfxLightGridEntry **)(uVar2 - 1));
+  R_GetLightGridSampleEntryQuad(param_1,local_98,param_4,param_5);
+  local_98[param_1->rowAxis] = local_98[param_1->rowAxis] + 1;
+  R_GetLightGridSampleEntryQuad(param_1,local_98,param_4 + 4,param_5);
+  uVar3 = param_1->rowAxis;
+  uVar13 = (ulonglong)uVar3;
+  iVar17 = (r_vc_makelog->current).integer;
+  uVar1 = local_98[uVar3];
+  local_98[uVar3] = uVar1 - 1;
+  if (iVar17 != 0) {
+    R_UpdateVisHistory(param_1,local_98,(GfxLightGridEntry **)(uVar1 - 1));
   }
-  bVar21 = 1;
-  uVar23 = 0;
-  uVar20 = 0xffffffff82000000;
-  pbVar22 = (bool *)0x0;
-  dVar27 = 0.0;
-  pGVar24 = (GfxLightGridEntry *)0x0;
-  dVar26 = 0.0010000000474974513;
-  iVar1 = (int)param_4 - (int)pfVar12;
+  bVar16 = 1;
+  uVar19 = 0;
+  uVar15 = 0xffffffff82000000;
+  pbVar18 = (bool *)0x0;
+  dVar22 = 0.0;
+  pGVar20 = (GfxLightGridEntry *)0x0;
+  dVar21 = 0.0010000000474974513;
+  iVar17 = (int)param_4 - (int)param_3;
   do {
-    pfVar12 = (float *)lVar25;
-    iVar3 = *(int *)(iVar1 + (int)pfVar12);
-    if (iVar3 != 0) {
-      if (dVar26 <= (double)*pfVar12) {
-        if ((*(byte *)(iVar3 + 3) & bVar21) == 0) {
+    iVar2 = *(int *)(iVar17 + (int)param_3);
+    if (iVar2 != 0) {
+      if (dVar21 <= (double)*param_3) {
+        if ((*(byte *)(iVar2 + 3) & bVar16) == 0) {
 LAB_827a638c:
-          bVar13 = false;
+          bVar11 = false;
         }
         else {
-          bVar15 = R_IsValidLightGridSample
-                             (pGVar14,pGVar24,(int)local_98,(uint *)param_2,(float *)uVar17);
-          bVar13 = true;
-          if (bVar15) goto LAB_827a638c;
+          bVar12 = R_IsValidLightGridSample
+                             (param_1,pGVar20,(int)local_98,(uint *)param_2,(float *)uVar13);
+          bVar11 = true;
+          if (bVar12) goto LAB_827a638c;
         }
-        uVar20 = ZEXT48(&stack0x00000000) - 0xa0;
-        *(bool *)((int)&pGVar24->colorsIndex + (int)uVar20) = bVar13;
-        if (bVar13) {
-          if (pbVar22 == (bool *)0x0) {
+        uVar15 = ZEXT48(&stack0x00000000) - 0xa0;
+        *(bool *)((int)&pGVar20->colorsIndex + (int)uVar15) = bVar11;
+        if (bVar11) {
+          if (pbVar18 == (bool *)0x0) {
 LAB_827a63e0:
-            uVar18 = (ulonglong)*(byte *)(iVar3 + 2);
-            if (uVar23 == 0) {
-              bVar13 = true;
+            uVar14 = (ulonglong)*(byte *)(iVar2 + 2);
+            if (uVar19 == 0) {
+              bVar11 = true;
             }
-            else if (uVar18 == 0) {
+            else if (uVar14 == 0) {
 LAB_827a6434:
-              bVar13 = false;
+              bVar11 = false;
             }
             else {
-              uVar20 = 0x100 - (ulonglong)s_world.lastSunPrimaryLightIndex;
-              if (uVar23 < (uVar20 & 0xffffffff)) {
-                if (((uVar20 & 0xffffffff) <= uVar18) || (bVar13 = true, (double)*pfVar12 <= dVar27)
+              uVar15 = 0x100 - (ulonglong)s_world.lastSunPrimaryLightIndex;
+              if (uVar19 < (uVar15 & 0xffffffff)) {
+                if (((uVar15 & 0xffffffff) <= uVar14) || (bVar11 = true, (double)*param_3 <= dVar22)
                    ) goto LAB_827a6434;
               }
               else {
-                bVar13 = true;
+                bVar11 = true;
               }
             }
-            if (bVar13) {
-              dVar27 = (double)*pfVar12;
-              uVar23 = uVar18;
+            if (bVar11) {
+              dVar22 = (double)*param_3;
+              uVar19 = uVar14;
             }
           }
           else {
-            *(undefined4 *)(iVar1 + (int)pfVar12) = 0;
+            *(undefined4 *)(iVar17 + (int)param_3) = 0;
           }
         }
         else {
-          if (pbVar22 != (bool *)0x0) goto LAB_827a63e0;
-          dVar27 = (double)*pfVar12;
-          uVar23 = (ulonglong)*(byte *)(iVar3 + 2);
-          pbVar22 = (bool *)0x1;
+          if (pbVar18 != (bool *)0x0) goto LAB_827a63e0;
+          dVar22 = (double)*param_3;
+          uVar19 = (ulonglong)*(byte *)(iVar2 + 2);
+          pbVar18 = (bool *)0x1;
           memset();
         }
       }
       else {
-        *(undefined4 *)(iVar1 + (int)pfVar12) = 0;
+        *(undefined4 *)(iVar17 + (int)param_3) = 0;
       }
     }
-    pGVar24 = (GfxLightGridEntry *)((int)&pGVar24->colorsIndex + 1);
-    lVar25 = lVar25 + 4;
-    bVar21 = bVar21 << 1;
-    if ((GfxLightGridEntry *)0x7 < pGVar24) {
+    pGVar20 = (GfxLightGridEntry *)((int)&pGVar20->colorsIndex + 1);
+    param_3 = param_3 + 1;
+    bVar16 = bVar16 << 1;
+    if ((GfxLightGridEntry *)0x7 < pGVar20) {
       if (frontEndDataOut != (GfxBackEndData *)0x0) {
         if ((r_showLightGrid->current).integer == 1) {
-          R_ShowLightGrid(pGVar14,local_98,param_2,param_4,(bool *)local_a0,SUB41(pbVar22,0));
-          uVar16 = __restgprlr_19(uVar23);
-          return uVar16;
+          R_ShowLightGrid(param_1,local_98,param_2,param_4,(bool *)local_a0,SUB41(pbVar18,0));
+          return (uchar)uVar19;
         }
         if (1 < (r_showLightGrid->current).integer) {
           R_ShowDetailedLightGrid
-                    (pGVar14,(uint)local_98,(uint *)param_2,(float *)param_4,local_a0,pbVar22,
-                     (bool)uVar19,(float *)uVar20);
+                    (param_1,(uint)local_98,(uint *)param_2,(float *)param_4,local_a0,pbVar18,
+                     SUB41(param_6,0),(float *)uVar15);
         }
       }
-      uVar16 = __restgprlr_19(uVar23);
-      return uVar16;
+      return (uchar)uVar19;
     }
   } while( true );
 }
@@ -2443,163 +2340,159 @@ LAB_827a6434:
 
 // 827A64F0  R_GetPrimaryLightFromGrid  (gfx_d3d/rb_light.cpp:2339)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 uchar R_GetPrimaryLightFromGrid(GfxLightGrid *param_1,float *param_2,uchar param_3)
 
 {
-  GfxLightGrid *pGVar3;
-  ulonglong uVar1;
-  ulonglong uVar2;
-  uchar uVar5;
-  longlong lVar6;
-  ulonglong uVar7;
-  ulonglong uVar8;
-  uint uVar9;
-  GfxLightGridEntry **ppGVar10;
-  ulonglong uVar11;
+  uint uVar1;
+  uint uVar3;
+  GfxLightGridEntry **ppGVar4;
+  uint uVar5;
   uint auStack_70 [4];
   GfxLightGridEntry *local_60 [8];
   float afStack_40 [16];
-  byte bVar4;
+  byte bVar2;
   
-  uVar7 = (ulonglong)(char)param_3;
-  lVar6 = (longlong)(int)param_2;
-  pGVar3 = (GfxLightGrid *)__savegprlr_29(param_1,lVar6,uVar7);
-  if (pGVar3 == (GfxLightGrid *)0x0) {
+  if (param_1 == (GfxLightGrid *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_light.cpp",0x92b,0,
                     "%s");
   }
-  bVar4 = R_LightGridLookup(pGVar3,(float *)lVar6,afStack_40,local_60,auStack_70,(float *)0x0);
-  uVar1 = (ulonglong)(char)bVar4;
-  uVar11 = (ulonglong)s_world.lastSunPrimaryLightIndex;
-  if (((0x100 - uVar11 & 0xffffffff) <= (ulonglong)bVar4) &&
-     (uVar8 = (bVar4 + uVar11) - 0xff, uVar1 = uVar8 & 0xff, (int)uVar8 != (int)uVar1)) {
+  bVar2 = R_LightGridLookup(param_1,param_2,afStack_40,local_60,auStack_70,(float *)0x0);
+  uVar1 = (uint)(char)bVar2;
+  if ((0x100 - s_world.lastSunPrimaryLightIndex <= (uint)bVar2) &&
+     (uVar3 = (bVar2 + s_world.lastSunPrimaryLightIndex) - 0xff, uVar1 = uVar3 & 0xff,
+     uVar3 != uVar1)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\../universal/assertive.h"
                     ,0x1ce,0,"i == static_cast< Type >( i )\n\t%i, %i");
-    uVar11 = (ulonglong)s_world.lastSunPrimaryLightIndex;
   }
-  uVar9 = 0;
-  ppGVar10 = local_60;
+  uVar3 = 0;
+  ppGVar4 = local_60;
   do {
-    if (((*ppGVar10 != (GfxLightGridEntry *)0x0) &&
-        (uVar8 = (ulonglong)(*ppGVar10)->primaryLightIndex, uVar8 < (0x100 - uVar11 & 0xffffffff)))
-       && ((uVar2 = uVar1, uVar8 == 0 || (uVar8 == (uVar1 & 0xff))))) break;
-    uVar9 = uVar9 + 1;
-    ppGVar10 = ppGVar10 + 1;
-    uVar2 = uVar7;
-  } while (uVar9 < 8);
-  uVar5 = __restgprlr_29(uVar2);
-  return uVar5;
+    if ((*ppGVar4 != (GfxLightGridEntry *)0x0) &&
+       (uVar5 = (uint)(*ppGVar4)->primaryLightIndex,
+       uVar5 < 0x100 - s_world.lastSunPrimaryLightIndex)) {
+      if (uVar5 == 0) {
+        return (uchar)uVar1;
+      }
+      if (uVar5 == (uVar1 & 0xff)) {
+        return (uchar)uVar1;
+      }
+    }
+    uVar3 = uVar3 + 1;
+    ppGVar4 = ppGVar4 + 1;
+    if (7 < uVar3) {
+      return param_3;
+    }
+  } while( true );
 }
 
 
 // 827A4E48  R_CanLightInfluenceLightGridCorner  (gfx_d3d/rb_light.cpp:2554)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 bool R_CanLightInfluenceLightGridCorner
                (GfxLightGrid *param_1,ComPrimaryLight *param_2,float *param_3,uint param_4)
 
 {
-  int iVar1;
-  int iVar2;
-  undefined1 uVar3;
-  bool bVar4;
-  ulonglong uVar5;
-  double dVar6;
-  double dVar7;
-  double dVar8;
+  uint uVar1;
+  bool bVar2;
+  double dVar3;
+  double dVar4;
+  double dVar5;
   float local_48 [18];
   
-  uVar5 = (ulonglong)(int)param_4;
-  iVar2 = __savegprlr_28(param_1);
   if (param_2->type == '\x01') {
-    uVar3 = __restgprlr_28(1);
-    return (bool)uVar3;
+    return true;
   }
-  dVar7 = 0.03125;
-  dVar6 = floor((double)(*param_3 * 0.03125));
-  dVar8 = 32.0;
-  local_48[0] = (float)dVar6 * 32.0;
-  dVar6 = floor((double)(float)((double)param_3[1] * dVar7));
-  local_48[1] = (float)((double)(float)dVar6 * dVar8);
-  dVar6 = floor((double)(*param_3 * 0.015625));
-  iVar1 = *(int *)(iVar2 + 0x18);
-  local_48[2] = (float)dVar6 * 64.0;
-  local_48[*(int *)(iVar2 + 0x14)] = (float)((uVar5 & 4) << 3) + local_48[*(int *)(iVar2 + 0x14)];
-  local_48[iVar1] = (float)((uVar5 & 2) << 4) + local_48[iVar1];
-  local_48[2] = (float)((uVar5 & 1) << 6) + local_48[2];
-  bVar4 = Com_CanPrimaryLightAffectPoint(param_2,local_48);
-  uVar3 = __restgprlr_28(bVar4);
-  return (bool)uVar3;
+  dVar4 = 0.03125;
+  dVar3 = floor((double)(*param_3 * 0.03125));
+  dVar5 = 32.0;
+  local_48[0] = (float)dVar3 * 32.0;
+  dVar3 = floor((double)(float)((double)param_3[1] * dVar4));
+  local_48[1] = (float)((double)(float)dVar3 * dVar5);
+  dVar3 = floor((double)(*param_3 * 0.015625));
+  uVar1 = param_1->colAxis;
+  local_48[2] = (float)dVar3 * 64.0;
+  local_48[param_1->rowAxis] = (float)(((ulonglong)param_4 & 4) << 3) + local_48[param_1->rowAxis];
+  local_48[uVar1] = (float)(((ulonglong)param_4 & 2) << 4) + local_48[uVar1];
+  local_48[2] = (float)(((ulonglong)param_4 & 1) << 6) + local_48[2];
+  bVar2 = Com_CanPrimaryLightAffectPoint(param_2,local_48);
+  return bVar2;
 }
 
 
 // 827A6600  R_IsInPointOrSpotPrimaryLight  (gfx_d3d/rb_light.cpp:2575)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 int R_IsInPointOrSpotPrimaryLight(float *param_1)
 
 {
-  Bounds *pBVar1;
-  byte bVar5;
-  uint uVar2;
-  int iVar3;
-  ComPrimaryLight *pCVar4;
-  bool bVar6;
-  Bounds *pBVar7;
-  double dVar8;
+  byte bVar3;
+  uint uVar1;
+  ComPrimaryLight *pCVar2;
+  bool bVar4;
+  Bounds *pBVar5;
+  double dVar6;
   uint auStack_a0 [4];
   Bounds local_90;
   GfxLightGridEntry *apGStack_70 [8];
   Bounds aBStack_50 [3];
   
-  pBVar1 = (Bounds *)__savegprlr_28(param_1);
-  local_90.midPoint[0] = pBVar1->midPoint[0];
-  local_90.midPoint[1] = pBVar1->midPoint[1];
-  local_90.midPoint[2] = pBVar1->midPoint[2];
-  dVar8 = 0.0;
+  local_90.midPoint[0] = *param_1;
+  local_90.midPoint[1] = param_1[1];
+  local_90.midPoint[2] = param_1[2];
+  dVar6 = 0.0;
   local_90.halfSize[0] = 64.0;
   local_90.halfSize[1] = 64.0;
-  pBVar7 = aBStack_50;
+  pBVar5 = aBStack_50;
   local_90.halfSize[2] = 0.0;
-  bVar5 = R_LightGridLookup(&(rgp.world)->lightGrid,(float *)pBVar1,pBVar7->midPoint,apGStack_70,
-                            auStack_a0,(float *)0x0);
-  uVar2 = (uint)bVar5;
-  if (uVar2 == 0) {
-    uVar2 = R_GetNonSunPrimaryLightForBox(&local_90);
-    iVar3 = __restgprlr_28(uVar2 != 0);
-    return iVar3;
+  bVar3 = R_LightGridLookup(&(rgp.world)->lightGrid,param_1,pBVar5->midPoint,apGStack_70,auStack_a0,
+                            (float *)0x0);
+  uVar1 = (uint)bVar3;
+  if (uVar1 == 0) {
+    uVar1 = R_GetNonSunPrimaryLightForBox(&local_90);
+    return (uint)(uVar1 != 0);
   }
-  if (uVar2 < 0x100 - s_world.lastSunPrimaryLightIndex) {
-    if ((uVar2 == 0) || (bVar6 = true, s_world.lastSunPrimaryLightIndex < uVar2)) {
-      bVar6 = false;
+  if (uVar1 < 0x100 - s_world.lastSunPrimaryLightIndex) {
+    if ((uVar1 == 0) || (bVar4 = true, s_world.lastSunPrimaryLightIndex < uVar1)) {
+      bVar4 = false;
     }
-    if (!bVar6) {
-      pCVar4 = Com_GetPrimaryLight((uint)bVar5);
-      if ((pCVar4->type != '\x02') && (pCVar4->type != '\x03')) {
-        pBVar7 = (Bounds *)0x0;
-        pBVar1 = (Bounds *)0xa25;
+    if (!bVar4) {
+      pCVar2 = Com_GetPrimaryLight((uint)bVar3);
+      if ((pCVar2->type != '\x02') && (pCVar2->type != '\x03')) {
+        pBVar5 = (Bounds *)0x0;
+        param_1 = (float *)0xa25;
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_light.cpp",
                         0xa25,0,"%s\n\t(light->type) = %i");
       }
-      if ((pCVar4->type != '\x02') || ((double)pCVar4->cosHalfFovExpanded < dVar8)) {
-        bVar6 = CullBoxFromSphere(pCVar4->origin,pCVar4->radius,pBVar1);
+      if ((pCVar2->type != '\x02') || ((double)pCVar2->cosHalfFovExpanded < dVar6)) {
+        bVar4 = CullBoxFromSphere(pCVar2->origin,pCVar2->radius,(Bounds *)param_1);
       }
       else {
-        bVar6 = CullBoxFromConicSectionOfSphere
-                          (pCVar4->origin,pCVar4->dir,pCVar4->cosHalfFovExpanded,pCVar4->radius,
-                           pBVar7);
+        bVar4 = CullBoxFromConicSectionOfSphere
+                          (pCVar2->origin,pCVar2->dir,pCVar2->cosHalfFovExpanded,pCVar2->radius,
+                           pBVar5);
       }
-      if (bVar6 == false) {
-        bVar6 = R_CullBoxFromLightRegion((rgp.world)->lightRegion + bVar5,pCVar4->origin,&local_90);
-        iVar3 = __restgprlr_28(!bVar6);
-        return iVar3;
+      if (bVar4 == false) {
+        bVar4 = R_CullBoxFromLightRegion((rgp.world)->lightRegion + bVar3,pCVar2->origin,&local_90);
+        return (uint)LZCOUNT((uint)bVar4) >> 5;
       }
     }
   }
-  iVar3 = __restgprlr_28(0);
-  return iVar3;
+  return 0;
 }
 
 
 // 827A67B0  GetLightingAtPoint  (gfx_d3d/rb_light.cpp:2609)
+
+/* WARNING: Function: __savegprlr_18 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_18 replaced with injection: xenon_save_restore */
 
 uint GetLightingAtPoint(GfxLightGrid *param_1,float *param_2,uint param_3,ushort *param_4,
                        float *param_5,uint *param_6,uint *param_7,float *param_8,float *param_9,
@@ -2607,108 +2500,98 @@ uint GetLightingAtPoint(GfxLightGrid *param_1,float *param_2,uint param_3,ushort
 
 {
   float fVar1;
-  short *psVar2;
-  GfxLightGrid *pGVar3;
-  byte bVar6;
-  ComPrimaryLight *pCVar4;
-  bool bVar7;
-  uint uVar5;
-  longlong lVar8;
-  longlong lVar9;
+  ushort *puVar2;
+  byte bVar4;
+  ComPrimaryLight *pCVar3;
+  bool bVar5;
+  ushort *puVar6;
+  uint uVar7;
+  uint uVar8;
+  uint uVar9;
   uint uVar10;
-  ulonglong uVar11;
-  ulonglong uVar12;
-  uint uVar13;
-  ulonglong uVar14;
-  uint uVar15;
-  double dVar16;
+  uint uVar11;
+  double dVar12;
   float *in_stack_00000054;
   float *in_stack_0000005c;
   float *in_stack_00000064;
   float local_c0 [8];
   GfxLightGridEntry *local_a0 [40];
   
-  lVar8 = (longlong)(int)param_4;
-  uVar12 = (ulonglong)(int)param_3;
-  pGVar3 = (GfxLightGrid *)__savegprlr_18(param_1);
-  bVar6 = R_LightGridLookup(pGVar3,param_2,local_c0,local_a0,param_7,in_stack_00000064);
-  uVar14 = (ulonglong)bVar6;
-  uVar11 = (ulonglong)s_world.lastSunPrimaryLightIndex;
-  if (uVar14 < (0x100 - uVar11 & 0xffffffff)) {
-    if (pGVar3->hasLightRegions != false) {
-      if ((uVar14 == 0) || (bVar7 = true, uVar11 < uVar14)) {
-        bVar7 = false;
+  bVar4 = R_LightGridLookup(param_1,param_2,local_c0,local_a0,param_7,in_stack_00000064);
+  uVar10 = (uint)bVar4;
+  if (uVar10 < 0x100 - s_world.lastSunPrimaryLightIndex) {
+    if (param_1->hasLightRegions != false) {
+      if ((uVar10 == 0) || (bVar5 = true, s_world.lastSunPrimaryLightIndex < uVar10)) {
+        bVar5 = false;
       }
-      if (!bVar7) {
-        uVar14 = uVar12;
+      if (!bVar5) {
+        uVar10 = param_3;
       }
     }
   }
   else {
-    uVar14 = (uVar11 + uVar14) - 0xff;
+    uVar10 = (s_world.lastSunPrimaryLightIndex + uVar10) - 0xff;
   }
-  if ((ulonglong)(rgp.world)->primaryLightCount <= (uVar14 & 0xffffffff)) {
+  if ((rgp.world)->primaryLightCount <= uVar10) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_light.cpp",0xa3f,0,
                     "primaryLightIndex doesn\'t index rgp.world->primaryLightCount\n\t%i not in [0, %i)"
                    );
   }
-  uVar5 = 0;
+  uVar9 = 0;
   *param_6 = 0;
-  uVar15 = 0;
-  dVar16 = 0.0;
+  uVar11 = 0;
+  dVar12 = 0.0;
   *in_stack_0000005c = 0.0;
   *param_8 = 0.0;
   *in_stack_00000054 = 0.0;
   do {
-    psVar2 = *(short **)((int)local_a0 + uVar15);
-    if (psVar2 != (short *)0x0) {
-      uVar12 = (ulonglong)*(byte *)(psVar2 + 1);
-      if (uVar12 == (uVar14 & 0xffffffff)) {
-        *param_8 = *(float *)((int)local_c0 + uVar15) + *param_8;
+    puVar2 = *(ushort **)((int)local_a0 + uVar11);
+    if (puVar2 != (ushort *)0x0) {
+      uVar8 = (uint)*(byte *)(puVar2 + 1);
+      if (uVar8 == uVar10) {
+        *param_8 = *(float *)((int)local_c0 + uVar11) + *param_8;
       }
-      else if ((uVar12 == 0) ||
-              (((0x100 - (ulonglong)s_world.lastSunPrimaryLightIndex & 0xffffffff) <= uVar12 &&
-               ((uVar14 & 0xffffffff) != 0)))) {
-        pCVar4 = Com_GetPrimaryLight((uint)uVar14);
-        bVar7 = R_CanLightInfluenceLightGridCorner(pGVar3,pCVar4,param_2,uVar5);
-        if (bVar7) {
-          *in_stack_00000054 = *(float *)((int)local_c0 + uVar15) + *in_stack_00000054;
+      else if ((uVar8 == 0) ||
+              ((0x100 - s_world.lastSunPrimaryLightIndex <= uVar8 && (uVar10 != 0)))) {
+        pCVar3 = Com_GetPrimaryLight(uVar10);
+        bVar5 = R_CanLightInfluenceLightGridCorner(param_1,pCVar3,param_2,uVar9);
+        if (bVar5) {
+          *in_stack_00000054 = *(float *)((int)local_c0 + uVar11) + *in_stack_00000054;
         }
       }
-      uVar10 = 0;
-      fVar1 = *(float *)((int)local_c0 + uVar15);
+      uVar7 = 0;
+      fVar1 = *(float *)((int)local_c0 + uVar11);
       *in_stack_0000005c = fVar1 + *in_stack_0000005c;
-      uVar13 = *param_6;
-      lVar9 = lVar8;
-      if (uVar13 != 0) {
+      uVar8 = *param_6;
+      puVar6 = param_4;
+      if (uVar8 != 0) {
         do {
-          if (*(short *)lVar9 == *psVar2) {
-            param_5[uVar10] = param_5[uVar10] + fVar1;
+          if (*puVar6 == *puVar2) {
+            param_5[uVar7] = param_5[uVar7] + fVar1;
             goto LAB_827a69a4;
           }
-          uVar10 = uVar10 + 1;
-          lVar9 = lVar9 + 2;
-        } while (uVar10 < uVar13);
+          uVar7 = uVar7 + 1;
+          puVar6 = puVar6 + 1;
+        } while (uVar7 < uVar8);
       }
-      *(short *)(uVar13 * 2 + (int)lVar8) = *psVar2;
-      param_5[uVar13] = fVar1;
-      uVar13 = uVar13 + 1;
+      param_4[uVar8] = *puVar2;
+      param_5[uVar8] = fVar1;
+      uVar8 = uVar8 + 1;
 LAB_827a69a4:
-      *param_6 = uVar13;
+      *param_6 = uVar8;
     }
-    uVar15 = uVar15 + 4;
-    uVar5 = uVar5 + 1;
-    if (0x1f < uVar15) {
-      if ((double)*in_stack_0000005c < dVar16) {
+    uVar11 = uVar11 + 4;
+    uVar9 = uVar9 + 1;
+    if (0x1f < uVar11) {
+      if ((double)*in_stack_0000005c < dVar12) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_light.cpp",
                         0xa59,0,"%s\n\t(*maxWeight) = %g");
       }
-      if ((double)*param_8 < dVar16) {
+      if ((double)*param_8 < dVar12) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_light.cpp",
                         0xa5a,0,"%s\n\t(*primaryVisibleWeight) = %g");
       }
-      uVar5 = __restgprlr_18(uVar14);
-      return uVar5;
+      return uVar10;
     }
   } while( true );
 }
@@ -2716,23 +2599,24 @@ LAB_827a69a4:
 
 // 827A6A48  R_GetLightingAtPoint  (gfx_d3d/rb_light.cpp:2661)
 
+/* WARNING: Function: __savegprlr_21 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_21 replaced with injection: xenon_save_restore */
+
 uint R_GetLightingAtPoint
                (GfxLightGrid *param_1,float *param_2,uint param_3,uchar *param_4,
                GfxModelLightExtrapolation param_5,float (*param_6) [3],float (*param_7) [3],
                GfxColor *param_8,float *param_9)
 
 {
-  GfxLightGrid *pGVar1;
-  bool bVar4;
+  bool bVar3;
+  uint uVar1;
+  byte bVar4;
   uint uVar2;
-  byte bVar5;
-  uint uVar3;
-  float (*pafVar6) [3];
-  longlong lVar7;
-  float *pfVar8;
+  float (*pafVar5) [3];
+  float *pfVar6;
+  double dVar7;
+  double dVar8;
   double dVar9;
-  double dVar10;
-  double dVar11;
   float *in_stack_fffffec8;
   float *in_stack_fffffecc;
   float *in_stack_fffffed0;
@@ -2744,71 +2628,67 @@ uint R_GetLightingAtPoint
   ushort local_b0 [8];
   float afStack_a0 [40];
   
-  lVar7 = (longlong)(int)param_6;
-  pGVar1 = (GfxLightGrid *)__savegprlr_21(param_1);
-  if (pGVar1 == (GfxLightGrid *)0x0) {
+  if (param_1 == (GfxLightGrid *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_light.cpp",0xa70,0,
                     "%s");
   }
-  bVar4 = LightEdit_DisableModelLightingUpdate();
-  if (!bVar4) {
+  bVar3 = LightEdit_DisableModelLightingUpdate();
+  if (!bVar3) {
     Profile_Begin(0x50);
-    pfVar8 = &local_cc;
-    uVar2 = GetLightingAtPoint(pGVar1,param_2,param_3,local_b0,afStack_a0,(uint *)pfVar8,local_c0,
+    pfVar6 = &local_cc;
+    uVar1 = GetLightingAtPoint(param_1,param_2,param_3,local_b0,afStack_a0,(uint *)pfVar6,local_c0,
                                &local_d0,in_stack_fffffec8,in_stack_fffffecc,in_stack_fffffed0);
-    dVar9 = (double)local_c8;
-    dVar10 = 1.0;
+    dVar7 = (double)local_c8;
+    dVar8 = 1.0;
     if (local_cc == 0.0) {
-      dVar11 = (double)local_d0;
+      dVar9 = (double)local_d0;
     }
     else {
-      dVar11 = 0.0;
-      if (dVar9 <= 0.0) {
+      dVar9 = 0.0;
+      if (dVar7 <= 0.0) {
         param_3 = 1;
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_light.cpp",
                         0xa7d,1,"%s");
       }
-      if (uVar2 != 0) {
-        if ((double)local_c4 == dVar11) {
-          bVar4 = (double)local_d0 != dVar11;
-          dVar11 = (double)local_d0;
-          if (bVar4) {
-            dVar11 = dVar10;
+      if (uVar1 != 0) {
+        if ((double)local_c4 == dVar9) {
+          bVar3 = (double)local_d0 != dVar9;
+          dVar9 = (double)local_d0;
+          if (bVar3) {
+            dVar9 = dVar8;
           }
         }
         else {
-          dVar11 = (double)(float)((double)local_d0 /
-                                  (double)(float)((double)local_d0 + (double)local_c4));
+          dVar9 = (double)(float)((double)local_d0 /
+                                 (double)(float)((double)local_d0 + (double)local_c4));
         }
       }
     }
-    pafVar6 = (float (*) [3])(-(uint)(lVar7 != 0) & (uint)param_2);
+    pafVar5 = (float (*) [3])(-(uint)(param_6 != (float (*) [3])0x0) & (uint)param_2);
     if (local_cc == 0.0) {
-      bVar5 = R_ExtrapolateLightingAtPoint
-                        (pGVar1,param_4,param_5,local_c0[0],(float *)pafVar6,(float (*) [3])lVar7,
-                         param_7,param_8);
-      uVar2 = (uint)bVar5;
+      bVar4 = R_ExtrapolateLightingAtPoint
+                        (param_1,param_4,param_5,local_c0[0],(float *)pafVar5,param_6,param_7,
+                         param_8);
+      uVar1 = (uint)bVar4;
     }
     else {
       if (local_cc == 1.4013e-45) {
-        uVar3 = R_SetLightGridColorsFromIndex
-                          (pGVar1,(uint)local_b0[0],(float)dVar11,(uchar *)param_3,(float *)param_4,
-                           pafVar6,(float (*) [3])lVar7);
+        uVar2 = R_SetLightGridColorsFromIndex
+                          (param_1,(uint)local_b0[0],(float)dVar9,(uchar *)param_3,(float *)param_4,
+                           pafVar5,param_6);
       }
       else {
-        uVar3 = R_BlendAndSetLightGridColors
-                          (pGVar1,local_b0,afStack_a0,(uint)local_cc,(float)dVar11,
-                           (float)(dVar10 / dVar9),(uchar *)pafVar6,pfVar8,(float (*) [3])param_4,
-                           pafVar6);
+        uVar2 = R_BlendAndSetLightGridColors
+                          (param_1,local_b0,afStack_a0,(uint)local_cc,(float)dVar9,
+                           (float)(dVar8 / dVar7),(uchar *)pafVar5,pfVar6,(float (*) [3])param_4,
+                           pafVar5);
       }
-      param_8->packed = uVar3;
+      param_8->packed = uVar2;
     }
     Profile_EndInternal((double *)0x0);
-    uVar2 = __restgprlr_21(uVar2);
-    return uVar2;
+    return uVar1;
   }
-  uVar2 = __restgprlr_21(0);
-  return uVar2;
+  return 0;
 }
 
 
@@ -2895,25 +2775,25 @@ void GetAttenuatedPrimaryLightColor(ComPrimaryLight *param_1,float *param_2,floa
 
 // 827A6C50  R_GetAverageLightingAtPoint  (gfx_d3d/rb_light.cpp:2799)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void R_GetAverageLightingAtPoint(float *param_1,uchar *param_2)
 
 {
-  undefined1 *puVar1;
-  longlong lVar2;
-  float *pfVar3;
-  bool bVar7;
-  uint uVar4;
-  ComPrimaryLight *pCVar5;
-  int iVar6;
-  float *pfVar8;
-  IMAGE_DOS_HEADER *pIVar9;
-  uint uVar10;
-  longlong lVar11;
-  longlong lVar12;
+  longlong lVar1;
+  bool bVar4;
+  uint uVar2;
+  ComPrimaryLight *pCVar3;
+  float *pfVar5;
+  IMAGE_DOS_HEADER *pIVar6;
+  uint uVar7;
+  uchar *puVar8;
+  longlong lVar9;
+  double dVar10;
+  double dVar11;
+  double dVar12;
   double dVar13;
-  double dVar14;
-  double dVar15;
-  double dVar16;
   float *in_stack_ffffff08;
   float *in_stack_ffffff0c;
   float *in_stack_ffffff10;
@@ -2925,110 +2805,108 @@ void R_GetAverageLightingAtPoint(float *param_1,uchar *param_2)
   float local_70 [4];
   float afStack_60 [24];
   
-  lVar11 = (longlong)(int)param_2;
-  pfVar3 = (float *)__savegprlr_27(param_1);
-  bVar7 = LightEdit_DisableModelLightingUpdate();
-  puVar1 = (undefined1 *)lVar11;
-  if (bVar7) {
-    puVar1[3] = 0;
-    puVar1[2] = 0;
-    puVar1[1] = 0;
-    *puVar1 = 0;
-    __restgprlr_27();
+  bVar4 = LightEdit_DisableModelLightingUpdate();
+  if (bVar4) {
+    param_2[3] = '\0';
+    param_2[2] = '\0';
+    param_2[1] = '\0';
+    *param_2 = '\0';
     return;
   }
   Profile_Begin(0x5e);
-  pfVar8 = pfVar3;
-  uVar4 = GetLightingAtPoint(&(rgp.world)->lightGrid,pfVar3,0,(ushort *)local_70,afStack_60,
+  pfVar5 = param_1;
+  uVar2 = GetLightingAtPoint(&(rgp.world)->lightGrid,param_1,0,(ushort *)local_70,afStack_60,
                              &local_8c,(uint *)&local_78,(float *)&local_90,in_stack_ffffff08,
                              in_stack_ffffff0c,in_stack_ffffff10);
-  pIVar9 = &IMAGE_DOS_HEADER_82000000;
-  dVar16 = 0.0;
+  pIVar6 = &IMAGE_DOS_HEADER_82000000;
+  dVar13 = 0.0;
   if (local_8c == 0) {
-    uVar10 = 1;
-    dVar13 = 1.0;
-    uVar4 = (uint)s_skyOverride.primaryLightIndex;
+    uVar7 = 1;
+    dVar10 = 1.0;
+    uVar2 = (uint)s_skyOverride.primaryLightIndex;
   }
   else {
-    dVar15 = (double)local_88;
-    if (dVar15 <= 0.0) {
-      pfVar8 = (float *)0xb16;
-      pIVar9 = (IMAGE_DOS_HEADER *)"maxWeight > 0.0f";
+    dVar12 = (double)local_88;
+    if (dVar12 <= 0.0) {
+      pfVar5 = (float *)0xb16;
+      pIVar6 = (IMAGE_DOS_HEADER *)"maxWeight > 0.0f";
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_light.cpp",0xb16,
                       1,"%s");
     }
-    dVar13 = dVar16;
-    if (uVar4 != 0) {
-      if ((double)local_80._0_4_ == dVar16) {
-        dVar13 = (double)local_90;
+    dVar10 = dVar13;
+    if (uVar2 != 0) {
+      if ((double)local_80._0_4_ == dVar13) {
+        dVar10 = (double)local_90;
       }
       else {
-        dVar13 = (double)(float)((double)local_90 /
+        dVar10 = (double)(float)((double)local_90 /
                                 (double)(float)((double)local_90 + (double)local_80._0_4_));
       }
     }
     if (local_8c != 1) {
       R_BlendAndAverageLightGridColors
-                (&(rgp.world)->lightGrid,(ushort *)local_70,afStack_60,local_8c,(float)dVar13,
-                 (float)(1.0 / dVar15),(uchar *)pIVar9);
+                (&(rgp.world)->lightGrid,(ushort *)local_70,afStack_60,local_8c,(float)dVar10,
+                 (float)(1.0 / dVar12),(uchar *)pIVar6);
       goto LAB_827a6dd8;
     }
-    uVar10 = (uint)local_70[0]._0_2_;
+    uVar7 = (uint)local_70[0]._0_2_;
   }
-  R_AverageLightGridColors(((rgp.world)->lightGrid).colors + uVar10,(float)dVar13,(uchar *)pfVar8);
+  R_AverageLightGridColors(((rgp.world)->lightGrid).colors + uVar7,(float)dVar10,(uchar *)pfVar5);
 LAB_827a6dd8:
-  if ((uVar4 < 0xf8) && (uVar4 != 0)) {
-    pCVar5 = Com_GetPrimaryLight(uVar4);
-    GetAttenuatedPrimaryLightColor(pCVar5,pfVar3,local_70);
-    pfVar3 = (float *)((int)&local_78 + 4);
+  if ((uVar2 < 0xf8) && (uVar2 != 0)) {
+    pCVar3 = Com_GetPrimaryLight(uVar2);
+    GetAttenuatedPrimaryLightColor(pCVar3,param_1,local_70);
+    pfVar5 = (float *)((int)&local_78 + 4);
     local_78 = (ulonglong)(byte)local_90;
-    lVar12 = 3;
+    lVar9 = 3;
+    puVar8 = param_2;
     do {
-      local_78 = (ulonglong)(byte)((undefined1 *)lVar11)[(int)&local_90 - (int)puVar1];
-      pfVar3 = pfVar3 + 1;
-      dVar13 = (double)(*pfVar3 * (float)(byte)local_90 * 0.5 + (float)local_78);
-      dVar15 = 255.0;
-      if ((float)(dVar13 - 255.0) < 0.0) {
-        dVar15 = dVar13;
+      pfVar5 = pfVar5 + 1;
+      local_78 = (ulonglong)puVar8[(int)&local_90 - (int)param_2];
+      dVar10 = (double)(*pfVar5 * (float)(byte)local_90 * 0.5 +
+                       (float)puVar8[(int)&local_90 - (int)param_2]);
+      dVar12 = 255.0;
+      if ((float)(dVar10 - 255.0) < 0.0) {
+        dVar12 = dVar10;
       }
-      dVar14 = dVar16;
-      if (-dVar13 < 0.0) {
-        dVar14 = dVar15;
+      dVar11 = dVar13;
+      if (-dVar10 < 0.0) {
+        dVar11 = dVar12;
       }
-      local_80 = (longlong)dVar14;
-      lVar2 = local_80;
-      local_80._7_1_ = (undefined1)(longlong)dVar14;
-      *(undefined1 *)lVar11 = (undefined1)local_80;
-      lVar11 = lVar11 + 1;
-      lVar12 = lVar12 + -1;
-      local_80 = lVar2;
-    } while (lVar12 != 0);
+      local_80 = (longlong)dVar11;
+      lVar1 = local_80;
+      local_80._7_1_ = (uchar)(longlong)dVar11;
+      *puVar8 = (uchar)local_80;
+      puVar8 = puVar8 + 1;
+      lVar9 = lVar9 + -1;
+      local_80 = lVar1;
+    } while (lVar9 != 0);
   }
   else {
-    lVar12 = 3;
+    lVar9 = 3;
+    puVar8 = param_2;
     do {
-      local_78 = (ulonglong)(byte)((undefined1 *)lVar11)[(int)&local_90 - (int)puVar1];
-      dVar13 = (double)local_78;
-      dVar15 = 255.0;
-      if ((float)(dVar13 - 255.0) < 0.0) {
-        dVar15 = dVar13;
+      local_78 = (ulonglong)puVar8[(int)&local_90 - (int)param_2];
+      dVar10 = (double)puVar8[(int)&local_90 - (int)param_2];
+      dVar12 = 255.0;
+      if ((float)(dVar10 - 255.0) < 0.0) {
+        dVar12 = dVar10;
       }
-      dVar14 = dVar16;
-      if (-dVar13 < 0.0) {
-        dVar14 = dVar15;
+      dVar11 = dVar13;
+      if (-dVar10 < 0.0) {
+        dVar11 = dVar12;
       }
-      local_80 = (longlong)dVar14;
-      lVar2 = local_80;
-      local_80._7_1_ = (undefined1)(longlong)dVar14;
-      *(undefined1 *)lVar11 = (undefined1)local_80;
-      lVar11 = lVar11 + 1;
-      lVar12 = lVar12 + -1;
-      local_80 = lVar2;
-    } while (lVar12 != 0);
+      local_80 = (longlong)dVar11;
+      lVar1 = local_80;
+      local_80._7_1_ = (uchar)(longlong)dVar11;
+      *puVar8 = (uchar)local_80;
+      puVar8 = puVar8 + 1;
+      lVar9 = lVar9 + -1;
+      local_80 = lVar1;
+    } while (lVar9 != 0);
   }
-  puVar1[3] = 0xff;
-  iVar6 = Profile_EndInternal((double *)0x0);
-  __restgprlr_27(iVar6);
+  param_2[3] = 0xff;
+  Profile_EndInternal((double *)0x0);
   return;
 }
 
@@ -3055,44 +2933,43 @@ uchar R_SkyOverride_ColorByte(float param_1)
 
 // 827A5188  R_SkyOverride_Begin  (gfx_d3d/rb_light.cpp:2920)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void R_SkyOverride_Begin(float *param_1,float *param_2)
 
 {
-  float *pfVar1;
+  uchar uVar3;
   uchar uVar4;
   uchar uVar5;
-  uchar uVar6;
-  uint uVar2;
-  Stage *pSVar3;
-  uchar *puVar7;
-  longlong lVar8;
+  uint uVar1;
+  Stage *pSVar2;
+  uchar *puVar6;
+  longlong lVar7;
   
-  pfVar1 = (float *)__savegprlr_28(param_1);
   if (rgp.world == (GfxWorld *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_light.cpp",0xb73,0,
                     "%s");
   }
   if (1 < ((rgp.world)->lightGrid).colorCount) {
-    uVar4 = R_SkyOverride_ColorByte(*param_2);
-    uVar5 = R_SkyOverride_ColorByte(param_2[1]);
-    uVar6 = R_SkyOverride_ColorByte(param_2[2]);
-    lVar8 = 0x38;
-    puVar7 = (((rgp.world)->lightGrid).colors)->rgb[0x37] + 2;
+    uVar3 = R_SkyOverride_ColorByte(*param_2);
+    uVar4 = R_SkyOverride_ColorByte(param_2[1]);
+    uVar5 = R_SkyOverride_ColorByte(param_2[2]);
+    lVar7 = 0x38;
+    puVar6 = (((rgp.world)->lightGrid).colors)->rgb[0x37] + 2;
     do {
-      puVar7[1] = uVar4;
-      puVar7[2] = uVar5;
-      puVar7 = puVar7 + 3;
-      *puVar7 = uVar6;
-      lVar8 = lVar8 + -1;
-    } while (lVar8 != 0);
-    uVar2 = R_GetActiveStageIndex(pfVar1);
-    pSVar3 = R_GetStageByIndex(uVar2);
-    s_skyOverride.primaryLightIndex = pSVar3->sunPrimaryLightIndex;
-    __restgprlr_28();
+      puVar6[1] = uVar3;
+      puVar6[2] = uVar4;
+      puVar6 = puVar6 + 3;
+      *puVar6 = uVar5;
+      lVar7 = lVar7 + -1;
+    } while (lVar7 != 0);
+    uVar1 = R_GetActiveStageIndex(param_1);
+    pSVar2 = R_GetStageByIndex(uVar1);
+    s_skyOverride.primaryLightIndex = pSVar2->sunPrimaryLightIndex;
     return;
   }
   Com_PrintError(8,"R_SkyOverride_Begin : No LightGrid Computed. Ignoring Sky Override Begin.\n");
-  __restgprlr_28();
   return;
 }
 
@@ -3264,39 +3141,39 @@ void R_LightVisHistoryFilename(char *param_1,char *param_2)
 
 // 827A55C8  R_InitLightVisHistory  (gfx_d3d/rb_light.cpp:3113)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void R_InitLightVisHistory(char *param_1)
 
 {
-  char *pcVar1;
-  uint uVar2;
-  ulonglong uVar3;
+  uint uVar1;
+  ulonglong uVar2;
   void *local_70 [4];
   char acStack_60 [96];
   
-  pcVar1 = (char *)__savegprlr_29(param_1);
   s_vc_log.history = (ushort (*) [3])0x0;
   s_vc_log.count = 0;
   if ((r_vc_makelog->current).integer != 0) {
     s_vc_log.history = Z_VirtualAlloc(0x600000,"R_InitLightVisHistory",0);
     if ((r_vc_makelog->current).integer == 2) {
-      R_LightVisHistoryFilename(pcVar1,acStack_60);
-      uVar2 = FS_ReadFile(acStack_60,local_70);
-      uVar3 = (ulonglong)(int)uVar2;
-      if (-1 < (int)uVar2) {
-        if (uVar3 == (((ulonglong)uVar2 / 6) * 6 & 0xfffffffe)) {
-          if (0x600000 < (int)uVar2) {
-            uVar3 = 0x600000;
+      R_LightVisHistoryFilename(param_1,acStack_60);
+      uVar1 = FS_ReadFile(acStack_60,local_70);
+      uVar2 = (ulonglong)(int)uVar1;
+      if (-1 < (int)uVar1) {
+        if (uVar2 == (((ulonglong)uVar1 / 6) * 6 & 0xfffffffe)) {
+          if (0x600000 < (int)uVar1) {
+            uVar2 = 0x600000;
           }
           Profile_Begin(0x9d);
           memcpy();
           Profile_EndInternal((double *)0x0);
-          s_vc_log.count = (int)((uVar3 & 0xffffffff) / 6);
+          s_vc_log.count = (int)((uVar2 & 0xffffffff) / 6);
         }
         FS_FreeFile(local_70[0]);
       }
     }
   }
-  __restgprlr_29();
   return;
 }
 

@@ -79,29 +79,28 @@ bdQueue<bdUnicastConnection::bdControlChunkStore>::peek
 
 // 82931EA0  clear  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdcontainers/bdlinkedlist.inl:39)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void __thiscall
 bdLinkedList<bdUnicastConnection::bdControlChunkStore>::clear
           (bdLinkedList<bdUnicastConnection::bdControlChunkStore> *this)
 
 {
-  bdReference<bdChunk> *this_00;
-  bdChunk *pbVar1;
-  int *piVar2;
+  Node *this_00;
+  Node *pNVar1;
   
-  piVar2 = (int *)__savegprlr_29(this);
-  while( true ) {
-    if (*piVar2 == 0) break;
-    this_00 = (bdReference<bdChunk> *)*piVar2;
-    pbVar1 = this_00[2].m_ptr;
-    if (this_00 != (bdReference<bdChunk> *)0x0) {
-      bdReference<bdChunk>::~bdReference<bdChunk>(this_00);
+  while (this->m_head != (Node *)0x0) {
+    this_00 = this->m_head;
+    pNVar1 = this_00->m_next;
+    if (this_00 != (Node *)0x0) {
+      bdReference<bdChunk>::~bdReference<bdChunk>((bdReference<bdChunk> *)this_00);
       bdMemory::deallocate(this_00);
     }
-    *piVar2 = (int)pbVar1;
+    this->m_head = pNVar1;
   }
-  piVar2[1] = 0;
-  piVar2[2] = 0;
-  __restgprlr_29();
+  this->m_tail = (Node *)0x0;
+  this->m_size = 0;
   return;
 }
 
@@ -737,132 +736,127 @@ void __thiscall bdUnicastConnection::disconnect(bdUnicastConnection *this)
 
 // 82931018  send  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdconnection/bdunicastconnection.cpp:206)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 bool __thiscall
 bdUnicastConnection::send(bdUnicastConnection *this,bdReference<bdMessage> param_1,bool param_2)
 
 {
-  int iVar1;
+  bool bVar6;
+  bdReference<bdBitBuffer> bVar1;
+  bdReference<bdByteBuffer> bVar2;
+  uint uVar3;
+  bdDataChunk *pbVar4;
+  bdReliableSendWindow *pbVar5;
   bool bVar7;
-  bdReference<bdBitBuffer> bVar2;
-  bdReference<bdByteBuffer> bVar3;
-  uint uVar4;
-  bdDataChunk *pbVar5;
-  bdReliableSendWindow *pbVar6;
-  bool bVar8;
-  undefined1 uVar9;
+  longlong lVar8;
+  uint *puVar9;
+  uint uVar11;
   ulonglong uVar10;
-  longlong lVar11;
-  uint *puVar12;
-  uint uVar14;
-  ulonglong uVar13;
   char in_RESERVE;
-  byte bVar15;
-  bdMessage *pbStack0000001c;
+  byte bVar12;
+  bdReference<bdMessage> bStack0000001c;
   undefined1 local_50 [8];
   bdReference<bdDataChunk> local_48 [18];
   
-  uVar10 = (ulonglong)param_2;
-  iVar1 = __savegprlr_26(this);
-  bVar8 = false;
-  pbStack0000001c = param_1.m_ptr;
-  if (*(int *)(iVar1 + 0xb0) == 3) {
-    uVar14 = 0;
-    bVar7 = bdMessage::hasPayload((bdMessage *)(param_1.m_ptr)->_padding_);
-    if (bVar7) {
-      bVar2 = bdMessage::getPayload((bdMessage *)local_50);
-      uVar14 = *(uint *)((bVar2.m_ptr)->_padding_ + 0x10);
+  bVar7 = false;
+  bStack0000001c.m_ptr = param_1.m_ptr;
+  if (this->m_state == BD_UC_ESTABLISHED) {
+    uVar11 = 0;
+    bVar6 = bdMessage::hasPayload((bdMessage *)(param_1.m_ptr)->_padding_);
+    if (bVar6) {
+      bVar1 = bdMessage::getPayload((bdMessage *)local_50);
+      uVar11 = *(uint *)((bVar1.m_ptr)->_padding_ + 0x10);
       bdReference<bdBitBuffer>::~bdReference<bdBitBuffer>((bdReference<bdBitBuffer> *)local_50);
     }
-    bVar7 = bdMessage::hasUnencryptedPayload((bdMessage *)(param_1.m_ptr)->_padding_);
-    if (bVar7) {
-      bVar3 = bdMessage::getUnencryptedPayload((bdMessage *)local_50);
-      uVar4 = bdByteBuffer::getDataSize((bdByteBuffer *)(bVar3.m_ptr)->_padding_);
-      uVar14 = uVar4 + uVar14;
+    bVar6 = bdMessage::hasUnencryptedPayload((bdMessage *)(param_1.m_ptr)->_padding_);
+    if (bVar6) {
+      bVar2 = bdMessage::getUnencryptedPayload((bdMessage *)local_50);
+      uVar3 = bdByteBuffer::getDataSize((bdByteBuffer *)(bVar2.m_ptr)->_padding_);
+      uVar11 = uVar3 + uVar11;
       bdReference<bdByteBuffer>::~bdReference<bdByteBuffer>((bdReference<bdByteBuffer> *)local_50);
     }
-    if (uVar14 < 0x4dd) {
+    if (uVar11 < 0x4dd) {
       local_48[0].m_ptr = bdMemory::allocate(0x18);
-      bVar15 = (local_48[0].m_ptr == (bdDataChunk *)0x0) << 1;
+      bVar12 = (local_48[0].m_ptr == (bdDataChunk *)0x0) << 1;
       if (local_48[0].m_ptr == (bdDataChunk *)0x0) {
-        uVar13 = 0;
+        uVar10 = 0;
       }
       else {
         local_50._0_4_ = (param_1.m_ptr)->_padding_;
         if ((ulonglong)(uint)local_50._0_4_ != 0) {
-          lVar11 = (ulonglong)(uint)local_50._0_4_ + 4;
+          lVar8 = (ulonglong)(uint)local_50._0_4_ + 4;
           do {
-            puVar12 = (uint *)lVar11;
+            puVar9 = (uint *)lVar8;
             if (in_RESERVE != '\0') {
-              uVar14 = storeWordConditionalIndexed((ulonglong)*puVar12 + 1,0,lVar11);
-              *puVar12 = uVar14;
-              bVar15 = 2;
+              uVar11 = storeWordConditionalIndexed((ulonglong)*puVar9 + 1,0,lVar8);
+              *puVar9 = uVar11;
+              bVar12 = 2;
             }
-          } while (!(bool)(bVar15 >> 1));
+          } while (!(bool)(bVar12 >> 1));
         }
-        pbVar5 = bdDataChunk::bdDataChunk
-                           (local_48[0].m_ptr,(bdMessage *)local_50,(uint)((uVar10 & 0xff) == 0));
-        uVar13 = (ulonglong)(int)pbVar5;
+        pbVar4 = bdDataChunk::bdDataChunk(local_48[0].m_ptr,(bdMessage *)local_50,(uint)!param_2);
+        uVar10 = (ulonglong)(int)pbVar4;
       }
-      pbVar5 = (bdDataChunk *)uVar13;
-      if ((uVar13 & 0xffffffff) != 0) {
+      pbVar4 = (bdDataChunk *)uVar10;
+      if ((uVar10 & 0xffffffff) != 0) {
         do {
-          puVar12 = (uint *)(uVar13 + 4);
+          puVar9 = (uint *)(uVar10 + 4);
           if (in_RESERVE != '\0') {
-            uVar14 = storeWordConditionalIndexed((ulonglong)*puVar12 + 1,0,uVar13 + 4);
-            *puVar12 = uVar14;
-            bVar15 = 2;
+            uVar11 = storeWordConditionalIndexed((ulonglong)*puVar9 + 1,0,uVar10 + 4);
+            *puVar9 = uVar11;
+            bVar12 = 2;
           }
-        } while (!(bool)(bVar15 >> 1 & 1));
+        } while (!(bool)(bVar12 >> 1 & 1));
       }
-      local_48[0].m_ptr = pbVar5;
-      if ((uVar10 & 0xff) == 0) {
-        if ((uVar13 & 0xffffffff) != 0) {
-          do {
-            puVar12 = (uint *)(uVar13 + 4);
-            if (in_RESERVE != '\0') {
-              uVar14 = storeWordConditionalIndexed((ulonglong)*puVar12 + 1,0,uVar13 + 4);
-              *puVar12 = uVar14;
-              bVar15 = 2;
-            }
-          } while (!(bool)(bVar15 >> 1 & 1));
-        }
-        local_50._4_4_ = pbVar5;
-        bdUnreliableSendWindow::add
-                  ((bdUnreliableSendWindow *)(iVar1 + 0x6c),(bdDataChunk *)(local_50 + 4));
-        bVar8 = true;
-      }
-      else {
-        if (*(int *)(iVar1 + 100) == 0) {
+      local_48[0].m_ptr = pbVar4;
+      if (param_2) {
+        if (this->m_reliableSendWindow == (bdReliableSendWindow *)0x0) {
           local_50._4_4_ = bdMemory::allocate(0xc30);
-          bVar15 = ((bdReliableSendWindow *)local_50._4_4_ == (bdReliableSendWindow *)0x0) << 1;
+          bVar12 = ((bdReliableSendWindow *)local_50._4_4_ == (bdReliableSendWindow *)0x0) << 1;
           if ((bdReliableSendWindow *)local_50._4_4_ == (bdReliableSendWindow *)0x0) {
-            pbVar6 = (bdReliableSendWindow *)0x0;
+            pbVar5 = (bdReliableSendWindow *)0x0;
           }
           else {
-            pbVar6 = bdReliableSendWindow::bdReliableSendWindow
+            pbVar5 = bdReliableSendWindow::bdReliableSendWindow
                                ((bdReliableSendWindow *)local_50._4_4_);
           }
-          *(bdReliableSendWindow **)(iVar1 + 100) = pbVar6;
+          this->m_reliableSendWindow = pbVar5;
         }
-        if ((uVar13 & 0xffffffff) != 0) {
+        if ((uVar10 & 0xffffffff) != 0) {
           do {
-            puVar12 = (uint *)(uVar13 + 4);
+            puVar9 = (uint *)(uVar10 + 4);
             if (in_RESERVE != '\0') {
-              uVar14 = storeWordConditionalIndexed((ulonglong)*puVar12 + 1,0,uVar13 + 4);
-              *puVar12 = uVar14;
-              bVar15 = 2;
+              uVar11 = storeWordConditionalIndexed((ulonglong)*puVar9 + 1,0,uVar10 + 4);
+              *puVar9 = uVar11;
+              bVar12 = 2;
             }
-          } while (!(bool)(bVar15 >> 1 & 1));
+          } while (!(bool)(bVar12 >> 1 & 1));
         }
-        local_50._4_4_ = pbVar5;
-        bVar8 = bdReliableSendWindow::add
-                          (*(bdReliableSendWindow **)(iVar1 + 100),(bdDataChunk *)(local_50 + 4));
-        if (!bVar8) {
+        local_50._4_4_ = pbVar4;
+        bVar7 = bdReliableSendWindow::add(this->m_reliableSendWindow,(bdDataChunk *)(local_50 + 4));
+        if (!bVar7) {
           bdLogMessage(BD_LOG_WARNING,"warn/","bdConnection/connections",
                        "c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdConnection\\bdUnicastConnection.cpp"
                        ,"bdUnicastConnection::send",0xf4,
                        "Failed to add message to reliable send window.");
         }
+      }
+      else {
+        if ((uVar10 & 0xffffffff) != 0) {
+          do {
+            puVar9 = (uint *)(uVar10 + 4);
+            if (in_RESERVE != '\0') {
+              uVar11 = storeWordConditionalIndexed((ulonglong)*puVar9 + 1,0,uVar10 + 4);
+              *puVar9 = uVar11;
+              bVar12 = 2;
+            }
+          } while (!(bool)(bVar12 >> 1 & 1));
+        }
+        local_50._4_4_ = pbVar4;
+        bdUnreliableSendWindow::add(&this->m_unreliableSendWindow,(bdDataChunk *)(local_50 + 4));
+        bVar7 = true;
       }
       bdReference<bdDataChunk>::~bdReference<bdDataChunk>(local_48);
     }
@@ -879,8 +873,7 @@ bdUnicastConnection::send(bdUnicastConnection *this,bdReference<bdMessage> param
                  ,"bdUnicastConnection::send",0x104,"connection not established.");
   }
   bdReference<bdMessage>::~bdReference<bdMessage>((bdReference<bdMessage> *)param_1.m_ptr);
-  uVar9 = __restgprlr_26(bVar8);
-  return (bool)uVar9;
+  return bVar7;
 }
 
 
@@ -967,6 +960,9 @@ void __thiscall bdUnicastConnection::close(bdUnicastConnection *this)
 
 // 82931EF8  insertAfter  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdcontainers/bdlinkedlist.inl:346)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void __thiscall
 bdLinkedList<bdUnicastConnection::bdControlChunkStore>::insertAfter
           (bdLinkedList<bdUnicastConnection::bdControlChunkStore> *this,void *param_1,
@@ -974,246 +970,232 @@ bdLinkedList<bdUnicastConnection::bdControlChunkStore>::insertAfter
 
 {
   bdChunk *pbVar1;
-  uint uVar2;
+  Node *pNVar2;
   uint uVar3;
   bool bVar4;
-  undefined4 *puVar5;
-  uint *puVar6;
-  ulonglong uVar7;
-  longlong lVar8;
-  uint *puVar9;
+  Node *pNVar5;
+  longlong lVar6;
+  uint *puVar7;
   char in_RESERVE;
   
-  uVar7 = (ulonglong)(int)param_1;
-  puVar5 = (undefined4 *)__savegprlr_29(this);
-  puVar6 = bdMemory::allocate(0x10);
-  if (puVar6 == (uint *)0x0) {
-    puVar6 = (uint *)0x0;
+  pNVar5 = bdMemory::allocate(0x10);
+  if (pNVar5 == (Node *)0x0) {
+    pNVar5 = (Node *)0x0;
   }
   else {
     pbVar1 = (param_2->m_chunk).m_ptr;
-    *puVar6 = (uint)pbVar1;
+    (pNVar5->m_data).m_chunk.m_ptr = pbVar1;
     if (ZEXT48(pbVar1) != 0) {
-      lVar8 = ZEXT48(pbVar1) + 4;
+      lVar6 = ZEXT48(pbVar1) + 4;
       bVar4 = false;
       do {
-        puVar9 = (uint *)lVar8;
+        puVar7 = (uint *)lVar6;
         if (in_RESERVE != '\0') {
-          uVar2 = storeWordConditionalIndexed((ulonglong)*puVar9 + 1,0,lVar8);
-          *puVar9 = uVar2;
+          uVar3 = storeWordConditionalIndexed((ulonglong)*puVar7 + 1,0,lVar6);
+          *puVar7 = uVar3;
           bVar4 = true;
         }
       } while (!bVar4);
     }
-    *(bool *)(puVar6 + 1) = param_2->m_lone;
+    (pNVar5->m_data).m_lone = param_2->m_lone;
   }
-  if ((uVar7 & 0xffffffff) == 0) {
-    puVar6[2] = 0;
-    puVar6[3] = puVar5[1];
-    if (puVar5[1] == 0) {
-      *puVar5 = puVar6;
+  if (param_1 == (void *)0x0) {
+    pNVar5->m_next = (Node *)0x0;
+    pNVar5->m_prev = this->m_tail;
+    if (this->m_tail == (Node *)0x0) {
+      this->m_head = pNVar5;
     }
     else {
-      *(uint **)(puVar5[1] + 8) = puVar6;
+      this->m_tail->m_next = pNVar5;
     }
-    puVar5[1] = puVar6;
+    this->m_tail = pNVar5;
   }
   else {
-    uVar3 = (uint)uVar7;
-    uVar2 = *(uint *)(uVar3 + 8);
-    puVar6[3] = uVar3;
-    puVar6[2] = uVar2;
-    if (*(int *)(uVar3 + 8) == 0) {
-      if ((uVar7 & 0xffffffff) != (ulonglong)(uint)puVar5[1]) {
+    pNVar2 = *(Node **)((int)param_1 + 8);
+    pNVar5->m_prev = param_1;
+    pNVar5->m_next = pNVar2;
+    if (*(int *)((int)param_1 + 8) == 0) {
+      if (param_1 != this->m_tail) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdCore/bdContainers/bdLinkedList.inl"
                         ,0x16b,0,"%s\n\t%s");
       }
-      puVar5[1] = puVar6;
+      this->m_tail = pNVar5;
     }
     else {
-      *(uint **)(*(int *)(uVar3 + 8) + 0xc) = puVar6;
+      *(Node **)(*(int *)((int)param_1 + 8) + 0xc) = pNVar5;
     }
-    *(uint **)(uVar3 + 8) = puVar6;
+    *(Node **)((int)param_1 + 8) = pNVar5;
   }
-  puVar5[2] = puVar5[2] + 1;
-  __restgprlr_29();
+  this->m_size = this->m_size + 1;
   return;
 }
 
 
 // 82932458  bdUnicastConnection  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdconnection/bdunicastconnection.cpp:349)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 bdUnicastConnection * __thiscall
 bdUnicastConnection::bdUnicastConnection(bdUnicastConnection *this,bdAddressMap *param_1)
 
 {
-  bdUnicastConnection *pbVar1;
-  ulonglong uVar2;
   bdUnicastConnection *pbStack00000014;
   
-  uVar2 = (ulonglong)(int)param_1;
-  pbVar1 = (bdUnicastConnection *)__savegprlr_28(this);
-  pbStack00000014 = pbVar1;
-  bdConnection::bdConnection((bdConnection *)pbVar1);
-  pbVar1->_padding_ = (int)&_vftable_;
-  bdConnectionStatistics::bdConnectionStatistics(&pbVar1->m_stats);
-  pbVar1->m_reliableSendWindow = (bdReliableSendWindow *)0x0;
-  pbVar1->m_reliableRecvWindow = (bdReliableReceiveWindow *)0x0;
-  bdUnreliableSendWindow::bdUnreliableSendWindow(&pbVar1->m_unreliableSendWindow);
-  bdUnreliableReceiveWindow::bdUnreliableReceiveWindow(&pbVar1->m_unreliableReceiveWindow);
-  (pbVar1->m_outQueue).m_list.m_head = (Node *)0x0;
-  (pbVar1->m_outQueue).m_list.m_tail = (Node *)0x0;
-  (pbVar1->m_outQueue).m_list.m_size = 0;
-  bdStopwatch::bdStopwatch(&pbVar1->m_sendTimer);
-  bdStopwatch::bdStopwatch(&pbVar1->m_receiveTimer);
-  pbVar1->m_state = BD_UC_CLOSED;
-  bdStopwatch::bdStopwatch(&pbVar1->m_initTimer);
-  bdStopwatch::bdStopwatch(&pbVar1->m_cookieTimer);
-  bdStopwatch::bdStopwatch(&pbVar1->m_shutdownTimer);
-  bdStopwatch::bdStopwatch(&pbVar1->m_shutdownGuard);
-  (pbVar1->m_initAckChunk).m_ptr = (bdInitAckChunk *)0x0;
-  pbVar1->m_addrMap = (bdAddressMap *)uVar2;
-  if ((uVar2 & 0xffffffff) == 0) {
+  pbStack00000014 = this;
+  bdConnection::bdConnection((bdConnection *)this);
+  this->_padding_ = (int)&_vftable_;
+  bdConnectionStatistics::bdConnectionStatistics(&this->m_stats);
+  this->m_reliableSendWindow = (bdReliableSendWindow *)0x0;
+  this->m_reliableRecvWindow = (bdReliableReceiveWindow *)0x0;
+  bdUnreliableSendWindow::bdUnreliableSendWindow(&this->m_unreliableSendWindow);
+  bdUnreliableReceiveWindow::bdUnreliableReceiveWindow(&this->m_unreliableReceiveWindow);
+  (this->m_outQueue).m_list.m_head = (Node *)0x0;
+  (this->m_outQueue).m_list.m_tail = (Node *)0x0;
+  (this->m_outQueue).m_list.m_size = 0;
+  bdStopwatch::bdStopwatch(&this->m_sendTimer);
+  bdStopwatch::bdStopwatch(&this->m_receiveTimer);
+  this->m_state = BD_UC_CLOSED;
+  bdStopwatch::bdStopwatch(&this->m_initTimer);
+  bdStopwatch::bdStopwatch(&this->m_cookieTimer);
+  bdStopwatch::bdStopwatch(&this->m_shutdownTimer);
+  bdStopwatch::bdStopwatch(&this->m_shutdownGuard);
+  (this->m_initAckChunk).m_ptr = (bdInitAckChunk *)0x0;
+  this->m_addrMap = param_1;
+  if (param_1 == (bdAddressMap *)0x0) {
     bdLogMessage(BD_LOG_ERROR,"err/","bdConnection/connections",
                  "c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdConnection\\bdUnicastConnection.cpp"
                  ,"bdUnicastConnection::bdUnicastConnection",0x160,
                  "Addr map pointer not initialised.");
   }
-  reset(pbVar1);
-  pbVar1 = (bdUnicastConnection *)__restgprlr_28(pbVar1);
-  return pbVar1;
+  reset(this);
+  return this;
 }
 
 
 // 829321C8  ~bdUnicastConnection  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdconnection/bdunicastconnection.cpp:358)
+
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 
 void __thiscall bdUnicastConnection::~bdUnicastConnection(bdUnicastConnection *this)
 
 {
   bdReliableReceiveWindow *this_00;
   bdReliableSendWindow *this_01;
-  bdConnection *this_02;
-  bdConnection *pbStack00000014;
+  bdUnicastConnection *pbStack00000014;
   
-  this_02 = (bdConnection *)__savegprlr_29(this);
-  this_02->_padding_ = (int)&_vftable_;
-  this_00 = (bdReliableReceiveWindow *)this_02[2].m_status;
-  pbStack00000014 = this_02;
+  this->_padding_ = (int)&_vftable_;
+  this_00 = this->m_reliableRecvWindow;
+  pbStack00000014 = this;
   if (this_00 != (bdReliableReceiveWindow *)0x0) {
     bdReliableReceiveWindow::~bdReliableReceiveWindow(this_00);
     bdMemory::deallocate(this_00);
   }
-  this_01 = (bdReliableSendWindow *)this_02[2].m_maxTransmissionRate;
+  this_01 = this->m_reliableSendWindow;
   if (this_01 != (bdReliableSendWindow *)0x0) {
     bdReliableSendWindow::~bdReliableSendWindow(this_01);
     bdMemory::deallocate(this_01);
   }
-  bdReference<bdInitAckChunk>::~bdReference<bdInitAckChunk>
-            ((bdReference<bdInitAckChunk> *)&this_02[6].m_status);
-  bdLinkedList<bdUnicastConnection::bdControlChunkStore>::clear
-            ((bdLinkedList<bdUnicastConnection::bdControlChunkStore> *)&this_02[4]._padding_);
-  bdUnreliableReceiveWindow::~bdUnreliableReceiveWindow
-            ((bdUnreliableReceiveWindow *)&this_02[3].m_listeners.m_capacity);
-  bdUnreliableSendWindow::~bdUnreliableSendWindow((bdUnreliableSendWindow *)(this_02 + 3));
-  bdConnection::~bdConnection(this_02);
-  __restgprlr_29();
+  bdReference<bdInitAckChunk>::~bdReference<bdInitAckChunk>(&this->m_initAckChunk);
+  bdLinkedList<bdUnicastConnection::bdControlChunkStore>::clear(&(this->m_outQueue).m_list);
+  bdUnreliableReceiveWindow::~bdUnreliableReceiveWindow(&this->m_unreliableReceiveWindow);
+  bdUnreliableSendWindow::~bdUnreliableSendWindow(&this->m_unreliableSendWindow);
+  bdConnection::~bdConnection((bdConnection *)this);
   return;
 }
 
 
 // 829348D8  receive  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdconnection/bdunicastconnection.cpp:367)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
+
 bool __thiscall bdUnicastConnection::receive(bdUnicastConnection *this,uchar *param_1,uint param_2)
 
 {
-  bdUnicastConnection *this_00;
   bool bVar3;
-  bdConnectionStatistics *this_01;
+  bdConnectionStatistics *this_00;
   int iVar1;
   uint uVar2;
   bool bVar4;
   bool bVar5;
-  undefined1 uVar6;
-  ulonglong uVar7;
-  float fVar8;
+  float fVar6;
   bdReference<bdChunk> local_70 [4];
   bdPacket abStack_60 [3];
   
-  uVar7 = (ulonglong)(int)param_2;
-  this_00 = (bdUnicastConnection *)__savegprlr_25(this);
-  fVar8 = bdStopwatch::getElapsedTimeInSeconds(&this_00->m_shutdownGuard);
-  if (fVar8 <= 5.0) {
-    if ((uVar7 & 0xffffffff) != 0) {
+  fVar6 = bdStopwatch::getElapsedTimeInSeconds(&this->m_shutdownGuard);
+  if (fVar6 <= 5.0) {
+    if (param_2 != 0) {
       bVar5 = false;
       bVar4 = false;
       bdPacket::bdPacket(abStack_60);
-      uVar2 = (uint)uVar7;
-      bVar3 = bdPacket::deserialize(abStack_60,param_1,uVar2);
-      this_01 = &this_00->m_stats;
-      bdConnectionStatistics::addBytesRecv(this_01,uVar2 + 0x1c);
+      bVar3 = bdPacket::deserialize(abStack_60,param_1,param_2);
+      this_00 = &this->m_stats;
+      bdConnectionStatistics::addBytesRecv(this_00,param_2 + 0x1c);
       if (bVar3) {
-        bdConnectionStatistics::addPacketsRecv(this_01,1);
-        bdConnectionStatistics::addPacketSizeRecv(this_01,uVar2);
+        bdConnectionStatistics::addPacketsRecv(this_00,1);
+        bdConnectionStatistics::addPacketSizeRecv(this_00,param_2);
         local_70[0].m_ptr = (bdChunk *)0x0;
         bdPacket::getNextChunk(abStack_60,local_70);
         if ((local_70[0].m_ptr != (bdChunk *)0x0) &&
            (bVar3 = bdChunk::isControl(local_70[0].m_ptr), bVar3)) {
           iVar1 = (**(code **)((local_70[0].m_ptr)->_padding_ + 4))();
           if (iVar1 == 3) {
-            bVar4 = handleInit(this_00,local_70);
+            bVar4 = handleInit(this,local_70);
           }
           else if (iVar1 == 4) {
             uVar2 = bdPacket::getVerificationTag(abStack_60);
-            bVar4 = handleInitAck(this_00,local_70,uVar2);
+            bVar4 = handleInitAck(this,local_70,uVar2);
           }
           else if (iVar1 == 0xd) {
             uVar2 = bdPacket::getVerificationTag(abStack_60);
-            bVar4 = handleCookieEcho(this_00,local_70,uVar2);
+            bVar4 = handleCookieEcho(this,local_70,uVar2);
           }
           else if (iVar1 == 0xe) {
             uVar2 = bdPacket::getVerificationTag(abStack_60);
-            bVar4 = handleCookieAck(this_00,local_70,uVar2);
+            bVar4 = handleCookieAck(this,local_70,uVar2);
           }
           if (bVar4 != false) {
             bdReference<bdChunk>::operator=(local_70,(bdChunk *)0x0);
           }
         }
         uVar2 = bdPacket::getVerificationTag(abStack_60);
-        if (this_00->m_localTag == uVar2) {
+        if (this->m_localTag == uVar2) {
           do {
             if (local_70[0].m_ptr != (bdChunk *)0x0) {
               iVar1 = (**(code **)((local_70[0].m_ptr)->_padding_ + 4))();
               if (iVar1 == 2) {
-                bVar4 = handleData(this_00,local_70);
+                bVar4 = handleData(this,local_70);
                 if ((bVar5) || (bVar5 = false, bVar4)) {
                   bVar5 = true;
                 }
               }
               else if (iVar1 == 5) {
-                bVar4 = handleSAck(this_00,local_70);
+                bVar4 = handleSAck(this,local_70);
               }
               else if (iVar1 == 6) {
-                bVar4 = handleHeartbeat(this_00,local_70);
+                bVar4 = handleHeartbeat(this,local_70);
               }
               else if (iVar1 == 7) {
-                bdStopwatch::start(&this_00->m_receiveTimer);
+                bdStopwatch::start(&this->m_receiveTimer);
                 bVar4 = true;
               }
               else if (iVar1 == 9) {
-                bVar4 = handleShutdown(this_00,local_70);
+                bVar4 = handleShutdown(this,local_70);
               }
               else if (iVar1 == 10) {
-                bVar4 = handleShutdownAck(this_00,local_70);
+                bVar4 = handleShutdownAck(this,local_70);
               }
               else if (iVar1 == 0xb) {
-                bVar4 = handleShutdownComplete(this_00,local_70);
+                bVar4 = handleShutdownComplete(this,local_70);
               }
             }
             bVar3 = bdPacket::getNextChunk(abStack_60,local_70);
           } while (bVar3);
         }
         if (bVar4 != false) {
-          bdStopwatch::start(&this_00->m_receiveTimer);
+          bdStopwatch::start(&this->m_receiveTimer);
         }
         bdReference<bdChunk>::~bdReference<bdChunk>(local_70);
       }
@@ -1223,345 +1205,339 @@ bool __thiscall bdUnicastConnection::receive(bdUnicastConnection *this,uchar *pa
                      ,"bdUnicastConnection::receive",0x1e9,
                      "bdUnicastConnection::receive(): Invalid packet received.");
       }
-      if ((this_00->m_state == BD_UC_SHUTDOWN_SENT) && (bVar5 = sendShutdown(this_00), !bVar5)) {
-        (**(code **)(this_00->_padding_ + 0x1c))(this_00);
+      if ((this->m_state == BD_UC_SHUTDOWN_SENT) && (bVar5 = sendShutdown(this), !bVar5)) {
+        (**(code **)(this->_padding_ + 0x1c))(this);
       }
       bdPacket::~bdPacket(abStack_60);
-      goto LAB_82934c34;
+      return bVar4;
     }
     bdLogMessage(BD_LOG_WARNING,"warn/","bdConnection/connections",
                  "c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdConnection\\bdUnicastConnection.cpp"
                  ,"bdUnicastConnection::receive",0x17a,"Received zero size packet passed.");
   }
   else {
-    (**(code **)(this_00->_padding_ + 0x1c))(this_00);
+    (**(code **)(this->_padding_ + 0x1c))(this);
   }
-  bVar4 = false;
-LAB_82934c34:
-  uVar6 = __restgprlr_25(bVar4);
-  return (bool)uVar6;
+  return false;
 }
 
 
 // 82933768  getDataToSend  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdconnection/bdunicastconnection.cpp:517)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
+
 uint __thiscall
 bdUnicastConnection::getDataToSend(bdUnicastConnection *this,uchar *param_1,uint param_2)
 
 {
-  bdUnicastConnection *this_00;
-  uint uVar2;
-  bool bVar7;
-  bdQueue<bdUnicastConnection::bdControlChunkStore> *this_01;
-  bdControlChunkStore *pbVar3;
-  int iVar4;
-  bdHeartbeatChunk *pbVar5;
+  bool bVar6;
+  bdQueue<bdUnicastConnection::bdControlChunkStore> *this_00;
+  bdControlChunkStore *pbVar2;
+  int iVar3;
+  bdHeartbeatChunk *pbVar4;
   ulonglong uVar1;
-  uint uVar6;
-  bdConnectionStatistics *this_02;
-  ulonglong uVar8;
-  uint *puVar10;
-  longlong lVar9;
-  bdUnicastConnectionStatus bVar11;
+  uint uVar5;
+  bdConnectionStatistics *this_01;
+  uint *puVar8;
+  longlong lVar7;
+  bdUnicastConnectionStatus bVar9;
   char in_RESERVE;
   byte in_cr0;
-  byte bVar12;
-  double dVar13;
-  float fVar14;
+  byte bVar10;
+  double dVar11;
+  float fVar12;
   bdReference<bdChunk> local_a0;
   bdReference<bdInitAckChunk> local_9c;
   bdControlChunkStore local_98;
   bdPacket bStack_90;
   bdPacket abStack_70 [3];
   
-  uVar8 = (ulonglong)(int)param_2;
-  this_00 = (bdUnicastConnection *)__savegprlr_24(this);
-  uVar2 = (uint)uVar8;
-  bdPacket::bdPacket(&bStack_90,this_00->m_peerTag,uVar2);
-  fVar14 = bdStopwatch::getElapsedTimeInSeconds(&this_00->m_shutdownGuard);
-  if (5.0 < fVar14) {
-    (**(code **)(this_00->_padding_ + 0x1c))(this_00);
-    uVar6 = 0;
+  bdPacket::bdPacket(&bStack_90,this->m_peerTag,param_2);
+  fVar12 = bdStopwatch::getElapsedTimeInSeconds(&this->m_shutdownGuard);
+  if (5.0 < fVar12) {
+    (**(code **)(this->_padding_ + 0x1c))(this);
+    uVar5 = 0;
     goto LAB_829337c4;
   }
-  if ((this_00->m_outQueue).m_list.m_size != 0) goto LAB_829338b8;
-  fVar14 = bdStopwatch::getElapsedTimeInSeconds(&this_00->m_initTimer);
-  dVar13 = 0.5;
-  if (fVar14 <= 0.5) {
-    fVar14 = bdStopwatch::getElapsedTimeInSeconds(&this_00->m_cookieTimer);
-    if (dVar13 < (double)fVar14) {
-      local_9c.m_ptr = (this_00->m_initAckChunk).m_ptr;
+  if ((this->m_outQueue).m_list.m_size != 0) goto LAB_829338b8;
+  fVar12 = bdStopwatch::getElapsedTimeInSeconds(&this->m_initTimer);
+  dVar11 = 0.5;
+  if (fVar12 <= 0.5) {
+    fVar12 = bdStopwatch::getElapsedTimeInSeconds(&this->m_cookieTimer);
+    if (dVar11 < (double)fVar12) {
+      local_9c.m_ptr = (this->m_initAckChunk).m_ptr;
       if (ZEXT48(local_9c.m_ptr) != 0) {
-        lVar9 = ZEXT48(local_9c.m_ptr) + 4;
+        lVar7 = ZEXT48(local_9c.m_ptr) + 4;
         do {
-          puVar10 = (uint *)lVar9;
+          puVar8 = (uint *)lVar7;
           if (in_RESERVE != '\0') {
-            uVar6 = storeWordConditionalIndexed((ulonglong)*puVar10 + 1,0,lVar9);
-            *puVar10 = uVar6;
+            uVar5 = storeWordConditionalIndexed((ulonglong)*puVar8 + 1,0,lVar7);
+            *puVar8 = uVar5;
             in_cr0 = 2;
           }
         } while (!(bool)(in_cr0 >> 1 & 1));
       }
-      bVar7 = sendCookieEcho(this_00,(bdInitAckChunk *)&local_9c);
+      bVar6 = sendCookieEcho(this,(bdInitAckChunk *)&local_9c);
       goto LAB_8293389c;
     }
-    fVar14 = bdStopwatch::getElapsedTimeInSeconds(&this_00->m_shutdownTimer);
-    if (dVar13 < (double)fVar14) {
-      bVar11 = this_00->m_state;
-      if (bVar11 == BD_UC_SHUTDOWN_SENT) {
-        bVar7 = sendShutdown(this_00);
+    fVar12 = bdStopwatch::getElapsedTimeInSeconds(&this->m_shutdownTimer);
+    if (dVar11 < (double)fVar12) {
+      bVar9 = this->m_state;
+      if (bVar9 == BD_UC_SHUTDOWN_SENT) {
+        bVar6 = sendShutdown(this);
       }
       else {
-        if (((int)bVar11 < 6) || (7 < (int)bVar11)) goto LAB_829338b8;
-        bVar7 = sendShutdownAck(this_00);
+        if (((int)bVar9 < 6) || (7 < (int)bVar9)) goto LAB_829338b8;
+        bVar6 = sendShutdownAck(this);
       }
       goto LAB_8293389c;
     }
   }
   else {
-    bVar7 = sendInit(this_00);
+    bVar6 = sendInit(this);
 LAB_8293389c:
-    if (bVar7 == false) {
-      (**(code **)(this_00->_padding_ + 0x1c))(this_00);
+    if (bVar6 == false) {
+      (**(code **)(this->_padding_ + 0x1c))(this);
     }
   }
 LAB_829338b8:
-  if ((this_00->m_outQueue).m_list.m_size != 0) {
-    this_01 = &this_00->m_outQueue;
+  if ((this->m_outQueue).m_list.m_size != 0) {
+    this_00 = &this->m_outQueue;
     do {
-      pbVar3 = bdQueue<bdUnicastConnection::bdControlChunkStore>::peek(this_01);
-      bVar7 = pbVar3->m_lone == false;
-      if (!bVar7) {
+      pbVar2 = bdQueue<bdUnicastConnection::bdControlChunkStore>::peek(this_00);
+      bVar6 = pbVar2->m_lone == false;
+      if (!bVar6) {
         local_a0.m_ptr = (bdChunk *)0x0;
         while( true ) {
-          bVar7 = bdPacket::getNextChunk(&bStack_90,&local_a0);
-          bVar12 = !bVar7 << 1;
-          if (!bVar7) break;
+          bVar6 = bdPacket::getNextChunk(&bStack_90,&local_a0);
+          bVar10 = !bVar6 << 1;
+          if (!bVar6) break;
           local_9c.m_ptr = (bdInitAckChunk *)local_a0.m_ptr;
           if (ZEXT48(local_a0.m_ptr) != 0) {
-            lVar9 = ZEXT48(local_a0.m_ptr) + 4;
-            bVar7 = false;
+            lVar7 = ZEXT48(local_a0.m_ptr) + 4;
+            bVar6 = false;
             do {
-              puVar10 = (uint *)lVar9;
+              puVar8 = (uint *)lVar7;
               if (in_RESERVE != '\0') {
-                uVar6 = storeWordConditionalIndexed((ulonglong)*puVar10 + 1,0,lVar9);
-                *puVar10 = uVar6;
-                bVar7 = true;
+                uVar5 = storeWordConditionalIndexed((ulonglong)*puVar8 + 1,0,lVar7);
+                *puVar8 = uVar5;
+                bVar6 = true;
               }
-            } while (!bVar7);
+            } while (!bVar6);
           }
           bdControlChunkStore::bdControlChunkStore(&local_98,(bdChunk *)&local_9c,false);
           bdLinkedList<bdUnicastConnection::bdControlChunkStore>::insertAfter
-                    (&this_01->m_list,(this_00->m_outQueue).m_list.m_tail,&local_98);
+                    (&this_00->m_list,(this->m_outQueue).m_list.m_tail,&local_98);
           bdReference<bdChunk>::~bdReference<bdChunk>(&local_98.m_chunk);
         }
-        uVar6 = this_00->m_peerTag;
-        iVar4 = (**(code **)(((pbVar3->m_chunk).m_ptr)->_padding_ + 4))();
-        if (iVar4 == 4) {
-          local_9c.m_ptr = (bdInitAckChunk *)(pbVar3->m_chunk).m_ptr;
+        uVar5 = this->m_peerTag;
+        iVar3 = (**(code **)(((pbVar2->m_chunk).m_ptr)->_padding_ + 4))();
+        if (iVar3 == 4) {
+          local_9c.m_ptr = (bdInitAckChunk *)(pbVar2->m_chunk).m_ptr;
           if (ZEXT48(local_9c.m_ptr) != 0) {
-            lVar9 = ZEXT48(local_9c.m_ptr) + 4;
+            lVar7 = ZEXT48(local_9c.m_ptr) + 4;
             do {
-              puVar10 = (uint *)lVar9;
+              puVar8 = (uint *)lVar7;
               if (in_RESERVE != '\0') {
-                uVar6 = storeWordConditionalIndexed((ulonglong)*puVar10 + 1,0,lVar9);
-                *puVar10 = uVar6;
-                bVar12 = 2;
+                uVar5 = storeWordConditionalIndexed((ulonglong)*puVar8 + 1,0,lVar7);
+                *puVar8 = uVar5;
+                bVar10 = 2;
               }
-            } while (!(bool)(bVar12 >> 1 & 1));
+            } while (!(bool)(bVar10 >> 1 & 1));
           }
-          uVar6 = bdInitAckChunk::getPeerTag(local_9c.m_ptr);
+          uVar5 = bdInitAckChunk::getPeerTag(local_9c.m_ptr);
           bdReference<bdInitAckChunk>::~bdReference<bdInitAckChunk>(&local_9c);
         }
-        bdPacket::bdPacket(abStack_70,uVar6,uVar2);
-        local_9c.m_ptr = (bdInitAckChunk *)(pbVar3->m_chunk).m_ptr;
+        bdPacket::bdPacket(abStack_70,uVar5,param_2);
+        local_9c.m_ptr = (bdInitAckChunk *)(pbVar2->m_chunk).m_ptr;
         if (ZEXT48(local_9c.m_ptr) != 0) {
-          lVar9 = ZEXT48(local_9c.m_ptr) + 4;
+          lVar7 = ZEXT48(local_9c.m_ptr) + 4;
           do {
-            puVar10 = (uint *)lVar9;
+            puVar8 = (uint *)lVar7;
             if (in_RESERVE != '\0') {
-              uVar6 = storeWordConditionalIndexed((ulonglong)*puVar10 + 1,0,lVar9);
-              *puVar10 = uVar6;
-              bVar12 = 2;
+              uVar5 = storeWordConditionalIndexed((ulonglong)*puVar8 + 1,0,lVar7);
+              *puVar8 = uVar5;
+              bVar10 = 2;
             }
-          } while (!(bool)(bVar12 >> 1 & 1));
+          } while (!(bool)(bVar10 >> 1 & 1));
         }
         bdPacket::addChunk(abStack_70,(bdChunk *)&local_9c);
-        bdQueue<bdUnicastConnection::bdControlChunkStore>::dequeue(this_01);
-        uVar6 = bdPacket::serialize(abStack_70,param_1,uVar2);
+        bdQueue<bdUnicastConnection::bdControlChunkStore>::dequeue(this_00);
+        uVar5 = bdPacket::serialize(abStack_70,param_1,param_2);
         bdPacket::~bdPacket(abStack_70);
         bdReference<bdChunk>::~bdReference<bdChunk>(&local_a0);
         goto LAB_829337c4;
       }
-      local_9c.m_ptr = (bdInitAckChunk *)(pbVar3->m_chunk).m_ptr;
+      local_9c.m_ptr = (bdInitAckChunk *)(pbVar2->m_chunk).m_ptr;
       if (ZEXT48(local_9c.m_ptr) != 0) {
-        lVar9 = ZEXT48(local_9c.m_ptr) + 4;
+        lVar7 = ZEXT48(local_9c.m_ptr) + 4;
         do {
-          puVar10 = (uint *)lVar9;
+          puVar8 = (uint *)lVar7;
           if (in_RESERVE != '\0') {
-            uVar6 = storeWordConditionalIndexed((ulonglong)*puVar10 + 1,0,lVar9);
-            *puVar10 = uVar6;
-            bVar7 = true;
+            uVar5 = storeWordConditionalIndexed((ulonglong)*puVar8 + 1,0,lVar7);
+            *puVar8 = uVar5;
+            bVar6 = true;
           }
-        } while (!bVar7);
+        } while (!bVar6);
       }
-      bVar7 = bdPacket::addChunk(&bStack_90,(bdChunk *)&local_9c);
-    } while ((bVar7) &&
-            (bdQueue<bdUnicastConnection::bdControlChunkStore>::dequeue(this_01),
-            (this_00->m_outQueue).m_list.m_size != 0));
+      bVar6 = bdPacket::addChunk(&bStack_90,(bdChunk *)&local_9c);
+    } while ((bVar6) &&
+            (bdQueue<bdUnicastConnection::bdControlChunkStore>::dequeue(this_00),
+            (this->m_outQueue).m_list.m_size != 0));
   }
-  fVar14 = bdStopwatch::getElapsedTimeInSeconds(&this_00->m_receiveTimer);
-  if ((2 < (int)this_00->m_state) && ((int)this_00->m_state < 7)) {
-    if (fVar14 <= 1800.0) {
-      if (this_00->m_reliableRecvWindow != (bdReliableReceiveWindow *)0x0) {
-        bdReliableReceiveWindow::getDataToSend(this_00->m_reliableRecvWindow,&bStack_90);
+  fVar12 = bdStopwatch::getElapsedTimeInSeconds(&this->m_receiveTimer);
+  if ((2 < (int)this->m_state) && ((int)this->m_state < 7)) {
+    if (fVar12 <= 1800.0) {
+      if (this->m_reliableRecvWindow != (bdReliableReceiveWindow *)0x0) {
+        bdReliableReceiveWindow::getDataToSend(this->m_reliableRecvWindow,&bStack_90);
       }
-      if (this_00->m_reliableSendWindow != (bdReliableSendWindow *)0x0) {
-        bdReliableSendWindow::getDataToSend(this_00->m_reliableSendWindow,&bStack_90);
+      if (this->m_reliableSendWindow != (bdReliableSendWindow *)0x0) {
+        bdReliableSendWindow::getDataToSend(this->m_reliableSendWindow,&bStack_90);
       }
-      bdUnreliableSendWindow::getDataToSend(&this_00->m_unreliableSendWindow,&bStack_90);
+      bdUnreliableSendWindow::getDataToSend(&this->m_unreliableSendWindow,&bStack_90);
     }
     else {
       bdLogMessage(BD_LOG_WARNING,"warn/","bdConnection/connections",
                    "c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdConnection\\bdUnicastConnection.cpp"
                    ,"bdUnicastConnection::getDataToSend",0x27e,
                    "bdUnicastConnection: Connection timed out.");
-      (**(code **)(this_00->_padding_ + 0x1c))(this_00);
+      (**(code **)(this->_padding_ + 0x1c))(this);
     }
   }
-  if (this_00->m_state == BD_UC_SHUTDOWN_PENDING) {
-    bVar7 = bdPacket::isEmpty(&bStack_90);
-    if ((bVar7) && (bVar7 = windowsEmpty(this_00), bVar7)) {
-      bVar7 = sendShutdown(this_00);
-      if (!bVar7) goto LAB_82933be4;
-      bVar11 = BD_UC_SHUTDOWN_SENT;
+  if (this->m_state == BD_UC_SHUTDOWN_PENDING) {
+    bVar6 = bdPacket::isEmpty(&bStack_90);
+    if ((bVar6) && (bVar6 = windowsEmpty(this), bVar6)) {
+      bVar6 = sendShutdown(this);
+      if (!bVar6) goto LAB_82933be4;
+      bVar9 = BD_UC_SHUTDOWN_SENT;
 LAB_82933bdc:
-      this_00->m_state = bVar11;
+      this->m_state = bVar9;
     }
   }
-  else if (((this_00->m_state == BD_UC_SHUTDOWN_RECEIVED) &&
-           (bVar7 = bdPacket::isEmpty(&bStack_90), bVar7)) && (bVar7 = windowsEmpty(this_00), bVar7)
-          ) {
-    bVar7 = sendShutdownAck(this_00);
-    if (bVar7) {
-      bVar11 = BD_UC_SHUTDOWN_ACK_SENT;
+  else if (((this->m_state == BD_UC_SHUTDOWN_RECEIVED) &&
+           (bVar6 = bdPacket::isEmpty(&bStack_90), bVar6)) && (bVar6 = windowsEmpty(this), bVar6)) {
+    bVar6 = sendShutdownAck(this);
+    if (bVar6) {
+      bVar9 = BD_UC_SHUTDOWN_ACK_SENT;
       goto LAB_82933bdc;
     }
 LAB_82933be4:
-    (**(code **)(this_00->_padding_ + 0x1c))(this_00);
+    (**(code **)(this->_padding_ + 0x1c))(this);
   }
-  if (((this_00->m_state == BD_UC_ESTABLISHED) && (bVar7 = bdPacket::isEmpty(&bStack_90), bVar7)) &&
-     (fVar14 = bdStopwatch::getElapsedTimeInSeconds(&this_00->m_sendTimer), 10.0 < fVar14)) {
+  if (((this->m_state == BD_UC_ESTABLISHED) && (bVar6 = bdPacket::isEmpty(&bStack_90), bVar6)) &&
+     (fVar12 = bdStopwatch::getElapsedTimeInSeconds(&this->m_sendTimer), 10.0 < fVar12)) {
     bdLogMessage(BD_LOG_INFO,"info/","bdConnection/connections",
                  "c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdConnection\\bdUnicastConnection.cpp"
                  ,"bdUnicastConnection::getDataToSend",0x2cc,
                  "Sending Heartbeat. Last send %.2fs ago.");
     local_98.m_chunk.m_ptr = bdMemory::allocate(0x14);
-    bVar12 = ((bdHeartbeatChunk *)local_98.m_chunk.m_ptr == (bdHeartbeatChunk *)0x0) << 1;
+    bVar10 = ((bdHeartbeatChunk *)local_98.m_chunk.m_ptr == (bdHeartbeatChunk *)0x0) << 1;
     if ((bdHeartbeatChunk *)local_98.m_chunk.m_ptr == (bdHeartbeatChunk *)0x0) {
       uVar1 = 0;
     }
     else {
-      pbVar5 = bdHeartbeatChunk::bdHeartbeatChunk((bdHeartbeatChunk *)local_98.m_chunk.m_ptr);
-      uVar1 = (ulonglong)(int)pbVar5;
+      pbVar4 = bdHeartbeatChunk::bdHeartbeatChunk((bdHeartbeatChunk *)local_98.m_chunk.m_ptr);
+      uVar1 = (ulonglong)(int)pbVar4;
     }
     local_9c.m_ptr = (bdInitAckChunk *)uVar1;
     if ((uVar1 & 0xffffffff) != 0) {
       do {
-        puVar10 = (uint *)(uVar1 + 4);
+        puVar8 = (uint *)(uVar1 + 4);
         if (in_RESERVE != '\0') {
-          uVar6 = storeWordConditionalIndexed((ulonglong)*puVar10 + 1,0,uVar1 + 4);
-          *puVar10 = uVar6;
-          bVar12 = 2;
+          uVar5 = storeWordConditionalIndexed((ulonglong)*puVar8 + 1,0,uVar1 + 4);
+          *puVar8 = uVar5;
+          bVar10 = 2;
         }
-      } while (!(bool)(bVar12 >> 1 & 1));
+      } while (!(bool)(bVar10 >> 1 & 1));
     }
     if ((uVar1 & 0xffffffff) != 0) {
       do {
-        puVar10 = (uint *)(uVar1 + 4);
+        puVar8 = (uint *)(uVar1 + 4);
         if (in_RESERVE != '\0') {
-          uVar6 = storeWordConditionalIndexed((ulonglong)*puVar10 + 1,0,uVar1 + 4);
-          *puVar10 = uVar6;
-          bVar12 = 2;
+          uVar5 = storeWordConditionalIndexed((ulonglong)*puVar8 + 1,0,uVar1 + 4);
+          *puVar8 = uVar5;
+          bVar10 = 2;
         }
-      } while (!(bool)(bVar12 >> 1 & 1));
+      } while (!(bool)(bVar10 >> 1 & 1));
     }
     local_98.m_chunk.m_ptr = (bdChunk *)local_9c.m_ptr;
     bdPacket::addChunk(&bStack_90,(bdChunk *)&local_9c);
     bdReference<bdHeartbeatChunk>::~bdReference<bdHeartbeatChunk>
               ((bdReference<bdHeartbeatChunk> *)&local_98);
   }
-  uVar6 = 0;
-  bVar7 = bdPacket::isEmpty(&bStack_90);
-  if (!bVar7) {
-    uVar6 = bdPacket::serialize(&bStack_90,param_1,uVar2);
-    if ((uVar8 & 0xffffffff) < (ulonglong)uVar6) {
+  uVar5 = 0;
+  bVar6 = bdPacket::isEmpty(&bStack_90);
+  if (!bVar6) {
+    uVar5 = bdPacket::serialize(&bStack_90,param_1,param_2);
+    if (param_2 < uVar5) {
       bdLogMessage(BD_LOG_ERROR,"err/","bdConnection/connections",
                    "c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdConnection\\bdUnicastConnection.cpp"
                    ,"bdUnicastConnection::getDataToSend",0x2e0,"buffer overflow!");
     }
-    bdStopwatch::start(&this_00->m_sendTimer);
-    if (uVar6 != 0) {
-      this_02 = &this_00->m_stats;
-      bdConnectionStatistics::addBytesSent(this_02,uVar6 + 0x1c);
-      bdConnectionStatistics::addPacketsSent(this_02,1);
-      bdConnectionStatistics::addPacketSizeSent(this_02,uVar6);
+    bdStopwatch::start(&this->m_sendTimer);
+    if (uVar5 != 0) {
+      this_01 = &this->m_stats;
+      bdConnectionStatistics::addBytesSent(this_01,uVar5 + 0x1c);
+      bdConnectionStatistics::addPacketsSent(this_01,1);
+      bdConnectionStatistics::addPacketSizeSent(this_01,uVar5);
     }
   }
 LAB_829337c4:
   bdPacket::~bdPacket(&bStack_90);
-  uVar2 = __restgprlr_24(uVar6);
-  return uVar2;
+  return uVar5;
 }
 
 
 // 829313C0  getMessageToDispatch  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdconnection/bdunicastconnection.cpp:759)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 bool __thiscall
 bdUnicastConnection::getMessageToDispatch(bdUnicastConnection *this,bdReference<bdMessage> *param_1)
 
 {
-  int iVar1;
+  bool bVar1;
   bdReference<bdMessage> bVar2;
-  undefined1 uVar3;
-  bool bVar4;
   bdReference<bdMessage> local_40;
   bdReference<bdDataChunk> local_3c;
   undefined1 local_38 [56];
   
-  iVar1 = __savegprlr_28(this);
-  bVar4 = false;
+  bVar1 = false;
   local_40.m_ptr = (bdMessage *)0x0;
-  if (*(int *)(iVar1 + 0x68) != 0) {
+  if (this->m_reliableRecvWindow != (bdReliableReceiveWindow *)0x0) {
     bdReliableReceiveWindow::getNextToRead((bdReliableReceiveWindow *)&local_3c);
-    bVar4 = local_3c.m_ptr != (bdDataChunk *)0x0;
-    if (bVar4) {
+    bVar1 = local_3c.m_ptr != (bdDataChunk *)0x0;
+    if (bVar1) {
       bVar2 = bdDataChunk::getMessage((bdDataChunk *)(local_38 + 4));
       bdReference<bdMessage>::operator=(&local_40,(bdReference<bdMessage> *)bVar2.m_ptr);
       bdReference<bdMessage>::~bdReference<bdMessage>((bdReference<bdMessage> *)(local_38 + 4));
     }
     bdReference<bdDataChunk>::~bdReference<bdDataChunk>(&local_3c);
   }
-  if (bVar4 == false) {
+  if (!bVar1) {
     bdUnreliableReceiveWindow::getNextToRead((bdUnreliableReceiveWindow *)local_38);
     if ((bdDataChunk *)local_38._0_4_ != (bdDataChunk *)0x0) {
       bVar2 = bdDataChunk::getMessage((bdDataChunk *)(local_38 + 4));
       bdReference<bdMessage>::operator=(&local_40,(bdReference<bdMessage> *)bVar2.m_ptr);
       bdReference<bdMessage>::~bdReference<bdMessage>((bdReference<bdMessage> *)(local_38 + 4));
-      bVar4 = true;
+      bVar1 = true;
     }
     bdReference<bdDataChunk>::~bdReference<bdDataChunk>((bdReference<bdDataChunk> *)local_38);
   }
-  if (bVar4 != false) {
+  if (bVar1) {
     bdReference<bdMessage>::operator=(param_1,&local_40);
   }
   bdReference<bdMessage>::~bdReference<bdMessage>(&local_40);
-  uVar3 = __restgprlr_28(bVar4);
-  return (bool)uVar3;
+  return bVar1;
 }
 
 
 // 82931568  handleData  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdconnection/bdunicastconnection.cpp:793)
+
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 
 bool __thiscall
 bdUnicastConnection::handleData(bdUnicastConnection *this,bdReference<bdChunk> *param_1)
@@ -1569,73 +1545,69 @@ bdUnicastConnection::handleData(bdUnicastConnection *this,bdReference<bdChunk> *
 {
   bdDataChunk *this_00;
   uint uVar1;
-  int iVar2;
-  byte bVar4;
-  bool bVar5;
-  bdReliableReceiveWindow *pbVar3;
-  undefined1 uVar6;
-  uint *puVar7;
-  ulonglong uVar8;
+  byte bVar3;
+  bool bVar4;
+  bdReliableReceiveWindow *pbVar2;
+  uint *puVar5;
+  ulonglong uVar6;
   char in_RESERVE;
   byte in_cr0;
   bdReference<bdChunk> local_30;
   bdReference<bdDataChunk> local_2c [11];
   
-  iVar2 = __savegprlr_29(this);
   this_00 = (bdDataChunk *)param_1->m_ptr;
-  uVar8 = ZEXT48(this_00);
-  if (uVar8 != 0) {
+  uVar6 = ZEXT48(this_00);
+  if (uVar6 != 0) {
     do {
-      puVar7 = (uint *)(uVar8 + 4);
+      puVar5 = (uint *)(uVar6 + 4);
       if (in_RESERVE != '\0') {
-        uVar1 = storeWordConditionalIndexed((ulonglong)*puVar7 + 1,0,uVar8 + 4);
-        *puVar7 = uVar1;
+        uVar1 = storeWordConditionalIndexed((ulonglong)*puVar5 + 1,0,uVar6 + 4);
+        *puVar5 = uVar1;
         in_cr0 = 2;
       }
     } while (!(bool)(in_cr0 >> 1 & 1));
   }
   local_30.m_ptr = (bdChunk *)this_00;
   bdReference<bdChunk>::~bdReference<bdChunk>(&local_30);
-  if (uVar8 != 0) {
+  if (uVar6 != 0) {
     do {
-      puVar7 = (uint *)(uVar8 + 4);
+      puVar5 = (uint *)(uVar6 + 4);
       if (in_RESERVE != '\0') {
-        uVar1 = storeWordConditionalIndexed((ulonglong)*puVar7 + 1,0,uVar8 + 4);
-        *puVar7 = uVar1;
+        uVar1 = storeWordConditionalIndexed((ulonglong)*puVar5 + 1,0,uVar6 + 4);
+        *puVar5 = uVar1;
         in_cr0 = 2;
       }
     } while (!(bool)(in_cr0 >> 1 & 1));
   }
   local_2c[0].m_ptr = this_00;
-  bVar4 = bdDataChunk::getFlags(this_00);
-  if ((bVar4 & 1) == 0) {
-    bVar4 = 2;
-    if (*(int *)(iVar2 + 0x68) == 0) {
+  bVar3 = bdDataChunk::getFlags(this_00);
+  if ((bVar3 & 1) == 0) {
+    bVar3 = 2;
+    if (this->m_reliableRecvWindow == (bdReliableReceiveWindow *)0x0) {
       local_30.m_ptr = bdMemory::allocate(0x21c);
-      bVar4 = ((bdReliableReceiveWindow *)local_30.m_ptr == (bdReliableReceiveWindow *)0x0) << 1;
+      bVar3 = ((bdReliableReceiveWindow *)local_30.m_ptr == (bdReliableReceiveWindow *)0x0) << 1;
       if ((bdReliableReceiveWindow *)local_30.m_ptr == (bdReliableReceiveWindow *)0x0) {
-        pbVar3 = (bdReliableReceiveWindow *)0x0;
+        pbVar2 = (bdReliableReceiveWindow *)0x0;
       }
       else {
-        pbVar3 = bdReliableReceiveWindow::bdReliableReceiveWindow
+        pbVar2 = bdReliableReceiveWindow::bdReliableReceiveWindow
                            ((bdReliableReceiveWindow *)local_30.m_ptr);
       }
-      *(bdReliableReceiveWindow **)(iVar2 + 0x68) = pbVar3;
+      this->m_reliableRecvWindow = pbVar2;
     }
     if (this_00 != (bdDataChunk *)0x0) {
       do {
-        puVar7 = (uint *)(uVar8 + 4);
+        puVar5 = (uint *)(uVar6 + 4);
         if (in_RESERVE != '\0') {
-          uVar1 = storeWordConditionalIndexed((ulonglong)*puVar7 + 1,0,uVar8 + 4);
-          *puVar7 = uVar1;
-          bVar4 = 2;
+          uVar1 = storeWordConditionalIndexed((ulonglong)*puVar5 + 1,0,uVar6 + 4);
+          *puVar5 = uVar1;
+          bVar3 = 2;
         }
-      } while (!(bool)(bVar4 >> 1 & 1));
+      } while (!(bool)(bVar3 >> 1 & 1));
     }
     local_30.m_ptr = (bdChunk *)this_00;
-    bVar5 = bdReliableReceiveWindow::add
-                      (*(bdReliableReceiveWindow **)(iVar2 + 0x68),(bdDataChunk *)&local_30);
-    if (!bVar5) {
+    bVar4 = bdReliableReceiveWindow::add(this->m_reliableRecvWindow,(bdDataChunk *)&local_30);
+    if (!bVar4) {
       bdLogMessage(BD_LOG_WARNING,"warn/","bdConnection/connections",
                    "c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdConnection\\bdUnicastConnection.cpp"
                    ,"bdUnicastConnection::handleData",0x32c,"receive window full.");
@@ -1643,122 +1615,122 @@ bdUnicastConnection::handleData(bdUnicastConnection *this,bdReference<bdChunk> *
   }
   else {
     if (this_00 != (bdDataChunk *)0x0) {
-      bVar5 = false;
+      bVar4 = false;
       do {
-        puVar7 = (uint *)(uVar8 + 4);
+        puVar5 = (uint *)(uVar6 + 4);
         if (in_RESERVE != '\0') {
-          uVar1 = storeWordConditionalIndexed((ulonglong)*puVar7 + 1,0,uVar8 + 4);
-          *puVar7 = uVar1;
-          bVar5 = true;
+          uVar1 = storeWordConditionalIndexed((ulonglong)*puVar5 + 1,0,uVar6 + 4);
+          *puVar5 = uVar1;
+          bVar4 = true;
         }
-      } while (!bVar5);
+      } while (!bVar4);
     }
     local_30.m_ptr = (bdChunk *)this_00;
-    bVar5 = bdUnreliableReceiveWindow::add
-                      ((bdUnreliableReceiveWindow *)(iVar2 + 0x80),(bdDataChunk *)&local_30);
+    bVar4 = bdUnreliableReceiveWindow::add
+                      (&this->m_unreliableReceiveWindow,(bdDataChunk *)&local_30);
   }
   bdReference<bdDataChunk>::~bdReference<bdDataChunk>(local_2c);
-  uVar6 = __restgprlr_29(bVar5);
-  return (bool)uVar6;
+  return bVar4;
 }
 
 
 // 829317D0  handleSAck  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdconnection/bdunicastconnection.cpp:820)
+
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 
 bool __thiscall
 bdUnicastConnection::handleSAck(bdUnicastConnection *this,bdReference<bdChunk> *param_1)
 
 {
   float fVar1;
-  uint uVar2;
-  float fVar3;
-  int *piVar4;
+  bdSAckChunk *pbVar2;
+  uint uVar3;
+  float fVar4;
   bool bVar5;
-  undefined1 uVar6;
-  uint *puVar7;
-  ulonglong uVar8;
+  uint *puVar6;
+  ulonglong uVar7;
   char in_RESERVE;
   byte in_cr0;
-  double dVar9;
+  double dVar8;
   bdReference<bdChunk> local_40;
   float local_3c;
   bdReference<bdSAckChunk> local_38 [14];
   
-  piVar4 = (int *)__savegprlr_28(this);
-  local_38[0].m_ptr = (bdSAckChunk *)param_1->m_ptr;
-  uVar8 = ZEXT48(local_38[0].m_ptr);
+  pbVar2 = (bdSAckChunk *)param_1->m_ptr;
+  uVar7 = ZEXT48(pbVar2);
   bVar5 = false;
-  if (uVar8 != 0) {
+  if (uVar7 != 0) {
     do {
-      puVar7 = (uint *)(uVar8 + 4);
+      puVar6 = (uint *)(uVar7 + 4);
       if (in_RESERVE != '\0') {
-        uVar2 = storeWordConditionalIndexed((ulonglong)*puVar7 + 1,0,uVar8 + 4);
-        *puVar7 = uVar2;
+        uVar3 = storeWordConditionalIndexed((ulonglong)*puVar6 + 1,0,uVar7 + 4);
+        *puVar6 = uVar3;
         in_cr0 = 2;
       }
     } while (!(bool)(in_cr0 >> 1 & 1));
   }
-  local_40.m_ptr = (bdChunk *)local_38[0].m_ptr;
+  local_40.m_ptr = (bdChunk *)pbVar2;
   bdReference<bdChunk>::~bdReference<bdChunk>(&local_40);
-  if (local_38[0].m_ptr != (bdSAckChunk *)0x0) {
+  if (pbVar2 != (bdSAckChunk *)0x0) {
     do {
-      puVar7 = (uint *)(uVar8 + 4);
+      puVar6 = (uint *)(uVar7 + 4);
       if (in_RESERVE != '\0') {
-        uVar2 = storeWordConditionalIndexed((ulonglong)*puVar7 + 1,0,uVar8 + 4);
-        *puVar7 = uVar2;
+        uVar3 = storeWordConditionalIndexed((ulonglong)*puVar6 + 1,0,uVar7 + 4);
+        *puVar6 = uVar3;
         in_cr0 = 2;
       }
     } while (!(bool)(in_cr0 >> 1 & 1));
   }
-  if (piVar4[0x19] == 0) {
+  local_38[0].m_ptr = pbVar2;
+  if (this->m_reliableSendWindow == (bdReliableSendWindow *)0x0) {
     bdLogMessage(BD_LOG_WARNING,"warn/","bdConnection/connections",
                  "c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdConnection\\bdUnicastConnection.cpp"
                  ,"bdUnicastConnection::handleSAck",0x390,"invalid stream id.");
   }
   else {
-    if (local_38[0].m_ptr != (bdSAckChunk *)0x0) {
+    if (pbVar2 != (bdSAckChunk *)0x0) {
       do {
-        puVar7 = (uint *)(uVar8 + 4);
+        puVar6 = (uint *)(uVar7 + 4);
         if (in_RESERVE != '\0') {
-          uVar2 = storeWordConditionalIndexed((ulonglong)*puVar7 + 1,0,uVar8 + 4);
-          *puVar7 = uVar2;
+          uVar3 = storeWordConditionalIndexed((ulonglong)*puVar6 + 1,0,uVar7 + 4);
+          *puVar6 = uVar3;
           in_cr0 = 2;
         }
       } while (!(bool)(in_cr0 >> 1 & 1));
     }
-    local_40.m_ptr = (bdChunk *)local_38[0].m_ptr;
+    local_40.m_ptr = (bdChunk *)pbVar2;
     bVar5 = bdReliableSendWindow::handleAck
-                      ((bdReliableSendWindow *)piVar4[0x19],(bdSAckChunk *)&local_40,&local_3c);
+                      (this->m_reliableSendWindow,(bdSAckChunk *)&local_40,&local_3c);
     if (bVar5) {
-      dVar9 = 0.0;
+      dVar8 = 0.0;
       if (0.0 < local_3c) {
-        fVar1 = (float)piVar4[0x3f];
-        if ((fVar1 == 0.0) && ((float)piVar4[0x40] == 0.0)) {
-          piVar4[0x3f] = (int)local_3c;
+        fVar1 = this->m_smoothedRTT;
+        if ((fVar1 == 0.0) && (this->m_RTTVariation == 0.0)) {
+          this->m_smoothedRTT = local_3c;
           local_3c = local_3c * 0.5;
         }
         else {
           if (fVar1 <= local_3c) {
-            fVar3 = local_3c - fVar1;
+            fVar4 = local_3c - fVar1;
           }
           else {
-            fVar3 = fVar1 - local_3c;
+            fVar4 = fVar1 - local_3c;
           }
-          piVar4[0x3f] = (int)(fVar1 * 0.875 + local_3c * 0.125);
-          local_3c = fVar3 * 0.25 + (float)piVar4[0x40] * 0.75;
+          this->m_smoothedRTT = fVar1 * 0.875 + local_3c * 0.125;
+          local_3c = fVar4 * 0.25 + this->m_RTTVariation * 0.75;
         }
-        piVar4[0x40] = (int)local_3c;
-        bdConnectionStatistics::setLastRTT
-                  ((bdConnectionStatistics *)(piVar4 + 9),(float)piVar4[0x3f]);
-        if ((double)(float)piVar4[0x40] == dVar9) {
-          piVar4[0x40] = 0x42c80000;
+        this->m_RTTVariation = local_3c;
+        bdConnectionStatistics::setLastRTT(&this->m_stats,this->m_smoothedRTT);
+        if ((double)this->m_RTTVariation == dVar8) {
+          this->m_RTTVariation = 100.0;
         }
-        fVar3 = (float)piVar4[0x40] * 2.0 + (float)piVar4[0x3f];
+        fVar4 = this->m_RTTVariation * 2.0 + this->m_smoothedRTT;
         fVar1 = 0.02;
-        if ((0.02 <= fVar3) && (fVar1 = fVar3, 2.0 < fVar3)) {
+        if ((0.02 <= fVar4) && (fVar1 = fVar4, 2.0 < fVar4)) {
           fVar1 = 2.0;
         }
-        bdReliableSendWindow::setTimeoutPeriod((bdReliableSendWindow *)piVar4[0x19],fVar1);
+        bdReliableSendWindow::setTimeoutPeriod(this->m_reliableSendWindow,fVar1);
       }
     }
     else {
@@ -1766,46 +1738,45 @@ bdUnicastConnection::handleSAck(bdUnicastConnection *this,bdReference<bdChunk> *
                    "c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdConnection\\bdUnicastConnection.cpp"
                    ,"bdUnicastConnection::handleSAck",0x38a,
                    "Unable to handle ack. disconnecting connection.");
-      (**(code **)(*piVar4 + 0x18))(piVar4);
+      (**(code **)(this->_padding_ + 0x18))(this);
     }
   }
   bdReference<bdSAckChunk>::~bdReference<bdSAckChunk>(local_38);
-  uVar6 = __restgprlr_28(bVar5);
-  return (bool)uVar6;
+  return bVar5;
 }
 
 
 // 82933EA8  handleInit  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdconnection/bdunicastconnection.cpp:919)
+
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 
 bool __thiscall
 bdUnicastConnection::handleInit(bdUnicastConnection *this,bdReference<bdChunk> *param_1)
 
 {
   bdInitChunk *this_00;
-  bdUnicastConnection *this_01;
   uint uVar1;
   bool bVar2;
-  undefined1 uVar3;
-  uint *puVar4;
-  ulonglong uVar5;
-  longlong lVar6;
+  uint *puVar3;
+  ulonglong uVar4;
+  longlong lVar5;
   char in_RESERVE;
   byte in_cr0;
-  byte bVar7;
+  byte bVar6;
   bdReference<bdChunk> local_40;
   bdReference<bdInitChunk> local_3c;
   XNKID aXStack_38 [7];
   
-  this_01 = (bdUnicastConnection *)__savegprlr_27(this);
   this_00 = (bdInitChunk *)param_1->m_ptr;
-  uVar5 = ZEXT48(this_00);
+  uVar4 = ZEXT48(this_00);
   bVar2 = false;
-  if (uVar5 != 0) {
+  if (uVar4 != 0) {
     do {
-      puVar4 = (uint *)(uVar5 + 4);
+      puVar3 = (uint *)(uVar4 + 4);
       if (in_RESERVE != '\0') {
-        uVar1 = storeWordConditionalIndexed((ulonglong)*puVar4 + 1,0,uVar5 + 4);
-        *puVar4 = uVar1;
+        uVar1 = storeWordConditionalIndexed((ulonglong)*puVar3 + 1,0,uVar4 + 4);
+        *puVar3 = uVar1;
         in_cr0 = 2;
       }
     } while (!(bool)(in_cr0 >> 1 & 1));
@@ -1814,26 +1785,26 @@ bdUnicastConnection::handleInit(bdUnicastConnection *this,bdReference<bdChunk> *
   bdReference<bdChunk>::~bdReference<bdChunk>(&local_40);
   if (this_00 != (bdInitChunk *)0x0) {
     do {
-      puVar4 = (uint *)(uVar5 + 4);
+      puVar3 = (uint *)(uVar4 + 4);
       if (in_RESERVE != '\0') {
-        uVar1 = storeWordConditionalIndexed((ulonglong)*puVar4 + 1,0,uVar5 + 4);
-        *puVar4 = uVar1;
+        uVar1 = storeWordConditionalIndexed((ulonglong)*puVar3 + 1,0,uVar4 + 4);
+        *puVar3 = uVar1;
         in_cr0 = 2;
       }
     } while (!(bool)(in_cr0 >> 1 & 1));
   }
   local_3c.m_ptr = this_00;
-  if (this_01->m_addrMap == (bdAddressMap *)0x0) {
+  if (this->m_addrMap == (bdAddressMap *)0x0) {
     bdLogMessage(BD_LOG_ERROR,"err/","bdConnection/connections",
                  "c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdConnection\\bdUnicastConnection.cpp"
                  ,"bdUnicastConnection::handleInit",0x39f,"Addr map pointer not initialised.");
   }
   else {
     bdAddressMap::addrToCommonAddr
-              (this_01->m_addrMap,(bdReference<bdAddrHandle> *)&this_01->_padding_,
-               (bdReference<bdCommonAddr> *)&this_01->_padding_,aXStack_38);
+              (this->m_addrMap,(bdReference<bdAddrHandle> *)&this->_padding_,
+               (bdReference<bdCommonAddr> *)&this->_padding_,aXStack_38);
     uVar1 = bdInitChunk::getInitTag(this_00);
-    bVar7 = (uVar1 == 0) << 1;
+    bVar6 = (uVar1 == 0) << 1;
     if (uVar1 == 0) {
       bdInitChunk::getInitTag(this_00);
       bdLogMessage(BD_LOG_WARNING,"warn/","bdConnection/connections",
@@ -1845,28 +1816,30 @@ bdUnicastConnection::handleInit(bdUnicastConnection *this,bdReference<bdChunk> *
       bdLogMessage(BD_LOG_INFO,"info/","bdConnection/connections",
                    "c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdConnection\\bdUnicastConnection.cpp"
                    ,"bdUnicastConnection::handleInit",0x3a6,"uc::handling init: m_localTag: %d");
-      local_40.m_ptr = param_1->m_ptr;
+      local_40 = (bdReference<bdChunk>)param_1->m_ptr;
       if (ZEXT48(local_40.m_ptr) != 0) {
-        lVar6 = ZEXT48(local_40.m_ptr) + 4;
+        lVar5 = ZEXT48(local_40.m_ptr) + 4;
         do {
-          puVar4 = (uint *)lVar6;
+          puVar3 = (uint *)lVar5;
           if (in_RESERVE != '\0') {
-            uVar1 = storeWordConditionalIndexed((ulonglong)*puVar4 + 1,0,lVar6);
-            *puVar4 = uVar1;
-            bVar7 = 2;
+            uVar1 = storeWordConditionalIndexed((ulonglong)*puVar3 + 1,0,lVar5);
+            *puVar3 = uVar1;
+            bVar6 = 2;
           }
-        } while (!(bool)(bVar7 >> 1 & 1));
+        } while (!(bool)(bVar6 >> 1 & 1));
       }
-      bVar2 = sendInitAck(this_01,(bdInitChunk *)&local_40);
+      bVar2 = sendInitAck(this,(bdInitChunk *)&local_40);
     }
   }
   bdReference<bdInitChunk>::~bdReference<bdInitChunk>(&local_3c);
-  uVar3 = __restgprlr_27(bVar2);
-  return (bool)uVar3;
+  return bVar2;
 }
 
 
 // 829340A0  handleInitAck  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdconnection/bdunicastconnection.cpp:948)
+
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 
 bool __thiscall
 bdUnicastConnection::handleInitAck
@@ -1874,52 +1847,48 @@ bdUnicastConnection::handleInitAck
 
 {
   bdInitAckChunk *this_00;
-  bdUnicastConnection *this_01;
   uint uVar1;
   bool bVar2;
-  undefined1 uVar3;
-  uint *puVar4;
-  undefined8 uVar5;
-  ulonglong uVar6;
+  uint *puVar3;
+  bool bVar4;
+  ulonglong uVar5;
   char in_RESERVE;
   byte in_cr0;
-  byte bVar7;
+  byte bVar6;
   bdReference<bdChunk> local_30;
   bdReference<bdInitAckChunk> local_2c [11];
   
-  uVar6 = (ulonglong)(int)param_2;
-  this_01 = (bdUnicastConnection *)__savegprlr_28(this);
-  uVar5 = 0;
-  if (this_01->m_state == BD_UC_COOKIE_WAIT) {
-    if ((uVar6 & 0xffffffff) == (ulonglong)this_01->m_localTag) {
+  bVar4 = false;
+  if (this->m_state == BD_UC_COOKIE_WAIT) {
+    if (param_2 == this->m_localTag) {
       this_00 = (bdInitAckChunk *)param_1->m_ptr;
-      uVar6 = ZEXT48(this_00);
-      if (uVar6 != 0) {
+      uVar5 = ZEXT48(this_00);
+      if (uVar5 != 0) {
         do {
-          puVar4 = (uint *)(uVar6 + 4);
+          puVar3 = (uint *)(uVar5 + 4);
           if (in_RESERVE != '\0') {
-            uVar1 = storeWordConditionalIndexed((ulonglong)*puVar4 + 1,0,uVar6 + 4);
-            *puVar4 = uVar1;
+            uVar1 = storeWordConditionalIndexed((ulonglong)*puVar3 + 1,0,uVar5 + 4);
+            *puVar3 = uVar1;
             in_cr0 = 2;
           }
         } while (!(bool)(in_cr0 >> 1 & 1));
       }
       local_30.m_ptr = (bdChunk *)this_00;
       bdReference<bdChunk>::~bdReference<bdChunk>(&local_30);
-      if (uVar6 != 0) {
+      if (uVar5 != 0) {
         do {
-          puVar4 = (uint *)(uVar6 + 4);
+          puVar3 = (uint *)(uVar5 + 4);
           if (in_RESERVE != '\0') {
-            uVar1 = storeWordConditionalIndexed((ulonglong)*puVar4 + 1,0,uVar6 + 4);
-            *puVar4 = uVar1;
+            uVar1 = storeWordConditionalIndexed((ulonglong)*puVar3 + 1,0,uVar5 + 4);
+            *puVar3 = uVar1;
             in_cr0 = 2;
           }
         } while (!(bool)(in_cr0 >> 1 & 1));
       }
       local_2c[0].m_ptr = this_00;
       uVar1 = bdInitAckChunk::getInitTag(this_00);
-      this_01->m_peerTag = uVar1;
-      bVar7 = (uVar1 == 0) << 1;
+      this->m_peerTag = uVar1;
+      bVar6 = (uVar1 == 0) << 1;
       if (uVar1 == 0) {
         bdLogMessage(BD_LOG_WARNING,"warn/","bdConnection/connections",
                      "c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdConnection\\bdUnicastConnection.cpp"
@@ -1933,20 +1902,20 @@ bdUnicastConnection::handleInitAck
                      "uc::handling init ack: m_localTag/m_peerTag: %d/%d");
         if (this_00 != (bdInitAckChunk *)0x0) {
           do {
-            puVar4 = (uint *)(uVar6 + 4);
+            puVar3 = (uint *)(uVar5 + 4);
             if (in_RESERVE != '\0') {
-              uVar1 = storeWordConditionalIndexed((ulonglong)*puVar4 + 1,0,uVar6 + 4);
-              *puVar4 = uVar1;
-              bVar7 = 2;
+              uVar1 = storeWordConditionalIndexed((ulonglong)*puVar3 + 1,0,uVar5 + 4);
+              *puVar3 = uVar1;
+              bVar6 = 2;
             }
-          } while (!(bool)(bVar7 >> 1 & 1));
+          } while (!(bool)(bVar6 >> 1 & 1));
         }
         local_30.m_ptr = (bdChunk *)this_00;
-        bVar2 = sendCookieEcho(this_01,(bdInitAckChunk *)&local_30);
+        bVar2 = sendCookieEcho(this,(bdInitAckChunk *)&local_30);
         if (bVar2) {
-          bdStopwatch::reset(&this_01->m_initTimer);
-          uVar5 = 1;
-          this_01->m_state = BD_UC_COOKIE_ECHOED;
+          bdStopwatch::reset(&this->m_initTimer);
+          bVar4 = true;
+          this->m_state = BD_UC_COOKIE_ECHOED;
         }
       }
       bdReference<bdInitAckChunk>::~bdReference<bdInitAckChunk>(local_2c);
@@ -1958,12 +1927,14 @@ bdUnicastConnection::handleInitAck
                    "Invalid verification tag on init ack.");
     }
   }
-  uVar3 = __restgprlr_28(uVar5);
-  return (bool)uVar3;
+  return bVar4;
 }
 
 
 // 82934288  handleCookieEcho  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdconnection/bdunicastconnection.cpp:990)
+
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 
 bool __thiscall
 bdUnicastConnection::handleCookieEcho
@@ -1973,34 +1944,29 @@ bdUnicastConnection::handleCookieEcho
   bdCookieEchoChunk *this_00;
   bdUnicastConnectionStatus bVar1;
   uint uVar2;
-  bdUnicastConnection *this_01;
   bool bVar7;
   uint uVar3;
   uint uVar4;
   uint uVar5;
   uint uVar6;
   bool bVar8;
-  undefined1 uVar9;
-  longlong lVar10;
-  uint *puVar11;
-  ulonglong uVar12;
+  uint *puVar9;
+  ulonglong uVar10;
   char in_RESERVE;
   byte in_cr0;
   bdReference<bdCookie> local_60;
   bdReference<bdCookieEchoChunk> local_5c;
   XNKID aXStack_58 [11];
   
-  lVar10 = (longlong)(int)param_1;
-  this_01 = (bdUnicastConnection *)__savegprlr_24(this,lVar10,param_2);
-  this_00 = (bdCookieEchoChunk *)*(undefined4 *)lVar10;
-  uVar12 = ZEXT48(this_00);
+  this_00 = (bdCookieEchoChunk *)param_1->m_ptr;
+  uVar10 = ZEXT48(this_00);
   bVar8 = false;
-  if (uVar12 != 0) {
+  if (uVar10 != 0) {
     do {
-      puVar11 = (uint *)(uVar12 + 4);
+      puVar9 = (uint *)(uVar10 + 4);
       if (in_RESERVE != '\0') {
-        uVar3 = storeWordConditionalIndexed((ulonglong)*puVar11 + 1,0,uVar12 + 4);
-        *puVar11 = uVar3;
+        uVar3 = storeWordConditionalIndexed((ulonglong)*puVar9 + 1,0,uVar10 + 4);
+        *puVar9 = uVar3;
         in_cr0 = 2;
       }
     } while (!(bool)(in_cr0 >> 1 & 1));
@@ -2009,10 +1975,10 @@ bdUnicastConnection::handleCookieEcho
   bdReference<bdChunk>::~bdReference<bdChunk>((bdReference<bdChunk> *)&local_5c);
   if (this_00 != (bdCookieEchoChunk *)0x0) {
     do {
-      puVar11 = (uint *)(uVar12 + 4);
+      puVar9 = (uint *)(uVar10 + 4);
       if (in_RESERVE != '\0') {
-        uVar3 = storeWordConditionalIndexed((ulonglong)*puVar11 + 1,0,uVar12 + 4);
-        *puVar11 = uVar3;
+        uVar3 = storeWordConditionalIndexed((ulonglong)*puVar9 + 1,0,uVar10 + 4);
+        *puVar9 = uVar3;
         in_cr0 = 2;
       }
     } while (!(bool)(in_cr0 >> 1 & 1));
@@ -2025,9 +1991,9 @@ bdUnicastConnection::handleCookieEcho
   uVar4 = bdCookie::getPeerTag(local_60.m_ptr);
   uVar5 = bdCookie::getLocalTieTag(local_60.m_ptr);
   uVar6 = bdCookie::getPeerTieTag(local_60.m_ptr);
-  bVar1 = this_01->m_state;
+  bVar1 = this->m_state;
   if (bVar1 == BD_UC_CLOSED) {
-    if (this_01->m_addrMap == (bdAddressMap *)0x0) {
+    if (this->m_addrMap == (bdAddressMap *)0x0) {
       uVar3 = 0x3f5;
 LAB_8293451c:
       bdLogMessage(BD_LOG_ERROR,"err/","bdConnection/connections",
@@ -2037,82 +2003,81 @@ LAB_8293451c:
       goto LAB_829345ac;
     }
     bdAddressMap::addrToCommonAddr
-              (this_01->m_addrMap,(bdReference<bdAddrHandle> *)&this_01->_padding_,
-               (bdReference<bdCommonAddr> *)&this_01->_padding_,aXStack_58);
-    this_01->m_localTag = uVar3;
-    this_01->m_peerTag = uVar4;
+              (this->m_addrMap,(bdReference<bdAddrHandle> *)&this->_padding_,
+               (bdReference<bdCommonAddr> *)&this->_padding_,aXStack_58);
+    this->m_localTag = uVar3;
+    this->m_peerTag = uVar4;
     bdLogMessage(BD_LOG_INFO,"info/","bdConnection/connections",
                  "c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdConnection\\bdUnicastConnection.cpp"
                  ,"bdUnicastConnection::handleCookieEcho",0x3fd,
                  "uc::handling cookie echo: m_localTag/m_peerTag: %d/%d");
-    bVar7 = sendCookieAck(this_01);
+    bVar7 = sendCookieAck(this);
     if (!bVar7) goto LAB_829345ac;
-    this_01->m_state = BD_UC_ESTABLISHED;
-    callListenersConnect(this_01,true);
+    this->m_state = BD_UC_ESTABLISHED;
+    callListenersConnect(this,true);
   }
   else {
-    uVar2 = this_01->m_localTag;
+    uVar2 = this->m_localTag;
     if (uVar2 == uVar3) {
 LAB_82934448:
-      if (this_01->m_peerTag == uVar4) {
+      if (this->m_peerTag == uVar4) {
         if (uVar2 == uVar3) {
           if (uVar6 == 0) goto LAB_82934464;
           if (uVar2 != uVar3) goto LAB_82934490;
         }
         else {
 LAB_82934490:
-          if (this_01->m_peerTag == uVar4) goto LAB_829345ac;
+          if (this->m_peerTag == uVar4) goto LAB_829345ac;
           if (uVar2 != uVar3) goto LAB_829345a8;
         }
-        if (this_01->m_peerTag != uVar4) goto LAB_829345a8;
+        if (this->m_peerTag != uVar4) goto LAB_829345a8;
         if (bVar1 != BD_UC_ESTABLISHED) {
-          this_01->m_state = BD_UC_ESTABLISHED;
-          callListenersConnect(this_01,true);
+          this->m_state = BD_UC_ESTABLISHED;
+          callListenersConnect(this,true);
         }
       }
       else {
 LAB_82934464:
         if (bVar1 != BD_UC_ESTABLISHED) {
-          this_01->m_state = BD_UC_ESTABLISHED;
-          callListenersConnect(this_01,true);
+          this->m_state = BD_UC_ESTABLISHED;
+          callListenersConnect(this,true);
         }
-        this_01->m_peerTag = uVar4;
+        this->m_peerTag = uVar4;
       }
-      bdStopwatch::reset(&this_01->m_initTimer);
-      bdStopwatch::reset(&this_01->m_cookieTimer);
-      bVar8 = sendCookieAck(this_01);
+      bdStopwatch::reset(&this->m_initTimer);
+      bdStopwatch::reset(&this->m_cookieTimer);
+      bVar8 = sendCookieAck(this);
       goto LAB_829345ac;
     }
-    if (((this_01->m_peerTag == uVar4) || (uVar2 != uVar5)) || (this_01->m_peerTag != uVar6)) {
+    if (((this->m_peerTag == uVar4) || (uVar2 != uVar5)) || (this->m_peerTag != uVar6)) {
       if (uVar2 == uVar3) goto LAB_82934448;
       goto LAB_82934490;
     }
-    reset(this_01);
-    bVar7 = sendCookieAck(this_01);
+    reset(this);
+    bVar7 = sendCookieAck(this);
     if (!bVar7) goto LAB_829345ac;
     bdLogMessage(BD_LOG_INFO,"info/","bdConnection/connections",
                  "c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdConnection\\bdUnicastConnection.cpp"
                  ,"bdUnicastConnection::handleCookieEcho",0x443,
                  "uc::handling cookie echo: m_localTag/m_peerTag: %d/%d");
-    if (this_01->m_addrMap == (bdAddressMap *)0x0) {
+    if (this->m_addrMap == (bdAddressMap *)0x0) {
       uVar3 = 0x447;
       goto LAB_8293451c;
     }
     bdAddressMap::addrToCommonAddr
-              (this_01->m_addrMap,(bdReference<bdAddrHandle> *)&this_01->_padding_,
-               (bdReference<bdCommonAddr> *)&this_01->_padding_,aXStack_58);
-    this_01->m_localTag = uVar3;
-    this_01->m_peerTag = uVar4;
-    this_01->m_state = BD_UC_ESTABLISHED;
-    callListenersReconnect(this_01);
+              (this->m_addrMap,(bdReference<bdAddrHandle> *)&this->_padding_,
+               (bdReference<bdCommonAddr> *)&this->_padding_,aXStack_58);
+    this->m_localTag = uVar3;
+    this->m_peerTag = uVar4;
+    this->m_state = BD_UC_ESTABLISHED;
+    callListenersReconnect(this);
   }
 LAB_829345a8:
   bVar8 = true;
 LAB_829345ac:
   bdReference<bdCookie>::~bdReference<bdCookie>(&local_60);
   bdReference<bdCookieEchoChunk>::~bdReference<bdCookieEchoChunk>(&local_5c);
-  uVar9 = __restgprlr_24(bVar8);
-  return (bool)uVar9;
+  return bVar8;
 }
 
 
@@ -2185,29 +2150,29 @@ bdUnicastConnection::handleHeartbeat(bdUnicastConnection *this,bdReference<bdChu
 
 // 82934698  handleShutdown  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdconnection/bdunicastconnection.cpp:1228)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 bool __thiscall
 bdUnicastConnection::handleShutdown(bdUnicastConnection *this,bdReference<bdChunk> *param_1)
 
 {
-  bdUnicastConnection *this_00;
   bool bVar1;
-  undefined1 uVar2;
   
-  this_00 = (bdUnicastConnection *)__savegprlr_26(this,param_1);
   bVar1 = false;
-  if (this_00->m_state == BD_UC_ESTABLISHED) {
+  if (this->m_state == BD_UC_ESTABLISHED) {
     bdLogMessage(BD_LOG_INFO,"info/","bdConnection/connections",
                  "c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdConnection\\bdUnicastConnection.cpp"
                  ,"bdUnicastConnection::handleShutdown",0x4d2,"uc::handling shutdown (a)");
     bVar1 = true;
-    this_00->m_state = BD_UC_SHUTDOWN_RECEIVED;
+    this->m_state = BD_UC_SHUTDOWN_RECEIVED;
   }
-  else if (this_00->m_state == BD_UC_SHUTDOWN_SENT) {
+  else if (this->m_state == BD_UC_SHUTDOWN_SENT) {
     bdLogMessage(BD_LOG_INFO,"info/","bdConnection/connections",
                  "c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdConnection\\bdUnicastConnection.cpp"
                  ,"bdUnicastConnection::handleShutdown",0x4d7,"uc::handling shutdown (b)");
-    this_00->m_state = BD_UC_SHUTDOWN_RECEIVED;
-    bVar1 = sendShutdownAck(this_00);
+    this->m_state = BD_UC_SHUTDOWN_RECEIVED;
+    bVar1 = sendShutdownAck(this);
   }
   else {
     bdLogMessage(BD_LOG_WARNING,"warn/","bdConnection/connections",
@@ -2219,10 +2184,9 @@ bdUnicastConnection::handleShutdown(bdUnicastConnection *this,bdReference<bdChun
     bdLogMessage(BD_LOG_INFO,"info/","bdConnection/connections",
                  "c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdConnection\\bdUnicastConnection.cpp"
                  ,"bdUnicastConnection::handleShutdown",0x4e2,"uc::handling shutdown.");
-    bdStopwatch::start(&this_00->m_shutdownGuard);
+    bdStopwatch::start(&this->m_shutdownGuard);
   }
-  uVar2 = __restgprlr_26(1);
-  return (bool)uVar2;
+  return true;
 }
 
 
@@ -2289,70 +2253,69 @@ bdUnicastConnection::handleShutdownComplete(bdUnicastConnection *this,bdReferenc
 
 // 82932630  sendInit  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdconnection/bdunicastconnection.cpp:1307)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 bool __thiscall bdUnicastConnection::sendInit(bdUnicastConnection *this)
 
 {
   uint uVar1;
-  int iVar3;
+  bool bVar2;
   bdInitChunk *pbVar4;
-  ulonglong uVar2;
+  ulonglong uVar3;
   bdControlChunkStore *pbVar5;
-  undefined1 uVar6;
-  longlong lVar7;
-  uint *puVar8;
+  uint *puVar6;
   char in_RESERVE;
-  byte bVar9;
+  byte bVar7;
   bdInitChunk *local_40;
   bdReference<bdInitChunk> local_3c;
   bdControlChunkStore abStack_38 [7];
   
-  iVar3 = __savegprlr_28(this);
-  if ((*(int *)(iVar3 + 0xb0) == 0) || (lVar7 = 0, *(int *)(iVar3 + 0xb0) == 1)) {
-    lVar7 = 1;
+  if ((this->m_state == BD_UC_CLOSED) || (bVar2 = false, this->m_state == BD_UC_COOKIE_WAIT)) {
+    bVar2 = true;
   }
-  if (lVar7 == 0) {
+  if (!bVar2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdConnection\\bdUnicastConnection.cpp"
                     ,0x51e,0,"%s\n\t%s");
   }
-  bVar9 = *(byte *)(iVar3 + 200);
-  *(byte *)(iVar3 + 200) = bVar9 + 1;
-  if (bVar9 < 200) {
-    bdStopwatch::start((bdStopwatch *)(iVar3 + 0xc0));
+  bVar7 = this->m_initResends;
+  this->m_initResends = bVar7 + 1;
+  if (bVar7 < 200) {
+    bdStopwatch::start(&this->m_initTimer);
     local_3c.m_ptr = bdMemory::allocate(0x28);
-    bVar9 = (local_3c.m_ptr == (bdInitChunk *)0x0) << 1;
+    bVar7 = (local_3c.m_ptr == (bdInitChunk *)0x0) << 1;
     if (local_3c.m_ptr == (bdInitChunk *)0x0) {
-      uVar2 = 0;
+      uVar3 = 0;
     }
     else {
-      pbVar4 = bdInitChunk::bdInitChunk(local_3c.m_ptr,*(uint *)(iVar3 + 0xb4),15000);
-      uVar2 = (ulonglong)(int)pbVar4;
+      pbVar4 = bdInitChunk::bdInitChunk(local_3c.m_ptr,this->m_localTag,15000);
+      uVar3 = (ulonglong)(int)pbVar4;
     }
-    local_40 = (bdInitChunk *)uVar2;
-    if ((uVar2 & 0xffffffff) != 0) {
+    local_40 = (bdInitChunk *)uVar3;
+    if ((uVar3 & 0xffffffff) != 0) {
       do {
-        puVar8 = (uint *)(uVar2 + 4);
+        puVar6 = (uint *)(uVar3 + 4);
         if (in_RESERVE != '\0') {
-          uVar1 = storeWordConditionalIndexed((ulonglong)*puVar8 + 1,0,uVar2 + 4);
-          *puVar8 = uVar1;
-          bVar9 = 2;
+          uVar1 = storeWordConditionalIndexed((ulonglong)*puVar6 + 1,0,uVar3 + 4);
+          *puVar6 = uVar1;
+          bVar7 = 2;
         }
-      } while (!(bool)(bVar9 >> 1 & 1));
+      } while (!(bool)(bVar7 >> 1 & 1));
     }
-    if ((uVar2 & 0xffffffff) != 0) {
+    if ((uVar3 & 0xffffffff) != 0) {
       do {
-        puVar8 = (uint *)(uVar2 + 4);
+        puVar6 = (uint *)(uVar3 + 4);
         if (in_RESERVE != '\0') {
-          uVar1 = storeWordConditionalIndexed((ulonglong)*puVar8 + 1,0,uVar2 + 4);
-          *puVar8 = uVar1;
-          bVar9 = 2;
+          uVar1 = storeWordConditionalIndexed((ulonglong)*puVar6 + 1,0,uVar3 + 4);
+          *puVar6 = uVar1;
+          bVar7 = 2;
         }
-      } while (!(bool)(bVar9 >> 1 & 1));
+      } while (!(bool)(bVar7 >> 1 & 1));
     }
     local_3c.m_ptr = local_40;
     pbVar5 = bdControlChunkStore::bdControlChunkStore(abStack_38,(bdChunk *)&local_40,false);
     bdLinkedList<bdUnicastConnection::bdControlChunkStore>::insertAfter
-              ((bdLinkedList<bdUnicastConnection::bdControlChunkStore> *)(iVar3 + 0x94),
-               *(void **)(iVar3 + 0x98),pbVar5);
+              (&(this->m_outQueue).m_list,(this->m_outQueue).m_list.m_tail,pbVar5);
     bdReference<bdChunk>::~bdReference<bdChunk>(&abStack_38[0].m_chunk);
     bdLogMessage(BD_LOG_INFO,"info/","bdConnection/connections",
                  "c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdConnection\\bdUnicastConnection.cpp"
@@ -2360,148 +2323,140 @@ bool __thiscall bdUnicastConnection::sendInit(bdUnicastConnection *this)
     bdReference<bdInitChunk>::~bdReference<bdInitChunk>(&local_3c);
   }
   else {
-    lVar7 = 0;
+    bVar2 = false;
   }
-  uVar6 = __restgprlr_28(lVar7);
-  return (bool)uVar6;
+  return bVar2;
 }
 
 
 // 82932838  sendInitAck  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdconnection/bdunicastconnection.cpp:1332)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
+
 bool __thiscall
 bdUnicastConnection::sendInitAck(bdUnicastConnection *this,bdReference<bdInitChunk> param_1)
 
 {
-  uint uVar1;
-  int iVar3;
+  bdUnicastConnectionStatus bVar1;
+  bool bVar2;
   uint uVar4;
   bdTrulyRandomImpl *this_00;
   uint uVar5;
   bdCookie *pbVar6;
   bdInitAckChunk *pbVar7;
-  ulonglong uVar2;
+  ulonglong uVar3;
   bdControlChunkStore *pbVar8;
-  undefined1 uVar9;
-  uint *puVar10;
-  longlong lVar11;
-  uint uVar12;
-  uint uVar13;
+  uint *puVar9;
+  uint uVar10;
+  uint uVar11;
   char in_RESERVE;
-  byte bVar14;
-  bdInitChunk *pbStack0000001c;
+  byte bVar12;
+  bdReference<bdInitChunk> bStack0000001c;
   bdCookie *local_60;
   bdInitAckChunk *local_5c;
   bdReference<bdInitAckChunk> local_58;
   bdReference<bdCookie> local_54;
   bdControlChunkStore abStack_50 [10];
   
-  iVar3 = __savegprlr_24(this);
-  lVar11 = 1;
-  pbStack0000001c = param_1.m_ptr;
+  bVar2 = true;
+  bStack0000001c.m_ptr = param_1.m_ptr;
   uVar4 = bdInitChunk::getInitTag((bdInitChunk *)(param_1.m_ptr)->_padding_);
-  uVar1 = *(uint *)(iVar3 + 0xb0);
+  bVar1 = this->m_state;
   uVar5 = 0;
-  uVar13 = 0;
-  uVar12 = 0;
-  if (uVar1 == 0) {
+  uVar11 = 0;
+  uVar10 = 0;
+  if (bVar1 == BD_UC_CLOSED) {
 LAB_829328c0:
-    *(uint *)(iVar3 + 0xb8) = uVar4;
+    this->m_peerTag = uVar4;
   }
-  else if (uVar1 != 1) {
-    if (2 < uVar1) {
-      if (uVar1 < 7) {
+  else if (bVar1 != BD_UC_COOKIE_WAIT) {
+    if (BD_UC_COOKIE_ECHOED < bVar1) {
+      if (bVar1 < BD_UC_SHUTDOWN_ACK_SENT) {
         this_00 = bdSingleton<bdTrulyRandomImpl>::getInstance();
         uVar5 = bdTrulyRandomImpl::getRandomUInt(this_00);
-        uVar13 = *(uint *)(iVar3 + 0xb8);
-        uVar12 = *(uint *)(iVar3 + 0xb4);
+        uVar11 = this->m_peerTag;
+        uVar10 = this->m_localTag;
         goto LAB_829328c8;
       }
-      if (uVar1 != 7) {
-        lVar11 = 0;
+      if (bVar1 != BD_UC_SHUTDOWN_ACK_SENT) {
+        bVar2 = false;
         goto LAB_829328c8;
       }
       goto LAB_829328c0;
     }
-    uVar13 = *(uint *)(iVar3 + 0xb8);
-    uVar12 = *(uint *)(iVar3 + 0xb4);
+    uVar11 = this->m_peerTag;
+    uVar10 = this->m_localTag;
   }
-  uVar5 = *(uint *)(iVar3 + 0xb4);
+  uVar5 = this->m_localTag;
 LAB_829328c8:
-  if (lVar11 == 0) {
-    bdLogMessage(BD_LOG_WARNING,"warn/","bdConnection/connections",
-                 "c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdConnection\\bdUnicastConnection.cpp"
-                 ,"bdUnicastConnection::sendInitAck",0x57c,
-                 "bdUnicastConnection::sendInitAck(): Failed to send init ack.");
-  }
-  else {
+  if (bVar2) {
     local_54.m_ptr = bdMemory::allocate(0x18);
-    bVar14 = (local_54.m_ptr == (bdCookie *)0x0) << 1;
+    bVar12 = (local_54.m_ptr == (bdCookie *)0x0) << 1;
     if (local_54.m_ptr == (bdCookie *)0x0) {
-      uVar2 = 0;
+      uVar3 = 0;
     }
     else {
-      pbVar6 = bdCookie::bdCookie(local_54.m_ptr,uVar5,uVar4,uVar12,uVar13);
-      uVar2 = (ulonglong)(int)pbVar6;
+      pbVar6 = bdCookie::bdCookie(local_54.m_ptr,uVar5,uVar4,uVar10,uVar11);
+      uVar3 = (ulonglong)(int)pbVar6;
     }
-    if ((uVar2 & 0xffffffff) != 0) {
+    if ((uVar3 & 0xffffffff) != 0) {
       do {
-        puVar10 = (uint *)(uVar2 + 4);
+        puVar9 = (uint *)(uVar3 + 4);
         if (in_RESERVE != '\0') {
-          uVar1 = storeWordConditionalIndexed((ulonglong)*puVar10 + 1,0,uVar2 + 4);
-          *puVar10 = uVar1;
-          bVar14 = 2;
+          uVar11 = storeWordConditionalIndexed((ulonglong)*puVar9 + 1,0,uVar3 + 4);
+          *puVar9 = uVar11;
+          bVar12 = 2;
         }
-      } while (!(bool)(bVar14 >> 1 & 1));
+      } while (!(bool)(bVar12 >> 1 & 1));
     }
-    local_54.m_ptr = (bdCookie *)uVar2;
+    local_54.m_ptr = (bdCookie *)uVar3;
     local_58.m_ptr = bdMemory::allocate(0x28);
-    bVar14 = (local_58.m_ptr == (bdInitAckChunk *)0x0) << 1;
+    bVar12 = (local_58.m_ptr == (bdInitAckChunk *)0x0) << 1;
     if (local_58.m_ptr == (bdInitAckChunk *)0x0) {
-      uVar2 = 0;
+      uVar3 = 0;
     }
     else {
-      if ((uVar2 & 0xffffffff) != 0) {
+      if ((uVar3 & 0xffffffff) != 0) {
         do {
-          puVar10 = (uint *)(uVar2 + 4);
+          puVar9 = (uint *)(uVar3 + 4);
           if (in_RESERVE != '\0') {
-            uVar1 = storeWordConditionalIndexed((ulonglong)*puVar10 + 1,0,uVar2 + 4);
-            *puVar10 = uVar1;
-            bVar14 = 2;
+            uVar11 = storeWordConditionalIndexed((ulonglong)*puVar9 + 1,0,uVar3 + 4);
+            *puVar9 = uVar11;
+            bVar12 = 2;
           }
-        } while (!(bool)(bVar14 >> 1));
+        } while (!(bool)(bVar12 >> 1));
       }
-      local_60 = (bdCookie *)uVar2;
+      local_60 = (bdCookie *)uVar3;
       pbVar7 = bdInitAckChunk::bdInitAckChunk
                          (local_58.m_ptr,uVar5,(bdCookie *)&local_60,15000,uVar4);
-      uVar2 = (ulonglong)(int)pbVar7;
+      uVar3 = (ulonglong)(int)pbVar7;
     }
-    local_5c = (bdInitAckChunk *)uVar2;
-    if ((uVar2 & 0xffffffff) != 0) {
+    local_5c = (bdInitAckChunk *)uVar3;
+    if ((uVar3 & 0xffffffff) != 0) {
       do {
-        puVar10 = (uint *)(uVar2 + 4);
+        puVar9 = (uint *)(uVar3 + 4);
         if (in_RESERVE != '\0') {
-          uVar1 = storeWordConditionalIndexed((ulonglong)*puVar10 + 1,0,uVar2 + 4);
-          *puVar10 = uVar1;
-          bVar14 = 2;
+          uVar11 = storeWordConditionalIndexed((ulonglong)*puVar9 + 1,0,uVar3 + 4);
+          *puVar9 = uVar11;
+          bVar12 = 2;
         }
-      } while (!(bool)(bVar14 >> 1 & 1));
+      } while (!(bool)(bVar12 >> 1 & 1));
     }
-    if ((uVar2 & 0xffffffff) != 0) {
+    if ((uVar3 & 0xffffffff) != 0) {
       do {
-        puVar10 = (uint *)(uVar2 + 4);
+        puVar9 = (uint *)(uVar3 + 4);
         if (in_RESERVE != '\0') {
-          uVar1 = storeWordConditionalIndexed((ulonglong)*puVar10 + 1,0,uVar2 + 4);
-          *puVar10 = uVar1;
-          bVar14 = 2;
+          uVar11 = storeWordConditionalIndexed((ulonglong)*puVar9 + 1,0,uVar3 + 4);
+          *puVar9 = uVar11;
+          bVar12 = 2;
         }
-      } while (!(bool)(bVar14 >> 1 & 1));
+      } while (!(bool)(bVar12 >> 1 & 1));
     }
     local_58.m_ptr = local_5c;
     pbVar8 = bdControlChunkStore::bdControlChunkStore(abStack_50,(bdChunk *)&local_5c,true);
     bdLinkedList<bdUnicastConnection::bdControlChunkStore>::insertAfter
-              ((bdLinkedList<bdUnicastConnection::bdControlChunkStore> *)(iVar3 + 0x94),
-               *(void **)(iVar3 + 0x98),pbVar8);
+              (&(this->m_outQueue).m_list,(this->m_outQueue).m_list.m_tail,pbVar8);
     bdReference<bdChunk>::~bdReference<bdChunk>(&abStack_50[0].m_chunk);
     bdLogMessage(BD_LOG_INFO,"info/","bdConnection/connections",
                  "c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdConnection\\bdUnicastConnection.cpp"
@@ -2510,97 +2465,100 @@ LAB_829328c8:
     bdReference<bdInitAckChunk>::~bdReference<bdInitAckChunk>(&local_58);
     bdReference<bdCookie>::~bdReference<bdCookie>(&local_54);
   }
+  else {
+    bdLogMessage(BD_LOG_WARNING,"warn/","bdConnection/connections",
+                 "c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdConnection\\bdUnicastConnection.cpp"
+                 ,"bdUnicastConnection::sendInitAck",0x57c,
+                 "bdUnicastConnection::sendInitAck(): Failed to send init ack.");
+  }
   bdReference<bdInitChunk>::~bdReference<bdInitChunk>((bdReference<bdInitChunk> *)param_1.m_ptr);
-  uVar9 = __restgprlr_24(lVar11);
-  return (bool)uVar9;
+  return bVar2;
 }
 
 
 // 82932BB8  sendCookieEcho  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdconnection/bdunicastconnection.cpp:1411)
+
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 
 bool __thiscall
 bdUnicastConnection::sendCookieEcho(bdUnicastConnection *this,bdReference<bdInitAckChunk> param_1)
 
 {
   uint uVar1;
-  int iVar3;
-  bool bVar6;
-  bdCookieEchoChunk *pbVar4;
+  bool bVar5;
+  bdCookieEchoChunk *pbVar3;
   ulonglong uVar2;
-  bdControlChunkStore *pbVar5;
-  undefined1 uVar7;
-  longlong lVar8;
-  uint *puVar9;
-  undefined8 uVar10;
+  bdControlChunkStore *pbVar4;
+  longlong lVar6;
+  uint *puVar7;
+  bool bVar8;
   char in_RESERVE;
-  byte bVar11;
-  bdInitAckChunk *pbStack0000001c;
+  byte bVar9;
+  bdReference<bdInitAckChunk> bStack0000001c;
   bdReference<bdByteBuffer> local_40;
   bdByteBuffer *local_3c;
   bdCookieEchoChunk *local_38;
   bdReference<bdCookieEchoChunk> local_34;
   bdControlChunkStore abStack_30 [6];
   
-  iVar3 = __savegprlr_28(this);
-  uVar10 = 1;
-  pbStack0000001c = param_1.m_ptr;
+  bVar8 = true;
+  bStack0000001c.m_ptr = param_1.m_ptr;
   bdReference<bdInitAckChunk>::operator=
-            ((bdReference<bdInitAckChunk> *)(iVar3 + 0xf8),
-             (bdReference<bdInitAckChunk> *)param_1.m_ptr);
-  bVar11 = *(byte *)(iVar3 + 0xd8);
-  *(byte *)(iVar3 + 0xd8) = bVar11 + 1;
-  if (bVar11 < 200) {
+            (&this->m_initAckChunk,(bdReference<bdInitAckChunk> *)param_1.m_ptr);
+  bVar9 = this->m_cookieResends;
+  this->m_cookieResends = bVar9 + 1;
+  if (bVar9 < 200) {
     local_40.m_ptr = (bdByteBuffer *)0x0;
-    bVar6 = bdInitAckChunk::getCookie((bdInitAckChunk *)(param_1.m_ptr)->_padding_,&local_40);
-    if (bVar6) {
-      bdStopwatch::start((bdStopwatch *)(iVar3 + 0xd0));
+    bVar5 = bdInitAckChunk::getCookie((bdInitAckChunk *)(param_1.m_ptr)->_padding_,&local_40);
+    if (bVar5) {
+      bdStopwatch::start(&this->m_cookieTimer);
       local_34.m_ptr = bdMemory::allocate(0x1c);
-      bVar11 = (local_34.m_ptr == (bdCookieEchoChunk *)0x0) << 1;
+      bVar9 = (local_34.m_ptr == (bdCookieEchoChunk *)0x0) << 1;
       if (local_34.m_ptr == (bdCookieEchoChunk *)0x0) {
         uVar2 = 0;
       }
       else {
         local_3c = local_40.m_ptr;
         if (ZEXT48(local_40.m_ptr) != 0) {
-          lVar8 = ZEXT48(local_40.m_ptr) + 4;
+          lVar6 = ZEXT48(local_40.m_ptr) + 4;
           do {
-            puVar9 = (uint *)lVar8;
+            puVar7 = (uint *)lVar6;
             if (in_RESERVE != '\0') {
-              uVar1 = storeWordConditionalIndexed((ulonglong)*puVar9 + 1,0,lVar8);
-              *puVar9 = uVar1;
-              bVar11 = 2;
+              uVar1 = storeWordConditionalIndexed((ulonglong)*puVar7 + 1,0,lVar6);
+              *puVar7 = uVar1;
+              bVar9 = 2;
             }
-          } while (!(bool)(bVar11 >> 1));
+          } while (!(bool)(bVar9 >> 1));
         }
-        pbVar4 = bdCookieEchoChunk::bdCookieEchoChunk(local_34.m_ptr,(bdByteBuffer *)&local_3c);
-        uVar2 = (ulonglong)(int)pbVar4;
+        pbVar3 = bdCookieEchoChunk::bdCookieEchoChunk(local_34.m_ptr,(bdByteBuffer *)&local_3c);
+        uVar2 = (ulonglong)(int)pbVar3;
       }
       local_38 = (bdCookieEchoChunk *)uVar2;
       if ((uVar2 & 0xffffffff) != 0) {
         do {
-          puVar9 = (uint *)(uVar2 + 4);
+          puVar7 = (uint *)(uVar2 + 4);
           if (in_RESERVE != '\0') {
-            uVar1 = storeWordConditionalIndexed((ulonglong)*puVar9 + 1,0,uVar2 + 4);
-            *puVar9 = uVar1;
-            bVar11 = 2;
+            uVar1 = storeWordConditionalIndexed((ulonglong)*puVar7 + 1,0,uVar2 + 4);
+            *puVar7 = uVar1;
+            bVar9 = 2;
           }
-        } while (!(bool)(bVar11 >> 1 & 1));
+        } while (!(bool)(bVar9 >> 1 & 1));
       }
       if ((uVar2 & 0xffffffff) != 0) {
         do {
-          puVar9 = (uint *)(uVar2 + 4);
+          puVar7 = (uint *)(uVar2 + 4);
           if (in_RESERVE != '\0') {
-            uVar1 = storeWordConditionalIndexed((ulonglong)*puVar9 + 1,0,uVar2 + 4);
-            *puVar9 = uVar1;
-            bVar11 = 2;
+            uVar1 = storeWordConditionalIndexed((ulonglong)*puVar7 + 1,0,uVar2 + 4);
+            *puVar7 = uVar1;
+            bVar9 = 2;
           }
-        } while (!(bool)(bVar11 >> 1 & 1));
+        } while (!(bool)(bVar9 >> 1 & 1));
       }
       local_34.m_ptr = local_38;
-      pbVar5 = bdControlChunkStore::bdControlChunkStore(abStack_30,(bdChunk *)&local_38,false);
+      pbVar4 = bdControlChunkStore::bdControlChunkStore(abStack_30,(bdChunk *)&local_38,false);
       bdLinkedList<bdUnicastConnection::bdControlChunkStore>::insertAfter
-                ((bdLinkedList<bdUnicastConnection::bdControlChunkStore> *)(iVar3 + 0x94),
-                 *(void **)(iVar3 + 0x98),pbVar5);
+                (&(this->m_outQueue).m_list,(this->m_outQueue).m_list.m_tail,pbVar4);
       bdReference<bdChunk>::~bdReference<bdChunk>(&abStack_30[0].m_chunk);
       bdLogMessage(BD_LOG_INFO,"info/","bdConnection/connections",
                    "c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdConnection\\bdUnicastConnection.cpp"
@@ -2611,12 +2569,11 @@ bdUnicastConnection::sendCookieEcho(bdUnicastConnection *this,bdReference<bdInit
     bdReference<bdByteBuffer>::~bdReference<bdByteBuffer>(&local_40);
   }
   else {
-    uVar10 = 0;
+    bVar8 = false;
   }
   bdReference<bdInitAckChunk>::~bdReference<bdInitAckChunk>
             ((bdReference<bdInitAckChunk> *)param_1.m_ptr);
-  uVar7 = __restgprlr_28(uVar10);
-  return (bool)uVar7;
+  return bVar8;
 }
 
 
@@ -2682,30 +2639,30 @@ bool __thiscall bdUnicastConnection::sendCookieAck(bdUnicastConnection *this)
 
 // 82932FE8  sendHeartbeatAck  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdconnection/bdunicastconnection.cpp:1461)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 bool __thiscall
 bdUnicastConnection::sendHeartbeatAck(bdUnicastConnection *this,bdReference<bdInitChunk> param_1)
 
 {
   uint uVar1;
-  bdUnicastConnection *this_00;
   bool bVar5;
   bdHeartbeatAckChunk *pbVar3;
   ulonglong uVar2;
   bdControlChunkStore *pbVar4;
-  undefined1 uVar6;
-  uint *puVar7;
+  uint *puVar6;
   char in_RESERVE;
-  byte bVar8;
-  bdInitChunk *pbStack0000001c;
+  byte bVar7;
+  bdReference<bdInitChunk> bStack0000001c;
   bdHeartbeatAckChunk *local_30;
   bdReference<bdHeartbeatAckChunk> local_2c;
   bdControlChunkStore abStack_28 [5];
   
-  this_00 = (bdUnicastConnection *)__savegprlr_29(this);
-  pbStack0000001c = param_1.m_ptr;
-  if (((this_00->m_outQueue).m_list.m_size == 0) && (bVar5 = windowsEmpty(this_00), bVar5)) {
+  bStack0000001c.m_ptr = param_1.m_ptr;
+  if (((this->m_outQueue).m_list.m_size == 0) && (bVar5 = windowsEmpty(this), bVar5)) {
     local_2c.m_ptr = bdMemory::allocate(0x14);
-    bVar8 = (local_2c.m_ptr == (bdHeartbeatAckChunk *)0x0) << 1;
+    bVar7 = (local_2c.m_ptr == (bdHeartbeatAckChunk *)0x0) << 1;
     if (local_2c.m_ptr == (bdHeartbeatAckChunk *)0x0) {
       uVar2 = 0;
     }
@@ -2716,182 +2673,177 @@ bdUnicastConnection::sendHeartbeatAck(bdUnicastConnection *this,bdReference<bdIn
     local_30 = (bdHeartbeatAckChunk *)uVar2;
     if ((uVar2 & 0xffffffff) != 0) {
       do {
-        puVar7 = (uint *)(uVar2 + 4);
+        puVar6 = (uint *)(uVar2 + 4);
         if (in_RESERVE != '\0') {
-          uVar1 = storeWordConditionalIndexed((ulonglong)*puVar7 + 1,0,uVar2 + 4);
-          *puVar7 = uVar1;
-          bVar8 = 2;
+          uVar1 = storeWordConditionalIndexed((ulonglong)*puVar6 + 1,0,uVar2 + 4);
+          *puVar6 = uVar1;
+          bVar7 = 2;
         }
-      } while (!(bool)(bVar8 >> 1 & 1));
+      } while (!(bool)(bVar7 >> 1 & 1));
     }
     if ((uVar2 & 0xffffffff) != 0) {
       do {
-        puVar7 = (uint *)(uVar2 + 4);
+        puVar6 = (uint *)(uVar2 + 4);
         if (in_RESERVE != '\0') {
-          uVar1 = storeWordConditionalIndexed((ulonglong)*puVar7 + 1,0,uVar2 + 4);
-          *puVar7 = uVar1;
-          bVar8 = 2;
+          uVar1 = storeWordConditionalIndexed((ulonglong)*puVar6 + 1,0,uVar2 + 4);
+          *puVar6 = uVar1;
+          bVar7 = 2;
         }
-      } while (!(bool)(bVar8 >> 1 & 1));
+      } while (!(bool)(bVar7 >> 1 & 1));
     }
     local_2c.m_ptr = local_30;
     pbVar4 = bdControlChunkStore::bdControlChunkStore(abStack_28,(bdChunk *)&local_30,false);
     bdLinkedList<bdUnicastConnection::bdControlChunkStore>::insertAfter
-              (&(this_00->m_outQueue).m_list,(this_00->m_outQueue).m_list.m_tail,pbVar4);
+              (&(this->m_outQueue).m_list,(this->m_outQueue).m_list.m_tail,pbVar4);
     bdReference<bdChunk>::~bdReference<bdChunk>(&abStack_28[0].m_chunk);
     bdReference<bdHeartbeatAckChunk>::~bdReference<bdHeartbeatAckChunk>(&local_2c);
   }
   bdReference<bdInitChunk>::~bdReference<bdInitChunk>((bdReference<bdInitChunk> *)param_1.m_ptr);
-  uVar6 = __restgprlr_29(1);
-  return (bool)uVar6;
+  return true;
 }
 
 
 // 82933190  sendShutdown  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdconnection/bdunicastconnection.cpp:1474)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 bool __thiscall bdUnicastConnection::sendShutdown(bdUnicastConnection *this)
 
 {
   uint uVar1;
-  int iVar3;
-  bdShutdownChunk *pbVar4;
+  bdShutdownChunk *pbVar3;
   ulonglong uVar2;
-  bdControlChunkStore *pbVar5;
-  undefined1 uVar6;
-  uint *puVar7;
-  undefined8 uVar8;
+  bdControlChunkStore *pbVar4;
+  uint *puVar5;
+  bool bVar6;
   char in_RESERVE;
-  byte bVar9;
+  byte bVar7;
   bdChunk *local_30;
   bdReference<bdChunk> local_2c;
   bdControlChunkStore abStack_28 [5];
   
-  iVar3 = __savegprlr_29(this);
-  bVar9 = *(byte *)(iVar3 + 0xe8);
-  uVar8 = 1;
-  *(byte *)(iVar3 + 0xe8) = bVar9 + 1;
-  if (bVar9 < 5) {
+  bVar7 = this->m_shutdownResends;
+  bVar6 = true;
+  this->m_shutdownResends = bVar7 + 1;
+  if (bVar7 < 5) {
     bdLogMessage(BD_LOG_INFO,"info/","bdConnection/connections",
                  "c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdConnection\\bdUnicastConnection.cpp"
                  ,"bdUnicastConnection::sendShutdown",0x5c7,"uc::sending shutdown (%u/%u)");
     local_2c.m_ptr = bdMemory::allocate(0x14);
-    bVar9 = ((bdShutdownChunk *)local_2c.m_ptr == (bdShutdownChunk *)0x0) << 1;
+    bVar7 = ((bdShutdownChunk *)local_2c.m_ptr == (bdShutdownChunk *)0x0) << 1;
     if ((bdShutdownChunk *)local_2c.m_ptr == (bdShutdownChunk *)0x0) {
       uVar2 = 0;
     }
     else {
-      pbVar4 = bdShutdownChunk::bdShutdownChunk((bdShutdownChunk *)local_2c.m_ptr);
-      uVar2 = (ulonglong)(int)pbVar4;
+      pbVar3 = bdShutdownChunk::bdShutdownChunk((bdShutdownChunk *)local_2c.m_ptr);
+      uVar2 = (ulonglong)(int)pbVar3;
     }
     local_30 = (bdChunk *)uVar2;
     if ((uVar2 & 0xffffffff) != 0) {
       do {
-        puVar7 = (uint *)(uVar2 + 4);
+        puVar5 = (uint *)(uVar2 + 4);
         if (in_RESERVE != '\0') {
-          uVar1 = storeWordConditionalIndexed((ulonglong)*puVar7 + 1,0,uVar2 + 4);
-          *puVar7 = uVar1;
-          bVar9 = 2;
+          uVar1 = storeWordConditionalIndexed((ulonglong)*puVar5 + 1,0,uVar2 + 4);
+          *puVar5 = uVar1;
+          bVar7 = 2;
         }
-      } while (!(bool)(bVar9 >> 1 & 1));
+      } while (!(bool)(bVar7 >> 1 & 1));
     }
     if ((uVar2 & 0xffffffff) != 0) {
       do {
-        puVar7 = (uint *)(uVar2 + 4);
+        puVar5 = (uint *)(uVar2 + 4);
         if (in_RESERVE != '\0') {
-          uVar1 = storeWordConditionalIndexed((ulonglong)*puVar7 + 1,0,uVar2 + 4);
-          *puVar7 = uVar1;
-          bVar9 = 2;
+          uVar1 = storeWordConditionalIndexed((ulonglong)*puVar5 + 1,0,uVar2 + 4);
+          *puVar5 = uVar1;
+          bVar7 = 2;
         }
-      } while (!(bool)(bVar9 >> 1 & 1));
+      } while (!(bool)(bVar7 >> 1 & 1));
     }
     local_2c.m_ptr = local_30;
-    pbVar5 = bdControlChunkStore::bdControlChunkStore(abStack_28,(bdChunk *)&local_30,false);
+    pbVar4 = bdControlChunkStore::bdControlChunkStore(abStack_28,(bdChunk *)&local_30,false);
     bdLinkedList<bdUnicastConnection::bdControlChunkStore>::insertAfter
-              ((bdLinkedList<bdUnicastConnection::bdControlChunkStore> *)(iVar3 + 0x94),
-               *(void **)(iVar3 + 0x98),pbVar5);
+              (&(this->m_outQueue).m_list,(this->m_outQueue).m_list.m_tail,pbVar4);
     bdReference<bdChunk>::~bdReference<bdChunk>(&abStack_28[0].m_chunk);
-    bdStopwatch::start((bdStopwatch *)(iVar3 + 0xe0));
+    bdStopwatch::start(&this->m_shutdownTimer);
     bdReference<bdChunk>::~bdReference<bdChunk>(&local_2c);
   }
   else {
-    uVar8 = 0;
+    bVar6 = false;
   }
-  uVar6 = __restgprlr_29(uVar8);
-  return (bool)uVar6;
+  return bVar6;
 }
 
 
 // 82933350  sendShutdownAck  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdconnection/bdunicastconnection.cpp:1494)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 bool __thiscall bdUnicastConnection::sendShutdownAck(bdUnicastConnection *this)
 
 {
   uint uVar1;
-  int iVar3;
-  bdShutdownAckChunk *pbVar4;
+  bdShutdownAckChunk *pbVar3;
   ulonglong uVar2;
-  bdControlChunkStore *pbVar5;
-  undefined1 uVar6;
-  uint *puVar7;
-  undefined8 uVar8;
+  bdControlChunkStore *pbVar4;
+  uint *puVar5;
+  bool bVar6;
   char in_RESERVE;
-  byte bVar9;
+  byte bVar7;
   bdChunk *local_30;
   bdReference<bdChunk> local_2c;
   bdControlChunkStore abStack_28 [5];
   
-  iVar3 = __savegprlr_29(this);
-  bVar9 = *(byte *)(iVar3 + 0xe8);
-  uVar8 = 1;
-  *(byte *)(iVar3 + 0xe8) = bVar9 + 1;
-  if (bVar9 < 5) {
+  bVar7 = this->m_shutdownResends;
+  bVar6 = true;
+  this->m_shutdownResends = bVar7 + 1;
+  if (bVar7 < 5) {
     bdLogMessage(BD_LOG_INFO,"info/","bdConnection/connections",
                  "c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdConnection\\bdUnicastConnection.cpp"
                  ,"bdUnicastConnection::sendShutdownAck",0x5db,"uc::sending shutdown ack (%u/%u)");
     local_2c.m_ptr = bdMemory::allocate(0x14);
-    bVar9 = ((bdShutdownAckChunk *)local_2c.m_ptr == (bdShutdownAckChunk *)0x0) << 1;
+    bVar7 = ((bdShutdownAckChunk *)local_2c.m_ptr == (bdShutdownAckChunk *)0x0) << 1;
     if ((bdShutdownAckChunk *)local_2c.m_ptr == (bdShutdownAckChunk *)0x0) {
       uVar2 = 0;
     }
     else {
-      pbVar4 = bdShutdownAckChunk::bdShutdownAckChunk((bdShutdownAckChunk *)local_2c.m_ptr);
-      uVar2 = (ulonglong)(int)pbVar4;
+      pbVar3 = bdShutdownAckChunk::bdShutdownAckChunk((bdShutdownAckChunk *)local_2c.m_ptr);
+      uVar2 = (ulonglong)(int)pbVar3;
     }
     local_30 = (bdChunk *)uVar2;
     if ((uVar2 & 0xffffffff) != 0) {
       do {
-        puVar7 = (uint *)(uVar2 + 4);
+        puVar5 = (uint *)(uVar2 + 4);
         if (in_RESERVE != '\0') {
-          uVar1 = storeWordConditionalIndexed((ulonglong)*puVar7 + 1,0,uVar2 + 4);
-          *puVar7 = uVar1;
-          bVar9 = 2;
+          uVar1 = storeWordConditionalIndexed((ulonglong)*puVar5 + 1,0,uVar2 + 4);
+          *puVar5 = uVar1;
+          bVar7 = 2;
         }
-      } while (!(bool)(bVar9 >> 1 & 1));
+      } while (!(bool)(bVar7 >> 1 & 1));
     }
     if ((uVar2 & 0xffffffff) != 0) {
       do {
-        puVar7 = (uint *)(uVar2 + 4);
+        puVar5 = (uint *)(uVar2 + 4);
         if (in_RESERVE != '\0') {
-          uVar1 = storeWordConditionalIndexed((ulonglong)*puVar7 + 1,0,uVar2 + 4);
-          *puVar7 = uVar1;
-          bVar9 = 2;
+          uVar1 = storeWordConditionalIndexed((ulonglong)*puVar5 + 1,0,uVar2 + 4);
+          *puVar5 = uVar1;
+          bVar7 = 2;
         }
-      } while (!(bool)(bVar9 >> 1 & 1));
+      } while (!(bool)(bVar7 >> 1 & 1));
     }
     local_2c.m_ptr = local_30;
-    pbVar5 = bdControlChunkStore::bdControlChunkStore(abStack_28,(bdChunk *)&local_30,false);
+    pbVar4 = bdControlChunkStore::bdControlChunkStore(abStack_28,(bdChunk *)&local_30,false);
     bdLinkedList<bdUnicastConnection::bdControlChunkStore>::insertAfter
-              ((bdLinkedList<bdUnicastConnection::bdControlChunkStore> *)(iVar3 + 0x94),
-               *(void **)(iVar3 + 0x98),pbVar5);
+              (&(this->m_outQueue).m_list,(this->m_outQueue).m_list.m_tail,pbVar4);
     bdReference<bdChunk>::~bdReference<bdChunk>(&abStack_28[0].m_chunk);
-    bdStopwatch::start((bdStopwatch *)(iVar3 + 0xe0));
+    bdStopwatch::start(&this->m_shutdownTimer);
     bdReference<bdChunk>::~bdReference<bdChunk>(&local_2c);
   }
   else {
-    uVar8 = 0;
+    bVar6 = false;
   }
-  uVar6 = __restgprlr_29(uVar8);
-  return (bool)uVar6;
+  return bVar6;
 }
 
 
@@ -2957,53 +2909,56 @@ bool __thiscall bdUnicastConnection::sendShutdownComplete(bdUnicastConnection *t
 
 // 82932330  reset  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdconnection/bdunicastconnection.cpp:1528)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void __thiscall bdUnicastConnection::reset(bdUnicastConnection *this)
 
 {
   bdReliableReceiveWindow *this_00;
   bdReliableSendWindow *this_01;
-  int iVar1;
   bdTrulyRandomImpl *this_02;
-  uint uVar2;
+  uint uVar1;
   
-  iVar1 = __savegprlr_29(this);
-  this_00 = *(bdReliableReceiveWindow **)(iVar1 + 0x68);
+  this_00 = this->m_reliableRecvWindow;
   if (this_00 != (bdReliableReceiveWindow *)0x0) {
     bdReliableReceiveWindow::~bdReliableReceiveWindow(this_00);
     bdMemory::deallocate(this_00);
   }
-  this_01 = *(bdReliableSendWindow **)(iVar1 + 100);
+  this_01 = this->m_reliableSendWindow;
   if (this_01 != (bdReliableSendWindow *)0x0) {
     bdReliableSendWindow::~bdReliableSendWindow(this_01);
     bdMemory::deallocate(this_01);
   }
-  *(undefined4 *)(iVar1 + 0x68) = 0;
-  *(undefined4 *)(iVar1 + 100) = 0;
-  if (*(int *)(iVar1 + 0x9c) != 0) {
+  uVar1 = (this->m_outQueue).m_list.m_size;
+  this->m_reliableRecvWindow = (bdReliableReceiveWindow *)0x0;
+  this->m_reliableSendWindow = (bdReliableSendWindow *)0x0;
+  if (uVar1 != 0) {
     do {
-      bdQueue<bdUnicastConnection::bdControlChunkStore>::dequeue
-                ((bdQueue<bdUnicastConnection::bdControlChunkStore> *)(iVar1 + 0x94));
-    } while (*(int *)(iVar1 + 0x9c) != 0);
+      bdQueue<bdUnicastConnection::bdControlChunkStore>::dequeue(&this->m_outQueue);
+    } while ((this->m_outQueue).m_list.m_size != 0);
   }
-  bdUnreliableReceiveWindow::reset((bdUnreliableReceiveWindow *)(iVar1 + 0x80));
-  bdUnreliableSendWindow::reset((bdUnreliableSendWindow *)(iVar1 + 0x6c));
-  bdStopwatch::start((bdStopwatch *)(iVar1 + 0xa0));
-  bdStopwatch::start((bdStopwatch *)(iVar1 + 0xa8));
-  *(undefined1 *)(iVar1 + 200) = 0;
-  *(undefined1 *)(iVar1 + 0xd8) = 0;
-  *(undefined1 *)(iVar1 + 0xe8) = 0;
+  bdUnreliableReceiveWindow::reset(&this->m_unreliableReceiveWindow);
+  bdUnreliableSendWindow::reset(&this->m_unreliableSendWindow);
+  bdStopwatch::start(&this->m_sendTimer);
+  bdStopwatch::start(&this->m_receiveTimer);
+  this->m_initResends = '\0';
+  this->m_cookieResends = '\0';
+  this->m_shutdownResends = '\0';
   this_02 = bdSingleton<bdTrulyRandomImpl>::getInstance();
-  uVar2 = bdTrulyRandomImpl::getRandomUInt(this_02);
-  *(uint *)(iVar1 + 0xb4) = uVar2;
-  *(undefined4 *)(iVar1 + 0xb8) = 0;
-  *(undefined4 *)(iVar1 + 0xfc) = 0;
-  *(undefined4 *)(iVar1 + 0x100) = 0;
-  __restgprlr_29();
+  uVar1 = bdTrulyRandomImpl::getRandomUInt(this_02);
+  this->m_localTag = uVar1;
+  this->m_peerTag = 0;
+  this->m_smoothedRTT = 0.0;
+  this->m_RTTVariation = 0.0;
   return;
 }
 
 
 // 82931A70  callListenersConnect  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdconnection/bdunicastconnection.cpp:1559)
+
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 
 void __thiscall bdUnicastConnection::callListenersConnect(bdUnicastConnection *this,bool param_1)
 
@@ -3011,145 +2966,135 @@ void __thiscall bdUnicastConnection::callListenersConnect(bdUnicastConnection *t
   bdConnectionListener *pbVar1;
   code *pcVar2;
   uint uVar3;
-  int iVar4;
-  longlong lVar5;
-  bdConnectionListener **ppbVar6;
-  ulonglong uVar7;
-  int *piVar8;
-  uint uVar9;
-  uint *puVar10;
+  bdConnectionListener **ppbVar4;
+  bdUnicastConnection **ppbVar5;
+  uint uVar6;
+  longlong lVar7;
+  uint *puVar8;
   char in_RESERVE;
   byte in_cr0;
-  int local_40;
-  int local_3c [15];
+  bdUnicastConnection *local_40;
+  bdUnicastConnection *local_3c [15];
   
-  uVar7 = (ulonglong)param_1;
-  lVar5 = __savegprlr_27(this);
-  iVar4 = (int)lVar5;
-  uVar9 = 0;
-  if (*(int *)(iVar4 + 0x18) != 0) {
-    lVar5 = lVar5 + 4;
+  uVar6 = 0;
+  if (this->_padding_ != 0) {
+    lVar7 = (longlong)(int)this + 4;
     do {
-      puVar10 = (uint *)lVar5;
-      if ((uVar7 & 0xff) == 0) {
-        ppbVar6 = bdFastArray<bdConnectionListener_*>::operator[]
-                            ((bdFastArray<bdConnectionListener_*> *)(iVar4 + 0x10),uVar9);
-        pbVar1 = *ppbVar6;
+      puVar8 = (uint *)lVar7;
+      if (param_1) {
+        ppbVar4 = bdFastArray<bdConnectionListener_*>::operator[]
+                            ((bdFastArray<bdConnectionListener_*> *)&this->_padding_,uVar6);
+        pbVar1 = *ppbVar4;
         do {
           if (in_RESERVE != '\0') {
-            uVar3 = storeWordConditionalIndexed((ulonglong)*puVar10 + 1,0,lVar5);
-            *puVar10 = uVar3;
+            uVar3 = storeWordConditionalIndexed((ulonglong)*puVar8 + 1,0,lVar7);
+            *puVar8 = uVar3;
             in_cr0 = 2;
           }
         } while (!(bool)(in_cr0 >> 1 & 1));
-        piVar8 = local_3c;
-        pcVar2 = *(code **)((int)*pbVar1 + 8);
-        local_3c[0] = iVar4;
+        ppbVar5 = &local_40;
+        pcVar2 = *(code **)((int)*pbVar1 + 4);
+        local_40 = this;
       }
       else {
-        ppbVar6 = bdFastArray<bdConnectionListener_*>::operator[]
-                            ((bdFastArray<bdConnectionListener_*> *)(iVar4 + 0x10),uVar9);
-        pbVar1 = *ppbVar6;
+        ppbVar4 = bdFastArray<bdConnectionListener_*>::operator[]
+                            ((bdFastArray<bdConnectionListener_*> *)&this->_padding_,uVar6);
+        pbVar1 = *ppbVar4;
         do {
           if (in_RESERVE != '\0') {
-            uVar3 = storeWordConditionalIndexed((ulonglong)*puVar10 + 1,0,lVar5);
-            *puVar10 = uVar3;
+            uVar3 = storeWordConditionalIndexed((ulonglong)*puVar8 + 1,0,lVar7);
+            *puVar8 = uVar3;
             in_cr0 = 2;
           }
         } while (!(bool)(in_cr0 >> 1 & 1));
-        piVar8 = &local_40;
-        pcVar2 = *(code **)((int)*pbVar1 + 4);
-        local_40 = iVar4;
+        ppbVar5 = local_3c;
+        pcVar2 = *(code **)((int)*pbVar1 + 8);
+        local_3c[0] = this;
       }
-      (*pcVar2)(pbVar1,piVar8);
-      uVar9 = uVar9 + 1;
-    } while (uVar9 < *(uint *)(iVar4 + 0x18));
+      (*pcVar2)(pbVar1,ppbVar5);
+      uVar6 = uVar6 + 1;
+    } while (uVar6 < (uint)this->_padding_);
   }
-  __restgprlr_27();
   return;
 }
 
 
 // 82931B40  callListenersDisconnect  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdconnection/bdunicastconnection.cpp:1574)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void __thiscall bdUnicastConnection::callListenersDisconnect(bdUnicastConnection *this)
 
 {
   bdConnectionListener *pbVar1;
   uint uVar2;
-  int iVar3;
-  longlong lVar4;
-  bdConnectionListener **ppbVar5;
-  uint *puVar6;
-  uint uVar7;
+  bdConnectionListener **ppbVar3;
+  uint *puVar4;
+  uint uVar5;
   char in_RESERVE;
   byte in_cr0;
-  int local_30 [12];
+  bdUnicastConnection *local_30 [12];
   
-  lVar4 = __savegprlr_28(this);
-  iVar3 = (int)lVar4;
-  uVar7 = 0;
-  if (*(int *)(iVar3 + 0x18) != 0) {
+  uVar5 = 0;
+  if (this->_padding_ != 0) {
     do {
-      ppbVar5 = bdFastArray<bdConnectionListener_*>::operator[]
-                          ((bdFastArray<bdConnectionListener_*> *)(iVar3 + 0x10),uVar7);
-      pbVar1 = *ppbVar5;
+      ppbVar3 = bdFastArray<bdConnectionListener_*>::operator[]
+                          ((bdFastArray<bdConnectionListener_*> *)&this->_padding_,uVar5);
+      pbVar1 = *ppbVar3;
       do {
-        puVar6 = (uint *)(lVar4 + 4);
+        puVar4 = (uint *)((longlong)(int)this + 4);
         if (in_RESERVE != '\0') {
-          uVar2 = storeWordConditionalIndexed((ulonglong)*puVar6 + 1,0,lVar4 + 4);
-          *puVar6 = uVar2;
+          uVar2 = storeWordConditionalIndexed((ulonglong)*puVar4 + 1,0,(longlong)(int)this + 4);
+          *puVar4 = uVar2;
           in_cr0 = 2;
         }
       } while (!(bool)(in_cr0 >> 1 & 1));
-      local_30[0] = iVar3;
+      local_30[0] = this;
       (**(code **)((int)*pbVar1 + 0xc))(pbVar1,local_30);
-      uVar7 = uVar7 + 1;
-    } while (uVar7 < *(uint *)(iVar3 + 0x18));
+      uVar5 = uVar5 + 1;
+    } while (uVar5 < (uint)this->_padding_);
   }
-  __restgprlr_28();
   return;
 }
 
 
 // 82931BC8  callListenersReconnect  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdconnection/bdunicastconnection.cpp:1582)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void __thiscall bdUnicastConnection::callListenersReconnect(bdUnicastConnection *this)
 
 {
   bdConnectionListener *pbVar1;
   uint uVar2;
-  int iVar3;
-  longlong lVar4;
-  bdConnectionListener **ppbVar5;
-  uint *puVar6;
-  uint uVar7;
+  bdConnectionListener **ppbVar3;
+  uint *puVar4;
+  uint uVar5;
   char in_RESERVE;
   byte in_cr0;
-  int local_30 [12];
+  bdUnicastConnection *local_30 [12];
   
-  lVar4 = __savegprlr_28(this);
-  iVar3 = (int)lVar4;
-  uVar7 = 0;
-  if (*(int *)(iVar3 + 0x18) != 0) {
+  uVar5 = 0;
+  if (this->_padding_ != 0) {
     do {
-      ppbVar5 = bdFastArray<bdConnectionListener_*>::operator[]
-                          ((bdFastArray<bdConnectionListener_*> *)(iVar3 + 0x10),uVar7);
-      pbVar1 = *ppbVar5;
+      ppbVar3 = bdFastArray<bdConnectionListener_*>::operator[]
+                          ((bdFastArray<bdConnectionListener_*> *)&this->_padding_,uVar5);
+      pbVar1 = *ppbVar3;
       do {
-        puVar6 = (uint *)(lVar4 + 4);
+        puVar4 = (uint *)((longlong)(int)this + 4);
         if (in_RESERVE != '\0') {
-          uVar2 = storeWordConditionalIndexed((ulonglong)*puVar6 + 1,0,lVar4 + 4);
-          *puVar6 = uVar2;
+          uVar2 = storeWordConditionalIndexed((ulonglong)*puVar4 + 1,0,(longlong)(int)this + 4);
+          *puVar4 = uVar2;
           in_cr0 = 2;
         }
       } while (!(bool)(in_cr0 >> 1 & 1));
-      local_30[0] = iVar3;
+      local_30[0] = this;
       (**(code **)((int)*pbVar1 + 0x10))(pbVar1,local_30);
-      uVar7 = uVar7 + 1;
-    } while (uVar7 < *(uint *)(iVar3 + 0x18));
+      uVar5 = uVar5 + 1;
+    } while (uVar5 < (uint)this->_padding_);
   }
-  __restgprlr_28();
   return;
 }
 

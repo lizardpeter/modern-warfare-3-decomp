@@ -123,6 +123,8 @@ SessionData * Lobby_GetSearchSession(void)
 
 // 82362628  Lobby_GetHostData  (client_mp/lobbycommon.cpp:91)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
@@ -130,9 +132,6 @@ SessionData * Lobby_GetSearchSession(void)
 PartyHostData * Lobby_GetHostData(void)
 
 {
-  PartyHostData *pPVar1;
-  
-  __savegprlr_29();
   if (g_lobbyData.party.inParty == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\lobbycommon.cpp",
                     0x5c,0,"%s");
@@ -141,8 +140,7 @@ PartyHostData * Lobby_GetHostData(void)
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\lobbycommon.cpp",
                     0x5d,0,"%s");
   }
-  pPVar1 = (PartyHostData *)__restgprlr_29(0xffffffff82b4e160);
-  return pPVar1;
+  return (PartyHostData *)&g_lobbyData.party.specificData;
 }
 
 

@@ -27,66 +27,63 @@ void __thiscall bdPreCopyResult::~bdPreCopyResult(bdPreCopyResult *this)
 
 // 82913700  deserialize  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdcontentstreaming/bdprecopyresult.cpp:22)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 bool __thiscall
 bdPreCopyResult::deserialize(bdPreCopyResult *this,bdReference<bdByteBuffer> param_1)
 
 {
   uint uVar1;
-  int iVar2;
-  char cVar3;
+  char cVar2;
+  bool bVar3;
   bool bVar4;
-  bool bVar5;
-  undefined1 uVar6;
-  longlong lVar7;
-  uint *puVar9;
-  undefined8 uVar8;
+  longlong lVar5;
+  uint *puVar6;
   char in_RESERVE;
   byte in_cr0;
-  bdByteBuffer *pbStack0000001c;
+  bdReference<bdByteBuffer> bStack0000001c;
   undefined1 local_40 [64];
   
-  iVar2 = __savegprlr_27(this);
-  *(undefined1 *)(iVar2 + 8) = 0;
-  *(undefined4 *)(iVar2 + 0x188) = 0;
-  pbStack0000001c = param_1.m_ptr;
-  if (*(int *)(iVar2 + 4) == 0) {
-    cVar3 = '\0';
+  this->m_destination[0] = '\0';
+  this->m_fileSize = 0;
+  bStack0000001c.m_ptr = param_1.m_ptr;
+  if (this->m_source == (bdURL *)0x0) {
+    cVar2 = '\0';
   }
   else {
     if ((ulonglong)(uint)(param_1.m_ptr)->_padding_ != 0) {
-      lVar7 = (ulonglong)(uint)(param_1.m_ptr)->_padding_ + 4;
+      lVar5 = (ulonglong)(uint)(param_1.m_ptr)->_padding_ + 4;
       do {
-        puVar9 = (uint *)lVar7;
+        puVar6 = (uint *)lVar5;
         if (in_RESERVE != '\0') {
-          uVar1 = storeWordConditionalIndexed((ulonglong)*puVar9 + 1,0,lVar7);
-          *puVar9 = uVar1;
+          uVar1 = storeWordConditionalIndexed((ulonglong)*puVar6 + 1,0,lVar5);
+          *puVar6 = uVar1;
           in_cr0 = 2;
         }
       } while (!(bool)(in_cr0 >> 1 & 1));
     }
-    cVar3 = (**(code **)(**(int **)(iVar2 + 4) + 4))(*(int **)(iVar2 + 4),local_40);
+    cVar2 = (**(code **)(this->m_source->_padding_ + 4))(this->m_source,local_40);
   }
-  if (cVar3 == '\0') {
+  if (cVar2 == '\0') {
 LAB_829137b4:
-    bVar5 = false;
+    bVar4 = false;
   }
   else {
-    bVar4 = bdByteBuffer::readString
-                      ((bdByteBuffer *)(param_1.m_ptr)->_padding_,(char *)(iVar2 + 8),0x180);
-    bVar5 = true;
-    if (!bVar4) goto LAB_829137b4;
+    bVar3 = bdByteBuffer::readString
+                      ((bdByteBuffer *)(param_1.m_ptr)->_padding_,this->m_destination,0x180);
+    bVar4 = true;
+    if (!bVar3) goto LAB_829137b4;
   }
-  if (bVar5) {
-    bVar5 = bdByteBuffer::readUInt32
-                      ((bdByteBuffer *)(param_1.m_ptr)->_padding_,(uint *)(iVar2 + 0x188));
-    uVar8 = 1;
-    if (bVar5) goto LAB_829137dc;
+  if (bVar4) {
+    bVar4 = bdByteBuffer::readUInt32((bdByteBuffer *)(param_1.m_ptr)->_padding_,&this->m_fileSize);
+    bVar3 = true;
+    if (bVar4) goto LAB_829137dc;
   }
-  uVar8 = 0;
+  bVar3 = false;
 LAB_829137dc:
   bdReference<bdByteBuffer>::~bdReference<bdByteBuffer>((bdReference<bdByteBuffer> *)param_1.m_ptr);
-  uVar6 = __restgprlr_27(uVar8);
-  return (bool)uVar6;
+  return bVar3;
 }
 
 

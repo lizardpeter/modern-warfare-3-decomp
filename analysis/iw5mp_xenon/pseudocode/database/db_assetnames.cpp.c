@@ -1562,6 +1562,8 @@ int DB_SizeofXAsset<AddonMapEnts>(void)
 
 // 823A1DB8  DB_GetXAssetHeaderName  (database/db_assetnames.cpp:801)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "nodeType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
@@ -1570,32 +1572,27 @@ int DB_SizeofXAsset<AddonMapEnts>(void)
 char * DB_GetXAssetHeaderName(int param_1,XAssetHeader *param_2)
 
 {
-  int iVar1;
-  char *pcVar2;
-  ulonglong uVar3;
+  char *pcVar1;
   
-  uVar3 = (ulonglong)(int)param_2;
-  iVar1 = __savegprlr_27(param_1);
-  if ((uVar3 & 0xffffffff) == 0) {
+  if (param_2 == (XAssetHeader *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_assetnames.cpp",
                     0x324,0,"%s");
   }
-  if (DB_XAssetGetNameHandler[iVar1] == (_func___cdecl_char_ptr_XAssetHeader_ptr *)0x0) {
+  if (DB_XAssetGetNameHandler[param_1] == (_func___cdecl_char_ptr_XAssetHeader_ptr *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_assetnames.cpp",
                     0x325,0,"%s");
   }
-  if (((XAssetHeader *)uVar3)->physPreset == (PhysPreset *)0x0) {
+  if (param_2->physPreset == (PhysPreset *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_assetnames.cpp",
                     0x326,0,"%s");
   }
-  pcVar2 = (*DB_XAssetGetNameHandler[iVar1])((XAssetHeader *)uVar3);
-  if (pcVar2 == (char *)0x0) {
+  pcVar1 = (*DB_XAssetGetNameHandler[param_1])(param_2);
+  if (pcVar1 == (char *)0x0) {
     va("Name not found for asset type %s\n");
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_assetnames.cpp",
                     0x328,0,"%s\n\t%s");
   }
-  pcVar2 = (char *)__restgprlr_27(pcVar2);
-  return pcVar2;
+  return pcVar1;
 }
 
 
@@ -1623,6 +1620,8 @@ char * DB_GetXAssetName(XAsset *param_1)
 
 // 823A1F20  DB_SetXAssetName  (database/db_assetnames.cpp:821)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "XAssetType": Some values do not have unique names */
 /* WARNING: Enum "nodeType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
@@ -1632,17 +1631,12 @@ char * DB_GetXAssetName(XAsset *param_1)
 void DB_SetXAssetName(XAsset *param_1,char *param_2)
 
 {
-  int *piVar1;
-  longlong lVar2;
-  
-  lVar2 = (longlong)(int)param_2;
-  piVar1 = (int *)__savegprlr_29(param_1,lVar2);
-  if (DB_XAssetSetNameHandler[*piVar1] == (_func___cdecl_void_XAssetHeader_ptr_char_ptr *)0x0) {
+  if (DB_XAssetSetNameHandler[param_1->type] == (_func___cdecl_void_XAssetHeader_ptr_char_ptr *)0x0)
+  {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_assetnames.cpp",
                     0x336,0,"%s");
   }
-  (*DB_XAssetSetNameHandler[*piVar1])((XAssetHeader *)(piVar1 + 1),(char *)lVar2);
-  __restgprlr_29();
+  (*DB_XAssetSetNameHandler[param_1->type])(&param_1->header,param_2);
   return;
 }
 

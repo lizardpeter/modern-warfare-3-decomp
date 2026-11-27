@@ -25,6 +25,9 @@ bdSequenceNumber::bdSequenceNumber
 
 // 8293CFE0  set  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdcontainers/bdsequencenumber.cpp:32)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
+
 void __thiscall
 bdSequenceNumber::set(bdSequenceNumber *this,bdSequenceNumber *param_1,uint param_2,uint param_3)
 
@@ -33,81 +36,75 @@ bdSequenceNumber::set(bdSequenceNumber *this,bdSequenceNumber *param_1,uint para
   uint uVar2;
   bool bVar3;
   bool bVar4;
-  int *piVar5;
-  ulonglong uVar6;
+  int iVar5;
+  int iVar6;
   int iVar7;
-  int iVar8;
-  int iVar9;
-  ulonglong uVar10;
+  ulonglong uVar8;
   
-  uVar6 = (ulonglong)(int)param_2;
-  piVar5 = (int *)__savegprlr_23(this);
   uVar1 = param_1->m_seqNum;
   uVar2 = 2 << (param_3 - 1 & 0x3f);
-  uVar10 = (ulonglong)uVar2;
-  iVar7 = (int)uVar6;
-  iVar9 = uVar1 - ((int)uVar1 / (int)uVar2) * uVar2;
-  trapWord(6,uVar10,0);
-  trapWord(6,uVar10,0);
-  trapWord(5,uVar10 & ~((((ulonglong)uVar1 & 0x7fffffff) << 1 | (ulonglong)(uVar1 >> 0x1f)) - 1),
+  uVar8 = (ulonglong)uVar2;
+  iVar7 = uVar1 - ((int)uVar1 / (int)uVar2) * uVar2;
+  trapWord(6,uVar8,0);
+  trapWord(6,uVar8,0);
+  trapWord(5,uVar8 & ~((((ulonglong)uVar1 & 0x7fffffff) << 1 | (ulonglong)(uVar1 >> 0x1f)) - 1),
            0xffff);
-  trapWord(5,uVar10 & ~(((uVar6 & 0x7fffffff) << 1 | (uVar6 & 0xffffffff) >> 0x1f) - 1),0xffff);
-  iVar8 = iVar7 - (iVar7 / (int)uVar2) * uVar2;
-  if ((int)uVar2 <= iVar7) {
+  trapWord(5,uVar8 & ~((((ulonglong)param_2 & 0x7fffffff) << 1 | (ulonglong)(param_2 >> 0x1f)) - 1),
+           0xffff);
+  iVar5 = param_2 - ((int)param_2 / (int)uVar2) * uVar2;
+  if ((int)uVar2 <= (int)param_2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdCore\\bdContainers\\bdSequenceNumber.cpp"
                     ,0x28,0,"%s\n\t%s");
   }
-  if (iVar9 < 0) {
-    *piVar5 = iVar7;
-    goto LAB_8293d1b8;
+  if (iVar7 < 0) {
+    this->m_seqNum = param_2;
+    return;
   }
-  if (iVar9 == iVar8) {
-    iVar7 = param_1->m_seqNum;
+  if (iVar7 == iVar5) {
+    iVar5 = param_1->m_seqNum;
+    goto LAB_8293d1b4;
+  }
+  iVar6 = (int)uVar2 >> 1;
+  if (((iVar7 < iVar5) &&
+      (iVar5 - iVar7 < (int)(iVar6 + (uint)((int)uVar2 < 0 && (uVar2 & 1) != 0)))) ||
+     ((iVar5 < iVar7 && ((int)(iVar6 + (uint)((int)uVar2 < 0 && (uVar2 & 1) != 0)) < iVar7 - iVar5))
+     )) {
+    bVar4 = true;
   }
   else {
-    iVar7 = (int)uVar2 >> 1;
-    if (((iVar9 < iVar8) &&
-        (iVar8 - iVar9 < (int)(iVar7 + (uint)((int)uVar2 < 0 && (uVar2 & 1) != 0)))) ||
-       ((iVar8 < iVar9 &&
-        ((int)(iVar7 + (uint)((int)uVar2 < 0 && (uVar2 & 1) != 0)) < iVar9 - iVar8)))) {
-      bVar4 = true;
-    }
-    else {
-      bVar4 = false;
-    }
-    if (((iVar9 < iVar8) &&
-        ((int)(iVar7 + (uint)((int)uVar2 < 0 && (uVar2 & 1) != 0)) < iVar8 - iVar9)) ||
-       ((iVar8 < iVar9 &&
-        (iVar9 - iVar8 < (int)(iVar7 + (uint)((int)uVar2 < 0 && (uVar2 & 1) != 0)))))) {
-      bVar3 = true;
-    }
-    else {
-      bVar3 = false;
-    }
-    iVar7 = 0;
-    if ((!bVar3) && (!bVar4)) {
-      bdLogMessage(BD_LOG_WARNING,"warn/","bdCore/bdContainers/sequenceNumber",
-                   "c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdCore\\bdContainers\\bdSequenceNumber.cpp"
-                   ,"bdSequenceNumber::set",0x43,
-                   "Sequence numbers are too far away and cannot be compared.");
-    }
-    if (bVar3) {
-      if (iVar9 <= iVar8) {
-        if ((!bVar3) || (iVar8 <= iVar9)) goto LAB_8293d194;
-        iVar7 = -1;
-      }
-    }
-    else {
-LAB_8293d194:
-      if ((bVar4) && (iVar8 < iVar9)) {
-        iVar7 = 1;
-      }
-    }
-    iVar7 = iVar7 * uVar2 + iVar8 + (uVar1 - iVar9);
+    bVar4 = false;
   }
-  *piVar5 = iVar7;
-LAB_8293d1b8:
-  __restgprlr_23();
+  if (((iVar7 < iVar5) &&
+      ((int)(iVar6 + (uint)((int)uVar2 < 0 && (uVar2 & 1) != 0)) < iVar5 - iVar7)) ||
+     ((iVar5 < iVar7 && (iVar7 - iVar5 < (int)(iVar6 + (uint)((int)uVar2 < 0 && (uVar2 & 1) != 0))))
+     )) {
+    bVar3 = true;
+  }
+  else {
+    bVar3 = false;
+  }
+  iVar6 = 0;
+  if ((!bVar3) && (!bVar4)) {
+    bdLogMessage(BD_LOG_WARNING,"warn/","bdCore/bdContainers/sequenceNumber",
+                 "c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdCore\\bdContainers\\bdSequenceNumber.cpp"
+                 ,"bdSequenceNumber::set",0x43,
+                 "Sequence numbers are too far away and cannot be compared.");
+  }
+  if (bVar3) {
+    if (iVar7 <= iVar5) {
+      if ((!bVar3) || (iVar5 <= iVar7)) goto LAB_8293d194;
+      iVar6 = -1;
+    }
+  }
+  else {
+LAB_8293d194:
+    if ((bVar4) && (iVar5 < iVar7)) {
+      iVar6 = 1;
+    }
+  }
+  iVar5 = iVar6 * uVar2 + iVar5 + (uVar1 - iVar7);
+LAB_8293d1b4:
+  this->m_seqNum = iVar5;
   return;
 }
 

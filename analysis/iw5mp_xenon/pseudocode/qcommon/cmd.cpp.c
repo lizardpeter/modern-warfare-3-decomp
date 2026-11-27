@@ -175,81 +175,73 @@ void Cbuf_AddText(LocalClientNum_t param_1,char *param_2)
 
 // 824D4810  Cbuf_AddCall  (qcommon/cmd.cpp:279)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void Cbuf_AddCall(LocalClientNum_t param_1,_func___cdecl_void_LocalClientNum_t *param_2)
 
 {
   uint uVar1;
-  int iVar2;
-  ulonglong uVar3;
   
-  uVar3 = __savegprlr_27(param_1);
   Sys_EnterCriticalSection(CRITSECT_CBUF);
-  iVar2 = (int)((uVar3 & 0x3fffffff) << 2);
-  if (0x1f < *(uint *)((int)cmd_funcCount + iVar2)) {
+  if (0x1f < cmd_funcCount[param_1]) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cmd.cpp",0x11c,0,
                     "cmd_funcCount[localClientNum] doesn\'t index ARRAY_COUNT( cmd_funcArray[localClientNum] )\n\t%i not in [0, %i)"
                    );
   }
-  uVar1 = *(uint *)((int)cmd_funcCount + iVar2);
-  if ((ulonglong)uVar1 < 0x20) {
-    *(uint *)((int)cmd_funcCount + iVar2) = uVar1 + 1;
-    *(_func___cdecl_void_LocalClientNum_t **)
-     ((int)cmd_funcArray[0] +
-     (int)(((uVar3 & 0x7ffffff) * 0x20 + (ulonglong)uVar1 & 0xffffffff) << 2)) = param_2;
+  uVar1 = cmd_funcCount[param_1];
+  if (uVar1 < 0x20) {
+    cmd_funcCount[param_1] = uVar1 + 1;
+    cmd_funcArray[param_1][uVar1] = param_2;
   }
   Sys_LeaveCriticalSection(CRITSECT_CBUF);
-  __restgprlr_27();
   return;
 }
 
 
 // 824D48A0  Cbuf_InsertText  (qcommon/cmd.cpp:312)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void Cbuf_InsertText(LocalClientNum_t param_1,char *param_2)
 
 {
-  int iVar1;
-  int iVar2;
-  longlong lVar3;
-  uchar *puVar4;
-  char *pcVar7;
-  longlong lVar5;
-  ulonglong uVar6;
+  char cVar1;
+  uchar *puVar2;
+  char *pcVar5;
+  int iVar6;
+  ulonglong uVar3;
+  longlong lVar4;
   
-  lVar3 = (longlong)(int)param_2;
-  iVar2 = __savegprlr_29(param_1);
   Sys_EnterCriticalSection(CRITSECT_CBUF);
-  lVar5 = lVar3;
+  pcVar5 = param_2;
   do {
-    pcVar7 = (char *)lVar5;
-    lVar5 = lVar5 + 1;
-  } while (*pcVar7 != '\0');
-  iVar1 = (int)lVar5 - (int)lVar3;
-  uVar6 = (ulonglong)(uint)cmd_textArray[iVar2].cmdsize;
-  if (cmd_textArray[iVar2].cmdsize + iVar1 <= cmd_textArray[iVar2].maxsize) {
-    lVar5 = uVar6 - 1;
-    if (-1 < lVar5) {
+    cVar1 = *pcVar5;
+    pcVar5 = pcVar5 + 1;
+  } while (cVar1 != '\0');
+  iVar6 = (int)pcVar5 - (int)param_2;
+  uVar3 = (ulonglong)(uint)cmd_textArray[param_1].cmdsize;
+  if (cmd_textArray[param_1].cmdsize + iVar6 <= cmd_textArray[param_1].maxsize) {
+    lVar4 = uVar3 - 1;
+    if (-1 < lVar4) {
       do {
-        puVar4 = cmd_textArray[iVar2].data + (int)lVar5;
-        lVar5 = lVar5 + -1;
-        puVar4[iVar1] = *puVar4;
-        uVar6 = uVar6 - 1;
-      } while (uVar6 != 0);
+        puVar2 = cmd_textArray[param_1].data + (int)lVar4;
+        lVar4 = lVar4 + -1;
+        puVar2[iVar6] = *puVar2;
+        uVar3 = uVar3 - 1;
+      } while (uVar3 != 0);
     }
     memcpy();
-    cmd_textArray[iVar2].data[iVar1 + -1] = '\n';
-    cmd_textArray[iVar2].cmdsize = cmd_textArray[iVar2].cmdsize + iVar1;
+    cmd_textArray[param_1].data[iVar6 + -1] = '\n';
+    cmd_textArray[param_1].cmdsize = cmd_textArray[param_1].cmdsize + iVar6;
     Sys_LeaveCriticalSection(CRITSECT_CBUF);
-    __restgprlr_29();
     return;
   }
   Com_PrintError(1,"Cbuf_InsertText overflowed\n");
   Sys_LeaveCriticalSection(CRITSECT_CBUF);
-  __restgprlr_29();
   return;
 }
 
@@ -272,6 +264,8 @@ void Cbuf_AddServerText_f(void)
 
 // 824D5D88  Cmd_ExecuteServerString  (qcommon/cmd.cpp:373)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void Cmd_ExecuteServerString(char *param_1)
@@ -282,9 +276,8 @@ void Cmd_ExecuteServerString(char *param_1)
   int iVar3;
   cmd_function_s *pcVar4;
   
-  pcVar2 = (char *)__savegprlr_27(param_1);
   Cmd_TokenizeStringKernel
-            (pcVar2,0x200 - sv_cmd_argsPrivate.totalUsedArgvPool,&sv_cmd_args,&sv_cmd_argsPrivate);
+            (param_1,0x200 - sv_cmd_argsPrivate.totalUsedArgvPool,&sv_cmd_args,&sv_cmd_argsPrivate);
   if (7 < (uint)sv_cmd_args.nesting) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cmd.h",0xc3,0,
                     "sv_cmd_args.nesting doesn\'t index CMD_MAX_NESTING\n\t%i not in [0, %i)");
@@ -300,7 +293,6 @@ void Cmd_ExecuteServerString(char *param_1)
         pcVar4 = pcVar1;
         if (pcVar1->next == (cmd_function_s *)0x0) {
           Cmd_EndTokenizedStringKernel(&sv_cmd_args,&sv_cmd_argsPrivate);
-          __restgprlr_27();
           return;
         }
       }
@@ -313,12 +305,14 @@ void Cmd_ExecuteServerString(char *param_1)
     }
   }
   Cmd_EndTokenizedStringKernel(&sv_cmd_args,&sv_cmd_argsPrivate);
-  __restgprlr_27();
   return;
 }
 
 
 // 824D49C0  Cmd_AddServerCommandInternal  (qcommon/cmd.cpp:419)
+
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 
 void Cmd_AddServerCommandInternal(char *param_1,_func___cdecl_void *param_2,cmd_function_s *param_3)
 
@@ -327,51 +321,41 @@ void Cmd_AddServerCommandInternal(char *param_1,_func___cdecl_void *param_2,cmd_
   char cVar2;
   cmd_function_s *pcVar3;
   char *pcVar4;
-  ulonglong uVar5;
-  ulonglong uVar6;
-  char *pcVar7;
-  char *pcVar8;
-  cmd_function_s *pcVar9;
+  char *pcVar5;
   
-  uVar6 = (ulonglong)(int)param_3;
-  uVar5 = (ulonglong)(int)param_2;
-  pcVar4 = (char *)__savegprlr_27(param_1);
-  if (pcVar4 == (char *)0x0) {
+  pcVar3 = sv_cmd_functions;
+  if (param_1 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cmd.cpp",0x1a6,0,"%s")
     ;
+    pcVar3 = sv_cmd_functions;
   }
-  pcVar9 = (cmd_function_s *)uVar6;
-  pcVar3 = sv_cmd_functions;
   do {
     if (pcVar3 == (cmd_function_s *)0x0) {
-      pcVar9->name = pcVar4;
-      pcVar9->function = (_func___cdecl_void *)uVar5;
-      pcVar9->next = sv_cmd_functions;
-      sv_cmd_functions = pcVar9;
-LAB_824d4a70:
-      __restgprlr_27();
+      param_3->name = param_1;
+      param_3->function = param_2;
+      param_3->next = sv_cmd_functions;
+      sv_cmd_functions = param_3;
       return;
     }
-    pcVar7 = pcVar3->name;
-    pcVar8 = pcVar4;
+    pcVar4 = pcVar3->name;
+    pcVar5 = param_1;
     do {
-      cVar1 = *pcVar8;
-      cVar2 = *pcVar7;
+      cVar1 = *pcVar5;
+      cVar2 = *pcVar4;
       if (cVar1 == '\0') break;
-      pcVar8 = pcVar8 + 1;
-      pcVar7 = pcVar7 + 1;
+      pcVar5 = pcVar5 + 1;
+      pcVar4 = pcVar4 + 1;
     } while (cVar1 == cVar2);
     if (cVar1 == cVar2) {
-      if (ZEXT48(pcVar3) != (uVar6 & 0xffffffff)) {
+      if (pcVar3 != param_3) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cmd.cpp",0x1ad,0,
                         "%s");
       }
-      if ((uVar5 & 0xffffffff) != 0) {
-        Com_Printf(0x10,"Cmd_AddServerCommand: %s already defined\n");
-        __restgprlr_27();
+      if (param_2 == (_func___cdecl_void *)0x0) {
         return;
       }
-      goto LAB_824d4a70;
+      Com_Printf(0x10,"Cmd_AddServerCommand: %s already defined\n");
+      return;
     }
     pcVar3 = pcVar3->next;
   } while( true );
@@ -380,6 +364,8 @@ LAB_824d4a70:
 
 // 824D4AC0  Cbuf_ExecuteBufferInternal  (qcommon/cmd.cpp:449)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void Cbuf_ExecuteBufferInternal
@@ -388,66 +374,49 @@ void Cbuf_ExecuteBufferInternal
 
 {
   char cVar1;
-  undefined8 uVar2;
-  longlong lVar3;
-  ulonglong uVar4;
-  bool bVar5;
-  char *pcVar8;
-  ulonglong uVar6;
-  ulonglong uVar7;
-  ulonglong uVar9;
-  int iVar10;
-  longlong lVar11;
-  undefined1 auStack_1040 [4160];
+  bool bVar2;
+  char *pcVar3;
+  char *pcVar4;
+  char acStack_1040 [4160];
   
-  uVar4 = (ulonglong)(int)param_4;
-  uVar9 = (ulonglong)(int)param_3;
-  lVar3 = (longlong)param_2;
-  uVar2 = __savegprlr_25(param_1,lVar3);
-  if ((uVar9 & 0xffffffff) == 0) {
+  if (param_3 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cmd.cpp",0x1c8,0,"%s")
     ;
   }
-  uVar6 = uVar9;
-  if ((uVar4 & 0xffffffff) == 0) {
+  pcVar3 = param_3;
+  if (param_4 == (_func___cdecl_void_LocalClientNum_t_int_char_ptr *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cmd.cpp",0x1c9,0,"%s")
     ;
   }
   do {
-    pcVar8 = (char *)uVar6;
-    uVar6 = uVar6 + 1;
-  } while (*pcVar8 != '\0');
-  uVar7 = (uVar6 - uVar9) - 1;
-  uVar6 = uVar7 & 0xffffffff;
-  iVar10 = (int)uVar7;
-  while (iVar10 != 0) {
-    bVar5 = false;
-    lVar11 = 0;
-    iVar10 = (int)uVar6;
-    if (0 < iVar10) {
+    cVar1 = *pcVar3;
+    pcVar3 = pcVar3 + 1;
+  } while (cVar1 != '\0');
+  for (pcVar3 = pcVar3 + (-1 - (int)param_3); pcVar3 != (char *)0x0; pcVar3 = pcVar3 + -(int)pcVar4)
+  {
+    bVar2 = false;
+    pcVar4 = (char *)0x0;
+    if (0 < (int)pcVar3) {
       do {
-        cVar1 = *(char *)((int)lVar11 + (int)uVar9);
+        cVar1 = param_3[(int)pcVar4];
         if (cVar1 == '\"') {
-          bVar5 = (bool)(bVar5 ^ 1);
+          bVar2 = (bool)(bVar2 ^ 1);
         }
-      } while ((((bVar5) || (cVar1 != ';')) && (cVar1 != '\n')) &&
-              ((cVar1 != '\r' && (lVar11 = lVar11 + 1, (int)lVar11 < iVar10))));
-      if (0xffe < (int)lVar11) {
-        lVar11 = 0xfff;
+      } while ((((bVar2) || (cVar1 != ';')) && (cVar1 != '\n')) &&
+              ((cVar1 != '\r' && (pcVar4 = pcVar4 + 1, (int)pcVar4 < (int)pcVar3))));
+      if (0xffe < (int)pcVar4) {
+        pcVar4 = (char *)0xfff;
       }
     }
     memcpy();
-    auStack_1040[(int)lVar11] = 0;
-    if ((int)lVar11 != iVar10) {
-      lVar11 = lVar11 + 1;
+    acStack_1040[(int)pcVar4] = '\0';
+    if (pcVar4 != pcVar3) {
+      pcVar4 = pcVar4 + 1;
     }
-    uVar9 = lVar11 + uVar9;
-    uVar6 = uVar6 - lVar11;
-    (*(code *)uVar4)(uVar2,lVar3,auStack_1040);
-    iVar10 = (int)uVar6;
+    param_3 = param_3 + (int)pcVar4;
+    (*param_4)(param_1,param_2,acStack_1040);
   }
   UI_IncExpressionExecuteTime();
-  __restgprlr_25();
   return;
 }
 
@@ -466,6 +435,8 @@ void Cbuf_ExecuteBuffer(LocalClientNum_t param_1,int param_2,char *param_3)
 
 // 824D63B8  Cbuf_ExecuteInternal  (qcommon/cmd.cpp:509)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void Cbuf_ExecuteInternal(LocalClientNum_t param_1,int param_2)
@@ -473,136 +444,123 @@ void Cbuf_ExecuteInternal(LocalClientNum_t param_1,int param_2)
 {
   uchar uVar1;
   int iVar2;
-  LocalClientNum_t LVar3;
-  bool bVar4;
-  int iVar5;
+  bool bVar3;
+  int iVar4;
   char acStack_1050 [4176];
   
-  LVar3 = __savegprlr_24(param_1);
-  if (cmd_textArray[LVar3].cmdsize != 0) {
+  if (cmd_textArray[param_1].cmdsize != 0) {
     while (cmd_wait == 0) {
-      iVar2 = cmd_textArray[LVar3].cmdsize;
-      bVar4 = false;
-      iVar5 = 0;
+      iVar2 = cmd_textArray[param_1].cmdsize;
+      bVar3 = false;
+      iVar4 = 0;
       if (0 < iVar2) {
         do {
-          uVar1 = cmd_textArray[LVar3].data[iVar5];
+          uVar1 = cmd_textArray[param_1].data[iVar4];
           if (uVar1 == '\"') {
-            bVar4 = (bool)(bVar4 ^ 1);
+            bVar3 = (bool)(bVar3 ^ 1);
           }
-        } while ((((bVar4) || (uVar1 != ';')) && (uVar1 != '\n')) &&
-                ((uVar1 != '\r' && (iVar5 = iVar5 + 1, iVar5 < cmd_textArray[LVar3].cmdsize))));
-        if (0xffe < iVar5) {
-          iVar5 = 0xfff;
+        } while ((((bVar3) || (uVar1 != ';')) && (uVar1 != '\n')) &&
+                ((uVar1 != '\r' && (iVar4 = iVar4 + 1, iVar4 < cmd_textArray[param_1].cmdsize))));
+        if (0xffe < iVar4) {
+          iVar4 = 0xfff;
         }
       }
       memcpy();
-      acStack_1050[iVar5] = '\0';
-      if (iVar5 == iVar2) {
-        cmd_textArray[LVar3].cmdsize = 0;
+      acStack_1050[iVar4] = '\0';
+      if (iVar4 == iVar2) {
+        cmd_textArray[param_1].cmdsize = 0;
       }
       else {
-        cmd_textArray[LVar3].cmdsize = iVar2 - (iVar5 + 1);
+        cmd_textArray[param_1].cmdsize = iVar2 - (iVar4 + 1);
         memmove();
       }
       Sys_LeaveCriticalSection(CRITSECT_CBUF);
-      Cmd_ExecuteSingleCommand(LVar3,param_2,acStack_1050);
+      Cmd_ExecuteSingleCommand(param_1,param_2,acStack_1050);
       Sys_EnterCriticalSection(CRITSECT_CBUF);
-      if (cmd_textArray[LVar3].cmdsize == 0) {
-        __restgprlr_24();
+      if (cmd_textArray[param_1].cmdsize == 0) {
         return;
       }
     }
     cmd_wait = cmd_wait + -1;
   }
-  __restgprlr_24();
   return;
 }
 
 
 // 824D4C20  Cbuf_FuncExecute  (qcommon/cmd.cpp:577)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void Cbuf_FuncExecute(LocalClientNum_t param_1)
 
 {
-  code *pcVar1;
-  int iVar2;
-  ulonglong uVar3;
+  _func___cdecl_void_LocalClientNum_t *p_Var1;
   
-  uVar3 = __savegprlr_25(param_1);
-  iVar2 = (int)((uVar3 & 0x3fffffff) << 2);
-  if (*(int *)((int)cmd_funcCount + iVar2) != 0) {
+  if (cmd_funcCount[param_1] != 0) {
     do {
-      pcVar1 = *(code **)((int)cmd_funcArray[0] + (int)((uVar3 & 0xffffffff) << 7));
-      *(int *)((int)cmd_funcCount + iVar2) = *(int *)((int)cmd_funcCount + iVar2) + -1;
+      p_Var1 = cmd_funcArray[param_1][0];
+      cmd_funcCount[param_1] = cmd_funcCount[param_1] - 1;
       memcpy();
       Sys_LeaveCriticalSection(CRITSECT_CBUF);
       SV_WaitServer();
-      (*pcVar1)(uVar3);
+      (*p_Var1)(param_1);
       Sys_EnterCriticalSection(CRITSECT_CBUF);
-    } while (*(int *)((int)cmd_funcCount + iVar2) != 0);
+    } while (cmd_funcCount[param_1] != 0);
   }
-  __restgprlr_25();
   return;
 }
 
 
 // 824D64F8  Cbuf_Execute  (qcommon/cmd.cpp:601)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void Cbuf_Execute(LocalClientNum_t param_1,int param_2)
 
 {
-  LocalClientNum_t LVar1;
-  int iVar2;
-  
-  LVar1 = __savegprlr_29(param_1);
   Profile_Begin(0x15);
-  if (cmd_insideCBufExecute[LVar1] != false) {
+  if (cmd_insideCBufExecute[param_1] != false) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cmd.cpp",0x25c,0,
                     "%s\n\t%s");
   }
-  cmd_insideCBufExecute[LVar1] = true;
+  cmd_insideCBufExecute[param_1] = true;
   Sys_EnterCriticalSection(CRITSECT_CBUF);
-  Cbuf_FuncExecute(LVar1);
-  Cbuf_ExecuteInternal(LVar1,param_2);
+  Cbuf_FuncExecute(param_1);
+  Cbuf_ExecuteInternal(param_1,param_2);
   Sys_LeaveCriticalSection(CRITSECT_CBUF);
-  cmd_insideCBufExecute[LVar1] = false;
-  iVar2 = Profile_EndInternal((double *)0x0);
-  __restgprlr_29(iVar2);
+  cmd_insideCBufExecute[param_1] = false;
+  Profile_EndInternal((double *)0x0);
   return;
 }
 
 
 // 824D6598  Cmd_ExecFromFastFile  (qcommon/cmd.cpp:660)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 bool Cmd_ExecFromFastFile(LocalClientNum_t param_1,int param_2,char *param_3)
 
 {
-  LocalClientNum_t LVar1;
-  char *pcVar2;
-  undefined1 uVar3;
+  char *pcVar1;
   LargeLocal aLStack_30 [6];
   
-  LVar1 = __savegprlr_28(param_1);
   LargeLocal::LargeLocal(aLStack_30,0x18000);
-  pcVar2 = LargeLocal::GetBuf(aLStack_30);
-  pcVar2 = DB_ReadRawFile(param_3,pcVar2,0x18000);
-  if (pcVar2 == (char *)0x0) {
+  pcVar1 = LargeLocal::GetBuf(aLStack_30);
+  pcVar1 = DB_ReadRawFile(param_3,pcVar1,0x18000);
+  if (pcVar1 == (char *)0x0) {
     LargeLocal::~LargeLocal(aLStack_30);
-    uVar3 = __restgprlr_28(0);
-    return (bool)uVar3;
+    return false;
   }
   Com_Printf(0x10,"execing %s from fastfile\n");
-  Cbuf_ExecuteBufferInternal(LVar1,param_2,pcVar2,Cmd_ExecuteSingleCommand);
+  Cbuf_ExecuteBufferInternal(param_1,param_2,pcVar1,Cmd_ExecuteSingleCommand);
   LargeLocal::~LargeLocal(aLStack_30);
-  uVar3 = __restgprlr_28(1);
-  return (bool)uVar3;
+  return true;
 }
 
 
@@ -676,6 +634,8 @@ void Cmd_Vstr_f(void)
 
 // 824D4DA0  Cmd_Echo_f  (qcommon/cmd.cpp:775)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
@@ -684,7 +644,6 @@ void Cmd_Echo_f(void)
 {
   int iVar1;
   
-  __savegprlr_27();
   iVar1 = 1;
   while( true ) {
     if (7 < (uint)sv_cmd_args.nesting) {
@@ -697,7 +656,6 @@ void Cmd_Echo_f(void)
     iVar1 = iVar1 + 1;
   }
   Com_Printf(0,"\n");
-  __restgprlr_27();
   return;
 }
 
@@ -717,6 +675,8 @@ void SV_Cmd_ArgvBuffer(int param_1,char *param_2,int param_3)
 
 // 824D4E90  Cmd_ArgsBuffer  (qcommon/cmd.cpp:814)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void Cmd_ArgsBuffer(int param_1,char *param_2,int param_3)
@@ -724,24 +684,17 @@ void Cmd_ArgsBuffer(int param_1,char *param_2,int param_3)
 {
   char cVar1;
   int iVar2;
-  int iVar3;
-  bool bVar4;
-  char *pcVar5;
-  char **ppcVar6;
-  longlong lVar7;
-  ulonglong uVar8;
-  char *pcVar9;
+  bool bVar3;
+  char **ppcVar4;
+  longlong lVar5;
+  char *pcVar6;
   
-  lVar7 = (longlong)param_3;
-  uVar8 = (ulonglong)(int)param_2;
-  iVar3 = __savegprlr_26(param_1);
-  pcVar5 = (char *)uVar8;
-  bVar4 = Sys_IsMainThread();
-  if (!bVar4) {
+  bVar3 = Sys_IsMainThread();
+  if (!bVar3) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cmd.cpp",0x335,0,"%s")
     ;
   }
-  if (iVar3 < 0) {
+  if (param_1 < 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cmd.cpp",0x336,0,"%s")
     ;
   }
@@ -749,44 +702,41 @@ void Cmd_ArgsBuffer(int param_1,char *param_2,int param_3)
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cmd.cpp",0x337,0,
                     "cmd_args.nesting doesn\'t index CMD_MAX_NESTING\n\t%i not in [0, %i)");
   }
-  if ((uVar8 & 0xffffffff) == 0) {
+  if (param_2 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cmd.cpp",0x338,0,"%s")
     ;
   }
-  if ((int)lVar7 < 2) {
+  if (param_3 < 2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cmd.cpp",0x339,0,"%s")
     ;
   }
-  lVar7 = lVar7 + -1;
+  lVar5 = (longlong)param_3 + -1;
   iVar2 = cmd_args.argc[cmd_args.nesting];
-  if (iVar3 < iVar2) {
-    ppcVar6 = cmd_args.argv[cmd_args.nesting] + iVar3;
+  if (param_1 < iVar2) {
+    ppcVar4 = cmd_args.argv[cmd_args.nesting] + param_1;
     do {
-      pcVar9 = *ppcVar6;
-      cVar1 = *pcVar9;
-      while (pcVar5 = (char *)uVar8, cVar1 != '\0') {
-        *pcVar5 = cVar1;
-        lVar7 = lVar7 + -1;
-        uVar8 = uVar8 + 1;
-        pcVar5 = (char *)uVar8;
-        pcVar9 = pcVar9 + 1;
-        if (lVar7 == 0) goto LAB_824d5020;
-        cVar1 = *pcVar9;
+      pcVar6 = *ppcVar4;
+      cVar1 = *pcVar6;
+      while (cVar1 != '\0') {
+        *param_2 = cVar1;
+        lVar5 = lVar5 + -1;
+        param_2 = param_2 + 1;
+        pcVar6 = pcVar6 + 1;
+        if (lVar5 == 0) goto LAB_824d5020;
+        cVar1 = *pcVar6;
       }
-      if ((int)lVar7 == 1) break;
-      if (iVar3 != iVar2 + -1) {
-        *pcVar5 = ' ';
-        lVar7 = lVar7 + -1;
-        uVar8 = uVar8 + 1;
+      if ((int)lVar5 == 1) break;
+      if (param_1 != iVar2 + -1) {
+        *param_2 = ' ';
+        lVar5 = lVar5 + -1;
+        param_2 = param_2 + 1;
       }
-      pcVar5 = (char *)uVar8;
-      iVar3 = iVar3 + 1;
-      ppcVar6 = ppcVar6 + 1;
-    } while (iVar3 < iVar2);
+      param_1 = param_1 + 1;
+      ppcVar4 = ppcVar4 + 1;
+    } while (param_1 < iVar2);
   }
 LAB_824d5020:
-  *pcVar5 = '\0';
-  __restgprlr_26();
+  *param_2 = '\0';
   return;
 }
 
@@ -833,74 +783,94 @@ void Cmd_EmitChar(char param_1,CmdArgsPrivate *param_2)
 
 // 824D50F8  Cmd_TokenizeStringInternal  (qcommon/cmd.cpp:902)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 int Cmd_TokenizeStringInternal(char *param_1,int param_2,char **param_3,CmdArgsPrivate *param_4)
 
 {
-  char *pcVar1;
-  bool bVar3;
-  int iVar2;
+  bool bVar1;
+  char cVar3;
   char cVar4;
-  char cVar5;
+  int iVar2;
+  int iVar5;
   longlong lVar6;
-  longlong lVar7;
-  longlong lVar8;
-  char *pcVar9;
+  char **ppcVar7;
+  char *pcVar8;
   
-  lVar8 = (longlong)(int)param_3;
-  lVar7 = (longlong)param_2;
-  pcVar1 = (char *)__savegprlr_26(param_1);
-  if (pcVar1 == (char *)0x0) {
+  lVar6 = (longlong)param_2;
+  if (param_1 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cmd.cpp",0x38a,0,"%s")
     ;
   }
-  lVar8 = lVar8 + -4;
-  lVar6 = 0;
+  ppcVar7 = param_3 + -1;
+  iVar5 = 0;
 LAB_824d514c:
   do {
     while( true ) {
-      if (*pcVar1 == '\0') goto LAB_824d538c;
-      bVar3 = Cmd_IsWhiteSpaceChar(*pcVar1);
-      if (!bVar3) break;
-      pcVar1 = pcVar1 + 1;
+      if (*param_1 == '\0') {
+        return iVar5;
+      }
+      bVar1 = Cmd_IsWhiteSpaceChar(*param_1);
+      if (!bVar1) break;
+      param_1 = param_1 + 1;
     }
-    if (*pcVar1 == '/') {
-      if (pcVar1[1] == '/') goto LAB_824d538c;
-      if (pcVar1[1] == '*') {
-        pcVar1 = pcVar1 + 2;
-        cVar4 = *pcVar1;
-        if (cVar4 == '\0') goto LAB_824d538c;
+    if (*param_1 == '/') {
+      if (param_1[1] == '/') {
+        return iVar5;
+      }
+      if (param_1[1] == '*') {
+        pcVar8 = param_1 + 2;
+        cVar3 = *pcVar8;
+        if (cVar3 == '\0') {
+          return iVar5;
+        }
         do {
-          if ((cVar4 == '*') && (cVar5 = '*', pcVar1[1] == '/')) break;
-          pcVar1 = pcVar1 + 1;
-          cVar4 = *pcVar1;
-          cVar5 = '\0';
-        } while (cVar4 != '\0');
-        if (cVar5 == '\0') goto LAB_824d538c;
-        pcVar1 = pcVar1 + 2;
+          if ((cVar3 == '*') && (cVar4 = '*', pcVar8[1] == '/')) break;
+          pcVar8 = pcVar8 + 1;
+          cVar3 = *pcVar8;
+          cVar4 = '\0';
+        } while (cVar3 != '\0');
+        if (cVar4 == '\0') {
+          return iVar5;
+        }
+        param_1 = pcVar8 + 2;
         goto LAB_824d514c;
       }
     }
-    lVar7 = lVar7 + -1;
-    lVar6 = lVar6 + 1;
-    lVar8 = lVar8 + 4;
-    *(undefined4 *)lVar8 = param_4->textPool + param_4->totalUsedTextPool;
-    if (lVar7 == 0) break;
-    cVar4 = *pcVar1;
-    if (cVar4 == '\"') {
-      pcVar1 = pcVar1 + 1;
-      cVar4 = *pcVar1;
-      while ((cVar4 != '\0' && (cVar4 != '\"'))) {
-        if ((cVar4 == '\\') && (pcVar1[1] == '\"')) {
-          pcVar1 = pcVar1 + 1;
-        }
-        param_4->textPool[param_4->totalUsedTextPool] = *pcVar1;
+    lVar6 = lVar6 + -1;
+    iVar5 = iVar5 + 1;
+    ppcVar7 = ppcVar7 + 1;
+    *ppcVar7 = param_4->textPool + param_4->totalUsedTextPool;
+    if (lVar6 == 0) {
+      while( true ) {
+        param_4->textPool[param_4->totalUsedTextPool] = *param_1;
         iVar2 = param_4->totalUsedTextPool + 1;
         if (0x1ffd < iVar2) {
           iVar2 = 0x1ffe;
         }
         param_4->totalUsedTextPool = iVar2;
-        pcVar1 = pcVar1 + 1;
-        cVar4 = *pcVar1;
+        if (*param_1 == '\0') break;
+        param_1 = param_1 + 1;
+      }
+      return iVar5;
+    }
+    cVar3 = *param_1;
+    if (cVar3 == '\"') {
+      pcVar8 = param_1 + 1;
+      cVar3 = *pcVar8;
+      while ((cVar3 != '\0' && (cVar3 != '\"'))) {
+        if ((cVar3 == '\\') && (pcVar8[1] == '\"')) {
+          pcVar8 = pcVar8 + 1;
+        }
+        param_4->textPool[param_4->totalUsedTextPool] = *pcVar8;
+        iVar2 = param_4->totalUsedTextPool + 1;
+        if (0x1ffd < iVar2) {
+          iVar2 = 0x1ffe;
+        }
+        param_4->totalUsedTextPool = iVar2;
+        pcVar8 = pcVar8 + 1;
+        cVar3 = *pcVar8;
       }
       param_4->textPool[param_4->totalUsedTextPool] = '\0';
       iVar2 = param_4->totalUsedTextPool + 1;
@@ -908,36 +878,37 @@ LAB_824d514c:
         iVar2 = 0x1ffe;
       }
       param_4->totalUsedTextPool = iVar2;
-      if (*pcVar1 == '\0') goto LAB_824d538c;
-      pcVar1 = pcVar1 + 1;
-      if (*pcVar1 == '\0') {
-        iVar2 = __restgprlr_26(lVar6);
-        return iVar2;
+      if (*pcVar8 == '\0') {
+        return iVar5;
+      }
+      param_1 = pcVar8 + 1;
+      if (*param_1 == '\0') {
+        return iVar5;
       }
     }
     else {
       do {
-        pcVar9 = pcVar1;
-        param_4->textPool[param_4->totalUsedTextPool] = cVar4;
+        pcVar8 = param_1;
+        param_4->textPool[param_4->totalUsedTextPool] = cVar3;
         iVar2 = param_4->totalUsedTextPool + 1;
         if (0x1ffd < iVar2) {
           iVar2 = 0x1ffe;
         }
         param_4->totalUsedTextPool = iVar2;
-        pcVar1 = pcVar9 + 1;
-        if (*pcVar1 == '\0') {
+        param_1 = pcVar8 + 1;
+        if (*param_1 == '\0') {
           param_4->textPool[iVar2] = '\0';
           iVar2 = param_4->totalUsedTextPool + 1;
           if (0x1ffd < iVar2) {
             iVar2 = 0x1ffe;
           }
           param_4->totalUsedTextPool = iVar2;
-          goto LAB_824d538c;
+          return iVar5;
         }
-        bVar3 = Cmd_IsWhiteSpaceChar(*pcVar1);
-      } while ((!bVar3) &&
-              ((cVar4 = *pcVar1, cVar4 != '/' ||
-               ((cVar5 = pcVar9[2], cVar5 != '/' && (cVar5 != '*'))))));
+        bVar1 = Cmd_IsWhiteSpaceChar(*param_1);
+      } while ((!bVar1) &&
+              ((cVar3 = *param_1, cVar3 != '/' ||
+               ((cVar4 = pcVar8[2], cVar4 != '/' && (cVar4 != '*'))))));
       param_4->textPool[param_4->totalUsedTextPool] = '\0';
       iVar2 = param_4->totalUsedTextPool + 1;
       if (0x1ffd < iVar2) {
@@ -946,130 +917,113 @@ LAB_824d514c:
       param_4->totalUsedTextPool = iVar2;
     }
   } while( true );
-  while( true ) {
-    param_4->textPool[param_4->totalUsedTextPool] = *pcVar1;
-    iVar2 = param_4->totalUsedTextPool + 1;
-    if (0x1ffd < iVar2) {
-      iVar2 = 0x1ffe;
-    }
-    param_4->totalUsedTextPool = iVar2;
-    if (*pcVar1 == '\0') break;
-    pcVar1 = pcVar1 + 1;
-  }
-LAB_824d538c:
-  iVar2 = __restgprlr_26(lVar6);
-  return iVar2;
 }
 
 
 // 824D5398  AssertCmdArgsConsistency  (qcommon/cmd.cpp:1005)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void AssertCmdArgsConsistency(CmdArgs *param_1,CmdArgsPrivate *param_2)
 
 {
-  int iVar1;
-  int iVar2;
-  int *piVar3;
+  int *piVar1;
+  char *pcVar2;
+  int iVar3;
   int iVar4;
   int iVar5;
-  int iVar6;
-  int iVar7;
-  longlong lVar8;
-  int iVar9;
+  char **ppcVar6;
+  int *piVar7;
+  int iVar8;
+  char *pcVar9;
   int iVar10;
   int iVar11;
-  int iVar12;
-  int *piVar13;
   
-  lVar8 = (longlong)(int)param_2;
-  piVar3 = (int *)__savegprlr_23(param_1);
-  iVar12 = *piVar3;
-  iVar6 = 0;
+  iVar11 = param_1->nesting;
   iVar4 = 0;
-  iVar7 = 0;
+  pcVar2 = (char *)0x0;
   iVar5 = 0;
-  iVar11 = 0;
+  iVar3 = 0;
   iVar10 = 0;
-  iVar9 = 0;
-  iVar2 = (int)lVar8;
-  if (-1 < iVar12) {
-    if (1 < iVar12 + 1) {
-      lVar8 = lVar8 + 0x27fc;
-      piVar13 = piVar3 + 0x10;
+  pcVar9 = (char *)0x0;
+  iVar8 = 0;
+  if (-1 < iVar11) {
+    if (1 < iVar11 + 1) {
+      ppcVar6 = param_2->argvPool + 0x1ff;
+      piVar7 = param_1->controllerIndex + 7;
       do {
-        iVar9 = iVar9 + 2;
-        iVar1 = (int)lVar8;
-        iVar7 = piVar13[1] + iVar7;
-        piVar13 = piVar13 + 2;
-        lVar8 = lVar8 + 8;
-        iVar6 = *(int *)(iVar1 + 4) + iVar6;
-        iVar5 = *piVar13 + iVar5;
-        iVar4 = *(int *)lVar8 + iVar4;
-      } while (iVar9 <= iVar12 + -1);
+        iVar8 = iVar8 + 2;
+        piVar1 = (int *)(ppcVar6 + 1);
+        iVar5 = piVar7[1] + iVar5;
+        piVar7 = piVar7 + 2;
+        ppcVar6 = ppcVar6 + 2;
+        iVar4 = *piVar1 + iVar4;
+        iVar3 = *piVar7 + iVar3;
+        pcVar2 = *ppcVar6 + (int)pcVar2;
+      } while (iVar8 <= iVar11 + -1);
     }
-    if (iVar9 <= iVar12) {
-      iVar11 = piVar3[iVar9 + 0x11];
-      iVar10 = *(int *)((iVar9 + 0xa00) * 4 + iVar2);
+    if (iVar8 <= iVar11) {
+      iVar10 = param_1->argc[iVar8];
+      pcVar9 = (char *)param_2->usedTextPool[iVar8];
     }
-    iVar10 = iVar4 + iVar6 + iVar10;
-    iVar11 = iVar5 + iVar7 + iVar11;
+    pcVar9 = pcVar2 + iVar4 + (int)pcVar9;
+    iVar10 = iVar3 + iVar5 + iVar10;
   }
-  if (iVar11 != *(int *)(iVar2 + 0x2820)) {
+  if (iVar10 != param_2->totalUsedArgvPool) {
     Com_Printf(0x10,"About to assert totalUsedArgvPool\n");
-    iVar12 = 0;
-    if (-1 < *piVar3) {
-      piVar13 = piVar3 + 0x11;
+    iVar11 = 0;
+    if (-1 < param_1->nesting) {
+      piVar7 = param_1->argc;
       do {
-        iVar4 = 0;
-        if (0 < *piVar13) {
+        iVar3 = 0;
+        if (0 < *piVar7) {
           do {
             Com_Printf(0x10,"nesting %i, arg %i: \'%s\'\n");
-            iVar4 = iVar4 + 1;
-          } while (iVar4 < *piVar13);
+            iVar3 = iVar3 + 1;
+          } while (iVar3 < *piVar7);
         }
-        iVar12 = iVar12 + 1;
-        piVar13 = piVar13 + 1;
-      } while (iVar12 <= *piVar3);
+        iVar11 = iVar11 + 1;
+        piVar7 = piVar7 + 1;
+      } while (iVar11 <= param_1->nesting);
     }
   }
-  if (iVar11 != *(int *)(iVar2 + 0x2820)) {
+  if (iVar10 != param_2->totalUsedArgvPool) {
     va(
       "totalUsedArgvPool is %i, argsPriv->totalUsedArgvPool is %i, args->nesting is %i, args->argc[0] is %i, args->argc[1] is %i, args->argc[2] is %i, args->argc[3] is %i"
       );
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cmd.cpp",0x403,0,
                     "%s\n\t%s");
   }
-  if (iVar10 != *(int *)(iVar2 + 0x2824)) {
+  if (pcVar9 != (char *)param_2->totalUsedTextPool) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cmd.cpp",0x404,0,
                     "totalUsedTextPool == argsPriv->totalUsedTextPool\n\t%i, %i");
   }
-  __restgprlr_23();
   return;
 }
 
 
 // 824D5560  Cmd_TokenizeStringKernel  (qcommon/cmd.cpp:1036)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void Cmd_TokenizeStringKernel(char *param_1,int param_2,CmdArgs *param_3,CmdArgsPrivate *param_4)
 
 {
-  char *pcVar1;
-  int iVar2;
-  uint uVar3;
+  int iVar1;
+  uint uVar2;
   
-  pcVar1 = (char *)__savegprlr_27(param_1);
   if (0x200 - param_4->totalUsedArgvPool < param_2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cmd.cpp",0x40d,0,
                     "max_tokens <= MAX_TOKENS_SIZE - argsPriv->totalUsedArgvPool\n\t%i, %i");
   }
   AssertCmdArgsConsistency(param_3,param_4);
-  uVar3 = param_3->nesting + 1;
-  param_3->nesting = uVar3;
-  if (7 < uVar3) {
+  uVar2 = param_3->nesting + 1;
+  param_3->nesting = uVar2;
+  if (7 < uVar2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cmd.cpp",0x412,0,
                     "args->nesting doesn\'t index CMD_MAX_NESTING\n\t%i not in [0, %i)");
   }
@@ -1077,13 +1031,12 @@ void Cmd_TokenizeStringKernel(char *param_1,int param_2,CmdArgs *param_3,CmdArgs
   param_3->localClientNum[param_3->nesting] = LOCAL_CLIENT_INVALID;
   param_3->controllerIndex[param_3->nesting] = 0;
   param_3->argv[param_3->nesting] = param_4->argvPool + param_4->totalUsedArgvPool;
-  iVar2 = Cmd_TokenizeStringInternal(pcVar1,param_2,param_3->argv[param_3->nesting],param_4);
-  param_3->argc[param_3->nesting] = iVar2;
+  iVar1 = Cmd_TokenizeStringInternal(param_1,param_2,param_3->argv[param_3->nesting],param_4);
+  param_3->argc[param_3->nesting] = iVar1;
   param_4->totalUsedArgvPool = param_3->argc[param_3->nesting] + param_4->totalUsedArgvPool;
   param_4->usedTextPool[param_3->nesting] =
        param_4->usedTextPool[param_3->nesting] + param_4->totalUsedTextPool;
   AssertCmdArgsConsistency(param_3,param_4);
-  __restgprlr_27();
   return;
 }
 
@@ -1207,41 +1160,35 @@ cmd_function_s * Cmd_FindCommand(char *param_1)
 
 // 824D5868  Cmd_AddCommandInternal  (qcommon/cmd.cpp:1125)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void Cmd_AddCommandInternal(char *param_1,_func___cdecl_void *param_2,cmd_function_s *param_3)
 
 {
-  char *pcVar1;
-  cmd_function_s *pcVar2;
-  ulonglong uVar3;
-  ulonglong uVar4;
+  cmd_function_s *pcVar1;
   
-  uVar4 = (ulonglong)(int)param_3;
-  uVar3 = (ulonglong)(int)param_2;
-  pcVar1 = (char *)__savegprlr_27(param_1);
-  if (pcVar1 == (char *)0x0) {
+  if (param_1 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cmd.cpp",0x468,0,"%s")
     ;
   }
-  pcVar2 = Cmd_FindCommand(pcVar1);
-  if (pcVar2 == (cmd_function_s *)0x0) {
-    pcVar2 = (cmd_function_s *)uVar4;
-    pcVar2->name = pcVar1;
-    pcVar2->function = (_func___cdecl_void *)uVar3;
-    pcVar2->next = cmd_functions;
-    cmd_functions = pcVar2;
+  pcVar1 = Cmd_FindCommand(param_1);
+  if (pcVar1 == (cmd_function_s *)0x0) {
+    param_3->name = param_1;
+    param_3->function = param_2;
+    param_3->next = cmd_functions;
+    cmd_functions = param_3;
   }
   else {
-    if (ZEXT48(pcVar2) != (uVar4 & 0xffffffff)) {
+    if (pcVar1 != param_3) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cmd.cpp",0x46d,0,
                       "%s");
     }
-    if ((uVar3 & 0xffffffff) != 0) {
+    if (param_2 != (_func___cdecl_void *)0x0) {
       Com_Printf(0x10,"Cmd_AddCommand: %s already defined\n");
-      __restgprlr_27();
       return;
     }
   }
-  __restgprlr_27();
   return;
 }
 
@@ -1290,45 +1237,41 @@ void Cmd_RemoveCommand(char *param_1)
 
 // 824D5998  Cmd_SetAutoComplete  (qcommon/cmd.cpp:1174)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void Cmd_SetAutoComplete(char *param_1,char *param_2,char *param_3)
 
 {
-  char *pcVar1;
-  cmd_function_s *pcVar2;
-  ulonglong uVar3;
-  ulonglong uVar4;
+  cmd_function_s *pcVar1;
   
-  uVar4 = (ulonglong)(int)param_3;
-  uVar3 = (ulonglong)(int)param_2;
-  pcVar1 = (char *)__savegprlr_27(param_1);
-  if (pcVar1 == (char *)0x0) {
+  if (param_1 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cmd.cpp",0x499,0,"%s")
     ;
   }
-  if ((uVar3 & 0xffffffff) == 0) {
+  if (param_2 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cmd.cpp",0x49a,0,"%s")
     ;
   }
-  if ((uVar4 & 0xffffffff) == 0) {
+  if (param_3 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cmd.cpp",0x49b,0,"%s")
     ;
   }
-  pcVar2 = Cmd_FindCommand(pcVar1);
-  if (pcVar2 == (cmd_function_s *)0x0) {
+  pcVar1 = Cmd_FindCommand(param_1);
+  if (pcVar1 == (cmd_function_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cmd.cpp",0x49f,0,"%s")
     ;
   }
-  if (pcVar2->autoCompleteDir != (char *)0x0) {
+  if (pcVar1->autoCompleteDir != (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cmd.cpp",0x4a0,0,"%s")
     ;
   }
-  if (pcVar2->autoCompleteExt != (char *)0x0) {
+  if (pcVar1->autoCompleteExt != (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cmd.cpp",0x4a1,0,"%s")
     ;
   }
-  pcVar2->autoCompleteExt = (char *)uVar4;
-  pcVar2->autoCompleteDir = (char *)uVar3;
-  __restgprlr_27();
+  pcVar1->autoCompleteExt = param_3;
+  pcVar1->autoCompleteDir = param_2;
   return;
 }
 
@@ -1399,142 +1342,143 @@ void Cmd_ComErrorCleanup(void)
 
 // 824D5B50  Cmd_SaveNotifications  (qcommon/cmd.cpp:1265)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void Cmd_SaveNotifications(MemoryFile *param_1)
 
 {
   uint uVar1;
-  MemoryFile *pMVar2;
-  char *pcVar3;
-  ulonglong uVar4;
-  ushort *puVar5;
+  char *pcVar2;
+  ulonglong uVar3;
+  ushort *puVar4;
   uint local_30 [12];
   
-  pMVar2 = (MemoryFile *)__savegprlr_29(param_1);
   uVar1 = DAT_835aba64;
-  uVar4 = (ulonglong)DAT_835aba64;
+  uVar3 = (ulonglong)DAT_835aba64;
   local_30[0] = DAT_835aba64;
-  MemFile_WriteData(pMVar2,4,local_30);
+  MemFile_WriteData(param_1,4,local_30);
   if (uVar1 != 0) {
-    puVar5 = (ushort *)((int)&sv_cmd_argsPrivate.totalUsedTextPool + 2);
+    puVar4 = (ushort *)((int)&sv_cmd_argsPrivate.totalUsedTextPool + 2);
     do {
-      local_30[0] = *(uint *)(puVar5 + 1);
-      MemFile_WriteData(pMVar2,4,local_30);
-      local_30[0] = CONCAT22(puVar5[3],local_30[0]._2_2_);
-      MemFile_WriteData(pMVar2,2,local_30);
-      puVar5 = puVar5 + 4;
-      pcVar3 = SL_ConvertToString((uint)*puVar5);
-      MemFile_WriteCString(pMVar2,pcVar3);
-      uVar4 = uVar4 - 1;
-    } while (uVar4 != 0);
+      local_30[0] = *(uint *)(puVar4 + 1);
+      MemFile_WriteData(param_1,4,local_30);
+      local_30[0] = CONCAT22(puVar4[3],local_30[0]._2_2_);
+      MemFile_WriteData(param_1,2,local_30);
+      puVar4 = puVar4 + 4;
+      pcVar2 = SL_ConvertToString((uint)*puVar4);
+      MemFile_WriteCString(param_1,pcVar2);
+      uVar3 = uVar3 - 1;
+    } while (uVar3 != 0);
   }
-  __restgprlr_29();
   return;
 }
 
 
 // 824D5F08  Cmd_LoadNotifications  (qcommon/cmd.cpp:1283)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
+
 void Cmd_LoadNotifications(MemoryFile *param_1)
 
 {
   uint uVar1;
-  MemoryFile *pMVar2;
-  char *pcVar3;
-  uint uVar4;
-  ulonglong uVar5;
-  undefined2 *puVar6;
+  char *pcVar2;
+  uint uVar3;
+  ulonglong uVar4;
+  undefined2 *puVar5;
   uint local_50;
   undefined4 local_4c [19];
   
-  pMVar2 = (MemoryFile *)__savegprlr_24(param_1);
   DAT_835aba64 = 0;
-  MemFile_ReadData(pMVar2,4,&local_50);
+  MemFile_ReadData(param_1,4,&local_50);
   uVar1 = local_50;
-  uVar5 = (ulonglong)local_50;
-  if (uVar5 != 0) {
-    puVar6 = (undefined2 *)((int)&sv_cmd_argsPrivate.totalUsedTextPool + 2);
+  uVar4 = (ulonglong)local_50;
+  if (uVar4 != 0) {
+    puVar5 = (undefined2 *)((int)&sv_cmd_argsPrivate.totalUsedTextPool + 2);
     do {
-      MemFile_ReadData(pMVar2,4,local_4c);
-      *(undefined4 *)(puVar6 + 1) = local_4c[0];
-      MemFile_ReadData(pMVar2,2,&local_50);
-      puVar6[3] = local_50._0_2_;
-      pcVar3 = MemFile_ReadCString(pMVar2);
-      uVar4 = SL_GetString(pcVar3,0);
-      if (uVar4 != (uVar4 & 0xffff)) {
+      MemFile_ReadData(param_1,4,local_4c);
+      *(undefined4 *)(puVar5 + 1) = local_4c[0];
+      MemFile_ReadData(param_1,2,&local_50);
+      puVar5[3] = local_50._0_2_;
+      pcVar2 = MemFile_ReadCString(param_1);
+      uVar3 = SL_GetString(pcVar2,0);
+      if (uVar3 != (uVar3 & 0xffff)) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\../universal/assertive.h"
                         ,0x1ce,0,"i == static_cast< Type >( i )\n\t%i, %i");
       }
-      uVar5 = uVar5 - 1;
-      puVar6 = puVar6 + 4;
-      *puVar6 = (short)uVar4;
-    } while (uVar5 != 0);
+      uVar4 = uVar4 - 1;
+      puVar5 = puVar5 + 4;
+      *puVar5 = (short)uVar3;
+    } while (uVar4 != 0);
   }
   DAT_835aba64 = uVar1;
-  __restgprlr_24();
   return;
 }
 
 
 // 824D5FD8  Cmd_RegisterNotification  (qcommon/cmd.cpp:1304)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
+
 void Cmd_RegisterNotification(int param_1,char *param_2,char *param_3)
 
 {
   uint uVar1;
-  int iVar2;
+  uint uVar2;
   uint uVar3;
-  uint uVar4;
-  char *pcVar5;
-  uint uVar6;
-  ushort *puVar7;
+  char *pcVar4;
+  uint uVar5;
+  ushort *puVar6;
   
-  iVar2 = __savegprlr_25(param_1);
-  uVar3 = Key_GetBindingForCmd(param_2);
-  if (uVar3 != 0) {
-    uVar4 = SL_GetString(param_3,0);
+  uVar2 = Key_GetBindingForCmd(param_2);
+  if (uVar2 != 0) {
+    uVar3 = SL_GetString(param_3,0);
     uVar1 = DAT_835aba64;
-    uVar6 = 0;
+    uVar5 = 0;
     if (DAT_835aba64 != 0) {
-      puVar7 = &cmd_notify[0].notify;
+      puVar6 = &cmd_notify[0].notify;
       do {
-        if (((((CmdScriptNotify *)(puVar7 + -3))->clientNum == iVar2) && (puVar7[-1] == uVar3)) &&
-           (*puVar7 == uVar4)) {
-          SL_RemoveRefToString(uVar4);
-          __restgprlr_25();
+        if (((((CmdScriptNotify *)(puVar6 + -3))->clientNum == param_1) && (puVar6[-1] == uVar2)) &&
+           (*puVar6 == uVar3)) {
+          SL_RemoveRefToString(uVar3);
           return;
         }
-        uVar6 = uVar6 + 1;
-        puVar7 = puVar7 + 4;
-      } while (uVar6 < DAT_835aba64);
+        uVar5 = uVar5 + 1;
+        puVar6 = puVar6 + 4;
+      } while (uVar5 < DAT_835aba64);
     }
     if (DAT_835aba64 == 0x100) {
-      SL_RemoveRefToString(uVar4);
-      pcVar5 = va("Cannot currently register more than %i commands\n");
-      Scr_Error(pcVar5);
+      SL_RemoveRefToString(uVar3);
+      pcVar4 = va("Cannot currently register more than %i commands\n");
+      Scr_Error(pcVar4);
     }
-    uVar6 = DAT_835aba64;
-    cmd_notify[uVar1].clientNum = iVar2;
+    uVar5 = DAT_835aba64;
+    cmd_notify[uVar1].clientNum = param_1;
+    if (uVar2 != (uVar2 & 0xffff)) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\../universal/assertive.h"
+                      ,0x1ce,0,"i == static_cast< Type >( i )\n\t%i, %i");
+      uVar5 = DAT_835aba64;
+    }
+    cmd_notify[uVar1].cmdIndex = (ushort)uVar2;
     if (uVar3 != (uVar3 & 0xffff)) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\../universal/assertive.h"
                       ,0x1ce,0,"i == static_cast< Type >( i )\n\t%i, %i");
-      uVar6 = DAT_835aba64;
+      uVar5 = DAT_835aba64;
     }
-    cmd_notify[uVar1].cmdIndex = (ushort)uVar3;
-    if (uVar4 != (uVar4 & 0xffff)) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\../universal/assertive.h"
-                      ,0x1ce,0,"i == static_cast< Type >( i )\n\t%i, %i");
-      uVar6 = DAT_835aba64;
-    }
-    DAT_835aba64 = uVar6 + 1;
-    cmd_notify[uVar1].notify = (ushort)uVar4;
+    DAT_835aba64 = uVar5 + 1;
+    cmd_notify[uVar1].notify = (ushort)uVar3;
   }
-  __restgprlr_25();
   return;
 }
 
 
 // 824D5BE0  Cmd_UnregisterAllNotifications  (qcommon/cmd.cpp:1341)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void Cmd_UnregisterAllNotifications(void)
@@ -1544,7 +1488,6 @@ void Cmd_UnregisterAllNotifications(void)
   ushort *puVar2;
   ulonglong uVar3;
   
-  __savegprlr_29();
   bVar1 = Sys_IsMainThread();
   if (!bVar1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cmd.cpp",0x542,0,"%s")
@@ -1560,45 +1503,46 @@ void Cmd_UnregisterAllNotifications(void)
     } while (uVar3 != 0);
   }
   DAT_835aba64 = 0;
-  __restgprlr_29();
   return;
 }
 
 
 // 824D5C58  Cmd_CheckNetNotify_f  (qcommon/cmd.cpp:1358)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void Cmd_CheckNetNotify_f(int param_1)
 
 {
-  int iVar1;
-  char *pcVar2;
-  uint uVar3;
-  ulonglong uVar4;
-  CmdScriptNotify *pCVar5;
+  char *pcVar1;
+  uint uVar2;
+  ulonglong uVar3;
+  CmdScriptNotify *pCVar4;
   
-  iVar1 = __savegprlr_28(param_1);
-  pCVar5 = cmd_notify;
-  uVar4 = (ulonglong)DAT_835aba64;
-  if (uVar4 != 0) {
-    pcVar2 = SV_Cmd_Argv(1);
-    uVar3 = atoi(pcVar2);
-    if (uVar3 != 0) {
-      for (; uVar4 != 0; uVar4 = uVar4 - 1) {
-        if (((pCVar5->clientNum == -1) || (iVar1 == pCVar5->clientNum)) &&
-           (uVar3 == pCVar5->cmdIndex)) {
-          G_AddCommandNotify(iVar1,pCVar5->notify);
+  pCVar4 = cmd_notify;
+  uVar3 = (ulonglong)DAT_835aba64;
+  if (uVar3 != 0) {
+    pcVar1 = SV_Cmd_Argv(1);
+    uVar2 = atoi(pcVar1);
+    if (uVar2 != 0) {
+      for (; uVar3 != 0; uVar3 = uVar3 - 1) {
+        if (((pCVar4->clientNum == -1) || (param_1 == pCVar4->clientNum)) &&
+           (uVar2 == pCVar4->cmdIndex)) {
+          G_AddCommandNotify(param_1,pCVar4->notify);
         }
-        pCVar5 = pCVar5 + 1;
+        pCVar4 = pCVar4 + 1;
       }
     }
   }
-  __restgprlr_28();
   return;
 }
 
 
 // 824D6128  Cmd_ExecuteSingleCommand  (qcommon/cmd.cpp:1392)
 
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void Cmd_ExecuteSingleCommand(LocalClientNum_t param_1,int param_2,char *param_3)
@@ -1608,39 +1552,37 @@ void Cmd_ExecuteSingleCommand(LocalClientNum_t param_1,int param_2,char *param_3
   cmd_function_s *pcVar2;
   _func___cdecl_void *p_Var3;
   cmd_function_s *pcVar4;
-  LocalClientNum_t LVar5;
-  bool bVar8;
-  int iVar6;
-  char *pcVar7;
+  bool bVar7;
+  int iVar5;
+  char *pcVar6;
   char in_RESERVE;
   byte in_cr0;
   
-  LVar5 = __savegprlr_22(param_1);
-  bVar8 = Sys_IsMainThread();
-  if (!bVar8) {
+  bVar7 = Sys_IsMainThread();
+  if (!bVar7) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cmd.cpp",0x575,0,"%s")
     ;
   }
-  if (LOCAL_CLIENT_3 < LVar5) {
+  if (LOCAL_CLIENT_3 < param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cmd.cpp",0x577,0,
                     "localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)");
   }
   Cmd_TokenizeStringKernel
             (param_3,0x200 - cmd_argsPrivate.totalUsedArgvPool,&cmd_args,&cmd_argsPrivate);
-  iVar6 = Cmd_Argc();
-  if (iVar6 != 0) {
-    cmd_args.localClientNum[cmd_args.nesting] = LVar5;
+  iVar5 = Cmd_Argc();
+  if (iVar5 != 0) {
+    cmd_args.localClientNum[cmd_args.nesting] = param_1;
     cmd_args.controllerIndex[cmd_args.nesting] = param_2;
-    pcVar7 = Cmd_Argv(0);
+    pcVar6 = Cmd_Argv(0);
     pcVar1 = (cmd_function_s *)&cmd_functions;
     pcVar2 = cmd_functions;
     do {
       pcVar4 = pcVar1;
       if (pcVar2 == (cmd_function_s *)0x0) goto LAB_824d6244;
       pcVar1 = pcVar4->next;
-      iVar6 = I_stricmp(pcVar7,pcVar1->name);
+      iVar5 = I_stricmp(pcVar6,pcVar1->name);
       pcVar2 = pcVar1->next;
-    } while (iVar6 != 0);
+    } while (iVar5 != 0);
     pcVar4->next = pcVar2;
     pcVar1->next = cmd_functions;
     p_Var3 = pcVar1->function;
@@ -1649,13 +1591,12 @@ void Cmd_ExecuteSingleCommand(LocalClientNum_t param_1,int param_2,char *param_3
       if (p_Var3 != Cbuf_AddServerText_f) {
         (*p_Var3)();
         Cmd_EndTokenizedStringKernel(&cmd_args,&cmd_argsPrivate);
-        __restgprlr_22();
         return;
       }
       SV_WaitServer();
       Com_CheckError();
       do {
-        iVar6 = g_serverThreadOwnership;
+        iVar5 = g_serverThreadOwnership;
         if (g_serverThreadOwnership != 1) {
           if (in_RESERVE != '\0') {
             g_serverThreadOwnership =
@@ -1669,7 +1610,7 @@ void Cmd_ExecuteSingleCommand(LocalClientNum_t param_1,int param_2,char *param_3
           in_cr0 = 2;
         }
       } while (!(bool)(in_cr0 >> 1 & 1));
-      if (iVar6 != 0) {
+      if (iVar5 != 0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cmd.cpp",0x59c,0,
                         "%s\n\t(g_serverThreadOwnership) = %i");
       }
@@ -1679,25 +1620,25 @@ void Cmd_ExecuteSingleCommand(LocalClientNum_t param_1,int param_2,char *param_3
       }
       Cmd_ExecuteServerString(param_3);
       Cmd_EndTokenizedStringKernel(&cmd_args,&cmd_argsPrivate);
-      __restgprlr_22();
       return;
     }
 LAB_824d6244:
-    iVar6 = Dvar_Command();
-    if ((iVar6 == 0) &&
+    iVar5 = Dvar_Command();
+    if ((iVar5 == 0) &&
        (((com_sv_running == (dvar_t *)0x0 || ((com_sv_running->current).enabled == false)) ||
-        (iVar6 = SV_GameCommand(), iVar6 == 0)))) {
-      CL_ForwardCommandToServer(LVar5,param_3);
+        (iVar5 = SV_GameCommand(), iVar5 == 0)))) {
+      CL_ForwardCommandToServer(param_1,param_3);
     }
   }
   Cmd_EndTokenizedStringKernel(&cmd_args,&cmd_argsPrivate);
-  __restgprlr_22();
   return;
 }
 
 
 // 824D63A0  SV_Cmd_ExecuteString  (qcommon/cmd.cpp:1519)
 
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* void __cdecl SV_Cmd_ExecuteString(enum LocalClientNum_t,int,char const *) */
 
@@ -1708,39 +1649,37 @@ void SV_Cmd_ExecuteString(LocalClientNum_t param_1,int param_2,char *param_3)
   cmd_function_s *pcVar2;
   _func___cdecl_void *p_Var3;
   cmd_function_s *pcVar4;
-  LocalClientNum_t LVar5;
-  bool bVar8;
-  int iVar6;
-  char *pcVar7;
+  bool bVar7;
+  int iVar5;
+  char *pcVar6;
   char in_RESERVE;
   byte in_cr0;
   
-  LVar5 = __savegprlr_22(param_1);
-  bVar8 = Sys_IsMainThread();
-  if (!bVar8) {
+  bVar7 = Sys_IsMainThread();
+  if (!bVar7) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cmd.cpp",0x575,0,"%s")
     ;
   }
-  if (LOCAL_CLIENT_3 < LVar5) {
+  if (LOCAL_CLIENT_3 < param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cmd.cpp",0x577,0,
                     "localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)");
   }
   Cmd_TokenizeStringKernel
             (param_3,0x200 - cmd_argsPrivate.totalUsedArgvPool,&cmd_args,&cmd_argsPrivate);
-  iVar6 = Cmd_Argc();
-  if (iVar6 != 0) {
-    cmd_args.localClientNum[cmd_args.nesting] = LVar5;
+  iVar5 = Cmd_Argc();
+  if (iVar5 != 0) {
+    cmd_args.localClientNum[cmd_args.nesting] = param_1;
     cmd_args.controllerIndex[cmd_args.nesting] = param_2;
-    pcVar7 = Cmd_Argv(0);
+    pcVar6 = Cmd_Argv(0);
     pcVar1 = (cmd_function_s *)&cmd_functions;
     pcVar2 = cmd_functions;
     do {
       pcVar4 = pcVar1;
       if (pcVar2 == (cmd_function_s *)0x0) goto LAB_824d6244;
       pcVar1 = pcVar4->next;
-      iVar6 = I_stricmp(pcVar7,pcVar1->name);
+      iVar5 = I_stricmp(pcVar6,pcVar1->name);
       pcVar2 = pcVar1->next;
-    } while (iVar6 != 0);
+    } while (iVar5 != 0);
     pcVar4->next = pcVar2;
     pcVar1->next = cmd_functions;
     p_Var3 = pcVar1->function;
@@ -1749,13 +1688,12 @@ void SV_Cmd_ExecuteString(LocalClientNum_t param_1,int param_2,char *param_3)
       if (p_Var3 != Cbuf_AddServerText_f) {
         (*p_Var3)();
         Cmd_EndTokenizedStringKernel(&cmd_args,&cmd_argsPrivate);
-        __restgprlr_22();
         return;
       }
       SV_WaitServer();
       Com_CheckError();
       do {
-        iVar6 = g_serverThreadOwnership;
+        iVar5 = g_serverThreadOwnership;
         if (g_serverThreadOwnership != 1) {
           if (in_RESERVE != '\0') {
             g_serverThreadOwnership =
@@ -1769,7 +1707,7 @@ void SV_Cmd_ExecuteString(LocalClientNum_t param_1,int param_2,char *param_3)
           in_cr0 = 2;
         }
       } while (!(bool)(in_cr0 >> 1 & 1));
-      if (iVar6 != 0) {
+      if (iVar5 != 0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cmd.cpp",0x59c,0,
                         "%s\n\t(g_serverThreadOwnership) = %i");
       }
@@ -1779,25 +1717,25 @@ void SV_Cmd_ExecuteString(LocalClientNum_t param_1,int param_2,char *param_3)
       }
       Cmd_ExecuteServerString(param_3);
       Cmd_EndTokenizedStringKernel(&cmd_args,&cmd_argsPrivate);
-      __restgprlr_22();
       return;
     }
 LAB_824d6244:
-    iVar6 = Dvar_Command();
-    if ((iVar6 == 0) &&
+    iVar5 = Dvar_Command();
+    if ((iVar5 == 0) &&
        (((com_sv_running == (dvar_t *)0x0 || ((com_sv_running->current).enabled == false)) ||
-        (iVar6 = SV_GameCommand(), iVar6 == 0)))) {
-      CL_ForwardCommandToServer(LVar5,param_3);
+        (iVar5 = SV_GameCommand(), iVar5 == 0)))) {
+      CL_ForwardCommandToServer(param_1,param_3);
     }
   }
   Cmd_EndTokenizedStringKernel(&cmd_args,&cmd_argsPrivate);
-  __restgprlr_22();
   return;
 }
 
 
 // 824D5CE0  Cmd_List_f  (qcommon/cmd.cpp:1532)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void Cmd_List_f(void)
@@ -1808,7 +1746,6 @@ void Cmd_List_f(void)
   char *pcVar3;
   bool bVar4;
   
-  __savegprlr_28();
   iVar2 = Cmd_Argc();
   if (iVar2 < 2) {
     pcVar3 = (char *)0x0;
@@ -1824,7 +1761,6 @@ void Cmd_List_f(void)
     }
   }
   Com_Printf(0,"%i commands\n");
-  __restgprlr_28();
   return;
 }
 

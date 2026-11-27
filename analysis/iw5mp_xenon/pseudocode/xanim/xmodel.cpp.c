@@ -128,17 +128,20 @@ int XModelGetMemUsage(XModel *param_1)
 
 // 82632E38  XModelTraceLine  (xanim/xmodel.cpp:440)
 
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
+
 int XModelTraceLine(XModel *param_1,trace_t *param_2,float *param_3,float *param_4,int param_5)
 
 {
-  int iVar1;
-  uint uVar2;
+  uint uVar1;
+  int iVar2;
   int iVar3;
   int iVar4;
   float fVar5;
-  int iVar6;
-  uint uVar7;
-  XSurface *pXVar8;
+  uint uVar6;
+  XSurface *pXVar7;
+  int iVar8;
   int iVar9;
   int iVar10;
   int iVar11;
@@ -151,9 +154,8 @@ int XModelTraceLine(XModel *param_1,trace_t *param_2,float *param_3,float *param
   float local_110;
   TraceExtents aTStack_100 [2];
   
-  __savegprlr();
-  uStack00000034 = param_5;
   if ((byte)param_1->collLod < 0x80) {
+    uStack00000034 = param_5;
     if (param_1->maxLoadedLod != '\0') {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xmodel.cpp",0x1dd,0,
                       "%s\n\t(model->name) = %s");
@@ -170,33 +172,33 @@ int XModelTraceLine(XModel *param_1,trace_t *param_2,float *param_3,float *param
     local_114 = aTStack_100[0].end[1] - aTStack_100[0].start[1];
     local_130.fraction = param_2->fraction;
     local_110 = aTStack_100[0].end[2] - aTStack_100[0].start[2];
-    iVar1 = 0;
-    uVar2 = XModelGetSurfaces(param_1,local_120,(int)param_1->collLod);
-    uVar7 = 0;
-    if (uVar2 != 0) {
-      iVar6 = 0;
-      iVar1 = 0;
+    iVar10 = 0;
+    uVar1 = XModelGetSurfaces(param_1,local_120,(int)param_1->collLod);
+    uVar6 = 0;
+    if (uVar1 != 0) {
+      iVar4 = 0;
+      iVar10 = 0;
       do {
-        pXVar8 = (XSurface *)((int)(local_120[0]->vertInfo).vertCount + iVar6 + -0x10);
-        iVar3 = XSurfaceGetVertListCount(pXVar8);
+        pXVar7 = (XSurface *)((int)(local_120[0]->vertInfo).vertCount + iVar4 + -0x10);
+        iVar2 = XSurfaceGetVertListCount(pXVar7);
         iVar11 = 0;
-        if (0 < iVar3) {
-          iVar9 = 0;
-          iVar10 = iVar1 * 0x24;
+        if (0 < iVar2) {
+          iVar8 = 0;
+          iVar9 = iVar10 * 0x24;
           do {
-            if (param_1->numCollSurfs <= iVar1) {
+            if (param_1->numCollSurfs <= iVar10) {
               va("%d < %d, %d %d");
               MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xmodel.cpp",
                               0x1f9,0,"%s\n\t%s");
             }
-            pBVar12 = (Bounds *)((int)(param_1->collSurfs->bounds).midPoint + iVar10);
+            pBVar12 = (Bounds *)((int)(param_1->collSurfs->bounds).midPoint + iVar9);
             if ((((uint)pBVar12[1].midPoint[1] & uStack00000034) != 0) &&
-               (iVar4 = CM_TraceBox(aTStack_100,pBVar12,local_130.fraction), iVar4 == 0)) {
-              if (*(int *)((int)&pXVar8->vertList->collisionTree + iVar9) == 0) {
-                XSurfaceTraceLineVerts(pXVar8,iVar11,aTStack_100[0].start,&local_118,&local_130);
+               (iVar3 = CM_TraceBox(aTStack_100,pBVar12,local_130.fraction), iVar3 == 0)) {
+              if (*(int *)((int)&pXVar7->vertList->collisionTree + iVar8) == 0) {
+                XSurfaceTraceLineVerts(pXVar7,iVar11,aTStack_100[0].start,&local_118,&local_130);
               }
               else {
-                XSurfaceTraceLineTree(pXVar8,iVar11,aTStack_100[0].start,&local_118,&local_130);
+                XSurfaceTraceLineTree(pXVar7,iVar11,aTStack_100[0].start,&local_118,&local_130);
               }
               if (param_2->fraction != local_130.fraction) {
                 fVar5 = pBVar12[1].midPoint[0];
@@ -214,29 +216,29 @@ int XModelTraceLine(XModel *param_1,trace_t *param_2,float *param_3,float *param
               }
             }
             iVar11 = iVar11 + 1;
-            iVar9 = iVar9 + 0xc;
-            iVar1 = iVar1 + 1;
-            iVar10 = iVar10 + 0x24;
-          } while (iVar11 < iVar3);
+            iVar8 = iVar8 + 0xc;
+            iVar10 = iVar10 + 1;
+            iVar9 = iVar9 + 0x24;
+          } while (iVar11 < iVar2);
         }
-        uVar7 = uVar7 + 1;
-        iVar6 = iVar6 + 0x80;
-      } while (uVar7 < uVar2);
+        uVar6 = uVar6 + 1;
+        iVar4 = iVar4 + 0x80;
+      } while (uVar6 < uVar1);
     }
-    if (iVar1 != param_1->numCollSurfs) {
+    if (iVar10 != param_1->numCollSurfs) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xmodel.cpp",0x217,0,
                       "%s\n\t(collSurfIndex) = %i");
     }
-    __restgprlr();
     return (int)fVar5;
   }
-  iVar1 = -1;
-  __restgprlr();
-  return iVar1;
+  return -1;
 }
 
 
 // 82633108  XModelTraceLineAnimated  (xanim/xmodel.cpp:616)
+
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
 
 int XModelTraceLineAnimated
               (DObj *param_1,uint param_2,int param_3,trace_t *param_4,DObjAnimMat *param_5,
@@ -253,18 +255,17 @@ int XModelTraceLineAnimated
   float fVar8;
   float fVar9;
   bool bVar10;
-  int iVar11;
-  uint uVar12;
-  int iVar13;
-  ulonglong uVar14;
-  XSurface *pXVar15;
+  uint uVar11;
+  int iVar12;
+  XSurface *pXVar13;
+  int iVar14;
+  int iVar15;
   int iVar16;
   int iVar17;
-  int iVar18;
-  Bounds *pBVar19;
+  Bounds *pBVar18;
+  DObjAnimMat *pDVar19;
   DObjAnimMat *pDVar20;
-  DObjAnimMat *pDVar21;
-  double dVar22;
+  double dVar21;
   int iStack00000024;
   DObjAnimMat *pDStack00000034;
   uint uStack0000004c;
@@ -330,54 +331,52 @@ int XModelTraceLineAnimated
   TraceExtents TStack_120;
   uint auStack_c0 [48];
   
-  uVar14 = (ulonglong)(int)param_2;
-  __savegprlr();
-  pXVar5 = *(XModel **)((int)param_1->models + (int)((uVar14 & 0xffffffff) << 2));
-  iStack00000024 = param_3;
-  pDStack00000034 = param_5;
-  uStack0000004c = param_8;
+  pXVar5 = param_1->models[param_2];
   if ((byte)pXVar5->collLod < 0x80) {
     local_220 = -NAN;
+    iStack00000024 = param_3;
+    pDStack00000034 = param_5;
+    uStack0000004c = param_8;
     local_1f8 = XModelGetBasePose(pXVar5);
     DObjGetHidePartBits(param_1,auStack_c0);
     local_210.fraction = param_4->fraction;
-    iVar11 = 0;
-    uVar12 = XModelGetSurfaces(pXVar5,&local_1e0,(int)pXVar5->collLod);
+    iVar16 = 0;
+    uVar11 = XModelGetSurfaces(pXVar5,&local_1e0,(int)pXVar5->collLod);
     local_230 = 0;
-    local_1e4 = uVar12;
-    if (uVar12 != 0) {
+    local_1e4 = uVar11;
+    if (uVar11 != 0) {
       local_22c = 0;
-      dVar22 = 1.0;
+      dVar21 = 1.0;
       local_1f4 = g_stackTrace + 0x1ea8;
       local_1c8 = &g_bitShift;
-      iVar11 = 0;
+      iVar16 = 0;
       do {
-        pXVar15 = (XSurface *)((int)(local_1e0->vertInfo).vertCount + local_22c + -0x10);
-        local_1ec = XSurfaceGetVertListCount(pXVar15);
-        iVar18 = 0;
+        pXVar13 = (XSurface *)((int)(local_1e0->vertInfo).vertCount + local_22c + -0x10);
+        local_1ec = XSurfaceGetVertListCount(pXVar13);
+        iVar17 = 0;
         if (0 < local_1ec) {
-          iVar16 = 0;
-          iVar17 = iVar11 * 0x24;
+          iVar14 = 0;
+          iVar15 = iVar16 * 0x24;
           do {
-            if (pXVar5->numCollSurfs <= iVar11) {
+            if (pXVar5->numCollSurfs <= iVar16) {
               va("%d < %d, %d %d");
               MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xmodel.cpp",
                               0x2b1,0,"%s\n\t%s");
             }
-            pBVar19 = (Bounds *)((int)(pXVar5->collSurfs->bounds).midPoint + iVar17);
-            if ((((uint)pBVar19[1].midPoint[1] & uStack0000004c) != 0) &&
-               (fVar4 = pBVar19[1].midPoint[0],
+            pBVar18 = (Bounds *)((int)(pXVar5->collSurfs->bounds).midPoint + iVar15);
+            if ((((uint)pBVar18[1].midPoint[1] & uStack0000004c) != 0) &&
+               (fVar4 = pBVar18[1].midPoint[0],
                (*(uint *)(local_1c8 + (((int)fVar4 + iStack00000024) * 4 & 0x7c)) &
                auStack_c0[(int)fVar4 + iStack00000024 >> 5]) == 0)) {
-              pDVar20 = pDStack00000034 + (int)fVar4;
-              pDVar21 = local_1f8 + (int)fVar4;
-              fVar4 = pDVar21->quat[0];
-              if (((pDVar20->quat[0] == fVar4) &&
-                  (((pDVar20->quat[1] == pDVar21->quat[1] && (pDVar20->quat[2] == pDVar21->quat[2]))
-                   && (pDVar20->quat[3] == pDVar21->quat[3])))) &&
-                 (((pDVar20->trans[0] == pDVar21->trans[0] &&
-                   (pDVar20->trans[1] == pDVar21->trans[1])) &&
-                  (pDVar20->trans[2] == pDVar21->trans[2])))) {
+              pDVar19 = pDStack00000034 + (int)fVar4;
+              pDVar20 = local_1f8 + (int)fVar4;
+              fVar4 = pDVar20->quat[0];
+              if (((pDVar19->quat[0] == fVar4) &&
+                  (((pDVar19->quat[1] == pDVar20->quat[1] && (pDVar19->quat[2] == pDVar20->quat[2]))
+                   && (pDVar19->quat[3] == pDVar20->quat[3])))) &&
+                 (((pDVar19->trans[0] == pDVar20->trans[0] &&
+                   (pDVar19->trans[1] == pDVar20->trans[1])) &&
+                  (pDVar19->trans[2] == pDVar20->trans[2])))) {
                 TStack_120.start[0] = *param_6;
                 bVar10 = false;
                 TStack_120.start[1] = param_6[1];
@@ -389,55 +388,17 @@ int XModelTraceLineAnimated
               else {
                 local_1cc = fVar4;
                 if (((((uint)fVar4 & 0x7f800000) == 0x7f800000) ||
-                    (local_1f0 = pDVar21->quat[1], ((uint)local_1f0 & 0x7f800000) == 0x7f800000)) ||
-                   ((local_1dc = pDVar21->quat[2], ((uint)local_1dc & 0x7f800000) == 0x7f800000 ||
-                    (local_1e8 = pDVar21->quat[3], ((uint)local_1e8 & 0x7f800000) == 0x7f800000))))
+                    (local_1f0 = pDVar20->quat[1], ((uint)local_1f0 & 0x7f800000) == 0x7f800000)) ||
+                   ((local_1dc = pDVar20->quat[2], ((uint)local_1dc & 0x7f800000) == 0x7f800000 ||
+                    (local_1e8 = pDVar20->quat[3], ((uint)local_1e8 & 0x7f800000) == 0x7f800000))))
                 {
                   MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim_public.h"
                                   ,0x26d,0,"%s");
                 }
-                local_1d8 = pDVar21->transWeight;
+                local_1d8 = pDVar20->transWeight;
                 if (((uint)local_1d8 & 0x7f800000) == 0x7f800000) {
                   MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim_public.h"
                                   ,0x26e,0,"%s");
-                }
-                fVar4 = pDVar21->quat[2];
-                fVar1 = pDVar21->transWeight;
-                fVar2 = pDVar21->quat[1];
-                fVar8 = fVar2 * fVar1;
-                fVar9 = pDVar21->quat[0] * fVar1;
-                fVar3 = pDVar21->quat[3];
-                fVar6 = fVar4 * fVar4 * fVar1;
-                fVar7 = pDVar21->quat[0] * fVar9;
-                local_174 = fVar3 * fVar4 * fVar1;
-                local_16c = fVar4 * fVar8 - fVar3 * fVar9;
-                local_17c = fVar2 * fVar9 - local_174;
-                local_174 = local_174 + fVar2 * fVar9;
-                local_178 = fVar3 * fVar8 + fVar4 * fVar9;
-                local_168 = fVar4 * fVar9 - fVar3 * fVar8;
-                local_180 = (float)(dVar22 - (double)(fVar6 + fVar2 * fVar8));
-                local_170 = (float)(dVar22 - (double)(fVar6 + fVar7));
-                local_164 = fVar4 * fVar8 + fVar3 * fVar9;
-                local_160 = (float)(dVar22 - (double)(fVar2 * fVar8 + fVar7));
-                local_15c = -(pDVar21->trans[1] * local_174 +
-                             pDVar21->trans[0] * local_180 + pDVar21->trans[2] * local_168);
-                local_158 = -(pDVar21->trans[0] * local_17c +
-                             pDVar21->trans[2] * local_164 + pDVar21->trans[1] * local_170);
-                local_154 = -(pDVar21->trans[0] * local_178 +
-                             pDVar21->trans[2] * local_160 + pDVar21->trans[1] * local_16c);
-                local_200 = pDVar20->quat[0];
-                if ((((((uint)local_200 & 0x7f800000) == 0x7f800000) ||
-                     (local_1d0 = pDVar20->quat[1], ((uint)local_1d0 & 0x7f800000) == 0x7f800000))
-                    || (local_1c4 = pDVar20->quat[2], ((uint)local_1c4 & 0x7f800000) == 0x7f800000))
-                   || (local_1d4 = pDVar20->quat[3], ((uint)local_1d4 & 0x7f800000) == 0x7f800000))
-                {
-                  MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim_public.h"
-                                  ,0x205,0,"%s");
-                }
-                local_1fc = pDVar20->transWeight;
-                if (((uint)local_1fc & 0x7f800000) == 0x7f800000) {
-                  MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim_public.h"
-                                  ,0x206,0,"%s");
                 }
                 fVar4 = pDVar20->quat[2];
                 fVar1 = pDVar20->transWeight;
@@ -447,19 +408,57 @@ int XModelTraceLineAnimated
                 fVar3 = pDVar20->quat[3];
                 fVar6 = fVar4 * fVar4 * fVar1;
                 fVar7 = pDVar20->quat[0] * fVar9;
+                local_174 = fVar3 * fVar4 * fVar1;
+                local_16c = fVar4 * fVar8 - fVar3 * fVar9;
+                local_17c = fVar2 * fVar9 - local_174;
+                local_174 = local_174 + fVar2 * fVar9;
+                local_178 = fVar3 * fVar8 + fVar4 * fVar9;
+                local_168 = fVar4 * fVar9 - fVar3 * fVar8;
+                local_180 = (float)(dVar21 - (double)(fVar6 + fVar2 * fVar8));
+                local_170 = (float)(dVar21 - (double)(fVar6 + fVar7));
+                local_164 = fVar4 * fVar8 + fVar3 * fVar9;
+                local_160 = (float)(dVar21 - (double)(fVar2 * fVar8 + fVar7));
+                local_15c = -(pDVar20->trans[1] * local_174 +
+                             pDVar20->trans[0] * local_180 + pDVar20->trans[2] * local_168);
+                local_158 = -(pDVar20->trans[0] * local_17c +
+                             pDVar20->trans[2] * local_164 + pDVar20->trans[1] * local_170);
+                local_154 = -(pDVar20->trans[0] * local_178 +
+                             pDVar20->trans[2] * local_160 + pDVar20->trans[1] * local_16c);
+                local_200 = pDVar19->quat[0];
+                if ((((((uint)local_200 & 0x7f800000) == 0x7f800000) ||
+                     (local_1d0 = pDVar19->quat[1], ((uint)local_1d0 & 0x7f800000) == 0x7f800000))
+                    || (local_1c4 = pDVar19->quat[2], ((uint)local_1c4 & 0x7f800000) == 0x7f800000))
+                   || (local_1d4 = pDVar19->quat[3], ((uint)local_1d4 & 0x7f800000) == 0x7f800000))
+                {
+                  MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim_public.h"
+                                  ,0x205,0,"%s");
+                }
+                local_1fc = pDVar19->transWeight;
+                if (((uint)local_1fc & 0x7f800000) == 0x7f800000) {
+                  MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim_public.h"
+                                  ,0x206,0,"%s");
+                }
+                fVar4 = pDVar19->quat[2];
+                fVar1 = pDVar19->transWeight;
+                fVar2 = pDVar19->quat[1];
+                fVar8 = fVar2 * fVar1;
+                fVar9 = pDVar19->quat[0] * fVar1;
+                fVar3 = pDVar19->quat[3];
+                fVar6 = fVar4 * fVar4 * fVar1;
+                fVar7 = pDVar19->quat[0] * fVar9;
                 local_14c = fVar3 * fVar4 * fVar1;
                 local_144 = fVar2 * fVar9 - local_14c;
                 local_13c = fVar4 * fVar8 + fVar3 * fVar9;
                 local_138 = fVar3 * fVar8 + fVar4 * fVar9;
                 local_134 = fVar4 * fVar8 - fVar3 * fVar9;
                 local_148 = fVar4 * fVar9 - fVar3 * fVar8;
-                local_150 = (float)(dVar22 - (double)(fVar6 + fVar2 * fVar8));
-                local_140 = (float)(dVar22 - (double)(fVar6 + fVar7));
+                local_150 = (float)(dVar21 - (double)(fVar6 + fVar2 * fVar8));
+                local_140 = (float)(dVar21 - (double)(fVar6 + fVar7));
                 local_14c = local_14c + fVar2 * fVar9;
-                local_130 = (float)(dVar22 - (double)(fVar2 * fVar8 + fVar7));
-                local_12c = pDVar20->trans[0];
-                local_128 = pDVar20->trans[1];
-                local_124 = pDVar20->trans[2];
+                local_130 = (float)(dVar21 - (double)(fVar2 * fVar8 + fVar7));
+                local_12c = pDVar19->trans[0];
+                local_128 = pDVar19->trans[1];
+                local_124 = pDVar19->trans[2];
                 MatrixMultiply43((float (*) [3])&local_180,(float (*) [3])&local_150,
                                  (float (*) [3])&local_1c0);
                 bVar10 = true;
@@ -477,19 +476,19 @@ int XModelTraceLineAnimated
                 TStack_120.end[2] = local_1a4 * fVar7 + local_1a8 * fVar3 + local_1a0 * fVar1;
               }
               CM_CalcTraceExtents(&TStack_120);
-              iVar13 = CM_TraceBox(&TStack_120,pBVar19,param_4->fraction);
-              if (iVar13 == 0) {
+              iVar12 = CM_TraceBox(&TStack_120,pBVar18,param_4->fraction);
+              if (iVar12 == 0) {
                 local_188 = TStack_120.end[2] - TStack_120.start[2];
                 local_18c = TStack_120.end[1] - TStack_120.start[1];
                 local_190 = TStack_120.end[0] - TStack_120.start[0];
-                if (*(int *)((int)&pXVar15->vertList->collisionTree + iVar16) == 0) {
-                  XSurfaceTraceLineVerts(pXVar15,iVar18,TStack_120.start,&local_190,&local_210);
+                if (*(int *)((int)&pXVar13->vertList->collisionTree + iVar14) == 0) {
+                  XSurfaceTraceLineVerts(pXVar13,iVar17,TStack_120.start,&local_190,&local_210);
                 }
                 else {
-                  XSurfaceTraceLineTree(pXVar15,iVar18,TStack_120.start,&local_190,&local_210);
+                  XSurfaceTraceLineTree(pXVar13,iVar17,TStack_120.start,&local_190,&local_210);
                 }
                 if (param_4->fraction != local_210.fraction) {
-                  local_220 = pBVar19[1].midPoint[0];
+                  local_220 = pBVar18[1].midPoint[0];
                   param_4->fraction = local_210.fraction;
                   if (bVar10) {
                     param_4->normal[0] =
@@ -509,39 +508,39 @@ int XModelTraceLineAnimated
                   }
                   param_4->startsolid = false;
                   param_4->allsolid = false;
-                  param_4->surfaceFlags = (int)pBVar19[1].midPoint[2];
-                  param_4->contents = (int)pBVar19[1].midPoint[1];
+                  param_4->surfaceFlags = (int)pBVar18[1].midPoint[2];
+                  param_4->contents = (int)pBVar18[1].midPoint[1];
                   if (*(int *)(*(int *)(local_1f4 + -0x1ee8) + 0xc) != 0) {
                     param_4->material = pXVar5->name;
                   }
                 }
               }
             }
-            iVar18 = iVar18 + 1;
-            iVar16 = iVar16 + 0xc;
-            iVar11 = iVar11 + 1;
-            iVar17 = iVar17 + 0x24;
-            uVar12 = local_1e4;
-          } while (iVar18 < local_1ec);
+            iVar17 = iVar17 + 1;
+            iVar14 = iVar14 + 0xc;
+            iVar16 = iVar16 + 1;
+            iVar15 = iVar15 + 0x24;
+            uVar11 = local_1e4;
+          } while (iVar17 < local_1ec);
         }
         local_230 = local_230 + 1;
         local_22c = local_22c + 0x80;
-      } while (local_230 < uVar12);
+      } while (local_230 < uVar11);
     }
-    if (iVar11 != pXVar5->numCollSurfs) {
+    if (iVar16 != pXVar5->numCollSurfs) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xmodel.cpp",0x2f4,0,
                       "%s\n\t(collSurfIndex) = %i");
     }
-    __restgprlr();
     return (int)local_220;
   }
-  iVar11 = -1;
-  __restgprlr();
-  return iVar11;
+  return -1;
 }
 
 
 // 82631150  XModelTraceLineAnimatedPartBits  (xanim/xmodel.cpp:869)
+
+/* WARNING: Function: __savegprlr_15 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_15 replaced with injection: xenon_save_restore */
 
 void XModelTraceLineAnimatedPartBits
                (XModel *param_1,DObj *param_2,uint param_3,int param_4,int param_5,int *param_6)
@@ -549,83 +548,76 @@ void XModelTraceLineAnimatedPartBits
 {
   XModelCollSurf_s *pXVar1;
   int iVar2;
-  XModel *pXVar3;
-  uint uVar4;
+  uint uVar3;
+  int iVar4;
   int iVar5;
-  longlong lVar6;
-  longlong lVar7;
-  int iVar8;
-  uint uVar9;
-  int iVar10;
-  int *piVar11;
-  int iVar12;
+  uint uVar6;
+  int iVar7;
+  int *piVar8;
+  int iVar9;
   XSurface *local_c0 [4];
   uint auStack_b0 [44];
   
-  lVar7 = (longlong)param_4;
-  lVar6 = (longlong)(int)param_2;
-  pXVar3 = (XModel *)__savegprlr_15(param_1,lVar6,param_3);
-  if ((byte)pXVar3->collLod < 0x80) {
-    DObjGetHidePartBits((DObj *)lVar6,auStack_b0);
-    iVar12 = 0;
-    pXVar1 = pXVar3->collSurfs;
-    uVar4 = XModelGetSurfaces(pXVar3,local_c0,(int)pXVar3->collLod);
-    uVar9 = 0;
-    if (uVar4 != 0) {
-      iVar8 = 0;
-      iVar12 = 0;
+  if ((byte)param_1->collLod < 0x80) {
+    DObjGetHidePartBits(param_2,auStack_b0);
+    iVar9 = 0;
+    pXVar1 = param_1->collSurfs;
+    uVar3 = XModelGetSurfaces(param_1,local_c0,(int)param_1->collLod);
+    uVar6 = 0;
+    if (uVar3 != 0) {
+      iVar5 = 0;
+      iVar9 = 0;
       do {
-        iVar5 = XSurfaceGetVertListCount
-                          ((XSurface *)((int)(local_c0[0]->vertInfo).vertCount + iVar8 + -0x10));
-        iVar10 = 0;
-        if (0 < iVar5) {
-          piVar11 = &pXVar1[iVar12].boneIdx;
+        iVar4 = XSurfaceGetVertListCount
+                          ((XSurface *)((int)(local_c0[0]->vertInfo).vertCount + iVar5 + -0x10));
+        iVar7 = 0;
+        if (0 < iVar4) {
+          piVar8 = &pXVar1[iVar9].boneIdx;
           do {
-            if (pXVar3->numCollSurfs <= iVar12) {
+            if (param_1->numCollSurfs <= iVar9) {
               va("%d < %d, %d %d");
               MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xmodel.cpp",
                               0x38a,0,"%s\n\t%s");
             }
-            if ((piVar11[1] & param_5) != 0) {
-              iVar2 = (int)((ulonglong)(uint)*piVar11 + lVar7) >> 5;
-              if ((auStack_b0[iVar2] &
-                  *(uint *)(&g_bitShift +
-                           ((uint)(((ulonglong)(uint)*piVar11 + lVar7 & 0xffffffff) << 2) & 0x7c)))
-                  == 0) {
+            if ((piVar8[1] & param_5) != 0) {
+              iVar2 = *piVar8 + param_4 >> 5;
+              if ((auStack_b0[iVar2] & *(uint *)(&g_bitShift + ((*piVar8 + param_4) * 4 & 0x7c))) ==
+                  0) {
                 param_6[iVar2] =
-                     param_6[iVar2] |
-                     *(uint *)(&g_bitShift +
-                              ((uint)(((ulonglong)(uint)*piVar11 + lVar7 & 0xffffffff) << 2) & 0x7c)
-                              );
+                     param_6[iVar2] | *(uint *)(&g_bitShift + ((*piVar8 + param_4) * 4 & 0x7c));
               }
             }
-            iVar10 = iVar10 + 1;
-            iVar12 = iVar12 + 1;
-            piVar11 = piVar11 + 9;
-          } while (iVar10 < iVar5);
+            iVar7 = iVar7 + 1;
+            iVar9 = iVar9 + 1;
+            piVar8 = piVar8 + 9;
+          } while (iVar7 < iVar4);
         }
-        uVar9 = uVar9 + 1;
-        iVar8 = iVar8 + 0x80;
-      } while (uVar9 < uVar4);
+        uVar6 = uVar6 + 1;
+        iVar5 = iVar5 + 0x80;
+      } while (uVar6 < uVar3);
     }
-    if (iVar12 != pXVar3->numCollSurfs) {
+    if (iVar9 != param_1->numCollSurfs) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xmodel.cpp",0x399,0,
                       "%s\n\t(collSurfIndex) = %i");
     }
   }
-  __restgprlr_15();
   return;
 }
 
 
 // 826312F0  XSurfaceVisitTrianglesInAabb_ConvertAabb  (xanim/xmodel.cpp:948)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void XSurfaceVisitTrianglesInAabb_ConvertAabb
                (XSurfaceCollisionTree *param_1,float *param_2,float *param_3,int *param_4,
                int *param_5)
 
 {
-  float *pfVar1;
+  double dVar1;
   double dVar2;
   double dVar3;
   double dVar4;
@@ -633,33 +625,28 @@ void XSurfaceVisitTrianglesInAabb_ConvertAabb
   double dVar6;
   double dVar7;
   double dVar8;
-  double dVar9;
-  float fVar10;
+  float fVar9;
   
-  __savegprlr_28(param_1);
-  pfVar1 = (float *)__savefpr_24();
-  dVar9 = 1000000.0;
-  dVar8 = -1000000.0;
-  dVar4 = (double)(pfVar1[3] * (*param_3 + *pfVar1));
-  dVar7 = 0.5;
-  dVar6 = (double)(pfVar1[4] * (param_2[1] + pfVar1[1]));
-  dVar5 = (double)(pfVar1[5] * (param_2[2] + pfVar1[2]));
-  dVar3 = (double)(pfVar1[4] * (param_3[1] + pfVar1[1]));
-  dVar2 = (double)(pfVar1[5] * (param_3[2] + pfVar1[2]));
-  fVar10 = ClampFloat(pfVar1[3] * (*param_2 + *pfVar1) - 0.5,-1e+06,1e+06);
-  *param_4 = (int)(longlong)fVar10;
-  fVar10 = ClampFloat((float)(dVar6 - dVar7),(float)dVar8,(float)dVar9);
-  param_4[1] = (int)(longlong)fVar10;
-  fVar10 = ClampFloat((float)(dVar5 - dVar7),(float)dVar8,(float)dVar9);
-  param_4[2] = (int)(longlong)fVar10;
-  fVar10 = ClampFloat((float)(dVar4 + dVar7),(float)dVar8,(float)dVar9);
-  *param_5 = (int)(longlong)fVar10;
-  fVar10 = ClampFloat((float)(dVar3 + dVar7),(float)dVar8,(float)dVar9);
-  param_5[1] = (int)(longlong)fVar10;
-  fVar10 = ClampFloat((float)(dVar2 + dVar7),(float)dVar8,(float)dVar9);
-  param_5[2] = (int)(longlong)fVar10;
-  __restfpr_24();
-  __restgprlr_28();
+  dVar8 = 1000000.0;
+  dVar7 = -1000000.0;
+  dVar3 = (double)(param_1->scale[0] * (*param_3 + param_1->trans[0]));
+  dVar6 = 0.5;
+  dVar5 = (double)(param_1->scale[1] * (param_2[1] + param_1->trans[1]));
+  dVar4 = (double)(param_1->scale[2] * (param_2[2] + param_1->trans[2]));
+  dVar2 = (double)(param_1->scale[1] * (param_3[1] + param_1->trans[1]));
+  dVar1 = (double)(param_1->scale[2] * (param_3[2] + param_1->trans[2]));
+  fVar9 = ClampFloat(param_1->scale[0] * (*param_2 + param_1->trans[0]) - 0.5,-1e+06,1e+06);
+  *param_4 = (int)(longlong)fVar9;
+  fVar9 = ClampFloat((float)(dVar5 - dVar6),(float)dVar7,(float)dVar8);
+  param_4[1] = (int)(longlong)fVar9;
+  fVar9 = ClampFloat((float)(dVar4 - dVar6),(float)dVar7,(float)dVar8);
+  param_4[2] = (int)(longlong)fVar9;
+  fVar9 = ClampFloat((float)(dVar3 + dVar6),(float)dVar7,(float)dVar8);
+  *param_5 = (int)(longlong)fVar9;
+  fVar9 = ClampFloat((float)(dVar2 + dVar6),(float)dVar7,(float)dVar8);
+  param_5[1] = (int)(longlong)fVar9;
+  fVar9 = ClampFloat((float)(dVar1 + dVar6),(float)dVar7,(float)dVar8);
+  param_5[2] = (int)(longlong)fVar9;
   return;
 }
 
@@ -808,139 +795,139 @@ void PrefetchArray<XSurfaceCollisionNode>(XSurfaceCollisionNode *param_1,uint pa
 
 // 82631550  XSurfaceVisitTrianglesInAabb_ProcessVertices  (xanim/xmodel.cpp:1055)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 bool XSurfaceVisitTrianglesInAabb_ProcessVertices(XSurfaceGetTriCandidatesLocals *param_1)
 
 {
   float fVar1;
   uint uVar2;
-  uint uVar3;
+  GfxQuantizedNoColorVertex *pGVar3;
   int iVar4;
   __vector4 _Var5;
   __vector4 _Var6;
   ulonglong uVar7;
-  int iVar8;
-  undefined1 uVar9;
-  ulonglong uVar10;
-  ulonglong uVar11;
-  longlong lVar12;
-  longlong lVar13;
-  longlong lVar14;
-  short *psVar15;
-  undefined4 *puVar16;
-  longlong lVar17;
-  longlong lVar18;
+  bool bVar8;
+  longlong lVar9;
+  longlong lVar10;
+  longlong lVar11;
+  GfxQuantizedNoColorVertex *pGVar12;
+  short *psVar13;
+  undefined4 *puVar14;
+  longlong lVar15;
+  longlong lVar16;
+  undefined1 auVar17 [16];
+  undefined1 auVar18 [16];
   undefined1 auVar19 [16];
-  undefined1 auVar20 [16];
-  undefined1 auVar21 [16];
+  TriangleVisitorVertex local_70 [4];
   
+  _Var6.field0_0x0 = g_unpackAdd101010.field0_0x0;
+  _Var5.field0_0x0 = g_unpackMul101010.field0_0x0;
   uVar7 = ZEXT48(&stack0x00000000);
-  iVar8 = __savegprlr_29(param_1);
-  _Var6 = g_unpackAdd101010;
-  _Var5 = g_unpackMul101010;
-  uVar2 = *(uint *)(iVar8 + 0x50);
-  lVar12 = 0;
-  lVar18 = 3;
-  lVar13 = ((ulonglong)uVar2 & 0x7fffffff) * 2;
-  if ((*(uint *)(iVar8 + 0x2c) & 0x20) == 0) {
-    uVar10 = (ulonglong)uVar2 + lVar13;
-    uVar3 = *(uint *)(iVar8 + 0x20);
-    uVar11 = (ulonglong)uVar3;
-    lVar13 = uVar7 - 100;
+  uVar2 = param_1->vertexQueueBegin;
+  lVar9 = 0;
+  lVar16 = 3;
+  lVar10 = ((ulonglong)uVar2 & 0x7fffffff) * 2;
+  if ((param_1->surfaceFlags & 0x20) == 0) {
+    pGVar3 = (param_1->inVertices0).quantizedNoColorVerts0;
+    lVar15 = uVar7 - 100;
     do {
-      lVar17 = uVar10 + lVar12;
-      lVar12 = lVar12 + 1;
-      puVar16 = (undefined4 *)
-                ((uint)*(ushort *)((int)((lVar17 + 0x44cU & 0xffffffff) << 1) + iVar8) * 0x20 +
-                uVar3);
-      iVar4 = (int)lVar13;
-      *(undefined4 *)(iVar4 + -0xc) = *puVar16;
-      *(undefined4 *)(iVar4 + -8) = puVar16[1];
-      *(undefined4 *)(iVar4 + -4) = puVar16[2];
-      auVar21 = loadVectorLeftIndexed(uVar7 - 0x90);
-      auVar21 = vectorSplatWord(auVar21,0);
-      auVar21 = vectorUnpackD3Dtype(auVar21,8);
-      auVar21 = vectorMultiplyAddFloatingPoint
-                          (auVar21,(undefined1  [16])_Var5.field0_0x0,
+      lVar11 = (ulonglong)uVar2 + lVar10 + lVar9;
+      lVar9 = lVar9 + 1;
+      puVar14 = (undefined4 *)
+                ((uint)*(ushort *)((int)param_1->mins + (int)((lVar11 + 0x44cU & 0xffffffff) << 1))
+                 * 0x20 + (int)pGVar3);
+      iVar4 = (int)lVar15;
+      *(undefined4 *)(iVar4 + -0xc) = *puVar14;
+      *(undefined4 *)(iVar4 + -8) = puVar14[1];
+      *(undefined4 *)(iVar4 + -4) = puVar14[2];
+      auVar19 = loadVectorLeftIndexed(uVar7 - 0x90);
+      auVar19 = vectorSplatWord(auVar19,0);
+      auVar19 = vectorUnpackD3Dtype(auVar19,8);
+      auVar19 = vectorMultiplyAddFloatingPoint
+                          (auVar19,(undefined1  [16])_Var5.field0_0x0,
                            (undefined1  [16])_Var6.field0_0x0);
-      auVar20 = vectorSplatWord(auVar21,0);
-      auVar19 = vectorSplatWord(auVar21,1);
-      auVar21 = vectorSplatWord(auVar21,2);
-      storeVectorElementWordIndexed(auVar20,lVar13);
-      storeVectorElementWordIndexed(auVar19,lVar13 + 4);
-      storeVectorElementWordIndexed(auVar21,lVar13 + 8);
-      lVar13 = lVar13 + 0x18;
-      lVar18 = lVar18 + -1;
-    } while (lVar18 != 0);
+      auVar18 = vectorSplatWord(auVar19,0);
+      auVar17 = vectorSplatWord(auVar19,1);
+      auVar19 = vectorSplatWord(auVar19,2);
+      storeVectorElementWordIndexed(auVar18,lVar15);
+      storeVectorElementWordIndexed(auVar17,lVar15 + 4);
+      storeVectorElementWordIndexed(auVar19,lVar15 + 8);
+      lVar15 = lVar15 + 0x18;
+      lVar16 = lVar16 + -1;
+    } while (lVar16 != 0);
   }
   else {
-    lVar13 = (ulonglong)uVar2 + lVar13;
-    fVar1 = *(float *)(iVar8 + 0x30);
-    uVar3 = *(uint *)(iVar8 + 0x20);
-    uVar10 = (ulonglong)uVar3;
-    lVar17 = uVar7 - 100;
-    if ((*(uint *)(iVar8 + 0x2c) & 0x18) == 0) {
+    lVar10 = (ulonglong)uVar2 + lVar10;
+    fVar1 = param_1->quantizeScale;
+    pGVar3 = (param_1->inVertices0).quantizedNoColorVerts0;
+    lVar15 = uVar7 - 100;
+    if ((param_1->surfaceFlags & 0x18) == 0) {
       do {
-        lVar14 = lVar13 + lVar12;
-        lVar12 = lVar12 + 1;
-        psVar15 = (short *)((uint)*(ushort *)((int)((lVar14 + 0x44cU & 0xffffffff) << 1) + iVar8) *
-                            0x18 + uVar3);
-        iVar4 = (int)lVar17;
-        *(float *)(iVar4 + -0xc) = (float)(longlong)*psVar15 * fVar1;
-        *(float *)(iVar4 + -8) = (float)(longlong)psVar15[1] * fVar1;
-        uVar11 = (ulonglong)psVar15[2];
-        *(float *)(iVar4 + -4) = (float)(longlong)uVar11 * fVar1;
-        auVar21 = loadVectorLeftIndexed(uVar7 - 0x90);
-        auVar21 = vectorSplatWord(auVar21,0);
-        auVar21 = vectorUnpackD3Dtype(auVar21,8);
-        auVar21 = vectorMultiplyAddFloatingPoint
-                            (auVar21,(undefined1  [16])_Var5.field0_0x0,
+        lVar11 = lVar10 + lVar9;
+        lVar9 = lVar9 + 1;
+        psVar13 = (short *)((uint)*(ushort *)
+                                   ((int)param_1->mins + (int)((lVar11 + 0x44cU & 0xffffffff) << 1))
+                            * 0x18 + (int)pGVar3);
+        iVar4 = (int)lVar15;
+        *(float *)(iVar4 + -0xc) = (float)(longlong)*psVar13 * fVar1;
+        *(float *)(iVar4 + -8) = (float)(longlong)psVar13[1] * fVar1;
+        *(float *)(iVar4 + -4) = (float)(longlong)psVar13[2] * fVar1;
+        auVar19 = loadVectorLeftIndexed(uVar7 - 0x90);
+        auVar19 = vectorSplatWord(auVar19,0);
+        auVar19 = vectorUnpackD3Dtype(auVar19,8);
+        auVar19 = vectorMultiplyAddFloatingPoint
+                            (auVar19,(undefined1  [16])_Var5.field0_0x0,
                              (undefined1  [16])_Var6.field0_0x0);
-        auVar20 = vectorSplatWord(auVar21,0);
-        auVar19 = vectorSplatWord(auVar21,1);
-        auVar21 = vectorSplatWord(auVar21,2);
-        storeVectorElementWordIndexed(auVar20,lVar17);
-        storeVectorElementWordIndexed(auVar19,lVar17 + 4);
-        storeVectorElementWordIndexed(auVar21,lVar17 + 8);
-        lVar17 = lVar17 + 0x18;
-        lVar18 = lVar18 + -1;
-      } while (lVar18 != 0);
+        auVar18 = vectorSplatWord(auVar19,0);
+        auVar17 = vectorSplatWord(auVar19,1);
+        auVar19 = vectorSplatWord(auVar19,2);
+        storeVectorElementWordIndexed(auVar18,lVar15);
+        storeVectorElementWordIndexed(auVar17,lVar15 + 4);
+        storeVectorElementWordIndexed(auVar19,lVar15 + 8);
+        lVar15 = lVar15 + 0x18;
+        lVar16 = lVar16 + -1;
+      } while (lVar16 != 0);
     }
     else {
       do {
-        lVar14 = lVar13 + lVar12;
-        lVar12 = lVar12 + 1;
-        psVar15 = (short *)((uint)*(ushort *)((int)((lVar14 + 0x44cU & 0xffffffff) << 1) + iVar8) *
-                            0x14 + uVar3);
-        iVar4 = (int)lVar17;
-        *(float *)(iVar4 + -0xc) = (float)(longlong)*psVar15 * fVar1;
-        *(float *)(iVar4 + -8) = (float)(longlong)psVar15[1] * fVar1;
-        uVar11 = (ulonglong)psVar15[2];
-        *(float *)(iVar4 + -4) = (float)(longlong)uVar11 * fVar1;
-        auVar21 = loadVectorLeftIndexed(uVar7 - 0x90);
-        auVar21 = vectorSplatWord(auVar21,0);
-        auVar21 = vectorUnpackD3Dtype(auVar21,8);
-        auVar21 = vectorMultiplyAddFloatingPoint
-                            (auVar21,(undefined1  [16])_Var5.field0_0x0,
+        lVar11 = lVar10 + lVar9;
+        lVar9 = lVar9 + 1;
+        pGVar12 = pGVar3 + *(ushort *)
+                            ((int)param_1->mins + (int)((lVar11 + 0x44cU & 0xffffffff) << 1));
+        iVar4 = (int)lVar15;
+        *(float *)(iVar4 + -0xc) = (float)(longlong)pGVar12->xyz[0] * fVar1;
+        *(float *)(iVar4 + -8) = (float)(longlong)pGVar12->xyz[1] * fVar1;
+        *(float *)(iVar4 + -4) = (float)(longlong)pGVar12->xyz[2] * fVar1;
+        auVar19 = loadVectorLeftIndexed(uVar7 - 0x90);
+        auVar19 = vectorSplatWord(auVar19,0);
+        auVar19 = vectorUnpackD3Dtype(auVar19,8);
+        auVar19 = vectorMultiplyAddFloatingPoint
+                            (auVar19,(undefined1  [16])_Var5.field0_0x0,
                              (undefined1  [16])_Var6.field0_0x0);
-        auVar20 = vectorSplatWord(auVar21,0);
-        auVar19 = vectorSplatWord(auVar21,1);
-        auVar21 = vectorSplatWord(auVar21,2);
-        storeVectorElementWordIndexed(auVar20,lVar17);
-        storeVectorElementWordIndexed(auVar19,lVar17 + 4);
-        storeVectorElementWordIndexed(auVar21,lVar17 + 8);
-        lVar17 = lVar17 + 0x18;
-        lVar18 = lVar18 + -1;
-      } while (lVar18 != 0);
+        auVar18 = vectorSplatWord(auVar19,0);
+        auVar17 = vectorSplatWord(auVar19,1);
+        auVar19 = vectorSplatWord(auVar19,2);
+        storeVectorElementWordIndexed(auVar18,lVar15);
+        storeVectorElementWordIndexed(auVar17,lVar15 + 4);
+        storeVectorElementWordIndexed(auVar19,lVar15 + 8);
+        lVar15 = lVar15 + 0x18;
+        lVar16 = lVar16 + -1;
+      } while (lVar16 != 0);
     }
   }
-  *(uint *)(iVar8 + 0x50) = uVar2 + 1 & 3;
-  (**(code **)(iVar8 + 0x24))(*(undefined4 *)(iVar8 + 0x28),uVar7 - 0x70,uVar10,uVar11,4,8);
-  uVar9 = __restgprlr_29();
-  return (bool)uVar9;
+  param_1->vertexQueueBegin = uVar2 + 1 & 3;
+  bVar8 = (*param_1->visitorFunc)
+                    (param_1->visitorContext,(TriangleVisitorVertex *)(&stack0x00000000 + -0x70));
+  return bVar8;
 }
 
 
 // 82633948  XSurfaceVisitTrianglesInAabb_ProcessTriangles  (xanim/xmodel.cpp:1167)
+
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 
 bool XSurfaceVisitTrianglesInAabb_ProcessTriangles(XSurfaceGetTriCandidatesLocals *param_1)
 
@@ -949,107 +936,103 @@ bool XSurfaceVisitTrianglesInAabb_ProcessTriangles(XSurfaceGetTriCandidatesLocal
   uint uVar2;
   uint uVar3;
   uint uVar4;
-  XSurfaceGetTriCandidatesLocals *pXVar5;
-  bool bVar6;
-  undefined1 uVar7;
-  longlong lVar8;
-  int iVar9;
-  int iVar10;
-  ulonglong uVar11;
-  uint uVar12;
-  ushort *puVar13;
+  bool bVar5;
+  longlong lVar6;
+  int iVar7;
+  int iVar8;
+  ulonglong uVar9;
+  uint uVar10;
+  ushort *puVar11;
   
-  pXVar5 = (XSurfaceGetTriCandidatesLocals *)__savegprlr_28(param_1);
-  uVar2 = pXVar5->triangleQueueBegin;
-  uVar12 = 0;
-  uVar4 = pXVar5->triangleQueue[uVar2].beginIndex;
-  uVar3 = pXVar5->triangleQueue[uVar2].count;
-  pXVar5->triangleQueueBegin = uVar2 + 1 & 3;
-  puVar13 = pXVar5->inIndices + uVar4 * 3;
+  uVar2 = param_1->triangleQueueBegin;
+  uVar10 = 0;
+  uVar4 = param_1->triangleQueue[uVar2].beginIndex;
+  uVar3 = param_1->triangleQueue[uVar2].count;
+  param_1->triangleQueueBegin = uVar2 + 1 & 3;
+  puVar11 = param_1->inIndices + uVar4 * 3;
   if (uVar3 != 0) {
     do {
-      iVar9 = 0;
+      iVar7 = 0;
       do {
-        uVar1 = *puVar13;
-        uVar11 = (longlong)(int)(uint)uVar1 * (longlong)(int)pXVar5->vert0Size +
-                 (ulonglong)(uint)pXVar5->inVertices0 & 0xffffff80;
-        lVar8 = 1;
+        uVar1 = *puVar11;
+        uVar9 = (longlong)(int)(uint)uVar1 * (longlong)(int)param_1->vert0Size +
+                (ulonglong)(uint)param_1->inVertices0 & 0xffffff80;
+        lVar6 = 1;
         do {
-          dataCacheBlockTouch(uVar11);
-          uVar11 = uVar11 + 0x80;
-          lVar8 = lVar8 + -1;
-        } while (lVar8 != 0);
-        puVar13 = puVar13 + 1;
-        iVar10 = iVar9 + 1;
-        pXVar5->vertexQueue[pXVar5->vertexQueueEnd][iVar9] = uVar1;
-        iVar9 = iVar10;
-      } while (iVar10 != 3);
-      uVar2 = pXVar5->vertexQueueEnd + 1 & 3;
-      pXVar5->vertexQueueEnd = uVar2;
-      if ((pXVar5->vertexQueueBegin == uVar2) &&
-         (bVar6 = XSurfaceVisitTrianglesInAabb_ProcessVertices(pXVar5), !bVar6)) {
-        uVar7 = __restgprlr_28(0);
-        return (bool)uVar7;
+          dataCacheBlockTouch(uVar9);
+          uVar9 = uVar9 + 0x80;
+          lVar6 = lVar6 + -1;
+        } while (lVar6 != 0);
+        puVar11 = puVar11 + 1;
+        iVar8 = iVar7 + 1;
+        param_1->vertexQueue[param_1->vertexQueueEnd][iVar7] = uVar1;
+        iVar7 = iVar8;
+      } while (iVar8 != 3);
+      uVar2 = param_1->vertexQueueEnd + 1 & 3;
+      param_1->vertexQueueEnd = uVar2;
+      if ((param_1->vertexQueueBegin == uVar2) &&
+         (bVar5 = XSurfaceVisitTrianglesInAabb_ProcessVertices(param_1), !bVar5)) {
+        return false;
       }
-      uVar12 = uVar12 + 1;
-    } while (uVar12 != uVar3);
+      uVar10 = uVar10 + 1;
+    } while (uVar10 != uVar3);
   }
-  uVar7 = __restgprlr_28(1);
-  return (bool)uVar7;
+  return true;
 }
 
 
 // 82633A68  XSurfaceVisitTrianglesInAabb_ProcessLeaf  (xanim/xmodel.cpp:1206)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
+
 bool XSurfaceVisitTrianglesInAabb_ProcessLeaf(XSurfaceGetTriCandidatesLocals *param_1)
 
 {
-  XSurfaceGetTriCandidatesLocals *pXVar1;
-  bool bVar2;
-  undefined1 uVar3;
-  uint uVar4;
+  bool bVar1;
+  uint uVar2;
+  uint uVar3;
+  int iVar4;
   uint uVar5;
-  int iVar6;
-  uint uVar7;
-  uint uVar8;
+  uint uVar6;
   
-  pXVar1 = (XSurfaceGetTriCandidatesLocals *)__savegprlr_25(param_1);
-  uVar8 = pXVar1->leafQueueBegin;
-  uVar4 = pXVar1->leafQueue[uVar8].count;
-  uVar5 = pXVar1->leafQueue[uVar8].beginIndex;
-  pXVar1->leafQueueBegin = uVar8 + 1 & 3;
-  uVar4 = uVar4 + uVar5;
-  if (uVar5 != uVar4) {
-    iVar6 = uVar5 << 1;
+  uVar6 = param_1->leafQueueBegin;
+  uVar2 = param_1->leafQueue[uVar6].count;
+  uVar3 = param_1->leafQueue[uVar6].beginIndex;
+  param_1->leafQueueBegin = uVar6 + 1 & 3;
+  uVar2 = uVar2 + uVar3;
+  if (uVar3 != uVar2) {
+    iVar4 = uVar3 << 1;
     do {
-      uVar8 = (uint)*(ushort *)((int)&pXVar1->tree->leafs->triangleBeginIndex + iVar6);
-      if (uVar8 < 0x8000) {
-        uVar7 = 1;
+      uVar6 = (uint)*(ushort *)((int)&param_1->tree->leafs->triangleBeginIndex + iVar4);
+      if (uVar6 < 0x8000) {
+        uVar5 = 1;
       }
       else {
-        uVar7 = 2;
-        uVar8 = uVar8 - 0x8000;
+        uVar5 = 2;
+        uVar6 = uVar6 - 0x8000;
       }
-      PrefetchArray<unsigned_short>(pXVar1->inIndices + uVar8 * 3,uVar7 * 3);
-      pXVar1->triangleQueue[pXVar1->triangleQueueEnd].beginIndex = uVar8;
-      pXVar1->triangleQueue[pXVar1->triangleQueueEnd].count = uVar7;
-      uVar8 = pXVar1->triangleQueueEnd + 1 & 3;
-      pXVar1->triangleQueueEnd = uVar8;
-      if ((pXVar1->triangleQueueBegin == uVar8) &&
-         (bVar2 = XSurfaceVisitTrianglesInAabb_ProcessTriangles(pXVar1), !bVar2)) {
-        uVar3 = __restgprlr_25(0);
-        return (bool)uVar3;
+      PrefetchArray<unsigned_short>(param_1->inIndices + uVar6 * 3,uVar5 * 3);
+      param_1->triangleQueue[param_1->triangleQueueEnd].beginIndex = uVar6;
+      param_1->triangleQueue[param_1->triangleQueueEnd].count = uVar5;
+      uVar6 = param_1->triangleQueueEnd + 1 & 3;
+      param_1->triangleQueueEnd = uVar6;
+      if ((param_1->triangleQueueBegin == uVar6) &&
+         (bVar1 = XSurfaceVisitTrianglesInAabb_ProcessTriangles(param_1), !bVar1)) {
+        return false;
       }
-      uVar5 = uVar5 + 1;
-      iVar6 = iVar6 + 2;
-    } while (uVar5 != uVar4);
+      uVar3 = uVar3 + 1;
+      iVar4 = iVar4 + 2;
+    } while (uVar3 != uVar2);
   }
-  uVar3 = __restgprlr_25(1);
-  return (bool)uVar3;
+  return true;
 }
 
 
 // 82633B78  XSurfaceVisitTrianglesInAabb_ProcessNode  (xanim/xmodel.cpp:1249)
+
+/* WARNING: Function: __savegprlr_21 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_21 replaced with injection: xenon_save_restore */
 
 bool XSurfaceVisitTrianglesInAabb_ProcessNode(XSurfaceGetTriCandidatesLocals *param_1)
 
@@ -1058,38 +1041,35 @@ bool XSurfaceVisitTrianglesInAabb_ProcessNode(XSurfaceGetTriCandidatesLocals *pa
   ushort uVar2;
   uint uVar3;
   XSurfaceCollisionNode *pXVar4;
-  XSurfaceGetTriCandidatesLocals *pXVar5;
-  bool bVar6;
-  undefined1 uVar7;
-  uint uVar8;
-  uint uVar9;
-  int iVar10;
+  bool bVar5;
+  uint uVar6;
+  uint uVar7;
+  int iVar8;
   
-  pXVar5 = (XSurfaceGetTriCandidatesLocals *)__savegprlr_21(param_1);
-  uVar3 = pXVar5->nodeQueueBegin;
-  uVar8 = pXVar5->nodeQueue[uVar3].count;
-  uVar9 = pXVar5->nodeQueue[uVar3].beginIndex;
-  pXVar5->nodeQueueBegin = uVar3 + 1 & 0xff;
-  uVar8 = uVar8 + uVar9;
-  if (uVar9 != uVar8) {
-    iVar10 = uVar9 << 4;
+  uVar3 = param_1->nodeQueueBegin;
+  uVar6 = param_1->nodeQueue[uVar3].count;
+  uVar7 = param_1->nodeQueue[uVar3].beginIndex;
+  param_1->nodeQueueBegin = uVar3 + 1 & 0xff;
+  uVar6 = uVar6 + uVar7;
+  if (uVar7 != uVar6) {
+    iVar8 = uVar7 << 4;
     do {
-      pXVar4 = pXVar5->tree->nodes;
-      if ((((((int)(uint)*(ushort *)((int)(pXVar4->aabb).mins + iVar10) <= pXVar5->maxs[0]) &&
-            (pXVar5->mins[0] <= (int)(uint)*(ushort *)((int)(pXVar4->aabb).maxs + iVar10))) &&
-           ((int)(uint)*(ushort *)((int)(pXVar4->aabb).mins + iVar10 + 2) <= pXVar5->maxs[1])) &&
-          ((pXVar5->mins[1] <= (int)(uint)*(ushort *)((int)(pXVar4->aabb).maxs + iVar10 + 2) &&
-           ((int)(uint)*(ushort *)((int)(pXVar4->aabb).mins + iVar10 + 4) <= pXVar5->maxs[2])))) &&
-         (pXVar5->mins[2] <= (int)(uint)*(ushort *)((int)(pXVar4->aabb).maxs + iVar10 + 4))) {
-        uVar1 = *(ushort *)((int)(&pXVar4->aabb + 1) + iVar10 + 2);
-        uVar2 = *(ushort *)((int)(&pXVar4->aabb + 1) + iVar10);
+      pXVar4 = param_1->tree->nodes;
+      if ((((((int)(uint)*(ushort *)((int)(pXVar4->aabb).mins + iVar8) <= param_1->maxs[0]) &&
+            (param_1->mins[0] <= (int)(uint)*(ushort *)((int)(pXVar4->aabb).maxs + iVar8))) &&
+           ((int)(uint)*(ushort *)((int)(pXVar4->aabb).mins + iVar8 + 2) <= param_1->maxs[1])) &&
+          ((param_1->mins[1] <= (int)(uint)*(ushort *)((int)(pXVar4->aabb).maxs + iVar8 + 2) &&
+           ((int)(uint)*(ushort *)((int)(pXVar4->aabb).mins + iVar8 + 4) <= param_1->maxs[2])))) &&
+         (param_1->mins[2] <= (int)(uint)*(ushort *)((int)(pXVar4->aabb).maxs + iVar8 + 4))) {
+        uVar1 = *(ushort *)((int)(&pXVar4->aabb + 1) + iVar8 + 2);
+        uVar2 = *(ushort *)((int)(&pXVar4->aabb + 1) + iVar8);
         if (uVar1 < 0x8000) {
           PrefetchArray<XSurfaceCollisionNode>(pXVar4 + uVar2,(uint)uVar1);
-          pXVar5->nodeQueue[pXVar5->nodeQueueEnd].beginIndex = (uint)uVar2;
-          pXVar5->nodeQueue[pXVar5->nodeQueueEnd].count = (uint)uVar1;
-          uVar3 = pXVar5->nodeQueueEnd + 1 & 0xff;
-          pXVar5->nodeQueueEnd = uVar3;
-          if (pXVar5->nodeQueueBegin == uVar3) {
+          param_1->nodeQueue[param_1->nodeQueueEnd].beginIndex = (uint)uVar2;
+          param_1->nodeQueue[param_1->nodeQueueEnd].count = (uint)uVar1;
+          uVar3 = param_1->nodeQueueEnd + 1 & 0xff;
+          param_1->nodeQueueEnd = uVar3;
+          if (param_1->nodeQueueBegin == uVar3) {
             va(
               "nodeQueue Ring buffer wrapped unexpectedly gathering collision surfaces (probably for effects) - either %d nodes is too small or there is a more insidious logic error"
               );
@@ -1098,28 +1078,29 @@ bool XSurfaceVisitTrianglesInAabb_ProcessNode(XSurfaceGetTriCandidatesLocals *pa
           }
         }
         else {
-          PrefetchArray<XSurfaceCollisionLeaf>(pXVar5->tree->leafs + uVar2,uVar1 - 0x8000);
-          pXVar5->leafQueue[pXVar5->leafQueueEnd].beginIndex = (uint)uVar2;
-          pXVar5->leafQueue[pXVar5->leafQueueEnd].count = uVar1 - 0x8000;
-          uVar3 = pXVar5->leafQueueEnd + 1 & 3;
-          pXVar5->leafQueueEnd = uVar3;
-          if ((pXVar5->leafQueueBegin == uVar3) &&
-             (bVar6 = XSurfaceVisitTrianglesInAabb_ProcessLeaf(pXVar5), !bVar6)) {
-            uVar7 = __restgprlr_21(0);
-            return (bool)uVar7;
+          PrefetchArray<XSurfaceCollisionLeaf>(param_1->tree->leafs + uVar2,uVar1 - 0x8000);
+          param_1->leafQueue[param_1->leafQueueEnd].beginIndex = (uint)uVar2;
+          param_1->leafQueue[param_1->leafQueueEnd].count = uVar1 - 0x8000;
+          uVar3 = param_1->leafQueueEnd + 1 & 3;
+          param_1->leafQueueEnd = uVar3;
+          if ((param_1->leafQueueBegin == uVar3) &&
+             (bVar5 = XSurfaceVisitTrianglesInAabb_ProcessLeaf(param_1), !bVar5)) {
+            return false;
           }
         }
       }
-      uVar9 = uVar9 + 1;
-      iVar10 = iVar10 + 0x10;
-    } while (uVar9 != uVar8);
+      uVar7 = uVar7 + 1;
+      iVar8 = iVar8 + 0x10;
+    } while (uVar7 != uVar6);
   }
-  uVar7 = __restgprlr_21(1);
-  return (bool)uVar7;
+  return true;
 }
 
 
 // 82633D70  XSurfaceVisitTrianglesInAabb  (xanim/xmodel.cpp:1304)
+
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 
 bool XSurfaceVisitTrianglesInAabb
                (XSurface *param_1,uint param_2,float *param_3,float *param_4,
@@ -1127,38 +1108,31 @@ bool XSurfaceVisitTrianglesInAabb
 
 {
   XSurfaceCollisionTree *pXVar1;
-  XSurface *pXVar2;
-  bool bVar3;
-  undefined1 uVar4;
-  ulonglong uVar5;
+  bool bVar2;
   XSurfaceGetTriCandidatesLocals XStack_900;
   
-  uVar5 = (ulonglong)(int)param_2;
-  pXVar2 = (XSurface *)__savegprlr_24(param_1);
-  if ((pXVar2->flags & 0x40) != 0) {
+  if ((param_1->flags & 0x40) != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xmodel.cpp",0x51c,0,"%s"
                    );
   }
-  if ((ulonglong)pXVar2->vertListCount <= (uVar5 & 0xffffffff)) {
+  if (param_1->vertListCount <= param_2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xmodel.cpp",0x523,0,
                     "%s\n\t(vertListIndex) = %i");
   }
-  pXVar1 = *(XSurfaceCollisionTree **)
-            ((int)&pXVar2->vertList->collisionTree +
-            (int)((uVar5 + (uVar5 & 0x7fffffff) * 2 & 0xffffffff) << 2));
+  pXVar1 = param_1->vertList[param_2].collisionTree;
   XStack_900.tree = pXVar1;
   if (pXVar1 == (XSurfaceCollisionTree *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xmodel.cpp",0x526,0,"%s"
                    );
   }
   PrefetchArray<XSurfaceCollisionNode>(pXVar1->nodes,1);
-  XStack_900.inIndices = pXVar2->triIndices;
-  XStack_900.inVertices0 = pXVar2->verts0;
-  XStack_900.quantizeScale = pXVar2->quantizeScale;
-  XStack_900.surfaceFlags = (uint)pXVar2->flags;
+  XStack_900.inIndices = param_1->triIndices;
+  XStack_900.inVertices0 = param_1->verts0;
+  XStack_900.quantizeScale = param_1->quantizeScale;
+  XStack_900.surfaceFlags = (uint)param_1->flags;
   XStack_900.visitorFunc = param_5;
   XStack_900.visitorContext = param_6;
-  XStack_900.vert0Size = XSurfaceGetVert0Size(pXVar2);
+  XStack_900.vert0Size = XSurfaceGetVert0Size(param_1);
   XSurfaceVisitTrianglesInAabb_ConvertAabb(pXVar1,param_3,param_4,XStack_900.mins,XStack_900.maxs);
   XStack_900.nodeQueue[0].beginIndex = 0;
   XStack_900.nodeQueue[0].count = 1;
@@ -1171,37 +1145,43 @@ bool XSurfaceVisitTrianglesInAabb
   XStack_900.vertexQueueBegin = 0;
   XStack_900.vertexQueueEnd = 0;
   do {
-    bVar3 = XSurfaceVisitTrianglesInAabb_ProcessNode(&XStack_900);
-    if (!bVar3) goto LAB_82633f94;
+    bVar2 = XSurfaceVisitTrianglesInAabb_ProcessNode(&XStack_900);
+    if (!bVar2) {
+      return false;
+    }
   } while (XStack_900.nodeQueueBegin != XStack_900.nodeQueueEnd);
   if (XStack_900.leafQueueBegin != XStack_900.leafQueueEnd) {
     do {
-      bVar3 = XSurfaceVisitTrianglesInAabb_ProcessLeaf(&XStack_900);
-      if (!bVar3) goto LAB_82633f94;
+      bVar2 = XSurfaceVisitTrianglesInAabb_ProcessLeaf(&XStack_900);
+      if (!bVar2) {
+        return false;
+      }
     } while (XStack_900.leafQueueBegin != XStack_900.leafQueueEnd);
   }
   if (XStack_900.triangleQueueBegin != XStack_900.triangleQueueEnd) {
     do {
-      bVar3 = XSurfaceVisitTrianglesInAabb_ProcessTriangles(&XStack_900);
-      if (!bVar3) goto LAB_82633f94;
+      bVar2 = XSurfaceVisitTrianglesInAabb_ProcessTriangles(&XStack_900);
+      if (!bVar2) {
+        return false;
+      }
     } while (XStack_900.triangleQueueBegin != XStack_900.triangleQueueEnd);
   }
   if (XStack_900.vertexQueueBegin != XStack_900.vertexQueueEnd) {
     do {
-      bVar3 = XSurfaceVisitTrianglesInAabb_ProcessVertices(&XStack_900);
-      if (!bVar3) {
-LAB_82633f94:
-        uVar4 = __restgprlr_24(0);
-        return (bool)uVar4;
+      bVar2 = XSurfaceVisitTrianglesInAabb_ProcessVertices(&XStack_900);
+      if (!bVar2) {
+        return false;
       }
     } while (XStack_900.vertexQueueBegin != XStack_900.vertexQueueEnd);
   }
-  uVar4 = __restgprlr_24(1);
-  return (bool)uVar4;
+  return true;
 }
 
 
 // 82631808  XSurfaceTraceLine_Leaf  (xanim/xmodel.cpp:1410)
+
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
 
 void XSurfaceTraceLine_Leaf
                (XSurface *param_1,XSurfaceCollisionTree *param_2,int param_3,int param_4,int param_5
@@ -1209,18 +1189,18 @@ void XSurfaceTraceLine_Leaf
 
 {
   GfxQuantizedNoColorVertex *pGVar1;
-  XSurface *pXVar2;
+  ushort *puVar2;
   ushort *puVar3;
-  ushort *puVar4;
+  int iVar4;
+  uint uVar6;
   longlong lVar5;
-  int iVar6;
-  ulonglong uVar7;
-  uint uVar9;
+  longlong lVar7;
   longlong lVar8;
-  longlong lVar10;
-  ushort *puVar11;
-  longlong lVar12;
-  ulonglong uVar13;
+  ushort *puVar9;
+  int iVar10;
+  ulonglong uVar11;
+  undefined1 auVar12 [16];
+  undefined1 auVar13 [16];
   undefined1 auVar14 [16];
   undefined1 auVar15 [16];
   undefined1 auVar16 [16];
@@ -1234,197 +1214,195 @@ void XSurfaceTraceLine_Leaf
   undefined1 auVar24 [16];
   undefined1 auVar25 [16];
   undefined1 auVar26 [16];
-  undefined1 auVar27 [16];
-  undefined1 auVar28 [16];
   
-  lVar12 = (longlong)param_4;
-  uVar7 = (ulonglong)param_3;
-  lVar5 = __savegprlr_23(param_1);
+  lVar8 = (longlong)param_3;
   if ((*(float *)(param_5 + 0xc) < 0.0) || (1.0 < *(float *)(param_5 + 0xc))) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xmodel.cpp",0x5b2,0,
                     "%s\n\t(results->fraction) = %g");
   }
-  pXVar2 = (XSurface *)lVar5;
-  if ((pXVar2->flags & 0x40) != 0) {
+  if ((param_1->flags & 0x40) != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xmodel.cpp",0x5b8,0,"%s"
                    );
   }
-  if ((pXVar2->flags & 0x20) == 0) {
-    pGVar1 = (pXVar2->verts0).quantizedNoColorVerts0;
-    if ((int)uVar7 != (int)(uVar7 + lVar12)) {
-      lVar12 = (uVar7 + lVar12) - uVar7;
-      lVar5 = (uVar7 & 0x7fffffff) << 1;
+  if ((param_1->flags & 0x20) == 0) {
+    lVar7 = lVar8 + param_4;
+    pGVar1 = (param_1->verts0).quantizedNoColorVerts0;
+    if (param_3 != (int)lVar7) {
+      lVar7 = lVar7 - lVar8;
+      iVar4 = param_3 << 1;
       do {
-        uVar9 = (uint)*(ushort *)((int)&param_2->leafs->triangleBeginIndex + (int)lVar5);
-        if (uVar9 < 0x8000) {
-          lVar10 = 1;
+        uVar6 = (uint)*(ushort *)((int)&param_2->leafs->triangleBeginIndex + iVar4);
+        if (uVar6 < 0x8000) {
+          lVar8 = 1;
         }
         else {
-          lVar10 = 2;
-          uVar9 = uVar9 - 0x8000;
+          lVar8 = 2;
+          uVar6 = uVar6 - 0x8000;
         }
-        if ((int)lVar10 != 0) {
-          auVar26 = *(undefined1 (*) [16])((uint)(param_6 + 4) & 0xfffffff0);
-          auVar25 = *(undefined1 (*) [16])((uint)param_6 & 0xfffffff0);
-          auVar24 = vectorPermuteWordImmediate(auVar26,99);
-          puVar11 = pXVar2->triIndices + uVar9 * 3 + -1;
-          auVar28 = vectorPermuteWordImmediate(auVar26,0x87);
+        if ((int)lVar8 != 0) {
+          auVar24 = *(undefined1 (*) [16])((uint)(param_6 + 4) & 0xfffffff0);
+          auVar23 = *(undefined1 (*) [16])((uint)param_6 & 0xfffffff0);
+          auVar22 = vectorPermuteWordImmediate(auVar24,99);
+          puVar9 = param_1->triIndices + uVar6 * 3 + -1;
+          auVar26 = vectorPermuteWordImmediate(auVar24,0x87);
           do {
-            puVar3 = puVar11 + 1;
-            puVar4 = puVar11 + 2;
-            auVar22 = *(undefined1 (*) [16])((uint)(param_6 + 8) & 0xfffffff0);
-            puVar11 = puVar11 + 3;
-            auVar27 = *(undefined1 (*) [16])((uint)*puVar3 * 0x20 + (int)pGVar1 & 0xfffffff0);
-            auVar14 = vectorSubtractFloatingPoint128(auVar27,auVar25);
-            auVar18 = vectorSubtractFloatingPoint128
-                                (auVar27,*(undefined1 (*) [16])
-                                          ((uint)*puVar11 * 0x20 + (int)pGVar1 & 0xfffffff0));
-            auVar15 = vectorSubtractFloatingPoint128
-                                (auVar27,*(undefined1 (*) [16])
-                                          ((uint)*puVar4 * 0x20 + (int)pGVar1 & 0xfffffff0));
-            auVar27 = vectorPermuteWordImmediate(auVar14,0x87);
-            auVar17 = vectorPermuteWordImmediate(auVar14,99);
-            auVar19 = vectorPermuteWordImmediate(auVar18,99);
-            auVar21 = vectorPermuteWordImmediate(auVar15,0x87);
-            auVar20 = vectorMultiplyFloatingPoint(auVar24,auVar27);
-            auVar27 = vectorPermuteWordImmediate(auVar15,99);
-            auVar16 = vectorPermuteWordImmediate(auVar18,0x87);
-            auVar21 = vectorMultiplyFloatingPoint(auVar19,auVar21);
-            auVar20 = vectorNegativeMultiplySubtractFloatingPoint(auVar28,auVar17,auVar20);
-            auVar21 = vectorNegativeMultiplySubtractFloatingPoint(auVar16,auVar27,auVar21);
-            auVar16 = vectorMultiplySum3FloatingPoint(auVar20,auVar15);
-            auVar27 = vectorMultiplySum3FloatingPoint(auVar20,auVar18);
-            auVar19 = vectorMultiplySum3FloatingPoint(auVar26,auVar21);
-            auVar14 = vectorMultiplySum3FloatingPoint(auVar14,auVar21);
-            auVar18 = vectorCompareGreaterThanFloatingPoint128
-                                (auVar16,(undefined1  [16])g_zero.field0_0x0);
-            auVar16 = vectorSubtractFloatingPoint128(auVar16,auVar27);
-            auVar15 = vectorCompareGreaterThanFloatingPoint128
-                                ((undefined1  [16])g_zero.field0_0x0,auVar27);
-            auVar20 = vectorMultiplyFloatingPoint(auVar22,auVar19);
-            auVar27 = vectorReciprocalEstimateFloatingPoint128(auVar19);
-            auVar17 = vectorCompareGreaterThanFloatingPoint128
+            puVar2 = puVar9 + 1;
+            puVar3 = puVar9 + 2;
+            auVar20 = *(undefined1 (*) [16])((uint)(param_6 + 8) & 0xfffffff0);
+            puVar9 = puVar9 + 3;
+            auVar25 = *(undefined1 (*) [16])((uint)*puVar2 * 0x20 + (int)pGVar1 & 0xfffffff0);
+            auVar12 = vectorSubtractFloatingPoint128(auVar25,auVar23);
+            auVar16 = vectorSubtractFloatingPoint128
+                                (auVar25,*(undefined1 (*) [16])
+                                          ((uint)*puVar9 * 0x20 + (int)pGVar1 & 0xfffffff0));
+            auVar13 = vectorSubtractFloatingPoint128
+                                (auVar25,*(undefined1 (*) [16])
+                                          ((uint)*puVar3 * 0x20 + (int)pGVar1 & 0xfffffff0));
+            auVar25 = vectorPermuteWordImmediate(auVar12,0x87);
+            auVar15 = vectorPermuteWordImmediate(auVar12,99);
+            auVar17 = vectorPermuteWordImmediate(auVar16,99);
+            auVar19 = vectorPermuteWordImmediate(auVar13,0x87);
+            auVar18 = vectorMultiplyFloatingPoint(auVar22,auVar25);
+            auVar25 = vectorPermuteWordImmediate(auVar13,99);
+            auVar14 = vectorPermuteWordImmediate(auVar16,0x87);
+            auVar19 = vectorMultiplyFloatingPoint(auVar17,auVar19);
+            auVar18 = vectorNegativeMultiplySubtractFloatingPoint(auVar26,auVar15,auVar18);
+            auVar19 = vectorNegativeMultiplySubtractFloatingPoint(auVar14,auVar25,auVar19);
+            auVar14 = vectorMultiplySum3FloatingPoint(auVar18,auVar13);
+            auVar25 = vectorMultiplySum3FloatingPoint(auVar18,auVar16);
+            auVar17 = vectorMultiplySum3FloatingPoint(auVar24,auVar19);
+            auVar12 = vectorMultiplySum3FloatingPoint(auVar12,auVar19);
+            auVar16 = vectorCompareGreaterThanFloatingPoint128
                                 (auVar14,(undefined1  [16])g_zero.field0_0x0);
-            auVar16 = vectorCompareGreaterThanFloatingPoint128(auVar19,auVar16);
-            auVar20 = vectorCompareGreaterThanFloatingPoint128(auVar14,auVar20);
-            auVar27 = vectorMultiplyFloatingPoint(auVar14,auVar27);
-            auVar20 = auVar20 & ~auVar17 & ~(auVar18 | auVar15 | auVar16);
-            auVar21 = vectorConditionalSelect
-                                (*(undefined1 (*) [16])((uint)(param_6 + 0xc) & 0xfffffff0),auVar21,
-                                 auVar20);
-            auVar27 = vectorConditionalSelect(auVar22,auVar27,auVar20);
-            *(undefined1 (*) [16])((uint)(param_6 + 0xc) & 0xfffffff0) = auVar21;
-            *(undefined1 (*) [16])((uint)(param_6 + 8) & 0xfffffff0) = auVar27;
-            lVar10 = lVar10 + -1;
-          } while (lVar10 != 0);
+            auVar14 = vectorSubtractFloatingPoint128(auVar14,auVar25);
+            auVar13 = vectorCompareGreaterThanFloatingPoint128
+                                ((undefined1  [16])g_zero.field0_0x0,auVar25);
+            auVar18 = vectorMultiplyFloatingPoint(auVar20,auVar17);
+            auVar25 = vectorReciprocalEstimateFloatingPoint128(auVar17);
+            auVar15 = vectorCompareGreaterThanFloatingPoint128
+                                (auVar12,(undefined1  [16])g_zero.field0_0x0);
+            auVar14 = vectorCompareGreaterThanFloatingPoint128(auVar17,auVar14);
+            auVar18 = vectorCompareGreaterThanFloatingPoint128(auVar12,auVar18);
+            auVar25 = vectorMultiplyFloatingPoint(auVar12,auVar25);
+            auVar18 = auVar18 & ~auVar15 & ~(auVar16 | auVar13 | auVar14);
+            auVar19 = vectorConditionalSelect
+                                (*(undefined1 (*) [16])((uint)(param_6 + 0xc) & 0xfffffff0),auVar19,
+                                 auVar18);
+            auVar25 = vectorConditionalSelect(auVar20,auVar25,auVar18);
+            *(undefined1 (*) [16])((uint)(param_6 + 0xc) & 0xfffffff0) = auVar19;
+            *(undefined1 (*) [16])((uint)(param_6 + 8) & 0xfffffff0) = auVar25;
+            lVar8 = lVar8 + -1;
+          } while (lVar8 != 0);
         }
-        lVar12 = lVar12 + -1;
-        lVar5 = lVar5 + 2;
-      } while (lVar12 != 0);
+        lVar7 = lVar7 + -1;
+        iVar4 = iVar4 + 2;
+      } while (lVar7 != 0);
     }
   }
   else {
-    uVar13 = (ulonglong)(uint)pXVar2->verts0;
-    iVar6 = XSurfaceGetVert0Size(pXVar2);
-    auVar28 = loadVectorLeftIndexed(lVar5 + 8);
-    auVar28 = vectorSplatWord(auVar28,0);
-    if ((int)uVar7 != (int)(uVar7 + lVar12)) {
-      lVar5 = (uVar7 & 0x7fffffff) << 1;
-      lVar12 = (uVar7 + lVar12) - uVar7;
+    uVar11 = (ulonglong)(uint)param_1->verts0;
+    iVar4 = XSurfaceGetVert0Size(param_1);
+    lVar7 = lVar8 + param_4;
+    auVar26 = loadVectorLeftIndexed((longlong)(int)param_1 + 8);
+    auVar26 = vectorSplatWord(auVar26,0);
+    if (param_3 != (int)lVar7) {
+      iVar10 = param_3 << 1;
+      lVar7 = lVar7 - lVar8;
       do {
-        uVar9 = (uint)*(ushort *)((int)&param_2->leafs->triangleBeginIndex + (int)lVar5);
-        if (uVar9 < 0x8000) {
-          lVar10 = 1;
+        uVar6 = (uint)*(ushort *)((int)&param_2->leafs->triangleBeginIndex + iVar10);
+        if (uVar6 < 0x8000) {
+          lVar8 = 1;
         }
         else {
-          lVar10 = 2;
-          uVar9 = uVar9 - 0x8000;
+          lVar8 = 2;
+          uVar6 = uVar6 - 0x8000;
         }
-        if ((int)lVar10 != 0) {
-          auVar27 = *(undefined1 (*) [16])((uint)(param_6 + 4) & 0xfffffff0);
-          auVar26 = *(undefined1 (*) [16])((uint)param_6 & 0xfffffff0);
-          auVar25 = vectorPermuteWordImmediate(auVar27,99);
-          puVar11 = pXVar2->triIndices + uVar9 * 3 + -1;
-          auVar24 = vectorPermuteWordImmediate(auVar27,0x87);
+        if ((int)lVar8 != 0) {
+          auVar25 = *(undefined1 (*) [16])((uint)(param_6 + 4) & 0xfffffff0);
+          auVar24 = *(undefined1 (*) [16])((uint)param_6 & 0xfffffff0);
+          auVar23 = vectorPermuteWordImmediate(auVar25,99);
+          puVar9 = param_1->triIndices + uVar6 * 3 + -1;
+          auVar22 = vectorPermuteWordImmediate(auVar25,0x87);
           do {
-            puVar3 = puVar11 + 1;
-            puVar4 = puVar11 + 2;
-            auVar23 = *(undefined1 (*) [16])((uint)(param_6 + 8) & 0xfffffff0);
-            puVar11 = puVar11 + 3;
-            lVar8 = (longlong)(int)(uint)*puVar3 * (longlong)iVar6 + uVar13;
-            auVar21 = loadVectorRightIndexed(lVar8 + 8);
-            auVar20 = loadVectorLeftIndexed(lVar8);
-            auVar21 = vectorShiftLeftDoubleByOctetImmediate(auVar21,auVar21,8);
-            auVar21 = vectorUnpackHighSignedByte(auVar20 | auVar21);
-            auVar18 = loadVectorLeftIndexed
-                                ((longlong)(int)(uint)*puVar11 * (longlong)iVar6 + uVar13);
-            auVar17 = vectorConvertFromSignedFixedPointWord128(auVar21,0);
-            lVar8 = (longlong)(int)(uint)*puVar4 * (longlong)iVar6 + uVar13;
-            auVar20 = loadVectorRightIndexed(lVar8 + 8);
-            auVar21 = loadVectorRightIndexed
-                                ((longlong)(int)(uint)*puVar11 * (longlong)iVar6 + uVar13 + 8);
-            auVar16 = vectorShiftLeftDoubleByOctetImmediate(auVar20,auVar20,8);
-            auVar20 = loadVectorLeftIndexed(lVar8);
-            auVar21 = vectorShiftLeftDoubleByOctetImmediate(auVar21,auVar21,8);
-            auVar15 = vectorMultiplyFloatingPoint(auVar17,auVar28);
-            auVar20 = vectorUnpackHighSignedByte(auVar20 | auVar16);
-            auVar21 = vectorUnpackHighSignedByte(auVar18 | auVar21);
-            auVar20 = vectorConvertFromSignedFixedPointWord128(auVar20,0);
-            auVar21 = vectorConvertFromSignedFixedPointWord128(auVar21,0);
-            auVar14 = vectorSubtractFloatingPoint128(auVar15,auVar26);
-            auVar17 = vectorMultiplyFloatingPoint(auVar20,auVar28);
-            auVar16 = vectorMultiplyFloatingPoint(auVar21,auVar28);
-            auVar21 = vectorPermuteWordImmediate(auVar14,0x87);
-            auVar20 = vectorPermuteWordImmediate(auVar14,99);
-            auVar21 = vectorMultiplyFloatingPoint(auVar25,auVar21);
-            auVar18 = vectorSubtractFloatingPoint128(auVar15,auVar17);
-            auVar15 = vectorSubtractFloatingPoint128(auVar15,auVar16);
-            auVar16 = vectorNegativeMultiplySubtractFloatingPoint(auVar24,auVar20,auVar21);
-            auVar22 = vectorPermuteWordImmediate(auVar18,0x87);
-            auVar20 = vectorPermuteWordImmediate(auVar15,99);
-            auVar17 = vectorPermuteWordImmediate(auVar18,99);
-            auVar21 = vectorPermuteWordImmediate(auVar15,0x87);
-            auVar20 = vectorMultiplyFloatingPoint(auVar20,auVar22);
-            auVar18 = vectorMultiplySum3FloatingPoint(auVar16,auVar18);
-            auVar16 = vectorMultiplySum3FloatingPoint(auVar16,auVar15);
-            auVar21 = vectorNegativeMultiplySubtractFloatingPoint(auVar21,auVar17,auVar20);
-            auVar19 = vectorCompareGreaterThanFloatingPoint128
-                                (auVar18,(undefined1  [16])g_zero.field0_0x0);
-            auVar17 = vectorSubtractFloatingPoint128(auVar18,auVar16);
-            auVar22 = vectorCompareGreaterThanFloatingPoint128
-                                ((undefined1  [16])g_zero.field0_0x0,auVar16);
-            auVar16 = vectorMultiplySum3FloatingPoint(auVar27,auVar21);
-            auVar18 = vectorMultiplySum3FloatingPoint(auVar14,auVar21);
-            auVar20 = vectorMultiplyFloatingPoint(auVar23,auVar16);
-            auVar15 = vectorCompareGreaterThanFloatingPoint128(auVar16,auVar17);
-            auVar17 = vectorReciprocalEstimateFloatingPoint128(auVar16);
-            auVar16 = vectorCompareGreaterThanFloatingPoint128
-                                (auVar18,(undefined1  [16])g_zero.field0_0x0);
-            auVar20 = vectorCompareGreaterThanFloatingPoint128(auVar18,auVar20);
-            auVar17 = vectorMultiplyFloatingPoint(auVar18,auVar17);
-            auVar16 = auVar20 & ~auVar16 & ~(auVar19 | auVar22 | auVar15);
-            auVar20 = vectorConditionalSelect
-                                (*(undefined1 (*) [16])((uint)(param_6 + 0xc) & 0xfffffff0),auVar21,
-                                 auVar16);
-            auVar21 = vectorConditionalSelect(auVar23,auVar17,auVar16);
-            *(undefined1 (*) [16])((uint)(param_6 + 0xc) & 0xfffffff0) = auVar20;
-            *(undefined1 (*) [16])((uint)(param_6 + 8) & 0xfffffff0) = auVar21;
-            lVar10 = lVar10 + -1;
-          } while (lVar10 != 0);
+            puVar2 = puVar9 + 1;
+            puVar3 = puVar9 + 2;
+            auVar21 = *(undefined1 (*) [16])((uint)(param_6 + 8) & 0xfffffff0);
+            puVar9 = puVar9 + 3;
+            lVar5 = (longlong)(int)(uint)*puVar2 * (longlong)iVar4 + uVar11;
+            auVar19 = loadVectorRightIndexed(lVar5 + 8);
+            auVar18 = loadVectorLeftIndexed(lVar5);
+            auVar19 = vectorShiftLeftDoubleByOctetImmediate(auVar19,auVar19,8);
+            auVar19 = vectorUnpackHighSignedByte(auVar18 | auVar19);
+            auVar16 = loadVectorLeftIndexed((longlong)(int)(uint)*puVar9 * (longlong)iVar4 + uVar11)
+            ;
+            auVar15 = vectorConvertFromSignedFixedPointWord128(auVar19,0);
+            lVar5 = (longlong)(int)(uint)*puVar3 * (longlong)iVar4 + uVar11;
+            auVar18 = loadVectorRightIndexed(lVar5 + 8);
+            auVar19 = loadVectorRightIndexed
+                                ((longlong)(int)(uint)*puVar9 * (longlong)iVar4 + uVar11 + 8);
+            auVar14 = vectorShiftLeftDoubleByOctetImmediate(auVar18,auVar18,8);
+            auVar18 = loadVectorLeftIndexed(lVar5);
+            auVar19 = vectorShiftLeftDoubleByOctetImmediate(auVar19,auVar19,8);
+            auVar13 = vectorMultiplyFloatingPoint(auVar15,auVar26);
+            auVar18 = vectorUnpackHighSignedByte(auVar18 | auVar14);
+            auVar19 = vectorUnpackHighSignedByte(auVar16 | auVar19);
+            auVar18 = vectorConvertFromSignedFixedPointWord128(auVar18,0);
+            auVar19 = vectorConvertFromSignedFixedPointWord128(auVar19,0);
+            auVar12 = vectorSubtractFloatingPoint128(auVar13,auVar24);
+            auVar15 = vectorMultiplyFloatingPoint(auVar18,auVar26);
+            auVar14 = vectorMultiplyFloatingPoint(auVar19,auVar26);
+            auVar19 = vectorPermuteWordImmediate(auVar12,0x87);
+            auVar18 = vectorPermuteWordImmediate(auVar12,99);
+            auVar19 = vectorMultiplyFloatingPoint(auVar23,auVar19);
+            auVar16 = vectorSubtractFloatingPoint128(auVar13,auVar15);
+            auVar13 = vectorSubtractFloatingPoint128(auVar13,auVar14);
+            auVar14 = vectorNegativeMultiplySubtractFloatingPoint(auVar22,auVar18,auVar19);
+            auVar20 = vectorPermuteWordImmediate(auVar16,0x87);
+            auVar18 = vectorPermuteWordImmediate(auVar13,99);
+            auVar15 = vectorPermuteWordImmediate(auVar16,99);
+            auVar19 = vectorPermuteWordImmediate(auVar13,0x87);
+            auVar18 = vectorMultiplyFloatingPoint(auVar18,auVar20);
+            auVar16 = vectorMultiplySum3FloatingPoint(auVar14,auVar16);
+            auVar14 = vectorMultiplySum3FloatingPoint(auVar14,auVar13);
+            auVar19 = vectorNegativeMultiplySubtractFloatingPoint(auVar19,auVar15,auVar18);
+            auVar17 = vectorCompareGreaterThanFloatingPoint128
+                                (auVar16,(undefined1  [16])g_zero.field0_0x0);
+            auVar15 = vectorSubtractFloatingPoint128(auVar16,auVar14);
+            auVar20 = vectorCompareGreaterThanFloatingPoint128
+                                ((undefined1  [16])g_zero.field0_0x0,auVar14);
+            auVar14 = vectorMultiplySum3FloatingPoint(auVar25,auVar19);
+            auVar16 = vectorMultiplySum3FloatingPoint(auVar12,auVar19);
+            auVar18 = vectorMultiplyFloatingPoint(auVar21,auVar14);
+            auVar13 = vectorCompareGreaterThanFloatingPoint128(auVar14,auVar15);
+            auVar15 = vectorReciprocalEstimateFloatingPoint128(auVar14);
+            auVar14 = vectorCompareGreaterThanFloatingPoint128
+                                (auVar16,(undefined1  [16])g_zero.field0_0x0);
+            auVar18 = vectorCompareGreaterThanFloatingPoint128(auVar16,auVar18);
+            auVar15 = vectorMultiplyFloatingPoint(auVar16,auVar15);
+            auVar14 = auVar18 & ~auVar14 & ~(auVar17 | auVar20 | auVar13);
+            auVar18 = vectorConditionalSelect
+                                (*(undefined1 (*) [16])((uint)(param_6 + 0xc) & 0xfffffff0),auVar19,
+                                 auVar14);
+            auVar19 = vectorConditionalSelect(auVar21,auVar15,auVar14);
+            *(undefined1 (*) [16])((uint)(param_6 + 0xc) & 0xfffffff0) = auVar18;
+            *(undefined1 (*) [16])((uint)(param_6 + 8) & 0xfffffff0) = auVar19;
+            lVar8 = lVar8 + -1;
+          } while (lVar8 != 0);
         }
-        lVar12 = lVar12 + -1;
-        lVar5 = lVar5 + 2;
-      } while (lVar12 != 0);
-      __restgprlr_23();
+        lVar7 = lVar7 + -1;
+        iVar10 = iVar10 + 2;
+      } while (lVar7 != 0);
       return;
     }
   }
-  __restgprlr_23();
   return;
 }
 
 
 // 82631BF8  XSurfaceTraceLine_r  (xanim/xmodel.cpp:1657)
+
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
 
 void XSurfaceTraceLine_r(XSurface *param_1,XSurfaceCollisionTree *param_2,uint param_3,
                         TraceExtents *param_4,int param_5,float *param_6,float *param_7,
@@ -1432,13 +1410,11 @@ void XSurfaceTraceLine_r(XSurface *param_1,XSurfaceCollisionTree *param_2,uint p
 
 {
   ushort uVar1;
-  ushort *puVar2;
-  XSurface *pXVar3;
-  int iVar4;
-  ulonglong uVar5;
-  uint uVar6;
-  float *pfVar7;
-  uint uVar8;
+  int iVar2;
+  uint uVar3;
+  float *pfVar4;
+  uint uVar5;
+  XSurfaceCollisionNode *pXVar6;
   float *in_stack_00000054;
   XSurfaceTraceLineData *in_stack_ffffff18;
   float local_90;
@@ -1449,16 +1425,15 @@ void XSurfaceTraceLine_r(XSurface *param_1,XSurfaceCollisionTree *param_2,uint p
   float local_7c;
   Bounds local_70 [4];
   
-  uVar5 = (ulonglong)(int)param_3;
-  pXVar3 = (XSurface *)__savegprlr_22(param_1);
-  pfVar7 = param_7;
-  if ((ulonglong)param_2->nodeCount <= (uVar5 & 0xffffffff)) {
-    pfVar7 = (float *)0x82180000;
+  pfVar4 = param_7;
+  if (param_2->nodeCount <= param_3) {
+    pfVar4 = (float *)0x82180000;
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xmodel.cpp",0x68a,0,"%s"
                    );
   }
-  puVar2 = (ushort *)((int)(param_2->nodes->aabb).mins + (int)((uVar5 & 0xffffffff) << 4));
-  XSurfaceVisitTrianglesInAabb_UnconvertAabb(param_2,puVar2,puVar2 + 3,&local_90,&local_84);
+  pXVar6 = param_2->nodes + param_3;
+  XSurfaceVisitTrianglesInAabb_UnconvertAabb
+            (param_2,(ushort *)pXVar6,(pXVar6->aabb).maxs,&local_90,&local_84);
   local_70[0].midPoint[0] = (local_84 + local_90) * 0.5;
   local_70[0].midPoint[1] = (local_80 + local_8c) * 0.5;
   local_70[0].midPoint[2] = (local_7c + local_88) * 0.5;
@@ -1474,32 +1449,33 @@ void XSurfaceTraceLine_r(XSurface *param_1,XSurfaceCollisionTree *param_2,uint p
   if ((local_7c - local_70[0].midPoint[2]) - (local_70[0].midPoint[2] - local_88) < 0.0) {
     local_70[0].halfSize[2] = local_70[0].midPoint[2] - local_88;
   }
-  iVar4 = CM_TraceBox(param_4,local_70,param_8->fraction);
-  if (iVar4 == 0) {
-    uVar1 = puVar2[7];
-    uVar6 = (uint)puVar2[6];
+  iVar2 = CM_TraceBox(param_4,local_70,param_8->fraction);
+  if (iVar2 == 0) {
+    uVar1 = pXVar6->childCount;
+    uVar3 = (uint)pXVar6->childBeginIndex;
     if ((xtrace_t *)0x7fff < (xtrace_t *)(uint)uVar1) {
       XSurfaceTraceLine_Leaf
-                (pXVar3,param_2,uVar6,uVar1 - 0x8000,(int)param_8,in_stack_00000054,pfVar7,
+                (param_1,param_2,uVar3,uVar1 - 0x8000,(int)param_8,in_stack_00000054,pfVar4,
                  (xtrace_t *)(uint)uVar1,in_stack_ffffff18);
-      __restgprlr_22();
       return;
     }
-    uVar8 = (uint)uVar1 + (uint)puVar2[6];
-    if (uVar6 < uVar8) {
+    uVar5 = (uint)uVar1 + (uint)pXVar6->childBeginIndex;
+    if (uVar3 < uVar5) {
       do {
-        XSurfaceTraceLine_r(pXVar3,param_2,uVar6,param_4,param_5,param_6,param_7,param_8,
+        XSurfaceTraceLine_r(param_1,param_2,uVar3,param_4,param_5,param_6,param_7,param_8,
                             in_stack_ffffff18);
-        uVar6 = uVar6 + 1;
-      } while ((int)uVar6 < (int)uVar8);
+        uVar3 = uVar3 + 1;
+      } while ((int)uVar3 < (int)uVar5);
     }
   }
-  __restgprlr_22();
   return;
 }
 
 
 // 82631D98  XSurfaceTraceLineTree  (xanim/xmodel.cpp:1703)
+
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
 
 void XSurfaceTraceLineTree
                (XSurface *param_1,int param_2,float *param_3,float *param_4,xtrace_t *param_5)
@@ -1507,108 +1483,97 @@ void XSurfaceTraceLineTree
 {
   XRigidVertList *pXVar1;
   XSurfaceCollisionTree *pXVar2;
-  int iVar3;
-  XSurface *pXVar4;
-  ulonglong uVar5;
-  longlong lVar6;
-  float *pfVar7;
-  longlong lVar8;
-  float *pfVar9;
-  longlong lVar10;
-  undefined1 auVar11 [16];
-  undefined1 auVar12 [16];
-  undefined1 auVar13 [16];
-  undefined1 auVar14 [16];
-  undefined1 auVar15 [16];
+  longlong lVar3;
+  undefined1 auVar4 [16];
+  undefined1 auVar5 [16];
+  undefined1 auVar6 [16];
+  undefined1 auVar7 [16];
+  undefined1 auVar8 [16];
   XSurfaceTraceLineData *in_stack_fffffe98;
   float local_110;
   TraceExtents aTStack_c0 [2];
   
-  lVar10 = (longlong)(int)param_5;
-  lVar8 = (longlong)(int)param_4;
-  lVar6 = (longlong)(int)param_3;
-  uVar5 = (ulonglong)param_2;
-  pXVar4 = (XSurface *)__savegprlr_22(param_1);
-  pfVar7 = (float *)lVar6;
-  aTStack_c0[0].start[0] = *pfVar7;
-  aTStack_c0[0].start[1] = pfVar7[1];
-  aTStack_c0[0].start[2] = pfVar7[2];
-  pfVar9 = (float *)lVar8;
-  aTStack_c0[0].end[0] = aTStack_c0[0].start[0] + *pfVar9;
-  aTStack_c0[0].end[1] = pfVar9[1] + aTStack_c0[0].start[1];
-  aTStack_c0[0].end[2] = pfVar9[2] + aTStack_c0[0].start[2];
+  lVar3 = (longlong)(int)param_5;
+  aTStack_c0[0].start[0] = *param_3;
+  aTStack_c0[0].start[1] = param_3[1];
+  aTStack_c0[0].start[2] = param_3[2];
+  aTStack_c0[0].end[0] = aTStack_c0[0].start[0] + *param_4;
+  aTStack_c0[0].end[1] = param_4[1] + aTStack_c0[0].start[1];
+  aTStack_c0[0].end[2] = param_4[2] + aTStack_c0[0].start[2];
   CM_CalcTraceExtents(aTStack_c0);
-  iVar3 = (int)((uVar5 + (uVar5 & 0x7fffffff) * 2 & 0xffffffff) << 2);
-  pXVar1 = pXVar4->vertList;
-  pXVar2 = *(XSurfaceCollisionTree **)((int)&pXVar1->collisionTree + iVar3);
+  pXVar1 = param_1->vertList;
+  pXVar2 = pXVar1[param_2].collisionTree;
   if (pXVar2 == (XSurfaceCollisionTree *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xmodel.cpp",0x6ba,0,"%s"
                    );
   }
-  loadVectorLeftIndexed(lVar6);
-  loadVectorLeftIndexed(lVar8);
-  loadVectorRightIndexed(lVar6 + 0x10);
-  loadVectorRightIndexed(lVar8 + 0x10);
-  auVar15 = loadVectorLeftIndexed(lVar10 + 0xc);
-  auVar14 = vectorSplatWord(auVar15,0);
-  auVar15 = loadVectorLeftIndexed(0xffffffff82000f10);
-  auVar13 = vectorSplatWord(auVar15,0);
-  PIXBeginNamedEvent_Copy_Int
-            (0xffffffff,"trace tree %d tris",(uint)*(ushort *)((int)&pXVar1->triCount + iVar3));
-  XSurfaceTraceLine_r(pXVar4,pXVar2,0,aTStack_c0,(int)uVar5,pfVar7,pfVar9,(xtrace_t *)lVar10,
-                      in_stack_fffffe98);
+  loadVectorLeftIndexed((longlong)(int)param_3);
+  loadVectorLeftIndexed((longlong)(int)param_4);
+  loadVectorRightIndexed((longlong)(int)param_3 + 0x10);
+  loadVectorRightIndexed((longlong)(int)param_4 + 0x10);
+  auVar8 = loadVectorLeftIndexed(lVar3 + 0xc);
+  auVar7 = vectorSplatWord(auVar8,0);
+  auVar8 = loadVectorLeftIndexed(0xffffffff82000f10);
+  auVar6 = vectorSplatWord(auVar8,0);
+  PIXBeginNamedEvent_Copy_Int(0xffffffff,"trace tree %d tris",(uint)pXVar1[param_2].triCount);
+  XSurfaceTraceLine_r(param_1,pXVar2,0,aTStack_c0,param_2,param_3,param_4,param_5,in_stack_fffffe98)
+  ;
   PIXEndNamedEvent();
-  auVar12 = vectorSplatImmediateSignedWord(0);
-  auVar11 = vectorMultiplySum3FloatingPoint(auVar13,auVar13);
-  auVar15 = vectorReciprocalSquareRootEstimateFloatingPoint128(auVar11);
-  auVar12 = vectorCompareEqualFloatingPoint128(auVar11,auVar12);
-  auVar15 = vectorMultiplyFloatingPoint(auVar13,auVar15);
-  auVar15 = vectorConditionalSelect(auVar15,auVar11,auVar12);
-  auVar11 = vectorSplatWord(auVar15,0);
-  auVar12 = vectorSplatWord(auVar15,1);
-  auVar15 = vectorSplatWord(auVar15,2);
-  storeVectorElementWordIndexed(auVar11,lVar10);
-  storeVectorElementWordIndexed(auVar12,lVar10 + 4);
-  storeVectorElementWordIndexed(auVar15,lVar10 + 8);
-  auVar15 = loadVectorLeftIndexed(lVar10 + 0xc);
-  auVar15 = vectorSplatWord(auVar15,0);
-  auVar15 = vectorMinimumFloatingPoint128(auVar14,auVar15);
-  auVar15 = vectorSplatWord(auVar15,0);
-  storeVectorElementWordIndexed(auVar15,ZEXT48(&stack0x00000000) - 0x110);
-  ((xtrace_t *)lVar10)->fraction = local_110;
+  auVar5 = vectorSplatImmediateSignedWord(0);
+  auVar4 = vectorMultiplySum3FloatingPoint(auVar6,auVar6);
+  auVar8 = vectorReciprocalSquareRootEstimateFloatingPoint128(auVar4);
+  auVar5 = vectorCompareEqualFloatingPoint128(auVar4,auVar5);
+  auVar8 = vectorMultiplyFloatingPoint(auVar6,auVar8);
+  auVar8 = vectorConditionalSelect(auVar8,auVar4,auVar5);
+  auVar4 = vectorSplatWord(auVar8,0);
+  auVar5 = vectorSplatWord(auVar8,1);
+  auVar8 = vectorSplatWord(auVar8,2);
+  storeVectorElementWordIndexed(auVar4,lVar3);
+  storeVectorElementWordIndexed(auVar5,lVar3 + 4);
+  storeVectorElementWordIndexed(auVar8,lVar3 + 8);
+  auVar8 = loadVectorLeftIndexed(lVar3 + 0xc);
+  auVar8 = vectorSplatWord(auVar8,0);
+  auVar8 = vectorMinimumFloatingPoint128(auVar7,auVar8);
+  auVar8 = vectorSplatWord(auVar8,0);
+  storeVectorElementWordIndexed(auVar8,ZEXT48(&stack0x00000000) - 0x110);
+  param_5->fraction = local_110;
   if ((local_110 < 0.0) || (1.0 < local_110)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xmodel.cpp",0x6cc,1,
                     "%s\n\t(results->fraction) = %g");
   }
-  __restgprlr_22();
   return;
 }
 
 
 // 82631FB8  XSurfaceTraceLineVerts  (xanim/xmodel.cpp:1747)
 
+/* WARNING: Function: __savegprlr_19 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savevmx_123 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restvmx_123 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_19 replaced with injection: xenon_save_restore */
+
 void XSurfaceTraceLineVerts
                (XSurface *param_1,int param_2,float *param_3,float *param_4,xtrace_t *param_5)
 
 {
-  float fVar1;
-  ushort uVar2;
-  XRigidVertList *pXVar3;
-  GfxQuantizedNoColorVertex *pGVar4;
-  XSurface *pXVar5;
+  ushort uVar1;
+  XRigidVertList *pXVar2;
+  GfxQuantizedNoColorVertex *pGVar3;
+  int iVar4;
+  longlong lVar5;
   longlong lVar6;
-  int iVar7;
+  longlong lVar7;
   longlong lVar8;
+  int iVar10;
   longlong lVar9;
-  longlong lVar10;
-  int iVar12;
-  longlong lVar11;
-  ulonglong uVar13;
-  ulonglong uVar14;
-  longlong lVar15;
-  ushort *puVar16;
-  double dVar17;
-  double dVar18;
+  ulonglong uVar11;
+  ulonglong uVar12;
+  longlong lVar13;
+  ushort *puVar14;
+  double dVar15;
+  double dVar16;
+  undefined1 auVar17 [16];
+  undefined1 auVar18 [16];
   undefined1 auVar19 [16];
   undefined1 auVar20 [16];
   undefined1 auVar21 [16];
@@ -1624,261 +1589,249 @@ void XSurfaceTraceLineVerts
   undefined1 auVar31 [16];
   undefined1 auVar32 [16];
   undefined1 auVar33 [16];
-  undefined1 auVar34 [16];
-  undefined1 auVar35 [16];
   float local_e0;
   
-  lVar8 = (longlong)(int)param_5;
-  lVar10 = (longlong)(int)param_4;
-  lVar9 = (longlong)(int)param_3;
-  lVar6 = (longlong)param_2;
-  __savegprlr_19(param_1,lVar6,lVar9,lVar10);
-  iVar12 = (int)lVar6;
-  lVar6 = __savevmx_123();
-  fVar1 = *(float *)((int)lVar8 + 0xc);
-  dVar18 = 0.0;
-  dVar17 = 1.0;
-  if ((fVar1 < 0.0) || (1.0 < fVar1)) {
+  lVar5 = (longlong)(int)param_5;
+  dVar16 = 0.0;
+  dVar15 = 1.0;
+  if ((param_5->fraction < 0.0) || (1.0 < param_5->fraction)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xmodel.cpp",0x708,0,
                     "%s\n\t(results->fraction) = %g");
   }
-  pXVar5 = (XSurface *)lVar6;
-  if ((pXVar5->flags & 0x40) != 0) {
+  if ((param_1->flags & 0x40) != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xmodel.cpp",0x70e,0,"%s"
                    );
   }
-  pXVar3 = pXVar5->vertList;
-  uVar2 = pXVar3[iVar12].triCount;
-  uVar13 = (ulonglong)uVar2;
-  lVar15 = (ulonglong)pXVar3[iVar12].triOffset * 6 + ZEXT48(pXVar5->triIndices);
-  if (uVar2 == 0) {
+  pXVar2 = param_1->vertList;
+  uVar1 = pXVar2[param_2].triCount;
+  uVar11 = (ulonglong)uVar1;
+  lVar13 = (ulonglong)pXVar2[param_2].triOffset * 6 + ZEXT48(param_1->triIndices);
+  if (uVar1 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xmodel.cpp",0x716,0,
                     "%s\n\t(triCount) = %i");
   }
-  auVar33 = loadVectorLeftIndexed(lVar8 + 0xc);
-  auVar32 = loadVectorLeftIndexed(lVar9);
-  auVar30 = loadVectorLeftIndexed(lVar10);
-  auVar34 = vectorSplatWord(auVar33,0);
-  auVar29 = loadVectorLeftIndexed(0xffffffff82000f10);
-  auVar27 = loadVectorRightIndexed(lVar9 + 0x10);
-  auVar33 = loadVectorRightIndexed(lVar10 + 0x10);
-  auVar35 = vectorSplatWord(auVar29,0);
-  auVar27 = (auVar32 | auVar27) & (undefined1  [16])g_keepXYZ.field0_0x0;
-  auVar29 = (auVar30 | auVar33) & (undefined1  [16])g_keepXYZ.field0_0x0;
-  auVar33 = auVar34;
-  if ((pXVar5->flags & 0x20) == 0) {
-    pGVar4 = (pXVar5->verts0).quantizedNoColorVerts0;
-    lVar6 = uVar13 * 6;
-    if ((uint)lVar6 < 0x201) {
-      lVar9 = 0;
-    }
-    else {
-      lVar6 = 0x200;
-      lVar9 = 0x200;
-    }
-    lVar10 = 0;
-    if ((int)lVar6 != 0) {
-      lVar6 = ((lVar6 - 1U & 0xffffffff) >> 7) + 1;
-      do {
-        dataCacheBlockTouch(lVar10 + lVar15);
-        lVar10 = lVar10 + 0x80;
-        lVar6 = lVar6 + -1;
-      } while (lVar6 != 0);
-    }
-    iVar7 = (uint)pXVar3[iVar12].vertCount << 5;
-    if ((uint)pXVar3[iVar12].vertCount << 5 < 0x201) {
+  auVar31 = loadVectorLeftIndexed(lVar5 + 0xc);
+  auVar30 = loadVectorLeftIndexed((longlong)(int)param_3);
+  auVar28 = loadVectorLeftIndexed((longlong)(int)param_4);
+  auVar32 = vectorSplatWord(auVar31,0);
+  auVar27 = loadVectorLeftIndexed(0xffffffff82000f10);
+  auVar25 = loadVectorRightIndexed((longlong)(int)param_3 + 0x10);
+  auVar31 = loadVectorRightIndexed((longlong)(int)param_4 + 0x10);
+  auVar33 = vectorSplatWord(auVar27,0);
+  auVar25 = (auVar30 | auVar25) & (undefined1  [16])g_keepXYZ.field0_0x0;
+  auVar27 = (auVar28 | auVar31) & (undefined1  [16])g_keepXYZ.field0_0x0;
+  auVar31 = auVar32;
+  if ((param_1->flags & 0x20) == 0) {
+    pGVar3 = (param_1->verts0).quantizedNoColorVerts0;
+    lVar8 = uVar11 * 6;
+    if ((uint)lVar8 < 0x201) {
       lVar6 = 0;
     }
     else {
-      iVar7 = 0x200;
+      lVar8 = 0x200;
       lVar6 = 0x200;
     }
-    lVar10 = 0;
-    if (iVar7 != 0) {
-      lVar11 = (ulonglong)(iVar7 - 1U >> 7) + 1;
+    lVar7 = 0;
+    if ((int)lVar8 != 0) {
+      lVar8 = ((lVar8 - 1U & 0xffffffff) >> 7) + 1;
       do {
-        dataCacheBlockTouch(lVar10 + (ulonglong)*(ushort *)lVar15 * 0x20 + ZEXT48(pGVar4));
-        lVar10 = lVar10 + 0x80;
-        lVar11 = lVar11 + -1;
-      } while (lVar11 != 0);
+        dataCacheBlockTouch(lVar7 + lVar13);
+        lVar7 = lVar7 + 0x80;
+        lVar8 = lVar8 + -1;
+      } while (lVar8 != 0);
     }
-    if (uVar2 != 0) {
-      auVar32 = vectorPermuteWordImmediate(auVar29,99);
-      auVar30 = vectorPermuteWordImmediate(auVar29,0x87);
+    iVar4 = (uint)pXVar2[param_2].vertCount << 5;
+    if ((uint)pXVar2[param_2].vertCount << 5 < 0x201) {
+      lVar8 = 0;
+    }
+    else {
+      iVar4 = 0x200;
+      lVar8 = 0x200;
+    }
+    lVar7 = 0;
+    if (iVar4 != 0) {
+      lVar9 = (ulonglong)(iVar4 - 1U >> 7) + 1;
       do {
-        dataCacheBlockTouch(lVar9 + lVar15);
-        puVar16 = (ushort *)lVar15;
-        lVar10 = (ulonglong)*puVar16 * 0x20 + ZEXT48(pGVar4);
-        dataCacheBlockTouch(lVar6 + lVar10);
-        auVar31 = *(undefined1 (*) [16])((uint)lVar10 & 0xfffffff0);
-        auVar26 = vectorSubtractFloatingPoint128(auVar31,auVar27);
-        lVar15 = lVar15 + 6;
-        auVar25 = vectorSubtractFloatingPoint128
-                            (auVar31,*(undefined1 (*) [16])
-                                      ((uint)puVar16[1] * 0x20 + (int)pGVar4 & 0xfffffff0));
-        auVar22 = vectorSubtractFloatingPoint128
-                            (auVar31,*(undefined1 (*) [16])
-                                      ((uint)puVar16[2] * 0x20 + (int)pGVar4 & 0xfffffff0));
-        auVar31 = vectorPermuteWordImmediate(auVar26,0x87);
-        auVar20 = vectorPermuteWordImmediate(auVar26,99);
-        auVar24 = vectorMultiplyFloatingPoint(auVar32,auVar31);
-        auVar19 = vectorPermuteWordImmediate(auVar25,0x87);
-        auVar23 = vectorPermuteWordImmediate(auVar22,99);
-        auVar31 = vectorPermuteWordImmediate(auVar25,99);
-        auVar21 = vectorPermuteWordImmediate(auVar22,0x87);
-        auVar23 = vectorMultiplyFloatingPoint(auVar23,auVar19);
-        auVar24 = vectorNegativeMultiplySubtractFloatingPoint(auVar30,auVar20,auVar24);
-        auVar23 = vectorNegativeMultiplySubtractFloatingPoint(auVar21,auVar31,auVar23);
-        auVar31 = vectorMultiplySum3FloatingPoint(auVar24,auVar25);
-        auVar24 = vectorMultiplySum3FloatingPoint(auVar24,auVar22);
-        auVar28 = vectorMultiplySum3FloatingPoint(auVar29,auVar23);
-        auVar25 = vectorMultiplySum3FloatingPoint(auVar26,auVar23);
-        auVar22 = vectorCompareGreaterThanFloatingPoint128
-                            (auVar31,(undefined1  [16])g_zero.field0_0x0);
-        auVar31 = vectorSubtractFloatingPoint128(auVar31,auVar24);
+        dataCacheBlockTouch(lVar7 + (ulonglong)*(ushort *)lVar13 * 0x20 + ZEXT48(pGVar3));
+        lVar7 = lVar7 + 0x80;
+        lVar9 = lVar9 + -1;
+      } while (lVar9 != 0);
+    }
+    if (uVar1 != 0) {
+      auVar30 = vectorPermuteWordImmediate(auVar27,99);
+      auVar28 = vectorPermuteWordImmediate(auVar27,0x87);
+      do {
+        dataCacheBlockTouch(lVar6 + lVar13);
+        puVar14 = (ushort *)lVar13;
+        lVar7 = (ulonglong)*puVar14 * 0x20 + ZEXT48(pGVar3);
+        dataCacheBlockTouch(lVar8 + lVar7);
+        auVar29 = *(undefined1 (*) [16])((uint)lVar7 & 0xfffffff0);
+        auVar24 = vectorSubtractFloatingPoint128(auVar29,auVar25);
+        lVar13 = lVar13 + 6;
+        auVar23 = vectorSubtractFloatingPoint128
+                            (auVar29,*(undefined1 (*) [16])
+                                      ((uint)puVar14[1] * 0x20 + (int)pGVar3 & 0xfffffff0));
+        auVar20 = vectorSubtractFloatingPoint128
+                            (auVar29,*(undefined1 (*) [16])
+                                      ((uint)puVar14[2] * 0x20 + (int)pGVar3 & 0xfffffff0));
+        auVar29 = vectorPermuteWordImmediate(auVar24,0x87);
+        auVar18 = vectorPermuteWordImmediate(auVar24,99);
+        auVar22 = vectorMultiplyFloatingPoint(auVar30,auVar29);
+        auVar17 = vectorPermuteWordImmediate(auVar23,0x87);
+        auVar21 = vectorPermuteWordImmediate(auVar20,99);
+        auVar29 = vectorPermuteWordImmediate(auVar23,99);
+        auVar19 = vectorPermuteWordImmediate(auVar20,0x87);
+        auVar21 = vectorMultiplyFloatingPoint(auVar21,auVar17);
+        auVar22 = vectorNegativeMultiplySubtractFloatingPoint(auVar28,auVar18,auVar22);
+        auVar21 = vectorNegativeMultiplySubtractFloatingPoint(auVar19,auVar29,auVar21);
+        auVar29 = vectorMultiplySum3FloatingPoint(auVar22,auVar23);
+        auVar22 = vectorMultiplySum3FloatingPoint(auVar22,auVar20);
+        auVar26 = vectorMultiplySum3FloatingPoint(auVar27,auVar21);
+        auVar23 = vectorMultiplySum3FloatingPoint(auVar24,auVar21);
+        auVar20 = vectorCompareGreaterThanFloatingPoint128
+                            (auVar29,(undefined1  [16])g_zero.field0_0x0);
+        auVar29 = vectorSubtractFloatingPoint128(auVar29,auVar22);
+        auVar17 = vectorCompareGreaterThanFloatingPoint128
+                            ((undefined1  [16])g_zero.field0_0x0,auVar22);
+        auVar22 = vectorMultiplyFloatingPoint(auVar31,auVar26);
         auVar19 = vectorCompareGreaterThanFloatingPoint128
-                            ((undefined1  [16])g_zero.field0_0x0,auVar24);
-        auVar24 = vectorMultiplyFloatingPoint(auVar33,auVar28);
-        auVar21 = vectorCompareGreaterThanFloatingPoint128
-                            (auVar25,(undefined1  [16])g_zero.field0_0x0);
-        auVar20 = vectorCompareGreaterThanFloatingPoint128(auVar28,auVar31);
-        auVar31 = vectorReciprocalEstimateFloatingPoint128(auVar28);
-        auVar24 = vectorCompareGreaterThanFloatingPoint128(auVar25,auVar24);
-        auVar31 = vectorMultiplyFloatingPoint(auVar25,auVar31);
-        auVar24 = auVar24 & ~auVar21 & ~(auVar22 | auVar19 | auVar20);
-        auVar35 = auVar35 & ~auVar24 | auVar23 & auVar24;
-        auVar33 = auVar33 & ~auVar24 | auVar31 & auVar24;
-        uVar13 = uVar13 - 1;
-      } while (uVar13 != 0);
+                            (auVar23,(undefined1  [16])g_zero.field0_0x0);
+        auVar18 = vectorCompareGreaterThanFloatingPoint128(auVar26,auVar29);
+        auVar29 = vectorReciprocalEstimateFloatingPoint128(auVar26);
+        auVar22 = vectorCompareGreaterThanFloatingPoint128(auVar23,auVar22);
+        auVar29 = vectorMultiplyFloatingPoint(auVar23,auVar29);
+        auVar22 = auVar22 & ~auVar19 & ~(auVar20 | auVar17 | auVar18);
+        auVar33 = auVar33 & ~auVar22 | auVar21 & auVar22;
+        auVar31 = auVar31 & ~auVar22 | auVar29 & auVar22;
+        uVar11 = uVar11 - 1;
+      } while (uVar11 != 0);
     }
   }
   else {
-    uVar14 = (ulonglong)(uint)pXVar5->verts0;
-    iVar7 = XSurfaceGetVert0Size(pXVar5);
-    auVar30 = loadVectorLeftIndexed(lVar6 + 8);
-    auVar30 = vectorSplatWord(auVar30,0);
-    lVar6 = uVar13 * 6;
-    if ((uint)lVar6 < 0x201) {
-      lVar9 = 0;
-    }
-    else {
-      lVar6 = 0x200;
-      lVar9 = 0x200;
-    }
-    lVar10 = 0;
-    if ((int)lVar6 != 0) {
-      lVar6 = ((lVar6 - 1U & 0xffffffff) >> 7) + 1;
-      do {
-        dataCacheBlockTouch(lVar10 + lVar15);
-        lVar10 = lVar10 + 0x80;
-        lVar6 = lVar6 + -1;
-      } while (lVar6 != 0);
-    }
-    iVar12 = (uint)pXVar3[iVar12].vertCount * iVar7;
-    if (iVar12 < 0x201) {
+    uVar12 = (ulonglong)(uint)param_1->verts0;
+    iVar4 = XSurfaceGetVert0Size(param_1);
+    auVar28 = loadVectorLeftIndexed((longlong)(int)param_1 + 8);
+    auVar28 = vectorSplatWord(auVar28,0);
+    lVar8 = uVar11 * 6;
+    if ((uint)lVar8 < 0x201) {
       lVar6 = 0;
     }
     else {
-      iVar12 = 0x200;
+      lVar8 = 0x200;
       lVar6 = 0x200;
     }
-    lVar10 = 0;
-    if (0 < iVar12) {
-      lVar11 = (ulonglong)(iVar12 - 1U >> 7) + 1;
+    lVar7 = 0;
+    if ((int)lVar8 != 0) {
+      lVar8 = ((lVar8 - 1U & 0xffffffff) >> 7) + 1;
       do {
-        dataCacheBlockTouch(lVar10 + (longlong)(int)(uint)*(ushort *)lVar15 * (longlong)iVar7 +
-                                     uVar14);
-        lVar10 = lVar10 + 0x80;
-        lVar11 = lVar11 + -1;
-      } while (lVar11 != 0);
+        dataCacheBlockTouch(lVar7 + lVar13);
+        lVar7 = lVar7 + 0x80;
+        lVar8 = lVar8 + -1;
+      } while (lVar8 != 0);
     }
-    if (uVar2 != 0) {
-      auVar31 = vectorPermuteWordImmediate(auVar29,99);
-      auVar32 = vectorPermuteWordImmediate(auVar29,0x87);
+    iVar10 = (uint)pXVar2[param_2].vertCount * iVar4;
+    if (iVar10 < 0x201) {
+      lVar8 = 0;
+    }
+    else {
+      iVar10 = 0x200;
+      lVar8 = 0x200;
+    }
+    lVar7 = 0;
+    if (0 < iVar10) {
+      lVar9 = (ulonglong)(iVar10 - 1U >> 7) + 1;
       do {
-        dataCacheBlockTouch(lVar9 + lVar15);
-        puVar16 = (ushort *)lVar15;
-        lVar10 = (longlong)(int)(uint)*puVar16 * (longlong)iVar7 + uVar14;
-        dataCacheBlockTouch(lVar6 + lVar10);
-        auVar24 = loadVectorRightIndexed(lVar10 + 8);
-        auVar23 = loadVectorLeftIndexed(lVar10);
-        auVar24 = vectorShiftLeftDoubleByOctetImmediate(auVar24,auVar24,8);
-        lVar15 = lVar15 + 6;
-        auVar24 = vectorUnpackHighSignedByte(auVar23 | auVar24);
-        auVar24 = vectorConvertFromSignedFixedPointWord128(auVar24,0);
-        auVar22 = vectorMultiplyFloatingPoint(auVar24,auVar30);
-        lVar11 = (longlong)(int)(uint)puVar16[1] * (longlong)iVar7 + uVar14;
-        lVar10 = (longlong)(int)(uint)puVar16[2] * (longlong)iVar7 + uVar14;
-        auVar23 = loadVectorRightIndexed(lVar11 + 8);
-        auVar24 = loadVectorRightIndexed(lVar10 + 8);
-        auVar21 = vectorShiftLeftDoubleByOctetImmediate(auVar23,auVar23,8);
-        auVar23 = loadVectorLeftIndexed(lVar11);
-        auVar20 = vectorShiftLeftDoubleByOctetImmediate(auVar24,auVar24,8);
-        auVar24 = loadVectorLeftIndexed(lVar10);
-        auVar19 = vectorSubtractFloatingPoint128(auVar22,auVar27);
-        auVar23 = vectorUnpackHighSignedByte(auVar23 | auVar21);
-        auVar24 = vectorUnpackHighSignedByte(auVar24 | auVar20);
-        auVar21 = vectorConvertFromSignedFixedPointWord128(auVar23,0);
-        auVar20 = vectorConvertFromSignedFixedPointWord128(auVar24,0);
-        auVar24 = vectorPermuteWordImmediate(auVar19,0x87);
-        auVar23 = vectorPermuteWordImmediate(auVar19,99);
-        auVar24 = vectorMultiplyFloatingPoint(auVar31,auVar24);
-        auVar21 = vectorMultiplyFloatingPoint(auVar21,auVar30);
-        auVar20 = vectorMultiplyFloatingPoint(auVar20,auVar30);
-        auVar24 = vectorNegativeMultiplySubtractFloatingPoint(auVar32,auVar23,auVar24);
-        auVar28 = vectorSubtractFloatingPoint128(auVar22,auVar21);
-        auVar26 = vectorSubtractFloatingPoint128(auVar22,auVar20);
-        auVar25 = vectorPermuteWordImmediate(auVar28,0x87);
-        auVar21 = vectorMultiplySum3FloatingPoint(auVar24,auVar28);
-        auVar23 = vectorPermuteWordImmediate(auVar26,99);
-        auVar22 = vectorMultiplySum3FloatingPoint(auVar24,auVar26);
-        auVar20 = vectorPermuteWordImmediate(auVar28,99);
-        auVar24 = vectorPermuteWordImmediate(auVar26,0x87);
-        auVar23 = vectorMultiplyFloatingPoint(auVar23,auVar25);
-        auVar26 = vectorCompareGreaterThanFloatingPoint128
-                            (auVar21,(undefined1  [16])g_zero.field0_0x0);
-        auVar24 = vectorNegativeMultiplySubtractFloatingPoint(auVar24,auVar20,auVar23);
-        auVar21 = vectorSubtractFloatingPoint128(auVar21,auVar22);
-        auVar25 = vectorCompareGreaterThanFloatingPoint128
-                            ((undefined1  [16])g_zero.field0_0x0,auVar22);
-        auVar20 = vectorMultiplySum3FloatingPoint(auVar29,auVar24);
-        auVar22 = vectorMultiplySum3FloatingPoint(auVar19,auVar24);
-        auVar23 = vectorMultiplyFloatingPoint(auVar33,auVar20);
-        auVar19 = vectorCompareGreaterThanFloatingPoint128(auVar20,auVar21);
-        auVar21 = vectorCompareGreaterThanFloatingPoint128
-                            (auVar22,(undefined1  [16])g_zero.field0_0x0);
-        auVar20 = vectorReciprocalEstimateFloatingPoint128(auVar20);
-        auVar23 = vectorCompareGreaterThanFloatingPoint128(auVar22,auVar23);
-        auVar20 = vectorMultiplyFloatingPoint(auVar22,auVar20);
-        auVar23 = auVar23 & ~auVar21 & ~(auVar26 | auVar25 | auVar19);
-        auVar35 = auVar35 & ~auVar23 | auVar24 & auVar23;
-        auVar33 = auVar33 & ~auVar23 | auVar20 & auVar23;
-        uVar13 = uVar13 - 1;
-      } while (uVar13 != 0);
+        dataCacheBlockTouch(lVar7 + (longlong)(int)(uint)*(ushort *)lVar13 * (longlong)iVar4 +
+                                    uVar12);
+        lVar7 = lVar7 + 0x80;
+        lVar9 = lVar9 + -1;
+      } while (lVar9 != 0);
+    }
+    if (uVar1 != 0) {
+      auVar29 = vectorPermuteWordImmediate(auVar27,99);
+      auVar30 = vectorPermuteWordImmediate(auVar27,0x87);
+      do {
+        dataCacheBlockTouch(lVar6 + lVar13);
+        puVar14 = (ushort *)lVar13;
+        lVar7 = (longlong)(int)(uint)*puVar14 * (longlong)iVar4 + uVar12;
+        dataCacheBlockTouch(lVar8 + lVar7);
+        auVar22 = loadVectorRightIndexed(lVar7 + 8);
+        auVar21 = loadVectorLeftIndexed(lVar7);
+        auVar22 = vectorShiftLeftDoubleByOctetImmediate(auVar22,auVar22,8);
+        lVar13 = lVar13 + 6;
+        auVar22 = vectorUnpackHighSignedByte(auVar21 | auVar22);
+        auVar22 = vectorConvertFromSignedFixedPointWord128(auVar22,0);
+        auVar20 = vectorMultiplyFloatingPoint(auVar22,auVar28);
+        lVar9 = (longlong)(int)(uint)puVar14[1] * (longlong)iVar4 + uVar12;
+        lVar7 = (longlong)(int)(uint)puVar14[2] * (longlong)iVar4 + uVar12;
+        auVar21 = loadVectorRightIndexed(lVar9 + 8);
+        auVar22 = loadVectorRightIndexed(lVar7 + 8);
+        auVar19 = vectorShiftLeftDoubleByOctetImmediate(auVar21,auVar21,8);
+        auVar21 = loadVectorLeftIndexed(lVar9);
+        auVar18 = vectorShiftLeftDoubleByOctetImmediate(auVar22,auVar22,8);
+        auVar22 = loadVectorLeftIndexed(lVar7);
+        auVar17 = vectorSubtractFloatingPoint128(auVar20,auVar25);
+        auVar21 = vectorUnpackHighSignedByte(auVar21 | auVar19);
+        auVar22 = vectorUnpackHighSignedByte(auVar22 | auVar18);
+        auVar19 = vectorConvertFromSignedFixedPointWord128(auVar21,0);
+        auVar18 = vectorConvertFromSignedFixedPointWord128(auVar22,0);
+        auVar22 = vectorPermuteWordImmediate(auVar17,0x87);
+        auVar21 = vectorPermuteWordImmediate(auVar17,99);
+        auVar22 = vectorMultiplyFloatingPoint(auVar29,auVar22);
+        auVar19 = vectorMultiplyFloatingPoint(auVar19,auVar28);
+        auVar18 = vectorMultiplyFloatingPoint(auVar18,auVar28);
+        auVar22 = vectorNegativeMultiplySubtractFloatingPoint(auVar30,auVar21,auVar22);
+        auVar26 = vectorSubtractFloatingPoint128(auVar20,auVar19);
+        auVar24 = vectorSubtractFloatingPoint128(auVar20,auVar18);
+        auVar23 = vectorPermuteWordImmediate(auVar26,0x87);
+        auVar19 = vectorMultiplySum3FloatingPoint(auVar22,auVar26);
+        auVar21 = vectorPermuteWordImmediate(auVar24,99);
+        auVar20 = vectorMultiplySum3FloatingPoint(auVar22,auVar24);
+        auVar18 = vectorPermuteWordImmediate(auVar26,99);
+        auVar22 = vectorPermuteWordImmediate(auVar24,0x87);
+        auVar21 = vectorMultiplyFloatingPoint(auVar21,auVar23);
+        auVar24 = vectorCompareGreaterThanFloatingPoint128
+                            (auVar19,(undefined1  [16])g_zero.field0_0x0);
+        auVar22 = vectorNegativeMultiplySubtractFloatingPoint(auVar22,auVar18,auVar21);
+        auVar19 = vectorSubtractFloatingPoint128(auVar19,auVar20);
+        auVar23 = vectorCompareGreaterThanFloatingPoint128
+                            ((undefined1  [16])g_zero.field0_0x0,auVar20);
+        auVar18 = vectorMultiplySum3FloatingPoint(auVar27,auVar22);
+        auVar20 = vectorMultiplySum3FloatingPoint(auVar17,auVar22);
+        auVar21 = vectorMultiplyFloatingPoint(auVar31,auVar18);
+        auVar17 = vectorCompareGreaterThanFloatingPoint128(auVar18,auVar19);
+        auVar19 = vectorCompareGreaterThanFloatingPoint128
+                            (auVar20,(undefined1  [16])g_zero.field0_0x0);
+        auVar18 = vectorReciprocalEstimateFloatingPoint128(auVar18);
+        auVar21 = vectorCompareGreaterThanFloatingPoint128(auVar20,auVar21);
+        auVar18 = vectorMultiplyFloatingPoint(auVar20,auVar18);
+        auVar21 = auVar21 & ~auVar19 & ~(auVar24 | auVar23 | auVar17);
+        auVar33 = auVar33 & ~auVar21 | auVar22 & auVar21;
+        auVar31 = auVar31 & ~auVar21 | auVar18 & auVar21;
+        uVar11 = uVar11 - 1;
+      } while (uVar11 != 0);
     }
   }
-  auVar32 = vectorMultiplySum3FloatingPoint(auVar35,auVar35);
-  auVar29 = vectorSplatImmediateSignedWord(0);
-  auVar33 = vectorMinimumFloatingPoint128(auVar33,auVar34);
-  auVar30 = vectorSplatWord(auVar33,0);
-  auVar27 = vectorReciprocalSquareRootEstimateFloatingPoint128(auVar32);
-  auVar33 = vectorCompareEqualFloatingPoint128(auVar32,auVar29);
-  auVar27 = vectorMultiplyFloatingPoint(auVar35,auVar27);
-  auVar33 = vectorConditionalSelect(auVar27,auVar32,auVar33);
-  auVar29 = vectorSplatWord(auVar33,0);
-  auVar27 = vectorSplatWord(auVar33,1);
-  auVar33 = vectorSplatWord(auVar33,2);
-  storeVectorElementWordIndexed(auVar29,lVar8);
-  storeVectorElementWordIndexed(auVar27,lVar8 + 4);
-  storeVectorElementWordIndexed(auVar33,lVar8 + 8);
-  storeVectorElementWordIndexed(auVar30,ZEXT48(&stack0x00000000) - 0xe0);
-  *(float *)(lVar8 + 0xc) = local_e0;
-  if (((double)local_e0 < dVar18) || (dVar17 < (double)local_e0)) {
+  auVar30 = vectorMultiplySum3FloatingPoint(auVar33,auVar33);
+  auVar27 = vectorSplatImmediateSignedWord(0);
+  auVar31 = vectorMinimumFloatingPoint128(auVar31,auVar32);
+  auVar28 = vectorSplatWord(auVar31,0);
+  auVar25 = vectorReciprocalSquareRootEstimateFloatingPoint128(auVar30);
+  auVar31 = vectorCompareEqualFloatingPoint128(auVar30,auVar27);
+  auVar25 = vectorMultiplyFloatingPoint(auVar33,auVar25);
+  auVar31 = vectorConditionalSelect(auVar25,auVar30,auVar31);
+  auVar27 = vectorSplatWord(auVar31,0);
+  auVar25 = vectorSplatWord(auVar31,1);
+  auVar31 = vectorSplatWord(auVar31,2);
+  storeVectorElementWordIndexed(auVar27,lVar5);
+  storeVectorElementWordIndexed(auVar25,lVar5 + 4);
+  storeVectorElementWordIndexed(auVar31,lVar5 + 8);
+  storeVectorElementWordIndexed(auVar28,ZEXT48(&stack0x00000000) - 0xe0);
+  *(float *)(lVar5 + 0xc) = local_e0;
+  if (((double)local_e0 < dVar16) || (dVar15 < (double)local_e0)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xmodel.cpp",0x7c3,1,
                     "%s\n\t(results->fraction) = %g");
   }
-  __restvmx_123();
-  __restgprlr_19();
   return;
 }
 
@@ -1900,157 +1853,131 @@ void XSurfaceTraceLine(XSurface *param_1,int param_2,float *param_3,float *param
 
 // 82632588  XModelGetBoneIndex  (xanim/xmodel.cpp:2024)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
+
 int XModelGetBoneIndex(XModel *param_1,uint param_2,uint param_3,uchar *param_4)
 
 {
-  int iVar1;
-  ulonglong uVar2;
-  longlong lVar3;
-  ulonglong uVar4;
-  ushort *puVar5;
-  ulonglong uVar6;
-  ulonglong uVar7;
+  ushort *puVar1;
+  uint uVar2;
+  uint uVar3;
   
-  uVar4 = (ulonglong)(int)param_4;
-  lVar3 = (longlong)(int)param_3;
-  uVar2 = (ulonglong)(int)param_2;
-  iVar1 = __savegprlr_25(param_1);
-  if ((uVar4 & 0xffffffff) == 0) {
+  if (param_4 == (uchar *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xmodel.cpp",0x7ed,0,"%s"
                    );
   }
-  uVar7 = (ulonglong)*(byte *)(iVar1 + 4);
-  puVar5 = *(ushort **)(iVar1 + 0x24);
-  if (0xbf < uVar7) {
+  uVar3 = (uint)param_1->numBones;
+  puVar1 = param_1->boneNames;
+  if (0xbf < uVar3) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xmodel.cpp",0x7f2,0,"%s"
                    );
   }
-  uVar6 = 0;
-  if (uVar7 != 0) {
+  uVar2 = 0;
+  if (uVar3 != 0) {
     do {
-      if ((uVar2 & 0xffffffff) == (ulonglong)*puVar5) {
-        uVar6 = uVar6 + lVar3;
-        *(undefined1 *)uVar4 = (char)uVar6;
-        if ((uVar6 & 0xff) != (uVar6 & 0xffffffff)) {
+      if (param_2 == *puVar1) {
+        uVar2 = uVar2 + param_3;
+        *param_4 = (uchar)uVar2;
+        if ((uVar2 & 0xff) != uVar2) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xmodel.cpp",0x7f9,
                           0,"%s");
         }
-        iVar1 = __restgprlr_25(1);
-        return iVar1;
+        return 1;
       }
-      uVar6 = uVar6 + 1;
-      puVar5 = puVar5 + 1;
-    } while ((uVar6 & 0xffffffff) < uVar7);
+      uVar2 = uVar2 + 1;
+      puVar1 = puVar1 + 1;
+    } while (uVar2 < uVar3);
   }
-  iVar1 = __restgprlr_25(0);
-  return iVar1;
+  return 0;
 }
 
 
 // 82632678  XModelHasParentBone  (xanim/xmodel.cpp:2051)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Removing unreachable block (ram,0x826326f8) */
 
 int XModelHasParentBone(XModel *param_1,uchar param_2,uint param_3)
 
 {
-  ulonglong uVar1;
-  int iVar2;
-  ulonglong uVar3;
-  ulonglong uVar4;
+  uint uVar1;
   
-  uVar4 = (ulonglong)(int)param_3;
-  uVar3 = (ulonglong)(char)param_2;
-  iVar2 = __savegprlr_26(param_1);
-  uVar1 = uVar4 & 0xff;
-  if (uVar1 != (uVar4 & 0xffffffff)) {
+  uVar1 = param_3 & 0xff;
+  if (uVar1 != param_3) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xmodel.cpp",0x808,0,"%s"
                    );
   }
-  if (*(char *)(iVar2 + 5) == '\0') {
+  if (param_1->numRootBones == '\0') {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xmodel.cpp",0x809,0,"%s"
                    );
   }
   while( true ) {
-    if ((uVar3 & 0xff) == uVar1) {
-      iVar2 = __restgprlr_26(1);
-      return iVar2;
+    if (param_2 == uVar1) {
+      return 1;
     }
-    if (uVar1 < *(byte *)(iVar2 + 5)) break;
-    uVar1 = uVar1 - *(byte *)((*(int *)(iVar2 + 0x28) - (uint)*(byte *)(iVar2 + 5)) + (int)uVar1) &
-            0xff;
+    if (uVar1 < param_1->numRootBones) break;
+    uVar1 = uVar1 - param_1->parentList[uVar1 - param_1->numRootBones] & 0xff;
   }
-  iVar2 = __restgprlr_26(0);
-  return iVar2;
+  return 0;
 }
 
 
 // 82632760  XModelGetNextChildBoneIndex  (xanim/xmodel.cpp:2076)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
+
 int XModelGetNextChildBoneIndex(XModel *param_1,uchar param_2,uint param_3,uchar *param_4)
 
 {
-  ulonglong uVar1;
-  XModel *pXVar2;
-  int iVar3;
-  ulonglong uVar4;
-  ulonglong uVar5;
-  byte *pbVar6;
-  ulonglong uVar7;
-  ulonglong uVar8;
+  int iVar1;
+  uint uVar2;
+  uint uVar3;
   
-  uVar7 = (ulonglong)(int)param_4;
-  uVar5 = (ulonglong)(int)param_3;
-  uVar4 = (ulonglong)(char)param_2;
-  pXVar2 = (XModel *)__savegprlr_24(param_1);
-  if ((uVar7 & 0xffffffff) == 0) {
+  if (param_4 == (uchar *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xmodel.cpp",0x820,0,"%s"
                    );
   }
-  pbVar6 = (byte *)uVar7;
-  if ((ulonglong)*pbVar6 < (uVar5 & 0xffffffff)) {
+  if (*param_4 < param_3) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xmodel.cpp",0x821,0,"%s"
                    );
   }
-  uVar7 = (ulonglong)pXVar2->numBones;
-  if (uVar7 <= (uVar4 & 0xff)) {
+  uVar2 = (uint)param_1->numBones;
+  if (uVar2 <= param_2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xmodel.cpp",0x825,0,"%s"
                    );
   }
-  if (0xbf < uVar7) {
+  if (0xbf < uVar2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xmodel.cpp",0x826,0,"%s"
                    );
   }
-  if ((ulonglong)*pbVar6 == 0xfe) {
-    uVar8 = 0;
+  if (*param_4 == 0xfe) {
+    uVar3 = 0;
   }
   else {
-    uVar8 = (*pbVar6 - uVar5) + 1;
-    uVar1 = uVar8 & 0xffffffff;
-    if (uVar1 <= uVar7) goto joined_r0x8263286c;
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xmodel.cpp",0x82d,0,"%s"
-                   );
-  }
-  uVar1 = uVar8 & 0xffffffff;
-joined_r0x8263286c:
-  while( true ) {
-    if (uVar7 <= uVar1) {
-      iVar3 = __restgprlr_24(0);
-      return iVar3;
+    uVar3 = (*param_4 - param_3) + 1;
+    if (uVar2 < uVar3) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xmodel.cpp",0x82d,0,
+                      "%s");
     }
-    iVar3 = XModelHasParentBone(pXVar2,(uchar)uVar4,(uint)uVar8);
-    if (iVar3 != 0) break;
-    uVar8 = uVar8 + 1;
-    uVar1 = uVar8 & 0xffffffff;
   }
-  uVar8 = uVar8 + uVar5;
-  *pbVar6 = (byte)uVar8;
-  if ((uVar8 & 0xff) != (uVar8 & 0xffffffff)) {
+  while( true ) {
+    if (uVar2 <= uVar3) {
+      return 0;
+    }
+    iVar1 = XModelHasParentBone(param_1,param_2,uVar3);
+    if (iVar1 != 0) break;
+    uVar3 = uVar3 + 1;
+  }
+  uVar3 = uVar3 + param_3;
+  *param_4 = (uchar)uVar3;
+  if ((uVar3 & 0xff) != uVar3) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xmodel.cpp",0x834,0,"%s"
                    );
   }
-  iVar3 = __restgprlr_24(1);
-  return iVar3;
+  return 1;
 }
 
 
@@ -2076,6 +2003,8 @@ void XModelWriteInfoHeader(void *param_1)
 
 // 82632950  XModelWriteInfo  (xanim/xmodel.cpp:2125)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "nodeType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
@@ -2086,43 +2015,39 @@ void XModelWriteInfo(XAssetHeader param_1,void *param_2)
 {
   char cVar1;
   void *pvVar2;
-  int *piVar3;
-  int iVar4;
-  char *pcVar5;
-  double dVar6;
+  char *pcVar3;
+  double dVar4;
   char local_1040 [4160];
   
-  piVar3 = (int *)__savegprlr_27(param_1.physPreset);
   if ((_S1 & 1) == 0) {
     _S1 = _S1 | 1;
-    dVar6 = tan(22.5);
-    radius2pixels = 720.0 / (float)dVar6;
+    dVar4 = tan(22.5);
+    radius2pixels = 720.0 / (float)dVar4;
   }
   pvVar2 = *(void **)param_2;
-  if (piVar3 == (int *)0x0) {
+  if (param_1.physPreset == (PhysPreset *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xmodel.cpp",0x85a,0,"%s"
                    );
   }
-  if (*piVar3 == 0) {
+  if ((param_1.physPreset)->name == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xmodel.cpp",0x85b,0,"%s"
                    );
   }
-  if (*(char *)((int)piVar3 + 0xe1) < '\x01') {
+  if ((param_1.model)->numLods < '\x01') {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xmodel.cpp",0x85c,0,"%s"
                    );
   }
-  if ((float)(piVar3 + *(char *)((int)piVar3 + 0xe1) * 10)[6] <= 0.0) {
+  if ((&(param_1.physPreset)->explosiveForceScale)[(param_1.model)->numLods * 10] <= 0.0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xmodel.cpp",0x860,0,"%s"
                    );
   }
   Com_sprintf(local_1040,0x1000,"%s,%.1f,%d,%.1f,%.1f,%.1f\n");
-  pcVar5 = local_1040;
+  pcVar3 = local_1040;
   do {
-    cVar1 = *pcVar5;
-    pcVar5 = pcVar5 + 1;
+    cVar1 = *pcVar3;
+    pcVar3 = pcVar3 + 1;
   } while (cVar1 != '\0');
-  iVar4 = FS_Write(local_1040,(int)(pcVar5 + (-1 - (int)local_1040)),pvVar2);
-  __restgprlr_27(iVar4);
+  FS_Write(local_1040,(int)(pcVar3 + (-1 - (int)local_1040)),pvVar2);
   return;
 }
 

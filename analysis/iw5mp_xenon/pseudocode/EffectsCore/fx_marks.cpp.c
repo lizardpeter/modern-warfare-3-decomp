@@ -2,120 +2,110 @@
 
 // 82431590  FX_MarkToHandle  (EffectsCore/fx_marks.h:159)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 ushort FX_MarkToHandle(FxMarksSystem *param_1,FxMark *param_2)
 
 {
   uint uVar1;
-  int iVar2;
-  ushort uVar3;
-  ulonglong uVar4;
   
-  uVar4 = (ulonglong)(int)param_2;
-  iVar2 = __savegprlr_28(param_1);
-  if (iVar2 == 0) {
+  if (param_1 == (FxMarksSystem *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\fx_marks.h",0xa2,0
                     ,"%s");
   }
-  if ((uVar4 & 0xffffffff) == 0) {
+  if (param_2 == (FxMark *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\fx_marks.h",0xa3,0
                     ,"%s");
   }
-  uVar1 = (int)uVar4 - *(int *)(iVar2 + 0x101c) >> 6 & 0xffff;
-  if (0x1ff < uVar1) {
+  uVar1 = (int)param_2 - (int)param_1->marks >> 6;
+  if (0x1ff < (uVar1 & 0xffff)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\fx_marks.h",0xa6,0
                     ,"handle doesn\'t index FX_MARKS_LIMIT\n\t%i not in [0, %i)");
   }
-  uVar3 = __restgprlr_28(uVar1);
-  return uVar3;
+  return (ushort)uVar1;
 }
 
 
 // 82431640  FX_MarkFromHandle  (EffectsCore/fx_marks.h:172)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 FxMark * FX_MarkFromHandle(FxMarksSystem *param_1,ushort param_2)
 
 {
-  int iVar1;
-  FxMark *pFVar2;
-  ulonglong uVar3;
-  
-  uVar3 = (ulonglong)(short)param_2;
-  iVar1 = __savegprlr_29(param_1);
-  if (0x1ff < (uVar3 & 0xffff)) {
+  if (0x1ff < param_2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\fx_marks.h",0xad,0
                     ,"handle doesn\'t index FX_MARKS_LIMIT\n\t%i not in [0, %i)");
   }
-  if (iVar1 == 0) {
+  if (param_1 == (FxMarksSystem *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\fx_marks.h",0xae,0
                     ,"%s");
   }
-  pFVar2 = (FxMark *)__restgprlr_29((uVar3 & 0xffff) * 0x40 + (ulonglong)*(uint *)(iVar1 + 0x101c));
-  return pFVar2;
+  return param_1->marks + param_2;
 }
 
 
 // 82431830  FX_GetDobjModelGlobalBoneBase  (EffectsCore/fx_marks.cpp:178)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 int FX_GetDobjModelGlobalBoneBase(DObj *param_1,int param_2)
 
 {
-  DObj *pDVar1;
-  int iVar2;
-  XModel *pXVar3;
+  int iVar1;
+  XModel *pXVar2;
+  int iVar3;
   int iVar4;
-  longlong lVar5;
   
-  pDVar1 = (DObj *)__savegprlr_28(param_1);
-  iVar2 = DObjGetNumModels(pDVar1);
-  if (iVar2 <= param_2) {
-    DObjGetName(pDVar1);
-    DObjGetNumModels(pDVar1);
+  iVar1 = DObjGetNumModels(param_1);
+  if (iVar1 <= param_2) {
+    DObjGetName(param_1);
+    DObjGetNumModels(param_1);
     va("modelIndex:%i numModels:%i modelName:%s");
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_marks.cpp",0xb8
                     ,0,"%s\n\t%s");
   }
-  lVar5 = 0;
-  iVar2 = 0;
+  iVar1 = 0;
+  iVar4 = 0;
   if (param_2 != 0) {
     do {
-      pXVar3 = DObjGetModel(pDVar1,iVar2);
-      iVar4 = XModelNumBones(pXVar3);
-      iVar2 = iVar2 + 1;
-      lVar5 = iVar4 + lVar5;
-    } while (iVar2 != param_2);
+      pXVar2 = DObjGetModel(param_1,iVar4);
+      iVar3 = XModelNumBones(pXVar2);
+      iVar4 = iVar4 + 1;
+      iVar1 = iVar3 + iVar1;
+    } while (iVar4 != param_2);
   }
-  iVar2 = __restgprlr_28(lVar5);
-  return iVar2;
+  return iVar1;
 }
 
 
 // 824316C0  FX_TriGroupToHandle  (EffectsCore/fx_marks.h:181)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 ushort FX_TriGroupToHandle(FxMarksSystem *param_1,FxTriGroup *param_2)
 
 {
   uint uVar1;
-  int iVar2;
-  ushort uVar3;
-  ulonglong uVar4;
   
-  uVar4 = (ulonglong)(int)param_2;
-  iVar2 = __savegprlr_28(param_1);
-  if (iVar2 == 0) {
+  if (param_1 == (FxMarksSystem *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\fx_marks.h",0xb9,0
                     ,"%s");
   }
-  if ((uVar4 & 0xffffffff) == 0) {
+  if (param_2 == (FxTriGroup *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\fx_marks.h",0xba,0
                     ,"%s");
   }
-  uVar1 = ((int)uVar4 - *(int *)(iVar2 + 0x1020)) / 0x18 & 0xffff;
-  if (0x7ff < uVar1) {
+  uVar1 = ((int)param_2 - (int)param_1->triGroups) / 0x18;
+  if (0x7ff < (uVar1 & 0xffff)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\fx_marks.h",0xbf,0
                     ,"handle doesn\'t index FX_TRI_GROUP_LIMIT\n\t%i not in [0, %i)");
   }
-  uVar3 = __restgprlr_28(uVar1);
-  return uVar3;
+  return (ushort)uVar1;
 }
 
 
@@ -133,31 +123,28 @@ void TRACK_fx_marks(void)
 
 // 82431778  FX_PointGroupToHandle  (EffectsCore/fx_marks.h:206)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 ushort FX_PointGroupToHandle(FxMarksSystem *param_1,FxPointGroup *param_2)
 
 {
   uint uVar1;
-  int iVar2;
-  ushort uVar3;
-  ulonglong uVar4;
   
-  uVar4 = (ulonglong)(int)param_2;
-  iVar2 = __savegprlr_28(param_1);
-  if (iVar2 == 0) {
+  if (param_1 == (FxMarksSystem *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\fx_marks.h",0xd2,0
                     ,"%s");
   }
-  if ((uVar4 & 0xffffffff) == 0) {
+  if (param_2 == (FxPointGroup *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\fx_marks.h",0xd3,0
                     ,"%s");
   }
-  uVar1 = ((int)uVar4 - *(int *)(iVar2 + 0x1024)) / 0x44 & 0xffff;
-  if (0xbff < uVar1) {
+  uVar1 = ((int)param_2 - (int)param_1->pointGroups) / 0x44;
+  if (0xbff < (uVar1 & 0xffff)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\fx_marks.h",0xd8,0
                     ,"handle doesn\'t index FX_POINT_GROUP_LIMIT\n\t%i not in [0, %i)");
   }
-  uVar3 = __restgprlr_28(uVar1);
-  return uVar3;
+  return (ushort)uVar1;
 }
 
 
@@ -187,584 +174,558 @@ void FX_MarkFreeClientMemory(void)
 
 // 82431978  FX_InitMarksBuffers  (EffectsCore/fx_marks.cpp:232)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void FX_InitMarksBuffers(LocalClientNum_t param_1,FxMarksSystem *param_2)
 
 {
-  int iVar1;
-  uint uVar2;
-  ulonglong uVar3;
-  FxMarksSystemBuffers *pFVar4;
+  FxMarksSystemBuffers *pFVar1;
   
-  uVar3 = (ulonglong)(int)param_2;
-  uVar2 = __savegprlr_28(param_1);
-  if (DAT_83332c10 <= uVar2) {
+  if (DAT_83332c10 <= param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_marks.cpp",0xef
                     ,0,"localClientNum doesn\'t index s_markMaxLocalClients\n\t%i not in [0, %i)");
   }
-  pFVar4 = s_markBuffers + uVar2;
-  if ((uVar3 & 0xffffffff) == 0) {
+  pFVar1 = s_markBuffers + param_1;
+  if (param_2 == (FxMarksSystem *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_marks.cpp",0xf7
                     ,0,"%s");
   }
-  iVar1 = (int)uVar3;
-  *(FxMarksSystemBuffers **)(iVar1 + 0x101c) = pFVar4;
-  *(FxTriGroupPool **)(iVar1 + 0x1020) = pFVar4->triGroupsBuf;
-  *(FxPointGroupPool **)(iVar1 + 0x1024) = pFVar4->pointGroupsBuf;
-  __restgprlr_28();
+  param_2->marks = pFVar1->marksBuf;
+  param_2->triGroups = pFVar1->triGroupsBuf;
+  param_2->pointGroups = pFVar1->pointGroupsBuf;
   return;
 }
 
 
 // 82431A28  FX_InitMarksSystem  (EffectsCore/fx_marks.cpp:255)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void FX_InitMarksSystem(LocalClientNum_t param_1)
 
 {
-  LocalClientNum_t LVar1;
-  FxMarksSystem *pFVar2;
-  ushort uVar3;
-  char *pcVar4;
-  int *piVar5;
-  ushort *puVar6;
-  int iVar7;
+  FxMarksSystem *pFVar1;
+  ushort uVar2;
+  char *pcVar3;
+  int *piVar4;
+  ushort *puVar5;
+  int iVar6;
+  uint uVar7;
   uint uVar8;
-  uint uVar9;
-  longlong lVar10;
+  longlong lVar9;
   
-  LVar1 = __savegprlr_27(param_1);
-  pFVar2 = FX_GetMarksSystem(LVar1);
-  FX_InitMarksBuffers(LVar1,pFVar2);
-  puVar6 = &pFVar2->firstGlassMarkHandle;
-  lVar10 = 0x800;
+  pFVar1 = FX_GetMarksSystem(param_1);
+  FX_InitMarksBuffers(param_1,pFVar1);
+  puVar5 = &pFVar1->firstGlassMarkHandle;
+  lVar9 = 0x800;
   do {
-    puVar6 = puVar6 + 1;
-    *puVar6 = 0xffff;
-    lVar10 = lVar10 + -1;
-  } while (lVar10 != 0);
-  pFVar2->firstViewmodelMarkHandle[0] = 0xffff;
-  pFVar2->firstViewmodelMarkHandle[1] = 0xffff;
-  pFVar2->firstViewmodelMarkHandle[2] = 0xffff;
-  pFVar2->firstViewmodelMarkHandle[3] = 0xffff;
-  *(undefined2 *)&pFVar2->field_0x1012 = 0xffff;
-  uVar3 = FX_MarkToHandle(pFVar2,pFVar2->marks);
-  pFVar2->firstFreeMarkHandle = uVar3;
-  uVar8 = 0;
+    puVar5 = puVar5 + 1;
+    *puVar5 = 0xffff;
+    lVar9 = lVar9 + -1;
+  } while (lVar9 != 0);
+  pFVar1->firstViewmodelMarkHandle[0] = 0xffff;
+  pFVar1->firstViewmodelMarkHandle[1] = 0xffff;
+  pFVar1->firstViewmodelMarkHandle[2] = 0xffff;
+  pFVar1->firstViewmodelMarkHandle[3] = 0xffff;
+  *(undefined2 *)&pFVar1->field_0x1012 = 0xffff;
+  uVar2 = FX_MarkToHandle(pFVar1,pFVar1->marks);
+  pFVar1->firstFreeMarkHandle = uVar2;
+  uVar7 = 0;
   do {
-    *(undefined2 *)((int)pFVar2->marks->origin + (uVar8 - 0xc)) = 0xffff;
-    uVar3 = FX_MarkToHandle(pFVar2,(FxMark *)((int)pFVar2->marks[1].origin + (uVar8 - 0xc)));
-    *(ushort *)((int)pFVar2->marks->origin + (uVar8 - 10)) = uVar3;
-    uVar9 = uVar8 + 0x40;
-    *(undefined4 *)((int)pFVar2->marks->origin + (uVar8 - 8)) = 0xffffffff;
-    uVar8 = uVar9;
-  } while (uVar9 < 0x7fc0);
-  iVar7 = 0;
-  pFVar2->marks[0x1ff].prevMark = 0xffff;
-  lVar10 = 0x7ff;
-  pFVar2->marks[0x1ff].nextMark = 0xffff;
-  pFVar2->marks[0x1ff].timeDrawn = -1;
-  pFVar2->firstFreeTriGroup = pFVar2->triGroups;
+    *(undefined2 *)((int)pFVar1->marks->origin + (uVar7 - 0xc)) = 0xffff;
+    uVar2 = FX_MarkToHandle(pFVar1,(FxMark *)((int)pFVar1->marks[1].origin + (uVar7 - 0xc)));
+    *(ushort *)((int)pFVar1->marks->origin + (uVar7 - 10)) = uVar2;
+    uVar8 = uVar7 + 0x40;
+    *(undefined4 *)((int)pFVar1->marks->origin + (uVar7 - 8)) = 0xffffffff;
+    uVar7 = uVar8;
+  } while (uVar8 < 0x7fc0);
+  iVar6 = 0;
+  pFVar1->marks[0x1ff].prevMark = 0xffff;
+  lVar9 = 0x7ff;
+  pFVar1->marks[0x1ff].nextMark = 0xffff;
+  pFVar1->marks[0x1ff].timeDrawn = -1;
+  pFVar1->firstFreeTriGroup = pFVar1->triGroups;
   do {
-    pcVar4 = pFVar2->triGroups->_padding_ + iVar7;
-    iVar7 = iVar7 + 0x18;
-    *(char **)pcVar4 = pcVar4 + 0x18;
-    lVar10 = lVar10 + -1;
-  } while (lVar10 != 0);
-  iVar7 = 0;
-  lVar10 = 0xbff;
-  pFVar2->triGroups[0x7ff].nextFreeTriGroup = (FxTriGroupPool *)0x0;
-  pFVar2->firstFreePointGroup = pFVar2->pointGroups;
+    pcVar3 = pFVar1->triGroups->_padding_ + iVar6;
+    iVar6 = iVar6 + 0x18;
+    *(char **)pcVar3 = pcVar3 + 0x18;
+    lVar9 = lVar9 + -1;
+  } while (lVar9 != 0);
+  iVar6 = 0;
+  lVar9 = 0xbff;
+  pFVar1->triGroups[0x7ff].nextFreeTriGroup = (FxTriGroupPool *)0x0;
+  pFVar1->firstFreePointGroup = pFVar1->pointGroups;
   do {
-    piVar5 = (int *)(iVar7 + (int)pFVar2->pointGroups);
-    iVar7 = iVar7 + 0x44;
-    *piVar5 = (int)(piVar5 + 0x11);
-    lVar10 = lVar10 + -1;
-  } while (lVar10 != 0);
-  iVar7 = 0;
-  lVar10 = 5;
-  pFVar2->pointGroups[0xbff].pointGroup.points[0].xyz[0] = 0.0;
-  pFVar2->firstGlassMarkHandle = 0xffff;
-  pFVar2->firstActiveWorldMarkHandle = 0xffff;
+    piVar4 = (int *)(iVar6 + (int)pFVar1->pointGroups);
+    iVar6 = iVar6 + 0x44;
+    *piVar4 = (int)(piVar4 + 0x11);
+    lVar9 = lVar9 + -1;
+  } while (lVar9 != 0);
+  iVar6 = 0;
+  lVar9 = 5;
+  pFVar1->pointGroups[0xbff].pointGroup.points[0].xyz[0] = 0.0;
+  pFVar1->firstGlassMarkHandle = 0xffff;
+  pFVar1->firstActiveWorldMarkHandle = 0xffff;
   do {
-    pFVar2->viewmodelMarksCount[iVar7] = '\0';
-    iVar7 = iVar7 + 1;
-    lVar10 = lVar10 + -1;
-  } while (lVar10 != 0);
-  pFVar2->allocedMarkCount = 0;
-  pFVar2->freedMarkCount = 0;
-  pFVar2->time = 1;
-  __restgprlr_27();
+    pFVar1->viewmodelMarksCount[iVar6] = '\0';
+    iVar6 = iVar6 + 1;
+    lVar9 = lVar9 + -1;
+  } while (lVar9 != 0);
+  pFVar1->allocedMarkCount = 0;
+  pFVar1->freedMarkCount = 0;
+  pFVar1->time = 1;
   return;
 }
 
 
 // 82431BB8  FX_ClearMarks  (EffectsCore/fx_marks.cpp:310)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* void __cdecl FX_ClearMarks(enum LocalClientNum_t) */
 
 void FX_ClearMarks(LocalClientNum_t param_1)
 
 {
-  LocalClientNum_t LVar1;
-  FxMarksSystem *pFVar2;
-  ushort uVar3;
-  char *pcVar4;
-  int *piVar5;
-  ushort *puVar6;
-  int iVar7;
+  FxMarksSystem *pFVar1;
+  ushort uVar2;
+  char *pcVar3;
+  int *piVar4;
+  ushort *puVar5;
+  int iVar6;
+  uint uVar7;
   uint uVar8;
-  uint uVar9;
-  longlong lVar10;
+  longlong lVar9;
   
-  LVar1 = __savegprlr_27(param_1);
-  pFVar2 = FX_GetMarksSystem(LVar1);
-  FX_InitMarksBuffers(LVar1,pFVar2);
-  puVar6 = &pFVar2->firstGlassMarkHandle;
-  lVar10 = 0x800;
+  pFVar1 = FX_GetMarksSystem(param_1);
+  FX_InitMarksBuffers(param_1,pFVar1);
+  puVar5 = &pFVar1->firstGlassMarkHandle;
+  lVar9 = 0x800;
   do {
-    puVar6 = puVar6 + 1;
-    *puVar6 = 0xffff;
-    lVar10 = lVar10 + -1;
-  } while (lVar10 != 0);
-  pFVar2->firstViewmodelMarkHandle[0] = 0xffff;
-  pFVar2->firstViewmodelMarkHandle[1] = 0xffff;
-  pFVar2->firstViewmodelMarkHandle[2] = 0xffff;
-  pFVar2->firstViewmodelMarkHandle[3] = 0xffff;
-  *(undefined2 *)&pFVar2->field_0x1012 = 0xffff;
-  uVar3 = FX_MarkToHandle(pFVar2,pFVar2->marks);
-  pFVar2->firstFreeMarkHandle = uVar3;
-  uVar8 = 0;
+    puVar5 = puVar5 + 1;
+    *puVar5 = 0xffff;
+    lVar9 = lVar9 + -1;
+  } while (lVar9 != 0);
+  pFVar1->firstViewmodelMarkHandle[0] = 0xffff;
+  pFVar1->firstViewmodelMarkHandle[1] = 0xffff;
+  pFVar1->firstViewmodelMarkHandle[2] = 0xffff;
+  pFVar1->firstViewmodelMarkHandle[3] = 0xffff;
+  *(undefined2 *)&pFVar1->field_0x1012 = 0xffff;
+  uVar2 = FX_MarkToHandle(pFVar1,pFVar1->marks);
+  pFVar1->firstFreeMarkHandle = uVar2;
+  uVar7 = 0;
   do {
-    *(undefined2 *)((int)pFVar2->marks->origin + (uVar8 - 0xc)) = 0xffff;
-    uVar3 = FX_MarkToHandle(pFVar2,(FxMark *)((int)pFVar2->marks[1].origin + (uVar8 - 0xc)));
-    *(ushort *)((int)pFVar2->marks->origin + (uVar8 - 10)) = uVar3;
-    uVar9 = uVar8 + 0x40;
-    *(undefined4 *)((int)pFVar2->marks->origin + (uVar8 - 8)) = 0xffffffff;
-    uVar8 = uVar9;
-  } while (uVar9 < 0x7fc0);
-  iVar7 = 0;
-  pFVar2->marks[0x1ff].prevMark = 0xffff;
-  lVar10 = 0x7ff;
-  pFVar2->marks[0x1ff].nextMark = 0xffff;
-  pFVar2->marks[0x1ff].timeDrawn = -1;
-  pFVar2->firstFreeTriGroup = pFVar2->triGroups;
+    *(undefined2 *)((int)pFVar1->marks->origin + (uVar7 - 0xc)) = 0xffff;
+    uVar2 = FX_MarkToHandle(pFVar1,(FxMark *)((int)pFVar1->marks[1].origin + (uVar7 - 0xc)));
+    *(ushort *)((int)pFVar1->marks->origin + (uVar7 - 10)) = uVar2;
+    uVar8 = uVar7 + 0x40;
+    *(undefined4 *)((int)pFVar1->marks->origin + (uVar7 - 8)) = 0xffffffff;
+    uVar7 = uVar8;
+  } while (uVar8 < 0x7fc0);
+  iVar6 = 0;
+  pFVar1->marks[0x1ff].prevMark = 0xffff;
+  lVar9 = 0x7ff;
+  pFVar1->marks[0x1ff].nextMark = 0xffff;
+  pFVar1->marks[0x1ff].timeDrawn = -1;
+  pFVar1->firstFreeTriGroup = pFVar1->triGroups;
   do {
-    pcVar4 = pFVar2->triGroups->_padding_ + iVar7;
-    iVar7 = iVar7 + 0x18;
-    *(char **)pcVar4 = pcVar4 + 0x18;
-    lVar10 = lVar10 + -1;
-  } while (lVar10 != 0);
-  iVar7 = 0;
-  lVar10 = 0xbff;
-  pFVar2->triGroups[0x7ff].nextFreeTriGroup = (FxTriGroupPool *)0x0;
-  pFVar2->firstFreePointGroup = pFVar2->pointGroups;
+    pcVar3 = pFVar1->triGroups->_padding_ + iVar6;
+    iVar6 = iVar6 + 0x18;
+    *(char **)pcVar3 = pcVar3 + 0x18;
+    lVar9 = lVar9 + -1;
+  } while (lVar9 != 0);
+  iVar6 = 0;
+  lVar9 = 0xbff;
+  pFVar1->triGroups[0x7ff].nextFreeTriGroup = (FxTriGroupPool *)0x0;
+  pFVar1->firstFreePointGroup = pFVar1->pointGroups;
   do {
-    piVar5 = (int *)(iVar7 + (int)pFVar2->pointGroups);
-    iVar7 = iVar7 + 0x44;
-    *piVar5 = (int)(piVar5 + 0x11);
-    lVar10 = lVar10 + -1;
-  } while (lVar10 != 0);
-  iVar7 = 0;
-  lVar10 = 5;
-  pFVar2->pointGroups[0xbff].pointGroup.points[0].xyz[0] = 0.0;
-  pFVar2->firstGlassMarkHandle = 0xffff;
-  pFVar2->firstActiveWorldMarkHandle = 0xffff;
+    piVar4 = (int *)(iVar6 + (int)pFVar1->pointGroups);
+    iVar6 = iVar6 + 0x44;
+    *piVar4 = (int)(piVar4 + 0x11);
+    lVar9 = lVar9 + -1;
+  } while (lVar9 != 0);
+  iVar6 = 0;
+  lVar9 = 5;
+  pFVar1->pointGroups[0xbff].pointGroup.points[0].xyz[0] = 0.0;
+  pFVar1->firstGlassMarkHandle = 0xffff;
+  pFVar1->firstActiveWorldMarkHandle = 0xffff;
   do {
-    pFVar2->viewmodelMarksCount[iVar7] = '\0';
-    iVar7 = iVar7 + 1;
-    lVar10 = lVar10 + -1;
-  } while (lVar10 != 0);
-  pFVar2->allocedMarkCount = 0;
-  pFVar2->freedMarkCount = 0;
-  pFVar2->time = 1;
-  __restgprlr_27();
+    pFVar1->viewmodelMarksCount[iVar6] = '\0';
+    iVar6 = iVar6 + 1;
+    lVar9 = lVar9 + -1;
+  } while (lVar9 != 0);
+  pFVar1->allocedMarkCount = 0;
+  pFVar1->freedMarkCount = 0;
+  pFVar1->time = 1;
   return;
 }
 
 
 // 82431BC0  FX_FreeMarkTriGroups  (EffectsCore/fx_marks.cpp:336)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 void FX_FreeMarkTriGroups(FxMarksSystem *param_1,ushort param_2)
 
 {
-  undefined4 *puVar1;
-  int iVar2;
-  ulonglong uVar3;
+  FxTriGroupPool *pFVar1;
+  uint uVar2;
   
-  uVar3 = (ulonglong)(short)param_2;
-  iVar2 = __savegprlr_26(param_1);
-  uVar3 = uVar3 & 0xffff;
+  uVar2 = (uint)param_2;
   do {
-    if (0x7ff < uVar3) {
+    if (0x7ff < uVar2) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\fx_marks.h",0xc6
                       ,0,"handle doesn\'t index FX_TRI_GROUP_LIMIT\n\t%i not in [0, %i)");
     }
-    if (iVar2 == 0) {
+    if (param_1 == (FxMarksSystem *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\fx_marks.h",199,
                       0,"%s");
     }
-    puVar1 = (undefined4 *)((int)uVar3 * 0x18 + *(int *)(iVar2 + 0x1020));
-    uVar3 = (ulonglong)*(ushort *)(puVar1 + 5);
-    *puVar1 = *(undefined4 *)(iVar2 + 0x1014);
-    *(undefined4 **)(iVar2 + 0x1014) = puVar1;
-  } while (uVar3 != 0xffff);
-  __restgprlr_26();
+    pFVar1 = param_1->triGroups + uVar2;
+    uVar2 = (uint)(pFVar1->triGroup).next;
+    pFVar1->nextFreeTriGroup = param_1->firstFreeTriGroup;
+    param_1->firstFreeTriGroup = pFVar1;
+  } while (uVar2 != 0xffff);
   return;
 }
 
 
 // 82431C70  FX_FreeMarkPointGroups  (EffectsCore/fx_marks.cpp:354)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 void FX_FreeMarkPointGroups(FxMarksSystem *param_1,ushort param_2)
 
 {
-  undefined4 *puVar1;
-  int iVar2;
-  ulonglong uVar3;
+  uint uVar1;
+  FxPointGroupPool *pFVar2;
   
-  uVar3 = (ulonglong)(short)param_2;
-  iVar2 = __savegprlr_26(param_1);
-  uVar3 = uVar3 & 0xffff;
+  uVar1 = (uint)param_2;
   do {
-    if (0xbff < uVar3) {
+    if (0xbff < uVar1) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\fx_marks.h",0xdf
                       ,0,"handle doesn\'t index FX_POINT_GROUP_LIMIT\n\t%i not in [0, %i)");
     }
-    if (iVar2 == 0) {
+    if (param_1 == (FxMarksSystem *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\fx_marks.h",0xe0
                       ,0,"%s");
     }
-    puVar1 = (undefined4 *)((int)uVar3 * 0x44 + *(int *)(iVar2 + 0x1024));
-    uVar3 = (ulonglong)*(ushort *)(puVar1 + 0x10);
-    *puVar1 = *(undefined4 *)(iVar2 + 0x1018);
-    *(undefined4 **)(iVar2 + 0x1018) = puVar1;
-  } while (uVar3 != 0xffff);
-  __restgprlr_26();
+    pFVar2 = param_1->pointGroups + uVar1;
+    uVar1 = (uint)(pFVar2->pointGroup).next;
+    (pFVar2->pointGroup).points[0].xyz[0] = (float)param_1->firstFreePointGroup;
+    param_1->firstFreePointGroup = pFVar2;
+  } while (uVar1 != 0xffff);
   return;
 }
 
 
 // 82431D18  FX_FreeMarkFromList  (EffectsCore/fx_marks.cpp:373)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void FX_FreeMarkFromList(FxMarksSystem *param_1,FxMark *param_2,ushort *param_3)
 
 {
-  FxMarksSystem *pFVar1;
-  ushort uVar3;
-  FxMark *pFVar2;
-  ulonglong uVar4;
+  ushort uVar2;
+  FxMark *pFVar1;
   
-  uVar4 = (ulonglong)(int)param_3;
-  pFVar1 = (FxMarksSystem *)__savegprlr_28(param_1);
-  uVar3 = FX_MarkToHandle(pFVar1,param_2);
-  FX_FreeMarkTriGroups(pFVar1,param_2->tris);
-  FX_FreeMarkPointGroups(pFVar1,param_2->points);
+  uVar2 = FX_MarkToHandle(param_1,param_2);
+  FX_FreeMarkTriGroups(param_1,param_2->tris);
+  FX_FreeMarkPointGroups(param_1,param_2->points);
   if (param_2->nextMark != 0xffff) {
-    pFVar2 = FX_MarkFromHandle(pFVar1,param_2->nextMark);
-    pFVar2->prevMark = param_2->prevMark;
+    pFVar1 = FX_MarkFromHandle(param_1,param_2->nextMark);
+    pFVar1->prevMark = param_2->prevMark;
   }
   if (param_2->prevMark == 0xffff) {
-    if ((uVar4 & 0xffffffff) != 0) {
-      if (*(ushort *)uVar4 != uVar3) {
+    if (param_3 != (ushort *)0x0) {
+      if (*param_3 != uVar2) {
         va("%i %i");
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_marks.cpp",
                         0x185,0,"%s\n\t%s");
       }
-      *(ushort *)uVar4 = param_2->nextMark;
+      *param_3 = param_2->nextMark;
     }
   }
   else {
-    pFVar2 = FX_MarkFromHandle(pFVar1,param_2->prevMark);
-    pFVar2->nextMark = param_2->nextMark;
+    pFVar1 = FX_MarkFromHandle(param_1,param_2->prevMark);
+    pFVar1->nextMark = param_2->nextMark;
   }
   param_2->timeDrawn = -1;
-  param_2->nextMark = pFVar1->firstFreeMarkHandle;
-  pFVar1->firstFreeMarkHandle = uVar3;
-  __restgprlr_28();
+  param_2->nextMark = param_1->firstFreeMarkHandle;
+  param_1->firstFreeMarkHandle = uVar2;
   return;
 }
 
 
 // 82431E00  FX_FreeMark  (EffectsCore/fx_marks.cpp:400)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void FX_FreeMark(FxMarksSystem *param_1,FxMark *param_2)
 
 {
   byte bVar1;
-  FxMarksSystem *pFVar2;
-  bool bVar5;
-  int iVar3;
-  ushort uVar4;
-  longlong lVar6;
-  FxMark *pFVar7;
-  GfxMarkContext *pGVar8;
+  bool bVar4;
+  int iVar2;
+  ushort uVar3;
+  GfxMarkContext *pGVar5;
   
-  lVar6 = (longlong)(int)param_2;
-  pFVar2 = (FxMarksSystem *)__savegprlr_28(param_1);
-  if (lVar6 + 0x30 == 0) {
+  pGVar5 = &param_2->context;
+  if (pGVar5 == (GfxMarkContext *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\../renderer/tr_types.h"
                     ,0x3b2,0,"%s");
   }
-  pGVar8 = (GfxMarkContext *)(lVar6 + 0x30);
-  bVar1 = pGVar8->modelType;
+  bVar1 = pGVar5->modelType;
   if (4 < bVar1) {
     if (alwaysfails == 0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_marks.cpp",
                       0x1b7,0,"Unhandled case.\n");
     }
-    pFVar2->freedMarkCount = pFVar2->freedMarkCount + 1;
-    __restgprlr_28();
+    param_1->freedMarkCount = param_1->freedMarkCount + 1;
     return;
   }
-  pFVar7 = (FxMark *)lVar6;
   if (bVar1 == 1) {
-    FX_FreeMarkFromList(pFVar2,pFVar7,(ushort *)0x0);
-    pFVar2->freedMarkCount = pFVar2->freedMarkCount + 1;
-    __restgprlr_28();
+    FX_FreeMarkFromList(param_1,param_2,(ushort *)0x0);
+    param_1->freedMarkCount = param_1->freedMarkCount + 1;
     return;
   }
   if (bVar1 != 2) {
     if (bVar1 != 3) {
       if (bVar1 != 0) {
-        FX_FreeMarkFromList(pFVar2,pFVar7,&pFVar2->firstGlassMarkHandle);
-        pFVar2->freedMarkCount = pFVar2->freedMarkCount + 1;
-        __restgprlr_28();
+        FX_FreeMarkFromList(param_1,param_2,&param_1->firstGlassMarkHandle);
+        param_1->freedMarkCount = param_1->freedMarkCount + 1;
         return;
       }
-      FX_FreeMarkFromList(pFVar2,pFVar7,&pFVar2->firstActiveWorldMarkHandle);
-      pFVar2->freedMarkCount = pFVar2->freedMarkCount + 1;
-      __restgprlr_28();
+      FX_FreeMarkFromList(param_1,param_2,&param_1->firstActiveWorldMarkHandle);
+      param_1->freedMarkCount = param_1->freedMarkCount + 1;
       return;
     }
-    bVar5 = FX_GetMarkContext_DObjIsViewmodel(pGVar8);
-    if (bVar5) {
-      iVar3 = FX_GetMarkContext_ViewmodelClientIndex(pGVar8);
-      FX_FreeMarkFromList(pFVar2,pFVar7,pFVar2->firstViewmodelMarkHandle + iVar3);
-      if (pFVar2->viewmodelMarksCount[iVar3] == '\0') {
+    bVar4 = FX_GetMarkContext_DObjIsViewmodel(pGVar5);
+    if (bVar4) {
+      iVar2 = FX_GetMarkContext_ViewmodelClientIndex(pGVar5);
+      FX_FreeMarkFromList(param_1,param_2,param_1->firstViewmodelMarkHandle + iVar2);
+      if (param_1->viewmodelMarksCount[iVar2] == '\0') {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_marks.cpp",
                         0x19f,0,"%s");
       }
-      pFVar2->viewmodelMarksCount[iVar3] = pFVar2->viewmodelMarksCount[iVar3] + 0xff;
-      pFVar2->freedMarkCount = pFVar2->freedMarkCount + 1;
-      __restgprlr_28();
+      param_1->viewmodelMarksCount[iVar2] = param_1->viewmodelMarksCount[iVar2] + 0xff;
+      param_1->freedMarkCount = param_1->freedMarkCount + 1;
       return;
     }
   }
-  uVar4 = FX_GetMarkContext_EntNum(pGVar8);
-  FX_FreeMarkFromList(pFVar2,pFVar7,pFVar2->entFirstMarkHandles + uVar4);
-  pFVar2->freedMarkCount = pFVar2->freedMarkCount + 1;
-  __restgprlr_28();
+  uVar3 = FX_GetMarkContext_EntNum(pGVar5);
+  FX_FreeMarkFromList(param_1,param_2,param_1->entFirstMarkHandles + uVar3);
+  param_1->freedMarkCount = param_1->freedMarkCount + 1;
   return;
 }
 
 
 // 82431FD8  FX_FreeRewoundMarks  (EffectsCore/fx_marks.cpp:447)
 
+/* WARNING: Function: __savegprlr_19 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_19 replaced with injection: xenon_save_restore */
+
 void FX_FreeRewoundMarks(FxMarksSystem *param_1,int param_2)
 
 {
   byte bVar1;
-  FxMarksSystem *pFVar2;
-  bool bVar5;
-  int iVar3;
-  ushort uVar4;
-  FxMark *pFVar6;
-  GfxMarkContext *pGVar7;
-  FxMark *pFVar8;
+  bool bVar4;
+  int iVar2;
+  ushort uVar3;
+  FxMark *pFVar5;
+  GfxMarkContext *pGVar6;
+  FxMark *pFVar7;
   
-  pFVar2 = (FxMarksSystem *)__savegprlr_19(param_1);
-  if (pFVar2 == (FxMarksSystem *)0x0) {
+  if (param_1 == (FxMarksSystem *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_marks.cpp",
                     0x1c3,0,"%s");
   }
-  pFVar8 = pFVar2->marks;
-  pFVar6 = pFVar8 + 0x200;
-  if (pFVar8 != pFVar8 + 0x200) {
-    pGVar7 = &pFVar8->context;
+  pFVar7 = param_1->marks;
+  pFVar5 = pFVar7 + 0x200;
+  if (pFVar7 != pFVar7 + 0x200) {
+    pGVar6 = &pFVar7->context;
     do {
-      if ((*(int *)&pGVar7[-7].primaryLightIndex != -1) &&
-         (iVar3._0_2_ = pGVar7[-0xffffffff00000006].typeSpecificIndex,
-         iVar3._2_1_ = pGVar7[-0xffffffff00000006].field3_0x4,
-         iVar3._3_1_ = pGVar7[-0xffffffff00000006].primaryLightIndex, param_2 <= iVar3)) {
-        if (pGVar7 == (GfxMarkContext *)0x0) {
+      if ((*(int *)&pGVar6[-7].primaryLightIndex != -1) &&
+         (iVar2._0_2_ = pGVar6[-0xffffffff00000006].typeSpecificIndex,
+         iVar2._2_1_ = pGVar6[-0xffffffff00000006].field3_0x4,
+         iVar2._3_1_ = pGVar6[-0xffffffff00000006].primaryLightIndex, param_2 <= iVar2)) {
+        if (pGVar6 == (GfxMarkContext *)0x0) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\../renderer/tr_types.h"
                           ,0x3b2,0,"%s");
         }
-        bVar1 = pGVar7->modelType;
+        bVar1 = pGVar6->modelType;
         if (bVar1 < 5) {
           if (bVar1 == 1) {
-            FX_FreeMarkFromList(pFVar2,pFVar8,(ushort *)0x0);
+            FX_FreeMarkFromList(param_1,pFVar7,(ushort *)0x0);
           }
           else if (bVar1 == 2) {
 LAB_82432144:
-            uVar4 = FX_GetMarkContext_EntNum(pGVar7);
-            FX_FreeMarkFromList(pFVar2,pFVar8,pFVar2->entFirstMarkHandles + uVar4);
+            uVar3 = FX_GetMarkContext_EntNum(pGVar6);
+            FX_FreeMarkFromList(param_1,pFVar7,param_1->entFirstMarkHandles + uVar3);
           }
           else if (bVar1 == 3) {
-            bVar5 = FX_GetMarkContext_DObjIsViewmodel(pGVar7);
-            if (!bVar5) goto LAB_82432144;
-            iVar3 = FX_GetMarkContext_ViewmodelClientIndex(pGVar7);
-            FX_FreeMarkFromList(pFVar2,pFVar8,pFVar2->firstViewmodelMarkHandle + iVar3);
-            if (pFVar2->viewmodelMarksCount[iVar3] == '\0') {
+            bVar4 = FX_GetMarkContext_DObjIsViewmodel(pGVar6);
+            if (!bVar4) goto LAB_82432144;
+            iVar2 = FX_GetMarkContext_ViewmodelClientIndex(pGVar6);
+            FX_FreeMarkFromList(param_1,pFVar7,param_1->firstViewmodelMarkHandle + iVar2);
+            if (param_1->viewmodelMarksCount[iVar2] == '\0') {
               MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_marks.cpp"
                               ,0x19f,0,"%s");
             }
-            pFVar2->viewmodelMarksCount[iVar3] = pFVar2->viewmodelMarksCount[iVar3] + 0xff;
+            param_1->viewmodelMarksCount[iVar2] = param_1->viewmodelMarksCount[iVar2] + 0xff;
           }
           else if (bVar1 == 0) {
-            FX_FreeMarkFromList(pFVar2,pFVar8,&pFVar2->firstActiveWorldMarkHandle);
+            FX_FreeMarkFromList(param_1,pFVar7,&param_1->firstActiveWorldMarkHandle);
           }
           else {
-            FX_FreeMarkFromList(pFVar2,pFVar8,&pFVar2->firstGlassMarkHandle);
+            FX_FreeMarkFromList(param_1,pFVar7,&param_1->firstGlassMarkHandle);
           }
         }
         else if (alwaysfails == 0) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_marks.cpp"
                           ,0x1b7,0,"Unhandled case.\n");
         }
-        pFVar2->freedMarkCount = pFVar2->freedMarkCount + 1;
+        param_1->freedMarkCount = param_1->freedMarkCount + 1;
       }
-      pFVar8 = pFVar8 + 1;
-      pGVar7 = (GfxMarkContext *)&pGVar7[9].field1_0x1;
-    } while (pFVar8 != pFVar6);
+      pFVar7 = pFVar7 + 1;
+      pGVar6 = (GfxMarkContext *)&pGVar6[9].field1_0x1;
+    } while (pFVar7 != pFVar5);
   }
-  __restgprlr_19();
   return;
 }
 
 
 // 824321D8  FX_FreeLruMark  (EffectsCore/fx_marks.cpp:464)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
+
 void FX_FreeLruMark(FxMarksSystem *param_1)
 
 {
   FxMark *pFVar1;
-  FxMarksSystem *pFVar2;
-  bool bVar4;
-  int iVar3;
-  GfxMarkContext *pGVar5;
-  FxMark *pFVar6;
-  FxMark *pFVar7;
+  bool bVar2;
+  GfxMarkContext *pGVar3;
+  FxMark *pFVar4;
+  FxMark *pFVar5;
   
-  pFVar2 = (FxMarksSystem *)__savegprlr_23(param_1);
   Profile_Begin(0xc3);
-  if (pFVar2 == (FxMarksSystem *)0x0) {
+  if (param_1 == (FxMarksSystem *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_marks.cpp",
                     0x1d8,0,"%s");
   }
-  pFVar1 = pFVar2->marks;
-  pFVar6 = (FxMark *)0x0;
-  pFVar7 = pFVar1;
+  pFVar1 = param_1->marks;
+  pFVar4 = (FxMark *)0x0;
+  pFVar5 = pFVar1;
   if (pFVar1 != pFVar1 + 0x200) {
     do {
-      if (pFVar7->timeDrawn != -1) {
-        pGVar5 = &pFVar7->context;
-        if (pGVar5 == (GfxMarkContext *)0x0) {
+      if (pFVar5->timeDrawn != -1) {
+        pGVar3 = &pFVar5->context;
+        if (pGVar3 == (GfxMarkContext *)0x0) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\../renderer/tr_types.h"
                           ,0x3b2,0,"%s");
         }
-        if (((pGVar5->modelType != '\x03') ||
-            (bVar4 = FX_GetMarkContext_DObjIsViewmodel(pGVar5), !bVar4)) &&
-           (((pFVar6 == (FxMark *)0x0 || (pFVar7->timeDrawn < pFVar6->timeDrawn)) ||
-            ((pFVar7->timeDrawn == pFVar6->timeDrawn && (pFVar7->timeAlloced < pFVar6->timeAlloced))
+        if (((pGVar3->modelType != '\x03') ||
+            (bVar2 = FX_GetMarkContext_DObjIsViewmodel(pGVar3), !bVar2)) &&
+           (((pFVar4 == (FxMark *)0x0 || (pFVar5->timeDrawn < pFVar4->timeDrawn)) ||
+            ((pFVar5->timeDrawn == pFVar4->timeDrawn && (pFVar5->timeAlloced < pFVar4->timeAlloced))
             )))) {
-          pFVar6 = pFVar7;
+          pFVar4 = pFVar5;
         }
       }
-      pFVar7 = pFVar7 + 1;
-    } while (pFVar7 != pFVar1 + 0x200);
-    if (pFVar6 != (FxMark *)0x0) {
-      FX_FreeMark(pFVar2,pFVar6);
-      iVar3 = Profile_EndInternal((double *)0x0);
-      __restgprlr_23(iVar3);
+      pFVar5 = pFVar5 + 1;
+    } while (pFVar5 != pFVar1 + 0x200);
+    if (pFVar4 != (FxMark *)0x0) {
+      FX_FreeMark(param_1,pFVar4);
+      Profile_EndInternal((double *)0x0);
       return;
     }
   }
-  pFVar7 = pFVar2->marks;
-  if (pFVar7 != pFVar1 + 0x200) {
+  pFVar5 = param_1->marks;
+  if (pFVar5 != pFVar1 + 0x200) {
     do {
-      if (pFVar7->timeDrawn != -1) {
-        if (pFVar7 == (FxMark *)0xffffffd0) {
+      if (pFVar5->timeDrawn != -1) {
+        if (pFVar5 == (FxMark *)0xffffffd0) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\../renderer/tr_types.h"
                           ,0x3b2,0,"%s");
         }
-        if ((pFVar7->context).modelType == '\x03') {
-          FX_GetMarkContext_DObjIsViewmodel(&pFVar7->context);
+        if ((pFVar5->context).modelType == '\x03') {
+          FX_GetMarkContext_DObjIsViewmodel(&pFVar5->context);
         }
       }
-      pFVar7 = pFVar7 + 1;
-    } while (pFVar7 != pFVar1 + 0x200);
+      pFVar5 = pFVar5 + 1;
+    } while (pFVar5 != pFVar1 + 0x200);
   }
   Com_PrintError(1,
                  "No freeable marks: freePointGroup 0x%x firstFreeTriGroup 0x%x firstFreeMarkHandle 0x%x.  freedMarkCount = %d freeCount = %d viewModelCount = %d otherCount = %d\n"
                 );
-  iVar3 = Profile_EndInternal((double *)0x0);
-  __restgprlr_23(iVar3);
+  Profile_EndInternal((double *)0x0);
   return;
 }
 
 
 // 824323B8  FX_AllocMarkTris  (EffectsCore/fx_marks.cpp:521)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 ushort FX_AllocMarkTris(FxMarksSystem *param_1,FxMarkTri *param_2,int param_3)
 
 {
-  FxMarksSystem *pFVar1;
-  ushort uVar2;
-  FxTriGroupPool *pFVar3;
-  longlong lVar4;
-  longlong lVar5;
-  longlong lVar6;
-  ulonglong uVar7;
-  longlong lVar8;
-  longlong lVar9;
+  byte bVar1;
+  byte bVar2;
+  ushort uVar3;
+  FxTriGroupPool *pFVar4;
+  <unnamed_type_typeSpecificIndex> *p<Var5;
+  <unnamed_type_typeSpecificIndex> *p<Var6;
+  int iVar7;
   
-  lVar9 = (longlong)param_3;
-  lVar8 = (longlong)(int)param_2;
-  pFVar1 = (FxMarksSystem *)__savegprlr_28(param_1);
-  uVar7 = 0xffffffffffffffff;
+  uVar3 = 0xffff;
   do {
-    pFVar3 = pFVar1->firstFreeTriGroup;
-    if (pFVar3 == (FxTriGroupPool *)0x0) {
-      FX_FreeLruMark(pFVar1);
-      pFVar3 = pFVar1->firstFreeTriGroup;
-      if (pFVar3 == (FxTriGroupPool *)0x0) {
-        if ((uVar7 & 0xffff) != 0xffff) {
-          FX_FreeMarkTriGroups(pFVar1,(ushort)uVar7);
+    pFVar4 = param_1->firstFreeTriGroup;
+    if (pFVar4 == (FxTriGroupPool *)0x0) {
+      FX_FreeLruMark(param_1);
+      pFVar4 = param_1->firstFreeTriGroup;
+      if (pFVar4 == (FxTriGroupPool *)0x0) {
+        if (uVar3 != 0xffff) {
+          FX_FreeMarkTriGroups(param_1,uVar3);
         }
-        uVar2 = __restgprlr_28(0xffffffffffffffff);
-        return uVar2;
+        return 0xffff;
       }
     }
-    pFVar1->firstFreeTriGroup = pFVar3->nextFreeTriGroup;
-    (pFVar3->triGroup).next = (ushort)uVar7;
-    uVar2 = FX_TriGroupToHandle(pFVar1,&pFVar3->triGroup);
-    uVar7 = (ulonglong)(short)uVar2;
-    if ((int)lVar9 < 2) {
+    param_1->firstFreeTriGroup = pFVar4->nextFreeTriGroup;
+    (pFVar4->triGroup).next = uVar3;
+    uVar3 = FX_TriGroupToHandle(param_1,&pFVar4->triGroup);
+    if (param_3 < 2) {
 LAB_8243244c:
-      lVar5 = 1;
+      iVar7 = 1;
     }
     else {
-      lVar6 = lVar8 + 6;
-      lVar5 = lVar8 + 0x14;
+      p<Var6 = (<unnamed_type_typeSpecificIndex> *)&param_2->context;
+      p<Var5 = (<unnamed_type_typeSpecificIndex> *)&param_2[1].context;
       do {
-        lVar4 = (ulonglong)*(byte *)lVar6 - (ulonglong)*(byte *)lVar5;
-        if (lVar4 != 0) break;
-        lVar6 = lVar6 + 1;
-        lVar5 = lVar5 + 1;
-      } while ((int)lVar6 != (int)lVar8 + 0xd);
-      lVar5 = 2;
-      if ((int)lVar4 != 0) goto LAB_8243244c;
+        bVar1 = p<Var6->modelIndex[0];
+        bVar2 = p<Var5->modelIndex[0];
+        if ((ulonglong)bVar1 - (ulonglong)bVar2 != 0) break;
+        p<Var6 = (<unnamed_type_typeSpecificIndex> *)((int)p<Var6 + 1);
+        p<Var5 = (<unnamed_type_typeSpecificIndex> *)((int)p<Var5 + 1);
+      } while (p<Var6 != (<unnamed_type_typeSpecificIndex> *)&param_2->field_0xd);
+      iVar7 = 2;
+      if ((int)((ulonglong)bVar1 - (ulonglong)bVar2) != 0) goto LAB_8243244c;
     }
-    lVar9 = lVar9 - lVar5;
-    lVar8 = lVar5 * 0xe + lVar8;
-    if (lVar9 == 0) {
-      uVar2 = __restgprlr_28(uVar7);
-      return uVar2;
+    param_3 = param_3 - iVar7;
+    param_2 = param_2 + iVar7;
+    if (param_3 == 0) {
+      return uVar3;
     }
   } while( true );
 }
@@ -772,239 +733,228 @@ LAB_8243244c:
 
 // 82432490  FX_AllocMarkPoints  (EffectsCore/fx_marks.cpp:558)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 ushort FX_AllocMarkPoints(FxMarksSystem *param_1,int param_2)
 
 {
-  FxMarksSystem *pFVar1;
-  ushort uVar2;
-  FxPointGroupPool *pFVar3;
-  uint uVar4;
-  longlong lVar5;
+  ushort uVar1;
+  FxPointGroupPool *pFVar2;
+  uint uVar3;
+  longlong lVar4;
   
-  pFVar1 = (FxMarksSystem *)__savegprlr_29(param_1);
-  uVar4 = param_2 + 1;
-  uVar2 = 0xffff;
-  lVar5 = (longlong)((int)uVar4 >> 1) + (ulonglong)((int)uVar4 < 0 && (uVar4 & 1) != 0);
-  if ((int)lVar5 < 1) {
+  uVar3 = param_2 + 1;
+  uVar1 = 0xffff;
+  lVar4 = (longlong)((int)uVar3 >> 1) + (ulonglong)((int)uVar3 < 0 && (uVar3 & 1) != 0);
+  if ((int)lVar4 < 1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_marks.cpp",
                     0x235,0,"%s\n\t(pointGroupCount) = %i");
   }
   do {
-    pFVar3 = pFVar1->firstFreePointGroup;
-    if (pFVar3 == (FxPointGroupPool *)0x0) {
-      FX_FreeLruMark(pFVar1);
-      pFVar3 = pFVar1->firstFreePointGroup;
-      if (pFVar3 == (FxPointGroupPool *)0x0) {
-        if (uVar2 != 0xffff) {
-          FX_FreeMarkPointGroups(pFVar1,uVar2);
+    pFVar2 = param_1->firstFreePointGroup;
+    if (pFVar2 == (FxPointGroupPool *)0x0) {
+      FX_FreeLruMark(param_1);
+      pFVar2 = param_1->firstFreePointGroup;
+      if (pFVar2 == (FxPointGroupPool *)0x0) {
+        if (uVar1 != 0xffff) {
+          FX_FreeMarkPointGroups(param_1,uVar1);
         }
-        uVar2 = __restgprlr_29(0xffffffffffffffff);
-        return uVar2;
+        return 0xffff;
       }
     }
-    pFVar1->firstFreePointGroup = (FxPointGroupPool *)(pFVar3->pointGroup).points[0].xyz[0];
-    (pFVar3->pointGroup).next = uVar2;
-    uVar2 = FX_PointGroupToHandle(pFVar1,&pFVar3->pointGroup);
-    lVar5 = lVar5 + -1;
-  } while (lVar5 != 0);
-  uVar2 = __restgprlr_29();
-  return uVar2;
+    param_1->firstFreePointGroup = (FxPointGroupPool *)(pFVar2->pointGroup).points[0].xyz[0];
+    (pFVar2->pointGroup).next = uVar1;
+    uVar1 = FX_PointGroupToHandle(param_1,&pFVar2->pointGroup);
+    lVar4 = lVar4 + -1;
+  } while (lVar4 != 0);
+  return uVar1;
 }
 
 
 // 82432550  FX_FindSpotForMark  (EffectsCore/fx_marks.cpp:591)
 
+/* WARNING: Function: __savegprlr_21 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_21 replaced with injection: xenon_save_restore */
+
 void FX_FindSpotForMark(ushort *param_1,ushort **param_2,FxMarksSystem *param_3,ushort *param_4,
                        FxMark *param_5)
 
 {
-  ushort uVar1;
-  int iVar2;
-  int iVar3;
+  byte bVar1;
+  byte bVar2;
+  ushort uVar3;
   float fVar4;
   float fVar5;
   float fVar6;
   float fVar7;
-  ushort *puVar8;
-  FxMark *pFVar9;
-  ulonglong uVar10;
-  longlong lVar11;
-  longlong lVar12;
-  longlong lVar13;
-  longlong lVar14;
-  longlong lVar15;
-  ushort uVar16;
-  ushort *puVar17;
+  FxMark *pFVar8;
+  <unnamed_type_typeSpecificIndex> *p<Var9;
+  <unnamed_type_typeSpecificIndex> *p<Var10;
+  ushort uVar11;
+  uint uVar12;
   
-  lVar11 = (longlong)(int)param_5;
-  lVar12 = (longlong)(int)param_4;
-  uVar10 = (ulonglong)(int)param_3;
-  puVar8 = (ushort *)__savegprlr_21(param_1);
-  *puVar8 = 0xffff;
-  *param_2 = (ushort *)lVar12;
-  uVar1 = *(ushort *)lVar12;
-  uVar16 = 0xffff;
+  *param_1 = 0xffff;
+  *param_2 = param_4;
+  uVar3 = *param_4;
+  uVar11 = 0xffff;
   do {
-    if (uVar1 == 0xffff) {
+    if (uVar3 == 0xffff) {
       if (**param_2 != 0xffff) {
-        *puVar8 = **param_2;
-        pFVar9 = FX_MarkFromHandle((FxMarksSystem *)uVar10,**param_2);
-        *param_2 = &pFVar9->nextMark;
+        *param_1 = **param_2;
+        pFVar8 = FX_MarkFromHandle(param_3,**param_2);
+        *param_2 = &pFVar8->nextMark;
       }
-      __restgprlr_21();
       return;
     }
-    puVar17 = (ushort *)lVar12;
-    uVar1 = *puVar17;
-    if (0x1ff < (ulonglong)uVar1) {
+    uVar12 = (uint)*param_4;
+    if (0x1ff < uVar12) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\fx_marks.h",0xad
                       ,0,"handle doesn\'t index FX_MARKS_LIMIT\n\t%i not in [0, %i)");
     }
-    if ((uVar10 & 0xffffffff) == 0) {
+    if (param_3 == (FxMarksSystem *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\fx_marks.h",0xae
                       ,0,"%s");
     }
-    iVar2 = (int)lVar11;
-    lVar12 = (ulonglong)uVar1 * 0x40 + ZEXT48(((FxMarksSystem *)uVar10)->marks);
-    iVar3 = (int)lVar12;
-    if (*(int *)(iVar3 + 0x2c) == *(int *)(iVar2 + 0x2c)) {
-      lVar15 = lVar12 + 0x30;
-      lVar14 = lVar11 + 0x30;
+    pFVar8 = param_3->marks;
+    if (pFVar8[uVar12].material == param_5->material) {
+      p<Var10 = (<unnamed_type_typeSpecificIndex> *)&pFVar8[uVar12].context;
+      p<Var9 = (<unnamed_type_typeSpecificIndex> *)&param_5->context;
       do {
-        lVar13 = (ulonglong)*(byte *)lVar15 - (ulonglong)*(byte *)lVar14;
-        if (lVar13 != 0) break;
-        lVar15 = lVar15 + 1;
-        lVar14 = lVar14 + 1;
-      } while ((int)lVar15 != iVar3 + 0x37);
-      if ((int)lVar13 != 0) goto LAB_82432648;
+        bVar1 = p<Var10->modelIndex[0];
+        bVar2 = p<Var9->modelIndex[0];
+        if ((ulonglong)bVar1 - (ulonglong)bVar2 != 0) break;
+        p<Var10 = (<unnamed_type_typeSpecificIndex> *)((int)p<Var10 + 1);
+        p<Var9 = (<unnamed_type_typeSpecificIndex> *)((int)p<Var9 + 1);
+      } while (p<Var10 != (<unnamed_type_typeSpecificIndex> *)&pFVar8[uVar12].fadeInfo);
+      if ((int)((ulonglong)bVar1 - (ulonglong)bVar2) != 0) goto LAB_82432648;
 LAB_82432690:
-      *puVar8 = uVar16;
-      *param_2 = puVar17;
+      *param_1 = uVar11;
+      *param_2 = param_4;
     }
     else {
 LAB_82432648:
-      fVar4 = *(float *)(iVar3 + 0x14) - *(float *)(iVar2 + 0x14);
-      fVar5 = *(float *)(iVar3 + 0xc) - *(float *)(iVar2 + 0xc);
-      fVar6 = *(float *)(iVar3 + 0x10) - *(float *)(iVar2 + 0x10);
-      fVar7 = *(float *)(iVar3 + 0x18) + *(float *)(iVar2 + 0x18);
+      fVar4 = pFVar8[uVar12].origin[2] - param_5->origin[2];
+      fVar5 = pFVar8[uVar12].origin[0] - param_5->origin[0];
+      fVar6 = pFVar8[uVar12].origin[1] - param_5->origin[1];
+      fVar7 = pFVar8[uVar12].radius + param_5->radius;
       if (fVar6 * fVar6 + fVar5 * fVar5 + fVar4 * fVar4 < fVar7 * fVar7) goto LAB_82432690;
     }
-    uVar1 = *(ushort *)(iVar3 + 2);
-    uVar16 = *puVar17;
-    lVar12 = lVar12 + 2;
+    uVar3 = pFVar8[uVar12].nextMark;
+    uVar11 = *param_4;
+    param_4 = &pFVar8[uVar12].nextMark;
   } while( true );
 }
 
 
 // 824326E0  FX_LinkMarkIntoList  (EffectsCore/fx_marks.cpp:658)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void FX_LinkMarkIntoList(FxMarksSystem *param_1,ushort *param_2,FxMark *param_3)
 
 {
   ushort uVar1;
-  FxMarksSystem *pFVar2;
-  ushort uVar4;
-  FxMark *pFVar3;
+  ushort uVar3;
+  FxMark *pFVar2;
   ushort local_30 [2];
   ushort *local_2c [11];
   
-  pFVar2 = (FxMarksSystem *)__savegprlr_28(param_1);
-  FX_FindSpotForMark(local_30,local_2c,pFVar2,param_2,param_3);
-  uVar4 = FX_MarkToHandle(pFVar2,param_3);
+  FX_FindSpotForMark(local_30,local_2c,param_1,param_2,param_3);
+  uVar3 = FX_MarkToHandle(param_1,param_3);
   uVar1 = *local_2c[0];
   param_3->prevMark = local_30[0];
   param_3->nextMark = uVar1;
   if (uVar1 != 0xffff) {
-    pFVar3 = FX_MarkFromHandle(pFVar2,uVar1);
-    if (pFVar3->prevMark != param_3->prevMark) {
+    pFVar2 = FX_MarkFromHandle(param_1,uVar1);
+    if (pFVar2->prevMark != param_3->prevMark) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_marks.cpp",
                       0x2a1,0,"%s");
     }
-    pFVar3->prevMark = uVar4;
+    pFVar2->prevMark = uVar3;
   }
-  *local_2c[0] = uVar4;
-  __restgprlr_28();
+  *local_2c[0] = uVar3;
   return;
 }
 
 
 // 82432790  FX_CopyMarkTris  (EffectsCore/fx_marks.cpp:682)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
+
 void FX_CopyMarkTris(FxMarksSystem *param_1,FxMarkTri *param_2,ushort param_3,int param_4)
 
 {
-  undefined2 *puVar1;
-  int iVar3;
-  longlong lVar2;
-  uint uVar5;
-  ulonglong uVar4;
-  longlong lVar6;
-  longlong lVar7;
-  longlong lVar8;
-  longlong lVar9;
-  longlong lVar10;
-  longlong lVar11;
-  longlong lVar12;
+  byte bVar1;
+  byte bVar2;
+  FxTriGroupPool *pFVar3;
+  uint uVar4;
+  ushort *puVar5;
+  char *pcVar6;
+  ushort *puVar7;
+  char *pcVar8;
+  byte *pbVar9;
+  int iVar10;
+  byte *pbVar11;
+  uint uVar12;
   longlong lVar13;
   
-  lVar10 = (longlong)param_4;
-  uVar4 = (ulonglong)(short)param_3;
-  lVar11 = (longlong)(int)param_2;
-  iVar3 = __savegprlr_23(param_1);
   do {
-    if (0x7ff < (uVar4 & 0xffff)) {
+    if (0x7ff < param_3) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\fx_marks.h",0xc6
                       ,0,"handle doesn\'t index FX_TRI_GROUP_LIMIT\n\t%i not in [0, %i)");
     }
-    if (iVar3 == 0) {
+    if (param_1 == (FxMarksSystem *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\fx_marks.h",199,
                       0,"%s");
     }
-    lVar2 = ((uVar4 & 0xffff) + (uVar4 & 0xffff) * 2) * 8 + (ulonglong)*(uint *)(iVar3 + 0x1020);
-    lVar12 = 2;
-    if ((int)lVar10 < 2) {
-      lVar12 = lVar10;
+    pFVar3 = param_1->triGroups;
+    iVar10 = (uint)param_3 + (uint)param_3 * 2;
+    uVar12 = 2;
+    if (param_4 < 2) {
+      uVar12 = param_4;
     }
-    uVar5 = 0;
-    lVar8 = lVar11 + 5;
-    lVar7 = lVar2 + 0xb;
+    uVar4 = 0;
+    pcVar8 = (char *)((int)param_2->indices + 5);
+    pcVar6 = pFVar3->_padding_ + iVar10 * 8 + 0xb;
     lVar13 = 7;
     do {
-      lVar8 = lVar8 + 1;
-      lVar7 = lVar7 + 1;
-      *(undefined1 *)lVar7 = *(undefined1 *)lVar8;
+      pcVar8 = pcVar8 + 1;
+      pcVar6 = pcVar6 + 1;
+      *pcVar6 = *pcVar8;
       lVar13 = lVar13 + -1;
     } while (lVar13 != 0);
-    lVar8 = lVar2 + -2;
-    lVar7 = lVar11 + 4;
+    puVar5 = (ushort *)((int)pFVar3 + iVar10 * 8 + -2);
+    puVar7 = param_2->indices + 2;
     do {
-      puVar1 = (undefined2 *)lVar7;
-      uVar5 = uVar5 + 1;
-      *(undefined2 *)((int)lVar8 + 2) = puVar1[-2];
-      *(undefined2 *)((int)lVar8 + 4) = puVar1[-1];
-      lVar8 = lVar8 + 6;
-      *(undefined2 *)lVar8 = *puVar1;
-      if (uVar5 == (uint)lVar12) break;
-      lVar9 = lVar7 + 0x10;
-      lVar13 = lVar2 + 0xc;
+      uVar4 = uVar4 + 1;
+      puVar5[1] = ((FxMarkTri *)(puVar7 + -2))->indices[0];
+      puVar5[2] = puVar7[-1];
+      puVar5 = puVar5 + 3;
+      *puVar5 = *puVar7;
+      if (uVar4 == uVar12) break;
+      pbVar11 = (byte *)(puVar7 + 8);
+      pbVar9 = (byte *)(pFVar3->_padding_ + iVar10 * 8 + 0xc);
       do {
-        lVar6 = (ulonglong)*(byte *)lVar9 - (ulonglong)*(byte *)lVar13;
-        if (lVar6 != 0) break;
-        lVar9 = lVar9 + 1;
-        lVar13 = lVar13 + 1;
-      } while ((int)lVar9 != (int)puVar1 + 0x17);
-      lVar7 = lVar7 + 0xe;
-    } while ((int)lVar6 == 0);
-    uVar4 = (ulonglong)*(ushort *)((int)lVar2 + 0x14);
-    *(char *)((int)lVar2 + 0x13) = (char)uVar5;
-    lVar10 = lVar10 - ((ulonglong)uVar5 & 0xff);
-    lVar11 = ((ulonglong)uVar5 & 0xff) * 0xe + lVar11;
-    if (lVar10 == 0) {
-      if (uVar4 != 0xffff) {
+        bVar1 = *pbVar11;
+        bVar2 = *pbVar9;
+        if ((ulonglong)bVar1 - (ulonglong)bVar2 != 0) break;
+        pbVar11 = pbVar11 + 1;
+        pbVar9 = pbVar9 + 1;
+      } while (pbVar11 != (byte *)((int)puVar7 + 0x17));
+      puVar7 = puVar7 + 7;
+    } while ((int)((ulonglong)bVar1 - (ulonglong)bVar2) == 0);
+    param_3 = *(ushort *)((int)pFVar3 + iVar10 * 8 + 0x14);
+    pFVar3->_padding_[iVar10 * 8 + 0x13] = (char)uVar4;
+    param_4 = param_4 - (uVar4 & 0xff);
+    param_2 = param_2 + (uVar4 & 0xff);
+    if (param_4 == 0) {
+      if (param_3 != 0xffff) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_marks.cpp",
                         0x2c4,0,"%s\n\t(dstGroupHandle) = %i");
       }
-      __restgprlr_23();
       return;
     }
   } while( true );
@@ -1013,166 +963,154 @@ void FX_CopyMarkTris(FxMarksSystem *param_1,FxMarkTri *param_2,ushort param_3,in
 
 // 82432910  FX_CopyMarkPoints  (EffectsCore/fx_marks.cpp:713)
 
+/* WARNING: Function: __savegprlr_20 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_20 replaced with injection: xenon_save_restore */
+
 void FX_CopyMarkPoints(FxMarksSystem *param_1,FxMarkPoint *param_2,ushort param_3,int param_4)
 
 {
   int iVar1;
-  ulonglong uVar2;
-  int iVar3;
-  longlong lVar4;
-  longlong lVar5;
-  longlong lVar6;
+  undefined4 *puVar2;
+  undefined4 *puVar3;
+  FxPointGroupPool *pFVar4;
+  FxPointGroupPool *pFVar5;
+  int iVar6;
   longlong lVar7;
-  ulonglong uVar8;
-  longlong lVar9;
-  ulonglong uVar10;
-  longlong lVar11;
   
-  uVar8 = (ulonglong)param_4;
-  uVar2 = (ulonglong)(short)param_3;
-  lVar7 = (longlong)(int)param_2;
-  iVar1 = __savegprlr_20(param_1);
   do {
-    if (0xbff < (uVar2 & 0xffff)) {
+    if (0xbff < param_3) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\fx_marks.h",0xdf
                       ,0,"handle doesn\'t index FX_POINT_GROUP_LIMIT\n\t%i not in [0, %i)");
     }
-    if (iVar1 == 0) {
+    if (param_1 == (FxMarksSystem *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\fx_marks.h",0xe0
                       ,0,"%s");
     }
-    lVar9 = (uVar2 & 0xffff) * 0x44 + (ulonglong)*(uint *)(iVar1 + 0x1024);
-    if ((int)uVar8 < 3) {
-      uVar10 = uVar8;
-      if ((int)uVar8 < 1) {
+    pFVar5 = param_1->pointGroups + param_3;
+    if (param_4 < 3) {
+      iVar6 = param_4;
+      if (param_4 < 1) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_marks.cpp",
                         0x2d3,0,"%s\n\t(copyCount) = %i");
       }
     }
     else {
-      uVar10 = 2;
+      iVar6 = 2;
     }
-    iVar3 = 0;
-    lVar6 = lVar9;
+    iVar1 = 0;
+    pFVar4 = pFVar5;
     do {
-      lVar4 = lVar6 + -4;
-      lVar5 = (lVar7 - lVar9) + lVar6 + -4;
-      lVar11 = 8;
+      puVar2 = (undefined4 *)((int)pFVar4 + -4);
+      puVar3 = (undefined4 *)((int)pFVar4 + (int)param_2 + (-4 - (int)pFVar5));
+      lVar7 = 8;
       do {
-        lVar5 = lVar5 + 4;
-        lVar4 = lVar4 + 4;
-        *(undefined4 *)lVar4 = *(undefined4 *)lVar5;
-        lVar11 = lVar11 + -1;
-      } while (lVar11 != 0);
-      iVar3 = iVar3 + 1;
-      lVar6 = lVar6 + 0x20;
-    } while (iVar3 < (int)uVar10);
-    uVar2 = (ulonglong)*(ushort *)((int)lVar9 + 0x40);
-    uVar8 = uVar8 - uVar10;
-    lVar7 = (uVar10 & 0x7ffffff) * 0x20 + lVar7;
-  } while (uVar8 != 0);
-  if (uVar2 != 0xffff) {
+        puVar3 = puVar3 + 1;
+        puVar2 = puVar2 + 1;
+        *puVar2 = *puVar3;
+        lVar7 = lVar7 + -1;
+      } while (lVar7 != 0);
+      iVar1 = iVar1 + 1;
+      pFVar4 = (FxPointGroupPool *)((pFVar4->pointGroup).points + 1);
+    } while (iVar1 < iVar6);
+    param_3 = (pFVar5->pointGroup).next;
+    param_4 = param_4 - iVar6;
+    param_2 = param_2 + iVar6;
+  } while (param_4 != 0);
+  if (param_3 != 0xffff) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_marks.cpp",
                     0x2df,0,"%s\n\t(dstGroupHandle) = %i");
   }
-  __restgprlr_20();
   return;
 }
 
 
 // 82432A70  FX_FindModelHead  (EffectsCore/fx_marks.cpp:740)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
+
 ushort FX_FindModelHead(FxMarksSystem *param_1,ushort param_2,int param_3)
 
 {
   FxMark *pFVar1;
-  FxMarksSystem *pFVar2;
-  ushort uVar3;
-  ulonglong uVar4;
-  FxMark *pFVar5;
+  ushort uVar2;
+  FxMark *pFVar3;
   
-  uVar4 = (ulonglong)(short)param_2;
-  pFVar2 = (FxMarksSystem *)__savegprlr_24(param_1);
-  pFVar1 = pFVar2->marks;
-  pFVar5 = pFVar1;
+  pFVar1 = param_1->marks;
+  pFVar3 = pFVar1;
   if (pFVar1 != pFVar1 + 0x200) {
     do {
-      if ((pFVar5->timeDrawn != -1) && (pFVar5->prevMark == 0xffff)) {
-        if (pFVar5 == (FxMark *)0xffffffd0) {
+      if ((pFVar3->timeDrawn != -1) && (pFVar3->prevMark == 0xffff)) {
+        if (pFVar3 == (FxMark *)0xffffffd0) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\../renderer/tr_types.h"
                           ,0x3b2,0,"%s");
         }
-        if (((uint)(pFVar5->context).modelType == param_3) &&
-           (uVar3 = FX_GetMarkContext_ModelIndex(&pFVar5->context),
-           (ulonglong)uVar3 == (uVar4 & 0xffff))) {
-          uVar3 = FX_MarkToHandle(pFVar2,pFVar5);
-          uVar3 = __restgprlr_24(uVar3);
-          return uVar3;
+        if (((uint)(pFVar3->context).modelType == param_3) &&
+           (uVar2 = FX_GetMarkContext_ModelIndex(&pFVar3->context), uVar2 == param_2)) {
+          uVar2 = FX_MarkToHandle(param_1,pFVar3);
+          return uVar2;
         }
       }
-      pFVar5 = pFVar5 + 1;
-    } while (pFVar5 != pFVar1 + 0x200);
+      pFVar3 = pFVar3 + 1;
+    } while (pFVar3 != pFVar1 + 0x200);
   }
-  uVar3 = __restgprlr_24(0xffffffffffffffff);
-  return uVar3;
+  return 0xffff;
 }
 
 
 // 82432B40  FX_MarkContextsCompare  (EffectsCore/fx_marks.cpp:763)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 int FX_MarkContextsCompare(GfxMarkContext *param_1,GfxMarkContext *param_2)
 
 {
   byte bVar1;
-  GfxMarkContext *pGVar2;
-  int iVar3;
+  byte bVar2;
+  byte bVar3;
   int iVar4;
-  GfxMarkContext *pGVar5;
-  ulonglong uVar6;
-  ulonglong uVar7;
+  int iVar5;
+  uint uVar6;
+  uint uVar7;
   
-  uVar6 = (ulonglong)(int)param_2;
-  pGVar2 = (GfxMarkContext *)__savegprlr_26(param_1);
-  if (pGVar2 == (GfxMarkContext *)0x0) {
+  if (param_1 == (GfxMarkContext *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\../renderer/tr_types.h"
                     ,0x3b2,0,"%s");
   }
-  bVar1 = pGVar2->modelType;
-  if ((uVar6 & 0xffffffff) == 0) {
+  bVar1 = param_1->modelType;
+  if (param_2 == (GfxMarkContext *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\../renderer/tr_types.h"
                     ,0x3b2,0,"%s");
   }
-  pGVar5 = (GfxMarkContext *)uVar6;
-  if (bVar1 != pGVar5->modelType) {
-    iVar3 = __restgprlr_26((ulonglong)pGVar5->modelType - (ulonglong)bVar1);
-    return iVar3;
+  if (bVar1 != param_2->modelType) {
+    return (uint)param_2->modelType - (uint)bVar1;
   }
-  uVar7 = (ulonglong)pGVar2->primaryLightIndex;
-  uVar6 = (ulonglong)pGVar5->primaryLightIndex;
-  if (uVar7 == uVar6) {
-    uVar7 = (ulonglong)pGVar2->reflectionProbeIndex;
-    uVar6 = (ulonglong)pGVar5->reflectionProbeIndex;
-    if (uVar7 == uVar6) {
-      uVar7 = (ulonglong)(pGVar2->field1_0x1).lmapIndex;
-      uVar6 = (ulonglong)(pGVar5->field1_0x1).lmapIndex;
+  uVar7 = (uint)param_1->primaryLightIndex;
+  uVar6 = (uint)param_2->primaryLightIndex;
+  if (param_1->primaryLightIndex == param_2->primaryLightIndex) {
+    uVar6 = (uint)param_2->reflectionProbeIndex;
+    uVar7 = (uint)param_1->reflectionProbeIndex;
+    if (param_1->reflectionProbeIndex == param_2->reflectionProbeIndex) {
+      bVar2 = (param_1->field1_0x1).lmapIndex;
+      uVar7 = (uint)bVar2;
+      bVar3 = (param_2->field1_0x1).lmapIndex;
+      uVar6 = (uint)bVar3;
       if (bVar1 == 3) {
-        if (uVar7 == uVar6) {
-          iVar3 = FX_GetMarkContext_DObjModelIndex(pGVar2);
-          iVar4 = FX_GetMarkContext_DObjModelIndex(pGVar5);
-          iVar3 = __restgprlr_26((longlong)iVar4 - (longlong)iVar3);
-          return iVar3;
+        if (bVar2 == bVar3) {
+          iVar4 = FX_GetMarkContext_DObjModelIndex(param_1);
+          iVar5 = FX_GetMarkContext_DObjModelIndex(param_2);
+          return iVar5 - iVar4;
         }
       }
-      else if (uVar7 == uVar6) {
-        iVar3 = FX_GetMarkContext_SurfaceIndex(pGVar2);
-        iVar4 = FX_GetMarkContext_SurfaceIndex(pGVar5);
-        iVar3 = __restgprlr_26((longlong)iVar4 - (longlong)iVar3);
-        return iVar3;
+      else if (bVar2 == bVar3) {
+        iVar4 = FX_GetMarkContext_SurfaceIndex(param_1);
+        iVar5 = FX_GetMarkContext_SurfaceIndex(param_2);
+        return iVar5 - iVar4;
       }
     }
   }
-  iVar3 = __restgprlr_26(uVar6 - uVar7);
-  return iVar3;
+  return uVar6 - uVar7;
 }
 
 
@@ -1197,6 +1135,8 @@ bool FX_CompareMarkTris(FxMarkTri *param_1,FxMarkTri *param_2)
 
 // 82436D48  FX_AllocAndConstructMark  (EffectsCore/fx_marks.cpp:817)
 
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void FX_AllocAndConstructMark
@@ -1207,48 +1147,42 @@ void FX_AllocAndConstructMark
 {
   uint uVar1;
   uint uVar2;
-  FxMarkTri *pFVar3;
-  ulonglong uVar4;
-  FxMarksSystem *pFVar5;
-  bool bVar12;
+  FxMarksSystem *pFVar3;
+  bool bVar10;
+  ushort uVar6;
+  ushort uVar7;
+  FxMark *pFVar4;
+  int iVar5;
   ushort uVar8;
   ushort uVar9;
-  FxMark *pFVar6;
-  int iVar7;
-  ushort uVar10;
-  ushort uVar11;
-  ushort *puVar13;
+  ushort *puVar11;
+  undefined1 *puVar12;
+  byte bVar13;
   undefined1 *puVar14;
-  byte bVar15;
-  longlong lVar16;
-  longlong lVar17;
-  uint *puVar18;
-  GfxMarkContext *pGVar19;
-  longlong lVar20;
+  longlong lVar15;
+  uint *puVar16;
+  GfxMarkContext *pGVar17;
   char in_RESERVE;
   byte in_cr0;
-  double dVar21;
+  longlong lVar18;
+  double dVar19;
   float *in_stack_0000005c;
   undefined4 *in_stack_00000064;
   int in_stack_0000006c;
   ushort local_b0 [88];
   
-  dVar21 = (double)param_9;
-  lVar16 = (longlong)(int)param_6;
-  uVar4 = (ulonglong)(int)param_1;
-  __savegprlr();
-  pFVar3 = (FxMarkTri *)lVar16;
+  dVar19 = (double)param_9;
   std::_Sort<FxMarkTri_*,int,bool_(__cdecl*)(FxMarkTri_const_&,FxMarkTri_const_&)>
-            (pFVar3,pFVar3 + param_2,((int)(pFVar3 + param_2) - (int)pFVar3) / 0xe,
+            (param_6,param_6 + param_2,((int)(param_6 + param_2) - (int)param_6) / 0xe,
              FX_CompareMarkTris);
   Sys_EnterCriticalSection(CRITSECT_ALLOC_MARK);
-  lVar17 = (uVar4 & 0x3fffffff) * 4 + -0x7cccd3e8;
+  lVar15 = ((ulonglong)param_1 & 0x3fffffff) * 4 + -0x7cccd3e8;
   do {
-    puVar18 = (uint *)lVar17;
-    uVar1 = *puVar18;
+    puVar16 = (uint *)lVar15;
+    uVar1 = *puVar16;
     if (in_RESERVE != '\0') {
-      uVar2 = storeWordConditionalIndexed((ulonglong)uVar1 + 1,0,lVar17);
-      *puVar18 = uVar2;
+      uVar2 = storeWordConditionalIndexed((ulonglong)uVar1 + 1,0,lVar15);
+      *puVar16 = uVar2;
       in_cr0 = 2;
     }
   } while (!(bool)(in_cr0 >> 1 & 1));
@@ -1256,21 +1190,21 @@ void FX_AllocAndConstructMark
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_marks.cpp",
                     0x33e,0,"%s");
   }
-  pFVar5 = FX_GetMarksSystem((int)uVar4);
-  if (0xf < pFVar5->viewmodelMarksCount[in_stack_0000006c]) {
-    lVar20 = lVar16 + 6;
-    in_cr0 = (lVar20 == 0) << 1;
-    if (lVar20 == 0) {
+  pFVar3 = FX_GetMarksSystem(param_1);
+  if (0xf < pFVar3->viewmodelMarksCount[in_stack_0000006c]) {
+    pGVar17 = &param_6->context;
+    in_cr0 = (pGVar17 == (GfxMarkContext *)0x0) << 1;
+    if (pGVar17 == (GfxMarkContext *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\../renderer/tr_types.h"
                       ,0x3b2,0,"%s");
     }
-    if ((((GfxMarkContext *)lVar20)->modelType == '\x03') &&
-       (bVar12 = FX_GetMarkContext_DObjIsViewmodel((GfxMarkContext *)lVar20), bVar12)) {
+    if ((pGVar17->modelType == '\x03') &&
+       (bVar10 = FX_GetMarkContext_DObjIsViewmodel(pGVar17), bVar10)) {
       do {
-        uVar1 = *puVar18;
+        uVar1 = *puVar16;
         if (in_RESERVE != '\0') {
-          uVar2 = storeWordConditionalIndexed((ulonglong)uVar1 - 1,0,lVar17);
-          *puVar18 = uVar2;
+          uVar2 = storeWordConditionalIndexed((ulonglong)uVar1 - 1,0,lVar15);
+          *puVar16 = uVar2;
           in_cr0 = 2;
         }
       } while (!(bool)(in_cr0 >> 1 & 1));
@@ -1279,17 +1213,16 @@ void FX_AllocAndConstructMark
                         0x347,0,"%s");
       }
       Sys_LeaveCriticalSection(CRITSECT_ALLOC_MARK);
-      __restgprlr();
       return;
     }
   }
-  uVar8 = FX_AllocMarkTris(pFVar5,pFVar3,param_2);
-  if (uVar8 == 0xffff) {
+  uVar6 = FX_AllocMarkTris(pFVar3,param_6,param_2);
+  if (uVar6 == 0xffff) {
     do {
-      uVar1 = *puVar18;
+      uVar1 = *puVar16;
       if (in_RESERVE != '\0') {
-        uVar2 = storeWordConditionalIndexed((ulonglong)uVar1 - 1,0,lVar17);
-        *puVar18 = uVar2;
+        uVar2 = storeWordConditionalIndexed((ulonglong)uVar1 - 1,0,lVar15);
+        *puVar16 = uVar2;
         in_cr0 = 2;
       }
     } while (!(bool)(in_cr0 >> 1 & 1));
@@ -1298,17 +1231,16 @@ void FX_AllocAndConstructMark
                       0x356,0,"%s");
     }
     Sys_LeaveCriticalSection(CRITSECT_ALLOC_MARK);
-    __restgprlr();
     return;
   }
-  uVar9 = FX_AllocMarkPoints(pFVar5,param_3);
-  if (uVar9 == 0xffff) {
-    FX_FreeMarkTriGroups(pFVar5,uVar8);
+  uVar7 = FX_AllocMarkPoints(pFVar3,param_3);
+  if (uVar7 == 0xffff) {
+    FX_FreeMarkTriGroups(pFVar3,uVar6);
     do {
-      uVar1 = *puVar18;
+      uVar1 = *puVar16;
       if (in_RESERVE != '\0') {
-        uVar2 = storeWordConditionalIndexed((ulonglong)uVar1 - 1,0,lVar17);
-        *puVar18 = uVar2;
+        uVar2 = storeWordConditionalIndexed((ulonglong)uVar1 - 1,0,lVar15);
+        *puVar16 = uVar2;
         in_cr0 = 2;
       }
     } while (!(bool)(in_cr0 >> 1 & 1));
@@ -1317,21 +1249,20 @@ void FX_AllocAndConstructMark
                       0x361,0,"%s");
     }
     Sys_LeaveCriticalSection(CRITSECT_ALLOC_MARK);
-    __restgprlr();
     return;
   }
-  uVar11 = pFVar5->firstFreeMarkHandle;
-  if (uVar11 == 0xffff) {
-    FX_FreeLruMark(pFVar5);
-    uVar11 = pFVar5->firstFreeMarkHandle;
-    if (uVar11 == 0xffff) {
-      FX_FreeMarkTriGroups(pFVar5,uVar8);
-      FX_FreeMarkPointGroups(pFVar5,uVar9);
+  uVar9 = pFVar3->firstFreeMarkHandle;
+  if (uVar9 == 0xffff) {
+    FX_FreeLruMark(pFVar3);
+    uVar9 = pFVar3->firstFreeMarkHandle;
+    if (uVar9 == 0xffff) {
+      FX_FreeMarkTriGroups(pFVar3,uVar6);
+      FX_FreeMarkPointGroups(pFVar3,uVar7);
       do {
-        uVar1 = *puVar18;
+        uVar1 = *puVar16;
         if (in_RESERVE != '\0') {
-          uVar2 = storeWordConditionalIndexed((ulonglong)uVar1 - 1,0,lVar17);
-          *puVar18 = uVar2;
+          uVar2 = storeWordConditionalIndexed((ulonglong)uVar1 - 1,0,lVar15);
+          *puVar16 = uVar2;
           in_cr0 = 2;
         }
       } while (!(bool)(in_cr0 >> 1 & 1));
@@ -1340,105 +1271,104 @@ void FX_AllocAndConstructMark
                         0x36f,0,"%s");
       }
       Sys_LeaveCriticalSection(CRITSECT_ALLOC_MARK);
-      __restgprlr();
       return;
     }
   }
-  pFVar6 = FX_MarkFromHandle(pFVar5,uVar11);
-  if (pFVar6 == (FxMark *)0x0) {
+  pFVar4 = FX_MarkFromHandle(pFVar3,uVar9);
+  if (pFVar4 == (FxMark *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_marks.cpp",
                     0x378,0,"%s");
   }
-  pFVar5->firstFreeMarkHandle = pFVar6->nextMark;
-  if (pFVar5->time < 1) {
+  pFVar3->firstFreeMarkHandle = pFVar4->nextMark;
+  if (pFVar3->time < 1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_marks.cpp",
                     0x37b,0,"%s\n\t(marksSystem->time) = %i");
   }
-  pGVar19 = &pFVar6->context;
-  lVar16 = lVar16 + 5;
-  puVar14 = (undefined1 *)((int)&pFVar6->material + 3);
-  lVar20 = 7;
+  pGVar17 = &pFVar4->context;
+  puVar14 = (undefined1 *)((int)param_6->indices + 5);
+  puVar12 = (undefined1 *)((int)&pFVar4->material + 3);
+  lVar18 = 7;
   do {
-    lVar16 = lVar16 + 1;
     puVar14 = puVar14 + 1;
-    *puVar14 = *(undefined1 *)lVar16;
-    lVar20 = lVar20 + -1;
-  } while (lVar20 != 0);
-  pFVar6->radius = (float)dVar21;
-  pFVar6->material = param_4;
-  pFVar6->fadeInfo = param_5;
-  pFVar6->origin[0] = *param_8;
-  pFVar6->origin[1] = param_8[1];
-  pFVar6->origin[2] = param_8[2];
-  pFVar6->texCoordAxis[0] = *in_stack_0000005c;
-  pFVar6->texCoordAxis[1] = in_stack_0000005c[1];
-  pFVar6->texCoordAxis[2] = in_stack_0000005c[2];
-  *(undefined4 *)pFVar6->nativeColor = *in_stack_00000064;
-  iVar7 = FX_GetMarkContext_ModelType(pGVar19);
-  if (iVar7 == 3) {
-    bVar12 = FX_GetMarkContext_DObjIsViewmodel(pGVar19);
-    if (bVar12) {
-      FX_LinkMarkIntoList(pFVar5,pFVar5->firstViewmodelMarkHandle + in_stack_0000006c,pFVar6);
-      bVar15 = pFVar5->viewmodelMarksCount[in_stack_0000006c] + 1;
-      pFVar5->viewmodelMarksCount[in_stack_0000006c] = bVar15;
-      if (0x10 < bVar15) {
+    puVar12 = puVar12 + 1;
+    *puVar12 = *puVar14;
+    lVar18 = lVar18 + -1;
+  } while (lVar18 != 0);
+  pFVar4->radius = (float)dVar19;
+  pFVar4->material = param_4;
+  pFVar4->fadeInfo = param_5;
+  pFVar4->origin[0] = *param_8;
+  pFVar4->origin[1] = param_8[1];
+  pFVar4->origin[2] = param_8[2];
+  pFVar4->texCoordAxis[0] = *in_stack_0000005c;
+  pFVar4->texCoordAxis[1] = in_stack_0000005c[1];
+  pFVar4->texCoordAxis[2] = in_stack_0000005c[2];
+  *(undefined4 *)pFVar4->nativeColor = *in_stack_00000064;
+  iVar5 = FX_GetMarkContext_ModelType(pGVar17);
+  if (iVar5 == 3) {
+    bVar10 = FX_GetMarkContext_DObjIsViewmodel(pGVar17);
+    if (bVar10) {
+      FX_LinkMarkIntoList(pFVar3,pFVar3->firstViewmodelMarkHandle + in_stack_0000006c,pFVar4);
+      bVar13 = pFVar3->viewmodelMarksCount[in_stack_0000006c] + 1;
+      pFVar3->viewmodelMarksCount[in_stack_0000006c] = bVar13;
+      if (0x10 < bVar13) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_marks.cpp",
                         0x38c,0,"%s");
       }
       goto LAB_82437258;
     }
 LAB_82437234:
-    uVar11 = FX_GetMarkContext_EntNum(pGVar19);
-    puVar13 = pFVar5->entFirstMarkHandles + uVar11;
+    uVar9 = FX_GetMarkContext_EntNum(pGVar17);
+    puVar11 = pFVar3->entFirstMarkHandles + uVar9;
   }
   else {
-    if (iVar7 == 2) goto LAB_82437234;
-    if (iVar7 == 1) {
-      uVar10 = FX_GetMarkContext_ModelIndex(pGVar19);
-      local_b0[0] = FX_FindModelHead(pFVar5,uVar10,1);
-      if (local_b0[0] == uVar11) {
+    if (iVar5 == 2) goto LAB_82437234;
+    if (iVar5 == 1) {
+      uVar8 = FX_GetMarkContext_ModelIndex(pGVar17);
+      local_b0[0] = FX_FindModelHead(pFVar3,uVar8,1);
+      if (local_b0[0] == uVar9) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_marks.cpp",
                         0x39d,0,"%s");
       }
-      puVar13 = local_b0;
+      puVar11 = local_b0;
     }
-    else if (iVar7 == 4) {
-      puVar13 = &pFVar5->firstGlassMarkHandle;
+    else if (iVar5 == 4) {
+      puVar11 = &pFVar3->firstGlassMarkHandle;
     }
     else {
-      if (iVar7 != 0) {
+      if (iVar5 != 0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_marks.cpp",
                         0x3ac,0,"%s\n\t(modelType) = %i");
       }
-      puVar13 = &pFVar5->firstActiveWorldMarkHandle;
+      puVar11 = &pFVar3->firstActiveWorldMarkHandle;
     }
   }
-  FX_LinkMarkIntoList(pFVar5,puVar13,pFVar6);
+  FX_LinkMarkIntoList(pFVar3,puVar11,pFVar4);
 LAB_82437258:
-  if (pFVar6->timeDrawn != -1) {
+  if (pFVar4->timeDrawn != -1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_marks.cpp",
                     0x3b3,0,"%s");
   }
-  pFVar6->timeDrawn = pFVar5->time + -1;
-  iVar7 = pFVar5->time;
-  pFVar6->tris = uVar8;
-  pFVar6->triCount = (uchar)param_2;
-  pFVar6->timeAlloced = iVar7;
+  pFVar4->timeDrawn = pFVar3->time + -1;
+  iVar5 = pFVar3->time;
+  pFVar4->tris = uVar6;
+  pFVar4->triCount = (uchar)param_2;
+  pFVar4->timeAlloced = iVar5;
   if ((param_2 & 0xffU) != param_2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_marks.cpp",
                     0x3ba,0,"newMark->triCount == triCount\n\t%i, %i");
   }
-  pFVar6->points = uVar9;
-  pFVar6->pointCount = (ushort)param_3;
+  pFVar4->points = uVar7;
+  pFVar4->pointCount = (ushort)param_3;
   if ((param_3 & 0xffffU) != param_3) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_marks.cpp",
                     0x3be,0,"newMark->pointCount == pointCount\n\t%i, %i");
   }
   do {
-    uVar1 = *puVar18;
+    uVar1 = *puVar16;
     if (in_RESERVE != '\0') {
-      uVar2 = storeWordConditionalIndexed((ulonglong)uVar1 - 1,0,lVar17);
-      *puVar18 = uVar2;
+      uVar2 = storeWordConditionalIndexed((ulonglong)uVar1 - 1,0,lVar15);
+      *puVar16 = uVar2;
       in_cr0 = 2;
     }
   } while (!(bool)(in_cr0 >> 1 & 1));
@@ -1447,10 +1377,9 @@ LAB_82437258:
                     0x3c0,0,"%s");
   }
   Sys_LeaveCriticalSection(CRITSECT_ALLOC_MARK);
-  FX_CopyMarkTris(pFVar5,pFVar3,pFVar6->tris,param_2);
-  FX_CopyMarkPoints(pFVar5,param_7,pFVar6->points,param_3);
-  pFVar5->allocedMarkCount = pFVar5->allocedMarkCount + 1;
-  __restgprlr();
+  FX_CopyMarkTris(pFVar3,param_6,pFVar4->tris,param_2);
+  FX_CopyMarkPoints(pFVar3,param_7,pFVar4->points,param_3);
+  pFVar3->allocedMarkCount = pFVar3->allocedMarkCount + 1;
   return;
 }
 
@@ -1470,90 +1399,84 @@ int FX_GetMarkContext_ModelType(GfxMarkContext *param_1)
 
 // 82430F50  FX_GetMarkContext_DObjModelIndex  (renderer/tr_types.h:952)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 int FX_GetMarkContext_DObjModelIndex(GfxMarkContext *param_1)
 
 {
-  char *pcVar1;
-  int iVar2;
-  
-  pcVar1 = (char *)__savegprlr_28(param_1);
-  if (pcVar1 == (char *)0x0) {
+  if (param_1 == (GfxMarkContext *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\../renderer/tr_types.h"
                     ,0x3b9,0,"%s");
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\../renderer/tr_types.h"
                     ,0x3b2,0,"%s");
   }
-  if (*pcVar1 != '\x03') {
+  if (param_1->modelType != '\x03') {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\../renderer/tr_types.h"
                     ,0x3ba,0,"%s");
-    iVar2 = __restgprlr_28(pcVar1[4] & 0x1f);
-    return iVar2;
+    return (param_1->field3_0x4).surfIndex & 0x1f;
   }
-  iVar2 = __restgprlr_28(pcVar1[4] & 0x1f);
-  return iVar2;
+  return (param_1->field3_0x4).surfIndex & 0x1f;
 }
 
 
 // 82430FF8  FX_GetMarkContext_DObjIsViewmodel  (renderer/tr_types.h:960)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 bool FX_GetMarkContext_DObjIsViewmodel(GfxMarkContext *param_1)
 
 {
-  char *pcVar1;
-  undefined1 uVar2;
-  
-  pcVar1 = (char *)__savegprlr_28(param_1);
-  if (pcVar1 == (char *)0x0) {
+  if (param_1 == (GfxMarkContext *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\../renderer/tr_types.h"
                     ,0x3c1,0,"%s");
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\../renderer/tr_types.h"
                     ,0x3b2,0,"%s");
   }
-  if (*pcVar1 != '\x03') {
+  if (param_1->modelType != '\x03') {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\../renderer/tr_types.h"
                     ,0x3c2,0,"%s");
-    uVar2 = __restgprlr_28((byte)pcVar1[4] >> 7);
-    return (bool)uVar2;
+    return (bool)((param_1->field3_0x4).surfIndex >> 7);
   }
-  uVar2 = __restgprlr_28((byte)pcVar1[4] >> 7);
-  return (bool)uVar2;
+  return (bool)((param_1->field3_0x4).surfIndex >> 7);
 }
 
 
 // 824310A0  FX_GetMarkContext_ViewmodelClientIndex  (renderer/tr_types.h:968)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 int FX_GetMarkContext_ViewmodelClientIndex(GfxMarkContext *param_1)
 
 {
-  GfxMarkContext *pGVar1;
-  bool bVar3;
-  int iVar2;
+  bool bVar1;
   
-  pGVar1 = (GfxMarkContext *)__savegprlr_28(param_1);
-  if (pGVar1 == (GfxMarkContext *)0x0) {
+  if (param_1 == (GfxMarkContext *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\../renderer/tr_types.h"
                     ,0x3c9,0,"%s");
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\../renderer/tr_types.h"
                     ,0x3b2,0,"%s");
   }
-  if (pGVar1->modelType != '\x03') {
+  if (param_1->modelType != '\x03') {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\../renderer/tr_types.h"
                     ,0x3ca,0,"%s");
   }
-  bVar3 = FX_GetMarkContext_DObjIsViewmodel(pGVar1);
-  if (!bVar3) {
+  bVar1 = FX_GetMarkContext_DObjIsViewmodel(param_1);
+  if (!bVar1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\../renderer/tr_types.h"
                     ,0x3cb,0,"%s");
-    iVar2 = __restgprlr_28((pGVar1->field3_0x4).surfIndex >> 5 & 3);
-    return iVar2;
+    return (param_1->field3_0x4).surfIndex >> 5 & 3;
   }
-  iVar2 = __restgprlr_28((pGVar1->field3_0x4).surfIndex >> 5 & 3);
-  return iVar2;
+  return (param_1->field3_0x4).surfIndex >> 5 & 3;
 }
 
 
 // 82432CC8  FX_ImpactMark_Generate_AddEntityBrush  (EffectsCore/fx_marks.cpp:975)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 
@@ -1563,14 +1486,13 @@ void FX_ImpactMark_Generate_AddEntityBrush
 
 {
   ulonglong uVar1;
-  LocalClientNum_t LVar3;
-  centity_s *pcVar4;
+  centity_s *pcVar3;
   longlong lVar2;
-  longlong lVar6;
-  ulonglong uVar7;
-  longlong lVar8;
-  double extraout_f1;
-  double dVar9;
+  double dVar5;
+  undefined1 auVar6 [16];
+  undefined1 auVar7 [16];
+  undefined1 auVar8 [16];
+  undefined1 auVar9 [16];
   undefined1 auVar10 [16];
   undefined1 auVar11 [16];
   undefined1 auVar12 [16];
@@ -1585,113 +1507,104 @@ void FX_ImpactMark_Generate_AddEntityBrush
   undefined1 auVar21 [16];
   undefined1 auVar22 [16];
   undefined1 auVar23 [16];
-  undefined1 auVar24 [16];
-  undefined1 auVar25 [16];
-  undefined1 auVar26 [16];
-  undefined1 auVar27 [16];
   float local_90;
   float afStack_80 [32];
-  GfxBrushModel *pGVar5;
+  GfxBrushModel *pGVar4;
   
-  lVar8 = (longlong)(int)param_4;
-  uVar7 = (ulonglong)(int)param_3;
-  lVar6 = (longlong)(int)param_2;
+  dVar5 = (double)param_5;
   uVar1 = ZEXT48(&stack0x00000000);
-  LVar3 = __savegprlr_24((double)param_5,param_1,lVar6,uVar7,lVar8);
-  if ((uVar7 & 0xffffffff) != 0x7ff) {
-    dVar9 = extraout_f1;
+  if (param_3 != 0x7ff) {
     Profile_Begin(0xc2);
-    pcVar4 = CG_GetEntity(LVar3,(int)uVar7);
-    if (((pcVar4->flags & 1U) != 0) && ((pcVar4->nextState).solid == 0xffffff)) {
-      pGVar5 = R_GetBrushModel((pcVar4->nextState).index.brushModel);
-      lVar2 = (longlong)(int)pGVar5;
-      AnglesToAxis((pcVar4->pose).angles,(float (*) [3])afStack_80);
-      auVar27 = vectorSplatImmediateSignedWord(0xff);
-      auVar12 = loadVectorLeftIndexed(lVar8);
-      auVar26 = vectorShiftLeftWord128(auVar27,auVar27);
-      auVar18 = loadVectorRightIndexed(lVar2 + 0x28);
-      auVar25 = vectorShiftLeftWord128(auVar27,auVar27);
-      auVar20 = loadVectorRightIndexed((longlong)(int)pcVar4 + 0x24);
-      auVar22 = loadVectorRightIndexed(uVar1 - 0x58);
-      auVar24 = vectorShiftLeftWord128(auVar27,auVar27);
-      auVar21 = loadVectorLeftIndexed(uVar1 - 0x68);
-      auVar23 = vectorShiftLeftWord128(auVar27,auVar27);
-      auVar19 = loadVectorLeftIndexed((longlong)(int)pcVar4 + 0x14);
-      auVar27 = loadVectorLeftIndexed(lVar2 + 0x18);
-      auVar27 = auVar27 | auVar18;
-      auVar13 = loadVectorRightIndexed(lVar8 + 0x10);
-      auVar18 = vectorSplatWord(auVar27,2);
-      auVar17 = loadVectorRightIndexed(uVar1 - 100);
-      auVar10 = vectorSplatWord(auVar27,1);
-      auVar16 = loadVectorLeftIndexed(uVar1 - 0x74);
-      auVar27 = vectorSplatWord(auVar27,0);
-      auVar15 = loadVectorRightIndexed(uVar1 - 0x70);
-      auVar11 = (auVar21 | auVar22) & (undefined1  [16])g_keepXYZ.field0_0x0;
-      auVar14 = loadVectorLeftIndexed(uVar1 - 0x80);
-      auVar21 = loadVectorRightIndexed(lVar2 + 0x34);
-      auVar22 = loadVectorLeftIndexed(lVar2 + 0x24);
-      auVar17 = (auVar16 | auVar17) & (undefined1  [16])g_keepXYZ.field0_0x0;
-      auVar22 = auVar22 | auVar21;
-      auVar16 = vectorMultiplyAddFloatingPoint
-                          (auVar11,auVar18,
-                           (auVar19 | auVar20) & (undefined1  [16])g_keepXYZ.field0_0x0);
-      auVar18 = (auVar14 | auVar15) & (undefined1  [16])g_keepXYZ.field0_0x0;
-      auVar21 = vectorSplatWord(auVar22,0);
-      auVar14 = vectorSplatWord(auVar22,1);
-      auVar22 = vectorSplatWord(auVar22,2);
-      auVar21 = vectorMultiplyFloatingPoint(auVar21,auVar18 & ~auVar24);
-      auVar10 = vectorMultiplyAddFloatingPoint(auVar10,auVar17,auVar16);
-      auVar21 = vectorMultiplyAddFloatingPoint(auVar14,auVar17 & ~auVar25,auVar21);
-      auVar18 = vectorMultiplyAddFloatingPoint(auVar27,auVar18,auVar10);
-      auVar27 = vectorMultiplyAddFloatingPoint(auVar22,auVar11 & ~auVar26,auVar21);
-      auVar18 = vectorSubtractFloatingPoint128
-                          ((auVar12 | auVar13) & (undefined1  [16])g_keepXYZ.field0_0x0,auVar18);
-      auVar18 = vectorSubtractFloatingPoint128(auVar18 & ~auVar23,auVar27);
-      auVar18 = vectorMaximumFloatingPoint128(auVar18,(undefined1  [16])g_zero.field0_0x0);
-      auVar18 = vectorMultiplySum3FloatingPoint(auVar18,auVar18);
-      auVar18 = vectorSplatWord(auVar18,0);
-      storeVectorElementWordIndexed(auVar18,uVar1 - 0x90);
-      if (local_90 < (float)(dVar9 * dVar9)) {
-        if ((uVar7 & 0xffff) != (uVar7 & 0xffffffff)) {
+    pcVar3 = CG_GetEntity(param_1,param_3);
+    if (((pcVar3->flags & 1U) != 0) && ((pcVar3->nextState).solid == 0xffffff)) {
+      pGVar4 = R_GetBrushModel((pcVar3->nextState).index.brushModel);
+      lVar2 = (longlong)(int)pGVar4;
+      AnglesToAxis((pcVar3->pose).angles,(float (*) [3])afStack_80);
+      auVar23 = vectorSplatImmediateSignedWord(0xff);
+      auVar8 = loadVectorLeftIndexed((longlong)(int)param_4);
+      auVar22 = vectorShiftLeftWord128(auVar23,auVar23);
+      auVar14 = loadVectorRightIndexed(lVar2 + 0x28);
+      auVar21 = vectorShiftLeftWord128(auVar23,auVar23);
+      auVar16 = loadVectorRightIndexed((longlong)(int)pcVar3 + 0x24);
+      auVar18 = loadVectorRightIndexed(uVar1 - 0x58);
+      auVar20 = vectorShiftLeftWord128(auVar23,auVar23);
+      auVar17 = loadVectorLeftIndexed(uVar1 - 0x68);
+      auVar19 = vectorShiftLeftWord128(auVar23,auVar23);
+      auVar15 = loadVectorLeftIndexed((longlong)(int)pcVar3 + 0x14);
+      auVar23 = loadVectorLeftIndexed(lVar2 + 0x18);
+      auVar23 = auVar23 | auVar14;
+      auVar9 = loadVectorRightIndexed((longlong)(int)param_4 + 0x10);
+      auVar14 = vectorSplatWord(auVar23,2);
+      auVar13 = loadVectorRightIndexed(uVar1 - 100);
+      auVar6 = vectorSplatWord(auVar23,1);
+      auVar12 = loadVectorLeftIndexed(uVar1 - 0x74);
+      auVar23 = vectorSplatWord(auVar23,0);
+      auVar11 = loadVectorRightIndexed(uVar1 - 0x70);
+      auVar7 = (auVar17 | auVar18) & (undefined1  [16])g_keepXYZ.field0_0x0;
+      auVar10 = loadVectorLeftIndexed(uVar1 - 0x80);
+      auVar17 = loadVectorRightIndexed(lVar2 + 0x34);
+      auVar18 = loadVectorLeftIndexed(lVar2 + 0x24);
+      auVar13 = (auVar12 | auVar13) & (undefined1  [16])g_keepXYZ.field0_0x0;
+      auVar18 = auVar18 | auVar17;
+      auVar12 = vectorMultiplyAddFloatingPoint
+                          (auVar7,auVar14,
+                           (auVar15 | auVar16) & (undefined1  [16])g_keepXYZ.field0_0x0);
+      auVar14 = (auVar10 | auVar11) & (undefined1  [16])g_keepXYZ.field0_0x0;
+      auVar17 = vectorSplatWord(auVar18,0);
+      auVar10 = vectorSplatWord(auVar18,1);
+      auVar18 = vectorSplatWord(auVar18,2);
+      auVar17 = vectorMultiplyFloatingPoint(auVar17,auVar14 & ~auVar20);
+      auVar6 = vectorMultiplyAddFloatingPoint(auVar6,auVar13,auVar12);
+      auVar17 = vectorMultiplyAddFloatingPoint(auVar10,auVar13 & ~auVar21,auVar17);
+      auVar14 = vectorMultiplyAddFloatingPoint(auVar23,auVar14,auVar6);
+      auVar23 = vectorMultiplyAddFloatingPoint(auVar18,auVar7 & ~auVar22,auVar17);
+      auVar14 = vectorSubtractFloatingPoint128
+                          ((auVar8 | auVar9) & (undefined1  [16])g_keepXYZ.field0_0x0,auVar14);
+      auVar14 = vectorSubtractFloatingPoint128(auVar14 & ~auVar19,auVar23);
+      auVar14 = vectorMaximumFloatingPoint128(auVar14,(undefined1  [16])g_zero.field0_0x0);
+      auVar14 = vectorMultiplySum3FloatingPoint(auVar14,auVar14);
+      auVar14 = vectorSplatWord(auVar14,0);
+      storeVectorElementWordIndexed(auVar14,uVar1 - 0x90);
+      if (local_90 < (float)(dVar5 * dVar5)) {
+        if ((param_3 & 0xffff) != param_3) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_marks.cpp"
                           ,0x3fa,0,"%s\n\t(entityIndex) = %i");
         }
-        R_MarkFragments_AddBModel((MarkInfo *)lVar6,pGVar5,&pcVar4->pose,(ushort)uVar7);
+        R_MarkFragments_AddBModel(param_2,pGVar4,&pcVar3->pose,(ushort)param_3);
       }
     }
-    LVar3 = Profile_EndInternal((double *)0x0);
+    Profile_EndInternal((double *)0x0);
   }
-  __restgprlr_24(LVar3);
   return;
 }
 
 
 // 82431178  FX_GetMarkContext_SurfaceIndex  (renderer/tr_types.h:977)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 int FX_GetMarkContext_SurfaceIndex(GfxMarkContext *param_1)
 
 {
-  char *pcVar1;
-  int iVar2;
-  
-  pcVar1 = (char *)__savegprlr_28(param_1);
-  if (pcVar1 == (char *)0x0) {
+  if (param_1 == (GfxMarkContext *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\../renderer/tr_types.h"
                     ,0x3d2,0,"%s");
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\../renderer/tr_types.h"
                     ,0x3b2,0,"%s");
   }
-  if (*pcVar1 == '\x03') {
+  if (param_1->modelType == '\x03') {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\../renderer/tr_types.h"
                     ,0x3d3,0,"%s");
   }
-  iVar2 = __restgprlr_28(pcVar1[4]);
-  return iVar2;
+  return (int)(param_1->field3_0x4).surfIndex;
 }
 
 
 // 82432ED0  FX_ImpactMark_Generate_AddEntityModel  (EffectsCore/fx_marks.cpp:1030)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 
@@ -1703,95 +1616,89 @@ void FX_ImpactMark_Generate_AddEntityModel
   float fVar1;
   float fVar2;
   float fVar3;
-  LocalClientNum_t LVar4;
-  centity_s *pcVar5;
-  DObj *pDVar6;
-  ulonglong uVar7;
-  double extraout_f1;
-  double dVar8;
-  float fVar9;
+  centity_s *pcVar4;
+  DObj *pDVar5;
+  double dVar6;
+  float fVar7;
   
-  uVar7 = (ulonglong)(int)param_3;
-  LVar4 = __savegprlr_27((double)param_5,param_1);
-  if ((uVar7 & 0xffffffff) != 0x7ff) {
-    dVar8 = extraout_f1;
+  dVar6 = (double)param_5;
+  if (param_3 != 0x7ff) {
     Profile_Begin(0xc2);
-    pcVar5 = CG_GetEntity(LVar4,(int)uVar7);
-    if ((((pcVar5->flags & 1U) != 0) &&
-        (pDVar6 = Com_GetClientDObj((pcVar5->nextState).number,LVar4), pDVar6 != (DObj *)0x0)) &&
-       (fVar9 = DObjGetRadius(pDVar6), fVar1 = (pcVar5->pose).origin[2] - param_4[2],
-       fVar2 = (pcVar5->pose).origin[0] - *param_4, fVar3 = (pcVar5->pose).origin[1] - param_4[1],
+    pcVar4 = CG_GetEntity(param_1,param_3);
+    if ((((pcVar4->flags & 1U) != 0) &&
+        (pDVar5 = Com_GetClientDObj((pcVar4->nextState).number,param_1), pDVar5 != (DObj *)0x0)) &&
+       (fVar7 = DObjGetRadius(pDVar5), fVar1 = (pcVar4->pose).origin[2] - param_4[2],
+       fVar2 = (pcVar4->pose).origin[0] - *param_4, fVar3 = (pcVar4->pose).origin[1] - param_4[1],
        fVar3 * fVar3 + fVar2 * fVar2 + fVar1 * fVar1 <=
-       (float)((double)fVar9 + dVar8) * (float)((double)fVar9 + dVar8))) {
-      if ((uVar7 & 0xffff) != (uVar7 & 0xffffffff)) {
+       (float)((double)fVar7 + dVar6) * (float)((double)fVar7 + dVar6))) {
+      if ((param_3 & 0xffff) != param_3) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_marks.cpp",
                         0x42c,0,"%s\n\t(entityIndex) = %i");
       }
-      R_MarkFragments_AddDObj(param_2,pDVar6,&pcVar5->pose,(ushort)uVar7);
+      R_MarkFragments_AddDObj(param_2,pDVar5,&pcVar4->pose,(ushort)param_3);
     }
-    LVar4 = Profile_EndInternal((double *)0x0);
+    Profile_EndInternal((double *)0x0);
   }
-  __restgprlr_27(LVar4);
   return;
 }
 
 
 // 82431210  FX_MarkContext_DecrementDObjModelIndex  (renderer/tr_types.h:1068)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void FX_MarkContext_DecrementDObjModelIndex(GfxMarkContext *param_1)
 
 {
-  GfxMarkContext *pGVar1;
-  int iVar2;
+  int iVar1;
   
-  pGVar1 = (GfxMarkContext *)__savegprlr_28(param_1);
-  if (pGVar1 == (GfxMarkContext *)0x0) {
+  if (param_1 == (GfxMarkContext *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\../renderer/tr_types.h"
                     ,0x42d,0,"%s");
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\../renderer/tr_types.h"
                     ,0x3b2,0,"%s");
   }
-  if (pGVar1->modelType != '\x03') {
+  if (param_1->modelType != '\x03') {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\../renderer/tr_types.h"
                     ,0x42e,0,"%s");
   }
-  iVar2 = FX_GetMarkContext_DObjModelIndex(pGVar1);
-  if (iVar2 < 1) {
+  iVar1 = FX_GetMarkContext_DObjModelIndex(param_1);
+  if (iVar1 < 1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\../renderer/tr_types.h"
                     ,0x42f,0,"%s");
   }
-  (pGVar1->field3_0x4).surfIndex = (pGVar1->field3_0x4).surfIndex + 0xff;
-  __restgprlr_28();
+  (param_1->field3_0x4).surfIndex = (param_1->field3_0x4).surfIndex + 0xff;
   return;
 }
 
 
 // 824312D8  FX_GetMarkContext_ModelIndex  (renderer/tr_types.h:1076)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 ushort FX_GetMarkContext_ModelIndex(GfxMarkContext *param_1)
 
 {
-  char *pcVar1;
-  ushort uVar2;
-  
-  pcVar1 = (char *)__savegprlr_28(param_1);
-  if (pcVar1 == (char *)0x0) {
+  if (param_1 == (GfxMarkContext *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\../renderer/tr_types.h"
                     ,0x435,0,"%s");
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\../renderer/tr_types.h"
                     ,0x3b2,0,"%s");
   }
-  if ((*pcVar1 != '\0') && (*pcVar1 != '\x01')) {
+  if ((param_1->modelType != '\0') && (param_1->modelType != '\x01')) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\../renderer/tr_types.h"
                     ,0x436,0,"%s");
   }
-  uVar2 = __restgprlr_28(*(undefined2 *)(pcVar1 + 2));
-  return uVar2;
+  return (ushort)param_1->typeSpecificIndex;
 }
 
 
 // 82432FE0  FX_ImpactMark_Generate_AddViewmodel  (EffectsCore/fx_marks.cpp:1080)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -1802,124 +1709,107 @@ void FX_ImpactMark_Generate_AddViewmodel
 {
   DObj *pDVar1;
   float fVar2;
-  float *pfVar3;
+  float fVar3;
   float fVar4;
-  float fVar5;
-  LocalClientNum_t LVar6;
-  WeaponHand *pWVar7;
-  cg_s *pcVar8;
-  int iVar9;
-  longlong lVar10;
-  longlong lVar11;
+  WeaponHand *pWVar5;
+  cg_s *pcVar6;
   int in_r7;
-  double extraout_f1;
-  double dVar12;
-  float fVar13;
+  double dVar7;
+  float fVar8;
   
-  lVar11 = (longlong)(int)param_3;
-  lVar10 = (longlong)(int)param_2;
-  LVar6 = __savegprlr_28((double)param_4,param_1,lVar10,lVar11,param_5);
-  dVar12 = extraout_f1;
+  dVar7 = (double)param_4;
   Profile_Begin(0xc2);
   if (in_r7 != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_marks.cpp",
                     0x44a,0,"%s");
   }
-  pWVar7 = CG_GetLocalClientViewModelHand(LVar6,0);
-  pDVar1 = pWVar7->viewModelDObj;
-  pcVar8 = CG_GetLocalClientGlobals(LVar6);
+  pWVar5 = CG_GetLocalClientViewModelHand(param_1,0);
+  pDVar1 = pWVar5->viewModelDObj;
+  pcVar6 = CG_GetLocalClientGlobals(param_1);
   if ((pDVar1 != (DObj *)0x0) &&
-     (fVar13 = DObjGetRadius(pDVar1), pfVar3 = (float *)lVar11,
-     fVar2 = (pcVar8->viewModelPose).origin[2] - pfVar3[2],
-     fVar4 = (pcVar8->viewModelPose).origin[0] - *pfVar3,
-     fVar5 = (pcVar8->viewModelPose).origin[1] - pfVar3[1],
-     fVar5 * fVar5 + fVar4 * fVar4 + fVar2 * fVar2 <=
-     (float)((double)fVar13 + dVar12) * (float)((double)fVar13 + dVar12))) {
-    R_MarkFragments_AddViewModelDObj((MarkInfo *)lVar10,pDVar1,&pcVar8->viewModelPose);
+     (fVar8 = DObjGetRadius(pDVar1), fVar2 = (pcVar6->viewModelPose).origin[2] - param_3[2],
+     fVar3 = (pcVar6->viewModelPose).origin[0] - *param_3,
+     fVar4 = (pcVar6->viewModelPose).origin[1] - param_3[1],
+     fVar4 * fVar4 + fVar3 * fVar3 + fVar2 * fVar2 <=
+     (float)((double)fVar8 + dVar7) * (float)((double)fVar8 + dVar7))) {
+    R_MarkFragments_AddViewModelDObj(param_2,pDVar1,&pcVar6->viewModelPose);
   }
-  iVar9 = Profile_EndInternal((double *)0x0);
-  __restgprlr_28(iVar9);
+  Profile_EndInternal((double *)0x0);
   return;
 }
 
 
 // 82431378  FX_GetMarkContext_EntNum  (renderer/tr_types.h:1092)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 ushort FX_GetMarkContext_EntNum(GfxMarkContext *param_1)
 
 {
-  char *pcVar1;
-  ushort uVar2;
-  
-  pcVar1 = (char *)__savegprlr_28(param_1);
-  if (pcVar1 == (char *)0x0) {
+  if (param_1 == (GfxMarkContext *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\../renderer/tr_types.h"
                     ,0x445,0,"%s");
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\../renderer/tr_types.h"
                     ,0x3b2,0,"%s");
   }
-  if ((*pcVar1 != '\x03') && (*pcVar1 != '\x02')) {
+  if ((param_1->modelType != '\x03') && (param_1->modelType != '\x02')) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\../renderer/tr_types.h"
                     ,0x446,0,"%s");
   }
-  uVar2 = __restgprlr_28(*(undefined2 *)(pcVar1 + 2));
-  return uVar2;
+  return (ushort)param_1->typeSpecificIndex;
 }
 
 
 // 82431418  FX_SetMarkContext_EntNum  (renderer/tr_types.h:1099)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void FX_SetMarkContext_EntNum(GfxMarkContext *param_1,ushort param_2)
 
 {
-  GfxMarkContext *pGVar1;
-  ushort uVar2;
-  ulonglong uVar3;
+  ushort uVar1;
   
-  uVar3 = (ulonglong)(short)param_2;
-  pGVar1 = (GfxMarkContext *)__savegprlr_27(param_1);
-  if (pGVar1 == (GfxMarkContext *)0x0) {
+  if (param_1 == (GfxMarkContext *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\../renderer/tr_types.h"
                     ,0x44c,0,"%s");
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\../renderer/tr_types.h"
                     ,0x3b2,0,"%s");
   }
-  if ((pGVar1->modelType != '\x03') && (pGVar1->modelType != '\x02')) {
+  if ((param_1->modelType != '\x03') && (param_1->modelType != '\x02')) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\../renderer/tr_types.h"
                     ,0x44d,0,"%s");
   }
-  pGVar1->typeSpecificIndex = SUB82(uVar3,0);
-  uVar2 = FX_GetMarkContext_EntNum(pGVar1);
-  if ((uVar3 & 0xffff) != (ulonglong)uVar2) {
+  param_1->typeSpecificIndex = (<unnamed_type_typeSpecificIndex>)param_2;
+  uVar1 = FX_GetMarkContext_EntNum(param_1);
+  if (param_2 != uVar1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\../renderer/tr_types.h"
                     ,0x450,0,"%s\n\t(entnum) = %i");
   }
-  __restgprlr_27();
   return;
 }
 
 
 // 824314F8  FX_GetMarkContext_GlassPieceIndex  (renderer/tr_types.h:1108)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 ushort FX_GetMarkContext_GlassPieceIndex(GfxMarkContext *param_1)
 
 {
-  char *pcVar1;
-  ushort uVar2;
-  
-  pcVar1 = (char *)__savegprlr_28(param_1);
-  if (pcVar1 == (char *)0x0) {
+  if (param_1 == (GfxMarkContext *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\../renderer/tr_types.h"
                     ,0x455,0,"%s");
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\../renderer/tr_types.h"
                     ,0x3b2,0,"%s");
   }
-  if (*pcVar1 != '\x04') {
+  if (param_1->modelType != '\x04') {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\../renderer/tr_types.h"
                     ,0x456,0,"%s");
   }
-  uVar2 = __restgprlr_28(*(undefined2 *)(pcVar1 + 2));
-  return uVar2;
+  return (ushort)param_1->typeSpecificIndex;
 }
 
 
@@ -1946,6 +1836,8 @@ void FX_ImpactMark_Generate_Callback
 
 // 824373F0  FX_ImpactMark_Generate  (EffectsCore/fx_marks.cpp:1155)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void FX_ImpactMark_Generate
@@ -1954,11 +1846,9 @@ void FX_ImpactMark_Generate
                uchar *param_9,float param_10,uint param_11,bool param_12,bool param_13,int param_14)
 
 {
-  MarkInfo *pMVar1;
-  FxSystem *pFVar2;
-  float *pfVar3;
-  double extraout_f1;
-  double dVar4;
+  FxSystem *pFVar1;
+  float *pfVar2;
+  double dVar3;
   uint in_stack_0000005c;
   bool in_stack_00000067;
   char in_stack_0000006f;
@@ -1970,28 +1860,27 @@ void FX_ImpactMark_Generate
   uchar local_e60;
   FxMarkTri aFStack_e50 [261];
   
-  pMVar1 = (MarkInfo *)__savegprlr_23((double)param_8,(double)param_10,param_1);
-  dVar4 = extraout_f1;
-  pFVar2 = FX_GetSystem(param_2);
-  local_e68 = (float)dVar4;
-  local_e70 = param_2;
-  local_e6c = param_4;
-  local_e64 = param_9;
-  local_e60 = param_5;
+  dVar3 = (double)param_8;
+  pFVar1 = FX_GetSystem(param_2);
+  local_e68 = (float)dVar3;
   if (((fx_marks->current).enabled != false) &&
      (((param_3 != MARK_FRAGMENTS_AGAINST_MODELS || ((fx_marks_ents->current).enabled != false)) ||
       ((fx_marks_smodels->current).enabled != false)))) {
-    pfVar3 = (pFVar2->camera).viewOffset;
-    R_MarkFragments_Begin(pMVar1,param_3,param_7,pfVar3,param_4,in_stack_00000067,in_stack_00000074)
-    ;
+    pfVar2 = (pFVar1->camera).viewOffset;
+    local_e70 = param_2;
+    local_e6c = param_4;
+    local_e64 = param_9;
+    local_e60 = param_5;
+    R_MarkFragments_Begin
+              (param_1,param_3,param_7,pfVar2,param_4,in_stack_00000067,in_stack_00000074);
     if ((fx_marks_ents->current).enabled != false) {
       if (param_3 == MARK_FRAGMENTS_AGAINST_MODELS) {
         if (in_stack_0000006f == '\0') {
           FX_ImpactMark_Generate_AddEntityModel
-                    (param_2,pMVar1,in_stack_0000005c,param_6,(float)dVar4);
+                    (param_2,param_1,in_stack_0000005c,param_6,(float)dVar3);
         }
         else {
-          FX_ImpactMark_Generate_AddViewmodel(param_2,pMVar1,param_6,(float)dVar4,(int)pfVar3);
+          FX_ImpactMark_Generate_AddViewmodel(param_2,param_1,param_6,(float)dVar3,(int)pfVar2);
         }
       }
       else {
@@ -1999,22 +1888,23 @@ void FX_ImpactMark_Generate
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_marks.cpp"
                           ,0x4a9,0,"%s\n\t(markAgainst) = %i");
         }
-        FX_ImpactMark_Generate_AddEntityBrush(param_2,pMVar1,in_stack_0000005c,param_6,(float)dVar4)
-        ;
+        FX_ImpactMark_Generate_AddEntityBrush
+                  (param_2,param_1,in_stack_0000005c,param_6,(float)dVar3);
       }
     }
     Sys_EnterCriticalSection(CRITSECT_GENERATE_MARK);
-    R_MarkFragments_Go(pMVar1,FX_ImpactMark_Generate_Callback,&local_e70,0xff,aFStack_e50,0x2fd,
+    R_MarkFragments_Go(param_1,FX_ImpactMark_Generate_Callback,&local_e70,0xff,aFStack_e50,0x2fd,
                        g_fxMarkPoints);
     Sys_LeaveCriticalSection(CRITSECT_GENERATE_MARK);
   }
-  __restgprlr_23();
   return;
 }
 
 
 // 82437588  FX_ImpactMark  (EffectsCore/fx_marks.cpp:1220)
 
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void FX_ImpactMark(LocalClientNum_t param_1,Material *param_2,Material *param_3,uchar param_4,
@@ -2022,13 +1912,11 @@ void FX_ImpactMark(LocalClientNum_t param_1,Material *param_2,Material *param_3,
                   uint param_10,bool param_11,bool param_12,int param_13)
 
 {
-  LocalClientNum_t LVar1;
-  FxMarksSystem *pFVar2;
-  double extraout_f1;
+  FxMarksSystem *pFVar1;
+  double dVar2;
   double dVar3;
   double dVar4;
-  double dVar5;
-  float fVar6;
+  float fVar5;
   char in_stack_00000067;
   uint in_stack_ffffb9f8;
   undefined1 in_stack_ffffb9ff;
@@ -2042,58 +1930,56 @@ void FX_ImpactMark(LocalClientNum_t param_1,Material *param_2,Material *param_3,
   uint auStack_4070 [2048];
   uint auStack_2070 [2076];
   
-  dVar3 = (double)param_9;
-  LVar1 = __savegprlr_22((double)param_7,param_1);
-  dVar4 = extraout_f1;
-  dVar5 = dVar3;
-  pFVar2 = FX_GetMarksSystem(LVar1);
-  if ((((fx_marks->current).enabled != false) && (pFVar2->noMarks == false)) &&
-     (0.10000000149011612 <= dVar5)) {
-    if (dVar5 <= 0.0) {
+  dVar2 = (double)param_9;
+  dVar3 = (double)param_7;
+  dVar4 = dVar2;
+  pFVar1 = FX_GetMarksSystem(param_1);
+  if ((((fx_marks->current).enabled != false) && (pFVar1->noMarks == false)) &&
+     (0.10000000149011612 <= dVar4)) {
+    if (dVar4 <= 0.0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_marks.cpp",
                       0x4d9,0,"%s\n\t(radius) = %g");
     }
     UnitQuatToAxis(param_6,&afStack_4590);
     RotatePointAroundVector
-              (afStack_4578,afStack_4590,afStack_4584,(float)(dVar4 * 57.2957763671875));
+              (afStack_4578,afStack_4590,afStack_4584,(float)(dVar3 * 57.2957763671875));
     Vec3Cross(afStack_4590,afStack_4578,afStack_4584);
     local_4560.bspSetBits = auStack_4070;
     local_4560.smodelSetBits = auStack_2070;
     local_4560.sphere.origin[0] = *param_5;
     local_4560.sphere.origin[1] = param_5[1];
-    local_4560.sphere.radiusSq = (float)(dVar5 * dVar5);
-    dVar4 = (double)local_4560.sphere.radiusSq;
+    local_4560.sphere.radiusSq = (float)(dVar4 * dVar4);
+    dVar3 = (double)local_4560.sphere.radiusSq;
     local_4560.sphere.origin[2] = param_5[2];
-    local_4560.sphere.radius = (float)dVar5;
+    local_4560.sphere.radius = (float)dVar4;
     R_SetupSphereStaticGeo(&local_4560);
     local_44c0.bspSetBits = auStack_4070;
     local_44c0.smodelSetBits = auStack_2070;
     local_44c0.bounds.origin[0] = *param_5;
     local_44c0.bounds.origin[1] = param_5[1];
     local_44c0.bounds.origin[2] = param_5[2];
-    local_44c0.bounds.radius = (float)dVar5;
-    local_44c0.bounds.radiusSq = (float)dVar4;
+    local_44c0.bounds.radius = (float)dVar4;
+    local_44c0.bounds.radiusSq = (float)dVar3;
     Profile_Begin(0xc0);
     if (in_stack_00000067 == '\0') {
-      fVar6 = (float)dVar3;
-      dVar3 = (double)fVar6;
+      fVar5 = (float)dVar2;
+      dVar2 = (double)fVar5;
       FX_ImpactMark_Generate
-                (&local_44c0,LVar1,MARK_FRAGMENTS_AGAINST_BRUSHES,param_2,param_4,param_5,
-                 &afStack_4590,(float)dVar5,(uchar *)param_10,fVar6,in_stack_ffffb9f8,
+                (&local_44c0,param_1,MARK_FRAGMENTS_AGAINST_BRUSHES,param_2,param_4,param_5,
+                 &afStack_4590,(float)dVar4,(uchar *)param_10,fVar5,in_stack_ffffb9f8,
                  (bool)in_stack_ffffb9ff,(bool)in_stack_ffffba03,in_stack_ffffba04);
     }
-    pFVar2 = (FxMarksSystem *)Profile_EndInternal((double *)0x0);
+    Profile_EndInternal((double *)0x0);
     if (((fx_marks_smodels->current).enabled != false) ||
        ((fx_marks_ents->current).enabled != false)) {
       Profile_Begin(0xc1);
       FX_ImpactMark_Generate
-                (&local_44c0,LVar1,MARK_FRAGMENTS_AGAINST_MODELS,param_3,param_4,param_5,
-                 &afStack_4590,(float)dVar5,(uchar *)param_10,(float)dVar3,in_stack_ffffb9f8,
+                (&local_44c0,param_1,MARK_FRAGMENTS_AGAINST_MODELS,param_3,param_4,param_5,
+                 &afStack_4590,(float)dVar4,(uchar *)param_10,(float)dVar2,in_stack_ffffb9f8,
                  (bool)in_stack_ffffb9ff,(bool)in_stack_ffffba03,in_stack_ffffba04);
-      pFVar2 = (FxMarksSystem *)Profile_EndInternal((double *)0x0);
+      Profile_EndInternal((double *)0x0);
     }
   }
-  __restgprlr_22(pFVar2);
   return;
 }
 
@@ -2118,6 +2004,8 @@ void FX_BeginMarks(int param_1,int param_2)
 
 // 824377C8  FX_CreateImpactMark  (EffectsCore/fx_marks.cpp:1290)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void FX_CreateImpactMark(LocalClientNum_t param_1,FxElemDef *param_2,FxSpatialFrame *param_3,
@@ -2125,14 +2013,10 @@ void FX_CreateImpactMark(LocalClientNum_t param_1,FxElemDef *param_2,FxSpatialFr
 
 {
   uchar *puVar1;
-  int iVar2;
-  LocalClientNum_t LVar3;
-  FxMarksSystem *pFVar4;
-  FxElemVisualState *pFVar5;
-  ulonglong uVar6;
-  FxElemPreVisualState *pFVar7;
-  ulonglong uVar8;
-  uchar *puVar9;
+  FxMarksSystem *pFVar2;
+  FxElemVisualState *pFVar3;
+  FxElemPreVisualState *pFVar4;
+  uchar *puVar5;
   undefined1 in_stack_fffffefb;
   undefined1 in_stack_fffffeff;
   int in_stack_ffffff00;
@@ -2141,38 +2025,37 @@ void FX_CreateImpactMark(LocalClientNum_t param_1,FxElemDef *param_2,FxSpatialFr
   float local_84;
   FxElemPreVisualState local_70 [4];
   
-  uVar8 = (ulonglong)param_6;
-  uVar6 = (ulonglong)param_4;
-  LVar3 = __savegprlr_23(param_1);
   if (fx_rewindToFinish == 0) {
-    pFVar7 = (FxElemPreVisualState *)uVar6;
+    pFVar4 = (FxElemPreVisualState *)param_4;
     Profile_Begin(0xbf);
-    if (((uVar8 & 0xff) == 0) ||
-       (pFVar4 = FX_GetMarksSystem(LVar3), pFVar4->viewmodelMarksCount[param_8] < 0x10)) {
-      pFVar5 = (FxElemVisualState *)0x0;
-      FX_SetupVisualState(param_2,(FxEffect *)0x0,(int)(FxElemPreVisualState *)uVar6,0.0,pFVar7);
-      iVar2 = (int)((uVar6 & 0xffffffff) << 2);
-      local_84 = (local_70[0].refState[1].amplitude.size[0] * *(float *)(&DAT_82066b30 + iVar2) +
-                 local_70[0].refState[1].base.size[0]) * local_70[0].sampleLerp +
-                 (((local_70[0].refState)->amplitude).size[0] * *(float *)(&DAT_82066b30 + iVar2) +
-                 ((local_70[0].refState)->base).size[0]) * local_70[0].sampleLerpInv;
-      FX_EvaluateVisualState(local_70,1.0,pFVar5);
-      puVar1 = (uchar *)(((int)((uint)*(ushort *)(&DAT_82066b1e + iVar2) *
+    if ((!param_6) ||
+       (pFVar2 = FX_GetMarksSystem(param_1), pFVar2->viewmodelMarksCount[param_8] < 0x10)) {
+      pFVar3 = (FxElemVisualState *)0x0;
+      FX_SetupVisualState(param_2,(FxEffect *)0x0,param_4,0.0,pFVar4);
+      local_84 = (local_70[0].refState[1].amplitude.size[0] *
+                  *(float *)(&DAT_82066b30 + param_4 * 4) + local_70[0].refState[1].base.size[0]) *
+                 local_70[0].sampleLerp +
+                 (((local_70[0].refState)->amplitude).size[0] *
+                  *(float *)(&DAT_82066b30 + param_4 * 4) + ((local_70[0].refState)->base).size[0])
+                 * local_70[0].sampleLerpInv;
+      FX_EvaluateVisualState(local_70,1.0,pFVar3);
+      puVar1 = (uchar *)(((int)((uint)*(ushort *)(&DAT_82066b1e + param_4 * 4) *
                                (uint)param_2->visualCount) >> 0x10) * 8);
-      puVar9 = puVar1 + (int)(param_2->visuals).markArray;
-      FX_ImpactMark(LVar3,*(Material **)(puVar9 + 4),*(Material **)puVar9,param_2->fadeInfo,
+      puVar5 = puVar1 + (int)(param_2->visuals).markArray;
+      FX_ImpactMark(param_1,*(Material **)(puVar5 + 4),*(Material **)puVar5,param_2->fadeInfo,
                     param_3->origin,param_3->quat,local_88,puVar1,local_84,(uint)auStack_90,
                     (bool)in_stack_fffffefb,(bool)in_stack_fffffeff,in_stack_ffffff00);
     }
-    LVar3 = Profile_EndInternal((double *)0x0);
+    Profile_EndInternal((double *)0x0);
   }
-  __restgprlr_23(LVar3);
   return;
 }
 
 
 // 82433130  FX_MarkEntDetachAll  (EffectsCore/fx_marks.cpp:1330)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void FX_MarkEntDetachAll(LocalClientNum_t param_1,int param_2)
@@ -2180,172 +2063,10 @@ void FX_MarkEntDetachAll(LocalClientNum_t param_1,int param_2)
 {
   ushort uVar1;
   uint uVar2;
-  int iVar3;
-  FxMarksSystem *pFVar4;
-  longlong lVar5;
-  
-  lVar5 = (longlong)param_2;
-  iVar3 = __savegprlr_25(param_1);
-  pFVar4 = FX_GetMarksSystem(iVar3);
-  iVar3 = (int)((lVar5 + 5U & 0xffffffff) << 1);
-  uVar1 = *(ushort *)((int)pFVar4->entFirstMarkHandles + iVar3 + -10);
-  while (uVar2 = (uint)uVar1, uVar2 != 0xffff) {
-    if (0x1ff < uVar2) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\fx_marks.h",0xad
-                      ,0,"handle doesn\'t index FX_MARKS_LIMIT\n\t%i not in [0, %i)");
-    }
-    if (pFVar4 == (FxMarksSystem *)0x0) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\fx_marks.h",0xae
-                      ,0,"%s");
-    }
-    FX_FreeMark(pFVar4,pFVar4->marks + uVar2);
-    uVar1 = *(ushort *)((int)pFVar4->entFirstMarkHandles + iVar3 + -10);
-  }
-  __restgprlr_25();
-  return;
-}
-
-
-// 824331F0  FX_MarkGlassDetachAll  (EffectsCore/fx_marks.cpp:1338)
-
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void FX_MarkGlassDetachAll(LocalClientNum_t param_1,int param_2)
-
-{
-  ushort uVar1;
-  FxMark *pFVar2;
-  uint uVar3;
-  int iVar4;
-  FxMarksSystem *pFVar5;
-  ushort uVar6;
-  
-  iVar4 = __savegprlr_26(param_1);
-  pFVar5 = FX_GetMarksSystem(iVar4);
-  uVar1 = pFVar5->firstGlassMarkHandle;
-  while (uVar3 = (uint)uVar1, uVar3 != 0xffff) {
-    if (0x1ff < uVar3) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\fx_marks.h",0xad
-                      ,0,"handle doesn\'t index FX_MARKS_LIMIT\n\t%i not in [0, %i)");
-    }
-    pFVar2 = pFVar5->marks + uVar3;
-    uVar1 = pFVar2->nextMark;
-    uVar6 = FX_GetMarkContext_GlassPieceIndex(&pFVar2->context);
-    if ((uint)uVar6 == param_2) {
-      FX_FreeMark(pFVar5,pFVar2);
-    }
-  }
-  __restgprlr_26();
-  return;
-}
-
-
-// 82433290  FX_MarkEntDetachAllOfType  (EffectsCore/fx_marks.cpp:1359)
-
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-
-void FX_MarkEntDetachAllOfType(LocalClientNum_t param_1,int param_2,int param_3)
-
-{
-  ushort uVar1;
-  uint uVar2;
-  int iVar3;
-  FxMarksSystem *pFVar4;
-  longlong lVar5;
-  FxMark *pFVar6;
-  
-  lVar5 = (longlong)param_2;
-  iVar3 = __savegprlr_21(param_1);
-  pFVar4 = FX_GetMarksSystem(iVar3);
-  uVar1 = *(ushort *)
-           ((int)pFVar4->entFirstMarkHandles + (int)((lVar5 + 5U & 0xffffffff) << 1) + -10);
-  while (uVar2 = (uint)uVar1, uVar2 != 0xffff) {
-    if (0x1ff < uVar2) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\fx_marks.h",0xad
-                      ,0,"handle doesn\'t index FX_MARKS_LIMIT\n\t%i not in [0, %i)");
-    }
-    if (pFVar4 == (FxMarksSystem *)0x0) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\fx_marks.h",0xae
-                      ,0,"%s");
-    }
-    pFVar6 = pFVar4->marks + uVar2;
-    uVar1 = pFVar6->nextMark;
-    if (&pFVar6->context == (GfxMarkContext *)0x0) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\../renderer/tr_types.h"
-                      ,0x3b2,0,"%s");
-    }
-    if ((uint)(pFVar6->context).modelType == param_3) {
-      FX_FreeMark(pFVar4,pFVar6);
-    }
-  }
-  __restgprlr_21();
-  return;
-}
-
-
-// 82433390  FX_MarkEntUpdateBegin  (EffectsCore/fx_marks.cpp:1383)
-
-void FX_MarkEntUpdateBegin
-               (FxMarkDObjUpdateContext *param_1,DObj *param_2,bool param_3,ushort param_4)
-
-{
-  int iVar1;
-  int iVar2;
-  XModel *pXVar4;
-  char *pcVar5;
-  ulonglong uVar6;
-  undefined4 *puVar7;
-  int iVar8;
-  DObj *pDVar3;
-  
-  uVar6 = (ulonglong)(int)param_2;
-  iVar1 = __savegprlr_25(param_1);
-  if ((uVar6 & 0xffffffff) == 0) {
-    *(bool *)(iVar1 + 0x104) = param_3;
-    *(ushort *)(iVar1 + 0x106) = param_4;
-    *(undefined4 *)(iVar1 + 0x100) = 0;
-    __restgprlr_25();
-    return;
-  }
-  pDVar3 = (DObj *)uVar6;
-  iVar2 = DObjGetNumModels(pDVar3);
-  iVar8 = 0;
-  *(int *)(iVar1 + 0x100) = iVar2;
-  if (iVar2 != 0) {
-    puVar7 = (undefined4 *)(iVar1 + 0x7c);
-    do {
-      pXVar4 = DObjGetModel(pDVar3,iVar8);
-      puVar7[-0x1f] = pXVar4;
-      pcVar5 = DObjGetModelParentBoneName(pDVar3,iVar8);
-      iVar8 = iVar8 + 1;
-      puVar7 = puVar7 + 1;
-      *puVar7 = pcVar5;
-    } while (iVar8 != iVar2);
-  }
-  *(bool *)(iVar1 + 0x104) = param_3;
-  *(ushort *)(iVar1 + 0x106) = param_4;
-  __restgprlr_25();
-  return;
-}
-
-
-// 82433428  FX_MarkEntDetachModel  (EffectsCore/fx_marks.cpp:1408)
-
-void FX_MarkEntDetachModel(FxMarksSystem *param_1,int param_2,int param_3)
-
-{
-  ushort uVar1;
-  uint uVar2;
   FxMarksSystem *pFVar3;
-  int iVar4;
-  longlong lVar5;
-  GfxMarkContext *pGVar6;
-  FxMark *pFVar7;
   
-  lVar5 = (longlong)param_2;
-  pFVar3 = (FxMarksSystem *)__savegprlr_18(param_1);
-  uVar1 = *(ushort *)
-           ((int)pFVar3->entFirstMarkHandles + (int)((lVar5 + 5U & 0xffffffff) << 1) + -10);
+  pFVar3 = FX_GetMarksSystem(param_1);
+  uVar1 = pFVar3->entFirstMarkHandles[param_2];
   while (uVar2 = (uint)uVar1, uVar2 != 0xffff) {
     if (0x1ff < uVar2) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\fx_marks.h",0xad
@@ -2355,38 +2076,182 @@ void FX_MarkEntDetachModel(FxMarksSystem *param_1,int param_2,int param_3)
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\fx_marks.h",0xae
                       ,0,"%s");
     }
-    pFVar7 = pFVar3->marks + uVar2;
-    pGVar6 = &pFVar7->context;
-    uVar1 = pFVar7->nextMark;
-    if (pGVar6 == (GfxMarkContext *)0x0) {
+    FX_FreeMark(pFVar3,pFVar3->marks + uVar2);
+    uVar1 = pFVar3->entFirstMarkHandles[param_2];
+  }
+  return;
+}
+
+
+// 824331F0  FX_MarkGlassDetachAll  (EffectsCore/fx_marks.cpp:1338)
+
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void FX_MarkGlassDetachAll(LocalClientNum_t param_1,int param_2)
+
+{
+  ushort uVar1;
+  FxMark *pFVar2;
+  uint uVar3;
+  FxMarksSystem *pFVar4;
+  ushort uVar5;
+  
+  pFVar4 = FX_GetMarksSystem(param_1);
+  uVar1 = pFVar4->firstGlassMarkHandle;
+  while (uVar3 = (uint)uVar1, uVar3 != 0xffff) {
+    if (0x1ff < uVar3) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\fx_marks.h",0xad
+                      ,0,"handle doesn\'t index FX_MARKS_LIMIT\n\t%i not in [0, %i)");
+    }
+    pFVar2 = pFVar4->marks + uVar3;
+    uVar1 = pFVar2->nextMark;
+    uVar5 = FX_GetMarkContext_GlassPieceIndex(&pFVar2->context);
+    if ((uint)uVar5 == param_2) {
+      FX_FreeMark(pFVar4,pFVar2);
+    }
+  }
+  return;
+}
+
+
+// 82433290  FX_MarkEntDetachAllOfType  (EffectsCore/fx_marks.cpp:1359)
+
+/* WARNING: Function: __savegprlr_21 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_21 replaced with injection: xenon_save_restore */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+
+void FX_MarkEntDetachAllOfType(LocalClientNum_t param_1,int param_2,int param_3)
+
+{
+  ushort uVar1;
+  uint uVar2;
+  FxMarksSystem *pFVar3;
+  FxMark *pFVar4;
+  
+  pFVar3 = FX_GetMarksSystem(param_1);
+  uVar1 = pFVar3->entFirstMarkHandles[param_2];
+  while (uVar2 = (uint)uVar1, uVar2 != 0xffff) {
+    if (0x1ff < uVar2) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\fx_marks.h",0xad
+                      ,0,"handle doesn\'t index FX_MARKS_LIMIT\n\t%i not in [0, %i)");
+    }
+    if (pFVar3 == (FxMarksSystem *)0x0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\fx_marks.h",0xae
+                      ,0,"%s");
+    }
+    pFVar4 = pFVar3->marks + uVar2;
+    uVar1 = pFVar4->nextMark;
+    if (&pFVar4->context == (GfxMarkContext *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\../renderer/tr_types.h"
                       ,0x3b2,0,"%s");
     }
-    if (pGVar6->modelType == '\x03') {
-      iVar4 = FX_GetMarkContext_DObjModelIndex(pGVar6);
-      if (iVar4 == param_3) {
-        if (pFVar7->timeDrawn == -1) {
+    if ((uint)(pFVar4->context).modelType == param_3) {
+      FX_FreeMark(pFVar3,pFVar4);
+    }
+  }
+  return;
+}
+
+
+// 82433390  FX_MarkEntUpdateBegin  (EffectsCore/fx_marks.cpp:1383)
+
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
+
+void FX_MarkEntUpdateBegin
+               (FxMarkDObjUpdateContext *param_1,DObj *param_2,bool param_3,ushort param_4)
+
+{
+  int iVar1;
+  XModel *pXVar2;
+  XModel **ppXVar3;
+  int iVar4;
+  
+  if (param_2 == (DObj *)0x0) {
+    param_1->isBrush = param_3;
+    param_1->brushIndex = param_4;
+    param_1->modelCount = 0;
+    return;
+  }
+  iVar1 = DObjGetNumModels(param_2);
+  iVar4 = 0;
+  param_1->modelCount = iVar1;
+  if (iVar1 != 0) {
+    ppXVar3 = param_1->models + 0x1f;
+    do {
+      pXVar2 = DObjGetModel(param_2,iVar4);
+      ((FxMarkDObjUpdateContext *)(ppXVar3 + -0x1f))->models[0] = pXVar2;
+      pXVar2 = (XModel *)DObjGetModelParentBoneName(param_2,iVar4);
+      iVar4 = iVar4 + 1;
+      ppXVar3 = ppXVar3 + 1;
+      *ppXVar3 = pXVar2;
+    } while (iVar4 != iVar1);
+  }
+  param_1->isBrush = param_3;
+  param_1->brushIndex = param_4;
+  return;
+}
+
+
+// 82433428  FX_MarkEntDetachModel  (EffectsCore/fx_marks.cpp:1408)
+
+/* WARNING: Function: __savegprlr_18 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_18 replaced with injection: xenon_save_restore */
+
+void FX_MarkEntDetachModel(FxMarksSystem *param_1,int param_2,int param_3)
+
+{
+  ushort uVar1;
+  uint uVar2;
+  int iVar3;
+  GfxMarkContext *pGVar4;
+  FxMark *pFVar5;
+  
+  uVar1 = param_1->entFirstMarkHandles[param_2];
+  while (uVar2 = (uint)uVar1, uVar2 != 0xffff) {
+    if (0x1ff < uVar2) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\fx_marks.h",0xad
+                      ,0,"handle doesn\'t index FX_MARKS_LIMIT\n\t%i not in [0, %i)");
+    }
+    if (param_1 == (FxMarksSystem *)0x0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\fx_marks.h",0xae
+                      ,0,"%s");
+    }
+    pFVar5 = param_1->marks + uVar2;
+    pGVar4 = &pFVar5->context;
+    uVar1 = pFVar5->nextMark;
+    if (pGVar4 == (GfxMarkContext *)0x0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\../renderer/tr_types.h"
+                      ,0x3b2,0,"%s");
+    }
+    if (pGVar4->modelType == '\x03') {
+      iVar3 = FX_GetMarkContext_DObjModelIndex(pGVar4);
+      if (iVar3 == param_3) {
+        if (pFVar5->timeDrawn == -1) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_marks.cpp"
                           ,0x594,0,"%s");
         }
-        FX_FreeMark(pFVar3,pFVar7);
-        if (pFVar7->timeDrawn != -1) {
+        FX_FreeMark(param_1,pFVar5);
+        if (pFVar5->timeDrawn != -1) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_marks.cpp"
                           ,0x596,0,"%s");
         }
       }
-      else if (param_3 < iVar4) {
-        FX_MarkContext_DecrementDObjModelIndex(pGVar6);
+      else if (param_3 < iVar3) {
+        FX_MarkContext_DecrementDObjModelIndex(pGVar4);
       }
     }
   }
-  __restgprlr_18();
   return;
 }
 
 
 // 824335A0  FX_MarkEntUpdateEndDObj  (EffectsCore/fx_marks.cpp:1441)
 
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void FX_MarkEntUpdateEndDObj
@@ -2402,184 +2267,157 @@ void FX_MarkEntUpdateEndDObj
   int iVar7;
   XModel *pXVar8;
   char *pcVar9;
-  longlong lVar10;
+  int iVar10;
   int iVar11;
   int iVar12;
-  int iVar13;
-  GfxMarkContext *pGVar14;
-  longlong lVar15;
-  FxMark *pFVar16;
+  GfxMarkContext *pGVar13;
+  FxMark *pFVar14;
   
-  lVar10 = (longlong)param_3;
-  lVar15 = (longlong)(int)param_1;
-  __savegprlr();
   pFVar6 = FX_GetMarksSystem(param_2);
-  iVar2 = *(int *)((int)lVar15 + 0x100);
+  iVar2 = param_1->modelCount;
   iVar7 = DObjGetNumModels(param_4);
-  iVar13 = 0;
   iVar12 = 0;
   iVar11 = 0;
+  iVar10 = 0;
   if (iVar2 != 0) {
-    while (iVar13 != iVar7) {
-      pXVar3 = (XModel *)*(int *)lVar15;
-      pXVar8 = DObjGetModel(param_4,iVar13);
+    while (iVar12 != iVar7) {
+      pXVar3 = param_1->models[0];
+      pXVar8 = DObjGetModel(param_4,iVar12);
       if ((pXVar8 == pXVar3) &&
-         (pcVar4 = (char *)((int *)lVar15)[0x20],
-         pcVar9 = DObjGetModelParentBoneName(param_4,iVar13), pcVar9 == pcVar4)) {
-        iVar13 = iVar13 + 1;
-      }
-      else {
-        FX_MarkEntDetachModel(pFVar6,(int)lVar10,iVar11 - iVar12);
+         (pcVar4 = param_1->modelParentBones[0], pcVar9 = DObjGetModelParentBoneName(param_4,iVar12)
+         , pcVar9 == pcVar4)) {
         iVar12 = iVar12 + 1;
       }
-      iVar11 = iVar11 + 1;
-      lVar15 = lVar15 + 4;
-      if (iVar11 == iVar2) {
-        __restgprlr();
+      else {
+        FX_MarkEntDetachModel(pFVar6,param_3,iVar10 - iVar11);
+        iVar11 = iVar11 + 1;
+      }
+      iVar10 = iVar10 + 1;
+      param_1 = (FxMarkDObjUpdateContext *)(param_1->models + 1);
+      if (iVar10 == iVar2) {
         return;
       }
     }
-    if (iVar11 != iVar2) {
-      do {
-        uVar1 = *(ushort *)
-                 ((int)pFVar6->entFirstMarkHandles + (int)((lVar10 + 5U & 0xffffffff) << 1) + -10);
-        while (uVar5 = (uint)uVar1, uVar5 != 0xffff) {
-          if (0x1ff < uVar5) {
-            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\fx_marks.h"
-                            ,0xad,0,"handle doesn\'t index FX_MARKS_LIMIT\n\t%i not in [0, %i)");
-          }
-          if (pFVar6 == (FxMarksSystem *)0x0) {
-            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\fx_marks.h"
-                            ,0xae,0,"%s");
-          }
-          pFVar16 = pFVar6->marks + uVar5;
-          pGVar14 = &pFVar16->context;
-          uVar1 = pFVar16->nextMark;
-          if (pGVar14 == (GfxMarkContext *)0x0) {
-            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\../renderer/tr_types.h"
-                            ,0x3b2,0,"%s");
-          }
-          if (pGVar14->modelType == '\x03') {
-            iVar7 = FX_GetMarkContext_DObjModelIndex(pGVar14);
-            if (iVar7 == iVar11 - iVar12) {
-              if (pFVar16->timeDrawn == -1) {
-                MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_marks.cpp"
-                                ,0x594,0,"%s");
-              }
-              FX_FreeMark(pFVar6,pFVar16);
-              if (pFVar16->timeDrawn != -1) {
-                MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_marks.cpp"
-                                ,0x596,0,"%s");
-              }
+    for (; iVar10 != iVar2; iVar10 = iVar10 + 1) {
+      uVar1 = pFVar6->entFirstMarkHandles[param_3];
+      while (uVar5 = (uint)uVar1, uVar5 != 0xffff) {
+        if (0x1ff < uVar5) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\fx_marks.h",
+                          0xad,0,"handle doesn\'t index FX_MARKS_LIMIT\n\t%i not in [0, %i)");
+        }
+        if (pFVar6 == (FxMarksSystem *)0x0) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\fx_marks.h",
+                          0xae,0,"%s");
+        }
+        pFVar14 = pFVar6->marks + uVar5;
+        pGVar13 = &pFVar14->context;
+        uVar1 = pFVar14->nextMark;
+        if (pGVar13 == (GfxMarkContext *)0x0) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\../renderer/tr_types.h"
+                          ,0x3b2,0,"%s");
+        }
+        if (pGVar13->modelType == '\x03') {
+          iVar7 = FX_GetMarkContext_DObjModelIndex(pGVar13);
+          if (iVar7 == iVar10 - iVar11) {
+            if (pFVar14->timeDrawn == -1) {
+              MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_marks.cpp"
+                              ,0x594,0,"%s");
             }
-            else if (iVar11 - iVar12 < iVar7) {
-              FX_MarkContext_DecrementDObjModelIndex(pGVar14);
+            FX_FreeMark(pFVar6,pFVar14);
+            if (pFVar14->timeDrawn != -1) {
+              MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_marks.cpp"
+                              ,0x596,0,"%s");
             }
+          }
+          else if (iVar10 - iVar11 < iVar7) {
+            FX_MarkContext_DecrementDObjModelIndex(pGVar13);
           }
         }
-        iVar11 = iVar11 + 1;
-        iVar12 = iVar12 + 1;
-      } while (iVar11 != iVar2);
+      }
+      iVar11 = iVar11 + 1;
     }
   }
-  __restgprlr();
   return;
 }
 
 
 // 824337D8  FX_MarkEntUpdateEnd  (EffectsCore/fx_marks.cpp:1482)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void FX_MarkEntUpdateEnd(FxMarkDObjUpdateContext *param_1,LocalClientNum_t param_2,int param_3,
                         DObj *param_4,bool param_5,ushort param_6)
 
 {
-  FxMarkDObjUpdateContext *pFVar1;
-  ulonglong uVar2;
-  ulonglong uVar3;
-  ulonglong uVar4;
-  
-  uVar4 = (ulonglong)(short)param_6;
-  uVar3 = (ulonglong)param_5;
-  uVar2 = (ulonglong)(int)param_4;
-  pFVar1 = (FxMarkDObjUpdateContext *)__savegprlr_28(param_1);
-  if ((pFVar1->isBrush != false) &&
-     (((uVar3 & 0xff) == 0 || ((ulonglong)pFVar1->brushIndex != (uVar4 & 0xffff))))) {
+  if ((param_1->isBrush != false) && ((!param_5 || (param_1->brushIndex != param_6)))) {
     FX_MarkEntDetachAllOfType(param_2,param_3,2);
   }
-  if (pFVar1->modelCount != 0) {
-    if ((uVar2 & 0xffffffff) != 0) {
-      FX_MarkEntUpdateEndDObj(pFVar1,param_2,param_3,(DObj *)uVar2);
-      __restgprlr_28();
+  if (param_1->modelCount != 0) {
+    if (param_4 != (DObj *)0x0) {
+      FX_MarkEntUpdateEndDObj(param_1,param_2,param_3,param_4);
       return;
     }
     FX_MarkEntDetachAllOfType(param_2,param_3,3);
   }
-  __restgprlr_28();
   return;
 }
 
 
 // 82433878  FX_MoveMarkBetweenLists  (EffectsCore/fx_marks.cpp:1500)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 void FX_MoveMarkBetweenLists(FxMarksSystem *param_1,FxMark *param_2,ushort *param_3,ushort *param_4)
 
 {
-  FxMarksSystem *pFVar1;
-  ushort uVar3;
-  FxMark *pFVar2;
-  ulonglong uVar4;
-  FxMark *pFVar5;
-  ulonglong uVar6;
-  ulonglong uVar7;
+  ushort uVar2;
+  FxMark *pFVar1;
   
-  uVar7 = (ulonglong)(int)param_4;
-  uVar6 = (ulonglong)(int)param_3;
-  uVar4 = (ulonglong)(int)param_2;
-  pFVar1 = (FxMarksSystem *)__savegprlr_26(param_1);
-  if (pFVar1 == (FxMarksSystem *)0x0) {
+  if (param_1 == (FxMarksSystem *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_marks.cpp",
                     0x5e1,0,"%s");
   }
-  if ((uVar4 & 0xffffffff) == 0) {
+  if (param_2 == (FxMark *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_marks.cpp",
                     0x5e2,0,"%s");
   }
-  if ((uVar6 & 0xffffffff) == 0) {
+  if (param_3 == (ushort *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_marks.cpp",
                     0x5e3,0,"%s");
   }
-  if ((uVar7 & 0xffffffff) == 0) {
+  if (param_4 == (ushort *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_marks.cpp",
                     0x5e4,0,"%s");
   }
-  pFVar5 = (FxMark *)uVar4;
-  uVar3 = FX_MarkToHandle(pFVar1,pFVar5);
-  if (pFVar5->nextMark != 0xffff) {
-    pFVar2 = FX_MarkFromHandle(pFVar1,pFVar5->nextMark);
-    pFVar2->prevMark = pFVar5->prevMark;
+  uVar2 = FX_MarkToHandle(param_1,param_2);
+  if (param_2->nextMark != 0xffff) {
+    pFVar1 = FX_MarkFromHandle(param_1,param_2->nextMark);
+    pFVar1->prevMark = param_2->prevMark;
   }
-  if (pFVar5->prevMark == 0xffff) {
-    if (*(ushort *)uVar6 != uVar3) {
+  if (param_2->prevMark == 0xffff) {
+    if (*param_3 != uVar2) {
       va("%i %i");
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_marks.cpp",
                       0x5f4,0,"%s\n\t%s");
     }
-    *(ushort *)uVar6 = pFVar5->nextMark;
+    *param_3 = param_2->nextMark;
   }
   else {
-    pFVar2 = FX_MarkFromHandle(pFVar1,pFVar5->prevMark);
-    pFVar2->nextMark = pFVar5->nextMark;
+    pFVar1 = FX_MarkFromHandle(param_1,param_2->prevMark);
+    pFVar1->nextMark = param_2->nextMark;
   }
-  FX_LinkMarkIntoList(pFVar1,(ushort *)uVar7,pFVar5);
-  __restgprlr_26();
+  FX_LinkMarkIntoList(param_1,param_4,param_2);
   return;
 }
 
 
 // 824339E0  FX_TransferDObjMarksFromEntToEnt  (EffectsCore/fx_marks.cpp:1533)
 
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void FX_TransferDObjMarksFromEntToEnt
@@ -2588,118 +2426,107 @@ void FX_TransferDObjMarksFromEntToEnt
 {
   ushort uVar1;
   FxTriGroupPool *pFVar2;
-  int iVar3;
-  FxMarksSystem *pFVar4;
-  int iVar5;
-  XModel *pXVar6;
-  int iVar7;
-  longlong lVar8;
-  ulonglong uVar9;
-  ulonglong uVar10;
-  FxMark *pFVar11;
-  uint uVar12;
-  uint uVar13;
-  GfxMarkContext *pGVar14;
+  FxMarksSystem *pFVar3;
+  int iVar4;
+  XModel *pXVar5;
+  int iVar6;
+  FxMark *pFVar7;
+  uint uVar8;
+  uint uVar9;
+  GfxMarkContext *pGVar10;
   int iStack0000002c;
   int local_a0;
   
-  uVar10 = (ulonglong)(int)param_5;
-  uVar9 = (ulonglong)(int)param_3;
-  lVar8 = (longlong)param_2;
-  __savegprlr();
   iStack0000002c = param_4;
-  if ((uVar9 & 0xffffffff) == 0) {
+  if (param_3 == (DObj *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_marks.cpp",
                     0x603,0,"%s");
   }
-  if ((uVar10 & 0xffffffff) == 0) {
+  if (param_5 == (XModel *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_marks.cpp",
                     0x604,0,"%s");
   }
-  pFVar4 = FX_GetMarksSystem(param_1);
-  iVar5 = DObjGetNumModels((DObj *)uVar9);
+  pFVar3 = FX_GetMarksSystem(param_1);
+  iVar4 = DObjGetNumModels(param_3);
   local_a0 = 0;
-  if (0 < iVar5) {
+  if (0 < iVar4) {
     do {
-      pXVar6 = DObjGetModel((DObj *)uVar9,local_a0);
-      if (ZEXT48(pXVar6) == (uVar10 & 0xffffffff)) break;
+      pXVar5 = DObjGetModel(param_3,local_a0);
+      if (pXVar5 == param_5) break;
       local_a0 = local_a0 + 1;
-    } while (local_a0 < iVar5);
+    } while (local_a0 < iVar4);
   }
-  if (local_a0 != iVar5) {
-    iVar5 = (int)((lVar8 + 5U & 0xffffffff) << 1);
-    uVar1 = *(ushort *)((int)pFVar4->entFirstMarkHandles + iVar5 + -10);
-    while (uVar12 = (uint)uVar1, uVar12 != 0xffff) {
-      if (0x1ff < uVar12) {
+  if (local_a0 != iVar4) {
+    uVar1 = pFVar3->entFirstMarkHandles[param_2];
+    while (uVar8 = (uint)uVar1, uVar8 != 0xffff) {
+      if (0x1ff < uVar8) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\fx_marks.h",
                         0xad,0,"handle doesn\'t index FX_MARKS_LIMIT\n\t%i not in [0, %i)");
       }
-      if (pFVar4 == (FxMarksSystem *)0x0) {
+      if (pFVar3 == (FxMarksSystem *)0x0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\fx_marks.h",
                         0xae,0,"%s");
       }
-      pFVar11 = pFVar4->marks + uVar12;
-      pGVar14 = &pFVar11->context;
-      uVar1 = pFVar11->nextMark;
-      if (pGVar14 == (GfxMarkContext *)0x0) {
+      pFVar7 = pFVar3->marks + uVar8;
+      pGVar10 = &pFVar7->context;
+      uVar1 = pFVar7->nextMark;
+      if (pGVar10 == (GfxMarkContext *)0x0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\../renderer/tr_types.h"
                         ,0x3b2,0,"%s");
       }
-      if ((pGVar14->modelType == '\x03') &&
-         (iVar7 = FX_GetMarkContext_DObjModelIndex(pGVar14), iVar3 = iStack0000002c,
-         iVar7 == local_a0)) {
+      if ((pGVar10->modelType == '\x03') &&
+         (iVar6 = FX_GetMarkContext_DObjModelIndex(pGVar10), iVar4 = iStack0000002c,
+         iVar6 == local_a0)) {
         FX_MoveMarkBetweenLists
-                  (pFVar4,pFVar11,(ushort *)((int)pFVar4->entFirstMarkHandles + iVar5 + -10),
-                   pFVar4->entFirstMarkHandles + iStack0000002c);
-        if (pGVar14 == (GfxMarkContext *)0x0) {
+                  (pFVar3,pFVar7,pFVar3->entFirstMarkHandles + param_2,
+                   pFVar3->entFirstMarkHandles + iStack0000002c);
+        if (pGVar10 == (GfxMarkContext *)0x0) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\../renderer/tr_types.h"
                           ,0x3f8,0,"%s");
         }
-        (pFVar11->context).field3_0x4.surfIndex = (pFVar11->context).field3_0x4.surfIndex & 0xe0;
-        iVar7 = FX_GetMarkContext_DObjModelIndex(pGVar14);
-        if (iVar7 != 0) {
+        (pFVar7->context).field3_0x4.surfIndex = (pFVar7->context).field3_0x4.surfIndex & 0xe0;
+        iVar6 = FX_GetMarkContext_DObjModelIndex(pGVar10);
+        if (iVar6 != 0) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\../renderer/tr_types.h"
                           ,0x3fd,0,"%s\n\t(dobjModelIndex) = %i");
         }
-        FX_SetMarkContext_EntNum(pGVar14,(ushort)iVar3);
-        uVar12 = (uint)pFVar11->tris;
+        FX_SetMarkContext_EntNum(pGVar10,(ushort)iVar4);
+        uVar8 = (uint)pFVar7->tris;
         do {
-          if (0x7ff < uVar12) {
+          if (0x7ff < uVar8) {
             MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\fx_marks.h"
                             ,0xc6,0,"handle doesn\'t index FX_TRI_GROUP_LIMIT\n\t%i not in [0, %i)")
             ;
           }
-          pFVar2 = pFVar4->triGroups;
-          *(uchar *)((int)&pFVar2->triGroup + uVar12 * 0x18 + 0xc) = pGVar14->modelType;
-          uVar13 = (uint)*(ushort *)((int)&pFVar2->triGroup + uVar12 * 0x18 + 0x14);
-          *(GfxMarkContext_u_4 *)((int)&pFVar2->triGroup + uVar12 * 0x18 + 0x10) =
-               (pFVar11->context).field3_0x4;
-          if (pGVar14 == (GfxMarkContext *)0x0) {
+          pFVar2 = pFVar3->triGroups;
+          *(uchar *)((int)&pFVar2->triGroup + uVar8 * 0x18 + 0xc) = pGVar10->modelType;
+          uVar9 = (uint)*(ushort *)((int)&pFVar2->triGroup + uVar8 * 0x18 + 0x14);
+          *(GfxMarkContext_u_4 *)((int)&pFVar2->triGroup + uVar8 * 0x18 + 0x10) =
+               (pFVar7->context).field3_0x4;
+          if (pGVar10 == (GfxMarkContext *)0x0) {
             MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\../renderer/tr_types.h"
                             ,0x445,0,"%s");
             MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\../renderer/tr_types.h"
                             ,0x3b2,0,"%s");
           }
-          if ((pGVar14->modelType != '\x03') && (pGVar14->modelType != '\x02')) {
+          if ((pGVar10->modelType != '\x03') && (pGVar10->modelType != '\x02')) {
             MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\../renderer/tr_types.h"
                             ,0x446,0,"%s");
           }
           FX_SetMarkContext_EntNum
-                    ((GfxMarkContext *)((int)&pFVar2->triGroup + uVar12 * 0x18 + 0xc),
-                     (ushort)(pFVar11->context).typeSpecificIndex);
-          *(GfxMarkContext_u_1 *)((int)&pFVar2->triGroup + uVar12 * 0x18 + 0xd) =
-               (pFVar11->context).field1_0x1;
-          uVar12 = uVar13;
-        } while (uVar13 != 0xffff);
+                    ((GfxMarkContext *)((int)&pFVar2->triGroup + uVar8 * 0x18 + 0xc),
+                     (ushort)(pFVar7->context).typeSpecificIndex);
+          *(GfxMarkContext_u_1 *)((int)&pFVar2->triGroup + uVar8 * 0x18 + 0xd) =
+               (pFVar7->context).field1_0x1;
+          uVar8 = uVar9;
+        } while (uVar9 != 0xffff);
       }
     }
-    __restgprlr();
     return;
   }
   Com_PrintWarning(0xe,
                    "FX_TransferDObjMarksFromEntToEnt(): couldn\'t find a match for destination model \"%s\" in the source dobj.\n"
                   );
-  __restgprlr();
   return;
 }
 
@@ -2717,6 +2544,8 @@ int FX_GetMarkViewmodelClientIndex(LocalClientNum_t param_1)
 
 // 82433D40  FX_ClearViewmodelMarks  (EffectsCore/fx_marks.cpp:1610)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void FX_ClearViewmodelMarks(LocalClientNum_t param_1)
@@ -2724,21 +2553,18 @@ void FX_ClearViewmodelMarks(LocalClientNum_t param_1)
 {
   ushort uVar1;
   uint uVar2;
-  int iVar3;
-  FxMarksSystem *pFVar4;
+  FxMarksSystem *pFVar3;
   
-  iVar3 = __savegprlr_28(param_1);
-  pFVar4 = FX_GetMarksSystem(iVar3);
-  uVar1 = pFVar4->firstViewmodelMarkHandle[0];
+  pFVar3 = FX_GetMarksSystem(param_1);
+  uVar1 = pFVar3->firstViewmodelMarkHandle[0];
   while (uVar2 = (uint)uVar1, uVar2 != 0xffff) {
     if (0x1ff < uVar2) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\fx_marks.h",0xad
                       ,0,"handle doesn\'t index FX_MARKS_LIMIT\n\t%i not in [0, %i)");
     }
-    uVar1 = pFVar4->marks[uVar2].nextMark;
-    FX_FreeMark(pFVar4,pFVar4->marks + uVar2);
+    uVar1 = pFVar3->marks[uVar2].nextMark;
+    FX_FreeMark(pFVar3,pFVar3->marks + uVar2);
   }
-  __restgprlr_28();
   return;
 }
 
@@ -2785,85 +2611,82 @@ void FX_ExpandMarkVerts_GetColor(FxMarksSystem *param_1,FxMark *param_2,uchar *p
 
 // 82434B98  FX_ExpandMarkVert_NoTransform<GfxWorldVertex>  (EffectsCore/fx_marks.cpp:1681)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 void FX_ExpandMarkVert_NoTransform<GfxWorldVertex>
                (GfxWorldVertex *param_1,uchar *param_2,float param_3,FxMark *param_4,
                FxMarkPoint *param_5)
 
 {
-  int iVar1;
-  float *pfVar3;
-  longlong lVar2;
-  float *pfVar4;
-  longlong lVar5;
   longlong in_r7;
-  float *pfVar6;
-  double extraout_f1;
-  double dVar7;
-  double dVar8;
-  double dVar9;
-  double dVar10;
-  undefined1 auVar11 [16];
-  undefined1 auVar12 [16];
-  float local_70;
+  float *pfVar1;
+  longlong lVar2;
+  double dVar3;
+  double dVar4;
+  double dVar5;
+  double dVar6;
+  undefined1 auVar7 [16];
+  undefined1 auVar8 [16];
+  PackedUnitVec local_70;
   float local_68;
   float local_64;
   float local_60;
   
-  lVar5 = (longlong)(int)param_5;
-  lVar2 = (longlong)(int)param_2;
-  __savegprlr_26((double)param_3,param_1,lVar2,param_4);
-  pfVar4 = (float *)lVar2;
-  pfVar3 = (float *)__savefpr_28();
-  pfVar6 = (float *)in_r7;
-  iVar1 = (int)lVar5;
-  dVar9 = (double)(*pfVar6 - *(float *)(iVar1 + 0xc));
-  dVar8 = (double)(pfVar6[1] - *(float *)(iVar1 + 0x10));
-  dVar7 = (double)(pfVar6[2] - *(float *)(iVar1 + 0x14));
-  dVar10 = extraout_f1;
-  Vec3Cross((float *)(lVar5 + 0x1c),(float *)(in_r7 + 0x14),&local_68);
-  *pfVar3 = *pfVar6;
-  pfVar3[1] = pfVar6[1];
-  pfVar3[2] = pfVar6[2];
-  pfVar3[3] = -1.0;
-  pfVar3[4] = *pfVar4;
-  lVar2 = ZEXT48(&stack0x00000000) - 0x70;
-  pfVar3[5] = (float)((double)(float)((double)*(float *)(iVar1 + 0x24) * dVar7 +
-                                     (double)(float)((double)*(float *)(iVar1 + 0x20) * dVar8 +
-                                                    (double)(float)((double)*(float *)(iVar1 + 0x1c)
-                                                                   * dVar9))) * dVar10 + 0.5);
-  pfVar3[6] = (float)((double)(float)((double)local_60 * dVar7 +
-                                     (double)(float)((double)local_64 * dVar8 +
-                                                    (double)(float)((double)local_68 * dVar9))) *
-                      dVar10 + 0.5);
-  pfVar3[7] = pfVar6[3];
-  pfVar3[8] = pfVar6[4];
-  auVar12 = loadVectorRightIndexed(in_r7 + 0x24);
-  auVar11 = loadVectorLeftIndexed(in_r7 + 0x14);
-  auVar11 = (auVar11 | auVar12) & (undefined1  [16])g_keepXYZ.field0_0x0;
-  auVar12 = vectorMultiplyAddFloatingPoint
-                      (auVar11,(undefined1  [16])g_packMul101010.field0_0x0,
-                       (undefined1  [16])g_packAdd.field0_0x0);
-  auVar11 = vectorPackD3Dtype(auVar11,auVar12,9,3);
-  auVar11 = vectorSplatWord(auVar11,0);
-  storeVectorElementWordIndexed(auVar11,lVar2);
-  pfVar3[9] = local_70;
-  auVar12 = loadVectorRightIndexed(lVar5 + 0x2c);
-  auVar11 = loadVectorLeftIndexed(lVar5 + 0x1c);
-  auVar11 = (auVar11 | auVar12) & (undefined1  [16])g_keepXYZ.field0_0x0;
-  auVar12 = vectorMultiplyAddFloatingPoint
-                      (auVar11,(undefined1  [16])g_packMul101010.field0_0x0,
-                       (undefined1  [16])g_packAdd.field0_0x0);
-  auVar11 = vectorPackD3Dtype(auVar11,auVar12,9,3);
-  auVar11 = vectorSplatWord(auVar11,0);
-  storeVectorElementWordIndexed(auVar11,ZEXT48(&stack0x00000000) - 0x70);
-  pfVar3[10] = local_70;
-  __restfpr_28(lVar2);
-  __restgprlr_26();
+  dVar3 = (double)param_3;
+  pfVar1 = (float *)in_r7;
+  lVar2 = (longlong)(int)param_5 + 0x1c;
+  dVar6 = (double)(*pfVar1 - param_5->lmapCoord[0]);
+  dVar5 = (double)(pfVar1[1] - param_5->lmapCoord[1]);
+  dVar4 = (double)(pfVar1[2] - param_5->normal[0]);
+  Vec3Cross((float *)lVar2,(float *)(in_r7 + 0x14),&local_68);
+  param_1->xyz[0] = *pfVar1;
+  param_1->xyz[1] = pfVar1[1];
+  param_1->xyz[2] = pfVar1[2];
+  param_1->binormalSign = -1.0;
+  (param_1->color).packed = *(uint *)param_2;
+  param_1->texCoord[0] =
+       (float)((double)(float)((double)param_5[1].xyz[1] * dVar4 +
+                              (double)(float)((double)param_5[1].xyz[0] * dVar5 +
+                                             (double)(float)((double)param_5->normal[2] * dVar6))) *
+               dVar3 + 0.5);
+  param_1->texCoord[1] =
+       (float)((double)(float)((double)local_60 * dVar4 +
+                              (double)(float)((double)local_64 * dVar5 +
+                                             (double)(float)((double)local_68 * dVar6))) * dVar3 +
+              0.5);
+  param_1->lmapCoord[0] = pfVar1[3];
+  param_1->lmapCoord[1] = pfVar1[4];
+  auVar8 = loadVectorRightIndexed(in_r7 + 0x24);
+  auVar7 = loadVectorLeftIndexed(in_r7 + 0x14);
+  auVar7 = (auVar7 | auVar8) & (undefined1  [16])g_keepXYZ.field0_0x0;
+  auVar8 = vectorMultiplyAddFloatingPoint
+                     (auVar7,(undefined1  [16])g_packMul101010.field0_0x0,
+                      (undefined1  [16])g_packAdd.field0_0x0);
+  auVar7 = vectorPackD3Dtype(auVar7,auVar8,9,3);
+  auVar7 = vectorSplatWord(auVar7,0);
+  storeVectorElementWordIndexed(auVar7,ZEXT48(&stack0x00000000) - 0x70);
+  param_1->normal = local_70;
+  auVar8 = loadVectorRightIndexed((longlong)(int)param_5 + 0x2c);
+  auVar7 = loadVectorLeftIndexed(lVar2);
+  auVar7 = (auVar7 | auVar8) & (undefined1  [16])g_keepXYZ.field0_0x0;
+  auVar8 = vectorMultiplyAddFloatingPoint
+                     (auVar7,(undefined1  [16])g_packMul101010.field0_0x0,
+                      (undefined1  [16])g_packAdd.field0_0x0);
+  auVar7 = vectorPackD3Dtype(auVar7,auVar8,9,3);
+  auVar7 = vectorSplatWord(auVar7,0);
+  storeVectorElementWordIndexed(auVar7,ZEXT48(&stack0x00000000) - 0x70);
+  param_1->tangent = local_70;
   return;
 }
 
 
 // 82434D20  FX_ExpandMarkVert_Transform<GfxWorldVertex>  (EffectsCore/fx_marks.cpp:1705)
+
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 
 void FX_ExpandMarkVert_Transform<GfxWorldVertex>
                (GfxWorldVertex *param_1,uchar *param_2,float param_3,FxMark *param_4,
@@ -2871,14 +2694,11 @@ void FX_ExpandMarkVert_Transform<GfxWorldVertex>
 
 {
   ulonglong uVar1;
-  float *pfVar2;
-  longlong lVar3;
   float (*in_r8) [3];
-  double extraout_f1;
-  double dVar4;
-  undefined1 auVar5 [16];
-  undefined1 auVar6 [16];
-  float local_80;
+  double dVar2;
+  undefined1 auVar3 [16];
+  undefined1 auVar4 [16];
+  PackedUnitVec local_80;
   float local_78;
   float local_74;
   float local_70;
@@ -2890,52 +2710,56 @@ void FX_ExpandMarkVert_Transform<GfxWorldVertex>
   float local_44;
   float local_40;
   
-  lVar3 = (longlong)(int)param_2;
+  dVar2 = (double)param_3;
   uVar1 = ZEXT48(&stack0x00000000);
-  pfVar2 = (float *)__savegprlr_27((double)param_3,param_1,lVar3,param_4);
   local_78 = (*param_6)[0] - param_5->lmapCoord[0];
   local_74 = (*param_6)[1] - param_5->lmapCoord[1];
   local_70 = (*param_6)[2] - param_5->normal[0];
-  dVar4 = extraout_f1;
   MatrixTransformVector(&local_78,in_r8,&local_58);
   MatrixTransformVector(param_5->normal + 2,in_r8,&local_78);
   MatrixTransformVector(param_6[1] + 2,in_r8,afStack_68);
   Vec3Cross(&local_78,afStack_68,&local_48);
-  MatrixTransformVector43(*param_6,in_r8,pfVar2);
-  pfVar2[3] = -1.0;
-  auVar5 = loadVectorLeftIndexed(uVar1 - 0x68);
-  auVar6 = loadVectorRightIndexed(uVar1 - 0x58);
-  pfVar2[4] = *(float *)lVar3;
-  pfVar2[5] = (float)((double)(local_50 * local_70 + local_54 * local_74 + local_78 * local_58) *
-                      dVar4 + 0.5);
-  pfVar2[6] = (float)((double)(local_40 * local_50 + local_44 * local_54 + local_48 * local_58) *
-                      dVar4 + 0.5);
-  pfVar2[7] = param_6[1][0];
-  pfVar2[8] = param_6[1][1];
-  auVar5 = (auVar5 | auVar6) & (undefined1  [16])g_keepXYZ.field0_0x0;
-  auVar6 = vectorMultiplyAddFloatingPoint
-                     (auVar5,(undefined1  [16])g_packMul101010.field0_0x0,
+  MatrixTransformVector43(*param_6,in_r8,param_1->xyz);
+  param_1->binormalSign = -1.0;
+  auVar3 = loadVectorLeftIndexed(uVar1 - 0x68);
+  auVar4 = loadVectorRightIndexed(uVar1 - 0x58);
+  (param_1->color).packed = *(uint *)param_2;
+  param_1->texCoord[0] =
+       (float)((double)(local_50 * local_70 + local_54 * local_74 + local_78 * local_58) * dVar2 +
+              0.5);
+  param_1->texCoord[1] =
+       (float)((double)(local_40 * local_50 + local_44 * local_54 + local_48 * local_58) * dVar2 +
+              0.5);
+  param_1->lmapCoord[0] = param_6[1][0];
+  param_1->lmapCoord[1] = param_6[1][1];
+  auVar3 = (auVar3 | auVar4) & (undefined1  [16])g_keepXYZ.field0_0x0;
+  auVar4 = vectorMultiplyAddFloatingPoint
+                     (auVar3,(undefined1  [16])g_packMul101010.field0_0x0,
                       (undefined1  [16])g_packAdd.field0_0x0);
-  auVar5 = vectorPackD3Dtype(auVar5,auVar6,9,3);
-  auVar5 = vectorSplatWord(auVar5,0);
-  storeVectorElementWordIndexed(auVar5,uVar1 - 0x80);
-  auVar6 = loadVectorRightIndexed(uVar1 - 0x68);
-  pfVar2[9] = local_80;
-  auVar5 = loadVectorLeftIndexed(uVar1 - 0x78);
-  auVar5 = (auVar5 | auVar6) & (undefined1  [16])g_keepXYZ.field0_0x0;
-  auVar6 = vectorMultiplyAddFloatingPoint
-                     (auVar5,(undefined1  [16])g_packMul101010.field0_0x0,
+  auVar3 = vectorPackD3Dtype(auVar3,auVar4,9,3);
+  auVar3 = vectorSplatWord(auVar3,0);
+  storeVectorElementWordIndexed(auVar3,uVar1 - 0x80);
+  auVar4 = loadVectorRightIndexed(uVar1 - 0x68);
+  param_1->normal = local_80;
+  auVar3 = loadVectorLeftIndexed(uVar1 - 0x78);
+  auVar3 = (auVar3 | auVar4) & (undefined1  [16])g_keepXYZ.field0_0x0;
+  auVar4 = vectorMultiplyAddFloatingPoint
+                     (auVar3,(undefined1  [16])g_packMul101010.field0_0x0,
                       (undefined1  [16])g_packAdd.field0_0x0);
-  auVar5 = vectorPackD3Dtype(auVar5,auVar6,9,3);
-  auVar5 = vectorSplatWord(auVar5,0);
-  storeVectorElementWordIndexed(auVar5,uVar1 - 0x80);
-  pfVar2[10] = local_80;
-  __restgprlr_27();
+  auVar3 = vectorPackD3Dtype(auVar3,auVar4,9,3);
+  auVar3 = vectorSplatWord(auVar3,0);
+  storeVectorElementWordIndexed(auVar3,uVar1 - 0x80);
+  param_1->tangent = local_80;
   return;
 }
 
 
 // 82434EF0  FX_ExpandMarkVert_Glass<GfxWorldVertex>  (EffectsCore/fx_marks.cpp:1733)
+
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 
 void FX_ExpandMarkVert_Glass<GfxWorldVertex>
                (GfxWorldVertex *param_1,uchar *param_2,float *param_3,float param_4,float param_5,
@@ -2944,21 +2768,15 @@ void FX_ExpandMarkVert_Glass<GfxWorldVertex>
 {
   int iVar1;
   ulonglong uVar2;
-  float *pfVar3;
-  longlong lVar4;
-  float *pfVar5;
-  longlong lVar6;
-  float *pfVar7;
   longlong in_r8;
   float *in_r9;
-  double extraout_f1;
-  double dVar8;
-  double dVar9;
-  double dVar10;
-  double dVar11;
-  undefined1 auVar12 [16];
-  undefined1 auVar13 [16];
-  float local_80;
+  double dVar3;
+  double dVar4;
+  double dVar5;
+  double dVar6;
+  undefined1 auVar7 [16];
+  undefined1 auVar8 [16];
+  PackedUnitVec local_80;
   float local_78;
   float local_74;
   float local_70;
@@ -2966,373 +2784,351 @@ void FX_ExpandMarkVert_Glass<GfxWorldVertex>
   float local_64;
   float local_60;
   
-  dVar8 = (double)param_5;
-  lVar6 = (longlong)(int)param_3;
-  lVar4 = (longlong)(int)param_2;
+  dVar3 = (double)param_5;
   uVar2 = ZEXT48(&stack0x00000000);
-  __savegprlr_26((double)param_4,param_1,lVar4,lVar6,param_6,param_7);
-  pfVar5 = (float *)lVar4;
-  pfVar7 = (float *)lVar6;
-  pfVar3 = (float *)__savefpr_28();
-  local_78 = (float)((double)in_r9[5] * extraout_f1);
-  local_74 = (float)((double)in_r9[6] * extraout_f1);
-  local_70 = (float)((double)in_r9[7] * extraout_f1);
+  local_78 = in_r9[5] * param_4;
+  local_74 = in_r9[6] * param_4;
+  local_70 = in_r9[7] * param_4;
   iVar1 = (int)in_r8;
-  dVar11 = (double)(*in_r9 - *(float *)(iVar1 + 0xc));
-  dVar10 = (double)(in_r9[1] - *(float *)(iVar1 + 0x10));
-  dVar9 = (double)(in_r9[2] - *(float *)(iVar1 + 0x14));
+  dVar6 = (double)(*in_r9 - *(float *)(iVar1 + 0xc));
+  dVar5 = (double)(in_r9[1] - *(float *)(iVar1 + 0x10));
+  dVar4 = (double)(in_r9[2] - *(float *)(iVar1 + 0x14));
   Vec3Cross((float *)(in_r8 + 0x1c),&local_78,&local_68);
-  *pfVar3 = *pfVar7 + *in_r9;
-  pfVar3[1] = pfVar7[1] + in_r9[1];
-  pfVar3[2] = pfVar7[2] + in_r9[2];
-  pfVar3[3] = -1.0;
-  pfVar3[4] = *pfVar5;
-  auVar13 = loadVectorRightIndexed(uVar2 - 0x68);
-  auVar12 = loadVectorLeftIndexed(uVar2 - 0x78);
-  pfVar3[5] = (float)((double)(float)((double)*(float *)(iVar1 + 0x24) * dVar9 +
-                                     (double)(float)((double)*(float *)(iVar1 + 0x20) * dVar10 +
-                                                    (double)(float)(dVar11 * (double)*(float *)(
-                                                  iVar1 + 0x1c)))) * dVar8 + 0.5);
-  pfVar3[6] = (float)((double)(float)((double)local_60 * dVar9 +
-                                     (double)(float)((double)local_64 * dVar10 +
-                                                    (double)(float)((double)local_68 * dVar11))) *
-                      dVar8 + 0.5);
-  pfVar3[7] = in_r9[3];
-  pfVar3[8] = in_r9[4];
-  auVar12 = (auVar12 | auVar13) & (undefined1  [16])g_keepXYZ.field0_0x0;
-  auVar13 = vectorMultiplyAddFloatingPoint
-                      (auVar12,(undefined1  [16])g_packMul101010.field0_0x0,
-                       (undefined1  [16])g_packAdd.field0_0x0);
-  auVar12 = vectorPackD3Dtype(auVar12,auVar13,9,3);
-  auVar12 = vectorSplatWord(auVar12,0);
-  storeVectorElementWordIndexed(auVar12,uVar2 - 0x80);
-  pfVar3[9] = local_80;
-  auVar13 = loadVectorRightIndexed(in_r8 + 0x2c);
-  auVar12 = loadVectorLeftIndexed(in_r8 + 0x1c);
-  auVar12 = (auVar12 | auVar13) & (undefined1  [16])g_keepXYZ.field0_0x0;
-  auVar13 = vectorMultiplyAddFloatingPoint
-                      (auVar12,(undefined1  [16])g_packMul101010.field0_0x0,
-                       (undefined1  [16])g_packAdd.field0_0x0);
-  auVar12 = vectorPackD3Dtype(auVar12,auVar13,9,3);
-  auVar12 = vectorSplatWord(auVar12,0);
-  storeVectorElementWordIndexed(auVar12,uVar2 - 0x80);
-  pfVar3[10] = local_80;
-  __restfpr_28();
-  __restgprlr_26();
+  param_1->xyz[0] = *param_3 + *in_r9;
+  param_1->xyz[1] = param_3[1] + in_r9[1];
+  param_1->xyz[2] = param_3[2] + in_r9[2];
+  param_1->binormalSign = -1.0;
+  (param_1->color).packed = *(uint *)param_2;
+  auVar8 = loadVectorRightIndexed(uVar2 - 0x68);
+  auVar7 = loadVectorLeftIndexed(uVar2 - 0x78);
+  param_1->texCoord[0] =
+       (float)((double)(float)((double)*(float *)(iVar1 + 0x24) * dVar4 +
+                              (double)(float)((double)*(float *)(iVar1 + 0x20) * dVar5 +
+                                             (double)(float)(dVar6 * (double)*(float *)(iVar1 + 0x1c
+                                                                                       )))) * dVar3
+              + 0.5);
+  param_1->texCoord[1] =
+       (float)((double)(float)((double)local_60 * dVar4 +
+                              (double)(float)((double)local_64 * dVar5 +
+                                             (double)(float)((double)local_68 * dVar6))) * dVar3 +
+              0.5);
+  param_1->lmapCoord[0] = in_r9[3];
+  param_1->lmapCoord[1] = in_r9[4];
+  auVar7 = (auVar7 | auVar8) & (undefined1  [16])g_keepXYZ.field0_0x0;
+  auVar8 = vectorMultiplyAddFloatingPoint
+                     (auVar7,(undefined1  [16])g_packMul101010.field0_0x0,
+                      (undefined1  [16])g_packAdd.field0_0x0);
+  auVar7 = vectorPackD3Dtype(auVar7,auVar8,9,3);
+  auVar7 = vectorSplatWord(auVar7,0);
+  storeVectorElementWordIndexed(auVar7,uVar2 - 0x80);
+  param_1->normal = local_80;
+  auVar8 = loadVectorRightIndexed(in_r8 + 0x2c);
+  auVar7 = loadVectorLeftIndexed(in_r8 + 0x1c);
+  auVar7 = (auVar7 | auVar8) & (undefined1  [16])g_keepXYZ.field0_0x0;
+  auVar8 = vectorMultiplyAddFloatingPoint
+                     (auVar7,(undefined1  [16])g_packMul101010.field0_0x0,
+                      (undefined1  [16])g_packAdd.field0_0x0);
+  auVar7 = vectorPackD3Dtype(auVar7,auVar8,9,3);
+  auVar7 = vectorSplatWord(auVar7,0);
+  storeVectorElementWordIndexed(auVar7,uVar2 - 0x80);
+  param_1->tangent = local_80;
   return;
 }
 
 
 // 824350C0  FX_ExpandMarkVerts_NoTransform<GfxWorldVertex>  (EffectsCore/fx_marks.cpp:1759)
 
+/* WARNING: Function: __savegprlr_17 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_17 replaced with injection: xenon_save_restore */
+
 void FX_ExpandMarkVerts_NoTransform<GfxWorldVertex>
                (FxMarksSystem *param_1,FxMark *param_2,ushort param_3)
 
 {
-  FxMarkPoint *pFVar1;
-  int *piVar2;
-  GfxWorldVertex *pGVar3;
+  GfxWorldVertex *pGVar1;
+  ulonglong uVar2;
+  int iVar3;
   ulonglong uVar4;
-  ulonglong uVar5;
-  int iVar6;
-  ulonglong uVar7;
-  uint uVar8;
-  uint uVar9;
-  uint uVar10;
-  double dVar11;
-  float local_90 [36];
+  uint uVar5;
+  uint uVar6;
+  uint uVar7;
+  double dVar8;
+  uint local_90 [36];
   
-  uVar4 = (ulonglong)(short)param_3;
-  uVar7 = (ulonglong)(int)param_2;
-  piVar2 = (int *)__savegprlr_17(param_1);
-  uVar5 = uVar4;
-  if ((uVar7 & 0xffffffff) == 0) {
-    uVar5 = 0;
+  uVar2 = (ulonglong)(short)param_3;
+  if (param_2 == (FxMark *)0x0) {
+    uVar2 = 0;
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_marks.cpp",
                     0x6ea,0,"%s");
   }
-  pGVar3 = R_MarkMeshVertIter_Begin((ushort)uVar4);
-  pFVar1 = (FxMarkPoint *)uVar7;
-  local_90[0] = pFVar1[1].xyz[2];
-  uVar7 = (ulonglong)*(byte *)((int)pFVar1[1].normal + 3);
-  uVar9 = (uint)*(ushort *)((int)pFVar1[1].normal + 6);
-  if (uVar7 != 0) {
-    uVar7 = uVar7 * 0x7d;
-    iVar6 = *piVar2 - (int)pFVar1->xyz[2];
-    if (iVar6 < (int)uVar7) {
-      trapWord(6,uVar7,0);
-      uVar8 = ((uint)local_90[0] >> 0x18) * iVar6;
-      uVar5 = (((ulonglong)uVar8 & 0x7fffffff) << 1 | (ulonglong)(uVar8 >> 0x1f)) - 1;
-      local_90[0] = (float)CONCAT13((char)((int)uVar8 / (int)uVar7),SUB43(local_90[0],0));
-      trapWord(5,uVar7 & ~uVar5,0xffff);
+  pGVar1 = R_MarkMeshVertIter_Begin(param_3);
+  local_90[0] = *(uint *)param_2->nativeColor;
+  uVar6 = (uint)param_2->pointCount;
+  if ((ulonglong)param_2->fadeInfo != 0) {
+    uVar4 = (ulonglong)param_2->fadeInfo * 0x7d;
+    iVar3 = param_1->time - param_2->timeAlloced;
+    if (iVar3 < (int)uVar4) {
+      trapWord(6,uVar4,0);
+      uVar5 = (local_90[0] >> 0x18) * iVar3;
+      uVar2 = (((ulonglong)uVar5 & 0x7fffffff) << 1 | (ulonglong)(uVar5 >> 0x1f)) - 1;
+      local_90[0] = CONCAT13((char)((int)uVar5 / (int)uVar4),(undefined3)local_90[0]);
+      trapWord(5,uVar4 & ~uVar2,0xffff);
     }
   }
-  if (pFVar1->normal[1] < 0.1) {
-    uVar5 = 0;
+  if (param_2->radius < 0.1) {
+    uVar2 = 0;
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_marks.cpp",
                     0x6f1,0,"%s\n\t(mark->radius) = %g");
   }
-  uVar8 = (uint)*(ushort *)((int)pFVar1[1].normal + 10);
-  dVar11 = (double)(0.5 / pFVar1->normal[1]);
+  uVar5 = (uint)param_2->points;
+  dVar8 = (double)(0.5 / param_2->radius);
   do {
-    if (uVar8 == 0xffff) {
-      uVar5 = 0;
+    if (uVar5 == 0xffff) {
+      uVar2 = 0;
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_marks.cpp",
                       0x6f8,0,"%s");
     }
-    if (0xbff < uVar8) {
-      uVar5 = 0;
+    if (0xbff < uVar5) {
+      uVar2 = 0;
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\fx_marks.h",0xdf
                       ,0,"handle doesn\'t index FX_POINT_GROUP_LIMIT\n\t%i not in [0, %i)");
     }
-    if (piVar2 == (int *)0x0) {
-      uVar5 = 0;
+    if (param_1 == (FxMarksSystem *)0x0) {
+      uVar2 = 0;
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\fx_marks.h",0xe0
                       ,0,"%s");
     }
-    uVar8 = (uint)*(ushort *)(uVar8 * 0x44 + piVar2[0x409] + 0x40);
-    if ((int)uVar9 < 3) {
-      uVar10 = uVar9;
-      if ((int)uVar9 < 1) {
-        uVar5 = 0;
+    uVar5 = (uint)(&param_1->pointGroups->pointGroup)[uVar5].next;
+    if ((int)uVar6 < 3) {
+      uVar7 = uVar6;
+      if ((int)uVar6 < 1) {
+        uVar2 = 0;
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_marks.cpp",
                         0x6fe,0,"%s\n\t(loopCount) = %i");
       }
     }
     else {
-      uVar10 = 2;
+      uVar7 = 2;
     }
-    uVar9 = uVar9 - uVar10;
+    uVar6 = uVar6 - uVar7;
     FX_ExpandMarkVert_NoTransform<GfxWorldVertex>
-              (pGVar3,(uchar *)local_90,(float)dVar11,(FxMark *)uVar5,pFVar1);
-    if (1 < (int)uVar10) {
-      pGVar3 = R_MarkMeshVertIter_Next(pGVar3);
+              (pGVar1,(uchar *)local_90,(float)dVar8,(FxMark *)uVar2,(FxMarkPoint *)param_2);
+    if (1 < (int)uVar7) {
+      pGVar1 = R_MarkMeshVertIter_Next(pGVar1);
       FX_ExpandMarkVert_NoTransform<GfxWorldVertex>
-                (pGVar3,(uchar *)local_90,(float)dVar11,(FxMark *)uVar5,pFVar1);
+                (pGVar1,(uchar *)local_90,(float)dVar8,(FxMark *)uVar2,(FxMarkPoint *)param_2);
     }
-    if (0 < (int)uVar9) {
-      pGVar3 = R_MarkMeshVertIter_Next(pGVar3);
+    if (0 < (int)uVar6) {
+      pGVar1 = R_MarkMeshVertIter_Next(pGVar1);
     }
-  } while (uVar9 != 0);
-  R_MarkMeshVertIter_End(pGVar3);
-  if (uVar8 != 0xffff) {
+  } while (uVar6 != 0);
+  R_MarkMeshVertIter_End(pGVar1);
+  if (uVar5 != 0xffff) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_marks.cpp",
                     0x713,0,"%s\n\t(groupHandle) = %i");
   }
-  __restgprlr_17();
   return;
 }
 
 
 // 82435348  FX_ExpandMarkVerts_Transform<GfxWorldVertex>  (EffectsCore/fx_marks.cpp:1817)
 
+/* WARNING: Function: __savegprlr_16 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_16 replaced with injection: xenon_save_restore */
+
 void FX_ExpandMarkVerts_Transform<GfxWorldVertex>
                (FxMarksSystem *param_1,FxMark *param_2,ushort param_3,float (*param_4) [3])
 
 {
-  FxMarkPoint *pFVar1;
-  int *piVar2;
-  GfxWorldVertex *pGVar3;
-  ulonglong uVar4;
+  GfxWorldVertex *pGVar1;
+  ulonglong uVar2;
+  uint uVar3;
+  int iVar4;
   ulonglong uVar5;
   uint uVar6;
-  int iVar7;
-  ulonglong uVar8;
-  uint uVar9;
-  uint uVar10;
-  float (*pafVar11) [3];
-  double dVar12;
-  float local_a0 [40];
+  uint uVar7;
+  FxPointGroupPool *pFVar8;
+  double dVar9;
+  uint local_a0 [40];
   
-  uVar4 = (ulonglong)(short)param_3;
-  uVar8 = (ulonglong)(int)param_2;
-  piVar2 = (int *)__savegprlr_16(param_1,uVar8,uVar4,param_4);
-  uVar5 = uVar4;
-  if ((uVar8 & 0xffffffff) == 0) {
-    uVar5 = 0;
+  uVar2 = (ulonglong)(short)param_3;
+  if (param_2 == (FxMark *)0x0) {
+    uVar2 = 0;
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_marks.cpp",
                     0x724,0,"%s");
   }
-  pGVar3 = R_MarkMeshVertIter_Begin((ushort)uVar4);
-  pFVar1 = (FxMarkPoint *)uVar8;
-  if (pFVar1->normal[1] < 0.1) {
-    uVar5 = 0;
+  pGVar1 = R_MarkMeshVertIter_Begin(param_3);
+  if (param_2->radius < 0.1) {
+    uVar2 = 0;
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_marks.cpp",
                     0x728,0,"%s\n\t(mark->radius) = %g");
   }
-  local_a0[0] = pFVar1[1].xyz[2];
-  uVar8 = (ulonglong)*(byte *)((int)pFVar1[1].normal + 3);
-  uVar9 = (uint)*(ushort *)((int)pFVar1[1].normal + 10);
-  uVar10 = (uint)*(ushort *)((int)pFVar1[1].normal + 6);
-  dVar12 = (double)(0.5 / pFVar1->normal[1]);
-  if (uVar8 != 0) {
-    uVar8 = uVar8 * 0x7d;
-    iVar7 = *piVar2 - (int)pFVar1->xyz[2];
-    if (iVar7 < (int)uVar8) {
-      trapWord(6,uVar8,0);
-      uVar6 = ((uint)local_a0[0] >> 0x18) * iVar7;
-      uVar5 = (((ulonglong)uVar6 & 0x7fffffff) << 1 | (ulonglong)(uVar6 >> 0x1f)) - 1;
-      local_a0[0] = (float)CONCAT13((char)((int)uVar6 / (int)uVar8),SUB43(local_a0[0],0));
-      trapWord(5,uVar8 & ~uVar5,0xffff);
+  local_a0[0] = *(uint *)param_2->nativeColor;
+  uVar6 = (uint)param_2->points;
+  uVar7 = (uint)param_2->pointCount;
+  dVar9 = (double)(0.5 / param_2->radius);
+  if ((ulonglong)param_2->fadeInfo != 0) {
+    uVar5 = (ulonglong)param_2->fadeInfo * 0x7d;
+    iVar4 = param_1->time - param_2->timeAlloced;
+    if (iVar4 < (int)uVar5) {
+      trapWord(6,uVar5,0);
+      uVar3 = (local_a0[0] >> 0x18) * iVar4;
+      uVar2 = (((ulonglong)uVar3 & 0x7fffffff) << 1 | (ulonglong)(uVar3 >> 0x1f)) - 1;
+      local_a0[0] = CONCAT13((char)((int)uVar3 / (int)uVar5),(undefined3)local_a0[0]);
+      trapWord(5,uVar5 & ~uVar2,0xffff);
     }
   }
   do {
-    if (uVar9 == 0xffff) {
-      uVar5 = 0;
+    if (uVar6 == 0xffff) {
+      uVar2 = 0;
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_marks.cpp",
                       0x732,0,"%s");
     }
-    if (0xbff < uVar9) {
-      uVar5 = 0;
+    if (0xbff < uVar6) {
+      uVar2 = 0;
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\fx_marks.h",0xdf
                       ,0,"handle doesn\'t index FX_POINT_GROUP_LIMIT\n\t%i not in [0, %i)");
     }
-    if (piVar2 == (int *)0x0) {
-      uVar5 = 0;
+    if (param_1 == (FxMarksSystem *)0x0) {
+      uVar2 = 0;
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\fx_marks.h",0xe0
                       ,0,"%s");
     }
-    pafVar11 = (float (*) [3])(uVar9 * 0x44 + piVar2[0x409]);
-    uVar9 = (uint)*(ushort *)(pafVar11[5] + 1);
-    if ((int)uVar10 < 3) {
-      uVar6 = uVar10;
-      if ((int)uVar10 < 1) {
-        uVar5 = 0;
+    pFVar8 = param_1->pointGroups + uVar6;
+    uVar6 = (uint)(pFVar8->pointGroup).next;
+    if ((int)uVar7 < 3) {
+      uVar3 = uVar7;
+      if ((int)uVar7 < 1) {
+        uVar2 = 0;
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_marks.cpp",
                         0x738,0,"%s\n\t(loopCount) = %i");
       }
     }
     else {
-      uVar6 = 2;
+      uVar3 = 2;
     }
-    uVar10 = uVar10 - uVar6;
+    uVar7 = uVar7 - uVar3;
     FX_ExpandMarkVert_Transform<GfxWorldVertex>
-              (pGVar3,(uchar *)local_a0,(float)dVar12,(FxMark *)uVar5,pFVar1,pafVar11);
-    if (1 < (int)uVar6) {
-      pGVar3 = R_MarkMeshVertIter_Next(pGVar3);
+              (pGVar1,(uchar *)local_a0,(float)dVar9,(FxMark *)uVar2,(FxMarkPoint *)param_2,
+               (float (*) [3])pFVar8);
+    if (1 < (int)uVar3) {
+      pGVar1 = R_MarkMeshVertIter_Next(pGVar1);
       FX_ExpandMarkVert_Transform<GfxWorldVertex>
-                (pGVar3,(uchar *)local_a0,(float)dVar12,(FxMark *)uVar5,pFVar1,
-                 (float (*) [3])(pafVar11[2] + 2));
+                (pGVar1,(uchar *)local_a0,(float)dVar9,(FxMark *)uVar2,(FxMarkPoint *)param_2,
+                 (pFVar8->pointGroup).points[1].xyz);
     }
-    if (0 < (int)uVar10) {
-      pGVar3 = R_MarkMeshVertIter_Next(pGVar3);
+    if (0 < (int)uVar7) {
+      pGVar1 = R_MarkMeshVertIter_Next(pGVar1);
     }
-  } while (uVar10 != 0);
-  R_MarkMeshVertIter_End(pGVar3);
-  if (uVar9 != 0xffff) {
+  } while (uVar7 != 0);
+  R_MarkMeshVertIter_End(pGVar1);
+  if (uVar6 != 0xffff) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_marks.cpp",
                     0x74d,0,"%s\n\t(groupHandle) = %i");
   }
-  __restgprlr_16();
   return;
 }
 
 
 // 824355D8  FX_ExpandMarkVerts_Glass<GfxWorldVertex>  (EffectsCore/fx_marks.cpp:1876)
 
+/* WARNING: Function: __savegprlr_16 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_16 replaced with injection: xenon_save_restore */
+
 void FX_ExpandMarkVerts_Glass<GfxWorldVertex>
                (FxMarksSystem *param_1,FxMark *param_2,ushort param_3,float param_4,float *param_5)
 
 {
-  int iVar1;
-  int *piVar2;
-  GfxWorldVertex *pGVar3;
-  longlong lVar4;
-  undefined8 uVar5;
+  GfxWorldVertex *pGVar1;
+  undefined8 uVar2;
   float *in_r7;
-  uint uVar6;
-  int iVar7;
-  ulonglong uVar8;
-  ulonglong uVar9;
-  uint uVar10;
-  double extraout_f1;
-  double dVar11;
-  double dVar12;
+  uint uVar3;
+  int iVar4;
+  ulonglong uVar5;
+  ulonglong uVar6;
+  uint uVar7;
+  double dVar8;
+  double dVar9;
   uint local_a0 [40];
   
-  lVar4 = (longlong)(short)param_3;
-  uVar8 = (ulonglong)(int)param_2;
-  piVar2 = (int *)__savegprlr_16((double)param_4,param_1,uVar8,lVar4,param_5);
-  dVar11 = extraout_f1;
-  if ((uVar8 & 0xffffffff) == 0) {
+  dVar8 = (double)param_4;
+  if (param_2 == (FxMark *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_marks.cpp",
                     0x75f,0,"%s");
   }
-  pGVar3 = R_MarkMeshVertIter_Begin((ushort)lVar4);
-  iVar1 = (int)uVar8;
-  local_a0[0] = *(uint *)(iVar1 + 0x28);
-  uVar10 = (uint)*(ushort *)(iVar1 + 0x3a);
-  if ((ulonglong)*(byte *)(iVar1 + 0x37) != 0) {
-    uVar8 = (ulonglong)*(byte *)(iVar1 + 0x37) * 0x7d;
-    iVar7 = *piVar2 - *(int *)(iVar1 + 8);
-    if (iVar7 < (int)uVar8) {
-      trapWord(6,uVar8,0);
-      uVar6 = (local_a0[0] >> 0x18) * iVar7;
-      local_a0[0] = CONCAT13((char)((int)uVar6 / (int)uVar8),(undefined3)local_a0[0]);
-      trapWord(5,uVar8 & ~((((ulonglong)uVar6 & 0x7fffffff) << 1 | (ulonglong)(uVar6 >> 0x1f)) - 1),
+  pGVar1 = R_MarkMeshVertIter_Begin(param_3);
+  local_a0[0] = *(uint *)param_2->nativeColor;
+  uVar7 = (uint)param_2->pointCount;
+  if ((ulonglong)param_2->fadeInfo != 0) {
+    uVar5 = (ulonglong)param_2->fadeInfo * 0x7d;
+    iVar4 = param_1->time - param_2->timeAlloced;
+    if (iVar4 < (int)uVar5) {
+      trapWord(6,uVar5,0);
+      uVar3 = (local_a0[0] >> 0x18) * iVar4;
+      local_a0[0] = CONCAT13((char)((int)uVar3 / (int)uVar5),(undefined3)local_a0[0]);
+      trapWord(5,uVar5 & ~((((ulonglong)uVar3 & 0x7fffffff) << 1 | (ulonglong)(uVar3 >> 0x1f)) - 1),
                0xffff);
     }
   }
-  if (*(float *)(iVar1 + 0x18) < 0.1) {
+  if (param_2->radius < 0.1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_marks.cpp",
                     0x766,0,"%s\n\t(mark->radius) = %g");
   }
-  uVar9 = (ulonglong)*(ushort *)(iVar1 + 0x3e);
-  uVar8 = 0xffffffff82060000;
+  uVar6 = (ulonglong)param_2->points;
   uVar5 = 0xffffffff82060000;
-  dVar12 = (double)(0.5 / *(float *)(iVar1 + 0x18));
+  uVar2 = 0xffffffff82060000;
+  dVar9 = (double)(0.5 / param_2->radius);
   do {
-    if (uVar9 == 0xffff) {
-      uVar5 = 0xffffffff82000f98;
-      uVar8 = 0xffffffff82065e1c;
+    if (uVar6 == 0xffff) {
+      uVar2 = 0xffffffff82000f98;
+      uVar5 = 0xffffffff82065e1c;
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_marks.cpp",
                       0x76d,0,"%s");
     }
-    if (0xbff < uVar9) {
-      uVar5 = 0xffffffff82065808;
-      uVar8 = uVar9;
+    if (0xbff < uVar6) {
+      uVar2 = 0xffffffff82065808;
+      uVar5 = uVar6;
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\fx_marks.h",0xdf
                       ,0,"handle doesn\'t index FX_POINT_GROUP_LIMIT\n\t%i not in [0, %i)");
     }
-    if (piVar2 == (int *)0x0) {
-      uVar5 = 0xffffffff82000f98;
-      uVar8 = 0xffffffff8206577c;
+    if (param_1 == (FxMarksSystem *)0x0) {
+      uVar2 = 0xffffffff82000f98;
+      uVar5 = 0xffffffff8206577c;
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\fx_marks.h",0xe0
                       ,0,"%s");
     }
-    uVar9 = (ulonglong)*(ushort *)((int)uVar9 * 0x44 + piVar2[0x409] + 0x40);
-    if ((int)uVar10 < 3) {
-      uVar6 = uVar10;
-      if ((int)uVar10 < 1) {
-        uVar5 = 0xffffffff82065e4c;
-        uVar8 = 0xffffffff82065e3c;
+    uVar6 = (ulonglong)(&param_1->pointGroups->pointGroup)[(int)uVar6].next;
+    if ((int)uVar7 < 3) {
+      uVar3 = uVar7;
+      if ((int)uVar7 < 1) {
+        uVar2 = 0xffffffff82065e4c;
+        uVar5 = 0xffffffff82065e3c;
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_marks.cpp",
                         0x772,0,"%s\n\t(loopCount) = %i");
       }
     }
     else {
-      uVar6 = 2;
+      uVar3 = 2;
     }
-    uVar10 = uVar10 - uVar6;
+    uVar7 = uVar7 - uVar3;
     FX_ExpandMarkVert_Glass<GfxWorldVertex>
-              (pGVar3,(uchar *)local_a0,in_r7,(float)dVar11,(float)dVar12,(FxMark *)uVar5,
-               (FxMarkPoint *)uVar8);
-    if (1 < (int)uVar6) {
-      pGVar3 = R_MarkMeshVertIter_Next(pGVar3);
+              (pGVar1,(uchar *)local_a0,in_r7,(float)dVar8,(float)dVar9,(FxMark *)uVar2,
+               (FxMarkPoint *)uVar5);
+    if (1 < (int)uVar3) {
+      pGVar1 = R_MarkMeshVertIter_Next(pGVar1);
       FX_ExpandMarkVert_Glass<GfxWorldVertex>
-                (pGVar3,(uchar *)local_a0,in_r7,(float)dVar11,(float)dVar12,(FxMark *)uVar5,
-                 (FxMarkPoint *)uVar8);
+                (pGVar1,(uchar *)local_a0,in_r7,(float)dVar8,(float)dVar9,(FxMark *)uVar2,
+                 (FxMarkPoint *)uVar5);
     }
-    if (0 < (int)uVar10) {
-      pGVar3 = R_MarkMeshVertIter_Next(pGVar3);
+    if (0 < (int)uVar7) {
+      pGVar1 = R_MarkMeshVertIter_Next(pGVar1);
     }
-  } while (uVar10 != 0);
-  R_MarkMeshVertIter_End(pGVar3);
-  if (uVar9 != 0xffff) {
+  } while (uVar7 != 0);
+  R_MarkMeshVertIter_End(pGVar1);
+  if (uVar6 != 0xffff) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_marks.cpp",
                     0x787,0,"%s\n\t(groupHandle) = %i");
   }
-  __restgprlr_16();
   return;
 }
 
@@ -3349,55 +3145,57 @@ void FX_AddMarkTrisToScene(FxActiveMarkSurf *param_1)
 
 // 82433E58  FX_EmitMarkTri  (EffectsCore/fx_marks.cpp:1948)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
+
 void FX_EmitMarkTri(FxMarksSystem *param_1,ushort *param_2,ushort param_3,FxActiveMarkSurf *param_4)
 
 {
   int iVar1;
-  int iVar2;
+  ushort *puVar2;
   ushort *puVar3;
-  ushort *puVar4;
   undefined4 local_50;
   
-  iVar2 = __savegprlr_24(param_1);
-  if (*(char *)(iVar2 + 0x1037) == '\0') {
+  if (param_1->hasCarryIndex == false) {
     iVar1 = param_4->indexCount;
-    puVar4 = param_4->indices;
+    puVar3 = param_4->indices;
     local_50 = CONCAT22(*param_2 + param_3,param_2[1] + param_3);
-    if (((uint)(puVar4 + iVar1) & 3) != 0) {
+    if (((uint)(puVar3 + iVar1) & 3) != 0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_marks.cpp",
                       0x7af,0,"%s");
     }
-    *(undefined4 *)(puVar4 + iVar1) = local_50;
-    *(undefined1 *)(iVar2 + 0x1037) = 1;
-    *(ushort *)(iVar2 + 0x1034) = param_2[2] + param_3;
+    *(undefined4 *)(puVar3 + iVar1) = local_50;
+    param_1->hasCarryIndex = true;
+    param_1->carryIndex = param_2[2] + param_3;
     param_4->indexCount = param_4->indexCount + 3;
-    __restgprlr_24();
     return;
   }
   iVar1 = param_4->indexCount;
-  puVar4 = param_4->indices;
-  puVar3 = puVar4 + iVar1 + -1;
-  local_50 = CONCAT22(*(undefined2 *)(iVar2 + 0x1034),*param_2 + param_3);
-  if (((uint)puVar3 & 3) != 0) {
+  puVar3 = param_4->indices;
+  puVar2 = puVar3 + iVar1 + -1;
+  local_50 = CONCAT22(param_1->carryIndex,*param_2 + param_3);
+  if (((uint)puVar2 & 3) != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_marks.cpp",
                     0x7bb,0,"%s");
   }
-  *(undefined4 *)puVar3 = local_50;
-  puVar4 = puVar4 + iVar1 + 1;
+  *(undefined4 *)puVar2 = local_50;
+  puVar3 = puVar3 + iVar1 + 1;
   local_50 = CONCAT22(param_2[1] + param_3,param_2[2] + param_3);
-  if (((uint)puVar4 & 3) != 0) {
+  if (((uint)puVar3 & 3) != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_marks.cpp",
                     0x7c2,0,"%s");
   }
-  *(undefined4 *)puVar4 = local_50;
-  *(undefined1 *)(iVar2 + 0x1037) = 0;
+  *(undefined4 *)puVar3 = local_50;
+  param_1->hasCarryIndex = false;
   param_4->indexCount = param_4->indexCount + 3;
-  __restgprlr_24();
   return;
 }
 
 
 // 82433FD8  FX_DrawMarkTris  (EffectsCore/fx_marks.cpp:1999)
+
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
 
 void FX_DrawMarkTris(FxMarksSystem *param_1,FxMark *param_2,ushort param_3,ushort *param_4,
                     FxActiveMarkSurf *param_5,ushort param_6,uchar param_7,uchar param_8)
@@ -3406,23 +3204,19 @@ void FX_DrawMarkTris(FxMarksSystem *param_1,FxMark *param_2,ushort param_3,ushor
   byte bVar1;
   byte bVar2;
   int iVar3;
-  int iVar4;
-  ulonglong uVar5;
-  ulonglong uVar6;
-  longlong lVar7;
-  FxActiveMarkSurf *pFVar8;
-  char *pcVar9;
-  longlong lVar10;
-  byte *pbVar11;
-  char *pcVar12;
-  ushort *puVar13;
-  undefined1 *puVar14;
+  char *pcVar4;
+  <unnamed_type_typeSpecificIndex> *p<Var5;
+  byte *pbVar6;
+  undefined1 *puVar7;
+  char *pcVar8;
+  ushort *puVar9;
+  undefined1 *puVar10;
+  uint uVar11;
+  uint uVar12;
+  FxTriGroupPool *pFVar13;
+  FxTriGroupPool *pFVar14;
   uint uVar15;
-  uint uVar16;
-  FxTriGroupPool *pFVar17;
-  FxTriGroupPool *pFVar18;
-  uint uVar19;
-  longlong lVar20;
+  longlong lVar16;
   ushort uStack00000026;
   ushort uStack0000003e;
   uchar uStack00000047;
@@ -3433,70 +3227,64 @@ void FX_DrawMarkTris(FxMarksSystem *param_1,FxMark *param_2,ushort param_3,ushor
   undefined2 uStack_9c;
   uchar local_9a;
   
-  lVar7 = (longlong)(int)param_5;
-  uVar6 = (ulonglong)(int)param_2;
-  uVar5 = (ulonglong)(int)param_1;
-  __savegprlr();
   uStack00000026 = param_3;
   uStack0000003e = param_6;
   uStack00000047 = param_7;
   uStack0000004f = param_8;
-  if ((uVar6 & 0xffffffff) == 0) {
+  if (param_2 == (FxMark *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_marks.cpp",
                     0x7d6,0,"%s");
   }
-  iVar4 = (int)uVar6;
-  uVar16 = (uint)*(ushort *)(iVar4 + 0x3c);
-  uVar15 = (uint)*(byte *)(iVar4 + 0x38);
-  local_a4 = (byte *)(iVar4 + 0x32);
-  pFVar8 = (FxActiveMarkSurf *)lVar7;
-  pFVar8->material = *(Material **)(iVar4 + 0x2c);
-  (pFVar8->context).modelType = 0xff;
-  (pFVar8->context).field1_0x1 = (GfxMarkContext_u_1)0xff;
-  (pFVar8->context).typeSpecificIndex = (<unnamed_type_typeSpecificIndex>)0xffff;
-  (pFVar8->context).field3_0x4 = (GfxMarkContext_u_4)0xff;
-  (pFVar8->context).primaryLightIndex = 0xff;
-  (pFVar8->context).reflectionProbeIndex = 0xff;
-  pFVar8->indexCount = 0;
-  pFVar8->indices = param_4;
+  uVar12 = (uint)param_2->tris;
+  uVar11 = (uint)param_2->triCount;
+  local_a4 = &(param_2->context).typeSpecificIndex;
+  param_5->material = param_2->material;
+  (param_5->context).modelType = 0xff;
+  (param_5->context).field1_0x1 = (GfxMarkContext_u_1)0xff;
+  (param_5->context).typeSpecificIndex = (<unnamed_type_typeSpecificIndex>)0xffff;
+  (param_5->context).field3_0x4 = (GfxMarkContext_u_4)0xff;
+  (param_5->context).primaryLightIndex = 0xff;
+  (param_5->context).reflectionProbeIndex = 0xff;
+  param_5->indexCount = 0;
+  param_5->indices = param_4;
   do {
-    if (0x7ff < uVar16) {
+    if (0x7ff < uVar12) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\fx_marks.h",0xc6
                       ,0,"handle doesn\'t index FX_TRI_GROUP_LIMIT\n\t%i not in [0, %i)");
     }
-    if ((uVar5 & 0xffffffff) == 0) {
+    if (param_1 == (FxMarksSystem *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\fx_marks.h",199,
                       0,"%s");
     }
-    pcVar9 = (char *)((int)&local_a4 + 3);
-    pFVar17 = ((FxMarksSystem *)uVar5)->triGroups + uVar16;
-    lVar20 = 7;
-    pcVar12 = pFVar17->_padding_ + 0xb;
-    uVar16 = (uint)(pFVar17->triGroup).next;
+    pcVar4 = (char *)((int)&local_a4 + 3);
+    pFVar13 = param_1->triGroups + uVar12;
+    lVar16 = 7;
+    pcVar8 = pFVar13->_padding_ + 0xb;
+    uVar12 = (uint)(pFVar13->triGroup).next;
     do {
-      pcVar12 = pcVar12 + 1;
-      pcVar9 = pcVar9 + 1;
-      *pcVar9 = *pcVar12;
+      pcVar8 = pcVar8 + 1;
+      pcVar4 = pcVar4 + 1;
+      *pcVar4 = *pcVar8;
       bVar1 = local_a0[0];
-      lVar20 = lVar20 + -1;
-    } while (lVar20 != 0);
-    if ((byte *)(iVar4 + 0x30) == (byte *)0x0) {
+      lVar16 = lVar16 + -1;
+    } while (lVar16 != 0);
+    if (&param_2->context == (GfxMarkContext *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\../renderer/tr_types.h"
                       ,0x3b2,0,"%s");
     }
-    if (bVar1 != *(byte *)(iVar4 + 0x30)) {
+    if (bVar1 != (param_2->context).modelType) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_marks.cpp",
                       0x7eb,0,"%s");
     }
-    puVar13 = &local_9e;
-    pbVar11 = local_a4;
+    puVar9 = &local_9e;
+    p<Var5 = local_a4;
     do {
-      bVar1 = *(byte *)puVar13;
-      bVar2 = *pbVar11;
+      bVar1 = *(byte *)puVar9;
+      bVar2 = p<Var5->modelIndex[0];
       if ((ulonglong)bVar1 - (ulonglong)bVar2 != 0) break;
-      puVar13 = (ushort *)((int)puVar13 + 1);
-      pbVar11 = pbVar11 + 1;
-    } while (puVar13 != &uStack_9c);
+      puVar9 = (ushort *)((int)puVar9 + 1);
+      p<Var5 = (<unnamed_type_typeSpecificIndex> *)((int)p<Var5 + 1);
+    } while (puVar9 != &uStack_9c);
     if ((int)((ulonglong)bVar1 - (ulonglong)bVar2) != 0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_marks.cpp",
                       0x7ec,0,"%s");
@@ -3510,58 +3298,57 @@ void FX_DrawMarkTris(FxMarksSystem *param_1,FxMark *param_2,ushort param_3,ushor
     if (uStack0000004f != '\0') {
       uStack_9c._1_1_ = uStack0000004f;
     }
-    if ((int)uVar15 < (int)(uint)(pFVar17->triGroup).triCount) {
+    if ((int)uVar11 < (int)(uint)(pFVar13->triGroup).triCount) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_marks.cpp",
                       0x7f6,0,"triCount >= group->triCount\n\t%i, %i");
     }
-    if ((pFVar17->triGroup).triCount == '\0') {
+    if ((pFVar13->triGroup).triCount == '\0') {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_marks.cpp",
                       0x7f7,0,"%s\n\t(group->triCount) = %i");
     }
-    pbVar11 = local_a0;
-    uVar15 = uVar15 - (pFVar17->triGroup).triCount;
-    lVar20 = lVar7 + 4;
+    pbVar6 = local_a0;
+    uVar11 = uVar11 - (pFVar13->triGroup).triCount;
+    p<Var5 = (<unnamed_type_typeSpecificIndex> *)&param_5->context;
     do {
-      lVar10 = (ulonglong)*(byte *)lVar20 - (ulonglong)*pbVar11;
-      if (lVar10 != 0) break;
-      lVar20 = lVar20 + 1;
-      pbVar11 = pbVar11 + 1;
-    } while ((undefined1 *)lVar20 != &pFVar8->field_0xb);
-    if ((int)lVar10 != 0) {
-      if (pFVar8->indexCount != 0) {
-        R_AddMarkSurf(pFVar8->material,(GfxMarkContext *)(lVar7 + 4),pFVar8->indices,
-                      pFVar8->indexCount);
-        iVar3 = pFVar8->indexCount;
-        pFVar8->indexCount = 0;
-        pFVar8->indices = pFVar8->indices + iVar3;
+      bVar1 = p<Var5->modelIndex[0];
+      bVar2 = *pbVar6;
+      if ((ulonglong)bVar1 - (ulonglong)bVar2 != 0) break;
+      p<Var5 = (<unnamed_type_typeSpecificIndex> *)((int)p<Var5 + 1);
+      pbVar6 = pbVar6 + 1;
+    } while (p<Var5 != (<unnamed_type_typeSpecificIndex> *)&param_5->field_0xb);
+    if ((int)((ulonglong)bVar1 - (ulonglong)bVar2) != 0) {
+      if (param_5->indexCount != 0) {
+        R_AddMarkSurf(param_5->material,&param_5->context,param_5->indices,param_5->indexCount);
+        iVar3 = param_5->indexCount;
+        param_5->indexCount = 0;
+        param_5->indices = param_5->indices + iVar3;
       }
-      puVar14 = (undefined1 *)((int)&local_a4 + 3);
-      lVar20 = lVar7 + 3;
-      lVar10 = 7;
+      puVar10 = (undefined1 *)((int)&local_a4 + 3);
+      puVar7 = (undefined1 *)((int)&param_5->material + 3);
+      lVar16 = 7;
       do {
-        puVar14 = puVar14 + 1;
-        lVar20 = lVar20 + 1;
-        *(undefined1 *)lVar20 = *puVar14;
-        lVar10 = lVar10 + -1;
-      } while (lVar10 != 0);
+        puVar10 = puVar10 + 1;
+        puVar7 = puVar7 + 1;
+        *puVar7 = *puVar10;
+        lVar16 = lVar16 + -1;
+      } while (lVar16 != 0);
     }
-    uVar19 = 0;
-    pFVar18 = pFVar17;
+    uVar15 = 0;
+    pFVar14 = pFVar13;
     do {
-      FX_EmitMarkTri((FxMarksSystem *)uVar5,(ushort *)pFVar18->_padding_,uStack00000026,pFVar8);
-      uVar19 = uVar19 + 1;
-      pFVar18 = (FxTriGroupPool *)((pFVar18->triGroup).indices + 1);
-    } while (uVar19 != (pFVar17->triGroup).triCount);
-    if (uVar15 == 0) {
-      if (uVar16 != 0xffff) {
+      FX_EmitMarkTri(param_1,(ushort *)pFVar14->_padding_,uStack00000026,param_5);
+      uVar15 = uVar15 + 1;
+      pFVar14 = (FxTriGroupPool *)((pFVar14->triGroup).indices + 1);
+    } while (uVar15 != (pFVar13->triGroup).triCount);
+    if (uVar11 == 0) {
+      if (uVar12 != 0xffff) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_marks.cpp",
                         0x80f,0,"%s\n\t(groupHandle) = %i");
       }
-      if (pFVar8->indexCount == 0) {
+      if (param_5->indexCount == 0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_marks.cpp",
                         0x811,0,"%s");
       }
-      __restgprlr();
       return;
     }
   } while( true );
@@ -3570,157 +3357,135 @@ void FX_DrawMarkTris(FxMarksSystem *param_1,FxMark *param_2,ushort param_3,ushor
 
 // 82434398  FX_GenerateMarkVertsForMark_Begin  (EffectsCore/fx_marks.cpp:2088)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
+
 bool FX_GenerateMarkVertsForMark_Begin
                (FxMarksSystem *param_1,FxMark *param_2,ushort param_3,uint *param_4,ushort *param_5,
                FxActiveMarkSurf *param_6,ushort param_7,uchar param_8,uchar param_9)
 
 {
   uint uVar1;
-  FxMarksSystem *pFVar2;
-  bool bVar3;
-  undefined1 uVar4;
-  uint *puVar5;
-  ushort uVar6;
-  uchar uVar7;
-  uint uVar8;
+  bool bVar2;
+  int iVar3;
   r_double_index_t *local_60 [24];
   
-  uVar7 = (uchar)param_7;
-  uVar6 = (ushort)param_6;
-  puVar5 = (uint *)(int)(short)param_3;
-  pFVar2 = (FxMarksSystem *)__savegprlr_23(param_1);
-  uVar8 = (uint)param_2->triCount * 3 + *puVar5;
-  bVar3 = R_ReserveMarkMeshVertsAndIndices
+  iVar3 = (uint)param_2->triCount * 3 + *(int *)(int)(short)param_3;
+  bVar2 = R_ReserveMarkMeshVertsAndIndices
                     ((uint)param_2->pointCount,(ushort *)param_4,
-                     (uVar8 + 1 & 0xfffffffe) - (*puVar5 + 1 & 0xfffffffe),local_60);
-  if (!bVar3) {
-    FX_FreeMark(pFVar2,param_2);
-    uVar4 = __restgprlr_23(0);
-    return (bool)uVar4;
+                     (iVar3 + 1U & 0xfffffffe) - (*(int *)(int)(short)param_3 + 1U & 0xfffffffe),
+                     local_60);
+  if (!bVar2) {
+    FX_FreeMark(param_1,param_2);
+    return false;
   }
-  uVar1 = *puVar5;
-  *puVar5 = uVar8;
+  uVar1 = *(uint *)(int)(short)param_3;
+  *(int *)(int)(short)param_3 = iVar3;
   if (param_2->timeDrawn == -1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_marks.cpp",
                     0x846,0,"%s");
   }
-  param_2->timeDrawn = pFVar2->time;
-  FX_DrawMarkTris(pFVar2,param_2,*(ushort *)param_4,(ushort *)((int)local_60[0] + (uVar1 & 1) * -2),
-                  (FxActiveMarkSurf *)param_5,uVar6,uVar7,param_8);
-  uVar4 = __restgprlr_23(1);
-  return (bool)uVar4;
+  param_2->timeDrawn = param_1->time;
+  FX_DrawMarkTris(param_1,param_2,*(ushort *)param_4,(ushort *)((int)local_60[0] + (uVar1 & 1) * -2)
+                  ,(FxActiveMarkSurf *)param_5,(ushort)param_6,(uchar)param_7,param_8);
+  return true;
 }
 
 
 // 82435880  FX_GenerateMarkVertsForMark_FinishNonAnimated  (EffectsCore/fx_marks.cpp:2130)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void FX_GenerateMarkVertsForMark_FinishNonAnimated
                (FxMarksSystem *param_1,FxMark *param_2,ushort param_3,FxActiveMarkSurf *param_4)
 
 {
-  uchar uVar1;
-  undefined4 *puVar2;
-  FxMarksSystem *pFVar3;
-  longlong lVar4;
-  GfxMarkContext *pGVar5;
+  GfxMarkContext *pGVar1;
   
-  lVar4 = (longlong)(int)param_4;
-  pFVar3 = (FxMarksSystem *)__savegprlr_27(param_1);
-  if (lVar4 + 4 == 0) {
+  pGVar1 = &param_4->context;
+  if (pGVar1 == (GfxMarkContext *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\../renderer/tr_types.h"
                     ,0x3b2,0,"%s");
   }
-  pGVar5 = (GfxMarkContext *)(lVar4 + 4);
-  uVar1 = pGVar5->modelType;
-  if ((uVar1 != '\0') && (uVar1 != '\x01')) {
+  if ((pGVar1->modelType != '\0') && (pGVar1->modelType != '\x01')) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_marks.cpp",
                     0x859,0,"%s\n\t(type) = %i");
   }
-  puVar2 = (undefined4 *)lVar4;
-  R_AddMarkSurf((Material *)*puVar2,pGVar5,(ushort *)puVar2[4],puVar2[3]);
-  FX_ExpandMarkVerts_NoTransform<GfxWorldVertex>(pFVar3,param_2,param_3);
-  __restgprlr_27();
+  R_AddMarkSurf(param_4->material,pGVar1,param_4->indices,param_4->indexCount);
+  FX_ExpandMarkVerts_NoTransform<GfxWorldVertex>(param_1,param_2,param_3);
   return;
 }
 
 
 // 82435930  FX_GenerateMarkVertsForMark_FinishAnimated  (EffectsCore/fx_marks.cpp:2153)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
+
 void FX_GenerateMarkVertsForMark_FinishAnimated
                (FxMarksSystem *param_1,FxMark *param_2,ushort param_3,FxActiveMarkSurf *param_4,
                float (*param_5) [3])
 
 {
-  uchar uVar1;
-  undefined4 *puVar2;
-  FxMarksSystem *pFVar3;
-  longlong lVar4;
-  ulonglong uVar5;
-  GfxMarkContext *pGVar6;
+  GfxMarkContext *pGVar1;
   
-  uVar5 = (ulonglong)(int)param_5;
-  lVar4 = (longlong)(int)param_4;
-  pFVar3 = (FxMarksSystem *)__savegprlr_24(param_1);
-  if (lVar4 + 4 == 0) {
+  pGVar1 = &param_4->context;
+  if (pGVar1 == (GfxMarkContext *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\../renderer/tr_types.h"
                     ,0x3b2,0,"%s");
   }
-  pGVar6 = (GfxMarkContext *)(lVar4 + 4);
-  uVar1 = pGVar6->modelType;
-  if ((uVar1 != '\x02') && (uVar1 != '\x03')) {
+  if ((pGVar1->modelType != '\x02') && (pGVar1->modelType != '\x03')) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_marks.cpp",
                     0x870,0,"%s\n\t(type) = %i");
   }
-  if ((uVar5 & 0xffffffff) == 0) {
+  if (param_5 == (float (*) [3])0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_marks.cpp",
                     0x871,0,"%s");
   }
-  puVar2 = (undefined4 *)lVar4;
-  R_AddMarkSurf((Material *)*puVar2,pGVar6,(ushort *)puVar2[4],puVar2[3]);
-  FX_ExpandMarkVerts_Transform<GfxWorldVertex>(pFVar3,param_2,param_3,(float (*) [3])uVar5);
-  __restgprlr_24();
+  R_AddMarkSurf(param_4->material,pGVar1,param_4->indices,param_4->indexCount);
+  FX_ExpandMarkVerts_Transform<GfxWorldVertex>(param_1,param_2,param_3,param_5);
   return;
 }
 
 
 // 82435A10  FX_GenerateMarkVertsForMark_FinishGlass  (EffectsCore/fx_marks.cpp:2178)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 void FX_GenerateMarkVertsForMark_FinishGlass
                (FxMarksSystem *param_1,FxMark *param_2,ushort param_3,FxActiveMarkSurf *param_4,
                float param_5,float *param_6)
 
 {
-  undefined4 *puVar1;
-  FxMarksSystem *pFVar2;
-  longlong lVar3;
-  float *pfVar4;
-  GfxMarkContext *pGVar5;
-  double extraout_f1;
-  double dVar6;
+  float *pfVar1;
+  GfxMarkContext *pGVar2;
+  double dVar3;
   
-  lVar3 = (longlong)(int)param_4;
-  pFVar2 = (FxMarksSystem *)__savegprlr_26((double)param_5,param_1);
-  dVar6 = extraout_f1;
-  if (lVar3 + 4 == 0) {
+  dVar3 = (double)param_5;
+  pGVar2 = &param_4->context;
+  if (pGVar2 == (GfxMarkContext *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\../renderer/tr_types.h"
                     ,0x3b2,0,"%s");
   }
-  pGVar5 = (GfxMarkContext *)(lVar3 + 4);
-  if (pGVar5->modelType != '\x04') {
+  if (pGVar2->modelType != '\x04') {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_marks.cpp",
                     0x889,0,"%s\n\t(type) = %i");
   }
-  puVar1 = (undefined4 *)lVar3;
-  pfVar4 = (float *)puVar1[3];
-  R_AddMarkSurf((Material *)*puVar1,pGVar5,(ushort *)puVar1[4],(uint)pfVar4);
-  FX_ExpandMarkVerts_Glass<GfxWorldVertex>(pFVar2,param_2,param_3,(float)dVar6,pfVar4);
-  __restgprlr_26();
+  pfVar1 = (float *)param_4->indexCount;
+  R_AddMarkSurf(param_4->material,pGVar2,param_4->indices,(uint)pfVar1);
+  FX_ExpandMarkVerts_Glass<GfxWorldVertex>(param_1,param_2,param_3,(float)dVar3,pfVar1);
   return;
 }
 
 
 // 824344A0  FX_GenerateMarkVertsForMark_MatrixFromPlacement  (EffectsCore/fx_marks.cpp:2199)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Removing unreachable block (ram,0x82434574) */
 
 void FX_GenerateMarkVertsForMark_MatrixFromPlacement
@@ -3729,7 +3494,7 @@ void FX_GenerateMarkVertsForMark_MatrixFromPlacement
 {
   float fVar1;
   float fVar2;
-  float *pfVar3;
+  double dVar3;
   double dVar4;
   double dVar5;
   double dVar6;
@@ -3738,70 +3503,66 @@ void FX_GenerateMarkVertsForMark_MatrixFromPlacement
   double dVar9;
   double dVar10;
   double dVar11;
-  double dVar12;
   
-  __savegprlr_27(param_1);
-  pfVar3 = (float *)__savefpr_24();
-  dVar9 = (double)*pfVar3;
-  dVar11 = (double)pfVar3[1];
-  dVar12 = (double)pfVar3[2];
-  dVar10 = (double)pfVar3[3];
-  dVar8 = (double)pfVar3[4];
-  dVar7 = (double)pfVar3[5];
-  dVar6 = (double)pfVar3[6];
-  if ((((((uint)*pfVar3 & 0x7f800000) == 0x7f800000) ||
-       (((uint)pfVar3[1] & 0x7f800000) == 0x7f800000)) ||
-      (((uint)pfVar3[2] & 0x7f800000) == 0x7f800000)) ||
-     (((uint)pfVar3[3] & 0x7f800000) == 0x7f800000)) {
+  dVar8 = (double)param_1->quat[0];
+  dVar10 = (double)param_1->quat[1];
+  dVar11 = (double)param_1->quat[2];
+  dVar9 = (double)param_1->quat[3];
+  dVar7 = (double)param_1->origin[0];
+  dVar6 = (double)param_1->origin[1];
+  dVar5 = (double)param_1->origin[2];
+  if ((((((uint)param_1->quat[0] & 0x7f800000) == 0x7f800000) ||
+       (((uint)param_1->quat[1] & 0x7f800000) == 0x7f800000)) ||
+      (((uint)param_1->quat[2] & 0x7f800000) == 0x7f800000)) ||
+     (((uint)param_1->quat[3] & 0x7f800000) == 0x7f800000)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\renderer\\../xanim/xanim_public.h"
                     ,0x22e,0,"%s");
   }
-  dVar5 = (double)(float)(dVar11 * 2.0);
-  dVar4 = (double)(float)(dVar9 * 2.0);
-  fVar1 = (float)((double)(float)(dVar12 * 2.0) * dVar12);
-  fVar2 = (float)((double)(float)(dVar12 * 2.0) * dVar10);
-  (*param_3)[1] = fVar2 + (float)(dVar4 * dVar11);
-  (*param_3)[2] = (float)(dVar4 * dVar12) - (float)(dVar5 * dVar10);
-  (*param_3)[0] = 1.0 - (fVar1 + (float)(dVar5 * dVar11));
-  param_3[1][2] = (float)(dVar5 * dVar12) + (float)(dVar4 * dVar10);
-  param_3[1][0] = (float)(dVar4 * dVar11) - fVar2;
-  param_3[1][1] = 1.0 - (fVar1 + (float)(dVar4 * dVar9));
-  param_3[2][0] = (float)(dVar5 * dVar10) + (float)(dVar4 * dVar12);
-  param_3[2][1] = (float)(dVar5 * dVar12) - (float)(dVar4 * dVar10);
-  param_3[2][2] = 1.0 - ((float)(dVar5 * dVar11) + (float)(dVar4 * dVar9));
-  param_3[3][0] = (float)dVar8;
-  param_3[3][1] = (float)dVar7;
-  param_3[3][2] = (float)dVar6;
-  fVar1 = *param_2;
-  param_3[3][0] = (float)(dVar8 + (double)fVar1);
+  dVar4 = (double)(float)(dVar10 * 2.0);
+  dVar3 = (double)(float)(dVar8 * 2.0);
+  fVar1 = (float)((double)(float)(dVar11 * 2.0) * dVar11);
+  fVar2 = (float)((double)(float)(dVar11 * 2.0) * dVar9);
+  (*param_3)[1] = fVar2 + (float)(dVar3 * dVar10);
+  (*param_3)[2] = (float)(dVar3 * dVar11) - (float)(dVar4 * dVar9);
+  (*param_3)[0] = 1.0 - (fVar1 + (float)(dVar4 * dVar10));
+  param_3[1][2] = (float)(dVar4 * dVar11) + (float)(dVar3 * dVar9);
+  param_3[1][0] = (float)(dVar3 * dVar10) - fVar2;
+  param_3[1][1] = 1.0 - (fVar1 + (float)(dVar3 * dVar8));
+  param_3[2][0] = (float)(dVar4 * dVar9) + (float)(dVar3 * dVar11);
+  param_3[2][1] = (float)(dVar4 * dVar11) - (float)(dVar3 * dVar9);
+  param_3[2][2] = 1.0 - ((float)(dVar4 * dVar10) + (float)(dVar3 * dVar8));
+  param_3[3][0] = (float)dVar7;
+  param_3[3][1] = (float)dVar6;
+  param_3[3][2] = (float)dVar5;
+  param_3[3][0] = (float)(dVar7 + (double)*param_2);
   param_3[3][1] = param_2[1] + param_3[3][1];
   param_3[3][2] = param_2[2] + param_3[3][2];
-  __restfpr_24((double)fVar1,dVar8);
-  __restgprlr_27();
   return;
 }
 
 
 // 82434670  FX_GenerateMarkVertsForMark_MatrixFromScaledPlacement  (EffectsCore/fx_marks.cpp:2219)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void FX_GenerateMarkVertsForMark_MatrixFromScaledPlacement
                (GfxScaledPlacement *param_1,float *param_2,float (*param_3) [3])
 
 {
-  GfxPlacement *pGVar1;
-  
-  pGVar1 = (GfxPlacement *)__savegprlr_29(param_1);
-  if (pGVar1[1].quat[0] != 1.0) {
+  if (param_1->scale != 1.0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_marks.cpp",
                     0x8ac,0,"%s\n\t(placement->scale) = %g");
   }
-  FX_GenerateMarkVertsForMark_MatrixFromPlacement(pGVar1,param_2,param_3);
-  __restgprlr_29();
+  FX_GenerateMarkVertsForMark_MatrixFromPlacement(&param_1->base,param_2,param_3);
   return;
 }
 
 
 // 824346E0  FX_GenerateMarkVertsForMark_MatrixFromAnim  (EffectsCore/fx_marks.cpp:2247)
+
+/* WARNING: Function: __savegprlr_21 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_21 replaced with injection: xenon_save_restore */
 
 void FX_GenerateMarkVertsForMark_MatrixFromAnim
                (FxMark *param_1,DObj *param_2,DObjAnimMat *param_3,float *param_4,
@@ -3822,10 +3583,7 @@ void FX_GenerateMarkVertsForMark_MatrixFromAnim
   int iVar12;
   XModel *pXVar13;
   DObjAnimMat *pDVar14;
-  ulonglong uVar15;
-  ulonglong uVar16;
-  float *pfVar17;
-  double dVar18;
+  double dVar15;
   float local_d0;
   float local_cc;
   float local_c8;
@@ -3851,44 +3609,40 @@ void FX_GenerateMarkVertsForMark_MatrixFromAnim
   float local_78;
   float local_74;
   
-  uVar16 = (ulonglong)(int)param_3;
-  uVar15 = (ulonglong)(int)param_2;
-  iVar12 = __savegprlr_21(param_1);
-  if ((uVar15 & 0xffffffff) == 0) {
+  if (param_2 == (DObj *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_marks.cpp",
                     0x8d1,0,"%s");
   }
-  if ((uVar16 & 0xffffffff) == 0) {
+  if (param_3 == (DObjAnimMat *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_marks.cpp",
                     0x8d2,0,"%s");
   }
-  bVar1 = *(byte *)(iVar12 + 0x31);
-  iVar12 = FX_GetMarkContext_DObjModelIndex((GfxMarkContext *)(iVar12 + 0x30));
-  pfVar17 = (float *)uVar16;
-  if ((((((uint)*pfVar17 & 0x7f800000) == 0x7f800000) ||
-       (((uint)pfVar17[1] & 0x7f800000) == 0x7f800000)) ||
-      (((uint)pfVar17[2] & 0x7f800000) == 0x7f800000)) ||
-     (((uint)pfVar17[3] & 0x7f800000) == 0x7f800000)) {
+  bVar1 = (param_1->context).field1_0x1.lmapIndex;
+  iVar12 = FX_GetMarkContext_DObjModelIndex(&param_1->context);
+  if ((((((uint)param_3->quat[0] & 0x7f800000) == 0x7f800000) ||
+       (((uint)param_3->quat[1] & 0x7f800000) == 0x7f800000)) ||
+      (((uint)param_3->quat[2] & 0x7f800000) == 0x7f800000)) ||
+     (((uint)param_3->quat[3] & 0x7f800000) == 0x7f800000)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\renderer\\../xanim/xanim_public.h"
                     ,0x22e,0,"%s");
   }
-  if (((uint)pfVar17[7] & 0x7f800000) == 0x7f800000) {
+  if (((uint)param_3->transWeight & 0x7f800000) == 0x7f800000) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\renderer\\../xanim/xanim_public.h"
                     ,0x22f,0,"%s");
   }
-  fVar2 = pfVar17[2];
-  fVar3 = pfVar17[7];
-  fVar4 = pfVar17[1];
+  fVar2 = param_3->quat[2];
+  fVar3 = param_3->transWeight;
+  fVar4 = param_3->quat[1];
   fVar8 = fVar4 * fVar3;
-  fVar9 = *pfVar17 * fVar3;
-  local_ac = pfVar17[4] + *param_4;
-  local_a8 = param_4[1] + pfVar17[5];
-  fVar5 = pfVar17[3];
+  fVar9 = param_3->quat[0] * fVar3;
+  local_ac = param_3->trans[0] + *param_4;
+  local_a8 = param_4[1] + param_3->trans[1];
+  fVar5 = param_3->quat[3];
   fVar6 = fVar2 * fVar2 * fVar3;
-  dVar18 = 1.0;
-  fVar7 = *pfVar17 * fVar9;
+  dVar15 = 1.0;
+  fVar7 = param_3->quat[0] * fVar9;
   local_c4 = fVar5 * fVar2 * fVar3;
-  local_a4 = param_4[2] + pfVar17[6];
+  local_a4 = param_4[2] + param_3->trans[2];
   local_bc = fVar2 * fVar8 + fVar5 * fVar9;
   local_cc = local_c4 + fVar4 * fVar9;
   local_c4 = fVar4 * fVar9 - local_c4;
@@ -3898,7 +3652,7 @@ void FX_GenerateMarkVertsForMark_MatrixFromAnim
   local_c0 = 1.0 - (fVar6 + fVar7);
   local_b4 = fVar2 * fVar8 - fVar5 * fVar9;
   local_b0 = 1.0 - (fVar4 * fVar8 + fVar7);
-  pXVar13 = DObjGetModel((DObj *)uVar15,iVar12);
+  pXVar13 = DObjGetModel(param_2,iVar12);
   pDVar14 = XModelGetBasePose(pXVar13);
   pDVar14 = pDVar14 + bVar1;
   if (((((uint)pDVar14->quat[0] & 0x7f800000) == 0x7f800000) ||
@@ -3929,40 +3683,36 @@ void FX_GenerateMarkVertsForMark_MatrixFromAnim
   local_98 = fVar5 * fVar9 + fVar4 * fVar10;
   local_88 = fVar4 * fVar10 - fVar5 * fVar9;
   local_84 = fVar4 * fVar9 + fVar5 * fVar10;
-  local_80 = (float)(dVar18 - (double)(fVar3 * fVar9 + fVar11));
+  local_80 = (float)(dVar15 - (double)(fVar3 * fVar9 + fVar11));
   local_8c = fVar4 * fVar9 - fVar5 * fVar10;
-  local_a0 = (float)(dVar18 - (double)(fVar2 + fVar3 * fVar9));
-  local_90 = (float)(dVar18 - (double)(fVar2 + fVar11));
+  local_a0 = (float)(dVar15 - (double)(fVar2 + fVar3 * fVar9));
+  local_90 = (float)(dVar15 - (double)(fVar2 + fVar11));
   local_7c = -(fVar8 * local_a0 + fVar6 * local_88 + fVar7 * local_94);
   local_78 = -(fVar7 * local_90 + fVar8 * local_9c + fVar6 * local_84);
   local_74 = -(fVar7 * local_8c + fVar8 * local_98 + fVar6 * local_80);
   MatrixMultiply43((float (*) [3])&local_a0,(float (*) [3])&local_d0,param_5);
-  __restgprlr_21();
   return;
 }
 
 
 // 82435AD0  FX_GenerateMarkVertsForList_EntDObj  (EffectsCore/fx_marks.cpp:2279)
 
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
+
 void FX_GenerateMarkVertsForList_EntDObj
                (FxMarksSystem *param_1,ushort param_2,FxCamera *param_3,uint *param_4,ushort param_5
                ,uchar param_6,uchar param_7,DObj *param_8,DObjAnimMat *param_9,uint *param_10)
 
 {
-  FxMarksSystem *pFVar1;
-  FxMark *pFVar2;
-  ulonglong uVar3;
+  uint uVar1;
+  int iVar2;
+  int iVar3;
   int iVar4;
-  int iVar5;
+  bool bVar5;
   int iVar6;
-  bool bVar7;
-  ulonglong uVar8;
-  ulonglong uVar9;
-  ulonglong uVar10;
-  int iVar11;
-  longlong lVar12;
-  GfxMarkContext *pGVar13;
-  longlong lVar14;
+  GfxMarkContext *pGVar7;
+  FxMark *pFVar8;
   FxCamera *pFStack00000024;
   uint *puStack0000002c;
   byte bStack0000003f;
@@ -3975,79 +3725,77 @@ void FX_GenerateMarkVertsForList_EntDObj
   FxActiveMarkSurf FStack_f0;
   float afStack_d0 [52];
   
-  uVar9 = (ulonglong)(char)param_6;
-  uVar8 = (ulonglong)(short)param_5;
-  uVar10 = (ulonglong)(short)param_2;
-  uVar3 = (ulonglong)(int)param_1;
-  __savegprlr();
-  bStack0000003f = (byte)uVar9;
   local_fc = "c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_marks.cpp";
   pFStack00000024 = param_3;
   puStack0000002c = param_4;
+  bStack0000003f = param_6;
   uStack00000047 = param_7;
-  if ((uVar8 & 0xffff) == 0) {
+  if (param_5 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_marks.cpp",
                     0x8f2,0,"%s");
   }
-  if ((uVar9 & 0xff) == 0xff) {
+  if (param_6 == 0xff) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_marks.cpp",
                     0x8f3,0,"%s");
   }
-  iVar11 = -1;
-  iVar5 = -1;
+  iVar6 = -1;
+  iVar3 = -1;
   local_100[0] = 0;
-  uVar10 = uVar10 & 0xffff;
-  while (uVar10 != 0xffff) {
-    if (0x1ff < uVar10) {
+  do {
+    uVar1 = (uint)param_2;
+    if (uVar1 == 0xffff) {
+      return;
+    }
+    if (0x1ff < uVar1) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\fx_marks.h",0xad
                       ,0,"handle doesn\'t index FX_MARKS_LIMIT\n\t%i not in [0, %i)");
     }
-    if ((uVar3 & 0xffffffff) == 0) {
+    if (param_1 == (FxMarksSystem *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\fx_marks.h",0xae
                       ,0,"%s");
     }
-    pFVar1 = (FxMarksSystem *)uVar3;
-    lVar14 = uVar10 * 0x40 + ZEXT48(pFVar1->marks);
-    lVar12 = lVar14 + 0x30;
-    if (lVar12 == 0) {
+    pFVar8 = param_1->marks + uVar1;
+    pGVar7 = &pFVar8->context;
+    if (pGVar7 == (GfxMarkContext *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\../renderer/tr_types.h"
                       ,0x3b2,0,"%s");
     }
-    pGVar13 = (GfxMarkContext *)lVar12;
-    pFVar2 = (FxMark *)lVar14;
-    if (pGVar13->modelType == '\x03') {
-      iVar4 = FX_GetMarkContext_DObjModelIndex(pGVar13);
-      if (iVar4 != iVar11) {
-        iVar5 = FX_GetDobjModelGlobalBoneBase(param_8,iVar4);
-        iVar11 = iVar4;
+    if (pGVar7->modelType == '\x03') {
+      iVar2 = FX_GetMarkContext_DObjModelIndex(pGVar7);
+      if (iVar2 != iVar6) {
+        iVar3 = FX_GetDobjModelGlobalBoneBase(param_8,iVar2);
+        iVar6 = iVar2;
       }
-      if (iVar5 < 0) {
+      if (iVar3 < 0) {
         MyAssertHandler(local_fc,0x906,0,"%s\n\t(markModelGlobalBoneBase) = %i");
       }
-      iVar4 = (uint)(pFVar2->context).field1_0x1.lmapIndex + iVar5;
-      if (((*(uint *)(&g_bitShift + (iVar4 * 4 & 0x7c)) &
-           *(uint *)((iVar4 >> 5) * 4 + in_stack_0000005c)) == 0) &&
-         (iVar6 = DObjSkelIsBoneUpToDate(param_8,iVar4), iVar6 != 0)) {
-        bVar7 = FX_GenerateMarkVertsForMark_Begin
-                          (pFVar1,pFVar2,(ushort)puStack0000002c,(uint *)local_100,
-                           (ushort *)&FStack_f0,(FxActiveMarkSurf *)uVar8,(ushort)bStack0000003f,
-                           uStack00000047,in_stack_fffffebb);
-        if (!bVar7) break;
+      iVar2 = (uint)(pFVar8->context).field1_0x1.lmapIndex + iVar3;
+      if (((*(uint *)(&g_bitShift + (iVar2 * 4 & 0x7c)) &
+           *(uint *)((iVar2 >> 5) * 4 + in_stack_0000005c)) == 0) &&
+         (iVar4 = DObjSkelIsBoneUpToDate(param_8,iVar2), iVar4 != 0)) {
+        bVar5 = FX_GenerateMarkVertsForMark_Begin
+                          (param_1,pFVar8,(ushort)puStack0000002c,(uint *)local_100,
+                           (ushort *)&FStack_f0,(FxActiveMarkSurf *)(int)(short)param_5,
+                           (ushort)bStack0000003f,uStack00000047,in_stack_fffffebb);
+        if (!bVar5) {
+          return;
+        }
         FX_GenerateMarkVertsForMark_MatrixFromAnim
-                  (pFVar2,param_8,(DObjAnimMat *)(iVar4 * 0x20 + in_stack_00000054),
+                  (pFVar8,param_8,(DObjAnimMat *)(iVar2 * 0x20 + in_stack_00000054),
                    pFStack00000024->viewOffset,(float (*) [3])afStack_d0);
         FX_GenerateMarkVertsForMark_FinishAnimated
-                  (pFVar1,pFVar2,local_100[0],&FStack_f0,(float (*) [3])afStack_d0);
+                  (param_1,pFVar8,local_100[0],&FStack_f0,(float (*) [3])afStack_d0);
       }
     }
-    uVar10 = (ulonglong)pFVar2->nextMark;
-  }
-  __restgprlr();
-  return;
+    param_2 = pFVar8->nextMark;
+  } while( true );
 }
 
 
 // 82435D50  FX_GenerateMarkVertsForList_EntXModel  (EffectsCore/fx_marks.cpp:2329)
+
+/* WARNING: Function: __savegprlr_16 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_16 replaced with injection: xenon_save_restore */
 
 bool FX_GenerateMarkVertsForList_EntXModel
                (FxMarksSystem *param_1,ushort param_2,FxCamera *param_3,uint *param_4,ushort param_5
@@ -4055,36 +3803,22 @@ bool FX_GenerateMarkVertsForList_EntXModel
 
 {
   byte bVar1;
-  FxMark *pFVar2;
-  FxMarksSystem *pFVar3;
-  int iVar4;
-  bool bVar5;
-  undefined1 uVar6;
-  ushort uVar7;
-  ulonglong uVar8;
-  ulonglong uVar9;
-  ulonglong uVar10;
-  ulonglong uVar11;
-  longlong lVar12;
-  GfxMarkContext *pGVar13;
-  longlong lVar14;
+  uint uVar2;
+  int iVar3;
+  bool bVar4;
+  GfxMarkContext *pGVar5;
+  FxMark *pFVar6;
   uchar in_stack_fffffeab;
   ushort local_110 [8];
   FxActiveMarkSurf FStack_100;
   uint auStack_e0 [8];
   float afStack_c0 [48];
   
-  uVar10 = (ulonglong)(char)param_7;
-  uVar9 = (ulonglong)(short)param_5;
-  uVar8 = (ulonglong)(int)param_4;
-  uVar7 = (ushort)param_3;
-  uVar11 = (ulonglong)(short)param_2;
-  pFVar3 = (FxMarksSystem *)__savegprlr_16(param_1);
-  if ((uVar8 & 0xffff) == 0) {
+  if (((uint)param_4 & 0xffff) == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_marks.cpp",
                     0x927,0,"%s");
   }
-  if ((uVar9 & 0xff) == 0xff) {
+  if ((param_5 & 0xff) == 0xff) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_marks.cpp",
                     0x928,0,"%s");
   }
@@ -4094,192 +3828,174 @@ bool FX_GenerateMarkVertsForList_EntXModel
   }
   FX_GenerateMarkVertsForMark_MatrixFromPlacement
             ((GfxPlacement *)param_8,vec3_origin,(float (*) [3])afStack_c0);
-  if ((uVar10 & 0xffffffff) == 0) {
+  if (param_7 == '\0') {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_marks.cpp",
                     0x92b,0,"%s");
   }
-  DObjGetHidePartBits((DObj *)uVar10,auStack_e0);
-  uVar11 = uVar11 & 0xffff;
+  DObjGetHidePartBits((DObj *)(int)(char)param_7,auStack_e0);
   local_110[0] = 0;
   do {
-    if (uVar11 == 0xffff) {
-      uVar6 = __restgprlr_16(1);
-      return (bool)uVar6;
+    uVar2 = (uint)param_2;
+    if (uVar2 == 0xffff) {
+      return true;
     }
-    if (0x1ff < uVar11) {
+    if (0x1ff < uVar2) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\fx_marks.h",0xad
                       ,0,"handle doesn\'t index FX_MARKS_LIMIT\n\t%i not in [0, %i)");
     }
-    if (pFVar3 == (FxMarksSystem *)0x0) {
+    if (param_1 == (FxMarksSystem *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\fx_marks.h",0xae
                       ,0,"%s");
     }
-    lVar14 = uVar11 * 0x40 + ZEXT48(pFVar3->marks);
-    lVar12 = lVar14 + 0x30;
-    if (lVar12 == 0) {
+    pFVar6 = param_1->marks + uVar2;
+    pGVar5 = &pFVar6->context;
+    if (pGVar5 == (GfxMarkContext *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\../renderer/tr_types.h"
                       ,0x3b2,0,"%s");
     }
-    pGVar13 = (GfxMarkContext *)lVar12;
-    pFVar2 = (FxMark *)lVar14;
-    if (pGVar13->modelType == '\x03') {
-      iVar4 = FX_GetMarkContext_DObjModelIndex(pGVar13);
-      if (iVar4 != 0) {
+    if (pGVar5->modelType == '\x03') {
+      iVar3 = FX_GetMarkContext_DObjModelIndex(pGVar5);
+      if (iVar3 != 0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_marks.cpp",
                         0x93a,0,"%s");
       }
-      bVar1 = (pFVar2->context).field1_0x1.lmapIndex;
+      bVar1 = (pFVar6->context).field1_0x1.lmapIndex;
       if ((*(uint *)(&g_bitShift + (bVar1 & 0x1f) * 4) & auStack_e0[(int)(uint)bVar1 >> 5]) == 0) {
-        bVar5 = FX_GenerateMarkVertsForMark_Begin
-                          (pFVar3,pFVar2,uVar7,(uint *)local_110,(ushort *)&FStack_100,
-                           (FxActiveMarkSurf *)uVar8,(ushort)uVar9,param_6,in_stack_fffffeab);
-        if (!bVar5) {
-          uVar6 = __restgprlr_16(0);
-          return (bool)uVar6;
+        bVar4 = FX_GenerateMarkVertsForMark_Begin
+                          (param_1,pFVar6,(ushort)param_3,(uint *)local_110,(ushort *)&FStack_100,
+                           (FxActiveMarkSurf *)param_4,param_5,param_6,in_stack_fffffeab);
+        if (!bVar4) {
+          return false;
         }
         FX_GenerateMarkVertsForMark_FinishAnimated
-                  (pFVar3,pFVar2,local_110[0],&FStack_100,(float (*) [3])afStack_c0);
+                  (param_1,pFVar6,local_110[0],&FStack_100,(float (*) [3])afStack_c0);
       }
     }
-    uVar11 = (ulonglong)pFVar2->nextMark;
+    param_2 = pFVar6->nextMark;
   } while( true );
 }
 
 
 // 82435FE8  FX_GenerateMarkVertsForList_EntBrush  (EffectsCore/fx_marks.cpp:2378)
 
+/* WARNING: Function: __savegprlr_20 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_20 replaced with injection: xenon_save_restore */
+
 bool FX_GenerateMarkVertsForList_EntBrush
                (FxMarksSystem *param_1,FxCamera *param_2,ushort param_3,uint *param_4,
                GfxPlacement *param_5,uchar param_6,uchar param_7)
 
 {
-  FxMarksSystem *pFVar1;
-  bool bVar2;
-  undefined1 uVar3;
-  FxMark *pFVar4;
-  ulonglong uVar5;
-  ulonglong uVar6;
-  longlong lVar7;
-  longlong lVar8;
+  bool bVar1;
+  uint uVar2;
+  FxMark *pFVar3;
   uchar in_stack_fffffeeb;
   ushort local_d0 [8];
   FxActiveMarkSurf FStack_c0;
   float afStack_a0 [40];
   
-  uVar5 = (ulonglong)(int)param_5;
-  uVar6 = (ulonglong)(int)param_2;
-  pFVar1 = (FxMarksSystem *)__savegprlr_20(param_1);
-  if ((uVar5 & 0xff) == 0xff) {
+  if (((uint)param_5 & 0xff) == 0xff) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_marks.cpp",
                     0x951,0,"%s");
   }
   FX_GenerateMarkVertsForMark_MatrixFromPlacement
             ((GfxPlacement *)param_4,vec3_origin,(float (*) [3])afStack_a0);
-  uVar6 = uVar6 & 0xffff;
+  uVar2 = (uint)param_2 & 0xffff;
   local_d0[0] = 0;
   do {
-    if (uVar6 == 0xffff) {
-      uVar3 = __restgprlr_20(1);
-      return (bool)uVar3;
+    if (uVar2 == 0xffff) {
+      return true;
     }
-    if (0x1ff < uVar6) {
+    if (0x1ff < uVar2) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\fx_marks.h",0xad
                       ,0,"handle doesn\'t index FX_MARKS_LIMIT\n\t%i not in [0, %i)");
     }
-    if (pFVar1 == (FxMarksSystem *)0x0) {
+    if (param_1 == (FxMarksSystem *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\fx_marks.h",0xae
                       ,0,"%s");
     }
-    lVar8 = uVar6 * 0x40 + ZEXT48(pFVar1->marks);
-    lVar7 = lVar8 + 0x30;
-    if (lVar7 == 0) {
+    pFVar3 = param_1->marks + uVar2;
+    if (&pFVar3->context == (GfxMarkContext *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\../renderer/tr_types.h"
                       ,0x3b2,0,"%s");
     }
-    pFVar4 = (FxMark *)lVar8;
-    if (*(char *)lVar7 == '\x02') {
-      bVar2 = FX_GenerateMarkVertsForMark_Begin
-                        (pFVar1,pFVar4,param_3,(uint *)local_d0,(ushort *)&FStack_c0,
-                         (FxActiveMarkSurf *)0x0,(ushort)uVar5,param_6,in_stack_fffffeeb);
-      if (!bVar2) {
-        uVar3 = __restgprlr_20(0);
-        return (bool)uVar3;
+    if ((pFVar3->context).modelType == '\x02') {
+      bVar1 = FX_GenerateMarkVertsForMark_Begin
+                        (param_1,pFVar3,param_3,(uint *)local_d0,(ushort *)&FStack_c0,
+                         (FxActiveMarkSurf *)0x0,(ushort)param_5,param_6,in_stack_fffffeeb);
+      if (!bVar1) {
+        return false;
       }
       FX_GenerateMarkVertsForMark_FinishAnimated
-                (pFVar1,pFVar4,local_d0[0],&FStack_c0,(float (*) [3])afStack_a0);
+                (param_1,pFVar3,local_d0[0],&FStack_c0,(float (*) [3])afStack_a0);
     }
-    uVar6 = (ulonglong)pFVar4->nextMark;
+    uVar2 = (uint)pFVar3->nextMark;
   } while( true );
 }
 
 
 // 82436180  FX_GenerateMarkVertsForList_WorldXModel  (EffectsCore/fx_marks.cpp:2406)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
+
 bool FX_GenerateMarkVertsForList_WorldXModel
                (FxMarksSystem *param_1,ushort param_2,FxCamera *param_3,uint *param_4)
 
 {
-  FxMarksSystem *pFVar1;
+  uint uVar1;
   bool bVar2;
-  undefined1 uVar3;
-  FxMark *pFVar4;
-  longlong lVar5;
-  ulonglong uVar6;
+  FxMark *pFVar3;
   uchar in_stack_ffffff4b;
   ushort local_70 [8];
   FxActiveMarkSurf aFStack_60 [4];
   
-  lVar5 = (longlong)(int)param_3;
-  uVar6 = (ulonglong)(short)param_2;
-  pFVar1 = (FxMarksSystem *)__savegprlr_25(param_1,uVar6,lVar5,param_4);
-  uVar6 = uVar6 & 0xffff;
   local_70[0] = 0;
   while( true ) {
-    if (uVar6 == 0xffff) {
-      uVar3 = __restgprlr_25(1);
-      return (bool)uVar3;
+    uVar1 = (uint)param_2;
+    if (uVar1 == 0xffff) {
+      return true;
     }
-    if (0x1ff < uVar6) {
+    if (0x1ff < uVar1) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\fx_marks.h",0xad
                       ,0,"handle doesn\'t index FX_MARKS_LIMIT\n\t%i not in [0, %i)");
     }
-    if (pFVar1 == (FxMarksSystem *)0x0) {
+    if (param_1 == (FxMarksSystem *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\fx_marks.h",0xae
                       ,0,"%s");
     }
-    pFVar4 = (FxMark *)((int)pFVar1->marks->origin + (int)(uVar6 << 6) + -0xc);
+    pFVar3 = param_1->marks + uVar1;
     bVar2 = FX_GenerateMarkVertsForMark_Begin
-                      (pFVar1,pFVar4,(ushort)lVar5,(uint *)local_70,(ushort *)aFStack_60,
+                      (param_1,pFVar3,(ushort)param_3,(uint *)local_70,(ushort *)aFStack_60,
                        (FxActiveMarkSurf *)0x0,0xff,'\0',in_stack_ffffff4b);
     if (!bVar2) break;
-    FX_GenerateMarkVertsForMark_FinishNonAnimated(pFVar1,pFVar4,local_70[0],aFStack_60);
-    uVar6 = (ulonglong)pFVar4->nextMark;
+    FX_GenerateMarkVertsForMark_FinishNonAnimated(param_1,pFVar3,local_70[0],aFStack_60);
+    param_2 = pFVar3->nextMark;
   }
-  uVar3 = __restgprlr_25(0);
-  return (bool)uVar3;
+  return false;
 }
 
 
 // 82436288  FX_GenerateMarkVertsForList_Glass  (EffectsCore/fx_marks.cpp:2428)
+
+/* WARNING: Function: __savegprlr_20 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_20 replaced with injection: xenon_save_restore */
 
 bool FX_GenerateMarkVertsForList_Glass
                (FxMarksSystem *param_1,ushort param_2,FxCamera *param_3,uint *param_4)
 
 {
   FxMark *pFVar1;
-  FxMarksSystem *pFVar2;
-  ushort uVar5;
-  GfxSceneGlass *pGVar3;
-  bool bVar6;
-  FxGlassPiecePlace *pFVar4;
-  undefined1 uVar7;
-  ushort uVar8;
-  FxActiveMarkSurf *pFVar9;
-  ulonglong uVar10;
+  ushort uVar4;
+  GfxSceneGlass *pGVar2;
+  bool bVar5;
+  FxGlassPiecePlace *pFVar3;
+  FxActiveMarkSurf *pFVar6;
+  uint uVar7;
+  double dVar8;
+  double dVar9;
+  double dVar10;
   double dVar11;
-  double dVar12;
-  double dVar13;
-  double dVar14;
   uchar in_stack_fffffeeb;
   ushort local_d0 [4];
   float local_c8;
@@ -4290,67 +4006,64 @@ bool FX_GenerateMarkVertsForList_Glass
   float local_b0;
   FxActiveMarkSurf aFStack_a0 [8];
   
-  uVar8 = (ushort)param_4;
-  uVar10 = (ulonglong)(short)param_2;
-  pFVar2 = (FxMarksSystem *)__savegprlr_20(param_1);
-  uVar10 = uVar10 & 0xffff;
+  uVar7 = (uint)param_2;
   local_d0[0] = 0;
-  if (uVar10 != 0xffff) {
-    dVar13 = -1.0;
-    dVar14 = 1.0;
+  if (uVar7 != 0xffff) {
+    dVar10 = -1.0;
+    dVar11 = 1.0;
     do {
-      if (0x1ff < uVar10) {
+      if (0x1ff < uVar7) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\fx_marks.h",
                         0xad,0,"handle doesn\'t index FX_MARKS_LIMIT\n\t%i not in [0, %i)");
       }
-      if (pFVar2 == (FxMarksSystem *)0x0) {
+      if (param_1 == (FxMarksSystem *)0x0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\fx_marks.h",
                         0xae,0,"%s");
       }
-      pFVar1 = pFVar2->marks + (int)uVar10;
-      uVar5 = FX_GetMarkContext_GlassPieceIndex(&pFVar1->context);
-      if (0x3ff < uVar5) {
+      pFVar1 = param_1->marks + uVar7;
+      uVar4 = FX_GetMarkContext_GlassPieceIndex(&pFVar1->context);
+      if (0x3ff < uVar4) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_marks.cpp",
                         0x992,0,
                         "pieceIndex doesn\'t index MAX_MAP_GLASS_PIECES\n\t%i not in [0, %i)");
       }
-      pGVar3 = R_GetSceneGlass((uint)uVar5);
-      if ((pGVar3->_s_0).rendered != false) {
-        pFVar9 = aFStack_a0;
-        bVar6 = FX_GenerateMarkVertsForMark_Begin
-                          (pFVar2,pFVar1,uVar8,(uint *)local_d0,(ushort *)pFVar9,
-                           (FxActiveMarkSurf *)(uint)(pGVar3->_s_0).lightingHandle,
-                           (ushort)(pGVar3->_s_0).reflectionProbeIndex,'\0',in_stack_fffffeeb);
-        if (!bVar6) {
-          uVar7 = __restgprlr_20(0);
-          return (bool)uVar7;
+      pGVar2 = R_GetSceneGlass((uint)uVar4);
+      if ((pGVar2->_s_0).rendered != false) {
+        pFVar6 = aFStack_a0;
+        bVar5 = FX_GenerateMarkVertsForMark_Begin
+                          (param_1,pFVar1,(ushort)param_4,(uint *)local_d0,(ushort *)pFVar6,
+                           (FxActiveMarkSurf *)(uint)(pGVar2->_s_0).lightingHandle,
+                           (ushort)(pGVar2->_s_0).reflectionProbeIndex,'\0',in_stack_fffffeeb);
+        if (!bVar5) {
+          return false;
         }
-        pFVar4 = fxWorld.glassSys.piecePlaces + uVar5;
-        dVar12 = (double)fxWorld.glassSys.halfThickness[uVar5];
-        UnitQuatToNormal((float *)&pFVar4->nextFree,&local_c8);
-        dVar11 = dVar14;
-        if (local_c0 * (param_3->origin[2] - (pFVar4->_s_0).frame.origin[2]) +
-            local_c8 * (param_3->origin[0] - (pFVar4->_s_0).frame.origin[0]) +
-            local_c4 * (param_3->origin[1] - (pFVar4->_s_0).frame.origin[1]) < 0.0) {
-          dVar11 = dVar13;
+        pFVar3 = fxWorld.glassSys.piecePlaces + uVar4;
+        dVar9 = (double)fxWorld.glassSys.halfThickness[uVar4];
+        UnitQuatToNormal((float *)&pFVar3->nextFree,&local_c8);
+        dVar8 = dVar11;
+        if (local_c0 * (param_3->origin[2] - (pFVar3->_s_0).frame.origin[2]) +
+            local_c8 * (param_3->origin[0] - (pFVar3->_s_0).frame.origin[0]) +
+            local_c4 * (param_3->origin[1] - (pFVar3->_s_0).frame.origin[1]) < 0.0) {
+          dVar8 = dVar10;
         }
-        local_b0 = (float)(dVar11 * dVar12);
+        local_b0 = (float)(dVar8 * dVar9);
         local_b8 = local_c8 * local_b0;
         local_b4 = local_c4 * local_b0;
         local_b0 = local_c0 * local_b0;
         FX_GenerateMarkVertsForMark_FinishGlass
-                  (pFVar2,pFVar1,local_d0[0],aFStack_a0,(float)dVar11,(float *)pFVar9);
+                  (param_1,pFVar1,local_d0[0],aFStack_a0,(float)dVar8,(float *)pFVar6);
       }
-      uVar10 = (ulonglong)pFVar1->nextMark;
-    } while (uVar10 != 0xffff);
+      uVar7 = (uint)pFVar1->nextMark;
+    } while (uVar7 != 0xffff);
   }
-  uVar7 = __restgprlr_20(1);
-  return (bool)uVar7;
+  return true;
 }
 
 
 // 82437910  _Push_heap<FxMarkTri_*,int,FxMarkTri,bool_(__cdecl*)(FxMarkTri_const_&,FxMarkTri_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2455)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void std::_Push_heap<FxMarkTri_*,int,FxMarkTri,bool_(__cdecl*)(FxMarkTri_const_&,FxMarkTri_const_&)>
@@ -4359,100 +4072,85 @@ void std::_Push_heap<FxMarkTri_*,int,FxMarkTri,bool_(__cdecl*)(FxMarkTri_const_&
 
 {
   int iVar1;
-  longlong lVar2;
-  longlong lVar3;
-  bool bVar4;
-  longlong lVar5;
+  bool bVar2;
+  uchar *puVar3;
+  uchar *puVar4;
+  uint uVar5;
   longlong lVar6;
-  uint uVar7;
-  longlong lVar8;
-  longlong lVar9;
   
-  lVar5 = (longlong)(int)param_4;
-  lVar6 = (longlong)param_2;
-  lVar3 = __savegprlr_25(param_1);
-  iVar1 = (int)lVar6;
-  uVar7 = iVar1 - 1;
-  lVar8 = (longlong)((int)uVar7 >> 1) + (ulonglong)((int)uVar7 < 0 && (uVar7 & 1) != 0);
-  while (lVar2 = lVar8, param_3 < iVar1) {
-    lVar8 = lVar2 * 0xe + lVar3;
-    bVar4 = (*param_5)((FxMarkTri *)lVar8,(FxMarkTri *)lVar5);
-    if (!bVar4) break;
-    lVar8 = lVar8 + -2;
-    lVar6 = lVar6 * 0xe + lVar3 + -2;
-    lVar9 = 7;
+  uVar5 = param_2 - 1;
+  iVar1 = ((int)uVar5 >> 1) + (uint)((int)uVar5 < 0 && (uVar5 & 1) != 0);
+  while (param_3 < param_2) {
+    bVar2 = (*param_5)(param_1 + iVar1,param_4);
+    if (!bVar2) break;
+    puVar3 = &(param_1 + iVar1)[-1].context.reflectionProbeIndex;
+    puVar4 = &param_1[param_2 + -1].context.reflectionProbeIndex;
+    lVar6 = 7;
     do {
-      lVar8 = lVar8 + 2;
-      lVar6 = lVar6 + 2;
-      *(undefined2 *)lVar6 = *(undefined2 *)lVar8;
-      lVar9 = lVar9 + -1;
-    } while (lVar9 != 0);
-    iVar1 = (int)lVar2;
-    uVar7 = iVar1 - 1;
-    lVar8 = (longlong)((int)uVar7 >> 1) + (ulonglong)((int)uVar7 < 0 && (uVar7 & 1) != 0);
-    lVar6 = lVar2;
+      puVar3 = puVar3 + 2;
+      puVar4 = puVar4 + 2;
+      *(undefined2 *)puVar4 = *(undefined2 *)puVar3;
+      lVar6 = lVar6 + -1;
+    } while (lVar6 != 0);
+    uVar5 = iVar1 - 1;
+    param_2 = iVar1;
+    iVar1 = ((int)uVar5 >> 1) + (uint)((int)uVar5 < 0 && (uVar5 & 1) != 0);
   }
-  lVar5 = lVar5 + -2;
-  lVar6 = lVar6 * 0xe + lVar3 + -2;
-  lVar8 = 7;
+  puVar3 = &param_4[-1].context.reflectionProbeIndex;
+  puVar4 = &param_1[param_2 + -1].context.reflectionProbeIndex;
+  lVar6 = 7;
   do {
-    lVar5 = lVar5 + 2;
-    lVar6 = lVar6 + 2;
-    *(undefined2 *)lVar6 = *(undefined2 *)lVar5;
-    lVar8 = lVar8 + -1;
-  } while (lVar8 != 0);
-  __restgprlr_25();
+    puVar3 = puVar3 + 2;
+    puVar4 = puVar4 + 2;
+    *(undefined2 *)puVar4 = *(undefined2 *)puVar3;
+    lVar6 = lVar6 + -1;
+  } while (lVar6 != 0);
   return;
 }
 
 
 // 824364A8  FX_GenerateMarkVertsForList_WorldBrush  (EffectsCore/fx_marks.cpp:2476)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
+
 bool FX_GenerateMarkVertsForList_WorldBrush
                (FxMarksSystem *param_1,ushort param_2,FxCamera *param_3,uint *param_4)
 
 {
   FxMark *pFVar1;
-  FxMarksSystem *pFVar2;
+  uint uVar2;
   bool bVar3;
-  undefined1 uVar4;
-  ushort uVar5;
-  ulonglong uVar6;
   uchar in_stack_ffffff4b;
   ushort local_70 [8];
   FxActiveMarkSurf aFStack_60 [4];
   
-  uVar5 = (ushort)param_4;
-  uVar6 = (ulonglong)(short)param_2;
-  pFVar2 = (FxMarksSystem *)__savegprlr_24(param_1);
-  uVar6 = uVar6 & 0xffff;
   local_70[0] = 0;
   do {
-    if (uVar6 == 0xffff) {
-      uVar4 = __restgprlr_24(1);
-      return (bool)uVar4;
+    uVar2 = (uint)param_2;
+    if (uVar2 == 0xffff) {
+      return true;
     }
-    if (0x1ff < uVar6) {
+    if (0x1ff < uVar2) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\fx_marks.h",0xad
                       ,0,"handle doesn\'t index FX_MARKS_LIMIT\n\t%i not in [0, %i)");
     }
-    if (pFVar2 == (FxMarksSystem *)0x0) {
+    if (param_1 == (FxMarksSystem *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\fx_marks.h",0xae
                       ,0,"%s");
     }
-    pFVar1 = (FxMark *)((int)pFVar2->marks->origin + (int)(uVar6 << 6) + -0xc);
+    pFVar1 = param_1->marks + uVar2;
     bVar3 = FX_CullSphere(param_3,param_3->frustumPlaneCount,pFVar1->origin,pFVar1->radius);
     if (!bVar3) {
       bVar3 = FX_GenerateMarkVertsForMark_Begin
-                        (pFVar2,pFVar1,uVar5,(uint *)local_70,(ushort *)aFStack_60,
+                        (param_1,pFVar1,(ushort)param_4,(uint *)local_70,(ushort *)aFStack_60,
                          (FxActiveMarkSurf *)0x0,0xff,'\0',in_stack_ffffff4b);
       if (!bVar3) {
-        uVar4 = __restgprlr_24(0);
-        return (bool)uVar4;
+        return false;
       }
-      FX_GenerateMarkVertsForMark_FinishNonAnimated(pFVar2,pFVar1,local_70[0],aFStack_60);
+      FX_GenerateMarkVertsForMark_FinishNonAnimated(param_1,pFVar1,local_70[0],aFStack_60);
     }
-    uVar6 = (ulonglong)pFVar1->nextMark;
+    param_2 = pFVar1->nextMark;
   } while( true );
 }
 
@@ -4487,6 +4185,8 @@ void FX_FinishGeneratingMarkVerts(FxMarksSystem *param_1)
 
 // 824365D0  FX_GenerateMarkVertsForEntXModel  (EffectsCore/fx_marks.cpp:2527)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void FX_GenerateMarkVertsForEntXModel
@@ -4496,34 +4196,26 @@ void FX_GenerateMarkVertsForEntXModel
 
 {
   ushort uVar1;
-  FxMarksSystem *pFVar2;
-  longlong lVar3;
-  uint *puVar4;
-  ushort uVar5;
   DObj *in_stack_00000054;
   uchar in_stack_0000005f;
   GfxScaledPlacement *in_stack_ffffff78;
   
-  uVar5 = (ushort)(char)param_7;
-  puVar4 = (uint *)(int)(short)param_6;
-  lVar3 = (longlong)param_4;
-  pFVar2 = (FxMarksSystem *)__savegprlr_26(param_1,param_2,param_3);
-  uVar1 = *(ushort *)
-           ((int)pFVar2->entFirstMarkHandles + (int)((lVar3 + 5U & 0xffffffff) << 1) + -10);
+  uVar1 = param_1->entFirstMarkHandles[param_4];
   if (uVar1 != 0xffff) {
     Profile_Begin(0xc5);
     FX_GenerateMarkVertsForList_EntXModel
-              (pFVar2,uVar1,(FxCamera *)param_5,puVar4,uVar5,param_8,in_stack_0000005f,
-               in_stack_00000054,in_stack_ffffff78);
-    pFVar2 = (FxMarksSystem *)Profile_EndInternal((double *)0x0);
+              (param_1,uVar1,(FxCamera *)param_5,(uint *)(int)(short)param_6,(short)(char)param_7,
+               param_8,in_stack_0000005f,in_stack_00000054,in_stack_ffffff78);
+    Profile_EndInternal((double *)0x0);
   }
-  __restgprlr_26(pFVar2);
   return;
 }
 
 
 // 82436640  FX_GenerateMarkVertsForEntDObj_internal  (EffectsCore/fx_marks.cpp:2544)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void FX_GenerateMarkVertsForEntDObj_internal
@@ -4531,50 +4223,43 @@ void FX_GenerateMarkVertsForEntDObj_internal
                ushort param_5,uchar param_6,uchar param_7,DObj *param_8,ushort param_9)
 
 {
-  FxMarksSystem *pFVar1;
-  DObj *pDVar2;
-  int iVar3;
-  longlong lVar4;
-  ulonglong uVar5;
+  int iVar1;
   ushort in_stack_00000056;
   DObjAnimMat *in_stack_ffffff38;
   uint *in_stack_ffffff3c;
   uint auStack_70 [28];
   
-  uVar5 = (ulonglong)(int)param_8;
-  lVar4 = (longlong)(int)param_2;
-  pFVar1 = (FxMarksSystem *)__savegprlr_23(param_1,lVar4,param_3);
-  if ((uVar5 & 0xffffffff) == 0) {
+  if (param_8 == (DObj *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_marks.cpp",
                     0x9f5,0,"%s");
   }
-  if (pFVar1 == (FxMarksSystem *)0x0) {
+  if (param_1 == (FxMarksSystem *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_marks.cpp",
                     0x9f6,0,"%s");
   }
   if (in_stack_00000056 != 0xffff) {
     Profile_Begin(0xc5);
-    pDVar2 = (DObj *)uVar5;
-    DObjLock(pDVar2);
-    iVar3 = CL_GetSkelTimeStamp();
-    iVar3 = DObjSkelExists(pDVar2,iVar3);
-    if (iVar3 != 0) {
-      I_dmaGetDObjSkel(pDVar2);
-      DObjGetHidePartBits(pDVar2,auStack_70);
+    DObjLock(param_8);
+    iVar1 = CL_GetSkelTimeStamp();
+    iVar1 = DObjSkelExists(param_8,iVar1);
+    if (iVar1 != 0) {
+      I_dmaGetDObjSkel(param_8);
+      DObjGetHidePartBits(param_8,auStack_70);
       FX_GenerateMarkVertsForList_EntDObj
-                (pFVar1,in_stack_00000056,(FxCamera *)lVar4,param_4,param_5,param_6,param_7,pDVar2,
+                (param_1,in_stack_00000056,param_2,param_4,param_5,param_6,param_7,param_8,
                  in_stack_ffffff38,in_stack_ffffff3c);
     }
-    DObjUnlock(pDVar2);
+    DObjUnlock(param_8);
     Profile_EndInternal((double *)0x0);
   }
-  __restgprlr_23();
   return;
 }
 
 
 // 824379D0  _Adjust_heap<FxMarkTri_*,int,FxMarkTri,bool_(__cdecl*)(FxMarkTri_const_&,FxMarkTri_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2565)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void std::
@@ -4583,88 +4268,72 @@ void std::
                _func___cdecl_bool_FxMarkTri_ptr_FxMarkTri_ptr *param_5)
 
 {
-  FxMarkTri *pFVar1;
-  longlong lVar2;
-  bool bVar3;
-  longlong lVar4;
-  longlong lVar5;
-  longlong lVar6;
+  bool bVar1;
+  uchar *puVar2;
+  uchar *puVar3;
+  uint uVar4;
+  int iVar5;
+  int iVar6;
   longlong lVar7;
-  uint uVar8;
-  longlong lVar9;
-  int iVar11;
-  longlong lVar10;
-  longlong lVar12;
   
-  lVar6 = (longlong)(int)param_4;
-  lVar5 = (longlong)param_3;
-  lVar4 = (longlong)param_2;
-  lVar2 = __savegprlr_25(param_1);
-  lVar9 = (lVar4 + 1U & 0x7fffffff) << 1;
-  iVar11 = (int)lVar9;
-  lVar7 = lVar4;
-  while (lVar10 = lVar9, iVar11 < (int)lVar5) {
-    pFVar1 = (FxMarkTri *)((int)lVar10 * 0xe + (int)lVar2);
-    bVar3 = (*param_5)(pFVar1,pFVar1 + -1);
-    if (bVar3) {
-      lVar10 = lVar10 + -1;
+  iVar5 = param_2;
+  while( true ) {
+    iVar6 = (iVar5 + 1) * 2;
+    if (param_3 <= iVar6) break;
+    bVar1 = (*param_5)(param_1 + (iVar5 + 1) * 2,param_1 + (iVar5 + 1) * 2 + -1);
+    if (bVar1) {
+      iVar6 = iVar6 + -1;
     }
-    lVar9 = lVar10 * 0xe + lVar2 + -2;
-    lVar7 = lVar7 * 0xe + lVar2 + -2;
-    lVar12 = 7;
+    puVar2 = &param_1[iVar6 + -1].context.reflectionProbeIndex;
+    puVar3 = &param_1[iVar5 + -1].context.reflectionProbeIndex;
+    lVar7 = 7;
     do {
-      lVar9 = lVar9 + 2;
-      lVar7 = lVar7 + 2;
-      *(undefined2 *)lVar7 = *(undefined2 *)lVar9;
-      lVar12 = lVar12 + -1;
-    } while (lVar12 != 0);
-    lVar9 = (lVar10 + 1U & 0x7fffffff) << 1;
-    iVar11 = (int)lVar9;
-    lVar7 = lVar10;
+      puVar2 = puVar2 + 2;
+      puVar3 = puVar3 + 2;
+      *(undefined2 *)puVar3 = *(undefined2 *)puVar2;
+      lVar7 = lVar7 + -1;
+      iVar5 = iVar6;
+    } while (lVar7 != 0);
   }
-  if (iVar11 == (int)lVar5) {
-    lVar9 = lVar5 * 0xe + lVar2 + -0x10;
-    lVar7 = lVar7 * 0xe + lVar2 + -2;
-    lVar10 = 7;
+  if (iVar6 == param_3) {
+    puVar2 = &param_1[param_3 + -2].context.reflectionProbeIndex;
+    puVar3 = &param_1[iVar5 + -1].context.reflectionProbeIndex;
+    lVar7 = 7;
     do {
-      lVar9 = lVar9 + 2;
-      lVar7 = lVar7 + 2;
-      *(undefined2 *)lVar7 = *(undefined2 *)lVar9;
-      lVar10 = lVar10 + -1;
-    } while (lVar10 != 0);
-    lVar7 = lVar5 + -1;
+      puVar2 = puVar2 + 2;
+      puVar3 = puVar3 + 2;
+      *(undefined2 *)puVar3 = *(undefined2 *)puVar2;
+      lVar7 = lVar7 + -1;
+    } while (lVar7 != 0);
+    iVar5 = param_3 + -1;
   }
-  iVar11 = (int)lVar7;
-  uVar8 = iVar11 - 1;
-  lVar9 = (longlong)((int)uVar8 >> 1) + (ulonglong)((int)uVar8 < 0 && (uVar8 & 1) != 0);
-  while (lVar5 = lVar9, (int)lVar4 < iVar11) {
-    lVar9 = lVar5 * 0xe + lVar2;
-    bVar3 = (*param_5)((FxMarkTri *)lVar9,(FxMarkTri *)lVar6);
-    if (!bVar3) break;
-    lVar9 = lVar9 + -2;
-    lVar7 = lVar7 * 0xe + lVar2 + -2;
-    lVar10 = 7;
+  uVar4 = iVar5 - 1;
+  iVar6 = ((int)uVar4 >> 1) + (uint)((int)uVar4 < 0 && (uVar4 & 1) != 0);
+  while (param_2 < iVar5) {
+    bVar1 = (*param_5)(param_1 + iVar6,param_4);
+    if (!bVar1) break;
+    puVar2 = &(param_1 + iVar6)[-1].context.reflectionProbeIndex;
+    puVar3 = &param_1[iVar5 + -1].context.reflectionProbeIndex;
+    lVar7 = 7;
     do {
-      lVar9 = lVar9 + 2;
-      lVar7 = lVar7 + 2;
-      *(undefined2 *)lVar7 = *(undefined2 *)lVar9;
-      lVar10 = lVar10 + -1;
-    } while (lVar10 != 0);
-    iVar11 = (int)lVar5;
-    uVar8 = iVar11 - 1;
-    lVar9 = (longlong)((int)uVar8 >> 1) + (ulonglong)((int)uVar8 < 0 && (uVar8 & 1) != 0);
-    lVar7 = lVar5;
+      puVar2 = puVar2 + 2;
+      puVar3 = puVar3 + 2;
+      *(undefined2 *)puVar3 = *(undefined2 *)puVar2;
+      lVar7 = lVar7 + -1;
+    } while (lVar7 != 0);
+    uVar4 = iVar6 - 1;
+    iVar5 = iVar6;
+    iVar6 = ((int)uVar4 >> 1) + (uint)((int)uVar4 < 0 && (uVar4 & 1) != 0);
   }
-  lVar6 = lVar6 + -2;
-  lVar7 = lVar7 * 0xe + lVar2 + -2;
-  lVar9 = 7;
+  puVar2 = &param_4[-1].context.reflectionProbeIndex;
+  puVar3 = &param_1[iVar5 + -1].context.reflectionProbeIndex;
+  lVar7 = 7;
   do {
-    lVar6 = lVar6 + 2;
-    lVar7 = lVar7 + 2;
-    *(undefined2 *)lVar7 = *(undefined2 *)lVar6;
-    lVar9 = lVar9 + -1;
-  } while (lVar9 != 0);
-  __restgprlr_25();
+    puVar2 = puVar2 + 2;
+    puVar3 = puVar3 + 2;
+    *(undefined2 *)puVar3 = *(undefined2 *)puVar2;
+    lVar7 = lVar7 + -1;
+  } while (lVar7 != 0);
   return;
 }
 
@@ -4709,6 +4378,8 @@ void FX_GenerateMarkVertsForViewmodelDObj
 
 // 824367E8  FX_GenerateMarkVertsForEntBrush  (EffectsCore/fx_marks.cpp:2606)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void FX_GenerateMarkVertsForEntBrush
@@ -4717,41 +4388,30 @@ void FX_GenerateMarkVertsForEntBrush
 
 {
   ushort uVar1;
-  FxMarksSystem *pFVar2;
-  longlong lVar3;
-  ushort uVar4;
-  GfxPlacement *pGVar5;
-  ulonglong uVar6;
-  ulonglong uVar7;
-  uchar uVar8;
+  uchar uVar2;
   
-  uVar6 = (ulonglong)(int)param_7;
-  pGVar5 = (GfxPlacement *)(int)(char)param_6;
-  uVar4 = (ushort)param_5;
-  lVar3 = (longlong)param_4;
-  pFVar2 = (FxMarksSystem *)__savegprlr_27(param_1,param_2,param_3);
-  uVar7 = uVar6;
-  if ((uVar6 & 0xffffffff) == 0) {
-    uVar7 = 0;
+  uVar2 = (uchar)param_7;
+  if (param_7 == (GfxPlacement *)0x0) {
+    uVar2 = '\0';
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_marks.cpp",
                     0xa31,0,"%s");
   }
-  uVar8 = (uchar)uVar7;
-  uVar1 = *(ushort *)
-           ((int)pFVar2->entFirstMarkHandles + (int)((lVar3 + 5U & 0xffffffff) << 1) + -10);
+  uVar1 = param_1->entFirstMarkHandles[param_4];
   if (uVar1 != 0xffff) {
     Profile_Begin(0xc5);
     FX_GenerateMarkVertsForList_EntBrush
-              (pFVar2,(FxCamera *)(uint)uVar1,uVar4,(uint *)uVar6,pGVar5,'\0',uVar8);
+              (param_1,(FxCamera *)(uint)uVar1,(ushort)param_5,(uint *)param_7,
+               (GfxPlacement *)(int)(char)param_6,'\0',uVar2);
     Profile_EndInternal((double *)0x0);
   }
-  __restgprlr_27();
   return;
 }
 
 
 // 82436880  FX_GenerateMarkVertsForStaticModels  (EffectsCore/fx_marks.cpp:2625)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void FX_GenerateMarkVertsForStaticModels
@@ -4760,53 +4420,51 @@ void FX_GenerateMarkVertsForStaticModels
 
 {
   FxMark *pFVar1;
-  FxMarksSystem *pFVar2;
+  ushort uVar2;
+  longlong lVar3;
   ushort uVar4;
-  int iVar3;
   longlong lVar5;
-  ushort uVar6;
-  longlong lVar7;
-  FxMark *pFVar8;
+  FxMark *pFVar6;
   
-  lVar5 = (longlong)param_4;
-  pFVar2 = (FxMarksSystem *)__savegprlr_23(param_1,param_2,param_3);
-  lVar7 = -0x7dfff068;
+  lVar3 = (longlong)param_4;
+  lVar5 = -0x7dfff068;
   if (((fx_marks->current).enabled == false) || ((fx_marks_smodels->current).enabled == false)) {
-    lVar5 = lVar7;
+    lVar3 = lVar5;
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_marks.cpp",
                     0xa49,0,"%s");
   }
   Profile_Begin(0xc4);
-  pFVar1 = pFVar2->marks;
-  uVar6 = 0;
-  uVar4 = FX_MarkToHandle(pFVar2,pFVar1);
-  if (uVar4 != 0) {
-    lVar5 = lVar7;
+  pFVar1 = param_1->marks;
+  uVar4 = 0;
+  uVar2 = FX_MarkToHandle(param_1,pFVar1);
+  if (uVar2 != 0) {
+    lVar3 = lVar5;
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_marks.cpp",
                     0xa54,0,"%s");
   }
-  for (pFVar8 = pFVar2->marks; pFVar8 != pFVar1 + 0x200; pFVar8 = pFVar8 + 1) {
-    if ((pFVar8->timeDrawn != -1) && (pFVar8->prevMark == 0xffff)) {
-      if (pFVar8 == (FxMark *)0xffffffd0) {
-        lVar5 = lVar7;
+  for (pFVar6 = param_1->marks; pFVar6 != pFVar1 + 0x200; pFVar6 = pFVar6 + 1) {
+    if ((pFVar6->timeDrawn != -1) && (pFVar6->prevMark == 0xffff)) {
+      if (pFVar6 == (FxMark *)0xffffffd0) {
+        lVar3 = lVar5;
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\../renderer/tr_types.h"
                         ,0x3b2,0,"%s");
       }
-      if (((pFVar8->context).modelType == '\x01') &&
-         (uVar4 = FX_GetMarkContext_ModelIndex(&pFVar8->context), param_5[uVar4] != '\0')) {
-        FX_GenerateMarkVertsForList_WorldXModel(pFVar2,uVar6,(FxCamera *)param_6,(uint *)lVar5);
+      if (((pFVar6->context).modelType == '\x01') &&
+         (uVar2 = FX_GetMarkContext_ModelIndex(&pFVar6->context), param_5[uVar2] != '\0')) {
+        FX_GenerateMarkVertsForList_WorldXModel(param_1,uVar4,(FxCamera *)param_6,(uint *)lVar3);
       }
     }
-    uVar6 = uVar6 + 1;
+    uVar4 = uVar4 + 1;
   }
-  iVar3 = Profile_EndInternal((double *)0x0);
-  __restgprlr_23(iVar3);
+  Profile_EndInternal((double *)0x0);
   return;
 }
 
 
 // 82437B40  _Make_heap<FxMarkTri_*,int,FxMarkTri,bool_(__cdecl*)(FxMarkTri_const_&,FxMarkTri_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2658)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void std::_Make_heap<FxMarkTri_*,int,FxMarkTri,bool_(__cdecl*)(FxMarkTri_const_&,FxMarkTri_const_&)>
@@ -4816,86 +4474,78 @@ void std::_Make_heap<FxMarkTri_*,int,FxMarkTri,bool_(__cdecl*)(FxMarkTri_const_&
 
 {
   uint uVar1;
-  FxMarkTri *pFVar2;
-  longlong lVar3;
-  bool bVar4;
-  longlong lVar5;
+  longlong lVar2;
+  bool bVar3;
+  longlong lVar4;
+  undefined2 *puVar5;
   longlong lVar6;
-  undefined2 *puVar7;
+  longlong lVar7;
   longlong lVar8;
   longlong lVar9;
-  longlong lVar10;
+  int iVar10;
   longlong lVar11;
-  int iVar12;
-  longlong lVar13;
-  longlong lVar14;
+  longlong lVar12;
   undefined2 uStack_62;
   FxMarkTri local_60 [6];
   
-  lVar5 = (longlong)(int)param_3;
-  lVar11 = (longlong)(int)param_2;
-  lVar3 = __savegprlr_24(param_1,lVar11,lVar5,param_4,param_5);
-  pFVar2 = (FxMarkTri *)lVar3;
-  uVar1 = ((int)lVar11 - (int)pFVar2) / 0xe;
-  lVar11 = (longlong)((int)uVar1 >> 1) + (ulonglong)((int)uVar1 < 0 && (uVar1 & 1) != 0);
-  if (0 < lVar11) {
-    lVar10 = (lVar11 + 1U & 0x7fffffff) << 1;
-    lVar9 = lVar11 * 0xe + lVar3;
+  lVar2 = (longlong)(int)param_1;
+  uVar1 = ((int)param_2 - (int)param_1) / 0xe;
+  lVar9 = (longlong)((int)uVar1 >> 1) + (ulonglong)((int)uVar1 < 0 && (uVar1 & 1) != 0);
+  if (0 < lVar9) {
+    lVar8 = (lVar9 + 1U & 0x7fffffff) << 1;
+    lVar7 = lVar9 * 0xe + lVar2;
     do {
-      puVar7 = &uStack_62;
-      lVar11 = lVar11 + -1;
-      lVar10 = lVar10 + -2;
-      lVar13 = 7;
-      lVar8 = lVar9 + -0x10;
+      puVar5 = &uStack_62;
+      lVar9 = lVar9 + -1;
+      lVar8 = lVar8 + -2;
+      lVar11 = 7;
+      lVar6 = lVar7 + -0x10;
       do {
-        lVar8 = lVar8 + 2;
-        puVar7 = puVar7 + 1;
-        *puVar7 = *(undefined2 *)lVar8;
-        lVar13 = lVar13 + -1;
-      } while (lVar13 != 0);
-      iVar12 = (int)lVar10;
-      lVar8 = lVar11;
-      lVar13 = lVar10;
-      while (iVar12 < (int)uVar1) {
-        bVar4 = (*(_func___cdecl_bool_FxMarkTri_ptr_FxMarkTri_ptr *)lVar5)
-                          (pFVar2 + (uint)lVar13,pFVar2 + (uint)lVar13 + -1);
-        if (bVar4) {
-          lVar13 = lVar13 + -1;
+        lVar6 = lVar6 + 2;
+        puVar5 = puVar5 + 1;
+        *puVar5 = *(undefined2 *)lVar6;
+        lVar11 = lVar11 + -1;
+      } while (lVar11 != 0);
+      iVar10 = (int)lVar8;
+      lVar6 = lVar9;
+      lVar11 = lVar8;
+      while (iVar10 < (int)uVar1) {
+        bVar3 = (*param_3)(param_1 + (uint)lVar11,param_1 + (uint)lVar11 + -1);
+        if (bVar3) {
+          lVar11 = lVar11 + -1;
         }
-        lVar6 = lVar13 * 0xe + lVar3 + -2;
-        lVar8 = lVar8 * 0xe + lVar3 + -2;
-        lVar14 = 7;
+        lVar4 = lVar11 * 0xe + lVar2 + -2;
+        lVar6 = lVar6 * 0xe + lVar2 + -2;
+        lVar12 = 7;
         do {
+          lVar4 = lVar4 + 2;
           lVar6 = lVar6 + 2;
-          lVar8 = lVar8 + 2;
-          *(undefined2 *)lVar8 = *(undefined2 *)lVar6;
-          lVar14 = lVar14 + -1;
-        } while (lVar14 != 0);
-        lVar6 = (lVar13 + 1U & 0x7fffffff) << 1;
-        lVar8 = lVar13;
-        lVar13 = lVar6;
-        iVar12 = (int)lVar6;
+          *(undefined2 *)lVar6 = *(undefined2 *)lVar4;
+          lVar12 = lVar12 + -1;
+        } while (lVar12 != 0);
+        lVar4 = (lVar11 + 1U & 0x7fffffff) << 1;
+        lVar6 = lVar11;
+        lVar11 = lVar4;
+        iVar10 = (int)lVar4;
       }
-      iVar12 = (int)lVar8;
-      if ((uint)lVar13 == uVar1) {
-        lVar13 = (longlong)(int)uVar1 * 0xe + lVar3 + -0x10;
-        lVar8 = lVar8 * 0xe + lVar3 + -2;
-        lVar6 = 7;
+      iVar10 = (int)lVar6;
+      if ((uint)lVar11 == uVar1) {
+        lVar11 = (longlong)(int)uVar1 * 0xe + lVar2 + -0x10;
+        lVar6 = lVar6 * 0xe + lVar2 + -2;
+        lVar4 = 7;
         do {
-          lVar13 = lVar13 + 2;
-          lVar8 = lVar8 + 2;
-          *(undefined2 *)lVar8 = *(undefined2 *)lVar13;
-          lVar6 = lVar6 + -1;
-        } while (lVar6 != 0);
-        iVar12 = uVar1 - 1;
+          lVar11 = lVar11 + 2;
+          lVar6 = lVar6 + 2;
+          *(undefined2 *)lVar6 = *(undefined2 *)lVar11;
+          lVar4 = lVar4 + -1;
+        } while (lVar4 != 0);
+        iVar10 = uVar1 - 1;
       }
       _Push_heap<FxMarkTri_*,int,FxMarkTri,bool_(__cdecl*)(FxMarkTri_const_&,FxMarkTri_const_&)>
-                (pFVar2,iVar12,(int)lVar11,local_60,
-                 (_func___cdecl_bool_FxMarkTri_ptr_FxMarkTri_ptr *)lVar5);
-      lVar9 = lVar9 + -0xe;
-    } while (0 < (int)lVar11);
+                (param_1,iVar10,(int)lVar9,local_60,param_3);
+      lVar7 = lVar7 + -0xe;
+    } while (0 < (int)lVar9);
   }
-  __restgprlr_24();
   return;
 }
 
@@ -4939,6 +4589,8 @@ void FX_GenerateMarkVertsForGlass(LocalClientNum_t param_1)
 
 // 82438468  _Sort_heap<FxMarkTri_*,bool_(__cdecl*)(FxMarkTri_const_&,FxMarkTri_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2700)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void std::_Sort_heap<FxMarkTri_*,bool_(__cdecl*)(FxMarkTri_const_&,FxMarkTri_const_&)>
@@ -4946,137 +4598,133 @@ void std::_Sort_heap<FxMarkTri_*,bool_(__cdecl*)(FxMarkTri_const_&,FxMarkTri_con
                _func___cdecl_bool_FxMarkTri_ptr_FxMarkTri_ptr *param_3)
 
 {
-  longlong lVar1;
-  undefined2 *puVar2;
-  longlong lVar3;
-  longlong lVar4;
-  longlong lVar5;
+  undefined2 *puVar1;
+  uchar *puVar2;
+  uchar *puVar3;
+  int iVar4;
+  FxMarkTri *pFVar5;
   longlong lVar6;
-  longlong lVar7;
   undefined2 uStack_42;
   FxMarkTri local_40 [4];
   
-  lVar5 = (longlong)(int)param_2;
-  lVar1 = __savegprlr_28(param_1);
-  lVar4 = lVar5 - lVar1;
-  if (1 < (int)lVar4 / 0xe) {
-    lVar5 = lVar5 + -0xe;
+  iVar4 = (int)param_2 - (int)param_1;
+  if (1 < iVar4 / 0xe) {
+    pFVar5 = param_2 + -1;
     do {
-      puVar2 = &uStack_42;
-      lVar3 = lVar5 + -2;
+      puVar1 = &uStack_42;
+      puVar3 = &pFVar5[-1].context.reflectionProbeIndex;
       lVar6 = 7;
       do {
-        lVar3 = lVar3 + 2;
-        puVar2 = puVar2 + 1;
-        *puVar2 = *(undefined2 *)lVar3;
+        puVar3 = puVar3 + 2;
+        puVar1 = puVar1 + 1;
+        *puVar1 = *(undefined2 *)puVar3;
         lVar6 = lVar6 + -1;
       } while (lVar6 != 0);
-      lVar3 = lVar1 + -2;
-      lVar6 = lVar5 + -2;
-      lVar7 = 7;
+      puVar3 = &param_1[-1].context.reflectionProbeIndex;
+      puVar2 = &pFVar5[-1].context.reflectionProbeIndex;
+      lVar6 = 7;
       do {
-        lVar3 = lVar3 + 2;
-        lVar6 = lVar6 + 2;
-        *(undefined2 *)lVar6 = *(undefined2 *)lVar3;
-        lVar7 = lVar7 + -1;
-      } while (lVar7 != 0);
+        puVar3 = puVar3 + 2;
+        puVar2 = puVar2 + 2;
+        *(undefined2 *)puVar2 = *(undefined2 *)puVar3;
+        lVar6 = lVar6 + -1;
+      } while (lVar6 != 0);
       _Adjust_heap<FxMarkTri_*,int,FxMarkTri,bool_(__cdecl*)(FxMarkTri_const_&,FxMarkTri_const_&)>
-                ((FxMarkTri *)lVar1,0,((int)lVar4 + -0xe) / 0xe,local_40,param_3);
-      lVar5 = lVar5 + -0xe;
-      lVar4 = (lVar5 - lVar1) + 0xe;
-    } while (1 < (int)lVar4 / 0xe);
+                (param_1,0,(iVar4 + -0xe) / 0xe,local_40,param_3);
+      pFVar5 = pFVar5 + -1;
+      iVar4 = (int)pFVar5 + (0xe - (int)param_1);
+    } while (1 < iVar4 / 0xe);
   }
-  __restgprlr_28();
   return;
 }
 
 
 // 82436AC8  FX_GenerateDynMarkVertsCmd  (EffectsCore/fx_marks.cpp:2731)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void FX_GenerateDynMarkVertsCmd(FxGenerateModelMarksCmd *param_1)
 
 {
-  uchar *puVar1;
-  FxMarksSystem *pFVar2;
-  GfxSceneMarkDrawData *pGVar3;
-  bool bVar4;
+  FxMarksSystem *pFVar1;
+  int iVar2;
+  bool bVar3;
+  FxCamera *pFVar4;
   uint local_40;
   int local_3c;
   r_double_index_t *local_38 [14];
   
-  pGVar3 = (GfxSceneMarkDrawData *)__savegprlr_28(param_1);
-  if ((*(char *)&pGVar3[1].brushVisData != '\0') &&
-     ((*(char *)((int)&pGVar3[1].brushVisData + 1) != '\0' ||
-      (*(char *)((int)&pGVar3[1].brushVisData + 2) != '\0')))) {
-    puVar1 = pGVar3[1].smodelVisLods;
-    pFVar2 = (FxMarksSystem *)pGVar3[1].dObjVisData;
-    bVar4 = R_BeginMarkMeshVerts();
-    if (!bVar4) {
+  if ((param_1->marksEnabled != false) &&
+     ((param_1->marksSmodels != false || (param_1->marksEnts != false)))) {
+    pFVar1 = param_1->marksSystem;
+    pFVar4 = &param_1->system->camera;
+    bVar3 = R_BeginMarkMeshVerts();
+    if (!bVar3) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_marks.cpp",
                       0xac7,0,"%s");
     }
-    pFVar2->hasCarryIndex = false;
+    pFVar1->hasCarryIndex = false;
     local_40 = 0;
-    if ((*(char *)((int)&pGVar3[1].brushVisData + 1) != '\0') && (pGVar3->smodelCount != 0)) {
+    if ((param_1->marksSmodels != false) &&
+       (iVar2 = (param_1->sceneDrawData).smodelCount, iVar2 != 0)) {
       FX_GenerateMarkVertsForStaticModels
-                (pFVar2,(FxCamera *)(puVar1 + 0xd4),(LocalClientNum_t)pGVar3[1].modelVisData,
-                 pGVar3->smodelCount,pGVar3->smodelVisLods,&local_40);
+                (pFVar1,pFVar4,param_1->localClientNum,iVar2,(param_1->sceneDrawData).smodelVisLods,
+                 &local_40);
     }
-    if (*(char *)((int)&pGVar3[1].brushVisData + 2) != '\0') {
-      R_GenerateMarkVertsForDynamicModels(pFVar2,(FxCamera *)(puVar1 + 0xd4),pGVar3,&local_40,0);
+    if (param_1->marksEnts != false) {
+      R_GenerateMarkVertsForDynamicModels(pFVar1,pFVar4,&param_1->sceneDrawData,&local_40,0);
     }
-    if (pFVar2->hasCarryIndex != false) {
-      local_3c = (uint)pFVar2->carryIndex << 0x10;
+    if (pFVar1->hasCarryIndex != false) {
+      local_3c = (uint)pFVar1->carryIndex << 0x10;
       R_ReserveMarkMeshIndices(0,local_38);
       *(int *)local_38[0][-1].value = local_3c;
     }
     R_EndMarkMeshVerts();
   }
-  __restgprlr_28();
   return;
 }
 
 
 // 82436BD8  FX_GenerateMarkVertsCmd  (EffectsCore/fx_marks.cpp:2796)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void FX_GenerateMarkVertsCmd(FxGenerateVertsCmd *param_1)
 
 {
-  int iVar1;
+  FxSystem *pFVar1;
   FxMarksSystem *pFVar2;
   uint uVar3;
   uint uVar4;
-  int *piVar5;
-  bool bVar6;
-  longlong lVar7;
-  uint *puVar8;
+  bool bVar5;
+  longlong lVar6;
+  uint *puVar7;
   char in_RESERVE;
   byte in_cr0;
   r_double_index_t local_40;
   r_double_index_t *local_3c [15];
   
-  piVar5 = (int *)__savegprlr_26(param_1);
   if ((fx_marks->current).enabled != false) {
-    bVar6 = R_BeginMarkMeshVerts();
-    if (!bVar6) {
+    bVar5 = R_BeginMarkMeshVerts();
+    if (!bVar5) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_marks.cpp",
                       0xb06,0,"%s");
     }
-    iVar1 = *piVar5;
-    pFVar2 = (FxMarksSystem *)piVar5[4];
-    uVar3 = piVar5[5];
+    pFVar1 = param_1->system;
+    pFVar2 = param_1->marksSystem;
+    uVar3 = param_1->localClientNum;
     Profile_Begin(0xc6);
-    lVar7 = ((ulonglong)uVar3 & 0x3fffffff) * 4 + -0x7cccd3e8;
+    lVar6 = ((ulonglong)uVar3 & 0x3fffffff) * 4 + -0x7cccd3e8;
     do {
-      puVar8 = (uint *)lVar7;
-      uVar3 = *puVar8;
+      puVar7 = (uint *)lVar6;
+      uVar3 = *puVar7;
       if (in_RESERVE != '\0') {
-        uVar4 = storeWordConditionalIndexed((ulonglong)uVar3 + 1,0,lVar7);
-        *puVar8 = uVar4;
+        uVar4 = storeWordConditionalIndexed((ulonglong)uVar3 + 1,0,lVar6);
+        *puVar7 = uVar4;
         in_cr0 = 2;
       }
     } while (!(bool)(in_cr0 >> 1 & 1));
@@ -5088,18 +4736,17 @@ void FX_GenerateMarkVertsCmd(FxGenerateVertsCmd *param_1)
     local_40.value[0] = 0;
     local_40.value[1] = 0;
     FX_GenerateMarkVertsForList_WorldBrush
-              (pFVar2,pFVar2->firstActiveWorldMarkHandle,(FxCamera *)(iVar1 + 0xd4),
-               (uint *)&local_40);
+              (pFVar2,pFVar2->firstActiveWorldMarkHandle,&pFVar1->camera,(uint *)&local_40);
     if (pFVar2->hasCarryIndex != false) {
       local_40.value = (ushort  [2])((uint)pFVar2->carryIndex << 0x10);
       R_ReserveMarkMeshIndices(0,local_3c);
       *&local_3c[0][-1].value = local_40.value;
     }
     do {
-      uVar3 = *puVar8;
+      uVar3 = *puVar7;
       if (in_RESERVE != '\0') {
-        uVar4 = storeWordConditionalIndexed((ulonglong)uVar3 - 1,0,lVar7);
-        *puVar8 = uVar4;
+        uVar4 = storeWordConditionalIndexed((ulonglong)uVar3 - 1,0,lVar6);
+        *puVar7 = uVar4;
         in_cr0 = 2;
       }
     } while (!(bool)(in_cr0 >> 1 & 1));
@@ -5108,9 +4755,8 @@ void FX_GenerateMarkVertsCmd(FxGenerateVertsCmd *param_1)
                       0xb1d,0,"%s");
     }
     R_EndMarkMeshVerts();
-    piVar5 = (int *)Profile_EndInternal((double *)0x0);
+    Profile_EndInternal((double *)0x0);
   }
-  __restgprlr_26(piVar5);
   return;
 }
 
@@ -5139,6 +4785,8 @@ void FX_FillGenerateModelMarksCmd(LocalClientNum_t param_1,FxGenerateModelMarksC
 
 // 82437EA0  _Insertion_sort1<FxMarkTri_*,bool_(__cdecl*)(FxMarkTri_const_&,FxMarkTri_const_&),FxMarkTri>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3650)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void std::
@@ -5147,106 +4795,96 @@ void std::
                _func___cdecl_bool_FxMarkTri_ptr_FxMarkTri_ptr *param_3,FxMarkTri *param_4)
 
 {
-  ulonglong uVar1;
-  ulonglong uVar2;
-  char cVar3;
-  ulonglong uVar4;
-  longlong lVar5;
-  code *pcVar6;
-  longlong lVar7;
-  ulonglong uVar8;
-  ulonglong uVar9;
-  undefined2 *puVar10;
-  ulonglong uVar11;
-  ulonglong uVar12;
-  longlong lVar13;
-  longlong lVar14;
+  FxMarkTri *pFVar1;
+  FxMarkTri *pFVar2;
+  FxMarkTri *pFVar3;
+  bool bVar4;
+  undefined2 *puVar5;
+  uchar *puVar6;
+  uchar *puVar7;
+  FxMarkTri *pFVar8;
+  longlong lVar9;
   undefined2 uStack_52;
-  undefined1 local_50 [80];
+  FxMarkTri local_50 [5];
   
-  lVar5 = (longlong)(int)param_3;
-  uVar4 = (ulonglong)(int)param_2;
-  uVar2 = __savegprlr_25(param_1,uVar4,lVar5,param_4);
-  if (((uVar2 & 0xffffffff) != (uVar4 & 0xffffffff)) &&
-     (uVar12 = uVar2 + 0xe, uVar11 = uVar2, (uVar12 & 0xffffffff) != (uVar4 & 0xffffffff))) {
-    do {
-      puVar10 = &uStack_52;
-      lVar7 = uVar12 - 2;
-      lVar13 = 7;
+  pFVar2 = param_1;
+  pFVar1 = param_1;
+  if (param_1 != param_2) {
+    while (pFVar3 = pFVar1 + 1, pFVar3 != param_2) {
+      puVar5 = &uStack_52;
+      puVar7 = &(pFVar1->context).reflectionProbeIndex;
+      lVar9 = 7;
       do {
-        lVar7 = lVar7 + 2;
-        puVar10 = puVar10 + 1;
-        *puVar10 = *(undefined2 *)lVar7;
-        lVar13 = lVar13 + -1;
-      } while (lVar13 != 0);
-      pcVar6 = (code *)lVar5;
-      cVar3 = (*pcVar6)(local_50,uVar2);
-      if (cVar3 == '\0') {
-        cVar3 = (*pcVar6)(local_50,uVar11);
-        uVar9 = uVar11;
-        uVar8 = uVar12;
-        while (uVar1 = uVar9, cVar3 != '\0') {
-          lVar7 = uVar1 - 2;
-          lVar13 = uVar8 - 2;
-          lVar14 = 7;
+        puVar7 = puVar7 + 2;
+        puVar5 = puVar5 + 1;
+        *puVar5 = *(undefined2 *)puVar7;
+        lVar9 = lVar9 + -1;
+      } while (lVar9 != 0);
+      bVar4 = (*param_3)(local_50,param_1);
+      pFVar1 = pFVar3;
+      if (bVar4) {
+        while (param_1 != pFVar1) {
+          pFVar8 = pFVar1 + -1;
+          puVar6 = &pFVar1[-1].context.reflectionProbeIndex;
+          puVar7 = &pFVar1[-2].context.reflectionProbeIndex;
+          lVar9 = 7;
           do {
-            lVar7 = lVar7 + 2;
-            lVar13 = lVar13 + 2;
-            *(undefined2 *)lVar13 = *(undefined2 *)lVar7;
-            lVar14 = lVar14 + -1;
-          } while (lVar14 != 0);
-          cVar3 = (*pcVar6)(local_50,uVar1 - 0xe);
-          uVar9 = uVar1 - 0xe;
-          uVar8 = uVar1;
+            puVar7 = puVar7 + 2;
+            puVar6 = puVar6 + 2;
+            *(undefined2 *)puVar6 = *(undefined2 *)puVar7;
+            lVar9 = lVar9 + -1;
+            pFVar1 = pFVar8;
+          } while (lVar9 != 0);
         }
-        puVar10 = &uStack_52;
-        lVar7 = uVar8 - 2;
-        lVar13 = 7;
+        puVar5 = &uStack_52;
+        puVar7 = &param_1[-1].context.reflectionProbeIndex;
+        lVar9 = 7;
         do {
-          puVar10 = puVar10 + 1;
-          lVar7 = lVar7 + 2;
-          *(undefined2 *)lVar7 = *puVar10;
-          lVar13 = lVar13 + -1;
-        } while (lVar13 != 0);
+          puVar5 = puVar5 + 1;
+          puVar7 = puVar7 + 2;
+          *(undefined2 *)puVar7 = *puVar5;
+          lVar9 = lVar9 + -1;
+        } while (lVar9 != 0);
       }
       else {
-        uVar8 = uVar12;
-        if ((uVar2 & 0xffffffff) != (uVar12 & 0xffffffff)) {
+        bVar4 = (*param_3)(local_50,pFVar2);
+        pFVar8 = pFVar2;
+        while (bVar4 != false) {
+          puVar7 = &pFVar8[-1].context.reflectionProbeIndex;
+          puVar6 = &pFVar1[-1].context.reflectionProbeIndex;
+          lVar9 = 7;
           do {
-            uVar9 = uVar8 - 0xe;
-            lVar13 = uVar8 - 2;
-            lVar7 = uVar8 - 0x10;
-            lVar14 = 7;
-            do {
-              lVar7 = lVar7 + 2;
-              lVar13 = lVar13 + 2;
-              *(undefined2 *)lVar13 = *(undefined2 *)lVar7;
-              lVar14 = lVar14 + -1;
-            } while (lVar14 != 0);
-            uVar8 = uVar9;
-          } while ((uVar9 & 0xffffffff) != (uVar2 & 0xffffffff));
+            puVar7 = puVar7 + 2;
+            puVar6 = puVar6 + 2;
+            *(undefined2 *)puVar6 = *(undefined2 *)puVar7;
+            lVar9 = lVar9 + -1;
+          } while (lVar9 != 0);
+          bVar4 = (*param_3)(local_50,pFVar8 + -1);
+          pFVar1 = pFVar8;
+          pFVar8 = pFVar8 + -1;
         }
-        puVar10 = &uStack_52;
-        lVar7 = uVar2 - 2;
-        lVar13 = 7;
+        puVar5 = &uStack_52;
+        puVar7 = &pFVar1[-1].context.reflectionProbeIndex;
+        lVar9 = 7;
         do {
-          puVar10 = puVar10 + 1;
-          lVar7 = lVar7 + 2;
-          *(undefined2 *)lVar7 = *puVar10;
-          lVar13 = lVar13 + -1;
-        } while (lVar13 != 0);
+          puVar5 = puVar5 + 1;
+          puVar7 = puVar7 + 2;
+          *(undefined2 *)puVar7 = *puVar5;
+          lVar9 = lVar9 + -1;
+        } while (lVar9 != 0);
       }
-      uVar12 = uVar12 + 0xe;
-      uVar11 = uVar11 + 0xe;
-    } while ((uVar12 & 0xffffffff) != (uVar4 & 0xffffffff));
+      pFVar2 = pFVar2 + 1;
+      pFVar1 = pFVar3;
+    }
   }
-  __restgprlr_25();
   return;
 }
 
 
 // 82437C78  _Med3<FxMarkTri_*,bool_(__cdecl*)(FxMarkTri_const_&,FxMarkTri_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3683)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void std::_Med3<FxMarkTri_*,bool_(__cdecl*)(FxMarkTri_const_&,FxMarkTri_const_&)>
@@ -5254,119 +4892,112 @@ void std::_Med3<FxMarkTri_*,bool_(__cdecl*)(FxMarkTri_const_&,FxMarkTri_const_&)
                _func___cdecl_bool_FxMarkTri_ptr_FxMarkTri_ptr *param_4)
 
 {
-  FxMarkTri *pFVar1;
-  FxMarkTri *pFVar2;
-  bool bVar3;
-  longlong lVar4;
+  bool bVar1;
+  uchar *puVar2;
+  uchar *puVar3;
+  undefined2 *puVar4;
   longlong lVar5;
-  longlong lVar6;
-  uchar *puVar7;
-  undefined2 *puVar8;
-  longlong lVar9;
   undefined2 uStack_42;
   undefined2 local_40 [32];
   
-  lVar4 = (longlong)(int)param_3;
-  lVar5 = (longlong)(int)param_2;
-  pFVar2 = (FxMarkTri *)__savegprlr_28(param_1);
-  pFVar1 = (FxMarkTri *)lVar5;
-  bVar3 = (*param_4)(pFVar1,pFVar2);
-  if (bVar3) {
-    puVar8 = &uStack_42;
-    lVar6 = lVar5 + -2;
-    lVar9 = 7;
+  bVar1 = (*param_4)(param_2,param_1);
+  if (bVar1) {
+    puVar4 = &uStack_42;
+    puVar3 = &param_2[-1].context.reflectionProbeIndex;
+    lVar5 = 7;
     do {
-      lVar6 = lVar6 + 2;
-      puVar8 = puVar8 + 1;
-      *puVar8 = *(undefined2 *)lVar6;
-      lVar9 = lVar9 + -1;
-    } while (lVar9 != 0);
-    puVar7 = &pFVar2[-1].context.reflectionProbeIndex;
-    lVar6 = lVar5 + -2;
-    lVar9 = 7;
+      puVar3 = puVar3 + 2;
+      puVar4 = puVar4 + 1;
+      *puVar4 = *(undefined2 *)puVar3;
+      lVar5 = lVar5 + -1;
+    } while (lVar5 != 0);
+    puVar3 = &param_1[-1].context.reflectionProbeIndex;
+    puVar2 = &param_2[-1].context.reflectionProbeIndex;
+    lVar5 = 7;
     do {
-      puVar7 = puVar7 + 2;
-      lVar6 = lVar6 + 2;
-      *(undefined2 *)lVar6 = *(undefined2 *)puVar7;
-      lVar9 = lVar9 + -1;
-    } while (lVar9 != 0);
-    puVar8 = &uStack_42;
-    puVar7 = &pFVar2[-1].context.reflectionProbeIndex;
-    lVar6 = 7;
+      puVar3 = puVar3 + 2;
+      puVar2 = puVar2 + 2;
+      *(undefined2 *)puVar2 = *(undefined2 *)puVar3;
+      lVar5 = lVar5 + -1;
+    } while (lVar5 != 0);
+    puVar4 = &uStack_42;
+    puVar3 = &param_1[-1].context.reflectionProbeIndex;
+    lVar5 = 7;
     do {
-      puVar8 = puVar8 + 1;
-      puVar7 = puVar7 + 2;
-      *(undefined2 *)puVar7 = *puVar8;
-      lVar6 = lVar6 + -1;
-    } while (lVar6 != 0);
+      puVar4 = puVar4 + 1;
+      puVar3 = puVar3 + 2;
+      *(undefined2 *)puVar3 = *puVar4;
+      lVar5 = lVar5 + -1;
+    } while (lVar5 != 0);
   }
-  bVar3 = (*param_4)((FxMarkTri *)lVar4,pFVar1);
-  if (bVar3) {
-    puVar8 = &uStack_42;
-    lVar6 = lVar4 + -2;
-    lVar9 = 7;
+  bVar1 = (*param_4)(param_3,param_2);
+  if (bVar1) {
+    puVar4 = &uStack_42;
+    puVar3 = &param_3[-1].context.reflectionProbeIndex;
+    lVar5 = 7;
     do {
-      lVar6 = lVar6 + 2;
-      puVar8 = puVar8 + 1;
-      *puVar8 = *(undefined2 *)lVar6;
-      lVar9 = lVar9 + -1;
-    } while (lVar9 != 0);
-    lVar6 = lVar5 + -2;
-    lVar4 = lVar4 + -2;
-    lVar9 = 7;
+      puVar3 = puVar3 + 2;
+      puVar4 = puVar4 + 1;
+      *puVar4 = *(undefined2 *)puVar3;
+      lVar5 = lVar5 + -1;
+    } while (lVar5 != 0);
+    puVar3 = &param_2[-1].context.reflectionProbeIndex;
+    puVar2 = &param_3[-1].context.reflectionProbeIndex;
+    lVar5 = 7;
     do {
-      lVar6 = lVar6 + 2;
-      lVar4 = lVar4 + 2;
-      *(undefined2 *)lVar4 = *(undefined2 *)lVar6;
-      lVar9 = lVar9 + -1;
-    } while (lVar9 != 0);
-    puVar8 = &uStack_42;
-    lVar4 = lVar5 + -2;
-    lVar6 = 7;
+      puVar3 = puVar3 + 2;
+      puVar2 = puVar2 + 2;
+      *(undefined2 *)puVar2 = *(undefined2 *)puVar3;
+      lVar5 = lVar5 + -1;
+    } while (lVar5 != 0);
+    puVar4 = &uStack_42;
+    puVar3 = &param_2[-1].context.reflectionProbeIndex;
+    lVar5 = 7;
     do {
-      puVar8 = puVar8 + 1;
-      lVar4 = lVar4 + 2;
-      *(undefined2 *)lVar4 = *puVar8;
-      lVar6 = lVar6 + -1;
-    } while (lVar6 != 0);
+      puVar4 = puVar4 + 1;
+      puVar3 = puVar3 + 2;
+      *(undefined2 *)puVar3 = *puVar4;
+      lVar5 = lVar5 + -1;
+    } while (lVar5 != 0);
   }
-  bVar3 = (*param_4)(pFVar1,pFVar2);
-  if (bVar3) {
-    puVar8 = &uStack_42;
-    lVar4 = lVar5 + -2;
-    lVar6 = 7;
+  bVar1 = (*param_4)(param_2,param_1);
+  if (bVar1) {
+    puVar4 = &uStack_42;
+    puVar3 = &param_2[-1].context.reflectionProbeIndex;
+    lVar5 = 7;
     do {
-      lVar4 = lVar4 + 2;
-      puVar8 = puVar8 + 1;
-      *puVar8 = *(undefined2 *)lVar4;
-      lVar6 = lVar6 + -1;
-    } while (lVar6 != 0);
-    puVar7 = &pFVar2[-1].context.reflectionProbeIndex;
-    lVar5 = lVar5 + -2;
-    lVar4 = 7;
+      puVar3 = puVar3 + 2;
+      puVar4 = puVar4 + 1;
+      *puVar4 = *(undefined2 *)puVar3;
+      lVar5 = lVar5 + -1;
+    } while (lVar5 != 0);
+    puVar3 = &param_1[-1].context.reflectionProbeIndex;
+    puVar2 = &param_2[-1].context.reflectionProbeIndex;
+    lVar5 = 7;
     do {
-      puVar7 = puVar7 + 2;
-      lVar5 = lVar5 + 2;
-      *(undefined2 *)lVar5 = *(undefined2 *)puVar7;
-      lVar4 = lVar4 + -1;
-    } while (lVar4 != 0);
-    puVar8 = &uStack_42;
-    puVar7 = &pFVar2[-1].context.reflectionProbeIndex;
-    lVar4 = 7;
+      puVar3 = puVar3 + 2;
+      puVar2 = puVar2 + 2;
+      *(undefined2 *)puVar2 = *(undefined2 *)puVar3;
+      lVar5 = lVar5 + -1;
+    } while (lVar5 != 0);
+    puVar4 = &uStack_42;
+    puVar3 = &param_1[-1].context.reflectionProbeIndex;
+    lVar5 = 7;
     do {
-      puVar8 = puVar8 + 1;
-      puVar7 = puVar7 + 2;
-      *(undefined2 *)puVar7 = *puVar8;
-      lVar4 = lVar4 + -1;
-    } while (lVar4 != 0);
+      puVar4 = puVar4 + 1;
+      puVar3 = puVar3 + 2;
+      *(undefined2 *)puVar3 = *puVar4;
+      lVar5 = lVar5 + -1;
+    } while (lVar5 != 0);
   }
-  __restgprlr_28();
   return;
 }
 
 
 // 82437DF0  _Median<FxMarkTri_*,bool_(__cdecl*)(FxMarkTri_const_&,FxMarkTri_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3695)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void std::_Median<FxMarkTri_*,bool_(__cdecl*)(FxMarkTri_const_&,FxMarkTri_const_&)>
@@ -5374,35 +5005,33 @@ void std::_Median<FxMarkTri_*,bool_(__cdecl*)(FxMarkTri_const_&,FxMarkTri_const_
                _func___cdecl_bool_FxMarkTri_ptr_FxMarkTri_ptr *param_4)
 
 {
-  FxMarkTri *pFVar1;
-  uint uVar2;
-  int iVar3;
+  uint uVar1;
+  int iVar2;
   
-  pFVar1 = (FxMarkTri *)__savegprlr_26(param_1);
-  iVar3 = ((int)param_3 - (int)pFVar1) / 0xe;
-  if (0x28 < iVar3) {
-    uVar2 = iVar3 + 1;
-    iVar3 = ((int)uVar2 >> 3) + (uint)((int)uVar2 < 0 && (uVar2 & 7) != 0);
+  iVar2 = ((int)param_3 - (int)param_1) / 0xe;
+  if (0x28 < iVar2) {
+    uVar1 = iVar2 + 1;
+    iVar2 = ((int)uVar1 >> 3) + (uint)((int)uVar1 < 0 && (uVar1 & 7) != 0);
     _Med3<FxMarkTri_*,bool_(__cdecl*)(FxMarkTri_const_&,FxMarkTri_const_&)>
-              (pFVar1,pFVar1 + iVar3,pFVar1 + iVar3 * 2,param_4);
+              (param_1,param_1 + iVar2,param_1 + iVar2 * 2,param_4);
     _Med3<FxMarkTri_*,bool_(__cdecl*)(FxMarkTri_const_&,FxMarkTri_const_&)>
-              (param_2 + -iVar3,param_2,param_2 + iVar3,param_4);
+              (param_2 + -iVar2,param_2,param_2 + iVar2,param_4);
     _Med3<FxMarkTri_*,bool_(__cdecl*)(FxMarkTri_const_&,FxMarkTri_const_&)>
-              (param_3 + iVar3 * -2,param_3 + -iVar3,param_3,param_4);
+              (param_3 + iVar2 * -2,param_3 + -iVar2,param_3,param_4);
     _Med3<FxMarkTri_*,bool_(__cdecl*)(FxMarkTri_const_&,FxMarkTri_const_&)>
-              (pFVar1 + iVar3,param_2,param_3 + -iVar3,param_4);
-    __restgprlr_26();
+              (param_1 + iVar2,param_2,param_3 + -iVar2,param_4);
     return;
   }
   _Med3<FxMarkTri_*,bool_(__cdecl*)(FxMarkTri_const_&,FxMarkTri_const_&)>
-            (pFVar1,param_2,param_3,param_4);
-  __restgprlr_26();
+            (param_1,param_2,param_3,param_4);
   return;
 }
 
 
 // 82437FF8  _Unguarded_partition<FxMarkTri_*,bool_(__cdecl*)(FxMarkTri_const_&,FxMarkTri_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3712)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 pair<FxMarkTri_*,FxMarkTri_*>
@@ -5413,24 +5042,18 @@ std::_Unguarded_partition<FxMarkTri_*,bool_(__cdecl*)(FxMarkTri_const_&,FxMarkTr
 {
   uint uVar1;
   FxMarkTri *pFVar2;
-  undefined4 *puVar4;
-  bool bVar5;
-  pair<FxMarkTri_*,FxMarkTri_*> pVar3;
-  ulonglong uVar6;
-  ulonglong uVar7;
+  bool bVar3;
   _func___cdecl_bool_FxMarkTri_ptr_FxMarkTri_ptr *in_r6;
-  longlong lVar8;
-  ulonglong uVar9;
-  undefined2 *puVar10;
-  ulonglong uVar11;
-  ulonglong uVar12;
-  ulonglong uVar13;
-  ulonglong uVar14;
-  ulonglong uVar15;
-  ulonglong uVar16;
-  ulonglong uVar17;
-  longlong lVar18;
-  longlong lVar19;
+  uchar *puVar4;
+  uchar *puVar5;
+  undefined2 *puVar6;
+  FxMarkTri *pFVar7;
+  FxMarkTri *pFVar8;
+  FxMarkTri *pFVar9;
+  FxMarkTri *pFVar10;
+  FxMarkTri *pFVar11;
+  FxMarkTri *pFVar12;
+  longlong lVar13;
   undefined2 uStack_c2;
   undefined2 local_c0 [7];
   undefined2 uStack_b2;
@@ -5446,294 +5069,276 @@ std::_Unguarded_partition<FxMarkTri_*,bool_(__cdecl*)(FxMarkTri_const_&,FxMarkTr
   undefined2 uStack_62;
   undefined2 local_60 [48];
   
-  uVar7 = (ulonglong)(int)param_3;
-  uVar6 = (ulonglong)(int)param_2;
-  puVar4 = (undefined4 *)__savegprlr_23(param_1);
-  uVar1 = ((int)uVar7 - (int)(FxMarkTri *)uVar6) / 0xe;
-  uVar16 = ((longlong)((int)uVar1 >> 1) + (ulonglong)((int)uVar1 < 0 && (uVar1 & 1) != 0)) * 0xe +
-           uVar6;
+  uVar1 = ((int)param_3 - (int)param_2) / 0xe;
+  pFVar11 = param_2 + ((int)uVar1 >> 1) + (uint)((int)uVar1 < 0 && (uVar1 & 1) != 0);
   _Median<FxMarkTri_*,bool_(__cdecl*)(FxMarkTri_const_&,FxMarkTri_const_&)>
-            ((FxMarkTri *)uVar6,(FxMarkTri *)uVar16,(FxMarkTri *)((int)uVar7 + -0xe),in_r6);
-  uVar11 = uVar16 + 0xe;
-  if ((uVar6 & 0xffffffff) < (uVar16 & 0xffffffff)) {
-    do {
-      uVar17 = uVar16 - 0xe;
-      bVar5 = (*in_r6)((FxMarkTri *)uVar17,(FxMarkTri *)uVar16);
-      if ((bVar5) || (bVar5 = (*in_r6)((FxMarkTri *)uVar16,(FxMarkTri *)uVar17), bVar5)) break;
-      uVar16 = uVar17;
-    } while ((uVar6 & 0xffffffff) < (uVar17 & 0xffffffff));
-  }
-  uVar17 = uVar16;
-  uVar13 = uVar11;
-  if ((uVar11 & 0xffffffff) < (uVar7 & 0xffffffff)) {
-    do {
-      bVar5 = (*in_r6)((FxMarkTri *)uVar11,(FxMarkTri *)uVar16);
-      uVar13 = uVar11;
-      if ((bVar5) || (bVar5 = (*in_r6)((FxMarkTri *)uVar16,(FxMarkTri *)uVar11), bVar5)) break;
-      uVar11 = uVar11 + 0xe;
-      uVar13 = uVar11;
-    } while ((uVar11 & 0xffffffff) < (uVar7 & 0xffffffff));
+            (param_2,pFVar11,(FxMarkTri *)(param_3 + -0xe),in_r6);
+  pFVar12 = pFVar11;
+  while (pFVar10 = pFVar12, param_2 < pFVar10) {
+    pFVar12 = pFVar10 + -1;
+    bVar3 = (*in_r6)(pFVar12,pFVar10);
+    if ((bVar3) || (bVar3 = (*in_r6)(pFVar10,pFVar12), bVar3)) break;
   }
   do {
-    uVar12 = uVar11;
-    uVar14 = uVar13;
-    if ((uVar13 & 0xffffffff) < (uVar7 & 0xffffffff)) {
-      do {
-        bVar5 = (*in_r6)((FxMarkTri *)uVar16,(FxMarkTri *)uVar13);
-        uVar12 = uVar11;
-        if (!bVar5) {
-          bVar5 = (*in_r6)((FxMarkTri *)uVar13,(FxMarkTri *)uVar16);
-          uVar14 = uVar13;
-          if (bVar5) break;
-          puVar10 = &uStack_c2;
-          uVar12 = uVar11 + 0xe;
-          lVar8 = uVar11 - 2;
-          lVar18 = 7;
-          do {
-            lVar8 = lVar8 + 2;
-            puVar10 = puVar10 + 1;
-            *puVar10 = *(undefined2 *)lVar8;
-            lVar18 = lVar18 + -1;
-          } while (lVar18 != 0);
-          lVar8 = uVar13 - 2;
-          lVar18 = uVar11 - 2;
-          lVar19 = 7;
-          do {
-            lVar8 = lVar8 + 2;
-            lVar18 = lVar18 + 2;
-            *(undefined2 *)lVar18 = *(undefined2 *)lVar8;
-            lVar19 = lVar19 + -1;
-          } while (lVar19 != 0);
-          puVar10 = &uStack_c2;
-          lVar8 = uVar13 - 2;
-          lVar18 = 7;
-          do {
-            puVar10 = puVar10 + 1;
-            lVar8 = lVar8 + 2;
-            *(undefined2 *)lVar8 = *puVar10;
-            lVar18 = lVar18 + -1;
-          } while (lVar18 != 0);
-        }
-        uVar13 = uVar13 + 0xe;
-        uVar11 = uVar12;
-        uVar14 = uVar13;
-      } while ((uVar13 & 0xffffffff) < (uVar7 & 0xffffffff));
-    }
-    bVar5 = (uVar17 & 0xffffffff) == (uVar6 & 0xffffffff);
-    uVar15 = uVar16;
-    uVar11 = uVar17;
-    if ((uVar6 & 0xffffffff) < (uVar17 & 0xffffffff)) {
-      do {
-        pFVar2 = (FxMarkTri *)(uVar11 - 0xe);
-        bVar5 = (*in_r6)(pFVar2,(FxMarkTri *)uVar16);
-        uVar15 = uVar16;
-        if (!bVar5) {
-          bVar5 = (*in_r6)((FxMarkTri *)uVar16,pFVar2);
-          if (bVar5) break;
-          uVar15 = uVar16 - 0xe;
-          puVar10 = &uStack_b2;
-          lVar8 = uVar16 - 0x10;
-          lVar18 = 7;
-          do {
-            lVar8 = lVar8 + 2;
-            puVar10 = puVar10 + 1;
-            *puVar10 = *(undefined2 *)lVar8;
-            lVar18 = lVar18 + -1;
-          } while (lVar18 != 0);
-          lVar8 = uVar11 - 0x10;
-          lVar18 = uVar16 - 0x10;
-          lVar19 = 7;
-          do {
-            lVar8 = lVar8 + 2;
-            lVar18 = lVar18 + 2;
-            *(undefined2 *)lVar18 = *(undefined2 *)lVar8;
-            lVar19 = lVar19 + -1;
-          } while (lVar19 != 0);
-          puVar10 = &uStack_b2;
-          lVar8 = uVar11 - 0x10;
-          lVar18 = 7;
-          do {
-            puVar10 = puVar10 + 1;
-            lVar8 = lVar8 + 2;
-            *(undefined2 *)lVar8 = *puVar10;
-            lVar18 = lVar18 + -1;
-          } while (lVar18 != 0);
-        }
-        uVar17 = uVar17 - 0xe;
-        uVar16 = uVar15;
-        uVar11 = uVar11 - 0xe;
-      } while ((uVar6 & 0xffffffff) < (uVar17 & 0xffffffff));
-      bVar5 = (uVar17 & 0xffffffff) == (uVar6 & 0xffffffff);
-    }
-    if (bVar5) {
-      if ((uVar14 & 0xffffffff) == (uVar7 & 0xffffffff)) {
-        *puVar4 = (int)uVar15;
-        puVar4[1] = (int)uVar12;
-        pVar3 = (pair<FxMarkTri_*,FxMarkTri_*>)__restgprlr_23(puVar4);
-        return pVar3;
+    pFVar11 = pFVar11 + 1;
+    pFVar12 = pFVar11;
+    pFVar7 = pFVar10;
+    if (param_3 <= pFVar11) break;
+    bVar3 = (*in_r6)(pFVar11,pFVar10);
+    if ((bVar3) || (bVar3 = (*in_r6)(pFVar10,pFVar11), bVar3)) break;
+  } while( true );
+joined_r0x824380f0:
+  pFVar2 = pFVar10;
+  pFVar9 = pFVar7;
+  if (param_3 <= pFVar12) {
+joined_r0x8243819c:
+    for (; param_2 < pFVar7; pFVar7 = pFVar7 + -1) {
+      pFVar8 = pFVar9 + -1;
+      bVar3 = (*in_r6)(pFVar8,pFVar2);
+      pFVar10 = pFVar2;
+      if (!bVar3) {
+        bVar3 = (*in_r6)(pFVar2,pFVar8);
+        if (bVar3) break;
+        pFVar10 = pFVar2 + -1;
+        puVar6 = &uStack_b2;
+        puVar4 = &pFVar2[-2].context.reflectionProbeIndex;
+        lVar13 = 7;
+        do {
+          puVar4 = puVar4 + 2;
+          puVar6 = puVar6 + 1;
+          *puVar6 = *(undefined2 *)puVar4;
+          lVar13 = lVar13 + -1;
+        } while (lVar13 != 0);
+        puVar4 = &pFVar9[-2].context.reflectionProbeIndex;
+        puVar5 = &pFVar2[-2].context.reflectionProbeIndex;
+        lVar13 = 7;
+        do {
+          puVar4 = puVar4 + 2;
+          puVar5 = puVar5 + 2;
+          *(undefined2 *)puVar5 = *(undefined2 *)puVar4;
+          lVar13 = lVar13 + -1;
+        } while (lVar13 != 0);
+        puVar6 = &uStack_b2;
+        puVar4 = &pFVar9[-2].context.reflectionProbeIndex;
+        lVar13 = 7;
+        do {
+          puVar6 = puVar6 + 1;
+          puVar4 = puVar4 + 2;
+          *(undefined2 *)puVar4 = *puVar6;
+          lVar13 = lVar13 + -1;
+        } while (lVar13 != 0);
       }
-      if ((uVar12 & 0xffffffff) != (uVar14 & 0xffffffff)) {
-        puVar10 = &uStack_a2;
-        lVar8 = uVar15 - 2;
-        lVar18 = 7;
-        do {
-          lVar8 = lVar8 + 2;
-          puVar10 = puVar10 + 1;
-          *puVar10 = *(undefined2 *)lVar8;
-          lVar18 = lVar18 + -1;
-        } while (lVar18 != 0);
-        lVar8 = uVar12 - 2;
-        lVar18 = uVar15 - 2;
-        lVar19 = 7;
-        do {
-          lVar8 = lVar8 + 2;
-          lVar18 = lVar18 + 2;
-          *(undefined2 *)lVar18 = *(undefined2 *)lVar8;
-          lVar19 = lVar19 + -1;
-        } while (lVar19 != 0);
-        puVar10 = &uStack_a2;
-        lVar8 = uVar12 - 2;
-        lVar18 = 7;
-        do {
-          puVar10 = puVar10 + 1;
-          lVar8 = lVar8 + 2;
-          *(undefined2 *)lVar8 = *puVar10;
-          lVar18 = lVar18 + -1;
-        } while (lVar18 != 0);
-      }
-      puVar10 = &uStack_92;
-      uVar11 = uVar12 + 0xe;
-      lVar18 = 7;
-      uVar16 = uVar15 + 0xe;
-      uVar13 = uVar14 + 0xe;
-      lVar8 = uVar15 - 2;
-      do {
-        lVar8 = lVar8 + 2;
-        puVar10 = puVar10 + 1;
-        *puVar10 = *(undefined2 *)lVar8;
-        lVar18 = lVar18 + -1;
-      } while (lVar18 != 0);
-      lVar8 = uVar14 - 2;
-      lVar18 = uVar15 - 2;
-      lVar19 = 7;
-      do {
-        lVar8 = lVar8 + 2;
-        lVar18 = lVar18 + 2;
-        *(undefined2 *)lVar18 = *(undefined2 *)lVar8;
-        lVar19 = lVar19 + -1;
-      } while (lVar19 != 0);
-      puVar10 = &uStack_92;
-      lVar8 = uVar14 - 2;
-      lVar18 = 7;
-      do {
-        puVar10 = puVar10 + 1;
-        lVar8 = lVar8 + 2;
-        *(undefined2 *)lVar8 = *puVar10;
-        lVar18 = lVar18 + -1;
-      } while (lVar18 != 0);
+      pFVar2 = pFVar10;
+      pFVar9 = pFVar8;
     }
-    else if ((uVar14 & 0xffffffff) == (uVar7 & 0xffffffff)) {
-      uVar9 = uVar17 - 0xe;
-      uVar16 = uVar15 - 0xe;
-      if ((uVar9 & 0xffffffff) != (uVar16 & 0xffffffff)) {
-        puVar10 = &uStack_82;
-        lVar8 = uVar17 - 0x10;
-        lVar18 = 7;
-        do {
-          lVar8 = lVar8 + 2;
-          puVar10 = puVar10 + 1;
-          *puVar10 = *(undefined2 *)lVar8;
-          lVar18 = lVar18 + -1;
-        } while (lVar18 != 0);
-        lVar8 = uVar15 - 0x10;
-        lVar18 = uVar17 - 0x10;
-        lVar19 = 7;
-        do {
-          lVar8 = lVar8 + 2;
-          lVar18 = lVar18 + 2;
-          *(undefined2 *)lVar18 = *(undefined2 *)lVar8;
-          lVar19 = lVar19 + -1;
-        } while (lVar19 != 0);
-        puVar10 = &uStack_82;
-        lVar8 = uVar15 - 0x10;
-        lVar18 = 7;
-        do {
-          puVar10 = puVar10 + 1;
-          lVar8 = lVar8 + 2;
-          *(undefined2 *)lVar8 = *puVar10;
-          lVar18 = lVar18 + -1;
-        } while (lVar18 != 0);
+    if (pFVar7 == param_2) {
+      if (pFVar12 == (FxMarkTri *)param_3) {
+        *(FxMarkTri **)param_1->indices = pFVar2;
+        *(FxMarkTri **)(param_1->indices + 2) = pFVar11;
+        return (pair<FxMarkTri_*,FxMarkTri_*>)(longlong)(int)param_1;
       }
-      uVar11 = uVar12 - 0xe;
-      puVar10 = &uStack_72;
-      lVar8 = uVar15 - 0x10;
-      lVar18 = 7;
+      if (pFVar11 != pFVar12) {
+        puVar6 = &uStack_a2;
+        puVar4 = &pFVar2[-1].context.reflectionProbeIndex;
+        lVar13 = 7;
+        do {
+          puVar4 = puVar4 + 2;
+          puVar6 = puVar6 + 1;
+          *puVar6 = *(undefined2 *)puVar4;
+          lVar13 = lVar13 + -1;
+        } while (lVar13 != 0);
+        puVar4 = &pFVar11[-1].context.reflectionProbeIndex;
+        puVar5 = &pFVar2[-1].context.reflectionProbeIndex;
+        lVar13 = 7;
+        do {
+          puVar4 = puVar4 + 2;
+          puVar5 = puVar5 + 2;
+          *(undefined2 *)puVar5 = *(undefined2 *)puVar4;
+          lVar13 = lVar13 + -1;
+        } while (lVar13 != 0);
+        puVar6 = &uStack_a2;
+        puVar4 = &pFVar11[-1].context.reflectionProbeIndex;
+        lVar13 = 7;
+        do {
+          puVar6 = puVar6 + 1;
+          puVar4 = puVar4 + 2;
+          *(undefined2 *)puVar4 = *puVar6;
+          lVar13 = lVar13 + -1;
+        } while (lVar13 != 0);
+      }
+      puVar6 = &uStack_92;
+      pFVar11 = pFVar11 + 1;
+      lVar13 = 7;
+      pFVar10 = pFVar2 + 1;
+      pFVar9 = pFVar12 + 1;
+      puVar4 = &pFVar2[-1].context.reflectionProbeIndex;
       do {
-        lVar8 = lVar8 + 2;
-        puVar10 = puVar10 + 1;
-        *puVar10 = *(undefined2 *)lVar8;
-        lVar18 = lVar18 + -1;
-      } while (lVar18 != 0);
-      lVar8 = uVar12 - 0x10;
-      lVar18 = uVar15 - 0x10;
-      lVar19 = 7;
+        puVar4 = puVar4 + 2;
+        puVar6 = puVar6 + 1;
+        *puVar6 = *(undefined2 *)puVar4;
+        lVar13 = lVar13 + -1;
+      } while (lVar13 != 0);
+      puVar4 = &pFVar12[-1].context.reflectionProbeIndex;
+      puVar5 = &pFVar2[-1].context.reflectionProbeIndex;
+      lVar13 = 7;
       do {
-        lVar8 = lVar8 + 2;
-        lVar18 = lVar18 + 2;
-        *(undefined2 *)lVar18 = *(undefined2 *)lVar8;
-        lVar19 = lVar19 + -1;
-      } while (lVar19 != 0);
-      puVar10 = &uStack_72;
-      lVar8 = uVar12 - 0x10;
-      lVar18 = 7;
+        puVar4 = puVar4 + 2;
+        puVar5 = puVar5 + 2;
+        *(undefined2 *)puVar5 = *(undefined2 *)puVar4;
+        lVar13 = lVar13 + -1;
+      } while (lVar13 != 0);
+      puVar6 = &uStack_92;
+      puVar4 = &pFVar12[-1].context.reflectionProbeIndex;
+      lVar13 = 7;
       do {
-        puVar10 = puVar10 + 1;
-        lVar8 = lVar8 + 2;
-        *(undefined2 *)lVar8 = *puVar10;
-        lVar18 = lVar18 + -1;
-        uVar17 = uVar9;
-        uVar13 = uVar14;
-      } while (lVar18 != 0);
+        puVar6 = puVar6 + 1;
+        puVar4 = puVar4 + 2;
+        *(undefined2 *)puVar4 = *puVar6;
+        lVar13 = lVar13 + -1;
+        pFVar12 = pFVar9;
+      } while (lVar13 != 0);
+    }
+    else if (pFVar12 == (FxMarkTri *)param_3) {
+      pFVar9 = pFVar7 + -1;
+      pFVar10 = pFVar2 + -1;
+      if (pFVar9 != pFVar10) {
+        puVar6 = &uStack_82;
+        puVar4 = &pFVar7[-2].context.reflectionProbeIndex;
+        lVar13 = 7;
+        do {
+          puVar4 = puVar4 + 2;
+          puVar6 = puVar6 + 1;
+          *puVar6 = *(undefined2 *)puVar4;
+          lVar13 = lVar13 + -1;
+        } while (lVar13 != 0);
+        puVar4 = &pFVar2[-2].context.reflectionProbeIndex;
+        puVar5 = &pFVar7[-2].context.reflectionProbeIndex;
+        lVar13 = 7;
+        do {
+          puVar4 = puVar4 + 2;
+          puVar5 = puVar5 + 2;
+          *(undefined2 *)puVar5 = *(undefined2 *)puVar4;
+          lVar13 = lVar13 + -1;
+        } while (lVar13 != 0);
+        puVar6 = &uStack_82;
+        puVar4 = &pFVar2[-2].context.reflectionProbeIndex;
+        lVar13 = 7;
+        do {
+          puVar6 = puVar6 + 1;
+          puVar4 = puVar4 + 2;
+          *(undefined2 *)puVar4 = *puVar6;
+          lVar13 = lVar13 + -1;
+        } while (lVar13 != 0);
+      }
+      pFVar8 = pFVar11 + -1;
+      puVar6 = &uStack_72;
+      puVar4 = &pFVar2[-2].context.reflectionProbeIndex;
+      lVar13 = 7;
+      do {
+        puVar4 = puVar4 + 2;
+        puVar6 = puVar6 + 1;
+        *puVar6 = *(undefined2 *)puVar4;
+        lVar13 = lVar13 + -1;
+      } while (lVar13 != 0);
+      puVar4 = &pFVar11[-2].context.reflectionProbeIndex;
+      puVar5 = &pFVar2[-2].context.reflectionProbeIndex;
+      lVar13 = 7;
+      do {
+        puVar4 = puVar4 + 2;
+        puVar5 = puVar5 + 2;
+        *(undefined2 *)puVar5 = *(undefined2 *)puVar4;
+        lVar13 = lVar13 + -1;
+      } while (lVar13 != 0);
+      puVar6 = &uStack_72;
+      puVar4 = &pFVar11[-2].context.reflectionProbeIndex;
+      lVar13 = 7;
+      do {
+        puVar6 = puVar6 + 1;
+        puVar4 = puVar4 + 2;
+        *(undefined2 *)puVar4 = *puVar6;
+        lVar13 = lVar13 + -1;
+        pFVar11 = pFVar8;
+        pFVar7 = pFVar9;
+      } while (lVar13 != 0);
     }
     else {
-      puVar10 = &uStack_62;
-      lVar8 = uVar14 - 2;
-      lVar18 = 7;
+      puVar6 = &uStack_62;
+      puVar4 = &pFVar12[-1].context.reflectionProbeIndex;
+      lVar13 = 7;
       do {
-        lVar8 = lVar8 + 2;
-        puVar10 = puVar10 + 1;
-        *puVar10 = *(undefined2 *)lVar8;
-        lVar18 = lVar18 + -1;
-      } while (lVar18 != 0);
-      lVar8 = uVar17 - 0x10;
-      lVar18 = uVar14 - 2;
-      lVar19 = 7;
+        puVar4 = puVar4 + 2;
+        puVar6 = puVar6 + 1;
+        *puVar6 = *(undefined2 *)puVar4;
+        lVar13 = lVar13 + -1;
+      } while (lVar13 != 0);
+      puVar4 = &pFVar7[-2].context.reflectionProbeIndex;
+      puVar5 = &pFVar12[-1].context.reflectionProbeIndex;
+      lVar13 = 7;
       do {
-        lVar8 = lVar8 + 2;
-        lVar18 = lVar18 + 2;
-        *(undefined2 *)lVar18 = *(undefined2 *)lVar8;
-        lVar19 = lVar19 + -1;
-      } while (lVar19 != 0);
-      puVar10 = &uStack_62;
-      lVar8 = uVar17 - 0x10;
-      lVar18 = 7;
+        puVar4 = puVar4 + 2;
+        puVar5 = puVar5 + 2;
+        *(undefined2 *)puVar5 = *(undefined2 *)puVar4;
+        lVar13 = lVar13 + -1;
+      } while (lVar13 != 0);
+      puVar6 = &uStack_62;
+      puVar4 = &pFVar7[-2].context.reflectionProbeIndex;
+      lVar13 = 7;
       do {
-        puVar10 = puVar10 + 1;
-        lVar8 = lVar8 + 2;
-        *(undefined2 *)lVar8 = *puVar10;
-        lVar18 = lVar18 + -1;
-      } while (lVar18 != 0);
-      uVar17 = uVar17 - 0xe;
-      uVar11 = uVar12;
-      uVar13 = uVar14 + 0xe;
-      uVar16 = uVar15;
+        puVar6 = puVar6 + 1;
+        puVar4 = puVar4 + 2;
+        *(undefined2 *)puVar4 = *puVar6;
+        lVar13 = lVar13 + -1;
+      } while (lVar13 != 0);
+      pFVar12 = pFVar12 + 1;
+      pFVar10 = pFVar2;
+      pFVar7 = pFVar7 + -1;
     }
-  } while( true );
+    goto joined_r0x824380f0;
+  }
+  bVar3 = (*in_r6)(pFVar10,pFVar12);
+  pFVar8 = pFVar11;
+  if (!bVar3) {
+    bVar3 = (*in_r6)(pFVar12,pFVar10);
+    if (bVar3) goto joined_r0x8243819c;
+    puVar6 = &uStack_c2;
+    pFVar8 = pFVar11 + 1;
+    puVar4 = &pFVar11[-1].context.reflectionProbeIndex;
+    lVar13 = 7;
+    do {
+      puVar4 = puVar4 + 2;
+      puVar6 = puVar6 + 1;
+      *puVar6 = *(undefined2 *)puVar4;
+      lVar13 = lVar13 + -1;
+    } while (lVar13 != 0);
+    puVar4 = &pFVar12[-1].context.reflectionProbeIndex;
+    puVar5 = &pFVar11[-1].context.reflectionProbeIndex;
+    lVar13 = 7;
+    do {
+      puVar4 = puVar4 + 2;
+      puVar5 = puVar5 + 2;
+      *(undefined2 *)puVar5 = *(undefined2 *)puVar4;
+      lVar13 = lVar13 + -1;
+    } while (lVar13 != 0);
+    puVar6 = &uStack_c2;
+    puVar4 = &pFVar12[-1].context.reflectionProbeIndex;
+    lVar13 = 7;
+    do {
+      puVar6 = puVar6 + 1;
+      puVar4 = puVar4 + 2;
+      *(undefined2 *)puVar4 = *puVar6;
+      lVar13 = lVar13 + -1;
+    } while (lVar13 != 0);
+  }
+  pFVar11 = pFVar8;
+  pFVar12 = pFVar12 + 1;
+  goto joined_r0x824380f0;
 }
 
 
 // 82438508  _Sort<FxMarkTri_*,int,bool_(__cdecl*)(FxMarkTri_const_&,FxMarkTri_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3771)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void std::_Sort<FxMarkTri_*,int,bool_(__cdecl*)(FxMarkTri_const_&,FxMarkTri_const_&)>
@@ -5742,67 +5347,54 @@ void std::_Sort<FxMarkTri_*,int,bool_(__cdecl*)(FxMarkTri_const_&,FxMarkTri_cons
 
 {
   FxMarkTri *pFVar1;
-  FxMarkTri *pFVar2;
-  ulonglong uVar3;
+  int iVar2;
+  uint uVar3;
   FxMarkTri *pFVar4;
-  int iVar6;
-  ulonglong uVar5;
-  ulonglong uVar7;
-  int iVar8;
   FxMarkTri *local_50;
   FxMarkTri *local_4c;
   
-  uVar5 = (ulonglong)param_3;
-  uVar3 = (ulonglong)(int)param_2;
-  pFVar2 = (FxMarkTri *)__savegprlr_25(param_1);
-  pFVar4 = (FxMarkTri *)uVar3;
-  iVar6 = (int)pFVar4 - (int)pFVar2;
+  iVar2 = (int)param_2 - (int)param_1;
   do {
-    iVar6 = iVar6 / 0xe;
-    if (iVar6 < 0x21) {
+    iVar2 = iVar2 / 0xe;
+    if (iVar2 < 0x21) {
 LAB_824385c4:
-      if (1 < iVar6) {
+      if (1 < iVar2) {
         _Insertion_sort1<FxMarkTri_*,bool_(__cdecl*)(FxMarkTri_const_&,FxMarkTri_const_&),FxMarkTri>
-                  (pFVar2,pFVar4,param_4,(FxMarkTri *)0x0);
+                  (param_1,param_2,param_4,(FxMarkTri *)0x0);
       }
-      __restgprlr_25();
       return;
     }
-    iVar8 = (int)uVar5;
-    pFVar4 = (FxMarkTri *)uVar3;
-    if (iVar8 < 1) {
-      if (0x20 < iVar6) {
-        if (1 < iVar6) {
+    if (param_3 < 1) {
+      if (0x20 < iVar2) {
+        if (1 < iVar2) {
           _Make_heap<FxMarkTri_*,int,FxMarkTri,bool_(__cdecl*)(FxMarkTri_const_&,FxMarkTri_const_&)>
-                    (pFVar2,pFVar4,param_4,(int *)0x0,(FxMarkTri *)0x0);
+                    (param_1,param_2,param_4,(int *)0x0,(FxMarkTri *)0x0);
         }
         _Sort_heap<FxMarkTri_*,bool_(__cdecl*)(FxMarkTri_const_&,FxMarkTri_const_&)>
-                  (pFVar2,pFVar4,param_4);
-        __restgprlr_25();
+                  (param_1,param_2,param_4);
         return;
       }
       goto LAB_824385c4;
     }
     _Unguarded_partition<FxMarkTri_*,bool_(__cdecl*)(FxMarkTri_const_&,FxMarkTri_const_&)>
-              ((FxMarkTri *)&local_50,pFVar2,
-               (_func___cdecl_bool_FxMarkTri_ptr_FxMarkTri_ptr *)pFVar4);
+              ((FxMarkTri *)&local_50,param_1,
+               (_func___cdecl_bool_FxMarkTri_ptr_FxMarkTri_ptr *)param_2);
     pFVar1 = local_4c;
-    uVar5 = (longlong)(iVar8 >> 1) + (ulonglong)(iVar8 < 0 && (uVar5 & 1) != 0);
-    uVar5 = (longlong)((int)uVar5 >> 1) + (ulonglong)((int)uVar5 < 0 && (uVar5 & 1) != 0) + uVar5;
-    uVar7 = ZEXT48(local_50);
-    if (((int)local_50 - (int)pFVar2) / 0xe < ((int)pFVar4 - (int)local_4c) / 0xe) {
+    pFVar4 = local_50;
+    uVar3 = (param_3 >> 1) + (uint)(param_3 < 0 && (param_3 & 1U) != 0);
+    param_3 = ((int)uVar3 >> 1) + (uint)((int)uVar3 < 0 && (uVar3 & 1) != 0) + uVar3;
+    if (((int)local_50 - (int)param_1) / 0xe < ((int)param_2 - (int)local_4c) / 0xe) {
       _Sort<FxMarkTri_*,int,bool_(__cdecl*)(FxMarkTri_const_&,FxMarkTri_const_&)>
-                (pFVar2,local_50,(int)uVar5,param_4);
-      uVar7 = uVar3;
-      pFVar2 = pFVar1;
+                (param_1,local_50,param_3,param_4);
+      pFVar4 = param_2;
+      param_1 = pFVar1;
     }
     else {
       _Sort<FxMarkTri_*,int,bool_(__cdecl*)(FxMarkTri_const_&,FxMarkTri_const_&)>
-                (local_4c,pFVar4,(int)uVar5,param_4);
+                (local_4c,param_2,param_3,param_4);
     }
-    pFVar4 = (FxMarkTri *)uVar7;
-    iVar6 = (int)pFVar4 - (int)pFVar2;
-    uVar3 = uVar7;
+    iVar2 = (int)pFVar4 - (int)param_1;
+    param_2 = pFVar4;
   } while( true );
 }
 

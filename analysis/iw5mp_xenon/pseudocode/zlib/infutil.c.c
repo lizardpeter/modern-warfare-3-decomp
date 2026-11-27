@@ -2,84 +2,75 @@
 
 // 8265C7C8  inflate_flush  (zlib/infutil.c:29)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 int inflate_flush(inflate_blocks_state *param_1,z_stream_s *param_2,int param_3)
 
 {
-  uint uVar1;
+  uchar *puVar1;
   uint uVar2;
-  int iVar3;
-  undefined4 uVar4;
-  int iVar5;
-  longlong lVar6;
-  ulonglong uVar7;
-  int iVar8;
-  ulonglong uVar9;
-  ulonglong uVar10;
-  int iVar11;
-  ulonglong uVar12;
-  ulonglong uVar13;
+  ulong uVar3;
+  uchar *puVar4;
+  ulonglong uVar5;
+  uchar *puVar6;
+  uint uVar7;
   
-  uVar9 = (ulonglong)param_3;
-  lVar6 = (longlong)(int)param_2;
-  iVar3 = __savegprlr_26(param_1,lVar6,uVar9);
-  uVar12 = (ulonglong)*(uint *)(iVar3 + 0x30);
-  uVar7 = (ulonglong)*(uint *)(iVar3 + 0x34);
-  iVar5 = (int)lVar6;
-  uVar10 = (ulonglong)*(uint *)(iVar5 + 0xc);
-  if (uVar7 < uVar12) {
-    uVar7 = (ulonglong)*(uint *)(iVar3 + 0x2c);
+  uVar5 = (ulonglong)param_3;
+  puVar4 = param_1->read;
+  puVar1 = param_1->write;
+  puVar6 = param_2->next_out;
+  if (puVar1 < puVar4) {
+    puVar1 = param_1->end;
   }
-  uVar1 = *(uint *)(iVar5 + 0x10);
-  uVar13 = uVar7 - uVar12;
-  if ((ulonglong)uVar1 < (uVar7 - uVar12 & 0xffffffff)) {
-    uVar13 = (ulonglong)uVar1;
+  uVar2 = param_2->avail_out;
+  uVar7 = (int)puVar1 - (int)puVar4;
+  if (uVar2 < (uint)((int)puVar1 - (int)puVar4)) {
+    uVar7 = uVar2;
   }
-  if ((uVar13 & 0xffffffff) != 0) {
-    uVar9 = -(ulonglong)(uVar9 != 0xfffffffffffffffb) & uVar9;
+  if (uVar7 != 0) {
+    uVar5 = -(ulonglong)(uVar5 != 0xfffffffffffffffb) & uVar5;
   }
-  *(uint *)(iVar5 + 0x10) = uVar1 - (int)uVar13;
-  *(int *)(iVar5 + 0x14) = *(int *)(iVar5 + 0x14) + (int)uVar13;
-  if (*(code **)(iVar3 + 0x38) != (code *)0x0) {
-    uVar4 = (**(code **)(iVar3 + 0x38))(*(undefined4 *)(iVar3 + 0x3c),uVar12,uVar13);
-    *(undefined4 *)(iVar3 + 0x3c) = uVar4;
-    *(undefined4 *)(iVar5 + 0x30) = uVar4;
+  param_2->avail_out = uVar2 - uVar7;
+  param_2->total_out = param_2->total_out + uVar7;
+  if (param_1->checkfn != (_func___cdecl_ulong_ulong_uchar_ptr_uint *)0x0) {
+    uVar3 = (*param_1->checkfn)(param_1->check,puVar4,uVar7);
+    param_1->check = uVar3;
+    param_2->adler = uVar3;
   }
-  if (uVar10 != 0) {
+  if (puVar6 != (uchar *)0x0) {
     memcpy();
-    uVar10 = uVar13 + uVar10;
+    puVar6 = puVar6 + uVar7;
   }
-  iVar11 = (int)uVar10;
-  iVar8 = (int)(uVar13 + uVar12);
-  if ((uVar13 + uVar12 & 0xffffffff) == (ulonglong)*(uint *)(iVar3 + 0x2c)) {
-    uVar1 = *(uint *)(iVar3 + 0x28);
-    if (*(uint *)(iVar3 + 0x34) == *(uint *)(iVar3 + 0x2c)) {
-      *(uint *)(iVar3 + 0x34) = uVar1;
+  puVar4 = puVar4 + uVar7;
+  if (puVar4 == param_1->end) {
+    puVar4 = param_1->window;
+    if (param_1->write == param_1->end) {
+      param_1->write = puVar4;
     }
-    uVar2 = *(uint *)(iVar5 + 0x10);
-    uVar7 = (ulonglong)*(uint *)(iVar3 + 0x34) - (ulonglong)uVar1;
-    if ((ulonglong)uVar2 < (uVar7 & 0xffffffff)) {
-      uVar7 = (ulonglong)uVar2;
+    uVar2 = param_2->avail_out;
+    uVar7 = (int)param_1->write - (int)puVar4;
+    if (uVar2 < uVar7) {
+      uVar7 = uVar2;
     }
-    if ((uVar7 & 0xffffffff) != 0) {
-      uVar9 = -(ulonglong)(uVar9 != 0xfffffffffffffffb) & uVar9;
+    if (uVar7 != 0) {
+      uVar5 = -(ulonglong)(uVar5 != 0xfffffffffffffffb) & uVar5;
     }
-    iVar8 = (int)uVar7;
-    *(uint *)(iVar5 + 0x10) = uVar2 - iVar8;
-    *(int *)(iVar5 + 0x14) = *(int *)(iVar5 + 0x14) + iVar8;
-    if (*(code **)(iVar3 + 0x38) != (code *)0x0) {
-      uVar4 = (**(code **)(iVar3 + 0x38))(*(undefined4 *)(iVar3 + 0x3c),(ulonglong)uVar1,uVar7);
-      *(undefined4 *)(iVar3 + 0x3c) = uVar4;
-      *(undefined4 *)(iVar5 + 0x30) = uVar4;
+    param_2->avail_out = uVar2 - uVar7;
+    param_2->total_out = param_2->total_out + uVar7;
+    if (param_1->checkfn != (_func___cdecl_ulong_ulong_uchar_ptr_uint *)0x0) {
+      uVar3 = (*param_1->checkfn)(param_1->check,puVar4,uVar7);
+      param_1->check = uVar3;
+      param_2->adler = uVar3;
     }
-    if ((uVar10 & 0xffffffff) != 0) {
+    if (puVar6 != (uchar *)0x0) {
       memcpy();
-      iVar11 = iVar8 + iVar11;
+      puVar6 = puVar6 + uVar7;
     }
-    iVar8 = iVar8 + uVar1;
+    puVar4 = puVar4 + uVar7;
   }
-  *(int *)(iVar5 + 0xc) = iVar11;
-  *(int *)(iVar3 + 0x30) = iVar8;
-  iVar5 = __restgprlr_26(uVar9);
-  return iVar5;
+  param_2->next_out = puVar6;
+  param_1->read = puVar4;
+  return (int)uVar5;
 }
 

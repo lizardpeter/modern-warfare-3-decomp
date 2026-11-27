@@ -2,42 +2,40 @@
 
 // 82918320  _snprintf  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/sprintf.c:99)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 int _snprintf(char *param_1,uint param_2,char *param_3)
 
 {
-  char *pcVar1;
-  int *piVar2;
-  int iVar3;
-  ulonglong uVar4;
-  ulonglong uVar5;
+  int *piVar1;
+  int iVar2;
+  ulonglong uVar3;
   char *pcStack00000024;
   _iobuf local_50 [2];
   
-  uVar4 = (ulonglong)(int)param_3;
-  uVar5 = (ulonglong)(int)param_2;
-  pcVar1 = (char *)__savegprlr_28(param_1);
   local_50[0]._ptr = (char *)0x0;
-  pcStack00000024 = (char *)uVar4;
+  pcStack00000024 = param_3;
   memset();
-  if (((uVar4 & 0xffffffff) == 0) || (((uVar5 & 0xffffffff) != 0 && (pcVar1 == (char *)0x0)))) {
-    piVar2 = _errno();
-    *piVar2 = 0x16;
+  if ((param_3 == (char *)0x0) || ((param_2 != 0 && (param_1 == (char *)0x0)))) {
+    piVar1 = _errno();
+    *piVar1 = 0x16;
     _invalid_parameter_noinfo();
-    iVar3 = -1;
+    iVar2 = -1;
   }
   else {
     local_50[0]._cnt = 0x7fffffff;
-    if ((uVar5 & 0xffffffff) < 0x80000000) {
-      local_50[0]._cnt = (int)uVar5;
+    if (param_2 < 0x80000000) {
+      local_50[0]._cnt = param_2;
     }
     local_50[0]._flag = 0x42;
-    local_50[0]._ptr = pcVar1;
-    local_50[0]._base = pcVar1;
-    iVar3 = _output_l(local_50,(char *)uVar4,(localeinfo_struct *)0x0,&stack0x00000028);
-    if (pcVar1 != (char *)0x0) {
-      uVar5 = (ulonglong)(uint)local_50[0]._cnt;
-      local_50[0]._cnt = (int)(uVar5 - 1);
-      if ((longlong)(uVar5 - 1) < 0) {
+    local_50[0]._ptr = param_1;
+    local_50[0]._base = param_1;
+    iVar2 = _output_l(local_50,param_3,(localeinfo_struct *)0x0,&stack0x00000028);
+    if (param_1 != (char *)0x0) {
+      uVar3 = (ulonglong)(uint)local_50[0]._cnt;
+      local_50[0]._cnt = (int)(uVar3 - 1);
+      if ((longlong)(uVar3 - 1) < 0) {
         _flsbuf(0,local_50);
       }
       else {
@@ -45,7 +43,6 @@ int _snprintf(char *param_1,uint param_2,char *param_3)
       }
     }
   }
-  iVar3 = __restgprlr_28(iVar3);
-  return iVar3;
+  return iVar2;
 }
 

@@ -89,43 +89,47 @@ UI_LiveDialogState Live_GetAcceptingInvitationDesiredDialog(void)
 
 // 82711C10  Live_ExceededMaxLogon  (online/live_common.cpp:350)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 int Live_ExceededMaxLogon(int param_1,int param_2)
 
 {
   int iVar1;
-  int iVar2;
-  DWOnlineStatus DVar3;
+  DWOnlineStatus DVar2;
   
-  iVar1 = __savegprlr_29(param_1);
-  iVar2 = Live_IsWaitingForOnlineServices(iVar1);
-  if ((iVar2 != 0) && (60000 < param_2)) {
-LAB_82711c40:
-    iVar1 = __restgprlr_29(1);
-    return iVar1;
+  iVar1 = Live_IsWaitingForOnlineServices(param_1);
+  if ((iVar1 != 0) && (60000 < param_2)) {
+    return 1;
   }
-  DVar3 = dwGetLogOnStatus(iVar1);
-  if (DVar3 == DW_LIVE_DISCONNECTED) {
-    iVar2 = dwGetNumLogonAttemps(iVar1);
-    if (2 < iVar2) goto LAB_82711c40;
+  DVar2 = dwGetLogOnStatus(param_1);
+  if (DVar2 == DW_LIVE_DISCONNECTED) {
+    iVar1 = dwGetNumLogonAttemps(param_1);
+    if (2 < iVar1) {
+      return 1;
+    }
     if (60000 < param_2) {
-      iVar2 = dwGetNumLogonAttemps(iVar1);
-      if (0 < iVar2) goto LAB_82711c40;
+      iVar1 = dwGetNumLogonAttemps(param_1);
+      if (0 < iVar1) {
+        return 1;
+      }
       if (((dw_test_disconnect != (dvar_t *)0x0) &&
-          (iVar2 = (dw_test_disconnect->current).integer, 0 < iVar2)) &&
-         ((iVar2 == 5 || (iVar2 == iVar1 + 1)))) {
+          (iVar1 = (dw_test_disconnect->current).integer, 0 < iVar1)) &&
+         ((iVar1 == 5 || (iVar1 == param_1 + 1)))) {
         Com_PrintWarning(0x19,
                          "Use dvar dw_test_retry_disconnect to properly test connecting dialog up and MW3 servers not available rather than dw_test_disconnect.\n"
                         );
       }
     }
   }
-  iVar1 = __restgprlr_29(0);
-  return iVar1;
+  return 0;
 }
 
 
 // 82713F10  Live_GetDesiredOnlineDialog  (online/live_common.cpp:395)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
@@ -133,129 +137,117 @@ UI_LiveDialogState Live_GetDesiredOnlineDialog(void)
 
 {
   int iVar1;
-  bool bVar5;
-  UI_LiveDialogState UVar2;
+  bool bVar4;
+  int iVar2;
   int iVar3;
-  int iVar4;
-  ulonglong uVar6;
-  undefined8 uVar7;
+  ulonglong uVar5;
+  UI_LiveDialogState UVar6;
   
-  __savegprlr_27();
-  bVar5 = CL_AllLocalClientsDisconnected();
-  if ((!bVar5) || (bVar5 = IsServerRunning(), iVar1 = g_waitForConnectionDialogController, bVar5)) {
-    UVar2 = __restgprlr_27(0);
-    return UVar2;
-  }
-  uVar7 = 0;
-  if (g_waitForConnectionDialogState != OCDS_NONE) {
-    if (g_waitForConnectionDialogState == OCDS_REQUESTED) {
-      g_waitForConnectionDialogState = OCDS_ACTIVE;
-      g_waitForConnectionDialogRequestTime = Sys_Milliseconds();
-      Dvar_SetString(com_errorResolveCommand,"");
-      DW_SetDisableLogonRetry(false);
-      dwResetLogonAttempts(iVar1);
-    }
-    else if (OCDS_ACTIVE < g_waitForConnectionDialogState) {
-      if (alwaysfails == 0) {
+  bVar4 = CL_AllLocalClientsDisconnected();
+  if ((bVar4) && (bVar4 = IsServerRunning(), iVar1 = g_waitForConnectionDialogController, !bVar4)) {
+    UVar6 = LIVE_DIALOG_NONE;
+    if (g_waitForConnectionDialogState != OCDS_NONE) {
+      if (g_waitForConnectionDialogState == OCDS_REQUESTED) {
+        g_waitForConnectionDialogState = OCDS_ACTIVE;
+        g_waitForConnectionDialogRequestTime = Sys_Milliseconds();
+        Dvar_SetString(com_errorResolveCommand,"");
+        DW_SetDisableLogonRetry(false);
+        dwResetLogonAttempts(iVar1);
+      }
+      else if (OCDS_ACTIVE < g_waitForConnectionDialogState) {
+        if (alwaysfails != 0) {
+          return LIVE_DIALOG_NONE;
+        }
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\online\\live_common.cpp",
                         0x1c8,0,"unexpected g_waitForConnectionDialogState state");
-        UVar2 = __restgprlr_27(0);
-        return UVar2;
+        return LIVE_DIALOG_NONE;
       }
-      goto LAB_82714084;
-    }
-    iVar3 = Sys_Milliseconds();
-    uVar6 = (ulonglong)(uint)g_waitForConnectionDialogRequestTime;
-    if ((longlong)((longlong)iVar3 - uVar6) < 0) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\online\\live_common.cpp",
-                      0x1a9,0,"%s\n\t(timeDisplayed) = %i");
-    }
-    uVar7 = 3;
-    iVar3 = (int)((longlong)iVar3 - uVar6);
-    if ((iVar3 < 0x5dd) || (iVar4 = Live_IsWaitingForOnlineServices(iVar1), iVar4 != 0)) {
-      iVar3 = Live_ExceededMaxLogon(iVar1,iVar3);
-      if (iVar3 != 0) {
-        UI_ClearCompletionResolve();
-        DW_SetDisableLogonRetry(true);
-        Live_DemonwareDisconnectCleanup(iVar1);
+      iVar2 = Sys_Milliseconds();
+      uVar5 = (ulonglong)(uint)g_waitForConnectionDialogRequestTime;
+      if ((longlong)((longlong)iVar2 - uVar5) < 0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\online\\live_common.cpp",
+                        0x1a9,0,"%s\n\t(timeDisplayed) = %i");
       }
-    }
-    else {
-      bVar5 = LiveStorage_CheckingRemoteConsoleChallenge();
-      if (!bVar5) {
-        g_waitForConnectionDialogState = OCDS_NONE;
-        g_waitForConnectionDialogController = -1;
-        UI_RunResolveItemDefAction(LOCAL_CLIENT_0);
-        UVar2 = __restgprlr_27(0);
-        return UVar2;
+      UVar6 = LIVE_DIALOG_WAITING_FOR_ONLINE_SERVICES;
+      iVar2 = (int)((longlong)iVar2 - uVar5);
+      if ((iVar2 < 0x5dd) || (iVar3 = Live_IsWaitingForOnlineServices(iVar1), iVar3 != 0)) {
+        iVar2 = Live_ExceededMaxLogon(iVar1,iVar2);
+        if (iVar2 != 0) {
+          UI_ClearCompletionResolve();
+          DW_SetDisableLogonRetry(true);
+          Live_DemonwareDisconnectCleanup(iVar1);
+        }
+      }
+      else {
+        bVar4 = LiveStorage_CheckingRemoteConsoleChallenge();
+        if (!bVar4) {
+          g_waitForConnectionDialogState = OCDS_NONE;
+          g_waitForConnectionDialogController = -1;
+          UI_RunResolveItemDefAction(LOCAL_CLIENT_0);
+          return LIVE_DIALOG_NONE;
+        }
       }
     }
+    return UVar6;
   }
-LAB_82714084:
-  UVar2 = __restgprlr_27(uVar7);
-  return UVar2;
+  return LIVE_DIALOG_NONE;
 }
 
 
 // 82713628  Live_GetSocialConfigDialog  (online/live_common.cpp:465)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 UI_LiveDialogState Live_GetSocialConfigDialog(void)
 
 {
-  bool bVar3;
-  UI_LiveDialogState UVar1;
-  int iVar2;
-  ulonglong uVar4;
-  undefined8 uVar5;
+  bool bVar2;
+  int iVar1;
+  ulonglong uVar3;
+  UI_LiveDialogState UVar4;
   
-  __savegprlr_29();
-  bVar3 = CL_AllLocalClientsDisconnected();
-  if ((!bVar3) || (bVar3 = IsServerRunning(), bVar3)) {
-    UVar1 = __restgprlr_29(0);
-    return UVar1;
+  bVar2 = CL_AllLocalClientsDisconnected();
+  if ((!bVar2) || (bVar2 = IsServerRunning(), bVar2)) {
+    return LIVE_DIALOG_NONE;
   }
-  uVar5 = 0;
+  UVar4 = LIVE_DIALOG_NONE;
   if (g_waitForSocialConfigDialogState != OCDS_NONE) {
     if (g_waitForSocialConfigDialogState == OCDS_REQUESTED) {
       g_waitForSocialConfigDialogState = OCDS_ACTIVE;
       g_waitForSocialConfigDialogRequestTime = Sys_Milliseconds();
     }
     else if (OCDS_ACTIVE < g_waitForSocialConfigDialogState) {
-      if (alwaysfails == 0) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\online\\live_common.cpp",
-                        0x202,0,"unexpected g_waitForSocialConfigDialogState state");
-        UVar1 = __restgprlr_29(0);
-        return UVar1;
+      if (alwaysfails != 0) {
+        return LIVE_DIALOG_NONE;
       }
-      goto LAB_82713768;
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\online\\live_common.cpp",
+                      0x202,0,"unexpected g_waitForSocialConfigDialogState state");
+      return LIVE_DIALOG_NONE;
     }
-    iVar2 = Sys_Milliseconds();
-    uVar4 = (ulonglong)(uint)g_waitForSocialConfigDialogRequestTime;
-    if ((longlong)((longlong)iVar2 - uVar4) < 0) {
+    iVar1 = Sys_Milliseconds();
+    uVar3 = (ulonglong)(uint)g_waitForSocialConfigDialogRequestTime;
+    if ((longlong)((longlong)iVar1 - uVar3) < 0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\online\\live_common.cpp",
                       0x1e9,0,"%s\n\t(timeDisplayed) = %i");
     }
-    uVar5 = 4;
-    iVar2 = (int)((longlong)iVar2 - uVar4);
-    if ((0x5dc < iVar2) && (bVar3 = SocialConfig_Ok(), bVar3)) {
+    UVar4 = LIVE_DIALOG_GETTING_SOCIALCONFIG;
+    iVar1 = (int)((longlong)iVar1 - uVar3);
+    if ((0x5dc < iVar1) && (bVar2 = SocialConfig_Ok(), bVar2)) {
       g_waitForSocialConfigDialogState = OCDS_NONE;
       UI_RunResolveItemDefAction(LOCAL_CLIENT_0);
-      UVar1 = __restgprlr_29(0);
-      return UVar1;
+      return LIVE_DIALOG_NONE;
     }
-    if (60000 < iVar2) {
+    if (60000 < iVar1) {
       UI_ClearCompletionResolve();
       g_waitForSocialConfigDialogState = OCDS_NONE;
       g_waitForSocialConfigDialogRequestTime = -1;
       Com_Error(ERR_DROP,"EXE_DEMONWARE_DISCONNECT");
     }
   }
-LAB_82713768:
-  UVar1 = __restgprlr_29(uVar5);
-  return UVar1;
+  return UVar4;
 }
 
 
@@ -293,28 +285,24 @@ void Live_UpdateDesiredDialog(void)
 
 // 82711CF0  Live_TryCloseDialog  (online/live_common.cpp:566)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void Live_TryCloseDialog(LocalClientNum_t param_1,UI_LiveDialogState param_2)
 
 {
-  int iVar1;
-  bool bVar2;
-  ulonglong uVar3;
+  bool bVar1;
   
-  uVar3 = (ulonglong)(int)param_2;
-  __savegprlr_29(param_1);
-  if ((s_uiJoiningDialogState.desiredMenuState != (UI_LiveDialogState)uVar3) &&
-     (s_uiJoiningDialogState.activeMenuState != (UI_LiveDialogState)uVar3)) {
-    iVar1 = (int)((uVar3 & 0xffffffff) << 2);
-    bVar2 = Menu_IsMenuOpenAndVisible
-                      (LOCAL_CLIENT_0,*(char **)((int)s_uiJoiningDialogMenuName + iVar1));
-    if (bVar2) {
-      UI_CloseMenu(LOCAL_CLIENT_0,*(char **)((int)s_uiJoiningDialogMenuName + iVar1));
-      s_gettingDataPopupOpenLastFrame = -(uint)(uVar3 != 2) & s_gettingDataPopupOpenLastFrame;
+  if ((s_uiJoiningDialogState.desiredMenuState != param_2) &&
+     (s_uiJoiningDialogState.activeMenuState != param_2)) {
+    bVar1 = Menu_IsMenuOpenAndVisible(LOCAL_CLIENT_0,s_uiJoiningDialogMenuName[param_2]);
+    if (bVar1) {
+      UI_CloseMenu(LOCAL_CLIENT_0,s_uiJoiningDialogMenuName[param_2]);
+      s_gettingDataPopupOpenLastFrame =
+           -(uint)(param_2 != LIVE_DIALOG_GETTING_PLAYER_DATA) & s_gettingDataPopupOpenLastFrame;
     }
   }
-  __restgprlr_29();
   return;
 }
 
@@ -340,45 +328,45 @@ int Live_IsOnlineDataRequired(void)
 
 // 82711DD0  Live_GetRequiredDataControllerIndex  (online/live_common.cpp:597)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 int Live_GetRequiredDataControllerIndex(LocalClientNum_t param_1)
 
 {
-  LocalClientNum_t LVar1;
-  bool bVar3;
-  int iVar2;
+  bool bVar2;
+  int iVar1;
   int aiStack_30 [12];
   
-  LVar1 = __savegprlr_29(param_1);
-  bVar3 = Live_HasAcceptedInvitation();
-  if (bVar3) {
-    iVar2 = Live_GetControllerIndexForPendingInvitation();
-    iVar2 = __restgprlr_29(iVar2);
-    return iVar2;
+  bVar2 = Live_HasAcceptedInvitation();
+  if (bVar2) {
+    iVar1 = Live_GetControllerIndexForPendingInvitation();
+    return iVar1;
   }
   if ((onlinegame->current).enabled == false) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\online\\live_common.cpp",0x266,
                     0,"%s");
   }
-  bVar3 = CL_IsLocalClientActive(LVar1);
-  if (!bVar3) {
+  bVar2 = CL_IsLocalClientActive(param_1);
+  if (!bVar2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\online\\live_common.cpp",0x26b,
                     0,"%s");
   }
   if ((cl_multi_gamepads_enabled != 0) &&
-     (bVar3 = CL_SplitscreenControllerIndexFromClientNum(LVar1,aiStack_30), !bVar3)) {
+     (bVar2 = CL_SplitscreenControllerIndexFromClientNum(param_1,aiStack_30), !bVar2)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\online\\live_common.cpp",0x26c,
                     0,"%s");
   }
-  iVar2 = CL_ControllerIndexFromClientNum(LVar1);
-  iVar2 = __restgprlr_29(iVar2);
-  return iVar2;
+  iVar1 = CL_ControllerIndexFromClientNum(param_1);
+  return iVar1;
 }
 
 
 // 82713780  ClosePopupGettingData  (online/live_common.cpp:634)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void ClosePopupGettingData(LocalClientNum_t param_1)
@@ -386,31 +374,31 @@ void ClosePopupGettingData(LocalClientNum_t param_1)
 {
   char cVar1;
   char cVar2;
-  LocalClientNum_t LVar3;
-  bool bVar7;
-  int iVar4;
+  bool bVar6;
+  int iVar3;
+  uint uVar4;
   uint uVar5;
-  uint uVar6;
+  char *pcVar7;
   char *pcVar8;
-  char *pcVar9;
   
-  LVar3 = __savegprlr_29(param_1);
-  bVar7 = Live_HasAcceptedInvitation();
-  if ((((bVar7) && (s_acceptingInviteInitialized != false)) ||
+  bVar6 = Live_HasAcceptedInvitation();
+  if ((((bVar6) && (s_acceptingInviteInitialized != false)) ||
       ((onlinegame->current).enabled != false)) &&
-     (iVar4 = Live_GetRequiredDataControllerIndex(LVar3), -1 < iVar4)) {
-    uVar5 = Live_GetRequiredFlags();
-    uVar6 = Live_SyncOnlineDataFlags(iVar4);
-    if ((uVar6 & uVar5) != 0) goto LAB_827138ac;
+     (iVar3 = Live_GetRequiredDataControllerIndex(param_1), -1 < iVar3)) {
+    uVar4 = Live_GetRequiredFlags();
+    uVar5 = Live_SyncOnlineDataFlags(iVar3);
+    if ((uVar5 & uVar4) != 0) {
+      return;
+    }
   }
-  pcVar9 = "popup_gettingdata";
-  pcVar8 = s_uiJoiningDialogMenuName[2];
+  pcVar8 = "popup_gettingdata";
+  pcVar7 = s_uiJoiningDialogMenuName[2];
   do {
-    cVar1 = *pcVar9;
-    cVar2 = *pcVar8;
+    cVar1 = *pcVar8;
+    cVar2 = *pcVar7;
     if (cVar1 == '\0') break;
-    pcVar9 = pcVar9 + 1;
     pcVar8 = pcVar8 + 1;
+    pcVar7 = pcVar7 + 1;
   } while (cVar1 == cVar2);
   if (cVar1 != cVar2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\online\\live_common.cpp",0x290,
@@ -418,82 +406,75 @@ void ClosePopupGettingData(LocalClientNum_t param_1)
   }
   if (((s_uiJoiningDialogState.desiredMenuState != LIVE_DIALOG_GETTING_PLAYER_DATA) &&
       (s_uiJoiningDialogState.activeMenuState != LIVE_DIALOG_GETTING_PLAYER_DATA)) &&
-     (bVar7 = Menu_IsMenuOpenAndVisible(LOCAL_CLIENT_0,s_uiJoiningDialogMenuName[2]), bVar7)) {
+     (bVar6 = Menu_IsMenuOpenAndVisible(LOCAL_CLIENT_0,s_uiJoiningDialogMenuName[2]), bVar6)) {
     UI_CloseMenu(LOCAL_CLIENT_0,s_uiJoiningDialogMenuName[2]);
     s_gettingDataPopupOpenLastFrame = 0;
   }
-LAB_827138ac:
-  __restgprlr_29();
   return;
 }
 
 
 // 82711EC0  Live_OpenDialog  (online/live_common.cpp:662)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void Live_OpenDialog(UI_LiveDialogState param_1,uint param_2)
 
 {
-  uint uVar1;
-  bool bVar3;
-  int iVar2;
-  ulonglong uVar4;
+  bool bVar2;
+  int iVar1;
   
-  uVar4 = (ulonglong)(int)param_2;
-  uVar1 = __savegprlr_28(param_1);
-  if (4 < uVar1) {
+  if (LIVE_DIALOG_GETTING_SOCIALCONFIG < param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\online\\live_common.cpp",0x297,
                     0,"state doesn\'t index LIVE_DIALOG_STATE_COUNT\n\t%i not in [0, %i)");
   }
-  if ((s_uiJoiningDialogMenuName[uVar1] != (char *)0x0) &&
-     (bVar3 = Menu_IsMenuOpenAndVisible(LOCAL_CLIENT_0,s_uiJoiningDialogMenuName[uVar1]), !bVar3)) {
-    if (uVar1 == 2) {
-      iVar2 = CL_GetFirstActiveControllerIndex();
-      ShowPopupGettingData(iVar2);
+  if ((s_uiJoiningDialogMenuName[param_1] != (char *)0x0) &&
+     (bVar2 = Menu_IsMenuOpenAndVisible(LOCAL_CLIENT_0,s_uiJoiningDialogMenuName[param_1]), !bVar2))
+  {
+    if (param_1 == LIVE_DIALOG_GETTING_PLAYER_DATA) {
+      iVar1 = CL_GetFirstActiveControllerIndex();
+      ShowPopupGettingData(iVar1);
     }
     else {
-      UI_OpenMenu(LOCAL_CLIENT_0,s_uiJoiningDialogMenuName[uVar1]);
+      UI_OpenMenu(LOCAL_CLIENT_0,s_uiJoiningDialogMenuName[param_1]);
     }
-    bVar3 = Menu_IsMenuOpenAndVisible(LOCAL_CLIENT_0,s_uiJoiningDialogMenuName[uVar1]);
-    if ((bVar3) && ((uVar4 & 0xffffffff) != (ulonglong)s_uiJoiningDialogState.lastStateTransition))
-    {
+    bVar2 = Menu_IsMenuOpenAndVisible(LOCAL_CLIENT_0,s_uiJoiningDialogMenuName[param_1]);
+    if ((bVar2) && (param_2 != s_uiJoiningDialogState.lastStateTransition)) {
       Com_PrintWarning(0xd,"Live_OpenDialog opened \'%s\' while not on state transition edge\n");
     }
   }
-  __restgprlr_28();
   return;
 }
 
 
 // 82711F98  Live_CloseDialog  (online/live_common.cpp:684)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void Live_CloseDialog(UI_LiveDialogState param_1,uint param_2)
 
 {
-  uint uVar1;
-  bool bVar2;
-  ulonglong uVar3;
+  bool bVar1;
   
-  uVar3 = (ulonglong)(int)param_2;
-  uVar1 = __savegprlr_28(param_1);
-  if (4 < uVar1) {
+  if (LIVE_DIALOG_GETTING_SOCIALCONFIG < param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\online\\live_common.cpp",0x2ad,
                     0,"state doesn\'t index LIVE_DIALOG_STATE_COUNT\n\t%i not in [0, %i)");
   }
-  if ((s_uiJoiningDialogMenuName[uVar1] != (char *)0x0) &&
-     (bVar2 = Menu_IsMenuOpenAndVisible(LOCAL_CLIENT_0,s_uiJoiningDialogMenuName[uVar1]), bVar2)) {
-    UI_CloseMenu(LOCAL_CLIENT_0,s_uiJoiningDialogMenuName[uVar1]);
-    s_gettingDataPopupOpenLastFrame = -(uint)(uVar1 != 2) & s_gettingDataPopupOpenLastFrame;
-    bVar2 = Menu_IsMenuOpenAndVisible(LOCAL_CLIENT_0,s_uiJoiningDialogMenuName[uVar1]);
-    if ((!bVar2) && ((uVar3 & 0xffffffff) != (ulonglong)s_uiJoiningDialogState.lastStateTransition))
-    {
+  if ((s_uiJoiningDialogMenuName[param_1] != (char *)0x0) &&
+     (bVar1 = Menu_IsMenuOpenAndVisible(LOCAL_CLIENT_0,s_uiJoiningDialogMenuName[param_1]), bVar1))
+  {
+    UI_CloseMenu(LOCAL_CLIENT_0,s_uiJoiningDialogMenuName[param_1]);
+    s_gettingDataPopupOpenLastFrame =
+         -(uint)(param_1 != LIVE_DIALOG_GETTING_PLAYER_DATA) & s_gettingDataPopupOpenLastFrame;
+    bVar1 = Menu_IsMenuOpenAndVisible(LOCAL_CLIENT_0,s_uiJoiningDialogMenuName[param_1]);
+    if ((!bVar1) && (param_2 != s_uiJoiningDialogState.lastStateTransition)) {
       Com_PrintWarning(0xd,"Live_CloseDialog closed \'%s\' while not on state transition edge\n");
     }
   }
-  __restgprlr_28();
   return;
 }
 
@@ -574,40 +555,39 @@ void Live_CheckWaitOnlineServicesController(int param_1)
 
 // 82712130  Live_WaitForOnlineServicesDialog  (online/live_common.cpp:785)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 int Live_WaitForOnlineServicesDialog(int param_1)
 
 {
   char cVar1;
-  int iVar2;
-  char *pcVar3;
-  int iVar4;
-  bool bVar5;
-  char *pcVar6;
+  char *pcVar2;
+  int iVar3;
+  bool bVar4;
+  char *pcVar5;
   
-  iVar2 = __savegprlr_29(param_1);
-  pcVar3 = Dvar_GetString("com_errorMessage");
-  pcVar6 = pcVar3;
+  pcVar2 = Dvar_GetString("com_errorMessage");
+  pcVar5 = pcVar2;
   do {
-    cVar1 = *pcVar6;
-    pcVar6 = pcVar6 + 1;
+    cVar1 = *pcVar5;
+    pcVar5 = pcVar5 + 1;
   } while (cVar1 != '\0');
-  if (((((int)pcVar6 - (int)pcVar3 == 1) || (iVar4 = I_stricmp(pcVar3,";"), iVar4 == 0)) &&
-      (bVar5 = Live_UserIsGuest(iVar2), !bVar5)) &&
-     ((iVar4 = Live_IsWaitingForOnlineServices(iVar2), iVar4 != 0 ||
-      (bVar5 = LiveStorage_CheckingRemoteConsoleChallenge(), bVar5)))) {
+  if (((((int)pcVar5 - (int)pcVar2 == 1) || (iVar3 = I_stricmp(pcVar2,";"), iVar3 == 0)) &&
+      (bVar4 = Live_UserIsGuest(param_1), !bVar4)) &&
+     ((iVar3 = Live_IsWaitingForOnlineServices(param_1), iVar3 != 0 ||
+      (bVar4 = LiveStorage_CheckingRemoteConsoleChallenge(), bVar4)))) {
     if (g_waitForConnectionDialogState == OCDS_NONE) {
       if (g_waitForConnectionDialogController != -1) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\online\\live_common.cpp",
                         0x303,0,"%s\n\t%s");
       }
       g_waitForConnectionDialogState = OCDS_REQUESTED;
-      g_waitForConnectionDialogController = iVar2;
+      g_waitForConnectionDialogController = param_1;
     }
-    iVar2 = __restgprlr_29(1);
-    return iVar2;
+    return 1;
   }
-  iVar2 = __restgprlr_29(0);
-  return iVar2;
+  return 0;
 }
 
 
@@ -764,60 +744,58 @@ void Live_ShutdownSessions(void)
 
 // 82712360  Live_ConnectToPotentialHost  (online/live_common.cpp:952)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 int Live_ConnectToPotentialHost(int param_1,_XSESSION_INFO *param_2)
 
 {
+  bool bVar3;
   int iVar1;
-  bool bVar4;
-  int iVar2;
-  netsrc_t nVar3;
+  netsrc_t nVar2;
   netadr_t in_stack_ffffff68;
   ushort local_50 [2];
   in_addr aiStack_4c [3];
   netadr_t local_40 [4];
   
-  iVar1 = __savegprlr_27(param_1);
   if (s_checkExeState == CHECK_EXE_STATE_NONE) {
-    bVar4 = Live_AreWeAcceptingInvite();
-    if (bVar4) {
+    bVar3 = Live_AreWeAcceptingInvite();
+    if (bVar3) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\online\\live_common.cpp",
                       0x3cb,0,"%s");
     }
-    bVar4 = Live_HasAcceptedInvitation();
-    if (!bVar4) {
+    bVar3 = Live_HasAcceptedInvitation();
+    if (!bVar3) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\online\\live_common.cpp",
                       0x3cc,0,"%s");
     }
-    bVar4 = CL_AllLocalClientsDisconnected();
-    if (!bVar4) {
+    bVar3 = CL_AllLocalClientsDisconnected();
+    if (!bVar3) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\online\\live_common.cpp",
                       0x3cd,0,"%s");
     }
     Sys_Milliseconds();
     Com_Printf(0xe,"Live_ConnectToPotentialHost - connecting to host from session info at time %i\n"
               );
-    CL_EnsureClientIsActive(iVar1);
+    CL_EnsureClientIsActive(param_1);
     Live_SetCurrentGametype();
     PartyAtomic_Shutdown();
-    iVar2 = Session_JoinPotentialHost
-                      (iVar1,param_2,0x2e,9,0,&g_partyJoinSession,aiStack_4c,local_50);
-    if (iVar2 == 0) {
-      iVar1 = __restgprlr_27();
-      return iVar1;
+    iVar1 = Session_JoinPotentialHost
+                      (param_1,param_2,0x2e,9,0,&g_partyJoinSession,aiStack_4c,local_50);
+    if (iVar1 == 0) {
+      return 0;
     }
     NET_ConvertInAddrToServerNetAddr(aiStack_4c,local_50[0],local_40);
-    nVar3 = NET_GetLocalNetIDFromControllerIndex(iVar1);
-    RMsg_AddPrint(local_40,"exe_check",nVar3);
+    nVar2 = NET_GetLocalNetIDFromControllerIndex(param_1);
+    RMsg_AddPrint(local_40,"exe_check",nVar2);
     s_checkExeState = CHECK_EXE_STATE_QUERY;
     s_checkExeTime = Sys_Milliseconds();
-    NET_GetLocalNetIDFromControllerIndex(iVar1);
+    NET_GetLocalNetIDFromControllerIndex(param_1);
     NET_AdrToString(in_stack_ffffff68);
     Com_Printf(0xe,"exe_check at %d to %s, local client = %d\n");
   }
-  iVar1 = __restgprlr_27(1);
-  return iVar1;
+  return 1;
 }
 
 
@@ -838,6 +816,8 @@ int Live_CheckInviteExecutable(void)
 
 // 82712568  Live_CheckInviteExecutableShouldError  (online/live_common.cpp:1028)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 int Live_CheckInviteExecutableShouldError(void)
@@ -845,7 +825,6 @@ int Live_CheckInviteExecutableShouldError(void)
 {
   int iVar1;
   
-  __savegprlr_28();
   if (s_checkExeState == CHECK_EXE_STATE_NONE) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\online\\live_common.cpp",0x405,
                     0,"%s");
@@ -858,17 +837,14 @@ int Live_CheckInviteExecutableShouldError(void)
     iVar1 = Sys_Milliseconds();
     if (20000 < iVar1 - s_checkExeTime) {
       Com_Printf(0x10,"Live_CheckInviteExecutableShouldError - timeout\n");
-      iVar1 = __restgprlr_28(1);
-      return iVar1;
+      return 1;
     }
     if (s_checkExeState == CHECK_EXE_STATE_SP) {
       Com_Printf(0x10,"Live_CheckInviteExecutableShouldError - incorrect exe %s\n");
-      iVar1 = __restgprlr_28(1);
-      return iVar1;
+      return 1;
     }
   }
-  iVar1 = __restgprlr_28(0);
-  return iVar1;
+  return 0;
 }
 
 
@@ -900,32 +876,30 @@ bool IsServerRunning(void)
 
 // 82713900  Live_ThrowError_Helper  (online/live_common.cpp:1078)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void Live_ThrowError_Helper(errorParm_t param_1,char *param_2,int param_3)
 
 {
-  errorParm_t eVar1;
-  bool bVar2;
+  bool bVar1;
   
-  eVar1 = __savegprlr_28(param_1);
   if (debug_onlinePlayEvenIfDown == (dvar_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\../universal/onlinegame.h"
                     ,0x1d3,0,"%s");
   }
   if (((debug_onlinePlayEvenIfDown->current).enabled == false) &&
-     (bVar2 = Com_ErrorEntered(), !bVar2)) {
+     (bVar1 = Com_ErrorEntered(), !bVar1)) {
     PartyAtomic_AbortJoinAttempt(&g_partyJoinInfo);
     if (param_3 != 0) {
       Live_DeclineInvitation();
     }
-    Com_Error(eVar1,param_2);
-    __restgprlr_28();
+    Com_Error(param_1,param_2);
     return;
   }
   Com_PrintError(0x19,param_2);
-  __restgprlr_28();
   return;
 }
 
@@ -1182,6 +1156,8 @@ void Live_ClearInvitationLaunchData(void)
 
 // 82712AF0  Live_DeclineInvitation  (online/live_common.cpp:1321)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
@@ -1195,7 +1171,6 @@ void Live_DeclineInvitation(void)
   ulong64 *puVar4;
   longlong lVar5;
   
-  __savegprlr_29();
   iVar3 = PartyAtomic_IsJoiningActive(&g_partyJoinInfo);
   if (iVar3 != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\online\\live_common.cpp",0x52b,
@@ -1222,7 +1197,6 @@ void Live_DeclineInvitation(void)
   puVar1[2] = '\0';
   puVar1[3] = '\0';
   XSetLaunchData(0xffffffff84259cc8,1000);
-  __restgprlr_29();
   return;
 }
 
@@ -1264,6 +1238,8 @@ int Live_SyncOnlineData(int param_1)
 
 // 82712C78  Live_ConfirmAcceptInvitation_Error  (online/live_common.cpp:1415)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void Live_ConfirmAcceptInvitation_Error(char *param_1)
@@ -1271,20 +1247,18 @@ void Live_ConfirmAcceptInvitation_Error(char *param_1)
 {
   bool bVar1;
   bool bVar2;
-  char *pcVar3;
-  int iVar4;
-  uiMenuCommand_t uVar5;
-  int iVar6;
+  int iVar3;
+  uiMenuCommand_t uVar4;
+  int iVar5;
   
-  pcVar3 = (char *)__savegprlr_27(param_1);
   PartyAtomic_Shutdown();
   Live_DeclineInvitation();
-  iVar4 = Live_GetControllerIndexForPendingInvitation();
-  uVar5 = UI_GetActiveMenu(LOCAL_CLIENT_0);
-  if (uVar5 == UIMENU_PARTY) {
-    iVar6 = CL_ControllerIndexFromClientNum(LOCAL_CLIENT_0);
+  iVar3 = Live_GetControllerIndexForPendingInvitation();
+  uVar4 = UI_GetActiveMenu(LOCAL_CLIENT_0);
+  if (uVar4 == UIMENU_PARTY) {
+    iVar5 = CL_ControllerIndexFromClientNum(LOCAL_CLIENT_0);
     bVar2 = true;
-    if (iVar6 == iVar4) goto LAB_82712cc0;
+    if (iVar5 == iVar3) goto LAB_82712cc0;
   }
   bVar2 = false;
 LAB_82712cc0:
@@ -1300,16 +1274,15 @@ LAB_82712cc0:
   }
   UI_MuteMenusEnd();
   Com_Printf(0x10,"Live_ConfirmAcceptInvitation_Error - %s\n");
-  Party_OpenPartyUIErrorBox(pcVar3);
+  Party_OpenPartyUIErrorBox(param_1);
   if (bVar2) {
-    iVar6 = CL_ControllerIndexFromClientNum(LOCAL_CLIENT_0);
-    if (iVar6 != iVar4) {
+    iVar5 = CL_ControllerIndexFromClientNum(LOCAL_CLIENT_0);
+    if (iVar5 != iVar3) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\online\\live_common.cpp",
                       0x5b7,0,"%s");
     }
-    Cbuf_ExecuteBuffer(LOCAL_CLIENT_0,iVar4,"xstartprivateparty");
+    Cbuf_ExecuteBuffer(LOCAL_CLIENT_0,iVar3,"xstartprivateparty");
   }
-  __restgprlr_27();
   return;
 }
 
@@ -1347,6 +1320,8 @@ void Live_StartConfirmAcceptInvitation(void)
 
 // 827139C0  Live_ConfirmAcceptInvitation  (online/live_common.cpp:1523)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
@@ -1366,7 +1341,6 @@ void Live_ConfirmAcceptInvitation(void)
   char *pcVar8;
   connstate_t *pcVar9;
   
-  __savegprlr_23();
   uVar1 = Live_GetControllerIndexForPendingInvitation();
   if (3 < uVar1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\online\\live_common.cpp",0x5f5,
@@ -1410,8 +1384,7 @@ LAB_82713a54:
       iVar3 = Live_IsWaitingForOnlineServices(uVar1);
       if (((iVar3 != 0) || (g_waitForConnectionDialogState == OCDS_ACTIVE)) ||
          (bVar7 = LiveStorage_CheckingRemoteConsoleChallenge(), bVar7)) {
-        iVar3 = Live_WaitForOnlineServicesDialog(uVar1);
-        __restgprlr_23(iVar3);
+        Live_WaitForOnlineServicesDialog(uVar1);
         return;
       }
       if ((((xblive_loggedin->current).enabled != false) &&
@@ -1456,7 +1429,6 @@ LAB_82713a54:
           if (iVar3 == 0) {
 LAB_82713d48:
             Live_ConfirmAcceptInvitation_Error("@XBOXLIVE_CANTJOINSESSION");
-            __restgprlr_23();
             return;
           }
           iVar3 = Live_CheckInviteExecutable();
@@ -1495,12 +1467,10 @@ LAB_82713d48:
       if (!bVar7) {
         LVar2 = CL_LocalClientNumFromControllerIndex(uVar1);
         Cbuf_AddText(LVar2,"hostmigration_start\n");
-        __restgprlr_23();
         return;
       }
     }
   }
-  __restgprlr_23();
   return;
 }
 
@@ -1524,53 +1494,52 @@ int Live_ShouldKickIfNotOnline(void)
 
 // 82714318  Live_CheckForFullDisconnect  (online/live_common.cpp:1788)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void Live_CheckForFullDisconnect(int param_1)
 
 {
+  bool bVar4;
   int iVar1;
   bool bVar5;
-  int iVar2;
-  bool bVar6;
   bdLobbyService *this;
-  Status SVar3;
-  char *pcVar4;
+  Status SVar2;
+  char *pcVar3;
   
-  iVar1 = __savegprlr_29(param_1);
   if (((onlinegame->current).enabled == false) && ((ui_onlineRequired->current).enabled == false)) {
-    bVar5 = CL_Demo_IsPlaybackMemoryAllocated();
-    bVar6 = false;
-    if (!bVar5) goto LAB_82714368;
+    bVar4 = CL_Demo_IsPlaybackMemoryAllocated();
+    bVar5 = false;
+    if (!bVar4) goto LAB_82714368;
   }
-  bVar6 = true;
+  bVar5 = true;
 LAB_82714368:
-  iVar2 = Sys_Milliseconds();
-  if ((((bVar6) && (bVar6 = Live_IsUserSignedInToLive(iVar1), bVar6)) &&
-      (bVar6 = Live_UserIsGuest(iVar1), !bVar6)) &&
-     (this = dwGetLobbyService(iVar1), this != (bdLobbyService *)0x0)) {
-    SVar3 = bdLobbyService::getStatus(this);
-    if (((SVar3 != last_dw_lobby_connect_status) &&
-        (last_dw_lobby_connect_status_change = iVar2, SVar3 != BD_CONNECTED)) &&
+  iVar1 = Sys_Milliseconds();
+  if ((((bVar5) && (bVar5 = Live_IsUserSignedInToLive(param_1), bVar5)) &&
+      (bVar5 = Live_UserIsGuest(param_1), !bVar5)) &&
+     (this = dwGetLobbyService(param_1), this != (bdLobbyService *)0x0)) {
+    SVar2 = bdLobbyService::getStatus(this);
+    if (((SVar2 != last_dw_lobby_connect_status) &&
+        (last_dw_lobby_connect_status_change = iVar1, SVar2 != BD_CONNECTED)) &&
        (dw_disconnect_detected == false)) {
       dw_disconnect_detected = true;
-      dw_last_disconnect_time = iVar2;
+      dw_last_disconnect_time = iVar1;
     }
-    last_dw_lobby_connect_status = SVar3;
-    if ((SVar3 == BD_CONNECTED) &&
+    last_dw_lobby_connect_status = SVar2;
+    if ((SVar2 == BD_CONNECTED) &&
        ((demonwareConsideredConnectedTime->current).integer <
-        iVar2 - last_dw_lobby_connect_status_change)) {
+        iVar1 - last_dw_lobby_connect_status_change)) {
       dw_disconnect_detected = false;
-      __restgprlr_29();
       return;
     }
-    if ((((dw_disconnect_detected != false) && (SVar3 != BD_CONNECTED)) &&
-        (30000 < iVar2 - dw_last_disconnect_time)) &&
-       (pcVar4 = Dvar_GetString("com_errorMessage"), *pcVar4 == '\0')) {
+    if ((((dw_disconnect_detected != false) && (SVar2 != BD_CONNECTED)) &&
+        (30000 < iVar1 - dw_last_disconnect_time)) &&
+       (pcVar3 = Dvar_GetString("com_errorMessage"), *pcVar3 == '\0')) {
       dw_disconnect_detected = false;
       DW_SetDisableLogonRetry(true);
-      Live_DemonwareDisconnectCleanup(iVar1);
+      Live_DemonwareDisconnectCleanup(param_1);
     }
   }
-  __restgprlr_29();
   return;
 }
 
@@ -1764,36 +1733,35 @@ uint Live_GetRequiredFlags(void)
 
 // 82713158  Live_SyncOnlineDataPopupTimeout  (online/live_common.cpp:2065)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void Live_SyncOnlineDataPopupTimeout(int param_1)
 
 {
-  int iVar1;
+  bool bVar4;
   bool bVar5;
-  bool bVar6;
-  int iVar2;
+  int iVar1;
+  uint uVar2;
   uint uVar3;
-  uint uVar4;
   
-  iVar1 = __savegprlr_28(param_1);
-  bVar5 = Menu_IsMenuOpenAndVisible(LOCAL_CLIENT_0,"popup_gettingdata");
-  if (((!bVar5) && (bVar6 = Live_HasAcceptedInvitation(), bVar6)) &&
+  bVar4 = Menu_IsMenuOpenAndVisible(LOCAL_CLIENT_0,"popup_gettingdata");
+  if (((!bVar4) && (bVar5 = Live_HasAcceptedInvitation(), bVar5)) &&
      (s_acceptingInviteInitialized != false)) {
-    bVar5 = Menu_IsMenuOpenAndVisible(LOCAL_CLIENT_0,"popup_acceptinginvite");
+    bVar4 = Menu_IsMenuOpenAndVisible(LOCAL_CLIENT_0,"popup_acceptinginvite");
   }
-  if ((bVar5 != false) && (iVar2 = Sys_Milliseconds(), 60000 < iVar2 - s_gettingDataPopupStartTime))
+  if ((bVar4 != false) && (iVar1 = Sys_Milliseconds(), 60000 < iVar1 - s_gettingDataPopupStartTime))
   {
-    uVar3 = Live_SyncOnlineDataFlags(iVar1);
-    uVar4 = Live_GetRequiredFlags();
-    if ((uVar4 & uVar3) != 0) {
+    uVar2 = Live_SyncOnlineDataFlags(param_1);
+    uVar3 = Live_GetRequiredFlags();
+    if ((uVar3 & uVar2) != 0) {
       Com_PrintWarning(0xe,
                        "Live - SyncOnlineDataPopupTimeout - Timed out after %i ms. Started at time %i. Required flags %i, sync flags %i.\n"
                       );
-      Live_SyncOnlineDataError(iVar1);
+      Live_SyncOnlineDataError(param_1);
     }
   }
-  __restgprlr_28();
   return;
 }
 
@@ -1810,124 +1778,111 @@ void Live_SyncOnlineDataPopupStarted(int param_1,uint param_2)
 
 // 82713260  Live_SyncOnlineDataFrame  (online/live_common.cpp:2102)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void Live_SyncOnlineDataFrame(int param_1)
 
 {
   char cVar1;
+  bool bVar7;
   int iVar2;
-  bool bVar8;
-  int iVar3;
+  uint uVar3;
   uint uVar4;
-  uint uVar5;
-  char *pcVar6;
-  int iVar7;
-  char *pcVar9;
+  char *pcVar5;
+  int iVar6;
+  char *pcVar8;
   
-  iVar2 = __savegprlr_28(param_1);
-  bVar8 = CL_AllLocalClientsDisconnected();
-  if (bVar8) {
-    bVar8 = IsServerRunning();
-    if (!bVar8) {
-      iVar3 = Live_IsOnlineDataRequired();
-      uVar4 = Live_GetRequiredFlags();
-      uVar5 = Live_SyncOnlineDataFlags(iVar2);
-      if ((iVar3 != 0) && ((uVar5 & uVar4) != 0)) {
-        pcVar6 = Dvar_GetString("com_errorMessage");
-        pcVar9 = pcVar6;
-        do {
-          cVar1 = *pcVar9;
-          pcVar9 = pcVar9 + 1;
-        } while (cVar1 != '\0');
-        if (((int)pcVar9 - (int)pcVar6 == 1) || (iVar7 = I_stricmp(pcVar6,";"), iVar7 == 0)) {
-          LiveStorage_ShowPopupGettingDataIfNeeded(iVar2);
-        }
+  bVar7 = CL_AllLocalClientsDisconnected();
+  if ((!bVar7) || (bVar7 = IsServerRunning(), bVar7)) {
+    s_gettingDataPopupOpenLastFrame = 0;
+  }
+  else {
+    iVar2 = Live_IsOnlineDataRequired();
+    uVar3 = Live_GetRequiredFlags();
+    uVar4 = Live_SyncOnlineDataFlags(param_1);
+    if ((iVar2 != 0) && ((uVar4 & uVar3) != 0)) {
+      pcVar5 = Dvar_GetString("com_errorMessage");
+      pcVar8 = pcVar5;
+      do {
+        cVar1 = *pcVar8;
+        pcVar8 = pcVar8 + 1;
+      } while (cVar1 != '\0');
+      if (((int)pcVar8 - (int)pcVar5 == 1) || (iVar6 = I_stricmp(pcVar5,";"), iVar6 == 0)) {
+        LiveStorage_ShowPopupGettingDataIfNeeded(param_1);
       }
-      bVar8 = Menu_IsMenuOpenAndVisible(LOCAL_CLIENT_0,"popup_gettingdata");
-      uVar4 = (uint)bVar8;
-      if ((s_gettingDataPopupOpenLastFrame == 0) && (uVar4 != 0)) {
-        s_gettingDataPopupStartTime = Sys_Milliseconds();
-      }
-      s_gettingDataPopupOpenLastFrame = uVar4;
-      if (iVar3 != 0) {
-        Live_SyncOnlineDataPopupTimeout(iVar2);
-        __restgprlr_28();
-        return;
-      }
-      goto LAB_82713370;
+    }
+    bVar7 = Menu_IsMenuOpenAndVisible(LOCAL_CLIENT_0,"popup_gettingdata");
+    uVar3 = (uint)bVar7;
+    if ((s_gettingDataPopupOpenLastFrame == 0) && (uVar3 != 0)) {
+      s_gettingDataPopupStartTime = Sys_Milliseconds();
+    }
+    s_gettingDataPopupOpenLastFrame = uVar3;
+    if (iVar2 != 0) {
+      Live_SyncOnlineDataPopupTimeout(param_1);
+      return;
     }
   }
-  s_gettingDataPopupOpenLastFrame = 0;
-LAB_82713370:
-  __restgprlr_28();
   return;
 }
 
 
 // 82713378  Live_HandleOnlineRequirementFailed  (online/live_common.cpp:2154)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void Live_HandleOnlineRequirementFailed(int param_1,int param_2,int param_3,int param_4)
 
 {
-  int iVar1;
-  char *pcVar2;
-  LocalClientNum_t LVar3;
-  ulonglong uVar4;
-  OnlinePlayFailureReason OVar5;
+  char *pcVar1;
+  LocalClientNum_t LVar2;
+  int iVar3;
   
-  uVar4 = (ulonglong)param_2;
-  iVar1 = __savegprlr_27(param_1);
-  OVar5 = (OnlinePlayFailureReason)uVar4;
-  if (OVar5 == OPFR_NONE) {
+  if (param_2 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\online\\live_common.cpp",0x86b,
                     0,"%s");
   }
   else {
-    if (0x10 < (uVar4 & 0xffffffff)) {
+    if (0x10 < (uint)param_2) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\online\\live_common.cpp",
                       0x86c,0,"failureReason doesn\'t index OPFR_COUNT\n\t%i not in [0, %i)");
     }
-    if (OVar5 == OPFR_ONLINE_SERVICES) {
-      Live_WaitForOnlineServicesDialog(iVar1);
-      if (param_3 != 0) {
-        UI_SilentReturnToMainMenu();
-        __restgprlr_27();
+    if (param_2 == 9) {
+      Live_WaitForOnlineServicesDialog(param_1);
+      if (param_3 == 0) {
         return;
       }
-      goto LAB_827134cc;
+      UI_SilentReturnToMainMenu();
+      return;
     }
-    if (OVar5 == OPFR_MISSING_VAULT_SOCIAL_CONFIG) {
+    if (param_2 == 0x10) {
       if (param_4 == 0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\online\\live_common.cpp",
                         0x87a,0,"%s");
       }
-      iVar1 = Live_IsWaitingForOnlineServices(iVar1);
-      if (iVar1 != 0) {
+      iVar3 = Live_IsWaitingForOnlineServices(param_1);
+      if (iVar3 != 0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\online\\live_common.cpp",
                         0x87b,0,"%s");
       }
-      if (g_waitForSocialConfigDialogState == OCDS_NONE) {
-        g_waitForSocialConfigDialogState = OCDS_REQUESTED;
-        __restgprlr_27();
+      if (g_waitForSocialConfigDialogState != OCDS_NONE) {
         return;
       }
-      goto LAB_827134cc;
+      g_waitForSocialConfigDialogState = OCDS_REQUESTED;
+      return;
     }
   }
-  pcVar2 = Live_GetFailureReason(OVar5,param_4);
-  if (param_3 == 0) {
-    Com_SetErrorMessage(pcVar2);
-    LVar3 = CL_LocalClientNumFromControllerIndex(iVar1);
-    UI_OpenMenu(LVar3,"error_popmenu_submenu");
-    __restgprlr_27();
+  pcVar1 = Live_GetFailureReason(param_2,param_4);
+  if (param_3 != 0) {
+    Live_CloseOnlineMenus(pcVar1);
     return;
   }
-  Live_CloseOnlineMenus(pcVar2);
-LAB_827134cc:
-  __restgprlr_27();
+  Com_SetErrorMessage(pcVar1);
+  LVar2 = CL_LocalClientNumFromControllerIndex(param_1);
+  UI_OpenMenu(LVar2,"error_popmenu_submenu");
   return;
 }
 

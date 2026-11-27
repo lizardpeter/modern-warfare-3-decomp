@@ -99,42 +99,37 @@ bool LiveStorage_CSCache_GetDescriptor(ulong64 param_1,bdFileMetaData *param_2)
 
 // 824D6EB0  AllocContentServerArray<csCacheFileDetails_t>  (qcommon/com_storage_contentserver.h:211)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 bool AllocContentServerArray<csCacheFileDetails_t>
                (csCacheFileDetails_t **param_1,int param_2,char *param_3)
 
 {
-  uint *puVar1;
-  undefined1 uVar4;
-  uint uVar2;
-  void *pvVar3;
-  longlong lVar5;
-  longlong lVar6;
+  csCacheFileDetails_t *pcVar1;
+  longlong lVar2;
+  longlong lVar3;
   
-  lVar5 = (longlong)param_2;
-  puVar1 = (uint *)__savegprlr_28(param_1,lVar5,param_3);
-  if (*puVar1 != 0) {
-    uVar4 = __restgprlr_28(1);
-    return (bool)uVar4;
+  lVar2 = (longlong)param_2;
+  if (*param_1 != (csCacheFileDetails_t *)0x0) {
+    return true;
   }
-  uVar2 = (int)lVar5 * 0x790;
-  pvVar3 = PMem_AllocFromSource_NoDebug(uVar2,8,4,PMEM_SOURCE_DATABASE);
-  if (pvVar3 != (void *)0x0) {
-    *puVar1 = (uint)pvVar3;
-    if (0 < (int)lVar5) {
-      lVar6 = 0;
+  pcVar1 = PMem_AllocFromSource_NoDebug(param_2 * 0x790,8,4,PMEM_SOURCE_DATABASE);
+  if (pcVar1 != (csCacheFileDetails_t *)0x0) {
+    *param_1 = pcVar1;
+    if (0 < param_2) {
+      lVar3 = 0;
       do {
-        if ((ulonglong)*puVar1 + lVar6 != 0) {
-          bdFileMetaData::bdFileMetaData((bdFileMetaData *)((ulonglong)*puVar1 + lVar6));
+        if (ZEXT48(*param_1) + lVar3 != 0) {
+          bdFileMetaData::bdFileMetaData((bdFileMetaData *)(ZEXT48(*param_1) + lVar3));
         }
-        lVar5 = lVar5 + -1;
-        lVar6 = lVar6 + 0x790;
-      } while (lVar5 != 0);
+        lVar2 = lVar2 + -1;
+        lVar3 = lVar3 + 0x790;
+      } while (lVar2 != 0);
     }
-    s_AllocatedContentServerMemorySize = s_AllocatedContentServerMemorySize + uVar2;
-    uVar4 = __restgprlr_28(1);
-    return (bool)uVar4;
+    s_AllocatedContentServerMemorySize = s_AllocatedContentServerMemorySize + param_2 * 0x790;
+    return true;
   }
-  uVar4 = __restgprlr_28(0);
-  return (bool)uVar4;
+  return false;
 }
 

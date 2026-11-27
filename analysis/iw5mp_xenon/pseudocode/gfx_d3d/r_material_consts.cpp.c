@@ -2,46 +2,46 @@
 
 // 82755920  R_RegisterShaderConst  (gfx_d3d/r_material_consts.cpp:11)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void R_RegisterShaderConst(uint param_1,float *param_2,GfxShaderConstantBlock *param_3)
 
 {
-  uint uVar1;
+  longlong lVar1;
   longlong lVar2;
-  uint *puVar3;
-  longlong lVar4;
-  ulonglong uVar5;
+  ulonglong uVar3;
   
-  lVar2 = (longlong)(int)param_3;
-  uVar1 = __savegprlr_29(param_1);
-  puVar3 = (uint *)lVar2;
-  if (0xf < *puVar3) {
+  if (0xf < param_3->count) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_material_consts.cpp"
                     ,0xe,1,
                     "consts->count doesn\'t index ARRAY_COUNT( consts->dest )\n\t%i not in [0, %i)")
     ;
   }
-  uVar5 = (ulonglong)*puVar3;
-  if (uVar5 != 0) {
-    lVar4 = (uVar5 + 2 & 0x7fffffff) * 2 + lVar2;
-    lVar2 = (uVar5 + 10 & 0x3fffffff) * 4 + lVar2;
+  uVar3 = (ulonglong)param_3->count;
+  if (uVar3 != 0) {
+    lVar2 = (uVar3 + 2 & 0x7fffffff) * 2 + (longlong)(int)param_3;
+    lVar1 = (uVar3 + 10 & 0x3fffffff) * 4 + (longlong)(int)param_3;
     do {
-      if (*(ushort *)((int)lVar4 + -2) <= uVar1) break;
-      lVar4 = lVar4 + -2;
-      uVar5 = uVar5 - 1;
-      ((undefined2 *)lVar4)[1] = *(undefined2 *)lVar4;
-      *(undefined4 *)(lVar2 + -4) = *(undefined4 *)((int)lVar2 + -8);
-      lVar2 = lVar2 + -4;
-    } while (uVar5 != 0);
+      if (*(ushort *)((int)lVar2 + -2) <= param_1) break;
+      lVar2 = lVar2 + -2;
+      uVar3 = uVar3 - 1;
+      ((undefined2 *)lVar2)[1] = *(undefined2 *)lVar2;
+      *(undefined4 *)(lVar1 + -4) = *(undefined4 *)((int)lVar1 + -8);
+      lVar1 = lVar1 + -4;
+    } while (uVar3 != 0);
   }
-  *(short *)((int)((uVar5 + 2 & 0xffffffff) << 1) + (int)puVar3) = (short)uVar1;
-  *(float **)((int)((uVar5 + 9 & 0xffffffff) << 2) + (int)puVar3) = param_2;
-  *puVar3 = *puVar3 + 1;
-  __restgprlr_29();
+  *(short *)((int)param_3->dest + (int)((uVar3 + 2 & 0xffffffff) << 1) + -4) = (short)param_1;
+  *(float **)((int)param_3->dest + (int)((uVar3 + 9 & 0xffffffff) << 2) + -4) = param_2;
+  param_3->count = param_3->count + 1;
   return;
 }
 
 
 // 827559E0  R_GetPixelLiteralConsts  (gfx_d3d/r_material_consts.cpp:31)
+
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
 
 void R_GetPixelLiteralConsts
                (Material *param_1,MaterialPass *param_2,GfxShaderConstantBlock *param_3)
@@ -50,62 +50,66 @@ void R_GetPixelLiteralConsts
   ushort uVar1;
   short *psVar2;
   int iVar3;
-  int iVar4;
-  ulonglong uVar5;
-  MaterialShaderArgument *pMVar6;
-  int *piVar7;
-  MaterialArgumentDef *pMVar8;
+  ulonglong uVar4;
+  MaterialShaderArgument *pMVar5;
+  MaterialConstantDef *pMVar6;
+  MaterialArgumentDef *pMVar7;
   
-  iVar3 = __savegprlr_23(param_1);
   param_3->count = 0;
-  uVar5 = (ulonglong)param_2->stableArgCount;
-  if (uVar5 != 0) {
-    iVar4 = (uint)param_2->perObjArgCount + (uint)param_2->perPrimArgCount;
-    pMVar6 = param_2->args + iVar4;
-    uVar1 = param_2->args[iVar4].type;
+  uVar4 = (ulonglong)param_2->stableArgCount;
+  if (uVar4 != 0) {
+    iVar3 = (uint)param_2->perObjArgCount + (uint)param_2->perPrimArgCount;
+    pMVar5 = param_2->args + iVar3;
+    uVar1 = param_2->args[iVar3].type;
     while (uVar1 < 7) {
-      uVar5 = uVar5 - 1;
-      pMVar6 = pMVar6 + 1;
-      if (uVar5 == 0) goto LAB_82755b30;
-      uVar1 = pMVar6->type;
+      uVar4 = uVar4 - 1;
+      pMVar5 = pMVar5 + 1;
+      if (uVar4 == 0) {
+        return;
+      }
+      uVar1 = pMVar5->type;
     }
-    piVar7 = *(int **)(iVar3 + 0x4c);
+    pMVar6 = param_1->constantTable;
     while (uVar1 == 7) {
-      if ((float *)*piVar7 != (pMVar6->u).literalConst) {
+      if ((float *)pMVar6->nameHash != (pMVar5->u).literalConst) {
         do {
-          piVar7 = piVar7 + 8;
-          if (piVar7 == (int *)((uint)*(byte *)(iVar3 + 0x3e) * 0x20 + *(int *)(iVar3 + 0x4c))) {
+          pMVar6 = pMVar6 + 1;
+          if (pMVar6 == param_1->constantTable + param_1->constantCount) {
             va("material \'%s\' is missing a required named constant");
             MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_material_consts.cpp"
                             ,0x3a,0,"%s\n\t%s");
           }
-        } while ((float *)*piVar7 != (pMVar6->u).literalConst);
+        } while ((float *)pMVar6->nameHash != (pMVar5->u).literalConst);
       }
-      R_RegisterShaderConst((uint)pMVar6->dest,(float *)(piVar7 + 4),param_3);
-      uVar5 = uVar5 - 1;
-      pMVar6 = pMVar6 + 1;
-      if (uVar5 == 0) goto LAB_82755b30;
-      uVar1 = pMVar6->type;
+      R_RegisterShaderConst((uint)pMVar5->dest,pMVar6->literal,param_3);
+      uVar4 = uVar4 - 1;
+      pMVar5 = pMVar5 + 1;
+      if (uVar4 == 0) {
+        return;
+      }
+      uVar1 = pMVar5->type;
     }
     if (uVar1 == 8) {
-      pMVar8 = &pMVar6[-1].u;
+      pMVar7 = &pMVar5[-1].u;
       do {
-        R_RegisterShaderConst((uint)*(ushort *)((int)pMVar8 + 6),pMVar8[2].literalConst,param_3);
-        uVar5 = uVar5 - 1;
-        if (uVar5 == 0) break;
-        psVar2 = (short *)(pMVar8 + 3);
-        pMVar8 = pMVar8 + 2;
+        R_RegisterShaderConst((uint)*(ushort *)((int)pMVar7 + 6),pMVar7[2].literalConst,param_3);
+        uVar4 = uVar4 - 1;
+        if (uVar4 == 0) {
+          return;
+        }
+        psVar2 = (short *)(pMVar7 + 3);
+        pMVar7 = pMVar7 + 2;
       } while (*psVar2 == 8);
     }
   }
-LAB_82755b30:
-  __restgprlr_23();
   return;
 }
 
 
 // 82755B38  R_GetPixelConsts  (gfx_d3d/r_material_consts.cpp:76)
 
+/* WARNING: Function: __savegprlr_20 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_20 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 
@@ -114,54 +118,54 @@ void R_GetPixelConsts(MaterialPass *param_1,GfxCmdBufInput *param_2,GfxShaderCon
 {
   ushort uVar1;
   ushort *puVar2;
-  int iVar3;
-  ushort *puVar4;
-  ulonglong uVar5;
+  MaterialShaderArgument *pMVar3;
+  ulonglong uVar4;
+  ushort *puVar5;
   double dVar6;
   
-  iVar3 = __savegprlr_20(param_1);
   param_3->count = 0;
-  uVar5 = (ulonglong)*(byte *)(iVar3 + 0x62);
-  if (uVar5 != 0) {
-    puVar4 = (ushort *)
-             (((uint)*(byte *)(iVar3 + 0x61) + (uint)*(byte *)(iVar3 + 0x60)) * 8 +
-             *(int *)(iVar3 + 0x68));
-    uVar1 = *puVar4;
+  uVar4 = (ulonglong)param_1->stableArgCount;
+  if (uVar4 != 0) {
+    pMVar3 = param_1->args + (uint)param_1->perObjArgCount + (uint)param_1->perPrimArgCount;
+    uVar1 = pMVar3->type;
     while (uVar1 < 6) {
-      uVar5 = uVar5 - 1;
-      puVar4 = puVar4 + 4;
-      if (uVar5 == 0) goto LAB_82755c9c;
-      uVar1 = *puVar4;
+      uVar4 = uVar4 - 1;
+      pMVar3 = pMVar3 + 1;
+      if (uVar4 == 0) {
+        return;
+      }
+      uVar1 = pMVar3->type;
     }
     if (uVar1 == 6) {
       dVar6 = 3.4028234663852886e+38;
-      puVar4 = puVar4 + -3;
+      puVar5 = &pMVar3[-1].dest;
       do {
-        if (*(int *)(&s_codeConstUpdateFreq + (uint)puVar4[5] * 4) != 2) {
+        if (*(int *)(&s_codeConstUpdateFreq + (uint)puVar5[5] * 4) != 2) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_material_consts.cpp"
                           ,100,0,"%s\n\t(arg->u.codeConst.index) = %i");
         }
-        if (*(char *)((int)puVar4 + 0xd) != '\x01') {
+        if (*(char *)((int)puVar5 + 0xd) != '\x01') {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_material_consts.cpp"
                           ,0x66,0,"%s\n\t(arg->u.codeConst.rowCount) = %i");
         }
-        uVar1 = puVar4[5];
+        uVar1 = puVar5[5];
         if ((double)param_2->consts[uVar1][0] == dVar6) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_material_consts.cpp"
                           ,0x68,0,"%s\n\t(arg->u.codeConst.index) = %i");
         }
-        R_RegisterShaderConst((uint)puVar4[4],param_2->consts[uVar1],param_3);
-        uVar5 = uVar5 - 1;
-      } while ((uVar5 != 0) && (puVar2 = puVar4 + 7, puVar4 = puVar4 + 4, *puVar2 == 6));
+        R_RegisterShaderConst((uint)puVar5[4],param_2->consts[uVar1],param_3);
+        uVar4 = uVar4 - 1;
+      } while ((uVar4 != 0) && (puVar2 = puVar5 + 7, puVar5 = puVar5 + 4, *puVar2 == 6));
     }
   }
-LAB_82755c9c:
-  __restgprlr_20();
   return;
 }
 
 
 // 82755CA8  R_ComparePixelConsts  (gfx_d3d/r_material_consts.cpp:114)
+
+/* WARNING: Function: __savegprlr_21 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_21 replaced with injection: xenon_save_restore */
 
 int R_ComparePixelConsts(Material **param_1,MaterialPass **param_2)
 
@@ -169,122 +173,115 @@ int R_ComparePixelConsts(Material **param_1,MaterialPass **param_2)
   float fVar1;
   float fVar2;
   ushort uVar3;
-  int iVar4;
+  MaterialPass *pMVar4;
   uint uVar5;
-  ushort *puVar6;
-  int iVar7;
-  int iVar8;
+  short *psVar6;
+  longlong lVar7;
+  ushort *puVar8;
   ulonglong uVar9;
-  ushort *puVar10;
-  int iVar11;
+  int iVar10;
+  MaterialShaderArgument *pMVar11;
   GfxShaderConstantBlock *pGVar12;
   int iVar13;
-  int *piVar15;
-  longlong lVar14;
+  int iVar14;
+  MaterialArgumentDef *pMVar15;
   ulonglong uVar16;
   uint local_540 [4];
   GfxShaderConstantBlock local_530;
   uint local_4cc;
+  ushort local_4c8 [16];
   int local_4a8 [18];
-  ushort local_460 [560];
+  ushort local_460 [256];
+  ushort local_260 [304];
   
-  lVar14 = (longlong)(int)param_2;
-  iVar7 = __savegprlr_21(param_1);
-  iVar11 = (int)lVar14;
-  iVar8 = (int)local_540 - iVar11;
+  iVar14 = (int)local_540 - (int)param_2;
   iVar13 = 0;
   pGVar12 = &local_530;
+  iVar10 = (int)param_1 - (int)param_2;
   do {
-    piVar15 = (int *)lVar14;
-    iVar4 = *piVar15;
+    pMVar4 = *param_2;
     pGVar12->count = 0;
-    *(undefined4 *)(iVar8 + (int)piVar15) = 0;
-    uVar16 = (ulonglong)*(byte *)(iVar4 + 0x62);
-    puVar10 = (ushort *)
-              (((uint)*(byte *)(iVar4 + 0x61) + (uint)*(byte *)(iVar4 + 0x60)) * 8 +
-              *(int *)(iVar4 + 0x68));
+    *(undefined4 *)(iVar14 + (int)param_2) = 0;
+    uVar16 = (ulonglong)pMVar4->stableArgCount;
+    pMVar11 = pMVar4->args + (uint)pMVar4->perObjArgCount + (uint)pMVar4->perPrimArgCount;
     if (uVar16 != 0) {
-      uVar3 = *puVar10;
+      uVar3 = pMVar11->type;
       while (uVar3 < 6) {
         uVar16 = uVar16 - 1;
-        puVar10 = puVar10 + 4;
+        pMVar11 = pMVar11 + 1;
         if (uVar16 == 0) goto LAB_82755dac;
-        uVar3 = *puVar10;
+        uVar3 = pMVar11->type;
       }
       if (uVar3 == 6) {
-        puVar10 = puVar10 + -2;
+        pMVar15 = &pMVar11[-1].u;
         do {
-          uVar5 = *(uint *)(iVar8 + (int)piVar15);
+          uVar5 = *(uint *)(iVar14 + (int)param_2);
           if (0xff < uVar5) {
             MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_material_consts.cpp"
                             ,0x93,0,
                             "pixelConstsCount[i] doesn\'t index ARRAY_COUNT( pixelConsts[i] )\n\t%i not in [0, %i)"
                            );
           }
-          uVar3 = puVar10[4];
+          uVar3 = pMVar15[2].codeConst.index;
           uVar16 = uVar16 - 1;
-          *(uint *)(iVar8 + (int)piVar15) = uVar5 + 1;
+          *(uint *)(iVar14 + (int)param_2) = uVar5 + 1;
           local_460[uVar5 + iVar13] = uVar3;
           if (uVar16 == 0) goto LAB_82755dac;
-          puVar6 = puVar10 + 6;
-          puVar10 = puVar10 + 4;
-        } while (*puVar6 == 6);
+          psVar6 = (short *)(pMVar15 + 3);
+          pMVar15 = pMVar15 + 2;
+        } while (*psVar6 == 6);
       }
-      R_GetPixelLiteralConsts
-                (*(Material **)((iVar7 - iVar11) + (int)piVar15),(MaterialPass *)*piVar15,pGVar12);
+      R_GetPixelLiteralConsts(*(Material **)(iVar10 + (int)param_2),*param_2,pGVar12);
     }
 LAB_82755dac:
     iVar13 = iVar13 + 0x100;
     pGVar12 = pGVar12 + 1;
-    lVar14 = lVar14 + 4;
+    param_2 = param_2 + 1;
   } while (iVar13 < 0x200);
   uVar16 = (ulonglong)local_540[0];
-  lVar14 = uVar16 - local_540[1];
-  if (lVar14 == 0) {
+  lVar7 = uVar16 - local_540[1];
+  if (lVar7 == 0) {
     uVar9 = 0;
     if (uVar16 != 0) {
-      puVar10 = local_460;
+      puVar8 = local_460;
       do {
-        lVar14 = (ulonglong)*puVar10 - (ulonglong)puVar10[0x100];
-        if (lVar14 != 0) goto LAB_82755e84;
+        lVar7 = (ulonglong)*puVar8 - (ulonglong)puVar8[0x100];
+        if (lVar7 != 0) goto LAB_82755e84;
         uVar9 = uVar9 + 1;
-        puVar10 = puVar10 + 1;
+        puVar8 = puVar8 + 1;
       } while ((uVar9 & 0xffffffff) < uVar16);
     }
     uVar16 = (ulonglong)local_530.count;
-    lVar14 = uVar16 - local_4cc;
-    if (lVar14 == 0) {
+    lVar7 = uVar16 - local_4cc;
+    if (lVar7 == 0) {
       uVar9 = 0;
       if (uVar16 != 0) {
-        iVar8 = 0;
-        puVar10 = local_530.dest;
+        iVar10 = 0;
+        puVar8 = local_530.dest;
         do {
-          lVar14 = (ulonglong)*puVar10 - (ulonglong)puVar10[0x32];
-          if (lVar14 != 0) goto LAB_82755e84;
-          iVar11 = 0;
+          lVar7 = (ulonglong)*puVar8 - (ulonglong)puVar8[0x32];
+          if (lVar7 != 0) goto LAB_82755e84;
+          iVar13 = 0;
           do {
-            fVar1 = *(float *)(*(int *)((int)local_4a8 + iVar8) + iVar11);
-            fVar2 = *(float *)(*(int *)((int)local_530.value + iVar8) + iVar11);
+            fVar1 = *(float *)(*(int *)((int)local_4a8 + iVar10) + iVar13);
+            fVar2 = *(float *)(*(int *)((int)local_530.value + iVar10) + iVar13);
             if (fVar2 < fVar1) {
-              iVar8 = __restgprlr_21(0xffffffffffffffff);
-              return iVar8;
+              return -1;
             }
             if (fVar1 < fVar2) {
-              iVar8 = __restgprlr_21(1);
-              return iVar8;
+              return 1;
             }
-            iVar11 = iVar11 + 4;
-          } while (iVar11 < 0x10);
+            iVar13 = iVar13 + 4;
+          } while (iVar13 < 0x10);
           uVar9 = uVar9 + 1;
-          puVar10 = puVar10 + 1;
-          iVar8 = iVar8 + 4;
+          puVar8 = puVar8 + 1;
+          iVar10 = iVar10 + 4;
         } while ((uVar9 & 0xffffffff) < uVar16);
       }
-      lVar14 = 0;
+      lVar7 = 0;
     }
   }
 LAB_82755e84:
-  iVar8 = __restgprlr_21(lVar14);
-  return iVar8;
+  return (int)lVar7;
 }
 

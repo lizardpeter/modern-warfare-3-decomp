@@ -2,89 +2,83 @@
 
 // 829227B8  _openfile  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/_open.c:58)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 _iobuf * _openfile(char *param_1,char *param_2,int param_3,_iobuf *param_4)
 
 {
-  char cVar1;
-  byte bVar2;
-  undefined4 *puVar3;
+  byte bVar1;
+  bool bVar2;
+  bool bVar3;
   bool bVar4;
-  bool bVar5;
-  bool bVar6;
-  char *pcVar8;
-  int *piVar9;
-  longlong lVar7;
-  int iVar10;
-  _iobuf *p_Var11;
-  longlong lVar12;
-  uint uVar13;
-  longlong lVar14;
-  uint uVar15;
+  int *piVar5;
+  int iVar6;
+  uint uVar7;
+  longlong lVar8;
+  uint uVar9;
   int local_30 [12];
   
-  lVar7 = (longlong)(int)param_4;
-  lVar12 = (longlong)(int)param_2;
-  pcVar8 = (char *)__savegprlr_29(param_1);
-  bVar6 = false;
-  bVar5 = false;
-  cVar1 = *(char *)lVar12;
-  while (cVar1 == ' ') {
-    lVar12 = lVar12 + 1;
-    cVar1 = *(char *)lVar12;
+  bVar4 = false;
+  bVar3 = false;
+  bVar1 = *param_2;
+  while (bVar1 == 0x20) {
+    param_2 = param_2 + 1;
+    bVar1 = *param_2;
   }
-  if (cVar1 == 'a') {
-    uVar13 = 0x109;
+  if (bVar1 == 0x61) {
+    uVar7 = 0x109;
   }
   else {
-    if (cVar1 == 'r') {
-      uVar13 = 0;
-      uVar15 = _commode | 1;
+    if (bVar1 == 0x72) {
+      uVar7 = 0;
+      uVar9 = _commode | 1;
       goto LAB_82922848;
     }
-    if (cVar1 != 'w') goto LAB_82922814;
-    uVar13 = 0x301;
+    if (bVar1 != 0x77) goto LAB_82922814;
+    uVar7 = 0x301;
   }
-  uVar15 = _commode | 2;
+  uVar9 = _commode | 2;
 LAB_82922848:
-  bVar4 = true;
+  bVar2 = true;
 LAB_82922978:
-  lVar12 = lVar12 + 1;
-  bVar2 = *(byte *)lVar12;
-  lVar14 = (longlong)(char)bVar2;
-  if ((lVar14 == 0) || (!bVar4)) goto LAB_82922990;
-  if (bVar2 < 0x54) {
-    if (bVar2 == 0x53) {
-      if (!bVar5) {
-        bVar5 = true;
-        uVar13 = uVar13 | 0x20;
+  param_2 = param_2 + 1;
+  bVar1 = *param_2;
+  lVar8 = (longlong)(char)bVar1;
+  if ((lVar8 == 0) || (!bVar2)) goto LAB_82922990;
+  if (bVar1 < 0x54) {
+    if (bVar1 == 0x53) {
+      if (!bVar3) {
+        bVar3 = true;
+        uVar7 = uVar7 | 0x20;
         goto LAB_82922978;
       }
     }
     else {
-      if (bVar2 == 0x20) goto LAB_82922978;
-      if (bVar2 == 0x2b) {
-        if ((uVar13 & 2) == 0) {
-          uVar13 = uVar13 & 0xfffffffe | 2;
-          uVar15 = uVar15 & 0xfffffffc | 0x80;
+      if (bVar1 == 0x20) goto LAB_82922978;
+      if (bVar1 == 0x2b) {
+        if ((uVar7 & 2) == 0) {
+          uVar7 = uVar7 & 0xfffffffe | 2;
+          uVar9 = uVar9 & 0xfffffffc | 0x80;
           goto LAB_82922978;
         }
       }
-      else if (bVar2 != 0x2c) {
-        if (bVar2 == 0x44) {
-          if ((uVar13 & 0x40) == 0) {
-            uVar13 = uVar13 | 0x40;
+      else if (bVar1 != 0x2c) {
+        if (bVar1 == 0x44) {
+          if ((uVar7 & 0x40) == 0) {
+            uVar7 = uVar7 | 0x40;
             goto LAB_82922978;
           }
         }
         else {
-          if (bVar2 == 0x4e) {
-            uVar13 = uVar13 | 0x80;
+          if (bVar1 == 0x4e) {
+            uVar7 = uVar7 | 0x80;
             goto LAB_82922978;
           }
-          if (bVar2 != 0x52) goto LAB_82922814;
-          if (!bVar5) {
-            bVar5 = true;
-            uVar13 = uVar13 | 0x10;
+          if (bVar1 != 0x52) goto LAB_82922814;
+          if (!bVar3) {
+            bVar3 = true;
+            uVar7 = uVar7 | 0x10;
             goto LAB_82922978;
           }
         }
@@ -92,69 +86,64 @@ LAB_82922978:
     }
   }
   else {
-    if (bVar2 == 0x54) {
-      if ((uVar13 & 0x1000) != 0) goto LAB_8292296c;
-      uVar13 = uVar13 | 0x1000;
+    if (bVar1 == 0x54) {
+      if ((uVar7 & 0x1000) != 0) goto LAB_8292296c;
+      uVar7 = uVar7 | 0x1000;
       goto LAB_82922978;
     }
-    if (bVar2 == 0x62) {
-      if ((uVar13 & 0xc000) == 0) {
-        uVar13 = uVar13 | 0x8000;
+    if (bVar1 == 0x62) {
+      if ((uVar7 & 0xc000) == 0) {
+        uVar7 = uVar7 | 0x8000;
         goto LAB_82922978;
       }
     }
-    else if (bVar2 == 99) {
-      if (!bVar6) {
-        bVar6 = true;
-        uVar15 = uVar15 | 0x4000;
+    else if (bVar1 == 99) {
+      if (!bVar4) {
+        bVar4 = true;
+        uVar9 = uVar9 | 0x4000;
         goto LAB_82922978;
       }
     }
     else {
-      if (bVar2 != 0x6e) {
-        if (bVar2 != 0x74) goto LAB_82922814;
-        if ((uVar13 & 0xc000) != 0) goto LAB_8292296c;
-        uVar13 = uVar13 | 0x4000;
+      if (bVar1 != 0x6e) {
+        if (bVar1 != 0x74) goto LAB_82922814;
+        if ((uVar7 & 0xc000) != 0) goto LAB_8292296c;
+        uVar7 = uVar7 | 0x4000;
         goto LAB_82922978;
       }
-      if (!bVar6) {
-        bVar6 = true;
-        uVar15 = uVar15 & 0xffffbfff;
+      if (!bVar4) {
+        bVar4 = true;
+        uVar9 = uVar9 & 0xffffbfff;
         goto LAB_82922978;
       }
     }
   }
 LAB_8292296c:
-  bVar4 = false;
+  bVar2 = false;
   goto LAB_82922978;
 LAB_82922990:
-  while ((int)lVar14 == 0x20) {
-    lVar12 = lVar12 + 1;
-    lVar14 = (longlong)*(char *)lVar12;
+  while ((int)lVar8 == 0x20) {
+    param_2 = param_2 + 1;
+    lVar8 = (longlong)*param_2;
   }
-  if ((int)lVar14 == 0) {
-    iVar10 = _sopen_s(local_30,pcVar8,uVar13,param_3,0x180);
-    if (iVar10 == 0) {
-      _cflush = _cflush + 1;
-      puVar3 = (undefined4 *)lVar7;
-      puVar3[3] = uVar15;
-      puVar3[1] = 0;
-      *puVar3 = 0;
-      puVar3[2] = 0;
-      puVar3[7] = 0;
-      puVar3[4] = local_30[0];
-      goto LAB_829229f0;
+  if ((int)lVar8 == 0) {
+    iVar6 = _sopen_s(local_30,param_1,uVar7,param_3,0x180);
+    if (iVar6 != 0) {
+      return (_iobuf *)0x0;
     }
+    _cflush = _cflush + 1;
+    param_4->_flag = uVar9;
+    param_4->_cnt = 0;
+    param_4->_ptr = (char *)0x0;
+    param_4->_base = (char *)0x0;
+    param_4->_tmpfname = (char *)0x0;
+    param_4->_file = local_30[0];
+    return param_4;
   }
-  else {
 LAB_82922814:
-    piVar9 = _errno();
-    *piVar9 = 0x16;
-    _invalid_parameter_noinfo();
-  }
-  lVar7 = 0;
-LAB_829229f0:
-  p_Var11 = (_iobuf *)__restgprlr_29(lVar7);
-  return p_Var11;
+  piVar5 = _errno();
+  *piVar5 = 0x16;
+  _invalid_parameter_noinfo();
+  return (_iobuf *)0x0;
 }
 

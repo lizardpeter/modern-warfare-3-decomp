@@ -2,30 +2,30 @@
 
 // 828C64B8  NellyQuantSC3  (<external>/Xenon/mar09/core/private/xam/codecs/nci/enc/src/coder.c:92)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void NellyQuantSC3(int *param_1,void *param_2,void *param_3)
 
 {
-  int *piVar1;
-  int iVar2;
-  float *pfVar3;
-  float fVar4;
+  int iVar1;
+  float *pfVar2;
+  float fVar3;
   
-  piVar1 = (int *)__savegprlr_27(param_1);
-  pfVar3 = param_2;
-  iVar2 = QuanPvSC3(*(float *)((int)param_2 + 0x38),*(float *)((int)param_3 + 4),
+  pfVar2 = param_2;
+  iVar1 = QuanPvSC3(*(float *)((int)param_2 + 0x38),*(float *)((int)param_3 + 4),
                     *(float *)((int)param_3 + 0xc));
-  piVar1[1] = iVar2;
-  UnQuanPvSC3(iVar2,*(float *)((int)param_2 + 0x38),pfVar3,(float *)((int)param_3 + 4));
-  iVar2 = NellyQuanPitchSC3(*(float *)((int)param_3 + 8));
-  piVar1[2] = iVar2;
-  fVar4 = NellyUnQuanPitchSC3(iVar2);
-  *(float *)((int)param_3 + 8) = fVar4;
-  iVar2 = QuanGainSC3(*(float *)((int)param_3 + 0x10));
-  *piVar1 = iVar2;
-  NellyMSVQEncPred((float *)((int)param_3 + 0x14),piVar1 + 3,0xc,*(float *)((int)param_3 + 0xc));
-  *(float *)((int)param_2 + 0x38) = *(float *)((int)param_3 + 0xc);
-  *(float *)((int)param_2 + 0x3c) = *(float *)((int)param_3 + 8);
-  __restgprlr_27();
+  param_1[1] = iVar1;
+  UnQuanPvSC3(iVar1,*(float *)((int)param_2 + 0x38),pfVar2,(float *)((int)param_3 + 4));
+  iVar1 = NellyQuanPitchSC3(*(float *)((int)param_3 + 8));
+  param_1[2] = iVar1;
+  fVar3 = NellyUnQuanPitchSC3(iVar1);
+  *(float *)((int)param_3 + 8) = fVar3;
+  iVar1 = QuanGainSC3(*(float *)((int)param_3 + 0x10));
+  *param_1 = iVar1;
+  NellyMSVQEncPred((float *)((int)param_3 + 0x14),param_1 + 3,0xc,*(float *)((int)param_3 + 0xc));
+  *(undefined4 *)((int)param_2 + 0x38) = *(undefined4 *)((int)param_3 + 0xc);
+  *(undefined4 *)((int)param_2 + 0x3c) = *(undefined4 *)((int)param_3 + 8);
   return;
 }
 

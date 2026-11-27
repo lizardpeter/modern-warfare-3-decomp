@@ -19,6 +19,8 @@ EQ * __thiscall EQ::EQ(EQ *this)
 
 // 8263F8B8  ComputeCoefficients  (xenon/snd_eq.cpp:23)
 
+/* WARNING: Function: __savefpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "SND_EQTYPE": Some values do not have unique names */
 
 void __thiscall EQ::ComputeCoefficients(EQ *this)
@@ -26,11 +28,11 @@ void __thiscall EQ::ComputeCoefficients(EQ *this)
 {
   float fVar1;
   float fVar2;
-  uint uVar3;
+  SND_EQTYPE SVar3;
   float fVar4;
-  uint *puVar5;
-  uint *puVar6;
-  longlong lVar7;
+  float *pfVar5;
+  longlong lVar6;
+  double dVar7;
   double dVar8;
   double dVar9;
   double dVar10;
@@ -38,100 +40,97 @@ void __thiscall EQ::ComputeCoefficients(EQ *this)
   double dVar12;
   double dVar13;
   double dVar14;
-  double dVar15;
   float local_40;
   float local_3c;
   float local_38;
   
-  puVar5 = (uint *)__savefpr_28(this);
-  puVar6 = puVar5 + 0xf;
-  lVar7 = 2;
+  pfVar5 = this->yn1 + 1;
+  lVar6 = 2;
   do {
-    puVar6[-5] = 0;
-    puVar6[-3] = 0;
-    puVar6[-1] = 0;
-    puVar6 = puVar6 + 1;
-    *puVar6 = 0;
-    lVar7 = lVar7 + -1;
-  } while (lVar7 != 0);
-  dVar13 = (double)((float)puVar5[2] * 0.0001308997);
-  dVar8 = cos(dVar13);
-  dVar15 = (double)(float)dVar8;
-  dVar8 = sin(dVar13);
-  uVar3 = *puVar5;
-  dVar13 = 2.0;
-  dVar14 = 1.0;
-  dVar8 = (double)((float)dVar8 / ((float)puVar5[3] * 2.0));
-  if (uVar3 < 5) {
-    if (uVar3 == 1) {
-      dVar9 = (double)(float)(dVar8 + 1.0);
-      local_38 = (float)(1.0 - dVar8);
-      local_3c = (float)(-1.0 - dVar15);
-      local_40 = (float)(dVar15 + 1.0) * 0.5;
-      fVar4 = (float)(dVar15 * -2.0);
+    pfVar5[-5] = 0.0;
+    pfVar5[-3] = 0.0;
+    pfVar5[-1] = 0.0;
+    pfVar5 = pfVar5 + 1;
+    *pfVar5 = 0.0;
+    lVar6 = lVar6 + -1;
+  } while (lVar6 != 0);
+  dVar12 = (double)(this->f0 * 0.0001308997);
+  dVar7 = cos(dVar12);
+  dVar14 = (double)(float)dVar7;
+  dVar7 = sin(dVar12);
+  SVar3 = this->type;
+  dVar12 = 2.0;
+  dVar13 = 1.0;
+  dVar7 = (double)((float)dVar7 / (this->Q * 2.0));
+  if (SVar3 < SND_EQTYPE_COUNT) {
+    if (SVar3 == SND_EQTYPE_HIGHPASS) {
+      dVar8 = (double)(float)(dVar7 + 1.0);
+      local_38 = (float)(1.0 - dVar7);
+      local_3c = (float)(-1.0 - dVar14);
+      local_40 = (float)(dVar14 + 1.0) * 0.5;
+      fVar4 = (float)(dVar14 * -2.0);
       fVar2 = local_40;
     }
-    else if (uVar3 == 2) {
-      dVar9 = pow(10.0,(double)((float)puVar5[1] * 0.025));
-      dVar12 = (double)(float)dVar9;
-      dVar11 = (double)(float)(dVar12 + dVar14);
-      dVar10 = (double)(float)(dVar12 - dVar14);
-      fVar2 = (float)((double)(float)((double)(float)SQRT(dVar12) * dVar8) * dVar13);
-      local_38 = (float)(dVar10 * dVar15 + dVar11) - fVar2;
-      dVar9 = (double)((float)(dVar10 * dVar15 + dVar11) + fVar2);
-      local_40 = (float)((double)(-(float)(dVar10 * dVar15 - dVar11) + fVar2) * dVar12);
-      local_3c = (float)((double)(float)(-(double)(float)(dVar11 * dVar15 - dVar10) * dVar12) *
-                        dVar13);
-      fVar4 = (float)(dVar11 * dVar15 + dVar10) * -2.0;
-      fVar2 = (float)((double)(-(float)(dVar10 * dVar15 - dVar11) - fVar2) * dVar12);
+    else if (SVar3 == SND_EQTYPE_LOWSHELF) {
+      dVar8 = pow(10.0,(double)(this->dbGain * 0.025));
+      dVar11 = (double)(float)dVar8;
+      dVar10 = (double)(float)(dVar11 + dVar13);
+      dVar9 = (double)(float)(dVar11 - dVar13);
+      fVar2 = (float)((double)(float)((double)(float)SQRT(dVar11) * dVar7) * dVar12);
+      local_38 = (float)(dVar9 * dVar14 + dVar10) - fVar2;
+      dVar8 = (double)((float)(dVar9 * dVar14 + dVar10) + fVar2);
+      local_40 = (float)((double)(-(float)(dVar9 * dVar14 - dVar10) + fVar2) * dVar11);
+      local_3c = (float)((double)(float)(-(double)(float)(dVar10 * dVar14 - dVar9) * dVar11) *
+                        dVar12);
+      fVar4 = (float)(dVar10 * dVar14 + dVar9) * -2.0;
+      fVar2 = (float)((double)(-(float)(dVar9 * dVar14 - dVar10) - fVar2) * dVar11);
     }
-    else if (uVar3 == 3) {
-      dVar9 = pow(10.0,(double)((float)puVar5[1] * 0.025));
-      dVar12 = (double)(float)dVar9;
-      dVar11 = (double)(float)(dVar12 - dVar14);
-      dVar10 = (double)(float)(dVar12 + dVar14);
-      fVar2 = (float)((double)(float)((double)(float)SQRT(dVar12) * dVar8) * dVar13);
-      local_38 = -(float)(dVar11 * dVar15 - dVar10) - fVar2;
-      dVar9 = (double)(-(float)(dVar11 * dVar15 - dVar10) + fVar2);
-      local_40 = (float)((double)((float)(dVar11 * dVar15 + dVar10) + fVar2) * dVar12);
-      local_3c = (float)((double)(float)(dVar10 * dVar15 + dVar11) * dVar12) * -2.0;
-      fVar4 = (float)(-(double)(float)(dVar10 * dVar15 - dVar11) * dVar13);
-      fVar2 = (float)((double)((float)(dVar11 * dVar15 + dVar10) - fVar2) * dVar12);
+    else if (SVar3 == SND_EQTYPE_HIGHSHELF) {
+      dVar8 = pow(10.0,(double)(this->dbGain * 0.025));
+      dVar11 = (double)(float)dVar8;
+      dVar10 = (double)(float)(dVar11 - dVar13);
+      dVar9 = (double)(float)(dVar11 + dVar13);
+      fVar2 = (float)((double)(float)((double)(float)SQRT(dVar11) * dVar7) * dVar12);
+      local_38 = -(float)(dVar10 * dVar14 - dVar9) - fVar2;
+      dVar8 = (double)(-(float)(dVar10 * dVar14 - dVar9) + fVar2);
+      local_40 = (float)((double)((float)(dVar10 * dVar14 + dVar9) + fVar2) * dVar11);
+      local_3c = (float)((double)(float)(dVar9 * dVar14 + dVar10) * dVar11) * -2.0;
+      fVar4 = (float)(-(double)(float)(dVar9 * dVar14 - dVar10) * dVar12);
+      fVar2 = (float)((double)((float)(dVar10 * dVar14 + dVar9) - fVar2) * dVar11);
     }
-    else if (uVar3 == 0) {
-      local_3c = (float)(1.0 - dVar15);
-      dVar9 = (double)(float)(dVar8 + 1.0);
-      local_38 = (float)(1.0 - dVar8);
+    else if (SVar3 == SND_EQTYPE_FIRST) {
+      local_3c = (float)(1.0 - dVar14);
+      dVar8 = (double)(float)(dVar7 + 1.0);
+      local_38 = (float)(1.0 - dVar7);
       local_40 = local_3c * 0.5;
-      fVar4 = (float)(dVar15 * -2.0);
+      fVar4 = (float)(dVar14 * -2.0);
       fVar2 = local_40;
     }
     else {
-      dVar13 = pow(10.0,(double)((float)puVar5[1] * 0.025));
-      local_3c = (float)(dVar15 * -2.0);
-      dVar15 = (double)(float)((double)(float)dVar13 * dVar8);
-      dVar8 = (double)(float)(dVar8 / (double)(float)dVar13);
-      local_40 = (float)(dVar15 + dVar14);
-      dVar9 = (double)(float)(dVar8 + dVar14);
-      local_38 = (float)(dVar14 - dVar8);
+      dVar12 = pow(10.0,(double)(this->dbGain * 0.025));
+      local_3c = (float)(dVar14 * -2.0);
+      dVar14 = (double)(float)((double)(float)dVar12 * dVar7);
+      dVar7 = (double)(float)(dVar7 / (double)(float)dVar12);
+      local_40 = (float)(dVar14 + dVar13);
+      dVar8 = (double)(float)(dVar7 + dVar13);
+      local_38 = (float)(dVar13 - dVar7);
       fVar4 = local_3c;
-      fVar2 = (float)(dVar14 - dVar15);
+      fVar2 = (float)(dVar13 - dVar14);
     }
   }
   else {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_eq.cpp",0x72,0,"%s")
     ;
-    dVar9 = (double)local_40;
+    dVar8 = (double)local_40;
     fVar4 = local_3c;
     fVar2 = local_38;
   }
-  fVar1 = (float)(dVar14 / dVar9);
-  puVar5[5] = (uint)(fVar1 * local_40);
-  puVar5[6] = (uint)(fVar1 * local_3c);
-  puVar5[7] = (uint)(fVar1 * fVar2);
-  puVar5[8] = (uint)(fVar1 * fVar4);
-  puVar5[9] = (uint)(fVar1 * local_38);
-  __restfpr_28();
+  fVar1 = (float)(dVar13 / dVar8);
+  this->coeffs[0] = fVar1 * local_40;
+  this->coeffs[1] = fVar1 * local_3c;
+  this->coeffs[2] = fVar1 * fVar2;
+  this->coeffs[3] = fVar1 * fVar4;
+  this->coeffs[4] = fVar1 * local_38;
   return;
 }
 
@@ -181,41 +180,39 @@ float __thiscall EQ::Process(EQ *this,float param_1,int param_2)
 
 // 82640D08  ParametricEQ  (xenon/snd_eq.cpp:144)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "SND_EQTYPE": Some values do not have unique names */
 
 ParametricEQ * __thiscall ParametricEQ::ParametricEQ(ParametricEQ *this)
 
 {
-  undefined4 *puVar1;
-  ParametricEQ *pPVar2;
-  longlong lVar3;
+  longlong lVar1;
   EQ *this_00;
-  double dVar4;
-  double dVar5;
+  double dVar2;
+  double dVar3;
   
-  puVar1 = (undefined4 *)__savegprlr_28(this);
-  *puVar1 = &_vftable_;
-  this_00 = (EQ *)(puVar1 + 6);
-  lVar3 = 5;
-  dVar4 = 20000.0;
-  dVar5 = 1.0;
+  this->_padding_ = (int)&_vftable_;
+  this_00 = this->eq[0];
+  lVar1 = 5;
+  dVar2 = 20000.0;
+  dVar3 = 1.0;
   do {
-    this_00->dbGain = (float)dVar5;
+    this_00->dbGain = (float)dVar3;
     this_00->type = SND_EQTYPE_FIRST;
-    this_00->Q = (float)dVar5;
+    this_00->Q = (float)dVar3;
     this_00->isEnabled = false;
-    this_00->f0 = (float)dVar4;
+    this_00->f0 = (float)dVar2;
     EQ::ComputeCoefficients(this_00);
-    lVar3 = lVar3 + -1;
+    lVar1 = lVar1 + -1;
     this_00 = this_00 + 1;
-  } while (-1 < lVar3);
-  puVar1[4] = (float)dVar5;
-  puVar1[2] = 0;
-  puVar1[1] = 1;
-  puVar1[3] = 0;
-  *(undefined1 *)(puVar1 + 5) = 0;
-  pPVar2 = (ParametricEQ *)__restgprlr_28(puVar1);
-  return pPVar2;
+  } while (-1 < lVar1);
+  this->lerp = (float)dVar3;
+  this->band = 0;
+  this->refCount = 1;
+  this->index = 0;
+  this->isAnyEqBandEnabled = false;
+  return this;
 }
 
 
@@ -284,105 +281,98 @@ undefined4 __thiscall ParametricEQ::GetInfo(ParametricEQ *this,XAUDIOFXINFO *par
 
 // 8263FCF8  GetParam  (xenon/snd_eq.cpp:191)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "SND_EQTYPE": Some values do not have unique names */
 
 undefined4 __thiscall
 ParametricEQ::GetParam(ParametricEQ *this,uchar param_1,uchar param_2,XAUDIOFXPARAM *param_3)
 
 {
-  bool bVar1;
+  int iVar1;
   int iVar2;
-  int iVar3;
-  undefined4 uVar4;
-  ulonglong uVar5;
-  ulonglong uVar6;
-  ulonglong uVar7;
-  undefined8 uVar8;
-  uint local_50;
+  undefined4 uVar3;
+  float local_50;
   
-  uVar7 = (ulonglong)(int)param_3;
-  uVar6 = (ulonglong)(char)param_2;
-  uVar5 = (ulonglong)(char)param_1;
-  iVar3 = __savegprlr_24(this);
-  uVar8 = 0;
-  if ((uVar7 & 0xffffffff) == 0) {
+  uVar3 = 0;
+  if (param_3 == (XAUDIOFXPARAM *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_eq.cpp",0xc4,0,"%s")
     ;
   }
-  iVar2 = (*(int *)(iVar3 + 0xc) * 3 + *(int *)(iVar3 + 8)) * 0x48 + iVar3;
+  iVar1 = this->index;
+  iVar2 = this->band;
   XAudioLock(0x10001);
-  uVar5 = uVar5 & 0xff;
-  if (uVar5 < 8) {
-    bVar1 = (int)uVar5 != 0;
-    if (uVar5 == 1 && bVar1) {
-      if ((uVar6 & 0xff) != 1) {
+  if (param_1 < 8) {
+    if (param_1 == '\x01') {
+      if (param_2 != '\x01') {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_eq.cpp",0xd1,0,
                         "%s");
       }
-      local_50 = *(uint *)(iVar2 + 0x1c);
+      local_50 = this->eq[iVar1][iVar2].dbGain;
     }
-    else if (uVar5 == 2 && bVar1) {
-      if ((uVar6 & 0xff) != 1) {
+    else if (param_1 == '\x02') {
+      if (param_2 != '\x01') {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_eq.cpp",0xd6,0,
                         "%s");
       }
-      local_50 = *(uint *)(iVar2 + 0x20);
+      local_50 = this->eq[iVar1][iVar2].f0;
     }
-    else if (uVar5 == 3 && bVar1) {
-      if ((uVar6 & 0xff) != 1) {
+    else if (param_1 == '\x03') {
+      if (param_2 != '\x01') {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_eq.cpp",0xdb,0,
                         "%s");
       }
-      local_50 = *(uint *)(iVar2 + 0x24);
+      local_50 = this->eq[iVar1][iVar2].Q;
     }
-    else if (uVar5 == 4 && bVar1) {
-      if ((uVar6 & 0xff) != 2) {
+    else if (param_1 == '\x04') {
+      if (param_2 != '\x02') {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_eq.cpp",0xe0,0,
                         "%s");
       }
-      local_50 = (uint)*(byte *)(iVar2 + 0x28);
+      local_50 = (float)(uint)this->eq[iVar1][iVar2].isEnabled;
     }
-    else if (uVar5 == 5 && bVar1) {
-      if ((uVar6 & 0xff) != 2) {
+    else if (param_1 == '\x05') {
+      if (param_2 != '\x02') {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_eq.cpp",0xe5,0,
                         "%s");
       }
-      local_50 = *(uint *)(iVar3 + 8);
+      local_50 = (float)this->band;
     }
-    else if (uVar5 == 6 && bVar1) {
-      if ((uVar6 & 0xff) != 1) {
+    else if (param_1 == '\x06') {
+      if (param_2 != '\x01') {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_eq.cpp",0xea,0,
                         "%s");
       }
-      local_50 = *(uint *)(iVar3 + 0x10);
+      local_50 = this->lerp;
     }
-    else if (bVar1) {
-      if ((uVar6 & 0xff) != 2) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_eq.cpp",0xef,0,
-                        "%s");
-      }
-      local_50 = *(uint *)(iVar3 + 0xc);
-    }
-    else {
-      if ((uVar6 & 0xff) != 2) {
+    else if (param_1 == '\0') {
+      if (param_2 != '\x02') {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_eq.cpp",0xcc,0,
                         "%s");
       }
-      local_50 = *(uint *)(iVar2 + 0x18);
+      local_50 = (float)this->eq[iVar1][iVar2].type;
     }
-    *(longlong *)uVar7 = (ulonglong)local_50 << 0x20;
+    else {
+      if (param_2 != '\x02') {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_eq.cpp",0xef,0,
+                        "%s");
+      }
+      local_50 = (float)this->index;
+    }
+    *param_3 = (XAUDIOFXPARAM)((ulonglong)(uint)local_50 << 0x20);
   }
   else {
-    uVar8 = 0xffffffff80004005;
+    uVar3 = 0x80004005;
   }
   XAudioLock(0x10003);
-  uVar4 = __restgprlr_24(uVar8);
-  return uVar4;
+  return uVar3;
 }
 
 
 // 8263FF80  SetParam  (xenon/snd_eq.cpp:256)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "SND_EQTYPE": Some values do not have unique names */
 
 undefined4 __thiscall
@@ -390,199 +380,178 @@ ParametricEQ::SetParam(ParametricEQ *this,uchar param_1,uchar param_2,XAUDIOFXPA
 
 {
   float fVar1;
-  SND_EQTYPE *pSVar2;
-  int iVar3;
-  undefined4 uVar4;
-  ulonglong uVar5;
-  ulonglong uVar6;
-  ulonglong uVar7;
-  float *pfVar8;
-  int iVar9;
-  char *pcVar10;
-  undefined8 uVar11;
+  int iVar2;
+  ulong uVar3;
+  SND_EQTYPE *pSVar4;
+  int iVar5;
+  bool *pbVar6;
+  undefined4 uVar7;
   EQ *this_00;
-  bool bVar12;
+  bool bVar8;
   
-  uVar7 = (ulonglong)(int)param_3;
-  uVar6 = (ulonglong)(char)param_2;
-  uVar5 = (ulonglong)(char)param_1;
-  iVar3 = __savegprlr_24(this);
-  if ((uVar7 & 0xffffffff) == 0) {
+  if (param_3 == (XAUDIOFXPARAM *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_eq.cpp",0x108,0,"%s"
                    );
   }
-  uVar11 = 0;
-  iVar9 = (*(int *)(iVar3 + 0xc) * 3 + *(int *)(iVar3 + 8)) * 0x48 + iVar3;
-  this_00 = (EQ *)(iVar9 + 0x18);
+  iVar5 = this->index;
+  iVar2 = this->band;
+  uVar7 = 0;
+  this_00 = this->eq[iVar5] + iVar2;
   XAudioLock(0x10001);
-  uVar5 = uVar5 & 0xff;
-  if (uVar5 < 9) {
-    pfVar8 = (float *)uVar7;
-    if ((int)uVar5 == 0) {
-      if ((uVar6 & 0xff) != 2) {
+  if (param_1 < 9) {
+    if (param_1 == '\0') {
+      if (param_2 != '\x02') {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_eq.cpp",0x137,0,
                         "%s");
       }
-      if ((*pfVar8 < 0.0) || (5.0 <= *pfVar8)) goto LAB_826401dc;
-      bVar12 = *pfVar8 != (float)this_00->type;
-      this_00->type = (SND_EQTYPE)*pfVar8;
+      if ((param_3->Value < 0.0) || (5.0 <= param_3->Value)) goto LAB_826401dc;
+      bVar8 = param_3->Flags != this_00->type;
+      this_00->type = param_3->Flags;
     }
-    else if (uVar5 == 1) {
-      if ((uVar6 & 0xff) != 1) {
+    else if (param_1 == '\x01') {
+      if (param_2 != '\x01') {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_eq.cpp",0x142,0,
                         "%s");
       }
-      bVar12 = *(float *)(iVar9 + 0x1c) != *pfVar8;
-      *(float *)(iVar9 + 0x1c) = *pfVar8;
+      bVar8 = this->eq[iVar5][iVar2].dbGain != param_3->Value;
+      this->eq[iVar5][iVar2].dbGain = param_3->Value;
     }
-    else if (uVar5 == 2) {
-      if ((uVar6 & 0xff) != 1) {
+    else if (param_1 == '\x02') {
+      if (param_2 != '\x01') {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_eq.cpp",0x148,0,
                         "%s");
       }
-      fVar1 = *pfVar8;
+      fVar1 = param_3->Value;
       if ((fVar1 < 0.0) || (20000.0 < fVar1)) goto LAB_826401dc;
-      bVar12 = *(float *)(iVar9 + 0x20) != fVar1;
-      *(float *)(iVar9 + 0x20) = fVar1;
+      bVar8 = this->eq[iVar5][iVar2].f0 != fVar1;
+      this->eq[iVar5][iVar2].f0 = fVar1;
     }
-    else if (uVar5 == 3) {
-      if ((uVar6 & 0xff) != 1) {
+    else if (param_1 == '\x03') {
+      if (param_2 != '\x01') {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_eq.cpp",0x153,0,
                         "%s");
       }
-      fVar1 = *pfVar8;
+      fVar1 = param_3->Value;
       if (fVar1 <= 0.0) goto LAB_826401dc;
-      bVar12 = *(float *)(iVar9 + 0x24) != fVar1;
-      *(float *)(iVar9 + 0x24) = fVar1;
+      bVar8 = this->eq[iVar5][iVar2].Q != fVar1;
+      this->eq[iVar5][iVar2].Q = fVar1;
     }
     else {
-      if (uVar5 == 4) {
-        if ((uVar6 & 0xff) != 2) {
+      if (param_1 == '\x04') {
+        if (param_2 != '\x02') {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_eq.cpp",0x15e,
                           0,"%s");
         }
-        if ((*pfVar8 != 0.0) != (bool)*(char *)(iVar9 + 0x28)) {
-          *(bool *)(iVar9 + 0x28) = *pfVar8 != 0.0;
-          iVar9 = 0;
-          pcVar10 = (char *)(iVar3 + 0x100);
-          *(undefined1 *)(iVar3 + 0x14) = 0;
-          while ((pcVar10[-0xd8] == '\0' && (*pcVar10 == '\0'))) {
-            iVar9 = iVar9 + 1;
-            pcVar10 = pcVar10 + 0x48;
-            if (2 < iVar9) {
+        if ((param_3->Flags != 0) != this->eq[iVar5][iVar2].isEnabled) {
+          this->eq[iVar5][iVar2].isEnabled = param_3->Flags != 0;
+          iVar5 = 0;
+          pbVar6 = &this->eq[1][0].isEnabled;
+          this->isAnyEqBandEnabled = false;
+          while ((pbVar6[-0xd8] == false && (*pbVar6 == false))) {
+            iVar5 = iVar5 + 1;
+            pbVar6 = pbVar6 + 0x48;
+            if (2 < iVar5) {
               XAudioLock(0x10003);
-              uVar4 = __restgprlr_24(0);
-              return uVar4;
+              return 0;
             }
           }
-          *(undefined1 *)(iVar3 + 0x14) = 1;
+          this->isAnyEqBandEnabled = true;
         }
         XAudioLock(0x10003);
-        uVar4 = __restgprlr_24(0);
-        return uVar4;
+        return 0;
       }
-      if (uVar5 == 5) {
-        if ((uVar6 & 0xff) != 2) {
+      if (param_1 == '\x05') {
+        if (param_2 != '\x02') {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_eq.cpp",0x112,
                           0,"%s");
         }
-        fVar1 = *pfVar8;
-        if ((-1 < (int)fVar1) && ((int)fVar1 < 3)) {
-          *(float *)(iVar3 + 8) = fVar1;
+        uVar3 = param_3->Flags;
+        if ((-1 < (int)uVar3) && ((int)uVar3 < 3)) {
+          this->band = uVar3;
           XAudioLock(0x10003);
-          uVar4 = __restgprlr_24(0);
-          return uVar4;
+          return 0;
         }
 LAB_82640098:
         XAudioLock(0x10003);
-        uVar4 = __restgprlr_24(0xffffffff80004005);
-        return uVar4;
+        return 0x80004005;
       }
-      if (uVar5 == 6) {
-        if ((uVar6 & 0xff) != 1) {
+      if (param_1 == '\x06') {
+        if (param_2 != '\x01') {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_eq.cpp",0x11e,
                           0,"%s");
         }
-        fVar1 = *pfVar8;
+        fVar1 = param_3->Value;
         if ((0.0 <= fVar1) && (fVar1 <= 1.0)) {
-          *(float *)(iVar3 + 0x10) = fVar1;
+          this->lerp = fVar1;
           XAudioLock(0x10003);
-          uVar4 = __restgprlr_24(0);
-          return uVar4;
+          return 0;
         }
         goto LAB_82640098;
       }
-      if (uVar5 == 7) {
-        if ((uVar6 & 0xff) != 2) {
+      if (param_1 == '\a') {
+        if (param_2 != '\x02') {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_eq.cpp",0x129,
                           0,"%s");
         }
-        fVar1 = *pfVar8;
-        if ((-1 < (int)fVar1) && ((int)fVar1 < 2)) {
-          *(float *)(iVar3 + 0xc) = fVar1;
+        uVar3 = param_3->Flags;
+        if ((-1 < (int)uVar3) && ((int)uVar3 < 2)) {
+          this->index = uVar3;
           XAudioLock(0x10003);
-          uVar4 = __restgprlr_24(0);
-          return uVar4;
+          return 0;
         }
         goto LAB_82640098;
       }
-      if ((uVar6 & 0xff) != 3) {
+      if (param_2 != '\x03') {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_eq.cpp",0x178,0,
                         "%s");
       }
-      pSVar2 = (SND_EQTYPE *)*pfVar8;
-      if ((((this_00->type != *pSVar2) || (*(float *)(iVar9 + 0x1c) != (float)pSVar2[1])) ||
-          (*(float *)(iVar9 + 0x20) != (float)pSVar2[2])) ||
-         (bVar12 = false, *(float *)(iVar9 + 0x24) != (float)pSVar2[3])) {
-        bVar12 = true;
+      pSVar4 = (param_3->Data).pBuffer;
+      if ((((this_00->type != *pSVar4) || (this->eq[iVar5][iVar2].dbGain != (float)pSVar4[1])) ||
+          (this->eq[iVar5][iVar2].f0 != (float)pSVar4[2])) ||
+         (bVar8 = false, this->eq[iVar5][iVar2].Q != (float)pSVar4[3])) {
+        bVar8 = true;
       }
-      this_00->type = *pSVar2;
-      *(SND_EQTYPE *)(iVar9 + 0x1c) = pSVar2[1];
-      *(SND_EQTYPE *)(iVar9 + 0x20) = pSVar2[2];
-      *(SND_EQTYPE *)(iVar9 + 0x24) = pSVar2[3];
+      this_00->type = *pSVar4;
+      this->eq[iVar5][iVar2].dbGain = (float)pSVar4[1];
+      this->eq[iVar5][iVar2].f0 = (float)pSVar4[2];
+      this->eq[iVar5][iVar2].Q = (float)pSVar4[3];
     }
-    if (bVar12) {
+    if (bVar8) {
       EQ::ComputeCoefficients(this_00);
     }
   }
   else {
 LAB_826401dc:
-    uVar11 = 0xffffffff80004005;
+    uVar7 = 0x80004005;
   }
   XAudioLock(0x10003);
-  uVar4 = __restgprlr_24(uVar11);
-  return uVar4;
+  return uVar7;
 }
 
 
 // 82640B00  Process  (xenon/snd_eq.cpp:399)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "SND_EQTYPE": Some values do not have unique names */
 
 undefined4 __thiscall
 ParametricEQ::Process(ParametricEQ *this,IXAudioFrameBuffer *param_1,IXAudioFrameBuffer *param_2)
 
 {
-  ParametricEQ *this_00;
-  undefined4 uVar1;
-  ulonglong uVar2;
-  longlong lVar3;
-  ulonglong uVar4;
-  int iVar5;
-  int iVar6;
-  int iVar7;
+  longlong lVar1;
+  int iVar2;
+  int iVar3;
+  int iVar4;
   char in_RESERVE;
   byte in_cr0;
-  double dVar8;
-  double dVar9;
-  float fVar10;
+  double dVar5;
+  double dVar6;
+  float fVar7;
   char local_60;
   byte local_5f;
   int local_58;
   
-  uVar4 = (ulonglong)(int)param_2;
-  uVar2 = (ulonglong)(int)param_1;
-  this_00 = (ParametricEQ *)__savegprlr_25(this);
   Profile2_UpdateEntry(1);
   do {
     if (in_RESERVE != '\0') {
@@ -592,45 +561,44 @@ ParametricEQ::Process(ParametricEQ *this,IXAudioFrameBuffer *param_1,IXAudioFram
       in_cr0 = 2;
     }
   } while (!(bool)(in_cr0 >> 1 & 1));
-  if (this_00->isAnyEqBandEnabled != false) {
-    if ((uVar2 & 0xffffffff) == 0) {
+  if (this->isAnyEqBandEnabled != false) {
+    if (param_1 == (IXAudioFrameBuffer *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_eq.cpp",0x19c,0,
                       "%s");
     }
-    if ((uVar4 & 0xffffffff) != 0) {
+    if (param_2 != (IXAudioFrameBuffer *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_eq.cpp",0x19d,0,
                       "%s");
     }
     PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffff,"ParametricEQ");
-    lVar3 = ZEXT48(&stack0x00000000) - 0x60;
-    XAudioFrameBuffer_GetProcessingData((IXAudioFrameBuffer *)uVar2,(XAUDIOFRAMEBUFDATA *)lVar3);
+    lVar1 = ZEXT48(&stack0x00000000) - 0x60;
+    XAudioFrameBuffer_GetProcessingData(param_1,(XAUDIOFRAMEBUFDATA *)lVar1);
     if (local_60 != '\0') {
-      lVar3 = 0x1a3;
+      lVar1 = 0x1a3;
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_eq.cpp",0x1a3,0,
                       "%s");
     }
     if (2 < local_5f) {
-      lVar3 = 0x1a6;
+      lVar1 = 0x1a6;
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_eq.cpp",0x1a6,0,
                       "%s");
     }
-    iVar5 = 0;
+    iVar2 = 0;
     if (local_5f != 0) {
-      dVar9 = 1.0;
+      dVar6 = 1.0;
       do {
-        iVar7 = 0;
+        iVar4 = 0;
         do {
-          iVar6 = (iVar5 * 0x100 + iVar7) * 4;
-          fVar10 = Process_Internal(this_00,*(float *)(iVar6 + local_58),(int)lVar3,iVar5,
-                                    (float)(dVar9 - (double)this_00->lerp));
-          dVar8 = (double)fVar10;
-          fVar10 = Process_Internal(this_00,*(float *)(iVar6 + local_58),(int)lVar3,iVar5,
-                                    this_00->lerp);
-          iVar7 = iVar7 + 1;
-          *(float *)(iVar6 + local_58) = (float)(dVar8 + (double)fVar10);
-        } while (iVar7 < 0x100);
-        iVar5 = iVar5 + 1;
-      } while (iVar5 < (int)(uint)local_5f);
+          iVar3 = (iVar2 * 0x100 + iVar4) * 4;
+          fVar7 = Process_Internal(this,*(float *)(iVar3 + local_58),(int)lVar1,iVar2,
+                                   (float)(dVar6 - (double)this->lerp));
+          dVar5 = (double)fVar7;
+          fVar7 = Process_Internal(this,*(float *)(iVar3 + local_58),(int)lVar1,iVar2,this->lerp);
+          iVar4 = iVar4 + 1;
+          *(float *)(iVar3 + local_58) = (float)(dVar5 + (double)fVar7);
+        } while (iVar4 < 0x100);
+        iVar2 = iVar2 + 1;
+      } while (iVar2 < (int)(uint)local_5f);
     }
     PIXEndNamedEvent();
   }
@@ -643,8 +611,7 @@ ParametricEQ::Process(ParametricEQ *this,IXAudioFrameBuffer *param_1,IXAudioFram
       in_cr0 = 2;
     }
   } while (!(bool)(in_cr0 >> 1 & 1));
-  uVar1 = __restgprlr_25(0);
-  return uVar1;
+  return 0;
 }
 
 
@@ -662,6 +629,8 @@ float pow(float param_1,float param_2)
 
 // 82640468  Process_Internal  (xenon/snd_eq.cpp:443)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "SND_EQTYPE": Some values do not have unique names */
 
 float __thiscall
@@ -680,100 +649,90 @@ ParametricEQ::Process_Internal
   float fVar9;
   int iVar10;
   int iVar11;
-  int iVar12;
+  bool bVar12;
   int iVar13;
   int iVar14;
-  int iVar15;
+  longlong lVar15;
   int iVar16;
-  ulonglong uVar17;
-  int iVar18;
-  ulonglong in_r6;
-  bool bVar19;
-  longlong lVar20;
-  double extraout_f1;
-  double dVar21;
-  double dVar22;
-  double dVar23;
+  uint in_r6;
+  longlong lVar17;
+  double dVar18;
+  double dVar19;
+  double dVar20;
   
-  dVar22 = (double)param_4;
-  uVar17 = (ulonglong)param_3;
-  iVar16 = __savegprlr_28((double)param_1,this,param_2);
-  dVar21 = extraout_f1;
-  if (1 < (uVar17 & 0xffffffff)) {
+  dVar19 = (double)param_4;
+  dVar18 = (double)param_1;
+  lVar15 = (longlong)param_3;
+  if (1 < (uint)param_3) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_eq.cpp",0x1c0,0,
                     "chan doesn\'t index MAX_CHANNEL_COUNT\n\t%i not in [0, %i)");
   }
-  if (1 < (in_r6 & 0xffffffff)) {
+  if (1 < in_r6) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_eq.cpp",0x1c1,0,
                     "index doesn\'t index SND_EQINDEX_COUNT\n\t%i not in [0, %i)");
   }
-  dVar23 = 0.0;
-  if ((dVar22 < 0.0) || (1.0 < dVar22)) {
+  dVar20 = 0.0;
+  if ((dVar19 < 0.0) || (1.0 < dVar19)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_eq.cpp",0x1c2,0,
                     "%s\n\t(lerp) = %g");
   }
-  if (dVar22 < 0.0010000000474974513) {
-    dVar21 = (double)__restgprlr_28(dVar23);
-    return (float)dVar21;
+  if (dVar19 < 0.0010000000474974513) {
+    return (float)dVar20;
   }
-  bVar19 = false;
-  iVar18 = 0;
-  lVar20 = 3;
+  bVar12 = false;
+  iVar16 = 0;
+  lVar17 = 3;
   do {
-    iVar10 = ((int)in_r6 * 3 + iVar18) * 0x48 + iVar16;
-    if (*(char *)(iVar10 + 0x28) != '\0') {
-      iVar12 = iVar10 + 0x18;
-      fVar1 = *(float *)(iVar10 + 0x38);
-      iVar11 = (int)((uVar17 + 0x10 & 0x3fffffff) << 2);
-      fVar6 = *(float *)(iVar11 + iVar12);
-      iVar13 = (int)((uVar17 + 0xe & 0x3fffffff) << 2);
-      if (bVar19) {
-        fVar2 = *(float *)(iVar10 + 0x2c);
-        fVar3 = *(float *)(iVar10 + 0x34);
-        iVar14 = (int)((uVar17 + 0xc & 0xffffffff) << 2);
-        fVar4 = *(float *)(iVar10 + 0x30);
-        fVar7 = *(float *)(iVar13 + iVar12);
-        fVar5 = *(float *)(iVar10 + 0x3c);
-        iVar10 = (int)((uVar17 + 10 & 0xffffffff) << 2);
-        *(float *)(iVar11 + iVar12) = fVar7;
-        fVar8 = *(float *)(iVar14 + iVar12);
-        fVar9 = *(float *)(iVar10 + iVar12);
-        *(float *)(iVar10 + iVar12) = (float)dVar23;
-        *(float *)(iVar14 + iVar12) = fVar9;
+    if (this->eq[in_r6][iVar16].isEnabled != false) {
+      fVar1 = this->eq[in_r6][iVar16].coeffs[3];
+      iVar10 = (int)((lVar15 + 0x10U & 0x3fffffff) << 2);
+      fVar6 = *(float *)((int)this->eq[in_r6][iVar16].coeffs + iVar10 + -0x14);
+      iVar11 = (int)((lVar15 + 0xeU & 0x3fffffff) << 2);
+      if (bVar12) {
+        fVar2 = this->eq[in_r6][iVar16].coeffs[0];
+        fVar3 = this->eq[in_r6][iVar16].coeffs[2];
+        iVar13 = (int)((lVar15 + 0xcU & 0xffffffff) << 2);
+        fVar4 = this->eq[in_r6][iVar16].coeffs[1];
+        fVar7 = *(float *)((int)this->eq[in_r6][iVar16].coeffs + iVar11 + -0x14);
+        fVar5 = this->eq[in_r6][iVar16].coeffs[4];
+        iVar14 = (int)((lVar15 + 10U & 0xffffffff) << 2);
+        *(float *)((int)this->eq[in_r6][iVar16].coeffs + iVar10 + -0x14) = fVar7;
+        fVar8 = *(float *)((int)this->eq[in_r6][iVar16].coeffs + iVar13 + -0x14);
+        fVar9 = *(float *)((int)this->eq[in_r6][iVar16].coeffs + iVar14 + -0x14);
+        *(float *)((int)this->eq[in_r6][iVar16].coeffs + iVar14 + -0x14) = (float)dVar20;
+        *(float *)((int)this->eq[in_r6][iVar16].coeffs + iVar13 + -0x14) = fVar9;
         fVar1 = fVar5 * fVar6 -
-                -(fVar1 * fVar7 - (fVar4 * fVar9 + fVar3 * fVar8 + (float)((double)fVar2 * dVar23)))
+                -(fVar1 * fVar7 - (fVar4 * fVar9 + fVar3 * fVar8 + (float)((double)fVar2 * dVar20)))
         ;
       }
       else {
-        fVar2 = *(float *)(iVar10 + 0x30);
-        fVar3 = *(float *)(iVar10 + 0x34);
-        iVar14 = (int)((uVar17 + 10 & 0xffffffff) << 2);
-        iVar15 = (int)((uVar17 + 0xc & 0xffffffff) << 2);
-        fVar4 = *(float *)(iVar10 + 0x2c);
-        fVar7 = *(float *)(iVar13 + iVar12);
-        bVar19 = true;
-        fVar5 = *(float *)(iVar10 + 0x3c);
-        *(float *)(iVar11 + iVar12) = fVar7;
-        fVar8 = *(float *)(iVar14 + iVar12);
-        fVar9 = *(float *)(iVar15 + iVar12);
-        *(float *)(iVar14 + iVar12) = (float)(dVar21 * dVar22);
-        *(float *)(iVar15 + iVar12) = fVar8;
+        fVar2 = this->eq[in_r6][iVar16].coeffs[1];
+        fVar3 = this->eq[in_r6][iVar16].coeffs[2];
+        iVar13 = (int)((lVar15 + 10U & 0xffffffff) << 2);
+        iVar14 = (int)((lVar15 + 0xcU & 0xffffffff) << 2);
+        fVar4 = this->eq[in_r6][iVar16].coeffs[0];
+        fVar7 = *(float *)((int)this->eq[in_r6][iVar16].coeffs + iVar11 + -0x14);
+        bVar12 = true;
+        fVar5 = this->eq[in_r6][iVar16].coeffs[4];
+        *(float *)((int)this->eq[in_r6][iVar16].coeffs + iVar10 + -0x14) = fVar7;
+        fVar8 = *(float *)((int)this->eq[in_r6][iVar16].coeffs + iVar13 + -0x14);
+        fVar9 = *(float *)((int)this->eq[in_r6][iVar16].coeffs + iVar14 + -0x14);
+        *(float *)((int)this->eq[in_r6][iVar16].coeffs + iVar13 + -0x14) = (float)(dVar18 * dVar19);
+        *(float *)((int)this->eq[in_r6][iVar16].coeffs + iVar14 + -0x14) = fVar8;
         fVar1 = fVar5 * fVar6 -
-                -(fVar1 * fVar7 - (fVar4 * (float)(dVar21 * dVar22) + fVar3 * fVar9 + fVar2 * fVar8)
+                -(fVar1 * fVar7 - (fVar4 * (float)(dVar18 * dVar19) + fVar3 * fVar9 + fVar2 * fVar8)
                  );
       }
-      dVar23 = -(double)fVar1;
-      *(float *)(iVar13 + iVar12) = (float)dVar23;
+      dVar20 = -(double)fVar1;
+      *(float *)((int)this->eq[in_r6][iVar16].coeffs + iVar11 + -0x14) = (float)dVar20;
     }
-    iVar18 = iVar18 + 1;
-    lVar20 = lVar20 + -1;
-  } while (lVar20 != 0);
-  if (bVar19) {
-    dVar21 = (double)__restgprlr_28(dVar23);
-    return (float)dVar21;
+    iVar16 = iVar16 + 1;
+    lVar17 = lVar17 + -1;
+  } while (lVar17 != 0);
+  if (bVar12) {
+    return (float)dVar20;
   }
-  dVar21 = (double)__restgprlr_28((double)(float)(dVar21 * dVar22));
-  return (float)dVar21;
+  return (float)(dVar18 * dVar19);
 }
 
 

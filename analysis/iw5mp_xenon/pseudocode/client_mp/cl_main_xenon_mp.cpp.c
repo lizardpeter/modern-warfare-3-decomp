@@ -89,6 +89,8 @@ void CL_ServerStatusResponse(netadr_t param_1,msg_t *param_2)
 
 // 8234CB80  CL_SetServerInfoByAddress  (client_mp/cl_main_xenon_mp.cpp:115)
 
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -97,155 +99,146 @@ void CL_SetServerInfoByAddress(netadr_t param_1,char *param_2,int param_3)
 
 {
   char *pcVar2;
-  int iVar4;
+  int iVar3;
   long64 lVar1;
-  ulonglong in_r5;
+  char *in_r5;
   undefined4 in_r6;
-  XNKEY *pXVar5;
+  XNKEY *pXVar4;
   undefined4 uStack0000002c;
   XNADDR aXStack_c0 [5];
-  char *pcVar3;
   
-  __savegprlr();
-  pcVar3 = (char *)in_r5;
   uStack0000002c = in_r6;
-  pcVar2 = Info_ValueForKey(pcVar3,"xnaddr");
+  pcVar2 = Info_ValueForKey(in_r5,"xnaddr");
   StringToXNAddr(pcVar2,aXStack_c0);
-  pXVar5 = &cls.localServers[0].xnkey;
+  pXVar4 = &cls.localServers[0].xnkey;
   do {
-    iVar4 = NET_CompareXNAddr(aXStack_c0,(XNADDR *)((int)(pXVar5 + -3) + 0xc));
-    if ((iVar4 != 0) && (pXVar5 != (XNKEY *)0x24)) {
-      if ((in_r5 & 0xffffffff) != 0) {
-        pcVar2 = Info_ValueForKey(pcVar3,"xnkid");
+    iVar3 = NET_CompareXNAddr(aXStack_c0,(XNADDR *)((int)(pXVar4 + -3) + 0xc));
+    if ((iVar3 != 0) && (pXVar4 != (XNKEY *)0x24)) {
+      if (in_r5 != (char *)0x0) {
+        pcVar2 = Info_ValueForKey(in_r5,"xnkid");
         lVar1 = StringToInt64(pcVar2);
-        *(long64 *)((XNKID *)(pXVar5 + 1))->ab = lVar1;
-        pcVar2 = Info_ValueForKey(pcVar3,"xnkey");
-        StringToInt128(pcVar2,pXVar5->ab);
-        pcVar2 = Info_ValueForKey(pcVar3,"xnaddr");
-        StringToXNAddr(pcVar2,(XNADDR *)((int)(pXVar5 + -3) + 0xc));
-        pcVar2 = Info_ValueForKey(pcVar3,"clients");
-        iVar4 = atoi(pcVar2);
-        *(uchar *)((int)(pXVar5 + 3) + 5) = (uchar)iVar4;
-        pcVar2 = Info_ValueForKey(pcVar3,"hostname");
-        I_strncpyz((char *)((int)(pXVar5 + 4) + 4),pcVar2,0x20);
-        pcVar2 = Info_ValueForKey(pcVar3,"mapname");
-        I_strncpyz((char *)((int)(pXVar5 + 6) + 4),pcVar2,0x20);
-        pcVar2 = Info_ValueForKey(pcVar3,"sv_maxclients");
-        iVar4 = atoi(pcVar2);
-        *(uchar *)((int)(pXVar5 + 3) + 6) = (uchar)iVar4;
-        pcVar2 = Info_ValueForKey(pcVar3,"game");
-        I_strncpyz((char *)((int)(pXVar5 + 8) + 4),pcVar2,0x18);
-        pcVar2 = Info_ValueForKey(pcVar3,"gametype");
-        I_strncpyz((char *)((int)(pXVar5 + 9) + 0xc),pcVar2,0x10);
-        pcVar2 = Info_ValueForKey(pcVar3,"nettype");
-        iVar4 = atoi(pcVar2);
-        *(uchar *)((int)(pXVar5 + 3) + 4) = (uchar)iVar4;
-        pcVar2 = Info_ValueForKey(pcVar3,"minping");
-        iVar4 = atoi(pcVar2);
-        *(short *)((int)(pXVar5 + 3) + 0xe) = (short)iVar4;
-        pcVar2 = Info_ValueForKey(pcVar3,"maxping");
-        iVar4 = atoi(pcVar2);
-        *(short *)(pXVar5 + 4) = (short)iVar4;
-        pcVar2 = Info_ValueForKey(pcVar3,"ff");
-        iVar4 = atoi(pcVar2);
-        *(char *)((int)(pXVar5 + 3) + 8) = (char)iVar4;
-        pcVar2 = Info_ValueForKey(pcVar3,"kc");
-        iVar4 = atoi(pcVar2);
-        *(char *)((int)(pXVar5 + 3) + 9) = (char)iVar4;
-        pcVar2 = Info_ValueForKey(pcVar3,"st");
-        iVar4 = atoi(pcVar2);
-        *(char *)((int)(pXVar5 + 3) + 10) = (char)iVar4;
-        pcVar2 = Info_ValueForKey(pcVar3,"hw");
-        iVar4 = atoi(pcVar2);
-        *(uchar *)((int)(pXVar5 + 3) + 0xb) = (uchar)iVar4;
-        pcVar2 = Info_ValueForKey(pcVar3,"mod");
-        iVar4 = atoi(pcVar2);
-        *(uchar *)((int)(pXVar5 + 3) + 0xc) = (uchar)iVar4;
+        *(long64 *)((XNKID *)(pXVar4 + 1))->ab = lVar1;
+        pcVar2 = Info_ValueForKey(in_r5,"xnkey");
+        StringToInt128(pcVar2,pXVar4->ab);
+        pcVar2 = Info_ValueForKey(in_r5,"xnaddr");
+        StringToXNAddr(pcVar2,(XNADDR *)((int)(pXVar4 + -3) + 0xc));
+        pcVar2 = Info_ValueForKey(in_r5,"clients");
+        iVar3 = atoi(pcVar2);
+        *(uchar *)((int)(pXVar4 + 3) + 5) = (uchar)iVar3;
+        pcVar2 = Info_ValueForKey(in_r5,"hostname");
+        I_strncpyz((char *)((int)(pXVar4 + 4) + 4),pcVar2,0x20);
+        pcVar2 = Info_ValueForKey(in_r5,"mapname");
+        I_strncpyz((char *)((int)(pXVar4 + 6) + 4),pcVar2,0x20);
+        pcVar2 = Info_ValueForKey(in_r5,"sv_maxclients");
+        iVar3 = atoi(pcVar2);
+        *(uchar *)((int)(pXVar4 + 3) + 6) = (uchar)iVar3;
+        pcVar2 = Info_ValueForKey(in_r5,"game");
+        I_strncpyz((char *)((int)(pXVar4 + 8) + 4),pcVar2,0x18);
+        pcVar2 = Info_ValueForKey(in_r5,"gametype");
+        I_strncpyz((char *)((int)(pXVar4 + 9) + 0xc),pcVar2,0x10);
+        pcVar2 = Info_ValueForKey(in_r5,"nettype");
+        iVar3 = atoi(pcVar2);
+        *(uchar *)((int)(pXVar4 + 3) + 4) = (uchar)iVar3;
+        pcVar2 = Info_ValueForKey(in_r5,"minping");
+        iVar3 = atoi(pcVar2);
+        *(short *)((int)(pXVar4 + 3) + 0xe) = (short)iVar3;
+        pcVar2 = Info_ValueForKey(in_r5,"maxping");
+        iVar3 = atoi(pcVar2);
+        *(short *)(pXVar4 + 4) = (short)iVar3;
+        pcVar2 = Info_ValueForKey(in_r5,"ff");
+        iVar3 = atoi(pcVar2);
+        *(char *)((int)(pXVar4 + 3) + 8) = (char)iVar3;
+        pcVar2 = Info_ValueForKey(in_r5,"kc");
+        iVar3 = atoi(pcVar2);
+        *(char *)((int)(pXVar4 + 3) + 9) = (char)iVar3;
+        pcVar2 = Info_ValueForKey(in_r5,"st");
+        iVar3 = atoi(pcVar2);
+        *(char *)((int)(pXVar4 + 3) + 10) = (char)iVar3;
+        pcVar2 = Info_ValueForKey(in_r5,"hw");
+        iVar3 = atoi(pcVar2);
+        *(uchar *)((int)(pXVar4 + 3) + 0xb) = (uchar)iVar3;
+        pcVar2 = Info_ValueForKey(in_r5,"mod");
+        iVar3 = atoi(pcVar2);
+        *(uchar *)((int)(pXVar4 + 3) + 0xc) = (uchar)iVar3;
       }
-      *(short *)((int)(pXVar5 + 4) + 2) = (short)uStack0000002c;
+      *(short *)((int)(pXVar4 + 4) + 2) = (short)uStack0000002c;
     }
-    pXVar5 = pXVar5 + 0xd;
-  } while ((int)pXVar5 < -0x7d55d684);
-  __restgprlr();
+    pXVar4 = pXVar4 + 0xd;
+  } while ((int)pXVar4 < -0x7d55d684);
   return;
 }
 
 
 // 8234BF08  CL_SetServerInfo  (client_mp/cl_main_xenon_mp.cpp:131)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void CL_SetServerInfo(serverInfo_t *param_1,char *param_2,int param_3)
 
 {
-  XNADDR *pXVar2;
-  char *pcVar3;
+  char *pcVar2;
   long64 lVar1;
-  int iVar4;
-  char *pcVar5;
-  ulonglong uVar6;
-  undefined2 uVar7;
+  int iVar3;
   
-  uVar7 = (undefined2)param_3;
-  uVar6 = (ulonglong)(int)param_2;
-  pXVar2 = (XNADDR *)__savegprlr_29(param_1);
-  if (pXVar2 != (XNADDR *)0x0) {
-    if ((uVar6 & 0xffffffff) != 0) {
-      pcVar5 = (char *)uVar6;
-      pcVar3 = Info_ValueForKey(pcVar5,"xnkid");
-      lVar1 = StringToInt64(pcVar3);
-      *(long64 *)pXVar2[1].abOnline = lVar1;
-      pcVar3 = Info_ValueForKey(pcVar5,"xnkey");
-      StringToInt128(pcVar3,(uchar *)(pXVar2 + 1));
-      pcVar3 = Info_ValueForKey(pcVar5,"xnaddr");
-      StringToXNAddr(pcVar3,pXVar2);
-      pcVar3 = Info_ValueForKey(pcVar5,"clients");
-      iVar4 = atoi(pcVar3);
-      pXVar2[2].abOnline[1] = (uchar)iVar4;
-      pcVar3 = Info_ValueForKey(pcVar5,"hostname");
-      I_strncpyz((char *)(pXVar2[2].abOnline + 0x10),pcVar3,0x20);
-      pcVar3 = Info_ValueForKey(pcVar5,"mapname");
-      I_strncpyz((char *)(pXVar2[3].abOnline + 0xc),pcVar3,0x20);
-      pcVar3 = Info_ValueForKey(pcVar5,"sv_maxclients");
-      iVar4 = atoi(pcVar3);
-      pXVar2[2].abOnline[2] = (uchar)iVar4;
-      pcVar3 = Info_ValueForKey(pcVar5,"game");
-      I_strncpyz((char *)(pXVar2[4].abOnline + 8),pcVar3,0x18);
-      pcVar3 = Info_ValueForKey(pcVar5,"gametype");
-      I_strncpyz((char *)(pXVar2[5].abEnet + 2),pcVar3,0x10);
-      pcVar3 = Info_ValueForKey(pcVar5,"nettype");
-      iVar4 = atoi(pcVar3);
-      pXVar2[2].abOnline[0] = (uchar)iVar4;
-      pcVar3 = Info_ValueForKey(pcVar5,"minping");
-      iVar4 = atoi(pcVar3);
-      *(short *)(pXVar2[2].abOnline + 10) = (short)iVar4;
-      pcVar3 = Info_ValueForKey(pcVar5,"maxping");
-      iVar4 = atoi(pcVar3);
-      *(short *)(pXVar2[2].abOnline + 0xc) = (short)iVar4;
-      pcVar3 = Info_ValueForKey(pcVar5,"ff");
-      iVar4 = atoi(pcVar3);
-      pXVar2[2].abOnline[4] = (uchar)iVar4;
-      pcVar3 = Info_ValueForKey(pcVar5,"kc");
-      iVar4 = atoi(pcVar3);
-      pXVar2[2].abOnline[5] = (uchar)iVar4;
-      pcVar3 = Info_ValueForKey(pcVar5,"st");
-      iVar4 = atoi(pcVar3);
-      pXVar2[2].abOnline[6] = (uchar)iVar4;
-      pcVar3 = Info_ValueForKey(pcVar5,"hw");
-      iVar4 = atoi(pcVar3);
-      pXVar2[2].abOnline[7] = (uchar)iVar4;
-      pcVar5 = Info_ValueForKey(pcVar5,"mod");
-      iVar4 = atoi(pcVar5);
-      pXVar2[2].abOnline[8] = (uchar)iVar4;
+  if (param_1 != (serverInfo_t *)0x0) {
+    if (param_2 != (char *)0x0) {
+      pcVar2 = Info_ValueForKey(param_2,"xnkid");
+      lVar1 = StringToInt64(pcVar2);
+      *(long64 *)(param_1->xnkid).ab = lVar1;
+      pcVar2 = Info_ValueForKey(param_2,"xnkey");
+      StringToInt128(pcVar2,(param_1->xnkey).ab);
+      pcVar2 = Info_ValueForKey(param_2,"xnaddr");
+      StringToXNAddr(pcVar2,&param_1->xnaddr);
+      pcVar2 = Info_ValueForKey(param_2,"clients");
+      iVar3 = atoi(pcVar2);
+      param_1->clients = (uchar)iVar3;
+      pcVar2 = Info_ValueForKey(param_2,"hostname");
+      I_strncpyz(param_1->hostName,pcVar2,0x20);
+      pcVar2 = Info_ValueForKey(param_2,"mapname");
+      I_strncpyz(param_1->mapName,pcVar2,0x20);
+      pcVar2 = Info_ValueForKey(param_2,"sv_maxclients");
+      iVar3 = atoi(pcVar2);
+      param_1->maxClients = (uchar)iVar3;
+      pcVar2 = Info_ValueForKey(param_2,"game");
+      I_strncpyz(param_1->game,pcVar2,0x18);
+      pcVar2 = Info_ValueForKey(param_2,"gametype");
+      I_strncpyz(param_1->gameType,pcVar2,0x10);
+      pcVar2 = Info_ValueForKey(param_2,"nettype");
+      iVar3 = atoi(pcVar2);
+      param_1->netType = (uchar)iVar3;
+      pcVar2 = Info_ValueForKey(param_2,"minping");
+      iVar3 = atoi(pcVar2);
+      param_1->minPing = (short)iVar3;
+      pcVar2 = Info_ValueForKey(param_2,"maxping");
+      iVar3 = atoi(pcVar2);
+      param_1->maxPing = (short)iVar3;
+      pcVar2 = Info_ValueForKey(param_2,"ff");
+      iVar3 = atoi(pcVar2);
+      param_1->friendlyfire = (char)iVar3;
+      pcVar2 = Info_ValueForKey(param_2,"kc");
+      iVar3 = atoi(pcVar2);
+      param_1->killcam = (char)iVar3;
+      pcVar2 = Info_ValueForKey(param_2,"st");
+      iVar3 = atoi(pcVar2);
+      param_1->onlineStatsOffline = (char)iVar3;
+      pcVar2 = Info_ValueForKey(param_2,"hw");
+      iVar3 = atoi(pcVar2);
+      param_1->hardware = (uchar)iVar3;
+      pcVar2 = Info_ValueForKey(param_2,"mod");
+      iVar3 = atoi(pcVar2);
+      param_1->mod = (uchar)iVar3;
     }
-    *(undefined2 *)(pXVar2[2].abOnline + 0xe) = uVar7;
+    param_1->ping = (short)param_3;
   }
-  __restgprlr_29();
   return;
 }
 
 
 // 8234CE00  CL_ServerInfoPacket  (client_mp/cl_main_xenon_mp.cpp:171)
 
-/* WARNING: Type propagation algorithm not settling */
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -256,20 +249,19 @@ void CL_ServerInfoPacket(netadr_t param_1,msg_t *param_2,int param_3)
   char cVar1;
   char *pcVar4;
   char *pcVar5;
-  char *pcVar6;
+  uint uVar6;
   uint uVar7;
-  uint uVar8;
-  int iVar9;
+  int iVar8;
   long64 lVar2;
   ulong64 uVar3;
   msg_t *in_r5;
   int in_r6;
-  serverInfo_t *psVar10;
-  longlong lVar11;
-  serverInfo_t *psVar12;
-  uchar *puVar13;
-  int iVar14;
-  XNADDR *pXVar15;
+  serverInfo_t *psVar9;
+  longlong lVar10;
+  serverInfo_t *psVar11;
+  uchar *puVar12;
+  int iVar13;
+  XNADDR *pXVar14;
   netadr_t in_stack_fffff6f8;
   XNADDR local_8c0;
   XNADDR XStack_89c;
@@ -278,57 +270,57 @@ void CL_ServerInfoPacket(netadr_t param_1,msg_t *param_2,int param_3)
   char acStack_861 [1025];
   char acStack_460 [1120];
   
-  pcVar4 = (char *)__savegprlr_22(param_2);
-  pcVar5 = MSG_ReadString(in_r5,acStack_460,0x400);
-  pcVar6 = Info_ValueForKey(pcVar5,"protocol");
-  uVar7 = atoi(pcVar6);
-  pcVar6 = Dvar_GetString("debug_protocol");
-  if (*pcVar6 == '\0') {
-    uVar8 = GetProtocolVersion();
+  pcVar4 = MSG_ReadString(in_r5,acStack_460,0x400);
+  pcVar5 = Info_ValueForKey(pcVar4,"protocol");
+  uVar6 = atoi(pcVar5);
+  pcVar5 = Dvar_GetString("debug_protocol");
+  if (*pcVar5 == '\0') {
+    uVar7 = GetProtocolVersion();
   }
   else {
-    uVar8 = atoi(pcVar6);
+    uVar7 = atoi(pcVar5);
   }
-  if (uVar7 != uVar8) {
+  if (uVar6 != uVar7) {
     Com_Printf(0xe,"Different protocol info packet: %s\n");
   }
-  pcVar6 = Info_ValueForKey(pcVar5,"xnaddr");
-  StringToXNAddr(pcVar6,&local_8c0);
-  iVar14 = 0;
-  pXVar15 = &cl_pinglist[0].xnaddr;
+  pcVar5 = Info_ValueForKey(pcVar4,"xnaddr");
+  StringToXNAddr(pcVar5,&local_8c0);
+  iVar13 = 0;
+  pXVar14 = &cl_pinglist[0].xnaddr;
   do {
-    if ((pXVar15[1].inaOnline.S_un.S_addr == 0) &&
-       (iVar9 = NET_CompareXNAddr(&local_8c0,pXVar15), iVar9 != 0)) {
-      cl_pinglist[iVar14].time = (in_r6 - cl_pinglist[iVar14].start) + 1;
-      Info_ValueForKey(pcVar5,"hostname");
+    if ((pXVar14[1].inaOnline.S_un.S_addr == 0) &&
+       (iVar8 = NET_CompareXNAddr(&local_8c0,pXVar14), iVar8 != 0)) {
+      cl_pinglist[iVar13].time = (in_r6 - cl_pinglist[iVar13].start) + 1;
+      Info_ValueForKey(pcVar4,"hostname");
       Com_DPrintf(0xe,"ping time %dms from %s\n");
-      I_strncpyz(cl_pinglist[iVar14].info,pcVar5,0x400);
-      pcVar5 = va("%d");
-      Info_SetValueForKey(cl_pinglist[iVar14].info,"nettype",pcVar5);
-      CL_SetServerInfoByAddress(in_stack_fffff6f8,pcVar4,param_3);
-      __restgprlr_22();
+      I_strncpyz(cl_pinglist[iVar13].info,pcVar4,0x400);
+      pcVar4 = va("%d");
+      Info_SetValueForKey(cl_pinglist[iVar13].info,"nettype",pcVar4);
+      CL_SetServerInfoByAddress(in_stack_fffff6f8,(char *)param_2,param_3);
       return;
     }
-    pXVar15 = (XNADDR *)&pXVar15[0x1e].inaOnline;
-    iVar14 = iVar14 + 1;
-  } while ((int)pXVar15 < -0x7d4c1b30);
+    pXVar14 = (XNADDR *)&pXVar14[0x1e].inaOnline;
+    iVar13 = iVar13 + 1;
+  } while ((int)pXVar14 < -0x7d4c1b30);
   if (cls.pingUpdateSource == 0) {
-    psVar10 = cls.localServers;
+    psVar9 = cls.localServers;
     do {
-      pXVar15 = &local_8c0;
-      psVar12 = psVar10;
+      pXVar14 = &local_8c0;
+      psVar11 = psVar9;
       do {
-        lVar11 = (ulonglong)(pXVar15->ina).S_un.S_un_b.s_b1 -
-                 (ulonglong)(psVar12->xnaddr).ina.S_un.S_un_b.s_b1;
-        if (lVar11 != 0) break;
-        pXVar15 = (XNADDR *)((int)&(pXVar15->ina).S_un + 1);
-        psVar12 = (serverInfo_t *)((int)&(psVar12->xnaddr).ina.S_un + 1);
-      } while (pXVar15 != &XStack_89c);
-      if ((int)lVar11 == 0) goto LAB_8234d208;
-      psVar10 = psVar10 + 1;
-    } while ((int)psVar10 < -0x7d55d6a8);
-    iVar14 = 0;
-    psVar10 = cls.localServers;
+        lVar10 = (ulonglong)(pXVar14->ina).S_un.S_un_b.s_b1 -
+                 (ulonglong)(psVar11->xnaddr).ina.S_un.S_un_b.s_b1;
+        if (lVar10 != 0) break;
+        pXVar14 = (XNADDR *)((int)&(pXVar14->ina).S_un + 1);
+        psVar11 = (serverInfo_t *)((int)&(psVar11->xnaddr).ina.S_un + 1);
+      } while (pXVar14 != &XStack_89c);
+      if ((int)lVar10 == 0) {
+        return;
+      }
+      psVar9 = psVar9 + 1;
+    } while ((int)psVar9 < -0x7d55d6a8);
+    iVar13 = 0;
+    psVar9 = cls.localServers;
     XStack_89c.abEnet[2] = '\0';
     XStack_89c.abEnet[3] = '\0';
     XStack_89c.abEnet[4] = '\0';
@@ -356,47 +348,46 @@ void CL_ServerInfoPacket(netadr_t param_1,msg_t *param_2,int param_3)
     local_878 = 0;
     local_870 = 0;
     do {
-      puVar13 = XStack_89c.abEnet + 2;
-      psVar12 = psVar10;
+      puVar12 = XStack_89c.abEnet + 2;
+      psVar11 = psVar9;
       do {
-        lVar11 = (ulonglong)(psVar12->xnaddr).ina.S_un.S_un_b.s_b1 - (ulonglong)*puVar13;
-        if (lVar11 != 0) break;
-        psVar12 = (serverInfo_t *)((int)&(psVar12->xnaddr).ina.S_un + 1);
-        puVar13 = puVar13 + 1;
-      } while (psVar12 != (serverInfo_t *)&psVar10->xnkey);
-      if ((int)lVar11 == 0) break;
-      psVar10 = psVar10 + 1;
-      iVar14 = iVar14 + 1;
-    } while ((int)psVar10 < -0x7d55d6a8);
-    if (iVar14 == 0x10) {
+        lVar10 = (ulonglong)(psVar11->xnaddr).ina.S_un.S_un_b.s_b1 - (ulonglong)*puVar12;
+        if (lVar10 != 0) break;
+        psVar11 = (serverInfo_t *)((int)&(psVar11->xnaddr).ina.S_un + 1);
+        puVar12 = puVar12 + 1;
+      } while (psVar11 != (serverInfo_t *)&psVar9->xnkey);
+      if ((int)lVar10 == 0) break;
+      psVar9 = psVar9 + 1;
+      iVar13 = iVar13 + 1;
+    } while ((int)psVar9 < -0x7d55d6a8);
+    if (iVar13 == 0x10) {
       Com_DPrintf(0xe,"MAX_OTHER_SERVERS hit, dropping infoResponse\n");
-      __restgprlr_22();
       return;
     }
-    cls.numlocalservers = iVar14 + 1;
-    pcVar4 = Info_ValueForKey(pcVar5,"xnkid");
-    lVar2 = StringToInt64(pcVar4);
-    *(long64 *)cls.localServers[iVar14].xnkid.ab = lVar2;
-    pcVar4 = Info_ValueForKey(pcVar5,"xnkey");
-    StringToInt128(pcVar4,cls.localServers[iVar14].xnkey.ab);
-    pcVar4 = Info_ValueForKey(pcVar5,"xnaddr");
-    StringToXNAddr(pcVar4,&cls.localServers[iVar14].xnaddr);
-    pcVar4 = Info_ValueForKey(pcVar5,"pslots");
-    iVar9 = atoi(pcVar4);
-    cls.localServers[iVar14].publicSlots = iVar9;
-    pcVar4 = Info_ValueForKey(pcVar5,"pused");
-    iVar9 = atoi(pcVar4);
-    cls.localServers[iVar14].publicSlotsUsed = iVar9;
-    pcVar4 = Info_ValueForKey(pcVar5,"prslots");
-    iVar9 = atoi(pcVar4);
-    cls.localServers[iVar14].privateSlots = iVar9;
-    pcVar4 = Info_ValueForKey(pcVar5,"prused");
-    iVar9 = atoi(pcVar4);
-    cls.localServers[iVar14].privateSlotsUsed = iVar9;
-    pcVar4 = Info_ValueForKey(pcVar5,"nonce");
-    uVar3 = StringToInt64(pcVar4);
-    cls.localServers[iVar14].nonce = uVar3;
-    CL_SetServerInfo(cls.localServers + iVar14,pcVar5,1);
+    cls.numlocalservers = iVar13 + 1;
+    pcVar5 = Info_ValueForKey(pcVar4,"xnkid");
+    lVar2 = StringToInt64(pcVar5);
+    *(long64 *)cls.localServers[iVar13].xnkid.ab = lVar2;
+    pcVar5 = Info_ValueForKey(pcVar4,"xnkey");
+    StringToInt128(pcVar5,cls.localServers[iVar13].xnkey.ab);
+    pcVar5 = Info_ValueForKey(pcVar4,"xnaddr");
+    StringToXNAddr(pcVar5,&cls.localServers[iVar13].xnaddr);
+    pcVar5 = Info_ValueForKey(pcVar4,"pslots");
+    iVar8 = atoi(pcVar5);
+    cls.localServers[iVar13].publicSlots = iVar8;
+    pcVar5 = Info_ValueForKey(pcVar4,"pused");
+    iVar8 = atoi(pcVar5);
+    cls.localServers[iVar13].publicSlotsUsed = iVar8;
+    pcVar5 = Info_ValueForKey(pcVar4,"prslots");
+    iVar8 = atoi(pcVar5);
+    cls.localServers[iVar13].privateSlots = iVar8;
+    pcVar5 = Info_ValueForKey(pcVar4,"prused");
+    iVar8 = atoi(pcVar5);
+    cls.localServers[iVar13].privateSlotsUsed = iVar8;
+    pcVar5 = Info_ValueForKey(pcVar4,"nonce");
+    uVar3 = StringToInt64(pcVar5);
+    cls.localServers[iVar13].nonce = uVar3;
+    CL_SetServerInfo(cls.localServers + iVar13,pcVar4,1);
     pcVar4 = MSG_ReadString(in_r5,acStack_460,0x400);
     I_strncpyz(acStack_861 + 1,pcVar4,0x400);
     pcVar4 = acStack_861 + 1;
@@ -411,14 +402,14 @@ void CL_ServerInfoPacket(netadr_t param_1,msg_t *param_2,int param_3)
       Com_Printf(0xe,"xenoninfo: %s");
     }
   }
-LAB_8234d208:
-  __restgprlr_22();
   return;
 }
 
 
 // 8234C0F8  CL_Connect  (client_mp/cl_main_xenon_mp.cpp:306)
 
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
@@ -429,21 +420,18 @@ void CL_Connect(LocalClientNum_t param_1,_XSESSION_INFO *param_2,ulong64 param_3
 
 {
   bool bVar1;
-  LocalClientNum_t LVar2;
-  clientConnection_t *pcVar3;
-  XNADDR *pXVar4;
-  bool bVar8;
-  clientActive_t *pcVar5;
-  int iVar6;
-  ushort uVar7;
-  ulonglong uVar9;
-  char *pcVar10;
+  clientConnection_t *pcVar2;
+  XNADDR *pXVar3;
+  bool bVar7;
+  clientActive_t *pcVar4;
+  int iVar5;
+  ushort uVar6;
+  char *pcVar8;
+  XNADDR *pXVar9;
+  longlong lVar10;
   XNADDR *pXVar11;
-  longlong lVar12;
-  longlong lVar13;
-  int *piVar14;
-  LocalClientNum_t LVar15;
-  ulonglong uVar16;
+  int *piVar12;
+  LocalClientNum_t LVar13;
   LocalClientNum_t LStack00000014;
   ulong64 uStack00000020;
   int iStack0000002c;
@@ -453,63 +441,59 @@ void CL_Connect(LocalClientNum_t param_1,_XSESSION_INFO *param_2,ulong64 param_3
   char *local_a8;
   char *local_a4;
   
-  uVar9 = (ulonglong)(int)param_2;
-  uVar16 = (ulonglong)(int)param_1;
-  __savegprlr();
-  LVar2 = (LocalClientNum_t)uVar16;
   local_a4 = "c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_main_xenon_mp.cpp";
   local_a8 = "%s";
-  LStack00000014 = LVar2;
+  LStack00000014 = param_1;
   uStack00000020 = param_3;
   iStack0000002c = param_4;
   iStack00000034 = param_5;
-  if ((uVar9 & 0xffffffff) == 0) {
+  if (param_2 == (_XSESSION_INFO *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_main_xenon_mp.cpp"
                     ,0x13c,0,"%s");
   }
   Com_Printf(0xe,"CL_Connect called for local client %i\n");
   local_ac.S_addr = 0;
   if ((systemlink->current).enabled != false) {
-    Live_CheckPlayerIsSignedIn(LVar2);
+    Live_CheckPlayerIsSignedIn(param_1);
   }
   CCS_ClearConstantConfigStrings();
   SND_StopSounds(SND_STOP_ALL);
   CL_AllocatePerLocalClientMemory(1);
-  pcVar3 = CL_GetLocalClientConnection(LVar2);
-  pcVar3->serverMessage[0] = '\0';
+  pcVar2 = CL_GetLocalClientConnection(param_1);
+  pcVar2->serverMessage[0] = '\0';
   SV_KillLocalServer();
   local_b0[0] = 0;
   cl_serverLoadingMap = false;
   SV_Frame(0);
-  Con_Close(LVar2);
-  pXVar4 = Xenon_GetXNAddr();
-  lVar13 = uVar9 + 8;
-  pXVar11 = pXVar4 + 1;
+  Con_Close(param_1);
+  pXVar3 = Xenon_GetXNAddr();
+  pXVar11 = &param_2->hostAddress;
+  pXVar9 = pXVar3 + 1;
   do {
-    lVar12 = (ulonglong)(pXVar4->ina).S_un.S_un_b.s_b1 - (ulonglong)*(byte *)lVar13;
-    if (lVar12 != 0) break;
-    pXVar4 = (XNADDR *)((int)&(pXVar4->ina).S_un + 1);
-    lVar13 = lVar13 + 1;
-  } while (pXVar4 != pXVar11);
-  if ((int)lVar12 == 0) {
-    pcVar10 = "localhost";
+    lVar10 = (ulonglong)(pXVar3->ina).S_un.S_un_b.s_b1 - (ulonglong)(pXVar11->ina).S_un.S_un_b.s_b1;
+    if (lVar10 != 0) break;
+    pXVar3 = (XNADDR *)((int)&(pXVar3->ina).S_un + 1);
+    pXVar11 = (XNADDR *)((int)&(pXVar11->ina).S_un + 1);
+  } while (pXVar3 != pXVar9);
+  if ((int)lVar10 == 0) {
+    pcVar8 = "localhost";
   }
   else {
-    pcVar10 = "Remote Xbox 360";
+    pcVar8 = "Remote Xbox 360";
   }
-  I_strncpyz(cls.servername,pcVar10,0x100);
+  I_strncpyz(cls.servername,pcVar8,0x100);
   bVar1 = true;
-  LVar15 = LOCAL_CLIENT_0;
+  LVar13 = LOCAL_CLIENT_0;
   if (0 < cl_maxLocalClients) {
-    piVar14 = &clientUIActives[0].keyCatchers;
+    piVar12 = &clientUIActives[0].keyCatchers;
     do {
-      bVar8 = CL_IsLocalClientActive(LVar15);
-      if (bVar8) {
-        CL_Disconnect(LVar15);
-        CL_SetLocalClientActive(LVar15,true);
-        pcVar3 = CL_GetLocalClientConnection(LVar15);
-        pcVar5 = CL_GetLocalClientGlobals(LVar15);
-        if (LOCAL_CLIENT_3 < LVar15) {
+      bVar7 = CL_IsLocalClientActive(LVar13);
+      if (bVar7) {
+        CL_Disconnect(LVar13);
+        CL_SetLocalClientActive(LVar13,true);
+        pcVar2 = CL_GetLocalClientConnection(LVar13);
+        pcVar4 = CL_GetLocalClientGlobals(LVar13);
+        if (LOCAL_CLIENT_3 < LVar13) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\client_mp.h",
                           0x47f,0,
                           "localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)"
@@ -518,61 +502,59 @@ void CL_Connect(LocalClientNum_t param_1,_XSESSION_INFO *param_2,ulong64 param_3
                           0x4b5,0,
                           "client doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)");
         }
-        piVar14[2] = CA_CONNECTING;
+        piVar12[2] = CA_CONNECTING;
         Live_SetCurrentGametype();
-        iVar6 = CL_ControllerIndexFromClientNum(LVar15);
+        iVar5 = CL_ControllerIndexFromClientNum(LVar13);
         if (bVar1) {
           bVar1 = false;
           if (g_serverSession.dyn.sessionHandle != (void *)0x0) {
             MyAssertHandler(local_a4,0x17c,0,local_a8);
           }
-          bVar8 = Session_StartClient(&g_serverSession,iVar6,0x20,(_XSESSION_INFO *)uVar9,
-                                      uStack00000020,iStack0000002c - iStack00000034,iStack00000034)
-          ;
-          if (!bVar8) {
+          bVar7 = Session_StartClient(&g_serverSession,iVar5,0x20,param_2,uStack00000020,
+                                      iStack0000002c - iStack00000034,iStack00000034);
+          if (!bVar7) {
             Com_Error(ERR_DROP,"EXE_HOSTUNREACH");
           }
-          bVar8 = Xenon_RegisterRemoteXenon
-                            ((_XSESSION_INFO *)uVar9,(in_addr *)&local_ac.S_un_b,local_b0);
-          if (!bVar8) {
+          bVar7 = Xenon_RegisterRemoteXenon(param_2,(in_addr *)&local_ac.S_un_b,local_b0);
+          if (!bVar7) {
             Com_Error(ERR_DROP,"EXE_HOSTUNREACH");
           }
         }
         else {
           R_BeginRemoteScreenUpdate();
-          LiveStorage_SaveStats(LVar15);
+          LiveStorage_SaveStats(LVar13);
           R_EndRemoteScreenUpdate();
         }
-        (pcVar3->serverAddress).type = NA_IP;
-        *(<unnamed_type_S_un> *)(pcVar3->serverAddress).ip = local_ac;
-        if ((pcVar3->serverAddress).port == 0) {
-          uVar7 = BigShort(local_b0[0]);
-          (pcVar3->serverAddress).port = uVar7;
+        (pcVar2->serverAddress).type = NA_IP;
+        *(<unnamed_type_S_un> *)(pcVar2->serverAddress).ip = local_ac;
+        if ((pcVar2->serverAddress).port == 0) {
+          uVar6 = BigShort(local_b0[0]);
+          (pcVar2->serverAddress).port = uVar6;
         }
-        BigShort((pcVar3->serverAddress).port);
+        BigShort((pcVar2->serverAddress).port);
         Com_Printf(0xe,"%s resolved to %i.%i.%i.%i:%i\n");
-        UI_CloseAll(LVar15);
-        *piVar14 = *piVar14 & 1;
-        pcVar3->connectTime = -99999;
-        pcVar3->connectPacketCount = 0;
-        uVar16 = (ulonglong)LStack00000014;
-        pcVar5->timeoutcount = 0;
+        UI_CloseAll(LVar13);
+        *piVar12 = *piVar12 & 1;
+        pcVar2->connectTime = -99999;
+        pcVar2->connectPacketCount = 0;
+        pcVar4->timeoutcount = 0;
+        param_1 = LStack00000014;
       }
-      LVar2 = (LocalClientNum_t)uVar16;
-      LVar15 = LVar15 + LOCAL_CLIENT_1;
-      piVar14 = piVar14 + 0x79;
-    } while ((int)LVar15 < cl_maxLocalClients);
+      LVar13 = LVar13 + LOCAL_CLIENT_1;
+      piVar12 = piVar12 + 0x79;
+    } while ((int)LVar13 < cl_maxLocalClients);
   }
   cls.mapPreloaded = false;
   memcpy();
-  UI_CloseAll(LVar2);
-  __restgprlr();
+  UI_CloseAll(param_1);
   return;
 }
 
 
 // 8234C498  CL_Connect_f  (client_mp/cl_main_xenon_mp.cpp:444)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
@@ -589,7 +571,6 @@ void CL_Connect_f(void)
   ulong64 uVar1;
   _XSESSION_INFO local_80 [2];
   
-  __savegprlr_25();
   if ((((com_sv_running->current).enabled == false) || ((onlinegame->current).enabled == false)) ||
      ((xblive_privatematch->current).enabled != false)) {
     iVar2 = Cmd_Argc();
@@ -597,7 +578,6 @@ void CL_Connect_f(void)
       Com_Printf(0,
                  "usage: connect [xnaddr] [xnkey] [xnkid] [numPublicSlots] [numPrivateSlots] [nonce]\n"
                 );
-      __restgprlr_25();
       return;
     }
     LVar3 = Cmd_LocalClientNum();
@@ -618,7 +598,6 @@ void CL_Connect_f(void)
     uVar1 = StringToInt64(pcVar7);
     CL_Connect(LVar3,local_80,uVar1,iVar2,iVar8);
   }
-  __restgprlr_25();
   return;
 }
 
@@ -715,6 +694,8 @@ void CL_UpdateGamerProfile(void)
 
 // 8234C760  CL_Live_JoinParty  (client_mp/cl_main_xenon_mp.cpp:569)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
@@ -727,11 +708,9 @@ void CL_Live_JoinParty(void)
   char *pcVar4;
   char *pcVar5;
   
-  __savegprlr_28();
   iVar1 = Cmd_Argc();
   if (iVar1 < 4) {
     Com_Printf(0,"usage: xpartyjoin [xnaddr] [xnkey] [xnkid]\n");
-    __restgprlr_28();
     return;
   }
   LVar2 = Cmd_LocalClientNum();
@@ -746,7 +725,6 @@ void CL_Live_JoinParty(void)
   iVar1 = CL_ControllerIndexFromClientNum(LVar2);
   g_launchData.invitedXUID = Live_GetXuid(iVar1);
   Live_StartConfirmAcceptInvitation();
-  __restgprlr_28();
   return;
 }
 

@@ -17,6 +17,9 @@ int CM_TestTriggerTouch_Slab(TriggerCapsuleTest *param_1,float *param_2,float pa
 
 // 824CFF70  CM_TestTriggerTouch_UnrotatedHull  (qcommon/cm_trigger.cpp:55)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 int CM_TestTriggerTouch_UnrotatedHull
               (MapTriggers *param_1,TriggerHull *param_2,TriggerCapsuleTest *param_3)
 
@@ -24,61 +27,61 @@ int CM_TestTriggerTouch_UnrotatedHull
   float fVar1;
   float fVar2;
   float fVar3;
-  int iVar4;
-  ulonglong uVar5;
-  float *pfVar6;
-  ulonglong uVar7;
-  float *pfVar8;
-  uint uVar9;
-  float *pfVar10;
+  float fVar4;
+  float fVar5;
+  float fVar6;
+  uint uVar7;
+  TriggerSlab *pTVar8;
   
-  uVar7 = (ulonglong)(int)param_3;
-  uVar5 = (ulonglong)(int)param_2;
-  iVar4 = __savegprlr_27(param_1);
-  if ((uVar5 & 0xffffffff) == 0) {
+  if (param_2 == (TriggerHull *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\../universal/bounds_inline.h"
                     ,0x223,0,"%s");
   }
-  if ((uVar7 & 0xffffffff) == 0) {
+  if (param_3 == (TriggerCapsuleTest *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\../universal/bounds_inline.h"
                     ,0x224,0,"%s");
   }
-  pfVar6 = (float *)uVar5;
-  pfVar8 = (float *)uVar7;
-  fVar1 = 0.0;
-  fVar2 = fVar1;
-  if (ABS(*pfVar6 - *pfVar8) - (pfVar6[3] + pfVar8[3]) < 0.0) {
-    fVar2 = 1.0;
+  fVar1 = (param_3->bounds).midPoint[0];
+  fVar2 = (param_3->bounds).midPoint[1];
+  fVar3 = (param_3->bounds).midPoint[2];
+  fVar4 = 0.0;
+  fVar6 = fVar4;
+  if (ABS((param_2->bounds).midPoint[0] - fVar1) -
+      ((param_2->bounds).halfSize[0] + (param_3->bounds).halfSize[0]) < 0.0) {
+    fVar6 = 1.0;
   }
-  fVar3 = fVar1;
-  if (ABS(pfVar6[1] - pfVar8[1]) - (pfVar6[4] + pfVar8[4]) < 0.0) {
-    fVar3 = fVar2;
+  fVar5 = fVar4;
+  if (ABS((param_2->bounds).midPoint[1] - fVar2) -
+      ((param_2->bounds).halfSize[1] + (param_3->bounds).halfSize[1]) < 0.0) {
+    fVar5 = fVar6;
   }
-  if (ABS(pfVar6[2] - pfVar8[2]) - (pfVar6[5] + pfVar8[5]) < 0.0) {
-    fVar1 = fVar3;
+  if (ABS((param_2->bounds).midPoint[2] - fVar3) -
+      ((param_2->bounds).halfSize[2] + (param_3->bounds).halfSize[2]) < 0.0) {
+    fVar4 = fVar5;
   }
-  if (fVar1 == 0.0) {
-LAB_824d0078:
-    iVar4 = __restgprlr_27(0);
-    return iVar4;
+  if (fVar4 != 0.0) {
+    uVar7 = 0;
+    if (param_2->slabCount != 0) {
+      do {
+        pTVar8 = param_1->slabs + param_2->firstSlab + uVar7;
+        if (ABS(pTVar8->dir[2]) * param_3->halfHeight + param_3->radius + pTVar8->halfSize <=
+            ABS((pTVar8->dir[2] * fVar3 + pTVar8->dir[1] * fVar2 + pTVar8->dir[0] * fVar1) -
+                pTVar8->midPoint)) {
+          return 0;
+        }
+        uVar7 = uVar7 + 1;
+      } while (uVar7 < param_2->slabCount);
+    }
+    return 1;
   }
-  uVar9 = 0;
-  if (*(ushort *)(pfVar6 + 7) != 0) {
-    do {
-      pfVar10 = (float *)((*(ushort *)((int)pfVar6 + 0x1e) + uVar9) * 0x14 + *(int *)(iVar4 + 0x14))
-      ;
-      if (ABS(pfVar10[2]) * pfVar8[7] + pfVar8[6] + pfVar10[4] <=
-          ABS((pfVar10[2] * pfVar8[2] + pfVar10[1] * pfVar8[1] + *pfVar10 * *pfVar8) - pfVar10[3]))
-      goto LAB_824d0078;
-      uVar9 = uVar9 + 1;
-    } while (uVar9 < *(ushort *)(pfVar6 + 7));
-  }
-  iVar4 = __restgprlr_27(1);
-  return iVar4;
+  return 0;
 }
 
 
 // 824D0110  CM_TestTriggerTouch_RotatedHull  (qcommon/cm_trigger.cpp:74)
+
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 
 int CM_TestTriggerTouch_RotatedHull
               (MapTriggers *param_1,TriggerHull *param_2,float (*param_3) [3],
@@ -91,150 +94,148 @@ int CM_TestTriggerTouch_RotatedHull
   float fVar4;
   float fVar5;
   float fVar6;
-  int iVar7;
-  ulonglong uVar8;
-  float *pfVar9;
-  ulonglong uVar10;
-  float *pfVar11;
-  uint uVar12;
-  float *pfVar13;
+  uint uVar7;
+  TriggerSlab *pTVar8;
   float local_50;
   float local_4c;
   float local_48;
   
-  uVar10 = (ulonglong)(int)param_4;
-  uVar8 = (ulonglong)(int)param_2;
-  iVar7 = __savegprlr_26(param_1);
-  if ((uVar8 & 0xffffffff) == 0) {
+  if (param_2 == (TriggerHull *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\../universal/bounds_inline.h"
                     ,0x223,0,"%s");
   }
-  if ((uVar10 & 0xffffffff) == 0) {
+  if (param_4 == (TriggerCapsuleTest *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\../universal/bounds_inline.h"
                     ,0x224,0,"%s");
   }
-  pfVar9 = (float *)uVar8;
-  pfVar11 = (float *)uVar10;
-  fVar1 = *pfVar11;
-  fVar2 = pfVar11[1];
-  fVar3 = pfVar11[2];
+  fVar1 = (param_4->bounds).midPoint[0];
+  fVar2 = (param_4->bounds).midPoint[1];
+  fVar3 = (param_4->bounds).midPoint[2];
   fVar4 = 0.0;
   fVar5 = fVar4;
-  if (ABS(*pfVar9 - fVar1) - (pfVar11[3] + pfVar9[3]) < 0.0) {
+  if (ABS((param_2->bounds).midPoint[0] - fVar1) -
+      ((param_4->bounds).halfSize[0] + (param_2->bounds).halfSize[0]) < 0.0) {
     fVar5 = 1.0;
   }
   fVar6 = fVar4;
-  if (ABS(pfVar9[1] - fVar2) - (pfVar11[4] + pfVar9[4]) < 0.0) {
+  if (ABS((param_2->bounds).midPoint[1] - fVar2) -
+      ((param_4->bounds).halfSize[1] + (param_2->bounds).halfSize[1]) < 0.0) {
     fVar6 = fVar5;
   }
-  if (ABS(pfVar9[2] - fVar3) - (pfVar11[5] + pfVar9[5]) < 0.0) {
+  if (ABS((param_2->bounds).midPoint[2] - fVar3) -
+      ((param_4->bounds).halfSize[2] + (param_2->bounds).halfSize[2]) < 0.0) {
     fVar4 = fVar6;
   }
   if (fVar4 != 0.0) {
-    uVar12 = 0;
-    if (*(short *)(pfVar9 + 7) != 0) {
+    uVar7 = 0;
+    if (param_2->slabCount != 0) {
       do {
-        pfVar13 = (float *)((*(ushort *)((int)pfVar9 + 0x1e) + uVar12) * 0x14 +
-                           *(int *)(iVar7 + 0x14));
-        Vec3Rotate(pfVar13,param_3,&local_50);
-        fVar1 = *pfVar11;
-        fVar2 = pfVar11[1];
-        fVar3 = pfVar11[2];
-        if (ABS(local_48) * pfVar11[7] + pfVar11[6] + pfVar13[4] <=
-            ABS((fVar3 * local_48 + fVar2 * local_4c + fVar1 * local_50) - pfVar13[3]))
-        goto LAB_824d021c;
-        uVar12 = uVar12 + 1;
-      } while (uVar12 < *(ushort *)(pfVar9 + 7));
+        pTVar8 = param_1->slabs + param_2->firstSlab + uVar7;
+        Vec3Rotate(pTVar8->dir,param_3,&local_50);
+        fVar1 = (param_4->bounds).midPoint[0];
+        fVar2 = (param_4->bounds).midPoint[1];
+        fVar3 = (param_4->bounds).midPoint[2];
+        if (ABS(local_48) * param_4->halfHeight + param_4->radius + pTVar8->halfSize <=
+            ABS((fVar3 * local_48 + fVar2 * local_4c + fVar1 * local_50) - pTVar8->midPoint)) {
+          return 0;
+        }
+        uVar7 = uVar7 + 1;
+      } while (uVar7 < param_2->slabCount);
     }
-    fVar4 = pfVar11[7];
-    fVar5 = pfVar11[6];
-    if ((ABS(((*param_3)[2] * fVar3 + (*param_3)[1] * fVar2 + fVar1 * (*param_3)[0]) - *pfVar9) <
-         ABS((*param_3)[2]) * fVar4 + fVar5 + pfVar9[3]) &&
-       (ABS((param_3[1][2] * fVar3 + param_3[1][1] * fVar2 + fVar1 * param_3[1][0]) - pfVar9[1]) <
-        ABS(param_3[1][2]) * fVar4 + fVar5 + pfVar9[4])) {
-      iVar7 = __restgprlr_26(ABS((param_3[2][2] * fVar3 +
-                                 param_3[2][1] * fVar2 + fVar1 * param_3[2][0]) - pfVar9[2]) <
-                             ABS(param_3[2][2]) * fVar4 + fVar5 + pfVar9[5]);
-      return iVar7;
+    fVar4 = param_4->halfHeight;
+    fVar5 = param_4->radius;
+    if ((ABS(((*param_3)[2] * fVar3 + (*param_3)[1] * fVar2 + fVar1 * (*param_3)[0]) -
+             (param_2->bounds).midPoint[0]) <
+         ABS((*param_3)[2]) * fVar4 + fVar5 + (param_2->bounds).halfSize[0]) &&
+       (ABS((param_3[1][2] * fVar3 + param_3[1][1] * fVar2 + fVar1 * param_3[1][0]) -
+            (param_2->bounds).midPoint[1]) <
+        ABS(param_3[1][2]) * fVar4 + fVar5 + (param_2->bounds).halfSize[1])) {
+      return (int)(ABS((param_3[2][2] * fVar3 + param_3[2][1] * fVar2 + fVar1 * param_3[2][0]) -
+                       (param_2->bounds).midPoint[2]) <
+                  ABS(param_3[2][2]) * fVar4 + fVar5 + (param_2->bounds).halfSize[2]);
     }
   }
-LAB_824d021c:
-  iVar7 = __restgprlr_26(0);
-  return iVar7;
+  return 0;
 }
 
 
 // 824D0390  CM_TestTriggerTouch_Unrotated  (qcommon/cm_trigger.cpp:102)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
+
 int CM_TestTriggerTouch_Unrotated
               (MapTriggers *param_1,TriggerModel *param_2,TriggerCapsuleTest *param_3)
 
 {
-  int iVar1;
-  ulonglong uVar2;
-  float *pfVar3;
+  float fVar1;
+  float fVar2;
+  float fVar3;
   uint uVar4;
-  float *pfVar5;
+  TriggerSlab *pTVar5;
   uint uVar6;
-  float *pfVar7;
+  TriggerHull *pTVar7;
   double dVar8;
   double dVar9;
   double dVar10;
   double dVar11;
   
-  uVar2 = (ulonglong)(int)param_3;
-  iVar1 = __savegprlr_23(param_1);
   dVar10 = 1.0;
   dVar11 = 0.0;
   uVar6 = 0;
   do {
-    pfVar7 = (float *)((param_2->firstHull + uVar6) * 0x20 + *(int *)(iVar1 + 0xc));
-    if (pfVar7 == (float *)0x0) {
+    pTVar7 = param_1->hulls + param_2->firstHull + uVar6;
+    if (pTVar7 == (TriggerHull *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\../universal/bounds_inline.h"
                       ,0x223,0,"%s");
     }
-    if ((uVar2 & 0xffffffff) == 0) {
+    if (param_3 == (TriggerCapsuleTest *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\../universal/bounds_inline.h"
                       ,0x224,0,"%s");
     }
-    pfVar3 = (float *)uVar2;
+    fVar1 = (param_3->bounds).midPoint[0];
+    fVar2 = (param_3->bounds).midPoint[1];
+    fVar3 = (param_3->bounds).midPoint[2];
     dVar8 = dVar11;
-    if (ABS(*pfVar7 - *pfVar3) - (pfVar7[3] + pfVar3[3]) < 0.0) {
+    if (ABS((pTVar7->bounds).midPoint[0] - fVar1) -
+        ((pTVar7->bounds).halfSize[0] + (param_3->bounds).halfSize[0]) < 0.0) {
       dVar8 = dVar10;
     }
     dVar9 = dVar11;
-    if (ABS(pfVar7[1] - pfVar3[1]) - (pfVar7[4] + pfVar3[4]) < 0.0) {
+    if (ABS((pTVar7->bounds).midPoint[1] - fVar2) -
+        ((pTVar7->bounds).halfSize[1] + (param_3->bounds).halfSize[1]) < 0.0) {
       dVar9 = dVar8;
     }
     dVar8 = dVar11;
-    if (ABS(pfVar7[2] - pfVar3[2]) - (pfVar7[5] + pfVar3[5]) < 0.0) {
+    if (ABS((pTVar7->bounds).midPoint[2] - fVar3) -
+        ((pTVar7->bounds).halfSize[2] + (param_3->bounds).halfSize[2]) < 0.0) {
       dVar8 = dVar9;
     }
     if (dVar8 != dVar11) {
       uVar4 = 0;
-      if (*(ushort *)(pfVar7 + 7) == 0) {
-LAB_824d0538:
-        iVar1 = __restgprlr_23(1);
-        return iVar1;
+      if (pTVar7->slabCount == 0) {
+        return 1;
       }
-      while (pfVar5 = (float *)((*(ushort *)((int)pfVar7 + 0x1e) + uVar4) * 0x14 +
-                               *(int *)(iVar1 + 0x14)),
-            ABS((pfVar5[2] * pfVar3[2] + pfVar5[1] * pfVar3[1] + *pfVar3 * *pfVar5) - pfVar5[3]) <
-            ABS(pfVar5[2]) * pfVar3[7] + pfVar3[6] + pfVar5[4]) {
+      while (pTVar5 = param_1->slabs + pTVar7->firstSlab + uVar4,
+            ABS((pTVar5->dir[2] * fVar3 + pTVar5->dir[1] * fVar2 + fVar1 * pTVar5->dir[0]) -
+                pTVar5->midPoint) <
+            ABS(pTVar5->dir[2]) * param_3->halfHeight + param_3->radius + pTVar5->halfSize) {
         uVar4 = uVar4 + 1;
-        if (*(ushort *)(pfVar7 + 7) <= uVar4) goto LAB_824d0538;
+        if (pTVar7->slabCount <= uVar4) {
+          return 1;
+        }
       }
     }
     uVar6 = uVar6 + 1;
-    if (uVar6 == param_2->hullCount) {
-      iVar1 = __restgprlr_23(0);
-      return iVar1;
-    }
-  } while( true );
+  } while (uVar6 != param_2->hullCount);
+  return 0;
 }
 
 
 // 824D0570  CM_TestTriggerTouch_Rotated  (qcommon/cm_trigger.cpp:121)
+
+/* WARNING: Function: __savegprlr_20 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_20 replaced with injection: xenon_save_restore */
 
 int CM_TestTriggerTouch_Rotated
               (MapTriggers *param_1,TriggerModel *param_2,float (*param_3) [3],
@@ -246,85 +247,82 @@ int CM_TestTriggerTouch_Rotated
   float fVar3;
   float fVar4;
   float fVar5;
-  int iVar6;
-  ulonglong uVar7;
-  float *pfVar8;
-  uint uVar9;
-  uint uVar10;
-  float *pfVar11;
-  float *pfVar12;
+  uint uVar6;
+  uint uVar7;
+  TriggerHull *pTVar8;
+  TriggerSlab *pTVar9;
+  double dVar10;
+  double dVar11;
+  double dVar12;
   double dVar13;
-  double dVar14;
-  double dVar15;
-  double dVar16;
   float local_90;
   float local_8c;
   float local_88;
   
-  uVar7 = (ulonglong)(int)param_4;
-  iVar6 = __savegprlr_20(param_1);
-  dVar15 = 1.0;
-  dVar16 = 0.0;
-  uVar9 = 0;
+  dVar12 = 1.0;
+  dVar13 = 0.0;
+  uVar6 = 0;
   do {
-    pfVar11 = (float *)((param_2->firstHull + uVar9) * 0x20 + *(int *)(iVar6 + 0xc));
-    if (pfVar11 == (float *)0x0) {
+    pTVar8 = param_1->hulls + param_2->firstHull + uVar6;
+    if (pTVar8 == (TriggerHull *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\../universal/bounds_inline.h"
                       ,0x223,0,"%s");
     }
-    if ((uVar7 & 0xffffffff) == 0) {
+    if (param_4 == (TriggerCapsuleTest *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\../universal/bounds_inline.h"
                       ,0x224,0,"%s");
     }
-    pfVar8 = (float *)uVar7;
-    fVar1 = *pfVar8;
-    fVar2 = pfVar8[1];
-    fVar3 = pfVar8[2];
-    dVar13 = dVar16;
-    if (ABS(*pfVar11 - fVar1) - (pfVar11[3] + pfVar8[3]) < 0.0) {
-      dVar13 = dVar15;
+    fVar1 = (param_4->bounds).midPoint[0];
+    fVar2 = (param_4->bounds).midPoint[1];
+    fVar3 = (param_4->bounds).midPoint[2];
+    dVar10 = dVar13;
+    if (ABS((pTVar8->bounds).midPoint[0] - fVar1) -
+        ((pTVar8->bounds).halfSize[0] + (param_4->bounds).halfSize[0]) < 0.0) {
+      dVar10 = dVar12;
     }
-    dVar14 = dVar16;
-    if (ABS(pfVar11[1] - fVar2) - (pfVar11[4] + pfVar8[4]) < 0.0) {
-      dVar14 = dVar13;
+    dVar11 = dVar13;
+    if (ABS((pTVar8->bounds).midPoint[1] - fVar2) -
+        ((pTVar8->bounds).halfSize[1] + (param_4->bounds).halfSize[1]) < 0.0) {
+      dVar11 = dVar10;
     }
-    dVar13 = dVar16;
-    if (ABS(pfVar11[2] - fVar3) - (pfVar11[5] + pfVar8[5]) < 0.0) {
-      dVar13 = dVar14;
+    dVar10 = dVar13;
+    if (ABS((pTVar8->bounds).midPoint[2] - fVar3) -
+        ((pTVar8->bounds).halfSize[2] + (param_4->bounds).halfSize[2]) < 0.0) {
+      dVar10 = dVar11;
     }
-    if (dVar13 != dVar16) {
-      uVar10 = 0;
-      if (*(short *)(pfVar11 + 7) != 0) {
+    if (dVar10 != dVar13) {
+      uVar7 = 0;
+      if (pTVar8->slabCount != 0) {
         do {
-          pfVar12 = (float *)((*(ushort *)((int)pfVar11 + 0x1e) + uVar10) * 0x14 +
-                             *(int *)(iVar6 + 0x14));
-          Vec3Rotate(pfVar12,param_3,&local_90);
-          fVar1 = *pfVar8;
-          fVar2 = pfVar8[1];
-          fVar3 = pfVar8[2];
-          if (ABS(local_88) * pfVar8[7] + pfVar8[6] + pfVar12[4] <=
-              ABS((fVar3 * local_88 + fVar2 * local_8c + fVar1 * local_90) - pfVar12[3]))
+          pTVar9 = param_1->slabs + pTVar8->firstSlab + uVar7;
+          Vec3Rotate(pTVar9->dir,param_3,&local_90);
+          fVar1 = (param_4->bounds).midPoint[0];
+          fVar2 = (param_4->bounds).midPoint[1];
+          fVar3 = (param_4->bounds).midPoint[2];
+          if (ABS(local_88) * param_4->halfHeight + param_4->radius + pTVar9->halfSize <=
+              ABS((fVar3 * local_88 + fVar2 * local_8c + fVar1 * local_90) - pTVar9->midPoint))
           goto LAB_824d07f8;
-          uVar10 = uVar10 + 1;
-        } while (uVar10 < *(ushort *)(pfVar11 + 7));
+          uVar7 = uVar7 + 1;
+        } while (uVar7 < pTVar8->slabCount);
       }
-      fVar4 = pfVar8[7];
-      fVar5 = pfVar8[6];
-      if (((ABS(((*param_3)[2] * fVar3 + (*param_3)[1] * fVar2 + fVar1 * (*param_3)[0]) - *pfVar11)
-            < ABS((*param_3)[2]) * fVar4 + fVar5 + pfVar11[3]) &&
-          (ABS((param_3[1][2] * fVar3 + param_3[1][1] * fVar2 + param_3[1][0] * fVar1) - pfVar11[1])
-           < ABS(param_3[1][2]) * fVar4 + fVar5 + pfVar11[4])) &&
-         (ABS((param_3[2][2] * fVar3 + param_3[2][1] * fVar2 + param_3[2][0] * fVar1) - pfVar11[2])
-          < ABS(param_3[2][2]) * fVar4 + fVar5 + pfVar11[5])) {
-        iVar6 = __restgprlr_20(1);
-        return iVar6;
+      fVar4 = param_4->halfHeight;
+      fVar5 = param_4->radius;
+      if (((ABS(((*param_3)[2] * fVar3 + (*param_3)[1] * fVar2 + fVar1 * (*param_3)[0]) -
+                (pTVar8->bounds).midPoint[0]) <
+            ABS((*param_3)[2]) * fVar4 + fVar5 + (pTVar8->bounds).halfSize[0]) &&
+          (ABS((param_3[1][2] * fVar3 + param_3[1][1] * fVar2 + param_3[1][0] * fVar1) -
+               (pTVar8->bounds).midPoint[1]) <
+           ABS(param_3[1][2]) * fVar4 + fVar5 + (pTVar8->bounds).halfSize[1])) &&
+         (ABS((param_3[2][2] * fVar3 + param_3[2][1] * fVar2 + param_3[2][0] * fVar1) -
+              (pTVar8->bounds).midPoint[2]) <
+          ABS(param_3[2][2]) * fVar4 + fVar5 + (pTVar8->bounds).halfSize[2])) {
+        return 1;
       }
     }
 LAB_824d07f8:
-    uVar9 = uVar9 + 1;
-    if (uVar9 == param_2->hullCount) {
-      iVar6 = __restgprlr_20(0);
-      return iVar6;
+    uVar6 = uVar6 + 1;
+    if (uVar6 == param_2->hullCount) {
+      return 0;
     }
   } while( true );
 }
@@ -332,30 +330,30 @@ LAB_824d07f8:
 
 // 824D0830  CM_SetupTriggerTest  (qcommon/cm_trigger.cpp:141)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 bool CM_SetupTriggerTest(Bounds *param_1,float *param_2,float *param_3,TriggerCapsuleTest *param_4,
                         float (*param_5) [3])
 
 {
   float fVar1;
   float fVar2;
-  float *pfVar3;
-  undefined1 uVar4;
   
-  pfVar3 = (float *)__savegprlr_26(param_1);
-  if (pfVar3[3] != pfVar3[4]) {
+  if (param_1->halfSize[0] != param_1->halfSize[1]) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_trigger.cpp",0x8e,0
                     ,"bounds->halfSize[0] == bounds->halfSize[1]\n\t%g, %g");
   }
-  if (pfVar3[5] < pfVar3[3]) {
+  if (param_1->halfSize[2] < param_1->halfSize[0]) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_trigger.cpp",0x8f,0
                     ,"bounds->halfSize[0] <= bounds->halfSize[2]\n\t%g, %g");
   }
-  (param_4->bounds).midPoint[0] = *pfVar3 - *param_2;
-  (param_4->bounds).midPoint[1] = pfVar3[1] - param_2[1];
-  (param_4->bounds).midPoint[2] = pfVar3[2] - param_2[2];
-  fVar1 = pfVar3[3];
+  (param_4->bounds).midPoint[0] = param_1->midPoint[0] - *param_2;
+  (param_4->bounds).midPoint[1] = param_1->midPoint[1] - param_2[1];
+  (param_4->bounds).midPoint[2] = param_1->midPoint[2] - param_2[2];
+  fVar1 = param_1->halfSize[0];
   param_4->radius = fVar1;
-  fVar1 = pfVar3[5] - fVar1;
+  fVar1 = param_1->halfSize[2] - fVar1;
   param_4->halfHeight = fVar1;
   if (((*param_3 != 0.0) || (param_3[2] != 0.0)) && (fVar1 != 0.0)) {
     AnglesToAxis(param_3,param_5);
@@ -364,154 +362,134 @@ bool CM_SetupTriggerTest(Bounds *param_1,float *param_2,float *param_3,TriggerCa
     (param_4->bounds).halfSize[0] = ABS(param_5[2][0]) * fVar1 + fVar2;
     (param_4->bounds).halfSize[1] = ABS(param_5[2][1]) * fVar1 + fVar2;
     (param_4->bounds).halfSize[2] = ABS(param_5[2][2]) * fVar1 + fVar2;
-    uVar4 = __restgprlr_26(1);
-    return (bool)uVar4;
+    return true;
   }
   fVar1 = param_4->radius;
   fVar2 = param_4->halfHeight;
   (param_4->bounds).halfSize[0] = fVar1;
   (param_4->bounds).halfSize[1] = fVar1;
   (param_4->bounds).halfSize[2] = fVar2 + fVar1;
-  uVar4 = __restgprlr_26(0);
-  return (bool)uVar4;
+  return false;
 }
 
 
 // 824D09C0  CM_TestTriggerTouch  (qcommon/cm_trigger.cpp:168)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 int CM_TestTriggerTouch(Bounds *param_1,uint param_2,float *param_3,float *param_4)
 
 {
-  Bounds *pBVar1;
-  TriggerModel *pTVar2;
-  MapTriggers *pMVar3;
-  bool bVar5;
-  int iVar4;
+  TriggerModel *pTVar1;
+  MapTriggers *pMVar2;
+  bool bVar4;
+  int iVar3;
   TriggerCapsuleTest TStack_80;
   float afStack_60 [24];
   
-  pBVar1 = (Bounds *)__savegprlr_27(param_1);
-  pTVar2 = CM_GetTriggerModel(param_2);
-  pMVar3 = CM_TriggerSource(param_2);
-  bVar5 = CM_SetupTriggerTest(pBVar1,param_3,param_4,&TStack_80,(float (*) [3])afStack_60);
-  if (bVar5) {
-    iVar4 = CM_TestTriggerTouch_Rotated(pMVar3,pTVar2,(float (*) [3])afStack_60,&TStack_80);
-    iVar4 = __restgprlr_27(iVar4);
-    return iVar4;
+  pTVar1 = CM_GetTriggerModel(param_2);
+  pMVar2 = CM_TriggerSource(param_2);
+  bVar4 = CM_SetupTriggerTest(param_1,param_3,param_4,&TStack_80,(float (*) [3])afStack_60);
+  if (bVar4) {
+    iVar3 = CM_TestTriggerTouch_Rotated(pMVar2,pTVar1,(float (*) [3])afStack_60,&TStack_80);
+    return iVar3;
   }
-  iVar4 = CM_TestTriggerTouch_Unrotated(pMVar3,pTVar2,&TStack_80);
-  iVar4 = __restgprlr_27(iVar4);
-  return iVar4;
+  iVar3 = CM_TestTriggerTouch_Unrotated(pMVar2,pTVar1,&TStack_80);
+  return iVar3;
 }
 
 
 // 824D0A48  CM_TriggerHullContainsPoint  (qcommon/cm_trigger.cpp:185)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 int CM_TriggerHullContainsPoint(MapTriggers *param_1,TriggerHull *param_2,float *param_3)
 
 {
-  int iVar1;
-  ulonglong uVar2;
-  float *pfVar3;
-  ulonglong uVar4;
-  float *pfVar5;
-  uint uVar6;
-  float *pfVar7;
+  uint uVar1;
+  TriggerSlab *pTVar2;
   
-  uVar4 = (ulonglong)(int)param_3;
-  uVar2 = (ulonglong)(int)param_2;
-  iVar1 = __savegprlr_27(param_1);
-  if ((uVar2 & 0xffffffff) == 0) {
+  if (param_2 == (TriggerHull *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\../universal/bounds_inline.h"
                     ,0x1c1,0,"%s");
   }
-  if ((uVar4 & 0xffffffff) == 0) {
+  if (param_3 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\../universal/bounds_inline.h"
                     ,0x1c2,0,"%s");
   }
-  pfVar5 = (float *)uVar4;
-  pfVar3 = (float *)uVar2;
-  if (ABS(*pfVar5 - *pfVar3) < pfVar3[3]) {
-    if (ABS(pfVar5[1] - pfVar3[1]) < pfVar3[4]) {
-      if (ABS(pfVar5[2] - pfVar3[2]) < pfVar3[5]) {
-        uVar6 = 0;
-        if (*(ushort *)(pfVar3 + 7) != 0) {
-          do {
-            pfVar7 = (float *)((*(ushort *)((int)pfVar3 + 0x1e) + uVar6) * 0x14 +
-                              *(int *)(iVar1 + 0x14));
-            if (pfVar7[4] <=
-                ABS((pfVar7[2] * pfVar5[2] + pfVar7[1] * pfVar5[1] + *pfVar7 * *pfVar5) - pfVar7[3])
-               ) goto LAB_824d0b0c;
-            uVar6 = uVar6 + 1;
-          } while (uVar6 < *(ushort *)(pfVar3 + 7));
+  if (((ABS(*param_3 - (param_2->bounds).midPoint[0]) < (param_2->bounds).halfSize[0]) &&
+      (ABS(param_3[1] - (param_2->bounds).midPoint[1]) < (param_2->bounds).halfSize[1])) &&
+     (ABS(param_3[2] - (param_2->bounds).midPoint[2]) < (param_2->bounds).halfSize[2])) {
+    uVar1 = 0;
+    if (param_2->slabCount != 0) {
+      do {
+        pTVar2 = param_1->slabs + param_2->firstSlab + uVar1;
+        if (pTVar2->halfSize <=
+            ABS((pTVar2->dir[2] * param_3[2] +
+                pTVar2->dir[1] * param_3[1] + pTVar2->dir[0] * *param_3) - pTVar2->midPoint)) {
+          return 0;
         }
-        iVar1 = __restgprlr_27(1);
-        return iVar1;
-      }
+        uVar1 = uVar1 + 1;
+      } while (uVar1 < param_2->slabCount);
     }
+    return 1;
   }
-LAB_824d0b0c:
-  iVar1 = __restgprlr_27(0);
-  return iVar1;
+  return 0;
 }
 
 
 // 824D0B90  CM_TriggerModelPointContents  (qcommon/cm_trigger.cpp:206)
 
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
+
 int CM_TriggerModelPointContents(uint param_1,float *param_2)
 
 {
-  uint uVar1;
-  TriggerModel *pTVar2;
-  MapTriggers *pMVar3;
-  int iVar4;
-  ulonglong uVar5;
-  float *pfVar6;
-  uint uVar7;
-  TriggerSlab *pTVar8;
-  uint uVar9;
-  TriggerHull *pTVar10;
+  TriggerModel *pTVar1;
+  MapTriggers *pMVar2;
+  uint uVar3;
+  TriggerSlab *pTVar4;
+  uint uVar5;
+  uint uVar6;
+  TriggerHull *pTVar7;
   
-  uVar5 = (ulonglong)(int)param_2;
-  uVar1 = __savegprlr_22(param_1);
-  pTVar2 = CM_GetTriggerModel(uVar1);
-  pMVar3 = CM_TriggerSource(uVar1);
-  uVar1 = 0;
-  uVar9 = 0;
+  pTVar1 = CM_GetTriggerModel(param_1);
+  pMVar2 = CM_TriggerSource(param_1);
+  uVar5 = 0;
+  uVar6 = 0;
   do {
-    pTVar10 = pMVar3->hulls + pTVar2->firstHull + uVar9;
-    if (pTVar10 == (TriggerHull *)0x0) {
+    pTVar7 = pMVar2->hulls + pTVar1->firstHull + uVar6;
+    if (pTVar7 == (TriggerHull *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\../universal/bounds_inline.h"
                       ,0x1c1,0,"%s");
     }
-    if ((uVar5 & 0xffffffff) == 0) {
+    if (param_2 == (float *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\../universal/bounds_inline.h"
                       ,0x1c2,0,"%s");
     }
-    pfVar6 = (float *)uVar5;
-    if (ABS(*pfVar6 - (pTVar10->bounds).midPoint[0]) < (pTVar10->bounds).halfSize[0]) {
-      if (ABS(pfVar6[1] - (pTVar10->bounds).midPoint[1]) < (pTVar10->bounds).halfSize[1]) {
-        if (ABS(pfVar6[2] - (pTVar10->bounds).midPoint[2]) < (pTVar10->bounds).halfSize[2]) {
-          uVar7 = 0;
-          if (pTVar10->slabCount != 0) {
-            do {
-              pTVar8 = pMVar3->slabs + pTVar10->firstSlab + uVar7;
-              if (pTVar8->halfSize <=
-                  ABS((pTVar8->dir[2] * pfVar6[2] +
-                      pTVar8->dir[1] * pfVar6[1] + pTVar8->dir[0] * *pfVar6) - pTVar8->midPoint))
-              goto LAB_824d0cf4;
-              uVar7 = uVar7 + 1;
-            } while (uVar7 < pTVar10->slabCount);
-          }
-          uVar1 = pTVar10->contents | uVar1;
-        }
+    if (((ABS(*param_2 - (pTVar7->bounds).midPoint[0]) < (pTVar7->bounds).halfSize[0]) &&
+        (ABS(param_2[1] - (pTVar7->bounds).midPoint[1]) < (pTVar7->bounds).halfSize[1])) &&
+       (ABS(param_2[2] - (pTVar7->bounds).midPoint[2]) < (pTVar7->bounds).halfSize[2])) {
+      uVar3 = 0;
+      if (pTVar7->slabCount != 0) {
+        do {
+          pTVar4 = pMVar2->slabs + pTVar7->firstSlab + uVar3;
+          if (pTVar4->halfSize <=
+              ABS((pTVar4->dir[2] * param_2[2] +
+                  pTVar4->dir[1] * param_2[1] + pTVar4->dir[0] * *param_2) - pTVar4->midPoint))
+          goto LAB_824d0cf4;
+          uVar3 = uVar3 + 1;
+        } while (uVar3 < pTVar7->slabCount);
       }
+      uVar5 = pTVar7->contents | uVar5;
     }
 LAB_824d0cf4:
-    uVar9 = uVar9 + 1;
-    if (uVar9 == pTVar2->hullCount) {
-      iVar4 = __restgprlr_22(uVar1);
-      return iVar4;
+    uVar6 = uVar6 + 1;
+    if (uVar6 == pTVar1->hullCount) {
+      return uVar5;
     }
   } while( true );
 }
@@ -519,65 +497,54 @@ LAB_824d0cf4:
 
 // 824D0D10  CM_TestStageTriggerContainsPoint  (qcommon/cm_trigger.cpp:232)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
+
 int CM_TestStageTriggerContainsPoint(uint param_1,float *param_2)
 
 {
   TriggerModel *pTVar1;
   uint uVar2;
-  int iVar3;
-  ulonglong uVar4;
-  float *pfVar5;
-  uint uVar6;
-  TriggerSlab *pTVar7;
-  uint uVar8;
-  TriggerHull *pTVar9;
+  TriggerSlab *pTVar3;
+  uint uVar4;
+  TriggerHull *pTVar5;
   
-  uVar4 = (ulonglong)(int)param_2;
-  uVar2 = __savegprlr_23(param_1);
-  if (cm.stageTrigger.count <= uVar2) {
+  if (cm.stageTrigger.count <= param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_trigger.cpp",0xee,0
                     ,"triggerIndex doesn\'t index cm.stageTrigger.count\n\t%i not in [0, %i)");
   }
   pTVar1 = cm.stageTrigger.models;
-  uVar8 = 0;
+  uVar4 = 0;
   do {
-    pTVar9 = cm.stageTrigger.hulls + pTVar1[uVar2].firstHull + uVar8;
-    if (pTVar9 == (TriggerHull *)0x0) {
+    pTVar5 = cm.stageTrigger.hulls + pTVar1[param_1].firstHull + uVar4;
+    if (pTVar5 == (TriggerHull *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\../universal/bounds_inline.h"
                       ,0x1c1,0,"%s");
     }
-    if ((uVar4 & 0xffffffff) == 0) {
+    if (param_2 == (float *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\../universal/bounds_inline.h"
                       ,0x1c2,0,"%s");
     }
-    pfVar5 = (float *)uVar4;
-    if (ABS(*pfVar5 - (pTVar9->bounds).midPoint[0]) < (pTVar9->bounds).halfSize[0]) {
-      if (ABS(pfVar5[1] - (pTVar9->bounds).midPoint[1]) < (pTVar9->bounds).halfSize[1]) {
-        if (ABS(pfVar5[2] - (pTVar9->bounds).midPoint[2]) < (pTVar9->bounds).halfSize[2]) {
-          uVar6 = 0;
-          if (pTVar9->slabCount == 0) {
-LAB_824d0e94:
-            iVar3 = __restgprlr_23(1);
-            return iVar3;
-          }
-          while( true ) {
-            pTVar7 = cm.stageTrigger.slabs + pTVar9->firstSlab + uVar6;
-            if (pTVar7->halfSize <=
-                ABS((pTVar7->dir[2] * pfVar5[2] +
-                    pTVar7->dir[1] * pfVar5[1] + pTVar7->dir[0] * *pfVar5) - pTVar7->midPoint))
-            break;
-            uVar6 = uVar6 + 1;
-            if (pTVar9->slabCount <= uVar6) goto LAB_824d0e94;
-          }
+    if (((ABS(*param_2 - (pTVar5->bounds).midPoint[0]) < (pTVar5->bounds).halfSize[0]) &&
+        (ABS(param_2[1] - (pTVar5->bounds).midPoint[1]) < (pTVar5->bounds).halfSize[1])) &&
+       (ABS(param_2[2] - (pTVar5->bounds).midPoint[2]) < (pTVar5->bounds).halfSize[2])) {
+      uVar2 = 0;
+      if (pTVar5->slabCount == 0) {
+        return 1;
+      }
+      while (pTVar3 = cm.stageTrigger.slabs + pTVar5->firstSlab + uVar2,
+            ABS((pTVar3->dir[2] * param_2[2] +
+                pTVar3->dir[1] * param_2[1] + pTVar3->dir[0] * *param_2) - pTVar3->midPoint) <
+            pTVar3->halfSize) {
+        uVar2 = uVar2 + 1;
+        if (pTVar5->slabCount <= uVar2) {
+          return 1;
         }
       }
     }
-    uVar8 = uVar8 + 1;
-    if (uVar8 == pTVar1[uVar2].hullCount) {
-      iVar3 = __restgprlr_23(0);
-      return iVar3;
-    }
-  } while( true );
+    uVar4 = uVar4 + 1;
+  } while (uVar4 != pTVar1[param_1].hullCount);
+  return 0;
 }
 
 
@@ -599,6 +566,9 @@ int CM_TriggerModelBlocksStationarySightTrace_Slab
 
 // 824D0F18  CM_TriggerModelBlocksStationarySightTrace_UnrotatedHull  (qcommon/cm_trigger.cpp:272)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 int CM_TriggerModelBlocksStationarySightTrace_UnrotatedHull
               (MapTriggers *param_1,TriggerHull *param_2,TriggerCapsuleTrace *param_3)
 
@@ -606,61 +576,61 @@ int CM_TriggerModelBlocksStationarySightTrace_UnrotatedHull
   float fVar1;
   float fVar2;
   float fVar3;
-  int iVar4;
-  ulonglong uVar5;
-  float *pfVar6;
-  ulonglong uVar7;
-  float *pfVar8;
-  uint uVar9;
-  float *pfVar10;
+  float fVar4;
+  float fVar5;
+  float fVar6;
+  uint uVar7;
+  TriggerSlab *pTVar8;
   
-  uVar7 = (ulonglong)(int)param_3;
-  uVar5 = (ulonglong)(int)param_2;
-  iVar4 = __savegprlr_27(param_1);
-  if ((uVar5 & 0xffffffff) == 0) {
+  if (param_2 == (TriggerHull *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\../universal/bounds_inline.h"
                     ,0x223,0,"%s");
   }
-  if ((uVar7 & 0xffffffff) == 0) {
+  if (param_3 == (TriggerCapsuleTrace *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\../universal/bounds_inline.h"
                     ,0x224,0,"%s");
   }
-  pfVar6 = (float *)uVar5;
-  pfVar8 = (float *)uVar7;
-  fVar1 = 0.0;
-  fVar2 = fVar1;
-  if (ABS(*pfVar6 - *pfVar8) - (pfVar6[3] + pfVar8[3]) < 0.0) {
-    fVar2 = 1.0;
+  fVar1 = (param_3->bounds).midPoint[0];
+  fVar2 = (param_3->bounds).midPoint[1];
+  fVar3 = (param_3->bounds).midPoint[2];
+  fVar4 = 0.0;
+  fVar6 = fVar4;
+  if (ABS((param_2->bounds).midPoint[0] - fVar1) -
+      ((param_2->bounds).halfSize[0] + (param_3->bounds).halfSize[0]) < 0.0) {
+    fVar6 = 1.0;
   }
-  fVar3 = fVar1;
-  if (ABS(pfVar6[1] - pfVar8[1]) - (pfVar6[4] + pfVar8[4]) < 0.0) {
-    fVar3 = fVar2;
+  fVar5 = fVar4;
+  if (ABS((param_2->bounds).midPoint[1] - fVar2) -
+      ((param_2->bounds).halfSize[1] + (param_3->bounds).halfSize[1]) < 0.0) {
+    fVar5 = fVar6;
   }
-  if (ABS(pfVar6[2] - pfVar8[2]) - (pfVar6[5] + pfVar8[5]) < 0.0) {
-    fVar1 = fVar3;
+  if (ABS((param_2->bounds).midPoint[2] - fVar3) -
+      ((param_2->bounds).halfSize[2] + (param_3->bounds).halfSize[2]) < 0.0) {
+    fVar4 = fVar5;
   }
-  if (fVar1 == 0.0) {
-LAB_824d1020:
-    iVar4 = __restgprlr_27(0);
-    return iVar4;
+  if (fVar4 != 0.0) {
+    uVar7 = 0;
+    if (param_2->slabCount != 0) {
+      do {
+        pTVar8 = param_1->slabs + param_2->firstSlab + uVar7;
+        if (ABS(pTVar8->dir[2]) * param_3->halfHeight + param_3->radius + pTVar8->halfSize <
+            ABS((pTVar8->dir[2] * fVar3 + pTVar8->dir[1] * fVar2 + pTVar8->dir[0] * fVar1) -
+                pTVar8->midPoint)) {
+          return 0;
+        }
+        uVar7 = uVar7 + 1;
+      } while (uVar7 < param_2->slabCount);
+    }
+    return 1;
   }
-  uVar9 = 0;
-  if (*(ushort *)(pfVar6 + 7) != 0) {
-    do {
-      pfVar10 = (float *)((*(ushort *)((int)pfVar6 + 0x1e) + uVar9) * 0x14 + *(int *)(iVar4 + 0x14))
-      ;
-      if (ABS(pfVar10[2]) * pfVar8[7] + pfVar8[6] + pfVar10[4] <
-          ABS((pfVar10[2] * pfVar8[2] + pfVar10[1] * pfVar8[1] + *pfVar10 * *pfVar8) - pfVar10[3]))
-      goto LAB_824d1020;
-      uVar9 = uVar9 + 1;
-    } while (uVar9 < *(ushort *)(pfVar6 + 7));
-  }
-  iVar4 = __restgprlr_27(1);
-  return iVar4;
+  return 0;
 }
 
 
 // 824D10B8  CM_TriggerModelBlocksStationarySightTrace_RotatedHull  (qcommon/cm_trigger.cpp:291)
+
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 
 int CM_TriggerModelBlocksStationarySightTrace_RotatedHull
               (MapTriggers *param_1,TriggerHull *param_2,float (*param_3) [3],
@@ -673,76 +643,68 @@ int CM_TriggerModelBlocksStationarySightTrace_RotatedHull
   float fVar4;
   float fVar5;
   float fVar6;
-  int iVar7;
-  ulonglong uVar8;
-  float *pfVar9;
-  ulonglong uVar10;
-  float *pfVar11;
-  uint uVar12;
-  float *pfVar13;
+  uint uVar7;
+  TriggerSlab *pTVar8;
   float local_50;
   float local_4c;
   float local_48;
   
-  uVar10 = (ulonglong)(int)param_4;
-  uVar8 = (ulonglong)(int)param_2;
-  iVar7 = __savegprlr_26(param_1);
-  if ((uVar8 & 0xffffffff) == 0) {
+  if (param_2 == (TriggerHull *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\../universal/bounds_inline.h"
                     ,0x223,0,"%s");
   }
-  if ((uVar10 & 0xffffffff) == 0) {
+  if (param_4 == (TriggerCapsuleTrace *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\../universal/bounds_inline.h"
                     ,0x224,0,"%s");
   }
-  pfVar9 = (float *)uVar8;
-  pfVar11 = (float *)uVar10;
-  fVar1 = *pfVar11;
-  fVar2 = pfVar11[1];
-  fVar3 = pfVar11[2];
+  fVar1 = (param_4->bounds).midPoint[0];
+  fVar2 = (param_4->bounds).midPoint[1];
+  fVar3 = (param_4->bounds).midPoint[2];
   fVar4 = 0.0;
   fVar5 = fVar4;
-  if (ABS(*pfVar9 - fVar1) - (pfVar11[3] + pfVar9[3]) < 0.0) {
+  if (ABS((param_2->bounds).midPoint[0] - fVar1) -
+      ((param_4->bounds).halfSize[0] + (param_2->bounds).halfSize[0]) < 0.0) {
     fVar5 = 1.0;
   }
   fVar6 = fVar4;
-  if (ABS(pfVar9[1] - fVar2) - (pfVar11[4] + pfVar9[4]) < 0.0) {
+  if (ABS((param_2->bounds).midPoint[1] - fVar2) -
+      ((param_4->bounds).halfSize[1] + (param_2->bounds).halfSize[1]) < 0.0) {
     fVar6 = fVar5;
   }
-  if (ABS(pfVar9[2] - fVar3) - (pfVar11[5] + pfVar9[5]) < 0.0) {
+  if (ABS((param_2->bounds).midPoint[2] - fVar3) -
+      ((param_4->bounds).halfSize[2] + (param_2->bounds).halfSize[2]) < 0.0) {
     fVar4 = fVar6;
   }
   if (fVar4 != 0.0) {
-    uVar12 = 0;
-    if (*(short *)(pfVar9 + 7) != 0) {
+    uVar7 = 0;
+    if (param_2->slabCount != 0) {
       do {
-        pfVar13 = (float *)((*(ushort *)((int)pfVar9 + 0x1e) + uVar12) * 0x14 +
-                           *(int *)(iVar7 + 0x14));
-        Vec3Rotate(pfVar13,param_3,&local_50);
-        fVar1 = *pfVar11;
-        fVar2 = pfVar11[1];
-        fVar3 = pfVar11[2];
-        if (ABS(local_48) * pfVar11[7] + pfVar11[6] + pfVar13[4] <
-            ABS((fVar3 * local_48 + fVar2 * local_4c + fVar1 * local_50) - pfVar13[3]))
-        goto LAB_824d11c4;
-        uVar12 = uVar12 + 1;
-      } while (uVar12 < *(ushort *)(pfVar9 + 7));
+        pTVar8 = param_1->slabs + param_2->firstSlab + uVar7;
+        Vec3Rotate(pTVar8->dir,param_3,&local_50);
+        fVar1 = (param_4->bounds).midPoint[0];
+        fVar2 = (param_4->bounds).midPoint[1];
+        fVar3 = (param_4->bounds).midPoint[2];
+        if (ABS(local_48) * param_4->halfHeight + param_4->radius + pTVar8->halfSize <
+            ABS((fVar3 * local_48 + fVar2 * local_4c + fVar1 * local_50) - pTVar8->midPoint)) {
+          return 0;
+        }
+        uVar7 = uVar7 + 1;
+      } while (uVar7 < param_2->slabCount);
     }
-    fVar4 = pfVar11[7];
-    fVar5 = pfVar11[6];
-    if ((ABS(((*param_3)[2] * fVar3 + (*param_3)[1] * fVar2 + fVar1 * (*param_3)[0]) - *pfVar9) <=
-         ABS((*param_3)[2]) * fVar4 + fVar5 + pfVar9[3]) &&
-       (ABS((param_3[1][2] * fVar3 + param_3[1][1] * fVar2 + fVar1 * param_3[1][0]) - pfVar9[1]) <=
-        ABS(param_3[1][2]) * fVar4 + fVar5 + pfVar9[4])) {
-      iVar7 = __restgprlr_26(ABS((param_3[2][2] * fVar3 +
-                                 param_3[2][1] * fVar2 + fVar1 * param_3[2][0]) - pfVar9[2]) <=
-                             ABS(param_3[2][2]) * fVar4 + fVar5 + pfVar9[5]);
-      return iVar7;
+    fVar4 = param_4->halfHeight;
+    fVar5 = param_4->radius;
+    if ((ABS(((*param_3)[2] * fVar3 + (*param_3)[1] * fVar2 + fVar1 * (*param_3)[0]) -
+             (param_2->bounds).midPoint[0]) <=
+         ABS((*param_3)[2]) * fVar4 + fVar5 + (param_2->bounds).halfSize[0]) &&
+       (ABS((param_3[1][2] * fVar3 + param_3[1][1] * fVar2 + fVar1 * param_3[1][0]) -
+            (param_2->bounds).midPoint[1]) <=
+        ABS(param_3[1][2]) * fVar4 + fVar5 + (param_2->bounds).halfSize[1])) {
+      return (int)(ABS((param_3[2][2] * fVar3 + param_3[2][1] * fVar2 + fVar1 * param_3[2][0]) -
+                       (param_2->bounds).midPoint[2]) <=
+                  ABS(param_3[2][2]) * fVar4 + fVar5 + (param_2->bounds).halfSize[2]);
     }
   }
-LAB_824d11c4:
-  iVar7 = __restgprlr_26(0);
-  return iVar7;
+  return 0;
 }
 
 
@@ -829,85 +791,85 @@ int CM_TriggerModelSightTrace_MissedHull(TriggerCapsuleTraceResults *param_1)
 
 // 824D1460  CM_TriggerModelBlocksSightTrace_UnrotatedHull  (qcommon/cm_trigger.cpp:373)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 int CM_TriggerModelBlocksSightTrace_UnrotatedHull
               (MapTriggers *param_1,TriggerHull *param_2,TriggerCapsuleTrace *param_3)
 
 {
-  float *pfVar1;
+  float fVar1;
   float fVar2;
   float fVar3;
   float fVar4;
-  int iVar5;
-  TriggerCapsuleTrace *pTVar6;
-  float *pfVar7;
-  TriggerCapsuleTrace *pTVar9;
-  ulonglong uVar8;
-  float (*pafVar11) [3];
-  ulonglong uVar10;
-  ulonglong uVar12;
+  float fVar5;
+  float *pfVar6;
+  TriggerCapsuleTrace *pTVar7;
+  longlong lVar8;
+  float (*pafVar10) [3];
+  ulonglong uVar9;
+  ulonglong uVar11;
   
-  uVar12 = (ulonglong)(int)param_3;
-  uVar10 = (ulonglong)(int)param_2;
-  iVar5 = __savegprlr_27(param_1);
-  pTVar9 = (TriggerCapsuleTrace *)uVar12;
-  uVar8 = uVar12;
-  if ((uVar10 & 0xffffffff) == 0) {
-    uVar8 = 0;
+  lVar8 = (longlong)(int)param_3;
+  if (param_2 == (TriggerHull *)0x0) {
+    lVar8 = 0;
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\../universal/bounds_inline.h"
                     ,0x223,0,"%s");
   }
-  if ((uVar12 & 0xffffffff) == 0) {
-    uVar8 = 0;
+  if (param_3 == (TriggerCapsuleTrace *)0x0) {
+    lVar8 = 0;
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\../universal/bounds_inline.h"
                     ,0x224,0,"%s");
   }
-  pfVar7 = (float *)uVar10;
-  fVar2 = 0.0;
-  fVar3 = fVar2;
-  if (ABS(*pfVar7 - (pTVar9->bounds).midPoint[0]) - ((pTVar9->bounds).halfSize[0] + pfVar7[3]) < 0.0
-     ) {
-    fVar3 = 1.0;
+  fVar1 = (param_2->bounds).midPoint[0];
+  fVar2 = (param_2->bounds).halfSize[0];
+  fVar3 = 0.0;
+  fVar5 = fVar3;
+  if (ABS(fVar1 - (param_3->bounds).midPoint[0]) - ((param_3->bounds).halfSize[0] + fVar2) < 0.0) {
+    fVar5 = 1.0;
   }
-  fVar4 = fVar2;
-  if (ABS(pfVar7[1] - (pTVar9->bounds).midPoint[1]) - ((pTVar9->bounds).halfSize[1] + pfVar7[4]) <
-      0.0) {
-    fVar4 = fVar3;
+  fVar4 = fVar3;
+  if (ABS((param_2->bounds).midPoint[1] - (param_3->bounds).midPoint[1]) -
+      ((param_3->bounds).halfSize[1] + (param_2->bounds).halfSize[1]) < 0.0) {
+    fVar4 = fVar5;
   }
-  if (ABS(pfVar7[2] - (pTVar9->bounds).midPoint[2]) - ((pTVar9->bounds).halfSize[2] + pfVar7[5]) <
-      0.0) {
-    fVar2 = fVar4;
+  if (ABS((param_2->bounds).midPoint[2] - (param_3->bounds).midPoint[2]) -
+      ((param_3->bounds).halfSize[2] + (param_2->bounds).halfSize[2]) < 0.0) {
+    fVar3 = fVar4;
   }
-  if (fVar2 != 0.0) {
-    pafVar11 = s_axisIdentity;
-    pTVar6 = pTVar9;
+  if (fVar3 != 0.0) {
+    pafVar10 = s_axisIdentity;
+    pTVar7 = param_3;
     CM_TriggerModelSightTrace_Slab
-              (pTVar9,s_axisIdentity[0],*pfVar7,pfVar7[3],(TriggerCapsuleTraceResults *)uVar8);
+              (param_3,s_axisIdentity[0],fVar1,fVar2,(TriggerCapsuleTraceResults *)lVar8);
     CM_TriggerModelSightTrace_Slab
-              (pTVar6,pafVar11[1],pfVar7[1],pfVar7[4],(TriggerCapsuleTraceResults *)uVar8);
+              (pTVar7,pafVar10[1],(param_2->bounds).midPoint[1],(param_2->bounds).halfSize[1],
+               (TriggerCapsuleTraceResults *)lVar8);
     CM_TriggerModelSightTrace_Slab
-              (pTVar6,pafVar11[2],pfVar7[2],pfVar7[5],(TriggerCapsuleTraceResults *)uVar8);
-    if (*(short *)(pfVar7 + 7) == 0) {
-      iVar5 = __restgprlr_27(1);
-      return iVar5;
+              (pTVar7,pafVar10[2],(param_2->bounds).midPoint[2],(param_2->bounds).halfSize[2],
+               (TriggerCapsuleTraceResults *)lVar8);
+    if (param_2->slabCount == 0) {
+      return 1;
     }
-    uVar10 = 0;
+    uVar9 = 0;
     do {
-      uVar12 = *(ushort *)((int)pfVar7 + 0x1e) + uVar10;
-      pfVar1 = (float *)((int)((uVar12 + (uVar12 & 0x3fffffff) * 4 & 0xffffffff) << 2) +
-                        *(int *)(iVar5 + 0x14));
+      uVar11 = param_2->firstSlab + uVar9;
+      pfVar6 = (float *)((int)param_1->slabs->dir +
+                        (int)((uVar11 + (uVar11 & 0x3fffffff) * 4 & 0xffffffff) << 2));
       CM_TriggerModelSightTrace_Slab
-                (pTVar9,pfVar1,pfVar1[3],pfVar1[4],(TriggerCapsuleTraceResults *)uVar8);
-      uVar10 = uVar10 + 1;
-    } while ((uVar10 & 0xffffffff) < (ulonglong)*(ushort *)(pfVar7 + 7));
-    iVar5 = __restgprlr_27(1);
-    return iVar5;
+                (param_3,pfVar6,pfVar6[3],pfVar6[4],(TriggerCapsuleTraceResults *)lVar8);
+      uVar9 = uVar9 + 1;
+    } while ((uVar9 & 0xffffffff) < (ulonglong)param_2->slabCount);
+    return 1;
   }
-  iVar5 = __restgprlr_27(0);
-  return iVar5;
+  return 0;
 }
 
 
 // 824D1680  CM_TriggerModelBlocksSightTrace_RotatedHull  (qcommon/cm_trigger.cpp:405)
+
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 
 int CM_TriggerModelBlocksSightTrace_RotatedHull
               (MapTriggers *param_1,TriggerHull *param_2,float (*param_3) [3],
@@ -917,129 +879,117 @@ int CM_TriggerModelBlocksSightTrace_RotatedHull
   float fVar1;
   float fVar2;
   float fVar3;
-  int iVar4;
-  TriggerCapsuleTrace *pTVar5;
-  ulonglong uVar6;
-  float *pfVar7;
-  TriggerCapsuleTraceResults *pTVar8;
-  ulonglong uVar9;
-  TriggerCapsuleTrace *pTVar10;
-  float *pfVar11;
-  uint uVar12;
+  float fVar4;
+  float fVar5;
+  TriggerCapsuleTrace *pTVar6;
+  TriggerCapsuleTraceResults *pTVar7;
+  TriggerSlab *pTVar8;
+  uint uVar9;
   TriggerCapsuleTraceResults TStack_60;
   float local_50;
   float local_4c;
   float local_48;
   float local_44;
   
-  uVar9 = (ulonglong)(int)param_4;
-  uVar6 = (ulonglong)(int)param_2;
-  iVar4 = __savegprlr_26(param_1);
-  pTVar10 = (TriggerCapsuleTrace *)uVar9;
-  pTVar8 = (TriggerCapsuleTraceResults *)param_3;
-  if ((uVar6 & 0xffffffff) == 0) {
-    pTVar8 = (TriggerCapsuleTraceResults *)0x0;
+  pTVar7 = (TriggerCapsuleTraceResults *)param_3;
+  if (param_2 == (TriggerHull *)0x0) {
+    pTVar7 = (TriggerCapsuleTraceResults *)0x0;
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\../universal/bounds_inline.h"
                     ,0x223,0,"%s");
   }
-  if ((uVar9 & 0xffffffff) == 0) {
-    pTVar8 = (TriggerCapsuleTraceResults *)0x0;
+  if (param_4 == (TriggerCapsuleTrace *)0x0) {
+    pTVar7 = (TriggerCapsuleTraceResults *)0x0;
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\../universal/bounds_inline.h"
                     ,0x224,0,"%s");
   }
-  pfVar7 = (float *)uVar6;
-  fVar1 = 0.0;
-  fVar2 = fVar1;
-  if (ABS(*pfVar7 - (pTVar10->bounds).midPoint[0]) - ((pTVar10->bounds).halfSize[0] + pfVar7[3]) <
-      0.0) {
-    fVar2 = 1.0;
+  fVar1 = (param_2->bounds).midPoint[0];
+  fVar2 = (param_2->bounds).halfSize[0];
+  fVar3 = 0.0;
+  fVar5 = fVar3;
+  if (ABS(fVar1 - (param_4->bounds).midPoint[0]) - ((param_4->bounds).halfSize[0] + fVar2) < 0.0) {
+    fVar5 = 1.0;
   }
-  fVar3 = fVar1;
-  if (ABS(pfVar7[1] - (pTVar10->bounds).midPoint[1]) - ((pTVar10->bounds).halfSize[1] + pfVar7[4]) <
-      0.0) {
-    fVar3 = fVar2;
+  fVar4 = fVar3;
+  if (ABS((param_2->bounds).midPoint[1] - (param_4->bounds).midPoint[1]) -
+      ((param_4->bounds).halfSize[1] + (param_2->bounds).halfSize[1]) < 0.0) {
+    fVar4 = fVar5;
   }
-  if (ABS(pfVar7[2] - (pTVar10->bounds).midPoint[2]) - ((pTVar10->bounds).halfSize[2] + pfVar7[5]) <
-      0.0) {
-    fVar1 = fVar3;
+  if (ABS((param_2->bounds).midPoint[2] - (param_4->bounds).midPoint[2]) -
+      ((param_4->bounds).halfSize[2] + (param_2->bounds).halfSize[2]) < 0.0) {
+    fVar3 = fVar4;
   }
-  if (fVar1 != 0.0) {
+  if (fVar3 != 0.0) {
     local_4c = 1.0;
     local_48 = 1.0;
     local_44 = 1.0;
     local_50 = -1.0;
-    pTVar5 = pTVar10;
-    CM_TriggerModelSightTrace_Slab(pTVar10,*param_3,*pfVar7,pfVar7[3],pTVar8);
+    pTVar6 = param_4;
+    CM_TriggerModelSightTrace_Slab(param_4,*param_3,fVar1,fVar2,pTVar7);
     CM_TriggerModelSightTrace_Slab
-              (pTVar5,&((TriggerCapsuleTraceResults *)param_3)->leaveDenom,pfVar7[1],pfVar7[4],
-               pTVar8);
+              (pTVar6,param_3[1],(param_2->bounds).midPoint[1],(param_2->bounds).halfSize[1],pTVar7)
+    ;
     CM_TriggerModelSightTrace_Slab
-              (pTVar5,&((TriggerCapsuleTraceResults *)((int)param_3 + 0x10))->leaveNumer,pfVar7[2],
-               pfVar7[5],pTVar8);
+              (pTVar6,param_3[2],(param_2->bounds).midPoint[2],(param_2->bounds).halfSize[2],pTVar7)
+    ;
     if (local_44 * local_50 < local_48 * local_4c) {
-      if (*(short *)(pfVar7 + 7) != 0) {
-        uVar12 = 0;
+      if (param_2->slabCount != 0) {
+        uVar9 = 0;
         do {
-          pTVar8 = &TStack_60;
-          pfVar11 = (float *)((*(ushort *)((int)pfVar7 + 0x1e) + uVar12) * 0x14 +
-                             *(int *)(iVar4 + 0x14));
-          Vec3Rotate(pfVar11,param_3,&pTVar8->enterNumer);
-          CM_TriggerModelSightTrace_Slab(pTVar10,&TStack_60.enterNumer,pfVar11[3],pfVar11[4],pTVar8)
-          ;
-          uVar12 = uVar12 + 1;
-        } while (uVar12 < *(ushort *)(pfVar7 + 7));
-        iVar4 = __restgprlr_26(local_44 * local_50 < local_48 * local_4c);
-        return iVar4;
+          pTVar7 = &TStack_60;
+          pTVar8 = param_1->slabs + param_2->firstSlab + uVar9;
+          Vec3Rotate(pTVar8->dir,param_3,&pTVar7->enterNumer);
+          CM_TriggerModelSightTrace_Slab
+                    (param_4,&TStack_60.enterNumer,pTVar8->midPoint,pTVar8->halfSize,pTVar7);
+          uVar9 = uVar9 + 1;
+        } while (uVar9 < param_2->slabCount);
+        return (uint)LZCOUNT((uint)(local_48 * local_4c <= local_44 * local_50)) >> 5;
       }
-      iVar4 = __restgprlr_26(1);
-      return iVar4;
+      return 1;
     }
   }
-  iVar4 = __restgprlr_26(0);
-  return iVar4;
+  return 0;
 }
 
 
 // 824D18B0  CM_TriggerModelBlocksSightTrace_Unrotated  (qcommon/cm_trigger.cpp:439)
+
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 
 int CM_TriggerModelBlocksSightTrace_Unrotated
               (MapTriggers *param_1,TriggerModel *param_2,TriggerCapsuleTrace *param_3,int param_4)
 
 {
   int iVar1;
-  int iVar2;
-  longlong lVar3;
-  code *pcVar4;
-  uint uVar5;
+  code *pcVar2;
+  uint uVar3;
   
-  lVar3 = (longlong)(int)param_3;
-  iVar1 = __savegprlr_26(param_1);
-  iVar2 = (int)lVar3;
-  if (*(float *)(iVar2 + 0x28) * *(float *)(iVar2 + 0x28) +
-      *(float *)(iVar2 + 0x20) * *(float *)(iVar2 + 0x20) +
-      *(float *)(iVar2 + 0x24) * *(float *)(iVar2 + 0x24) == 0.0) {
-    pcVar4 = CM_TriggerModelBlocksStationarySightTrace_UnrotatedHull;
+  if (param_3->halfDelta[2] * param_3->halfDelta[2] +
+      param_3->halfDelta[0] * param_3->halfDelta[0] + param_3->halfDelta[1] * param_3->halfDelta[1]
+      == 0.0) {
+    pcVar2 = CM_TriggerModelBlocksStationarySightTrace_UnrotatedHull;
   }
   else {
-    pcVar4 = CM_TriggerModelBlocksSightTrace_UnrotatedHull;
+    pcVar2 = CM_TriggerModelBlocksSightTrace_UnrotatedHull;
   }
-  uVar5 = 0;
+  uVar3 = 0;
   while( true ) {
-    iVar2 = (param_2->firstHull + uVar5) * 0x20 + *(int *)(iVar1 + 0xc);
-    if (((*(uint *)(iVar2 + 0x18) & param_4) != 0) &&
-       (iVar2 = (*pcVar4)(iVar1,iVar2,lVar3), iVar2 != 0)) break;
-    uVar5 = uVar5 + 1;
-    if (uVar5 == param_2->hullCount) {
-      iVar2 = __restgprlr_26(0);
-      return iVar2;
+    if (((param_1->hulls[param_2->firstHull + uVar3].contents & param_4) != 0) &&
+       (iVar1 = (*pcVar2)(param_1,param_1->hulls + param_2->firstHull + uVar3,param_3), iVar1 != 0))
+    break;
+    uVar3 = uVar3 + 1;
+    if (uVar3 == param_2->hullCount) {
+      return 0;
     }
   }
-  iVar2 = __restgprlr_26(1);
-  return iVar2;
+  return 1;
 }
 
 
 // 824D1970  CM_TriggerModelBlocksSightTrace_Rotated  (qcommon/cm_trigger.cpp:467)
+
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 
 int CM_TriggerModelBlocksSightTrace_Rotated
               (MapTriggers *param_1,TriggerModel *param_2,float (*param_3) [3],
@@ -1047,53 +997,44 @@ int CM_TriggerModelBlocksSightTrace_Rotated
 
 {
   int iVar1;
-  int iVar2;
-  longlong lVar3;
-  longlong lVar4;
-  longlong lVar5;
-  code *pcVar6;
-  uint uVar7;
+  code *pcVar2;
+  uint uVar3;
   
-  lVar5 = (longlong)(int)param_4;
-  lVar4 = (longlong)(int)param_3;
-  lVar3 = (longlong)(int)param_2;
-  iVar1 = __savegprlr_25(param_1,lVar3,lVar4);
-  iVar2 = (int)lVar5;
-  if (*(float *)(iVar2 + 0x28) * *(float *)(iVar2 + 0x28) +
-      *(float *)(iVar2 + 0x20) * *(float *)(iVar2 + 0x20) +
-      *(float *)(iVar2 + 0x24) * *(float *)(iVar2 + 0x24) == 0.0) {
-    pcVar6 = CM_TriggerModelBlocksStationarySightTrace_RotatedHull;
+  if (param_4->halfDelta[2] * param_4->halfDelta[2] +
+      param_4->halfDelta[0] * param_4->halfDelta[0] + param_4->halfDelta[1] * param_4->halfDelta[1]
+      == 0.0) {
+    pcVar2 = CM_TriggerModelBlocksStationarySightTrace_RotatedHull;
   }
   else {
-    pcVar6 = CM_TriggerModelBlocksSightTrace_RotatedHull;
+    pcVar2 = CM_TriggerModelBlocksSightTrace_RotatedHull;
   }
-  uVar7 = 0;
+  uVar3 = 0;
   while( true ) {
-    iVar2 = (*(ushort *)((int)lVar3 + 6) + uVar7) * 0x20 + *(int *)(iVar1 + 0xc);
-    if (((*(uint *)(iVar2 + 0x18) & param_5) != 0) &&
-       (iVar2 = (*pcVar6)(iVar1,iVar2,lVar4,lVar5), iVar2 != 0)) break;
-    uVar7 = uVar7 + 1;
-    if (uVar7 == *(ushort *)((int)lVar3 + 4)) {
-      iVar2 = __restgprlr_25(0);
-      return iVar2;
+    if (((param_1->hulls[param_2->firstHull + uVar3].contents & param_5) != 0) &&
+       (iVar1 = (*pcVar2)(param_1,param_1->hulls + param_2->firstHull + uVar3,param_3,param_4),
+       iVar1 != 0)) break;
+    uVar3 = uVar3 + 1;
+    if (uVar3 == param_2->hullCount) {
+      return 0;
     }
   }
-  iVar2 = __restgprlr_25(1);
-  return iVar2;
+  return 1;
 }
 
 
 // 824D1A38  CM_TransformedTriggerModelSightTrace  (qcommon/cm_trigger.cpp:495)
+
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
 
 int CM_TransformedTriggerModelSightTrace
               (float *param_1,float *param_2,Bounds *param_3,uint param_4,int param_5,float *param_6
               ,float *param_7)
 
 {
-  float *pfVar1;
-  TriggerModel *pTVar2;
+  TriggerModel *pTVar1;
+  MapTriggers *pMVar2;
   int iVar3;
-  MapTriggers *pMVar4;
   float local_f0;
   float local_ec;
   float local_e8;
@@ -1112,13 +1053,11 @@ int CM_TransformedTriggerModelSightTrace
   float local_90;
   TriggerCapsuleTrace local_80 [2];
   
-  pfVar1 = (float *)__savegprlr_23(param_1);
-  pTVar2 = CM_GetTriggerModel(param_4);
-  if ((param_5 & pTVar2->contents) == 0) {
-    iVar3 = __restgprlr_23(0);
-    return iVar3;
+  pTVar1 = CM_GetTriggerModel(param_4);
+  if ((param_5 & pTVar1->contents) == 0) {
+    return 0;
   }
-  pMVar4 = CM_TriggerSource(param_4);
+  pMVar2 = CM_TriggerSource(param_4);
   if (param_3->halfSize[0] != param_3->halfSize[1]) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_trigger.cpp",0x200,
                     0,"bounds->halfSize[0] == bounds->halfSize[1]\n\t%g, %g");
@@ -1132,11 +1071,11 @@ int CM_TransformedTriggerModelSightTrace
   local_dc = param_3->midPoint[1] - param_6[1];
   local_80[0].radius = param_3->halfSize[0];
   local_80[0].halfHeight = param_3->halfSize[2] - local_80[0].radius;
-  local_f0 = *pfVar1 + local_e0;
+  local_f0 = *param_1 + local_e0;
   local_e0 = *param_2 + local_e0;
-  local_e8 = pfVar1[2] + local_d8;
+  local_e8 = param_1[2] + local_d8;
   local_d8 = param_2[2] + local_d8;
-  local_ec = pfVar1[1] + local_dc;
+  local_ec = param_1[1] + local_dc;
   local_dc = param_2[1] + local_dc;
   if (((*param_7 == 0.0) && (param_7[1] == 0.0)) && (param_7[2] == 0.0)) {
     local_80[0].bounds.midPoint[0] = (local_e0 + local_f0) * 0.5;
@@ -1167,8 +1106,7 @@ int CM_TransformedTriggerModelSightTrace
            ABS(local_90) * local_80[0].halfHeight + ABS(local_80[0].halfDelta[2]) +
            local_80[0].radius;
       iVar3 = CM_TriggerModelBlocksSightTrace_Rotated
-                        (pMVar4,pTVar2,(float (*) [3])afStack_b0,local_80,param_5);
-      iVar3 = __restgprlr_23(iVar3);
+                        (pMVar2,pTVar1,(float (*) [3])afStack_b0,local_80,param_5);
       return iVar3;
     }
   }
@@ -1176,8 +1114,7 @@ int CM_TransformedTriggerModelSightTrace
   local_80[0].bounds.halfSize[1] = ABS(local_80[0].halfDelta[1]) + local_80[0].radius;
   local_80[0].bounds.halfSize[2] =
        ABS(local_80[0].halfDelta[2]) + local_80[0].halfHeight + local_80[0].radius;
-  iVar3 = CM_TriggerModelBlocksSightTrace_Unrotated(pMVar4,pTVar2,local_80,param_5);
-  iVar3 = __restgprlr_23(iVar3);
+  iVar3 = CM_TriggerModelBlocksSightTrace_Unrotated(pMVar2,pTVar1,local_80,param_5);
   return iVar3;
 }
 

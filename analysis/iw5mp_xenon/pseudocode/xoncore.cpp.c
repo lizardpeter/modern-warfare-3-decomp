@@ -146,75 +146,64 @@ undefined4 XLookupSchemaIndexFromOrdinal(ulong param_1,ulong *param_2)
 
 // 828B9F60  XOnlinepGetContextSize  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/online/common/xoncore.cpp:181)
 
-undefined4
-XOnlinepGetContextSize
-          (ulong param_1,ulong param_2,ulong param_3,ulong param_4,ulong *param_5,ulong *param_6,
-          ulong *param_7)
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
+int XOnlinepGetContextSize
+              (ulong param_1,ulong param_2,ulong param_3,ulong param_4,ulong *param_5,ulong *param_6
+              ,ulong *param_7)
 
 {
-  ulong uVar1;
-  int iVar2;
-  undefined4 uVar3;
-  ulonglong uVar4;
-  ulonglong uVar5;
-  ulonglong uVar6;
-  ulonglong uVar7;
-  uint uVar8;
-  ulonglong uVar9;
+  int iVar1;
+  uint uVar2;
+  ulonglong uVar3;
+  int iVar4;
   SCHEMA_TABLE_ENTRY aSStack_50 [3];
   
-  uVar7 = (ulonglong)(int)param_7;
-  uVar6 = (ulonglong)(int)param_6;
-  uVar5 = (ulonglong)(int)param_5;
-  uVar9 = (ulonglong)(int)param_3;
-  uVar4 = (ulonglong)(int)param_2;
-  uVar1 = __savegprlr_26(param_1);
-  iVar2 = CSchemaData::GetSchemaEntry((CSchemaData *)&g_Schema,uVar1,aSStack_50);
-  if (-1 < iVar2) {
-    if ((uVar4 & 8) == 0) {
-      uVar9 = (ulonglong)aSStack_50[0].MaxRequestAggregateSize;
+  uVar3 = (ulonglong)(int)param_3;
+  iVar1 = CSchemaData::GetSchemaEntry((CSchemaData *)&g_Schema,param_1,aSStack_50);
+  if (-1 < iVar1) {
+    if ((param_2 & 8) == 0) {
+      uVar3 = (ulonglong)aSStack_50[0].MaxRequestAggregateSize;
     }
-    if ((uVar4 & 0x100) != 0) {
-      uVar9 = (uVar9 + 0x10 & 0xfffffff0) + 0x104;
+    if ((param_2 & 0x100) != 0) {
+      uVar3 = (uVar3 + 0x10 & 0xfffffff0) + 0x104;
     }
-    uVar8 = (int)((uVar9 * 0x78 & 0xffffffff) / 100) + 3U & 0xfffffffc;
-    if ((uVar6 & 0xffffffff) != 0) {
-      *(uint *)uVar6 = uVar8;
+    uVar2 = (int)((uVar3 * 0x78 & 0xffffffff) / 100) + 3U & 0xfffffffc;
+    if (param_6 != (ulong *)0x0) {
+      *param_6 = uVar2;
     }
-    if ((uVar7 & 0xffffffff) != 0) {
-      *(undefined4 *)uVar7 = 0x1000;
+    if (param_7 != (ulong *)0x0) {
+      *param_7 = 0x1000;
     }
-    if ((uVar5 & 0xffffffff) != 0) {
-      iVar2 = 0x4c;
-      if ((uVar4 & 2) != 0) {
-        iVar2 = 0x50;
+    if (param_5 != (ulong *)0x0) {
+      iVar4 = 0x4c;
+      if ((param_2 & 2) != 0) {
+        iVar4 = 0x50;
       }
-      if ((uVar4 & 0x200) != 0) {
-        iVar2 = iVar2 + 4;
+      if ((param_2 & 0x200) != 0) {
+        iVar4 = iVar4 + 4;
       }
-      *(int *)uVar5 = iVar2 + uVar8 + param_4 + 0x2e20;
+      *param_5 = iVar4 + uVar2 + param_4 + 0x2e20;
     }
   }
-  uVar3 = __restgprlr_26();
-  return uVar3;
+  return iVar1;
 }
 
 
 // 828BA038  XOnlineSetupUserBuffer  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/online/common/xoncore.cpp:270)
 
-undefined4
-XOnlineSetupUserBuffer
-          (ulong param_1,ulong param_2,ulong param_3,ulong param_4,uchar *param_5,ulong param_6,
-          uchar *param_7,ulong param_8,_XOVERLAPPED *param_9,uchar **param_10,ulong *param_11,
-          ulong param_12,CXLiveAsyncTask **param_13)
+/* WARNING: Function: __savegprlr_21 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_21 replaced with injection: xenon_save_restore */
+
+int XOnlineSetupUserBuffer
+              (ulong param_1,ulong param_2,ulong param_3,ulong param_4,uchar *param_5,ulong param_6,
+              uchar *param_7,ulong param_8,_XOVERLAPPED *param_9,uchar **param_10,ulong *param_11,
+              ulong param_12,CXLiveAsyncTask **param_13)
 
 {
-  CXLiveAsyncTaskInternal *pCVar1;
-  ulong uVar2;
-  int iVar3;
-  undefined4 uVar4;
-  ulonglong uVar5;
-  int iVar6;
+  int iVar1;
+  int iVar2;
   undefined4 *in_stack_0000005c;
   int *in_stack_00000064;
   ulong in_stack_0000006c;
@@ -229,69 +218,59 @@ XOnlineSetupUserBuffer
   _XOVERLAPPED *in_stack_ffffff24;
   undefined1 local_70 [112];
   
-  uVar5 = (ulonglong)(int)param_3;
-  uVar2 = __savegprlr_21(param_1);
-  iVar6 = 0x4c;
-  if ((uVar5 & 0x200) != 0) {
-    iVar6 = 0x50;
+  iVar2 = 0x4c;
+  if ((param_3 & 0x200) != 0) {
+    iVar2 = 0x50;
   }
   XMsgInProcessCall(0xfc,0x58004,local_70,0);
-  pCVar1 = (CXLiveAsyncTaskInternal *)((int)&((CXLiveAsyncTask *)param_5)->m_dwOrdinal + iVar6);
-  iVar3 = CXLiveAsyncTask::Initialize
-                    ((CXLiveAsyncTask *)param_5,uVar2,(CSchemaData *)&g_Schema,param_2,(ulong)uVar5,
-                     pCVar1,param_4 + 0x1e20,in_stack_0000006c,in_stack_ffffff08,in_stack_ffffff0c,
-                     in_stack_ffffff10,in_stack_ffffff14,in_stack_ffffff18,in_stack_ffffff1c,
-                     in_stack_ffffff20,in_stack_ffffff24);
-  if (-1 < iVar3) {
-    *in_stack_0000005c = pCVar1[1].m_XrlTransaction.m_abRequestHandleBuffer + (param_4 - 0x78);
-    *in_stack_00000064 = param_6 - (param_4 + 0x1e20 + iVar6 + 0x1000);
+  iVar1 = CXLiveAsyncTask::Initialize
+                    ((CXLiveAsyncTask *)param_5,param_1,(CSchemaData *)&g_Schema,param_2,param_3,
+                     (CXLiveAsyncTaskInternal *)(param_5 + iVar2),param_4 + 0x1e20,in_stack_0000006c
+                     ,in_stack_ffffff08,in_stack_ffffff0c,in_stack_ffffff10,in_stack_ffffff14,
+                     in_stack_ffffff18,in_stack_ffffff1c,in_stack_ffffff20,in_stack_ffffff24);
+  if (-1 < iVar1) {
+    *in_stack_0000005c =
+         ((CXLiveAsyncTaskInternal *)(param_5 + iVar2))[1].m_XrlTransaction.m_abRequestHandleBuffer
+         + (param_4 - 0x78);
+    *in_stack_00000064 = param_6 - (param_4 + 0x1e20 + iVar2 + 0x1000);
     *in_stack_00000074 = param_5;
   }
-  uVar4 = __restgprlr_21();
-  return uVar4;
+  return iVar1;
 }
 
 
 // 828BA130  XOnlineMarshalArguments  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/online/common/xoncore.cpp:373)
 
-undefined4
-XOnlineMarshalArguments
-          (uchar *param_1,ulong param_2,ulong param_3,ulong param_4,ulong param_5,
-          CArgumentList *param_6,uchar *param_7,ulong *param_8)
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
+
+int XOnlineMarshalArguments
+              (uchar *param_1,ulong param_2,ulong param_3,ulong param_4,ulong param_5,
+              CArgumentList *param_6,uchar *param_7,ulong *param_8)
 
 {
-  CMarshaller *this;
   int iVar1;
-  undefined4 uVar2;
-  ulonglong uVar3;
   CMarshaller *local_50 [20];
   
-  uVar3 = (ulonglong)(int)param_2;
-  this = (CMarshaller *)__savegprlr_24(param_1);
   local_50[0] = (CMarshaller *)0x0;
-  if ((uVar3 & 0xffffffff) < 0x440) {
-    if (this != (CMarshaller *)0x0) {
-      iVar1 = -0x7ff8ff86;
-      goto LAB_828ba1f8;
+  if (param_2 < 0x440) {
+    if (param_1 != (uchar *)0x0) {
+      return 0x8007007a;
     }
     iVar1 = XamAlloc(0,0x440,local_50);
-    this = local_50[0];
-    if (-1 < iVar1) goto LAB_828ba1a0;
+    param_1 = (uchar *)local_50[0];
+    if (iVar1 < 0) goto LAB_828ba1e8;
   }
-  else {
-LAB_828ba1a0:
-    iVar1 = CMarshaller::Initialize
-                      (this,(CSchemaData *)&g_Schema,param_3,param_5,param_6,param_7,*param_8,
-                       ~param_4 >> 2 & 1);
-    if ((-1 < iVar1) && (iVar1 = CMarshaller::Marshal(this), -1 < iVar1)) {
-      *param_8 = (this->m_WireBuffer).m_cbConsumed;
-    }
+  iVar1 = CMarshaller::Initialize
+                    ((CMarshaller *)param_1,(CSchemaData *)&g_Schema,param_3,param_5,param_6,param_7
+                     ,*param_8,~param_4 >> 2 & 1);
+  if ((-1 < iVar1) && (iVar1 = CMarshaller::Marshal((CMarshaller *)param_1), -1 < iVar1)) {
+    *param_8 = (((CMarshaller *)param_1)->m_WireBuffer).m_cbConsumed;
   }
+LAB_828ba1e8:
   if (local_50[0] != (CMarshaller *)0x0) {
     XamFree();
   }
-LAB_828ba1f8:
-  uVar2 = __restgprlr_24(iVar1);
-  return uVar2;
+  return iVar1;
 }
 

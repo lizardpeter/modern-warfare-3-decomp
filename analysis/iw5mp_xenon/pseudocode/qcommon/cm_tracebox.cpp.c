@@ -226,14 +226,16 @@ int CM_TraceBox(TraceExtents *param_1,Bounds *param_2,float param_3)
 
 // 824CFE08  CM_TraceSphere  (qcommon/cm_tracebox.cpp:154)
 
+/* WARNING: Function: __savefpr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_22 replaced with injection: xenon_save_restore */
+
 int CM_TraceSphere(TraceExtents *param_1,float *param_2,float param_3,float param_4)
 
 {
   float fVar1;
   float fVar2;
   float fVar3;
-  int iVar4;
-  double extraout_f1;
+  double dVar4;
   double dVar5;
   double dVar6;
   double dVar7;
@@ -245,22 +247,21 @@ int CM_TraceSphere(TraceExtents *param_1,float *param_2,float param_3,float para
   double dVar13;
   double dVar14;
   
+  dVar4 = (double)param_3;
   dVar5 = (double)param_4;
-  iVar4 = __savefpr_22((double)param_3,param_1);
-  dVar14 = (double)(*(float *)(iVar4 + 0x54) - *(float *)(iVar4 + 0x44));
-  dVar13 = (double)(*(float *)(iVar4 + 0x58) - *(float *)(iVar4 + 0x48));
-  dVar12 = (double)(*(float *)(iVar4 + 0x50) - *(float *)(iVar4 + 0x40));
-  dVar10 = (double)(*param_2 - *(float *)(iVar4 + 0x40));
-  dVar9 = (double)(param_2[1] - *(float *)(iVar4 + 0x44));
+  dVar14 = (double)(param_1->end[1] - param_1->start[1]);
+  dVar13 = (double)(param_1->end[2] - param_1->start[2]);
+  dVar12 = (double)(param_1->end[0] - param_1->start[0]);
+  dVar10 = (double)(*param_2 - param_1->start[0]);
+  dVar9 = (double)(param_2[1] - param_1->start[1]);
   dVar11 = 0.0;
-  dVar8 = (double)(param_2[2] - *(float *)(iVar4 + 0x48));
+  dVar8 = (double)(param_2[2] - param_1->start[2]);
   dVar6 = (double)(float)(dVar12 * dVar12 +
                          (double)(float)(dVar13 * dVar13 + (double)(float)(dVar14 * dVar14)));
   dVar7 = 1.0;
   if (-dVar6 < 0.0) {
     dVar7 = dVar6;
   }
-  dVar6 = extraout_f1;
   if (dVar7 == 0.0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_tracebox.cpp",0xa6,
                     0,"%s");
@@ -278,7 +279,6 @@ int CM_TraceSphere(TraceExtents *param_1,float *param_2,float param_3,float para
   fVar1 = (float)(dVar14 * dVar11 + dVar9);
   fVar2 = (float)(dVar13 * dVar11 + dVar8);
   fVar3 = (float)(dVar11 * dVar12 + dVar10);
-  iVar4 = __restfpr_22((float)(dVar6 * dVar6) <= fVar3 * fVar3 + fVar2 * fVar2 + fVar1 * fVar1);
-  return iVar4;
+  return (int)((float)(dVar4 * dVar4) <= fVar3 * fVar3 + fVar2 * fVar2 + fVar1 * fVar1);
 }
 

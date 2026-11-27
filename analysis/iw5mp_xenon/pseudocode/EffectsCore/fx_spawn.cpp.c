@@ -90,6 +90,8 @@ void FXI_PutSpawnCmdRead(FxSystem *param_1,uint param_2)
 
 // 8243D168  FX_InitSpawnCmd  (EffectsCore/fx_spawn.cpp:61)
 
+/* WARNING: Function: __savegprlr_20 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_20 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void FX_InitSpawnCmd(FxSystem *param_1,uint param_2,ushort param_3,ushort param_4,uint param_5,
@@ -100,9 +102,8 @@ void FX_InitSpawnCmd(FxSystem *param_1,uint param_2,ushort param_3,ushort param_
 {
   FXSpawnCmd *pFVar1;
   uint uVar2;
-  FxSystem *pFVar3;
-  int iVar4;
-  FxEffect *pFVar5;
+  int iVar3;
+  FxEffect *pFVar4;
   FxEffectDef *in_stack_00000054;
   int in_stack_0000005c;
   float *in_stack_00000064;
@@ -116,19 +117,18 @@ void FX_InitSpawnCmd(FxSystem *param_1,uint param_2,ushort param_3,ushort param_
   int in_stack_000000a4;
   uint local_70 [28];
   
-  pFVar3 = (FxSystem *)__savegprlr_20(param_1,param_2);
   local_70[0] = 0xffffffff;
-  if (pFVar3 == (FxSystem *)0x0) {
+  if (param_1 == (FxSystem *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_spawn.cpp",0x44
                     ,0,"%s");
   }
-  if (((pFVar3->systemFlags & 1) == 0) &&
-     (iVar4 = FXI_GetSpawnCmdWrite(pFVar3,local_70), uVar2 = local_70[0], iVar4 != 0)) {
+  if (((param_1->systemFlags & 1) == 0) &&
+     (iVar3 = FXI_GetSpawnCmdWrite(param_1,local_70), uVar2 = local_70[0], iVar3 != 0)) {
     if (local_70[0] == 0xffffffff) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_spawn.cpp",
                       0x4a,0,"%s");
     }
-    pFVar1 = pFVar3->spawnCmdList;
+    pFVar1 = param_1->spawnCmdList;
     pFVar1[uVar2].info.remoteDef = in_stack_00000054;
     pFVar1[uVar2].info.msecBegin = in_stack_0000005c;
     pFVar1[uVar2].info.frame.origin[0] = *in_stack_00000064;
@@ -153,16 +153,15 @@ void FX_InitSpawnCmd(FxSystem *param_1,uint param_2,ushort param_3,ushort param_
       FX_SpatialFrameSetIdentity(&pFVar1[uVar2].info.boltOffset);
     }
     if (in_stack_00000086 != 0xffff) {
-      pFVar5 = FX_EffectFromHandle(pFVar3,in_stack_00000086);
-      if (pFVar5 == (FxEffect *)0x0) {
+      pFVar4 = FX_EffectFromHandle(param_1,in_stack_00000086);
+      if (pFVar4 == (FxEffect *)0x0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_spawn.cpp",
                         0x73,0,"%s");
       }
-      FX_AddRefToEffect(pFVar3,pFVar5);
+      FX_AddRefToEffect(param_1,pFVar4);
     }
-    FXI_PutSpawnCmdRead(pFVar3,uVar2);
+    FXI_PutSpawnCmdRead(param_1,uVar2);
   }
-  __restgprlr_20();
   return;
 }
 
@@ -198,13 +197,14 @@ void FXW_PlayEffectWithParent
 
 // 8243D3A8  FXW_ElemEmitEffect  (EffectsCore/fx_spawn.cpp:134)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void FXW_ElemEmitEffect(FxSystem *param_1,ushort param_2,ushort param_3,uint param_4,ushort param_5,
                        FxEffectDef *param_6,int param_7,float *param_8,float (*param_9) [3])
 
 {
-  FxSystem *pFVar1;
   FxEffectDef *in_stack_ffffff38;
   int in_stack_ffffff3c;
   float *in_stack_ffffff40;
@@ -213,22 +213,22 @@ void FXW_ElemEmitEffect(FxSystem *param_1,ushort param_2,ushort param_3,uint par
   int in_stack_ffffff4c;
   ushort in_stack_ffffff52;
   uint in_stack_ffffff54;
-  undefined1 in_stack_ffffff5b;
-  undefined1 in_stack_ffffff5f;
+  bool in_stack_ffffff5b;
+  bool in_stack_ffffff5f;
   int in_stack_ffffff60;
   
-  pFVar1 = (FxSystem *)__savegprlr_29(param_1);
-  FX_InitSpawnCmd(pFVar1,0,param_2,param_3,param_4,-1,-1,1,in_stack_ffffff38,in_stack_ffffff3c,
+  FX_InitSpawnCmd(param_1,0,param_2,param_3,param_4,-1,-1,1,in_stack_ffffff38,in_stack_ffffff3c,
                   in_stack_ffffff40,in_stack_ffffff44,in_stack_ffffff48,in_stack_ffffff4c,
-                  in_stack_ffffff52,in_stack_ffffff54,(bool)in_stack_ffffff5b,
-                  (bool)in_stack_ffffff5f,in_stack_ffffff60);
-  __restgprlr_29();
+                  in_stack_ffffff52,in_stack_ffffff54,in_stack_ffffff5b,in_stack_ffffff5f,
+                  in_stack_ffffff60);
   return;
 }
 
 
 // 8243D420  FXW_SpawnEffect  (EffectsCore/fx_spawn.cpp:144)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void FXW_SpawnEffect(FxSystem *param_1,SpawnEffectInfo *param_2)
@@ -237,24 +237,22 @@ void FXW_SpawnEffect(FxSystem *param_1,SpawnEffectInfo *param_2)
   ushort uVar1;
   FXSpawnCmd *pFVar2;
   uint uVar3;
-  FxSystem *pFVar4;
-  int iVar5;
-  FxEffect *pFVar6;
+  int iVar4;
+  FxEffect *pFVar5;
   uint local_50 [20];
   
-  pFVar4 = (FxSystem *)__savegprlr_25(param_1);
   local_50[0] = 0xffffffff;
-  if (pFVar4 == (FxSystem *)0x0) {
+  if (param_1 == (FxSystem *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_spawn.cpp",0x97
                     ,0,"%s");
   }
-  if (((pFVar4->systemFlags & 1) == 0) &&
-     (iVar5 = FXI_GetSpawnCmdWrite(pFVar4,local_50), uVar3 = local_50[0], iVar5 != 0)) {
+  if (((param_1->systemFlags & 1) == 0) &&
+     (iVar4 = FXI_GetSpawnCmdWrite(param_1,local_50), uVar3 = local_50[0], iVar4 != 0)) {
     if (local_50[0] == 0xffffffff) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_spawn.cpp",
                       0x9d,0,"%s");
     }
-    pFVar2 = pFVar4->spawnCmdList;
+    pFVar2 = param_1->spawnCmdList;
     memcpy();
     uVar1 = param_2->owner;
     pFVar2[uVar3].elemClass = 0xffffffff;
@@ -264,42 +262,40 @@ void FXW_SpawnEffect(FxSystem *param_1,SpawnEffectInfo *param_2)
     pFVar2[uVar3].elemParent = 0xffff;
     pFVar2[uVar3].timeValue = -1;
     if (uVar1 != 0xffff) {
-      pFVar6 = FX_EffectFromHandle(pFVar4,uVar1);
-      if (pFVar6 == (FxEffect *)0x0) {
+      pFVar5 = FX_EffectFromHandle(param_1,uVar1);
+      if (pFVar5 == (FxEffect *)0x0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_spawn.cpp",
                         0xb4,0,"%s");
       }
-      FX_AddRefToEffect(pFVar4,pFVar6);
+      FX_AddRefToEffect(param_1,pFVar5);
     }
-    FXI_PutSpawnCmdRead(pFVar4,uVar3);
+    FXI_PutSpawnCmdRead(param_1,uVar3);
   }
-  __restgprlr_25();
   return;
 }
 
 
 // 8243CFE0  FX_AddRefToEffect  (EffectsCore/fx_system.h:174)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void FX_AddRefToEffect(FxSystem *param_1,FxEffect *param_2)
 
 {
-  FxSystem *pFVar1;
-  uint uVar2;
+  uint uVar1;
   
-  pFVar1 = (FxSystem *)__savegprlr_26(param_1);
-  uVar2 = FXW_GetEffectStatus(pFVar1,param_2);
-  if ((uVar2 & 0x1fff) == 0) {
+  uVar1 = FXW_GetEffectStatus(param_1,param_2);
+  if ((uVar1 & 0x1fff) == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\fx_system.h",0xb3,
                     0,"%s\n\t(status & FX_STATUS_REF_COUNT_MASK) = %i");
   }
-  if (0x1ffe < (uVar2 & 0x1fff)) {
+  if (0x1ffe < (uVar1 & 0x1fff)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\fx_system.h",0xb4,
                     0,"%s\n\t(status & FX_STATUS_REF_COUNT_MASK) = %i");
   }
-  FXW_PutEffectStatus(pFVar1,param_2,uVar2 + 1);
-  __restgprlr_26();
+  FXW_PutEffectStatus(param_1,param_2,uVar1 + 1);
   return;
 }
 

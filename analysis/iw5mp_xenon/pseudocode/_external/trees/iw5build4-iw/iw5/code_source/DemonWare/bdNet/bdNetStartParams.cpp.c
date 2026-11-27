@@ -2,29 +2,29 @@
 
 // 8292C688  bdNetStartParams  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdnet/bdnetstartparams.cpp:24)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 bdNetStartParams * __thiscall bdNetStartParams::bdNetStartParams(bdNetStartParams *this)
 
 {
-  undefined1 *puVar1;
-  bdNetStartParams *pbVar2;
   bdArray<bdString> *this_00;
-  undefined1 *puStack00000014;
+  bdNetStartParams *pbStack00000014;
   bdString local_30 [12];
   
-  puVar1 = (undefined1 *)__savegprlr_29(this);
-  this_00 = (bdArray<bdString> *)(puVar1 + 8);
-  *puVar1 = 0;
-  *(undefined2 *)(puVar1 + 2) = 0x401;
-  *(undefined4 *)(puVar1 + 4) = 0;
-  *(undefined4 *)(puVar1 + 8) = 0;
-  *(undefined4 *)(puVar1 + 0xc) = 0;
-  *(undefined4 *)(puVar1 + 0x10) = 0;
-  local_30[0].m_string = puVar1 + 0x18;
-  *(undefined4 *)(puVar1 + 0x18) = 0;
-  *(undefined4 *)(puVar1 + 0x1c) = 0;
-  *(undefined4 *)(puVar1 + 0x20) = 0;
-  puVar1[0x24] = 1;
-  puStack00000014 = puVar1;
+  this_00 = &this->m_natTravHosts;
+  this->m_onlineGame = false;
+  this->m_gamePort = 0x401;
+  this->m_socket = (bdSocket *)0x0;
+  (this->m_natTravHosts).m_data = (bdString *)0x0;
+  (this->m_natTravHosts).m_capacity = 0;
+  (this->m_natTravHosts).m_size = 0;
+  local_30[0].m_string = (char *)&this->m_localAddresses;
+  (this->m_localAddresses).m_data = (bdInetAddr *)0x0;
+  (this->m_localAddresses).m_capacity = 0;
+  (this->m_localAddresses).m_size = 0;
+  this->m_useAnyIP = true;
+  pbStack00000014 = this;
   bdString::bdString(local_30,"stun.us.demonware.net");
   bdArray<bdString>::pushBack(this_00,local_30);
   bdString::~bdString(local_30);
@@ -37,8 +37,7 @@ bdNetStartParams * __thiscall bdNetStartParams::bdNetStartParams(bdNetStartParam
   bdString::bdString(local_30,"stun.au.demonware.net");
   bdArray<bdString>::pushBack(this_00,local_30);
   bdString::~bdString(local_30);
-  *(undefined2 *)(puVar1 + 0x14) = 0xc02;
-  pbVar2 = (bdNetStartParams *)__restgprlr_29(puVar1);
-  return pbVar2;
+  this->m_natTravPort = 0xc02;
+  return this;
 }
 

@@ -2,7 +2,8 @@
 
 // 824B6540  EntTagInfoChanged  (game/linkto.cpp:16)
 
-/* WARNING: Type propagation algorithm not settling */
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
@@ -14,31 +15,28 @@ void EntTagInfoChanged(gentity_s *param_1)
   float fVar3;
   tagInfo_s *ptVar4;
   gentity_s *pgVar5;
-  gentity_s *pgVar6;
-  char *pcVar7;
-  int iVar8;
-  bool bVar9;
-  byte bVar10;
+  char *pcVar6;
+  int iVar7;
+  byte bVar8;
   
-  pgVar6 = (gentity_s *)__savegprlr_28(param_1);
-  if (pgVar6 == (gentity_s *)0x0) {
+  if (param_1 == (gentity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_main_mp.cpp",0x957,0
                     ,"%s");
   }
-  if (pgVar6->tagChildren == (gentity_s *)0x0) {
-    bVar10 = (pgVar6->s).clientLinkInfo.flags & 0xfe;
+  if (param_1->tagChildren == (gentity_s *)0x0) {
+    bVar8 = (param_1->s).clientLinkInfo.flags & 0xfe;
   }
   else {
-    bVar10 = (pgVar6->s).clientLinkInfo.flags | 1;
+    bVar8 = (param_1->s).clientLinkInfo.flags | 1;
   }
-  ptVar4 = pgVar6->tagInfo;
-  (pgVar6->s).clientLinkInfo.flags = bVar10;
-  if ((ptVar4 != (tagInfo_s *)0x0) && (pgVar6->client == (gclient_s *)0x0)) {
+  ptVar4 = param_1->tagInfo;
+  (param_1->s).clientLinkInfo.flags = bVar8;
+  if ((ptVar4 != (tagInfo_s *)0x0) && (param_1->client == (gclient_s *)0x0)) {
     if (ptVar4->parent == (gentity_s *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_main_mp.cpp",0x964
                       ,0,"%s");
     }
-    ptVar4 = pgVar6->tagInfo;
+    ptVar4 = param_1->tagInfo;
     pgVar5 = ptVar4->parent;
     if (((pgVar5->r).svFlags & 1) == 0) {
       if (ptVar4->name == 0) {
@@ -46,25 +44,24 @@ void EntTagInfoChanged(gentity_s *param_1)
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_main_mp.cpp",
                           0x972,0,"%s");
         }
-        bVar10 = (pgVar6->s).clientLinkInfo.flags | 2;
-        (pgVar6->s).clientLinkInfo.tagName = '\0';
+        bVar8 = (param_1->s).clientLinkInfo.flags | 2;
+        (param_1->s).clientLinkInfo.tagName = '\0';
       }
       else {
-        pcVar7 = SL_ConvertToString((uint)ptVar4->name);
-        iVar8 = G_TagIndex(pcVar7);
-        bVar10 = (pgVar6->s).clientLinkInfo.flags;
-        (pgVar6->s).clientLinkInfo.tagName = (uchar)iVar8;
-        bVar10 = bVar10 & 0xfd;
+        pcVar6 = SL_ConvertToString((uint)ptVar4->name);
+        iVar7 = G_TagIndex(pcVar6);
+        bVar8 = (param_1->s).clientLinkInfo.flags;
+        (param_1->s).clientLinkInfo.tagName = (uchar)iVar7;
+        bVar8 = bVar8 & 0xfd;
       }
-      ptVar4 = pgVar6->tagInfo;
-      (pgVar6->s).clientLinkInfo.flags = bVar10;
-      (pgVar6->s).clientLinkInfo.parentId = (short)(pgVar5->s).number + 1;
-      (pgVar6->s).lerp.pos.trDelta[0] = ptVar4->axis[3][0];
-      (pgVar6->s).lerp.pos.trDelta[1] = ptVar4->axis[3][1];
-      (pgVar6->s).lerp.pos.trDelta[2] = ptVar4->axis[3][2];
-      AxisToAngles(pgVar6->tagInfo->axis,(pgVar6->s).lerp.apos.trDelta);
-      bVar9 = ResolveParentClientMask(pgVar6,pgVar5);
-      __restgprlr_28(bVar9);
+      ptVar4 = param_1->tagInfo;
+      (param_1->s).clientLinkInfo.flags = bVar8;
+      (param_1->s).clientLinkInfo.parentId = (short)(pgVar5->s).number + 1;
+      (param_1->s).lerp.pos.trDelta[0] = ptVar4->axis[3][0];
+      (param_1->s).lerp.pos.trDelta[1] = ptVar4->axis[3][1];
+      (param_1->s).lerp.pos.trDelta[2] = ptVar4->axis[3][2];
+      AxisToAngles(param_1->tagInfo->axis,(param_1->s).lerp.apos.trDelta);
+      ResolveParentClientMask(param_1,pgVar5);
       return;
     }
     fVar1 = (pgVar5->s).lerp.pos.trDelta[1];
@@ -76,8 +73,7 @@ void EntTagInfoChanged(gentity_s *param_1)
                       );
     }
   }
-  (pgVar6->s).clientLinkInfo.parentId = 0;
-  __restgprlr_28();
+  (param_1->s).clientLinkInfo.parentId = 0;
   return;
 }
 
@@ -108,6 +104,8 @@ void SlideMoveClientLinkedStep
 
 // 824B65A8  EntUnlink_Internal  (game/linkto.cpp:43)
 
+/* WARNING: Function: __savegprlr_21 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_21 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
@@ -119,79 +117,75 @@ void EntUnlink_Internal(gentity_s *param_1,bool param_2)
   gentity_s *pgVar3;
   gentity_s *pgVar4;
   int iVar5;
-  gentity_s *pgVar6;
-  trajectory_t *ptVar7;
-  bool bVar8;
-  ulonglong uVar9;
-  float *pfVar10;
-  float *pfVar11;
-  gentity_s *pgVar12;
-  double dVar13;
+  bool bVar6;
+  float *pfVar7;
+  float *pfVar8;
+  trajectory_t *ptVar9;
+  gentity_s *pgVar10;
+  double dVar11;
   float local_b0;
   float local_ac;
   undefined4 local_a8;
   trace_t atStack_a0 [3];
   
-  uVar9 = (ulonglong)param_2;
-  pgVar6 = (gentity_s *)__savegprlr_21(param_1);
-  ptVar1 = pgVar6->tagInfo;
+  ptVar1 = param_1->tagInfo;
   if (ptVar1 == (tagInfo_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\linkto.cpp",0x36,0,"%s");
   }
-  ptVar7 = &(pgVar6->s).lerp.pos;
-  (pgVar6->s).lerp.eFlags = (pgVar6->s).lerp.eFlags ^ 2;
-  bVar8 = Com_IsRagdollTrajectory(ptVar7);
-  pfVar10 = (pgVar6->r).currentOrigin;
-  G_SetOrigin(pgVar6,pfVar10);
-  pfVar11 = (pgVar6->r).currentAngles;
-  G_SetAngle(pgVar6,pfVar11);
-  if (bVar8) {
-    ptVar7->trType = TR_FIRST_RAGDOLL;
+  ptVar9 = &(param_1->s).lerp.pos;
+  (param_1->s).lerp.eFlags = (param_1->s).lerp.eFlags ^ 2;
+  bVar6 = Com_IsRagdollTrajectory(ptVar9);
+  pfVar7 = (param_1->r).currentOrigin;
+  G_SetOrigin(param_1,pfVar7);
+  pfVar8 = (param_1->r).currentAngles;
+  G_SetAngle(param_1,pfVar8);
+  if (bVar6) {
+    ptVar9->trType = TR_FIRST_RAGDOLL;
   }
-  pgVar2 = pgVar6->client;
+  pgVar2 = param_1->client;
   if (pgVar2 != (gclient_s *)0x0) {
     local_b0 = (pgVar2->ps).viewangles[0];
     local_ac = (pgVar2->ps).viewangles[1];
-    dVar13 = 0.0;
+    dVar11 = 0.0;
     local_a8 = 0;
-    SetClientViewAngle(pgVar6,&local_b0);
-    *pfVar11 = (float)dVar13;
+    SetClientViewAngle(param_1,&local_b0);
+    *pfVar8 = (float)dVar11;
   }
   pgVar3 = ptVar1->parent;
   if (pgVar3 == (gentity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\linkto.cpp",0x70,0,"%s");
   }
   pgVar4 = pgVar3->tagChildren;
-  if (pgVar3->tagChildren != pgVar6) {
+  if (pgVar3->tagChildren != param_1) {
     do {
-      pgVar12 = pgVar4;
-      if (pgVar12->tagInfo == (tagInfo_s *)0x0) {
+      pgVar10 = pgVar4;
+      if (pgVar10->tagInfo == (tagInfo_s *)0x0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\linkto.cpp",0x76,0,
                         "%s");
       }
-      pgVar4 = pgVar12->tagInfo->next;
+      pgVar4 = pgVar10->tagInfo->next;
       if (pgVar4 == (gentity_s *)0x0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\linkto.cpp",0x79,0,
                         "%s");
       }
-    } while (pgVar4 != pgVar6);
-    if (pgVar12 != (gentity_s *)0x0) {
-      pgVar12->tagInfo->next = ptVar1->next;
+    } while (pgVar4 != param_1);
+    if (pgVar10 != (gentity_s *)0x0) {
+      pgVar10->tagInfo->next = ptVar1->next;
       goto LAB_824b673c;
     }
   }
   pgVar3->tagChildren = ptVar1->next;
 LAB_824b673c:
-  pgVar2 = pgVar6->client;
-  pgVar6->tagInfo = (tagInfo_s *)0x0;
+  pgVar2 = param_1->client;
+  param_1->tagInfo = (tagInfo_s *)0x0;
   if (pgVar2 != (gclient_s *)0x0) {
     if (((pgVar2->ps).linkFlags & 4U) != 0) {
-      SetClientViewAngle(pgVar6,(pgVar2->ps).linkWeaponAngles);
-      (pgVar6->client->ps).linkFlags = (pgVar6->client->ps).linkFlags & 0xfffffff3;
-      (pgVar6->client->ps).linkWeaponEnt = 0x7ff;
+      SetClientViewAngle(param_1,(pgVar2->ps).linkWeaponAngles);
+      (param_1->client->ps).linkFlags = (param_1->client->ps).linkFlags & 0xfffffff3;
+      (param_1->client->ps).linkWeaponEnt = 0x7ff;
     }
-    (pgVar6->client->ps).linkFlags = (pgVar6->client->ps).linkFlags & 0xfffffff9;
-    pgVar2 = pgVar6->client;
+    (param_1->client->ps).linkFlags = (param_1->client->ps).linkFlags & 0xfffffff9;
+    pgVar2 = param_1->client;
     iVar5 = (pgVar2->ps).pm_type;
     if (iVar5 == 1) {
       (pgVar2->ps).pm_type = 0;
@@ -200,147 +194,134 @@ LAB_824b673c:
       (pgVar2->ps).pm_type = 8;
     }
   }
-  UpdateLinkInfoForClients(pgVar6);
+  UpdateLinkInfoForClients(param_1);
   Scr_SetString(&ptVar1->name,0);
   MT_Free(ptVar1,0x70);
-  if (((pgVar6->client != (gclient_s *)0x0) && ((uVar9 & 0xff) == 0)) &&
-     ((G_TraceCapsule(atStack_a0,pfVar10,pfVar10,&playerBox,(pgVar6->s).number,0x2810011),
+  if (((param_1->client != (gclient_s *)0x0) && (!param_2)) &&
+     ((G_TraceCapsule(atStack_a0,pfVar7,pfVar7,&playerBox,(param_1->s).number,0x2810011),
       atStack_a0[0].startsolid != false || (atStack_a0[0].allsolid != false)))) {
     Com_PrintWarning(1,"Unlinking the player in solid at (%f, %f, %f)\n");
   }
-  __restgprlr_21();
   return;
 }
 
 
 // 824B6878  EntLinkTo_Internal  (game/linkto.cpp:175)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
 int EntLinkTo_Internal(gentity_s *param_1,gentity_s *param_2,uint param_3)
 
 {
-  uint *puVar1;
-  gentity_s *pgVar2;
-  gclient_s *pgVar3;
-  gentity_s *pgVar4;
-  ulonglong uVar5;
-  gentity_s *pgVar6;
-  int iVar7;
-  tagInfo_s *ptVar8;
-  int iVar9;
-  uint uVar10;
-  ulonglong uVar11;
-  ulonglong uVar12;
+  gclient_s *pgVar1;
+  int iVar2;
+  tagInfo_s *ptVar3;
+  int iVar4;
+  gentity_s *pgVar5;
   
-  uVar11 = (ulonglong)(int)param_3;
-  uVar12 = (ulonglong)(int)param_2;
-  uVar5 = __savegprlr_24(param_1);
-  if ((uVar12 & 0xffffffff) == 0) {
+  if (param_2 == (gentity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\linkto.cpp",0xb4,0,"%s");
   }
-  pgVar4 = (gentity_s *)uVar5;
-  if ((pgVar4->flags & 0x1000U) == 0) {
+  if ((param_1->flags & 0x1000U) == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\linkto.cpp",0xb5,0,"%s");
   }
-  if (pgVar4->tagInfo != (tagInfo_s *)0x0) {
-    EntUnlink_Internal(pgVar4,true);
+  if (param_1->tagInfo != (tagInfo_s *)0x0) {
+    EntUnlink_Internal(param_1,true);
   }
-  if (pgVar4->tagInfo != (tagInfo_s *)0x0) {
+  if (param_1->tagInfo != (tagInfo_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\linkto.cpp",0xba,0,"%s");
   }
-  pgVar6 = (gentity_s *)uVar12;
-  uVar10 = (uint)uVar11;
-  if ((uVar11 & 0xffffffff) == 0) {
-    iVar7 = -1;
+  pgVar5 = param_2;
+  if (param_3 == 0) {
+    iVar2 = -1;
   }
   else {
-    iVar7 = SV_DObjExists(pgVar6);
-    if ((iVar7 == 0) || (iVar7 = SV_DObjGetBoneIndex(pgVar6,uVar10), iVar7 < 0)) {
-LAB_824b6960:
-      iVar7 = __restgprlr_24(0);
-      return iVar7;
+    iVar2 = SV_DObjExists(param_2);
+    if ((iVar2 == 0) || (iVar2 = SV_DObjGetBoneIndex(param_2,param_3), iVar2 < 0)) {
+      return 0;
     }
   }
   while( true ) {
-    if ((uVar12 & 0xffffffff) == 0) {
+    if (pgVar5 == (gentity_s *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\linkto.cpp",0xcd,0,"%s"
                      );
     }
-    if ((uVar12 & 0xffffffff) == (uVar5 & 0xffffffff)) goto LAB_824b6960;
-    puVar1 = *(uint **)((int)uVar12 + 0x214);
-    if (puVar1 == (uint *)0x0) break;
-    uVar12 = (ulonglong)*puVar1;
+    if (pgVar5 == param_1) {
+      return 0;
+    }
+    if (pgVar5->tagInfo == (tagInfo_s *)0x0) break;
+    pgVar5 = pgVar5->tagInfo->parent;
   }
-  ptVar8 = MT_Alloc(0x70,0x12);
-  ptVar8->parent = pgVar6;
-  ptVar8->blendToParent = false;
-  ptVar8->name = 0;
-  if (((uVar11 & 0xffffffff) != 0) && (iVar9 = SL_IsLowercaseString(uVar10), iVar9 == 0)) {
-    SL_ConvertToString(uVar10);
+  ptVar3 = MT_Alloc(0x70,0x12);
+  ptVar3->parent = param_2;
+  ptVar3->blendToParent = false;
+  ptVar3->name = 0;
+  if ((param_3 != 0) && (iVar4 = SL_IsLowercaseString(param_3), iVar4 == 0)) {
+    SL_ConvertToString(param_3);
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\linkto.cpp",0xd9,0,
                     "%s\n\t(SL_ConvertToString( tagName )) = %s");
   }
-  Scr_SetString(&ptVar8->name,uVar10);
-  pgVar2 = pgVar6->tagChildren;
-  ptVar8->index = iVar7;
-  ptVar8->next = pgVar2;
+  Scr_SetString(&ptVar3->name,param_3);
+  pgVar5 = param_2->tagChildren;
+  ptVar3->index = iVar2;
+  ptVar3->next = pgVar5;
   memset();
-  pgVar6->tagChildren = pgVar4;
-  pgVar4->tagInfo = ptVar8;
+  param_2->tagChildren = param_1;
+  param_1->tagInfo = ptVar3;
   memset();
-  pgVar3 = pgVar4->client;
-  if (pgVar3 != (gclient_s *)0x0) {
-    (pgVar3->ps).linkFlags = (pgVar3->ps).linkFlags & 0xfffffffd;
-    pgVar3 = pgVar4->client;
-    if (((pgVar3->ps).linkFlags & 4U) == 0) {
-      iVar7 = (pgVar3->ps).pm_type;
-      if (iVar7 == 0) {
-        iVar7 = 1;
+  pgVar1 = param_1->client;
+  if (pgVar1 != (gclient_s *)0x0) {
+    (pgVar1->ps).linkFlags = (pgVar1->ps).linkFlags & 0xfffffffd;
+    pgVar1 = param_1->client;
+    if (((pgVar1->ps).linkFlags & 4U) == 0) {
+      iVar2 = (pgVar1->ps).pm_type;
+      if (iVar2 == 0) {
+        iVar2 = 1;
       }
       else {
-        if (iVar7 != 8) goto LAB_824b6ab0;
-        iVar7 = 9;
+        if (iVar2 != 8) goto LAB_824b6ab0;
+        iVar2 = 9;
       }
-      (pgVar3->ps).pm_type = iVar7;
+      (pgVar1->ps).pm_type = iVar2;
     }
   }
 LAB_824b6ab0:
-  UpdateLinkInfoForClients(pgVar4);
-  iVar7 = __restgprlr_24(1);
-  return iVar7;
+  UpdateLinkInfoForClients(param_1);
+  return 1;
 }
 
 
 // 824B86D8  G_EntLinkTo  (game/linkto.cpp:270)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
 int G_EntLinkTo(gentity_s *param_1,gentity_s *param_2,uint param_3)
 
 {
-  gentity_s *pgVar1;
-  int iVar2;
+  int iVar1;
   
-  pgVar1 = (gentity_s *)__savegprlr_29(param_1);
   Profile_Begin(0xf6);
-  iVar2 = EntLinkTo_Internal(pgVar1,param_2,param_3);
-  if (iVar2 == 0) {
+  iVar1 = EntLinkTo_Internal(param_1,param_2,param_3);
+  if (iVar1 == 0) {
     Profile_EndInternal((double *)0x0);
-    iVar2 = __restgprlr_29(0);
-    return iVar2;
+    return 0;
   }
-  G_CalcTagAxis(pgVar1,0);
+  G_CalcTagAxis(param_1,0);
   Profile_EndInternal((double *)0x0);
-  iVar2 = __restgprlr_29(1);
-  return iVar2;
+  return 1;
 }
 
 
 // 824B6AC8  G_EntLinkToWithOffset  (game/linkto.cpp:287)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
@@ -349,25 +330,21 @@ int G_EntLinkToWithOffset
 
 {
   tagInfo_s *ptVar1;
-  gentity_s *pgVar2;
-  int iVar3;
+  int iVar2;
   
-  pgVar2 = (gentity_s *)__savegprlr_27(param_1);
   Profile_Begin(0xf6);
-  iVar3 = EntLinkTo_Internal(pgVar2,param_2,param_3);
-  if (iVar3 == 0) {
+  iVar2 = EntLinkTo_Internal(param_1,param_2,param_3);
+  if (iVar2 == 0) {
     Profile_EndInternal((double *)0x0);
-    iVar3 = __restgprlr_27(0);
-    return iVar3;
+    return 0;
   }
-  ptVar1 = pgVar2->tagInfo;
+  ptVar1 = param_1->tagInfo;
   AnglesToAxis(param_5,ptVar1->axis);
   ptVar1->axis[3][0] = *param_4;
   ptVar1->axis[3][1] = param_4[1];
   ptVar1->axis[3][2] = param_4[2];
   Profile_EndInternal((double *)0x0);
-  iVar3 = __restgprlr_27(1);
-  return iVar3;
+  return 1;
 }
 
 
@@ -445,6 +422,8 @@ bool G_EntIsLinkedToAncestor(gentity_s *param_1,gentity_s *param_2)
 
 // 824B6C38  G_UpdateTagInfo  (game/linkto.cpp:351)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
@@ -452,12 +431,10 @@ void G_UpdateTagInfo(gentity_s *param_1,int param_2)
 
 {
   tagInfo_s *ptVar1;
-  gentity_s *pgVar2;
-  int iVar3;
+  int iVar2;
   
-  pgVar2 = (gentity_s *)__savegprlr_29(param_1);
   Profile_Begin(0xf8);
-  ptVar1 = pgVar2->tagInfo;
+  ptVar1 = param_1->tagInfo;
   if (ptVar1 == (tagInfo_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\linkto.cpp",0x166,0,"%s")
     ;
@@ -468,27 +445,25 @@ void G_UpdateTagInfo(gentity_s *param_1,int param_2)
   }
   else {
     if ((param_2 == 0) ||
-       (iVar3 = SV_DObjGetBoneIndex(ptVar1->parent,(uint)ptVar1->name), iVar3 < 0)) {
+       (iVar2 = SV_DObjGetBoneIndex(ptVar1->parent,(uint)ptVar1->name), iVar2 < 0)) {
       if (ptVar1->index != -1) {
         ptVar1->index = -1;
-        UpdateLinkInfoForClients(pgVar2);
+        UpdateLinkInfoForClients(param_1);
       }
       Profile_Begin(0xf7);
-      if (pgVar2->tagInfo != (tagInfo_s *)0x0) {
-        EntUnlink_Internal(pgVar2,false);
+      if (param_1->tagInfo != (tagInfo_s *)0x0) {
+        EntUnlink_Internal(param_1,false);
       }
       Profile_EndInternal((double *)0x0);
-      iVar3 = Profile_EndInternal((double *)0x0);
-      __restgprlr_29(iVar3);
+      Profile_EndInternal((double *)0x0);
       return;
     }
-    if (ptVar1->index == iVar3) goto LAB_824b6d2c;
-    ptVar1->index = iVar3;
+    if (ptVar1->index == iVar2) goto LAB_824b6d2c;
+    ptVar1->index = iVar2;
   }
-  UpdateLinkInfoForClients(pgVar2);
+  UpdateLinkInfoForClients(param_1);
 LAB_824b6d2c:
-  iVar3 = Profile_EndInternal((double *)0x0);
-  __restgprlr_29(iVar3);
+  Profile_EndInternal((double *)0x0);
   return;
 }
 
@@ -518,6 +493,8 @@ void G_UpdateTagInfoOfChildren(gentity_s *param_1,int param_2)
 
 // 824B6DB0  G_CalcTagParentAxis  (game/linkto.cpp:416)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
@@ -528,15 +505,14 @@ void G_CalcTagParentAxis(gentity_s *param_1,float (*param_2) [3])
   float fVar2;
   float fVar3;
   float fVar4;
-  undefined4 *puVar5;
+  tagInfo_s *ptVar5;
   gentity_s *pgVar6;
   float fVar7;
   float fVar8;
   float fVar9;
   float fVar10;
-  int iVar11;
-  float *pfVar12;
-  DObjAnimMat *pDVar13;
+  float *pfVar11;
+  DObjAnimMat *pDVar12;
   float local_b0;
   float local_ac;
   float local_a8;
@@ -551,14 +527,13 @@ void G_CalcTagParentAxis(gentity_s *param_1,float (*param_2) [3])
   float local_58;
   float local_54;
   
-  iVar11 = __savegprlr_24(param_1);
   Profile_Begin(0x134);
-  puVar5 = *(undefined4 **)(iVar11 + 0x214);
-  if (puVar5 == (undefined4 *)0x0) {
+  ptVar5 = param_1->tagInfo;
+  if (ptVar5 == (tagInfo_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\linkto.cpp",0x1aa,0,"%s")
     ;
   }
-  pgVar6 = (gentity_s *)*puVar5;
+  pgVar6 = ptVar5->parent;
   if (pgVar6 == (gentity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\linkto.cpp",0x1ac,0,"%s")
     ;
@@ -569,47 +544,48 @@ void G_CalcTagParentAxis(gentity_s *param_1,float (*param_2) [3])
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\linkto.cpp",0x1ae,0,"%s")
     ;
   }
-  pfVar12 = (pgVar6->r).currentAngles;
+  pfVar11 = (pgVar6->r).currentAngles;
   if (((((uint)(pgVar6->r).currentAngles[0] & 0x7f800000) == 0x7f800000) ||
       (((uint)(pgVar6->r).currentAngles[1] & 0x7f800000) == 0x7f800000)) ||
      (((uint)(pgVar6->r).currentAngles[2] & 0x7f800000) == 0x7f800000)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\linkto.cpp",0x1af,0,"%s")
     ;
   }
-  if (((int)puVar5[3] < 0) ||
-     ((*(int *)(iVar11 + 0x158) != 0 && (*(char *)(*(int *)(iVar11 + 0x158) + 0x3678) != '\0')))) {
-    AnglesToAxis(pfVar12,param_2);
+  if ((ptVar5->index < 0) ||
+     ((param_1->client != (gclient_s *)0x0 &&
+      (param_1->client->link_useBaseAnglesForViewClamp != false)))) {
+    AnglesToAxis(pfVar11,param_2);
     param_2[3][0] = (pgVar6->r).currentOrigin[0];
     param_2[3][1] = (pgVar6->r).currentOrigin[1];
     param_2[3][2] = (pgVar6->r).currentOrigin[2];
   }
   else {
-    AnglesToAxis(pfVar12,(float (*) [3])afStack_80);
+    AnglesToAxis(pfVar11,(float (*) [3])afStack_80);
     local_5c = (pgVar6->r).currentOrigin[0];
     local_58 = (pgVar6->r).currentOrigin[1];
     local_54 = (pgVar6->r).currentOrigin[2];
-    G_DObjCalcBone(pgVar6,puVar5[3]);
-    pDVar13 = SV_DObjGetMatrixArray(pgVar6);
-    pDVar13 = pDVar13 + puVar5[3];
-    if ((((((uint)pDVar13->quat[0] & 0x7f800000) == 0x7f800000) ||
-         (((uint)pDVar13->quat[1] & 0x7f800000) == 0x7f800000)) ||
-        (((uint)pDVar13->quat[2] & 0x7f800000) == 0x7f800000)) ||
-       (((uint)pDVar13->quat[3] & 0x7f800000) == 0x7f800000)) {
+    G_DObjCalcBone(pgVar6,ptVar5->index);
+    pDVar12 = SV_DObjGetMatrixArray(pgVar6);
+    pDVar12 = pDVar12 + ptVar5->index;
+    if ((((((uint)pDVar12->quat[0] & 0x7f800000) == 0x7f800000) ||
+         (((uint)pDVar12->quat[1] & 0x7f800000) == 0x7f800000)) ||
+        (((uint)pDVar12->quat[2] & 0x7f800000) == 0x7f800000)) ||
+       (((uint)pDVar12->quat[3] & 0x7f800000) == 0x7f800000)) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\../xanim/xanim_public.h"
                       ,0x205,0,"%s");
     }
-    if (((uint)pDVar13->transWeight & 0x7f800000) == 0x7f800000) {
+    if (((uint)pDVar12->transWeight & 0x7f800000) == 0x7f800000) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\../xanim/xanim_public.h"
                       ,0x206,0,"%s");
     }
-    fVar1 = pDVar13->quat[2];
-    fVar2 = pDVar13->transWeight;
-    fVar3 = pDVar13->quat[1];
+    fVar1 = pDVar12->quat[2];
+    fVar2 = pDVar12->transWeight;
+    fVar3 = pDVar12->quat[1];
     fVar9 = fVar3 * fVar2;
-    fVar10 = pDVar13->quat[0] * fVar2;
-    fVar4 = pDVar13->quat[3];
+    fVar10 = pDVar12->quat[0] * fVar2;
+    fVar4 = pDVar12->quat[3];
     fVar7 = fVar1 * fVar1 * fVar2;
-    fVar8 = pDVar13->quat[0] * fVar10;
+    fVar8 = pDVar12->quat[0] * fVar10;
     local_a4 = fVar4 * fVar1 * fVar2;
     local_9c = fVar1 * fVar9 + fVar4 * fVar10;
     local_a8 = fVar1 * fVar10 - fVar4 * fVar9;
@@ -621,7 +597,7 @@ void G_CalcTagParentAxis(gentity_s *param_1,float (*param_2) [3])
     local_90 = 1.0 - (fVar3 * fVar9 + fVar8);
     local_94 = fVar1 * fVar9 - fVar4 * fVar10;
     MatrixMultiply((float (*) [3])&local_b0,(float (*) [3])afStack_80,param_2);
-    MatrixTransformVector43(pDVar13->trans,(float (*) [3])afStack_80,param_2[3]);
+    MatrixTransformVector43(pDVar12->trans,(float (*) [3])afStack_80,param_2[3]);
   }
   if (((((uint)(*param_2)[0] & 0x7f800000) == 0x7f800000) ||
       (((uint)(*param_2)[1] & 0x7f800000) == 0x7f800000)) ||
@@ -647,14 +623,15 @@ void G_CalcTagParentAxis(gentity_s *param_1,float (*param_2) [3])
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\linkto.cpp",0x1c8,0,"%s")
     ;
   }
-  iVar11 = Profile_EndInternal((double *)0x0);
-  __restgprlr_24(iVar11);
+  Profile_EndInternal((double *)0x0);
   return;
 }
 
 
 // 824B72B0  G_CalcTagParentRelAxis  (game/linkto.cpp:463)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
@@ -662,24 +639,23 @@ void G_CalcTagParentRelAxis(gentity_s *param_1,float (*param_2) [3])
 
 {
   tagInfo_s *ptVar1;
-  gentity_s *pgVar2;
   float afStack_50 [20];
   
-  pgVar2 = (gentity_s *)__savegprlr_29(param_1);
-  ptVar1 = pgVar2->tagInfo;
+  ptVar1 = param_1->tagInfo;
   if (ptVar1 == (tagInfo_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\linkto.cpp",0x1d4,0,"%s")
     ;
   }
-  G_CalcTagParentAxis(pgVar2,(float (*) [3])afStack_50);
+  G_CalcTagParentAxis(param_1,(float (*) [3])afStack_50);
   MatrixMultiply43(ptVar1->parentInvAxis,(float (*) [3])afStack_50,param_2);
-  __restgprlr_29();
   return;
 }
 
 
 // 824B7318  G_CalcTagAxis  (game/linkto.cpp:476)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
@@ -687,7 +663,6 @@ void G_CalcTagAxis(gentity_s *param_1,int param_2)
 
 {
   tagInfo_s *ptVar1;
-  gentity_s *pgVar2;
   float afStack_b0 [9];
   float local_8c;
   float local_88;
@@ -695,10 +670,9 @@ void G_CalcTagAxis(gentity_s *param_1,int param_2)
   float afStack_80 [12];
   float afStack_50 [20];
   
-  pgVar2 = (gentity_s *)__savegprlr_29(param_1);
-  G_CalcTagParentAxis(pgVar2,(float (*) [3])afStack_50);
-  AnglesToAxis((pgVar2->r).currentAngles,(float (*) [3])afStack_b0);
-  ptVar1 = pgVar2->tagInfo;
+  G_CalcTagParentAxis(param_1,(float (*) [3])afStack_50);
+  AnglesToAxis((param_1->r).currentAngles,(float (*) [3])afStack_b0);
+  ptVar1 = param_1->tagInfo;
   if (ptVar1 == (tagInfo_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\linkto.cpp",0x1e7,0,"%s")
     ;
@@ -706,15 +680,13 @@ void G_CalcTagAxis(gentity_s *param_1,int param_2)
   if (param_2 != 0) {
     MatrixTranspose((float (*) [3])afStack_50,(float (*) [3])afStack_80);
     MatrixMultiply((float (*) [3])afStack_b0,(float (*) [3])afStack_80,ptVar1->axis);
-    __restgprlr_29();
     return;
   }
   MatrixInverseOrthogonal43((float (*) [3])afStack_50,(float (*) [3])afStack_80);
-  local_8c = (pgVar2->r).currentOrigin[0];
-  local_88 = (pgVar2->r).currentOrigin[1];
-  local_84 = (pgVar2->r).currentOrigin[2];
+  local_8c = (param_1->r).currentOrigin[0];
+  local_88 = (param_1->r).currentOrigin[1];
+  local_84 = (param_1->r).currentOrigin[2];
   MatrixMultiply43((float (*) [3])afStack_b0,(float (*) [3])afStack_80,ptVar1->axis);
-  __restgprlr_29();
   return;
 }
 
@@ -733,6 +705,8 @@ int G_VerifyLinkedMoveTarget(gentity_s *param_1,float *param_2,int param_3)
 
 // 824B73D8  G_CalcFixedLinkTargetAxis  (game/linkto.cpp:530)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
@@ -740,24 +714,23 @@ void G_CalcFixedLinkTargetAxis(gentity_s *param_1,float (*param_2) [3])
 
 {
   tagInfo_s *ptVar1;
-  gentity_s *pgVar2;
   float afStack_50 [20];
   
-  pgVar2 = (gentity_s *)__savegprlr_29(param_1);
-  ptVar1 = pgVar2->tagInfo;
+  ptVar1 = param_1->tagInfo;
   if (ptVar1 == (tagInfo_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\linkto.cpp",0x217,0,"%s")
     ;
   }
-  G_CalcTagParentAxis(pgVar2,(float (*) [3])afStack_50);
+  G_CalcTagParentAxis(param_1,(float (*) [3])afStack_50);
   MatrixMultiply43(ptVar1->axis,(float (*) [3])afStack_50,param_2);
-  __restgprlr_29();
   return;
 }
 
 
 // 824B7440  G_SetFixedLinkNonPlayer  (game/linkto.cpp:543)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
@@ -765,58 +738,48 @@ int G_SetFixedLinkNonPlayer(gentity_s *param_1,int param_2,int param_3,float *pa
 
 {
   tagInfo_s *ptVar1;
-  gentity_s *pgVar2;
-  int iVar3;
-  longlong lVar4;
-  ulonglong uVar5;
-  float *pfVar6;
-  float fVar7;
+  float fVar2;
   float afStack_a0 [9];
   float local_7c;
   float local_78;
   float local_74;
   float afStack_70 [28];
   
-  uVar5 = (ulonglong)(int)param_4;
-  lVar4 = (longlong)param_2;
-  pgVar2 = (gentity_s *)__savegprlr_26(param_1,lVar4,param_3);
-  if (pgVar2 == (gentity_s *)0x0) {
+  if (param_1 == (gentity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\linkto.cpp",0x223,0,"%s")
     ;
   }
-  if (pgVar2->client != (gclient_s *)0x0) {
+  if (param_1->client != (gclient_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\linkto.cpp",0x224,0,"%s")
     ;
   }
-  ptVar1 = pgVar2->tagInfo;
+  ptVar1 = param_1->tagInfo;
   if (ptVar1 == (tagInfo_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\linkto.cpp",0x217,0,"%s")
     ;
   }
-  G_CalcTagParentAxis(pgVar2,(float (*) [3])afStack_70);
+  G_CalcTagParentAxis(param_1,(float (*) [3])afStack_70);
   MatrixMultiply43(ptVar1->axis,(float (*) [3])afStack_70,(float (*) [3])afStack_a0);
-  (pgVar2->r).currentOrigin[0] = local_7c;
-  (pgVar2->r).currentOrigin[1] = local_78;
-  (pgVar2->r).currentOrigin[2] = local_74;
-  if ((int)lVar4 == 0) {
-    AxisToAngles((float (*) [3])afStack_a0,(pgVar2->r).currentAngles);
+  (param_1->r).currentOrigin[0] = local_7c;
+  (param_1->r).currentOrigin[1] = local_78;
+  (param_1->r).currentOrigin[2] = local_74;
+  if (param_2 == 0) {
+    AxisToAngles((float (*) [3])afStack_a0,(param_1->r).currentAngles);
   }
   else {
-    if ((int)lVar4 != 1) {
+    if (param_2 != 1) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\linkto.cpp",0x233,0,
                       "%s");
     }
-    fVar7 = vectoyaw(afStack_a0);
-    (pgVar2->r).currentAngles[1] = fVar7;
+    fVar2 = vectoyaw(afStack_a0);
+    (param_1->r).currentAngles[1] = fVar2;
   }
-  if ((uVar5 & 0xffffffff) != 0) {
-    pfVar6 = (float *)uVar5;
-    *pfVar6 = local_7c;
-    pfVar6[1] = local_78;
-    pfVar6[2] = local_74;
+  if (param_4 != (float *)0x0) {
+    *param_4 = local_7c;
+    param_4[1] = local_78;
+    param_4[2] = local_74;
   }
-  iVar3 = __restgprlr_26(1);
-  return iVar3;
+  return 1;
 }
 
 
@@ -942,54 +905,54 @@ void LerpViewClamp(viewClampState *param_1)
 
 // 824B7850  G_UpdateViewAngleClamp  (game/linkto.cpp:696)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 
 void G_UpdateViewAngleClamp(gclient_s *param_1,float *param_2)
 
 {
-  int iVar1;
-  ulonglong uVar2;
-  double dVar3;
+  float fVar1;
+  double dVar2;
+  float fVar3;
   float fVar4;
-  float fVar5;
   
-  uVar2 = (ulonglong)(int)param_2;
-  iVar1 = __savegprlr_28(param_1);
-  if (iVar1 == 0) {
+  if (param_1 == (gclient_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\linkto.cpp",699,0,"%s");
   }
-  if ((uVar2 & 0xffffffff) == 0) {
+  if (param_2 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\linkto.cpp",700,0,"%s");
   }
-  fVar4 = CalcLerpFraction(*(float *)(iVar1 + 0x36bc),*(float *)(iVar1 + 14000),
-                           *(float *)(iVar1 + 0x36b4),*(float *)(iVar1 + 0x36b8));
-  dVar3 = 0.5;
-  *(float *)(iVar1 + 0x3688) =
-       (*(float *)(iVar1 + 0x3690) - *(float *)(iVar1 + 0x3680)) * fVar4 +
-       *(float *)(iVar1 + 0x3680);
-  *(float *)(iVar1 + 0x368c) =
-       (*(float *)(iVar1 + 0x3694) - *(float *)(iVar1 + 0x3684)) * fVar4 +
-       *(float *)(iVar1 + 0x3684);
-  fVar5 = (*(float *)(iVar1 + 0x36a8) - *(float *)(iVar1 + 0x3698)) * fVar4 +
-          *(float *)(iVar1 + 0x3698);
-  *(float *)(iVar1 + 0x36a0) = fVar5;
-  *(float *)(iVar1 + 0x36a4) =
-       (*(float *)(iVar1 + 0x36ac) - *(float *)(iVar1 + 0x369c)) * fVar4 +
-       *(float *)(iVar1 + 0x369c);
-  fVar4 = (fVar5 - *(float *)(iVar1 + 0x3688)) * 0.5;
-  *(float *)(iVar1 + 0x180) = fVar4;
-  fVar5 = fVar5 + *(float *)uVar2;
-  *(float *)(iVar1 + 0x178) = fVar5;
-  fVar5 = AngleNormalize360(fVar5 - fVar4);
-  *(float *)(iVar1 + 0x178) = fVar5;
-  fVar5 = (float)((double)(*(float *)(iVar1 + 0x36a4) - *(float *)(iVar1 + 0x368c)) * dVar3);
-  *(float *)(iVar1 + 0x184) = fVar5;
-  fVar4 = ((float *)uVar2)[1] + *(float *)(iVar1 + 0x36a4);
-  *(float *)(iVar1 + 0x17c) = fVar4;
-  fVar5 = AngleNormalize360(fVar4 - fVar5);
-  *(float *)(iVar1 + 0x17c) = fVar5;
-  __restgprlr_28();
+  fVar3 = CalcLerpFraction((param_1->link_viewClamp).startTime,(param_1->link_viewClamp).accelTime,
+                           (param_1->link_viewClamp).decelTime,(param_1->link_viewClamp).totalTime);
+  fVar4 = (param_1->link_viewClamp).min.start[0];
+  dVar2 = 0.5;
+  (param_1->link_viewClamp).min.current[0] =
+       ((param_1->link_viewClamp).min.goal[0] - fVar4) * fVar3 + fVar4;
+  fVar4 = (param_1->link_viewClamp).min.start[1];
+  (param_1->link_viewClamp).min.current[1] =
+       ((param_1->link_viewClamp).min.goal[1] - fVar4) * fVar3 + fVar4;
+  fVar4 = (param_1->link_viewClamp).max.start[0];
+  fVar4 = ((param_1->link_viewClamp).max.goal[0] - fVar4) * fVar3 + fVar4;
+  (param_1->link_viewClamp).max.current[0] = fVar4;
+  fVar1 = (param_1->link_viewClamp).max.start[1];
+  (param_1->link_viewClamp).max.current[1] =
+       ((param_1->link_viewClamp).max.goal[1] - fVar1) * fVar3 + fVar1;
+  fVar3 = (fVar4 - (param_1->link_viewClamp).min.current[0]) * 0.5;
+  (param_1->ps).viewAngleClampRange[0] = fVar3;
+  fVar1 = *param_2;
+  (param_1->ps).viewAngleClampBase[0] = fVar4 + fVar1;
+  fVar3 = AngleNormalize360((fVar4 + fVar1) - fVar3);
+  fVar1 = (param_1->link_viewClamp).max.current[1];
+  fVar4 = (param_1->link_viewClamp).min.current[1];
+  (param_1->ps).viewAngleClampBase[0] = fVar3;
+  fVar4 = (float)((double)(fVar1 - fVar4) * dVar2);
+  (param_1->ps).viewAngleClampRange[1] = fVar4;
+  fVar1 = param_2[1] + fVar1;
+  (param_1->ps).viewAngleClampBase[1] = fVar1;
+  fVar4 = AngleNormalize360(fVar1 - fVar4);
+  (param_1->ps).viewAngleClampBase[1] = fVar4;
   return;
 }
 
@@ -1024,6 +987,8 @@ void G_ApplyGroundReferenceFrame(float *param_1,float (*param_2) [3],float (*par
 
 // 824B7A78  G_InitPlayerLinkAngles  (game/linkto.cpp:765)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
@@ -1031,7 +996,6 @@ void G_InitPlayerLinkAngles(gentity_s *param_1)
 
 {
   gclient_s *pgVar1;
-  gentity_s *pgVar2;
   float afStack_90 [4];
   float local_80;
   float local_7c;
@@ -1052,25 +1016,24 @@ void G_InitPlayerLinkAngles(gentity_s *param_1)
   undefined4 local_34;
   undefined4 local_30;
   
-  pgVar2 = (gentity_s *)__savegprlr_29(param_1);
-  if (pgVar2 == (gentity_s *)0x0) {
+  if (param_1 == (gentity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\linkto.cpp",0x305,0,"%s")
     ;
   }
-  if (pgVar2->client == (gclient_s *)0x0) {
+  if (param_1->client == (gclient_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\linkto.cpp",0x306,0,"%s")
     ;
   }
-  if (pgVar2->tagInfo == (tagInfo_s *)0x0) {
+  if (param_1->tagInfo == (tagInfo_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\linkto.cpp",0x307,0,"%s")
     ;
   }
-  if (pgVar2->tagInfo->parent == (gentity_s *)0x0) {
+  if (param_1->tagInfo->parent == (gentity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\linkto.cpp",0x308,0,"%s")
     ;
   }
-  G_CalcTagParentAxis(pgVar2,(float (*) [3])&local_50);
-  pgVar1 = pgVar2->client;
+  G_CalcTagParentAxis(param_1,(float (*) [3])&local_50);
+  pgVar1 = param_1->client;
   local_80 = local_50;
   local_7c = local_4c;
   local_78 = local_48;
@@ -1082,62 +1045,62 @@ void G_InitPlayerLinkAngles(gentity_s *param_1)
   local_60 = local_30;
   if (pgVar1->link_useTagAnglesForViewAngles != false) {
     AxisToAngles((float (*) [3])&local_80,(pgVar1->ps).linkAngles);
-    G_UpdateViewAngleClamp(pgVar2->client,(pgVar2->client->ps).linkAngles);
-    __restgprlr_29();
+    G_UpdateViewAngleClamp(param_1->client,(param_1->client->ps).linkAngles);
     return;
   }
   (pgVar1->ps).linkAngles[0] = 0.0;
   (pgVar1->ps).linkAngles[1] = 0.0;
   (pgVar1->ps).linkAngles[2] = 0.0;
   AxisToAngles((float (*) [3])&local_80,afStack_90);
-  G_UpdateViewAngleClamp(pgVar2->client,afStack_90);
-  __restgprlr_29();
+  G_UpdateViewAngleClamp(param_1->client,afStack_90);
   return;
 }
 
 
 // 824B7BF0  G_GeneralLink  (game/linkto.cpp:803)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
 void G_GeneralLink(gentity_s *param_1)
 
 {
-  gentity_s *pgVar1;
-  
-  pgVar1 = (gentity_s *)__savegprlr_29(param_1);
-  if (pgVar1->tagInfo == (tagInfo_s *)0x0) {
+  if (param_1->tagInfo == (tagInfo_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\linkto.cpp",0x324,0,"%s")
     ;
   }
-  if (pgVar1->client != (gclient_s *)0x0) {
+  if (param_1->client != (gclient_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\linkto.cpp",0x325,0,"%s")
     ;
   }
-  G_SetFixedLinkNonPlayer(pgVar1,0,0x811,(float *)0x0);
-  G_SetOrigin(pgVar1,(pgVar1->r).currentOrigin);
-  G_SetAngle(pgVar1,(pgVar1->r).currentAngles);
-  (pgVar1->s).lerp.pos.trType = TR_INTERPOLATE;
-  (pgVar1->s).lerp.pos.trDelta[0] = 0.0;
-  (pgVar1->s).lerp.pos.trDelta[1] = 0.0;
-  (pgVar1->s).lerp.pos.trDelta[2] = 0.0;
-  (pgVar1->s).lerp.pos.trTime = 0;
-  (pgVar1->s).lerp.pos.trDuration = 0;
-  (pgVar1->s).lerp.apos.trType = TR_INTERPOLATE;
-  (pgVar1->s).lerp.apos.trDelta[0] = 0.0;
-  (pgVar1->s).lerp.apos.trDelta[1] = 0.0;
-  (pgVar1->s).lerp.apos.trDelta[2] = 0.0;
-  (pgVar1->s).lerp.apos.trTime = 0;
-  (pgVar1->s).lerp.apos.trDuration = 0;
-  SV_LinkEntity(pgVar1);
-  __restgprlr_29();
+  G_SetFixedLinkNonPlayer(param_1,0,0x811,(float *)0x0);
+  G_SetOrigin(param_1,(param_1->r).currentOrigin);
+  G_SetAngle(param_1,(param_1->r).currentAngles);
+  (param_1->s).lerp.pos.trType = TR_INTERPOLATE;
+  (param_1->s).lerp.pos.trDelta[0] = 0.0;
+  (param_1->s).lerp.pos.trDelta[1] = 0.0;
+  (param_1->s).lerp.pos.trDelta[2] = 0.0;
+  (param_1->s).lerp.pos.trTime = 0;
+  (param_1->s).lerp.pos.trDuration = 0;
+  (param_1->s).lerp.apos.trType = TR_INTERPOLATE;
+  (param_1->s).lerp.apos.trDelta[0] = 0.0;
+  (param_1->s).lerp.apos.trDelta[1] = 0.0;
+  (param_1->s).lerp.apos.trDelta[2] = 0.0;
+  (param_1->s).lerp.apos.trTime = 0;
+  (param_1->s).lerp.apos.trDuration = 0;
+  SV_LinkEntity(param_1);
   return;
 }
 
 
 // 824B7CE0  SetPlayerFixedLinkViewAngles  (game/linkto.cpp:832)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
@@ -1147,17 +1110,15 @@ void SetPlayerFixedLinkViewAngles(gentity_s *param_1,float (*param_2) [3],float 
   float fVar1;
   gclient_s *pgVar2;
   float *pfVar3;
-  int iVar4;
   float *in_r5;
-  float *pfVar5;
-  longlong lVar6;
-  float *pfVar7;
-  double extraout_f1;
+  float *pfVar4;
+  longlong lVar5;
+  float *pfVar6;
+  double dVar7;
   double dVar8;
   double dVar9;
   double dVar10;
   double dVar11;
-  double dVar12;
   float fStack_174;
   float local_170 [4];
   float local_160 [5];
@@ -1172,49 +1133,45 @@ void SetPlayerFixedLinkViewAngles(gentity_s *param_1,float (*param_2) [3],float 
   float afStack_b0 [12];
   float afStack_80 [32];
   
-  __savegprlr_27((double)param_3,param_1);
-  iVar4 = __savefpr_28();
-  dVar10 = extraout_f1;
-  if (iVar4 == 0) {
+  dVar9 = (double)param_3;
+  if (param_1 == (gentity_s *)0x0) {
     in_r5 = (float *)0x0;
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\linkto.cpp",0x352,0,"%s")
     ;
   }
-  if (*(int *)(iVar4 + 0x158) == 0) {
+  if (param_1->client == (gclient_s *)0x0) {
     in_r5 = (float *)0x0;
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\linkto.cpp",0x353,0,"%s")
     ;
   }
-  pgVar2 = *(gclient_s **)(iVar4 + 0x158);
+  pgVar2 = param_1->client;
   AxisToAngles(param_2,local_160 + 4);
   G_UpdateViewAngleClamp(pgVar2,local_160 + 4);
   AxisToQuat(param_2,local_140 + 4);
   if (((pgVar2->ps).linkFlags & 1U) != 0) {
-    QuatLerp((float *)(iVar4 + 0x1c4),local_140 + 4,(float)dVar10,in_r5);
+    QuatLerp((param_1->field31_0x1ac).blend.viewQuat,local_140 + 4,(float)dVar9,in_r5);
     QuatToAxis(afStack_120,(float (*) [3])afStack_e0);
     AxisToAngles((float (*) [3])afStack_e0,local_170);
     (pgVar2->ps).linkAngles[0] = local_170[0];
     (pgVar2->ps).linkAngles[1] = local_170[1];
-    pfVar5 = &fStack_174;
-    dVar11 = 0.5;
+    pfVar4 = &fStack_174;
+    dVar10 = 0.5;
     (pgVar2->ps).linkAngles[2] = local_170[2];
-    pfVar7 = (float *)&(pgVar2->ps).viewmodelIndex;
-    dVar10 = 360.0;
-    lVar6 = 2;
-    dVar12 = 0.0027777778450399637;
+    pfVar6 = (float *)&(pgVar2->ps).viewmodelIndex;
+    dVar9 = 360.0;
+    lVar5 = 2;
+    dVar11 = 0.0027777778450399637;
     do {
-      pfVar5 = pfVar5 + 1;
-      dVar9 = (double)(float)((double)(*pfVar5 - pfVar7[1]) * dVar12);
-      dVar8 = floor((double)(float)(dVar9 + dVar11));
-      pfVar3 = pfVar7 + 1;
-      lVar6 = lVar6 + -1;
-      fVar1 = (float)((double)(float)(dVar9 - (double)(float)dVar8) * dVar10);
-      pfVar7[-0x3d] = pfVar7[-0x3d] + fVar1;
-      pfVar7 = pfVar7 + 1;
-      *pfVar7 = *pfVar3 + fVar1;
-    } while (lVar6 != 0);
-    __restfpr_28();
-    __restgprlr_27();
+      pfVar4 = pfVar4 + 1;
+      dVar8 = (double)(float)((double)(*pfVar4 - pfVar6[1]) * dVar11);
+      dVar7 = floor((double)(float)(dVar8 + dVar10));
+      pfVar3 = pfVar6 + 1;
+      lVar5 = lVar5 + -1;
+      fVar1 = (float)((double)(float)(dVar8 - (double)(float)dVar7) * dVar9);
+      pfVar6[-0x3d] = pfVar6[-0x3d] + fVar1;
+      pfVar6 = pfVar6 + 1;
+      *pfVar6 = *pfVar3 + fVar1;
+    } while (lVar5 != 0);
     return;
   }
   if (pgVar2->prevLinkAnglesSet == false) {
@@ -1226,14 +1183,14 @@ void SetPlayerFixedLinkViewAngles(gentity_s *param_1,float (*param_2) [3],float 
     local_160[3] = 1.0;
   }
   else {
-    pfVar5 = local_160;
-    QuatMultiply(pgVar2->prevLinkedInvQuat,local_140 + 4,pfVar5);
+    pfVar4 = local_160;
+    QuatMultiply(pgVar2->prevLinkedInvQuat,local_140 + 4,pfVar4);
     QuatInverse(local_140 + 4,pgVar2->prevLinkedInvQuat);
     local_140[3] = 1.0;
     local_140[0] = 0.0;
     local_140[1] = 0.0;
     local_140[2] = 0.0;
-    QuatLerp(local_140,local_160,pgVar2->linkAnglesFrac,pfVar5);
+    QuatLerp(local_140,local_160,pgVar2->linkAnglesFrac,pfVar4);
   }
   AnglesToAxis((pgVar2->ps).viewangles,(float (*) [3])afStack_e0);
   AxisToQuat((float (*) [3])afStack_e0,afStack_120);
@@ -1244,45 +1201,45 @@ void SetPlayerFixedLinkViewAngles(gentity_s *param_1,float (*param_2) [3],float 
     local_170[1] = local_170[1] + 180.0;
     local_170[0] = (local_170[0] - 180.0) * -1.0;
   }
-  pfVar5 = &fStack_174;
-  pfVar7 = (float *)&(pgVar2->ps).viewmodelIndex;
-  dVar11 = 0.5;
-  lVar6 = 2;
-  dVar10 = 360.0;
-  dVar12 = 0.0027777778450399637;
+  pfVar4 = &fStack_174;
+  pfVar6 = (float *)&(pgVar2->ps).viewmodelIndex;
+  dVar10 = 0.5;
+  lVar5 = 2;
+  dVar9 = 360.0;
+  dVar11 = 0.0027777778450399637;
   do {
-    pfVar5 = pfVar5 + 1;
-    dVar9 = (double)(float)((double)(*pfVar5 - pfVar7[1]) * dVar12);
-    dVar8 = floor((double)(float)(dVar9 + dVar11));
-    pfVar3 = pfVar7 + 1;
-    lVar6 = lVar6 + -1;
-    fVar1 = (float)((double)(float)(dVar9 - (double)(float)dVar8) * dVar10);
-    pfVar7[-0x3d] = pfVar7[-0x3d] + fVar1;
-    pfVar7 = pfVar7 + 1;
-    *pfVar7 = *pfVar3 + fVar1;
-  } while (lVar6 != 0);
-  if (*(char *)(*(int *)(iVar4 + 0x158) + 0x3677) != '\0') {
+    pfVar4 = pfVar4 + 1;
+    dVar8 = (double)(float)((double)(*pfVar4 - pfVar6[1]) * dVar11);
+    dVar7 = floor((double)(float)(dVar8 + dVar10));
+    pfVar3 = pfVar6 + 1;
+    lVar5 = lVar5 + -1;
+    fVar1 = (float)((double)(float)(dVar8 - (double)(float)dVar7) * dVar9);
+    pfVar6[-0x3d] = pfVar6[-0x3d] + fVar1;
+    pfVar6 = pfVar6 + 1;
+    *pfVar6 = *pfVar3 + fVar1;
+  } while (lVar5 != 0);
+  if (param_1->client->link_useTagAnglesForViewAngles != false) {
     (pgVar2->ps).linkAngles[0] = local_160[4];
     (pgVar2->ps).linkAngles[1] = local_14c;
     (pgVar2->ps).linkAngles[2] = local_148;
-    __restfpr_28();
-    __restgprlr_27();
     return;
   }
-  pfVar5 = (pgVar2->ps).linkAngles;
-  AnglesToAxis(pfVar5,(float (*) [3])afStack_b0);
+  pfVar4 = (pgVar2->ps).linkAngles;
+  AnglesToAxis(pfVar4,(float (*) [3])afStack_b0);
   AxisToQuat((float (*) [3])afStack_b0,afStack_100);
   QuatMultiply(afStack_100,local_160,afStack_110);
   QuatToAxis(afStack_110,(float (*) [3])afStack_b0);
-  AxisToAngles((float (*) [3])afStack_b0,pfVar5);
-  __restfpr_28();
-  __restgprlr_27();
+  AxisToAngles((float (*) [3])afStack_b0,pfVar4);
   return;
 }
 
 
 // 824B8088  SetPlayerFixedLinkOrigin  (game/linkto.cpp:941)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
@@ -1291,18 +1248,16 @@ void SetPlayerFixedLinkOrigin(gentity_s *param_1,float (*param_2) [3],float para
 {
   gclient_s *pgVar1;
   float fVar2;
-  gentity_s *pgVar3;
-  float *pfVar4;
-  entityShared_t *peVar5;
-  float *pfVar6;
-  longlong lVar7;
+  float *pfVar3;
+  entityShared_t *peVar4;
+  float *pfVar5;
+  longlong lVar6;
+  double dVar7;
   double dVar8;
-  double extraout_f1;
   double dVar9;
   double dVar10;
   double dVar11;
   double dVar12;
-  double dVar13;
   float local_e8;
   float local_e4;
   float local_e0;
@@ -1317,45 +1272,43 @@ void SetPlayerFixedLinkOrigin(gentity_s *param_1,float (*param_2) [3],float para
   Bounds local_a0;
   G_StepSlideMoveParams local_80 [2];
   
-  __savegprlr_28((double)param_3,param_1);
-  pgVar3 = (gentity_s *)__savefpr_27();
-  dVar13 = extraout_f1;
-  if (pgVar3 == (gentity_s *)0x0) {
+  dVar8 = (double)param_3;
+  if (param_1 == (gentity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\linkto.cpp",0x3b8,0,"%s")
     ;
   }
-  if (pgVar3->client == (gclient_s *)0x0) {
+  if (param_1->client == (gclient_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\linkto.cpp",0x3b9,0,"%s")
     ;
   }
-  pgVar1 = pgVar3->client;
-  fVar2 = (float)(longlong)(level.time + 0x32) * 0.001 - (pgVar3->field31_0x1ac).mover.angle.speed;
-  dVar12 = (double)((pgVar3->field31_0x1ac).missile.surfaceNormal[0] * fVar2 +
-                   (pgVar3->field31_0x1ac).missile.time);
-  dVar11 = (double)((pgVar3->field31_0x1ac).missile.surfaceNormal[1] * fVar2 +
-                   (pgVar3->field31_0x1ac).blend.pos[1]);
-  dVar10 = (double)((pgVar3->field31_0x1ac).missile.surfaceNormal[2] * fVar2 +
-                   (pgVar3->field31_0x1ac).missile.travelDist);
+  pgVar1 = param_1->client;
+  fVar2 = (float)(longlong)(level.time + 0x32) * 0.001 - (param_1->field31_0x1ac).mover.angle.speed;
+  dVar12 = (double)((param_1->field31_0x1ac).missile.surfaceNormal[0] * fVar2 +
+                   (param_1->field31_0x1ac).missile.time);
+  dVar11 = (double)((param_1->field31_0x1ac).missile.surfaceNormal[1] * fVar2 +
+                   (param_1->field31_0x1ac).blend.pos[1]);
+  dVar10 = (double)((param_1->field31_0x1ac).missile.surfaceNormal[2] * fVar2 +
+                   (param_1->field31_0x1ac).missile.travelDist);
   if (pgVar1->link_rotationMovesEyePos == false) {
     if (pgVar1->link_doCollision == false) {
-      local_e8 = (float)((double)(float)((double)param_2[3][0] - dVar12) * dVar13 + dVar12);
-      local_e4 = (float)((double)(float)((double)param_2[3][1] - dVar11) * dVar13 + dVar11);
-      local_e0 = (float)((double)(float)((double)param_2[3][2] - dVar10) * dVar13 + dVar10);
+      local_e8 = (float)((double)(float)((double)param_2[3][0] - dVar12) * dVar8 + dVar12);
+      local_e4 = (float)((double)(float)((double)param_2[3][1] - dVar11) * dVar8 + dVar11);
+      local_e0 = (float)((double)(float)((double)param_2[3][2] - dVar10) * dVar8 + dVar10);
     }
     else {
-      pfVar4 = &fStack_a4;
-      local_b8 = param_2[3][0] - (pgVar3->r).currentOrigin[0];
-      pfVar6 = (pgVar3->r).currentOrigin;
-      local_b4 = param_2[3][1] - (pgVar3->r).currentOrigin[1];
-      peVar5 = &pgVar3->r;
-      local_b0 = param_2[3][2] - (pgVar3->r).currentOrigin[2];
-      lVar7 = 6;
+      pfVar3 = &fStack_a4;
+      local_b8 = param_2[3][0] - (param_1->r).currentOrigin[0];
+      pfVar5 = (param_1->r).currentOrigin;
+      local_b4 = param_2[3][1] - (param_1->r).currentOrigin[1];
+      peVar4 = &param_1->r;
+      local_b0 = param_2[3][2] - (param_1->r).currentOrigin[2];
+      lVar6 = 6;
       do {
-        peVar5 = (entityShared_t *)&peVar5->box;
-        pfVar4 = pfVar4 + 1;
-        *pfVar4 = ((Bounds *)peVar5)->midPoint[0];
-        lVar7 = lVar7 + -1;
-      } while (lVar7 != 0);
+        peVar4 = (entityShared_t *)&peVar4->box;
+        pfVar3 = pfVar3 + 1;
+        *pfVar3 = ((Bounds *)peVar4)->midPoint[0];
+        lVar6 = lVar6 + -1;
+      } while (lVar6 != 0);
       dVar9 = 0.0;
       if (local_a0.halfSize[0] < 0.0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\../universal/bounds_inline.h"
@@ -1365,14 +1318,14 @@ void SetPlayerFixedLinkOrigin(gentity_s *param_1,float (*param_2) [3],float para
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\../universal/bounds_inline.h"
                         ,0x354,0,"%s");
       }
-      dVar8 = (double)local_a0.halfSize[2];
-      if (dVar8 < dVar9) {
+      dVar7 = (double)local_a0.halfSize[2];
+      if (dVar7 < dVar9) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\../universal/bounds_inline.h"
                         ,0x355,0,"%s");
-        dVar8 = (double)local_a0.halfSize[2];
+        dVar7 = (double)local_a0.halfSize[2];
       }
-      local_80[0].passEntityNum = (pgVar3->s).number;
-      local_80[0].clipMask = pgVar3->clipmask;
+      local_80[0].passEntityNum = (param_1->s).number;
+      local_80[0].clipMask = param_1->clipmask;
       local_80[0].velocity = &local_b8;
       local_80[0].bounds = &local_a0;
       local_80[0].deltaTime = 1.0;
@@ -1387,16 +1340,16 @@ void SetPlayerFixedLinkOrigin(gentity_s *param_1,float (*param_2) [3],float para
       local_80[0].zerog = false;
       local_80[0].inSolid = (bool *)0x0;
       local_80[0].clipVelocityFunc = PM_ClipVelocity;
-      if ((float)(dVar9 - dVar8) < 0.0) {
-        dVar9 = dVar8;
+      if ((float)(dVar9 - dVar7) < 0.0) {
+        dVar9 = dVar7;
       }
       local_a0.halfSize[2] = (float)dVar9;
-      local_80[0].origin = pfVar6;
+      local_80[0].origin = pfVar5;
       G_StepSlideMove(local_80);
-      local_e8 = (float)((double)(float)((double)*pfVar6 - dVar12) * dVar13 + dVar12);
-      local_e4 = (float)((double)(float)((double)(pgVar3->r).currentOrigin[1] - dVar11) * dVar13 +
+      local_e8 = (float)((double)(float)((double)*pfVar5 - dVar12) * dVar8 + dVar12);
+      local_e4 = (float)((double)(float)((double)(param_1->r).currentOrigin[1] - dVar11) * dVar8 +
                         dVar11);
-      local_e0 = (float)((double)(float)((double)(pgVar3->r).currentOrigin[2] - dVar10) * dVar13 +
+      local_e0 = (float)((double)(float)((double)(param_1->r).currentOrigin[2] - dVar10) * dVar8 +
                         dVar10);
     }
   }
@@ -1406,20 +1359,20 @@ void SetPlayerFixedLinkOrigin(gentity_s *param_1,float (*param_2) [3],float para
     local_c8[1] = 0.0;
     MatrixTransformVector43(local_c8,param_2,&local_d8);
     local_d0 = local_d0 - (pgVar1->ps).viewHeightCurrent;
-    local_e8 = (float)((double)(float)((double)local_d8 - dVar12) * dVar13 + dVar12);
-    local_e4 = (float)((double)(float)((double)local_d4 - dVar11) * dVar13 + dVar11);
-    local_e0 = (float)((double)(float)((double)local_d0 - dVar10) * dVar13 + dVar10);
+    local_e8 = (float)((double)(float)((double)local_d8 - dVar12) * dVar8 + dVar12);
+    local_e4 = (float)((double)(float)((double)local_d4 - dVar11) * dVar8 + dVar11);
+    local_e0 = (float)((double)(float)((double)local_d0 - dVar10) * dVar8 + dVar10);
   }
-  G_SetOrigin(pgVar3,&local_e8);
-  (pgVar3->s).lerp.pos.trType = TR_INTERPOLATE;
-  __restfpr_27();
-  __restgprlr_28();
+  G_SetOrigin(param_1,&local_e8);
+  (param_1->s).lerp.pos.trType = TR_INTERPOLATE;
   return;
 }
 
 
 // 824B83C0  G_SetFixedLinkPlayer  (game/linkto.cpp:987)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
@@ -1428,18 +1381,16 @@ void G_SetFixedLinkPlayer(gentity_s *param_1)
 {
   gclient_s *pgVar1;
   tagInfo_s *ptVar2;
-  gentity_s *pgVar3;
-  double dVar4;
-  float fVar5;
+  double dVar3;
+  float fVar4;
   float afStack_a0 [12];
   float afStack_70 [28];
   
-  pgVar3 = (gentity_s *)__savegprlr_27(param_1);
-  if (pgVar3->client == (gclient_s *)0x0) {
+  if (param_1->client == (gclient_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\linkto.cpp",0x3e1,0,"%s")
     ;
   }
-  pgVar1 = pgVar3->client;
+  pgVar1 = param_1->client;
   if ((((pgVar1->ps).linkFlags & 4U) != 0) && ((pgVar1->ps).pm_type == 1)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\linkto.cpp",0x3e4,0,"%s")
     ;
@@ -1448,39 +1399,40 @@ void G_SetFixedLinkPlayer(gentity_s *param_1)
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\linkto.cpp",0x3e5,0,"%s")
     ;
   }
-  ptVar2 = pgVar3->tagInfo;
+  ptVar2 = param_1->tagInfo;
   if (ptVar2 == (tagInfo_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\linkto.cpp",1000,0,"%s");
   }
   if (((pgVar1->ps).linkFlags & 2U) == 0) {
-    G_CalcTagParentAxis(pgVar3,(float (*) [3])afStack_a0);
+    G_CalcTagParentAxis(param_1,(float (*) [3])afStack_a0);
   }
   else {
-    G_CalcTagParentAxis(pgVar3,(float (*) [3])afStack_70);
+    G_CalcTagParentAxis(param_1,(float (*) [3])afStack_70);
     MatrixMultiply43(ptVar2->axis,(float (*) [3])afStack_70,(float (*) [3])afStack_a0);
   }
   if (ptVar2->blendToParent == false) {
-    fVar5 = 1.0;
+    fVar4 = 1.0;
   }
   else {
-    fVar5 = CalcLerpFraction((pgVar3->field31_0x1ac).mover.angle.speed,
-                             (pgVar3->field31_0x1ac).blend.accelTime,
-                             (pgVar3->field31_0x1ac).mover.angle.decelTime,
-                             (pgVar3->field31_0x1ac).mover.angle.midTime);
+    fVar4 = CalcLerpFraction((param_1->field31_0x1ac).mover.angle.speed,
+                             (param_1->field31_0x1ac).blend.accelTime,
+                             (param_1->field31_0x1ac).mover.angle.decelTime,
+                             (param_1->field31_0x1ac).mover.angle.midTime);
   }
-  dVar4 = (double)fVar5;
-  SetPlayerFixedLinkViewAngles(pgVar3,(float (*) [3])afStack_a0,fVar5);
+  dVar3 = (double)fVar4;
+  SetPlayerFixedLinkViewAngles(param_1,(float (*) [3])afStack_a0,fVar4);
   if (((pgVar1->ps).linkFlags & 4U) == 0) {
-    SetPlayerFixedLinkOrigin(pgVar3,(float (*) [3])afStack_a0,(float)dVar4);
-    SV_LinkEntity(pgVar3);
+    SetPlayerFixedLinkOrigin(param_1,(float (*) [3])afStack_a0,(float)dVar3);
+    SV_LinkEntity(param_1);
   }
-  __restgprlr_27();
   return;
 }
 
 
 // 824B8558  G_TransferLinkedEntities  (game/linkto.cpp:1036)
 
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
@@ -1491,22 +1443,19 @@ void G_TransferLinkedEntities(gentity_s *param_1,gentity_s *param_2)
   tagInfo_s *ptVar2;
   int iVar3;
   int iVar4;
-  int iVar5;
   
-  iVar3 = __savegprlr_22(param_1);
-  iVar4 = SV_DObjExists(param_2);
-  iVar5 = *(int *)(iVar3 + 0x218);
+  iVar3 = SV_DObjExists(param_2);
+  pgVar1 = param_1->tagChildren;
   do {
-    if (iVar5 == 0) {
-      __restgprlr_22();
+    if (pgVar1 == (gentity_s *)0x0) {
       return;
     }
-    pgVar1 = *(gentity_s **)(iVar3 + 0x218);
+    pgVar1 = param_1->tagChildren;
     if (pgVar1->tagInfo == (tagInfo_s *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\linkto.cpp",0x414,0,
                       "%s");
     }
-    *(gentity_s **)(iVar3 + 0x218) = pgVar1->tagInfo->next;
+    param_1->tagChildren = pgVar1->tagInfo->next;
     pgVar1->tagInfo->parent = param_2;
     pgVar1->tagInfo->next = param_2->tagChildren;
     param_2->tagChildren = pgVar1;
@@ -1523,8 +1472,8 @@ LAB_824b86ac:
         UpdateLinkInfoForClients(pgVar1);
       }
     }
-    else if ((iVar4 == 0) ||
-            (iVar5 = SV_DObjGetBoneIndex(ptVar2->parent,(uint)ptVar2->name), iVar5 < 0)) {
+    else if ((iVar3 == 0) ||
+            (iVar4 = SV_DObjGetBoneIndex(ptVar2->parent,(uint)ptVar2->name), iVar4 < 0)) {
       if (ptVar2->index != -1) {
         ptVar2->index = -1;
         UpdateLinkInfoForClients(pgVar1);
@@ -1535,13 +1484,13 @@ LAB_824b86ac:
       }
       Profile_EndInternal((double *)0x0);
     }
-    else if (ptVar2->index != iVar5) {
-      ptVar2->index = iVar5;
+    else if (ptVar2->index != iVar4) {
+      ptVar2->index = iVar4;
       goto LAB_824b86ac;
     }
     Profile_EndInternal((double *)0x0);
     UpdateLinkInfoForClients(pgVar1);
-    iVar5 = *(int *)(iVar3 + 0x218);
+    pgVar1 = param_1->tagChildren;
   } while( true );
 }
 

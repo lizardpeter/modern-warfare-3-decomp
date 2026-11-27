@@ -2,58 +2,58 @@
 
 // 82255BF8  der_length_integer  (line unknown)
 
-void der_length_integer(undefined8 param_1,int *param_2)
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
+undefined8 der_length_integer(void *param_1,int *param_2)
 
 {
   ulonglong uVar1;
-  void *pvVar2;
-  int iVar3;
-  uint uVar4;
-  ulong uVar5;
-  int iVar6;
-  ulonglong uVar7;
-  longlong lVar8;
+  int iVar2;
+  uint uVar3;
+  ulong uVar4;
+  int iVar5;
+  ulonglong uVar6;
+  longlong lVar7;
   
-  pvVar2 = (void *)__savegprlr_27();
-  iVar3 = (*ltc_mp.compare_d)(pvVar2,0);
-  if (iVar3 == -1) {
-    iVar3 = (*ltc_mp.count_bits)(pvVar2);
-    lVar8 = (longlong)iVar3 - ((longlong)iVar3 & 7U);
-    uVar7 = lVar8 + 8;
-    iVar3 = (*ltc_mp.count_lsb_bits)(pvVar2);
-    iVar6 = (*ltc_mp.count_bits)(pvVar2);
-    if ((iVar3 + 1 == iVar6) && (uVar4 = (*ltc_mp.count_bits)(pvVar2), (uVar4 & 7) == 0)) {
-      uVar7 = lVar8 + 7;
+  iVar2 = (*ltc_mp.compare_d)(param_1,0);
+  if (iVar2 == -1) {
+    iVar2 = (*ltc_mp.count_bits)(param_1);
+    lVar7 = (longlong)iVar2 - ((longlong)iVar2 & 7U);
+    uVar6 = lVar7 + 8;
+    iVar2 = (*ltc_mp.count_lsb_bits)(param_1);
+    iVar5 = (*ltc_mp.count_bits)(param_1);
+    if ((iVar2 + 1 == iVar5) && (uVar3 = (*ltc_mp.count_bits)(param_1), (uVar3 & 7) == 0)) {
+      uVar6 = lVar7 + 7;
     }
-    uVar7 = (uVar7 & 0xffffffff) >> 3;
+    uVar6 = (uVar6 & 0xffffffff) >> 3;
     goto LAB_82255ce8;
   }
-  uVar4 = (*ltc_mp.count_bits)(pvVar2);
-  if ((uVar4 & 7) == 0) {
+  uVar3 = (*ltc_mp.count_bits)(param_1);
+  if ((uVar3 & 7) == 0) {
 LAB_82255c68:
-    lVar8 = 1;
+    lVar7 = 1;
   }
   else {
-    iVar3 = (*ltc_mp.compare_d)(pvVar2,0);
-    lVar8 = 0;
-    if (iVar3 == 0) goto LAB_82255c68;
+    iVar2 = (*ltc_mp.compare_d)(param_1,0);
+    lVar7 = 0;
+    if (iVar2 == 0) goto LAB_82255c68;
   }
-  uVar5 = (*ltc_mp.unsigned_size)(pvVar2);
-  uVar7 = (int)uVar5 + lVar8;
+  uVar4 = (*ltc_mp.unsigned_size)(param_1);
+  uVar6 = (int)uVar4 + lVar7;
 LAB_82255ce8:
-  lVar8 = uVar7 + 1;
-  iVar3 = (int)lVar8;
-  if (0x7f < (uVar7 & 0xffffffff)) {
-    uVar1 = uVar7 & 0xffffffff;
+  lVar7 = uVar6 + 1;
+  iVar2 = (int)lVar7;
+  if (0x7f < (uVar6 & 0xffffffff)) {
+    uVar1 = uVar6 & 0xffffffff;
     while (uVar1 != 0) {
-      lVar8 = lVar8 + 1;
-      iVar3 = (int)lVar8;
-      uVar7 = (uVar7 & 0xffffffff) >> 8;
-      uVar1 = uVar7;
+      lVar7 = lVar7 + 1;
+      iVar2 = (int)lVar7;
+      uVar6 = (uVar6 & 0xffffffff) >> 8;
+      uVar1 = uVar6;
     }
   }
-  *param_2 = iVar3 + 1;
-  __restgprlr_27(0);
-  return;
+  *param_2 = iVar2 + 1;
+  return 0;
 }
 

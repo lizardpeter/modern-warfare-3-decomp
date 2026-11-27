@@ -164,64 +164,57 @@ vpx_codec_encode(vpx_codec_ctx *param_1,vpx_image *param_2,long64 param_3,ulong 
 
 // 8283E118  vpx_codec_get_cx_data  (WebM_atvi_opt/vpx/vpx/src/vpx_encoder.c:150)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "vpx_kf_mode": Some values do not have unique names */
 
 vpx_codec_cx_pkt * vpx_codec_get_cx_data(vpx_codec_ctx *param_1,void **param_2)
 
 {
-  int iVar1;
-  int iVar2;
-  int iVar3;
+  vpx_codec_iface *pvVar1;
+  vpx_codec_priv *pvVar2;
+  void *pvVar3;
   vpx_codec_cx_pkt *pvVar4;
-  int *piVar5;
-  ulonglong uVar6;
   
-  uVar6 = (ulonglong)(int)param_2;
-  iVar3 = __savegprlr_27(param_1);
-  piVar5 = (int *)0x0;
-  if (iVar3 != 0) {
-    if ((uVar6 & 0xffffffff) == 0) {
-      *(undefined4 *)(iVar3 + 8) = 8;
-      pvVar4 = (vpx_codec_cx_pkt *)__restgprlr_27(0);
-      return pvVar4;
+  pvVar4 = (vpx_codec_cx_pkt *)0x0;
+  if (param_1 != (vpx_codec_ctx *)0x0) {
+    if (param_2 == (void **)0x0) {
+      param_1->err = VPX_CODEC_INVALID_PARAM;
+      return (vpx_codec_cx_pkt *)0x0;
     }
-    iVar1 = *(int *)(iVar3 + 4);
-    if ((iVar1 == 0) || (*(int *)(iVar3 + 0x18) == 0)) {
-      *(undefined4 *)(iVar3 + 8) = 1;
-      pvVar4 = (vpx_codec_cx_pkt *)__restgprlr_27(0);
-      return pvVar4;
+    pvVar1 = param_1->iface;
+    if ((pvVar1 == (vpx_codec_iface *)0x0) || (param_1->priv == (vpx_codec_priv *)0x0)) {
+      param_1->err = VPX_CODEC_ERROR;
+      return (vpx_codec_cx_pkt *)0x0;
     }
-    if ((*(uint *)(iVar1 + 8) & 2) == 0) {
-      *(undefined4 *)(iVar3 + 8) = 4;
-      pvVar4 = (vpx_codec_cx_pkt *)__restgprlr_27(0);
-      return pvVar4;
+    if ((pvVar1->caps & 2U) == 0) {
+      param_1->err = VPX_CODEC_INCAPABLE;
+      return (vpx_codec_cx_pkt *)0x0;
     }
-    piVar5 = (int *)(**(code **)(iVar1 + 0x38))(*(undefined4 *)(*(int *)(iVar3 + 0x18) + 8));
-    if ((piVar5 != (int *)0x0) && (*piVar5 == 0)) {
-      iVar1 = *(int *)(iVar3 + 0x18);
-      iVar2 = *(int *)(iVar1 + 0x2c);
-      if ((iVar2 != 0) &&
-         ((piVar5[2] != iVar2 &&
-          ((uint)(*(int *)(iVar1 + 0x38) + piVar5[3] + *(int *)(iVar1 + 0x34)) <=
-           *(uint *)(iVar1 + 0x30))))) {
-        piVar5 = (int *)(iVar1 + 0x40);
+    pvVar4 = (*(pvVar1->enc).get_cx_data)(param_1->priv->alg_priv,param_2);
+    if ((pvVar4 != (vpx_codec_cx_pkt *)0x0) && (pvVar4->kind == VPX_CODEC_CX_FRAME_PKT)) {
+      pvVar2 = param_1->priv;
+      pvVar3 = (pvVar2->enc).cx_data_dst_buf.buf;
+      if ((pvVar3 != (void *)0x0) &&
+         (((pvVar4->data).frame.buf != pvVar3 &&
+          ((pvVar2->enc).cx_data_pad_after + (pvVar4->data).frame.sz +
+           (pvVar2->enc).cx_data_pad_before <= (pvVar2->enc).cx_data_dst_buf.sz)))) {
+        pvVar4 = &(pvVar2->enc).cx_data_pkt;
         memcpy();
         memcpy();
-        *(int *)(iVar1 + 0x48) = iVar2;
-        *(int *)(iVar1 + 0x4c) =
-             *(int *)(*(int *)(iVar3 + 0x18) + 0x38) + *(int *)(*(int *)(iVar3 + 0x18) + 0x34) +
-             *(int *)(iVar1 + 0x4c);
+        (pvVar2->enc).cx_data_pkt.data.frame.buf = pvVar3;
+        (pvVar2->enc).cx_data_pkt.data.frame.sz =
+             (param_1->priv->enc).cx_data_pad_after + (param_1->priv->enc).cx_data_pad_before +
+             (pvVar2->enc).cx_data_pkt.data.frame.sz;
       }
-      if (iVar2 == piVar5[2]) {
-        *(int *)(*(int *)(iVar3 + 0x18) + 0x2c) = piVar5[3] + iVar2;
-        *(int *)(*(int *)(iVar3 + 0x18) + 0x30) =
-             *(int *)(*(int *)(iVar3 + 0x18) + 0x30) - piVar5[3];
-        pvVar4 = (vpx_codec_cx_pkt *)__restgprlr_27(piVar5);
+      if (pvVar3 == (pvVar4->data).frame.buf) {
+        (param_1->priv->enc).cx_data_dst_buf.buf = (void *)((pvVar4->data).frame.sz + (int)pvVar3);
+        (param_1->priv->enc).cx_data_dst_buf.sz =
+             (param_1->priv->enc).cx_data_dst_buf.sz - (pvVar4->data).frame.sz;
         return pvVar4;
       }
     }
   }
-  pvVar4 = (vpx_codec_cx_pkt *)__restgprlr_27(piVar5);
   return pvVar4;
 }
 

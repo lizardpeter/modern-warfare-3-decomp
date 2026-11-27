@@ -2,9 +2,10 @@
 
 // 8281009C  FUN_8281009c  (line unknown)
 
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "vpx_kf_mode": Some values do not have unique names */
 
-void FUN_8281009c(int param_1)
+undefined8 FUN_8281009c(int param_1)
 
 {
   undefined8 unaff_r28;
@@ -20,7 +21,6 @@ void FUN_8281009c(int param_1)
                     (vp8_extracfg)in_stack_00000084);
     vp8_change_config(*(int **)(unaff_r30 + 0x228),(VP8_CONFIG *)(unaff_r30 + 0x170));
   }
-  __restgprlr_28(unaff_r28);
-  return;
+  return unaff_r28;
 }
 

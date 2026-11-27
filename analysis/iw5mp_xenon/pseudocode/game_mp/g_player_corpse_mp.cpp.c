@@ -2,6 +2,8 @@
 
 // 82487FC0  G_BounceCorpse  (game_mp/g_player_corpse_mp.cpp:36)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
@@ -9,11 +11,10 @@ void G_BounceCorpse(gentity_s *param_1,corpseInfo_t *param_2,trace_t *param_3,fl
 
 {
   float fVar1;
-  gentity_s *pgVar2;
-  trajectory_t *ptVar3;
-  bool bVar5;
-  ushort uVar4;
-  float *pfVar6;
+  bool bVar3;
+  ushort uVar2;
+  float *pfVar4;
+  trajectory_t *ptVar5;
   float afStack_70 [4];
   float afStack_60 [3];
   float afStack_54 [3];
@@ -21,57 +22,54 @@ void G_BounceCorpse(gentity_s *param_1,corpseInfo_t *param_2,trace_t *param_3,fl
   float local_44;
   float local_40;
   
-  pgVar2 = (gentity_s *)__savegprlr_27(param_1);
-  ptVar3 = &(pgVar2->s).lerp.pos;
-  bVar5 = Com_IsRagdollTrajectory(ptVar3);
-  (pgVar2->s).lerp.pos.trDelta[0] = 0.0;
-  (pgVar2->s).lerp.pos.trDelta[1] = 0.0;
-  (pgVar2->s).lerp.pos.trDelta[2] = 0.0;
+  ptVar5 = &(param_1->s).lerp.pos;
+  bVar3 = Com_IsRagdollTrajectory(ptVar5);
+  (param_1->s).lerp.pos.trDelta[0] = 0.0;
+  (param_1->s).lerp.pos.trDelta[1] = 0.0;
+  (param_1->s).lerp.pos.trDelta[2] = 0.0;
   if ((param_3->allsolid == false) && (param_3->normal[2] <= 0.0)) {
-    fVar1 = param_3->normal[0] + (pgVar2->r).currentOrigin[0];
-    (pgVar2->r).currentOrigin[0] = fVar1;
-    (pgVar2->r).currentOrigin[1] = param_3->normal[1] + (pgVar2->r).currentOrigin[1];
-    (pgVar2->r).currentOrigin[2] = param_3->normal[2] + (pgVar2->r).currentOrigin[2];
-    (pgVar2->s).lerp.pos.trBase[0] = fVar1;
-    (pgVar2->s).lerp.pos.trBase[1] = (pgVar2->r).currentOrigin[1];
-    (pgVar2->s).lerp.pos.trBase[2] = (pgVar2->r).currentOrigin[2];
-    if ((ptVar3->trType != TR_GRAVITY) && (!bVar5)) {
+    fVar1 = param_3->normal[0] + (param_1->r).currentOrigin[0];
+    (param_1->r).currentOrigin[0] = fVar1;
+    (param_1->r).currentOrigin[1] = param_3->normal[1] + (param_1->r).currentOrigin[1];
+    (param_1->r).currentOrigin[2] = param_3->normal[2] + (param_1->r).currentOrigin[2];
+    (param_1->s).lerp.pos.trBase[0] = fVar1;
+    (param_1->s).lerp.pos.trBase[1] = (param_1->r).currentOrigin[1];
+    (param_1->s).lerp.pos.trBase[2] = (param_1->r).currentOrigin[2];
+    if ((ptVar5->trType != TR_GRAVITY) && (!bVar3)) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_player_corpse_mp.cpp"
                       ,0x54,0,"%s");
     }
-    (pgVar2->s).lerp.pos.trTime = level.time;
-    __restgprlr_27();
+    (param_1->s).lerp.pos.trTime = level.time;
     return;
   }
   param_2->falling = false;
-  ptVar3->trType = (-(uint)bVar5 & 0xb) + TR_INTERPOLATE;
-  (pgVar2->s).lerp.pos.trDelta[2] = 0.0;
-  (pgVar2->s).lerp.pos.trDelta[0] = 0.0;
-  (pgVar2->s).lerp.pos.trDelta[1] = 0.0;
-  (pgVar2->s).lerp.pos.trBase[0] = *param_4;
-  (pgVar2->s).lerp.pos.trBase[1] = param_4[1];
-  (pgVar2->s).lerp.pos.trBase[2] = param_4[2];
-  (pgVar2->s).lerp.pos.trTime = 0;
-  (pgVar2->s).lerp.pos.trDuration = 0;
-  uVar4 = Trace_GetEntityHitId(param_3);
-  (pgVar2->s).groundEntityNum = (uint)uVar4;
-  g_entities[uVar4].flags = g_entities[uVar4].flags | 0x100000;
+  ptVar5->trType = (-(uint)bVar3 & 0xb) + TR_INTERPOLATE;
+  (param_1->s).lerp.pos.trDelta[2] = 0.0;
+  (param_1->s).lerp.pos.trDelta[0] = 0.0;
+  (param_1->s).lerp.pos.trDelta[1] = 0.0;
+  (param_1->s).lerp.pos.trBase[0] = *param_4;
+  (param_1->s).lerp.pos.trBase[1] = param_4[1];
+  (param_1->s).lerp.pos.trBase[2] = param_4[2];
+  (param_1->s).lerp.pos.trTime = 0;
+  (param_1->s).lerp.pos.trDuration = 0;
+  uVar2 = Trace_GetEntityHitId(param_3);
+  (param_1->s).groundEntityNum = (uint)uVar2;
+  g_entities[uVar2].flags = g_entities[uVar2].flags | 0x100000;
   if (param_3->allsolid == false) {
     local_48 = param_3->normal[0];
     local_44 = param_3->normal[1];
     local_40 = param_3->normal[2];
-    AngleVectors((pgVar2->r).currentAngles,afStack_60,(float *)0x0,(float *)0x0);
+    AngleVectors((param_1->r).currentAngles,afStack_60,(float *)0x0,(float *)0x0);
     Vec3Cross(&local_48,afStack_60,afStack_54);
     Vec3Cross(afStack_54,&local_48,afStack_60);
     AxisToAngles(&afStack_60,afStack_70);
-    pfVar6 = afStack_70;
+    pfVar4 = afStack_70;
   }
   else {
-    pfVar6 = (pgVar2->r).currentAngles;
+    pfVar4 = (param_1->r).currentAngles;
   }
-  G_SetAngle(pgVar2,pfVar6);
-  SV_LinkEntity(pgVar2);
-  __restgprlr_27();
+  G_SetAngle(param_1,pfVar4);
+  SV_LinkEntity(param_1);
   return;
 }
 
@@ -106,6 +104,8 @@ int G_GetPlayerCorpseIndex(gentity_s *param_1)
 
 // 82488248  G_GetFreePlayerCorpseIndex  (game_mp/g_player_corpse_mp.cpp:119)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
@@ -113,50 +113,45 @@ int G_GetPlayerCorpseIndex(gentity_s *param_1)
 int G_GetFreePlayerCorpseIndex(void)
 
 {
-  float fVar1;
+  int iVar1;
   float fVar2;
   float fVar3;
-  gentity_s *pgVar6;
-  longlong lVar4;
-  longlong lVar5;
-  int iVar7;
-  int *piVar8;
-  longlong lVar9;
+  float fVar4;
+  gentity_s *pgVar5;
+  int iVar6;
+  int *piVar7;
+  int iVar8;
+  double dVar9;
   double dVar10;
-  double dVar11;
   
-  __savegprlr_29();
-  dVar11 = -1.0;
-  pgVar6 = G_Find((gentity_s *)0x0,0x172,scr_const.player);
-  if (pgVar6 == (gentity_s *)0x0) {
+  iVar8 = 0;
+  dVar10 = -1.0;
+  pgVar5 = G_Find((gentity_s *)0x0,0x172,scr_const.player);
+  if (pgVar5 == (gentity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_player_corpse_mp.cpp"
                     ,0x83,0,"%s");
   }
-  lVar4 = 0;
-  piVar8 = &g_scr_data.playerCorpseInfo[0].entnum;
-  lVar9 = 0;
+  iVar6 = 0;
+  piVar7 = &g_scr_data.playerCorpseInfo[0].entnum;
   do {
-    iVar7 = *piVar8;
-    lVar5 = lVar4;
-    if (iVar7 == -1) goto LAB_82488368;
-    fVar3 = (pgVar6->s).lerp.pos.trBase[2] - level.gentities[iVar7].r.currentOrigin[2];
-    fVar1 = (pgVar6->s).lerp.pos.trBase[0] - level.gentities[iVar7].r.currentOrigin[0];
-    fVar2 = (pgVar6->s).lerp.pos.trBase[1] - level.gentities[iVar7].r.currentOrigin[1];
-    dVar10 = (double)(fVar2 * fVar2 + fVar1 * fVar1 + fVar3 * fVar3);
-    lVar5 = lVar9;
-    if (dVar11 < dVar10) {
-      lVar5 = lVar4;
-      dVar11 = dVar10;
+    iVar1 = *piVar7;
+    if (iVar1 == -1) {
+      return iVar6;
     }
-    piVar8 = piVar8 + 0x168;
-    lVar4 = lVar4 + 1;
-    lVar9 = lVar5;
-  } while ((int)piVar8 < -0x7ca629f4);
-  G_FreeEntity(level.gentities + g_scr_data.playerCorpseInfo[(int)lVar5].entnum);
-  g_scr_data.playerCorpseInfo[(int)lVar5].entnum = -1;
-LAB_82488368:
-  iVar7 = __restgprlr_29(lVar5);
-  return iVar7;
+    fVar4 = (pgVar5->s).lerp.pos.trBase[2] - level.gentities[iVar1].r.currentOrigin[2];
+    fVar2 = (pgVar5->s).lerp.pos.trBase[0] - level.gentities[iVar1].r.currentOrigin[0];
+    fVar3 = (pgVar5->s).lerp.pos.trBase[1] - level.gentities[iVar1].r.currentOrigin[1];
+    dVar9 = (double)(fVar3 * fVar3 + fVar2 * fVar2 + fVar4 * fVar4);
+    if (dVar10 < dVar9) {
+      dVar10 = dVar9;
+      iVar8 = iVar6;
+    }
+    piVar7 = piVar7 + 0x168;
+    iVar6 = iVar6 + 1;
+  } while ((int)piVar7 < -0x7ca629f4);
+  G_FreeEntity(level.gentities + g_scr_data.playerCorpseInfo[iVar8].entnum);
+  g_scr_data.playerCorpseInfo[iVar8].entnum = -1;
+  return iVar8;
 }
 
 
@@ -208,6 +203,10 @@ bool G_GetAnimDeltaForCorpse(gentity_s *param_1,float *param_2)
 
 // 824884C0  G_RunCorpseMove  (game_mp/g_player_corpse_mp.cpp:204)
 
+/* WARNING: Function: __savegprlr_21 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_21 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
@@ -217,17 +216,17 @@ void G_RunCorpseMove(gentity_s *param_1)
   float fVar1;
   float fVar2;
   uint uVar3;
-  gentity_s *pgVar4;
-  trajectory_t *ptVar5;
-  bool bVar9;
-  int iVar6;
-  bool bVar10;
+  bool bVar7;
+  int iVar4;
+  bool bVar8;
+  int iVar5;
+  uint uVar6;
+  trajectory_t *ptVar9;
+  Bounds *pBVar10;
   EntHandle *this;
-  int iVar7;
-  uint uVar8;
   float *pfVar11;
-  Bounds *pBVar12;
-  float *pfVar13;
+  float *pfVar12;
+  double dVar13;
   double dVar14;
   double dVar15;
   double dVar16;
@@ -235,7 +234,6 @@ void G_RunCorpseMove(gentity_s *param_1)
   double dVar18;
   double dVar19;
   double dVar20;
-  double dVar21;
   float local_160;
   float local_15c;
   float local_158;
@@ -260,227 +258,216 @@ void G_RunCorpseMove(gentity_s *param_1)
   trace_t local_f0;
   float afStack_b8 [46];
   
-  __savegprlr_21(param_1);
-  pgVar4 = (gentity_s *)__savefpr_24();
-  ptVar5 = &(pgVar4->s).lerp.pos;
-  bVar9 = Com_IsRagdollTrajectory(ptVar5);
-  if ((pgVar4->s).eType != 2) {
+  ptVar9 = &(param_1->s).lerp.pos;
+  bVar7 = Com_IsRagdollTrajectory(ptVar9);
+  if ((param_1->s).eType != 2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_player_corpse_mp.cpp"
                     ,0xe5,0,"%s");
   }
-  iVar6 = G_GetPlayerCorpseIndex(pgVar4);
-  bVar10 = G_GetAnimDeltaForCorpse(pgVar4,&local_140);
-  dVar21 = 1.0;
-  if ((!bVar10) ||
-     (bVar10 = true, local_140 * local_140 + local_138 * local_138 + local_13c * local_13c <= 1.0))
-  {
-    bVar10 = false;
+  iVar4 = G_GetPlayerCorpseIndex(param_1);
+  bVar8 = G_GetAnimDeltaForCorpse(param_1,&local_140);
+  dVar20 = 1.0;
+  if ((!bVar8) ||
+     (bVar8 = true, local_140 * local_140 + local_138 * local_138 + local_13c * local_13c <= 1.0)) {
+    bVar8 = false;
   }
-  if ((!bVar10) || ((g_scr_data.playerCorpseInfo[iVar6].falling != false && (bVar9)))) {
-    bVar10 = false;
+  if ((!bVar8) || ((g_scr_data.playerCorpseInfo[iVar4].falling != false && (bVar7)))) {
+    bVar8 = false;
   }
   else {
-    bVar10 = true;
+    bVar8 = true;
   }
-  if (g_scr_data.playerCorpseInfo[iVar6].falling == false) {
-    if (!bVar10) goto LAB_82488b48;
-    if ((ptVar5->trType != TR_INTERPOLATE) && (!bVar9)) {
-      iVar7 = 0xfb;
-      goto LAB_82488628;
+  if (g_scr_data.playerCorpseInfo[iVar4].falling == false) {
+    if (!bVar8) {
+      return;
     }
+    if ((ptVar9->trType == TR_INTERPOLATE) || (bVar7)) goto LAB_82488638;
+    iVar5 = 0xfb;
   }
-  else if ((ptVar5->trType != TR_GRAVITY) && (!bVar9)) {
-    iVar7 = 0xf9;
-LAB_82488628:
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_player_corpse_mp.cpp"
-                    ,iVar7,0,"%s");
+  else {
+    if ((ptVar9->trType == TR_GRAVITY) || (bVar7)) goto LAB_82488638;
+    iVar5 = 0xf9;
   }
-  BG_EvaluateTrajectory(ptVar5,level.time,&local_160);
-  BG_EvaluateTrajectoryDelta(ptVar5,level.time,afStack_b8);
-  dVar17 = 0.0;
-  dVar16 = dVar17;
-  dVar14 = dVar17;
-  dVar15 = dVar17;
-  if (bVar10) {
-    AngleVectors((pgVar4->r).currentAngles,&local_150,&local_100,&local_120);
+  MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_player_corpse_mp.cpp",
+                  iVar5,0,"%s");
+LAB_82488638:
+  BG_EvaluateTrajectory(ptVar9,level.time,&local_160);
+  BG_EvaluateTrajectoryDelta(ptVar9,level.time,afStack_b8);
+  dVar16 = 0.0;
+  dVar15 = dVar16;
+  dVar13 = dVar16;
+  dVar14 = dVar16;
+  if (bVar8) {
+    AngleVectors((param_1->r).currentAngles,&local_150,&local_100,&local_120);
     local_fc = local_fc * -1.0;
     local_f8 = local_f8 * -1.0;
     local_100 = local_100 * -1.0;
-    dVar14 = (double)local_13c;
-    dVar15 = (double)SQRT(local_150 * local_150 + local_148 * local_148 + local_14c * local_14c);
-    dVar20 = (double)SQRT(local_100 * local_100 + local_f8 * local_f8 + local_fc * local_fc);
-    dVar16 = dVar21;
-    if (-dVar15 < 0.0) {
-      dVar16 = dVar15;
+    dVar13 = (double)local_13c;
+    dVar14 = (double)SQRT(local_150 * local_150 + local_148 * local_148 + local_14c * local_14c);
+    dVar19 = (double)SQRT(local_100 * local_100 + local_f8 * local_f8 + local_fc * local_fc);
+    dVar15 = dVar20;
+    if (-dVar14 < 0.0) {
+      dVar15 = dVar14;
     }
-    fVar1 = (float)(dVar21 / dVar16);
-    dVar16 = dVar21;
-    if (-dVar20 < 0.0) {
-      dVar16 = dVar20;
+    fVar1 = (float)(dVar20 / dVar15);
+    dVar15 = dVar20;
+    if (-dVar19 < 0.0) {
+      dVar15 = dVar19;
     }
     local_150 = local_150 * fVar1;
     local_14c = local_14c * fVar1;
     local_148 = local_148 * fVar1;
-    fVar1 = (float)(dVar21 / dVar16);
+    fVar1 = (float)(dVar20 / dVar15);
     local_160 = local_120 * local_138 +
-                (float)((double)(fVar1 * local_100) * dVar14 +
+                (float)((double)(fVar1 * local_100) * dVar13 +
                        (double)(local_150 * local_140 + local_160));
     local_15c = local_11c * local_138 +
-                (float)((double)(local_fc * fVar1) * dVar14 +
+                (float)((double)(local_fc * fVar1) * dVar13 +
                        (double)(local_14c * local_140 + local_15c));
     local_158 = local_118 * local_138 +
-                (float)((double)(local_f8 * fVar1) * dVar14 +
+                (float)((double)(local_f8 * fVar1) * dVar13 +
                        (double)(local_148 * local_140 + local_158));
-    dVar16 = (double)(local_f8 * fVar1);
-    dVar14 = (double)(local_fc * fVar1);
-    dVar15 = (double)(fVar1 * local_100);
+    dVar15 = (double)(local_f8 * fVar1);
+    dVar13 = (double)(local_fc * fVar1);
+    dVar14 = (double)(fVar1 * local_100);
   }
-  if (pgVar4->clipmask == 0) {
+  if (param_1->clipmask == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_player_corpse_mp.cpp"
                     ,0x113,0,"%s");
   }
-  uVar3 = pgVar4->clipmask;
-  if (((pgVar4->r).contents & uVar3) != 0) {
+  uVar3 = param_1->clipmask;
+  if (((param_1->r).contents & uVar3) != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_player_corpse_mp.cpp"
                     ,0x117,0,"%s");
   }
-  this = &(pgVar4->r).ownerNum;
-  iVar7 = EntHandle::isDefined(this);
-  if (iVar7 == 0) {
-    uVar8 = 0x7ff;
+  this = &(param_1->r).ownerNum;
+  iVar5 = EntHandle::isDefined(this);
+  if (iVar5 == 0) {
+    uVar6 = 0x7ff;
   }
   else {
-    uVar8 = EntHandle::entnum(this);
+    uVar6 = EntHandle::entnum(this);
   }
-  pBVar12 = &(pgVar4->r).box;
-  pfVar11 = (pgVar4->r).currentOrigin;
-  G_TraceCapsule(&local_f0,pfVar11,&local_160,pBVar12,uVar8,uVar3);
-  local_110 = (pgVar4->r).currentOrigin[0];
-  local_10c = (pgVar4->r).currentOrigin[1];
-  local_108 = (pgVar4->r).currentOrigin[2];
+  pBVar10 = &(param_1->r).box;
+  pfVar11 = (param_1->r).currentOrigin;
+  G_TraceCapsule(&local_f0,pfVar11,&local_160,pBVar10,uVar6,uVar3);
+  local_110 = (param_1->r).currentOrigin[0];
+  local_10c = (param_1->r).currentOrigin[1];
+  local_108 = (param_1->r).currentOrigin[2];
   local_110 = (local_160 - local_110) * local_f0.fraction + local_110;
-  dVar19 = (double)local_110;
+  dVar18 = (double)local_110;
   local_10c = (local_15c - local_10c) * local_f0.fraction + local_10c;
-  dVar18 = (double)local_10c;
+  dVar17 = (double)local_10c;
   local_108 = (local_158 - local_108) * local_f0.fraction + local_108;
-  dVar20 = (double)local_108;
-  (pgVar4->r).currentOrigin[0] = local_110;
-  (pgVar4->r).currentOrigin[1] = local_10c;
-  (pgVar4->r).currentOrigin[2] = local_108;
+  dVar19 = (double)local_108;
+  (param_1->r).currentOrigin[0] = local_110;
+  (param_1->r).currentOrigin[1] = local_10c;
+  (param_1->r).currentOrigin[2] = local_108;
   if (local_f0.startsolid != false) {
-    local_f0.fraction = (float)dVar17;
+    local_f0.fraction = (float)dVar16;
   }
-  SV_LinkEntity(pgVar4);
-  G_RunThink(pgVar4);
-  if ((pgVar4->r).isInUse != '\0') {
-    if ((double)local_f0.fraction == dVar21) {
-      if (bVar10) {
-        local_158 = (float)((double)local_158 - dVar21);
-        pfVar13 = (pgVar4->s).lerp.pos.trDelta;
-        ptVar5->trType = (-(uint)bVar9 & 0xb) + TR_INTERPOLATE;
-        (pgVar4->s).lerp.pos.trBase[0] = (float)dVar19;
-        (pgVar4->s).lerp.pos.trBase[1] = (float)dVar18;
-        (pgVar4->s).lerp.pos.trBase[2] = (float)dVar20;
-        (pgVar4->s).lerp.pos.trTime = 0;
-        (pgVar4->s).lerp.pos.trDuration = 0;
-        (pgVar4->s).lerp.pos.trDelta[0] = (float)dVar17;
-        (pgVar4->s).lerp.pos.trDelta[1] = (float)dVar17;
-        (pgVar4->s).lerp.pos.trDelta[2] = (float)dVar17;
-        if (bVar9) {
-          iVar7 = EntHandle::isDefined(this);
-          if (iVar7 == 0) {
-            uVar8 = 0x7ff;
+  SV_LinkEntity(param_1);
+  G_RunThink(param_1);
+  if ((param_1->r).isInUse != '\0') {
+    if ((double)local_f0.fraction == dVar20) {
+      if (bVar8) {
+        local_158 = (float)((double)local_158 - dVar20);
+        pfVar12 = (param_1->s).lerp.pos.trDelta;
+        ptVar9->trType = (-(uint)bVar7 & 0xb) + TR_INTERPOLATE;
+        (param_1->s).lerp.pos.trBase[0] = (float)dVar18;
+        (param_1->s).lerp.pos.trBase[1] = (float)dVar17;
+        (param_1->s).lerp.pos.trBase[2] = (float)dVar19;
+        (param_1->s).lerp.pos.trTime = 0;
+        (param_1->s).lerp.pos.trDuration = 0;
+        (param_1->s).lerp.pos.trDelta[0] = (float)dVar16;
+        (param_1->s).lerp.pos.trDelta[1] = (float)dVar16;
+        (param_1->s).lerp.pos.trDelta[2] = (float)dVar16;
+        if (bVar7) {
+          iVar5 = EntHandle::isDefined(this);
+          if (iVar5 == 0) {
+            uVar6 = 0x7ff;
           }
           else {
-            uVar8 = EntHandle::entnum(this);
+            uVar6 = EntHandle::entnum(this);
           }
-          iVar7 = G_TraceCapsuleComplete(pfVar11,&local_160,pBVar12,uVar8,0x7ff,uVar3);
-          if (iVar7 != 0) {
-            g_scr_data.playerCorpseInfo[iVar6].falling = true;
-            fVar2 = local_150 * local_140 + *pfVar13;
-            dVar17 = (double)local_13c;
-            fVar1 = (float)(dVar15 * dVar17 + (double)fVar2);
-            *pfVar13 = fVar2;
-            (pgVar4->s).lerp.pos.trDelta[1] =
-                 local_14c * local_140 + (pgVar4->s).lerp.pos.trDelta[1];
-            (pgVar4->s).lerp.pos.trDelta[2] =
-                 local_148 * local_140 + (pgVar4->s).lerp.pos.trDelta[2];
-            *pfVar13 = fVar1;
+          iVar5 = G_TraceCapsuleComplete(pfVar11,&local_160,pBVar10,uVar6,0x7ff,uVar3);
+          if (iVar5 != 0) {
+            g_scr_data.playerCorpseInfo[iVar4].falling = true;
+            fVar2 = local_150 * local_140 + *pfVar12;
+            dVar20 = (double)local_13c;
+            fVar1 = (float)(dVar14 * dVar20 + (double)fVar2);
+            *pfVar12 = fVar2;
+            (param_1->s).lerp.pos.trDelta[1] =
+                 local_14c * local_140 + (param_1->s).lerp.pos.trDelta[1];
+            (param_1->s).lerp.pos.trDelta[2] =
+                 local_148 * local_140 + (param_1->s).lerp.pos.trDelta[2];
+            *pfVar12 = fVar1;
             fVar1 = local_120 * local_138 + fVar1;
-            dVar21 = (double)fVar1;
-            (pgVar4->s).lerp.pos.trDelta[1] =
-                 (float)(dVar14 * dVar17 + (double)(pgVar4->s).lerp.pos.trDelta[1]);
-            (pgVar4->s).lerp.pos.trDelta[2] =
-                 (float)(dVar16 * dVar17 + (double)(pgVar4->s).lerp.pos.trDelta[2]);
-            *pfVar13 = fVar1;
-            (pgVar4->s).lerp.pos.trDelta[1] =
-                 local_11c * local_138 + (pgVar4->s).lerp.pos.trDelta[1];
-            (pgVar4->s).lerp.pos.trDelta[2] =
-                 local_118 * local_138 + (pgVar4->s).lerp.pos.trDelta[2];
-            fVar1 = (float)(dVar21 * 20.0);
-            *pfVar13 = fVar1;
-            (pgVar4->s).lerp.pos.trDelta[1] = (pgVar4->s).lerp.pos.trDelta[1] * 20.0;
-            (pgVar4->s).lerp.pos.trDelta[2] = (pgVar4->s).lerp.pos.trDelta[2] * 20.0;
-            ptVar5->trType = TR_RAGDOLL_GRAVITY;
-            iVar6 = level.time;
-            (pgVar4->s).lerp.pos.trDuration = 0;
-            (pgVar4->s).lerp.pos.trTime = iVar6;
-            __restfpr_24((double)fVar1,dVar21);
-            __restgprlr_21();
+            (param_1->s).lerp.pos.trDelta[1] =
+                 (float)(dVar13 * dVar20 + (double)(param_1->s).lerp.pos.trDelta[1]);
+            (param_1->s).lerp.pos.trDelta[2] =
+                 (float)(dVar15 * dVar20 + (double)(param_1->s).lerp.pos.trDelta[2]);
+            *pfVar12 = fVar1;
+            (param_1->s).lerp.pos.trDelta[1] =
+                 local_11c * local_138 + (param_1->s).lerp.pos.trDelta[1];
+            (param_1->s).lerp.pos.trDelta[2] =
+                 local_118 * local_138 + (param_1->s).lerp.pos.trDelta[2];
+            *pfVar12 = fVar1 * 20.0;
+            (param_1->s).lerp.pos.trDelta[1] = (param_1->s).lerp.pos.trDelta[1] * 20.0;
+            (param_1->s).lerp.pos.trDelta[2] = (param_1->s).lerp.pos.trDelta[2] * 20.0;
+            ptVar9->trType = TR_RAGDOLL_GRAVITY;
+            iVar4 = level.time;
+            (param_1->s).lerp.pos.trDuration = 0;
+            (param_1->s).lerp.pos.trTime = iVar4;
             return;
           }
         }
-        g_scr_data.playerCorpseInfo[iVar6].falling = false;
-        __restfpr_24();
-        __restgprlr_21();
+        g_scr_data.playerCorpseInfo[iVar4].falling = false;
         return;
       }
     }
     else {
-      iVar7 = SV_PointContents(pfVar11,-1,-0x80000000);
-      if (iVar7 != 0) {
-        G_FreeEntity(pgVar4);
-        __restfpr_24();
-        __restgprlr_21();
+      iVar5 = SV_PointContents(pfVar11,-1,-0x80000000);
+      if (iVar5 != 0) {
+        G_FreeEntity(param_1);
         return;
       }
-      if (g_scr_data.playerCorpseInfo[iVar6].falling != false) {
+      if (g_scr_data.playerCorpseInfo[iVar4].falling != false) {
         if (local_f0.allsolid != false) {
           local_130 = *pfVar11;
-          local_12c = (pgVar4->r).currentOrigin[1];
-          local_128 = (pgVar4->r).currentOrigin[2] + 32.0;
-          iVar7 = EntHandle::isDefined(this);
-          if (iVar7 == 0) {
-            uVar8 = 0x7ff;
+          local_12c = (param_1->r).currentOrigin[1];
+          local_128 = (param_1->r).currentOrigin[2] + 32.0;
+          iVar5 = EntHandle::isDefined(this);
+          if (iVar5 == 0) {
+            uVar6 = 0x7ff;
           }
           else {
-            uVar8 = EntHandle::entnum(this);
+            uVar6 = EntHandle::entnum(this);
           }
-          G_TraceCapsule(&local_f0,&local_130,&local_160,pBVar12,uVar8,uVar3 & 0xfffeffff);
+          G_TraceCapsule(&local_f0,&local_130,&local_160,pBVar10,uVar6,uVar3 & 0xfffeffff);
           if (local_f0.allsolid == false) {
             fVar1 = *pfVar11;
-            fVar2 = (pgVar4->r).currentOrigin[2];
-            local_10c = ((pgVar4->r).currentOrigin[1] - local_12c) * local_f0.fraction + local_12c;
-            (pgVar4->r).currentOrigin[1] = local_10c;
+            fVar2 = (param_1->r).currentOrigin[2];
+            local_10c = ((param_1->r).currentOrigin[1] - local_12c) * local_f0.fraction + local_12c;
+            (param_1->r).currentOrigin[1] = local_10c;
             local_110 = (fVar1 - local_130) * local_f0.fraction + local_130;
             *pfVar11 = local_110;
             local_108 = (fVar2 - local_128) * local_f0.fraction + local_128;
-            (pgVar4->r).currentOrigin[2] = local_108;
+            (param_1->r).currentOrigin[2] = local_108;
           }
         }
-        G_BounceCorpse(pgVar4,g_scr_data.playerCorpseInfo + iVar6,&local_f0,&local_110);
+        G_BounceCorpse(param_1,g_scr_data.playerCorpseInfo + iVar4,&local_f0,&local_110);
       }
     }
   }
-LAB_82488b48:
-  __restfpr_24();
-  __restgprlr_21();
   return;
 }
 
 
 // 82488B58  G_RunCorpseAnimate  (game_mp/g_player_corpse_mp.cpp:368)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
@@ -488,35 +475,31 @@ LAB_82488b48:
 void G_RunCorpseAnimate(gentity_s *param_1)
 
 {
-  gentity_s *pgVar1;
-  int iVar2;
-  DObj *pDVar3;
-  clientInfo_t *pcVar4;
+  int iVar1;
+  DObj *pDVar2;
+  clientInfo_t *pcVar3;
   
-  pgVar1 = (gentity_s *)__savegprlr_28(param_1);
-  iVar2 = G_GetPlayerCorpseIndex(pgVar1);
-  if (iVar2 < 0) {
+  iVar1 = G_GetPlayerCorpseIndex(param_1);
+  if (iVar1 < 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_player_corpse_mp.cpp"
                     ,0x177,0,"%s");
   }
-  if (7 < iVar2) {
+  if (7 < iVar1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_player_corpse_mp.cpp"
                     ,0x178,0,"%s");
   }
-  pcVar4 = &g_scr_data.playerCorpseInfo[iVar2].ci;
-  pDVar3 = Com_GetServerDObjForEnt(pgVar1);
-  BG_UpdatePlayerDObj(LOCAL_CLIENT_INVALID,pDVar3,(entityState_s *)pgVar1,pcVar4,0);
-  pDVar3 = Com_GetServerDObjForEnt(pgVar1);
-  G_UpdateTagInfoOfChildren(pgVar1,(uint)(pDVar3 != (DObj *)0x0));
-  if (pDVar3 != (DObj *)0x0) {
-    g_scr_data.playerCorpseInfo[iVar2].ci.legsAnim = (pgVar1->s).legsAnim;
-    g_scr_data.playerCorpseInfo[iVar2].ci.torsoAnim = (pgVar1->s).torsoAnim;
-    g_scr_data.playerCorpseInfo[iVar2].ci.fTorsoPitch = (pgVar1->s).lerp.u.turret.gunAngles[1];
-    g_scr_data.playerCorpseInfo[iVar2].ci.fWaistPitch = (pgVar1->s).lerp.u.turret.gunAngles[2];
-    BG_PlayerAnimation(LOCAL_CLIENT_INVALID,(entityState_s *)pgVar1,pcVar4,(pgVar1->r).currentOrigin
-                      );
+  pcVar3 = &g_scr_data.playerCorpseInfo[iVar1].ci;
+  pDVar2 = Com_GetServerDObjForEnt(param_1);
+  BG_UpdatePlayerDObj(LOCAL_CLIENT_INVALID,pDVar2,&param_1->s,pcVar3,0);
+  pDVar2 = Com_GetServerDObjForEnt(param_1);
+  G_UpdateTagInfoOfChildren(param_1,(uint)(pDVar2 != (DObj *)0x0));
+  if (pDVar2 != (DObj *)0x0) {
+    g_scr_data.playerCorpseInfo[iVar1].ci.legsAnim = (param_1->s).legsAnim;
+    g_scr_data.playerCorpseInfo[iVar1].ci.torsoAnim = (param_1->s).torsoAnim;
+    g_scr_data.playerCorpseInfo[iVar1].ci.fTorsoPitch = (param_1->s).lerp.u.turret.gunAngles[1];
+    g_scr_data.playerCorpseInfo[iVar1].ci.fWaistPitch = (param_1->s).lerp.u.turret.gunAngles[2];
+    BG_PlayerAnimation(LOCAL_CLIENT_INVALID,&param_1->s,pcVar3,(param_1->r).currentOrigin);
   }
-  __restgprlr_28();
   return;
 }
 

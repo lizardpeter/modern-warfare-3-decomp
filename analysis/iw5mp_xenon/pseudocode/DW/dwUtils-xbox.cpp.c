@@ -2,52 +2,49 @@
 
 // 826F2740  dwGetLobbyService  (DW/dwUtils-xbox.cpp:23)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 bdLobbyService * dwGetLobbyService(int param_1)
 
 {
-  ulonglong uVar1;
-  int iVar2;
-  bdLobbyService *pbVar3;
-  bool bVar4;
+  bool bVar2;
+  bdLobbyService *pbVar1;
   
-  uVar1 = __savegprlr_28(param_1);
-  if (3 < (uVar1 & 0xffffffff)) {
+  if (3 < (uint)param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DW\\dwUtils-xbox.cpp",0x18,0,
                     "controllerIndex doesn\'t index MAX_GPAD_COUNT\n\t%i not in [0, %i)");
   }
-  iVar2 = (int)uVar1;
-  bVar4 = Live_UserIsGuest(iVar2);
-  if (bVar4) {
-    pbVar3 = (bdLobbyService *)__restgprlr_28(0);
-    return pbVar3;
+  bVar2 = Live_UserIsGuest(param_1);
+  if (bVar2) {
+    return (bdLobbyService *)0x0;
   }
-  if (g_dwControllerData[iVar2].lobby == (bdLobbyService *)0x0) {
-    pbVar3 = bdMemory::allocate(300);
-    if (pbVar3 == (bdLobbyService *)0x0) {
-      pbVar3 = (bdLobbyService *)0x0;
+  if (g_dwControllerData[param_1].lobby == (bdLobbyService *)0x0) {
+    pbVar1 = bdMemory::allocate(300);
+    if (pbVar1 == (bdLobbyService *)0x0) {
+      pbVar1 = (bdLobbyService *)0x0;
     }
     else {
-      pbVar3 = bdLobbyService::bdLobbyService(pbVar3);
+      pbVar1 = bdLobbyService::bdLobbyService(pbVar1);
     }
-    g_dwControllerData[iVar2].lobby = pbVar3;
-    if (pbVar3 != (bdLobbyService *)0x0) {
-      if ((uVar1 & 0xffffffff) < 4) {
-        bVar4 = iVar2 != 0;
-        if (uVar1 == 1 && bVar4) {
+    g_dwControllerData[param_1].lobby = pbVar1;
+    if (pbVar1 != (bdLobbyService *)0x0) {
+      if ((uint)param_1 < 4) {
+        if (param_1 == 1) {
           bdLobbyService::registerEventHandler
-                    (pbVar3,(bdLobbyEventHandler *)&g_dwLobbyEventHandler1);
+                    (pbVar1,(bdLobbyEventHandler *)&g_dwLobbyEventHandler1);
         }
-        else if (uVar1 == 2 && bVar4) {
+        else if (param_1 == 2) {
           bdLobbyService::registerEventHandler
-                    (pbVar3,(bdLobbyEventHandler *)&g_dwLobbyEventHandler2);
+                    (pbVar1,(bdLobbyEventHandler *)&g_dwLobbyEventHandler2);
         }
-        else if (bVar4) {
+        else if (param_1 == 0) {
           bdLobbyService::registerEventHandler
-                    (pbVar3,(bdLobbyEventHandler *)&g_dwLobbyEventHandler3);
+                    (pbVar1,(bdLobbyEventHandler *)&g_dwLobbyEventHandler0);
         }
         else {
           bdLobbyService::registerEventHandler
-                    (pbVar3,(bdLobbyEventHandler *)&g_dwLobbyEventHandler0);
+                    (pbVar1,(bdLobbyEventHandler *)&g_dwLobbyEventHandler3);
         }
       }
       else if (alwaysfails == 0) {
@@ -56,12 +53,11 @@ bdLobbyService * dwGetLobbyService(int param_1)
       }
     }
   }
-  if (g_dwControllerData[iVar2].lobby == (bdLobbyService *)0x0) {
+  if (g_dwControllerData[param_1].lobby == (bdLobbyService *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DW\\dwUtils-xbox.cpp",0x41,0,
                     "%s");
   }
-  pbVar3 = (bdLobbyService *)__restgprlr_28(g_dwControllerData[iVar2].lobby);
-  return pbVar3;
+  return g_dwControllerData[param_1].lobby;
 }
 
 
@@ -127,31 +123,31 @@ void dwSetLogonStatus(int param_1,DWLogonStatus param_2)
 
 // 826F2FA0  dwLobbyPump  (DW/dwUtils-xbox.cpp:109)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void dwLobbyPump(int param_1)
 
 {
-  int iVar1;
   bdLobbyService *this;
-  Status SVar2;
+  Status SVar1;
   bdContentStreamingBase *this_00;
   
-  iVar1 = __savegprlr_28(param_1);
-  g_dwControllerData[iVar1].logOnStatus = DW_LOGON_ERROR;
-  this = dwGetLobbyService(iVar1);
+  g_dwControllerData[param_1].logOnStatus = DW_LOGON_ERROR;
+  this = dwGetLobbyService(param_1);
   if (this != (bdLobbyService *)0x0) {
     bdLobbyService::pump(this);
-    SVar2 = bdLobbyService::getStatus(this);
-    if (SVar2 == BD_CONNECTED) {
-      g_dwControllerData[iVar1].logOnStatus = DW_LOGON_COMPLETE;
-      LiveAntiCheat_Pump(iVar1);
-      LiveRegionInfo_Pump(iVar1);
-      this_00 = (bdContentStreamingBase *)dwGetContentStreaming(iVar1);
+    SVar1 = bdLobbyService::getStatus(this);
+    if (SVar1 == BD_CONNECTED) {
+      g_dwControllerData[param_1].logOnStatus = DW_LOGON_COMPLETE;
+      LiveAntiCheat_Pump(param_1);
+      LiveRegionInfo_Pump(param_1);
+      this_00 = (bdContentStreamingBase *)dwGetContentStreaming(param_1);
       if (this_00 != (bdContentStreamingBase *)0x0) {
         bdContentStreamingBase::pump(this_00);
       }
     }
   }
-  __restgprlr_28();
   return;
 }
 

@@ -2,6 +2,9 @@
 
 // 82822E38  thread_encoding_proc  (WebM_atvi_opt/vpx/vp8/encoder/ethreading.c:31)
 
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
+
 ulong thread_encoding_proc(void *param_1)
 
 {
@@ -35,7 +38,6 @@ ulong thread_encoding_proc(void *param_1)
   int *local_f0;
   ENTROPY_CONTEXT_PLANES aEStack_b0 [19];
   
-  __savegprlr();
   pVVar2 = *(VP8_COMP **)((int)param_1 + 4);
   uVar3 = *(uint *)param_1;
   pMVar4 = *(MACROBLOCK **)((int)param_1 + 8);
@@ -45,7 +47,9 @@ ulong thread_encoding_proc(void *param_1)
       uVar20 = (ulonglong)uVar3;
       uVar12 = WaitForSingleObject(pVVar2->h_event_mbrencoding[uVar3],10000);
       if (uVar12 == 0) {
-        if (*piVar17 == 0) break;
+        if (*piVar17 == 0) {
+          return 0;
+        }
         iVar13 = (pVVar2->common).lst_fb_idx;
         psVar24 = pMVar4[1].src_diff + 2;
         iVar5 = (pVVar2->common).new_fb_idx;
@@ -178,230 +182,242 @@ ulong thread_encoding_proc(void *param_1)
       }
     } while (*piVar17 != 0);
   }
-  uVar12 = 0;
-  __restgprlr();
-  return uVar12;
+  return 0;
 }
 
 
 // 82823420  setup_mbby_copy  (WebM_atvi_opt/vpx/vp8/encoder/ethreading.c:234)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void setup_mbby_copy(MACROBLOCK *param_1,MACROBLOCK *param_2)
 
 {
-  int iVar1;
-  int iVar2;
-  int iVar3;
-  void *pvVar4;
-  longlong lVar5;
-  undefined4 *puVar6;
-  longlong lVar7;
+  int *piVar1;
+  short **ppsVar2;
+  longlong lVar3;
   
-  lVar5 = (longlong)(int)param_2;
-  iVar3 = __savegprlr_28(param_1);
-  iVar1 = (int)lVar5;
-  *(undefined4 *)(iVar3 + 0x1cec) = *(undefined4 *)(iVar1 + 0x1cec);
-  *(undefined4 *)(iVar3 + 0x1cf0) = *(undefined4 *)(iVar1 + 0x1cf0);
-  *(undefined4 *)(iVar3 + 0x1cf4) = *(undefined4 *)(iVar1 + 0x1cf4);
-  *(undefined4 *)(iVar3 + 0x1cf8) = *(undefined4 *)(iVar1 + 0x1cf8);
-  *(undefined4 *)(iVar3 + 0x1cfc) = *(undefined4 *)(iVar1 + 0x1cfc);
-  *(undefined4 *)(iVar3 + 0x1d00) = *(undefined4 *)(iVar1 + 0x1d00);
-  *(undefined4 *)(iVar3 + 0x1d04) = *(undefined4 *)(iVar1 + 0x1d04);
-  *(undefined4 *)(iVar3 + 0x1d08) = *(undefined4 *)(iVar1 + 0x1d08);
-  *(undefined4 *)(iVar3 + 0x1d0c) = *(undefined4 *)(iVar1 + 0x1d0c);
-  *(undefined4 *)(iVar3 + 0xbfc4) = *(undefined4 *)(iVar1 + 0xbfc4);
-  *(undefined4 *)(iVar3 + 0xbfc8) = *(undefined4 *)(iVar1 + 0xbfc8);
-  *(undefined4 *)(iVar3 + 0xbfcc) = *(undefined4 *)(iVar1 + 0xbfcc);
-  *(undefined4 *)(iVar3 + 0xbfd0) = *(undefined4 *)(iVar1 + 0xbfd0);
-  vpx_memcpy((void *)(iVar3 + 0x1d10),(void *)(iVar1 + 0x1d10),0x4000);
-  *(int *)(iVar3 + 0x5d10) = iVar3 + 0x2d10;
-  *(int *)(iVar3 + 0x5d14) = iVar3 + 0x4d10;
-  *(int *)(iVar3 + 0x9d18) = iVar3 + 0x6d18;
-  *(int *)(iVar3 + 0x9d1c) = iVar3 + 0x8d18;
-  vpx_memcpy((void *)(iVar3 + 0xadc0),(void *)(iVar1 + 0xadc0),0x1200);
-  vpx_memcpy((void *)(iVar3 + 0xad60),(void *)(iVar1 + 0xad60),0x38);
-  vpx_memcpy((void *)(iVar3 + 0x9d20),(void *)(iVar1 + 0x9d20),0x50);
-  vpx_memcpy((void *)(iVar3 + 0x9d70),(void *)(iVar1 + 0x9d70),0x50);
-  vpx_memcpy((void *)(iVar3 + 0x9dc0),(void *)(iVar1 + 0x9dc0),4000);
-  lVar5 = lVar5 + 0x63c;
-  puVar6 = (undefined4 *)(iVar3 + 0x648);
-  lVar7 = 0x19;
+  param_1->ss = param_2->ss;
+  param_1->ss_count = param_2->ss_count;
+  param_1->searches_per_step = param_2->searches_per_step;
+  param_1->errorperbit = param_2->errorperbit;
+  param_1->sadperbit16 = param_2->sadperbit16;
+  param_1->sadperbit4 = param_2->sadperbit4;
+  param_1->errthresh = param_2->errthresh;
+  param_1->rddiv = param_2->rddiv;
+  param_1->rdmult = param_2->rdmult;
+  param_1->vp8_short_fdct4x4 = param_2->vp8_short_fdct4x4;
+  param_1->vp8_short_fdct8x4 = param_2->vp8_short_fdct8x4;
+  param_1->short_walsh4x4 = param_2->short_walsh4x4;
+  param_1->quantize_b = param_2->quantize_b;
+  vpx_memcpy(param_1->mvcosts,param_2->mvcosts,0x4000);
+  param_1->mvcost[0] = param_1->mvcosts[0] + 0x400;
+  param_1->mvcost[1] = param_1->mvcosts[1] + 0x400;
+  param_1->mvsadcost[0] = param_1->mvsadcosts[0] + 0x400;
+  param_1->mvsadcost[1] = param_1->mvsadcosts[1] + 0x400;
+  vpx_memcpy(param_1->token_costs,param_2->token_costs,0x1200);
+  vpx_memcpy(param_1->inter_bmode_costs,param_2->inter_bmode_costs,0x38);
+  vpx_memcpy(param_1->mbmode_cost,param_2->mbmode_cost,0x50);
+  vpx_memcpy(param_1->intra_uv_mode_cost,param_2->intra_uv_mode_cost,0x50);
+  vpx_memcpy(param_1->bmode_costs,param_2->bmode_costs,4000);
+  piVar1 = (int *)(param_2->coeff + 0x18e);
+  ppsVar2 = &param_1->block[0].quant;
+  lVar3 = 0x19;
   do {
-    *puVar6 = *(undefined4 *)((iVar1 - iVar3) + (int)puVar6);
-    iVar2 = (int)lVar5;
-    puVar6[1] = *(undefined4 *)(iVar2 + 0x10);
-    puVar6[2] = *(undefined4 *)(iVar2 + 0x14);
-    puVar6[3] = *(undefined4 *)(iVar2 + 0x18);
-    puVar6[4] = *(undefined4 *)(iVar2 + 0x1c);
-    puVar6[8] = *(undefined4 *)(iVar2 + 0x2c);
-    lVar5 = lVar5 + 0x30;
-    puVar6[9] = *(undefined4 *)lVar5;
-    puVar6 = puVar6 + 0xc;
-    lVar7 = lVar7 + -1;
-  } while (lVar7 != 0);
-  *(undefined4 *)(iVar3 + 0x1cc8) = *(undefined4 *)(iVar1 + 0x1cc8);
-  *(undefined4 *)(iVar3 + 0x1ccc) = *(undefined4 *)(iVar1 + 0x1ccc);
-  *(undefined4 *)(iVar3 + 0x1cd0) = *(undefined4 *)(iVar1 + 0x1cd0);
-  *(undefined4 *)(iVar3 + 0x1cd4) = *(undefined4 *)(iVar1 + 0x1cd4);
-  *(undefined1 *)(iVar3 + 0x1c8c) = *(undefined1 *)(iVar1 + 0x1c8c);
-  *(undefined1 *)(iVar3 + 0x1c8f) = *(undefined1 *)(iVar1 + 0x1c8f);
-  pvVar4 = vpx_memcpy((void *)(iVar3 + 0x1c93),(void *)(iVar1 + 0x1c93),8);
-  puVar6 = (undefined4 *)(iVar3 + 0x1640);
-  lVar5 = 0x19;
+    *ppsVar2 = *(short **)(((int)param_2 - (int)param_1) + (int)ppsVar2);
+    ppsVar2[1] = (short *)piVar1[4];
+    ppsVar2[2] = (short *)piVar1[5];
+    ppsVar2[3] = (short *)piVar1[6];
+    ppsVar2[4] = (short *)piVar1[7];
+    ppsVar2[8] = (short *)piVar1[0xb];
+    piVar1 = piVar1 + 0xc;
+    ppsVar2[9] = (short *)*piVar1;
+    ppsVar2 = ppsVar2 + 0xc;
+    lVar3 = lVar3 + -1;
+  } while (lVar3 != 0);
+  (param_1->e_mbd).subpixel_predict = (param_2->e_mbd).subpixel_predict;
+  (param_1->e_mbd).subpixel_predict8x4 = (param_2->e_mbd).subpixel_predict8x4;
+  (param_1->e_mbd).subpixel_predict8x8 = (param_2->e_mbd).subpixel_predict8x8;
+  (param_1->e_mbd).subpixel_predict16x16 = (param_2->e_mbd).subpixel_predict16x16;
+  (param_1->e_mbd).segmentation_enabled = (param_2->e_mbd).segmentation_enabled;
+  (param_1->e_mbd).mb_segement_abs_delta = (param_2->e_mbd).mb_segement_abs_delta;
+  vpx_memcpy((param_1->e_mbd).segment_feature_data,(param_2->e_mbd).segment_feature_data,8);
+  ppsVar2 = &(param_1->e_mbd).block[0].dequant;
+  lVar3 = 0x19;
   do {
-    *puVar6 = *(undefined4 *)(((iVar1 + 0xb30) - (iVar3 + 0xb30)) + (int)puVar6);
-    puVar6 = puVar6 + 0xf;
-    lVar5 = lVar5 + -1;
-  } while (lVar5 != 0);
-  __restgprlr_28(pvVar4);
+    *ppsVar2 = *(short **)((int)param_2 + (0xb30 - (int)&param_1->e_mbd) + (int)ppsVar2);
+    ppsVar2 = ppsVar2 + 0xf;
+    lVar3 = lVar3 + -1;
+  } while (lVar3 != 0);
   return;
 }
 
 
 // 82823648  vp8cx_init_mbrthread_data  (WebM_atvi_opt/vpx/vp8/encoder/ethreading.c:349)
 
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
+
 void vp8cx_init_mbrthread_data
                (VP8_COMP *param_1,MACROBLOCK *param_2,MB_ROW_COMP *param_3,int param_4,int param_5)
 
 {
-  undefined4 *puVar1;
+  longlong lVar1;
   MACROBLOCK *pMVar2;
-  longlong lVar3;
-  int iVar4;
-  longlong lVar5;
+  int iVar3;
+  _func___cdecl_void_uchar_ptr_int_int_int_uchar_ptr_int **pp_Var4;
   
-  lVar3 = (longlong)param_5;
-  lVar5 = (longlong)(int)param_3;
-  __savegprlr();
-  if (0 < (int)lVar3) {
-    iVar4 = 1;
-    lVar5 = lVar5 + 0x1ccc;
+  lVar1 = (longlong)param_5;
+  if (0 < param_5) {
+    iVar3 = 1;
+    pp_Var4 = &(param_3->mb).e_mbd.subpixel_predict8x4;
     do {
-      puVar1 = (undefined4 *)lVar5;
-      puVar1[-1] = (param_2->e_mbd).subpixel_predict;
-      *puVar1 = (param_2->e_mbd).subpixel_predict8x4;
-      puVar1[1] = (param_2->e_mbd).subpixel_predict8x8;
-      puVar1[2] = (param_2->e_mbd).subpixel_predict16x16;
-      puVar1[4] = (param_2->e_mbd).rtcd;
-      puVar1[0x243a] = param_2->gf_active_ptr;
-      puVar1[0x2437] = 0x20;
-      vpx_memset(puVar1 + 0x28c7,0,0x10);
-      puVar1[0x28cb] = 0;
-      puVar1[5] = param_2->pi + iVar4 * (param_2->e_mbd).mode_info_stride;
-      puVar1[-0x17] = (param_1->common).mi + iVar4 * (param_2->e_mbd).mode_info_stride;
-      puVar1[-0x16] = (param_1->common).mode_info_stride;
-      puVar1[-0x15] = (param_1->common).frame_type;
-      puVar1[-3] = (param_1->common).frames_since_golden;
-      puVar1[-2] = (param_1->common).frames_till_alt_ref_frame;
+      pp_Var4[-1] = (param_2->e_mbd).subpixel_predict;
+      *pp_Var4 = (param_2->e_mbd).subpixel_predict8x4;
+      pp_Var4[1] = (param_2->e_mbd).subpixel_predict8x8;
+      pp_Var4[2] = (param_2->e_mbd).subpixel_predict16x16;
+      pp_Var4[4] = (_func___cdecl_void_uchar_ptr_int_int_int_uchar_ptr_int *)(param_2->e_mbd).rtcd;
+      pp_Var4[0x243a] =
+           (_func___cdecl_void_uchar_ptr_int_int_int_uchar_ptr_int *)param_2->gf_active_ptr;
+      pp_Var4[0x2437] = (_func___cdecl_void_uchar_ptr_int_int_int_uchar_ptr_int *)0x20;
+      vpx_memset(pp_Var4 + 0x28c7,0,0x10);
+      pp_Var4[0x28cb] = (_func___cdecl_void_uchar_ptr_int_int_int_uchar_ptr_int *)0x0;
+      pp_Var4[5] = (_func___cdecl_void_uchar_ptr_int_int_int_uchar_ptr_int *)
+                   (param_2->pi + iVar3 * (param_2->e_mbd).mode_info_stride);
+      pp_Var4[-0x17] =
+           (_func___cdecl_void_uchar_ptr_int_int_int_uchar_ptr_int *)
+           ((param_1->common).mi + iVar3 * (param_2->e_mbd).mode_info_stride);
+      pp_Var4[-0x16] =
+           (_func___cdecl_void_uchar_ptr_int_int_int_uchar_ptr_int *)
+           (param_1->common).mode_info_stride;
+      pp_Var4[-0x15] =
+           (_func___cdecl_void_uchar_ptr_int_int_int_uchar_ptr_int *)(param_1->common).frame_type;
+      pp_Var4[-3] = (_func___cdecl_void_uchar_ptr_int_int_int_uchar_ptr_int *)
+                    (param_1->common).frames_since_golden;
+      pp_Var4[-2] = (_func___cdecl_void_uchar_ptr_int_int_int_uchar_ptr_int *)
+                    (param_1->common).frames_till_alt_ref_frame;
       memcpy();
       memcpy();
       memcpy();
-      pMVar2 = (MACROBLOCK *)(puVar1 + -0x733);
-      puVar1[-0x471] = (param_2->src).y_stride * iVar4 * 0x10 + puVar1[-0x471];
-      puVar1[-0x470] = iVar4 * (param_2->src).uv_stride * 8 + puVar1[-0x470];
-      puVar1[-0x46f] = iVar4 * (param_2->src).uv_stride * 8 + puVar1[-0x46f];
+      pMVar2 = (MACROBLOCK *)(pp_Var4 + -0x733);
+      pp_Var4[-0x471] =
+           (_func___cdecl_void_uchar_ptr_int_int_int_uchar_ptr_int *)
+           ((param_2->src).y_stride * iVar3 * 0x10 + (int)pp_Var4[-0x471]);
+      pp_Var4[-0x470] =
+           (_func___cdecl_void_uchar_ptr_int_int_int_uchar_ptr_int *)
+           (iVar3 * (param_2->src).uv_stride * 8 + (int)pp_Var4[-0x470]);
+      pp_Var4[-0x46f] =
+           (_func___cdecl_void_uchar_ptr_int_int_int_uchar_ptr_int *)
+           (iVar3 * (param_2->src).uv_stride * 8 + (int)pp_Var4[-0x46f]);
       vp8_build_block_offsets(pMVar2);
-      vp8_setup_block_dptrs((MACROBLOCKD *)(puVar1 + -0x467));
+      vp8_setup_block_dptrs((MACROBLOCKD *)(pp_Var4 + -0x467));
       vp8_setup_block_ptrs(pMVar2);
-      puVar1[0xf] = param_1->RDDIV;
-      puVar1[0x10] = param_1->RDMULT;
-      puVar1[-0x11] = &(param_1->common).left_context;
-      puVar1[0x243c] = (param_1->common).fc.mvc;
+      pp_Var4[0xf] = (_func___cdecl_void_uchar_ptr_int_int_int_uchar_ptr_int *)param_1->RDDIV;
+      pp_Var4[0x10] = (_func___cdecl_void_uchar_ptr_int_int_int_uchar_ptr_int *)param_1->RDMULT;
+      pp_Var4[-0x11] =
+           (_func___cdecl_void_uchar_ptr_int_int_int_uchar_ptr_int *)&(param_1->common).left_context
+      ;
+      pp_Var4[0x243c] =
+           (_func___cdecl_void_uchar_ptr_int_int_int_uchar_ptr_int *)(param_1->common).fc.mvc;
       setup_mbby_copy(pMVar2,param_2);
-      lVar3 = lVar3 + -1;
-      iVar4 = iVar4 + 1;
-      lVar5 = lVar5 + 0xc000;
-    } while (lVar3 != 0);
+      lVar1 = lVar1 + -1;
+      iVar3 = iVar3 + 1;
+      pp_Var4 = pp_Var4 + 0x3000;
+    } while (lVar1 != 0);
   }
-  __restgprlr();
   return;
 }
 
 
 // 82823860  vp8cx_create_encoder_threads  (WebM_atvi_opt/vpx/vp8/encoder/ethreading.c:413)
 
+/* WARNING: Function: __savegprlr_21 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_21 replaced with injection: xenon_save_restore */
+
 void vp8cx_create_encoder_threads(VP8_COMP *param_1)
 
 {
-  int iVar1;
-  void *pvVar2;
-  uint uVar3;
-  int *piVar4;
-  int *piVar5;
-  int iVar6;
-  int iVar7;
-  int iVar8;
-  int *piVar9;
+  TOKENLIST *pTVar1;
+  void **ppvVar2;
+  MB_ROW_COMP *pMVar3;
+  ENCODETHREAD_DATA *pEVar4;
+  void *pvVar5;
+  uint uVar6;
+  MB_ROW_COMP **ppMVar7;
+  int *piVar8;
+  int iVar9;
   int iVar10;
+  int iVar11;
+  ENCODETHREAD_DATA **ppEVar12;
+  int iVar13;
   
-  iVar1 = __savegprlr_21(param_1);
-  iVar7 = 0;
-  *(undefined4 *)(iVar1 + 0x301c0) = 0;
-  *(int *)(iVar1 + 0x301bc) = 0x20;
-  pvVar2 = vpx_malloc(*(int *)(iVar1 + 0x1e708) << 3);
-  *(void **)(iVar1 + 0x301dc) = pvVar2;
-  if (pvVar2 == (void *)0x0) {
-    vpx_internal_error((vpx_internal_error_info *)(iVar1 + 0x1afe0),VPX_CODEC_MEM_ERROR,
-                       "Failed to allocate cpi->tplist");
+  iVar10 = 0;
+  param_1->b_multi_threaded = 0;
+  param_1->processor_core_count = 0x20;
+  pTVar1 = vpx_malloc((param_1->common).mb_rows << 3);
+  param_1->tplist = pTVar1;
+  if (pTVar1 == (TOKENLIST *)0x0) {
+    vpx_internal_error(&(param_1->common).error,VPX_CODEC_MEM_ERROR,"Failed to allocate cpi->tplist"
+                      );
   }
-  iVar6 = *(int *)(iVar1 + 0x301bc);
-  if ((1 < iVar6) && (iVar8 = *(int *)(iVar1 + 0x22a10), 1 < iVar8)) {
-    piVar5 = (int *)(iVar1 + 0x301c4);
-    if (iVar6 < iVar8) {
-      iVar8 = iVar6;
+  iVar9 = param_1->processor_core_count;
+  if ((1 < iVar9) && (iVar11 = (param_1->oxcf).multi_threaded, 1 < iVar11)) {
+    piVar8 = &param_1->encoding_thread_count;
+    if (iVar9 < iVar11) {
+      iVar11 = iVar9;
     }
-    *piVar5 = iVar8 + -1;
-    pvVar2 = vpx_malloc((iVar8 + -1) * 4);
-    *(int *)(iVar1 + 0x301c8) = (int)pvVar2;
-    if (pvVar2 == (void *)0x0) {
-      vpx_internal_error((vpx_internal_error_info *)(iVar1 + 0x1afe0),VPX_CODEC_MEM_ERROR,
+    *piVar8 = iVar11 + -1;
+    ppvVar2 = vpx_malloc((iVar11 + -1) * 4);
+    param_1->h_encoding_thread = ppvVar2;
+    if (ppvVar2 == (void **)0x0) {
+      vpx_internal_error(&(param_1->common).error,VPX_CODEC_MEM_ERROR,
                          "Failed to allocate cpi->h_encoding_thread");
     }
-    pvVar2 = vpx_malloc(*piVar5 << 2);
-    *(int *)(iVar1 + 0x301d4) = (int)pvVar2;
-    if (pvVar2 == (void *)0x0) {
-      vpx_internal_error((vpx_internal_error_info *)(iVar1 + 0x1afe0),VPX_CODEC_MEM_ERROR,
+    ppvVar2 = vpx_malloc(*piVar8 << 2);
+    param_1->h_event_mbrencoding = ppvVar2;
+    if (ppvVar2 == (void **)0x0) {
+      vpx_internal_error(&(param_1->common).error,VPX_CODEC_MEM_ERROR,
                          "Failed to allocate cpi->h_event_mbrencoding");
     }
-    pvVar2 = vpx_memalign(0x20,*piVar5 * 0xc000);
-    piVar4 = (int *)(iVar1 + 0x301cc);
-    *piVar4 = (int)pvVar2;
-    if (pvVar2 == (void *)0x0) {
-      vpx_internal_error((vpx_internal_error_info *)(iVar1 + 0x1afe0),VPX_CODEC_MEM_ERROR,
+    pMVar3 = vpx_memalign(0x20,*piVar8 * 0xc000);
+    ppMVar7 = &param_1->mb_row_ei;
+    *ppMVar7 = pMVar3;
+    if (pMVar3 == (MB_ROW_COMP *)0x0) {
+      vpx_internal_error(&(param_1->common).error,VPX_CODEC_MEM_ERROR,
                          "Failed to allocate cpi->mb_row_ei");
     }
-    vpx_memset((void *)*piVar4,0,*piVar5 * 0xc000);
-    pvVar2 = vpx_malloc(*piVar5 * 0xc);
-    piVar9 = (int *)(iVar1 + 0x301d0);
-    *piVar9 = (int)pvVar2;
-    if (pvVar2 == (void *)0x0) {
-      vpx_internal_error((vpx_internal_error_info *)(iVar1 + 0x1afe0),VPX_CODEC_MEM_ERROR,
+    vpx_memset(*ppMVar7,0,*piVar8 * 0xc000);
+    pEVar4 = vpx_malloc(*piVar8 * 0xc);
+    ppEVar12 = &param_1->en_thread_data;
+    *ppEVar12 = pEVar4;
+    if (pEVar4 == (ENCODETHREAD_DATA *)0x0) {
+      vpx_internal_error(&(param_1->common).error,VPX_CODEC_MEM_ERROR,
                          "Failed to allocate cpi->en_thread_data");
     }
-    pvVar2 = CreateEventA((void *)0x0,0,0,(char *)0x0);
-    *(undefined4 *)(iVar1 + 0x301c0) = 1;
-    *(void **)(iVar1 + 0x301d8) = pvVar2;
-    if (0 < *piVar5) {
-      iVar8 = 0;
-      iVar10 = 0;
-      iVar6 = 0;
+    pvVar5 = CreateEventA((void *)0x0,0,0,(char *)0x0);
+    param_1->b_multi_threaded = 1;
+    param_1->h_event_main = pvVar5;
+    if (0 < *piVar8) {
+      iVar11 = 0;
+      iVar13 = 0;
+      iVar9 = 0;
       do {
-        pvVar2 = CreateEventA((void *)0x0,0,0,(char *)0x0);
-        *(void **)(*(int *)(iVar1 + 0x301d4) + iVar8) = pvVar2;
-        *(int *)(iVar10 + *piVar9) = iVar7;
-        *(int *)(iVar10 + *piVar9 + 4) = iVar1;
-        *(int *)(iVar10 + *piVar9 + 8) = *piVar4 + iVar6;
-        uVar3 = _beginthreadex((void *)0x0,0,thread_encoding_proc,(void *)(iVar10 + *piVar9),0,
-                               (uint *)0x0);
-        iVar7 = iVar7 + 1;
-        iVar10 = iVar10 + 0xc;
-        iVar6 = iVar6 + 0xc000;
-        *(uint *)(*(int *)(iVar1 + 0x301c8) + iVar8) = uVar3;
-        iVar8 = iVar8 + 4;
-      } while (iVar7 < *piVar5);
+        pvVar5 = CreateEventA((void *)0x0,0,0,(char *)0x0);
+        *(void **)((int)param_1->h_event_mbrencoding + iVar11) = pvVar5;
+        *(int *)((int)&(*ppEVar12)->ithread + iVar13) = iVar10;
+        *(VP8_COMP **)((int)&(*ppEVar12)->ptr1 + iVar13) = param_1;
+        *(int *)((int)&(*ppEVar12)->ptr2 + iVar13) = (int)((*ppMVar7)->mb).src_diff + iVar9;
+        uVar6 = _beginthreadex((void *)0x0,0,thread_encoding_proc,
+                               (void *)((int)&(*ppEVar12)->ithread + iVar13),0,(uint *)0x0);
+        iVar10 = iVar10 + 1;
+        iVar13 = iVar13 + 0xc;
+        iVar9 = iVar9 + 0xc000;
+        *(uint *)((int)param_1->h_encoding_thread + iVar11) = uVar6;
+        iVar11 = iVar11 + 4;
+      } while (iVar10 < *piVar8);
     }
   }
-  __restgprlr_21();
   return;
 }
 
@@ -430,52 +446,52 @@ void vpx_internal_error(vpx_internal_error_info *param_1,vpx_codec_err_t param_2
 
 // 82823AF0  vp8cx_remove_encoder_threads  (WebM_atvi_opt/vpx/vp8/encoder/ethreading.c:472)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
+
 void vp8cx_remove_encoder_threads(VP8_COMP *param_1)
 
 {
   void *pvVar1;
-  int iVar2;
-  ulong uVar3;
-  int *piVar4;
+  ulong uVar2;
+  int *piVar3;
+  int iVar4;
   int iVar5;
-  int iVar6;
   
-  iVar2 = __savegprlr_24(param_1);
-  if (*(int *)(iVar2 + 0x301c0) != 0) {
-    piVar4 = (int *)(iVar2 + 0x301c4);
-    *(int *)(iVar2 + 0x301c0) = 0;
-    iVar5 = 0;
-    if (0 < *piVar4) {
-      iVar6 = 0;
+  if (param_1->b_multi_threaded != 0) {
+    piVar3 = &param_1->encoding_thread_count;
+    param_1->b_multi_threaded = 0;
+    iVar4 = 0;
+    if (0 < *piVar3) {
+      iVar5 = 0;
       do {
-        SetEvent(*(void **)(iVar6 + *(int *)(iVar2 + 0x301d4)));
-        uVar3 = WaitForSingleObject(*(void **)(*(int *)(iVar2 + 0x301c8) + iVar6),10000);
-        if (uVar3 == 0) {
-          CloseHandle(*(void **)(*(int *)(iVar2 + 0x301c8) + iVar6));
+        SetEvent(*(void **)(iVar5 + (int)param_1->h_event_mbrencoding));
+        uVar2 = WaitForSingleObject(*(void **)((int)param_1->h_encoding_thread + iVar5),10000);
+        if (uVar2 == 0) {
+          CloseHandle(*(void **)((int)param_1->h_encoding_thread + iVar5));
         }
-        iVar5 = iVar5 + 1;
-        iVar6 = iVar6 + 4;
-      } while (iVar5 < *piVar4);
+        iVar4 = iVar4 + 1;
+        iVar5 = iVar5 + 4;
+      } while (iVar4 < *piVar3);
     }
-    iVar5 = 0;
-    if (0 < *piVar4) {
-      iVar6 = 0;
+    iVar4 = 0;
+    if (0 < *piVar3) {
+      iVar5 = 0;
       do {
-        pvVar1 = *(void **)(iVar6 + *(int *)(iVar2 + 0x301d4));
+        pvVar1 = *(void **)(iVar5 + (int)param_1->h_event_mbrencoding);
         if (pvVar1 != (void *)0x0) {
           CloseHandle(pvVar1);
         }
-        iVar5 = iVar5 + 1;
-        iVar6 = iVar6 + 4;
-      } while (iVar5 < *piVar4);
+        iVar4 = iVar4 + 1;
+        iVar5 = iVar5 + 4;
+      } while (iVar4 < *piVar3);
     }
-    vpx_free(*(void **)(iVar2 + 0x301d4));
-    vpx_free(*(void **)(iVar2 + 0x301c8));
-    vpx_free(*(void **)(iVar2 + 0x301cc));
-    vpx_free(*(void **)(iVar2 + 0x301d0));
+    vpx_free(param_1->h_event_mbrencoding);
+    vpx_free(param_1->h_encoding_thread);
+    vpx_free(param_1->mb_row_ei);
+    vpx_free(param_1->en_thread_data);
   }
-  vpx_free(*(void **)(iVar2 + 0x301dc));
-  __restgprlr_24();
+  vpx_free(param_1->tplist);
   return;
 }
 

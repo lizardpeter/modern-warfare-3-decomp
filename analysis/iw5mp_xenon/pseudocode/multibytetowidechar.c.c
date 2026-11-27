@@ -2,54 +2,45 @@
 
 // 828A2BB8  MultiByteToWideChar  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/xrtl/multibytetowidechar.c:25)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 int MultiByteToWideChar(uint param_1,ulong param_2,char *param_3,int param_4,ushort *param_5,
                        int param_6)
 
 {
-  int iVar1;
-  ulong uVar2;
-  longlong lVar3;
-  int iVar4;
-  longlong lVar5;
-  ulonglong uVar6;
-  char *pcVar8;
-  longlong lVar7;
-  longlong lVar9;
+  char cVar1;
+  int iVar2;
+  ulong uVar3;
+  char *pcVar4;
   
-  uVar6 = (ulonglong)param_6;
-  lVar5 = (longlong)(int)param_5;
-  lVar9 = (longlong)param_4;
-  lVar3 = (longlong)(int)param_3;
-  iVar1 = __savegprlr_27(param_1,param_2);
-  iVar4 = (int)uVar6;
-  if (iVar1 == 0xfde9) {
-    iVar1 = UTF8ToUnicode((char *)lVar3,(int)lVar9,(ushort *)lVar5,iVar4);
-    lVar9 = (longlong)iVar1;
+  if (param_1 == 0xfde9) {
+    param_4 = UTF8ToUnicode(param_3,param_4,param_5,param_6);
   }
   else {
-    lVar7 = lVar3;
-    if ((int)lVar9 == -1) {
+    pcVar4 = param_3;
+    if (param_4 == -1) {
       do {
-        pcVar8 = (char *)lVar7;
-        lVar7 = lVar7 + 1;
-      } while (*pcVar8 != '\0');
-      lVar9 = ((lVar7 - lVar3) - 1U & 0xffffffff) + 1;
+        cVar1 = *pcVar4;
+        pcVar4 = pcVar4 + 1;
+      } while (cVar1 != '\0');
+      param_4 = (int)pcVar4 - (int)param_3;
     }
-    if (iVar4 != 0) {
-      if (((int)lVar9 < 0) || (iVar4 < (int)lVar9)) {
-        uVar2 = 0x7a;
+    if (param_6 != 0) {
+      if ((param_4 < 0) || (param_6 < param_4)) {
+        uVar3 = 0x7a;
       }
       else {
-        iVar1 = RtlMultiByteToUnicodeN(lVar5,(uVar6 & 0x7fffffff) << 1,0,lVar3,lVar9);
-        if (-1 < iVar1) goto LAB_828a2c84;
-        uVar2 = RtlNtStatusToDosError();
+        iVar2 = RtlMultiByteToUnicodeN(param_5,param_6 << 1,0,param_3,param_4);
+        if (-1 < iVar2) {
+          return param_4;
+        }
+        uVar3 = RtlNtStatusToDosError();
       }
-      SetLastError(uVar2);
-      lVar9 = 0;
+      SetLastError(uVar3);
+      param_4 = 0;
     }
   }
-LAB_828a2c84:
-  iVar1 = __restgprlr_27(lVar9);
-  return iVar1;
+  return param_4;
 }
 

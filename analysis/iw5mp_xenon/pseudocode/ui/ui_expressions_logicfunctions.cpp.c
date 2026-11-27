@@ -2,18 +2,17 @@
 
 // 825A1530  compare_doesStringEqualString  (ui/ui_expressions_logicfunctions.cpp:12)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 
 void compare_doesStringEqualString(Operand *param_1,Operand *param_2,Operand *param_3)
 
 {
-  int *piVar1;
-  int iVar2;
-  operandInternalDataUnion oVar3;
+  int iVar1;
   
-  piVar1 = (int *)__savegprlr_28(param_1);
-  if (*piVar1 != 2) {
+  if (param_1->dataType != VAL_STRING) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions_logicfunctions.cpp"
                     ,0xd,0,"%s\n\t(leftSide->dataType) = %i");
   }
@@ -22,17 +21,16 @@ void compare_doesStringEqualString(Operand *param_1,Operand *param_2,Operand *pa
                     ,0xe,0,"%s\n\t(rightSide->dataType) = %i");
   }
   param_3->dataType = VAL_INT;
-  iVar2 = I_stricmp((char *)piVar1[1],(char *)(param_2->internals).function);
-  oVar3.intVal._0_3_ = 0;
-  oVar3.intVal._3_1_ = iVar2 == 0;
-  param_3->internals = oVar3;
-  __restgprlr_28();
+  iVar1 = I_stricmp((char *)(param_1->internals).function,(char *)(param_2->internals).function);
+  (param_3->internals).intVal = (uint)LZCOUNT(iVar1) >> 5;
   return;
 }
 
 
 // 825A15D0  compare_doesStringNotEqualString  (ui/ui_expressions_logicfunctions.cpp:21)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 
@@ -40,11 +38,9 @@ void compare_doesStringNotEqualString(Operand *param_1,Operand *param_2,Operand 
 
 {
   operandInternalDataUnion oVar1;
-  int *piVar2;
-  int iVar3;
+  int iVar2;
   
-  piVar2 = (int *)__savegprlr_28(param_1);
-  if (*piVar2 != 2) {
+  if (param_1->dataType != VAL_STRING) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions_logicfunctions.cpp"
                     ,0x16,0,"%s\n\t(leftSide->dataType) = %i");
   }
@@ -53,28 +49,25 @@ void compare_doesStringNotEqualString(Operand *param_1,Operand *param_2,Operand 
                     ,0x17,0,"%s\n\t(rightSide->dataType) = %i");
   }
   param_3->dataType = VAL_INT;
-  iVar3 = I_stricmp((char *)piVar2[1],(char *)(param_2->internals).function);
+  iVar2 = I_stricmp((char *)(param_1->internals).function,(char *)(param_2->internals).function);
   oVar1.intVal._0_3_ = 0;
-  oVar1.intVal._3_1_ = iVar3 != 0;
+  oVar1.intVal._3_1_ = iVar2 != 0;
   param_3->internals = oVar1;
-  __restgprlr_28();
   return;
 }
 
 
 // 825A1670  compare_doesIntEqualInt  (ui/ui_expressions_logicfunctions.cpp:30)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 
 void compare_doesIntEqualInt(Operand *param_1,Operand *param_2,Operand *param_3)
 
 {
-  int *piVar1;
-  operandInternalDataUnion oVar2;
-  
-  piVar1 = (int *)__savegprlr_28(param_1);
-  if (*piVar1 != 0) {
+  if (param_1->dataType != VAL_INT) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions_logicfunctions.cpp"
                     ,0x1f,0,"%s\n\t(leftSide->dataType) = %i");
   }
@@ -83,16 +76,16 @@ void compare_doesIntEqualInt(Operand *param_1,Operand *param_2,Operand *param_3)
                     ,0x20,0,"%s\n\t(rightSide->dataType) = %i");
   }
   param_3->dataType = VAL_INT;
-  oVar2.intVal._0_3_ = 0;
-  oVar2.intVal._3_1_ = (param_2->internals).intVal == piVar1[1];
-  param_3->internals = oVar2;
-  __restgprlr_28();
+  (param_3->internals).intVal =
+       (uint)LZCOUNT((int)(param_2->internals).function - (param_1->internals).intVal) >> 5;
   return;
 }
 
 
 // 825A1710  compare_doesIntNotEqualInt  (ui/ui_expressions_logicfunctions.cpp:38)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 
@@ -100,10 +93,8 @@ void compare_doesIntNotEqualInt(Operand *param_1,Operand *param_2,Operand *param
 
 {
   operandInternalDataUnion oVar1;
-  int *piVar2;
   
-  piVar2 = (int *)__savegprlr_28(param_1);
-  if (*piVar2 != 0) {
+  if (param_1->dataType != VAL_INT) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions_logicfunctions.cpp"
                     ,0x27,0,"%s\n\t(leftSide->dataType) = %i");
   }
@@ -113,26 +104,25 @@ void compare_doesIntNotEqualInt(Operand *param_1,Operand *param_2,Operand *param
   }
   param_3->dataType = VAL_INT;
   oVar1.intVal._0_3_ = 0;
-  oVar1.intVal._3_1_ = (param_2->internals).intVal != piVar2[1];
+  oVar1.intVal._3_1_ = (param_2->internals).intVal != (param_1->internals).intVal;
   param_3->internals = oVar1;
-  __restgprlr_28();
   return;
 }
 
 
 // 825A17B0  compare_doesIntEqualFloat  (ui/ui_expressions_logicfunctions.cpp:46)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 
 void compare_doesIntEqualFloat(Operand *param_1,Operand *param_2,Operand *param_3)
 
 {
-  int *piVar1;
-  operandInternalDataUnion oVar2;
+  operandInternalDataUnion oVar1;
   
-  piVar1 = (int *)__savegprlr_28(param_1);
-  if (*piVar1 != 0) {
+  if (param_1->dataType != VAL_INT) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions_logicfunctions.cpp"
                     ,0x2f,0,"%s\n\t(leftSide->dataType) = %i");
   }
@@ -141,10 +131,10 @@ void compare_doesIntEqualFloat(Operand *param_1,Operand *param_2,Operand *param_
                     ,0x30,0,"%s\n\t(rightSide->dataType) = %i");
   }
   param_3->dataType = VAL_INT;
-  oVar2.intVal._0_3_ = 0;
-  oVar2.intVal._3_1_ = (float)(longlong)piVar1[1] == (param_2->internals).floatVal;
-  param_3->internals = oVar2;
-  __restgprlr_28();
+  oVar1.intVal._0_3_ = 0;
+  oVar1.intVal._3_1_ = (float)(longlong)(param_1->internals).intVal == (param_2->internals).floatVal
+  ;
+  param_3->internals = oVar1;
   return;
 }
 
@@ -164,17 +154,17 @@ void compare_doesFloatEqualInt(Operand *param_1,Operand *param_2,Operand *param_
 
 // 825A1878  compare_doesFloatEqualFloat  (ui/ui_expressions_logicfunctions.cpp:59)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 
 void compare_doesFloatEqualFloat(Operand *param_1,Operand *param_2,Operand *param_3)
 
 {
-  int *piVar1;
-  operandInternalDataUnion oVar2;
+  operandInternalDataUnion oVar1;
   
-  piVar1 = (int *)__savegprlr_28(param_1);
-  if (*piVar1 != 1) {
+  if (param_1->dataType != VAL_FLOAT) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions_logicfunctions.cpp"
                     ,0x3c,0,"%s\n\t(leftSide->dataType) = %i");
   }
@@ -183,27 +173,26 @@ void compare_doesFloatEqualFloat(Operand *param_1,Operand *param_2,Operand *para
                     ,0x3d,0,"%s\n\t(rightSide->dataType) = %i");
   }
   param_3->dataType = VAL_INT;
-  oVar2.intVal._0_3_ = 0;
-  oVar2.intVal._3_1_ = (float)piVar1[1] == (param_2->internals).floatVal;
-  param_3->internals = oVar2;
-  __restgprlr_28();
+  oVar1.intVal._0_3_ = 0;
+  oVar1.intVal._3_1_ = (param_1->internals).floatVal == (param_2->internals).floatVal;
+  param_3->internals = oVar1;
   return;
 }
 
 
 // 825A1918  compare_doesIntNotEqualFloat  (ui/ui_expressions_logicfunctions.cpp:67)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 
 void compare_doesIntNotEqualFloat(Operand *param_1,Operand *param_2,Operand *param_3)
 
 {
-  int *piVar1;
-  operandInternalDataUnion oVar2;
+  operandInternalDataUnion oVar1;
   
-  piVar1 = (int *)__savegprlr_28(param_1);
-  if (*piVar1 != 0) {
+  if (param_1->dataType != VAL_INT) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions_logicfunctions.cpp"
                     ,0x44,0,"%s\n\t(leftSide->dataType) = %i");
   }
@@ -212,10 +201,10 @@ void compare_doesIntNotEqualFloat(Operand *param_1,Operand *param_2,Operand *par
                     ,0x45,0,"%s\n\t(rightSide->dataType) = %i");
   }
   param_3->dataType = VAL_INT;
-  oVar2.intVal._0_3_ = 0;
-  oVar2.intVal._3_1_ = (float)(longlong)piVar1[1] != (param_2->internals).floatVal;
-  param_3->internals = oVar2;
-  __restgprlr_28();
+  oVar1.intVal._0_3_ = 0;
+  oVar1.intVal._3_1_ = (float)(longlong)(param_1->internals).intVal != (param_2->internals).floatVal
+  ;
+  param_3->internals = oVar1;
   return;
 }
 
@@ -235,17 +224,17 @@ void compare_doesFloatNotEqualInt(Operand *param_1,Operand *param_2,Operand *par
 
 // 825A19E0  compare_doesFloatNotEqualFloat  (ui/ui_expressions_logicfunctions.cpp:80)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 
 void compare_doesFloatNotEqualFloat(Operand *param_1,Operand *param_2,Operand *param_3)
 
 {
-  int *piVar1;
-  operandInternalDataUnion oVar2;
+  operandInternalDataUnion oVar1;
   
-  piVar1 = (int *)__savegprlr_28(param_1);
-  if (*piVar1 != 1) {
+  if (param_1->dataType != VAL_FLOAT) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions_logicfunctions.cpp"
                     ,0x51,0,"%s\n\t(leftSide->dataType) = %i");
   }
@@ -254,26 +243,24 @@ void compare_doesFloatNotEqualFloat(Operand *param_1,Operand *param_2,Operand *p
                     ,0x52,0,"%s\n\t(rightSide->dataType) = %i");
   }
   param_3->dataType = VAL_INT;
-  oVar2.intVal._0_3_ = 0;
-  oVar2.intVal._3_1_ = (float)piVar1[1] != (param_2->internals).floatVal;
-  param_3->internals = oVar2;
-  __restgprlr_28();
+  oVar1.intVal._0_3_ = 0;
+  oVar1.intVal._3_1_ = (param_1->internals).floatVal != (param_2->internals).floatVal;
+  param_3->internals = oVar1;
   return;
 }
 
 
 // 825A1A80  compare_isIntLessThanInt  (ui/ui_expressions_logicfunctions.cpp:88)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 
 void compare_isIntLessThanInt(Operand *param_1,Operand *param_2,Operand *param_3)
 
 {
-  int *piVar1;
-  
-  piVar1 = (int *)__savegprlr_28(param_1);
-  if (*piVar1 != 0) {
+  if (param_1->dataType != VAL_INT) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions_logicfunctions.cpp"
                     ,0x59,0,"%s\n\t(leftSide->dataType) = %i");
   }
@@ -283,26 +270,27 @@ void compare_isIntLessThanInt(Operand *param_1,Operand *param_2,Operand *param_3
   }
   param_3->dataType = VAL_INT;
   (param_3->internals).intVal =
-       (int)((~(ulonglong)((uint)(param_2->internals).function ^ (uint)piVar1[1]) & 0xffffffff) >>
-            0x1f) + (uint)((param_2->internals).function <= (Statement_s *)piVar1[1]) & 1;
-  __restgprlr_28();
+       (int)((~(ulonglong)
+               ((uint)(param_2->internals).function ^ (uint)(param_1->internals).function) &
+             0xffffffff) >> 0x1f) +
+       (uint)((param_2->internals).function <= (param_1->internals).function) & 1;
   return;
 }
 
 
 // 825A1B28  compare_isIntLessThanFloat  (ui/ui_expressions_logicfunctions.cpp:96)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 
 void compare_isIntLessThanFloat(Operand *param_1,Operand *param_2,Operand *param_3)
 
 {
-  int *piVar1;
-  operandInternalDataUnion oVar2;
+  operandInternalDataUnion oVar1;
   
-  piVar1 = (int *)__savegprlr_28(param_1);
-  if (*piVar1 != 0) {
+  if (param_1->dataType != VAL_INT) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions_logicfunctions.cpp"
                     ,0x61,0,"%s\n\t(leftSide->dataType) = %i");
   }
@@ -311,27 +299,26 @@ void compare_isIntLessThanFloat(Operand *param_1,Operand *param_2,Operand *param
                     ,0x62,0,"%s\n\t(rightSide->dataType) = %i");
   }
   param_3->dataType = VAL_INT;
-  oVar2.intVal._0_3_ = 0;
-  oVar2.intVal._3_1_ = (float)(longlong)piVar1[1] < (param_2->internals).floatVal;
-  param_3->internals = oVar2;
-  __restgprlr_28();
+  oVar1.intVal._0_3_ = 0;
+  oVar1.intVal._3_1_ = (float)(longlong)(param_1->internals).intVal < (param_2->internals).floatVal;
+  param_3->internals = oVar1;
   return;
 }
 
 
 // 825A1BE0  compare_isFloatLessThanInt  (ui/ui_expressions_logicfunctions.cpp:104)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 
 void compare_isFloatLessThanInt(Operand *param_1,Operand *param_2,Operand *param_3)
 
 {
-  int *piVar1;
-  operandInternalDataUnion oVar2;
+  operandInternalDataUnion oVar1;
   
-  piVar1 = (int *)__savegprlr_28(param_1);
-  if (*piVar1 != 1) {
+  if (param_1->dataType != VAL_FLOAT) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions_logicfunctions.cpp"
                     ,0x69,0,"%s\n\t(leftSide->dataType) = %i");
   }
@@ -340,27 +327,26 @@ void compare_isFloatLessThanInt(Operand *param_1,Operand *param_2,Operand *param
                     ,0x6a,0,"%s\n\t(rightSide->dataType) = %i");
   }
   param_3->dataType = VAL_INT;
-  oVar2.intVal._0_3_ = 0;
-  oVar2.intVal._3_1_ = (float)piVar1[1] < (float)(longlong)(param_2->internals).intVal;
-  param_3->internals = oVar2;
-  __restgprlr_28();
+  oVar1.intVal._0_3_ = 0;
+  oVar1.intVal._3_1_ = (param_1->internals).floatVal < (float)(longlong)(param_2->internals).intVal;
+  param_3->internals = oVar1;
   return;
 }
 
 
 // 825A1C98  compare_isFloatLessThanFloat  (ui/ui_expressions_logicfunctions.cpp:112)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 
 void compare_isFloatLessThanFloat(Operand *param_1,Operand *param_2,Operand *param_3)
 
 {
-  int *piVar1;
-  operandInternalDataUnion oVar2;
+  operandInternalDataUnion oVar1;
   
-  piVar1 = (int *)__savegprlr_28(param_1);
-  if (*piVar1 != 1) {
+  if (param_1->dataType != VAL_FLOAT) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions_logicfunctions.cpp"
                     ,0x71,0,"%s\n\t(leftSide->dataType) = %i");
   }
@@ -369,26 +355,24 @@ void compare_isFloatLessThanFloat(Operand *param_1,Operand *param_2,Operand *par
                     ,0x72,0,"%s\n\t(rightSide->dataType) = %i");
   }
   param_3->dataType = VAL_INT;
-  oVar2.intVal._0_3_ = 0;
-  oVar2.intVal._3_1_ = (float)piVar1[1] < (param_2->internals).floatVal;
-  param_3->internals = oVar2;
-  __restgprlr_28();
+  oVar1.intVal._0_3_ = 0;
+  oVar1.intVal._3_1_ = (param_1->internals).floatVal < (param_2->internals).floatVal;
+  param_3->internals = oVar1;
   return;
 }
 
 
 // 825A1D38  compare_isIntLessThanEqualToInt  (ui/ui_expressions_logicfunctions.cpp:120)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 
 void compare_isIntLessThanEqualToInt(Operand *param_1,Operand *param_2,Operand *param_3)
 
 {
-  int *piVar1;
-  
-  piVar1 = (int *)__savegprlr_28(param_1);
-  if (*piVar1 != 0) {
+  if (param_1->dataType != VAL_INT) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions_logicfunctions.cpp"
                     ,0x79,0,"%s\n\t(leftSide->dataType) = %i");
   }
@@ -399,26 +383,25 @@ void compare_isIntLessThanEqualToInt(Operand *param_1,Operand *param_2,Operand *
   param_3->dataType = VAL_INT;
   (param_3->internals).function =
        (Statement_s *)
-       ((((int)(param_2->internals).function >> 0x1f) - (piVar1[1] >> 0x1f)) +
-       (uint)((Statement_s *)piVar1[1] <= (param_2->internals).function));
-  __restgprlr_28();
+       ((((int)(param_2->internals).function >> 0x1f) - ((int)(param_1->internals).function >> 0x1f)
+        ) + (uint)((param_1->internals).function <= (param_2->internals).function));
   return;
 }
 
 
 // 825A1DE0  compare_isFloatGreaterThanEqualToInt  (ui/ui_expressions_logicfunctions.cpp:128)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 
 void compare_isFloatGreaterThanEqualToInt(Operand *param_1,Operand *param_2,Operand *param_3)
 
 {
-  int *piVar1;
-  operandInternalDataUnion oVar2;
+  operandInternalDataUnion oVar1;
   
-  piVar1 = (int *)__savegprlr_28(param_1);
-  if (*piVar1 != 1) {
+  if (param_1->dataType != VAL_FLOAT) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions_logicfunctions.cpp"
                     ,0x81,0,"%s\n\t(leftSide->dataType) = %i");
   }
@@ -427,10 +410,10 @@ void compare_isFloatGreaterThanEqualToInt(Operand *param_1,Operand *param_2,Oper
                     ,0x82,0,"%s\n\t(rightSide->dataType) = %i");
   }
   param_3->dataType = VAL_INT;
-  oVar2.intVal._0_3_ = 0;
-  oVar2.intVal._3_1_ = (float)(longlong)(param_2->internals).intVal <= (float)piVar1[1];
-  param_3->internals = oVar2;
-  __restgprlr_28();
+  oVar1.intVal._0_3_ = 0;
+  oVar1.intVal._3_1_ = (float)(longlong)(param_2->internals).intVal <= (param_1->internals).floatVal
+  ;
+  param_3->internals = oVar1;
   return;
 }
 
@@ -450,17 +433,17 @@ void compare_isIntLessThanEqualToFloat(Operand *param_1,Operand *param_2,Operand
 
 // 825A1EA8  compare_isFloatLessThanEqualToInt  (ui/ui_expressions_logicfunctions.cpp:141)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 
 void compare_isFloatLessThanEqualToInt(Operand *param_1,Operand *param_2,Operand *param_3)
 
 {
-  int *piVar1;
-  operandInternalDataUnion oVar2;
+  operandInternalDataUnion oVar1;
   
-  piVar1 = (int *)__savegprlr_28(param_1);
-  if (*piVar1 != 1) {
+  if (param_1->dataType != VAL_FLOAT) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions_logicfunctions.cpp"
                     ,0x8e,0,"%s\n\t(leftSide->dataType) = %i");
   }
@@ -469,27 +452,27 @@ void compare_isFloatLessThanEqualToInt(Operand *param_1,Operand *param_2,Operand
                     ,0x8f,0,"%s\n\t(rightSide->dataType) = %i");
   }
   param_3->dataType = VAL_INT;
-  oVar2.intVal._0_3_ = 0;
-  oVar2.intVal._3_1_ = (float)piVar1[1] <= (float)(longlong)(param_2->internals).intVal;
-  param_3->internals = oVar2;
-  __restgprlr_28();
+  oVar1.intVal._0_3_ = 0;
+  oVar1.intVal._3_1_ = (param_1->internals).floatVal <= (float)(longlong)(param_2->internals).intVal
+  ;
+  param_3->internals = oVar1;
   return;
 }
 
 
 // 825A1F60  compare_isFloatLessThanEqualToFloat  (ui/ui_expressions_logicfunctions.cpp:149)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 
 void compare_isFloatLessThanEqualToFloat(Operand *param_1,Operand *param_2,Operand *param_3)
 
 {
-  int *piVar1;
-  operandInternalDataUnion oVar2;
+  operandInternalDataUnion oVar1;
   
-  piVar1 = (int *)__savegprlr_28(param_1);
-  if (*piVar1 != 1) {
+  if (param_1->dataType != VAL_FLOAT) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions_logicfunctions.cpp"
                     ,0x96,0,"%s\n\t(leftSide->dataType) = %i");
   }
@@ -498,10 +481,9 @@ void compare_isFloatLessThanEqualToFloat(Operand *param_1,Operand *param_2,Opera
                     ,0x97,0,"%s\n\t(rightSide->dataType) = %i");
   }
   param_3->dataType = VAL_INT;
-  oVar2.intVal._0_3_ = 0;
-  oVar2.intVal._3_1_ = (float)piVar1[1] <= (param_2->internals).floatVal;
-  param_3->internals = oVar2;
-  __restgprlr_28();
+  oVar1.intVal._0_3_ = 0;
+  oVar1.intVal._3_1_ = (param_1->internals).floatVal <= (param_2->internals).floatVal;
+  param_3->internals = oVar1;
   return;
 }
 
@@ -534,17 +516,17 @@ void compare_isIntGreaterThanFloat(Operand *param_1,Operand *param_2,Operand *pa
 
 // 825A2020  compare_isFloatGreaterThanInt  (ui/ui_expressions_logicfunctions.cpp:167)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 
 void compare_isFloatGreaterThanInt(Operand *param_1,Operand *param_2,Operand *param_3)
 
 {
-  int *piVar1;
-  operandInternalDataUnion oVar2;
+  operandInternalDataUnion oVar1;
   
-  piVar1 = (int *)__savegprlr_28(param_1);
-  if (*piVar1 != 1) {
+  if (param_1->dataType != VAL_FLOAT) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions_logicfunctions.cpp"
                     ,0xa8,0,"%s\n\t(leftSide->dataType) = %i");
   }
@@ -553,27 +535,26 @@ void compare_isFloatGreaterThanInt(Operand *param_1,Operand *param_2,Operand *pa
                     ,0xa9,0,"%s\n\t(rightSide->dataType) = %i");
   }
   param_3->dataType = VAL_INT;
-  oVar2.intVal._0_3_ = 0;
-  oVar2.intVal._3_1_ = (float)(longlong)(param_2->internals).intVal < (float)piVar1[1];
-  param_3->internals = oVar2;
-  __restgprlr_28();
+  oVar1.intVal._0_3_ = 0;
+  oVar1.intVal._3_1_ = (float)(longlong)(param_2->internals).intVal < (param_1->internals).floatVal;
+  param_3->internals = oVar1;
   return;
 }
 
 
 // 825A20D8  compare_isFloatGreaterThanFloat  (ui/ui_expressions_logicfunctions.cpp:175)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 
 void compare_isFloatGreaterThanFloat(Operand *param_1,Operand *param_2,Operand *param_3)
 
 {
-  int *piVar1;
-  operandInternalDataUnion oVar2;
+  operandInternalDataUnion oVar1;
   
-  piVar1 = (int *)__savegprlr_28(param_1);
-  if (*piVar1 != 1) {
+  if (param_1->dataType != VAL_FLOAT) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions_logicfunctions.cpp"
                     ,0xb0,0,"%s\n\t(leftSide->dataType) = %i");
   }
@@ -582,26 +563,24 @@ void compare_isFloatGreaterThanFloat(Operand *param_1,Operand *param_2,Operand *
                     ,0xb1,0,"%s\n\t(rightSide->dataType) = %i");
   }
   param_3->dataType = VAL_INT;
-  oVar2.intVal._0_3_ = 0;
-  oVar2.intVal._3_1_ = (param_2->internals).floatVal < (float)piVar1[1];
-  param_3->internals = oVar2;
-  __restgprlr_28();
+  oVar1.intVal._0_3_ = 0;
+  oVar1.intVal._3_1_ = (param_2->internals).floatVal < (param_1->internals).floatVal;
+  param_3->internals = oVar1;
   return;
 }
 
 
 // 825A2178  compare_isIntGreaterThanEqualToInt  (ui/ui_expressions_logicfunctions.cpp:183)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 
 void compare_isIntGreaterThanEqualToInt(Operand *param_1,Operand *param_2,Operand *param_3)
 
 {
-  int *piVar1;
-  
-  piVar1 = (int *)__savegprlr_28(param_1);
-  if (*piVar1 != 0) {
+  if (param_1->dataType != VAL_INT) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions_logicfunctions.cpp"
                     ,0xb8,0,"%s\n\t(leftSide->dataType) = %i");
   }
@@ -612,26 +591,25 @@ void compare_isIntGreaterThanEqualToInt(Operand *param_1,Operand *param_2,Operan
   param_3->dataType = VAL_INT;
   (param_3->internals).function =
        (Statement_s *)
-       (((piVar1[1] >> 0x1f) - ((int)(param_2->internals).function >> 0x1f)) +
-       (uint)((param_2->internals).function <= (Statement_s *)piVar1[1]));
-  __restgprlr_28();
+       ((((int)(param_1->internals).function >> 0x1f) - ((int)(param_2->internals).function >> 0x1f)
+        ) + (uint)((param_2->internals).function <= (param_1->internals).function));
   return;
 }
 
 
 // 825A2220  compare_isIntGreaterThanEqualToFloat  (ui/ui_expressions_logicfunctions.cpp:191)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 
 void compare_isIntGreaterThanEqualToFloat(Operand *param_1,Operand *param_2,Operand *param_3)
 
 {
-  int *piVar1;
-  operandInternalDataUnion oVar2;
+  operandInternalDataUnion oVar1;
   
-  piVar1 = (int *)__savegprlr_28(param_1);
-  if (*piVar1 != 0) {
+  if (param_1->dataType != VAL_INT) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions_logicfunctions.cpp"
                     ,0xc0,0,"%s\n\t(leftSide->dataType) = %i");
   }
@@ -640,27 +618,27 @@ void compare_isIntGreaterThanEqualToFloat(Operand *param_1,Operand *param_2,Oper
                     ,0xc1,0,"%s\n\t(rightSide->dataType) = %i");
   }
   param_3->dataType = VAL_INT;
-  oVar2.intVal._0_3_ = 0;
-  oVar2.intVal._3_1_ = (param_2->internals).floatVal <= (float)(longlong)piVar1[1];
-  param_3->internals = oVar2;
-  __restgprlr_28();
+  oVar1.intVal._0_3_ = 0;
+  oVar1.intVal._3_1_ = (param_2->internals).floatVal <= (float)(longlong)(param_1->internals).intVal
+  ;
+  param_3->internals = oVar1;
   return;
 }
 
 
 // 825A22D8  compare_isFloatGreaterThanEqualToFloat  (ui/ui_expressions_logicfunctions.cpp:199)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 
 void compare_isFloatGreaterThanEqualToFloat(Operand *param_1,Operand *param_2,Operand *param_3)
 
 {
-  int *piVar1;
-  operandInternalDataUnion oVar2;
+  operandInternalDataUnion oVar1;
   
-  piVar1 = (int *)__savegprlr_28(param_1);
-  if (*piVar1 != 1) {
+  if (param_1->dataType != VAL_FLOAT) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions_logicfunctions.cpp"
                     ,200,0,"%s\n\t(leftSide->dataType) = %i");
   }
@@ -669,26 +647,24 @@ void compare_isFloatGreaterThanEqualToFloat(Operand *param_1,Operand *param_2,Op
                     ,0xc9,0,"%s\n\t(rightSide->dataType) = %i");
   }
   param_3->dataType = VAL_INT;
-  oVar2.intVal._0_3_ = 0;
-  oVar2.intVal._3_1_ = (param_2->internals).floatVal <= (float)piVar1[1];
-  param_3->internals = oVar2;
-  __restgprlr_28();
+  oVar1.intVal._0_3_ = 0;
+  oVar1.intVal._3_1_ = (param_2->internals).floatVal <= (param_1->internals).floatVal;
+  param_3->internals = oVar1;
   return;
 }
 
 
 // 825A2378  add_IntWithInt  (ui/ui_expressions_logicfunctions.cpp:207)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 
 void add_IntWithInt(Operand *param_1,Operand *param_2,Operand *param_3)
 
 {
-  int *piVar1;
-  
-  piVar1 = (int *)__savegprlr_28(param_1);
-  if (*piVar1 != 0) {
+  if (param_1->dataType != VAL_INT) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions_logicfunctions.cpp"
                     ,0xd0,0,"%s\n\t(leftSide->dataType) = %i");
   }
@@ -699,24 +675,23 @@ void add_IntWithInt(Operand *param_1,Operand *param_2,Operand *param_3)
   param_3->dataType = VAL_INT;
   (param_3->internals).function =
        (Statement_s *)
-       ((int)(((param_2->internals).function)->persistentState).playerDataKey + piVar1[1] + -0x10);
-  __restgprlr_28();
+       ((int)(&((param_1->internals).function)->persistentState + -1) + 0x28 +
+       (int)(((param_2->internals).function)->persistentState).playerDataKey);
   return;
 }
 
 
 // 825A2410  add_IntWithFloat  (ui/ui_expressions_logicfunctions.cpp:215)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 
 void add_IntWithFloat(Operand *param_1,Operand *param_2,Operand *param_3)
 
 {
-  int *piVar1;
-  
-  piVar1 = (int *)__savegprlr_28(param_1);
-  if (*piVar1 != 0) {
+  if (param_1->dataType != VAL_INT) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions_logicfunctions.cpp"
                     ,0xd8,0,"%s\n\t(leftSide->dataType) = %i");
   }
@@ -725,8 +700,8 @@ void add_IntWithFloat(Operand *param_1,Operand *param_2,Operand *param_3)
                     ,0xd9,0,"%s\n\t(rightSide->dataType) = %i");
   }
   param_3->dataType = VAL_FLOAT;
-  (param_3->internals).floatVal = (float)(longlong)piVar1[1] + (param_2->internals).floatVal;
-  __restgprlr_28();
+  (param_3->internals).floatVal =
+       (float)(longlong)(param_1->internals).intVal + (param_2->internals).floatVal;
   return;
 }
 
@@ -746,16 +721,15 @@ void add_FloatWithInt(Operand *param_1,Operand *param_2,Operand *param_3)
 
 // 825A24D0  add_FloatWithFloat  (ui/ui_expressions_logicfunctions.cpp:228)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 
 void add_FloatWithFloat(Operand *param_1,Operand *param_2,Operand *param_3)
 
 {
-  int *piVar1;
-  
-  piVar1 = (int *)__savegprlr_28(param_1);
-  if (*piVar1 != 1) {
+  if (param_1->dataType != VAL_FLOAT) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions_logicfunctions.cpp"
                     ,0xe5,0,"%s\n\t(leftSide->dataType) = %i");
   }
@@ -764,28 +738,26 @@ void add_FloatWithFloat(Operand *param_1,Operand *param_2,Operand *param_3)
                     ,0xe6,0,"%s\n\t(rightSide->dataType) = %i");
   }
   param_3->dataType = VAL_FLOAT;
-  (param_3->internals).floatVal = (float)piVar1[1] + (param_2->internals).floatVal;
-  __restgprlr_28();
+  (param_3->internals).floatVal = (param_1->internals).floatVal + (param_2->internals).floatVal;
   return;
 }
 
 
 // 825A2568  add_StringWithString  (ui/ui_expressions_logicfunctions.cpp:236)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 
 void add_StringWithString(Operand *param_1,Operand *param_2,Operand *param_3)
 
 {
-  int *piVar1;
-  Statement_s *pSVar2;
-  int iVar3;
+  Statement_s *pSVar1;
   char acStack_230 [256];
   char acStack_130 [304];
   
-  piVar1 = (int *)__savegprlr_28(param_1);
-  if (*piVar1 != 2) {
+  if (param_1->dataType != VAL_STRING) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions_logicfunctions.cpp"
                     ,0xf1,0,"%s\n\t(leftSide->dataType) = %i");
   }
@@ -794,31 +766,29 @@ void add_StringWithString(Operand *param_1,Operand *param_2,Operand *param_3)
                     ,0xf2,0,"%s\n\t(rightSide->dataType) = %i");
   }
   param_3->dataType = VAL_STRING;
-  I_strncpyz(acStack_130,(char *)piVar1[1],0x100);
+  I_strncpyz(acStack_130,(char *)(param_1->internals).function,0x100);
   I_strncpyz(acStack_230,(char *)(param_2->internals).function,0x100);
-  pSVar2 = (Statement_s *)GetAvailableOperandString();
-  iVar3 = Com_sprintf((char *)pSVar2,0x100,"%s%s");
-  (param_3->internals).function = pSVar2;
-  __restgprlr_28(iVar3);
+  pSVar1 = (Statement_s *)GetAvailableOperandString();
+  Com_sprintf((char *)pSVar1,0x100,"%s%s");
+  (param_3->internals).function = pSVar1;
   return;
 }
 
 
 // 825A2638  add_StringWithInt  (ui/ui_expressions_logicfunctions.cpp:254)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 
 void add_StringWithInt(Operand *param_1,Operand *param_2,Operand *param_3)
 
 {
-  int *piVar1;
-  Statement_s *pSVar2;
-  int iVar3;
+  Statement_s *pSVar1;
   char acStack_130 [304];
   
-  piVar1 = (int *)__savegprlr_28(param_1);
-  if (*piVar1 != 2) {
+  if (param_1->dataType != VAL_STRING) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions_logicfunctions.cpp"
                     ,0x102,0,"%s\n\t(leftSide->dataType) = %i");
   }
@@ -827,30 +797,28 @@ void add_StringWithInt(Operand *param_1,Operand *param_2,Operand *param_3)
                     ,0x103,0,"%s\n\t(rightSide->dataType) = %i");
   }
   param_3->dataType = VAL_STRING;
-  I_strncpyz(acStack_130,(char *)piVar1[1],0x100);
-  pSVar2 = (Statement_s *)GetAvailableOperandString();
-  iVar3 = Com_sprintf((char *)pSVar2,0x100,"%s%i");
-  (param_3->internals).function = pSVar2;
-  __restgprlr_28(iVar3);
+  I_strncpyz(acStack_130,(char *)(param_1->internals).function,0x100);
+  pSVar1 = (Statement_s *)GetAvailableOperandString();
+  Com_sprintf((char *)pSVar1,0x100,"%s%i");
+  (param_3->internals).function = pSVar1;
   return;
 }
 
 
 // 825A26F8  add_IntWithString  (ui/ui_expressions_logicfunctions.cpp:271)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 
 void add_IntWithString(Operand *param_1,Operand *param_2,Operand *param_3)
 
 {
-  int *piVar1;
-  Statement_s *pSVar2;
-  int iVar3;
+  Statement_s *pSVar1;
   char acStack_130 [304];
   
-  piVar1 = (int *)__savegprlr_28(param_1);
-  if (*piVar1 != 0) {
+  if (param_1->dataType != VAL_INT) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions_logicfunctions.cpp"
                     ,0x113,0,"%s\n\t(rightSide->dataType) = %i");
   }
@@ -860,29 +828,27 @@ void add_IntWithString(Operand *param_1,Operand *param_2,Operand *param_3)
   }
   param_3->dataType = VAL_STRING;
   I_strncpyz(acStack_130,(char *)(param_2->internals).function,0x100);
-  pSVar2 = (Statement_s *)GetAvailableOperandString();
-  iVar3 = Com_sprintf((char *)pSVar2,0x100,"%i%s");
-  (param_3->internals).function = pSVar2;
-  __restgprlr_28(iVar3);
+  pSVar1 = (Statement_s *)GetAvailableOperandString();
+  Com_sprintf((char *)pSVar1,0x100,"%i%s");
+  (param_3->internals).function = pSVar1;
   return;
 }
 
 
 // 825A27C0  add_FloatWithString  (ui/ui_expressions_logicfunctions.cpp:287)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 
 void add_FloatWithString(Operand *param_1,Operand *param_2,Operand *param_3)
 
 {
-  int *piVar1;
-  Statement_s *pSVar2;
-  int iVar3;
+  Statement_s *pSVar1;
   char acStack_130 [304];
   
-  piVar1 = (int *)__savegprlr_28(param_1);
-  if (*piVar1 != 1) {
+  if (param_1->dataType != VAL_FLOAT) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions_logicfunctions.cpp"
                     ,0x123,0,"%s\n\t(rightSide->dataType) = %i");
   }
@@ -892,29 +858,27 @@ void add_FloatWithString(Operand *param_1,Operand *param_2,Operand *param_3)
   }
   param_3->dataType = VAL_STRING;
   I_strncpyz(acStack_130,(char *)(param_2->internals).function,0x100);
-  pSVar2 = (Statement_s *)GetAvailableOperandString();
-  iVar3 = Com_sprintf((char *)pSVar2,0x100,"%f%s");
-  (param_3->internals).function = pSVar2;
-  __restgprlr_28(iVar3);
+  pSVar1 = (Statement_s *)GetAvailableOperandString();
+  Com_sprintf((char *)pSVar1,0x100,"%f%s");
+  (param_3->internals).function = pSVar1;
   return;
 }
 
 
 // 825A2890  add_StringWithFloat  (ui/ui_expressions_logicfunctions.cpp:304)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 
 void add_StringWithFloat(Operand *param_1,Operand *param_2,Operand *param_3)
 
 {
-  int *piVar1;
-  Statement_s *pSVar2;
-  int iVar3;
+  Statement_s *pSVar1;
   char acStack_130 [304];
   
-  piVar1 = (int *)__savegprlr_28(param_1);
-  if (*piVar1 != 2) {
+  if (param_1->dataType != VAL_STRING) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions_logicfunctions.cpp"
                     ,0x134,0,"%s\n\t(leftSide->dataType) = %i");
   }
@@ -923,27 +887,25 @@ void add_StringWithFloat(Operand *param_1,Operand *param_2,Operand *param_3)
                     ,0x135,0,"%s\n\t(rightSide->dataType) = %i");
   }
   param_3->dataType = VAL_STRING;
-  I_strncpyz(acStack_130,(char *)piVar1[1],0x100);
-  pSVar2 = (Statement_s *)GetAvailableOperandString();
-  iVar3 = Com_sprintf((char *)pSVar2,0x100,"%s%f");
-  (param_3->internals).function = pSVar2;
-  __restgprlr_28(iVar3);
+  I_strncpyz(acStack_130,(char *)(param_1->internals).function,0x100);
+  pSVar1 = (Statement_s *)GetAvailableOperandString();
+  Com_sprintf((char *)pSVar1,0x100,"%s%f");
+  (param_3->internals).function = pSVar1;
   return;
 }
 
 
 // 825A2958  subtract_IntFromInt  (ui/ui_expressions_logicfunctions.cpp:323)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 
 void subtract_IntFromInt(Operand *param_1,Operand *param_2,Operand *param_3)
 
 {
-  int *piVar1;
-  
-  piVar1 = (int *)__savegprlr_28(param_1);
-  if (*piVar1 != 0) {
+  if (param_1->dataType != VAL_INT) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions_logicfunctions.cpp"
                     ,0x144,0,"%s\n\t(leftSide->dataType) = %i");
   }
@@ -952,24 +914,23 @@ void subtract_IntFromInt(Operand *param_1,Operand *param_2,Operand *param_3)
                     ,0x145,0,"%s\n\t(rightSide->dataType) = %i");
   }
   param_3->dataType = VAL_INT;
-  (param_3->internals).function = (Statement_s *)(piVar1[1] - (param_2->internals).intVal);
-  __restgprlr_28();
+  (param_3->internals).function =
+       (Statement_s *)((int)(param_1->internals).function - (param_2->internals).intVal);
   return;
 }
 
 
 // 825A29F0  subtract_FloatFromInt  (ui/ui_expressions_logicfunctions.cpp:331)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 
 void subtract_FloatFromInt(Operand *param_1,Operand *param_2,Operand *param_3)
 
 {
-  int *piVar1;
-  
-  piVar1 = (int *)__savegprlr_28(param_1);
-  if (*piVar1 != 0) {
+  if (param_1->dataType != VAL_INT) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions_logicfunctions.cpp"
                     ,0x14c,0,"%s\n\t(leftSide->dataType) = %i");
   }
@@ -978,24 +939,23 @@ void subtract_FloatFromInt(Operand *param_1,Operand *param_2,Operand *param_3)
                     ,0x14d,0,"%s\n\t(rightSide->dataType) = %i");
   }
   param_3->dataType = VAL_FLOAT;
-  (param_3->internals).floatVal = (float)(longlong)piVar1[1] - (param_2->internals).floatVal;
-  __restgprlr_28();
+  (param_3->internals).floatVal =
+       (float)(longlong)(param_1->internals).intVal - (param_2->internals).floatVal;
   return;
 }
 
 
 // 825A2AA0  subtract_IntFromFloat  (ui/ui_expressions_logicfunctions.cpp:339)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 
 void subtract_IntFromFloat(Operand *param_1,Operand *param_2,Operand *param_3)
 
 {
-  int *piVar1;
-  
-  piVar1 = (int *)__savegprlr_28(param_1);
-  if (*piVar1 != 1) {
+  if (param_1->dataType != VAL_FLOAT) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions_logicfunctions.cpp"
                     ,0x154,0,"%s\n\t(leftSide->dataType) = %i");
   }
@@ -1004,24 +964,23 @@ void subtract_IntFromFloat(Operand *param_1,Operand *param_2,Operand *param_3)
                     ,0x155,0,"%s\n\t(rightSide->dataType) = %i");
   }
   param_3->dataType = VAL_FLOAT;
-  (param_3->internals).floatVal = (float)piVar1[1] - (float)(longlong)(param_2->internals).intVal;
-  __restgprlr_28();
+  (param_3->internals).floatVal =
+       (param_1->internals).floatVal - (float)(longlong)(param_2->internals).intVal;
   return;
 }
 
 
 // 825A2B50  subtract_FloatFromFloat  (ui/ui_expressions_logicfunctions.cpp:347)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 
 void subtract_FloatFromFloat(Operand *param_1,Operand *param_2,Operand *param_3)
 
 {
-  int *piVar1;
-  
-  piVar1 = (int *)__savegprlr_28(param_1);
-  if (*piVar1 != 1) {
+  if (param_1->dataType != VAL_FLOAT) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions_logicfunctions.cpp"
                     ,0x15c,0,"%s\n\t(leftSide->dataType) = %i");
   }
@@ -1030,24 +989,22 @@ void subtract_FloatFromFloat(Operand *param_1,Operand *param_2,Operand *param_3)
                     ,0x15d,0,"%s\n\t(rightSide->dataType) = %i");
   }
   param_3->dataType = VAL_FLOAT;
-  (param_3->internals).floatVal = (float)piVar1[1] - (param_2->internals).floatVal;
-  __restgprlr_28();
+  (param_3->internals).floatVal = (param_1->internals).floatVal - (param_2->internals).floatVal;
   return;
 }
 
 
 // 825A2BE8  multiply_IntByInt  (ui/ui_expressions_logicfunctions.cpp:357)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 
 void multiply_IntByInt(Operand *param_1,Operand *param_2,Operand *param_3)
 
 {
-  int *piVar1;
-  
-  piVar1 = (int *)__savegprlr_28(param_1);
-  if (*piVar1 != 0) {
+  if (param_1->dataType != VAL_INT) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions_logicfunctions.cpp"
                     ,0x166,0,"%s\n\t(leftSide->dataType) = %i");
   }
@@ -1056,24 +1013,22 @@ void multiply_IntByInt(Operand *param_1,Operand *param_2,Operand *param_3)
                     ,0x167,0,"%s\n\t(rightSide->dataType) = %i");
   }
   param_3->dataType = VAL_INT;
-  (param_3->internals).intVal = piVar1[1] * (param_2->internals).intVal;
-  __restgprlr_28();
+  (param_3->internals).intVal = (param_1->internals).intVal * (param_2->internals).intVal;
   return;
 }
 
 
 // 825A2C80  multiply_IntByFloat  (ui/ui_expressions_logicfunctions.cpp:365)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 
 void multiply_IntByFloat(Operand *param_1,Operand *param_2,Operand *param_3)
 
 {
-  int *piVar1;
-  
-  piVar1 = (int *)__savegprlr_28(param_1);
-  if (*piVar1 != 0) {
+  if (param_1->dataType != VAL_INT) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions_logicfunctions.cpp"
                     ,0x16e,0,"%s\n\t(leftSide->dataType) = %i");
   }
@@ -1082,8 +1037,8 @@ void multiply_IntByFloat(Operand *param_1,Operand *param_2,Operand *param_3)
                     ,0x16f,0,"%s\n\t(rightSide->dataType) = %i");
   }
   param_3->dataType = VAL_FLOAT;
-  (param_3->internals).floatVal = (float)(longlong)piVar1[1] * (param_2->internals).floatVal;
-  __restgprlr_28();
+  (param_3->internals).floatVal =
+       (float)(longlong)(param_1->internals).intVal * (param_2->internals).floatVal;
   return;
 }
 
@@ -1103,16 +1058,15 @@ void multiply_FloatByInt(Operand *param_1,Operand *param_2,Operand *param_3)
 
 // 825A2D40  multiply_FloatByFloat  (ui/ui_expressions_logicfunctions.cpp:378)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 
 void multiply_FloatByFloat(Operand *param_1,Operand *param_2,Operand *param_3)
 
 {
-  int *piVar1;
-  
-  piVar1 = (int *)__savegprlr_28(param_1);
-  if (*piVar1 != 1) {
+  if (param_1->dataType != VAL_FLOAT) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions_logicfunctions.cpp"
                     ,0x17b,0,"%s\n\t(leftSide->dataType) = %i");
   }
@@ -1121,24 +1075,22 @@ void multiply_FloatByFloat(Operand *param_1,Operand *param_2,Operand *param_3)
                     ,0x17c,0,"%s\n\t(rightSide->dataType) = %i");
   }
   param_3->dataType = VAL_FLOAT;
-  (param_3->internals).floatVal = (float)piVar1[1] * (param_2->internals).floatVal;
-  __restgprlr_28();
+  (param_3->internals).floatVal = (param_1->internals).floatVal * (param_2->internals).floatVal;
   return;
 }
 
 
 // 825A2DD8  divide_IntByInt  (ui/ui_expressions_logicfunctions.cpp:388)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 
 void divide_IntByInt(Operand *param_1,Operand *param_2,Operand *param_3)
 
 {
-  int *piVar1;
-  
-  piVar1 = (int *)__savegprlr_28(param_1);
-  if (*piVar1 != 0) {
+  if (param_1->dataType != VAL_INT) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions_logicfunctions.cpp"
                     ,0x185,0,"%s\n\t(leftSide->dataType) = %i");
   }
@@ -1149,28 +1101,26 @@ void divide_IntByInt(Operand *param_1,Operand *param_2,Operand *param_3)
   param_3->dataType = VAL_FLOAT;
   if ((param_2->internals).intVal != 0) {
     (param_3->internals).floatVal =
-         (float)((double)(longlong)piVar1[1] / (double)(longlong)(param_2->internals).intVal);
-    __restgprlr_28();
+         (float)(longlong)(param_1->internals).intVal / (float)(longlong)(param_2->internals).intVal
+    ;
     return;
   }
   (param_3->internals).intVal = 0;
-  __restgprlr_28();
   return;
 }
 
 
 // 825A2EB8  divide_IntByFloat  (ui/ui_expressions_logicfunctions.cpp:399)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 
 void divide_IntByFloat(Operand *param_1,Operand *param_2,Operand *param_3)
 
 {
-  int *piVar1;
-  
-  piVar1 = (int *)__savegprlr_28(param_1);
-  if (*piVar1 != 0) {
+  if (param_1->dataType != VAL_INT) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions_logicfunctions.cpp"
                     ,400,0,"%s\n\t(leftSide->dataType) = %i");
   }
@@ -1180,28 +1130,26 @@ void divide_IntByFloat(Operand *param_1,Operand *param_2,Operand *param_3)
   }
   param_3->dataType = VAL_FLOAT;
   if ((param_2->internals).floatVal != 0.0) {
-    (param_3->internals).floatVal = (float)(longlong)piVar1[1] / (param_2->internals).floatVal;
-    __restgprlr_28();
+    (param_3->internals).floatVal =
+         (float)(longlong)(param_1->internals).intVal / (param_2->internals).floatVal;
     return;
   }
   (param_3->internals).intVal = 0;
-  __restgprlr_28();
   return;
 }
 
 
 // 825A2F80  divide_FloatByInt  (ui/ui_expressions_logicfunctions.cpp:410)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 
 void divide_FloatByInt(Operand *param_1,Operand *param_2,Operand *param_3)
 
 {
-  int *piVar1;
-  
-  piVar1 = (int *)__savegprlr_28(param_1);
-  if (*piVar1 != 1) {
+  if (param_1->dataType != VAL_FLOAT) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions_logicfunctions.cpp"
                     ,0x19b,0,"%s\n\t(leftSide->dataType) = %i");
   }
@@ -1211,28 +1159,26 @@ void divide_FloatByInt(Operand *param_1,Operand *param_2,Operand *param_3)
   }
   param_3->dataType = VAL_FLOAT;
   if ((param_2->internals).intVal != 0) {
-    (param_3->internals).floatVal = (float)piVar1[1] / (float)(longlong)(param_2->internals).intVal;
-    __restgprlr_28();
+    (param_3->internals).floatVal =
+         (param_1->internals).floatVal / (float)(longlong)(param_2->internals).intVal;
     return;
   }
   (param_3->internals).intVal = 0;
-  __restgprlr_28();
   return;
 }
 
 
 // 825A3048  divide_FloatByFloat  (ui/ui_expressions_logicfunctions.cpp:421)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 
 void divide_FloatByFloat(Operand *param_1,Operand *param_2,Operand *param_3)
 
 {
-  int *piVar1;
-  
-  piVar1 = (int *)__savegprlr_28(param_1);
-  if (*piVar1 != 1) {
+  if (param_1->dataType != VAL_FLOAT) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions_logicfunctions.cpp"
                     ,0x1a6,0,"%s\n\t(leftSide->dataType) = %i");
   }
@@ -1242,18 +1188,18 @@ void divide_FloatByFloat(Operand *param_1,Operand *param_2,Operand *param_3)
   }
   param_3->dataType = VAL_FLOAT;
   if ((param_2->internals).floatVal != 0.0) {
-    (param_3->internals).floatVal = (float)piVar1[1] / (param_2->internals).floatVal;
-    __restgprlr_28();
+    (param_3->internals).floatVal = (param_1->internals).floatVal / (param_2->internals).floatVal;
     return;
   }
   (param_3->internals).intVal = 0;
-  __restgprlr_28();
   return;
 }
 
 
 // 825A3100  mod_IntByInt  (ui/ui_expressions_logicfunctions.cpp:434)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 
@@ -1262,10 +1208,8 @@ void mod_IntByInt(Operand *param_1,Operand *param_2,Operand *param_3)
 {
   uint uVar1;
   uint uVar2;
-  int *piVar3;
   
-  piVar3 = (int *)__savegprlr_28(param_1);
-  if (*piVar3 != 0) {
+  if (param_1->dataType != VAL_INT) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions_logicfunctions.cpp"
                     ,0x1b3,0,"%s\n\t(leftSide->dataType) = %i");
   }
@@ -1276,22 +1220,22 @@ void mod_IntByInt(Operand *param_1,Operand *param_2,Operand *param_3)
   param_3->dataType = VAL_INT;
   uVar1 = (param_2->internals).intVal;
   if (uVar1 != 0) {
-    uVar2 = piVar3[1];
+    uVar2 = (param_1->internals).intVal;
     trapWord(6,(ulonglong)uVar1,0);
     (param_3->internals).function = (Statement_s *)(uVar2 - ((int)uVar2 / (int)uVar1) * uVar1);
     trapWord(5,(ulonglong)uVar1 &
                ~((((ulonglong)uVar2 & 0x7fffffff) << 1 | (ulonglong)(uVar2 >> 0x1f)) - 1),0xffff);
-    __restgprlr_28();
     return;
   }
-  param_3->internals = *(operandInternalDataUnion *)(piVar3 + 1);
-  __restgprlr_28();
+  param_3->internals = param_1->internals;
   return;
 }
 
 
 // 825A31D0  mod_FloatByInt  (ui/ui_expressions_logicfunctions.cpp:445)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 
@@ -1300,11 +1244,9 @@ void mod_FloatByInt(Operand *param_1,Operand *param_2,Operand *param_3)
 {
   uint uVar1;
   uint uVar2;
-  int *piVar3;
-  double dVar4;
+  double dVar3;
   
-  piVar3 = (int *)__savegprlr_28(param_1);
-  if (*piVar3 != 1) {
+  if (param_1->dataType != VAL_FLOAT) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions_logicfunctions.cpp"
                     ,0x1be,0,"%s\n\t(leftSide->dataType) = %i");
   }
@@ -1314,24 +1256,24 @@ void mod_FloatByInt(Operand *param_1,Operand *param_2,Operand *param_3)
   }
   param_3->dataType = VAL_INT;
   if ((param_2->internals).intVal != 0) {
-    dVar4 = floor((double)((float)piVar3[1] + 0.5));
+    dVar3 = floor((double)((param_1->internals).floatVal + 0.5));
     uVar2 = (param_2->internals).intVal;
     trapWord(6,(ulonglong)uVar2,0);
-    uVar1 = (uint)dVar4;
+    uVar1 = (uint)dVar3;
     (param_3->internals).function = (Statement_s *)(uVar1 - ((int)uVar1 / (int)uVar2) * uVar2);
     trapWord(5,(ulonglong)uVar2 &
                ~((((ulonglong)uVar1 & 0x7fffffff) << 1 | (ulonglong)(uVar1 >> 0x1f)) - 1),0xffff);
-    __restgprlr_28();
     return;
   }
-  param_3->internals = *(operandInternalDataUnion *)(piVar3 + 1);
-  __restgprlr_28();
+  param_3->internals = param_1->internals;
   return;
 }
 
 
 // 825A32C0  mod_IntByFloat  (ui/ui_expressions_logicfunctions.cpp:456)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 
@@ -1340,11 +1282,9 @@ void mod_IntByFloat(Operand *param_1,Operand *param_2,Operand *param_3)
 {
   uint uVar1;
   uint uVar2;
-  int *piVar3;
-  double dVar4;
+  double dVar3;
   
-  piVar3 = (int *)__savegprlr_28(param_1);
-  if (*piVar3 != 0) {
+  if (param_1->dataType != VAL_INT) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions_logicfunctions.cpp"
                     ,0x1ca,0,"%s\n\t(leftSide->dataType) = %i");
   }
@@ -1353,25 +1293,25 @@ void mod_IntByFloat(Operand *param_1,Operand *param_2,Operand *param_3)
                     ,0x1cb,0,"%s\n\t(rightSide->dataType) = %i");
   }
   param_3->dataType = VAL_INT;
-  dVar4 = floor((double)((param_2->internals).floatVal + 0.5));
-  uVar1 = (uint)dVar4;
+  dVar3 = floor((double)((param_2->internals).floatVal + 0.5));
+  uVar1 = (uint)dVar3;
   if (uVar1 != 0) {
-    uVar2 = piVar3[1];
+    uVar2 = (param_1->internals).intVal;
     trapWord(6,(ulonglong)uVar1,0);
     (param_3->internals).function = (Statement_s *)(uVar2 - ((int)uVar2 / (int)uVar1) * uVar1);
     trapWord(5,(ulonglong)uVar1 &
                ~((((ulonglong)uVar2 & 0x7fffffff) << 1 | (ulonglong)(uVar2 >> 0x1f)) - 1),0xffff);
-    __restgprlr_28();
     return;
   }
-  param_3->internals = *(operandInternalDataUnion *)(piVar3 + 1);
-  __restgprlr_28();
+  param_3->internals = param_1->internals;
   return;
 }
 
 
 // 825A33B0  mod_FloatByFloat  (ui/ui_expressions_logicfunctions.cpp:469)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 
@@ -1380,12 +1320,10 @@ void mod_FloatByFloat(Operand *param_1,Operand *param_2,Operand *param_3)
 {
   uint uVar1;
   uint uVar2;
-  int *piVar3;
+  double dVar3;
   double dVar4;
-  double dVar5;
   
-  piVar3 = (int *)__savegprlr_28(param_1);
-  if (*piVar3 != 1) {
+  if (param_1->dataType != VAL_FLOAT) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_expressions_logicfunctions.cpp"
                     ,0x1d7,0,"%s\n\t(leftSide->dataType) = %i");
   }
@@ -1394,66 +1332,63 @@ void mod_FloatByFloat(Operand *param_1,Operand *param_2,Operand *param_3)
                     ,0x1d8,0,"%s\n\t(rightSide->dataType) = %i");
   }
   param_3->dataType = VAL_INT;
-  dVar5 = 0.5;
-  dVar4 = floor((double)((param_2->internals).floatVal + 0.5));
-  uVar1 = (uint)dVar4;
+  dVar4 = 0.5;
+  dVar3 = floor((double)((param_2->internals).floatVal + 0.5));
+  dVar4 = (double)(float)((double)(param_1->internals).floatVal + dVar4);
+  uVar1 = (uint)dVar3;
   if (uVar1 != 0) {
-    dVar4 = floor((double)(float)((double)(float)piVar3[1] + dVar5));
+    dVar3 = floor(dVar4);
     trapWord(6,(ulonglong)uVar1,0);
-    uVar2 = (uint)dVar4;
+    uVar2 = (uint)dVar3;
     (param_3->internals).function = (Statement_s *)(uVar2 - ((int)uVar2 / (int)uVar1) * uVar1);
     trapWord(5,(ulonglong)uVar1 &
                ~((((ulonglong)uVar2 & 0x7fffffff) << 1 | (ulonglong)(uVar2 >> 0x1f)) - 1),0xffff);
-    __restgprlr_28();
     return;
   }
-  dVar4 = floor((double)(float)((double)(float)piVar3[1] + dVar5));
-  (param_3->internals).intVal = (int)dVar4;
-  __restgprlr_28();
+  dVar3 = floor(dVar4);
+  (param_3->internals).intVal = (int)dVar3;
   return;
 }
 
 
 // 825A34D0  bitwiseAnd  (ui/ui_expressions_logicfunctions.cpp:482)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 
 void bitwiseAnd(Operand *param_1,Operand *param_2,Operand *param_3)
 
 {
-  Operand *pOVar1;
+  uint uVar1;
   uint uVar2;
-  uint uVar3;
   
-  pOVar1 = (Operand *)__savegprlr_29(param_1);
   param_3->dataType = VAL_INT;
-  uVar2 = GetSourceInt(pOVar1);
-  uVar3 = GetSourceInt(param_2);
-  (param_3->internals).intVal = uVar2 & uVar3;
-  __restgprlr_29();
+  uVar1 = GetSourceInt(param_1);
+  uVar2 = GetSourceInt(param_2);
+  (param_3->internals).intVal = uVar1 & uVar2;
   return;
 }
 
 
 // 825A3510  bitwiseOr  (ui/ui_expressions_logicfunctions.cpp:488)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 
 void bitwiseOr(Operand *param_1,Operand *param_2,Operand *param_3)
 
 {
-  Operand *pOVar1;
+  uint uVar1;
   uint uVar2;
-  uint uVar3;
   
-  pOVar1 = (Operand *)__savegprlr_29(param_1);
   param_3->dataType = VAL_INT;
-  uVar2 = GetSourceInt(pOVar1);
-  uVar3 = GetSourceInt(param_2);
-  (param_3->internals).intVal = uVar2 | uVar3;
-  __restgprlr_29();
+  uVar1 = GetSourceInt(param_1);
+  uVar2 = GetSourceInt(param_2);
+  (param_3->internals).intVal = uVar1 | uVar2;
   return;
 }
 

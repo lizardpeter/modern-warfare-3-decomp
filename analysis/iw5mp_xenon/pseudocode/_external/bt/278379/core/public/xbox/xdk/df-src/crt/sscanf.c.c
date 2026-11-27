@@ -2,55 +2,42 @@
 
 // 82917708  vscan_fn  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/sscanf.c:42)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 int vscan_fn(_func___cdecl_int__iobuf_ptr_uchar_ptr_localeinfo_struct_ptr_char_ptr *param_1,
             char *param_2,char *param_3,localeinfo_struct *param_4,char *param_5)
 
 {
-  code *pcVar2;
-  int *piVar3;
-  undefined8 uVar1;
-  int iVar4;
-  ulonglong uVar5;
-  longlong lVar6;
-  longlong lVar7;
-  ulonglong uVar8;
-  char *pcVar10;
-  ulonglong uVar9;
-  undefined4 local_50;
-  undefined4 local_4c;
-  undefined4 local_48;
-  undefined4 local_44;
+  char cVar1;
+  int *piVar2;
+  int iVar3;
+  char *pcVar4;
+  _iobuf local_50 [2];
   
-  lVar7 = (longlong)(int)param_5;
-  lVar6 = (longlong)(int)param_4;
-  uVar5 = (ulonglong)(int)param_3;
-  uVar8 = (ulonglong)(int)param_2;
-  pcVar2 = (code *)__savegprlr_27(param_1,uVar8,uVar5,lVar6,lVar7);
-  local_50 = 0;
+  local_50[0]._ptr = (char *)0x0;
   memset();
-  if (((uVar8 & 0xffffffff) == 0) || (uVar9 = uVar8, (uVar5 & 0xffffffff) == 0)) {
-    piVar3 = _errno();
-    *piVar3 = 0x16;
+  if ((param_2 == (char *)0x0) || (pcVar4 = param_2, param_3 == (char *)0x0)) {
+    piVar2 = _errno();
+    *piVar2 = 0x16;
     _invalid_parameter_noinfo();
-    uVar1 = 0xffffffffffffffff;
+    iVar3 = -1;
   }
   else {
     do {
-      pcVar10 = (char *)uVar9;
-      uVar9 = uVar9 + 1;
-    } while (*pcVar10 != '\0');
-    local_50 = (undefined4)uVar8;
-    uVar8 = (uVar9 - uVar8) - 1;
-    local_4c = 0x7fffffff;
-    local_44 = 0x49;
-    if ((uVar8 & 0xffffffff) < 0x80000000) {
-      local_4c = (undefined4)uVar8;
+      cVar1 = *pcVar4;
+      pcVar4 = pcVar4 + 1;
+    } while (cVar1 != '\0');
+    local_50[0]._cnt = 0x7fffffff;
+    local_50[0]._flag = 0x49;
+    if (pcVar4 + (-1 - (int)param_2) < (char *)0x80000000) {
+      local_50[0]._cnt = (int)(pcVar4 + (-1 - (int)param_2));
     }
-    local_48 = local_50;
-    uVar1 = (*pcVar2)(&local_50,uVar5,lVar6,lVar7);
+    local_50[0]._ptr = param_2;
+    local_50[0]._base = param_2;
+    iVar3 = (*param_1)(local_50,(uchar *)param_3,param_4,param_5);
   }
-  iVar4 = __restgprlr_27(uVar1);
-  return iVar4;
+  return iVar3;
 }
 
 

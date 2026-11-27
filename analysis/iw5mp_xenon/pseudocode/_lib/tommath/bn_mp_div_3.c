@@ -2,23 +2,24 @@
 
 // 8225E8A0  mp_div_3  (line unknown)
 
-void mp_div_3(undefined8 param_1,ulonglong param_2,ulonglong param_3)
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
+undefined8 mp_div_3(uint *param_1,undefined4 *param_2,undefined4 *param_3)
 
 {
   uint uVar1;
   uint uVar2;
   undefined4 uVar3;
   int iVar4;
-  uint *puVar6;
   undefined8 uVar5;
-  undefined4 *puVar7;
-  longlong lVar8;
+  longlong lVar6;
+  ulonglong uVar7;
+  ulonglong uVar8;
   ulonglong uVar9;
   ulonglong uVar10;
   ulonglong uVar11;
-  ulonglong uVar12;
-  ulonglong uVar13;
-  int *piVar14;
+  int *piVar12;
   undefined4 local_50;
   undefined4 local_4c;
   uint local_48;
@@ -27,66 +28,63 @@ void mp_div_3(undefined8 param_1,ulonglong param_2,ulonglong param_3)
   uint local_38;
   int local_34;
   
-  puVar6 = (uint *)__savegprlr_27();
-  uVar5 = mp_init_size(&local_50,*puVar6);
+  uVar5 = mp_init_size(&local_50,*param_1);
   if ((int)uVar5 == 0) {
-    uVar1 = *puVar6;
-    uVar11 = (ulonglong)uVar1;
-    uVar13 = 0;
-    uVar2 = puVar6[2];
-    uVar9 = uVar11 - 1;
-    if (-1 < (longlong)uVar9) {
-      lVar8 = (uVar9 & 0x3fffffff) << 2;
+    uVar1 = *param_1;
+    uVar9 = (ulonglong)uVar1;
+    uVar11 = 0;
+    uVar2 = param_1[2];
+    uVar7 = uVar9 - 1;
+    if (-1 < (longlong)uVar7) {
+      lVar6 = (uVar7 & 0x3fffffff) << 2;
       do {
-        uVar13 = (ulonglong)*(uint *)((int)lVar8 + puVar6[3]) | uVar13 << 0x1c;
-        if (uVar13 < 3) {
-          uVar12 = 0;
+        uVar11 = (ulonglong)*(uint *)((int)lVar6 + param_1[3]) | uVar11 << 0x1c;
+        if (uVar11 < 3) {
+          uVar10 = 0;
         }
         else {
-          uVar12 = uVar13 * 0x5555555 >> 0x1c;
-          uVar13 = uVar12 * -3 + uVar13;
-          if (2 < uVar13) {
-            uVar10 = uVar13 / 3;
-            uVar13 = uVar13 % 3;
-            uVar12 = uVar10 + uVar12;
+          uVar10 = uVar11 * 0x5555555 >> 0x1c;
+          uVar11 = uVar10 * -3 + uVar11;
+          if (2 < uVar11) {
+            uVar8 = uVar11 / 3;
+            uVar11 = uVar11 % 3;
+            uVar10 = uVar8 + uVar10;
           }
         }
-        uVar9 = uVar9 - 1;
-        *(int *)((int)lVar8 + local_44) = (int)uVar12;
-        lVar8 = lVar8 + -4;
-      } while (-1 < (longlong)uVar9);
+        uVar7 = uVar7 - 1;
+        *(int *)((int)lVar6 + local_44) = (int)uVar10;
+        lVar6 = lVar6 + -4;
+      } while (-1 < (longlong)uVar7);
     }
-    if ((param_3 & 0xffffffff) != 0) {
-      *(undefined4 *)param_3 = (int)uVar13;
+    if (param_3 != (undefined4 *)0x0) {
+      *param_3 = (int)uVar11;
     }
     local_48 = uVar2;
-    if ((param_2 & 0xffffffff) != 0) {
+    if (param_2 != (undefined4 *)0x0) {
       if (0 < (int)uVar1) {
-        piVar14 = (int *)(uVar1 * 4 + local_44);
+        piVar12 = (int *)(uVar1 * 4 + local_44);
         do {
-          piVar14 = piVar14 + -1;
-          if (*piVar14 != 0) break;
-          uVar11 = uVar11 - 1;
-        } while (0 < (longlong)uVar11);
+          piVar12 = piVar12 + -1;
+          if (*piVar12 != 0) break;
+          uVar9 = uVar9 - 1;
+        } while (0 < (longlong)uVar9);
       }
-      puVar7 = (undefined4 *)param_2;
-      uVar3 = puVar7[1];
-      local_48 = puVar7[2];
-      iVar4 = puVar7[3];
-      local_38 = -(uint)(uVar11 != 0) & uVar2;
+      uVar3 = param_2[1];
+      local_48 = param_2[2];
+      iVar4 = param_2[3];
+      local_38 = -(uint)(uVar9 != 0) & uVar2;
       local_3c = local_4c;
       local_34 = local_44;
-      puVar7[3] = local_44;
-      *puVar7 = local_50;
-      puVar7[1] = local_4c;
-      puVar7[2] = local_38;
+      param_2[3] = local_44;
+      *param_2 = local_50;
+      param_2[1] = local_4c;
+      param_2[2] = local_38;
       local_4c = uVar3;
       local_44 = iVar4;
     }
     mp_clear(&local_50);
     uVar5 = 0;
   }
-  __restgprlr_27(uVar5);
-  return;
+  return uVar5;
 }
 

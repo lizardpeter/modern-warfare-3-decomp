@@ -2,53 +2,50 @@
 
 // 828A5400  CopyFileA  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/xrtl/copyfile.c:58)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 int CopyFileA(char *param_1,char *param_2,int param_3)
 
 {
-  char *pcVar1;
-  int iVar2;
-  longlong lVar3;
+  int iVar1;
   
-  lVar3 = (longlong)param_3;
-  pcVar1 = (char *)__savegprlr_29(param_1);
-  iVar2 = CopyFileExA(pcVar1,param_2,
+  iVar1 = CopyFileExA(param_1,param_2,
                       (_func___cdecl_ulong__LARGE_INTEGER__LARGE_INTEGER__LARGE_INTEGER__LARGE_INTEGER_ulong_ulong_void_ptr_void_ptr_void_ptr
-                       *)0x0,(void *)0x0,(int *)0x0,(uint)(lVar3 != 0));
-  iVar2 = __restgprlr_29(iVar2);
-  return iVar2;
+                       *)0x0,(void *)0x0,(int *)0x0,(uint)(param_3 != 0));
+  return iVar1;
 }
 
 
 // 828A5090  CopyFileExA  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/xrtl/copyfile.c:120)
+
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 
 int CopyFileExA(char *param_1,char *param_2,
                _func___cdecl_ulong__LARGE_INTEGER__LARGE_INTEGER__LARGE_INTEGER__LARGE_INTEGER_ulong_ulong_void_ptr_void_ptr_void_ptr
                *param_3,void *param_4,int *param_5,ulong param_6)
 
 {
-  ulong uVar1;
-  undefined8 uVar2;
-  longlong lVar3;
-  bool bVar7;
-  int iVar4;
-  long lVar5;
-  int iVar6;
-  longlong lVar8;
-  ulonglong uVar9;
-  ulonglong uVar10;
+  ulonglong uVar1;
+  longlong lVar2;
+  long lVar3;
+  ulong uVar4;
+  int iVar5;
+  void *in_stack_fffffeb8;
   void *local_f0;
-  undefined4 local_ec;
+  void *local_ec;
   undefined1 local_e8 [8];
   _IO_STATUS_BLOCK _Stack_e0;
   _LARGE_INTEGER local_d8;
   _OBJECT_ATTRIBUTES local_d0;
   _STRING _Stack_c0;
-  longlong local_b8;
+  _LARGE_INTEGER local_b8;
   undefined8 local_b0;
   undefined8 local_a8;
   undefined8 local_a0;
   undefined8 local_98;
-  longlong local_88;
+  _LARGE_INTEGER local_88;
   undefined4 local_80;
   undefined8 local_70;
   undefined8 local_68;
@@ -56,99 +53,96 @@ int CopyFileExA(char *param_1,char *param_2,
   undefined8 local_58;
   undefined4 local_50;
   
-  uVar9 = (ulonglong)(int)param_6;
-  uVar10 = (ulonglong)(int)param_3;
-  lVar8 = (longlong)(int)param_2;
-  uVar2 = __savegprlr_25(param_1,lVar8,uVar10,param_4,param_5,uVar9);
   local_d0.ObjectName = &_Stack_c0;
   local_d0.RootDirectory = (void *)0xfffffffd;
   local_d0.Attributes = 0x40;
-  lVar3 = ExAllocatePool(0x10000);
-  if (lVar3 == 0) {
+  lVar2 = ExAllocatePool(0x10000);
+  if (lVar2 == 0) {
     SetLastError(8);
   }
   else {
-    RtlInitAnsiString(&_Stack_c0,uVar2);
-    lVar5 = (*_fileIoHooks->NtOpenFile)(&local_f0,0x80100000,&local_d0,&_Stack_e0,1,0x60);
-    if (-1 < lVar5) {
-      lVar5 = (*_fileIoHooks->NtQueryInformationFile)
+    RtlInitAnsiString(&_Stack_c0,param_1);
+    lVar3 = (*_fileIoHooks->NtOpenFile)(&local_f0,0x80100000,&local_d0,&_Stack_e0,1,0x60);
+    if (-1 < lVar3) {
+      lVar3 = (*_fileIoHooks->NtQueryInformationFile)
                         (local_f0,&_Stack_e0,&local_b0,0x38,FileNetworkOpenInformation);
-      if (-1 < lVar5) {
-        RtlInitAnsiString(&_Stack_c0,lVar8);
-        uVar9 = -(ulonglong)((uVar9 & 1) != 0);
-        lVar5 = NtCreateFile(&local_ec,0x40110000,&local_d0,&_Stack_e0,&local_88,0x80,0,
-                             (uVar9 << 0x20 | uVar9 & 0xfffffffd) + 5);
-        if (-1 < lVar5) {
+      if (-1 < lVar3) {
+        RtlInitAnsiString(&_Stack_c0,param_2);
+        uVar1 = -(ulonglong)((param_6 & 1) != 0);
+        lVar3 = NtCreateFile(&local_ec,0x40110000,&local_d0,&_Stack_e0,&local_88,0x80,0,
+                             (uVar1 << 0x20 | uVar1 & 0xfffffffd) + 5);
+        if (-1 < lVar3) {
           local_d8.QuadPart = 0;
-          if ((uVar10 & 0xffffffff) == 0) {
-LAB_828a5220:
-            local_b8 = local_88;
-            iVar4 = NtSetInformationFile(local_ec,&_Stack_e0,&local_b8,8,0x14);
-            if (-1 < iVar4) {
-              if (local_d8.QuadPart < local_88) {
-                do {
-                  iVar4 = (*_fileIoHooks->NtReadFile)
-                                    (local_f0,(void *)0x0,
-                                     (_func___cdecl_void_void_ptr__IO_STATUS_BLOCK_ptr_ulong *)0x0,
-                                     (void *)0x0,&_Stack_e0,(void *)lVar3,0x10000,&local_d8);
-                  uVar1 = _Stack_e0.Information;
-                  if ((iVar4 < 0) ||
-                     (iVar4 = NtWriteFile(local_ec,0,0,0,&_Stack_e0,lVar3,_Stack_e0.Information,
-                                          &local_d8), iVar4 < 0)) goto LAB_828a5394;
-                  local_d8.QuadPart = (ulonglong)uVar1 + local_d8.QuadPart;
-                  if ((uVar10 & 0xffffffff) != 0) {
-                    iVar6 = (*(code *)uVar10)(local_88,local_d8.QuadPart,local_88,local_d8.QuadPart,
-                                              1,0,local_f0,local_ec);
-                    if (iVar6 == 3) {
-                      uVar10 = 0;
-                    }
-                    else if (iVar6 != 0) {
-                      iVar4 = -0x3ffffdc0;
-                      break;
-                    }
-                  }
-                } while (local_d8.QuadPart < local_88);
-              }
-              if (-1 < iVar4) {
-                local_50 = local_80;
-                local_70 = local_b0;
-                local_68 = local_a8;
-                local_60 = local_a0;
-                local_58 = local_98;
-                iVar4 = NtSetInformationFile(local_ec,&_Stack_e0,&local_70,0x28,4);
-              }
+          if (param_3 !=
+              (_func___cdecl_ulong__LARGE_INTEGER__LARGE_INTEGER__LARGE_INTEGER__LARGE_INTEGER_ulong_ulong_void_ptr_void_ptr_void_ptr
+               *)0x0) {
+            uVar4 = (*param_3)(local_88,(_LARGE_INTEGER)0x0,local_88,(_LARGE_INTEGER)0x0,1,1,
+                               local_f0,local_ec,in_stack_fffffeb8);
+            if (uVar4 == 3) {
+              param_3 = (_func___cdecl_ulong__LARGE_INTEGER__LARGE_INTEGER__LARGE_INTEGER__LARGE_INTEGER_ulong_ulong_void_ptr_void_ptr_void_ptr
+                         *)0x0;
+            }
+            else if (uVar4 != 0) {
+              iVar5 = -0x3ffffdc0;
+              goto LAB_828a5394;
             }
           }
-          else {
-            iVar4 = (*(code *)uVar10)(local_88,0,local_88,0,1,1,local_f0,local_ec);
-            if (iVar4 == 3) {
-              uVar10 = 0;
-              goto LAB_828a5220;
+          local_b8 = local_88;
+          iVar5 = NtSetInformationFile(local_ec,&_Stack_e0,&local_b8,8,0x14);
+          if (-1 < iVar5) {
+            if (local_d8.QuadPart < local_88.QuadPart) {
+              do {
+                iVar5 = (*_fileIoHooks->NtReadFile)
+                                  (local_f0,(void *)0x0,
+                                   (_func___cdecl_void_void_ptr__IO_STATUS_BLOCK_ptr_ulong *)0x0,
+                                   (void *)0x0,&_Stack_e0,(void *)lVar2,0x10000,&local_d8);
+                uVar4 = _Stack_e0.Information;
+                if ((iVar5 < 0) ||
+                   (iVar5 = NtWriteFile(local_ec,0,0,0,&_Stack_e0,lVar2,_Stack_e0.Information,
+                                        &local_d8), iVar5 < 0)) goto LAB_828a5394;
+                local_d8.QuadPart = (ulonglong)uVar4 + local_d8.QuadPart;
+                if (param_3 !=
+                    (_func___cdecl_ulong__LARGE_INTEGER__LARGE_INTEGER__LARGE_INTEGER__LARGE_INTEGER_ulong_ulong_void_ptr_void_ptr_void_ptr
+                     *)0x0) {
+                  uVar4 = (*param_3)(local_88,local_d8,local_88,local_d8,1,0,local_f0,local_ec,
+                                     in_stack_fffffeb8);
+                  if (uVar4 == 3) {
+                    param_3 = (_func___cdecl_ulong__LARGE_INTEGER__LARGE_INTEGER__LARGE_INTEGER__LARGE_INTEGER_ulong_ulong_void_ptr_void_ptr_void_ptr
+                               *)0x0;
+                  }
+                  else if (uVar4 != 0) {
+                    iVar5 = -0x3ffffdc0;
+                    break;
+                  }
+                }
+              } while (local_d8.QuadPart < local_88.QuadPart);
             }
-            if (iVar4 == 0) goto LAB_828a5220;
-            iVar4 = -0x3ffffdc0;
+            if (-1 < iVar5) {
+              local_50 = local_80;
+              local_70 = local_b0;
+              local_68 = local_a8;
+              local_60 = local_a0;
+              local_58 = local_98;
+              iVar5 = NtSetInformationFile(local_ec,&_Stack_e0,&local_70,0x28,4);
+            }
           }
 LAB_828a5394:
-          ExFreePool(lVar3);
+          ExFreePool(lVar2);
           (*_fileIoHooks->NtClose)(local_f0);
-          bVar7 = -1 < iVar4;
-          if (!bVar7) {
+          if (-1 >= iVar5) {
             local_e8[0] = 1;
             NtSetInformationFile(local_ec,&_Stack_e0,local_e8,1,0xd);
-            RtlSetLastNTError(iVar4);
+            RtlSetLastNTError(iVar5);
           }
           NtClose(local_ec);
-          goto LAB_828a50ec;
+          return (uint)(-1 < iVar5);
         }
       }
       (*_fileIoHooks->NtClose)(local_f0);
     }
-    ExFreePool(lVar3);
-    RtlSetLastNTError(lVar5);
+    ExFreePool(lVar2);
+    RtlSetLastNTError(lVar3);
   }
-  bVar7 = false;
-LAB_828a50ec:
-  iVar4 = __restgprlr_25(bVar7);
-  return iVar4;
+  return 0;
 }
 

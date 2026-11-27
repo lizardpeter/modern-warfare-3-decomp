@@ -29,32 +29,36 @@ void FX_RunGarbageCollection_FreeSpotLight(FxSystem *param_1,ushort param_2)
 
 // 824420A8  FXI_FreePool_Generic<FxTrail>  (EffectsCore/fx_pool.h:25)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void FXI_FreePool_Generic<FxTrail>(FxTrail *param_1,int *param_2,FxPool<FxTrail> *param_3)
 
 {
-  uint uVar1;
+  int iVar1;
   uint uVar2;
-  uint *puVar3;
   
-  puVar3 = (uint *)__savegprlr_27(param_1);
-  uVar2 = (int)puVar3 - (int)param_3 >> 4;
+  uVar2 = (int)param_1 - (int)param_3 >> 4;
   if (0x7f < uVar2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\fx_pool.h",0x25,0,
                     "freedIndex doesn\'t index ITEM_TYPE::POOL_SIZE\n\t%i not in [0, %i)");
   }
-  uVar1 = *param_2;
-  if (((int)uVar1 < -1) || (0x7f < (int)uVar1)) {
+  iVar1 = *param_2;
+  if ((iVar1 < -1) || (0x7f < iVar1)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\fx_pool.h",0x28,0,
                     "%s");
   }
-  *puVar3 = uVar1;
+  param_1->nextTrailHandle = (short)((uint)iVar1 >> 0x10);
+  param_1->firstTrailElemHandle = (short)iVar1;
   *param_2 = uVar2;
-  __restgprlr_27();
   return;
 }
 
 
 // 82442138  FXI_FreePool_Generic<FxSparkFountainCluster>  (EffectsCore/fx_pool.h:25)
+
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 
 void FXI_FreePool_Generic<FxSparkFountainCluster>
                (FxSparkFountainCluster *param_1,int *param_2,FxPool<FxSparkFountainCluster> *param_3
@@ -62,78 +66,76 @@ void FXI_FreePool_Generic<FxSparkFountainCluster>
 
 {
   uint uVar1;
-  uint uVar2;
-  uint *puVar3;
+  float fVar2;
   
-  puVar3 = (uint *)__savegprlr_27(param_1);
-  uVar1 = ((int)puVar3 - (int)param_3) / 0x1c00;
+  uVar1 = ((int)param_1 - (int)param_3) / 0x1c00;
   if (0x5f < uVar1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\fx_pool.h",0x25,0,
                     "freedIndex doesn\'t index ITEM_TYPE::POOL_SIZE\n\t%i not in [0, %i)");
   }
-  uVar2 = *param_2;
-  if (((int)uVar2 < -1) || (0x5f < (int)uVar2)) {
+  fVar2 = (float)*param_2;
+  if (((int)fVar2 < -1) || (0x5f < (int)fVar2)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\fx_pool.h",0x28,0,
                     "%s");
   }
-  *puVar3 = uVar2;
+  param_1->sparks[0].time[0] = fVar2;
   *param_2 = uVar1;
-  __restgprlr_27();
   return;
 }
 
 
 // 824421D0  FXI_FreePool_Generic<FxSparkFountain>  (EffectsCore/fx_pool.h:25)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void FXI_FreePool_Generic<FxSparkFountain>
                (FxSparkFountain *param_1,int *param_2,FxPool<FxSparkFountain> *param_3)
 
 {
-  uint uVar1;
+  int iVar1;
   uint uVar2;
-  uint *puVar3;
   
-  puVar3 = (uint *)__savegprlr_27(param_1);
-  uVar2 = (int)puVar3 - (int)param_3 >> 6;
+  uVar2 = (int)param_1 - (int)param_3 >> 6;
   if (0x3f < uVar2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\fx_pool.h",0x25,0,
                     "freedIndex doesn\'t index ITEM_TYPE::POOL_SIZE\n\t%i not in [0, %i)");
   }
-  uVar1 = *param_2;
-  if (((int)uVar1 < -1) || (0x3f < (int)uVar1)) {
+  iVar1 = *param_2;
+  if ((iVar1 < -1) || (0x3f < iVar1)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\fx_pool.h",0x28,0,
                     "%s");
   }
-  *puVar3 = uVar1;
+  (param_1->header).defIndex = (short)((uint)iVar1 >> 0x10);
+  (param_1->header).nextFountainInEffect = (short)iVar1;
   *param_2 = uVar2;
-  __restgprlr_27();
   return;
 }
 
 
 // 82442260  FXI_FreePool_Generic<FxBolt>  (EffectsCore/fx_pool.h:25)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void FXI_FreePool_Generic<FxBolt>(FxBolt *param_1,int *param_2,FxPool<FxBolt> *param_3)
 
 {
-  uint uVar1;
+  int iVar1;
   uint uVar2;
-  uint *puVar3;
   
-  puVar3 = (uint *)__savegprlr_27(param_1);
-  uVar2 = (int)puVar3 - (int)param_3 >> 5;
+  uVar2 = (int)param_1 - (int)param_3 >> 5;
   if (0xfe < uVar2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\fx_pool.h",0x25,0,
                     "freedIndex doesn\'t index ITEM_TYPE::POOL_SIZE\n\t%i not in [0, %i)");
   }
-  uVar1 = *param_2;
-  if (((int)uVar1 < -1) || (0xfe < (int)uVar1)) {
+  iVar1 = *param_2;
+  if ((iVar1 < -1) || (0xfe < iVar1)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\fx_pool.h",0x28,0,
                     "%s");
   }
-  *puVar3 = uVar1;
+  *(int *)param_1 = iVar1;
   *param_2 = uVar2;
-  __restgprlr_27();
   return;
 }
 
@@ -155,61 +157,62 @@ void FX_RunGarbageCollection_FreeOcclusionQuery(FxSystem *param_1,FxEffect *para
 
 // 824422F0  FXW_RunGarbageCollection_FreeTrails  (EffectsCore/fx_spawn_gc.cpp:55)
 
+/* WARNING: Function: __savegprlr_17 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_17 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void FXW_RunGarbageCollection_FreeTrails(FxSystem *param_1,FxEffect *param_2)
 
 {
   ushort uVar1;
-  int iVar2;
-  uint uVar3;
-  int iVar4;
-  int iVar5;
-  int *piVar6;
+  FxPool<FxTrail> *pFVar2;
+  int iVar3;
+  uint uVar4;
+  int *piVar5;
   
-  iVar5 = __savegprlr_17(param_1);
   uVar1 = param_2->firstTrailHandle;
   while (uVar1 != 0xffff) {
     uVar1 = param_2->firstTrailHandle;
-    if (iVar5 == 0) {
+    if (param_1 == (FxSystem *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\fx_system_handle.h"
                       ,0x8c,0,"%s");
     }
-    iVar2 = *(int *)(iVar5 + 0x14);
+    pFVar2 = param_1->trails;
     if ((0x1ff < uVar1) || ((uVar1 & 3) != 0)) {
       va("%p %i");
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\fx_system_handle.h"
                       ,0x54,0,"%s\n\t%s");
     }
-    iVar4 = (uint)uVar1 * 4;
-    piVar6 = (int *)(iVar4 + iVar2);
-    param_2->firstTrailHandle = *(ushort *)(iVar4 + iVar2);
-    *(undefined4 *)(iVar4 + iVar2) = 0;
-    piVar6[1] = 0;
-    piVar6[2] = 0;
-    piVar6[3] = 0;
-    uVar3 = (int)piVar6 - *(int *)(iVar5 + 0x14) >> 4;
-    if (0x7f < uVar3) {
+    iVar3 = (uint)uVar1 * 4;
+    piVar5 = (int *)((int)&pFVar2->field0_0x0 + iVar3);
+    param_2->firstTrailHandle = *(ushort *)((int)&pFVar2->field0_0x0 + iVar3);
+    *(undefined4 *)((int)&pFVar2->field0_0x0 + iVar3) = 0;
+    piVar5[1] = 0;
+    piVar5[2] = 0;
+    piVar5[3] = 0;
+    uVar4 = (int)piVar5 - (int)param_1->trails >> 4;
+    if (0x7f < uVar4) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\fx_pool.h",0x25,
                       0,"freedIndex doesn\'t index ITEM_TYPE::POOL_SIZE\n\t%i not in [0, %i)");
     }
-    iVar2 = *(int *)(iVar5 + 0x24);
-    if ((iVar2 < -1) || (0x7f < iVar2)) {
+    iVar3 = param_1->firstFreeTrail;
+    if ((iVar3 < -1) || (0x7f < iVar3)) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\fx_pool.h",0x28,
                       0,"%s");
     }
-    *piVar6 = iVar2;
-    *(uint *)(iVar5 + 0x24) = uVar3;
-    *(int *)(iVar5 + 0x234) = *(int *)(iVar5 + 0x234) + -1;
+    *piVar5 = iVar3;
+    param_1->firstFreeTrail = uVar4;
+    param_1->activeTrailCount = param_1->activeTrailCount + -1;
     uVar1 = param_2->firstTrailHandle;
   }
-  __restgprlr_17();
   return;
 }
 
 
 // 82442470  FXW_RunGarbageCollection_FreeSparkFountains  (EffectsCore/fx_spawn_gc.cpp:75)
 
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void FXW_RunGarbageCollection_FreeSparkFountains(FxSystem *param_1,FxEffect *param_2)
@@ -218,80 +221,75 @@ void FXW_RunGarbageCollection_FreeSparkFountains(FxSystem *param_1,FxEffect *par
   uint uVar1;
   byte bVar2;
   ushort uVar3;
-  int iVar4;
+  FxPool<FxSparkFountain> *pFVar4;
   float fVar5;
   int iVar6;
-  ulonglong uVar7;
-  FxSparkFountainCluster *pFVar8;
-  int *piVar9;
-  ulonglong uVar10;
-  ushort *puVar11;
+  FxSparkFountainCluster *pFVar7;
+  int *piVar8;
+  ulonglong uVar9;
+  ushort *puVar10;
   
-  uVar7 = (ulonglong)(int)param_1;
-  __savegprlr();
   uVar3 = param_2->firstSparkFountainHandle;
   while (uVar3 != 0xffff) {
     uVar3 = param_2->firstSparkFountainHandle;
-    if ((uVar7 & 0xffffffff) == 0) {
+    if (param_1 == (FxSystem *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\fx_system_handle.h"
                       ,0xc4,0,"%s");
     }
-    iVar6 = (int)uVar7;
-    iVar4 = *(int *)(iVar6 + 0x1c);
+    pFVar4 = param_1->sparkFountains;
     if ((0xfff < uVar3) || ((uVar3 & 0x3f) != 0)) {
       va("%p %i");
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\fx_system_handle.h"
                       ,0x54,0,"%s\n\t%s");
     }
-    piVar9 = (int *)((uint)uVar3 + iVar4);
-    param_2->firstSparkFountainHandle = (ushort)*piVar9;
-    bVar2 = *(byte *)((int)piVar9 + 5);
-    uVar10 = (ulonglong)bVar2;
-    if (0x10 < uVar10) {
+    piVar8 = (int *)((int)&pFVar4->field0_0x0 + (uint)uVar3);
+    param_2->firstSparkFountainHandle = (ushort)*piVar8;
+    bVar2 = *(byte *)((int)piVar8 + 5);
+    uVar9 = (ulonglong)bVar2;
+    if (0x10 < uVar9) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_spawn_gc.cpp"
                       ,0x5c,0,"%s");
     }
     if (bVar2 != 0) {
-      puVar11 = (ushort *)(piVar9 + 2);
+      puVar10 = (ushort *)(piVar8 + 2);
       do {
-        pFVar8 = FX_PoolFromHandle_Generic<FxSparkFountainCluster>
-                           (*(FxPool<FxSparkFountainCluster> **)(iVar6 + 0x20),*puVar11);
+        pFVar7 = FX_PoolFromHandle_Generic<FxSparkFountainCluster>
+                           (param_1->sparkFountainClusters,*puVar10);
         memset();
-        uVar1 = ((int)pFVar8 - *(int *)(iVar6 + 0x20)) / 0x1c00;
+        uVar1 = ((int)pFVar7 - (int)param_1->sparkFountainClusters) / 0x1c00;
         if (0x5f < uVar1) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\fx_pool.h",
                           0x25,0,
                           "freedIndex doesn\'t index ITEM_TYPE::POOL_SIZE\n\t%i not in [0, %i)");
         }
-        fVar5 = *(float *)(iVar6 + 0x30);
+        fVar5 = (float)param_1->firstFreeSparkFountainCluster;
         if (((int)fVar5 < -1) || (0x5f < (int)fVar5)) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\fx_pool.h",
                           0x28,0,"%s");
         }
-        pFVar8->sparks[0].time[0] = fVar5;
-        uVar10 = uVar10 - 1;
-        *(uint *)(iVar6 + 0x30) = uVar1;
-        puVar11 = puVar11 + 1;
-        *(int *)(iVar6 + 0x240) = *(int *)(iVar6 + 0x240) + -1;
-      } while (uVar10 != 0);
+        pFVar7->sparks[0].time[0] = fVar5;
+        uVar9 = uVar9 - 1;
+        param_1->firstFreeSparkFountainCluster = uVar1;
+        puVar10 = puVar10 + 1;
+        param_1->activeSparkFountainClusterCount = param_1->activeSparkFountainClusterCount + -1;
+      } while (uVar9 != 0);
     }
     memset();
-    uVar1 = (int)piVar9 - *(int *)(iVar6 + 0x1c) >> 6;
+    uVar1 = (int)piVar8 - (int)param_1->sparkFountains >> 6;
     if (0x3f < uVar1) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\fx_pool.h",0x25,
                       0,"freedIndex doesn\'t index ITEM_TYPE::POOL_SIZE\n\t%i not in [0, %i)");
     }
-    iVar4 = *(int *)(iVar6 + 0x2c);
-    if ((iVar4 < -1) || (0x3f < iVar4)) {
+    iVar6 = param_1->firstFreeSparkFountain;
+    if ((iVar6 < -1) || (0x3f < iVar6)) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\fx_pool.h",0x28,
                       0,"%s");
     }
-    *piVar9 = iVar4;
-    *(uint *)(iVar6 + 0x2c) = uVar1;
-    *(int *)(iVar6 + 0x23c) = *(int *)(iVar6 + 0x23c) + -1;
+    *piVar8 = iVar6;
+    param_1->firstFreeSparkFountain = uVar1;
+    param_1->activeSparkFountainCount = param_1->activeSparkFountainCount + -1;
     uVar3 = param_2->firstSparkFountainHandle;
   }
-  __restgprlr();
   return;
 }
 
@@ -325,6 +323,8 @@ void FX_RunGarbageCollection_FreeBolt(FxSystem *param_1,FxEffect *param_2)
 
 // 82442730  FXW_RunGarbageCollection  (EffectsCore/fx_spawn_gc.cpp:136)
 
+/* WARNING: Function: __savegprlr_16 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_16 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void FXW_RunGarbageCollection(FxSystem *param_1)
@@ -332,96 +332,93 @@ void FXW_RunGarbageCollection(FxSystem *param_1)
 {
   ushort uVar1;
   FxPool<FxBolt> *pFVar2;
-  FxSystem *pFVar3;
-  FxEffect *pFVar4;
-  float *pfVar5;
-  uint uVar6;
+  FxEffect *pFVar3;
+  float *pfVar4;
+  uint uVar5;
+  int iVar6;
   int iVar7;
-  int iVar8;
-  ushort *puVar9;
-  longlong lVar10;
+  ushort *puVar8;
+  longlong lVar9;
   ushort local_892;
   ushort local_890 [1096];
   
-  pFVar3 = (FxSystem *)__savegprlr_16(param_1);
-  if (pFVar3 == (FxSystem *)0x0) {
+  if (param_1 == (FxSystem *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_spawn_gc.cpp",
                     0x91,0,"%s");
   }
-  if ((pFVar3->systemFlags & 8) == 0) {
+  if ((param_1->systemFlags & 8) == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_spawn_gc.cpp",
                     0x92,0,"%s");
   }
-  iVar7 = 0;
-  iVar8 = pFVar3->firstNewEffect;
-  pFVar3->systemFlags = pFVar3->systemFlags & 0xfffffff7;
-  if (iVar8 != pFVar3->firstActiveEffect) {
-    puVar9 = &local_892;
+  iVar6 = 0;
+  iVar7 = param_1->firstNewEffect;
+  param_1->systemFlags = param_1->systemFlags & 0xfffffff7;
+  if (iVar7 != param_1->firstActiveEffect) {
+    puVar8 = &local_892;
     do {
-      iVar8 = iVar8 + -1;
-      uVar1 = *(ushort *)((iVar8 * 2 & 0x7feU) + (int)pFVar3->allEffectHandles);
-      pFVar4 = FX_EffectFromHandle(pFVar3,uVar1);
-      if ((pFVar4->status & 0x1fffU) == 0) {
-        uVar6 = (uint)pFVar4->bolt;
-        if (uVar6 != 0xff) {
-          pFVar2 = pFVar3->bolts;
-          if (0xfe < uVar6) {
+      iVar7 = iVar7 + -1;
+      uVar1 = *(ushort *)((iVar7 * 2 & 0x7feU) + (int)param_1->allEffectHandles);
+      pFVar3 = FX_EffectFromHandle(param_1,uVar1);
+      if ((pFVar3->status & 0x1fffU) == 0) {
+        uVar5 = (uint)pFVar3->bolt;
+        if (uVar5 != 0xff) {
+          pFVar2 = param_1->bolts;
+          if (0xfe < uVar5) {
             va("%p %i");
             MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\fx_system_handle.h"
                             ,0x54,0,"%s\n\t%s");
           }
-          pfVar5 = ((FxBolt *)(pFVar2 + uVar6))[-1].offset.origin + 2;
-          lVar10 = 8;
+          pfVar4 = ((FxBolt *)(pFVar2 + uVar5))[-1].offset.origin + 2;
+          lVar9 = 8;
           do {
-            pfVar5 = pfVar5 + 1;
-            *pfVar5 = 0.0;
-            lVar10 = lVar10 + -1;
-          } while (lVar10 != 0);
+            pfVar4 = pfVar4 + 1;
+            *pfVar4 = 0.0;
+            lVar9 = lVar9 + -1;
+          } while (lVar9 != 0);
           FXI_FreePool_Generic<FxBolt>
-                    ((FxBolt *)(pFVar2 + uVar6),&pFVar3->firstFreeBolt,pFVar3->bolts);
-          pFVar3->activeBoltCount = pFVar3->activeBoltCount + -1;
+                    ((FxBolt *)(pFVar2 + uVar5),&param_1->firstFreeBolt,param_1->bolts);
+          param_1->activeBoltCount = param_1->activeBoltCount + -1;
         }
-        FXW_RunGarbageCollection_FreeTrails(pFVar3,pFVar4);
-        FXW_RunGarbageCollection_FreeSparkFountains(pFVar3,pFVar4);
-        if ((pFVar3->activeSpotLightEffectCount != 0) &&
-           (pFVar3->activeSpotLightEffectHandle == uVar1)) {
-          lVar10 = (ulonglong)(uint)pFVar3->activeSpotLightEffectCount - 1;
-          pFVar3->activeSpotLightEffectHandle = 0xffff;
-          pFVar3->activeSpotLightEffectCount = (int)lVar10;
-          if (lVar10 != 0) {
+        FXW_RunGarbageCollection_FreeTrails(param_1,pFVar3);
+        FXW_RunGarbageCollection_FreeSparkFountains(param_1,pFVar3);
+        if ((param_1->activeSpotLightEffectCount != 0) &&
+           (param_1->activeSpotLightEffectHandle == uVar1)) {
+          lVar9 = (ulonglong)(uint)param_1->activeSpotLightEffectCount - 1;
+          param_1->activeSpotLightEffectHandle = 0xffff;
+          param_1->activeSpotLightEffectCount = (int)lVar9;
+          if (lVar9 != 0) {
             MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_spawn_gc.cpp"
                             ,0x23,0,"%s");
           }
         }
-        if (pFVar4->occlusionQueryHandle != 0xffff) {
-          RB_FreeOcclusionQuery(pFVar4->occlusionQueryHandle);
-          pFVar4->occlusionQueryHandle = 0xffff;
+        if (pFVar3->occlusionQueryHandle != 0xffff) {
+          RB_FreeOcclusionQuery(pFVar3->occlusionQueryHandle);
+          pFVar3->occlusionQueryHandle = 0xffff;
         }
-        puVar9 = puVar9 + 1;
-        *puVar9 = uVar1;
-        iVar7 = iVar7 + 1;
+        puVar8 = puVar8 + 1;
+        *puVar8 = uVar1;
+        iVar6 = iVar6 + 1;
       }
       else {
-        *(ushort *)(((iVar7 + iVar8) * 2 & 0x7feU) + (int)pFVar3->allEffectHandles) = uVar1;
+        *(ushort *)(((iVar6 + iVar7) * 2 & 0x7feU) + (int)param_1->allEffectHandles) = uVar1;
       }
-    } while (iVar8 != pFVar3->firstActiveEffect);
-    if (iVar7 != 0) {
-      puVar9 = local_890 + iVar7;
+    } while (iVar7 != param_1->firstActiveEffect);
+    if (iVar6 != 0) {
+      puVar8 = local_890 + iVar6;
       do {
-        uVar6 = iVar8 * 2;
-        puVar9 = puVar9 + -1;
-        uVar1 = *puVar9;
-        iVar7 = iVar7 + -1;
-        iVar8 = iVar8 + 1;
-        *(ushort *)((uVar6 & 0x7fe) + (int)pFVar3->allEffectHandles) = uVar1;
-        FX_EffectFromHandle(pFVar3,uVar1);
+        uVar5 = iVar7 * 2;
+        puVar8 = puVar8 + -1;
+        uVar1 = *puVar8;
+        iVar6 = iVar6 + -1;
+        iVar7 = iVar7 + 1;
+        *(ushort *)((uVar5 & 0x7fe) + (int)param_1->allEffectHandles) = uVar1;
+        FX_EffectFromHandle(param_1,uVar1);
         memset();
-      } while (iVar7 != 0);
+      } while (iVar6 != 0);
     }
   }
   sync(1);
-  pFVar3->firstActiveEffect = iVar8;
-  __restgprlr_16();
+  param_1->firstActiveEffect = iVar7;
   return;
 }
 

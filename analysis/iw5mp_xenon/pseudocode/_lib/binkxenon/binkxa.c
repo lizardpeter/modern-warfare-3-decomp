@@ -178,34 +178,31 @@ void set_rate_volume_and_pan(BINKSND *param_1)
 
 // 829456B0  DS_clear  (line unknown)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* void __cdecl DS_clear(struct SNDCHANNEL *,unsigned int,unsigned int) */
 
 void DS_clear(SNDCHANNEL *param_1,uint param_2,uint param_3)
 
 {
-  int iVar1;
-  longlong lVar2;
-  ulonglong uVar3;
-  ulonglong uVar4;
+  uint uVar1;
   
-  uVar3 = (ulonglong)(int)param_3;
-  lVar2 = (longlong)(int)param_2;
-  iVar1 = __savegprlr_29(param_1);
-  uVar4 = uVar3;
-  if ((ulonglong)*(uint *)(iVar1 + 0x60) < (lVar2 + uVar3 & 0xffffffff)) {
-    uVar4 = (ulonglong)*(uint *)(iVar1 + 0x60) - lVar2;
+  uVar1 = param_3;
+  if (*(uint *)(param_1 + 0x60) < param_2 + param_3) {
+    uVar1 = *(uint *)(param_1 + 0x60) - param_2;
   }
   memset();
-  if ((uVar4 & 0xffffffff) < (uVar3 & 0xffffffff)) {
+  if (uVar1 < param_3) {
     memset();
   }
-  __restgprlr_29();
   return;
 }
 
 
 // 82945718  Ready  (line unknown)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* int __cdecl Ready(struct BINKSND *) */
 
 int Ready(BINKSND *param_1)
@@ -213,80 +210,76 @@ int Ready(BINKSND *param_1)
 {
   IXAudioSourceVoice *pIVar1;
   int iVar2;
-  int iVar3;
-  T_HRESULT TVar4;
-  int iVar5;
+  T_HRESULT TVar3;
+  int iVar4;
+  uint uVar5;
   uint uVar6;
-  uint uVar7;
-  undefined4 uVar8;
+  undefined4 uVar7;
   XAUDIOPACKETPOSITION local_a0;
   XAUDIOPACKETPOSITION local_70 [2];
   
-  iVar2 = __savegprlr_26(param_1);
-  if ((*(int *)(iVar2 + 0xf4) == 0) && (*(int *)(iVar2 + 100) != 0)) {
-    if (*(int *)(iVar2 + 0xf0) == 0) {
-      iVar2 = __restgprlr_26(1);
-      return iVar2;
+  if ((*(int *)(param_1->snddata + 0x78) == 0) && (param_1->OnOff != 0)) {
+    if (*(int *)(param_1->snddata + 0x74) == 0) {
+      return 1;
     }
-    uVar8 = *(uint *)(iVar2 + 0x104);
-    iVar3 = RADTimerRead();
-    if (0xc < (uint)(iVar3 - *(int *)(iVar2 + 0x10c))) goto LAB_8294585c;
+    uVar7 = *(undefined4 *)(param_1->snddata + 0x88);
+    iVar2 = RADTimerRead();
+    if (0xc < (uint)(iVar2 - *(int *)(param_1->snddata + 0x90))) goto LAB_8294585c;
     while( true ) {
-      uVar6 = *(uint *)(iVar2 + 0xf8);
-      if ((uint)uVar8 < uVar6) {
-        iVar3 = *(int *)(iVar2 + 0xdc) - uVar6;
+      uVar5 = *(uint *)(param_1->snddata + 0x7c);
+      if ((uint)uVar7 < uVar5) {
+        iVar2 = *(int *)(param_1->snddata + 0x60) - uVar5;
       }
       else {
-        iVar3 = -uVar6;
+        iVar2 = -uVar5;
       }
-      if ((uint)(iVar3 + uVar8) < 0x400) {
-        uVar6 = 0;
+      if ((uint)(iVar2 + uVar7) < 0x400) {
+        uVar5 = 0;
       }
       else {
-        uVar6 = (iVar3 + uVar8) - 0x400U & 0xfffffffc;
+        uVar5 = (iVar2 + uVar7) - 0x400U & 0xfffffffc;
       }
-      if ((uVar6 < *(uint *)(iVar2 + 0xe0)) && ((*(int *)(iVar2 + 0xfc) == 0 || (uVar6 == 0))))
-      break;
-      if (uVar6 < *(uint *)(iVar2 + 0x108)) {
-        *(uint *)(iVar2 + 0xfc) = uVar6;
-        iVar2 = __restgprlr_26(1);
-        return iVar2;
+      if ((uVar5 < *(uint *)(param_1->snddata + 100)) &&
+         ((*(int *)(param_1->snddata + 0x80) == 0 || (uVar5 == 0)))) break;
+      if (uVar5 < *(uint *)(param_1->snddata + 0x8c)) {
+        *(uint *)(param_1->snddata + 0x80) = uVar5;
+        return 1;
       }
       do {
-        uVar6 = *(int *)(iVar2 + 0xe0) * 2;
-        *(undefined4 *)(iVar2 + 0x5c) = 1;
-        uVar7 = uVar6;
-        if (*(uint *)(iVar2 + 0xdc) < *(int *)(iVar2 + 0xf8) + uVar6) {
-          uVar7 = *(uint *)(iVar2 + 0xdc) - *(int *)(iVar2 + 0xf8);
+        iVar2 = *(int *)(param_1->snddata + 0x7c);
+        uVar5 = *(int *)(param_1->snddata + 100) * 2;
+        param_1->SoundDroppedOut = 1;
+        uVar6 = uVar5;
+        if (*(uint *)(param_1->snddata + 0x60) < iVar2 + uVar5) {
+          uVar6 = *(uint *)(param_1->snddata + 0x60) - iVar2;
         }
         memset();
-        if (uVar7 < uVar6) {
+        if (uVar6 < uVar5) {
           memset();
         }
-        uVar6 = *(int *)(iVar2 + 0xe0) * 2 + *(int *)(iVar2 + 0xf8);
-        *(uint *)(iVar2 + 0xf8) = uVar6;
-        if (*(uint *)(iVar2 + 0xdc) <= uVar6) {
-          *(uint *)(iVar2 + 0xf8) = uVar6 - *(uint *)(iVar2 + 0xdc);
+        uVar5 = *(int *)(param_1->snddata + 100) * 2 + *(int *)(param_1->snddata + 0x7c);
+        *(uint *)(param_1->snddata + 0x7c) = uVar5;
+        if (*(uint *)(param_1->snddata + 0x60) <= uVar5) {
+          *(uint *)(param_1->snddata + 0x7c) = uVar5 - *(uint *)(param_1->snddata + 0x60);
         }
 LAB_8294585c:
-        pIVar1 = *(IXAudioSourceVoice **)(iVar2 + 0x7c);
+        pIVar1 = *(IXAudioSourceVoice **)param_1->snddata;
         do {
           local_a0.Position = 0;
           local_70[0].Position = 0;
           XAudioSourceVoice_GetPacketPosition(pIVar1,local_70);
           XAudioSourceVoice_GetPacketPosition(pIVar1,&local_a0);
-          TVar4 = XAudioSourceVoice_GetPacketPosition(pIVar1,&local_a0);
-          uVar8 = local_a0.Position;
+          TVar3 = XAudioSourceVoice_GetPacketPosition(pIVar1,&local_a0);
+          uVar7 = local_a0.Position;
         } while (0x3ff < local_a0.Position - local_70[0]._0_4_);
-        iVar5 = RADTimerRead(TVar4);
-        iVar3 = *(int *)(iVar2 + 0x10c);
-        *(undefined4 *)(iVar2 + 0x104) = uVar8;
-        *(int *)(iVar2 + 0x10c) = iVar5;
-      } while (*(uint *)(iVar2 + 0x110) <= (uint)(iVar5 - iVar3));
+        iVar4 = RADTimerRead(TVar3);
+        iVar2 = *(int *)(param_1->snddata + 0x90);
+        *(undefined4 *)(param_1->snddata + 0x88) = uVar7;
+        *(int *)(param_1->snddata + 0x90) = iVar4;
+      } while (*(uint *)(param_1->snddata + 0x94) <= (uint)(iVar4 - iVar2));
     }
   }
-  iVar2 = __restgprlr_26(0);
-  return iVar2;
+  return 0;
 }
 
 
@@ -313,62 +306,62 @@ int Lock(BINKSND *param_1,uchar **param_2,uint *param_3)
 
 // 82945920  start_streaming  (line unknown)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* void __cdecl start_streaming(struct SNDCHANNEL *) */
 
 void start_streaming(SNDCHANNEL *param_1)
 
 {
   bool bVar1;
-  undefined4 *puVar4;
-  T_HRESULT TVar5;
+  T_HRESULT TVar4;
   longlong lVar2;
-  int iVar6;
+  int iVar5;
   longlong lVar3;
-  undefined4 uVar7;
+  undefined4 uVar6;
   XAUDIOPACKETPOSITION local_60 [2];
   
-  puVar4 = (undefined4 *)__savegprlr_27(param_1);
-  puVar4[0x1d] = 1;
+  *(undefined4 *)(param_1 + 0x74) = 1;
   local_60[0].Position = 0;
-  XAudioSourceVoice_FlushPackets((IXAudioSourceVoice *)*puVar4);
-  puVar4[4] = 0;
-  puVar4[3] = 0xffffffff;
-  puVar4[1] = puVar4[0x17];
-  puVar4[2] = puVar4[0x18];
-  puVar4[5] = puVar4[0x18];
-  XAudioSourceVoice_SubmitPacket((IXAudioSourceVoice *)*puVar4,(XAUDIOPACKET *)(puVar4 + 1),'\x01');
-  XAudioSourceVoice_SetPacketLoopCount((IXAudioSourceVoice *)*puVar4,0xffffffff);
-  XAudioSourceVoice_SetPacketPosition((IXAudioSourceVoice *)*puVar4,local_60);
-  TVar5 = XAudioSourceVoice_Start((IXAudioSourceVoice *)*puVar4,'\0');
-  puVar4[0x1e] = 0;
-  lVar2 = RADTimerRead(TVar5);
-  XAudioSourceVoice_GetPacketPosition((IXAudioSourceVoice *)*puVar4,local_60);
+  XAudioSourceVoice_FlushPackets(*(IXAudioSourceVoice **)param_1);
+  *(undefined4 *)(param_1 + 0x10) = 0;
+  *(undefined4 *)(param_1 + 0xc) = 0xffffffff;
+  *(undefined4 *)(param_1 + 4) = *(undefined4 *)(param_1 + 0x5c);
+  *(undefined4 *)(param_1 + 8) = *(undefined4 *)(param_1 + 0x60);
+  *(undefined4 *)(param_1 + 0x14) = *(undefined4 *)(param_1 + 0x60);
+  XAudioSourceVoice_SubmitPacket
+            (*(IXAudioSourceVoice **)param_1,(XAUDIOPACKET *)(param_1 + 4),'\x01');
+  XAudioSourceVoice_SetPacketLoopCount(*(IXAudioSourceVoice **)param_1,0xffffffff);
+  XAudioSourceVoice_SetPacketPosition(*(IXAudioSourceVoice **)param_1,local_60);
+  TVar4 = XAudioSourceVoice_Start(*(IXAudioSourceVoice **)param_1,'\0');
+  *(undefined4 *)(param_1 + 0x78) = 0;
+  lVar2 = RADTimerRead(TVar4);
+  XAudioSourceVoice_GetPacketPosition(*(IXAudioSourceVoice **)param_1,local_60);
   bVar1 = false;
-  uVar7 = local_60[0].Position;
+  uVar6 = local_60[0].Position;
   do {
     local_60[0].Position = 0;
-    iVar6 = XAudioSourceVoice_GetPacketPosition((IXAudioSourceVoice *)*puVar4,local_60);
-    lVar3 = (longlong)iVar6;
-    puVar4[0x22] = local_60[0].Position;
-    if (local_60[0].Position == uVar7) {
+    iVar5 = XAudioSourceVoice_GetPacketPosition(*(IXAudioSourceVoice **)param_1,local_60);
+    lVar3 = (longlong)iVar5;
+    *(undefined4 *)(param_1 + 0x88) = local_60[0].Position;
+    if (local_60[0].Position == uVar6) {
       if ((!bVar1) && (lVar3 = RADTimerRead(lVar3), 0x32 < (lVar3 - lVar2 & 0xffffffffU))) {
-        TVar5 = XAudioSourceVoice_Start((IXAudioSourceVoice *)*puVar4,'\0');
-        puVar4[0x1e] = 0;
-        lVar2 = RADTimerRead(TVar5);
+        TVar4 = XAudioSourceVoice_Start(*(IXAudioSourceVoice **)param_1,'\0');
+        *(undefined4 *)(param_1 + 0x78) = 0;
+        lVar2 = RADTimerRead(TVar4);
         local_60[0].Position = 0;
-        iVar6 = XAudioSourceVoice_GetPacketPosition((IXAudioSourceVoice *)*puVar4,local_60);
-        lVar3 = (longlong)iVar6;
+        iVar5 = XAudioSourceVoice_GetPacketPosition(*(IXAudioSourceVoice **)param_1,local_60);
+        lVar3 = (longlong)iVar5;
         bVar1 = false;
-        uVar7 = local_60[0].Position;
+        uVar6 = local_60[0].Position;
       }
     }
     else {
       bVar1 = true;
     }
-  } while ((uint)puVar4[0x19] < (uint)puVar4[0x22]);
-  uVar7 = RADTimerRead(lVar3);
-  puVar4[0x24] = uVar7;
-  __restgprlr_27();
+  } while (*(uint *)(param_1 + 100) < *(uint *)(param_1 + 0x88));
+  uVar6 = RADTimerRead(lVar3);
+  *(undefined4 *)(param_1 + 0x90) = uVar6;
   return;
 }
 
@@ -453,131 +446,132 @@ void MixBins(BINKSND *param_1,uint *param_2,uint param_3)
 
 // 82945B50  MixBinVolumes  (line unknown)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* void __cdecl MixBinVolumes(struct BINKSND *,unsigned int *,int *,unsigned int) */
 
 void MixBinVolumes(BINKSND *param_1,uint *param_2,int *param_3,uint param_4)
 
 {
-  BINKSND *pBVar1;
-  int *piVar2;
-  float *pfVar3;
-  longlong lVar4;
-  ulonglong uVar5;
-  ulonglong uVar6;
-  int iVar7;
-  longlong lVar8;
-  longlong lVar9;
-  longlong lVar10;
-  ulonglong uVar11;
+  int *piVar1;
+  float *pfVar2;
+  ulonglong uVar3;
+  ulonglong uVar4;
+  int iVar5;
+  longlong lVar6;
+  longlong lVar7;
+  ulonglong uVar8;
   
-  uVar11 = (ulonglong)(int)param_4;
-  lVar9 = (longlong)(int)param_3;
-  lVar4 = __savegprlr_29(param_1,param_2);
-  if (0xc < (uVar11 & 0xffffffff)) {
-    uVar11 = 0xc;
+  uVar8 = (ulonglong)(int)param_4;
+  if (0xc < param_4) {
+    uVar8 = 0xc;
   }
-  pBVar1 = (BINKSND *)lVar4;
-  *(int *)(pBVar1->snddata + 0xa8) = (int)uVar11;
-  pBVar1->snddata[0xa0] = '\0';
-  pBVar1->snddata[0xa1] = '\0';
-  pBVar1->snddata[0xa2] = '\0';
-  pBVar1->snddata[0xa3] = '\x01';
+  *(int *)(param_1->snddata + 0xa8) = (int)uVar8;
+  param_1->snddata[0xa0] = '\0';
+  param_1->snddata[0xa1] = '\0';
+  param_1->snddata[0xa2] = '\0';
+  param_1->snddata[0xa3] = '\x01';
   memcpy();
-  uVar5 = 0;
-  if (3 < (int)uVar11) {
-    lVar10 = lVar9 + 8;
-    lVar8 = lVar4 + 0x18c;
-    uVar6 = ((uVar11 - 4 & 0xffffffff) >> 2) + 1;
-    uVar5 = uVar6 * 4 & 0xfffffffc;
+  uVar3 = 0;
+  if (3 < (int)uVar8) {
+    lVar7 = (longlong)(int)param_3 + 8;
+    lVar6 = (longlong)(int)param_1 + 0x18c;
+    uVar4 = ((uVar8 - 4 & 0xffffffff) >> 2) + 1;
+    uVar3 = uVar4 * 4 & 0xfffffffc;
     do {
-      piVar2 = (int *)lVar10;
-      iVar7 = piVar2[-2];
-      if (0x7fff < iVar7) {
-        iVar7 = 0x7fff;
+      piVar1 = (int *)lVar7;
+      iVar5 = piVar1[-2];
+      if (0x7fff < iVar5) {
+        iVar5 = 0x7fff;
       }
-      pfVar3 = (float *)lVar8;
-      pfVar3[-1] = (float)(longlong)iVar7 * 3.051851e-05;
-      iVar7 = piVar2[-1];
-      if (0x7fff < iVar7) {
-        iVar7 = 0x7fff;
+      pfVar2 = (float *)lVar6;
+      pfVar2[-1] = (float)(longlong)iVar5 * 3.051851e-05;
+      iVar5 = piVar1[-1];
+      if (0x7fff < iVar5) {
+        iVar5 = 0x7fff;
       }
-      *pfVar3 = (float)(longlong)iVar7 * 3.051851e-05;
-      iVar7 = *piVar2;
-      if (0x7fff < iVar7) {
-        iVar7 = 0x7fff;
+      *pfVar2 = (float)(longlong)iVar5 * 3.051851e-05;
+      iVar5 = *piVar1;
+      if (0x7fff < iVar5) {
+        iVar5 = 0x7fff;
       }
-      pfVar3[1] = (float)(longlong)iVar7 * 3.051851e-05;
-      iVar7 = piVar2[1];
-      if (0x7fff < iVar7) {
-        iVar7 = 0x7fff;
+      pfVar2[1] = (float)(longlong)iVar5 * 3.051851e-05;
+      iVar5 = piVar1[1];
+      if (0x7fff < iVar5) {
+        iVar5 = 0x7fff;
       }
-      uVar6 = uVar6 - 1;
-      lVar10 = lVar10 + 0x10;
-      pfVar3[2] = (float)(longlong)iVar7 * 3.051851e-05;
-      lVar8 = lVar8 + 0x10;
-    } while ((uVar6 & 0xffffffff) != 0);
+      uVar4 = uVar4 - 1;
+      lVar7 = lVar7 + 0x10;
+      pfVar2[2] = (float)(longlong)iVar5 * 3.051851e-05;
+      lVar6 = lVar6 + 0x10;
+    } while ((uVar4 & 0xffffffff) != 0);
   }
-  if (uVar5 < (uVar11 & 0xffffffff)) {
-    lVar9 = (uVar5 & 0x3fffffff) * 4 + lVar9;
-    lVar4 = (uVar5 + 0x62 & 0x3fffffff) * 4 + lVar4;
-    uVar11 = uVar11 - uVar5;
+  if (uVar3 < (uVar8 & 0xffffffff)) {
+    lVar7 = (uVar3 & 0x3fffffff) * 4 + (longlong)(int)param_3;
+    lVar6 = (uVar3 + 0x62 & 0x3fffffff) * 4 + (longlong)(int)param_1;
+    uVar8 = uVar8 - uVar3;
     do {
-      iVar7 = *(int *)lVar9;
-      if (0x7fff < iVar7) {
-        iVar7 = 0x7fff;
+      iVar5 = *(int *)lVar7;
+      if (0x7fff < iVar5) {
+        iVar5 = 0x7fff;
       }
-      uVar11 = uVar11 - 1;
-      lVar9 = lVar9 + 4;
-      *(float *)lVar4 = (float)(longlong)iVar7 * 3.051851e-05;
-      lVar4 = lVar4 + 4;
-    } while ((uVar11 & 0xffffffff) != 0);
+      uVar8 = uVar8 - 1;
+      lVar7 = lVar7 + 4;
+      *(float *)lVar6 = (float)(longlong)iVar5 * 3.051851e-05;
+      lVar6 = lVar6 + 4;
+    } while ((uVar8 & 0xffffffff) != 0);
   }
-  set_rate_volume_and_pan(pBVar1);
-  __restgprlr_29();
+  set_rate_volume_and_pan(param_1);
   return;
 }
 
 
 // 82945CF0  SetOnOff  (line unknown)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* int __cdecl SetOnOff(struct BINKSND *,int) */
 
 int SetOnOff(BINKSND *param_1,int param_2)
 
 {
-  int iVar1;
+  undefined4 uVar1;
   int iVar2;
-  SNDCHANNEL *pSVar3;
+  uchar *puVar3;
   uchar local_60 [16];
   XAUDIOPACKETPOSITION local_50;
   
-  iVar1 = __savegprlr_29(param_1);
   if (param_2 == 0) {
-    if (*(int *)(iVar1 + 100) != 0) {
-      pSVar3 = (SNDCHANNEL *)(iVar1 + 0x7c);
+    if (param_1->OnOff != 0) {
+      puVar3 = param_1->snddata;
       local_50.Position = 0;
-      iVar2 = XAudioSourceVoice_Stop(*(IXAudioSourceVoice **)(iVar1 + 0x7c),'\x01');
+      iVar2 = XAudioSourceVoice_Stop(*(IXAudioSourceVoice **)param_1->snddata,'\x01');
       if (-1 < iVar2) {
         do {
           local_60[0] = '\0';
-          XAudioVoice_GetVoiceState(*(IXAudioVoice **)pSVar3,local_60);
+          XAudioVoice_GetVoiceState(*(IXAudioVoice **)puVar3,local_60);
         } while (local_60[0] == '\x01');
       }
-      XAudioSourceVoice_SetPacketPosition(*(IXAudioSourceVoice **)pSVar3,&local_50);
-      DS_clear(pSVar3,0,*(uint *)(iVar1 + 0xdc));
-      *(undefined4 *)(iVar1 + 100) = 0;
+      XAudioSourceVoice_SetPacketPosition(*(IXAudioSourceVoice **)puVar3,&local_50);
+      DS_clear((SNDCHANNEL *)puVar3,0,*(uint *)(param_1->snddata + 0x60));
+      param_1->OnOff = 0;
     }
   }
-  else if (*(int *)(iVar1 + 100) == 0) {
-    *(undefined4 *)(iVar1 + 100) = 1;
-    *(undefined4 *)(iVar1 + 0xf0) = 0;
-    *(undefined4 *)(iVar1 + 0xf8) = 0;
-    *(undefined4 *)(iVar1 + 0xfc) = *(undefined4 *)(iVar1 + 0x100);
-    iVar1 = __restgprlr_29(1);
-    return iVar1;
+  else if (param_1->OnOff == 0) {
+    uVar1 = *(undefined4 *)(param_1->snddata + 0x84);
+    param_1->OnOff = 1;
+    param_1->snddata[0x74] = '\0';
+    param_1->snddata[0x75] = '\0';
+    param_1->snddata[0x76] = '\0';
+    param_1->snddata[0x77] = '\0';
+    param_1->snddata[0x7c] = '\0';
+    param_1->snddata[0x7d] = '\0';
+    param_1->snddata[0x7e] = '\0';
+    param_1->snddata[0x7f] = '\0';
+    *(undefined4 *)(param_1->snddata + 0x80) = uVar1;
+    return 1;
   }
-  iVar1 = __restgprlr_29(*(undefined4 *)(iVar1 + 100));
-  return iVar1;
+  return param_1->OnOff;
 }
 
 
@@ -642,6 +636,8 @@ void Close(BINKSND *param_1)
 
 // 82945EC0  Open  (line unknown)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 /* int __cdecl Open(struct BINKSND *,unsigned int,int,int,unsigned int,struct BINK *) */
 
 int Open(BINKSND *param_1,uint param_2,int param_3,int param_4,uint param_5,BINK *param_6)
@@ -649,123 +645,119 @@ int Open(BINKSND *param_1,uint param_2,int param_3,int param_4,uint param_5,BINK
 {
   int iVar1;
   ulonglong uVar2;
-  BINKSND *pBVar3;
-  int iVar4;
-  undefined4 uVar5;
-  ulonglong uVar6;
-  uint uVar7;
-  ulonglong uVar8;
-  uint uVar9;
+  int iVar3;
+  undefined4 uVar4;
+  ulonglong uVar5;
+  uint uVar6;
+  ulonglong uVar7;
+  uint uVar8;
   XAUDIOSOURCEVOICEINIT local_b0;
   
-  pBVar3 = (BINKSND *)__savegprlr_24(param_1);
   memset();
-  pBVar3->freq = param_2;
-  pBVar3->bits = param_3;
-  pBVar3->chans = param_4;
-  pBVar3->SoundDroppedOut = 0;
+  param_1->freq = param_2;
+  param_1->bits = param_3;
+  param_1->chans = param_4;
+  param_1->SoundDroppedOut = 0;
   memset();
   local_b0.Format.field1_0x4._s_0.NumStreams = (uchar)param_4;
   local_b0.MaxPacketCount = '\x01';
   local_b0.Format.SampleType = (param_3 != 0x10) + '\x01';
   local_b0.MaxChannelMapEntryCount = '\f';
   local_b0.Format.field1_0x4._s_0.Stream[0].SampleRate = param_2;
-  iVar4 = XAudioCreateSourceVoice(&local_b0,(IXAudioSourceVoice **)pBVar3->snddata);
-  if (-1 < iVar4) {
-    iVar4 = pBVar3->bits;
-    iVar1 = pBVar3->chans;
-    *(uint *)(pBVar3->snddata + 0x68) = param_2;
-    pBVar3->Latency = 0;
-    uVar6 = (longlong)((iVar4 >> 3) * iVar1) * (longlong)(int)pBVar3->freq;
-    pBVar3->snddata[0x94] = '\0';
-    pBVar3->snddata[0x95] = '\0';
-    pBVar3->snddata[0x96] = '\x02';
-    pBVar3->snddata[0x97] = '\x1c';
-    uVar2 = (uVar6 * 600 & 0xffffffff) / 1000 + 0x3ff & 0xfffffc00;
-    uVar8 = (uVar6 * 0x32 & 0xffffffff) / 1000 + 0xff & 0xffffff00;
-    *(int *)(pBVar3->snddata + 0x60) = (int)uVar2;
-    *(int *)(pBVar3->snddata + 100) = (int)uVar8;
-    *(int *)(pBVar3->snddata + 0x8c) = (int)((uVar2 * 0x5a) / 100);
+  iVar3 = XAudioCreateSourceVoice(&local_b0,(IXAudioSourceVoice **)param_1->snddata);
+  if (-1 < iVar3) {
+    iVar3 = param_1->bits;
+    iVar1 = param_1->chans;
+    *(uint *)(param_1->snddata + 0x68) = param_2;
+    param_1->Latency = 0;
+    uVar5 = (longlong)((iVar3 >> 3) * iVar1) * (longlong)(int)param_1->freq;
+    param_1->snddata[0x94] = '\0';
+    param_1->snddata[0x95] = '\0';
+    param_1->snddata[0x96] = '\x02';
+    param_1->snddata[0x97] = '\x1c';
+    uVar2 = (uVar5 * 600 & 0xffffffff) / 1000 + 0x3ff & 0xfffffc00;
+    uVar7 = (uVar5 * 0x32 & 0xffffffff) / 1000 + 0xff & 0xffffff00;
+    *(int *)(param_1->snddata + 0x60) = (int)uVar2;
+    *(int *)(param_1->snddata + 100) = (int)uVar7;
+    *(int *)(param_1->snddata + 0x8c) = (int)((uVar2 * 0x5a) / 100);
     if ((param_6->FrameRate != 0) && (param_6->FrameRateDiv != 0)) {
-      uVar8 = ((ulonglong)param_6->Frames * (ulonglong)param_6->FrameRateDiv * (uVar6 & 0xffffffff))
+      uVar7 = ((ulonglong)param_6->Frames * (ulonglong)param_6->FrameRateDiv * (uVar5 & 0xffffffff))
               / (ulonglong)param_6->FrameRate & 0xffffffff;
     }
-    uVar5 = radmalloc();
-    uVar7 = *(uint *)(pBVar3->snddata + 100);
-    iVar4 = pBVar3->bits;
-    *(undefined4 *)(pBVar3->snddata + 0x5c) = uVar5;
-    pBVar3->BestSizeIn16 = uVar7;
-    if (iVar4 == 8) {
-      pBVar3->BestSizeIn16 = uVar7 << 1;
+    uVar4 = radmalloc();
+    uVar6 = *(uint *)(param_1->snddata + 100);
+    iVar3 = param_1->bits;
+    *(undefined4 *)(param_1->snddata + 0x5c) = uVar4;
+    param_1->BestSizeIn16 = uVar6;
+    if (iVar3 == 8) {
+      param_1->BestSizeIn16 = uVar6 << 1;
     }
-    pBVar3->snddata[0xa4] = '\0';
-    pBVar3->snddata[0xa5] = '\0';
-    pBVar3->snddata[0xa6] = '\0';
-    pBVar3->snddata[0xa7] = '\0';
-    pBVar3->snddata[0xa8] = '\0';
-    pBVar3->snddata[0xa9] = '\0';
-    pBVar3->snddata[0xaa] = '\0';
-    pBVar3->snddata[0xab] = '\0';
-    pBVar3->snddata[0x6c] = '\0';
-    pBVar3->snddata[0x6d] = '\0';
-    pBVar3->snddata[0x6e] = '\x7f';
-    pBVar3->snddata[0x6f] = 0xff;
-    pBVar3->snddata[0x70] = '\0';
-    pBVar3->snddata[0x71] = '\0';
-    pBVar3->snddata[0x72] = '\x7f';
-    pBVar3->snddata[0x73] = 0xff;
+    param_1->snddata[0xa4] = '\0';
+    param_1->snddata[0xa5] = '\0';
+    param_1->snddata[0xa6] = '\0';
+    param_1->snddata[0xa7] = '\0';
+    param_1->snddata[0xa8] = '\0';
+    param_1->snddata[0xa9] = '\0';
+    param_1->snddata[0xaa] = '\0';
+    param_1->snddata[0xab] = '\0';
+    param_1->snddata[0x6c] = '\0';
+    param_1->snddata[0x6d] = '\0';
+    param_1->snddata[0x6e] = '\x7f';
+    param_1->snddata[0x6f] = 0xff;
+    param_1->snddata[0x70] = '\0';
+    param_1->snddata[0x71] = '\0';
+    param_1->snddata[0x72] = '\x7f';
+    param_1->snddata[0x73] = 0xff;
     if (param_3 == 0x10) {
-      uVar5 = 0;
+      uVar4 = 0;
     }
     else {
-      uVar5 = 0x80808080;
+      uVar4 = 0x80808080;
     }
-    *(undefined4 *)(pBVar3->snddata + 0x98) = uVar5;
-    set_rate_volume_and_pan(pBVar3);
-    uVar7 = *(uint *)(pBVar3->snddata + 0x60);
-    uVar9 = uVar7;
-    if (*(uint *)(pBVar3->snddata + 0x60) < uVar7) {
-      uVar9 = *(uint *)(pBVar3->snddata + 0x60);
+    *(undefined4 *)(param_1->snddata + 0x98) = uVar4;
+    set_rate_volume_and_pan(param_1);
+    uVar6 = *(uint *)(param_1->snddata + 0x60);
+    uVar8 = uVar6;
+    if (*(uint *)(param_1->snddata + 0x60) < uVar6) {
+      uVar8 = *(uint *)(param_1->snddata + 0x60);
     }
     memset();
-    if (uVar9 < uVar7) {
+    if (uVar8 < uVar6) {
       memset();
     }
-    pBVar3->snddata[0x7c] = '\0';
-    pBVar3->snddata[0x7d] = '\0';
-    pBVar3->snddata[0x7e] = '\0';
-    pBVar3->snddata[0x7f] = '\0';
-    pBVar3->snddata[0x74] = '\0';
-    pBVar3->snddata[0x75] = '\0';
-    pBVar3->snddata[0x76] = '\0';
-    pBVar3->snddata[0x77] = '\0';
-    uVar7 = *(uint *)(pBVar3->snddata + 0x60);
-    if (uVar8 < *(uint *)(pBVar3->snddata + 0x60)) {
-      uVar7 = (uint)uVar8;
+    param_1->snddata[0x7c] = '\0';
+    param_1->snddata[0x7d] = '\0';
+    param_1->snddata[0x7e] = '\0';
+    param_1->snddata[0x7f] = '\0';
+    param_1->snddata[0x74] = '\0';
+    param_1->snddata[0x75] = '\0';
+    param_1->snddata[0x76] = '\0';
+    param_1->snddata[0x77] = '\0';
+    uVar6 = *(uint *)(param_1->snddata + 0x60);
+    if (uVar7 < *(uint *)(param_1->snddata + 0x60)) {
+      uVar6 = (uint)uVar7;
     }
-    *(uint *)(pBVar3->snddata + 0x84) = uVar7;
-    *(uint *)(pBVar3->snddata + 0x80) = uVar7;
-    pBVar3->snddata[0x78] = '\0';
-    pBVar3->snddata[0x79] = '\0';
-    pBVar3->snddata[0x7a] = '\0';
-    pBVar3->snddata[0x7b] = '\0';
-    pBVar3->OnOff = 1;
-    pBVar3->Volume = Volume;
-    pBVar3->MixBinVols = MixBinVolumes;
-    pBVar3->Unlock = Unlock;
-    pBVar3->Ready = Ready;
-    pBVar3->Lock = Lock;
+    *(uint *)(param_1->snddata + 0x84) = uVar6;
+    *(uint *)(param_1->snddata + 0x80) = uVar6;
+    param_1->snddata[0x78] = '\0';
+    param_1->snddata[0x79] = '\0';
+    param_1->snddata[0x7a] = '\0';
+    param_1->snddata[0x7b] = '\0';
+    param_1->OnOff = 1;
+    param_1->Volume = Volume;
+    param_1->MixBinVols = MixBinVolumes;
+    param_1->Unlock = Unlock;
+    param_1->Ready = Ready;
+    param_1->Lock = Lock;
+    param_1->Pan = Pan;
+    param_1->Pause = Pause;
+    param_1->SetOnOff = SetOnOff;
+    param_1->Close = Close;
+    param_1->MixBins = MixBins;
     DAT_8489bea8 = DAT_8489bea8 + 1;
-    pBVar3->Pan = Pan;
-    pBVar3->Pause = Pause;
-    pBVar3->SetOnOff = SetOnOff;
-    pBVar3->Close = Close;
-    pBVar3->MixBins = MixBins;
-    iVar4 = __restgprlr_24(1);
-    return iVar4;
+    return 1;
   }
-  iVar4 = __restgprlr_24(0);
-  return iVar4;
+  return 0;
 }
 
 

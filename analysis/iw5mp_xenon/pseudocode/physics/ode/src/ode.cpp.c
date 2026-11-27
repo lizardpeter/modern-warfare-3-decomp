@@ -44,64 +44,57 @@ void initObject(dObject *param_1,dxWorld *param_2)
 
 // 82697338  addObjectToList  (physics/ode/src/ode.cpp:76)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PhysWorld": Some values do not have unique names */
 
 void addObjectToList(dObject *param_1,dObject **param_2)
 
 {
-  int iVar1;
-  int *piVar2;
-  ulonglong uVar3;
-  int *piVar4;
+  dObject *pdVar1;
   
-  uVar3 = (ulonglong)(int)param_2;
-  piVar2 = (int *)__savegprlr_28(param_1);
-  if (piVar2 == (int *)0x0) {
+  if (param_1 == (dObject *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\ode.cpp",
                     0x4d,0,"%s");
   }
-  if ((uVar3 & 0xffffffff) == 0) {
+  if (param_2 == (dObject **)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\ode.cpp",
                     0x4e,0,"%s");
   }
-  piVar4 = (int *)uVar3;
-  iVar1 = *piVar4;
-  piVar2[1] = (int)piVar4;
-  *piVar2 = iVar1;
-  if (*piVar4 != 0) {
-    *(int **)(*piVar4 + 4) = piVar2;
+  pdVar1 = *param_2;
+  param_1->tome = param_2;
+  param_1->next = pdVar1;
+  if (*param_2 != (dObject *)0x0) {
+    (*param_2)->tome = &param_1->next;
   }
-  *piVar4 = (int)piVar2;
-  __restgprlr_28();
+  *param_2 = param_1;
   return;
 }
 
 
 // 826973D0  removeObjectFromList  (physics/ode/src/ode.cpp:91)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PhysWorld": Some values do not have unique names */
 
 void removeObjectFromList(dObject *param_1)
 
 {
-  int *piVar1;
-  
-  piVar1 = (int *)__savegprlr_29(param_1);
-  if (piVar1 == (int *)0x0) {
+  if (param_1 == (dObject *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\ode.cpp",
                     0x5c,0,"%s");
   }
-  if (piVar1[1] == 0) {
+  if (param_1->tome == (dObject **)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\ode.cpp",
                     0x5d,0,"%s");
   }
-  if (*piVar1 != 0) {
-    *(int *)(*piVar1 + 4) = piVar1[1];
+  if (param_1->next != (dObject *)0x0) {
+    param_1->next->tome = param_1->tome;
   }
-  *(int *)piVar1[1] = *piVar1;
-  *piVar1 = 0;
-  piVar1[1] = 0;
-  __restgprlr_29();
+  *param_1->tome = param_1->next;
+  param_1->next = (dObject *)0x0;
+  param_1->tome = (dObject **)0x0;
   return;
 }
 
@@ -183,99 +176,100 @@ int listHasLoops(dObject *param_1)
 
 // 82697548  checkWorld  (physics/ode/src/ode.cpp:155)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PhysWorld": Some values do not have unique names */
 
 void checkWorld(dxWorld *param_1)
 
 {
-  undefined4 *puVar1;
+  dxJoint *pdVar1;
   bool bVar2;
-  int *piVar3;
-  int iVar4;
-  char *pcVar5;
-  int *piVar6;
-  longlong lVar7;
-  int *piVar8;
+  int iVar3;
+  char *pcVar4;
+  dxJointNode *pdVar5;
+  longlong lVar6;
+  dxBody *pdVar7;
+  dxBody **ppdVar8;
   
-  piVar3 = (int *)__savegprlr_23(param_1);
-  iVar4 = listHasLoops((dObject *)*piVar3);
-  if ((iVar4 != 0) && (alwaysfails == 0)) {
+  iVar3 = listHasLoops((dObject *)param_1->firstbody);
+  if ((iVar3 != 0) && (alwaysfails == 0)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\ode.cpp",
                     0xa0,0,"body list has loops");
   }
-  iVar4 = listHasLoops((dObject *)piVar3[1]);
-  if ((iVar4 != 0) && (alwaysfails == 0)) {
+  iVar3 = listHasLoops((dObject *)param_1->firstjoint);
+  if ((iVar3 != 0) && (alwaysfails == 0)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\ode.cpp",
                     0xa1,0,"joint list has loops");
   }
-  for (piVar8 = (int *)*piVar3; piVar8 != (int *)0x0; piVar8 = (int *)*piVar8) {
-    if (((*piVar8 != 0) && (*(int **)(*piVar8 + 4) != piVar8)) && (alwaysfails == 0)) {
+  for (pdVar7 = param_1->firstbody; pdVar7 != (dxBody *)0x0; pdVar7 = (dxBody *)pdVar7->_padding_) {
+    if (((pdVar7->_padding_ != 0) && (*(dxBody **)(pdVar7->_padding_ + 4) != pdVar7)) &&
+       (alwaysfails == 0)) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\ode.cpp",
                       0xa6,0,"bad tome pointer in body list");
     }
   }
-  for (piVar8 = (int *)piVar3[1]; piVar8 != (int *)0x0; piVar8 = (int *)*piVar8) {
-    if (((*piVar8 != 0) && (*(int **)(*piVar8 + 4) != piVar8)) && (alwaysfails == 0)) {
+  for (pdVar1 = param_1->firstjoint; pdVar1 != (dxJoint *)0x0; pdVar1 = (dxJoint *)pdVar1->_padding_
+      ) {
+    if (((pdVar1->_padding_ != 0) && (*(dxJoint **)(pdVar1->_padding_ + 4) != pdVar1)) &&
+       (alwaysfails == 0)) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\ode.cpp",
                       0xaa,0,"bad tome pointer in joint list");
     }
   }
-  iVar4 = 0;
-  for (puVar1 = (undefined4 *)*piVar3; puVar1 != (undefined4 *)0x0; puVar1 = (undefined4 *)*puVar1)
-  {
-    iVar4 = iVar4 + 1;
+  iVar3 = 0;
+  for (pdVar7 = param_1->firstbody; pdVar7 != (dxBody *)0x0; pdVar7 = (dxBody *)pdVar7->_padding_) {
+    iVar3 = iVar3 + 1;
   }
-  if ((piVar3[2] != iVar4) && (alwaysfails == 0)) {
+  if ((param_1->bodyCount != iVar3) && (alwaysfails == 0)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\ode.cpp",
                     0xb0,0,"body count incorrect");
   }
-  iVar4 = 0;
-  for (puVar1 = (undefined4 *)piVar3[1]; puVar1 != (undefined4 *)0x0; puVar1 = (undefined4 *)*puVar1
+  iVar3 = 0;
+  for (pdVar1 = param_1->firstjoint; pdVar1 != (dxJoint *)0x0; pdVar1 = (dxJoint *)pdVar1->_padding_
       ) {
-    iVar4 = iVar4 + 1;
+    iVar3 = iVar3 + 1;
   }
-  if ((piVar3[3] != iVar4) && (alwaysfails == 0)) {
+  if ((param_1->jointCount != iVar3) && (alwaysfails == 0)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\ode.cpp",
                     0xb3,0,"joint count incorrect");
   }
   count = count + 1;
-  for (puVar1 = (undefined4 *)*piVar3; puVar1 != (undefined4 *)0x0; puVar1 = (undefined4 *)*puVar1)
-  {
-    puVar1[3] = count;
+  for (pdVar7 = param_1->firstbody; pdVar7 != (dxBody *)0x0; pdVar7 = (dxBody *)pdVar7->_padding_) {
+    pdVar7->_padding_ = count;
   }
-  for (puVar1 = (undefined4 *)piVar3[1]; puVar1 != (undefined4 *)0x0; puVar1 = (undefined4 *)*puVar1
+  for (pdVar1 = param_1->firstjoint; pdVar1 != (dxJoint *)0x0; pdVar1 = (dxJoint *)pdVar1->_padding_
       ) {
-    puVar1[3] = count;
+    pdVar1->_padding_ = count;
   }
-  for (puVar1 = (undefined4 *)*piVar3; puVar1 != (undefined4 *)0x0; puVar1 = (undefined4 *)*puVar1)
-  {
-    if (((int *)puVar1[4] != piVar3) && (alwaysfails == 0)) {
+  for (pdVar7 = param_1->firstbody; pdVar7 != (dxBody *)0x0; pdVar7 = (dxBody *)pdVar7->_padding_) {
+    if (((dxWorld *)pdVar7->_padding_ != param_1) && (alwaysfails == 0)) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\ode.cpp",
                       0xbd,0,"bad world pointer in body list");
     }
   }
-  for (puVar1 = (undefined4 *)piVar3[1]; puVar1 != (undefined4 *)0x0; puVar1 = (undefined4 *)*puVar1
+  for (pdVar1 = param_1->firstjoint; pdVar1 != (dxJoint *)0x0; pdVar1 = (dxJoint *)pdVar1->_padding_
       ) {
-    if (((int *)puVar1[4] != piVar3) && (alwaysfails == 0)) {
+    if (((dxWorld *)pdVar1->_padding_ != param_1) && (alwaysfails == 0)) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\ode.cpp",
                       0xbf,0,"bad world pointer in joint list");
     }
   }
-  for (puVar1 = (undefined4 *)piVar3[1]; puVar1 != (undefined4 *)0x0; puVar1 = (undefined4 *)*puVar1
+  for (pdVar1 = param_1->firstjoint; pdVar1 != (dxJoint *)0x0; pdVar1 = (dxJoint *)pdVar1->_padding_
       ) {
-    piVar8 = puVar1 + 8;
-    lVar7 = 2;
+    ppdVar8 = &pdVar1->node[0].body;
+    lVar6 = 2;
     do {
-      if (*piVar8 != 0) {
-        piVar6 = *(int **)(*piVar8 + 0x14);
+      if (*ppdVar8 != (dxBody *)0x0) {
+        pdVar5 = (*ppdVar8)->firstjoint;
         bVar2 = false;
-        if (piVar6 != (int *)0x0) {
+        if (pdVar5 != (dxJointNode *)0x0) {
           do {
-            if ((undefined4 *)*piVar6 == puVar1) {
+            if (pdVar5->joint == pdVar1) {
               bVar2 = true;
             }
-            piVar6 = (int *)piVar6[3];
-          } while (piVar6 != (int *)0x0);
+            pdVar5 = pdVar5->next;
+          } while (pdVar5 != (dxJointNode *)0x0);
           if (bVar2) goto LAB_82697880;
         }
         if (alwaysfails == 0) {
@@ -284,50 +278,52 @@ void checkWorld(dxWorld *param_1)
         }
       }
 LAB_82697880:
-      lVar7 = lVar7 + -1;
-      piVar8 = piVar8 + 4;
-    } while (lVar7 != 0);
+      lVar6 = lVar6 + -1;
+      ppdVar8 = ppdVar8 + 4;
+    } while (lVar6 != 0);
   }
-  piVar8 = (int *)*piVar3;
-  if (piVar8 != (int *)0x0) {
+  pdVar7 = param_1->firstbody;
+  if (pdVar7 != (dxBody *)0x0) {
     do {
-      for (piVar6 = (int *)piVar8[5]; piVar6 != (int *)0x0; piVar6 = (int *)piVar6[3]) {
-        iVar4 = *piVar6;
-        if ((int *)(iVar4 + 0x1c) == piVar6) {
-          if ((*(int **)(iVar4 + 0x30) != piVar8) && (alwaysfails == 0)) {
-            iVar4 = 0xe7;
-            pcVar5 = "bad body pointer in joint node of body list (1)";
+      for (pdVar5 = pdVar7->firstjoint; pdVar5 != (dxJointNode *)0x0; pdVar5 = pdVar5->next) {
+        pdVar1 = pdVar5->joint;
+        if (pdVar1->node == pdVar5) {
+          if ((pdVar1->node[1].body != pdVar7) && (alwaysfails == 0)) {
+            iVar3 = 0xe7;
+            pcVar4 = "bad body pointer in joint node of body list (1)";
 LAB_8269791c:
             MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\ode.cpp"
-                            ,iVar4,0,pcVar5);
+                            ,iVar3,0,pcVar4);
           }
         }
-        else if ((*(int **)(iVar4 + 0x20) != piVar8) && (alwaysfails == 0)) {
-          pcVar5 = "bad body pointer in joint node of body list (2)";
-          iVar4 = 0xec;
+        else if ((pdVar1->node[0].body != pdVar7) && (alwaysfails == 0)) {
+          pcVar4 = "bad body pointer in joint node of body list (2)";
+          iVar3 = 0xec;
           goto LAB_8269791c;
         }
-        if ((*(int *)(*piVar6 + 0xc) != count) && (alwaysfails == 0)) {
+        if ((pdVar5->joint->_padding_ != count) && (alwaysfails == 0)) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\ode.cpp"
                           ,0xef,0,"bad joint node pointer in body");
         }
       }
-      piVar8 = (int *)*piVar8;
-    } while (piVar8 != (int *)0x0);
+      pdVar7 = (dxBody *)pdVar7->_padding_;
+    } while (pdVar7 != (dxBody *)0x0);
   }
-  for (puVar1 = (undefined4 *)piVar3[1]; puVar1 != (undefined4 *)0x0; puVar1 = (undefined4 *)*puVar1
+  for (pdVar1 = param_1->firstjoint; pdVar1 != (dxJoint *)0x0; pdVar1 = (dxJoint *)pdVar1->_padding_
       ) {
-    if (((puVar1[8] != 0) && (puVar1[8] == puVar1[0xc])) && (alwaysfails == 0)) {
+    pdVar7 = pdVar1->node[0].body;
+    if (((pdVar7 != (dxBody *)0x0) && (pdVar7 == pdVar1->node[1].body)) && (alwaysfails == 0)) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\ode.cpp",
                       0xf6,0,"non-distinct body pointers in joint");
     }
-    if ((((puVar1[8] != 0) && (*(int *)(puVar1[8] + 0xc) != count)) ||
-        ((puVar1[0xc] != 0 && (*(int *)(puVar1[0xc] + 0xc) != count)))) && (alwaysfails == 0)) {
+    pdVar7 = pdVar1->node[0].body;
+    if ((((pdVar7 != (dxBody *)0x0) && (pdVar7->_padding_ != count)) ||
+        ((pdVar7 = pdVar1->node[1].body, pdVar7 != (dxBody *)0x0 && (pdVar7->_padding_ != count))))
+       && (alwaysfails == 0)) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\ode.cpp",
                       0xf9,0,"bad body pointer in joint");
     }
   }
-  __restgprlr_23();
   return;
 }
 
@@ -345,62 +341,57 @@ void ODE_Init(void)
 
 // 8269BA38  ODE_BodyInit  (physics/ode/src/ode.cpp:269)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PhysWorld": Some values do not have unique names */
 
 void ODE_BodyInit(dxBody *param_1,dxWorld *param_2)
 
 {
   int iVar1;
-  dxBody *pdVar2;
-  ulonglong uVar3;
-  dObject **ppdVar4;
-  double dVar5;
+  double dVar2;
   
-  uVar3 = (ulonglong)(int)param_2;
-  pdVar2 = (dxBody *)__savegprlr_28(param_1);
-  if (pdVar2 == (dxBody *)0x0) {
+  if (param_1 == (dxBody *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\ode.cpp",
                     0x10e,0,"%s");
   }
-  if ((uVar3 & 0xffffffff) == 0) {
+  if (param_2 == (dxWorld *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\ode.cpp",
                     0x10f,0,"%s");
   }
-  if (pdVar2 != (dxBody *)0x0) {
-    dMassSetZero(&pdVar2->mass);
+  if (param_1 != (dxBody *)0x0) {
+    dMassSetZero(&param_1->mass);
   }
-  ppdVar4 = (dObject **)uVar3;
-  pdVar2->_padding_ = (int)ppdVar4;
-  pdVar2->_padding_ = 0;
-  pdVar2->_padding_ = 0;
-  pdVar2->_padding_ = 0;
-  pdVar2->_padding_ = 0;
-  pdVar2->firstjoint = (dxJointNode *)0x0;
-  pdVar2->flags = 0;
-  dVar5 = 1.0;
-  pdVar2->geom = (dxGeom *)0x0;
-  dMassSetParameters(&pdVar2->mass,1.0,0.0,0.0,0.0,1.0,1.0,1.0,0.0,0.0,0.0);
-  dSetZero(pdVar2->invI,0xc);
-  pdVar2->invI[0] = (float)dVar5;
-  pdVar2->invI[5] = (float)dVar5;
-  pdVar2->invI[10] = (float)dVar5;
-  pdVar2->invMass = (float)dVar5;
-  dSetZero((pdVar2->info).pos,4);
-  dSetZero((pdVar2->info).q,4);
-  (pdVar2->info).q[0] = (float)dVar5;
-  dRSetIdentity((pdVar2->info).R);
-  dSetZero((pdVar2->info).lvel,4);
-  dSetZero((pdVar2->info).avel,4);
-  dSetZero(pdVar2->facc,4);
-  dSetZero(pdVar2->tacc,4);
-  dSetZero(pdVar2->finite_rot_axis,4);
-  addObjectToList((dObject *)pdVar2,ppdVar4);
-  ppdVar4[2] = (dObject *)((int)&ppdVar4[2]->next + 1);
-  dBodySetAutoDisableDefaults(pdVar2);
-  iVar1 = (pdVar2->adis).idle_steps;
-  pdVar2->adis_timeleft = (pdVar2->adis).idle_time;
-  pdVar2->adis_stepsleft = iVar1;
-  __restgprlr_28();
+  param_1->_padding_ = (int)param_2;
+  param_1->_padding_ = 0;
+  param_1->_padding_ = 0;
+  param_1->_padding_ = 0;
+  param_1->_padding_ = 0;
+  param_1->firstjoint = (dxJointNode *)0x0;
+  param_1->flags = 0;
+  dVar2 = 1.0;
+  param_1->geom = (dxGeom *)0x0;
+  dMassSetParameters(&param_1->mass,1.0,0.0,0.0,0.0,1.0,1.0,1.0,0.0,0.0,0.0);
+  dSetZero(param_1->invI,0xc);
+  param_1->invI[0] = (float)dVar2;
+  param_1->invI[5] = (float)dVar2;
+  param_1->invI[10] = (float)dVar2;
+  param_1->invMass = (float)dVar2;
+  dSetZero((param_1->info).pos,4);
+  dSetZero((param_1->info).q,4);
+  (param_1->info).q[0] = (float)dVar2;
+  dRSetIdentity((param_1->info).R);
+  dSetZero((param_1->info).lvel,4);
+  dSetZero((param_1->info).avel,4);
+  dSetZero(param_1->facc,4);
+  dSetZero(param_1->tacc,4);
+  dSetZero(param_1->finite_rot_axis,4);
+  addObjectToList((dObject *)param_1,(dObject **)param_2);
+  param_2->bodyCount = param_2->bodyCount + 1;
+  dBodySetAutoDisableDefaults(param_1);
+  iVar1 = (param_1->adis).idle_steps;
+  param_1->adis_timeleft = (param_1->adis).idle_time;
+  param_1->adis_stepsleft = iVar1;
   return;
 }
 
@@ -425,47 +416,46 @@ void ODE_BodyDestroyAllGeoms(dxBody *param_1)
 
 // 82697AA0  dBodyDestroy  (physics/ode/src/ode.cpp:322)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PhysWorld": Some values do not have unique names */
 
 void dBodyDestroy(dxBody *param_1)
 
 {
   ulonglong uVar1;
-  dxBody *pdVar2;
-  ulonglong uVar3;
-  int *piVar4;
+  ulonglong uVar2;
+  int *piVar3;
   
-  pdVar2 = (dxBody *)__savegprlr_28(param_1);
-  if (pdVar2 == (dxBody *)0x0) {
+  if (param_1 == (dxBody *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\ode.cpp",
                     0x143,0,"%s");
   }
-  if (*(int *)(pdVar2->_padding_ + 0x50) == 0) {
+  if (*(int *)(param_1->_padding_ + 0x50) == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\ode.cpp",
                     0x144,0,"%s");
   }
-  ODE_BodyDestroyAllGeoms(pdVar2);
-  uVar3 = ZEXT48(pdVar2->firstjoint);
-  uVar1 = uVar3;
+  ODE_BodyDestroyAllGeoms(param_1);
+  uVar2 = ZEXT48(param_1->firstjoint);
+  uVar1 = uVar2;
   while (uVar1 != 0) {
-    piVar4 = (int *)uVar3;
-    *(undefined4 *)((((int *)(*piVar4 + 0x1c) == piVar4) + 2) * 0x10 + *piVar4) = 0;
-    uVar3 = (ulonglong)(uint)piVar4[3];
-    piVar4[3] = 0;
-    removeJointReferencesFromAttachedBodies((dxJoint *)*piVar4);
-    uVar1 = uVar3 & 0xffffffff;
+    piVar3 = (int *)uVar2;
+    *(undefined4 *)((((int *)(*piVar3 + 0x1c) == piVar3) + 2) * 0x10 + *piVar3) = 0;
+    uVar2 = (ulonglong)(uint)piVar3[3];
+    piVar3[3] = 0;
+    removeJointReferencesFromAttachedBodies((dxJoint *)*piVar3);
+    uVar1 = uVar2 & 0xffffffff;
   }
-  removeObjectFromList((dObject *)pdVar2);
-  if (pdVar2->_padding_ == 0) {
+  removeObjectFromList((dObject *)param_1);
+  if (param_1->_padding_ == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\ode.cpp",
                     0x156,0,"%s");
   }
-  if (*(int *)(pdVar2->_padding_ + 8) == 0) {
+  if (*(int *)(param_1->_padding_ + 8) == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\ode.cpp",
                     0x157,0,"%s");
   }
-  *(int *)(pdVar2->_padding_ + 8) = *(int *)(pdVar2->_padding_ + 8) + -1;
-  __restgprlr_28();
+  *(int *)(param_1->_padding_ + 8) = *(int *)(param_1->_padding_ + 8) + -1;
   return;
 }
 
@@ -499,25 +489,25 @@ void * dBodyGetData(dxBody *param_1)
 
 // 82697C98  dBodySetPosition  (physics/ode/src/ode.cpp:363)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void dBodySetPosition(dxBody *param_1,float param_2,float param_3,float param_4)
 
 {
-  int iVar1;
-  dxGeom *pdVar2;
-  double extraout_f1;
+  dxGeom *pdVar1;
+  double dVar2;
   double dVar3;
   double dVar4;
-  double dVar5;
   
   dVar4 = (double)param_4;
   dVar3 = (double)param_3;
-  iVar1 = __savegprlr_28((double)param_2,param_1);
-  dVar5 = extraout_f1;
-  if (iVar1 == 0) {
+  dVar2 = (double)param_2;
+  if (param_1 == (dxBody *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\ode.cpp",
                     0x16c,0,"%s");
   }
-  if (((uint)(float)dVar5 & 0x7f800000) == 0x7f800000) {
+  if (((uint)(float)dVar2 & 0x7f800000) == 0x7f800000) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\ode.cpp",
                     0x16d,0,"%s");
   }
@@ -529,241 +519,232 @@ void dBodySetPosition(dxBody *param_1,float param_2,float param_3,float param_4)
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\ode.cpp",
                     0x16f,0,"%s");
   }
-  pdVar2 = *(dxGeom **)(iVar1 + 0x1c);
-  *(float *)(iVar1 + 0xe0) = (float)dVar5;
-  *(float *)(iVar1 + 0xe4) = (float)dVar3;
-  *(float *)(iVar1 + 0xe8) = (float)dVar4;
-  for (; pdVar2 != (dxGeom *)0x0; pdVar2 = dGeomGetBodyNext(pdVar2)) {
-    dGeomMoved(pdVar2);
+  pdVar1 = param_1->geom;
+  (param_1->info).pos[0] = (float)dVar2;
+  (param_1->info).pos[1] = (float)dVar3;
+  (param_1->info).pos[2] = (float)dVar4;
+  for (; pdVar1 != (dxGeom *)0x0; pdVar1 = dGeomGetBodyNext(pdVar1)) {
+    dGeomMoved(pdVar1);
   }
-  __restgprlr_28();
   return;
 }
 
 
 // 82697DD0  dBodySetRotation  (physics/ode/src/ode.cpp:380)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void dBodySetRotation(dxBody *param_1,float *param_2)
 
 {
-  int iVar1;
-  dxGeom *pdVar2;
-  ulonglong uVar3;
-  float *pfVar4;
+  dxGeom *pdVar1;
   float local_40;
-  uint local_3c;
-  uint local_38;
-  uint local_34;
+  float local_3c;
+  float local_38;
+  float local_34;
   
-  uVar3 = (ulonglong)(int)param_2;
-  iVar1 = __savegprlr_27(param_1);
-  if ((iVar1 == 0) || ((uVar3 & 0xffffffff) == 0)) {
+  if ((param_1 == (dxBody *)0x0) || (param_2 == (float *)0x0)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\ode.cpp",
                     0x180,0,"%s");
   }
-  pfVar4 = (float *)uVar3;
-  if (((((uint)*pfVar4 & 0x7f800000) == 0x7f800000) ||
-      (((uint)pfVar4[1] & 0x7f800000) == 0x7f800000)) ||
-     (((uint)pfVar4[2] & 0x7f800000) == 0x7f800000)) {
+  if (((((uint)*param_2 & 0x7f800000) == 0x7f800000) ||
+      (((uint)param_2[1] & 0x7f800000) == 0x7f800000)) ||
+     (((uint)param_2[2] & 0x7f800000) == 0x7f800000)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\ode.cpp",
                     0x181,0,"%s");
   }
-  if (((((uint)pfVar4[4] & 0x7f800000) == 0x7f800000) ||
-      (((uint)pfVar4[5] & 0x7f800000) == 0x7f800000)) ||
-     (((uint)pfVar4[6] & 0x7f800000) == 0x7f800000)) {
+  if (((((uint)param_2[4] & 0x7f800000) == 0x7f800000) ||
+      (((uint)param_2[5] & 0x7f800000) == 0x7f800000)) ||
+     (((uint)param_2[6] & 0x7f800000) == 0x7f800000)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\ode.cpp",
                     0x182,0,"%s");
   }
-  if (((((uint)pfVar4[8] & 0x7f800000) == 0x7f800000) ||
-      (((uint)pfVar4[9] & 0x7f800000) == 0x7f800000)) ||
-     (((uint)pfVar4[10] & 0x7f800000) == 0x7f800000)) {
+  if (((((uint)param_2[8] & 0x7f800000) == 0x7f800000) ||
+      (((uint)param_2[9] & 0x7f800000) == 0x7f800000)) ||
+     (((uint)param_2[10] & 0x7f800000) == 0x7f800000)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\ode.cpp",
                     0x183,0,"%s");
   }
-  dQfromR(&local_40,pfVar4);
-  if ((((((uint)local_40 & 0x7f800000) == 0x7f800000) || ((local_3c & 0x7f800000) == 0x7f800000)) ||
-      ((local_38 & 0x7f800000) == 0x7f800000)) || ((local_34 & 0x7f800000) == 0x7f800000)) {
+  dQfromR(&local_40,param_2);
+  if ((((((uint)local_40 & 0x7f800000) == 0x7f800000) ||
+       (((uint)local_3c & 0x7f800000) == 0x7f800000)) ||
+      (((uint)local_38 & 0x7f800000) == 0x7f800000)) ||
+     (((uint)local_34 & 0x7f800000) == 0x7f800000)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\ode.cpp",
                     0x186,0,"%s");
   }
   dNormalize4(&local_40);
-  *(float *)(iVar1 + 0xf0) = local_40;
-  *(uint *)(iVar1 + 0xf4) = local_3c;
-  *(uint *)(iVar1 + 0xf8) = local_38;
-  *(uint *)(iVar1 + 0xfc) = local_34;
-  dRfromQ((float *)(iVar1 + 0x100),(float *)(iVar1 + 0xf0));
-  if ((((*(uint *)(iVar1 + 0x100) & 0x7f800000) == 0x7f800000) ||
-      ((*(uint *)(iVar1 + 0x104) & 0x7f800000) == 0x7f800000)) ||
-     ((*(uint *)(iVar1 + 0x108) & 0x7f800000) == 0x7f800000)) {
+  (param_1->info).q[0] = local_40;
+  (param_1->info).q[1] = local_3c;
+  (param_1->info).q[2] = local_38;
+  (param_1->info).q[3] = local_34;
+  dRfromQ((param_1->info).R,(param_1->info).q);
+  if (((((uint)(param_1->info).R[0] & 0x7f800000) == 0x7f800000) ||
+      (((uint)(param_1->info).R[1] & 0x7f800000) == 0x7f800000)) ||
+     (((uint)(param_1->info).R[2] & 0x7f800000) == 0x7f800000)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\ode.cpp",
                     0x18e,0,"%s");
   }
-  if ((((*(uint *)(iVar1 + 0x110) & 0x7f800000) == 0x7f800000) ||
-      ((*(uint *)(iVar1 + 0x114) & 0x7f800000) == 0x7f800000)) ||
-     ((*(uint *)(iVar1 + 0x118) & 0x7f800000) == 0x7f800000)) {
+  if (((((uint)(param_1->info).R[4] & 0x7f800000) == 0x7f800000) ||
+      (((uint)(param_1->info).R[5] & 0x7f800000) == 0x7f800000)) ||
+     (((uint)(param_1->info).R[6] & 0x7f800000) == 0x7f800000)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\ode.cpp",399
                     ,0,"%s");
   }
-  if ((((*(uint *)(iVar1 + 0x120) & 0x7f800000) == 0x7f800000) ||
-      ((*(uint *)(iVar1 + 0x124) & 0x7f800000) == 0x7f800000)) ||
-     ((*(uint *)(iVar1 + 0x128) & 0x7f800000) == 0x7f800000)) {
+  if (((((uint)(param_1->info).R[8] & 0x7f800000) == 0x7f800000) ||
+      (((uint)(param_1->info).R[9] & 0x7f800000) == 0x7f800000)) ||
+     (((uint)(param_1->info).R[10] & 0x7f800000) == 0x7f800000)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\ode.cpp",400
                     ,0,"%s");
   }
-  for (pdVar2 = *(dxGeom **)(iVar1 + 0x1c); pdVar2 != (dxGeom *)0x0;
-      pdVar2 = dGeomGetBodyNext(pdVar2)) {
-    dGeomMoved(pdVar2);
+  for (pdVar1 = param_1->geom; pdVar1 != (dxGeom *)0x0; pdVar1 = dGeomGetBodyNext(pdVar1)) {
+    dGeomMoved(pdVar1);
   }
-  __restgprlr_27();
   return;
 }
 
 
 // 82698168  dBodySetQuaternion  (physics/ode/src/ode.cpp:409)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 void dBodySetQuaternion(dxBody *param_1,float *param_2)
 
 {
-  int iVar1;
+  float *pfVar1;
   dxGeom *pdVar2;
-  ulonglong uVar3;
-  uint *puVar4;
   
-  uVar3 = (ulonglong)(int)param_2;
-  iVar1 = __savegprlr_26(param_1);
-  if (iVar1 == 0) {
+  if (param_1 == (dxBody *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\ode.cpp",
                     0x19a,0,"%s");
   }
-  if ((uVar3 & 0xffffffff) == 0) {
+  if (param_2 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\ode.cpp",
                     0x19b,0,"%s");
   }
-  puVar4 = (uint *)uVar3;
-  if (((((*puVar4 & 0x7f800000) == 0x7f800000) || ((puVar4[1] & 0x7f800000) == 0x7f800000)) ||
-      ((puVar4[2] & 0x7f800000) == 0x7f800000)) || ((puVar4[3] & 0x7f800000) == 0x7f800000)) {
+  if ((((((uint)*param_2 & 0x7f800000) == 0x7f800000) ||
+       (((uint)param_2[1] & 0x7f800000) == 0x7f800000)) ||
+      (((uint)param_2[2] & 0x7f800000) == 0x7f800000)) ||
+     (((uint)param_2[3] & 0x7f800000) == 0x7f800000)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\ode.cpp",
                     0x19c,0,"%s");
   }
-  *(uint *)(iVar1 + 0xf0) = *puVar4;
-  *(uint *)(iVar1 + 0xf4) = puVar4[1];
-  *(uint *)(iVar1 + 0xf8) = puVar4[2];
-  *(uint *)(iVar1 + 0xfc) = puVar4[3];
-  dNormalize4((float *)(iVar1 + 0xf0));
-  dRfromQ((float *)(iVar1 + 0x100),(float *)(iVar1 + 0xf0));
-  if ((((*(uint *)(iVar1 + 0x100) & 0x7f800000) == 0x7f800000) ||
-      ((*(uint *)(iVar1 + 0x104) & 0x7f800000) == 0x7f800000)) ||
-     ((*(uint *)(iVar1 + 0x108) & 0x7f800000) == 0x7f800000)) {
+  pfVar1 = (param_1->info).q;
+  (param_1->info).q[0] = *param_2;
+  (param_1->info).q[1] = param_2[1];
+  (param_1->info).q[2] = param_2[2];
+  (param_1->info).q[3] = param_2[3];
+  dNormalize4(pfVar1);
+  dRfromQ((param_1->info).R,pfVar1);
+  if (((((uint)(param_1->info).R[0] & 0x7f800000) == 0x7f800000) ||
+      (((uint)(param_1->info).R[1] & 0x7f800000) == 0x7f800000)) ||
+     (((uint)(param_1->info).R[2] & 0x7f800000) == 0x7f800000)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\ode.cpp",
                     0x1a1,0,"%s");
   }
-  if ((((*(uint *)(iVar1 + 0x110) & 0x7f800000) == 0x7f800000) ||
-      ((*(uint *)(iVar1 + 0x114) & 0x7f800000) == 0x7f800000)) ||
-     ((*(uint *)(iVar1 + 0x118) & 0x7f800000) == 0x7f800000)) {
+  if (((((uint)(param_1->info).R[4] & 0x7f800000) == 0x7f800000) ||
+      (((uint)(param_1->info).R[5] & 0x7f800000) == 0x7f800000)) ||
+     (((uint)(param_1->info).R[6] & 0x7f800000) == 0x7f800000)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\ode.cpp",
                     0x1a2,0,"%s");
   }
-  if ((((*(uint *)(iVar1 + 0x120) & 0x7f800000) == 0x7f800000) ||
-      ((*(uint *)(iVar1 + 0x124) & 0x7f800000) == 0x7f800000)) ||
-     ((*(uint *)(iVar1 + 0x128) & 0x7f800000) == 0x7f800000)) {
+  if (((((uint)(param_1->info).R[8] & 0x7f800000) == 0x7f800000) ||
+      (((uint)(param_1->info).R[9] & 0x7f800000) == 0x7f800000)) ||
+     (((uint)(param_1->info).R[10] & 0x7f800000) == 0x7f800000)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\ode.cpp",
                     0x1a3,0,"%s");
   }
-  for (pdVar2 = *(dxGeom **)(iVar1 + 0x1c); pdVar2 != (dxGeom *)0x0;
-      pdVar2 = dGeomGetBodyNext(pdVar2)) {
+  for (pdVar2 = param_1->geom; pdVar2 != (dxGeom *)0x0; pdVar2 = dGeomGetBodyNext(pdVar2)) {
     dGeomMoved(pdVar2);
   }
-  __restgprlr_26();
   return;
 }
 
 
 // 826983E8  dBodySetQuaternionExact  (physics/ode/src/ode.cpp:428)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void dBodySetQuaternionExact(dxBody *param_1,float *param_2)
 
 {
-  int iVar1;
-  dxGeom *pdVar2;
-  ulonglong uVar3;
-  float *pfVar4;
+  dxGeom *pdVar1;
   
-  uVar3 = (ulonglong)(int)param_2;
-  iVar1 = __savegprlr_27(param_1);
-  if (iVar1 == 0) {
+  if (param_1 == (dxBody *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\ode.cpp",
                     0x1ad,0,"%s");
   }
-  if ((uVar3 & 0xffffffff) == 0) {
+  if (param_2 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\ode.cpp",
                     0x1ae,0,"%s");
   }
-  pfVar4 = (float *)uVar3;
-  if ((((((uint)*pfVar4 & 0x7f800000) == 0x7f800000) ||
-       (((uint)pfVar4[1] & 0x7f800000) == 0x7f800000)) ||
-      (((uint)pfVar4[2] & 0x7f800000) == 0x7f800000)) ||
-     (((uint)pfVar4[3] & 0x7f800000) == 0x7f800000)) {
+  if ((((((uint)*param_2 & 0x7f800000) == 0x7f800000) ||
+       (((uint)param_2[1] & 0x7f800000) == 0x7f800000)) ||
+      (((uint)param_2[2] & 0x7f800000) == 0x7f800000)) ||
+     (((uint)param_2[3] & 0x7f800000) == 0x7f800000)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\ode.cpp",
                     0x1af,0,"%s");
   }
-  if (0.002 <= ABS((*pfVar4 * *pfVar4 +
-                   pfVar4[3] * pfVar4[3] + pfVar4[1] * pfVar4[1] + pfVar4[2] * pfVar4[2]) - 1.0)) {
+  if (0.002 <= ABS((*param_2 * *param_2 +
+                   param_2[3] * param_2[3] + param_2[1] * param_2[1] + param_2[2] * param_2[2]) -
+                   1.0)) {
     va("%g %g %g %g");
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\ode.cpp",
                     0x1b0,0,"%s\n\t%s");
   }
-  *(float *)(iVar1 + 0xf0) = *pfVar4;
-  *(float *)(iVar1 + 0xf4) = pfVar4[1];
-  *(float *)(iVar1 + 0xf8) = pfVar4[2];
-  *(float *)(iVar1 + 0xfc) = pfVar4[3];
-  dRfromQ((float *)(iVar1 + 0x100),(float *)(iVar1 + 0xf0));
-  if ((((*(uint *)(iVar1 + 0x100) & 0x7f800000) == 0x7f800000) ||
-      ((*(uint *)(iVar1 + 0x104) & 0x7f800000) == 0x7f800000)) ||
-     ((*(uint *)(iVar1 + 0x108) & 0x7f800000) == 0x7f800000)) {
+  (param_1->info).q[0] = *param_2;
+  (param_1->info).q[1] = param_2[1];
+  (param_1->info).q[2] = param_2[2];
+  (param_1->info).q[3] = param_2[3];
+  dRfromQ((param_1->info).R,(param_1->info).q);
+  if (((((uint)(param_1->info).R[0] & 0x7f800000) == 0x7f800000) ||
+      (((uint)(param_1->info).R[1] & 0x7f800000) == 0x7f800000)) ||
+     (((uint)(param_1->info).R[2] & 0x7f800000) == 0x7f800000)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\ode.cpp",
                     0x1b4,0,"%s");
   }
-  if ((((*(uint *)(iVar1 + 0x110) & 0x7f800000) == 0x7f800000) ||
-      ((*(uint *)(iVar1 + 0x114) & 0x7f800000) == 0x7f800000)) ||
-     ((*(uint *)(iVar1 + 0x118) & 0x7f800000) == 0x7f800000)) {
+  if (((((uint)(param_1->info).R[4] & 0x7f800000) == 0x7f800000) ||
+      (((uint)(param_1->info).R[5] & 0x7f800000) == 0x7f800000)) ||
+     (((uint)(param_1->info).R[6] & 0x7f800000) == 0x7f800000)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\ode.cpp",
                     0x1b5,0,"%s");
   }
-  if ((((*(uint *)(iVar1 + 0x120) & 0x7f800000) == 0x7f800000) ||
-      ((*(uint *)(iVar1 + 0x124) & 0x7f800000) == 0x7f800000)) ||
-     ((*(uint *)(iVar1 + 0x128) & 0x7f800000) == 0x7f800000)) {
+  if (((((uint)(param_1->info).R[8] & 0x7f800000) == 0x7f800000) ||
+      (((uint)(param_1->info).R[9] & 0x7f800000) == 0x7f800000)) ||
+     (((uint)(param_1->info).R[10] & 0x7f800000) == 0x7f800000)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\ode.cpp",
                     0x1b6,0,"%s");
   }
-  for (pdVar2 = *(dxGeom **)(iVar1 + 0x1c); pdVar2 != (dxGeom *)0x0;
-      pdVar2 = dGeomGetBodyNext(pdVar2)) {
-    dGeomMoved(pdVar2);
+  for (pdVar1 = param_1->geom; pdVar1 != (dxGeom *)0x0; pdVar1 = dGeomGetBodyNext(pdVar1)) {
+    dGeomMoved(pdVar1);
   }
-  __restgprlr_27();
   return;
 }
 
 
 // 826986F8  dBodySetLinearVel  (physics/ode/src/ode.cpp:447)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void dBodySetLinearVel(dxBody *param_1,float param_2,float param_3,float param_4)
 
 {
-  int iVar1;
-  double extraout_f1;
+  double dVar1;
   double dVar2;
   double dVar3;
-  double dVar4;
   
   dVar3 = (double)param_4;
   dVar2 = (double)param_3;
-  iVar1 = __savegprlr_28((double)param_2,param_1);
-  dVar4 = extraout_f1;
-  if (iVar1 == 0) {
+  dVar1 = (double)param_2;
+  if (param_1 == (dxBody *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\ode.cpp",
                     0x1c0,0,"%s");
   }
-  if (((uint)(float)dVar4 & 0x7f800000) == 0x7f800000) {
+  if (((uint)(float)dVar1 & 0x7f800000) == 0x7f800000) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\ode.cpp",
                     0x1c1,0,"%s");
   }
@@ -775,34 +756,33 @@ void dBodySetLinearVel(dxBody *param_1,float param_2,float param_3,float param_4
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\ode.cpp",
                     0x1c3,0,"%s");
   }
-  *(float *)(iVar1 + 0x130) = (float)dVar4;
-  *(float *)(iVar1 + 0x134) = (float)dVar2;
-  *(float *)(iVar1 + 0x138) = (float)dVar3;
-  __restgprlr_28();
+  (param_1->info).lvel[0] = (float)dVar1;
+  (param_1->info).lvel[1] = (float)dVar2;
+  (param_1->info).lvel[2] = (float)dVar3;
   return;
 }
 
 
 // 82698808  dBodySetAngularVel  (physics/ode/src/ode.cpp:460)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void dBodySetAngularVel(dxBody *param_1,float param_2,float param_3,float param_4)
 
 {
-  int iVar1;
-  double extraout_f1;
+  double dVar1;
   double dVar2;
   double dVar3;
-  double dVar4;
   
   dVar3 = (double)param_4;
+  dVar1 = (double)param_2;
   dVar2 = (double)param_3;
-  iVar1 = __savegprlr_28((double)param_2,param_1);
-  dVar4 = extraout_f1;
-  if (iVar1 == 0) {
+  if (param_1 == (dxBody *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\ode.cpp",
                     0x1cd,0,"%s");
   }
-  if (((uint)(float)dVar4 & 0x7f800000) == 0x7f800000) {
+  if (((uint)(float)dVar1 & 0x7f800000) == 0x7f800000) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\ode.cpp",
                     0x1ce,0,"%s");
   }
@@ -814,10 +794,9 @@ void dBodySetAngularVel(dxBody *param_1,float param_2,float param_3,float param_
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\ode.cpp",
                     0x1d0,0,"%s");
   }
-  *(float *)(iVar1 + 0x140) = (float)dVar4;
-  *(float *)(iVar1 + 0x144) = (float)dVar2;
-  *(float *)(iVar1 + 0x148) = (float)dVar3;
-  __restgprlr_28();
+  (param_1->info).avel[0] = (float)dVar1;
+  (param_1->info).avel[1] = (float)dVar2;
+  (param_1->info).avel[2] = (float)dVar3;
   return;
 }
 
@@ -889,55 +868,50 @@ float * dBodyGetAngularVel(dxBody *param_1)
 
 // 82698AD0  dBodySetMass  (physics/ode/src/ode.cpp:508)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void dBodySetMass(dxBody *param_1,dMass *param_2)
 
 {
   int iVar1;
-  int iVar2;
-  ulonglong uVar3;
   
-  uVar3 = (ulonglong)(int)param_2;
-  iVar1 = __savegprlr_28(param_1);
-  if (iVar1 == 0) {
+  if (param_1 == (dxBody *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\ode.cpp",
                     0x1fd,0,"%s");
   }
-  if ((uVar3 & 0xffffffff) == 0) {
+  if (param_2 == (dMass *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\ode.cpp",
                     0x1fe,0,"%s");
   }
   memcpy();
-  iVar2 = dInvertPDMatrix3((float *)(iVar1 + 0x34),(float *)(iVar1 + 100));
-  if (iVar2 == 0) {
+  iVar1 = dInvertPDMatrix3((param_1->mass).I,param_1->invI);
+  if (iVar1 == 0) {
     Com_PrintWarning(0x14,"inertia must be positive definite");
-    dRSetIdentity((float *)(iVar1 + 100));
+    dRSetIdentity(param_1->invI);
   }
-  *(float *)(iVar1 + 0x94) = 1.0 / *(float *)(iVar1 + 0x20);
-  __restgprlr_28();
+  param_1->invMass = 1.0 / (param_1->mass).mass;
   return;
 }
 
 
 // 82698BA0  dBodyGetMass  (physics/ode/src/ode.cpp:523)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void dBodyGetMass(dxBody *param_1,dMass *param_2)
 
 {
-  int iVar1;
-  ulonglong uVar2;
-  
-  uVar2 = (ulonglong)(int)param_2;
-  iVar1 = __savegprlr_28(param_1);
-  if (iVar1 == 0) {
+  if (param_1 == (dxBody *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\ode.cpp",
                     0x20c,0,"%s");
   }
-  if ((uVar2 & 0xffffffff) == 0) {
+  if (param_2 == (dMass *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\ode.cpp",
                     0x20d,0,"%s");
   }
   memcpy();
-  __restgprlr_28();
   return;
 }
 
@@ -993,23 +967,26 @@ void dBodyAddRelForce(dxBody *param_1,float param_2,float param_3,float param_4)
 
 // 8269BCB8  dBodyAddRelTorque  (physics/ode/src/ode.cpp:546)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void dBodyAddRelTorque(dxBody *param_1,float param_2,float param_3,float param_4)
 
 {
   float fVar1;
   float fVar2;
   float fVar3;
-  int iVar4;
-  double extraout_f1;
-  double dVar5;
-  double dVar6;
+  float fVar4;
+  float fVar5;
+  float fVar6;
   double dVar7;
+  double dVar8;
+  double dVar9;
   
-  dVar6 = (double)param_4;
-  dVar5 = (double)param_3;
-  iVar4 = __savegprlr_28((double)param_2,param_1);
-  dVar7 = extraout_f1;
-  if (iVar4 == 0) {
+  dVar9 = (double)param_4;
+  dVar8 = (double)param_3;
+  dVar7 = (double)param_2;
+  if (param_1 == (dxBody *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\ode.cpp",
                     0x225,0,"%s");
   }
@@ -1017,40 +994,47 @@ void dBodyAddRelTorque(dxBody *param_1,float param_2,float param_3,float param_4
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\ode.cpp",
                     0x226,0,"%s");
   }
-  if (((uint)(float)dVar5 & 0x7f800000) == 0x7f800000) {
+  if (((uint)(float)dVar8 & 0x7f800000) == 0x7f800000) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\ode.cpp",
                     0x227,0,"%s");
   }
-  if (((uint)(float)dVar6 & 0x7f800000) == 0x7f800000) {
+  if (((uint)(float)dVar9 & 0x7f800000) == 0x7f800000) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\ode.cpp",
                     0x228,0,"%s");
   }
-  fVar1 = (float)((double)*(float *)(iVar4 + 0x100) * dVar7 +
-                 (double)(float)((double)*(float *)(iVar4 + 0x104) * dVar5 +
-                                (double)(float)((double)*(float *)(iVar4 + 0x108) * dVar6))) +
-          *(float *)(iVar4 + 0xa8);
-  fVar2 = (float)(dVar7 * (double)*(float *)(iVar4 + 0x110) +
-                 (double)(float)((double)*(float *)(iVar4 + 0x114) * dVar5 +
-                                (double)(float)((double)*(float *)(iVar4 + 0x118) * dVar6))) +
-          *(float *)(iVar4 + 0xac);
-  *(float *)(iVar4 + 0xa8) = fVar1;
-  fVar3 = (float)((double)*(float *)(iVar4 + 0x120) * dVar7 +
-                 (double)(float)((double)*(float *)(iVar4 + 0x124) * dVar5 +
-                                (double)(float)((double)*(float *)(iVar4 + 0x128) * dVar6))) +
-          *(float *)(iVar4 + 0xb0);
-  *(float *)(iVar4 + 0xac) = fVar2;
-  *(float *)(iVar4 + 0xb0) = fVar3;
-  if (((((uint)fVar1 & 0x7f800000) == 0x7f800000) || (((uint)fVar2 & 0x7f800000) == 0x7f800000)) ||
-     (((uint)fVar3 & 0x7f800000) == 0x7f800000)) {
+  fVar1 = (param_1->info).R[10];
+  fVar2 = (param_1->info).R[9];
+  fVar3 = (param_1->info).R[8];
+  fVar4 = param_1->tacc[2];
+  fVar5 = (float)((double)(param_1->info).R[0] * dVar7 +
+                 (double)(float)((double)(param_1->info).R[1] * dVar8 +
+                                (double)(float)((double)(param_1->info).R[2] * dVar9))) +
+          param_1->tacc[0];
+  fVar6 = (float)(dVar7 * (double)(param_1->info).R[4] +
+                 (double)(float)((double)(param_1->info).R[5] * dVar8 +
+                                (double)(float)((double)(param_1->info).R[6] * dVar9))) +
+          param_1->tacc[1];
+  param_1->tacc[0] = fVar5;
+  fVar4 = (float)((double)fVar3 * dVar7 +
+                 (double)(float)((double)fVar2 * dVar8 + (double)(float)((double)fVar1 * dVar9))) +
+          fVar4;
+  param_1->tacc[1] = fVar6;
+  param_1->tacc[2] = fVar4;
+  if (((((uint)fVar5 & 0x7f800000) == 0x7f800000) || (((uint)fVar6 & 0x7f800000) == 0x7f800000)) ||
+     (((uint)fVar4 & 0x7f800000) == 0x7f800000)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\ode.cpp",
                     0x233,0,"%s");
   }
-  __restgprlr_28();
   return;
 }
 
 
 // 82698C28  dBodyAddForceAtPos  (physics/ode/src/ode.cpp:569)
+
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 
 void dBodyAddForceAtPos(dxBody *param_1,float param_2,float param_3,float param_4,float param_5,
                        float param_6,float param_7)
@@ -1059,28 +1043,24 @@ void dBodyAddForceAtPos(dxBody *param_1,float param_2,float param_3,float param_
   float fVar1;
   float fVar2;
   float fVar3;
-  int iVar4;
-  double extraout_f1;
+  double dVar4;
   double dVar5;
   double dVar6;
   double dVar7;
   double dVar8;
   double dVar9;
-  double dVar10;
   
   dVar7 = (double)param_5;
   dVar8 = (double)param_6;
   dVar9 = (double)param_7;
   dVar6 = (double)param_4;
+  dVar4 = (double)param_2;
   dVar5 = (double)param_3;
-  __savegprlr_28((double)param_2,param_1);
-  iVar4 = __savefpr_26();
-  dVar10 = extraout_f1;
-  if (iVar4 == 0) {
+  if (param_1 == (dxBody *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\ode.cpp",
                     0x23a,0,"%s");
   }
-  if (((uint)(float)dVar10 & 0x7f800000) == 0x7f800000) {
+  if (((uint)(float)dVar4 & 0x7f800000) == 0x7f800000) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\ode.cpp",
                     0x23b,0,"%s");
   }
@@ -1104,30 +1084,37 @@ void dBodyAddForceAtPos(dxBody *param_1,float param_2,float param_3,float param_
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\ode.cpp",
                     0x240,0,"%s");
   }
-  dVar9 = (double)(float)(dVar9 - (double)*(float *)(iVar4 + 0xe8));
-  dVar8 = (double)(float)(dVar8 - (double)*(float *)(iVar4 + 0xe4));
-  dVar7 = (double)(float)(dVar7 - (double)*(float *)(iVar4 + 0xe0));
-  *(float *)(iVar4 + 0x98) = (float)((double)*(float *)(iVar4 + 0x98) + dVar10);
-  *(float *)(iVar4 + 0x9c) = (float)((double)*(float *)(iVar4 + 0x9c) + dVar5);
-  *(float *)(iVar4 + 0xa0) = (float)((double)*(float *)(iVar4 + 0xa0) + dVar6);
-  fVar1 = (float)(dVar8 * dVar6 - (double)(float)(dVar9 * dVar5)) + *(float *)(iVar4 + 0xa8);
-  fVar2 = (float)(dVar7 * dVar5 - (double)(float)(dVar8 * dVar10)) + *(float *)(iVar4 + 0xb0);
-  *(float *)(iVar4 + 0xa8) = fVar1;
-  fVar3 = (float)(dVar9 * dVar10 - (double)(float)(dVar7 * dVar6)) + *(float *)(iVar4 + 0xac);
-  *(float *)(iVar4 + 0xb0) = fVar2;
-  *(float *)(iVar4 + 0xac) = fVar3;
-  if (((((uint)fVar1 & 0x7f800000) == 0x7f800000) || (((uint)fVar3 & 0x7f800000) == 0x7f800000)) ||
+  dVar9 = (double)(float)(dVar9 - (double)(param_1->info).pos[2]);
+  dVar8 = (double)(float)(dVar8 - (double)(param_1->info).pos[1]);
+  dVar7 = (double)(float)(dVar7 - (double)(param_1->info).pos[0]);
+  fVar1 = param_1->facc[1];
+  fVar2 = param_1->facc[2];
+  param_1->facc[0] = (float)((double)param_1->facc[0] + dVar4);
+  fVar3 = param_1->tacc[0];
+  param_1->facc[1] = (float)((double)fVar1 + dVar5);
+  fVar1 = param_1->tacc[1];
+  param_1->facc[2] = (float)((double)fVar2 + dVar6);
+  fVar3 = (float)(dVar8 * dVar6 - (double)(float)(dVar9 * dVar5)) + fVar3;
+  fVar2 = (float)(dVar7 * dVar5 - (double)(float)(dVar8 * dVar4)) + param_1->tacc[2];
+  param_1->tacc[0] = fVar3;
+  fVar1 = (float)(dVar9 * dVar4 - (double)(float)(dVar7 * dVar6)) + fVar1;
+  param_1->tacc[2] = fVar2;
+  param_1->tacc[1] = fVar1;
+  if (((((uint)fVar3 & 0x7f800000) == 0x7f800000) || (((uint)fVar1 & 0x7f800000) == 0x7f800000)) ||
      (((uint)fVar2 & 0x7f800000) == 0x7f800000)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\ode.cpp",
                     0x24e,0,"%s");
   }
-  __restfpr_26();
-  __restgprlr_28();
   return;
 }
 
 
 // 8269BE88  dBodyAddForceAtRelPos  (physics/ode/src/ode.cpp:596)
+
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 
 void dBodyAddForceAtRelPos
                (dxBody *param_1,float param_2,float param_3,float param_4,float param_5,
@@ -1137,86 +1124,105 @@ void dBodyAddForceAtRelPos
   float fVar1;
   float fVar2;
   float fVar3;
-  int iVar4;
-  double dVar5;
-  double extraout_f1;
-  double dVar6;
-  double dVar7;
-  double dVar8;
-  double dVar9;
-  double dVar10;
-  double dVar11;
-  double dVar12;
+  float fVar4;
+  float fVar5;
+  float fVar6;
+  float fVar7;
+  float fVar8;
+  float fVar9;
+  float fVar10;
+  float fVar11;
+  float fVar12;
+  float fVar13;
+  double dVar14;
+  double dVar15;
+  double dVar16;
+  double dVar17;
+  double dVar18;
+  double dVar19;
+  double dVar20;
+  double dVar21;
   
-  dVar8 = (double)param_6;
-  dVar9 = (double)param_7;
-  dVar10 = (double)param_5;
-  dVar6 = (double)param_3;
-  dVar7 = (double)param_4;
-  __savegprlr_28((double)param_2,param_1);
-  iVar4 = __savefpr_26();
-  dVar12 = extraout_f1;
-  if (iVar4 == 0) {
+  dVar18 = (double)param_6;
+  dVar19 = (double)param_7;
+  dVar20 = (double)param_5;
+  dVar15 = (double)param_2;
+  dVar16 = (double)param_3;
+  dVar17 = (double)param_4;
+  if (param_1 == (dxBody *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\ode.cpp",599
                     ,0,"%s");
   }
-  if (((uint)(float)dVar12 & 0x7f800000) == 0x7f800000) {
+  if (((uint)(float)dVar15 & 0x7f800000) == 0x7f800000) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\ode.cpp",600
                     ,0,"%s");
   }
-  if (((uint)(float)dVar6 & 0x7f800000) == 0x7f800000) {
+  if (((uint)(float)dVar16 & 0x7f800000) == 0x7f800000) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\ode.cpp",
                     0x259,0,"%s");
   }
-  if (((uint)(float)dVar7 & 0x7f800000) == 0x7f800000) {
+  if (((uint)(float)dVar17 & 0x7f800000) == 0x7f800000) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\ode.cpp",
                     0x25a,0,"%s");
   }
-  if (((uint)(float)dVar10 & 0x7f800000) == 0x7f800000) {
+  if (((uint)(float)dVar20 & 0x7f800000) == 0x7f800000) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\ode.cpp",
                     0x25b,0,"%s");
   }
-  if (((uint)(float)dVar8 & 0x7f800000) == 0x7f800000) {
+  if (((uint)(float)dVar18 & 0x7f800000) == 0x7f800000) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\ode.cpp",
                     0x25c,0,"%s");
   }
-  if (((uint)(float)dVar9 & 0x7f800000) == 0x7f800000) {
+  if (((uint)(float)dVar19 & 0x7f800000) == 0x7f800000) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\ode.cpp",
                     0x25d,0,"%s");
   }
-  *(float *)(iVar4 + 0x9c) = (float)((double)*(float *)(iVar4 + 0x9c) + dVar6);
-  *(float *)(iVar4 + 0x98) = (float)((double)*(float *)(iVar4 + 0x98) + dVar12);
-  *(float *)(iVar4 + 0xa0) = (float)((double)*(float *)(iVar4 + 0xa0) + dVar7);
-  dVar5 = (double)(float)((double)*(float *)(iVar4 + 0x120) * dVar10 +
-                         (double)(float)((double)*(float *)(iVar4 + 0x124) * dVar8 +
-                                        (double)(float)((double)*(float *)(iVar4 + 0x128) * dVar9)))
-  ;
-  dVar11 = (double)(float)((double)*(float *)(iVar4 + 0x110) * dVar10 +
-                          (double)(float)((double)*(float *)(iVar4 + 0x114) * dVar8 +
-                                         (double)(float)((double)*(float *)(iVar4 + 0x118) * dVar9))
-                          );
-  dVar10 = (double)(float)((double)*(float *)(iVar4 + 0x100) * dVar10 +
-                          (double)(float)((double)*(float *)(iVar4 + 0x104) * dVar8 +
-                                         (double)(float)((double)*(float *)(iVar4 + 0x108) * dVar9))
-                          );
-  fVar1 = (float)(dVar11 * dVar7 - (double)(float)(dVar5 * dVar6)) + *(float *)(iVar4 + 0xa8);
-  fVar3 = (float)(dVar10 * dVar6 - (double)(float)(dVar11 * dVar12)) + *(float *)(iVar4 + 0xb0);
-  *(float *)(iVar4 + 0xa8) = fVar1;
-  fVar2 = (float)(dVar5 * dVar12 - (double)(float)(dVar10 * dVar7)) + *(float *)(iVar4 + 0xac);
-  *(float *)(iVar4 + 0xb0) = fVar3;
-  *(float *)(iVar4 + 0xac) = fVar2;
-  if (((((uint)fVar1 & 0x7f800000) == 0x7f800000) || (((uint)fVar2 & 0x7f800000) == 0x7f800000)) ||
-     (((uint)fVar3 & 0x7f800000) == 0x7f800000)) {
+  fVar1 = (param_1->info).R[10];
+  fVar2 = (param_1->info).R[6];
+  fVar3 = (param_1->info).R[2];
+  fVar4 = (param_1->info).R[9];
+  fVar5 = (param_1->info).R[5];
+  fVar6 = (param_1->info).R[1];
+  fVar7 = (param_1->info).R[8];
+  fVar8 = (param_1->info).R[4];
+  fVar9 = (param_1->info).R[0];
+  fVar10 = param_1->facc[0];
+  fVar11 = param_1->facc[2];
+  fVar12 = param_1->tacc[0];
+  fVar13 = param_1->tacc[1];
+  param_1->facc[1] = (float)((double)param_1->facc[1] + dVar16);
+  param_1->facc[0] = (float)((double)fVar10 + dVar15);
+  param_1->facc[2] = (float)((double)fVar11 + dVar17);
+  dVar14 = (double)(float)((double)fVar7 * dVar20 +
+                          (double)(float)((double)fVar4 * dVar18 +
+                                         (double)(float)((double)fVar1 * dVar19)));
+  dVar21 = (double)(float)((double)fVar8 * dVar20 +
+                          (double)(float)((double)fVar5 * dVar18 +
+                                         (double)(float)((double)fVar2 * dVar19)));
+  dVar20 = (double)(float)((double)fVar9 * dVar20 +
+                          (double)(float)((double)fVar6 * dVar18 +
+                                         (double)(float)((double)fVar3 * dVar19)));
+  fVar12 = (float)(dVar21 * dVar17 - (double)(float)(dVar14 * dVar16)) + fVar12;
+  fVar1 = (float)(dVar20 * dVar16 - (double)(float)(dVar21 * dVar15)) + param_1->tacc[2];
+  param_1->tacc[0] = fVar12;
+  fVar13 = (float)(dVar14 * dVar15 - (double)(float)(dVar20 * dVar17)) + fVar13;
+  param_1->tacc[2] = fVar1;
+  param_1->tacc[1] = fVar13;
+  if (((((uint)fVar12 & 0x7f800000) == 0x7f800000) || (((uint)fVar13 & 0x7f800000) == 0x7f800000))
+     || (((uint)fVar1 & 0x7f800000) == 0x7f800000)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\ode.cpp",
                     0x26d,0,"%s");
   }
-  __restfpr_26();
-  __restgprlr_28();
   return;
 }
 
 
 // 8269C128  dBodyAddRelForceAtPos  (physics/ode/src/ode.cpp:627)
+
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 
 void dBodyAddRelForceAtPos
                (dxBody *param_1,float param_2,float param_3,float param_4,float param_5,
@@ -1230,84 +1236,90 @@ void dBodyAddRelForceAtPos
   float fVar5;
   float fVar6;
   float fVar7;
-  int iVar8;
-  double extraout_f1;
-  double dVar9;
-  double dVar10;
+  float fVar8;
+  float fVar9;
+  float fVar10;
   double dVar11;
   double dVar12;
   double dVar13;
   double dVar14;
+  double dVar15;
+  double dVar16;
   
-  dVar12 = (double)param_6;
-  dVar13 = (double)param_7;
-  dVar11 = (double)param_5;
-  dVar10 = (double)param_4;
-  dVar9 = (double)param_3;
-  __savegprlr_28((double)param_2,param_1);
-  iVar8 = __savefpr_26();
-  dVar14 = extraout_f1;
-  if (iVar8 == 0) {
+  dVar15 = (double)param_6;
+  dVar16 = (double)param_7;
+  dVar14 = (double)param_5;
+  dVar13 = (double)param_4;
+  dVar12 = (double)param_3;
+  dVar11 = (double)param_2;
+  if (param_1 == (dxBody *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\ode.cpp",
                     0x277,0,"%s");
   }
-  if (((uint)(float)dVar14 & 0x7f800000) == 0x7f800000) {
+  if (((uint)(float)dVar11 & 0x7f800000) == 0x7f800000) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\ode.cpp",
                     0x278,0,"%s");
   }
-  if (((uint)(float)dVar9 & 0x7f800000) == 0x7f800000) {
+  if (((uint)(float)dVar12 & 0x7f800000) == 0x7f800000) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\ode.cpp",
                     0x279,0,"%s");
   }
-  if (((uint)(float)dVar10 & 0x7f800000) == 0x7f800000) {
+  if (((uint)(float)dVar13 & 0x7f800000) == 0x7f800000) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\ode.cpp",
                     0x27a,0,"%s");
   }
-  if (((uint)(float)dVar11 & 0x7f800000) == 0x7f800000) {
+  if (((uint)(float)dVar14 & 0x7f800000) == 0x7f800000) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\ode.cpp",
                     0x27b,0,"%s");
   }
-  if (((uint)(float)dVar12 & 0x7f800000) == 0x7f800000) {
+  if (((uint)(float)dVar15 & 0x7f800000) == 0x7f800000) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\ode.cpp",
                     0x27c,0,"%s");
   }
-  if (((uint)(float)dVar13 & 0x7f800000) == 0x7f800000) {
+  if (((uint)(float)dVar16 & 0x7f800000) == 0x7f800000) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\ode.cpp",
                     0x27d,0,"%s");
   }
-  fVar4 = (float)(dVar13 - (double)*(float *)(iVar8 + 0xe8));
-  fVar5 = (float)(dVar12 - (double)*(float *)(iVar8 + 0xe4));
-  fVar6 = (float)(dVar11 - (double)*(float *)(iVar8 + 0xe0));
-  fVar1 = (float)((double)*(float *)(iVar8 + 0x110) * dVar14 +
-                 (double)(float)((double)*(float *)(iVar8 + 0x114) * dVar9 +
-                                (double)(float)((double)*(float *)(iVar8 + 0x118) * dVar10)));
-  fVar2 = (float)((double)*(float *)(iVar8 + 0x120) * dVar14 +
-                 (double)(float)((double)*(float *)(iVar8 + 0x124) * dVar9 +
-                                (double)(float)((double)*(float *)(iVar8 + 0x128) * dVar10)));
-  fVar3 = (float)((double)*(float *)(iVar8 + 0x100) * dVar14 +
-                 (double)(float)((double)*(float *)(iVar8 + 0x104) * dVar9 +
-                                (double)(float)((double)*(float *)(iVar8 + 0x108) * dVar10)));
-  *(float *)(iVar8 + 0x9c) = *(float *)(iVar8 + 0x9c) + fVar1;
-  *(float *)(iVar8 + 0xa0) = *(float *)(iVar8 + 0xa0) + fVar2;
-  *(float *)(iVar8 + 0x98) = *(float *)(iVar8 + 0x98) + fVar3;
-  fVar7 = (fVar5 * fVar2 - fVar4 * fVar1) + *(float *)(iVar8 + 0xa8);
-  fVar2 = (fVar4 * fVar3 - fVar6 * fVar2) + *(float *)(iVar8 + 0xac);
-  *(float *)(iVar8 + 0xa8) = fVar7;
-  fVar1 = (fVar6 * fVar1 - fVar5 * fVar3) + *(float *)(iVar8 + 0xb0);
-  *(float *)(iVar8 + 0xac) = fVar2;
-  *(float *)(iVar8 + 0xb0) = fVar1;
-  if (((((uint)fVar7 & 0x7f800000) == 0x7f800000) || (((uint)fVar2 & 0x7f800000) == 0x7f800000)) ||
-     (((uint)fVar1 & 0x7f800000) == 0x7f800000)) {
+  fVar4 = (float)(dVar16 - (double)(param_1->info).pos[2]);
+  fVar7 = param_1->tacc[0];
+  fVar5 = (float)(dVar15 - (double)(param_1->info).pos[1]);
+  fVar6 = (float)(dVar14 - (double)(param_1->info).pos[0]);
+  fVar8 = param_1->facc[0];
+  fVar9 = param_1->tacc[1];
+  fVar10 = param_1->tacc[2];
+  fVar1 = (float)((double)(param_1->info).R[4] * dVar11 +
+                 (double)(float)((double)(param_1->info).R[5] * dVar12 +
+                                (double)(float)((double)(param_1->info).R[6] * dVar13)));
+  fVar2 = (float)((double)(param_1->info).R[8] * dVar11 +
+                 (double)(float)((double)(param_1->info).R[9] * dVar12 +
+                                (double)(float)((double)(param_1->info).R[10] * dVar13)));
+  fVar3 = (float)((double)(param_1->info).R[0] * dVar11 +
+                 (double)(float)((double)(param_1->info).R[1] * dVar12 +
+                                (double)(float)((double)(param_1->info).R[2] * dVar13)));
+  param_1->facc[1] = param_1->facc[1] + fVar1;
+  param_1->facc[2] = param_1->facc[2] + fVar2;
+  param_1->facc[0] = fVar8 + fVar3;
+  fVar7 = (fVar5 * fVar2 - fVar4 * fVar1) + fVar7;
+  fVar9 = (fVar4 * fVar3 - fVar6 * fVar2) + fVar9;
+  param_1->tacc[0] = fVar7;
+  fVar10 = (fVar6 * fVar1 - fVar5 * fVar3) + fVar10;
+  param_1->tacc[1] = fVar9;
+  param_1->tacc[2] = fVar10;
+  if (((((uint)fVar7 & 0x7f800000) == 0x7f800000) || (((uint)fVar9 & 0x7f800000) == 0x7f800000)) ||
+     (((uint)fVar10 & 0x7f800000) == 0x7f800000)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\ode.cpp",
                     0x28c,0,"%s");
   }
-  __restfpr_26();
-  __restgprlr_28();
   return;
 }
 
 
 // 8269C3E0  dBodyAddRelForceAtRelPos  (physics/ode/src/ode.cpp:658)
+
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 
 void dBodyAddRelForceAtRelPos
                (dxBody *param_1,float param_2,float param_3,float param_4,float param_5,
@@ -1321,85 +1333,100 @@ void dBodyAddRelForceAtRelPos
   float fVar5;
   float fVar6;
   float fVar7;
-  int iVar8;
-  double extraout_f1;
-  double dVar9;
-  double dVar10;
-  double dVar11;
+  float fVar8;
+  float fVar9;
+  float fVar10;
+  float fVar11;
   double dVar12;
   double dVar13;
   double dVar14;
+  double dVar15;
+  double dVar16;
+  double dVar17;
+  double dVar18;
+  double dVar19;
+  double dVar20;
+  double dVar21;
+  double dVar22;
+  double dVar23;
+  double dVar24;
+  double dVar25;
+  double dVar26;
   
-  dVar12 = (double)param_6;
-  dVar13 = (double)param_7;
-  dVar11 = (double)param_5;
-  dVar10 = (double)param_4;
-  dVar9 = (double)param_3;
-  __savegprlr_28((double)param_2,param_1);
-  iVar8 = __savefpr_25();
-  dVar14 = extraout_f1;
-  if (iVar8 == 0) {
+  dVar21 = (double)param_6;
+  dVar22 = (double)param_7;
+  dVar19 = (double)param_5;
+  dVar18 = (double)param_4;
+  dVar13 = (double)param_2;
+  dVar15 = (double)param_3;
+  if (param_1 == (dxBody *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\ode.cpp",
                     0x295,0,"%s");
   }
-  if (((uint)(float)dVar14 & 0x7f800000) == 0x7f800000) {
+  if (((uint)(float)dVar13 & 0x7f800000) == 0x7f800000) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\ode.cpp",
                     0x296,0,"%s");
   }
-  if (((uint)(float)dVar9 & 0x7f800000) == 0x7f800000) {
+  if (((uint)(float)dVar15 & 0x7f800000) == 0x7f800000) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\ode.cpp",
                     0x297,0,"%s");
   }
-  if (((uint)(float)dVar10 & 0x7f800000) == 0x7f800000) {
+  if (((uint)(float)dVar18 & 0x7f800000) == 0x7f800000) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\ode.cpp",
                     0x298,0,"%s");
   }
-  if (((uint)(float)dVar11 & 0x7f800000) == 0x7f800000) {
+  if (((uint)(float)dVar19 & 0x7f800000) == 0x7f800000) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\ode.cpp",
                     0x299,0,"%s");
   }
-  if (((uint)(float)dVar12 & 0x7f800000) == 0x7f800000) {
+  if (((uint)(float)dVar21 & 0x7f800000) == 0x7f800000) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\ode.cpp",
                     0x29a,0,"%s");
   }
-  if (((uint)(float)dVar13 & 0x7f800000) == 0x7f800000) {
+  if (((uint)(float)dVar22 & 0x7f800000) == 0x7f800000) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\ode.cpp",
                     0x29b,0,"%s");
   }
-  fVar1 = (float)((double)*(float *)(iVar8 + 0x110) * dVar14 +
-                 (double)(float)((double)*(float *)(iVar8 + 0x114) * dVar9 +
-                                (double)(float)((double)*(float *)(iVar8 + 0x118) * dVar10)));
-  fVar2 = (float)((double)*(float *)(iVar8 + 0x120) * dVar11 +
-                 (double)(float)((double)*(float *)(iVar8 + 0x124) * dVar12 +
-                                (double)(float)((double)*(float *)(iVar8 + 0x128) * dVar13)));
-  fVar3 = (float)((double)*(float *)(iVar8 + 0x108) * dVar10 +
-                 (double)(float)((double)*(float *)(iVar8 + 0x100) * dVar14 +
-                                (double)(float)((double)*(float *)(iVar8 + 0x104) * dVar9)));
-  fVar4 = (float)((double)*(float *)(iVar8 + 0x120) * dVar14 +
-                 (double)(float)((double)*(float *)(iVar8 + 0x124) * dVar9 +
-                                (double)(float)((double)*(float *)(iVar8 + 0x128) * dVar10)));
-  fVar5 = (float)((double)*(float *)(iVar8 + 0x110) * dVar11 +
-                 (double)(float)((double)*(float *)(iVar8 + 0x114) * dVar12 +
-                                (double)(float)((double)*(float *)(iVar8 + 0x118) * dVar13)));
-  fVar6 = (float)((double)*(float *)(iVar8 + 0x108) * dVar13 +
-                 (double)(float)((double)*(float *)(iVar8 + 0x100) * dVar11 +
-                                (double)(float)((double)*(float *)(iVar8 + 0x104) * dVar12)));
-  *(float *)(iVar8 + 0x9c) = *(float *)(iVar8 + 0x9c) + fVar1;
-  *(float *)(iVar8 + 0x98) = *(float *)(iVar8 + 0x98) + fVar3;
-  *(float *)(iVar8 + 0xa0) = *(float *)(iVar8 + 0xa0) + fVar4;
-  fVar7 = (fVar5 * fVar4 - fVar2 * fVar1) + *(float *)(iVar8 + 0xa8);
-  fVar1 = (fVar6 * fVar1 - fVar5 * fVar3) + *(float *)(iVar8 + 0xb0);
-  *(float *)(iVar8 + 0xa8) = fVar7;
-  fVar2 = (fVar2 * fVar3 - fVar6 * fVar4) + *(float *)(iVar8 + 0xac);
-  *(float *)(iVar8 + 0xb0) = fVar1;
-  *(float *)(iVar8 + 0xac) = fVar2;
-  if (((((uint)fVar7 & 0x7f800000) == 0x7f800000) || (((uint)fVar2 & 0x7f800000) == 0x7f800000)) ||
-     (((uint)fVar1 & 0x7f800000) == 0x7f800000)) {
+  dVar12 = (double)(param_1->info).R[6];
+  dVar26 = (double)(param_1->info).R[10];
+  dVar24 = (double)(param_1->info).R[1];
+  dVar16 = (double)(param_1->info).R[9];
+  dVar20 = (double)(param_1->info).R[5];
+  dVar14 = (double)(param_1->info).R[0];
+  dVar23 = (double)(param_1->info).R[8];
+  fVar7 = param_1->tacc[2];
+  dVar25 = (double)(param_1->info).R[4];
+  dVar17 = (double)(param_1->info).R[2];
+  fVar8 = param_1->tacc[0];
+  fVar9 = param_1->facc[2];
+  fVar10 = param_1->tacc[1];
+  fVar1 = (float)(dVar25 * dVar13 +
+                 (double)(float)(dVar20 * dVar15 + (double)(float)(dVar12 * dVar18)));
+  fVar11 = param_1->facc[0];
+  fVar2 = (float)(dVar23 * dVar19 +
+                 (double)(float)(dVar16 * dVar21 + (double)(float)(dVar26 * dVar22)));
+  fVar3 = (float)(dVar17 * dVar18 +
+                 (double)(float)(dVar14 * dVar13 + (double)(float)(dVar24 * dVar15)));
+  fVar4 = (float)(dVar23 * dVar13 +
+                 (double)(float)(dVar16 * dVar15 + (double)(float)(dVar26 * dVar18)));
+  fVar5 = (float)(dVar25 * dVar19 +
+                 (double)(float)(dVar20 * dVar21 + (double)(float)(dVar12 * dVar22)));
+  fVar6 = (float)(dVar17 * dVar22 +
+                 (double)(float)(dVar14 * dVar19 + (double)(float)(dVar24 * dVar21)));
+  param_1->facc[1] = param_1->facc[1] + fVar1;
+  param_1->facc[0] = fVar11 + fVar3;
+  param_1->facc[2] = fVar9 + fVar4;
+  fVar8 = (fVar5 * fVar4 - fVar2 * fVar1) + fVar8;
+  fVar7 = (fVar6 * fVar1 - fVar5 * fVar3) + fVar7;
+  param_1->tacc[0] = fVar8;
+  fVar10 = (fVar2 * fVar3 - fVar6 * fVar4) + fVar10;
+  param_1->tacc[2] = fVar7;
+  param_1->tacc[1] = fVar10;
+  if (((((uint)fVar8 & 0x7f800000) == 0x7f800000) || (((uint)fVar10 & 0x7f800000) == 0x7f800000)) ||
+     (((uint)fVar7 & 0x7f800000) == 0x7f800000)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\ode.cpp",
                     0x2ac,0,"%s");
   }
-  __restfpr_25();
-  __restgprlr_28();
   return;
 }
 
@@ -1432,24 +1459,24 @@ float * dBodyGetTorque(dxBody *param_1)
 
 // 82698F40  dBodySetForce  (physics/ode/src/ode.cpp:703)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void dBodySetForce(dxBody *param_1,float param_2,float param_3,float param_4)
 
 {
-  int iVar1;
-  double extraout_f1;
+  double dVar1;
   double dVar2;
   double dVar3;
-  double dVar4;
   
   dVar3 = (double)param_4;
   dVar2 = (double)param_3;
-  iVar1 = __savegprlr_28((double)param_2,param_1);
-  dVar4 = extraout_f1;
-  if (iVar1 == 0) {
+  dVar1 = (double)param_2;
+  if (param_1 == (dxBody *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\ode.cpp",
                     0x2c0,0,"%s");
   }
-  if (((uint)(float)dVar4 & 0x7f800000) == 0x7f800000) {
+  if (((uint)(float)dVar1 & 0x7f800000) == 0x7f800000) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\ode.cpp",
                     0x2c1,0,"%s");
   }
@@ -1461,34 +1488,33 @@ void dBodySetForce(dxBody *param_1,float param_2,float param_3,float param_4)
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\ode.cpp",
                     0x2c3,0,"%s");
   }
-  *(float *)(iVar1 + 0x98) = (float)dVar4;
-  *(float *)(iVar1 + 0x9c) = (float)dVar2;
-  *(float *)(iVar1 + 0xa0) = (float)dVar3;
-  __restgprlr_28();
+  param_1->facc[0] = (float)dVar1;
+  param_1->facc[1] = (float)dVar2;
+  param_1->facc[2] = (float)dVar3;
   return;
 }
 
 
 // 82699050  dBodySetTorque  (physics/ode/src/ode.cpp:716)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void dBodySetTorque(dxBody *param_1,float param_2,float param_3,float param_4)
 
 {
-  int iVar1;
-  double extraout_f1;
+  double dVar1;
   double dVar2;
   double dVar3;
-  double dVar4;
   
   dVar3 = (double)param_4;
+  dVar1 = (double)param_2;
   dVar2 = (double)param_3;
-  iVar1 = __savegprlr_28((double)param_2,param_1);
-  dVar4 = extraout_f1;
-  if (iVar1 == 0) {
+  if (param_1 == (dxBody *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\ode.cpp",
                     0x2cd,0,"%s");
   }
-  if (((uint)(float)dVar4 & 0x7f800000) == 0x7f800000) {
+  if (((uint)(float)dVar1 & 0x7f800000) == 0x7f800000) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\ode.cpp",
                     0x2ce,0,"%s");
   }
@@ -1500,10 +1526,9 @@ void dBodySetTorque(dxBody *param_1,float param_2,float param_3,float param_4)
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\ode.cpp",
                     0x2d0,0,"%s");
   }
-  *(float *)(iVar1 + 0xa8) = (float)dVar4;
-  *(float *)(iVar1 + 0xac) = (float)dVar2;
-  *(float *)(iVar1 + 0xb0) = (float)dVar3;
-  __restgprlr_28();
+  param_1->tacc[0] = (float)dVar1;
+  param_1->tacc[1] = (float)dVar2;
+  param_1->tacc[2] = (float)dVar3;
   return;
 }
 
@@ -2252,104 +2277,92 @@ void ODE_BodySetBreaksGlass(dxBody *param_1,bool param_2)
 
 // 82699F58  dBodySetAutoDisableDefaults  (physics/ode/src/ode.cpp:1078)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void dBodySetAutoDisableDefaults(dxBody *param_1)
 
 {
   int iVar1;
-  dxBody *pdVar2;
   
-  pdVar2 = (dxBody *)__savegprlr_28(param_1);
-  if (pdVar2 == (dxBody *)0x0) {
+  if (param_1 == (dxBody *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\ode.cpp",
                     0x437,0,"%s");
   }
-  iVar1 = pdVar2->_padding_;
+  iVar1 = param_1->_padding_;
   if (iVar1 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\ode.cpp",
                     0x439,0,"%s");
   }
-  (pdVar2->adis).linearThresholdSqrd = *(float *)(iVar1 + 0x38);
-  (pdVar2->adis).angularThresholdSqrd = *(float *)(iVar1 + 0x3c);
-  (pdVar2->adis).idle_time = *(float *)(iVar1 + 0x40);
-  (pdVar2->adis).idle_steps = *(int *)(iVar1 + 0x44);
-  dBodySetAutoDisableFlag(pdVar2,*(int *)(iVar1 + 0x48));
-  __restgprlr_28();
+  (param_1->adis).linearThresholdSqrd = *(float *)(iVar1 + 0x38);
+  (param_1->adis).angularThresholdSqrd = *(float *)(iVar1 + 0x3c);
+  (param_1->adis).idle_time = *(float *)(iVar1 + 0x40);
+  (param_1->adis).idle_steps = *(int *)(iVar1 + 0x44);
+  dBodySetAutoDisableFlag(param_1,*(int *)(iVar1 + 0x48));
   return;
 }
 
 
 // 8269A000  ODE_InitJoint  (physics/ode/src/ode.cpp:1090)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PhysWorld": Some values do not have unique names */
 
 void ODE_InitJoint(dxWorld *param_1,dxJoint *param_2,JointType param_3)
 
 {
-  dxJoint *pdVar1;
-  int iVar2;
-  ulonglong uVar3;
-  
-  uVar3 = (ulonglong)(int)param_2;
-  iVar2 = __savegprlr_27(param_1);
-  if (iVar2 == 0) {
+  if (param_1 == (dxWorld *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\ode.cpp",
                     0x443,0,"%s");
   }
-  if ((uVar3 & 0xffffffff) == 0) {
+  if (param_2 == (dxJoint *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\ode.cpp",
                     0x444,0,"%s");
   }
-  pdVar1 = (dxJoint *)uVar3;
-  pdVar1->_padding_ = iVar2;
-  pdVar1->node[0].joint = pdVar1;
-  pdVar1->_padding_ = 0;
-  pdVar1->_padding_ = 0;
-  pdVar1->_padding_ = 0;
-  pdVar1->_padding_ = 0;
-  pdVar1->type = ODE_JOINT_TYPE_NONE;
-  pdVar1->flags = 0;
-  pdVar1->node[0].body = (dxBody *)0x0;
-  pdVar1->node[0].next = (dxJointNode *)0x0;
-  pdVar1->node[1].joint = pdVar1;
-  pdVar1->node[1].body = (dxBody *)0x0;
-  pdVar1->node[1].next = (dxJointNode *)0x0;
-  addObjectToList((dObject *)pdVar1,(dObject **)(iVar2 + 4));
-  *(int *)(iVar2 + 0xc) = *(int *)(iVar2 + 0xc) + 1;
-  pdVar1->type = param_3;
-  jointInit(pdVar1);
-  __restgprlr_27();
+  param_2->_padding_ = (int)param_1;
+  param_2->node[0].joint = param_2;
+  param_2->_padding_ = 0;
+  param_2->_padding_ = 0;
+  param_2->_padding_ = 0;
+  param_2->_padding_ = 0;
+  param_2->type = ODE_JOINT_TYPE_NONE;
+  param_2->flags = 0;
+  param_2->node[0].body = (dxBody *)0x0;
+  param_2->node[0].next = (dxJointNode *)0x0;
+  param_2->node[1].joint = param_2;
+  param_2->node[1].body = (dxBody *)0x0;
+  param_2->node[1].next = (dxJointNode *)0x0;
+  addObjectToList((dObject *)param_2,(dObject **)&param_1->firstjoint);
+  param_1->jointCount = param_1->jointCount + 1;
+  param_2->type = param_3;
+  jointInit(param_2);
   return;
 }
 
 
 // 8269A0D8  createJointInPlace  (physics/ode/src/ode.cpp:1114)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PhysWorld": Some values do not have unique names */
 
 dxJoint * createJointInPlace(dxWorld *param_1,dxJoint *param_2,JointType param_3)
 
 {
-  dxWorld *pdVar1;
-  dxJoint *pdVar2;
-  ulonglong uVar3;
-  
-  uVar3 = (ulonglong)(int)param_2;
-  pdVar1 = (dxWorld *)__savegprlr_27(param_1);
-  if (pdVar1 == (dxWorld *)0x0) {
+  if (param_1 == (dxWorld *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\ode.cpp",
                     0x45b,0,"%s");
   }
-  if ((uVar3 & 0xffffffff) == 0) {
+  if (param_2 == (dxJoint *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\ode.cpp",
                     0x45c,0,"%s");
   }
-  if (0x3ff < pdVar1->jointCount) {
-    pdVar2 = (dxJoint *)__restgprlr_27(0);
-    return pdVar2;
+  if (0x3ff < param_1->jointCount) {
+    return (dxJoint *)0x0;
   }
-  ODE_InitJoint(pdVar1,(dxJoint *)uVar3,param_3);
-  pdVar2 = (dxJoint *)__restgprlr_27(uVar3);
-  return pdVar2;
+  ODE_InitJoint(param_1,param_2,param_3);
+  return param_2;
 }
 
 
@@ -2445,6 +2458,8 @@ dxJoint * dJointCreateSlider(dxWorld *param_1,dxJoint *param_2)
 
 // 8269A3B0  dJointCreateContact  (physics/ode/src/ode.cpp:1162)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PhysWorld": Some values do not have unique names */
 
 dxJoint * dJointCreateContact(dxWorld *param_1,dxJointGroup *param_2,dSurfaceParameters *param_3,
@@ -2452,69 +2467,57 @@ dxJoint * dJointCreateContact(dxWorld *param_1,dxJointGroup *param_2,dSurfacePar
 
 {
   uint uVar1;
-  dxWorld *pdVar2;
-  dxJoint *pdVar3;
-  ulonglong uVar4;
-  uint *puVar5;
-  ulonglong uVar6;
-  ulonglong uVar7;
-  dxJointNode *pdVar8;
-  longlong lVar9;
-  longlong lVar10;
+  float *pfVar2;
+  int *piVar3;
+  dxJointContact *pdVar4;
+  longlong lVar5;
   
-  uVar7 = (ulonglong)(int)param_4;
-  uVar6 = (ulonglong)(int)param_3;
-  uVar4 = (ulonglong)(int)param_2;
-  pdVar2 = (dxWorld *)__savegprlr_26(param_1);
-  if (pdVar2 == (dxWorld *)0x0) {
+  if (param_1 == (dxWorld *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\ode.cpp",
                     0x48d,0,"%s");
   }
-  if ((uVar6 & 0xffffffff) == 0) {
+  if (param_3 == (dSurfaceParameters *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\ode.cpp",
                     0x48e,0,"%s");
   }
-  if ((uVar7 & 0xffffffff) == 0) {
+  if (param_4 == (dContactGeom *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\ode.cpp",
                     0x48f,0,"%s");
   }
-  if ((uVar4 & 0xffffffff) == 0) {
+  if (param_2 == (dxJointGroup *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\ode.cpp",
                     0x490,0,"%s");
   }
-  if (pdVar2->jointCount < 0x400) {
-    puVar5 = (uint *)uVar4;
-    uVar1 = *puVar5;
-    if (uVar1 < puVar5[1]) {
-      *puVar5 = uVar1 + 1;
-      pdVar3 = (dxJoint *)(uVar1 * 0x9c + puVar5[2]);
-      ODE_InitJoint(pdVar2,pdVar3,ODE_JOINT_TYPE_CONTACT);
-      if (pdVar3->_padding_ == 0) {
+  if (param_1->jointCount < 0x400) {
+    uVar1 = param_2->useCount;
+    if (uVar1 < param_2->max) {
+      param_2->useCount = uVar1 + 1;
+      pdVar4 = param_2->joints + uVar1;
+      ODE_InitJoint(param_1,(dxJoint *)pdVar4,ODE_JOINT_TYPE_CONTACT);
+      if (pdVar4->_padding_ == 0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\ode.cpp"
                         ,0x4be,0,"%s");
       }
-      if ((dxWorld *)pdVar3->_padding_ != pdVar2) {
+      if ((dxWorld *)pdVar4->_padding_ != param_1) {
         va("joint & world mismatch. world: %i %i");
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\ode.cpp"
                         ,0x4bf,0,"%s\n\t%s");
       }
-      pdVar3->flags = pdVar3->flags | 1;
+      pdVar4->_padding_ = pdVar4->_padding_ | 1;
       memcpy();
-      pdVar8 = pdVar3[1].node + 1;
-      lVar9 = uVar7 - 4;
-      lVar10 = 8;
+      pfVar2 = &(pdVar4->contact).surface.slip2;
+      piVar3 = &param_4[-1].surfFlags;
+      lVar5 = 8;
       do {
-        lVar9 = lVar9 + 4;
-        pdVar8 = (dxJointNode *)&pdVar8->body;
-        *(dxBody **)pdVar8 = (dxBody *)*(undefined4 *)lVar9;
-        lVar10 = lVar10 + -1;
-      } while (lVar10 != 0);
-      pdVar3 = (dxJoint *)__restgprlr_26(pdVar3);
-      return pdVar3;
+        piVar3 = piVar3 + 1;
+        pfVar2 = pfVar2 + 1;
+        *pfVar2 = (float)*piVar3;
+        lVar5 = lVar5 + -1;
+      } while (lVar5 != 0);
+      return (dxJoint *)pdVar4;
     }
   }
-  pdVar3 = (dxJoint *)__restgprlr_26(0);
-  return pdVar3;
+  return (dxJoint *)0x0;
 }
 
 
@@ -2604,30 +2607,29 @@ dxJoint * dJointCreateAMotor(dxWorld *param_1,dxJoint *param_2)
 
 // 8269A748  dJointDestroy  (physics/ode/src/ode.cpp:1261)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PhysWorld": Some values do not have unique names */
 
 void dJointDestroy(dxJoint *param_1)
 
 {
   dxJoint *pdVar1;
-  dxJoint *pdVar2;
   
-  pdVar1 = (dxJoint *)__savegprlr_29(param_1);
-  if (pdVar1 == (dxJoint *)0x0) {
+  if (param_1 == (dxJoint *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\ode.cpp",
                     0x4ee,0,"%s");
   }
-  if (*(int *)(pdVar1->_padding_ + 0x50) == 0) {
+  if (*(int *)(param_1->_padding_ + 0x50) == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\ode.cpp",
                     0x4ef,0,"%s");
   }
-  if ((pdVar1->flags & 1U) == 0) {
-    pdVar2 = pdVar1;
-    removeJointReferencesFromAttachedBodies(pdVar1);
-    removeObjectFromList((dObject *)pdVar2);
-    *(int *)(pdVar1->_padding_ + 0xc) = *(int *)(pdVar1->_padding_ + 0xc) + -1;
+  if ((param_1->flags & 1U) == 0) {
+    pdVar1 = param_1;
+    removeJointReferencesFromAttachedBodies(param_1);
+    removeObjectFromList((dObject *)pdVar1);
+    *(int *)(param_1->_padding_ + 0xc) = *(int *)(param_1->_padding_ + 0xc) + -1;
   }
-  __restgprlr_29();
   return;
 }
 
@@ -2658,122 +2660,112 @@ void dJointGroupDestroy(dxJointGroup *param_1)
 
 // 8269A800  dJointGroupEmpty  (physics/ode/src/ode.cpp:1286)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PhysWorld": Some values do not have unique names */
 
 void dJointGroupEmpty(dxJointGroup *param_1)
 
 {
   int iVar1;
-  uint *puVar2;
+  dxJoint *pdVar2;
   longlong lVar3;
   longlong lVar4;
   
-  puVar2 = (uint *)__savegprlr_29(param_1);
-  if (puVar2 == (uint *)0x0) {
+  if (param_1 == (dxJointGroup *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\ode.cpp",
                     0x510,0,"%s");
   }
-  if (puVar2[1] < *puVar2) {
+  if (param_1->max < param_1->useCount) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\ode.cpp",
                     0x511,0,"%s");
   }
-  lVar3 = (ulonglong)*puVar2 - 1;
+  lVar3 = (ulonglong)param_1->useCount - 1;
   if (-1 < lVar3) {
     lVar4 = lVar3 * 0x9c;
     do {
       iVar1 = (int)lVar4;
-      if (((dxJoint *)(puVar2[2] + iVar1))->_padding_ != 0) {
-        removeJointReferencesFromAttachedBodies((dxJoint *)(puVar2[2] + iVar1));
-        removeObjectFromList((dObject *)(puVar2[2] + iVar1));
-        iVar1 = *(int *)(puVar2[2] + iVar1 + 0x10);
+      pdVar2 = (dxJoint *)((int)(param_1->joints->contact).geom.pos + iVar1 + -0x6c);
+      if (pdVar2->_padding_ != 0) {
+        removeJointReferencesFromAttachedBodies(pdVar2);
+        removeObjectFromList((dObject *)((int)(param_1->joints->contact).geom.pos + iVar1 + -0x6c));
+        iVar1 = *(int *)((int)(param_1->joints->contact).geom.pos + iVar1 + -0x5c);
         *(int *)(iVar1 + 0xc) = *(int *)(iVar1 + 0xc) + -1;
       }
       lVar3 = lVar3 + -1;
       lVar4 = lVar4 + -0x9c;
     } while (-1 < lVar3);
   }
-  *puVar2 = 0;
-  __restgprlr_29();
+  param_1->useCount = 0;
   return;
 }
 
 
 // 8269A8D8  dJointAttach  (physics/ode/src/ode.cpp:1313)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 void dJointAttach(dxJoint *param_1,dxBody *param_2,dxBody *param_3)
 
 {
   int iVar1;
-  dxJoint *pdVar2;
-  ulonglong uVar3;
-  ulonglong uVar4;
-  uint uVar5;
-  ulonglong uVar6;
-  dxBody *pdVar7;
-  dxBody *pdVar8;
+  uint uVar2;
   
-  uVar4 = (ulonglong)(int)param_3;
-  uVar3 = (ulonglong)(int)param_2;
-  pdVar2 = (dxJoint *)__savegprlr_26(param_1);
-  if (pdVar2 == (dxJoint *)0x0) {
+  if (param_1 == (dxJoint *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\ode.cpp",
                     0x527,0,"%s");
   }
-  if (((uVar3 & 0xffffffff) != 0) && ((uVar3 & 0xffffffff) == (uVar4 & 0xffffffff))) {
+  if ((param_2 != (dxBody *)0x0) && (param_2 == param_3)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\ode.cpp",
                     0x528,0,"%s");
   }
-  if (pdVar2->_padding_ == 0) {
+  if (param_1->_padding_ == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\ode.cpp",
                     0x529,0,"%s");
   }
-  iVar1 = pdVar2->_padding_;
-  if (((uVar3 & 0xffffffff) != 0) && (*(int *)((int)uVar3 + 0x10) != iVar1)) {
+  iVar1 = param_1->_padding_;
+  if ((param_2 != (dxBody *)0x0) && (param_2->_padding_ != iVar1)) {
     va("body1 & joint not in same world: %i, %i");
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\ode.cpp",
                     0x52d,0,"%s\n\t%s");
   }
-  if (((uVar4 & 0xffffffff) != 0) && (*(int *)((int)uVar4 + 0x10) != iVar1)) {
+  if ((param_3 != (dxBody *)0x0) && (param_3->_padding_ != iVar1)) {
     va("body2 & joint not in same world: %i, %i");
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\ode.cpp",
                     0x52e,0,"%s\n\t%s");
   }
-  if (((pdVar2->flags & 4U) != 0) && ((uVar3 != 0) != (uVar4 != 0))) {
+  if (((param_1->flags & 4U) != 0) && ((param_2 != (dxBody *)0x0) != (param_3 != (dxBody *)0x0))) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\ode.cpp",
                     0x535,0,"%s\n\t%s");
   }
-  if ((pdVar2->node[0].body != (dxBody *)0x0) || (pdVar2->node[1].body != (dxBody *)0x0)) {
-    removeJointReferencesFromAttachedBodies(pdVar2);
+  if ((param_1->node[0].body != (dxBody *)0x0) || (param_1->node[1].body != (dxBody *)0x0)) {
+    removeJointReferencesFromAttachedBodies(param_1);
   }
-  if ((uVar3 & 0xffffffff) == 0) {
-    uVar5 = pdVar2->flags | 2;
-    uVar6 = 0;
-    uVar3 = uVar4;
-  }
-  else {
-    uVar5 = pdVar2->flags & 0xfffffffd;
-    uVar6 = uVar4;
-  }
-  pdVar2->flags = uVar5;
-  pdVar8 = (dxBody *)uVar3;
-  pdVar2->node[0].body = pdVar8;
-  pdVar7 = (dxBody *)uVar6;
-  pdVar2->node[1].body = pdVar7;
-  if ((uVar3 & 0xffffffff) == 0) {
-    pdVar2->node[1].next = (dxJointNode *)0x0;
+  if (param_2 == (dxBody *)0x0) {
+    uVar2 = param_1->flags | 2;
+    param_2 = param_3;
+    param_3 = (dxBody *)0x0;
   }
   else {
-    pdVar2->node[1].next = pdVar8->firstjoint;
-    pdVar8->firstjoint = pdVar2->node + 1;
+    uVar2 = param_1->flags & 0xfffffffd;
   }
-  if ((uVar6 & 0xffffffff) != 0) {
-    pdVar2->node[0].next = pdVar7->firstjoint;
-    pdVar7->firstjoint = pdVar2->node;
-    __restgprlr_26();
+  param_1->flags = uVar2;
+  param_1->node[0].body = param_2;
+  param_1->node[1].body = param_3;
+  if (param_2 == (dxBody *)0x0) {
+    param_1->node[1].next = (dxJointNode *)0x0;
+  }
+  else {
+    param_1->node[1].next = param_2->firstjoint;
+    param_2->firstjoint = param_1->node + 1;
+  }
+  if (param_3 != (dxBody *)0x0) {
+    param_1->node[0].next = param_3->firstjoint;
+    param_3->firstjoint = param_1->node;
     return;
   }
-  pdVar2->node[0].next = (dxJointNode *)0x0;
-  __restgprlr_26();
+  param_1->node[0].next = (dxJointNode *)0x0;
   return;
 }
 
@@ -2869,36 +2861,33 @@ int dAreConnected(dxBody *param_1,dxBody *param_2)
 
 // 8269AD48  dAreConnectedExcluding  (physics/ode/src/ode.cpp:1439)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
+
 int dAreConnectedExcluding(dxBody *param_1,dxBody *param_2,int param_3)
 
 {
-  int *piVar1;
-  int iVar2;
-  ulonglong uVar3;
+  dxJointNode *pdVar1;
+  dxJoint *pdVar2;
   
-  uVar3 = (ulonglong)(int)param_2;
-  iVar2 = __savegprlr_25(param_1);
-  if ((iVar2 == 0) || ((uVar3 & 0xffffffff) == 0)) {
+  if ((param_1 == (dxBody *)0x0) || (param_2 == (dxBody *)0x0)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\ode.cpp",
                     0x5a0,0,"%s");
   }
-  piVar1 = *(int **)(iVar2 + 0x14);
+  pdVar1 = param_1->firstjoint;
   while( true ) {
-    if (piVar1 == (int *)0x0) {
-      iVar2 = __restgprlr_25(0);
-      return iVar2;
+    if (pdVar1 == (dxJointNode *)0x0) {
+      return 0;
     }
-    iVar2 = *piVar1;
-    if (iVar2 == 0) {
+    pdVar2 = pdVar1->joint;
+    if (pdVar2 == (dxJoint *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\ode.cpp",
                       0x571,0,"%s");
     }
-    if ((*(int *)(iVar2 + 0x14) != param_3) && ((ulonglong)(uint)piVar1[1] == (uVar3 & 0xffffffff)))
-    break;
-    piVar1 = (int *)piVar1[3];
+    if ((pdVar2->type != param_3) && (pdVar1->body == param_2)) break;
+    pdVar1 = pdVar1->next;
   }
-  iVar2 = __restgprlr_25(1);
-  return iVar2;
+  return 1;
 }
 
 
@@ -2932,40 +2921,40 @@ void ODE_WorldInit(dxWorld *param_1)
 
 // 8269AED0  ODE_WorldDestroy  (physics/ode/src/ode.cpp:1486)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PhysWorld": Some values do not have unique names */
 
 void ODE_WorldDestroy(dxWorld *param_1,_func___cdecl_void_dxBody_ptr *param_2)
 
 {
   dxBody *pdVar1;
-  dxBody *pdVar2;
-  undefined4 *puVar3;
-  undefined4 *puVar4;
+  dxJoint *pdVar2;
+  dxBody *pdVar3;
+  dxJoint *pdVar4;
   
-  puVar4 = (undefined4 *)__savegprlr_29(param_1);
-  if (puVar4 == (undefined4 *)0x0) {
+  if (param_1 == (dxWorld *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\ode.cpp",
                     0x5d5,0,"%s");
   }
-  pdVar2 = (dxBody *)*puVar4;
-  while (pdVar2 != (dxBody *)0x0) {
-    pdVar1 = (dxBody *)pdVar2->_padding_;
-    (*param_2)(pdVar2);
-    pdVar2 = pdVar1;
+  pdVar3 = param_1->firstbody;
+  while (pdVar3 != (dxBody *)0x0) {
+    pdVar1 = (dxBody *)pdVar3->_padding_;
+    (*param_2)(pdVar3);
+    pdVar3 = pdVar1;
   }
-  puVar4 = (undefined4 *)puVar4[1];
-  while (puVar3 = puVar4, puVar3 != (undefined4 *)0x0) {
-    puVar4 = (undefined4 *)*puVar3;
-    if ((puVar3[6] & 1) != 0) {
-      puVar3[4] = 0;
-      puVar3[8] = 0;
-      puVar3[10] = 0;
-      puVar3[0xc] = 0;
-      puVar3[0xe] = 0;
+  pdVar2 = param_1->firstjoint;
+  while (pdVar4 = pdVar2, pdVar4 != (dxJoint *)0x0) {
+    pdVar2 = (dxJoint *)pdVar4->_padding_;
+    if ((pdVar4->flags & 1U) != 0) {
+      pdVar4->_padding_ = 0;
+      pdVar4->node[0].body = (dxBody *)0x0;
+      pdVar4->node[0].next = (dxJointNode *)0x0;
+      pdVar4->node[1].body = (dxBody *)0x0;
+      pdVar4->node[1].next = (dxJointNode *)0x0;
       Com_PrintWarning(0x14,"warning: destroying world containing grouped joints");
     }
   }
-  __restgprlr_29();
   return;
 }
 
@@ -3083,33 +3072,33 @@ float dWorldGetCFM(dxWorld *param_1)
 
 // 8269B218  dWorldQuickStep  (physics/ode/src/ode.cpp:1573)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PhysWorld": Some values do not have unique names */
 
 void dWorldQuickStep(dxWorld *param_1,float param_2)
 
 {
-  dxWorld *pdVar1;
-  double extraout_f1;
-  double dVar2;
+  double dVar1;
   
-  pdVar1 = (dxWorld *)__savegprlr_29((double)param_2,param_1);
-  dVar2 = extraout_f1;
-  if (pdVar1 == (dxWorld *)0x0) {
+  dVar1 = (double)param_2;
+  if (param_1 == (dxWorld *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\ode.cpp",
                     0x626,0,"%s\n\t%s");
   }
-  if (dVar2 <= 0.0) {
+  if (dVar1 <= 0.0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\ode.cpp",
                     0x627,0,"%s\n\t%s");
   }
-  dxProcessIslands(pdVar1,(float)dVar2);
-  __restgprlr_29();
+  dxProcessIslands(param_1,(float)dVar1);
   return;
 }
 
 
 // 8269B2B8  dWorldImpulseToForce  (physics/ode/src/ode.cpp:1583)
 
+/* WARNING: Function: __savefpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PhysWorld": Some values do not have unique names */
 
 void dWorldImpulseToForce
@@ -3117,28 +3106,24 @@ void dWorldImpulseToForce
                float *param_6)
 
 {
-  int iVar1;
   float *in_r8;
+  double dVar1;
   double dVar2;
-  double extraout_f1;
   double dVar3;
   double dVar4;
-  double dVar5;
   
-  dVar5 = (double)param_5;
-  dVar3 = (double)param_3;
-  dVar4 = (double)param_4;
-  iVar1 = __savefpr_28((double)param_2,param_1,param_6);
-  dVar2 = extraout_f1;
-  if (iVar1 == 0) {
+  dVar4 = (double)param_5;
+  dVar1 = (double)param_2;
+  dVar2 = (double)param_3;
+  dVar3 = (double)param_4;
+  if (param_1 == (dxWorld *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\ode.cpp",
                     0x630,0,"%s");
   }
-  dVar2 = (double)(float)(1.0 / dVar2);
-  *in_r8 = (float)(dVar2 * dVar3);
-  in_r8[1] = (float)(dVar2 * dVar4);
-  in_r8[2] = (float)(dVar2 * dVar5);
-  __restfpr_28();
+  dVar1 = (double)(float)(1.0 / dVar1);
+  *in_r8 = (float)(dVar1 * dVar2);
+  in_r8[1] = (float)(dVar1 * dVar3);
+  in_r8[2] = (float)(dVar1 * dVar4);
   return;
 }
 

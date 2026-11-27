@@ -2,33 +2,31 @@
 
 // 82612EE8  Com_SurfaceTypeFromName  (universal/surfaceflags.cpp:113)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 int Com_SurfaceTypeFromName(char *param_1)
 
 {
-  char *pcVar1;
+  int iVar1;
   int iVar2;
-  int iVar3;
-  undefined4 *puVar4;
+  undefined4 *puVar3;
   
-  pcVar1 = (char *)__savegprlr_28(param_1);
-  iVar2 = I_stricmp(pcVar1,"default");
-  if (iVar2 == 0) {
-    iVar2 = __restgprlr_28();
-    return iVar2;
+  iVar1 = I_stricmp(param_1,"default");
+  if (iVar1 == 0) {
+    return 0;
   }
-  iVar2 = 0;
-  puVar4 = (undefined4 *)&infoParms;
+  iVar1 = 0;
+  puVar3 = (undefined4 *)&infoParms;
   do {
-    iVar3 = I_stricmp(pcVar1,(char *)*puVar4);
-    if (iVar3 == 0) {
-      iVar2 = __restgprlr_28((int)(&DAT_82994078)[iVar2 * 5] >> 0x14 & 0x1f);
-      return iVar2;
+    iVar2 = I_stricmp(param_1,(char *)*puVar3);
+    if (iVar2 == 0) {
+      return (int)(&DAT_82994078)[iVar1 * 5] >> 0x14 & 0x1f;
     }
-    puVar4 = puVar4 + 5;
-    iVar2 = iVar2 + 1;
-  } while ((int)puVar4 < -0x7d66bd38);
-  iVar2 = __restgprlr_28(0xffffffffffffffff);
-  return iVar2;
+    puVar3 = puVar3 + 5;
+    iVar1 = iVar1 + 1;
+  } while ((int)puVar3 < -0x7d66bd38);
+  return -1;
 }
 
 

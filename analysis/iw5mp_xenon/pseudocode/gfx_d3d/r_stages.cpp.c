@@ -24,75 +24,72 @@ int R_StageContainsPoint(uint param_1,float *param_2)
 
 // 8277C6D0  R_GetStageIndex  (gfx_d3d/r_stages.cpp:57)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 uint R_GetStageIndex(float *param_1)
 
 {
-  float *pfVar1;
-  int iVar2;
-  uint uVar3;
+  int iVar1;
+  uint uVar2;
   float local_50;
   float local_4c;
   float local_48;
   
-  pfVar1 = (float *)__savegprlr_26(param_1);
-  uVar3 = 1;
+  uVar2 = 1;
   if (1 < cm.stageCount) {
     do {
-      if (uVar3 == 0) {
+      if (uVar2 == 0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_stages.cpp",0x2f
                         ,0,"%s");
       }
-      local_50 = *pfVar1 - cm.stages[uVar3].origin[0];
-      local_4c = pfVar1[1] - cm.stages[uVar3].origin[1];
-      local_48 = pfVar1[2] - cm.stages[uVar3].origin[2];
-      iVar2 = CM_TestStageTriggerContainsPoint((uint)cm.stages[uVar3].triggerIndex,&local_50);
-      if (iVar2 != 0) {
-        uVar3 = __restgprlr_26(uVar3);
-        return uVar3;
+      local_50 = *param_1 - cm.stages[uVar2].origin[0];
+      local_4c = param_1[1] - cm.stages[uVar2].origin[1];
+      local_48 = param_1[2] - cm.stages[uVar2].origin[2];
+      iVar1 = CM_TestStageTriggerContainsPoint((uint)cm.stages[uVar2].triggerIndex,&local_50);
+      if (iVar1 != 0) {
+        return uVar2;
       }
-      uVar3 = uVar3 + 1;
-    } while (uVar3 < cm.stageCount);
+      uVar2 = uVar2 + 1;
+    } while (uVar2 < cm.stageCount);
   }
-  uVar3 = __restgprlr_26(0);
-  return uVar3;
+  return 0;
 }
 
 
 // 8277C7B0  R_GetActiveStageIndex  (gfx_d3d/r_stages.cpp:142)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* unsigned int __cdecl R_GetActiveStageIndex(float const * const) */
 
 uint R_GetActiveStageIndex(float *param_1)
 
 {
-  float *pfVar1;
-  int iVar2;
-  uint uVar3;
+  int iVar1;
+  uint uVar2;
   float fStack_50;
   float fStack_4c;
   float fStack_48;
   
-  pfVar1 = (float *)__savegprlr_26(param_1);
-  uVar3 = 1;
+  uVar2 = 1;
   if (1 < cm.stageCount) {
     do {
-      if (uVar3 == 0) {
+      if (uVar2 == 0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_stages.cpp",0x2f
                         ,0,"%s");
       }
-      fStack_50 = *pfVar1 - cm.stages[uVar3].origin[0];
-      fStack_4c = pfVar1[1] - cm.stages[uVar3].origin[1];
-      fStack_48 = pfVar1[2] - cm.stages[uVar3].origin[2];
-      iVar2 = CM_TestStageTriggerContainsPoint((uint)cm.stages[uVar3].triggerIndex,&fStack_50);
-      if (iVar2 != 0) {
-        uVar3 = __restgprlr_26(uVar3);
-        return uVar3;
+      fStack_50 = *param_1 - cm.stages[uVar2].origin[0];
+      fStack_4c = param_1[1] - cm.stages[uVar2].origin[1];
+      fStack_48 = param_1[2] - cm.stages[uVar2].origin[2];
+      iVar1 = CM_TestStageTriggerContainsPoint((uint)cm.stages[uVar2].triggerIndex,&fStack_50);
+      if (iVar1 != 0) {
+        return uVar2;
       }
-      uVar3 = uVar3 + 1;
-    } while (uVar3 < cm.stageCount);
+      uVar2 = uVar2 + 1;
+    } while (uVar2 < cm.stageCount);
   }
-  uVar3 = __restgprlr_26(0);
-  return uVar3;
+  return 0;
 }
 
 
@@ -111,32 +108,32 @@ Stage * R_GetStageByIndex(uint param_1)
 
 // 8277C830  R_UpdateActiveStage  (gfx_d3d/r_stages.cpp:158)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void R_UpdateActiveStage(GfxStageInfo *param_1,float *param_2)
 
 {
-  int iVar1;
-  uint uVar2;
-  undefined4 *puVar3;
-  ushort *puVar4;
-  longlong lVar5;
+  uint uVar1;
+  bool *pbVar2;
+  ushort *puVar3;
+  longlong lVar4;
   
-  iVar1 = __savegprlr_29(param_1);
-  *(undefined1 *)(iVar1 + 0x14) = 1;
+  param_1->activeStageValid = true;
   if (cm.stageCount == '\0') {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_stages.cpp",0xad,0,
                     "%s");
   }
-  uVar2 = R_GetStageIndex(param_2);
-  puVar3 = (undefined4 *)(iVar1 + -4);
-  lVar5 = 5;
-  puVar4 = &cm.stages[uVar2 - 1].triggerIndex;
+  uVar1 = R_GetStageIndex(param_2);
+  pbVar2 = &param_1[-1].activeStageValid;
+  lVar4 = 5;
+  puVar3 = &cm.stages[uVar1 - 1].triggerIndex;
   do {
-    puVar4 = puVar4 + 2;
-    puVar3 = puVar3 + 1;
-    *puVar3 = *(undefined4 *)puVar4;
-    lVar5 = lVar5 + -1;
-  } while (lVar5 != 0);
-  __restgprlr_29();
+    puVar3 = puVar3 + 2;
+    pbVar2 = pbVar2 + 4;
+    *(undefined4 *)pbVar2 = *(undefined4 *)puVar3;
+    lVar4 = lVar4 + -1;
+  } while (lVar4 != 0);
   return;
 }
 

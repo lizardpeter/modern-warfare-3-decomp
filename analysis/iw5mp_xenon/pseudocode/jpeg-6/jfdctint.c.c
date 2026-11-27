@@ -2,14 +2,17 @@
 
 // 827C6B70  jpeg_fdct_islow  (jpeg-6/jfdctint.c:141)
 
+/* WARNING: Function: __savegprlr_20 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_20 replaced with injection: xenon_save_restore */
+
 void jpeg_fdct_islow(int *param_1)
 
 {
   int iVar1;
-  longlong lVar2;
+  int iVar2;
   longlong lVar3;
   int iVar4;
-  int iVar5;
+  longlong lVar5;
   longlong lVar6;
   int iVar7;
   int iVar8;
@@ -18,79 +21,77 @@ void jpeg_fdct_islow(int *param_1)
   int iVar11;
   int iVar12;
   int iVar13;
-  int iVar14;
-  int *piVar15;
+  int *piVar14;
+  int iVar15;
   int iVar16;
   int iVar17;
   longlong lVar18;
   longlong lVar19;
   
-  iVar1 = __savegprlr_20(param_1);
-  piVar15 = (int *)(iVar1 + -0x1c);
+  piVar14 = param_1 + -7;
   lVar19 = 8;
   do {
-    iVar10 = piVar15[7] - piVar15[0xe];
-    lVar6 = (ulonglong)(uint)piVar15[7] + (ulonglong)(uint)piVar15[0xe];
-    iVar13 = piVar15[9] - piVar15[0xc];
-    iVar14 = piVar15[10] - piVar15[0xb];
-    iVar16 = piVar15[8] - piVar15[0xd];
-    lVar3 = (ulonglong)(uint)piVar15[8] + (ulonglong)(uint)piVar15[0xd];
-    lVar2 = (ulonglong)(uint)piVar15[0xc] + (ulonglong)(uint)piVar15[9];
-    lVar18 = (ulonglong)(uint)piVar15[10] + (ulonglong)(uint)piVar15[0xb];
-    iVar11 = (int)lVar3 - (int)lVar2;
-    iVar12 = (int)lVar6 - (int)lVar18;
-    iVar5 = (iVar13 + iVar10 + iVar14 + iVar16) * 0x25a1;
-    iVar4 = (iVar11 + iVar12) * 0x1151;
-    iVar8 = iVar5 + (iVar13 + iVar10) * -0xc7c;
-    iVar5 = iVar5 + (iVar14 + iVar16) * -0x3ec5;
-    iVar9 = (iVar14 + iVar10) * -0x1ccd;
-    lVar2 = lVar2 + lVar3;
-    iVar7 = (iVar13 + iVar16) * -0x5203;
+    iVar9 = piVar14[7] - piVar14[0xe];
+    lVar6 = (ulonglong)(uint)piVar14[7] + (ulonglong)(uint)piVar14[0xe];
+    iVar11 = piVar14[9] - piVar14[0xc];
+    iVar12 = piVar14[10] - piVar14[0xb];
+    iVar13 = piVar14[8] - piVar14[0xd];
+    lVar5 = (ulonglong)(uint)piVar14[8] + (ulonglong)(uint)piVar14[0xd];
+    lVar3 = (ulonglong)(uint)piVar14[0xc] + (ulonglong)(uint)piVar14[9];
+    lVar18 = (ulonglong)(uint)piVar14[10] + (ulonglong)(uint)piVar14[0xb];
+    iVar15 = (int)lVar5 - (int)lVar3;
+    iVar10 = (int)lVar6 - (int)lVar18;
+    iVar2 = (iVar11 + iVar9 + iVar12 + iVar13) * 0x25a1;
+    iVar1 = (iVar15 + iVar10) * 0x1151;
+    iVar7 = iVar2 + (iVar11 + iVar9) * -0xc7c;
+    iVar2 = iVar2 + (iVar12 + iVar13) * -0x3ec5;
+    iVar8 = (iVar12 + iVar9) * -0x1ccd;
+    lVar3 = lVar3 + lVar5;
+    iVar4 = (iVar11 + iVar13) * -0x5203;
     lVar18 = lVar18 + lVar6;
-    piVar15[9] = iVar12 * 0x187e + iVar4 + 0x400 >> 0xb;
-    piVar15[0xd] = iVar4 + iVar11 * -0x3b21 + 0x400 >> 0xb;
-    piVar15[0xe] = iVar14 * 0x98e + iVar5 + iVar9 + 0x400 >> 0xb;
-    piVar15[0xc] = iVar13 * 0x41b3 + iVar8 + iVar7 + 0x400 >> 0xb;
-    piVar15[10] = iVar16 * 0x6254 + iVar5 + iVar7 + 0x400 >> 0xb;
-    piVar15[7] = (int)((lVar2 + lVar18 & 0xffffffffU) << 2);
-    piVar15[0xb] = (int)((lVar18 - lVar2 & 0xffffffffU) << 2);
-    piVar15 = piVar15 + 8;
-    *piVar15 = iVar10 * 0x300b + iVar8 + iVar9 + 0x400 >> 0xb;
+    piVar14[9] = iVar10 * 0x187e + iVar1 + 0x400 >> 0xb;
+    piVar14[0xd] = iVar1 + iVar15 * -0x3b21 + 0x400 >> 0xb;
+    piVar14[0xe] = iVar12 * 0x98e + iVar2 + iVar8 + 0x400 >> 0xb;
+    piVar14[0xc] = iVar11 * 0x41b3 + iVar7 + iVar4 + 0x400 >> 0xb;
+    piVar14[10] = iVar13 * 0x6254 + iVar2 + iVar4 + 0x400 >> 0xb;
+    piVar14[7] = (int)((lVar3 + lVar18 & 0xffffffffU) << 2);
+    piVar14[0xb] = (int)((lVar18 - lVar3 & 0xffffffffU) << 2);
+    piVar14 = piVar14 + 8;
+    *piVar14 = iVar9 * 0x300b + iVar7 + iVar8 + 0x400 >> 0xb;
     lVar19 = lVar19 + -1;
   } while (lVar19 != 0);
-  piVar15 = (int *)(iVar1 + 0x1c);
+  piVar14 = param_1 + 7;
   lVar19 = 8;
   do {
-    iVar11 = piVar15[-7] - piVar15[0x31];
-    iVar7 = piVar15[-7] + piVar15[0x31];
-    iVar13 = piVar15[9] - piVar15[0x21];
-    iVar8 = piVar15[1] - piVar15[0x29];
-    iVar9 = piVar15[0x11] - piVar15[0x19];
-    iVar4 = piVar15[1] + piVar15[0x29];
-    iVar5 = piVar15[0x21] + piVar15[9];
-    iVar1 = piVar15[0x11] + piVar15[0x19];
-    iVar10 = (iVar13 + iVar11 + iVar9 + iVar8) * 0x25a1;
+    iVar10 = piVar14[-7] - piVar14[0x31];
+    iVar7 = piVar14[-7] + piVar14[0x31];
+    iVar12 = piVar14[9] - piVar14[0x21];
+    iVar8 = piVar14[1] - piVar14[0x29];
+    iVar9 = piVar14[0x11] - piVar14[0x19];
+    iVar2 = piVar14[1] + piVar14[0x29];
+    iVar4 = piVar14[0x21] + piVar14[9];
+    iVar1 = piVar14[0x11] + piVar14[0x19];
+    iVar15 = (iVar12 + iVar10 + iVar9 + iVar8) * 0x25a1;
     iVar16 = iVar7 - iVar1;
-    iVar17 = iVar4 - iVar5;
+    iVar17 = iVar2 - iVar4;
     iVar1 = iVar1 + iVar7;
-    iVar5 = iVar5 + iVar4;
-    iVar7 = iVar10 + (iVar9 + iVar8) * -0x3ec5;
-    iVar12 = (iVar9 + iVar11) * -0x1ccd;
-    iVar10 = iVar10 + (iVar13 + iVar11) * -0xc7c;
-    iVar4 = (iVar17 + iVar16) * 0x1151;
-    iVar14 = (iVar13 + iVar8) * -0x5203;
-    piVar15[-7] = iVar5 + iVar1 + 2 >> 2;
-    piVar15[0x19] = (iVar1 - iVar5) + 2 >> 2;
-    piVar15[9] = iVar16 * 0x187e + iVar4 + 0x4000 >> 0xf;
-    piVar15[0x29] = iVar4 + iVar17 * -0x3b21 + 0x4000 >> 0xf;
-    piVar15[0x31] = iVar9 * 0x98e + iVar7 + iVar12 + 0x4000 >> 0xf;
-    piVar15[0x21] = iVar13 * 0x41b3 + iVar10 + iVar14 + 0x4000 >> 0xf;
-    piVar15[0x11] = iVar8 * 0x6254 + iVar7 + iVar14 + 0x4000 >> 0xf;
-    piVar15 = piVar15 + 1;
-    *piVar15 = iVar11 * 0x300b + iVar10 + iVar12 + 0x4000 >> 0xf;
+    iVar4 = iVar4 + iVar2;
+    iVar7 = iVar15 + (iVar9 + iVar8) * -0x3ec5;
+    iVar11 = (iVar9 + iVar10) * -0x1ccd;
+    iVar15 = iVar15 + (iVar12 + iVar10) * -0xc7c;
+    iVar2 = (iVar17 + iVar16) * 0x1151;
+    iVar13 = (iVar12 + iVar8) * -0x5203;
+    piVar14[-7] = iVar4 + iVar1 + 2 >> 2;
+    piVar14[0x19] = (iVar1 - iVar4) + 2 >> 2;
+    piVar14[9] = iVar16 * 0x187e + iVar2 + 0x4000 >> 0xf;
+    piVar14[0x29] = iVar2 + iVar17 * -0x3b21 + 0x4000 >> 0xf;
+    piVar14[0x31] = iVar9 * 0x98e + iVar7 + iVar11 + 0x4000 >> 0xf;
+    piVar14[0x21] = iVar12 * 0x41b3 + iVar15 + iVar13 + 0x4000 >> 0xf;
+    piVar14[0x11] = iVar8 * 0x6254 + iVar7 + iVar13 + 0x4000 >> 0xf;
+    piVar14 = piVar14 + 1;
+    *piVar14 = iVar10 * 0x300b + iVar15 + iVar11 + 0x4000 >> 0xf;
     lVar19 = lVar19 + -1;
   } while (lVar19 != 0);
-  __restgprlr_20();
   return;
 }
 

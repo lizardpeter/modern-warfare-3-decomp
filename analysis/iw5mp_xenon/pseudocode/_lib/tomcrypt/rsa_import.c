@@ -2,20 +2,21 @@
 
 // 822523F0  rsa_import  (line unknown)
 
-void rsa_import(undefined8 param_1,undefined8 param_2,longlong param_3)
+/* WARNING: Function: __savegprlr_15 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_15 replaced with injection: xenon_save_restore */
+
+int rsa_import(undefined8 param_1,undefined8 param_2,undefined4 *param_3)
 
 {
-  undefined8 uVar1;
-  undefined8 uVar2;
-  void *pvVar3;
-  int iVar4;
+  int iVar1;
+  void *pvVar2;
+  int iVar3;
+  ulonglong uVar4;
   int iVar5;
-  ulonglong uVar6;
-  int iVar7;
-  byte bVar8;
-  byte bVar9;
-  undefined4 *puVar10;
-  undefined4 *puVar11;
+  byte bVar6;
+  byte bVar7;
+  undefined4 *puVar8;
+  undefined4 *puVar9;
   void *local_160 [4];
   undefined4 local_150;
   undefined4 *local_14c;
@@ -35,15 +36,14 @@ void rsa_import(undefined8 param_1,undefined8 param_2,longlong param_3)
   undefined4 local_e4;
   undefined1 auStack_d0 [208];
   
-  uVar1 = __savegprlr_15();
-  uVar2 = ltc_init_multi(param_3 + 4,param_3 + 8,param_3 + 0xc,param_3 + 0x20,param_3 + 0x1c,
-                         param_3 + 0x18,param_3 + 0x10,param_3 + 0x14);
-  if ((int)uVar2 == 0) {
-    pvVar3 = tom_game_calloc(1,0x4000);
-    puVar11 = (undefined4 *)(param_3 + 0xc);
-    puVar10 = (undefined4 *)(param_3 + 4);
-    if (pvVar3 == (void *)0x0) {
-      iVar4 = 0xd;
+  puVar8 = param_3 + 1;
+  puVar9 = param_3 + 3;
+  iVar1 = ltc_init_multi(puVar8,param_3 + 2,puVar9,param_3 + 8,param_3 + 7,param_3 + 6,param_3 + 4,
+                         param_3 + 5);
+  if (iVar1 == 0) {
+    pvVar2 = tom_game_calloc(1,0x4000);
+    if (pvVar2 == (void *)0x0) {
+      iVar1 = 0xd;
       goto LAB_8225275c;
     }
     local_10c = auStack_d0;
@@ -61,71 +61,66 @@ void rsa_import(undefined8 param_1,undefined8 param_2,longlong param_3)
     local_144 = 0;
     local_128 = 0x4000;
     local_124 = 0;
-    local_12c = pvVar3;
-    iVar4 = der_decode_sequence_ex(uVar1,param_2,&local_150,2,1);
-    if (iVar4 == 0) {
-      iVar4 = 0;
-      iVar7 = 0;
-      bVar9 = 0;
+    local_12c = pvVar2;
+    iVar1 = der_decode_sequence_ex(param_1,param_2,&local_150,2,1);
+    if (iVar1 == 0) {
+      iVar1 = 0;
       iVar5 = 0;
-      for (uVar6 = (ulonglong)local_128; uVar6 != 0; uVar6 = uVar6 - 1) {
-        iVar7 = iVar7 + 1;
-        bVar8 = *(byte *)(iVar4 + (int)pvVar3) | bVar9 << 1;
-        bVar9 = bVar8;
-        if (iVar7 == 8) {
-          bVar9 = 0;
-          *(byte *)(iVar5 + (int)pvVar3) = bVar8;
-          iVar5 = iVar5 + 1;
-          iVar7 = 0;
+      bVar7 = 0;
+      iVar3 = 0;
+      for (uVar4 = (ulonglong)local_128; uVar4 != 0; uVar4 = uVar4 - 1) {
+        iVar5 = iVar5 + 1;
+        bVar6 = *(byte *)(iVar1 + (int)pvVar2) | bVar7 << 1;
+        bVar7 = bVar6;
+        if (iVar5 == 8) {
+          bVar7 = 0;
+          *(byte *)(iVar3 + (int)pvVar2) = bVar6;
+          iVar3 = iVar3 + 1;
+          iVar5 = 0;
         }
-        iVar4 = iVar4 + 1;
+        iVar1 = iVar1 + 1;
       }
-      iVar4 = der_decode_sequence_multi(pvVar3,iVar5,2,1,*puVar11,2,1,*puVar10);
-      if (iVar4 != 0) {
-        tom_game_free(pvVar3);
+      iVar1 = der_decode_sequence_multi(pvVar2,iVar3,2,1,*puVar9,2,1,*puVar8);
+      if (iVar1 != 0) {
+        tom_game_free(pvVar2);
         goto LAB_8225275c;
       }
-      tom_game_free(pvVar3);
+      tom_game_free(pvVar2);
     }
     else {
-      tom_game_free(pvVar3);
-      iVar4 = der_decode_sequence_multi(uVar1,param_2,2,1,*puVar11,0,0,0);
-      if (iVar4 != 0) {
+      tom_game_free(pvVar2);
+      iVar1 = der_decode_sequence_multi(param_1,param_2,2,1,*puVar9,0,0,0);
+      if (iVar1 != 0) {
 LAB_8225275c:
-        ltc_deinit_multi(*(undefined4 *)(param_3 + 8),*puVar10,*puVar11,
-                         *(undefined4 *)(param_3 + 0x20),*(undefined4 *)(param_3 + 0x1c),
-                         *(undefined4 *)(param_3 + 0x18),*(undefined4 *)(param_3 + 0x10),
-                         *(undefined4 *)(param_3 + 0x14));
-        __restgprlr_15(iVar4);
-        return;
+        ltc_deinit_multi(param_3[2],*puVar8,*puVar9,param_3[8],param_3[7],param_3[6],param_3[4],
+                         param_3[5]);
+        return iVar1;
       }
-      iVar4 = (*ltc_mp.compare_d)((void *)*puVar11,0);
-      if (iVar4 == 0) {
-        iVar4 = (*ltc_mp.init)(local_160);
-        if (iVar4 == 0) {
-          iVar4 = der_decode_sequence_multi(uVar1,param_2,2,1,local_160[0],2,1,*puVar11);
-          if (iVar4 == 0) {
+      iVar1 = (*ltc_mp.compare_d)((void *)*puVar9,0);
+      if (iVar1 == 0) {
+        iVar1 = (*ltc_mp.init)(local_160);
+        if (iVar1 == 0) {
+          iVar1 = der_decode_sequence_multi(param_1,param_2,2,1,local_160[0],2,1,*puVar9);
+          if (iVar1 == 0) {
             (*ltc_mp.deinit)(local_160[0]);
-            *(undefined4 *)param_3 = 1;
-            __restgprlr_15(0);
-            return;
+            *param_3 = 1;
+            return 0;
           }
           (*ltc_mp.deinit)(local_160[0]);
         }
         goto LAB_8225275c;
       }
-      iVar4 = (*ltc_mp.compare_d)((void *)*puVar11,1);
-      if (iVar4 == 0) {
-        iVar4 = 0x12;
+      iVar1 = (*ltc_mp.compare_d)((void *)*puVar9,1);
+      if (iVar1 == 0) {
+        iVar1 = 0x12;
         goto LAB_8225275c;
       }
-      iVar4 = der_decode_sequence_multi(uVar1,param_2,2,1,*puVar11,2,1,*puVar10);
-      if (iVar4 != 0) goto LAB_8225275c;
+      iVar1 = der_decode_sequence_multi(param_1,param_2,2,1,*puVar9,2,1,*puVar8);
+      if (iVar1 != 0) goto LAB_8225275c;
     }
-    *(undefined4 *)param_3 = 0;
-    uVar2 = 0;
+    *param_3 = 0;
+    iVar1 = 0;
   }
-  __restgprlr_15(uVar2);
-  return;
+  return iVar1;
 }
 

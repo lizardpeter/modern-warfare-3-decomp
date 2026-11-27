@@ -2,20 +2,18 @@
 
 // 8288FA08  TrainEDRAM  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/hsio.cpp:2736)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 
 int D3D::TrainEDRAM(CDevice *param_1,ulong param_2,int param_3)
 
 {
-  CDevice *this;
   int iVar1;
-  longlong lVar2;
   ulong *local_840;
   undefined4 local_83c [3];
   undefined1 auStack_830 [2096];
   
-  lVar2 = (longlong)(int)param_2;
-  this = (CDevice *)__savegprlr_28(param_1,lVar2);
   KeEnterCriticalRegion();
   RtlEnterCriticalSection(0x1c1);
   if (param_3 != 0) {
@@ -23,23 +21,22 @@ int D3D::TrainEDRAM(CDevice *param_1,ulong param_2,int param_3)
   }
   local_83c[0] = 0;
   local_840 = (ulong *)0x0;
-  iVar1 = VdRetrainEDRAM(lVar2,&local_840,0x1000,local_83c,auStack_830,0x800);
+  iVar1 = VdRetrainEDRAM(param_2,&local_840,0x1000,local_83c,auStack_830,0x800);
   if (iVar1 != 0) {
     if (param_3 == 0) {
-      D3DDevice_BlockUntilIdle((D3DDevice *)this);
+      D3DDevice_BlockUntilIdle((D3DDevice *)param_1);
     }
     do {
-      local_840 = CDevice::BeginRingBig(this,0x1000);
+      local_840 = CDevice::BeginRingBig(param_1,0x1000);
       local_840 = local_840 + 1;
-      iVar1 = VdRetrainEDRAM(lVar2,&local_840,0x1000,local_83c,auStack_830,0x800);
+      iVar1 = VdRetrainEDRAM(param_2,&local_840,0x1000,local_83c,auStack_830,0x800);
       local_840 = local_840 + -1;
-      *(ulong **)&this->field_0x30 = local_840;
-      D3DDevice_BlockUntilIdle((D3DDevice *)this);
+      *(ulong **)&param_1->field_0x30 = local_840;
+      D3DDevice_BlockUntilIdle((D3DDevice *)param_1);
     } while (iVar1 != 0);
   }
   RtlLeaveCriticalSection(0x1c1);
   KeLeaveCriticalRegion();
-  iVar1 = __restgprlr_28(1);
-  return iVar1;
+  return 1;
 }
 

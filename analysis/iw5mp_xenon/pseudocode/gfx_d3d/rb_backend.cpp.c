@@ -2,6 +2,8 @@
 
 // 8278CD20  R_DrawListIter_Init  (gfx_d3d/r_drawlistiter_inline.h:18)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
@@ -24,29 +26,27 @@ void R_DrawListIter_Init(GfxDrawListIter *param_1,GfxDrawList *param_2)
   GfxGlassSurf *pGVar14;
   GfxCloudSurf *pGVar15;
   GfxSparkSurf *pGVar16;
-  undefined4 *puVar17;
   
-  puVar17 = (undefined4 *)__savegprlr_25(param_1);
   uVar1 = (param_2->bspSurfList).count;
-  *puVar17 = 0;
+  param_1->addedPrimitive = 0;
   if (uVar1 < 2) {
-    puVar17[2] = 0;
-    puVar17[3] = 0;
+    (param_1->bspSurfIter).current = (ushort *)0x0;
+    (param_1->bspSurfIter).end = (ushort *)0x0;
   }
   else {
     puVar2 = (param_2->bspSurfList).stream;
-    puVar17[2] = puVar2;
-    puVar17[3] = puVar2 + (uVar1 - 1);
+    (param_1->bspSurfIter).current = puVar2;
+    (param_1->bspSurfIter).end = puVar2 + (uVar1 - 1);
   }
   uVar1 = (param_2->bspLightMapSurfList).count;
   if (uVar1 < 2) {
-    puVar17[5] = 0;
-    puVar17[6] = 0;
+    *(undefined4 *)&param_1->bspLightMapSurfIter = 0;
+    *(undefined4 *)&(param_1->bspLightMapSurfIter).field_0x4 = 0;
   }
   else {
     puVar2 = (param_2->bspLightMapSurfList).stream;
-    puVar17[5] = puVar2;
-    puVar17[6] = puVar2 + (uVar1 - 1);
+    *(ushort **)&param_1->bspLightMapSurfIter = puVar2;
+    *(ushort **)&(param_1->bspLightMapSurfIter).field_0x4 = puVar2 + (uVar1 - 1);
   }
   puVar3 = param_2->smodelSurfList[0].surfData;
   uVar1 = (param_2->drawSurfList).count;
@@ -61,56 +61,53 @@ void R_DrawListIter_Init(GfxDrawListIter *param_1,GfxDrawList *param_2)
   puVar12 = param_2->smodelSurfList[0].visData;
   uVar13 = (param_2->sparkSurfList).count;
   pGVar14 = (param_2->glassSurfList).surfs;
-  puVar17[9] = puVar3;
+  *(uchar **)&(param_1->smodelRigidSurfIter).field_0x4 = puVar3;
   pGVar15 = (param_2->cloudSurfList).surfs;
-  puVar17[8] = puVar12;
-  puVar17[10] = puVar3 + uVar4;
+  *(uchar **)&param_1->smodelRigidSurfIter = puVar12;
+  *(uchar **)&(param_1->smodelRigidSurfIter).field_0x8 = puVar3 + uVar4;
   pGVar16 = (param_2->sparkSurfList).surfs;
-  puVar17[0xc] = pGVar5;
-  puVar17[0xd] = pGVar5 + uVar1;
-  puVar17[0xf] = pGVar8;
-  puVar17[0x10] = pGVar8 + uVar6;
-  puVar17[0x12] = pGVar9;
-  puVar17[0x13] = pGVar9 + uVar7;
-  puVar17[0x15] = pGVar14;
-  puVar17[0x16] = pGVar14 + uVar10;
-  puVar17[0x18] = pGVar15;
-  puVar17[0x19] = pGVar15 + uVar11;
-  puVar17[0x1b] = pGVar16;
-  puVar17[0x1c] = pGVar16 + uVar13;
-  __restgprlr_25();
+  (param_1->drawSurfIter).current = pGVar5;
+  (param_1->drawSurfIter).end = pGVar5 + uVar1;
+  (param_1->codeSurfIter).current = pGVar8;
+  (param_1->codeSurfIter).end = pGVar8 + uVar6;
+  (param_1->markSurfIter).current = pGVar9;
+  (param_1->markSurfIter).end = pGVar9 + uVar7;
+  (param_1->glassSurfIter).current = pGVar14;
+  (param_1->glassSurfIter).end = pGVar14 + uVar10;
+  (param_1->cloudSurfIter).current = pGVar15;
+  (param_1->cloudSurfIter).end = pGVar15 + uVar11;
+  (param_1->sparkSurfIter).current = pGVar16;
+  (param_1->sparkSurfIter).end = pGVar16 + uVar13;
   return;
 }
 
 
 // 8279AD00  RB_CheckTessOverflow  (gfx_d3d/rb_backend.h:184)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void RB_CheckTessOverflow(uint param_1,uint param_2)
 
 {
-  uint uVar1;
-  int iVar2;
-  ulonglong uVar3;
+  int iVar1;
   
-  uVar3 = (ulonglong)(int)param_2;
-  uVar1 = __savegprlr_29(param_1);
-  if (0x800 < uVar1) {
+  if (0x800 < param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_backend.h",0xb9,0,
                     "%s\n\t(vertexCount) = %i");
   }
-  if (0xc00 < (uVar3 & 0xffffffff)) {
+  if (0xc00 < param_2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_backend.h",0xba,0,
                     "%s\n\t(indexCount) = %i");
   }
-  iVar2 = Sys_HasDeviceOwnership();
-  if (iVar2 == 0) {
+  iVar1 = Sys_HasDeviceOwnership();
+  if (iVar1 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_backend.h",0xbc,0,
                     "%s");
   }
-  if ((0x800 < tess.vertexCount + uVar1) || (0xc00 < (tess.indexCount + uVar3 & 0xffffffff))) {
+  if ((0x800 < tess.vertexCount + param_1) || (0xc00 < tess.indexCount + param_2)) {
     RB_TessOverflow();
   }
-  __restgprlr_29();
   return;
 }
 
@@ -271,6 +268,10 @@ void R_SetVertex4dWithNormal
 
 // 827924D0  RB_DrawStretchPic  (gfx_d3d/rb_backend.cpp:339)
 
+/* WARNING: Function: __savegprlr_21 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_21 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "GfxPrimStatsTarget": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
@@ -282,9 +283,8 @@ void RB_DrawStretchPic(Material *param_1,float param_2,float param_3,float param
 {
   ushort uVar1;
   uint uVar2;
-  Material *pMVar3;
-  int iVar4;
-  double extraout_f1;
+  int iVar3;
+  double dVar4;
   double dVar5;
   double dVar6;
   double dVar7;
@@ -292,7 +292,6 @@ void RB_DrawStretchPic(Material *param_1,float param_2,float param_3,float param
   double dVar9;
   double dVar10;
   double dVar11;
-  double dVar12;
   GfxColor in_stack_0000005c;
   GfxPrimStatsTarget in_stack_00000064;
   
@@ -303,23 +302,19 @@ void RB_DrawStretchPic(Material *param_1,float param_2,float param_3,float param
   dVar7 = (double)param_5;
   dVar6 = (double)param_4;
   dVar5 = (double)param_3;
-  __savegprlr_21((double)param_2,param_1,param_10,param_11);
-  pMVar3 = (Material *)__savefpr_24();
-  dVar12 = extraout_f1;
+  dVar4 = (double)param_2;
   if (gfxCmdBufSourceState.viewMode != VIEW_MODE_2D) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_backend.cpp",0x156,
                     0,"%s");
   }
-  iVar4 = DB_MaterialStreamingFail(pMVar3);
-  if (iVar4 != 0) {
+  iVar3 = DB_MaterialStreamingFail(param_1);
+  if (iVar3 != 0) {
     Com_PrintWarning(8,"WARNING: material \'%s\' not loaded since it is manually streamed.\n");
-    __restfpr_24();
-    __restgprlr_21();
     return;
   }
-  RB_SetTessTechnique(pMVar3,TECHNIQUE_UNLIT,in_stack_00000064);
-  iVar4 = Sys_HasDeviceOwnership();
-  if (iVar4 == 0) {
+  RB_SetTessTechnique(param_1,TECHNIQUE_UNLIT,in_stack_00000064);
+  iVar3 = Sys_HasDeviceOwnership();
+  if (iVar3 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_backend.h",0xbc,0,
                     "%s");
   }
@@ -334,7 +329,7 @@ void RB_DrawStretchPic(Material *param_1,float param_2,float param_3,float param
   tess.indices[tess.indexCount + 4] = uVar1;
   tess.indices[tess.indexCount + 5] = uVar1 + 1;
   uVar2 = tess.vertexCount;
-  tess.verts[tess.vertexCount].xyzw[0] = (float)dVar12;
+  tess.verts[tess.vertexCount].xyzw[0] = (float)dVar4;
   tess.verts[uVar2].normal.packed = 0x1ff00000;
   tess.verts[uVar2].xyzw[1] = (float)dVar5;
   tess.verts[uVar2].color = in_stack_0000005c;
@@ -343,7 +338,7 @@ void RB_DrawStretchPic(Material *param_1,float param_2,float param_3,float param
   tess.verts[uVar2].texCoord[0] = (float)dVar8;
   tess.verts[uVar2].texCoord[1] = (float)dVar9;
   uVar2 = tess.vertexCount;
-  tess.verts[tess.vertexCount + 1].xyzw[0] = (float)(dVar12 + dVar6);
+  tess.verts[tess.vertexCount + 1].xyzw[0] = (float)(dVar4 + dVar6);
   tess.verts[uVar2 + 1].normal.packed = 0x1ff00000;
   tess.verts[uVar2 + 1].xyzw[1] = (float)dVar5;
   tess.verts[uVar2 + 1].color = in_stack_0000005c;
@@ -352,17 +347,17 @@ void RB_DrawStretchPic(Material *param_1,float param_2,float param_3,float param
   tess.verts[uVar2 + 1].texCoord[0] = (float)dVar10;
   tess.verts[uVar2 + 1].texCoord[1] = (float)dVar9;
   uVar2 = tess.vertexCount;
-  iVar4 = tess.vertexCount + 2;
+  iVar3 = tess.vertexCount + 2;
   tess.verts[tess.vertexCount + 2].color = in_stack_0000005c;
   tess.verts[uVar2 + 2].xyzw[1] = (float)(dVar5 + dVar7);
   tess.verts[uVar2 + 2].xyzw[2] = 0.0;
   tess.verts[uVar2 + 2].normal.packed = 0x1ff00000;
   tess.verts[uVar2 + 2].xyzw[3] = 1.0;
-  tess.verts[iVar4].xyzw[0] = (float)(dVar12 + dVar6);
+  tess.verts[iVar3].xyzw[0] = (float)(dVar4 + dVar6);
   tess.verts[uVar2 + 2].texCoord[0] = (float)dVar10;
   tess.verts[uVar2 + 2].texCoord[1] = (float)dVar11;
   uVar2 = tess.vertexCount;
-  tess.verts[tess.vertexCount + 3].xyzw[0] = (float)dVar12;
+  tess.verts[tess.vertexCount + 3].xyzw[0] = (float)dVar4;
   tess.verts[uVar2 + 3].normal.packed = 0x1ff00000;
   tess.verts[uVar2 + 3].xyzw[1] = (float)(dVar5 + dVar7);
   tess.verts[uVar2 + 3].color = in_stack_0000005c;
@@ -370,16 +365,18 @@ void RB_DrawStretchPic(Material *param_1,float param_2,float param_3,float param
   tess.verts[uVar2 + 3].xyzw[3] = 1.0;
   tess.verts[uVar2 + 3].texCoord[0] = (float)dVar8;
   tess.verts[uVar2 + 3].texCoord[1] = (float)dVar11;
-  tess.indexCount = tess.indexCount + 6;
   tess.vertexCount = tess.vertexCount + 4;
-  __restfpr_24();
-  __restgprlr_21();
+  tess.indexCount = tess.indexCount + 6;
   return;
 }
 
 
 // 82792800  RB_DrawStretchPicFlipST  (gfx_d3d/rb_backend.cpp:375)
 
+/* WARNING: Function: __savegprlr_21 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_21 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "GfxPrimStatsTarget": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
@@ -392,9 +389,8 @@ void RB_DrawStretchPicFlipST
 {
   ushort uVar1;
   uint uVar2;
-  Material *pMVar3;
-  int iVar4;
-  double extraout_f1;
+  int iVar3;
+  double dVar4;
   double dVar5;
   double dVar6;
   double dVar7;
@@ -402,7 +398,6 @@ void RB_DrawStretchPicFlipST
   double dVar9;
   double dVar10;
   double dVar11;
-  double dVar12;
   GfxColor in_stack_0000005c;
   GfxPrimStatsTarget in_stack_00000064;
   
@@ -412,17 +407,15 @@ void RB_DrawStretchPicFlipST
   dVar9 = (double)param_7;
   dVar7 = (double)param_5;
   dVar6 = (double)param_4;
+  dVar4 = (double)param_2;
   dVar5 = (double)param_3;
-  __savegprlr_21((double)param_2,param_1,param_10,param_11);
-  pMVar3 = (Material *)__savefpr_24();
-  dVar12 = extraout_f1;
   if (gfxCmdBufSourceState.viewMode != VIEW_MODE_2D) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_backend.cpp",0x17a,
                     0,"%s");
   }
-  RB_SetTessTechnique(pMVar3,TECHNIQUE_UNLIT,in_stack_00000064);
-  iVar4 = Sys_HasDeviceOwnership();
-  if (iVar4 == 0) {
+  RB_SetTessTechnique(param_1,TECHNIQUE_UNLIT,in_stack_00000064);
+  iVar3 = Sys_HasDeviceOwnership();
+  if (iVar3 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_backend.h",0xbc,0,
                     "%s");
   }
@@ -437,7 +430,7 @@ void RB_DrawStretchPicFlipST
   tess.indices[tess.indexCount + 4] = uVar1;
   tess.indices[tess.indexCount + 5] = uVar1 + 1;
   uVar2 = tess.vertexCount;
-  tess.verts[tess.vertexCount].xyzw[0] = (float)dVar12;
+  tess.verts[tess.vertexCount].xyzw[0] = (float)dVar4;
   tess.verts[uVar2].normal.packed = 0x1ff00000;
   tess.verts[uVar2].xyzw[1] = (float)dVar5;
   tess.verts[uVar2].color = in_stack_0000005c;
@@ -446,7 +439,7 @@ void RB_DrawStretchPicFlipST
   tess.verts[uVar2].texCoord[0] = (float)dVar8;
   tess.verts[uVar2].texCoord[1] = (float)dVar9;
   uVar2 = tess.vertexCount;
-  tess.verts[tess.vertexCount + 1].xyzw[0] = (float)(dVar12 + dVar6);
+  tess.verts[tess.vertexCount + 1].xyzw[0] = (float)(dVar4 + dVar6);
   tess.verts[uVar2 + 1].normal.packed = 0x1ff00000;
   tess.verts[uVar2 + 1].xyzw[1] = (float)dVar5;
   tess.verts[uVar2 + 1].color = in_stack_0000005c;
@@ -455,17 +448,17 @@ void RB_DrawStretchPicFlipST
   tess.verts[uVar2 + 1].texCoord[0] = (float)dVar8;
   tess.verts[uVar2 + 1].texCoord[1] = (float)dVar11;
   uVar2 = tess.vertexCount;
-  iVar4 = tess.vertexCount + 2;
+  iVar3 = tess.vertexCount + 2;
   tess.verts[tess.vertexCount + 2].color = in_stack_0000005c;
   tess.verts[uVar2 + 2].xyzw[1] = (float)(dVar5 + dVar7);
   tess.verts[uVar2 + 2].xyzw[2] = 0.0;
   tess.verts[uVar2 + 2].normal.packed = 0x1ff00000;
   tess.verts[uVar2 + 2].xyzw[3] = 1.0;
-  tess.verts[iVar4].xyzw[0] = (float)(dVar12 + dVar6);
+  tess.verts[iVar3].xyzw[0] = (float)(dVar4 + dVar6);
   tess.verts[uVar2 + 2].texCoord[0] = (float)dVar10;
   tess.verts[uVar2 + 2].texCoord[1] = (float)dVar11;
   uVar2 = tess.vertexCount;
-  tess.verts[tess.vertexCount + 3].xyzw[0] = (float)dVar12;
+  tess.verts[tess.vertexCount + 3].xyzw[0] = (float)dVar4;
   tess.verts[uVar2 + 3].normal.packed = 0x1ff00000;
   tess.verts[uVar2 + 3].xyzw[1] = (float)(dVar5 + dVar7);
   tess.verts[uVar2 + 3].color = in_stack_0000005c;
@@ -473,16 +466,18 @@ void RB_DrawStretchPicFlipST
   tess.verts[uVar2 + 3].xyzw[3] = 1.0;
   tess.verts[uVar2 + 3].texCoord[0] = (float)dVar10;
   tess.verts[uVar2 + 3].texCoord[1] = (float)dVar9;
-  tess.indexCount = tess.indexCount + 6;
   tess.vertexCount = tess.vertexCount + 4;
-  __restfpr_24();
-  __restgprlr_21();
+  tess.indexCount = tess.indexCount + 6;
   return;
 }
 
 
 // 82792AF8  RB_DrawStretchPicRotate  (gfx_d3d/rb_backend.cpp:404)
 
+/* WARNING: Function: __savegprlr_21 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_21 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "GfxPrimStatsTarget": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
@@ -494,11 +489,10 @@ void RB_DrawStretchPicRotate
 
 {
   uint uVar1;
-  uint uVar2;
-  ushort uVar3;
-  Material *pMVar4;
-  int iVar5;
-  double extraout_f1;
+  ushort uVar2;
+  uint uVar3;
+  int iVar4;
+  double dVar5;
   double dVar6;
   double dVar7;
   double dVar8;
@@ -508,7 +502,6 @@ void RB_DrawStretchPicRotate
   double dVar12;
   double dVar13;
   double dVar14;
-  double dVar15;
   GfxColor in_stack_0000006c;
   GfxPrimStatsTarget in_stack_00000074;
   
@@ -521,16 +514,14 @@ void RB_DrawStretchPicRotate
   dVar12 = (double)param_9;
   dVar7 = (double)param_4;
   dVar6 = (double)param_3;
-  __savegprlr_21((double)param_2,param_1,param_12,param_13);
-  pMVar4 = (Material *)__savefpr_22();
-  dVar15 = extraout_f1;
+  dVar5 = (double)param_2;
   if (gfxCmdBufSourceState.viewMode != VIEW_MODE_2D) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_backend.cpp",0x19a,
                     0,"%s");
   }
-  RB_SetTessTechnique(pMVar4,TECHNIQUE_UNLIT,in_stack_00000074);
-  iVar5 = Sys_HasDeviceOwnership();
-  if (iVar5 == 0) {
+  RB_SetTessTechnique(param_1,TECHNIQUE_UNLIT,in_stack_00000074);
+  iVar4 = Sys_HasDeviceOwnership();
+  if (iVar4 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_backend.h",0xbc,0,
                     "%s");
   }
@@ -538,60 +529,62 @@ void RB_DrawStretchPicRotate
     RB_TessOverflow();
     uVar1 = tess.indexCount;
   }
-  uVar3 = (ushort)tess.vertexCount;
   tess.indexCount = uVar1 + 6;
-  uVar2 = tess.vertexCount & 0xffff;
+  uVar3 = tess.vertexCount & 0xffff;
+  uVar2 = (ushort)tess.vertexCount;
   tess.vertexCount = tess.vertexCount + 4;
-  tess.indices[uVar1 + 1] = uVar3;
-  tess.indices[uVar1 + 4] = uVar3;
-  tess.indices[uVar1 + 5] = uVar3 + 1;
-  tess.indices[uVar1] = uVar3 + 3;
-  tess.indices[uVar1 + 2] = uVar3 + 2;
-  tess.indices[uVar1 + 3] = uVar3 + 2;
-  tess.verts[uVar2].xyzw[1] = (float)dVar6;
-  tess.verts[uVar2].xyzw[2] = 0.0;
-  tess.verts[uVar2].normal.packed = 0x1ff00000;
-  tess.verts[uVar2].xyzw[3] = 1.0;
-  tess.verts[uVar2].color = in_stack_0000006c;
-  tess.verts[uVar2].xyzw[0] = (float)dVar15;
-  tess.verts[uVar2].texCoord[0] = (float)dVar9;
-  tess.verts[uVar2].texCoord[1] = (float)dVar10;
-  tess.verts[uVar2 + 1].normal.packed = 0x1ff00000;
-  tess.verts[uVar2 + 1].xyzw[1] = (float)((double)(float)(dVar7 * dVar13) + dVar6);
-  tess.verts[uVar2 + 1].color = in_stack_0000006c;
-  tess.verts[uVar2 + 1].xyzw[2] = 0.0;
-  tess.verts[uVar2 + 1].xyzw[3] = 1.0;
-  tess.verts[uVar2 + 1].xyzw[0] = (float)((double)(float)(dVar7 * dVar14) + dVar15);
-  tess.verts[uVar2 + 1].texCoord[0] = (float)dVar11;
-  tess.verts[uVar2 + 1].texCoord[1] = (float)dVar10;
-  tess.verts[uVar2 + 2].normal.packed = 0x1ff00000;
-  tess.verts[uVar2 + 2].xyzw[0] =
+  tess.indices[uVar1 + 1] = uVar2;
+  tess.indices[uVar1 + 4] = uVar2;
+  tess.indices[uVar1 + 5] = uVar2 + 1;
+  tess.indices[uVar1] = uVar2 + 3;
+  tess.indices[uVar1 + 2] = uVar2 + 2;
+  tess.indices[uVar1 + 3] = uVar2 + 2;
+  tess.verts[uVar3].xyzw[1] = (float)dVar6;
+  tess.verts[uVar3].xyzw[2] = 0.0;
+  tess.verts[uVar3].normal.packed = 0x1ff00000;
+  tess.verts[uVar3].xyzw[3] = 1.0;
+  tess.verts[uVar3].color = in_stack_0000006c;
+  tess.verts[uVar3].xyzw[0] = (float)dVar5;
+  tess.verts[uVar3].texCoord[0] = (float)dVar9;
+  tess.verts[uVar3].texCoord[1] = (float)dVar10;
+  tess.verts[uVar3 + 1].normal.packed = 0x1ff00000;
+  tess.verts[uVar3 + 1].xyzw[1] = (float)((double)(float)(dVar7 * dVar13) + dVar6);
+  tess.verts[uVar3 + 1].color = in_stack_0000006c;
+  tess.verts[uVar3 + 1].xyzw[2] = 0.0;
+  tess.verts[uVar3 + 1].xyzw[3] = 1.0;
+  tess.verts[uVar3 + 1].xyzw[0] = (float)((double)(float)(dVar7 * dVar14) + dVar5);
+  tess.verts[uVar3 + 1].texCoord[0] = (float)dVar11;
+  tess.verts[uVar3 + 1].texCoord[1] = (float)dVar10;
+  tess.verts[uVar3 + 2].normal.packed = 0x1ff00000;
+  tess.verts[uVar3 + 2].xyzw[0] =
        (float)((double)(float)(-(double)(float)(dVar8 * dVar13) + (double)(float)(dVar7 * dVar14)) +
-              dVar15);
-  tess.verts[uVar2 + 2].color = in_stack_0000006c;
-  tess.verts[uVar2 + 2].xyzw[2] = 0.0;
-  tess.verts[uVar2 + 2].xyzw[3] = 1.0;
-  tess.verts[uVar2 + 2].xyzw[1] =
+              dVar5);
+  tess.verts[uVar3 + 2].color = in_stack_0000006c;
+  tess.verts[uVar3 + 2].xyzw[2] = 0.0;
+  tess.verts[uVar3 + 2].xyzw[3] = 1.0;
+  tess.verts[uVar3 + 2].xyzw[1] =
        (float)((double)(float)((double)(float)(dVar8 * dVar14) + (double)(float)(dVar7 * dVar13)) +
               dVar6);
-  tess.verts[uVar2 + 2].texCoord[0] = (float)dVar11;
-  tess.verts[uVar2 + 2].texCoord[1] = (float)dVar12;
-  tess.verts[uVar2 + 3].xyzw[0] = (float)(-(double)(float)(dVar8 * dVar13) + dVar15);
-  tess.verts[uVar2 + 3].normal.packed = 0x1ff00000;
-  tess.verts[uVar2 + 3].xyzw[1] = (float)((double)(float)(dVar8 * dVar14) + dVar6);
-  tess.verts[uVar2 + 3].color = in_stack_0000006c;
-  tess.verts[uVar2 + 3].xyzw[2] = 0.0;
-  tess.verts[uVar2 + 3].xyzw[3] = 1.0;
-  tess.verts[uVar2 + 3].texCoord[0] = (float)dVar9;
-  tess.verts[uVar2 + 3].texCoord[1] = (float)dVar12;
-  __restfpr_22();
-  __restgprlr_21();
+  tess.verts[uVar3 + 2].texCoord[0] = (float)dVar11;
+  tess.verts[uVar3 + 2].texCoord[1] = (float)dVar12;
+  tess.verts[uVar3 + 3].xyzw[0] = (float)(-(double)(float)(dVar8 * dVar13) + dVar5);
+  tess.verts[uVar3 + 3].normal.packed = 0x1ff00000;
+  tess.verts[uVar3 + 3].xyzw[1] = (float)((double)(float)(dVar8 * dVar14) + dVar6);
+  tess.verts[uVar3 + 3].color = in_stack_0000006c;
+  tess.verts[uVar3 + 3].xyzw[2] = 0.0;
+  tess.verts[uVar3 + 3].xyzw[3] = 1.0;
+  tess.verts[uVar3 + 3].texCoord[0] = (float)dVar9;
+  tess.verts[uVar3 + 3].texCoord[1] = (float)dVar12;
   return;
 }
 
 
 // 82792D80  RB_DrawFullScreenColoredQuad  (gfx_d3d/rb_backend.cpp:442)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 /* WARNING: Enum "GfxPrimStatsTarget": Some values do not have unique names */
@@ -601,28 +594,22 @@ void RB_DrawFullScreenColoredQuad
                ulong param_6)
 
 {
-  Material *pMVar1;
   GfxPrimStatsTarget in_r5;
-  double extraout_f1;
+  double dVar1;
   double dVar2;
   double dVar3;
   double dVar4;
-  double dVar5;
   
   dVar4 = (double)param_5;
   dVar3 = (double)param_4;
+  dVar1 = (double)param_2;
   dVar2 = (double)param_3;
-  __savegprlr_29((double)param_2,param_1);
-  pMVar1 = (Material *)__savefpr_28();
-  dVar5 = extraout_f1;
   RB_EndSurfaceIfNeeded();
   R_Set2D(&gfxCmdBufSourceState);
-  RB_DrawStretchPic(pMVar1,0.0,0.0,(float)(longlong)gfxCmdBufSourceState.renderTargetWidth,
-                    (float)(longlong)gfxCmdBufSourceState.renderTargetHeight,(float)dVar5,
+  RB_DrawStretchPic(param_1,0.0,0.0,(float)(longlong)gfxCmdBufSourceState.renderTargetWidth,
+                    (float)(longlong)gfxCmdBufSourceState.renderTargetHeight,(float)dVar1,
                     (float)dVar2,(float)dVar3,(float)dVar4,param_6,in_r5);
   RB_EndTessSurface();
-  __restfpr_28();
-  __restgprlr_29();
   return;
 }
 
@@ -639,6 +626,10 @@ void RB_FullScreenColoredFilter(Material *param_1,ulong param_2)
 
 // 8278D010  RB_SplitScreenTexCoords  (gfx_d3d/rb_backend.cpp:462)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 
@@ -652,105 +643,92 @@ void RB_SplitScreenTexCoords
   bool bVar2;
   ulonglong uVar3;
   ulonglong uVar4;
-  float *pfVar5;
-  ulonglong uVar6;
-  ulonglong uVar7;
-  float *pfVar8;
-  ulonglong in_r9;
-  float *pfVar9;
-  ulonglong in_r10;
-  float *pfVar10;
+  float *in_r9;
+  float *in_r10;
+  double dVar5;
+  double dVar6;
+  double dVar7;
+  double dVar8;
+  double dVar9;
+  double dVar10;
   double dVar11;
-  double dVar12;
-  double dVar13;
-  double dVar14;
-  double dVar15;
-  double dVar16;
-  double dVar17;
   char in_stack_00000057;
   char in_stack_0000005f;
   
-  dVar14 = (double)param_4;
-  dVar15 = (double)param_11;
-  dVar13 = (double)param_3;
-  dVar12 = (double)param_2;
-  uVar6 = (ulonglong)param_10;
-  uVar3 = (ulonglong)param_9;
-  __savegprlr_26((double)param_1,param_5,param_6,param_7,param_8);
-  dVar11 = (double)__savefpr_27();
-  if ((uVar3 & 0xffffffff) == 0) {
+  dVar8 = (double)param_4;
+  dVar9 = (double)param_11;
+  dVar7 = (double)param_3;
+  dVar6 = (double)param_2;
+  dVar5 = (double)param_1;
+  if (!param_9) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_backend.cpp",0x1d3,
                     0,"%s");
   }
-  if ((in_r9 & 0xffffffff) == 0) {
+  if (in_r9 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_backend.cpp",0x1d4,
                     0,"%s");
   }
-  if ((uVar6 & 0xffffffff) == 0) {
+  if (!param_10) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_backend.cpp",0x1d5,
                     0,"%s");
   }
-  if ((in_r10 & 0xffffffff) == 0) {
+  if (in_r10 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_backend.cpp",0x1d6,
                     0,"%s");
   }
   if (in_stack_00000057 == '\0') {
-    uVar4 = (ulonglong)vidConfig.sceneWidth;
-    uVar7 = (ulonglong)vidConfig.sceneHeight;
+    uVar3 = (ulonglong)vidConfig.sceneWidth;
+    uVar4 = (ulonglong)vidConfig.sceneHeight;
   }
   else {
-    uVar7 = (ulonglong)gfxCmdBufSourceState.renderTargetHeight;
-    uVar4 = (ulonglong)gfxCmdBufSourceState.renderTargetWidth;
+    uVar4 = (ulonglong)gfxCmdBufSourceState.renderTargetHeight;
+    uVar3 = (ulonglong)gfxCmdBufSourceState.renderTargetWidth;
   }
-  dVar17 = (double)(float)(1.0 / (double)(longlong)uVar4);
-  dVar16 = (double)(float)(1.0 / (double)(longlong)uVar7);
-  pfVar5 = (float *)uVar3;
-  *pfVar5 = (float)(dVar17 * dVar11);
-  pfVar8 = (float *)uVar6;
-  *pfVar8 = (float)(dVar16 * dVar12);
-  pfVar9 = (float *)in_r9;
-  *pfVar9 = (float)((double)(float)(dVar11 + dVar13) * dVar17);
-  pfVar10 = (float *)in_r10;
-  *pfVar10 = (float)((double)(float)(dVar12 + dVar14) * dVar16);
-  if (dVar15 != 0.0) {
+  dVar11 = (double)(float)(1.0 / (double)(longlong)uVar3);
+  dVar10 = (double)(float)(1.0 / (double)(longlong)uVar4);
+  *(float *)(int)param_9 = (float)(dVar11 * dVar5);
+  *(float *)(int)param_10 = (float)(dVar10 * dVar6);
+  *in_r9 = (float)((double)(float)(dVar5 + dVar7) * dVar11);
+  *in_r10 = (float)((double)(float)(dVar6 + dVar8) * dVar10);
+  if (dVar9 != 0.0) {
     if ((in_stack_0000005f != '\0') ||
        ((in_stack_00000057 != '\0' &&
-        ((dVar14 < (double)(longlong)uVar7 || (dVar13 < (double)(longlong)uVar4)))))) {
+        ((dVar8 < (double)(longlong)uVar4 || (dVar7 < (double)(longlong)uVar3)))))) {
       bVar2 = true;
     }
     else {
       bVar2 = false;
     }
     if (bVar2) {
-      if (dVar13 <= dVar14) {
-        if (dVar13 <= 1e-06) {
+      if (dVar7 <= dVar8) {
+        if (dVar7 <= 1e-06) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_backend.cpp",
                           0x1f5,0,"%s");
         }
-        dVar15 = dVar15 / dVar13;
+        dVar9 = dVar9 / dVar7;
       }
       else {
-        if (dVar14 <= 1e-06) {
+        if (dVar8 <= 1e-06) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_backend.cpp",
                           0x1f0,0,"%s");
         }
-        dVar15 = dVar15 / dVar14;
+        dVar9 = dVar9 / dVar8;
       }
-      fVar1 = (float)dVar15;
-      *pfVar5 = *pfVar5 + fVar1;
-      *pfVar8 = *pfVar8 + fVar1;
-      *pfVar9 = *pfVar9 - fVar1;
-      *pfVar10 = *pfVar10 - fVar1;
+      fVar1 = (float)dVar9;
+      *(float *)(int)param_9 = *(float *)(int)param_9 + fVar1;
+      *(float *)(int)param_10 = *(float *)(int)param_10 + fVar1;
+      *in_r9 = *in_r9 - fVar1;
+      *in_r10 = *in_r10 - fVar1;
     }
   }
-  __restfpr_27();
-  __restgprlr_26();
   return;
 }
 
 
 // 82792E58  RB_SplitScreenFilter  (gfx_d3d/rb_backend.cpp:514)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "GfxPrimStatsTarget": Some values do not have unique names */
@@ -759,15 +737,12 @@ void RB_SplitScreenFilter(Material *param_1,GfxViewInfo *param_2,ulong param_3)
 
 {
   int iVar1;
-  float fVar2;
+  int iVar2;
   float fVar3;
   float fVar4;
   float fVar5;
-  Material *pMVar6;
-  longlong lVar7;
+  float fVar6;
   
-  lVar7 = (longlong)(int)param_2;
-  pMVar6 = (Material *)__savegprlr_29(param_1,lVar7,param_3);
   RB_EndSurfaceIfNeeded();
   if ((((gfxCmdBufSourceState.input.consts[0x3c][0] != 0.0) ||
        (gfxCmdBufSourceState.input.consts[0x3c][1] != 0.0)) ||
@@ -780,20 +755,18 @@ void RB_SplitScreenFilter(Material *param_1,GfxViewInfo *param_2,ulong param_3)
     R_DirtyCodeConstant(&gfxCmdBufSourceState,0x3c);
   }
   R_Set2D(&gfxCmdBufSourceState);
-  iVar1 = (int)lVar7;
-  fVar2 = (float)(longlong)(*(int *)(iVar1 + 0x158) + *(int *)(iVar1 + 0x150)) /
-          (float)vidConfig.sceneWidth;
-  fVar3 = (float)(longlong)*(int *)(iVar1 + 0x150) / (float)vidConfig.sceneWidth;
-  fVar5 = (float)(longlong)*(int *)(iVar1 + 0x154) / (float)vidConfig.sceneHeight;
-  fVar4 = (float)(longlong)(*(int *)(iVar1 + 0x15c) + *(int *)(iVar1 + 0x154)) /
-          (float)vidConfig.sceneHeight;
-  RB_DrawStretchPic(pMVar6,fVar3 * (float)(longlong)gfxCmdBufSourceState.renderTargetWidth,
-                    fVar5 * (float)(longlong)gfxCmdBufSourceState.renderTargetHeight,
-                    (fVar2 - fVar3) * (float)(longlong)gfxCmdBufSourceState.renderTargetWidth,
-                    (fVar4 - fVar5) * (float)(longlong)gfxCmdBufSourceState.renderTargetHeight,fVar3
-                    ,fVar5,fVar2,fVar4,gfxCmdBufSourceState.renderTargetWidth,GFX_PRIM_STATS_CODE);
+  iVar1 = (param_2->sceneViewport).x;
+  iVar2 = (param_2->sceneViewport).y;
+  fVar3 = (float)(longlong)((param_2->sceneViewport).width + iVar1) / (float)vidConfig.sceneWidth;
+  fVar4 = (float)(longlong)iVar1 / (float)vidConfig.sceneWidth;
+  fVar6 = (float)(longlong)iVar2 / (float)vidConfig.sceneHeight;
+  fVar5 = (float)(longlong)((param_2->sceneViewport).height + iVar2) / (float)vidConfig.sceneHeight;
+  RB_DrawStretchPic(param_1,fVar4 * (float)(longlong)gfxCmdBufSourceState.renderTargetWidth,
+                    fVar6 * (float)(longlong)gfxCmdBufSourceState.renderTargetHeight,
+                    (fVar3 - fVar4) * (float)(longlong)gfxCmdBufSourceState.renderTargetWidth,
+                    (fVar5 - fVar6) * (float)(longlong)gfxCmdBufSourceState.renderTargetHeight,fVar4
+                    ,fVar6,fVar3,fVar5,gfxCmdBufSourceState.renderTargetWidth,GFX_PRIM_STATS_CODE);
   RB_EndTessSurface();
-  __restgprlr_29();
   return;
 }
 
@@ -874,6 +847,10 @@ void RB_Filter(Material *param_1,GfxViewInfo *param_2)
 
 // 82793118  RB_ViewportColoredFilter  (gfx_d3d/rb_backend.cpp:566)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 /* WARNING: Enum "GfxPrimStatsTarget": Some values do not have unique names */
@@ -890,11 +867,10 @@ void RB_ViewportColoredFilter
   float fVar5;
   uint uVar6;
   GfxViewportBehavior GVar7;
-  Material *pMVar8;
-  longlong lVar9;
-  ulonglong uVar10;
-  GfxVertex *pGVar11;
-  double extraout_f1;
+  longlong lVar8;
+  GfxVertex *pGVar9;
+  double dVar10;
+  double dVar11;
   double dVar12;
   double dVar13;
   double dVar14;
@@ -903,8 +879,6 @@ void RB_ViewportColoredFilter
   double dVar17;
   double dVar18;
   double dVar19;
-  double dVar20;
-  double dVar21;
   undefined1 *local_110 [21];
   undefined1 local_b9;
   undefined4 local_b4;
@@ -914,25 +888,22 @@ void RB_ViewportColoredFilter
   longlong local_98;
   ulonglong local_90;
   
-  uVar10 = (ulonglong)param_4;
-  __savegprlr_24((double)param_6,param_1);
-  pMVar8 = (Material *)__savefpr_24();
-  dVar12 = extraout_f1;
+  dVar10 = (double)param_6;
   local_110[0] = (undefined1 *)register0x0000000c;
-  if (pMVar8 == (Material *)0x0) {
+  if (param_1 == (Material *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_backend.cpp",0x24e,
                     0,"%s");
   }
   RB_EndSurfaceIfNeeded();
   GVar7 = gfxCmdBufSourceState.viewportBehavior;
-  dVar21 = 1.0;
-  dVar14 = dVar21;
-  dVar15 = dVar21;
-  if ((uVar10 & 0xff) == 0) {
+  dVar19 = 1.0;
+  dVar12 = dVar19;
+  dVar13 = dVar19;
+  if (!param_4) {
     gfxCmdBufSourceState.viewportBehavior = GFX_USE_VIEWPORT_FULL;
     local_90 = (ulonglong)vidConfig.sceneHeight;
-    dVar14 = (double)((float)(longlong)gfxCmdBufSourceState.renderTargetHeight / (float)local_90);
-    dVar15 = (double)((float)(longlong)gfxCmdBufSourceState.renderTargetWidth /
+    dVar12 = (double)((float)(longlong)gfxCmdBufSourceState.renderTargetHeight / (float)local_90);
+    dVar13 = (double)((float)(longlong)gfxCmdBufSourceState.renderTargetWidth /
                      (float)vidConfig.sceneWidth);
   }
   R_Set2D(&gfxCmdBufSourceState);
@@ -940,97 +911,93 @@ void RB_ViewportColoredFilter
   pfVar3 = (float *)param_3->x;
   local_b4 = CONCAT31(local_b4._0_3_,param_5);
   local_98 = (longlong)(int)pfVar3;
-  local_b9 = (undefined1)uVar10;
-  lVar9 = (longlong)param_3->width;
-  dVar17 = (double)lVar9;
-  dVar18 = (double)(longlong)(int)pfVar2;
-  dVar19 = (double)local_98;
-  dVar16 = (double)(longlong)param_3->height;
-  local_90 = lVar9;
+  lVar8 = (longlong)param_3->width;
+  dVar15 = (double)lVar8;
+  dVar16 = (double)(longlong)(int)pfVar2;
+  dVar17 = (double)local_98;
+  dVar14 = (double)(longlong)param_3->height;
+  local_b9 = param_4;
+  local_90 = lVar8;
   RB_SplitScreenTexCoords
-            ((float)local_98,(float)(longlong)(int)pfVar2,(float)lVar9,
+            ((float)local_98,(float)(longlong)(int)pfVar2,(float)lVar8,
              (float)(longlong)param_3->height,pfVar2,pfVar3,(float *)param_3->width,pfVar3,
-             (bool)((char)local_110 + -0x80),(bool)((char)local_110 + 'x'),(float)dVar12);
+             (bool)((char)local_110 + -0x80),(bool)((char)local_110 + 'x'),(float)dVar10);
   iVar4 = (r_screenFilterQuads->current).integer;
   if (iVar4 == 0) {
     local_b4 = param_2;
-    if ((uVar10 & 0xff) == 0) {
+    if (param_4) {
       local_ac = 8;
-      RB_DrawStretchPic(pMVar8,(float)(dVar19 * dVar15),(float)(dVar18 * dVar14),
-                        (float)(dVar17 * dVar15),(float)(dVar16 * dVar14),local_90._0_4_,
-                        local_98._0_4_,local_9c,local_a0,0x845b0000,(GfxPrimStatsTarget)lVar9);
+      RB_DrawStretchPic(param_1,0.0,0.0,(float)dVar15,(float)dVar14,local_90._0_4_,local_98._0_4_,
+                        local_9c,local_a0,0x845b0000,(GfxPrimStatsTarget)lVar8);
     }
     else {
       local_ac = 8;
-      RB_DrawStretchPic(pMVar8,0.0,0.0,(float)dVar17,(float)dVar16,local_90._0_4_,local_98._0_4_,
-                        local_9c,local_a0,0x845b0000,(GfxPrimStatsTarget)lVar9);
+      RB_DrawStretchPic(param_1,(float)(dVar17 * dVar13),(float)(dVar16 * dVar12),
+                        (float)(dVar15 * dVar13),(float)(dVar14 * dVar12),local_90._0_4_,
+                        local_98._0_4_,local_9c,local_a0,0x845b0000,(GfxPrimStatsTarget)lVar8);
     }
     RB_EndTessSurface();
     gfxCmdBufSourceState.viewportBehavior = GVar7;
-    __restfpr_24();
-    __restgprlr_24();
     return;
   }
-  dVar19 = (double)local_90._0_4_;
-  dVar18 = (double)(longlong)iVar4;
+  dVar17 = (double)local_90._0_4_;
+  dVar16 = (double)(longlong)iVar4;
   local_90 = (longlong)iVar4;
-  dVar12 = floor((double)(float)(dVar18 * dVar19));
-  dVar15 = (double)local_9c;
-  dVar14 = (double)(float)dVar12;
-  dVar12 = ceil((double)(float)(dVar18 * dVar15));
-  dVar20 = (double)(float)dVar12;
-  RB_SetTessTechnique(pMVar8,TECHNIQUE_UNLIT,GFX_PRIM_STATS_CODE);
+  dVar10 = floor((double)(float)(dVar16 * dVar17));
+  dVar13 = (double)local_9c;
+  dVar12 = (double)(float)dVar10;
+  dVar10 = ceil((double)(float)(dVar16 * dVar13));
+  dVar18 = (double)(float)dVar10;
+  RB_SetTessTechnique(param_1,TECHNIQUE_UNLIT,GFX_PRIM_STATS_CODE);
   RB_SetTessPrimType(8);
-  dVar12 = (double)(float)(dVar14 + dVar21);
-  if (dVar12 <= dVar20) {
-    dVar14 = dVar19;
+  dVar10 = (double)(float)(dVar12 + dVar19);
+  if (dVar10 <= dVar18) {
+    dVar12 = dVar17;
     fVar5 = 0.0;
     do {
       uVar6 = tess.vertexCount;
-      dVar13 = dVar15;
-      if (dVar12 != dVar20) {
-        dVar13 = (double)(float)(dVar12 / dVar18);
+      dVar11 = dVar13;
+      if (dVar10 != dVar18) {
+        dVar11 = (double)(float)(dVar10 / dVar16);
       }
-      pGVar11 = tess.verts + tess.vertexCount;
-      dVar12 = (double)(float)(dVar12 + dVar21);
+      pGVar9 = tess.verts + tess.vertexCount;
+      dVar10 = (double)(float)(dVar10 + dVar19);
       tess.verts[tess.vertexCount].normal.packed = 0x1ff00000;
-      pGVar11->xyzw[0] = fVar5;
+      pGVar9->xyzw[0] = fVar5;
       tess.verts[uVar6].xyzw[1] = 0.0;
       tess.verts[uVar6].color.packed = param_2;
       tess.verts[uVar6].xyzw[2] = 0.0;
-      tess.verts[uVar6].xyzw[3] = (float)dVar21;
-      tess.verts[uVar6].texCoord[0] = (float)dVar14;
+      tess.verts[uVar6].xyzw[3] = (float)dVar19;
+      tess.verts[uVar6].texCoord[0] = (float)dVar12;
       tess.verts[uVar6].texCoord[1] = local_98._0_4_;
       uVar6 = tess.vertexCount;
-      fVar1 = (float)((double)((float)(dVar13 - dVar19) *
-                              (float)(dVar21 / (double)(float)(dVar15 - dVar19))) * dVar17);
+      fVar1 = (float)((double)((float)(dVar11 - dVar17) *
+                              (float)(dVar19 / (double)(float)(dVar13 - dVar17))) * dVar15);
       tess.verts[tess.vertexCount + 1].xyzw[0] = fVar1;
       tess.verts[uVar6 + 1].normal.packed = 0x1ff00000;
       tess.verts[uVar6 + 1].xyzw[1] = 0.0;
       tess.verts[uVar6 + 1].color.packed = param_2;
       tess.verts[uVar6 + 1].xyzw[2] = 0.0;
-      tess.verts[uVar6 + 1].xyzw[3] = (float)dVar21;
-      tess.verts[uVar6 + 1].texCoord[0] = (float)dVar13;
+      tess.verts[uVar6 + 1].xyzw[3] = (float)dVar19;
+      tess.verts[uVar6 + 1].texCoord[0] = (float)dVar11;
       tess.verts[uVar6 + 1].texCoord[1] = local_98._0_4_;
       uVar6 = tess.vertexCount;
       tess.verts[tess.vertexCount + 2].xyzw[0] = fVar5;
       tess.verts[uVar6 + 2].normal.packed = 0x1ff00000;
-      tess.verts[uVar6 + 2].xyzw[1] = (float)dVar16;
+      tess.verts[uVar6 + 2].xyzw[1] = (float)dVar14;
       tess.verts[uVar6 + 2].color.packed = param_2;
       tess.verts[uVar6 + 2].xyzw[2] = 0.0;
-      tess.verts[uVar6 + 2].xyzw[3] = (float)dVar21;
-      tess.verts[uVar6 + 2].texCoord[0] = (float)dVar14;
+      tess.verts[uVar6 + 2].xyzw[3] = (float)dVar19;
+      tess.verts[uVar6 + 2].texCoord[0] = (float)dVar12;
       tess.verts[uVar6 + 2].texCoord[1] = local_a0;
       tess.vertexCount = tess.vertexCount + 3;
-      dVar14 = dVar13;
+      dVar12 = dVar11;
       fVar5 = fVar1;
-    } while (dVar12 <= dVar20);
+    } while (dVar10 <= dVar18);
   }
   RB_EndTessSurface();
   RB_SetTessPrimType(4);
   gfxCmdBufSourceState.viewportBehavior = GVar7;
-  __restfpr_24();
-  __restgprlr_24();
   return;
 }
 
@@ -1048,6 +1015,8 @@ void RB_ViewportFilter(Material *param_1,GfxViewport *param_2,bool param_3,bool 
 
 // 8278D310  R_ResolveAndClear_Xbox360  (gfx_d3d/rb_backend.cpp:668)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 
 void R_ResolveAndClear_Xbox360
@@ -1055,59 +1024,53 @@ void R_ResolveAndClear_Xbox360
                float *param_6,float param_7,uchar param_8,_D3DRECT *param_9,_D3DPOINT *param_10)
 
 {
-  D3DDevice *pDVar1;
-  ulonglong uVar2;
-  ulonglong uVar3;
-  double extraout_f1;
-  double dVar4;
+  double dVar1;
   _D3DRECT *in_stack_00000054;
   _D3DPOINT *in_stack_0000005c;
   ulong in_stack_ffffff28;
   _D3DRESOLVE_PARAMETERS *in_stack_ffffff2c;
   __vector4_u_0 local_60 [6];
   
-  uVar3 = (ulonglong)(char)param_4;
-  uVar2 = (ulonglong)(int)param_2;
-  pDVar1 = (D3DDevice *)__savegprlr_24((double)param_7,param_1);
-  if ((uVar3 & 0xf) != 0) {
+  dVar1 = (double)param_7;
+  if ((param_4 & 0xf) != 0) {
     local_60[0]._0_4_ = *param_6;
     param_3 = param_3 | 0x100;
     local_60[0]._4_4_ = param_6[1];
     local_60[0]._8_4_ = param_6[2];
     local_60[0]._12_4_ = param_6[3];
   }
-  dVar4 = extraout_f1;
-  if ((uVar3 & 0xb0) != 0) {
-    if ((uVar3 & 0x10) == 0) {
+  if ((param_4 & 0xb0) != 0) {
+    if ((param_4 & 0x10) == 0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_backend.cpp",
                       0x2ac,0,"%s\n\t(whichToClear) = %i");
     }
-    if ((uVar3 & 0xa0) == 0) {
+    if ((param_4 & 0xa0) == 0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_backend.cpp",
                       0x2ad,0,"%s\n\t(whichToClear) = %i");
     }
     param_3 = param_3 | 0x200;
   }
-  if ((uVar2 & 0xffffffff) == 0) {
+  if (param_2 == (GfxImage *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_backend.cpp",0x2b5,
                     0,"%s");
   }
   PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffff,"Resolve");
   PIXBeginNamedEvent_Copy_VarArgs(0xffffffff,"%s");
   do {
-    D3DDevice_Resolve(pDVar1,param_3,in_stack_00000054,(D3DBaseTexture *)uVar2,in_stack_0000005c,0,0
-                      ,(__vector4 *)&local_60[0]._s_2,(float)dVar4,in_stack_ffffff28,
+    D3DDevice_Resolve(param_1,param_3,in_stack_00000054,(D3DBaseTexture *)param_2,in_stack_0000005c,
+                      0,0,(__vector4 *)&local_60[0]._s_2,(float)dVar1,in_stack_ffffff28,
                       in_stack_ffffff2c);
   } while (alwaysfails != 0);
   PIXEndNamedEvent();
   PIXEndNamedEvent();
-  __restgprlr_24();
   return;
 }
 
 
 // 8278D4C0  R_ResolveAndClearFull_Xbox360  (gfx_d3d/rb_backend.cpp:705)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
@@ -1117,48 +1080,44 @@ void R_ResolveAndClearFull_Xbox360
                float *param_5,float param_6,uchar param_7)
 
 {
-  GfxImage *pGVar1;
-  int iVar2;
-  GfxCmdBufState *pGVar3;
-  ulonglong uVar4;
+  GfxCmdBufSourceState *pGVar1;
+  GfxCmdBufState *pGVar2;
   _D3DRECT *in_r9;
-  uchar uVar5;
-  double extraout_f1;
-  double dVar6;
-  int iStack00000010;
+  uchar uVar3;
+  double dVar4;
+  GfxCmdBufSourceState *pGStack00000010;
   GfxCmdBufState *pGStack00000014;
   _D3DPOINT *in_stack_ffffff38;
   
-  uVar4 = (ulonglong)(int)param_2;
-  _iStack00000010 = __savegprlr_25((double)param_6);
-  dVar6 = extraout_f1;
-  if ((uVar4 & 0xffffffff) == 0) {
+  dVar4 = (double)param_6;
+  _pGStack00000010 = param_1;
+  if (param_2 == (GfxImage *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_backend.cpp",0x2c5,
                     0,"%s");
   }
-  iVar2 = iStack00000010;
-  pGVar1 = (GfxImage *)uVar4;
-  if (*(uint *)(iStack00000010 + 0x1740) != (uint)pGVar1->width) {
+  pGVar1 = pGStack00000010;
+  if (pGStack00000010->renderTargetWidth != (uint)param_2->width) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_backend.cpp",0x2c6,
                     0,"context.source->renderTargetWidth == image->width\n\t%i, %i");
   }
-  if (*(uint *)(iVar2 + 0x1744) != (uint)pGVar1->height) {
+  if (pGVar1->renderTargetHeight != (uint)param_2->height) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_backend.cpp",0x2c7,
                     0,"context.source->renderTargetHeight == image->height\n\t%i, %i");
   }
-  uVar5 = (uchar)*(undefined4 *)(iVar2 + 0x1744);
-  pGVar3 = pGStack00000014;
+  uVar3 = (uchar)pGVar1->renderTargetHeight;
+  pGVar2 = pGStack00000014;
   R_HW_ForceDisableGammaWrites(pGStack00000014);
   R_ResolveAndClear_Xbox360
-            ((pGVar3->prim).device,pGVar1,0,param_3,param_4,param_5,(float)dVar6,uVar5,in_r9,
+            ((pGVar2->prim).device,param_2,0,param_3,param_4,param_5,(float)dVar4,uVar3,in_r9,
              in_stack_ffffff38);
-  __restgprlr_25();
   return;
 }
 
 
 // 827934E8  RB_DrawStretchPicForResolve  (gfx_d3d/rb_backend.cpp:726)
 
+/* WARNING: Function: __savefpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 /* WARNING: Enum "GfxPrimStatsTarget": Some values do not have unique names */
@@ -1167,38 +1126,36 @@ void RB_DrawStretchPicForResolve
                (GfxImage *param_1,float param_2,float param_3,float param_4,float param_5)
 
 {
-  GfxImage *pGVar1;
-  double extraout_f1;
+  double dVar1;
   double dVar2;
   double dVar3;
   double dVar4;
   double dVar5;
   double dVar6;
-  double dVar7;
   
   dVar4 = (double)param_5;
   dVar3 = (double)param_4;
   dVar2 = (double)param_3;
-  pGVar1 = (GfxImage *)__savefpr_28((double)param_2,param_1);
-  dVar7 = extraout_f1;
+  dVar1 = (double)param_2;
   R_SetFullViewport(&gfxCmdBufSourceState);
   R_Set2D(&gfxCmdBufSourceState);
-  dVar6 = (double)(longlong)(int)(uint)pGVar1->height;
-  dVar5 = (double)(longlong)(int)(uint)pGVar1->width;
-  gfxCmdBufSourceState.input.codeImages[8] = pGVar1;
-  RB_DrawStretchPic(rgp.feedbackReplaceMaterial,(float)dVar7,(float)dVar2,(float)dVar3,(float)dVar4,
-                    (float)(dVar7 / dVar5),(float)(dVar2 / dVar6),
-                    (float)((double)(float)(dVar7 + dVar3) / dVar5),
-                    (float)((double)(float)(dVar2 + dVar4) / dVar6),(uint)pGVar1->height,
-                    (uint)pGVar1->width);
+  dVar6 = (double)(longlong)(int)(uint)param_1->height;
+  dVar5 = (double)(longlong)(int)(uint)param_1->width;
+  gfxCmdBufSourceState.input.codeImages[8] = param_1;
+  RB_DrawStretchPic(rgp.feedbackReplaceMaterial,(float)dVar1,(float)dVar2,(float)dVar3,(float)dVar4,
+                    (float)(dVar1 / dVar5),(float)(dVar2 / dVar6),
+                    (float)((double)(float)(dVar1 + dVar3) / dVar5),
+                    (float)((double)(float)(dVar2 + dVar4) / dVar6),(uint)param_1->height,
+                    (uint)param_1->width);
   RB_EndTessSurface();
-  __restfpr_28();
   return;
 }
 
 
 // 827935D0  R_ResolveAndClearPartial_Xbox360  (gfx_d3d/rb_backend.cpp:736)
 
+/* WARNING: Function: __savegprlr_19 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_19 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
@@ -1208,15 +1165,11 @@ void R_ResolveAndClearPartial_Xbox360
                float *param_5,float param_6,uchar param_7,GfxViewport param_8)
 
 {
-  GfxImage *pGVar1;
-  GfxCmdBufState *pGVar2;
-  ulonglong uVar3;
   _D3DRECT *in_r9;
   undefined8 in_r10;
-  uint uVar4;
-  uint uVar5;
-  double extraout_f1;
-  double dVar6;
+  uint uVar1;
+  uint uVar2;
+  double dVar3;
   uint uStack00000050;
   uint uStack00000054;
   int in_stack_00000058;
@@ -1228,84 +1181,86 @@ void R_ResolveAndClearPartial_Xbox360
   uint local_94;
   GfxViewport local_90 [9];
   
-  uVar3 = (ulonglong)(int)param_2;
-  pGVar2 = (GfxCmdBufState *)__savegprlr_19((double)param_6);
-  dVar6 = extraout_f1;
+  dVar3 = (double)param_6;
+  param_8.width = (int)param_1.source;
+  param_8.height = (int)param_1.state;
   _uStack00000050 = in_r10;
-  MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_backend.cpp",0x2e5,0,
-                  "%s");
-  if (pGVar2 != &gfxCmdBufState) {
+  if ((GfxCmdBufSourceState *)param_8.width != &gfxCmdBufSourceState) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_backend.cpp",0x2e5,
+                    0,"%s");
+  }
+  if ((GfxCmdBufState *)param_8.height != &gfxCmdBufState) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_backend.cpp",0x2e6,
                     0,"%s");
   }
-  if ((uVar3 & 0xffffffff) == 0) {
+  if (param_2 == (GfxImage *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_backend.cpp",0x2e8,
                     0,"%s");
   }
-  pGVar1 = (GfxImage *)uVar3;
-  if (uRam00001740 != pGVar1->width) {
+  if (*(uint *)(param_8.width + 0x1740) != (uint)param_2->width) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_backend.cpp",0x2e9,
                     0,"context.source->renderTargetWidth == image->width\n\t%i, %i");
   }
-  if (uRam00001744 != pGVar1->height) {
+  if (*(uint *)(param_8.width + 0x1744) != (uint)param_2->height) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_backend.cpp",0x2ea,
                     0,"context.source->renderTargetHeight == image->height\n\t%i, %i");
   }
-  if (iRam00001730 == 0) {
+  if (*(int *)(param_8.width + 0x1730) == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_backend.cpp",0x2eb,
                     0,"%s");
   }
-  if (iRam00001734 == 0) {
+  if (*(int *)(param_8.width + 0x1734) == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_backend.cpp",0x2ec,
                     0,"%s");
   }
   local_9c = uStack00000054 & 0xfffffff8;
   local_a0 = uStack00000050 & 0xfffffff8;
-  local_90[0].x = iRam00001728;
-  uVar4 = in_stack_00000058 + uStack00000050;
-  uVar5 = in_stack_0000005c + uStack00000054;
-  local_90[0].y = iRam0000172c;
-  local_90[0].width = iRam00001730;
-  local_90[0].height = iRam00001734;
-  local_98 = uVar4 + 7 & 0xfffffff8;
-  local_94 = uVar5 + 7 & 0xfffffff8;
+  local_90[0].x = *(int *)(param_8.width + 0x1728);
+  uVar1 = in_stack_00000058 + uStack00000050;
+  uVar2 = in_stack_0000005c + uStack00000054;
+  local_90[0].y = *(int *)(param_8.width + 0x172c);
+  local_90[0].width = *(int *)(param_8.width + 0x1730);
+  local_90[0].height = *(int *)(param_8.width + 0x1734);
+  local_98 = uVar1 + 7 & 0xfffffff8;
+  local_94 = uVar2 + 7 & 0xfffffff8;
   if (local_9c != uStack00000054) {
     RB_DrawStretchPicForResolve
-              (pGVar1,(float)(longlong)(int)local_a0,(float)(longlong)(int)local_9c,
+              (param_2,(float)(longlong)(int)local_a0,(float)(longlong)(int)local_9c,
                (float)(longlong)(int)(local_98 - local_a0),
                (float)(longlong)(int)(uStack00000054 - local_9c));
   }
-  if (local_94 != uVar5) {
+  if (local_94 != uVar2) {
     RB_DrawStretchPicForResolve
-              (pGVar1,(float)(longlong)(int)local_a0,(float)(longlong)(int)uVar5,
+              (param_2,(float)(longlong)(int)local_a0,(float)(longlong)(int)uVar2,
                (float)(longlong)(int)(local_98 - local_a0),
                (float)(longlong)(int)((local_94 - in_stack_0000005c) - uStack00000054));
   }
   if (local_a0 != uStack00000050) {
     RB_DrawStretchPicForResolve
-              (pGVar1,(float)(longlong)(int)local_a0,(float)(longlong)(int)uStack00000054,
+              (param_2,(float)(longlong)(int)local_a0,(float)(longlong)(int)uStack00000054,
                (float)(longlong)(int)(uStack00000050 - local_a0),(float)(longlong)in_stack_0000005c)
     ;
   }
-  if (local_98 != uVar4) {
+  if (local_98 != uVar1) {
     RB_DrawStretchPicForResolve
-              (pGVar1,(float)(longlong)(int)uVar4,(float)(longlong)(int)uStack00000054,
+              (param_2,(float)(longlong)(int)uVar1,(float)(longlong)(int)uStack00000054,
                (float)(longlong)(int)((local_98 - in_stack_00000058) - uStack00000050),
                (float)(longlong)in_stack_0000005c);
   }
-  R_SetViewportStruct((GfxCmdBufSourceState *)0x0,local_90);
-  R_Set2D((GfxCmdBufSourceState *)0x0);
-  R_HW_ForceDisableGammaWrites(pGVar2);
+  R_SetViewportStruct((GfxCmdBufSourceState *)param_8.width,local_90);
+  R_Set2D((GfxCmdBufSourceState *)param_8.width);
+  R_HW_ForceDisableGammaWrites((GfxCmdBufState *)param_8.height);
   R_ResolveAndClear_Xbox360
-            ((pGVar2->prim).device,pGVar1,0,param_3,param_4,param_5,(float)dVar6,(uchar)&local_a0,
-             in_r9,in_stack_fffffed8);
-  __restgprlr_19();
+            (*(D3DDevice **)(param_8.height + 0xc0),param_2,0,param_3,param_4,param_5,(float)dVar3,
+             (uchar)&local_a0,in_r9,in_stack_fffffed8);
   return;
 }
 
 
 // 8278D5E0  R_ResolveDepthFull_Xbox360  (gfx_d3d/rb_backend.cpp:779)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
@@ -1315,18 +1270,16 @@ void R_ResolveDepthFull_Xbox360(GfxCmdBufContext param_1,GfxRenderTargetId param
 {
   GfxImage *pGVar1;
   GfxCmdBufSourceState *pGVar2;
-  GfxCmdBufContext GVar3;
   GfxCmdBufSourceState *pGStack00000010;
   GfxCmdBufState *pGStack00000014;
   _D3DPOINT *in_stack_ffffff58;
   
-  GVar3 = (GfxCmdBufContext)__savegprlr_28();
   pGVar1 = gfxRenderTargets[7].image;
-  pGStack00000010 = GVar3.source;
+  pGStack00000010 = param_1.source;
   pGVar2 = pGStack00000010;
-  _pGStack00000010 = GVar3;
+  _pGStack00000010 = param_1;
   R_SetRenderTargetSize(pGVar2,param_2);
-  R_SetRenderTarget(GVar3,param_2);
+  R_SetRenderTarget(param_1,param_2);
   if (pGVar1 == (GfxImage *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_backend.cpp",800,0,
                     "%s");
@@ -1342,13 +1295,14 @@ void R_ResolveDepthFull_Xbox360(GfxCmdBufContext param_1,GfxRenderTargetId param
   R_ResolveAndClear_Xbox360
             ((pGStack00000014->prim).device,pGVar1,0x14,'\0',D3DFMT_UNKNOWN,colorWhite,0.0,
              (uchar)pGVar2->renderTargetWidth,(_D3DRECT *)0x0,in_stack_ffffff58);
-  __restgprlr_28();
   return;
 }
 
 
 // 8278D708  R_ResolveSpecificDepthFull_Xbox360  (gfx_d3d/rb_backend.cpp:816)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
@@ -1356,39 +1310,38 @@ void R_ResolveDepthFull_Xbox360(GfxCmdBufContext param_1,GfxRenderTargetId param
 void R_ResolveSpecificDepthFull_Xbox360(GfxCmdBufContext param_1,GfxImage *param_2)
 
 {
-  GfxImage *pGVar1;
-  int iVar2;
-  ulonglong uVar3;
-  int iStack00000010;
-  int iStack00000014;
+  GfxCmdBufSourceState *pGVar1;
+  GfxCmdBufSourceState *pGStack00000010;
+  GfxCmdBufState *pGStack00000014;
   _D3DPOINT *in_stack_ffffff68;
   
-  uVar3 = (ulonglong)(int)param_2;
-  _iStack00000010 = __savegprlr_29();
-  if ((uVar3 & 0xffffffff) == 0) {
+  _pGStack00000010 = param_1;
+  if (param_2 == (GfxImage *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_backend.cpp",0x339,
                     0,"%s");
   }
-  iVar2 = iStack00000010;
-  pGVar1 = (GfxImage *)uVar3;
-  if (*(uint *)(iStack00000010 + 0x1740) != (uint)pGVar1->width) {
+  pGVar1 = pGStack00000010;
+  if (pGStack00000010->renderTargetWidth != (uint)param_2->width) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_backend.cpp",0x33a,
                     0,"context.source->renderTargetWidth == image->width\n\t%i, %i");
   }
-  if (*(uint *)(iVar2 + 0x1744) != (uint)pGVar1->height) {
+  if (pGVar1->renderTargetHeight != (uint)param_2->height) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_backend.cpp",0x33b,
                     0,"context.source->renderTargetHeight == image->height\n\t%i, %i");
   }
   R_ResolveAndClear_Xbox360
-            (*(D3DDevice **)(iStack00000014 + 0xc0),pGVar1,0x14,'\0',D3DFMT_UNKNOWN,colorWhite,0.0,
-             (uchar)*(undefined4 *)(iVar2 + 0x1740),(_D3DRECT *)0x0,in_stack_ffffff68);
-  __restgprlr_29();
+            ((pGStack00000014->prim).device,param_2,0x14,'\0',D3DFMT_UNKNOWN,colorWhite,0.0,
+             (uchar)pGVar1->renderTargetWidth,(_D3DRECT *)0x0,in_stack_ffffff68);
   return;
 }
 
 
 // 827939B8  R_ResolveAndClearSection_Xbox360  (gfx_d3d/rb_backend.cpp:841)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
@@ -1399,66 +1352,56 @@ void R_ResolveAndClearSection_Xbox360
                ,float param_11)
 
 {
-  GfxImage *pGVar1;
-  GfxCmdBufSourceState *pGVar2;
-  GfxCmdBufContext GVar3;
-  ulonglong uVar4;
-  double extraout_f1;
+  GfxCmdBufSourceState *pGVar1;
+  double dVar2;
+  double dVar3;
+  double dVar4;
   double dVar5;
   double dVar6;
   double dVar7;
-  double dVar8;
-  double dVar9;
-  double dVar10;
   GfxCmdBufSourceState *pGStack00000010;
   GfxViewport in_stack_ffffff18;
   
-  dVar7 = (double)param_10;
-  dVar6 = (double)param_9;
-  dVar5 = (double)param_8;
-  uVar4 = (ulonglong)(int)param_2;
-  __savegprlr_28((double)param_6,param_1,uVar4,param_3,param_4,param_5,param_7);
-  GVar3 = (GfxCmdBufContext)__savefpr_24();
-  dVar8 = extraout_f1;
-  _pGStack00000010 = GVar3;
-  if ((uVar4 & 0xffffffff) == 0) {
+  dVar5 = (double)param_10;
+  dVar4 = (double)param_9;
+  dVar3 = (double)param_8;
+  dVar2 = (double)param_6;
+  _pGStack00000010 = param_1;
+  if (param_2 == (GfxImage *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_backend.cpp",0x34d,
                     0,"%s");
   }
-  pGVar2 = pGStack00000010;
-  pGVar1 = (GfxImage *)uVar4;
-  if (pGStack00000010->renderTargetWidth != (uint)pGVar1->width) {
+  pGVar1 = pGStack00000010;
+  if (pGStack00000010->renderTargetWidth != (uint)param_2->width) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_backend.cpp",0x34e,
                     0,"context.source->renderTargetWidth == image->width\n\t%i, %i");
   }
-  if (pGVar2->renderTargetHeight != (uint)pGVar1->height) {
+  if (pGVar1->renderTargetHeight != (uint)param_2->height) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_backend.cpp",0x34f,
                     0,"context.source->renderTargetHeight == image->height\n\t%i, %i");
   }
-  dVar10 = 0.0;
-  dVar9 = 1.0;
-  if ((dVar8 < 0.0) || (1.0 < dVar8)) {
+  dVar7 = 0.0;
+  dVar6 = 1.0;
+  if ((dVar2 < 0.0) || (1.0 < dVar2)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_backend.cpp",0x350,
                     0,"s0 not in [0.f, 1.f]\n\t%g not in [%g, %g]");
   }
-  if ((dVar5 < dVar10) || (dVar9 < dVar5)) {
+  if ((dVar3 < dVar7) || (dVar6 < dVar3)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_backend.cpp",0x351,
                     0,"t0 not in [0.f, 1.f]\n\t%g not in [%g, %g]");
   }
-  if ((dVar6 < dVar10) || (dVar9 < dVar6)) {
+  if ((dVar4 < dVar7) || (dVar6 < dVar4)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_backend.cpp",0x352,
                     0,"s1 not in [0.f, 1.f]\n\t%g not in [%g, %g]");
   }
-  if ((dVar7 < dVar10) || (dVar9 < dVar7)) {
+  if ((dVar5 < dVar7) || (dVar6 < dVar5)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_backend.cpp",0x353,
                     0,"t1 not in [0.f, 1.f]\n\t%g not in [%g, %g]");
   }
   R_ResolveAndClearPartial_Xbox360
-            (GVar3,pGVar1,'\0',D3DFMT_UNKNOWN,colorWhite,(float)dVar10,
-             (char)(int)((double)pGVar1->height * dVar7) -
-             (char)(int)((double)pGVar1->height * dVar5),in_stack_ffffff18);
-  __restfpr_24();
-  __restgprlr_28();
+            (param_1,param_2,'\0',D3DFMT_UNKNOWN,colorWhite,(float)dVar7,
+             (char)(int)((double)param_2->height * dVar5) -
+             (char)(int)((double)param_2->height * dVar3),in_stack_ffffff18);
   return;
 }
 
@@ -1489,26 +1432,27 @@ void R_ResolveAndClearRenderTarget
 
 // 8278D870  R_ResolveShadowmap  (gfx_d3d/rb_backend.cpp:873)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 
 void R_ResolveShadowmap(GfxCmdBufState *param_1,GfxViewport *param_2,uint param_3,uint param_4)
 
 {
-  int iVar1;
   _D3DPOINT *in_stack_ffffff58;
   
-  iVar1 = __savegprlr_27(param_1);
   R_ResolveAndClear_Xbox360
-            (*(D3DDevice **)(iVar1 + 0xc0),gfxRenderTargets[*(int *)(iVar1 + 0xb68)].image,0x14,'\0'
-             ,D3DFMT_UNKNOWN,colorWhite,0.0,0xc0,(_D3DRECT *)0x0,in_stack_ffffff58);
-  __restgprlr_27();
+            ((param_1->prim).device,gfxRenderTargets[param_1->renderTargetId].image,0x14,'\0',
+             D3DFMT_UNKNOWN,colorWhite,0.0,0xc0,(_D3DRECT *)0x0,in_stack_ffffff58);
   return;
 }
 
 
 // 8278D930  R_Resolve  (gfx_d3d/rb_backend.cpp:1032)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
@@ -1516,43 +1460,39 @@ void R_ResolveShadowmap(GfxCmdBufState *param_1,GfxViewport *param_2,uint param_
 void R_Resolve(GfxCmdBufContext param_1,GfxImage *param_2)
 
 {
-  GfxImage *pGVar1;
-  GfxCmdBufState *pGVar2;
-  GfxCmdBufContext GVar3;
-  char *pcVar4;
-  ulonglong uVar5;
+  GfxCmdBufState *pGVar1;
+  char *pcVar2;
+  ulonglong uVar3;
   GfxCmdBufContext GStack00000010;
   
-  uVar5 = (ulonglong)(int)param_2;
-  GVar3 = (GfxCmdBufContext)__savegprlr_25();
-  GStack00000010 = GVar3;
-  if ((uVar5 & 0xffffffff) == 0) {
+  GStack00000010 = param_1;
+  if (param_2 == (GfxImage *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_backend.cpp",0x409,
                     0,"%s");
   }
-  pGVar2 = GStack00000010.state;
-  pGVar1 = (GfxImage *)uVar5;
-  if ((uint)pGVar1->width != gfxRenderTargets[(GStack00000010.state)->renderTargetId].width) {
+  pGVar1 = GStack00000010.state;
+  if ((uint)param_2->width != gfxRenderTargets[(GStack00000010.state)->renderTargetId].width) {
     va("%s,%i");
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_backend.cpp",0x40a,
                     0,"%s\n\t%s");
   }
-  uVar5 = (ulonglong)pGVar2->renderTargetId + ((ulonglong)pGVar2->renderTargetId & 0x3fffffff) * 4;
-  if ((uint)pGVar1->height !=
-      *(uint *)((int)&gfxRenderTargets[0].height + (int)((uVar5 & 0xffffffff) << 2))) {
-    pcVar4 = va("%s,%i");
-    uVar5 = (ulonglong)(int)pcVar4;
+  uVar3 = (ulonglong)pGVar1->renderTargetId + ((ulonglong)pGVar1->renderTargetId & 0x3fffffff) * 4;
+  if ((uint)param_2->height !=
+      *(uint *)((int)&gfxRenderTargets[0].height + (int)((uVar3 & 0xffffffff) << 2))) {
+    pcVar2 = va("%s,%i");
+    uVar3 = (ulonglong)(int)pcVar2;
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_backend.cpp",0x40b,
                     0,"%s\n\t%s");
   }
-  R_ResolveAndClearFull_Xbox360(GVar3,pGVar1,'\0',D3DFMT_UNKNOWN,colorWhite,0.0,(uchar)uVar5);
-  __restgprlr_25();
+  R_ResolveAndClearFull_Xbox360(param_1,param_2,'\0',D3DFMT_UNKNOWN,colorWhite,0.0,(uchar)uVar3);
   return;
 }
 
 
 // 82793C88  R_ResolvePartial  (gfx_d3d/rb_backend.cpp:1063)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
@@ -1560,44 +1500,39 @@ void R_Resolve(GfxCmdBufContext param_1,GfxImage *param_2)
 void R_ResolvePartial(GfxCmdBufContext param_1,GfxImage *param_2)
 
 {
-  GfxImage *pGVar1;
-  GfxCmdBufState *pGVar2;
-  GfxCmdBufContext GVar3;
-  ulonglong uVar4;
-  undefined4 uVar5;
+  GfxCmdBufState *pGVar1;
+  undefined4 uVar2;
   GfxCmdBufSourceState *pGStack00000010;
   GfxCmdBufState *pGStack00000014;
   GfxViewport in_stack_ffffff68;
   
-  uVar4 = (ulonglong)(int)param_2;
-  GVar3 = (GfxCmdBufContext)__savegprlr_25();
-  _pGStack00000010 = GVar3;
-  if ((uVar4 & 0xffffffff) == 0) {
+  _pGStack00000010 = param_1;
+  if (param_2 == (GfxImage *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_backend.cpp",0x428,
                     0,"%s");
   }
-  pGVar2 = pGStack00000014;
-  pGVar1 = (GfxImage *)uVar4;
-  if ((uint)pGVar1->width != gfxRenderTargets[pGStack00000014->renderTargetId].width) {
+  pGVar1 = pGStack00000014;
+  if ((uint)param_2->width != gfxRenderTargets[pGStack00000014->renderTargetId].width) {
     va("%s,%i");
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_backend.cpp",0x429,
                     0,"%s\n\t%s");
   }
-  if ((uint)pGVar1->height != gfxRenderTargets[pGVar2->renderTargetId].height) {
+  if ((uint)param_2->height != gfxRenderTargets[pGVar1->renderTargetId].height) {
     va("%s,%i");
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_backend.cpp",0x42a,
                     0,"%s\n\t%s");
   }
-  uVar5 = (pGStack00000010->sceneViewport).height;
+  uVar2 = (pGStack00000010->sceneViewport).height;
   R_ResolveAndClearPartial_Xbox360
-            (GVar3,pGVar1,'\0',D3DFMT_UNKNOWN,colorWhite,0.0,(uchar)uVar5,in_stack_ffffff68);
-  __restgprlr_25();
+            (param_1,param_2,'\0',D3DFMT_UNKNOWN,colorWhite,0.0,(uchar)uVar2,in_stack_ffffff68);
   return;
 }
 
 
 // 82793DD0  R_ResolveSection  (gfx_d3d/rb_backend.cpp:1075)
 
+/* WARNING: Function: __savefpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
@@ -1606,26 +1541,21 @@ void R_ResolveSection(GfxCmdBufContext param_1,GfxImage *param_2,float param_3,f
                      float param_5,float param_6)
 
 {
-  GfxCmdBufContext GVar1;
-  ulonglong uVar2;
   uchar in_r5;
   char *in_r6;
   char *in_r7;
   uchar in_r8;
-  double extraout_f1;
+  double dVar1;
+  double dVar2;
   double dVar3;
   double dVar4;
-  double dVar5;
   double in_f5;
-  double dVar6;
   
-  dVar5 = (double)param_6;
-  dVar4 = (double)param_5;
-  dVar3 = (double)param_4;
-  uVar2 = (ulonglong)(int)param_2;
-  GVar1 = (GfxCmdBufContext)__savefpr_28((double)param_3);
-  dVar6 = extraout_f1;
-  if ((uVar2 & 0xffffffff) == 0) {
+  dVar4 = (double)param_6;
+  dVar3 = (double)param_5;
+  dVar2 = (double)param_4;
+  dVar1 = (double)param_3;
+  if (param_2 == (GfxImage *)0x0) {
     in_r7 = "image";
     in_r6 = "%s";
     in_r5 = '\0';
@@ -1633,15 +1563,16 @@ void R_ResolveSection(GfxCmdBufContext param_1,GfxImage *param_2,float param_3,f
                     0,"%s");
   }
   R_ResolveAndClearSection_Xbox360
-            (GVar1,(GfxImage *)uVar2,in_r5,(_D3DFORMAT)in_r6,(float *)in_r7,(float)dVar6,in_r8,
-             (float)dVar3,(float)(dVar6 + dVar4),(float)(dVar3 + dVar5),(float)in_f5);
-  __restfpr_28();
+            (param_1,param_2,in_r5,(_D3DFORMAT)in_r6,(float *)in_r7,(float)dVar1,in_r8,(float)dVar2,
+             (float)(dVar1 + dVar3),(float)(dVar2 + dVar4),(float)in_f5);
   return;
 }
 
 
 // 8278DA68  R_ResolveFloatZ  (gfx_d3d/rb_backend.cpp:1094)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
@@ -1652,18 +1583,16 @@ void R_ResolveFloatZ(GfxCmdBufContext param_1,GfxRenderTargetId param_2)
 {
   GfxImage *pGVar1;
   GfxCmdBufSourceState *pGVar2;
-  GfxCmdBufContext GVar3;
   GfxCmdBufSourceState *pGStack00000010;
   GfxCmdBufState *pGStack00000014;
   _D3DPOINT *in_stack_ffffff58;
   
-  GVar3 = (GfxCmdBufContext)__savegprlr_28();
   pGVar1 = gfxRenderTargets[7].image;
-  pGStack00000010 = GVar3.source;
+  pGStack00000010 = param_1.source;
   pGVar2 = pGStack00000010;
-  _pGStack00000010 = GVar3;
+  _pGStack00000010 = param_1;
   R_SetRenderTargetSize(pGVar2,param_2);
-  R_SetRenderTarget(GVar3,param_2);
+  R_SetRenderTarget(param_1,param_2);
   if (pGVar1 == (GfxImage *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_backend.cpp",800,0,
                     "%s");
@@ -1679,13 +1608,14 @@ void R_ResolveFloatZ(GfxCmdBufContext param_1,GfxRenderTargetId param_2)
   R_ResolveAndClear_Xbox360
             ((pGStack00000014->prim).device,pGVar1,0x14,'\0',D3DFMT_UNKNOWN,colorWhite,0.0,
              (uchar)pGVar2->renderTargetWidth,(_D3DRECT *)0x0,in_stack_ffffff58);
-  __restgprlr_28();
   return;
 }
 
 
 // 8278DA70  R_ResolveSpecificFloatZ  (gfx_d3d/rb_backend.cpp:1105)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
@@ -1694,33 +1624,28 @@ void R_ResolveFloatZ(GfxCmdBufContext param_1,GfxRenderTargetId param_2)
 void R_ResolveSpecificFloatZ(GfxCmdBufContext param_1,GfxImage *param_2)
 
 {
-  GfxImage *pGVar1;
-  int iVar2;
-  ulonglong uVar3;
-  int iStack00000010;
-  int iStack00000014;
+  GfxCmdBufSourceState *pGVar1;
+  GfxCmdBufSourceState *pGStack00000010;
+  GfxCmdBufState *pGStack00000014;
   _D3DPOINT *in_stack_ffffff68;
   
-  uVar3 = (ulonglong)(int)param_2;
-  _iStack00000010 = __savegprlr_29();
-  if ((uVar3 & 0xffffffff) == 0) {
+  _pGStack00000010 = param_1;
+  if (param_2 == (GfxImage *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_backend.cpp",0x339,
                     0,"%s");
   }
-  iVar2 = iStack00000010;
-  pGVar1 = (GfxImage *)uVar3;
-  if (*(uint *)(iStack00000010 + 0x1740) != (uint)pGVar1->width) {
+  pGVar1 = pGStack00000010;
+  if (pGStack00000010->renderTargetWidth != (uint)param_2->width) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_backend.cpp",0x33a,
                     0,"context.source->renderTargetWidth == image->width\n\t%i, %i");
   }
-  if (*(uint *)(iVar2 + 0x1744) != (uint)pGVar1->height) {
+  if (pGVar1->renderTargetHeight != (uint)param_2->height) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_backend.cpp",0x33b,
                     0,"context.source->renderTargetHeight == image->height\n\t%i, %i");
   }
   R_ResolveAndClear_Xbox360
-            (*(D3DDevice **)(iStack00000014 + 0xc0),pGVar1,0x14,'\0',D3DFMT_UNKNOWN,colorWhite,0.0,
-             (uchar)*(undefined4 *)(iVar2 + 0x1740),(_D3DRECT *)0x0,in_stack_ffffff68);
-  __restgprlr_29();
+            ((pGStack00000014->prim).device,param_2,0x14,'\0',D3DFMT_UNKNOWN,colorWhite,0.0,
+             (uchar)pGVar1->renderTargetWidth,(_D3DRECT *)0x0,in_stack_ffffff68);
   return;
 }
 
@@ -1772,6 +1697,10 @@ void RB_StretchPicCmdFlipST(GfxRenderCommandExecState *param_1)
 
 // 82793F60  RB_StretchPicRotateXYCmd  (gfx_d3d/rb_backend.cpp:1140)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "GfxPrimStatsTarget": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
@@ -1781,31 +1710,28 @@ void RB_StretchPicRotateXYCmd(GfxRenderCommandExecState *param_1)
 {
   float fVar1;
   float fVar2;
-  int iVar3;
+  void *pvVar3;
   GfxColor GVar4;
   uint uVar5;
   ushort uVar7;
-  int *piVar8;
-  int iVar9;
+  int iVar8;
+  double dVar9;
   double dVar10;
   double dVar11;
   double dVar12;
   double dVar13;
   double dVar14;
   double dVar15;
-  double dVar16;
   uint uVar6;
   
-  __savegprlr_23(param_1);
-  piVar8 = (int *)__savefpr_26();
-  iVar3 = *piVar8;
+  pvVar3 = param_1->cmd;
   if (gfxCmdBufSourceState.viewMode != VIEW_MODE_2D) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_backend.cpp",0x483,
                     0,"%s");
   }
-  RB_SetTessTechnique(*(Material **)(iVar3 + 4),TECHNIQUE_UNLIT,GFX_PRIM_STATS_HUD);
-  iVar9 = Sys_HasDeviceOwnership();
-  if (iVar9 == 0) {
+  RB_SetTessTechnique(*(Material **)((int)pvVar3 + 4),TECHNIQUE_UNLIT,GFX_PRIM_STATS_HUD);
+  iVar8 = Sys_HasDeviceOwnership();
+  if (iVar8 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_backend.h",0xbc,0,
                     "%s");
   }
@@ -1824,73 +1750,75 @@ void RB_StretchPicRotateXYCmd(GfxRenderCommandExecState *param_1)
   tess.indices[uVar5 + 3] = uVar7 + 2;
   tess.indices[uVar5 + 4] = uVar7;
   tess.indices[uVar5 + 5] = uVar7 + 1;
-  dVar16 = (double)(*(float *)(iVar3 + 0x2c) * 0.017453292);
-  dVar15 = (double)(*(float *)(iVar3 + 0x10) * 0.5);
-  dVar14 = (double)(*(float *)(iVar3 + 0x14) * 0.5);
-  dVar13 = (double)(float)((double)*(float *)(iVar3 + 8) + dVar15);
-  dVar12 = (double)(float)((double)*(float *)(iVar3 + 0xc) + dVar14);
-  dVar10 = sin(dVar16);
-  dVar11 = (double)(float)dVar10;
-  dVar10 = cos(dVar16);
+  dVar15 = (double)(*(float *)((int)pvVar3 + 0x2c) * 0.017453292);
+  dVar14 = (double)(*(float *)((int)pvVar3 + 0x10) * 0.5);
+  dVar13 = (double)(*(float *)((int)pvVar3 + 0x14) * 0.5);
+  dVar12 = (double)(float)((double)*(float *)((int)pvVar3 + 8) + dVar14);
+  dVar11 = (double)(float)((double)*(float *)((int)pvVar3 + 0xc) + dVar13);
+  dVar9 = sin(dVar15);
+  dVar10 = (double)(float)dVar9;
+  dVar9 = cos(dVar15);
   uVar6 = uVar6 & 0xffff;
-  dVar16 = (double)(float)(dVar11 * dVar15);
-  GVar4 = *(GfxColor *)(iVar3 + 0x28);
-  fVar1 = *(float *)(iVar3 + 0x1c);
-  fVar2 = *(float *)(iVar3 + 0x18);
+  dVar15 = (double)(float)(dVar10 * dVar14);
+  GVar4 = *(GfxColor *)((int)pvVar3 + 0x28);
+  fVar1 = *(float *)((int)pvVar3 + 0x1c);
+  fVar2 = *(float *)((int)pvVar3 + 0x18);
   tess.verts[uVar6].xyzw[2] = 0.0;
   tess.verts[uVar6].color = GVar4;
   tess.verts[uVar6].xyzw[3] = 1.0;
   tess.verts[uVar6].normal.packed = 0x1ff00000;
-  dVar15 = (double)(float)((double)(float)dVar10 * dVar15);
-  dVar10 = (double)(float)((double)(float)dVar10 * dVar14);
-  dVar11 = -(double)(float)(dVar11 * dVar14);
-  tess.verts[uVar6].xyzw[1] = (float)((double)(float)(dVar12 - dVar16) - dVar10);
-  tess.verts[uVar6].xyzw[0] = (float)((double)(float)(dVar13 - dVar15) - dVar11);
+  dVar14 = (double)(float)((double)(float)dVar9 * dVar14);
+  dVar9 = (double)(float)((double)(float)dVar9 * dVar13);
+  dVar10 = -(double)(float)(dVar10 * dVar13);
+  tess.verts[uVar6].xyzw[1] = (float)((double)(float)(dVar11 - dVar15) - dVar9);
+  tess.verts[uVar6].xyzw[0] = (float)((double)(float)(dVar12 - dVar14) - dVar10);
   tess.verts[uVar6].texCoord[0] = fVar2;
   tess.verts[uVar6].texCoord[1] = fVar1;
-  fVar1 = *(float *)(iVar3 + 0x1c);
-  GVar4 = *(GfxColor *)(iVar3 + 0x28);
-  fVar2 = *(float *)(iVar3 + 0x20);
-  tess.verts[uVar6 + 1].xyzw[0] = (float)((double)(float)(dVar15 + dVar13) - dVar11);
+  fVar1 = *(float *)((int)pvVar3 + 0x1c);
+  GVar4 = *(GfxColor *)((int)pvVar3 + 0x28);
+  fVar2 = *(float *)((int)pvVar3 + 0x20);
+  tess.verts[uVar6 + 1].xyzw[0] = (float)((double)(float)(dVar14 + dVar12) - dVar10);
   tess.verts[uVar6 + 1].normal.packed = 0x1ff00000;
-  tess.verts[uVar6 + 1].xyzw[1] = (float)((double)(float)(dVar16 + dVar12) - dVar10);
+  tess.verts[uVar6 + 1].xyzw[1] = (float)((double)(float)(dVar15 + dVar11) - dVar9);
   tess.verts[uVar6 + 1].color = GVar4;
   tess.verts[uVar6 + 1].xyzw[2] = 0.0;
   tess.verts[uVar6 + 1].xyzw[3] = 1.0;
   tess.verts[uVar6 + 1].texCoord[1] = fVar1;
   tess.verts[uVar6 + 1].texCoord[0] = fVar2;
-  fVar1 = *(float *)(iVar3 + 0x24);
-  fVar2 = *(float *)(iVar3 + 0x20);
-  GVar4 = *(GfxColor *)(iVar3 + 0x28);
+  fVar1 = *(float *)((int)pvVar3 + 0x24);
+  fVar2 = *(float *)((int)pvVar3 + 0x20);
+  GVar4 = *(GfxColor *)((int)pvVar3 + 0x28);
   tess.verts[uVar6 + 2].xyzw[2] = 0.0;
   tess.verts[uVar6 + 2].normal.packed = 0x1ff00000;
   tess.verts[uVar6 + 2].color = GVar4;
-  tess.verts[uVar6 + 2].xyzw[0] = (float)((double)(float)(dVar11 + dVar15) + dVar13);
-  tess.verts[uVar6 + 2].xyzw[1] = (float)((double)(float)(dVar10 + dVar16) + dVar12);
+  tess.verts[uVar6 + 2].xyzw[0] = (float)((double)(float)(dVar10 + dVar14) + dVar12);
+  tess.verts[uVar6 + 2].xyzw[1] = (float)((double)(float)(dVar9 + dVar15) + dVar11);
   tess.verts[uVar6 + 2].xyzw[3] = 1.0;
   tess.verts[uVar6 + 2].texCoord[0] = fVar2;
   tess.verts[uVar6 + 2].texCoord[1] = fVar1;
-  GVar4 = *(GfxColor *)(iVar3 + 0x28);
-  fVar1 = *(float *)(iVar3 + 0x24);
-  fVar2 = *(float *)(iVar3 + 0x18);
+  GVar4 = *(GfxColor *)((int)pvVar3 + 0x28);
+  fVar1 = *(float *)((int)pvVar3 + 0x24);
+  fVar2 = *(float *)((int)pvVar3 + 0x18);
   tess.verts[uVar6 + 3].normal.packed = 0x1ff00000;
-  tess.verts[uVar6 + 3].xyzw[1] = (float)((double)(float)(dVar12 - dVar16) + dVar10);
+  tess.verts[uVar6 + 3].xyzw[1] = (float)((double)(float)(dVar11 - dVar15) + dVar9);
   tess.verts[uVar6 + 3].color = GVar4;
   tess.verts[uVar6 + 3].xyzw[2] = 0.0;
   tess.verts[uVar6 + 3].xyzw[3] = 1.0;
-  tess.verts[uVar6 + 3].xyzw[0] = (float)((double)(float)(dVar13 - dVar15) + dVar11);
-  iVar3 = *piVar8;
+  tess.verts[uVar6 + 3].xyzw[0] = (float)((double)(float)(dVar12 - dVar14) + dVar10);
+  pvVar3 = param_1->cmd;
   tess.verts[uVar6 + 3].texCoord[0] = fVar2;
   tess.verts[uVar6 + 3].texCoord[1] = fVar1;
-  *piVar8 = (uint)*(ushort *)(iVar3 + 2) + iVar3;
-  __restfpr_26();
-  __restgprlr_23();
+  param_1->cmd = (void *)((uint)*(ushort *)((int)pvVar3 + 2) + (int)pvVar3);
   return;
 }
 
 
 // 82794268  RB_StretchPicRotateSTCmd  (gfx_d3d/rb_backend.cpp:1193)
 
+/* WARNING: Function: __savegprlr_20 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_20 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "GfxPrimStatsTarget": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
@@ -1914,31 +1842,28 @@ void RB_StretchPicRotateSTCmd(GfxRenderCommandExecState *param_1)
   float fVar14;
   float fVar15;
   float fVar16;
-  int iVar17;
+  void *pvVar17;
   GfxColor GVar18;
   float fVar19;
   ushort uVar20;
   uint uVar21;
   uint uVar22;
-  int *piVar23;
-  int iVar24;
+  int iVar23;
+  double dVar24;
   double dVar25;
   double dVar26;
   double dVar27;
-  double dVar28;
   
-  __savegprlr_20(param_1);
-  piVar23 = (int *)__savefpr_23();
-  iVar17 = *piVar23;
+  pvVar17 = param_1->cmd;
   if (gfxCmdBufSourceState.viewMode != VIEW_MODE_2D) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_backend.cpp",0x4b8,
                     0,"%s");
   }
-  RB_SetTessTechnique(*(Material **)(iVar17 + 4),TECHNIQUE_UNLIT,GFX_PRIM_STATS_HUD);
+  RB_SetTessTechnique(*(Material **)((int)pvVar17 + 4),TECHNIQUE_UNLIT,GFX_PRIM_STATS_HUD);
   uVar21 = tess.vertexCount;
   uVar22 = tess.indexCount;
-  iVar24 = Sys_HasDeviceOwnership();
-  if (iVar24 == 0) {
+  iVar23 = Sys_HasDeviceOwnership();
+  if (iVar23 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_backend.h",0xbc,0,
                     "%s");
   }
@@ -1954,29 +1879,29 @@ void RB_StretchPicRotateSTCmd(GfxRenderCommandExecState *param_1)
   tess.indices[uVar22 + 3] = uVar20 + 2;
   tess.indices[uVar22 + 4] = uVar20;
   tess.indices[uVar22 + 5] = uVar20 + 1;
-  dVar28 = (double)(*(float *)(iVar17 + 0x3c) * 0.017453292);
-  dVar25 = sin(dVar28);
-  dVar27 = (double)(float)dVar25;
-  dVar25 = cos(dVar28);
-  dVar26 = (double)(float)dVar25;
-  fVar1 = (float)((double)*(float *)(iVar17 + 0x24) * dVar27);
-  fVar11 = *(float *)(iVar17 + 0x18);
+  dVar27 = (double)(*(float *)((int)pvVar17 + 0x3c) * 0.017453292);
+  dVar24 = sin(dVar27);
+  dVar26 = (double)(float)dVar24;
+  dVar24 = cos(dVar27);
+  dVar25 = (double)(float)dVar24;
+  fVar1 = (float)((double)*(float *)((int)pvVar17 + 0x24) * dVar26);
+  fVar11 = *(float *)((int)pvVar17 + 0x18);
   uVar21 = uVar21 & 0xffff;
-  fVar12 = *(float *)(iVar17 + 0x1c);
-  GVar18 = *(GfxColor *)(iVar17 + 0x38);
-  fVar2 = (float)((double)*(float *)(iVar17 + 0x28) * dVar27);
-  dVar25 = (double)(1.0 - *(float *)(iVar17 + 0x2c));
-  fVar3 = (float)((double)*(float *)(iVar17 + 0x30) * dVar27);
-  fVar4 = (float)((double)*(float *)(iVar17 + 0x20) * dVar26);
-  fVar19 = -(float)((double)*(float *)(iVar17 + 0x20) * dVar27);
-  fVar5 = (float)((double)*(float *)(iVar17 + 0x24) * dVar26);
-  fVar6 = (float)((double)*(float *)(iVar17 + 0x28) * dVar26);
-  fVar7 = (float)((double)*(float *)(iVar17 + 0x30) * dVar26);
-  dVar28 = (double)(1.0 - *(float *)(iVar17 + 0x34));
-  fVar8 = (float)(dVar25 * dVar26);
-  fVar9 = (float)(dVar25 * dVar27);
-  fVar13 = *(float *)(iVar17 + 0xc);
-  tess.verts[uVar21].xyzw[0] = *(float *)(iVar17 + 8);
+  fVar12 = *(float *)((int)pvVar17 + 0x1c);
+  GVar18 = *(GfxColor *)((int)pvVar17 + 0x38);
+  fVar2 = (float)((double)*(float *)((int)pvVar17 + 0x28) * dVar26);
+  dVar24 = (double)(1.0 - *(float *)((int)pvVar17 + 0x2c));
+  fVar3 = (float)((double)*(float *)((int)pvVar17 + 0x30) * dVar26);
+  fVar4 = (float)((double)*(float *)((int)pvVar17 + 0x20) * dVar25);
+  fVar19 = -(float)((double)*(float *)((int)pvVar17 + 0x20) * dVar26);
+  fVar5 = (float)((double)*(float *)((int)pvVar17 + 0x24) * dVar25);
+  fVar6 = (float)((double)*(float *)((int)pvVar17 + 0x28) * dVar25);
+  fVar7 = (float)((double)*(float *)((int)pvVar17 + 0x30) * dVar25);
+  dVar27 = (double)(1.0 - *(float *)((int)pvVar17 + 0x34));
+  fVar8 = (float)(dVar24 * dVar25);
+  fVar9 = (float)(dVar24 * dVar26);
+  fVar13 = *(float *)((int)pvVar17 + 0xc);
+  tess.verts[uVar21].xyzw[0] = *(float *)((int)pvVar17 + 8);
   tess.verts[uVar21].normal.packed = 0x1ff00000;
   tess.verts[uVar21].xyzw[1] = fVar13;
   tess.verts[uVar21].xyzw[2] = 0.0;
@@ -1984,12 +1909,12 @@ void RB_StretchPicRotateSTCmd(GfxRenderCommandExecState *param_1)
   tess.verts[uVar21].xyzw[3] = 1.0;
   tess.verts[uVar21].texCoord[0] = (((fVar11 - fVar4) - fVar19) + fVar6) - fVar3;
   tess.verts[uVar21].texCoord[1] = ((fVar12 - fVar1) - fVar5) + fVar2 + fVar7;
-  fVar13 = (float)(dVar28 * dVar27);
-  fVar14 = *(float *)(iVar17 + 0x10);
-  GVar18 = *(GfxColor *)(iVar17 + 0x38);
-  fVar10 = (float)(dVar28 * dVar26);
-  fVar15 = *(float *)(iVar17 + 8);
-  fVar16 = *(float *)(iVar17 + 0xc);
+  fVar13 = (float)(dVar27 * dVar26);
+  fVar14 = *(float *)((int)pvVar17 + 0x10);
+  GVar18 = *(GfxColor *)((int)pvVar17 + 0x38);
+  fVar10 = (float)(dVar27 * dVar25);
+  fVar15 = *(float *)((int)pvVar17 + 8);
+  fVar16 = *(float *)((int)pvVar17 + 0xc);
   tess.verts[uVar21 + 1].normal.packed = 0x1ff00000;
   tess.verts[uVar21 + 1].xyzw[1] = fVar16;
   tess.verts[uVar21 + 1].color = GVar18;
@@ -1998,11 +1923,11 @@ void RB_StretchPicRotateSTCmd(GfxRenderCommandExecState *param_1)
   tess.verts[uVar21 + 1].xyzw[3] = 1.0;
   tess.verts[uVar21 + 1].texCoord[0] = (((fVar11 + fVar4) - fVar19) - fVar8) - fVar3;
   tess.verts[uVar21 + 1].texCoord[1] = (((fVar12 + fVar1) - fVar5) - fVar9) + fVar7;
-  GVar18 = *(GfxColor *)(iVar17 + 0x38);
-  fVar3 = *(float *)(iVar17 + 8);
-  fVar7 = *(float *)(iVar17 + 0x10);
-  fVar14 = *(float *)(iVar17 + 0xc);
-  fVar15 = *(float *)(iVar17 + 0x14);
+  GVar18 = *(GfxColor *)((int)pvVar17 + 0x38);
+  fVar3 = *(float *)((int)pvVar17 + 8);
+  fVar7 = *(float *)((int)pvVar17 + 0x10);
+  fVar14 = *(float *)((int)pvVar17 + 0xc);
+  fVar15 = *(float *)((int)pvVar17 + 0x14);
   tess.verts[uVar21 + 2].normal.packed = 0x1ff00000;
   tess.verts[uVar21 + 2].xyzw[2] = 0.0;
   tess.verts[uVar21 + 2].color = GVar18;
@@ -2011,28 +1936,28 @@ void RB_StretchPicRotateSTCmd(GfxRenderCommandExecState *param_1)
   tess.verts[uVar21 + 2].xyzw[1] = fVar14 + fVar15;
   tess.verts[uVar21 + 2].texCoord[1] = ((fVar12 + fVar5 + fVar1) - fVar9) - fVar10;
   tess.verts[uVar21 + 2].texCoord[0] = ((fVar11 + fVar19 + fVar4) - fVar8) + fVar13;
-  GVar18 = *(GfxColor *)(iVar17 + 0x38);
-  fVar3 = *(float *)(iVar17 + 0xc);
-  fVar7 = *(float *)(iVar17 + 0x14);
-  fVar8 = *(float *)(iVar17 + 8);
+  GVar18 = *(GfxColor *)((int)pvVar17 + 0x38);
+  fVar3 = *(float *)((int)pvVar17 + 0xc);
+  fVar7 = *(float *)((int)pvVar17 + 0x14);
+  fVar8 = *(float *)((int)pvVar17 + 8);
   tess.verts[uVar21 + 3].normal.packed = 0x1ff00000;
   tess.verts[uVar21 + 3].xyzw[0] = fVar8;
   tess.verts[uVar21 + 3].color = GVar18;
   tess.verts[uVar21 + 3].xyzw[1] = fVar3 + fVar7;
   tess.verts[uVar21 + 3].xyzw[2] = 0.0;
   tess.verts[uVar21 + 3].xyzw[3] = 1.0;
-  iVar17 = *piVar23;
+  pvVar17 = param_1->cmd;
   tess.verts[uVar21 + 3].texCoord[0] = fVar13 + fVar6 + (fVar11 - fVar4) + fVar19;
   tess.verts[uVar21 + 3].texCoord[1] = (fVar2 + (fVar12 - fVar1) + fVar5) - fVar10;
-  *piVar23 = (uint)*(ushort *)(iVar17 + 2) + iVar17;
-  __restfpr_23();
-  __restgprlr_20();
+  param_1->cmd = (void *)((uint)*(ushort *)((int)pvVar17 + 2) + (int)pvVar17);
   return;
 }
 
 
 // 82794608  RB_DrawQuadPicCmd  (gfx_d3d/rb_backend.cpp:1257)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "GfxPrimStatsTarget": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
@@ -2042,23 +1967,21 @@ void RB_DrawQuadPicCmd(GfxRenderCommandExecState *param_1)
 {
   float fVar1;
   float fVar2;
-  int iVar3;
+  void *pvVar3;
   GfxColor GVar4;
   uint uVar5;
-  ushort uVar7;
-  int *piVar8;
-  int iVar9;
+  int iVar7;
+  ushort uVar8;
   uint uVar6;
   
-  piVar8 = (int *)__savegprlr_24(param_1);
-  iVar3 = *piVar8;
+  pvVar3 = param_1->cmd;
   if (gfxCmdBufSourceState.viewMode != VIEW_MODE_2D) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_backend.cpp",0x4f0,
                     0,"%s");
   }
-  RB_SetTessTechnique(*(Material **)(iVar3 + 4),TECHNIQUE_UNLIT,GFX_PRIM_STATS_HUD);
-  iVar9 = Sys_HasDeviceOwnership();
-  if (iVar9 == 0) {
+  RB_SetTessTechnique(*(Material **)((int)pvVar3 + 4),TECHNIQUE_UNLIT,GFX_PRIM_STATS_HUD);
+  iVar7 = Sys_HasDeviceOwnership();
+  if (iVar7 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_backend.h",0xbc,0,
                     "%s");
   }
@@ -2068,19 +1991,19 @@ void RB_DrawQuadPicCmd(GfxRenderCommandExecState *param_1)
     uVar5 = tess.indexCount;
     uVar6 = tess.vertexCount;
   }
-  uVar7 = (ushort)uVar6;
   tess.vertexCount = uVar6 + 4;
   tess.indexCount = uVar5 + 6;
-  tess.indices[uVar5 + 4] = uVar7;
+  uVar8 = (ushort)uVar6;
+  tess.indices[uVar5 + 4] = uVar8;
   uVar6 = uVar6 & 0xffff;
-  tess.indices[uVar5 + 1] = uVar7;
-  tess.indices[uVar5] = uVar7 + 3;
-  tess.indices[uVar5 + 2] = uVar7 + 2;
-  tess.indices[uVar5 + 3] = uVar7 + 2;
-  tess.indices[uVar5 + 5] = uVar7 + 1;
-  fVar1 = *(float *)(iVar3 + 0xc);
-  GVar4 = *(GfxColor *)(iVar3 + 0x28);
-  fVar2 = *(float *)(iVar3 + 8);
+  tess.indices[uVar5 + 1] = uVar8;
+  tess.indices[uVar5] = uVar8 + 3;
+  tess.indices[uVar5 + 2] = uVar8 + 2;
+  tess.indices[uVar5 + 3] = uVar8 + 2;
+  tess.indices[uVar5 + 5] = uVar8 + 1;
+  fVar1 = *(float *)((int)pvVar3 + 0xc);
+  GVar4 = *(GfxColor *)((int)pvVar3 + 0x28);
+  fVar2 = *(float *)((int)pvVar3 + 8);
   tess.verts[uVar6].normal.packed = 0x1ff00000;
   tess.verts[uVar6].color = GVar4;
   tess.verts[uVar6].xyzw[1] = fVar1;
@@ -2089,9 +2012,9 @@ void RB_DrawQuadPicCmd(GfxRenderCommandExecState *param_1)
   tess.verts[uVar6].xyzw[0] = fVar2;
   tess.verts[uVar6].texCoord[0] = 0.0;
   tess.verts[uVar6].texCoord[1] = 0.0;
-  GVar4 = *(GfxColor *)(iVar3 + 0x28);
-  fVar1 = *(float *)(iVar3 + 0x14);
-  fVar2 = *(float *)(iVar3 + 0x10);
+  GVar4 = *(GfxColor *)((int)pvVar3 + 0x28);
+  fVar1 = *(float *)((int)pvVar3 + 0x14);
+  fVar2 = *(float *)((int)pvVar3 + 0x10);
   tess.verts[uVar6 + 1].normal.packed = 0x1ff00000;
   tess.verts[uVar6 + 1].xyzw[0] = fVar2;
   tess.verts[uVar6 + 1].color = GVar4;
@@ -2100,9 +2023,9 @@ void RB_DrawQuadPicCmd(GfxRenderCommandExecState *param_1)
   tess.verts[uVar6 + 1].xyzw[3] = 1.0;
   tess.verts[uVar6 + 1].texCoord[0] = 1.0;
   tess.verts[uVar6 + 1].texCoord[1] = 0.0;
-  GVar4 = *(GfxColor *)(iVar3 + 0x28);
-  fVar1 = *(float *)(iVar3 + 0x1c);
-  fVar2 = *(float *)(iVar3 + 0x18);
+  GVar4 = *(GfxColor *)((int)pvVar3 + 0x28);
+  fVar1 = *(float *)((int)pvVar3 + 0x1c);
+  fVar2 = *(float *)((int)pvVar3 + 0x18);
   tess.verts[uVar6 + 2].normal.packed = 0x1ff00000;
   tess.verts[uVar6 + 2].xyzw[0] = fVar2;
   tess.verts[uVar6 + 2].color = GVar4;
@@ -2111,25 +2034,26 @@ void RB_DrawQuadPicCmd(GfxRenderCommandExecState *param_1)
   tess.verts[uVar6 + 2].xyzw[3] = 1.0;
   tess.verts[uVar6 + 2].texCoord[0] = 1.0;
   tess.verts[uVar6 + 2].texCoord[1] = 1.0;
-  GVar4 = *(GfxColor *)(iVar3 + 0x28);
-  fVar1 = *(float *)(iVar3 + 0x24);
-  tess.verts[uVar6 + 3].xyzw[0] = *(float *)(iVar3 + 0x20);
+  GVar4 = *(GfxColor *)((int)pvVar3 + 0x28);
+  fVar1 = *(float *)((int)pvVar3 + 0x24);
+  tess.verts[uVar6 + 3].xyzw[0] = *(float *)((int)pvVar3 + 0x20);
   tess.verts[uVar6 + 3].normal.packed = 0x1ff00000;
   tess.verts[uVar6 + 3].xyzw[1] = fVar1;
   tess.verts[uVar6 + 3].color = GVar4;
   tess.verts[uVar6 + 3].xyzw[2] = 0.0;
   tess.verts[uVar6 + 3].xyzw[3] = 1.0;
-  iVar3 = *piVar8;
+  pvVar3 = param_1->cmd;
   tess.verts[uVar6 + 3].texCoord[0] = 0.0;
   tess.verts[uVar6 + 3].texCoord[1] = 1.0;
-  *piVar8 = (uint)*(ushort *)(iVar3 + 2) + iVar3;
-  __restgprlr_24();
+  param_1->cmd = (void *)((uint)*(ushort *)((int)pvVar3 + 2) + (int)pvVar3);
   return;
 }
 
 
 // 82794868  RB_DrawQuadPicSTCmd  (gfx_d3d/rb_backend.cpp:1292)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "GfxPrimStatsTarget": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
@@ -2141,23 +2065,21 @@ void RB_DrawQuadPicSTCmd(GfxRenderCommandExecState *param_1)
   float fVar2;
   float fVar3;
   float fVar4;
-  int iVar5;
+  void *pvVar5;
   GfxColor GVar6;
   uint uVar7;
-  int *piVar9;
-  int iVar10;
-  ushort uVar11;
+  int iVar9;
+  ushort uVar10;
   uint uVar8;
   
-  piVar9 = (int *)__savegprlr_25(param_1);
-  iVar5 = *piVar9;
+  pvVar5 = param_1->cmd;
   if (gfxCmdBufSourceState.viewMode != VIEW_MODE_2D) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_backend.cpp",0x513,
                     0,"%s");
   }
-  RB_SetTessTechnique(*(Material **)(iVar5 + 4),TECHNIQUE_UNLIT,GFX_PRIM_STATS_HUD);
-  iVar10 = Sys_HasDeviceOwnership();
-  if (iVar10 == 0) {
+  RB_SetTessTechnique(*(Material **)((int)pvVar5 + 4),TECHNIQUE_UNLIT,GFX_PRIM_STATS_HUD);
+  iVar9 = Sys_HasDeviceOwnership();
+  if (iVar9 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_backend.h",0xbc,0,
                     "%s");
   }
@@ -2169,19 +2091,19 @@ void RB_DrawQuadPicSTCmd(GfxRenderCommandExecState *param_1)
   }
   tess.vertexCount = uVar8 + 4;
   tess.indexCount = uVar7 + 6;
-  uVar11 = (ushort)uVar8;
-  tess.indices[uVar7 + 1] = uVar11;
-  tess.indices[uVar7 + 4] = uVar11;
+  uVar10 = (ushort)uVar8;
+  tess.indices[uVar7 + 1] = uVar10;
+  tess.indices[uVar7 + 4] = uVar10;
   uVar8 = uVar8 & 0xffff;
-  tess.indices[uVar7 + 3] = uVar11 + 2;
-  tess.indices[uVar7 + 2] = uVar11 + 2;
-  tess.indices[uVar7] = uVar11 + 3;
-  tess.indices[uVar7 + 5] = uVar11 + 1;
-  GVar6 = *(GfxColor *)(iVar5 + 0x38);
-  fVar1 = *(float *)(iVar5 + 0x2c);
-  fVar2 = *(float *)(iVar5 + 0x28);
-  fVar3 = *(float *)(iVar5 + 0xc);
-  fVar4 = *(float *)(iVar5 + 8);
+  tess.indices[uVar7 + 3] = uVar10 + 2;
+  tess.indices[uVar7 + 2] = uVar10 + 2;
+  tess.indices[uVar7] = uVar10 + 3;
+  tess.indices[uVar7 + 5] = uVar10 + 1;
+  GVar6 = *(GfxColor *)((int)pvVar5 + 0x38);
+  fVar1 = *(float *)((int)pvVar5 + 0x2c);
+  fVar2 = *(float *)((int)pvVar5 + 0x28);
+  fVar3 = *(float *)((int)pvVar5 + 0xc);
+  fVar4 = *(float *)((int)pvVar5 + 8);
   tess.verts[uVar8].normal.packed = 0x1ff00000;
   tess.verts[uVar8].color = GVar6;
   tess.verts[uVar8].xyzw[0] = fVar4;
@@ -2190,11 +2112,11 @@ void RB_DrawQuadPicSTCmd(GfxRenderCommandExecState *param_1)
   tess.verts[uVar8].xyzw[3] = 1.0;
   tess.verts[uVar8].texCoord[0] = fVar2;
   tess.verts[uVar8].texCoord[1] = fVar1;
-  GVar6 = *(GfxColor *)(iVar5 + 0x38);
-  fVar1 = *(float *)(iVar5 + 0x2c);
-  fVar2 = *(float *)(iVar5 + 0x30);
-  fVar3 = *(float *)(iVar5 + 0x14);
-  fVar4 = *(float *)(iVar5 + 0x10);
+  GVar6 = *(GfxColor *)((int)pvVar5 + 0x38);
+  fVar1 = *(float *)((int)pvVar5 + 0x2c);
+  fVar2 = *(float *)((int)pvVar5 + 0x30);
+  fVar3 = *(float *)((int)pvVar5 + 0x14);
+  fVar4 = *(float *)((int)pvVar5 + 0x10);
   tess.verts[uVar8 + 1].normal.packed = 0x1ff00000;
   tess.verts[uVar8 + 1].xyzw[0] = fVar4;
   tess.verts[uVar8 + 1].color = GVar6;
@@ -2203,11 +2125,11 @@ void RB_DrawQuadPicSTCmd(GfxRenderCommandExecState *param_1)
   tess.verts[uVar8 + 1].xyzw[3] = 1.0;
   tess.verts[uVar8 + 1].texCoord[0] = fVar2;
   tess.verts[uVar8 + 1].texCoord[1] = fVar1;
-  GVar6 = *(GfxColor *)(iVar5 + 0x38);
-  fVar1 = *(float *)(iVar5 + 0x34);
-  fVar2 = *(float *)(iVar5 + 0x30);
-  fVar3 = *(float *)(iVar5 + 0x1c);
-  tess.verts[uVar8 + 2].xyzw[0] = *(float *)(iVar5 + 0x18);
+  GVar6 = *(GfxColor *)((int)pvVar5 + 0x38);
+  fVar1 = *(float *)((int)pvVar5 + 0x34);
+  fVar2 = *(float *)((int)pvVar5 + 0x30);
+  fVar3 = *(float *)((int)pvVar5 + 0x1c);
+  tess.verts[uVar8 + 2].xyzw[0] = *(float *)((int)pvVar5 + 0x18);
   tess.verts[uVar8 + 2].xyzw[1] = fVar3;
   tess.verts[uVar8 + 2].normal.packed = 0x1ff00000;
   tess.verts[uVar8 + 2].xyzw[2] = 0.0;
@@ -2215,11 +2137,11 @@ void RB_DrawQuadPicSTCmd(GfxRenderCommandExecState *param_1)
   tess.verts[uVar8 + 2].xyzw[3] = 1.0;
   tess.verts[uVar8 + 2].texCoord[0] = fVar2;
   tess.verts[uVar8 + 2].texCoord[1] = fVar1;
-  fVar1 = *(float *)(iVar5 + 0x24);
-  fVar2 = *(float *)(iVar5 + 0x20);
-  fVar3 = *(float *)(iVar5 + 0x28);
-  fVar4 = *(float *)(iVar5 + 0x34);
-  tess.verts[uVar8 + 3].color = *(GfxColor *)(iVar5 + 0x38);
+  fVar1 = *(float *)((int)pvVar5 + 0x24);
+  fVar2 = *(float *)((int)pvVar5 + 0x20);
+  fVar3 = *(float *)((int)pvVar5 + 0x28);
+  fVar4 = *(float *)((int)pvVar5 + 0x34);
+  tess.verts[uVar8 + 3].color = *(GfxColor *)((int)pvVar5 + 0x38);
   tess.verts[uVar8 + 3].xyzw[0] = fVar2;
   tess.verts[uVar8 + 3].normal.packed = 0x1ff00000;
   tess.verts[uVar8 + 3].xyzw[1] = fVar1;
@@ -2227,8 +2149,7 @@ void RB_DrawQuadPicSTCmd(GfxRenderCommandExecState *param_1)
   tess.verts[uVar8 + 3].xyzw[3] = 1.0;
   tess.verts[uVar8 + 3].texCoord[0] = fVar3;
   tess.verts[uVar8 + 3].texCoord[1] = fVar4;
-  *piVar9 = (uint)*(ushort *)(*piVar9 + 2) + *piVar9;
-  __restgprlr_25();
+  param_1->cmd = (void *)((uint)*(ushort *)((int)param_1->cmd + 2) + (int)param_1->cmd);
   return;
 }
 
@@ -2301,6 +2222,8 @@ void R_UpdateUseTextureOverrides(GfxCmdBufSourceState *param_1)
 
 // 8278DB40  R_RenderDrawGroup_SetupFirstPass  (gfx_d3d/rb_backend.cpp:1413)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 
@@ -2309,40 +2232,35 @@ bool R_RenderDrawGroup_SetupFirstPass(GfxDrawListArgs *param_1,GfxDrawGroupSetup
 {
   GfxCmdBufState *pGVar1;
   GfxCmdBufSourceState *pGVar2;
-  GfxDrawListArgs *pGVar3;
-  int iVar4;
-  undefined1 uVar5;
-  uint uVar6;
-  bool bVar7;
+  int iVar3;
+  uint uVar4;
+  bool bVar5;
   
-  pGVar3 = (GfxDrawListArgs *)__savegprlr_29(param_1);
-  iVar4 = R_SetupDrawGroup(pGVar3,param_2);
-  if (iVar4 != 0) {
-    pGVar1 = (pGVar3->context).state;
-    iVar4 = DB_MaterialStreamingFail(pGVar1->material);
-    if (iVar4 == 0) {
+  iVar3 = R_SetupDrawGroup(param_1,param_2);
+  if (iVar3 != 0) {
+    pGVar1 = (param_1->context).state;
+    iVar3 = DB_MaterialStreamingFail(pGVar1->material);
+    if (iVar3 == 0) {
       R_SetPixOrGpadPrimarySortKey
                 (pGVar1,(uint)g_drawConsts.sortedMaterialKeys[param_2.packed >> 0x12]);
-      uVar6 = pGVar3->listInfo->sceneLightIndex;
-      if (uVar6 == 0) {
-        uVar6 = param_2.packed >> 8 & 0xff;
+      uVar4 = param_1->listInfo->sceneLightIndex;
+      if (uVar4 == 0) {
+        uVar4 = param_2.packed >> 8 & 0xff;
       }
-      R_SetPixOrGpadSceneLightIndex((((pGVar3->context).source)->input).data,pGVar1,uVar6);
+      R_SetPixOrGpadSceneLightIndex((((param_1->context).source)->input).data,pGVar1,uVar4);
       R_BeginPixOrGpadMaterial(pGVar1);
-      R_UpdateMaterialTime((pGVar3->context).source,0.0);
-      pGVar2 = (pGVar3->context).source;
+      R_UpdateMaterialTime((param_1->context).source,0.0);
+      pGVar2 = (param_1->context).source;
       if (((r_overrideDrawList->current).integer == 0x28) ||
-         (bVar7 = false, (r_overrideDrawList->current).integer == pGVar2->drawListId)) {
-        bVar7 = true;
+         (bVar5 = false, (r_overrideDrawList->current).integer == pGVar2->drawListId)) {
+        bVar5 = true;
       }
-      pGVar2->useTextureOverrides = bVar7;
-      R_SetupPass(pGVar3->context,0);
-      uVar5 = __restgprlr_29(1);
-      return (bool)uVar5;
+      pGVar2->useTextureOverrides = bVar5;
+      R_SetupPass(param_1->context,0);
+      return true;
     }
   }
-  uVar5 = __restgprlr_29(0);
-  return (bool)uVar5;
+  return false;
 }
 
 
@@ -2379,6 +2297,8 @@ void R_RenderDrawGroup_Finish(GfxDrawListArgs *param_1)
 
 // 8279AC50  Tess  (gfx_d3d/rb_backend.cpp:1636)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 
@@ -2387,12 +2307,8 @@ void GfxDrawSurfTessCallback::Tess(GfxDrawListArgs *param_1,GfxDrawSurfIter *par
 {
   ulonglong uVar1;
   int iVar2;
-  undefined8 uVar3;
-  longlong lVar4;
   
-  lVar4 = (longlong)(int)param_2;
-  uVar3 = __savegprlr_26(param_1);
-  uVar1 = *(ulonglong *)*(undefined4 *)lVar4 >> 0x35;
+  uVar1 = param_2->current->packed >> 0x35;
   if (0xc < (uVar1 & 0xf)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_backend.cpp",0x66a,
                     0,"surfType doesn\'t index ARRAY_COUNT( rb_tessTable )\n\t%i not in [0, %i)");
@@ -2402,14 +2318,15 @@ void GfxDrawSurfTessCallback::Tess(GfxDrawListArgs *param_1,GfxDrawSurfIter *par
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_backend.cpp",0x66b,
                     0,"%s\n\t(surfType) = %i");
   }
-  (**(code **)((int)rb_tessTable + iVar2))(uVar3,lVar4);
-  __restgprlr_26();
+  (**(code **)((int)rb_tessTable + iVar2))(param_1,param_2);
   return;
 }
 
 
 // 82790998  R_RenderDrawGroup_FromSurfList<GfxBspSurfTessCallback,GfxBspSurfIter>  (gfx_d3d/rb_backend.cpp:1701)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
@@ -2419,74 +2336,72 @@ bool R_RenderDrawGroup_FromSurfList<GfxBspSurfTessCallback,GfxBspSurfIter>
 
 {
   ushort uVar1;
-  GfxDrawListArgs *pGVar2;
-  ulong uVar3;
-  bool bVar4;
-  undefined1 uVar5;
-  GfxBspSurfIter *pGVar6;
-  ulonglong uVar7;
+  ulong uVar2;
+  bool bVar3;
+  GfxBspSurfIter *pGVar4;
+  ulonglong uVar5;
   
-  pGVar2 = (GfxDrawListArgs *)__savegprlr_23(param_1);
-  uVar3 = GetCurrentProcessorNumber();
-  R_CmdBufCheckReserveMemory(dx.cmdBufForProcId[uVar3]);
-  pGVar6 = &param_2->bspSurfIter;
+  uVar2 = GetCurrentProcessorNumber();
+  R_CmdBufCheckReserveMemory(dx.cmdBufForProcId[uVar2]);
+  pGVar4 = &param_2->bspSurfIter;
   if ((param_2->bspSurfIter).end < (param_2->bspSurfIter).current) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_bspsurfiter_inline.h"
                     ,0x57,0,"%s");
   }
-  if (pGVar6->current == (param_2->bspSurfIter).end) {
+  if (pGVar4->current == (param_2->bspSurfIter).end) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_backend.cpp",0x6b4,
                     0,"%s");
   }
-  uVar1 = pGVar6->current[1];
+  uVar1 = pGVar4->current[1];
   if (g_worldDpvs->staticSurfaceCount <= (uint)uVar1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_bspsurfiter_inline.h"
                     ,0xa3,0,
                     "bspSurfIndex doesn\'t index g_worldDpvs->staticSurfaceCount\n\t%i not in [0, %i)"
                    );
   }
-  uVar7 = g_worldDpvs->surfaceMaterials[uVar1].packed;
-  if ((uVar7 >> 0x2c & 0xff) != (ulonglong)g_worldDpvs->surfaces[uVar1].laf.fields.primaryLightIndex
+  uVar5 = g_worldDpvs->surfaceMaterials[uVar1].packed;
+  if ((uVar5 >> 0x2c & 0xff) != (ulonglong)g_worldDpvs->surfaces[uVar1].laf.fields.primaryLightIndex
      ) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_bspsurfiter_inline.h"
                     ,0xa5,0,
                     "drawSurf.fields.sceneLightIndex == g_worldDpvs->surfaces[bspSurfIndex].laf.fields.primaryLightIndex\n\t%i, %i"
                    );
   }
-  if (0x165f < (uVar7 >> 0x1d & 0xfff)) {
+  if (0x165f < (uVar5 >> 0x1d & 0xfff)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_backend.cpp",0x6b7,
                     0,
                     "drawGroup.fields.materialSortedIndex doesn\'t index MAX_MATERIALS\n\t%i not in [0, %i)"
                    );
   }
-  bVar4 = R_RenderDrawGroup_SetupFirstPass
-                    (pGVar2,(GfxDrawGroupSetup)
-                            (uint)(((uVar7 >> 0x1d & 0xfff) << 10 | uVar7 >> 0x2c & 0xff) << 8));
-  if (bVar4) {
+  bVar3 = R_RenderDrawGroup_SetupFirstPass
+                    (param_1,(GfxDrawGroupSetup)
+                             (uint)(((uVar5 >> 0x1d & 0xfff) << 10 | uVar5 >> 0x2c & 0xff) << 8));
+  if (bVar3) {
     param_2->addedPrimitive = 1;
-    (param_2->bspSurfIter).mark = pGVar6->current;
-    R_TessTrianglesList(pGVar2,pGVar6,0);
-    if (((pGVar2->context).state)->technique->passCount != 1) {
-      pGVar6->current = (param_2->bspSurfIter).mark;
-      R_RenderDrawGroup_SetupSecondPass(pGVar2);
-      R_TessTrianglesList(pGVar2,pGVar6,0);
+    (param_2->bspSurfIter).mark = pGVar4->current;
+    R_TessTrianglesList(param_1,pGVar4,0);
+    if (((param_1->context).state)->technique->passCount != 1) {
+      pGVar4->current = (param_2->bspSurfIter).mark;
+      R_RenderDrawGroup_SetupSecondPass(param_1);
+      R_TessTrianglesList(param_1,pGVar4,0);
     }
-    R_EndPixOrGpadMaterial((pGVar2->context).state);
+    R_EndPixOrGpadMaterial((param_1->context).state);
   }
   else {
-    GfxBspSurfIter::SkipToNextDrawGroup(pGVar6);
+    GfxBspSurfIter::SkipToNextDrawGroup(pGVar4);
   }
-  if ((param_2->bspSurfIter).end < pGVar6->current) {
+  if ((param_2->bspSurfIter).end < pGVar4->current) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_bspsurfiter_inline.h"
                     ,0x57,0,"%s");
   }
-  uVar5 = __restgprlr_23((param_2->bspSurfIter).end != pGVar6->current);
-  return (bool)uVar5;
+  return (bool)('\x01' - ((param_2->bspSurfIter).end == pGVar4->current));
 }
 
 
 // 82790D00  R_RenderDrawGroup_FromSurfList<GfxBspLightMapSurfTessCallback,GfxBspLightMapSurfIter>  (gfx_d3d/rb_backend.cpp:1701)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
@@ -2496,76 +2411,74 @@ bool R_RenderDrawGroup_FromSurfList<GfxBspLightMapSurfTessCallback,GfxBspLightMa
 
 {
   ushort uVar1;
-  GfxDrawListArgs *pGVar2;
-  ulong uVar3;
-  bool bVar4;
-  undefined1 uVar5;
-  GfxBspLightMapSurfIter *pGVar6;
-  ulonglong uVar7;
+  ulong uVar2;
+  bool bVar3;
+  GfxBspLightMapSurfIter *pGVar4;
+  ulonglong uVar5;
   
-  pGVar2 = (GfxDrawListArgs *)__savegprlr_23(param_1);
-  uVar3 = GetCurrentProcessorNumber();
-  R_CmdBufCheckReserveMemory(dx.cmdBufForProcId[uVar3]);
-  pGVar6 = &param_2->bspLightMapSurfIter;
+  uVar2 = GetCurrentProcessorNumber();
+  R_CmdBufCheckReserveMemory(dx.cmdBufForProcId[uVar2]);
+  pGVar4 = &param_2->bspLightMapSurfIter;
   if (*(uint *)&(param_2->bspLightMapSurfIter).field_0x4 < *(uint *)&param_2->bspLightMapSurfIter) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_bspsurfiter_inline.h"
                     ,0x57,0,"%s");
   }
-  if (*(int *)&pGVar6->field_0x0 == *(int *)&(param_2->bspLightMapSurfIter).field_0x4) {
+  if (*(int *)&pGVar4->field_0x0 == *(int *)&(param_2->bspLightMapSurfIter).field_0x4) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_backend.cpp",0x6b4,
                     0,"%s");
   }
-  uVar1 = *(ushort *)(*(int *)&pGVar6->field_0x0 + 2);
+  uVar1 = *(ushort *)(*(int *)&pGVar4->field_0x0 + 2);
   if (g_worldDpvs->staticSurfaceCount <= (uint)uVar1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_bspsurfiter_inline.h"
                     ,0xa3,0,
                     "bspSurfIndex doesn\'t index g_worldDpvs->staticSurfaceCount\n\t%i not in [0, %i)"
                    );
   }
-  uVar7 = g_worldDpvs->surfaceMaterials[uVar1].packed;
-  if ((uVar7 >> 0x2c & 0xff) != (ulonglong)g_worldDpvs->surfaces[uVar1].laf.fields.primaryLightIndex
+  uVar5 = g_worldDpvs->surfaceMaterials[uVar1].packed;
+  if ((uVar5 >> 0x2c & 0xff) != (ulonglong)g_worldDpvs->surfaces[uVar1].laf.fields.primaryLightIndex
      ) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_bspsurfiter_inline.h"
                     ,0xa5,0,
                     "drawSurf.fields.sceneLightIndex == g_worldDpvs->surfaces[bspSurfIndex].laf.fields.primaryLightIndex\n\t%i, %i"
                    );
   }
-  if (0x165f < (uVar7 >> 0x1d & 0xfff)) {
+  if (0x165f < (uVar5 >> 0x1d & 0xfff)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_backend.cpp",0x6b7,
                     0,
                     "drawGroup.fields.materialSortedIndex doesn\'t index MAX_MATERIALS\n\t%i not in [0, %i)"
                    );
   }
-  bVar4 = R_RenderDrawGroup_SetupFirstPass
-                    (pGVar2,(GfxDrawGroupSetup)
-                            ((uint)(((uVar7 >> 0x1d & 0xfff) << 10 | uVar7 >> 0x2c & 0xff) << 8) | 2
-                            ));
-  if (bVar4) {
+  bVar3 = R_RenderDrawGroup_SetupFirstPass
+                    (param_1,(GfxDrawGroupSetup)
+                             ((uint)(((uVar5 >> 0x1d & 0xfff) << 10 | uVar5 >> 0x2c & 0xff) << 8) |
+                             2));
+  if (bVar3) {
     param_2->addedPrimitive = 1;
-    *(undefined4 *)&(param_2->bspLightMapSurfIter).field_0x8 = *(undefined4 *)&pGVar6->field_0x0;
-    R_TessTrianglesList(pGVar2,(GfxBspSurfIter *)pGVar6,1);
-    if (((pGVar2->context).state)->technique->passCount != 1) {
-      *(undefined4 *)&pGVar6->field_0x0 = *(undefined4 *)&(param_2->bspLightMapSurfIter).field_0x8;
-      R_RenderDrawGroup_SetupSecondPass(pGVar2);
-      R_TessTrianglesList(pGVar2,(GfxBspSurfIter *)pGVar6,1);
+    *(undefined4 *)&(param_2->bspLightMapSurfIter).field_0x8 = *(undefined4 *)&pGVar4->field_0x0;
+    R_TessTrianglesList(param_1,(GfxBspSurfIter *)pGVar4,1);
+    if (((param_1->context).state)->technique->passCount != 1) {
+      *(undefined4 *)&pGVar4->field_0x0 = *(undefined4 *)&(param_2->bspLightMapSurfIter).field_0x8;
+      R_RenderDrawGroup_SetupSecondPass(param_1);
+      R_TessTrianglesList(param_1,(GfxBspSurfIter *)pGVar4,1);
     }
-    R_EndPixOrGpadMaterial((pGVar2->context).state);
+    R_EndPixOrGpadMaterial((param_1->context).state);
   }
   else {
-    GfxBspSurfIter::SkipToNextDrawGroup((GfxBspSurfIter *)pGVar6);
+    GfxBspSurfIter::SkipToNextDrawGroup((GfxBspSurfIter *)pGVar4);
   }
-  if (*(uint *)&(param_2->bspLightMapSurfIter).field_0x4 < *(uint *)&pGVar6->field_0x0) {
+  if (*(uint *)&(param_2->bspLightMapSurfIter).field_0x4 < *(uint *)&pGVar4->field_0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_bspsurfiter_inline.h"
                     ,0x57,0,"%s");
   }
-  uVar5 = __restgprlr_23(*(int *)&(param_2->bspLightMapSurfIter).field_0x4 !=
-                         *(int *)&pGVar6->field_0x0);
-  return (bool)uVar5;
+  return (bool)('\x01' - (*(int *)&(param_2->bspLightMapSurfIter).field_0x4 ==
+                         *(int *)&pGVar4->field_0x0));
 }
 
 
 // 82790FF0  R_RenderDrawGroup_FromSurfList<GfxSModelRigidSurfTessCallback,GfxSModelRigidSurfIter>  (gfx_d3d/rb_backend.cpp:1701)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
@@ -2576,57 +2489,55 @@ bool R_RenderDrawGroup_FromSurfList<GfxSModelRigidSurfTessCallback,GfxSModelRigi
 {
   byte bVar1;
   ushort *puVar2;
-  GfxDrawListArgs *pGVar3;
-  ulong uVar4;
-  GfxSModelRigidSurfIter *pGVar5;
-  bool bVar6;
-  undefined1 uVar7;
-  uint uVar8;
+  ulong uVar3;
+  GfxSModelRigidSurfIter *pGVar4;
+  bool bVar5;
+  uint uVar6;
   
-  pGVar3 = (GfxDrawListArgs *)__savegprlr_27(param_1);
-  uVar4 = GetCurrentProcessorNumber();
-  R_CmdBufCheckReserveMemory(dx.cmdBufForProcId[uVar4]);
-  pGVar5 = &param_2->smodelRigidSurfIter;
+  uVar3 = GetCurrentProcessorNumber();
+  R_CmdBufCheckReserveMemory(dx.cmdBufForProcId[uVar3]);
+  pGVar4 = &param_2->smodelRigidSurfIter;
   if (*(int *)&(param_2->smodelRigidSurfIter).field_0x4 ==
       *(int *)&(param_2->smodelRigidSurfIter).field_0x8) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_backend.cpp",0x6b4,
                     0,"%s");
   }
   puVar2 = *(ushort **)&(param_2->smodelRigidSurfIter).field_0x4;
-  uVar8 = (uint)*puVar2;
+  uVar6 = (uint)*puVar2;
   bVar1 = *(byte *)(puVar2 + 1);
-  if (0x165f < (uVar8 & 0xfff)) {
+  if (0x165f < (uVar6 & 0xfff)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_backend.cpp",0x6b7,
                     0,
                     "drawGroup.fields.materialSortedIndex doesn\'t index MAX_MATERIALS\n\t%i not in [0, %i)"
                    );
   }
-  bVar6 = R_RenderDrawGroup_SetupFirstPass
-                    (pGVar3,(GfxDrawGroupSetup)(((uVar8 & 0xfff) << 10 | (uint)bVar1) << 8 | 4));
-  if (bVar6) {
+  bVar5 = R_RenderDrawGroup_SetupFirstPass
+                    (param_1,(GfxDrawGroupSetup)(((uVar6 & 0xfff) << 10 | (uint)bVar1) << 8 | 4));
+  if (bVar5) {
     param_2->addedPrimitive = 1;
     *(undefined4 *)&(param_2->smodelRigidSurfIter).field_0xc =
          *(undefined4 *)&(param_2->smodelRigidSurfIter).field_0x4;
-    R_TessStaticModelRigidDrawSurfList(pGVar3,(GfxSModelSurfIter *)pGVar5);
-    if (((pGVar3->context).state)->technique->passCount != 1) {
+    R_TessStaticModelRigidDrawSurfList(param_1,(GfxSModelSurfIter *)pGVar4);
+    if (((param_1->context).state)->technique->passCount != 1) {
       *(undefined4 *)&(param_2->smodelRigidSurfIter).field_0x4 =
            *(undefined4 *)&(param_2->smodelRigidSurfIter).field_0xc;
-      R_RenderDrawGroup_SetupSecondPass(pGVar3);
-      R_TessStaticModelRigidDrawSurfList(pGVar3,(GfxSModelSurfIter *)pGVar5);
+      R_RenderDrawGroup_SetupSecondPass(param_1);
+      R_TessStaticModelRigidDrawSurfList(param_1,(GfxSModelSurfIter *)pGVar4);
     }
-    R_EndPixOrGpadMaterial((pGVar3->context).state);
+    R_EndPixOrGpadMaterial((param_1->context).state);
   }
   else {
-    GfxSModelSurfIter::SkipToNextDrawGroup((GfxSModelSurfIter *)pGVar5);
+    GfxSModelSurfIter::SkipToNextDrawGroup((GfxSModelSurfIter *)pGVar4);
   }
-  uVar7 = __restgprlr_27(*(int *)&(param_2->smodelRigidSurfIter).field_0x8 !=
-                         *(int *)&(param_2->smodelRigidSurfIter).field_0x4);
-  return (bool)uVar7;
+  return (bool)('\x01' - (*(int *)&(param_2->smodelRigidSurfIter).field_0x8 ==
+                         *(int *)&(param_2->smodelRigidSurfIter).field_0x4));
 }
 
 
 // 82791138  R_RenderDrawGroup_FromSurfList<GfxDrawSurfTessCallback,GfxDrawSurfIter>  (gfx_d3d/rb_backend.cpp:1701)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
@@ -2635,62 +2546,60 @@ bool R_RenderDrawGroup_FromSurfList<GfxDrawSurfTessCallback,GfxDrawSurfIter>
                (GfxDrawListArgs *param_1,GfxDrawListIter *param_2)
 
 {
-  GfxDrawListArgs *pGVar1;
-  ulong uVar2;
-  bool bVar3;
-  undefined1 uVar4;
+  ulong uVar1;
+  bool bVar2;
+  ulonglong uVar3;
+  ulonglong uVar4;
   ulonglong uVar5;
-  ulonglong uVar6;
-  ulonglong uVar7;
-  GfxDrawSurfIter *pGVar8;
+  GfxDrawSurfIter *pGVar6;
   uint local_40;
   
-  pGVar1 = (GfxDrawListArgs *)__savegprlr_27(param_1);
-  uVar2 = GetCurrentProcessorNumber();
-  R_CmdBufCheckReserveMemory(dx.cmdBufForProcId[uVar2]);
-  pGVar8 = &param_2->drawSurfIter;
+  uVar1 = GetCurrentProcessorNumber();
+  R_CmdBufCheckReserveMemory(dx.cmdBufForProcId[uVar1]);
+  pGVar6 = &param_2->drawSurfIter;
   if ((param_2->drawSurfIter).current == (param_2->drawSurfIter).end) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_backend.cpp",0x6b4,
                     0,"%s");
   }
-  uVar7 = pGVar8->current->packed;
-  uVar6 = uVar7 >> 0x35 & 0xf;
-  uVar5 = ((((uVar7 >> 0x1d & 0xfff) << 1 | uVar7 >> 0x2b & 1) << 9 | uVar7 >> 0x2c & 0xff) << 7 |
-          uVar7 >> 0x35 & 0xf) << 1;
-  if (((uVar6 != 6) && (uVar6 != 5)) ||
-     (uVar6 = uVar5 | (ulonglong)local_40 & 0x10001 | 0x10000, (uVar7 & 0x1000000) == 0)) {
-    uVar6 = uVar5;
+  uVar5 = pGVar6->current->packed;
+  uVar4 = uVar5 >> 0x35 & 0xf;
+  uVar3 = ((((uVar5 >> 0x1d & 0xfff) << 1 | uVar5 >> 0x2b & 1) << 9 | uVar5 >> 0x2c & 0xff) << 7 |
+          uVar5 >> 0x35 & 0xf) << 1;
+  if (((uVar4 != 6) && (uVar4 != 5)) ||
+     (uVar4 = uVar3 | (ulonglong)local_40 & 0x10001 | 0x10000, (uVar5 & 0x1000000) == 0)) {
+    uVar4 = uVar3;
   }
-  if (0x165f < uVar6 >> 0x12) {
+  if (0x165f < uVar4 >> 0x12) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_backend.cpp",0x6b7,
                     0,
                     "drawGroup.fields.materialSortedIndex doesn\'t index MAX_MATERIALS\n\t%i not in [0, %i)"
                    );
   }
-  bVar3 = R_RenderDrawGroup_SetupFirstPass
-                    (pGVar1,(GfxDrawGroupSetup)
-                            ((uint)uVar6 & 0xfffffffe | (uint)(uVar7 >> 0x34) & 1));
-  if (bVar3) {
+  bVar2 = R_RenderDrawGroup_SetupFirstPass
+                    (param_1,(GfxDrawGroupSetup)
+                             ((uint)uVar4 & 0xfffffffe | (uint)(uVar5 >> 0x34) & 1));
+  if (bVar2) {
     param_2->addedPrimitive = 1;
-    (param_2->drawSurfIter).mark = pGVar8->current;
-    GfxDrawSurfTessCallback::Tess(pGVar1,pGVar8);
-    if (((pGVar1->context).state)->technique->passCount != 1) {
-      pGVar8->current = (param_2->drawSurfIter).mark;
-      R_RenderDrawGroup_SetupSecondPass(pGVar1);
-      GfxDrawSurfTessCallback::Tess(pGVar1,pGVar8);
+    (param_2->drawSurfIter).mark = pGVar6->current;
+    GfxDrawSurfTessCallback::Tess(param_1,pGVar6);
+    if (((param_1->context).state)->technique->passCount != 1) {
+      pGVar6->current = (param_2->drawSurfIter).mark;
+      R_RenderDrawGroup_SetupSecondPass(param_1);
+      GfxDrawSurfTessCallback::Tess(param_1,pGVar6);
     }
-    R_EndPixOrGpadMaterial((pGVar1->context).state);
+    R_EndPixOrGpadMaterial((param_1->context).state);
   }
   else {
-    GfxDrawSurfIter::SkipToNextDrawGroup(pGVar8);
+    GfxDrawSurfIter::SkipToNextDrawGroup(pGVar6);
   }
-  uVar4 = __restgprlr_27((param_2->drawSurfIter).end != pGVar8->current);
-  return (bool)uVar4;
+  return (bool)('\x01' - ((param_2->drawSurfIter).end == pGVar6->current));
 }
 
 
 // 82791378  R_RenderDrawGroup_FromSurfList<GfxCodeSurfTessCallback,GfxCodeSurfIter>  (gfx_d3d/rb_backend.cpp:1701)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
@@ -2700,52 +2609,50 @@ bool R_RenderDrawGroup_FromSurfList<GfxCodeSurfTessCallback,GfxCodeSurfIter>
 
 {
   GfxDrawGroupSetup GVar1;
-  GfxDrawListArgs *pGVar2;
-  ulong uVar3;
-  bool bVar4;
-  undefined1 uVar5;
-  GfxCodeSurfIter *pGVar6;
+  ulong uVar2;
+  bool bVar3;
+  GfxCodeSurfIter *pGVar4;
   
-  pGVar2 = (GfxDrawListArgs *)__savegprlr_26(param_1);
-  uVar3 = GetCurrentProcessorNumber();
-  R_CmdBufCheckReserveMemory(dx.cmdBufForProcId[uVar3]);
-  pGVar6 = &param_2->codeSurfIter;
+  uVar2 = GetCurrentProcessorNumber();
+  R_CmdBufCheckReserveMemory(dx.cmdBufForProcId[uVar2]);
+  pGVar4 = &param_2->codeSurfIter;
   if ((param_2->codeSurfIter).current == (param_2->codeSurfIter).end) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_backend.cpp",0x6b4,
                     0,"%s");
   }
-  GVar1 = pGVar6->current->drawGroup;
+  GVar1 = pGVar4->current->drawGroup;
   if (0x165f < GVar1.packed >> 0x12) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_backend.cpp",0x6b7,
                     0,
                     "drawGroup.fields.materialSortedIndex doesn\'t index MAX_MATERIALS\n\t%i not in [0, %i)"
                    );
   }
-  bVar4 = R_RenderDrawGroup_SetupFirstPass(pGVar2,GVar1);
-  if (bVar4) {
+  bVar3 = R_RenderDrawGroup_SetupFirstPass(param_1,GVar1);
+  if (bVar3) {
     param_2->addedPrimitive = 1;
-    (param_2->codeSurfIter).mark = pGVar6->current;
-    R_TessCodeSurfList(pGVar2,pGVar6);
-    if (((pGVar2->context).state)->technique->passCount != 1) {
-      if (pGVar6->current != (param_2->codeSurfIter).mark) {
+    (param_2->codeSurfIter).mark = pGVar4->current;
+    R_TessCodeSurfList(param_1,pGVar4);
+    if (((param_1->context).state)->technique->passCount != 1) {
+      if (pGVar4->current != (param_2->codeSurfIter).mark) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_codesurfiter_inline.h"
                         ,0x5e,0,"%s");
       }
-      R_RenderDrawGroup_SetupSecondPass(pGVar2);
-      R_TessCodeSurfList(pGVar2,pGVar6);
+      R_RenderDrawGroup_SetupSecondPass(param_1);
+      R_TessCodeSurfList(param_1,pGVar4);
     }
-    R_EndPixOrGpadMaterial((pGVar2->context).state);
+    R_EndPixOrGpadMaterial((param_1->context).state);
   }
   else {
-    GfxCodeSurfIter::SkipToNextDrawGroup(pGVar6);
+    GfxCodeSurfIter::SkipToNextDrawGroup(pGVar4);
   }
-  uVar5 = __restgprlr_26((param_2->codeSurfIter).end != pGVar6->current);
-  return (bool)uVar5;
+  return (bool)('\x01' - ((param_2->codeSurfIter).end == pGVar4->current));
 }
 
 
 // 82791570  R_RenderDrawGroup_FromSurfList<GfxMarkSurfTessCallback,GfxMarkSurfIter>  (gfx_d3d/rb_backend.cpp:1701)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
@@ -2755,49 +2662,47 @@ bool R_RenderDrawGroup_FromSurfList<GfxMarkSurfTessCallback,GfxMarkSurfIter>
 
 {
   GfxDrawGroupSetup GVar1;
-  GfxDrawListArgs *pGVar2;
-  ulong uVar3;
-  bool bVar4;
-  undefined1 uVar5;
-  GfxMarkSurfIter *pGVar6;
+  ulong uVar2;
+  bool bVar3;
+  GfxMarkSurfIter *pGVar4;
   
-  pGVar2 = (GfxDrawListArgs *)__savegprlr_27(param_1);
-  uVar3 = GetCurrentProcessorNumber();
-  R_CmdBufCheckReserveMemory(dx.cmdBufForProcId[uVar3]);
-  pGVar6 = &param_2->markSurfIter;
+  uVar2 = GetCurrentProcessorNumber();
+  R_CmdBufCheckReserveMemory(dx.cmdBufForProcId[uVar2]);
+  pGVar4 = &param_2->markSurfIter;
   if ((param_2->markSurfIter).current == (param_2->markSurfIter).end) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_backend.cpp",0x6b4,
                     0,"%s");
   }
-  GVar1 = pGVar6->current->drawGroup;
+  GVar1 = pGVar4->current->drawGroup;
   if (0x165f < GVar1.packed >> 0x12) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_backend.cpp",0x6b7,
                     0,
                     "drawGroup.fields.materialSortedIndex doesn\'t index MAX_MATERIALS\n\t%i not in [0, %i)"
                    );
   }
-  bVar4 = R_RenderDrawGroup_SetupFirstPass(pGVar2,GVar1);
-  if (bVar4) {
+  bVar3 = R_RenderDrawGroup_SetupFirstPass(param_1,GVar1);
+  if (bVar3) {
     param_2->addedPrimitive = 1;
-    (param_2->markSurfIter).mark = pGVar6->current;
-    R_TessMarkSurfList(pGVar2,pGVar6);
-    if (((pGVar2->context).state)->technique->passCount != 1) {
-      pGVar6->current = (param_2->markSurfIter).mark;
-      R_RenderDrawGroup_SetupSecondPass(pGVar2);
-      R_TessMarkSurfList(pGVar2,pGVar6);
+    (param_2->markSurfIter).mark = pGVar4->current;
+    R_TessMarkSurfList(param_1,pGVar4);
+    if (((param_1->context).state)->technique->passCount != 1) {
+      pGVar4->current = (param_2->markSurfIter).mark;
+      R_RenderDrawGroup_SetupSecondPass(param_1);
+      R_TessMarkSurfList(param_1,pGVar4);
     }
-    R_EndPixOrGpadMaterial((pGVar2->context).state);
+    R_EndPixOrGpadMaterial((param_1->context).state);
   }
   else {
-    GfxMarkSurfIter::SkipToNextDrawGroup(pGVar6);
+    GfxMarkSurfIter::SkipToNextDrawGroup(pGVar4);
   }
-  uVar5 = __restgprlr_27((param_2->markSurfIter).end != pGVar6->current);
-  return (bool)uVar5;
+  return (bool)('\x01' - ((param_2->markSurfIter).end == pGVar4->current));
 }
 
 
 // 82791738  R_RenderDrawGroup_FromSurfList<GfxGlassSurfTessCallback,GfxGlassSurfIter>  (gfx_d3d/rb_backend.cpp:1701)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
@@ -2807,49 +2712,47 @@ bool R_RenderDrawGroup_FromSurfList<GfxGlassSurfTessCallback,GfxGlassSurfIter>
 
 {
   GfxDrawGroupSetup GVar1;
-  GfxDrawListArgs *pGVar2;
-  ulong uVar3;
-  bool bVar4;
-  undefined1 uVar5;
-  GfxGlassSurfIter *pGVar6;
+  ulong uVar2;
+  bool bVar3;
+  GfxGlassSurfIter *pGVar4;
   
-  pGVar2 = (GfxDrawListArgs *)__savegprlr_27(param_1);
-  uVar3 = GetCurrentProcessorNumber();
-  R_CmdBufCheckReserveMemory(dx.cmdBufForProcId[uVar3]);
-  pGVar6 = &param_2->glassSurfIter;
+  uVar2 = GetCurrentProcessorNumber();
+  R_CmdBufCheckReserveMemory(dx.cmdBufForProcId[uVar2]);
+  pGVar4 = &param_2->glassSurfIter;
   if ((param_2->glassSurfIter).current == (param_2->glassSurfIter).end) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_backend.cpp",0x6b4,
                     0,"%s");
   }
-  GVar1 = pGVar6->current->drawGroup;
+  GVar1 = pGVar4->current->drawGroup;
   if (0x165f < GVar1.packed >> 0x12) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_backend.cpp",0x6b7,
                     0,
                     "drawGroup.fields.materialSortedIndex doesn\'t index MAX_MATERIALS\n\t%i not in [0, %i)"
                    );
   }
-  bVar4 = R_RenderDrawGroup_SetupFirstPass(pGVar2,GVar1);
-  if (bVar4) {
+  bVar3 = R_RenderDrawGroup_SetupFirstPass(param_1,GVar1);
+  if (bVar3) {
     param_2->addedPrimitive = 1;
-    (param_2->glassSurfIter).mark = pGVar6->current;
-    R_TessGlassSurfList(pGVar2,pGVar6);
-    if (((pGVar2->context).state)->technique->passCount != 1) {
-      pGVar6->current = (param_2->glassSurfIter).mark;
-      R_RenderDrawGroup_SetupSecondPass(pGVar2);
-      R_TessGlassSurfList(pGVar2,pGVar6);
+    (param_2->glassSurfIter).mark = pGVar4->current;
+    R_TessGlassSurfList(param_1,pGVar4);
+    if (((param_1->context).state)->technique->passCount != 1) {
+      pGVar4->current = (param_2->glassSurfIter).mark;
+      R_RenderDrawGroup_SetupSecondPass(param_1);
+      R_TessGlassSurfList(param_1,pGVar4);
     }
-    R_EndPixOrGpadMaterial((pGVar2->context).state);
+    R_EndPixOrGpadMaterial((param_1->context).state);
   }
   else {
-    GfxGlassSurfIter::SkipToNextDrawGroup(pGVar6);
+    GfxGlassSurfIter::SkipToNextDrawGroup(pGVar4);
   }
-  uVar5 = __restgprlr_27((param_2->glassSurfIter).end != pGVar6->current);
-  return (bool)uVar5;
+  return (bool)('\x01' - ((param_2->glassSurfIter).end == pGVar4->current));
 }
 
 
 // 82791918  R_RenderDrawGroup_FromSurfList<GfxCloudSurfTessCallback,GfxCloudSurfIter>  (gfx_d3d/rb_backend.cpp:1701)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
@@ -2858,59 +2761,57 @@ bool R_RenderDrawGroup_FromSurfList<GfxCloudSurfTessCallback,GfxCloudSurfIter>
                (GfxDrawListArgs *param_1,GfxDrawListIter *param_2)
 
 {
-  GfxDrawListArgs *pGVar1;
-  ulong uVar2;
-  bool bVar3;
-  undefined1 uVar4;
-  ulonglong uVar5;
-  GfxCloudSurfIter *pGVar6;
+  ulong uVar1;
+  bool bVar2;
+  ulonglong uVar3;
+  GfxCloudSurfIter *pGVar4;
   ushort local_40;
   byte bStack_3d;
   
-  pGVar1 = (GfxDrawListArgs *)__savegprlr_26(param_1);
-  uVar2 = GetCurrentProcessorNumber();
-  R_CmdBufCheckReserveMemory(dx.cmdBufForProcId[uVar2]);
-  pGVar6 = &param_2->cloudSurfIter;
+  uVar1 = GetCurrentProcessorNumber();
+  R_CmdBufCheckReserveMemory(dx.cmdBufForProcId[uVar1]);
+  pGVar4 = &param_2->cloudSurfIter;
   if ((param_2->cloudSurfIter).current == (param_2->cloudSurfIter).end) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_backend.cpp",0x6b4,
                     0,"%s");
   }
-  local_40 = (pGVar6->current->fields).materialSortedIndex;
-  bStack_3d = (pGVar6->current->fields).surfType;
-  uVar5 = ((ulonglong)local_40 & 0x7fff) << 0x11;
-  if (0x165f < (uVar5 & 0x7fffffff) >> 0x11) {
+  local_40 = (pGVar4->current->fields).materialSortedIndex;
+  bStack_3d = (pGVar4->current->fields).surfType;
+  uVar3 = ((ulonglong)local_40 & 0x7fff) << 0x11;
+  if (0x165f < (uVar3 & 0x7fffffff) >> 0x11) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_backend.cpp",0x6b7,
                     0,
                     "drawGroup.fields.materialSortedIndex doesn\'t index MAX_MATERIALS\n\t%i not in [0, %i)"
                    );
   }
-  bVar3 = R_RenderDrawGroup_SetupFirstPass
-                    (pGVar1,(GfxDrawGroupSetup)
-                            (uint)(((ulonglong)bStack_3d & 0x7f | uVar5 & 0x7fffffff) << 1));
-  if (bVar3) {
+  bVar2 = R_RenderDrawGroup_SetupFirstPass
+                    (param_1,(GfxDrawGroupSetup)
+                             (uint)(((ulonglong)bStack_3d & 0x7f | uVar3 & 0x7fffffff) << 1));
+  if (bVar2) {
     param_2->addedPrimitive = 1;
-    (param_2->cloudSurfIter).mark = pGVar6->current;
-    R_TessParticleCloudList(pGVar1,pGVar6);
-    if (((pGVar1->context).state)->technique->passCount != 1) {
-      if (pGVar6->current != (param_2->cloudSurfIter).mark) {
+    (param_2->cloudSurfIter).mark = pGVar4->current;
+    R_TessParticleCloudList(param_1,pGVar4);
+    if (((param_1->context).state)->technique->passCount != 1) {
+      if (pGVar4->current != (param_2->cloudSurfIter).mark) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_cloudsurfiter_inline.h"
                         ,0x5e,0,"%s");
       }
-      R_RenderDrawGroup_SetupSecondPass(pGVar1);
-      R_TessParticleCloudList(pGVar1,pGVar6);
+      R_RenderDrawGroup_SetupSecondPass(param_1);
+      R_TessParticleCloudList(param_1,pGVar4);
     }
-    R_EndPixOrGpadMaterial((pGVar1->context).state);
+    R_EndPixOrGpadMaterial((param_1->context).state);
   }
   else {
-    GfxCloudSurfIter::SkipToNextDrawGroup(pGVar6);
+    GfxCloudSurfIter::SkipToNextDrawGroup(pGVar4);
   }
-  uVar4 = __restgprlr_26((param_2->cloudSurfIter).end != pGVar6->current);
-  return (bool)uVar4;
+  return (bool)('\x01' - ((param_2->cloudSurfIter).end == pGVar4->current));
 }
 
 
 // 82791B38  R_RenderDrawGroup_FromSurfList<GfxSparkSurfTessCallback,GfxSparkSurfIter>  (gfx_d3d/rb_backend.cpp:1701)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
@@ -2920,52 +2821,50 @@ bool R_RenderDrawGroup_FromSurfList<GfxSparkSurfTessCallback,GfxSparkSurfIter>
 
 {
   uint uVar1;
-  GfxDrawListArgs *pGVar2;
-  ulong uVar3;
-  bool bVar4;
-  undefined1 uVar5;
-  GfxSparkSurfIter *pGVar6;
+  ulong uVar2;
+  bool bVar3;
+  GfxSparkSurfIter *pGVar4;
   
-  pGVar2 = (GfxDrawListArgs *)__savegprlr_26(param_1);
-  uVar3 = GetCurrentProcessorNumber();
-  R_CmdBufCheckReserveMemory(dx.cmdBufForProcId[uVar3]);
-  pGVar6 = &param_2->sparkSurfIter;
+  uVar2 = GetCurrentProcessorNumber();
+  R_CmdBufCheckReserveMemory(dx.cmdBufForProcId[uVar2]);
+  pGVar4 = &param_2->sparkSurfIter;
   if ((param_2->sparkSurfIter).current == (param_2->sparkSurfIter).end) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_backend.cpp",0x6b4,
                     0,"%s");
   }
-  uVar1 = pGVar6->current->packed >> 0x10;
+  uVar1 = pGVar4->current->packed >> 0x10;
   if (0x165f < (uVar1 & 0x3fff)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_backend.cpp",0x6b7,
                     0,
                     "drawGroup.fields.materialSortedIndex doesn\'t index MAX_MATERIALS\n\t%i not in [0, %i)"
                    );
   }
-  bVar4 = R_RenderDrawGroup_SetupFirstPass(pGVar2,(GfxDrawGroupSetup)(uVar1 << 0x12 | 0x14));
-  if (bVar4) {
+  bVar3 = R_RenderDrawGroup_SetupFirstPass(param_1,(GfxDrawGroupSetup)(uVar1 << 0x12 | 0x14));
+  if (bVar3) {
     param_2->addedPrimitive = 1;
-    (param_2->sparkSurfIter).mark = pGVar6->current;
-    R_TessSparkSurfList(pGVar2,pGVar6);
-    if (((pGVar2->context).state)->technique->passCount != 1) {
-      if (pGVar6->current != (param_2->sparkSurfIter).mark) {
+    (param_2->sparkSurfIter).mark = pGVar4->current;
+    R_TessSparkSurfList(param_1,pGVar4);
+    if (((param_1->context).state)->technique->passCount != 1) {
+      if (pGVar4->current != (param_2->sparkSurfIter).mark) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_sparksurfiter_inline.h"
                         ,0x66,0,"%s");
       }
-      R_RenderDrawGroup_SetupSecondPass(pGVar2);
-      R_TessSparkSurfList(pGVar2,pGVar6);
+      R_RenderDrawGroup_SetupSecondPass(param_1);
+      R_TessSparkSurfList(param_1,pGVar4);
     }
-    R_EndPixOrGpadMaterial((pGVar2->context).state);
+    R_EndPixOrGpadMaterial((param_1->context).state);
   }
   else {
-    GfxSparkSurfIter::SkipToNextDrawGroup(pGVar6);
+    GfxSparkSurfIter::SkipToNextDrawGroup(pGVar4);
   }
-  uVar5 = __restgprlr_26((param_2->sparkSurfIter).end != pGVar6->current);
-  return (bool)uVar5;
+  return (bool)('\x01' - ((param_2->sparkSurfIter).end == pGVar4->current));
 }
 
 
 // 82791FF0  R_RenderDrawGroup_FromSurfList<GfxBspSurfTessCallback,GfxBspNoSunShadowsSurfIter>  (gfx_d3d/rb_backend.cpp:1701)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
@@ -2975,75 +2874,73 @@ bool R_RenderDrawGroup_FromSurfList<GfxBspSurfTessCallback,GfxBspNoSunShadowsSur
 
 {
   ushort uVar1;
-  GfxDrawListArgs *pGVar2;
-  ulong uVar3;
-  bool bVar4;
-  undefined1 uVar5;
-  GfxBspSurfIter *pGVar6;
-  ulonglong uVar7;
+  ulong uVar2;
+  bool bVar3;
+  GfxBspSurfIter *pGVar4;
+  ulonglong uVar5;
   
-  pGVar2 = (GfxDrawListArgs *)__savegprlr_23(param_1);
-  uVar3 = GetCurrentProcessorNumber();
-  R_CmdBufCheckReserveMemory(dx.cmdBufForProcId[uVar3]);
-  pGVar6 = &param_2->bspSurfIter;
+  uVar2 = GetCurrentProcessorNumber();
+  R_CmdBufCheckReserveMemory(dx.cmdBufForProcId[uVar2]);
+  pGVar4 = &param_2->bspSurfIter;
   if ((param_2->bspSurfIter).end < (param_2->bspSurfIter).current) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_bspsurfiter_inline.h"
                     ,0x57,0,"%s");
   }
-  if (pGVar6->current == (param_2->bspSurfIter).end) {
+  if (pGVar4->current == (param_2->bspSurfIter).end) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_backend.cpp",0x6b4,
                     0,"%s");
   }
-  uVar1 = pGVar6->current[1];
+  uVar1 = pGVar4->current[1];
   if (g_worldDpvs->staticSurfaceCount <= (uint)uVar1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_bspsurfiter_inline.h"
                     ,0xa3,0,
                     "bspSurfIndex doesn\'t index g_worldDpvs->staticSurfaceCount\n\t%i not in [0, %i)"
                    );
   }
-  uVar7 = g_worldDpvs->surfaceMaterials[uVar1].packed;
-  if ((uVar7 >> 0x2c & 0xff) != (ulonglong)g_worldDpvs->surfaces[uVar1].laf.fields.primaryLightIndex
+  uVar5 = g_worldDpvs->surfaceMaterials[uVar1].packed;
+  if ((uVar5 >> 0x2c & 0xff) != (ulonglong)g_worldDpvs->surfaces[uVar1].laf.fields.primaryLightIndex
      ) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_bspsurfiter_inline.h"
                     ,0xa5,0,
                     "drawSurf.fields.sceneLightIndex == g_worldDpvs->surfaces[bspSurfIndex].laf.fields.primaryLightIndex\n\t%i, %i"
                    );
   }
-  if (0x165f < (uVar7 >> 0x1d & 0xfff)) {
+  if (0x165f < (uVar5 >> 0x1d & 0xfff)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_backend.cpp",0x6b7,
                     0,
                     "drawGroup.fields.materialSortedIndex doesn\'t index MAX_MATERIALS\n\t%i not in [0, %i)"
                    );
   }
-  bVar4 = R_RenderDrawGroup_SetupFirstPass
-                    (pGVar2,(GfxDrawGroupSetup)
-                            ((uint)(((uVar7 >> 0x1d & 0xfff) << 10 | uVar7 >> 0x2c & 0xff) << 8) | 2
-                            ));
-  if (bVar4) {
+  bVar3 = R_RenderDrawGroup_SetupFirstPass
+                    (param_1,(GfxDrawGroupSetup)
+                             ((uint)(((uVar5 >> 0x1d & 0xfff) << 10 | uVar5 >> 0x2c & 0xff) << 8) |
+                             2));
+  if (bVar3) {
     param_2->addedPrimitive = 1;
-    (param_2->bspSurfIter).mark = pGVar6->current;
-    R_TessTrianglesList(pGVar2,pGVar6,0);
-    if (((pGVar2->context).state)->technique->passCount != 1) {
-      pGVar6->current = (param_2->bspSurfIter).mark;
-      R_RenderDrawGroup_SetupSecondPass(pGVar2);
-      R_TessTrianglesList(pGVar2,pGVar6,0);
+    (param_2->bspSurfIter).mark = pGVar4->current;
+    R_TessTrianglesList(param_1,pGVar4,0);
+    if (((param_1->context).state)->technique->passCount != 1) {
+      pGVar4->current = (param_2->bspSurfIter).mark;
+      R_RenderDrawGroup_SetupSecondPass(param_1);
+      R_TessTrianglesList(param_1,pGVar4,0);
     }
-    R_EndPixOrGpadMaterial((pGVar2->context).state);
+    R_EndPixOrGpadMaterial((param_1->context).state);
   }
   else {
-    GfxBspSurfIter::SkipToNextDrawGroup(pGVar6);
+    GfxBspSurfIter::SkipToNextDrawGroup(pGVar4);
   }
-  if ((param_2->bspSurfIter).end < pGVar6->current) {
+  if ((param_2->bspSurfIter).end < pGVar4->current) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_bspsurfiter_inline.h"
                     ,0x57,0,"%s");
   }
-  uVar5 = __restgprlr_23((param_2->bspSurfIter).end != pGVar6->current);
-  return (bool)uVar5;
+  return (bool)('\x01' - ((param_2->bspSurfIter).end == pGVar4->current));
 }
 
 
 // 82792308  R_RenderDrawGroup_FromSurfList<GfxSModelRigidSurfTessCallback,GfxSModelRigidNoSunShadowsSurfIter>  (gfx_d3d/rb_backend.cpp:1701)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
@@ -3054,81 +2951,76 @@ bool R_RenderDrawGroup_FromSurfList<GfxSModelRigidSurfTessCallback,GfxSModelRigi
 {
   byte bVar1;
   ushort *puVar2;
-  GfxDrawListArgs *pGVar3;
-  ulong uVar4;
-  GfxSModelRigidSurfIter *pGVar5;
-  bool bVar6;
-  undefined1 uVar7;
-  uint uVar8;
+  ulong uVar3;
+  GfxSModelRigidSurfIter *pGVar4;
+  bool bVar5;
+  uint uVar6;
   
-  pGVar3 = (GfxDrawListArgs *)__savegprlr_27(param_1);
-  uVar4 = GetCurrentProcessorNumber();
-  R_CmdBufCheckReserveMemory(dx.cmdBufForProcId[uVar4]);
-  pGVar5 = &param_2->smodelRigidSurfIter;
+  uVar3 = GetCurrentProcessorNumber();
+  R_CmdBufCheckReserveMemory(dx.cmdBufForProcId[uVar3]);
+  pGVar4 = &param_2->smodelRigidSurfIter;
   if (*(int *)&(param_2->smodelRigidSurfIter).field_0x4 ==
       *(int *)&(param_2->smodelRigidSurfIter).field_0x8) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_backend.cpp",0x6b4,
                     0,"%s");
   }
   puVar2 = *(ushort **)&(param_2->smodelRigidSurfIter).field_0x4;
-  uVar8 = (uint)*puVar2;
+  uVar6 = (uint)*puVar2;
   bVar1 = *(byte *)(puVar2 + 1);
-  if (0x165f < (uVar8 & 0xfff)) {
+  if (0x165f < (uVar6 & 0xfff)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_backend.cpp",0x6b7,
                     0,
                     "drawGroup.fields.materialSortedIndex doesn\'t index MAX_MATERIALS\n\t%i not in [0, %i)"
                    );
   }
-  bVar6 = R_RenderDrawGroup_SetupFirstPass
-                    (pGVar3,(GfxDrawGroupSetup)(((uVar8 & 0xfff) << 10 | (uint)bVar1) << 8 | 6));
-  if (bVar6) {
+  bVar5 = R_RenderDrawGroup_SetupFirstPass
+                    (param_1,(GfxDrawGroupSetup)(((uVar6 & 0xfff) << 10 | (uint)bVar1) << 8 | 6));
+  if (bVar5) {
     param_2->addedPrimitive = 1;
     *(undefined4 *)&(param_2->smodelRigidSurfIter).field_0xc =
          *(undefined4 *)&(param_2->smodelRigidSurfIter).field_0x4;
-    R_TessStaticModelRigidDrawSurfList(pGVar3,(GfxSModelSurfIter *)pGVar5);
-    if (((pGVar3->context).state)->technique->passCount != 1) {
+    R_TessStaticModelRigidDrawSurfList(param_1,(GfxSModelSurfIter *)pGVar4);
+    if (((param_1->context).state)->technique->passCount != 1) {
       *(undefined4 *)&(param_2->smodelRigidSurfIter).field_0x4 =
            *(undefined4 *)&(param_2->smodelRigidSurfIter).field_0xc;
-      R_RenderDrawGroup_SetupSecondPass(pGVar3);
-      R_TessStaticModelRigidDrawSurfList(pGVar3,(GfxSModelSurfIter *)pGVar5);
+      R_RenderDrawGroup_SetupSecondPass(param_1);
+      R_TessStaticModelRigidDrawSurfList(param_1,(GfxSModelSurfIter *)pGVar4);
     }
-    R_EndPixOrGpadMaterial((pGVar3->context).state);
+    R_EndPixOrGpadMaterial((param_1->context).state);
   }
   else {
-    GfxSModelSurfIter::SkipToNextDrawGroup((GfxSModelSurfIter *)pGVar5);
+    GfxSModelSurfIter::SkipToNextDrawGroup((GfxSModelSurfIter *)pGVar4);
   }
-  uVar7 = __restgprlr_27(*(int *)&(param_2->smodelRigidSurfIter).field_0x8 !=
-                         *(int *)&(param_2->smodelRigidSurfIter).field_0x4);
-  return (bool)uVar7;
+  return (bool)('\x01' - (*(int *)&(param_2->smodelRigidSurfIter).field_0x8 ==
+                         *(int *)&(param_2->smodelRigidSurfIter).field_0x4));
 }
 
 
 // 82791E10  R_RenderDrawGroupNoRender_FromSurfList<GfxBspNoSunShadowsSurfIter>  (gfx_d3d/rb_backend.cpp:1753)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 bool R_RenderDrawGroupNoRender_FromSurfList<GfxBspNoSunShadowsSurfIter>(GfxDrawListIter *param_1)
 
 {
-  int iVar1;
-  undefined1 uVar2;
-  GfxBspSurfIter *pGVar3;
+  GfxBspSurfIter *pGVar1;
   
-  iVar1 = __savegprlr_28(param_1);
-  pGVar3 = (GfxBspSurfIter *)(iVar1 + 8);
-  if (*(uint *)(iVar1 + 0xc) < *(uint *)(iVar1 + 8)) {
+  pGVar1 = &param_1->bspSurfIter;
+  if ((param_1->bspSurfIter).end < (param_1->bspSurfIter).current) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_bspsurfiter_inline.h"
                     ,0x57,0,"%s");
   }
-  if (pGVar3->current == *(ushort **)(iVar1 + 0xc)) {
+  if (pGVar1->current == (param_1->bspSurfIter).end) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_backend.cpp",0x6dd,
                     0,"%s");
   }
-  GfxBspSurfIter::SkipToNextDrawGroup(pGVar3);
-  if (*(ushort **)(iVar1 + 0xc) < pGVar3->current) {
+  GfxBspSurfIter::SkipToNextDrawGroup(pGVar1);
+  if ((param_1->bspSurfIter).end < pGVar1->current) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_bspsurfiter_inline.h"
                     ,0x57,0,"%s");
   }
-  uVar2 = __restgprlr_28(*(ushort **)(iVar1 + 0xc) != pGVar3->current);
-  return (bool)uVar2;
+  return (bool)('\x01' - ((param_1->bspSurfIter).end == pGVar1->current));
 }
 
 
@@ -3257,6 +3149,8 @@ void R_DrawSurfs_InitListArgs
 
 // 8278DD50  R_DrawSurfs_Begin  (gfx_d3d/rb_backend.cpp:1836)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
@@ -3265,12 +3159,10 @@ void R_DrawSurfs_Begin(GfxCmdBufContext param_1,GfxDrawListInfo *param_2,GfxDraw
 
 {
   GfxCmdBufSourceState *pGVar1;
-  GfxCmdBufContext GVar2;
   GfxCmdBufSourceState *pGStack00000010;
   GfxCmdBufState *pGStack00000014;
   
-  GVar2 = (GfxCmdBufContext)__savegprlr_26();
-  _pGStack00000010 = GVar2;
+  _pGStack00000010 = param_1;
   Profile_Begin(0x5f);
   pGVar1 = pGStack00000010;
   if (pGStack00000010->cameraView != param_2->cameraView) {
@@ -3278,16 +3170,15 @@ void R_DrawSurfs_Begin(GfxCmdBufContext param_1,GfxDrawListInfo *param_2,GfxDraw
                     0,"%s");
   }
   R_SetDrawSurfsSceneLight(pGVar1,param_2->sceneLightIndex,param_2->viewInfo);
-  R_DrawSurfs_Viewport(GVar2);
+  R_DrawSurfs_Viewport(param_1);
   if ((dx.d3d9 == (Direct3D *)0x0) || (dx.device == (D3DDevice *)0x0)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_backend.cpp",0x73d,
                     0,"%s");
   }
   R_BeginPixOrGpadMaterials(pGStack00000014);
-  param_3->context = GVar2;
+  param_3->context = param_1;
   param_3->listInfo = param_2;
   param_3->baseTechType = param_2->baseTechType;
-  __restgprlr_26();
   return;
 }
 
@@ -3315,206 +3206,251 @@ void R_DrawSurfs_End(GfxCmdBufContext param_1)
 
 // 8278DE70  R_DrawSurfs_InsertionSortHeadIterator  (gfx_d3d/rb_backend.cpp:1929)
 
-/* WARNING: Restarted to delay deadcode elimination for space: stack */
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 
 void R_DrawSurfs_InsertionSortHeadIterator(GfxSurfsIterator *param_1,uint param_2)
 
 {
-  ulonglong *puVar1;
-  ulonglong uVar2;
-  ulonglong uVar3;
-  ulonglong uVar4;
-  ulonglong uVar5;
-  ulonglong uVar6;
-  ulonglong uVar7;
-  ulonglong *puVar9;
-  int iVar8;
+  _func___cdecl_uint_GfxDrawListIter_ptr *p_Var1;
+  _func___cdecl_bool_GfxDrawListArgs_ptr_GfxDrawListIter_ptr *p_Var2;
+  _func___cdecl_bool_GfxDrawListIter_ptr *p_Var3;
+  _func___cdecl_void_GfxDrawListIter_ptr *p_Var4;
+  _func___cdecl_bool_GfxDrawListIter_ptr *p_Var5;
+  undefined4 uVar6;
+  _func___cdecl_uint_GfxDrawListIter_ptr *p_Var7;
+  _func___cdecl_bool_GfxDrawListArgs_ptr_GfxDrawListIter_ptr *p_Var8;
+  _func___cdecl_bool_GfxDrawListIter_ptr *p_Var9;
+  _func___cdecl_void_GfxDrawListIter_ptr *p_Var10;
+  _func___cdecl_bool_GfxDrawListIter_ptr *p_Var11;
+  undefined4 uVar12;
+  ulonglong uVar13;
+  uint uVar14;
+  GfxSurfsIterator *pGVar15;
   
-  uVar2 = (ulonglong)(int)param_2;
-  puVar1 = (ulonglong *)__savegprlr_29(param_1);
-  uVar6 = *puVar1;
-  if (puVar1[4] < uVar6) {
-    uVar7 = 2;
-    iVar8 = 2;
-    uVar5 = puVar1[1];
-    uVar4 = puVar1[2];
-    uVar3 = puVar1[3];
-    *puVar1 = puVar1[4];
-    puVar1[1] = puVar1[5];
-    puVar1[2] = puVar1[6];
-    puVar1[3] = puVar1[7];
-    if (2 < (uVar2 & 0xffffffff)) {
-      puVar9 = puVar1 + 8;
+  uVar13 = (param_1->key).packed;
+  if (param_1[1].key.packed < uVar13) {
+    p_Var1 = param_1[1].GetSortKeyCallback;
+    p_Var2 = param_1[1].RenderDrawGroupCallback;
+    p_Var3 = param_1[1].RenderDrawGroupNoRenderCallback;
+    p_Var4 = param_1[1].SaveMarkCallback;
+    uVar14 = 2;
+    p_Var7 = param_1->GetSortKeyCallback;
+    p_Var8 = param_1->RenderDrawGroupCallback;
+    p_Var9 = param_1->RenderDrawGroupNoRenderCallback;
+    p_Var10 = param_1->SaveMarkCallback;
+    p_Var11 = param_1->TerminateCallback;
+    uVar12 = *(undefined4 *)&param_1->field_0x1c;
+    p_Var5 = param_1[1].TerminateCallback;
+    uVar6 = *(undefined4 *)&param_1[1].field_0x1c;
+    param_1->key = param_1[1].key;
+    param_1->GetSortKeyCallback = p_Var1;
+    param_1->RenderDrawGroupCallback = p_Var2;
+    param_1->RenderDrawGroupNoRenderCallback = p_Var3;
+    param_1->SaveMarkCallback = p_Var4;
+    param_1->TerminateCallback = p_Var5;
+    *(undefined4 *)&param_1->field_0x1c = uVar6;
+    if (2 < param_2) {
+      pGVar15 = param_1 + 2;
       do {
-        iVar8 = (int)uVar7;
-        if (uVar6 <= *puVar9) break;
-        uVar7 = uVar7 + 1;
-        iVar8 = (int)uVar7;
-        puVar9[-4] = *puVar9;
-        puVar9[-3] = puVar9[1];
-        puVar9[-2] = puVar9[2];
-        puVar9[-1] = puVar9[3];
-        puVar9 = puVar9 + 4;
-      } while ((uVar7 & 0xffffffff) < (uVar2 & 0xffffffff));
+        if (uVar13 <= (pGVar15->key).packed) break;
+        p_Var1 = pGVar15->GetSortKeyCallback;
+        p_Var2 = pGVar15->RenderDrawGroupCallback;
+        uVar14 = uVar14 + 1;
+        p_Var3 = pGVar15->RenderDrawGroupNoRenderCallback;
+        p_Var4 = pGVar15->SaveMarkCallback;
+        p_Var5 = pGVar15->TerminateCallback;
+        uVar6 = *(undefined4 *)&pGVar15->field_0x1c;
+        pGVar15[-1].key = pGVar15->key;
+        pGVar15[-0xffffffff00000001].GetSortKeyCallback = p_Var1;
+        pGVar15[-0xffffffff00000001].RenderDrawGroupCallback = p_Var2;
+        pGVar15[-0xffffffff00000001].RenderDrawGroupNoRenderCallback = p_Var3;
+        pGVar15[-0xffffffff00000001].SaveMarkCallback = p_Var4;
+        pGVar15[-0xffffffff00000001].TerminateCallback = p_Var5;
+        *(undefined4 *)&pGVar15[-0xffffffff00000001].field_0x1c = uVar6;
+        pGVar15 = pGVar15 + 1;
+      } while (uVar14 < param_2);
     }
-    puVar1 = puVar1 + iVar8 * 4;
-    puVar1[-4] = uVar6;
-    puVar1[-3] = uVar5;
-    puVar1[-2] = uVar4;
-    puVar1[-1] = uVar3;
+    param_1[uVar14 - 1].key.packed = uVar13;
+    param_1[uVar14 - 1].GetSortKeyCallback = p_Var7;
+    param_1[uVar14 - 1].RenderDrawGroupCallback = p_Var8;
+    param_1[uVar14 - 1].RenderDrawGroupNoRenderCallback = p_Var9;
+    param_1[uVar14 - 1].SaveMarkCallback = p_Var10;
+    param_1[uVar14 - 1].TerminateCallback = p_Var11;
+    *(undefined4 *)&param_1[uVar14 - 1].field_0x1c = uVar12;
   }
-  __restgprlr_29();
   return;
 }
 
 
 // 8278DF58  R_DrawSurfs_SortIterators  (gfx_d3d/rb_backend.cpp:1949)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 
 void R_DrawSurfs_SortIterators(GfxSurfsIterator *param_1,uint param_2)
 
 {
-  longlong lVar1;
-  ulonglong uVar2;
-  longlong lVar3;
-  ulonglong uVar4;
-  ulonglong uVar5;
-  ulonglong uVar6;
-  longlong lVar8;
-  ulonglong *puVar9;
-  ulonglong *puVar10;
-  ulonglong uVar11;
-  ulonglong uVar12;
-  int iVar7;
+  _func___cdecl_uint_GfxDrawListIter_ptr *p_Var1;
+  _func___cdecl_bool_GfxDrawListArgs_ptr_GfxDrawListIter_ptr *p_Var2;
+  _func___cdecl_bool_GfxDrawListIter_ptr *p_Var3;
+  _func___cdecl_void_GfxDrawListIter_ptr *p_Var4;
+  _func___cdecl_bool_GfxDrawListIter_ptr *p_Var5;
+  undefined4 uVar6;
+  _func___cdecl_uint_GfxDrawListIter_ptr *p_Var7;
+  _func___cdecl_bool_GfxDrawListArgs_ptr_GfxDrawListIter_ptr *p_Var8;
+  _func___cdecl_bool_GfxDrawListIter_ptr *p_Var9;
+  _func___cdecl_void_GfxDrawListIter_ptr *p_Var10;
+  _func___cdecl_bool_GfxDrawListIter_ptr *p_Var11;
+  undefined4 uVar12;
+  int iVar13;
+  ulonglong uVar14;
+  uint uVar15;
+  GfxSurfsIterator *pGVar16;
+  GfxSurfsIterator *pGVar17;
   
-  lVar3 = (longlong)(int)param_2;
-  lVar1 = __savegprlr_26(param_1);
-  uVar4 = lVar3 - 2;
-  lVar1 = (uVar4 & 0x7ffffff) * 0x20 + lVar1;
+  iVar13 = param_2 - 2;
+  pGVar17 = param_1 + (param_2 - 2);
   do {
-    puVar10 = (ulonglong *)lVar1;
-    uVar5 = *puVar10;
-    if (puVar10[4] < uVar5) {
-      uVar2 = puVar10[1];
-      uVar12 = puVar10[2];
-      uVar11 = puVar10[3];
-      uVar6 = 2;
-      iVar7 = 2;
-      *puVar10 = puVar10[4];
-      puVar10[1] = puVar10[5];
-      puVar10[2] = puVar10[6];
-      puVar10[3] = puVar10[7];
-      if (2 < (lVar3 - uVar4 & 0xffffffff)) {
-        lVar8 = lVar1 + 0x40;
+    uVar14 = (pGVar17->key).packed;
+    if (pGVar17[1].key.packed < uVar14) {
+      p_Var7 = pGVar17->GetSortKeyCallback;
+      p_Var8 = pGVar17->RenderDrawGroupCallback;
+      p_Var9 = pGVar17->RenderDrawGroupNoRenderCallback;
+      p_Var10 = pGVar17->SaveMarkCallback;
+      p_Var11 = pGVar17->TerminateCallback;
+      uVar12 = *(undefined4 *)&pGVar17->field_0x1c;
+      uVar15 = 2;
+      p_Var1 = pGVar17[1].GetSortKeyCallback;
+      p_Var2 = pGVar17[1].RenderDrawGroupCallback;
+      p_Var3 = pGVar17[1].RenderDrawGroupNoRenderCallback;
+      p_Var4 = pGVar17[1].SaveMarkCallback;
+      p_Var5 = pGVar17[1].TerminateCallback;
+      uVar6 = *(undefined4 *)&pGVar17[1].field_0x1c;
+      pGVar17->key = pGVar17[1].key;
+      pGVar17->GetSortKeyCallback = p_Var1;
+      pGVar17->RenderDrawGroupCallback = p_Var2;
+      pGVar17->RenderDrawGroupNoRenderCallback = p_Var3;
+      pGVar17->SaveMarkCallback = p_Var4;
+      pGVar17->TerminateCallback = p_Var5;
+      *(undefined4 *)&pGVar17->field_0x1c = uVar6;
+      if (2 < param_2 - iVar13) {
+        pGVar16 = pGVar17 + 2;
         do {
-          iVar7 = (int)uVar6;
-          puVar9 = (ulonglong *)lVar8;
-          if (uVar5 <= *puVar9) break;
-          uVar6 = uVar6 + 1;
-          iVar7 = (int)uVar6;
-          lVar8 = lVar8 + 0x20;
-          puVar9[-4] = *puVar9;
-          puVar9[-3] = puVar9[1];
-          puVar9[-2] = puVar9[2];
-          puVar9[-1] = puVar9[3];
-        } while ((uVar6 & 0xffffffff) < (lVar3 - uVar4 & 0xffffffff));
+          if (uVar14 <= (pGVar16->key).packed) break;
+          p_Var1 = pGVar16->GetSortKeyCallback;
+          p_Var2 = pGVar16->RenderDrawGroupCallback;
+          uVar15 = uVar15 + 1;
+          p_Var3 = pGVar16->RenderDrawGroupNoRenderCallback;
+          p_Var4 = pGVar16->SaveMarkCallback;
+          p_Var5 = pGVar16->TerminateCallback;
+          uVar6 = *(undefined4 *)&pGVar16->field_0x1c;
+          pGVar16[-1].key = pGVar16->key;
+          pGVar16[-0xffffffff00000001].GetSortKeyCallback = p_Var1;
+          pGVar16[-0xffffffff00000001].RenderDrawGroupCallback = p_Var2;
+          pGVar16[-0xffffffff00000001].RenderDrawGroupNoRenderCallback = p_Var3;
+          pGVar16[-0xffffffff00000001].SaveMarkCallback = p_Var4;
+          pGVar16[-0xffffffff00000001].TerminateCallback = p_Var5;
+          *(undefined4 *)&pGVar16[-0xffffffff00000001].field_0x1c = uVar6;
+          pGVar16 = pGVar16 + 1;
+        } while (uVar15 < param_2 - iVar13);
       }
-      puVar10[iVar7 * 4 + -4] = uVar5;
-      puVar10[iVar7 * 4 + -3] = uVar2;
-      puVar10[iVar7 * 4 + -2] = uVar12;
-      puVar10[iVar7 * 4 + -1] = uVar11;
+      pGVar17[uVar15 - 1].key.packed = uVar14;
+      pGVar17[uVar15 - 1].GetSortKeyCallback = p_Var7;
+      pGVar17[uVar15 - 1].RenderDrawGroupCallback = p_Var8;
+      pGVar17[uVar15 - 1].RenderDrawGroupNoRenderCallback = p_Var9;
+      pGVar17[uVar15 - 1].SaveMarkCallback = p_Var10;
+      pGVar17[uVar15 - 1].TerminateCallback = p_Var11;
+      *(undefined4 *)&pGVar17[uVar15 - 1].field_0x1c = uVar12;
     }
-    if ((uVar4 & 0xffffffff) == 0) {
-      __restgprlr_26();
+    if (iVar13 == 0) {
       return;
     }
-    uVar4 = uVar4 - 1;
-    lVar1 = lVar1 + -0x20;
+    iVar13 = iVar13 + -1;
+    pGVar17 = pGVar17 + -1;
   } while( true );
 }
 
 
 // 82790870  R_GetDrawGroupSortKey<GfxBspSurfIter>  (gfx_d3d/rb_backend.cpp:2000)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 uint R_GetDrawGroupSortKey<GfxBspSurfIter>(GfxDrawListIter *param_1)
 
 {
   ushort uVar1;
   ulonglong uVar2;
-  int iVar3;
-  uint uVar4;
-  ulonglong uVar5;
+  ulonglong uVar3;
   
-  iVar3 = __savegprlr_29(param_1);
-  uVar1 = *(ushort *)(*(int *)(iVar3 + 8) + 2);
+  uVar1 = (param_1->bspSurfIter).current[1];
   if (g_worldDpvs->staticSurfaceCount <= (uint)uVar1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_bspsurfiter_inline.h"
                     ,0xa3,0,
                     "bspSurfIndex doesn\'t index g_worldDpvs->staticSurfaceCount\n\t%i not in [0, %i)"
                    );
   }
-  uVar5 = g_worldDpvs->surfaceMaterials[uVar1].packed;
-  if ((uVar5 >> 0x2c & 0xff) != (ulonglong)g_worldDpvs->surfaces[uVar1].laf.fields.primaryLightIndex
+  uVar3 = g_worldDpvs->surfaceMaterials[uVar1].packed;
+  if ((uVar3 >> 0x2c & 0xff) != (ulonglong)g_worldDpvs->surfaces[uVar1].laf.fields.primaryLightIndex
      ) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_bspsurfiter_inline.h"
                     ,0xa5,0,
                     "drawSurf.fields.sceneLightIndex == g_worldDpvs->surfaces[bspSurfIndex].laf.fields.primaryLightIndex\n\t%i, %i"
                    );
   }
-  uVar2 = uVar5 >> 0x1d & 0xfff;
+  uVar2 = uVar3 >> 0x1d & 0xfff;
   if (0x165f < uVar2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_backend.cpp",0x7d8,
                     0,
                     "drawGroup.fields.materialSortedIndex doesn\'t index MAX_MATERIALS\n\t%i not in [0, %i)"
                    );
   }
-  uVar4 = __restgprlr_29((((ulonglong)g_drawConsts.sortedMaterialKeys[(int)uVar2] & 0x3f) << 0x14 |
-                         (uVar5 >> 0x2c & 0xff) << 8) << 5 | uVar5 >> 0x1d & 0xfff);
-  return uVar4;
+  return (uint)((((ulonglong)g_drawConsts.sortedMaterialKeys[(int)uVar2] & 0x3f) << 0x14 |
+                (uVar3 >> 0x2c & 0xff) << 8) << 5) | (uint)((uVar3 >> 0x1d & 0xfff) << 5) >> 5;
 }
 
 
 // 82790BD8  R_GetDrawGroupSortKey<GfxBspLightMapSurfIter>  (gfx_d3d/rb_backend.cpp:2000)
+
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 
 uint R_GetDrawGroupSortKey<GfxBspLightMapSurfIter>(GfxDrawListIter *param_1)
 
 {
   ushort uVar1;
   ulonglong uVar2;
-  int iVar3;
-  uint uVar4;
-  ulonglong uVar5;
+  ulonglong uVar3;
   
-  iVar3 = __savegprlr_29(param_1);
-  uVar1 = *(ushort *)(*(int *)(iVar3 + 0x14) + 2);
+  uVar1 = *(ushort *)(*(int *)&param_1->bspLightMapSurfIter + 2);
   if (g_worldDpvs->staticSurfaceCount <= (uint)uVar1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_bspsurfiter_inline.h"
                     ,0xa3,0,
                     "bspSurfIndex doesn\'t index g_worldDpvs->staticSurfaceCount\n\t%i not in [0, %i)"
                    );
   }
-  uVar5 = g_worldDpvs->surfaceMaterials[uVar1].packed;
-  if ((uVar5 >> 0x2c & 0xff) != (ulonglong)g_worldDpvs->surfaces[uVar1].laf.fields.primaryLightIndex
+  uVar3 = g_worldDpvs->surfaceMaterials[uVar1].packed;
+  if ((uVar3 >> 0x2c & 0xff) != (ulonglong)g_worldDpvs->surfaces[uVar1].laf.fields.primaryLightIndex
      ) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_bspsurfiter_inline.h"
                     ,0xa5,0,
                     "drawSurf.fields.sceneLightIndex == g_worldDpvs->surfaces[bspSurfIndex].laf.fields.primaryLightIndex\n\t%i, %i"
                    );
   }
-  uVar2 = uVar5 >> 0x1d & 0xfff;
+  uVar2 = uVar3 >> 0x1d & 0xfff;
   if (0x165f < uVar2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_backend.cpp",0x7d8,
                     0,
                     "drawGroup.fields.materialSortedIndex doesn\'t index MAX_MATERIALS\n\t%i not in [0, %i)"
                    );
   }
-  uVar4 = __restgprlr_29(((((ulonglong)g_drawConsts.sortedMaterialKeys[(int)uVar2] & 0x3f) << 5 | 2)
-                          << 0xf | (uVar5 >> 0x2c & 0xff) << 8) << 5 | uVar5 >> 0x1d & 0xfff);
-  return uVar4;
+  return (uint)(((((ulonglong)g_drawConsts.sortedMaterialKeys[(int)uVar2] & 0x3f) << 5 | 2) << 0xf |
+                (uVar3 >> 0x2c & 0xff) << 8) << 5) | (uint)((uVar3 >> 0x1d & 0xfff) << 5) >> 5;
 }
 
 
@@ -3660,6 +3596,8 @@ uint R_GetDrawGroupSortKey<GfxDrawSurfIter>(GfxDrawListIter *param_1)
 
 // 82798DD0  R_AddDrawGroupIterator_DrawGroupSortKey<GfxBspSurfTessCallback,GfxBspSurfIter>  (gfx_d3d/rb_backend.cpp:2043)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
@@ -3667,42 +3605,43 @@ void R_AddDrawGroupIterator_DrawGroupSortKey<GfxBspSurfTessCallback,GfxBspSurfIt
                (GfxSpliceSurfs *param_1,uint param_2)
 
 {
-  int iVar1;
-  int iVar2;
-  uint uVar3;
-  ulonglong uVar4;
+  uint uVar1;
   
-  uVar4 = (ulonglong)(int)param_2;
-  iVar2 = __savegprlr_28(param_1);
-  if (4 < (uVar4 & 0xffffffff)) {
+  if (4 < param_2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_backend.cpp",0x7fe,
                     0,"spliceIndex doesn\'t index GFX_SPLICED_DRAW_LIST_LIMIT\n\t%i not in [0, %i)")
     ;
   }
-  iVar1 = (int)uVar4 * 0x78 + iVar2;
-  if (*(uint *)(iVar1 + 0x18) < *(uint *)(iVar1 + 0x14)) {
+  if (param_1->drawListIter[param_2].bspSurfIter.end <
+      param_1->drawListIter[param_2].bspSurfIter.current) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_bspsurfiter_inline.h"
                     ,0x57,0,"%s");
   }
-  if (*(int *)(iVar1 + 0x14) != *(int *)(iVar1 + 0x18)) {
-    uVar3 = R_GetDrawGroupSortKey<GfxBspSurfIter>((GfxDrawListIter *)(iVar1 + 0xc));
-    *(uint *)((*(int *)(iVar2 + 4) + 0x17) * 0x20 + iVar2) = uVar3;
-    *(int *)(*(int *)(iVar2 + 4) * 0x20 + iVar2 + 0x2e4) = (int)uVar4;
-    *(code **)(*(int *)(iVar2 + 4) * 0x20 + iVar2 + 0x2e8) = R_GetDrawGroupSortKey<GfxBspSurfIter>;
-    *(code **)(*(int *)(iVar2 + 4) * 0x20 + iVar2 + 0x2ec) =
+  if (param_1->drawListIter[param_2].bspSurfIter.current !=
+      param_1->drawListIter[param_2].bspSurfIter.end) {
+    uVar1 = R_GetDrawGroupSortKey<GfxBspSurfIter>(param_1->drawListIter + param_2);
+    param_1->iteratorPool[param_1->iteratorCount].key.fields.sortKey = uVar1;
+    param_1->iteratorPool[param_1->iteratorCount].key.fields.spliceIndex = param_2;
+    param_1->iteratorPool[param_1->iteratorCount].GetSortKeyCallback =
+         R_GetDrawGroupSortKey<GfxBspSurfIter>;
+    param_1->iteratorPool[param_1->iteratorCount].RenderDrawGroupCallback =
          R_RenderDrawGroup_FromSurfList<GfxBspSurfTessCallback,GfxBspSurfIter>;
-    *(undefined4 *)(*(int *)(iVar2 + 4) * 0x20 + iVar2 + 0x2f0) = 0;
-    *(undefined4 *)(*(int *)(iVar2 + 4) * 0x20 + iVar2 + 0x2f4) = 0;
-    *(undefined4 *)(*(int *)(iVar2 + 4) * 0x20 + iVar2 + 0x2f8) = 0;
-    *(int *)(iVar2 + 4) = *(int *)(iVar2 + 4) + 1;
+    param_1->iteratorPool[param_1->iteratorCount].RenderDrawGroupNoRenderCallback =
+         (_func___cdecl_bool_GfxDrawListIter_ptr *)0x0;
+    param_1->iteratorPool[param_1->iteratorCount].SaveMarkCallback =
+         (_func___cdecl_void_GfxDrawListIter_ptr *)0x0;
+    param_1->iteratorPool[param_1->iteratorCount].TerminateCallback =
+         (_func___cdecl_bool_GfxDrawListIter_ptr *)0x0;
+    param_1->iteratorCount = param_1->iteratorCount + 1;
   }
-  __restgprlr_28();
   return;
 }
 
 
 // 82798F00  R_AddDrawGroupIterator_DrawGroupSortKey<GfxBspLightMapSurfTessCallback,GfxBspLightMapSurfIter>  (gfx_d3d/rb_backend.cpp:2043)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
@@ -3710,37 +3649,35 @@ void R_AddDrawGroupIterator_DrawGroupSortKey<GfxBspLightMapSurfTessCallback,GfxB
                (GfxSpliceSurfs *param_1,uint param_2)
 
 {
-  int iVar1;
-  int iVar2;
-  uint uVar3;
-  ulonglong uVar4;
+  uint uVar1;
   
-  uVar4 = (ulonglong)(int)param_2;
-  iVar2 = __savegprlr_28(param_1);
-  if (4 < (uVar4 & 0xffffffff)) {
+  if (4 < param_2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_backend.cpp",0x7fe,
                     0,"spliceIndex doesn\'t index GFX_SPLICED_DRAW_LIST_LIMIT\n\t%i not in [0, %i)")
     ;
   }
-  iVar1 = (int)uVar4 * 0x78 + iVar2;
-  if (*(uint *)(iVar1 + 0x24) < *(uint *)(iVar1 + 0x20)) {
+  if (*(uint *)&param_1->drawListIter[param_2].bspLightMapSurfIter.field_0x4 <
+      *(uint *)&param_1->drawListIter[param_2].bspLightMapSurfIter) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_bspsurfiter_inline.h"
                     ,0x57,0,"%s");
   }
-  if (*(int *)(iVar1 + 0x20) != *(int *)(iVar1 + 0x24)) {
-    uVar3 = R_GetDrawGroupSortKey<GfxBspLightMapSurfIter>((GfxDrawListIter *)(iVar1 + 0xc));
-    *(uint *)((*(int *)(iVar2 + 4) + 0x17) * 0x20 + iVar2) = uVar3;
-    *(int *)(*(int *)(iVar2 + 4) * 0x20 + iVar2 + 0x2e4) = (int)uVar4;
-    *(code **)(*(int *)(iVar2 + 4) * 0x20 + iVar2 + 0x2e8) =
+  if (*(int *)&param_1->drawListIter[param_2].bspLightMapSurfIter !=
+      *(int *)&param_1->drawListIter[param_2].bspLightMapSurfIter.field_0x4) {
+    uVar1 = R_GetDrawGroupSortKey<GfxBspLightMapSurfIter>(param_1->drawListIter + param_2);
+    param_1->iteratorPool[param_1->iteratorCount].key.fields.sortKey = uVar1;
+    param_1->iteratorPool[param_1->iteratorCount].key.fields.spliceIndex = param_2;
+    param_1->iteratorPool[param_1->iteratorCount].GetSortKeyCallback =
          R_GetDrawGroupSortKey<GfxBspLightMapSurfIter>;
-    *(code **)(*(int *)(iVar2 + 4) * 0x20 + iVar2 + 0x2ec) =
+    param_1->iteratorPool[param_1->iteratorCount].RenderDrawGroupCallback =
          R_RenderDrawGroup_FromSurfList<GfxBspLightMapSurfTessCallback,GfxBspLightMapSurfIter>;
-    *(undefined4 *)(*(int *)(iVar2 + 4) * 0x20 + iVar2 + 0x2f0) = 0;
-    *(undefined4 *)(*(int *)(iVar2 + 4) * 0x20 + iVar2 + 0x2f4) = 0;
-    *(undefined4 *)(*(int *)(iVar2 + 4) * 0x20 + iVar2 + 0x2f8) = 0;
-    *(int *)(iVar2 + 4) = *(int *)(iVar2 + 4) + 1;
+    param_1->iteratorPool[param_1->iteratorCount].RenderDrawGroupNoRenderCallback =
+         (_func___cdecl_bool_GfxDrawListIter_ptr *)0x0;
+    param_1->iteratorPool[param_1->iteratorCount].SaveMarkCallback =
+         (_func___cdecl_void_GfxDrawListIter_ptr *)0x0;
+    param_1->iteratorPool[param_1->iteratorCount].TerminateCallback =
+         (_func___cdecl_bool_GfxDrawListIter_ptr *)0x0;
+    param_1->iteratorCount = param_1->iteratorCount + 1;
   }
-  __restgprlr_28();
   return;
 }
 
@@ -4123,6 +4060,8 @@ uint R_GetPrimarySortKey<GfxSModelRigidNoSunShadowsSurfIter>(GfxDrawListIter *pa
 
 // 8278E0A0  R_AddDrawGroupIterator_PrimarySortKey_Finish  (gfx_d3d/rb_backend.cpp:2087)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 
@@ -4132,24 +4071,22 @@ void R_AddDrawGroupIterator_PrimarySortKey_Finish
                _func___cdecl_bool_GfxDrawListArgs_ptr_GfxDrawListIter_ptr *param_4)
 
 {
-  int iVar1;
-  uint uVar2;
+  uint uVar1;
   
-  iVar1 = __savegprlr_28(param_1);
-  uVar2 = (*param_3)((GfxDrawListIter *)(iVar1 + 8));
-  *(uint *)((*(int *)(iVar1 + 4) + 4) * 0x20 + iVar1) = uVar2;
-  *(uint *)(*(int *)(iVar1 + 4) * 0x20 + iVar1 + 0x84) = param_2;
-  *(_func___cdecl_uint_GfxDrawListIter_ptr **)(*(int *)(iVar1 + 4) * 0x20 + iVar1 + 0x88) = param_3;
-  *(_func___cdecl_bool_GfxDrawListArgs_ptr_GfxDrawListIter_ptr **)
-   (*(int *)(iVar1 + 4) * 0x20 + iVar1 + 0x8c) = param_4;
-  *(int *)(iVar1 + 4) = *(int *)(iVar1 + 4) + 1;
-  __restgprlr_28();
+  uVar1 = (*param_3)(&param_1->drawListIter);
+  param_1->iteratorPool[param_1->iteratorCount].key.fields.sortKey = uVar1;
+  param_1->iteratorPool[param_1->iteratorCount].key.fields.spliceIndex = param_2;
+  param_1->iteratorPool[param_1->iteratorCount].GetSortKeyCallback = param_3;
+  param_1->iteratorPool[param_1->iteratorCount].RenderDrawGroupCallback = param_4;
+  param_1->iteratorCount = param_1->iteratorCount + 1;
   return;
 }
 
 
 // 827997D0  R_AddDrawGroupIterator_PrimarySortKey<GfxBspSurfTessCallback,GfxBspSurfIter>  (gfx_d3d/rb_backend.cpp:2098)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 
@@ -4157,25 +4094,21 @@ void R_AddDrawGroupIterator_PrimarySortKey<GfxBspSurfTessCallback,GfxBspSurfIter
                (GfxSurfsIterGroup *param_1,uint param_2)
 
 {
-  GfxSurfsIterGroup *pGVar1;
-  
-  pGVar1 = (GfxSurfsIterGroup *)__savegprlr_29(param_1);
-  if ((pGVar1->drawListIter).bspSurfIter.end < (pGVar1->drawListIter).bspSurfIter.current) {
+  if ((param_1->drawListIter).bspSurfIter.end < (param_1->drawListIter).bspSurfIter.current) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_bspsurfiter_inline.h"
                     ,0x57,0,"%s");
   }
-  if ((pGVar1->drawListIter).bspSurfIter.current != (pGVar1->drawListIter).bspSurfIter.end) {
-    pGVar1->iteratorPool[pGVar1->iteratorCount].RenderDrawGroupNoRenderCallback =
+  if ((param_1->drawListIter).bspSurfIter.current != (param_1->drawListIter).bspSurfIter.end) {
+    param_1->iteratorPool[param_1->iteratorCount].RenderDrawGroupNoRenderCallback =
          (_func___cdecl_bool_GfxDrawListIter_ptr *)0x0;
-    pGVar1->iteratorPool[pGVar1->iteratorCount].SaveMarkCallback =
+    param_1->iteratorPool[param_1->iteratorCount].SaveMarkCallback =
          (_func___cdecl_void_GfxDrawListIter_ptr *)0x0;
-    pGVar1->iteratorPool[pGVar1->iteratorCount].TerminateCallback =
+    param_1->iteratorPool[param_1->iteratorCount].TerminateCallback =
          (_func___cdecl_bool_GfxDrawListIter_ptr *)0x0;
     R_AddDrawGroupIterator_PrimarySortKey_Finish
-              (pGVar1,param_2,R_GetPrimarySortKey<GfxBspSurfIter>,
+              (param_1,param_2,R_GetPrimarySortKey<GfxBspSurfIter>,
                R_RenderDrawGroup_FromSurfList<GfxBspSurfTessCallback,GfxBspSurfIter>);
   }
-  __restgprlr_29();
   return;
 }
 
@@ -4399,6 +4332,8 @@ void R_AddDrawGroupIterator_PrimarySortKey<GfxSparkSurfTessCallback,GfxSparkSurf
 
 // 82799DE8  R_AddDrawGroupIterator_PrimarySortKey_NoSunShadows<GfxBspSurfTessCallback,GfxBspNoSunShadowsSurfIter>  (gfx_d3d/rb_backend.cpp:2124)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 
@@ -4406,25 +4341,21 @@ void R_AddDrawGroupIterator_PrimarySortKey_NoSunShadows<GfxBspSurfTessCallback,G
                (GfxSurfsIterGroup *param_1,uint param_2)
 
 {
-  GfxSurfsIterGroup *pGVar1;
-  
-  pGVar1 = (GfxSurfsIterGroup *)__savegprlr_29(param_1);
-  if ((pGVar1->drawListIter).bspSurfIter.end < (pGVar1->drawListIter).bspSurfIter.current) {
+  if ((param_1->drawListIter).bspSurfIter.end < (param_1->drawListIter).bspSurfIter.current) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_bspsurfiter_inline.h"
                     ,0x57,0,"%s");
   }
-  if ((pGVar1->drawListIter).bspSurfIter.current != (pGVar1->drawListIter).bspSurfIter.end) {
-    pGVar1->iteratorPool[pGVar1->iteratorCount].RenderDrawGroupNoRenderCallback =
+  if ((param_1->drawListIter).bspSurfIter.current != (param_1->drawListIter).bspSurfIter.end) {
+    param_1->iteratorPool[param_1->iteratorCount].RenderDrawGroupNoRenderCallback =
          R_RenderDrawGroupNoRender_FromSurfList<GfxBspNoSunShadowsSurfIter>;
-    pGVar1->iteratorPool[pGVar1->iteratorCount].SaveMarkCallback =
+    param_1->iteratorPool[param_1->iteratorCount].SaveMarkCallback =
          R_Savemark_FromSurfList<GfxBspNoSunShadowsSurfIter>;
-    pGVar1->iteratorPool[pGVar1->iteratorCount].TerminateCallback =
+    param_1->iteratorPool[param_1->iteratorCount].TerminateCallback =
          R_Terminate_FromSurfList<GfxBspNoSunShadowsSurfIter>;
     R_AddDrawGroupIterator_PrimarySortKey_Finish
-              (pGVar1,param_2,R_GetPrimarySortKey<GfxBspNoSunShadowsSurfIter>,
+              (param_1,param_2,R_GetPrimarySortKey<GfxBspNoSunShadowsSurfIter>,
                R_RenderDrawGroup_FromSurfList<GfxBspSurfTessCallback,GfxBspNoSunShadowsSurfIter>);
   }
-  __restgprlr_29();
   return;
 }
 
@@ -4602,80 +4533,74 @@ void R_DrawSurfs_SetupIteratorList_PrimarySortKey_NoSunShadows
 
 // 8278E120  R_DrawSurfs_Iterate_Sorted_NoRender  (gfx_d3d/rb_backend.cpp:2300)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 
 uint R_DrawSurfs_Iterate_Sorted_NoRender(GfxSurfsIterGroup *param_1,uint param_2)
 
 {
-  int iVar1;
-  int *piVar2;
+  bool bVar2;
+  uint uVar1;
   uint uVar3;
-  bool bVar4;
-  ulonglong uVar5;
-  ulonglong uVar6;
-  GfxSurfsIterator *pGVar7;
+  GfxSurfsIterator *pGVar4;
   
-  uVar5 = (ulonglong)(int)param_2;
-  piVar2 = (int *)__savegprlr_23(param_1);
-  uVar3 = piVar2[1];
-  if (uVar3 == 0) {
-    uVar3 = __restgprlr_23(0);
-    return uVar3;
+  uVar1 = param_1->iteratorCount;
+  if (uVar1 == 0) {
+    return 0;
   }
-  uVar6 = 0;
-  pGVar7 = (GfxSurfsIterator *)(piVar2 + (*piVar2 + 4) * 8);
-  if (1 < uVar3) {
-    R_DrawSurfs_SortIterators((GfxSurfsIterator *)(piVar2 + 0x20),uVar3);
-    uVar6 = 1;
-    if ((uVar5 & 0xffffffff) != 1) {
+  uVar3 = 0;
+  pGVar4 = param_1->iteratorPool + param_1->iteratorBegin;
+  if (1 < uVar1) {
+    R_DrawSurfs_SortIterators(param_1->iteratorPool,uVar1);
+    uVar3 = 1;
+    if (param_2 != 1) {
       do {
-        bVar4 = (*pGVar7->RenderDrawGroupNoRenderCallback)((GfxDrawListIter *)(piVar2 + 2));
-        if (bVar4) {
-          uVar3 = (*pGVar7->GetSortKeyCallback)((GfxDrawListIter *)(piVar2 + 2));
-          if (uVar3 < (pGVar7->key).fields.sortKey) {
+        bVar2 = (*pGVar4->RenderDrawGroupNoRenderCallback)(&param_1->drawListIter);
+        if (bVar2) {
+          uVar1 = (*pGVar4->GetSortKeyCallback)(&param_1->drawListIter);
+          if (uVar1 < (pGVar4->key).fields.sortKey) {
             MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_backend.cpp"
                             ,0x914,0,"%s");
           }
-          (pGVar7->key).fields.sortKey = uVar3;
-          R_DrawSurfs_InsertionSortHeadIterator(pGVar7,piVar2[1]);
+          (pGVar4->key).fields.sortKey = uVar1;
+          R_DrawSurfs_InsertionSortHeadIterator(pGVar4,param_1->iteratorCount);
         }
         else {
-          pGVar7 = pGVar7 + 1;
-          iVar1 = piVar2[1];
-          *piVar2 = *piVar2 + 1;
-          piVar2[1] = iVar1 + -1;
-          if (iVar1 + -1 == 1) goto LAB_8278e23c;
+          pGVar4 = pGVar4 + 1;
+          uVar1 = param_1->iteratorCount - 1;
+          param_1->iteratorBegin = param_1->iteratorBegin + 1;
+          param_1->iteratorCount = uVar1;
+          if (uVar1 == 1) goto LAB_8278e23c;
         }
-        uVar6 = uVar6 + 1;
-      } while ((uVar6 & 0xffffffff) != (uVar5 & 0xffffffff));
+        uVar3 = uVar3 + 1;
+      } while (uVar3 != param_2);
     }
-    uVar3 = __restgprlr_23(uVar6);
     return uVar3;
   }
 LAB_8278e23c:
-  uVar6 = uVar6 + 1;
-  if ((uVar6 & 0xffffffff) != (uVar5 & 0xffffffff)) {
+  uVar3 = uVar3 + 1;
+  if (uVar3 != param_2) {
     while( true ) {
-      bVar4 = (*pGVar7->RenderDrawGroupNoRenderCallback)((GfxDrawListIter *)(piVar2 + 2));
-      if (!bVar4) break;
-      uVar6 = uVar6 + 1;
-      if ((uVar6 & 0xffffffff) == (uVar5 & 0xffffffff)) {
-        uVar3 = __restgprlr_23(uVar6);
+      bVar2 = (*pGVar4->RenderDrawGroupNoRenderCallback)(&param_1->drawListIter);
+      if (!bVar2) break;
+      uVar3 = uVar3 + 1;
+      if (uVar3 == param_2) {
         return uVar3;
       }
     }
-    *piVar2 = *piVar2 + 1;
-    piVar2[1] = piVar2[1] + -1;
+    param_1->iteratorBegin = param_1->iteratorBegin + 1;
+    param_1->iteratorCount = param_1->iteratorCount - 1;
   }
-  uVar3 = __restgprlr_23(uVar6);
   return uVar3;
 }
 
 
 // 8278E2A8  R_SplitIterGroup  (gfx_d3d/rb_backend.cpp:2359)
 
-/* WARNING: Type propagation algorithm not settling */
+/* WARNING: Function: __savegprlr_18 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_18 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 
@@ -4685,91 +4610,85 @@ void R_SplitIterGroup(GfxSurfsIterGroup *param_1,uint param_2)
   _func___cdecl_bool_GfxDrawListArgs_ptr_GfxDrawListIter_ptr *p_Var1;
   _func___cdecl_void_GfxDrawListIter_ptr *p_Var2;
   undefined4 uVar3;
-  int iVar4;
+  uint uVar4;
+  bool bVar6;
   uint uVar5;
-  bool bVar7;
-  uint uVar6;
-  ulonglong uVar8;
-  longlong lVar9;
-  GfxSurfsIterator *pGVar10;
-  ulonglong uVar11;
+  longlong lVar7;
+  GfxSurfsIterator *pGVar8;
+  ulonglong uVar9;
+  uint *puVar10;
+  uint uVar11;
   uint *puVar12;
-  uint uVar13;
-  uint *puVar14;
-  GfxSurfsIterGroup *pGVar15;
-  GfxSurfsIterator *pGVar16;
+  GfxSurfsIterGroup *pGVar13;
+  GfxSurfsIterator *pGVar14;
   GfxSurfsIterGroup GStack_200;
   
-  uVar8 = (ulonglong)(int)param_2;
-  iVar4 = __savegprlr_18(param_1);
-  if ((uVar8 & 0xffffffff) < 2) {
+  if (param_2 < 2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_backend.cpp",0x941,
                     0,"%s\n\t(iterCount) = %i");
   }
   PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffff,"split iter");
   memcpy();
-  uVar5 = R_DrawSurfs_Iterate_Sorted_NoRender(&GStack_200,0);
-  trapWord(6,uVar8,0);
-  lVar9 = uVar8 - 1;
-  if (lVar9 != 0) {
-    puVar14 = (uint *)(iVar4 + 4);
+  uVar4 = R_DrawSurfs_Iterate_Sorted_NoRender(&GStack_200,0);
+  trapWord(6,(longlong)(int)param_2,0);
+  lVar7 = (longlong)(int)param_2 + -1;
+  if (lVar7 != 0) {
+    puVar12 = &param_1->iteratorCount;
     do {
-      uVar13 = puVar14[-1];
-      pGVar15 = (GfxSurfsIterGroup *)(puVar14 + -1);
-      uVar6 = *puVar14;
-      uVar11 = (ulonglong)uVar6;
-      pGVar10 = pGVar15->iteratorPool + uVar13;
-      if (uVar11 != 0) {
-        puVar12 = (uint *)((int)(pGVar10 + -1) + 0x14);
+      uVar11 = ((GfxSurfsIterGroup *)(puVar12 + -1))->iteratorBegin;
+      pGVar13 = (GfxSurfsIterGroup *)(puVar12 + -1);
+      uVar5 = *puVar12;
+      uVar9 = (ulonglong)uVar5;
+      pGVar8 = pGVar13->iteratorPool + uVar11;
+      if (uVar9 != 0) {
+        puVar10 = (uint *)((int)(pGVar8 + -1) + 0x14);
         do {
-          puVar12 = puVar12 + 8;
-          (*(code *)*puVar12)(puVar14 + 1);
-          uVar11 = uVar11 - 1;
-        } while (uVar11 != 0);
+          puVar10 = puVar10 + 8;
+          (*(code *)*puVar10)((GfxDrawListIter *)(puVar12 + 1));
+          uVar9 = uVar9 - 1;
+        } while (uVar9 != 0);
       }
-      R_DrawSurfs_Iterate_Sorted_NoRender
-                (pGVar15,(int)((ulonglong)uVar5 / (uVar8 & 0xffffffff)) + 1);
+      R_DrawSurfs_Iterate_Sorted_NoRender(pGVar13,uVar4 / param_2 + 1);
       memcpy();
-      pGVar15->iteratorBegin = uVar13;
-      *puVar14 = uVar6;
-      if (pGVar10 != (GfxSurfsIterator *)(puVar14 + uVar13 * 8 + 0x1f)) {
+      pGVar13->iteratorBegin = uVar11;
+      *puVar12 = uVar5;
+      if (pGVar8 != (GfxSurfsIterator *)(puVar12 + uVar11 * 8 + 0x1f)) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_backend.cpp",
                         0x95a,0,"%s");
       }
-      uVar13 = 0;
-      pGVar16 = pGVar10;
-      if (*puVar14 != 0) {
+      uVar11 = 0;
+      pGVar14 = pGVar8;
+      if (*puVar12 != 0) {
         do {
-          bVar7 = (*pGVar16->TerminateCallback)((GfxDrawListIter *)(puVar14 + 1));
-          if (bVar7) {
-            uVar6 = (*pGVar16->GetSortKeyCallback)((GfxDrawListIter *)(puVar14 + 1));
-            (pGVar16->key).fields.sortKey = uVar6;
-            uVar13 = uVar13 + 1;
-            pGVar16 = pGVar16 + 1;
+          bVar6 = (*pGVar14->TerminateCallback)((GfxDrawListIter *)(puVar12 + 1));
+          if (bVar6) {
+            uVar5 = (*pGVar14->GetSortKeyCallback)((GfxDrawListIter *)(puVar12 + 1));
+            (pGVar14->key).fields.sortKey = uVar5;
+            uVar11 = uVar11 + 1;
+            pGVar14 = pGVar14 + 1;
           }
           else {
-            uVar6 = *puVar14 - 1;
-            *puVar14 = uVar6;
-            pGVar16->key = pGVar10[uVar6].key;
-            p_Var1 = pGVar10[uVar6].RenderDrawGroupCallback;
-            pGVar16->GetSortKeyCallback = pGVar10[uVar6].GetSortKeyCallback;
-            pGVar16->RenderDrawGroupCallback = p_Var1;
-            p_Var2 = pGVar10[uVar6].SaveMarkCallback;
-            pGVar16->RenderDrawGroupNoRenderCallback =
-                 pGVar10[uVar6].RenderDrawGroupNoRenderCallback;
-            pGVar16->SaveMarkCallback = p_Var2;
-            uVar3 = *(undefined4 *)&pGVar10[uVar6].field_0x1c;
-            pGVar16->TerminateCallback = pGVar10[uVar6].TerminateCallback;
-            *(undefined4 *)&pGVar16->field_0x1c = uVar3;
+            uVar5 = *puVar12 - 1;
+            *puVar12 = uVar5;
+            pGVar14->key = pGVar8[uVar5].key;
+            p_Var1 = pGVar8[uVar5].RenderDrawGroupCallback;
+            pGVar14->GetSortKeyCallback = pGVar8[uVar5].GetSortKeyCallback;
+            pGVar14->RenderDrawGroupCallback = p_Var1;
+            p_Var2 = pGVar8[uVar5].SaveMarkCallback;
+            pGVar14->RenderDrawGroupNoRenderCallback = pGVar8[uVar5].RenderDrawGroupNoRenderCallback
+            ;
+            pGVar14->SaveMarkCallback = p_Var2;
+            uVar3 = *(undefined4 *)&pGVar8[uVar5].field_0x1c;
+            pGVar14->TerminateCallback = pGVar8[uVar5].TerminateCallback;
+            *(undefined4 *)&pGVar14->field_0x1c = uVar3;
           }
-        } while (uVar13 < *puVar14);
+        } while (uVar11 < *puVar12);
       }
-      lVar9 = lVar9 + -1;
-      puVar14 = puVar14 + 0x60;
-    } while (lVar9 != 0);
+      lVar7 = lVar7 + -1;
+      puVar12 = puVar12 + 0x60;
+    } while (lVar7 != 0);
   }
   PIXEndNamedEvent();
-  __restgprlr_18();
   return;
 }
 
@@ -4786,6 +4705,8 @@ int R_CmdBuf_Exceeded(GfxCmdRingBuf *param_1)
 
 // 8278E4A8  R_DrawSurfs_Iterate_ByType  (gfx_d3d/rb_backend.cpp:2466)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
@@ -4795,44 +4716,41 @@ void R_DrawSurfs_Iterate_ByType(GfxDrawListArgs *param_1,GfxSurfsIterGroup *para
 {
   uint uVar1;
   GfxCmdRingBuf *pGVar2;
-  undefined8 uVar3;
-  ulong uVar4;
-  char cVar5;
-  longlong lVar6;
-  uint *puVar7;
-  longlong lVar8;
+  ulong uVar3;
+  bool bVar4;
+  _func___cdecl_bool_GfxDrawListArgs_ptr_GfxDrawListIter_ptr **pp_Var5;
   
-  lVar6 = (longlong)(int)param_2;
-  uVar3 = __savegprlr_27(param_1);
-  uVar4 = GetCurrentProcessorNumber();
-  puVar7 = (uint *)lVar6;
-  pGVar2 = dx.cmdBufForProcId[uVar4];
-  if (puVar7[1] != 0) {
-    lVar8 = ((ulonglong)*puVar7 + 4 & 0x7ffffff) * 0x20 + lVar6 + 0xc;
+  uVar3 = GetCurrentProcessorNumber();
+  pGVar2 = dx.cmdBufForProcId[uVar3];
+  if (param_2->iteratorCount != 0) {
+    pp_Var5 = &param_2->iteratorPool[param_2->iteratorBegin].RenderDrawGroupCallback;
     do {
       do {
         if (pGVar2 != (GfxCmdRingBuf *)0x0) {
-          if ((lVar6 + 8U & 0xffffffff) == ZEXT48(dx.cmdBufAbortDrawListIter)) goto LAB_8278e568;
+          if (&param_2->drawListIter == dx.cmdBufAbortDrawListIter) {
+            return;
+          }
           pGVar2->checkMemoryPos = pGVar2->memoryPos;
-          if (-1 < (longlong)((ulonglong)pGVar2->memoryPos - (ulonglong)pGVar2->maxMemoryPos))
-          goto LAB_8278e568;
+          if (-1 < (longlong)((ulonglong)pGVar2->memoryPos - (ulonglong)pGVar2->maxMemoryPos)) {
+            return;
+          }
         }
-        cVar5 = (*(code *)*(undefined4 *)lVar8)(uVar3,lVar6 + 8);
-      } while (cVar5 != '\0');
-      uVar1 = puVar7[1];
-      lVar8 = lVar8 + 0x20;
-      puVar7[1] = uVar1 - 1;
-      *puVar7 = *puVar7 + 1;
+        bVar4 = (**pp_Var5)(param_1,&param_2->drawListIter);
+      } while (bVar4);
+      uVar1 = param_2->iteratorCount;
+      pp_Var5 = pp_Var5 + 8;
+      param_2->iteratorCount = uVar1 - 1;
+      param_2->iteratorBegin = param_2->iteratorBegin + 1;
     } while (uVar1 != 1);
   }
-LAB_8278e568:
-  __restgprlr_27();
   return;
 }
 
 
 // 8278E570  R_DrawSurfs_Iterate_Sorted  (gfx_d3d/rb_backend.cpp:2499)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
@@ -4841,71 +4759,67 @@ void R_DrawSurfs_Iterate_Sorted(GfxDrawListArgs *param_1,GfxSurfsIterGroup *para
 
 {
   GfxCmdRingBuf *pGVar1;
-  uint *puVar2;
-  GfxSurfsIterator *pGVar3;
-  undefined8 uVar4;
-  ulong uVar5;
-  bool bVar7;
-  uint uVar6;
-  char cVar8;
-  longlong lVar9;
-  longlong lVar10;
+  ulong uVar2;
+  bool bVar4;
+  uint uVar3;
+  GfxSurfsIterator *pGVar5;
   
-  lVar9 = (longlong)(int)param_2;
-  uVar4 = __savegprlr_23(param_1);
-  puVar2 = (uint *)lVar9;
-  if (puVar2[1] != 0) {
-    uVar5 = GetCurrentProcessorNumber();
-    lVar10 = ((ulonglong)*puVar2 + 4 & 0x7ffffff) * 0x20 + lVar9;
-    pGVar1 = dx.cmdBufForProcId[uVar5];
-    if (1 < puVar2[1]) {
-      R_DrawSurfs_SortIterators((GfxSurfsIterator *)(puVar2 + 0x20),puVar2[1]);
+  if (param_2->iteratorCount != 0) {
+    uVar2 = GetCurrentProcessorNumber();
+    pGVar5 = param_2->iteratorPool + param_2->iteratorBegin;
+    pGVar1 = dx.cmdBufForProcId[uVar2];
+    if (1 < param_2->iteratorCount) {
+      R_DrawSurfs_SortIterators(param_2->iteratorPool,param_2->iteratorCount);
       do {
         while( true ) {
           if (pGVar1 != (GfxCmdRingBuf *)0x0) {
-            if ((lVar9 + 8U & 0xffffffff) == ZEXT48(dx.cmdBufAbortDrawListIter)) goto LAB_8278e708;
+            if (&param_2->drawListIter == dx.cmdBufAbortDrawListIter) {
+              return;
+            }
             pGVar1->checkMemoryPos = pGVar1->memoryPos;
-            if (-1 < (longlong)((ulonglong)pGVar1->memoryPos - (ulonglong)pGVar1->maxMemoryPos))
-            goto LAB_8278e708;
+            if (-1 < (longlong)((ulonglong)pGVar1->memoryPos - (ulonglong)pGVar1->maxMemoryPos)) {
+              return;
+            }
           }
-          pGVar3 = (GfxSurfsIterator *)lVar10;
-          bVar7 = (*pGVar3->RenderDrawGroupCallback)
-                            ((GfxDrawListArgs *)uVar4,(GfxDrawListIter *)(puVar2 + 2));
-          if (!bVar7) break;
-          uVar6 = (*pGVar3->GetSortKeyCallback)((GfxDrawListIter *)(puVar2 + 2));
-          if (uVar6 < (pGVar3->key).fields.sortKey) {
+          bVar4 = (*pGVar5->RenderDrawGroupCallback)(param_1,&param_2->drawListIter);
+          if (!bVar4) break;
+          uVar3 = (*pGVar5->GetSortKeyCallback)(&param_2->drawListIter);
+          if (uVar3 < (pGVar5->key).fields.sortKey) {
             MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_backend.cpp"
                             ,0x9e4,0,"%s");
           }
-          (pGVar3->key).fields.sortKey = uVar6;
-          R_DrawSurfs_InsertionSortHeadIterator(pGVar3,puVar2[1]);
+          (pGVar5->key).fields.sortKey = uVar3;
+          R_DrawSurfs_InsertionSortHeadIterator(pGVar5,param_2->iteratorCount);
         }
-        lVar10 = lVar10 + 0x20;
-        uVar6 = puVar2[1];
-        *puVar2 = *puVar2 + 1;
-        puVar2[1] = uVar6 - 1;
-      } while (uVar6 - 1 != 1);
+        pGVar5 = pGVar5 + 1;
+        uVar3 = param_2->iteratorCount - 1;
+        param_2->iteratorBegin = param_2->iteratorBegin + 1;
+        param_2->iteratorCount = uVar3;
+      } while (uVar3 != 1);
     }
     do {
       if (pGVar1 != (GfxCmdRingBuf *)0x0) {
-        if ((lVar9 + 8U & 0xffffffff) == ZEXT48(dx.cmdBufAbortDrawListIter)) goto LAB_8278e708;
+        if (&param_2->drawListIter == dx.cmdBufAbortDrawListIter) {
+          return;
+        }
         pGVar1->checkMemoryPos = pGVar1->memoryPos;
-        if (-1 < (longlong)((ulonglong)pGVar1->memoryPos - (ulonglong)pGVar1->maxMemoryPos))
-        goto LAB_8278e708;
+        if (-1 < (longlong)((ulonglong)pGVar1->memoryPos - (ulonglong)pGVar1->maxMemoryPos)) {
+          return;
+        }
       }
-      cVar8 = (**(code **)((int)lVar10 + 0xc))(uVar4,lVar9 + 8);
-    } while (cVar8 != '\0');
-    *puVar2 = *puVar2 + 1;
-    puVar2[1] = puVar2[1] - 1;
+      bVar4 = (*pGVar5->RenderDrawGroupCallback)(param_1,&param_2->drawListIter);
+    } while (bVar4);
+    param_2->iteratorBegin = param_2->iteratorBegin + 1;
+    param_2->iteratorCount = param_2->iteratorCount - 1;
   }
-LAB_8278e708:
-  __restgprlr_23();
   return;
 }
 
 
 // 8278E710  R_DrawSurfs_Iterate_SortedSpliceGroups  (gfx_d3d/rb_backend.cpp:2569)
 
+/* WARNING: Function: __savegprlr_15 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_15 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
@@ -4915,95 +4829,84 @@ void R_DrawSurfs_Iterate_SortedSpliceGroups(GfxDrawListArgs *param_1,GfxSpliceSu
 {
   uint uVar1;
   GfxCmdRingBuf *pGVar2;
-  uint *puVar3;
-  GfxSurfsIterator *pGVar4;
-  int iVar5;
-  ulong uVar6;
-  bool bVar8;
+  ulong uVar3;
+  bool bVar5;
+  uint uVar4;
+  longlong lVar6;
   uint uVar7;
-  longlong lVar9;
-  int iVar10;
+  int iVar8;
+  GfxSurfsIterator *pGVar9;
+  GfxDrawListArgs *pGVar10;
   uint uVar11;
-  uint uVar12;
-  longlong lVar13;
-  GfxDrawListArgs *pGVar14;
-  uint uVar15;
   
-  lVar9 = (longlong)(int)param_2;
-  iVar5 = __savegprlr_15(param_1);
-  puVar3 = (uint *)lVar9;
-  if (puVar3[1] == 0) {
-LAB_8278e944:
-    __restgprlr_15();
+  if (param_2->iteratorCount == 0) {
     return;
   }
-  uVar6 = GetCurrentProcessorNumber();
-  lVar13 = ((ulonglong)*puVar3 + 0x17 & 0x7ffffff) * 0x20 + lVar9;
-  pGVar2 = dx.cmdBufForProcId[uVar6];
-  uVar12 = 1;
-  uVar11 = 0;
+  uVar3 = GetCurrentProcessorNumber();
+  pGVar9 = param_2->iteratorPool + param_2->iteratorBegin;
+  pGVar2 = dx.cmdBufForProcId[uVar3];
+  iVar8 = 1;
+  uVar7 = 0;
 LAB_8278e784:
   do {
-    pGVar4 = (GfxSurfsIterator *)lVar13;
-    uVar1 = (pGVar4->key).fields.spliceIndex;
+    uVar1 = (pGVar9->key).fields.spliceIndex;
     if (4 < uVar1) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_backend.cpp",
                       0xa27,0,
                       "spliceIndex doesn\'t index GFX_SPLICED_DRAW_LIST_LIMIT\n\t%i not in [0, %i)")
       ;
     }
-    iVar10 = uVar1 + 0xad;
-    pGVar14 = (GfxDrawListArgs *)(uVar1 * 0x10 + iVar5);
-    uVar15 = pGVar14->listInfo->sceneLightIndex;
-    if ((uVar12 != puVar3[iVar10]) &&
-       ((uVar11 == uVar15 || ((puVar3[iVar10] != 0 && (uVar12 != 0)))))) {
+    pGVar10 = param_1 + uVar1;
+    uVar11 = pGVar10->listInfo->sceneLightIndex;
+    if ((iVar8 != param_2->isSceneScissorViewport[uVar1]) &&
+       ((uVar7 == uVar11 || ((param_2->isSceneScissorViewport[uVar1] != 0 && (iVar8 != 0)))))) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_backend.cpp",
                       0xa30,0,"%s");
     }
-    if (uVar11 != uVar15) {
-      if ((puVar3[iVar10] == 0) || (uVar12 == 0)) {
-        R_HW_SetScissor((pGVar14->context).state,(GfxViewport *)(puVar3 + uVar1 * 4 + 0x99));
+    if (uVar7 != uVar11) {
+      if ((param_2->isSceneScissorViewport[uVar1] == 0) || (iVar8 == 0)) {
+        R_HW_SetScissor((pGVar10->context).state,param_2->scissorViewport + uVar1);
       }
-      R_SetSceneLight((pGVar14->context).source,uVar15,false,false,pGVar14->listInfo->viewInfo);
-      uVar11 = uVar15;
+      R_SetSceneLight((pGVar10->context).source,uVar11,false,false,pGVar10->listInfo->viewInfo);
+      uVar7 = uVar11;
     }
-    uVar12 = puVar3[iVar10];
-    if (puVar3[1] < 2) {
-      uVar15 = 0xffffffff;
+    iVar8 = param_2->isSceneScissorViewport[uVar1];
+    if (param_2->iteratorCount < 2) {
+      uVar11 = 0xffffffff;
     }
     else {
-      uVar15 = (pGVar4->key).fields.sortKey;
-      uVar7 = pGVar4[1].key.fields.sortKey - 1;
-      if ((int)uVar15 <= (int)uVar7) {
-        uVar15 = uVar7;
+      uVar11 = (pGVar9->key).fields.sortKey;
+      uVar4 = pGVar9[1].key.fields.sortKey - 1;
+      if ((int)uVar11 <= (int)uVar4) {
+        uVar11 = uVar4;
       }
     }
     do {
       if ((pGVar2 != (GfxCmdRingBuf *)0x0) &&
-         (((lVar9 + 0xcU & 0xffffffff) == ZEXT48(dx.cmdBufAbortDrawListIter) ||
+         ((param_2->drawListIter == dx.cmdBufAbortDrawListIter ||
           (pGVar2->checkMemoryPos = pGVar2->memoryPos,
           -1 < (longlong)((ulonglong)pGVar2->memoryPos - (ulonglong)pGVar2->maxMemoryPos))))) {
 LAB_8278e930:
-        if (uVar12 == 0) {
-          R_HW_SetScissor(*(GfxCmdBufState **)(iVar5 + 4),(GfxViewport *)(puVar3 + 0x99));
+        if (iVar8 != 0) {
+          return;
         }
-        goto LAB_8278e944;
+        R_HW_SetScissor((param_1->context).state,param_2->scissorViewport);
+        return;
       }
-      bVar8 = (*pGVar4->RenderDrawGroupCallback)
-                        (pGVar14,(GfxDrawListIter *)(puVar3 + uVar1 * 0x1e + 3));
-      if (!bVar8) {
-        lVar13 = lVar13 + 0x20;
-        uVar1 = puVar3[1];
-        *puVar3 = *puVar3 + 1;
-        puVar3[1] = (uint)((ulonglong)uVar1 - 1);
-        if ((ulonglong)uVar1 - 1 == 0) goto LAB_8278e930;
+      bVar5 = (*pGVar9->RenderDrawGroupCallback)(pGVar10,param_2->drawListIter + uVar1);
+      if (!bVar5) {
+        pGVar9 = pGVar9 + 1;
+        lVar6 = (ulonglong)param_2->iteratorCount - 1;
+        param_2->iteratorBegin = param_2->iteratorBegin + 1;
+        param_2->iteratorCount = (uint)lVar6;
+        if (lVar6 == 0) goto LAB_8278e930;
         goto LAB_8278e784;
       }
-      uVar7 = (*pGVar4->GetSortKeyCallback)((GfxDrawListIter *)(puVar3 + uVar1 * 0x1e + 3));
-      (pGVar4->key).fields.sortKey = uVar7;
-    } while (uVar7 <= uVar15);
-    if (puVar3[1] != 0) {
-      R_DrawSurfs_InsertionSortHeadIterator(pGVar4,puVar3[1]);
+      uVar4 = (*pGVar9->GetSortKeyCallback)(param_2->drawListIter + uVar1);
+      (pGVar9->key).fields.sortKey = uVar4;
+    } while (uVar4 <= uVar11);
+    if (param_2->iteratorCount != 0) {
+      R_DrawSurfs_InsertionSortHeadIterator(pGVar9,param_2->iteratorCount);
     }
   } while( true );
 }
@@ -5011,6 +4914,8 @@ LAB_8278e930:
 
 // 8278E950  R_DrawSurfs_Camera  (gfx_d3d/rb_backend.cpp:2676)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
@@ -5018,30 +4923,28 @@ LAB_8278e930:
 void R_DrawSurfs_Camera(GfxCmdBufContext param_1,GfxDrawList *param_2)
 
 {
-  GfxCmdBufContext GVar1;
-  ulong uVar2;
-  int iVar3;
+  ulong uVar1;
   GfxCmdBufContext GStack00000010;
   GfxDrawListArgs aGStack_30 [3];
   
-  GVar1 = (GfxCmdBufContext)__savegprlr_29();
-  GStack00000010 = GVar1;
-  uVar2 = GetCurrentProcessorNumber();
-  if (dx.cmdBufForProcId[uVar2] != (GfxCmdRingBuf *)0x0) {
-    dx.cmdBufForProcId[uVar2]->drawListIter = &(param_2->info).iterGroup.drawListIter;
+  GStack00000010 = param_1;
+  uVar1 = GetCurrentProcessorNumber();
+  if (dx.cmdBufForProcId[uVar1] != (GfxCmdRingBuf *)0x0) {
+    dx.cmdBufForProcId[uVar1]->drawListIter = &(param_2->info).iterGroup.drawListIter;
   }
-  R_DrawSurfs_Begin(GVar1,&param_2->info,aGStack_30);
+  R_DrawSurfs_Begin(param_1,&param_2->info,aGStack_30);
   R_DrawSurfs_Iterate_Sorted(aGStack_30,&(param_2->info).iterGroup);
   R_EndPixOrGpadMaterials(GStack00000010.state);
-  R_TessEnd(GVar1);
-  iVar3 = Profile_EndInternal((double *)0x0);
-  __restgprlr_29(iVar3);
+  R_TessEnd(param_1);
+  Profile_EndInternal((double *)0x0);
   return;
 }
 
 
 // 8278E9D0  R_DrawSurfs_Camera_NoSunShadows  (gfx_d3d/rb_backend.cpp:2718)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
@@ -5049,30 +4952,30 @@ void R_DrawSurfs_Camera(GfxCmdBufContext param_1,GfxDrawList *param_2)
 void R_DrawSurfs_Camera_NoSunShadows(GfxCmdBufContext param_1,GfxDrawList *param_2)
 
 {
-  GfxCmdBufContext GVar1;
-  ulong uVar2;
-  int iVar3;
+  ulong uVar1;
   GfxCmdBufContext GStack00000010;
   GfxDrawListArgs aGStack_30 [3];
   
-  GVar1 = (GfxCmdBufContext)__savegprlr_29();
-  GStack00000010 = GVar1;
-  uVar2 = GetCurrentProcessorNumber();
-  if (dx.cmdBufForProcId[uVar2] != (GfxCmdRingBuf *)0x0) {
-    dx.cmdBufForProcId[uVar2]->drawListIter = &(param_2->info).iterGroup.drawListIter;
+  GStack00000010 = param_1;
+  uVar1 = GetCurrentProcessorNumber();
+  if (dx.cmdBufForProcId[uVar1] != (GfxCmdRingBuf *)0x0) {
+    dx.cmdBufForProcId[uVar1]->drawListIter = &(param_2->info).iterGroup.drawListIter;
   }
-  R_DrawSurfs_Begin(GVar1,&param_2->info,aGStack_30);
+  R_DrawSurfs_Begin(param_1,&param_2->info,aGStack_30);
   R_DrawSurfs_Iterate_Sorted(aGStack_30,&(param_2->info).iterGroup);
   R_EndPixOrGpadMaterials(GStack00000010.state);
-  R_TessEnd(GVar1);
-  iVar3 = Profile_EndInternal((double *)0x0);
-  __restgprlr_29(iVar3);
+  R_TessEnd(param_1);
+  Profile_EndInternal((double *)0x0);
   return;
 }
 
 
 // 8278EA50  R_GetDynLightScissorViewport  (gfx_d3d/rb_backend.cpp:2756)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
@@ -5085,10 +4988,10 @@ void R_GetDynLightScissorViewport(GfxLight *param_1,GfxViewInfo *param_2,GfxView
   ulonglong uVar4;
   int iVar5;
   float *pfVar6;
-  int iVar7;
-  float *pfVar8;
-  ulonglong uVar9;
-  longlong lVar10;
+  GfxCamera *pGVar7;
+  ulonglong uVar8;
+  float *pfVar9;
+  double dVar10;
   double dVar11;
   double dVar12;
   double dVar13;
@@ -5099,7 +5002,6 @@ void R_GetDynLightScissorViewport(GfxLight *param_1,GfxViewInfo *param_2,GfxView
   double dVar18;
   double dVar19;
   double dVar20;
-  double dVar21;
   undefined8 local_b0;
   float local_a8;
   float local_a0;
@@ -5107,105 +5009,104 @@ void R_GetDynLightScissorViewport(GfxLight *param_1,GfxViewInfo *param_2,GfxView
   float local_98;
   float local_90 [36];
   
-  lVar10 = (longlong)(int)param_2;
-  __savegprlr_25(param_1);
-  iVar7 = __savefpr_24();
-  if (iVar7 == 0) {
+  if (param_1 == (GfxLight *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_backend.cpp",0xad8,
                     0,"%s");
   }
-  iVar5 = (int)lVar10;
-  local_9c = *(float *)(iVar7 + 0x2c) - *(float *)(iVar5 + 0x104);
-  local_98 = *(float *)(iVar7 + 0x30) - *(float *)(iVar5 + 0x108);
-  local_a0 = *(float *)(iVar7 + 0x28) - *(float *)(iVar5 + 0x100);
-  fVar3 = *(float *)(iVar7 + 0x34);
-  dVar21 = 1.0;
-  dVar15 = -1.0;
+  local_9c = param_1->origin[1] - (param_2->viewParms).camera.origin[1];
+  pGVar7 = &(param_2->viewParms).camera;
+  local_98 = param_1->origin[2] - (param_2->viewParms).camera.origin[2];
+  local_a0 = param_1->origin[0] - (param_2->viewParms).camera.origin[0];
+  fVar3 = param_1->radius;
+  dVar20 = 1.0;
+  dVar14 = -1.0;
   local_90[0] = 1.0;
   local_90[1] = -1.0;
   local_90[2] = 1.0;
   local_90[3] = -1.0;
   fVar1 = local_a0 * local_a0 + local_98 * local_98 + local_9c * local_9c;
   fVar2 = -(fVar3 * fVar3 - fVar1);
-  dVar11 = dVar21;
+  dVar10 = dVar20;
   if (1.0 < fVar2) {
     fVar2 = fVar2 / fVar1;
-    uVar9 = 0;
-    pfVar8 = local_90;
-    dVar20 = 0.0;
-    lVar10 = lVar10 + 0x1c0;
-    dVar19 = (double)(local_a0 * fVar2 + *(float *)(iVar5 + 0x100));
-    dVar18 = (double)(local_9c * fVar2 + *(float *)(iVar5 + 0x104));
-    dVar17 = (double)(local_98 * fVar2 + *(float *)(iVar5 + 0x108));
-    dVar16 = (double)(SQRT(fVar2) * fVar3);
+    uVar8 = 0;
+    pfVar6 = local_90;
+    dVar19 = 0.0;
+    pfVar9 = param_2->frustumPlanes[0] + 2;
+    dVar18 = (double)(local_a0 * fVar2 + pGVar7->origin[0]);
+    dVar17 = (double)(local_9c * fVar2 + (param_2->viewParms).camera.origin[1]);
+    dVar16 = (double)(local_98 * fVar2 + (param_2->viewParms).camera.origin[2]);
+    dVar15 = (double)(SQRT(fVar2) * fVar3);
     do {
-      uVar4 = (uVar9 & 0xffffffff) >> 1;
+      uVar4 = (uVar8 & 0xffffffff) >> 1;
       Vec3Cross(&local_a0,
-                (float *)((iVar5 - (int)((uVar4 + (uVar9 & 0xfffffffe) & 0xffffffff) << 2)) + 0x124)
-                ,(float *)&local_b0);
-      dVar13 = (double)(float)(dVar21 * dVar16);
-      pfVar6 = (float *)lVar10;
-      dVar12 = (double)SQRT(local_b0._0_4_ * local_b0._0_4_ +
+                (float *)((int)param_2 +
+                         (0x124 - (int)((uVar4 + (uVar8 & 0xfffffffe) & 0xffffffff) << 2))),
+                (float *)&local_b0);
+      dVar12 = (double)(float)(dVar20 * dVar15);
+      dVar11 = (double)SQRT(local_b0._0_4_ * local_b0._0_4_ +
                             local_a8 * local_a8 + local_b0._4_4_ * local_b0._4_4_);
-      dVar14 = dVar11;
-      if (-dVar12 < 0.0) {
-        dVar14 = dVar12;
+      dVar13 = dVar10;
+      if (-dVar11 < 0.0) {
+        dVar13 = dVar11;
       }
-      fVar3 = (float)(dVar11 / dVar14);
+      fVar3 = (float)(dVar10 / dVar13);
       local_b0._4_4_ = local_b0._4_4_ * fVar3;
       local_b0._0_4_ = local_b0._0_4_ * fVar3;
       local_a8 = local_a8 * fVar3;
-      fVar3 = (float)((double)local_b0._4_4_ * dVar13 + dVar18);
-      fVar1 = (float)(dVar13 * (double)local_b0._0_4_ + dVar19);
-      fVar2 = (float)((double)local_a8 * dVar13 + dVar17);
-      if (dVar20 < (double)(*pfVar6 * fVar2 + pfVar6[-2] * fVar1 + pfVar6[-1] * fVar3 + pfVar6[1]))
-      {
-        fVar3 = fVar3 - *(float *)(iVar5 + 0x104);
-        fVar2 = fVar2 - *(float *)(iVar5 + 0x108);
-        fVar1 = fVar1 - *(float *)(iVar5 + 0x100);
-        dVar14 = (double)(*(float *)(iVar5 + 0x8c) * fVar1 +
-                          *(float *)(iVar5 + 0xac) * fVar2 + *(float *)(iVar5 + 0x9c) * fVar3 +
-                         *(float *)(iVar5 + 0xbc));
-        if (dVar20 < dVar14) {
-          iVar7 = (int)uVar4;
-          dVar12 = (double)(float)((double)(*(float *)((iVar7 + 0x20) * 4 + iVar5) * fVar1 +
-                                            *(float *)((iVar7 + 0x28) * 4 + iVar5) * fVar2 +
-                                            *(float *)((iVar7 + 0x24) * 4 + iVar5) * fVar3 +
-                                           *(float *)((iVar7 + 0x2c) * 4 + iVar5)) / dVar14);
-          dVar14 = dVar11;
-          if ((float)(dVar12 - dVar11) < 0.0) {
-            dVar14 = dVar12;
+      fVar3 = (float)((double)local_b0._4_4_ * dVar12 + dVar17);
+      fVar1 = (float)(dVar12 * (double)local_b0._0_4_ + dVar18);
+      fVar2 = (float)((double)local_a8 * dVar12 + dVar16);
+      if (dVar19 < (double)(*pfVar9 * fVar2 +
+                            (*(float (*) [4])(pfVar9 + -2))[0] * fVar1 + pfVar9[-1] * fVar3 +
+                           pfVar9[1])) {
+        fVar3 = fVar3 - (param_2->viewParms).camera.origin[1];
+        fVar2 = fVar2 - (param_2->viewParms).camera.origin[2];
+        fVar1 = fVar1 - pGVar7->origin[0];
+        dVar13 = (double)((param_2->viewParms).viewProjectionMatrix.m[0][3] * fVar1 +
+                          (param_2->viewParms).viewProjectionMatrix.m[2][3] * fVar2 +
+                          (param_2->viewParms).viewProjectionMatrix.m[1][3] * fVar3 +
+                         (param_2->viewParms).viewProjectionMatrix.m[3][3]);
+        if (dVar19 < dVar13) {
+          iVar5 = (int)uVar4;
+          dVar11 = (double)(float)((double)((param_2->viewParms).viewProjectionMatrix.m[0][iVar5] *
+                                            fVar1 + (param_2->viewParms).viewProjectionMatrix.m[2]
+                                                    [iVar5] * fVar2 +
+                                                    (param_2->viewParms).viewProjectionMatrix.m[1]
+                                                    [iVar5] * fVar3 +
+                                           (param_2->viewParms).viewProjectionMatrix.m[3][iVar5]) /
+                                  dVar13);
+          dVar13 = dVar10;
+          if ((float)(dVar11 - dVar10) < 0.0) {
+            dVar13 = dVar11;
           }
-          dVar13 = dVar15;
-          if ((float)(dVar15 - dVar12) < 0.0) {
-            dVar13 = dVar14;
+          dVar12 = dVar14;
+          if ((float)(dVar14 - dVar11) < 0.0) {
+            dVar12 = dVar13;
           }
-          *pfVar8 = (float)dVar13;
+          *pfVar6 = (float)dVar12;
         }
       }
-      uVar9 = uVar9 + 1;
-      dVar21 = -dVar21;
-      lVar10 = lVar10 + 0x10;
-      pfVar8 = pfVar8 + 1;
-    } while ((uVar9 & 0xffffffff) < 4);
+      uVar8 = uVar8 + 1;
+      dVar20 = -dVar20;
+      pfVar9 = pfVar9 + 4;
+      pfVar6 = pfVar6 + 1;
+    } while ((uVar8 & 0xffffffff) < 4);
   }
-  local_b0 = (longlong)*(int *)(iVar5 + 0x158);
-  dVar21 = (double)((float)(longlong)*(int *)(iVar5 + 0x15c) * 0.5);
-  dVar16 = (double)((float)local_b0 * 0.5);
-  dVar15 = floor((double)(float)((double)(float)((double)local_90[1] + dVar11) * dVar16));
-  param_3->x = (int)dVar15;
-  dVar15 = floor((double)(float)((double)(float)(dVar11 - (double)local_90[2]) * dVar21));
-  param_3->y = (int)dVar15;
-  dVar15 = ceil((double)(float)((double)(float)((double)local_90[0] + dVar11) * dVar16));
-  local_b0 = (longlong)(int)dVar15;
-  param_3->width = (int)dVar15 - param_3->x;
-  dVar11 = ceil((double)(float)((double)(float)(dVar11 - (double)local_90[3]) * dVar21));
-  local_b0 = (longlong)(int)dVar11;
-  param_3->height = (int)dVar11 - param_3->y;
-  param_3->x = *(int *)(iVar5 + 0x150) + param_3->x;
-  param_3->y = *(int *)(iVar5 + 0x154) + param_3->y;
-  __restfpr_24();
-  __restgprlr_25();
+  local_b0 = (longlong)(param_2->sceneViewport).width;
+  dVar20 = (double)((float)(longlong)(param_2->sceneViewport).height * 0.5);
+  dVar15 = (double)((float)local_b0 * 0.5);
+  dVar14 = floor((double)(float)((double)(float)((double)local_90[1] + dVar10) * dVar15));
+  param_3->x = (int)dVar14;
+  dVar14 = floor((double)(float)((double)(float)(dVar10 - (double)local_90[2]) * dVar20));
+  param_3->y = (int)dVar14;
+  dVar14 = ceil((double)(float)((double)(float)((double)local_90[0] + dVar10) * dVar15));
+  local_b0 = (longlong)(int)dVar14;
+  param_3->width = (int)dVar14 - param_3->x;
+  dVar10 = ceil((double)(float)((double)(float)(dVar10 - (double)local_90[3]) * dVar20));
+  param_3->height = (int)dVar10 - param_3->y;
+  param_3->x = (param_2->sceneViewport).x + param_3->x;
+  param_3->y = (param_2->sceneViewport).y + param_3->y;
   return;
 }
 
@@ -5245,6 +5146,8 @@ void R_ClipScissorViewport(GfxViewport *param_1,GfxViewport *param_2)
 
 // 8279A288  R_DrawSurfs_SetupGfxSpliceSurfs_DrawGroupSortKey  (gfx_d3d/rb_backend.cpp:2883)
 
+/* WARNING: Function: __savegprlr_18 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_18 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 
@@ -5256,107 +5159,96 @@ void R_DrawSurfs_SetupGfxSpliceSurfs_DrawGroupSortKey
   uint uVar1;
   int iVar2;
   int iVar3;
-  GfxViewInfo *pGVar4;
-  int *piVar5;
+  int iVar4;
+  int iVar5;
   int iVar6;
-  ulonglong uVar7;
-  int iVar8;
-  int iVar9;
-  GfxSpliceSurfs *pGVar10;
-  int iVar11;
-  longlong lVar12;
-  longlong lVar13;
-  ulonglong uVar14;
-  int iVar15;
-  longlong lVar16;
-  uint uVar17;
-  uint uVar18;
-  int *piVar19;
-  longlong lVar20;
-  longlong lVar21;
+  longlong lVar7;
+  GfxViewport *pGVar8;
+  ulonglong uVar9;
+  int iVar10;
+  GfxViewport *pGVar11;
+  int *piVar12;
+  uint uVar13;
+  uint uVar14;
+  uint *puVar15;
+  int *piVar16;
   
-  lVar20 = (longlong)(int)param_4;
-  uVar7 = (ulonglong)(int)param_2;
-  iVar6 = __savegprlr_18(param_1);
-  pGVar10 = (GfxSpliceSurfs *)lVar20;
-  pGVar10->iteratorBegin = 0;
-  pGVar10->iteratorCount = 0;
-  R_DrawSurfs_SetupIteratorList_DrawGroupSortKey(param_3,pGVar10,0);
-  pGVar4 = (GfxViewInfo *)uVar7;
-  uVar18 = 1;
-  pGVar10->scissorViewport[0].x = (pGVar4->scissorViewport).x;
-  pGVar10->scissorViewport[0].y = (pGVar4->scissorViewport).y;
-  pGVar10->scissorViewport[0].width = (pGVar4->scissorViewport).width;
-  pGVar10->scissorViewport[0].height = (pGVar4->scissorViewport).height;
-  pGVar10->isSceneScissorViewport[0] = 1;
-  uVar14 = (ulonglong)*(uint *)(iVar6 + 0x23e0);
-  uVar17 = pGVar10->iteratorCount;
-  if (uVar14 != 0) {
-    piVar19 = (int *)(iVar6 + 0x1c64);
-    lVar16 = lVar20 + 0x2b4;
-    lVar20 = lVar20 + 0x280;
+  param_4->iteratorBegin = 0;
+  param_4->iteratorCount = 0;
+  R_DrawSurfs_SetupIteratorList_DrawGroupSortKey(param_3,param_4,0);
+  uVar14 = 1;
+  param_4->scissorViewport[0].x = (param_2->scissorViewport).x;
+  param_4->scissorViewport[0].y = (param_2->scissorViewport).y;
+  param_4->scissorViewport[0].width = (param_2->scissorViewport).width;
+  param_4->scissorViewport[0].height = (param_2->scissorViewport).height;
+  param_4->isSceneScissorViewport[0] = 1;
+  uVar9 = (ulonglong)param_1->dynLightCount;
+  uVar13 = param_4->iteratorCount;
+  if (uVar9 != 0) {
+    puVar15 = &param_1->dynLightDrawList[0].info.sceneLightIndex;
+    piVar12 = param_4->isSceneScissorViewport;
+    piVar16 = &param_4->scissorViewport[1].height;
     do {
       R_DrawSurfs_SetupIteratorList_DrawGroupSortKey
-                ((GfxDrawList *)(piVar19 + -0x19),pGVar10,uVar18);
-      uVar1 = pGVar10->iteratorCount;
-      if (uVar17 != uVar1) {
-        if ((uVar7 & 0xffffffff) != (ulonglong)(uint)piVar19[-4]) {
+                ((GfxDrawList *)(puVar15 + -0x19),param_4,uVar14);
+      uVar1 = param_4->iteratorCount;
+      if (uVar13 != uVar1) {
+        if (param_2 != (GfxViewInfo *)puVar15[-4]) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_backend.cpp",
                           0xb66,0,"%s");
         }
-        lVar21 = lVar20 + -0xc;
-        R_GetDynLightScissorViewport
-                  ((GfxLight *)((*piVar19 + 0x1d00) * 0x4c + iVar6),pGVar4,(GfxViewport *)lVar21);
-        piVar5 = (int *)lVar20;
-        iVar2 = piVar5[-2];
-        iVar3 = *piVar5;
-        iVar11 = *(int *)(uVar7 + 0x170);
-        iVar15 = piVar5[-1] + piVar5[-3];
-        iVar9 = iVar2 + iVar3;
-        iVar8 = iVar15;
-        if (iVar15 < iVar11) {
-          iVar8 = iVar11;
+        pGVar11 = (GfxViewport *)(piVar16 + -3);
+        R_GetDynLightScissorViewport(param_1->sceneLights + *puVar15,param_2,pGVar11);
+        iVar2 = piVar16[-2];
+        iVar3 = *piVar16;
+        iVar6 = (param_2->scissorViewport).x;
+        iVar10 = piVar16[-1] + ((GfxViewport *)(piVar16 + -3))->x;
+        iVar5 = iVar2 + iVar3;
+        iVar4 = iVar10;
+        if (iVar10 < iVar6) {
+          iVar4 = iVar6;
         }
-        if (iVar15 < iVar8) {
-          iVar8 = iVar15;
+        if (iVar10 < iVar4) {
+          iVar4 = iVar10;
         }
-        iVar11 = iVar9;
-        if (iVar9 < iVar2) {
-          iVar11 = iVar2;
+        iVar6 = iVar5;
+        if (iVar5 < iVar2) {
+          iVar6 = iVar2;
         }
-        if (iVar9 < iVar11) {
-          iVar11 = iVar9;
+        if (iVar5 < iVar6) {
+          iVar6 = iVar5;
         }
-        ((GfxViewport *)lVar21)->x = iVar8 - piVar5[-1];
-        piVar5[-2] = iVar11 - iVar3;
-        lVar13 = uVar7 + 0x170;
+        pGVar11->x = iVar4 - piVar16[-1];
+        piVar16[-2] = iVar6 - iVar3;
+        pGVar8 = &param_2->scissorViewport;
         do {
-          lVar12 = (ulonglong)*(byte *)lVar21 - (ulonglong)*(byte *)lVar13;
-          if (lVar12 != 0) break;
-          lVar21 = lVar21 + 1;
-          lVar13 = lVar13 + 1;
-        } while ((int *)lVar21 != piVar5 + 1);
-        uVar18 = uVar18 + 1;
-        lVar20 = lVar20 + 0x10;
-        lVar16 = lVar16 + 4;
-        *(uint *)lVar16 = (uint)LZCOUNT((int)lVar12) >> 5;
-        uVar17 = uVar1;
+          lVar7 = (ulonglong)*(byte *)&pGVar11->x - (ulonglong)*(byte *)&pGVar8->x;
+          if (lVar7 != 0) break;
+          pGVar11 = (GfxViewport *)((int)&pGVar11->x + 1);
+          pGVar8 = (GfxViewport *)((int)&pGVar8->x + 1);
+        } while (pGVar11 != (GfxViewport *)(piVar16 + 1));
+        uVar14 = uVar14 + 1;
+        piVar16 = piVar16 + 4;
+        piVar12 = piVar12 + 1;
+        *piVar12 = (uint)LZCOUNT((int)lVar7) >> 5;
+        uVar13 = uVar1;
       }
-      uVar14 = uVar14 - 1;
-      piVar19 = piVar19 + 0x7e;
-    } while (uVar14 != 0);
+      uVar9 = uVar9 - 1;
+      puVar15 = puVar15 + 0x7e;
+    } while (uVar9 != 0);
   }
-  pGVar10->spliceCount = uVar18;
-  if (1 < pGVar10->iteratorCount) {
-    R_DrawSurfs_SortIterators(pGVar10->iteratorPool,pGVar10->iteratorCount);
+  param_4->spliceCount = uVar14;
+  if (1 < param_4->iteratorCount) {
+    R_DrawSurfs_SortIterators(param_4->iteratorPool,param_4->iteratorCount);
   }
-  __restgprlr_18();
   return;
 }
 
 
 // 8278EE08  R_DrawSurfs_LitTransAndDynLights_Old  (gfx_d3d/rb_backend.cpp:2939)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
@@ -5371,21 +5263,20 @@ void R_DrawSurfs_LitTransAndDynLights_Old
   GfxCmdBufState *pGVar4;
   GfxCmdBufContext GVar5;
   ulong uVar6;
-  int iVar7;
-  longlong lVar8;
-  GfxDrawListInfo **ppGVar9;
-  uint uVar10;
-  GfxDrawListIter *pGVar11;
-  MaterialTechniqueType *pMVar12;
-  bool bVar13;
+  longlong lVar7;
+  GfxDrawListInfo **ppGVar8;
+  uint uVar9;
+  GfxDrawListIter *pGVar10;
+  MaterialTechniqueType *pMVar11;
+  bool bVar12;
   GfxCmdBufSourceState *pGStack00000010;
   GfxCmdBufState *pGStack00000014;
   GfxDrawListArgs GStack_80;
   GfxCmdBufContext local_70;
   int local_68 [26];
   
-  GVar5 = (GfxCmdBufContext)__savegprlr_28(param_1,param_2,param_3);
-  pGStack00000010 = GVar5.source;
+  GVar5 = (GfxCmdBufContext)(longlong)(int)param_1;
+  pGStack00000010 = (GfxCmdBufSourceState *)((int)param_1 >> 0x1f);
   pGVar3 = pGStack00000010;
   pGVar1 = (pGStack00000010->input).data;
   _pGStack00000010 = GVar5;
@@ -5394,30 +5285,30 @@ void R_DrawSurfs_LitTransAndDynLights_Old
     dx.cmdBufForProcId[uVar6]->drawListIter = (pGVar1->litTransSpliceSurfs).drawListIter;
   }
   R_DrawSurfs_Begin(GVar5,(GfxDrawListInfo *)((param_2.state)->samplerState + 0xc),&GStack_80);
-  uVar10 = 1;
+  uVar9 = 1;
   if (1 < (pGVar1->litTransSpliceSurfs).spliceCount) {
-    pMVar12 = &GStack_80.baseTechType;
-    ppGVar9 = (pGVar1->litTransSpliceSurfs).dynLightDrawListInfo;
+    pMVar11 = &GStack_80.baseTechType;
+    ppGVar8 = (pGVar1->litTransSpliceSurfs).dynLightDrawListInfo;
     do {
-      ppGVar9 = ppGVar9 + 1;
-      pGVar2 = *ppGVar9;
-      uVar10 = uVar10 + 1;
-      *(GfxCmdBufContext *)(pMVar12 + 1) = GVar5;
-      pMVar12[3] = (MaterialTechniqueType)pGVar2;
-      pMVar12 = pMVar12 + 4;
-      *pMVar12 = pGVar2->baseTechType;
-    } while (uVar10 < (pGVar1->litTransSpliceSurfs).spliceCount);
+      ppGVar8 = ppGVar8 + 1;
+      pGVar2 = *ppGVar8;
+      uVar9 = uVar9 + 1;
+      *(GfxCmdBufContext *)(pMVar11 + 1) = GVar5;
+      pMVar11[3] = (MaterialTechniqueType)pGVar2;
+      pMVar11 = pMVar11 + 4;
+      *pMVar11 = pGVar2->baseTechType;
+    } while (uVar9 < (pGVar1->litTransSpliceSurfs).spliceCount);
   }
   R_DrawSurfs_Iterate_SortedSpliceGroups(&GStack_80,&pGVar1->litTransSpliceSurfs);
-  uVar10 = 1;
+  uVar9 = 1;
   if (1 < (pGVar1->litTransSpliceSurfs).spliceCount) {
-    pGVar11 = (pGVar1->litTransSpliceSurfs).drawListIter;
+    pGVar10 = (pGVar1->litTransSpliceSurfs).drawListIter;
     do {
-      pGVar11 = pGVar11 + 1;
-      uVar10 = uVar10 + 1;
+      pGVar10 = pGVar10 + 1;
+      uVar9 = uVar9 + 1;
       (pGVar1->litTransSpliceSurfs).drawListIter[0].addedPrimitive =
-           pGVar11->addedPrimitive | (pGVar1->litTransSpliceSurfs).drawListIter[0].addedPrimitive;
-    } while (uVar10 < (pGVar1->litTransSpliceSurfs).spliceCount);
+           pGVar10->addedPrimitive | (pGVar1->litTransSpliceSurfs).drawListIter[0].addedPrimitive;
+    } while (uVar9 < (pGVar1->litTransSpliceSurfs).spliceCount);
   }
   pGVar4 = pGStack00000014;
   R_EndPixOrGpadMaterials(pGStack00000014);
@@ -5425,16 +5316,15 @@ void R_DrawSurfs_LitTransAndDynLights_Old
   pGVar3->objectPlacement[1] = (GfxPlacement *)0x0;
   pGVar3->objectPlacement[2] = (GfxPlacement *)0x0;
   R_ChangeDepthHackNearClip(pGVar3,0);
-  bVar13 = pGVar3->cameraView == 0;
-  lVar8 = -(ulonglong)bVar13;
+  bVar12 = pGVar3->cameraView == 0;
+  lVar7 = -(ulonglong)bVar12;
   if (pGVar4->forceNoDepthHack != false) {
-    lVar8 = -(ulonglong)(lVar8 != 2 && bVar13);
+    lVar7 = -(ulonglong)(lVar7 != 2 && bVar12);
   }
-  if ((GfxDepthRangeType)lVar8 != pGVar4->depthRangeType) {
-    R_ChangeDepthRange(pGVar4,(GfxDepthRangeType)lVar8);
+  if ((GfxDepthRangeType)lVar7 != pGVar4->depthRangeType) {
+    R_ChangeDepthRange(pGVar4,(GfxDepthRangeType)lVar7);
   }
-  iVar7 = Profile_EndInternal((double *)0x0);
-  __restgprlr_28(iVar7);
+  Profile_EndInternal((double *)0x0);
   return;
 }
 
@@ -5471,6 +5361,8 @@ void R_DrawSurfs_LitTransAndDynLights
 
 // 8278EF68  R_DrawSurfs_Prepass  (gfx_d3d/rb_backend.cpp:3741)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
@@ -5479,31 +5371,29 @@ void R_DrawSurfs_Prepass(GfxCmdBufContext param_1,GfxSurfsIterGroup *param_2,Gfx
                         MaterialTechniqueType param_4)
 
 {
-  GfxCmdBufContext GVar1;
-  ulong uVar2;
-  int iVar3;
+  ulong uVar1;
   GfxCmdBufContext GStack00000010;
   GfxDrawListArgs aGStack_40 [4];
   
-  GVar1 = (GfxCmdBufContext)__savegprlr_28();
-  GStack00000010 = GVar1;
-  uVar2 = GetCurrentProcessorNumber();
-  if (dx.cmdBufForProcId[uVar2] != (GfxCmdRingBuf *)0x0) {
-    dx.cmdBufForProcId[uVar2]->drawListIter = &param_2->drawListIter;
+  GStack00000010 = param_1;
+  uVar1 = GetCurrentProcessorNumber();
+  if (dx.cmdBufForProcId[uVar1] != (GfxCmdRingBuf *)0x0) {
+    dx.cmdBufForProcId[uVar1]->drawListIter = &param_2->drawListIter;
   }
-  R_DrawSurfs_Begin(GVar1,&param_3->info,aGStack_40);
+  R_DrawSurfs_Begin(param_1,&param_3->info,aGStack_40);
   aGStack_40[0].baseTechType = param_4;
   R_DrawSurfs_Iterate_Sorted(aGStack_40,param_2);
   R_EndPixOrGpadMaterials(GStack00000010.state);
-  R_TessEnd(GVar1);
-  iVar3 = Profile_EndInternal((double *)0x0);
-  __restgprlr_28(iVar3);
+  R_TessEnd(param_1);
+  Profile_EndInternal((double *)0x0);
   return;
 }
 
 
 // 8278EFF0  R_DrawSurfs_Unsorted  (gfx_d3d/rb_backend.cpp:3773)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
@@ -5511,24 +5401,20 @@ void R_DrawSurfs_Prepass(GfxCmdBufContext param_1,GfxSurfsIterGroup *param_2,Gfx
 void R_DrawSurfs_Unsorted(GfxCmdBufContext param_1,GfxDrawList *param_2)
 
 {
-  GfxCmdBufContext GVar1;
-  ulong uVar2;
-  int iVar3;
+  ulong uVar1;
   GfxCmdBufContext GStack00000010;
   GfxDrawListArgs aGStack_30 [3];
   
-  GVar1 = (GfxCmdBufContext)__savegprlr_29();
-  GStack00000010 = GVar1;
-  uVar2 = GetCurrentProcessorNumber();
-  if (dx.cmdBufForProcId[uVar2] != (GfxCmdRingBuf *)0x0) {
-    dx.cmdBufForProcId[uVar2]->drawListIter = &(param_2->info).iterGroup.drawListIter;
+  GStack00000010 = param_1;
+  uVar1 = GetCurrentProcessorNumber();
+  if (dx.cmdBufForProcId[uVar1] != (GfxCmdRingBuf *)0x0) {
+    dx.cmdBufForProcId[uVar1]->drawListIter = &(param_2->info).iterGroup.drawListIter;
   }
-  R_DrawSurfs_Begin(GVar1,&param_2->info,aGStack_30);
+  R_DrawSurfs_Begin(param_1,&param_2->info,aGStack_30);
   R_DrawSurfs_Iterate_ByType(aGStack_30,&(param_2->info).iterGroup);
   R_EndPixOrGpadMaterials(GStack00000010.state);
-  R_TessEnd(GVar1);
-  iVar3 = Profile_EndInternal((double *)0x0);
-  __restgprlr_29(iVar3);
+  R_TessEnd(param_1);
+  Profile_EndInternal((double *)0x0);
   return;
 }
 
@@ -5554,20 +5440,20 @@ void RB_ClearScreenCmd(GfxRenderCommandExecState *param_1)
 
 // 8278F070  RB_SetGammaRamp  (gfx_d3d/rb_backend.cpp:3824)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 
 void RB_SetGammaRamp(GfxGammaRamp *param_1)
 
 {
-  undefined2 uVar1;
-  D3DDevice *pDVar2;
-  undefined2 *puVar3;
-  undefined2 *puVar4;
-  longlong lVar5;
+  ushort uVar1;
+  int iVar2;
+  int iVar3;
+  longlong lVar4;
   _D3DGAMMARAMP _Stack_630;
   
-  puVar3 = (undefined2 *)__savegprlr_28(param_1);
-  if (puVar3 == (undefined2 *)0x0) {
+  if (param_1 == (GfxGammaRamp *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_backend.cpp",0xef4,
                     0,"%s");
   }
@@ -5579,25 +5465,26 @@ void RB_SetGammaRamp(GfxGammaRamp *param_1)
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_backend.cpp",0xef6,
                     0,"%s");
   }
-  pDVar2 = dx.device;
-  lVar5 = 0x100;
-  puVar4 = puVar3;
+  iVar2 = -(int)param_1;
+  iVar3 = 0x400 - (int)param_1;
+  lVar4 = 0x100;
   do {
-    uVar1 = *puVar4;
-    *(undefined2 *)((int)&_Stack_630 + (int)puVar4 + -(int)puVar3) = uVar1;
-    *(undefined2 *)((int)puVar4 + (int)&_Stack_630 + -(int)puVar3 + 0x200) = uVar1;
-    *(undefined2 *)((int)puVar4 + (int)&_Stack_630 + (0x400 - (int)puVar3)) = uVar1;
-    puVar4 = puVar4 + 1;
-    lVar5 = lVar5 + -1;
-  } while (lVar5 != 0);
-  D3DDevice_SetGammaRamp(pDVar2,0,&_Stack_630);
-  __restgprlr_28();
+    uVar1 = param_1->entries[0];
+    *(ushort *)((int)param_1 + (int)&_Stack_630 + iVar2) = uVar1;
+    *(ushort *)((int)&_Stack_630 + iVar2 + 0x200 + (int)param_1) = uVar1;
+    *(ushort *)((int)&_Stack_630 + iVar3 + (int)param_1) = uVar1;
+    param_1 = (GfxGammaRamp *)((int)param_1 + 2);
+    lVar4 = lVar4 + -1;
+  } while (lVar4 != 0);
+  D3DDevice_SetGammaRamp(dx.device,0,&_Stack_630);
   return;
 }
 
 
 // 82794BB8  RB_SaveScreenCmd  (gfx_d3d/rb_backend.cpp:3865)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
@@ -5605,30 +5492,29 @@ void RB_SetGammaRamp(GfxGammaRamp *param_1)
 void RB_SaveScreenCmd(GfxRenderCommandExecState *param_1)
 
 {
-  int iVar1;
-  int *piVar2;
+  void *pvVar1;
   
-  piVar2 = (int *)__savegprlr_28(param_1);
-  iVar1 = *piVar2;
-  if (3 < *(uint *)(iVar1 + 4)) {
+  pvVar1 = param_1->cmd;
+  if (3 < *(uint *)((int)pvVar1 + 4)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_backend.cpp",0xf20,
                     0,
                     "cmd->screenTimerId doesn\'t index ARRAY_COUNT( rgp.savedScreenTimes )\n\t%i not in [0, %i)"
                    );
   }
   RB_EndSurfaceIfNeeded();
-  if (rgp.savedScreenTimes[*(int *)(iVar1 + 4)] != gfxCmdBufSourceState.sceneDef.time) {
+  if (rgp.savedScreenTimes[*(int *)((int)pvVar1 + 4)] != gfxCmdBufSourceState.sceneDef.time) {
     R_Resolve((GfxCmdBufContext)0x8484c7e08484df40,gfxRenderTargets[0].image);
   }
-  rgp.savedScreenTimes[*(int *)(iVar1 + 4)] = gfxCmdBufSourceState.sceneDef.time;
-  *piVar2 = (uint)*(ushort *)(*piVar2 + 2) + *piVar2;
-  __restgprlr_28();
+  rgp.savedScreenTimes[*(int *)((int)pvVar1 + 4)] = gfxCmdBufSourceState.sceneDef.time;
+  param_1->cmd = (void *)((uint)*(ushort *)((int)param_1->cmd + 2) + (int)param_1->cmd);
   return;
 }
 
 
 // 82794C68  RB_SaveScreenSectionCmd  (gfx_d3d/rb_backend.cpp:3901)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
@@ -5636,32 +5522,31 @@ void RB_SaveScreenCmd(GfxRenderCommandExecState *param_1)
 void RB_SaveScreenSectionCmd(GfxRenderCommandExecState *param_1)
 
 {
-  int iVar1;
-  int *piVar2;
+  void *pvVar1;
   
-  piVar2 = (int *)__savegprlr_28(param_1);
-  iVar1 = *piVar2;
-  if (3 < *(uint *)(iVar1 + 0x14)) {
+  pvVar1 = param_1->cmd;
+  if (3 < *(uint *)((int)pvVar1 + 0x14)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_backend.cpp",0xf44,
                     0,
                     "cmd->screenTimerId doesn\'t index ARRAY_COUNT( rgp.savedScreenTimes )\n\t%i not in [0, %i)"
                    );
   }
   RB_EndSurfaceIfNeeded();
-  if (rgp.savedScreenTimes[*(int *)(iVar1 + 0x14)] != gfxCmdBufSourceState.sceneDef.time) {
+  if (rgp.savedScreenTimes[*(int *)((int)pvVar1 + 0x14)] != gfxCmdBufSourceState.sceneDef.time) {
     R_ResolveSection((GfxCmdBufContext)0x8484c7e08484df40,gfxRenderTargets[0].image,
-                     *(float *)(iVar1 + 4),*(float *)(iVar1 + 8),*(float *)(iVar1 + 0xc),
-                     *(float *)(iVar1 + 0x10));
+                     *(float *)((int)pvVar1 + 4),*(float *)((int)pvVar1 + 8),
+                     *(float *)((int)pvVar1 + 0xc),*(float *)((int)pvVar1 + 0x10));
   }
-  rgp.savedScreenTimes[*(int *)(iVar1 + 0x14)] = gfxCmdBufSourceState.sceneDef.time;
-  *piVar2 = (uint)*(ushort *)(*piVar2 + 2) + *piVar2;
-  __restgprlr_28();
+  rgp.savedScreenTimes[*(int *)((int)pvVar1 + 0x14)] = gfxCmdBufSourceState.sceneDef.time;
+  param_1->cmd = (void *)((uint)*(ushort *)((int)param_1->cmd + 2) + (int)param_1->cmd);
   return;
 }
 
 
 // 82794D28  RB_BlendSavedScreenBlurredCmd  (gfx_d3d/rb_backend.cpp:3937)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "GfxPrimStatsTarget": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
@@ -5672,25 +5557,23 @@ void RB_BlendSavedScreenBlurredCmd(GfxRenderCommandExecState *param_1)
 {
   float fVar1;
   float fVar2;
-  int iVar3;
+  void *pvVar3;
   float fVar4;
   float fVar5;
-  int *piVar6;
   ulong in_r4;
   GfxPrimStatsTarget in_r5;
-  longlong lVar7;
-  int iVar8;
-  double dVar9;
+  longlong lVar6;
+  int iVar7;
+  double dVar8;
   
-  piVar6 = (int *)__savegprlr_27(param_1);
-  iVar3 = *piVar6;
-  if (*(int *)(iVar3 + 4) < 1) {
+  pvVar3 = param_1->cmd;
+  if (*(int *)((int)pvVar3 + 4) < 1) {
     in_r5 = GFX_PRIM_STATS_WORLD;
     in_r4 = 0xf6b;
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_backend.cpp",0xf6b,
                     0,"%s");
   }
-  if (3 < *(uint *)(iVar3 + 0x18)) {
+  if (3 < *(uint *)((int)pvVar3 + 0x18)) {
     in_r5 = GFX_PRIM_STATS_WORLD;
     in_r4 = 0xf6c;
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_backend.cpp",0xf6c,
@@ -5705,44 +5588,47 @@ void RB_BlendSavedScreenBlurredCmd(GfxRenderCommandExecState *param_1)
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_backend.cpp",0xf6f,
                     0,"%s");
   }
-  lVar7 = (ulonglong)(uint)gfxCmdBufSourceState.sceneDef.time -
-          (ulonglong)(uint)rgp.savedScreenTimes[*(int *)(iVar3 + 0x18)];
-  if (-1 < lVar7) {
-    iVar8 = (int)lVar7;
-    if (iVar8 < *(int *)(iVar3 + 4)) {
-      dVar9 = pow(0.009999999776482582,
-                  (double)((float)(longlong)iVar8 / (float)(longlong)*(int *)(iVar3 + 4)));
-      fVar1 = (float)dVar9;
-      if (0.99 < (float)dVar9) {
+  lVar6 = (ulonglong)(uint)gfxCmdBufSourceState.sceneDef.time -
+          (ulonglong)(uint)rgp.savedScreenTimes[*(int *)((int)pvVar3 + 0x18)];
+  if (-1 < lVar6) {
+    iVar7 = (int)lVar6;
+    if (iVar7 < *(int *)((int)pvVar3 + 4)) {
+      dVar8 = pow(0.009999999776482582,
+                  (double)((float)(longlong)iVar7 / (float)(longlong)*(int *)((int)pvVar3 + 4)));
+      fVar1 = (float)dVar8;
+      if (0.99 < (float)dVar8) {
         fVar1 = 0.99;
       }
       floor((double)(fVar1 * 255.0 + 0.5));
-      fVar1 = *(float *)(iVar3 + 8);
-      fVar2 = *(float *)(iVar3 + 0xc);
-      fVar4 = fVar1 + *(float *)(iVar3 + 0x10);
-      fVar5 = fVar2 + *(float *)(iVar3 + 0x14);
+      fVar1 = *(float *)((int)pvVar3 + 8);
+      fVar2 = *(float *)((int)pvVar3 + 0xc);
+      fVar4 = fVar1 + *(float *)((int)pvVar3 + 0x10);
+      fVar5 = fVar2 + *(float *)((int)pvVar3 + 0x14);
       if (rg.renderHiResShot != 0) {
         fVar1 = (1.0 / rg.hiResShotScaleX) * fVar1 + rg.hiResShotX;
         fVar2 = (1.0 / rg.hiResShotScaleY) * fVar2 + rg.hiResShotY;
-        fVar4 = *(float *)(iVar3 + 0x10) * (1.0 / rg.hiResShotScaleX) + fVar1;
-        fVar5 = (1.0 / rg.hiResShotScaleY) * *(float *)(iVar3 + 0x14) + fVar2;
+        fVar4 = *(float *)((int)pvVar3 + 0x10) * (1.0 / rg.hiResShotScaleX) + fVar1;
+        fVar5 = (1.0 / rg.hiResShotScaleY) * *(float *)((int)pvVar3 + 0x14) + fVar2;
       }
       gfxCmdBufSourceState.input.codeImages[8] = gfxRenderTargets[0].image;
       RB_DrawStretchPic(rgp.shellShockBlurredMaterial,0.0,0.0,
                         (float)(longlong)gfxCmdBufSourceState.renderTargetWidth *
-                        *(float *)(iVar3 + 0x10),
+                        *(float *)((int)pvVar3 + 0x10),
                         (float)(longlong)gfxCmdBufSourceState.renderTargetHeight *
-                        *(float *)(iVar3 + 0x14),fVar1,fVar2,fVar4,fVar5,in_r4,in_r5);
+                        *(float *)((int)pvVar3 + 0x14),fVar1,fVar2,fVar4,fVar5,in_r4,in_r5);
     }
   }
-  *piVar6 = (uint)*(ushort *)(*piVar6 + 2) + *piVar6;
-  __restgprlr_27();
+  param_1->cmd = (void *)((uint)*(ushort *)((int)param_1->cmd + 2) + (int)param_1->cmd);
   return;
 }
 
 
 // 82794F68  RB_BlendSavedScreenFlashedCmd  (gfx_d3d/rb_backend.cpp:3988)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "GfxPrimStatsTarget": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
@@ -5751,21 +5637,18 @@ void RB_BlendSavedScreenBlurredCmd(GfxRenderCommandExecState *param_1)
 void RB_BlendSavedScreenFlashedCmd(GfxRenderCommandExecState *param_1)
 
 {
-  int iVar1;
+  void *pvVar1;
   Material *pMVar2;
   Material *pMVar3;
-  int *piVar4;
   GfxPrimStatsTarget in_r4;
   GfxPrimStatsTarget in_r5;
+  double dVar4;
   double dVar5;
   double dVar6;
   double dVar7;
   double dVar8;
-  double dVar9;
   
-  __savegprlr_28(param_1);
-  piVar4 = (int *)__savefpr_28();
-  iVar1 = *piVar4;
+  pvVar1 = param_1->cmd;
   RB_EndSurfaceIfNeeded();
   if (gfxCmdBufSourceState.viewMode != VIEW_MODE_2D) {
     in_r5 = GFX_PRIM_STATS_WORLD;
@@ -5775,33 +5658,34 @@ void RB_BlendSavedScreenFlashedCmd(GfxRenderCommandExecState *param_1)
   }
   pMVar3 = rgp.shellShockFlashedMaterial;
   gfxCmdBufSourceState.input.codeImages[8] = gfxRenderTargets[0].image;
-  dVar7 = (double)((float)(longlong)gfxCmdBufSourceState.renderTargetWidth *
-                  *(float *)(iVar1 + 0x18));
-  dVar6 = (double)((float)(longlong)gfxCmdBufSourceState.renderTargetHeight *
-                  *(float *)(iVar1 + 0x1c));
+  dVar6 = (double)((float)(longlong)gfxCmdBufSourceState.renderTargetWidth *
+                  *(float *)((int)pvVar1 + 0x18));
+  dVar5 = (double)((float)(longlong)gfxCmdBufSourceState.renderTargetHeight *
+                  *(float *)((int)pvVar1 + 0x1c));
   pMVar2 = rgp.feedbackReplaceMaterial;
-  if (*(char *)(iVar1 + 4) == '\0') {
-    dVar9 = 255.0;
-    dVar8 = 0.5;
-    dVar5 = floor((double)(*(float *)(iVar1 + 8) * 255.0 + 0.5));
-    dVar8 = floor((double)(float)((double)(float)((double)*(float *)(iVar1 + 0xc) * dVar9) + dVar8))
-    ;
-    in_r5 = ((int)dVar8 & 0xffU) << 8;
-    in_r4 = in_r5 | (int)dVar5 & 0xff;
+  if (*(char *)((int)pvVar1 + 4) == '\0') {
+    dVar8 = 255.0;
+    dVar7 = 0.5;
+    dVar4 = floor((double)(*(float *)((int)pvVar1 + 8) * 255.0 + 0.5));
+    dVar7 = floor((double)(float)((double)(float)((double)*(float *)((int)pvVar1 + 0xc) * dVar8) +
+                                 dVar7));
+    in_r5 = ((int)dVar7 & 0xffU) << 8;
+    in_r4 = in_r5 | (int)dVar4 & 0xff;
     pMVar2 = pMVar3;
   }
-  RB_DrawStretchPic(pMVar2,0.0,0.0,(float)dVar7,(float)dVar6,*(float *)(iVar1 + 0x10),
-                    *(float *)(iVar1 + 0x14),*(float *)(iVar1 + 0x18) + *(float *)(iVar1 + 0x10),
-                    *(float *)(iVar1 + 0x14) + *(float *)(iVar1 + 0x1c),in_r4,in_r5);
-  *piVar4 = (uint)*(ushort *)(*piVar4 + 2) + *piVar4;
-  __restfpr_28();
-  __restgprlr_28();
+  RB_DrawStretchPic(pMVar2,0.0,0.0,(float)dVar6,(float)dVar5,*(float *)((int)pvVar1 + 0x10),
+                    *(float *)((int)pvVar1 + 0x14),
+                    *(float *)((int)pvVar1 + 0x18) + *(float *)((int)pvVar1 + 0x10),
+                    *(float *)((int)pvVar1 + 0x14) + *(float *)((int)pvVar1 + 0x1c),in_r4,in_r5);
+  param_1->cmd = (void *)((uint)*(ushort *)((int)param_1->cmd + 2) + (int)param_1->cmd);
   return;
 }
 
 
 // 82795100  RB_DrawPoints2D  (gfx_d3d/rb_backend.cpp:4027)
 
+/* WARNING: Function: __savegprlr_18 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_18 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "GfxPrimStatsTarget": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
@@ -5814,27 +5698,25 @@ void RB_DrawPoints2D(GfxCmdDrawPoints *param_1)
   uint uVar3;
   int iVar4;
   int iVar5;
-  int iVar6;
-  GfxColor *pGVar7;
+  GfxColor *pGVar6;
+  double dVar7;
   double dVar8;
   double dVar9;
-  double dVar10;
   
-  iVar4 = __savegprlr_18(param_1);
   if (gfxCmdBufSourceState.viewMode != VIEW_MODE_2D) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_backend.cpp",0xfc0,
                     0,"%s");
   }
   RB_SetTessTechnique(rgp.whiteMaterial,TECHNIQUE_UNLIT,GFX_PRIM_STATS_DEBUG);
-  iVar6 = 0;
-  dVar9 = (double)((float)*(byte *)(iVar4 + 6) * 0.5);
-  if (0 < *(short *)(iVar4 + 4)) {
-    pGVar7 = (GfxColor *)(iVar4 + 4);
-    dVar8 = 0.0;
-    dVar10 = 1.0;
+  iVar5 = 0;
+  dVar8 = (double)((float)param_1->size * 0.5);
+  if (0 < param_1->pointCount) {
+    pGVar6 = (GfxColor *)&param_1->pointCount;
+    dVar7 = 0.0;
+    dVar9 = 1.0;
     do {
-      iVar5 = Sys_HasDeviceOwnership();
-      if (iVar5 == 0) {
+      iVar4 = Sys_HasDeviceOwnership();
+      if (iVar4 == 0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_backend.h",0xbc
                         ,0,"%s");
       }
@@ -5849,62 +5731,65 @@ void RB_DrawPoints2D(GfxCmdDrawPoints *param_1)
       tess.indices[tess.indexCount + 5] = (short)tess.vertexCount + 3;
       uVar3 = tess.vertexCount;
       tess.indexCount = tess.indexCount + 6;
-      GVar1 = pGVar7[2];
-      GVar2 = pGVar7[3];
-      tess.verts[tess.vertexCount].xyzw[0] = (float)((double)(float)pGVar7[1] - dVar9);
+      GVar1 = pGVar6[2];
+      GVar2 = pGVar6[3];
+      tess.verts[tess.vertexCount].xyzw[0] = (float)((double)(float)pGVar6[1] - dVar8);
       *(GfxColor *)(tess.verts[uVar3].xyzw + 2) = GVar2;
       tess.verts[uVar3].normal.packed = 0x1ff00000;
-      tess.verts[uVar3].xyzw[3] = (float)dVar10;
-      tess.verts[uVar3].xyzw[1] = (float)((double)(float)GVar1 - dVar9);
-      tess.verts[uVar3].color = pGVar7[4];
-      tess.verts[uVar3].texCoord[0] = (float)dVar8;
-      tess.verts[uVar3].texCoord[1] = (float)dVar8;
+      tess.verts[uVar3].xyzw[3] = (float)dVar9;
+      tess.verts[uVar3].xyzw[1] = (float)((double)(float)GVar1 - dVar8);
+      tess.verts[uVar3].color = pGVar6[4];
+      tess.verts[uVar3].texCoord[0] = (float)dVar7;
+      tess.verts[uVar3].texCoord[1] = (float)dVar7;
       uVar3 = tess.vertexCount;
-      GVar1 = pGVar7[2];
-      GVar2 = pGVar7[3];
-      tess.verts[tess.vertexCount + 1].xyzw[0] = (float)((double)(float)pGVar7[1] - dVar9);
+      GVar1 = pGVar6[2];
+      GVar2 = pGVar6[3];
+      tess.verts[tess.vertexCount + 1].xyzw[0] = (float)((double)(float)pGVar6[1] - dVar8);
       tess.verts[uVar3 + 1].normal.packed = 0x1ff00000;
-      tess.verts[uVar3 + 1].xyzw[1] = (float)((double)(float)GVar1 + dVar9);
+      tess.verts[uVar3 + 1].xyzw[1] = (float)((double)(float)GVar1 + dVar8);
       *(GfxColor *)(tess.verts[uVar3 + 1].xyzw + 2) = GVar2;
-      tess.verts[uVar3 + 1].xyzw[3] = (float)dVar10;
-      tess.verts[uVar3 + 1].color = pGVar7[4];
-      tess.verts[uVar3 + 1].texCoord[0] = (float)dVar8;
-      tess.verts[uVar3 + 1].texCoord[1] = (float)dVar10;
+      tess.verts[uVar3 + 1].xyzw[3] = (float)dVar9;
+      tess.verts[uVar3 + 1].color = pGVar6[4];
+      tess.verts[uVar3 + 1].texCoord[0] = (float)dVar7;
+      tess.verts[uVar3 + 1].texCoord[1] = (float)dVar9;
       uVar3 = tess.vertexCount;
-      iVar5 = tess.vertexCount + 2;
-      GVar1 = pGVar7[1];
-      GVar2 = pGVar7[3];
-      tess.verts[tess.vertexCount + 2].xyzw[1] = (float)((double)(float)pGVar7[2] + dVar9);
+      iVar4 = tess.vertexCount + 2;
+      GVar1 = pGVar6[1];
+      GVar2 = pGVar6[3];
+      tess.verts[tess.vertexCount + 2].xyzw[1] = (float)((double)(float)pGVar6[2] + dVar8);
       tess.verts[uVar3 + 2].normal.packed = 0x1ff00000;
       *(GfxColor *)(tess.verts[uVar3 + 2].xyzw + 2) = GVar2;
-      tess.verts[uVar3 + 2].xyzw[3] = (float)dVar10;
-      iVar6 = iVar6 + 1;
-      tess.verts[iVar5].xyzw[0] = (float)((double)(float)GVar1 + dVar9);
-      tess.verts[uVar3 + 2].color = pGVar7[4];
-      tess.verts[uVar3 + 2].texCoord[0] = (float)dVar10;
-      tess.verts[uVar3 + 2].texCoord[1] = (float)dVar10;
+      tess.verts[uVar3 + 2].xyzw[3] = (float)dVar9;
+      iVar5 = iVar5 + 1;
+      tess.verts[iVar4].xyzw[0] = (float)((double)(float)GVar1 + dVar8);
+      tess.verts[uVar3 + 2].color = pGVar6[4];
+      tess.verts[uVar3 + 2].texCoord[0] = (float)dVar9;
+      tess.verts[uVar3 + 2].texCoord[1] = (float)dVar9;
       uVar3 = tess.vertexCount;
-      GVar1 = pGVar7[2];
-      GVar2 = pGVar7[3];
-      tess.verts[tess.vertexCount + 3].xyzw[0] = (float)((double)(float)pGVar7[1] + dVar9);
+      GVar1 = pGVar6[2];
+      GVar2 = pGVar6[3];
+      tess.verts[tess.vertexCount + 3].xyzw[0] = (float)((double)(float)pGVar6[1] + dVar8);
       tess.verts[uVar3 + 3].normal.packed = 0x1ff00000;
-      tess.verts[uVar3 + 3].xyzw[1] = (float)((double)(float)GVar1 - dVar9);
+      tess.verts[uVar3 + 3].xyzw[1] = (float)((double)(float)GVar1 - dVar8);
       *(GfxColor *)(tess.verts[uVar3 + 3].xyzw + 2) = GVar2;
-      tess.verts[uVar3 + 3].xyzw[3] = (float)dVar10;
-      pGVar7 = pGVar7 + 4;
-      tess.verts[uVar3 + 3].color = *pGVar7;
-      tess.verts[uVar3 + 3].texCoord[0] = (float)dVar10;
-      tess.verts[uVar3 + 3].texCoord[1] = (float)dVar8;
+      tess.verts[uVar3 + 3].xyzw[3] = (float)dVar9;
+      pGVar6 = pGVar6 + 4;
+      tess.verts[uVar3 + 3].color = *pGVar6;
+      tess.verts[uVar3 + 3].texCoord[0] = (float)dVar9;
+      tess.verts[uVar3 + 3].texCoord[1] = (float)dVar7;
       tess.vertexCount = tess.vertexCount + 4;
-    } while (iVar6 < *(short *)(iVar4 + 4));
+    } while (iVar5 < param_1->pointCount);
   }
-  __restgprlr_18();
   return;
 }
 
 
 // 827954C8  RB_DrawPoints3D  (gfx_d3d/rb_backend.cpp:4058)
 
+/* WARNING: Function: __savegprlr_17 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_18 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_18 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_17 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "GfxPrimStatsTarget": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
@@ -5918,10 +5803,10 @@ void RB_DrawPoints3D(GfxCmdDrawPoints *param_1)
   uint uVar4;
   GfxViewParms *pGVar5;
   int iVar6;
-  int iVar7;
-  GfxMatrix *pGVar8;
-  int iVar9;
-  float *pfVar10;
+  GfxMatrix *pGVar7;
+  int iVar8;
+  GfxPointVertex *pGVar9;
+  double dVar10;
   double dVar11;
   double dVar12;
   double dVar13;
@@ -5935,51 +5820,47 @@ void RB_DrawPoints3D(GfxCmdDrawPoints *param_1)
   double dVar21;
   double dVar22;
   double dVar23;
-  double dVar24;
   
-  __savegprlr_17(param_1);
-  iVar6 = __savefpr_18();
   RB_SetTessTechnique(rgp.pointMaterial,TECHNIQUE_UNLIT,GFX_PRIM_STATS_DEBUG);
   RB_SetIdentity();
   pGVar5 = gfxCmdBufSourceState.viewParms3D;
-  iVar9 = 0;
-  pfVar10 = (float *)(iVar6 + 8);
-  pGVar8 = &(gfxCmdBufSourceState.viewParms3D)->viewProjectionMatrix;
-  dVar15 = (double)((gfxCmdBufSourceState.viewParms3D)->camera).origin[0];
-  dVar14 = (double)((gfxCmdBufSourceState.viewParms3D)->camera).origin[1];
-  dVar13 = (double)((gfxCmdBufSourceState.viewParms3D)->camera).origin[2];
-  dVar12 = (double)((float)*(byte *)(iVar6 + 6) /
-                   (float)(longlong)gfxCmdBufSourceState.renderTargetWidth);
-  dVar11 = (double)((float)*(byte *)(iVar6 + 6) /
-                   (float)(longlong)gfxCmdBufSourceState.renderTargetHeight);
-  if (0 < *(short *)(iVar6 + 4)) {
-    dVar17 = 1.0;
-    dVar18 = 0.0;
-    dVar16 = 0.0010000000474974513;
+  iVar8 = 0;
+  pGVar9 = param_1->verts;
+  pGVar7 = &(gfxCmdBufSourceState.viewParms3D)->viewProjectionMatrix;
+  dVar14 = (double)((gfxCmdBufSourceState.viewParms3D)->camera).origin[0];
+  dVar13 = (double)((gfxCmdBufSourceState.viewParms3D)->camera).origin[1];
+  dVar12 = (double)((gfxCmdBufSourceState.viewParms3D)->camera).origin[2];
+  dVar11 = (double)((float)param_1->size / (float)(longlong)gfxCmdBufSourceState.renderTargetWidth);
+  dVar10 = (double)((float)param_1->size / (float)(longlong)gfxCmdBufSourceState.renderTargetHeight)
+  ;
+  if (0 < param_1->pointCount) {
+    dVar16 = 1.0;
+    dVar17 = 0.0;
+    dVar15 = 0.0010000000474974513;
     do {
-      fVar1 = (float)((double)pfVar10[2] - dVar13);
-      fVar2 = (float)((double)pfVar10[1] - dVar14);
-      fVar3 = (float)((double)*pfVar10 - dVar15);
-      dVar24 = (double)((pGVar5->viewProjectionMatrix).m[1][3] * fVar2 +
+      fVar1 = (float)((double)pGVar9->xyz[2] - dVar12);
+      fVar2 = (float)((double)pGVar9->xyz[1] - dVar13);
+      fVar3 = (float)((double)pGVar9->xyz[0] - dVar14);
+      dVar23 = (double)((pGVar5->viewProjectionMatrix).m[1][3] * fVar2 +
                         (pGVar5->viewProjectionMatrix).m[0][3] * fVar3 +
                         (pGVar5->viewProjectionMatrix).m[2][3] * fVar1 +
                        (pGVar5->viewProjectionMatrix).m[3][3]);
-      dVar22 = (double)(fVar2 * (pGVar5->viewProjectionMatrix).m[1][0] +
-                        pGVar8->m[0][0] * fVar3 + fVar1 * (pGVar5->viewProjectionMatrix).m[2][0] +
+      dVar21 = (double)(fVar2 * (pGVar5->viewProjectionMatrix).m[1][0] +
+                        pGVar7->m[0][0] * fVar3 + fVar1 * (pGVar5->viewProjectionMatrix).m[2][0] +
                        (pGVar5->viewProjectionMatrix).m[3][0]);
-      dVar21 = (double)((pGVar5->viewProjectionMatrix).m[1][1] * fVar2 +
+      dVar20 = (double)((pGVar5->viewProjectionMatrix).m[1][1] * fVar2 +
                         (pGVar5->viewProjectionMatrix).m[0][1] * fVar3 +
                         (pGVar5->viewProjectionMatrix).m[2][1] * fVar1 +
                        (pGVar5->viewProjectionMatrix).m[3][1]);
-      dVar20 = (double)(float)(dVar24 * dVar12);
-      dVar19 = (double)(float)(dVar24 * dVar11);
-      dVar23 = (double)(float)(dVar24 * dVar16 +
+      dVar19 = (double)(float)(dVar23 * dVar11);
+      dVar18 = (double)(float)(dVar23 * dVar10);
+      dVar22 = (double)(float)(dVar23 * dVar15 +
                               (double)(fVar3 * (pGVar5->viewProjectionMatrix).m[0][2] +
                                        (pGVar5->viewProjectionMatrix).m[2][2] * fVar1 +
                                        (pGVar5->viewProjectionMatrix).m[1][2] * fVar2 +
                                       (pGVar5->viewProjectionMatrix).m[3][2]));
-      iVar7 = Sys_HasDeviceOwnership();
-      if (iVar7 == 0) {
+      iVar6 = Sys_HasDeviceOwnership();
+      if (iVar6 == 0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_backend.h",0xbc
                         ,0,"%s");
       }
@@ -5994,50 +5875,48 @@ void RB_DrawPoints3D(GfxCmdDrawPoints *param_1)
       tess.indices[tess.indexCount + 5] = (short)tess.vertexCount + 1;
       uVar4 = tess.vertexCount;
       tess.indexCount = tess.indexCount + 6;
-      tess.verts[tess.vertexCount].xyzw[0] = (float)(dVar22 - dVar20);
-      tess.verts[uVar4].xyzw[1] = (float)(dVar21 - dVar19);
+      tess.verts[tess.vertexCount].xyzw[0] = (float)(dVar21 - dVar19);
+      tess.verts[uVar4].xyzw[1] = (float)(dVar20 - dVar18);
       tess.verts[uVar4].normal.packed = 0x1ff00000;
-      tess.verts[uVar4].xyzw[2] = (float)dVar23;
-      tess.verts[uVar4].xyzw[3] = (float)dVar24;
-      tess.verts[uVar4].color = *(GfxColor *)(pfVar10 + 3);
-      tess.verts[uVar4].texCoord[0] = (float)dVar18;
-      tess.verts[uVar4].texCoord[1] = (float)dVar18;
+      tess.verts[uVar4].xyzw[2] = (float)dVar22;
+      tess.verts[uVar4].xyzw[3] = (float)dVar23;
+      tess.verts[uVar4].color = *(GfxColor *)pGVar9->color;
+      tess.verts[uVar4].texCoord[0] = (float)dVar17;
+      tess.verts[uVar4].texCoord[1] = (float)dVar17;
       uVar4 = tess.vertexCount;
-      iVar7 = tess.vertexCount + 1;
-      tess.verts[tess.vertexCount + 1].xyzw[3] = (float)dVar24;
+      iVar6 = tess.vertexCount + 1;
+      tess.verts[tess.vertexCount + 1].xyzw[3] = (float)dVar23;
       tess.verts[uVar4 + 1].normal.packed = 0x1ff00000;
-      tess.verts[iVar7].xyzw[0] = (float)(dVar22 - dVar20);
-      tess.verts[uVar4 + 1].xyzw[1] = (float)(dVar19 + dVar21);
-      iVar9 = iVar9 + 1;
-      tess.verts[uVar4 + 1].xyzw[2] = (float)dVar23;
-      tess.verts[uVar4 + 1].color = *(GfxColor *)(pfVar10 + 3);
-      tess.verts[uVar4 + 1].texCoord[1] = (float)dVar17;
-      tess.verts[uVar4 + 1].texCoord[0] = (float)dVar18;
+      tess.verts[iVar6].xyzw[0] = (float)(dVar21 - dVar19);
+      tess.verts[uVar4 + 1].xyzw[1] = (float)(dVar18 + dVar20);
+      iVar8 = iVar8 + 1;
+      tess.verts[uVar4 + 1].xyzw[2] = (float)dVar22;
+      tess.verts[uVar4 + 1].color = *(GfxColor *)pGVar9->color;
+      tess.verts[uVar4 + 1].texCoord[1] = (float)dVar16;
+      tess.verts[uVar4 + 1].texCoord[0] = (float)dVar17;
       uVar4 = tess.vertexCount;
-      tess.verts[tess.vertexCount + 2].xyzw[0] = (float)(dVar20 + dVar22);
+      tess.verts[tess.vertexCount + 2].xyzw[0] = (float)(dVar19 + dVar21);
       tess.verts[uVar4 + 2].normal.packed = 0x1ff00000;
-      tess.verts[uVar4 + 2].xyzw[1] = (float)(dVar19 + dVar21);
-      tess.verts[uVar4 + 2].xyzw[2] = (float)dVar23;
-      tess.verts[uVar4 + 2].xyzw[3] = (float)dVar24;
-      tess.verts[uVar4 + 2].color = *(GfxColor *)(pfVar10 + 3);
-      tess.verts[uVar4 + 2].texCoord[0] = (float)dVar17;
-      tess.verts[uVar4 + 2].texCoord[1] = (float)dVar17;
+      tess.verts[uVar4 + 2].xyzw[1] = (float)(dVar18 + dVar20);
+      tess.verts[uVar4 + 2].xyzw[2] = (float)dVar22;
+      tess.verts[uVar4 + 2].xyzw[3] = (float)dVar23;
+      tess.verts[uVar4 + 2].color = *(GfxColor *)pGVar9->color;
+      tess.verts[uVar4 + 2].texCoord[0] = (float)dVar16;
+      tess.verts[uVar4 + 2].texCoord[1] = (float)dVar16;
       uVar4 = tess.vertexCount;
-      tess.verts[tess.vertexCount + 3].xyzw[0] = (float)(dVar20 + dVar22);
+      tess.verts[tess.vertexCount + 3].xyzw[0] = (float)(dVar19 + dVar21);
       tess.verts[uVar4 + 3].normal.packed = 0x1ff00000;
-      tess.verts[uVar4 + 3].xyzw[1] = (float)(dVar21 - dVar19);
-      tess.verts[uVar4 + 3].xyzw[2] = (float)dVar23;
-      tess.verts[uVar4 + 3].xyzw[3] = (float)dVar24;
-      tess.verts[uVar4 + 3].color = *(GfxColor *)(pfVar10 + 3);
-      tess.verts[uVar4 + 3].texCoord[0] = (float)dVar17;
-      tess.verts[uVar4 + 3].texCoord[1] = (float)dVar18;
+      tess.verts[uVar4 + 3].xyzw[1] = (float)(dVar20 - dVar18);
+      tess.verts[uVar4 + 3].xyzw[2] = (float)dVar22;
+      tess.verts[uVar4 + 3].xyzw[3] = (float)dVar23;
+      tess.verts[uVar4 + 3].color = *(GfxColor *)pGVar9->color;
+      tess.verts[uVar4 + 3].texCoord[0] = (float)dVar16;
+      tess.verts[uVar4 + 3].texCoord[1] = (float)dVar17;
       tess.vertexCount = tess.vertexCount + 4;
-      pfVar10 = pfVar10 + 4;
-    } while (iVar9 < *(short *)(iVar6 + 4));
+      pGVar9 = pGVar9 + 1;
+    } while (iVar8 < param_1->pointCount);
   }
   RB_EndTessSurface();
-  __restfpr_18();
-  __restgprlr_17();
   return;
 }
 
@@ -6067,6 +5946,8 @@ void RB_DrawPointsCmd(GfxRenderCommandExecState *param_1)
 
 // 827959A0  RB_DrawLines2D  (gfx_d3d/rb_backend.cpp:4136)
 
+/* WARNING: Function: __savegprlr_19 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_19 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "GfxPrimStatsTarget": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
@@ -6076,20 +5957,18 @@ void RB_DrawLines2D(int param_1,int param_2,GfxPointVertex *param_3)
 {
   float fVar1;
   float fVar2;
-  int iVar3;
-  uint uVar4;
+  uint uVar3;
+  int iVar4;
   longlong lVar5;
-  int iVar6;
-  longlong lVar7;
+  GfxColor *pGVar6;
+  double dVar7;
   double dVar8;
   double dVar9;
-  double dVar10;
   float local_90;
   float local_8c;
   
-  lVar7 = (longlong)(int)param_3;
-  lVar5 = __savegprlr_19(param_1,param_2);
-  if ((int)lVar5 < 1) {
+  lVar5 = (longlong)param_1;
+  if (param_1 < 1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_backend.cpp",0x1030
                     ,0,"%s\n\t(count) = %i");
   }
@@ -6098,20 +5977,19 @@ void RB_DrawLines2D(int param_1,int param_2,GfxPointVertex *param_3)
                     ,0,"%s");
   }
   RB_SetTessTechnique(rgp.whiteMaterial,TECHNIQUE_UNLIT,GFX_PRIM_STATS_DEBUG);
-  if (0 < (int)lVar5) {
-    dVar9 = 0.0;
-    dVar10 = 1.0;
-    lVar7 = lVar7 + -0x14;
-    dVar8 = 0.5;
+  if (0 < param_1) {
+    dVar8 = 0.0;
+    dVar9 = 1.0;
+    pGVar6 = (GfxColor *)param_3[-2].color;
+    dVar7 = 0.5;
     do {
-      iVar3 = (int)lVar7;
-      local_90 = *(float *)(iVar3 + 0x28) - *(float *)(iVar3 + 0x18);
-      local_8c = *(float *)(iVar3 + 0x14) - *(float *)(iVar3 + 0x24);
+      local_90 = *(float *)(pGVar6->array + 0x28) - *(float *)(pGVar6->array + 0x18);
+      local_8c = *(float *)(pGVar6->array + 0x14) - *(float *)(pGVar6->array + 0x24);
       Vec2Normalize(&local_90);
-      local_90 = (float)((double)local_90 * dVar8);
-      local_8c = (float)((double)local_8c * dVar8);
-      iVar6 = Sys_HasDeviceOwnership();
-      if (iVar6 == 0) {
+      local_90 = (float)((double)local_90 * dVar7);
+      local_8c = (float)((double)local_8c * dVar7);
+      iVar4 = Sys_HasDeviceOwnership();
+      if (iVar4 == 0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_backend.h",0xbc
                         ,0,"%s");
       }
@@ -6124,64 +6002,67 @@ void RB_DrawLines2D(int param_1,int param_2,GfxPointVertex *param_3)
       tess.indices[tess.indexCount + 3] = (short)tess.vertexCount + 2;
       tess.indices[tess.indexCount + 4] = (ushort)tess.vertexCount;
       tess.indices[tess.indexCount + 5] = (short)tess.vertexCount + 3;
-      uVar4 = tess.vertexCount;
+      uVar3 = tess.vertexCount;
       tess.indexCount = tess.indexCount + 6;
-      fVar1 = *(float *)(iVar3 + 0x14);
-      fVar2 = *(float *)(iVar3 + 0x18);
-      tess.verts[tess.vertexCount].xyzw[2] = *(float *)(iVar3 + 0x1c);
-      tess.verts[uVar4].normal.packed = 0x1ff00000;
-      tess.verts[uVar4].xyzw[1] = fVar2 - local_8c;
-      tess.verts[uVar4].xyzw[3] = (float)dVar10;
-      tess.verts[uVar4].xyzw[0] = fVar1 - local_90;
-      tess.verts[uVar4].color = *(GfxColor *)(iVar3 + 0x20);
-      tess.verts[uVar4].texCoord[0] = (float)dVar9;
-      tess.verts[uVar4].texCoord[1] = (float)dVar9;
-      uVar4 = tess.vertexCount;
-      fVar1 = *(float *)(iVar3 + 0x24);
-      fVar2 = *(float *)(iVar3 + 0x28);
-      iVar6 = tess.vertexCount + 1;
-      tess.verts[tess.vertexCount + 1].xyzw[2] = *(float *)(iVar3 + 0x2c);
-      tess.verts[uVar4 + 1].normal.packed = 0x1ff00000;
-      tess.verts[uVar4 + 1].xyzw[3] = (float)dVar10;
-      tess.verts[iVar6].xyzw[0] = fVar1 - local_90;
-      tess.verts[uVar4 + 1].xyzw[1] = fVar2 - local_8c;
+      fVar1 = *(float *)(pGVar6->array + 0x14);
+      fVar2 = *(float *)(pGVar6->array + 0x18);
+      tess.verts[tess.vertexCount].xyzw[2] = *(float *)(pGVar6->array + 0x1c);
+      tess.verts[uVar3].normal.packed = 0x1ff00000;
+      tess.verts[uVar3].xyzw[1] = fVar2 - local_8c;
+      tess.verts[uVar3].xyzw[3] = (float)dVar9;
+      tess.verts[uVar3].xyzw[0] = fVar1 - local_90;
+      tess.verts[uVar3].color = *(GfxColor *)(pGVar6->array + 0x20);
+      tess.verts[uVar3].texCoord[0] = (float)dVar8;
+      tess.verts[uVar3].texCoord[1] = (float)dVar8;
+      uVar3 = tess.vertexCount;
+      fVar1 = *(float *)(pGVar6->array + 0x24);
+      fVar2 = *(float *)(pGVar6->array + 0x28);
+      iVar4 = tess.vertexCount + 1;
+      tess.verts[tess.vertexCount + 1].xyzw[2] = *(float *)(pGVar6->array + 0x2c);
+      tess.verts[uVar3 + 1].normal.packed = 0x1ff00000;
+      tess.verts[uVar3 + 1].xyzw[3] = (float)dVar9;
+      tess.verts[iVar4].xyzw[0] = fVar1 - local_90;
+      tess.verts[uVar3 + 1].xyzw[1] = fVar2 - local_8c;
       lVar5 = lVar5 + -1;
-      tess.verts[uVar4 + 1].color = *(GfxColor *)(iVar3 + 0x30);
-      tess.verts[uVar4 + 1].texCoord[0] = (float)dVar9;
-      tess.verts[uVar4 + 1].texCoord[1] = (float)dVar10;
-      uVar4 = tess.vertexCount;
-      fVar1 = *(float *)(iVar3 + 0x2c);
-      fVar2 = *(float *)(iVar3 + 0x28);
-      tess.verts[tess.vertexCount + 2].xyzw[0] = *(float *)(iVar3 + 0x24) + local_90;
-      tess.verts[uVar4 + 2].xyzw[1] = fVar2 + local_8c;
-      tess.verts[uVar4 + 2].normal.packed = 0x1ff00000;
-      tess.verts[uVar4 + 2].xyzw[2] = fVar1;
-      tess.verts[uVar4 + 2].xyzw[3] = (float)dVar10;
-      tess.verts[uVar4 + 2].color = *(GfxColor *)(iVar3 + 0x30);
-      tess.verts[uVar4 + 2].texCoord[0] = (float)dVar10;
-      tess.verts[uVar4 + 2].texCoord[1] = (float)dVar10;
-      uVar4 = tess.vertexCount;
-      fVar1 = *(float *)(iVar3 + 0x18);
-      fVar2 = *(float *)(iVar3 + 0x1c);
-      tess.verts[tess.vertexCount + 3].xyzw[0] = *(float *)(iVar3 + 0x14) + local_90;
-      tess.verts[uVar4 + 3].normal.packed = 0x1ff00000;
-      tess.verts[uVar4 + 3].xyzw[1] = fVar1 + local_8c;
-      tess.verts[uVar4 + 3].xyzw[2] = fVar2;
-      tess.verts[uVar4 + 3].xyzw[3] = (float)dVar10;
-      lVar7 = lVar7 + 0x20;
-      tess.verts[uVar4 + 3].color = *(GfxColor *)lVar7;
-      tess.verts[uVar4 + 3].texCoord[0] = (float)dVar10;
-      tess.verts[uVar4 + 3].texCoord[1] = (float)dVar9;
+      tess.verts[uVar3 + 1].color = *(GfxColor *)(pGVar6->array + 0x30);
+      tess.verts[uVar3 + 1].texCoord[0] = (float)dVar8;
+      tess.verts[uVar3 + 1].texCoord[1] = (float)dVar9;
+      uVar3 = tess.vertexCount;
+      fVar1 = *(float *)(pGVar6->array + 0x2c);
+      fVar2 = *(float *)(pGVar6->array + 0x28);
+      tess.verts[tess.vertexCount + 2].xyzw[0] = *(float *)(pGVar6->array + 0x24) + local_90;
+      tess.verts[uVar3 + 2].xyzw[1] = fVar2 + local_8c;
+      tess.verts[uVar3 + 2].normal.packed = 0x1ff00000;
+      tess.verts[uVar3 + 2].xyzw[2] = fVar1;
+      tess.verts[uVar3 + 2].xyzw[3] = (float)dVar9;
+      tess.verts[uVar3 + 2].color = *(GfxColor *)(pGVar6->array + 0x30);
+      tess.verts[uVar3 + 2].texCoord[0] = (float)dVar9;
+      tess.verts[uVar3 + 2].texCoord[1] = (float)dVar9;
+      uVar3 = tess.vertexCount;
+      fVar1 = *(float *)(pGVar6->array + 0x18);
+      fVar2 = *(float *)(pGVar6->array + 0x1c);
+      tess.verts[tess.vertexCount + 3].xyzw[0] = *(float *)(pGVar6->array + 0x14) + local_90;
+      tess.verts[uVar3 + 3].normal.packed = 0x1ff00000;
+      tess.verts[uVar3 + 3].xyzw[1] = fVar1 + local_8c;
+      tess.verts[uVar3 + 3].xyzw[2] = fVar2;
+      tess.verts[uVar3 + 3].xyzw[3] = (float)dVar9;
+      pGVar6 = (GfxColor *)(pGVar6->array + 0x20);
+      tess.verts[uVar3 + 3].color = *pGVar6;
+      tess.verts[uVar3 + 3].texCoord[0] = (float)dVar9;
+      tess.verts[uVar3 + 3].texCoord[1] = (float)dVar8;
       tess.vertexCount = tess.vertexCount + 4;
     } while (lVar5 != 0);
   }
-  __restgprlr_19();
   return;
 }
 
 
 // 82795DB0  RB_DrawLines3D  (gfx_d3d/rb_backend.cpp:4194)
 
+/* WARNING: Function: __savegprlr_18 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_18 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "GfxPrimStatsTarget": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
@@ -6211,16 +6092,16 @@ void RB_DrawLines3D(int param_1,int param_2,GfxPointVertex *param_3,bool param_4
   float fVar20;
   float fVar21;
   float fVar22;
-  GfxColor *pGVar23;
-  uint uVar24;
-  GfxViewParms *pGVar25;
-  longlong lVar26;
-  Material *pMVar27;
-  int iVar28;
-  ulonglong uVar29;
-  longlong lVar30;
-  GfxMatrix *pGVar31;
-  longlong lVar32;
+  uint uVar23;
+  GfxViewParms *pGVar24;
+  Material *pMVar25;
+  int iVar26;
+  longlong lVar27;
+  GfxMatrix *pGVar28;
+  longlong lVar29;
+  GfxColor *pGVar30;
+  double dVar31;
+  double dVar32;
   double dVar33;
   double dVar34;
   double dVar35;
@@ -6237,76 +6118,70 @@ void RB_DrawLines3D(int param_1,int param_2,GfxPointVertex *param_3,bool param_4
   double dVar46;
   double dVar47;
   double dVar48;
-  double dVar49;
-  double dVar50;
   float local_118;
   float local_114;
   
-  uVar29 = (ulonglong)param_4;
-  lVar32 = (longlong)(int)param_3;
-  lVar26 = __savegprlr_18(param_1);
-  __savefpr();
-  pMVar27 = rgp.lineMaterialNoDepth;
-  if ((uVar29 & 0xff) != 0) {
-    pMVar27 = rgp.lineMaterial;
+  lVar29 = (longlong)param_1;
+  pMVar25 = rgp.lineMaterialNoDepth;
+  if (param_4) {
+    pMVar25 = rgp.lineMaterial;
   }
-  RB_SetTessTechnique(pMVar27,TECHNIQUE_UNLIT,GFX_PRIM_STATS_DEBUG);
+  RB_SetTessTechnique(pMVar25,TECHNIQUE_UNLIT,GFX_PRIM_STATS_DEBUG);
   RB_SetIdentity();
-  pGVar25 = gfxCmdBufSourceState.viewParms3D;
-  lVar30 = (longlong)gfxCmdBufSourceState.renderTargetHeight;
-  pGVar31 = &(gfxCmdBufSourceState.viewParms3D)->viewProjectionMatrix;
-  dVar36 = (double)((gfxCmdBufSourceState.viewParms3D)->camera).origin[0];
-  dVar35 = (double)((gfxCmdBufSourceState.viewParms3D)->camera).origin[1];
-  dVar34 = (double)((gfxCmdBufSourceState.viewParms3D)->camera).origin[2];
-  dVar33 = (double)((float)(longlong)param_2 /
+  pGVar24 = gfxCmdBufSourceState.viewParms3D;
+  lVar27 = (longlong)gfxCmdBufSourceState.renderTargetHeight;
+  pGVar28 = &(gfxCmdBufSourceState.viewParms3D)->viewProjectionMatrix;
+  dVar34 = (double)((gfxCmdBufSourceState.viewParms3D)->camera).origin[0];
+  dVar33 = (double)((gfxCmdBufSourceState.viewParms3D)->camera).origin[1];
+  dVar32 = (double)((gfxCmdBufSourceState.viewParms3D)->camera).origin[2];
+  dVar31 = (double)((float)(longlong)param_2 /
                    (float)(longlong)gfxCmdBufSourceState.renderTargetWidth);
-  if (0 < (int)lVar26) {
-    dVar37 = 1.0;
-    dVar38 = 0.0;
-    lVar32 = lVar32 + 0x1c;
+  if (0 < param_1) {
+    dVar35 = 1.0;
+    dVar36 = 0.0;
+    pGVar30 = (GfxColor *)param_3[1].color;
     do {
-      pGVar23 = (GfxColor *)lVar32;
-      fVar1 = (float)((double)(float)pGVar23[-6] - dVar35);
-      fVar2 = (float)((double)(float)pGVar23[-2] - dVar35);
-      fVar7 = (pGVar25->viewProjectionMatrix).m[1][3];
-      fVar3 = (float)((double)(float)pGVar23[-3] - dVar36);
-      fVar8 = (pGVar25->viewProjectionMatrix).m[1][0];
-      fVar4 = (float)((double)(float)pGVar23[-7] - dVar36);
-      fVar9 = (pGVar25->viewProjectionMatrix).m[1][1];
-      fVar10 = (pGVar25->viewProjectionMatrix).m[1][2];
-      fVar11 = (pGVar25->viewProjectionMatrix).m[0][3];
-      fVar12 = pGVar31->m[0][0];
-      fVar13 = (pGVar25->viewProjectionMatrix).m[0][1];
-      fVar14 = (pGVar25->viewProjectionMatrix).m[0][2];
-      fVar15 = (pGVar25->viewProjectionMatrix).m[2][0];
-      fVar16 = (pGVar25->viewProjectionMatrix).m[2][1];
-      fVar17 = (pGVar25->viewProjectionMatrix).m[2][3];
-      fVar18 = (pGVar25->viewProjectionMatrix).m[3][0];
-      fVar19 = (pGVar25->viewProjectionMatrix).m[2][2];
-      fVar5 = (float)((double)(float)pGVar23[-1] - dVar34);
-      fVar20 = (pGVar25->viewProjectionMatrix).m[3][1];
-      fVar6 = (float)((double)(float)pGVar23[-5] - dVar34);
-      fVar21 = (pGVar25->viewProjectionMatrix).m[3][3];
-      fVar22 = (pGVar25->viewProjectionMatrix).m[3][2];
-      dVar50 = (double)(fVar17 * fVar6 + fVar11 * fVar4 + fVar7 * fVar1 + fVar21);
-      dVar47 = (double)(fVar16 * fVar6 + fVar13 * fVar4 + fVar9 * fVar1 + fVar20);
-      dVar46 = (double)(fVar15 * fVar5 + fVar12 * fVar3 + fVar8 * fVar2 + fVar18);
-      dVar49 = (double)(fVar17 * fVar5 + fVar11 * fVar3 + fVar7 * fVar2 + fVar21);
-      dVar48 = (double)(fVar15 * fVar6 + fVar12 * fVar4 + fVar8 * fVar1 + fVar18);
-      dVar45 = (double)(fVar16 * fVar5 + fVar13 * fVar3 + fVar9 * fVar2 + fVar20);
-      dVar44 = (double)(fVar19 * fVar6 + fVar14 * fVar4 + fVar10 * fVar1 + fVar22);
-      dVar43 = (double)(fVar19 * fVar5 + fVar14 * fVar3 + fVar10 * fVar2 + fVar22);
-      local_114 = (float)(dVar49 * dVar48 - (double)(float)(dVar46 * dVar50));
-      local_118 = (float)(dVar45 * dVar50 - (double)(float)(dVar49 * dVar47));
+      fVar1 = (float)((double)*(float *)(pGVar30->array + -0x18) - dVar33);
+      fVar2 = (float)((double)*(float *)(pGVar30->array + -8) - dVar33);
+      fVar7 = (pGVar24->viewProjectionMatrix).m[1][3];
+      fVar3 = (float)((double)*(float *)(pGVar30->array + -0xc) - dVar34);
+      fVar8 = (pGVar24->viewProjectionMatrix).m[1][0];
+      fVar4 = (float)((double)*(float *)(pGVar30->array + -0x1c) - dVar34);
+      fVar9 = (pGVar24->viewProjectionMatrix).m[1][1];
+      fVar10 = (pGVar24->viewProjectionMatrix).m[1][2];
+      fVar11 = (pGVar24->viewProjectionMatrix).m[0][3];
+      fVar12 = pGVar28->m[0][0];
+      fVar13 = (pGVar24->viewProjectionMatrix).m[0][1];
+      fVar14 = (pGVar24->viewProjectionMatrix).m[0][2];
+      fVar15 = (pGVar24->viewProjectionMatrix).m[2][0];
+      fVar16 = (pGVar24->viewProjectionMatrix).m[2][1];
+      fVar17 = (pGVar24->viewProjectionMatrix).m[2][3];
+      fVar18 = (pGVar24->viewProjectionMatrix).m[3][0];
+      fVar19 = (pGVar24->viewProjectionMatrix).m[2][2];
+      fVar5 = (float)((double)*(float *)(pGVar30->array + -4) - dVar32);
+      fVar20 = (pGVar24->viewProjectionMatrix).m[3][1];
+      fVar6 = (float)((double)*(float *)(pGVar30->array + -0x14) - dVar32);
+      fVar21 = (pGVar24->viewProjectionMatrix).m[3][3];
+      fVar22 = (pGVar24->viewProjectionMatrix).m[3][2];
+      dVar48 = (double)(fVar17 * fVar6 + fVar11 * fVar4 + fVar7 * fVar1 + fVar21);
+      dVar45 = (double)(fVar16 * fVar6 + fVar13 * fVar4 + fVar9 * fVar1 + fVar20);
+      dVar44 = (double)(fVar15 * fVar5 + fVar12 * fVar3 + fVar8 * fVar2 + fVar18);
+      dVar47 = (double)(fVar17 * fVar5 + fVar11 * fVar3 + fVar7 * fVar2 + fVar21);
+      dVar46 = (double)(fVar15 * fVar6 + fVar12 * fVar4 + fVar8 * fVar1 + fVar18);
+      dVar43 = (double)(fVar16 * fVar5 + fVar13 * fVar3 + fVar9 * fVar2 + fVar20);
+      dVar42 = (double)(fVar19 * fVar6 + fVar14 * fVar4 + fVar10 * fVar1 + fVar22);
+      dVar41 = (double)(fVar19 * fVar5 + fVar14 * fVar3 + fVar10 * fVar2 + fVar22);
+      local_114 = (float)(dVar47 * dVar46 - (double)(float)(dVar44 * dVar48));
+      local_118 = (float)(dVar43 * dVar48 - (double)(float)(dVar47 * dVar45));
       Vec2Normalize(&local_118);
-      local_118 = (float)((double)local_118 * dVar33);
-      local_114 = local_114 * ((float)(longlong)param_2 / (float)lVar30);
-      dVar42 = (double)(float)((double)local_118 * dVar50);
-      dVar40 = (double)(float)((double)local_118 * dVar49);
-      dVar41 = (double)(float)((double)local_114 * dVar50);
-      dVar39 = (double)(float)((double)local_114 * dVar49);
-      iVar28 = Sys_HasDeviceOwnership();
-      if (iVar28 == 0) {
+      local_118 = (float)((double)local_118 * dVar31);
+      local_114 = local_114 * ((float)(longlong)param_2 / (float)lVar27);
+      dVar40 = (double)(float)((double)local_118 * dVar48);
+      dVar38 = (double)(float)((double)local_118 * dVar47);
+      dVar39 = (double)(float)((double)local_114 * dVar48);
+      dVar37 = (double)(float)((double)local_114 * dVar47);
+      iVar26 = Sys_HasDeviceOwnership();
+      if (iVar26 == 0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_backend.h",0xbc
                         ,0,"%s");
       }
@@ -6319,51 +6194,49 @@ void RB_DrawLines3D(int param_1,int param_2,GfxPointVertex *param_3,bool param_4
       tess.indices[tess.indexCount + 3] = (short)tess.vertexCount + 2;
       tess.indices[tess.indexCount + 4] = (ushort)tess.vertexCount;
       tess.indices[tess.indexCount + 5] = (short)tess.vertexCount + 1;
-      uVar24 = tess.vertexCount;
+      uVar23 = tess.vertexCount;
       tess.indexCount = tess.indexCount + 6;
-      tess.verts[tess.vertexCount].xyzw[1] = (float)(dVar47 - dVar41);
-      tess.verts[uVar24].normal.packed = 0x1ff00000;
-      tess.verts[uVar24].xyzw[2] = (float)dVar44;
-      tess.verts[uVar24].xyzw[3] = (float)dVar50;
-      tess.verts[uVar24].xyzw[0] = (float)(dVar48 - dVar42);
-      tess.verts[uVar24].color = pGVar23[-4];
-      tess.verts[uVar24].texCoord[0] = (float)dVar38;
-      tess.verts[uVar24].texCoord[1] = (float)dVar38;
-      uVar24 = tess.vertexCount;
-      tess.verts[tess.vertexCount + 1].xyzw[0] = (float)(dVar46 - dVar40);
-      tess.verts[uVar24 + 1].normal.packed = 0x1ff00000;
-      tess.verts[uVar24 + 1].xyzw[1] = (float)(dVar45 - dVar39);
-      tess.verts[uVar24 + 1].xyzw[2] = (float)dVar43;
-      tess.verts[uVar24 + 1].xyzw[3] = (float)dVar49;
-      tess.verts[uVar24 + 1].color = *pGVar23;
-      tess.verts[uVar24 + 1].texCoord[0] = (float)dVar38;
-      tess.verts[uVar24 + 1].texCoord[1] = (float)dVar37;
-      uVar24 = tess.vertexCount;
-      lVar26 = lVar26 + -1;
-      tess.verts[tess.vertexCount + 2].xyzw[0] = (float)(dVar40 + dVar46);
-      tess.verts[uVar24 + 2].normal.packed = 0x1ff00000;
-      tess.verts[uVar24 + 2].xyzw[1] = (float)(dVar39 + dVar45);
-      tess.verts[uVar24 + 2].xyzw[2] = (float)dVar43;
-      tess.verts[uVar24 + 2].xyzw[3] = (float)dVar49;
-      tess.verts[uVar24 + 2].color = *pGVar23;
-      tess.verts[uVar24 + 2].texCoord[0] = (float)dVar37;
-      tess.verts[uVar24 + 2].texCoord[1] = (float)dVar37;
-      uVar24 = tess.vertexCount;
-      tess.verts[tess.vertexCount + 3].xyzw[0] = (float)(dVar42 + dVar48);
-      tess.verts[uVar24 + 3].normal.packed = 0x1ff00000;
-      tess.verts[uVar24 + 3].xyzw[1] = (float)(dVar41 + dVar47);
-      tess.verts[uVar24 + 3].xyzw[2] = (float)dVar44;
-      tess.verts[uVar24 + 3].xyzw[3] = (float)dVar50;
-      tess.verts[uVar24 + 3].color = pGVar23[-4];
-      tess.verts[uVar24 + 3].texCoord[0] = (float)dVar37;
-      tess.verts[uVar24 + 3].texCoord[1] = (float)dVar38;
+      tess.verts[tess.vertexCount].xyzw[1] = (float)(dVar45 - dVar39);
+      tess.verts[uVar23].normal.packed = 0x1ff00000;
+      tess.verts[uVar23].xyzw[2] = (float)dVar42;
+      tess.verts[uVar23].xyzw[3] = (float)dVar48;
+      tess.verts[uVar23].xyzw[0] = (float)(dVar46 - dVar40);
+      tess.verts[uVar23].color = *(GfxColor *)(pGVar30->array + -0x10);
+      tess.verts[uVar23].texCoord[0] = (float)dVar36;
+      tess.verts[uVar23].texCoord[1] = (float)dVar36;
+      uVar23 = tess.vertexCount;
+      tess.verts[tess.vertexCount + 1].xyzw[0] = (float)(dVar44 - dVar38);
+      tess.verts[uVar23 + 1].normal.packed = 0x1ff00000;
+      tess.verts[uVar23 + 1].xyzw[1] = (float)(dVar43 - dVar37);
+      tess.verts[uVar23 + 1].xyzw[2] = (float)dVar41;
+      tess.verts[uVar23 + 1].xyzw[3] = (float)dVar47;
+      tess.verts[uVar23 + 1].color = *pGVar30;
+      tess.verts[uVar23 + 1].texCoord[0] = (float)dVar36;
+      tess.verts[uVar23 + 1].texCoord[1] = (float)dVar35;
+      uVar23 = tess.vertexCount;
+      lVar29 = lVar29 + -1;
+      tess.verts[tess.vertexCount + 2].xyzw[0] = (float)(dVar38 + dVar44);
+      tess.verts[uVar23 + 2].normal.packed = 0x1ff00000;
+      tess.verts[uVar23 + 2].xyzw[1] = (float)(dVar37 + dVar43);
+      tess.verts[uVar23 + 2].xyzw[2] = (float)dVar41;
+      tess.verts[uVar23 + 2].xyzw[3] = (float)dVar47;
+      tess.verts[uVar23 + 2].color = *pGVar30;
+      tess.verts[uVar23 + 2].texCoord[0] = (float)dVar35;
+      tess.verts[uVar23 + 2].texCoord[1] = (float)dVar35;
+      uVar23 = tess.vertexCount;
+      tess.verts[tess.vertexCount + 3].xyzw[0] = (float)(dVar40 + dVar46);
+      tess.verts[uVar23 + 3].normal.packed = 0x1ff00000;
+      tess.verts[uVar23 + 3].xyzw[1] = (float)(dVar39 + dVar45);
+      tess.verts[uVar23 + 3].xyzw[2] = (float)dVar42;
+      tess.verts[uVar23 + 3].xyzw[3] = (float)dVar48;
+      tess.verts[uVar23 + 3].color = *(GfxColor *)(pGVar30->array + -0x10);
+      tess.verts[uVar23 + 3].texCoord[0] = (float)dVar35;
+      tess.verts[uVar23 + 3].texCoord[1] = (float)dVar36;
       tess.vertexCount = tess.vertexCount + 4;
-      lVar32 = lVar32 + 0x20;
-    } while (lVar26 != 0);
+      pGVar30 = (GfxColor *)(pGVar30->array + 0x20);
+    } while (lVar29 != 0);
   }
   RB_EndTessSurface();
-  __restfpr();
-  __restgprlr_18();
   return;
 }
 
@@ -6395,6 +6268,8 @@ void RB_DrawLinesCmd(GfxRenderCommandExecState *param_1)
 
 // 82796350  RB_DrawTriangles_Internal  (gfx_d3d/rb_backend.cpp:4301)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "GfxPrimStatsTarget": Some values do not have unique names */
@@ -6414,126 +6289,116 @@ void RB_DrawTriangles_Internal
   __vector4 _Var7;
   __vector4 _Var8;
   ulonglong uVar9;
-  Material *pMVar10;
-  ulonglong uVar11;
-  GfxColor *pGVar12;
-  float *pfVar13;
-  int iVar14;
-  longlong lVar15;
+  GfxColor *pGVar10;
+  float *pfVar11;
+  int iVar12;
+  ushort *puVar13;
+  float (*pafVar14) [4];
+  int iVar15;
   longlong lVar16;
-  int iVar17;
-  int iVar18;
-  longlong lVar19;
-  longlong lVar20;
-  undefined1 auVar21 [16];
-  undefined1 auVar22 [16];
+  longlong lVar17;
+  undefined1 auVar18 [16];
+  undefined1 auVar19 [16];
   int in_stack_00000054;
   int in_stack_0000005c;
   PackedUnitVec local_60;
   
-  lVar16 = (longlong)(int)param_7;
-  lVar15 = (longlong)(int)param_5;
-  uVar11 = (ulonglong)(char)param_3;
   uVar9 = ZEXT48(&stack0x00000000);
-  pMVar10 = (Material *)__savegprlr_24(param_1);
   RB_EndSurfaceIfNeeded();
-  if ((uVar11 & 0xff) == 2) {
+  if (param_3 == '\x02') {
     R_Set2D(&gfxCmdBufSourceState);
   }
   else {
     R_Set3D(&gfxCmdBufSourceState);
   }
-  RB_SetTessTechnique(pMVar10,param_2,GFX_PRIM_STATS_DEBUG);
-  lVar19 = (longlong)param_4;
-  lVar20 = (longlong)param_6;
+  RB_SetTessTechnique(param_1,param_2,GFX_PRIM_STATS_DEBUG);
+  lVar16 = (longlong)param_4;
+  lVar17 = (longlong)param_6;
   RB_CheckTessOverflow((int)param_6,(int)param_4);
-  iVar17 = 0;
+  iVar15 = 0;
   if (0 < param_4) {
-    lVar15 = lVar15 + -2;
+    puVar13 = param_5 + -1;
     do {
-      lVar15 = lVar15 + 2;
-      iVar14 = tess.indexCount + iVar17;
-      iVar17 = iVar17 + 1;
-      tess.indices[iVar14] = *(short *)lVar15 + (short)tess.vertexCount;
-      lVar19 = lVar19 + -1;
-    } while (lVar19 != 0);
+      puVar13 = puVar13 + 1;
+      iVar12 = tess.indexCount + iVar15;
+      iVar15 = iVar15 + 1;
+      tess.indices[iVar12] = *puVar13 + (short)tess.vertexCount;
+      lVar16 = lVar16 + -1;
+    } while (lVar16 != 0);
   }
   _Var8.field0_0x0 = g_keepXYZ.field0_0x0;
   _Var7.field0_0x0 = g_packMul101010.field0_0x0;
   _Var6.field0_0x0 = g_packAdd.field0_0x0;
-  iVar17 = 0;
+  iVar15 = 0;
   if (0 < param_6) {
-    pGVar12 = (GfxColor *)(in_stack_00000054 + -4);
-    pfVar13 = (float *)(in_stack_0000005c + -8);
-    lVar16 = lVar16 + -0x10;
+    pGVar10 = (GfxColor *)(in_stack_00000054 + -4);
+    pfVar11 = (float *)(in_stack_0000005c + -8);
+    pafVar14 = param_7 + -1;
     do {
-      auVar21 = loadVectorLeftIndexed(uVar9 - 0x58);
-      auVar22 = loadVectorRightIndexed(uVar9 - 0x48);
-      fVar1 = pfVar13[3];
-      iVar14 = (int)lVar16;
-      fVar2 = *(float *)(iVar14 + 0x1c);
-      fVar3 = *(float *)(iVar14 + 0x18);
-      iVar18 = tess.vertexCount + iVar17;
-      fVar4 = *(float *)(iVar14 + 0x14);
-      pfVar13 = pfVar13 + 2;
-      fVar5 = *pfVar13;
-      iVar17 = iVar17 + 1;
-      lVar16 = lVar16 + 0x10;
-      auVar21 = (auVar21 | auVar22) & (undefined1  [16])_Var8.field0_0x0;
-      tess.verts[iVar18].xyzw[0] = *(float *)lVar16;
-      auVar22 = vectorMultiplyAddFloatingPoint
-                          (auVar21,(undefined1  [16])_Var7.field0_0x0,
+      auVar18 = loadVectorLeftIndexed(uVar9 - 0x58);
+      auVar19 = loadVectorRightIndexed(uVar9 - 0x48);
+      fVar1 = pfVar11[3];
+      fVar2 = pafVar14[1][3];
+      fVar3 = pafVar14[1][2];
+      iVar12 = tess.vertexCount + iVar15;
+      fVar4 = pafVar14[1][1];
+      pfVar11 = pfVar11 + 2;
+      fVar5 = *pfVar11;
+      iVar15 = iVar15 + 1;
+      pafVar14 = pafVar14 + 1;
+      auVar18 = (auVar18 | auVar19) & (undefined1  [16])_Var8.field0_0x0;
+      tess.verts[iVar12].xyzw[0] = (*pafVar14)[0];
+      auVar19 = vectorMultiplyAddFloatingPoint
+                          (auVar18,(undefined1  [16])_Var7.field0_0x0,
                            (undefined1  [16])_Var6.field0_0x0);
-      tess.verts[iVar18].xyzw[1] = fVar4;
-      tess.verts[iVar18].xyzw[2] = fVar3;
-      tess.verts[iVar18].xyzw[3] = fVar2;
-      auVar21 = vectorPackD3Dtype(auVar21,auVar22,9,3);
-      auVar21 = vectorSplatWord(auVar21,0);
-      storeVectorElementWordIndexed(auVar21,uVar9 - 0x60);
-      tess.verts[iVar18].normal = local_60;
-      pGVar12 = pGVar12 + 1;
-      tess.verts[iVar18].color = *pGVar12;
-      tess.verts[iVar18].texCoord[0] = fVar5;
-      tess.verts[iVar18].texCoord[1] = fVar1;
-      lVar20 = lVar20 + -1;
-    } while (lVar20 != 0);
+      tess.verts[iVar12].xyzw[1] = fVar4;
+      tess.verts[iVar12].xyzw[2] = fVar3;
+      tess.verts[iVar12].xyzw[3] = fVar2;
+      auVar18 = vectorPackD3Dtype(auVar18,auVar19,9,3);
+      auVar18 = vectorSplatWord(auVar18,0);
+      storeVectorElementWordIndexed(auVar18,uVar9 - 0x60);
+      tess.verts[iVar12].normal = local_60;
+      pGVar10 = pGVar10 + 1;
+      tess.verts[iVar12].color = *pGVar10;
+      tess.verts[iVar12].texCoord[0] = fVar5;
+      tess.verts[iVar12].texCoord[1] = fVar1;
+      lVar17 = lVar17 + -1;
+    } while (lVar17 != 0);
   }
   tess.indexCount = (int)param_4 + tess.indexCount;
   tess.vertexCount = (int)param_6 + tess.vertexCount;
   RB_EndTessSurface();
-  __restgprlr_24();
   return;
 }
 
 
 // 82796558  RB_DrawTrianglesCmd  (gfx_d3d/rb_backend.cpp:4328)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 
 void RB_DrawTrianglesCmd(GfxRenderCommandExecState *param_1)
 
 {
   short sVar1;
-  int iVar2;
+  void *pvVar2;
   int iVar3;
-  int *piVar4;
   GfxColor *in_stack_ffffff78;
   float (*in_stack_ffffff7c) [2];
   
-  piVar4 = (int *)__savegprlr_28(param_1);
-  iVar2 = *piVar4;
-  sVar1 = *(short *)(iVar2 + 0x10);
+  pvVar2 = param_1->cmd;
+  sVar1 = *(short *)((int)pvVar2 + 0x10);
   iVar3 = sVar1 * 0x10 + 0x14;
   RB_DrawTriangles_Internal
-            (*(Material **)(iVar2 + 4),*(MaterialTechniqueType *)(iVar2 + 8),*(uchar *)(iVar2 + 0xc)
-             ,*(short *)(iVar2 + 0xe),
+            (*(Material **)((int)pvVar2 + 4),*(MaterialTechniqueType *)((int)pvVar2 + 8),
+             *(uchar *)((int)pvVar2 + 0xc),*(short *)((int)pvVar2 + 0xe),
              (ushort *)
              ((int)(((longlong)sVar1 & 0xffffffffU) << 3) +
               (int)(((longlong)sVar1 & 0xffffffffU) << 2) + ((int)sVar1 + sVar1 * 2) * 4 + iVar3 +
-             iVar2),sVar1,(float (*) [4])(iVar2 + 0x14),(float (*) [3])(iVar3 + iVar2),
-             in_stack_ffffff78,in_stack_ffffff7c);
-  *piVar4 = (uint)*(ushort *)(*piVar4 + 2) + *piVar4;
-  __restgprlr_28();
+             (int)pvVar2),sVar1,(float (*) [4])((int)pvVar2 + 0x14),
+             (float (*) [3])(iVar3 + (int)pvVar2),in_stack_ffffff78,in_stack_ffffff7c);
+  param_1->cmd = (void *)((uint)*(ushort *)((int)param_1->cmd + 2) + (int)param_1->cmd);
   return;
 }
 
@@ -6589,46 +6454,45 @@ void RB_SetMaterialColorCmd(GfxRenderCommandExecState *param_1)
 
 // 8278F208  RB_Set2dLightPropertiesCmd  (gfx_d3d/rb_backend.cpp:4426)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 
 void RB_Set2dLightPropertiesCmd(GfxRenderCommandExecState *param_1)
 
 {
-  int iVar1;
-  int *piVar2;
-  double dVar3;
+  void *pvVar1;
+  double dVar2;
   
-  piVar2 = (int *)__savegprlr_29(param_1);
-  iVar1 = *piVar2;
-  gfxCmdBufSourceState.input.consts[1][2] = *(float *)(iVar1 + 0xc);
-  gfxCmdBufSourceState.input.consts[1][1] = *(float *)(iVar1 + 8);
-  gfxCmdBufSourceState.input.consts[1][0] = *(float *)(iVar1 + 4);
-  dVar3 = 0.0;
+  pvVar1 = param_1->cmd;
+  gfxCmdBufSourceState.input.consts[1][2] = *(float *)((int)pvVar1 + 0xc);
+  gfxCmdBufSourceState.input.consts[1][1] = *(float *)((int)pvVar1 + 8);
+  gfxCmdBufSourceState.input.consts[1][0] = *(float *)((int)pvVar1 + 4);
+  dVar2 = 0.0;
   gfxCmdBufSourceState.input.consts[1][3] = 0.0;
   R_DirtyCodeConstant(&gfxCmdBufSourceState,1);
-  gfxCmdBufSourceState.input.consts[0][2] = *(float *)(iVar1 + 0x18);
-  gfxCmdBufSourceState.input.consts[0][1] = *(float *)(iVar1 + 0x14);
-  gfxCmdBufSourceState.input.consts[0][0] = *(float *)(iVar1 + 0x10);
-  gfxCmdBufSourceState.input.consts[0][3] = (float)dVar3;
+  gfxCmdBufSourceState.input.consts[0][2] = *(float *)((int)pvVar1 + 0x18);
+  gfxCmdBufSourceState.input.consts[0][1] = *(float *)((int)pvVar1 + 0x14);
+  gfxCmdBufSourceState.input.consts[0][0] = *(float *)((int)pvVar1 + 0x10);
+  gfxCmdBufSourceState.input.consts[0][3] = (float)dVar2;
   R_DirtyCodeConstant(&gfxCmdBufSourceState,0);
-  gfxCmdBufSourceState.input.consts[2][2] = *(float *)(iVar1 + 0x24);
-  gfxCmdBufSourceState.input.consts[2][1] = *(float *)(iVar1 + 0x20);
-  gfxCmdBufSourceState.input.consts[2][0] = *(float *)(iVar1 + 0x1c);
-  gfxCmdBufSourceState.input.consts[2][3] = (float)dVar3;
+  gfxCmdBufSourceState.input.consts[2][2] = *(float *)((int)pvVar1 + 0x24);
+  gfxCmdBufSourceState.input.consts[2][1] = *(float *)((int)pvVar1 + 0x20);
+  gfxCmdBufSourceState.input.consts[2][0] = *(float *)((int)pvVar1 + 0x1c);
+  gfxCmdBufSourceState.input.consts[2][3] = (float)dVar2;
   R_DirtyCodeConstant(&gfxCmdBufSourceState,2);
-  gfxCmdBufSourceState.input.consts[3][2] = *(float *)(iVar1 + 0x30);
-  gfxCmdBufSourceState.input.consts[3][1] = *(float *)(iVar1 + 0x2c);
-  gfxCmdBufSourceState.input.consts[3][0] = *(float *)(iVar1 + 0x28);
-  gfxCmdBufSourceState.input.consts[3][3] = (float)dVar3;
+  gfxCmdBufSourceState.input.consts[3][2] = *(float *)((int)pvVar1 + 0x30);
+  gfxCmdBufSourceState.input.consts[3][1] = *(float *)((int)pvVar1 + 0x2c);
+  gfxCmdBufSourceState.input.consts[3][0] = *(float *)((int)pvVar1 + 0x28);
+  gfxCmdBufSourceState.input.consts[3][3] = (float)dVar2;
   R_DirtyCodeConstant(&gfxCmdBufSourceState,3);
-  gfxCmdBufSourceState.input.consts[4][2] = *(float *)(iVar1 + 0x3c);
-  gfxCmdBufSourceState.input.consts[4][1] = *(float *)(iVar1 + 0x38);
-  gfxCmdBufSourceState.input.consts[4][0] = *(float *)(iVar1 + 0x34);
-  gfxCmdBufSourceState.input.consts[4][3] = (float)dVar3;
+  gfxCmdBufSourceState.input.consts[4][2] = *(float *)((int)pvVar1 + 0x3c);
+  gfxCmdBufSourceState.input.consts[4][1] = *(float *)((int)pvVar1 + 0x38);
+  gfxCmdBufSourceState.input.consts[4][0] = *(float *)((int)pvVar1 + 0x34);
+  gfxCmdBufSourceState.input.consts[4][3] = (float)dVar2;
   R_DirtyCodeConstant(&gfxCmdBufSourceState,4);
-  *piVar2 = (uint)*(ushort *)(*piVar2 + 2) + *piVar2;
-  __restgprlr_29();
+  param_1->cmd = (void *)((uint)*(ushort *)((int)param_1->cmd + 2) + (int)param_1->cmd);
   return;
 }
 
@@ -6759,6 +6623,10 @@ void RB_LookupColor(uchar param_1,uchar *param_2)
 
 // 82796848  RB_DrawHudIcon  (gfx_d3d/rb_backend.cpp:4563)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_21 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_21 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "GfxPrimStatsTarget": Some values do not have unique names */
 
 float RB_DrawHudIcon(char *param_1,float param_2,float param_3,float param_4,float param_5,
@@ -6767,14 +6635,13 @@ float RB_DrawHudIcon(char *param_1,float param_2,float param_3,float param_4,flo
 {
   char cVar1;
   int iVar2;
-  char *pcVar3;
-  Material *pMVar4;
-  uint uVar5;
-  ulong uVar6;
-  GfxPrimStatsTarget GVar7;
+  Material *pMVar3;
+  uint uVar4;
+  ulong uVar5;
+  GfxPrimStatsTarget GVar6;
   int in_r8;
-  uint uVar8;
-  double extraout_f1;
+  uint uVar7;
+  double dVar8;
   double dVar9;
   double dVar10;
   double dVar11;
@@ -6785,68 +6652,63 @@ float RB_DrawHudIcon(char *param_1,float param_2,float param_3,float param_4,flo
   double dVar16;
   double dVar17;
   double dVar18;
-  double dVar19;
   char acStack_180 [384];
   
-  dVar11 = (double)param_5;
-  dVar17 = (double)param_7;
-  dVar12 = (double)param_8;
-  dVar10 = (double)param_4;
-  dVar15 = (double)param_3;
-  __savegprlr_28((double)param_2,param_1,param_6,param_9);
-  pcVar3 = (char *)__savefpr_21();
-  dVar9 = extraout_f1;
-  if (pcVar3 == (char *)0x0) {
+  dVar10 = (double)param_5;
+  dVar16 = (double)param_7;
+  dVar11 = (double)param_8;
+  dVar9 = (double)param_4;
+  dVar8 = (double)param_2;
+  dVar14 = (double)param_3;
+  if (param_1 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_backend.cpp",0x11dc
                     ,0,"%s");
   }
-  if (*pcVar3 == '\x01') {
-    dVar13 = 1.0;
-    dVar18 = 0.0;
+  if (*param_1 == '\x01') {
+    dVar12 = 1.0;
+    dVar17 = 0.0;
   }
   else {
-    if (*pcVar3 != '\x02') {
+    if (*param_1 != '\x02') {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_backend.cpp",
                       0x11e5,0,"text[0] == CONTXTCMD_TYPE_HUDICON_FLIP\n\t%i, %i");
     }
-    dVar18 = 1.0;
-    dVar13 = 0.0;
+    dVar17 = 1.0;
+    dVar12 = 0.0;
   }
-  dVar19 = 0.0;
-  dVar14 = 1.0;
+  dVar18 = 0.0;
+  dVar13 = 1.0;
   iVar2 = *(int *)(in_r8 + 4);
-  uVar5 = (pcVar3[1] + -0x10) * iVar2 + 0x10;
-  uVar8 = (pcVar3[2] + -0x10) * iVar2 + 0x10;
+  uVar4 = (param_1[1] + -0x10) * iVar2 + 0x10;
+  uVar7 = (param_1[2] + -0x10) * iVar2 + 0x10;
+  dVar15 = (double)(float)((double)(longlong)
+                                   (int)(((int)uVar7 >> 5) +
+                                        (uint)((int)uVar7 < 0 && (uVar7 & 0x1f) != 0)) * dVar11);
   dVar16 = (double)(float)((double)(longlong)
-                                   (int)(((int)uVar8 >> 5) +
-                                        (uint)((int)uVar8 < 0 && (uVar8 & 0x1f) != 0)) * dVar12);
-  dVar17 = (double)(float)((double)(longlong)
-                                   (int)(((int)uVar5 >> 5) +
-                                        (uint)((int)uVar5 < 0 && (uVar5 & 0x1f) != 0)) * dVar17);
-  dVar15 = -(double)(float)((double)(float)((double)(longlong)iVar2 * dVar12 + dVar16) * 0.5 -
-                           dVar15);
-  if (dVar17 <= 0.0) {
+                                   (int)(((int)uVar4 >> 5) +
+                                        (uint)((int)uVar4 < 0 && (uVar4 & 0x1f) != 0)) * dVar16);
+  dVar14 = -(double)(float)((double)(float)((double)(longlong)iVar2 * dVar11 + dVar15) * 0.5 -
+                           dVar14);
+  if (dVar16 <= 0.0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_backend.cpp",0x11ee
                     ,0,"%s");
   }
-  if (dVar16 <= dVar19) {
+  if (dVar15 <= dVar18) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_backend.cpp",0x11ef
                     ,0,"%s");
   }
-  cVar1 = pcVar3[3];
-  GVar7 = (GfxPrimStatsTarget)cVar1;
+  cVar1 = param_1[3];
+  GVar6 = (GfxPrimStatsTarget)cVar1;
   memcpy();
-  uVar6 = 7;
+  uVar5 = 7;
   acStack_180[cVar1] = '\0';
-  pMVar4 = Material_Register(acStack_180,7);
-  if (pMVar4 != (Material *)0x0) {
+  pMVar3 = Material_Register(acStack_180,7);
+  if (pMVar3 != (Material *)0x0) {
     RB_DrawStretchPicRotate
-              (pMVar4,(float)dVar9,(float)dVar15,(float)dVar17,(float)dVar16,(float)dVar18,
-               (float)dVar19,(float)dVar13,(float)dVar14,(float)dVar10,(float)dVar11,uVar6,GVar7);
+              (pMVar3,(float)dVar8,(float)dVar14,(float)dVar16,(float)dVar15,(float)dVar17,
+               (float)dVar18,(float)dVar12,(float)dVar13,(float)dVar9,(float)dVar10,uVar5,GVar6);
   }
-  __restfpr_21(dVar17);
-  dVar9 = (double)__restgprlr_28();
-  return (float)dVar9;
+  return (float)dVar16;
 }
 
 
@@ -6904,6 +6766,8 @@ ulong RB_ProcessLetterColor(ulong param_1,uint param_2)
 
 // 82796A88  RB_DrawChar  (gfx_d3d/rb_backend.cpp:4647)
 
+/* WARNING: Function: __savefpr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 /* WARNING: Enum "GfxPrimStatsTarget": Some values do not have unique names */
 
@@ -6911,101 +6775,88 @@ void RB_DrawChar(Material *param_1,float param_2,float param_3,float param_4,flo
                 float param_6,float param_7,Glyph *param_8,ulong param_9)
 
 {
-  Material *pMVar1;
+  bool bVar1;
   bool bVar2;
-  bool bVar3;
-  ulong uVar4;
+  ulong uVar3;
   int in_r10;
-  double extraout_f1;
+  double dVar4;
   double dVar5;
   double dVar6;
   double dVar7;
   double dVar8;
   double dVar9;
-  double dVar10;
   
   dVar8 = (double)param_6;
   dVar9 = (double)param_7;
   dVar7 = (double)param_5;
   dVar6 = (double)param_4;
   dVar5 = (double)param_3;
-  pMVar1 = (Material *)__savefpr_26((double)param_2,param_1,param_8);
-  uVar4 = 9;
-  dVar10 = extraout_f1;
-  bVar2 = Material_HasTechnique(pMVar1,TECHNIQUE_LIT);
-  if (!bVar2) {
-    uVar4 = 5;
-    bVar3 = Material_HasTechnique(pMVar1,TECHNIQUE_EMISSIVE);
-    bVar2 = false;
-    if (!bVar3) goto LAB_82796af8;
+  dVar4 = (double)param_2;
+  uVar3 = 9;
+  bVar1 = Material_HasTechnique(param_1,TECHNIQUE_LIT);
+  if (!bVar1) {
+    uVar3 = 5;
+    bVar2 = Material_HasTechnique(param_1,TECHNIQUE_EMISSIVE);
+    bVar1 = false;
+    if (!bVar2) goto LAB_82796af8;
   }
-  bVar2 = true;
+  bVar1 = true;
 LAB_82796af8:
-  if (bVar2) {
+  if (bVar1) {
     R_WarnOncePerFrame(R_WARN_FOGABLE_2DTEXT);
   }
   else {
     RB_DrawStretchPicRotate
-              (pMVar1,(float)dVar10,(float)dVar5,(float)dVar6,(float)dVar7,*(float *)(in_r10 + 8),
+              (param_1,(float)dVar4,(float)dVar5,(float)dVar6,(float)dVar7,*(float *)(in_r10 + 8),
                *(float *)(in_r10 + 0xc),*(float *)(in_r10 + 0x10),*(float *)(in_r10 + 0x14),
-               (float)dVar8,(float)dVar9,uVar4,param_9);
+               (float)dVar8,(float)dVar9,uVar3,param_9);
   }
-  __restfpr_26();
   return;
 }
 
 
 // 82796B78  RB_DrawCursor  (gfx_d3d/rb_backend.cpp:4661)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void RB_DrawCursor(Material *param_1,uchar param_2,float param_3,float param_4,float param_5,
                   float param_6,Font_s *param_7,float param_8,float param_9,ulong param_10)
 
 {
-  Material *pMVar1;
-  uint uVar2;
-  Glyph *pGVar3;
-  longlong lVar4;
-  uint uVar5;
-  longlong lVar6;
-  ulong uVar7;
-  ulonglong in_r9;
-  double extraout_f1;
+  uint uVar1;
+  Glyph *pGVar2;
+  Font_s *in_r9;
+  double dVar3;
+  double dVar4;
+  double dVar5;
+  double dVar6;
+  double dVar7;
   double dVar8;
-  double dVar9;
-  double dVar10;
-  double dVar11;
-  double dVar12;
-  double dVar13;
   ulong in_stack_0000005c;
   
-  dVar11 = (double)param_8;
-  dVar12 = (double)param_9;
-  dVar10 = (double)param_6;
-  dVar8 = (double)param_4;
-  dVar9 = (double)param_5;
-  lVar6 = (longlong)(int)param_7;
-  lVar4 = (longlong)(char)param_2;
-  __savegprlr_29((double)param_3,param_1,lVar4,lVar6,param_10);
-  uVar7 = (ulong)lVar6;
-  uVar5 = (uint)lVar4;
-  pMVar1 = (Material *)__savefpr_26();
-  dVar13 = extraout_f1;
-  if ((in_r9 & 0xffffffff) == 0) {
-    uVar7 = 0;
+  dVar7 = (double)param_8;
+  dVar8 = (double)param_9;
+  dVar6 = (double)param_6;
+  dVar3 = (double)param_3;
+  dVar4 = (double)param_4;
+  dVar5 = (double)param_5;
+  if (in_r9 == (Font_s *)0x0) {
+    param_7 = (Font_s *)0x0;
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_backend.cpp",0x1239
                     ,0,"%s");
   }
-  uVar2 = CL_ScaledMilliseconds();
-  if ((((int)uVar2 >> 8) + (uint)((int)uVar2 < 0 && (uVar2 & 0xff) != 0) & 1) == 0) {
-    pGVar3 = R_GetCharacterGlyph((Font_s *)in_r9,uVar5 & 0xff);
-    RB_ProcessLetterColor(in_stack_0000005c,uVar5 & 0xff);
-    RB_DrawChar(pMVar1,(float)dVar13,(float)((double)(longlong)pGVar3->y0 * dVar12 + dVar8),
-                (float)((double)pGVar3->pixelWidth * dVar11),
-                (float)((double)pGVar3->pixelHeight * dVar12),(float)dVar9,(float)dVar10,
-                (Glyph *)(uint)pGVar3->pixelWidth,uVar7);
+  uVar1 = CL_ScaledMilliseconds();
+  if ((((int)uVar1 >> 8) + (uint)((int)uVar1 < 0 && (uVar1 & 0xff) != 0) & 1) == 0) {
+    pGVar2 = R_GetCharacterGlyph(in_r9,(uint)param_2);
+    RB_ProcessLetterColor(in_stack_0000005c,(uint)param_2);
+    RB_DrawChar(param_1,(float)dVar3,(float)((double)(longlong)pGVar2->y0 * dVar8 + dVar4),
+                (float)((double)pGVar2->pixelWidth * dVar7),
+                (float)((double)pGVar2->pixelHeight * dVar8),(float)dVar5,(float)dVar6,
+                (Glyph *)(uint)pGVar2->pixelWidth,(ulong)param_7);
   }
-  __restfpr_26();
-  __restgprlr_29();
   return;
 }
 
@@ -7071,6 +6922,8 @@ void GlowColor(GfxColor *param_1,GfxColor param_2,GfxColor param_3,int param_4)
 
 // 8278F600  SetupPulseFXVars  (gfx_d3d/rb_backend.cpp:4722)
 
+/* WARNING: Function: __savegprlr_21 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_21 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 
@@ -7079,36 +6932,27 @@ bool SetupPulseFXVars(char *param_1,int param_2,int param_3,int param_4,int para
                      int *param_12)
 
 {
-  char *pcVar1;
-  undefined1 uVar3;
-  int iVar2;
-  longlong lVar4;
-  ulonglong uVar5;
-  ulonglong uVar6;
-  bool bVar7;
+  int iVar1;
+  ulonglong uVar2;
+  int iVar3;
+  int iVar4;
+  undefined1 uVar5;
+  bool bVar6;
+  ulonglong uVar7;
   int iVar8;
-  int iVar9;
-  ulonglong uVar10;
-  int iVar11;
   int *in_stack_00000054;
   int *in_stack_0000005c;
   undefined1 *in_stack_00000064;
   int *in_stack_0000006c;
   int local_70 [28];
   
-  uVar5 = (ulonglong)param_5;
-  lVar4 = (longlong)param_4;
-  uVar10 = (ulonglong)param_3;
-  pcVar1 = (char *)__savegprlr_21(param_1);
-  if ((int)(uVar10 & 0x40) == 0) {
-    bVar7 = SUB81(uVar10 & 0x40,0);
-    *param_8 = bVar7;
+  if ((param_3 & 0x40U) == 0) {
+    *param_8 = false;
     *in_stack_00000054 = 1;
     *in_stack_0000005c = param_2;
-    *in_stack_00000064 = bVar7;
+    *in_stack_00000064 = 0;
     *in_stack_0000006c = 0;
-    uVar3 = __restgprlr_21(1);
-    return (bool)uVar3;
+    return true;
   }
   if (gfxCmdBufSourceState.sceneDef.time < 1) {
     *param_8 = false;
@@ -7116,74 +6960,73 @@ bool SetupPulseFXVars(char *param_1,int param_2,int param_3,int param_4,int para
     *in_stack_0000005c = param_2;
     *in_stack_00000064 = 0;
     *in_stack_0000006c = 0;
-    uVar3 = __restgprlr_21(0);
-    return (bool)uVar3;
+    return false;
   }
-  uVar10 = (ulonglong)(uint)gfxCmdBufSourceState.sceneDef.time - lVar4;
-  if ((longlong)uVar10 < 0) {
+  uVar7 = (ulonglong)(uint)gfxCmdBufSourceState.sceneDef.time - (longlong)param_4;
+  if ((longlong)uVar7 < 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_backend.cpp",0x1292
                     ,0,"%s\n\t(timeElapsed) = %i");
   }
-  iVar11 = (int)uVar10;
-  if (param_6 + param_7 < iVar11) {
+  iVar8 = (int)uVar7;
+  if (param_6 + param_7 < iVar8) {
     *param_8 = false;
     *in_stack_00000054 = 1;
     *in_stack_0000005c = param_2;
     *in_stack_00000064 = 0;
     *in_stack_0000006c = 0;
-    uVar3 = __restgprlr_21(0);
-    return (bool)uVar3;
+    return false;
   }
   local_70[0] = 1;
-  bVar7 = false;
-  uVar3 = 0;
-  iVar8 = 0;
-  iVar2 = SEH_PrintStrlen(pcVar1);
-  if (param_2 < iVar2) {
-    iVar2 = param_2;
+  bVar6 = false;
+  uVar5 = 0;
+  iVar4 = 0;
+  iVar1 = SEH_PrintStrlen(param_1);
+  if (param_2 < iVar1) {
+    iVar1 = param_2;
   }
-  iVar9 = (int)uVar5;
-  if (iVar11 < iVar2 * iVar9) {
-    if (iVar9 == 0) {
+  if (iVar8 < iVar1 * param_5) {
+    if (param_5 == 0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_backend.cpp",
                       0x12ba,0,"%s");
     }
-    iVar11 = iVar11 / iVar9;
-    trapWord(6,uVar5,0);
-    uVar6 = (longlong)(iVar9 >> 2) + (ulonglong)(iVar9 < 0 && (uVar5 & 3) != 0);
-    trapWord(5,uVar5 & ~(((uVar10 & 0x7fffffff) << 1 | (uVar10 & 0xffffffff) >> 0x1f) - 1),0xffff);
-    bVar7 = true;
-    uVar10 = uVar10 - (longlong)iVar11 * (longlong)iVar9;
-    iVar9 = (int)uVar10;
-    if (uVar6 != 0) {
-      iVar9 = iVar9 / (int)uVar6;
-      trapWord(6,uVar6,0);
-      trapWord(5,uVar6 & ~(((uVar10 & 0x7fffffff) << 1 | (uVar10 & 0xffffffff) >> 0x1f) - 1),0xffff)
-      ;
+    iVar8 = iVar8 / param_5;
+    trapWord(6,(longlong)param_5,0);
+    uVar2 = (longlong)(param_5 >> 2) + (ulonglong)(param_5 < 0 && (param_5 & 3U) != 0);
+    trapWord(5,(longlong)param_5 & ~(((uVar7 & 0x7fffffff) << 1 | (uVar7 & 0xffffffff) >> 0x1f) - 1)
+             ,0xffff);
+    bVar6 = true;
+    uVar7 = uVar7 - (longlong)iVar8 * (longlong)param_5;
+    iVar3 = (int)uVar7;
+    if (uVar2 != 0) {
+      iVar3 = iVar3 / (int)uVar2;
+      trapWord(6,uVar2,0);
+      trapWord(5,uVar2 & ~(((uVar7 & 0x7fffffff) << 1 | (uVar7 & 0xffffffff) >> 0x1f) - 1),0xffff);
     }
-    local_70[0] = iVar9 + iVar2 + iVar11 + (int)lVar4;
+    local_70[0] = iVar3 + iVar1 + iVar8 + param_4;
     RandWithSeed(local_70);
     RandWithSeed(local_70);
-    param_2 = iVar11 + 1;
+    param_2 = iVar8 + 1;
   }
-  else if (param_6 < iVar11) {
-    local_70[0] = iVar2 + (int)lVar4;
-    uVar3 = 1;
+  else if (param_6 < iVar8) {
+    local_70[0] = iVar1 + param_4;
+    uVar5 = 1;
     RandWithSeed(local_70);
     RandWithSeed(local_70);
-    iVar8 = iVar11 - param_6;
+    iVar4 = iVar8 - param_6;
   }
-  *param_8 = bVar7;
+  *param_8 = bVar6;
   *in_stack_00000054 = local_70[0];
   *in_stack_0000005c = param_2;
-  *in_stack_00000064 = uVar3;
-  *in_stack_0000006c = iVar8;
-  uVar3 = __restgprlr_21(1);
-  return (bool)uVar3;
+  *in_stack_00000064 = uVar5;
+  *in_stack_0000006c = iVar4;
+  return true;
 }
 
 
 // 8278F858  GetDecayingLetterInfo  (gfx_d3d/rb_backend.cpp:4820)
+
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
 
 void GetDecayingLetterInfo
                (uint param_1,Font_s *param_2,int *param_3,int param_4,int param_5,int param_6,
@@ -7192,64 +7035,58 @@ void GetDecayingLetterInfo
 {
   uint uVar1;
   uint uVar2;
-  uint uVar3;
-  uchar uVar4;
-  ulonglong uVar5;
-  ulonglong uVar6;
-  ulonglong uVar7;
-  bool bVar8;
-  bool bVar9;
-  int iVar10;
-  double dVar11;
+  uchar uVar3;
+  ulonglong uVar4;
+  bool bVar5;
+  bool bVar6;
+  int iVar7;
+  double dVar8;
   uchar *in_stack_00000054;
   uint *in_stack_0000005c;
   undefined4 in_stack_00000064;
   longlong local_70 [14];
   
-  uVar6 = (ulonglong)(char)param_7;
-  uVar5 = (ulonglong)param_6;
-  uVar1 = __savegprlr_22(param_1);
-  dVar11 = 1.0;
-  bVar8 = false;
-  bVar9 = false;
-  uVar3 = (uint)((float)(longlong)(int)uVar5 * 0.001 * 30.0);
-  local_70[0] = (longlong)(int)uVar3;
-  uVar7 = (ulonglong)uVar3;
-  uVar2 = RandWithSeed(param_3);
-  iVar10 = (uVar2 - ((int)uVar2 / (int)uVar3) * uVar3) * ((int)uVar5 / (int)uVar3);
-  trapWord(6,uVar7,0);
-  trapWord(6,uVar7,0);
-  trapWord(5,uVar7 & ~((((ulonglong)uVar2 & 0x7fffffff) << 1 | (ulonglong)(uVar2 >> 0x1f)) - 1),
+  dVar8 = 1.0;
+  bVar5 = false;
+  bVar6 = false;
+  uVar2 = (uint)((float)(longlong)param_6 * 0.001 * 30.0);
+  local_70[0] = (longlong)(int)uVar2;
+  uVar4 = (ulonglong)uVar2;
+  uVar1 = RandWithSeed(param_3);
+  iVar7 = (uVar1 - ((int)uVar1 / (int)uVar2) * uVar2) * (param_6 / (int)uVar2);
+  trapWord(6,uVar4,0);
+  trapWord(6,uVar4,0);
+  trapWord(5,uVar4 & ~((((ulonglong)uVar1 & 0x7fffffff) << 1 | (ulonglong)(uVar1 >> 0x1f)) - 1),
            0xffff);
-  trapWord(5,uVar7 & ~(((uVar5 & 0x7fffffff) << 1 | (uVar5 & 0xffffffff) >> 0x1f) - 1),0xffff);
-  if (param_4 < iVar10) {
-    if (iVar10 <= param_4 + 0x3c) {
-      local_70[0]._0_4_ = uVar1 + param_4 + param_5;
-      uVar3 = RandWithSeed((int *)local_70);
-      bVar9 = (longlong)(int)uVar3 ==
-              ((longlong)((int)uVar3 >> 1) + (ulonglong)((int)uVar3 < 0 && (uVar3 & 1) != 0) &
+  trapWord(5,uVar4 & ~((((ulonglong)(uint)param_6 & 0x7fffffff) << 1 |
+                       (ulonglong)((uint)param_6 >> 0x1f)) - 1),0xffff);
+  if (param_4 < iVar7) {
+    if (iVar7 <= param_4 + 0x3c) {
+      local_70[0]._0_4_ = param_1 + param_4 + param_5;
+      uVar2 = RandWithSeed((int *)local_70);
+      bVar6 = (longlong)(int)uVar2 ==
+              ((longlong)((int)uVar2 >> 1) + (ulonglong)((int)uVar2 < 0 && (uVar2 & 1) != 0) &
               0x7fffffff) << 1;
-      if (bVar9) {
-        uVar1 = R_FontGetRandomLetter(param_2,local_70[0]._0_4_);
+      if (bVar6) {
+        param_1 = R_FontGetRandomLetter(param_2,local_70[0]._0_4_);
       }
       else {
-        uVar1 = 0x4f;
+        param_1 = 0x4f;
       }
-      bVar9 = !bVar9;
-      local_70[0] = (longlong)((param_4 - iVar10) + 0x3c);
-      dVar11 = (double)(-(float)((double)local_70[0] * 0.01666666753590107 - dVar11) *
-                        (float)(uVar6 & 0xff) * 0.003921569);
+      bVar6 = !bVar6;
+      local_70[0] = (longlong)((param_4 - iVar7) + 0x3c);
+      dVar8 = (double)(-(float)((double)local_70[0] * 0.01666666753590107 - dVar8) * (float)param_7
+                      * 0.003921569);
     }
   }
   else {
-    bVar8 = true;
+    bVar5 = true;
   }
-  *param_8 = bVar8;
-  *in_stack_0000005c = uVar1;
-  uVar4 = ByteFromFloatColor((float)dVar11);
-  *in_stack_00000054 = uVar4;
-  *(bool *)in_stack_00000064 = bVar9;
-  __restgprlr_22();
+  *param_8 = bVar5;
+  *in_stack_0000005c = param_1;
+  uVar3 = ByteFromFloatColor((float)dVar8);
+  *in_stack_00000054 = uVar3;
+  *(bool *)in_stack_00000064 = bVar6;
   return;
 }
 
@@ -7289,6 +7126,10 @@ uchar ModulateByteColors(uchar param_1,uchar param_2)
 
 // 82796D10  DrawText2D  (gfx_d3d/rb_backend.cpp:4904)
 
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
 /* WARNING: Restarted to delay deadcode elimination for space: stack */
 
 void DrawText2D(char *param_1,float param_2,float param_3,Font_s *param_4,float param_5,
@@ -7305,27 +7146,27 @@ void DrawText2D(char *param_1,float param_2,float param_3,Font_s *param_4,float 
   char cVar6;
   Font_s *pFVar7;
   Material *pMVar8;
-  ulonglong uVar9;
-  Font_s *pFVar10;
-  Glyph *pGVar11;
-  bool bVar15;
-  uchar uVar16;
-  uchar uVar17;
-  uint uVar12;
-  int iVar13;
-  Glyph *pGVar14;
-  Font_s *pFVar18;
+  Glyph *pGVar9;
+  bool bVar13;
+  uchar uVar14;
+  uchar uVar15;
+  uint uVar10;
+  int iVar11;
+  Glyph *pGVar12;
+  Font_s *pFVar16;
+  ulonglong uVar17;
+  ulonglong uVar18;
   ulonglong uVar19;
-  ulonglong uVar20;
-  ulonglong uVar21;
-  int iVar22;
-  int iVar23;
-  ulong uVar24;
-  Glyph *pGVar25;
-  ulonglong uVar26;
-  ulonglong uVar27;
-  float (*pafVar28) [2];
-  uint uVar29;
+  int iVar20;
+  int iVar21;
+  ulong uVar22;
+  Glyph *pGVar23;
+  ulonglong uVar24;
+  ulonglong uVar25;
+  float (*pafVar26) [2];
+  uint uVar27;
+  double dVar28;
+  double dVar29;
   double dVar30;
   double dVar31;
   double dVar32;
@@ -7343,9 +7184,7 @@ void DrawText2D(char *param_1,float param_2,float param_3,Font_s *param_4,float 
   double dVar44;
   double dVar45;
   double dVar46;
-  double dVar47;
-  double dVar48;
-  float fVar49;
+  float fVar47;
   byte bStack00000054;
   int in_stack_0000005c;
   uint in_stack_00000064;
@@ -7427,101 +7266,95 @@ void DrawText2D(char *param_1,float param_2,float param_3,Font_s *param_4,float 
   ulonglong local_138;
   ulonglong local_130;
   
-  dVar37 = (double)param_14;
-  dVar34 = (double)param_7;
-  dVar35 = (double)param_8;
-  dVar32 = (double)param_6;
-  dVar31 = (double)param_5;
-  dVar40 = (double)param_2;
-  dVar41 = (double)param_3;
-  uVar20 = (ulonglong)param_10;
-  uVar9 = (ulonglong)(int)param_1;
-  __savegprlr();
-  __savefpr();
-  fStack0000007c = (float)dVar37;
+  dVar32 = (double)param_7;
+  dVar33 = (double)param_8;
+  dVar30 = (double)param_6;
+  dVar29 = (double)param_5;
+  dVar38 = (double)param_2;
+  dVar39 = (double)param_3;
   local_280 = "c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_backend.cpp";
   local_24c = "%s";
-  if ((uVar9 & 0xffffffff) == 0) {
+  fStack0000007c = param_14;
+  if (param_1 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_backend.cpp",0x1339
                     ,0,"%s");
   }
-  if ((uVar20 & 0xffffffff) == 0) {
+  if (param_10 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_backend.cpp",0x133a
                     ,0,"%s");
   }
   local_27c = (Font_s *)0x1;
-  dVar37 = 0.0;
+  dVar35 = 0.0;
   local_2a8 = false;
   local_29c = _bStack00000054 & 0xff000000;
-  pFVar10 = (Font_s *)uVar20;
   if ((in_stack_00000064 & 1) == 0) {
     local_278 = 0.0;
   }
   else {
-    pGVar11 = R_GetCharacterGlyph(pFVar10,0x6f);
-    local_268 = (ulonglong)pGVar11->dx;
+    pGVar9 = R_GetCharacterGlyph((Font_s *)param_10,0x6f);
+    local_268 = (ulonglong)pGVar9->dx;
     local_278 = (float)local_268;
   }
   local_28c = (Material *)0x0;
-  local_294 = Material_FromHandle(pFVar10->material);
+  local_294 = Material_FromHandle(*(Material **)(param_10 + 0xc));
   if (local_294 == (Material *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_backend.cpp",0x1344
                     ,0,"%s");
   }
-  uVar12 = in_stack_00000064 & 0x40;
-  if ((uVar12 != 0) &&
+  uVar10 = in_stack_00000064 & 0x40;
+  if ((uVar10 != 0) &&
      ((in_stack_000000ac == (Material *)0x0 ||
       (in_stack_000000ac->techniqueSet == (MaterialTechniqueSet *)0x0)))) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_backend.cpp",0x1346
                     ,0,"%s");
   }
-  if ((uVar12 != 0) &&
+  if ((uVar10 != 0) &&
      ((in_stack_000000b4 == (Material *)0x0 ||
       (in_stack_000000b4->techniqueSet == (MaterialTechniqueSet *)0x0)))) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_backend.cpp",0x1347
                     ,0,"%s");
   }
-  bVar15 = SetupPulseFXVars((char *)uVar9,in_stack_0000005c,in_stack_00000064,in_stack_0000008c,
+  bVar13 = SetupPulseFXVars(param_1,in_stack_0000005c,in_stack_00000064,in_stack_0000008c,
                             in_stack_00000094,in_stack_0000009c,in_stack_000000a4,&local_2a8,
                             in_stack_fffffce8,(int *)in_stack_fffffcec,in_stack_fffffcf0,
                             in_stack_fffffcf4);
-  if (bVar15) {
-    iVar23 = 0;
+  if (bVar13) {
+    iVar21 = 0;
     local_254 = "glowMaterial";
     uVar3 = in_stack_00000064 & 0x10;
     if ((in_stack_00000064 & 0x400) == 0) {
       local_238[0] = 0;
-      uVar29 = 1;
+      uVar27 = 1;
       if (uVar3 != 0) {
-        local_28c = Material_FromHandle(pFVar10->glowMaterial);
+        local_28c = Material_FromHandle(*(Material **)(param_10 + 0x10));
         if (local_28c == (Material *)0x0) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_backend.cpp",
                           0x136c,0,"%s");
         }
-        uVar29 = 2;
+        uVar27 = 2;
         local_238[1] = 1;
       }
     }
     else {
       if (uVar3 != 0) {
-        local_28c = Material_FromHandle(pFVar10->glowMaterial);
+        local_28c = Material_FromHandle(*(Material **)(param_10 + 0x10));
         if (local_28c == (Material *)0x0) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_backend.cpp",
                           0x1354,0,"%s");
         }
-        iVar23 = 1;
+        iVar21 = 1;
         local_238[0] = 1;
       }
-      local_238[iVar23] = 2;
-      if (2 < iVar23 + 1U) {
+      local_238[iVar21] = 2;
+      if (2 < iVar21 + 1U) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_backend.cpp",
                         0x135f,0,
                         "passCount doesn\'t index ARRAY_COUNT( passType )\n\t%i not in [0, %i)");
       }
-      uVar29 = iVar23 + 2;
-      local_238[iVar23 + 1U] = 0;
+      uVar27 = iVar21 + 2;
+      local_238[iVar21 + 1U] = 0;
     }
-    if (uVar12 != 0) {
+    if (uVar10 != 0) {
       if ((uVar3 != 0) && (in_stack_000000b4 == (Material *)0x0)) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_backend.cpp",
                         0x1377,0,"%s");
@@ -7538,66 +7371,65 @@ void DrawText2D(char *param_1,float param_2,float param_3,Font_s *param_4,float 
     else {
       local_274 = 1;
     }
-    dVar45 = 0.5;
+    dVar43 = 0.5;
     local_268 = CONCAT44(0x3f000000,local_268._4_4_);
-    if (uVar29 != 0) {
+    if (uVar27 != 0) {
       local_290 = local_238;
-      dVar42 = 255.0;
+      dVar40 = 255.0;
       local_248 = 1.0;
-      dVar43 = 0.003921568859368563;
-      dVar38 = 1.75;
+      dVar41 = 0.003921568859368563;
+      dVar36 = 1.75;
       local_228 = 1.3;
       local_25c = -0.0625;
       local_260 = -0.375;
-      uVar19 = 0xffffffff821d0000;
+      uVar17 = 0xffffffff821d0000;
       local_244 = 255.0;
       local_23c = 0.003921569;
       local_250 = "%s\n\t%s";
       local_240 = "iconWidth > 0";
-      dVar39 = 1.125;
-      uVar20 = 0xffffffff821d5230;
+      dVar37 = 1.125;
+      uVar18 = 0xffffffff821d5230;
       local_258 = "Invalid hud icon.  Text: \"%s\"";
       local_224 = MY_ALTCOLOR_TWO;
       local_22c = MY_ALTCOLOR_TWO_CINEMATIC;
-      uVar21 = uVar9;
-      dVar41 = -(double)(float)(dVar32 * 0.5 - dVar41);
-      dVar40 = -(double)(float)(dVar31 * 0.5 - dVar40);
-      local_270 = uVar29;
+      dVar39 = -(double)(float)(dVar30 * 0.5 - dVar39);
+      dVar38 = -(double)(float)(dVar29 * 0.5 - dVar38);
+      local_270 = uVar27;
       do {
-        iVar23 = 0;
-        bVar15 = false;
-        local_2a4 = (uchar *)uVar21;
+        iVar21 = 0;
+        bVar13 = false;
         local_298 = local_27c;
         local_288 = CONCAT44(_bStack00000054,local_288._4_4_);
-        dVar47 = dVar41;
-        dVar48 = dVar40;
-        if (*local_2a4 != '\0') {
-          iVar22 = in_stack_0000005c;
-          uVar24 = _bStack00000054;
+        dVar45 = dVar39;
+        dVar46 = dVar38;
+        local_2a4 = (uchar *)param_1;
+        if (*param_1 != '\0') {
+          iVar20 = in_stack_0000005c;
+          uVar22 = _bStack00000054;
           do {
-            uVar21 = 0;
-            if (iVar22 == 0) break;
-            pFVar18 = (Font_s *)0x0;
-            uVar19 = (ulonglong)local_274;
+            uVar19 = 0;
+            if (iVar20 == 0) break;
+            pFVar16 = (Font_s *)0x0;
+            uVar17 = (ulonglong)local_274;
             local_2ac.packed =
                  SEH_ReadCharFromStringModCase((char **)&local_2a4,(int *)0x0,local_274);
             bVar5 = local_2a8;
-            uVar26 = (ulonglong)(int)local_2ac.packed;
+            uVar24 = (ulonglong)(int)local_2ac.packed;
             local_2a7[0] = false;
             local_2b0 = 0;
             bVar4 = false;
             if (((((Font_s *)local_2ac.packed == (Font_s *)0x5e) && (local_2a4 != (uchar *)0x0)) &&
-                (uVar16 = *local_2a4, uVar16 != '^')) &&
-               (('/' < (char)uVar16 && ((char)uVar16 < '<')))) {
-              bVar15 = false;
-              uVar16 = ColorIndex(uVar16);
-              uVar17 = ColorIndex('7');
-              uVar24 = _bStack00000054;
-              if (uVar16 != uVar17) {
+                (uVar14 = *local_2a4, uVar14 != '^')) &&
+               (('/' < (char)uVar14 && ((char)uVar14 < '<')))) {
+              bVar13 = false;
+              uVar14 = ColorIndex(uVar14);
+              uVar15 = ColorIndex('7');
+              uVar22 = _bStack00000054;
+              if (uVar14 != uVar15) {
                 if (((in_stack_00000064 & 0x100) == 0) ||
-                   (uVar16 = ColorIndex(*local_2a4), uVar16 != '\x02')) {
+                   (uVar14 = ColorIndex(*local_2a4), uVar14 != '\x02')) {
                   RB_LookupColor(*local_2a4,(uchar *)&local_29c);
-                  uVar24 = (uint)CONCAT21(CONCAT11(bStack00000054,local_29c._0_1_),local_29c._1_1_)
+                  uVar22 = (uint)CONCAT21(CONCAT11(bStack00000054,local_29c._0_1_),local_29c._1_1_)
                            << 8 | local_29c >> 8 & 0xff;
                 }
                 else {
@@ -7605,326 +7437,322 @@ void DrawText2D(char *param_1,float param_2,float param_3,Font_s *param_4,float 
                   if ((in_stack_00000064 & 0x200) == 0) {
                     puVar1 = local_224;
                   }
-                  uVar19 = (ulonglong)puVar1[3];
-                  bVar15 = true;
-                  uVar20 = (ulonglong)puVar1[1];
+                  uVar17 = (ulonglong)puVar1[3];
+                  bVar13 = true;
+                  uVar18 = (ulonglong)puVar1[1];
                   local_288 = (longlong)
-                              ((double)((float)((double)uVar19 * dVar43) *
-                                       (float)((double)bStack00000054 * dVar43)) * dVar42);
+                              ((double)((float)((double)uVar17 * dVar41) *
+                                       (float)((double)bStack00000054 * dVar41)) * dVar40);
                   local_1d8 = (ulonglong)bStack00000054;
-                  local_130 = uVar19;
-                  uVar24 = CONCAT31(CONCAT21(CONCAT11((undefined1)local_288,*puVar1),puVar1[1]),
+                  local_130 = uVar17;
+                  uVar22 = CONCAT31(CONCAT21(CONCAT11((undefined1)local_288,*puVar1),puVar1[1]),
                                     puVar1[2]);
                 }
               }
-              iVar23 = iVar23 + 2;
-              local_288 = CONCAT44(uVar24,local_288._4_4_);
+              iVar21 = iVar21 + 2;
+              local_288 = CONCAT44(uVar22,local_288._4_4_);
               local_2a4 = local_2a4 + 1;
             }
             else {
-              dVar44 = dVar40;
-              if ((local_2a8 == false) || (iVar22 != 1)) {
+              dVar42 = dVar38;
+              if ((local_2a8 == false) || (iVar20 != 1)) {
 LAB_8279743c:
-                dVar40 = dVar48;
-                dVar30 = dVar37;
-                dVar48 = dVar40;
-                if ((uVar26 & 0xffffffff) != 0x5e) {
-                  if ((uVar26 & 0xffffffff) == 10) {
-                    local_168 = (longlong)pFVar10->pixelHeight;
-                    dVar41 = (double)(float)((double)local_168 * dVar32 + dVar41);
+                dVar38 = dVar46;
+                dVar28 = dVar35;
+                dVar46 = dVar38;
+                if ((uVar24 & 0xffffffff) != 0x5e) {
+                  if ((uVar24 & 0xffffffff) == 10) {
+                    local_168 = (longlong)*(int *)(param_10 + 4);
+                    dVar39 = (double)(float)((double)local_168 * dVar30 + dVar39);
                   }
-                  else if ((uVar26 & 0xffffffff) != 0xd) goto LAB_8279735c;
+                  else if ((uVar24 & 0xffffffff) != 0xd) goto LAB_8279735c;
                   goto LAB_82797b1c;
                 }
                 if ((*local_2a4 != '\x01') && (*local_2a4 != '\x02')) goto LAB_8279735c;
-                fVar49 = RB_DrawHudIcon((char *)local_2a4,
-                                        -(float)((double)(float)(dVar41 - dVar47) * dVar34 -
-                                                (double)(float)((double)(float)(dVar44 - dVar40) *
-                                                                dVar35 + dVar40)),
-                                        (float)((double)(float)((double)(float)(dVar41 - dVar47) *
-                                                                dVar35 + (double)(float)((double)(
-                                                  float)(dVar44 - dVar40) * dVar34)) + dVar47),
-                                        (float)dVar34,(float)dVar35,pFVar18,(float)dVar31,
-                                        (float)dVar32,(ulong)uVar19);
-                dVar30 = (double)fVar49;
-                dVar48 = dVar40;
-                if (dVar30 <= dVar37) {
+                fVar47 = RB_DrawHudIcon((char *)local_2a4,
+                                        -(float)((double)(float)(dVar39 - dVar45) * dVar32 -
+                                                (double)(float)((double)(float)(dVar42 - dVar38) *
+                                                                dVar33 + dVar38)),
+                                        (float)((double)(float)((double)(float)(dVar39 - dVar45) *
+                                                                dVar33 + (double)(float)((double)(
+                                                  float)(dVar42 - dVar38) * dVar32)) + dVar45),
+                                        (float)dVar32,(float)dVar33,pFVar16,(float)dVar29,
+                                        (float)dVar30,(ulong)uVar17);
+                dVar28 = (double)fVar47;
+                dVar46 = dVar38;
+                if (dVar28 <= dVar35) {
                   va(local_258);
-                  uVar19 = 0;
-                  uVar20 = ZEXT48(local_250);
+                  uVar17 = 0;
+                  uVar18 = ZEXT48(local_250);
                   MyAssertHandler(local_280,0x13e7,0,local_250);
-                  dVar48 = dVar40;
+                  dVar46 = dVar38;
                 }
-                dVar40 = (double)(float)(dVar30 + dVar44);
+                dVar38 = (double)(float)(dVar28 + dVar42);
                 if ((in_stack_00000064 & 0x80) != 0) {
-                  dVar40 = (double)(float)(dVar31 * (double)fStack0000007c + dVar40);
+                  dVar38 = (double)(float)(dVar29 * (double)fStack0000007c + dVar38);
                 }
                 local_2a4 = local_2a4 + (char)local_2a4[3] + 4;
               }
               else {
-                pFVar18 = local_298;
-                local_2ac.packed = R_FontGetRandomLetter(pFVar10,(int)local_298);
-                uVar26 = (ulonglong)(int)local_2ac.packed;
+                pFVar16 = local_298;
+                local_2ac.packed = R_FontGetRandomLetter((Font_s *)param_10,(int)local_298);
+                uVar24 = (ulonglong)(int)local_2ac.packed;
                 local_2b0 = 0xc0;
-                uVar12 = RandWithSeed((int *)&local_298);
-                dVar44 = dVar40;
-                if ((longlong)(int)uVar12 ==
-                    ((longlong)((int)uVar12 >> 1) +
-                     (ulonglong)((int)uVar12 < 0 && (uVar12 & 1) != 0) & 0x7fffffff) << 1)
+                uVar10 = RandWithSeed((int *)&local_298);
+                dVar42 = dVar38;
+                if ((longlong)(int)uVar10 ==
+                    ((longlong)((int)uVar10 >> 1) +
+                     (ulonglong)((int)uVar10 < 0 && (uVar10 & 1) != 0) & 0x7fffffff) << 1)
                 goto LAB_8279743c;
-                uVar26 = 0x4f;
+                uVar24 = 0x4f;
                 bVar4 = true;
                 local_2ac.packed = 0x4f;
-                dVar30 = dVar37;
+                dVar28 = dVar35;
 LAB_8279735c:
                 cVar6 = local_2a0;
-                uVar27 = uVar26;
+                uVar25 = uVar24;
                 if (local_2a0 != '\0') {
-                  uVar19 = ZEXT48(&stack0x00000000) - 0x298;
+                  uVar17 = ZEXT48(&stack0x00000000) - 0x298;
                   GetDecayingLetterInfo
-                            ((uint)uVar26,pFVar10,(int *)uVar19,(int)pFVar7,in_stack_0000008c,
-                             in_stack_000000a4,local_288._0_1_,local_2a7,(uchar *)in_stack_fffffce8,
-                             in_stack_fffffcec,in_stack_fffffcf0);
-                  uVar27 = (ulonglong)local_2ac.packed;
+                            ((uint)uVar24,(Font_s *)param_10,(int *)uVar17,(int)pFVar7,
+                             in_stack_0000008c,in_stack_000000a4,local_288._0_1_,local_2a7,
+                             (uchar *)in_stack_fffffce8,in_stack_fffffcec,in_stack_fffffcf0);
+                  uVar25 = (ulonglong)local_2ac.packed;
                 }
                 if (bVar4) {
                   local_2ac.packed = (uint)local_298;
-                  iVar13 = RandWithSeed((int *)&local_2ac.packed);
-                  uVar21 = (ulonglong)iVar13;
+                  iVar11 = RandWithSeed((int *)&local_2ac.packed);
+                  uVar19 = (ulonglong)iVar11;
                 }
-                pGVar25 = (Glyph *)uVar21;
-                pGVar11 = R_GetCharacterGlyph(pFVar10,(uint)uVar27);
-                dVar37 = dVar30;
-                if ((uVar27 & 0xffffffff) == (uVar26 & 0xffffffff)) {
-                  uVar20 = (ulonglong)pGVar11->dx;
-                  local_148 = uVar20;
+                pGVar23 = (Glyph *)uVar19;
+                pGVar9 = R_GetCharacterGlyph((Font_s *)param_10,(uint)uVar25);
+                dVar35 = dVar28;
+                if ((uVar25 & 0xffffffff) == (uVar24 & 0xffffffff)) {
+                  uVar18 = (ulonglong)pGVar9->dx;
+                  local_148 = uVar18;
                 }
                 else {
-                  pGVar14 = R_GetCharacterGlyph(pFVar10,(uint)uVar26);
-                  local_198 = (ulonglong)pGVar11->pixelWidth;
-                  uVar20 = (ulonglong)pGVar14->dx;
-                  local_208 = (ulonglong)pGVar14->pixelWidth;
-                  dVar30 = (double)(float)((double)local_208 * dVar45 -
-                                          (double)(float)((double)local_198 * dVar45));
-                  local_1f8 = uVar20;
+                  pGVar12 = R_GetCharacterGlyph((Font_s *)param_10,(uint)uVar24);
+                  local_198 = (ulonglong)pGVar9->pixelWidth;
+                  uVar18 = (ulonglong)pGVar12->dx;
+                  local_208 = (ulonglong)pGVar12->pixelWidth;
+                  dVar28 = (double)(float)((double)local_208 * dVar43 -
+                                          (double)(float)((double)local_198 * dVar43));
+                  local_1f8 = uVar18;
                 }
-                dVar40 = (double)uVar20;
-                local_188 = (longlong)pGVar11->y0;
-                uVar20 = (ulonglong)pGVar11->x0;
-                dVar45 = (double)(float)((double)(float)((double)(longlong)uVar20 + dVar30) * dVar31
+                dVar38 = (double)uVar18;
+                local_188 = (longlong)pGVar9->y0;
+                uVar18 = (ulonglong)pGVar9->x0;
+                dVar43 = (double)(float)((double)(float)((double)(longlong)uVar18 + dVar28) * dVar29
                                         );
-                dVar30 = (double)(float)((double)local_188 * dVar32);
-                local_1e8 = uVar20;
-                local_2ac.packed = RB_ProcessLetterColor(uVar24,(uint)uVar27);
+                dVar28 = (double)(float)((double)local_188 * dVar30);
+                local_1e8 = uVar18;
+                local_2ac.packed = RB_ProcessLetterColor(uVar22,(uint)uVar25);
                 pMVar8 = local_294;
-                pGVar14 = (Glyph *)uVar27;
-                uVar26 = (ulonglong)(int)local_2ac.packed;
-                if ((cVar6 != '\0') || ((bVar5 != false && (iVar22 == 1)))) {
+                pGVar12 = (Glyph *)uVar25;
+                uVar24 = (ulonglong)(int)local_2ac.packed;
+                if ((cVar6 != '\0') || ((bVar5 != false && (iVar20 == 1)))) {
                   local_158 = (ulonglong)local_2ac.array[0];
-                  uVar20 = (ulonglong)local_2b0;
+                  uVar18 = (ulonglong)local_2b0;
                   local_1c8 = (ulonglong)
-                              ((double)((float)((double)local_158 * dVar43) *
-                                       (float)((double)uVar20 * dVar43)) * dVar42);
-                  uVar19 = local_1c8 & 0xff;
+                              ((double)((float)((double)local_158 * dVar41) *
+                                       (float)((double)uVar18 * dVar41)) * dVar40);
+                  uVar17 = local_1c8 & 0xff;
                   local_2ac.array[0] = (undefined1)local_1c8;
-                  uVar26 = (ulonglong)local_2ac.packed;
-                  local_220 = uVar20;
+                  uVar24 = (ulonglong)local_2ac.packed;
+                  local_220 = uVar18;
                 }
                 if (local_2a7[0] == false) {
-                  iVar13 = *local_290;
-                  if (iVar13 == 0) {
+                  iVar11 = *local_290;
+                  if (iVar11 == 0) {
                     if ((in_stack_00000064 & 4) != 0) {
-                      iVar13 = 1;
+                      iVar11 = 1;
                       if ((in_stack_00000064 & 8) != 0) {
-                        iVar13 = 2;
+                        iVar11 = 2;
                       }
-                      local_178 = (longlong)iVar13;
-                      dVar43 = (double)(float)((double)(float)((double)(float)((double)local_178 +
-                                                                              dVar45) + dVar44) -
-                                              dVar48);
-                      dVar42 = (double)(float)((double)(float)((double)(float)((double)local_178 +
-                                                                              dVar30) + dVar41) -
-                                              dVar47);
-                      fVar2 = -(float)(dVar42 * dVar34 - (double)(float)(dVar43 * dVar35 + dVar48));
-                      fVar49 = (float)((double)(float)(dVar42 * dVar35 +
-                                                      (double)(float)(dVar43 * dVar34)) + dVar47);
+                      local_178 = (longlong)iVar11;
+                      dVar41 = (double)(float)((double)(float)((double)(float)((double)local_178 +
+                                                                              dVar43) + dVar42) -
+                                              dVar46);
+                      dVar40 = (double)(float)((double)(float)((double)(float)((double)local_178 +
+                                                                              dVar28) + dVar39) -
+                                              dVar45);
+                      fVar2 = -(float)(dVar40 * dVar32 - (double)(float)(dVar41 * dVar33 + dVar46));
+                      fVar47 = (float)((double)(float)(dVar40 * dVar33 +
+                                                      (double)(float)(dVar41 * dVar32)) + dVar45);
                       if (bVar4) {
-                        local_1b8 = (ulonglong)pGVar11->pixelHeight;
-                        local_138 = (ulonglong)pGVar11->pixelWidth;
-                        pGVar14 = pGVar25;
+                        local_1b8 = (ulonglong)pGVar9->pixelHeight;
+                        local_138 = (ulonglong)pGVar9->pixelWidth;
+                        pGVar12 = pGVar23;
                         DrawTextFxExtraCharacter
-                                  (in_stack_000000ac,(int)pGVar25,fVar2,fVar49,
-                                   (float)((double)local_138 * dVar31),
-                                   (float)((double)local_1b8 * dVar32),(float)dVar34,(float)dVar35,
-                                   (ulong)uVar19);
+                                  (in_stack_000000ac,(int)pGVar23,fVar2,fVar47,
+                                   (float)((double)local_138 * dVar29),
+                                   (float)((double)local_1b8 * dVar30),(float)dVar32,(float)dVar33,
+                                   (ulong)uVar17);
                       }
                       else {
-                        local_1a8 = (ulonglong)pGVar11->pixelHeight;
-                        local_218 = (ulonglong)pGVar11->pixelWidth;
-                        RB_DrawChar(local_294,fVar2,fVar49,(float)((double)local_218 * dVar31),
-                                    (float)((double)local_1a8 * dVar32),(float)dVar34,(float)dVar35,
-                                    pGVar14,(ulong)uVar19);
+                        local_1a8 = (ulonglong)pGVar9->pixelHeight;
+                        local_218 = (ulonglong)pGVar9->pixelWidth;
+                        RB_DrawChar(local_294,fVar2,fVar47,(float)((double)local_218 * dVar29),
+                                    (float)((double)local_1a8 * dVar30),(float)dVar32,(float)dVar33,
+                                    pGVar12,(ulong)uVar17);
                       }
                     }
-                    dVar42 = (double)(float)((double)(float)(dVar30 + dVar41) - dVar47);
-                    dVar45 = (double)(float)((double)(float)(dVar45 + dVar44) - dVar48);
-                    fVar2 = -(float)(dVar42 * dVar34 - (double)(float)(dVar45 * dVar35 + dVar48));
-                    fVar49 = (float)((double)(float)(dVar45 * dVar34 +
-                                                    (double)(float)(dVar42 * dVar35)) + dVar47);
+                    dVar40 = (double)(float)((double)(float)(dVar28 + dVar39) - dVar45);
+                    dVar43 = (double)(float)((double)(float)(dVar43 + dVar42) - dVar46);
+                    fVar2 = -(float)(dVar40 * dVar32 - (double)(float)(dVar43 * dVar33 + dVar46));
+                    fVar47 = (float)((double)(float)(dVar43 * dVar32 +
+                                                    (double)(float)(dVar40 * dVar33)) + dVar45);
                     if (bVar4) {
-                      local_210 = (ulonglong)pGVar11->pixelHeight;
-                      local_200 = (ulonglong)pGVar11->pixelWidth;
+                      local_210 = (ulonglong)pGVar9->pixelHeight;
+                      local_200 = (ulonglong)pGVar9->pixelWidth;
                       DrawTextFxExtraCharacter
-                                (in_stack_000000ac,(int)pGVar25,fVar2,fVar49,
-                                 (float)((double)local_200 * dVar31),
-                                 (float)((double)local_210 * dVar32),(float)dVar34,(float)dVar35,
-                                 (ulong)uVar19);
+                                (in_stack_000000ac,(int)pGVar23,fVar2,fVar47,
+                                 (float)((double)local_200 * dVar29),
+                                 (float)((double)local_210 * dVar30),(float)dVar32,(float)dVar33,
+                                 (ulong)uVar17);
                     }
                     else {
-                      local_1f0 = (ulonglong)pGVar11->pixelHeight;
-                      local_1e0 = (ulonglong)pGVar11->pixelWidth;
-                      RB_DrawChar(local_294,fVar2,fVar49,(float)((double)local_1e0 * dVar31),
-                                  (float)((double)local_1f0 * dVar32),(float)dVar34,(float)dVar35,
-                                  pGVar14,(ulong)uVar19);
+                      local_1f0 = (ulonglong)pGVar9->pixelHeight;
+                      local_1e0 = (ulonglong)pGVar9->pixelWidth;
+                      RB_DrawChar(local_294,fVar2,fVar47,(float)((double)local_1e0 * dVar29),
+                                  (float)((double)local_1f0 * dVar30),(float)dVar32,(float)dVar33,
+                                  pGVar12,(ulong)uVar17);
                     }
-                    if (((in_stack_00000064 & 2) != 0) && (iVar23 == in_stack_0000006c)) {
+                    if (((in_stack_00000064 & 2) != 0) && (iVar21 == in_stack_0000006c)) {
                       RB_DrawCursor(local_294,in_stack_00000077,
-                                    -(float)((double)(float)(dVar41 - dVar47) * dVar34 -
-                                            (double)(float)(dVar45 * dVar35 + dVar48)),
-                                    (float)((double)(float)(dVar45 * dVar34 +
-                                                           (double)(float)((double)(float)(dVar41 - 
-                                                  dVar47) * dVar35)) + dVar47),(float)dVar34,
-                                    (float)dVar35,(Font_s *)uVar19,(float)dVar31,(float)dVar32,
-                                    (ulong)uVar20);
+                                    -(float)((double)(float)(dVar39 - dVar45) * dVar32 -
+                                            (double)(float)(dVar43 * dVar33 + dVar46)),
+                                    (float)((double)(float)(dVar43 * dVar32 +
+                                                           (double)(float)((double)(float)(dVar39 - 
+                                                  dVar45) * dVar33)) + dVar45),(float)dVar32,
+                                    (float)dVar33,(Font_s *)uVar17,(float)dVar29,(float)dVar30,
+                                    (ulong)uVar18);
                     }
                   }
-                  else if (iVar13 == 2) {
-                    fVar49 = local_248;
+                  else if (iVar11 == 2) {
+                    fVar47 = local_248;
                     if ((in_stack_00000064 & 0x800) != 0) {
-                      fVar49 = local_228;
+                      fVar47 = local_228;
                     }
-                    dVar42 = (double)fVar49;
-                    pafVar28 = MY_OFFSETS;
+                    dVar40 = (double)fVar47;
+                    pafVar26 = MY_OFFSETS;
                     do {
-                      dVar36 = (double)(float)((double)(float)((double)(float)(dVar42 * (double)(*
-                                                  pafVar28)[0] + dVar45) + dVar44) - dVar48);
-                      dVar43 = (double)(float)((double)(float)((double)(float)((double)(*pafVar28)
-                                                                                       [1] * dVar42
-                                                                              + dVar30) + dVar41) -
-                                              dVar47);
-                      fVar2 = -(float)(dVar43 * dVar34 - (double)(float)(dVar36 * dVar35 + dVar48));
-                      fVar49 = (float)((double)(float)(dVar43 * dVar35 +
-                                                      (double)(float)(dVar36 * dVar34)) + dVar47);
+                      dVar34 = (double)(float)((double)(float)((double)(float)(dVar40 * (double)(*
+                                                  pafVar26)[0] + dVar43) + dVar42) - dVar46);
+                      dVar41 = (double)(float)((double)(float)((double)(float)((double)(*pafVar26)
+                                                                                       [1] * dVar40
+                                                                              + dVar28) + dVar39) -
+                                              dVar45);
+                      fVar2 = -(float)(dVar41 * dVar32 - (double)(float)(dVar34 * dVar33 + dVar46));
+                      fVar47 = (float)((double)(float)(dVar41 * dVar33 +
+                                                      (double)(float)(dVar34 * dVar32)) + dVar45);
                       if (bVar4) {
-                        local_1d0 = (ulonglong)pGVar11->pixelHeight;
-                        local_1c0 = (ulonglong)pGVar11->pixelWidth;
-                        uVar27 = uVar21;
+                        local_1d0 = (ulonglong)pGVar9->pixelHeight;
+                        local_1c0 = (ulonglong)pGVar9->pixelWidth;
+                        uVar25 = uVar19;
                         DrawTextFxExtraCharacter
-                                  (in_stack_000000ac,(int)pGVar25,fVar2,fVar49,
-                                   (float)((double)local_1c0 * dVar31),
-                                   (float)((double)local_1d0 * dVar32),(float)dVar34,(float)dVar35,
-                                   (ulong)uVar19);
+                                  (in_stack_000000ac,(int)pGVar23,fVar2,fVar47,
+                                   (float)((double)local_1c0 * dVar29),
+                                   (float)((double)local_1d0 * dVar30),(float)dVar32,(float)dVar33,
+                                   (ulong)uVar17);
                       }
                       else {
-                        local_1b0 = (ulonglong)pGVar11->pixelHeight;
-                        local_1a0 = (ulonglong)pGVar11->pixelWidth;
-                        RB_DrawChar(pMVar8,fVar2,fVar49,(float)((double)local_1a0 * dVar31),
-                                    (float)((double)local_1b0 * dVar32),(float)dVar34,(float)dVar35,
-                                    (Glyph *)uVar27,(ulong)uVar19);
+                        local_1b0 = (ulonglong)pGVar9->pixelHeight;
+                        local_1a0 = (ulonglong)pGVar9->pixelWidth;
+                        RB_DrawChar(pMVar8,fVar2,fVar47,(float)((double)local_1a0 * dVar29),
+                                    (float)((double)local_1b0 * dVar30),(float)dVar32,(float)dVar33,
+                                    (Glyph *)uVar25,(ulong)uVar17);
                       }
-                      pafVar28 = pafVar28 + 1;
-                    } while ((int)pafVar28 < -0x7de2adf0);
+                      pafVar26 = pafVar26 + 1;
+                    } while ((int)pafVar26 < -0x7de2adf0);
                   }
-                  else if ((iVar13 == 1) && (((in_stack_00000064 & 0x100) == 0 || (bVar15)))) {
-                    uVar19 = (ulonglong)in_stack_00000084.packed;
-                    uVar20 = (ulonglong)in_stack_00000064;
-                    GlowColor(&local_2ac,(GfxColor)(uint)uVar26,in_stack_00000084,in_stack_00000064)
+                  else if ((iVar11 == 1) && (((in_stack_00000064 & 0x100) == 0 || (bVar13)))) {
+                    uVar17 = (ulonglong)in_stack_00000084.packed;
+                    uVar18 = (ulonglong)in_stack_00000064;
+                    GlowColor(&local_2ac,(GfxColor)(uint)uVar24,in_stack_00000084,in_stack_00000064)
                     ;
                     pMVar8 = local_28c;
-                    local_180 = (ulonglong)pGVar11->pixelHeight;
-                    local_190 = (ulonglong)pGVar11->pixelWidth;
-                    dVar43 = (double)((float)((double)local_190 * dVar31) * local_260);
-                    dVar42 = (double)((float)((double)local_180 * dVar32) * local_25c);
-                    pafVar28 = MY_OFFSETS;
+                    local_180 = (ulonglong)pGVar9->pixelHeight;
+                    local_190 = (ulonglong)pGVar9->pixelWidth;
+                    dVar41 = (double)((float)((double)local_190 * dVar29) * local_260);
+                    dVar40 = (double)((float)((double)local_180 * dVar30) * local_25c);
+                    pafVar26 = MY_OFFSETS;
                     do {
-                      dVar33 = (double)(float)((double)(float)((double)(float)((double)(float)((
-                                                  double)(float)((double)(*pafVar28)[0] * dVar31) *
-                                                  2.0 + dVar43) + dVar45) + dVar44) - dVar48);
-                      dVar36 = (double)(float)((double)(float)((double)(float)((double)(float)((
-                                                  double)(float)((double)(*pafVar28)[1] * dVar32) *
-                                                  2.0 + dVar42) + dVar30) + dVar41) - dVar47);
-                      dVar46 = -(double)(float)(dVar36 * dVar34 -
-                                               (double)(float)(dVar33 * dVar35 + dVar48));
-                      dVar36 = (double)(float)((double)(float)(dVar36 * dVar35 +
-                                                              (double)(float)(dVar33 * dVar34)) +
-                                              dVar47);
+                      dVar31 = (double)(float)((double)(float)((double)(float)((double)(float)((
+                                                  double)(float)((double)(*pafVar26)[0] * dVar29) *
+                                                  2.0 + dVar41) + dVar43) + dVar42) - dVar46);
+                      dVar34 = (double)(float)((double)(float)((double)(float)((double)(float)((
+                                                  double)(float)((double)(*pafVar26)[1] * dVar30) *
+                                                  2.0 + dVar40) + dVar28) + dVar39) - dVar45);
+                      dVar44 = -(double)(float)(dVar34 * dVar32 -
+                                               (double)(float)(dVar31 * dVar33 + dVar46));
+                      dVar34 = (double)(float)((double)(float)(dVar34 * dVar33 +
+                                                              (double)(float)(dVar31 * dVar32)) +
+                                              dVar45);
                       if (pMVar8 == (Material *)0x0) {
-                        uVar19 = 0;
-                        uVar26 = 0x1477;
-                        uVar20 = ZEXT48(local_24c);
+                        uVar17 = 0;
+                        uVar24 = 0x1477;
+                        uVar18 = ZEXT48(local_24c);
                         MyAssertHandler(local_280,0x1477,0,local_24c);
                       }
-                      uVar27 = (ulonglong)pGVar11->pixelHeight;
+                      uVar25 = (ulonglong)pGVar9->pixelHeight;
                       if (bVar4) {
-                        local_170 = (ulonglong)pGVar11->pixelWidth;
-                        uVar26 = uVar21;
-                        local_160 = uVar27;
+                        local_170 = (ulonglong)pGVar9->pixelWidth;
+                        uVar24 = uVar19;
+                        local_160 = uVar25;
                         DrawTextFxExtraCharacter
-                                  (in_stack_000000b4,(int)pGVar25,(float)dVar46,(float)dVar36,
-                                   (float)((double)local_170 * dVar31),
-                                   (float)((double)uVar27 * dVar32),(float)dVar34,(float)dVar35,
-                                   (ulong)uVar19);
+                                  (in_stack_000000b4,(int)pGVar23,(float)dVar44,(float)dVar34,
+                                   (float)((double)local_170 * dVar29),
+                                   (float)((double)uVar25 * dVar30),(float)dVar32,(float)dVar33,
+                                   (ulong)uVar17);
                       }
                       else {
-                        local_140 = (ulonglong)pGVar11->pixelWidth;
-                        local_150 = uVar27;
-                        RB_DrawChar(pMVar8,(float)dVar46,(float)dVar36,
-                                    (float)((double)(float)((double)local_140 * dVar31) * dVar38),
-                                    (float)((double)(float)((double)uVar27 * dVar32) * dVar39),
-                                    (float)dVar34,(float)dVar35,(Glyph *)uVar26,(ulong)uVar19);
+                        local_140 = (ulonglong)pGVar9->pixelWidth;
+                        local_150 = uVar25;
+                        RB_DrawChar(pMVar8,(float)dVar44,(float)dVar34,
+                                    (float)((double)(float)((double)local_140 * dVar29) * dVar36),
+                                    (float)((double)(float)((double)uVar25 * dVar30) * dVar37),
+                                    (float)dVar32,(float)dVar33,(Glyph *)uVar24,(ulong)uVar17);
                       }
-                      pafVar28 = pafVar28 + 1;
-                    } while ((int)pafVar28 < -0x7de2add0);
+                      pafVar26 = pafVar26 + 1;
+                    } while ((int)pafVar26 < -0x7de2add0);
                   }
                 }
                 if ((in_stack_00000064 & 1) != 0) {
-                  dVar40 = (double)local_278;
+                  dVar38 = (double)local_278;
                 }
-                dVar40 = (double)(float)(dVar40 * dVar31 + dVar44);
+                dVar38 = (double)(float)(dVar38 * dVar29 + dVar42);
                 if ((in_stack_00000064 & 0x80) != 0) {
-                  dVar40 = (double)(float)(dVar31 * (double)fStack0000007c + dVar40);
+                  dVar38 = (double)(float)(dVar29 * (double)fStack0000007c + dVar38);
                 }
-                dVar42 = (double)local_244;
-                dVar43 = (double)local_23c;
-                dVar45 = (double)local_268._0_4_;
+                dVar40 = (double)local_244;
+                dVar41 = (double)local_23c;
+                dVar43 = (double)local_268._0_4_;
               }
-              iVar22 = iVar22 + -1;
-              iVar23 = iVar23 + 1;
+              iVar20 = iVar20 + -1;
+              iVar21 = iVar21 + 1;
             }
 LAB_82797b1c:
           } while (*local_2a4 != '\0');
         }
-        if (((in_stack_00000064 & 2) != 0) && (iVar23 == in_stack_0000006c)) {
+        if (((in_stack_00000064 & 2) != 0) && (iVar21 == in_stack_0000006c)) {
           RB_DrawCursor(local_294,in_stack_00000077,
-                        -(float)((double)(float)(dVar41 - dVar47) * dVar34 -
-                                (double)(float)((double)(float)(dVar40 - dVar48) * dVar35 + dVar48))
-                        ,(float)((double)(float)((double)(float)(dVar41 - dVar47) * dVar35 +
-                                                (double)(float)((double)(float)(dVar40 - dVar48) *
-                                                               dVar34)) + dVar47),(float)dVar34,
-                        (float)dVar35,(Font_s *)uVar19,(float)dVar31,(float)dVar32,(ulong)uVar20);
+                        -(float)((double)(float)(dVar39 - dVar45) * dVar32 -
+                                (double)(float)((double)(float)(dVar38 - dVar46) * dVar33 + dVar46))
+                        ,(float)((double)(float)((double)(float)(dVar39 - dVar45) * dVar33 +
+                                                (double)(float)((double)(float)(dVar38 - dVar46) *
+                                                               dVar32)) + dVar45),(float)dVar32,
+                        (float)dVar33,(Font_s *)uVar17,(float)dVar29,(float)dVar30,(ulong)uVar18);
         }
-        uVar21 = (ulonglong)local_270;
+        uVar19 = (ulonglong)local_270;
         local_290 = local_290 + 1;
-        local_270 = (uint)(uVar21 - 1);
-        if (uVar21 - 1 == 0) break;
-        uVar21 = uVar9 & 0xffffffff;
-        dVar41 = dVar47;
-        dVar40 = dVar48;
-      } while( true );
+        local_270 = (uint)(uVar19 - 1);
+        dVar39 = dVar45;
+        dVar38 = dVar46;
+      } while (uVar19 - 1 != 0);
     }
   }
-  __restfpr();
-  __restgprlr();
   return;
 }
 
@@ -7950,6 +7778,8 @@ void RB_DrawText(char *param_1,Font_s *param_2,float param_3,float param_4,GfxCo
 
 // 82797C30  RB_DrawCharInSpace  (gfx_d3d/rb_backend.cpp:5277)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "GfxPrimStatsTarget": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 
@@ -7967,14 +7797,12 @@ void RB_DrawCharInSpace(Material *param_1,float *param_2,float *param_3,float *p
   float fVar8;
   uint uVar9;
   uint uVar10;
-  Material *pMVar11;
-  int iVar12;
-  ushort uVar13;
+  int iVar11;
+  ushort uVar12;
   
-  pMVar11 = (Material *)__savegprlr_24(param_1);
-  RB_SetTessTechnique(pMVar11,TECHNIQUE_UNLIT,GFX_PRIM_STATS_DEBUG);
-  iVar12 = Sys_HasDeviceOwnership();
-  if (iVar12 == 0) {
+  RB_SetTessTechnique(param_1,TECHNIQUE_UNLIT,GFX_PRIM_STATS_DEBUG);
+  iVar11 = Sys_HasDeviceOwnership();
+  if (iVar11 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_backend.h",0xbc,0,
                     "%s");
   }
@@ -7984,14 +7812,14 @@ void RB_DrawCharInSpace(Material *param_1,float *param_2,float *param_3,float *p
   uVar10 = tess.indexCount & 0xffff;
   tess.indexCount = tess.indexCount + 6;
   uVar9 = tess.vertexCount & 0xffff;
-  uVar13 = (ushort)tess.vertexCount;
+  uVar12 = (ushort)tess.vertexCount;
   tess.vertexCount = tess.vertexCount + 4;
-  tess.indices[uVar10 + 1] = uVar13;
-  tess.indices[uVar10 + 4] = uVar13;
-  tess.indices[uVar10 + 2] = uVar13 + 2;
-  tess.indices[uVar10] = uVar13 + 3;
-  tess.indices[uVar10 + 3] = uVar13 + 2;
-  tess.indices[uVar10 + 5] = uVar13 + 1;
+  tess.indices[uVar10 + 1] = uVar12;
+  tess.indices[uVar10 + 4] = uVar12;
+  tess.indices[uVar10 + 2] = uVar12 + 2;
+  tess.indices[uVar10] = uVar12 + 3;
+  tess.indices[uVar10 + 3] = uVar12 + 2;
+  tess.indices[uVar10 + 5] = uVar12 + 1;
   fVar1 = param_5->t0;
   fVar2 = param_5->s0;
   fVar3 = param_2[2];
@@ -8051,13 +7879,14 @@ void RB_DrawCharInSpace(Material *param_1,float *param_2,float *param_3,float *p
   tess.verts[uVar9 + 3].xyzw[3] = 1.0;
   tess.verts[uVar9 + 3].texCoord[0] = fVar4;
   tess.verts[uVar9 + 3].texCoord[1] = fVar3;
-  __restgprlr_24();
   return;
 }
 
 
 // 82797EC0  RB_DrawTextInSpace  (gfx_d3d/rb_backend.cpp:5307)
 
+/* WARNING: Function: __savegprlr_20 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_20 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 
@@ -8071,12 +7900,11 @@ void RB_DrawTextInSpace(char *param_1,Font_s *param_2,float *param_3,float *para
   Material *pMVar4;
   uint uVar5;
   Glyph *pGVar6;
-  ulonglong uVar7;
+  double dVar7;
   double dVar8;
   double dVar9;
   double dVar10;
   double dVar11;
-  double dVar12;
   char *pcStack00000014;
   undefined1 uStack0000003c;
   ulong local_e0;
@@ -8090,27 +7918,26 @@ void RB_DrawTextInSpace(char *param_1,Font_s *param_2,float *param_3,float *para
   float local_8c;
   float local_88;
   
-  uVar7 = (ulonglong)(int)param_2;
-  pcStack00000014 = (char *)__savegprlr_20(param_1);
+  pcStack00000014 = param_1;
   _uStack0000003c = param_6;
-  if (pcStack00000014 == (char *)0x0) {
+  if (param_1 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_backend.cpp",0x14c5
                     ,0,"%s");
   }
-  if ((uVar7 & 0xffffffff) == 0) {
+  if (param_2 == (Font_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_backend.cpp",0x14c6
                     ,0,"%s");
   }
-  pMVar4 = Material_FromHandle(((Font_s *)uVar7)->material);
+  pMVar4 = Material_FromHandle(param_2->material);
   if (pMVar4 == (Material *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_backend.cpp",0x14c9
                     ,0,"%s");
   }
   RB_EndSurfaceIfNeeded();
   R_Set3D(&gfxCmdBufSourceState);
-  dVar12 = -(double)(*param_5 * 0.5 - -(*param_4 * 0.5 - *param_3));
-  dVar11 = -(double)(param_5[1] * 0.5 - -(param_4[1] * 0.5 - param_3[1]));
-  dVar10 = -(double)(param_5[2] * 0.5 - -(param_4[2] * 0.5 - param_3[2]));
+  dVar11 = -(double)(*param_5 * 0.5 - -(*param_4 * 0.5 - *param_3));
+  dVar10 = -(double)(param_5[1] * 0.5 - -(param_4[1] * 0.5 - param_3[1]));
+  dVar9 = -(double)(param_5[2] * 0.5 - -(param_4[2] * 0.5 - param_3[2]));
   if (*pcStack00000014 != '\0') {
     uVar3 = uStack0000003c;
     do {
@@ -8119,7 +7946,7 @@ void RB_DrawTextInSpace(char *param_1,Font_s *param_2,float *param_3,float *para
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_backend.cpp",
                         0x14d3,0,"%s");
       }
-      pGVar6 = R_GetCharacterGlyph((Font_s *)uVar7,uVar5);
+      pGVar6 = R_GetCharacterGlyph(param_2,uVar5);
       if ((uVar5 == 0) || (6 < uVar5)) {
         if ((uVar5 < 0xe) || (0x17 < uVar5)) {
           if ((uVar5 < 0x1c) || (0x1f < uVar5)) {
@@ -8145,42 +7972,43 @@ void RB_DrawTextInSpace(char *param_1,Font_s *param_2,float *param_3,float *para
       if (bVar2) {
         local_e0 = CONCAT13(uVar3,0xffffff);
       }
-      dVar8 = (double)(longlong)pGVar6->x0;
+      dVar7 = (double)(longlong)pGVar6->x0;
       fVar1 = (float)(longlong)pGVar6->y0;
       local_98 = (float)pGVar6->pixelHeight;
-      dVar9 = (double)pGVar6->pixelWidth;
-      local_90 = *param_5 * fVar1 + (float)((double)*param_4 * dVar8 + dVar12);
-      local_b0 = (float)((double)*param_4 * dVar9);
-      local_ac = (float)((double)param_4[1] * dVar9);
-      local_a8 = (float)((double)param_4[2] * dVar9);
-      local_8c = param_5[1] * fVar1 + (float)((double)param_4[1] * dVar8 + dVar11);
+      dVar8 = (double)pGVar6->pixelWidth;
+      local_90 = *param_5 * fVar1 + (float)((double)*param_4 * dVar7 + dVar11);
+      local_b0 = (float)((double)*param_4 * dVar8);
+      local_ac = (float)((double)param_4[1] * dVar8);
+      local_a8 = (float)((double)param_4[2] * dVar8);
+      local_8c = param_5[1] * fVar1 + (float)((double)param_4[1] * dVar7 + dVar10);
       local_a0 = *param_5 * local_98;
       local_9c = param_5[1] * local_98;
       local_98 = param_5[2] * local_98;
-      local_88 = param_5[2] * fVar1 + (float)((double)param_4[2] * dVar8 + dVar10);
+      local_88 = param_5[2] * fVar1 + (float)((double)param_4[2] * dVar7 + dVar9);
       RB_DrawCharInSpace(pMVar4,&local_90,&local_b0,&local_a0,pGVar6,local_e0);
-      dVar8 = (double)pGVar6->dx;
-      dVar12 = (double)(float)((double)*param_4 * dVar8 + dVar12);
-      dVar11 = (double)(float)((double)param_4[1] * dVar8 + dVar11);
-      dVar10 = (double)(float)((double)param_4[2] * dVar8 + dVar10);
+      dVar7 = (double)pGVar6->dx;
+      dVar11 = (double)(float)((double)*param_4 * dVar7 + dVar11);
+      dVar10 = (double)(float)((double)param_4[1] * dVar7 + dVar10);
+      dVar9 = (double)(float)((double)param_4[2] * dVar7 + dVar9);
     } while (*pcStack00000014 != '\0');
   }
   RB_EndSurfaceIfNeeded();
-  __restgprlr_20();
   return;
 }
 
 
 // 827981E8  RB_DrawText2DCmd  (gfx_d3d/rb_backend.cpp:5350)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
+
 void RB_DrawText2DCmd(GfxRenderCommandExecState *param_1)
 
 {
-  int iVar1;
-  int *piVar2;
+  void *pvVar1;
+  double dVar2;
   double dVar3;
   double dVar4;
-  double dVar5;
   int in_stack_fffffef8;
   int in_stack_fffffefc;
   int in_stack_ffffff00;
@@ -8188,21 +8016,20 @@ void RB_DrawText2DCmd(GfxRenderCommandExecState *param_1)
   Material *in_stack_ffffff08;
   Material *in_stack_ffffff0c;
   
-  piVar2 = (int *)__savegprlr_25(param_1);
-  iVar1 = *piVar2;
-  dVar5 = (double)(*(float *)(iVar1 + 0xc) * 0.017453292);
-  dVar3 = sin(dVar5);
-  dVar4 = (double)(float)dVar3;
-  dVar3 = cos(dVar5);
-  DrawText2D((char *)(iVar1 + 0x50),*(float *)(iVar1 + 4),*(float *)(iVar1 + 8),
-             *(Font_s **)(iVar1 + 0x34),*(float *)(iVar1 + 0x14),*(float *)(iVar1 + 0x18),
-             (float)dVar4,(float)dVar3,*(GfxColor *)(iVar1 + 0x38),*(int *)(iVar1 + 0x10),
-             *(int *)(iVar1 + 0x3c),*(int *)(iVar1 + 0x40),(char)*(undefined4 *)(iVar1 + 0x44),
-             *(float *)(iVar1 + 0x4c),*(GfxColor *)(iVar1 + 0x48),in_stack_fffffef8,
-             in_stack_fffffefc,in_stack_ffffff00,in_stack_ffffff04,in_stack_ffffff08,
-             in_stack_ffffff0c);
-  *piVar2 = (uint)*(ushort *)(*piVar2 + 2) + *piVar2;
-  __restgprlr_25();
+  pvVar1 = param_1->cmd;
+  dVar4 = (double)(*(float *)((int)pvVar1 + 0xc) * 0.017453292);
+  dVar2 = sin(dVar4);
+  dVar3 = (double)(float)dVar2;
+  dVar2 = cos(dVar4);
+  DrawText2D((char *)((int)pvVar1 + 0x50),*(float *)((int)pvVar1 + 4),*(float *)((int)pvVar1 + 8),
+             *(Font_s **)((int)pvVar1 + 0x34),*(float *)((int)pvVar1 + 0x14),
+             *(float *)((int)pvVar1 + 0x18),(float)dVar3,(float)dVar2,
+             *(GfxColor *)((int)pvVar1 + 0x38),*(int *)((int)pvVar1 + 0x10),
+             *(int *)((int)pvVar1 + 0x3c),*(int *)((int)pvVar1 + 0x40),
+             (char)*(undefined4 *)((int)pvVar1 + 0x44),*(float *)((int)pvVar1 + 0x4c),
+             *(GfxColor *)((int)pvVar1 + 0x48),in_stack_fffffef8,in_stack_fffffefc,in_stack_ffffff00
+             ,in_stack_ffffff04,in_stack_ffffff08,in_stack_ffffff0c);
+  param_1->cmd = (void *)((uint)*(ushort *)((int)param_1->cmd + 2) + (int)param_1->cmd);
   return;
 }
 
@@ -8270,18 +8097,18 @@ void RB_IncBackEndFrameCount(void)
 
 // 827983C8  RB_BeginFrame  (gfx_d3d/rb_backend.cpp:5479)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 
 void RB_BeginFrame(void *param_1)
 
 {
-  GfxBackEndData *pGVar1;
-  int iVar2;
+  int iVar1;
   
-  pGVar1 = (GfxBackEndData *)__savegprlr_29(param_1);
-  iVar2 = Sys_HasDeviceOwnership();
-  if (iVar2 == 0) {
+  iVar1 = Sys_HasDeviceOwnership();
+  if (iVar1 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_backend.cpp",0x1569
                     ,0,"%s");
   }
@@ -8289,8 +8116,8 @@ void RB_BeginFrame(void *param_1)
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_backend.cpp",0x156a
                     ,0,"%s\n\t(r_glob.stopUpdatingSamplers) = %i");
   }
-  backEndData = pGVar1;
-  if ((pGVar1->drawType & 1) != 0) {
+  backEndData = param_1;
+  if ((*(uint *)((int)param_1 + 0x1bdc) & 1) != 0) {
     if (rg.renderHiResShot == 0) {
       r_glob.backEndFrameCount = r_glob.backEndFrameCount + 1;
     }
@@ -8318,13 +8145,14 @@ void RB_BeginFrame(void *param_1)
     tess.vertexCount = 0;
     R_GPU_BeginFrame();
   }
-  __restgprlr_29();
   return;
 }
 
 
 // 8278FA78  RB_SwapBuffers  (gfx_d3d/rb_backend.cpp:5563)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 
@@ -8334,7 +8162,6 @@ void RB_SwapBuffers(void)
   uint uVar1;
   int iVar2;
   
-  __savegprlr_29();
   Profile_Begin(0x7c);
   do {
     D3DDevice_SetShaderGPRAllocation(dx.device,0,0,0);
@@ -8362,20 +8189,19 @@ void RB_SwapBuffers(void)
                (r_pixelShaderGPRReallocation->current).unsignedInt);
     iVar2 = alwaysfails;
   }
-  __restgprlr_29();
   return;
 }
 
 
 // 8278FBA8  RB_EndFrame  (gfx_d3d/rb_backend.cpp:5706)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void RB_EndFrame(uint param_1)
 
 {
-  ulonglong uVar1;
-  
-  uVar1 = __savegprlr_27(param_1);
-  if ((uVar1 & 2) != 0) {
+  if ((param_1 & 2) != 0) {
     R_GPU_EndFrame();
     RB_SwapBuffers();
     if (r_gamma == (dvar_t *)0x0) {
@@ -8400,7 +8226,6 @@ void RB_EndFrame(uint param_1)
       }
     }
   }
-  __restgprlr_27();
   return;
 }
 
@@ -8441,6 +8266,9 @@ LAB_8278fd50:
 
 // 827984F8  RB_ExecuteRenderCommandsLoop  (gfx_d3d/rb_backend.cpp:5933)
 
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
+
 void RB_ExecuteRenderCommandsLoop(void *param_1)
 
 {
@@ -8448,7 +8276,7 @@ void RB_ExecuteRenderCommandsLoop(void *param_1)
   GfxRenderCommandExecState GVar2;
   GfxRenderCommandExecState local_60 [24];
   
-  local_60[0].cmd = (void *)__savegprlr_22(param_1);
+  local_60[0].cmd = param_1;
   if (tess.indexCount != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_backend.cpp",0x1738
                     ,0,"%s\n\t(tess.indexCount) = %i");
@@ -8477,13 +8305,14 @@ void RB_ExecuteRenderCommandsLoop(void *param_1)
     }
   }
   RB_EndSurfaceIfNeeded();
-  __restgprlr_22();
   return;
 }
 
 
 // 8279A468  RB_Draw3D  (gfx_d3d/rb_backend.cpp:5976)
 
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
@@ -8491,22 +8320,21 @@ void RB_ExecuteRenderCommandsLoop(void *param_1)
 void RB_Draw3D(void)
 
 {
-  long lVar1;
-  GfxBackEndData *pGVar2;
-  int iVar3;
+  int iVar1;
+  long lVar2;
+  GfxBackEndData *pGVar3;
   ulonglong uVar4;
   char in_RESERVE;
   byte in_cr0;
   
-  __savegprlr_22();
   Profile_Begin(0xb0);
-  pGVar2 = backEndData;
+  pGVar3 = backEndData;
   if (backEndData->viewInfoCount != 0) {
     RB_Draw3DInternal(backEndData->viewInfo + backEndData->viewInfoIndex);
   }
   RB_Cinematic_UpdateFrame2();
   do {
-    iVar3 = r_glob.freezeDrawLock;
+    iVar1 = r_glob.freezeDrawLock;
     if (r_glob.freezeDrawLock != 0) {
       if (in_RESERVE != '\0') {
         r_glob.freezeDrawLock =
@@ -8522,10 +8350,10 @@ void RB_Draw3D(void)
     }
   } while (!(bool)(in_cr0 >> 1 & 1));
 joined_r0x8279a4f0:
-  if (iVar3 != 0) {
+  if (iVar1 != 0) {
     Sys_Sleep(0);
     do {
-      iVar3 = r_glob.freezeDrawLock;
+      iVar1 = r_glob.freezeDrawLock;
       if (r_glob.freezeDrawLock != 0) {
         if (in_RESERVE != '\0') {
           r_glob.freezeDrawLock =
@@ -8545,7 +8373,7 @@ joined_r0x8279a4f0:
   sync(1);
   if (r_glob.freezeDrawData != (GfxBackEndData *)0x0) {
     do {
-      lVar1 = g_imageCacheWaiting;
+      lVar2 = g_imageCacheWaiting;
       if (g_imageCacheWaiting != 1) {
         if (in_RESERVE != '\0') {
           g_imageCacheWaiting =
@@ -8560,7 +8388,7 @@ joined_r0x8279a4f0:
         in_cr0 = 2;
       }
     } while (!(bool)(in_cr0 >> 1 & 1));
-    if (lVar1 == 1) {
+    if (lVar2 == 1) {
       sync(1);
       ImageCache_ForceUpdateGPU();
       if (g_imageCacheWaiting != 2) {
@@ -8579,10 +8407,10 @@ joined_r0x8279a4f0:
   }
   r_glob.freezeDrawLock = 0;
   R_ProcessWorkerCmdsWithTimeout(RB_IsFinishReady,1);
-  if (pGVar2->finishReady != 0) {
+  if (pGVar3->finishReady != 0) {
     sync(1);
     do {
-      iVar3 = r_glob.freezeDrawLock;
+      iVar1 = r_glob.freezeDrawLock;
       if (r_glob.freezeDrawLock != 0) {
         if (in_RESERVE != '\0') {
           r_glob.freezeDrawLock =
@@ -8598,10 +8426,10 @@ joined_r0x8279a4f0:
       }
     } while (!(bool)(in_cr0 >> 1 & 1));
 joined_r0x8279a674:
-    if (iVar3 != 0) {
+    if (iVar1 != 0) {
       Sys_Sleep(0);
       do {
-        iVar3 = r_glob.freezeDrawLock;
+        iVar1 = r_glob.freezeDrawLock;
         if (r_glob.freezeDrawLock != 0) {
           if (in_RESERVE != '\0') {
             r_glob.freezeDrawLock =
@@ -8666,8 +8494,7 @@ joined_r0x8279a674:
     }
     g_imageCacheAllowUpdate = 1;
   }
-  iVar3 = Profile_EndInternal((double *)0x0);
-  __restgprlr_22(iVar3);
+  Profile_EndInternal((double *)0x0);
   return;
 }
 
@@ -8712,6 +8539,8 @@ int RB_IsFinishReady(void)
 
 // 82798700  RB_CallExecuteRenderCommands  (gfx_d3d/rb_backend.cpp:6156)
 
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
@@ -8722,18 +8551,16 @@ void RB_CallExecuteRenderCommands(void)
 
 {
   ulong uVar1;
-  int iVar2;
-  uint uVar3;
+  uint uVar2;
   char in_RESERVE;
   byte in_cr0;
-  double dVar4;
+  double dVar3;
   ulong in_stack_ffffff38;
   _D3DRESOLVE_PARAMETERS *in_stack_ffffff3c;
   
-  __savegprlr_22();
   Profile_Begin(0xb0);
-  uVar3 = backEndData->drawType >> 1 & 1;
-  if (uVar3 != 0) {
+  uVar2 = backEndData->drawType >> 1 & 1;
+  if (uVar2 != 0) {
     D3DDevice_InsertFence(dx.device);
     R_ProcessWorkerCmdsWithTimeout(RB_IsFinishReady,1);
     if (backEndData->finishReady == 0) goto LAB_82798a80;
@@ -8805,61 +8632,59 @@ void RB_CallExecuteRenderCommands(void)
   uVar1 = D3DDevice_InsertFence(dx.device);
   backEndData->endFrameFence = uVar1;
   PIXEndNamedEvent();
-  if (uVar3 != 0) {
+  if (uVar2 != 0) {
     R_GPU_BeginTimer(GPU_TIMER_END_RESOLVE);
     PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffff,"end cmds");
-    dVar4 = 0.0;
+    dVar3 = 0.0;
     do {
       D3DDevice_Resolve(dx.device,0,(_D3DRECT *)0x0,
                         (D3DBaseTexture *)dx.frontBufferTexture[dx.frontBufferTextureIndex],
-                        (_D3DPOINT *)0x0,0,0,(__vector4 *)0x0,(float)dVar4,in_stack_ffffff38,
+                        (_D3DPOINT *)0x0,0,0,(__vector4 *)0x0,(float)dVar3,in_stack_ffffff38,
                         in_stack_ffffff3c);
     } while (alwaysfails != 0);
     PIXEndNamedEvent();
     R_GPU_EndTimer();
   }
 LAB_82798a80:
-  iVar2 = Profile_EndInternal((double *)0x0);
-  __restgprlr_22(iVar2);
+  Profile_EndInternal((double *)0x0);
   return;
 }
 
 
 // 8279A878  RB_RenderCommandFrame  (gfx_d3d/rb_backend.cpp:6348)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 
 void RB_RenderCommandFrame(void *param_1)
 
 {
-  GfxBackEndData *pGVar1;
-  uint uVar2;
+  uint uVar1;
   
-  pGVar1 = (GfxBackEndData *)__savegprlr_29(param_1);
   Profile_EndInternal((double *)0x0);
   g_inRenderCommandFrame = 1;
-  RB_BeginFrame(pGVar1);
+  RB_BeginFrame(param_1);
   RB_Draw3D();
   RB_CallExecuteRenderCommands();
-  if (backEndData != pGVar1) {
+  if (backEndData != param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_backend.cpp",0x18e5
                     ,0,"%s");
   }
   if (backEndData->finishReady == 0) {
-    uVar2 = 0;
+    uVar1 = 0;
   }
   else {
-    uVar2 = backEndData->drawType;
+    uVar1 = backEndData->drawType;
   }
   backEndData = (GfxBackEndData *)0x0;
   g_inRenderCommandFrame = 0;
   Sys_RenderCompleted();
   PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffff,"end frame");
-  RB_EndFrame(uVar2);
+  RB_EndFrame(uVar1);
   PIXEndNamedEvent();
   Profile_Begin(0xa3);
-  __restgprlr_29();
   return;
 }
 
@@ -9005,6 +8830,7 @@ void R_ForceReleaseDeviceOwnership(void)
 
 // 8278FE60  RB_ShowDirtyDiscError  (gfx_d3d/rb_backend.cpp:6503)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 
@@ -9019,7 +8845,6 @@ void RB_ShowDirtyDiscError(void)
   ulong in_stack_ffffff78;
   _D3DRESOLVE_PARAMETERS *in_stack_ffffff7c;
   
-  __savegprlr_29();
   uVar1 = ZEXT48(dx.frontBufferTexture[dx.frontBufferTextureIndex]);
   if (uVar1 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_backend.cpp",0x1968
@@ -9083,20 +8908,20 @@ void R_ShowDirtyDiscError(void)
 
 // 8278FF90  R_BladeErrorDisplay  (gfx_d3d/rb_backend.cpp:6555)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 
 BladeErrorResponse R_BladeErrorDisplay(char *param_1)
 
 {
   uint uVar1;
-  char *pcVar2;
-  ulong uVar3;
-  D3DBaseTexture *pDVar4;
-  BladeErrorResponse BVar5;
-  _XOVERLAPPED *p_Var6;
+  ulong uVar2;
+  D3DBaseTexture *pDVar3;
+  _XOVERLAPPED *p_Var4;
   char in_RESERVE;
   byte in_cr0;
-  longlong lVar7;
+  longlong lVar5;
   _XOVERLAPPED *in_stack_ffffdf38;
   _MESSAGEBOX_RESULT_u_0 local_2070;
   ulong local_2068;
@@ -9107,15 +8932,14 @@ BladeErrorResponse R_BladeErrorDisplay(char *param_1)
   _XOVERLAPPED local_2050;
   wchar_t awStack_2030 [4120];
   
-  pcVar2 = (char *)__savegprlr_28(param_1);
-  p_Var6 = &local_2050;
+  p_Var4 = &local_2050;
   local_2050.InternalLow = 0;
-  lVar7 = 6;
+  lVar5 = 6;
   do {
-    p_Var6 = (_XOVERLAPPED *)&p_Var6->InternalHigh;
-    *(ulong *)p_Var6 = 0;
-    lVar7 = lVar7 + -1;
-  } while (lVar7 != 0);
+    p_Var4 = (_XOVERLAPPED *)&p_Var4->InternalHigh;
+    *(ulong *)p_Var4 = 0;
+    lVar5 = lVar5 + -1;
+  } while (lVar5 != 0);
   local_2070.dwButtonPressed = 0;
   local_2070._4_4_ = 0;
   local_2060 = L"Dump Memory to File";
@@ -9123,21 +8947,21 @@ BladeErrorResponse R_BladeErrorDisplay(char *param_1)
   local_2058 = L"Continue";
   R_FlushSwap();
   DB_AbortFileHandles();
-  uVar3 = PIXGetCaptureState();
-  if (uVar3 == 0) {
+  uVar2 = PIXGetCaptureState();
+  if (uVar2 == 0) {
     if (dx.frontBufferTexture[dx.frontBufferTextureIndex] == (D3DTexture *)0x0) {
       R_GetDisplayResolution((int *)&local_2068,(int *)&local_2064);
       uVar1 = dx.frontBufferTextureIndex;
-      pDVar4 = D3DDevice_CreateTexture
+      pDVar3 = D3DDevice_CreateTexture
                          (local_2068,local_2064,1,1,1,D3DFMT_LE_X8R8G8B8,0,D3DRTYPE_TEXTURE);
-      dx.frontBufferTexture[uVar1] = (D3DTexture *)pDVar4;
+      dx.frontBufferTexture[uVar1] = (D3DTexture *)pDVar3;
     }
     D3DDevice_GpuDisownAll(dx.device);
     D3DDevice_SetShaderGPRAllocation(dx.device,0,0,0);
-    MultiByteToWideChar(0xfde9,0,pcVar2,-1,(ushort *)awStack_2030,0x1000);
-    uVar3 = XShowMessageBoxUI(0,L"Error",awStack_2030,3,&local_2060,0,1,
+    MultiByteToWideChar(0xfde9,0,param_1,-1,(ushort *)awStack_2030,0x1000);
+    uVar2 = XShowMessageBoxUI(0,L"Error",awStack_2030,3,&local_2060,0,1,
                               (_MESSAGEBOX_RESULT *)&local_2070,in_stack_ffffdf38);
-    while (uVar3 != 0x3e5) {
+    while (uVar2 != 0x3e5) {
       R_RegistedRenderFrame();
       do {
         if (in_RESERVE != '\0') {
@@ -9150,7 +8974,7 @@ BladeErrorResponse R_BladeErrorDisplay(char *param_1)
       D3DDevice_Swap(dx.device,(D3DBaseTexture *)dx.frontBufferTexture[dx.frontBufferTextureIndex],
                      (_D3DVIDEO_SCALER_PARAMETERS *)0x0);
       Sys_DidSwap();
-      uVar3 = XShowMessageBoxUI(0,L"Error",awStack_2030,3,&local_2060,0,1,
+      uVar2 = XShowMessageBoxUI(0,L"Error",awStack_2030,3,&local_2060,0,1,
                                 (_MESSAGEBOX_RESULT *)&local_2070,in_stack_ffffdf38);
     }
     while (local_2050.InternalLow == 0x3e5) {
@@ -9167,18 +8991,15 @@ BladeErrorResponse R_BladeErrorDisplay(char *param_1)
                      (_D3DVIDEO_SCALER_PARAMETERS *)0x0);
       Sys_DidSwap();
     }
-    uVar3 = XGetOverlappedResult(&local_2050,(ulong *)0x0,1);
-    if ((uVar3 != 0x4c7) && (local_2070.dwButtonPressed != 2)) {
+    uVar2 = XGetOverlappedResult(&local_2050,(ulong *)0x0,1);
+    if ((uVar2 != 0x4c7) && (local_2070.dwButtonPressed != 2)) {
       if (local_2070.dwButtonPressed == 1) {
-        BVar5 = __restgprlr_28(1);
-        return BVar5;
+        return ERRORBLADE_RESPONSE_DEBUG;
       }
-      BVar5 = __restgprlr_28(-(local_2070.dwButtonPressed != 0) & 2);
-      return BVar5;
+      return -(uint)(local_2070.dwButtonPressed != 0) & ERRORBLADE_RESPONSE_DONOTHING;
     }
   }
-  BVar5 = __restgprlr_28(2);
-  return BVar5;
+  return ERRORBLADE_RESPONSE_DONOTHING;
 }
 
 
@@ -9219,6 +9040,8 @@ void RB_RenderThreadIdle(void)
 
 // 82790270  RB_BeginRemoteScreenUpdate  (gfx_d3d/rb_backend.cpp:6658)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
@@ -9228,7 +9051,6 @@ void RB_BeginRemoteScreenUpdate(void)
 {
   bool bVar1;
   
-  __savegprlr_29();
   bVar1 = Sys_IsRenderThread();
   if (!bVar1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_backend.cpp",0x1a03
@@ -9256,17 +9078,17 @@ void RB_BeginRemoteScreenUpdate(void)
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_backend.cpp",0x1a13
                     ,0,"%s\n\t(r_glob.allowRenderThreadReleaseDevice) = %i");
     r_glob.allowRenderThreadReleaseDevice = r_glob.allowRenderThreadReleaseDevice + 1;
-    __restgprlr_29();
     return;
   }
   r_glob.allowRenderThreadReleaseDevice = r_glob.allowRenderThreadReleaseDevice + 1;
-  __restgprlr_29();
   return;
 }
 
 
 // 827903C8  RB_EndRemoteScreenUpdate  (gfx_d3d/rb_backend.cpp:6683)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
@@ -9277,7 +9099,6 @@ void RB_EndRemoteScreenUpdate(void)
   bool bVar1;
   ulonglong uVar2;
   
-  __savegprlr_29();
   bVar1 = Sys_IsRenderThread();
   if (!bVar1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_backend.cpp",0x1a1c
@@ -9305,7 +9126,6 @@ void RB_EndRemoteScreenUpdate(void)
                     ,0,"%s");
   }
   r_glob.screenUpdateNotify = 1;
-  __restgprlr_29();
   return;
 }
 
@@ -9332,28 +9152,28 @@ void RB_CheckSkipRemoteScreenUpdate(void)
 
 // 8279A940  RB_RenderThread  (gfx_d3d/rb_backend.cpp:6729)
 
+/* WARNING: Function: __savegprlr_21 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 
 void RB_RenderThread(uint param_1)
 
 {
-  int iVar1;
-  void *pvVar2;
+  void *pvVar1;
+  int iVar2;
   ulonglong uVar3;
   undefined8 in_r13;
   int *piVar4;
   
-  iVar1 = __savegprlr_21(param_1);
-  if (iVar1 != 1) {
+  if (param_1 != 1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_backend.cpp",0x1a54
                     ,0,"threadContext == THREAD_CONTEXT_BACKEND\n\t%i, %i");
   }
   R_AcquireDeviceOwnership();
-  pvVar2 = Sys_GetValue(2);
+  pvVar1 = Sys_GetValue(2);
   setjmp();
   piVar4 = (int *)in_r13;
-  while (pvVar2 != (void *)0x0) {
+  while (pvVar1 != (void *)0x0) {
     Profile_Recover(1);
     if (r_glob.isRenderingRemoteUpdate == false) {
       if (r_glob.allowRenderThreadReleaseDevice != 0) {
@@ -9375,7 +9195,7 @@ void RB_RenderThread(uint param_1)
       g_inRenderCommandFrame = 0;
       Sys_RenderCompleted();
     }
-    pvVar2 = Sys_GetValue(2);
+    pvVar1 = Sys_GetValue(2);
     setjmp();
     piVar4 = (int *)in_r13;
   }
@@ -9384,8 +9204,8 @@ void RB_RenderThread(uint param_1)
   *(undefined4 *)(*piVar4 + 0xf4) = 0xffffe967;
   do {
     R_ProcessWorkerCmdsWithTimeout(Sys_CheckBackendEvent,1);
-    iVar1 = Sys_FinishRenderer();
-    if (iVar1 != 0) {
+    iVar2 = Sys_FinishRenderer();
+    if (iVar2 != 0) {
       data = Sys_RendererSleep();
       if (data != (void *)0x0) {
         RB_RenderCommandFrame(data);
@@ -9520,6 +9340,8 @@ void RB_InitSingleCodeImage(uint param_1,GfxImage *param_2,uchar param_3,char *p
 
 // 82790628  RB_InitCodeImages  (gfx_d3d/rb_backend.cpp:6952)
 
+/* WARNING: Function: __savegprlr_20 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_20 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
@@ -9528,7 +9350,6 @@ void RB_InitSingleCodeImage(uint param_1,GfxImage *param_2,uchar param_3,char *p
 void RB_InitCodeImages(void)
 
 {
-  __savegprlr_20();
   rg.codeImageNames[6] = "shadowmapSamplerSun";
   gfxCmdBufInput.codeImageSamplerStates[0] = '\x01';
   gfxCmdBufInput.codeImageSamplerStates[1] = '\x01';
@@ -9584,7 +9405,6 @@ void RB_InitCodeImages(void)
   gfxCmdBufInput.codeImages[0x1d] = rgp.streamingLoadingImage;
   gfxCmdBufInput.codeImageSamplerStates[0x1d] = '\x01';
   rg.codeImageNames[0x1d] = (char *)0x0;
-  __restgprlr_20();
   return;
 }
 

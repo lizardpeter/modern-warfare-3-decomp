@@ -2,6 +2,8 @@
 
 // 8289EAD8  SetBaseTextureHeader  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/xgraphics/misc/header.cpp:46)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 
 uint XGRAPHICS::SetBaseTextureHeader
@@ -12,19 +14,15 @@ uint XGRAPHICS::SetBaseTextureHeader
 
 {
   undefined8 *puVar1;
-  uint uVar2;
-  ulonglong uVar3;
-  ulonglong uVar4;
-  ulonglong uVar5;
-  undefined8 *puVar6;
-  ulonglong uVar7;
-  longlong lVar8;
+  undefined8 *puVar2;
+  uint uVar3;
+  longlong lVar4;
   uint in_stack_0000005c;
   uint in_stack_00000064;
   _D3DRESOURCETYPE in_stack_00000074;
   int in_stack_0000007c;
-  undefined4 *in_stack_00000084;
-  uint *in_stack_0000008c;
+  uint *in_stack_00000084;
+  ulong *in_stack_0000008c;
   ulong in_stack_fffffef8;
   int in_stack_fffffefc;
   uint in_stack_ffffff00;
@@ -32,86 +30,80 @@ uint XGRAPHICS::SetBaseTextureHeader
   ulong *in_stack_ffffff08;
   ulong *in_stack_ffffff0c;
   uint local_90;
-  uint local_8c;
+  ulong local_8c;
   undefined8 uStack_88;
   uint local_80 [8];
   uint local_60;
   uint local_50;
   
-  uVar5 = (ulonglong)(int)param_5;
-  uVar4 = (ulonglong)(int)param_4;
-  uVar3 = (ulonglong)(int)param_3;
-  uVar7 = (ulonglong)(int)param_2;
-  uVar2 = __savegprlr_24(param_1);
   D3D::BlockSizeOfGpuFormat(param_6 & 0x3f,&local_8c,&local_90);
-  if ((uVar4 & 0xffffffff) != 1) {
-    if ((uVar4 & 0xffffffff) != 0) goto LAB_8289eb88;
-    if (uVar2 == 1) {
-      if (((uVar7 & 0xffffffff) != 1) || ((uVar3 & 0xffffffff) != 1)) goto LAB_8289eb88;
+  if (param_4 != 1) {
+    if (param_4 != 0) goto LAB_8289eb88;
+    if (param_1 == 1) {
+      if ((param_2 != 1) || (param_3 != 1)) goto LAB_8289eb88;
       if (param_8 == 0) goto LAB_8289eb68;
     }
-    if ((((uVar2 != 3) || ((uVar7 & 0xffffffff) != 3)) || ((uVar3 & 0xffffffff) != 3)) ||
-       (param_8 == 0)) goto LAB_8289eb88;
+    if ((((param_1 != 3) || (param_2 != 3)) || (param_3 != 3)) || (param_8 == 0)) goto LAB_8289eb88;
   }
 LAB_8289eb68:
   if (in_stack_00000074 == D3DRTYPE_TEXTURE) {
     trapWord(6,(ulonglong)local_90,0);
   }
 LAB_8289eb88:
-  lVar8 = 6;
+  lVar4 = 6;
   puVar1 = &uStack_88;
   do {
-    puVar6 = puVar1;
-    puVar1 = puVar6 + 1;
+    puVar2 = puVar1;
+    puVar1 = puVar2 + 1;
     *puVar1 = 0;
-    lVar8 = lVar8 + -1;
-  } while (lVar8 != 0);
-  *(undefined4 *)(puVar6 + 2) = 0;
+    lVar4 = lVar4 + -1;
+  } while (lVar4 != 0);
+  *(undefined4 *)(puVar2 + 2) = 0;
   D3D::SetTextureHeader
-            (in_stack_00000074,uVar2,(uint)uVar7,(uint)uVar3,(uint)uVar4,(ulong)uVar5,param_6,
-             param_7,in_stack_fffffef8,in_stack_fffffefc,in_stack_ffffff00,in_stack_ffffff04,
+            (in_stack_00000074,param_1,param_2,param_3,param_4,param_5,param_6,param_7,
+             in_stack_fffffef8,in_stack_fffffefc,in_stack_ffffff00,in_stack_ffffff04,
              in_stack_ffffff08,in_stack_ffffff0c);
   local_80[5] = 0xffff0000;
   local_80[6] = 0xffff0000;
-  uVar2 = 3;
+  uVar3 = 3;
   local_80[1] = 1;
   local_60 = in_stack_0000005c & 0xfffff000 | local_60 & 0xfff;
   local_80[0] = 3;
-  if ((uVar5 & 4) != 0) {
-    uVar2 = 0x200003;
+  if ((param_5 & 4) != 0) {
+    uVar3 = 0x200003;
     local_80[0] = 0x200003;
   }
-  if ((uVar5 & 0x200) != 0) {
-    local_80[0] = uVar2 | 0x400000;
+  if ((param_5 & 0x200) != 0) {
+    local_80[0] = uVar3 | 0x400000;
   }
-  if ((ulonglong)local_8c == 0) {
-    uVar7 = (ulonglong)local_90;
+  uVar3 = local_90;
+  if (local_8c == 0) {
     local_50 = local_50 & 0xfff;
   }
   else if (in_stack_00000064 == 0xffffffff) {
-    uVar7 = (ulonglong)local_90 + 0xfff & 0xfffff000;
-    local_50 = local_50 & 0xfff | (int)uVar7 + in_stack_0000005c & 0xfffff000;
+    uVar3 = local_90 + 0xfff & 0xfffff000;
+    local_50 = local_50 & 0xfff | uVar3 + in_stack_0000005c & 0xfffff000;
   }
   else {
-    uVar7 = (ulonglong)local_90;
     local_50 = in_stack_00000064 & 0xfffff000 | local_50 & 0xfff;
   }
-  if (in_stack_00000084 != (undefined4 *)0x0) {
-    *in_stack_00000084 = (int)uVar7;
+  if (in_stack_00000084 != (uint *)0x0) {
+    *in_stack_00000084 = uVar3;
   }
-  if (in_stack_0000008c != (uint *)0x0) {
+  if (in_stack_0000008c != (ulong *)0x0) {
     *in_stack_0000008c = local_8c;
   }
   if (in_stack_0000007c != 0) {
     memcpy();
   }
-  uVar2 = __restgprlr_24(uVar7 + local_8c);
-  return uVar2;
+  return uVar3 + local_8c;
 }
 
 
 // 8289ECE0  XGSetTextureHeader  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/xgraphics/misc/header.cpp:607)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 
 uint XGSetTextureHeader(uint param_1,uint param_2,uint param_3,ulong param_4,_D3DFORMAT param_5,
@@ -129,18 +121,18 @@ uint XGSetTextureHeader(uint param_1,uint param_2,uint param_3,ulong param_4,_D3
   uint *in_stack_ffffff60;
   uint *in_stack_ffffff64;
   
-  uVar1 = __savegprlr_27(param_1);
   uVar1 = XGRAPHICS::SetBaseTextureHeader
-                    (uVar1,param_2,1,param_3,param_4,param_5,MIPPACKING_DEFAULT,0,in_stack_ffffff48,
-                     in_stack_ffffff4c,in_stack_ffffff50,in_stack_ffffff54,in_stack_ffffff58,
-                     in_stack_ffffff5c,in_stack_ffffff60,in_stack_ffffff64);
-  uVar1 = __restgprlr_27(uVar1);
+                    (param_1,param_2,1,param_3,param_4,param_5,MIPPACKING_DEFAULT,0,
+                     in_stack_ffffff48,in_stack_ffffff4c,in_stack_ffffff50,in_stack_ffffff54,
+                     in_stack_ffffff58,in_stack_ffffff5c,in_stack_ffffff60,in_stack_ffffff64);
   return uVar1;
 }
 
 
 // 8289ED50  XGSetLineTextureHeader  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/xgraphics/misc/header.cpp:681)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 
 uint XGSetLineTextureHeader
@@ -158,18 +150,18 @@ uint XGSetLineTextureHeader
   uint *in_stack_ffffff70;
   uint *in_stack_ffffff74;
   
-  uVar1 = __savegprlr_29(param_1);
   uVar1 = XGRAPHICS::SetBaseTextureHeader
-                    (uVar1,1,1,param_2,param_3,param_4,MIPPACKING_DISABLED,0,in_stack_ffffff58,
+                    (param_1,1,1,param_2,param_3,param_4,MIPPACKING_DISABLED,0,in_stack_ffffff58,
                      in_stack_ffffff5c,in_stack_ffffff60,in_stack_ffffff64,in_stack_ffffff68,
                      in_stack_ffffff6c,in_stack_ffffff70,in_stack_ffffff74);
-  uVar1 = __restgprlr_29(uVar1);
   return uVar1;
 }
 
 
 // 8289EDB8  XGSetCubeTextureHeader  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/xgraphics/misc/header.cpp:731)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 
 uint XGSetCubeTextureHeader
@@ -187,18 +179,18 @@ uint XGSetCubeTextureHeader
   uint *in_stack_ffffff60;
   uint *in_stack_ffffff64;
   
-  uVar1 = __savegprlr_28(param_1);
   uVar1 = XGRAPHICS::SetBaseTextureHeader
-                    (uVar1,uVar1,6,param_2,param_3,param_4,MIPPACKING_DEFAULT,0,in_stack_ffffff48,
-                     in_stack_ffffff4c,in_stack_ffffff50,in_stack_ffffff54,in_stack_ffffff58,
-                     in_stack_ffffff5c,in_stack_ffffff60,in_stack_ffffff64);
-  uVar1 = __restgprlr_28(uVar1);
+                    (param_1,param_1,6,param_2,param_3,param_4,MIPPACKING_DEFAULT,0,
+                     in_stack_ffffff48,in_stack_ffffff4c,in_stack_ffffff50,in_stack_ffffff54,
+                     in_stack_ffffff58,in_stack_ffffff5c,in_stack_ffffff60,in_stack_ffffff64);
   return uVar1;
 }
 
 
 // 8289EE28  XGSetVolumeTextureHeader  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/xgraphics/misc/header.cpp:881)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 
 uint XGSetVolumeTextureHeader
@@ -217,48 +209,46 @@ uint XGSetVolumeTextureHeader
   uint *in_stack_ffffff50;
   uint *in_stack_ffffff54;
   
-  uVar1 = __savegprlr_26(param_1);
   uVar1 = XGRAPHICS::SetBaseTextureHeader
-                    (uVar1,param_2,param_3,param_4,param_5,param_6,MIPPACKING_DEFAULT,0,
+                    (param_1,param_2,param_3,param_4,param_5,param_6,MIPPACKING_DEFAULT,0,
                      in_stack_ffffff38,in_stack_ffffff3c,in_stack_ffffff40,in_stack_ffffff44,
                      in_stack_ffffff48,in_stack_ffffff4c,in_stack_ffffff50,in_stack_ffffff54);
-  uVar1 = __restgprlr_26(uVar1);
   return uVar1;
 }
 
 
 // 8289E9B0  XGSetVertexBufferHeader  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/xgraphics/misc/header.cpp:918)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void XGSetVertexBufferHeader
                (uint param_1,ulong param_2,ulong param_3,uint param_4,D3DVertexBuffer *param_5)
 
 {
   uint uVar1;
-  uint uVar2;
-  ulonglong uVar3;
   
-  uVar3 = (ulonglong)(int)param_2;
-  uVar2 = __savegprlr_28(param_1,uVar3,param_3);
   memset();
   param_5->_padding_ = 1;
-  if ((uVar3 & 4) != 0) {
+  if ((param_2 & 4) != 0) {
     param_5->_padding_ = 0x200001;
   }
-  if ((uVar3 & 0x200) != 0) {
+  if ((param_2 & 0x200) != 0) {
     param_5->_padding_ = param_5->_padding_ | 0x400000;
   }
   uVar1 = (param_5->Format).dword[1];
   param_5->_padding_ = 1;
   param_5->_padding_ = -0x10000;
   (param_5->Format).dword[0] = param_4 | 3;
-  (param_5->Format).dword[1] = uVar2 & 0x3fffffc | uVar1 & 0x8000000 | 0x10000002;
-  __restgprlr_28();
+  (param_5->Format).dword[1] = param_1 & 0x3fffffc | uVar1 & 0x8000000 | 0x10000002;
   return;
 }
 
 
 // 8289EA48  XGSetIndexBufferHeader  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/xgraphics/misc/header.cpp:968)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 
 void XGSetIndexBufferHeader
@@ -266,27 +256,19 @@ void XGSetIndexBufferHeader
                D3DIndexBuffer *param_6)
 
 {
-  ulong uVar1;
-  ulonglong uVar2;
-  ulonglong uVar3;
-  
-  uVar3 = (ulonglong)(int)param_3;
-  uVar2 = (ulonglong)(int)param_2;
-  uVar1 = __savegprlr_27(param_1,uVar2,uVar3,param_4);
   memset();
-  param_6->Size = uVar1;
+  param_6->Size = param_1;
   param_6->_padding_ = 1;
   param_6->_padding_ = 2;
-  if ((uVar2 & 4) != 0) {
+  if ((param_2 & 4) != 0) {
     param_6->_padding_ = 0x200002;
   }
-  if ((uVar2 & 0x200) != 0) {
+  if ((param_2 & 0x200) != 0) {
     param_6->_padding_ = param_6->_padding_ | 0x400000;
   }
   param_6->Address = param_5;
   param_6->_padding_ = -0x10000;
-  param_6->_padding_ = (uint)((uVar3 & 0xffffffff) << 0x1d) | param_6->_padding_;
-  __restgprlr_27();
+  param_6->_padding_ = param_3 << 0x1d | param_6->_padding_;
   return;
 }
 

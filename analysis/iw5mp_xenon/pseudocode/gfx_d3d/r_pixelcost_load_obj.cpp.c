@@ -2,6 +2,8 @@
 
 // 82761A60  R_PixelCost_PrintColorCodeKey  (gfx_d3d/r_pixelcost_load_obj.cpp:75)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void R_PixelCost_PrintColorCodeKey(void)
@@ -9,7 +11,6 @@ void R_PixelCost_PrintColorCodeKey(void)
 {
   longlong lVar1;
   
-  __savegprlr_29();
   Com_Printf(8,"\n---- PIXEL COST KEY ----\n");
   lVar1 = 6;
   do {
@@ -17,7 +18,6 @@ void R_PixelCost_PrintColorCodeKey(void)
     lVar1 = lVar1 + -1;
   } while (lVar1 != 0);
   Com_Printf(8,"----------------------\n\n");
-  __restgprlr_29();
   return;
 }
 

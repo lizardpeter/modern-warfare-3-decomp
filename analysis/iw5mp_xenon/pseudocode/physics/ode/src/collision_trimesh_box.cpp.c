@@ -2,80 +2,79 @@
 
 // 82688A18  _cldTestNormal  (physics/ode/src/collision_trimesh_box.cpp:118)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 bool _cldTestNormal(collData_t *param_1,float param_2,float param_3,float *param_4,int param_5)
 
 {
   float fVar1;
   float fVar2;
   float fVar3;
-  int iVar4;
-  undefined1 uVar5;
-  ulonglong in_r6;
-  float *pfVar6;
-  undefined4 in_r7;
-  double extraout_f1;
-  double dVar7;
-  double dVar8;
+  float *in_r6;
+  int in_r7;
+  double dVar4;
+  double dVar5;
   
-  dVar7 = (double)param_3;
-  iVar4 = __savegprlr_26((double)param_2,param_1,param_4,param_5);
-  dVar8 = extraout_f1;
-  if (((uint)(float)extraout_f1 & 0x7f800000) == 0x7f800000) {
+  dVar5 = (double)param_2;
+  dVar4 = (double)param_3;
+  if (((uint)param_2 & 0x7f800000) == 0x7f800000) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\collision_trimesh_box.cpp"
                     ,0x79,0,"%s");
   }
-  if (((uint)(float)dVar7 & 0x7f800000) == 0x7f800000) {
+  if (((uint)(float)dVar4 & 0x7f800000) == 0x7f800000) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\collision_trimesh_box.cpp"
                     ,0x7a,0,"%s");
   }
-  if ((in_r6 & 0xffffffff) == 0) {
+  if (in_r6 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\collision_trimesh_box.cpp"
                     ,0x7b,0,"%s");
   }
-  pfVar6 = (float *)in_r6;
-  if (((((uint)*pfVar6 & 0x7f800000) == 0x7f800000) ||
-      (((uint)pfVar6[1] & 0x7f800000) == 0x7f800000)) ||
-     (((uint)pfVar6[2] & 0x7f800000) == 0x7f800000)) {
+  if (((((uint)*in_r6 & 0x7f800000) == 0x7f800000) || (((uint)in_r6[1] & 0x7f800000) == 0x7f800000))
+     || (((uint)in_r6[2] & 0x7f800000) == 0x7f800000)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\collision_trimesh_box.cpp"
                     ,0x7c,0,"%s");
   }
-  dVar8 = (double)(float)(dVar8 + dVar7);
-  if (3.4028234663852886e+38 <= dVar8) {
+  dVar5 = (double)(float)(dVar5 + dVar4);
+  if (3.4028234663852886e+38 <= dVar5) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\collision_trimesh_box.cpp"
                     ,0x80,0,"%s");
   }
-  if (dVar8 < 0.0) {
-    uVar5 = __restgprlr_26(0);
-    return (bool)uVar5;
+  if (dVar5 < 0.0) {
+    return false;
   }
-  dVar7 = (double)SQRT(*pfVar6 * *pfVar6 + pfVar6[1] * pfVar6[1] + pfVar6[2] * pfVar6[2]);
-  if (dVar7 <= 0.0) {
+  dVar4 = (double)SQRT(*in_r6 * *in_r6 + in_r6[1] * in_r6[1] + in_r6[2] * in_r6[2]);
+  if (dVar4 <= 0.0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\collision_trimesh_box.cpp"
                     ,0x8b,0,"%s");
   }
-  dVar7 = (double)(float)(1.0 / dVar7);
-  dVar8 = (double)(float)(dVar7 * dVar8);
-  if (dVar8 < (double)*(float *)(iVar4 + 0x60)) {
-    fVar1 = -(float)((double)*pfVar6 * dVar7);
-    *(float *)(iVar4 + 0x50) = fVar1;
-    fVar2 = -(float)((double)pfVar6[1] * dVar7);
-    *(float *)(iVar4 + 0x54) = fVar2;
-    fVar3 = -(float)((double)pfVar6[2] * dVar7);
-    *(float *)(iVar4 + 0x58) = fVar3;
+  dVar4 = (double)(float)(1.0 / dVar4);
+  dVar5 = (double)(float)(dVar4 * dVar5);
+  if (dVar5 < (double)param_1->fBestDepth) {
+    fVar1 = -(float)((double)*in_r6 * dVar4);
+    param_1->vBestNormal[0] = fVar1;
+    fVar2 = -(float)((double)in_r6[1] * dVar4);
+    param_1->vBestNormal[1] = fVar2;
+    fVar3 = -(float)((double)in_r6[2] * dVar4);
+    param_1->vBestNormal[2] = fVar3;
     if (0.002 <= ABS((fVar3 * fVar3 + fVar1 * fVar1 + fVar2 * fVar2) - 1.0)) {
       va("normal: (%f, %f, %f)");
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\collision_trimesh_box.cpp"
                       ,0x97,0,"%s\n\t%s");
     }
-    *(float *)(iVar4 + 0x60) = (float)dVar8;
-    *(undefined4 *)(iVar4 + 100) = in_r7;
+    param_1->fBestDepth = (float)dVar5;
+    param_1->iBestAxis = in_r7;
   }
-  uVar5 = __restgprlr_26(1);
-  return (bool)uVar5;
+  return true;
 }
 
 
 // 82688CB8  _cldTestFace  (physics/ode/src/collision_trimesh_box.cpp:164)
+
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 
 bool _cldTestFace(collData_t *param_1,float param_2,float param_3,float param_4,float param_5,
                  float param_6,float *param_7,int param_8)
@@ -84,73 +83,65 @@ bool _cldTestFace(collData_t *param_1,float param_2,float param_3,float param_4,
   float fVar1;
   float fVar2;
   float fVar3;
-  int iVar4;
-  undefined1 uVar5;
   float *in_r8;
-  undefined4 in_r9;
-  double extraout_f1;
+  int in_r9;
+  double dVar4;
+  double dVar5;
   double dVar6;
   double dVar7;
   double dVar8;
   double dVar9;
-  double dVar10;
-  double dVar11;
   
-  dVar8 = (double)param_5;
-  dVar7 = (double)param_4;
-  dVar6 = (double)param_3;
-  __savegprlr_28((double)param_2,param_1,param_7,param_8);
-  iVar4 = __savefpr_27();
-  dVar11 = 0.0;
-  dVar9 = extraout_f1;
+  dVar6 = (double)param_5;
+  dVar5 = (double)param_4;
+  dVar4 = (double)param_3;
+  dVar7 = (double)param_2;
+  dVar9 = 0.0;
   if (((*in_r8 == 0.0) && (in_r8[1] == 0.0)) && (in_r8[2] == 0.0)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\collision_trimesh_box.cpp"
                     ,0xa7,0,"%s");
   }
-  dVar10 = dVar6;
-  if (dVar9 < dVar6) {
-    dVar10 = dVar9;
+  dVar8 = dVar4;
+  if (dVar7 < dVar4) {
+    dVar8 = dVar7;
   }
-  if (dVar7 <= dVar10) {
-    dVar10 = dVar7;
+  if (dVar5 <= dVar8) {
+    dVar8 = dVar5;
   }
-  if (dVar6 < dVar9) {
-    dVar6 = dVar9;
+  if (dVar4 < dVar7) {
+    dVar4 = dVar7;
   }
-  if (dVar6 <= dVar7) {
-    dVar6 = dVar7;
+  if (dVar4 <= dVar5) {
+    dVar4 = dVar5;
   }
-  dVar9 = (double)(float)(dVar8 - dVar10);
-  if ((dVar11 <= dVar9) && (dVar11 <= (double)(float)(dVar6 + dVar8))) {
-    if (dVar11 < (double)(*(float *)(iVar4 + 0xa0) * in_r8[2] +
-                         *(float *)(iVar4 + 0x9c) * in_r8[1] + *(float *)(iVar4 + 0x98) * *in_r8)) {
+  dVar7 = (double)(float)(dVar6 - dVar8);
+  if ((dVar9 <= dVar7) && (dVar9 <= (double)(float)(dVar4 + dVar6))) {
+    if (dVar9 < (double)(param_1->triangleNormal[2] * in_r8[2] +
+                        param_1->triangleNormal[1] * in_r8[1] + param_1->triangleNormal[0] * *in_r8)
+       ) {
       *in_r8 = -*in_r8;
       in_r8[1] = -in_r8[1];
       in_r8[2] = -in_r8[2];
-      dVar9 = (double)(float)(dVar6 + dVar8);
+      dVar7 = (double)(float)(dVar4 + dVar6);
     }
-    if (dVar9 < (double)*(float *)(iVar4 + 0x60)) {
+    if (dVar7 < (double)param_1->fBestDepth) {
       fVar1 = *in_r8;
-      *(float *)(iVar4 + 0x50) = fVar1;
+      param_1->vBestNormal[0] = fVar1;
       fVar2 = in_r8[1];
-      *(float *)(iVar4 + 0x54) = fVar2;
+      param_1->vBestNormal[1] = fVar2;
       fVar3 = in_r8[2];
-      *(float *)(iVar4 + 0x58) = fVar3;
+      param_1->vBestNormal[2] = fVar3;
       if (0.002 <= ABS((fVar3 * fVar3 + fVar1 * fVar1 + fVar2 * fVar2) - 1.0)) {
         va("normal: (%f, %f, %f)");
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\collision_trimesh_box.cpp"
                         ,0xe7,0,"%s\n\t%s");
       }
-      *(float *)(iVar4 + 0x60) = (float)dVar9;
-      *(undefined4 *)(iVar4 + 100) = in_r9;
+      param_1->fBestDepth = (float)dVar7;
+      param_1->iBestAxis = in_r9;
     }
-    __restfpr_27(1);
-    uVar5 = __restgprlr_28();
-    return (bool)uVar5;
+    return true;
   }
-  __restfpr_27(0);
-  uVar5 = __restgprlr_28();
-  return (bool)uVar5;
+  return false;
 }
 
 
@@ -271,6 +262,11 @@ void _cldClipPolyToPlane(collData_t *param_1,float (*param_2) [4],int param_3,fl
 
 // 82689220  _cldTestSeparatingAxes  (physics/ode/src/collision_trimesh_box.cpp:362)
 
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
+
 bool _cldTestSeparatingAxes
                (collData_t *param_1,float (*param_2) [4],float (*param_3) [4],float (*param_4) [4])
 
@@ -283,20 +279,20 @@ bool _cldTestSeparatingAxes
   float fVar6;
   float *pfVar7;
   float fVar8;
-  collData_t *pcVar9;
-  undefined1 uVar10;
-  bool bVar11;
-  ulonglong uVar12;
+  bool bVar9;
+  float (*pafVar10) [4];
+  float (*pafVar11) [4];
+  float *pfVar12;
   float *pfVar13;
   float *pfVar14;
-  ulonglong uVar15;
+  float *pfVar15;
   float *pfVar16;
-  float *pfVar17;
-  ulonglong uVar18;
-  float *pfVar19;
-  float *pfVar20;
-  float *pfVar21;
-  float *pfVar22;
+  double dVar17;
+  double dVar18;
+  double dVar19;
+  double dVar20;
+  double dVar21;
+  double dVar22;
   double dVar23;
   double dVar24;
   double dVar25;
@@ -310,657 +306,640 @@ bool _cldTestSeparatingAxes
   double dVar33;
   double dVar34;
   double dVar35;
-  double dVar36;
-  double dVar37;
-  double dVar38;
-  double dVar39;
-  double dVar40;
-  double dVar41;
   
-  uVar18 = (ulonglong)(int)param_4;
-  uVar15 = (ulonglong)(int)param_3;
-  uVar12 = (ulonglong)(int)param_2;
-  pcVar9 = (collData_t *)__savegprlr_22(param_1);
-  __savefpr();
-  pfVar16 = (float *)uVar15;
-  pfVar13 = (float *)uVar12;
-  pfVar14 = pfVar13;
-  pfVar17 = pfVar16;
-  if ((uVar12 & 0xffffffff) == 0) {
-    pfVar17 = (float *)0x0;
-    pfVar14 = (float *)0x172;
+  pafVar10 = param_2;
+  pafVar11 = param_3;
+  if (param_2 == (float (*) [4])0x0) {
+    pafVar11 = (float (*) [4])0x0;
+    pafVar10 = (float (*) [4])0x172;
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\collision_trimesh_box.cpp"
                     ,0x172,0,"%s");
   }
-  if ((uVar15 & 0xffffffff) == 0) {
-    pfVar17 = (float *)0x0;
-    pfVar14 = (float *)0x173;
+  if (param_3 == (float (*) [4])0x0) {
+    pafVar11 = (float (*) [4])0x0;
+    pafVar10 = (float (*) [4])0x173;
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\collision_trimesh_box.cpp"
                     ,0x173,0,"%s");
   }
-  if ((uVar18 & 0xffffffff) == 0) {
-    pfVar17 = (float *)0x0;
-    pfVar14 = (float *)0x174;
+  if (param_4 == (float (*) [4])0x0) {
+    pafVar11 = (float (*) [4])0x0;
+    pafVar10 = (float (*) [4])0x174;
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\collision_trimesh_box.cpp"
                     ,0x174,0,"%s");
   }
-  if (((((uint)*pfVar13 & 0x7f800000) == 0x7f800000) ||
-      (((uint)pfVar13[1] & 0x7f800000) == 0x7f800000)) ||
-     (((uint)pfVar13[2] & 0x7f800000) == 0x7f800000)) {
-    pfVar17 = (float *)0x0;
-    pfVar14 = (float *)0x175;
+  if (((((uint)(*param_2)[0] & 0x7f800000) == 0x7f800000) ||
+      (((uint)(*param_2)[1] & 0x7f800000) == 0x7f800000)) ||
+     (((uint)(*param_2)[2] & 0x7f800000) == 0x7f800000)) {
+    pafVar11 = (float (*) [4])0x0;
+    pafVar10 = (float (*) [4])0x175;
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\collision_trimesh_box.cpp"
                     ,0x175,0,"%s");
   }
-  if (((((uint)*pfVar16 & 0x7f800000) == 0x7f800000) ||
-      (((uint)pfVar16[1] & 0x7f800000) == 0x7f800000)) ||
-     (((uint)pfVar16[2] & 0x7f800000) == 0x7f800000)) {
-    pfVar17 = (float *)0x0;
-    pfVar14 = (float *)0x176;
+  if (((((uint)(*param_3)[0] & 0x7f800000) == 0x7f800000) ||
+      (((uint)(*param_3)[1] & 0x7f800000) == 0x7f800000)) ||
+     (((uint)(*param_3)[2] & 0x7f800000) == 0x7f800000)) {
+    pafVar11 = (float (*) [4])0x0;
+    pafVar10 = (float (*) [4])0x176;
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\collision_trimesh_box.cpp"
                     ,0x176,0,"%s");
   }
-  pfVar19 = (float *)uVar18;
-  if (((((uint)*pfVar19 & 0x7f800000) == 0x7f800000) ||
-      (((uint)pfVar19[1] & 0x7f800000) == 0x7f800000)) ||
-     (((uint)pfVar19[2] & 0x7f800000) == 0x7f800000)) {
-    pfVar17 = (float *)0x0;
-    pfVar14 = (float *)0x177;
+  if (((((uint)(*param_4)[0] & 0x7f800000) == 0x7f800000) ||
+      (((uint)(*param_4)[1] & 0x7f800000) == 0x7f800000)) ||
+     (((uint)(*param_4)[2] & 0x7f800000) == 0x7f800000)) {
+    pafVar11 = (float (*) [4])0x0;
+    pafVar10 = (float (*) [4])0x177;
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\collision_trimesh_box.cpp"
                     ,0x177,0,"%s");
   }
-  pcVar9->iBestAxis = 0;
-  pfVar22 = pcVar9->vBestNormal;
-  pfVar20 = pcVar9->triangleEdge0;
-  pcVar9->fBestDepth = 3.4028235e+38;
-  dVar28 = 0.0;
-  pcVar9->vBestNormal[0] = 0.0;
-  pcVar9->vBestNormal[1] = 0.0;
-  pcVar9->vBestNormal[2] = 0.0;
-  fVar1 = *pfVar16 - *pfVar13;
-  pcVar9->triangleEdge0[0] = fVar1;
-  fVar2 = pfVar16[1] - pfVar13[1];
-  pcVar9->triangleEdge0[1] = fVar2;
-  fVar3 = pfVar16[2] - pfVar13[2];
-  pcVar9->triangleEdge0[2] = fVar3;
+  param_1->iBestAxis = 0;
+  pfVar16 = param_1->vBestNormal;
+  pfVar14 = param_1->triangleEdge0;
+  param_1->fBestDepth = 3.4028235e+38;
+  dVar22 = 0.0;
+  param_1->vBestNormal[0] = 0.0;
+  param_1->vBestNormal[1] = 0.0;
+  param_1->vBestNormal[2] = 0.0;
+  fVar1 = (*param_3)[0] - (*param_2)[0];
+  param_1->triangleEdge0[0] = fVar1;
+  fVar2 = (*param_3)[1] - (*param_2)[1];
+  param_1->triangleEdge0[1] = fVar2;
+  fVar3 = (*param_3)[2] - (*param_2)[2];
+  param_1->triangleEdge0[2] = fVar3;
   if (0.01 <= fVar3 * fVar3 + fVar1 * fVar1 + fVar2 * fVar2) {
-    pfVar16 = pcVar9->triangleEdge1;
-    fVar1 = *pfVar19 - *pfVar13;
-    pcVar9->triangleEdge1[0] = fVar1;
-    fVar2 = pfVar19[1] - pfVar13[1];
-    pcVar9->triangleEdge1[1] = fVar2;
-    fVar3 = pfVar19[2] - pfVar13[2];
-    pcVar9->triangleEdge1[2] = fVar3;
+    pfVar13 = param_1->triangleEdge1;
+    fVar1 = (*param_4)[0] - (*param_2)[0];
+    param_1->triangleEdge1[0] = fVar1;
+    fVar2 = (*param_4)[1] - (*param_2)[1];
+    param_1->triangleEdge1[1] = fVar2;
+    fVar3 = (*param_4)[2] - (*param_2)[2];
+    param_1->triangleEdge1[2] = fVar3;
     if (0.01 <= fVar3 * fVar3 + fVar1 * fVar1 + fVar2 * fVar2) {
-      pfVar19 = pcVar9->triangleEdge2;
-      fVar1 = fVar1 - *pfVar20;
-      pcVar9->triangleEdge2[0] = fVar1;
-      fVar2 = pcVar9->triangleEdge1[1] - pcVar9->triangleEdge0[1];
-      pcVar9->triangleEdge2[1] = fVar2;
-      fVar3 = pcVar9->triangleEdge1[2] - pcVar9->triangleEdge0[2];
-      pcVar9->triangleEdge2[2] = fVar3;
+      pfVar12 = param_1->triangleEdge2;
+      fVar1 = fVar1 - *pfVar14;
+      param_1->triangleEdge2[0] = fVar1;
+      fVar2 = param_1->triangleEdge1[1] - param_1->triangleEdge0[1];
+      param_1->triangleEdge2[1] = fVar2;
+      fVar3 = param_1->triangleEdge1[2] - param_1->triangleEdge0[2];
+      param_1->triangleEdge2[2] = fVar3;
       if (0.01 <= fVar3 * fVar3 + fVar1 * fVar1 + fVar2 * fVar2) {
-        fVar1 = *pfVar20;
-        fVar2 = pcVar9->triangleEdge1[2];
-        pfVar21 = pcVar9->triangleNormal;
-        fVar3 = *pfVar16;
-        fVar4 = pcVar9->triangleEdge1[1];
-        fVar5 = pcVar9->triangleEdge0[2];
-        fVar6 = pcVar9->triangleEdge0[1];
-        dVar26 = 1.0;
+        fVar1 = *pfVar14;
+        fVar2 = param_1->triangleEdge1[2];
+        pfVar15 = param_1->triangleNormal;
+        fVar3 = *pfVar13;
+        fVar4 = param_1->triangleEdge1[1];
+        fVar5 = param_1->triangleEdge0[2];
+        fVar6 = param_1->triangleEdge0[1];
+        dVar20 = 1.0;
         fVar8 = fVar3 * fVar5 - fVar1 * fVar2;
-        pcVar9->triangleNormal[1] = fVar8;
+        param_1->triangleNormal[1] = fVar8;
         fVar2 = fVar6 * fVar2 - fVar5 * fVar4;
-        pcVar9->triangleNormal[0] = fVar2;
+        param_1->triangleNormal[0] = fVar2;
         fVar1 = fVar1 * fVar4 - fVar3 * fVar6;
-        pcVar9->triangleNormal[2] = fVar1;
-        dVar29 = (double)SQRT(fVar1 * fVar1 + fVar2 * fVar2 + fVar8 * fVar8);
-        dVar27 = dVar26;
-        if (-dVar29 < 0.0) {
-          dVar27 = dVar29;
+        param_1->triangleNormal[2] = fVar1;
+        dVar23 = (double)SQRT(fVar1 * fVar1 + fVar2 * fVar2 + fVar8 * fVar8);
+        dVar21 = dVar20;
+        if (-dVar23 < 0.0) {
+          dVar21 = dVar23;
         }
-        fVar3 = (float)(1.0 / dVar27);
-        pcVar9->triangleNormal[0] = fVar3 * fVar2;
-        pcVar9->triangleNormal[1] = fVar3 * fVar8;
-        pcVar9->triangleNormal[2] = fVar3 * fVar1;
-        if (0.009999999776482582 <= dVar29) {
-          dVar41 = (double)pcVar9->mHullBoxRot[4];
-          dVar40 = (double)pcVar9->mHullBoxRot[8];
-          dVar39 = (double)pcVar9->mHullBoxRot[0];
-          dVar38 = (double)pcVar9->mHullBoxRot[1];
-          dVar37 = (double)pcVar9->mHullBoxRot[5];
-          dVar27 = 0.0020000000949949026;
-          dVar36 = (double)pcVar9->mHullBoxRot[9];
-          dVar35 = (double)pcVar9->mHullBoxRot[2];
-          dVar34 = (double)pcVar9->mHullBoxRot[6];
-          dVar33 = (double)pcVar9->mHullBoxRot[10];
-          if (0.002 <= ABS((float)(dVar39 * dVar39 +
-                                  (double)(float)(dVar40 * dVar40 + (double)(float)(dVar41 * dVar41)
+        fVar3 = (float)(1.0 / dVar21);
+        param_1->triangleNormal[0] = fVar3 * fVar2;
+        param_1->triangleNormal[1] = fVar3 * fVar8;
+        param_1->triangleNormal[2] = fVar3 * fVar1;
+        if (0.009999999776482582 <= dVar23) {
+          dVar35 = (double)param_1->mHullBoxRot[4];
+          dVar34 = (double)param_1->mHullBoxRot[8];
+          dVar33 = (double)param_1->mHullBoxRot[0];
+          dVar32 = (double)param_1->mHullBoxRot[1];
+          dVar31 = (double)param_1->mHullBoxRot[5];
+          dVar21 = 0.0020000000949949026;
+          dVar30 = (double)param_1->mHullBoxRot[9];
+          dVar29 = (double)param_1->mHullBoxRot[2];
+          dVar28 = (double)param_1->mHullBoxRot[6];
+          dVar27 = (double)param_1->mHullBoxRot[10];
+          if (0.002 <= ABS((float)(dVar33 * dVar33 +
+                                  (double)(float)(dVar34 * dVar34 + (double)(float)(dVar35 * dVar35)
                                                  )) - 1.0)) {
             va("normal: (%f, %f, %f)");
-            pfVar17 = (float *)0x0;
-            pfVar14 = (float *)&DAT_00000193;
+            pafVar11 = (float (*) [4])0x0;
+            pafVar10 = (float (*) [4])&DAT_00000193;
             MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\collision_trimesh_box.cpp"
                             ,0x193,0,"%s\n\t%s");
           }
-          if (dVar27 <= ABS((double)(float)((double)(float)(dVar38 * dVar38 +
-                                                           (double)(float)(dVar36 * dVar36 +
-                                                                          (double)(float)(dVar37 * 
-                                                  dVar37))) - dVar26))) {
+          if (dVar21 <= ABS((double)(float)((double)(float)(dVar32 * dVar32 +
+                                                           (double)(float)(dVar30 * dVar30 +
+                                                                          (double)(float)(dVar31 * 
+                                                  dVar31))) - dVar20))) {
             va("normal: (%f, %f, %f)");
-            pfVar17 = (float *)0x0;
-            pfVar14 = (float *)0x194;
+            pafVar11 = (float (*) [4])0x0;
+            pafVar10 = (float (*) [4])0x194;
             MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\collision_trimesh_box.cpp"
                             ,0x194,0,"%s\n\t%s");
           }
-          if (dVar27 <= ABS((double)(float)((double)(float)(dVar35 * dVar35 +
-                                                           (double)(float)(dVar33 * dVar33 +
-                                                                          (double)(float)(dVar34 * 
-                                                  dVar34))) - dVar26))) {
+          if (dVar21 <= ABS((double)(float)((double)(float)(dVar29 * dVar29 +
+                                                           (double)(float)(dVar27 * dVar27 +
+                                                                          (double)(float)(dVar28 * 
+                                                  dVar28))) - dVar20))) {
             va("normal: (%f, %f, %f)");
-            pfVar17 = (float *)0x0;
-            pfVar14 = (float *)0x195;
+            pafVar11 = (float (*) [4])0x0;
+            pafVar10 = (float (*) [4])0x195;
             MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\collision_trimesh_box.cpp"
                             ,0x195,0,"%s\n\t%s");
           }
-          pfVar7 = pcVar9->bodyCenter;
-          dVar32 = (double)(float)((double)pfVar13[1] - (double)pcVar9->vHullBoxPos[1]);
-          dVar25 = (double)pcVar9->triangleNormal[1];
-          dVar31 = (double)(float)((double)*pfVar13 - (double)pcVar9->vHullBoxPos[0]);
-          dVar23 = (double)*pfVar21;
-          dVar30 = (double)(float)((double)pfVar13[2] - (double)pcVar9->vHullBoxPos[2]);
-          dVar24 = (double)pcVar9->triangleNormal[2];
-          if (((double)(float)(dVar24 * dVar30 +
-                              (double)(float)(dVar31 * dVar23 + (double)(float)(dVar25 * dVar32))) <
-               dVar28) ||
-             (dVar28 <= (double)((float)((double)pfVar7[2] * dVar24 +
-                                        (double)(float)((double)pfVar7[1] * dVar25 +
-                                                       (double)(float)(dVar23 * (double)*pfVar7))) -
-                                (float)(dVar24 * (double)pfVar13[2] +
-                                       (double)(float)(dVar25 * (double)pfVar13[1] +
-                                                      (double)(float)((double)*pfVar13 * dVar23)))))
-             ) {
-            bVar11 = _cldTestNormal(pcVar9,(float)(dVar30 * dVar24 +
-                                                  (double)(float)(dVar31 * dVar23 +
-                                                                 (double)(float)(dVar32 * dVar25))),
-                                    ABS((float)((double)pcVar9->triangleNormal[2] * dVar40 +
-                                               (double)(float)(dVar23 * dVar39 +
-                                                              (double)(float)((double)pcVar9->
-                                                  triangleNormal[1] * dVar41)))) *
-                                    pcVar9->vBoxHalfSize[0] +
-                                    ABS((float)(dVar24 * dVar33 +
-                                               (double)(float)(dVar23 * dVar35 +
-                                                              (double)(float)(dVar25 * dVar34)))) *
-                                    pcVar9->vBoxHalfSize[2] +
-                                    ABS((float)((double)pcVar9->triangleNormal[2] * dVar36 +
-                                               (double)(float)(dVar23 * dVar38 +
-                                                              (double)(float)((double)pcVar9->
-                                                  triangleNormal[1] * dVar37)))) *
-                                    pcVar9->vBoxHalfSize[1],pfVar14,(int)pfVar17);
-            if (bVar11) {
-              if (dVar27 <= ABS((double)(float)((double)(pcVar9->vBestNormal[2] *
-                                                         pcVar9->vBestNormal[2] +
-                                                        *pfVar22 * *pfVar22 +
-                                                        pcVar9->vBestNormal[1] *
-                                                        pcVar9->vBestNormal[1]) - dVar26))) {
+          pfVar7 = param_1->bodyCenter;
+          dVar26 = (double)(float)((double)(*param_2)[1] - (double)param_1->vHullBoxPos[1]);
+          dVar19 = (double)param_1->triangleNormal[1];
+          dVar25 = (double)(float)((double)(*param_2)[0] - (double)param_1->vHullBoxPos[0]);
+          dVar17 = (double)*pfVar15;
+          dVar24 = (double)(float)((double)(*param_2)[2] - (double)param_1->vHullBoxPos[2]);
+          dVar18 = (double)param_1->triangleNormal[2];
+          if (((double)(float)(dVar18 * dVar24 +
+                              (double)(float)(dVar25 * dVar17 + (double)(float)(dVar19 * dVar26))) <
+               dVar22) ||
+             (dVar22 <= (double)((float)((double)pfVar7[2] * dVar18 +
+                                        (double)(float)((double)pfVar7[1] * dVar19 +
+                                                       (double)(float)(dVar17 * (double)*pfVar7))) -
+                                (float)(dVar18 * (double)(*param_2)[2] +
+                                       (double)(float)(dVar19 * (double)(*param_2)[1] +
+                                                      (double)(float)((double)(*param_2)[0] * dVar17
+                                                                     )))))) {
+            bVar9 = _cldTestNormal(param_1,(float)(dVar24 * dVar18 +
+                                                  (double)(float)(dVar25 * dVar17 +
+                                                                 (double)(float)(dVar26 * dVar19))),
+                                   ABS((float)((double)param_1->triangleNormal[2] * dVar34 +
+                                              (double)(float)(dVar17 * dVar33 +
+                                                             (double)(float)((double)param_1->
+                                                  triangleNormal[1] * dVar35)))) *
+                                   param_1->vBoxHalfSize[0] +
+                                   ABS((float)(dVar18 * dVar27 +
+                                              (double)(float)(dVar17 * dVar29 +
+                                                             (double)(float)(dVar19 * dVar28)))) *
+                                   param_1->vBoxHalfSize[2] +
+                                   ABS((float)((double)param_1->triangleNormal[2] * dVar30 +
+                                              (double)(float)(dVar17 * dVar32 +
+                                                             (double)(float)((double)param_1->
+                                                  triangleNormal[1] * dVar31)))) *
+                                   param_1->vBoxHalfSize[1],*pafVar10,(int)pafVar11);
+            if (bVar9) {
+              if (dVar21 <= ABS((double)(float)((double)(param_1->vBestNormal[2] *
+                                                         param_1->vBestNormal[2] +
+                                                        *pfVar16 * *pfVar16 +
+                                                        param_1->vBestNormal[1] *
+                                                        param_1->vBestNormal[1]) - dVar20))) {
                 va("normal: (%f, %f, %f) bestaxis: %i");
-                pfVar17 = (float *)0x0;
-                pfVar14 = (float *)0x1ad;
+                pafVar11 = (float (*) [4])0x0;
+                pafVar10 = (float (*) [4])0x1ad;
                 MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\collision_trimesh_box.cpp"
                                 ,0x1ad,0,"%s\n\t%s");
               }
-              fVar1 = (float)(dVar31 * dVar39 + (double)(float)(dVar32 * dVar41));
-              fVar2 = (float)(dVar30 * dVar40 + (double)fVar1);
-              bVar11 = _cldTestFace(pcVar9,fVar2,
-                                    (float)((double)pcVar9->triangleEdge0[2] * dVar40 +
-                                           (double)(float)((double)*pfVar20 * dVar39 +
-                                                          (double)(float)((double)pcVar9->
-                                                  triangleEdge0[1] * dVar41))) + fVar2,
-                                    (float)((double)pcVar9->triangleEdge1[2] * dVar40 +
-                                           (double)(float)((double)pcVar9->triangleEdge1[1] * dVar41
-                                                          + (double)(float)((double)*pfVar16 *
-                                                                           dVar39))) + fVar2,
-                                    pcVar9->vBoxHalfSize[0],fVar1,pfVar14,(int)pfVar17);
-              if (bVar11) {
-                if (dVar27 <= ABS((double)(float)((double)(*pfVar22 * *pfVar22 +
-                                                          pcVar9->vBestNormal[1] *
-                                                          pcVar9->vBestNormal[1] +
-                                                          pcVar9->vBestNormal[2] *
-                                                          pcVar9->vBestNormal[2]) - dVar26))) {
+              fVar1 = (float)(dVar25 * dVar33 + (double)(float)(dVar26 * dVar35));
+              fVar2 = (float)(dVar24 * dVar34 + (double)fVar1);
+              bVar9 = _cldTestFace(param_1,fVar2,
+                                   (float)((double)param_1->triangleEdge0[2] * dVar34 +
+                                          (double)(float)((double)*pfVar14 * dVar33 +
+                                                         (double)(float)((double)param_1->
+                                                  triangleEdge0[1] * dVar35))) + fVar2,
+                                   (float)((double)param_1->triangleEdge1[2] * dVar34 +
+                                          (double)(float)((double)param_1->triangleEdge1[1] * dVar35
+                                                         + (double)(float)((double)*pfVar13 * dVar33
+                                                                          ))) + fVar2,
+                                   param_1->vBoxHalfSize[0],fVar1,*pafVar10,(int)pafVar11);
+              if (bVar9) {
+                if (dVar21 <= ABS((double)(float)((double)(*pfVar16 * *pfVar16 +
+                                                          param_1->vBestNormal[1] *
+                                                          param_1->vBestNormal[1] +
+                                                          param_1->vBestNormal[2] *
+                                                          param_1->vBestNormal[2]) - dVar20))) {
                   va("normal: (%f, %f, %f) bestaxis: %i");
-                  pfVar17 = (float *)0x0;
-                  pfVar14 = (float *)&DAT_000001c0;
+                  pafVar11 = (float (*) [4])0x0;
+                  pafVar10 = (float (*) [4])&DAT_000001c0;
                   MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\collision_trimesh_box.cpp"
                                   ,0x1c0,0,"%s\n\t%s");
                 }
-                fVar1 = (float)(dVar31 * dVar38 + (double)(float)(dVar32 * dVar37));
-                fVar2 = (float)(dVar30 * dVar36 + (double)fVar1);
-                bVar11 = _cldTestFace(pcVar9,fVar2,
-                                      (float)((double)pcVar9->triangleEdge0[2] * dVar36 +
-                                             (double)(float)((double)*pfVar20 * dVar38 +
-                                                            (double)(float)((double)pcVar9->
-                                                  triangleEdge0[1] * dVar37))) + fVar2,
-                                      (float)((double)pcVar9->triangleEdge1[2] * dVar36 +
-                                             (double)(float)((double)pcVar9->triangleEdge1[1] *
-                                                             dVar37 + (double)(float)((double)*
-                                                  pfVar16 * dVar38))) + fVar2,
-                                      pcVar9->vBoxHalfSize[1],fVar1,pfVar14,(int)pfVar17);
-                if (bVar11) {
-                  if (dVar27 <= ABS((double)(float)((double)(pcVar9->vBestNormal[2] *
-                                                             pcVar9->vBestNormal[2] +
-                                                            *pfVar22 * *pfVar22 +
-                                                            pcVar9->vBestNormal[1] *
-                                                            pcVar9->vBestNormal[1]) - dVar26))) {
+                fVar1 = (float)(dVar25 * dVar32 + (double)(float)(dVar26 * dVar31));
+                fVar2 = (float)(dVar24 * dVar30 + (double)fVar1);
+                bVar9 = _cldTestFace(param_1,fVar2,
+                                     (float)((double)param_1->triangleEdge0[2] * dVar30 +
+                                            (double)(float)((double)*pfVar14 * dVar32 +
+                                                           (double)(float)((double)param_1->
+                                                  triangleEdge0[1] * dVar31))) + fVar2,
+                                     (float)((double)param_1->triangleEdge1[2] * dVar30 +
+                                            (double)(float)((double)param_1->triangleEdge1[1] *
+                                                            dVar31 + (double)(float)((double)*
+                                                  pfVar13 * dVar32))) + fVar2,
+                                     param_1->vBoxHalfSize[1],fVar1,*pafVar10,(int)pafVar11);
+                if (bVar9) {
+                  if (dVar21 <= ABS((double)(float)((double)(param_1->vBestNormal[2] *
+                                                             param_1->vBestNormal[2] +
+                                                            *pfVar16 * *pfVar16 +
+                                                            param_1->vBestNormal[1] *
+                                                            param_1->vBestNormal[1]) - dVar20))) {
                     va("normal: (%f, %f, %f) bestaxis: %i");
-                    pfVar17 = (float *)0x0;
-                    pfVar14 = (float *)0x1d2;
+                    pafVar11 = (float (*) [4])0x0;
+                    pafVar10 = (float (*) [4])0x1d2;
                     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\collision_trimesh_box.cpp"
                                     ,0x1d2,0,"%s\n\t%s");
                   }
-                  fVar1 = (float)(dVar31 * dVar35 + (double)(float)(dVar32 * dVar34));
-                  fVar2 = (float)(dVar30 * dVar33 + (double)fVar1);
-                  bVar11 = _cldTestFace(pcVar9,fVar2,
-                                        (float)((double)pcVar9->triangleEdge0[2] * dVar33 +
-                                               (double)(float)((double)*pfVar20 * dVar35 +
-                                                              (double)(float)((double)pcVar9->
-                                                  triangleEdge0[1] * dVar34))) + fVar2,
-                                        (float)((double)pcVar9->triangleEdge1[2] * dVar33 +
-                                               (double)(float)((double)pcVar9->triangleEdge1[1] *
-                                                               dVar34 + (double)(float)((double)*
-                                                  pfVar16 * dVar35))) + fVar2,
-                                        pcVar9->vBoxHalfSize[2],fVar1,pfVar14,(int)pfVar17);
-                  if (bVar11) {
-                    if (dVar27 <= ABS((double)(float)((double)(pcVar9->vBestNormal[2] *
-                                                               pcVar9->vBestNormal[2] +
-                                                              *pfVar22 * *pfVar22 +
-                                                              pcVar9->vBestNormal[1] *
-                                                              pcVar9->vBestNormal[1]) - dVar26))) {
+                  fVar1 = (float)(dVar25 * dVar29 + (double)(float)(dVar26 * dVar28));
+                  fVar2 = (float)(dVar24 * dVar27 + (double)fVar1);
+                  bVar9 = _cldTestFace(param_1,fVar2,
+                                       (float)((double)param_1->triangleEdge0[2] * dVar27 +
+                                              (double)(float)((double)*pfVar14 * dVar29 +
+                                                             (double)(float)((double)param_1->
+                                                  triangleEdge0[1] * dVar28))) + fVar2,
+                                       (float)((double)param_1->triangleEdge1[2] * dVar27 +
+                                              (double)(float)((double)param_1->triangleEdge1[1] *
+                                                              dVar28 + (double)(float)((double)*
+                                                  pfVar13 * dVar29))) + fVar2,
+                                       param_1->vBoxHalfSize[2],fVar1,*pafVar10,(int)pafVar11);
+                  if (bVar9) {
+                    if (dVar21 <= ABS((double)(float)((double)(param_1->vBestNormal[2] *
+                                                               param_1->vBestNormal[2] +
+                                                              *pfVar16 * *pfVar16 +
+                                                              param_1->vBestNormal[1] *
+                                                              param_1->vBestNormal[1]) - dVar20))) {
                       va("normal: (%f, %f, %f) bestaxis: %i");
-                      pfVar17 = (float *)0x0;
-                      pfVar14 = (float *)0x1e4;
+                      pafVar11 = (float (*) [4])0x0;
+                      pafVar10 = (float (*) [4])0x1e4;
                       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\collision_trimesh_box.cpp"
                                       ,0x1e4,0,"%s\n\t%s");
                     }
-                    dVar28 = (double)*pfVar20;
-                    fVar1 = (float)((double)pcVar9->triangleEdge0[2] * dVar36 +
-                                   (double)(float)(dVar28 * dVar38 +
-                                                  (double)(float)((double)pcVar9->triangleEdge0[1] *
-                                                                 dVar37)));
-                    fVar2 = (float)(dVar30 * (double)(float)((double)pcVar9->triangleEdge0[1] *
-                                                             dVar39 - (double)(float)(dVar28 * 
-                                                  dVar41)) +
-                                   (double)(float)(dVar31 * (double)(float)((double)pcVar9->
-                                                  triangleEdge0[2] * dVar41 -
-                                                  (double)(float)((double)pcVar9->triangleEdge0[1] *
-                                                                 dVar40)) +
-                                                  (double)(float)(dVar32 * (double)(float)(dVar28 * 
-                                                  dVar40 - (double)(float)((double)pcVar9->
-                                                  triangleEdge0[2] * dVar39)))));
-                    bVar11 = _cldTestEdge(pcVar9,fVar2,
-                                          (float)((double)(float)((double)pcVar9->triangleNormal[2]
-                                                                  * dVar40 +
-                                                                 (double)(float)((double)pcVar9->
-                                                  triangleNormal[1] * dVar41 +
-                                                  (double)(float)(dVar39 * (double)*pfVar21))) *
-                                                  dVar29 + (double)fVar2),
-                                          ABS(fVar1) * pcVar9->vBoxHalfSize[2] +
-                                          ABS((float)((double)pcVar9->triangleEdge0[2] * dVar33 +
-                                                     (double)(float)(dVar28 * dVar35 +
-                                                                    (double)(float)((double)pcVar9->
-                                                  triangleEdge0[1] * dVar34)))) *
-                                          pcVar9->vBoxHalfSize[1],fVar1,pfVar14,(int)pfVar17);
-                    if (bVar11) {
-                      if (dVar27 <= ABS((double)(float)((double)(pcVar9->vBestNormal[2] *
-                                                                 pcVar9->vBestNormal[2] +
-                                                                pcVar9->vBestNormal[1] *
-                                                                pcVar9->vBestNormal[1] +
-                                                                *pfVar22 * *pfVar22) - dVar26))) {
+                    dVar22 = (double)*pfVar14;
+                    fVar1 = (float)((double)param_1->triangleEdge0[2] * dVar30 +
+                                   (double)(float)(dVar22 * dVar32 +
+                                                  (double)(float)((double)param_1->triangleEdge0[1]
+                                                                 * dVar31)));
+                    fVar2 = (float)(dVar24 * (double)(float)((double)param_1->triangleEdge0[1] *
+                                                             dVar33 - (double)(float)(dVar22 * 
+                                                  dVar35)) +
+                                   (double)(float)(dVar25 * (double)(float)((double)param_1->
+                                                  triangleEdge0[2] * dVar35 -
+                                                  (double)(float)((double)param_1->triangleEdge0[1]
+                                                                 * dVar34)) +
+                                                  (double)(float)(dVar26 * (double)(float)(dVar22 * 
+                                                  dVar34 - (double)(float)((double)param_1->
+                                                  triangleEdge0[2] * dVar33)))));
+                    bVar9 = _cldTestEdge(param_1,fVar2,
+                                         (float)((double)(float)((double)param_1->triangleNormal[2]
+                                                                 * dVar34 +
+                                                                (double)(float)((double)param_1->
+                                                  triangleNormal[1] * dVar35 +
+                                                  (double)(float)(dVar33 * (double)*pfVar15))) *
+                                                 dVar23 + (double)fVar2),
+                                         ABS(fVar1) * param_1->vBoxHalfSize[2] +
+                                         ABS((float)((double)param_1->triangleEdge0[2] * dVar27 +
+                                                    (double)(float)(dVar22 * dVar29 +
+                                                                   (double)(float)((double)param_1->
+                                                  triangleEdge0[1] * dVar28)))) *
+                                         param_1->vBoxHalfSize[1],fVar1,*pafVar10,(int)pafVar11);
+                    if (bVar9) {
+                      if (dVar21 <= ABS((double)(float)((double)(param_1->vBestNormal[2] *
+                                                                 param_1->vBestNormal[2] +
+                                                                param_1->vBestNormal[1] *
+                                                                param_1->vBestNormal[1] +
+                                                                *pfVar16 * *pfVar16) - dVar20))) {
                         va("normal: (%f, %f, %f) bestaxis: %i");
-                        pfVar17 = (float *)0x0;
-                        pfVar14 = (float *)0x1f7;
+                        pafVar11 = (float (*) [4])0x0;
+                        pafVar10 = (float (*) [4])0x1f7;
                         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\collision_trimesh_box.cpp"
                                         ,0x1f7,0,"%s\n\t%s");
                       }
-                      dVar28 = (double)*pfVar16;
-                      fVar1 = (float)((double)pcVar9->triangleEdge1[2] * dVar36 +
-                                     (double)(float)(dVar28 * dVar38 +
-                                                    (double)(float)((double)pcVar9->triangleEdge1[1]
-                                                                   * dVar37)));
-                      fVar2 = (float)(dVar30 * (double)(float)((double)pcVar9->triangleEdge1[1] *
-                                                               dVar39 - (double)(float)(dVar28 * 
-                                                  dVar41)) +
-                                     (double)(float)(dVar31 * (double)(float)((double)pcVar9->
-                                                  triangleEdge1[2] * dVar41 -
-                                                  (double)(float)((double)pcVar9->triangleEdge1[1] *
-                                                                 dVar40)) +
-                                                  (double)(float)(dVar32 * (double)(float)(dVar28 * 
-                                                  dVar40 - (double)(float)((double)pcVar9->
-                                                  triangleEdge1[2] * dVar39)))));
-                      bVar11 = _cldTestEdge(pcVar9,fVar2,
-                                            -(float)((double)(float)((double)pcVar9->triangleNormal
-                                                                             [2] * dVar40 +
-                                                                    (double)(float)((double)pcVar9->
-                                                  triangleNormal[1] * dVar41 +
-                                                  (double)(float)(dVar39 * (double)*pfVar21))) *
-                                                  dVar29 - (double)fVar2),
-                                            ABS(fVar1) * pcVar9->vBoxHalfSize[2] +
-                                            ABS((float)((double)pcVar9->triangleEdge1[2] * dVar33 +
-                                                       (double)(float)(dVar28 * dVar35 +
-                                                                      (double)(float)((double)pcVar9
-                                                  ->triangleEdge1[1] * dVar34)))) *
-                                            pcVar9->vBoxHalfSize[1],fVar1,pfVar14,(int)pfVar17);
-                      if (bVar11) {
-                        if (dVar27 <= ABS((double)(float)((double)(*pfVar22 * *pfVar22 +
-                                                                  pcVar9->vBestNormal[1] *
-                                                                  pcVar9->vBestNormal[1] +
-                                                                  pcVar9->vBestNormal[2] *
-                                                                  pcVar9->vBestNormal[2]) - dVar26))
-                           ) {
+                      dVar22 = (double)*pfVar13;
+                      fVar1 = (float)((double)param_1->triangleEdge1[2] * dVar30 +
+                                     (double)(float)(dVar22 * dVar32 +
+                                                    (double)(float)((double)param_1->triangleEdge1
+                                                                            [1] * dVar31)));
+                      fVar2 = (float)(dVar24 * (double)(float)((double)param_1->triangleEdge1[1] *
+                                                               dVar33 - (double)(float)(dVar22 * 
+                                                  dVar35)) +
+                                     (double)(float)(dVar25 * (double)(float)((double)param_1->
+                                                  triangleEdge1[2] * dVar35 -
+                                                  (double)(float)((double)param_1->triangleEdge1[1]
+                                                                 * dVar34)) +
+                                                  (double)(float)(dVar26 * (double)(float)(dVar22 * 
+                                                  dVar34 - (double)(float)((double)param_1->
+                                                  triangleEdge1[2] * dVar33)))));
+                      bVar9 = _cldTestEdge(param_1,fVar2,
+                                           -(float)((double)(float)((double)param_1->triangleNormal
+                                                                            [2] * dVar34 +
+                                                                   (double)(float)((double)param_1->
+                                                  triangleNormal[1] * dVar35 +
+                                                  (double)(float)(dVar33 * (double)*pfVar15))) *
+                                                  dVar23 - (double)fVar2),
+                                           ABS(fVar1) * param_1->vBoxHalfSize[2] +
+                                           ABS((float)((double)param_1->triangleEdge1[2] * dVar27 +
+                                                      (double)(float)(dVar22 * dVar29 +
+                                                                     (double)(float)((double)param_1
+                                                  ->triangleEdge1[1] * dVar28)))) *
+                                           param_1->vBoxHalfSize[1],fVar1,*pafVar10,(int)pafVar11);
+                      if (bVar9) {
+                        if (dVar21 <= ABS((double)(float)((double)(*pfVar16 * *pfVar16 +
+                                                                  param_1->vBestNormal[1] *
+                                                                  param_1->vBestNormal[1] +
+                                                                  param_1->vBestNormal[2] *
+                                                                  param_1->vBestNormal[2]) - dVar20)
+                                         )) {
                           va("normal: (%f, %f, %f) bestaxis: %i");
-                          pfVar17 = (float *)0x0;
-                          pfVar14 = (float *)0x208;
+                          pafVar11 = (float (*) [4])0x0;
+                          pafVar10 = (float (*) [4])0x208;
                           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\collision_trimesh_box.cpp"
                                           ,0x208,0,"%s\n\t%s");
                         }
-                        dVar28 = (double)*pfVar19;
-                        fVar1 = (float)((double)pcVar9->triangleEdge2[2] * dVar33 +
-                                       (double)(float)((double)pcVar9->triangleEdge2[1] * dVar34 +
-                                                      (double)(float)(dVar28 * dVar35)));
-                        fVar2 = (float)(dVar30 * (double)(float)((double)pcVar9->triangleEdge2[1] *
-                                                                 dVar39 - (double)(float)(dVar28 * 
-                                                  dVar41)) +
-                                       (double)(float)(dVar31 * (double)(float)((double)pcVar9->
-                                                  triangleEdge2[2] * dVar41 -
-                                                  (double)(float)((double)pcVar9->triangleEdge2[1] *
-                                                                 dVar40)) +
-                                                  (double)(float)(dVar32 * (double)(float)(dVar28 * 
-                                                  dVar40 - (double)(float)((double)pcVar9->
-                                                  triangleEdge2[2] * dVar39)))));
-                        bVar11 = _cldTestEdge(pcVar9,fVar2,
-                                              -(float)((double)(float)((double)pcVar9->
-                                                  triangleNormal[2] * dVar40 +
-                                                  (double)(float)((double)pcVar9->triangleNormal[1]
-                                                                  * dVar41 +
-                                                                 (double)(float)(dVar39 * (double)*
-                                                  pfVar21))) * dVar29 - (double)fVar2),
-                                              ABS((float)((double)pcVar9->triangleEdge2[2] * dVar36
-                                                         + (double)(float)((double)pcVar9->
-                                                  triangleEdge2[1] * dVar37 +
-                                                  (double)(float)(dVar28 * dVar38)))) *
-                                              pcVar9->vBoxHalfSize[2] +
-                                              ABS(fVar1) * pcVar9->vBoxHalfSize[1],fVar1,pfVar14,
-                                              (int)pfVar17);
-                        if (bVar11) {
-                          if (dVar27 <= ABS((double)(float)((double)(pcVar9->vBestNormal[2] *
-                                                                     pcVar9->vBestNormal[2] +
-                                                                    *pfVar22 * *pfVar22 +
-                                                                    pcVar9->vBestNormal[1] *
-                                                                    pcVar9->vBestNormal[1]) - dVar26
-                                                           ))) {
+                        dVar22 = (double)*pfVar12;
+                        fVar1 = (float)((double)param_1->triangleEdge2[2] * dVar27 +
+                                       (double)(float)((double)param_1->triangleEdge2[1] * dVar28 +
+                                                      (double)(float)(dVar22 * dVar29)));
+                        fVar2 = (float)(dVar24 * (double)(float)((double)param_1->triangleEdge2[1] *
+                                                                 dVar33 - (double)(float)(dVar22 * 
+                                                  dVar35)) +
+                                       (double)(float)(dVar25 * (double)(float)((double)param_1->
+                                                  triangleEdge2[2] * dVar35 -
+                                                  (double)(float)((double)param_1->triangleEdge2[1]
+                                                                 * dVar34)) +
+                                                  (double)(float)(dVar26 * (double)(float)(dVar22 * 
+                                                  dVar34 - (double)(float)((double)param_1->
+                                                  triangleEdge2[2] * dVar33)))));
+                        bVar9 = _cldTestEdge(param_1,fVar2,
+                                             -(float)((double)(float)((double)param_1->
+                                                  triangleNormal[2] * dVar34 +
+                                                  (double)(float)((double)param_1->triangleNormal[1]
+                                                                  * dVar35 +
+                                                                 (double)(float)(dVar33 * (double)*
+                                                  pfVar15))) * dVar23 - (double)fVar2),
+                                             ABS((float)((double)param_1->triangleEdge2[2] * dVar30
+                                                        + (double)(float)((double)param_1->
+                                                  triangleEdge2[1] * dVar31 +
+                                                  (double)(float)(dVar22 * dVar32)))) *
+                                             param_1->vBoxHalfSize[2] +
+                                             ABS(fVar1) * param_1->vBoxHalfSize[1],fVar1,*pafVar10,
+                                             (int)pafVar11);
+                        if (bVar9) {
+                          if (dVar21 <= ABS((double)(float)((double)(param_1->vBestNormal[2] *
+                                                                     param_1->vBestNormal[2] +
+                                                                    *pfVar16 * *pfVar16 +
+                                                                    param_1->vBestNormal[1] *
+                                                                    param_1->vBestNormal[1]) -
+                                                           dVar20))) {
                             va("normal: (%f, %f, %f) bestaxis: %i");
-                            pfVar17 = (float *)0x0;
-                            pfVar14 = (float *)0x219;
+                            pafVar11 = (float (*) [4])0x0;
+                            pafVar10 = (float (*) [4])0x219;
                             MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\collision_trimesh_box.cpp"
                                             ,0x219,0,"%s\n\t%s");
                           }
-                          dVar28 = (double)*pfVar20;
-                          fVar1 = (float)((double)pcVar9->triangleEdge0[2] * dVar40 +
-                                         (double)(float)(dVar28 * dVar39 +
-                                                        (double)(float)((double)pcVar9->
-                                                  triangleEdge0[1] * dVar41)));
-                          fVar2 = (float)(dVar30 * (double)(float)((double)pcVar9->triangleEdge0[1]
-                                                                   * dVar38 -
-                                                                  (double)(float)(dVar28 * dVar37))
-                                         + (double)(float)(dVar31 * (double)(float)((double)pcVar9->
-                                                  triangleEdge0[2] * dVar37 -
-                                                  (double)(float)((double)pcVar9->triangleEdge0[1] *
-                                                                 dVar36)) +
-                                                  (double)(float)(dVar32 * (double)(float)(dVar28 * 
-                                                  dVar36 - (double)(float)((double)pcVar9->
-                                                  triangleEdge0[2] * dVar38)))));
-                          bVar11 = _cldTestEdge(pcVar9,fVar2,
-                                                (float)((double)(float)((double)pcVar9->
-                                                  triangleNormal[2] * dVar36 +
-                                                  (double)(float)((double)pcVar9->triangleNormal[1]
-                                                                  * dVar37 +
-                                                                 (double)(float)(dVar38 * (double)*
-                                                  pfVar21))) * dVar29 + (double)fVar2),
-                                                ABS(fVar1) * pcVar9->vBoxHalfSize[2] +
-                                                ABS((float)((double)pcVar9->triangleEdge0[2] *
-                                                            dVar33 + (double)(float)(dVar28 * dVar35
-                                                                                    + (double)(float
-                                                  )((double)pcVar9->triangleEdge0[1] * dVar34)))) *
-                                                pcVar9->vBoxHalfSize[0],fVar1,pfVar14,(int)pfVar17);
-                          if (bVar11) {
-                            if (dVar27 <= ABS((double)(float)((double)(pcVar9->vBestNormal[2] *
-                                                                       pcVar9->vBestNormal[2] +
-                                                                      *pfVar22 * *pfVar22 +
-                                                                      pcVar9->vBestNormal[1] *
-                                                                      pcVar9->vBestNormal[1]) -
-                                                             dVar26))) {
+                          dVar22 = (double)*pfVar14;
+                          fVar1 = (float)((double)param_1->triangleEdge0[2] * dVar34 +
+                                         (double)(float)(dVar22 * dVar33 +
+                                                        (double)(float)((double)param_1->
+                                                  triangleEdge0[1] * dVar35)));
+                          fVar2 = (float)(dVar24 * (double)(float)((double)param_1->triangleEdge0[1]
+                                                                   * dVar32 -
+                                                                  (double)(float)(dVar22 * dVar31))
+                                         + (double)(float)(dVar25 * (double)(float)((double)param_1
+                                                  ->triangleEdge0[2] * dVar31 -
+                                                  (double)(float)((double)param_1->triangleEdge0[1]
+                                                                 * dVar30)) +
+                                                  (double)(float)(dVar26 * (double)(float)(dVar22 * 
+                                                  dVar30 - (double)(float)((double)param_1->
+                                                  triangleEdge0[2] * dVar32)))));
+                          bVar9 = _cldTestEdge(param_1,fVar2,
+                                               (float)((double)(float)((double)param_1->
+                                                  triangleNormal[2] * dVar30 +
+                                                  (double)(float)((double)param_1->triangleNormal[1]
+                                                                  * dVar31 +
+                                                                 (double)(float)(dVar32 * (double)*
+                                                  pfVar15))) * dVar23 + (double)fVar2),
+                                               ABS(fVar1) * param_1->vBoxHalfSize[2] +
+                                               ABS((float)((double)param_1->triangleEdge0[2] *
+                                                           dVar27 + (double)(float)(dVar22 * dVar29
+                                                                                   + (double)(float)
+                                                  ((double)param_1->triangleEdge0[1] * dVar28)))) *
+                                               param_1->vBoxHalfSize[0],fVar1,*pafVar10,
+                                               (int)pafVar11);
+                          if (bVar9) {
+                            if (dVar21 <= ABS((double)(float)((double)(param_1->vBestNormal[2] *
+                                                                       param_1->vBestNormal[2] +
+                                                                      *pfVar16 * *pfVar16 +
+                                                                      param_1->vBestNormal[1] *
+                                                                      param_1->vBestNormal[1]) -
+                                                             dVar20))) {
                               va("normal: (%f, %f, %f) bestaxis: %i");
-                              pfVar17 = (float *)0x0;
-                              pfVar14 = (float *)0x22b;
+                              pafVar11 = (float (*) [4])0x0;
+                              pafVar10 = (float (*) [4])0x22b;
                               MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\collision_trimesh_box.cpp"
                                               ,0x22b,0,"%s\n\t%s");
                             }
-                            dVar28 = (double)*pfVar16;
-                            fVar1 = (float)((double)pcVar9->triangleEdge1[2] * dVar40 +
-                                           (double)(float)(dVar28 * dVar39 +
-                                                          (double)(float)((double)pcVar9->
-                                                  triangleEdge1[1] * dVar41)));
-                            fVar2 = (float)(dVar30 * (double)(float)((double)pcVar9->triangleEdge1
-                                                                             [1] * dVar38 -
-                                                                    (double)(float)(dVar28 * dVar37)
+                            dVar22 = (double)*pfVar13;
+                            fVar1 = (float)((double)param_1->triangleEdge1[2] * dVar34 +
+                                           (double)(float)(dVar22 * dVar33 +
+                                                          (double)(float)((double)param_1->
+                                                  triangleEdge1[1] * dVar35)));
+                            fVar2 = (float)(dVar24 * (double)(float)((double)param_1->triangleEdge1
+                                                                             [1] * dVar32 -
+                                                                    (double)(float)(dVar22 * dVar31)
                                                                     ) +
-                                           (double)(float)(dVar31 * (double)(float)((double)pcVar9->
-                                                  triangleEdge1[2] * dVar37 -
-                                                  (double)(float)((double)pcVar9->triangleEdge1[1] *
-                                                                 dVar36)) +
-                                                  (double)(float)(dVar32 * (double)(float)(dVar28 * 
-                                                  dVar36 - (double)(float)((double)pcVar9->
-                                                  triangleEdge1[2] * dVar38)))));
-                            bVar11 = _cldTestEdge(pcVar9,fVar2,
-                                                  -(float)((double)(float)((double)pcVar9->
-                                                  triangleNormal[2] * dVar36 +
-                                                  (double)(float)((double)pcVar9->triangleNormal[1]
-                                                                  * dVar37 +
-                                                                 (double)(float)(dVar38 * (double)*
-                                                  pfVar21))) * dVar29 - (double)fVar2),
-                                                  ABS(fVar1) * pcVar9->vBoxHalfSize[2] +
-                                                  ABS((float)((double)pcVar9->triangleEdge1[2] *
-                                                              dVar33 + (double)(float)(dVar28 * 
-                                                  dVar35 + (double)(float)((double)pcVar9->
-                                                  triangleEdge1[1] * dVar34)))) *
-                                                  pcVar9->vBoxHalfSize[0],fVar1,pfVar14,(int)pfVar17
-                                                 );
-                            if (bVar11) {
-                              if (dVar27 <= ABS((double)(float)((double)(pcVar9->vBestNormal[2] *
-                                                                         pcVar9->vBestNormal[2] +
-                                                                        *pfVar22 * *pfVar22 +
-                                                                        pcVar9->vBestNormal[1] *
-                                                                        pcVar9->vBestNormal[1]) -
-                                                               dVar26))) {
+                                           (double)(float)(dVar25 * (double)(float)((double)param_1
+                                                  ->triangleEdge1[2] * dVar31 -
+                                                  (double)(float)((double)param_1->triangleEdge1[1]
+                                                                 * dVar30)) +
+                                                  (double)(float)(dVar26 * (double)(float)(dVar22 * 
+                                                  dVar30 - (double)(float)((double)param_1->
+                                                  triangleEdge1[2] * dVar32)))));
+                            bVar9 = _cldTestEdge(param_1,fVar2,
+                                                 -(float)((double)(float)((double)param_1->
+                                                  triangleNormal[2] * dVar30 +
+                                                  (double)(float)((double)param_1->triangleNormal[1]
+                                                                  * dVar31 +
+                                                                 (double)(float)(dVar32 * (double)*
+                                                  pfVar15))) * dVar23 - (double)fVar2),
+                                                 ABS(fVar1) * param_1->vBoxHalfSize[2] +
+                                                 ABS((float)((double)param_1->triangleEdge1[2] *
+                                                             dVar27 + (double)(float)(dVar22 * 
+                                                  dVar29 + (double)(float)((double)param_1->
+                                                  triangleEdge1[1] * dVar28)))) *
+                                                 param_1->vBoxHalfSize[0],fVar1,*pafVar10,
+                                                 (int)pafVar11);
+                            if (bVar9) {
+                              if (dVar21 <= ABS((double)(float)((double)(param_1->vBestNormal[2] *
+                                                                         param_1->vBestNormal[2] +
+                                                                        *pfVar16 * *pfVar16 +
+                                                                        param_1->vBestNormal[1] *
+                                                                        param_1->vBestNormal[1]) -
+                                                               dVar20))) {
                                 va("normal: (%f, %f, %f) bestaxis: %i");
-                                pfVar17 = (float *)0x0;
-                                pfVar14 = (float *)0x23d;
+                                pafVar11 = (float (*) [4])0x0;
+                                pafVar10 = (float (*) [4])0x23d;
                                 MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\collision_trimesh_box.cpp"
                                                 ,0x23d,0,"%s\n\t%s");
                               }
-                              dVar28 = (double)*pfVar19;
-                              fVar1 = (float)((double)pcVar9->triangleEdge2[2] * dVar33 +
-                                             (double)(float)((double)pcVar9->triangleEdge2[1] *
-                                                             dVar34 + (double)(float)(dVar28 * 
-                                                  dVar35)));
-                              fVar2 = (float)(dVar30 * (double)(float)((double)pcVar9->triangleEdge2
-                                                                               [1] * dVar38 -
-                                                                      (double)(float)(dVar28 * 
-                                                  dVar37)) +
-                                             (double)(float)(dVar31 * (double)(float)((double)pcVar9
-                                                  ->triangleEdge2[2] * dVar37 -
-                                                  (double)(float)((double)pcVar9->triangleEdge2[1] *
-                                                                 dVar36)) +
-                                                  (double)(float)(dVar32 * (double)(float)(dVar28 * 
-                                                  dVar36 - (double)(float)((double)pcVar9->
-                                                  triangleEdge2[2] * dVar38)))));
-                              bVar11 = _cldTestEdge(pcVar9,fVar2,
-                                                    -(float)((double)(float)((double)pcVar9->
-                                                  triangleNormal[2] * dVar36 +
-                                                  (double)(float)((double)pcVar9->triangleNormal[1]
-                                                                  * dVar37 +
-                                                                 (double)(float)(dVar38 * (double)*
-                                                  pfVar21))) * dVar29 - (double)fVar2),
-                                                  ABS((float)((double)pcVar9->triangleEdge2[2] *
-                                                              dVar40 + (double)(float)((double)
-                                                  pcVar9->triangleEdge2[1] * dVar41 +
-                                                  (double)(float)(dVar28 * dVar39)))) *
-                                                  pcVar9->vBoxHalfSize[2] +
-                                                  ABS(fVar1) * pcVar9->vBoxHalfSize[0],fVar1,pfVar14
-                                                  ,(int)pfVar17);
-                              if (bVar11) {
-                                if (dVar27 <= ABS((double)(float)((double)(*pfVar22 * *pfVar22 +
-                                                                          pcVar9->vBestNormal[1] *
-                                                                          pcVar9->vBestNormal[1] +
-                                                                          pcVar9->vBestNormal[2] *
-                                                                          pcVar9->vBestNormal[2]) -
-                                                                 dVar26))) {
+                              dVar22 = (double)*pfVar12;
+                              fVar1 = (float)((double)param_1->triangleEdge2[2] * dVar27 +
+                                             (double)(float)((double)param_1->triangleEdge2[1] *
+                                                             dVar28 + (double)(float)(dVar22 * 
+                                                  dVar29)));
+                              fVar2 = (float)(dVar24 * (double)(float)((double)param_1->
+                                                  triangleEdge2[1] * dVar32 -
+                                                  (double)(float)(dVar22 * dVar31)) +
+                                             (double)(float)(dVar25 * (double)(float)((double)
+                                                  param_1->triangleEdge2[2] * dVar31 -
+                                                  (double)(float)((double)param_1->triangleEdge2[1]
+                                                                 * dVar30)) +
+                                                  (double)(float)(dVar26 * (double)(float)(dVar22 * 
+                                                  dVar30 - (double)(float)((double)param_1->
+                                                  triangleEdge2[2] * dVar32)))));
+                              bVar9 = _cldTestEdge(param_1,fVar2,
+                                                   -(float)((double)(float)((double)param_1->
+                                                  triangleNormal[2] * dVar30 +
+                                                  (double)(float)((double)param_1->triangleNormal[1]
+                                                                  * dVar31 +
+                                                                 (double)(float)(dVar32 * (double)*
+                                                  pfVar15))) * dVar23 - (double)fVar2),
+                                                  ABS((float)((double)param_1->triangleEdge2[2] *
+                                                              dVar34 + (double)(float)((double)
+                                                  param_1->triangleEdge2[1] * dVar35 +
+                                                  (double)(float)(dVar22 * dVar33)))) *
+                                                  param_1->vBoxHalfSize[2] +
+                                                  ABS(fVar1) * param_1->vBoxHalfSize[0],fVar1,
+                                                  *pafVar10,(int)pafVar11);
+                              if (bVar9) {
+                                if (dVar21 <= ABS((double)(float)((double)(*pfVar16 * *pfVar16 +
+                                                                          param_1->vBestNormal[1] *
+                                                                          param_1->vBestNormal[1] +
+                                                                          param_1->vBestNormal[2] *
+                                                                          param_1->vBestNormal[2]) -
+                                                                 dVar20))) {
                                   va("normal: (%f, %f, %f) bestaxis: %i");
-                                  pfVar17 = (float *)0x0;
-                                  pfVar14 = (float *)0x24f;
+                                  pafVar11 = (float (*) [4])0x0;
+                                  pafVar10 = (float (*) [4])0x24f;
                                   MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\collision_trimesh_box.cpp"
                                                   ,0x24f,0,"%s\n\t%s");
                                 }
-                                dVar28 = (double)*pfVar20;
-                                fVar1 = (float)((double)pcVar9->triangleEdge0[2] * dVar36 +
-                                               (double)(float)(dVar28 * dVar38 +
-                                                              (double)(float)((double)pcVar9->
-                                                  triangleEdge0[1] * dVar37)));
-                                fVar2 = (float)(dVar30 * (double)(float)((double)pcVar9->
-                                                  triangleEdge0[1] * dVar35 -
-                                                  (double)(float)(dVar28 * dVar34)) +
-                                               (double)(float)(dVar31 * (double)(float)((double)
-                                                  pcVar9->triangleEdge0[2] * dVar34 -
-                                                  (double)(float)((double)pcVar9->triangleEdge0[1] *
-                                                                 dVar33)) +
-                                                  (double)(float)(dVar32 * (double)(float)(dVar28 * 
-                                                  dVar33 - (double)(float)((double)pcVar9->
-                                                  triangleEdge0[2] * dVar35)))));
-                                bVar11 = _cldTestEdge(pcVar9,fVar2,
-                                                      (float)((double)(float)((double)pcVar9->
-                                                  triangleNormal[2] * dVar33 +
-                                                  (double)(float)((double)pcVar9->triangleNormal[1]
-                                                                  * dVar34 +
-                                                                 (double)(float)(dVar35 * (double)*
-                                                  pfVar21))) * dVar29 + (double)fVar2),
-                                                  ABS(fVar1) * pcVar9->vBoxHalfSize[0] +
-                                                  ABS((float)((double)pcVar9->triangleEdge0[2] *
-                                                              dVar40 + (double)(float)(dVar28 * 
-                                                  dVar39 + (double)(float)((double)pcVar9->
-                                                  triangleEdge0[1] * dVar41)))) *
-                                                  pcVar9->vBoxHalfSize[1],fVar1,pfVar14,(int)pfVar17
-                                                  );
-                                if (bVar11) {
-                                  if (dVar27 <= ABS((double)(float)((double)(*pfVar22 * *pfVar22 +
-                                                                            pcVar9->vBestNormal[1] *
-                                                                            pcVar9->vBestNormal[1] +
-                                                                            pcVar9->vBestNormal[2] *
-                                                                            pcVar9->vBestNormal[2])
-                                                                   - dVar26))) {
+                                dVar22 = (double)*pfVar14;
+                                fVar1 = (float)((double)param_1->triangleEdge0[2] * dVar30 +
+                                               (double)(float)(dVar22 * dVar32 +
+                                                              (double)(float)((double)param_1->
+                                                  triangleEdge0[1] * dVar31)));
+                                fVar2 = (float)(dVar24 * (double)(float)((double)param_1->
+                                                  triangleEdge0[1] * dVar29 -
+                                                  (double)(float)(dVar22 * dVar28)) +
+                                               (double)(float)(dVar25 * (double)(float)((double)
+                                                  param_1->triangleEdge0[2] * dVar28 -
+                                                  (double)(float)((double)param_1->triangleEdge0[1]
+                                                                 * dVar27)) +
+                                                  (double)(float)(dVar26 * (double)(float)(dVar22 * 
+                                                  dVar27 - (double)(float)((double)param_1->
+                                                  triangleEdge0[2] * dVar29)))));
+                                bVar9 = _cldTestEdge(param_1,fVar2,
+                                                     (float)((double)(float)((double)param_1->
+                                                  triangleNormal[2] * dVar27 +
+                                                  (double)(float)((double)param_1->triangleNormal[1]
+                                                                  * dVar28 +
+                                                                 (double)(float)(dVar29 * (double)*
+                                                  pfVar15))) * dVar23 + (double)fVar2),
+                                                  ABS(fVar1) * param_1->vBoxHalfSize[0] +
+                                                  ABS((float)((double)param_1->triangleEdge0[2] *
+                                                              dVar34 + (double)(float)(dVar22 * 
+                                                  dVar33 + (double)(float)((double)param_1->
+                                                  triangleEdge0[1] * dVar35)))) *
+                                                  param_1->vBoxHalfSize[1],fVar1,*pafVar10,
+                                                  (int)pafVar11);
+                                if (bVar9) {
+                                  if (dVar21 <= ABS((double)(float)((double)(*pfVar16 * *pfVar16 +
+                                                                            param_1->vBestNormal[1]
+                                                                            * param_1->vBestNormal
+                                                                              [1] + param_1->
+                                                  vBestNormal[2] * param_1->vBestNormal[2]) - dVar20
+                                                  ))) {
                                     va("normal: (%f, %f, %f) bestaxis: %i");
-                                    pfVar17 = (float *)0x0;
-                                    pfVar14 = (float *)0x261;
+                                    pafVar11 = (float (*) [4])0x0;
+                                    pafVar10 = (float (*) [4])0x261;
                                     MyAssertHandler(
                                                   "c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\collision_trimesh_box.cpp"
                                                   ,0x261,0,"%s\n\t%s");
                                   }
-                                  dVar28 = (double)*pfVar16;
-                                  fVar1 = (float)((double)pcVar9->triangleEdge1[2] * dVar36 +
-                                                 (double)(float)(dVar28 * dVar38 +
-                                                                (double)(float)((double)pcVar9->
-                                                  triangleEdge1[1] * dVar37)));
-                                  fVar2 = (float)(dVar30 * (double)(float)((double)pcVar9->
-                                                  triangleEdge1[1] * dVar35 -
-                                                  (double)(float)(dVar28 * dVar34)) +
-                                                 (double)(float)(dVar31 * (double)(float)((double)
-                                                  pcVar9->triangleEdge1[2] * dVar34 -
-                                                  (double)(float)((double)pcVar9->triangleEdge1[1] *
-                                                                 dVar33)) +
-                                                  (double)(float)(dVar32 * (double)(float)(dVar28 * 
-                                                  dVar33 - (double)(float)((double)pcVar9->
-                                                  triangleEdge1[2] * dVar35)))));
-                                  bVar11 = _cldTestEdge(pcVar9,fVar2,
-                                                        -(float)((double)(float)((double)pcVar9->
-                                                  triangleNormal[2] * dVar33 +
-                                                  (double)(float)((double)pcVar9->triangleNormal[1]
-                                                                  * dVar34 +
-                                                                 (double)(float)(dVar35 * (double)*
-                                                  pfVar21))) * dVar29 - (double)fVar2),
-                                                  ABS(fVar1) * pcVar9->vBoxHalfSize[0] +
-                                                  ABS((float)((double)pcVar9->triangleEdge1[2] *
-                                                              dVar40 + (double)(float)(dVar28 * 
-                                                  dVar39 + (double)(float)((double)pcVar9->
-                                                  triangleEdge1[1] * dVar41)))) *
-                                                  pcVar9->vBoxHalfSize[1],fVar1,pfVar14,(int)pfVar17
-                                                  );
-                                  if (bVar11) {
-                                    if (dVar27 <= ABS((double)(float)((double)(pcVar9->vBestNormal
-                                                                               [2] * pcVar9->
+                                  dVar22 = (double)*pfVar13;
+                                  fVar1 = (float)((double)param_1->triangleEdge1[2] * dVar30 +
+                                                 (double)(float)(dVar22 * dVar32 +
+                                                                (double)(float)((double)param_1->
+                                                  triangleEdge1[1] * dVar31)));
+                                  fVar2 = (float)(dVar24 * (double)(float)((double)param_1->
+                                                  triangleEdge1[1] * dVar29 -
+                                                  (double)(float)(dVar22 * dVar28)) +
+                                                 (double)(float)(dVar25 * (double)(float)((double)
+                                                  param_1->triangleEdge1[2] * dVar28 -
+                                                  (double)(float)((double)param_1->triangleEdge1[1]
+                                                                 * dVar27)) +
+                                                  (double)(float)(dVar26 * (double)(float)(dVar22 * 
+                                                  dVar27 - (double)(float)((double)param_1->
+                                                  triangleEdge1[2] * dVar29)))));
+                                  bVar9 = _cldTestEdge(param_1,fVar2,
+                                                       -(float)((double)(float)((double)param_1->
+                                                  triangleNormal[2] * dVar27 +
+                                                  (double)(float)((double)param_1->triangleNormal[1]
+                                                                  * dVar28 +
+                                                                 (double)(float)(dVar29 * (double)*
+                                                  pfVar15))) * dVar23 - (double)fVar2),
+                                                  ABS(fVar1) * param_1->vBoxHalfSize[0] +
+                                                  ABS((float)((double)param_1->triangleEdge1[2] *
+                                                              dVar34 + (double)(float)(dVar22 * 
+                                                  dVar33 + (double)(float)((double)param_1->
+                                                  triangleEdge1[1] * dVar35)))) *
+                                                  param_1->vBoxHalfSize[1],fVar1,*pafVar10,
+                                                  (int)pafVar11);
+                                  if (bVar9) {
+                                    if (dVar21 <= ABS((double)(float)((double)(param_1->vBestNormal
+                                                                               [2] * param_1->
                                                   vBestNormal[2] +
-                                                  *pfVar22 * *pfVar22 +
-                                                  pcVar9->vBestNormal[1] * pcVar9->vBestNormal[1]) -
-                                                  dVar26))) {
+                                                  *pfVar16 * *pfVar16 +
+                                                  param_1->vBestNormal[1] * param_1->vBestNormal[1])
+                                                  - dVar20))) {
                                       va("normal: (%f, %f, %f) bestaxis: %i");
-                                      pfVar17 = (float *)0x0;
-                                      pfVar14 = (float *)0x273;
+                                      pafVar11 = (float (*) [4])0x0;
+                                      pafVar10 = (float (*) [4])0x273;
                                       MyAssertHandler(
                                                   "c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\collision_trimesh_box.cpp"
                                                   ,0x273,0,"%s\n\t%s");
                                     }
-                                    dVar28 = (double)*pfVar19;
-                                    fVar1 = (float)((double)pcVar9->triangleEdge2[2] * dVar40 +
-                                                   (double)(float)((double)pcVar9->triangleEdge2[1]
-                                                                   * dVar41 +
-                                                                  (double)(float)(dVar28 * dVar39)))
+                                    dVar22 = (double)*pfVar12;
+                                    fVar1 = (float)((double)param_1->triangleEdge2[2] * dVar34 +
+                                                   (double)(float)((double)param_1->triangleEdge2[1]
+                                                                   * dVar35 +
+                                                                  (double)(float)(dVar22 * dVar33)))
                                     ;
-                                    fVar2 = (float)(dVar30 * (double)(float)((double)pcVar9->
-                                                  triangleEdge2[1] * dVar35 -
-                                                  (double)(float)(dVar28 * dVar34)) +
-                                                  (double)(float)(dVar31 * (double)(float)((double)
-                                                  pcVar9->triangleEdge2[2] * dVar34 -
-                                                  (double)(float)((double)pcVar9->triangleEdge2[1] *
-                                                                 dVar33)) +
-                                                  (double)(float)(dVar32 * (double)(float)(dVar28 * 
-                                                  dVar33 - (double)(float)((double)pcVar9->
-                                                  triangleEdge2[2] * dVar35)))));
-                                    bVar11 = _cldTestEdge(pcVar9,fVar2,
-                                                          -(float)((double)(float)((double)pcVar9->
-                                                  triangleNormal[2] * dVar33 +
-                                                  (double)(float)((double)pcVar9->triangleNormal[1]
-                                                                  * dVar34 +
-                                                                 (double)(float)(dVar35 * (double)*
-                                                  pfVar21))) * dVar29 - (double)fVar2),
-                                                  ABS((float)((double)pcVar9->triangleEdge2[2] *
-                                                              dVar36 + (double)(float)((double)
-                                                  pcVar9->triangleEdge2[1] * dVar37 +
-                                                  (double)(float)(dVar28 * dVar38)))) *
-                                                  pcVar9->vBoxHalfSize[0] +
-                                                  ABS(fVar1) * pcVar9->vBoxHalfSize[1],fVar1,pfVar14
-                                                  ,(int)pfVar17);
-                                    if (bVar11) {
-                                      if (dVar27 <= ABS((double)(float)((double)(pcVar9->vBestNormal
-                                                                                 [2] * pcVar9->
-                                                  vBestNormal[2] +
-                                                  *pfVar22 * *pfVar22 +
-                                                  pcVar9->vBestNormal[1] * pcVar9->vBestNormal[1]) -
-                                                  dVar26))) {
+                                    fVar2 = (float)(dVar24 * (double)(float)((double)param_1->
+                                                  triangleEdge2[1] * dVar29 -
+                                                  (double)(float)(dVar22 * dVar28)) +
+                                                  (double)(float)(dVar25 * (double)(float)((double)
+                                                  param_1->triangleEdge2[2] * dVar28 -
+                                                  (double)(float)((double)param_1->triangleEdge2[1]
+                                                                 * dVar27)) +
+                                                  (double)(float)(dVar26 * (double)(float)(dVar22 * 
+                                                  dVar27 - (double)(float)((double)param_1->
+                                                  triangleEdge2[2] * dVar29)))));
+                                    bVar9 = _cldTestEdge(param_1,fVar2,
+                                                         -(float)((double)(float)((double)param_1->
+                                                  triangleNormal[2] * dVar27 +
+                                                  (double)(float)((double)param_1->triangleNormal[1]
+                                                                  * dVar28 +
+                                                                 (double)(float)(dVar29 * (double)*
+                                                  pfVar15))) * dVar23 - (double)fVar2),
+                                                  ABS((float)((double)param_1->triangleEdge2[2] *
+                                                              dVar30 + (double)(float)((double)
+                                                  param_1->triangleEdge2[1] * dVar31 +
+                                                  (double)(float)(dVar22 * dVar32)))) *
+                                                  param_1->vBoxHalfSize[0] +
+                                                  ABS(fVar1) * param_1->vBoxHalfSize[1],fVar1,
+                                                  *pafVar10,(int)pafVar11);
+                                    if (bVar9) {
+                                      if (dVar21 <= ABS((double)(float)((double)(param_1->
+                                                  vBestNormal[2] * param_1->vBestNormal[2] +
+                                                  *pfVar16 * *pfVar16 +
+                                                  param_1->vBestNormal[1] * param_1->vBestNormal[1])
+                                                  - dVar20))) {
                                         va("normal: (%f, %f, %f) bestaxis: %i");
                                         MyAssertHandler(
                                                   "c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\collision_trimesh_box.cpp"
                                                   ,0x285,0,"%s\n\t%s");
                                       }
-                                      __restfpr();
-                                      uVar10 = __restgprlr_22();
-                                      return (bool)uVar10;
+                                      return true;
                                     }
                                   }
                                 }
@@ -979,9 +958,7 @@ bool _cldTestSeparatingAxes
       }
     }
   }
-  __restfpr();
-  uVar10 = __restgprlr_22();
-  return (bool)uVar10;
+  return false;
 }
 
 
@@ -1017,6 +994,11 @@ bool _cldClosestPointOnTwoLines
 
 // 8268A6E0  _cldClipping  (physics/ode/src/collision_trimesh_box.cpp:685)
 
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_19 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_19 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
+
 void _cldClipping(collData_t *param_1,float (*param_2) [4],float (*param_3) [4],float (*param_4) [4]
                  )
 
@@ -1024,23 +1006,23 @@ void _cldClipping(collData_t *param_1,float (*param_2) [4],float (*param_3) [4],
   float fVar1;
   float fVar2;
   float fVar3;
-  float fVar4;
-  float fVar5;
+  uint uVar4;
+  dContactGeom *pdVar5;
   float fVar6;
-  char *pcVar7;
-  char *pcVar8;
-  float *pfVar9;
-  float (*pafVar10) [4];
+  float fVar7;
+  float fVar8;
+  char *pcVar9;
+  char *pcVar10;
   float (*pafVar11) [4];
   ulonglong uVar12;
   ulonglong uVar13;
   longlong lVar14;
   int iVar15;
-  float *pfVar16;
+  int iVar16;
   float *pfVar17;
-  int iVar18;
-  uint *puVar19;
-  int iVar20;
+  float *pfVar18;
+  int iVar19;
+  float *pfVar20;
   double dVar21;
   double dVar22;
   double dVar23;
@@ -1068,17 +1050,17 @@ void _cldClipping(collData_t *param_1,float (*param_2) [4],float (*param_3) [4],
   char *local_2d0;
   char *local_2cc;
   char *local_2c8;
-  uint local_2c4;
+  float local_2c4;
   float local_2c0;
   char *local_2bc;
   char *local_2b8;
   char *local_2b4;
   char *local_2b0;
   char *local_2ac;
-  uint local_2a8;
+  float local_2a8;
   char *local_2a4;
-  uint local_2a0;
-  uint local_29c;
+  float local_2a0;
+  float local_29c;
   float local_290;
   float local_28c;
   float local_288;
@@ -1112,10 +1094,8 @@ void _cldClipping(collData_t *param_1,float (*param_2) [4],float (*param_3) [4],
   float local_158;
   collData_t local_150;
   
-  __savegprlr();
-  pfVar9 = (float *)__savefpr_19();
-  fVar3 = pfVar9[0x19];
-  uVar13 = (ulonglong)(uint)fVar3;
+  uVar4 = param_1->iBestAxis;
+  uVar13 = (ulonglong)uVar4;
   dVar35 = 0.0;
   dVar24 = 1e-06;
   dVar25 = 0.0020000000949949026;
@@ -1132,24 +1112,24 @@ void _cldClipping(collData_t *param_1,float (*param_2) [4],float (*param_3) [4],
   local_2cc = "normal: (%f, %f, %f)";
   local_2ac = 
   "!IS_NAN((Contact->normal)[0]) && !IS_NAN((Contact->normal)[1]) && !IS_NAN((Contact->normal)[2])";
-  if ((int)fVar3 < 5) {
-    if (1 < (int)fVar3) {
-      dVar28 = (double)pfVar9[0x14];
-      dVar27 = (double)pfVar9[0x15];
-      dVar21 = (double)pfVar9[0x16];
-      iVar18 = 2;
+  if ((int)uVar4 < 5) {
+    if (1 < (int)uVar4) {
+      dVar28 = (double)param_1->vBestNormal[0];
+      dVar27 = (double)param_1->vBestNormal[1];
+      dVar21 = (double)param_1->vBestNormal[2];
+      iVar19 = 2;
       if (uVar13 - 2 == 0) {
-        iVar20 = 1;
+        iVar15 = 1;
       }
       else {
-        iVar20 = 0;
+        iVar15 = 0;
         if ((int)(uVar13 - 2) != 1) {
-          iVar18 = 1;
+          iVar19 = 1;
         }
       }
-      local_150.mHullBoxRot[9] = pfVar9[0xd];
-      local_150.mHullBoxRot[8] = pfVar9[0xc];
-      local_150.mHullBoxRot[10] = pfVar9[0xe];
+      local_150.mHullBoxRot[9] = param_1->vHullBoxPos[1];
+      local_150.mHullBoxRot[8] = param_1->vHullBoxPos[0];
+      local_150.mHullBoxRot[10] = param_1->vHullBoxPos[2];
       local_150.mHullBoxRot[2] = (*param_2)[2] - local_150.mHullBoxRot[10];
       local_150.mHullBoxRot[0] = (*param_2)[0] - local_150.mHullBoxRot[8];
       local_150.mHullBoxRot[4] = (*param_3)[0] - local_150.mHullBoxRot[8];
@@ -1202,12 +1182,12 @@ void _cldClipping(collData_t *param_1,float (*param_2) [4],float (*param_3) [4],
       local_17c = 0.0;
       local_178 = 0.0;
       local_270._112_4_ = 0.0;
-      iVar15 = (int)((uVar13 + 0xe & 0xffffffff) << 2);
+      iVar16 = (int)((uVar13 + 0xe & 0xffffffff) << 2);
       local_2f0 = (float)-dVar28;
       local_2ec = (float)-dVar27;
       local_2e8 = (float)-dVar21;
       local_270._116_4_ = 0.0;
-      local_2e4 = *(float *)(iVar15 + (int)pfVar9);
+      local_2e4 = *(float *)((int)param_1->mHullBoxRot + iVar16);
       local_270._120_4_ = 0.0;
       local_170 = 0.0;
       local_16c = 0.0;
@@ -1222,131 +1202,142 @@ void _cldClipping(collData_t *param_1,float (*param_2) [4],float (*param_3) [4],
                           (int *)&local_2f0,
                           (float (*) [4])
                           "Vec3Dot( Contact->normal, tbData->triangleNormal ) <= ZERO_EPSILON");
-      pafVar11 = (float (*) [4])(iVar20 + 0x10);
-      local_2ec = pfVar9[iVar20 + 4];
-      local_2e8 = pfVar9[iVar20 + 8];
-      local_2e4 = pfVar9[(int)pafVar11];
-      local_2f0 = pfVar9[iVar20];
-      pafVar10 = pafVar11;
+      pafVar11 = (float (*) [4])(iVar15 + 0x10);
+      local_2ec = param_1->mHullBoxRot[iVar15 + 4];
+      local_2e8 = param_1->mHullBoxRot[iVar15 + 8];
+      local_2e4 = param_1->vBoxHalfSize[iVar15];
+      local_2f0 = param_1->mHullBoxRot[iVar15];
       _cldClipPolyToPlane((collData_t *)local_270,local_2fc[0],(int)(local_270 + 0x90),
                           (float (*) [4])&local_300,(int *)&local_2f0,pafVar11);
-      local_2f0 = -pfVar9[iVar20];
-      local_2ec = -pfVar9[iVar20 + 4];
-      local_2e4 = pfVar9[(int)pafVar11];
-      local_2e8 = -pfVar9[iVar20 + 8];
+      local_2f0 = -param_1->mHullBoxRot[iVar15];
+      local_2ec = -param_1->mHullBoxRot[iVar15 + 4];
+      local_2e4 = param_1->vBoxHalfSize[iVar15];
+      local_2e8 = -param_1->mHullBoxRot[iVar15 + 8];
       _cldClipPolyToPlane((collData_t *)(local_270 + 0x90),local_300,(int)local_270,
-                          (float (*) [4])local_2fc,(int *)&local_2f0,pafVar10);
-      local_2f0 = pfVar9[iVar18];
-      local_2ec = pfVar9[iVar18 + 4];
-      local_2e4 = pfVar9[iVar18 + 0x10];
-      local_2e8 = pfVar9[iVar18 + 8];
+                          (float (*) [4])local_2fc,(int *)&local_2f0,pafVar11);
+      local_2f0 = param_1->mHullBoxRot[iVar19];
+      local_2ec = param_1->mHullBoxRot[iVar19 + 4];
+      local_2e4 = param_1->vBoxHalfSize[iVar19];
+      local_2e8 = param_1->mHullBoxRot[iVar19 + 8];
       _cldClipPolyToPlane((collData_t *)local_270,local_2fc[0],(int)(local_270 + 0x90),
-                          (float (*) [4])&local_300,(int *)&local_2f0,pafVar10);
-      local_2f0 = -pfVar9[iVar18];
-      local_2ec = -pfVar9[iVar18 + 4];
-      local_2e4 = pfVar9[iVar18 + 0x10];
-      local_2e8 = -pfVar9[iVar18 + 8];
+                          (float (*) [4])&local_300,(int *)&local_2f0,pafVar11);
+      local_2f0 = -param_1->mHullBoxRot[iVar19];
+      local_2ec = -param_1->mHullBoxRot[iVar19 + 4];
+      local_2e4 = param_1->vBoxHalfSize[iVar19];
+      local_2e8 = -param_1->mHullBoxRot[iVar19 + 8];
       _cldClipPolyToPlane((collData_t *)(local_270 + 0x90),local_300,(int)local_270,
-                          (float (*) [4])local_2fc,(int *)&local_2f0,pafVar10);
-      pafVar10 = local_2fc[0];
-      iVar18 = 0;
+                          (float (*) [4])local_2fc,(int *)&local_2f0,pafVar11);
+      pafVar11 = local_2fc[0];
+      iVar19 = 0;
       if (0 < (int)local_2fc[0]) {
-        pfVar16 = (float *)(local_270 + 8);
+        pfVar17 = (float *)(local_270 + 8);
         do {
-          dVar29 = (double)((float)((double)*pfVar16 * dVar21 +
-                                   (double)(float)((double)pfVar16[-2] * dVar28 +
-                                                  (double)(float)((double)pfVar16[-1] * dVar27))) -
-                           *(float *)(iVar15 + (int)pfVar9));
+          dVar29 = (double)((float)((double)*pfVar17 * dVar21 +
+                                   (double)(float)((double)pfVar17[-2] * dVar28 +
+                                                  (double)(float)((double)pfVar17[-1] * dVar27))) -
+                           *(float *)((int)param_1->mHullBoxRot + iVar16));
           if (dVar35 < dVar29) {
             dVar29 = dVar35;
           }
-          fVar3 = pfVar9[0x2f];
-          dVar22 = (double)(float)((double)pfVar16[-2] + (double)pfVar9[0xc]);
-          dVar31 = (double)(float)((double)pfVar16[-1] + (double)pfVar9[0xd]);
-          dVar30 = (double)(float)((double)pfVar9[0xe] + (double)*pfVar16);
-          if ((int)((uint)pfVar9[0x2a] & 0xffff) <= (int)fVar3) break;
-          fVar1 = pfVar9[0x2c];
-          fVar2 = pfVar9[0x2b];
-          if (((uint)pfVar9[0x2a] & 0xffff) <= (uint)fVar3) {
+          uVar4 = param_1->ctContacts;
+          dVar22 = (double)(float)((double)pfVar17[-2] + (double)param_1->vHullBoxPos[0]);
+          dVar31 = (double)(float)((double)pfVar17[-1] + (double)param_1->vHullBoxPos[1]);
+          dVar30 = (double)(float)((double)param_1->vHullBoxPos[2] + (double)*pfVar17);
+          if ((int)(param_1->iFlags & 0xffffU) <= (int)uVar4) break;
+          iVar15 = param_1->iStride;
+          pdVar5 = param_1->ContactGeoms;
+          if ((param_1->iFlags & 0xffffU) <= uVar4) {
             MyAssertHandler(local_2c8,0x1f,0,local_2d0);
           }
-          puVar19 = (uint *)((int)fVar3 * (int)fVar1 + (int)fVar2);
-          puVar19[6] = (uint)(float)-dVar29;
-          local_300 = (float (*) [4])pfVar9[0x14];
-          puVar19[3] = (uint)local_300;
-          puVar19[4] = (uint)pfVar9[0x15];
-          puVar19[5] = (uint)pfVar9[0x16];
-          *(float *)((int)fVar3 * (int)fVar1 + (int)fVar2) = (float)dVar22;
-          puVar19[1] = (uint)(float)dVar31;
-          puVar19[2] = (uint)(float)dVar30;
+          iVar15 = uVar4 * iVar15;
+          pfVar18 = (float *)((int)pdVar5->pos + iVar15);
+          pfVar18[6] = (float)-dVar29;
+          local_300 = (float (*) [4])param_1->vBestNormal[0];
+          pfVar18[3] = (float)local_300;
+          pfVar18[4] = param_1->vBestNormal[1];
+          pfVar18[5] = param_1->vBestNormal[2];
+          *(float *)((int)pdVar5->pos + iVar15) = (float)dVar22;
+          pfVar18[1] = (float)dVar31;
+          pfVar18[2] = (float)dVar30;
           if (((((uint)local_300 & 0x7f800000) == 0x7f800000) ||
-              (local_2fc[0] = (float (*) [4])puVar19[4],
+              (local_2fc[0] = (float (*) [4])pfVar18[4],
               ((uint)local_2fc[0] & 0x7f800000) == 0x7f800000)) ||
-             (local_2c4 = puVar19[5], (local_2c4 & 0x7f800000) == 0x7f800000)) {
+             (local_2c4 = pfVar18[5], ((uint)local_2c4 & 0x7f800000) == 0x7f800000)) {
             MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\collision_trimesh_box.cpp"
                             ,0x37b,0,"%s");
           }
-          fVar3 = (float)puVar19[3];
-          if (dVar25 <= ABS((double)(float)((double)((float)puVar19[5] * (float)puVar19[5] +
-                                                    fVar3 * fVar3 +
-                                                    (float)puVar19[4] * (float)puVar19[4]) - dVar26)
-                           )) {
+          fVar1 = pfVar18[3];
+          if (dVar25 <= ABS((double)(float)((double)(pfVar18[5] * pfVar18[5] +
+                                                    fVar1 * fVar1 + pfVar18[4] * pfVar18[4]) -
+                                           dVar26))) {
             va(local_2cc);
             MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\collision_trimesh_box.cpp"
                             ,0x37c,0,"%s\n\t%s");
           }
-          local_29c = *puVar19;
-          if ((((local_29c & 0x7f800000) == 0x7f800000) ||
-              (local_2a8 = puVar19[1], (local_2a8 & 0x7f800000) == 0x7f800000)) ||
-             (local_2a0 = puVar19[2], (local_2a0 & 0x7f800000) == 0x7f800000)) {
+          local_29c = *pfVar18;
+          if (((((uint)local_29c & 0x7f800000) == 0x7f800000) ||
+              (local_2a8 = pfVar18[1], ((uint)local_2a8 & 0x7f800000) == 0x7f800000)) ||
+             (local_2a0 = pfVar18[2], ((uint)local_2a0 & 0x7f800000) == 0x7f800000)) {
             MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\collision_trimesh_box.cpp"
                             ,0x37d,0,"%s");
           }
-          local_2c0 = (float)puVar19[6];
+          local_2c0 = pfVar18[6];
           if (((uint)local_2c0 & 0x7f800000) == 0x7f800000) {
             MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\collision_trimesh_box.cpp"
                             ,0x37e,0,"%s");
           }
-          if (dVar24 < (double)((float)puVar19[5] * pfVar9[0x28] +
-                               (float)puVar19[4] * pfVar9[0x27] + (float)puVar19[3] * pfVar9[0x26]))
-          {
+          if (dVar24 < (double)(pfVar18[5] * param_1->triangleNormal[2] +
+                               pfVar18[4] * param_1->triangleNormal[1] +
+                               pfVar18[3] * param_1->triangleNormal[0])) {
             MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\collision_trimesh_box.cpp"
                             ,0x37f,0,"%s\n\t%s");
           }
-          iVar18 = iVar18 + 1;
-          pfVar16 = pfVar16 + 4;
-          pfVar9[0x2f] = (float)((int)pfVar9[0x2f] + 1);
-        } while (iVar18 < (int)pafVar10);
+          iVar19 = iVar19 + 1;
+          pfVar17 = pfVar17 + 4;
+          param_1->ctContacts = param_1->ctContacts + 1;
+        } while (iVar19 < (int)pafVar11);
       }
     }
   }
   else {
-    pfVar16 = pfVar9 + 0x14;
+    pfVar17 = param_1->vBestNormal;
     dVar21 = -1.0;
     dVar27 = dVar21;
-    if (0.0 < pfVar9[0x16] * pfVar9[8] + pfVar9[0x15] * pfVar9[4] + pfVar9[0x14] * *pfVar9) {
+    if (0.0 < param_1->vBestNormal[2] * param_1->mHullBoxRot[8] +
+              param_1->vBestNormal[1] * param_1->mHullBoxRot[4] +
+              param_1->vBestNormal[0] * param_1->mHullBoxRot[0]) {
       dVar27 = dVar26;
     }
-    fVar3 = (float)((double)pfVar9[0x10] * dVar27);
+    fVar1 = (float)((double)param_1->vBoxHalfSize[0] * dVar27);
     dVar27 = dVar21;
-    if (0.0 < pfVar9[0x16] * pfVar9[9] + pfVar9[0x15] * pfVar9[5] + *pfVar16 * pfVar9[1]) {
+    if (0.0 < param_1->vBestNormal[2] * param_1->mHullBoxRot[9] +
+              param_1->vBestNormal[1] * param_1->mHullBoxRot[5] + *pfVar17 * param_1->mHullBoxRot[1]
+       ) {
       dVar27 = dVar26;
     }
-    fVar1 = (float)((double)pfVar9[0x11] * dVar27);
-    if (0.0 < pfVar9[0x16] * pfVar9[10] + pfVar9[0x15] * pfVar9[6] + *pfVar16 * pfVar9[2]) {
+    fVar2 = (float)((double)param_1->vBoxHalfSize[1] * dVar27);
+    if (0.0 < param_1->vBestNormal[2] * param_1->mHullBoxRot[10] +
+              param_1->vBestNormal[1] * param_1->mHullBoxRot[6] + *pfVar17 * param_1->mHullBoxRot[2]
+       ) {
       dVar21 = dVar26;
     }
-    fVar2 = (float)((double)pfVar9[0x12] * dVar21);
+    fVar3 = (float)((double)param_1->vBoxHalfSize[2] * dVar21);
     lVar14 = (longlong)(int)(uVar13 - 5);
     uVar12 = lVar14 / 3 + (lVar14 >> 0x3f);
     local_150.vBoxHalfSize[0] =
-         fVar2 * pfVar9[2] + fVar1 * pfVar9[1] + fVar3 * *pfVar9 + pfVar9[0xc];
+         fVar3 * param_1->mHullBoxRot[2] +
+         fVar2 * param_1->mHullBoxRot[1] + fVar1 * param_1->mHullBoxRot[0] + param_1->vHullBoxPos[0]
+    ;
     dVar28 = (double)local_150.vBoxHalfSize[0];
     local_150.vBoxHalfSize[1] =
-         fVar2 * pfVar9[6] + fVar1 * pfVar9[5] + fVar3 * pfVar9[4] + pfVar9[0xd];
+         fVar3 * param_1->mHullBoxRot[6] +
+         fVar2 * param_1->mHullBoxRot[5] + fVar1 * param_1->mHullBoxRot[4] + param_1->vHullBoxPos[1]
+    ;
     dVar27 = (double)local_150.vBoxHalfSize[1];
     local_150.vBoxHalfSize[2] =
-         fVar2 * pfVar9[10] + fVar1 * pfVar9[9] + fVar3 * pfVar9[8] + pfVar9[0xe];
+         fVar3 * param_1->mHullBoxRot[10] +
+         fVar2 * param_1->mHullBoxRot[9] + fVar1 * param_1->mHullBoxRot[8] + param_1->vHullBoxPos[2]
+    ;
     dVar21 = (double)local_150.vBoxHalfSize[2];
     uVar12 = (uVar12 & 0xffffffff) + ((uVar12 & 0xffffffff) >> 0x1f);
     lVar14 = (uVar13 - 5) - (uVar12 + (uVar12 & 0x7fffffff) * 2);
@@ -1354,154 +1345,158 @@ void _cldClipping(collData_t *param_1,float (*param_2) [4],float (*param_3) [4],
       dVar31 = (double)(*param_2)[0];
       dVar30 = (double)(*param_2)[1];
       dVar29 = (double)(*param_2)[2];
-      local_290 = pfVar9[0x1a];
-      local_28c = pfVar9[0x1b];
-      local_288 = pfVar9[0x1c];
+      local_290 = param_1->triangleEdge0[0];
+      local_28c = param_1->triangleEdge0[1];
+      local_288 = param_1->triangleEdge0[2];
     }
     else if ((int)lVar14 == 1) {
       dVar31 = (double)(*param_4)[0];
       dVar30 = (double)(*param_4)[1];
       dVar29 = (double)(*param_4)[2];
-      local_290 = pfVar9[0x1e];
-      local_28c = pfVar9[0x1f];
-      local_288 = pfVar9[0x20];
+      local_290 = param_1->triangleEdge1[0];
+      local_28c = param_1->triangleEdge1[1];
+      local_288 = param_1->triangleEdge1[2];
     }
     else {
       dVar31 = (double)(*param_3)[0];
       dVar30 = (double)(*param_3)[1];
       dVar29 = (double)(*param_3)[2];
-      local_290 = pfVar9[0x22];
-      local_28c = pfVar9[0x23];
-      local_288 = pfVar9[0x24];
+      local_290 = param_1->triangleEdge2[0];
+      local_28c = param_1->triangleEdge2[1];
+      local_288 = param_1->triangleEdge2[2];
     }
     local_2f0 = (float)dVar31;
     local_2ec = (float)dVar30;
     local_2e8 = (float)dVar29;
     dNormalize3(&local_290);
-    iVar18 = ((int)pfVar9[0x19] + -5) / 3;
-    local_280[0] = pfVar9[iVar18];
+    iVar19 = (param_1->iBestAxis + -5) / 3;
+    local_280[0] = param_1->mHullBoxRot[iVar19];
     dVar34 = (double)local_280[0];
-    local_280[1] = pfVar9[iVar18 + 4];
+    local_280[1] = param_1->mHullBoxRot[iVar19 + 4];
     dVar33 = (double)local_280[1];
-    local_280[2] = pfVar9[iVar18 + 8];
+    local_280[2] = param_1->mHullBoxRot[iVar19 + 8];
     dVar32 = (double)local_280[2];
     _cldClosestPointOnTwoLines
               (local_150.vBoxHalfSize,local_280,&local_2f0,&local_290,(float *)&local_300,
                (float *)local_2fc);
     dVar23 = (double)(float)local_300;
     dVar22 = (double)(float)local_2fc[0];
-    fVar3 = pfVar9[0x2f];
+    uVar4 = param_1->ctContacts;
     dVar28 = (double)(((float)((double)local_290 * dVar22 + dVar31) +
                       (float)(dVar23 * dVar34 + dVar28)) * 0.5);
     dVar27 = (double)(((float)((double)local_28c * dVar22 + dVar30) +
                       (float)(dVar23 * dVar33 + dVar27)) * 0.5);
     dVar21 = (double)(((float)((double)local_288 * dVar22 + dVar29) +
                       (float)(dVar23 * dVar32 + dVar21)) * 0.5);
-    if ((int)fVar3 < (int)((uint)pfVar9[0x2a] & 0xffff)) {
-      fVar1 = pfVar9[0x2c];
-      fVar2 = pfVar9[0x2b];
-      if (((uint)pfVar9[0x2a] & 0xffff) <= (uint)fVar3) {
+    if ((int)uVar4 < (int)(param_1->iFlags & 0xffffU)) {
+      iVar19 = param_1->iStride;
+      pdVar5 = param_1->ContactGeoms;
+      if ((param_1->iFlags & 0xffffU) <= uVar4) {
         MyAssertHandler(local_2c8,0x1f,0,local_2d0);
       }
-      puVar19 = (uint *)((int)fVar3 * (int)fVar1 + (int)fVar2);
-      puVar19[6] = (uint)pfVar9[0x18];
-      local_300 = (float (*) [4])*pfVar16;
-      puVar19[3] = (uint)local_300;
-      puVar19[4] = (uint)pfVar9[0x15];
-      puVar19[5] = (uint)pfVar9[0x16];
-      *(float *)((int)fVar3 * (int)fVar1 + (int)fVar2) = (float)dVar28;
-      puVar19[1] = (uint)(float)dVar27;
-      puVar19[2] = (uint)(float)dVar21;
+      iVar19 = uVar4 * iVar19;
+      pfVar18 = (float *)((int)pdVar5->pos + iVar19);
+      pfVar18[6] = param_1->fBestDepth;
+      local_300 = (float (*) [4])*pfVar17;
+      pfVar18[3] = (float)local_300;
+      pfVar18[4] = param_1->vBestNormal[1];
+      pfVar18[5] = param_1->vBestNormal[2];
+      *(float *)((int)pdVar5->pos + iVar19) = (float)dVar28;
+      pfVar18[1] = (float)dVar27;
+      pfVar18[2] = (float)dVar21;
       if (((((uint)local_300 & 0x7f800000) == 0x7f800000) ||
-          (local_300 = (float (*) [4])puVar19[4], ((uint)local_300 & 0x7f800000) == 0x7f800000)) ||
-         (local_300 = (float (*) [4])puVar19[5], ((uint)local_300 & 0x7f800000) == 0x7f800000)) {
+          (local_300 = (float (*) [4])pfVar18[4], ((uint)local_300 & 0x7f800000) == 0x7f800000)) ||
+         (local_300 = (float (*) [4])pfVar18[5], ((uint)local_300 & 0x7f800000) == 0x7f800000)) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\collision_trimesh_box.cpp"
                         ,0x2f8,0,"%s");
       }
-      fVar3 = (float)puVar19[3];
-      if (dVar25 <= ABS((double)(float)((double)((float)puVar19[5] * (float)puVar19[5] +
-                                                fVar3 * fVar3 +
-                                                (float)puVar19[4] * (float)puVar19[4]) - dVar26))) {
+      fVar1 = pfVar18[3];
+      if (dVar25 <= ABS((double)(float)((double)(pfVar18[5] * pfVar18[5] +
+                                                fVar1 * fVar1 + pfVar18[4] * pfVar18[4]) - dVar26)))
+      {
         va(local_2cc);
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\collision_trimesh_box.cpp"
                         ,0x2f9,0,"%s\n\t%s");
       }
-      local_300 = (float (*) [4])*puVar19;
+      local_300 = (float (*) [4])*pfVar18;
       if (((((uint)local_300 & 0x7f800000) == 0x7f800000) ||
-          (local_300 = (float (*) [4])puVar19[1], ((uint)local_300 & 0x7f800000) == 0x7f800000)) ||
-         (local_300 = (float (*) [4])puVar19[2], ((uint)local_300 & 0x7f800000) == 0x7f800000)) {
+          (local_300 = (float (*) [4])pfVar18[1], ((uint)local_300 & 0x7f800000) == 0x7f800000)) ||
+         (local_300 = (float (*) [4])pfVar18[2], ((uint)local_300 & 0x7f800000) == 0x7f800000)) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\collision_trimesh_box.cpp"
                         ,0x2fa,0,"%s");
       }
-      local_300 = (float (*) [4])puVar19[6];
+      local_300 = (float (*) [4])pfVar18[6];
       if (((uint)local_300 & 0x7f800000) == 0x7f800000) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\collision_trimesh_box.cpp"
                         ,0x2fb,0,"%s");
       }
-      if (dVar24 < (double)((float)puVar19[5] * pfVar9[0x28] +
-                           (float)puVar19[4] * pfVar9[0x27] + (float)puVar19[3] * pfVar9[0x26])) {
+      if (dVar24 < (double)(pfVar18[5] * param_1->triangleNormal[2] +
+                           pfVar18[4] * param_1->triangleNormal[1] +
+                           pfVar18[3] * param_1->triangleNormal[0])) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\collision_trimesh_box.cpp"
                         ,0x2fc,0,"%s\n\t%s");
       }
-      pfVar9[0x2f] = (float)((int)pfVar9[0x2f] + 1);
+      param_1->ctContacts = param_1->ctContacts + 1;
     }
   }
-  pfVar16 = pfVar9 + 0x26;
-  if (dVar25 <= ABS((double)(float)((double)(pfVar9[0x28] * pfVar9[0x28] +
-                                            pfVar9[0x26] * pfVar9[0x26] +
-                                            pfVar9[0x27] * pfVar9[0x27]) - dVar26))) {
+  pfVar17 = param_1->triangleNormal;
+  if (dVar25 <= ABS((double)(float)((double)(param_1->triangleNormal[2] * param_1->triangleNormal[2]
+                                            + param_1->triangleNormal[0] *
+                                              param_1->triangleNormal[0] +
+                                              param_1->triangleNormal[1] *
+                                              param_1->triangleNormal[1]) - dVar26))) {
     va(local_2cc);
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\collision_trimesh_box.cpp"
                     ,0x391,0,"%s\n\t%s");
   }
-  dVar27 = (double)pfVar9[0x28];
-  dVar28 = (double)*pfVar16;
-  dVar21 = (double)pfVar9[0x27];
-  local_280[0] = (float)((double)pfVar9[4] * dVar21 +
-                        (double)(float)((double)*pfVar9 * dVar28 +
-                                       (double)(float)((double)pfVar9[8] * dVar27)));
-  local_280[1] = (float)((double)pfVar9[5] * dVar21 +
-                        (double)(float)((double)pfVar9[1] * dVar28 +
-                                       (double)(float)((double)pfVar9[9] * dVar27)));
-  local_280[2] = (float)((double)pfVar9[6] * dVar21 +
-                        (double)(float)((double)pfVar9[2] * dVar28 +
-                                       (double)(float)((double)pfVar9[10] * dVar27)));
-  fVar3 = ABS(local_280[0]);
-  fVar2 = ABS(local_280[1]);
-  fVar1 = ABS(local_280[2]);
-  if (fVar2 <= fVar3) {
-    if (fVar1 < fVar3) {
-      iVar15 = 0;
-      iVar20 = 1;
-      iVar18 = 2;
-      goto LAB_8268b304;
-    }
-  }
-  else {
-    iVar20 = 0;
-    if (fVar1 < fVar2) {
+  dVar27 = (double)param_1->triangleNormal[2];
+  dVar28 = (double)*pfVar17;
+  dVar21 = (double)param_1->triangleNormal[1];
+  local_280[0] = (float)((double)param_1->mHullBoxRot[4] * dVar21 +
+                        (double)(float)((double)param_1->mHullBoxRot[0] * dVar28 +
+                                       (double)(float)((double)param_1->mHullBoxRot[8] * dVar27)));
+  local_280[1] = (float)((double)param_1->mHullBoxRot[5] * dVar21 +
+                        (double)(float)((double)param_1->mHullBoxRot[1] * dVar28 +
+                                       (double)(float)((double)param_1->mHullBoxRot[9] * dVar27)));
+  local_280[2] = (float)((double)param_1->mHullBoxRot[6] * dVar21 +
+                        (double)(float)((double)param_1->mHullBoxRot[2] * dVar28 +
+                                       (double)(float)((double)param_1->mHullBoxRot[10] * dVar27)));
+  fVar1 = ABS(local_280[0]);
+  fVar3 = ABS(local_280[1]);
+  fVar2 = ABS(local_280[2]);
+  if (fVar3 <= fVar1) {
+    if (fVar2 < fVar1) {
+      iVar16 = 0;
       iVar15 = 1;
-      iVar18 = 2;
+      iVar19 = 2;
       goto LAB_8268b304;
     }
   }
-  iVar20 = 0;
-  iVar15 = 2;
-  iVar18 = 1;
+  else {
+    iVar15 = 0;
+    if (fVar2 < fVar3) {
+      iVar16 = 1;
+      iVar19 = 2;
+      goto LAB_8268b304;
+    }
+  }
+  iVar15 = 0;
+  iVar16 = 2;
+  iVar19 = 1;
 LAB_8268b304:
-  local_150.vHullBoxPos[0] = pfVar9[0xc] - (*param_2)[0];
-  fVar1 = pfVar9[0xd] - (*param_2)[1];
-  fVar2 = pfVar9[0xe] - (*param_2)[2];
-  fVar3 = pfVar9[iVar15 + 0x10];
-  if ((double)local_280[iVar15] <= dVar35) {
-    local_150.vHullBoxPos[0] = fVar3 * pfVar9[iVar15] + local_150.vHullBoxPos[0];
-    fVar1 = fVar3 * pfVar9[iVar15 + 4] + fVar1;
-    fVar2 = fVar3 * pfVar9[iVar15 + 8] + fVar2;
+  local_150.vHullBoxPos[0] = param_1->vHullBoxPos[0] - (*param_2)[0];
+  fVar2 = param_1->vHullBoxPos[1] - (*param_2)[1];
+  fVar3 = param_1->vHullBoxPos[2] - (*param_2)[2];
+  fVar1 = param_1->vBoxHalfSize[iVar16];
+  if ((double)local_280[iVar16] <= dVar35) {
+    local_150.vHullBoxPos[0] = fVar1 * param_1->mHullBoxRot[iVar16] + local_150.vHullBoxPos[0];
+    fVar2 = fVar1 * param_1->mHullBoxRot[iVar16 + 4] + fVar2;
+    fVar3 = fVar1 * param_1->mHullBoxRot[iVar16 + 8] + fVar3;
   }
   else {
-    local_150.vHullBoxPos[0] = -(fVar3 * pfVar9[iVar15] - local_150.vHullBoxPos[0]);
-    fVar1 = -(fVar3 * pfVar9[iVar15 + 4] - fVar1);
-    fVar2 = -(fVar3 * pfVar9[iVar15 + 8] - fVar2);
+    local_150.vHullBoxPos[0] = -(fVar1 * param_1->mHullBoxRot[iVar16] - local_150.vHullBoxPos[0]);
+    fVar2 = -(fVar1 * param_1->mHullBoxRot[iVar16 + 4] - fVar2);
+    fVar3 = -(fVar1 * param_1->mHullBoxRot[iVar16 + 8] - fVar3);
   }
   local_270._144_4_ = (undefined4)dVar35;
   local_1dc = (float)dVar35;
@@ -1510,21 +1505,21 @@ LAB_8268b304:
   local_270._4_4_ = (undefined4)dVar35;
   local_270._8_4_ = (undefined4)dVar35;
   local_1d0 = (float)dVar35;
-  fVar3 = pfVar9[iVar20 + 0x10];
-  pafVar10 = (float (*) [4])(iVar18 + 4);
-  fVar5 = fVar3 * pfVar9[iVar20];
-  local_150.mHullBoxRot[10] = pfVar9[iVar18 + 0x10];
-  fVar4 = fVar3 * pfVar9[iVar20 + 4];
-  fVar6 = local_150.mHullBoxRot[10] * pfVar9[iVar18];
+  fVar1 = param_1->vBoxHalfSize[iVar15];
+  pafVar11 = (float (*) [4])(iVar19 + 4);
+  fVar7 = fVar1 * param_1->mHullBoxRot[iVar15];
+  local_150.mHullBoxRot[10] = param_1->vBoxHalfSize[iVar19];
+  fVar6 = fVar1 * param_1->mHullBoxRot[iVar15 + 4];
+  fVar8 = local_150.mHullBoxRot[10] * param_1->mHullBoxRot[iVar19];
   local_1cc = (float)dVar35;
   local_1c8 = (float)dVar35;
   local_270._16_4_ = (undefined4)dVar35;
   local_2fc[0] = (float (*) [4])0x0;
   local_270._20_4_ = (undefined4)dVar35;
   local_300 = (float (*) [4])0x0;
-  fVar3 = fVar3 * pfVar9[iVar20 + 8];
-  local_150.mHullBoxRot[9] = local_150.mHullBoxRot[10] * pfVar9[(int)pafVar10];
-  local_150.mHullBoxRot[10] = local_150.mHullBoxRot[10] * pfVar9[iVar18 + 8];
+  fVar1 = fVar1 * param_1->mHullBoxRot[iVar15 + 8];
+  local_150.mHullBoxRot[9] = local_150.mHullBoxRot[10] * param_1->mHullBoxRot[iVar19 + 4];
+  local_150.mHullBoxRot[10] = local_150.mHullBoxRot[10] * param_1->mHullBoxRot[iVar19 + 8];
   local_270._24_4_ = (undefined4)dVar35;
   local_1c0 = (float)dVar35;
   local_1bc = (dxGeom *)(float)dVar35;
@@ -1536,26 +1531,26 @@ LAB_8268b304:
   local_1ac = (float)dVar35;
   local_1a8 = (float)dVar35;
   local_270._48_4_ = (undefined4)dVar35;
-  local_150.mHullBoxRot[0] = (fVar5 + local_150.vHullBoxPos[0]) - fVar6;
+  local_150.mHullBoxRot[0] = (fVar7 + local_150.vHullBoxPos[0]) - fVar8;
   local_270._52_4_ = (undefined4)dVar35;
-  local_150.mHullBoxRot[4] = (local_150.vHullBoxPos[0] - fVar5) - fVar6;
+  local_150.mHullBoxRot[4] = (local_150.vHullBoxPos[0] - fVar7) - fVar8;
   local_270._56_4_ = (undefined4)dVar35;
-  local_150.mHullBoxRot[8] = (local_150.vHullBoxPos[0] - fVar5) + fVar6;
+  local_150.mHullBoxRot[8] = (local_150.vHullBoxPos[0] - fVar7) + fVar8;
   local_1a0 = (float)dVar35;
-  local_150.vHullBoxPos[0] = fVar6 + fVar5 + local_150.vHullBoxPos[0];
+  local_150.vHullBoxPos[0] = fVar8 + fVar7 + local_150.vHullBoxPos[0];
   local_19c = (float)dVar35;
-  local_150.mHullBoxRot[1] = (fVar4 + fVar1) - local_150.mHullBoxRot[9];
+  local_150.mHullBoxRot[1] = (fVar6 + fVar2) - local_150.mHullBoxRot[9];
   local_198 = (float)dVar35;
   local_2e0 = (float)-dVar28;
   local_2dc = (float)-dVar21;
   local_2d8 = (float)-dVar27;
-  local_150.vHullBoxPos[1] = local_150.mHullBoxRot[9] + fVar4 + fVar1;
-  local_150.mHullBoxRot[5] = (fVar1 - fVar4) - local_150.mHullBoxRot[9];
-  local_150.mHullBoxRot[9] = (fVar1 - fVar4) + local_150.mHullBoxRot[9];
-  local_150.vHullBoxPos[2] = local_150.mHullBoxRot[10] + fVar3 + fVar2;
-  local_150.mHullBoxRot[2] = (fVar3 + fVar2) - local_150.mHullBoxRot[10];
-  local_150.mHullBoxRot[6] = (fVar2 - fVar3) - local_150.mHullBoxRot[10];
-  local_150.mHullBoxRot[10] = (fVar2 - fVar3) + local_150.mHullBoxRot[10];
+  local_150.vHullBoxPos[1] = local_150.mHullBoxRot[9] + fVar6 + fVar2;
+  local_150.mHullBoxRot[5] = (fVar2 - fVar6) - local_150.mHullBoxRot[9];
+  local_150.mHullBoxRot[9] = (fVar2 - fVar6) + local_150.mHullBoxRot[9];
+  local_150.vHullBoxPos[2] = local_150.mHullBoxRot[10] + fVar1 + fVar3;
+  local_150.mHullBoxRot[2] = (fVar1 + fVar3) - local_150.mHullBoxRot[10];
+  local_150.mHullBoxRot[6] = (fVar3 - fVar1) - local_150.mHullBoxRot[10];
+  local_150.mHullBoxRot[10] = (fVar3 - fVar1) + local_150.mHullBoxRot[10];
   local_270._64_4_ = (undefined4)dVar35;
   local_270._68_4_ = (undefined4)dVar35;
   local_270._72_4_ = (undefined4)dVar35;
@@ -1587,7 +1582,7 @@ LAB_8268b304:
   if (dVar25 <= ABS((double)(float)((double)(local_2e0 * local_2e0 +
                                             local_2d8 * local_2d8 + local_2dc * local_2dc) - dVar26)
                    )) {
-    pafVar10 = (float (*) [4])va(local_2cc);
+    pafVar11 = (float (*) [4])va(local_2cc);
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\collision_trimesh_box.cpp"
                     ,0x406,0,"%s\n\t%s");
   }
@@ -1596,26 +1591,26 @@ LAB_8268b304:
   local_2e8 = local_2d8;
   local_2e4 = (float)dVar35;
   _cldClipPolyToPlane(&local_150,(float (*) [4])&DAT_00000004,(int)(local_270 + 0x90),
-                      (float (*) [4])local_2fc,(int *)&local_2f0,pafVar10);
-  fVar3 = (*param_3)[0] - (*param_2)[0];
-  fVar1 = (*param_3)[1] - (*param_2)[1];
-  fVar2 = (*param_3)[2] - (*param_2)[2];
-  local_2d8 = *pfVar16 * fVar1 - pfVar9[0x27] * fVar3;
-  local_2e0 = pfVar9[0x27] * fVar2 - pfVar9[0x28] * fVar1;
-  local_2dc = pfVar9[0x28] * fVar3 - *pfVar16 * fVar2;
+                      (float (*) [4])local_2fc,(int *)&local_2f0,pafVar11);
+  fVar1 = (*param_3)[0] - (*param_2)[0];
+  fVar2 = (*param_3)[1] - (*param_2)[1];
+  fVar3 = (*param_3)[2] - (*param_2)[2];
+  local_2d8 = *pfVar17 * fVar2 - param_1->triangleNormal[1] * fVar1;
+  local_2e0 = param_1->triangleNormal[1] * fVar3 - param_1->triangleNormal[2] * fVar2;
+  local_2dc = param_1->triangleNormal[2] * fVar1 - *pfVar17 * fVar3;
   dNormalize3(&local_2e0);
   local_2e4 = (float)dVar35;
   local_2f0 = local_2e0;
   local_2ec = local_2dc;
   local_2e8 = local_2d8;
   _cldClipPolyToPlane((collData_t *)(local_270 + 0x90),local_2fc[0],(int)local_270,
-                      (float (*) [4])&local_300,(int *)&local_2f0,pafVar10);
-  fVar3 = (*param_4)[0] - (*param_3)[0];
-  fVar1 = (*param_4)[1] - (*param_3)[1];
-  fVar2 = (*param_4)[2] - (*param_3)[2];
-  local_2d8 = *pfVar16 * fVar1 - pfVar9[0x27] * fVar3;
-  local_2e0 = pfVar9[0x27] * fVar2 - pfVar9[0x28] * fVar1;
-  local_2dc = pfVar9[0x28] * fVar3 - *pfVar16 * fVar2;
+                      (float (*) [4])&local_300,(int *)&local_2f0,pafVar11);
+  fVar1 = (*param_4)[0] - (*param_3)[0];
+  fVar2 = (*param_4)[1] - (*param_3)[1];
+  fVar3 = (*param_4)[2] - (*param_3)[2];
+  local_2d8 = *pfVar17 * fVar2 - param_1->triangleNormal[1] * fVar1;
+  local_2e0 = param_1->triangleNormal[1] * fVar3 - param_1->triangleNormal[2] * fVar2;
+  local_2dc = param_1->triangleNormal[2] * fVar1 - *pfVar17 * fVar3;
   dNormalize3(&local_2e0);
   local_2f0 = local_2e0;
   local_2ec = local_2dc;
@@ -1624,136 +1619,142 @@ LAB_8268b304:
               ((*param_2)[1] - (*param_4)[1]) * local_2dc +
               ((*param_2)[0] - (*param_4)[0]) * local_2e0;
   _cldClipPolyToPlane((collData_t *)local_270,local_300,(int)(local_270 + 0x90),
-                      (float (*) [4])local_2fc,(int *)&local_2f0,pafVar10);
-  fVar3 = (*param_2)[0] - (*param_4)[0];
-  fVar1 = (*param_2)[1] - (*param_4)[1];
-  fVar2 = (*param_2)[2] - (*param_4)[2];
-  local_2d8 = *pfVar16 * fVar1 - pfVar9[0x27] * fVar3;
-  local_2e0 = pfVar9[0x27] * fVar2 - pfVar9[0x28] * fVar1;
-  local_2dc = pfVar9[0x28] * fVar3 - *pfVar16 * fVar2;
+                      (float (*) [4])local_2fc,(int *)&local_2f0,pafVar11);
+  fVar1 = (*param_2)[0] - (*param_4)[0];
+  fVar2 = (*param_2)[1] - (*param_4)[1];
+  fVar3 = (*param_2)[2] - (*param_4)[2];
+  local_2d8 = *pfVar17 * fVar2 - param_1->triangleNormal[1] * fVar1;
+  local_2e0 = param_1->triangleNormal[1] * fVar3 - param_1->triangleNormal[2] * fVar2;
+  local_2dc = param_1->triangleNormal[2] * fVar1 - *pfVar17 * fVar3;
   dNormalize3(&local_2e0);
   local_2e4 = (float)dVar35;
   local_2f0 = local_2e0;
   local_2ec = local_2dc;
   local_2e8 = local_2d8;
   _cldClipPolyToPlane((collData_t *)(local_270 + 0x90),local_2fc[0],(int)local_270,
-                      (float (*) [4])&local_300,(int *)&local_2f0,pafVar10);
-  pcVar8 = local_2c8;
-  pcVar7 = local_2d0;
-  pafVar10 = local_300;
-  iVar18 = 0;
+                      (float (*) [4])&local_300,(int *)&local_2f0,pafVar11);
+  pcVar10 = local_2c8;
+  pcVar9 = local_2d0;
+  pafVar11 = local_300;
+  iVar19 = 0;
   if (0 < (int)local_300) {
-    pfVar17 = (float *)(local_270 + 8);
+    pfVar18 = (float *)(local_270 + 8);
     do {
-      dVar29 = (double)(float)(dVar27 * (double)*pfVar17 +
-                              (double)(float)((double)pfVar17[-2] * dVar28 +
-                                             (double)(float)((double)pfVar17[-1] * dVar21)));
+      dVar29 = (double)(float)(dVar27 * (double)*pfVar18 +
+                              (double)(float)((double)pfVar18[-2] * dVar28 +
+                                             (double)(float)((double)pfVar18[-1] * dVar21)));
       if (dVar35 < dVar29) {
         dVar29 = dVar35;
       }
-      fVar3 = pfVar9[0x2f];
-      dVar22 = (double)(float)((double)(*param_2)[0] + (double)pfVar17[-2]);
-      dVar31 = (double)(float)((double)pfVar17[-1] + (double)(*param_2)[1]);
-      dVar30 = (double)(float)((double)*pfVar17 + (double)(*param_2)[2]);
-      if ((int)((uint)pfVar9[0x2a] & 0xffff) <= (int)fVar3) break;
-      fVar1 = pfVar9[0x2c];
-      fVar2 = pfVar9[0x2b];
-      if (((uint)pfVar9[0x2a] & 0xffff) <= (uint)fVar3) {
-        MyAssertHandler(pcVar8,0x1f,0,pcVar7);
+      uVar4 = param_1->ctContacts;
+      dVar22 = (double)(float)((double)(*param_2)[0] + (double)pfVar18[-2]);
+      dVar31 = (double)(float)((double)pfVar18[-1] + (double)(*param_2)[1]);
+      dVar30 = (double)(float)((double)*pfVar18 + (double)(*param_2)[2]);
+      if ((int)(param_1->iFlags & 0xffffU) <= (int)uVar4) {
+        return;
       }
-      puVar19 = (uint *)((int)fVar3 * (int)fVar1 + (int)fVar2);
-      puVar19[6] = (uint)(float)-dVar29;
-      local_2c0 = -*pfVar16;
-      puVar19[3] = (uint)local_2c0;
-      puVar19[4] = (uint)-pfVar9[0x27];
-      puVar19[5] = (uint)-pfVar9[0x28];
-      *(float *)((int)fVar3 * (int)fVar1 + (int)fVar2) = (float)dVar22;
-      puVar19[1] = (uint)(float)dVar31;
-      puVar19[2] = (uint)(float)dVar30;
+      iVar15 = param_1->iStride;
+      pdVar5 = param_1->ContactGeoms;
+      if ((param_1->iFlags & 0xffffU) <= uVar4) {
+        MyAssertHandler(pcVar10,0x1f,0,pcVar9);
+      }
+      iVar15 = uVar4 * iVar15;
+      pfVar20 = (float *)((int)pdVar5->pos + iVar15);
+      pfVar20[6] = (float)-dVar29;
+      local_2c0 = -*pfVar17;
+      pfVar20[3] = local_2c0;
+      pfVar20[4] = -param_1->triangleNormal[1];
+      pfVar20[5] = -param_1->triangleNormal[2];
+      *(float *)((int)pdVar5->pos + iVar15) = (float)dVar22;
+      pfVar20[1] = (float)dVar31;
+      pfVar20[2] = (float)dVar30;
       if (((((uint)local_2c0 & 0x7f800000) == 0x7f800000) ||
-          (local_2a0 = puVar19[4], (local_2a0 & 0x7f800000) == 0x7f800000)) ||
-         (local_2a8 = puVar19[5], (local_2a8 & 0x7f800000) == 0x7f800000)) {
+          (local_2a0 = pfVar20[4], ((uint)local_2a0 & 0x7f800000) == 0x7f800000)) ||
+         (local_2a8 = pfVar20[5], ((uint)local_2a8 & 0x7f800000) == 0x7f800000)) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\collision_trimesh_box.cpp"
                         ,0x442,0,"%s");
       }
-      fVar3 = (float)puVar19[3];
-      if (dVar25 <= ABS((double)(float)((double)((float)puVar19[5] * (float)puVar19[5] +
-                                                fVar3 * fVar3 +
-                                                (float)puVar19[4] * (float)puVar19[4]) - dVar26))) {
+      fVar1 = pfVar20[3];
+      if (dVar25 <= ABS((double)(float)((double)(pfVar20[5] * pfVar20[5] +
+                                                fVar1 * fVar1 + pfVar20[4] * pfVar20[4]) - dVar26)))
+      {
         va(local_2cc);
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\collision_trimesh_box.cpp"
                         ,0x443,0,"%s\n\t%s");
       }
-      local_29c = *puVar19;
-      if ((((local_29c & 0x7f800000) == 0x7f800000) ||
-          (local_2c4 = puVar19[1], (local_2c4 & 0x7f800000) == 0x7f800000)) ||
-         (local_2c8 = (char *)puVar19[2], ((uint)local_2c8 & 0x7f800000) == 0x7f800000)) {
+      local_29c = *pfVar20;
+      if (((((uint)local_29c & 0x7f800000) == 0x7f800000) ||
+          (local_2c4 = pfVar20[1], ((uint)local_2c4 & 0x7f800000) == 0x7f800000)) ||
+         (local_2c8 = (char *)pfVar20[2], ((uint)local_2c8 & 0x7f800000) == 0x7f800000)) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\collision_trimesh_box.cpp"
                         ,0x444,0,"%s");
       }
-      local_2d0 = (char *)puVar19[6];
+      local_2d0 = (char *)pfVar20[6];
       if (((uint)local_2d0 & 0x7f800000) == 0x7f800000) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\collision_trimesh_box.cpp"
                         ,0x445,0,"%s");
       }
-      if (dVar24 < (double)((float)puVar19[5] * pfVar9[0x28] +
-                           (float)puVar19[4] * pfVar9[0x27] + (float)puVar19[3] * *pfVar16)) {
+      if (dVar24 < (double)(pfVar20[5] * param_1->triangleNormal[2] +
+                           pfVar20[4] * param_1->triangleNormal[1] + pfVar20[3] * *pfVar17)) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\collision_trimesh_box.cpp"
                         ,0x446,0,"%s\n\t%s");
       }
-      iVar18 = iVar18 + 1;
-      pfVar17 = pfVar17 + 4;
-      pfVar9[0x2f] = (float)((int)pfVar9[0x2f] + 1);
-    } while (iVar18 < (int)pafVar10);
+      iVar19 = iVar19 + 1;
+      pfVar18 = pfVar18 + 4;
+      param_1->ctContacts = param_1->ctContacts + 1;
+    } while (iVar19 < (int)pafVar11);
   }
-  __restfpr_19();
-  __restgprlr();
   return;
 }
 
 
 // 8268BAB8  _cldTestOneTriangle  (physics/ode/src/collision_trimesh_box.cpp:1111)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void _cldTestOneTriangle(collData_t *param_1,float (*param_2) [4],float (*param_3) [4],
                         float (*param_4) [4])
 
 {
-  collData_t *pcVar1;
-  bool bVar2;
+  bool bVar1;
   
-  pcVar1 = (collData_t *)__savegprlr_27(param_1);
-  bVar2 = _cldTestSeparatingAxes(pcVar1,param_2,param_3,param_4);
-  if (bVar2) {
-    if (pcVar1->iBestAxis == 0) {
+  bVar1 = _cldTestSeparatingAxes(param_1,param_2,param_3,param_4);
+  if (bVar1) {
+    if (param_1->iBestAxis == 0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\collision_trimesh_box.cpp"
                       ,0x45d,0,"%s");
     }
-    if (0.002 <= ABS((pcVar1->vBestNormal[2] * pcVar1->vBestNormal[2] +
-                     pcVar1->vBestNormal[0] * pcVar1->vBestNormal[0] +
-                     pcVar1->vBestNormal[1] * pcVar1->vBestNormal[1]) - 1.0)) {
+    if (0.002 <= ABS((param_1->vBestNormal[2] * param_1->vBestNormal[2] +
+                     param_1->vBestNormal[0] * param_1->vBestNormal[0] +
+                     param_1->vBestNormal[1] * param_1->vBestNormal[1]) - 1.0)) {
       va("normal: (%f, %f, %f)");
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\collision_trimesh_box.cpp"
                       ,0x45e,0,"%s\n\t%s");
     }
-    _cldClipping(pcVar1,param_2,param_3,param_4);
+    _cldClipping(param_1,param_2,param_3,param_4);
   }
-  __restgprlr_27();
   return;
 }
 
 
 // 8268BBC0  dCollideBoxTriangleList  (physics/ode/src/collision_trimesh_box.cpp:1125)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 int dCollideBoxTriangleList
               (ushort *param_1,float (*param_2) [3],int param_3,float *param_4,float *param_5,
               float *param_6,float *param_7,int param_8,dContactGeom *param_9,int param_10)
 
 {
-  ushort *puVar1;
-  int iVar2;
+  int iVar1;
+  float (*pafVar2) [3];
   float (*pafVar3) [3];
   float (*pafVar4) [3];
-  float (*pafVar5) [3];
+  int iVar5;
   float local_150;
   float local_14c;
   float local_148;
@@ -1765,8 +1766,6 @@ int dCollideBoxTriangleList
   float local_128;
   collData_t local_120;
   
-  __savegprlr_28(param_1);
-  puVar1 = (ushort *)__savefpr_26();
   local_120.mHullBoxRot[0] = *param_4;
   local_120.mHullBoxRot[1] = param_4[1];
   local_120.mHullBoxRot[2] = param_4[2];
@@ -1776,7 +1775,7 @@ int dCollideBoxTriangleList
   local_120.mHullBoxRot[5] = param_4[5];
   local_120.mHullBoxRot[6] = param_4[6];
   local_120.mHullBoxRot[7] = param_4[7];
-  iVar2 = 0;
+  iVar5 = 0;
   local_120.mHullBoxRot[8] = param_4[8];
   local_120.mHullBoxRot[9] = param_4[9];
   local_120.mHullBoxRot[10] = param_4[10];
@@ -1791,31 +1790,33 @@ int dCollideBoxTriangleList
   local_120.vBestNormal[0] = 0.0;
   local_120.vBestNormal[1] = 0.0;
   local_120.vBestNormal[2] = 0.0;
+  iVar1 = 0;
   local_120.iFlags = param_8;
   local_120.bodyCenter = param_7;
   if (0 < param_3) {
     do {
-      if ((int)(local_120.iFlags & 0xffffU) <= local_120.ctContacts) break;
-      pafVar5 = param_2 + *puVar1;
-      pafVar4 = param_2 + puVar1[1];
-      pafVar3 = param_2 + puVar1[2];
-      local_150 = (*pafVar5)[0];
-      puVar1 = puVar1 + 3;
-      local_14c = (*pafVar5)[1];
-      local_148 = (*pafVar5)[2];
-      local_140 = (*pafVar4)[0];
-      local_13c = (*pafVar4)[1];
-      local_138 = (*pafVar4)[2];
-      local_130 = (*pafVar3)[0];
-      local_12c = (*pafVar3)[1];
-      local_128 = (*pafVar3)[2];
+      if ((int)(local_120.iFlags & 0xffffU) <= local_120.ctContacts) {
+        return local_120.ctContacts;
+      }
+      pafVar4 = param_2 + *param_1;
+      pafVar3 = param_2 + param_1[1];
+      pafVar2 = param_2 + param_1[2];
+      local_150 = (*pafVar4)[0];
+      param_1 = param_1 + 3;
+      local_14c = (*pafVar4)[1];
+      local_148 = (*pafVar4)[2];
+      local_140 = (*pafVar3)[0];
+      local_13c = (*pafVar3)[1];
+      local_138 = (*pafVar3)[2];
+      local_130 = (*pafVar2)[0];
+      local_12c = (*pafVar2)[1];
+      local_128 = (*pafVar2)[2];
       _cldTestOneTriangle(&local_120,(float (*) [4])&local_130,(float (*) [4])&local_140,
                           (float (*) [4])&local_150);
-      iVar2 = iVar2 + 1;
-    } while (iVar2 < param_3);
+      iVar5 = iVar5 + 1;
+      iVar1 = local_120.ctContacts;
+    } while (iVar5 < param_3);
   }
-  __restfpr_26();
-  iVar2 = __restgprlr_28();
-  return iVar2;
+  return iVar1;
 }
 

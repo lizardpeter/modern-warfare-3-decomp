@@ -22,50 +22,49 @@ int R_StaticModelGetMemoryUsageInst(GfxStaticModelDrawInst *param_1)
 
 // 82783018  R_StaticModelGetMemoryUsage  (gfx_d3d/r_staticmodel.cpp:29)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 int R_StaticModelGetMemoryUsage(XModel *param_1,int *param_2)
 
 {
   int iVar1;
-  XModel *pXVar2;
+  int iVar2;
   int iVar3;
-  longlong lVar4;
-  int iVar5;
+  int iVar4;
+  GfxWorld *pGVar5;
   int iVar6;
-  GfxWorld *pGVar7;
-  int iVar8;
+  int iVar7;
   
-  pXVar2 = (XModel *)__savegprlr_29(param_1);
   *param_2 = 0;
-  lVar4 = 0;
+  iVar2 = 0;
   if (rgp.world == (GfxWorld *)0x0) {
-    iVar3 = __restgprlr_29(0);
-    return iVar3;
+    return 0;
   }
-  iVar3 = 0;
+  iVar6 = 0;
   if (0 < ((rgp.world)->dpvsPlanes).cellCount) {
-    iVar8 = 0;
-    pGVar7 = rgp.world;
+    iVar7 = 0;
+    pGVar5 = rgp.world;
     do {
-      iVar5 = 0;
-      iVar1 = *(int *)((int)&pGVar7->aabbTrees->aabbTree + iVar8);
+      iVar3 = 0;
+      iVar1 = *(int *)((int)&pGVar5->aabbTrees->aabbTree + iVar7);
       if (*(short *)(iVar1 + 0x1e) != 0) {
-        iVar6 = 0;
+        iVar4 = 0;
         do {
-          if ((pGVar7->dpvs).smodelDrawInsts[*(ushort *)(*(int *)(iVar1 + 0x20) + iVar6)].model ==
-              pXVar2) {
-            lVar4 = lVar4 + 0x2c;
+          if ((pGVar5->dpvs).smodelDrawInsts[*(ushort *)(*(int *)(iVar1 + 0x20) + iVar4)].model ==
+              param_1) {
+            iVar2 = iVar2 + 0x2c;
             *param_2 = *param_2 + 1;
-            pGVar7 = rgp.world;
+            pGVar5 = rgp.world;
           }
-          iVar5 = iVar5 + 1;
-          iVar6 = iVar6 + 2;
-        } while (iVar5 < (int)(uint)*(ushort *)(iVar1 + 0x1e));
+          iVar3 = iVar3 + 1;
+          iVar4 = iVar4 + 2;
+        } while (iVar3 < (int)(uint)*(ushort *)(iVar1 + 0x1e));
       }
-      iVar3 = iVar3 + 1;
-      iVar8 = iVar8 + 4;
-    } while (iVar3 < (pGVar7->dpvsPlanes).cellCount);
+      iVar6 = iVar6 + 1;
+      iVar7 = iVar7 + 4;
+    } while (iVar6 < (pGVar5->dpvsPlanes).cellCount);
   }
-  iVar3 = __restgprlr_29(lVar4);
-  return iVar3;
+  return iVar2;
 }
 

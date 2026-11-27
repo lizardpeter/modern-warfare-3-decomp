@@ -134,32 +134,32 @@ int BG_WeaponAllowsAmmoPickup(Weapon param_1,bool param_2)
 
 // 82291610  BG_WeaponAmmo  (bgame/bg_weapons_ammo.cpp:132)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
 int BG_WeaponAmmo(playerState_s *param_1,Weapon param_2,bool param_3)
 
 {
-  playerState_s *ppVar1;
+  int iVar1;
   int iVar2;
   int iVar3;
-  int iVar4;
   
-  ppVar1 = (playerState_s *)__savegprlr_28(param_1);
-  iVar2 = BG_GetAmmoInClipForWeapon(ppVar1,param_2,param_3,WEAPON_HAND_DEFAULT);
-  iVar3 = BG_GetAmmoNotInClip(ppVar1,param_2,param_3);
-  iVar4 = BG_PlayerDualWieldingWeapon(ppVar1,param_2);
-  if (iVar4 != 0) {
-    iVar4 = BG_GetAmmoInClipForWeapon(ppVar1,param_2,param_3,WEAPON_HAND_LEFT);
-    iVar2 = __restgprlr_28((longlong)iVar4 + (longlong)iVar3 + (longlong)iVar2);
-    return iVar2;
+  iVar1 = BG_GetAmmoInClipForWeapon(param_1,param_2,param_3,WEAPON_HAND_DEFAULT);
+  iVar2 = BG_GetAmmoNotInClip(param_1,param_2,param_3);
+  iVar3 = BG_PlayerDualWieldingWeapon(param_1,param_2);
+  if (iVar3 != 0) {
+    iVar3 = BG_GetAmmoInClipForWeapon(param_1,param_2,param_3,WEAPON_HAND_LEFT);
+    return iVar3 + iVar2 + iVar1;
   }
-  iVar2 = __restgprlr_28((longlong)iVar3 + (longlong)iVar2);
-  return iVar2;
+  return iVar2 + iVar1;
 }
 
 
 // 82290EE8  BG_GetAmmoPlayerMax  (bgame/bg_weapons_ammo.cpp:145)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
 
@@ -167,59 +167,46 @@ int BG_GetAmmoPlayerMax(playerState_s *param_1,Weapon param_2,bool param_3,Weapo
 
 {
   WeaponDef *pWVar1;
-  playerState_s *ppVar2;
-  Weapon WVar3;
-  int iVar4;
-  Weapon WVar5;
-  int iVar6;
-  bool bVar7;
-  bool bVar8;
-  ulonglong uVar9;
-  ulonglong uVar10;
-  int iVar11;
-  Weapon *pWVar12;
+  Weapon WVar2;
+  int iVar3;
+  Weapon WVar4;
+  int iVar5;
+  bool bVar6;
+  int iVar7;
+  Weapon *pWVar8;
   
-  uVar10 = (ulonglong)(int)param_4.data;
-  uVar9 = (ulonglong)param_3;
-  ppVar2 = (playerState_s *)__savegprlr_23(param_1);
-  bVar8 = SUB81(uVar9,0);
-  WVar3 = BG_GetAlternateWeapon(param_2,bVar8);
-  if (-1 < bg_weaponDefs[WVar3.data & 0xff]->iSharedAmmoCapIndex) {
-    iVar4 = __restgprlr_23(bg_weaponDefs[WVar3.data & 0xff]->iSharedAmmoCap);
-    return iVar4;
+  WVar2 = BG_GetAlternateWeapon(param_2,param_3);
+  if (-1 < bg_weaponDefs[WVar2.data & 0xff]->iSharedAmmoCapIndex) {
+    return bg_weaponDefs[WVar2.data & 0xff]->iSharedAmmoCap;
   }
-  WVar3 = BG_GetAlternateWeapon(param_2,bVar8);
-  if (bg_weaponDefs[WVar3.data & 0xff]->bClipOnly != false) {
-    iVar4 = BG_GetClipSize(ppVar2,param_2,bVar8);
-    iVar4 = __restgprlr_23(iVar4);
-    return iVar4;
+  WVar2 = BG_GetAlternateWeapon(param_2,param_3);
+  if (bg_weaponDefs[WVar2.data & 0xff]->bClipOnly != false) {
+    iVar3 = BG_GetClipSize(param_1,param_2,param_3);
+    return iVar3;
   }
-  iVar4 = BG_AmmoForWeapon(param_2,bVar8);
-  iVar11 = 0;
-  pWVar12 = ppVar2->weaponsEquipped;
+  iVar3 = BG_AmmoForWeapon(param_2,param_3);
+  iVar7 = 0;
+  pWVar8 = param_1->weaponsEquipped;
   do {
-    WVar3 = *pWVar12;
-    if (((WVar3.data & 0xff) != 0) && ((ulonglong)WVar3.data != (uVar10 & 0xffffffff))) {
-      WVar5 = BG_GetAlternateWeapon(WVar3,bVar8);
-      pWVar1 = bg_weaponDefs[WVar5.data & 0xff];
-      iVar6 = BG_AmmoForWeapon(WVar3,bVar8);
-      if (iVar6 == iVar4) {
+    WVar2 = *pWVar8;
+    if (((WVar2.data & 0xff) != 0) && (WVar2.data != param_4.data)) {
+      WVar4 = BG_GetAlternateWeapon(WVar2,param_3);
+      pWVar1 = bg_weaponDefs[WVar4.data & 0xff];
+      iVar5 = BG_AmmoForWeapon(WVar2,param_3);
+      if (iVar5 == iVar3) {
         if (-1 < pWVar1->iSharedAmmoCapIndex) {
-          iVar4 = __restgprlr_23(pWVar1->iSharedAmmoCap);
-          return iVar4;
+          return pWVar1->iSharedAmmoCap;
         }
-        if (((uVar9 & 0xff) == 0) || (bVar7 = BG_HasUnderbarrelAmmo(WVar3), bVar7)) {
-          iVar4 = BG_MaxAmmo(WVar3,bVar8);
-          iVar4 = __restgprlr_23(iVar4);
-          return iVar4;
+        if ((!param_3) || (bVar6 = BG_HasUnderbarrelAmmo(WVar2), bVar6)) {
+          iVar3 = BG_MaxAmmo(WVar2,param_3);
+          return iVar3;
         }
       }
     }
-    iVar11 = iVar11 + 1;
-    pWVar12 = pWVar12 + 1;
-    if (0xe < iVar11) {
-      iVar4 = __restgprlr_23(0);
-      return iVar4;
+    iVar7 = iVar7 + 1;
+    pWVar8 = pWVar8 + 1;
+    if (0xe < iVar7) {
+      return 0;
     }
   } while( true );
 }
@@ -227,6 +214,8 @@ int BG_GetAmmoPlayerMax(playerState_s *param_1,Weapon param_2,bool param_3,Weapo
 
 // 82291688  BG_GetMaxPickupableAmmo  (bgame/bg_weapons_ammo.cpp:193)
 
+/* WARNING: Function: __savegprlr_21 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_21 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
 
@@ -234,89 +223,84 @@ int BG_GetMaxPickupableAmmo(playerState_s *param_1,Weapon param_2,bool param_3)
 
 {
   WeaponDef *pWVar1;
-  playerState_s *ppVar2;
-  Weapon WVar3;
+  Weapon WVar2;
+  int iVar3;
   int iVar4;
   int iVar5;
   Weapon WVar6;
   int *piVar7;
   uint uVar8;
-  Weapon *pWVar9;
-  int *piVar10;
-  ulonglong uVar11;
-  longlong lVar12;
-  uint uVar13;
+  longlong lVar9;
+  Weapon *pWVar10;
+  int *piVar11;
+  uint uVar12;
   int iStack_a4;
   int local_a0 [40];
   
-  ppVar2 = (playerState_s *)__savegprlr_21(param_1);
-  WVar3 = BG_GetAlternateWeapon(param_2,param_3);
-  pWVar1 = bg_weaponDefs[WVar3.data & 0xff];
+  WVar2 = BG_GetAlternateWeapon(param_2,param_3);
+  pWVar1 = bg_weaponDefs[WVar2.data & 0xff];
   BG_AmmoForWeapon(param_2,param_3);
   if (pWVar1->iSharedAmmoCapIndex < 0) {
-    WVar3 = BG_GetAlternateWeapon(param_2,param_3);
-    if (bg_weaponDefs[WVar3.data & 0xff]->bClipOnly != false) {
-      iVar4 = BG_GetClipSize(ppVar2,param_2,param_3);
-      iVar5 = BG_GetAmmoInClipForWeapon(ppVar2,param_2,param_3,WEAPON_HAND_DEFAULT);
-      lVar12 = (longlong)iVar4 - (longlong)iVar5;
-      if ((ppVar2->weapCommon).lastWeaponHand == WEAPON_HAND_LEFT) {
-        iVar5 = BG_GetAmmoInClipForWeapon(ppVar2,param_2,param_3,WEAPON_HAND_LEFT);
-        lVar12 = (lVar12 + iVar4) - (longlong)iVar5;
+    WVar2 = BG_GetAlternateWeapon(param_2,param_3);
+    if (bg_weaponDefs[WVar2.data & 0xff]->bClipOnly != false) {
+      iVar3 = BG_GetClipSize(param_1,param_2,param_3);
+      iVar4 = BG_GetAmmoInClipForWeapon(param_1,param_2,param_3,WEAPON_HAND_DEFAULT);
+      iVar4 = iVar3 - iVar4;
+      if ((param_1->weapCommon).lastWeaponHand == WEAPON_HAND_LEFT) {
+        iVar5 = BG_GetAmmoInClipForWeapon(param_1,param_2,param_3,WEAPON_HAND_LEFT);
+        iVar4 = (iVar4 + iVar3) - iVar5;
       }
-      iVar4 = __restgprlr_21(lVar12);
       return iVar4;
     }
-    iVar4 = BG_GetAmmoPlayerMax(ppVar2,param_2,param_3,(Weapon)0x0);
-    iVar5 = BG_GetAmmoNotInClip(ppVar2,param_2,param_3);
-    iVar4 = __restgprlr_21((longlong)iVar4 - (longlong)iVar5);
-    return iVar4;
+    iVar3 = BG_GetAmmoPlayerMax(param_1,param_2,param_3,(Weapon)0x0);
+    iVar4 = BG_GetAmmoNotInClip(param_1,param_2,param_3);
+    return iVar3 - iVar4;
   }
-  uVar11 = (ulonglong)(uint)pWVar1->iSharedAmmoCap;
-  uVar13 = 0;
-  piVar10 = &iStack_a4;
-  pWVar9 = ppVar2->weaponsEquipped;
-  lVar12 = 0xf;
+  iVar3 = pWVar1->iSharedAmmoCap;
+  uVar12 = 0;
+  piVar11 = &iStack_a4;
+  pWVar10 = param_1->weaponsEquipped;
+  lVar9 = 0xf;
   do {
-    WVar3 = *pWVar9;
-    if (((WVar3.data & 0xff) != 0) &&
-       (WVar6 = BG_GetAlternateWeapon(WVar3,param_3),
+    WVar2 = *pWVar10;
+    if (((WVar2.data & 0xff) != 0) &&
+       (WVar6 = BG_GetAlternateWeapon(WVar2,param_3),
        bg_weaponDefs[WVar6.data & 0xff]->iSharedAmmoCapIndex == pWVar1->iSharedAmmoCapIndex)) {
-      WVar6 = BG_GetAlternateWeapon(WVar3,param_3);
+      WVar6 = BG_GetAlternateWeapon(WVar2,param_3);
       if (bg_weaponDefs[WVar6.data & 0xff]->bClipOnly == false) {
-        iVar4 = BG_AmmoForWeapon(WVar3,param_3);
+        iVar4 = BG_AmmoForWeapon(WVar2,param_3);
         uVar8 = 0;
-        if (uVar13 != 0) {
+        if (uVar12 != 0) {
           piVar7 = local_a0;
           do {
             if (*piVar7 == iVar4) break;
             uVar8 = uVar8 + 1;
             piVar7 = piVar7 + 1;
-          } while (uVar8 < uVar13);
+          } while (uVar8 < uVar12);
         }
-        if (uVar8 == uVar13) {
-          iVar5 = BG_GetAmmoNotInClip(ppVar2,WVar3,param_3);
-          piVar10 = piVar10 + 1;
-          *piVar10 = iVar4;
-          uVar13 = uVar13 + 1;
+        if (uVar8 == uVar12) {
+          iVar5 = BG_GetAmmoNotInClip(param_1,WVar2,param_3);
+          piVar11 = piVar11 + 1;
+          *piVar11 = iVar4;
+          uVar12 = uVar12 + 1;
           goto LAB_8229188c;
         }
       }
       else {
-        iVar4 = BG_GetAmmoInClipForWeapon(ppVar2,WVar3,param_3,WEAPON_HAND_DEFAULT);
-        uVar11 = uVar11 - (longlong)iVar4;
-        iVar4 = BG_PlayerDualWieldingWeapon(ppVar2,WVar3);
+        iVar4 = BG_GetAmmoInClipForWeapon(param_1,WVar2,param_3,WEAPON_HAND_DEFAULT);
+        iVar3 = iVar3 - iVar4;
+        iVar4 = BG_PlayerDualWieldingWeapon(param_1,WVar2);
         if (iVar4 != 0) {
-          iVar5 = BG_GetAmmoInClipForWeapon(ppVar2,WVar3,param_3,WEAPON_HAND_LEFT);
+          iVar5 = BG_GetAmmoInClipForWeapon(param_1,WVar2,param_3,WEAPON_HAND_LEFT);
 LAB_8229188c:
-          uVar11 = uVar11 - (longlong)iVar5;
+          iVar3 = iVar3 - iVar5;
         }
       }
     }
-    lVar12 = lVar12 + -1;
-    pWVar9 = pWVar9 + 1;
-    if (lVar12 == 0) {
-      iVar4 = __restgprlr_21(uVar11);
-      return iVar4;
+    lVar9 = lVar9 + -1;
+    pWVar10 = pWVar10 + 1;
+    if (lVar9 == 0) {
+      return iVar3;
     }
   } while( true );
 }
@@ -324,6 +308,8 @@ LAB_8229188c:
 
 // 822918A8  BG_GetTotalAmmoReserve  (bgame/bg_weapons_ammo.cpp:267)
 
+/* WARNING: Function: __savegprlr_19 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_19 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
 
@@ -332,9 +318,9 @@ int BG_GetTotalAmmoReserve(playerState_s *param_1,Weapon param_2,bool param_3)
 {
   WeaponDef *pWVar1;
   WeaponDef *pWVar2;
-  playerState_s *ppVar3;
+  Weapon WVar3;
   Weapon WVar4;
-  Weapon WVar5;
+  int iVar5;
   int iVar6;
   int *piVar7;
   uint uVar8;
@@ -342,79 +328,75 @@ int BG_GetTotalAmmoReserve(playerState_s *param_1,Weapon param_2,bool param_3)
   Weapon *pWVar10;
   int *piVar11;
   int *piVar12;
-  longlong lVar13;
+  uint uVar13;
   uint uVar14;
-  uint uVar15;
   int iStack_f4;
   int local_f0 [15];
   int iStack_b4;
   int local_b0 [44];
   
-  ppVar3 = (playerState_s *)__savegprlr_19(param_1);
-  lVar13 = 0;
-  uVar15 = 0;
+  iVar6 = 0;
   uVar14 = 0;
-  WVar4 = BG_GetAlternateWeapon(param_2,param_3);
-  pWVar1 = bg_weaponDefs[WVar4.data & 0xff];
+  uVar13 = 0;
+  WVar3 = BG_GetAlternateWeapon(param_2,param_3);
+  pWVar1 = bg_weaponDefs[WVar3.data & 0xff];
   if (pWVar1->iSharedAmmoCapIndex < 0) {
-    WVar4 = BG_GetAlternateWeapon(param_2,param_3);
-    if (bg_weaponDefs[WVar4.data & 0xff]->bClipOnly != false) {
-      iVar6 = BG_GetAmmoInClipBothHandsForWeapon(ppVar3,param_2,param_3);
-      iVar6 = __restgprlr_19(iVar6);
+    WVar3 = BG_GetAlternateWeapon(param_2,param_3);
+    if (bg_weaponDefs[WVar3.data & 0xff]->bClipOnly != false) {
+      iVar6 = BG_GetAmmoInClipBothHandsForWeapon(param_1,param_2,param_3);
       return iVar6;
     }
-    iVar6 = BG_GetAmmoNotInClip(ppVar3,param_2,param_3);
-    iVar6 = __restgprlr_19(iVar6);
+    iVar6 = BG_GetAmmoNotInClip(param_1,param_2,param_3);
     return iVar6;
   }
   piVar12 = &iStack_b4;
   piVar11 = &iStack_f4;
-  pWVar10 = ppVar3->weaponsEquipped;
+  pWVar10 = param_1->weaponsEquipped;
   lVar9 = 0xf;
   do {
-    WVar4 = *pWVar10;
-    if ((WVar4.data & 0xff) != 0) {
-      WVar5 = BG_GetAlternateWeapon(WVar4,param_3);
-      pWVar2 = bg_weaponDefs[WVar5.data & 0xff];
+    WVar3 = *pWVar10;
+    if ((WVar3.data & 0xff) != 0) {
+      WVar4 = BG_GetAlternateWeapon(WVar3,param_3);
+      pWVar2 = bg_weaponDefs[WVar4.data & 0xff];
       if (pWVar2->iSharedAmmoCapIndex == pWVar1->iSharedAmmoCapIndex) {
-        WVar5 = BG_GetAlternateWeapon(WVar4,param_3);
-        if (bg_weaponDefs[WVar5.data & 0xff]->bClipOnly == false) {
-          iVar6 = BG_AmmoForWeapon(WVar4,param_3);
-          uVar8 = 0;
-          if (uVar15 != 0) {
-            piVar7 = local_b0;
-            do {
-              if (*piVar7 == iVar6) break;
-              uVar8 = uVar8 + 1;
-              piVar7 = piVar7 + 1;
-            } while (uVar8 < uVar15);
-          }
-          if (uVar8 == uVar15) {
-            piVar12 = piVar12 + 1;
-            *piVar12 = iVar6;
-            uVar15 = uVar15 + 1;
-            iVar6 = BG_GetAmmoNotInClip(ppVar3,WVar4,param_3);
-            goto LAB_82291a0c;
-          }
-        }
-        else {
-          iVar6 = pWVar2->iClipIndex;
+        WVar4 = BG_GetAlternateWeapon(WVar3,param_3);
+        if (bg_weaponDefs[WVar4.data & 0xff]->bClipOnly == false) {
+          iVar5 = BG_AmmoForWeapon(WVar3,param_3);
           uVar8 = 0;
           if (uVar14 != 0) {
-            piVar7 = local_f0;
+            piVar7 = local_b0;
             do {
-              if (*piVar7 == iVar6) break;
+              if (*piVar7 == iVar5) break;
               uVar8 = uVar8 + 1;
               piVar7 = piVar7 + 1;
             } while (uVar8 < uVar14);
           }
           if (uVar8 == uVar14) {
-            piVar11 = piVar11 + 1;
-            *piVar11 = iVar6;
+            piVar12 = piVar12 + 1;
+            *piVar12 = iVar5;
             uVar14 = uVar14 + 1;
-            iVar6 = BG_GetAmmoInClipBothHandsForWeapon(ppVar3,WVar4,param_3);
+            iVar5 = BG_GetAmmoNotInClip(param_1,WVar3,param_3);
+            goto LAB_82291a0c;
+          }
+        }
+        else {
+          iVar5 = pWVar2->iClipIndex;
+          uVar8 = 0;
+          if (uVar13 != 0) {
+            piVar7 = local_f0;
+            do {
+              if (*piVar7 == iVar5) break;
+              uVar8 = uVar8 + 1;
+              piVar7 = piVar7 + 1;
+            } while (uVar8 < uVar13);
+          }
+          if (uVar8 == uVar13) {
+            piVar11 = piVar11 + 1;
+            *piVar11 = iVar5;
+            uVar13 = uVar13 + 1;
+            iVar5 = BG_GetAmmoInClipBothHandsForWeapon(param_1,WVar3,param_3);
 LAB_82291a0c:
-            lVar13 = iVar6 + lVar13;
+            iVar6 = iVar5 + iVar6;
           }
         }
       }
@@ -422,7 +404,6 @@ LAB_82291a0c:
     lVar9 = lVar9 + -1;
     pWVar10 = pWVar10 + 1;
     if (lVar9 == 0) {
-      iVar6 = __restgprlr_19(lVar13);
       return iVar6;
     }
   } while( true );
@@ -467,75 +448,73 @@ ClipAmmo * BG_GetClipAmmoPtr(playerState_s *param_1,int param_2)
 
 // 822910C8  BG_GetFreeClipAmmoPtr  (bgame/bg_weapons_ammo.cpp:397)
 
+/* WARNING: Function: __savegprlr_18 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_18 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
 ClipAmmo * BG_GetFreeClipAmmoPtr(playerState_s *param_1)
 
 {
   bool bVar1;
-  int iVar2;
-  int *piVar3;
+  ClipAmmo *pCVar2;
+  int iVar3;
   int iVar4;
   ClipAmmo *pCVar5;
-  int iVar6;
-  int *piVar7;
-  longlong lVar8;
-  Weapon *pWVar9;
+  longlong lVar6;
+  Weapon *pWVar7;
   char acStack_480 [1152];
   
-  iVar2 = __savegprlr_18(param_1);
-  if (iVar2 == 0) {
+  if (param_1 == (playerState_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_weapons_ammo.cpp",
                     0x194,0,"%s");
   }
-  piVar7 = (int *)(iVar2 + 0x40c);
-  iVar6 = 0;
-  piVar3 = piVar7;
+  pCVar5 = (param_1->weapCommon).ammoInClip;
+  iVar4 = 0;
+  pCVar2 = pCVar5;
   do {
-    if (*piVar3 == 0) {
-      *piVar3 = 0;
-      piVar3[1] = 0;
-      piVar3[2] = 0;
-      pCVar5 = (ClipAmmo *)__restgprlr_18();
-      return pCVar5;
+    if (pCVar2->clipIndex == 0) {
+      pCVar2->clipIndex = 0;
+      pCVar2->ammoCount[0] = 0;
+      pCVar2->ammoCount[1] = 0;
+      return pCVar2;
     }
-    iVar6 = iVar6 + 1;
-    piVar3 = piVar3 + 3;
-  } while (iVar6 < 0xf);
-  lVar8 = 0xf;
-  piVar3 = piVar7;
+    iVar4 = iVar4 + 1;
+    pCVar2 = pCVar2 + 1;
+  } while (iVar4 < 0xf);
+  lVar6 = 0xf;
+  pCVar2 = pCVar5;
   do {
     bVar1 = false;
-    if (*piVar3 == 0) {
+    if (pCVar2->clipIndex == 0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_weapons_ammo.cpp",
                       0x1a5,0,"%s");
     }
-    iVar6 = 0;
-    pWVar9 = (Weapon *)(iVar2 + 0x274);
+    iVar4 = 0;
+    pWVar7 = param_1->weaponsEquipped;
     do {
-      iVar4 = BG_ClipForWeapon(*pWVar9,false);
-      if ((iVar4 == *piVar3) || (iVar4 = BG_ClipForWeapon(*pWVar9,true), iVar4 == *piVar3)) {
+      iVar3 = BG_ClipForWeapon(*pWVar7,false);
+      if ((iVar3 == pCVar2->clipIndex) ||
+         (iVar3 = BG_ClipForWeapon(*pWVar7,true), iVar3 == pCVar2->clipIndex)) {
         bVar1 = true;
-        BG_GetWeaponName(*(Weapon *)((iVar6 + 0x9d) * 4 + iVar2),acStack_480,0x400);
+        BG_GetWeaponName(param_1->weaponsEquipped[iVar4],acStack_480,0x400);
         Com_PrintError(0x10,"%i, %i (left hand) rounds for %s\n");
         break;
       }
-      iVar6 = iVar6 + 1;
-      pWVar9 = pWVar9 + 1;
-    } while (iVar6 < 0xf);
+      iVar4 = iVar4 + 1;
+      pWVar7 = pWVar7 + 1;
+    } while (iVar4 < 0xf);
     if (!bVar1) {
       Com_PrintError(0x10,
                      "%i, %i (left hand) rounds for clipIndex %i, but we don\'t have any weapons that use that clip!\n"
                     );
     }
-    lVar8 = lVar8 + -1;
-    piVar3 = piVar3 + 3;
-    if (lVar8 == 0) {
+    lVar6 = lVar6 + -1;
+    pCVar2 = pCVar2 + 1;
+    if (lVar6 == 0) {
       if (alwaysfails == 0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_weapons_ammo.cpp"
                         ,0x1bd,0,"All clipAmmo slots are full!");
       }
-      pCVar5 = (ClipAmmo *)__restgprlr_18(piVar7);
       return pCVar5;
     }
   } while( true );
@@ -587,91 +566,80 @@ void BG_RemoveClipAmmo(playerState_s *param_1,Weapon param_2,bool param_3)
 
 // 82291360  BG_AddClipAmmo  (bgame/bg_weapons_ammo.cpp:480)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
 void BG_AddClipAmmo(playerState_s *param_1,int param_2,PlayerHandIndex param_3,int param_4)
 
 {
-  int iVar1;
-  playerState_s *ppVar2;
-  ClipAmmo *pCVar3;
-  longlong lVar4;
+  ClipAmmo *pCVar1;
   
-  lVar4 = (longlong)(int)param_3;
-  ppVar2 = (playerState_s *)__savegprlr_26(param_1);
-  if (ppVar2 == (playerState_s *)0x0) {
+  if (param_1 == (playerState_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_weapons_ammo.cpp",
                     0x1e3,0,"%s");
   }
-  pCVar3 = BG_GetClipAmmoPtr(ppVar2,param_2);
-  if (pCVar3 == (ClipAmmo *)0x0) {
-    pCVar3 = BG_GetFreeClipAmmoPtr(ppVar2);
-    pCVar3->clipIndex = param_2;
+  pCVar1 = BG_GetClipAmmoPtr(param_1,param_2);
+  if (pCVar1 == (ClipAmmo *)0x0) {
+    pCVar1 = BG_GetFreeClipAmmoPtr(param_1);
+    pCVar1->clipIndex = param_2;
   }
-  if ((param_4 < 0) &&
-     (*(int *)((int)pCVar3->ammoCount + (int)((lVar4 + 1U & 0xffffffff) << 2) + -4) < -param_4)) {
+  if ((param_4 < 0) && (pCVar1->ammoCount[param_3] < -param_4)) {
     va("Tried to subtract %i rounds, but we only have %i rounds in the clip");
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_weapons_ammo.cpp",
                     0x1e6,0,"%s\n\t%s");
   }
-  iVar1 = (int)((lVar4 + 1U & 0xffffffff) << 2);
-  *(int *)((int)pCVar3->ammoCount + iVar1 + -4) =
-       *(int *)((int)pCVar3->ammoCount + iVar1 + -4) + param_4;
-  __restgprlr_26();
+  pCVar1->ammoCount[param_3] = pCVar1->ammoCount[param_3] + param_4;
   return;
 }
 
 
 // 82291440  BG_SetClipAmmo  (bgame/bg_weapons_ammo.cpp:492)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
 void BG_SetClipAmmo(playerState_s *param_1,int param_2,PlayerHandIndex param_3,int param_4)
 
 {
-  playerState_s *ppVar1;
-  ClipAmmo *pCVar2;
-  longlong lVar3;
+  ClipAmmo *pCVar1;
   
-  lVar3 = (longlong)(int)param_3;
-  ppVar1 = (playerState_s *)__savegprlr_26(param_1);
-  if (ppVar1 == (playerState_s *)0x0) {
+  if (param_1 == (playerState_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_weapons_ammo.cpp",
                     0x1ef,0,"%s");
   }
-  pCVar2 = BG_GetClipAmmoPtr(ppVar1,param_2);
-  if (pCVar2 == (ClipAmmo *)0x0) {
-    pCVar2 = BG_GetFreeClipAmmoPtr(ppVar1);
-    pCVar2->clipIndex = param_2;
+  pCVar1 = BG_GetClipAmmoPtr(param_1,param_2);
+  if (pCVar1 == (ClipAmmo *)0x0) {
+    pCVar1 = BG_GetFreeClipAmmoPtr(param_1);
+    pCVar1->clipIndex = param_2;
   }
   if (param_4 < 0) {
     va("Tried to set the clip ammo to a negative amount (%i).");
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_weapons_ammo.cpp",
                     0x1f2,0,"%s\n\t%s");
   }
-  *(int *)((int)pCVar2->ammoCount + (int)((lVar3 + 1U & 0xffffffff) << 2) + -4) = param_4;
-  __restgprlr_26();
+  pCVar1->ammoCount[param_3] = param_4;
   return;
 }
 
 
 // 82291508  PM_WeaponUseAmmo  (bgame/bg_weapons_ammo.cpp:505)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
 void PM_WeaponUseAmmo(playerState_s *param_1,Weapon param_2,bool param_3,int param_4,
                      PlayerHandIndex param_5)
 
 {
-  playerState_s *ppVar1;
-  int iVar2;
+  int iVar1;
   
-  ppVar1 = (playerState_s *)__savegprlr_29(param_1);
   if ((player_sustainAmmo->current).enabled == false) {
-    iVar2 = BG_ClipForWeapon(param_2,param_3);
-    BG_AddClipAmmo(ppVar1,iVar2,param_5,-param_4);
+    iVar1 = BG_ClipForWeapon(param_2,param_3);
+    BG_AddClipAmmo(param_1,iVar1,param_5,-param_4);
   }
-  __restgprlr_29();
   return;
 }
 
@@ -716,83 +684,81 @@ int BG_WeaponBothClipEmpty(playerState_s *param_1)
 
 // 82291560  PM_AddAmmoToClip  (bgame/bg_weapons_ammo.cpp:531)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
 void PM_AddAmmoToClip(playerState_s *param_1,PlayerHandIndex param_2,int param_3)
 
 {
-  playerState_s *ppVar1;
-  uint uVar2;
-  int iVar3;
-  bool bVar4;
+  uint uVar1;
+  int iVar2;
+  bool bVar3;
   
-  ppVar1 = (playerState_s *)__savegprlr_28(param_1);
-  if (ppVar1 == (playerState_s *)0x0) {
+  if (param_1 == (playerState_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_weapons_ammo.cpp",
                     0x218,0,"%s");
   }
   else {
-    bVar4 = true;
-    if (((ppVar1->weapCommon).weapFlags & 0x8000U) != 0) goto LAB_822915c0;
+    bVar3 = true;
+    if (((param_1->weapCommon).weapFlags & 0x8000U) != 0) goto LAB_822915c0;
   }
-  bVar4 = false;
+  bVar3 = false;
 LAB_822915c0:
-  uVar2 = BG_AmmoForWeapon((ppVar1->weapCommon).weapon,bVar4);
-  iVar3 = BG_ClipForWeapon((ppVar1->weapCommon).weapon,bVar4);
-  BG_AddClipAmmo(ppVar1,iVar3,param_2,param_3);
-  BG_AddGlobalAmmoForAmmoType(ppVar1,uVar2,-param_3);
-  __restgprlr_28();
+  uVar1 = BG_AmmoForWeapon((param_1->weapCommon).weapon,bVar3);
+  iVar2 = BG_ClipForWeapon((param_1->weapCommon).weapon,bVar3);
+  BG_AddClipAmmo(param_1,iVar2,param_2,param_3);
+  BG_AddGlobalAmmoForAmmoType(param_1,uVar1,-param_3);
   return;
 }
 
 
 // 82291B18  PM_ReloadClip  (bgame/bg_weapons_ammo.cpp:547)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
 void PM_ReloadClip(playerState_s *param_1,PlayerHandIndex param_2)
 
 {
-  playerState_s *ppVar1;
+  int iVar1;
   int iVar2;
   int iVar3;
   int iVar4;
   int iVar5;
   int iVar6;
-  int iVar7;
-  bool bVar8;
+  bool bVar7;
   
-  ppVar1 = (playerState_s *)__savegprlr_24(param_1);
-  if ((ppVar1 == (playerState_s *)0x0) ||
-     (bVar8 = true, ((ppVar1->weapCommon).weapFlags & 0x8000U) == 0)) {
-    bVar8 = false;
+  if ((param_1 == (playerState_s *)0x0) ||
+     (bVar7 = true, ((param_1->weapCommon).weapFlags & 0x8000U) == 0)) {
+    bVar7 = false;
   }
-  iVar2 = BG_ReloadAmmoAdd((ppVar1->weapCommon).weapon,bVar8);
-  iVar3 = BG_ReloadStartAdd((ppVar1->weapCommon).weapon,bVar8);
-  iVar7 = ppVar1->weapState[param_2].weaponState;
-  if (((iVar7 != 10) && (iVar7 != 0xb)) || (iVar3 != 0)) {
-    iVar4 = BG_GetClipSize(ppVar1,(ppVar1->weapCommon).weapon,bVar8);
-    iVar5 = BG_GetAmmoNotInClip(ppVar1,(ppVar1->weapCommon).weapon,bVar8);
-    iVar6 = BG_GetAmmoInClipForWeapon(ppVar1,(ppVar1->weapCommon).weapon,bVar8,param_2);
-    iVar7 = iVar4 - iVar6;
-    if (iVar5 < iVar4 - iVar6) {
-      iVar7 = iVar5;
+  iVar1 = BG_ReloadAmmoAdd((param_1->weapCommon).weapon,bVar7);
+  iVar2 = BG_ReloadStartAdd((param_1->weapCommon).weapon,bVar7);
+  iVar6 = param_1->weapState[param_2].weaponState;
+  if (((iVar6 != 10) && (iVar6 != 0xb)) || (iVar2 != 0)) {
+    iVar3 = BG_GetClipSize(param_1,(param_1->weapCommon).weapon,bVar7);
+    iVar4 = BG_GetAmmoNotInClip(param_1,(param_1->weapCommon).weapon,bVar7);
+    iVar5 = BG_GetAmmoInClipForWeapon(param_1,(param_1->weapCommon).weapon,bVar7,param_2);
+    iVar6 = iVar3 - iVar5;
+    if (iVar4 < iVar3 - iVar5) {
+      iVar6 = iVar4;
     }
-    iVar5 = ppVar1->weapState[param_2].weaponState;
-    if ((iVar5 == 10) || (iVar5 == 0xb)) {
-      if ((iVar3 < iVar4) && (iVar3 < iVar7)) {
-        iVar7 = iVar3;
+    iVar4 = param_1->weapState[param_2].weaponState;
+    if ((iVar4 == 10) || (iVar4 == 0xb)) {
+      if ((iVar2 < iVar3) && (iVar2 < iVar6)) {
+        iVar6 = iVar2;
       }
     }
-    else if (((iVar2 != 0) && (iVar2 < iVar4)) && (iVar2 < iVar7)) {
-      iVar7 = iVar2;
+    else if (((iVar1 != 0) && (iVar1 < iVar3)) && (iVar1 < iVar6)) {
+      iVar6 = iVar1;
     }
-    if (iVar7 != 0) {
-      PM_AddAmmoToClip(ppVar1,param_2,iVar7);
-      PM_AddEvent(ppVar1,0x17);
+    if (iVar6 != 0) {
+      PM_AddAmmoToClip(param_1,param_2,iVar6);
+      PM_AddEvent(param_1,0x17);
     }
   }
-  __restgprlr_24();
   return;
 }
 

@@ -351,6 +351,40 @@ LAB_8227fbfc:
   822782EC  4E800420             bctr
 
 ; 822782F8  PM_getPlayerTurretWeapon  (bgame/bg_pmove.cpp:359)
+s_WEAPON_BLAST_IMPACT:
+  82000B7C  57454150             rlwinm r5,r26,0x8,0x5,0x8
+s_WEAPON_STUNNED_LOOP:
+  82000BD8  57454150             rlwinm r5,r26,0x8,0x5,0x8
+s_WEAPON_SPRINT_DROP:
+  82000C04  57454150             rlwinm r5,r26,0x8,0x5,0x8
+s_WEAPON_SPRINT_LOOP:
+  82000C18  57454150             rlwinm r5,r26,0x8,0x5,0x8
+s_WEAPON_OFFHAND_DETONATE:
+  82000C68  57454150             rlwinm r5,r26,0x8,0x5,0x8
+s_WEAPON_OFFHAND_HOLD:
+  82000C94  57454150             rlwinm r5,r26,0x8,0x5,0x8
+s_WEAPON_OFFHAND_PREPARE:
+  82000CA8  57454150             rlwinm r5,r26,0x8,0x5,0x8
+s_WEAPON_MELEE_INIT:
+  82000CFC  57454150             rlwinm r5,r26,0x8,0x5,0x8
+s_WEAPON_RELOAD_START_INTERUPT:
+  82000D24  57454150             rlwinm r5,r26,0x8,0x5,0x8
+s_WEAPON_RELOAD_START:
+  82000D44  57454150             rlwinm r5,r26,0x8,0x5,0x8
+s_WEAPON_FIRING:
+  82000D9C  57454150             rlwinm r5,r26,0x8,0x5,0x8
+s_WEAPON_DROPPING_QUICK:
+  82000DC0  57454150             rlwinm r5,r26,0x8,0x5,0x8
+  82000DC4  4F4E5F44             addpcis r26,0x5f5c0000
+  82000DC8  524F5050             rlwimi r15,r18,0xa,0x1,0x8
+  82000DCC  494E475F             bla 0x014e475c
+  82000DD0  51554943             rlwimi. r21,r10,0x9,0x5,0x1
+  82000DD4  4B000000             b 0x81000dd4
+s_WEAPON_DROPPING:
+  82000DD8  57454150             rlwinm r5,r26,0x8,0x5,0x8
+  82000DDC  4F4E5F44             addpcis r26,0x5f5c0000
+  82000DE0  524F5050             rlwimi r15,r18,0xa,0x1,0x8
+  82000DE4  494E4700             b 0x834e54e4
   822782F8  3D408296             lis r10,-0x7d6a
   822782FC  546B063E             rlwinm r11,r3,0x0,0x18,0x1f
   82278300  394A1640             addi r10,r10,0x1640
@@ -405,69 +439,35 @@ s_Screenshot:
   82000B4C  53637265             rlwimi. r3,r27,0xe,0x9,0x12
   82000B50  656E7368             oris r14,r11,0x7368
   82000B54  6F740000             xoris r20,r27,0x0
-s_WEAPON_BLAST_IMPACT:
-  82000B7C  57454150             rlwinm r5,r26,0x8,0x5,0x8
 s_WEAPON_NIGHTVISION_WEAR:
   82000BAC  57454150             rlwinm r5,r26,0x8,0x5,0x8
 s_WEAPON_STUNNED_END:
   82000BC4  57454150             rlwinm r5,r26,0x8,0x5,0x8
-s_WEAPON_STUNNED_LOOP:
-  82000BD8  57454150             rlwinm r5,r26,0x8,0x5,0x8
 s_WEAPON_STUNNED_START:
   82000BEC  57454150             rlwinm r5,r26,0x8,0x5,0x8
-s_WEAPON_SPRINT_DROP:
-  82000C04  57454150             rlwinm r5,r26,0x8,0x5,0x8
-s_WEAPON_SPRINT_LOOP:
-  82000C18  57454150             rlwinm r5,r26,0x8,0x5,0x8
 s_WEAPON_DETONATING:
   82000C40  57454150             rlwinm r5,r26,0x8,0x5,0x8
   82000C44  4F4E5F44             addpcis r26,0x5f5c0000
 s_WEAPON_OFFHAND_END:
   82000C54  57454150             rlwinm r5,r26,0x8,0x5,0x8
-s_WEAPON_OFFHAND_DETONATE:
-  82000C68  57454150             rlwinm r5,r26,0x8,0x5,0x8
 s_WEAPON_OFFHAND_FIRE:
   82000C80  57454150             rlwinm r5,r26,0x8,0x5,0x8
-s_WEAPON_OFFHAND_HOLD:
-  82000C94  57454150             rlwinm r5,r26,0x8,0x5,0x8
-s_WEAPON_OFFHAND_PREPARE:
-  82000CA8  57454150             rlwinm r5,r26,0x8,0x5,0x8
 s_WEAPON_MELEE_END:
   82000CD4  57454150             rlwinm r5,r26,0x8,0x5,0x8
 s_WEAPON_MELEE_FIRE:
   82000CE8  57454150             rlwinm r5,r26,0x8,0x5,0x8
-s_WEAPON_MELEE_INIT:
-  82000CFC  57454150             rlwinm r5,r26,0x8,0x5,0x8
 s_WEAPON_RELOAD_END:
   82000D10  57454150             rlwinm r5,r26,0x8,0x5,0x8
-s_WEAPON_RELOAD_START_INTERUPT:
-  82000D24  57454150             rlwinm r5,r26,0x8,0x5,0x8
-s_WEAPON_RELOAD_START:
-  82000D44  57454150             rlwinm r5,r26,0x8,0x5,0x8
 s_WEAPON_RELOADING:
   82000D74  57454150             rlwinm r5,r26,0x8,0x5,0x8
 s_WEAPON_RECHAMBERING:
   82000D88  57454150             rlwinm r5,r26,0x8,0x5,0x8
-s_WEAPON_FIRING:
-  82000D9C  57454150             rlwinm r5,r26,0x8,0x5,0x8
 s_WEAPON_DROPPING_ALT:
   82000DAC  57454150             rlwinm r5,r26,0x8,0x5,0x8
   82000DB0  4F4E5F44             addpcis r26,0x5f5c0000
   82000DB4  524F5050             rlwimi r15,r18,0xa,0x1,0x8
   82000DB8  494E475F             bla 0x014e475c
   82000DBC  414C5400             bdzt 4*cr3+lt,0x820061bc
-s_WEAPON_DROPPING_QUICK:
-  82000DC0  57454150             rlwinm r5,r26,0x8,0x5,0x8
-  82000DC4  4F4E5F44             addpcis r26,0x5f5c0000
-  82000DC8  524F5050             rlwimi r15,r18,0xa,0x1,0x8
-  82000DCC  494E475F             bla 0x014e475c
-  82000DD0  51554943             rlwimi. r21,r10,0x9,0x5,0x1
-  82000DD4  4B000000             b 0x81000dd4
-s_WEAPON_DROPPING:
-  82000DD8  57454150             rlwinm r5,r26,0x8,0x5,0x8
-  82000DDC  4F4E5F44             addpcis r26,0x5f5c0000
-  82000DE0  524F5050             rlwimi r15,r18,0xa,0x1,0x8
-  82000DE4  494E4700             b 0x834e54e4
 s_WEAPON_RAISING:
   82000E04  57454150             rlwinm r5,r26,0x8,0x5,0x8
 s_WEAPON_READY:

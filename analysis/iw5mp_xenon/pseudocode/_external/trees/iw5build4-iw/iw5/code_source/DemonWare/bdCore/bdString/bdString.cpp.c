@@ -16,34 +16,30 @@ bdString * __thiscall bdString::bdString(bdString *this,bdString *param_1)
 
 // 8292D388  bdString  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdstring/bdstring.cpp:46)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 bdString * __thiscall bdString::bdString(bdString *this,char *param_1)
 
 {
-  bdString *pbVar1;
-  longlong lVar2;
-  char *pcVar5;
-  longlong lVar3;
-  ulonglong uVar4;
+  char cVar1;
+  char *pcVar2;
   
-  lVar2 = (longlong)(int)param_1;
-  pbVar1 = (bdString *)__savegprlr_29(this);
-  lVar3 = lVar2;
+  pcVar2 = param_1;
   do {
-    pcVar5 = (char *)lVar3;
-    lVar3 = lVar3 + 1;
-  } while (*pcVar5 != '\0');
-  uVar4 = (lVar3 - lVar2) - 1;
-  if ((uVar4 & 0xffffffff) == 0) {
+    cVar1 = *pcVar2;
+    pcVar2 = pcVar2 + 1;
+  } while (cVar1 != '\0');
+  if (pcVar2 + (-1 - (int)param_1) == (char *)0x0) {
     *g_emptyString = '\0';
-    pbVar1->m_string = (char *)(g_emptyStringData + 3);
+    this->m_string = (char *)0x829b121c;
     g_emptyStringData[0] = g_emptyStringData[0] + 1;
   }
   else {
-    allocateBuffer(pbVar1,(uint)uVar4);
+    allocateBuffer(this,(uint)(pcVar2 + (-1 - (int)param_1)));
     memcpy();
   }
-  pbVar1 = (bdString *)__restgprlr_29(pbVar1);
-  return pbVar1;
+  return this;
 }
 
 
@@ -132,28 +128,26 @@ char * __thiscall bdString::getBuffer(bdString *this)
 
 // 8292D330  allocateBuffer  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdstring/bdstring.cpp:311)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void __thiscall bdString::allocateBuffer(bdString *this,uint param_1)
 
 {
   int iVar1;
   undefined4 *puVar2;
-  undefined4 *puVar3;
-  longlong lVar4;
-  ulonglong uVar5;
+  ulonglong uVar3;
   
-  lVar4 = (longlong)(int)param_1;
-  puVar2 = (undefined4 *)__savegprlr_29(this);
-  uVar5 = (lVar4 + 1U & 0xffffffff) >> 6;
-  if ((lVar4 + 1U & 0x3f) != 0) {
-    uVar5 = uVar5 + 1;
+  uVar3 = ((longlong)(int)param_1 + 1U & 0xffffffff) >> 6;
+  if (((longlong)(int)param_1 + 1U & 0x3f) != 0) {
+    uVar3 = uVar3 + 1;
   }
-  iVar1 = (int)(uVar5 << 6);
-  puVar3 = bdMemory::allocate(iVar1 + 0xc);
-  puVar3[2] = iVar1;
-  *puVar3 = 1;
-  puVar3[1] = (int)lVar4;
-  *puVar2 = puVar3 + 3;
-  __restgprlr_29();
+  iVar1 = (int)(uVar3 << 6);
+  puVar2 = bdMemory::allocate(iVar1 + 0xc);
+  puVar2[2] = iVar1;
+  *puVar2 = 1;
+  puVar2[1] = param_1;
+  this->m_string = (char *)(puVar2 + 3);
   return;
 }
 

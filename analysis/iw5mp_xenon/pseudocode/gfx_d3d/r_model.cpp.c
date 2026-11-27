@@ -74,6 +74,8 @@ void R_GetModelList(XAssetHeader param_1,void *param_2)
 
 // 827597C0  R_ModelList_f  (gfx_d3d/r_model.cpp:116)
 
+/* WARNING: Function: __savegprlr_19 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_19 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "XAssetType": Some values do not have unique names */
 /* WARNING: Enum "nodeType": Some values do not have unique names */
@@ -98,7 +100,6 @@ void R_ModelList_f(void)
   int local_2090;
   XModel *local_208c [2083];
   
-  __savegprlr_19();
   local_2090 = 0;
   DB_EnumXAssets(ASSET_TYPE_XMODEL,R_GetModelList,&local_2090,true);
   std::_Sort<XModel_*_*,int,bool_(__cdecl*)(XModel_*_&,XModel_*_&)>
@@ -156,7 +157,6 @@ void R_ModelList_f(void)
   Com_Printf(8,
              "Related commands: meminfo, imagelist, gfx_world, gfx_model, cg_drawfps, com_statmon, tempmeminfo\n"
             );
-  __restgprlr_19();
   return;
 }
 
@@ -175,27 +175,25 @@ XModel * R_RegisterModel(char *param_1)
 
 // 827589D8  R_RegisterInlineModel  (gfx_d3d/r_model.cpp:215)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 GfxBrushModel * R_RegisterInlineModel(int param_1)
 
 {
-  longlong lVar1;
-  GfxBrushModel *pGVar2;
-  
-  lVar1 = __savegprlr_28(param_1);
   if (rgp.world == (GfxWorld *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_model.cpp",0xd8,0,
                     "%s");
   }
-  if ((int)lVar1 < 0) {
+  if (param_1 < 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_model.cpp",0xd9,0,
                     "%s");
   }
-  if ((rgp.world)->modelCount <= (int)lVar1) {
+  if ((rgp.world)->modelCount <= param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_model.cpp",0xda,0,
                     "%s");
   }
-  pGVar2 = (GfxBrushModel *)__restgprlr_28(ZEXT48((rgp.world)->models) + lVar1 * 0x38);
-  return pGVar2;
+  return (rgp.world)->models + param_1;
 }
 
 
@@ -211,6 +209,8 @@ void R_SetIgnorePrecacheErrors(int param_1)
 
 // 82758AA8  R_XModelDebugBoxes  (gfx_d3d/r_model.cpp:235)
 
+/* WARNING: Function: __savegprlr_20 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_20 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 
@@ -219,17 +219,16 @@ void R_XModelDebugBoxes(DObj *param_1,int *param_2)
 {
   XBoneInfo *pXVar1;
   uint uVar2;
-  DObj *pDVar3;
-  DObjAnimMat *pDVar4;
-  int iVar5;
-  ulonglong uVar6;
-  int iVar7;
-  XBoneInfo **ppXVar8;
-  longlong lVar9;
-  uint *puVar10;
+  DObjAnimMat *pDVar3;
+  int iVar4;
+  ulonglong uVar5;
+  int iVar6;
+  XBoneInfo **ppXVar7;
+  longlong lVar8;
+  uint *puVar9;
+  double dVar10;
   double dVar11;
   double dVar12;
-  double dVar13;
   float local_3c0;
   float local_3bc;
   float local_3b8;
@@ -242,21 +241,20 @@ void R_XModelDebugBoxes(DObj *param_1,int *param_2)
   float local_390 [4];
   XBoneInfo *local_380 [224];
   
-  pDVar3 = (DObj *)__savegprlr_20(param_1);
-  if (pDVar3 == (DObj *)0x0) {
+  if (param_1 == (DObj *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_model.cpp",0xf9,0,
                     "%s");
   }
-  pDVar4 = DObjGetRotTransArray(pDVar3);
-  if (pDVar4 != (DObjAnimMat *)0x0) {
-    iVar5 = DObjNumBones(pDVar3);
-    if (0xc0 < iVar5) {
+  pDVar3 = DObjGetRotTransArray(param_1);
+  if (pDVar3 != (DObjAnimMat *)0x0) {
+    iVar4 = DObjNumBones(param_1);
+    if (0xc0 < iVar4) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_model.cpp",0xff,0,
                       "%s");
     }
-    DObjGetBoneInfo(pDVar3,local_380);
-    uVar6 = 0xffffffff80000000;
-    dVar13 = 1.0;
+    DObjGetBoneInfo(param_1,local_380);
+    uVar5 = 0xffffffff80000000;
+    dVar12 = 1.0;
     local_390[0] = 1.0;
     local_390[1] = 1.0;
     local_390[2] = 1.0;
@@ -265,97 +263,97 @@ void R_XModelDebugBoxes(DObj *param_1,int *param_2)
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_model.cpp",0x109,0
                       ,"%s");
     }
-    iVar7 = 0;
-    if (0 < iVar5) {
-      ppXVar8 = local_380;
-      dVar12 = -1.0;
+    iVar6 = 0;
+    if (0 < iVar4) {
+      ppXVar7 = local_380;
+      dVar11 = -1.0;
       do {
-        if (((uint)param_2[iVar7 >> 5] & uVar6) != 0) {
-          pXVar1 = *ppXVar8;
-          lVar9 = 0xc;
-          puVar10 = (uint *)boxVerts;
+        if (((uint)param_2[iVar6 >> 5] & uVar5) != 0) {
+          pXVar1 = *ppXVar7;
+          lVar8 = 0xc;
+          puVar9 = (uint *)boxVerts;
           do {
-            uVar2 = *puVar10;
-            dVar11 = dVar12;
+            uVar2 = *puVar9;
+            dVar10 = dVar11;
             if ((uVar2 & 1) != 0) {
-              dVar11 = dVar13;
+              dVar10 = dVar12;
             }
-            local_3b0 = (float)((double)(pXVar1->bounds).halfSize[0] * dVar11 +
+            local_3b0 = (float)((double)(pXVar1->bounds).halfSize[0] * dVar10 +
                                (double)(pXVar1->bounds).midPoint[0]);
-            dVar11 = dVar12;
+            dVar10 = dVar11;
             if ((uVar2 & 2) != 0) {
-              dVar11 = dVar13;
+              dVar10 = dVar12;
             }
-            local_3ac = (float)((double)(pXVar1->bounds).halfSize[1] * dVar11 +
+            local_3ac = (float)((double)(pXVar1->bounds).halfSize[1] * dVar10 +
                                (double)(pXVar1->bounds).midPoint[1]);
-            dVar11 = dVar12;
+            dVar10 = dVar11;
             if ((uVar2 & 4) != 0) {
-              dVar11 = dVar13;
+              dVar10 = dVar12;
             }
-            local_3a8 = (float)(dVar11 * (double)(pXVar1->bounds).halfSize[2] +
+            local_3a8 = (float)(dVar10 * (double)(pXVar1->bounds).halfSize[2] +
                                (double)(pXVar1->bounds).midPoint[2]);
-            MatrixTransformVectorQuatTrans(&local_3b0,pDVar4,&local_3a0);
-            uVar2 = puVar10[1];
+            MatrixTransformVectorQuatTrans(&local_3b0,pDVar3,&local_3a0);
+            uVar2 = puVar9[1];
             local_3a0 = scene.def.viewOffset[0] + local_3a0;
             local_39c = scene.def.viewOffset[1] + local_39c;
             local_398 = scene.def.viewOffset[2] + local_398;
-            dVar11 = dVar12;
+            dVar10 = dVar11;
             if ((uVar2 & 1) != 0) {
-              dVar11 = dVar13;
+              dVar10 = dVar12;
             }
-            local_3b0 = (float)((double)(pXVar1->bounds).halfSize[0] * dVar11 +
+            local_3b0 = (float)((double)(pXVar1->bounds).halfSize[0] * dVar10 +
                                (double)(pXVar1->bounds).midPoint[0]);
-            dVar11 = dVar12;
+            dVar10 = dVar11;
             if ((uVar2 & 2) != 0) {
-              dVar11 = dVar13;
+              dVar10 = dVar12;
             }
-            local_3ac = (float)((double)(pXVar1->bounds).halfSize[1] * dVar11 +
+            local_3ac = (float)((double)(pXVar1->bounds).halfSize[1] * dVar10 +
                                (double)(pXVar1->bounds).midPoint[1]);
-            dVar11 = dVar12;
+            dVar10 = dVar11;
             if ((uVar2 & 4) != 0) {
-              dVar11 = dVar13;
+              dVar10 = dVar12;
             }
-            local_3a8 = (float)(dVar11 * (double)(pXVar1->bounds).halfSize[2] +
+            local_3a8 = (float)(dVar10 * (double)(pXVar1->bounds).halfSize[2] +
                                (double)(pXVar1->bounds).midPoint[2]);
-            MatrixTransformVectorQuatTrans(&local_3b0,pDVar4,&local_3c0);
+            MatrixTransformVectorQuatTrans(&local_3b0,pDVar3,&local_3c0);
             local_3c0 = scene.def.viewOffset[0] + local_3c0;
             local_3bc = scene.def.viewOffset[1] + local_3bc;
-            puVar10 = puVar10 + 2;
+            puVar9 = puVar9 + 2;
             local_3b8 = scene.def.viewOffset[2] + local_3b8;
             R_AddDebugLine(&frontEndDataOut->debugGlobals,&local_3a0,&local_3c0,local_390);
-            lVar9 = lVar9 + -1;
-          } while (lVar9 != 0);
+            lVar8 = lVar8 + -1;
+          } while (lVar8 != 0);
         }
-        iVar7 = iVar7 + 1;
-        ppXVar8 = ppXVar8 + 1;
-        pDVar4 = pDVar4 + 1;
-        uVar6 = (uVar6 & 1) << 0x1f | (uVar6 & 0xffffffff) >> 1;
-      } while (iVar7 < iVar5);
+        iVar6 = iVar6 + 1;
+        ppXVar7 = ppXVar7 + 1;
+        pDVar3 = pDVar3 + 1;
+        uVar5 = (uVar5 & 1) << 0x1f | (uVar5 & 0xffffffff) >> 1;
+      } while (iVar6 < iVar4);
     }
   }
-  __restgprlr_20();
   return;
 }
 
 
 // 82758DD8  R_XModelDebugAxes  (gfx_d3d/r_model.cpp:294)
 
+/* WARNING: Function: __savegprlr_21 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_21 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 
 void R_XModelDebugAxes(DObj *param_1,int *param_2)
 
 {
-  DObj *pDVar1;
-  DObjAnimMat *pDVar2;
-  int iVar3;
-  ulonglong uVar4;
-  int iVar5;
+  DObjAnimMat *pDVar1;
+  int iVar2;
+  ulonglong uVar3;
+  int iVar4;
+  float *pfVar5;
   float *pfVar6;
-  float *pfVar7;
-  longlong lVar8;
+  longlong lVar7;
+  double dVar8;
   double dVar9;
-  double dVar10;
   float local_d0;
   float local_cc;
   float local_c8;
@@ -366,14 +364,13 @@ void R_XModelDebugAxes(DObj *param_1,int *param_2)
   float local_b0 [4];
   float local_a0 [40];
   
-  pDVar1 = (DObj *)__savegprlr_21(param_1);
-  if (pDVar1 == (DObj *)0x0) {
+  if (param_1 == (DObj *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_model.cpp",0x131,0,
                     "%s");
   }
-  pDVar2 = DObjGetRotTransArray(pDVar1);
-  if (pDVar2 != (DObjAnimMat *)0x0) {
-    dVar10 = 0.0;
+  pDVar1 = DObjGetRotTransArray(param_1);
+  if (pDVar1 != (DObjAnimMat *)0x0) {
+    dVar9 = 0.0;
     local_a0[0] = 6.0;
     local_a0[1] = 0.0;
     local_a0[2] = 0.0;
@@ -383,66 +380,64 @@ void R_XModelDebugAxes(DObj *param_1,int *param_2)
     local_a0[6] = 0.0;
     local_a0[7] = 0.0;
     local_a0[8] = 6.0;
-    iVar3 = DObjNumBones(pDVar1);
-    uVar4 = 0xffffffff80000000;
+    iVar2 = DObjNumBones(param_1);
+    uVar3 = 0xffffffff80000000;
     if (frontEndDataOut == (GfxBackEndData *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_model.cpp",0x145,0
                       ,"%s");
     }
-    iVar5 = 0;
-    if (0 < iVar3) {
-      dVar9 = 1.0;
+    iVar4 = 0;
+    if (0 < iVar2) {
+      dVar8 = 1.0;
       do {
-        if (((uint)param_2[iVar5 >> 5] & uVar4) != 0) {
-          pfVar7 = local_a0;
-          pfVar6 = &fStack_b4;
-          lVar8 = 3;
+        if (((uint)param_2[iVar4 >> 5] & uVar3) != 0) {
+          pfVar6 = local_a0;
+          pfVar5 = &fStack_b4;
+          lVar7 = 3;
           do {
-            local_b0[0] = (float)dVar10;
-            local_b0[1] = (float)dVar10;
-            local_b0[2] = (float)dVar10;
-            local_b0[3] = (float)dVar10;
-            pfVar6 = pfVar6 + 1;
-            *pfVar6 = (float)dVar9;
-            MatrixTransformVectorQuatTrans(vec3_origin,pDVar2,&local_d0);
+            local_b0[0] = (float)dVar9;
+            local_b0[1] = (float)dVar9;
+            local_b0[2] = (float)dVar9;
+            local_b0[3] = (float)dVar9;
+            pfVar5 = pfVar5 + 1;
+            *pfVar5 = (float)dVar8;
+            MatrixTransformVectorQuatTrans(vec3_origin,pDVar1,&local_d0);
             local_d0 = scene.def.viewOffset[0] + local_d0;
             local_cc = scene.def.viewOffset[1] + local_cc;
             local_c8 = scene.def.viewOffset[2] + local_c8;
-            MatrixTransformVectorQuatTrans(pfVar7,pDVar2,&local_c0);
+            MatrixTransformVectorQuatTrans(pfVar6,pDVar1,&local_c0);
             local_c0 = scene.def.viewOffset[0] + local_c0;
             local_bc = scene.def.viewOffset[1] + local_bc;
             local_b8 = scene.def.viewOffset[2] + local_b8;
             R_AddDebugLine(&frontEndDataOut->debugGlobals,&local_d0,&local_c0,local_b0);
-            lVar8 = lVar8 + -1;
-            pfVar7 = pfVar7 + 3;
-          } while (lVar8 != 0);
+            lVar7 = lVar7 + -1;
+            pfVar6 = pfVar6 + 3;
+          } while (lVar7 != 0);
         }
-        iVar5 = iVar5 + 1;
-        pDVar2 = pDVar2 + 1;
-        uVar4 = (uVar4 & 1) << 0x1f | (uVar4 & 0xffffffff) >> 1;
-      } while (iVar5 < iVar3);
+        iVar4 = iVar4 + 1;
+        pDVar1 = pDVar1 + 1;
+        uVar3 = (uVar3 & 1) << 0x1f | (uVar3 & 0xffffffff) >> 1;
+      } while (iVar4 < iVar2);
     }
   }
-  __restgprlr_21();
   return;
 }
 
 
 // 82759008  R_XModelDebug  (gfx_d3d/r_model.cpp:351)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void R_XModelDebug(DObj *param_1,int *param_2)
 
 {
-  DObj *pDVar1;
-  
-  pDVar1 = (DObj *)__savegprlr_29(param_1);
   if (((r_xdebug->current).unsignedInt & 1) != 0) {
-    R_XModelDebugBoxes(pDVar1,param_2);
+    R_XModelDebugBoxes(param_1,param_2);
   }
   if (((r_xdebug->current).unsignedInt & 2) != 0) {
-    R_XModelDebugAxes(pDVar1,param_2);
+    R_XModelDebugAxes(param_1,param_2);
   }
-  __restgprlr_29();
   return;
 }
 
@@ -458,6 +453,8 @@ int R_GetSkinnedCacheOffset(XSurface *param_1)
 
 // 82759068  R_SkinXModel  (gfx_d3d/r_model.cpp:435)
 
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 
@@ -469,23 +466,20 @@ int R_SkinXModel(XModelDrawInfo *param_1,XModel *param_2,DObj *param_3,GfxPlacem
   uint uVar2;
   uint uVar3;
   int iVar4;
-  int iVar6;
-  ulonglong uVar7;
-  longlong lVar8;
-  longlong lVar9;
+  int iVar5;
+  longlong lVar6;
   int in_r9;
+  float *pfVar7;
+  ulonglong uVar8;
+  uint *puVar9;
   longlong lVar10;
-  ulonglong uVar11;
-  uint *puVar12;
-  longlong lVar13;
-  longlong lVar14;
-  longlong lVar15;
-  ulonglong uVar16;
-  undefined4 *puVar17;
+  longlong lVar11;
+  ulonglong uVar12;
+  undefined4 *puVar13;
   char in_RESERVE;
   byte in_cr0;
-  longlong lVar18;
-  double dVar19;
+  longlong lVar14;
+  double dVar15;
   XSurface *local_30cc [3];
   uint local_30c0;
   uint local_30bc;
@@ -493,145 +487,134 @@ int R_SkinXModel(XModelDrawInfo *param_1,XModel *param_2,DObj *param_3,GfxPlacem
   uint local_30b4;
   uint local_30b0;
   uint local_30ac;
-  XModel *pXVar5;
   
-  dVar19 = (double)param_5;
-  lVar8 = (longlong)param_7;
-  lVar14 = (longlong)(int)param_4;
-  uVar7 = (ulonglong)(int)param_3;
-  uVar16 = (ulonglong)(int)param_2;
-  uVar11 = ZEXT48(&stack0x00000000);
-  __savegprlr();
-  if ((uVar16 & 0xffffffff) == 0) {
+  dVar15 = (double)param_5;
+  uVar8 = ZEXT48(&stack0x00000000);
+  if (param_2 == (XModel *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_model.cpp",0x1bf,0,
                     "%s");
   }
   if (-1 < in_r9) {
     Profile_Begin(0x55);
-    pXVar5 = (XModel *)uVar16;
-    iVar4 = XModelGetSurfaces(pXVar5,local_30cc,in_r9);
-    lVar15 = (longlong)iVar4;
+    iVar4 = XModelGetSurfaces(param_2,local_30cc,in_r9);
+    lVar11 = (longlong)iVar4;
     if (iVar4 == 0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_model.cpp",0x1cc,0
                       ,"%s");
     }
-    if ((uVar7 & 0xffffffff) != 0) {
-      DObjGetHidePartBits((DObj *)uVar7,&local_30c0);
+    if (param_3 != (DObj *)0x0) {
+      DObjGetHidePartBits(param_3,&local_30c0);
     }
     if (0x40 < iVar4) {
       va("R_SkinXModel : model %s lod %d : surfaceCount %d exceeds DOBJ_MAX_SURFS (%d).");
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_model.cpp",0x1d3,0
                       ,"%s\n\t%s");
     }
-    uVar16 = uVar11 - 0x30a0;
+    uVar12 = uVar8 - 0x30a0;
     if (0 < iVar4) {
-      lVar13 = uVar11 - 0x3084;
+      lVar10 = uVar8 - 0x3084;
       iVar4 = 0;
       do {
-        puVar17 = (undefined4 *)uVar16;
-        if ((uVar11 - 0x11bc & 0xffffffff) < (uVar16 & 0xffffffff)) {
+        puVar13 = (undefined4 *)uVar12;
+        if ((uVar8 - 0x11bc & 0xffffffff) < (uVar12 & 0xffffffff)) {
           R_WarnOncePerFrame(R_WARN_MAX_SURF_BUF);
 LAB_82759244:
-          *puVar17 = 0xfffffffd;
-          uVar16 = uVar16 + 4;
-          lVar13 = lVar13 + 4;
-          if ((uVar11 - 0xa0 & 0xffffffff) < (uVar16 & 0xffffffff)) {
-            XModelGetName(pXVar5);
+          *puVar13 = 0xfffffffd;
+          uVar12 = uVar12 + 4;
+          lVar10 = lVar10 + 4;
+          if ((uVar8 - 0xa0 & 0xffffffff) < (uVar12 & 0xffffffff)) {
+            XModelGetName(param_2);
             va("DOBJ_MAX_SURFS exceeded for \'%s\'");
-            iVar6 = 0x1eb;
+            iVar5 = 0x1eb;
 LAB_82759324:
             MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_model.cpp",
-                            iVar6,0,"%s\n\t%s");
+                            iVar5,0,"%s\n\t%s");
           }
         }
         else {
-          iVar6 = (int)(local_30cc[0]->vertInfo).vertCount + iVar4 + -0x10;
-          if (((uVar7 & 0xffffffff) != 0) &&
-             ((((((*(uint *)(iVar6 + 0x7c) & local_30ac) != 0 ||
-                 (*(uint *)(iVar6 + 0x78) & local_30b0) != 0) ||
-                (*(uint *)(iVar6 + 0x74) & local_30b4) != 0) ||
-               (*(uint *)(iVar6 + 0x70) & local_30b8) != 0) ||
-              (*(uint *)(iVar6 + 0x6c) & local_30bc) != 0) ||
-              (*(uint *)(iVar6 + 0x68) & local_30c0) != 0)) goto LAB_82759244;
+          iVar5 = (int)(local_30cc[0]->vertInfo).vertCount + iVar4 + -0x10;
+          if ((param_3 != (DObj *)0x0) &&
+             ((((((*(uint *)(iVar5 + 0x7c) & local_30ac) != 0 ||
+                 (*(uint *)(iVar5 + 0x78) & local_30b0) != 0) ||
+                (*(uint *)(iVar5 + 0x74) & local_30b4) != 0) ||
+               (*(uint *)(iVar5 + 0x70) & local_30b8) != 0) ||
+              (*(uint *)(iVar5 + 0x6c) & local_30bc) != 0) ||
+              (*(uint *)(iVar5 + 0x68) & local_30c0) != 0)) goto LAB_82759244;
           if (rg.drawRigidModels == false) {
-            *puVar17 = 0xfffffffd;
-            uVar16 = uVar16 + 4;
-            lVar13 = lVar13 + 4;
-            if ((uVar16 & 0xffffffff) <= (uVar11 - 0xa0 & 0xffffffff)) goto LAB_8275933c;
-            XModelGetName(pXVar5);
+            *puVar13 = 0xfffffffd;
+            uVar12 = uVar12 + 4;
+            lVar10 = lVar10 + 4;
+            if ((uVar12 & 0xffffffff) <= (uVar8 - 0xa0 & 0xffffffff)) goto LAB_8275933c;
+            XModelGetName(param_2);
             va("DOBJ_MAX_SURFS exceeded for \'%s\'");
-            iVar6 = 0x1f7;
+            iVar5 = 0x1f7;
             goto LAB_82759324;
           }
-          puVar17[6] = (float)dVar19;
-          puVar17[5] = iVar6;
-          lVar10 = lVar14 + -4;
-          *puVar17 = 0xfffffffc;
-          lVar9 = lVar13 + -4;
-          *(short *)((int)puVar17 + 10) = (short)lVar8;
-          *(undefined2 *)(puVar17 + 3) = 0;
-          puVar17[4] = 0;
-          lVar18 = 7;
+          puVar13[6] = (float)dVar15;
+          puVar13[5] = iVar5;
+          pfVar7 = param_4[-1].origin + 2;
+          *puVar13 = 0xfffffffc;
+          lVar6 = lVar10 + -4;
+          *(short *)((int)puVar13 + 10) = (short)param_7;
+          *(undefined2 *)(puVar13 + 3) = 0;
+          puVar13[4] = 0;
+          lVar14 = 7;
           do {
-            lVar10 = lVar10 + 4;
-            lVar9 = lVar9 + 4;
-            *(undefined4 *)lVar9 = *(undefined4 *)lVar10;
-            lVar18 = lVar18 + -1;
-          } while (lVar18 != 0);
-          uVar1 = *(undefined2 *)(iVar6 + 4);
-          *(undefined2 *)(puVar17 + 0xe) = 0;
-          lVar13 = lVar13 + 0x3c;
-          *(undefined2 *)((int)puVar17 + 0x3a) = uVar1;
-          uVar16 = uVar16 + 0x3c;
-          if ((uVar11 - 0xa0 & 0xffffffff) < (uVar16 & 0xffffffff)) {
-            XModelGetName(pXVar5);
+            pfVar7 = pfVar7 + 1;
+            lVar6 = lVar6 + 4;
+            *(float *)lVar6 = *pfVar7;
+            lVar14 = lVar14 + -1;
+          } while (lVar14 != 0);
+          uVar1 = *(undefined2 *)(iVar5 + 4);
+          *(undefined2 *)(puVar13 + 0xe) = 0;
+          lVar10 = lVar10 + 0x3c;
+          *(undefined2 *)((int)puVar13 + 0x3a) = uVar1;
+          uVar12 = uVar12 + 0x3c;
+          if ((uVar8 - 0xa0 & 0xffffffff) < (uVar12 & 0xffffffff)) {
+            XModelGetName(param_2);
             va("DOBJ_MAX_SURFS exceeded for \'%s\'");
-            iVar6 = 0x207;
+            iVar5 = 0x207;
             goto LAB_82759324;
           }
         }
 LAB_8275933c:
-        lVar15 = lVar15 + -1;
+        lVar11 = lVar11 + -1;
         iVar4 = iVar4 + 0x80;
-      } while (lVar15 != 0);
+      } while (lVar11 != 0);
       in_cr0 = 2;
     }
-    lVar14 = uVar16 - (uVar11 - 0x30a0);
-    uVar11 = ZEXT48(frontEndDataOut);
-    if (uVar11 == 0) {
+    lVar11 = uVar12 - (uVar8 - 0x30a0);
+    uVar8 = ZEXT48(frontEndDataOut);
+    if (uVar8 == 0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_model.cpp",0x20f,0
                       ,"%s");
-      uVar11 = ZEXT48(frontEndDataOut);
+      uVar8 = ZEXT48(frontEndDataOut);
     }
     do {
-      puVar12 = (uint *)(uVar11 + 0x1548);
-      uVar2 = *puVar12;
+      puVar9 = (uint *)(uVar8 + 0x1548);
+      uVar2 = *puVar9;
       if (in_RESERVE != '\0') {
-        uVar3 = storeWordConditionalIndexed(lVar14 + (ulonglong)uVar2,0,uVar11 + 0x1548);
-        *puVar12 = uVar3;
+        uVar3 = storeWordConditionalIndexed(lVar11 + (ulonglong)uVar2,0,uVar8 + 0x1548);
+        *puVar9 = uVar3;
         in_cr0 = 2;
       }
     } while (!(bool)(in_cr0 >> 1 & 1));
-    if (((ulonglong)uVar2 + lVar14 & 0xffffffff) < 0x20001) {
+    if (((ulonglong)uVar2 + lVar11 & 0xffffffff) < 0x20001) {
       if ((uVar2 & 3) != 0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_model.cpp",0x21c
                         ,0,"%s");
       }
       param_1->surfId = (ushort)(uVar2 >> 2);
-      param_1->hasGfxEntIndex = '\x01' - (lVar8 == 0);
+      param_1->hasGfxEntIndex = '\x01' - (param_7 == 0);
       memcpy();
       param_1->lod = (uchar)in_r9;
       Profile_EndInternal((double *)0x0);
-      iVar4 = 1;
-      __restgprlr();
-      return iVar4;
+      return 1;
     }
     R_WarnOncePerFrame(R_WARN_MAX_SCENE_SURFS_SIZE);
     Profile_EndInternal((double *)0x0);
   }
-  iVar4 = 0;
-  __restgprlr();
-  return iVar4;
+  return 0;
 }
 
 
@@ -666,24 +649,22 @@ void R_SkinAndBoundSceneEnt(GfxSceneEntity *param_1)
 
 // 82759508  R_DObjGetSurfMaterials  (gfx_d3d/r_model.cpp:609)
 
+/* WARNING: Function: __savegprlr_20 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_20 replaced with injection: xenon_save_restore */
+
 void R_DObjGetSurfMaterials(DObj *param_1,int param_2,Material **param_3)
 
 {
-  ulonglong uVar1;
-  DObj *pDVar2;
+  uint uVar1;
+  XModel *pXVar2;
   uint uVar3;
-  XModel *pXVar4;
-  uint uVar5;
-  Material **ppMVar6;
-  ulonglong uVar7;
-  longlong lVar8;
-  uint uVar9;
-  ulonglong uVar10;
-  longlong lVar11;
+  Material **ppMVar4;
+  Material **ppMVar5;
+  uint uVar6;
+  int iVar7;
+  int iVar8;
   
-  uVar7 = (ulonglong)(int)param_3;
-  pDVar2 = (DObj *)__savegprlr_20(param_1);
-  if ((pDVar2 == (DObj *)0x0) || ((uVar7 & 0xffffffff) == 0)) {
+  if ((param_1 == (DObj *)0x0) || (param_3 == (Material **)0x0)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_model.cpp",0x26a,0,
                     "%s");
   }
@@ -691,59 +672,58 @@ void R_DObjGetSurfMaterials(DObj *param_1,int param_2,Material **param_3)
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_model.cpp",0x26b,0,
                     "%s");
   }
-  uVar3 = DObjGetNumModels(pDVar2);
-  uVar10 = 0;
-  uVar9 = 0;
-  if (uVar3 != 0) {
+  uVar1 = DObjGetNumModels(param_1);
+  iVar7 = 0;
+  uVar6 = 0;
+  if (uVar1 != 0) {
     do {
-      pXVar4 = DObjGetModel(pDVar2,uVar9);
-      if (pXVar4 == (XModel *)0x0) {
+      pXVar2 = DObjGetModel(param_1,uVar6);
+      if (pXVar2 == (XModel *)0x0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_model.cpp",0x273
                         ,0,"%s");
       }
-      uVar5 = XModelGetSurfCount(pXVar4,param_2);
-      lVar11 = (longlong)(int)uVar5;
-      ppMVar6 = XModelGetSkins(pXVar4,param_2);
-      if (ppMVar6 == (Material **)0x0) {
+      uVar3 = XModelGetSurfCount(pXVar2,param_2);
+      ppMVar4 = XModelGetSkins(pXVar2,param_2);
+      if (ppMVar4 == (Material **)0x0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_model.cpp",0x277
                         ,0,"%s");
       }
-      if (uVar5 != 0) {
-        uVar1 = uVar10 & 0x3fffffff;
-        ppMVar6 = ppMVar6 + -1;
-        uVar10 = lVar11 + uVar10;
-        lVar8 = uVar1 * 4 + uVar7 + -4;
+      if (uVar3 != 0) {
+        ppMVar4 = ppMVar4 + -1;
+        iVar8 = uVar3 + iVar7;
+        ppMVar5 = param_3 + iVar7 + -1;
         do {
-          ppMVar6 = ppMVar6 + 1;
-          lVar8 = lVar8 + 4;
-          *(undefined4 *)lVar8 = *ppMVar6;
-          lVar11 = lVar11 + -1;
-        } while (lVar11 != 0);
+          ppMVar4 = ppMVar4 + 1;
+          ppMVar5 = ppMVar5 + 1;
+          *ppMVar5 = *ppMVar4;
+          uVar3 = uVar3 - 1;
+          iVar7 = iVar8;
+        } while (uVar3 != 0);
       }
-      uVar9 = uVar9 + 1;
-    } while (uVar9 < uVar3);
+      uVar6 = uVar6 + 1;
+    } while (uVar6 < uVar1);
   }
-  __restgprlr_20();
   return;
 }
 
 
 // 82759660  R_DObjReplaceMaterial  (gfx_d3d/r_model.cpp:640)
 
+/* WARNING: Function: __savegprlr_19 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_19 replaced with injection: xenon_save_restore */
+
 void R_DObjReplaceMaterial(DObj *param_1,int param_2,int param_3,Material *param_4)
 
 {
-  DObj *pDVar1;
-  uint uVar2;
-  XModel *pXVar3;
-  uint uVar4;
-  Material **ppMVar5;
+  uint uVar1;
+  XModel *pXVar2;
+  uint uVar3;
+  Material **ppMVar4;
+  uint uVar5;
   uint uVar6;
-  uint uVar7;
-  int iVar8;
+  int iVar7;
   
-  pDVar1 = (DObj *)__savegprlr_19(param_1);
-  if (pDVar1 == (DObj *)0x0) {
+  if (param_1 == (DObj *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_model.cpp",0x289,0,
                     "%s");
   }
@@ -751,43 +731,38 @@ void R_DObjReplaceMaterial(DObj *param_1,int param_2,int param_3,Material *param
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_model.cpp",0x28a,0,
                     "%s");
   }
-  uVar2 = DObjGetNumModels(pDVar1);
-  iVar8 = 0;
-  uVar7 = 0;
-  if (uVar2 == 0) {
-LAB_827597b0:
-    __restgprlr_19();
+  uVar1 = DObjGetNumModels(param_1);
+  iVar7 = 0;
+  uVar6 = 0;
+  if (uVar1 != 0) {
+    do {
+      pXVar2 = DObjGetModel(param_1,uVar6);
+      if (pXVar2 == (XModel *)0x0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_model.cpp",0x292
+                        ,0,"%s");
+      }
+      uVar3 = XModelGetSurfCount(pXVar2,param_2);
+      ppMVar4 = XModelGetSkins(pXVar2,param_2);
+      if (ppMVar4 == (Material **)0x0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_model.cpp",0x296
+                        ,0,"%s");
+      }
+      uVar5 = 0;
+      if (uVar3 != 0) {
+        do {
+          if (param_3 == iVar7) {
+            ppMVar4[uVar5] = param_4;
+            return;
+          }
+          uVar5 = uVar5 + 1;
+          iVar7 = iVar7 + 1;
+        } while (uVar5 < uVar3);
+      }
+      uVar6 = uVar6 + 1;
+    } while (uVar6 < uVar1);
     return;
   }
-  do {
-    pXVar3 = DObjGetModel(pDVar1,uVar7);
-    if (pXVar3 == (XModel *)0x0) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_model.cpp",0x292,0
-                      ,"%s");
-    }
-    uVar4 = XModelGetSurfCount(pXVar3,param_2);
-    ppMVar5 = XModelGetSkins(pXVar3,param_2);
-    if (ppMVar5 == (Material **)0x0) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_model.cpp",0x296,0
-                      ,"%s");
-    }
-    uVar6 = 0;
-    if (uVar4 != 0) {
-      do {
-        if (param_3 == iVar8) {
-          ppMVar5[uVar6] = param_4;
-          goto LAB_827597b0;
-        }
-        uVar6 = uVar6 + 1;
-        iVar8 = iVar8 + 1;
-      } while (uVar6 < uVar4);
-    }
-    uVar7 = uVar7 + 1;
-    if (uVar2 <= uVar7) {
-      __restgprlr_19();
-      return;
-    }
-  } while( true );
+  return;
 }
 
 
@@ -802,6 +777,8 @@ int XSurfaceGetVertListCount(XSurface *param_1)
 
 // 82759AC0  _Push_heap<XModel_*_*,int,XModel_*,bool_(__cdecl*)(XModel_*_&,XModel_*_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2455)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void std::_Push_heap<XModel_*_*,int,XModel_*,bool_(__cdecl*)(XModel_*_&,XModel_*_&)>
@@ -809,38 +786,33 @@ void std::_Push_heap<XModel_*_*,int,XModel_*,bool_(__cdecl*)(XModel_*_&,XModel_*
                _func___cdecl_bool_XModel_ptr_ptr_XModel_ptr_ptr *param_5)
 
 {
-  int iVar1;
+  ulonglong uVar1;
   ulonglong uVar2;
-  XModel **ppXVar3;
-  ulonglong uVar4;
-  int iVar5;
-  bool bVar6;
-  ulonglong uVar7;
-  uint uVar8;
+  ulonglong uVar3;
+  bool bVar4;
+  uint uVar5;
   
-  uVar7 = (ulonglong)param_2;
-  iVar5 = __savegprlr_25(param_1);
-  iVar1 = (int)uVar7;
-  uVar8 = iVar1 - 1;
-  uVar4 = (longlong)((int)uVar8 >> 1) + (ulonglong)((int)uVar8 < 0 && (uVar8 & 1) != 0);
-  while (uVar2 = uVar4, param_3 < iVar1) {
-    iVar1 = (int)uVar2;
-    ppXVar3 = (XModel **)(iVar1 * 4 + iVar5);
-    bVar6 = (*param_5)(ppXVar3,param_4);
-    if (!bVar6) break;
-    uVar8 = iVar1 - 1;
-    *(XModel **)((int)((uVar7 & 0xffffffff) << 2) + iVar5) = *ppXVar3;
-    uVar4 = (longlong)((int)uVar8 >> 1) + (ulonglong)((int)uVar8 < 0 && (uVar8 & 1) != 0);
-    uVar7 = uVar2;
+  uVar5 = param_2 - 1;
+  uVar3 = (longlong)((int)uVar5 >> 1) + (ulonglong)((int)uVar5 < 0 && (uVar5 & 1) != 0);
+  uVar2 = (longlong)param_2;
+  while (uVar1 = uVar3, param_3 < param_2) {
+    param_2 = (int)uVar1;
+    bVar4 = (*param_5)(param_1 + param_2,param_4);
+    if (!bVar4) break;
+    uVar5 = param_2 - 1;
+    *(XModel **)((int)((uVar2 & 0xffffffff) << 2) + (int)param_1) = param_1[param_2];
+    uVar3 = (longlong)((int)uVar5 >> 1) + (ulonglong)((int)uVar5 < 0 && (uVar5 & 1) != 0);
+    uVar2 = uVar1;
   }
-  *(XModel **)((int)((uVar7 & 0xffffffff) << 2) + iVar5) = *param_4;
-  __restgprlr_25();
+  *(XModel **)((int)((uVar2 & 0xffffffff) << 2) + (int)param_1) = *param_4;
   return;
 }
 
 
 // 82759B50  _Adjust_heap<XModel_*_*,int,XModel_*,bool_(__cdecl*)(XModel_*_&,XModel_*_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2565)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void std::_Adjust_heap<XModel_*_*,int,XModel_*,bool_(__cdecl*)(XModel_*_&,XModel_*_&)>
@@ -848,62 +820,53 @@ void std::_Adjust_heap<XModel_*_*,int,XModel_*,bool_(__cdecl*)(XModel_*_&,XModel
                _func___cdecl_bool_XModel_ptr_ptr_XModel_ptr_ptr *param_5)
 
 {
-  XModel **ppXVar1;
-  int iVar2;
-  bool bVar3;
+  bool bVar1;
+  uint uVar2;
+  ulonglong uVar3;
   ulonglong uVar4;
+  int iVar6;
   ulonglong uVar5;
-  uint uVar6;
-  ulonglong uVar7;
-  ulonglong uVar8;
-  int iVar10;
-  ulonglong uVar9;
   
-  uVar5 = (ulonglong)param_3;
-  uVar4 = (ulonglong)param_2;
-  iVar2 = __savegprlr_25(param_1);
-  uVar8 = (uVar4 + 1 & 0x7fffffff) << 1;
-  iVar10 = (int)uVar8;
-  uVar7 = uVar4;
-  while (uVar9 = uVar8, iVar10 < (int)uVar5) {
-    ppXVar1 = (XModel **)((int)uVar9 * 4 + iVar2);
-    bVar3 = (*param_5)(ppXVar1,ppXVar1 + -1);
-    if (bVar3) {
-      uVar9 = uVar9 - 1;
+  uVar4 = ((longlong)param_2 + 1U & 0x7fffffff) << 1;
+  iVar6 = (int)uVar4;
+  uVar3 = (longlong)param_2;
+  while (uVar5 = uVar4, iVar6 < param_3) {
+    bVar1 = (*param_5)(param_1 + (int)uVar5,param_1 + (int)uVar5 + -1);
+    if (bVar1) {
+      uVar5 = uVar5 - 1;
     }
-    uVar8 = (uVar9 + 1 & 0x7fffffff) << 1;
-    *(undefined4 *)((int)((uVar7 & 0xffffffff) << 2) + iVar2) =
-         *(undefined4 *)((int)((uVar9 & 0xffffffff) << 2) + iVar2);
-    iVar10 = (int)uVar8;
-    uVar7 = uVar9;
+    uVar4 = (uVar5 + 1 & 0x7fffffff) << 1;
+    *(undefined4 *)((int)((uVar3 & 0xffffffff) << 2) + (int)param_1) =
+         *(undefined4 *)((int)((uVar5 & 0xffffffff) << 2) + (int)param_1);
+    iVar6 = (int)uVar4;
+    uVar3 = uVar5;
   }
-  if (iVar10 == (int)uVar5) {
-    uVar8 = uVar7 & 0xffffffff;
-    uVar7 = uVar5 - 1;
-    *(undefined4 *)((int)(uVar8 << 2) + iVar2) =
-         *(undefined4 *)((int)((uVar5 & 0xffffffff) << 2) + iVar2 + -4);
+  if (iVar6 == param_3) {
+    uVar4 = uVar3 & 0xffffffff;
+    uVar3 = (longlong)param_3 - 1;
+    *(XModel **)((int)(uVar4 << 2) + (int)param_1) = param_1[param_3 + -1];
   }
-  iVar10 = (int)uVar7;
-  uVar6 = iVar10 - 1;
-  uVar8 = (longlong)((int)uVar6 >> 1) + (ulonglong)((int)uVar6 < 0 && (uVar6 & 1) != 0);
-  while (uVar5 = uVar8, (int)uVar4 < iVar10) {
-    iVar10 = (int)uVar5;
-    ppXVar1 = (XModel **)(iVar10 * 4 + iVar2);
-    bVar3 = (*param_5)(ppXVar1,param_4);
-    if (!bVar3) break;
-    uVar6 = iVar10 - 1;
-    *(XModel **)((int)((uVar7 & 0xffffffff) << 2) + iVar2) = *ppXVar1;
-    uVar8 = (longlong)((int)uVar6 >> 1) + (ulonglong)((int)uVar6 < 0 && (uVar6 & 1) != 0);
-    uVar7 = uVar5;
+  iVar6 = (int)uVar3;
+  uVar2 = iVar6 - 1;
+  uVar4 = (longlong)((int)uVar2 >> 1) + (ulonglong)((int)uVar2 < 0 && (uVar2 & 1) != 0);
+  while (uVar5 = uVar4, param_2 < iVar6) {
+    iVar6 = (int)uVar5;
+    bVar1 = (*param_5)(param_1 + iVar6,param_4);
+    if (!bVar1) break;
+    uVar2 = iVar6 - 1;
+    *(XModel **)((int)((uVar3 & 0xffffffff) << 2) + (int)param_1) = param_1[iVar6];
+    uVar4 = (longlong)((int)uVar2 >> 1) + (ulonglong)((int)uVar2 < 0 && (uVar2 & 1) != 0);
+    uVar3 = uVar5;
   }
-  *(XModel **)((int)((uVar7 & 0xffffffff) << 2) + iVar2) = *param_4;
-  __restgprlr_25();
+  *(XModel **)((int)((uVar3 & 0xffffffff) << 2) + (int)param_1) = *param_4;
   return;
 }
 
 
 // 82759C60  _Make_heap<XModel_*_*,int,XModel_*,bool_(__cdecl*)(XModel_*_&,XModel_*_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2658)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void std::_Make_heap<XModel_*_*,int,XModel_*,bool_(__cdecl*)(XModel_*_&,XModel_*_&)>
@@ -913,67 +876,59 @@ void std::_Make_heap<XModel_*_*,int,XModel_*,bool_(__cdecl*)(XModel_*_&,XModel_*
 
 {
   uint uVar1;
-  XModel **ppXVar2;
-  ulonglong uVar3;
+  ulonglong uVar2;
+  bool bVar3;
   longlong lVar4;
-  bool bVar5;
-  longlong lVar6;
-  longlong lVar7;
-  int iVar8;
+  ulonglong uVar5;
+  ulonglong uVar6;
+  int iVar7;
+  ulonglong uVar8;
   ulonglong uVar9;
-  ulonglong uVar10;
-  ulonglong uVar11;
-  ulonglong uVar12;
-  uint uVar13;
+  uint uVar10;
   XModel *local_50 [20];
   
-  lVar7 = (longlong)(int)param_3;
-  lVar6 = (longlong)(int)param_2;
-  lVar4 = __savegprlr_24(param_1,lVar6,lVar7,param_4,param_5);
-  ppXVar2 = (XModel **)lVar4;
-  iVar8 = (int)lVar6 - (int)ppXVar2;
-  uVar1 = iVar8 >> 2;
-  uVar10 = (longlong)(iVar8 >> 3) + (ulonglong)((int)uVar1 < 0 && (uVar1 & 1) != 0);
-  if (0 < (longlong)uVar10) {
-    uVar9 = (uVar10 + 1 & 0x7fffffff) << 1;
-    lVar4 = (uVar10 & 0x3fffffff) * 4 + lVar4;
+  uVar1 = (int)param_2 - (int)param_1 >> 2;
+  uVar6 = (longlong)((int)param_2 - (int)param_1 >> 3) +
+          (ulonglong)((int)uVar1 < 0 && (uVar1 & 1) != 0);
+  if (0 < (longlong)uVar6) {
+    uVar5 = (uVar6 + 1 & 0x7fffffff) << 1;
+    lVar4 = (uVar6 & 0x3fffffff) * 4 + (longlong)(int)param_1;
     do {
       lVar4 = lVar4 + -4;
       local_50[0] = (XModel *)*(undefined4 *)lVar4;
-      uVar9 = uVar9 - 2;
-      uVar10 = uVar10 - 1;
-      uVar13 = (uint)uVar9;
-      uVar12 = uVar9;
-      uVar3 = uVar10;
-      while (uVar11 = uVar12, (int)uVar13 < (int)uVar1) {
-        bVar5 = (*(_func___cdecl_bool_XModel_ptr_ptr_XModel_ptr_ptr *)lVar7)
-                          (ppXVar2 + (int)uVar11,ppXVar2 + (int)uVar11 + -1);
-        if (bVar5) {
-          uVar11 = uVar11 - 1;
+      uVar5 = uVar5 - 2;
+      uVar6 = uVar6 - 1;
+      uVar10 = (uint)uVar5;
+      uVar9 = uVar5;
+      uVar2 = uVar6;
+      while (uVar8 = uVar9, (int)uVar10 < (int)uVar1) {
+        bVar3 = (*param_3)(param_1 + (int)uVar8,param_1 + (int)uVar8 + -1);
+        if (bVar3) {
+          uVar8 = uVar8 - 1;
         }
-        uVar12 = (uVar11 + 1 & 0x7fffffff) << 1;
-        *(undefined4 *)((int)((uVar3 & 0xffffffff) << 2) + (int)ppXVar2) =
-             *(undefined4 *)((int)((uVar11 & 0xffffffff) << 2) + (int)ppXVar2);
-        uVar13 = (uint)uVar12;
-        uVar3 = uVar11;
+        uVar9 = (uVar8 + 1 & 0x7fffffff) << 1;
+        *(undefined4 *)((int)((uVar2 & 0xffffffff) << 2) + (int)param_1) =
+             *(undefined4 *)((int)((uVar8 & 0xffffffff) << 2) + (int)param_1);
+        uVar10 = (uint)uVar9;
+        uVar2 = uVar8;
       }
-      iVar8 = (int)uVar3;
-      if (uVar13 == uVar1) {
-        iVar8 = uVar1 - 1;
-        *(XModel **)((int)((uVar3 & 0xffffffff) << 2) + (int)ppXVar2) = ppXVar2[uVar1 - 1];
+      iVar7 = (int)uVar2;
+      if (uVar10 == uVar1) {
+        iVar7 = uVar1 - 1;
+        *(XModel **)((int)((uVar2 & 0xffffffff) << 2) + (int)param_1) = param_1[uVar1 - 1];
       }
       _Push_heap<XModel_*_*,int,XModel_*,bool_(__cdecl*)(XModel_*_&,XModel_*_&)>
-                (ppXVar2,iVar8,(int)uVar10,local_50,
-                 (_func___cdecl_bool_XModel_ptr_ptr_XModel_ptr_ptr *)lVar7);
-    } while (0 < (int)uVar10);
+                (param_1,iVar7,(int)uVar6,local_50,param_3);
+    } while (0 < (int)uVar6);
   }
-  __restgprlr_24();
   return;
 }
 
 
 // 8275A200  _Sort_heap<XModel_*_*,bool_(__cdecl*)(XModel_*_&,XModel_*_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2700)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void std::_Sort_heap<XModel_*_*,bool_(__cdecl*)(XModel_*_&,XModel_*_&)>
@@ -981,33 +936,25 @@ void std::_Sort_heap<XModel_*_*,bool_(__cdecl*)(XModel_*_&,XModel_*_&)>
                _func___cdecl_bool_XModel_ptr_ptr_XModel_ptr_ptr *param_3)
 
 {
-  int iVar1;
-  XModel **ppXVar2;
-  longlong lVar3;
-  longlong lVar4;
+  uint uVar1;
   XModel *local_30 [12];
   
-  lVar4 = (longlong)(int)param_2;
-  lVar3 = __savegprlr_28(param_1);
-  lVar4 = lVar4 - lVar3;
-  if (4 < (int)((uint)lVar4 & 0xfffffffc)) {
-    ppXVar2 = (XModel **)lVar3;
-    do {
-      iVar1 = (int)lVar4;
-      local_30[0] = *(XModel **)((int)ppXVar2 + iVar1 + -4);
-      lVar4 = lVar4 + -4;
-      *(XModel **)((int)ppXVar2 + iVar1 + -4) = *ppXVar2;
-      _Adjust_heap<XModel_*_*,int,XModel_*,bool_(__cdecl*)(XModel_*_&,XModel_*_&)>
-                (ppXVar2,0,(int)(uint)lVar4 >> 2,local_30,param_3);
-    } while (4 < (int)((uint)lVar4 & 0xfffffffc));
+  uVar1 = (int)param_2 - (int)param_1;
+  while (4 < (int)(uVar1 & 0xfffffffc)) {
+    local_30[0] = *(XModel **)((int)param_1 + (uVar1 - 4));
+    *(XModel **)((int)param_1 + (uVar1 - 4)) = *param_1;
+    _Adjust_heap<XModel_*_*,int,XModel_*,bool_(__cdecl*)(XModel_*_&,XModel_*_&)>
+              (param_1,0,(int)(uVar1 - 4) >> 2,local_30,param_3);
+    uVar1 = uVar1 - 4;
   }
-  __restgprlr_28();
   return;
 }
 
 
 // 82759D48  _Insertion_sort1<XModel_*_*,bool_(__cdecl*)(XModel_*_&,XModel_*_&),XModel_*>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3650)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void std::_Insertion_sort1<XModel_*_*,bool_(__cdecl*)(XModel_*_&,XModel_*_&),XModel_*>
@@ -1015,54 +962,46 @@ void std::_Insertion_sort1<XModel_*_*,bool_(__cdecl*)(XModel_*_&,XModel_*_&),XMo
                _func___cdecl_bool_XModel_ptr_ptr_XModel_ptr_ptr *param_3,XModel **param_4)
 
 {
-  ulonglong uVar1;
-  ulonglong uVar2;
-  ulonglong uVar3;
-  ulonglong uVar4;
-  char cVar5;
-  ulonglong uVar6;
-  longlong lVar7;
-  code *pcVar8;
-  ulonglong uVar9;
-  ulonglong uVar10;
-  undefined4 local_50 [20];
+  XModel **ppXVar1;
+  XModel **ppXVar2;
+  XModel **ppXVar3;
+  XModel **ppXVar4;
+  bool bVar5;
+  XModel *local_50 [20];
   
-  lVar7 = (longlong)(int)param_3;
-  uVar6 = (ulonglong)(int)param_2;
-  uVar4 = __savegprlr_24(param_1,uVar6,lVar7,param_4);
-  if (((uVar4 & 0xffffffff) != (uVar6 & 0xffffffff)) &&
-     (uVar10 = uVar4 + 4, uVar9 = uVar4, (uVar10 & 0xffffffff) != (uVar6 & 0xffffffff))) {
-    do {
-      local_50[0] = *(undefined4 *)uVar10;
-      pcVar8 = (code *)lVar7;
-      cVar5 = (*pcVar8)(local_50,uVar4);
-      if (cVar5 == '\0') {
-        cVar5 = (*pcVar8)(local_50,uVar9);
-        uVar3 = uVar9;
-        uVar2 = uVar10;
-        while (uVar1 = uVar3, cVar5 != '\0') {
-          *(undefined4 *)uVar2 = *(undefined4 *)uVar1;
-          cVar5 = (*pcVar8)(local_50,uVar1 - 4);
-          uVar3 = uVar1 - 4;
-          uVar2 = uVar1;
-        }
-        *(undefined4 *)uVar2 = local_50[0];
+  ppXVar3 = param_1;
+  ppXVar4 = param_1;
+  if (param_1 != param_2) {
+    while (ppXVar4 = ppXVar4 + 1, ppXVar4 != param_2) {
+      local_50[0] = *ppXVar4;
+      bVar5 = (*param_3)(local_50,param_1);
+      if (bVar5) {
+        memmove();
+        *param_1 = local_50[0];
       }
       else {
-        memmove();
-        *(undefined4 *)uVar4 = local_50[0];
+        bVar5 = (*param_3)(local_50,ppXVar3);
+        ppXVar1 = ppXVar4;
+        ppXVar2 = ppXVar3;
+        while (bVar5 != false) {
+          *ppXVar1 = *ppXVar2;
+          bVar5 = (*param_3)(local_50,ppXVar2 + -1);
+          ppXVar1 = ppXVar2;
+          ppXVar2 = ppXVar2 + -1;
+        }
+        *ppXVar1 = local_50[0];
       }
-      uVar10 = uVar10 + 4;
-      uVar9 = uVar9 + 4;
-    } while ((uVar10 & 0xffffffff) != (uVar6 & 0xffffffff));
+      ppXVar3 = ppXVar3 + 1;
+    }
   }
-  __restgprlr_24();
   return;
 }
 
 
 // 82759E38  _Med3<XModel_*_*,bool_(__cdecl*)(XModel_*_&,XModel_*_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3683)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void std::_Med3<XModel_*_*,bool_(__cdecl*)(XModel_*_&,XModel_*_&)>
@@ -1071,35 +1010,34 @@ void std::_Med3<XModel_*_*,bool_(__cdecl*)(XModel_*_&,XModel_*_&)>
 
 {
   XModel *pXVar1;
-  XModel **ppXVar2;
-  bool bVar3;
+  bool bVar2;
   
-  ppXVar2 = (XModel **)__savegprlr_28(param_1);
-  bVar3 = (*param_4)(param_2,ppXVar2);
-  if (bVar3) {
+  bVar2 = (*param_4)(param_2,param_1);
+  if (bVar2) {
     pXVar1 = *param_2;
-    *param_2 = *ppXVar2;
-    *ppXVar2 = pXVar1;
+    *param_2 = *param_1;
+    *param_1 = pXVar1;
   }
-  bVar3 = (*param_4)(param_3,param_2);
-  if (bVar3) {
+  bVar2 = (*param_4)(param_3,param_2);
+  if (bVar2) {
     pXVar1 = *param_3;
     *param_3 = *param_2;
     *param_2 = pXVar1;
   }
-  bVar3 = (*param_4)(param_2,ppXVar2);
-  if (bVar3) {
+  bVar2 = (*param_4)(param_2,param_1);
+  if (bVar2) {
     pXVar1 = *param_2;
-    *param_2 = *ppXVar2;
-    *ppXVar2 = pXVar1;
+    *param_2 = *param_1;
+    *param_1 = pXVar1;
   }
-  __restgprlr_28();
   return;
 }
 
 
 // 82759EE0  _Median<XModel_*_*,bool_(__cdecl*)(XModel_*_&,XModel_*_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3695)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void std::_Median<XModel_*_*,bool_(__cdecl*)(XModel_*_&,XModel_*_&)>
@@ -1109,36 +1047,34 @@ void std::_Median<XModel_*_*,bool_(__cdecl*)(XModel_*_&,XModel_*_&)>
 {
   int iVar1;
   int iVar2;
-  XModel **ppXVar3;
-  uint uVar5;
-  ulonglong uVar4;
+  uint uVar4;
+  ulonglong uVar3;
   
-  ppXVar3 = (XModel **)__savegprlr_26(param_1);
-  iVar1 = (int)param_3 - (int)ppXVar3 >> 2;
+  iVar1 = (int)param_3 - (int)param_1 >> 2;
   if (0x28 < iVar1) {
-    uVar5 = iVar1 + 1;
-    uVar4 = (longlong)((int)uVar5 >> 3) + (ulonglong)((int)uVar5 < 0 && (uVar5 & 7) != 0);
-    iVar2 = (int)((uVar4 & 0xffffffff) << 3);
-    iVar1 = (int)((uVar4 & 0x3fffffff) << 2);
+    uVar4 = iVar1 + 1;
+    uVar3 = (longlong)((int)uVar4 >> 3) + (ulonglong)((int)uVar4 < 0 && (uVar4 & 7) != 0);
+    iVar2 = (int)((uVar3 & 0xffffffff) << 3);
+    iVar1 = (int)((uVar3 & 0x3fffffff) << 2);
     _Med3<XModel_*_*,bool_(__cdecl*)(XModel_*_&,XModel_*_&)>
-              (ppXVar3,(XModel **)(iVar1 + (int)ppXVar3),(XModel **)(iVar2 + (int)ppXVar3),param_4);
+              (param_1,(XModel **)(iVar1 + (int)param_1),(XModel **)(iVar2 + (int)param_1),param_4);
     _Med3<XModel_*_*,bool_(__cdecl*)(XModel_*_&,XModel_*_&)>
               ((XModel **)((int)param_2 - iVar1),param_2,(XModel **)(iVar1 + (int)param_2),param_4);
     _Med3<XModel_*_*,bool_(__cdecl*)(XModel_*_&,XModel_*_&)>
               ((XModel **)((int)param_3 - iVar2),(XModel **)((int)param_3 - iVar1),param_3,param_4);
     _Med3<XModel_*_*,bool_(__cdecl*)(XModel_*_&,XModel_*_&)>
-              ((XModel **)(iVar1 + (int)ppXVar3),param_2,(XModel **)((int)param_3 - iVar1),param_4);
-    __restgprlr_26();
+              ((XModel **)(iVar1 + (int)param_1),param_2,(XModel **)((int)param_3 - iVar1),param_4);
     return;
   }
-  _Med3<XModel_*_*,bool_(__cdecl*)(XModel_*_&,XModel_*_&)>(ppXVar3,param_2,param_3,param_4);
-  __restgprlr_26();
+  _Med3<XModel_*_*,bool_(__cdecl*)(XModel_*_&,XModel_*_&)>(param_1,param_2,param_3,param_4);
   return;
 }
 
 
 // 82759F88  _Unguarded_partition<XModel_*_*,bool_(__cdecl*)(XModel_*_&,XModel_*_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3712)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 pair<XModel_*_*,XModel_*_*>
@@ -1148,143 +1084,114 @@ std::_Unguarded_partition<XModel_*_*,bool_(__cdecl*)(XModel_*_&,XModel_*_&)>
 
 {
   XModel *pXVar1;
-  undefined4 uVar2;
+  float fVar2;
   uint uVar3;
-  XModel **ppXVar4;
-  undefined4 *puVar6;
-  bool bVar7;
-  pair<XModel_*_*,XModel_*_*> pVar5;
-  ulonglong uVar8;
-  ulonglong uVar9;
+  bool bVar4;
   _func___cdecl_bool_XModel_ptr_ptr_XModel_ptr_ptr *in_r6;
-  int iVar10;
-  ulonglong uVar11;
-  ulonglong uVar12;
-  undefined4 *puVar13;
-  ulonglong uVar14;
-  undefined4 *puVar15;
-  ulonglong uVar16;
-  ulonglong uVar17;
-  undefined4 *puVar18;
+  XModel *pXVar5;
+  XModel *pXVar6;
+  XModel *pXVar7;
+  XModel *pXVar8;
+  XModel *pXVar9;
   
-  uVar9 = (ulonglong)(int)param_3;
-  uVar8 = (ulonglong)(int)param_2;
-  puVar6 = (undefined4 *)__savegprlr_23(param_1);
-  iVar10 = (int)uVar9 - (int)(XModel **)uVar8;
-  uVar3 = iVar10 >> 2;
-  uVar17 = ((longlong)(iVar10 >> 3) + (ulonglong)((int)uVar3 < 0 && (uVar3 & 1) != 0) & 0x3fffffff)
-           * 4 + uVar8;
+  uVar3 = (int)param_3 - (int)param_2 >> 2;
+  pXVar8 = (XModel *)
+           (param_2 +
+           ((int)param_3 - (int)param_2 >> 3) + (uint)((int)uVar3 < 0 && (uVar3 & 1) != 0));
   _Median<XModel_*_*,bool_(__cdecl*)(XModel_*_&,XModel_*_&)>
-            ((XModel **)uVar8,(XModel **)uVar17,(XModel **)((int)uVar9 + -4),in_r6);
-  uVar11 = uVar17 + 4;
-  if ((uVar8 & 0xffffffff) < (uVar17 & 0xffffffff)) {
-    do {
-      uVar16 = uVar17 - 4;
-      bVar7 = (*in_r6)((XModel **)uVar16,(XModel **)uVar17);
-      if ((bVar7) || (bVar7 = (*in_r6)((XModel **)uVar17,(XModel **)uVar16), bVar7)) break;
-      uVar17 = uVar16;
-    } while ((uVar8 & 0xffffffff) < (uVar16 & 0xffffffff));
-  }
-  uVar14 = uVar11;
-  uVar16 = uVar17;
-  if ((uVar11 & 0xffffffff) < (uVar9 & 0xffffffff)) {
-    do {
-      bVar7 = (*in_r6)((XModel **)uVar11,(XModel **)uVar17);
-      uVar14 = uVar11;
-      if ((bVar7) || (bVar7 = (*in_r6)((XModel **)uVar17,(XModel **)uVar11), bVar7)) break;
-      uVar11 = uVar11 + 4;
-      uVar14 = uVar11;
-    } while ((uVar11 & 0xffffffff) < (uVar9 & 0xffffffff));
+            (param_2,(XModel **)pXVar8,(XModel **)(param_3 + -4),in_r6);
+  pXVar7 = pXVar8;
+  while (pXVar9 = pXVar7, param_2 < pXVar9) {
+    pXVar7 = (XModel *)&pXVar9[-1].quantization;
+    bVar4 = (*in_r6)((XModel **)pXVar7,(XModel **)pXVar9);
+    if ((bVar4) || (bVar4 = (*in_r6)((XModel **)pXVar9,(XModel **)pXVar7), bVar4)) break;
   }
   do {
-    uVar12 = uVar11;
-    if ((uVar14 & 0xffffffff) < (uVar9 & 0xffffffff)) {
-      do {
-        ppXVar4 = (XModel **)uVar14;
-        bVar7 = (*in_r6)((XModel **)uVar16,ppXVar4);
-        uVar11 = uVar12;
-        if (!bVar7) {
-          bVar7 = (*in_r6)(ppXVar4,(XModel **)uVar16);
-          if (bVar7) break;
-          uVar11 = uVar12 + 4;
-          pXVar1 = (XModel *)*(undefined4 *)uVar12;
-          *(undefined4 *)uVar12 = *ppXVar4;
-          *ppXVar4 = pXVar1;
-        }
-        uVar14 = uVar14 + 4;
-        uVar12 = uVar11;
-      } while ((uVar14 & 0xffffffff) < (uVar9 & 0xffffffff));
-    }
-    bVar7 = (uVar17 & 0xffffffff) == (uVar8 & 0xffffffff);
-    uVar12 = uVar17;
-    if ((uVar8 & 0xffffffff) < (uVar17 & 0xffffffff)) {
-      do {
-        ppXVar4 = (XModel **)(uVar12 - 4);
-        bVar7 = (*in_r6)(ppXVar4,(XModel **)uVar16);
-        if (!bVar7) {
-          bVar7 = (*in_r6)((XModel **)uVar16,ppXVar4);
-          if (bVar7) break;
-          uVar16 = uVar16 - 4;
-          pXVar1 = (XModel *)*(undefined4 *)uVar16;
-          *(undefined4 *)uVar16 = *ppXVar4;
-          *ppXVar4 = pXVar1;
-        }
-        uVar17 = uVar17 - 4;
-        uVar12 = uVar12 - 4;
-      } while ((uVar8 & 0xffffffff) < (uVar17 & 0xffffffff));
-      bVar7 = (uVar17 & 0xffffffff) == (uVar8 & 0xffffffff);
-    }
-    puVar15 = (undefined4 *)uVar14;
-    if (bVar7) {
-      puVar13 = (undefined4 *)uVar11;
-      puVar18 = (undefined4 *)uVar16;
-      if ((uVar14 & 0xffffffff) == (uVar9 & 0xffffffff)) {
-        *puVar6 = puVar18;
-        puVar6[1] = puVar13;
-        pVar5 = (pair<XModel_*_*,XModel_*_*>)__restgprlr_23(puVar6);
-        return pVar5;
+    pXVar8 = (XModel *)&pXVar8->numBones;
+    pXVar7 = pXVar8;
+    pXVar6 = pXVar9;
+    if (param_3 <= pXVar8) break;
+    bVar4 = (*in_r6)((XModel **)pXVar8,(XModel **)pXVar9);
+    if ((bVar4) || (bVar4 = (*in_r6)((XModel **)pXVar9,(XModel **)pXVar8), bVar4)) break;
+  } while( true );
+joined_r0x8275a078:
+  pXVar1 = pXVar6;
+  if (param_3 <= pXVar7) {
+joined_r0x8275a0dc:
+    for (; param_2 < pXVar1; pXVar1 = (XModel *)&pXVar1[-1].quantization) {
+      pXVar6 = (XModel *)&pXVar6[-1].quantization;
+      bVar4 = (*in_r6)((XModel **)pXVar6,(XModel **)pXVar9);
+      if (!bVar4) {
+        bVar4 = (*in_r6)((XModel **)pXVar9,(XModel **)pXVar6);
+        if (bVar4) break;
+        pXVar9 = (XModel *)&pXVar9[-1].quantization;
+        fVar2 = *(float *)pXVar9;
+        *(float *)pXVar9 = *(float *)pXVar6;
+        *(float *)pXVar6 = fVar2;
       }
-      if ((uVar11 & 0xffffffff) != (uVar14 & 0xffffffff)) {
-        uVar2 = *puVar18;
-        *puVar18 = *puVar13;
-        *puVar13 = uVar2;
+    }
+    if (pXVar1 == (XModel *)param_2) {
+      if (pXVar7 == (XModel *)param_3) {
+        *param_1 = pXVar9;
+        param_1[1] = pXVar8;
+        return (pair<XModel_*_*,XModel_*_*>)(longlong)(int)param_1;
       }
-      uVar11 = uVar11 + 4;
-      uVar2 = *puVar18;
-      *puVar18 = *puVar15;
-      *puVar15 = uVar2;
-      uVar14 = uVar14 + 4;
-      uVar16 = uVar16 + 4;
+      if (pXVar8 != pXVar7) {
+        pXVar6 = (XModel *)pXVar9->name;
+        pXVar9->name = (char *)pXVar8->name;
+        pXVar8->name = (char *)pXVar6;
+      }
+      pXVar8 = (XModel *)&pXVar8->numBones;
+      pXVar6 = (XModel *)pXVar9->name;
+      pXVar9->name = (char *)pXVar7->name;
+      pXVar7->name = (char *)pXVar6;
+      pXVar7 = (XModel *)&pXVar7->numBones;
+      pXVar9 = (XModel *)&pXVar9->numBones;
+      pXVar6 = pXVar1;
     }
     else {
-      uVar17 = uVar17 - 4;
-      puVar13 = (undefined4 *)uVar17;
-      if ((uVar14 & 0xffffffff) == (uVar9 & 0xffffffff)) {
-        uVar16 = uVar16 - 4;
-        puVar15 = (undefined4 *)uVar16;
-        if ((uVar17 & 0xffffffff) != (uVar16 & 0xffffffff)) {
-          uVar2 = *puVar13;
-          *puVar13 = *puVar15;
-          *puVar15 = uVar2;
+      pXVar6 = (XModel *)&pXVar1[-1].quantization;
+      if (pXVar7 == (XModel *)param_3) {
+        pXVar9 = (XModel *)&pXVar9[-1].quantization;
+        if (pXVar6 != pXVar9) {
+          fVar2 = *(float *)pXVar6;
+          *(float *)pXVar6 = *(float *)pXVar9;
+          *(float *)pXVar9 = fVar2;
         }
-        uVar11 = uVar11 - 4;
-        uVar2 = *puVar15;
-        *puVar15 = *(undefined4 *)uVar11;
-        *(undefined4 *)uVar11 = uVar2;
+        pXVar8 = (XModel *)&pXVar8[-1].quantization;
+        fVar2 = *(float *)pXVar9;
+        *(float *)pXVar9 = *(float *)pXVar8;
+        *(float *)pXVar8 = fVar2;
       }
       else {
-        uVar2 = *puVar15;
-        *puVar15 = *puVar13;
-        *puVar13 = uVar2;
-        uVar14 = uVar14 + 4;
+        pXVar1 = (XModel *)pXVar7->name;
+        pXVar7->name = (char *)*(XModel **)pXVar6;
+        *(XModel **)pXVar6 = pXVar1;
+        pXVar7 = (XModel *)&pXVar7->numBones;
       }
     }
-  } while( true );
+    goto joined_r0x8275a078;
+  }
+  bVar4 = (*in_r6)((XModel **)pXVar9,(XModel **)pXVar7);
+  pXVar5 = pXVar8;
+  if (!bVar4) {
+    bVar4 = (*in_r6)((XModel **)pXVar7,(XModel **)pXVar9);
+    if (bVar4) goto joined_r0x8275a0dc;
+    pXVar5 = (XModel *)&pXVar8->numBones;
+    pXVar1 = (XModel *)pXVar8->name;
+    pXVar8->name = (char *)pXVar7->name;
+    pXVar7->name = (char *)pXVar1;
+  }
+  pXVar8 = pXVar5;
+  pXVar7 = (XModel *)&pXVar7->numBones;
+  goto joined_r0x8275a078;
 }
 
 
 // 8275A270  _Sort<XModel_*_*,int,bool_(__cdecl*)(XModel_*_&,XModel_*_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3771)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void std::_Sort<XModel_*_*,int,bool_(__cdecl*)(XModel_*_&,XModel_*_&)>
@@ -1293,66 +1200,53 @@ void std::_Sort<XModel_*_*,int,bool_(__cdecl*)(XModel_*_&,XModel_*_&)>
 
 {
   XModel **ppXVar1;
-  XModel **ppXVar2;
-  ulonglong uVar3;
-  int iVar5;
-  ulonglong uVar4;
-  ulonglong uVar6;
-  int iVar7;
-  XModel **ppXVar8;
+  int iVar2;
+  uint uVar3;
+  XModel *pXVar4;
   XModel *local_40;
   XModel **local_3c;
   
-  uVar4 = (ulonglong)param_3;
-  uVar3 = (ulonglong)(int)param_2;
-  ppXVar2 = (XModel **)__savegprlr_26(param_1);
-  ppXVar8 = (XModel **)uVar3;
-  iVar5 = (int)ppXVar8 - (int)ppXVar2;
+  iVar2 = (int)param_2 - (int)param_1;
   do {
-    iVar5 = iVar5 >> 2;
-    if (iVar5 < 0x21) {
+    iVar2 = iVar2 >> 2;
+    if (iVar2 < 0x21) {
 LAB_8275a328:
-      if (1 < iVar5) {
+      if (1 < iVar2) {
         _Insertion_sort1<XModel_*_*,bool_(__cdecl*)(XModel_*_&,XModel_*_&),XModel_*>
-                  (ppXVar2,ppXVar8,param_4,(XModel **)0x0);
+                  (param_1,param_2,param_4,(XModel **)0x0);
       }
-      __restgprlr_26();
       return;
     }
-    ppXVar8 = (XModel **)uVar3;
-    iVar7 = (int)uVar4;
-    if (iVar7 < 1) {
-      if (0x20 < iVar5) {
-        if (1 < iVar5) {
+    if (param_3 < 1) {
+      if (0x20 < iVar2) {
+        if (1 < iVar2) {
           _Make_heap<XModel_*_*,int,XModel_*,bool_(__cdecl*)(XModel_*_&,XModel_*_&)>
-                    (ppXVar2,ppXVar8,param_4,(int *)0x0,(XModel **)0x0);
+                    (param_1,param_2,param_4,(int *)0x0,(XModel **)0x0);
         }
-        _Sort_heap<XModel_*_*,bool_(__cdecl*)(XModel_*_&,XModel_*_&)>(ppXVar2,ppXVar8,param_4);
-        __restgprlr_26();
+        _Sort_heap<XModel_*_*,bool_(__cdecl*)(XModel_*_&,XModel_*_&)>(param_1,param_2,param_4);
         return;
       }
       goto LAB_8275a328;
     }
     _Unguarded_partition<XModel_*_*,bool_(__cdecl*)(XModel_*_&,XModel_*_&)>
-              (&local_40,ppXVar2,(_func___cdecl_bool_XModel_ptr_ptr_XModel_ptr_ptr *)ppXVar8);
+              (&local_40,param_1,(_func___cdecl_bool_XModel_ptr_ptr_XModel_ptr_ptr *)param_2);
     ppXVar1 = local_3c;
-    uVar4 = (longlong)(iVar7 >> 1) + (ulonglong)(iVar7 < 0 && (uVar4 & 1) != 0);
-    uVar4 = (longlong)((int)uVar4 >> 1) + (ulonglong)((int)uVar4 < 0 && (uVar4 & 1) != 0) + uVar4;
-    uVar6 = ZEXT48(local_40);
-    if ((int)((int)local_40 - (int)ppXVar2 & 0xfffffffcU) <
-        (int)((int)ppXVar8 - (int)local_3c & 0xfffffffcU)) {
+    pXVar4 = local_40;
+    uVar3 = (param_3 >> 1) + (uint)(param_3 < 0 && (param_3 & 1U) != 0);
+    param_3 = ((int)uVar3 >> 1) + (uint)((int)uVar3 < 0 && (uVar3 & 1) != 0) + uVar3;
+    if ((int)((int)local_40 - (int)param_1 & 0xfffffffcU) <
+        (int)((int)param_2 - (int)local_3c & 0xfffffffcU)) {
       _Sort<XModel_*_*,int,bool_(__cdecl*)(XModel_*_&,XModel_*_&)>
-                (ppXVar2,(XModel **)local_40,(int)uVar4,param_4);
-      uVar6 = uVar3;
-      ppXVar2 = ppXVar1;
+                (param_1,(XModel **)local_40,param_3,param_4);
+      pXVar4 = (XModel *)param_2;
+      param_1 = ppXVar1;
     }
     else {
-      _Sort<XModel_*_*,int,bool_(__cdecl*)(XModel_*_&,XModel_*_&)>
-                (local_3c,ppXVar8,(int)uVar4,param_4);
+      _Sort<XModel_*_*,int,bool_(__cdecl*)(XModel_*_&,XModel_*_&)>(local_3c,param_2,param_3,param_4)
+      ;
     }
-    ppXVar8 = (XModel **)uVar6;
-    iVar5 = (int)ppXVar8 - (int)ppXVar2;
-    uVar3 = uVar6;
+    iVar2 = (int)pXVar4 - (int)param_1;
+    param_2 = (XModel **)pXVar4;
   } while( true );
 }
 

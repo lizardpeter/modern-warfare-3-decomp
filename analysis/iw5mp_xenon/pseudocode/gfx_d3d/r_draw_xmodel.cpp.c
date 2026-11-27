@@ -31,45 +31,42 @@ void __stvx(__vector4 param_1,void *param_2,int param_3)
 
 // 82737F18  R_SetupXModelRigidModelSurfWithUpdate  (gfx_d3d/r_draw_xmodel.cpp:192)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 
 void R_SetupXModelRigidModelSurfWithUpdate(GfxCmdBufState *param_1,XSurface *param_2)
 
 {
-  GfxCmdBufState *pGVar1;
-  MaterialVertexDeclType MVar2;
-  uint uVar4;
-  ulonglong uVar5;
-  ulonglong uVar6;
-  XSurface *pXVar3;
+  MaterialVertexDeclType MVar1;
+  uint uVar2;
+  ulonglong uVar3;
   
-  uVar5 = (ulonglong)(int)param_2;
-  pGVar1 = (GfxCmdBufState *)__savegprlr_27(param_1);
-  if ((uVar5 & 0xffffffff) == 0) {
+  if (param_2 == (XSurface *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_draw_xmodel.cpp",
                     0xce,0,"%s");
   }
-  uVar6 = uVar5 + 0x48;
-  if (uVar6 == 0) {
+  uVar3 = (longlong)(int)param_2 + 0x48;
+  if (uVar3 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_draw_xmodel.cpp",
                     0xd2,0,"%s");
   }
-  if (ZEXT48((pGVar1->prim).indexBuffer) != (uVar6 & 0xffffffff)) {
-    R_ChangeIndices(&pGVar1->prim,(D3DIndexBuffer *)uVar6);
+  if (ZEXT48((param_1->prim).indexBuffer) != (uVar3 & 0xffffffff)) {
+    R_ChangeIndices(&param_1->prim,(D3DIndexBuffer *)uVar3);
   }
-  pXVar3 = (XSurface *)uVar5;
-  MVar2 = XSurfaceGetModelVertDecl(pXVar3);
-  (pGVar1->prim).vertDeclType = MVar2;
-  R_UpdateVertexDecl(pGVar1);
-  uVar4 = XSurfaceGetVert0Size(pXVar3);
-  R_SetStreamSource(&pGVar1->prim,&pXVar3->vb0,0,uVar4);
-  __restgprlr_27();
+  MVar1 = XSurfaceGetModelVertDecl(param_2);
+  (param_1->prim).vertDeclType = MVar1;
+  R_UpdateVertexDecl(param_1);
+  uVar2 = XSurfaceGetVert0Size(param_2);
+  R_SetStreamSource(&param_1->prim,&param_2->vb0,0,uVar2);
   return;
 }
 
 
 // 82737FD8  R_DrawXModelRigidModelChildSurf  (gfx_d3d/r_draw_xmodel.cpp:235)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 
@@ -77,30 +74,31 @@ void R_DrawXModelRigidModelChildSurf
                (GfxCmdBufContext param_1,GfxModelRigidChildSurface *param_2,XSurface *param_3)
 
 {
-  GfxCmdBufContext GVar1;
-  GfxMatrix *pGVar2;
+  GfxMatrix *pGVar1;
   GfxCmdBufSourceState *pGStack00000010;
   GfxCmdBufState *pGStack00000014;
   GfxDrawPrimArgs local_30 [4];
   
-  GVar1 = (GfxCmdBufContext)__savegprlr_29();
-  _pGStack00000010 = GVar1;
-  R_SetupPassPerPrimArgs(GVar1);
+  _pGStack00000010 = param_1;
+  R_SetupPassPerPrimArgs(param_1);
   local_30[0].baseIndex = (uint)param_2->triOffset + (uint)param_2->triOffset * 2;
   local_30[0].vertexCount = (int)param_3->vertCount;
   local_30[0].triCount = (int)param_2->triCount;
   R_DrawIndexedPrimitive(&pGStack00000014->prim,local_30);
   if ((r_showTess->current).integer != 0) {
-    pGVar2 = R_GetActiveWorldMatrix(pGStack00000010);
-    RB_ShowTess(GVar1,pGVar2->m[3],"XMRigid",colorWhite);
+    pGVar1 = R_GetActiveWorldMatrix(pGStack00000010);
+    RB_ShowTess(param_1,pGVar1->m[3],"XMRigid",colorWhite);
   }
-  __restgprlr_29();
   return;
 }
 
 
 // 82738070  R_DrawXModelRigidSurfLitInternal  (gfx_d3d/r_draw_xmodel.cpp:272)
 
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savevmx_120 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restvmx_120 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 
@@ -116,164 +114,11 @@ void R_DrawXModelRigidSurfLitInternal(GfxDrawListArgs *param_1,GfxDrawSurfIter *
   GfxDrawSurf *pGVar7;
   uint *puVar8;
   ulonglong uVar9;
-  GfxCmdBufContext *pGVar10;
-  GfxMatrix *pGVar11;
-  GfxDrawSurf *pGVar12;
-  GfxCmdBufContext GVar13;
-  uint uVar14;
-  ulonglong uVar15;
-  longlong lVar16;
-  double dVar17;
-  undefined1 auVar18 [16];
-  undefined1 auVar19 [16];
-  undefined1 auVar20 [16];
-  undefined1 auVar21 [16];
-  undefined1 auVar22 [16];
-  undefined1 auVar23 [16];
-  undefined1 auVar24 [16];
-  undefined1 auVar25 [16];
-  undefined1 auVar26 [16];
-  undefined1 auVar27 [16];
-  GfxCmdBufSourceState *local_148;
-  GfxCmdBufState *pGStack_144;
-  GfxDrawPrimArgs local_130 [25];
-  
-  __savegprlr();
-  pGVar10 = (GfxCmdBufContext *)__savevmx_120();
-  GVar13 = *pGVar10;
-  uVar15 = param_2->current->packed;
-  local_148 = GVar13.source;
-  pGVar4 = (local_148->input).data;
-  uVar5 = local_148->depthHackFlags;
-  auVar25 = loadVectorRightIndexed(ZEXT48(local_148) + 0x1550);
-  auVar24 = loadVectorLeftIndexed(ZEXT48(local_148) + 0x1540);
-  uVar9 = uVar15 & 0xffffffffff800000;
-  lVar16 = ((uVar15 & 0x7fff) + 0x1380) * 4 + ZEXT48(pGVar4);
-  dVar17 = (double)local_148->materialTime;
-  uVar1 = *(ushort *)((int)lVar16 + 10);
-  pGStack_144 = GVar13.state;
-  auVar24 = vectorSubtractFloatingPoint128
-                      ((auVar24 | auVar25) & (undefined1  [16])g_keepXYZ.field0_0x0,
-                       (undefined1  [16])g_unit.field0_0x0);
-  while( true ) {
-    puVar8 = (uint *)lVar16;
-    R_SetModelLightingCoordsForSource((uint)*(ushort *)(puVar8 + 3),local_148);
-    R_SetModelAmbientColorForSource((uchar *)(puVar8 + 4),local_148);
-    R_SetReflectionProbe(GVar13,(uint)(uVar15 >> 0xf) & 0xff);
-    pXVar6 = (XSurface *)puVar8[5];
-    R_SetupXModelRigidModelSurfWithUpdate(pGStack_144,pXVar6);
-    auVar25 = loadVectorLeftIndexed(ZEXT48(pXVar6) + 8);
-    auVar25 = vectorSplatWord(auVar25,0);
-    uVar15 = -(ulonglong)*puVar8 - 3;
-    auVar23 = loadVectorLeftIndexed(lVar16 + 0x18);
-    auVar23 = vectorSplatWord(auVar23,0);
-    auVar25 = vectorMultiplyFloatingPoint(auVar25,auVar23);
-    if ((uVar15 & 0xffffffff) != 0) {
-      auVar23 = vectorSplatImmediateSignedWord(0);
-      uVar2 = pXVar6->vertCount;
-      lVar16 = lVar16 + 0x2c;
-      auVar27 = vectorUnpackD3Dtype(auVar23,4);
-      auVar23 = vectorPermuteWordImmediate(auVar27,0xfe);
-      do {
-        auVar22 = loadVectorLeftIndexed(lVar16);
-        auVar21 = loadVectorRightIndexed(lVar16 + 0x10);
-        auVar20 = loadVectorRightIndexed(lVar16);
-        auVar19 = loadVectorLeftIndexed(lVar16 + -0x10);
-        auVar19 = auVar19 | auVar20;
-        auVar26 = vectorSubtractFloatingPoint128
-                            ((auVar22 | auVar21) & (undefined1  [16])g_keepXYZ.field0_0x0,auVar24);
-        auVar20 = vectorAddFloatingPoint128(auVar19,auVar19);
-        auVar18 = vectorPermuteWordImmediate(auVar19,7);
-        auVar22 = vectorSplatWord(auVar19,3);
-        auVar21 = vectorMultiplyFloatingPoint(auVar19,auVar20);
-        auVar19 = vectorPermuteWordImmediate(auVar20,0x9b);
-        auVar20 = vectorPermuteWordImmediate(auVar20,99);
-        auVar18 = vectorMultiplyFloatingPoint(auVar18,auVar19);
-        auVar19 = vectorMultiplyFloatingPoint(auVar22,auVar20);
-        auVar20 = vectorPermuteWordImmediate(auVar21,0x40);
-        auVar22 = vectorPermuteWordImmediate(auVar21,0xa4);
-        auVar20 = vectorSubtractFloatingPoint128(auVar23,auVar20);
-        auVar21 = vectorAddFloatingPoint128(auVar18,auVar19);
-        auVar19 = vectorSubtractFloatingPoint128(auVar18,auVar19);
-        auVar20 = vectorSubtractFloatingPoint128(auVar20,auVar22);
-        auVar22 = vectorPermuteWordImmediate(auVar21,0x42);
-        auVar21 = vectorShiftLeftDoubleByOctetImmediate(auVar19,auVar21,8);
-        auVar18 = vectorRotateLeftImmediateAndMaskInsert(auVar22,auVar19,6,3);
-        auVar21 = vectorPermuteWordImmediate(auVar21,0x88);
-        auVar20 = vectorRotateLeftImmediateAndMaskInsert(auVar20,auVar27,1,3);
-        auVar19 = vectorPermuteWordImmediate(auVar20,7);
-        auVar22 = vectorRotateLeftImmediateAndMaskInsert(auVar21,auVar20,3,0);
-        auVar21 = vectorRotateLeftImmediateAndMaskInsert(auVar20,auVar18,6,3);
-        auVar20 = vectorMergeLowWord128(auVar18,auVar19);
-        auVar19 = vectorMultiplyFloatingPoint(auVar22,auVar25);
-        auVar22 = vectorMultiplyFloatingPoint(auVar20,auVar25);
-        auVar20 = vectorMultiplyFloatingPoint(auVar21,auVar25);
-        pGVar11 = R_GetActiveWorldMatrix(local_148);
-        *(undefined1 (*) [16])((uint)pGVar11 & 0xfffffff0) = auVar20;
-        *(undefined1 (*) [16])((uint)(pGVar11->m + 1) & 0xfffffff0) = auVar22;
-        *(undefined1 (*) [16])((uint)(pGVar11->m + 2) & 0xfffffff0) = auVar19;
-        *(undefined1 (*) [16])((uint)(pGVar11->m + 3) & 0xfffffff0) = auVar26;
-        R_SetupPassPerPrimArgs(GVar13);
-        uVar3 = *(ushort *)((int)lVar16 + 0xc);
-        local_130[0].vertexCount = (int)uVar2;
-        local_130[0].baseIndex = (uint)uVar3 + (uint)uVar3 * 2;
-        local_130[0].triCount = (int)*(ushort *)((int)lVar16 + 0xe);
-        R_DrawIndexedPrimitive(&pGStack_144->prim,local_130);
-        if ((r_showTess->current).integer != 0) {
-          pGVar11 = R_GetActiveWorldMatrix(local_148);
-          RB_ShowTess(GVar13,pGVar11->m[3],"XMRigid",colorWhite);
-        }
-        uVar15 = uVar15 - 1;
-        lVar16 = lVar16 + 0x20;
-      } while (uVar15 != 0);
-    }
-    pGVar7 = param_2->current;
-    pGVar12 = pGVar7 + 1;
-    param_2->current = pGVar12;
-    if (pGVar7 + 1 == param_2->end) break;
-    uVar15 = pGVar12->packed;
-    if ((uVar15 & 0xffffffffff800000) != uVar9) break;
-    lVar16 = ((uVar15 & 0x7fff) + 0x1380) * 4 + ZEXT48(pGVar4);
-    if ((uVar15 & 0x800000) != 0) {
-      uVar14 = (uint)*(ushort *)((int)lVar16 + 10);
-      if (uVar14 == 0) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_draw_xmodel.cpp"
-                        ,0x17d,0,"%s");
-      }
-      if (uVar14 != uVar1) {
-        if (((pGVar4->gfxEnts[uVar14].renderFxFlags & 2) != uVar5) ||
-           ((double)pGVar4->gfxEnts[uVar14].materialTime != dVar17)) break;
-      }
-    }
-  }
-  __restvmx_120();
-  __restgprlr();
-  return;
-}
-
-
-// 827383A8  R_DrawXModelRigidSurfCameraInternal  (gfx_d3d/r_draw_xmodel.cpp:398)
-
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
-
-void R_DrawXModelRigidSurfCameraInternal(GfxDrawListArgs *param_1,GfxDrawSurfIter *param_2)
-
-{
-  ushort uVar1;
-  ushort uVar2;
-  ushort uVar3;
-  GfxBackEndData *pGVar4;
-  uint uVar5;
-  XSurface *pXVar6;
-  GfxDrawSurf *pGVar7;
-  GfxCmdBufContext *pGVar8;
-  GfxMatrix *pGVar9;
-  ulonglong uVar10;
-  ulonglong uVar11;
-  GfxDrawSurf *pGVar12;
-  GfxCmdBufContext GVar13;
-  uint uVar14;
+  GfxMatrix *pGVar10;
+  GfxDrawSurf *pGVar11;
+  GfxCmdBufContext GVar12;
+  uint uVar13;
+  ulonglong uVar14;
   longlong lVar15;
   double dVar16;
   undefined1 auVar17 [16];
@@ -290,32 +135,35 @@ void R_DrawXModelRigidSurfCameraInternal(GfxDrawListArgs *param_1,GfxDrawSurfIte
   GfxCmdBufState *pGStack_144;
   GfxDrawPrimArgs local_130 [25];
   
-  __savegprlr();
-  pGVar8 = (GfxCmdBufContext *)__savevmx_120();
-  GVar13 = *pGVar8;
-  uVar10 = param_2->current->packed;
-  local_148 = GVar13.source;
+  GVar12 = param_1->context;
+  uVar14 = param_2->current->packed;
+  local_148 = GVar12.source;
   pGVar4 = (local_148->input).data;
   uVar5 = local_148->depthHackFlags;
   auVar24 = loadVectorRightIndexed(ZEXT48(local_148) + 0x1550);
   auVar23 = loadVectorLeftIndexed(ZEXT48(local_148) + 0x1540);
-  lVar15 = ((uVar10 & 0x7fff) + 0x1380) * 4 + ZEXT48(pGVar4);
+  uVar9 = uVar14 & 0xffffffffff800000;
+  lVar15 = ((uVar14 & 0x7fff) + 0x1380) * 4 + ZEXT48(pGVar4);
   dVar16 = (double)local_148->materialTime;
   uVar1 = *(ushort *)((int)lVar15 + 10);
-  pGStack_144 = GVar13.state;
+  pGStack_144 = GVar12.state;
   auVar23 = vectorSubtractFloatingPoint128
                       ((auVar23 | auVar24) & (undefined1  [16])g_keepXYZ.field0_0x0,
                        (undefined1  [16])g_unit.field0_0x0);
   while( true ) {
-    pXVar6 = (XSurface *)((uint *)lVar15)[5];
+    puVar8 = (uint *)lVar15;
+    R_SetModelLightingCoordsForSource((uint)*(ushort *)(puVar8 + 3),local_148);
+    R_SetModelAmbientColorForSource((uchar *)(puVar8 + 4),local_148);
+    R_SetReflectionProbe(GVar12,(uint)(uVar14 >> 0xf) & 0xff);
+    pXVar6 = (XSurface *)puVar8[5];
     R_SetupXModelRigidModelSurfWithUpdate(pGStack_144,pXVar6);
-    uVar11 = -(ulonglong)*(uint *)lVar15 - 3;
-    auVar22 = loadVectorLeftIndexed(lVar15 + 0x18);
     auVar24 = loadVectorLeftIndexed(ZEXT48(pXVar6) + 8);
-    auVar22 = vectorSplatWord(auVar22,0);
     auVar24 = vectorSplatWord(auVar24,0);
+    uVar14 = -(ulonglong)*puVar8 - 3;
+    auVar22 = loadVectorLeftIndexed(lVar15 + 0x18);
+    auVar22 = vectorSplatWord(auVar22,0);
     auVar24 = vectorMultiplyFloatingPoint(auVar24,auVar22);
-    if ((uVar11 & 0xffffffff) != 0) {
+    if ((uVar14 & 0xffffffff) != 0) {
       auVar22 = vectorSplatImmediateSignedWord(0);
       uVar2 = pXVar6->vertCount;
       lVar15 = lVar15 + 0x2c;
@@ -355,52 +203,208 @@ void R_DrawXModelRigidSurfCameraInternal(GfxDrawListArgs *param_1,GfxDrawSurfIte
         auVar18 = vectorMultiplyFloatingPoint(auVar21,auVar24);
         auVar21 = vectorMultiplyFloatingPoint(auVar19,auVar24);
         auVar19 = vectorMultiplyFloatingPoint(auVar20,auVar24);
-        pGVar9 = R_GetActiveWorldMatrix(local_148);
-        *(undefined1 (*) [16])((uint)pGVar9 & 0xfffffff0) = auVar19;
-        *(undefined1 (*) [16])((uint)(pGVar9->m + 1) & 0xfffffff0) = auVar21;
-        *(undefined1 (*) [16])((uint)(pGVar9->m + 2) & 0xfffffff0) = auVar18;
-        *(undefined1 (*) [16])((uint)(pGVar9->m + 3) & 0xfffffff0) = auVar25;
-        R_SetupPassPerPrimArgs(GVar13);
+        pGVar10 = R_GetActiveWorldMatrix(local_148);
+        *(undefined1 (*) [16])((uint)pGVar10 & 0xfffffff0) = auVar19;
+        *(undefined1 (*) [16])((uint)(pGVar10->m + 1) & 0xfffffff0) = auVar21;
+        *(undefined1 (*) [16])((uint)(pGVar10->m + 2) & 0xfffffff0) = auVar18;
+        *(undefined1 (*) [16])((uint)(pGVar10->m + 3) & 0xfffffff0) = auVar25;
+        R_SetupPassPerPrimArgs(GVar12);
         uVar3 = *(ushort *)((int)lVar15 + 0xc);
         local_130[0].vertexCount = (int)uVar2;
         local_130[0].baseIndex = (uint)uVar3 + (uint)uVar3 * 2;
         local_130[0].triCount = (int)*(ushort *)((int)lVar15 + 0xe);
         R_DrawIndexedPrimitive(&pGStack_144->prim,local_130);
         if ((r_showTess->current).integer != 0) {
-          pGVar9 = R_GetActiveWorldMatrix(local_148);
-          RB_ShowTess(GVar13,pGVar9->m[3],"XMRigid",colorWhite);
+          pGVar10 = R_GetActiveWorldMatrix(local_148);
+          RB_ShowTess(GVar12,pGVar10->m[3],"XMRigid",colorWhite);
         }
-        uVar11 = uVar11 - 1;
+        uVar14 = uVar14 - 1;
         lVar15 = lVar15 + 0x20;
-      } while (uVar11 != 0);
+      } while (uVar14 != 0);
     }
     pGVar7 = param_2->current;
-    pGVar12 = pGVar7 + 1;
-    param_2->current = pGVar12;
+    pGVar11 = pGVar7 + 1;
+    param_2->current = pGVar11;
     if (pGVar7 + 1 == param_2->end) break;
-    uVar11 = pGVar12->packed;
-    if ((uVar11 & 0xffffffffe0800000) != (uVar10 & 0xffffffffe0800000)) break;
-    lVar15 = ((uVar11 & 0x7fff) + 0x1380) * 4 + ZEXT48(pGVar4);
-    if ((uVar11 & 0x800000) != 0) {
-      uVar14 = (uint)*(ushort *)((int)lVar15 + 10);
-      if (uVar14 == 0) {
+    uVar14 = pGVar11->packed;
+    if ((uVar14 & 0xffffffffff800000) != uVar9) {
+      return;
+    }
+    lVar15 = ((uVar14 & 0x7fff) + 0x1380) * 4 + ZEXT48(pGVar4);
+    if ((uVar14 & 0x800000) != 0) {
+      uVar13 = (uint)*(ushort *)((int)lVar15 + 10);
+      if (uVar13 == 0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_draw_xmodel.cpp"
-                        ,0x1ea,0,"%s");
+                        ,0x17d,0,"%s");
       }
-      if (uVar14 != uVar1) {
-        if (((pGVar4->gfxEnts[uVar14].renderFxFlags & 2) != uVar5) ||
-           ((double)pGVar4->gfxEnts[uVar14].materialTime != dVar16)) break;
+      if ((uVar13 != uVar1) &&
+         (((pGVar4->gfxEnts[uVar13].renderFxFlags & 2) != uVar5 ||
+          ((double)pGVar4->gfxEnts[uVar13].materialTime != dVar16)))) {
+                    /* WARNING: Read-only address (ram,0x8217a040) is written */
+        return;
       }
     }
   }
-  __restvmx_120();
-  __restgprlr();
+  return;
+}
+
+
+// 827383A8  R_DrawXModelRigidSurfCameraInternal  (gfx_d3d/r_draw_xmodel.cpp:398)
+
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savevmx_120 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restvmx_120 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+
+void R_DrawXModelRigidSurfCameraInternal(GfxDrawListArgs *param_1,GfxDrawSurfIter *param_2)
+
+{
+  ushort uVar1;
+  ushort uVar2;
+  ushort uVar3;
+  GfxBackEndData *pGVar4;
+  uint uVar5;
+  XSurface *pXVar6;
+  GfxDrawSurf *pGVar7;
+  GfxMatrix *pGVar8;
+  ulonglong uVar9;
+  ulonglong uVar10;
+  GfxDrawSurf *pGVar11;
+  GfxCmdBufContext GVar12;
+  uint uVar13;
+  longlong lVar14;
+  double dVar15;
+  undefined1 auVar16 [16];
+  undefined1 auVar17 [16];
+  undefined1 auVar18 [16];
+  undefined1 auVar19 [16];
+  undefined1 auVar20 [16];
+  undefined1 auVar21 [16];
+  undefined1 auVar22 [16];
+  undefined1 auVar23 [16];
+  undefined1 auVar24 [16];
+  undefined1 auVar25 [16];
+  GfxCmdBufSourceState *local_148;
+  GfxCmdBufState *pGStack_144;
+  GfxDrawPrimArgs local_130 [25];
+  
+  GVar12 = param_1->context;
+  uVar9 = param_2->current->packed;
+  local_148 = GVar12.source;
+  pGVar4 = (local_148->input).data;
+  uVar5 = local_148->depthHackFlags;
+  auVar23 = loadVectorRightIndexed(ZEXT48(local_148) + 0x1550);
+  auVar22 = loadVectorLeftIndexed(ZEXT48(local_148) + 0x1540);
+  lVar14 = ((uVar9 & 0x7fff) + 0x1380) * 4 + ZEXT48(pGVar4);
+  dVar15 = (double)local_148->materialTime;
+  uVar1 = *(ushort *)((int)lVar14 + 10);
+  pGStack_144 = GVar12.state;
+  auVar22 = vectorSubtractFloatingPoint128
+                      ((auVar22 | auVar23) & (undefined1  [16])g_keepXYZ.field0_0x0,
+                       (undefined1  [16])g_unit.field0_0x0);
+  while( true ) {
+    pXVar6 = (XSurface *)((uint *)lVar14)[5];
+    R_SetupXModelRigidModelSurfWithUpdate(pGStack_144,pXVar6);
+    uVar10 = -(ulonglong)*(uint *)lVar14 - 3;
+    auVar21 = loadVectorLeftIndexed(lVar14 + 0x18);
+    auVar23 = loadVectorLeftIndexed(ZEXT48(pXVar6) + 8);
+    auVar21 = vectorSplatWord(auVar21,0);
+    auVar23 = vectorSplatWord(auVar23,0);
+    auVar23 = vectorMultiplyFloatingPoint(auVar23,auVar21);
+    if ((uVar10 & 0xffffffff) != 0) {
+      auVar21 = vectorSplatImmediateSignedWord(0);
+      uVar2 = pXVar6->vertCount;
+      lVar14 = lVar14 + 0x2c;
+      auVar25 = vectorUnpackD3Dtype(auVar21,4);
+      auVar21 = vectorPermuteWordImmediate(auVar25,0xfe);
+      do {
+        auVar20 = loadVectorLeftIndexed(lVar14);
+        auVar19 = loadVectorRightIndexed(lVar14 + 0x10);
+        auVar18 = loadVectorRightIndexed(lVar14);
+        auVar17 = loadVectorLeftIndexed(lVar14 + -0x10);
+        auVar17 = auVar17 | auVar18;
+        auVar24 = vectorSubtractFloatingPoint128
+                            ((auVar20 | auVar19) & (undefined1  [16])g_keepXYZ.field0_0x0,auVar22);
+        auVar18 = vectorAddFloatingPoint128(auVar17,auVar17);
+        auVar16 = vectorPermuteWordImmediate(auVar17,7);
+        auVar20 = vectorSplatWord(auVar17,3);
+        auVar19 = vectorMultiplyFloatingPoint(auVar17,auVar18);
+        auVar17 = vectorPermuteWordImmediate(auVar18,0x9b);
+        auVar18 = vectorPermuteWordImmediate(auVar18,99);
+        auVar16 = vectorMultiplyFloatingPoint(auVar16,auVar17);
+        auVar17 = vectorMultiplyFloatingPoint(auVar20,auVar18);
+        auVar18 = vectorPermuteWordImmediate(auVar19,0x40);
+        auVar20 = vectorPermuteWordImmediate(auVar19,0xa4);
+        auVar18 = vectorSubtractFloatingPoint128(auVar21,auVar18);
+        auVar19 = vectorAddFloatingPoint128(auVar16,auVar17);
+        auVar17 = vectorSubtractFloatingPoint128(auVar16,auVar17);
+        auVar18 = vectorSubtractFloatingPoint128(auVar18,auVar20);
+        auVar20 = vectorPermuteWordImmediate(auVar19,0x42);
+        auVar19 = vectorShiftLeftDoubleByOctetImmediate(auVar17,auVar19,8);
+        auVar16 = vectorRotateLeftImmediateAndMaskInsert(auVar20,auVar17,6,3);
+        auVar19 = vectorPermuteWordImmediate(auVar19,0x88);
+        auVar18 = vectorRotateLeftImmediateAndMaskInsert(auVar18,auVar25,1,3);
+        auVar17 = vectorPermuteWordImmediate(auVar18,7);
+        auVar20 = vectorRotateLeftImmediateAndMaskInsert(auVar19,auVar18,3,0);
+        auVar19 = vectorRotateLeftImmediateAndMaskInsert(auVar18,auVar16,6,3);
+        auVar18 = vectorMergeLowWord128(auVar16,auVar17);
+        auVar17 = vectorMultiplyFloatingPoint(auVar20,auVar23);
+        auVar20 = vectorMultiplyFloatingPoint(auVar18,auVar23);
+        auVar18 = vectorMultiplyFloatingPoint(auVar19,auVar23);
+        pGVar8 = R_GetActiveWorldMatrix(local_148);
+        *(undefined1 (*) [16])((uint)pGVar8 & 0xfffffff0) = auVar18;
+        *(undefined1 (*) [16])((uint)(pGVar8->m + 1) & 0xfffffff0) = auVar20;
+        *(undefined1 (*) [16])((uint)(pGVar8->m + 2) & 0xfffffff0) = auVar17;
+        *(undefined1 (*) [16])((uint)(pGVar8->m + 3) & 0xfffffff0) = auVar24;
+        R_SetupPassPerPrimArgs(GVar12);
+        uVar3 = *(ushort *)((int)lVar14 + 0xc);
+        local_130[0].vertexCount = (int)uVar2;
+        local_130[0].baseIndex = (uint)uVar3 + (uint)uVar3 * 2;
+        local_130[0].triCount = (int)*(ushort *)((int)lVar14 + 0xe);
+        R_DrawIndexedPrimitive(&pGStack_144->prim,local_130);
+        if ((r_showTess->current).integer != 0) {
+          pGVar8 = R_GetActiveWorldMatrix(local_148);
+          RB_ShowTess(GVar12,pGVar8->m[3],"XMRigid",colorWhite);
+        }
+        uVar10 = uVar10 - 1;
+        lVar14 = lVar14 + 0x20;
+      } while (uVar10 != 0);
+    }
+    pGVar7 = param_2->current;
+    pGVar11 = pGVar7 + 1;
+    param_2->current = pGVar11;
+    if (pGVar7 + 1 == param_2->end) break;
+    uVar10 = pGVar11->packed;
+    if ((uVar10 & 0xffffffffe0800000) != (uVar9 & 0xffffffffe0800000)) {
+      return;
+    }
+    lVar14 = ((uVar10 & 0x7fff) + 0x1380) * 4 + ZEXT48(pGVar4);
+    if ((uVar10 & 0x800000) != 0) {
+      uVar13 = (uint)*(ushort *)((int)lVar14 + 10);
+      if (uVar13 == 0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_draw_xmodel.cpp"
+                        ,0x1ea,0,"%s");
+      }
+      if ((uVar13 != uVar1) &&
+         (((pGVar4->gfxEnts[uVar13].renderFxFlags & 2) != uVar5 ||
+          ((double)pGVar4->gfxEnts[uVar13].materialTime != dVar15)))) {
+                    /* WARNING: Read-only address (ram,0x8217a040) is written */
+        return;
+      }
+    }
+  }
   return;
 }
 
 
 // 827386C0  R_DrawXModelRigidSurfInternal  (gfx_d3d/r_draw_xmodel.cpp:507)
 
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savevmx_120 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restvmx_120 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 
@@ -414,12 +418,12 @@ void R_DrawXModelRigidSurfInternal(GfxDrawListArgs *param_1,GfxDrawSurfIter *par
   GfxDrawSurf *pGVar5;
   GfxCmdBufSourceState *pGVar6;
   GfxCmdBufState *pGVar7;
-  GfxCmdBufContext *pGVar8;
-  GfxMatrix *pGVar9;
-  ulonglong uVar10;
-  GfxDrawSurf *pGVar11;
-  GfxCmdBufContext GVar12;
-  longlong lVar13;
+  GfxMatrix *pGVar8;
+  ulonglong uVar9;
+  GfxDrawSurf *pGVar10;
+  GfxCmdBufContext GVar11;
+  longlong lVar12;
+  undefined1 auVar13 [16];
   undefined1 auVar14 [16];
   undefined1 auVar15 [16];
   undefined1 auVar16 [16];
@@ -429,105 +433,99 @@ void R_DrawXModelRigidSurfInternal(GfxDrawListArgs *param_1,GfxDrawSurfIter *par
   undefined1 auVar20 [16];
   undefined1 auVar21 [16];
   undefined1 auVar22 [16];
-  undefined1 auVar23 [16];
   GfxCmdBufContext local_140;
   int local_138;
   ulonglong local_130;
   
-  __savegprlr();
-  pGVar8 = (GfxCmdBufContext *)__savevmx_120();
-  GVar12 = *pGVar8;
-  local_140.source = GVar12.source;
+  GVar11 = param_1->context;
+  local_140.source = GVar11.source;
   pGVar6 = local_140.source;
-  auVar21 = loadVectorRightIndexed(ZEXT48(local_140.source) + 0x1550);
-  uVar10 = param_2->current->packed;
-  auVar20 = loadVectorLeftIndexed(ZEXT48(local_140.source) + 0x1540);
-  local_130 = uVar10 & 0xffffffffe0800000;
+  auVar20 = loadVectorRightIndexed(ZEXT48(local_140.source) + 0x1550);
+  uVar9 = param_2->current->packed;
+  auVar19 = loadVectorLeftIndexed(ZEXT48(local_140.source) + 0x1540);
+  local_130 = uVar9 & 0xffffffffe0800000;
   pGVar3 = ((local_140.source)->input).data;
-  local_140.state = GVar12.state;
+  local_140.state = GVar11.state;
   pGVar7 = local_140.state;
-  auVar20 = vectorSubtractFloatingPoint128
-                      ((auVar20 | auVar21) & (undefined1  [16])g_keepXYZ.field0_0x0,
+  auVar19 = vectorSubtractFloatingPoint128
+                      ((auVar19 | auVar20) & (undefined1  [16])g_keepXYZ.field0_0x0,
                        (undefined1  [16])g_unit.field0_0x0);
-  local_140 = GVar12;
+  local_140 = GVar11;
   do {
-    lVar13 = ((uVar10 & 0x7fff) + 0x1380) * 4 + ZEXT48(pGVar3);
-    pXVar4 = (XSurface *)((uint *)lVar13)[5];
+    lVar12 = ((uVar9 & 0x7fff) + 0x1380) * 4 + ZEXT48(pGVar3);
+    pXVar4 = (XSurface *)((uint *)lVar12)[5];
     R_SetupXModelRigidModelSurfWithUpdate(pGVar7,pXVar4);
-    auVar19 = loadVectorLeftIndexed(lVar13 + 0x18);
-    auVar21 = loadVectorLeftIndexed(ZEXT48(pXVar4) + 8);
-    auVar19 = vectorSplatWord(auVar19,0);
-    auVar21 = vectorSplatWord(auVar21,0);
-    uVar10 = -(ulonglong)*(uint *)lVar13 - 3;
-    auVar21 = vectorMultiplyFloatingPoint(auVar21,auVar19);
-    if ((uVar10 & 0xffffffff) != 0) {
-      auVar19 = vectorSplatImmediateSignedWord(0);
+    auVar18 = loadVectorLeftIndexed(lVar12 + 0x18);
+    auVar20 = loadVectorLeftIndexed(ZEXT48(pXVar4) + 8);
+    auVar18 = vectorSplatWord(auVar18,0);
+    auVar20 = vectorSplatWord(auVar20,0);
+    uVar9 = -(ulonglong)*(uint *)lVar12 - 3;
+    auVar20 = vectorMultiplyFloatingPoint(auVar20,auVar18);
+    if ((uVar9 & 0xffffffff) != 0) {
+      auVar18 = vectorSplatImmediateSignedWord(0);
       uVar1 = pXVar4->vertCount;
-      lVar13 = lVar13 + 0x2c;
-      auVar23 = vectorUnpackD3Dtype(auVar19,4);
-      auVar19 = vectorPermuteWordImmediate(auVar23,0xfe);
+      lVar12 = lVar12 + 0x2c;
+      auVar22 = vectorUnpackD3Dtype(auVar18,4);
+      auVar18 = vectorPermuteWordImmediate(auVar22,0xfe);
       do {
-        auVar18 = loadVectorLeftIndexed(lVar13);
-        auVar17 = loadVectorRightIndexed(lVar13 + 0x10);
-        auVar16 = loadVectorRightIndexed(lVar13);
-        auVar15 = loadVectorLeftIndexed(lVar13 + -0x10);
-        auVar15 = auVar15 | auVar16;
-        auVar22 = vectorSubtractFloatingPoint128
-                            ((auVar18 | auVar17) & (undefined1  [16])g_keepXYZ.field0_0x0,auVar20);
-        auVar16 = vectorAddFloatingPoint128(auVar15,auVar15);
-        auVar14 = vectorPermuteWordImmediate(auVar15,7);
-        auVar18 = vectorSplatWord(auVar15,3);
-        auVar17 = vectorMultiplyFloatingPoint(auVar15,auVar16);
-        auVar15 = vectorPermuteWordImmediate(auVar16,0x9b);
-        auVar16 = vectorPermuteWordImmediate(auVar16,99);
-        auVar14 = vectorMultiplyFloatingPoint(auVar14,auVar15);
-        auVar18 = vectorMultiplyFloatingPoint(auVar18,auVar16);
-        auVar16 = vectorPermuteWordImmediate(auVar17,0x40);
-        auVar17 = vectorPermuteWordImmediate(auVar17,0xa4);
-        auVar15 = vectorSubtractFloatingPoint128(auVar19,auVar16);
-        auVar16 = vectorAddFloatingPoint128(auVar14,auVar18);
-        auVar18 = vectorSubtractFloatingPoint128(auVar14,auVar18);
-        auVar17 = vectorSubtractFloatingPoint128(auVar15,auVar17);
-        auVar15 = vectorPermuteWordImmediate(auVar16,0x42);
-        auVar16 = vectorShiftLeftDoubleByOctetImmediate(auVar18,auVar16,8);
-        auVar15 = vectorRotateLeftImmediateAndMaskInsert(auVar15,auVar18,6,3);
-        auVar18 = vectorPermuteWordImmediate(auVar16,0x88);
-        auVar16 = vectorRotateLeftImmediateAndMaskInsert(auVar17,auVar23,1,3);
-        auVar17 = vectorPermuteWordImmediate(auVar16,7);
-        auVar14 = vectorRotateLeftImmediateAndMaskInsert(auVar18,auVar16,3,0);
-        auVar18 = vectorRotateLeftImmediateAndMaskInsert(auVar16,auVar15,6,3);
-        auVar16 = vectorMergeLowWord128(auVar15,auVar17);
-        auVar15 = vectorMultiplyFloatingPoint(auVar14,auVar21);
-        auVar17 = vectorMultiplyFloatingPoint(auVar16,auVar21);
-        auVar16 = vectorMultiplyFloatingPoint(auVar18,auVar21);
-        pGVar9 = R_GetActiveWorldMatrix(pGVar6);
-        *(undefined1 (*) [16])((uint)pGVar9 & 0xfffffff0) = auVar16;
-        *(undefined1 (*) [16])((uint)(pGVar9->m + 1) & 0xfffffff0) = auVar17;
-        *(undefined1 (*) [16])((uint)(pGVar9->m + 2) & 0xfffffff0) = auVar15;
-        *(undefined1 (*) [16])((uint)(pGVar9->m + 3) & 0xfffffff0) = auVar22;
-        R_SetupPassPerPrimArgs(GVar12);
-        uVar2 = *(ushort *)((int)lVar13 + 0xc);
+        auVar17 = loadVectorLeftIndexed(lVar12);
+        auVar16 = loadVectorRightIndexed(lVar12 + 0x10);
+        auVar15 = loadVectorRightIndexed(lVar12);
+        auVar14 = loadVectorLeftIndexed(lVar12 + -0x10);
+        auVar14 = auVar14 | auVar15;
+        auVar21 = vectorSubtractFloatingPoint128
+                            ((auVar17 | auVar16) & (undefined1  [16])g_keepXYZ.field0_0x0,auVar19);
+        auVar15 = vectorAddFloatingPoint128(auVar14,auVar14);
+        auVar13 = vectorPermuteWordImmediate(auVar14,7);
+        auVar17 = vectorSplatWord(auVar14,3);
+        auVar16 = vectorMultiplyFloatingPoint(auVar14,auVar15);
+        auVar14 = vectorPermuteWordImmediate(auVar15,0x9b);
+        auVar15 = vectorPermuteWordImmediate(auVar15,99);
+        auVar13 = vectorMultiplyFloatingPoint(auVar13,auVar14);
+        auVar17 = vectorMultiplyFloatingPoint(auVar17,auVar15);
+        auVar15 = vectorPermuteWordImmediate(auVar16,0x40);
+        auVar16 = vectorPermuteWordImmediate(auVar16,0xa4);
+        auVar14 = vectorSubtractFloatingPoint128(auVar18,auVar15);
+        auVar15 = vectorAddFloatingPoint128(auVar13,auVar17);
+        auVar17 = vectorSubtractFloatingPoint128(auVar13,auVar17);
+        auVar16 = vectorSubtractFloatingPoint128(auVar14,auVar16);
+        auVar14 = vectorPermuteWordImmediate(auVar15,0x42);
+        auVar15 = vectorShiftLeftDoubleByOctetImmediate(auVar17,auVar15,8);
+        auVar14 = vectorRotateLeftImmediateAndMaskInsert(auVar14,auVar17,6,3);
+        auVar17 = vectorPermuteWordImmediate(auVar15,0x88);
+        auVar15 = vectorRotateLeftImmediateAndMaskInsert(auVar16,auVar22,1,3);
+        auVar16 = vectorPermuteWordImmediate(auVar15,7);
+        auVar13 = vectorRotateLeftImmediateAndMaskInsert(auVar17,auVar15,3,0);
+        auVar17 = vectorRotateLeftImmediateAndMaskInsert(auVar15,auVar14,6,3);
+        auVar15 = vectorMergeLowWord128(auVar14,auVar16);
+        auVar14 = vectorMultiplyFloatingPoint(auVar13,auVar20);
+        auVar16 = vectorMultiplyFloatingPoint(auVar15,auVar20);
+        auVar15 = vectorMultiplyFloatingPoint(auVar17,auVar20);
+        pGVar8 = R_GetActiveWorldMatrix(pGVar6);
+        *(undefined1 (*) [16])((uint)pGVar8 & 0xfffffff0) = auVar15;
+        *(undefined1 (*) [16])((uint)(pGVar8->m + 1) & 0xfffffff0) = auVar16;
+        *(undefined1 (*) [16])((uint)(pGVar8->m + 2) & 0xfffffff0) = auVar14;
+        *(undefined1 (*) [16])((uint)(pGVar8->m + 3) & 0xfffffff0) = auVar21;
+        R_SetupPassPerPrimArgs(GVar11);
+        uVar2 = *(ushort *)((int)lVar12 + 0xc);
         local_138 = (uint)uVar2 + (uint)uVar2 * 2;
         local_140.source._2_2_ = uVar1;
-        local_140.state = (GfxCmdBufState *)(uint)*(ushort *)((int)lVar13 + 0xe);
+        local_140.state = (GfxCmdBufState *)(uint)*(ushort *)((int)lVar12 + 0xe);
         local_140.source._0_2_ = 0;
         R_DrawIndexedPrimitive(&pGVar7->prim,(GfxDrawPrimArgs *)&local_140);
         if ((r_showTess->current).integer != 0) {
-          pGVar9 = R_GetActiveWorldMatrix(pGVar6);
-          RB_ShowTess(GVar12,pGVar9->m[3],"XMRigid",colorWhite);
+          pGVar8 = R_GetActiveWorldMatrix(pGVar6);
+          RB_ShowTess(GVar11,pGVar8->m[3],"XMRigid",colorWhite);
         }
-        uVar10 = uVar10 - 1;
-        lVar13 = lVar13 + 0x20;
-      } while (uVar10 != 0);
+        uVar9 = uVar9 - 1;
+        lVar12 = lVar12 + 0x20;
+      } while (uVar9 != 0);
     }
     pGVar5 = param_2->current;
-    pGVar11 = pGVar5 + 1;
-    param_2->current = pGVar11;
-    if (pGVar5 + 1 == param_2->end) break;
-    uVar10 = pGVar11->packed;
-  } while ((uVar10 & 0xffffffffe0800000) == local_130);
-  __restvmx_120();
-  __restgprlr();
+    pGVar10 = pGVar5 + 1;
+    param_2->current = pGVar10;
+  } while ((pGVar5 + 1 != param_2->end) &&
+          (uVar9 = pGVar10->packed, (uVar9 & 0xffffffffe0800000) == local_130));
   return;
 }
 
@@ -590,6 +588,10 @@ void D3DTagCollection_Clear(_D3DTAGCOLLECTION *param_1,ulong param_2,ulong64 par
 
 // 82738918  R_DrawXModelUnlitNoPrepass  (gfx_d3d/r_draw_xmodel.cpp:1864)
 
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savevmx_120 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restvmx_120 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
@@ -600,222 +602,23 @@ void R_DrawXModelUnlitNoPrepass(GfxXModelDrawStream *param_1,GfxCmdBufState *par
   float fVar1;
   ushort uVar2;
   ushort uVar3;
-  int *piVar4;
-  uint uVar5;
+  GfxDrawSurfIter *pGVar4;
+  GfxBackEndData *pGVar5;
   D3DDevice *pDVar6;
   XSurface *pXVar7;
-  int iVar8;
+  GfxDrawSurf *pGVar8;
   GfxCmdRingBuf *pGVar9;
-  int *piVar10;
-  __vector4 _Var11;
-  ulonglong uVar12;
-  __vector4 *p_Var13;
-  ulong uVar14;
-  uint uVar15;
-  ulonglong uVar16;
-  uint *puVar17;
-  ulonglong *puVar18;
-  ulonglong uVar19;
-  uint uVar20;
-  longlong lVar21;
-  double dVar22;
-  undefined1 auVar23 [16];
-  undefined1 auVar24 [16];
-  undefined1 auVar25 [16];
-  undefined1 auVar26 [16];
-  undefined1 auVar27 [16];
-  undefined1 auVar28 [16];
-  undefined1 auVar29 [16];
-  undefined1 auVar30 [16];
-  undefined1 auVar31 [16];
-  undefined1 auVar32 [16];
-  undefined1 auVar33 [16];
-  undefined1 auVar34 [16];
-  int *piStack00000014;
-  uint uStack0000001c;
-  uint local_15c;
-  GfxDrawPrimArgs local_138 [26];
-  
-  uVar19 = (ulonglong)(int)param_2;
-  __savegprlr();
-  uVar12 = __savevmx_120();
-  piVar10 = (int *)uVar12;
-  uVar15 = (uint)uVar19;
-  piStack00000014 = piVar10;
-  uStack0000001c = uVar15;
-  if (piVar10[1] != 2) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_draw_xmodel.cpp",
-                    0x76a,0,"%s\n\t(drawStream->precompiledIndex) = %i");
-  }
-  _Var11.field0_0x0 = g_unit.field0_0x0;
-  piVar4 = (int *)*piVar10;
-  uVar5 = piVar10[7];
-  uVar16 = *(ulonglong *)*piVar4;
-  lVar21 = ((uVar16 & 0x7fff) + 0x1380) * 4 + (ulonglong)uVar5;
-  uVar2 = *(ushort *)((int)lVar21 + 10);
-  if (uVar2 == 0) {
-    local_15c = 0;
-    fVar1 = 0.0;
-  }
-  else {
-    puVar17 = (uint *)((uVar2 + 0xc880) * 8 + uVar5);
-    fVar1 = (float)puVar17[1];
-    local_15c = *puVar17 & 2;
-  }
-  dVar22 = (double)fVar1;
-  pDVar6 = ((GfxCmdBufPrimState *)(uVar15 + 0xc0))->device;
-  auVar32 = loadVectorLeftIndexed(uVar12 + 0x10);
-  auVar30 = loadVectorRightIndexed(uVar12 + 0x20);
-  auVar30 = (auVar32 | auVar30) & (undefined1  [16])g_keepXYZ.field0_0x0;
-  (pDVar6->m_Pending).m_Mask[0] = (pDVar6->m_Pending).m_Mask[0] & 0xbfffffffffffffff;
-  auVar30 = vectorSubtractFloatingPoint128(auVar30,(undefined1  [16])_Var11.field0_0x0);
-  while( true ) {
-    pXVar7 = (XSurface *)((uint *)lVar21)[5];
-    if (pXVar7 == (XSurface *)0x0) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_draw_xmodel.cpp",
-                      0x79c,0,"%s");
-    }
-    R_SetupXModelRigidModelSurfWithUpdate((GfxCmdBufState *)uVar19,pXVar7);
-    uVar19 = -(ulonglong)*(uint *)lVar21 - 3;
-    auVar32 = loadVectorLeftIndexed(ZEXT48(&stack0x00000000) - 0x154);
-    auVar32 = vectorSplatWord(auVar32,0);
-    local_138[0].vertexCount = (int)pXVar7->vertCount;
-    if ((uVar19 & 0xffffffff) != 0) {
-      auVar29 = vectorSplatImmediateSignedWord(0);
-      lVar21 = lVar21 + 0x1c;
-      auVar33 = vectorUnpackD3Dtype(auVar29,4);
-      auVar29 = vectorPermuteWordImmediate(auVar33,0xfe);
-      do {
-        auVar28 = loadVectorRightIndexed(lVar21 + 0x10);
-        auVar27 = loadVectorLeftIndexed(lVar21);
-        auVar27 = auVar27 | auVar28;
-        auVar26 = loadVectorLeftIndexed(lVar21 + 0x10);
-        auVar25 = vectorAddFloatingPoint128(auVar27,auVar27);
-        auVar24 = vectorPermuteWordImmediate(auVar27,7);
-        auVar23 = vectorSplatWord(auVar27,3);
-        auVar28 = loadVectorRightIndexed(lVar21 + 0x20);
-        auVar34 = vectorSubtractFloatingPoint128
-                            ((auVar26 | auVar28) & (undefined1  [16])g_keepXYZ.field0_0x0,auVar30);
-        auVar27 = vectorMultiplyFloatingPoint(auVar27,auVar25);
-        auVar26 = vectorPermuteWordImmediate(auVar25,0x9b);
-        auVar28 = vectorPermuteWordImmediate(auVar25,99);
-        auVar24 = vectorMultiplyFloatingPoint(auVar24,auVar26);
-        auVar23 = vectorMultiplyFloatingPoint(auVar23,auVar28);
-        auVar28 = vectorPermuteWordImmediate(auVar27,0x40);
-        auVar27 = vectorPermuteWordImmediate(auVar27,0xa4);
-        auVar26 = vectorSubtractFloatingPoint128(auVar29,auVar28);
-        auVar28 = vectorAddFloatingPoint128(auVar24,auVar23);
-        auVar23 = vectorSubtractFloatingPoint128(auVar24,auVar23);
-        auVar27 = vectorSubtractFloatingPoint128(auVar26,auVar27);
-        auVar26 = vectorPermuteWordImmediate(auVar28,0x42);
-        auVar28 = vectorShiftLeftDoubleByOctetImmediate(auVar23,auVar28,8);
-        auVar23 = vectorRotateLeftImmediateAndMaskInsert(auVar26,auVar23,6,3);
-        auVar26 = vectorPermuteWordImmediate(auVar28,0x88);
-        auVar24 = vectorRotateLeftImmediateAndMaskInsert(auVar27,auVar33,1,3);
-        auVar28 = vectorPermuteWordImmediate(auVar24,7);
-        auVar27 = vectorRotateLeftImmediateAndMaskInsert(auVar26,auVar24,3,0);
-        auVar26 = vectorRotateLeftImmediateAndMaskInsert(auVar24,auVar23,6,3);
-        auVar28 = vectorMergeLowWord128(auVar23,auVar28);
-        auVar27 = vectorMultiplyFloatingPoint(auVar27,auVar32);
-        auVar28 = vectorMultiplyFloatingPoint(auVar28,auVar32);
-        auVar26 = vectorMultiplyFloatingPoint(auVar26,auVar32);
-        do {
-          p_Var13 = D3DDevice_GpuBeginShaderConstantF4(pDVar6,0,4,4);
-          uVar20 = -(uint)(p_Var13 == (__vector4 *)0x0) & 0x8007000e;
-          if ((int)uVar20 < 0) {
-            R_ErrorDescription(uVar20);
-                    /* WARNING: Subroutine does not return */
-            Sys_Error(
-                     "c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_draw_xmodel.cpp (%i) device->GpuBeginVertexShaderConstantF4( 4, &constantData, 4 ) failed: %s\n"
-                     );
-          }
-        } while (alwaysfails != 0);
-        uVar3 = *(ushort *)((int)lVar21 + 0x1c);
-        auVar31 = vectorMergeHighWord128(auVar26,auVar27);
-        auVar25 = vectorMergeHighWord128(auVar28,auVar34);
-        auVar24 = vectorMergeLowWord128(auVar26,auVar27);
-        auVar28 = vectorMergeLowWord128(auVar28,auVar34);
-        local_138[0].baseIndex = (uint)uVar3 + (uint)uVar3 * 2;
-        auVar23 = vectorMergeHighWord128(auVar31,auVar25);
-        local_138[0].triCount = (int)*(ushort *)((int)lVar21 + 0x1e);
-        auVar27 = vectorMergeLowWord128(auVar31,auVar25);
-        auVar26 = vectorMergeHighWord128(auVar24,auVar28);
-        auVar28 = vectorMergeLowWord128(auVar24,auVar28);
-        *(undefined1 (*) [16])((uint)p_Var13 & 0xfffffff0) = auVar23;
-        *(undefined1 (*) [16])((uint)(p_Var13 + 1) & 0xfffffff0) = auVar27;
-        *(undefined1 (*) [16])((uint)(p_Var13 + 2) & 0xfffffff0) = auVar26;
-        *(undefined1 (*) [16])((uint)(p_Var13 + 3) & 0xfffffff0) = auVar28;
-        R_DrawIndexedPrimitive((GfxCmdBufPrimState *)(uVar15 + 0xc0),local_138);
-        uVar19 = uVar19 - 1;
-        lVar21 = lVar21 + 0x20;
-      } while (uVar19 != 0);
-      uVar12 = ZEXT48(piStack00000014);
-    }
-    iVar8 = *piVar4;
-    puVar18 = (ulonglong *)(iVar8 + 8);
-    *piVar4 = (int)puVar18;
-    if ((iVar8 + 8 == piVar4[1]) ||
-       (uVar19 = *puVar18, (uVar19 & 0xffffffffff800000) != (uVar16 & 0xffffffffff800000))) break;
-    pGVar9 = *(GfxCmdRingBuf **)((int)uVar12 + 0x24);
-    uVar14 = GetCurrentProcessorNumber();
-    if (pGVar9 != dx.cmdBufForProcId[uVar14]) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.h",
-                      0x496,0,"%s");
-    }
-    if ((pGVar9 != (GfxCmdRingBuf *)0x0) &&
-       ((longlong)((ulonglong)pGVar9->reserveMemoryPos0 - (ulonglong)pGVar9->memoryPos) < 0)) {
-      R_CmdBufReserveMemory(pGVar9);
-    }
-    lVar21 = ((uVar19 & 0x7fff) + 0x1380) * 4 + (ulonglong)uVar5;
-    if ((uVar19 & 0x800000) != 0) {
-      uVar20 = (uint)*(ushort *)((int)lVar21 + 10);
-      if (uVar20 == 0) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_draw_xmodel.cpp"
-                        ,0x7ea,0,"%s");
-      }
-      if (uVar20 != uVar2) {
-        puVar17 = (uint *)((uVar20 + 0xc880) * 8 + uVar5);
-        if (((*puVar17 & 2) != local_15c) || ((double)(float)puVar17[1] != dVar22)) break;
-      }
-    }
-    uVar19 = (ulonglong)uStack0000001c;
-  }
-  (pDVar6->m_Pending).m_Mask[0] = (pDVar6->m_Pending).m_Mask[0] | 0x4000000000000000;
-  __restvmx_120();
-  __restgprlr();
-  return;
-}
-
-
-// 82738D88  R_DrawXModelUnlitNoPrepassNoGfxEnt  (gfx_d3d/r_draw_xmodel.cpp:2213)
-
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
-/* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
-
-void R_DrawXModelUnlitNoPrepassNoGfxEnt(GfxXModelDrawStream *param_1,GfxCmdBufState *param_2)
-
-{
-  ushort uVar1;
-  int *piVar2;
-  D3DDevice *pDVar3;
-  uint uVar4;
-  XSurface *pXVar5;
-  int iVar6;
-  GfxCmdRingBuf *pGVar7;
-  int *piVar8;
-  uint *puVar9;
   __vector4 _Var10;
-  longlong lVar11;
-  ulonglong uVar12;
-  __vector4 *p_Var13;
-  ulong uVar14;
-  uint uVar15;
-  ulonglong *puVar16;
+  __vector4 *p_Var11;
+  ulong uVar12;
+  ulonglong uVar13;
+  GfxDrawSurf *pGVar14;
+  GfxCmdBufPrimState *pGVar15;
+  ulonglong uVar16;
   uint uVar18;
   ulonglong uVar17;
-  ulonglong uVar19;
-  undefined1 auVar20 [16];
+  longlong lVar19;
+  double dVar20;
   undefined1 auVar21 [16];
   undefined1 auVar22 [16];
   undefined1 auVar23 [16];
@@ -827,85 +630,94 @@ void R_DrawXModelUnlitNoPrepassNoGfxEnt(GfxXModelDrawStream *param_1,GfxCmdBufSt
   undefined1 auVar29 [16];
   undefined1 auVar30 [16];
   undefined1 auVar31 [16];
-  uint uStack0000001c;
-  GfxDrawPrimArgs local_130 [25];
+  undefined1 auVar32 [16];
+  GfxXModelDrawStream *pGStack00000014;
+  GfxCmdBufState *pGStack0000001c;
+  uint local_15c;
+  GfxDrawPrimArgs local_138 [26];
   
-  uVar17 = (ulonglong)(int)param_2;
-  __savegprlr();
-  lVar11 = __savevmx_120();
-  piVar8 = (int *)lVar11;
-  uVar15 = (uint)uVar17;
-  uStack0000001c = uVar15;
-  if (piVar8[1] != 2) {
+  uVar17 = (ulonglong)(int)param_1;
+  pGStack00000014 = param_1;
+  pGStack0000001c = param_2;
+  if (param_1->precompiledIndex != 2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_draw_xmodel.cpp",
-                    0x8c2,0,"%s\n\t(drawStream->precompiledIndex) = %i");
+                    0x76a,0,"%s\n\t(drawStream->precompiledIndex) = %i");
   }
   _Var10.field0_0x0 = g_unit.field0_0x0;
-  piVar2 = (int *)*piVar8;
-  pDVar3 = *(D3DDevice **)(uVar15 + 0xc0);
-  uVar4 = piVar8[7];
-  auVar29 = loadVectorLeftIndexed(lVar11 + 0x10);
-  auVar27 = loadVectorRightIndexed(lVar11 + 0x20);
-  uVar19 = *(ulonglong *)*piVar2;
-  uVar12 = uVar19 & 0xffffffffe0800000;
-  auVar27 = (auVar29 | auVar27) & (undefined1  [16])g_keepXYZ.field0_0x0;
-  (pDVar3->m_Pending).m_Mask[0] = (pDVar3->m_Pending).m_Mask[0] & 0xbfffffffffffffff;
-  auVar27 = vectorSubtractFloatingPoint128(auVar27,(undefined1  [16])_Var10.field0_0x0);
+  pGVar4 = param_1->drawSurfIter;
+  pGVar15 = &param_2->prim;
+  pGVar5 = param_1->data;
+  uVar13 = pGVar4->current->packed;
+  lVar19 = ((uVar13 & 0x7fff) + 0x1380) * 4 + ZEXT48(pGVar5);
+  uVar2 = *(ushort *)((int)lVar19 + 10);
+  if (uVar2 == 0) {
+    local_15c = 0;
+    fVar1 = 0.0;
+  }
+  else {
+    fVar1 = pGVar5->gfxEnts[uVar2].materialTime;
+    local_15c = pGVar5->gfxEnts[uVar2].renderFxFlags & 2;
+  }
+  dVar20 = (double)fVar1;
+  pDVar6 = pGVar15->device;
+  auVar30 = loadVectorLeftIndexed(uVar17 + 0x10);
+  auVar28 = loadVectorRightIndexed(uVar17 + 0x20);
+  auVar28 = (auVar30 | auVar28) & (undefined1  [16])g_keepXYZ.field0_0x0;
+  (pDVar6->m_Pending).m_Mask[0] = (pDVar6->m_Pending).m_Mask[0] & 0xbfffffffffffffff;
+  auVar28 = vectorSubtractFloatingPoint128(auVar28,(undefined1  [16])_Var10.field0_0x0);
   while( true ) {
-    lVar11 = ((uVar19 & 0x7fff) + 0x1380) * 4 + (ulonglong)uVar4;
-    puVar9 = (uint *)lVar11;
-    pXVar5 = (XSurface *)puVar9[5];
-    if (pXVar5 == (XSurface *)0x0) {
+    pXVar7 = (XSurface *)((uint *)lVar19)[5];
+    if (pXVar7 == (XSurface *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_draw_xmodel.cpp",
-                      0x8e9,0,"%s");
+                      0x79c,0,"%s");
     }
-    R_SetupXModelRigidModelSurfWithUpdate((GfxCmdBufState *)uVar17,pXVar5);
-    uVar19 = -(ulonglong)*puVar9 - 3;
-    auVar29 = loadVectorLeftIndexed(ZEXT48(&stack0x00000000) - 0x144);
-    auVar29 = vectorSplatWord(auVar29,0);
-    local_130[0].vertexCount = (int)pXVar5->vertCount;
-    if ((uVar19 & 0xffffffff) != 0) {
-      auVar26 = vectorSplatImmediateSignedWord(0);
-      lVar11 = lVar11 + 0x1c;
-      auVar30 = vectorUnpackD3Dtype(auVar26,4);
-      auVar26 = vectorPermuteWordImmediate(auVar30,0xfe);
+    R_SetupXModelRigidModelSurfWithUpdate(param_2,pXVar7);
+    uVar16 = -(ulonglong)*(uint *)lVar19 - 3;
+    auVar30 = loadVectorLeftIndexed(ZEXT48(&stack0x00000000) - 0x154);
+    auVar30 = vectorSplatWord(auVar30,0);
+    local_138[0].vertexCount = (int)pXVar7->vertCount;
+    if ((uVar16 & 0xffffffff) != 0) {
+      auVar27 = vectorSplatImmediateSignedWord(0);
+      lVar19 = lVar19 + 0x1c;
+      auVar31 = vectorUnpackD3Dtype(auVar27,4);
+      auVar27 = vectorPermuteWordImmediate(auVar31,0xfe);
       do {
-        auVar25 = loadVectorRightIndexed(lVar11 + 0x10);
-        auVar24 = loadVectorLeftIndexed(lVar11);
-        auVar24 = auVar24 | auVar25;
-        auVar23 = loadVectorLeftIndexed(lVar11 + 0x10);
-        auVar22 = vectorAddFloatingPoint128(auVar24,auVar24);
-        auVar21 = vectorPermuteWordImmediate(auVar24,7);
-        auVar20 = vectorSplatWord(auVar24,3);
-        auVar25 = loadVectorRightIndexed(lVar11 + 0x20);
-        auVar31 = vectorSubtractFloatingPoint128
-                            ((auVar23 | auVar25) & (undefined1  [16])g_keepXYZ.field0_0x0,auVar27);
-        auVar24 = vectorMultiplyFloatingPoint(auVar24,auVar22);
-        auVar23 = vectorPermuteWordImmediate(auVar22,0x9b);
-        auVar25 = vectorPermuteWordImmediate(auVar22,99);
-        auVar21 = vectorMultiplyFloatingPoint(auVar21,auVar23);
-        auVar20 = vectorMultiplyFloatingPoint(auVar20,auVar25);
-        auVar25 = vectorPermuteWordImmediate(auVar24,0x40);
-        auVar24 = vectorPermuteWordImmediate(auVar24,0xa4);
-        auVar23 = vectorSubtractFloatingPoint128(auVar26,auVar25);
-        auVar25 = vectorAddFloatingPoint128(auVar21,auVar20);
-        auVar20 = vectorSubtractFloatingPoint128(auVar21,auVar20);
-        auVar24 = vectorSubtractFloatingPoint128(auVar23,auVar24);
-        auVar23 = vectorPermuteWordImmediate(auVar25,0x42);
-        auVar25 = vectorShiftLeftDoubleByOctetImmediate(auVar20,auVar25,8);
-        auVar20 = vectorRotateLeftImmediateAndMaskInsert(auVar23,auVar20,6,3);
-        auVar23 = vectorPermuteWordImmediate(auVar25,0x88);
-        auVar21 = vectorRotateLeftImmediateAndMaskInsert(auVar24,auVar30,1,3);
-        auVar25 = vectorPermuteWordImmediate(auVar21,7);
-        auVar24 = vectorRotateLeftImmediateAndMaskInsert(auVar23,auVar21,3,0);
-        auVar23 = vectorRotateLeftImmediateAndMaskInsert(auVar21,auVar20,6,3);
-        auVar25 = vectorMergeLowWord128(auVar20,auVar25);
-        auVar24 = vectorMultiplyFloatingPoint(auVar24,auVar29);
-        auVar25 = vectorMultiplyFloatingPoint(auVar25,auVar29);
-        auVar23 = vectorMultiplyFloatingPoint(auVar23,auVar29);
+        auVar26 = loadVectorRightIndexed(lVar19 + 0x10);
+        auVar25 = loadVectorLeftIndexed(lVar19);
+        auVar25 = auVar25 | auVar26;
+        auVar24 = loadVectorLeftIndexed(lVar19 + 0x10);
+        auVar23 = vectorAddFloatingPoint128(auVar25,auVar25);
+        auVar22 = vectorPermuteWordImmediate(auVar25,7);
+        auVar21 = vectorSplatWord(auVar25,3);
+        auVar26 = loadVectorRightIndexed(lVar19 + 0x20);
+        auVar32 = vectorSubtractFloatingPoint128
+                            ((auVar24 | auVar26) & (undefined1  [16])g_keepXYZ.field0_0x0,auVar28);
+        auVar25 = vectorMultiplyFloatingPoint(auVar25,auVar23);
+        auVar24 = vectorPermuteWordImmediate(auVar23,0x9b);
+        auVar26 = vectorPermuteWordImmediate(auVar23,99);
+        auVar22 = vectorMultiplyFloatingPoint(auVar22,auVar24);
+        auVar21 = vectorMultiplyFloatingPoint(auVar21,auVar26);
+        auVar26 = vectorPermuteWordImmediate(auVar25,0x40);
+        auVar25 = vectorPermuteWordImmediate(auVar25,0xa4);
+        auVar24 = vectorSubtractFloatingPoint128(auVar27,auVar26);
+        auVar26 = vectorAddFloatingPoint128(auVar22,auVar21);
+        auVar21 = vectorSubtractFloatingPoint128(auVar22,auVar21);
+        auVar25 = vectorSubtractFloatingPoint128(auVar24,auVar25);
+        auVar24 = vectorPermuteWordImmediate(auVar26,0x42);
+        auVar26 = vectorShiftLeftDoubleByOctetImmediate(auVar21,auVar26,8);
+        auVar21 = vectorRotateLeftImmediateAndMaskInsert(auVar24,auVar21,6,3);
+        auVar24 = vectorPermuteWordImmediate(auVar26,0x88);
+        auVar22 = vectorRotateLeftImmediateAndMaskInsert(auVar25,auVar31,1,3);
+        auVar26 = vectorPermuteWordImmediate(auVar22,7);
+        auVar25 = vectorRotateLeftImmediateAndMaskInsert(auVar24,auVar22,3,0);
+        auVar24 = vectorRotateLeftImmediateAndMaskInsert(auVar22,auVar21,6,3);
+        auVar26 = vectorMergeLowWord128(auVar21,auVar26);
+        auVar25 = vectorMultiplyFloatingPoint(auVar25,auVar30);
+        auVar26 = vectorMultiplyFloatingPoint(auVar26,auVar30);
+        auVar24 = vectorMultiplyFloatingPoint(auVar24,auVar30);
         do {
-          p_Var13 = D3DDevice_GpuBeginShaderConstantF4(pDVar3,0,4,4);
-          uVar18 = -(uint)(p_Var13 == (__vector4 *)0x0) & 0x8007000e;
+          p_Var11 = D3DDevice_GpuBeginShaderConstantF4(pDVar6,0,4,4);
+          uVar18 = -(uint)(p_Var11 == (__vector4 *)0x0) & 0x8007000e;
           if ((int)uVar18 < 0) {
             R_ErrorDescription(uVar18);
                     /* WARNING: Subroutine does not return */
@@ -914,35 +726,216 @@ void R_DrawXModelUnlitNoPrepassNoGfxEnt(GfxXModelDrawStream *param_1,GfxCmdBufSt
                      );
           }
         } while (alwaysfails != 0);
-        uVar1 = *(ushort *)((int)lVar11 + 0x1c);
-        auVar28 = vectorMergeHighWord128(auVar23,auVar24);
-        auVar22 = vectorMergeHighWord128(auVar25,auVar31);
-        auVar21 = vectorMergeLowWord128(auVar23,auVar24);
-        auVar25 = vectorMergeLowWord128(auVar25,auVar31);
-        local_130[0].baseIndex = (uint)uVar1 + (uint)uVar1 * 2;
-        auVar20 = vectorMergeHighWord128(auVar28,auVar22);
-        local_130[0].triCount = (int)*(ushort *)((int)lVar11 + 0x1e);
-        auVar24 = vectorMergeLowWord128(auVar28,auVar22);
-        auVar23 = vectorMergeHighWord128(auVar21,auVar25);
-        auVar25 = vectorMergeLowWord128(auVar21,auVar25);
-        *(undefined1 (*) [16])((uint)p_Var13 & 0xfffffff0) = auVar20;
-        *(undefined1 (*) [16])((uint)(p_Var13 + 1) & 0xfffffff0) = auVar24;
-        *(undefined1 (*) [16])((uint)(p_Var13 + 2) & 0xfffffff0) = auVar23;
-        *(undefined1 (*) [16])((uint)(p_Var13 + 3) & 0xfffffff0) = auVar25;
-        R_DrawIndexedPrimitive((GfxCmdBufPrimState *)(uVar15 + 0xc0),local_130);
-        uVar19 = uVar19 - 1;
-        lVar11 = lVar11 + 0x20;
-      } while (uVar19 != 0);
-      uVar17 = (ulonglong)uStack0000001c;
+        uVar3 = *(ushort *)((int)lVar19 + 0x1c);
+        auVar29 = vectorMergeHighWord128(auVar24,auVar25);
+        auVar23 = vectorMergeHighWord128(auVar26,auVar32);
+        auVar22 = vectorMergeLowWord128(auVar24,auVar25);
+        auVar26 = vectorMergeLowWord128(auVar26,auVar32);
+        local_138[0].baseIndex = (uint)uVar3 + (uint)uVar3 * 2;
+        auVar21 = vectorMergeHighWord128(auVar29,auVar23);
+        local_138[0].triCount = (int)*(ushort *)((int)lVar19 + 0x1e);
+        auVar25 = vectorMergeLowWord128(auVar29,auVar23);
+        auVar24 = vectorMergeHighWord128(auVar22,auVar26);
+        auVar26 = vectorMergeLowWord128(auVar22,auVar26);
+        *(undefined1 (*) [16])((uint)p_Var11 & 0xfffffff0) = auVar21;
+        *(undefined1 (*) [16])((uint)(p_Var11 + 1) & 0xfffffff0) = auVar25;
+        *(undefined1 (*) [16])((uint)(p_Var11 + 2) & 0xfffffff0) = auVar24;
+        *(undefined1 (*) [16])((uint)(p_Var11 + 3) & 0xfffffff0) = auVar26;
+        R_DrawIndexedPrimitive(pGVar15,local_138);
+        uVar16 = uVar16 - 1;
+        lVar19 = lVar19 + 0x20;
+      } while (uVar16 != 0);
+      uVar17 = ZEXT48(pGStack00000014);
     }
-    iVar6 = *piVar2;
-    puVar16 = (ulonglong *)(iVar6 + 8);
-    *piVar2 = (int)puVar16;
-    if ((iVar6 + 8 == piVar2[1]) || (uVar19 = *puVar16, (uVar19 & 0xffffffffe0800000) != uVar12))
+    pGVar8 = pGVar4->current;
+    pGVar14 = pGVar8 + 1;
+    pGVar4->current = pGVar14;
+    if ((pGVar8 + 1 == pGVar4->end) ||
+       (uVar16 = pGVar14->packed, (uVar16 & 0xffffffffff800000) != (uVar13 & 0xffffffffff800000)))
     break;
-    pGVar7 = (GfxCmdRingBuf *)piVar8[9];
-    uVar14 = GetCurrentProcessorNumber();
-    if (pGVar7 != dx.cmdBufForProcId[uVar14]) {
+    pGVar9 = *(GfxCmdRingBuf **)((int)uVar17 + 0x24);
+    uVar12 = GetCurrentProcessorNumber();
+    if (pGVar9 != dx.cmdBufForProcId[uVar12]) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.h",
+                      0x496,0,"%s");
+    }
+    if ((pGVar9 != (GfxCmdRingBuf *)0x0) &&
+       ((longlong)((ulonglong)pGVar9->reserveMemoryPos0 - (ulonglong)pGVar9->memoryPos) < 0)) {
+      R_CmdBufReserveMemory(pGVar9);
+    }
+    lVar19 = ((uVar16 & 0x7fff) + 0x1380) * 4 + ZEXT48(pGVar5);
+    param_2 = pGStack0000001c;
+    if ((uVar16 & 0x800000) != 0) {
+      uVar18 = (uint)*(ushort *)((int)lVar19 + 10);
+      if (uVar18 == 0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_draw_xmodel.cpp"
+                        ,0x7ea,0,"%s");
+      }
+      param_2 = pGStack0000001c;
+      if ((uVar18 != uVar2) &&
+         (((pGVar5->gfxEnts[uVar18].renderFxFlags & 2) != local_15c ||
+          ((double)pGVar5->gfxEnts[uVar18].materialTime != dVar20)))) break;
+    }
+  }
+  (pDVar6->m_Pending).m_Mask[0] = (pDVar6->m_Pending).m_Mask[0] | 0x4000000000000000;
+  return;
+}
+
+
+// 82738D88  R_DrawXModelUnlitNoPrepassNoGfxEnt  (gfx_d3d/r_draw_xmodel.cpp:2213)
+
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savevmx_120 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restvmx_120 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+/* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
+
+void R_DrawXModelUnlitNoPrepassNoGfxEnt(GfxXModelDrawStream *param_1,GfxCmdBufState *param_2)
+
+{
+  ushort uVar1;
+  GfxDrawSurfIter *pGVar2;
+  D3DDevice *pDVar3;
+  GfxBackEndData *pGVar4;
+  XSurface *pXVar5;
+  GfxDrawSurf *pGVar6;
+  GfxCmdRingBuf *pGVar7;
+  uint *puVar8;
+  __vector4 _Var9;
+  ulonglong uVar10;
+  GfxCmdBufPrimState *pGVar11;
+  __vector4 *p_Var12;
+  ulong uVar13;
+  GfxDrawSurf *pGVar14;
+  uint uVar15;
+  ulonglong uVar16;
+  longlong lVar17;
+  undefined1 auVar18 [16];
+  undefined1 auVar19 [16];
+  undefined1 auVar20 [16];
+  undefined1 auVar21 [16];
+  undefined1 auVar22 [16];
+  undefined1 auVar23 [16];
+  undefined1 auVar24 [16];
+  undefined1 auVar25 [16];
+  undefined1 auVar26 [16];
+  undefined1 auVar27 [16];
+  undefined1 auVar28 [16];
+  undefined1 auVar29 [16];
+  GfxCmdBufState *pGStack0000001c;
+  GfxDrawPrimArgs local_130 [25];
+  
+  pGStack0000001c = param_2;
+  if (param_1->precompiledIndex != 2) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_draw_xmodel.cpp",
+                    0x8c2,0,"%s\n\t(drawStream->precompiledIndex) = %i");
+  }
+  _Var9.field0_0x0 = g_unit.field0_0x0;
+  pGVar2 = param_1->drawSurfIter;
+  pDVar3 = (param_2->prim).device;
+  pGVar4 = param_1->data;
+  auVar27 = loadVectorLeftIndexed((longlong)(int)param_1 + 0x10);
+  auVar25 = loadVectorRightIndexed((longlong)(int)param_1 + 0x20);
+  uVar16 = pGVar2->current->packed;
+  uVar10 = uVar16 & 0xffffffffe0800000;
+  auVar25 = (auVar27 | auVar25) & (undefined1  [16])g_keepXYZ.field0_0x0;
+  (pDVar3->m_Pending).m_Mask[0] = (pDVar3->m_Pending).m_Mask[0] & 0xbfffffffffffffff;
+  auVar25 = vectorSubtractFloatingPoint128(auVar25,(undefined1  [16])_Var9.field0_0x0);
+  pGVar11 = &param_2->prim;
+  while( true ) {
+    lVar17 = ((uVar16 & 0x7fff) + 0x1380) * 4 + ZEXT48(pGVar4);
+    puVar8 = (uint *)lVar17;
+    pXVar5 = (XSurface *)puVar8[5];
+    if (pXVar5 == (XSurface *)0x0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_draw_xmodel.cpp",
+                      0x8e9,0,"%s");
+    }
+    R_SetupXModelRigidModelSurfWithUpdate(param_2,pXVar5);
+    uVar16 = -(ulonglong)*puVar8 - 3;
+    auVar27 = loadVectorLeftIndexed(ZEXT48(&stack0x00000000) - 0x144);
+    auVar27 = vectorSplatWord(auVar27,0);
+    local_130[0].vertexCount = (int)pXVar5->vertCount;
+    if ((uVar16 & 0xffffffff) != 0) {
+      auVar24 = vectorSplatImmediateSignedWord(0);
+      lVar17 = lVar17 + 0x1c;
+      auVar28 = vectorUnpackD3Dtype(auVar24,4);
+      auVar24 = vectorPermuteWordImmediate(auVar28,0xfe);
+      do {
+        auVar23 = loadVectorRightIndexed(lVar17 + 0x10);
+        auVar22 = loadVectorLeftIndexed(lVar17);
+        auVar22 = auVar22 | auVar23;
+        auVar21 = loadVectorLeftIndexed(lVar17 + 0x10);
+        auVar20 = vectorAddFloatingPoint128(auVar22,auVar22);
+        auVar19 = vectorPermuteWordImmediate(auVar22,7);
+        auVar18 = vectorSplatWord(auVar22,3);
+        auVar23 = loadVectorRightIndexed(lVar17 + 0x20);
+        auVar29 = vectorSubtractFloatingPoint128
+                            ((auVar21 | auVar23) & (undefined1  [16])g_keepXYZ.field0_0x0,auVar25);
+        auVar22 = vectorMultiplyFloatingPoint(auVar22,auVar20);
+        auVar21 = vectorPermuteWordImmediate(auVar20,0x9b);
+        auVar23 = vectorPermuteWordImmediate(auVar20,99);
+        auVar19 = vectorMultiplyFloatingPoint(auVar19,auVar21);
+        auVar18 = vectorMultiplyFloatingPoint(auVar18,auVar23);
+        auVar23 = vectorPermuteWordImmediate(auVar22,0x40);
+        auVar22 = vectorPermuteWordImmediate(auVar22,0xa4);
+        auVar21 = vectorSubtractFloatingPoint128(auVar24,auVar23);
+        auVar23 = vectorAddFloatingPoint128(auVar19,auVar18);
+        auVar18 = vectorSubtractFloatingPoint128(auVar19,auVar18);
+        auVar22 = vectorSubtractFloatingPoint128(auVar21,auVar22);
+        auVar21 = vectorPermuteWordImmediate(auVar23,0x42);
+        auVar23 = vectorShiftLeftDoubleByOctetImmediate(auVar18,auVar23,8);
+        auVar18 = vectorRotateLeftImmediateAndMaskInsert(auVar21,auVar18,6,3);
+        auVar21 = vectorPermuteWordImmediate(auVar23,0x88);
+        auVar19 = vectorRotateLeftImmediateAndMaskInsert(auVar22,auVar28,1,3);
+        auVar23 = vectorPermuteWordImmediate(auVar19,7);
+        auVar22 = vectorRotateLeftImmediateAndMaskInsert(auVar21,auVar19,3,0);
+        auVar21 = vectorRotateLeftImmediateAndMaskInsert(auVar19,auVar18,6,3);
+        auVar23 = vectorMergeLowWord128(auVar18,auVar23);
+        auVar22 = vectorMultiplyFloatingPoint(auVar22,auVar27);
+        auVar23 = vectorMultiplyFloatingPoint(auVar23,auVar27);
+        auVar21 = vectorMultiplyFloatingPoint(auVar21,auVar27);
+        do {
+          p_Var12 = D3DDevice_GpuBeginShaderConstantF4(pDVar3,0,4,4);
+          uVar15 = -(uint)(p_Var12 == (__vector4 *)0x0) & 0x8007000e;
+          if ((int)uVar15 < 0) {
+            R_ErrorDescription(uVar15);
+                    /* WARNING: Subroutine does not return */
+            Sys_Error(
+                     "c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_draw_xmodel.cpp (%i) device->GpuBeginVertexShaderConstantF4( 4, &constantData, 4 ) failed: %s\n"
+                     );
+          }
+        } while (alwaysfails != 0);
+        uVar1 = *(ushort *)((int)lVar17 + 0x1c);
+        auVar26 = vectorMergeHighWord128(auVar21,auVar22);
+        auVar20 = vectorMergeHighWord128(auVar23,auVar29);
+        auVar19 = vectorMergeLowWord128(auVar21,auVar22);
+        auVar23 = vectorMergeLowWord128(auVar23,auVar29);
+        local_130[0].baseIndex = (uint)uVar1 + (uint)uVar1 * 2;
+        auVar18 = vectorMergeHighWord128(auVar26,auVar20);
+        local_130[0].triCount = (int)*(ushort *)((int)lVar17 + 0x1e);
+        auVar22 = vectorMergeLowWord128(auVar26,auVar20);
+        auVar21 = vectorMergeHighWord128(auVar19,auVar23);
+        auVar23 = vectorMergeLowWord128(auVar19,auVar23);
+        *(undefined1 (*) [16])((uint)p_Var12 & 0xfffffff0) = auVar18;
+        *(undefined1 (*) [16])((uint)(p_Var12 + 1) & 0xfffffff0) = auVar22;
+        *(undefined1 (*) [16])((uint)(p_Var12 + 2) & 0xfffffff0) = auVar21;
+        *(undefined1 (*) [16])((uint)(p_Var12 + 3) & 0xfffffff0) = auVar23;
+        R_DrawIndexedPrimitive(pGVar11,local_130);
+        uVar16 = uVar16 - 1;
+        lVar17 = lVar17 + 0x20;
+        param_2 = pGStack0000001c;
+      } while (uVar16 != 0);
+    }
+    pGVar6 = pGVar2->current;
+    pGVar14 = pGVar6 + 1;
+    pGVar2->current = pGVar14;
+    if ((pGVar6 + 1 == pGVar2->end) ||
+       (uVar16 = pGVar14->packed, (uVar16 & 0xffffffffe0800000) != uVar10)) break;
+    pGVar7 = param_1->cmdBuf;
+    uVar13 = GetCurrentProcessorNumber();
+    if (pGVar7 != dx.cmdBufForProcId[uVar13]) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.h",
                       0x496,0,"%s");
     }
@@ -952,14 +945,16 @@ void R_DrawXModelUnlitNoPrepassNoGfxEnt(GfxXModelDrawStream *param_1,GfxCmdBufSt
     }
   }
   (pDVar3->m_Pending).m_Mask[0] = (pDVar3->m_Pending).m_Mask[0] | 0x4000000000000000;
-  __restvmx_120();
-  __restgprlr();
   return;
 }
 
 
 // 82739130  R_DrawXModelLitNoPrepass  (gfx_d3d/r_draw_xmodel.cpp:2488)
 
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savevmx_120 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restvmx_120 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
@@ -970,32 +965,32 @@ void R_DrawXModelLitNoPrepass(GfxXModelDrawStream *param_1,GfxCmdBufState *param
   float fVar1;
   ushort uVar2;
   ushort uVar3;
-  int *piVar4;
-  uint uVar5;
-  int iVar6;
+  GfxDrawSurfIter *pGVar4;
+  GfxBackEndData *pGVar5;
+  GfxDrawSurf *pGVar6;
   D3DDevice *pDVar7;
   uint uVar8;
   GfxTexture *pGVar9;
   XSurface *pXVar10;
-  int iVar11;
+  GfxDrawSurf *pGVar11;
   GfxCmdRingBuf *pGVar12;
-  int *piVar13;
+  uint *puVar13;
   float *pfVar14;
   ulonglong uVar15;
   __vector4 _Var16;
   GfxWorldDraw *pGVar17;
-  longlong lVar18;
-  __vector4 *p_Var19;
-  ulong uVar20;
-  uint uVar22;
-  ulonglong uVar21;
-  ulonglong uVar23;
-  uint *puVar24;
-  ulonglong *puVar25;
-  longlong lVar26;
-  ulonglong uVar27;
-  uint uVar28;
-  double dVar29;
+  __vector4 *p_Var18;
+  ulong uVar19;
+  ulonglong uVar20;
+  GfxDrawSurf *pGVar21;
+  GfxCmdBufPrimState *pGVar22;
+  longlong lVar23;
+  ulonglong uVar24;
+  uint uVar25;
+  double dVar26;
+  undefined1 auVar27 [16];
+  undefined1 auVar28 [16];
+  undefined1 auVar29 [16];
   undefined1 auVar30 [16];
   undefined1 auVar31 [16];
   undefined1 auVar32 [16];
@@ -1005,190 +1000,182 @@ void R_DrawXModelLitNoPrepass(GfxXModelDrawStream *param_1,GfxCmdBufState *param
   undefined1 auVar36 [16];
   undefined1 auVar37 [16];
   undefined1 auVar38 [16];
-  undefined1 auVar39 [16];
-  undefined1 auVar40 [16];
-  undefined1 auVar41 [16];
-  uint uStack0000001c;
+  GfxCmdBufState *pGStack0000001c;
   GfxTexture *local_180;
   uint local_174;
   GfxDrawPrimArgs local_138 [26];
   
-  uVar23 = (ulonglong)(int)param_2;
-  __savegprlr();
-  lVar18 = __savevmx_120();
-  piVar13 = (int *)lVar18;
-  uVar22 = (uint)uVar23;
-  uStack0000001c = uVar22;
-  if (piVar13[1] != 1) {
+  pGStack0000001c = param_2;
+  if (param_1->precompiledIndex != 1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_draw_xmodel.cpp",
                     0x9e0,0,"%s\n\t(drawStream->precompiledIndex) = %i");
   }
   pGVar17 = g_worldDraw;
-  piVar4 = (int *)*piVar13;
-  uVar5 = piVar13[7];
-  uVar27 = *(ulonglong *)*piVar4;
-  lVar26 = ((uVar27 & 0x7fff) + 0x1380) * 4 + (ulonglong)uVar5;
-  uVar2 = *(ushort *)((int)lVar26 + 10);
+  pGVar4 = param_1->drawSurfIter;
+  pGVar22 = &param_2->prim;
+  pGVar5 = param_1->data;
+  uVar24 = pGVar4->current->packed;
+  lVar23 = ((uVar24 & 0x7fff) + 0x1380) * 4 + ZEXT48(pGVar5);
+  uVar2 = *(ushort *)((int)lVar23 + 10);
   if (uVar2 == 0) {
     local_174 = 0;
     fVar1 = 0.0;
   }
   else {
-    puVar24 = (uint *)((uVar2 + 0xc880) * 8 + uVar5);
-    fVar1 = (float)puVar24[1];
-    local_174 = *puVar24 & 2;
+    fVar1 = pGVar5->gfxEnts[uVar2].materialTime;
+    local_174 = pGVar5->gfxEnts[uVar2].renderFxFlags & 2;
   }
-  dVar29 = (double)fVar1;
-  iVar6 = piVar4[1];
-  pDVar7 = ((GfxCmdBufPrimState *)(uVar22 + 0xc0))->device;
-  local_180 = (GfxTexture *)piVar13[2];
-  uVar8 = piVar13[3];
-  auVar39 = loadVectorLeftIndexed(lVar18 + 0x10);
-  auVar37 = loadVectorRightIndexed(lVar18 + 0x20);
-  uVar21 = (pDVar7->m_Pending).m_Mask[0];
-  (pDVar7->m_Pending).m_Mask[0] = uVar21 & 0xbfffffffffffffff;
+  dVar26 = (double)fVar1;
+  pGVar6 = pGVar4->end;
+  pDVar7 = pGVar22->device;
+  local_180 = param_1->reflectionProbeTexture;
+  uVar8 = param_1->customSamplerFlags;
+  auVar36 = loadVectorLeftIndexed((longlong)(int)param_1 + 0x10);
+  auVar34 = loadVectorRightIndexed((longlong)(int)param_1 + 0x20);
+  uVar20 = (pDVar7->m_Pending).m_Mask[0];
+  (pDVar7->m_Pending).m_Mask[0] = uVar20 & 0xbfffffffffffffff;
   _Var16 = g_unit;
   pGVar9 = pGVar17->reflectionProbeTextures;
-  auVar37 = (auVar39 | auVar37) & (undefined1  [16])g_keepXYZ.field0_0x0;
-  uVar15 = uVar27 & 0xffffffffff800000;
-  (pDVar7->m_Pending).m_Mask[0] = uVar21 & 0x9fffffffffffffff;
-  auVar37 = vectorSubtractFloatingPoint128(auVar37,(undefined1  [16])_Var16.field0_0x0);
+  auVar34 = (auVar36 | auVar34) & (undefined1  [16])g_keepXYZ.field0_0x0;
+  uVar15 = uVar24 & 0xffffffffff800000;
+  (pDVar7->m_Pending).m_Mask[0] = uVar20 & 0x9fffffffffffffff;
+  auVar34 = vectorSubtractFloatingPoint128(auVar34,(undefined1  [16])_Var16.field0_0x0);
   while( true ) {
-    puVar24 = (uint *)lVar26;
-    pXVar10 = (XSurface *)puVar24[5];
+    puVar13 = (uint *)lVar23;
+    pXVar10 = (XSurface *)puVar13[5];
     if (pXVar10 == (XSurface *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_draw_xmodel.cpp",
                       0xa24,0,"%s");
     }
-    R_SetupXModelRigidModelSurfWithUpdate((GfxCmdBufState *)uVar23,pXVar10);
+    R_SetupXModelRigidModelSurfWithUpdate(param_2,pXVar10);
     if ((uVar8 & 1) == 0) {
       local_180 = (GfxTexture *)0x0;
     }
     else {
-      uVar23 = uVar27 >> 0xf & 0xff;
-      if (g_worldDraw->reflectionProbeCount <= uVar23) {
+      uVar24 = uVar24 >> 0xf & 0xff;
+      if (g_worldDraw->reflectionProbeCount <= uVar24) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_draw_xmodel.cpp"
                         ,0xa30,0,
                         "reflectionProbeIndex doesn\'t index g_worldDraw->reflectionProbeCount\n\t%i not in [0, %i)"
                        );
       }
-      uVar23 = uVar23 * 0x34 + ZEXT48(pGVar9);
-      if (ZEXT48(local_180) != (uVar23 & 0xffffffff)) {
-        local_180 = (GfxTexture *)uVar23;
+      uVar24 = uVar24 * 0x34 + ZEXT48(pGVar9);
+      if (ZEXT48(local_180) != (uVar24 & 0xffffffff)) {
+        local_180 = (GfxTexture *)uVar24;
         R_HW_SetPixelSamplerTexture(pDVar7,1,local_180);
       }
     }
-    uVar3 = *(ushort *)(puVar24 + 3);
+    uVar3 = *(ushort *)(puVar13 + 3);
     do {
-      p_Var19 = D3DDevice_GpuBeginShaderConstantF4(pDVar7,0,8,4);
-      uVar28 = -(uint)(p_Var19 == (__vector4 *)0x0) & 0x8007000e;
-      if ((int)uVar28 < 0) {
-        R_ErrorDescription(uVar28);
+      p_Var18 = D3DDevice_GpuBeginShaderConstantF4(pDVar7,0,8,4);
+      uVar25 = -(uint)(p_Var18 == (__vector4 *)0x0) & 0x8007000e;
+      if ((int)uVar25 < 0) {
+        R_ErrorDescription(uVar25);
                     /* WARNING: Subroutine does not return */
         Sys_Error(
                  "c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_draw_xmodel.cpp (%i) device->GpuBeginVertexShaderConstantF4( 8, &constantData, 4 ) failed: %s\n"
                  );
       }
     } while (alwaysfails != 0);
-    R_SetModelLightingCoords((uint)uVar3,(float *)p_Var19);
+    R_SetModelLightingCoords((uint)uVar3,(float *)p_Var18);
     uVar3 = pXVar10->vertCount;
-    uVar23 = -(ulonglong)*puVar24 - 3;
-    pfVar14 = (float *)((uint)(p_Var19 + 1) & 0xfffffff0);
+    uVar24 = -(ulonglong)*puVar13 - 3;
+    pfVar14 = (float *)((uint)(p_Var18 + 1) & 0xfffffff0);
     *pfVar14 = (float)0;
     pfVar14[1] = (float)0;
     pfVar14[2] = (float)0;
     pfVar14[3] = (float)0;
-    auVar39 = loadVectorLeftIndexed(ZEXT48(&stack0x00000000) - 0x160);
-    auVar39 = vectorSplatWord(auVar39,0);
-    pfVar14 = (float *)((uint)(p_Var19 + 2) & 0xfffffff0);
+    auVar36 = loadVectorLeftIndexed(ZEXT48(&stack0x00000000) - 0x160);
+    auVar36 = vectorSplatWord(auVar36,0);
+    pfVar14 = (float *)((uint)(p_Var18 + 2) & 0xfffffff0);
     *pfVar14 = (float)0;
     pfVar14[1] = (float)0;
     pfVar14[2] = (float)0;
     pfVar14[3] = (float)0;
     local_138[0].vertexCount = (int)uVar3;
-    pfVar14 = (float *)((uint)(p_Var19 + 3) & 0xfffffff0);
+    pfVar14 = (float *)((uint)(p_Var18 + 3) & 0xfffffff0);
     *pfVar14 = (float)0;
     pfVar14[1] = (float)0;
     pfVar14[2] = (float)0;
     pfVar14[3] = (float)0;
-    if ((uVar23 & 0xffffffff) != 0) {
-      auVar36 = vectorSplatImmediateSignedWord(0);
-      lVar26 = lVar26 + 0x1c;
-      auVar40 = vectorUnpackD3Dtype(auVar36,4);
-      auVar36 = vectorPermuteWordImmediate(auVar40,0xfe);
+    if ((uVar24 & 0xffffffff) != 0) {
+      auVar33 = vectorSplatImmediateSignedWord(0);
+      lVar23 = lVar23 + 0x1c;
+      auVar37 = vectorUnpackD3Dtype(auVar33,4);
+      auVar33 = vectorPermuteWordImmediate(auVar37,0xfe);
       do {
-        auVar35 = loadVectorRightIndexed(lVar26 + 0x10);
-        auVar34 = loadVectorLeftIndexed(lVar26);
-        auVar34 = auVar34 | auVar35;
-        auVar33 = loadVectorLeftIndexed(lVar26 + 0x10);
-        auVar32 = vectorAddFloatingPoint128(auVar34,auVar34);
-        auVar31 = vectorPermuteWordImmediate(auVar34,7);
-        auVar30 = vectorSplatWord(auVar34,3);
-        auVar35 = loadVectorRightIndexed(lVar26 + 0x20);
-        auVar41 = vectorSubtractFloatingPoint128
-                            ((auVar33 | auVar35) & (undefined1  [16])g_keepXYZ.field0_0x0,auVar37);
-        auVar34 = vectorMultiplyFloatingPoint(auVar34,auVar32);
-        auVar33 = vectorPermuteWordImmediate(auVar32,0x9b);
-        auVar35 = vectorPermuteWordImmediate(auVar32,99);
-        auVar31 = vectorMultiplyFloatingPoint(auVar31,auVar33);
-        auVar30 = vectorMultiplyFloatingPoint(auVar30,auVar35);
-        auVar35 = vectorPermuteWordImmediate(auVar34,0x40);
-        auVar34 = vectorPermuteWordImmediate(auVar34,0xa4);
-        auVar33 = vectorSubtractFloatingPoint128(auVar36,auVar35);
-        auVar35 = vectorAddFloatingPoint128(auVar31,auVar30);
-        auVar30 = vectorSubtractFloatingPoint128(auVar31,auVar30);
-        auVar34 = vectorSubtractFloatingPoint128(auVar33,auVar34);
-        auVar33 = vectorPermuteWordImmediate(auVar35,0x42);
-        auVar35 = vectorShiftLeftDoubleByOctetImmediate(auVar30,auVar35,8);
-        auVar30 = vectorRotateLeftImmediateAndMaskInsert(auVar33,auVar30,6,3);
-        auVar33 = vectorPermuteWordImmediate(auVar35,0x88);
-        auVar31 = vectorRotateLeftImmediateAndMaskInsert(auVar34,auVar40,1,3);
-        auVar35 = vectorPermuteWordImmediate(auVar31,7);
-        auVar34 = vectorRotateLeftImmediateAndMaskInsert(auVar33,auVar31,3,0);
-        auVar33 = vectorRotateLeftImmediateAndMaskInsert(auVar31,auVar30,6,3);
-        auVar35 = vectorMergeLowWord128(auVar30,auVar35);
-        auVar34 = vectorMultiplyFloatingPoint(auVar34,auVar39);
-        auVar35 = vectorMultiplyFloatingPoint(auVar35,auVar39);
-        auVar33 = vectorMultiplyFloatingPoint(auVar33,auVar39);
+        auVar32 = loadVectorRightIndexed(lVar23 + 0x10);
+        auVar31 = loadVectorLeftIndexed(lVar23);
+        auVar31 = auVar31 | auVar32;
+        auVar30 = loadVectorLeftIndexed(lVar23 + 0x10);
+        auVar29 = vectorAddFloatingPoint128(auVar31,auVar31);
+        auVar28 = vectorPermuteWordImmediate(auVar31,7);
+        auVar27 = vectorSplatWord(auVar31,3);
+        auVar32 = loadVectorRightIndexed(lVar23 + 0x20);
+        auVar38 = vectorSubtractFloatingPoint128
+                            ((auVar30 | auVar32) & (undefined1  [16])g_keepXYZ.field0_0x0,auVar34);
+        auVar31 = vectorMultiplyFloatingPoint(auVar31,auVar29);
+        auVar30 = vectorPermuteWordImmediate(auVar29,0x9b);
+        auVar32 = vectorPermuteWordImmediate(auVar29,99);
+        auVar28 = vectorMultiplyFloatingPoint(auVar28,auVar30);
+        auVar27 = vectorMultiplyFloatingPoint(auVar27,auVar32);
+        auVar32 = vectorPermuteWordImmediate(auVar31,0x40);
+        auVar31 = vectorPermuteWordImmediate(auVar31,0xa4);
+        auVar30 = vectorSubtractFloatingPoint128(auVar33,auVar32);
+        auVar32 = vectorAddFloatingPoint128(auVar28,auVar27);
+        auVar27 = vectorSubtractFloatingPoint128(auVar28,auVar27);
+        auVar31 = vectorSubtractFloatingPoint128(auVar30,auVar31);
+        auVar30 = vectorPermuteWordImmediate(auVar32,0x42);
+        auVar32 = vectorShiftLeftDoubleByOctetImmediate(auVar27,auVar32,8);
+        auVar27 = vectorRotateLeftImmediateAndMaskInsert(auVar30,auVar27,6,3);
+        auVar30 = vectorPermuteWordImmediate(auVar32,0x88);
+        auVar28 = vectorRotateLeftImmediateAndMaskInsert(auVar31,auVar37,1,3);
+        auVar32 = vectorPermuteWordImmediate(auVar28,7);
+        auVar31 = vectorRotateLeftImmediateAndMaskInsert(auVar30,auVar28,3,0);
+        auVar30 = vectorRotateLeftImmediateAndMaskInsert(auVar28,auVar27,6,3);
+        auVar32 = vectorMergeLowWord128(auVar27,auVar32);
+        auVar31 = vectorMultiplyFloatingPoint(auVar31,auVar36);
+        auVar32 = vectorMultiplyFloatingPoint(auVar32,auVar36);
+        auVar30 = vectorMultiplyFloatingPoint(auVar30,auVar36);
         do {
-          p_Var19 = D3DDevice_GpuBeginShaderConstantF4(pDVar7,0,4,4);
-          uVar28 = -(uint)(p_Var19 == (__vector4 *)0x0) & 0x8007000e;
-          if ((int)uVar28 < 0) {
-            R_ErrorDescription(uVar28);
+          p_Var18 = D3DDevice_GpuBeginShaderConstantF4(pDVar7,0,4,4);
+          uVar25 = -(uint)(p_Var18 == (__vector4 *)0x0) & 0x8007000e;
+          if ((int)uVar25 < 0) {
+            R_ErrorDescription(uVar25);
                     /* WARNING: Subroutine does not return */
             Sys_Error(
                      "c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_draw_xmodel.cpp (%i) device->GpuBeginVertexShaderConstantF4( 4, &constantData, 4 ) failed: %s\n"
                      );
           }
         } while (alwaysfails != 0);
-        uVar3 = *(ushort *)((int)lVar26 + 0x1c);
-        auVar38 = vectorMergeHighWord128(auVar33,auVar34);
-        auVar32 = vectorMergeHighWord128(auVar35,auVar41);
-        auVar31 = vectorMergeLowWord128(auVar33,auVar34);
-        auVar35 = vectorMergeLowWord128(auVar35,auVar41);
+        uVar3 = *(ushort *)((int)lVar23 + 0x1c);
+        auVar35 = vectorMergeHighWord128(auVar30,auVar31);
+        auVar29 = vectorMergeHighWord128(auVar32,auVar38);
+        auVar28 = vectorMergeLowWord128(auVar30,auVar31);
+        auVar32 = vectorMergeLowWord128(auVar32,auVar38);
         local_138[0].baseIndex = (uint)uVar3 + (uint)uVar3 * 2;
-        auVar30 = vectorMergeHighWord128(auVar38,auVar32);
-        local_138[0].triCount = (int)*(ushort *)((int)lVar26 + 0x1e);
-        auVar34 = vectorMergeLowWord128(auVar38,auVar32);
-        auVar33 = vectorMergeHighWord128(auVar31,auVar35);
-        auVar35 = vectorMergeLowWord128(auVar31,auVar35);
-        *(undefined1 (*) [16])((uint)p_Var19 & 0xfffffff0) = auVar30;
-        *(undefined1 (*) [16])((uint)(p_Var19 + 1) & 0xfffffff0) = auVar34;
-        *(undefined1 (*) [16])((uint)(p_Var19 + 2) & 0xfffffff0) = auVar33;
-        *(undefined1 (*) [16])((uint)(p_Var19 + 3) & 0xfffffff0) = auVar35;
-        R_DrawIndexedPrimitive((GfxCmdBufPrimState *)(uVar22 + 0xc0),local_138);
-        uVar23 = uVar23 - 1;
-        lVar26 = lVar26 + 0x20;
-      } while (uVar23 != 0);
+        auVar27 = vectorMergeHighWord128(auVar35,auVar29);
+        local_138[0].triCount = (int)*(ushort *)((int)lVar23 + 0x1e);
+        auVar31 = vectorMergeLowWord128(auVar35,auVar29);
+        auVar30 = vectorMergeHighWord128(auVar28,auVar32);
+        auVar32 = vectorMergeLowWord128(auVar28,auVar32);
+        *(undefined1 (*) [16])((uint)p_Var18 & 0xfffffff0) = auVar27;
+        *(undefined1 (*) [16])((uint)(p_Var18 + 1) & 0xfffffff0) = auVar31;
+        *(undefined1 (*) [16])((uint)(p_Var18 + 2) & 0xfffffff0) = auVar30;
+        *(undefined1 (*) [16])((uint)(p_Var18 + 3) & 0xfffffff0) = auVar32;
+        R_DrawIndexedPrimitive(pGVar22,local_138);
+        uVar24 = uVar24 - 1;
+        lVar23 = lVar23 + 0x20;
+      } while (uVar24 != 0);
     }
-    iVar11 = *piVar4;
-    puVar25 = (ulonglong *)(iVar11 + 8);
-    *piVar4 = (int)puVar25;
-    if ((iVar11 + 8 == iVar6) || (uVar27 = *puVar25, (uVar27 & 0xffffffffff800000) != uVar15))
-    break;
-    pGVar12 = (GfxCmdRingBuf *)piVar13[9];
-    uVar20 = GetCurrentProcessorNumber();
-    if (pGVar12 != dx.cmdBufForProcId[uVar20]) {
+    pGVar11 = pGVar4->current;
+    pGVar21 = pGVar11 + 1;
+    pGVar4->current = pGVar21;
+    if ((pGVar11 + 1 == pGVar6) ||
+       (uVar24 = pGVar21->packed, (uVar24 & 0xffffffffff800000) != uVar15)) break;
+    pGVar12 = param_1->cmdBuf;
+    uVar19 = GetCurrentProcessorNumber();
+    if (pGVar12 != dx.cmdBufForProcId[uVar19]) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.h",
                       0x496,0,"%s");
     }
@@ -1196,26 +1183,24 @@ void R_DrawXModelLitNoPrepass(GfxXModelDrawStream *param_1,GfxCmdBufState *param
        ((longlong)((ulonglong)pGVar12->reserveMemoryPos0 - (ulonglong)pGVar12->memoryPos) < 0)) {
       R_CmdBufReserveMemory(pGVar12);
     }
-    lVar26 = ((uVar27 & 0x7fff) + 0x1380) * 4 + (ulonglong)uVar5;
-    if ((uVar27 & 0x800000) != 0) {
-      uVar28 = (uint)*(ushort *)((int)lVar26 + 10);
-      if (uVar28 == 0) {
+    lVar23 = ((uVar24 & 0x7fff) + 0x1380) * 4 + ZEXT48(pGVar5);
+    param_2 = pGStack0000001c;
+    if ((uVar24 & 0x800000) != 0) {
+      uVar25 = (uint)*(ushort *)((int)lVar23 + 10);
+      if (uVar25 == 0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_draw_xmodel.cpp"
                         ,0xa92,0,"%s");
       }
-      if (uVar28 != uVar2) {
-        puVar24 = (uint *)((uVar28 + 0xc880) * 8 + uVar5);
-        if (((*puVar24 & 2) != local_174) || ((double)(float)puVar24[1] != dVar29)) break;
-      }
+      param_2 = pGStack0000001c;
+      if ((uVar25 != uVar2) &&
+         (((pGVar5->gfxEnts[uVar25].renderFxFlags & 2) != local_174 ||
+          ((double)pGVar5->gfxEnts[uVar25].materialTime != dVar26)))) break;
     }
-    uVar23 = (ulonglong)uStack0000001c;
   }
-  uVar23 = (pDVar7->m_Pending).m_Mask[0];
-  (pDVar7->m_Pending).m_Mask[0] = uVar23 | 0x4000000000000000;
-  piVar13[2] = (int)local_180;
-  (pDVar7->m_Pending).m_Mask[0] = uVar23 | 0x6000000000000000;
-  __restvmx_120();
-  __restgprlr();
+  uVar24 = (pDVar7->m_Pending).m_Mask[0];
+  (pDVar7->m_Pending).m_Mask[0] = uVar24 | 0x4000000000000000;
+  param_1->reflectionProbeTexture = local_180;
+  (pDVar7->m_Pending).m_Mask[0] = uVar24 | 0x6000000000000000;
   return;
 }
 
@@ -1247,6 +1232,10 @@ void D3DDevice_SetTexture_Inline(D3DDevice *param_1,ulong param_2,D3DBaseTexture
 
 // 82739728  R_DrawXModelAmbientNoPrepass  (gfx_d3d/r_draw_xmodel.cpp:2958)
 
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savevmx_120 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restvmx_120 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
@@ -1257,27 +1246,27 @@ void R_DrawXModelAmbientNoPrepass(GfxXModelDrawStream *param_1,GfxCmdBufState *p
   float fVar1;
   ushort uVar2;
   ushort uVar3;
-  int *piVar4;
-  uint uVar5;
+  GfxDrawSurfIter *pGVar4;
+  GfxBackEndData *pGVar5;
   D3DDevice *pDVar6;
-  int iVar7;
+  GfxDrawSurf *pGVar7;
   XSurface *pXVar8;
-  int iVar9;
+  GfxDrawSurf *pGVar9;
   GfxCmdRingBuf *pGVar10;
-  int *piVar11;
-  float *pfVar12;
-  __vector4 _Var13;
+  float *pfVar11;
+  __vector4 _Var12;
   undefined8 in_r0;
-  longlong lVar14;
-  __vector4 *p_Var15;
-  ulong uVar16;
-  ulonglong uVar17;
-  ulonglong uVar18;
-  uint *puVar19;
-  ulonglong *puVar20;
-  longlong lVar21;
-  uint uVar22;
-  double dVar23;
+  __vector4 *p_Var13;
+  ulong uVar14;
+  ulonglong uVar15;
+  ulonglong uVar16;
+  GfxDrawSurf *pGVar17;
+  longlong lVar18;
+  uint uVar19;
+  double dVar20;
+  undefined1 auVar21 [16];
+  undefined1 auVar22 [16];
+  undefined1 auVar23 [16];
   undefined1 auVar24 [16];
   undefined1 auVar25 [16];
   undefined1 auVar26 [16];
@@ -1287,73 +1276,66 @@ void R_DrawXModelAmbientNoPrepass(GfxXModelDrawStream *param_1,GfxCmdBufState *p
   undefined1 auVar30 [16];
   undefined1 auVar31 [16];
   undefined1 auVar32 [16];
-  undefined1 auVar33 [16];
-  undefined1 auVar34 [16];
-  undefined1 auVar35 [16];
-  int *piStack00000014;
+  GfxXModelDrawStream *pGStack00000014;
   GfxCmdBufState *pGStack0000001c;
   uint local_168;
   GfxDrawPrimArgs local_138 [26];
   
-  __savegprlr();
-  lVar14 = __savevmx_120();
-  piVar11 = (int *)lVar14;
-  piStack00000014 = piVar11;
+  pGStack00000014 = param_1;
   pGStack0000001c = param_2;
-  if (piVar11[1] != 3) {
+  if (param_1->precompiledIndex != 3) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_draw_xmodel.cpp",
                     0xbb3,0,"%s\n\t(drawStream->precompiledIndex) = %i");
   }
-  piVar4 = (int *)*piVar11;
-  uVar5 = piVar11[7];
-  uVar18 = *(ulonglong *)*piVar4;
-  lVar21 = ((uVar18 & 0x7fff) + 0x1380) * 4 + (ulonglong)uVar5;
-  uVar2 = *(ushort *)((int)lVar21 + 10);
+  pGVar4 = param_1->drawSurfIter;
+  pGVar5 = param_1->data;
+  uVar16 = pGVar4->current->packed;
+  lVar18 = ((uVar16 & 0x7fff) + 0x1380) * 4 + ZEXT48(pGVar5);
+  uVar2 = *(ushort *)((int)lVar18 + 10);
   if (uVar2 == 0) {
     local_168 = 0;
     fVar1 = 0.0;
   }
   else {
-    puVar19 = (uint *)((uVar2 + 0xc880) * 8 + uVar5);
-    fVar1 = (float)puVar19[1];
-    local_168 = *puVar19 & 2;
+    fVar1 = pGVar5->gfxEnts[uVar2].materialTime;
+    local_168 = pGVar5->gfxEnts[uVar2].renderFxFlags & 2;
   }
-  dVar23 = (double)fVar1;
+  dVar20 = (double)fVar1;
   pDVar6 = (param_2->prim).device;
-  iVar7 = piVar4[1];
-  uVar17 = (pDVar6->m_Pending).m_Mask[0];
-  auVar33 = loadVectorLeftIndexed(lVar14 + 0x10);
-  auVar32 = loadVectorRightIndexed(lVar14 + 0x20);
-  (pDVar6->m_Pending).m_Mask[0] = uVar17 & 0xbfffffffffffffff;
-  _Var13 = g_keepXYZ;
-  (pDVar6->m_Pending).m_Mask[0] = uVar17 & 0x9fffffffffffffff;
-  auVar32 = vectorSubtractFloatingPoint128
-                      ((auVar33 | auVar32) & (undefined1  [16])_Var13.field0_0x0,
+  pGVar7 = pGVar4->end;
+  uVar15 = (pDVar6->m_Pending).m_Mask[0];
+  auVar30 = loadVectorLeftIndexed((longlong)(int)param_1 + 0x10);
+  auVar29 = loadVectorRightIndexed((longlong)(int)param_1 + 0x20);
+  (pDVar6->m_Pending).m_Mask[0] = uVar15 & 0xbfffffffffffffff;
+  _Var12 = g_keepXYZ;
+  (pDVar6->m_Pending).m_Mask[0] = uVar15 & 0x9fffffffffffffff;
+  auVar29 = vectorSubtractFloatingPoint128
+                      ((auVar30 | auVar29) & (undefined1  [16])_Var12.field0_0x0,
                        (undefined1  [16])g_unit.field0_0x0);
   while( true ) {
-    pXVar8 = (XSurface *)((uint *)lVar21)[5];
+    pXVar8 = (XSurface *)((uint *)lVar18)[5];
     if (pXVar8 == (XSurface *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_draw_xmodel.cpp",
                       0xbe6,0,"%s");
     }
     R_SetupXModelRigidModelSurfWithUpdate(pGStack0000001c,pXVar8);
-    auVar33 = ZEXT416(0);
-    auVar33 = auVar33 | auVar33 << 0x20 | auVar33 << 0x40 | auVar33 << 0x60;
-    uVar22 = (uint)(lVar21 + 0x10);
-    auVar24 = loadVectorForShiftLeft(in_r0,lVar21 + 0x10);
-    auVar24 = vectorPermute128(*(undefined1 (*) [16])(uVar22 & 0xfffffff0),
-                               *(undefined1 (*) [16])(uVar22 + 7 & 0xfffffff0),auVar24);
-    auVar24 = vectorMergeHighByte(auVar33,auVar24);
-    auVar33 = vectorMergeHighHalfWord(auVar33,auVar24);
-    auVar33 = vectorConvertFromUnsignedFixedPointWord128(auVar33,0);
-    auVar24 = vectorMultiplyFloatingPoint(auVar33,(undefined1  [16])g_diffuseDouble.field0_0x0);
-    auVar33 = vectorMultiplyFloatingPoint(auVar24,auVar24);
-    auVar33 = vectorPermute128(auVar33,auVar24,(undefined1  [16])g_XYZw.field0_0x0);
+    auVar30 = ZEXT416(0);
+    auVar30 = auVar30 | auVar30 << 0x20 | auVar30 << 0x40 | auVar30 << 0x60;
+    uVar19 = (uint)(lVar18 + 0x10);
+    auVar21 = loadVectorForShiftLeft(in_r0,lVar18 + 0x10);
+    auVar21 = vectorPermute128(*(undefined1 (*) [16])(uVar19 & 0xfffffff0),
+                               *(undefined1 (*) [16])(uVar19 + 7 & 0xfffffff0),auVar21);
+    auVar21 = vectorMergeHighByte(auVar30,auVar21);
+    auVar30 = vectorMergeHighHalfWord(auVar30,auVar21);
+    auVar30 = vectorConvertFromUnsignedFixedPointWord128(auVar30,0);
+    auVar21 = vectorMultiplyFloatingPoint(auVar30,(undefined1  [16])g_diffuseDouble.field0_0x0);
+    auVar30 = vectorMultiplyFloatingPoint(auVar21,auVar21);
+    auVar30 = vectorPermute128(auVar30,auVar21,(undefined1  [16])g_XYZw.field0_0x0);
     do {
-      p_Var15 = D3DDevice_GpuBeginShaderConstantF4(pDVar6,0,8,4);
-      uVar22 = -(uint)(p_Var15 == (__vector4 *)0x0) & 0x8007000e;
-      if ((int)uVar22 < 0) {
-        R_ErrorDescription(uVar22);
+      p_Var13 = D3DDevice_GpuBeginShaderConstantF4(pDVar6,0,8,4);
+      uVar19 = -(uint)(p_Var13 == (__vector4 *)0x0) & 0x8007000e;
+      if ((int)uVar19 < 0) {
+        R_ErrorDescription(uVar19);
                     /* WARNING: Subroutine does not return */
         Sys_Error(
                  "c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_draw_xmodel.cpp (%i) device->GpuBeginVertexShaderConstantF4( 8, &constantData, 4 ) failed: %s\n"
@@ -1361,104 +1343,105 @@ void R_DrawXModelAmbientNoPrepass(GfxXModelDrawStream *param_1,GfxCmdBufState *p
       }
     } while (alwaysfails != 0);
     uVar3 = pXVar8->vertCount;
-    uVar17 = -(ulonglong)*(uint *)lVar21 - 3;
-    *(undefined1 (*) [16])((uint)p_Var15 & 0xfffffff0) = auVar33;
-    pfVar12 = (float *)((uint)(p_Var15 + 1) & 0xfffffff0);
-    *pfVar12 = (float)0;
-    pfVar12[1] = (float)0;
-    pfVar12[2] = (float)0;
-    pfVar12[3] = (float)0;
+    uVar15 = -(ulonglong)*(uint *)lVar18 - 3;
+    *(undefined1 (*) [16])((uint)p_Var13 & 0xfffffff0) = auVar30;
+    pfVar11 = (float *)((uint)(p_Var13 + 1) & 0xfffffff0);
+    *pfVar11 = (float)0;
+    pfVar11[1] = (float)0;
+    pfVar11[2] = (float)0;
+    pfVar11[3] = (float)0;
     local_138[0].vertexCount = (int)uVar3;
-    auVar33 = loadVectorLeftIndexed(ZEXT48(&stack0x00000000) - 0x160);
-    auVar33 = vectorSplatWord(auVar33,0);
-    pfVar12 = (float *)((uint)(p_Var15 + 2) & 0xfffffff0);
-    *pfVar12 = (float)0;
-    pfVar12[1] = (float)0;
-    pfVar12[2] = (float)0;
-    pfVar12[3] = (float)0;
-    pfVar12 = (float *)((uint)(p_Var15 + 3) & 0xfffffff0);
-    *pfVar12 = (float)0;
-    pfVar12[1] = (float)0;
-    pfVar12[2] = (float)0;
-    pfVar12[3] = (float)0;
-    if ((uVar17 & 0xffffffff) != 0) {
-      auVar24 = vectorSplatImmediateSignedWord(0);
-      lVar21 = lVar21 + 0x1c;
-      auVar34 = vectorUnpackD3Dtype(auVar24,4);
-      auVar24 = vectorPermuteWordImmediate(auVar34,0xfe);
+    auVar30 = loadVectorLeftIndexed(ZEXT48(&stack0x00000000) - 0x160);
+    auVar30 = vectorSplatWord(auVar30,0);
+    pfVar11 = (float *)((uint)(p_Var13 + 2) & 0xfffffff0);
+    *pfVar11 = (float)0;
+    pfVar11[1] = (float)0;
+    pfVar11[2] = (float)0;
+    pfVar11[3] = (float)0;
+    pfVar11 = (float *)((uint)(p_Var13 + 3) & 0xfffffff0);
+    *pfVar11 = (float)0;
+    pfVar11[1] = (float)0;
+    pfVar11[2] = (float)0;
+    pfVar11[3] = (float)0;
+    if ((uVar15 & 0xffffffff) != 0) {
+      auVar21 = vectorSplatImmediateSignedWord(0);
+      lVar18 = lVar18 + 0x1c;
+      auVar31 = vectorUnpackD3Dtype(auVar21,4);
+      auVar21 = vectorPermuteWordImmediate(auVar31,0xfe);
       do {
-        auVar30 = loadVectorRightIndexed(lVar21 + 0x10);
-        auVar29 = loadVectorLeftIndexed(lVar21);
-        auVar29 = auVar29 | auVar30;
-        auVar28 = loadVectorLeftIndexed(lVar21 + 0x10);
-        auVar27 = vectorAddFloatingPoint128(auVar29,auVar29);
-        auVar26 = vectorPermuteWordImmediate(auVar29,7);
-        auVar25 = vectorSplatWord(auVar29,3);
-        auVar30 = loadVectorRightIndexed(lVar21 + 0x20);
-        auVar35 = vectorSubtractFloatingPoint128
-                            ((auVar28 | auVar30) & (undefined1  [16])g_keepXYZ.field0_0x0,auVar32);
-        auVar29 = vectorMultiplyFloatingPoint(auVar29,auVar27);
-        auVar28 = vectorPermuteWordImmediate(auVar27,0x9b);
-        auVar30 = vectorPermuteWordImmediate(auVar27,99);
-        auVar26 = vectorMultiplyFloatingPoint(auVar26,auVar28);
-        auVar25 = vectorMultiplyFloatingPoint(auVar25,auVar30);
-        auVar30 = vectorPermuteWordImmediate(auVar29,0x40);
-        auVar29 = vectorPermuteWordImmediate(auVar29,0xa4);
-        auVar28 = vectorSubtractFloatingPoint128(auVar24,auVar30);
-        auVar30 = vectorAddFloatingPoint128(auVar26,auVar25);
-        auVar25 = vectorSubtractFloatingPoint128(auVar26,auVar25);
-        auVar29 = vectorSubtractFloatingPoint128(auVar28,auVar29);
-        auVar28 = vectorPermuteWordImmediate(auVar30,0x42);
-        auVar30 = vectorShiftLeftDoubleByOctetImmediate(auVar25,auVar30,8);
-        auVar28 = vectorRotateLeftImmediateAndMaskInsert(auVar28,auVar25,6,3);
-        auVar25 = vectorPermuteWordImmediate(auVar30,0x88);
-        auVar30 = vectorRotateLeftImmediateAndMaskInsert(auVar29,auVar34,1,3);
-        auVar29 = vectorPermuteWordImmediate(auVar30,7);
-        auVar26 = vectorRotateLeftImmediateAndMaskInsert(auVar25,auVar30,3,0);
-        auVar25 = vectorRotateLeftImmediateAndMaskInsert(auVar30,auVar28,6,3);
-        auVar30 = vectorMergeLowWord128(auVar28,auVar29);
-        auVar29 = vectorMultiplyFloatingPoint(auVar26,auVar33);
-        auVar30 = vectorMultiplyFloatingPoint(auVar30,auVar33);
-        auVar28 = vectorMultiplyFloatingPoint(auVar25,auVar33);
+        auVar27 = loadVectorRightIndexed(lVar18 + 0x10);
+        auVar26 = loadVectorLeftIndexed(lVar18);
+        auVar26 = auVar26 | auVar27;
+        auVar25 = loadVectorLeftIndexed(lVar18 + 0x10);
+        auVar24 = vectorAddFloatingPoint128(auVar26,auVar26);
+        auVar23 = vectorPermuteWordImmediate(auVar26,7);
+        auVar22 = vectorSplatWord(auVar26,3);
+        auVar27 = loadVectorRightIndexed(lVar18 + 0x20);
+        auVar32 = vectorSubtractFloatingPoint128
+                            ((auVar25 | auVar27) & (undefined1  [16])g_keepXYZ.field0_0x0,auVar29);
+        auVar26 = vectorMultiplyFloatingPoint(auVar26,auVar24);
+        auVar25 = vectorPermuteWordImmediate(auVar24,0x9b);
+        auVar27 = vectorPermuteWordImmediate(auVar24,99);
+        auVar23 = vectorMultiplyFloatingPoint(auVar23,auVar25);
+        auVar22 = vectorMultiplyFloatingPoint(auVar22,auVar27);
+        auVar27 = vectorPermuteWordImmediate(auVar26,0x40);
+        auVar26 = vectorPermuteWordImmediate(auVar26,0xa4);
+        auVar25 = vectorSubtractFloatingPoint128(auVar21,auVar27);
+        auVar27 = vectorAddFloatingPoint128(auVar23,auVar22);
+        auVar22 = vectorSubtractFloatingPoint128(auVar23,auVar22);
+        auVar26 = vectorSubtractFloatingPoint128(auVar25,auVar26);
+        auVar25 = vectorPermuteWordImmediate(auVar27,0x42);
+        auVar27 = vectorShiftLeftDoubleByOctetImmediate(auVar22,auVar27,8);
+        auVar25 = vectorRotateLeftImmediateAndMaskInsert(auVar25,auVar22,6,3);
+        auVar22 = vectorPermuteWordImmediate(auVar27,0x88);
+        auVar27 = vectorRotateLeftImmediateAndMaskInsert(auVar26,auVar31,1,3);
+        auVar26 = vectorPermuteWordImmediate(auVar27,7);
+        auVar23 = vectorRotateLeftImmediateAndMaskInsert(auVar22,auVar27,3,0);
+        auVar22 = vectorRotateLeftImmediateAndMaskInsert(auVar27,auVar25,6,3);
+        auVar27 = vectorMergeLowWord128(auVar25,auVar26);
+        auVar26 = vectorMultiplyFloatingPoint(auVar23,auVar30);
+        auVar27 = vectorMultiplyFloatingPoint(auVar27,auVar30);
+        auVar25 = vectorMultiplyFloatingPoint(auVar22,auVar30);
         do {
-          p_Var15 = D3DDevice_GpuBeginShaderConstantF4(pDVar6,0,4,4);
-          uVar22 = -(uint)(p_Var15 == (__vector4 *)0x0) & 0x8007000e;
-          if ((int)uVar22 < 0) {
-            R_ErrorDescription(uVar22);
+          p_Var13 = D3DDevice_GpuBeginShaderConstantF4(pDVar6,0,4,4);
+          uVar19 = -(uint)(p_Var13 == (__vector4 *)0x0) & 0x8007000e;
+          if ((int)uVar19 < 0) {
+            R_ErrorDescription(uVar19);
                     /* WARNING: Subroutine does not return */
             Sys_Error(
                      "c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_draw_xmodel.cpp (%i) device->GpuBeginVertexShaderConstantF4( 4, &constantData, 4 ) failed: %s\n"
                      );
           }
         } while (alwaysfails != 0);
-        uVar3 = *(ushort *)((int)lVar21 + 0x1c);
-        auVar31 = vectorMergeHighWord128(auVar28,auVar29);
-        auVar27 = vectorMergeHighWord128(auVar30,auVar35);
-        auVar26 = vectorMergeLowWord128(auVar28,auVar29);
-        auVar30 = vectorMergeLowWord128(auVar30,auVar35);
+        uVar3 = *(ushort *)((int)lVar18 + 0x1c);
+        auVar28 = vectorMergeHighWord128(auVar25,auVar26);
+        auVar24 = vectorMergeHighWord128(auVar27,auVar32);
+        auVar23 = vectorMergeLowWord128(auVar25,auVar26);
+        auVar27 = vectorMergeLowWord128(auVar27,auVar32);
         local_138[0].baseIndex = (uint)uVar3 + (uint)uVar3 * 2;
-        auVar25 = vectorMergeHighWord128(auVar31,auVar27);
-        local_138[0].triCount = (int)*(ushort *)((int)lVar21 + 0x1e);
-        auVar29 = vectorMergeLowWord128(auVar31,auVar27);
-        auVar28 = vectorMergeHighWord128(auVar26,auVar30);
-        auVar30 = vectorMergeLowWord128(auVar26,auVar30);
-        *(undefined1 (*) [16])((uint)p_Var15 & 0xfffffff0) = auVar25;
-        *(undefined1 (*) [16])((uint)(p_Var15 + 1) & 0xfffffff0) = auVar29;
-        *(undefined1 (*) [16])((uint)(p_Var15 + 2) & 0xfffffff0) = auVar28;
-        *(undefined1 (*) [16])((uint)(p_Var15 + 3) & 0xfffffff0) = auVar30;
+        auVar22 = vectorMergeHighWord128(auVar28,auVar24);
+        local_138[0].triCount = (int)*(ushort *)((int)lVar18 + 0x1e);
+        auVar26 = vectorMergeLowWord128(auVar28,auVar24);
+        auVar25 = vectorMergeHighWord128(auVar23,auVar27);
+        auVar27 = vectorMergeLowWord128(auVar23,auVar27);
+        *(undefined1 (*) [16])((uint)p_Var13 & 0xfffffff0) = auVar22;
+        *(undefined1 (*) [16])((uint)(p_Var13 + 1) & 0xfffffff0) = auVar26;
+        *(undefined1 (*) [16])((uint)(p_Var13 + 2) & 0xfffffff0) = auVar25;
+        *(undefined1 (*) [16])((uint)(p_Var13 + 3) & 0xfffffff0) = auVar27;
         R_DrawIndexedPrimitive(&param_2->prim,local_138);
-        uVar17 = uVar17 - 1;
-        lVar21 = lVar21 + 0x20;
-      } while (uVar17 != 0);
+        uVar15 = uVar15 - 1;
+        lVar18 = lVar18 + 0x20;
+      } while (uVar15 != 0);
     }
-    iVar9 = *piVar4;
-    puVar20 = (ulonglong *)(iVar9 + 8);
-    *piVar4 = (int)puVar20;
-    if ((iVar9 + 8 == iVar7) ||
-       (uVar17 = *puVar20, (uVar17 & 0xffffffffff800000) != (uVar18 & 0xffffffffff800000))) break;
-    pGVar10 = (GfxCmdRingBuf *)piStack00000014[9];
-    uVar16 = GetCurrentProcessorNumber();
-    if (pGVar10 != dx.cmdBufForProcId[uVar16]) {
+    pGVar9 = pGVar4->current;
+    pGVar17 = pGVar9 + 1;
+    pGVar4->current = pGVar17;
+    if ((pGVar9 + 1 == pGVar7) ||
+       (uVar15 = pGVar17->packed, (uVar15 & 0xffffffffff800000) != (uVar16 & 0xffffffffff800000)))
+    break;
+    pGVar10 = pGStack00000014->cmdBuf;
+    uVar14 = GetCurrentProcessorNumber();
+    if (pGVar10 != dx.cmdBufForProcId[uVar14]) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.h",
                       0x496,0,"%s");
     }
@@ -1466,24 +1449,22 @@ void R_DrawXModelAmbientNoPrepass(GfxXModelDrawStream *param_1,GfxCmdBufState *p
        ((longlong)((ulonglong)pGVar10->reserveMemoryPos0 - (ulonglong)pGVar10->memoryPos) < 0)) {
       R_CmdBufReserveMemory(pGVar10);
     }
-    lVar21 = ((uVar17 & 0x7fff) + 0x1380) * 4 + (ulonglong)uVar5;
-    if ((uVar17 & 0x800000) != 0) {
-      uVar22 = (uint)*(ushort *)((int)lVar21 + 10);
-      if (uVar22 == 0) {
+    lVar18 = ((uVar15 & 0x7fff) + 0x1380) * 4 + ZEXT48(pGVar5);
+    if ((uVar15 & 0x800000) != 0) {
+      uVar19 = (uint)*(ushort *)((int)lVar18 + 10);
+      if (uVar19 == 0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_draw_xmodel.cpp"
                         ,0xc48,0,"%s");
       }
-      if (uVar22 != uVar2) {
-        puVar19 = (uint *)((uVar22 + 0xc880) * 8 + uVar5);
-        if (((*puVar19 & 2) != local_168) || ((double)(float)puVar19[1] != dVar23)) break;
+      if (uVar19 != uVar2) {
+        if (((pGVar5->gfxEnts[uVar19].renderFxFlags & 2) != local_168) ||
+           ((double)pGVar5->gfxEnts[uVar19].materialTime != dVar20)) break;
       }
     }
   }
-  uVar18 = (pDVar6->m_Pending).m_Mask[0];
-  (pDVar6->m_Pending).m_Mask[0] = uVar18 | 0x4000000000000000;
-  (pDVar6->m_Pending).m_Mask[0] = uVar18 | 0x6000000000000000;
-  __restvmx_120();
-  __restgprlr();
+  uVar16 = (pDVar6->m_Pending).m_Mask[0];
+  (pDVar6->m_Pending).m_Mask[0] = uVar16 | 0x4000000000000000;
+  (pDVar6->m_Pending).m_Mask[0] = uVar16 | 0x6000000000000000;
   return;
 }
 
@@ -1529,6 +1510,8 @@ void D3DDevice_GpuEndShaderConstantF4(D3DDevice *param_1)
 
 // 82739CB8  R_DrawXModelRigidSurfLit  (gfx_d3d/r_draw_xmodel.cpp:3713)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
@@ -1541,15 +1524,12 @@ void R_DrawXModelRigidSurfLit(GfxDrawListArgs *param_1,GfxDrawSurfIter *param_2)
   GfxCmdBufState *pGVar3;
   GfxDrawListInfo *pGVar4;
   MaterialPass *pMVar5;
-  GfxDrawListArgs *pGVar6;
-  ulong uVar7;
+  ulong uVar6;
   GfxXModelDrawStream local_60 [2];
   
-  pGVar6 = (GfxDrawListArgs *)__savegprlr_27(param_1);
-  pGVar2 = (pGVar6->context).state;
+  pGVar2 = (param_1->context).state;
   if (pGVar2->pass->precompiledIndex == '\0') {
-    R_DrawXModelRigidSurfLitInternal(pGVar6,param_2);
-    __restgprlr_27();
+    R_DrawXModelRigidSurfLitInternal(param_1,param_2);
     return;
   }
   R_DirtyCodeConstantBlock(pGVar2,8);
@@ -1557,15 +1537,15 @@ void R_DrawXModelRigidSurfLit(GfxDrawListArgs *param_1,GfxDrawSurfIter *param_2)
   pGVar2->vertexShaderConstState[5] = 0;
   pGVar2->vertexShaderConstState[6] = 0;
   pGVar2->vertexShaderConstState[7] = 0;
-  if (pGVar6->listInfo == (GfxDrawListInfo *)0x0) {
+  if (param_1->listInfo == (GfxDrawListInfo *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_draw_xmodel.cpp",
                     0x251,0,"%s");
   }
-  pGVar3 = (pGVar6->context).state;
-  pGVar4 = pGVar6->listInfo;
+  pGVar3 = (param_1->context).state;
+  pGVar4 = param_1->listInfo;
   pMVar5 = pGVar3->pass;
   local_60[0].reflectionProbeTexture = pGVar3->samplerTexture[1];
-  local_60[0].data = (((pGVar6->context).source)->input).data;
+  local_60[0].data = (((param_1->context).source)->input).data;
   local_60[0].eyeOffset[0] = pGVar4->eyeOffset[0];
   local_60[0].eyeOffset[1] = pGVar4->eyeOffset[1];
   local_60[0].eyeOffset[2] = pGVar4->eyeOffset[2];
@@ -1573,14 +1553,13 @@ void R_DrawXModelRigidSurfLit(GfxDrawListArgs *param_1,GfxDrawSurfIter *param_2)
   local_60[0].customSamplerFlags = (uint)pMVar5->customSamplerFlags;
   local_60[0].drawSurfIter = param_2;
   local_60[0].precompiledIndex = (uint)bVar1;
-  uVar7 = GetCurrentProcessorNumber();
-  local_60[0].cmdBuf = dx.cmdBufForProcId[uVar7];
+  uVar6 = GetCurrentProcessorNumber();
+  local_60[0].cmdBuf = dx.cmdBufForProcId[uVar6];
   if (bVar1 == 2) {
     R_DrawXModelUnlitNoPrepass(local_60,pGVar2);
     if (pGVar2->samplerTexture[1] != local_60[0].reflectionProbeTexture) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_draw_xmodel.cpp",
                       0xea5,0,"%s");
-      __restgprlr_27();
       return;
     }
   }
@@ -1591,7 +1570,6 @@ void R_DrawXModelRigidSurfLit(GfxDrawListArgs *param_1,GfxDrawSurfIter *param_2)
       }
       R_DrawXModelLitNoPrepass(local_60,pGVar2);
       pGVar2->samplerTexture[1] = local_60[0].reflectionProbeTexture;
-      __restgprlr_27();
       return;
     }
     if (bVar1 != 3) {
@@ -1600,13 +1578,14 @@ void R_DrawXModelRigidSurfLit(GfxDrawListArgs *param_1,GfxDrawSurfIter *param_2)
     }
     R_DrawXModelAmbientNoPrepass(local_60,pGVar2);
   }
-  __restgprlr_27();
   return;
 }
 
 
 // 82739E78  R_DrawXModelRigidSurfCamera  (gfx_d3d/r_draw_xmodel.cpp:3788)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
@@ -1617,38 +1596,35 @@ void R_DrawXModelRigidSurfCamera(GfxDrawListArgs *param_1,GfxDrawSurfIter *param
   GfxCmdBufState *pGVar1;
   GfxDrawListInfo *pGVar2;
   MaterialPass *pMVar3;
-  GfxDrawListArgs *pGVar4;
-  ulong uVar5;
-  uint uVar6;
+  ulong uVar4;
+  uint uVar5;
   GfxCmdBufState *pGStack_6c;
   GfxXModelDrawStream local_60 [2];
   
-  local_60[0].drawSurfIter = param_2;
-  pGVar4 = (GfxDrawListArgs *)__savegprlr_27(param_1);
-  pGStack_6c = (pGVar4->context).state;
+  pGStack_6c = (param_1->context).state;
   if (pGStack_6c->pass->precompiledIndex == '\0') {
-    R_DrawXModelRigidSurfCameraInternal(pGVar4,local_60[0].drawSurfIter);
-    __restgprlr_27();
+    R_DrawXModelRigidSurfCameraInternal(param_1,param_2);
     return;
   }
-  if (pGVar4->listInfo == (GfxDrawListInfo *)0x0) {
+  if (param_1->listInfo == (GfxDrawListInfo *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_draw_xmodel.cpp",
                     0x251,0,"%s");
   }
-  pGVar1 = (pGVar4->context).state;
-  pGVar2 = pGVar4->listInfo;
+  pGVar1 = (param_1->context).state;
+  pGVar2 = param_1->listInfo;
   pMVar3 = pGVar1->pass;
   local_60[0].reflectionProbeTexture = pGVar1->samplerTexture[1];
-  local_60[0].data = (((pGVar4->context).source)->input).data;
+  local_60[0].data = (((param_1->context).source)->input).data;
   local_60[0].eyeOffset[0] = pGVar2->eyeOffset[0];
   local_60[0].eyeOffset[1] = pGVar2->eyeOffset[1];
   local_60[0].eyeOffset[2] = pGVar2->eyeOffset[2];
   local_60[0].customSamplerFlags = (uint)pMVar3->customSamplerFlags;
-  uVar6 = (uint)pMVar3->precompiledIndex;
-  local_60[0].precompiledIndex = uVar6;
-  uVar5 = GetCurrentProcessorNumber();
-  local_60[0].cmdBuf = dx.cmdBufForProcId[uVar5];
-  if (uVar6 != 2) {
+  uVar5 = (uint)pMVar3->precompiledIndex;
+  local_60[0].drawSurfIter = param_2;
+  local_60[0].precompiledIndex = uVar5;
+  uVar4 = GetCurrentProcessorNumber();
+  local_60[0].cmdBuf = dx.cmdBufForProcId[uVar4];
+  if (uVar5 != 2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_draw_xmodel.cpp",
                     0xed9,0,"%s");
   }
@@ -1657,13 +1633,14 @@ void R_DrawXModelRigidSurfCamera(GfxDrawListArgs *param_1,GfxDrawSurfIter *param
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_draw_xmodel.cpp",
                     0xedc,0,"%s");
   }
-  __restgprlr_27();
   return;
 }
 
 
 // 82739FB8  R_DrawXModelRigidSurf  (gfx_d3d/r_draw_xmodel.cpp:3809)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
@@ -1675,37 +1652,34 @@ void R_DrawXModelRigidSurf(GfxDrawListArgs *param_1,GfxDrawSurfIter *param_2)
   GfxCmdBufState *pGVar2;
   GfxDrawListInfo *pGVar3;
   MaterialPass *pMVar4;
-  GfxDrawListArgs *pGVar5;
-  ulong uVar6;
-  uint uVar7;
+  ulong uVar5;
+  uint uVar6;
   GfxXModelDrawStream local_60 [2];
   
-  local_60[0].drawSurfIter = param_2;
-  pGVar5 = (GfxDrawListArgs *)__savegprlr_27(param_1);
-  pGVar1 = (pGVar5->context).state;
+  pGVar1 = (param_1->context).state;
   if (pGVar1->pass->precompiledIndex == '\0') {
-    R_DrawXModelRigidSurfInternal(pGVar5,local_60[0].drawSurfIter);
-    __restgprlr_27();
+    R_DrawXModelRigidSurfInternal(param_1,param_2);
     return;
   }
-  if (pGVar5->listInfo == (GfxDrawListInfo *)0x0) {
+  if (param_1->listInfo == (GfxDrawListInfo *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_draw_xmodel.cpp",
                     0x251,0,"%s");
   }
-  pGVar2 = (pGVar5->context).state;
-  pGVar3 = pGVar5->listInfo;
+  pGVar2 = (param_1->context).state;
+  pGVar3 = param_1->listInfo;
   pMVar4 = pGVar2->pass;
   local_60[0].reflectionProbeTexture = pGVar2->samplerTexture[1];
-  local_60[0].data = (((pGVar5->context).source)->input).data;
+  local_60[0].data = (((param_1->context).source)->input).data;
   local_60[0].eyeOffset[0] = pGVar3->eyeOffset[0];
   local_60[0].eyeOffset[1] = pGVar3->eyeOffset[1];
   local_60[0].eyeOffset[2] = pGVar3->eyeOffset[2];
   local_60[0].customSamplerFlags = (uint)pMVar4->customSamplerFlags;
-  uVar7 = (uint)pMVar4->precompiledIndex;
-  local_60[0].precompiledIndex = uVar7;
-  uVar6 = GetCurrentProcessorNumber();
-  local_60[0].cmdBuf = dx.cmdBufForProcId[uVar6];
-  if (uVar7 != 2) {
+  uVar6 = (uint)pMVar4->precompiledIndex;
+  local_60[0].drawSurfIter = param_2;
+  local_60[0].precompiledIndex = uVar6;
+  uVar5 = GetCurrentProcessorNumber();
+  local_60[0].cmdBuf = dx.cmdBufForProcId[uVar5];
+  if (uVar6 != 2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_draw_xmodel.cpp",
                     0xeee,0,"%s");
   }
@@ -1714,7 +1688,6 @@ void R_DrawXModelRigidSurf(GfxDrawListArgs *param_1,GfxDrawSurfIter *param_2)
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_draw_xmodel.cpp",
                     0xef1,0,"%s");
   }
-  __restgprlr_27();
   return;
 }
 

@@ -112,49 +112,52 @@ void setup_features(VP8_COMP *param_1)
 
 // 8282CAD8  vp8_dealloc_compressor_data  (WebM_atvi_opt/vpx/vp8/encoder/onyx_if.c:291)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void vp8_dealloc_compressor_data(VP8_COMP *param_1)
 
 {
-  void *pvVar1;
-  int iVar2;
+  uchar *puVar1;
+  PARTITION_INFO *pPVar2;
+  PARTITION_INFO **ppPVar3;
   
-  iVar2 = __savegprlr_28(param_1);
-  pvVar1 = *(void **)(iVar2 + 0x30180);
-  if (pvVar1 != (void *)0x0) {
-    vpx_free(pvVar1);
+  puVar1 = param_1->segmentation_map;
+  if (puVar1 != (uchar *)0x0) {
+    vpx_free(puVar1);
   }
-  *(undefined4 *)(iVar2 + 0x30180) = 0;
-  pvVar1 = *(void **)(iVar2 + 0x3019c);
-  if (pvVar1 != (void *)0x0) {
-    vpx_free(pvVar1);
+  param_1->segmentation_map = (uchar *)0x0;
+  puVar1 = param_1->active_map;
+  if (puVar1 != (uchar *)0x0) {
+    vpx_free(puVar1);
   }
-  *(undefined4 *)(iVar2 + 0x3019c) = 0;
-  pvVar1 = *(void **)(iVar2 + 0x2e7d0);
-  if (pvVar1 != (void *)0x0) {
-    vpx_free(pvVar1);
+  param_1->active_map = (uchar *)0x0;
+  puVar1 = param_1->fp_motion_map;
+  if (puVar1 != (uchar *)0x0) {
+    vpx_free(puVar1);
   }
-  *(undefined4 *)(iVar2 + 0x2e7d0) = 0;
-  vp8_de_alloc_frame_buffers((VP8Common *)(iVar2 + 0x1afe0));
-  vp8_yv12_de_alloc_frame_buffer((YV12_BUFFER_CONFIG *)(iVar2 + 0x22b00));
-  vp8_yv12_de_alloc_frame_buffer((YV12_BUFFER_CONFIG *)(iVar2 + 0x22a54));
-  vp8_yv12_de_alloc_frame_buffer((YV12_BUFFER_CONFIG *)(iVar2 + 0x305c0));
-  vp8_yv12_de_alloc_frame_buffer((YV12_BUFFER_CONFIG *)(iVar2 + 0x22ac0));
-  *(undefined4 *)(iVar2 + 0x22a88) = 0;
-  vpx_free(*(void **)(iVar2 + 0x22b38));
-  *(undefined4 *)(iVar2 + 0x22b38) = 0;
-  pvVar1 = *(void **)(iVar2 + 0x30e0c);
-  if (pvVar1 != (void *)0x0) {
-    vpx_free(pvVar1);
+  param_1->fp_motion_map = (uchar *)0x0;
+  vp8_de_alloc_frame_buffers(&param_1->common);
+  vp8_yv12_de_alloc_frame_buffer(&param_1->last_frame_uf);
+  vp8_yv12_de_alloc_frame_buffer(&param_1->scaled_source);
+  vp8_yv12_de_alloc_frame_buffer(&(param_1->alt_ref_buffer).source_buffer);
+  vp8_yv12_de_alloc_frame_buffer(&param_1->src_buffer[0].source_buffer);
+  param_1->source_buffer_count = 0;
+  vpx_free(param_1->tok);
+  param_1->tok = (TOKENEXTRA *)0x0;
+  puVar1 = param_1->gf_active_flags;
+  if (puVar1 != (uchar *)0x0) {
+    vpx_free(puVar1);
   }
-  *(undefined4 *)(iVar2 + 0x30e0c) = 0;
-  pvVar1 = *(void **)(iVar2 + 0x10ce8);
-  if (pvVar1 != (void *)0x0) {
-    vpx_free(pvVar1);
+  param_1->gf_active_flags = (uchar *)0x0;
+  ppPVar3 = &(param_1->mb).pip;
+  pPVar2 = *ppPVar3;
+  if (pPVar2 != (PARTITION_INFO *)0x0) {
+    vpx_free(pPVar2);
   }
-  *(undefined4 *)(iVar2 + 0x10ce8) = 0;
-  vpx_free(*(void **)(iVar2 + 0x2e7b8));
-  vpx_free(*(void **)(iVar2 + 0x2e7bc));
-  __restgprlr_28();
+  *ppPVar3 = (PARTITION_INFO *)0x0;
+  vpx_free(param_1->total_stats);
+  vpx_free(param_1->this_frame_stats);
   return;
 }
 
@@ -228,23 +231,27 @@ void vpx_internal_error(vpx_internal_error_info *param_1,vpx_codec_err_t param_2
 
 // 8282CCE0  cyclic_background_refresh  (WebM_atvi_opt/vpx/vp8/encoder/onyx_if.c:453)
 
+/* WARNING: Function: __savegprlr_21 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_21 replaced with injection: xenon_save_restore */
+
 void cyclic_background_refresh(VP8_COMP *param_1,int param_2,int param_3)
 
 {
   byte bVar1;
-  int iVar2;
-  int iVar3;
+  char *pcVar2;
+  FRAME_TYPE FVar3;
   uint uVar4;
   void *pvVar5;
   longlong lVar6;
   uint uVar7;
-  undefined1 uVar8;
-  int *piVar9;
+  int *piVar8;
+  longlong lVar9;
   longlong lVar10;
-  longlong lVar11;
-  int iVar12;
+  int iVar11;
+  int *piVar12;
   int *piVar13;
   int iVar14;
+  int *piVar15;
   undefined1 local_70;
   char local_6f;
   undefined1 local_6e;
@@ -254,106 +261,110 @@ void cyclic_background_refresh(VP8_COMP *param_1,int param_2,int param_3)
   undefined1 local_6a;
   undefined1 local_69;
   
-  uVar8 = (undefined1)param_3;
   lVar6 = (longlong)param_2;
-  iVar3 = __savegprlr_21(param_1);
-  uVar4 = *(int *)(iVar3 + 0x1e70c) * *(int *)(iVar3 + 0x1e708);
-  iVar12 = *(int *)(iVar3 + 0x301a8);
+  piVar13 = &(param_1->common).mb_cols;
+  piVar12 = &(param_1->common).mb_rows;
+  uVar4 = *piVar13 * *piVar12;
+  iVar14 = param_1->cyclic_refresh_mode_max_mbs_perframe;
   pvVar5 = vpx_calloc(uVar4,1);
   if (pvVar5 == (void *)0x0) {
-    vpx_internal_error((vpx_internal_error_info *)(iVar3 + 0x1afe0),VPX_CODEC_MEM_ERROR,
-                       "Failed to allocate seg_map");
+    vpx_internal_error(&(param_1->common).error,VPX_CODEC_MEM_ERROR,"Failed to allocate seg_map");
   }
-  piVar13 = (int *)(iVar3 + 0x301b0);
-  iVar14 = (int)lVar6;
-  *piVar13 = iVar14;
-  lVar10 = lVar6;
-  if (0 < iVar14) {
-    lVar11 = ((ulonglong)*(uint *)(iVar3 + 0x1e6f8) & 0x1ffffff) * 0x80;
+  piVar15 = &param_1->cyclic_refresh_q;
+  *piVar15 = param_2;
+  lVar9 = lVar6;
+  if (0 < param_2) {
+    lVar10 = ((ulonglong)(param_1->common).frame_type & 0x1ffffff) * 0x80;
     do {
-      uVar7 = *(int *)((int)vp8_bits_per_mb[0] + (int)((lVar11 + lVar6 & 0xffffffffU) << 2)) *
-              (iVar14 + 0x80);
+      uVar7 = *(int *)((int)vp8_bits_per_mb[0] + (int)((lVar10 + lVar6 & 0xffffffffU) << 2)) *
+              (param_2 + 0x80);
       if ((int)(((int)uVar7 >> 6) + (uint)((int)uVar7 < 0 && (uVar7 & 0x3f) != 0)) <=
-          *(int *)((int)vp8_bits_per_mb[0] + (int)((lVar11 + lVar10 & 0xffffffffU) << 2))) break;
-      lVar10 = lVar10 + -1;
-    } while (0 < lVar10);
+          *(int *)((int)vp8_bits_per_mb[0] + (int)((lVar10 + lVar9 & 0xffffffffU) << 2))) break;
+      lVar9 = lVar9 + -1;
+    } while (0 < lVar9);
   }
-  *piVar13 = (int)lVar10;
-  if (*(int *)(iVar3 + 0x1e6f8) != 0) {
-    piVar9 = (int *)(iVar3 + 0x301ac);
-    iVar14 = *piVar9;
-    if (iVar14 < (int)uVar4) {
+  FVar3 = (param_1->common).frame_type;
+  *piVar15 = (int)lVar9;
+  if (FVar3 != KEY_FRAME) {
+    piVar8 = &param_1->cyclic_refresh_mode_index;
+    iVar11 = *piVar8;
+    if (iVar11 < (int)uVar4) {
       do {
-        if (*(char *)(iVar14 + *(int *)(iVar3 + 0x301b4)) == '\0') {
-          *(undefined1 *)(iVar14 + (int)pvVar5) = 1;
+        if (param_1->cyclic_refresh_map[iVar11] == '\0') {
+          *(undefined1 *)(iVar11 + (int)pvVar5) = 1;
         }
         else {
-          *(undefined1 *)(iVar14 + (int)pvVar5) = 0;
-          iVar2 = *(int *)(iVar3 + 0x301b4);
-          bVar1 = *(byte *)(iVar14 + iVar2);
+          *(undefined1 *)(iVar11 + (int)pvVar5) = 0;
+          pcVar2 = param_1->cyclic_refresh_map;
+          bVar1 = pcVar2[iVar11];
           if (0x7f < bVar1) {
-            *(byte *)(iVar14 + iVar2) = bVar1 + 1;
+            pcVar2[iVar11] = bVar1 + 1;
           }
         }
-        if (iVar12 < 1) break;
-        iVar14 = iVar14 + 1;
-        iVar12 = iVar12 + -1;
-      } while (iVar14 < (int)uVar4);
+        if (iVar14 < 1) break;
+        iVar11 = iVar11 + 1;
+        iVar14 = iVar14 + -1;
+      } while (iVar11 < (int)uVar4);
     }
-    *piVar9 = iVar14;
-    if ((int)uVar4 <= iVar14) {
-      *piVar9 = 0;
+    *piVar8 = iVar11;
+    if ((int)uVar4 <= iVar11) {
+      *piVar8 = 0;
     }
   }
-  vpx_memcpy(*(void **)(iVar3 + 0x30180),pvVar5,
-             *(int *)(iVar3 + 0x1e70c) * *(int *)(iVar3 + 0x1e708));
+  vpx_memcpy(param_1->segmentation_map,pvVar5,*piVar13 * *piVar12);
   local_70 = 0;
   local_6e = 0;
   local_6d = 0;
   local_6c = 0;
   local_6a = 0;
   local_69 = 0;
-  *(undefined1 *)(iVar3 + 0x10c8c) = 1;
-  *(undefined1 *)(iVar3 + 0x10c8d) = 1;
-  *(undefined1 *)(iVar3 + 0x10c8e) = 1;
-  *(undefined1 *)(iVar3 + 0x10c8f) = 0;
-  local_6f = (char)*piVar13 - (char)lVar6;
-  local_6b = uVar8;
-  vpx_memcpy((void *)(iVar3 + 0x30184),&local_70,8);
+  local_6b = (undefined1)param_3;
+  (param_1->mb).e_mbd.segmentation_enabled = '\x01';
+  (param_1->mb).e_mbd.update_mb_segmentation_map = '\x01';
+  (param_1->mb).e_mbd.update_mb_segmentation_data = '\x01';
+  (param_1->mb).e_mbd.mb_segement_abs_delta = '\0';
+  local_6f = (char)*piVar15 - (char)param_2;
+  vpx_memcpy(param_1->segment_feature_data,&local_70,8);
   if (pvVar5 != (void *)0x0) {
     vpx_free(pvVar5);
   }
-  __restgprlr_21();
   return;
 }
 
 
 // 8282CEF0  set_default_lf_deltas  (WebM_atvi_opt/vpx/vp8/encoder/onyx_if.c:546)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void set_default_lf_deltas(VP8_COMP *param_1)
 
 {
-  int iVar1;
+  char *pcVar1;
+  char *pcVar2;
   
-  iVar1 = __savegprlr_29(param_1);
-  *(undefined1 *)(iVar1 + 0x10c9b) = 1;
-  *(undefined1 *)(iVar1 + 0x10c9c) = 1;
-  vpx_memset((undefined1 *)(iVar1 + 0x10ca1),0,4);
-  vpx_memset((undefined1 *)(iVar1 + 0x10ca9),0,4);
-  *(undefined1 *)(iVar1 + 0x10ca3) = 0xfe;
-  *(undefined1 *)(iVar1 + 0x10ca1) = 2;
-  *(undefined1 *)(iVar1 + 0x10ca4) = 0xfe;
-  *(undefined1 *)(iVar1 + 0x10ca2) = 0;
-  *(undefined1 *)(iVar1 + 0x10ca9) = 4;
-  *(undefined1 *)(iVar1 + 0x10caa) = 0xfe;
-  *(undefined1 *)(iVar1 + 0x10cab) = 2;
-  *(undefined1 *)(iVar1 + 0x10cac) = 4;
-  __restgprlr_29();
+  (param_1->mb).e_mbd.mode_ref_lf_delta_enabled = '\x01';
+  pcVar1 = (param_1->mb).e_mbd.ref_lf_deltas;
+  (param_1->mb).e_mbd.mode_ref_lf_delta_update = '\x01';
+  vpx_memset(pcVar1,0,4);
+  pcVar2 = (param_1->mb).e_mbd.mode_lf_deltas;
+  vpx_memset(pcVar2,0,4);
+  (param_1->mb).e_mbd.ref_lf_deltas[2] = -2;
+  *pcVar1 = '\x02';
+  (param_1->mb).e_mbd.ref_lf_deltas[3] = -2;
+  (param_1->mb).e_mbd.ref_lf_deltas[1] = '\0';
+  *pcVar2 = '\x04';
+  (param_1->mb).e_mbd.mode_lf_deltas[1] = -2;
+  (param_1->mb).e_mbd.mode_lf_deltas[2] = '\x02';
+  (param_1->mb).e_mbd.mode_lf_deltas[3] = '\x04';
   return;
 }
 
 
 // 8282CFB8  vp8_set_speed_features  (WebM_atvi_opt/vpx/vp8/encoder/onyx_if.c:566)
+
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
 
 void vp8_set_speed_features(VP8_COMP *param_1)
 
@@ -361,348 +372,344 @@ void vp8_set_speed_features(VP8_COMP *param_1)
   int iVar1;
   SEARCH_METHODS SVar2;
   _func___cdecl_void_short_ptr_short_ptr_int *p_Var3;
-  VP8_COMP *pVVar4;
-  int iVar6;
-  longlong lVar5;
+  int *piVar4;
+  int iVar5;
+  int *piVar6;
   int iVar7;
-  int *piVar8;
+  int iVar8;
   int iVar9;
-  int iVar10;
-  code *pcVar11;
-  longlong lVar12;
+  code *pcVar10;
+  uint *puVar12;
+  int *piVar13;
   uint uVar14;
   uint uVar15;
-  ulonglong uVar13;
+  ulonglong uVar11;
   int iVar16;
   uint uVar17;
   int *piVar18;
-  int *piVar19;
-  int iVar20;
-  longlong lVar21;
+  int iVar19;
+  longlong lVar20;
   
-  lVar5 = (longlong)(int)param_1;
-  __savegprlr();
-  pVVar4 = (VP8_COMP *)lVar5;
-  piVar18 = &pVVar4->Speed;
-  iVar1 = (pVVar4->sf).improved_quant;
-  iVar16 = pVVar4->compressor_speed;
+  piVar18 = &param_1->Speed;
+  iVar1 = (param_1->sf).improved_quant;
+  iVar16 = param_1->compressor_speed;
   iVar7 = *piVar18;
-  lVar12 = lVar5 + 0x22be8;
-  lVar21 = 0x14;
+  puVar12 = param_1->mode_test_hit_counts + 0x13;
+  lVar20 = 0x14;
   do {
-    *(undefined4 *)((int)lVar12 + -0x9c) = 0;
-    *(undefined4 *)((int)lVar12 + -0x4c) = 0;
-    lVar12 = lVar12 + 4;
-    *(undefined4 *)lVar12 = 0;
-    lVar21 = lVar21 + -1;
-  } while (lVar21 != 0);
-  pVVar4->mbs_tested_so_far = 0;
-  (pVVar4->sf).RD = 1;
-  (pVVar4->sf).min_fs_radius = 8;
-  piVar8 = (pVVar4->sf).thresh_mult;
-  (pVVar4->sf).max_step_search_steps = 8;
-  (pVVar4->sf).search_method = NSTEP;
-  lVar21 = 0x14;
-  (pVVar4->sf).improved_quant = 1;
-  lVar12 = lVar5 + 0x2f0ac;
-  (pVVar4->sf).improved_dct = 1;
-  (pVVar4->sf).auto_filter = 1;
-  (pVVar4->sf).recode_loop = 1;
-  (pVVar4->sf).quarter_pixel_search = 1;
-  (pVVar4->sf).half_pixel_search = 1;
-  (pVVar4->sf).full_freq[0] = 7;
-  (pVVar4->sf).full_freq[1] = 7;
-  (pVVar4->sf).max_fs_radius = 0x20;
-  (pVVar4->sf).iterative_sub_pixel = 1;
-  (pVVar4->sf).optimize_coefficients = 1;
-  (pVVar4->sf).first_step = 0;
-  pVVar4->do_full[0] = 0;
-  pVVar4->do_full[1] = 0;
+    puVar12[-0x27] = 0;
+    puVar12[-0x13] = 0;
+    puVar12 = puVar12 + 1;
+    *puVar12 = 0;
+    lVar20 = lVar20 + -1;
+  } while (lVar20 != 0);
+  param_1->mbs_tested_so_far = 0;
+  (param_1->sf).RD = 1;
+  (param_1->sf).min_fs_radius = 8;
+  piVar6 = (param_1->sf).thresh_mult;
+  (param_1->sf).max_step_search_steps = 8;
+  (param_1->sf).search_method = NSTEP;
+  lVar20 = 0x14;
+  (param_1->sf).improved_quant = 1;
+  piVar13 = &(param_1->sf).quarter_pixel_search;
+  (param_1->sf).improved_dct = 1;
+  (param_1->sf).auto_filter = 1;
+  (param_1->sf).recode_loop = 1;
+  (param_1->sf).quarter_pixel_search = 1;
+  (param_1->sf).half_pixel_search = 1;
+  (param_1->sf).full_freq[0] = 7;
+  (param_1->sf).full_freq[1] = 7;
+  (param_1->sf).max_fs_radius = 0x20;
+  (param_1->sf).iterative_sub_pixel = 1;
+  (param_1->sf).optimize_coefficients = 1;
+  (param_1->sf).first_step = 0;
+  param_1->do_full[0] = 0;
+  param_1->do_full[1] = 0;
   do {
-    lVar12 = lVar12 + 4;
-    *(undefined4 *)lVar12 = 0;
-    lVar21 = lVar21 + -1;
-  } while (lVar21 != 0);
+    piVar13 = piVar13 + 1;
+    *piVar13 = 0;
+    lVar20 = lVar20 + -1;
+  } while (lVar20 != 0);
   if (iVar16 == 2) {
-    (pVVar4->sf).optimize_coefficients = 0;
-    (pVVar4->sf).recode_loop = 0;
-    (pVVar4->sf).auto_filter = 1;
-    piVar19 = &pVVar4->ref_frame_flags;
-    (pVVar4->sf).iterative_sub_pixel = 1;
-    (pVVar4->sf).thresh_mult[2] = 0;
-    *piVar8 = 0;
-    (pVVar4->sf).thresh_mult[1] = 0;
-    (pVVar4->sf).thresh_mult[0xc] = 0;
-    (pVVar4->sf).thresh_mult[3] = 0;
-    (pVVar4->sf).thresh_mult[10] = 1000;
-    (pVVar4->sf).thresh_mult[0xb] = 1000;
-    (pVVar4->sf).thresh_mult[0x13] = 0x9c4;
-    (pVVar4->sf).thresh_mult[5] = 1000;
-    (pVVar4->sf).thresh_mult[4] = 1000;
-    (pVVar4->sf).thresh_mult[8] = 1000;
-    (pVVar4->sf).thresh_mult[7] = 1000;
-    (pVVar4->sf).thresh_mult[6] = 1000;
-    (pVVar4->sf).thresh_mult[9] = 1000;
-    (pVVar4->sf).thresh_mult[0xd] = 2000;
-    (pVVar4->sf).thresh_mult[0xe] = 2000;
-    (pVVar4->sf).thresh_mult[0xf] = 2000;
-    (pVVar4->sf).thresh_mult[0x10] = 5000;
-    (pVVar4->sf).thresh_mult[0x11] = 10000;
-    (pVVar4->sf).thresh_mult[0x12] = 10000;
-    (pVVar4->sf).full_freq[0] = 0xf;
-    (pVVar4->sf).full_freq[1] = 0x1f;
-    (pVVar4->sf).search_method = NSTEP;
-    if ((*piVar19 & 1U) == 0) {
-      (pVVar4->sf).thresh_mult[0xd] = 0x7fffffff;
-      (pVVar4->sf).thresh_mult[2] = 0x7fffffff;
-      *piVar8 = 0x7fffffff;
-      (pVVar4->sf).thresh_mult[3] = 0x7fffffff;
-      (pVVar4->sf).thresh_mult[0x10] = 0x7fffffff;
+    (param_1->sf).optimize_coefficients = 0;
+    (param_1->sf).recode_loop = 0;
+    (param_1->sf).auto_filter = 1;
+    piVar13 = &param_1->ref_frame_flags;
+    (param_1->sf).iterative_sub_pixel = 1;
+    (param_1->sf).thresh_mult[2] = 0;
+    *piVar6 = 0;
+    (param_1->sf).thresh_mult[1] = 0;
+    (param_1->sf).thresh_mult[0xc] = 0;
+    (param_1->sf).thresh_mult[3] = 0;
+    (param_1->sf).thresh_mult[10] = 1000;
+    (param_1->sf).thresh_mult[0xb] = 1000;
+    (param_1->sf).thresh_mult[0x13] = 0x9c4;
+    (param_1->sf).thresh_mult[5] = 1000;
+    (param_1->sf).thresh_mult[4] = 1000;
+    (param_1->sf).thresh_mult[8] = 1000;
+    (param_1->sf).thresh_mult[7] = 1000;
+    (param_1->sf).thresh_mult[6] = 1000;
+    (param_1->sf).thresh_mult[9] = 1000;
+    (param_1->sf).thresh_mult[0xd] = 2000;
+    (param_1->sf).thresh_mult[0xe] = 2000;
+    (param_1->sf).thresh_mult[0xf] = 2000;
+    (param_1->sf).thresh_mult[0x10] = 5000;
+    (param_1->sf).thresh_mult[0x11] = 10000;
+    (param_1->sf).thresh_mult[0x12] = 10000;
+    (param_1->sf).full_freq[0] = 0xf;
+    (param_1->sf).full_freq[1] = 0x1f;
+    (param_1->sf).search_method = NSTEP;
+    if ((*piVar13 & 1U) == 0) {
+      (param_1->sf).thresh_mult[0xd] = 0x7fffffff;
+      (param_1->sf).thresh_mult[2] = 0x7fffffff;
+      *piVar6 = 0x7fffffff;
+      (param_1->sf).thresh_mult[3] = 0x7fffffff;
+      (param_1->sf).thresh_mult[0x10] = 0x7fffffff;
     }
-    if ((*piVar19 & 2U) == 0) {
-      (pVVar4->sf).thresh_mult[5] = 0x7fffffff;
-      (pVVar4->sf).thresh_mult[4] = 0x7fffffff;
-      (pVVar4->sf).thresh_mult[8] = 0x7fffffff;
-      (pVVar4->sf).thresh_mult[0xe] = 0x7fffffff;
-      (pVVar4->sf).thresh_mult[0x11] = 0x7fffffff;
+    if ((*piVar13 & 2U) == 0) {
+      (param_1->sf).thresh_mult[5] = 0x7fffffff;
+      (param_1->sf).thresh_mult[4] = 0x7fffffff;
+      (param_1->sf).thresh_mult[8] = 0x7fffffff;
+      (param_1->sf).thresh_mult[0xe] = 0x7fffffff;
+      (param_1->sf).thresh_mult[0x11] = 0x7fffffff;
     }
-    if ((*piVar19 & 4U) == 0) {
-      (pVVar4->sf).thresh_mult[7] = 0x7fffffff;
-      (pVVar4->sf).thresh_mult[6] = 0x7fffffff;
-      (pVVar4->sf).thresh_mult[9] = 0x7fffffff;
-      (pVVar4->sf).thresh_mult[0xf] = 0x7fffffff;
-      (pVVar4->sf).thresh_mult[0x12] = 0x7fffffff;
+    if ((*piVar13 & 4U) == 0) {
+      (param_1->sf).thresh_mult[7] = 0x7fffffff;
+      (param_1->sf).thresh_mult[6] = 0x7fffffff;
+      (param_1->sf).thresh_mult[9] = 0x7fffffff;
+      (param_1->sf).thresh_mult[0xf] = 0x7fffffff;
+      (param_1->sf).thresh_mult[0x12] = 0x7fffffff;
     }
     if (0 < iVar7) {
-      pVVar4->mode_check_freq[0x11] = 4;
-      pVVar4->mode_check_freq[0x12] = 4;
-      pVVar4->mode_check_freq[0x10] = 2;
-      (pVVar4->sf).thresh_mult[1] = 0;
-      (pVVar4->sf).thresh_mult[0xc] = 1000;
-      (pVVar4->sf).thresh_mult[10] = 2000;
-      (pVVar4->sf).thresh_mult[0xb] = 2000;
-      (pVVar4->sf).thresh_mult[0x13] = 5000;
-      if ((*piVar19 & 1U) != 0) {
-        (pVVar4->sf).thresh_mult[2] = 0;
-        *piVar8 = 0;
-        (pVVar4->sf).thresh_mult[3] = 0;
-        (pVVar4->sf).thresh_mult[0xd] = 2000;
-        (pVVar4->sf).thresh_mult[0x10] = 10000;
+      param_1->mode_check_freq[0x11] = 4;
+      param_1->mode_check_freq[0x12] = 4;
+      param_1->mode_check_freq[0x10] = 2;
+      (param_1->sf).thresh_mult[1] = 0;
+      (param_1->sf).thresh_mult[0xc] = 1000;
+      (param_1->sf).thresh_mult[10] = 2000;
+      (param_1->sf).thresh_mult[0xb] = 2000;
+      (param_1->sf).thresh_mult[0x13] = 5000;
+      if ((*piVar13 & 1U) != 0) {
+        (param_1->sf).thresh_mult[2] = 0;
+        *piVar6 = 0;
+        (param_1->sf).thresh_mult[3] = 0;
+        (param_1->sf).thresh_mult[0xd] = 2000;
+        (param_1->sf).thresh_mult[0x10] = 10000;
       }
-      if ((*piVar19 & 2U) != 0) {
-        (pVVar4->sf).thresh_mult[5] = 1000;
-        (pVVar4->sf).thresh_mult[4] = 1000;
-        (pVVar4->sf).thresh_mult[8] = 1000;
-        (pVVar4->sf).thresh_mult[0xe] = 2000;
-        (pVVar4->sf).thresh_mult[0x11] = 20000;
+      if ((*piVar13 & 2U) != 0) {
+        (param_1->sf).thresh_mult[5] = 1000;
+        (param_1->sf).thresh_mult[4] = 1000;
+        (param_1->sf).thresh_mult[8] = 1000;
+        (param_1->sf).thresh_mult[0xe] = 2000;
+        (param_1->sf).thresh_mult[0x11] = 20000;
       }
-      if ((*piVar19 & 4U) != 0) {
-        (pVVar4->sf).thresh_mult[7] = 1000;
-        (pVVar4->sf).thresh_mult[6] = 1000;
-        (pVVar4->sf).thresh_mult[9] = 1000;
-        (pVVar4->sf).thresh_mult[0xf] = 2000;
-        (pVVar4->sf).thresh_mult[0x12] = 20000;
+      if ((*piVar13 & 4U) != 0) {
+        (param_1->sf).thresh_mult[7] = 1000;
+        (param_1->sf).thresh_mult[6] = 1000;
+        (param_1->sf).thresh_mult[9] = 1000;
+        (param_1->sf).thresh_mult[0xf] = 2000;
+        (param_1->sf).thresh_mult[0x12] = 20000;
       }
-      (pVVar4->sf).improved_quant = 0;
-      (pVVar4->sf).improved_dct = 0;
+      (param_1->sf).improved_quant = 0;
+      (param_1->sf).improved_dct = 0;
     }
     if (1 < iVar7) {
-      pVVar4->mode_check_freq[0x10] = 7;
-      pVVar4->mode_check_freq[0x11] = 0xf;
-      pVVar4->mode_check_freq[0x12] = 0xf;
-      (pVVar4->sf).thresh_mult[0xc] = 2000;
-      (pVVar4->sf).thresh_mult[10] = 2000;
-      (pVVar4->sf).thresh_mult[0xb] = 2000;
-      (pVVar4->sf).thresh_mult[0x13] = 5000;
-      if ((*piVar19 & 1U) != 0) {
-        (pVVar4->sf).thresh_mult[0xd] = 2000;
-        (pVVar4->sf).thresh_mult[0x10] = 25000;
+      param_1->mode_check_freq[0x10] = 7;
+      param_1->mode_check_freq[0x11] = 0xf;
+      param_1->mode_check_freq[0x12] = 0xf;
+      (param_1->sf).thresh_mult[0xc] = 2000;
+      (param_1->sf).thresh_mult[10] = 2000;
+      (param_1->sf).thresh_mult[0xb] = 2000;
+      (param_1->sf).thresh_mult[0x13] = 5000;
+      if ((*piVar13 & 1U) != 0) {
+        (param_1->sf).thresh_mult[0xd] = 2000;
+        (param_1->sf).thresh_mult[0x10] = 25000;
       }
-      if ((*piVar19 & 2U) != 0) {
-        (pVVar4->sf).thresh_mult[5] = 2000;
-        (pVVar4->sf).thresh_mult[4] = 2000;
-        (pVVar4->sf).thresh_mult[8] = 2000;
-        (pVVar4->sf).thresh_mult[0xe] = 0x9c4;
-        (pVVar4->sf).thresh_mult[0x11] = 50000;
+      if ((*piVar13 & 2U) != 0) {
+        (param_1->sf).thresh_mult[5] = 2000;
+        (param_1->sf).thresh_mult[4] = 2000;
+        (param_1->sf).thresh_mult[8] = 2000;
+        (param_1->sf).thresh_mult[0xe] = 0x9c4;
+        (param_1->sf).thresh_mult[0x11] = 50000;
       }
-      if ((*piVar19 & 4U) != 0) {
-        (pVVar4->sf).thresh_mult[7] = 2000;
-        (pVVar4->sf).thresh_mult[6] = 2000;
-        (pVVar4->sf).thresh_mult[9] = 2000;
-        (pVVar4->sf).thresh_mult[0xf] = 0x9c4;
-        (pVVar4->sf).thresh_mult[0x12] = 50000;
+      if ((*piVar13 & 4U) != 0) {
+        (param_1->sf).thresh_mult[7] = 2000;
+        (param_1->sf).thresh_mult[6] = 2000;
+        (param_1->sf).thresh_mult[9] = 2000;
+        (param_1->sf).thresh_mult[0xf] = 0x9c4;
+        (param_1->sf).thresh_mult[0x12] = 50000;
       }
-      (pVVar4->sf).full_freq[0] = 0x1f;
-      (pVVar4->sf).full_freq[1] = 0x3f;
+      (param_1->sf).full_freq[0] = 0x1f;
+      (param_1->sf).full_freq[1] = 0x3f;
     }
     if (2 < iVar7) {
-      (pVVar4->sf).auto_filter = 0;
-      uVar17 = *piVar19;
-      pVVar4->mode_check_freq[10] = 2;
-      pVVar4->mode_check_freq[0xb] = 2;
-      pVVar4->mode_check_freq[0x13] = 2;
+      (param_1->sf).auto_filter = 0;
+      uVar17 = *piVar13;
+      param_1->mode_check_freq[10] = 2;
+      param_1->mode_check_freq[0xb] = 2;
+      param_1->mode_check_freq[0x13] = 2;
       if ((uVar17 & 2) != 0) {
-        pVVar4->mode_check_freq[8] = 2;
-        pVVar4->mode_check_freq[0xe] = 4;
+        param_1->mode_check_freq[8] = 2;
+        param_1->mode_check_freq[0xe] = 4;
       }
       if ((uVar17 & 4) != 0) {
-        pVVar4->mode_check_freq[9] = 2;
-        pVVar4->mode_check_freq[0xf] = 4;
+        param_1->mode_check_freq[9] = 2;
+        param_1->mode_check_freq[0xf] = 4;
       }
-      (pVVar4->sf).thresh_mult[0x10] = 0x7fffffff;
-      (pVVar4->sf).thresh_mult[0x11] = 0x7fffffff;
-      (pVVar4->sf).thresh_mult[0x12] = 0x7fffffff;
-      (pVVar4->sf).full_freq[0] = 0x3f;
-      (pVVar4->sf).full_freq[1] = 0x7f;
+      (param_1->sf).thresh_mult[0x10] = 0x7fffffff;
+      (param_1->sf).thresh_mult[0x11] = 0x7fffffff;
+      (param_1->sf).thresh_mult[0x12] = 0x7fffffff;
+      (param_1->sf).full_freq[0] = 0x3f;
+      (param_1->sf).full_freq[1] = 0x7f;
     }
     if (3 < iVar7) {
-      (pVVar4->sf).RD = 0;
-      (pVVar4->sf).full_freq[0] = 0x7fffffff;
-      (pVVar4->sf).full_freq[1] = 0x7fffffff;
-      (pVVar4->sf).auto_filter = 1;
+      (param_1->sf).RD = 0;
+      (param_1->sf).full_freq[0] = 0x7fffffff;
+      (param_1->sf).full_freq[1] = 0x7fffffff;
+      (param_1->sf).auto_filter = 1;
     }
     if (4 < iVar7) {
-      (pVVar4->sf).auto_filter = 0;
-      (pVVar4->sf).search_method = HEX;
-      uVar17 = *piVar19;
-      pVVar4->mode_check_freq[10] = 4;
-      pVVar4->mode_check_freq[0xb] = 4;
-      pVVar4->mode_check_freq[0x13] = 4;
+      (param_1->sf).auto_filter = 0;
+      (param_1->sf).search_method = HEX;
+      uVar17 = *piVar13;
+      param_1->mode_check_freq[10] = 4;
+      param_1->mode_check_freq[0xb] = 4;
+      param_1->mode_check_freq[0x13] = 4;
       if ((uVar17 & 2) != 0) {
-        pVVar4->mode_check_freq[8] = 2;
-        pVVar4->mode_check_freq[0xe] = 4;
+        param_1->mode_check_freq[8] = 2;
+        param_1->mode_check_freq[0xe] = 4;
       }
       if ((uVar17 & 4) != 0) {
-        pVVar4->mode_check_freq[9] = 2;
-        pVVar4->mode_check_freq[0xf] = 4;
+        param_1->mode_check_freq[9] = 2;
+        param_1->mode_check_freq[0xf] = 4;
       }
-      (pVVar4->sf).thresh_mult[0xc] = 2000;
-      (pVVar4->sf).thresh_mult[0x13] = 5000;
-      if ((*piVar19 & 2U) != 0) {
-        (pVVar4->sf).thresh_mult[5] = 2000;
-        (pVVar4->sf).thresh_mult[4] = 2000;
-        (pVVar4->sf).thresh_mult[8] = 2000;
-        (pVVar4->sf).thresh_mult[0xe] = 4000;
+      (param_1->sf).thresh_mult[0xc] = 2000;
+      (param_1->sf).thresh_mult[0x13] = 5000;
+      if ((*piVar13 & 2U) != 0) {
+        (param_1->sf).thresh_mult[5] = 2000;
+        (param_1->sf).thresh_mult[4] = 2000;
+        (param_1->sf).thresh_mult[8] = 2000;
+        (param_1->sf).thresh_mult[0xe] = 4000;
       }
-      if ((*piVar19 & 4U) != 0) {
-        (pVVar4->sf).thresh_mult[7] = 2000;
-        (pVVar4->sf).thresh_mult[6] = 2000;
-        (pVVar4->sf).thresh_mult[9] = 2000;
-        (pVVar4->sf).thresh_mult[0xf] = 4000;
+      if ((*piVar13 & 4U) != 0) {
+        (param_1->sf).thresh_mult[7] = 2000;
+        (param_1->sf).thresh_mult[6] = 2000;
+        (param_1->sf).thresh_mult[9] = 2000;
+        (param_1->sf).thresh_mult[0xf] = 4000;
       }
     }
     if (5 < iVar7) {
-      (pVVar4->sf).thresh_mult[0x13] = 0x7fffffff;
+      (param_1->sf).thresh_mult[0x13] = 0x7fffffff;
     }
     if (6 < iVar7) {
-      iVar16 = (pVVar4->common).MBs;
-      (pVVar4->sf).iterative_sub_pixel = 0;
-      iVar20 = 0;
-      iVar6 = (pVVar4->oxcf).encode_breakout;
-      iVar9 = 2000;
-      if (2000 < iVar6) {
-        iVar9 = iVar6;
+      iVar16 = (param_1->common).MBs;
+      (param_1->sf).iterative_sub_pixel = 0;
+      iVar19 = 0;
+      iVar5 = (param_1->oxcf).encode_breakout;
+      iVar8 = 2000;
+      if (2000 < iVar5) {
+        iVar8 = iVar5;
       }
-      uVar17 = iVar9 >> 7;
-      iVar6 = 0;
-      iVar9 = 0;
+      uVar17 = iVar8 >> 7;
+      iVar5 = 0;
+      iVar8 = 0;
       uVar14 = 0;
       if (1 < (int)uVar17) {
-        lVar12 = lVar5 + 0x2f118;
-        iVar6 = 0;
-        iVar9 = 0;
+        piVar6 = &(param_1->sf).optimize_coefficients;
+        iVar5 = 0;
+        iVar8 = 0;
         do {
-          iVar10 = (int)lVar12;
+          piVar4 = piVar6 + 1;
           uVar14 = uVar14 + 2;
-          lVar12 = lVar12 + 8;
-          iVar6 = *(int *)(iVar10 + 4) + iVar6;
-          iVar9 = *(int *)lVar12 + iVar9;
+          piVar6 = piVar6 + 2;
+          iVar5 = *piVar4 + iVar5;
+          iVar8 = *piVar6 + iVar8;
         } while (uVar14 < uVar17 - 1);
       }
       uVar15 = uVar14;
       if (uVar14 < uVar17) {
         uVar15 = uVar14 + 1;
-        iVar20 = pVVar4->error_bins[uVar14];
+        iVar19 = param_1->error_bins[uVar14];
       }
-      iVar10 = 0;
+      iVar9 = 0;
       if (uVar15 < 0x400) {
-        lVar5 = ((ulonglong)(uVar15 + 0xbc47) & 0x3fffffff) * 4 + lVar5;
+        piVar6 = param_1->error_bins + uVar15;
         do {
-          iVar10 = *(int *)lVar5 + iVar10;
-          if ((uint)((iVar16 - (iVar6 + iVar9 + iVar20)) * (*piVar18 + -6)) <= (uint)(iVar10 * 10))
+          iVar9 = *piVar6 + iVar9;
+          if ((uint)((iVar16 - (iVar5 + iVar8 + iVar19)) * (*piVar18 + -6)) <= (uint)(iVar9 * 10))
           break;
           uVar15 = uVar15 + 1;
-          lVar5 = lVar5 + 4;
+          piVar6 = piVar6 + 1;
         } while (uVar15 < 0x400);
       }
-      uVar13 = ((ulonglong)uVar15 & 0x1ffffff) * 0x80 - 0x80;
-      if ((int)uVar13 < 2000) {
-        uVar13 = 2000;
+      uVar11 = ((ulonglong)uVar15 & 0x1ffffff) * 0x80 - 0x80;
+      if ((int)uVar11 < 2000) {
+        uVar11 = 2000;
       }
-      iVar16 = (int)uVar13;
-      if ((*piVar19 & 1U) != 0) {
-        (pVVar4->sf).thresh_mult[0xd] = iVar16;
-        (pVVar4->sf).thresh_mult[2] = iVar16 >> 1;
-        (pVVar4->sf).thresh_mult[3] = iVar16 >> 1;
+      iVar16 = (int)uVar11;
+      if ((*piVar13 & 1U) != 0) {
+        (param_1->sf).thresh_mult[0xd] = iVar16;
+        (param_1->sf).thresh_mult[2] = iVar16 >> 1;
+        (param_1->sf).thresh_mult[3] = iVar16 >> 1;
       }
-      if ((*piVar19 & 2U) != 0) {
-        (pVVar4->sf).thresh_mult[5] = iVar16;
-        (pVVar4->sf).thresh_mult[8] = iVar16;
-        (pVVar4->sf).thresh_mult[0xe] = (int)((uVar13 & 0xffffffff) << 1);
+      if ((*piVar13 & 2U) != 0) {
+        (param_1->sf).thresh_mult[5] = iVar16;
+        (param_1->sf).thresh_mult[8] = iVar16;
+        (param_1->sf).thresh_mult[0xe] = (int)((uVar11 & 0xffffffff) << 1);
       }
-      if ((*piVar19 & 4U) != 0) {
-        (pVVar4->sf).thresh_mult[7] = iVar16;
-        (pVVar4->sf).thresh_mult[9] = iVar16;
-        (pVVar4->sf).thresh_mult[0xf] = (int)((uVar13 & 0xffffffff) << 1);
+      if ((*piVar13 & 4U) != 0) {
+        (param_1->sf).thresh_mult[7] = iVar16;
+        (param_1->sf).thresh_mult[9] = iVar16;
+        (param_1->sf).thresh_mult[0xf] = (int)((uVar11 & 0xffffffff) << 1);
       }
-      (pVVar4->sf).thresh_mult[0xc] = 0x7fffffff;
-      (pVVar4->sf).thresh_mult[10] = 0x7fffffff;
-      (pVVar4->sf).thresh_mult[0xb] = 0x7fffffff;
+      (param_1->sf).thresh_mult[0xc] = 0x7fffffff;
+      (param_1->sf).thresh_mult[10] = 0x7fffffff;
+      (param_1->sf).thresh_mult[0xb] = 0x7fffffff;
     }
     if (8 < iVar7) {
-      (pVVar4->sf).quarter_pixel_search = 0;
+      (param_1->sf).quarter_pixel_search = 0;
     }
     if (9 < iVar7) {
       uVar17 = *piVar18 - 8;
       if (4 < (int)uVar17) {
         uVar17 = 4;
       }
-      uVar14 = *piVar19;
+      uVar14 = *piVar13;
       if ((uVar14 & 2) != 0) {
         uVar15 = 1 << (uVar17 - 1 & 0x3f);
-        pVVar4->mode_check_freq[4] = uVar15;
-        pVVar4->mode_check_freq[5] = uVar15;
-        pVVar4->mode_check_freq[8] = 1 << (uVar17 & 0x3f);
-        pVVar4->mode_check_freq[0xe] = 1 << (uVar17 + 1 & 0x3f);
+        param_1->mode_check_freq[4] = uVar15;
+        param_1->mode_check_freq[5] = uVar15;
+        param_1->mode_check_freq[8] = 1 << (uVar17 & 0x3f);
+        param_1->mode_check_freq[0xe] = 1 << (uVar17 + 1 & 0x3f);
       }
       if ((uVar14 & 4) != 0) {
         uVar14 = 1 << (uVar17 - 1 & 0x3f);
-        pVVar4->mode_check_freq[6] = uVar14;
-        pVVar4->mode_check_freq[7] = uVar14;
-        pVVar4->mode_check_freq[9] = 1 << (uVar17 & 0x3f);
-        pVVar4->mode_check_freq[0xf] = 1 << (uVar17 + 1 & 0x3f);
+        param_1->mode_check_freq[6] = uVar14;
+        param_1->mode_check_freq[7] = uVar14;
+        param_1->mode_check_freq[9] = 1 << (uVar17 & 0x3f);
+        param_1->mode_check_freq[0xf] = 1 << (uVar17 + 1 & 0x3f);
       }
-      pVVar4->mode_check_freq[0xd] = 1 << (uVar17 - 1 & 0x3f);
+      param_1->mode_check_freq[0xd] = 1 << (uVar17 - 1 & 0x3f);
     }
-    (pVVar4->common).filter_type = NORMAL_LOOPFILTER;
+    (param_1->common).filter_type = NORMAL_LOOPFILTER;
     if (0xd < iVar7) {
-      (pVVar4->common).filter_type = SIMPLE_LOOPFILTER;
+      (param_1->common).filter_type = SIMPLE_LOOPFILTER;
     }
     if (0xe < iVar7) {
-      (pVVar4->sf).half_pixel_search = 0;
+      (param_1->sf).half_pixel_search = 0;
     }
-    vpx_memset(pVVar4->error_bins,0,0x1000);
+    vpx_memset(param_1->error_bins,0,0x1000);
   }
-  SVar2 = (pVVar4->sf).search_method;
+  SVar2 = (param_1->sf).search_method;
   if (SVar2 == NSTEP) {
     vp8_init3smotion_compensation
-              (&pVVar4->mb,(pVVar4->common).yv12_fb[(pVVar4->common).lst_fb_idx].y_stride);
+              (&param_1->mb,(param_1->common).yv12_fb[(param_1->common).lst_fb_idx].y_stride);
   }
   else if (SVar2 == DIAMOND) {
     vp8_init_dsmotion_compensation
-              (&pVVar4->mb,(pVVar4->common).yv12_fb[(pVVar4->common).lst_fb_idx].y_stride);
+              (&param_1->mb,(param_1->common).yv12_fb[(param_1->common).lst_fb_idx].y_stride);
   }
-  if ((pVVar4->sf).improved_dct == 0) {
+  if ((param_1->sf).improved_dct == 0) {
     iVar16 = 0x30578;
     iVar7 = 0x30574;
   }
@@ -710,92 +717,90 @@ void vp8_set_speed_features(VP8_COMP *param_1)
     iVar16 = 0x30570;
     iVar7 = 0x3056c;
   }
-  p_Var3 = *(_func___cdecl_void_short_ptr_short_ptr_int **)((int)pVVar4->Y1quant[0] + iVar16);
-  (pVVar4->mb).vp8_short_fdct4x4 =
-       *(_func___cdecl_void_short_ptr_short_ptr_int **)((int)pVVar4->Y1quant[0] + iVar7);
-  (pVVar4->mb).vp8_short_fdct8x4 = p_Var3;
-  iVar7 = (pVVar4->sf).improved_quant;
+  p_Var3 = *(_func___cdecl_void_short_ptr_short_ptr_int **)((int)param_1->Y1quant[0] + iVar16);
+  (param_1->mb).vp8_short_fdct4x4 =
+       *(_func___cdecl_void_short_ptr_short_ptr_int **)((int)param_1->Y1quant[0] + iVar7);
+  (param_1->mb).vp8_short_fdct8x4 = p_Var3;
+  iVar7 = (param_1->sf).improved_quant;
   iVar16 = 0x30598;
-  (pVVar4->mb).short_walsh4x4 = (pVVar4->rtcd).fdct.walsh_short4x4;
+  (param_1->mb).short_walsh4x4 = (param_1->rtcd).fdct.walsh_short4x4;
   if (iVar7 == 0) {
     iVar16 = 0x3059c;
   }
-  (pVVar4->mb).quantize_b =
-       *(_func___cdecl_void_BLOCK_ptr_BLOCKD_ptr **)((int)pVVar4->Y1quant[0] + iVar16);
+  (param_1->mb).quantize_b =
+       *(_func___cdecl_void_BLOCK_ptr_BLOCKD_ptr **)((int)param_1->Y1quant[0] + iVar16);
   if (iVar7 != iVar1) {
-    vp8cx_init_quantizer(pVVar4);
+    vp8cx_init_quantizer(param_1);
   }
-  iVar1 = (pVVar4->sf).iterative_sub_pixel;
-  (pVVar4->mb).e_mbd.rtcd = &(pVVar4->common).rtcd;
+  iVar1 = (param_1->sf).iterative_sub_pixel;
+  (param_1->mb).e_mbd.rtcd = &(param_1->common).rtcd;
   if (iVar1 == 1) {
-    pcVar11 = vp8_find_best_sub_pixel_step_iteratively;
+    pcVar10 = vp8_find_best_sub_pixel_step_iteratively;
   }
-  else if ((pVVar4->sf).quarter_pixel_search == 0) {
-    if ((pVVar4->sf).half_pixel_search == 0) {
-      pcVar11 = vp8_skip_fractional_mv_step;
+  else if ((param_1->sf).quarter_pixel_search == 0) {
+    if ((param_1->sf).half_pixel_search == 0) {
+      pcVar10 = vp8_skip_fractional_mv_step;
     }
     else {
-      pcVar11 = vp8_find_best_half_pixel_step;
+      pcVar10 = vp8_find_best_half_pixel_step;
     }
   }
   else {
-    pcVar11 = vp8_find_best_sub_pixel_step;
+    pcVar10 = vp8_find_best_sub_pixel_step;
   }
-  iVar1 = (pVVar4->sf).optimize_coefficients;
-  pVVar4->find_fractional_mv_step = pcVar11;
+  iVar1 = (param_1->sf).optimize_coefficients;
+  param_1->find_fractional_mv_step = pcVar10;
   if (iVar1 == 1) {
-    (pVVar4->mb).optimize = pVVar4->is_next_src_alt_ref + 1;
+    (param_1->mb).optimize = param_1->is_next_src_alt_ref + 1;
   }
   else {
-    (pVVar4->mb).optimize = 0;
+    (param_1->mb).optimize = 0;
   }
-  if ((pVVar4->common).full_pixel != 0) {
-    pVVar4->find_fractional_mv_step = vp8_skip_fractional_mv_step;
+  if ((param_1->common).full_pixel != 0) {
+    param_1->find_fractional_mv_step = vp8_skip_fractional_mv_step;
   }
-  __restgprlr();
   return;
 }
 
 
 // 8282D8B0  alloc_raw_frame_buffers  (WebM_atvi_opt/vpx/vp8/encoder/onyx_if.c:1310)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
+
 void alloc_raw_frame_buffers(VP8_COMP *param_1)
 
 {
   uint uVar1;
   int iVar2;
-  int iVar3;
-  ulonglong uVar4;
-  YV12_BUFFER_CONFIG *pYVar5;
+  ulonglong uVar3;
+  YV12_BUFFER_CONFIG *pYVar4;
   
-  iVar2 = __savegprlr_23(param_1);
-  uVar1 = *(uint *)(iVar2 + 0x229b8);
-  uVar4 = (ulonglong)uVar1;
+  uVar1 = (param_1->oxcf).lag_in_frames;
+  uVar3 = (ulonglong)uVar1;
   if ((1 < (int)uVar1) || ((int)uVar1 < 1)) {
-    uVar4 = 1;
+    uVar3 = 1;
   }
-  if (0 < (int)uVar4) {
-    pYVar5 = (YV12_BUFFER_CONFIG *)(iVar2 + 0x22ac0);
+  if (0 < (int)uVar3) {
+    pYVar4 = &param_1->src_buffer[0].source_buffer;
     do {
-      iVar3 = vp8_yv12_alloc_frame_buffer
-                        (pYVar5,*(int *)(iVar2 + 0x22984),*(int *)(iVar2 + 0x22988),0x10);
-      if (iVar3 != 0) {
-        vpx_internal_error((vpx_internal_error_info *)(iVar2 + 0x1afe0),VPX_CODEC_MEM_ERROR,
+      iVar2 = vp8_yv12_alloc_frame_buffer(pYVar4,(param_1->oxcf).Width,(param_1->oxcf).Height,0x10);
+      if (iVar2 != 0) {
+        vpx_internal_error(&(param_1->common).error,VPX_CODEC_MEM_ERROR,
                            "Failed to allocate lag buffer");
       }
-      uVar4 = uVar4 - 1;
-      pYVar5 = (YV12_BUFFER_CONFIG *)&pYVar5[1].u_buffer;
-    } while (uVar4 != 0);
+      uVar3 = uVar3 - 1;
+      pYVar4 = (YV12_BUFFER_CONFIG *)&pYVar4[1].u_buffer;
+    } while (uVar3 != 0);
   }
-  iVar3 = vp8_yv12_alloc_frame_buffer
-                    ((YV12_BUFFER_CONFIG *)(iVar2 + 0x305c0),*(int *)(iVar2 + 0x22984),
-                     *(int *)(iVar2 + 0x22988),0x10);
-  if (iVar3 != 0) {
-    vpx_internal_error((vpx_internal_error_info *)(iVar2 + 0x1afe0),VPX_CODEC_MEM_ERROR,
+  iVar2 = vp8_yv12_alloc_frame_buffer
+                    (&(param_1->alt_ref_buffer).source_buffer,(param_1->oxcf).Width,
+                     (param_1->oxcf).Height,0x10);
+  if (iVar2 != 0) {
+    vpx_internal_error(&(param_1->common).error,VPX_CODEC_MEM_ERROR,
                        "Failed to allocate altref buffer");
   }
-  *(undefined4 *)(iVar2 + 0x22a88) = 0;
-  __restgprlr_23();
+  param_1->source_buffer_count = 0;
   return;
 }
 
@@ -819,80 +824,80 @@ int vp8_alloc_partition_data(VP8_COMP *param_1)
 
 // 8282DA50  vp8_alloc_compressor_data  (WebM_atvi_opt/vpx/vp8/encoder/onyx_if.c:1354)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void vp8_alloc_compressor_data(VP8_COMP *param_1)
 
 {
-  VP8_COMP *pVVar1;
-  VP8Common *pVVar2;
-  int iVar3;
-  TOKENEXTRA *pTVar4;
-  uchar *puVar5;
-  FIRSTPASS_STATS *pFVar6;
-  uint uVar7;
-  uint uVar8;
-  int *piVar9;
+  int iVar1;
+  TOKENEXTRA *pTVar2;
+  uchar *puVar3;
+  FIRSTPASS_STATS *pFVar4;
+  uint uVar5;
+  uint uVar6;
+  int *piVar7;
+  VP8Common *pVVar8;
   
-  pVVar1 = (VP8_COMP *)__savegprlr_28(param_1);
-  pVVar2 = &pVVar1->common;
-  uVar7 = (pVVar1->common).Width;
-  uVar8 = (pVVar1->common).Height;
-  iVar3 = vp8_alloc_frame_buffers(pVVar2,uVar7,uVar8);
-  if (iVar3 != 0) {
-    vpx_internal_error(&pVVar2->error,VPX_CODEC_MEM_ERROR,"Failed to allocate frame buffers");
+  pVVar8 = &param_1->common;
+  uVar5 = (param_1->common).Width;
+  uVar6 = (param_1->common).Height;
+  iVar1 = vp8_alloc_frame_buffers(pVVar8,uVar5,uVar6);
+  if (iVar1 != 0) {
+    vpx_internal_error(&pVVar8->error,VPX_CODEC_MEM_ERROR,"Failed to allocate frame buffers");
   }
-  iVar3 = vp8_alloc_partition_data(pVVar1);
-  if (iVar3 != 0) {
-    vpx_internal_error(&pVVar2->error,VPX_CODEC_MEM_ERROR,"Failed to allocate partition data");
+  iVar1 = vp8_alloc_partition_data(param_1);
+  if (iVar1 != 0) {
+    vpx_internal_error(&pVVar8->error,VPX_CODEC_MEM_ERROR,"Failed to allocate partition data");
   }
-  if ((uVar7 & 0xf) != 0) {
-    uVar7 = (uVar7 - (uVar7 & 0xf)) + 0x10;
+  if ((uVar5 & 0xf) != 0) {
+    uVar5 = (uVar5 - (uVar5 & 0xf)) + 0x10;
   }
-  if ((uVar8 & 0xf) != 0) {
-    uVar8 = (uVar8 - (uVar8 & 0xf)) + 0x10;
+  if ((uVar6 & 0xf) != 0) {
+    uVar6 = (uVar6 - (uVar6 & 0xf)) + 0x10;
   }
-  iVar3 = vp8_yv12_alloc_frame_buffer(&pVVar1->last_frame_uf,uVar7,uVar8,0x20);
-  if (iVar3 != 0) {
-    vpx_internal_error(&pVVar2->error,VPX_CODEC_MEM_ERROR,"Failed to allocate last frame buffer");
+  iVar1 = vp8_yv12_alloc_frame_buffer(&param_1->last_frame_uf,uVar5,uVar6,0x20);
+  if (iVar1 != 0) {
+    vpx_internal_error(&pVVar8->error,VPX_CODEC_MEM_ERROR,"Failed to allocate last frame buffer");
   }
-  iVar3 = vp8_yv12_alloc_frame_buffer(&pVVar1->scaled_source,uVar7,uVar8,0x10);
-  if (iVar3 != 0) {
-    vpx_internal_error(&pVVar2->error,VPX_CODEC_MEM_ERROR,"Failed to allocate scaled source buffer")
+  iVar1 = vp8_yv12_alloc_frame_buffer(&param_1->scaled_source,uVar5,uVar6,0x10);
+  if (iVar1 != 0) {
+    vpx_internal_error(&pVVar8->error,VPX_CODEC_MEM_ERROR,"Failed to allocate scaled source buffer")
     ;
   }
-  pTVar4 = pVVar1->tok;
-  if (pTVar4 != (TOKENEXTRA *)0x0) {
-    vpx_free(pTVar4);
+  pTVar2 = param_1->tok;
+  if (pTVar2 != (TOKENEXTRA *)0x0) {
+    vpx_free(pTVar2);
   }
-  pTVar4 = vpx_calloc((pVVar1->common).mb_rows * (pVVar1->common).mb_cols * 0x180,0x14);
-  pVVar1->tok = pTVar4;
-  if (pTVar4 == (TOKENEXTRA *)0x0) {
-    vpx_internal_error(&pVVar2->error,VPX_CODEC_MEM_ERROR,"Failed to allocate cpi->tok");
+  pTVar2 = vpx_calloc((param_1->common).mb_rows * (param_1->common).mb_cols * 0x180,0x14);
+  param_1->tok = pTVar2;
+  if (pTVar2 == (TOKENEXTRA *)0x0) {
+    vpx_internal_error(&pVVar8->error,VPX_CODEC_MEM_ERROR,"Failed to allocate cpi->tok");
   }
-  puVar5 = pVVar1->gf_active_flags;
-  pVVar1->inter_zz_count = 0;
-  pVVar1->gf_bad_count = 0;
-  pVVar1->gf_update_recommended = 0;
-  if (puVar5 != (uchar *)0x0) {
-    vpx_free(puVar5);
+  puVar3 = param_1->gf_active_flags;
+  param_1->inter_zz_count = 0;
+  param_1->gf_bad_count = 0;
+  param_1->gf_update_recommended = 0;
+  if (puVar3 != (uchar *)0x0) {
+    vpx_free(puVar3);
   }
-  puVar5 = vpx_calloc(1,(pVVar1->common).mb_rows * (pVVar1->common).mb_cols);
-  pVVar1->gf_active_flags = puVar5;
-  if (puVar5 == (uchar *)0x0) {
-    vpx_internal_error(&pVVar2->error,VPX_CODEC_MEM_ERROR,"Failed to allocate cpi->gf_active_flags")
+  puVar3 = vpx_calloc(1,(param_1->common).mb_rows * (param_1->common).mb_cols);
+  param_1->gf_active_flags = puVar3;
+  if (puVar3 == (uchar *)0x0) {
+    vpx_internal_error(&pVVar8->error,VPX_CODEC_MEM_ERROR,"Failed to allocate cpi->gf_active_flags")
     ;
   }
-  pVVar1->gf_active_count = (pVVar1->common).mb_rows * (pVVar1->common).mb_cols;
-  piVar9 = &(pVVar1->common).MBs;
-  uVar7 = vp8_firstpass_stats_sz(*piVar9);
-  pFVar6 = vpx_calloc(1,uVar7);
-  pVVar1->total_stats = pFVar6;
-  uVar7 = vp8_firstpass_stats_sz(*piVar9);
-  pFVar6 = vpx_calloc(1,uVar7);
-  pVVar1->this_frame_stats = pFVar6;
-  if ((pVVar1->total_stats == (FIRSTPASS_STATS *)0x0) || (pFVar6 == (FIRSTPASS_STATS *)0x0)) {
-    vpx_internal_error(&pVVar2->error,VPX_CODEC_MEM_ERROR,"Failed to allocate firstpass stats");
+  param_1->gf_active_count = (param_1->common).mb_rows * (param_1->common).mb_cols;
+  piVar7 = &(param_1->common).MBs;
+  uVar5 = vp8_firstpass_stats_sz(*piVar7);
+  pFVar4 = vpx_calloc(1,uVar5);
+  param_1->total_stats = pFVar4;
+  uVar5 = vp8_firstpass_stats_sz(*piVar7);
+  pFVar4 = vpx_calloc(1,uVar5);
+  param_1->this_frame_stats = pFVar4;
+  if ((param_1->total_stats == (FIRSTPASS_STATS *)0x0) || (pFVar4 == (FIRSTPASS_STATS *)0x0)) {
+    vpx_internal_error(&pVVar8->error,VPX_CODEC_MEM_ERROR,"Failed to allocate firstpass stats");
   }
-  __restgprlr_28();
   return;
 }
 
@@ -971,601 +976,566 @@ int rescale(int param_1,int param_2,int param_3)
 
 // 8282FA48  vp8_init_config  (WebM_atvi_opt/vpx/vp8/encoder/onyx_if.c:1480)
 
+/* WARNING: Function: __savegprlr_15 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_15 replaced with injection: xenon_save_restore */
+
 void vp8_init_config(int *param_1,VP8_CONFIG *param_2)
 
 {
   uint uVar1;
-  TOKEN_PARTITION TVar2;
-  int iVar3;
+  int iVar2;
+  ulonglong uVar3;
   int iVar4;
-  VP8_COMP *pVVar5;
-  VP8Common *pVVar6;
-  ulonglong uVar7;
-  int iVar8;
-  longlong lVar9;
-  int *piVar11;
-  ulonglong uVar10;
+  longlong lVar5;
+  ulonglong uVar6;
+  int *piVar7;
+  int iVar9;
+  ulonglong uVar8;
+  VP8Common *pVVar10;
+  uint *puVar11;
   int *piVar12;
-  int *piVar14;
-  int iVar15;
-  ulonglong uVar13;
-  int *piVar16;
-  int *piVar17;
-  int *piVar18;
   
-  pVVar5 = (VP8_COMP *)__savegprlr_15(param_1);
-  pVVar6 = &pVVar5->common;
-  if (pVVar5 != (VP8_COMP *)0x0) {
-    pVVar5->auto_gold = 1;
-    pVVar5->auto_adjust_gold_quantizer = 1;
-    pVVar5->goldquantizer = 1;
-    pVVar5->goldfreq = 7;
-    pVVar5->auto_adjust_key_quantizer = 1;
-    pVVar5->keyquantizer = 1;
-    (pVVar5->common).version = param_2->Version;
-    vp8_setup_version(pVVar6);
+  pVVar10 = (VP8Common *)(param_1 + 0x6bf8);
+  if (param_1 != (int *)0x0) {
+    param_1[0xb9ff] = 1;
+    param_1[0xba00] = 1;
+    param_1[0xba01] = 1;
+    param_1[0xba02] = 7;
+    param_1[0xba03] = 1;
+    param_1[0xba04] = 1;
+    param_1[0x8713] = param_2->Version;
+    vp8_setup_version(pVVar10);
     memcpy();
-    if ((pVVar5->oxcf).Mode == 0) {
-      iVar8 = (pVVar5->oxcf).cpu_used;
-      pVVar5->pass = 0;
-      piVar12 = &(pVVar5->oxcf).cpu_used;
-      pVVar5->compressor_speed = 2;
-      if (iVar8 < -0x10) {
-        *piVar12 = -0x10;
+    if (param_1[0x8a6a] == 0) {
+      param_1[0xba0b] = 0;
+      piVar7 = param_1 + 0x8a69;
+      param_1[0xb9fd] = 2;
+      if (param_1[0x8a69] < -0x10) {
+        *piVar7 = -0x10;
       }
-      if (0x10 < *piVar12) {
-        *piVar12 = 0x10;
+      if (0x10 < *piVar7) {
+        *piVar7 = 0x10;
       }
     }
-    if (pVVar5->pass == 0) {
-      pVVar5->auto_worst_q = 1;
+    if (param_1[0xba0b] == 0) {
+      param_1[0xba05] = 1;
     }
-    piVar17 = &(pVVar5->oxcf).worst_allowed_q;
-    piVar12 = &(pVVar5->oxcf).best_allowed_q;
-    *piVar17 = q_trans[param_2->worst_allowed_q];
-    *piVar12 = q_trans[param_2->best_allowed_q];
+    param_1[0x8a75] = q_trans[param_2->worst_allowed_q];
+    param_1[0x8a76] = q_trans[param_2->best_allowed_q];
     if (-1 < param_2->fixed_q) {
       if (param_2->worst_allowed_q < 0) {
-        (pVVar5->oxcf).fixed_q = 0;
+        param_1[0x8a74] = 0;
       }
       else {
-        (pVVar5->oxcf).fixed_q = q_trans[param_2->worst_allowed_q];
+        param_1[0x8a74] = q_trans[param_2->worst_allowed_q];
       }
       if (param_2->alt_q < 0) {
-        (pVVar5->oxcf).alt_q = 0;
+        param_1[0x8a81] = 0;
       }
       else {
-        (pVVar5->oxcf).alt_q = q_trans[param_2->alt_q];
+        param_1[0x8a81] = q_trans[param_2->alt_q];
       }
       if (param_2->key_q < 0) {
-        (pVVar5->oxcf).key_q = 0;
+        param_1[0x8a82] = 0;
       }
       else {
-        (pVVar5->oxcf).key_q = q_trans[param_2->key_q];
+        param_1[0x8a82] = q_trans[param_2->key_q];
       }
       if (param_2->gold_q < 0) {
-        (pVVar5->oxcf).gold_q = 0;
+        param_1[0x8a83] = 0;
       }
       else {
-        (pVVar5->oxcf).gold_q = q_trans[param_2->gold_q];
+        param_1[0x8a83] = q_trans[param_2->gold_q];
       }
     }
-    iVar8 = (pVVar5->oxcf).alt_freq;
-    if (iVar8 == 0) {
-      iVar8 = 7;
+    iVar4 = param_1[0x8a80];
+    if (iVar4 == 0) {
+      iVar4 = 7;
     }
-    pVVar5->baseline_gf_interval = iVar8;
-    pVVar5->ref_frame_flags = 7;
-    (pVVar5->common).refresh_last_frame = 1;
-    (pVVar5->common).refresh_golden_frame = 0;
-    (pVVar5->common).refresh_entropy_probs = 1;
-    TVar2 = (pVVar5->oxcf).token_partitions;
-    if ((-1 < (int)TVar2) && ((int)TVar2 < 4)) {
-      (pVVar5->common).multi_token_partition = TVar2;
+    param_1[0x9bbb] = iVar4;
+    param_1[0xba22] = 7;
+    param_1[0x83df] = 1;
+    param_1[0x83e0] = 0;
+    param_1[0x83e4] = 1;
+    iVar4 = param_1[0x8a85];
+    if ((-1 < iVar4) && (iVar4 < 4)) {
+      param_1[0x8714] = iVar4;
     }
-    setup_features(pVVar5);
-    piVar14 = &(pVVar5->oxcf).encode_breakout;
-    piVar16 = &(pVVar5->oxcf).fixed_q;
-    pVVar5->segment_encode_breakout[0] = *piVar14;
-    pVVar5->segment_encode_breakout[1] = *piVar14;
-    pVVar5->segment_encode_breakout[2] = *piVar14;
-    pVVar5->segment_encode_breakout[3] = *piVar14;
-    if (0x7f < (pVVar5->oxcf).fixed_q) {
-      *piVar16 = 0x7f;
+    setup_features((VP8_COMP *)param_1);
+    piVar7 = param_1 + 0x8a86;
+    param_1[0xc063] = *piVar7;
+    param_1[0xc064] = *piVar7;
+    param_1[0xc065] = *piVar7;
+    param_1[0xc066] = *piVar7;
+    if (0x7f < param_1[0x8a74]) {
+      param_1[0x8a74] = 0x7f;
     }
-    if ((pVVar5->oxcf).end_usage == 1) {
-      (pVVar5->oxcf).starting_buffer_level = 60000;
-      (pVVar5->oxcf).optimal_buffer_level = 60000;
-      (pVVar5->oxcf).maximum_buffer_size = 240000;
+    if (param_1[0x8a6f] == 1) {
+      param_1[0x8a71] = 60000;
+      param_1[0x8a72] = 60000;
+      param_1[0x8a73] = 240000;
     }
-    piVar18 = &(pVVar5->oxcf).optimal_buffer_level;
-    piVar14 = &(pVVar5->oxcf).target_bandwidth;
-    iVar15 = *piVar14 * 1000;
-    *piVar14 = iVar15;
-    lVar9 = (longlong)iVar15;
-    iVar8 = (int)(((pVVar5->oxcf).starting_buffer_level * lVar9) / 1000);
-    (pVVar5->oxcf).starting_buffer_level = iVar8;
-    if (*piVar18 == 0) {
-      *piVar18 = iVar15 >> 3;
-    }
-    else {
-      *piVar18 = (int)((*piVar18 * lVar9) / 1000);
-    }
-    piVar11 = &(pVVar5->oxcf).maximum_buffer_size;
-    iVar3 = (pVVar5->oxcf).maximum_buffer_size;
-    if (iVar3 == 0) {
-      *piVar11 = iVar15 >> 3;
+    puVar11 = (uint *)(param_1 + 0x8a72);
+    piVar7 = param_1 + 0x8a66;
+    iVar9 = *piVar7 * 1000;
+    *piVar7 = iVar9;
+    lVar5 = (longlong)iVar9;
+    iVar4 = (int)((param_1[0x8a71] * lVar5) / 1000);
+    param_1[0x8a71] = iVar4;
+    if (*puVar11 == 0) {
+      *puVar11 = iVar9 >> 3;
     }
     else {
-      *piVar11 = (int)((iVar3 * lVar9) / 1000);
+      *puVar11 = (uint)(((int)*puVar11 * lVar5) / 1000);
     }
-    pVVar5->buffer_level = iVar8;
-    pVVar5->bits_off_target = iVar8;
-    vp8_new_frame_rate(pVVar5,(pVVar5->oxcf).frame_rate);
-    iVar3 = pVVar5->av_per_frame_bandwidth;
-    iVar8 = *piVar17;
-    uVar1 = *piVar18;
-    iVar15 = *piVar12;
-    iVar4 = (pVVar5->oxcf).allow_df;
-    pVVar5->rolling_target_bits = iVar3;
-    pVVar5->worst_quality = iVar8;
-    pVVar5->active_worst_quality = iVar8;
-    pVVar5->avg_frame_qindex = iVar8;
-    pVVar5->best_quality = iVar15;
-    pVVar5->active_best_quality = iVar15;
-    iVar8 = -((int)(-uVar1 & ~uVar1) >> 0x1f);
-    pVVar5->rolling_actual_bits = iVar3;
-    pVVar5->total_actual_bits = 0;
-    pVVar5->total_target_vs_actual = 0;
-    pVVar5->buffered_mode = iVar8;
-    pVVar5->long_rolling_target_bits = iVar3;
-    pVVar5->long_rolling_actual_bits = iVar3;
-    if ((iVar4 == 0) || (iVar15 = 1, iVar8 == 0)) {
-      iVar15 = 0;
-    }
-    pVVar5->drop_frames_allowed = iVar15;
-    (pVVar5->common).filter_type = pVVar5->filter_type;
-    if ((pVVar5->common).use_bilinear_mc_filter == 0) {
-      (pVVar5->common).mcomp_filter_type = SIXTAP;
+    if (param_1[0x8a73] == 0) {
+      param_1[0x8a73] = iVar9 >> 3;
     }
     else {
-      (pVVar5->common).mcomp_filter_type = BILINEAR;
+      param_1[0x8a73] = (uint)((param_1[0x8a73] * lVar5) / 1000);
     }
-    piVar17 = &(pVVar5->oxcf).Width;
-    piVar12 = &(pVVar5->oxcf).Height;
-    iVar8 = *piVar17;
-    pVVar5->target_bandwidth = *piVar14;
-    (pVVar5->common).Width = iVar8;
-    piVar18 = &pVVar5->intra_frame_target;
-    iVar15 = *piVar12;
-    (pVVar5->common).Height = iVar15;
-    *piVar18 = (((iVar8 + iVar15) * 4) / 0xf) * 1000;
-    (pVVar5->common).horiz_scale = pVVar5->horiz_scale;
-    piVar14 = &(pVVar5->oxcf).Sharpness;
-    (pVVar5->common).vert_scale = pVVar5->vert_scale;
-    if (7 < *piVar14) {
-      *piVar14 = 7;
+    param_1[0x9be5] = iVar4;
+    param_1[0x9be6] = iVar4;
+    vp8_new_frame_rate((VP8_COMP *)param_1,*(double *)(param_1 + 0x8a64));
+    iVar2 = param_1[0x9bcd];
+    iVar4 = param_1[0x8a75];
+    iVar9 = param_1[0x8a76];
+    param_1[0x9be7] = iVar2;
+    param_1[0x9bef] = iVar4;
+    param_1[0x9bf0] = iVar4;
+    param_1[0x9bdd] = iVar4;
+    param_1[0x9bf1] = iVar9;
+    param_1[0x9bf2] = iVar9;
+    iVar4 = -((int)(-*puVar11 & ~*puVar11) >> 0x1f);
+    param_1[0x9be8] = iVar2;
+    param_1[0x9bec] = 0;
+    param_1[0x9bed] = 0;
+    param_1[0x9bee] = 0;
+    param_1[0x9be4] = iVar4;
+    param_1[0x9be9] = iVar2;
+    param_1[0x9bea] = iVar2;
+    if ((param_1[0x8a7a] == 0) || (iVar9 = 1, iVar4 == 0)) {
+      iVar9 = 0;
     }
-    uVar1 = (pVVar5->common).horiz_scale;
-    (pVVar5->common).sharpness_level = *piVar14;
-    if ((uVar1 != 0) || ((pVVar5->common).vert_scale != 0)) {
+    param_1[0x9bf3] = iVar9;
+    param_1[0x79d7] = param_1[0xba06];
+    if (param_1[0x79c8] == 0) {
+      param_1[0x79d5] = 0;
+    }
+    else {
+      param_1[0x79d5] = 1;
+    }
+    iVar4 = param_1[0x8a61];
+    param_1[0xb9e8] = *piVar7;
+    param_1[0x7960] = iVar4;
+    piVar12 = param_1 + 0x9bd0;
+    iVar9 = param_1[0x8a62];
+    param_1[0x7961] = iVar9;
+    *piVar12 = (((iVar4 + iVar9) * 4) / 0xf) * 1000;
+    param_1[0x7962] = param_1[0xba09];
+    piVar7 = param_1 + 0x8a68;
+    param_1[0x7963] = param_1[0xba0a];
+    if (7 < *piVar7) {
+      *piVar7 = 7;
+    }
+    uVar1 = param_1[0x7962];
+    param_1[0x83de] = *piVar7;
+    if ((uVar1 != 0) || (param_1[0x7963] != 0)) {
       if ((uVar1 < 4) && (uVar1 != 0)) {
         if (uVar1 == 1) {
-          iVar8 = 4;
-          uVar10 = 5;
+          iVar4 = 4;
+          uVar6 = 5;
         }
         else if (uVar1 == 2) {
-          iVar8 = 3;
-          uVar10 = 5;
+          iVar4 = 3;
+          uVar6 = 5;
         }
         else {
-          iVar8 = 1;
-          uVar10 = 2;
+          iVar4 = 1;
+          uVar6 = 2;
         }
       }
       else {
-        iVar8 = 1;
-        uVar10 = 1;
+        iVar4 = 1;
+        uVar6 = 1;
       }
-      uVar1 = (pVVar5->common).vert_scale;
+      uVar1 = param_1[0x7963];
       if ((uVar1 < 4) && (uVar1 != 0)) {
         if (uVar1 == 1) {
-          iVar15 = 4;
-          uVar13 = 5;
+          iVar9 = 4;
+          uVar8 = 5;
         }
         else if (uVar1 == 2) {
-          iVar15 = 3;
-          uVar13 = 5;
+          iVar9 = 3;
+          uVar8 = 5;
         }
         else {
-          iVar15 = 1;
-          uVar13 = 2;
+          iVar9 = 1;
+          uVar8 = 2;
         }
       }
       else {
-        iVar15 = 1;
-        uVar13 = 1;
+        iVar9 = 1;
+        uVar8 = 1;
       }
-      trapWord(6,uVar10,0);
-      trapWord(6,uVar13,0);
-      uVar7 = ((longlong)*piVar17 * (longlong)iVar8 + uVar10) - 1;
-      (pVVar5->common).Width = (int)uVar7 / (int)uVar10;
-      trapWord(5,uVar10 & ~(((uVar7 & 0x7fffffff) << 1 | (uVar7 & 0xffffffff) >> 0x1f) - 1),0xffff);
-      uVar10 = ((longlong)*piVar12 * (longlong)iVar15 + uVar13) - 1;
-      (pVVar5->common).Height = (int)uVar10 / (int)uVar13;
-      trapWord(5,uVar13 & ~(((uVar10 & 0x7fffffff) << 1 | (uVar10 & 0xffffffff) >> 0x1f) - 1),0xffff
-              );
+      trapWord(6,uVar6,0);
+      trapWord(6,uVar8,0);
+      uVar3 = ((longlong)param_1[0x8a61] * (longlong)iVar4 + uVar6) - 1;
+      param_1[0x7960] = (int)uVar3 / (int)uVar6;
+      trapWord(5,uVar6 & ~(((uVar3 & 0x7fffffff) << 1 | (uVar3 & 0xffffffff) >> 0x1f) - 1),0xffff);
+      uVar6 = ((longlong)param_1[0x8a62] * (longlong)iVar9 + uVar8) - 1;
+      param_1[0x7961] = (int)uVar6 / (int)uVar8;
+      trapWord(5,uVar8 & ~(((uVar6 & 0x7fffffff) << 1 | (uVar6 & 0xffffffff) >> 0x1f) - 1),0xffff);
     }
-    iVar8 = (pVVar5->common).lst_fb_idx;
-    uVar1 = pVVar6->yv12_fb[iVar8].y_width;
-    if (((((pVVar5->common).Width + 0xfU & 0xfffffff0) != uVar1) ||
-        (((pVVar5->common).Height + 0xfU & 0xfffffff0) != pVVar6->yv12_fb[iVar8].y_height)) ||
+    uVar1 = pVVar10->yv12_fb[param_1[0x79a0]].y_width;
+    if ((((param_1[0x7960] + 0xfU & 0xfffffff0) != uVar1) ||
+        ((param_1[0x7961] + 0xfU & 0xfffffff0) != pVVar10->yv12_fb[param_1[0x79a0]].y_height)) ||
        (uVar1 == 0)) {
-      alloc_raw_frame_buffers(pVVar5);
-      vp8_alloc_compressor_data(pVVar5);
+      alloc_raw_frame_buffers((VP8_COMP *)param_1);
+      vp8_alloc_compressor_data((VP8_COMP *)param_1);
     }
-    iVar8 = pVVar5->target_bandwidth >> 2;
-    if (iVar8 < *piVar18) {
-      *piVar18 = iVar8;
+    iVar4 = param_1[0xb9e8] >> 2;
+    if (iVar4 < *piVar12) {
+      *piVar12 = iVar4;
     }
-    iVar8 = *piVar16;
-    if (-1 < iVar8) {
-      pVVar5->last_q[0] = iVar8;
-      pVVar5->last_q[1] = iVar8;
+    iVar4 = param_1[0x8a74];
+    if (-1 < iVar4) {
+      param_1[0x9b9e] = iVar4;
+      param_1[0x9b9f] = iVar4;
     }
-    piVar12 = &(pVVar5->oxcf).lag_in_frames;
-    iVar8 = *piVar12;
-    pVVar5->Speed = (pVVar5->oxcf).cpu_used;
-    if (iVar8 == 0) {
-      (pVVar5->oxcf).allow_lag = 0;
+    iVar4 = param_1[0x8a6e];
+    param_1[0xb9fb] = param_1[0x8a69];
+    if (iVar4 == 0) {
+      param_1[0x8a6d] = 0;
     }
-    else if (1 < iVar8) {
-      *piVar12 = 1;
+    else if (1 < iVar4) {
+      param_1[0x8a6e] = 1;
     }
-    pVVar5->is_src_frame_alt_ref = 0;
-    pVVar5->fixed_divide[0] = 0;
-    lVar9 = 0x1ff;
-    uVar10 = 1;
-    pVVar5->is_next_src_alt_ref = 0;
-    piVar12 = pVVar5->fixed_divide;
-    pVVar5->last_alt_ref_sei = -1;
-    pVVar5->use_weighted_temporal_filter = 0;
+    param_1[0x8aa7] = 0;
+    param_1[0xc181] = 0;
+    lVar5 = 0x1ff;
+    uVar6 = 1;
+    param_1[0x8aa8] = 0;
+    piVar7 = param_1 + 0xc181;
+    param_1[0x8aa6] = -1;
+    param_1[0xc381] = 0;
     do {
-      uVar13 = uVar10 & 0xffffffff;
-      trapWord(6,uVar10,0);
-      uVar10 = uVar10 + 1;
-      piVar12 = piVar12 + 1;
-      *piVar12 = (int)(0x80000 / uVar13);
-      lVar9 = lVar9 + -1;
-    } while (lVar9 != 0);
+      uVar8 = uVar6 & 0xffffffff;
+      trapWord(6,uVar6,0);
+      uVar6 = uVar6 + 1;
+      piVar7 = piVar7 + 1;
+      *piVar7 = (int)(0x80000 / uVar8);
+      lVar5 = lVar5 + -1;
+    } while (lVar5 != 0);
   }
-  __restgprlr_15();
   return;
 }
 
 
 // 82830220  vp8_change_config  (WebM_atvi_opt/vpx/vp8/encoder/onyx_if.c:1805)
 
+/* WARNING: Function: __savegprlr_15 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_15 replaced with injection: xenon_save_restore */
+
 void vp8_change_config(int *param_1,VP8_CONFIG *param_2)
 
 {
   uint uVar1;
-  TOKEN_PARTITION TVar2;
-  int iVar3;
+  int iVar2;
+  ulonglong uVar3;
   int iVar4;
-  VP8_COMP *pVVar5;
-  VP8Common *pVVar6;
-  int *piVar7;
-  ulonglong uVar8;
+  longlong lVar5;
+  ulonglong uVar6;
+  int *piVar8;
   int iVar9;
-  longlong lVar10;
+  ulonglong uVar7;
+  VP8Common *pVVar10;
+  uint *puVar11;
   int *piVar12;
-  ulonglong uVar11;
-  int *piVar14;
-  int iVar15;
-  ulonglong uVar13;
-  int *piVar16;
-  int *piVar17;
-  int *piVar18;
   
-  uVar11 = (ulonglong)(int)param_2;
-  pVVar5 = (VP8_COMP *)__savegprlr_15(param_1);
-  pVVar6 = &pVVar5->common;
-  if ((pVVar5 != (VP8_COMP *)0x0) && ((uVar11 & 0xffffffff) != 0)) {
-    piVar7 = (int *)uVar11;
-    if ((pVVar5->common).version != *piVar7) {
-      (pVVar5->common).version = *piVar7;
-      vp8_setup_version(pVVar6);
+  pVVar10 = (VP8Common *)(param_1 + 0x6bf8);
+  if ((param_1 != (int *)0x0) && (param_2 != (VP8_CONFIG *)0x0)) {
+    if (param_1[0x8713] != param_2->Version) {
+      param_1[0x8713] = param_2->Version;
+      vp8_setup_version(pVVar10);
     }
     memcpy();
-    if ((pVVar5->oxcf).Mode == 0) {
-      iVar9 = (pVVar5->oxcf).cpu_used;
-      pVVar5->pass = 0;
-      piVar14 = &(pVVar5->oxcf).cpu_used;
-      pVVar5->compressor_speed = 2;
-      if (iVar9 < -0x10) {
-        *piVar14 = -0x10;
+    if (param_1[0x8a6a] == 0) {
+      param_1[0xba0b] = 0;
+      piVar8 = param_1 + 0x8a69;
+      param_1[0xb9fd] = 2;
+      if (param_1[0x8a69] < -0x10) {
+        *piVar8 = -0x10;
       }
-      if (0x10 < *piVar14) {
-        *piVar14 = 0x10;
+      if (0x10 < *piVar8) {
+        *piVar8 = 0x10;
       }
     }
-    if (pVVar5->pass == 0) {
-      pVVar5->auto_worst_q = 1;
+    if (param_1[0xba0b] == 0) {
+      param_1[0xba05] = 1;
     }
-    piVar17 = &(pVVar5->oxcf).worst_allowed_q;
-    piVar14 = &(pVVar5->oxcf).best_allowed_q;
-    *piVar17 = q_trans[piVar7[0x15]];
-    *piVar14 = q_trans[piVar7[0x16]];
-    if (-1 < piVar7[0x14]) {
-      if (piVar7[0x15] < 0) {
-        (pVVar5->oxcf).fixed_q = 0;
+    param_1[0x8a75] = q_trans[param_2->worst_allowed_q];
+    param_1[0x8a76] = q_trans[param_2->best_allowed_q];
+    if (-1 < param_2->fixed_q) {
+      if (param_2->worst_allowed_q < 0) {
+        param_1[0x8a74] = 0;
       }
       else {
-        (pVVar5->oxcf).fixed_q = q_trans[piVar7[0x15]];
+        param_1[0x8a74] = q_trans[param_2->worst_allowed_q];
       }
-      if (piVar7[0x21] < 0) {
-        (pVVar5->oxcf).alt_q = 0;
-      }
-      else {
-        (pVVar5->oxcf).alt_q = q_trans[piVar7[0x21]];
-      }
-      if (piVar7[0x22] < 0) {
-        (pVVar5->oxcf).key_q = 0;
+      if (param_2->alt_q < 0) {
+        param_1[0x8a81] = 0;
       }
       else {
-        (pVVar5->oxcf).key_q = q_trans[piVar7[0x22]];
+        param_1[0x8a81] = q_trans[param_2->alt_q];
       }
-      if (piVar7[0x23] < 0) {
-        (pVVar5->oxcf).gold_q = 0;
+      if (param_2->key_q < 0) {
+        param_1[0x8a82] = 0;
       }
       else {
-        (pVVar5->oxcf).gold_q = q_trans[piVar7[0x23]];
+        param_1[0x8a82] = q_trans[param_2->key_q];
+      }
+      if (param_2->gold_q < 0) {
+        param_1[0x8a83] = 0;
+      }
+      else {
+        param_1[0x8a83] = q_trans[param_2->gold_q];
       }
     }
-    iVar9 = (pVVar5->oxcf).alt_freq;
-    if (iVar9 == 0) {
-      iVar9 = 7;
+    iVar4 = param_1[0x8a80];
+    if (iVar4 == 0) {
+      iVar4 = 7;
     }
-    pVVar5->baseline_gf_interval = iVar9;
-    pVVar5->ref_frame_flags = 7;
-    (pVVar5->common).refresh_golden_frame = 0;
-    (pVVar5->common).refresh_last_frame = 1;
-    (pVVar5->common).refresh_entropy_probs = 1;
-    TVar2 = (pVVar5->oxcf).token_partitions;
-    if ((-1 < (int)TVar2) && ((int)TVar2 < 4)) {
-      (pVVar5->common).multi_token_partition = TVar2;
+    param_1[0x9bbb] = iVar4;
+    param_1[0xba22] = 7;
+    param_1[0x83e0] = 0;
+    param_1[0x83df] = 1;
+    param_1[0x83e4] = 1;
+    iVar4 = param_1[0x8a85];
+    if ((-1 < iVar4) && (iVar4 < 4)) {
+      param_1[0x8714] = iVar4;
     }
-    setup_features(pVVar5);
-    piVar7 = &(pVVar5->oxcf).encode_breakout;
-    piVar16 = &(pVVar5->oxcf).fixed_q;
-    pVVar5->segment_encode_breakout[0] = *piVar7;
-    pVVar5->segment_encode_breakout[1] = *piVar7;
-    pVVar5->segment_encode_breakout[2] = *piVar7;
-    pVVar5->segment_encode_breakout[3] = *piVar7;
-    if (0x7f < (pVVar5->oxcf).fixed_q) {
-      *piVar16 = 0x7f;
+    setup_features((VP8_COMP *)param_1);
+    piVar8 = param_1 + 0x8a86;
+    param_1[0xc063] = *piVar8;
+    param_1[0xc064] = *piVar8;
+    param_1[0xc065] = *piVar8;
+    param_1[0xc066] = *piVar8;
+    if (0x7f < param_1[0x8a74]) {
+      param_1[0x8a74] = 0x7f;
     }
-    if ((pVVar5->oxcf).end_usage == 1) {
-      (pVVar5->oxcf).starting_buffer_level = 60000;
-      (pVVar5->oxcf).optimal_buffer_level = 60000;
-      (pVVar5->oxcf).maximum_buffer_size = 240000;
+    if (param_1[0x8a6f] == 1) {
+      param_1[0x8a71] = 60000;
+      param_1[0x8a72] = 60000;
+      param_1[0x8a73] = 240000;
     }
-    piVar18 = &(pVVar5->oxcf).optimal_buffer_level;
-    piVar7 = &(pVVar5->oxcf).target_bandwidth;
-    iVar15 = *piVar7 * 1000;
-    *piVar7 = iVar15;
-    lVar10 = (longlong)iVar15;
-    iVar9 = (int)(((pVVar5->oxcf).starting_buffer_level * lVar10) / 1000);
-    (pVVar5->oxcf).starting_buffer_level = iVar9;
-    if (*piVar18 == 0) {
-      *piVar18 = iVar15 >> 3;
+    puVar11 = (uint *)(param_1 + 0x8a72);
+    piVar8 = param_1 + 0x8a66;
+    iVar9 = *piVar8 * 1000;
+    *piVar8 = iVar9;
+    lVar5 = (longlong)iVar9;
+    iVar4 = (int)((param_1[0x8a71] * lVar5) / 1000);
+    param_1[0x8a71] = iVar4;
+    if (*puVar11 == 0) {
+      *puVar11 = iVar9 >> 3;
     }
     else {
-      *piVar18 = (int)((*piVar18 * lVar10) / 1000);
+      *puVar11 = (uint)(((int)*puVar11 * lVar5) / 1000);
     }
-    piVar12 = &(pVVar5->oxcf).maximum_buffer_size;
-    iVar3 = (pVVar5->oxcf).maximum_buffer_size;
-    if (iVar3 == 0) {
-      *piVar12 = iVar15 >> 3;
+    if (param_1[0x8a73] == 0) {
+      param_1[0x8a73] = iVar9 >> 3;
     }
     else {
-      *piVar12 = (int)((iVar3 * lVar10) / 1000);
+      param_1[0x8a73] = (uint)((param_1[0x8a73] * lVar5) / 1000);
     }
-    pVVar5->buffer_level = iVar9;
-    pVVar5->bits_off_target = iVar9;
-    vp8_new_frame_rate(pVVar5,(pVVar5->oxcf).frame_rate);
-    iVar3 = pVVar5->av_per_frame_bandwidth;
-    iVar9 = *piVar17;
-    uVar1 = *piVar18;
-    iVar15 = *piVar14;
-    iVar4 = (pVVar5->oxcf).allow_df;
-    pVVar5->rolling_target_bits = iVar3;
-    pVVar5->worst_quality = iVar9;
-    pVVar5->active_worst_quality = iVar9;
-    pVVar5->avg_frame_qindex = iVar9;
-    pVVar5->best_quality = iVar15;
-    pVVar5->active_best_quality = iVar15;
-    iVar9 = -((int)(-uVar1 & ~uVar1) >> 0x1f);
-    pVVar5->rolling_actual_bits = iVar3;
-    pVVar5->total_actual_bits = 0;
-    pVVar5->total_target_vs_actual = 0;
-    pVVar5->buffered_mode = iVar9;
-    pVVar5->long_rolling_target_bits = iVar3;
-    pVVar5->long_rolling_actual_bits = iVar3;
-    if ((iVar4 == 0) || (iVar15 = 1, iVar9 == 0)) {
-      iVar15 = 0;
+    param_1[0x9be5] = iVar4;
+    param_1[0x9be6] = iVar4;
+    vp8_new_frame_rate((VP8_COMP *)param_1,*(double *)(param_1 + 0x8a64));
+    iVar2 = param_1[0x9bcd];
+    iVar4 = param_1[0x8a75];
+    iVar9 = param_1[0x8a76];
+    param_1[0x9be7] = iVar2;
+    param_1[0x9bef] = iVar4;
+    param_1[0x9bf0] = iVar4;
+    param_1[0x9bdd] = iVar4;
+    param_1[0x9bf1] = iVar9;
+    param_1[0x9bf2] = iVar9;
+    iVar4 = -((int)(-*puVar11 & ~*puVar11) >> 0x1f);
+    param_1[0x9be8] = iVar2;
+    param_1[0x9bec] = 0;
+    param_1[0x9bed] = 0;
+    param_1[0x9bee] = 0;
+    param_1[0x9be4] = iVar4;
+    param_1[0x9be9] = iVar2;
+    param_1[0x9bea] = iVar2;
+    if ((param_1[0x8a7a] == 0) || (iVar9 = 1, iVar4 == 0)) {
+      iVar9 = 0;
     }
-    pVVar5->drop_frames_allowed = iVar15;
-    (pVVar5->common).filter_type = pVVar5->filter_type;
-    if ((pVVar5->common).use_bilinear_mc_filter == 0) {
-      (pVVar5->common).mcomp_filter_type = SIXTAP;
+    param_1[0x9bf3] = iVar9;
+    param_1[0x79d7] = param_1[0xba06];
+    if (param_1[0x79c8] == 0) {
+      param_1[0x79d5] = 0;
     }
     else {
-      (pVVar5->common).mcomp_filter_type = BILINEAR;
+      param_1[0x79d5] = 1;
     }
-    piVar17 = &(pVVar5->oxcf).Width;
-    piVar14 = &(pVVar5->oxcf).Height;
-    iVar9 = *piVar17;
-    pVVar5->target_bandwidth = *piVar7;
-    (pVVar5->common).Width = iVar9;
-    piVar7 = &(pVVar5->oxcf).Sharpness;
-    piVar18 = &pVVar5->intra_frame_target;
-    iVar15 = *piVar14;
-    (pVVar5->common).Height = iVar15;
-    (pVVar5->common).horiz_scale = pVVar5->horiz_scale;
-    (pVVar5->common).vert_scale = pVVar5->vert_scale;
-    iVar3 = *piVar7;
-    *piVar18 = (((iVar15 + iVar9) * 4) / 0xf) * 1000;
-    if (7 < iVar3) {
-      *piVar7 = 7;
+    iVar4 = param_1[0x8a61];
+    param_1[0xb9e8] = *piVar8;
+    param_1[0x7960] = iVar4;
+    piVar8 = param_1 + 0x8a68;
+    piVar12 = param_1 + 0x9bd0;
+    iVar9 = param_1[0x8a62];
+    param_1[0x7961] = iVar9;
+    param_1[0x7962] = param_1[0xba09];
+    param_1[0x7963] = param_1[0xba0a];
+    *piVar12 = (((iVar9 + iVar4) * 4) / 0xf) * 1000;
+    if (7 < *piVar8) {
+      *piVar8 = 7;
     }
-    uVar1 = (pVVar5->common).horiz_scale;
-    (pVVar5->common).sharpness_level = *piVar7;
-    if ((uVar1 != 0) || ((pVVar5->common).vert_scale != 0)) {
+    uVar1 = param_1[0x7962];
+    param_1[0x83de] = *piVar8;
+    if ((uVar1 != 0) || (param_1[0x7963] != 0)) {
+      if ((uVar1 < 4) && (uVar1 != 0)) {
+        if (uVar1 == 1) {
+          iVar4 = 4;
+          uVar6 = 5;
+        }
+        else if (uVar1 == 2) {
+          iVar4 = 3;
+          uVar6 = 5;
+        }
+        else {
+          iVar4 = 1;
+          uVar6 = 2;
+        }
+      }
+      else {
+        iVar4 = 1;
+        uVar6 = 1;
+      }
+      uVar1 = param_1[0x7963];
       if ((uVar1 < 4) && (uVar1 != 0)) {
         if (uVar1 == 1) {
           iVar9 = 4;
-          uVar11 = 5;
+          uVar7 = 5;
         }
         else if (uVar1 == 2) {
           iVar9 = 3;
-          uVar11 = 5;
+          uVar7 = 5;
         }
         else {
           iVar9 = 1;
-          uVar11 = 2;
+          uVar7 = 2;
         }
       }
       else {
         iVar9 = 1;
-        uVar11 = 1;
+        uVar7 = 1;
       }
-      uVar1 = (pVVar5->common).vert_scale;
-      if ((uVar1 < 4) && (uVar1 != 0)) {
-        if (uVar1 == 1) {
-          iVar15 = 4;
-          uVar13 = 5;
-        }
-        else if (uVar1 == 2) {
-          iVar15 = 3;
-          uVar13 = 5;
-        }
-        else {
-          iVar15 = 1;
-          uVar13 = 2;
-        }
-      }
-      else {
-        iVar15 = 1;
-        uVar13 = 1;
-      }
-      trapWord(6,uVar11,0);
-      trapWord(6,uVar13,0);
-      uVar8 = ((longlong)iVar9 * (longlong)*piVar17 + uVar11) - 1;
-      (pVVar5->common).Width = (int)uVar8 / (int)uVar11;
-      trapWord(5,uVar11 & ~(((uVar8 & 0x7fffffff) << 1 | (uVar8 & 0xffffffff) >> 0x1f) - 1),0xffff);
-      uVar11 = ((longlong)*piVar14 * (longlong)iVar15 + uVar13) - 1;
-      (pVVar5->common).Height = (int)uVar11 / (int)uVar13;
-      trapWord(5,uVar13 & ~(((uVar11 & 0x7fffffff) << 1 | (uVar11 & 0xffffffff) >> 0x1f) - 1),0xffff
-              );
+      trapWord(6,uVar6,0);
+      trapWord(6,uVar7,0);
+      uVar3 = ((longlong)iVar4 * (longlong)param_1[0x8a61] + uVar6) - 1;
+      param_1[0x7960] = (int)uVar3 / (int)uVar6;
+      trapWord(5,uVar6 & ~(((uVar3 & 0x7fffffff) << 1 | (uVar3 & 0xffffffff) >> 0x1f) - 1),0xffff);
+      uVar6 = ((longlong)param_1[0x8a62] * (longlong)iVar9 + uVar7) - 1;
+      param_1[0x7961] = (int)uVar6 / (int)uVar7;
+      trapWord(5,uVar7 & ~(((uVar6 & 0x7fffffff) << 1 | (uVar6 & 0xffffffff) >> 0x1f) - 1),0xffff);
     }
-    iVar9 = (pVVar5->common).lst_fb_idx;
-    uVar1 = pVVar6->yv12_fb[iVar9].y_width;
-    if (((((pVVar5->common).Width + 0xfU & 0xfffffff0) != uVar1) ||
-        (((pVVar5->common).Height + 0xfU & 0xfffffff0) != pVVar6->yv12_fb[iVar9].y_height)) ||
+    uVar1 = pVVar10->yv12_fb[param_1[0x79a0]].y_width;
+    if ((((param_1[0x7960] + 0xfU & 0xfffffff0) != uVar1) ||
+        ((param_1[0x7961] + 0xfU & 0xfffffff0) != pVVar10->yv12_fb[param_1[0x79a0]].y_height)) ||
        (uVar1 == 0)) {
-      alloc_raw_frame_buffers(pVVar5);
-      vp8_alloc_compressor_data(pVVar5);
+      alloc_raw_frame_buffers((VP8_COMP *)param_1);
+      vp8_alloc_compressor_data((VP8_COMP *)param_1);
     }
-    iVar9 = pVVar5->target_bandwidth >> 2;
-    if (iVar9 < *piVar18) {
-      *piVar18 = iVar9;
+    iVar4 = param_1[0xb9e8] >> 2;
+    if (iVar4 < *piVar12) {
+      *piVar12 = iVar4;
     }
-    iVar9 = *piVar16;
-    if (-1 < iVar9) {
-      pVVar5->last_q[0] = iVar9;
-      pVVar5->last_q[1] = iVar9;
+    iVar4 = param_1[0x8a74];
+    if (-1 < iVar4) {
+      param_1[0x9b9e] = iVar4;
+      param_1[0x9b9f] = iVar4;
     }
-    piVar7 = &(pVVar5->oxcf).lag_in_frames;
-    iVar9 = *piVar7;
-    pVVar5->Speed = (pVVar5->oxcf).cpu_used;
-    if (iVar9 == 0) {
-      (pVVar5->oxcf).allow_lag = 0;
+    iVar4 = param_1[0x8a6e];
+    param_1[0xb9fb] = param_1[0x8a69];
+    if (iVar4 == 0) {
+      param_1[0x8a6d] = 0;
     }
-    else if (1 < iVar9) {
-      *piVar7 = 1;
+    else if (1 < iVar4) {
+      param_1[0x8a6e] = 1;
     }
-    pVVar5->last_alt_ref_sei = -1;
-    pVVar5->is_src_frame_alt_ref = 0;
-    pVVar5->is_next_src_alt_ref = 0;
+    param_1[0x8aa6] = -1;
+    param_1[0x8aa7] = 0;
+    param_1[0x8aa8] = 0;
   }
-  __restgprlr_15();
   return;
 }
 
 
 // 8282DE38  cal_mvsadcosts  (WebM_atvi_opt/vpx/vp8/encoder/onyx_if.c:2073)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void cal_mvsadcosts(int **param_1)
 
 {
   int iVar1;
-  int *piVar2;
+  int iVar2;
   int iVar3;
-  int iVar4;
+  double dVar4;
   double dVar5;
   double dVar6;
   double dVar7;
   double dVar8;
-  double dVar9;
   
-  __savegprlr_29(param_1);
-  piVar2 = (int *)__savefpr_28();
-  iVar4 = 4;
-  iVar3 = 2;
-  *(undefined4 *)*piVar2 = 300;
-  dVar9 = 1.4426950408889634;
-  *(undefined4 *)piVar2[1] = 300;
-  dVar6 = 256.0;
-  dVar7 = 2.0;
-  dVar8 = 0.6;
+  iVar3 = 4;
+  iVar2 = 2;
+  **param_1 = 300;
+  dVar8 = 1.4426950408889634;
+  *param_1[1] = 300;
+  dVar5 = 256.0;
+  dVar6 = 2.0;
+  dVar7 = 0.6;
   do {
-    dVar5 = log((double)(longlong)iVar3);
-    iVar3 = iVar3 + 2;
-    iVar1 = (int)((dVar5 * dVar9 + dVar8) * dVar7 * dVar6);
-    *(int *)(iVar4 + *piVar2) = iVar1;
-    *(int *)(piVar2[1] + iVar4) = iVar1;
-    *(int *)(*piVar2 - iVar4) = iVar1;
-    *(int *)(piVar2[1] - iVar4) = iVar1;
-    iVar4 = iVar4 + 4;
-  } while (iVar3 < 0x7ff);
-  __restfpr_28();
-  __restgprlr_29();
+    dVar4 = log((double)(longlong)iVar2);
+    iVar2 = iVar2 + 2;
+    iVar1 = (int)((dVar4 * dVar8 + dVar7) * dVar6 * dVar5);
+    *(int *)(iVar3 + (int)*param_1) = iVar1;
+    *(int *)((int)param_1[1] + iVar3) = iVar1;
+    *(int *)((int)*param_1 - iVar3) = iVar1;
+    *(int *)((int)param_1[1] - iVar3) = iVar1;
+    iVar3 = iVar3 + 4;
+  } while (iVar2 < 0x7ff);
   return;
 }
 
 
 // 82830980  vp8_create_compressor  (WebM_atvi_opt/vpx/vp8/encoder/onyx_if.c:2091)
 
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
+
 int * vp8_create_compressor(VP8_CONFIG *param_1)
 
 {
   VP8_COMP *pVVar1;
   SETJMP_VECTOR4 *pSVar2;
-  int *piVar3;
-  TOKENEXTRA *pTVar4;
-  search_site *psVar5;
-  uchar *puVar6;
-  char *pcVar7;
-  VP8_COMP *pVVar8;
-  double *pdVar9;
-  uint *puVar10;
-  int **ppiVar11;
-  VP8Common *pVVar12;
-  TOKENEXTRA **ppTVar13;
-  int *piVar14;
-  longlong lVar15;
+  TOKENEXTRA *pTVar3;
+  search_site *psVar4;
+  uchar *puVar5;
+  char *pcVar6;
+  double *pdVar7;
+  int *piVar8;
+  uint *puVar9;
+  int **ppiVar10;
+  VP8Common *pVVar11;
+  TOKENEXTRA **ppTVar12;
+  int *piVar13;
+  longlong lVar14;
   VP8_CONFIG *pVStack00000014;
   VP8_COMP *local_ec;
   VP8_COMP *local_e8;
@@ -1587,246 +1557,241 @@ int * vp8_create_compressor(VP8_CONFIG *param_1)
   int *local_a8;
   undefined8 local_a0;
   
-  __savegprlr();
   pVStack00000014 = param_1;
-  pVVar1 = vpx_memalign(0x20,0x30e20);
-  local_e8 = pVVar1;
-  if (pVVar1 != (VP8_COMP *)0x0) {
-    local_ac = &pVVar1->common;
-    vpx_memset(pVVar1,0,0x30e20);
-    pSVar2 = (pVVar1->common).error.jmp;
+  local_ec = vpx_memalign(0x20,0x30e20);
+  if (local_ec != (VP8_COMP *)0x0) {
+    local_ac = &local_ec->common;
+    local_e8 = local_ec;
+    vpx_memset(local_ec,0,0x30e20);
+    pSVar2 = (local_ec->common).error.jmp;
     setjmp();
-    pVVar8 = local_e8;
+    pVVar1 = local_e8;
     if (pSVar2 == (SETJMP_VECTOR4 *)0x0) {
       local_a8 = &(local_e8->common).error._setjmp;
-      ppTVar13 = &local_e8->rdtok;
+      ppTVar12 = &local_e8->rdtok;
       *local_a8 = 1;
-      pTVar4 = vpx_calloc(0x180,0x14);
-      *ppTVar13 = pTVar4;
-      if (pTVar4 == (TOKENEXTRA *)0x0) {
-        vpx_internal_error(&(pVVar8->common).error,VPX_CODEC_MEM_ERROR,
+      pTVar3 = vpx_calloc(0x180,0x14);
+      *ppTVar12 = pTVar3;
+      if (pTVar3 == (TOKENEXTRA *)0x0) {
+        vpx_internal_error(&(pVVar1->common).error,VPX_CODEC_MEM_ERROR,
                            "Failed to allocate cpi->rdtok");
       }
-      psVar5 = vpx_calloc(8,0x41);
-      (pVVar8->mb).ss = psVar5;
-      if (psVar5 == (search_site *)0x0) {
-        vpx_internal_error(&(pVVar8->common).error,VPX_CODEC_MEM_ERROR,
+      psVar4 = vpx_calloc(8,0x41);
+      (pVVar1->mb).ss = psVar4;
+      if (psVar4 == (search_site *)0x0) {
+        vpx_internal_error(&(pVVar1->common).error,VPX_CODEC_MEM_ERROR,
                            "Failed to allocate cpi->mb.ss");
       }
-      pVVar12 = &pVVar8->common;
-      vp8_create_common(pVVar12);
-      vp8_cmachine_specific_config(pVVar8);
-      vp8_init_config((int *)pVVar8,pVStack00000014);
+      pVVar11 = &pVVar1->common;
+      vp8_create_common(pVVar11);
+      vp8_cmachine_specific_config(pVVar1);
+      vp8_init_config((int *)pVVar1,pVStack00000014);
       memcpy();
-      (pVVar8->common).current_video_frame = 0;
-      pVVar8->kf_overspend_bits = 0;
-      local_e4 = &pVVar8->frames_till_gf_update_due;
-      pVVar8->kf_bitrate_adjustment = 0;
+      (pVVar1->common).current_video_frame = 0;
+      pVVar1->kf_overspend_bits = 0;
+      local_e4 = &pVVar1->frames_till_gf_update_due;
+      pVVar1->kf_bitrate_adjustment = 0;
       *local_e4 = 0;
-      pVVar8->gf_overspend_bits = 0;
-      pVVar8->non_gf_bitrate_adjustment = 0;
-      pVVar8->prob_last_coded = 0x80;
-      pVVar8->prob_gf_coded = 0x80;
-      pVVar8->prob_intra_coded = 0x3f;
-      pVVar8->recent_ref_frame_usage[0] = 1;
-      pVVar8->recent_ref_frame_usage[1] = 1;
-      pVVar8->recent_ref_frame_usage[2] = 1;
-      pVVar8->recent_ref_frame_usage[3] = 1;
-      (pVVar8->common).ref_frame_sign_bias[3] = 1;
-      pVVar8->gf_decay_rate = 0;
-      pVVar8->baseline_gf_interval = 7;
-      pVVar8->gold_is_last = 0;
-      pVVar8->alt_is_last = 0;
-      piVar14 = &(pVVar8->common).mb_cols;
-      piVar3 = &(pVVar8->common).mb_rows;
-      pVVar8->gold_is_alt = 0;
-      puVar6 = vpx_calloc(*piVar14 * *piVar3,1);
-      pVVar8->segmentation_map = puVar6;
-      if (puVar6 == (uchar *)0x0) {
-        vpx_internal_error(&pVVar12->error,VPX_CODEC_MEM_ERROR,
+      pVVar1->gf_overspend_bits = 0;
+      pVVar1->non_gf_bitrate_adjustment = 0;
+      pVVar1->prob_last_coded = 0x80;
+      pVVar1->prob_gf_coded = 0x80;
+      pVVar1->prob_intra_coded = 0x3f;
+      pVVar1->recent_ref_frame_usage[0] = 1;
+      pVVar1->recent_ref_frame_usage[1] = 1;
+      pVVar1->recent_ref_frame_usage[2] = 1;
+      pVVar1->recent_ref_frame_usage[3] = 1;
+      (pVVar1->common).ref_frame_sign_bias[3] = 1;
+      pVVar1->gf_decay_rate = 0;
+      pVVar1->baseline_gf_interval = 7;
+      pVVar1->gold_is_last = 0;
+      pVVar1->alt_is_last = 0;
+      piVar13 = &(pVVar1->common).mb_cols;
+      piVar8 = &(pVVar1->common).mb_rows;
+      pVVar1->gold_is_alt = 0;
+      puVar5 = vpx_calloc(*piVar13 * *piVar8,1);
+      pVVar1->segmentation_map = puVar5;
+      if (puVar5 == (uchar *)0x0) {
+        vpx_internal_error(&pVVar11->error,VPX_CODEC_MEM_ERROR,
                            "Failed to allocate cpi->segmentation_map");
       }
-      puVar6 = vpx_calloc(*piVar14 * *piVar3,1);
-      pVVar8->active_map = puVar6;
-      if (puVar6 == (uchar *)0x0) {
-        vpx_internal_error(&pVVar12->error,VPX_CODEC_MEM_ERROR,"Failed to allocate cpi->active_map")
+      puVar5 = vpx_calloc(*piVar13 * *piVar8,1);
+      pVVar1->active_map = puVar5;
+      if (puVar5 == (uchar *)0x0) {
+        vpx_internal_error(&pVVar11->error,VPX_CODEC_MEM_ERROR,"Failed to allocate cpi->active_map")
         ;
       }
-      vpx_memset(pVVar8->active_map,1,*piVar14 * *piVar3);
-      local_b0 = &(pVVar8->common).MBs;
-      pVVar8->active_map_enabled = 0;
-      puVar6 = vpx_calloc(*local_b0 * 0xf,1);
-      pVVar8->fp_motion_map = puVar6;
-      if (puVar6 == (uchar *)0x0) {
-        vpx_internal_error(&pVVar12->error,VPX_CODEC_MEM_ERROR,
+      vpx_memset(pVVar1->active_map,1,*piVar13 * *piVar8);
+      local_b0 = &(pVVar1->common).MBs;
+      pVVar1->active_map_enabled = 0;
+      puVar5 = vpx_calloc(*local_b0 * 0xf,1);
+      pVVar1->fp_motion_map = puVar5;
+      if (puVar5 == (uchar *)0x0) {
+        vpx_internal_error(&pVVar11->error,VPX_CODEC_MEM_ERROR,
                            "Failed to allocate cpi->fp_motion_map");
       }
-      pVVar8->cyclic_refresh_mode_enabled = (pVVar8->oxcf).error_resilient_mode;
-      pVVar8->cyclic_refresh_mode_max_mbs_perframe = (*piVar14 * *piVar3) / 0x28;
-      pVVar8->cyclic_refresh_mode_index = 0;
-      pVVar8->cyclic_refresh_q = 0x20;
-      if (pVVar8->cyclic_refresh_mode_enabled == 0) {
-        pVVar8->cyclic_refresh_map = (char *)0x0;
+      pVVar1->cyclic_refresh_mode_enabled = (pVVar1->oxcf).error_resilient_mode;
+      pVVar1->cyclic_refresh_mode_max_mbs_perframe = (*piVar13 * *piVar8) / 0x28;
+      pVVar1->cyclic_refresh_mode_index = 0;
+      pVVar1->cyclic_refresh_q = 0x20;
+      if (pVVar1->cyclic_refresh_mode_enabled == 0) {
+        pVVar1->cyclic_refresh_map = (char *)0x0;
       }
       else {
-        pcVar7 = vpx_calloc(*piVar14 * *piVar3,1);
-        pVVar8->cyclic_refresh_map = pcVar7;
-        if (pcVar7 == (char *)0x0) {
-          vpx_internal_error(&pVVar12->error,VPX_CODEC_MEM_ERROR,
+        pcVar6 = vpx_calloc(*piVar13 * *piVar8,1);
+        pVVar1->cyclic_refresh_map = pcVar6;
+        if (pcVar6 == (char *)0x0) {
+          vpx_internal_error(&pVVar11->error,VPX_CODEC_MEM_ERROR,
                              "Failed to allocate cpi->cyclic_refresh_map");
         }
       }
-      piVar3 = local_e4;
-      pVVar8->frames_since_key = 8;
+      piVar8 = local_e4;
+      pVVar1->frames_since_key = 8;
       local_e4 = (int *)0x26f6c;
       local_e0 = 0x26f70;
-      pVVar8->key_frame_frequency = (pVVar8->oxcf).key_freq;
-      pVVar8->source_alt_ref_pending = 0;
-      pVVar8->source_alt_ref_active = 0;
-      (pVVar8->common).refresh_alt_ref_frame = 0;
-      pVVar8->b_calculate_psnr = 0;
-      *piVar3 = 0;
-      pVVar8->key_frame_count = 1;
-      pVVar8->tot_key_frame_bits = 0;
-      ppiVar11 = (pVVar8->mb).mvsadcost;
-      pVVar8->ni_av_qi = (pVVar8->oxcf).worst_allowed_q;
-      pVVar8->ni_tot_qi = 0;
-      pVVar8->ni_frames = 0;
-      pVVar8->total_byte_count = 0;
-      pVVar8->drop_frame = 0;
-      pVVar8->drop_count = 0;
-      pVVar8->max_drop_count = 0;
-      pVVar8->max_consec_dropped_frames = 4;
-      pVVar8->rate_correction_factor = 1.0;
-      (pVVar8->mb).mvcost[0] = (pVVar8->mb).mvcosts[0] + 0x400;
-      pVVar8->key_frame_rate_correction_factor = 1.0;
-      (pVVar8->mb).mvcost[1] = (pVVar8->mb).mvcosts[1] + 0x400;
-      pVVar8->gf_rate_correction_factor = 1.0;
-      *ppiVar11 = (pVVar8->mb).mvsadcosts[0] + 0x400;
-      pVVar8->est_max_qcorrection_factor = 1.0;
-      (pVVar8->mb).mvsadcost[1] = (pVVar8->mb).mvsadcosts[1] + 0x400;
-      cal_mvsadcosts(ppiVar11);
-      piVar3 = &pVVar8->intra_frame_target;
-      pdVar9 = &pVVar8->output_frame_rate;
-      pVVar8->prior_key_frame_size[0] = *piVar3;
-      pVVar8->prior_key_frame_distance[0] = (int)*pdVar9;
-      pVVar8->prior_key_frame_size[1] = *piVar3;
-      pVVar8->prior_key_frame_distance[1] = (int)*pdVar9;
-      pVVar8->prior_key_frame_size[2] = *piVar3;
-      pVVar8->prior_key_frame_distance[2] = (int)*pdVar9;
-      pVVar8->prior_key_frame_size[3] = *piVar3;
-      pVVar8->prior_key_frame_distance[3] = (int)*pdVar9;
-      pVVar8->prior_key_frame_size[4] = *piVar3;
-      pVVar8->prior_key_frame_distance[4] = (int)*pdVar9;
-      pVVar8->check_freq[0] = 0xf;
-      pVVar8->check_freq[1] = 0xf;
-      pVVar8->output_pkt_list = pVStack00000014->output_pkt_list;
-      if (pVVar8->compressor_speed == 2) {
-        pVVar8->cpu_freq = 0;
-        pVVar8->avg_encode_time = 0;
-        pVVar8->avg_pick_mode_time = 0;
+      pVVar1->key_frame_frequency = (pVVar1->oxcf).key_freq;
+      pVVar1->source_alt_ref_pending = 0;
+      pVVar1->source_alt_ref_active = 0;
+      (pVVar1->common).refresh_alt_ref_frame = 0;
+      pVVar1->b_calculate_psnr = 0;
+      *piVar8 = 0;
+      pVVar1->key_frame_count = 1;
+      pVVar1->tot_key_frame_bits = 0;
+      ppiVar10 = (pVVar1->mb).mvsadcost;
+      pVVar1->ni_av_qi = (pVVar1->oxcf).worst_allowed_q;
+      pVVar1->ni_tot_qi = 0;
+      pVVar1->ni_frames = 0;
+      pVVar1->total_byte_count = 0;
+      pVVar1->drop_frame = 0;
+      pVVar1->drop_count = 0;
+      pVVar1->max_drop_count = 0;
+      pVVar1->max_consec_dropped_frames = 4;
+      pVVar1->rate_correction_factor = 1.0;
+      (pVVar1->mb).mvcost[0] = (pVVar1->mb).mvcosts[0] + 0x400;
+      pVVar1->key_frame_rate_correction_factor = 1.0;
+      (pVVar1->mb).mvcost[1] = (pVVar1->mb).mvcosts[1] + 0x400;
+      pVVar1->gf_rate_correction_factor = 1.0;
+      *ppiVar10 = (pVVar1->mb).mvsadcosts[0] + 0x400;
+      pVVar1->est_max_qcorrection_factor = 1.0;
+      (pVVar1->mb).mvsadcost[1] = (pVVar1->mb).mvsadcosts[1] + 0x400;
+      cal_mvsadcosts(ppiVar10);
+      piVar8 = &pVVar1->intra_frame_target;
+      pdVar7 = &pVVar1->output_frame_rate;
+      pVVar1->prior_key_frame_size[0] = *piVar8;
+      pVVar1->prior_key_frame_distance[0] = (int)*pdVar7;
+      pVVar1->prior_key_frame_size[1] = *piVar8;
+      pVVar1->prior_key_frame_distance[1] = (int)*pdVar7;
+      pVVar1->prior_key_frame_size[2] = *piVar8;
+      pVVar1->prior_key_frame_distance[2] = (int)*pdVar7;
+      pVVar1->prior_key_frame_size[3] = *piVar8;
+      pVVar1->prior_key_frame_distance[3] = (int)*pdVar7;
+      pVVar1->prior_key_frame_size[4] = *piVar8;
+      pVVar1->prior_key_frame_distance[4] = (int)*pdVar7;
+      pVVar1->check_freq[0] = 0xf;
+      pVVar1->check_freq[1] = 0xf;
+      pVVar1->output_pkt_list = pVStack00000014->output_pkt_list;
+      if (pVVar1->compressor_speed == 2) {
+        pVVar1->cpu_freq = 0;
+        pVVar1->avg_encode_time = 0;
+        pVVar1->avg_pick_mode_time = 0;
       }
-      vp8_set_speed_features(pVVar8);
-      puVar10 = pVVar8->do_full + 1;
-      lVar15 = 0x14;
+      vp8_set_speed_features(pVVar1);
+      puVar9 = pVVar1->do_full + 1;
+      lVar14 = 0x14;
       do {
-        puVar10 = puVar10 + 1;
-        *puVar10 = 0x80;
-        lVar15 = lVar15 + -1;
-      } while (lVar15 != 0);
-      vp8cx_create_encoder_threads(pVVar8);
+        puVar9 = puVar9 + 1;
+        *puVar9 = 0x80;
+        lVar14 = lVar14 + -1;
+      } while (lVar14 != 0);
+      vp8cx_create_encoder_threads(pVVar1);
       local_a0 = 0;
-      pVVar8->fn_ptr[4].sdf = (pVVar8->rtcd).variance.sad16x16;
-      pVVar8->fn_ptr[4].vf = (pVVar8->rtcd).variance.var16x16;
-      pVVar8->fn_ptr[4].svf = (pVVar8->rtcd).variance.subpixvar16x16;
-      pVVar8->fn_ptr[4].svf_halfpix_h = (pVVar8->rtcd).variance.halfpixvar16x16_h;
-      pVVar8->fn_ptr[4].svf_halfpix_v = (pVVar8->rtcd).variance.halfpixvar16x16_v;
-      pVVar8->fn_ptr[4].svf_halfpix_hv = (pVVar8->rtcd).variance.halfpixvar16x16_hv;
+      pVVar1->fn_ptr[4].sdf = (pVVar1->rtcd).variance.sad16x16;
+      pVVar1->fn_ptr[4].vf = (pVVar1->rtcd).variance.var16x16;
+      pVVar1->fn_ptr[4].svf = (pVVar1->rtcd).variance.subpixvar16x16;
+      pVVar1->fn_ptr[4].svf_halfpix_h = (pVVar1->rtcd).variance.halfpixvar16x16_h;
+      pVVar1->fn_ptr[4].svf_halfpix_v = (pVVar1->rtcd).variance.halfpixvar16x16_v;
+      pVVar1->fn_ptr[4].svf_halfpix_hv = (pVVar1->rtcd).variance.halfpixvar16x16_hv;
       local_e0 = 0x3055c;
-      pVVar8->fn_ptr[4].sdx3f = (pVVar8->rtcd).variance.sad16x16x3;
+      pVVar1->fn_ptr[4].sdx3f = (pVVar1->rtcd).variance.sad16x16x3;
       local_d8 = 0x30548;
       local_dc = 0x30208;
       local_e4 = (int *)0x3020c;
       local_d4 = 0x304d4;
-      pVVar8->fn_ptr[4].sdx8f = (pVVar8->rtcd).variance.sad16x16x8;
-      pVVar8->fn_ptr[4].sdx4df = (pVVar8->rtcd).variance.sad16x16x4d;
-      pVVar8->fn_ptr[0].sdf = (pVVar8->rtcd).variance.sad16x8;
-      pVVar8->fn_ptr[0].vf = (pVVar8->rtcd).variance.var16x8;
-      pVVar8->fn_ptr[0].svf = (pVVar8->rtcd).variance.subpixvar16x8;
-      pVVar8->fn_ptr[0].svf_halfpix_h =
+      pVVar1->fn_ptr[4].sdx8f = (pVVar1->rtcd).variance.sad16x16x8;
+      pVVar1->fn_ptr[4].sdx4df = (pVVar1->rtcd).variance.sad16x16x4d;
+      pVVar1->fn_ptr[0].sdf = (pVVar1->rtcd).variance.sad16x8;
+      pVVar1->fn_ptr[0].vf = (pVVar1->rtcd).variance.var16x8;
+      pVVar1->fn_ptr[0].svf = (pVVar1->rtcd).variance.subpixvar16x8;
+      pVVar1->fn_ptr[0].svf_halfpix_h =
            (_func___cdecl_uint_uchar_ptr_int_uchar_ptr_int_uint_ptr *)0x0;
-      pVVar8->fn_ptr[0].svf_halfpix_v =
+      pVVar1->fn_ptr[0].svf_halfpix_v =
            (_func___cdecl_uint_uchar_ptr_int_uchar_ptr_int_uint_ptr *)0x0;
-      pVVar8->fn_ptr[0].svf_halfpix_hv =
+      pVVar1->fn_ptr[0].svf_halfpix_hv =
            (_func___cdecl_uint_uchar_ptr_int_uchar_ptr_int_uint_ptr *)0x0;
-      pVVar8->fn_ptr[0].sdx3f = (pVVar8->rtcd).variance.sad16x8x3;
-      pVVar8->fn_ptr[0].sdx8f = (pVVar8->rtcd).variance.sad16x8x8;
-      pVVar8->fn_ptr[0].sdx4df = (pVVar8->rtcd).variance.sad16x8x4d;
+      pVVar1->fn_ptr[0].sdx3f = (pVVar1->rtcd).variance.sad16x8x3;
+      pVVar1->fn_ptr[0].sdx8f = (pVVar1->rtcd).variance.sad16x8x8;
+      pVVar1->fn_ptr[0].sdx4df = (pVVar1->rtcd).variance.sad16x8x4d;
       local_d0 = 0x3023c;
-      pVVar8->fn_ptr[1].sdf = (pVVar8->rtcd).variance.sad8x16;
+      pVVar1->fn_ptr[1].sdf = (pVVar1->rtcd).variance.sad8x16;
       local_cc = 0x304f8;
       local_c8 = 0x30238;
-      pVVar8->fn_ptr[1].vf = (pVVar8->rtcd).variance.var8x16;
+      pVVar1->fn_ptr[1].vf = (pVVar1->rtcd).variance.var8x16;
       local_c4 = 0x304e4;
-      pVVar8->fn_ptr[1].svf = (pVVar8->rtcd).variance.subpixvar8x16;
-      pVVar8->fn_ptr[1].svf_halfpix_h =
+      pVVar1->fn_ptr[1].svf = (pVVar1->rtcd).variance.subpixvar8x16;
+      pVVar1->fn_ptr[1].svf_halfpix_h =
            (_func___cdecl_uint_uchar_ptr_int_uchar_ptr_int_uint_ptr *)0x0;
-      pVVar8->fn_ptr[1].svf_halfpix_v =
+      pVVar1->fn_ptr[1].svf_halfpix_v =
            (_func___cdecl_uint_uchar_ptr_int_uchar_ptr_int_uint_ptr *)0x0;
-      pVVar8->fn_ptr[1].svf_halfpix_hv =
+      pVVar1->fn_ptr[1].svf_halfpix_hv =
            (_func___cdecl_uint_uchar_ptr_int_uchar_ptr_int_uint_ptr *)0x0;
-      pVVar8->fn_ptr[1].sdx3f = (pVVar8->rtcd).variance.sad8x16x3;
+      pVVar1->fn_ptr[1].sdx3f = (pVVar1->rtcd).variance.sad8x16x3;
       local_b4 = 0x304e0;
-      pVVar8->fn_ptr[1].sdx8f = (pVVar8->rtcd).variance.sad8x16x8;
+      pVVar1->fn_ptr[1].sdx8f = (pVVar1->rtcd).variance.sad8x16x8;
       local_b8 = 0x3025c;
       local_bc = 0x304f4;
       local_c0 = 0x30260;
-      pVVar8->fn_ptr[1].sdx4df = (pVVar8->rtcd).variance.sad8x16x4d;
-      pVVar8->fn_ptr[2].sdf = (pVVar8->rtcd).variance.sad8x8;
-      pVVar8->fn_ptr[2].vf = (pVVar8->rtcd).variance.var8x8;
-      pVVar8->fn_ptr[2].svf = (pVVar8->rtcd).variance.subpixvar8x8;
-      pVVar8->fn_ptr[2].svf_halfpix_h =
+      pVVar1->fn_ptr[1].sdx4df = (pVVar1->rtcd).variance.sad8x16x4d;
+      pVVar1->fn_ptr[2].sdf = (pVVar1->rtcd).variance.sad8x8;
+      pVVar1->fn_ptr[2].vf = (pVVar1->rtcd).variance.var8x8;
+      pVVar1->fn_ptr[2].svf = (pVVar1->rtcd).variance.subpixvar8x8;
+      pVVar1->fn_ptr[2].svf_halfpix_h =
            (_func___cdecl_uint_uchar_ptr_int_uchar_ptr_int_uint_ptr *)0x0;
-      pVVar8->fn_ptr[2].svf_halfpix_v =
+      pVVar1->fn_ptr[2].svf_halfpix_v =
            (_func___cdecl_uint_uchar_ptr_int_uchar_ptr_int_uint_ptr *)0x0;
-      pVVar8->fn_ptr[2].svf_halfpix_hv =
+      pVVar1->fn_ptr[2].svf_halfpix_hv =
            (_func___cdecl_uint_uchar_ptr_int_uchar_ptr_int_uint_ptr *)0x0;
-      pVVar8->fn_ptr[2].sdx3f = (pVVar8->rtcd).variance.sad8x8x3;
-      pVVar8->fn_ptr[2].sdx8f = (pVVar8->rtcd).variance.sad8x8x8;
-      pVVar8->fn_ptr[2].sdx4df = (pVVar8->rtcd).variance.sad8x8x4d;
-      pVVar8->fn_ptr[3].sdf = (pVVar8->rtcd).variance.sad4x4;
-      pVVar8->fn_ptr[3].vf = (pVVar8->rtcd).variance.var4x4;
-      pVVar8->fn_ptr[3].svf = (pVVar8->rtcd).variance.subpixvar4x4;
-      pVVar8->fn_ptr[3].svf_halfpix_h =
+      pVVar1->fn_ptr[2].sdx3f = (pVVar1->rtcd).variance.sad8x8x3;
+      pVVar1->fn_ptr[2].sdx8f = (pVVar1->rtcd).variance.sad8x8x8;
+      pVVar1->fn_ptr[2].sdx4df = (pVVar1->rtcd).variance.sad8x8x4d;
+      pVVar1->fn_ptr[3].sdf = (pVVar1->rtcd).variance.sad4x4;
+      pVVar1->fn_ptr[3].vf = (pVVar1->rtcd).variance.var4x4;
+      pVVar1->fn_ptr[3].svf = (pVVar1->rtcd).variance.subpixvar4x4;
+      pVVar1->fn_ptr[3].svf_halfpix_h =
            (_func___cdecl_uint_uchar_ptr_int_uchar_ptr_int_uint_ptr *)0x0;
-      pVVar8->fn_ptr[3].svf_halfpix_v =
+      pVVar1->fn_ptr[3].svf_halfpix_v =
            (_func___cdecl_uint_uchar_ptr_int_uchar_ptr_int_uint_ptr *)0x0;
-      pVVar8->fn_ptr[3].svf_halfpix_hv =
+      pVVar1->fn_ptr[3].svf_halfpix_hv =
            (_func___cdecl_uint_uchar_ptr_int_uchar_ptr_int_uint_ptr *)0x0;
-      pVVar8->fn_ptr[3].sdx3f = (pVVar8->rtcd).variance.sad4x4x3;
-      pVVar8->fn_ptr[3].sdx8f = (pVVar8->rtcd).variance.sad4x4x8;
-      pVVar8->fn_ptr[3].sdx4df = (pVVar8->rtcd).variance.sad4x4x4d;
-      pVVar8->diamond_search_sad = (pVVar8->rtcd).search.diamond_search;
-      pVVar8->ready_for_new_frame = 1;
-      pVVar8->source_encode_index = 0;
-      pVVar8->error_bins[0] = *local_b0;
-      vp8cx_init_quantizer(pVVar8);
-      pVVar12 = local_ac;
+      pVVar1->fn_ptr[3].sdx3f = (pVVar1->rtcd).variance.sad4x4x3;
+      pVVar1->fn_ptr[3].sdx8f = (pVVar1->rtcd).variance.sad4x4x8;
+      pVVar1->fn_ptr[3].sdx4df = (pVVar1->rtcd).variance.sad4x4x4d;
+      pVVar1->diamond_search_sad = (pVVar1->rtcd).search.diamond_search;
+      pVVar1->ready_for_new_frame = 1;
+      pVVar1->source_encode_index = 0;
+      pVVar1->error_bins[0] = *local_b0;
+      vp8cx_init_quantizer(pVVar1);
+      pVVar11 = local_ac;
       vp8_init_loop_filter(local_ac);
-      pVVar12->last_frame_type = KEY_FRAME;
-      pVVar12->last_filter_type = pVVar12->filter_type;
-      pVVar12->last_sharpness_level = pVVar12->sharpness_level;
+      pVVar11->last_frame_type = KEY_FRAME;
+      pVVar11->last_filter_type = pVVar11->filter_type;
+      pVVar11->last_sharpness_level = pVVar11->sharpness_level;
       *local_a8 = 0;
-      __restgprlr();
-      return (int *)pVVar8;
+      return (int *)pVVar1;
     }
-    (pVVar1->common).error._setjmp = 0;
-    local_ec = pVVar1;
+    (local_ec->common).error._setjmp = 0;
     vp8_remove_compressor((int **)&local_ec);
   }
-  piVar3 = (int *)0x0;
-  __restgprlr();
-  return piVar3;
+  return (int *)0x0;
 }
 
 
@@ -1855,191 +1820,173 @@ void vp8_remove_compressor(int **param_1)
 
 // 8282DFA8  calc_plane_error  (WebM_atvi_opt/vpx/vp8/encoder/onyx_if.c:2656)
 
+/* WARNING: Function: __savegprlr_15 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_15 replaced with injection: xenon_save_restore */
+
 ulong64 calc_plane_error(uchar *param_1,int param_2,uchar *param_3,int param_4,uint param_5,
                         uint param_6,vp8_variance_rtcd_vtable_t *param_7)
 
 {
-  int iVar1;
+  longlong lVar1;
   longlong lVar2;
-  ulong64 uVar3;
-  ulonglong uVar4;
-  int iVar5;
-  ulonglong uVar6;
+  uchar *puVar3;
+  uint uVar4;
+  uint uVar5;
+  uint uVar6;
   ulonglong uVar7;
-  longlong lVar8;
-  longlong lVar9;
-  int iVar10;
-  ulonglong uVar11;
-  ulonglong uVar12;
-  ulonglong uVar13;
-  ulonglong uVar14;
-  ulonglong uVar15;
-  longlong lVar16;
-  longlong lVar17;
-  int iVar18;
-  longlong lVar19;
-  longlong lVar20;
-  longlong lVar21;
+  uint uVar8;
+  ulong64 uVar9;
+  uchar *puVar10;
+  longlong lVar11;
   uint local_a0 [40];
   
-  uVar12 = (ulonglong)(int)param_6;
-  uVar7 = (ulonglong)(int)param_5;
-  uVar6 = (ulonglong)param_4;
-  lVar16 = (longlong)(int)param_3;
-  uVar4 = (ulonglong)param_2;
-  lVar2 = __savegprlr_15(param_1);
-  lVar17 = 0;
-  uVar13 = 0;
-  if (0xf < (uVar12 & 0xffffffff)) {
-    uVar14 = 0x10;
+  uVar9 = 0;
+  uVar7 = 0;
+  if (0xf < param_6) {
+    uVar6 = 0x10;
     do {
-      uVar15 = 0;
-      if (0xf < (uVar7 & 0xffffffff)) {
-        lVar20 = lVar2;
+      uVar8 = 0;
+      if (0xf < param_5) {
+        puVar10 = param_1;
         do {
           (*param_7->mse16x16)
-                    ((uchar *)lVar20,(int)uVar4,(uchar *)lVar20 + ((int)lVar16 - (int)lVar2),
-                     (int)uVar6,local_a0);
-          lVar20 = lVar20 + 0x10;
-          uVar15 = uVar15 + 0x10;
-          lVar17 = (ulonglong)local_a0[0] + lVar17;
-        } while (((0x10 - lVar2) + lVar20 & 0xffffffffU) <= (uVar7 & 0xffffffff));
+                    (puVar10,param_2,puVar10 + ((int)param_3 - (int)param_1),param_4,local_a0);
+          puVar10 = puVar10 + 0x10;
+          uVar8 = uVar8 + 0x10;
+          uVar9 = local_a0[0] + uVar9;
+        } while (puVar10 + (0x10 - (int)param_1) <= param_5);
       }
-      if ((uVar15 & 0xffffffff) < (uVar7 & 0xffffffff)) {
-        lVar21 = 0x10;
-        lVar20 = lVar2;
-        lVar19 = lVar16;
+      if (uVar8 < param_5) {
+        lVar11 = 0x10;
+        puVar10 = param_3;
+        puVar3 = param_1;
         do {
-          lVar9 = 0;
-          lVar8 = 0;
-          iVar5 = (int)lVar20;
-          iVar1 = (int)lVar19;
-          uVar11 = uVar15;
-          if (1 < (int)uVar7 - (int)uVar15) {
+          lVar2 = 0;
+          lVar1 = 0;
+          uVar4 = uVar8;
+          uVar5 = uVar8;
+          if (1 < (int)(param_5 - uVar8)) {
             do {
-              iVar10 = (int)uVar11;
-              uVar11 = uVar11 + 2;
-              iVar18 = (uint)*(byte *)(iVar5 + 1 + iVar10) - (uint)*(byte *)(iVar1 + 1 + iVar10);
-              iVar10 = (uint)*(byte *)(iVar10 + iVar5) - (uint)*(byte *)(iVar1 + iVar10);
-              lVar8 = iVar18 * iVar18 + lVar8;
-              lVar9 = iVar10 * iVar10 + lVar9;
-            } while ((uVar11 & 0xffffffff) < (uVar7 - 1 & 0xffffffff));
+              uVar5 = uVar4 + 2;
+              lVar1 = (int)(((uint)puVar3[uVar4 + 1] - (uint)puVar10[uVar4 + 1]) *
+                           ((uint)puVar3[uVar4 + 1] - (uint)puVar10[uVar4 + 1])) + lVar1;
+              lVar2 = (int)(((uint)puVar3[uVar4] - (uint)puVar10[uVar4]) *
+                           ((uint)puVar3[uVar4] - (uint)puVar10[uVar4])) + lVar2;
+              uVar4 = uVar5;
+            } while (uVar5 < param_5 - 1);
           }
-          if ((uVar11 & 0xffffffff) < (uVar7 & 0xffffffff)) {
-            iVar5 = (uint)*(byte *)((int)uVar11 + iVar5) - (uint)*(byte *)((int)uVar11 + iVar1);
-            lVar17 = iVar5 * iVar5 + lVar17;
+          if (uVar5 < param_5) {
+            uVar9 = (longlong)
+                    (int)(((uint)puVar3[uVar5] - (uint)puVar10[uVar5]) *
+                         ((uint)puVar3[uVar5] - (uint)puVar10[uVar5])) + uVar9;
           }
-          lVar20 = lVar20 + uVar4;
-          lVar17 = lVar8 + lVar9 + lVar17;
-          lVar19 = lVar19 + uVar6;
-          lVar21 = lVar21 + -1;
-        } while (lVar21 != 0);
+          puVar3 = puVar3 + param_2;
+          uVar9 = lVar1 + lVar2 + uVar9;
+          puVar10 = puVar10 + param_4;
+          lVar11 = lVar11 + -1;
+        } while (lVar11 != 0);
       }
-      uVar14 = uVar14 + 0x10;
-      lVar2 = (uVar4 & 0xfffffff) * 0x10 + lVar2;
-      lVar16 = (uVar6 & 0xfffffff) * 0x10 + lVar16;
-      uVar13 = uVar13 + 0x10;
-    } while ((uVar14 & 0xffffffff) <= (uVar12 & 0xffffffff));
+      uVar6 = uVar6 + 0x10;
+      param_1 = param_1 + param_2 * 0x10;
+      param_3 = param_3 + param_4 * 0x10;
+      uVar7 = uVar7 + 0x10;
+    } while (uVar6 <= param_6);
   }
-  if ((uVar13 & 0xffffffff) < (uVar12 & 0xffffffff)) {
-    lVar20 = uVar12 - uVar13;
+  if ((uVar7 & 0xffffffff) < (ulonglong)param_6) {
+    lVar11 = (longlong)(int)param_6 - uVar7;
     do {
-      lVar21 = 0;
-      lVar19 = 0;
-      uVar12 = 0;
-      iVar5 = (int)lVar16;
-      iVar1 = (int)lVar2;
-      if (1 < (int)uVar7) {
+      lVar2 = 0;
+      lVar1 = 0;
+      uVar8 = 0;
+      uVar6 = uVar8;
+      if (1 < (int)param_5) {
         do {
-          iVar10 = (int)uVar12;
-          uVar12 = uVar12 + 2;
-          iVar18 = (uint)*(byte *)(iVar1 + 1 + iVar10) - (uint)*(byte *)(iVar5 + 1 + iVar10);
-          iVar10 = (uint)*(byte *)(iVar1 + iVar10) - (uint)*(byte *)(iVar10 + iVar5);
-          lVar19 = iVar18 * iVar18 + lVar19;
-          lVar21 = iVar10 * iVar10 + lVar21;
-        } while ((uVar12 & 0xffffffff) < (uVar7 - 1 & 0xffffffff));
+          uVar8 = uVar6 + 2;
+          lVar1 = (int)(((uint)param_1[uVar6 + 1] - (uint)param_3[uVar6 + 1]) *
+                       ((uint)param_1[uVar6 + 1] - (uint)param_3[uVar6 + 1])) + lVar1;
+          lVar2 = (int)(((uint)param_1[uVar6] - (uint)param_3[uVar6]) *
+                       ((uint)param_1[uVar6] - (uint)param_3[uVar6])) + lVar2;
+          uVar6 = uVar8;
+        } while (uVar8 < param_5 - 1);
       }
-      if ((uVar12 & 0xffffffff) < (uVar7 & 0xffffffff)) {
-        iVar5 = (uint)*(byte *)((int)uVar12 + iVar1) - (uint)*(byte *)((int)uVar12 + iVar5);
-        lVar17 = iVar5 * iVar5 + lVar17;
+      if (uVar8 < param_5) {
+        uVar9 = (longlong)
+                (int)(((uint)param_1[uVar8] - (uint)param_3[uVar8]) *
+                     ((uint)param_1[uVar8] - (uint)param_3[uVar8])) + uVar9;
       }
-      lVar2 = lVar2 + uVar4;
-      lVar17 = lVar19 + lVar21 + lVar17;
-      lVar16 = lVar16 + uVar6;
-      lVar20 = lVar20 + -1;
-    } while (lVar20 != 0);
+      param_1 = param_1 + param_2;
+      uVar9 = lVar1 + lVar2 + uVar9;
+      param_3 = param_3 + param_4;
+      lVar11 = lVar11 + -1;
+    } while (lVar11 != 0);
   }
-  uVar3 = __restgprlr_15(lVar17);
-  return uVar3;
+  return uVar9;
 }
 
 
 // 8282E1C8  generate_psnr_packet  (WebM_atvi_opt/vpx/vp8/encoder/onyx_if.c:2715)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
+
 void generate_psnr_packet(VP8_COMP *param_1)
 
 {
-  int iVar1;
-  uint uVar2;
+  YV12_BUFFER_CONFIG *pYVar1;
+  YV12_BUFFER_CONFIG *pYVar2;
   uint uVar3;
-  int iVar4;
-  int iVar5;
-  vp8_variance_rtcd_vtable_t *pvVar6;
-  uint *puVar7;
-  double *pdVar8;
-  uint uVar10;
-  longlong lVar9;
-  double extraout_f1;
-  double dVar11;
-  double dVar12;
+  uint uVar4;
+  vp8_variance_rtcd_vtable_t *pvVar5;
+  uint *puVar6;
+  double *pdVar7;
+  uint uVar9;
+  longlong lVar8;
+  double in_f1;
+  double dVar10;
   undefined1 local_d0 [56];
   double local_98 [19];
   
-  iVar4 = __savegprlr_25(param_1);
   local_d0._0_4_ = VPX_CODEC_PSNR_PKT;
-  iVar5 = *(int *)(iVar4 + 0x1e598);
-  iVar1 = *(int *)(iVar4 + 0x22a38);
-  pvVar6 = (vp8_variance_rtcd_vtable_t *)(iVar4 + 0x304cc);
-  uVar2 = *(uint *)(iVar4 + 0x1e580);
-  uVar3 = *(uint *)(iVar4 + 0x1e584);
-  dVar11 = extraout_f1;
+  pYVar1 = (param_1->common).frame_to_show;
+  pYVar2 = param_1->Source;
+  pvVar5 = &(param_1->rtcd).variance;
+  uVar3 = (param_1->common).Width;
+  uVar4 = (param_1->common).Height;
   local_d0._24_8_ =
-       calc_plane_error(*(uchar **)(iVar1 + 0x18),*(int *)(iVar1 + 8),*(uchar **)(iVar5 + 0x18),
-                        *(int *)(iVar5 + 8),uVar2,uVar3,pvVar6);
-  local_d0._8_4_ = uVar3 * uVar2;
+       calc_plane_error(pYVar2->y_buffer,pYVar2->y_stride,pYVar1->y_buffer,pYVar1->y_stride,uVar3,
+                        uVar4,pvVar5);
+  local_d0._8_4_ = uVar4 * uVar3;
+  uVar4 = uVar4 + 1 >> 1;
   uVar3 = uVar3 + 1 >> 1;
-  uVar2 = uVar2 + 1 >> 1;
   local_d0._12_4_ = local_d0._8_4_;
   local_d0._32_8_ = local_d0._24_8_;
   local_d0._40_8_ =
-       calc_plane_error(*(uchar **)(iVar1 + 0x1c),*(int *)(iVar1 + 0x14),*(uchar **)(iVar5 + 0x1c),
-                        *(int *)(iVar5 + 0x14),uVar2,uVar3,pvVar6);
-  uVar10 = uVar3 * uVar2;
+       calc_plane_error(pYVar2->u_buffer,pYVar2->uv_stride,pYVar1->u_buffer,pYVar1->uv_stride,uVar3,
+                        uVar4,pvVar5);
+  uVar9 = uVar4 * uVar3;
   local_d0._24_8_ = local_d0._24_8_ + local_d0._40_8_;
-  local_d0._8_4_ = uVar10 + local_d0._8_4_;
-  local_d0._16_4_ = uVar10;
+  local_d0._8_4_ = uVar9 + local_d0._8_4_;
+  local_d0._16_4_ = uVar9;
   local_d0._48_8_ =
-       calc_plane_error(*(uchar **)(iVar1 + 0x20),*(int *)(iVar1 + 0x14),*(uchar **)(iVar5 + 0x20),
-                        *(int *)(iVar5 + 0x14),uVar2,uVar3,pvVar6);
-  local_d0._20_4_ = uVar10;
-  pdVar8 = (double *)(local_d0 + 0x30);
+       calc_plane_error(pYVar2->v_buffer,pYVar2->uv_stride,pYVar1->v_buffer,pYVar1->uv_stride,uVar3,
+                        uVar4,pvVar5);
+  local_d0._20_4_ = uVar9;
+  pdVar7 = (double *)(local_d0 + 0x30);
   local_d0._24_8_ = local_d0._24_8_ + local_d0._48_8_;
-  local_d0._8_4_ = (void *)(uVar10 + local_d0._8_4_);
-  puVar7 = (uint *)(local_d0 + 4);
-  lVar9 = 4;
-  dVar12 = 255.0;
+  local_d0._8_4_ = (void *)(uVar9 + local_d0._8_4_);
+  puVar6 = (uint *)(local_d0 + 4);
+  lVar8 = 4;
+  dVar10 = 255.0;
   do {
-    puVar7 = puVar7 + 1;
-    uVar2 = *puVar7;
+    puVar6 = puVar6 + 1;
+    uVar3 = *puVar6;
     __u64tod();
-    dVar11 = vp8_mse2psnr((double)uVar2,dVar12,dVar11);
-    pdVar8 = pdVar8 + 1;
-    *pdVar8 = dVar11;
-    lVar9 = lVar9 + -1;
-  } while (lVar9 != 0);
-  iVar5 = vpx_codec_pkt_list_add
-                    (*(vpx_codec_pkt_list **)(iVar4 + 0x2e7c8),(vpx_codec_cx_pkt *)local_d0);
-  __restgprlr_25(iVar5);
+    in_f1 = vp8_mse2psnr((double)uVar3,dVar10,in_f1);
+    pdVar7 = pdVar7 + 1;
+    *pdVar7 = in_f1;
+    lVar8 = lVar8 + -1;
+  } while (lVar8 != 0);
+  vpx_codec_pkt_list_add(param_1->output_pkt_list,(vpx_codec_cx_pkt *)local_d0);
   return;
 }
 
@@ -2141,79 +2088,77 @@ int vp8_update_entropy(int *param_1,int param_2)
 
 // 8282E520  scale_and_extend_source  (WebM_atvi_opt/vpx/vp8/encoder/onyx_if.c:2885)
 
-/* WARNING: Type propagation algorithm not settling */
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 
 void scale_and_extend_source(YV12_BUFFER_CONFIG *param_1,VP8_COMP *param_2)
 
 {
   int iVar1;
-  YV12_BUFFER_CONFIG *pYVar2;
-  uchar uVar3;
+  uchar uVar2;
+  uint uVar3;
   uint uVar4;
   uint uVar5;
   uint uVar6;
-  uint uVar7;
   uint in_stack_ffffff88;
   
-  pYVar2 = (YV12_BUFFER_CONFIG *)__savegprlr_28(param_1);
-  uVar4 = (param_2->common).horiz_scale;
-  if ((uVar4 == 0) && ((param_2->common).vert_scale == 0)) {
+  uVar3 = (param_2->common).horiz_scale;
+  if ((uVar3 == 0) && ((param_2->common).vert_scale == 0)) {
     iVar1 = (param_2->common).lst_fb_idx;
     if (((param_2->common).Width == (param_2->common).yv12_fb[iVar1].y_width) &&
        ((param_2->common).Height == (param_2->common).yv12_fb[iVar1].y_height)) goto LAB_8282e66c;
-    (*vp8_yv12_copy_frame_ptr)(pYVar2,&param_2->scaled_source);
+    (*vp8_yv12_copy_frame_ptr)(param_1,&param_2->scaled_source);
   }
   else {
-    uVar6 = (param_2->common).vert_scale;
-    uVar3 = '\t';
-    if (uVar6 != 3) {
-      uVar3 = '\v';
+    uVar5 = (param_2->common).vert_scale;
+    uVar2 = '\t';
+    if (uVar5 != 3) {
+      uVar2 = '\v';
     }
-    if ((uVar4 < 4) && (uVar4 != 0)) {
-      if (uVar4 == 1) {
-        uVar5 = 4;
-        uVar4 = 5;
+    if ((uVar3 < 4) && (uVar3 != 0)) {
+      if (uVar3 == 1) {
+        uVar4 = 4;
+        uVar3 = 5;
       }
       else {
-        if (uVar4 != 2) {
-          uVar4 = 2;
+        if (uVar3 != 2) {
+          uVar3 = 2;
           goto LAB_8282e5fc;
         }
-        uVar5 = 3;
-        uVar4 = 5;
+        uVar4 = 3;
+        uVar3 = 5;
       }
     }
     else {
-      uVar4 = 1;
+      uVar3 = 1;
 LAB_8282e5fc:
-      uVar5 = 1;
+      uVar4 = 1;
     }
-    if ((uVar6 < 4) && (uVar6 != 0)) {
-      if (uVar6 == 1) {
-        uVar7 = 4;
-        uVar6 = 5;
+    if ((uVar5 < 4) && (uVar5 != 0)) {
+      if (uVar5 == 1) {
+        uVar6 = 4;
+        uVar5 = 5;
       }
       else {
-        if (uVar6 != 2) {
-          uVar6 = 2;
+        if (uVar5 != 2) {
+          uVar5 = 2;
           goto LAB_8282e644;
         }
-        uVar7 = 3;
-        uVar6 = 5;
+        uVar6 = 3;
+        uVar5 = 5;
       }
     }
     else {
-      uVar6 = 1;
+      uVar5 = 1;
 LAB_8282e644:
-      uVar7 = 1;
+      uVar6 = 1;
     }
-    vp8_scale_frame(pYVar2,&param_2->scaled_source,(param_2->common).temp_scale_frame.y_buffer,uVar3
-                    ,uVar4,uVar5,uVar6,uVar7,in_stack_ffffff88);
+    vp8_scale_frame(param_1,&param_2->scaled_source,(param_2->common).temp_scale_frame.y_buffer,
+                    uVar2,uVar3,uVar4,uVar5,uVar6,in_stack_ffffff88);
   }
   param_2->Source = &param_2->scaled_source;
 LAB_8282e66c:
   vp8_extend_to_multiple_of16(param_2->Source,(param_2->common).Width,(param_2->common).Height);
-  __restgprlr_28();
   return;
 }
 
@@ -2405,84 +2350,97 @@ void update_alt_ref_frame_and_stats(VP8_COMP *param_1)
 
 // 8282EB98  update_golden_frame_and_stats  (WebM_atvi_opt/vpx/vp8/encoder/onyx_if.c:3105)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
+
 void update_golden_frame_and_stats(VP8_COMP *param_1)
 
 {
   int iVar1;
-  uint uVar2;
-  int iVar3;
-  uint uVar4;
+  int iVar2;
+  uint uVar3;
+  int iVar4;
+  int iVar5;
+  int iVar6;
+  int iVar7;
+  uint *puVar8;
+  uint uVar9;
   
-  iVar3 = __savegprlr_25(param_1);
-  if (*(int *)(iVar3 + 0x20f80) == 0) {
-    if (*(int *)(iVar3 + 0x20f84) == 0) {
-      iVar1 = *(int *)(iVar3 + 0x26ea8);
-      if (0 < iVar1) {
-        *(int *)(iVar3 + 0x26ea8) = iVar1 + -1;
+  if ((param_1->common).refresh_golden_frame == 0) {
+    if ((param_1->common).refresh_alt_ref_frame == 0) {
+      iVar4 = param_1->frames_till_gf_update_due;
+      if (0 < iVar4) {
+        param_1->frames_till_gf_update_due = iVar4 + -1;
       }
-      iVar1 = *(int *)(iVar3 + 0x1e748);
-      if (iVar1 != 0) {
-        *(int *)(iVar3 + 0x1e748) = iVar1 + -1;
+      puVar8 = &(param_1->common).frames_till_alt_ref_frame;
+      uVar9 = *puVar8;
+      if (uVar9 != 0) {
+        *puVar8 = uVar9 - 1;
       }
-      uVar4 = *(uint *)(iVar3 + 0x1e744) + 1;
-      *(uint *)(iVar3 + 0x1e744) = uVar4;
-      if (1 < uVar4) {
-        *(int *)(iVar3 + 0x2e858) = *(int *)(iVar3 + 0x2e868) + *(int *)(iVar3 + 0x2e858);
-        *(int *)(iVar3 + 0x2e860) = *(int *)(iVar3 + 0x2e870) + *(int *)(iVar3 + 0x2e860);
-        *(int *)(iVar3 + 0x2e864) = *(int *)(iVar3 + 0x2e874) + *(int *)(iVar3 + 0x2e864);
-        *(int *)(iVar3 + 0x2e85c) = *(int *)(iVar3 + 0x2e86c) + *(int *)(iVar3 + 0x2e85c);
+      puVar8 = &(param_1->common).frames_since_golden;
+      uVar9 = *puVar8 + 1;
+      *puVar8 = uVar9;
+      if (1 < uVar9) {
+        iVar4 = param_1->recent_ref_frame_usage[2];
+        iVar5 = param_1->count_mb_ref_frame_usage[2];
+        iVar6 = param_1->count_mb_ref_frame_usage[3];
+        iVar1 = param_1->recent_ref_frame_usage[1];
+        iVar2 = param_1->recent_ref_frame_usage[3];
+        iVar7 = param_1->count_mb_ref_frame_usage[1];
+        param_1->recent_ref_frame_usage[0] =
+             param_1->count_mb_ref_frame_usage[0] + param_1->recent_ref_frame_usage[0];
+        param_1->recent_ref_frame_usage[2] = iVar5 + iVar4;
+        param_1->recent_ref_frame_usage[3] = iVar6 + iVar2;
+        param_1->recent_ref_frame_usage[1] = iVar7 + iVar1;
       }
     }
   }
   else {
     (*vp8_yv12_copy_frame_ptr)
-              (*(YV12_BUFFER_CONFIG **)(iVar3 + 0x1e598),
-               (YV12_BUFFER_CONFIG *)(*(int *)(iVar3 + 0x1e684) * 0x34 + iVar3 + 0x1e59c));
-    if (*(int *)(iVar3 + 0x2e7fc) == 0) {
-      *(undefined4 *)(iVar3 + 0x26ea8) = *(undefined4 *)(iVar3 + 0x2e808);
+              ((param_1->common).frame_to_show,
+               (param_1->common).yv12_fb + (param_1->common).gld_fb_idx);
+    if (param_1->auto_gold == 0) {
+      param_1->frames_till_gf_update_due = param_1->goldfreq;
     }
-    if (*(int *)(iVar3 + 0x2e82c) != 2) {
-      uVar4 = *(uint *)(iVar3 + 0x26ea8);
-      if (0 < (int)uVar4) {
-        *(uint *)(iVar3 + 0x26eac) = uVar4;
-        if ((*(int *)(iVar3 + 0x1e6f8) != 0) && (*(int *)(iVar3 + 0x22a94) == 0)) {
-          *(int *)(iVar3 + 0x26eb0) =
-               (*(int *)(iVar3 + 0x26e74) - *(int *)(iVar3 + 0x26f44)) + *(int *)(iVar3 + 0x26eb0);
+    if (param_1->pass != 2) {
+      uVar9 = param_1->frames_till_gf_update_due;
+      if (0 < (int)uVar9) {
+        param_1->current_gf_interval = uVar9;
+        if (((param_1->common).frame_type != KEY_FRAME) && (param_1->source_alt_ref_active == 0)) {
+          param_1->gf_overspend_bits =
+               (param_1->projected_frame_size - param_1->inter_frame_target) +
+               param_1->gf_overspend_bits;
         }
-        uVar2 = *(uint *)(iVar3 + 0x26eb0);
-        trapWord(6,(ulonglong)uVar4,0);
-        *(int *)(iVar3 + 0x26ed4) = (int)uVar2 / (int)uVar4;
-        trapWord(5,(ulonglong)uVar4 &
-                   ~((((ulonglong)uVar2 & 0x7fffffff) << 1 | (ulonglong)(uVar2 >> 0x1f)) - 1),0xffff
+        uVar3 = param_1->gf_overspend_bits;
+        trapWord(6,(ulonglong)uVar9,0);
+        param_1->non_gf_bitrate_adjustment = (int)uVar3 / (int)uVar9;
+        trapWord(5,(ulonglong)uVar9 &
+                   ~((((ulonglong)uVar3 & 0x7fffffff) << 1 | (ulonglong)(uVar3 >> 0x1f)) - 1),0xffff
                 );
       }
     }
-    vpx_memset(*(void **)(iVar3 + 0x30e0c),1,*(int *)(iVar3 + 0x1e708) * *(int *)(iVar3 + 0x1e70c));
-    *(int *)(iVar3 + 0x30e10) = *(int *)(iVar3 + 0x1e708) * *(int *)(iVar3 + 0x1e70c);
-    *(undefined4 *)(iVar3 + 0x20f80) = 0;
-    *(undefined4 *)(iVar3 + 0x2e864) = 1;
-    *(undefined4 *)(iVar3 + 0x1e744) = 0;
-    *(undefined4 *)(iVar3 + 0x2e858) = 1;
-    *(undefined4 *)(iVar3 + 0x2e85c) = 1;
-    *(undefined4 *)(iVar3 + 0x2e860) = 1;
-    if (-1 < *(int *)(iVar3 + 0x229d0)) {
-      if (*(int *)(iVar3 + 0x229fc) != 0) {
-        if (*(int *)(iVar3 + 0x20f84) == 0) {
-          *(undefined4 *)(iVar3 + 0x22a90) = 1;
-          *(undefined4 *)(iVar3 + 0x26ea8) = *(undefined4 *)(iVar3 + 0x26eec);
-        }
-      }
+    vpx_memset(param_1->gf_active_flags,1,(param_1->common).mb_rows * (param_1->common).mb_cols);
+    param_1->gf_active_count = (param_1->common).mb_rows * (param_1->common).mb_cols;
+    (param_1->common).refresh_golden_frame = 0;
+    iVar4 = (param_1->oxcf).fixed_q;
+    param_1->recent_ref_frame_usage[3] = 1;
+    (param_1->common).frames_since_golden = 0;
+    param_1->recent_ref_frame_usage[0] = 1;
+    param_1->recent_ref_frame_usage[1] = 1;
+    param_1->recent_ref_frame_usage[2] = 1;
+    if (((-1 < iVar4) && ((param_1->oxcf).play_alternate != 0)) &&
+       ((param_1->common).refresh_alt_ref_frame == 0)) {
+      param_1->source_alt_ref_pending = 1;
+      param_1->frames_till_gf_update_due = param_1->baseline_gf_interval;
     }
-    if (*(int *)(iVar3 + 0x22a90) == 0) {
-      *(undefined4 *)(iVar3 + 0x22a94) = 0;
+    if (param_1->source_alt_ref_pending == 0) {
+      param_1->source_alt_ref_active = 0;
     }
-    if (0 < *(int *)(iVar3 + 0x26ea8)) {
-      *(int *)(iVar3 + 0x26ea8) = *(int *)(iVar3 + 0x26ea8) + -1;
-      __restgprlr_25();
+    if (0 < param_1->frames_till_gf_update_due) {
+      param_1->frames_till_gf_update_due = param_1->frames_till_gf_update_due + -1;
       return;
     }
   }
-  __restgprlr_25();
   return;
 }
 
@@ -2666,41 +2624,43 @@ int decide_key_frame(VP8_COMP *param_1)
 
 // 828315A8  encode_frame_to_data_rate  (WebM_atvi_opt/vpx/vp8/encoder/onyx_if.c:3483)
 
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
+
 void encode_frame_to_data_rate(VP8_COMP *param_1,ulong *param_2,uchar *param_3,uint *param_4)
 
 {
   FRAME_TYPE FVar1;
-  VP8_COMP *pVVar2;
-  ulong *puVar3;
+  ulong *puVar2;
+  int iVar3;
   int iVar4;
   int iVar5;
-  int iVar6;
-  long lVar7;
+  long lVar6;
+  YV12_BUFFER_CONFIG *pYVar7;
   YV12_BUFFER_CONFIG *pYVar8;
   YV12_BUFFER_CONFIG *pYVar9;
-  VP8Common *pVVar10;
-  YV12_BUFFER_CONFIG *pYVar11;
-  int *piVar12;
+  int *piVar10;
+  uint uVar11;
+  ulonglong uVar12;
   uint uVar13;
   ulonglong uVar14;
-  uint uVar15;
-  ulonglong uVar16;
-  uchar *puVar19;
-  longlong lVar17;
-  ulonglong uVar18;
-  int *piVar20;
-  long64 *plVar21;
-  uint uVar22;
-  uint uVar23;
+  uchar *puVar16;
+  uint *puVar17;
+  ulonglong uVar15;
+  int *piVar18;
+  long64 *plVar19;
+  uint uVar20;
+  uint uVar21;
+  int *piVar22;
+  uchar *puVar23;
   int *piVar24;
   uchar *puVar25;
   int *piVar26;
-  uchar *puVar27;
-  int *piVar28;
-  int *piVar29;
-  YV12_BUFFER_CONFIG *pYVar30;
-  bool bVar31;
-  longlong lVar32;
+  int *piVar27;
+  YV12_BUFFER_CONFIG *pYVar28;
+  VP8Common *pVVar29;
+  bool bVar30;
+  longlong lVar31;
   ulong *puStack0000001c;
   uchar *puStack00000024;
   uint *puStack0000002c;
@@ -2716,632 +2676,627 @@ void encode_frame_to_data_rate(VP8_COMP *param_1,ulong *param_2,uchar *param_3,u
   _LARGE_INTEGER _Stack_b0;
   _LARGE_INTEGER a_Stack_a8 [21];
   
-  lVar17 = (longlong)(int)param_1;
-  __savegprlr();
-  pVVar2 = (VP8_COMP *)lVar17;
-  iVar6 = pVVar2->target_bandwidth;
-  piVar28 = &(pVVar2->oxcf).optimal_buffer_level;
-  piVar29 = &pVVar2->per_frame_bandwidth;
-  uVar13 = ((pVVar2->oxcf).drop_frames_water_mark * *piVar28) / 100;
-  pVVar10 = &pVVar2->common;
-  piVar12 = &pVVar2->pass;
-  local_d8 = CONCAT44(piVar12,local_d8._4_4_);
-  iVar4 = (int)(uVar13 << 1) / 3;
-  *piVar29 = (int)((double)(longlong)iVar6 / pVVar2->output_frame_rate);
-  (pVVar2->common).copy_buffer_to_gf = 0;
-  (pVVar2->common).copy_buffer_to_arf = 0;
-  pVVar2->zbin_over_quant = 0;
-  pVVar2->zbin_mode_boost = 0;
-  pVVar2->zbin_mode_boost_enabled = 1;
-  if ((*piVar12 == 2) && (pVVar2->gfu_boost < 0x191)) {
-    pVVar2->zbin_mode_boost_enabled = 0;
+  iVar5 = param_1->target_bandwidth;
+  piVar26 = &(param_1->oxcf).optimal_buffer_level;
+  piVar27 = &param_1->per_frame_bandwidth;
+  uVar11 = ((param_1->oxcf).drop_frames_water_mark * *piVar26) / 100;
+  pVVar29 = &param_1->common;
+  piVar10 = &param_1->pass;
+  local_d8 = CONCAT44(piVar10,local_d8._4_4_);
+  iVar3 = (int)(uVar11 << 1) / 3;
+  *piVar27 = (int)((double)(longlong)iVar5 / param_1->output_frame_rate);
+  (param_1->common).copy_buffer_to_gf = 0;
+  (param_1->common).copy_buffer_to_arf = 0;
+  param_1->zbin_over_quant = 0;
+  param_1->zbin_mode_boost = 0;
+  param_1->zbin_mode_boost_enabled = 1;
+  if ((*piVar10 == 2) && (param_1->gfu_boost < 0x191)) {
+    param_1->zbin_mode_boost_enabled = 0;
   }
-  piVar24 = &pVVar2->source_alt_ref_active;
-  local_c8 = CONCAT44(piVar24,local_c8._4_4_);
-  if (*piVar24 == 0) {
-    (pVVar2->common).ref_frame_sign_bias[3] = 0;
+  piVar22 = &param_1->source_alt_ref_active;
+  local_c8 = CONCAT44(piVar22,local_c8._4_4_);
+  if (*piVar22 == 0) {
+    (param_1->common).ref_frame_sign_bias[3] = 0;
   }
   else {
-    (pVVar2->common).ref_frame_sign_bias[3] = 1;
+    (param_1->common).ref_frame_sign_bias[3] = 1;
   }
-  if (((pVVar2->common).current_video_frame == 0) || (((pVVar2->common).frame_flags & 1U) != 0)) {
+  if (((param_1->common).current_video_frame == 0) || (((param_1->common).frame_flags & 1U) != 0)) {
 LAB_82831734:
-    (pVVar2->common).frame_type = KEY_FRAME;
+    (param_1->common).frame_type = KEY_FRAME;
   }
-  else if ((pVVar2->oxcf).auto_key != 0) {
-    uVar15 = pVVar2->key_frame_frequency;
-    trapWord(6,(ulonglong)uVar15,0);
-    if ((ulonglong)pVVar2->frames_since_key ==
-        (longlong)(int)(pVVar2->frames_since_key / uVar15) * (longlong)(int)uVar15)
+  else if ((param_1->oxcf).auto_key != 0) {
+    uVar13 = param_1->key_frame_frequency;
+    trapWord(6,(ulonglong)uVar13,0);
+    if ((ulonglong)param_1->frames_since_key ==
+        (longlong)(int)(param_1->frames_since_key / uVar13) * (longlong)(int)uVar13)
     goto LAB_82831734;
   }
-  puVar27 = &(pVVar2->mb).e_mbd.update_mb_segmentation_map;
-  puVar19 = &(pVVar2->mb).e_mbd.mode_ref_lf_delta_update;
-  puVar25 = &(pVVar2->mb).e_mbd.update_mb_segmentation_data;
-  _local_b8 = CONCAT44(puVar19,iVar6);
-  *puVar27 = '\0';
-  *puVar19 = '\0';
+  puVar25 = &(param_1->mb).e_mbd.update_mb_segmentation_map;
+  puVar16 = &(param_1->mb).e_mbd.mode_ref_lf_delta_update;
+  puVar23 = &(param_1->mb).e_mbd.update_mb_segmentation_data;
+  _local_b8 = CONCAT44(puVar16,iVar5);
   *puVar25 = '\0';
+  *puVar16 = '\0';
+  *puVar23 = '\0';
   puStack0000001c = param_2;
   puStack00000024 = param_3;
   puStack0000002c = param_4;
-  local_d0 = puVar25;
-  local_cc = puVar27;
-  if ((pVVar2->common).frame_type == KEY_FRAME) {
-    setup_features(pVVar2);
-    if ((pVVar2->mb).e_mbd.segmentation_enabled != '\0') {
-      *puVar27 = '\x01';
+  local_d0 = puVar23;
+  local_cc = puVar25;
+  if ((param_1->common).frame_type == KEY_FRAME) {
+    setup_features(param_1);
+    if ((param_1->mb).e_mbd.segmentation_enabled != '\0') {
       *puVar25 = '\x01';
+      *puVar23 = '\x01';
     }
-    *piVar24 = 0;
-    lVar17 = lVar17 + 0x22c4c;
-    lVar32 = 0x14;
+    *piVar22 = 0;
+    puVar17 = param_1->do_full + 1;
+    lVar31 = 0x14;
     do {
-      lVar17 = lVar17 + 4;
-      *(undefined4 *)lVar17 = 0x80;
-      lVar32 = lVar32 + -1;
-    } while (lVar32 != 0);
+      puVar17 = puVar17 + 1;
+      *puVar17 = 0x80;
+      lVar31 = lVar31 + -1;
+    } while (lVar31 != 0);
   }
-  update_rd_ref_frame_probs(pVVar2);
-  local_bc = &pVVar2->drop_frames_allowed;
+  update_rd_ref_frame_probs(param_1);
+  local_bc = &param_1->drop_frames_allowed;
   if (*local_bc != 0) {
-    iVar6 = pVVar2->buffer_level;
-    if ((int)uVar13 < iVar6) {
-      if (0 < pVVar2->decimation_factor) {
-        pVVar2->decimation_factor = pVVar2->decimation_factor + -1;
+    iVar5 = param_1->buffer_level;
+    if ((int)uVar11 < iVar5) {
+      if (0 < param_1->decimation_factor) {
+        param_1->decimation_factor = param_1->decimation_factor + -1;
       }
     }
-    if ((iVar6 <= iVar4) || (pVVar2->decimation_factor < 1)) {
-      if (iVar6 < (int)(((int)uVar13 >> 3) + (uint)((int)uVar13 < 0 && (uVar13 & 7) != 0))) {
-        if ((pVVar2->decimation_factor == 2) || (pVVar2->decimation_factor == 3)) {
-          pVVar2->decimation_factor = 3;
+    if ((iVar5 <= iVar3) || (param_1->decimation_factor < 1)) {
+      if (iVar5 < (int)(((int)uVar11 >> 3) + (uint)((int)uVar11 < 0 && (uVar11 & 7) != 0))) {
+        if ((param_1->decimation_factor == 2) || (param_1->decimation_factor == 3)) {
+          param_1->decimation_factor = 3;
           goto LAB_828318a0;
         }
       }
-      if (iVar6 < (int)(((int)uVar13 >> 2) + (uint)((int)uVar13 < 0 && (uVar13 & 3) != 0))) {
-        if ((pVVar2->decimation_factor == 1) || (pVVar2->decimation_factor == 2)) {
-          pVVar2->decimation_factor = 2;
+      if (iVar5 < (int)(((int)uVar11 >> 2) + (uint)((int)uVar11 < 0 && (uVar11 & 3) != 0))) {
+        if ((param_1->decimation_factor == 1) || (param_1->decimation_factor == 2)) {
+          param_1->decimation_factor = 2;
           goto LAB_828318a0;
         }
       }
-      if ((iVar4 <= iVar6) || ((pVVar2->decimation_factor != 0 && (pVVar2->decimation_factor != 1)))
-         ) goto LAB_828318a0;
+      if ((iVar3 <= iVar5) ||
+         ((param_1->decimation_factor != 0 && (param_1->decimation_factor != 1))))
+      goto LAB_828318a0;
     }
-    pVVar2->decimation_factor = 1;
+    param_1->decimation_factor = 1;
   }
 LAB_828318a0:
-  iVar4 = pVVar2->decimation_factor;
-  if (0 < iVar4) {
-    if (iVar4 == 1) {
-      uVar13 = *piVar29 * 3;
-      bVar31 = (int)uVar13 < 0 && (uVar13 & 1) != 0;
-      iVar6 = (int)uVar13 >> 1;
+  iVar3 = param_1->decimation_factor;
+  if (0 < iVar3) {
+    if (iVar3 == 1) {
+      uVar11 = *piVar27 * 3;
+      bVar30 = (int)uVar11 < 0 && (uVar11 & 1) != 0;
+      iVar5 = (int)uVar11 >> 1;
 LAB_828318e8:
-      *piVar29 = iVar6 + (uint)bVar31;
+      *piVar27 = iVar5 + (uint)bVar30;
     }
-    else if ((iVar4 == 2) || (iVar4 == 3)) {
-      uVar13 = *piVar29 * 5;
-      bVar31 = (int)uVar13 < 0 && (uVar13 & 3) != 0;
-      iVar6 = (int)uVar13 >> 2;
+    else if ((iVar3 == 2) || (iVar3 == 3)) {
+      uVar11 = *piVar27 * 5;
+      bVar30 = (int)uVar11 < 0 && (uVar11 & 3) != 0;
+      iVar5 = (int)uVar11 >> 2;
       goto LAB_828318e8;
     }
-    if ((pVVar2->common).frame_type == KEY_FRAME) {
-      pVVar2->decimation_count = iVar4;
+    if ((param_1->common).frame_type == KEY_FRAME) {
+      param_1->decimation_count = iVar3;
     }
     else {
-      piVar29 = &pVVar2->decimation_count;
-      if (0 < *piVar29) {
-        *piVar29 = *piVar29 + -1;
-        piVar12 = &pVVar2->bits_off_target;
-        *piVar12 = pVVar2->av_per_frame_bandwidth + *piVar12;
-        (pVVar2->common).current_video_frame = (pVVar2->common).current_video_frame + 1;
-        pVVar2->buffer_level = *piVar12;
-        pVVar2->frames_since_key = pVVar2->frames_since_key + 1;
-        __restgprlr();
+      piVar27 = &param_1->decimation_count;
+      if (0 < *piVar27) {
+        *piVar27 = *piVar27 + -1;
+        piVar10 = &param_1->bits_off_target;
+        *piVar10 = param_1->av_per_frame_bandwidth + *piVar10;
+        (param_1->common).current_video_frame = (param_1->common).current_video_frame + 1;
+        param_1->buffer_level = *piVar10;
+        param_1->frames_since_key = param_1->frames_since_key + 1;
         return;
       }
-      *piVar29 = iVar4;
+      *piVar27 = iVar3;
     }
   }
-  iVar4 = pick_frame_size(pVVar2);
-  if (iVar4 == 0) {
-    (pVVar2->common).current_video_frame = (pVVar2->common).current_video_frame + 1;
-    pVVar2->frames_since_key = pVVar2->frames_since_key + 1;
-    __restgprlr();
+  iVar3 = pick_frame_size(param_1);
+  if (iVar3 == 0) {
+    (param_1->common).current_video_frame = (param_1->common).current_video_frame + 1;
+    param_1->frames_since_key = param_1->frames_since_key + 1;
     return;
   }
-  piVar29 = &(pVVar2->oxcf).end_usage;
-  iVar4 = *piVar29;
-  if (iVar4 == 0) {
-    uVar13 = *piVar28;
-    uVar15 = pVVar2->buffer_level;
-    if (((int)uVar13 <= (int)uVar15) && (pVVar2->buffered_mode != 0)) {
-      uVar22 = pVVar2->active_worst_quality;
-      uVar16 = (longlong)((int)uVar22 >> 2) + (ulonglong)((int)uVar22 < 0 && (uVar22 & 3) != 0);
-      if (uVar16 != 0) {
-        uVar23 = (pVVar2->oxcf).maximum_buffer_size;
-        if ((int)uVar15 < (int)uVar23) {
-          uVar18 = (ulonglong)uVar23 - (ulonglong)uVar13;
-          trapWord(6,uVar16,0);
-          iVar6 = (int)uVar18 / (int)uVar16;
-          trapWord(5,uVar16 & ~(((uVar18 & 0x7fffffff) << 1 | (uVar18 & 0xffffffff) >> 0x1f) - 1),
+  piVar27 = &(param_1->oxcf).end_usage;
+  iVar3 = *piVar27;
+  if (iVar3 == 0) {
+    uVar11 = *piVar26;
+    uVar13 = param_1->buffer_level;
+    if (((int)uVar11 <= (int)uVar13) && (param_1->buffered_mode != 0)) {
+      uVar20 = param_1->active_worst_quality;
+      uVar14 = (longlong)((int)uVar20 >> 2) + (ulonglong)((int)uVar20 < 0 && (uVar20 & 3) != 0);
+      if (uVar14 != 0) {
+        uVar21 = (param_1->oxcf).maximum_buffer_size;
+        if ((int)uVar13 < (int)uVar21) {
+          uVar15 = (ulonglong)uVar21 - (ulonglong)uVar11;
+          trapWord(6,uVar14,0);
+          iVar5 = (int)uVar15 / (int)uVar14;
+          trapWord(5,uVar14 & ~(((uVar15 & 0x7fffffff) << 1 | (uVar15 & 0xffffffff) >> 0x1f) - 1),
                    0xffff);
-          if (iVar6 != 0) {
-            uVar16 = (ulonglong)uVar15 - (ulonglong)uVar13;
-            trapWord(6,(longlong)iVar6,0);
-            pVVar2->active_worst_quality = uVar22 - (int)uVar16 / iVar6;
-            trapWord(5,(longlong)iVar6 &
-                       ~(((uVar16 & 0x7fffffff) << 1 | (uVar16 & 0xffffffff) >> 0x1f) - 1),0xffff);
+          if (iVar5 != 0) {
+            uVar14 = (ulonglong)uVar13 - (ulonglong)uVar11;
+            trapWord(6,(longlong)iVar5,0);
+            param_1->active_worst_quality = uVar20 - (int)uVar14 / iVar5;
+            trapWord(5,(longlong)iVar5 &
+                       ~(((uVar14 & 0x7fffffff) << 1 | (uVar14 & 0xffffffff) >> 0x1f) - 1),0xffff);
           }
         }
         else {
-          pVVar2->active_worst_quality = uVar22 - (int)uVar16;
+          param_1->active_worst_quality = uVar20 - (int)uVar14;
         }
       }
     }
   }
-  if ((*piVar12 == 2) || (0x96 < (pVVar2->common).current_video_frame)) {
-    FVar1 = (pVVar2->common).frame_type;
-    iVar6 = pVVar2->active_worst_quality;
+  if ((*piVar10 == 2) || (0x96 < (param_1->common).current_video_frame)) {
+    FVar1 = (param_1->common).frame_type;
+    iVar5 = param_1->active_worst_quality;
     if (FVar1 == KEY_FRAME) {
 LAB_82831b24:
-      iVar6 = iVar6 << 2;
-      piVar12 = kf_low_motion_minq;
-      if (pVVar2->gfu_boost < 0x259) {
-        piVar12 = kf_high_motion_minq;
+      iVar5 = iVar5 << 2;
+      piVar10 = kf_low_motion_minq;
+      if (param_1->gfu_boost < 0x259) {
+        piVar10 = kf_high_motion_minq;
       }
     }
-    else if (((pVVar2->common).refresh_golden_frame == 0) &&
-            ((pVVar2->common).refresh_alt_ref_frame == 0)) {
-      iVar6 = iVar6 << 2;
-      piVar12 = inter_minq;
+    else if (((param_1->common).refresh_golden_frame == 0) &&
+            ((param_1->common).refresh_alt_ref_frame == 0)) {
+      iVar5 = iVar5 << 2;
+      piVar10 = inter_minq;
     }
     else {
       if (FVar1 == KEY_FRAME) goto LAB_82831b24;
-      if (pVVar2->avg_frame_qindex < iVar6) {
-        iVar6 = pVVar2->avg_frame_qindex;
+      if (param_1->avg_frame_qindex < iVar5) {
+        iVar5 = param_1->avg_frame_qindex;
       }
-      iVar6 = iVar6 << 2;
-      if (pVVar2->gfu_boost < 0x3e9) {
-        if (pVVar2->gfu_boost < 400) {
-          piVar12 = gf_high_motion_minq;
+      iVar5 = iVar5 << 2;
+      if (param_1->gfu_boost < 0x3e9) {
+        if (param_1->gfu_boost < 400) {
+          piVar10 = gf_high_motion_minq;
         }
         else {
-          piVar12 = gf_mid_motion_minq;
+          piVar10 = gf_mid_motion_minq;
         }
       }
       else {
-        piVar12 = gf_low_motion_minq;
+        piVar10 = gf_low_motion_minq;
       }
     }
-    piVar24 = &pVVar2->active_best_quality;
-    pVVar2->active_best_quality = *(int *)(iVar6 + (int)piVar12);
-    if (iVar4 == 0) {
-      uVar13 = pVVar2->buffer_level;
-      uVar15 = (pVVar2->oxcf).maximum_buffer_size;
-      if ((int)uVar13 < (int)uVar15) {
-        uVar22 = *piVar28;
-        if ((int)uVar22 < (int)uVar13) {
-          uVar18 = (ulonglong)uVar22 - (ulonglong)uVar13;
-          uVar16 = (ulonglong)uVar15 - (ulonglong)uVar22;
-          uVar14 = (uVar18 & 0x1ffffff) << 7;
-          uVar13 = ((int)uVar14 / (int)uVar16) * (*piVar24 - pVVar2->best_quality);
-          trapWord(6,uVar16,0);
-          trapWord(5,uVar16 & ~(((uVar14 & 0x7fffffff) << 1 | (uVar18 & 0x1ffffff) >> 0x18) - 1),
+    piVar22 = &param_1->active_best_quality;
+    param_1->active_best_quality = *(int *)(iVar5 + (int)piVar10);
+    if (iVar3 == 0) {
+      uVar11 = param_1->buffer_level;
+      uVar13 = (param_1->oxcf).maximum_buffer_size;
+      if ((int)uVar11 < (int)uVar13) {
+        uVar20 = *piVar26;
+        if ((int)uVar20 < (int)uVar11) {
+          uVar15 = (ulonglong)uVar20 - (ulonglong)uVar11;
+          uVar14 = (ulonglong)uVar13 - (ulonglong)uVar20;
+          uVar12 = (uVar15 & 0x1ffffff) << 7;
+          uVar11 = ((int)uVar12 / (int)uVar14) * (*piVar22 - param_1->best_quality);
+          trapWord(6,uVar14,0);
+          trapWord(5,uVar14 & ~(((uVar12 & 0x7fffffff) << 1 | (uVar15 & 0x1ffffff) >> 0x18) - 1),
                    0xffff);
-          *piVar24 = ((int)uVar13 >> 7) + (uint)((int)uVar13 < 0 && (uVar13 & 0x7f) != 0) + *piVar24
+          *piVar22 = ((int)uVar11 >> 7) + (uint)((int)uVar11 < 0 && (uVar11 & 0x7f) != 0) + *piVar22
           ;
         }
       }
       else {
-        *piVar24 = pVVar2->best_quality;
+        *piVar22 = param_1->best_quality;
       }
     }
   }
-  piVar28 = &pVVar2->active_worst_quality;
-  piVar12 = &pVVar2->worst_quality;
-  if (*piVar12 < pVVar2->active_worst_quality) {
-    *piVar28 = *piVar12;
+  piVar26 = &param_1->active_worst_quality;
+  piVar10 = &param_1->worst_quality;
+  if (*piVar10 < param_1->active_worst_quality) {
+    *piVar26 = *piVar10;
   }
-  iVar4 = pVVar2->best_quality;
-  if ((pVVar2->active_best_quality < iVar4) ||
-     (iVar4 = *piVar28, iVar4 < pVVar2->active_best_quality)) {
-    pVVar2->active_best_quality = iVar4;
+  iVar3 = param_1->best_quality;
+  if ((param_1->active_best_quality < iVar3) ||
+     (iVar3 = *piVar26, iVar3 < param_1->active_best_quality)) {
+    param_1->active_best_quality = iVar3;
   }
-  piVar24 = &pVVar2->this_frame_target;
-  iVar4 = vp8_regulate_q(pVVar2,*piVar24);
-  if (pVVar2->cyclic_refresh_mode_enabled != 0) {
-    cyclic_background_refresh(pVVar2,iVar4,0);
+  piVar22 = &param_1->this_frame_target;
+  iVar3 = vp8_regulate_q(param_1,*piVar22);
+  if (param_1->cyclic_refresh_mode_enabled != 0) {
+    cyclic_background_refresh(param_1,iVar3,0);
   }
-  vp8_compute_frame_size_bounds(pVVar2,&iStack_c0,(int *)local_e0);
-  vp8_save_coding_context(pVVar2);
-  scale_and_extend_source(pVVar2->un_scaled_source,pVVar2);
-  piVar26 = &pVVar2->projected_frame_size;
+  vp8_compute_frame_size_bounds(param_1,&iStack_c0,(int *)local_e0);
+  vp8_save_coding_context(param_1);
+  scale_and_extend_source(param_1->un_scaled_source,param_1);
+  piVar24 = &param_1->projected_frame_size;
   while( true ) {
-    (pVVar2->common).base_qindex = iVar4;
-    (pVVar2->common).y1dc_delta_q = 0;
-    (pVVar2->common).y2ac_delta_q = 0;
-    (pVVar2->common).uvdc_delta_q = 0;
-    (pVVar2->common).uvac_delta_q = 0;
-    (pVVar2->common).y2dc_delta_q = 0;
-    (pVVar2->mb).e_mbd.segment_feature_data[0][0] = pVVar2->segment_feature_data[0][0];
-    (pVVar2->mb).e_mbd.segment_feature_data[0][1] = pVVar2->segment_feature_data[0][1];
-    (pVVar2->mb).e_mbd.segment_feature_data[0][2] = pVVar2->segment_feature_data[0][2];
-    (pVVar2->mb).e_mbd.segment_feature_data[0][3] = pVVar2->segment_feature_data[0][3];
-    if ((pVVar2->common).mb_no_coeff_skip != 0) {
-      piVar20 = &pVVar2->prob_skip_false;
-      pVVar2->prob_skip_false = pVVar2->base_skip_false_prob[iVar4];
-      if ((pVVar2->common).frame_type != KEY_FRAME) {
-        if ((pVVar2->common).refresh_alt_ref_frame == 0) {
-          iVar6 = 0x2e844;
-          if ((pVVar2->common).refresh_golden_frame == 0) {
-            iVar6 = 0x2e840;
+    (param_1->common).base_qindex = iVar3;
+    (param_1->common).y1dc_delta_q = 0;
+    (param_1->common).y2ac_delta_q = 0;
+    (param_1->common).uvdc_delta_q = 0;
+    (param_1->common).uvac_delta_q = 0;
+    (param_1->common).y2dc_delta_q = 0;
+    (param_1->mb).e_mbd.segment_feature_data[0][0] = param_1->segment_feature_data[0][0];
+    (param_1->mb).e_mbd.segment_feature_data[0][1] = param_1->segment_feature_data[0][1];
+    (param_1->mb).e_mbd.segment_feature_data[0][2] = param_1->segment_feature_data[0][2];
+    (param_1->mb).e_mbd.segment_feature_data[0][3] = param_1->segment_feature_data[0][3];
+    if ((param_1->common).mb_no_coeff_skip != 0) {
+      piVar18 = &param_1->prob_skip_false;
+      param_1->prob_skip_false = param_1->base_skip_false_prob[iVar3];
+      if ((param_1->common).frame_type != KEY_FRAME) {
+        if ((param_1->common).refresh_alt_ref_frame == 0) {
+          iVar5 = 0x2e844;
+          if ((param_1->common).refresh_golden_frame == 0) {
+            iVar5 = 0x2e840;
           }
         }
         else {
-          iVar6 = 0x2e848;
+          iVar5 = 0x2e848;
         }
-        iVar6 = *(int *)((int)pVVar2->Y1quant[0] + iVar6);
-        if (iVar6 != 0) {
-          *piVar20 = iVar6;
+        iVar5 = *(int *)((int)param_1->Y1quant[0] + iVar5);
+        if (iVar5 != 0) {
+          *piVar18 = iVar5;
         }
-        if (*piVar20 < 5) {
-          *piVar20 = 5;
+        if (*piVar18 < 5) {
+          *piVar18 = 5;
         }
-        if (0xfa < *piVar20) {
-          *piVar20 = 0xfa;
+        if (0xfa < *piVar18) {
+          *piVar18 = 0xfa;
         }
-        if (pVVar2->is_src_frame_alt_ref != 0) {
-          *piVar20 = 1;
+        if (param_1->is_src_frame_alt_ref != 0) {
+          *piVar18 = 1;
         }
       }
     }
-    if ((pVVar2->common).frame_type == KEY_FRAME) {
-      vp8_setup_key_frame(pVVar2);
+    if ((param_1->common).frame_type == KEY_FRAME) {
+      vp8_setup_key_frame(param_1);
     }
-    vp8_encode_frame(pVVar2);
-    iVar5 = vp8_estimate_entropy_savings(pVVar2);
-    uVar13 = *piVar26;
-    uVar15 = (uint)((ulonglong)uVar13 - (longlong)iVar5);
-    *piVar26 = uVar15;
-    iVar6 = *local_d8._0_4_;
-    *piVar26 = (-1 - ((int)uVar15 >> 0x1f)) + (uint)((ulonglong)uVar13 - (longlong)iVar5 == 0) &
-               uVar15;
-    if ((((iVar6 == 2) || ((pVVar2->oxcf).auto_key == 0)) ||
-        ((pVVar2->common).frame_type == KEY_FRAME)) ||
-       (iVar6 = decide_key_frame(pVVar2), iVar6 == 0)) break;
-    vp8_calc_auto_iframe_target_size(pVVar2);
-    (pVVar2->common).frame_type = KEY_FRAME;
+    vp8_encode_frame(param_1);
+    iVar4 = vp8_estimate_entropy_savings(param_1);
+    uVar11 = *piVar24;
+    uVar13 = (uint)((ulonglong)uVar11 - (longlong)iVar4);
+    *piVar24 = uVar13;
+    iVar5 = *local_d8._0_4_;
+    *piVar24 = (-1 - ((int)uVar13 >> 0x1f)) + (uint)((ulonglong)uVar11 - (longlong)iVar4 == 0) &
+               uVar13;
+    if ((((iVar5 == 2) || ((param_1->oxcf).auto_key == 0)) ||
+        ((param_1->common).frame_type == KEY_FRAME)) ||
+       (iVar5 = decide_key_frame(param_1), iVar5 == 0)) break;
+    vp8_calc_auto_iframe_target_size(param_1);
+    (param_1->common).frame_type = KEY_FRAME;
     *local_c8._0_4_ = 0;
-    setup_features(pVVar2);
-    if ((pVVar2->mb).e_mbd.segmentation_enabled != '\0') {
+    setup_features(param_1);
+    if ((param_1->mb).e_mbd.segmentation_enabled != '\0') {
       *local_cc = '\x01';
       *local_d0 = '\x01';
     }
-    vp8_restore_coding_context(pVVar2);
-    iVar4 = vp8_regulate_q(pVVar2,*piVar24);
-    vp8_compute_frame_size_bounds(pVVar2,&iStack_c0,(int *)local_e0);
-    resize_key_frame(pVVar2);
+    vp8_restore_coding_context(param_1);
+    iVar3 = vp8_regulate_q(param_1,*piVar22);
+    vp8_compute_frame_size_bounds(param_1,&iStack_c0,(int *)local_e0);
+    resize_key_frame(param_1);
   }
-  uVar16 = (ulonglong)local_e0[0];
+  uVar14 = (ulonglong)local_e0[0];
   if (local_e0[0] == 0) {
-    uVar16 = 1;
+    uVar14 = 1;
     local_e0[0] = 1;
   }
-  if (((*local_d8._0_4_ == 2) && (*piVar29 != 0)) || ((iVar4 != *piVar28 || (*piVar12 <= *piVar28)))
+  if (((*local_d8._0_4_ == 2) && (*piVar27 != 0)) || ((iVar3 != *piVar26 || (*piVar10 <= *piVar26)))
      ) {
 LAB_82831f78:
-    bVar31 = false;
+    bVar30 = false;
   }
   else {
-    if (*piVar26 <= (int)uVar16) goto LAB_82831f78;
-    trapWord(6,uVar16,0);
-    uVar18 = ((uint)*piVar26 - uVar16) * 100;
-    iVar6 = (int)uVar18 / (int)uVar16;
-    trapWord(5,uVar16 & ~(((uVar18 & 0x7fffffff) << 1 | (uVar18 & 0xffffffff) >> 0x1f) - 1),0xffff);
+    if (*piVar24 <= (int)uVar14) goto LAB_82831f78;
+    trapWord(6,uVar14,0);
+    uVar15 = ((uint)*piVar24 - uVar14) * 100;
+    iVar5 = (int)uVar15 / (int)uVar14;
+    trapWord(5,uVar14 & ~(((uVar15 & 0x7fffffff) << 1 | (uVar15 & 0xffffffff) >> 0x1f) - 1),0xffff);
     do {
-      if (iVar6 < 1) break;
-      local_c8 = (longlong)iVar6;
-      iVar5 = *piVar28;
-      *piVar28 = iVar5 + 1;
-      iVar6 = (int)((double)local_c8 * 0.96);
-      local_d8 = (longlong)iVar6;
-    } while (iVar5 + 1 < *piVar12);
-    bVar31 = true;
+      if (iVar5 < 1) break;
+      local_c8 = (longlong)iVar5;
+      iVar4 = *piVar26;
+      *piVar26 = iVar4 + 1;
+      iVar5 = (int)((double)local_c8 * 0.96);
+      local_d8 = (longlong)iVar5;
+    } while (iVar4 + 1 < *piVar10);
+    bVar30 = true;
   }
-  vp8_update_gf_useage_maps(pVVar2,pVVar10,&pVVar2->mb);
-  if ((pVVar2->common).frame_type == KEY_FRAME) {
-    (pVVar2->common).refresh_last_frame = 1;
+  vp8_update_gf_useage_maps(param_1,pVVar29,&param_1->mb);
+  if ((param_1->common).frame_type == KEY_FRAME) {
+    (param_1->common).refresh_last_frame = 1;
   }
-  piVar28 = &(pVVar2->oxcf).error_resilient_mode;
-  if ((*piVar28 == 0) && ((pVVar2->common).refresh_golden_frame != 0)) {
-    (pVVar2->common).copy_buffer_to_arf = 2;
+  piVar26 = &(param_1->oxcf).error_resilient_mode;
+  if ((*piVar26 == 0) && ((param_1->common).refresh_golden_frame != 0)) {
+    (param_1->common).copy_buffer_to_arf = 2;
   }
   else {
-    (pVVar2->common).copy_buffer_to_arf = 0;
+    (param_1->common).copy_buffer_to_arf = 0;
   }
-  if ((pVVar2->common).refresh_last_frame == 0) {
-    (pVVar2->common).frame_to_show = pVVar10->yv12_fb + (pVVar2->common).new_fb_idx;
+  if ((param_1->common).refresh_last_frame == 0) {
+    (param_1->common).frame_to_show = pVVar29->yv12_fb + (param_1->common).new_fb_idx;
   }
   else {
     vp8_swap_yv12_buffer
-              (pVVar10->yv12_fb + (pVVar2->common).lst_fb_idx,
-               pVVar10->yv12_fb + (pVVar2->common).new_fb_idx);
-    (pVVar2->common).frame_to_show = pVVar10->yv12_fb + (pVVar2->common).lst_fb_idx;
+              (pVVar29->yv12_fb + (param_1->common).lst_fb_idx,
+               pVVar29->yv12_fb + (param_1->common).new_fb_idx);
+    (param_1->common).frame_to_show = pVVar29->yv12_fb + (param_1->common).lst_fb_idx;
   }
   QueryPerformanceCounter(&_Stack_b0);
-  if ((pVVar2->sf).auto_filter == 0) {
-    vp8cx_pick_filter_level_fast(pVVar2->Source,pVVar2);
+  if ((param_1->sf).auto_filter == 0) {
+    vp8cx_pick_filter_level_fast(param_1->Source,param_1);
   }
   else {
-    vp8cx_pick_filter_level(pVVar2->Source,pVVar2);
+    vp8cx_pick_filter_level(param_1->Source,param_1);
   }
   QueryPerformanceCounter(a_Stack_a8);
-  lVar7 = vpx_usec_timer_elapsed((vpx_usec_timer *)&_Stack_b0._s_0);
-  pVVar2->time_pick_lpf = lVar7 + pVVar2->time_pick_lpf;
-  if ((pVVar2->common).no_lpf != 0) {
-    (pVVar2->common).filter_level = 0;
+  lVar6 = vpx_usec_timer_elapsed((vpx_usec_timer *)&_Stack_b0._s_0);
+  param_1->time_pick_lpf = lVar6 + param_1->time_pick_lpf;
+  if ((param_1->common).no_lpf != 0) {
+    (param_1->common).filter_level = 0;
   }
-  iVar6 = (pVVar2->common).filter_level;
-  if (0 < iVar6) {
-    vp8cx_set_alt_lf_level(pVVar2,iVar6);
-    vp8_loop_filter_frame(pVVar10,&(pVVar2->mb).e_mbd,(pVVar2->common).filter_level);
-    (pVVar2->common).last_frame_type = (pVVar2->common).frame_type;
-    (pVVar2->common).last_filter_type = (pVVar2->common).filter_type;
-    (pVVar2->common).last_sharpness_level = (pVVar2->common).sharpness_level;
+  iVar5 = (param_1->common).filter_level;
+  if (0 < iVar5) {
+    vp8cx_set_alt_lf_level(param_1,iVar5);
+    vp8_loop_filter_frame(pVVar29,&(param_1->mb).e_mbd,(param_1->common).filter_level);
+    (param_1->common).last_frame_type = (param_1->common).frame_type;
+    (param_1->common).last_filter_type = (param_1->common).filter_type;
+    (param_1->common).last_sharpness_level = (param_1->common).sharpness_level;
   }
-  (*vp8_yv12_extend_frame_borders_ptr)((pVVar2->common).frame_to_show);
-  puVar3 = puStack0000001c;
-  if (*piVar28 == 1) {
-    (pVVar2->common).refresh_entropy_probs = 0;
+  (*vp8_yv12_extend_frame_borders_ptr)((param_1->common).frame_to_show);
+  puVar2 = puStack0000001c;
+  if (*piVar26 == 1) {
+    (param_1->common).refresh_entropy_probs = 0;
   }
-  vp8_pack_bitstream(pVVar2,puStack00000024,puStack0000001c);
-  iVar6 = (pVVar2->common).new_fb_idx;
-  pYVar9 = pVVar10->yv12_fb + (pVVar2->common).lst_fb_idx;
-  pYVar11 = pVVar10->yv12_fb + (pVVar2->common).gld_fb_idx;
-  pYVar30 = pVVar10->yv12_fb + (pVVar2->common).alt_fb_idx;
-  if ((pVVar2->common).frame_type == KEY_FRAME) {
-    (*vp8_yv12_copy_frame_ptr)((pVVar2->common).frame_to_show,pYVar11);
-    pYVar9 = (pVVar2->common).frame_to_show;
-    pYVar11 = pYVar30;
+  vp8_pack_bitstream(param_1,puStack00000024,puStack0000001c);
+  iVar5 = (param_1->common).new_fb_idx;
+  pYVar8 = pVVar29->yv12_fb + (param_1->common).lst_fb_idx;
+  pYVar9 = pVVar29->yv12_fb + (param_1->common).gld_fb_idx;
+  pYVar28 = pVVar29->yv12_fb + (param_1->common).alt_fb_idx;
+  if ((param_1->common).frame_type == KEY_FRAME) {
+    (*vp8_yv12_copy_frame_ptr)((param_1->common).frame_to_show,pYVar9);
+    pYVar9 = pYVar28;
+    pYVar8 = (param_1->common).frame_to_show;
   }
   else {
-    iVar5 = (pVVar2->common).copy_buffer_to_arf;
-    if (iVar5 != 0) {
-      if (iVar5 == 1) {
-        pYVar8 = pYVar9;
-        if ((pVVar2->common).refresh_last_frame != 0) {
-          pYVar8 = pVVar10->yv12_fb + iVar6;
+    iVar4 = (param_1->common).copy_buffer_to_arf;
+    if (iVar4 != 0) {
+      if (iVar4 == 1) {
+        pYVar7 = pYVar8;
+        if ((param_1->common).refresh_last_frame != 0) {
+          pYVar7 = pVVar29->yv12_fb + iVar5;
         }
       }
       else {
-        pYVar8 = pYVar11;
-        if (iVar5 != 2) goto LAB_828321f4;
+        pYVar7 = pYVar9;
+        if (iVar4 != 2) goto LAB_828321f4;
       }
-      (*vp8_yv12_copy_frame_ptr)(pYVar8,pYVar30);
+      (*vp8_yv12_copy_frame_ptr)(pYVar7,pYVar28);
     }
 LAB_828321f4:
-    iVar5 = (pVVar2->common).copy_buffer_to_gf;
-    if (iVar5 == 0) goto LAB_8283224c;
-    if (iVar5 == 1) {
-      if ((pVVar2->common).refresh_last_frame != 0) {
-        pYVar9 = pVVar10->yv12_fb + iVar6;
+    iVar4 = (param_1->common).copy_buffer_to_gf;
+    if (iVar4 == 0) goto LAB_8283224c;
+    if (iVar4 == 1) {
+      if ((param_1->common).refresh_last_frame != 0) {
+        pYVar8 = pVVar29->yv12_fb + iVar5;
       }
     }
     else {
-      pYVar9 = pYVar30;
-      if (iVar5 != 2) goto LAB_8283224c;
+      pYVar8 = pYVar28;
+      if (iVar4 != 2) goto LAB_8283224c;
     }
   }
-  (*vp8_yv12_copy_frame_ptr)(pYVar9,pYVar11);
+  (*vp8_yv12_copy_frame_ptr)(pYVar8,pYVar9);
 LAB_8283224c:
-  pVVar2->total_byte_count = (ulonglong)*puVar3 + pVVar2->total_byte_count;
-  *piVar26 = *puVar3 << 3;
-  if (!bVar31) {
-    vp8_update_rate_correction_factors(pVVar2,2);
+  param_1->total_byte_count = (ulonglong)*puVar2 + param_1->total_byte_count;
+  *piVar24 = *puVar2 << 3;
+  if (!bVar30) {
+    vp8_update_rate_correction_factors(param_1,2);
   }
-  pVVar2->last_q[(pVVar2->common).frame_type] = (pVVar2->common).base_qindex;
-  if ((pVVar2->common).frame_type == KEY_FRAME) {
-    vp8_adjust_key_frame_context(pVVar2);
+  param_1->last_q[(param_1->common).frame_type] = (param_1->common).base_qindex;
+  if ((param_1->common).frame_type == KEY_FRAME) {
+    vp8_adjust_key_frame_context(param_1);
   }
-  iVar6 = (pVVar2->common).base_qindex;
-  if ((pVVar2->common).frame_type == KEY_FRAME) {
-    pVVar2->avg_frame_qindex = iVar6;
+  iVar5 = (param_1->common).base_qindex;
+  if ((param_1->common).frame_type == KEY_FRAME) {
+    param_1->avg_frame_qindex = iVar5;
   }
   else {
-    pVVar2->avg_frame_qindex = pVVar2->avg_frame_qindex * 3 + iVar6 + 2 >> 2;
+    param_1->avg_frame_qindex = param_1->avg_frame_qindex * 3 + iVar5 + 2 >> 2;
   }
-  if ((((pVVar2->common).frame_type != KEY_FRAME) && ((pVVar2->common).refresh_golden_frame == 0))
-     && ((pVVar2->common).refresh_alt_ref_frame == 0)) {
-    piVar29 = &pVVar2->ni_av_qi;
-    uVar16 = (ulonglong)(uint)pVVar2->ni_frames + 1;
-    iVar6 = (int)uVar16;
-    pVVar2->ni_frames = iVar6;
-    trapWord(6,uVar16,0);
-    if (iVar6 < 0x97) {
-      uVar15 = iVar4 + pVVar2->ni_tot_qi;
-      pVVar2->ni_tot_qi = uVar15;
-      uVar13 = (int)uVar15 / iVar6 + *piVar12 + 1;
-      trapWord(5,uVar16 & ~((((ulonglong)uVar15 & 0x7fffffff) << 1 | (ulonglong)(uVar15 >> 0x1f)) -
+  if ((((param_1->common).frame_type != KEY_FRAME) && ((param_1->common).refresh_golden_frame == 0))
+     && ((param_1->common).refresh_alt_ref_frame == 0)) {
+    piVar27 = &param_1->ni_av_qi;
+    uVar14 = (ulonglong)(uint)param_1->ni_frames + 1;
+    iVar5 = (int)uVar14;
+    param_1->ni_frames = iVar5;
+    trapWord(6,uVar14,0);
+    if (iVar5 < 0x97) {
+      uVar13 = iVar3 + param_1->ni_tot_qi;
+      param_1->ni_tot_qi = uVar13;
+      uVar11 = (int)uVar13 / iVar5 + *piVar10 + 1;
+      trapWord(5,uVar14 & ~((((ulonglong)uVar13 & 0x7fffffff) << 1 | (ulonglong)(uVar13 >> 0x1f)) -
                            1),0xffff);
-      *piVar29 = ((int)uVar13 >> 1) + (uint)((int)uVar13 < 0 && (uVar13 & 1) != 0);
+      *piVar27 = ((int)uVar11 >> 1) + (uint)((int)uVar11 < 0 && (uVar11 & 1) != 0);
     }
     else {
-      uVar13 = iVar4 + pVVar2->ni_tot_qi;
-      pVVar2->ni_tot_qi = uVar13;
-      *piVar29 = (int)uVar13 / iVar6;
-      trapWord(5,uVar16 & ~((((ulonglong)uVar13 & 0x7fffffff) << 1 | (ulonglong)(uVar13 >> 0x1f)) -
+      uVar11 = iVar3 + param_1->ni_tot_qi;
+      param_1->ni_tot_qi = uVar11;
+      *piVar27 = (int)uVar11 / iVar5;
+      trapWord(5,uVar14 & ~((((ulonglong)uVar11 & 0x7fffffff) << 1 | (ulonglong)(uVar11 >> 0x1f)) -
                            1),0xffff);
     }
-    if (*piVar29 < iVar4) {
-      *piVar29 = iVar4 + -1;
+    if (*piVar27 < iVar3) {
+      *piVar27 = iVar3 + -1;
     }
   }
   if (*local_bc != 0) {
-    uVar13 = pVVar2->av_per_frame_bandwidth;
-    if (0 < (int)uVar13) {
-      uVar15 = *piVar26;
-      trapWord(6,(ulonglong)uVar13,0);
-      pVVar2->max_drop_count = (int)uVar15 / (int)uVar13;
-      trapWord(5,(ulonglong)uVar13 &
-                 ~((((ulonglong)uVar15 & 0x7fffffff) << 1 | (ulonglong)(uVar15 >> 0x1f)) - 1),0xffff
+    uVar11 = param_1->av_per_frame_bandwidth;
+    if (0 < (int)uVar11) {
+      uVar13 = *piVar24;
+      trapWord(6,(ulonglong)uVar11,0);
+      param_1->max_drop_count = (int)uVar13 / (int)uVar11;
+      trapWord(5,(ulonglong)uVar11 &
+                 ~((((ulonglong)uVar13 & 0x7fffffff) << 1 | (ulonglong)(uVar13 >> 0x1f)) - 1),0xffff
               );
-      if (pVVar2->max_consec_dropped_frames < (int)uVar15 / (int)uVar13) {
-        pVVar2->max_drop_count = pVVar2->max_consec_dropped_frames;
+      if (param_1->max_consec_dropped_frames < (int)uVar13 / (int)uVar11) {
+        param_1->max_drop_count = param_1->max_consec_dropped_frames;
       }
     }
   }
-  uVar13 = *piVar26;
-  piVar12 = &(pVVar2->common).refresh_alt_ref_frame;
-  piVar29 = &pVVar2->bits_off_target;
-  iVar4 = *piVar12;
-  if (iVar4 == 0) {
-    iVar6 = (pVVar2->av_per_frame_bandwidth - uVar13) + *piVar29;
+  uVar11 = *piVar24;
+  piVar10 = &(param_1->common).refresh_alt_ref_frame;
+  piVar27 = &param_1->bits_off_target;
+  iVar3 = *piVar10;
+  if (iVar3 == 0) {
+    iVar5 = (param_1->av_per_frame_bandwidth - uVar11) + *piVar27;
   }
   else {
-    iVar6 = *piVar29 - uVar13;
+    iVar5 = *piVar27 - uVar11;
   }
-  *piVar29 = iVar6;
-  uVar15 = *piVar24;
-  uVar22 = pVVar2->rolling_target_bits * 3 + uVar15 + 2;
-  uVar23 = pVVar2->rolling_actual_bits * 3 + uVar13 + 2;
-  pVVar2->rolling_target_bits = ((int)uVar22 >> 2) + (uint)((int)uVar22 < 0 && (uVar22 & 3) != 0);
-  uVar22 = pVVar2->long_rolling_target_bits * 0x1f + uVar15 + 0x10;
-  pVVar2->rolling_actual_bits = ((int)uVar23 >> 2) + (uint)((int)uVar23 < 0 && (uVar23 & 3) != 0);
-  uVar23 = pVVar2->long_rolling_actual_bits * 0x1f + uVar13 + 0x10;
-  pVVar2->long_rolling_target_bits =
-       ((int)uVar22 >> 5) + (uint)((int)uVar22 < 0 && (uVar22 & 0x1f) != 0);
-  pVVar2->total_actual_bits = (longlong)(int)uVar13 + pVVar2->total_actual_bits;
-  pVVar2->long_rolling_actual_bits =
-       ((int)uVar23 >> 5) + (uint)((int)uVar23 < 0 && (uVar23 & 0x1f) != 0);
-  pVVar2->total_target_vs_actual = (uVar15 - uVar13) + pVVar2->total_target_vs_actual;
-  pVVar2->buffer_level = iVar6;
-  if ((pVVar2->common).frame_type == KEY_FRAME) {
-    plVar21 = &pVVar2->kf_group_bits;
-    lVar17 = (longlong)(int)(uVar15 - uVar13) + *plVar21;
-    *plVar21 = lVar17;
-    if (lVar17 < 0) {
-      *plVar21 = 0;
+  *piVar27 = iVar5;
+  uVar13 = *piVar22;
+  uVar20 = param_1->rolling_target_bits * 3 + uVar13 + 2;
+  uVar21 = param_1->rolling_actual_bits * 3 + uVar11 + 2;
+  param_1->rolling_target_bits = ((int)uVar20 >> 2) + (uint)((int)uVar20 < 0 && (uVar20 & 3) != 0);
+  uVar20 = param_1->long_rolling_target_bits * 0x1f + uVar13 + 0x10;
+  param_1->rolling_actual_bits = ((int)uVar21 >> 2) + (uint)((int)uVar21 < 0 && (uVar21 & 3) != 0);
+  uVar21 = param_1->long_rolling_actual_bits * 0x1f + uVar11 + 0x10;
+  param_1->long_rolling_target_bits =
+       ((int)uVar20 >> 5) + (uint)((int)uVar20 < 0 && (uVar20 & 0x1f) != 0);
+  param_1->total_actual_bits = (longlong)(int)uVar11 + param_1->total_actual_bits;
+  param_1->long_rolling_actual_bits =
+       ((int)uVar21 >> 5) + (uint)((int)uVar21 < 0 && (uVar21 & 0x1f) != 0);
+  param_1->total_target_vs_actual = (uVar13 - uVar11) + param_1->total_target_vs_actual;
+  param_1->buffer_level = iVar5;
+  if ((param_1->common).frame_type == KEY_FRAME) {
+    plVar19 = &param_1->kf_group_bits;
+    lVar31 = (longlong)(int)(uVar13 - uVar11) + *plVar19;
+    *plVar19 = lVar31;
+    if (lVar31 < 0) {
+      *plVar19 = 0;
     }
   }
-  else if (((pVVar2->common).refresh_golden_frame != 0) ||
-          ((pVVar2->common).refresh_alt_ref_frame != 0)) {
-    piVar29 = &pVVar2->gf_group_bits;
-    lVar17 = ((ulonglong)(uint)*piVar29 - (ulonglong)uVar13) + (ulonglong)uVar15;
-    *piVar29 = (int)lVar17;
-    if (lVar17 < 0) {
-      *piVar29 = 0;
+  else if (((param_1->common).refresh_golden_frame != 0) ||
+          ((param_1->common).refresh_alt_ref_frame != 0)) {
+    piVar27 = &param_1->gf_group_bits;
+    lVar31 = ((ulonglong)(uint)*piVar27 - (ulonglong)uVar11) + (ulonglong)uVar13;
+    *piVar27 = (int)lVar31;
+    if (lVar31 < 0) {
+      *piVar27 = 0;
     }
   }
-  if ((pVVar2->common).frame_type != KEY_FRAME) {
-    if (iVar4 == 0) {
-      iVar4 = pVVar2->prob_skip_false;
-      if ((pVVar2->common).refresh_golden_frame == 0) {
-        pVVar2->last_skip_false_probs[0] = iVar4;
-        pVVar2->last_skip_probs_q[0] = (pVVar2->common).base_qindex;
-        pVVar2->base_skip_false_prob[(pVVar2->common).base_qindex] = iVar4;
+  if ((param_1->common).frame_type != KEY_FRAME) {
+    if (iVar3 == 0) {
+      iVar3 = param_1->prob_skip_false;
+      if ((param_1->common).refresh_golden_frame == 0) {
+        param_1->last_skip_false_probs[0] = iVar3;
+        param_1->last_skip_probs_q[0] = (param_1->common).base_qindex;
+        param_1->base_skip_false_prob[(param_1->common).base_qindex] = iVar3;
       }
       else {
-        pVVar2->last_skip_false_probs[1] = iVar4;
-        pVVar2->last_skip_probs_q[1] = (pVVar2->common).base_qindex;
+        param_1->last_skip_false_probs[1] = iVar3;
+        param_1->last_skip_probs_q[1] = (param_1->common).base_qindex;
       }
     }
     else {
-      pVVar2->last_skip_false_probs[2] = pVVar2->prob_skip_false;
-      pVVar2->last_skip_probs_q[2] = (pVVar2->common).base_qindex;
+      param_1->last_skip_false_probs[2] = param_1->prob_skip_false;
+      param_1->last_skip_probs_q[2] = (param_1->common).base_qindex;
     }
   }
-  if ((((pVVar2->common).frame_type == KEY_FRAME) || ((pVVar2->common).refresh_golden_frame != 0))
-     || ((pVVar2->common).refresh_alt_ref_frame != 0)) {
-    (pVVar2->common).last_kf_gf_q = (pVVar2->common).base_qindex;
+  if ((((param_1->common).frame_type == KEY_FRAME) || ((param_1->common).refresh_golden_frame != 0))
+     || ((param_1->common).refresh_alt_ref_frame != 0)) {
+    (param_1->common).last_kf_gf_q = (param_1->common).base_qindex;
   }
-  uVar13 = (pVVar2->common).refresh_golden_frame;
-  uVar15 = (pVVar2->common).frame_flags;
-  uVar22 = uVar15 | 2;
-  if (uVar13 != 1) {
-    uVar22 = uVar15 & 0xfffffffd;
+  uVar11 = (param_1->common).refresh_golden_frame;
+  uVar13 = (param_1->common).frame_flags;
+  uVar20 = uVar13 | 2;
+  if (uVar11 != 1) {
+    uVar20 = uVar13 & 0xfffffffd;
   }
-  (pVVar2->common).frame_flags = uVar22;
-  uVar15 = uVar22 | 4;
-  if ((pVVar2->common).refresh_alt_ref_frame != 1) {
-    uVar15 = uVar22 & 0xfffffffb;
+  (param_1->common).frame_flags = uVar20;
+  uVar13 = uVar20 | 4;
+  if ((param_1->common).refresh_alt_ref_frame != 1) {
+    uVar13 = uVar20 & 0xfffffffb;
   }
-  uVar22 = (pVVar2->common).refresh_last_frame;
-  (pVVar2->common).frame_flags = uVar15;
-  if ((uVar22 & uVar13) == 0) {
-    if (uVar22 != uVar13) {
-      pVVar2->gold_is_last = 0;
-    }
-  }
-  else {
-    pVVar2->gold_is_last = 1;
-  }
-  uVar13 = (pVVar2->common).refresh_alt_ref_frame;
-  uVar15 = (pVVar2->common).refresh_last_frame;
-  if ((uVar13 & uVar15) == 0) {
-    if (uVar13 != uVar15) {
-      pVVar2->alt_is_last = 0;
+  uVar20 = (param_1->common).refresh_last_frame;
+  (param_1->common).frame_flags = uVar13;
+  if ((uVar20 & uVar11) == 0) {
+    if (uVar20 != uVar11) {
+      param_1->gold_is_last = 0;
     }
   }
   else {
-    pVVar2->alt_is_last = 1;
+    param_1->gold_is_last = 1;
   }
-  uVar13 = (pVVar2->common).refresh_alt_ref_frame;
-  uVar15 = (pVVar2->common).refresh_golden_frame;
-  if ((uVar13 & uVar15) == 0) {
-    if (uVar13 != uVar15) {
-      pVVar2->gold_is_alt = 0;
+  uVar11 = (param_1->common).refresh_alt_ref_frame;
+  uVar13 = (param_1->common).refresh_last_frame;
+  if ((uVar11 & uVar13) == 0) {
+    if (uVar11 != uVar13) {
+      param_1->alt_is_last = 0;
     }
   }
   else {
-    pVVar2->gold_is_alt = 1;
+    param_1->alt_is_last = 1;
   }
-  piVar29 = &pVVar2->ref_frame_flags;
-  *piVar29 = 7;
-  if (pVVar2->gold_is_last != 0) {
-    *piVar29 = 5;
+  uVar11 = (param_1->common).refresh_alt_ref_frame;
+  uVar13 = (param_1->common).refresh_golden_frame;
+  if ((uVar11 & uVar13) == 0) {
+    if (uVar11 != uVar13) {
+      param_1->gold_is_alt = 0;
+    }
   }
-  if (pVVar2->alt_is_last != 0) {
-    *piVar29 = *piVar29 & 0xfffffffb;
+  else {
+    param_1->gold_is_alt = 1;
   }
-  if (pVVar2->gold_is_alt != 0) {
-    *piVar29 = *piVar29 & 0xfffffffb;
+  piVar27 = &param_1->ref_frame_flags;
+  *piVar27 = 7;
+  if (param_1->gold_is_last != 0) {
+    *piVar27 = 5;
   }
-  if (*piVar28 == 0) {
-    if (((pVVar2->oxcf).play_alternate == 0) || (*piVar12 == 0)) {
-      update_golden_frame_and_stats(pVVar2);
+  if (param_1->alt_is_last != 0) {
+    *piVar27 = *piVar27 & 0xfffffffb;
+  }
+  if (param_1->gold_is_alt != 0) {
+    *piVar27 = *piVar27 & 0xfffffffb;
+  }
+  if (*piVar26 == 0) {
+    if (((param_1->oxcf).play_alternate == 0) || (*piVar10 == 0)) {
+      update_golden_frame_and_stats(param_1);
     }
     else {
-      update_alt_ref_frame_and_stats(pVVar2);
+      update_alt_ref_frame_and_stats(param_1);
     }
   }
   else {
-    if (*piVar12 != 0) {
+    if (*piVar10 != 0) {
       (*vp8_yv12_copy_frame_ptr)
-                ((pVVar2->common).frame_to_show,pVVar10->yv12_fb + (pVVar2->common).alt_fb_idx);
+                ((param_1->common).frame_to_show,pVVar29->yv12_fb + (param_1->common).alt_fb_idx);
     }
-    if ((pVVar2->common).refresh_golden_frame != 0) {
+    if ((param_1->common).refresh_golden_frame != 0) {
       (*vp8_yv12_copy_frame_ptr)
-                ((pVVar2->common).frame_to_show,pVVar10->yv12_fb + (pVVar2->common).gld_fb_idx);
+                ((param_1->common).frame_to_show,pVVar29->yv12_fb + (param_1->common).gld_fb_idx);
     }
   }
-  if ((pVVar2->common).frame_type == KEY_FRAME) {
-    *puStack0000002c = (pVVar2->common).frame_flags | 1;
-    (pVVar2->common).frame_type = INTER_FRAME;
-    pVVar2->last_frame_percent_intra = 100;
+  if ((param_1->common).frame_type == KEY_FRAME) {
+    *puStack0000002c = (param_1->common).frame_flags | 1;
+    (param_1->common).frame_type = INTER_FRAME;
+    param_1->last_frame_percent_intra = 100;
   }
   else {
-    *puStack0000002c = (pVVar2->common).frame_flags & 0xfffffffe;
-    pVVar2->last_frame_percent_intra = pVVar2->this_frame_percent_intra;
+    *puStack0000002c = (param_1->common).frame_flags & 0xfffffffe;
+    param_1->last_frame_percent_intra = param_1->this_frame_percent_intra;
   }
   *local_d0 = '\0';
   *local_cc = '\0';
   *local_b8 = 0;
-  if ((pVVar2->common).show_frame != 0) {
-    (pVVar2->common).current_video_frame = (pVVar2->common).current_video_frame + 1;
-    pVVar2->frames_since_key = pVVar2->frames_since_key + 1;
+  if ((param_1->common).show_frame != 0) {
+    (param_1->common).current_video_frame = (param_1->common).current_video_frame + 1;
+    param_1->frames_since_key = param_1->frames_since_key + 1;
   }
-  __restgprlr();
   return;
 }
 
@@ -3418,40 +3373,42 @@ LAB_8282f420:
 
 // 8282F460  vp8_receive_raw_frame  (WebM_atvi_opt/vpx/vp8/encoder/onyx_if.c:4742)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
+
 int vp8_receive_raw_frame
               (int *param_1,uint param_2,YV12_BUFFER_CONFIG *param_3,long64 param_4,long64 param_5)
 
 {
   int iVar1;
-  int iVar2;
-  long lVar3;
+  long lVar2;
   _LARGE_INTEGER _Stack_50;
   _LARGE_INTEGER a_Stack_48 [9];
   
-  iVar2 = __savegprlr_25(param_1);
-  if (iVar2 != 0) {
+  if (param_1 != (int *)0x0) {
     QueryPerformanceCounter(&_Stack_50);
-    iVar1 = *(int *)(iVar2 + 0x22a88);
-    if ((iVar1 == 0) || (iVar1 < *(int *)(iVar2 + 0x229b8))) {
-      *(YUV_TYPE *)(iVar2 + 0x1e590) = param_3->clrtype;
-      *(long64 *)(iVar2 + 0x22ab8) = param_5;
-      *(long64 *)(iVar2 + 0x22ab0) = param_4;
-      *(uint *)(iVar2 + 0x22af4) = param_2;
-      (*vp8_yv12_copy_frame_ptr)(param_3,(YV12_BUFFER_CONFIG *)(iVar2 + 0x22ac0));
-      *(int *)(iVar2 + 0x22a88) = 1;
+    iVar1 = param_1[0x8aa2];
+    if ((iVar1 == 0) || (iVar1 < param_1[0x8a6e])) {
+      param_1[0x7964] = param_3->clrtype;
+      *(long64 *)(param_1 + 0x8aae) = param_5;
+      *(long64 *)(param_1 + 0x8aac) = param_4;
+      param_1[0x8abd] = param_2;
+      (*vp8_yv12_copy_frame_ptr)(param_3,(YV12_BUFFER_CONFIG *)(param_1 + 0x8ab0));
+      param_1[0x8aa2] = 1;
       QueryPerformanceCounter(a_Stack_48);
-      lVar3 = vpx_usec_timer_elapsed((vpx_usec_timer *)&_Stack_50._s_0);
-      *(int *)(iVar2 + 0x302a0) = lVar3 + *(int *)(iVar2 + 0x302a0);
-      iVar2 = __restgprlr_25(0);
-      return iVar2;
+      lVar2 = vpx_usec_timer_elapsed((vpx_usec_timer *)&_Stack_50._s_0);
+      param_1[0xc0a8] = lVar2 + param_1[0xc0a8];
+      return 0;
     }
   }
-  iVar2 = __restgprlr_25(0xffffffffffffffff);
-  return iVar2;
+  return -1;
 }
 
 
 // 828328E8  vp8_get_compressed_data  (WebM_atvi_opt/vpx/vp8/encoder/onyx_if.c:4845)
+
+/* WARNING: Function: __savegprlr_21 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_21 replaced with injection: xenon_save_restore */
 
 int vp8_get_compressed_data
               (int *param_1,uint *param_2,ulong *param_3,uchar *param_4,long64 *param_5,
@@ -3459,18 +3416,17 @@ int vp8_get_compressed_data
 
 {
   int iVar1;
-  SOURCE_SAMPLE *pSVar2;
-  VP8_COMP *pVVar3;
-  uint uVar4;
-  long lVar5;
-  int iVar6;
-  int *piVar7;
+  uint uVar2;
+  long lVar3;
+  int *piVar4;
+  longlong *plVar5;
+  uint *puVar6;
   long64 *plVar8;
-  longlong lVar9;
+  longlong lVar7;
+  long64 *plVar9;
   long64 *plVar10;
-  long64 *plVar11;
-  double dVar12;
-  int iStack_9c;
+  double dVar11;
+  uint uStack_9c;
   _LARGE_INTEGER _Stack_90;
   _LARGE_INTEGER _Stack_88;
   _LARGE_INTEGER _Stack_80;
@@ -3478,106 +3434,101 @@ int vp8_get_compressed_data
   _LARGE_INTEGER _Stack_70;
   _LARGE_INTEGER a_Stack_68 [13];
   
-  pVVar3 = (VP8_COMP *)__savegprlr_21(param_1);
-  if (pVVar3 != (VP8_COMP *)0x0) {
+  if (param_1 != (int *)0x0) {
     QueryPerformanceCounter(&_Stack_80);
-    piVar7 = &pVVar3->source_buffer_count;
-    iVar6 = *piVar7;
-    iVar1 = (pVVar3->oxcf).lag_in_frames;
-    if ((((iVar6 == iVar1) && (0 < iVar1)) || (((pVVar3->oxcf).allow_lag == 0 && (0 < iVar6)))) ||
-       ((param_7 != 0 && (0 < iVar6)))) {
-      plVar11 = &pVVar3->source_time_stamp;
-      plVar10 = &pVVar3->source_end_time_stamp;
-      pSVar2 = pVVar3->src_buffer + pVVar3->source_encode_index;
-      plVar8 = &pVVar3->first_time_stamp_ever;
-      *plVar11 = pSVar2->source_time_stamp;
-      *plVar10 = pSVar2->source_end_time_stamp;
-      (pVVar3->common).show_frame = 1;
-      pVVar3->Source = &pSVar2->source_buffer;
-      pVVar3->un_scaled_source = &pSVar2->source_buffer;
-      *piVar7 = *piVar7 + -1;
-      pVVar3->source_frame_flags = pSVar2->source_frame_flags;
-      *param_5 = *plVar11;
-      *param_6 = *plVar10;
-      *param_2 = pVVar3->source_frame_flags;
-      lVar9 = *plVar11;
-      if (lVar9 < *plVar8) {
-        *plVar8 = lVar9;
-        pVVar3->last_end_time_stamp_seen = lVar9;
+    piVar4 = param_1 + 0x8aa2;
+    iVar1 = *piVar4;
+    if ((((iVar1 == param_1[0x8a6e]) && (0 < param_1[0x8a6e])) ||
+        ((param_1[0x8a6d] == 0 && (0 < iVar1)))) || ((param_7 != 0 && (0 < iVar1)))) {
+      plVar10 = (long64 *)(param_1 + 0x8a90);
+      plVar9 = (long64 *)(param_1 + 0x8a92);
+      plVar8 = (long64 *)(param_1 + (param_1[0x8aa3] + 0x6ef) * 0x14);
+      plVar5 = (longlong *)(param_1 + 0x9bd8);
+      *plVar10 = *plVar8;
+      *plVar9 = plVar8[1];
+      param_1[0x79bf] = 1;
+      param_1[0x8a8e] = (int)(plVar8 + 2);
+      param_1[0x8a8f] = (int)(plVar8 + 2);
+      *piVar4 = *piVar4 + -1;
+      param_1[0x8a94] = *(uint *)((int)plVar8 + 0x44);
+      *param_5 = *plVar10;
+      *param_6 = *plVar9;
+      *param_2 = param_1[0x8a94];
+      lVar7 = *plVar10;
+      if (lVar7 < *plVar5) {
+        *plVar5 = lVar7;
+        *(longlong *)(param_1 + 0x9bd6) = lVar7;
       }
-      if ((pVVar3->common).refresh_alt_ref_frame == 0) {
-        if (lVar9 == *plVar8) {
-          dVar12 = 10000000.0 / (double)(*plVar10 - lVar9);
+      if (param_1[0x83e1] == 0) {
+        if (lVar7 == *plVar5) {
+          dVar11 = 10000000.0 / (double)(*plVar9 - lVar7);
         }
         else {
-          dVar12 = ((pVVar3->oxcf).frame_rate * 7.0 +
-                   10000000.0 / (double)(*plVar10 - pVVar3->last_end_time_stamp_seen)) * 0.125;
+          dVar11 = (*(double *)(param_1 + 0x8a64) * 7.0 +
+                   10000000.0 / (double)(*plVar9 - *(longlong *)(param_1 + 0x9bd6))) * 0.125;
         }
-        vp8_new_frame_rate(pVVar3,dVar12);
-        pVVar3->last_end_time_stamp_seen = *plVar10;
-        pVVar3->last_time_stamp_seen = *plVar11;
+        vp8_new_frame_rate((VP8_COMP *)param_1,dVar11);
+        *(long64 *)(param_1 + 0x9bd6) = *plVar9;
+        *(long64 *)(param_1 + 0x9bd4) = *plVar10;
       }
-      piVar7 = &pVVar3->compressor_speed;
-      if (*piVar7 == 2) {
-        vp8_check_gf_quality(pVVar3);
+      piVar4 = param_1 + 0xb9fd;
+      if (*piVar4 == 2) {
+        vp8_check_gf_quality((VP8_COMP *)param_1);
       }
-      if (*piVar7 == 2) {
+      if (*piVar4 == 2) {
         QueryPerformanceCounter(&_Stack_70);
         QueryPerformanceCounter(&_Stack_90);
       }
       *param_3 = 0;
-      (pVVar3->common).frame_type = INTER_FRAME;
-      (pVVar3->common).frame_flags = *param_2;
-      encode_frame_to_data_rate(pVVar3,param_3,param_4,param_2);
-      if (*piVar7 == 2) {
+      param_1[0x79be] = 1;
+      param_1[0x79c0] = *param_2;
+      encode_frame_to_data_rate((VP8_COMP *)param_1,param_3,param_4,param_2);
+      if (*piVar4 == 2) {
         QueryPerformanceCounter(a_Stack_68);
         QueryPerformanceCounter(&_Stack_88);
-        uVar4 = vpx_usec_timer_elapsed((vpx_usec_timer *)&_Stack_90._s_0);
-        iStack_9c = (int)(longlong)((double)uVar4 * 0.5);
-        if ((pVVar3->common).frame_type != KEY_FRAME) {
-          piVar7 = &pVVar3->avg_encode_time;
-          if (*piVar7 == 0) {
-            *piVar7 = uVar4;
+        uVar2 = vpx_usec_timer_elapsed((vpx_usec_timer *)&_Stack_90._s_0);
+        uStack_9c = (uint)(longlong)((double)uVar2 * 0.5);
+        if (param_1[0x79be] != 0) {
+          puVar6 = (uint *)(param_1 + 0xb9f9);
+          if (*puVar6 == 0) {
+            *puVar6 = uVar2;
           }
           else {
-            *piVar7 = *piVar7 * 7 + uVar4 >> 3;
+            *puVar6 = *puVar6 * 7 + uVar2 >> 3;
           }
         }
-        if (((longlong)((double)uVar4 * 0.5) & 0xffffffffU) != 0) {
-          piVar7 = &pVVar3->avg_pick_mode_time;
-          if (*piVar7 == 0) {
-            *piVar7 = iStack_9c;
+        if (((longlong)((double)uVar2 * 0.5) & 0xffffffffU) != 0) {
+          puVar6 = (uint *)(param_1 + 0xb9fa);
+          if (*puVar6 == 0) {
+            *puVar6 = uStack_9c;
           }
           else {
-            *piVar7 = (uint)(*piVar7 * 7 + iStack_9c) >> 3;
+            *puVar6 = *puVar6 * 7 + uStack_9c >> 3;
           }
         }
       }
-      if ((pVVar3->common).refresh_entropy_probs == 0) {
-        vpx_memcpy(&(pVVar3->common).fc,&(pVVar3->common).lfc,0x47f);
+      if (param_1[0x83e4] == 0) {
+        vpx_memcpy((void *)((int)param_1 + 0x217bb),param_1 + 33999,0x47f);
       }
       if (*param_3 != 0) {
-        (pVVar3->common).refresh_entropy_probs = 1;
-        (pVVar3->common).refresh_alt_ref_frame = 0;
-        (pVVar3->common).refresh_golden_frame = 0;
-        (pVVar3->common).refresh_last_frame = 1;
-        (pVVar3->common).frame_type = INTER_FRAME;
+        param_1[0x83e4] = 1;
+        param_1[0x83e1] = 0;
+        param_1[0x83e0] = 0;
+        param_1[0x83df] = 1;
+        param_1[0x79be] = 1;
       }
-      pVVar3->ready_for_new_frame = 1;
+      param_1[0xc05f] = 1;
       QueryPerformanceCounter(&_Stack_78);
-      lVar5 = vpx_usec_timer_elapsed((vpx_usec_timer *)&_Stack_80._s_0);
-      pVVar3->time_compress_data = lVar5 + pVVar3->time_compress_data;
-      if (((pVVar3->b_calculate_psnr != 0) && (pVVar3->pass != 1)) &&
-         ((pVVar3->common).show_frame != 0)) {
-        generate_psnr_packet(pVVar3);
+      lVar3 = vpx_usec_timer_elapsed((vpx_usec_timer *)&_Stack_80._s_0);
+      param_1[0xc0a9] = lVar3 + param_1[0xc0a9];
+      if (((param_1[0xc382] != 0) && (param_1[0xba0b] != 1)) && (param_1[0x79bf] != 0)) {
+        generate_psnr_packet((VP8_COMP *)param_1);
       }
-      iVar6 = __restgprlr_21(0);
-      return iVar6;
+      return 0;
     }
     *param_3 = 0;
   }
-  iVar6 = __restgprlr_21(0xffffffffffffffff);
-  return iVar6;
+  return -1;
 }
 
 
@@ -3598,6 +3549,9 @@ int vp8_get_preview_raw_frame(int *param_1,YV12_BUFFER_CONFIG *param_2,vp8_ppfla
 
 // 8282F560  vp8_set_roimap  (WebM_atvi_opt/vpx/vp8/encoder/onyx_if.c:5301)
 
+/* WARNING: Function: __savegprlr_21 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_21 replaced with injection: xenon_save_restore */
+
 int vp8_set_roimap(int *param_1,uchar *param_2,uint param_3,uint param_4,int *param_5,int *param_6,
                   uint *param_7)
 
@@ -3609,11 +3563,7 @@ int vp8_set_roimap(int *param_1,uchar *param_2,uint param_3,uint param_4,int *pa
   int iVar5;
   int iVar6;
   int iVar7;
-  int *piVar8;
-  int iVar9;
-  ulonglong uVar10;
-  ulonglong uVar11;
-  ulonglong uVar12;
+  int iVar8;
   undefined1 local_70;
   undefined1 local_6f;
   undefined1 local_6e;
@@ -3623,49 +3573,40 @@ int vp8_set_roimap(int *param_1,uchar *param_2,uint param_3,uint param_4,int *pa
   undefined1 local_6a;
   undefined1 local_69;
   
-  uVar12 = (ulonglong)(int)param_4;
-  uVar11 = (ulonglong)(int)param_3;
-  uVar10 = (ulonglong)(int)param_2;
-  piVar8 = (int *)__savegprlr_21(param_1);
-  if ((ulonglong)(uint)piVar8[0x79c2] == (uVar11 & 0xffffffff)) {
-    if ((ulonglong)(uint)piVar8[0x79c3] == (uVar12 & 0xffffffff)) {
-      if ((uVar10 & 0xffffffff) == 0) {
-        *(undefined1 *)(piVar8 + 0x4323) = 0;
-        iVar9 = __restgprlr_21(0);
-        return iVar9;
-      }
-      set_segmentation_map(piVar8,(uchar *)uVar10);
-      *(undefined1 *)(piVar8 + 0x4323) = 1;
-      *(undefined1 *)((int)piVar8 + 0x10c8d) = 1;
-      *(undefined1 *)((int)piVar8 + 0x10c8e) = 1;
-      iVar9 = *param_5;
-      iVar1 = param_5[1];
-      iVar2 = param_5[2];
-      iVar3 = *param_6;
-      iVar4 = param_6[1];
-      iVar5 = param_6[2];
-      iVar6 = param_5[3];
-      iVar7 = param_6[3];
-      piVar8[0xc063] = *param_7;
-      piVar8[0xc064] = param_7[1];
-      piVar8[0xc065] = param_7[2];
-      local_70 = (undefined1)iVar9;
-      local_6f = (undefined1)iVar1;
-      local_6e = (undefined1)iVar2;
-      local_6d = (undefined1)iVar6;
-      local_6c = (undefined1)iVar3;
-      local_6b = (undefined1)iVar4;
-      local_6a = (undefined1)iVar5;
-      local_69 = (undefined1)iVar7;
-      piVar8[0xc066] = param_7[3];
-      *(undefined1 *)((int)piVar8 + 0x10c8f) = 0;
-      vpx_memcpy(piVar8 + 0xc061,&local_70,8);
-      iVar9 = __restgprlr_21(0);
-      return iVar9;
+  if ((param_1[0x79c2] == param_3) && (param_1[0x79c3] == param_4)) {
+    if (param_2 == (uchar *)0x0) {
+      *(undefined1 *)(param_1 + 0x4323) = 0;
+      return 0;
     }
+    set_segmentation_map(param_1,param_2);
+    *(undefined1 *)(param_1 + 0x4323) = 1;
+    *(undefined1 *)((int)param_1 + 0x10c8d) = 1;
+    *(undefined1 *)((int)param_1 + 0x10c8e) = 1;
+    iVar1 = *param_5;
+    iVar2 = param_5[1];
+    iVar3 = param_5[2];
+    iVar4 = *param_6;
+    iVar5 = param_6[1];
+    iVar6 = param_6[2];
+    iVar7 = param_5[3];
+    iVar8 = param_6[3];
+    param_1[0xc063] = *param_7;
+    param_1[0xc064] = param_7[1];
+    param_1[0xc065] = param_7[2];
+    local_70 = (undefined1)iVar1;
+    local_6f = (undefined1)iVar2;
+    local_6e = (undefined1)iVar3;
+    local_6d = (undefined1)iVar7;
+    local_6c = (undefined1)iVar4;
+    local_6b = (undefined1)iVar5;
+    local_6a = (undefined1)iVar6;
+    local_69 = (undefined1)iVar8;
+    param_1[0xc066] = param_7[3];
+    *(undefined1 *)((int)param_1 + 0x10c8f) = 0;
+    vpx_memcpy(param_1 + 0xc061,&local_70,8);
+    return 0;
   }
-  iVar9 = __restgprlr_21(0xffffffffffffffff);
-  return iVar9;
+  return -1;
 }
 
 
@@ -3702,95 +3643,96 @@ int vp8_set_internal_size(int *param_1,VPX_SCALING param_2,VPX_SCALING param_3)
 
 // 8282F7B8  vp8_calc_ss_err  (WebM_atvi_opt/vpx/vp8/encoder/onyx_if.c:5387)
 
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
+
 int vp8_calc_ss_err(YV12_BUFFER_CONFIG *param_1,YV12_BUFFER_CONFIG *param_2,
                    vp8_variance_rtcd_vtable_t *param_3)
 
 {
-  int *piVar1;
-  uint uVar2;
+  uint uVar1;
+  int iVar2;
   int iVar3;
-  int iVar4;
+  uchar *puVar4;
   uchar *puVar5;
-  uchar *puVar6;
-  longlong lVar7;
-  int iVar8;
-  uchar *puVar9;
+  int iVar6;
+  int iVar7;
+  uchar *puVar8;
   uint auStack_60 [24];
   
-  piVar1 = (int *)__savegprlr_22(param_1);
-  puVar6 = (uchar *)piVar1[6];
-  puVar5 = param_2->y_buffer;
-  lVar7 = 0;
+  puVar5 = param_1->y_buffer;
+  puVar4 = param_2->y_buffer;
+  iVar6 = 0;
   iVar3 = 0;
-  if (0 < piVar1[1]) {
-    iVar4 = *piVar1;
+  if (0 < param_1->y_height) {
+    iVar2 = param_1->y_width;
+    iVar6 = 0;
     do {
-      iVar8 = 0;
-      if (0 < iVar4) {
-        puVar9 = puVar6;
+      iVar7 = 0;
+      if (0 < iVar2) {
+        puVar8 = puVar5;
         do {
-          uVar2 = (*param_3->mse16x16)
-                            (puVar9,piVar1[2],puVar9 + ((int)puVar5 - (int)puVar6),param_2->y_stride
-                             ,auStack_60);
-          iVar4 = *piVar1;
-          iVar8 = iVar8 + 0x10;
-          lVar7 = (int)uVar2 + lVar7;
-          puVar9 = puVar9 + 0x10;
-        } while (iVar8 < iVar4);
+          uVar1 = (*param_3->mse16x16)
+                            (puVar8,param_1->y_stride,puVar8 + ((int)puVar4 - (int)puVar5),
+                             param_2->y_stride,auStack_60);
+          iVar2 = param_1->y_width;
+          iVar7 = iVar7 + 0x10;
+          iVar6 = uVar1 + iVar6;
+          puVar8 = puVar8 + 0x10;
+        } while (iVar7 < iVar2);
       }
       iVar3 = iVar3 + 0x10;
-      puVar6 = puVar6 + piVar1[2] * 0x10;
-      puVar5 = puVar5 + param_2->y_stride * 0x10;
-    } while (iVar3 < piVar1[1]);
+      puVar5 = puVar5 + param_1->y_stride * 0x10;
+      puVar4 = puVar4 + param_2->y_stride * 0x10;
+    } while (iVar3 < param_1->y_height);
   }
-  iVar3 = __restgprlr_22(lVar7);
-  return iVar3;
+  return iVar6;
 }
 
 
 // 8282F870  vp8_calc_low_ss_err  (WebM_atvi_opt/vpx/vp8/encoder/onyx_if.c:5411)
 
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
+
 int vp8_calc_low_ss_err(YV12_BUFFER_CONFIG *param_1,YV12_BUFFER_CONFIG *param_2,
                        vp8_variance_rtcd_vtable_t *param_3)
 
 {
-  int *piVar1;
+  int iVar1;
   int iVar2;
-  longlong lVar3;
-  uchar *puVar4;
-  int iVar5;
+  uchar *puVar3;
+  int iVar4;
+  uchar *puVar5;
   uchar *puVar6;
-  uchar *puVar7;
   uint local_60 [24];
   
-  piVar1 = (int *)__savegprlr_22(param_1);
-  puVar6 = (uchar *)piVar1[6];
-  puVar4 = param_2->y_buffer;
-  lVar3 = 0;
+  puVar5 = param_1->y_buffer;
+  puVar3 = param_2->y_buffer;
+  iVar1 = 0;
   iVar2 = 0;
-  if (0 < piVar1[1]) {
+  if (0 < param_1->y_height) {
     do {
-      iVar5 = 0;
-      if (0 < *piVar1) {
-        puVar7 = puVar6;
+      iVar4 = 0;
+      if (0 < param_1->y_width) {
+        puVar6 = puVar5;
         do {
           (*param_3->mse16x16)
-                    (puVar7,piVar1[2],puVar7 + ((int)puVar4 - (int)puVar6),param_2->y_stride,
-                     local_60);
-          if ((ulonglong)local_60[0] < 0x1fa0) {
-            lVar3 = (ulonglong)local_60[0] + lVar3;
+                    (puVar6,param_1->y_stride,puVar6 + ((int)puVar3 - (int)puVar5),param_2->y_stride
+                     ,local_60);
+          if (local_60[0] < 0x1fa0) {
+            iVar1 = local_60[0] + iVar1;
           }
-          iVar5 = iVar5 + 0x10;
-          puVar7 = puVar7 + 0x10;
-        } while (iVar5 < *piVar1);
+          iVar4 = iVar4 + 0x10;
+          puVar6 = puVar6 + 0x10;
+        } while (iVar4 < param_1->y_width);
       }
       iVar2 = iVar2 + 0x10;
-      puVar6 = puVar6 + piVar1[2] * 0x10;
-      puVar4 = puVar4 + param_2->y_stride * 0x10;
-    } while (iVar2 < piVar1[1]);
+      puVar5 = puVar5 + param_1->y_stride * 0x10;
+      puVar3 = puVar3 + param_2->y_stride * 0x10;
+    } while (iVar2 < param_1->y_height);
   }
-  iVar2 = __restgprlr_22(lVar3);
-  return iVar2;
+  return iVar1;
 }
 
 

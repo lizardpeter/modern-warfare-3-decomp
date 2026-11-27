@@ -60,6 +60,9 @@ void CM_StoreLeafs(leafList_t *param_1,int param_2)
 
 // 824C8DB8  CM_BoxLeafnums_r  (qcommon/cm_test.cpp:69)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void CM_BoxLeafnums_r(leafList_t *param_1,int param_2)
 
 {
@@ -68,60 +71,53 @@ void CM_BoxLeafnums_r(leafList_t *param_1,int param_2)
   cplane_s *pcVar3;
   float fVar4;
   cNode_t *pcVar5;
-  leafList_t *plVar6;
-  int iVar7;
-  int iVar8;
-  longlong lVar9;
-  double dVar10;
+  int iVar6;
+  double dVar7;
   
-  lVar9 = (longlong)param_2;
-  plVar6 = (leafList_t *)__savegprlr_27(param_1);
-  iVar7 = (int)lVar9;
   if (cm.nodes == (cNode_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_test.cpp",0x4a,0,
                     "%s");
   }
-  if (plVar6 == (leafList_t *)0x0) {
+  if (param_1 == (leafList_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_test.cpp",0x4b,0,
                     "%s");
   }
-  if (-1 < iVar7) {
-    dVar10 = 0.0010000000474974513;
+  if (-1 < param_2) {
+    dVar7 = 0.0010000000474974513;
     do {
       pcVar5 = cm.nodes;
-      iVar7 = (int)lVar9;
-      pcVar3 = cm.nodes[iVar7].plane;
-      fVar4 = ((plVar6->bounds).midPoint[2] * pcVar3->normal[2] +
-              (plVar6->bounds).midPoint[0] * pcVar3->normal[0] +
-              pcVar3->normal[1] * (plVar6->bounds).midPoint[1]) - pcVar3->dist;
-      fVar1 = (float)((double)(ABS(pcVar3->normal[1]) * (plVar6->bounds).halfSize[1] +
-                              ABS(pcVar3->normal[0]) * (plVar6->bounds).halfSize[0] +
-                              ABS(pcVar3->normal[2]) * (plVar6->bounds).halfSize[2]) - dVar10);
+      pcVar3 = cm.nodes[param_2].plane;
+      fVar4 = ((param_1->bounds).midPoint[2] * pcVar3->normal[2] +
+              (param_1->bounds).midPoint[0] * pcVar3->normal[0] +
+              pcVar3->normal[1] * (param_1->bounds).midPoint[1]) - pcVar3->dist;
+      fVar1 = (float)((double)(ABS(pcVar3->normal[1]) * (param_1->bounds).halfSize[1] +
+                              ABS(pcVar3->normal[0]) * (param_1->bounds).halfSize[0] +
+                              ABS(pcVar3->normal[2]) * (param_1->bounds).halfSize[2]) - dVar7);
       if (fVar4 <= fVar1) {
         if (fVar4 < -fVar1) {
-          iVar8 = 1;
+          iVar6 = 1;
           goto LAB_824c8eb8;
         }
-        CM_BoxLeafnums_r(plVar6,(int)cm.nodes[iVar7].children[0]);
-        sVar2 = pcVar5[iVar7].children[1];
+        CM_BoxLeafnums_r(param_1,(int)cm.nodes[param_2].children[0]);
+        sVar2 = pcVar5[param_2].children[1];
       }
       else {
-        iVar8 = 0;
+        iVar6 = 0;
 LAB_824c8eb8:
-        sVar2 = cm.nodes[iVar7].children[iVar8];
+        sVar2 = cm.nodes[param_2].children[iVar6];
       }
-      lVar9 = (longlong)sVar2;
-      iVar7 = (int)sVar2;
-    } while (-1 < sVar2);
+      param_2 = (int)sVar2;
+    } while (-1 < param_2);
   }
-  CM_StoreLeafs(plVar6,iVar7);
-  __restgprlr_27();
+  CM_StoreLeafs(param_1,param_2);
   return;
 }
 
 
 // 824C8F18  CM_PointContentsLeafBrushNode_r  (qcommon/cm_test.cpp:116)
 
+/* WARNING: Function: __savegprlr_20 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_20 replaced with injection: xenon_save_restore */
 /* WARNING: Removing unreachable block (ram,0x824c905c) */
 
 int CM_PointContentsLeafBrushNode_r(ClipInfo *param_1,float *param_2,cLeafBrushNode_s *param_3)
@@ -131,160 +127,151 @@ int CM_PointContentsLeafBrushNode_r(ClipInfo *param_1,float *param_2,cLeafBrushN
   ushort uVar2;
   ushort uVar3;
   cplane_s *pcVar4;
-  byte *pbVar5;
-  int iVar6;
-  ClipInfo *pCVar7;
-  int iVar8;
-  int iVar9;
-  Bounds *pBVar10;
-  ulonglong uVar11;
-  int iVar12;
+  int iVar5;
+  uint uVar6;
+  int iVar7;
+  Bounds *pBVar8;
+  uint uVar9;
+  int iVar10;
+  int iVar11;
+  cbrushside_t *pcVar12;
   ulonglong uVar13;
-  cbrushside_t *pcVar14;
   
-  uVar13 = (ulonglong)(int)param_3;
-  pCVar7 = (ClipInfo *)__savegprlr_20(param_1);
-  if ((uVar13 & 0xffffffff) == 0) {
+  if (param_3 == (cLeafBrushNode_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_test.cpp",0x7d,0,
                     "%s");
   }
-  uVar11 = 0;
+  uVar9 = 0;
   do {
-    pbVar5 = (byte *)uVar13;
-    sVar1 = *(short *)(pbVar5 + 2);
+    sVar1 = param_3->leafBrushCount;
     if (sVar1 != 0) {
       if (0 < sVar1) {
-        iVar8 = 0;
+        iVar10 = 0;
         if (0 < sVar1) {
-          iVar12 = 0;
+          iVar11 = 0;
           do {
-            iVar9 = 0;
-            uVar3 = *(ushort *)(iVar12 + *(int *)(pbVar5 + 8));
-            pBVar10 = pCVar7->brushBounds + uVar3;
-            iVar6 = (int)param_2 - (int)pBVar10;
+            iVar7 = 0;
+            uVar3 = *(ushort *)(iVar11 + (int)(param_3->data).leaf.brushes);
+            pBVar8 = param_1->brushBounds + uVar3;
+            iVar5 = (int)param_2 - (int)pBVar8;
             do {
-              if (pBVar10->halfSize[0] <
-                  ABS(*(float *)(iVar6 + (int)pBVar10) - pBVar10->midPoint[0])) goto LAB_824c90cc;
-              iVar9 = iVar9 + 1;
-              pBVar10 = (Bounds *)(pBVar10->midPoint + 1);
-            } while (iVar9 < 3);
-            uVar2 = pCVar7->brushes[uVar3].numsides;
+              if (pBVar8->halfSize[0] < ABS(*(float *)(iVar5 + (int)pBVar8) - pBVar8->midPoint[0]))
+              goto LAB_824c90cc;
+              iVar7 = iVar7 + 1;
+              pBVar8 = (Bounds *)(pBVar8->midPoint + 1);
+            } while (iVar7 < 3);
+            uVar2 = param_1->brushes[uVar3].numsides;
             uVar13 = (ulonglong)uVar2;
-            pcVar14 = pCVar7->brushes[uVar3].sides;
+            pcVar12 = param_1->brushes[uVar3].sides;
             if (uVar2 != 0) {
               do {
-                pcVar4 = pcVar14->plane;
+                pcVar4 = pcVar12->plane;
                 if (pcVar4->dist <
                     pcVar4->normal[2] * param_2[2] +
                     pcVar4->normal[1] * param_2[1] + pcVar4->normal[0] * *param_2)
                 goto LAB_824c90cc;
                 uVar13 = uVar13 - 1;
-                pcVar14 = pcVar14 + 1;
+                pcVar12 = pcVar12 + 1;
               } while (uVar13 != 0);
             }
-            uVar11 = (uint)pCVar7->brushContents[uVar3] | uVar11;
+            uVar9 = param_1->brushContents[uVar3] | uVar9;
 LAB_824c90cc:
-            iVar8 = iVar8 + 1;
-            iVar12 = iVar12 + 2;
-          } while (iVar8 < *(short *)(pbVar5 + 2));
+            iVar10 = iVar10 + 1;
+            iVar11 = iVar11 + 2;
+          } while (iVar10 < param_3->leafBrushCount);
         }
-        iVar8 = __restgprlr_20(uVar11);
-        return iVar8;
+        return uVar9;
       }
-      iVar8 = CM_PointContentsLeafBrushNode_r(pCVar7,param_2,(cLeafBrushNode_s *)(pbVar5 + 0x14));
-      uVar11 = (longlong)iVar8 | uVar11;
+      uVar6 = CM_PointContentsLeafBrushNode_r(param_1,param_2,param_3 + 1);
+      uVar9 = uVar6 | uVar9;
     }
-    uVar13 = (ulonglong)*(ushort *)(pbVar5 + ((param_2[*pbVar5] <= *(float *)(pbVar5 + 8)) + 8) * 2)
-             * 0x14 + uVar13;
+    param_3 = param_3 + *(ushort *)
+                         ((int)&param_3->data +
+                         (uint)(param_2[param_3->axis] <= (param_3->data).children.dist) * 2 + 8);
   } while( true );
 }
 
 
 // 824C90F0  CM_CapsulePointContents  (qcommon/cm_test.cpp:174)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 int CM_CapsulePointContents(Bounds *param_1,int param_2,float *param_3)
 
 {
   float fVar1;
   float fVar2;
-  float *pfVar4;
-  longlong lVar3;
+  float fVar3;
+  float fVar4;
   int iVar5;
-  longlong lVar6;
   
-  lVar6 = (longlong)param_2;
-  pfVar4 = (float *)__savegprlr_28(param_1,lVar6);
-  if (pfVar4[3] != pfVar4[4]) {
+  if (param_1->halfSize[0] != param_1->halfSize[1]) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_test.cpp",0xb4,0,
                     "bounds->halfSize[0] == bounds->halfSize[1]\n\t%g, %g");
   }
-  if (pfVar4[5] < pfVar4[3]) {
+  if (param_1->halfSize[2] < param_1->halfSize[0]) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_test.cpp",0xb5,0,
                     "bounds->halfSize[0] <= bounds->halfSize[2]\n\t%g, %g");
   }
-  fVar1 = pfVar4[3];
-  fVar2 = ABS(param_3[2] - pfVar4[2]) - (pfVar4[5] - fVar1);
+  fVar1 = param_1->halfSize[0];
+  fVar3 = *param_3 - param_1->midPoint[0];
+  fVar4 = param_3[1] - param_1->midPoint[1];
+  fVar2 = ABS(param_3[2] - param_1->midPoint[2]) - (param_1->halfSize[2] - fVar1);
   if (fVar2 < 0.0) {
     fVar2 = 0.0;
   }
-  lVar3 = 0;
-  if (fVar2 * fVar2 +
-      (param_3[1] - pfVar4[1]) * (param_3[1] - pfVar4[1]) +
-      (*param_3 - *pfVar4) * (*param_3 - *pfVar4) <= fVar1 * fVar1) {
-    lVar3 = lVar6;
+  iVar5 = 0;
+  if (fVar2 * fVar2 + fVar4 * fVar4 + fVar3 * fVar3 <= fVar1 * fVar1) {
+    iVar5 = param_2;
   }
-  iVar5 = __restgprlr_28(lVar3);
   return iVar5;
 }
 
 
 // 824C91F0  CM_BrushModelPointContents  (qcommon/cm_test.cpp:197)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 int CM_BrushModelPointContents(uint param_1,float *param_2)
 
 {
   int iVar1;
-  float *pfVar2;
-  ulonglong uVar3;
-  ClipInfo *pCVar4;
-  cLeaf_t *pcVar5;
+  ClipInfo *pCVar2;
+  cLeaf_t *pcVar3;
   
-  uVar3 = (ulonglong)(int)param_2;
-  iVar1 = __savegprlr_26(param_1);
   if (cm.numNodes == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_test.cpp",0xcb,0,
                     "%s");
   }
-  pfVar2 = (float *)uVar3;
-  if (iVar1 == 0) {
-    iVar1 = CM_PointLeafnum(pfVar2,0);
-    pCVar4 = &cm.info;
-    pcVar5 = cm.leafs + iVar1;
+  if (param_1 == 0) {
+    iVar1 = CM_PointLeafnum(param_2,0);
+    pCVar2 = &cm.info;
+    pcVar3 = cm.leafs + iVar1;
   }
   else {
-    pcVar5 = &cm.cmodels[iVar1].leaf;
-    pCVar4 = cm.cmodels[iVar1].info;
+    pcVar3 = &cm.cmodels[param_1].leaf;
+    pCVar2 = cm.cmodels[param_1].info;
   }
-  if (pcVar5->leafBrushNode != 0) {
-    if (&pcVar5->bounds == (Bounds *)0x0) {
+  if (pcVar3->leafBrushNode != 0) {
+    if (&pcVar3->bounds == (Bounds *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\../universal/bounds_inline.h"
                       ,0x1c1,0,"%s");
     }
-    if ((uVar3 & 0xffffffff) == 0) {
+    if (param_2 == (float *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\../universal/bounds_inline.h"
                       ,0x1c2,0,"%s");
     }
-    if (((ABS(*pfVar2 - (pcVar5->bounds).midPoint[0]) < (pcVar5->bounds).halfSize[0]) &&
-        (ABS(pfVar2[1] - (pcVar5->bounds).midPoint[1]) < (pcVar5->bounds).halfSize[1])) &&
-       (ABS(pfVar2[2] - (pcVar5->bounds).midPoint[2]) < (pcVar5->bounds).halfSize[2])) {
+    if (((ABS(*param_2 - (pcVar3->bounds).midPoint[0]) < (pcVar3->bounds).halfSize[0]) &&
+        (ABS(param_2[1] - (pcVar3->bounds).midPoint[1]) < (pcVar3->bounds).halfSize[1])) &&
+       (ABS(param_2[2] - (pcVar3->bounds).midPoint[2]) < (pcVar3->bounds).halfSize[2])) {
       iVar1 = CM_PointContentsLeafBrushNode_r
-                        (pCVar4,pfVar2,pCVar4->leafbrushNodes + pcVar5->leafBrushNode);
-      iVar1 = __restgprlr_26(iVar1);
+                        (pCVar2,param_2,pCVar2->leafbrushNodes + pcVar3->leafBrushNode);
       return iVar1;
     }
   }
-  iVar1 = __restgprlr_26(0);
-  return iVar1;
+  return 0;
 }
 
 

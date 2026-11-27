@@ -109,6 +109,8 @@ void _initptd(_tiddata *param_1,threadlocaleinfostruct *param_2)
 
 // 8291CA58  _getptd_noexit  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/tidtable.c:291)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 _tiddata * _getptd_noexit(void)
@@ -117,47 +119,41 @@ _tiddata * _getptd_noexit(void)
   ulong uVar1;
   LPVOID pvVar2;
   BOOL BVar3;
-  ulong *lpTlsValue;
+  _tiddata *lpTlsValue;
   ulong uVar4;
-  _tiddata *p_Var5;
-  ulonglong uVar6;
   
-  __savegprlr_29();
   uVar1 = GetLastError();
   pvVar2 = TlsGetValue(__flsindex);
-  uVar6 = (ulonglong)(int)pvVar2;
-  if (uVar6 == 0) {
+  if (pvVar2 == (LPVOID)0x0) {
     BVar3 = TlsSetValue(__flsindex,(LPVOID)0x1);
-    uVar6 = 0;
+    lpTlsValue = (_tiddata *)0x0;
     if (BVar3 != 0) {
       lpTlsValue = calloc(1,0xc4);
-      uVar6 = (ulonglong)(int)lpTlsValue;
-      if (uVar6 == 0) {
+      if (lpTlsValue == (_tiddata *)0x0) {
         TlsSetValue(__flsindex,(LPVOID)0x0);
       }
       else {
         BVar3 = TlsSetValue(__flsindex,lpTlsValue);
         if (BVar3 == 0) {
           free(lpTlsValue);
-          uVar6 = 0;
+          lpTlsValue = (_tiddata *)0x0;
         }
         else {
-          lpTlsValue[2] = 0;
-          lpTlsValue[0x17] = (ulong)&_XcptActTab;
-          lpTlsValue[5] = 1;
+          lpTlsValue->_terrno = 0;
+          lpTlsValue->_pxcptacttab = &_XcptActTab;
+          lpTlsValue->_holdrand = 1;
           uVar4 = GetCurrentThreadId();
-          *lpTlsValue = uVar4;
-          lpTlsValue[1] = 0xffffffff;
+          lpTlsValue->_tid = uVar4;
+          lpTlsValue->_thandle = 0xffffffff;
         }
       }
     }
   }
   else {
-    uVar6 = -(ulonglong)(uVar6 != 1) & uVar6;
+    lpTlsValue = (_tiddata *)(-(uint)(pvVar2 != (LPVOID)0x1) & (uint)pvVar2);
   }
   SetLastError(uVar1);
-  p_Var5 = (_tiddata *)__restgprlr_29(uVar6);
-  return p_Var5;
+  return lpTlsValue;
 }
 
 

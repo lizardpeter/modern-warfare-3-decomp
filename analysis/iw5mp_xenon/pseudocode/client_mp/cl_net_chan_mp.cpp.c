@@ -2,56 +2,53 @@
 
 // 8234EE40  CL_Netchan_TransmitNextFragment  (client_mp/cl_net_chan_mp.cpp:99)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* void __cdecl CL_Netchan_TransmitNextFragment(struct netchan_t *) */
 
 void CL_Netchan_TransmitNextFragment(netchan_t *param_1)
 
 {
-  uint *puVar1;
-  uint uVar2;
-  ulonglong uVar3;
-  int iVar4;
+  int iVar1;
+  int iVar2;
   netadr_t in_stack_fffffa58;
   msg_t mStack_560;
   uchar auStack_530 [1328];
   
-  puVar1 = (uint *)__savegprlr_26(param_1);
   Profile_Begin(0x126);
-  NetProf_PrepProfiling((netProfileInfo_t *)(puVar1 + 0x11));
+  NetProf_PrepProfiling(&param_1->prof);
   MSG_Init(&mStack_560,auStack_530,0x4f0);
-  MSG_WriteLong(&mStack_560,*puVar1 | 0x80000000);
-  uVar2 = puVar1[0xd];
-  iVar4 = 0x4e1;
-  if ((int)puVar1[0xe] < (int)(uVar2 + 0x4e1)) {
-    iVar4 = puVar1[0xe] - uVar2;
+  MSG_WriteLong(&mStack_560,param_1->outgoingSequence | 0x80000000);
+  iVar1 = param_1->unsentFragmentStart;
+  iVar2 = 0x4e1;
+  if (param_1->unsentLength < iVar1 + 0x4e1) {
+    iVar2 = param_1->unsentLength - iVar1;
   }
-  MSG_WriteLong(&mStack_560,uVar2);
-  MSG_WriteShort(&mStack_560,iVar4);
-  MSG_WriteData(&mStack_560,(void *)(puVar1[0xf] + puVar1[0xd]),iVar4);
+  MSG_WriteLong(&mStack_560,iVar1);
+  MSG_WriteShort(&mStack_560,iVar2);
+  MSG_WriteData(&mStack_560,param_1->unsentBuffer + param_1->unsentFragmentStart,iVar2);
   if (mStack_560.overflowed != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\net_chan_mp.cpp",0x2e3
                     ,0,"%s");
   }
-  uVar2 = FakeLag_SendPacket(puVar1[1],mStack_560.cursize,mStack_560.data,in_stack_fffffa58);
-  uVar3 = (longlong)((int)uVar2 >> 0x1f) + 1 + (ulonglong)(0xfffffffe < uVar2);
+  FakeLag_SendPacket(param_1->sock,mStack_560.cursize,mStack_560.data,in_stack_fffffa58);
   if ((net_iProfilingOn != 0) &&
-     (NetProf_AddPacket((netProfileStream_t *)(puVar1 + 0x11),mStack_560.cursize,1),
+     (NetProf_AddPacket(&(param_1->prof).send,mStack_560.cursize,1),
      ((net_showprofile->current).unsignedInt & 2) != 0)) {
     Com_Printf(0x19,"[%s] send%s: %i\n");
   }
   if (((showpackets->current).integer != 0) &&
-     ((1 < (showpackets->current).integer || (puVar1[4] != 2)))) {
+     ((1 < (showpackets->current).integer || ((param_1->remoteAddress).type != NA_LOOPBACK)))) {
     Com_Printf(0x19,"[%s] send %4i : s=%i fragment=%i,%i\n");
   }
-  uVar2 = puVar1[0xd];
-  puVar1[0xd] = iVar4 + uVar2;
-  if ((iVar4 + uVar2 == puVar1[0xe]) && (iVar4 != 0x4e1)) {
-    puVar1[0xc] = 0;
-    *puVar1 = *puVar1 + 1;
+  iVar1 = iVar2 + param_1->unsentFragmentStart;
+  param_1->unsentFragmentStart = iVar1;
+  if ((iVar1 == param_1->unsentLength) && (iVar2 != 0x4e1)) {
+    param_1->unsentFragments = 0;
+    param_1->outgoingSequence = param_1->outgoingSequence + 1;
   }
   Profile_EndInternal((double *)0x0);
-  __restgprlr_26((-uVar3 & ~uVar3 & 0xffffffff) >> 0x1f);
   return;
 }
 
@@ -120,34 +117,34 @@ void CL_ProfDraw(int param_1,char *param_2)
 
 // 8234EF70  CL_Netchan_PrintProfileStats  (client_mp/cl_net_chan_mp.cpp:178)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 void CL_Netchan_PrintProfileStats(LocalClientNum_t param_1,int param_2)
 
 {
-  LocalClientNum_t LVar1;
-  clientConnection_t *pcVar2;
-  int iVar3;
+  clientConnection_t *pcVar1;
+  int iVar2;
   char acStack_450 [1104];
   
-  LVar1 = __savegprlr_23(param_1);
-  iVar3 = 0x50;
+  iVar2 = 0x50;
   if ((net_profile->current).integer == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_net_chan_mp.cpp",
                     0xbd,0,"%s");
   }
-  pcVar2 = CL_GetLocalClientConnection(LVar1);
-  NetProf_UpdateStatistics(&(pcVar2->netchan).prof.send);
-  NetProf_UpdateStatistics(&(pcVar2->netchan).prof.recieve);
-  NetProf_UpdateStatistics(&(pcVar2->OOBProf).send);
-  NetProf_UpdateStatistics(&(pcVar2->OOBProf).recieve);
+  pcVar1 = CL_GetLocalClientConnection(param_1);
+  NetProf_UpdateStatistics(&(pcVar1->netchan).prof.send);
+  NetProf_UpdateStatistics(&(pcVar1->netchan).prof.recieve);
+  NetProf_UpdateStatistics(&(pcVar1->OOBProf).send);
+  NetProf_UpdateStatistics(&(pcVar1->OOBProf).recieve);
   if (param_2 != 0) {
     Com_Printf(0xe,"\n\n");
   }
   Com_sprintf(acStack_450,0x400,"====================");
   if (param_2 == 0) {
-    iVar3 = 0x5a;
+    iVar2 = 0x5a;
     CL_DrawString(0x20,0x5a,acStack_450,0,(cl_profileTextHeight->current).integer);
   }
   else {
@@ -155,49 +152,49 @@ void CL_Netchan_PrintProfileStats(LocalClientNum_t param_1,int param_2)
   }
   Com_sprintf(acStack_450,0x400,"Client Network Profile:");
   if (param_2 == 0) {
-    CL_DrawString(0x20,iVar3 + 10,acStack_450,0,(cl_profileTextHeight->current).integer);
-    iVar3 = iVar3 + 0x14;
+    CL_DrawString(0x20,iVar2 + 10,acStack_450,0,(cl_profileTextHeight->current).integer);
+    iVar2 = iVar2 + 0x14;
   }
   else {
     Com_Printf(0xe,"%s\n\n");
   }
   Com_sprintf(acStack_450,0x400,"      Source    bps   max   min frag%%");
   if (param_2 == 0) {
-    iVar3 = iVar3 + 10;
-    CL_DrawString(0x20,iVar3,acStack_450,0,(cl_profileTextHeight->current).integer);
+    iVar2 = iVar2 + 10;
+    CL_DrawString(0x20,iVar2,acStack_450,0,(cl_profileTextHeight->current).integer);
   }
   else {
     Com_Printf(0xe,"%s\n");
   }
-  CL_GetLocalClientConnection(LVar1);
+  CL_GetLocalClientConnection(param_1);
   Com_sprintf(acStack_450,0x400,"    OOB Sent: %5i %5i %5i    -");
   if (param_2 == 0) {
-    iVar3 = iVar3 + 10;
-    CL_DrawString(0x20,iVar3,acStack_450,0,(cl_profileTextHeight->current).integer);
+    iVar2 = iVar2 + 10;
+    CL_DrawString(0x20,iVar2,acStack_450,0,(cl_profileTextHeight->current).integer);
   }
   else {
     Com_Printf(0xe,"%s\n");
   }
   Com_sprintf(acStack_450,0x400,"OOB Recieved: %5i %5i %5i    -");
   if (param_2 == 0) {
-    iVar3 = iVar3 + 10;
-    CL_DrawString(0x20,iVar3,acStack_450,0,(cl_profileTextHeight->current).integer);
+    iVar2 = iVar2 + 10;
+    CL_DrawString(0x20,iVar2,acStack_450,0,(cl_profileTextHeight->current).integer);
   }
   else {
     Com_Printf(0xe,"%s\n");
   }
   Com_sprintf(acStack_450,0x400,"        Sent: %5i %5i %5i  %3i%%");
   if (param_2 == 0) {
-    iVar3 = iVar3 + 10;
-    CL_DrawString(0x20,iVar3,acStack_450,0,(cl_profileTextHeight->current).integer);
+    iVar2 = iVar2 + 10;
+    CL_DrawString(0x20,iVar2,acStack_450,0,(cl_profileTextHeight->current).integer);
   }
   else {
     Com_Printf(0xe,"%s\n");
   }
   Com_sprintf(acStack_450,0x400,"    Recieved: %5i %5i %5i  %3i%%");
   if (param_2 == 0) {
-    iVar3 = iVar3 + 10;
-    CL_DrawString(0x20,iVar3,acStack_450,0,(cl_profileTextHeight->current).integer);
+    iVar2 = iVar2 + 10;
+    CL_DrawString(0x20,iVar2,acStack_450,0,(cl_profileTextHeight->current).integer);
   }
   else {
     Com_Printf(0xe,"%s\n");
@@ -205,11 +202,9 @@ void CL_Netchan_PrintProfileStats(LocalClientNum_t param_1,int param_2)
   Com_sprintf(acStack_450,0x400,"       Total: %5i");
   if (param_2 != 0) {
     Com_Printf(0xe,"%s\n");
-    __restgprlr_23();
     return;
   }
-  CL_DrawString(0x20,iVar3 + 10,acStack_450,0,(cl_profileTextHeight->current).integer);
-  __restgprlr_23();
+  CL_DrawString(0x20,iVar2 + 10,acStack_450,0,(cl_profileTextHeight->current).integer);
   return;
 }
 

@@ -2,59 +2,46 @@
 
 // 828A32A0  SetFilePointerEx  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/xrtl/setfilepointerex.c:80)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 int SetFilePointerEx(void *param_1,_LARGE_INTEGER param_2,_LARGE_INTEGER *param_3,ulong param_4)
 
 {
-  void *pvVar2;
-  int iVar3;
-  undefined8 uVar1;
-  ulonglong uVar4;
-  ulonglong uVar5;
+  int iVar1;
   _LARGE_INTEGER local_80;
   _IO_STATUS_BLOCK _Stack_78;
   undefined1 auStack_70 [40];
   _LARGE_INTEGER local_48;
   
-  uVar5 = (ulonglong)(int)param_4;
-  uVar4 = (ulonglong)(int)param_3;
-  pvVar2 = (void *)__savegprlr_27(param_1);
-  if ((uVar5 & 0xffffffff) == 0) {
-LAB_828a3348:
-    local_80 = param_2;
-    if (-1 < param_2.QuadPart) {
-      iVar3 = (*_fileIoHooks->NtSetInformationFile)
-                        (pvVar2,&_Stack_78,&local_80,8,FilePositionInformation);
-      if (-1 < iVar3) {
-        if ((uVar4 & 0xffffffff) != 0) {
-          ((_LARGE_INTEGER *)uVar4)->QuadPart = (long64)local_80;
-        }
-        uVar1 = 1;
-        goto LAB_828a33b4;
-      }
-      goto LAB_828a33a8;
-    }
-    RtlSetLastError(0x83);
-  }
-  else {
-    if (((uVar5 & 0xffffffff) == 1) || (2 < (uVar5 & 0xffffffff))) {
-      iVar3 = (*_fileIoHooks->NtQueryInformationFile)
-                        (pvVar2,&_Stack_78,&local_80,8,FilePositionInformation);
+  if (param_4 != 0) {
+    if ((param_4 == 1) || (2 < param_4)) {
+      iVar1 = (*_fileIoHooks->NtQueryInformationFile)
+                        (param_1,&_Stack_78,&local_80,8,FilePositionInformation);
       local_48 = local_80;
     }
     else {
-      iVar3 = (*_fileIoHooks->NtQueryInformationFile)
-                        (pvVar2,&_Stack_78,auStack_70,0x38,FileNetworkOpenInformation);
+      iVar1 = (*_fileIoHooks->NtQueryInformationFile)
+                        (param_1,&_Stack_78,auStack_70,0x38,FileNetworkOpenInformation);
     }
-    if (-1 < iVar3) {
-      param_2.QuadPart = local_48.QuadPart + param_2.QuadPart;
-      goto LAB_828a3348;
-    }
-LAB_828a33a8:
-    RtlSetLastNTError(iVar3);
+    if (iVar1 < 0) goto LAB_828a33a8;
+    param_2.QuadPart = local_48.QuadPart + param_2.QuadPart;
   }
-  uVar1 = 0;
-LAB_828a33b4:
-  iVar3 = __restgprlr_27(uVar1);
-  return iVar3;
+  local_80 = param_2;
+  if (param_2.QuadPart < 0) {
+    RtlSetLastError(0x83);
+    return 0;
+  }
+  iVar1 = (*_fileIoHooks->NtSetInformationFile)
+                    (param_1,&_Stack_78,&local_80,8,FilePositionInformation);
+  if (-1 < iVar1) {
+    if (param_3 != (_LARGE_INTEGER *)0x0) {
+      param_3->QuadPart = (long64)local_80;
+    }
+    return 1;
+  }
+LAB_828a33a8:
+  RtlSetLastNTError(iVar1);
+  return 0;
 }
 

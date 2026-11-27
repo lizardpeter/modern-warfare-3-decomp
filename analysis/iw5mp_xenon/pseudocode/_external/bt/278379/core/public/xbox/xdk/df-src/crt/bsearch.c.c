@@ -2,68 +2,61 @@
 
 // 8291CD78  bsearch  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/bsearch.c:71)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
+
 void * bsearch(void *param_1,void *param_2,uint param_3,uint param_4,
               _func___cdecl_int_void_ptr_void_ptr *param_5)
 
 {
-  undefined8 uVar1;
-  int *piVar4;
+  int *piVar1;
   ulonglong uVar2;
+  ulonglong uVar3;
+  int iVar4;
   void *pvVar5;
-  longlong lVar3;
-  ulonglong uVar6;
-  ulonglong uVar7;
-  ulonglong uVar8;
-  ulonglong uVar9;
-  int iVar10;
-  ulonglong uVar11;
-  ulonglong uVar12;
+  void *pvVar6;
   
-  uVar9 = (ulonglong)(int)param_5;
-  uVar8 = (ulonglong)(int)param_4;
-  uVar6 = (ulonglong)(int)param_3;
-  uVar12 = (ulonglong)(int)param_2;
-  uVar1 = __savegprlr_24(param_1);
-  uVar11 = (longlong)((int)uVar6 + -1) * (longlong)(int)uVar8 + uVar12;
-  if (((((uVar12 & 0xffffffff) == 0) && ((uVar6 & 0xffffffff) != 0)) || ((uVar8 & 0xffffffff) == 0))
-     || ((uVar9 & 0xffffffff) == 0)) {
-    piVar4 = _errno();
-    *piVar4 = 0x16;
+  pvVar5 = (void *)((param_3 - 1) * param_4 + (int)param_2);
+  if ((((param_2 == (void *)0x0) && (param_3 != 0)) || (param_4 == 0)) ||
+     (param_5 == (_func___cdecl_int_void_ptr_void_ptr *)0x0)) {
+    piVar1 = _errno();
+    *piVar1 = 0x16;
     _invalid_parameter_noinfo();
   }
-  else if ((uVar12 & 0xffffffff) <= (uVar11 & 0xffffffff)) {
-    do {
-      uVar7 = (uVar6 & 0xffffffff) >> 1;
-      if (uVar7 == 0) {
-        if ((uVar6 & 0xffffffff) != 0) {
-          lVar3 = (*(code *)uVar9)(uVar1,uVar12);
-          uVar2 = -(ulonglong)(lVar3 == 0) & uVar12;
-          goto LAB_8291cdc4;
+  else {
+    uVar2 = (longlong)(int)param_3;
+    if (param_2 <= pvVar5) {
+      do {
+        uVar3 = (uVar2 & 0xffffffff) >> 1;
+        if (uVar3 == 0) {
+          if ((uVar2 & 0xffffffff) == 0) {
+            return (void *)0x0;
+          }
+          iVar4 = (*param_5)(param_1,param_2);
+          return (void *)(-(uint)(iVar4 == 0) & (uint)param_2);
         }
-        break;
-      }
-      iVar10 = (int)uVar7;
-      if ((uVar6 & 1) == 0) {
-        iVar10 = iVar10 + -1;
-      }
-      uVar2 = (longlong)iVar10 * (longlong)(int)uVar8 + uVar12;
-      iVar10 = (*(code *)uVar9)(uVar1,uVar2);
-      if (iVar10 == 0) goto LAB_8291cdc4;
-      if (iVar10 < 0) {
-        uVar11 = uVar2 - uVar8;
-        if ((uVar6 & 1) == 0) {
-          uVar7 = uVar7 - 1;
+        iVar4 = (int)uVar3;
+        if ((uVar2 & 1) == 0) {
+          iVar4 = iVar4 + -1;
         }
-      }
-      else {
-        uVar12 = uVar2 + uVar8;
-      }
-      uVar6 = uVar7;
-    } while ((uVar12 & 0xffffffff) <= (uVar11 & 0xffffffff));
+        pvVar6 = (void *)(iVar4 * param_4 + (int)param_2);
+        iVar4 = (*param_5)(param_1,pvVar6);
+        if (iVar4 == 0) {
+          return pvVar6;
+        }
+        if (iVar4 < 0) {
+          pvVar5 = (void *)((int)pvVar6 - param_4);
+          if ((uVar2 & 1) == 0) {
+            uVar3 = uVar3 - 1;
+          }
+        }
+        else {
+          param_2 = (void *)((int)pvVar6 + param_4);
+        }
+        uVar2 = uVar3;
+      } while (param_2 <= pvVar5);
+    }
   }
-  uVar2 = 0;
-LAB_8291cdc4:
-  pvVar5 = (void *)__restgprlr_24(uVar2);
-  return pvVar5;
+  return (void *)0x0;
 }
 

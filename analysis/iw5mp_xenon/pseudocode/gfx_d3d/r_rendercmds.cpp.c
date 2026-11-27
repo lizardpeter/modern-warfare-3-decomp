@@ -32,6 +32,8 @@ void R_PerformanceCounters(void)
 
 // 82764DB8  R_InitRenderCommands  (gfx_d3d/r_rendercmds.cpp:170)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
@@ -44,7 +46,6 @@ void R_InitRenderCommands(void)
   DebugGlobals *pDVar3;
   longlong lVar4;
   
-  __savegprlr_26();
   DAT_84628b28 = 0x18000;
   s_renderCmdWarnSize = 0x12000;
   GenerateLightGridBasisDirs();
@@ -65,13 +66,14 @@ void R_InitRenderCommands(void)
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",0xd1
                     ,0,"%s");
   }
-  __restgprlr_26();
   return;
 }
 
 
 // 82764E78  R_ShutdownRenderCommands  (gfx_d3d/r_rendercmds.cpp:218)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
@@ -82,7 +84,6 @@ void R_ShutdownRenderCommands(void)
   DebugGlobals *pDVar1;
   longlong lVar2;
   
-  __savegprlr_29();
   lVar2 = 2;
   pDVar1 = &s_backEndData[0].debugGlobals;
   do {
@@ -90,36 +91,31 @@ void R_ShutdownRenderCommands(void)
     lVar2 = lVar2 + -1;
     pDVar1 = (DebugGlobals *)&pDVar1[0x1b23].vertCount;
   } while (lVar2 != 0);
-  __restgprlr_29();
   return;
 }
 
 
 // 82764EB8  R_InitDynamicMesh  (gfx_d3d/r_rendercmds.cpp:257)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void R_InitDynamicMesh(GfxMeshData *param_1,uint param_2,uint param_3,uint param_4)
 
 {
-  undefined4 *puVar1;
-  void *pvVar2;
-  ulonglong uVar3;
+  ushort *puVar1;
   
-  uVar3 = (ulonglong)(int)param_2;
-  puVar1 = (undefined4 *)__savegprlr_27(param_1);
-  if ((uVar3 & 0xffffffff) == 0) {
-    puVar1[10] = 0;
+  if (param_2 == 0) {
+    param_1->indices = (ushort *)0x0;
   }
   else {
-    pvVar2 = R_AllocDynamicIndexBuffer
-                       ((D3DIndexBuffer *)(puVar1 + 2),(int)((uVar3 & 0xffffffff) << 1),
-                        "R_InitDynamicMesh");
-    puVar1[10] = pvVar2;
+    puVar1 = R_AllocDynamicIndexBuffer(&param_1->ib,param_2 << 1,"R_InitDynamicMesh");
+    param_1->indices = puVar1;
   }
-  puVar1[1] = (int)uVar3;
-  puVar1[0x16] = param_4;
-  *puVar1 = 0;
-  R_InitDynamicVertexBufferState((GfxVertexBufferState *)(puVar1 + 0xb),param_3 * param_4);
-  __restgprlr_27();
+  param_1->totalIndexCount = param_2;
+  param_1->vertSize = param_4;
+  param_1->indexCount = 0;
+  R_InitDynamicVertexBufferState(&param_1->vb,param_3 * param_4);
   return;
 }
 
@@ -183,37 +179,42 @@ void R_CmdBufUpdateFences(GfxCmdRingBuf *param_1)
 
 // 82765070  R_CmdBufUpdateFences2  (gfx_d3d/r_rendercmds.cpp:391)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 void R_CmdBufUpdateFences2(GfxCmdRingBuf *param_1)
 
 {
-  int iVar1;
+  uint uVar1;
   int iVar2;
-  int iVar3;
+  uint uVar3;
   
-  iVar1 = __savegprlr_26(param_1);
-  if (*(int *)(iVar1 + 0x18) != *(int *)(iVar1 + 0x14)) {
+  if (param_1->availIndex != param_1->fenceIndex) {
     do {
       sync(1);
-      iVar2 = ((*(uint *)(iVar1 + 0x18) & 0x7f) + 0x8a) * 4;
-      if (*(int *)(iVar2 + iVar1) == 0) {
+      uVar1 = param_1->availIndex & 0x7f;
+      if (param_1->fence[uVar1] == 0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_fence_xbox.h",
                         0xf,0,"%s");
       }
-      iVar2 = D3DDevice_IsFencePending(*(ulong *)(iVar2 + iVar1));
-      if (iVar2 != 0) break;
-      iVar3 = *(uint *)(iVar1 + 0x18) + 1;
-      iVar2 = *(int *)(((*(uint *)(iVar1 + 0x18) & 0x7f) + 10) * 4 + iVar1);
-      *(int *)(iVar1 + 0x18) = iVar3;
-      *(int *)(iVar1 + 0x1c) = iVar2 + 0x80000;
-    } while (iVar3 != *(int *)(iVar1 + 0x14));
+      iVar2 = D3DDevice_IsFencePending(param_1->fence[uVar1]);
+      if (iVar2 != 0) {
+        return;
+      }
+      uVar3 = param_1->availIndex + 1;
+      uVar1 = param_1->fencePos[param_1->availIndex & 0x7f];
+      param_1->availIndex = uVar3;
+      param_1->availMemoryPos = uVar1 + 0x80000;
+    } while (uVar3 != param_1->fenceIndex);
   }
-  __restgprlr_26();
   return;
 }
 
 
 // 82765130  R_CmdBufReserveMemory  (gfx_d3d/r_rendercmds.cpp:406)
 
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
 /* WARNING: Removing unreachable block (ram,0x82765190) */
 
 void R_CmdBufReserveMemory(GfxCmdRingBuf *param_1)
@@ -221,48 +222,45 @@ void R_CmdBufReserveMemory(GfxCmdRingBuf *param_1)
 {
   uint uVar1;
   ulonglong uVar2;
-  int iVar3;
-  ulong uVar4;
+  ulong uVar3;
+  int iVar4;
   int iVar5;
-  int iVar6;
-  ulonglong uVar7;
-  longlong lVar8;
-  ulonglong uVar9;
+  ulonglong uVar6;
+  longlong lVar7;
+  ulonglong uVar8;
   
-  iVar3 = __savegprlr_22(param_1);
-  uVar7 = (ulonglong)*(uint *)(iVar3 + 4) + 0x7f;
-  uVar2 = uVar7 & 0xffffff80;
-  uVar9 = uVar2 + 0x83ff & 0xfff80000;
-  if (uVar9 != (uVar7 & 0xfff80000)) {
-    uVar2 = uVar9;
+  uVar6 = (ulonglong)param_1->memoryPos + 0x7f;
+  uVar2 = uVar6 & 0xffffff80;
+  uVar8 = uVar2 + 0x83ff & 0xfff80000;
+  if (uVar8 != (uVar6 & 0xfff80000)) {
+    uVar2 = uVar8;
   }
-  uVar9 = uVar2 + 0x8400;
-  *(int *)(iVar3 + 0x20) = (int)uVar9;
+  uVar8 = uVar2 + 0x8400;
+  param_1->reserveMemoryPos0 = (uint)uVar8;
   uVar2 = uVar2 + 0x107ff & 0xfff80000;
-  if (uVar2 != (uVar9 & 0xfff80000)) {
-    uVar9 = uVar2;
+  if (uVar2 != (uVar8 & 0xfff80000)) {
+    uVar8 = uVar2;
   }
-  lVar8 = uVar9 + 0x8400;
-  *(int *)(iVar3 + 0x24) = (int)lVar8;
-  if (0x40000 < (lVar8 - (ulonglong)*(uint *)(iVar3 + 0x428) & 0xffffffff)) {
+  lVar7 = uVar8 + 0x8400;
+  param_1->reserveMemoryPos1 = (uint)lVar7;
+  if (0x40000 < (lVar7 - (ulonglong)param_1->checkMemoryPos & 0xffffffff)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
                     0x1ba,0,"%s");
   }
-  uVar1 = *(uint *)(iVar3 + 0x1c);
+  uVar1 = param_1->availMemoryPos;
   do {
-    if ((longlong)(lVar8 - (ulonglong)uVar1) < 1) {
-      __restgprlr_22();
+    if ((longlong)(lVar7 - (ulonglong)uVar1) < 1) {
       return;
     }
-    if (*(int *)(iVar3 + 0x18) == *(int *)(iVar3 + 0x14)) {
+    if (param_1->availIndex == param_1->fenceIndex) {
       PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffff,"wait submit fence");
-      uVar4 = GetCurrentProcessorNumber();
-      if (uVar4 == 1) {
-        iVar5 = Sys_Milliseconds();
+      uVar3 = GetCurrentProcessorNumber();
+      if (uVar3 == 1) {
+        iVar4 = Sys_Milliseconds();
         Sys_UnblockDatabaseThread();
         Sys_Sleep(0);
-        iVar6 = Sys_Milliseconds();
-        if (iVar6 == iVar5) {
+        iVar5 = Sys_Milliseconds();
+        if (iVar5 == iVar4) {
           Sys_Sleep(1);
         }
         Sys_BlockDatabaseThread();
@@ -276,39 +274,41 @@ LAB_8276528c:
     }
     else {
       sync(1);
-      iVar5 = ((*(uint *)(iVar3 + 0x18) & 0x7f) + 0x8a) * 4;
-      if (*(int *)(iVar5 + iVar3) == 0) {
+      uVar1 = param_1->availIndex & 0x7f;
+      if (param_1->fence[uVar1] == 0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_fence_xbox.h",
                         0xf,0,"%s");
       }
-      iVar5 = D3DDevice_IsFencePending(*(ulong *)(iVar5 + iVar3));
-      if (iVar5 == 0) {
-        iVar5 = *(int *)(((*(uint *)(iVar3 + 0x18) & 0x7f) + 10) * 4 + iVar3);
-        *(uint *)(iVar3 + 0x18) = *(uint *)(iVar3 + 0x18) + 1;
-        *(int *)(iVar3 + 0x1c) = iVar5 + 0x80000;
+      iVar4 = D3DDevice_IsFencePending(param_1->fence[uVar1]);
+      if (iVar4 == 0) {
+        uVar1 = param_1->fencePos[param_1->availIndex & 0x7f];
+        param_1->availIndex = param_1->availIndex + 1;
+        param_1->availMemoryPos = uVar1 + 0x80000;
       }
       else {
         PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffff,"wait pending fence");
-        uVar4 = GetCurrentProcessorNumber();
-        if (uVar4 != 1) goto LAB_8276528c;
-        iVar5 = Sys_Milliseconds();
+        uVar3 = GetCurrentProcessorNumber();
+        if (uVar3 != 1) goto LAB_8276528c;
+        iVar4 = Sys_Milliseconds();
         Sys_UnblockDatabaseThread();
         Sys_Sleep(0);
-        iVar6 = Sys_Milliseconds();
-        if (iVar6 == iVar5) {
+        iVar5 = Sys_Milliseconds();
+        if (iVar5 == iVar4) {
           Sys_Sleep(1);
         }
         Sys_BlockDatabaseThread();
         PIXEndNamedEvent();
       }
     }
-    uVar1 = *(uint *)(iVar3 + 0x1c);
+    uVar1 = param_1->availMemoryPos;
   } while( true );
 }
 
 
 // 82765368  R_CmdBufAllocCallback  (gfx_d3d/r_rendercmds.cpp:450)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 
 void * R_CmdBufAllocCallback(ulong param_1,ulong param_2,ulong *param_3,ulong param_4)
@@ -317,29 +317,27 @@ void * R_CmdBufAllocCallback(ulong param_1,ulong param_2,ulong *param_3,ulong pa
   uchar *puVar1;
   GfxCmdRingBuf *pGVar2;
   ulong uVar3;
-  void *pvVar4;
+  longlong lVar4;
   ulonglong uVar5;
-  longlong lVar6;
+  ulonglong uVar6;
   ulonglong uVar7;
-  ulonglong uVar8;
   
-  uVar5 = (ulonglong)(int)param_4;
-  __savegprlr_27(param_1,param_2);
-  if ((uVar5 & 0xffffffff) == 0) {
+  if (param_4 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
                     0x1ca,0,"%s");
   }
-  trapWord(6,uVar5,0);
-  if ((longlong)(int)(0x80 / (uVar5 & 0xffffffff)) * (longlong)(int)uVar5 != 0x80) {
+  trapWord(6,(longlong)(int)param_4,0);
+  if ((longlong)(int)(0x80 / (ulonglong)param_4) * (longlong)(int)param_4 != 0x80) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
                     0x1cb,0,"%s\n\t(Alignment) = %i");
   }
-  uVar8 = (ulonglong)*param_3;
-  if (uVar8 == 0) {
+  uVar7 = (ulonglong)*param_3;
+  uVar6 = (longlong)(int)param_4 - 1;
+  if (uVar7 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
                     0x1d0,0,"%s");
   }
-  else if (0x8000 < uVar8) {
+  else if (0x8000 < uVar7) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
                     0x1d1,0,"%s\n\t(size) = %i");
   }
@@ -349,21 +347,20 @@ void * R_CmdBufAllocCallback(ulong param_1,ulong param_2,ulong *param_3,ulong pa
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
                     0x1d4,0,"%s");
   }
-  uVar7 = (ulonglong)pGVar2->memoryPos + (uVar5 - 1) & ~(uVar5 - 1);
-  lVar6 = uVar7 + uVar8;
-  uVar5 = lVar6 - 1U & 0xfff80000;
-  if (uVar5 != (uVar7 & 0xfff80000)) {
-    lVar6 = uVar5 + uVar8;
-    uVar7 = uVar5;
+  uVar5 = pGVar2->memoryPos + uVar6 & ~uVar6;
+  lVar4 = uVar5 + uVar7;
+  uVar6 = lVar4 - 1U & 0xfff80000;
+  if (uVar6 != (uVar5 & 0xfff80000)) {
+    lVar4 = uVar6 + uVar7;
+    uVar5 = uVar6;
   }
   puVar1 = pGVar2->memoryPool;
-  pGVar2->memoryPos = (uint)lVar6;
-  if ((longlong)((ulonglong)pGVar2->reserveMemoryPos1 - lVar6) < 0) {
+  pGVar2->memoryPos = (uint)lVar4;
+  if ((longlong)((ulonglong)pGVar2->reserveMemoryPos1 - lVar4) < 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
                     0x1e3,0,"%s");
   }
-  pvVar4 = (void *)__restgprlr_27(ZEXT48(puVar1) + (uVar7 & 0x7ffff));
-  return pvVar4;
+  return puVar1 + ((uint)uVar5 & 0x7ffff);
 }
 
 
@@ -392,6 +389,8 @@ void R_CmdBufQueryCallback(ulong param_1,ulong *param_2,ulong *param_3)
 
 // 82765530  R_InitRenderBuffers  (gfx_d3d/r_rendercmds.cpp:562)
 
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
@@ -435,7 +434,6 @@ void R_InitRenderBuffers(void)
   double dVar33;
   uint local_e0;
   
-  __savegprlr();
   uVar23 = D3DDevice_InsertFence(dx.device);
   if (uVar23 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
@@ -605,7 +603,6 @@ void R_InitRenderBuffers(void)
     lVar30 = lVar30 + -1;
     ppuVar31 = ppuVar31 + 0x1b;
   } while (lVar30 != 0);
-  __restgprlr();
   return;
 }
 
@@ -629,6 +626,8 @@ void R_InitRenderThread(void)
 
 // 82765A58  R_SyncRenderThread  (gfx_d3d/r_rendercmds.cpp:849)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
@@ -640,7 +639,6 @@ void R_SyncRenderThread(void)
   bool bVar2;
   int iVar1;
   
-  __savegprlr_29();
   bVar2 = Sys_IsRenderThread();
   if (!bVar2) {
     bVar2 = Sys_IsMainThread();
@@ -683,19 +681,19 @@ void R_SyncRenderThread(void)
         if (iVar1 == 0) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp"
                           ,0x36f,0,"%s");
-          __restgprlr_29();
           return;
         }
       }
     }
   }
-  __restgprlr_29();
   return;
 }
 
 
 // 82765C20  R_ReleaseDeviceOwnershipForStreaming  (gfx_d3d/r_rendercmds.cpp:906)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
@@ -706,7 +704,6 @@ int R_ReleaseDeviceOwnershipForStreaming(void)
   bool bVar2;
   int iVar1;
   
-  __savegprlr_28();
   bVar2 = Sys_IsMainThread();
   if ((bVar2) && (r_glob.startedRenderThread != false)) {
     if (r_glob.remoteScreenUpdateNesting != 0) {
@@ -715,9 +712,7 @@ int R_ReleaseDeviceOwnershipForStreaming(void)
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
                         0x396,0,"%s");
       }
-LAB_82765c8c:
-      iVar1 = __restgprlr_28(0);
-      return iVar1;
+      return 0;
     }
     if (r_glob.mainThreadHasOwnership == false) {
       iVar1 = R_HasDeviceOwnership();
@@ -730,23 +725,22 @@ LAB_82765c8c:
       Profile_EndInternal((double *)0x0);
       r_glob.mainThreadHasOwnership = true;
       iVar1 = R_HasDeviceOwnership();
-      if (iVar1 != 0) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
-                        0x3aa,0,"%s");
-        iVar1 = __restgprlr_28(1);
-        return iVar1;
+      if (iVar1 == 0) {
+        return 1;
       }
-      goto LAB_82765d3c;
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
+                      0x3aa,0,"%s");
+      return 1;
     }
   }
   else {
     iVar1 = R_HasDeviceOwnership();
-    if (iVar1 == 0) goto LAB_82765c8c;
+    if (iVar1 == 0) {
+      return 0;
+    }
   }
   R_ReleaseDeviceOwnership();
-LAB_82765d3c:
-  iVar1 = __restgprlr_28(1);
-  return iVar1;
+  return 1;
 }
 
 
@@ -804,6 +798,8 @@ int R_SkinCacheReachedThreshold(void)
 
 // 82765E50  R_ReleaseThreadOwnership  (gfx_d3d/r_rendercmds.cpp:973)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
@@ -814,7 +810,6 @@ void R_ReleaseThreadOwnership(void)
   bool bVar2;
   int iVar1;
   
-  __savegprlr_29();
   bVar2 = Sys_IsMainThread();
   if (!bVar2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
@@ -826,7 +821,6 @@ void R_ReleaseThreadOwnership(void)
       if (iVar1 != 0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
                         0x3d6,0,"%s");
-        __restgprlr_29();
         return;
       }
     }
@@ -836,7 +830,6 @@ void R_ReleaseThreadOwnership(void)
       r_glob.mainThreadHasOwnership = false;
     }
   }
-  __restgprlr_29();
   return;
 }
 
@@ -914,38 +907,38 @@ void R_WakeRenderer(void)
 
 // 82766078  R_IssueRenderCommandsBegin  (gfx_d3d/r_rendercmds.cpp:1091)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 
 void R_IssueRenderCommandsBegin(uint param_1)
 
 {
-  uint uVar1;
-  bool bVar2;
-  uint uVar3;
+  bool bVar1;
+  uint uVar2;
   
-  uVar1 = __savegprlr_28(param_1);
   if (frontEndDataOut == (GfxBackEndData *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
                     0x444,0,"%s");
   }
   if ((r_smp_backend->current).enabled == false) {
-    uVar3 = 0;
+    uVar2 = 0;
   }
   else {
-    uVar3 = (uint)(r_glob.isRenderingRemoteUpdate == false);
+    uVar2 = (uint)(r_glob.isRenderingRemoteUpdate == false);
   }
-  frontEndDataOut->renderFromBackEnd = uVar3;
-  frontEndDataOut->drawType = uVar1;
-  if ((uVar1 & 2) != 0) {
+  frontEndDataOut->renderFromBackEnd = uVar2;
+  frontEndDataOut->drawType = param_1;
+  if ((param_1 & 2) != 0) {
     R_RegistedRenderFrame();
     PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffff,"dev perf counters");
     Profile_ResetCounters(0);
     PIXEndNamedEvent();
   }
   if (frontEndDataOut->renderFromBackEnd != 0) {
-    bVar2 = Sys_IsMainThread2();
-    if (!bVar2) {
+    bVar1 = Sys_IsMainThread2();
+    if (!bVar1) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
                       0x45b,0,"%s");
     }
@@ -954,7 +947,6 @@ void R_IssueRenderCommandsBegin(uint param_1)
       R_WakeRenderer();
     }
   }
-  __restgprlr_28();
   return;
 }
 
@@ -1006,6 +998,8 @@ void R_IssueRenderCommandsEmissive(void)
 
 // 827661D8  R_IssueRenderCommandsEnd  (gfx_d3d/r_rendercmds.cpp:1156)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
@@ -1017,7 +1011,6 @@ void R_IssueRenderCommandsEnd(void)
   bool bVar3;
   int iVar2;
   
-  __savegprlr_25();
   bVar3 = Sys_IsMainThread();
   if ((!bVar3) && (bVar3 = Sys_IsRenderThread(), !bVar3)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
@@ -1048,7 +1041,6 @@ void R_IssueRenderCommandsEnd(void)
                       0x4b0,0,"%s");
     }
     R_ReleaseThreadOwnership();
-    __restgprlr_25();
     return;
   }
   bVar3 = Sys_IsMainThread();
@@ -1100,7 +1092,6 @@ void R_IssueRenderCommandsEnd(void)
     }
     r_glob.stopUpdatingSamplers = r_glob.stopUpdatingSamplers + 1;
   }
-  __restgprlr_25();
   return;
 }
 
@@ -1154,6 +1145,8 @@ void R_AbortRenderCommands(void)
 
 // 82766590  R_AbortCommandBuffers  (gfx_d3d/r_rendercmds.cpp:1312)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
@@ -1167,7 +1160,6 @@ void R_AbortCommandBuffers(void)
   bool bVar4;
   GfxDrawListIter *pGVar5;
   
-  __savegprlr_29();
   bVar4 = Sys_IsMainThread();
   if (!bVar4) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
@@ -1232,13 +1224,14 @@ void R_AbortCommandBuffers(void)
       R_AbortCommandBuffer(pGVar3,0x13,&pGVar2[uVar1].drawList[0x13].info.iterGroup.drawListIter);
     }
   }
-  __restgprlr_29();
   return;
 }
 
 
 // 827668D8  R_GetCommandBuffer  (gfx_d3d/r_rendercmds.cpp:1415)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "GfxRenderCommand": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
@@ -1250,37 +1243,28 @@ void * R_GetCommandBuffer(GfxRenderCommand param_1,int param_2)
   uchar *puVar2;
   GfxCmdArray *pGVar3;
   undefined8 in_r0;
-  ulonglong uVar4;
-  bool bVar7;
-  void *pvVar5;
-  GfxCmdHeader *pGVar6;
-  ulonglong uVar8;
-  int iVar9;
-  int iVar10;
-  uint uVar11;
+  bool bVar5;
+  GfxCmdHeader *pGVar4;
+  int iVar6;
   
-  uVar8 = (ulonglong)param_2;
-  uVar4 = __savegprlr_25(param_1);
-  bVar7 = Sys_IsMainThread();
-  if ((!bVar7) && (bVar7 = Sys_IsRenderThread(), !bVar7)) {
+  bVar5 = Sys_IsMainThread();
+  if ((!bVar5) && (bVar5 = Sys_IsRenderThread(), !bVar5)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
                     0x58b,0,"%s");
   }
-  iVar10 = (int)uVar4;
-  if ((iVar10 < 0) || (0x19 < iVar10)) {
+  if (((int)param_1 < 0) || (0x19 < (int)param_1)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
                     0x58c,0,"%s\n\t(renderCmd) = %i");
   }
-  if ((uVar8 & 3) != 0) {
+  if ((param_2 & 3U) != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
                     0x58d,0,"%s\n\t(bytes) = %i");
   }
-  uVar11 = (uint)uVar8;
-  if (DAT_84628b28 <= (int)uVar11) {
+  if (DAT_84628b28 <= param_2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
                     0x58e,0,"%s\n\t(bytes) = %i");
   }
-  if (uVar11 != (uVar11 & 0xffff)) {
+  if (param_2 != (param_2 & 0xffffU)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
                     0x58f,0,"%s\n\t(bytes) = %i");
   }
@@ -1311,46 +1295,46 @@ void * R_GetCommandBuffer(GfxRenderCommand param_1,int param_2)
     }
     trapWord(0x1f,in_r0,0x16);
   }
-  if (((iVar10 < 9) && (s_cmdList->usedCritical < 0x1e00)) &&
-     (0x1dff < (int)(s_cmdList->usedCritical + uVar11))) {
+  if ((((int)param_1 < 9) && (s_cmdList->usedCritical < 0x1e00)) &&
+     (0x1dff < s_cmdList->usedCritical + param_2)) {
     Com_PrintWarning(8,"RENDERCOMMAND_CRITICAL_WARN_SIZE (%i bytes) reached\n");
   }
   if ((s_cmdList->usedTotal < s_renderCmdWarnSize) &&
-     (s_renderCmdWarnSize <= (int)(s_cmdList->usedTotal + uVar11))) {
+     (s_renderCmdWarnSize <= s_cmdList->usedTotal + param_2)) {
     Com_PrintWarning(8,"RENDERCOMMAND_WARN_SIZE (%.0f KB) reached\n");
   }
   pGVar3 = s_cmdList;
   iVar1 = s_cmdList->usedTotal;
-  iVar9 = DAT_84628b28 - iVar1;
-  if (8 < iVar10) {
-    iVar9 = s_cmdList->usedCritical + iVar9 + -0x2000;
+  iVar6 = DAT_84628b28 - iVar1;
+  if (8 < (int)param_1) {
+    iVar6 = s_cmdList->usedCritical + iVar6 + -0x2000;
   }
-  if (iVar9 < (int)uVar11) {
-    if (iVar10 < 9) {
+  if (iVar6 < param_2) {
+    if ((int)param_1 < 9) {
       va("rc %i used %i critical %i bytes %i");
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
                       0x5a7,0,"%s\n\t%s");
     }
     s_cmdList->lastCmd = (GfxCmdHeader *)0x0;
-    pvVar5 = (void *)__restgprlr_25(0);
-    return pvVar5;
+    return (void *)0x0;
   }
   puVar2 = s_cmdList->cmds;
-  iVar10 = s_cmdList->usedCritical;
-  pGVar6 = (GfxCmdHeader *)(puVar2 + iVar1);
-  s_cmdList->lastCmd = pGVar6;
-  pGVar3->usedTotal = iVar1 + uVar11;
+  iVar6 = s_cmdList->usedCritical;
+  pGVar4 = (GfxCmdHeader *)(puVar2 + iVar1);
+  s_cmdList->lastCmd = pGVar4;
+  pGVar3->usedTotal = iVar1 + param_2;
   pGVar3->usedCritical =
-       iVar10 + (-((int)((uVar4 & 0xffffffff) >> 0x1f) + (uint)(uVar4 < 9)) & uVar11);
-  pGVar6->byteCount = (ushort)uVar8;
-  *(short *)(puVar2 + iVar1) = (short)uVar4;
-  pvVar5 = (void *)__restgprlr_25();
-  return pvVar5;
+       iVar6 + (-((uint)(param_1 < RC_FIRST_NONCRITICAL) - ((int)param_1 >> 0x1f)) & param_2);
+  pGVar4->byteCount = (ushort)param_2;
+  *(short *)(puVar2 + iVar1) = (short)param_1;
+  return pGVar4;
 }
 
 
 // 82766C88  R_GrowCommandBuffer  (gfx_d3d/r_rendercmds.cpp:1463)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "GfxRenderCommand": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
@@ -1359,15 +1343,12 @@ void * R_GrowCommandBuffer(int param_1)
 
 {
   uchar *puVar1;
-  uint uVar2;
-  int iVar3;
-  bool bVar6;
-  GfxCmdHeader *pGVar4;
-  void *pvVar5;
+  int iVar2;
+  bool bVar4;
+  GfxCmdHeader *pGVar3;
   
-  iVar3 = __savegprlr_27(param_1);
-  bVar6 = Sys_IsMainThread();
-  if ((!bVar6) && (bVar6 = Sys_IsRenderThread(), !bVar6)) {
+  bVar4 = Sys_IsMainThread();
+  if ((!bVar4) && (bVar4 = Sys_IsRenderThread(), !bVar4)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
                     0x5bb,0,"%s");
   }
@@ -1379,23 +1360,23 @@ void * R_GrowCommandBuffer(int param_1)
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
                     0x5be,0,"%s");
   }
-  pGVar4 = s_cmdList->lastCmd;
+  pGVar3 = s_cmdList->lastCmd;
   puVar1 = s_cmdList->cmds;
-  uVar2 = s_cmdList->usedTotal;
-  s_cmdList->usedTotal = (int)pGVar4 - (int)puVar1;
-  pGVar4 = R_GetCommandBuffer((uint)pGVar4->id,(uint)pGVar4->byteCount + iVar3);
-  if (s_cmdList->lastCmd != pGVar4) {
+  iVar2 = s_cmdList->usedTotal;
+  s_cmdList->usedTotal = (int)pGVar3 - (int)puVar1;
+  pGVar3 = R_GetCommandBuffer((uint)pGVar3->id,(uint)pGVar3->byteCount + param_1);
+  if (s_cmdList->lastCmd != pGVar3) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
                     0x5c4,1,"%s");
   }
-  pvVar5 = (void *)__restgprlr_27(-(ulonglong)(pGVar4 != (GfxCmdHeader *)0x0) &
-                                  ZEXT48(puVar1) + (ulonglong)uVar2);
-  return pvVar5;
+  return (void *)(-(uint)(pGVar3 != (GfxCmdHeader *)0x0) & (uint)(puVar1 + iVar2));
 }
 
 
 // 82766DB0  R_BeginDisplayCmdList2D  (gfx_d3d/r_rendercmds.cpp:1484)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
@@ -1405,7 +1386,6 @@ void R_BeginDisplayCmdList2D(void)
 {
   bool bVar1;
   
-  __savegprlr_29();
   bVar1 = Sys_IsMainThread();
   if ((!bVar1) && (bVar1 = Sys_IsRenderThread(), !bVar1)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
@@ -1421,13 +1401,14 @@ void R_BeginDisplayCmdList2D(void)
   }
   frontEndDataOut->viewInfo[frontEndDataOut->viewInfoIndex].displayCmds =
        s_cmdList->cmds + s_cmdList->usedTotal;
-  __restgprlr_29();
   return;
 }
 
 
 // 82766E98  R_BeginClientCmdList2D  (gfx_d3d/r_rendercmds.cpp:1507)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
@@ -1437,7 +1418,6 @@ void R_BeginClientCmdList2D(void)
 {
   bool bVar1;
   
-  __savegprlr_29();
   bVar1 = Sys_IsMainThread();
   if ((!bVar1) && (bVar1 = Sys_IsRenderThread(), !bVar1)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
@@ -1452,13 +1432,14 @@ void R_BeginClientCmdList2D(void)
                     0x5e7,0,"%s");
   }
   R_BeginDisplayCmdList2D();
-  __restgprlr_29();
   return;
 }
 
 
 // 82766F58  R_ClearClientCmdList2D  (gfx_d3d/r_rendercmds.cpp:1547)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
@@ -1468,7 +1449,6 @@ void R_ClearClientCmdList2D(void)
 {
   bool bVar1;
   
-  __savegprlr_29();
   bVar1 = Sys_IsMainThread();
   if ((!bVar1) && (bVar1 = Sys_IsRenderThread(), !bVar1)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
@@ -1483,13 +1463,14 @@ void R_ClearClientCmdList2D(void)
                     0x611,0,"%s");
   }
   frontEndDataOut->viewInfo[frontEndDataOut->viewInfoIndex].displayCmds = (void *)0x0;
-  __restgprlr_29();
   return;
 }
 
 
 // 82767030  R_BeginSharedCmdList  (gfx_d3d/r_rendercmds.cpp:1565)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
@@ -1499,7 +1480,6 @@ void R_BeginSharedCmdList(void)
 {
   bool bVar1;
   
-  __savegprlr_29();
   bVar1 = Sys_IsMainThread();
   if ((!bVar1) && (bVar1 = Sys_IsRenderThread(), !bVar1)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
@@ -1514,7 +1494,6 @@ void R_BeginSharedCmdList(void)
                     0x621,0,"%s");
   }
   frontEndDataOut->cmds = s_cmdList->cmds + s_cmdList->usedTotal;
-  __restgprlr_29();
   return;
 }
 
@@ -1534,6 +1513,8 @@ void R_AddCmdEndOfList(void)
 
 // 82767118  R_ToggleSmpFrame  (gfx_d3d/r_rendercmds.cpp:1583)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
@@ -1546,7 +1527,6 @@ void R_ToggleSmpFrame(void)
   int iVar2;
   uint uVar4;
   
-  __savegprlr_26();
   if (frontEndDataOut != (GfxBackEndData *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
                     0x638,0,"%s");
@@ -1659,7 +1639,6 @@ void R_ToggleSmpFrame(void)
   frontEndDataOut->emissiveReady = 0;
   frontEndDataOut->finishReady = 0;
   frontEndDataOut->abortReady = 0;
-  __restgprlr_26();
   return;
 }
 
@@ -1728,6 +1707,10 @@ Material * R_RenderCommandMaterial(Material *param_1)
 
 // 82767710  R_AddCmdDrawStretchPic  (gfx_d3d/r_rendercmds.cpp:1889)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 /* WARNING: Enum "GfxRenderCommand": Some values do not have unique names */
 
@@ -1757,10 +1740,9 @@ void R_AddCmdDrawStretchPic
   dVar12 = (double)param_7;
   dVar13 = (double)param_8;
   dVar9 = (double)param_4;
+  dVar6 = (double)param_1;
   dVar7 = (double)param_2;
   dVar8 = (double)param_3;
-  __savegprlr_29((double)param_1,param_9,param_10);
-  dVar6 = (double)__savefpr_24();
   pMVar1 = rgp.defaultMaterial;
   if (in_stack_0000005c != (Material *)0x0) {
     pMVar1 = Material_FromHandle(in_stack_0000005c);
@@ -1808,14 +1790,16 @@ LAB_82767808:
     *(float *)((int)pvVar2 + 0x24) = (float)dVar13;
     R_ConvertColorToBytes(in_stack_00000054,(uchar *)((int)pvVar2 + 0x28));
   }
-  __restfpr_24();
-  __restgprlr_29();
   return;
 }
 
 
 // 82767898  R_AddCmdDrawStretchPicFlipST  (gfx_d3d/r_rendercmds.cpp:1927)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 /* WARNING: Enum "GfxRenderCommand": Some values do not have unique names */
 
@@ -1847,8 +1831,7 @@ void R_AddCmdDrawStretchPicFlipST
   dVar9 = (double)param_4;
   dVar8 = (double)param_3;
   dVar7 = (double)param_2;
-  __savegprlr_29((double)param_1,param_9,param_10);
-  dVar6 = (double)__savefpr_24();
+  dVar6 = (double)param_1;
   pMVar1 = rgp.defaultMaterial;
   if (in_stack_0000005c != (Material *)0x0) {
     pMVar1 = Material_FromHandle(in_stack_0000005c);
@@ -1896,14 +1879,14 @@ LAB_82767990:
     *(float *)((int)pvVar2 + 0x24) = (float)dVar13;
     R_ConvertColorToBytes(in_stack_00000054,(uchar *)((int)pvVar2 + 0x28));
   }
-  __restfpr_24();
-  __restgprlr_29();
   return;
 }
 
 
 // 82767A20  R_AddCmdDrawStretchPicRotateXY  (gfx_d3d/r_rendercmds.cpp:1965)
 
+/* WARNING: Function: __savefpr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_23 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "GfxRenderCommand": Some values do not have unique names */
 
 void R_AddCmdDrawStretchPicRotateXY
@@ -1933,8 +1916,8 @@ void R_AddCmdDrawStretchPicRotateXY
   dVar8 = (double)param_6;
   dVar6 = (double)param_4;
   dVar5 = (double)param_3;
+  dVar3 = (double)param_1;
   dVar4 = (double)param_2;
-  dVar3 = (double)__savefpr_23((double)param_1,param_10,param_11);
   pvVar1 = R_GetCommandBuffer(RC_STRETCH_PIC_ROTATE_XY,0x30);
   if (pvVar1 != (void *)0x0) {
     pMVar2 = rgp.defaultMaterial;
@@ -1954,13 +1937,14 @@ void R_AddCmdDrawStretchPicRotateXY
     fVar12 = AngleNormalize360((float)dVar11);
     *(float *)((int)pvVar1 + 0x2c) = fVar12;
   }
-  __restfpr_23();
   return;
 }
 
 
 // 82767AF0  R_AddCmdDrawStretchPicRotateST  (gfx_d3d/r_rendercmds.cpp:1988)
 
+/* WARNING: Function: __savefpr_19 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_19 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "GfxRenderCommand": Some values do not have unique names */
 
 void R_AddCmdDrawStretchPicRotateST
@@ -2000,7 +1984,7 @@ void R_AddCmdDrawStretchPicRotateST
   dVar10 = (double)param_8;
   dVar5 = (double)param_3;
   dVar4 = (double)param_2;
-  dVar3 = (double)__savefpr_19((double)param_1,param_14,param_15);
+  dVar3 = (double)param_1;
   pvVar1 = R_GetCommandBuffer(RC_STRETCH_PIC_ROTATE_ST,0x40);
   if (pvVar1 != (void *)0x0) {
     pMVar2 = rgp.defaultMaterial;
@@ -2024,13 +2008,14 @@ void R_AddCmdDrawStretchPicRotateST
     fVar16 = AngleNormalize360((float)dVar15);
     *(float *)((int)pvVar1 + 0x3c) = fVar16;
   }
-  __restfpr_19();
   return;
 }
 
 
 // 82767BE0  R_AddCmdDrawStretchRaw  (gfx_d3d/r_rendercmds.cpp:2015)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "GfxRenderCommand": Some values do not have unique names */
 
 void R_AddCmdDrawStretchRaw
@@ -2038,30 +2023,31 @@ void R_AddCmdDrawStretchRaw
                uchar *param_7,int param_8,int param_9)
 
 {
-  undefined4 uVar1;
-  void *pvVar2;
+  void *pvVar1;
   undefined4 in_stack_00000054;
   
-  uVar1 = __savegprlr_24(param_1);
-  pvVar2 = R_GetCommandBuffer(RC_STRETCH_RAW,0x28);
-  if (pvVar2 != (void *)0x0) {
-    *(undefined4 *)((int)pvVar2 + 4) = uVar1;
-    *(int *)((int)pvVar2 + 8) = param_2;
-    *(int *)((int)pvVar2 + 0xc) = param_3;
-    *(int *)((int)pvVar2 + 0x10) = param_4;
-    *(int *)((int)pvVar2 + 0x14) = param_5;
-    *(int *)((int)pvVar2 + 0x18) = param_6;
-    *(uchar **)((int)pvVar2 + 0x1c) = param_7;
-    *(int *)((int)pvVar2 + 0x20) = param_8;
-    *(undefined4 *)((int)pvVar2 + 0x24) = in_stack_00000054;
+  pvVar1 = R_GetCommandBuffer(RC_STRETCH_RAW,0x28);
+  if (pvVar1 != (void *)0x0) {
+    *(int *)((int)pvVar1 + 4) = param_1;
+    *(int *)((int)pvVar1 + 8) = param_2;
+    *(int *)((int)pvVar1 + 0xc) = param_3;
+    *(int *)((int)pvVar1 + 0x10) = param_4;
+    *(int *)((int)pvVar1 + 0x14) = param_5;
+    *(int *)((int)pvVar1 + 0x18) = param_6;
+    *(uchar **)((int)pvVar1 + 0x1c) = param_7;
+    *(int *)((int)pvVar1 + 0x20) = param_8;
+    *(undefined4 *)((int)pvVar1 + 0x24) = in_stack_00000054;
   }
-  __restgprlr_24();
   return;
 }
 
 
 // 82767C50  AddBaseDrawTextCmd  (gfx_d3d/r_rendercmds.cpp:2036)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "GfxRenderCommand": Some values do not have unique names */
 
 GfxCmdDrawText2D *
@@ -2071,108 +2057,94 @@ AddBaseDrawTextCmd(char *param_1,int param_2,Font_s *param_3,float param_4,float
 
 {
   char cVar1;
-  char *pcVar2;
-  GfxCmdDrawText2D *pGVar3;
-  void *pvVar4;
-  longlong lVar5;
-  int iVar6;
-  ulonglong uVar7;
-  char *pcVar8;
-  undefined4 uVar9;
-  double extraout_f1;
-  double dVar10;
-  double dVar11;
-  double dVar12;
-  double dVar13;
-  double dVar14;
+  GfxCmdDrawText2D *pGVar2;
+  char *pcVar3;
+  int iVar4;
+  double dVar5;
+  double dVar6;
+  double dVar7;
+  double dVar8;
+  double dVar9;
   float *in_stack_00000054;
   int in_stack_0000005c;
   int in_stack_00000064;
-  undefined1 in_stack_0000006f;
+  char in_stack_0000006f;
   
-  dVar13 = (double)param_8;
-  dVar12 = (double)param_7;
-  dVar11 = (double)param_6;
-  dVar10 = (double)param_5;
-  uVar7 = (ulonglong)(int)param_3;
-  lVar5 = (longlong)param_2;
-  __savegprlr_26((double)param_4,param_1,lVar5,uVar7,param_9,param_10,param_11,param_12);
-  iVar6 = (int)lVar5;
-  pcVar2 = (char *)__savefpr_27();
-  dVar14 = extraout_f1;
-  if (iVar6 < 1) {
+  dVar9 = (double)param_8;
+  dVar8 = (double)param_7;
+  dVar7 = (double)param_6;
+  dVar6 = (double)param_5;
+  dVar5 = (double)param_4;
+  if (param_2 < 1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
                     0x7f9,0,"%s");
   }
-  if (pcVar2 == (char *)0x0) {
+  if (param_1 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
                     0x7fa,0,"%s");
   }
-  if ((uVar7 & 0xffffffff) == 0) {
+  if (param_3 == (Font_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
                     0x7fb,0,"%s");
   }
-  pcVar8 = pcVar2;
-  if ((*pcVar2 == '\0') && (in_stack_00000064 < 0)) {
-LAB_82767d18:
-    __restfpr_27(0);
-    pGVar3 = (GfxCmdDrawText2D *)__restgprlr_26();
-    return pGVar3;
+  pcVar3 = param_1;
+  if ((*param_1 == '\0') && (in_stack_00000064 < 0)) {
+    return (GfxCmdDrawText2D *)0x0;
   }
   do {
-    cVar1 = *pcVar8;
-    pcVar8 = pcVar8 + 1;
+    cVar1 = *pcVar3;
+    pcVar3 = pcVar3 + 1;
   } while (cVar1 != '\0');
-  pvVar4 = R_GetCommandBuffer(RC_DRAW_TEXT_2D,(uint)(pcVar8 + (0x53 - (int)pcVar2)) & 0xfffffffc);
-  if (pvVar4 == (void *)0x0) goto LAB_82767d18;
-  *(float *)((int)pvVar4 + 4) = (float)dVar14;
-  *(int *)((int)pvVar4 + 0x10) = (int)uVar7;
-  *(float *)((int)pvVar4 + 8) = (float)dVar10;
-  *(float *)((int)pvVar4 + 0xc) = (float)dVar13;
-  *(float *)((int)pvVar4 + 0x14) = (float)dVar11;
-  *(float *)((int)pvVar4 + 0x18) = (float)dVar12;
-  R_ConvertColorToBytes(in_stack_00000054,(uchar *)((int)pvVar4 + 0x1c));
-  *(int *)((int)pvVar4 + 0x20) = iVar6;
-  *(undefined4 *)((int)pvVar4 + 0x24) = 0;
+  pGVar2 = R_GetCommandBuffer(RC_DRAW_TEXT_2D,(uint)(pcVar3 + (0x53 - (int)param_1)) & 0xfffffffc);
+  if (pGVar2 == (GfxCmdDrawText2D *)0x0) {
+    return (GfxCmdDrawText2D *)0x0;
+  }
+  pGVar2->x = (float)dVar5;
+  pGVar2->font = param_3;
+  pGVar2->y = (float)dVar6;
+  pGVar2->rotation = (float)dVar9;
+  pGVar2->xScale = (float)dVar7;
+  pGVar2->yScale = (float)dVar8;
+  R_ConvertColorToBytes(in_stack_00000054,(pGVar2->color).array);
+  pGVar2->maxChars = param_2;
+  pGVar2->renderFlags = 0;
   if (in_stack_0000005c == 3) {
-    uVar9 = 4;
+    iVar4 = 4;
   }
   else if (in_stack_0000005c == 6) {
-    uVar9 = 0xc;
+    iVar4 = 0xc;
   }
   else if (in_stack_0000005c == 0x80) {
-    uVar9 = 1;
+    iVar4 = 1;
   }
   else if (in_stack_0000005c == 0x84) {
-    uVar9 = 5;
+    iVar4 = 5;
   }
   else if (in_stack_0000005c == 7) {
-    uVar9 = 0x400;
+    iVar4 = 0x400;
   }
   else if (in_stack_0000005c == 8) {
-    uVar9 = 0xc00;
+    iVar4 = 0xc00;
   }
   else if (in_stack_0000005c == 9) {
-    uVar9 = 0x1000;
+    iVar4 = 0x1000;
   }
   else {
     if (in_stack_0000005c != 10) goto LAB_82767e1c;
-    uVar9 = 0x2000;
+    iVar4 = 0x2000;
   }
-  *(undefined4 *)((int)pvVar4 + 0x24) = uVar9;
+  pGVar2->renderFlags = iVar4;
 LAB_82767e1c:
   if (-1 < in_stack_00000064) {
-    *(int *)((int)pvVar4 + 0x28) = in_stack_00000064;
-    *(uint *)((int)pvVar4 + 0x24) = *(uint *)((int)pvVar4 + 0x24) | 2;
-    *(undefined1 *)((int)pvVar4 + 0x2c) = in_stack_0000006f;
+    pGVar2->cursorPos = in_stack_00000064;
+    pGVar2->renderFlags = pGVar2->renderFlags | 2;
+    pGVar2->cursorLetter = in_stack_0000006f;
   }
   Profile_Begin(0x9d);
   memcpy();
   Profile_EndInternal((double *)0x0);
-  *(char *)((int)pvVar4 + (int)(pcVar8 + (0x4f - (int)pcVar2))) = '\0';
-  __restfpr_27(pvVar4);
-  pGVar3 = (GfxCmdDrawText2D *)__restgprlr_26();
-  return pGVar3;
+  (pcVar3 + (0x4f - (int)param_1))[(int)(pGVar2->text + -0x50)] = '\0';
+  return pGVar2;
 }
 
 
@@ -2239,6 +2211,10 @@ bool SetDrawText2DPulseFXParms
 
 // 82767FD0  R_AddCmdDrawText  (gfx_d3d/r_rendercmds.cpp:2148)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "GfxRenderCommand": Some values do not have unique names */
 
 void R_AddCmdDrawText(char *param_1,int param_2,Font_s *param_3,float param_4,float param_5,
@@ -2246,109 +2222,96 @@ void R_AddCmdDrawText(char *param_1,int param_2,Font_s *param_3,float param_4,fl
 
 {
   char cVar1;
-  char *pcVar2;
-  void *pvVar3;
-  longlong lVar4;
-  int iVar5;
-  ulonglong uVar6;
-  char *pcVar7;
-  undefined4 uVar8;
-  double extraout_f1;
+  void *pvVar2;
+  char *pcVar3;
+  undefined4 uVar4;
+  double dVar5;
+  double dVar6;
+  double dVar7;
+  double dVar8;
   double dVar9;
-  double dVar10;
-  double dVar11;
-  double dVar12;
-  double dVar13;
   float *in_stack_00000054;
   int in_stack_0000005c;
   
-  dVar11 = (double)param_7;
-  dVar12 = (double)param_8;
-  dVar10 = (double)param_6;
-  dVar9 = (double)param_5;
-  uVar6 = (ulonglong)(int)param_3;
-  lVar4 = (longlong)param_2;
-  __savegprlr_27((double)param_4,param_1,lVar4,uVar6,param_9,param_10);
-  iVar5 = (int)lVar4;
-  pcVar2 = (char *)__savefpr_27();
-  dVar13 = extraout_f1;
-  if (iVar5 < 1) {
+  dVar8 = (double)param_7;
+  dVar9 = (double)param_8;
+  dVar7 = (double)param_6;
+  dVar6 = (double)param_5;
+  dVar5 = (double)param_4;
+  if (param_2 < 1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
                     0x7f9,0,"%s");
   }
-  if (pcVar2 == (char *)0x0) {
+  if (param_1 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
                     0x7fa,0,"%s");
   }
-  if ((uVar6 & 0xffffffff) == 0) {
+  if (param_3 == (Font_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
                     0x7fb,0,"%s");
   }
-  pcVar7 = pcVar2;
-  if (*pcVar2 == '\0') goto LAB_827681a4;
+  pcVar3 = param_1;
+  if (*param_1 == '\0') {
+    return;
+  }
   do {
-    cVar1 = *pcVar7;
-    pcVar7 = pcVar7 + 1;
+    cVar1 = *pcVar3;
+    pcVar3 = pcVar3 + 1;
   } while (cVar1 != '\0');
-  pvVar3 = R_GetCommandBuffer(RC_DRAW_TEXT_2D,(uint)(pcVar7 + (0x53 - (int)pcVar2)) & 0xfffffffc);
-  if (pvVar3 == (void *)0x0) goto LAB_827681a4;
-  *(float *)((int)pvVar3 + 4) = (float)dVar13;
-  *(int *)((int)pvVar3 + 0x10) = (int)uVar6;
-  *(float *)((int)pvVar3 + 8) = (float)dVar9;
-  *(float *)((int)pvVar3 + 0xc) = (float)dVar12;
-  *(float *)((int)pvVar3 + 0x14) = (float)dVar10;
-  *(float *)((int)pvVar3 + 0x18) = (float)dVar11;
-  R_ConvertColorToBytes(in_stack_00000054,(uchar *)((int)pvVar3 + 0x1c));
-  *(int *)((int)pvVar3 + 0x20) = iVar5;
-  *(undefined4 *)((int)pvVar3 + 0x24) = 0;
+  pvVar2 = R_GetCommandBuffer(RC_DRAW_TEXT_2D,(uint)(pcVar3 + (0x53 - (int)param_1)) & 0xfffffffc);
+  if (pvVar2 == (void *)0x0) {
+    return;
+  }
+  *(float *)((int)pvVar2 + 4) = (float)dVar5;
+  *(Font_s **)((int)pvVar2 + 0x10) = param_3;
+  *(float *)((int)pvVar2 + 8) = (float)dVar6;
+  *(float *)((int)pvVar2 + 0xc) = (float)dVar9;
+  *(float *)((int)pvVar2 + 0x14) = (float)dVar7;
+  *(float *)((int)pvVar2 + 0x18) = (float)dVar8;
+  R_ConvertColorToBytes(in_stack_00000054,(uchar *)((int)pvVar2 + 0x1c));
+  *(int *)((int)pvVar2 + 0x20) = param_2;
+  *(undefined4 *)((int)pvVar2 + 0x24) = 0;
   if (in_stack_0000005c == 3) {
-    uVar8 = 4;
-LAB_82768178:
-    *(undefined4 *)((int)pvVar3 + 0x24) = uVar8;
+    uVar4 = 4;
+  }
+  else if (in_stack_0000005c == 6) {
+    uVar4 = 0xc;
+  }
+  else if (in_stack_0000005c == 0x80) {
+    uVar4 = 1;
+  }
+  else if (in_stack_0000005c == 0x84) {
+    uVar4 = 5;
+  }
+  else if (in_stack_0000005c == 7) {
+    uVar4 = 0x400;
+  }
+  else if (in_stack_0000005c == 8) {
+    uVar4 = 0xc00;
+  }
+  else if (in_stack_0000005c == 9) {
+    uVar4 = 0x1000;
   }
   else {
-    if (in_stack_0000005c == 6) {
-      uVar8 = 0xc;
-      goto LAB_82768178;
-    }
-    if (in_stack_0000005c == 0x80) {
-      uVar8 = 1;
-      goto LAB_82768178;
-    }
-    if (in_stack_0000005c == 0x84) {
-      uVar8 = 5;
-      goto LAB_82768178;
-    }
-    if (in_stack_0000005c == 7) {
-      uVar8 = 0x400;
-      goto LAB_82768178;
-    }
-    if (in_stack_0000005c == 8) {
-      uVar8 = 0xc00;
-      goto LAB_82768178;
-    }
-    if (in_stack_0000005c == 9) {
-      uVar8 = 0x1000;
-      goto LAB_82768178;
-    }
-    if (in_stack_0000005c == 10) {
-      uVar8 = 0x2000;
-      goto LAB_82768178;
-    }
+    if (in_stack_0000005c != 10) goto LAB_8276817c;
+    uVar4 = 0x2000;
   }
+  *(undefined4 *)((int)pvVar2 + 0x24) = uVar4;
+LAB_8276817c:
   Profile_Begin(0x9d);
   memcpy();
   Profile_EndInternal((double *)0x0);
-  *(char *)((int)pvVar3 + (int)(pcVar7 + (0x4f - (int)pcVar2))) = '\0';
-LAB_827681a4:
-  __restfpr_27();
-  __restgprlr_27();
+  *(char *)((int)pvVar2 + (int)(pcVar3 + (0x4f - (int)param_1))) = '\0';
   return;
 }
 
 
 // 827681B8  R_AddCmdDrawTextSubtitle  (gfx_d3d/r_rendercmds.cpp:2154)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "GfxRenderCommand": Some values do not have unique names */
 
 void R_AddCmdDrawTextSubtitle
@@ -2358,115 +2321,103 @@ void R_AddCmdDrawTextSubtitle
 
 {
   char cVar1;
-  char *pcVar2;
-  GfxCmdDrawText2D *pGVar3;
-  longlong lVar4;
-  ulonglong uVar5;
-  char *pcVar6;
-  int iVar7;
-  double extraout_f1;
+  GfxCmdDrawText2D *pGVar2;
+  char *pcVar3;
+  int iVar4;
+  double dVar5;
+  double dVar6;
+  double dVar7;
   double dVar8;
   double dVar9;
-  double dVar10;
-  double dVar11;
-  double dVar12;
   float *in_stack_00000054;
   int in_stack_0000005c;
   float *in_stack_00000064;
   char in_stack_0000006f;
   
-  dVar10 = (double)param_7;
-  dVar11 = (double)param_8;
-  dVar9 = (double)param_6;
-  dVar8 = (double)param_5;
-  uVar5 = (ulonglong)(int)param_3;
-  lVar4 = (longlong)param_2;
-  __savegprlr_26((double)param_4,param_1,lVar4,uVar5,param_9,param_10,param_11,param_12);
-  iVar7 = (int)lVar4;
-  pcVar2 = (char *)__savefpr_27();
-  dVar12 = extraout_f1;
-  if (iVar7 < 1) {
+  dVar8 = (double)param_7;
+  dVar9 = (double)param_8;
+  dVar7 = (double)param_6;
+  dVar5 = (double)param_4;
+  dVar6 = (double)param_5;
+  if (param_2 < 1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
                     0x7f9,0,"%s");
   }
-  if (pcVar2 == (char *)0x0) {
+  if (param_1 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
                     0x7fa,0,"%s");
   }
-  if ((uVar5 & 0xffffffff) == 0) {
+  if (param_3 == (Font_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
                     0x7fb,0,"%s");
   }
-  pcVar6 = pcVar2;
-  if (*pcVar2 == '\0') goto LAB_827683c4;
+  pcVar3 = param_1;
+  if (*param_1 == '\0') {
+    return;
+  }
   do {
-    cVar1 = *pcVar6;
-    pcVar6 = pcVar6 + 1;
+    cVar1 = *pcVar3;
+    pcVar3 = pcVar3 + 1;
   } while (cVar1 != '\0');
-  pGVar3 = R_GetCommandBuffer(RC_DRAW_TEXT_2D,(uint)(pcVar6 + (0x53 - (int)pcVar2)) & 0xfffffffc);
-  if (pGVar3 == (GfxCmdDrawText2D *)0x0) goto LAB_827683c4;
-  pGVar3->x = (float)dVar12;
-  pGVar3->font = (Font_s *)uVar5;
-  pGVar3->y = (float)dVar8;
-  pGVar3->rotation = (float)dVar11;
-  pGVar3->xScale = (float)dVar9;
-  pGVar3->yScale = (float)dVar10;
-  R_ConvertColorToBytes(in_stack_00000054,(pGVar3->color).array);
-  pGVar3->maxChars = iVar7;
-  pGVar3->renderFlags = 0;
+  pGVar2 = R_GetCommandBuffer(RC_DRAW_TEXT_2D,(uint)(pcVar3 + (0x53 - (int)param_1)) & 0xfffffffc);
+  if (pGVar2 == (GfxCmdDrawText2D *)0x0) {
+    return;
+  }
+  pGVar2->x = (float)dVar5;
+  pGVar2->font = param_3;
+  pGVar2->y = (float)dVar6;
+  pGVar2->rotation = (float)dVar9;
+  pGVar2->xScale = (float)dVar7;
+  pGVar2->yScale = (float)dVar8;
+  R_ConvertColorToBytes(in_stack_00000054,(pGVar2->color).array);
+  pGVar2->maxChars = param_2;
+  pGVar2->renderFlags = 0;
   if (in_stack_0000005c == 3) {
-    iVar7 = 4;
-LAB_82768364:
-    pGVar3->renderFlags = iVar7;
+    iVar4 = 4;
+  }
+  else if (in_stack_0000005c == 6) {
+    iVar4 = 0xc;
+  }
+  else if (in_stack_0000005c == 0x80) {
+    iVar4 = 1;
+  }
+  else if (in_stack_0000005c == 0x84) {
+    iVar4 = 5;
+  }
+  else if (in_stack_0000005c == 7) {
+    iVar4 = 0x400;
+  }
+  else if (in_stack_0000005c == 8) {
+    iVar4 = 0xc00;
+  }
+  else if (in_stack_0000005c == 9) {
+    iVar4 = 0x1000;
   }
   else {
-    if (in_stack_0000005c == 6) {
-      iVar7 = 0xc;
-      goto LAB_82768364;
-    }
-    if (in_stack_0000005c == 0x80) {
-      iVar7 = 1;
-      goto LAB_82768364;
-    }
-    if (in_stack_0000005c == 0x84) {
-      iVar7 = 5;
-      goto LAB_82768364;
-    }
-    if (in_stack_0000005c == 7) {
-      iVar7 = 0x400;
-      goto LAB_82768364;
-    }
-    if (in_stack_0000005c == 8) {
-      iVar7 = 0xc00;
-      goto LAB_82768364;
-    }
-    if (in_stack_0000005c == 9) {
-      iVar7 = 0x1000;
-      goto LAB_82768364;
-    }
-    if (in_stack_0000005c == 10) {
-      iVar7 = 0x2000;
-      goto LAB_82768364;
-    }
+    if (in_stack_0000005c != 10) goto LAB_82768368;
+    iVar4 = 0x2000;
   }
+  pGVar2->renderFlags = iVar4;
+LAB_82768368:
   Profile_Begin(0x9d);
   memcpy();
   Profile_EndInternal((double *)0x0);
-  (pcVar6 + (0x4f - (int)pcVar2))[(int)(pGVar3->text + -0x50)] = '\0';
+  (pcVar3 + (0x4f - (int)param_1))[(int)(pGVar2->text + -0x50)] = '\0';
   if (in_stack_0000006f != '\0') {
-    pGVar3->renderFlags = pGVar3->renderFlags | 0x200;
+    pGVar2->renderFlags = pGVar2->renderFlags | 0x200;
   }
-  pGVar3->renderFlags = pGVar3->renderFlags | 0x100;
-  SetDrawText2DGlowParms(pGVar3,in_stack_00000054,in_stack_00000064);
-LAB_827683c4:
-  __restfpr_27();
-  __restgprlr_26();
+  pGVar2->renderFlags = pGVar2->renderFlags | 0x100;
+  SetDrawText2DGlowParms(pGVar2,in_stack_00000054,in_stack_00000064);
   return;
 }
 
 
 // 827683D8  R_AddCmdDrawTextWithEffects  (gfx_d3d/r_rendercmds.cpp:2169)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 /* WARNING: Enum "GfxRenderCommand": Some values do not have unique names */
 
@@ -2478,21 +2429,17 @@ void R_AddCmdDrawTextWithEffects
 
 {
   char cVar1;
-  char *pcVar2;
-  Material *pMVar3;
+  Material *pMVar2;
+  bool bVar4;
   bool bVar5;
-  bool bVar6;
-  GfxCmdDrawText2D *pGVar4;
-  longlong lVar7;
-  ulonglong uVar8;
-  char *pcVar9;
-  int iVar10;
-  double extraout_f1;
+  GfxCmdDrawText2D *pGVar3;
+  char *pcVar6;
+  int iVar7;
+  double dVar8;
+  double dVar9;
+  double dVar10;
   double dVar11;
   double dVar12;
-  double dVar13;
-  double dVar14;
-  double dVar15;
   float *in_stack_00000054;
   int in_stack_0000005c;
   float *in_stack_00000064;
@@ -2503,141 +2450,129 @@ void R_AddCmdDrawTextWithEffects
   int in_stack_0000008c;
   int in_stack_00000094;
   
-  dVar14 = (double)param_8;
-  dVar13 = (double)param_7;
-  dVar12 = (double)param_6;
-  dVar11 = (double)param_5;
-  uVar8 = (ulonglong)(int)param_3;
-  lVar7 = (longlong)param_2;
-  __savegprlr_24((double)param_4,param_1,lVar7,uVar8,param_9,param_10,param_11,param_12,param_13);
-  iVar10 = (int)lVar7;
-  pcVar2 = (char *)__savefpr_27();
-  dVar15 = extraout_f1;
-  pMVar3 = rgp.defaultMaterial;
+  dVar12 = (double)param_8;
+  dVar11 = (double)param_7;
+  dVar10 = (double)param_6;
+  dVar9 = (double)param_5;
+  dVar8 = (double)param_4;
+  pMVar2 = rgp.defaultMaterial;
   if (in_stack_0000006c != (Material *)0x0) {
-    pMVar3 = Material_FromHandle(in_stack_0000006c);
+    pMVar2 = Material_FromHandle(in_stack_0000006c);
   }
-  bVar5 = Material_HasTechnique(pMVar3,TECHNIQUE_LIT);
-  if (bVar5) {
+  bVar4 = Material_HasTechnique(pMVar2,TECHNIQUE_LIT);
+  if (bVar4) {
 LAB_8276846c:
-    bVar5 = true;
+    bVar4 = true;
   }
   else {
-    bVar6 = Material_HasTechnique(pMVar3,TECHNIQUE_EMISSIVE);
-    bVar5 = false;
-    if (bVar6) goto LAB_8276846c;
+    bVar5 = Material_HasTechnique(pMVar2,TECHNIQUE_EMISSIVE);
+    bVar4 = false;
+    if (bVar5) goto LAB_8276846c;
   }
-  if ((bVar5) && (bVar5 = Material_IsDefault(pMVar3), !bVar5)) goto LAB_82768490;
-  pMVar3 = rgp.defaultMaterial;
+  if ((bVar4) && (bVar4 = Material_IsDefault(pMVar2), !bVar4)) goto LAB_82768490;
+  pMVar2 = rgp.defaultMaterial;
   if (in_stack_00000074 != (Material *)0x0) {
-    pMVar3 = Material_FromHandle(in_stack_00000074);
+    pMVar2 = Material_FromHandle(in_stack_00000074);
   }
-  bVar5 = Material_HasTechnique(pMVar3,TECHNIQUE_LIT);
-  if (bVar5) {
+  bVar4 = Material_HasTechnique(pMVar2,TECHNIQUE_LIT);
+  if (bVar4) {
 LAB_82768504:
-    bVar5 = true;
+    bVar4 = true;
   }
   else {
-    bVar6 = Material_HasTechnique(pMVar3,TECHNIQUE_EMISSIVE);
-    bVar5 = false;
-    if (bVar6) goto LAB_82768504;
+    bVar5 = Material_HasTechnique(pMVar2,TECHNIQUE_EMISSIVE);
+    bVar4 = false;
+    if (bVar5) goto LAB_82768504;
   }
-  if ((bVar5) && (bVar5 = Material_IsDefault(pMVar3), !bVar5)) {
+  if ((bVar4) && (bVar4 = Material_IsDefault(pMVar2), !bVar4)) {
 LAB_82768490:
     R_WarnOncePerFrame(R_WARN_FOGABLE_2DTEXT);
-    __restfpr_27();
-    __restgprlr_24();
     return;
   }
-  if (iVar10 < 1) {
+  if (param_2 < 1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
                     0x7f9,0,"%s");
   }
-  if (pcVar2 == (char *)0x0) {
+  if (param_1 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
                     0x7fa,0,"%s");
   }
-  if ((uVar8 & 0xffffffff) == 0) {
+  if (param_3 == (Font_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
                     0x7fb,0,"%s");
   }
-  pcVar9 = pcVar2;
-  if (*pcVar2 == '\0') goto LAB_82768730;
+  pcVar6 = param_1;
+  if (*param_1 == '\0') {
+    return;
+  }
   do {
-    cVar1 = *pcVar9;
-    pcVar9 = pcVar9 + 1;
+    cVar1 = *pcVar6;
+    pcVar6 = pcVar6 + 1;
   } while (cVar1 != '\0');
-  pGVar4 = R_GetCommandBuffer(RC_DRAW_TEXT_2D,(uint)(pcVar9 + (0x53 - (int)pcVar2)) & 0xfffffffc);
-  if (pGVar4 == (GfxCmdDrawText2D *)0x0) goto LAB_82768730;
-  pGVar4->font = (Font_s *)uVar8;
-  pGVar4->x = (float)dVar15;
-  pGVar4->y = (float)dVar11;
-  pGVar4->rotation = (float)dVar14;
-  pGVar4->xScale = (float)dVar12;
-  pGVar4->yScale = (float)dVar13;
-  R_ConvertColorToBytes(in_stack_00000054,(pGVar4->color).array);
-  pGVar4->maxChars = iVar10;
-  pGVar4->renderFlags = 0;
+  pGVar3 = R_GetCommandBuffer(RC_DRAW_TEXT_2D,(uint)(pcVar6 + (0x53 - (int)param_1)) & 0xfffffffc);
+  if (pGVar3 == (GfxCmdDrawText2D *)0x0) {
+    return;
+  }
+  pGVar3->font = param_3;
+  pGVar3->x = (float)dVar8;
+  pGVar3->y = (float)dVar9;
+  pGVar3->rotation = (float)dVar12;
+  pGVar3->xScale = (float)dVar10;
+  pGVar3->yScale = (float)dVar11;
+  R_ConvertColorToBytes(in_stack_00000054,(pGVar3->color).array);
+  pGVar3->maxChars = param_2;
+  pGVar3->renderFlags = 0;
   if (in_stack_0000005c == 3) {
-    iVar10 = 4;
-LAB_8276869c:
-    pGVar4->renderFlags = iVar10;
+    iVar7 = 4;
+  }
+  else if (in_stack_0000005c == 6) {
+    iVar7 = 0xc;
+  }
+  else if (in_stack_0000005c == 0x80) {
+    iVar7 = 1;
+  }
+  else if (in_stack_0000005c == 0x84) {
+    iVar7 = 5;
+  }
+  else if (in_stack_0000005c == 7) {
+    iVar7 = 0x400;
+  }
+  else if (in_stack_0000005c == 8) {
+    iVar7 = 0xc00;
+  }
+  else if (in_stack_0000005c == 9) {
+    iVar7 = 0x1000;
   }
   else {
-    if (in_stack_0000005c == 6) {
-      iVar10 = 0xc;
-      goto LAB_8276869c;
-    }
-    if (in_stack_0000005c == 0x80) {
-      iVar10 = 1;
-      goto LAB_8276869c;
-    }
-    if (in_stack_0000005c == 0x84) {
-      iVar10 = 5;
-      goto LAB_8276869c;
-    }
-    if (in_stack_0000005c == 7) {
-      iVar10 = 0x400;
-      goto LAB_8276869c;
-    }
-    if (in_stack_0000005c == 8) {
-      iVar10 = 0xc00;
-      goto LAB_8276869c;
-    }
-    if (in_stack_0000005c == 9) {
-      iVar10 = 0x1000;
-      goto LAB_8276869c;
-    }
-    if (in_stack_0000005c == 10) {
-      iVar10 = 0x2000;
-      goto LAB_8276869c;
-    }
+    if (in_stack_0000005c != 10) goto LAB_827686a0;
+    iVar7 = 0x2000;
   }
+  pGVar3->renderFlags = iVar7;
+LAB_827686a0:
   Profile_Begin(0x9d);
   memcpy();
   Profile_EndInternal((double *)0x0);
-  (pcVar9 + (0x4f - (int)pcVar2))[(int)(pGVar4->text + -0x50)] = '\0';
-  SetDrawText2DGlowParms(pGVar4,in_stack_00000054,in_stack_00000064);
+  (pcVar6 + (0x4f - (int)param_1))[(int)(pGVar3->text + -0x50)] = '\0';
+  SetDrawText2DGlowParms(pGVar3,in_stack_00000054,in_stack_00000064);
   if (((in_stack_0000006c != (Material *)0x0) && (in_stack_00000074 != (Material *)0x0)) &&
      (in_stack_0000007c != 0)) {
-    pGVar4->fxMaterial = in_stack_0000006c;
-    pGVar4->fxMaterialGlow = in_stack_00000074;
-    pGVar4->padding = 0.0;
-    pGVar4->fxBirthTime = in_stack_0000007c;
-    pGVar4->renderFlags = pGVar4->renderFlags | 0xc0;
-    pGVar4->fxLetterTime = in_stack_00000084;
-    pGVar4->fxDecayStartTime = in_stack_0000008c;
-    pGVar4->fxDecayDuration = in_stack_00000094;
+    pGVar3->fxMaterial = in_stack_0000006c;
+    pGVar3->fxMaterialGlow = in_stack_00000074;
+    pGVar3->padding = 0.0;
+    pGVar3->fxBirthTime = in_stack_0000007c;
+    pGVar3->renderFlags = pGVar3->renderFlags | 0xc0;
+    pGVar3->fxLetterTime = in_stack_00000084;
+    pGVar3->fxDecayStartTime = in_stack_0000008c;
+    pGVar3->fxDecayDuration = in_stack_00000094;
   }
-LAB_82768730:
-  __restfpr_27();
-  __restgprlr_24();
   return;
 }
 
 
 // 82768740  R_AddCmdDrawTextInSpace  (gfx_d3d/r_rendercmds.cpp:2200)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "GfxRenderCommand": Some values do not have unique names */
 
 void R_AddCmdDrawTextInSpace
@@ -2647,57 +2582,53 @@ void R_AddCmdDrawTextInSpace
 {
   char cVar1;
   float fVar2;
-  char *pcVar3;
-  void *pvVar4;
-  char *pcVar5;
+  void *pvVar3;
+  char *pcVar4;
   
-  pcVar3 = (char *)__savegprlr_24(param_1);
-  if (pcVar3 == (char *)0x0) {
+  if (param_1 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
                     0x89d,0,"%s");
   }
-  pcVar5 = pcVar3;
-  if (*pcVar3 != '\0') {
+  pcVar4 = param_1;
+  if (*param_1 != '\0') {
     do {
-      cVar1 = *pcVar5;
-      pcVar5 = pcVar5 + 1;
+      cVar1 = *pcVar4;
+      pcVar4 = pcVar4 + 1;
     } while (cVar1 != '\0');
-    pvVar4 = R_GetCommandBuffer(RC_DRAW_TEXT_3D,(uint)(pcVar5 + (0x33 - (int)pcVar3)) & 0xfffffffc);
-    if (pvVar4 != (void *)0x0) {
+    pvVar3 = R_GetCommandBuffer(RC_DRAW_TEXT_3D,(uint)(pcVar4 + (0x33 - (int)param_1)) & 0xfffffffc)
+    ;
+    if (pvVar3 != (void *)0x0) {
       fVar2 = *param_3;
-      *(Font_s **)((int)pvVar4 + 0x10) = param_2;
-      *(float *)((int)pvVar4 + 4) = fVar2;
-      *(float *)((int)pvVar4 + 8) = param_3[1];
-      *(float *)((int)pvVar4 + 0xc) = param_3[2];
-      *(float *)((int)pvVar4 + 0x14) = *param_4;
-      *(float *)((int)pvVar4 + 0x18) = param_4[1];
-      *(float *)((int)pvVar4 + 0x1c) = param_4[2];
-      *(float *)((int)pvVar4 + 0x20) = *param_5;
-      *(float *)((int)pvVar4 + 0x24) = param_5[1];
-      *(float *)((int)pvVar4 + 0x28) = param_5[2];
-      R_ConvertColorToBytes(param_6,(uchar *)((int)pvVar4 + 0x2c));
+      *(Font_s **)((int)pvVar3 + 0x10) = param_2;
+      *(float *)((int)pvVar3 + 4) = fVar2;
+      *(float *)((int)pvVar3 + 8) = param_3[1];
+      *(float *)((int)pvVar3 + 0xc) = param_3[2];
+      *(float *)((int)pvVar3 + 0x14) = *param_4;
+      *(float *)((int)pvVar3 + 0x18) = param_4[1];
+      *(float *)((int)pvVar3 + 0x1c) = param_4[2];
+      *(float *)((int)pvVar3 + 0x20) = *param_5;
+      *(float *)((int)pvVar3 + 0x24) = param_5[1];
+      *(float *)((int)pvVar3 + 0x28) = param_5[2];
+      R_ConvertColorToBytes(param_6,(uchar *)((int)pvVar3 + 0x2c));
       Profile_Begin(0x9d);
       memcpy();
       Profile_EndInternal((double *)0x0);
-      *(char *)((int)pvVar4 + (int)(pcVar5 + (0x2f - (int)pcVar3))) = '\0';
+      *(char *)((int)pvVar3 + (int)(pcVar4 + (0x2f - (int)param_1))) = '\0';
     }
   }
-  __restgprlr_24();
   return;
 }
 
 
 // 82768868  CopyPoolTextToCmd  (gfx_d3d/r_rendercmds.cpp:2233)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void CopyPoolTextToCmd(char *param_1,int param_2,int param_3,int param_4,GfxCmdDrawText2D *param_5)
 
 {
-  int iVar1;
-  ulonglong uVar2;
-  
-  uVar2 = (ulonglong)(int)param_5;
-  __savegprlr_27(param_1);
-  if ((uVar2 & 0xffffffff) == 0) {
+  if (param_5 == (GfxCmdDrawText2D *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
                     0x8bc,0,"%s");
   }
@@ -2706,15 +2637,18 @@ void CopyPoolTextToCmd(char *param_1,int param_2,int param_3,int param_4,GfxCmdD
     memcpy();
   }
   memcpy();
-  iVar1 = Profile_EndInternal((double *)0x0);
-  *(undefined1 *)(param_4 + (int)uVar2 + 0x50) = 0;
-  __restgprlr_27(iVar1);
+  Profile_EndInternal((double *)0x0);
+  param_5->text[param_4] = '\0';
   return;
 }
 
 
 // 82768910  AddBaseDrawConsoleTextCmd  (gfx_d3d/r_rendercmds.cpp:2256)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "GfxRenderCommand": Some values do not have unique names */
 
 GfxCmdDrawText2D *
@@ -2723,73 +2657,64 @@ AddBaseDrawConsoleTextCmd
           float param_7,float param_8,float param_9,float *param_10,int param_11)
 
 {
-  char *pcVar1;
-  GfxCmdDrawText2D *pGVar2;
-  int iVar3;
-  double extraout_f1;
+  GfxCmdDrawText2D *pGVar1;
+  int iVar2;
+  double dVar3;
   double dVar4;
   double dVar5;
   double dVar6;
-  double dVar7;
   float *in_stack_0000005c;
   int in_stack_00000064;
   
   dVar6 = (double)param_9;
   dVar5 = (double)param_8;
+  dVar3 = (double)param_6;
   dVar4 = (double)param_7;
-  __savegprlr_25((double)param_6,param_1);
-  pcVar1 = (char *)__savefpr_28();
-  dVar7 = extraout_f1;
   if (param_4 < 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
                     0x8d4,0,"%s");
   }
-  if (pcVar1 == (char *)0x0) {
+  if (param_1 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
                     0x8d5,0,"%s");
   }
-  if (param_4 == 0) {
-LAB_827689a8:
-    __restfpr_28(0);
-    pGVar2 = (GfxCmdDrawText2D *)__restgprlr_25();
-    return pGVar2;
+  if ((param_4 == 0) ||
+     (pGVar1 = R_GetCommandBuffer(RC_DRAW_TEXT_2D,param_4 + 0x54U & 0xfffffffc),
+     pGVar1 == (GfxCmdDrawText2D *)0x0)) {
+    return (GfxCmdDrawText2D *)0x0;
   }
-  pGVar2 = R_GetCommandBuffer(RC_DRAW_TEXT_2D,param_4 + 0x54U & 0xfffffffc);
-  if (pGVar2 == (GfxCmdDrawText2D *)0x0) goto LAB_827689a8;
-  pGVar2->x = (float)dVar7;
-  pGVar2->y = (float)dVar4;
-  pGVar2->font = param_5;
-  pGVar2->xScale = (float)dVar5;
-  pGVar2->yScale = (float)dVar6;
-  pGVar2->rotation = 0.0;
-  R_ConvertColorToBytes(in_stack_0000005c,(pGVar2->color).array);
-  pGVar2->renderFlags = 0;
-  pGVar2->maxChars = 0x7fffffff;
+  pGVar1->x = (float)dVar3;
+  pGVar1->y = (float)dVar4;
+  pGVar1->font = param_5;
+  pGVar1->xScale = (float)dVar5;
+  pGVar1->yScale = (float)dVar6;
+  pGVar1->rotation = 0.0;
+  R_ConvertColorToBytes(in_stack_0000005c,(pGVar1->color).array);
+  pGVar1->renderFlags = 0;
+  pGVar1->maxChars = 0x7fffffff;
   if (in_stack_00000064 == 3) {
-    iVar3 = 4;
+    iVar2 = 4;
   }
   else if (in_stack_00000064 == 6) {
-    iVar3 = 0xc;
+    iVar2 = 0xc;
   }
   else if (in_stack_00000064 == 0x80) {
-    iVar3 = 1;
+    iVar2 = 1;
   }
   else if (in_stack_00000064 == 0x84) {
-    iVar3 = 5;
+    iVar2 = 5;
   }
   else if (in_stack_00000064 == 7) {
-    iVar3 = 0x400;
+    iVar2 = 0x400;
   }
   else {
     if (in_stack_00000064 != 8) goto LAB_82768a7c;
-    iVar3 = 0xc00;
+    iVar2 = 0xc00;
   }
-  pGVar2->renderFlags = iVar3;
+  pGVar1->renderFlags = iVar2;
 LAB_82768a7c:
-  CopyPoolTextToCmd(pcVar1,param_2,param_3,param_4,pGVar2);
-  __restfpr_28(pGVar2);
-  pGVar2 = (GfxCmdDrawText2D *)__restgprlr_25();
-  return pGVar2;
+  CopyPoolTextToCmd(param_1,param_2,param_3,param_4,pGVar1);
+  return pGVar1;
 }
 
 
@@ -2832,6 +2757,10 @@ void R_AddCmdDrawConsoleTextSubtitle
 
 // 82768B30  R_AddCmdDrawConsoleTextPulseFX  (gfx_d3d/r_rendercmds.cpp:2322)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 
 void R_AddCmdDrawConsoleTextPulseFX
@@ -2841,16 +2770,14 @@ void R_AddCmdDrawConsoleTextPulseFX
                Material *param_17,Material *param_18)
 
 {
-  char *pcVar2;
-  Material *pMVar3;
-  bool bVar5;
-  bool bVar6;
-  longlong lVar1;
-  double extraout_f1;
+  Material *pMVar1;
+  bool bVar3;
+  bool bVar4;
+  GfxCmdDrawText2D *pGVar2;
+  double dVar5;
+  double dVar6;
   double dVar7;
   double dVar8;
-  double dVar9;
-  double dVar10;
   float *in_stack_0000005c;
   float *in_stack_0000006c;
   int in_stack_00000074;
@@ -2859,115 +2786,106 @@ void R_AddCmdDrawConsoleTextPulseFX
   int in_stack_0000008c;
   Material *in_stack_00000094;
   Material *in_stack_0000009c;
-  GfxCmdDrawText2D *pGVar4;
   
-  dVar9 = (double)param_9;
-  dVar8 = (double)param_8;
-  dVar7 = (double)param_7;
-  __savegprlr_23((double)param_6,param_1);
-  pcVar2 = (char *)__savefpr_28();
-  dVar10 = extraout_f1;
-  pMVar3 = rgp.defaultMaterial;
+  dVar8 = (double)param_9;
+  dVar7 = (double)param_8;
+  dVar6 = (double)param_7;
+  dVar5 = (double)param_6;
+  pMVar1 = rgp.defaultMaterial;
   if (in_stack_00000094 != (Material *)0x0) {
-    pMVar3 = Material_FromHandle(in_stack_00000094);
+    pMVar1 = Material_FromHandle(in_stack_00000094);
   }
-  bVar5 = Material_HasTechnique(pMVar3,TECHNIQUE_LIT);
-  if (bVar5) {
+  bVar3 = Material_HasTechnique(pMVar1,TECHNIQUE_LIT);
+  if (bVar3) {
 LAB_82768bc4:
-    bVar5 = true;
+    bVar3 = true;
   }
   else {
-    bVar6 = Material_HasTechnique(pMVar3,TECHNIQUE_EMISSIVE);
-    bVar5 = false;
-    if (bVar6) goto LAB_82768bc4;
+    bVar4 = Material_HasTechnique(pMVar1,TECHNIQUE_EMISSIVE);
+    bVar3 = false;
+    if (bVar4) goto LAB_82768bc4;
   }
-  if ((bVar5) && (bVar5 = Material_IsDefault(pMVar3), !bVar5)) goto LAB_82768be8;
-  pMVar3 = rgp.defaultMaterial;
+  if ((bVar3) && (bVar3 = Material_IsDefault(pMVar1), !bVar3)) goto LAB_82768be8;
+  pMVar1 = rgp.defaultMaterial;
   if (in_stack_0000009c != (Material *)0x0) {
-    pMVar3 = Material_FromHandle(in_stack_0000009c);
+    pMVar1 = Material_FromHandle(in_stack_0000009c);
   }
-  bVar5 = Material_HasTechnique(pMVar3,TECHNIQUE_LIT);
-  if (bVar5) {
+  bVar3 = Material_HasTechnique(pMVar1,TECHNIQUE_LIT);
+  if (bVar3) {
 LAB_82768c5c:
-    bVar5 = true;
+    bVar3 = true;
   }
   else {
-    bVar6 = Material_HasTechnique(pMVar3,TECHNIQUE_EMISSIVE);
-    bVar5 = false;
-    if (bVar6) goto LAB_82768c5c;
+    bVar4 = Material_HasTechnique(pMVar1,TECHNIQUE_EMISSIVE);
+    bVar3 = false;
+    if (bVar4) goto LAB_82768c5c;
   }
-  if ((!bVar5) || (bVar5 = Material_IsDefault(pMVar3), bVar5)) {
-    pGVar4 = AddBaseDrawConsoleTextCmd
-                       (pcVar2,param_2,param_3,param_4,param_5,(float)dVar10,(float)dVar7,
-                        (float)dVar8,(float)dVar9,param_10,param_11);
-    lVar1 = (longlong)(int)pGVar4;
-    if (pGVar4 != (GfxCmdDrawText2D *)0x0) {
-      bVar5 = SetDrawText2DGlowParms(pGVar4,in_stack_0000005c,in_stack_0000006c);
-      lVar1 = (longlong)bVar5;
-      if (((in_stack_00000094 != (Material *)0x0) && (in_stack_0000009c != (Material *)0x0)) &&
-         (in_stack_00000074 != 0)) {
-        pGVar4->fxMaterial = in_stack_00000094;
-        pGVar4->fxMaterialGlow = in_stack_0000009c;
-        pGVar4->padding = 0.0;
-        pGVar4->renderFlags = pGVar4->renderFlags | 0xc0;
-        pGVar4->fxBirthTime = in_stack_00000074;
-        pGVar4->fxLetterTime = in_stack_0000007c;
-        pGVar4->fxDecayStartTime = in_stack_00000084;
-        pGVar4->fxDecayDuration = in_stack_0000008c;
-      }
+  if ((!bVar3) || (bVar3 = Material_IsDefault(pMVar1), bVar3)) {
+    pGVar2 = AddBaseDrawConsoleTextCmd
+                       (param_1,param_2,param_3,param_4,param_5,(float)dVar5,(float)dVar6,
+                        (float)dVar7,(float)dVar8,param_10,param_11);
+    if ((pGVar2 != (GfxCmdDrawText2D *)0x0) &&
+       (((SetDrawText2DGlowParms(pGVar2,in_stack_0000005c,in_stack_0000006c),
+         in_stack_00000094 != (Material *)0x0 && (in_stack_0000009c != (Material *)0x0)) &&
+        (in_stack_00000074 != 0)))) {
+      pGVar2->fxMaterial = in_stack_00000094;
+      pGVar2->fxMaterialGlow = in_stack_0000009c;
+      pGVar2->padding = 0.0;
+      pGVar2->renderFlags = pGVar2->renderFlags | 0xc0;
+      pGVar2->fxBirthTime = in_stack_00000074;
+      pGVar2->fxLetterTime = in_stack_0000007c;
+      pGVar2->fxDecayStartTime = in_stack_00000084;
+      pGVar2->fxDecayDuration = in_stack_0000008c;
     }
-    __restfpr_28(lVar1);
-    __restgprlr_23();
     return;
   }
 LAB_82768be8:
   R_WarnOncePerFrame(R_WARN_FOGABLE_2DTEXT);
-  __restfpr_28();
-  __restgprlr_23();
   return;
 }
 
 
 // 82768D38  R_AddCmdDrawQuadPic  (gfx_d3d/r_rendercmds.cpp:2353)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "GfxRenderCommand": Some values do not have unique names */
 
 void R_AddCmdDrawQuadPic(float (*param_1) [2],float *param_2,Material *param_3)
 
 {
-  undefined4 uVar1;
-  undefined4 *puVar2;
-  void *pvVar3;
-  Material *pMVar4;
-  ulonglong uVar5;
+  float fVar1;
+  void *pvVar2;
+  Material *pMVar3;
   
-  uVar5 = (ulonglong)(int)param_3;
-  puVar2 = (undefined4 *)__savegprlr_28(param_1);
-  pvVar3 = R_GetCommandBuffer(RC_DRAW_QUAD_PIC,0x2c);
-  if (pvVar3 != (void *)0x0) {
-    pMVar4 = rgp.defaultMaterial;
-    if ((uVar5 & 0xffffffff) != 0) {
-      pMVar4 = Material_FromHandle((Material *)uVar5);
+  pvVar2 = R_GetCommandBuffer(RC_DRAW_QUAD_PIC,0x2c);
+  if (pvVar2 != (void *)0x0) {
+    pMVar3 = rgp.defaultMaterial;
+    if (param_3 != (Material *)0x0) {
+      pMVar3 = Material_FromHandle(param_3);
     }
-    uVar1 = *puVar2;
-    *(Material **)((int)pvVar3 + 4) = pMVar4;
-    *(undefined4 *)((int)pvVar3 + 8) = uVar1;
-    *(undefined4 *)((int)pvVar3 + 0xc) = puVar2[1];
-    *(undefined4 *)((int)pvVar3 + 0x10) = puVar2[2];
-    *(undefined4 *)((int)pvVar3 + 0x14) = puVar2[3];
-    *(undefined4 *)((int)pvVar3 + 0x18) = puVar2[4];
-    *(undefined4 *)((int)pvVar3 + 0x1c) = puVar2[5];
-    *(undefined4 *)((int)pvVar3 + 0x20) = puVar2[6];
-    *(undefined4 *)((int)pvVar3 + 0x24) = puVar2[7];
-    R_ConvertColorToBytes(param_2,(uchar *)((int)pvVar3 + 0x28));
+    fVar1 = (*param_1)[0];
+    *(Material **)((int)pvVar2 + 4) = pMVar3;
+    *(float *)((int)pvVar2 + 8) = fVar1;
+    *(float *)((int)pvVar2 + 0xc) = (*param_1)[1];
+    *(float *)((int)pvVar2 + 0x10) = param_1[1][0];
+    *(float *)((int)pvVar2 + 0x14) = param_1[1][1];
+    *(float *)((int)pvVar2 + 0x18) = param_1[2][0];
+    *(float *)((int)pvVar2 + 0x1c) = param_1[2][1];
+    *(float *)((int)pvVar2 + 0x20) = param_1[3][0];
+    *(float *)((int)pvVar2 + 0x24) = param_1[3][1];
+    R_ConvertColorToBytes(param_2,(uchar *)((int)pvVar2 + 0x28));
   }
-  __restgprlr_28();
   return;
 }
 
 
 // 82768DE0  R_AddCmdDrawQuadPicST  (gfx_d3d/r_rendercmds.cpp:2370)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "GfxRenderCommand": Some values do not have unique names */
 
 void R_AddCmdDrawQuadPicST
@@ -2975,52 +2893,50 @@ void R_AddCmdDrawQuadPicST
                float *param_6,Material *param_7)
 
 {
-  undefined4 *puVar1;
-  void *pvVar2;
-  Material *pMVar3;
+  void *pvVar1;
+  Material *pMVar2;
   float *in_r8;
-  ulonglong in_r9;
-  double extraout_f1;
+  Material *in_r9;
+  double dVar3;
   double dVar4;
   double dVar5;
   double dVar6;
-  double dVar7;
   
   dVar6 = (double)param_5;
   dVar5 = (double)param_4;
   dVar4 = (double)param_3;
-  __savegprlr_28((double)param_2,param_1,param_6,param_7);
-  puVar1 = (undefined4 *)__savefpr_28();
-  dVar7 = extraout_f1;
-  pvVar2 = R_GetCommandBuffer(RC_DRAW_QUAD_PIC_ST,0x3c);
-  if (pvVar2 != (void *)0x0) {
-    pMVar3 = rgp.defaultMaterial;
-    if ((in_r9 & 0xffffffff) != 0) {
-      pMVar3 = Material_FromHandle((Material *)in_r9);
+  dVar3 = (double)param_2;
+  pvVar1 = R_GetCommandBuffer(RC_DRAW_QUAD_PIC_ST,0x3c);
+  if (pvVar1 != (void *)0x0) {
+    pMVar2 = rgp.defaultMaterial;
+    if (in_r9 != (Material *)0x0) {
+      pMVar2 = Material_FromHandle(in_r9);
     }
-    *(Material **)((int)pvVar2 + 4) = pMVar3;
-    *(undefined4 *)((int)pvVar2 + 8) = *puVar1;
-    *(undefined4 *)((int)pvVar2 + 0xc) = puVar1[1];
-    *(undefined4 *)((int)pvVar2 + 0x10) = puVar1[2];
-    *(undefined4 *)((int)pvVar2 + 0x14) = puVar1[3];
-    *(undefined4 *)((int)pvVar2 + 0x18) = puVar1[4];
-    *(undefined4 *)((int)pvVar2 + 0x1c) = puVar1[5];
-    *(undefined4 *)((int)pvVar2 + 0x20) = puVar1[6];
-    *(undefined4 *)((int)pvVar2 + 0x24) = puVar1[7];
-    *(float *)((int)pvVar2 + 0x28) = (float)dVar7;
-    *(float *)((int)pvVar2 + 0x2c) = (float)dVar4;
-    *(float *)((int)pvVar2 + 0x30) = (float)dVar5;
-    *(float *)((int)pvVar2 + 0x34) = (float)dVar6;
-    R_ConvertColorToBytes(in_r8,(uchar *)((int)pvVar2 + 0x38));
+    *(Material **)((int)pvVar1 + 4) = pMVar2;
+    *(float *)((int)pvVar1 + 8) = (*param_1)[0];
+    *(float *)((int)pvVar1 + 0xc) = (*param_1)[1];
+    *(float *)((int)pvVar1 + 0x10) = param_1[1][0];
+    *(float *)((int)pvVar1 + 0x14) = param_1[1][1];
+    *(float *)((int)pvVar1 + 0x18) = param_1[2][0];
+    *(float *)((int)pvVar1 + 0x1c) = param_1[2][1];
+    *(float *)((int)pvVar1 + 0x20) = param_1[3][0];
+    *(float *)((int)pvVar1 + 0x24) = param_1[3][1];
+    *(float *)((int)pvVar1 + 0x28) = (float)dVar3;
+    *(float *)((int)pvVar1 + 0x2c) = (float)dVar4;
+    *(float *)((int)pvVar1 + 0x30) = (float)dVar5;
+    *(float *)((int)pvVar1 + 0x34) = (float)dVar6;
+    R_ConvertColorToBytes(in_r8,(uchar *)((int)pvVar1 + 0x38));
   }
-  __restfpr_28();
-  __restgprlr_28();
   return;
 }
 
 
 // 82768EB8  R_AddCmdDrawFullScreenColoredQuad  (gfx_d3d/r_rendercmds.cpp:2391)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "GfxRenderCommand": Some values do not have unique names */
 
 void R_AddCmdDrawFullScreenColoredQuad
@@ -3031,7 +2947,7 @@ void R_AddCmdDrawFullScreenColoredQuad
   void *pvVar1;
   Material *pMVar2;
   float *in_r7;
-  ulonglong in_r8;
+  Material *in_r8;
   double dVar3;
   double dVar4;
   double dVar5;
@@ -3039,14 +2955,13 @@ void R_AddCmdDrawFullScreenColoredQuad
   
   dVar6 = (double)param_4;
   dVar5 = (double)param_3;
+  dVar3 = (double)param_1;
   dVar4 = (double)param_2;
-  __savegprlr_29((double)param_1,param_5,param_6);
-  dVar3 = (double)__savefpr_28();
   pvVar1 = R_GetCommandBuffer(RC_DRAW_FULL_SCREEN_COLORED_QUAD,0x1c);
   if (pvVar1 != (void *)0x0) {
     pMVar2 = rgp.defaultMaterial;
-    if ((in_r8 & 0xffffffff) != 0) {
-      pMVar2 = Material_FromHandle((Material *)in_r8);
+    if (in_r8 != (Material *)0x0) {
+      pMVar2 = Material_FromHandle(in_r8);
     }
     *(Material **)((int)pvVar1 + 4) = pMVar2;
     *(float *)((int)pvVar1 + 8) = (float)dVar3;
@@ -3055,8 +2970,6 @@ void R_AddCmdDrawFullScreenColoredQuad
     *(float *)((int)pvVar1 + 0x14) = (float)dVar6;
     R_ConvertColorToBytes(in_r7,(uchar *)((int)pvVar1 + 0x18));
   }
-  __restfpr_28();
-  __restgprlr_29();
   return;
 }
 
@@ -3093,52 +3006,51 @@ void R_AddCmdSetMaterialColor(float *param_1)
 
 // 82769000  R_AddCmd2dLightProperties  (gfx_d3d/r_rendercmds.cpp:2441)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "GfxRenderCommand": Some values do not have unique names */
 
 void R_AddCmd2dLightProperties
                (float *param_1,float *param_2,float *param_3,float *param_4,float *param_5)
 
 {
-  undefined4 *puVar1;
-  void *pvVar2;
+  void *pvVar1;
   
-  puVar1 = (undefined4 *)__savegprlr_26(param_1);
-  pvVar2 = R_GetCommandBuffer(RC_SET_2D_LIGHT_PROPERTIES,0x40);
-  if (pvVar2 == (void *)0x0) {
+  pvVar1 = R_GetCommandBuffer(RC_SET_2D_LIGHT_PROPERTIES,0x40);
+  if (pvVar1 == (void *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
                     0x98e,0,"%s");
   }
-  *(undefined4 *)((int)pvVar2 + 4) = *puVar1;
-  *(undefined4 *)((int)pvVar2 + 8) = puVar1[1];
-  *(undefined4 *)((int)pvVar2 + 0xc) = puVar1[2];
-  *(float *)((int)pvVar2 + 0x10) = *param_2;
-  *(float *)((int)pvVar2 + 0x14) = param_2[1];
-  *(float *)((int)pvVar2 + 0x18) = param_2[2];
-  *(float *)((int)pvVar2 + 0x1c) = *param_3;
-  *(float *)((int)pvVar2 + 0x20) = param_3[1];
-  *(float *)((int)pvVar2 + 0x24) = param_3[2];
-  *(float *)((int)pvVar2 + 0x28) = *param_4;
-  *(float *)((int)pvVar2 + 0x2c) = param_4[1];
-  *(float *)((int)pvVar2 + 0x30) = param_4[2];
-  *(float *)((int)pvVar2 + 0x34) = *param_5;
-  *(float *)((int)pvVar2 + 0x38) = param_5[1];
-  *(float *)((int)pvVar2 + 0x3c) = param_5[2];
-  __restgprlr_26();
+  *(float *)((int)pvVar1 + 4) = *param_1;
+  *(float *)((int)pvVar1 + 8) = param_1[1];
+  *(float *)((int)pvVar1 + 0xc) = param_1[2];
+  *(float *)((int)pvVar1 + 0x10) = *param_2;
+  *(float *)((int)pvVar1 + 0x14) = param_2[1];
+  *(float *)((int)pvVar1 + 0x18) = param_2[2];
+  *(float *)((int)pvVar1 + 0x1c) = *param_3;
+  *(float *)((int)pvVar1 + 0x20) = param_3[1];
+  *(float *)((int)pvVar1 + 0x24) = param_3[2];
+  *(float *)((int)pvVar1 + 0x28) = *param_4;
+  *(float *)((int)pvVar1 + 0x2c) = param_4[1];
+  *(float *)((int)pvVar1 + 0x30) = param_4[2];
+  *(float *)((int)pvVar1 + 0x34) = *param_5;
+  *(float *)((int)pvVar1 + 0x38) = param_5[1];
+  *(float *)((int)pvVar1 + 0x3c) = param_5[2];
   return;
 }
 
 
 // 827690E0  R_AddCmdSetViewportValues  (gfx_d3d/r_rendercmds.cpp:2474)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "GfxRenderCommand": Some values do not have unique names */
 
 void R_AddCmdSetViewportValues(int param_1,int param_2,int param_3,int param_4)
 
 {
-  undefined4 uVar1;
-  void *pvVar2;
+  void *pvVar1;
   
-  uVar1 = __savegprlr_26(param_1);
   if (param_3 < 1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
                     0x9ad,0,"%s\n\t(width) = %i");
@@ -3147,32 +3059,31 @@ void R_AddCmdSetViewportValues(int param_1,int param_2,int param_3,int param_4)
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
                     0x9ae,0,"%s\n\t(height) = %i");
   }
-  pvVar2 = R_GetCommandBuffer(RC_SET_VIEWPORT,0x14);
-  if (pvVar2 == (void *)0x0) {
+  pvVar1 = R_GetCommandBuffer(RC_SET_VIEWPORT,0x14);
+  if (pvVar1 == (void *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
                     0x9b2,0,"%s");
   }
-  *(undefined4 *)((int)pvVar2 + 4) = uVar1;
-  *(int *)((int)pvVar2 + 8) = param_2;
-  *(int *)((int)pvVar2 + 0xc) = param_3;
-  *(int *)((int)pvVar2 + 0x10) = param_4;
-  __restgprlr_26();
+  *(int *)((int)pvVar1 + 4) = param_1;
+  *(int *)((int)pvVar1 + 8) = param_2;
+  *(int *)((int)pvVar1 + 0xc) = param_3;
+  *(int *)((int)pvVar1 + 0x10) = param_4;
   return;
 }
 
 
 // 827691B0  R_AddCmdSetScissorRect  (gfx_d3d/r_rendercmds.cpp:2492)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "GfxRenderCommand": Some values do not have unique names */
 
 void R_AddCmdSetScissorRect(int param_1,int param_2,int param_3,int param_4)
 
 {
-  int iVar1;
-  void *pvVar2;
+  void *pvVar1;
   
-  iVar1 = __savegprlr_26(param_1);
-  if (iVar1 < 0) {
+  if (param_1 < 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
                     0x9bf,0,"%s\n\t(x) = %i");
   }
@@ -3188,16 +3099,15 @@ void R_AddCmdSetScissorRect(int param_1,int param_2,int param_3,int param_4)
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
                     0x9c2,0,"%s\n\t(height) = %i");
   }
-  pvVar2 = R_GetCommandBuffer(RC_SET_SCISSOR,0x14);
-  if (pvVar2 == (void *)0x0) {
+  pvVar1 = R_GetCommandBuffer(RC_SET_SCISSOR,0x14);
+  if (pvVar1 == (void *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
                     0x9c6,0,"%s");
   }
-  *(int *)((int)pvVar2 + 4) = iVar1;
-  *(int *)((int)pvVar2 + 8) = param_2;
-  *(int *)((int)pvVar2 + 0xc) = param_3;
-  *(int *)((int)pvVar2 + 0x10) = param_4;
-  __restgprlr_26();
+  *(int *)((int)pvVar1 + 4) = param_1;
+  *(int *)((int)pvVar1 + 8) = param_2;
+  *(int *)((int)pvVar1 + 0xc) = param_3;
+  *(int *)((int)pvVar1 + 0x10) = param_4;
   return;
 }
 
@@ -3294,6 +3204,8 @@ void R_SetOutdoorFeatherConst(void)
 
 // 82769508  R_EnvMapOverrideConstants  (gfx_d3d/r_rendercmds.cpp:2567)
 
+/* WARNING: Function: __savefpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Removing unreachable block (ram,0x827695b4) */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
@@ -3302,7 +3214,6 @@ void R_SetOutdoorFeatherConst(void)
 void R_EnvMapOverrideConstants(void)
 
 {
-  __savefpr_28();
   if ((r_envMapMaxIntensity->current).value <= 0.0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
                     0xa08,0,"%s");
@@ -3313,7 +3224,6 @@ void R_EnvMapOverrideConstants(void)
     gfxCmdBufInput.consts[0x37][2] = (r_envMapExponent->current).value;
     gfxCmdBufInput.consts[0x37][0] = (r_envMapMinIntensity->current).value;
   }
-  __restfpr_28();
   return;
 }
 
@@ -3331,6 +3241,8 @@ bool R_FogIsWorldLoaded(void)
 
 // 82769630  R_UpdateFrontEndDvarOptions  (gfx_d3d/r_rendercmds.cpp:2585)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 /* WARNING: Removing unreachable block (ram,0x82769874) */
 /* WARNING: Removing unreachable block (ram,0x827698c4) */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
@@ -3349,7 +3261,6 @@ void R_UpdateFrontEndDvarOptions(void)
   float *pfVar6;
   double dVar7;
   
-  __savegprlr_24();
   if (((r_sun_from_dvars->current).enabled != false) && (rgp.world != (GfxWorld *)0x0)) {
     R_SetSunFromDvars(&(rgp.world)->sun);
   }
@@ -3433,6 +3344,7 @@ void R_UpdateFrontEndDvarOptions(void)
   if (rg.distortion != bVar2) {
     R_SyncRenderThread();
   }
+  rg.distortion = bVar2;
   gfxCmdBufInput.codeImages[9] =
        (GfxImage *)(-(uint)(bVar2 != false) & (uint)gfxRenderTargets[4].image);
   rg.drawWorld = (r_drawWorld->current).enabled;
@@ -3445,8 +3357,6 @@ void R_UpdateFrontEndDvarOptions(void)
   rg.drawSkinnedModels = (r_drawSkinnedModels->current).enabled;
   rg.drawRigidModels = (r_drawRigidModels->current).enabled;
   rg.colorMap = (r_colorMap->current).integer;
-  rg.distortion = bVar2;
-  __restgprlr_24();
   return;
 }
 
@@ -3530,88 +3440,85 @@ void R_EndFrame(void)
 
 // 82769C30  R_AddCmdClearScreen  (gfx_d3d/r_rendercmds.cpp:2908)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "GfxRenderCommand": Some values do not have unique names */
 
 void R_AddCmdClearScreen(int param_1,float *param_2,float param_3,uchar param_4)
 
 {
-  uint uVar1;
-  void *pvVar2;
-  ulonglong uVar3;
-  undefined4 *puVar4;
+  void *pvVar1;
   undefined1 in_r6;
-  double extraout_f1;
-  double dVar5;
+  double dVar2;
   
-  uVar3 = (ulonglong)(int)param_2;
-  uVar1 = __savegprlr_26((double)param_3,param_1,uVar3,param_4);
-  dVar5 = extraout_f1;
-  if (uVar1 == 0) {
+  dVar2 = (double)param_3;
+  if (param_1 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
                     0xb5f,0,"%s");
   }
-  if ((uVar1 & 0xffffff40) != 0) {
+  if ((param_1 & 0xffffff40U) != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
                     0xb60,0,"%s\n\t(whichToClear) = %i");
   }
-  if ((uVar3 & 0xffffffff) == 0) {
+  if (param_2 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
                     0xb61,0,"%s");
   }
-  if ((dVar5 < 0.0) || (1.0 < dVar5)) {
+  if ((dVar2 < 0.0) || (1.0 < dVar2)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
                     0xb62,0,"%s\n\t(depth) = %g");
   }
-  pvVar2 = R_GetCommandBuffer(RC_CLEAR_SCREEN,0x1c);
-  if (pvVar2 == (void *)0x0) {
+  pvVar1 = R_GetCommandBuffer(RC_CLEAR_SCREEN,0x1c);
+  if (pvVar1 == (void *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
                     0xb66,0,"%s");
   }
-  *(char *)((int)pvVar2 + 4) = (char)uVar1;
-  if ((uVar1 & 0xff) != uVar1) {
+  *(char *)((int)pvVar1 + 4) = (char)param_1;
+  if ((param_1 & 0xffU) != param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
                     0xb69,1,"%s");
   }
-  *(float *)((int)pvVar2 + 8) = (float)dVar5;
-  *(undefined1 *)((int)pvVar2 + 5) = in_r6;
-  puVar4 = (undefined4 *)uVar3;
-  *(undefined4 *)((int)pvVar2 + 0xc) = *puVar4;
-  *(undefined4 *)((int)pvVar2 + 0x10) = puVar4[1];
-  *(undefined4 *)((int)pvVar2 + 0x14) = puVar4[2];
-  *(undefined4 *)((int)pvVar2 + 0x18) = puVar4[3];
-  __restgprlr_26();
+  *(float *)((int)pvVar1 + 8) = (float)dVar2;
+  *(undefined1 *)((int)pvVar1 + 5) = in_r6;
+  *(float *)((int)pvVar1 + 0xc) = *param_2;
+  *(float *)((int)pvVar1 + 0x10) = param_2[1];
+  *(float *)((int)pvVar1 + 0x14) = param_2[2];
+  *(float *)((int)pvVar1 + 0x18) = param_2[3];
   return;
 }
 
 
 // 82769DC0  R_AddCmdSaveScreen  (gfx_d3d/r_rendercmds.cpp:2929)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "GfxRenderCommand": Some values do not have unique names */
 
 void R_AddCmdSaveScreen(int param_1)
 
 {
-  int iVar1;
-  void *pvVar2;
+  void *pvVar1;
   
-  iVar1 = __savegprlr_29(param_1);
-  if ((iVar1 < 0) || (3 < iVar1)) {
+  if ((param_1 < 0) || (3 < param_1)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
                     0xb74,0,"screenTimerId not in [0, 3]\n\t%i not in [%i, %i]");
   }
-  pvVar2 = R_GetCommandBuffer(RC_SAVE_SCREEN,8);
-  if (pvVar2 == (void *)0x0) {
+  pvVar1 = R_GetCommandBuffer(RC_SAVE_SCREEN,8);
+  if (pvVar1 == (void *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
                     0xb7e,0,"%s");
   }
-  *(int *)((int)pvVar2 + 4) = iVar1;
-  __restgprlr_29();
+  *(int *)((int)pvVar1 + 4) = param_1;
   return;
 }
 
 
 // 82769E50  R_AddCmdSaveScreenSection  (gfx_d3d/r_rendercmds.cpp:2954)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "GfxRenderCommand": Some values do not have unique names */
 
 void R_AddCmdSaveScreenSection(float param_1,float param_2,float param_3,float param_4,int param_5)
@@ -3625,10 +3532,9 @@ void R_AddCmdSaveScreenSection(float param_1,float param_2,float param_3,float p
   double dVar5;
   
   dVar5 = (double)param_4;
+  dVar2 = (double)param_1;
   dVar3 = (double)param_2;
   dVar4 = (double)param_3;
-  __savegprlr_29((double)param_1,param_5);
-  dVar2 = (double)__savefpr_28();
   if ((in_r7 < 0) || (3 < in_r7)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
                     0xb8d,0,"screenTimerId not in [0, 3]\n\t%i not in [%i, %i]");
@@ -3643,54 +3549,52 @@ void R_AddCmdSaveScreenSection(float param_1,float param_2,float param_3,float p
   *(float *)((int)pvVar1 + 8) = (float)dVar3;
   *(float *)((int)pvVar1 + 0xc) = (float)dVar4;
   *(float *)((int)pvVar1 + 0x10) = (float)dVar5;
-  __restfpr_28();
-  __restgprlr_29();
   return;
 }
 
 
 // 82769F10  R_AddCmdBlendSavedScreenShockBlurred  (gfx_d3d/r_rendercmds.cpp:2977)
 
+/* WARNING: Function: __savefpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "GfxRenderCommand": Some values do not have unique names */
 
 void R_AddCmdBlendSavedScreenShockBlurred
                (int param_1,float param_2,float param_3,float param_4,float param_5,int param_6)
 
 {
-  int iVar1;
-  void *pvVar2;
+  void *pvVar1;
   int in_r8;
-  double extraout_f1;
+  double dVar2;
   double dVar3;
   double dVar4;
   double dVar5;
-  double dVar6;
   
   dVar5 = (double)param_5;
   dVar4 = (double)param_4;
   dVar3 = (double)param_3;
-  iVar1 = __savefpr_28((double)param_2,param_1,param_6);
-  dVar6 = extraout_f1;
+  dVar2 = (double)param_2;
   if ((in_r8 < 0) || (3 < in_r8)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
                     0xba4,0,"screenTimerId not in [0, 3]\n\t%i not in [%i, %i]");
   }
-  if ((0 < iVar1) &&
-     (pvVar2 = R_GetCommandBuffer(RC_BLEND_SAVED_SCREEN_BLURRED,0x1c), pvVar2 != (void *)0x0)) {
-    *(float *)((int)pvVar2 + 8) = (float)dVar6;
-    *(int *)((int)pvVar2 + 4) = iVar1;
-    *(float *)((int)pvVar2 + 0xc) = (float)dVar3;
-    *(int *)((int)pvVar2 + 0x18) = in_r8;
-    *(float *)((int)pvVar2 + 0x10) = (float)dVar4;
-    *(float *)((int)pvVar2 + 0x14) = (float)dVar5;
+  if ((0 < param_1) &&
+     (pvVar1 = R_GetCommandBuffer(RC_BLEND_SAVED_SCREEN_BLURRED,0x1c), pvVar1 != (void *)0x0)) {
+    *(float *)((int)pvVar1 + 8) = (float)dVar2;
+    *(int *)((int)pvVar1 + 4) = param_1;
+    *(float *)((int)pvVar1 + 0xc) = (float)dVar3;
+    *(int *)((int)pvVar1 + 0x18) = in_r8;
+    *(float *)((int)pvVar1 + 0x10) = (float)dVar4;
+    *(float *)((int)pvVar1 + 0x14) = (float)dVar5;
   }
-  __restfpr_28();
   return;
 }
 
 
 // 82769FD0  R_AddCmdBlendSavedScreenShockFlashed  (gfx_d3d/r_rendercmds.cpp:3014)
 
+/* WARNING: Function: __savefpr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "GfxRenderCommand": Some values do not have unique names */
 
 void R_AddCmdBlendSavedScreenShockFlashed
@@ -3709,8 +3613,8 @@ void R_AddCmdBlendSavedScreenShockFlashed
   dVar7 = (double)param_6;
   dVar5 = (double)param_4;
   dVar4 = (double)param_3;
+  dVar2 = (double)param_1;
   dVar3 = (double)param_2;
-  dVar2 = (double)__savefpr_26((double)param_1);
   pvVar1 = R_GetCommandBuffer(RC_BLEND_SAVED_SCREEN_FLASHED,0x20);
   if (pvVar1 != (void *)0x0) {
     *(float *)((int)pvVar1 + 8) = (float)dVar2;
@@ -3721,13 +3625,14 @@ void R_AddCmdBlendSavedScreenShockFlashed
     *(float *)((int)pvVar1 + 0x18) = (float)dVar6;
     *(float *)((int)pvVar1 + 0x1c) = (float)dVar7;
   }
-  __restfpr_26();
   return;
 }
 
 
 // 8276A048  R_AddCmdRestoreSavedScreen  (gfx_d3d/r_rendercmds.cpp:3038)
 
+/* WARNING: Function: __savefpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "GfxRenderCommand": Some values do not have unique names */
 
 void R_AddCmdRestoreSavedScreen(float param_1,float param_2,float param_3,float param_4)
@@ -3742,7 +3647,7 @@ void R_AddCmdRestoreSavedScreen(float param_1,float param_2,float param_3,float 
   dVar5 = (double)param_4;
   dVar4 = (double)param_3;
   dVar3 = (double)param_2;
-  dVar2 = (double)__savefpr_28((double)param_1);
+  dVar2 = (double)param_1;
   pvVar1 = R_GetCommandBuffer(RC_BLEND_SAVED_SCREEN_FLASHED,0x20);
   if (pvVar1 != (void *)0x0) {
     *(float *)((int)pvVar1 + 0x10) = (float)dVar2;
@@ -3753,66 +3658,56 @@ void R_AddCmdRestoreSavedScreen(float param_1,float param_2,float param_3,float 
     *(undefined4 *)((int)pvVar1 + 8) = 0;
     *(undefined4 *)((int)pvVar1 + 0xc) = 0;
   }
-  __restfpr_28();
   return;
 }
 
 
 // 8276A0C0  R_AddCmdDrawPoints  (gfx_d3d/r_rendercmds.cpp:3062)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "GfxRenderCommand": Some values do not have unique names */
 
 void R_AddCmdDrawPoints(short param_1,uchar param_2,uchar param_3,GfxPointVertex *param_4)
 
 {
   GfxCmdHeader *pGVar1;
-  short sVar4;
-  void *pvVar2;
-  int iVar3;
-  ulonglong uVar5;
-  ulonglong uVar6;
+  int iVar2;
+  void *pvVar3;
   
-  uVar6 = (ulonglong)(char)param_3;
-  uVar5 = (ulonglong)(char)param_2;
-  sVar4 = __savegprlr_23(param_1,uVar5,uVar6,param_4);
-  if (sVar4 < 1) {
+  if (param_1 < 1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
                     0xbfa,0,"%s");
   }
-  if ((uVar5 & 0xff) == 0) {
+  if (param_2 == '\0') {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
                     0xbfb,0,"%s");
   }
   pGVar1 = s_cmdList->lastCmd;
   if ((((pGVar1 == (GfxCmdHeader *)0x0) || (pGVar1->id != 0x15)) ||
-      (iVar3 = sVar4 * 0x10, 0xffff < (uint)pGVar1->byteCount + iVar3)) ||
-     ((((ulonglong)*(byte *)&pGVar1[1].byteCount != (uVar5 & 0xff) ||
-       ((ulonglong)(byte)pGVar1[1].byteCount != (uVar6 & 0xff))) ||
-      (0x7fff < (int)(short)pGVar1[1].id + (int)sVar4)))) {
-    pvVar2 = R_GetCommandBuffer(RC_DRAW_POINTS,sVar4 * 0x10 + 8);
-    iVar3 = 0;
-    if (pvVar2 != (void *)0x0) {
-      *(short *)((int)pvVar2 + 4) = sVar4;
-      *(char *)((int)pvVar2 + 6) = (char)uVar5;
-      *(char *)((int)pvVar2 + 7) = (char)uVar6;
+      (iVar2 = param_1 * 0x10, 0xffff < (uint)pGVar1->byteCount + iVar2)) ||
+     (((*(uchar *)&pGVar1[1].byteCount != param_2 || ((uchar)pGVar1[1].byteCount != param_3)) ||
+      (0x7fff < (int)(short)pGVar1[1].id + (int)param_1)))) {
+    pvVar3 = R_GetCommandBuffer(RC_DRAW_POINTS,param_1 * 0x10 + 8);
+    if (pvVar3 != (void *)0x0) {
+      *(short *)((int)pvVar3 + 4) = param_1;
+      *(uchar *)((int)pvVar3 + 6) = param_2;
+      *(uchar *)((int)pvVar3 + 7) = param_3;
       Profile_Begin(0x9d);
       memcpy();
-      iVar3 = Profile_EndInternal((double *)0x0);
+      Profile_EndInternal((double *)0x0);
     }
   }
   else {
-    pvVar2 = R_GrowCommandBuffer(iVar3);
-    iVar3 = 0;
-    if (pvVar2 != (void *)0x0) {
+    pvVar3 = R_GrowCommandBuffer(iVar2);
+    if (pvVar3 != (void *)0x0) {
       Profile_Begin(0x9d);
       memcpy();
-      iVar3 = Profile_EndInternal((double *)0x0);
-      pGVar1[1].id = pGVar1[1].id + sVar4;
-      __restgprlr_23(iVar3);
+      Profile_EndInternal((double *)0x0);
+      pGVar1[1].id = pGVar1[1].id + param_1;
       return;
     }
   }
-  __restgprlr_23(iVar3);
   return;
 }
 
@@ -3839,55 +3734,46 @@ void R_AddCmdDrawPoints3D(short param_1,uchar param_2,GfxPointVertex *param_3)
 
 // 8276A258  R_AddCmdDrawLines  (gfx_d3d/r_rendercmds.cpp:3115)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "GfxRenderCommand": Some values do not have unique names */
 
 void R_AddCmdDrawLines(short param_1,uchar param_2,uchar param_3,GfxPointVertex *param_4)
 
 {
   GfxCmdHeader *pGVar1;
-  short sVar4;
-  void *pvVar2;
-  int iVar3;
-  ulonglong uVar5;
-  ulonglong uVar6;
+  int iVar2;
+  void *pvVar3;
   
-  uVar6 = (ulonglong)(char)param_3;
-  uVar5 = (ulonglong)(char)param_2;
-  sVar4 = __savegprlr_25(param_1,uVar5,uVar6,param_4);
-  if (sVar4 < 1) {
+  if (param_1 < 1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
                     0xc2f,0,"%s\n\t(lineCount) = %i");
   }
   pGVar1 = s_cmdList->lastCmd;
   if ((((pGVar1 == (GfxCmdHeader *)0x0) || (pGVar1->id != 0x16)) ||
-      (iVar3 = sVar4 * 0x20, 0xffff < (uint)pGVar1->byteCount + iVar3)) ||
-     ((((ulonglong)*(byte *)&pGVar1[1].byteCount != (uVar5 & 0xff) ||
-       ((ulonglong)(byte)pGVar1[1].byteCount != (uVar6 & 0xff))) ||
-      (0x7fff < (int)(short)pGVar1[1].id + (int)sVar4)))) {
-    pvVar2 = R_GetCommandBuffer(RC_DRAW_LINES,sVar4 * 0x20 + 8);
-    iVar3 = 0;
-    if (pvVar2 != (void *)0x0) {
-      *(short *)((int)pvVar2 + 4) = sVar4;
-      *(char *)((int)pvVar2 + 6) = (char)uVar5;
-      *(char *)((int)pvVar2 + 7) = (char)uVar6;
+      (iVar2 = param_1 * 0x20, 0xffff < (uint)pGVar1->byteCount + iVar2)) ||
+     (((*(uchar *)&pGVar1[1].byteCount != param_2 || ((uchar)pGVar1[1].byteCount != param_3)) ||
+      (0x7fff < (int)(short)pGVar1[1].id + (int)param_1)))) {
+    pvVar3 = R_GetCommandBuffer(RC_DRAW_LINES,param_1 * 0x20 + 8);
+    if (pvVar3 != (void *)0x0) {
+      *(short *)((int)pvVar3 + 4) = param_1;
+      *(uchar *)((int)pvVar3 + 6) = param_2;
+      *(uchar *)((int)pvVar3 + 7) = param_3;
       Profile_Begin(0x9d);
       memcpy();
-      iVar3 = Profile_EndInternal((double *)0x0);
+      Profile_EndInternal((double *)0x0);
     }
   }
   else {
-    pvVar2 = R_GrowCommandBuffer(iVar3);
-    iVar3 = 0;
-    if (pvVar2 != (void *)0x0) {
+    pvVar3 = R_GrowCommandBuffer(iVar2);
+    if (pvVar3 != (void *)0x0) {
       Profile_Begin(0x9d);
       memcpy();
-      iVar3 = Profile_EndInternal((double *)0x0);
-      pGVar1[1].id = pGVar1[1].id + sVar4;
-      __restgprlr_25(iVar3);
+      Profile_EndInternal((double *)0x0);
+      pGVar1[1].id = pGVar1[1].id + param_1;
       return;
     }
   }
-  __restgprlr_25(iVar3);
   return;
 }
 
@@ -3914,6 +3800,8 @@ void R_AddCmdDrawLines3D(short param_1,uchar param_2,GfxPointVertex *param_3)
 
 // 8276A3C8  R_AddCmdDrawTriangles  (gfx_d3d/r_rendercmds.cpp:3167)
 
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 /* WARNING: Enum "GfxRenderCommand": Some values do not have unique names */
 
@@ -3928,11 +3816,9 @@ void R_AddCmdDrawTriangles
   void *pvVar2;
   ulonglong uVar4;
   
-  uVar4 = (ulonglong)(int)param_1;
-  __savegprlr();
   pMVar1 = rgp.defaultMaterial;
-  if ((uVar4 & 0xffffffff) != 0) {
-    pMVar1 = Material_FromHandle((Material *)uVar4);
+  if (param_1 != (Material *)0x0) {
+    pMVar1 = Material_FromHandle(param_1);
   }
   if (pMVar1 == (Material *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
@@ -3962,7 +3848,6 @@ void R_AddCmdDrawTriangles
       Profile_EndInternal((double *)0x0);
     }
   }
-  __restgprlr();
   return;
 }
 
@@ -4009,33 +3894,31 @@ void R_AddCmdDrawTriangles3D
 
 // 8276A5C0  R_AddCmdSetCodeConstant  (gfx_d3d/r_rendercmds.cpp:3250)
 
+/* WARNING: Function: __savefpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "GfxRenderCommand": Some values do not have unique names */
 
 void R_AddCmdSetCodeConstant(uint param_1,float param_2,float param_3,float param_4,float param_5)
 
 {
-  undefined4 uVar1;
-  void *pvVar2;
-  double extraout_f1;
+  void *pvVar1;
+  double dVar2;
   double dVar3;
   double dVar4;
   double dVar5;
-  double dVar6;
   
   dVar5 = (double)param_5;
   dVar4 = (double)param_4;
   dVar3 = (double)param_3;
-  uVar1 = __savefpr_28((double)param_2,param_1);
-  dVar6 = extraout_f1;
-  pvVar2 = R_GetCommandBuffer(RC_SET_CODE_CONSTANT,0x18);
-  if (pvVar2 != (void *)0x0) {
-    *(float *)((int)pvVar2 + 8) = (float)dVar6;
-    *(undefined4 *)((int)pvVar2 + 4) = uVar1;
-    *(float *)((int)pvVar2 + 0xc) = (float)dVar3;
-    *(float *)((int)pvVar2 + 0x10) = (float)dVar4;
-    *(float *)((int)pvVar2 + 0x14) = (float)dVar5;
+  dVar2 = (double)param_2;
+  pvVar1 = R_GetCommandBuffer(RC_SET_CODE_CONSTANT,0x18);
+  if (pvVar1 != (void *)0x0) {
+    *(float *)((int)pvVar1 + 8) = (float)dVar2;
+    *(uint *)((int)pvVar1 + 4) = param_1;
+    *(float *)((int)pvVar1 + 0xc) = (float)dVar3;
+    *(float *)((int)pvVar1 + 0x10) = (float)dVar4;
+    *(float *)((int)pvVar1 + 0x14) = (float)dVar5;
   }
-  __restfpr_28();
   return;
 }
 
@@ -4077,6 +3960,8 @@ void R_AddCmdProjectionSet2D(void)
 
 // 8276A6A8  R_BeginRemoteScreenUpdate  (gfx_d3d/r_rendercmds.cpp:3288)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
@@ -4086,7 +3971,6 @@ void R_BeginRemoteScreenUpdate(void)
 {
   bool bVar1;
   
-  __savegprlr_29();
   bVar1 = Sys_IsMainThread();
   if (bVar1) {
     if (r_glob.allowAddDrawCall != 0) {
@@ -4100,7 +3984,6 @@ void R_BeginRemoteScreenUpdate(void)
     if (r_glob.startedRenderThread != false) {
       if (r_glob.remoteScreenUpdateNesting != 0) {
         r_glob.remoteScreenUpdateNesting = r_glob.remoteScreenUpdateNesting + 1;
-        __restgprlr_29();
         return;
       }
       if (r_glob.screenUpdateNotify != 0) {
@@ -4113,13 +3996,14 @@ void R_BeginRemoteScreenUpdate(void)
       Sys_NotifyRenderer();
     }
   }
-  __restgprlr_29();
   return;
 }
 
 
 // 8276A7A0  R_EndRemoteScreenUpdate  (gfx_d3d/r_rendercmds.cpp:3320)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
@@ -4129,7 +4013,6 @@ void R_EndRemoteScreenUpdate(void)
 {
   bool bVar1;
   
-  __savegprlr_27();
   bVar1 = Sys_IsMainThread();
   if (bVar1) {
     if (r_glob.remoteScreenUpdateNesting < 0) {
@@ -4140,7 +4023,6 @@ void R_EndRemoteScreenUpdate(void)
       if (r_glob.remoteScreenUpdateNesting != 0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
                         0xd00,0,"%s");
-        __restgprlr_27();
         return;
       }
     }
@@ -4151,7 +4033,6 @@ void R_EndRemoteScreenUpdate(void)
       }
       if (r_glob.remoteScreenUpdateNesting != 1) {
         r_glob.remoteScreenUpdateNesting = r_glob.remoteScreenUpdateNesting + -1;
-        __restgprlr_27();
         return;
       }
       r_glob.remoteScreenUpdateNesting = 1;
@@ -4173,36 +4054,37 @@ void R_EndRemoteScreenUpdate(void)
       r_glob.screenUpdateNotify = 0;
     }
   }
-  __restgprlr_27();
   return;
 }
 
 
 // 8276A938  R_PushRemoteScreenUpdate  (gfx_d3d/r_rendercmds.cpp:3365)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 
 void R_PushRemoteScreenUpdate(int param_1)
 
 {
-  longlong lVar1;
-  bool bVar2;
+  bool bVar1;
+  longlong lVar2;
   
-  lVar1 = __savegprlr_25(param_1);
-  bVar2 = Sys_IsMainThread();
-  if (!bVar2) {
+  lVar2 = (longlong)param_1;
+  bVar1 = Sys_IsMainThread();
+  if (!bVar1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
                     0xd27,0,"%s");
   }
-  if ((int)lVar1 < 0) {
+  if (param_1 < 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
                     0xd28,0,"%s\n\t(remoteScreenUpdateNesting) = %i");
   }
-  if ((int)lVar1 != 0) {
+  if (param_1 != 0) {
     do {
-      bVar2 = Sys_IsMainThread();
-      if (bVar2) {
+      bVar1 = Sys_IsMainThread();
+      if (bVar1) {
         if (r_glob.allowAddDrawCall != 0) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp"
                           ,0xcdd,0,"%s");
@@ -4227,16 +4109,17 @@ void R_PushRemoteScreenUpdate(int param_1)
           }
         }
       }
-      lVar1 = lVar1 + -1;
-    } while (lVar1 != 0);
+      lVar2 = lVar2 + -1;
+    } while (lVar2 != 0);
   }
-  __restgprlr_25();
   return;
 }
 
 
 // 8276AAA8  R_PopRemoteScreenUpdate  (gfx_d3d/r_rendercmds.cpp:3379)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
@@ -4245,35 +4128,34 @@ int R_PopRemoteScreenUpdate(void)
 
 {
   int iVar1;
-  bool bVar3;
   int iVar2;
+  bool bVar3;
   
-  __savegprlr_23();
   bVar3 = Sys_IsMainThread();
-  iVar2 = r_glob.remoteScreenUpdateNesting;
   iVar1 = r_glob.remoteScreenUpdateNesting;
+  iVar2 = r_glob.remoteScreenUpdateNesting;
   if (!bVar3) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
                     0xd37,0,"%s");
-    iVar2 = r_glob.remoteScreenUpdateNesting;
     iVar1 = r_glob.remoteScreenUpdateNesting;
-  }
-  while (r_glob.remoteScreenUpdateNesting = iVar1, iVar1 = r_glob.remoteScreenUpdateNesting,
-        iVar2 != 0) {
-    r_glob.remoteScreenUpdateNesting = iVar2;
-    bVar3 = Sys_IsMainThread();
     iVar2 = r_glob.remoteScreenUpdateNesting;
+  }
+  while (r_glob.remoteScreenUpdateNesting = iVar2, iVar2 = r_glob.remoteScreenUpdateNesting,
+        iVar1 != 0) {
+    r_glob.remoteScreenUpdateNesting = iVar1;
+    bVar3 = Sys_IsMainThread();
+    iVar1 = r_glob.remoteScreenUpdateNesting;
     if (bVar3) {
       if (r_glob.remoteScreenUpdateNesting < 0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
                         0xcfc,0,"%s");
       }
       if (r_glob.startedRenderThread == false) {
-        iVar2 = r_glob.remoteScreenUpdateNesting;
+        iVar1 = r_glob.remoteScreenUpdateNesting;
         if (r_glob.remoteScreenUpdateNesting != 0) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp"
                           ,0xd00,0,"%s");
-          iVar2 = r_glob.remoteScreenUpdateNesting;
+          iVar1 = r_glob.remoteScreenUpdateNesting;
         }
       }
       else {
@@ -4299,21 +4181,20 @@ int R_PopRemoteScreenUpdate(void)
             g_mainThreadBlocked = g_mainThreadBlocked - 1;
           }
           r_glob.screenUpdateNotify = 0;
-          iVar2 = r_glob.remoteScreenUpdateNesting;
+          iVar1 = r_glob.remoteScreenUpdateNesting;
         }
         else {
-          iVar2 = r_glob.remoteScreenUpdateNesting + -1;
+          iVar1 = r_glob.remoteScreenUpdateNesting + -1;
         }
       }
     }
   }
   bVar3 = r_glob.remoteScreenUpdateNesting < 0;
-  r_glob.remoteScreenUpdateNesting = iVar2;
+  r_glob.remoteScreenUpdateNesting = iVar1;
   if (bVar3) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
                     0xd3e,0,"%s\n\t(remoteScreenUpdateNesting) = %i");
   }
-  iVar2 = __restgprlr_23(iVar1);
   return iVar2;
 }
 
@@ -4361,36 +4242,33 @@ int RB_IsInRemoteScreenUpdate(void)
 
 // 8276AD80  R_AnySunHasShadowMap  (gfx_d3d/r_rendercmds.cpp:3431)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 
 bool R_AnySunHasShadowMap(GfxBackEndData *param_1)
 
 {
-  int iVar1;
-  undefined1 uVar2;
-  uint uVar3;
+  uint uVar1;
   
-  iVar1 = __savegprlr_24(param_1);
-  uVar3 = 1;
+  uVar1 = 1;
   if ((rgp.world)->lastSunPrimaryLightIndex != 0) {
     do {
-      if (iVar1 + 0x1524 == 0) {
+      if (param_1 == (GfxBackEndData *)0xffffeadc) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_bitops.h",
                         0xb,0,"%s");
       }
-      if (0xff < uVar3) {
+      if (0xff < uVar1) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_bitops.h",
                         0xc,0,"bitNum doesn\'t index size * 8\n\t%i not in [0, %i)");
       }
-      if ((1 << (uVar3 & 0x1f) & *(uint *)(((int)uVar3 >> 5) * 4 + iVar1 + 0x1524)) != 0) {
-        uVar2 = __restgprlr_24(1);
-        return (bool)uVar2;
+      if ((1 << (uVar1 & 0x1f) & param_1->sceneLightHasShadowMap[(int)uVar1 >> 5]) != 0) {
+        return true;
       }
-      uVar3 = uVar3 + 1;
-    } while (uVar3 <= (rgp.world)->lastSunPrimaryLightIndex);
+      uVar1 = uVar1 + 1;
+    } while (uVar1 <= (rgp.world)->lastSunPrimaryLightIndex);
   }
-  uVar2 = __restgprlr_24(0);
-  return (bool)uVar2;
+  return false;
 }
 

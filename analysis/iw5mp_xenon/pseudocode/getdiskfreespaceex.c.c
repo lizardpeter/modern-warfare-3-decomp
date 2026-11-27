@@ -2,18 +2,17 @@
 
 // 828ABA80  GetDiskFreeSpaceExA  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/xrtl/getdiskfreespaceex.c:24)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 int GetDiskFreeSpaceExA(char *param_1,_ULARGE_INTEGER *param_2,_ULARGE_INTEGER *param_3,
                        _ULARGE_INTEGER *param_4)
 
 {
-  ulonglong uVar1;
-  undefined8 uVar2;
+  ulong64 uVar1;
+  ulonglong uVar2;
   long lVar3;
   ulong uVar4;
-  int iVar5;
-  ulonglong uVar6;
-  ulonglong uVar7;
-  ulonglong uVar8;
   undefined4 local_70 [2];
   undefined1 auStack_68 [8];
   undefined1 auStack_60 [8];
@@ -25,11 +24,7 @@ int GetDiskFreeSpaceExA(char *param_1,_ULARGE_INTEGER *param_2,_ULARGE_INTEGER *
   int local_30;
   int local_2c;
   
-  uVar8 = (ulonglong)(int)param_4;
-  uVar7 = (ulonglong)(int)param_3;
-  uVar6 = (ulonglong)(int)param_2;
-  uVar2 = __savegprlr_28(param_1);
-  RtlInitAnsiString(auStack_68,uVar2);
+  RtlInitAnsiString(auStack_68,param_1);
   local_54 = auStack_68;
   local_58 = 0xfffffffd;
   local_50 = 0x40;
@@ -45,25 +40,21 @@ int GetDiskFreeSpaceExA(char *param_1,_ULARGE_INTEGER *param_2,_ULARGE_INTEGER *
     lVar3 = NtQueryVolumeInformationFile(local_70[0],auStack_60,&local_40,0x18,3);
     NtClose(local_70[0]);
     if (-1 < lVar3) {
-      uVar1 = (longlong)local_30 * (longlong)local_2c & 0xffffffff;
-      local_38 = local_38 * uVar1;
-      if ((uVar6 & 0xffffffff) != 0) {
-        *(longlong *)uVar6 = local_38;
+      uVar2 = (longlong)local_30 * (longlong)local_2c & 0xffffffff;
+      uVar1 = local_38 * uVar2;
+      if (param_2 != (_ULARGE_INTEGER *)0x0) {
+        param_2->QuadPart = uVar1;
       }
-      if ((uVar7 & 0xffffffff) != 0) {
-        *(longlong *)uVar7 = local_40 * uVar1;
+      if (param_3 != (_ULARGE_INTEGER *)0x0) {
+        param_3->QuadPart = local_40 * uVar2;
       }
-      if ((uVar8 & 0xffffffff) != 0) {
-        *(longlong *)uVar8 = local_38;
+      if (param_4 != (_ULARGE_INTEGER *)0x0) {
+        param_4->QuadPart = uVar1;
       }
-      uVar2 = 1;
-      goto LAB_828abb98;
+      return 1;
     }
     RtlSetLastNTError(lVar3);
   }
-  uVar2 = 0;
-LAB_828abb98:
-  iVar5 = __restgprlr_28(uVar2);
-  return iVar5;
+  return 0;
 }
 

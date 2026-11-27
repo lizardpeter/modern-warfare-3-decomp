@@ -17,130 +17,118 @@ _LARGE_INTEGER * RtlpFormatTimeOut(_LARGE_INTEGER *param_1,long param_2)
 
 // 828AC3F8  RtlFindFirstFile  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/xrtl/rtlfile.c:107)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 long RtlFindFirstFile(_OBJECT_ATTRIBUTES *param_1,_FILE_DIRECTORY_INFORMATION *param_2,ulong param_3
                      ,void **param_4)
 
 {
-  undefined4 *puVar2;
-  ulonglong uVar1;
-  long lVar3;
-  ulonglong uVar4;
-  uint uVar5;
-  uint uVar6;
+  _IO_STATUS_BLOCK_u_0 _Var1;
+  uint uVar2;
+  uint uVar3;
   ulong in_stack_ffffff48;
   void *local_60 [2];
   ushort local_58;
   undefined2 uStack_56;
-  int iStack_54;
+  uchar *puStack_54;
   _STRING local_50;
   _IO_STATUS_BLOCK_u_0 local_48 [2];
-  undefined4 local_40;
+  void *local_40;
   ushort *local_3c;
-  undefined4 local_38;
+  ulong local_38;
   
-  uVar4 = (ulonglong)(int)param_4;
-  puVar2 = (undefined4 *)__savegprlr_27(param_1);
-  local_40 = *puVar2;
+  local_40 = param_1->RootDirectory;
   local_3c = &local_58;
-  local_38 = puVar2[2];
+  local_38 = param_1->Attributes;
   local_60[0] = (void *)0x0;
-  local_58 = (ushort)((ulonglong)*(undefined8 *)puVar2[1] >> 0x30);
-  uVar5 = (uint)local_58;
-  iStack_54 = (int)*(undefined8 *)puVar2[1];
-  uVar6 = uVar5;
-  if (uVar5 != 0) {
-    do {
-      if (*(char *)(iStack_54 + -1 + uVar6) == '\\') break;
-      uVar6 = uVar6 - 1;
-    } while (uVar6 != 0);
+  local_58 = (*param_1->ObjectName).Length;
+  puStack_54 = (*param_1->ObjectName).Buffer;
+  for (uVar3 = (uint)local_58; (uVar3 != 0 && (puStack_54[uVar3 - 1] != '\\')); uVar3 = uVar3 - 1) {
   }
-  local_50.MaximumLength = (ushort)(uVar5 - uVar6);
-  uVar5 = uVar5 - uVar6 & 0xffff;
-  local_50.Buffer = (uchar *)(iStack_54 + uVar6);
-  _local_58 = CONCAT26((short)uVar6,CONCAT24((short)uVar6,iStack_54));
-  local_50.Length = local_50.MaximumLength;
-  if (((uVar6 & 0xffff) == 0) || (uVar5 == 0)) {
-    uVar1 = 0xffffffffc000000d;
+  uVar2 = local_58 - uVar3;
+  local_50.MaximumLength = (ushort)uVar2;
+  uVar2 = uVar2 & 0xffff;
+  local_50.Buffer = puStack_54 + uVar3;
+  _local_58 = CONCAT26((short)uVar3,CONCAT24((short)uVar3,puStack_54));
+  if (((uVar3 & 0xffff) == 0) || (uVar2 == 0)) {
+    _Var1.Pointer = (void *)0xc000000d;
   }
   else {
-    if (((uVar5 == 3) && (*local_50.Buffer == '*')) && (local_50.Buffer[1] == '.')) {
+    local_50.Length = local_50.MaximumLength;
+    if (((uVar2 == 3) && (*local_50.Buffer == '*')) && (local_50.Buffer[1] == '.')) {
       local_50.Length = -(ushort)(local_50.Buffer[2] != '*') & local_50.MaximumLength;
     }
-    uVar1 = NtOpenFile(local_60,0x100001,&local_40,local_48,3,0x4021);
-    if (-1 < (longlong)uVar1) {
-      lVar3 = (*_fileIoHooks->NtQueryDirectoryFile)
-                        (local_60[0],(void *)0x0,
-                         (_func___cdecl_void_void_ptr__IO_STATUS_BLOCK_ptr_ulong *)0x0,(void *)0x0,
-                         (_IO_STATUS_BLOCK *)local_48,param_2,param_3,&local_50,in_stack_ffffff48);
-      uVar1 = (ulonglong)lVar3;
-      if ((longlong)uVar1 < 0) {
+    _Var1.Status = NtOpenFile(local_60,0x100001,&local_40,local_48,3,0x4021);
+    if (-1 < _Var1.Status) {
+      _Var1.Status = (*_fileIoHooks->NtQueryDirectoryFile)
+                               (local_60[0],(void *)0x0,
+                                (_func___cdecl_void_void_ptr__IO_STATUS_BLOCK_ptr_ulong *)0x0,
+                                (void *)0x0,(_IO_STATUS_BLOCK *)local_48,param_2,param_3,&local_50,
+                                in_stack_ffffff48);
+      if ((int)_Var1 < 0) {
         NtClose(local_60[0]);
       }
+      else if (param_4 == (void **)0x0) {
+        NtClose(local_60[0]);
+        _Var1 = local_48[0];
+      }
       else {
-        if ((uVar4 & 0xffffffff) == 0) {
-          NtClose(local_60[0]);
-        }
-        else {
-          *(undefined4 *)uVar4 = local_60[0];
-        }
-        uVar1 = (ulonglong)(uint)local_48[0].Status;
+        *param_4 = local_60[0];
+        _Var1 = local_48[0];
       }
     }
   }
-  lVar3 = __restgprlr_27(uVar1);
-  return lVar3;
+  return _Var1.Status;
 }
 
 
 // 828AC598  RtlFindNextFile  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/xrtl/rtlfile.c:270)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 long RtlFindNextFile(void *param_1,_FILE_DIRECTORY_INFORMATION *param_2,ulong param_3)
 
 {
-  void *pvVar2;
-  long lVar3;
-  ulonglong uVar1;
+  _IO_STATUS_BLOCK_u_0 _Var1;
   ulong in_stack_ffffff78;
   _IO_STATUS_BLOCK_u_0 local_30 [12];
   
-  pvVar2 = (void *)__savegprlr_29(param_1);
-  lVar3 = (*_fileIoHooks->NtQueryDirectoryFile)
-                    (pvVar2,(void *)0x0,
-                     (_func___cdecl_void_void_ptr__IO_STATUS_BLOCK_ptr_ulong *)0x0,(void *)0x0,
-                     (_IO_STATUS_BLOCK *)local_30,param_2,param_3,(_STRING *)0x0,in_stack_ffffff78);
-  uVar1 = (ulonglong)lVar3;
-  if (-1 < (longlong)uVar1) {
-    uVar1 = (ulonglong)(uint)local_30[0].Status;
+  _Var1.Status = (*_fileIoHooks->NtQueryDirectoryFile)
+                           (param_1,(void *)0x0,
+                            (_func___cdecl_void_void_ptr__IO_STATUS_BLOCK_ptr_ulong *)0x0,
+                            (void *)0x0,(_IO_STATUS_BLOCK *)local_30,param_2,param_3,(_STRING *)0x0,
+                            in_stack_ffffff78);
+  if (-1 < _Var1.Status) {
+    _Var1 = local_30[0];
   }
-  lVar3 = __restgprlr_29(uVar1);
-  return lVar3;
+  return _Var1.Status;
 }
 
 
 // 828AC618  RtlSleep  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/xrtl/rtlfile.c:457)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 long RtlSleep(ulong param_1,uchar param_2)
 
 {
-  long lVar2;
-  _LARGE_INTEGER *p_Var3;
+  _LARGE_INTEGER *p_Var2;
   longlong lVar1;
-  ulonglong uVar4;
   _LARGE_INTEGER local_30 [6];
   
-  uVar4 = (ulonglong)(char)param_2;
-  lVar2 = __savegprlr_29(param_1);
-  p_Var3 = RtlpFormatTimeOut(local_30,lVar2);
-  if (p_Var3 == (_LARGE_INTEGER *)0x0) {
+  p_Var2 = RtlpFormatTimeOut(local_30,param_1);
+  if (p_Var2 == (_LARGE_INTEGER *)0x0) {
     local_30[0]._s_0.LowPart = 0;
-    p_Var3 = local_30;
+    p_Var2 = local_30;
     local_30[0]._s_0.HighPart = -0x80000000;
   }
   do {
-    lVar1 = KeDelayExecutionThread(1,uVar4,p_Var3);
-    if ((uVar4 & 0xff) == 0) break;
+    lVar1 = KeDelayExecutionThread(1,param_2,p_Var2);
+    if (param_2 == '\0') break;
   } while ((int)lVar1 == 0x101);
-  lVar2 = __restgprlr_29(-(lVar1 == 0xc0) & 0xc0);
-  return lVar2;
+  return -(uint)(lVar1 == 0xc0) & 0xc0;
 }
 

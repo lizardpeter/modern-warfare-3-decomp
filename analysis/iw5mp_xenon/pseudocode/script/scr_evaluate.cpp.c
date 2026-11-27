@@ -47,6 +47,8 @@ int CompareCanonicalStrings(void *param_1,void *param_2)
 
 // 82532E38  Scr_ArchiveCanonicalStrings  (script/scr_evaluate.cpp:122)
 
+/* WARNING: Function: __savegprlr_21 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_21 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void Scr_ArchiveCanonicalStrings(void)
@@ -59,7 +61,6 @@ void Scr_ArchiveCanonicalStrings(void)
   uint uVar5;
   uint uVar6;
   
-  __savegprlr_21();
   if (scrCompilePub.canonicalString == (CanonicalString *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_evaluate.cpp",0x81,
                     0,"%s");
@@ -106,33 +107,30 @@ void Scr_ArchiveCanonicalStrings(void)
       uVar4 = uVar4 + 1;
     } while (uVar4 < scrVarPub.canonicalStrCount);
   }
-  __restgprlr_21();
   return;
 }
 
 
 // 82532FF8  Scr_GetCanonicalString  (script/scr_evaluate.cpp:162)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 char * Scr_GetCanonicalString(uint param_1)
 
 {
-  int iVar1;
-  char *pcVar2;
-  
-  iVar1 = __savegprlr_29(param_1);
-  if (iVar1 == 0) {
+  if (param_1 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_evaluate.cpp",0xa3,
                     0,"%s");
   }
-  if ((uint)scrVarPub.canonicalStrCount <= (uint)scrEvaluateGlob.canonicalStringLookup[iVar1]) {
+  if ((uint)scrVarPub.canonicalStrCount <= (uint)scrEvaluateGlob.canonicalStringLookup[param_1]) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_evaluate.cpp",0xa4,
                     0,
                     "(unsigned)scrEvaluateGlob.canonicalStringLookup[fieldName] doesn\'t index scrVarPub.canonicalStrCount\n\t%i not in [0, %i)"
                    );
   }
-  pcVar2 = (char *)__restgprlr_29(scrEvaluateGlob.archivedCanonicalStrings
-                                  [scrEvaluateGlob.canonicalStringLookup[iVar1]].value);
-  return pcVar2;
+  return scrEvaluateGlob.archivedCanonicalStrings[scrEvaluateGlob.canonicalStringLookup[param_1]].
+         value;
 }
 
 
@@ -235,46 +233,45 @@ ushort Scr_CompileCanonicalString(uint param_1)
 
 // 825352B0  Scr_GetFieldValue  (script/scr_evaluate.cpp:273)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void Scr_GetFieldValue(uint param_1,char *param_2,int param_3,char *param_4)
 
 {
   uint uVar1;
-  uint uVar2;
-  ushort uVar3;
+  ushort uVar2;
   VariableUnion local_30;
   int local_2c;
   
-  uVar1 = __savegprlr_29(param_1);
-  uVar2 = SL_FindString(param_2);
-  if ((uVar2 != 0) && (uVar3 = Scr_CompileCanonicalString(uVar2), uVar3 != 0)) {
-    Scr_EvalFieldVariableInternal(uVar1,(uint)uVar3,(VariableValue *)&local_30);
+  uVar1 = SL_FindString(param_2);
+  if ((uVar1 != 0) && (uVar2 = Scr_CompileCanonicalString(uVar1), uVar2 != 0)) {
+    Scr_EvalFieldVariableInternal(param_1,(uint)uVar2,(VariableValue *)&local_30);
     if (scrVarPub.error_message == (char *)0x0) {
       Scr_GetValueString(0,(VariableValue *)&local_30,param_3,param_4);
       RemoveRefToValue(local_2c,local_30);
-      __restgprlr_29();
       return;
     }
     Scr_ClearErrorMessage();
   }
   *param_4 = '\0';
-  __restgprlr_29();
   return;
 }
 
 
 // 82533220  Scr_GetValueString  (script/scr_evaluate.cpp:311)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
+
 void Scr_GetValueString(uint param_1,VariableValue *param_2,int param_3,char *param_4)
 
 {
   uint uVar1;
-  uint uVar3;
-  XAnim_s *pXVar4;
+  XAnim_s *pXVar3;
   longlong lVar2;
-  int iVar6;
-  uint uVar5;
+  uint uVar4;
   
-  uVar3 = __savegprlr_25(param_1);
   if (0x18 < (uint)param_2->type) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_evaluate.cpp",0x13d
                     ,0,"%s");
@@ -282,102 +279,84 @@ void Scr_GetValueString(uint param_1,VariableValue *param_2,int param_3,char *pa
   switch(param_2->type) {
   case 0:
     I_strncpyz(param_4,"undefined",param_3);
-    __restgprlr_25();
     return;
   case 1:
     break;
   case 2:
     SL_ConvertToString((param_2->u).uintValue);
-    iVar6 = Com_sprintf(param_4,param_3,"\"%s\"");
-    __restgprlr_25(iVar6);
+    Com_sprintf(param_4,param_3,"\"%s\"");
     return;
   case 3:
     SL_ConvertToString((param_2->u).uintValue);
-    iVar6 = Com_sprintf(param_4,param_3,"&\"%s\"");
-    __restgprlr_25(iVar6);
+    Com_sprintf(param_4,param_3,"&\"%s\"");
     return;
   case 4:
-    iVar6 = sprintf(param_4,"(%g, %g, %g)");
-    __restgprlr_25(iVar6);
+    sprintf(param_4,"(%g, %g, %g)");
     return;
   case 5:
-    iVar6 = Com_sprintf(param_4,param_3,"%g");
-    __restgprlr_25(iVar6);
+    Com_sprintf(param_4,param_3,"%g");
     return;
   case 6:
-    iVar6 = Com_sprintf(param_4,param_3,"%i");
-    __restgprlr_25(iVar6);
+    Com_sprintf(param_4,param_3,"%i");
     return;
   default:
-    iVar6 = Com_sprintf(param_4,param_3,"<%s>");
-    __restgprlr_25(iVar6);
+    Com_sprintf(param_4,param_3,"<%s>");
     return;
   case 9:
     Scr_GetCodePos((char *)((param_2->u).intValue + -1),1,param_4,param_3);
-    __restgprlr_25();
     return;
   case 10:
-    iVar6 = Com_sprintf(param_4,param_3,"::%s");
-    __restgprlr_25(iVar6);
+    Com_sprintf(param_4,param_3,"::%s");
     return;
   case 0xb:
-    iVar6 = Com_sprintf(param_4,param_3,"::%s");
-    __restgprlr_25(iVar6);
+    Com_sprintf(param_4,param_3,"::%s");
     return;
   case 0xd:
-    uVar3 = (param_2->u).uintValue;
-    pXVar4 = Scr_GetAnims(uVar3 & 0xffff);
-    XAnimGetAnimDebugName(pXVar4,uVar3 >> 0x10);
-    iVar6 = Com_sprintf(param_4,param_3,"%%%s");
-    __restgprlr_25(iVar6);
+    uVar1 = (param_2->u).uintValue;
+    pXVar3 = Scr_GetAnims(uVar1 & 0xffff);
+    XAnimGetAnimDebugName(pXVar3,uVar1 >> 0x10);
+    Com_sprintf(param_4,param_3,"%%%s");
     return;
   }
   uVar1 = (param_2->u).uintValue;
-  uVar5 = GetObjectType(uVar1);
-  lVar2 = (longlong)(int)uVar5;
-  if (uVar5 == 0x16) {
+  uVar4 = GetObjectType(uVar1);
+  lVar2 = (longlong)(int)uVar4;
+  if (uVar4 == 0x16) {
     Scr_GetEntNum(uVar1);
     Scr_GetEntClassId(uVar1);
-    iVar6 = Com_sprintf(param_4,param_3,"$%c%i");
-    __restgprlr_25(iVar6);
+    Com_sprintf(param_4,param_3,"$%c%i");
     return;
   }
   if (uVar1 == scrVarPub.levelId) {
     I_strncpyz(param_4,"level",param_3);
-    __restgprlr_25();
     return;
   }
   if (uVar1 == scrVarPub.animId) {
     I_strncpyz(param_4,"anim",param_3);
-    __restgprlr_25();
     return;
   }
-  if (0x18 < uVar5) {
+  if (0x18 < uVar4) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_evaluate.cpp",0x184
                     ,0,"%s");
   }
   if ((lVar2 - 0x10U & 0xffffffff) < 8) {
     if (((((int)(lVar2 - 0x10U) == 0) || (lVar2 == 0x11)) || (lVar2 == 0x12)) || (lVar2 == 0x13)) {
-      iVar6 = Com_sprintf(param_4,param_3,"$t%i");
-      __restgprlr_25(iVar6);
+      Com_sprintf(param_4,param_3,"$t%i");
       return;
     }
     if (lVar2 == 0x14) {
-      if ((uVar3 != 0) && (uVar3 = Scr_GetSelf(uVar3), uVar1 == uVar3)) {
+      if ((param_1 != 0) && (uVar4 = Scr_GetSelf(param_1), uVar1 == uVar4)) {
         I_strncpyz(param_4,"self",param_3);
-        __restgprlr_25();
         return;
       }
     }
     else if ((lVar2 != 0x15) && (lVar2 != 0x16)) {
       GetArraySize(uVar1);
-      iVar6 = Com_sprintf(param_4,param_3,"<array of size %i>");
-      __restgprlr_25(iVar6);
+      Com_sprintf(param_4,param_3,"<array of size %i>");
       return;
     }
   }
-  iVar6 = Com_sprintf(param_4,param_3,"<%s>");
-  __restgprlr_25(iVar6);
+  Com_sprintf(param_4,param_3,"<%s>");
   return;
 }
 
@@ -395,25 +374,27 @@ void Scr_ClearValue(VariableValue *param_1)
 
 // 82533698  Scr_EvalArrayVariableInternal  (script/scr_evaluate.cpp:448)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void Scr_EvalArrayVariableInternal(VariableValue *param_1,VariableValue *param_2)
 
 {
-  VariableUnion *pVVar1;
-  
-  pVVar1 = (VariableUnion *)__savegprlr_29(param_1);
   if ((scrVarPub.error_message != (char *)0x0) ||
-     (Scr_EvalArray((VariableValue *)pVVar1,param_2), scrVarPub.error_message != (char *)0x0)) {
-    RemoveRefToValue(((VariableUnion *)((int)param_2 + 4))->intValue,param_2->u);
-    ((VariableUnion *)((int)param_2 + 4))->intValue = 0;
-    RemoveRefToValue(pVVar1[1].intValue,*pVVar1);
-    pVVar1[1].intValue = 0;
+     (Scr_EvalArray(param_1,param_2), scrVarPub.error_message != (char *)0x0)) {
+    RemoveRefToValue(param_2->type,param_2->u);
+    param_2->type = 0;
+    RemoveRefToValue(param_1->type,param_1->u);
+    param_1->type = 0;
   }
-  __restgprlr_29();
   return;
 }
 
 
 // 82533700  Scr_EvalArrayVariable  (script/scr_evaluate.cpp:469)
+
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 
 void Scr_EvalArrayVariable(uint param_1,VariableValue *param_2)
 
@@ -421,44 +402,43 @@ void Scr_EvalArrayVariable(uint param_1,VariableValue *param_2)
   VariableUnion local_30;
   int local_2c;
   
-  local_30.intValue = __savegprlr_29(param_1);
-  if (scrVarPub.evaluate == false) {
+  if (!scrVarPub.evaluate) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_evaluate.cpp",0x1d8
                     ,0,"%s");
   }
   local_2c = 1;
-  AddRefToObject(local_30.uintValue);
+  local_30.uintValue = param_1;
+  AddRefToObject(param_1);
   if ((scrVarPub.error_message != (char *)0x0) ||
      (Scr_EvalArray((VariableValue *)&local_30,param_2), scrVarPub.error_message != (char *)0x0)) {
-    RemoveRefToValue(((VariableUnion *)((int)param_2 + 4))->intValue,param_2->u);
-    ((VariableUnion *)((int)param_2 + 4))->intValue = 0;
+    RemoveRefToValue(param_2->type,param_2->u);
+    param_2->type = 0;
     RemoveRefToValue(local_2c,local_30);
   }
-  __restgprlr_29();
   return;
 }
 
 
 // 825337B0  Scr_EvalArrayVariableExpression  (script/scr_evaluate.cpp:489)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void Scr_EvalArrayVariableExpression
                (sval_u param_1,sval_u param_2,uint param_3,VariableValue *param_4)
 
 {
-  sval_u sVar1;
   VariableUnion local_30;
   int local_2c;
   
-  sVar1.type = __savegprlr_29(param_1.type);
   Scr_EvalExpression(param_2,param_3,param_4);
-  Scr_EvalPrimitiveExpression(sVar1,param_3,(VariableValue *)&local_30);
+  Scr_EvalPrimitiveExpression(param_1,param_3,(VariableValue *)&local_30);
   if ((scrVarPub.error_message != (char *)0x0) ||
      (Scr_EvalArray((VariableValue *)&local_30,param_4), scrVarPub.error_message != (char *)0x0)) {
-    RemoveRefToValue(((VariableUnion *)((int)param_4 + 4))->intValue,param_4->u);
-    ((VariableUnion *)((int)param_4 + 4))->intValue = 0;
+    RemoveRefToValue(param_4->type,param_4->u);
+    param_4->type = 0;
     RemoveRefToValue(local_2c,local_30);
   }
-  __restgprlr_29();
   return;
 }
 
@@ -482,27 +462,27 @@ bool Scr_RefArrayVariableExpression(sval_u param_1,sval_u param_2)
 
 // 825338A8  Scr_EvalLocalVariable  (script/scr_evaluate.cpp:522)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void Scr_EvalLocalVariable(sval_u param_1,uint param_2,VariableValue *param_3)
 
 {
   uint uVar2;
   VariableValue VVar1;
   
-  uVar2 = __savegprlr_29(param_1.type);
-  if (uVar2 == 0) {
+  if (param_1.type == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_evaluate.cpp",0x20b
                     ,0,"%s");
   }
-  uVar2 = FindVariable(param_2,uVar2);
+  uVar2 = FindVariable(param_2,param_1.stringValue);
   if (uVar2 == 0) {
     param_3->type = 0;
     Scr_Error("unknown variable");
-    __restgprlr_29();
     return;
   }
   VVar1 = Scr_EvalVariable(param_2,uVar2);
   *param_3 = VVar1;
-  __restgprlr_29();
   return;
 }
 
@@ -595,161 +575,141 @@ void Scr_GetValue(uint param_1,VariableValue *param_2)
 
 // 825359E8  Scr_EvalVariableExpression  (script/scr_evaluate.cpp:632)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void Scr_EvalVariableExpression(sval_u param_1,uint param_2,VariableValue *param_3)
 
 {
-  int *piVar1;
-  uint uVar2;
-  int iVar3;
-  ulonglong uVar4;
+  uint uVar1;
+  int iVar2;
   
-  uVar4 = (ulonglong)(int)param_2;
-  piVar1 = (int *)__savegprlr_27(param_1.type);
-  iVar3 = *piVar1;
-  uVar2 = (uint)uVar4;
-  if (iVar3 < 0x13) {
-    if (iVar3 != 0x12) {
-      switch(iVar3) {
+  iVar2 = (param_1.block)->abortLevel;
+  if (iVar2 < 0x13) {
+    if (iVar2 == 0x12) {
+      if (alwaysfails == 0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_evaluate.cpp",
+                        0x27e,0,"unimplemented");
+        return;
+      }
+    }
+    else {
+      switch(iVar2) {
       case 4:
         param_3->type = 0;
         Scr_Error("unknown variable");
-        __restgprlr_27();
         return;
       case 5:
-        goto switchD_82535a30_caseD_5;
+        if (scrEvaluateGlob.freezeScope) {
+          param_2 = (param_1.block)->localVarsPublicCount;
+        }
+        uVar1 = 0;
+        if ((param_2 == 0) || (iVar2 = Scr_IsThreadAlive(param_2), iVar2 == 0)) {
+          param_3->type = 0;
+          param_2 = 0;
+          Scr_Error("thread not active");
+        }
+        else {
+          Scr_EvalLocalVariable((sval_u)(param_1.block)->localVarsCreateCount,param_2,param_3);
+          if (scrVarPub.error_message == (char *)0x0) {
+            AddRefToValue(param_3->type,param_3->u);
+            uVar1 = Scr_EvalFieldObject(*(uint *)(param_1.block)->localVarsInitBits,param_3);
+            Scr_ClearErrorMessage();
+          }
+        }
+        if (scrEvaluateGlob.freezeObjects == false) {
+          (param_1.block)->localVarsPublicCount = param_2;
+        }
+        else if ((param_1.block)->localVarsPublicCount != param_2) {
+          scrEvaluateGlob.objectChanged = true;
+        }
+        if (scrEvaluateGlob.freezeObjects == false) {
+          (param_1.block)->localVarsCount = uVar1;
+          return;
+        }
+        if ((param_1.block)->localVarsCount != uVar1) {
+          scrEvaluateGlob.objectChanged = true;
+          return;
+        }
+        break;
       case 6:
         param_3->type = 0;
         Scr_Error("thread not active");
-        __restgprlr_27();
         return;
-      default:
-        goto switchD_82535a30_caseD_7;
       case 0xf:
         Scr_EvalArrayVariableExpression
-                  (*(sval_u *)(piVar1 + 1),*(sval_u *)(piVar1 + 2),uVar2,param_3);
-        __restgprlr_27();
+                  ((sval_u)(param_1.block)->localVarsCreateCount,
+                   (sval_u)(param_1.block)->localVarsPublicCount,param_2,param_3);
         return;
       case 0x10:
         param_3->type = 0;
         Scr_Error("unknown field");
-        __restgprlr_27();
         return;
       case 0x11:
-        uVar2 = Scr_EvalPrimitiveExpressionFieldObject(*(sval_u *)(piVar1 + 1),uVar2);
+        uVar1 = Scr_EvalPrimitiveExpressionFieldObject
+                          ((sval_u)(param_1.block)->localVarsCreateCount,param_2);
         if (scrEvaluateGlob.freezeObjects == false) {
-          piVar1[3] = uVar2;
+          (param_1.block)->localVarsCount = uVar1;
         }
-        else if (piVar1[3] != uVar2) {
+        else if ((param_1.block)->localVarsCount != uVar1) {
           scrEvaluateGlob.objectChanged = true;
         }
-        if (uVar2 != 0) {
-          Scr_EvalFieldVariableInternal(uVar2,piVar1[2],param_3);
-          __restgprlr_27();
+        if (uVar1 != 0) {
+          Scr_EvalFieldVariableInternal(uVar1,(param_1.block)->localVarsPublicCount,param_3);
           return;
         }
 LAB_82535c10:
         param_3->type = 0;
         Scr_Error("unknown object");
-        __restgprlr_27();
         return;
       }
-    }
-    if (alwaysfails == 0) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_evaluate.cpp",
-                      0x27e,0,"unimplemented");
-      __restgprlr_27();
-      return;
     }
   }
-  else if (iVar3 < 0x58) {
-    if (iVar3 == 0x57) {
-      if ((piVar1[1] != 0) && (iVar3 = Scr_IsThreadAlive(piVar1[1]), iVar3 != 0)) {
-        uVar2 = piVar1[1];
+  else if (iVar2 < 0x58) {
+    if (iVar2 == 0x57) {
+      if (((param_1.block)->localVarsCreateCount != 0) &&
+         (iVar2 = Scr_IsThreadAlive((param_1.block)->localVarsCreateCount), iVar2 != 0)) {
+        uVar1 = (param_1.block)->localVarsCreateCount;
         param_3->type = 1;
-        (param_3->u).uintValue = uVar2;
-        AddRefToObject(uVar2);
-        __restgprlr_27();
+        (param_3->u).uintValue = uVar1;
+        AddRefToObject(uVar1);
         return;
       }
-      if (piVar1[1] != 0) {
-        RemoveRefToObject(piVar1[1]);
-        piVar1[1] = 0;
+      if ((param_1.block)->localVarsCreateCount != 0) {
+        RemoveRefToObject((param_1.block)->localVarsCreateCount);
+        (param_1.block)->localVarsCreateCount = 0;
       }
       param_3->type = 0;
       Scr_Error("thread not active");
-      __restgprlr_27();
       return;
     }
-    if (iVar3 == 0x13) goto LAB_82535c10;
-    if (iVar3 == 0x3b) {
-      Scr_EvalPrimitiveExpression(*(sval_u *)(piVar1 + 1),uVar2,param_3);
+    if (iVar2 == 0x13) goto LAB_82535c10;
+    if (iVar2 == 0x3b) {
+      Scr_EvalPrimitiveExpression((sval_u)(param_1.block)->localVarsCreateCount,param_2,param_3);
       Scr_EvalSelfValue(param_3);
-      __restgprlr_27();
       return;
     }
-    if (iVar3 == 0x56) {
-      uVar2 = Scr_EvalObject(*(sval_u *)(piVar1 + 1),*(sval_u *)(piVar1 + 2),param_3);
+    if (iVar2 == 0x56) {
+      uVar1 = Scr_EvalObject((sval_u)(param_1.block)->localVarsCreateCount,
+                             (sval_u)(param_1.block)->localVarsPublicCount,param_3);
       if (scrEvaluateGlob.freezeObjects == false) {
-        piVar1[3] = uVar2;
-        __restgprlr_27();
+        (param_1.block)->localVarsCount = uVar1;
         return;
       }
-      if (piVar1[3] != uVar2) {
+      if ((param_1.block)->localVarsCount != uVar1) {
         scrEvaluateGlob.objectChanged = true;
-        __restgprlr_27();
         return;
       }
     }
   }
-  else if (iVar3 == 0x5a) {
+  else if (iVar2 == 0x5a) {
     param_3->type = 0;
     Scr_Error("bad expression");
   }
-  else if (iVar3 == 0x5d) {
-    Scr_GetValue(piVar1[1],param_3);
-    __restgprlr_27();
+  else if (iVar2 == 0x5d) {
+    Scr_GetValue((param_1.block)->localVarsCreateCount,param_3);
     return;
   }
-  goto switchD_82535a30_caseD_7;
-switchD_82535a30_caseD_5:
-  if (scrEvaluateGlob.freezeScope != false) {
-    uVar4 = (ulonglong)(uint)piVar1[2];
-  }
-  uVar2 = 0;
-  if ((uVar4 & 0xffffffff) == 0) {
-LAB_82535b04:
-    param_3->type = 0;
-    uVar4 = 0;
-    Scr_Error("thread not active");
-  }
-  else {
-    iVar3 = Scr_IsThreadAlive((uint)uVar4);
-    if (iVar3 == 0) goto LAB_82535b04;
-    Scr_EvalLocalVariable(*(sval_u *)(piVar1 + 1),(uint)uVar4,param_3);
-    if (scrVarPub.error_message == (char *)0x0) {
-      AddRefToValue(param_3->type,(VariableUnion)*(uint *)&param_3->u);
-      uVar2 = Scr_EvalFieldObject(piVar1[4],param_3);
-      Scr_ClearErrorMessage();
-    }
-  }
-  if (scrEvaluateGlob.freezeObjects == false) {
-    piVar1[2] = (int)uVar4;
-  }
-  else if ((ulonglong)(uint)piVar1[2] != (uVar4 & 0xffffffff)) {
-    scrEvaluateGlob.objectChanged = true;
-  }
-  if (scrEvaluateGlob.freezeObjects == false) {
-    piVar1[3] = uVar2;
-    __restgprlr_27();
-    return;
-  }
-  if (piVar1[3] != uVar2) {
-    scrEvaluateGlob.objectChanged = true;
-    __restgprlr_27();
-    return;
-  }
-switchD_82535a30_caseD_7:
-  __restgprlr_27();
   return;
 }
 
@@ -828,65 +788,62 @@ bool Scr_RefVariableExpression(sval_u param_1)
 
 // 82535DB0  Scr_CompileVariableExpression  (script/scr_evaluate.cpp:852)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void Scr_CompileVariableExpression(sval_u *param_1)
 
 {
   char cVar1;
   char cVar2;
   scr_block_t *psVar3;
-  sval_u *psVar4;
-  ushort uVar9;
-  sval_u sVar5;
-  char *pcVar6;
-  bool bVar10;
-  int iVar7;
-  sval_u sVar8;
-  char *pcVar11;
+  ushort uVar8;
+  sval_u sVar4;
+  char *pcVar5;
+  bool bVar9;
+  int iVar6;
+  sval_u sVar7;
+  char *pcVar10;
   
-  psVar4 = (sval_u *)__savegprlr_28(param_1);
-  psVar3 = psVar4->block;
-  iVar7 = psVar3->abortLevel;
-  if (iVar7 < 0x13) {
-    if (iVar7 != 0x12) {
-      if (iVar7 == 5) {
-        uVar9 = Scr_CompileCanonicalString(psVar3->localVarsCreateCount);
-        psVar4->block->localVarsCreateCount = (uint)uVar9;
-        if (psVar4->block->localVarsCreateCount == 0) {
-          sVar5 = debugger_node0(4);
-          *psVar4 = sVar5;
-          __restgprlr_28();
+  psVar3 = param_1->block;
+  iVar6 = psVar3->abortLevel;
+  if (iVar6 < 0x13) {
+    if (iVar6 != 0x12) {
+      if (iVar6 == 5) {
+        uVar8 = Scr_CompileCanonicalString(psVar3->localVarsCreateCount);
+        param_1->block->localVarsCreateCount = (uint)uVar8;
+        if (param_1->block->localVarsCreateCount == 0) {
+          sVar4 = debugger_node0(4);
+          *param_1 = sVar4;
           return;
         }
-        sVar5.stringValue = AllocValue(0);
-        sVar5 = debugger_node4(5,psVar4->block->localVarsCreateCount,(sval_u)0x0,(sval_u)0x0,sVar5);
-        *psVar4 = sVar5;
-        __restgprlr_28();
+        sVar4.stringValue = AllocValue(0);
+        sVar4 = debugger_node4(5,param_1->block->localVarsCreateCount,(sval_u)0x0,(sval_u)0x0,sVar4)
+        ;
+        *param_1 = sVar4;
         return;
       }
-      if (iVar7 == 0xf) {
+      if (iVar6 == 0xf) {
         Scr_CompileExpression((sval_u *)&psVar3->localVarsPublicCount);
-        Scr_CompilePrimitiveExpression((sval_u *)&psVar4->block->localVarsCreateCount);
-        sVar5 = debugger_node2(0xf,psVar4->block->localVarsCreateCount,
-                               psVar4->block->localVarsPublicCount);
-        *psVar4 = sVar5;
-        __restgprlr_28();
+        Scr_CompilePrimitiveExpression((sval_u *)&param_1->block->localVarsCreateCount);
+        sVar4 = debugger_node2(0xf,param_1->block->localVarsCreateCount,
+                               param_1->block->localVarsPublicCount);
+        *param_1 = sVar4;
         return;
       }
-      if (iVar7 == 0x11) {
+      if (iVar6 == 0x11) {
         Scr_CompilePrimitiveExpressionFieldObject((sval_u *)&psVar3->localVarsCreateCount);
-        uVar9 = Scr_CompileCanonicalString(psVar4->block->localVarsPublicCount);
-        psVar4->block->localVarsPublicCount = (uint)uVar9;
-        psVar3 = psVar4->block;
+        uVar8 = Scr_CompileCanonicalString(param_1->block->localVarsPublicCount);
+        param_1->block->localVarsPublicCount = (uint)uVar8;
+        psVar3 = param_1->block;
         if (psVar3->localVarsPublicCount == 0) {
-          sVar5 = debugger_node0(0x10);
-          *psVar4 = sVar5;
-          __restgprlr_28();
+          sVar4 = debugger_node0(0x10);
+          *param_1 = sVar4;
           return;
         }
-        sVar5 = debugger_node3(0x11,psVar3->localVarsCreateCount,psVar3->localVarsPublicCount,
+        sVar4 = debugger_node3(0x11,psVar3->localVarsCreateCount,psVar3->localVarsPublicCount,
                                (sval_u)0x0);
-        *psVar4 = sVar5;
-        __restgprlr_28();
+        *param_1 = sVar4;
         return;
       }
       goto LAB_8253605c;
@@ -894,159 +851,137 @@ void Scr_CompileVariableExpression(sval_u *param_1)
     if (alwaysfails == 0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_evaluate.cpp",
                       0x362,0,"unimplemented");
-      __restgprlr_28();
       return;
     }
   }
   else {
-    if (iVar7 != 0x3b) {
-      if (iVar7 == 0x56) {
-        pcVar6 = SL_ConvertToString(psVar3->localVarsCreateCount);
-        cVar1 = *pcVar6;
+    if (iVar6 != 0x3b) {
+      if (iVar6 == 0x56) {
+        pcVar5 = SL_ConvertToString(psVar3->localVarsCreateCount);
+        cVar1 = *pcVar5;
         if (cVar1 == 't') {
-          sVar5.type = atoi(pcVar6 + 1);
-          if ((((sVar5.type != 0) && (sVar5.stringValue < 0x9000)) &&
-              (bVar10 = IsObjectFree(sVar5.stringValue), !bVar10)) &&
-             ((iVar7 = GetObjectType(sVar5.stringValue), 0xf < iVar7 &&
-              ((iVar7 < 0x14 || (iVar7 == 0x18)))))) {
-            sVar8 = debugger_node1(0x57,sVar5);
-            *psVar4 = sVar8;
-            AddRefToObject(sVar5.stringValue);
-            __restgprlr_28();
+          sVar4.type = atoi(pcVar5 + 1);
+          if ((((sVar4.type != 0) && (sVar4.stringValue < 0x9000)) &&
+              (bVar9 = IsObjectFree(sVar4.stringValue), !bVar9)) &&
+             ((iVar6 = GetObjectType(sVar4.stringValue), 0xf < iVar6 &&
+              ((iVar6 < 0x14 || (iVar6 == 0x18)))))) {
+            sVar7 = debugger_node1(0x57,sVar4);
+            *param_1 = sVar7;
+            AddRefToObject(sVar4.stringValue);
             return;
           }
         }
         else {
           if (cVar1 == 'a') {
-            pcVar6 = pcVar6 + 1;
-            sVar5.type = atoi(pcVar6);
-            if (sVar5.type < 1) {
-              pcVar11 = "0";
+            pcVar5 = pcVar5 + 1;
+            sVar4.type = atoi(pcVar5);
+            if (sVar4.type < 1) {
+              pcVar10 = "0";
               do {
-                cVar1 = *pcVar6;
-                cVar2 = *pcVar11;
+                cVar1 = *pcVar5;
+                cVar2 = *pcVar10;
                 if (cVar1 == '\0') break;
-                pcVar6 = pcVar6 + 1;
-                pcVar11 = pcVar11 + 1;
+                pcVar5 = pcVar5 + 1;
+                pcVar10 = pcVar10 + 1;
               } while (cVar1 == cVar2);
               if (cVar1 != cVar2) goto LAB_8253605c;
             }
-            sVar5 = debugger_node1(0x5d,sVar5);
-            *psVar4 = sVar5;
-            __restgprlr_28();
+            sVar4 = debugger_node1(0x5d,sVar4);
+            *param_1 = sVar4;
             return;
           }
-          sVar5.type = Scr_GetClassnumForCharId(cVar1);
-          if (-1 < sVar5.type) {
-            sVar8.type = atoi(pcVar6 + 1);
-            if ((sVar8.type != 0) || (pcVar6[1] == '0')) {
-              sVar5 = debugger_node3(0x56,sVar5,sVar8,(sval_u)0x0);
-              *psVar4 = sVar5;
-              __restgprlr_28();
+          sVar4.type = Scr_GetClassnumForCharId(cVar1);
+          if (-1 < sVar4.type) {
+            sVar7.type = atoi(pcVar5 + 1);
+            if ((sVar7.type != 0) || (pcVar5[1] == '0')) {
+              sVar4 = debugger_node3(0x56,sVar4,sVar7,(sval_u)0x0);
+              *param_1 = sVar4;
               return;
             }
           }
         }
       }
 LAB_8253605c:
-      sVar5 = debugger_node0(0x5a);
-      *psVar4 = sVar5;
-      __restgprlr_28();
+      sVar4 = debugger_node0(0x5a);
+      *param_1 = sVar4;
       return;
     }
     Scr_CompilePrimitiveExpression((sval_u *)&psVar3->localVarsCreateCount);
-    sVar5 = debugger_node1(0x3b,psVar4->block->localVarsCreateCount);
-    *psVar4 = sVar5;
+    sVar4 = debugger_node1(0x3b,param_1->block->localVarsCreateCount);
+    *param_1 = sVar4;
   }
-  __restgprlr_28();
   return;
 }
 
 
 // 82535348  Scr_EvalPrimitiveExpressionFieldObject  (script/scr_evaluate.cpp:969)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 uint Scr_EvalPrimitiveExpressionFieldObject(sval_u param_1,uint param_2)
 
 {
   int *piVar1;
-  undefined4 *puVar2;
-  int iVar3;
-  uint uVar4;
-  ulonglong uVar5;
-  ulonglong uVar6;
+  int iVar2;
+  uint uVar3;
   VariableValue aVStack_30 [6];
   
-  uVar6 = (ulonglong)(int)param_2;
-  puVar2 = (undefined4 *)__savegprlr_28(param_1.type);
-  uVar4 = (uint)uVar6;
-  switch(*puVar2) {
+  switch((param_1.block)->abortLevel) {
   case 0x14:
-    Scr_EvalVariableExpression(*(sval_u *)(puVar2 + 1),uVar4,aVStack_30);
-    uVar4 = Scr_EvalFieldObject(puVar2[2],aVStack_30);
-    uVar4 = __restgprlr_28(uVar4);
-    return uVar4;
+    Scr_EvalVariableExpression((sval_u)(param_1.block)->localVarsCreateCount,param_2,aVStack_30);
+    uVar3 = Scr_EvalFieldObject((param_1.block)->localVarsPublicCount,aVStack_30);
+    return uVar3;
   default:
     Scr_Error("bad expression");
-    uVar4 = __restgprlr_28(0);
-    return uVar4;
+    return 0;
   case 0x16:
-    piVar1 = (int *)puVar2[1];
+    piVar1 = (int *)(param_1.block)->localVarsCreateCount;
     if (*piVar1 == 0x1a) {
-      Scr_EvalFunction(*(sval_u *)(piVar1 + 1),*(sval_u *)(piVar1 + 2),uVar4,aVStack_30);
+      Scr_EvalFunction(*(sval_u *)(piVar1 + 1),*(sval_u *)(piVar1 + 2),param_2,aVStack_30);
     }
     else if (*piVar1 == 0x1b) {
-      Scr_EvalMethod(*(sval_u *)(piVar1 + 1),*(sval_u *)(piVar1 + 2),*(sval_u *)(piVar1 + 3),uVar4,
-                     aVStack_30);
-      uVar4 = Scr_EvalFieldObject(puVar2[2],aVStack_30);
-      uVar4 = __restgprlr_28(uVar4);
-      return uVar4;
+      Scr_EvalMethod(*(sval_u *)(piVar1 + 1),*(sval_u *)(piVar1 + 2),*(sval_u *)(piVar1 + 3),param_2
+                     ,aVStack_30);
+      uVar3 = Scr_EvalFieldObject((param_1.block)->localVarsPublicCount,aVStack_30);
+      return uVar3;
     }
-    uVar4 = Scr_EvalFieldObject(puVar2[2],aVStack_30);
-    uVar4 = __restgprlr_28(uVar4);
-    return uVar4;
+    uVar3 = Scr_EvalFieldObject((param_1.block)->localVarsPublicCount,aVStack_30);
+    return uVar3;
   case 0x25:
     break;
   case 0x26:
-    if (puVar2[2] == 0) {
+    if ((param_1.block)->localVarsPublicCount == 0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_evaluate.cpp",
                       0x3ef,0,"%s");
     }
-    uVar4 = __restgprlr_28(puVar2[2]);
-    return uVar4;
+    return (param_1.block)->localVarsPublicCount;
   case 0x28:
-    uVar4 = __restgprlr_28(scrVarPub.levelId);
-    return uVar4;
+    return scrVarPub.levelId;
   case 0x2a:
-    uVar4 = __restgprlr_28(scrVarPub.animId);
-    return uVar4;
+    return scrVarPub.animId;
   }
-  if (scrEvaluateGlob.freezeScope != false) {
-    uVar6 = (ulonglong)(uint)puVar2[1];
+  if (scrEvaluateGlob.freezeScope) {
+    param_2 = (param_1.block)->localVarsCreateCount;
   }
-  if ((uVar6 & 0xffffffff) != 0) {
-    iVar3 = Scr_IsThreadAlive((uint)uVar6);
-    if (iVar3 != 0) {
-      uVar4 = Scr_GetSelf((uint)uVar6);
-      uVar5 = (ulonglong)(int)uVar4;
-      goto LAB_82535458;
-    }
+  if ((param_2 == 0) || (iVar2 = Scr_IsThreadAlive(param_2), iVar2 == 0)) {
+    param_2 = 0;
+    uVar3 = 0;
+    Scr_Error("thread not active");
   }
-  uVar6 = 0;
-  uVar5 = 0;
-  Scr_Error("thread not active");
-LAB_82535458:
+  else {
+    uVar3 = Scr_GetSelf(param_2);
+  }
   if (scrEvaluateGlob.freezeObjects == false) {
-    puVar2[1] = (int)uVar6;
-    puVar2[2] = (int)uVar5;
-    uVar4 = __restgprlr_28(uVar5);
-    return uVar4;
+    (param_1.block)->localVarsCreateCount = param_2;
+    (param_1.block)->localVarsPublicCount = uVar3;
+    return uVar3;
   }
-  if (((ulonglong)(uint)puVar2[1] != (uVar6 & 0xffffffff)) ||
-     ((ulonglong)(uint)puVar2[2] != (uVar5 & 0xffffffff))) {
+  if (((param_1.block)->localVarsCreateCount != param_2) ||
+     ((param_1.block)->localVarsPublicCount != uVar3)) {
     scrEvaluateGlob.objectChanged = true;
   }
-  uVar4 = __restgprlr_28(uVar5);
-  return uVar4;
+  return uVar3;
 }
 
 
@@ -1091,239 +1026,210 @@ LAB_82535640:
 
 // 82533D48  Scr_EvalFieldVariableInternal  (script/scr_evaluate.cpp:1074)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 void Scr_EvalFieldVariableInternal(uint param_1,uint param_2,VariableValue *param_3)
 
 {
   VariableValue *pVVar1;
-  uint uVar2;
-  uint uVar4;
-  bool bVar5;
-  VariableValue VVar3;
-  ulonglong uVar6;
+  bool bVar4;
+  VariableValue VVar2;
+  uint uVar3;
   
-  uVar6 = (ulonglong)(int)param_2;
-  uVar4 = __savegprlr_26(param_1);
-  if ((uVar6 & 0xffffffff) == 0) {
+  if (param_2 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_evaluate.cpp",0x436
                     ,0,"%s");
   }
-  bVar5 = IsFieldObject(uVar4);
-  uVar2 = scrVmPub.outparamcount;
+  bVar4 = IsFieldObject(param_1);
+  uVar3 = scrVmPub.outparamcount;
   pVVar1 = scrVmPub.top;
-  if (!bVar5) {
+  if (!bVar4) {
     param_3->type = 0;
     Scr_Error("not a field object");
-    __restgprlr_26();
     return;
   }
   scrVmPub.outparamcount = 0;
-  VVar3 = Scr_FindVariableField(uVar4,(uint)uVar6);
-  *param_3 = VVar3;
+  VVar2 = Scr_FindVariableField(param_1,param_2);
+  *param_3 = VVar2;
   scrVmPub.top = pVVar1;
-  scrVmPub.outparamcount = uVar2;
-  if ((param_3->type == 0) && (uVar4 = FindVariable(uVar4,(uint)uVar6), uVar4 == 0)) {
+  scrVmPub.outparamcount = uVar3;
+  if ((param_3->type == 0) && (uVar3 = FindVariable(param_1,param_2), uVar3 == 0)) {
     Scr_Error("unknown field");
   }
-  __restgprlr_26();
   return;
 }
 
 
 // 82533E20  Scr_EvalFieldVariable  (script/scr_evaluate.cpp:1112)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void Scr_EvalFieldVariable(uint param_1,VariableValue *param_2,uint param_3)
 
 {
-  uint uVar1;
-  
-  uVar1 = __savegprlr_29(param_1);
-  if (scrVarPub.evaluate == false) {
+  if (!scrVarPub.evaluate) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_evaluate.cpp",0x459
                     ,0,"%s");
   }
-  Scr_EvalFieldVariableInternal(param_3,uVar1,param_2);
-  __restgprlr_29();
+  Scr_EvalFieldVariableInternal(param_3,param_1,param_2);
   return;
 }
 
 
 // 825360B0  Scr_EvalPrimitiveExpression  (script/scr_evaluate.cpp:1126)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void Scr_EvalPrimitiveExpression(sval_u param_1,uint param_2,VariableValue *param_3)
 
 {
   int *piVar1;
-  undefined4 *puVar3;
-  int iVar4;
-  uint uVar5;
+  int iVar3;
+  uint uVar4;
   VariableValue VVar2;
-  ulonglong uVar6;
   VariableUnion local_40;
   int local_3c;
   VariableUnion local_38;
   int local_34;
   
-  uVar6 = (ulonglong)(int)param_2;
-  puVar3 = (undefined4 *)__savegprlr_27(param_1.type);
-  uVar5 = (uint)uVar6;
-  switch(*puVar3) {
+  switch((param_1.block)->abortLevel) {
   case 9:
     param_3->type = 6;
-    param_3->u = *(VariableUnion *)(puVar3 + 1);
-    __restgprlr_27();
+    param_3->u = (VariableUnion)(param_1.block)->localVarsCreateCount;
     return;
   case 10:
     param_3->type = 5;
-    param_3->u = *(VariableUnion *)(puVar3 + 1);
-    __restgprlr_27();
+    param_3->u = (VariableUnion)(param_1.block)->localVarsCreateCount;
     return;
   case 0xb:
     param_3->type = 6;
-    (param_3->u).intValue = -puVar3[1];
-    __restgprlr_27();
+    (param_3->u).intValue = -(param_1.block)->localVarsCreateCount;
     return;
   case 0xc:
     param_3->type = 5;
-    (param_3->u).floatValue = -(float)puVar3[1];
-    __restgprlr_27();
+    (param_3->u).floatValue = -(float)(param_1.block)->localVarsCreateCount;
     return;
   case 0xd:
     param_3->type = 2;
-    uVar5 = SL_GetString_((char *)puVar3[1],0,0x15);
-    (param_3->u).uintValue = uVar5;
-    __restgprlr_27();
+    uVar4 = SL_GetString_((char *)(param_1.block)->localVarsCreateCount,0,0x15);
+    (param_3->u).uintValue = uVar4;
     return;
   case 0xe:
     param_3->type = 3;
-    uVar5 = SL_GetString_((char *)puVar3[1],0,0x15);
-    (param_3->u).uintValue = uVar5;
-    __restgprlr_27();
+    uVar4 = SL_GetString_((char *)(param_1.block)->localVarsCreateCount,0,0x15);
+    (param_3->u).uintValue = uVar4;
     return;
   case 0x14:
-    Scr_EvalVariableExpression(*(sval_u *)(puVar3 + 1),uVar5,param_3);
-    __restgprlr_27();
+    Scr_EvalVariableExpression((sval_u)(param_1.block)->localVarsCreateCount,param_2,param_3);
     return;
   case 0x16:
-    piVar1 = (int *)puVar3[1];
+    piVar1 = (int *)(param_1.block)->localVarsCreateCount;
     if (*piVar1 == 0x1a) {
-      Scr_EvalFunction(*(sval_u *)(piVar1 + 1),*(sval_u *)(piVar1 + 2),uVar5,param_3);
-      __restgprlr_27();
+      Scr_EvalFunction(*(sval_u *)(piVar1 + 1),*(sval_u *)(piVar1 + 2),param_2,param_3);
       return;
     }
     if (*piVar1 == 0x1b) {
-      Scr_EvalMethod(*(sval_u *)(piVar1 + 1),*(sval_u *)(piVar1 + 2),*(sval_u *)(piVar1 + 3),uVar5,
-                     param_3);
-      __restgprlr_27();
+      Scr_EvalMethod(*(sval_u *)(piVar1 + 1),*(sval_u *)(piVar1 + 2),*(sval_u *)(piVar1 + 3),param_2
+                     ,param_3);
       return;
     }
     break;
   case 0x24:
     param_3->type = 0;
-    __restgprlr_27();
     return;
   case 0x25:
-    if (scrEvaluateGlob.freezeScope != false) {
-      uVar6 = (ulonglong)(uint)puVar3[1];
+    if (scrEvaluateGlob.freezeScope) {
+      param_2 = (param_1.block)->localVarsCreateCount;
     }
-    if ((uVar6 & 0xffffffff) == 0) {
-LAB_82536378:
-      uVar5 = 0;
+    if ((param_2 == 0) || (iVar3 = Scr_IsThreadAlive(param_2), iVar3 == 0)) {
+      uVar4 = 0;
       param_3->type = 0;
-      uVar6 = 0;
+      param_2 = 0;
       Scr_Error("thread not active");
     }
     else {
-      iVar4 = Scr_IsThreadAlive((uint)uVar6);
-      if (iVar4 == 0) goto LAB_82536378;
-      uVar5 = Scr_GetSelf((uint)uVar6);
-      (param_3->u).uintValue = uVar5;
+      uVar4 = Scr_GetSelf(param_2);
+      (param_3->u).uintValue = uVar4;
       param_3->type = 1;
-      AddRefToObject(uVar5);
+      AddRefToObject(uVar4);
     }
     if (scrEvaluateGlob.freezeObjects == false) {
-      puVar3[1] = (int)uVar6;
-      puVar3[2] = uVar5;
-      __restgprlr_27();
+      (param_1.block)->localVarsCreateCount = param_2;
+      (param_1.block)->localVarsPublicCount = uVar4;
       return;
     }
-    if (((ulonglong)(uint)puVar3[1] != (uVar6 & 0xffffffff)) || (puVar3[2] != uVar5)) {
+    if (((param_1.block)->localVarsCreateCount != param_2) ||
+       ((param_1.block)->localVarsPublicCount != uVar4)) {
       scrEvaluateGlob.objectChanged = true;
-      __restgprlr_27();
       return;
     }
     break;
   case 0x26:
-    if (puVar3[2] == 0) {
+    if ((param_1.block)->localVarsPublicCount == 0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_evaluate.cpp",
                       0x4b7,0,"%s");
     }
     param_3->type = 1;
-    uVar5 = puVar3[2];
-    (param_3->u).uintValue = uVar5;
-    AddRefToObject(uVar5);
-    __restgprlr_27();
+    uVar4 = (param_1.block)->localVarsPublicCount;
+    (param_3->u).uintValue = uVar4;
+    AddRefToObject(uVar4);
     return;
   case 0x28:
     param_3->type = 1;
     (param_3->u).uintValue = scrVarPub.levelId;
     AddRefToObject(scrVarPub.levelId);
-    __restgprlr_27();
     return;
   case 0x29:
     VVar2 = Scr_EvalVariableInternal(0,scrVarPub.gameId);
     *param_3 = VVar2;
-    __restgprlr_27();
     return;
   case 0x2a:
     param_3->type = 1;
     (param_3->u).uintValue = scrVarPub.animId;
     AddRefToObject(scrVarPub.animId);
-    __restgprlr_27();
     return;
   case 0x34:
-    Scr_EvalExpression(*(sval_u *)(puVar3 + 1),uVar5,param_3);
-    __restgprlr_27();
+    Scr_EvalExpression((sval_u)(param_1.block)->localVarsCreateCount,param_2,param_3);
     return;
   case 0x3a:
-    Scr_EvalPrimitiveExpression(*(sval_u *)(puVar3 + 1),uVar5,param_3);
+    Scr_EvalPrimitiveExpression((sval_u)(param_1.block)->localVarsCreateCount,param_2,param_3);
     Scr_EvalSizeValue(param_3);
-    __restgprlr_27();
     return;
   case 0x48:
     param_3->type = 0;
     Scr_Error("cannot evaluate []");
-    __restgprlr_27();
     return;
   case 0x4e:
     param_3->type = 6;
     (param_3->u).intValue = 0;
-    __restgprlr_27();
     return;
   case 0x4f:
     param_3->type = 6;
     (param_3->u).intValue = 1;
-    __restgprlr_27();
     return;
   case 0x51:
-    Scr_EvalPrimitiveExpression(*(sval_u *)(puVar3 + 1),uVar5,(VariableValue *)&local_38);
-    Scr_EvalExpression(*(sval_u *)(puVar3 + 2),uVar5,(VariableValue *)&local_40);
+    Scr_EvalPrimitiveExpression
+              ((sval_u)(param_1.block)->localVarsCreateCount,param_2,(VariableValue *)&local_38);
+    Scr_EvalExpression((sval_u)(param_1.block)->localVarsPublicCount,param_2,
+                       (VariableValue *)&local_40);
     if ((((local_34 == 1) && (local_3c == 2)) && (g_breakonObject == local_38.intValue)) &&
        (g_breakonString == local_40.intValue)) {
       g_breakonHit = 1;
-      puVar3[3] = puVar3[3] + 1;
+      (param_1.block)->localVarsCount = (param_1.block)->localVarsCount + 1;
     }
     RemoveRefToValue(local_34,local_38);
     RemoveRefToValue(local_3c,local_40);
     param_3->type = 6;
-    param_3->u = *(VariableUnion *)(puVar3 + 3);
+    param_3->u = (VariableUnion)(param_1.block)->localVarsCount;
     break;
   case 0x5a:
     param_3->type = 0;
     Scr_Error("bad expression");
-    __restgprlr_27();
     return;
   }
-  __restgprlr_27();
   return;
 }
 
@@ -1415,155 +1321,152 @@ LAB_8253579c:
 
 // 82533EF0  Scr_CompilePrimitiveExpressionList  (script/scr_evaluate.cpp:1350)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void Scr_CompilePrimitiveExpressionList(sval_u *param_1)
 
 {
-  sval_u *psVar1;
-  int iVar2;
-  sval_u sVar3;
+  int iVar1;
+  sval_u sVar2;
+  undefined4 *puVar3;
   undefined4 *puVar4;
-  undefined4 *puVar5;
   undefined4 uStack_34;
   sval_u local_30 [12];
   
-  psVar1 = (sval_u *)__savegprlr_29(param_1);
-  iVar2 = GetExpressionCount(*psVar1);
-  if (iVar2 == 1) {
-    puVar5 = *(undefined4 **)psVar1->codePosValue;
-    Scr_CompileExpression((sval_u *)*puVar5);
-    *psVar1 = *(sval_u *)*puVar5;
-    __restgprlr_29();
+  iVar1 = GetExpressionCount(*param_1);
+  if (iVar1 == 1) {
+    puVar4 = *(undefined4 **)param_1->codePosValue;
+    Scr_CompileExpression((sval_u *)*puVar4);
+    *param_1 = *(sval_u *)*puVar4;
     return;
   }
-  if (iVar2 == 3) {
-    puVar5 = *(undefined4 **)psVar1->codePosValue;
-    if (puVar5 != (undefined4 *)0x0) {
-      puVar4 = &uStack_34;
+  if (iVar1 == 3) {
+    puVar4 = *(undefined4 **)param_1->codePosValue;
+    if (puVar4 != (undefined4 *)0x0) {
+      puVar3 = &uStack_34;
       do {
-        Scr_CompileExpression((sval_u *)*puVar5);
-        puVar4 = puVar4 + 1;
-        *puVar4 = *(undefined4 *)*puVar5;
-        puVar5 = (undefined4 *)puVar5[1];
-      } while (puVar5 != (undefined4 *)0x0);
+        Scr_CompileExpression((sval_u *)*puVar4);
+        puVar3 = puVar3 + 1;
+        *puVar3 = *(undefined4 *)*puVar4;
+        puVar4 = (undefined4 *)puVar4[1];
+      } while (puVar4 != (undefined4 *)0x0);
     }
-    sVar3 = debugger_node3(0x55,local_30[0],local_30[1],local_30[2]);
-    *psVar1 = sVar3;
-    __restgprlr_29();
+    sVar2 = debugger_node3(0x55,local_30[0],local_30[1],local_30[2]);
+    *param_1 = sVar2;
     return;
   }
-  sVar3 = debugger_node0(0x5a);
-  *psVar1 = sVar3;
-  __restgprlr_29();
+  sVar2 = debugger_node0(0x5a);
+  *param_1 = sVar2;
   return;
 }
 
 
 // 82533FA8  Scr_CompileCallExpressionList  (script/scr_evaluate.cpp:1390)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void Scr_CompileCallExpressionList(sval_u *param_1)
 
 {
   undefined4 *puVar1;
-  sval_u *psVar2;
-  sval_u sVar3;
+  sval_u sVar2;
   
-  psVar2 = (sval_u *)__savegprlr_29(param_1);
-  sVar3 = debugger_node0(0);
-  for (puVar1 = *(undefined4 **)psVar2->codePosValue; puVar1 != (undefined4 *)0x0;
+  sVar2 = debugger_node0(0);
+  for (puVar1 = *(undefined4 **)param_1->codePosValue; puVar1 != (undefined4 *)0x0;
       puVar1 = (undefined4 *)puVar1[1]) {
     Scr_CompileExpression((sval_u *)*puVar1);
-    sVar3 = debugger_prepend_node(*(sval_u *)*puVar1,sVar3);
+    sVar2 = debugger_prepend_node(*(sval_u *)*puVar1,sVar2);
   }
-  *psVar2 = sVar3;
-  __restgprlr_29();
+  *param_1 = sVar2;
   return;
 }
 
 
 // 82534008  Scr_GetScriptFunction2  (script/scr_evaluate.cpp:1405)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 char * Scr_GetScriptFunction2(sval_u param_1)
 
 {
   char cVar1;
-  int *piVar2;
+  char *pcVar2;
   char *pcVar3;
-  char *pcVar4;
-  int iVar5;
+  int iVar4;
+  ulonglong uVar5;
   ulonglong uVar6;
   ulonglong uVar7;
-  ulonglong uVar8;
-  int iVar9;
+  int iVar8;
+  byte *pbVar9;
   byte *pbVar10;
-  byte *pbVar11;
+  uint uVar11;
   uint uVar12;
-  uint uVar13;
   byte local_230 [256];
   byte local_130 [304];
   
-  piVar2 = (int *)__savegprlr_28(param_1.type);
-  if (*piVar2 != 0x18) {
+  if ((param_1.block)->abortLevel != 0x18) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_evaluate.cpp",0x58a
                     ,0,"%s");
   }
-  pcVar3 = SL_ConvertToString(piVar2[1]);
-  pcVar4 = SL_ConvertToString(piVar2[2]);
-  Scr_CreateCanonicalFilenameInternal((char *)local_130,pcVar3,0x100);
-  pcVar3 = pcVar4;
+  pcVar2 = SL_ConvertToString((param_1.block)->localVarsCreateCount);
+  pcVar3 = SL_ConvertToString((param_1.block)->localVarsPublicCount);
+  Scr_CreateCanonicalFilenameInternal((char *)local_130,pcVar2,0x100);
+  pcVar2 = pcVar3;
   do {
-    cVar1 = *pcVar3;
-    pcVar3 = pcVar3 + 1;
+    cVar1 = *pcVar2;
+    pcVar2 = pcVar2 + 1;
   } while (cVar1 != '\0');
-  uVar12 = (int)pcVar3 - (int)pcVar4;
-  if (0x100 < (int)uVar12) {
-    uVar12 = 0x100;
+  uVar11 = (int)pcVar2 - (int)pcVar3;
+  if (0x100 < (int)uVar11) {
+    uVar11 = 0x100;
   }
-  uVar13 = 0;
-  if (uVar12 != 0) {
+  uVar12 = 0;
+  if (uVar11 != 0) {
     do {
-      pbVar10 = local_230 + uVar13;
-      iVar5 = tolower((int)(char)pbVar10[(int)pcVar4 - (int)local_230]);
-      uVar13 = uVar13 + 1;
-      *pbVar10 = (byte)iVar5;
-    } while (uVar13 < uVar12);
+      pbVar9 = local_230 + uVar12;
+      iVar4 = tolower((int)(char)pbVar9[(int)pcVar3 - (int)local_230]);
+      uVar12 = uVar12 + 1;
+      *pbVar9 = (byte)iVar4;
+    } while (uVar12 < uVar11);
   }
-  uVar6 = 0;
-  uVar7 = (ulonglong)scrParserPub.functionCount;
+  uVar5 = 0;
+  uVar6 = (ulonglong)scrParserPub.functionCount;
   if ((ulonglong)scrParserPub.functionCount != 0) {
     do {
-      uVar8 = (uVar7 + uVar6 & 0xffffffff) >> 1;
-      pbVar11 = local_130;
-      iVar5 = (int)uVar8;
-      pbVar10 = (byte *)scrParserPub.functionList[iVar5].filename;
+      uVar7 = (uVar6 + uVar5 & 0xffffffff) >> 1;
+      pbVar10 = local_130;
+      iVar4 = (int)uVar7;
+      pbVar9 = (byte *)scrParserPub.functionList[iVar4].filename;
       do {
-        iVar9 = (uint)*pbVar11 - (uint)*pbVar10;
-        if (*pbVar11 == 0) break;
-        pbVar11 = pbVar11 + 1;
+        iVar8 = (uint)*pbVar10 - (uint)*pbVar9;
+        if (*pbVar10 == 0) break;
         pbVar10 = pbVar10 + 1;
-      } while (iVar9 == 0);
-      if (iVar9 == 0) {
-        pbVar10 = (byte *)scrParserPub.functionList[iVar5].name;
-        pbVar11 = local_230;
+        pbVar9 = pbVar9 + 1;
+      } while (iVar8 == 0);
+      if (iVar8 == 0) {
+        pbVar9 = (byte *)scrParserPub.functionList[iVar4].name;
+        pbVar10 = local_230;
         do {
-          iVar9 = (uint)*pbVar11 - (uint)*pbVar10;
-          if (*pbVar11 == 0) break;
-          pbVar11 = pbVar11 + 1;
+          iVar8 = (uint)*pbVar10 - (uint)*pbVar9;
+          if (*pbVar10 == 0) break;
           pbVar10 = pbVar10 + 1;
-        } while (iVar9 == 0);
+          pbVar9 = pbVar9 + 1;
+        } while (iVar8 == 0);
       }
-      if (-1 < iVar9) {
-        if (iVar9 < 1) {
-          pcVar3 = (char *)__restgprlr_28(scrParserPub.functionList[iVar5].codePosValue);
-          return pcVar3;
+      if (-1 < iVar8) {
+        if (iVar8 < 1) {
+          return scrParserPub.functionList[iVar4].codePosValue;
         }
-        uVar6 = uVar8 + 1;
-        uVar8 = uVar7;
+        uVar5 = uVar7 + 1;
+        uVar7 = uVar6;
       }
-      uVar7 = uVar8;
-    } while (uVar6 < uVar8);
+      uVar6 = uVar7;
+    } while (uVar5 < uVar7);
   }
-  pcVar3 = (char *)__restgprlr_28(0);
-  return pcVar3;
+  return (char *)0x0;
 }
 
 
@@ -1588,101 +1491,100 @@ char * Scr_GetScriptFunction(sval_u param_1)
 
 // 825341E8  Scr_CompileFunction  (script/scr_evaluate.cpp:1484)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 bool Scr_CompileFunction(sval_u *param_1,sval_u *param_2)
 
 {
   int *piVar1;
   sval_u sVar2;
-  int *piVar3;
-  uint uVar4;
-  char *pcVar5;
-  undefined1 uVar7;
-  int iVar6;
+  uint uVar3;
+  char *pcVar4;
+  int iVar5;
   int local_30;
   char *local_2c [11];
   
-  piVar3 = (int *)__savegprlr_29(param_1);
-  uVar4 = Scr_GetBuiltin((char *)*piVar3);
-  if (uVar4 == 0) {
-    if ((((*(int *)*piVar3 != 0x1d) || (piVar1 = (int *)((int *)*piVar3)[1], *piVar1 != 0x15)) ||
+  uVar3 = Scr_GetBuiltin(*param_1);
+  if (uVar3 == 0) {
+    if ((((param_1->block->abortLevel != 0x1d) ||
+         (piVar1 = (int *)param_1->block->localVarsCreateCount, *piVar1 != 0x15)) ||
         (sVar2 = (sval_u)((sval_u *)(piVar1 + 1))->block, (sVar2.block)->abortLevel != 0x18)) ||
-       (pcVar5 = Scr_GetScriptFunction2(sVar2), pcVar5 == (char *)0x0)) {
-LAB_8253424c:
-      uVar7 = __restgprlr_29(0);
-      return (bool)uVar7;
+       (pcVar4 = Scr_GetScriptFunction2(sVar2), pcVar4 == (char *)0x0)) {
+      return false;
     }
-    iVar6 = Scr_IsInOpcodeMemory(pcVar5);
-    if (iVar6 != 0) goto LAB_825342e4;
-    iVar6 = 0x5da;
+    iVar5 = Scr_IsInOpcodeMemory(pcVar4);
+    if (iVar5 != 0) goto LAB_825342e4;
+    iVar5 = 0x5da;
   }
   else {
-    local_2c[0] = SL_ConvertToString(uVar4);
+    local_2c[0] = SL_ConvertToString(uVar3);
     local_30 = 0;
-    uVar4 = Scr_GetFunction(local_2c,&local_30);
-    if (uVar4 == 0) goto LAB_8253424c;
-    pcVar5 = *(char **)(&DAT_837011e4 + uVar4 * 4);
-    iVar6 = Scr_IsInOpcodeMemory(pcVar5);
-    if (iVar6 == 0) goto LAB_825342e4;
-    iVar6 = 0x5e5;
+    uVar3 = Scr_GetFunction(local_2c,&local_30);
+    if (uVar3 == 0) {
+      return false;
+    }
+    pcVar4 = *(char **)(&DAT_837011e4 + uVar3 * 4);
+    iVar5 = Scr_IsInOpcodeMemory(pcVar4);
+    if (iVar5 == 0) goto LAB_825342e4;
+    iVar5 = 0x5e5;
   }
-  MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_evaluate.cpp",iVar6,0
+  MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_evaluate.cpp",iVar5,0
                   ,"%s");
 LAB_825342e4:
-  *piVar3 = (int)pcVar5;
+  param_1->codePosValue = pcVar4;
   Scr_CompileCallExpressionList(param_2);
-  uVar7 = __restgprlr_29(1);
-  return (bool)uVar7;
+  return true;
 }
 
 
 // 82534300  Scr_CompileMethod  (script/scr_evaluate.cpp:1525)
+
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 
 bool Scr_CompileMethod(sval_u *param_1,sval_u *param_2,sval_u *param_3)
 
 {
   int *piVar1;
   sval_u sVar2;
-  sval_u *psVar3;
-  uint uVar4;
-  char *pcVar5;
-  undefined1 uVar7;
-  int iVar6;
+  uint uVar3;
+  char *pcVar4;
+  int iVar5;
   int local_30;
   char *local_2c [11];
   
-  psVar3 = (sval_u *)__savegprlr_28(param_1);
-  uVar4 = Scr_GetBuiltin((sval_u)*(char **)param_2);
-  if (uVar4 == 0) {
+  uVar3 = Scr_GetBuiltin(*param_2);
+  if (uVar3 == 0) {
     if ((((param_2->block->abortLevel != 0x1d) ||
          (piVar1 = (int *)param_2->block->localVarsCreateCount, *piVar1 != 0x15)) ||
         (sVar2 = (sval_u)((sval_u *)(piVar1 + 1))->block, (sVar2.block)->abortLevel != 0x18)) ||
-       (pcVar5 = Scr_GetScriptFunction2(sVar2), pcVar5 == (char *)0x0)) {
-LAB_82534368:
-      uVar7 = __restgprlr_28(0);
-      return (bool)uVar7;
+       (pcVar4 = Scr_GetScriptFunction2(sVar2), pcVar4 == (char *)0x0)) {
+      return false;
     }
-    iVar6 = Scr_IsInOpcodeMemory(pcVar5);
-    if (iVar6 != 0) goto LAB_82534400;
-    iVar6 = 0x603;
+    iVar5 = Scr_IsInOpcodeMemory(pcVar4);
+    if (iVar5 != 0) goto LAB_82534400;
+    iVar5 = 0x603;
   }
   else {
-    local_2c[0] = SL_ConvertToString(uVar4);
+    local_2c[0] = SL_ConvertToString(uVar3);
     local_30 = 0;
-    uVar4 = Scr_GetMethod(local_2c,&local_30);
-    if (uVar4 == 0) goto LAB_82534368;
-    pcVar5 = (char *)g_scr_meth_table[uVar4 - 0x8000];
-    iVar6 = Scr_IsInOpcodeMemory(pcVar5);
-    if (iVar6 == 0) goto LAB_82534400;
-    iVar6 = 0x60e;
+    uVar3 = Scr_GetMethod(local_2c,&local_30);
+    if (uVar3 == 0) {
+      return false;
+    }
+    pcVar4 = (char *)g_scr_meth_table[uVar3 - 0x8000];
+    iVar5 = Scr_IsInOpcodeMemory(pcVar4);
+    if (iVar5 == 0) goto LAB_82534400;
+    iVar5 = 0x60e;
   }
-  MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_evaluate.cpp",iVar6,0
+  MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_evaluate.cpp",iVar5,0
                   ,"%s");
 LAB_82534400:
-  Scr_CompilePrimitiveExpression(psVar3);
-  param_2->codePosValue = pcVar5;
+  Scr_CompilePrimitiveExpression(param_1);
+  param_2->codePosValue = pcVar4;
   Scr_CompileCallExpressionList(param_3);
-  uVar7 = __restgprlr_28(1);
-  return (bool)uVar7;
+  return true;
 }
 
 
@@ -1780,15 +1682,16 @@ bool Scr_RefCallExpression(sval_u param_1)
 
 // 82534600  Scr_PreEvalBuiltin  (script/scr_evaluate.cpp:1657)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
+
 void Scr_PreEvalBuiltin(sval_u param_1,uint param_2)
 
 {
   sval_u *psVar1;
-  sval_u sVar2;
-  uint uVar3;
-  int iVar4;
+  uint uVar2;
+  int iVar3;
   
-  sVar2.type = __savegprlr_24(param_1.type);
   if (scrVmPub.outparamcount != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_evaluate.cpp",0x67e
                     ,0,"%s");
@@ -1797,7 +1700,7 @@ void Scr_PreEvalBuiltin(sval_u param_1,uint param_2)
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_evaluate.cpp",0x67f
                     ,0,"%s");
   }
-  uVar3 = GetExpressionCount(sVar2);
+  uVar2 = GetExpressionCount(param_1);
   if (scrVmPub.top < scrVmPub.stack) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_evaluate.cpp",0x682
                     ,0,"%s");
@@ -1806,18 +1709,18 @@ void Scr_PreEvalBuiltin(sval_u param_1,uint param_2)
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_evaluate.cpp",0x683
                     ,0,"%s");
   }
-  iVar4 = uVar3 * 8;
-  if (scrVmPub.maxstack < scrVmPub.top + uVar3) {
+  iVar3 = uVar2 * 8;
+  if (scrVmPub.maxstack < scrVmPub.top + uVar2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_evaluate.cpp",0x684
                     ,0,"%s");
   }
-  for (psVar1 = (sval_u *)(sVar2.block)->abortLevel; psVar1 != (sval_u *)0x0;
+  for (psVar1 = (sval_u *)(param_1.block)->abortLevel; psVar1 != (sval_u *)0x0;
       psVar1 = psVar1[1].node) {
-    Scr_EvalExpression(*psVar1,param_2,(VariableValue *)((int)&(scrVmPub.top)->u + iVar4));
-    iVar4 = iVar4 + -8;
+    Scr_EvalExpression(*psVar1,param_2,(VariableValue *)((int)&(scrVmPub.top)->u + iVar3));
+    iVar3 = iVar3 + -8;
   }
-  scrVmPub.top = scrVmPub.top + uVar3;
-  scrVmPub.outparamcount = uVar3;
+  scrVmPub.top = scrVmPub.top + uVar2;
+  scrVmPub.outparamcount = uVar2;
   if (scrVarPub.evaluate == false) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_evaluate.cpp",0x691
                     ,0,"%s");
@@ -1828,21 +1731,21 @@ void Scr_PreEvalBuiltin(sval_u param_1,uint param_2)
                     ,0,"%s");
   }
   scrVmPub.debugCode = true;
-  __restgprlr_24();
   return;
 }
 
 
 // 825347C8  Scr_PostEvalBuiltin  (script/scr_evaluate.cpp:1696)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void Scr_PostEvalBuiltin(VariableValue *param_1)
 
 {
   VariableValue *pVVar1;
-  VariableUnion *pVVar2;
   
-  pVVar2 = (VariableUnion *)__savegprlr_27(param_1);
-  if (scrVmPub.debugCode == false) {
+  if (!scrVmPub.debugCode) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_evaluate.cpp",0x6a1
                     ,0,"%s");
   }
@@ -1860,38 +1763,37 @@ void Scr_PostEvalBuiltin(VariableValue *param_1)
     }
     pVVar1 = scrVmPub.top;
     scrVmPub.inparamcount = 0;
-    *pVVar2 = (scrVmPub.top)->u;
-    pVVar2[1] = (VariableUnion)pVVar1->type;
+    param_1->u = (scrVmPub.top)->u;
+    param_1->type = pVVar1->type;
     scrVmPub.top = scrVmPub.top + -1;
-    __restgprlr_27();
     return;
   }
-  pVVar2[1].intValue = 0;
-  __restgprlr_27();
+  param_1->type = 0;
   return;
 }
 
 
 // 825348D0  Scr_EvalFunction  (script/scr_evaluate.cpp:1725)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void Scr_EvalFunction(sval_u param_1,sval_u param_2,uint param_3,VariableValue *param_4)
 
 {
   uint uVar1;
-  code *pcVar2;
+  int iVar2;
   int iVar3;
-  int iVar4;
-  SETJMP_VECTOR4 (*paSVar5) [84];
-  code *pcStack00000014;
+  SETJMP_VECTOR4 (*paSVar4) [84];
+  sval_u sStack00000014;
   VariableValue *pVStack0000002c;
   
+  sStack00000014 = param_1;
   pVStack0000002c = param_4;
-  pcVar2 = (code *)__savegprlr_29(param_1.type);
-  pcStack00000014 = pcVar2;
   Scr_PreEvalBuiltin(param_2,param_3);
   if (scrVarPub.error_message == (char *)0x0) {
-    iVar3 = Scr_IsInOpcodeMemory((char *)pcVar2);
-    if (iVar3 == 0) {
+    iVar2 = Scr_IsInOpcodeMemory(param_1.codePosValue);
+    if (iVar2 == 0) {
       g_script_error_level = g_script_error_level + 1;
       if (0x20 < (uint)g_script_error_level) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_evaluate.cpp",
@@ -1899,13 +1801,13 @@ void Scr_EvalFunction(sval_u param_1,sval_u param_2,uint param_3,VariableValue *
                         "g_script_error_level doesn\'t index ARRAY_COUNT( g_script_error )\n\t%i not in [0, %i)"
                        );
       }
-      iVar4 = LargeLocalGetMark();
-      iVar3 = g_script_error_level;
-      g_script_large_local_mark[g_script_error_level] = iVar4;
-      paSVar5 = g_script_error + iVar3;
+      iVar3 = LargeLocalGetMark();
+      iVar2 = g_script_error_level;
+      g_script_large_local_mark[g_script_error_level] = iVar3;
+      paSVar4 = g_script_error + iVar2;
       setjmp();
-      if (paSVar5 == (SETJMP_VECTOR4 (*) [84])0x0) {
-        (*pcStack00000014)();
+      if (paSVar4 == (SETJMP_VECTOR4 (*) [84])0x0) {
+        (*(code *)sStack00000014)();
       }
       LargeLocalResetToMark(g_script_large_local_mark[g_script_error_level]);
       if (g_script_error_level < 0) {
@@ -1915,36 +1817,37 @@ void Scr_EvalFunction(sval_u param_1,sval_u param_2,uint param_3,VariableValue *
       g_script_error_level = g_script_error_level + -1;
     }
     else {
-      iVar3 = Scr_IgnoreErrors();
-      uVar1 = (uint)LZCOUNT(iVar3) >> 5;
+      iVar2 = Scr_IgnoreErrors();
+      uVar1 = (uint)LZCOUNT(iVar2) >> 5;
       if (uVar1 != 0) {
         Scr_EnableBreakpoints(false);
       }
       scrVmPub.inparamcount = scrVmPub.outparamcount;
       scrVmPub.outparamcount = 0;
-      Scr_AddExecThread((int)pcVar2 - (int)scrVarPub.programBuffer,scrVmPub.inparamcount);
+      Scr_AddExecThread(param_1.type - (int)scrVarPub.programBuffer,scrVmPub.inparamcount);
       scrVmPub.outparamcount = scrVmPub.outparamcount - 1;
       scrVmPub.inparamcount = scrVmPub.inparamcount + 1;
       if (uVar1 != 0) {
-        iVar3 = Scr_IgnoreErrors();
-        if (iVar3 == 0) {
+        iVar2 = Scr_IgnoreErrors();
+        if (iVar2 == 0) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_evaluate.cpp"
                           ,0x6d4,0,"%s");
         }
         Scr_EnableBreakpoints(true);
         Scr_PostEvalBuiltin(pVStack0000002c);
-        __restgprlr_29();
         return;
       }
     }
   }
   Scr_PostEvalBuiltin(pVStack0000002c);
-  __restgprlr_29();
   return;
 }
 
 
 // 82534A98  Scr_EvalMethod  (script/scr_evaluate.cpp:1780)
+
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 
 void Scr_EvalMethod(sval_u param_1,sval_u param_2,sval_u param_3,uint param_4,VariableValue *param_5
                    )
@@ -1952,31 +1855,29 @@ void Scr_EvalMethod(sval_u param_1,sval_u param_2,sval_u param_3,uint param_4,Va
 {
   uint uVar1;
   VariableUnion VVar2;
-  sval_u sVar3;
-  char *pcVar4;
+  char *pcVar3;
+  int iVar4;
   int iVar5;
-  int iVar6;
-  SETJMP_VECTOR4 (*paSVar7) [84];
-  scr_entref_t sVar8;
+  SETJMP_VECTOR4 (*paSVar6) [84];
+  scr_entref_t sVar7;
   sval_u sStack0000001c;
   VariableValue *pVStack00000034;
   VariableUnion local_48;
   int local_44;
   
-  pVStack00000034 = param_5;
-  sVar3.type = __savegprlr_26(param_1.type);
   sStack0000001c = param_2;
-  Scr_EvalPrimitiveExpression(sVar3,param_4,(VariableValue *)&local_48);
+  pVStack00000034 = param_5;
+  Scr_EvalPrimitiveExpression(param_1,param_4,(VariableValue *)&local_48);
   if (local_44 != 1) {
     scrVarPub.error_index = -1;
-    pcVar4 = va("%s is not an object");
-    Scr_Error(pcVar4);
+    pcVar3 = va("%s is not an object");
+    Scr_Error(pcVar3);
   }
   Scr_PreEvalBuiltin(param_3,param_4);
   VVar2 = local_48;
   if (scrVarPub.error_message == (char *)0x0) {
-    iVar5 = Scr_IsInOpcodeMemory(param_2.codePosValue);
-    if (iVar5 == 0) {
+    iVar4 = Scr_IsInOpcodeMemory(param_2.codePosValue);
+    if (iVar4 == 0) {
       g_script_error_level = g_script_error_level + 1;
       if (0x20 < (uint)g_script_error_level) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_evaluate.cpp",
@@ -1984,21 +1885,21 @@ void Scr_EvalMethod(sval_u param_1,sval_u param_2,sval_u param_3,uint param_4,Va
                         "g_script_error_level doesn\'t index ARRAY_COUNT( g_script_error )\n\t%i not in [0, %i)"
                        );
       }
-      iVar6 = LargeLocalGetMark();
-      iVar5 = g_script_error_level;
-      g_script_large_local_mark[g_script_error_level] = iVar6;
-      paSVar7 = g_script_error + iVar5;
+      iVar5 = LargeLocalGetMark();
+      iVar4 = g_script_error_level;
+      g_script_large_local_mark[g_script_error_level] = iVar5;
+      paSVar6 = g_script_error + iVar4;
       setjmp();
-      if (paSVar7 == (SETJMP_VECTOR4 (*) [84])0x0) {
-        iVar5 = GetObjectType(VVar2.uintValue);
-        if (iVar5 != 0x16) {
+      if (paSVar6 == (SETJMP_VECTOR4 (*) [84])0x0) {
+        iVar4 = GetObjectType(VVar2.uintValue);
+        if (iVar4 != 0x16) {
           GetObjectType(VVar2.uintValue);
           scrVarPub.error_index = -1;
-          pcVar4 = va("%s is not an entity");
-          Scr_Error(pcVar4);
+          pcVar3 = va("%s is not an entity");
+          Scr_Error(pcVar3);
         }
-        sVar8 = Scr_GetEntityIdRef(VVar2.uintValue);
-        (*(code *)sStack0000001c)(sVar8);
+        sVar7 = Scr_GetEntityIdRef(VVar2.uintValue);
+        (*(code *)sStack0000001c)(sVar7);
       }
       LargeLocalResetToMark(g_script_large_local_mark[g_script_error_level]);
       if (g_script_error_level < 0) {
@@ -2008,8 +1909,8 @@ void Scr_EvalMethod(sval_u param_1,sval_u param_2,sval_u param_3,uint param_4,Va
       g_script_error_level = g_script_error_level + -1;
     }
     else {
-      iVar5 = Scr_IgnoreErrors();
-      uVar1 = (uint)LZCOUNT(iVar5) >> 5;
+      iVar4 = Scr_IgnoreErrors();
+      uVar1 = (uint)LZCOUNT(iVar4) >> 5;
       if (uVar1 != 0) {
         Scr_EnableBreakpoints(false);
       }
@@ -2020,8 +1921,8 @@ void Scr_EvalMethod(sval_u param_1,sval_u param_2,sval_u param_3,uint param_4,Va
       scrVmPub.outparamcount = scrVmPub.outparamcount - 1;
       scrVmPub.inparamcount = scrVmPub.inparamcount + 1;
       if (uVar1 != 0) {
-        iVar5 = Scr_IgnoreErrors();
-        if (iVar5 == 0) {
+        iVar4 = Scr_IgnoreErrors();
+        if (iVar4 == 0) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_evaluate.cpp"
                           ,0x71a,0,"%s");
         }
@@ -2031,7 +1932,6 @@ void Scr_EvalMethod(sval_u param_1,sval_u param_2,sval_u param_3,uint param_4,Va
   }
   Scr_PostEvalBuiltin(pVStack00000034);
   RemoveRefToValue(local_44,local_48);
-  __restgprlr_26();
   return;
 }
 
@@ -2142,55 +2042,56 @@ LAB_82536838:
 
 // 82534D40  Scr_EvalBoolOrExpression  (script/scr_evaluate.cpp:1963)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void Scr_EvalBoolOrExpression(sval_u param_1,sval_u param_2,uint param_3,VariableValue *param_4)
 
 {
   VariableUnion VVar1;
   VariableUnion VVar2;
   bool bVar3;
-  sval_u sVar4;
-  int iVar5;
+  int iVar4;
   
-  sVar4.type = __savegprlr_28(param_1.type);
-  Scr_EvalExpression(sVar4,param_3,param_4);
-  if (((VariableUnion *)((int)param_4 + 4))->intValue == 6) {
+  Scr_EvalExpression(param_1,param_3,param_4);
+  if (param_4->type == 6) {
     VVar1.intValue._0_3_ = 0;
-    VVar1.intValue._3_1_ = *(int *)param_4 != 0;
+    VVar1.intValue._3_1_ = (param_4->u).intValue != 0;
     param_4->u = VVar1;
   }
   else {
     Scr_CastBool_NonInteger(param_4);
   }
-  if ((((VariableUnion *)((int)param_4 + 4))->intValue != 6) || (bVar3 = true, *(int *)param_4 == 0)
-     ) {
+  if ((param_4->type != 6) || (bVar3 = true, (param_4->u).intValue == 0)) {
     bVar3 = false;
   }
-  RemoveRefToValue(((VariableUnion *)((int)param_4 + 4))->intValue,param_4->u);
+  RemoveRefToValue(param_4->type,param_4->u);
   Scr_EvalExpression(param_2,param_3,param_4);
-  if (((VariableUnion *)((int)param_4 + 4))->intValue == 6) {
+  if (param_4->type == 6) {
     VVar2.intValue._0_3_ = 0;
-    VVar2.intValue._3_1_ = *(int *)param_4 != 0;
+    VVar2.intValue._3_1_ = (param_4->u).intValue != 0;
     param_4->u = VVar2;
   }
   else {
     Scr_CastBool_NonInteger(param_4);
   }
-  if ((bVar3) || ((((VariableUnion *)((int)param_4 + 4))->intValue == 6 && (*(int *)param_4 != 0))))
-  {
-    iVar5 = 1;
+  if ((bVar3) || ((param_4->type == 6 && ((param_4->u).intValue != 0)))) {
+    iVar4 = 1;
   }
   else {
-    iVar5 = 0;
+    iVar4 = 0;
   }
-  RemoveRefToValue(((VariableUnion *)((int)param_4 + 4))->intValue,param_4->u);
-  *(int *)param_4 = iVar5;
-  ((VariableUnion *)((int)param_4 + 4))->intValue = 6;
-  __restgprlr_28();
+  RemoveRefToValue(param_4->type,param_4->u);
+  (param_4->u).intValue = iVar4;
+  param_4->type = 6;
   return;
 }
 
 
 // 82534E38  Scr_EvalBoolAndExpression  (script/scr_evaluate.cpp:1990)
+
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 
 void Scr_EvalBoolAndExpression(sval_u param_1,sval_u param_2,uint param_3,VariableValue *param_4)
 
@@ -2198,59 +2099,54 @@ void Scr_EvalBoolAndExpression(sval_u param_1,sval_u param_2,uint param_3,Variab
   VariableUnion VVar1;
   VariableUnion VVar2;
   bool bVar3;
-  sval_u sVar4;
-  int iVar5;
+  int iVar4;
   
-  sVar4.type = __savegprlr_28(param_1.type);
-  Scr_EvalExpression(sVar4,param_3,param_4);
-  if (((VariableUnion *)((int)param_4 + 4))->intValue == 6) {
+  Scr_EvalExpression(param_1,param_3,param_4);
+  if (param_4->type == 6) {
     VVar1.intValue._0_3_ = 0;
-    VVar1.intValue._3_1_ = *(int *)param_4 != 0;
+    VVar1.intValue._3_1_ = (param_4->u).intValue != 0;
     param_4->u = VVar1;
   }
   else {
     Scr_CastBool_NonInteger(param_4);
   }
-  if ((((VariableUnion *)((int)param_4 + 4))->intValue != 6) || (bVar3 = true, *(int *)param_4 == 0)
-     ) {
+  if ((param_4->type != 6) || (bVar3 = true, (param_4->u).intValue == 0)) {
     bVar3 = false;
   }
-  RemoveRefToValue(((VariableUnion *)((int)param_4 + 4))->intValue,param_4->u);
+  RemoveRefToValue(param_4->type,param_4->u);
   Scr_EvalExpression(param_2,param_3,param_4);
-  if (((VariableUnion *)((int)param_4 + 4))->intValue == 6) {
+  if (param_4->type == 6) {
     VVar2.intValue._0_3_ = 0;
-    VVar2.intValue._3_1_ = *(int *)param_4 != 0;
+    VVar2.intValue._3_1_ = (param_4->u).intValue != 0;
     param_4->u = VVar2;
   }
   else {
     Scr_CastBool_NonInteger(param_4);
   }
-  if (((!bVar3) || (((VariableUnion *)((int)param_4 + 4))->intValue != 6)) ||
-     (iVar5 = 1, *(int *)param_4 == 0)) {
-    iVar5 = 0;
+  if (((!bVar3) || (param_4->type != 6)) || (iVar4 = 1, (param_4->u).intValue == 0)) {
+    iVar4 = 0;
   }
-  RemoveRefToValue(((VariableUnion *)((int)param_4 + 4))->intValue,param_4->u);
-  *(int *)param_4 = iVar5;
-  ((VariableUnion *)((int)param_4 + 4))->intValue = 6;
-  __restgprlr_28();
+  RemoveRefToValue(param_4->type,param_4->u);
+  (param_4->u).intValue = iVar4;
+  param_4->type = 6;
   return;
 }
 
 
 // 82534F30  Scr_EvalBinaryOperatorExpression  (script/scr_evaluate.cpp:2017)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void Scr_EvalBinaryOperatorExpression
                (sval_u param_1,sval_u param_2,sval_u param_3,uint param_4,VariableValue *param_5)
 
 {
-  sval_u sVar1;
   VariableValue aVStack_30 [6];
   
-  sVar1.type = __savegprlr_28(param_1.type);
-  Scr_EvalExpression(sVar1,param_4,param_5);
+  Scr_EvalExpression(param_1,param_4,param_5);
   Scr_EvalExpression(param_2,param_4,aVStack_30);
   Scr_EvalBinaryOperator(param_3.type,param_5,aVStack_30);
-  __restgprlr_28();
   return;
 }
 
@@ -2274,156 +2170,141 @@ bool Scr_RefBinaryOperatorExpression(sval_u param_1,sval_u param_2)
 
 // 82534FE8  Scr_EvalVector  (script/scr_evaluate.cpp:2050)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void Scr_EvalVector(sval_u param_1,sval_u param_2,sval_u param_3,uint param_4,VariableValue *param_5
                    )
 
 {
-  sval_u sVar1;
   VariableValue local_40;
   VariableValue VStack_38;
   VariableValue aVStack_30 [6];
   
-  sVar1.type = __savegprlr_28(param_1.type);
-  Scr_EvalExpression(sVar1,param_4,&local_40);
+  Scr_EvalExpression(param_1,param_4,&local_40);
   Scr_EvalExpression(param_2,param_4,&VStack_38);
   Scr_EvalExpression(param_3,param_4,aVStack_30);
   Scr_CastVector(&local_40);
   *param_5 = local_40;
-  __restgprlr_28();
   return;
 }
 
 
 // 82535048  Scr_RefVector  (script/scr_evaluate.cpp:2068)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 bool Scr_RefVector(sval_u param_1,sval_u param_2,sval_u param_3)
 
 {
-  sval_u sVar1;
+  bool bVar1;
   bool bVar2;
   bool bVar3;
-  bool bVar4;
-  undefined1 uVar5;
-  undefined8 uVar6;
   
-  sVar1.type = __savegprlr_29(param_1.type);
-  bVar2 = Scr_RefExpression(sVar1);
-  bVar3 = Scr_RefExpression(param_2);
-  bVar4 = Scr_RefExpression(param_3);
-  if (((bVar2) || (bVar3)) || (uVar6 = 0, bVar4)) {
-    uVar6 = 1;
+  bVar1 = Scr_RefExpression(param_1);
+  bVar2 = Scr_RefExpression(param_2);
+  bVar3 = Scr_RefExpression(param_3);
+  if (((bVar1) || (bVar2)) || (bVar1 = false, bVar3)) {
+    bVar1 = true;
   }
-  uVar5 = __restgprlr_29(uVar6);
-  return (bool)uVar5;
+  return bVar1;
 }
 
 
 // 82536858  Scr_EvalExpression  (script/scr_evaluate.cpp:2087)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void Scr_EvalExpression(sval_u param_1,uint param_2,VariableValue *param_3)
 
 {
   sval_u sVar1;
-  int *piVar2;
-  int iVar3;
-  ulonglong uVar5;
+  int iVar2;
   VariableValue aVStack_30 [6];
-  uint uVar4;
   
-  uVar5 = (ulonglong)(int)param_2;
-  piVar2 = (int *)__savegprlr_28(param_1.type);
-  iVar3 = *piVar2;
-  uVar4 = (uint)uVar5;
-  if (iVar3 < 0x38) {
-    if (iVar3 == 0x37) {
-      iVar3 = piVar2[3];
-      sVar1 = *(sval_u *)(piVar2 + 2);
-      Scr_EvalExpression(*(sval_u *)(piVar2 + 1),uVar4,param_3);
-      Scr_EvalExpression(sVar1,uVar4,aVStack_30);
-      Scr_EvalBinaryOperator(iVar3,param_3,aVStack_30);
-      __restgprlr_28();
+  iVar2 = (param_1.block)->abortLevel;
+  if (iVar2 < 0x38) {
+    if (iVar2 == 0x37) {
+      iVar2 = (param_1.block)->localVarsCount;
+      sVar1 = (sval_u)(param_1.block)->localVarsPublicCount;
+      Scr_EvalExpression((sval_u)(param_1.block)->localVarsCreateCount,param_2,param_3);
+      Scr_EvalExpression(sVar1,param_2,aVStack_30);
+      Scr_EvalBinaryOperator(iVar2,param_3,aVStack_30);
       return;
     }
-    if (0x35 < iVar3) {
-      if (iVar3 == 0x36) {
-        Scr_EvalBoolAndExpression(*(sval_u *)(piVar2 + 1),*(sval_u *)(piVar2 + 2),uVar4,param_3);
-        __restgprlr_28();
+    if (iVar2 < 0x36) {
+      if (iVar2 == 0x35) {
+        Scr_EvalBoolOrExpression
+                  ((sval_u)(param_1.block)->localVarsCreateCount,
+                   (sval_u)(param_1.block)->localVarsPublicCount,param_2,param_3);
         return;
       }
-LAB_825369ec:
-      param_3->type = 0;
-      Scr_Error("bad expression");
-      __restgprlr_28();
+      if (iVar2 == 7) {
+        Scr_EvalPrimitiveExpression((sval_u)(param_1.block)->localVarsCreateCount,param_2,param_3);
+        return;
+      }
+      if (iVar2 == 8) {
+        if (alwaysfails != 0) {
+          return;
+        }
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_evaluate.cpp",
+                        0x82b,0,"unimplemented");
+        return;
+      }
+    }
+    else if (iVar2 == 0x36) {
+      Scr_EvalBoolAndExpression
+                ((sval_u)(param_1.block)->localVarsCreateCount,
+                 (sval_u)(param_1.block)->localVarsPublicCount,param_2,param_3);
       return;
     }
-    if (iVar3 == 0x35) {
-      Scr_EvalBoolOrExpression(*(sval_u *)(piVar2 + 1),*(sval_u *)(piVar2 + 2),uVar4,param_3);
-      __restgprlr_28();
-      return;
-    }
-    if (iVar3 == 7) {
-      Scr_EvalPrimitiveExpression(*(sval_u *)(piVar2 + 1),uVar4,param_3);
-      __restgprlr_28();
-      return;
-    }
-    if (iVar3 != 8) goto LAB_825369ec;
-    if (alwaysfails == 0) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_evaluate.cpp",
-                      0x82b,0,"unimplemented");
-      __restgprlr_28();
-      return;
-    }
-    goto LAB_82536a90;
   }
-  if (iVar3 < 0x56) {
-    if (iVar3 == 0x55) {
-      Scr_EvalVector(*(sval_u *)(piVar2 + 1),*(sval_u *)(piVar2 + 2),*(sval_u *)(piVar2 + 3),uVar4,
-                     param_3);
-      __restgprlr_28();
+  else if (iVar2 < 0x56) {
+    if (iVar2 == 0x55) {
+      Scr_EvalVector((sval_u)(param_1.block)->localVarsCreateCount,
+                     (sval_u)(param_1.block)->localVarsPublicCount,
+                     (sval_u)(param_1.block)->localVarsCount,param_2,param_3);
       return;
     }
-    if (iVar3 == 0x38) {
-      Scr_EvalExpression(*(sval_u *)(piVar2 + 1),uVar4,param_3);
+    if (iVar2 == 0x38) {
+      Scr_EvalExpression((sval_u)(param_1.block)->localVarsCreateCount,param_2,param_3);
       Scr_EvalBoolNot(param_3);
-      __restgprlr_28();
       return;
     }
-    if (iVar3 == 0x39) {
-      Scr_EvalExpression(*(sval_u *)(piVar2 + 1),uVar4,param_3);
+    if (iVar2 == 0x39) {
+      Scr_EvalExpression((sval_u)(param_1.block)->localVarsCreateCount,param_2,param_3);
       Scr_EvalBoolComplement(param_3);
-      __restgprlr_28();
       return;
     }
-    goto LAB_825369ec;
   }
-  if (iVar3 != 0x58) goto LAB_825369ec;
-  if (scrEvaluateGlob.freezeScope != false) {
-    uVar5 = (ulonglong)(uint)piVar2[1];
-  }
-  if ((uVar5 & 0xffffffff) == 0) {
-LAB_82536a50:
-    uVar5 = 0;
-    param_3->type = 0;
-    Scr_Error("thread not active");
-  }
-  else {
-    uVar4 = (uint)uVar5;
-    iVar3 = Scr_IsThreadAlive(uVar4);
-    if (iVar3 == 0) goto LAB_82536a50;
-    (param_3->u).uintValue = uVar4;
-    param_3->type = 1;
-    AddRefToObject(uVar4);
-  }
-  if (scrEvaluateGlob.freezeObjects == false) {
-    piVar2[1] = (int)uVar5;
-    __restgprlr_28();
+  else if (iVar2 == 0x58) {
+    if (scrEvaluateGlob.freezeScope) {
+      param_2 = (param_1.block)->localVarsCreateCount;
+    }
+    if ((param_2 == 0) || (iVar2 = Scr_IsThreadAlive(param_2), iVar2 == 0)) {
+      param_2 = 0;
+      param_3->type = 0;
+      Scr_Error("thread not active");
+    }
+    else {
+      (param_3->u).uintValue = param_2;
+      param_3->type = 1;
+      AddRefToObject(param_2);
+    }
+    if (scrEvaluateGlob.freezeObjects != false) {
+      if ((param_1.block)->localVarsCreateCount == param_2) {
+        return;
+      }
+      scrEvaluateGlob.objectChanged = true;
+      return;
+    }
+    (param_1.block)->localVarsCreateCount = param_2;
     return;
   }
-  if ((ulonglong)(uint)piVar2[1] != (uVar5 & 0xffffffff)) {
-    scrEvaluateGlob.objectChanged = true;
-  }
-LAB_82536a90:
-  __restgprlr_28();
+  param_3->type = 0;
+  Scr_Error("bad expression");
   return;
 }
 
@@ -2545,39 +2426,39 @@ void Scr_CompileExpression(sval_u *param_1)
 
 // 82536BD0  Scr_CompileTextInternal  (script/scr_evaluate.cpp:2251)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
+
 void Scr_CompileTextInternal(char *param_1,ScriptExpression_t *param_2)
 
 {
   char cVar1;
   char cVar2;
-  scr_block_t *psVar3;
+  sval_u *psVar3;
   int iVar4;
-  char *pcVar5;
-  sval_u sVar6;
-  HunkUser *pHVar7;
+  sval_u sVar5;
+  HunkUser *pHVar6;
+  char *pcVar7;
   char *pcVar8;
-  char *pcVar9;
   
-  pcVar5 = (char *)__savegprlr_25(param_1);
-  pcVar9 = "<locals>";
-  pcVar8 = pcVar5;
+  pcVar8 = "<locals>";
+  pcVar7 = param_1;
   do {
-    cVar1 = *pcVar8;
-    cVar2 = *pcVar9;
+    cVar1 = *pcVar7;
+    cVar2 = *pcVar8;
     if (cVar1 == '\0') break;
+    pcVar7 = pcVar7 + 1;
     pcVar8 = pcVar8 + 1;
-    pcVar9 = pcVar9 + 1;
   } while (cVar1 == cVar2);
   if (cVar1 == cVar2) {
-    sVar6 = debugger_node1(0x58,(sval_u)0x0);
-    param_2->parseData = sVar6;
-    __restgprlr_25();
+    sVar5 = debugger_node1(0x58,(sval_u)0x0);
+    param_2->parseData = sVar5;
     return;
   }
   Scr_InitAllocNode();
   scrCompilePub.in_ptr = "*";
   scrCompilePub.in_ptr_valid = false;
-  scrCompilePub.parseBuf = pcVar5;
+  scrCompilePub.parseBuf = param_1;
   if (scrVarPub.error_message != (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_evaluate.cpp",0x8e0
                     ,0,"%s");
@@ -2590,79 +2471,76 @@ void Scr_CompileTextInternal(char *param_1,ScriptExpression_t *param_2)
   scrCompilePub.parseBuf = (char *)0x0;
   if (scrVarPub.error_message == (char *)0x0) {
     scrCompilePub.developer_statement = 3;
-    psVar3 = *(scr_block_t **)param_2;
-    *(int *)param_2 = psVar3->localVarsCreateCount;
-    pcVar8 = scrVarPub.varUsagePos;
-    iVar4 = psVar3->abortLevel;
+    psVar3 = (param_2->parseData).node;
+    param_2->parseData = psVar3[1];
+    pcVar7 = scrVarPub.varUsagePos;
+    iVar4 = psVar3->type;
     if (iVar4 != 0x47) {
       if (iVar4 != 0x59) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_evaluate.cpp",
                         0x903,0,"%s");
       }
-      pHVar7 = Hunk_UserCreate(0x10000,"Scr_CompileTextInternal",false,0);
-      TempMemoryReset(pHVar7);
-      pcVar8 = TempMalloc(0);
+      pHVar6 = Hunk_UserCreate(0x10000,"Scr_CompileTextInternal",false,0);
+      TempMemoryReset(pHVar6);
+      pcVar7 = TempMalloc(0);
       Scr_CompileStatement(param_2->parseData);
       if (scrVarPub.error_message == (char *)0x0) {
-        pcVar5 = TempMalloc(0);
-        sVar6 = debugger_buffer(0x59,pcVar8,(int)pcVar5 - (int)pcVar8,0x20);
-        param_2->parseData = sVar6;
-        Hunk_UserDestroy(pHVar7);
+        pcVar8 = TempMalloc(0);
+        sVar5 = debugger_buffer(0x59,pcVar7,(int)pcVar8 - (int)pcVar7,0x20);
+        param_2->parseData = sVar5;
+        Hunk_UserDestroy(pHVar6);
         Scr_ShutdownAllocNode();
-        __restgprlr_25();
         return;
       }
       Com_PrintError(0x17,"%s\n");
       Scr_ClearErrorMessage();
-      sVar6 = debugger_node0(0x5b);
-      param_2->parseData = sVar6;
+      sVar5 = debugger_node0(0x5b);
+      param_2->parseData = sVar5;
       SL_ShutdownSystem(2);
-      Hunk_UserDestroy(pHVar7);
+      Hunk_UserDestroy(pHVar6);
       Scr_ShutdownAllocNode();
-      __restgprlr_25();
       return;
     }
     if (scrVarPub.varUsagePos == (char *)0x0) {
       scrVarPub.varUsagePos = "<debug expression>";
     }
     Scr_CompileExpression(&param_2->parseData);
-    scrVarPub.varUsagePos = pcVar8;
+    scrVarPub.varUsagePos = pcVar7;
     if (scrVarPub.error_message != (char *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_evaluate.cpp",
                       0x8fe,0,"%s");
       SL_ShutdownSystem(2);
       Scr_ShutdownAllocNode();
-      __restgprlr_25();
       return;
     }
   }
   else {
-    if (*pcVar5 != '\0') {
+    if (*param_1 != '\0') {
       Com_PrintError(0x17,"%s\n");
     }
     Scr_ClearErrorMessage();
-    sVar6 = debugger_node0(0x5a);
-    param_2->parseData = sVar6;
+    sVar5 = debugger_node0(0x5a);
+    param_2->parseData = sVar5;
   }
   SL_ShutdownSystem(2);
   Scr_ShutdownAllocNode();
-  __restgprlr_25();
   return;
 }
 
 
 // 82536E90  Scr_CompileText  (script/scr_evaluate.cpp:2352)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void Scr_CompileText(char *param_1,ScriptExpression_t *param_2)
 
 {
   int iVar1;
-  char *pcVar2;
   
-  pcVar2 = (char *)__savegprlr_29(param_1);
   g_debugExprHead = (debugger_sval_s *)0x0;
   g_breakonExpr = 0;
-  Scr_CompileTextInternal(pcVar2,param_2);
+  Scr_CompileTextInternal(param_1,param_2);
   if (g_debugExprHead == (debugger_sval_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_evaluate.cpp",0x934
                     ,0,"%s");
@@ -2670,32 +2548,29 @@ void Scr_CompileText(char *param_1,ScriptExpression_t *param_2)
   iVar1 = g_breakonExpr;
   param_2->exprHead = g_debugExprHead;
   param_2->breakonExpr = iVar1;
-  __restgprlr_29();
   return;
 }
 
 
 // 82536F08  Scr_EvalScriptExpression  (script/scr_evaluate.cpp:2369)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 bool Scr_EvalScriptExpression
                (ScriptExpression_t *param_1,uint param_2,VariableValue *param_3,bool param_4,
                bool param_5)
 
 {
-  sval_u *psVar1;
-  undefined1 uVar2;
-  
-  psVar1 = (sval_u *)__savegprlr_26(param_1);
-  if (psVar1 == (sval_u *)0x0) {
+  if (param_1 == (ScriptExpression_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_evaluate.cpp",0x942
                     ,0,"%s");
   }
   scrEvaluateGlob.objectChanged = false;
   scrEvaluateGlob.freezeScope = param_4;
   scrEvaluateGlob.freezeObjects = param_5;
-  Scr_EvalExpression(*psVar1,param_2,param_3);
-  uVar2 = __restgprlr_26(scrEvaluateGlob.objectChanged);
-  return (bool)uVar2;
+  Scr_EvalExpression(param_1->parseData,param_2,param_3);
+  return scrEvaluateGlob.objectChanged;
 }
 
 
@@ -2740,26 +2615,25 @@ LAB_82535158:
 
 // 82535958  Scr_RefScriptExpression  (script/scr_evaluate.cpp:2412)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 bool Scr_RefScriptExpression(ScriptExpression_t *param_1)
 
 {
-  sval_u *psVar1;
-  bool bVar2;
-  undefined1 uVar3;
+  bool bVar1;
   
-  psVar1 = (sval_u *)__savegprlr_28(param_1);
-  if (psVar1 == (sval_u *)0x0) {
+  if (param_1 == (ScriptExpression_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_evaluate.cpp",0x96f
                     ,0,"%s");
   }
-  bVar2 = Scr_RefExpression(*psVar1);
-  if (psVar1[2].type == 0) {
+  bVar1 = Scr_RefExpression(param_1->parseData);
+  if (param_1->exprHead == (debugger_sval_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_evaluate.cpp",0x972
                     ,0,"%s");
   }
-  Scr_ClearDebugExpr((debugger_sval_s *)psVar1[2].block);
-  uVar3 = __restgprlr_28(bVar2);
-  return (bool)uVar3;
+  Scr_ClearDebugExpr(param_1->exprHead);
+  return bVar1;
 }
 
 

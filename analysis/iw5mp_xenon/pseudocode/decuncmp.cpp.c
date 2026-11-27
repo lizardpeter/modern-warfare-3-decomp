@@ -2,24 +2,27 @@
 
 // 828B6630  decode_uncompressed_block  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/compression/codec/lzx/decoder/decuncmp.cpp:11)
 
+/* WARNING: Function: __savegprlr_20 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_20 replaced with injection: xenon_save_restore */
+
 int XCOMPRESS::decode_uncompressed_block(t_decoder_context *param_1,long param_2,int param_3)
 
 {
   uint uVar1;
-  uint *puVar2;
-  int iVar3;
+  int iVar2;
+  uint uVar3;
   longlong lVar4;
   ulonglong uVar5;
   ulonglong uVar6;
-  longlong lVar7;
+  ulonglong uVar7;
   longlong lVar8;
   longlong lVar9;
   ulonglong uVar10;
   ulonglong uVar11;
   ulonglong uVar12;
   ulonglong uVar13;
-  uint uVar14;
-  ulonglong uVar15;
+  uchar *puVar14;
+  int iVar15;
   undefined1 auVar16 [16];
   undefined1 auVar17 [16];
   undefined1 auVar18 [16];
@@ -29,27 +32,27 @@ int XCOMPRESS::decode_uncompressed_block(t_decoder_context *param_1,long param_2
   undefined1 auVar22 [16];
   undefined1 auVar23 [16];
   
-  uVar5 = (ulonglong)param_3;
   lVar4 = (longlong)param_2;
-  puVar2 = (uint *)__savegprlr_20(param_1);
-  uVar13 = (ulonglong)puVar2[0xac1];
-  uVar10 = (ulonglong)*puVar2;
-  uVar1 = puVar2[1];
-  lVar9 = lVar4 + uVar5;
-  if ((int)(puVar2[0xac2] - uVar13) <= (int)uVar5) {
-    uVar5 = puVar2[0xac2] - uVar13;
+  uVar13 = ZEXT48(param_1->dec_input_curpos);
+  uVar10 = ZEXT48(param_1->dec_mem_window);
+  uVar6 = ZEXT48(param_1->dec_end_input_pos) - uVar13;
+  uVar1 = param_1->dec_window_size;
+  lVar9 = lVar4 + param_3;
+  uVar5 = (longlong)param_3;
+  if ((int)uVar6 <= param_3) {
+    uVar5 = uVar6;
   }
   uVar12 = uVar10 + lVar4;
   uVar11 = uVar12 + uVar5;
-  uVar15 = uVar12;
+  uVar6 = uVar12;
   if (((uVar12 & 0xffffffff) < uVar13) || ((uVar13 + 0x40 & 0xffffffff) <= (uVar12 & 0xffffffff))) {
-    uVar6 = (uVar5 & 0xffffffc0) + uVar12;
+    uVar7 = (uVar5 & 0xffffffc0) + uVar12;
     uVar5 = (uVar5 & 0xfffffff0) + uVar12;
-    if ((uVar12 & 0xffffffff) < (uVar6 & 0xffffffff)) {
-      lVar7 = (((uVar6 - uVar12) - 1 & 0xffffffff) >> 6) + 1;
+    if ((uVar12 & 0xffffffff) < (uVar7 & 0xffffffff)) {
+      lVar8 = (((uVar7 - uVar12) - 1 & 0xffffffff) >> 6) + 1;
       do {
         dataCacheBlockTouch(uVar13 + 0x80);
-        dataCacheBlockTouch(uVar15 + 0x80);
+        dataCacheBlockTouch(uVar6 + 0x80);
         auVar19 = loadVectorRightIndexed(uVar13 + 0x10);
         auVar22 = loadVectorLeftIndexed(uVar13);
         auVar17 = loadVectorRightIndexed(uVar13 + 0x20);
@@ -59,45 +62,47 @@ int XCOMPRESS::decode_uncompressed_block(t_decoder_context *param_1,long param_2
         auVar21 = loadVectorRightIndexed(uVar13 + 0x40);
         auVar16 = loadVectorLeftIndexed(uVar13 + 0x30);
         uVar13 = uVar13 + 0x40;
-        storeVectorLeftIndexed(auVar22 | auVar19,uVar15);
-        storeVectorRightIndexed(auVar22 | auVar19,uVar15 + 0x10);
-        storeVectorLeftIndexed(auVar20 | auVar17,uVar15 + 0x10);
-        storeVectorRightIndexed(auVar20 | auVar17,uVar15 + 0x20);
-        storeVectorLeftIndexed(auVar18 | auVar23,uVar15 + 0x20);
-        storeVectorRightIndexed(auVar18 | auVar23,uVar15 + 0x30);
-        storeVectorLeftIndexed(auVar16 | auVar21,uVar15 + 0x30);
-        storeVectorRightIndexed(auVar16 | auVar21,uVar15 + 0x40);
-        uVar15 = uVar15 + 0x40;
-        lVar7 = lVar7 + -1;
-      } while (lVar7 != 0);
+        storeVectorLeftIndexed(auVar22 | auVar19,uVar6);
+        storeVectorRightIndexed(auVar22 | auVar19,uVar6 + 0x10);
+        storeVectorLeftIndexed(auVar20 | auVar17,uVar6 + 0x10);
+        storeVectorRightIndexed(auVar20 | auVar17,uVar6 + 0x20);
+        storeVectorLeftIndexed(auVar18 | auVar23,uVar6 + 0x20);
+        storeVectorRightIndexed(auVar18 | auVar23,uVar6 + 0x30);
+        storeVectorLeftIndexed(auVar16 | auVar21,uVar6 + 0x30);
+        storeVectorRightIndexed(auVar16 | auVar21,uVar6 + 0x40);
+        uVar6 = uVar6 + 0x40;
+        lVar8 = lVar8 + -1;
+      } while (lVar8 != 0);
     }
   }
   else {
     if ((uVar12 & 0xffffffff) < (uVar13 + 0x10 & 0xffffffff)) goto LAB_828b6788;
     uVar5 = (uVar5 & 0xfffffff0) + uVar12;
   }
-  if ((uVar15 & 0xffffffff) < (uVar5 & 0xffffffff)) {
-    lVar7 = (((uVar5 - uVar15) - 1 & 0xffffffff) >> 4) + 1;
+  if ((uVar6 & 0xffffffff) < (uVar5 & 0xffffffff)) {
+    lVar8 = (((uVar5 - uVar6) - 1 & 0xffffffff) >> 4) + 1;
     do {
       auVar23 = loadVectorLeftIndexed(uVar13);
       auVar21 = loadVectorRightIndexed(uVar13 + 0x10);
       uVar13 = uVar13 + 0x10;
-      storeVectorLeftIndexed(auVar23 | auVar21,uVar15);
-      storeVectorRightIndexed(auVar23 | auVar21,uVar15 + 0x10);
-      uVar15 = uVar15 + 0x10;
-      lVar7 = lVar7 + -1;
-    } while (lVar7 != 0);
+      storeVectorLeftIndexed(auVar23 | auVar21,uVar6);
+      storeVectorRightIndexed(auVar23 | auVar21,uVar6 + 0x10);
+      uVar6 = uVar6 + 0x10;
+      lVar8 = lVar8 + -1;
+    } while (lVar8 != 0);
   }
 LAB_828b6788:
-  uVar14 = (uint)uVar13;
-  if ((uVar15 & 0xffffffff) < (uVar11 & 0xffffffff)) {
+  iVar15 = (int)uVar6;
+  puVar14 = (uchar *)uVar13;
+  if ((uVar6 & 0xffffffff) < (uVar11 & 0xffffffff)) {
+    iVar2 = (int)uVar11 - iVar15;
     _blkmov();
-    uVar14 = (int)(uVar11 - uVar15) + uVar14;
-    uVar15 = (uVar11 - uVar15) + uVar15;
+    puVar14 = puVar14 + iVar2;
+    iVar15 = iVar2 + iVar15;
   }
-  lVar7 = (uVar15 - uVar12) + lVar4;
+  uVar3 = (iVar15 - (int)uVar12) + param_2;
   if ((uVar11 & 0xffffffff) == (lVar9 + uVar10 & 0xffffffff)) {
-    puVar2[0xac1] = uVar14;
+    param_1->dec_input_curpos = puVar14;
     lVar8 = 0x101;
     if ((int)lVar9 < 0x102) {
       lVar8 = lVar9;
@@ -106,14 +111,13 @@ LAB_828b6788:
     if ((uVar10 & 0xffffffff) < ((lVar8 - lVar4) + uVar10 & 0xffffffff)) {
       _blkmov();
     }
-    lVar9 = lVar7 - lVar9;
-    puVar2[0xbae] = puVar2[2] & (uint)lVar7;
+    iVar15 = uVar3 - (int)lVar9;
+    param_1->dec_bufpos = param_1->dec_window_mask & uVar3;
   }
   else {
-    lVar9 = -1;
+    iVar15 = -1;
   }
-  iVar3 = __restgprlr_20(lVar9);
-  return iVar3;
+  return iVar15;
 }
 
 

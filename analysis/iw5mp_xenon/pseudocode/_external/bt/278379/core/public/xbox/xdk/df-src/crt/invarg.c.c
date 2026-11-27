@@ -44,19 +44,20 @@ void _invoke_watson(wchar_t *param_1,wchar_t *param_2,wchar_t *param_3,uint para
 
 // 8291FC48  _call_reportfault  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/invarg.c:139)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void _call_reportfault(int param_1,ulong param_2,ulong param_3)
 
 {
-  int iVar1;
-  long lVar2;
+  long lVar1;
   _EXCEPTION_POINTERS local_ac0 [2];
   _EXCEPTION_RECORD local_ab0;
   _CONTEXT _Stack_a60;
   void *local_8;
   
-  iVar1 = __savegprlr_29(param_1);
-  if (iVar1 != -1) {
-    __crt_debugger_hook(iVar1);
+  if (param_1 != -1) {
+    __crt_debugger_hook(param_1);
   }
   local_ab0.ExceptionCode = 0;
   memset();
@@ -67,11 +68,10 @@ void _call_reportfault(int param_1,ulong param_2,ulong param_3)
   local_ab0.ExceptionCode = param_2;
   local_ab0.ExceptionFlags = param_3;
   SetUnhandledExceptionFilter((_func___cdecl_long__EXCEPTION_POINTERS_ptr *)0x0);
-  lVar2 = UnhandledExceptionFilter(local_ac0);
-  if ((lVar2 == 0) && (iVar1 != -1)) {
-    __crt_debugger_hook(iVar1);
+  lVar1 = UnhandledExceptionFilter(local_ac0);
+  if ((lVar1 == 0) && (param_1 != -1)) {
+    __crt_debugger_hook(param_1);
   }
-  __restgprlr_29();
   return;
 }
 

@@ -38,27 +38,26 @@ void term_source(jpeg_decompress_struct *param_1)
 
 // 827BC1A0  jpeg_memory_src  (jpeg-6/jdatasrc.c:227)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void jpeg_memory_src(jpeg_decompress_struct *param_1,uchar *param_2,int param_3)
 
 {
-  undefined4 *puVar1;
-  int iVar2;
-  undefined4 uVar3;
+  jpeg_source_mgr *pjVar1;
   
-  iVar2 = __savegprlr_29(param_1);
-  if (*(int *)(iVar2 + 0x20) == 0) {
-    uVar3 = (*(code *)**(undefined4 **)(iVar2 + 4))(iVar2,0,0x20);
-    *(undefined4 *)(iVar2 + 0x20) = uVar3;
+  if (param_1->src == (jpeg_source_mgr *)0x0) {
+    pjVar1 = (*param_1->mem->alloc_small)((jpeg_common_struct *)param_1,0,0x20);
+    param_1->src = pjVar1;
   }
-  puVar1 = *(undefined4 **)(iVar2 + 0x20);
-  puVar1[1] = param_3;
-  puVar1[2] = init_source;
-  puVar1[3] = 0;
-  puVar1[4] = skip_input_data;
-  puVar1[5] = jpeg_resync_to_restart;
-  puVar1[6] = term_source;
-  *puVar1 = param_2;
-  __restgprlr_29();
+  pjVar1 = param_1->src;
+  pjVar1->bytes_in_buffer = param_3;
+  pjVar1->init_source = init_source;
+  pjVar1->fill_input_buffer = (_func___cdecl_uchar_jpeg_decompress_struct_ptr *)0x0;
+  pjVar1->skip_input_data = skip_input_data;
+  pjVar1->resync_to_restart = jpeg_resync_to_restart;
+  pjVar1->term_source = term_source;
+  pjVar1->next_input_byte = param_2;
   return;
 }
 

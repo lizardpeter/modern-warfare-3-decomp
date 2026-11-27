@@ -2,13 +2,15 @@
 
 // 828B88B8  XFriendsCreateEnumerator  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/online/codegen/xliveimp.cpp:37)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 ulong XFriendsCreateEnumerator
                 (ulong param_1,ulong param_2,ulong param_3,ulong *param_4,void **param_5)
 
 {
   ulong uVar1;
-  undefined8 uVar2;
-  undefined4 uStack00000014;
+  ulong uStack00000014;
   ulong uStack0000001c;
   ulong uStack00000024;
   _XOVERLAPPED *in_stack_fffffd38;
@@ -22,56 +24,49 @@ ulong XFriendsCreateEnumerator
   undefined4 local_244;
   CArgumentList CStack_230;
   
-  uStack00000014 = __savegprlr_28(param_1);
-  uVar2 = 0;
   CStack_230.m_Arguments = 0;
   local_250 = (uchar *)0x0;
   local_24c = 0;
+  uStack00000014 = param_1;
   uStack0000001c = param_2;
   uStack00000024 = param_3;
   uVar1 = XLookupSchemaIndexFromOrdinal(0x206,&local_248);
-  if (-1 < (int)uVar1) {
-    uVar1 = XOnlinepGetContextSize(local_248,0,0,0,&local_24c,(ulong *)0x0,(ulong *)0x0);
+  if ((((-1 < (int)uVar1) &&
+       (uVar1 = XOnlinepGetContextSize(local_248,0,0,0,&local_24c,(ulong *)0x0,(ulong *)0x0),
+       -1 < (int)uVar1)) && (uVar1 = XamAlloc(0,local_24c,&local_250), -1 < (int)uVar1)) &&
+     (uVar1 = XOnlineSetupUserBuffer
+                        (0x206,local_248,0,0,local_250,local_24c,(uchar *)0x0,0,in_stack_fffffd38,
+                         in_stack_fffffd3c,in_stack_fffffd40,in_stack_fffffd44,in_stack_fffffd48),
+     -1 < (int)uVar1)) {
+    CArgumentList::AddArgument(&CStack_230,&stack0x00000014);
+    CArgumentList::AddArgument(&CStack_230,&stack0x0000001c);
+    CArgumentList::AddArgument(&CStack_230,&stack0x00000024);
+    CArgumentList::AddArgument(&CStack_230,param_4);
+    CArgumentList::AddArgument(&CStack_230,param_5);
+    uVar1 = XMsgInProcessCall(0xfc,0x58020,local_244,&CStack_230);
     if (-1 < (int)uVar1) {
-      uVar1 = XamAlloc(0,local_24c,&local_250);
-      if (-1 < (int)uVar1) {
-        uVar1 = XOnlineSetupUserBuffer
-                          (0x206,local_248,0,0,local_250,local_24c,(uchar *)0x0,0,in_stack_fffffd38,
-                           in_stack_fffffd3c,in_stack_fffffd40,in_stack_fffffd44,in_stack_fffffd48);
-        if (-1 < (int)uVar1) {
-          CArgumentList::AddArgument(&CStack_230,&stack0x00000014);
-          CArgumentList::AddArgument(&CStack_230,&stack0x0000001c);
-          CArgumentList::AddArgument(&CStack_230,&stack0x00000024);
-          CArgumentList::AddArgument(&CStack_230,param_4);
-          CArgumentList::AddArgument(&CStack_230,param_5);
-          uVar1 = XMsgInProcessCall(0xfc,0x58020,local_244,&CStack_230);
-          if (-1 < (int)uVar1) {
-            XamFree(local_250);
-            goto LAB_828b8a0c;
-          }
-        }
-      }
+      XamFree(local_250);
+      return 0;
     }
   }
   if (local_250 != (uchar *)0x0) {
     XamFree();
   }
   SetLastError(uVar1);
-  uVar2 = 0x65b;
-LAB_828b8a0c:
-  uVar1 = __restgprlr_28(uVar2);
-  return uVar1;
+  return 0x65b;
 }
 
 
 // 828B8A18  XInviteGetAcceptedInfo  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/online/codegen/xliveimp.cpp:111)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 ulong XInviteGetAcceptedInfo(ulong param_1,_XINVITE_INFO *param_2)
 
 {
   ulong uVar1;
-  undefined8 uVar2;
-  undefined4 uStack00000014;
+  ulong uStack00000014;
   _XOVERLAPPED *in_stack_fffffd38;
   uchar **in_stack_fffffd3c;
   ulong *in_stack_fffffd40;
@@ -83,57 +78,49 @@ ulong XInviteGetAcceptedInfo(ulong param_1,_XINVITE_INFO *param_2)
   undefined4 local_244;
   CArgumentList CStack_230;
   
-  uStack00000014 = __savegprlr_29(param_1);
-  uVar2 = 0;
   CStack_230.m_Arguments = 0;
   local_250 = (uchar *)0x0;
   local_24c = 0;
+  uStack00000014 = param_1;
   uVar1 = XLookupSchemaIndexFromOrdinal(0x586,&local_248);
-  if (-1 < (int)uVar1) {
-    uVar1 = XOnlinepGetContextSize(local_248,0,0,0,&local_24c,(ulong *)0x0,(ulong *)0x0);
+  if ((((-1 < (int)uVar1) &&
+       (uVar1 = XOnlinepGetContextSize(local_248,0,0,0,&local_24c,(ulong *)0x0,(ulong *)0x0),
+       -1 < (int)uVar1)) && (uVar1 = XamAlloc(0,local_24c,&local_250), -1 < (int)uVar1)) &&
+     (uVar1 = XOnlineSetupUserBuffer
+                        (0x586,local_248,0,0,local_250,local_24c,(uchar *)0x0,0,in_stack_fffffd38,
+                         in_stack_fffffd3c,in_stack_fffffd40,in_stack_fffffd44,in_stack_fffffd48),
+     -1 < (int)uVar1)) {
+    CArgumentList::AddArgument(&CStack_230,&stack0x00000014);
+    CArgumentList::AddArgument(&CStack_230,param_2);
+    uVar1 = XMsgInProcessCall(0xfc,0x58023,local_244,&CStack_230);
     if (-1 < (int)uVar1) {
-      uVar1 = XamAlloc(0,local_24c,&local_250);
-      if (-1 < (int)uVar1) {
-        uVar1 = XOnlineSetupUserBuffer
-                          (0x586,local_248,0,0,local_250,local_24c,(uchar *)0x0,0,in_stack_fffffd38,
-                           in_stack_fffffd3c,in_stack_fffffd40,in_stack_fffffd44,in_stack_fffffd48);
-        if (-1 < (int)uVar1) {
-          CArgumentList::AddArgument(&CStack_230,&stack0x00000014);
-          CArgumentList::AddArgument(&CStack_230,param_2);
-          uVar1 = XMsgInProcessCall(0xfc,0x58023,local_244,&CStack_230);
-          if (-1 < (int)uVar1) {
-            XamFree(local_250);
-            goto LAB_828b8b3c;
-          }
-        }
-      }
+      XamFree(local_250);
+      return 0;
     }
   }
   if (local_250 != (uchar *)0x0) {
     XamFree();
   }
   SetLastError(uVar1);
-  uVar2 = 0x65b;
-LAB_828b8b3c:
-  uVar1 = __restgprlr_29(uVar2);
-  return uVar1;
+  return 0x65b;
 }
 
 
 // 828B8B48  XInviteSend  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/online/codegen/xliveimp.cpp:185)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
+
 ulong XInviteSend(ulong param_1,ulong param_2,ulong64 *param_3,wchar_t *param_4,
                  _XOVERLAPPED *param_5)
 
 {
-  long lVar1;
+  ulong uVar1;
   uint uVar2;
-  ulong uVar3;
-  wchar_t *pwVar4;
-  ulonglong uVar5;
-  int iVar6;
-  ulonglong uVar7;
-  undefined4 uStack00000014;
+  long lVar3;
+  int iVar4;
+  ulong uVar5;
+  ulong uStack00000014;
   ulong uStack0000001c;
   _XOVERLAPPED *in_stack_fffffce8;
   uchar **in_stack_fffffcec;
@@ -151,73 +138,67 @@ ulong XInviteSend(ulong param_1,ulong param_2,ulong64 *param_3,wchar_t *param_4,
   longlong local_280 [6];
   CArgumentList CStack_250;
   
-  uVar5 = (ulonglong)(int)param_5;
-  uVar7 = (ulonglong)(int)param_4;
-  uStack00000014 = __savegprlr_25(param_1);
-  pwVar4 = (wchar_t *)uVar7;
   CStack_250.m_Arguments = 0;
   local_298 = (uchar *)0x0;
   local_29c = 0;
+  uStack00000014 = param_1;
   uStack0000001c = param_2;
-  lVar1 = XLookupSchemaIndexFromOrdinal(0xd01,&local_2a0);
-  if ((-1 < lVar1) &&
-     (lVar1 = XOnlinepGetContextSize(local_2a0,0,2,0,&local_29c,(ulong *)0x0,(ulong *)0x0),
-     -1 < lVar1)) {
-    iVar6 = local_29c + 0x5dc;
-    lVar1 = XLookupSchemaIndexFromOrdinal(0xe02,&local_2a0);
-    if ((-1 < lVar1) &&
-       (lVar1 = XOnlinepGetContextSize(local_2a0,0,3,0x100,&local_29c,(ulong *)0x0,(ulong *)0x0),
-       -1 < lVar1)) {
-      iVar6 = iVar6 + local_29c;
-      lVar1 = XLookupSchemaIndexFromOrdinal(0x580,&local_2a0);
-      if ((-1 < lVar1) &&
-         (lVar1 = XOnlinepGetContextSize(local_2a0,0,2,0,&local_29c,(ulong *)0x0,(ulong *)0x0),
-         -1 < lVar1)) {
-        uVar3 = iVar6 + local_29c;
-        lVar1 = XLookupSchemaIndexFromOrdinal(0x583,&local_2a0);
-        if ((-1 < lVar1) &&
-           ((lVar1 = XOnlinepGetContextSize
-                               (local_2a0,5,0,uVar3,&local_29c,(ulong *)0x0,(ulong *)0x0),
-            -1 < lVar1 && (lVar1 = XamAlloc(0,local_29c,&local_298), -1 < lVar1)))) {
-          if ((uVar7 & 0xffffffff) == 0) {
-            pwVar4 = L"";
+  uVar1 = XLookupSchemaIndexFromOrdinal(0xd01,&local_2a0);
+  if ((-1 < (int)uVar1) &&
+     (uVar1 = XOnlinepGetContextSize(local_2a0,0,2,0,&local_29c,(ulong *)0x0,(ulong *)0x0),
+     -1 < (int)uVar1)) {
+    iVar4 = local_29c + 0x5dc;
+    uVar1 = XLookupSchemaIndexFromOrdinal(0xe02,&local_2a0);
+    if ((-1 < (int)uVar1) &&
+       (uVar1 = XOnlinepGetContextSize(local_2a0,0,3,0x100,&local_29c,(ulong *)0x0,(ulong *)0x0),
+       -1 < (int)uVar1)) {
+      iVar4 = iVar4 + local_29c;
+      uVar1 = XLookupSchemaIndexFromOrdinal(0x580,&local_2a0);
+      if ((-1 < (int)uVar1) &&
+         (uVar1 = XOnlinepGetContextSize(local_2a0,0,2,0,&local_29c,(ulong *)0x0,(ulong *)0x0),
+         -1 < (int)uVar1)) {
+        uVar5 = iVar4 + local_29c;
+        uVar1 = XLookupSchemaIndexFromOrdinal(0x583,&local_2a0);
+        if ((-1 < (int)uVar1) &&
+           ((uVar1 = XOnlinepGetContextSize
+                               (local_2a0,5,0,uVar5,&local_29c,(ulong *)0x0,(ulong *)0x0),
+            -1 < (int)uVar1 && (uVar1 = XamAlloc(0,local_29c,&local_298), -1 < (int)uVar1)))) {
+          if (param_4 == (wchar_t *)0x0) {
+            param_4 = L"";
             local_290 = 1;
           }
           else {
-            uVar2 = wcslen(pwVar4);
+            uVar2 = wcslen(param_4);
             local_290 = uVar2 + 1;
           }
           local_288 = 0;
-          lVar1 = XOnlineSetupUserBuffer
-                            (0x583,local_2a0,5,uVar3,local_298,local_29c,(uchar *)0x0,0,
+          uVar1 = XOnlineSetupUserBuffer
+                            (0x583,local_2a0,5,uVar5,local_298,local_29c,(uchar *)0x0,0,
                              in_stack_fffffce8,in_stack_fffffcec,in_stack_fffffcf0,in_stack_fffffcf4
                              ,in_stack_fffffcf8);
-          if (-1 < lVar1) {
+          if (-1 < (int)uVar1) {
             CArgumentList::AddArgument(&CStack_250,&stack0x00000014);
             CArgumentList::AddArgument(&CStack_250,&stack0x0000001c);
             CArgumentList::AddArgument(&CStack_250,param_3);
-            CArgumentList::AddArgument(&CStack_250,pwVar4);
+            CArgumentList::AddArgument(&CStack_250,param_4);
             CArgumentList::AddArgument(&CStack_250,&local_290);
             CArgumentList::AddArgument(&CStack_250,&local_288);
-            lVar1 = XOnlineMarshalArguments
+            uVar1 = XOnlineMarshalArguments
                               ((uchar *)0x0,0,local_2a0,5,0,&CStack_250,local_284,&local_294);
-            if (-1 < lVar1) {
+            if (-1 < (int)uVar1) {
               *(ulong *)(local_28c + 0x1c) = local_294;
               local_280[1] = 0;
               local_280[2] = 0;
               local_280[3] = 0;
               local_280[4] = 0;
               local_280[0] = (ulonglong)local_28c << 0x20;
-              lVar1 = XMsgStartIORequest(0xfc,local_2a0 & 0xffff | 0x50000,uVar5,local_280,0x28);
-              if (-1 < lVar1) {
-                if ((uVar5 & 0xffffffff) == 0) {
-                  lVar1 = RtlGetLastError();
-                  uVar7 = -(ulonglong)(lVar1 != 0) & 0x65b;
+              uVar1 = XMsgStartIORequest(0xfc,local_2a0 & 0xffff | 0x50000,param_5,local_280,0x28);
+              if (-1 < (int)uVar1) {
+                if (param_5 != (_XOVERLAPPED *)0x0) {
+                  return 0x3e5;
                 }
-                else {
-                  uVar7 = 0x3e5;
-                }
-                goto LAB_828b8e2c;
+                lVar3 = RtlGetLastError();
+                return -(uint)(lVar3 != 0) & 0x65b;
               }
             }
           }
@@ -225,19 +206,16 @@ ulong XInviteSend(ulong param_1,ulong param_2,ulong64 *param_3,wchar_t *param_4,
       }
     }
   }
-  uVar7 = 0x65b;
-  if ((uVar5 & 0xffffffff) == 0) {
-    RtlSetLastError(lVar1);
+  if (param_5 == (_XOVERLAPPED *)0x0) {
+    RtlSetLastError(uVar1);
   }
   else {
-    *(long *)((int)uVar5 + 0x18) = lVar1;
+    param_5->dwExtendedError = uVar1;
   }
   if (local_298 != (uchar *)0x0) {
     XamFree();
   }
-LAB_828b8e2c:
-  uVar3 = __restgprlr_25(uVar7);
-  return uVar3;
+  return 0x65b;
 }
 
 
@@ -259,14 +237,16 @@ ulong __thiscall CArgumentList::AddArgument(CArgumentList *this,void *param_1)
 
 // 828B8E38  XPresenceCreateEnumerator  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/online/codegen/xliveimp.cpp:486)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 ulong XPresenceCreateEnumerator
                 (ulong param_1,ulong param_2,ulong64 *param_3,ulong param_4,ulong param_5,
                 ulong *param_6,void **param_7)
 
 {
   ulong uVar1;
-  undefined8 uVar2;
-  undefined4 uStack00000014;
+  ulong uStack00000014;
   ulong uStack0000001c;
   ulong uStack0000002c;
   ulong uStack00000034;
@@ -281,48 +261,39 @@ ulong XPresenceCreateEnumerator
   undefined4 local_254;
   CArgumentList CStack_240;
   
-  uStack00000014 = __savegprlr_27(param_1);
-  uVar2 = 0;
   CStack_240.m_Arguments = 0;
   local_260 = (uchar *)0x0;
   local_25c = 0;
+  uStack00000014 = param_1;
   uStack0000001c = param_2;
   uStack0000002c = param_4;
   uStack00000034 = param_5;
   uVar1 = XLookupSchemaIndexFromOrdinal(0xb,&local_258);
-  if (-1 < (int)uVar1) {
-    uVar1 = XOnlinepGetContextSize(local_258,0,0,0,&local_25c,(ulong *)0x0,(ulong *)0x0);
+  if ((((-1 < (int)uVar1) &&
+       (uVar1 = XOnlinepGetContextSize(local_258,0,0,0,&local_25c,(ulong *)0x0,(ulong *)0x0),
+       -1 < (int)uVar1)) && (uVar1 = XamAlloc(0,local_25c,&local_260), -1 < (int)uVar1)) &&
+     (uVar1 = XOnlineSetupUserBuffer
+                        (0xb,local_258,0,0,local_260,local_25c,(uchar *)0x0,0,in_stack_fffffd28,
+                         in_stack_fffffd2c,in_stack_fffffd30,in_stack_fffffd34,in_stack_fffffd38),
+     -1 < (int)uVar1)) {
+    CArgumentList::AddArgument(&CStack_240,&stack0x00000014);
+    CArgumentList::AddArgument(&CStack_240,&stack0x0000001c);
+    CArgumentList::AddArgument(&CStack_240,param_3);
+    CArgumentList::AddArgument(&CStack_240,&stack0x0000002c);
+    CArgumentList::AddArgument(&CStack_240,&stack0x00000034);
+    CArgumentList::AddArgument(&CStack_240,param_6);
+    CArgumentList::AddArgument(&CStack_240,param_7);
+    uVar1 = XMsgInProcessCall(0xfc,0x58019,local_254,&CStack_240);
     if (-1 < (int)uVar1) {
-      uVar1 = XamAlloc(0,local_25c,&local_260);
-      if (-1 < (int)uVar1) {
-        uVar1 = XOnlineSetupUserBuffer
-                          (0xb,local_258,0,0,local_260,local_25c,(uchar *)0x0,0,in_stack_fffffd28,
-                           in_stack_fffffd2c,in_stack_fffffd30,in_stack_fffffd34,in_stack_fffffd38);
-        if (-1 < (int)uVar1) {
-          CArgumentList::AddArgument(&CStack_240,&stack0x00000014);
-          CArgumentList::AddArgument(&CStack_240,&stack0x0000001c);
-          CArgumentList::AddArgument(&CStack_240,param_3);
-          CArgumentList::AddArgument(&CStack_240,&stack0x0000002c);
-          CArgumentList::AddArgument(&CStack_240,&stack0x00000034);
-          CArgumentList::AddArgument(&CStack_240,param_6);
-          CArgumentList::AddArgument(&CStack_240,param_7);
-          uVar1 = XMsgInProcessCall(0xfc,0x58019,local_254,&CStack_240);
-          if (-1 < (int)uVar1) {
-            XamFree(local_260);
-            goto LAB_828b8fac;
-          }
-        }
-      }
+      XamFree(local_260);
+      return 0;
     }
   }
   if (local_260 != (uchar *)0x0) {
     XamFree();
   }
   SetLastError(uVar1);
-  uVar2 = 0x65b;
-LAB_828b8fac:
-  uVar1 = __restgprlr_27(uVar2);
-  return uVar1;
+  return 0x65b;
 }
 
 
@@ -373,12 +344,14 @@ ulong XPresenceInitialize(ulong param_1)
 
 // 828B90F0  XPresenceSubscribe  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/online/codegen/xliveimp.cpp:632)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 ulong XPresenceSubscribe(ulong param_1,ulong param_2,ulong64 *param_3)
 
 {
   ulong uVar1;
-  undefined8 uVar2;
-  undefined4 uStack00000014;
+  ulong uStack00000014;
   ulong uStack0000001c;
   _XOVERLAPPED *in_stack_fffffd38;
   uchar **in_stack_fffffd3c;
@@ -391,53 +364,46 @@ ulong XPresenceSubscribe(ulong param_1,ulong param_2,ulong64 *param_3)
   undefined4 local_244;
   CArgumentList CStack_230;
   
-  uStack00000014 = __savegprlr_29(param_1);
-  uVar2 = 0;
   CStack_230.m_Arguments = 0;
   local_250 = (uchar *)0x0;
   local_24c = 0;
+  uStack00000014 = param_1;
   uStack0000001c = param_2;
   uVar1 = XLookupSchemaIndexFromOrdinal(0xd,&local_248);
-  if (-1 < (int)uVar1) {
-    uVar1 = XOnlinepGetContextSize(local_248,0,0,0,&local_24c,(ulong *)0x0,(ulong *)0x0);
+  if ((((-1 < (int)uVar1) &&
+       (uVar1 = XOnlinepGetContextSize(local_248,0,0,0,&local_24c,(ulong *)0x0,(ulong *)0x0),
+       -1 < (int)uVar1)) && (uVar1 = XamAlloc(0,local_24c,&local_250), -1 < (int)uVar1)) &&
+     (uVar1 = XOnlineSetupUserBuffer
+                        (0xd,local_248,0,0,local_250,local_24c,(uchar *)0x0,0,in_stack_fffffd38,
+                         in_stack_fffffd3c,in_stack_fffffd40,in_stack_fffffd44,in_stack_fffffd48),
+     -1 < (int)uVar1)) {
+    CArgumentList::AddArgument(&CStack_230,&stack0x00000014);
+    CArgumentList::AddArgument(&CStack_230,&stack0x0000001c);
+    CArgumentList::AddArgument(&CStack_230,param_3);
+    uVar1 = XMsgInProcessCall(0xfc,0x5801e,local_244,&CStack_230);
     if (-1 < (int)uVar1) {
-      uVar1 = XamAlloc(0,local_24c,&local_250);
-      if (-1 < (int)uVar1) {
-        uVar1 = XOnlineSetupUserBuffer
-                          (0xd,local_248,0,0,local_250,local_24c,(uchar *)0x0,0,in_stack_fffffd38,
-                           in_stack_fffffd3c,in_stack_fffffd40,in_stack_fffffd44,in_stack_fffffd48);
-        if (-1 < (int)uVar1) {
-          CArgumentList::AddArgument(&CStack_230,&stack0x00000014);
-          CArgumentList::AddArgument(&CStack_230,&stack0x0000001c);
-          CArgumentList::AddArgument(&CStack_230,param_3);
-          uVar1 = XMsgInProcessCall(0xfc,0x5801e,local_244,&CStack_230);
-          if (-1 < (int)uVar1) {
-            XamFree(local_250);
-            goto LAB_828b9224;
-          }
-        }
-      }
+      XamFree(local_250);
+      return 0;
     }
   }
   if (local_250 != (uchar *)0x0) {
     XamFree();
   }
   SetLastError(uVar1);
-  uVar2 = 0x65b;
-LAB_828b9224:
-  uVar1 = __restgprlr_29(uVar2);
-  return uVar1;
+  return 0x65b;
 }
 
 
 // 828B9230  XPresenceUnsubscribe  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/online/codegen/xliveimp.cpp:705)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 ulong XPresenceUnsubscribe(ulong param_1,ulong param_2,ulong64 *param_3)
 
 {
   ulong uVar1;
-  undefined8 uVar2;
-  undefined4 uStack00000014;
+  ulong uStack00000014;
   ulong uStack0000001c;
   _XOVERLAPPED *in_stack_fffffd38;
   uchar **in_stack_fffffd3c;
@@ -450,59 +416,52 @@ ulong XPresenceUnsubscribe(ulong param_1,ulong param_2,ulong64 *param_3)
   undefined4 local_244;
   CArgumentList CStack_230;
   
-  uStack00000014 = __savegprlr_29(param_1);
-  uVar2 = 0;
   CStack_230.m_Arguments = 0;
   local_250 = (uchar *)0x0;
   local_24c = 0;
+  uStack00000014 = param_1;
   uStack0000001c = param_2;
   uVar1 = XLookupSchemaIndexFromOrdinal(0xe,&local_248);
-  if (-1 < (int)uVar1) {
-    uVar1 = XOnlinepGetContextSize(local_248,0,0,0,&local_24c,(ulong *)0x0,(ulong *)0x0);
+  if ((((-1 < (int)uVar1) &&
+       (uVar1 = XOnlinepGetContextSize(local_248,0,0,0,&local_24c,(ulong *)0x0,(ulong *)0x0),
+       -1 < (int)uVar1)) && (uVar1 = XamAlloc(0,local_24c,&local_250), -1 < (int)uVar1)) &&
+     (uVar1 = XOnlineSetupUserBuffer
+                        (0xe,local_248,0,0,local_250,local_24c,(uchar *)0x0,0,in_stack_fffffd38,
+                         in_stack_fffffd3c,in_stack_fffffd40,in_stack_fffffd44,in_stack_fffffd48),
+     -1 < (int)uVar1)) {
+    CArgumentList::AddArgument(&CStack_230,&stack0x00000014);
+    CArgumentList::AddArgument(&CStack_230,&stack0x0000001c);
+    CArgumentList::AddArgument(&CStack_230,param_3);
+    uVar1 = XMsgInProcessCall(0xfc,0x58044,local_244,&CStack_230);
     if (-1 < (int)uVar1) {
-      uVar1 = XamAlloc(0,local_24c,&local_250);
-      if (-1 < (int)uVar1) {
-        uVar1 = XOnlineSetupUserBuffer
-                          (0xe,local_248,0,0,local_250,local_24c,(uchar *)0x0,0,in_stack_fffffd38,
-                           in_stack_fffffd3c,in_stack_fffffd40,in_stack_fffffd44,in_stack_fffffd48);
-        if (-1 < (int)uVar1) {
-          CArgumentList::AddArgument(&CStack_230,&stack0x00000014);
-          CArgumentList::AddArgument(&CStack_230,&stack0x0000001c);
-          CArgumentList::AddArgument(&CStack_230,param_3);
-          uVar1 = XMsgInProcessCall(0xfc,0x58044,local_244,&CStack_230);
-          if (-1 < (int)uVar1) {
-            XamFree(local_250);
-            goto LAB_828b9364;
-          }
-        }
-      }
+      XamFree(local_250);
+      return 0;
     }
   }
   if (local_250 != (uchar *)0x0) {
     XamFree();
   }
   SetLastError(uVar1);
-  uVar2 = 0x65b;
-LAB_828b9364:
-  uVar1 = __restgprlr_29(uVar2);
-  return uVar1;
+  return 0x65b;
 }
 
 
 // 828B9370  XStorageDownloadToMemory  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/online/codegen/xliveimp.cpp:927)
+
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
 
 ulong XStorageDownloadToMemory
                 (ulong param_1,wchar_t *param_2,ulong param_3,uchar *param_4,ulong param_5,
                 _XSTORAGE_DOWNLOAD_TO_MEMORY_RESULTS *param_6,_XOVERLAPPED *param_7)
 
 {
-  long lVar1;
+  ulong uVar1;
   uint uVar2;
-  ulong uVar3;
-  ulonglong uVar4;
-  int iVar5;
-  ulonglong uVar6;
-  undefined4 uStack00000014;
+  long lVar3;
+  int iVar4;
+  ulong uVar5;
+  ulong uStack00000014;
   ulong uStack00000024;
   _XOVERLAPPED *in_stack_fffffcd8;
   uchar **in_stack_fffffcdc;
@@ -520,65 +479,61 @@ ulong XStorageDownloadToMemory
   longlong local_290 [6];
   CArgumentList CStack_260;
   
-  uVar4 = (ulonglong)(int)param_7;
-  uStack00000014 = __savegprlr_23(param_1);
   CStack_260.m_Arguments = 0;
   local_2a8 = (uchar *)0x0;
   local_2ac = 0;
+  uStack00000014 = param_1;
   uStack00000024 = param_3;
-  lVar1 = XLookupSchemaIndexFromOrdinal(0xd01,&local_2b0);
-  if ((-1 < lVar1) &&
-     (lVar1 = XOnlinepGetContextSize(local_2b0,0,2,0,&local_2ac,(ulong *)0x0,(ulong *)0x0),
-     -1 < lVar1)) {
-    iVar5 = local_2ac + 0x1c0;
-    lVar1 = XLookupSchemaIndexFromOrdinal(0xc01,&local_2b0);
-    if ((-1 < lVar1) &&
-       (lVar1 = XOnlinepGetContextSize(local_2b0,0,2,0,&local_2ac,(ulong *)0x0,(ulong *)0x0),
-       -1 < lVar1)) {
-      iVar5 = iVar5 + local_2ac;
-      lVar1 = XLookupSchemaIndexFromOrdinal(0xe01,&local_2b0);
-      if ((-1 < lVar1) &&
-         (lVar1 = XOnlinepGetContextSize(local_2b0,0,3,0x100,&local_2ac,(ulong *)0x0,(ulong *)0x0),
-         -1 < lVar1)) {
-        uVar3 = iVar5 + local_2ac;
-        lVar1 = XLookupSchemaIndexFromOrdinal(0xe11,&local_2b0);
-        if ((-1 < lVar1) &&
-           ((lVar1 = XOnlinepGetContextSize
-                               (local_2b0,5,0,uVar3,&local_2ac,(ulong *)0x0,(ulong *)0x0),
-            -1 < lVar1 && (lVar1 = XamAlloc(0,local_2ac,&local_2a8), -1 < lVar1)))) {
+  uVar1 = XLookupSchemaIndexFromOrdinal(0xd01,&local_2b0);
+  if ((-1 < (int)uVar1) &&
+     (uVar1 = XOnlinepGetContextSize(local_2b0,0,2,0,&local_2ac,(ulong *)0x0,(ulong *)0x0),
+     -1 < (int)uVar1)) {
+    iVar4 = local_2ac + 0x1c0;
+    uVar1 = XLookupSchemaIndexFromOrdinal(0xc01,&local_2b0);
+    if ((-1 < (int)uVar1) &&
+       (uVar1 = XOnlinepGetContextSize(local_2b0,0,2,0,&local_2ac,(ulong *)0x0,(ulong *)0x0),
+       -1 < (int)uVar1)) {
+      iVar4 = iVar4 + local_2ac;
+      uVar1 = XLookupSchemaIndexFromOrdinal(0xe01,&local_2b0);
+      if ((-1 < (int)uVar1) &&
+         (uVar1 = XOnlinepGetContextSize(local_2b0,0,3,0x100,&local_2ac,(ulong *)0x0,(ulong *)0x0),
+         -1 < (int)uVar1)) {
+        uVar5 = iVar4 + local_2ac;
+        uVar1 = XLookupSchemaIndexFromOrdinal(0xe11,&local_2b0);
+        if ((-1 < (int)uVar1) &&
+           ((uVar1 = XOnlinepGetContextSize
+                               (local_2b0,5,0,uVar5,&local_2ac,(ulong *)0x0,(ulong *)0x0),
+            -1 < (int)uVar1 && (uVar1 = XamAlloc(0,local_2ac,&local_2a8), -1 < (int)uVar1)))) {
           uVar2 = wcslen(param_2);
           local_294 = uVar2 + 1;
           local_29c = param_4;
-          lVar1 = XOnlineSetupUserBuffer
-                            (0xe11,local_2b0,5,uVar3,local_2a8,local_2ac,(uchar *)param_6,param_5,
+          uVar1 = XOnlineSetupUserBuffer
+                            (0xe11,local_2b0,5,uVar5,local_2a8,local_2ac,(uchar *)param_6,param_5,
                              in_stack_fffffcd8,in_stack_fffffcdc,in_stack_fffffce0,in_stack_fffffce4
                              ,in_stack_fffffce8);
-          if (-1 < lVar1) {
+          if (-1 < (int)uVar1) {
             CArgumentList::AddArgument(&CStack_260,&stack0x00000014);
             CArgumentList::AddArgument(&CStack_260,param_2);
             CArgumentList::AddArgument(&CStack_260,&stack0x00000024);
             CArgumentList::AddArgument(&CStack_260,param_4);
             CArgumentList::AddArgument(&CStack_260,&local_294);
             CArgumentList::AddArgument(&CStack_260,&local_29c);
-            lVar1 = XOnlineMarshalArguments
+            uVar1 = XOnlineMarshalArguments
                               ((uchar *)0x0,0,local_2b0,5,0,&CStack_260,local_298,&local_2a0);
-            if (-1 < lVar1) {
+            if (-1 < (int)uVar1) {
               *(ulong *)(local_2a4 + 0x1c) = local_2a0;
               local_290[1] = 0;
               local_290[2] = 0;
               local_290[3] = 0;
               local_290[4] = 0;
               local_290[0] = (ulonglong)local_2a4 << 0x20;
-              lVar1 = XMsgStartIORequest(0xfc,local_2b0 & 0xffff | 0x50000,uVar4,local_290,0x28);
-              if (-1 < lVar1) {
-                if ((uVar4 & 0xffffffff) == 0) {
-                  lVar1 = RtlGetLastError();
-                  uVar6 = -(ulonglong)(lVar1 != 0) & 0x65b;
+              uVar1 = XMsgStartIORequest(0xfc,local_2b0 & 0xffff | 0x50000,param_7,local_290,0x28);
+              if (-1 < (int)uVar1) {
+                if (param_7 != (_XOVERLAPPED *)0x0) {
+                  return 0x3e5;
                 }
-                else {
-                  uVar6 = 0x3e5;
-                }
-                goto LAB_828b9640;
+                lVar3 = RtlGetLastError();
+                return -(uint)(lVar3 != 0) & 0x65b;
               }
             }
           }
@@ -586,36 +541,33 @@ ulong XStorageDownloadToMemory
       }
     }
   }
-  uVar6 = 0x65b;
-  if ((uVar4 & 0xffffffff) == 0) {
-    RtlSetLastError(lVar1);
+  if (param_7 == (_XOVERLAPPED *)0x0) {
+    RtlSetLastError(uVar1);
   }
   else {
-    *(long *)((int)uVar4 + 0x18) = lVar1;
+    param_7->dwExtendedError = uVar1;
   }
   if (local_2a8 != (uchar *)0x0) {
     XamFree();
   }
-LAB_828b9640:
-  uVar3 = __restgprlr_23(uVar6);
-  return uVar3;
+  return 0x65b;
 }
 
 
 // 828B9650  XStringVerify  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/online/codegen/xliveimp.cpp:1400)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 ulong XStringVerify(ulong param_1,char *param_2,ulong param_3,_STRING_DATA *param_4,ulong param_5,
                    _STRING_VERIFY_RESPONSE *param_6,_XOVERLAPPED *param_7)
 
 {
-  long lVar1;
+  char cVar1;
   ulong uVar2;
-  longlong lVar3;
-  ulonglong uVar4;
-  char *pcVar6;
-  longlong lVar5;
-  ulonglong uVar7;
-  undefined4 uStack00000014;
+  long lVar3;
+  char *pcVar4;
+  ulong uStack00000014;
   ulong uStack00000024;
   _XOVERLAPPED *in_stack_fffffce8;
   uchar **in_stack_fffffcec;
@@ -634,90 +586,80 @@ ulong XStringVerify(ulong param_1,char *param_2,ulong param_3,_STRING_DATA *para
   longlong local_270 [6];
   CArgumentList CStack_240;
   
-  uVar4 = (ulonglong)(int)param_7;
-  lVar3 = (longlong)(int)param_2;
-  uStack00000014 = __savegprlr_26(param_1);
   CStack_240.m_Arguments = 0;
   local_290 = (uchar *)0x0;
   local_298 = 0;
+  uStack00000014 = param_1;
   uStack00000024 = param_3;
-  lVar1 = XLookupSchemaIndexFromOrdinal(0x801,&local_2a0);
-  if ((-1 < lVar1) &&
-     (lVar1 = XOnlinepGetContextSize(local_2a0,0,0,0,&local_298,(ulong *)0x0,(ulong *)0x0),
-     -1 < lVar1)) {
-    lVar1 = XamAlloc(0,local_298,&local_290);
-    if (-1 < lVar1) {
-      local_280[0] = XNetLogonGetTitleID(2);
-      lVar5 = lVar3;
-      do {
-        pcVar6 = (char *)lVar5;
-        lVar5 = lVar5 + 1;
-      } while (*pcVar6 != '\0');
-      local_29c[0] = ((short)lVar5 - (short)lVar3) + -1;
-      local_294[0] = (undefined2)uStack00000024;
-      lVar1 = XOnlineSetupUserBuffer
-                        (0x801,local_2a0,0,0,local_290,local_298,(uchar *)param_6,param_5,
-                         in_stack_fffffce8,in_stack_fffffcec,in_stack_fffffcf0,in_stack_fffffcf4,
-                         in_stack_fffffcf8);
-      if (-1 < lVar1) {
-        CArgumentList::AddArgument(&CStack_240,&stack0x00000014);
-        CArgumentList::AddArgument(&CStack_240,(void *)lVar3);
-        CArgumentList::AddArgument(&CStack_240,&stack0x00000024);
-        CArgumentList::AddArgument(&CStack_240,param_4);
-        CArgumentList::AddArgument(&CStack_240,local_280);
-        CArgumentList::AddArgument(&CStack_240,local_29c);
-        CArgumentList::AddArgument(&CStack_240,local_294);
-        lVar1 = XOnlineMarshalArguments
-                          ((uchar *)0x0,0,local_2a0,0,0,&CStack_240,local_284,&local_28c);
-        if (-1 < lVar1) {
-          *(ulong *)(local_288 + 0x1c) = local_28c;
-          local_270[1] = 0;
-          local_270[2] = 0;
-          local_270[3] = 0;
-          local_270[4] = 0;
-          local_270[0] = (ulonglong)local_288 << 0x20;
-          lVar1 = XMsgStartIORequest(0xfc,local_2a0 & 0xffff | 0x50000,uVar4,local_270,0x28);
-          if (-1 < lVar1) {
-            if ((uVar4 & 0xffffffff) == 0) {
-              lVar1 = RtlGetLastError();
-              uVar7 = -(ulonglong)(lVar1 != 0) & 0x65b;
-            }
-            else {
-              uVar7 = 0x3e5;
-            }
-            goto LAB_828b9880;
+  uVar2 = XLookupSchemaIndexFromOrdinal(0x801,&local_2a0);
+  if (((-1 < (int)uVar2) &&
+      (uVar2 = XOnlinepGetContextSize(local_2a0,0,0,0,&local_298,(ulong *)0x0,(ulong *)0x0),
+      -1 < (int)uVar2)) && (uVar2 = XamAlloc(0,local_298,&local_290), -1 < (int)uVar2)) {
+    local_280[0] = XNetLogonGetTitleID(2);
+    pcVar4 = param_2;
+    do {
+      cVar1 = *pcVar4;
+      pcVar4 = pcVar4 + 1;
+    } while (cVar1 != '\0');
+    local_29c[0] = ((short)pcVar4 - (short)param_2) + -1;
+    local_294[0] = (undefined2)uStack00000024;
+    uVar2 = XOnlineSetupUserBuffer
+                      (0x801,local_2a0,0,0,local_290,local_298,(uchar *)param_6,param_5,
+                       in_stack_fffffce8,in_stack_fffffcec,in_stack_fffffcf0,in_stack_fffffcf4,
+                       in_stack_fffffcf8);
+    if (-1 < (int)uVar2) {
+      CArgumentList::AddArgument(&CStack_240,&stack0x00000014);
+      CArgumentList::AddArgument(&CStack_240,param_2);
+      CArgumentList::AddArgument(&CStack_240,&stack0x00000024);
+      CArgumentList::AddArgument(&CStack_240,param_4);
+      CArgumentList::AddArgument(&CStack_240,local_280);
+      CArgumentList::AddArgument(&CStack_240,local_29c);
+      CArgumentList::AddArgument(&CStack_240,local_294);
+      uVar2 = XOnlineMarshalArguments((uchar *)0x0,0,local_2a0,0,0,&CStack_240,local_284,&local_28c)
+      ;
+      if (-1 < (int)uVar2) {
+        *(ulong *)(local_288 + 0x1c) = local_28c;
+        local_270[1] = 0;
+        local_270[2] = 0;
+        local_270[3] = 0;
+        local_270[4] = 0;
+        local_270[0] = (ulonglong)local_288 << 0x20;
+        uVar2 = XMsgStartIORequest(0xfc,local_2a0 & 0xffff | 0x50000,param_7,local_270,0x28);
+        if (-1 < (int)uVar2) {
+          if (param_7 != (_XOVERLAPPED *)0x0) {
+            return 0x3e5;
           }
+          lVar3 = RtlGetLastError();
+          return -(uint)(lVar3 != 0) & 0x65b;
         }
       }
     }
   }
-  uVar7 = 0x65b;
-  if ((uVar4 & 0xffffffff) == 0) {
-    RtlSetLastError(lVar1);
+  if (param_7 == (_XOVERLAPPED *)0x0) {
+    RtlSetLastError(uVar2);
   }
   else {
-    *(long *)((int)uVar4 + 0x18) = lVar1;
+    param_7->dwExtendedError = uVar2;
   }
   if (local_290 != (uchar *)0x0) {
     XamFree();
   }
-LAB_828b9880:
-  uVar2 = __restgprlr_26(uVar7);
-  return uVar2;
+  return 0x65b;
 }
 
 
 // 828B9890  XUserFindUsers  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/online/codegen/xliveimp.cpp:1639)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
+
 ulong XUserFindUsers(ulong64 param_1,ulong param_2,_FIND_USER_INFO *param_3,ulong param_4,
                     _FIND_USERS_RESPONSE *param_5,_XOVERLAPPED *param_6)
 
 {
-  long lVar1;
-  ulong uVar2;
-  ulonglong uVar3;
-  ulonglong uVar4;
-  undefined8 uStack00000010;
+  ulong uVar1;
+  long lVar2;
+  ulong64 uStack00000010;
   ulong uStack0000001c;
   _XOVERLAPPED *in_stack_fffffcb8;
   uchar **in_stack_fffffcbc;
@@ -737,77 +679,70 @@ ulong XUserFindUsers(ulong64 param_1,ulong param_2,_FIND_USER_INFO *param_3,ulon
   longlong local_280 [6];
   CArgumentList CStack_250;
   
-  uVar3 = (ulonglong)(int)param_6;
-  uStack00000010 = __savegprlr_25();
   CStack_250.m_Arguments = 0;
   local_2cc = (uchar *)0x0;
   local_2c8 = 0;
+  uStack00000010 = param_1;
   uStack0000001c = param_2;
-  lVar1 = XLookupSchemaIndexFromOrdinal(0xa03,&local_2d0);
-  if ((-1 < lVar1) &&
-     (lVar1 = XOnlinepGetContextSize(local_2d0,0,0,0,&local_2c8,(ulong *)0x0,(ulong *)0x0),
-     -1 < lVar1)) {
-    lVar1 = XamAlloc(0,local_2c8,&local_2cc);
-    if (-1 < lVar1) {
-      local_2bc = 0x429;
-      local_2b0[0] = uStack0000001c * 0x18 + 0xc;
-      lVar1 = XMsgInProcessCall(0xfc,0x58017,auStack_2b4,0);
-      if (-1 < lVar1) {
-        XOnlinepGetSgaddrForMarshalling(&_Stack_2a0);
-        lVar1 = XOnlineSetupUserBuffer
-                          (0xa03,local_2d0,0,0,local_2cc,local_2c8,(uchar *)param_5,param_4,
-                           in_stack_fffffcb8,in_stack_fffffcbc,in_stack_fffffcc0,in_stack_fffffcc4,
-                           in_stack_fffffcc8);
-        if (-1 < lVar1) {
-          CArgumentList::AddArgument(&CStack_250,&stack0x00000010);
-          CArgumentList::AddArgument(&CStack_250,&stack0x0000001c);
-          CArgumentList::AddArgument(&CStack_250,param_3);
-          CArgumentList::AddArgument(&CStack_250,&local_2bc);
-          CArgumentList::AddArgument(&CStack_250,local_2b0);
-          CArgumentList::AddArgument(&CStack_250,auStack_2b4);
-          CArgumentList::AddArgument(&CStack_250,&_Stack_2a0);
-          lVar1 = XOnlineMarshalArguments
-                            ((uchar *)0x0,0,local_2d0,0,0,&CStack_250,local_2b8,&local_2c4);
-          if (-1 < lVar1) {
-            *(ulong *)(local_2c0 + 0x1c) = local_2c4;
-            local_280[1] = 0;
-            local_280[2] = 0;
-            local_280[3] = 0;
-            local_280[4] = 0;
-            local_280[0] = (ulonglong)local_2c0 << 0x20;
-            lVar1 = XMsgStartIORequest(0xfc,local_2d0 & 0xffff | 0x50000,uVar3,local_280,0x28);
-            if (-1 < lVar1) {
-              if ((uVar3 & 0xffffffff) == 0) {
-                lVar1 = RtlGetLastError();
-                uVar4 = -(ulonglong)(lVar1 != 0) & 0x65b;
-              }
-              else {
-                uVar4 = 0x3e5;
-              }
-              goto LAB_828b9ac8;
+  uVar1 = XLookupSchemaIndexFromOrdinal(0xa03,&local_2d0);
+  if (((-1 < (int)uVar1) &&
+      (uVar1 = XOnlinepGetContextSize(local_2d0,0,0,0,&local_2c8,(ulong *)0x0,(ulong *)0x0),
+      -1 < (int)uVar1)) && (uVar1 = XamAlloc(0,local_2c8,&local_2cc), -1 < (int)uVar1)) {
+    local_2bc = 0x429;
+    local_2b0[0] = uStack0000001c * 0x18 + 0xc;
+    uVar1 = XMsgInProcessCall(0xfc,0x58017,auStack_2b4,0);
+    if (-1 < (int)uVar1) {
+      XOnlinepGetSgaddrForMarshalling(&_Stack_2a0);
+      uVar1 = XOnlineSetupUserBuffer
+                        (0xa03,local_2d0,0,0,local_2cc,local_2c8,(uchar *)param_5,param_4,
+                         in_stack_fffffcb8,in_stack_fffffcbc,in_stack_fffffcc0,in_stack_fffffcc4,
+                         in_stack_fffffcc8);
+      if (-1 < (int)uVar1) {
+        CArgumentList::AddArgument(&CStack_250,&stack0x00000010);
+        CArgumentList::AddArgument(&CStack_250,&stack0x0000001c);
+        CArgumentList::AddArgument(&CStack_250,param_3);
+        CArgumentList::AddArgument(&CStack_250,&local_2bc);
+        CArgumentList::AddArgument(&CStack_250,local_2b0);
+        CArgumentList::AddArgument(&CStack_250,auStack_2b4);
+        CArgumentList::AddArgument(&CStack_250,&_Stack_2a0);
+        uVar1 = XOnlineMarshalArguments
+                          ((uchar *)0x0,0,local_2d0,0,0,&CStack_250,local_2b8,&local_2c4);
+        if (-1 < (int)uVar1) {
+          *(ulong *)(local_2c0 + 0x1c) = local_2c4;
+          local_280[1] = 0;
+          local_280[2] = 0;
+          local_280[3] = 0;
+          local_280[4] = 0;
+          local_280[0] = (ulonglong)local_2c0 << 0x20;
+          uVar1 = XMsgStartIORequest(0xfc,local_2d0 & 0xffff | 0x50000,param_6,local_280,0x28);
+          if (-1 < (int)uVar1) {
+            if (param_6 != (_XOVERLAPPED *)0x0) {
+              return 0x3e5;
             }
+            lVar2 = RtlGetLastError();
+            return -(uint)(lVar2 != 0) & 0x65b;
           }
         }
       }
     }
   }
-  uVar4 = 0x65b;
-  if ((uVar3 & 0xffffffff) == 0) {
-    RtlSetLastError(lVar1);
+  if (param_6 == (_XOVERLAPPED *)0x0) {
+    RtlSetLastError(uVar1);
   }
   else {
-    *(long *)((int)uVar3 + 0x18) = lVar1;
+    param_6->dwExtendedError = uVar1;
   }
   if (local_2cc != (uchar *)0x0) {
     XamFree();
   }
-LAB_828b9ac8:
-  uVar2 = __restgprlr_25(uVar4);
-  return uVar2;
+  return 0x65b;
 }
 
 
 // 828B9AD8  _XAccountGetUserInfo  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/online/codegen/xliveimp.cpp:1897)
+
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 
 ulong _XAccountGetUserInfo
                 (ulong param_1,ulong param_2,_GET_USER_INFO_RESPONSE *param_3,_XOVERLAPPED *param_4)
@@ -815,9 +750,7 @@ ulong _XAccountGetUserInfo
 {
   ulong uVar1;
   long lVar2;
-  ulonglong uVar3;
-  ulonglong uVar4;
-  undefined4 uStack00000014;
+  ulong uStack00000014;
   _XOVERLAPPED *in_stack_fffffcd8;
   uchar **in_stack_fffffcdc;
   ulong *in_stack_fffffce0;
@@ -836,70 +769,56 @@ ulong _XAccountGetUserInfo
   longlong local_270 [6];
   CArgumentList CStack_240;
   
-  uVar3 = (ulonglong)(int)param_4;
-  uStack00000014 = __savegprlr_27(param_1);
   CStack_240.m_Arguments = 0;
   local_2ac = (uchar *)0x0;
   local_2a8 = 0;
+  uStack00000014 = param_1;
   uVar1 = XLookupSchemaIndexFromOrdinal(0x604,&local_2b0);
-  if ((-1 < (int)uVar1) &&
-     (uVar1 = XOnlinepGetContextSize(local_2b0,0,0,0,&local_2a8,(ulong *)0x0,(ulong *)0x0),
-     -1 < (int)uVar1)) {
-    uVar1 = XamAlloc(0,local_2a8,&local_2ac);
-    if (-1 < (int)uVar1) {
-      local_29c = XNetLogonGetTitleID(5);
-      uVar1 = XamUserGetXUID(uStack00000014,2,auStack_290);
-      if ((-1 < (int)uVar1) && (uVar1 = XNetLogonGetMachineID(auStack_288), -1 < (int)uVar1)) {
-        uVar1 = _XAccountGetUserInfoCheck();
+  if (((-1 < (int)uVar1) &&
+      (uVar1 = XOnlinepGetContextSize(local_2b0,0,0,0,&local_2a8,(ulong *)0x0,(ulong *)0x0),
+      -1 < (int)uVar1)) && (uVar1 = XamAlloc(0,local_2a8,&local_2ac), -1 < (int)uVar1)) {
+    local_29c = XNetLogonGetTitleID(5);
+    uVar1 = XamUserGetXUID(uStack00000014,2,auStack_290);
+    if (((-1 < (int)uVar1) && (uVar1 = XNetLogonGetMachineID(auStack_288), -1 < (int)uVar1)) &&
+       ((uVar1 = _XAccountGetUserInfoCheck(), -1 < (int)uVar1 &&
+        (uVar1 = XOnlineSetupUserBuffer
+                           (0x604,local_2b0,0,0,local_2ac,local_2a8,(uchar *)param_3,param_2,
+                            in_stack_fffffcd8,in_stack_fffffcdc,in_stack_fffffce0,in_stack_fffffce4,
+                            in_stack_fffffce8), -1 < (int)uVar1)))) {
+      CArgumentList::AddArgument(&CStack_240,&stack0x00000014);
+      CArgumentList::AddArgument(&CStack_240,auStack_290);
+      CArgumentList::AddArgument(&CStack_240,auStack_288);
+      CArgumentList::AddArgument(&CStack_240,&local_29c);
+      CArgumentList::AddArgument(&CStack_240,auStack_280);
+      uVar1 = XOnlineMarshalArguments((uchar *)0x0,0,local_2b0,0,0,&CStack_240,local_298,&local_2a4)
+      ;
+      if (-1 < (int)uVar1) {
+        *(ulong *)(local_2a0 + 0x1c) = local_2a4;
+        local_270[1] = 0;
+        local_270[2] = 0;
+        local_270[3] = 0;
+        local_270[4] = 0;
+        local_270[0] = (ulonglong)local_2a0 << 0x20;
+        uVar1 = XMsgStartIORequest(0xfc,local_2b0 & 0xffff | 0x50000,param_4,local_270,0x28);
         if (-1 < (int)uVar1) {
-          uVar1 = XOnlineSetupUserBuffer
-                            (0x604,local_2b0,0,0,local_2ac,local_2a8,(uchar *)param_3,param_2,
-                             in_stack_fffffcd8,in_stack_fffffcdc,in_stack_fffffce0,in_stack_fffffce4
-                             ,in_stack_fffffce8);
-          if (-1 < (int)uVar1) {
-            CArgumentList::AddArgument(&CStack_240,&stack0x00000014);
-            CArgumentList::AddArgument(&CStack_240,auStack_290);
-            CArgumentList::AddArgument(&CStack_240,auStack_288);
-            CArgumentList::AddArgument(&CStack_240,&local_29c);
-            CArgumentList::AddArgument(&CStack_240,auStack_280);
-            uVar1 = XOnlineMarshalArguments
-                              ((uchar *)0x0,0,local_2b0,0,0,&CStack_240,local_298,&local_2a4);
-            if (-1 < (int)uVar1) {
-              *(ulong *)(local_2a0 + 0x1c) = local_2a4;
-              local_270[1] = 0;
-              local_270[2] = 0;
-              local_270[3] = 0;
-              local_270[4] = 0;
-              local_270[0] = (ulonglong)local_2a0 << 0x20;
-              uVar1 = XMsgStartIORequest(0xfc,local_2b0 & 0xffff | 0x50000,uVar3,local_270,0x28);
-              if (-1 < (int)uVar1) {
-                if ((uVar3 & 0xffffffff) == 0) {
-                  lVar2 = RtlGetLastError();
-                  uVar4 = -(ulonglong)(lVar2 != 0) & 0x65b;
-                }
-                else {
-                  uVar4 = 0x3e5;
-                }
-                goto LAB_828b9cf0;
-              }
-            }
+          if (param_4 != (_XOVERLAPPED *)0x0) {
+            return 0x3e5;
           }
+          lVar2 = RtlGetLastError();
+          return -(uint)(lVar2 != 0) & 0x65b;
         }
       }
     }
   }
-  uVar4 = 0x65b;
-  if ((uVar3 & 0xffffffff) == 0) {
+  if (param_4 == (_XOVERLAPPED *)0x0) {
     RtlSetLastError(uVar1);
   }
   else {
-    *(ulong *)((int)uVar3 + 0x18) = uVar1;
+    param_4->dwExtendedError = uVar1;
   }
   if (local_2ac != (uchar *)0x0) {
     XamFree();
   }
-LAB_828b9cf0:
-  uVar1 = __restgprlr_27(uVar4);
-  return uVar1;
+  return 0x65b;
 }
 

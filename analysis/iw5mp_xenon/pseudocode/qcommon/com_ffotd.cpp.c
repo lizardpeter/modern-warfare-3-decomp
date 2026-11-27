@@ -54,146 +54,123 @@ int LiveStorage_ShouldUseFFoTD(void)
 
 // 824DA698  LiveStorage_FetchFFotD  (qcommon/com_ffotd.cpp:79)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 void LiveStorage_FetchFFotD(int param_1)
 
 {
-  uint uVar1;
-  longlong lVar2;
-  bool bVar8;
-  DWOnlineStatus DVar4;
-  int iVar5;
-  longlong lVar3;
-  bool bVar9;
-  overlappedTask *poVar6;
-  int iVar7;
+  bool bVar4;
+  DWOnlineStatus DVar1;
+  int iVar2;
+  bool bVar5;
+  overlappedTask *poVar3;
   
-  lVar2 = __savegprlr_26(param_1);
   if (((live_test_onlinedataoff->current).unsignedInt & 8) == 0) {
-    if ((g_ffotdFetched != false) || (bVar8 = false, g_ffotdShouldDownload == false)) {
-      bVar8 = true;
+    if ((g_ffotdFetched) || (bVar4 = false, !g_ffotdShouldDownload)) {
+      bVar4 = true;
     }
   }
   else {
-    bVar8 = false;
+    bVar4 = false;
   }
-  lVar3 = lVar2;
-  if (bVar8) goto LAB_824da840;
-  bVar8 = TaskManager_TaskIsInProgress(&storageTasks,0x11);
-  lVar3 = (longlong)bVar8;
-  if (lVar3 != 0) goto LAB_824da840;
-  iVar7 = (int)lVar2;
-  bVar8 = Live_IsUserSignedInToLive(iVar7);
-  lVar3 = 0;
-  if (!bVar8) goto LAB_824da840;
-  DVar4 = dwGetLogOnStatus(iVar7);
-  lVar3 = (longlong)(int)DVar4;
-  if (DVar4 != DW_LIVE_CONNECTED) goto LAB_824da840;
-  iVar5 = Sys_Milliseconds();
-  bVar8 = false;
-  uVar1 = (iVar5 - g_LastFetchFFotDAttemptTime) / 1000;
-  lVar3 = (longlong)(int)uVar1;
-  if (g_NumFetchFFotDAttempts == 0) {
-LAB_824da78c:
-    bVar8 = true;
-  }
-  else {
-    bVar9 = Live_GetShouldDemonwareRetry(uVar1,g_NumFetchFFotDAttempts,0x3c);
-    lVar3 = (longlong)bVar9;
-    if (lVar3 != 0) goto LAB_824da78c;
-  }
-  if (bVar8) {
-    g_NumFetchFFotDAttempts = g_NumFetchFFotDAttempts + 1;
-    g_LastFetchFFotDAttemptTime = iVar5;
-    poVar6 = TaskManager_GetOpenTaskSlot(&storageTasks,iVar7,0x11);
-    lVar3 = (longlong)(int)poVar6;
-    if (poVar6 != (overlappedTask *)0x0) {
-      getBuildNumberAsInt();
-      Com_sprintf(ffotdFilename,0x40,"ffotd-%s.%i.ff");
-      g_fetchFFotDFileTask.m_filename = ffotdFilename;
-      memset();
-      g_fetchFFotDFileTask.m_buffer = g_ffotdBuffer;
-      g_fetchFFotDFileTask.m_bufferSize = 0xf000;
-      poVar6->data = &g_fetchFFotDFileTask;
-      iVar7 = dwFetchPublisherFile(poVar6,&g_fetchFFotDFileTask);
-      lVar3 = (longlong)iVar7;
+  if ((((!bVar4) && (bVar4 = TaskManager_TaskIsInProgress(&storageTasks,0x11), !bVar4)) &&
+      (bVar4 = Live_IsUserSignedInToLive(param_1), bVar4)) &&
+     (DVar1 = dwGetLogOnStatus(param_1), DVar1 == DW_LIVE_CONNECTED)) {
+    iVar2 = Sys_Milliseconds();
+    bVar4 = false;
+    if ((g_NumFetchFFotDAttempts == 0) ||
+       (bVar5 = Live_GetShouldDemonwareRetry
+                          ((iVar2 - g_LastFetchFFotDAttemptTime) / 1000,g_NumFetchFFotDAttempts,0x3c
+                          ), bVar5)) {
+      bVar4 = true;
+    }
+    if (bVar4) {
+      g_NumFetchFFotDAttempts = g_NumFetchFFotDAttempts + 1;
+      g_LastFetchFFotDAttemptTime = iVar2;
+      poVar3 = TaskManager_GetOpenTaskSlot(&storageTasks,param_1,0x11);
+      if (poVar3 != (overlappedTask *)0x0) {
+        getBuildNumberAsInt();
+        Com_sprintf(ffotdFilename,0x40,"ffotd-%s.%i.ff");
+        g_fetchFFotDFileTask.m_filename = ffotdFilename;
+        memset();
+        g_fetchFFotDFileTask.m_buffer = g_ffotdBuffer;
+        g_fetchFFotDFileTask.m_bufferSize = 0xf000;
+        poVar3->data = &g_fetchFFotDFileTask;
+        dwFetchPublisherFile(poVar3,&g_fetchFFotDFileTask);
+      }
     }
   }
-LAB_824da840:
-  __restgprlr_26(lVar3);
   return;
 }
 
 
 // 824DABD0  LiveStorage_FFotDFetchComplete  (qcommon/com_ffotd.cpp:136)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 taskCompleteResults LiveStorage_FFotDFetchComplete(int param_1)
 
 {
   bdRemoteTask *this;
-  int iVar1;
-  overlappedTask *poVar2;
-  bdLobbyService *pbVar3;
-  Status SVar4;
-  taskCompleteResults tVar5;
-  bdLobbyErrorCode bVar6;
+  bdLobbyService *pbVar1;
+  Status SVar2;
+  taskCompleteResults tVar3;
+  bdLobbyErrorCode bVar4;
+  overlappedTask *poVar5;
   
-  iVar1 = __savegprlr_27(param_1);
-  poVar2 = storageTasks.tasks + iVar1;
-  if (storageTasks.tasks[iVar1].active == false) {
+  poVar5 = storageTasks.tasks + param_1;
+  if (storageTasks.tasks[param_1].active == false) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_ffotd.cpp",0x8b,0,
                     "%s");
   }
-  if (storageTasks.tasks[iVar1].type != 0x11) {
+  if (storageTasks.tasks[param_1].type != 0x11) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_ffotd.cpp",0x8c,0,
                     "%s");
   }
-  pbVar3 = dwGetLobbyService((uint)storageTasks.tasks[iVar1].controllerIndex);
-  if (pbVar3 != (bdLobbyService *)0x0) {
-    pbVar3 = dwGetLobbyService((uint)storageTasks.tasks[iVar1].controllerIndex);
-    SVar4 = bdLobbyService::getStatus(pbVar3);
-    if (SVar4 != BD_CONNECTED) {
-      tVar5 = __restgprlr_27(0);
-      return tVar5;
+  pbVar1 = dwGetLobbyService((uint)storageTasks.tasks[param_1].controllerIndex);
+  if (pbVar1 != (bdLobbyService *)0x0) {
+    pbVar1 = dwGetLobbyService((uint)storageTasks.tasks[param_1].controllerIndex);
+    SVar2 = bdLobbyService::getStatus(pbVar1);
+    if (SVar2 != BD_CONNECTED) {
+      return TASK_NOTCOMPLETE;
     }
   }
-  tVar5 = dwFetchFileComplete(poVar2,&g_fetchFFotDFileTask);
-  if (tVar5 == TASK_COMPLETE) {
-    Com_Printf(0x10,"FFotD was %i bytes\n");
-    if (0xf000 < g_fetchFFotDFileTask.m_fileSize) {
-      Com_PrintError(0x10,"Insufficient space for FFotD\n");
-      g_ffotdShouldDownload = false;
-      TaskManager_ClearTask(poVar2);
-      tVar5 = __restgprlr_27(1);
-      return tVar5;
-    }
-    g_ffotdSize = g_fetchFFotDFileTask.m_fileSize;
-    g_ffotdFetched = true;
-    TaskManager_ClearTask(poVar2);
-    tVar5 = __restgprlr_27(1);
-    return tVar5;
-  }
-  if (tVar5 == TASK_ERROR) {
-    this = storageTasks.tasks[iVar1].u.remoteTask.m_ptr;
-    if (this != (bdRemoteTask *)0x0) {
-      bVar6 = bdRemoteTask::getErrorCode(this);
-      if (bVar6 == BD_NO_FILE) {
+  tVar3 = dwFetchFileComplete(poVar5,&g_fetchFFotDFileTask);
+  if (tVar3 != TASK_COMPLETE) {
+    if (tVar3 == TASK_ERROR) {
+      this = storageTasks.tasks[param_1].u.remoteTask.m_ptr;
+      if (this != (bdRemoteTask *)0x0) {
+        bVar4 = bdRemoteTask::getErrorCode(this);
+        if (bVar4 != BD_NO_FILE) {
+          Com_PrintError(0x10,"Unable to retrieve FFotD: %d\n");
+          TaskManager_ClearTask(poVar5);
+          return TASK_ERROR;
+        }
         Com_Printf(0x10,"No FFotD\n");
         g_ffotdShouldDownload = false;
-        TaskManager_ClearTask(poVar2);
-        tVar5 = __restgprlr_27(2);
-        return tVar5;
+        TaskManager_ClearTask(poVar5);
+        return TASK_ERROR;
       }
-      Com_PrintError(0x10,"Unable to retrieve FFotD: %d\n");
-      TaskManager_ClearTask(poVar2);
-      tVar5 = __restgprlr_27(2);
-      return tVar5;
     }
+    else if (tVar3 == TASK_NOTCOMPLETE) {
+      return TASK_NOTCOMPLETE;
+    }
+    TaskManager_ClearTask(poVar5);
+    return tVar3;
   }
-  else if (tVar5 == TASK_NOTCOMPLETE) goto LAB_824dadb0;
-  TaskManager_ClearTask(poVar2);
-LAB_824dadb0:
-  tVar5 = __restgprlr_27(tVar5);
-  return tVar5;
+  Com_Printf(0x10,"FFotD was %i bytes\n");
+  if (g_fetchFFotDFileTask.m_fileSize < 0xf001) {
+    g_ffotdSize = g_fetchFFotDFileTask.m_fileSize;
+    g_ffotdFetched = true;
+    TaskManager_ClearTask(poVar5);
+    return TASK_COMPLETE;
+  }
+  Com_PrintError(0x10,"Insufficient space for FFotD\n");
+  g_ffotdShouldDownload = false;
+  TaskManager_ClearTask(poVar5);
+  return TASK_COMPLETE;
 }
 
 
@@ -297,46 +274,43 @@ uint LiveStorage_GetFFotDChecksum(uint param_1)
 
 // 824DAA80  LiveStorage_GetFFotDBuffer  (qcommon/com_ffotd.cpp:235)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 uchar * LiveStorage_GetFFotDBuffer(uint *param_1)
 
 {
-  uint *puVar1;
-  bool bVar3;
-  uchar *puVar2;
+  bool bVar1;
   
-  puVar1 = (uint *)__savegprlr_28(param_1);
   if (((live_test_onlinedataoff->current).unsignedInt & 8) == 0) {
-    if ((g_ffotdFetched != false) || (bVar3 = false, g_ffotdShouldDownload == false)) {
-      bVar3 = true;
+    if ((g_ffotdFetched) || (bVar1 = false, !g_ffotdShouldDownload)) {
+      bVar1 = true;
     }
   }
   else {
-    bVar3 = false;
+    bVar1 = false;
   }
-  if (!bVar3) {
+  if (!bVar1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_ffotd.cpp",0xee,0,
                     "%s");
   }
-  bVar3 = Lobby_IsInLobby();
-  if (((!bVar3) && (g_partyData.inParty == 0)) && (bVar3 = Live_AreWeAcceptingInvite(), !bVar3)) {
+  bVar1 = Lobby_IsInLobby();
+  if (((!bVar1) && (g_partyData.inParty == 0)) && (bVar1 = Live_AreWeAcceptingInvite(), !bVar1)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_ffotd.cpp",0xef,0,
                     "%s");
   }
   if (g_ffotdFetched != false) {
-    if (puVar1 != (uint *)0x0) {
-      *puVar1 = 0xffffffffU - ((int)(g_ffotdSize - 2U) >> 0x1f) & g_ffotdSize - 2U;
+    if (param_1 != (uint *)0x0) {
+      *param_1 = -((int)(g_ffotdSize - 2U) >> 0x1f) - 1U & g_ffotdSize - 2U;
     }
-    puVar2 = (uchar *)__restgprlr_28(0xffffffff835f1632);
-    return puVar2;
+    return g_ffotdBuffer + 2;
   }
-  if (puVar1 != (uint *)0x0) {
-    *puVar1 = 0;
+  if (param_1 != (uint *)0x0) {
+    *param_1 = 0;
   }
-  puVar2 = (uchar *)__restgprlr_28(0);
-  return puVar2;
+  return (uchar *)0x0;
 }
 
 

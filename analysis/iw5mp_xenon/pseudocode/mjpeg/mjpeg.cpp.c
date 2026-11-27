@@ -2,48 +2,35 @@
 
 // 827EBCF0  GetAllocSize  (mjpeg/mjpeg.cpp:75)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 
 int __thiscall mjpeg_render::GetAllocSize(mjpeg_render *this,int param_1,int param_2,bool param_3)
 
 {
-  uint uVar1;
+  int iVar1;
   uint uVar2;
-  int iVar3;
-  ulonglong uVar4;
-  ulonglong uVar5;
-  ulonglong uVar6;
-  longlong lVar7;
+  uint uVar3;
   uint in_stack_ffffff68;
   D3DTexture *in_stack_ffffff6c;
   uint *in_stack_ffffff70;
   uint *in_stack_ffffff74;
   
-  uVar6 = (ulonglong)param_3;
-  uVar5 = (ulonglong)param_2;
-  uVar4 = (ulonglong)param_1;
-  __savegprlr_28(this);
-  uVar1 = (uint)uVar5;
-  uVar2 = ((int)uVar1 >> 1) + (uint)((int)uVar1 < 0 && (uVar5 & 1) != 0);
-  iVar3 = (int)uVar4;
-  lVar7 = ((longlong)(int)(uVar2 + 8) *
-           (longlong)(int)((iVar3 >> 1) + (uint)(iVar3 < 0 && (uVar4 & 1) != 0)) & 0x7fffffffU) * 2
-          + (longlong)(int)(uVar1 + 8) * (longlong)iVar3;
-  if ((uVar6 & 0xff) != 0) {
-    uVar1 = XGSetTextureHeader((iVar3 >> 2) + (uint)(iVar3 < 0 && (uVar4 & 3) != 0),uVar1,1,0,
-                               0x14c0186,0,0,0,in_stack_ffffff68,in_stack_ffffff6c,in_stack_ffffff70
-                               ,in_stack_ffffff74);
-    uVar2 = XGSetTextureHeader((iVar3 >> 3) + (uint)(iVar3 < 0 && (uVar4 & 7) != 0),uVar2,1,0,
-                               0x14c0186,0,0,0,in_stack_ffffff68,in_stack_ffffff6c,in_stack_ffffff70
-                               ,in_stack_ffffff74);
+  uVar3 = (param_2 >> 1) + (uint)(param_2 < 0 && (param_2 & 1U) != 0);
+  iVar1 = (uVar3 + 8) * ((param_1 >> 1) + (uint)(param_1 < 0 && (param_1 & 1U) != 0)) * 2 +
+          (param_2 + 8) * param_1;
+  if (param_3) {
+    uVar2 = XGSetTextureHeader((param_1 >> 2) + (uint)(param_1 < 0 && (param_1 & 3U) != 0),param_2,1
+                               ,0,0x14c0186,0,0,0,in_stack_ffffff68,in_stack_ffffff6c,
+                               in_stack_ffffff70,in_stack_ffffff74);
+    uVar3 = XGSetTextureHeader((param_1 >> 3) + (uint)(param_1 < 0 && (param_1 & 7U) != 0),uVar3,1,0
+                               ,0x14c0186,0,0,0,in_stack_ffffff68,in_stack_ffffff6c,
+                               in_stack_ffffff70,in_stack_ffffff74);
     Com_Printf(0,"sizeLarge=%d : sizeSmall=%d\n");
-    iVar3 = __restgprlr_28((((longlong)(int)uVar2 + 0x1ffffU & 0xffff0000) +
-                            ((longlong)(int)uVar1 + 0x1ffffU & 0xffff0000) & 0x3fffffff) * 4 + lVar7
-                          );
-    return iVar3;
+    return ((uVar3 + 0x1ffff & 0xffff0000) + (uVar2 + 0x1ffff & 0xffff0000)) * 4 + iVar1;
   }
-  iVar3 = __restgprlr_28(lVar7);
-  return iVar3;
+  return iVar1;
 }
 
 
@@ -155,23 +142,23 @@ void mjpeg_initonce(void)
 
 // 827EA348  mjpeg_create_render_target  (mjpeg/mjpeg.cpp:179)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 
 void mjpeg_create_render_target
                (int param_1,int param_2,D3DSurface **param_3,_D3DSURFACE_PARAMETERS *param_4)
 
 {
-  ulong uVar1;
-  D3DSurface *pDVar2;
-  uint uVar3;
+  D3DSurface *pDVar1;
+  uint uVar2;
   
-  uVar1 = __savegprlr_25(param_1);
   do {
-    pDVar2 = D3DDevice_CreateSurface(uVar1,param_2,0x14c0186,D3DMULTISAMPLE_NONE,param_4);
-    *param_3 = pDVar2;
-    uVar3 = -(uint)(pDVar2 == (D3DSurface *)0x0) & 0x8007000e;
-    if ((int)uVar3 < 0) {
-      R_ErrorDescription(uVar3);
+    pDVar1 = D3DDevice_CreateSurface(param_1,param_2,0x14c0186,D3DMULTISAMPLE_NONE,param_4);
+    *param_3 = pDVar1;
+    uVar2 = -(uint)(pDVar1 == (D3DSurface *)0x0) & 0x8007000e;
+    if ((int)uVar2 < 0) {
+      R_ErrorDescription(uVar2);
                     /* WARNING: Subroutine does not return */
       Sys_Error(
                "c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\mjpeg\\mjpeg.cpp (%i) dx.device->CreateRenderTarget( width, height, (D3DFORMAT)((GPUTEXTUREFORMAT_8_8_8_8) << 0 | (GPUENDIAN_8IN32) << 6 | (1) << 8 | ((GPUSIGN_UNSIGNED | GPUSIGN_UNSIGNED<<2 | GPUSIGN_UNSIGNED<<4 | GPUSIGN_UNSIGNED<<6)) << 9 | (GPUNUMFORMAT_FRACTION) << 17 | ((GPUSWIZZLE_W | GPUSWIZZLE_Z<<3 | GPUSWIZZLE_Y<<6 | GPUSWIZZLE_X<<9)) << 18), D3DMULTISAMPLE_NONE, 0, 0,surf, params) failed: %s\n"
@@ -180,15 +167,16 @@ void mjpeg_create_render_target
   } while (alwaysfails != 0);
   param_4->Base =
        (int)((((longlong)(int)(param_2 + 0xfU & 0xfffffff0) *
-               (longlong)(int)(((uVar1 + 0x4f) / 0x50) * 0x50) & 0x3fffffffU) << 2) / 0x1400) +
-       param_4->Base;
-  __restgprlr_25();
+               (longlong)((int)(((longlong)param_1 + 0x4fU & 0xffffffff) / 0x50) * 0x50) &
+              0x3fffffffU) << 2) / 0x1400) + param_4->Base;
   return;
 }
 
 
 // 827EA428  mjpeg_init_d3d_textures  (mjpeg/mjpeg.cpp:186)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 
@@ -198,7 +186,6 @@ void mjpeg_init_d3d_textures(void)
   uint uVar1;
   _D3DSURFACE_PARAMETERS local_50 [5];
   
-  __savegprlr_25();
   if ((mjpeg.width & 0x3fU) != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\mjpeg\\mjpeg.cpp",0xbf,0,"%s");
   }
@@ -394,7 +381,6 @@ void mjpeg_init_d3d_textures(void)
     D3DTexture_UnlockRect(mjpeg_d3d.texYRenderTarget[1],0);
   } while (alwaysfails != 0);
   DAT_84872bf0 = 0;
-  __restgprlr_25();
   return;
 }
 
@@ -411,6 +397,8 @@ void D3DVECTOR4_SetX(__vector4 *param_1,float param_2)
 
 // 827EAAE0  mjpeg_close_d3d_textures  (mjpeg/mjpeg.cpp:230)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 
@@ -420,7 +408,6 @@ void mjpeg_close_d3d_textures(void)
   int iVar1;
   ulong uVar2;
   
-  __savegprlr_26();
   iVar1 = D3DResource_IsBusy((D3DResource *)mjpeg_d3d.surfYRenderTarget);
   if (iVar1 != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\mjpeg\\mjpeg.cpp",0xe8,0,"%s");
@@ -623,7 +610,6 @@ void mjpeg_close_d3d_textures(void)
     }
   } while (alwaysfails != 0);
   mjpeg_d3d.texVRenderTarget[1] = (D3DTexture *)alwaysfails;
-  __restgprlr_26();
   return;
 }
 
@@ -696,6 +682,7 @@ bool mjpeg_is_encoding(void)
 
 // 827EB2A0  mjpeg_thread  (mjpeg/mjpeg.cpp:307)
 
+/* WARNING: Function: __savegprlr_15 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 
 void mjpeg_thread(uint param_1)
@@ -720,7 +707,6 @@ void mjpeg_thread(uint param_1)
   tagRECT local_d0;
   tagRECT local_c0 [12];
   
-  __savegprlr_15(param_1);
   dVar12 = 0.25;
   dVar11 = 1000.0;
   do {
@@ -842,90 +828,89 @@ void mjpeg_d3d_callback(ulong param_1)
 
 // 827EB660  mjpeg_draw  (mjpeg/mjpeg.cpp:392)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 
 void mjpeg_draw(D3DDevice *param_1,D3DTexture *param_2)
 
 {
-  D3DDevice *pDVar1;
+  double dVar1;
   double dVar2;
   double dVar3;
-  double dVar4;
   ulong in_stack_ffffff48;
   _D3DRESOLVE_PARAMETERS *in_stack_ffffff4c;
   
-  pDVar1 = (D3DDevice *)__savegprlr_28(param_1);
-  if (mjpeg_run_encoder != false) {
-    dVar4 = 0.0;
-    dVar2 = (double)(longlong)mjpeg.height;
-    dVar3 = (double)(longlong)mjpeg.width;
-    D3DDevice_SetTexture(pDVar1,0,(D3DBaseTexture *)param_2,0x80000000);
-    D3DDevice_SetVertexShader(pDVar1,mjpeg_d3d.pVertexShader);
-    D3DDevice_SetStreamSource(pDVar1,0,mjpeg_d3d.pVertexBuffer,0,0x10,1);
-    D3DDevice_SetRenderState_AlphaBlendEnable(pDVar1,0);
-    D3DDevice_SetRenderState_SeparateAlphaBlendEnable(pDVar1,0);
-    D3DDevice_SetRenderState_AlphaTestEnable(pDVar1,0);
-    D3DDevice_SetRenderState_ZEnable(pDVar1,0);
-    D3DDevice_SetRenderState_CullMode(pDVar1,0);
-    D3DDevice_SetRenderState_StencilEnable(pDVar1,0);
-    *(uint *)&(pDVar1->m_Constants).field0_0x0 =
-         *(uint *)&(pDVar1->m_Constants).field0_0x0 & 0xffffe3ff | 0x800;
-    (pDVar1->m_Pending).m_Mask[3] = (pDVar1->m_Pending).m_Mask[3] | 0x80000000;
-    *(uint *)&(pDVar1->m_Constants).field0_0x0 =
-         *(uint *)&(pDVar1->m_Constants).field0_0x0 & 0xffff1fff | 0x4000;
-    (pDVar1->m_Pending).m_Mask[3] = (pDVar1->m_Pending).m_Mask[3] | 0x80000000;
-    *(uint *)((int)&(pDVar1->m_Constants).field0_0x0 + 0x18) =
-         *(uint *)((int)&(pDVar1->m_Constants).field0_0x0 + 0x18) & 0xffffe3ff | 0x800;
-    (pDVar1->m_Pending).m_Mask[3] = (pDVar1->m_Pending).m_Mask[3] | 0x40000000;
-    *(uint *)((int)&(pDVar1->m_Constants).field0_0x0 + 0x18) =
-         *(uint *)((int)&(pDVar1->m_Constants).field0_0x0 + 0x18) & 0xffff1fff | 0x4000;
-    (pDVar1->m_Pending).m_Mask[3] = (pDVar1->m_Pending).m_Mask[3] | 0x40000000;
-    D3DDevice_SetVertexDeclaration(pDVar1,mjpeg_d3d.pVertexDeclaration);
-    D3DDevice_SetRenderTarget_External(pDVar1,0,mjpeg_d3d.surfYRenderTarget);
-    D3DDevice_SetRenderTarget_External(pDVar1,1,mjpeg_d3d.surfURenderTarget_double);
-    D3DDevice_SetRenderTarget_External(pDVar1,2,mjpeg_d3d.surfVRenderTarget_double);
-    D3DDevice_SetPixelShader(pDVar1,mjpeg_d3d.pYPixelShader);
-    *(float *)((int)&(pDVar1->m_Constants).field1_0x300 + 0x1008) = (float)dVar4;
-    *(float *)((int)&(pDVar1->m_Constants).field1_0x300 + 0x100c) = (float)dVar4;
-    *(float *)((int)&(pDVar1->m_Constants).field1_0x300 + 0x1000) = (float)dVar3;
-    *(float *)((int)&(pDVar1->m_Constants).field1_0x300 + 0x1004) = (float)dVar2;
-    (pDVar1->m_Pending).m_Mask[1] = (pDVar1->m_Pending).m_Mask[1] | 0x8000000000000000;
-    D3DDevice_DrawVertices(pDVar1,D3DPT_QUADLIST,0,4);
-    D3DDevice_Resolve(pDVar1,0,(_D3DRECT *)0x0,
+  if (mjpeg_run_encoder) {
+    dVar3 = 0.0;
+    dVar1 = (double)(longlong)mjpeg.height;
+    dVar2 = (double)(longlong)mjpeg.width;
+    D3DDevice_SetTexture(param_1,0,(D3DBaseTexture *)param_2,0x80000000);
+    D3DDevice_SetVertexShader(param_1,mjpeg_d3d.pVertexShader);
+    D3DDevice_SetStreamSource(param_1,0,mjpeg_d3d.pVertexBuffer,0,0x10,1);
+    D3DDevice_SetRenderState_AlphaBlendEnable(param_1,0);
+    D3DDevice_SetRenderState_SeparateAlphaBlendEnable(param_1,0);
+    D3DDevice_SetRenderState_AlphaTestEnable(param_1,0);
+    D3DDevice_SetRenderState_ZEnable(param_1,0);
+    D3DDevice_SetRenderState_CullMode(param_1,0);
+    D3DDevice_SetRenderState_StencilEnable(param_1,0);
+    *(uint *)&(param_1->m_Constants).field0_0x0 =
+         *(uint *)&(param_1->m_Constants).field0_0x0 & 0xffffe3ff | 0x800;
+    (param_1->m_Pending).m_Mask[3] = (param_1->m_Pending).m_Mask[3] | 0x80000000;
+    *(uint *)&(param_1->m_Constants).field0_0x0 =
+         *(uint *)&(param_1->m_Constants).field0_0x0 & 0xffff1fff | 0x4000;
+    (param_1->m_Pending).m_Mask[3] = (param_1->m_Pending).m_Mask[3] | 0x80000000;
+    *(uint *)((int)&(param_1->m_Constants).field0_0x0 + 0x18) =
+         *(uint *)((int)&(param_1->m_Constants).field0_0x0 + 0x18) & 0xffffe3ff | 0x800;
+    (param_1->m_Pending).m_Mask[3] = (param_1->m_Pending).m_Mask[3] | 0x40000000;
+    *(uint *)((int)&(param_1->m_Constants).field0_0x0 + 0x18) =
+         *(uint *)((int)&(param_1->m_Constants).field0_0x0 + 0x18) & 0xffff1fff | 0x4000;
+    (param_1->m_Pending).m_Mask[3] = (param_1->m_Pending).m_Mask[3] | 0x40000000;
+    D3DDevice_SetVertexDeclaration(param_1,mjpeg_d3d.pVertexDeclaration);
+    D3DDevice_SetRenderTarget_External(param_1,0,mjpeg_d3d.surfYRenderTarget);
+    D3DDevice_SetRenderTarget_External(param_1,1,mjpeg_d3d.surfURenderTarget_double);
+    D3DDevice_SetRenderTarget_External(param_1,2,mjpeg_d3d.surfVRenderTarget_double);
+    D3DDevice_SetPixelShader(param_1,mjpeg_d3d.pYPixelShader);
+    *(float *)((int)&(param_1->m_Constants).field1_0x300 + 0x1008) = (float)dVar3;
+    *(float *)((int)&(param_1->m_Constants).field1_0x300 + 0x100c) = (float)dVar3;
+    *(float *)((int)&(param_1->m_Constants).field1_0x300 + 0x1000) = (float)dVar2;
+    *(float *)((int)&(param_1->m_Constants).field1_0x300 + 0x1004) = (float)dVar1;
+    (param_1->m_Pending).m_Mask[1] = (param_1->m_Pending).m_Mask[1] | 0x8000000000000000;
+    D3DDevice_DrawVertices(param_1,D3DPT_QUADLIST,0,4);
+    D3DDevice_Resolve(param_1,0,(_D3DRECT *)0x0,
                       *(D3DBaseTexture **)((int)&mjpeg_d3d + DAT_84872bf0 * -4 + 4),(_D3DPOINT *)0x0
-                      ,0,0,(__vector4 *)0x0,(float)dVar4,in_stack_ffffff48,in_stack_ffffff4c);
-    D3DDevice_Resolve(pDVar1,1,(_D3DRECT *)0x0,(D3DBaseTexture *)mjpeg_d3d.texURenderTarget_double,
-                      (_D3DPOINT *)0x0,0,0,(__vector4 *)0x0,(float)dVar4,in_stack_ffffff48,
+                      ,0,0,(__vector4 *)0x0,(float)dVar3,in_stack_ffffff48,in_stack_ffffff4c);
+    D3DDevice_Resolve(param_1,1,(_D3DRECT *)0x0,(D3DBaseTexture *)mjpeg_d3d.texURenderTarget_double,
+                      (_D3DPOINT *)0x0,0,0,(__vector4 *)0x0,(float)dVar3,in_stack_ffffff48,
                       in_stack_ffffff4c);
-    D3DDevice_Resolve(pDVar1,2,(_D3DRECT *)0x0,(D3DBaseTexture *)mjpeg_d3d.texVRenderTarget_double,
-                      (_D3DPOINT *)0x0,0,0,(__vector4 *)0x0,(float)dVar4,in_stack_ffffff48,
+    D3DDevice_Resolve(param_1,2,(_D3DRECT *)0x0,(D3DBaseTexture *)mjpeg_d3d.texVRenderTarget_double,
+                      (_D3DPOINT *)0x0,0,0,(__vector4 *)0x0,(float)dVar3,in_stack_ffffff48,
                       in_stack_ffffff4c);
-    D3DDevice_SetTexture(pDVar1,0,(D3DBaseTexture *)mjpeg_d3d.texURenderTarget_double,0x80000000);
-    D3DDevice_SetTexture(pDVar1,1,(D3DBaseTexture *)mjpeg_d3d.texVRenderTarget_double,0x40000000);
-    D3DDevice_SetRenderTarget_External(pDVar1,0,mjpeg_d3d.surfURenderTarget);
-    D3DDevice_SetRenderTarget_External(pDVar1,1,mjpeg_d3d.surfVRenderTarget);
-    D3DDevice_SetPixelShader(pDVar1,mjpeg_d3d.pUVPixelShader);
-    D3DDevice_DrawVertices(pDVar1,D3DPT_QUADLIST,0,4);
-    D3DDevice_Resolve(pDVar1,0,(_D3DRECT *)0x0,
+    D3DDevice_SetTexture(param_1,0,(D3DBaseTexture *)mjpeg_d3d.texURenderTarget_double,0x80000000);
+    D3DDevice_SetTexture(param_1,1,(D3DBaseTexture *)mjpeg_d3d.texVRenderTarget_double,0x40000000);
+    D3DDevice_SetRenderTarget_External(param_1,0,mjpeg_d3d.surfURenderTarget);
+    D3DDevice_SetRenderTarget_External(param_1,1,mjpeg_d3d.surfVRenderTarget);
+    D3DDevice_SetPixelShader(param_1,mjpeg_d3d.pUVPixelShader);
+    D3DDevice_DrawVertices(param_1,D3DPT_QUADLIST,0,4);
+    D3DDevice_Resolve(param_1,0,(_D3DRECT *)0x0,
                       *(D3DBaseTexture **)((int)&mjpeg_d3d + DAT_84872bf0 * -4 + 0x14),
-                      (_D3DPOINT *)0x0,0,0,(__vector4 *)0x0,(float)dVar4,in_stack_ffffff48,
+                      (_D3DPOINT *)0x0,0,0,(__vector4 *)0x0,(float)dVar3,in_stack_ffffff48,
                       in_stack_ffffff4c);
-    D3DDevice_Resolve(pDVar1,1,(_D3DRECT *)0x0,
+    D3DDevice_Resolve(param_1,1,(_D3DRECT *)0x0,
                       *(D3DBaseTexture **)((int)&mjpeg_d3d + DAT_84872bf0 * -4 + 0x1c),
-                      (_D3DPOINT *)0x0,0,0,(__vector4 *)0x0,(float)dVar4,in_stack_ffffff48,
+                      (_D3DPOINT *)0x0,0,0,(__vector4 *)0x0,(float)dVar3,in_stack_ffffff48,
                       in_stack_ffffff4c);
-    D3DDevice_SetRenderTarget_External(pDVar1,0,(D3DSurface *)0x0);
-    D3DDevice_SetRenderTarget_External(pDVar1,1,(D3DSurface *)0x0);
-    D3DDevice_SetRenderTarget_External(pDVar1,2,(D3DSurface *)0x0);
-    D3DDevice_SetTexture(pDVar1,0,(D3DBaseTexture *)0x0,0x80000000);
-    D3DDevice_SetTexture(pDVar1,1,(D3DBaseTexture *)0x0,0x40000000);
-    D3DDevice_SetVertexShader(pDVar1,(D3DVertexShader *)0x0);
-    D3DDevice_SetPixelShader(pDVar1,(D3DPixelShader *)0x0);
-    D3DDevice_SetVertexDeclaration(pDVar1,(D3DVertexDeclaration *)0x0);
-    D3DDevice_SetStreamSource(pDVar1,0,(D3DVertexBuffer *)0x0,0,0x10,1);
-    D3DDevice_InsertCallback(pDVar1,0,mjpeg_d3d_callback,0);
+    D3DDevice_SetRenderTarget_External(param_1,0,(D3DSurface *)0x0);
+    D3DDevice_SetRenderTarget_External(param_1,1,(D3DSurface *)0x0);
+    D3DDevice_SetRenderTarget_External(param_1,2,(D3DSurface *)0x0);
+    D3DDevice_SetTexture(param_1,0,(D3DBaseTexture *)0x0,0x80000000);
+    D3DDevice_SetTexture(param_1,1,(D3DBaseTexture *)0x0,0x40000000);
+    D3DDevice_SetVertexShader(param_1,(D3DVertexShader *)0x0);
+    D3DDevice_SetPixelShader(param_1,(D3DPixelShader *)0x0);
+    D3DDevice_SetVertexDeclaration(param_1,(D3DVertexDeclaration *)0x0);
+    D3DDevice_SetStreamSource(param_1,0,(D3DVertexBuffer *)0x0,0,0x10,1);
+    D3DDevice_InsertCallback(param_1,0,mjpeg_d3d_callback,0);
   }
-  __restgprlr_28();
   return;
 }
 

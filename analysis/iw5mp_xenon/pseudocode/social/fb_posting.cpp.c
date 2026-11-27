@@ -40,6 +40,8 @@ void _dynamic_initializer_for__g_FacebookPostingInfo__(void)
 
 // 826FF238  Facebook_ShutdownPosting  (social/fb_posting.cpp:45)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void Facebook_ShutdownPosting(void)
@@ -52,7 +54,6 @@ void Facebook_ShutdownPosting(void)
   char in_RESERVE;
   byte in_cr0;
   
-  __savegprlr_29();
   pbVar4 = g_DWFacebookPostingTask;
   do {
     pbVar1 = pbVar4->m_ptr;
@@ -77,12 +78,14 @@ void Facebook_ShutdownPosting(void)
     }
     pbVar4 = pbVar4 + 1;
   } while ((int)pbVar4 < -0x7bac5238);
-  __restgprlr_29();
   return;
 }
 
 
 // 826FF2D8  FacebookPosting_Reset  (social/fb_posting.cpp:55)
+
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 
 void FacebookPosting_Reset(int param_1)
 
@@ -90,40 +93,38 @@ void FacebookPosting_Reset(int param_1)
   bdRemoteTask *pbVar1;
   uint uVar2;
   int iVar3;
-  int iVar4;
-  longlong lVar5;
-  uint *puVar6;
+  longlong lVar4;
+  uint *puVar5;
   char in_RESERVE;
   byte in_cr0;
   
-  iVar3 = __savegprlr_29(param_1);
-  if ((g_DWFacebookPostingTask[iVar3].m_ptr != (bdRemoteTask *)0x0) &&
-     (iVar4 = (**(code **)((g_DWFacebookPostingTask[iVar3].m_ptr)->_padding_ + 4))(), iVar4 == 1)) {
-    bdRemoteTask::cancelTask(g_DWFacebookPostingTask[iVar3].m_ptr);
+  if ((g_DWFacebookPostingTask[param_1].m_ptr != (bdRemoteTask *)0x0) &&
+     (iVar3 = (**(code **)((g_DWFacebookPostingTask[param_1].m_ptr)->_padding_ + 4))(), iVar3 == 1))
+  {
+    bdRemoteTask::cancelTask(g_DWFacebookPostingTask[param_1].m_ptr);
   }
-  pbVar1 = g_DWFacebookPostingTask[iVar3].m_ptr;
-  g_DWFacebookPostingTaskStage[iVar3] = FACEBOOK_POSTING_TASK_STAGE_WAITING;
-  g_DWFacebookPostingTaskType[iVar3] = FACEBOOK_POSTING_DW_TASK_TYPE_ALL_DONE;
-  (&DAT_8453a7e0)[iVar3] = 0;
+  pbVar1 = g_DWFacebookPostingTask[param_1].m_ptr;
+  g_DWFacebookPostingTaskStage[param_1] = FACEBOOK_POSTING_TASK_STAGE_WAITING;
+  g_DWFacebookPostingTaskType[param_1] = FACEBOOK_POSTING_DW_TASK_TYPE_ALL_DONE;
+  (&DAT_8453a7e0)[param_1] = 0;
   if (ZEXT48(pbVar1) != 0) {
-    lVar5 = ZEXT48(pbVar1) + 4;
+    lVar4 = ZEXT48(pbVar1) + 4;
     do {
-      puVar6 = (uint *)lVar5;
+      puVar5 = (uint *)lVar4;
       if (in_RESERVE != '\0') {
-        uVar2 = storeWordConditionalIndexed((ulonglong)*puVar6 - 1,0,lVar5);
-        *puVar6 = uVar2;
+        uVar2 = storeWordConditionalIndexed((ulonglong)*puVar5 - 1,0,lVar4);
+        *puVar5 = uVar2;
         in_cr0 = 2;
       }
     } while (!(bool)(in_cr0 >> 1 & 1));
     if (*(int *)&pbVar1->field_0x4 == 0) {
-      pbVar1 = g_DWFacebookPostingTask[iVar3].m_ptr;
+      pbVar1 = g_DWFacebookPostingTask[param_1].m_ptr;
       if (pbVar1 != (bdRemoteTask *)0x0) {
         (**(code **)pbVar1->_padding_)(pbVar1,1);
       }
     }
   }
-  g_DWFacebookPostingTask[iVar3].m_ptr = (bdRemoteTask *)0x0;
-  __restgprlr_29();
+  g_DWFacebookPostingTask[param_1].m_ptr = (bdRemoteTask *)0x0;
   return;
 }
 
@@ -142,6 +143,8 @@ void Facebook_ClearTags(void)
 
 // 826FF3A8  Facebook_InitPosting  (social/fb_posting.cpp:76)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void Facebook_InitPosting(void)
@@ -157,7 +160,6 @@ void Facebook_InitPosting(void)
   char in_RESERVE;
   byte in_cr0;
   
-  __savegprlr_25();
   facebook_posting_popup_text =
        Dvar_RegisterString("facebook_posting_popup_text","",0x2000,"Facebook Posting Popup Text");
   iVar7 = 0;
@@ -189,29 +191,27 @@ void Facebook_InitPosting(void)
   } while (iVar7 < 0x10);
   g_FacebookPostingInfo.caption[0] = '\0';
   g_FacebookPostingInfo.num_tags = 0;
-  __restgprlr_25();
   return;
 }
 
 
 // 826FEF68  Facebook_AddTag  (social/fb_posting.cpp:94)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void Facebook_AddTag(ulong64 param_1,ushort param_2,ushort param_3)
 
 {
-  ulong64 uVar1;
-  
-  uVar1 = __savegprlr_28();
   if (0x11 < g_FacebookPostingInfo.num_tags) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\fb_posting.cpp",0x5f,0,
                     "g_FacebookPostingInfo.num_tags doesn\'t index MAX_CLIENTS\n\t%i not in [0, %i)"
                    );
   }
-  g_FacebookPostingInfo.tags[g_FacebookPostingInfo.num_tags].m_accountID = uVar1;
+  g_FacebookPostingInfo.tags[g_FacebookPostingInfo.num_tags].m_accountID = param_1;
   g_FacebookPostingInfo.tags[g_FacebookPostingInfo.num_tags].m_x = param_2;
   g_FacebookPostingInfo.tags[g_FacebookPostingInfo.num_tags].m_y = param_3;
   g_FacebookPostingInfo.num_tags = g_FacebookPostingInfo.num_tags + 1;
-  __restgprlr_28();
   return;
 }
 
@@ -360,150 +360,147 @@ void Facebook_CloseMenu(int param_1,FACEBOOK_POSTING_MEDIA_TYPE param_2)
 
 // 826FF4A0  Facebook_UpdatePostingType  (social/fb_posting.cpp:197)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void Facebook_UpdatePostingType(int param_1,FACEBOOK_POSTING_MEDIA_TYPE param_2)
 
 {
-  uint uVar2;
+  int iVar2;
   int iVar3;
-  int iVar4;
-  LocalClientNum_t LVar5;
+  LocalClientNum_t LVar4;
   longlong lVar1;
+  bool bVar9;
+  int iVar6;
+  bdFacebook *pbVar7;
   bool bVar10;
-  int iVar7;
-  bdFacebook *pbVar8;
-  bool bVar11;
-  bdReference<bdRemoteTask> bVar9;
+  bdReference<bdRemoteTask> bVar8;
   LocalClientNum_t local_70;
   bdReference<bdRemoteTask> bStack_6c;
   bdReference<bdRemoteTask> abStack_68 [2];
   ulong64 auStack_60 [12];
-  bdLobbyErrorCode bVar6;
+  bdLobbyErrorCode bVar5;
   
-  uVar2 = __savegprlr_23(param_1);
-  if (3 < uVar2) {
+  if (3 < (uint)param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\fb_posting.cpp",0xc6,0,
                     "controllerIndex doesn\'t index MAX_GPAD_COUNT\n\t%i not in [0, %i)");
   }
-  bVar11 = false;
-  if (g_DWFacebookPostingTaskStage[uVar2] == FACEBOOK_POSTING_TASK_STAGE_WAITING) {
-    bVar10 = CL_DoesControllerIndexHaveALocalClientNum(uVar2,&local_70);
-    if ((bVar10) && (iVar7 = CL_IsCgameInitialized(local_70), iVar7 != 0)) {
-      bVar11 = true;
+  bVar10 = false;
+  if (g_DWFacebookPostingTaskStage[param_1] == FACEBOOK_POSTING_TASK_STAGE_WAITING) {
+    bVar9 = CL_DoesControllerIndexHaveALocalClientNum(param_1,&local_70);
+    if ((bVar9) && (iVar6 = CL_IsCgameInitialized(local_70), iVar6 != 0)) {
+      bVar10 = true;
     }
-    pbVar8 = dwGetFacebook(uVar2);
-    bVar10 = false;
-    if (((pbVar8 != (bdFacebook *)0x0) && (!bVar11)) &&
-       (bVar11 = dwGetOnlineUserID(uVar2,auStack_60), bVar11)) {
+    pbVar7 = dwGetFacebook(param_1);
+    bVar9 = false;
+    if (((pbVar7 != (bdFacebook *)0x0) && (!bVar10)) &&
+       (bVar10 = dwGetOnlineUserID(param_1,auStack_60), bVar10)) {
       if (param_2 == FACEBOOK_POSTING_MEDIA_TYPE_SCREENSHOT) {
-        bVar9 = bdFacebook::uploadPhoto
-                          ((bdFacebook *)&bStack_6c,(longlong)(int)pbVar8,
+        bVar8 = bdFacebook::uploadPhoto
+                          ((bdFacebook *)&bStack_6c,(longlong)(int)pbVar7,
                            (char *)g_FacebookPostingInfo.id,0x8453a800,
                            (bdFacebookTag *)g_FacebookPostingInfo.num_tags);
         bdReference<bdRemoteTask>::operator=
-                  (g_DWFacebookPostingTask + uVar2,(bdReference<bdRemoteTask> *)bVar9.m_ptr);
+                  (g_DWFacebookPostingTask + param_1,(bdReference<bdRemoteTask> *)bVar8.m_ptr);
         bdReference<bdRemoteTask>::~bdReference<bdRemoteTask>(&bStack_6c);
       }
       else if (param_2 == FACEBOOK_POSTING_MEDIA_TYPE_VIDEO) {
-        bVar9 = bdFacebook::uploadVideo
-                          ((bdFacebook *)abStack_68,(longlong)(int)pbVar8,
+        bVar8 = bdFacebook::uploadVideo
+                          ((bdFacebook *)abStack_68,(longlong)(int)pbVar7,
                            (char *)g_FacebookPostingInfo.id);
         bdReference<bdRemoteTask>::operator=
-                  (g_DWFacebookPostingTask + uVar2,(bdReference<bdRemoteTask> *)bVar9.m_ptr);
+                  (g_DWFacebookPostingTask + param_1,(bdReference<bdRemoteTask> *)bVar8.m_ptr);
         bdReference<bdRemoteTask>::~bdReference<bdRemoteTask>(abStack_68);
       }
       else if (alwaysfails == 0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\fb_posting.cpp",
                         0xed,0,"Error. Unknown Facebook posting media type");
       }
-      if ((g_DWFacebookPostingTask[uVar2].m_ptr != (bdRemoteTask *)0x0) &&
-         (iVar7 = (**(code **)((g_DWFacebookPostingTask[uVar2].m_ptr)->_padding_ + 4))(), iVar7 == 1
-         )) {
-        bVar10 = true;
-        g_DWFacebookPostingTaskStage[uVar2] = FACEBOOK_POSTING_TASK_STAGE_WORKING;
-        iVar7 = Sys_Milliseconds();
-        (&DAT_8453a7e0)[uVar2] = iVar7 + 0x5dc;
+      if ((g_DWFacebookPostingTask[param_1].m_ptr != (bdRemoteTask *)0x0) &&
+         (iVar6 = (**(code **)((g_DWFacebookPostingTask[param_1].m_ptr)->_padding_ + 4))(),
+         iVar6 == 1)) {
+        bVar9 = true;
+        g_DWFacebookPostingTaskStage[param_1] = FACEBOOK_POSTING_TASK_STAGE_WORKING;
+        iVar6 = Sys_Milliseconds();
+        (&DAT_8453a7e0)[param_1] = iVar6 + 0x5dc;
         if (param_2 == FACEBOOK_POSTING_MEDIA_TYPE_SCREENSHOT) {
           UI_OpenMenu(local_70,"popup_uploading_to_facebook");
         }
       }
     }
-    if (bVar10) goto LAB_826ff850;
-    if (param_2 == FACEBOOK_POSTING_MEDIA_TYPE_VIDEO) {
-      LVar5 = CL_LocalClientNumFromControllerIndex(uVar2);
-      UI_CloseMenu(LVar5,"theater_avi_upload");
-    }
-  }
-  else {
-    if (g_DWFacebookPostingTaskStage[uVar2] != FACEBOOK_POSTING_TASK_STAGE_WORKING)
-    goto LAB_826ff850;
-    if (g_DWFacebookPostingTask[uVar2].m_ptr == (bdRemoteTask *)0x0) goto LAB_826ff850;
-    iVar3 = (**(code **)((g_DWFacebookPostingTask[uVar2].m_ptr)->_padding_ + 4))();
-    iVar7 = (&DAT_8453a7e0)[uVar2];
-    iVar4 = Sys_Milliseconds();
-    if ((iVar7 < iVar4) && (iVar7 != -1)) {
-      Facebook_CloseMenu(uVar2,param_2);
-      LVar5 = CL_LocalClientNumFromControllerIndex(uVar2);
-      UI_OpenMenu(LVar5,"popup_uploading_to_facebook_complete");
-      (&DAT_8453a7e0)[uVar2] = 0xffffffff;
-    }
-    if (iVar3 == 1) goto LAB_826ff850;
-    bVar6 = bdRemoteTask::getErrorCode(g_DWFacebookPostingTask[uVar2].m_ptr);
-    lVar1 = (longlong)(int)bVar6;
-    if ((&DAT_8453a7e0)[uVar2] == -1) {
-LAB_826ff5c4:
-      g_DWFacebookPostingTaskStage[uVar2] = FACEBOOK_POSTING_TASK_STAGE_WAITING;
-      g_DWFacebookPostingTaskType[uVar2] = FACEBOOK_POSTING_DW_TASK_TYPE_ALL_DONE;
-      g_FacebookPostingInfo.caption[0] = '\0';
-      __restgprlr_23();
+    if (bVar9) {
       return;
     }
-    if ((iVar3 == 2) && (bVar6 == BD_NO_ERROR)) {
-      Facebook_CloseMenu(uVar2,param_2);
-      LVar5 = CL_LocalClientNumFromControllerIndex(uVar2);
-      UI_OpenMenu(LVar5,"popup_uploading_to_facebook_complete");
-      goto LAB_826ff5c4;
+    if (param_2 == FACEBOOK_POSTING_MEDIA_TYPE_VIDEO) {
+      LVar4 = CL_LocalClientNumFromControllerIndex(param_1);
+      UI_CloseMenu(LVar4,"theater_avi_upload");
     }
-    Facebook_CloseMenu(uVar2,param_2);
-    if ((lVar1 - 0xe11U & 0xffffffff) < 9) {
-      bVar11 = (int)(lVar1 - 0xe11U) != 0;
-      if (lVar1 == 0xe12 && bVar11) {
+    goto LAB_826ff840;
+  }
+  if (g_DWFacebookPostingTaskStage[param_1] != FACEBOOK_POSTING_TASK_STAGE_WORKING) {
+    return;
+  }
+  if (g_DWFacebookPostingTask[param_1].m_ptr == (bdRemoteTask *)0x0) {
+    return;
+  }
+  iVar2 = (**(code **)((g_DWFacebookPostingTask[param_1].m_ptr)->_padding_ + 4))();
+  iVar6 = (&DAT_8453a7e0)[param_1];
+  iVar3 = Sys_Milliseconds();
+  if ((iVar6 < iVar3) && (iVar6 != -1)) {
+    Facebook_CloseMenu(param_1,param_2);
+    LVar4 = CL_LocalClientNumFromControllerIndex(param_1);
+    UI_OpenMenu(LVar4,"popup_uploading_to_facebook_complete");
+    (&DAT_8453a7e0)[param_1] = 0xffffffff;
+  }
+  if (iVar2 == 1) {
+    return;
+  }
+  bVar5 = bdRemoteTask::getErrorCode(g_DWFacebookPostingTask[param_1].m_ptr);
+  lVar1 = (longlong)(int)bVar5;
+  if ((&DAT_8453a7e0)[param_1] != -1) {
+    if ((iVar2 != 2) || (bVar5 != BD_NO_ERROR)) {
+      Facebook_CloseMenu(param_1,param_2);
+      if ((lVar1 - 0xe11U & 0xffffffff) < 9) {
+        bVar10 = (int)(lVar1 - 0xe11U) != 0;
+        if (lVar1 == 0xe12 && bVar10) {
 LAB_826ff630:
-        Facebook_ShowErrorPostingPopup(uVar2,"MENU_FACEBOOK_AUTH_FAIL");
-        __restgprlr_23();
-        return;
-      }
-      if (lVar1 != 0xe13 || !bVar11) {
-        if (lVar1 == 0xe14 && bVar11) {
-          Facebook_ShowErrorPostingPopup(uVar2,"MENU_FACEBOOK_PHOTO_INVALID");
-          __restgprlr_23();
+          Facebook_ShowErrorPostingPopup(param_1,"MENU_FACEBOOK_AUTH_FAIL");
           return;
         }
-        if (lVar1 == 0xe15 && bVar11) {
-          Facebook_ShowErrorPostingPopup(uVar2,"MENU_FACEBOOK_PHOTO_ALBUM_FULL");
-          __restgprlr_23();
-          return;
-        }
-        if (lVar1 == 0xe16 && bVar11) {
-          Facebook_ShowErrorPostingPopup(uVar2,"MENU_FACEBOOK_UNAVAILABLE");
-          __restgprlr_23();
-          return;
-        }
-        if ((lVar1 != 0xe17 || !bVar11) && (lVar1 != 0xe18 || !bVar11)) {
-          if (bVar11) {
-            Facebook_ShowErrorPostingPopup(uVar2,"MENU_FACEBOOK_DISABLED_FOR_USER");
-            __restgprlr_23();
+        if (lVar1 != 0xe13 || !bVar10) {
+          if (lVar1 == 0xe14 && bVar10) {
+            Facebook_ShowErrorPostingPopup(param_1,"MENU_FACEBOOK_PHOTO_INVALID");
             return;
           }
-          goto LAB_826ff630;
+          if (lVar1 == 0xe15 && bVar10) {
+            Facebook_ShowErrorPostingPopup(param_1,"MENU_FACEBOOK_PHOTO_ALBUM_FULL");
+            return;
+          }
+          if (lVar1 == 0xe16 && bVar10) {
+            Facebook_ShowErrorPostingPopup(param_1,"MENU_FACEBOOK_UNAVAILABLE");
+            return;
+          }
+          if ((lVar1 != 0xe17 || !bVar10) && (lVar1 != 0xe18 || !bVar10)) {
+            if (bVar10) {
+              Facebook_ShowErrorPostingPopup(param_1,"MENU_FACEBOOK_DISABLED_FOR_USER");
+              return;
+            }
+            goto LAB_826ff630;
+          }
         }
       }
+LAB_826ff840:
+      Facebook_ShowErrorPostingPopup(param_1,"MENU_FACEBOOK_UPLOAD_ERROR");
+      return;
     }
+    Facebook_CloseMenu(param_1,param_2);
+    LVar4 = CL_LocalClientNumFromControllerIndex(param_1);
+    UI_OpenMenu(LVar4,"popup_uploading_to_facebook_complete");
   }
-  Facebook_ShowErrorPostingPopup(uVar2,"MENU_FACEBOOK_UPLOAD_ERROR");
-LAB_826ff850:
-  __restgprlr_23();
+  g_DWFacebookPostingTaskStage[param_1] = FACEBOOK_POSTING_TASK_STAGE_WAITING;
+  g_DWFacebookPostingTaskType[param_1] = FACEBOOK_POSTING_DW_TASK_TYPE_ALL_DONE;
+  g_FacebookPostingInfo.caption[0] = '\0';
   return;
 }
 
@@ -558,6 +555,8 @@ void __thiscall FacebookPostingInfo::~FacebookPostingInfo(FacebookPostingInfo *t
 
 // 82940AB8  `dynamic_atexit_destructor_for_'g_DWFacebookPostingTask''  (line unknown)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void _dynamic_atexit_destructor_for__g_DWFacebookPostingTask__(void)
@@ -573,7 +572,6 @@ void _dynamic_atexit_destructor_for__g_DWFacebookPostingTask__(void)
   char in_RESERVE;
   byte in_cr0;
   
-  __savegprlr_29();
   lVar6 = 3;
   piVar7 = s_playerCardCacheDownloadRetryTime;
   do {
@@ -600,7 +598,6 @@ void _dynamic_atexit_destructor_for__g_DWFacebookPostingTask__(void)
     lVar6 = lVar6 + -1;
     in_cr0 = (lVar6 == 0) << 1;
   } while (-1 < lVar6);
-  __restgprlr_29();
   return;
 }
 

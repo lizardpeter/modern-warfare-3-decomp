@@ -2,20 +2,16 @@
 
 // 828A9FD0  XInputGetCapabilities  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/xinpapi.c:28)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 ulong XInputGetCapabilities(ulong param_1,ulong param_2,_XINPUT_CAPABILITIES *param_3)
 
 {
-  undefined8 uVar1;
-  ulong uVar2;
-  longlong lVar3;
-  longlong lVar4;
+  ulong uVar1;
   
-  lVar4 = (longlong)(int)param_3;
-  lVar3 = (longlong)(int)param_2;
-  uVar1 = __savegprlr_29(param_1,lVar3,lVar4);
-  uVar1 = XamInputGetCapabilities(uVar1,lVar3,lVar4);
-  uVar2 = __restgprlr_29(uVar1);
-  return uVar2;
+  uVar1 = XamInputGetCapabilities(param_1,param_2,param_3);
+  return uVar1;
 }
 
 
@@ -62,25 +58,20 @@ ulong XInputSetState(ulong param_1,_XINPUT_VIBRATION *param_2)
 
 // 828AA148  XInputGetKeystrokeEx  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/xinpapi.c:129)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 ulong XInputGetKeystrokeEx(ulong *param_1,ulong param_2,_XINPUT_KEYSTROKE *param_3)
 
 {
-  int *piVar2;
-  undefined8 uVar1;
-  ulong uVar3;
-  longlong lVar4;
-  ulonglong uVar5;
+  ulong uVar1;
   
-  lVar4 = (longlong)(int)param_3;
-  uVar5 = (ulonglong)(int)param_2;
-  piVar2 = (int *)__savegprlr_29(param_1,uVar5,lVar4);
-  if (*piVar2 == 0xff) {
-    uVar5 = uVar5 | 0x40000000;
-    *piVar2 = 0;
+  if (*param_1 == 0xff) {
+    param_2 = param_2 | 0x40000000;
+    *param_1 = 0;
   }
-  uVar1 = XamInputGetKeystrokeEx(piVar2,uVar5,lVar4);
-  uVar3 = __restgprlr_29(uVar1);
-  return uVar3;
+  uVar1 = XamInputGetKeystrokeEx(param_1,param_2,param_3);
+  return uVar1;
 }
 
 

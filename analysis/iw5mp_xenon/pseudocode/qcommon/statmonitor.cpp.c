@@ -14,35 +14,34 @@ void TRACK_statmonitor(void)
 
 // 82513100  StatMon_Warning  (qcommon/statmonitor.cpp:41)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 
 void StatMon_Warning(int param_1,int param_2,char *param_3)
 
 {
-  uint uVar1;
-  int iVar2;
-  Material *pMVar3;
+  int iVar1;
+  Material *pMVar2;
   
-  uVar1 = __savegprlr_27(param_1);
   if ((com_statmon->current).enabled != false) {
-    if (10 < uVar1) {
+    if (10 < (uint)param_1) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\statmonitor.cpp",
                       0x2d,0,"type doesn\'t index ARRAY_COUNT( stats )\n\t%i not in [0, %i)");
     }
     Sys_EnterCriticalSection(CRITSECT_STATMON);
-    iVar2 = Sys_Milliseconds();
-    stats[uVar1].endtime = iVar2 + param_2;
-    if ((stats[uVar1].material == (Material *)0x0) && (cls.rendererStarted != 0)) {
-      pMVar3 = Material_RegisterHandle(param_3,1);
-      stats[uVar1].material = pMVar3;
+    iVar1 = Sys_Milliseconds();
+    stats[param_1].endtime = iVar1 + param_2;
+    if ((stats[param_1].material == (Material *)0x0) && (cls.rendererStarted != 0)) {
+      pMVar2 = Material_RegisterHandle(param_3,1);
+      stats[param_1].material = pMVar2;
     }
-    if (DAT_836fda90 <= (int)uVar1) {
-      DAT_836fda90 = uVar1 + 1;
+    if (DAT_836fda90 <= param_1) {
+      DAT_836fda90 = param_1 + 1;
     }
     Sys_LeaveCriticalSection(CRITSECT_STATMON);
   }
-  __restgprlr_27();
   return;
 }
 

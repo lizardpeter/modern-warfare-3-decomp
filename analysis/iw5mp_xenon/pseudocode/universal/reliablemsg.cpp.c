@@ -2,104 +2,92 @@
 
 // 8260FE40  RMsg_FindMessageSlot  (universal/reliablemsg.cpp:125)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 int RMsg_FindMessageSlot(RMsgClient *param_1,uint param_2,uint *param_3)
 
 {
-  int iVar1;
-  ulonglong uVar2;
-  ulonglong uVar3;
-  uint uVar4;
-  uint *puVar5;
+  uint uVar1;
+  uint *puVar2;
   
-  uVar3 = (ulonglong)(int)param_3;
-  uVar2 = (ulonglong)(int)param_2;
-  iVar1 = __savegprlr_27(param_1);
-  if (iVar1 == 0) {
+  if (param_1 == (RMsgClient *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\reliablemsg.cpp",
                     0x80,0,"%s");
   }
-  if ((uVar3 & 0xffffffff) == 0) {
+  if (param_3 == (uint *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\reliablemsg.cpp",
                     0x81,0,"%s");
   }
-  uVar4 = 0;
-  *(uint *)uVar3 = 0xffffffff;
-  puVar5 = (uint *)(iVar1 + 0xff4);
-  while ((*(char *)(puVar5 + -2) == '\0' || ((ulonglong)*puVar5 != (uVar2 & 0xffffffff)))) {
-    uVar4 = uVar4 + 1;
-    puVar5 = puVar5 + 0xf;
-    if (0x13 < uVar4) {
-      iVar1 = __restgprlr_27(0);
-      return iVar1;
+  uVar1 = 0;
+  *param_3 = 0xffffffff;
+  puVar2 = &param_1->msgs[0].sequenceNum;
+  while ((((RMsgMessage *)(puVar2 + -2))->active == false || (*puVar2 != param_2))) {
+    uVar1 = uVar1 + 1;
+    puVar2 = puVar2 + 0xf;
+    if (0x13 < uVar1) {
+      return 0;
     }
   }
-  *(uint *)uVar3 = uVar4;
-  iVar1 = __restgprlr_27(1);
-  return iVar1;
+  *param_3 = uVar1;
+  return 1;
 }
 
 
 // 8260FF08  RMsg_FindClientForAddr  (universal/reliablemsg.cpp:147)
 
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 int RMsg_FindClientForAddr(netadr_t *param_1,RMsgClient **param_2,int param_3)
 
 {
   undefined2 uVar1;
-  netadr_t *pnVar2;
+  int iVar2;
   int iVar3;
-  int iVar4;
-  undefined4 *puVar5;
-  ulonglong uVar6;
+  XNADDR *pXVar4;
+  longlong lVar5;
+  int *piVar6;
   XNADDR *pXVar7;
-  longlong lVar8;
-  int *piVar9;
-  XNADDR *pXVar10;
-  XNADDR *pXVar11;
-  ulonglong uVar12;
+  XNADDR *pXVar8;
+  ulonglong uVar9;
   netadr_t in_stack_ffffff38;
   netadr_t in_stack_ffffff48;
   XNADDR local_80;
   XNADDR aXStack_5c [2];
   
-  uVar6 = (ulonglong)(int)param_2;
-  pnVar2 = (netadr_t *)__savegprlr_22(param_1);
-  if (pnVar2 == (netadr_t *)0x0) {
+  if (param_1 == (netadr_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\reliablemsg.cpp",
                     0x99,0,"%s");
   }
-  if ((uVar6 & 0xffffffff) == 0) {
+  if (param_2 == (RMsgClient **)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\reliablemsg.cpp",
                     0x9a,0,"%s");
   }
-  if ((((pnVar2->ip[0] != '\0') || (pnVar2->ip[1] != '\0')) || (pnVar2->ip[2] != '\0')) ||
-     (pnVar2->ip[3] != '\0')) {
-    iVar4 = 0;
-    uVar12 = 0;
+  if ((((param_1->ip[0] != '\0') || (param_1->ip[1] != '\0')) || (param_1->ip[2] != '\0')) ||
+     (param_1->ip[3] != '\0')) {
+    iVar3 = 0;
+    uVar9 = 0;
     do {
-      iVar3 = NET_CompareAdr(in_stack_ffffff38,in_stack_ffffff48);
-      puVar5 = (undefined4 *)uVar6;
-      if (iVar3 != 0) {
-        *puVar5 = s_reliableMsgClients + iVar4;
-        iVar4 = __restgprlr_22(1);
-        return iVar4;
+      iVar2 = NET_CompareAdr(in_stack_ffffff38,in_stack_ffffff48);
+      if (iVar2 != 0) {
+        *param_2 = s_reliableMsgClients + iVar3;
+        return 1;
       }
-      uVar12 = uVar12 + 0x149c;
-      iVar4 = iVar4 + 1;
-    } while ((uVar12 & 0xffffffff) < 0x2e5f0);
-    iVar4 = NET_GetXnAddrForNetAddr(pnVar2,&local_80,(XNKID *)0x0);
-    if (iVar4 == 0) {
+      uVar9 = uVar9 + 0x149c;
+      iVar3 = iVar3 + 1;
+    } while ((uVar9 & 0xffffffff) < 0x2e5f0);
+    iVar3 = NET_GetXnAddrForNetAddr(param_1,&local_80,(XNKID *)0x0);
+    if (iVar3 == 0) {
       if (debug_onlinePlayEvenIfDown == (dvar_t *)0x0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\../universal/onlinegame.h"
                         ,0x1d3,0,"%s");
       }
       if ((debug_onlinePlayEvenIfDown->current).enabled == false) {
         Com_PrintWarning(0x10,"RMsg_FindClientForAddr - Error from NET_GetXnAddrForNetAddr()\n");
-        iVar4 = __restgprlr_22(0);
-        return iVar4;
+        return 0;
       }
       local_80.abOnline[0] = '\0';
       local_80.abOnline[1] = '\0';
@@ -121,103 +109,99 @@ int RMsg_FindClientForAddr(netadr_t *param_1,RMsgClient **param_2,int param_3)
       local_80.abOnline[0x11] = '\0';
       local_80.abOnline[0x12] = '\0';
       local_80.abOnline[0x13] = '\0';
-      local_80._0_8_ = (ulonglong)*(uint *)pnVar2->ip << 0x20;
-      local_80._8_8_ = (ulonglong)pnVar2->port << 0x30;
+      local_80._0_8_ = (ulonglong)*(uint *)param_1->ip << 0x20;
+      local_80._8_8_ = (ulonglong)param_1->port << 0x30;
     }
-    iVar4 = 0;
-    uVar6 = 0;
-    pXVar7 = &s_reliableMsgClients[0].xnaddr;
+    iVar3 = 0;
+    uVar9 = 0;
+    pXVar4 = &s_reliableMsgClients[0].xnaddr;
     do {
-      if (*(int *)((int)(pXVar7 + 1) + 0x10) == 0) {
-        pXVar11 = &local_80;
-        pXVar10 = pXVar7;
+      if (*(int *)((int)(pXVar4 + 1) + 0x10) == 0) {
+        pXVar8 = &local_80;
+        pXVar7 = pXVar4;
         do {
-          lVar8 = (ulonglong)(pXVar11->ina).S_un.S_un_b.s_b1 -
-                  (ulonglong)(pXVar10->ina).S_un.S_un_b.s_b1;
-          if (lVar8 != 0) break;
-          pXVar11 = (XNADDR *)((int)&(pXVar11->ina).S_un + 1);
-          pXVar10 = (XNADDR *)((int)&(pXVar10->ina).S_un + 1);
-        } while (pXVar11 != aXStack_5c);
-        if (((int)lVar8 == 0) && (pnVar2->localNetID == *(netsrc_t *)((int)(pXVar7 + -1) + 0x20))) {
+          lVar5 = (ulonglong)(pXVar8->ina).S_un.S_un_b.s_b1 -
+                  (ulonglong)(pXVar7->ina).S_un.S_un_b.s_b1;
+          if (lVar5 != 0) break;
+          pXVar8 = (XNADDR *)((int)&(pXVar8->ina).S_un + 1);
+          pXVar7 = (XNADDR *)((int)&(pXVar7->ina).S_un + 1);
+        } while (pXVar8 != aXStack_5c);
+        if (((int)lVar5 == 0) && (param_1->localNetID == *(netsrc_t *)((int)(pXVar4 + -1) + 0x20)))
+        {
           Com_Printf(0x10,
                      "RMsg_FindClientForAddr using alternate address from the netAdr (client %i)\n")
           ;
-          s_reliableMsgClients[iVar4].addr.type = pnVar2->type;
-          *(undefined4 *)s_reliableMsgClients[iVar4].addr.ip = *(undefined4 *)pnVar2->ip;
-          uVar1 = *(undefined2 *)&pnVar2->field_0xa;
-          s_reliableMsgClients[iVar4].addr.port = pnVar2->port;
-          *(undefined2 *)&s_reliableMsgClients[iVar4].addr.field_0xa = uVar1;
-          s_reliableMsgClients[iVar4].addr.localNetID = pnVar2->localNetID;
-          *puVar5 = s_reliableMsgClients + iVar4;
-          iVar4 = __restgprlr_22(1);
-          return iVar4;
+          s_reliableMsgClients[iVar3].addr.type = param_1->type;
+          *(undefined4 *)s_reliableMsgClients[iVar3].addr.ip = *(undefined4 *)param_1->ip;
+          uVar1 = *(undefined2 *)&param_1->field_0xa;
+          s_reliableMsgClients[iVar3].addr.port = param_1->port;
+          *(undefined2 *)&s_reliableMsgClients[iVar3].addr.field_0xa = uVar1;
+          s_reliableMsgClients[iVar3].addr.localNetID = param_1->localNetID;
+          *param_2 = s_reliableMsgClients + iVar3;
+          return 1;
         }
       }
-      uVar6 = uVar6 + 0x149c;
-      iVar4 = iVar4 + 1;
-      pXVar7 = (XNADDR *)((int)(pXVar7 + 0x92) + 0x14);
-    } while ((uVar6 & 0xffffffff) < 0x2e5f0);
+      uVar9 = uVar9 + 0x149c;
+      iVar3 = iVar3 + 1;
+      pXVar4 = (XNADDR *)((int)(pXVar4 + 0x92) + 0x14);
+    } while ((uVar9 & 0xffffffff) < 0x2e5f0);
     if (param_3 != 0) {
-      iVar4 = 0;
-      uVar6 = 0;
-      piVar9 = &s_reliableMsgClients[0].bufferUsed;
+      iVar3 = 0;
+      uVar9 = 0;
+      piVar6 = &s_reliableMsgClients[0].bufferUsed;
       do {
-        if (*piVar9 == 0) {
-          s_reliableMsgClients[iVar4].addr.type = pnVar2->type;
-          *(undefined4 *)s_reliableMsgClients[iVar4].addr.ip = *(undefined4 *)pnVar2->ip;
-          uVar1 = *(undefined2 *)&pnVar2->field_0xa;
-          s_reliableMsgClients[iVar4].addr.port = pnVar2->port;
-          *(undefined2 *)&s_reliableMsgClients[iVar4].addr.field_0xa = uVar1;
-          s_reliableMsgClients[iVar4].addr.localNetID = pnVar2->localNetID;
+        if (*piVar6 == 0) {
+          s_reliableMsgClients[iVar3].addr.type = param_1->type;
+          *(undefined4 *)s_reliableMsgClients[iVar3].addr.ip = *(undefined4 *)param_1->ip;
+          uVar1 = *(undefined2 *)&param_1->field_0xa;
+          s_reliableMsgClients[iVar3].addr.port = param_1->port;
+          *(undefined2 *)&s_reliableMsgClients[iVar3].addr.field_0xa = uVar1;
+          s_reliableMsgClients[iVar3].addr.localNetID = param_1->localNetID;
           memcpy();
-          *puVar5 = s_reliableMsgClients + iVar4;
-          iVar4 = __restgprlr_22(1);
-          return iVar4;
+          *param_2 = s_reliableMsgClients + iVar3;
+          return 1;
         }
-        uVar6 = uVar6 + 0x149c;
-        iVar4 = iVar4 + 1;
-        piVar9 = piVar9 + 0x527;
-      } while ((uVar6 & 0xffffffff) < 0x2e5f0);
+        uVar9 = uVar9 + 0x149c;
+        iVar3 = iVar3 + 1;
+        piVar6 = piVar6 + 0x527;
+      } while ((uVar9 & 0xffffffff) < 0x2e5f0);
     }
   }
-  iVar4 = __restgprlr_22(0);
-  return iVar4;
+  return 0;
 }
 
 
 // 826101F8  RMsg_GetSendHandler  (universal/reliablemsg.cpp:238)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 RMsgSendHandler * RMsg_GetSendHandler(uint param_1)
 
 {
   int iVar1;
-  RMsgSendHandler *pRVar2;
-  uint uVar3;
   
-  iVar1 = __savegprlr_29(param_1);
-  if (iVar1 == 0) {
+  if (param_1 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\reliablemsg.cpp",
                     0xf3,0,"%s");
   }
-  uVar3 = iVar1 - 1;
-  if (0x31 < uVar3) {
+  iVar1 = param_1 - 1;
+  if (0x31 < param_1 - 1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\reliablemsg.cpp",
                     0xf6,0,
                     "handleIndex doesn\'t index ARRAY_COUNT( s_reliableMsgHandler )\n\t%i not in [0, %i)"
                    );
   }
-  if (RMSG_STATUS_ERROR < s_reliableMsgHandler[uVar3].status) {
+  if (RMSG_STATUS_ERROR < s_reliableMsgHandler[iVar1].status) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\reliablemsg.cpp",
                     0xf9,0,"handler->status doesn\'t index RMSG_STATUS_COUNT\n\t%i not in [0, %i)");
   }
-  if (s_reliableMsgHandler[uVar3].status == RMSG_STATUS_INACTIVE) {
+  if (s_reliableMsgHandler[iVar1].status == RMSG_STATUS_INACTIVE) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\reliablemsg.cpp",
                     0xfa,0,"%s");
   }
-  pRVar2 = (RMsgSendHandler *)__restgprlr_29(s_reliableMsgHandler + uVar3);
-  return pRVar2;
+  return s_reliableMsgHandler + iVar1;
 }
 
 
@@ -236,66 +220,63 @@ void RMsg_SetInvalidHandle(uint *param_1)
 
 // 826102F0  RMsg_GetFreeMessageHandler  (universal/reliablemsg.cpp:264)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 int RMsg_GetFreeMessageHandler(uint *param_1,RMsgSendHandler **param_2)
 
 {
-  undefined4 *puVar1;
-  int iVar2;
-  ulonglong uVar3;
-  RMsgSendHandler *pRVar4;
+  ulonglong uVar1;
+  RMsgSendHandler *pRVar2;
   
-  puVar1 = (undefined4 *)__savegprlr_28(param_1);
-  uVar3 = 0;
+  uVar1 = 0;
   *param_2 = (RMsgSendHandler *)0x0;
-  pRVar4 = s_reliableMsgHandler;
+  pRVar2 = s_reliableMsgHandler;
   do {
-    if (pRVar4->status == RMSG_STATUS_INACTIVE) {
-      if (uVar3 + 1 == 0) {
+    if (pRVar2->status == RMSG_STATUS_INACTIVE) {
+      if (uVar1 + 1 == 0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\reliablemsg.cpp"
                         ,0x116,1,"%s");
       }
-      *puVar1 = (int)(uVar3 + 1);
-      *param_2 = pRVar4;
-      iVar2 = __restgprlr_28(1);
-      return iVar2;
+      *param_1 = (uint)(uVar1 + 1);
+      *param_2 = pRVar2;
+      return 1;
     }
-    uVar3 = uVar3 + 1;
-    pRVar4 = pRVar4 + 1;
-  } while ((uVar3 & 0xffffffff) < 0x32);
+    uVar1 = uVar1 + 1;
+    pRVar2 = pRVar2 + 1;
+  } while ((uVar1 & 0xffffffff) < 0x32);
   if (alwaysfails == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\reliablemsg.cpp",
                     0x11e,0,"Out of free handler slots for connection mesh");
   }
-  iVar2 = __restgprlr_28(0);
-  return iVar2;
+  return 0;
 }
 
 
 // 826103A8  RMsg_SetMessageStatus  (universal/reliablemsg.cpp:292)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 void RMsg_SetMessageStatus(RMsgMessage *param_1,RMsgSendStatus param_2)
 
 {
-  char *pcVar1;
-  RMsgSendHandler *pRVar2;
+  RMsgSendHandler *pRVar1;
   netadr_t in_stack_ffffff88;
   
-  pcVar1 = (char *)__savegprlr_28(param_1);
-  if (pcVar1 == (char *)0x0) {
+  if (param_1 == (RMsgMessage *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\reliablemsg.cpp",
                     0x127,0,"%s");
   }
-  if (*pcVar1 == '\0') {
+  if (param_1->active == false) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\reliablemsg.cpp",
                     0x128,0,"%s");
   }
-  if (*(uint *)(pcVar1 + 0x38) != 0) {
-    pRVar2 = RMsg_GetSendHandler(*(uint *)(pcVar1 + 0x38));
-    if (pRVar2->status != RMSG_STATUS_IN_PROGRESS) {
+  if (param_1->sendHandle != 0) {
+    pRVar1 = RMsg_GetSendHandler(param_1->sendHandle);
+    if (pRVar1->status != RMSG_STATUS_IN_PROGRESS) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\reliablemsg.cpp",
                       0x12e,0,"%s\n\t(handler->status) = %i");
     }
@@ -307,13 +288,9 @@ void RMsg_SetMessageStatus(RMsgMessage *param_1,RMsgSendStatus param_2)
       NET_AdrToString(in_stack_ffffff88);
       Com_Printf(0x19,"RMSG: Changing handle state from %i to %i for handle %i (client %s)\n");
     }
-    pRVar2->status = param_2;
-    pcVar1[0x38] = '\0';
-    pcVar1[0x39] = '\0';
-    pcVar1[0x3a] = '\0';
-    pcVar1[0x3b] = '\0';
+    pRVar1->status = param_2;
+    param_1->sendHandle = 0;
   }
-  __restgprlr_28();
   return;
 }
 
@@ -368,45 +345,46 @@ int RMsg_FindMessageFromHandler(RMsgSendHandler *param_1)
 
 // 826105E8  RMsg_ReleaseHandle  (universal/reliablemsg.cpp:346)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 void RMsg_ReleaseHandle(uint *param_1)
 
 {
-  uint *puVar1;
-  RMsgSendHandler *pRVar2;
-  int iVar3;
-  int *piVar4;
-  longlong lVar5;
+  RMsgSendHandler *pRVar1;
+  int iVar2;
+  int *piVar3;
+  longlong lVar4;
   
-  puVar1 = (uint *)__savegprlr_29(param_1);
-  if (*puVar1 != 0) {
-    pRVar2 = RMsg_GetSendHandler(*puVar1);
-    if ((pRVar2->status != RMSG_STATUS_SUCCESS) && (pRVar2->status != RMSG_STATUS_ERROR)) {
+  if (*param_1 != 0) {
+    pRVar1 = RMsg_GetSendHandler(*param_1);
+    if ((pRVar1->status != RMSG_STATUS_SUCCESS) && (pRVar1->status != RMSG_STATUS_ERROR)) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\reliablemsg.cpp",
                       0x161,0,"%s\n\t(handler->status) = %i");
     }
-    iVar3 = RMsg_FindMessageFromHandler(pRVar2);
-    if (iVar3 != 0) {
+    iVar2 = RMsg_FindMessageFromHandler(pRVar1);
+    if (iVar2 != 0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\reliablemsg.cpp",
                       0x162,0,"%s");
     }
-    piVar4 = &pRVar2[-1].timeCreated;
-    lVar5 = 8;
+    piVar3 = &pRVar1[-1].timeCreated;
+    lVar4 = 8;
     do {
-      piVar4 = piVar4 + 1;
-      *piVar4 = 0;
-      lVar5 = lVar5 + -1;
-    } while (lVar5 != 0);
-    *puVar1 = 0;
+      piVar3 = piVar3 + 1;
+      *piVar3 = 0;
+      lVar4 = lVar4 + -1;
+    } while (lVar4 != 0);
+    *param_1 = 0;
   }
-  __restgprlr_29();
   return;
 }
 
 
 // 826106A0  RMsg_CheckForHandleLeak  (universal/reliablemsg.cpp:364)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
@@ -418,7 +396,6 @@ void RMsg_CheckForHandleLeak(void)
   uint uVar3;
   uint *puVar4;
   
-  __savegprlr_24();
   iVar1 = Sys_Milliseconds();
   puVar4 = &s_reliableMsgHandler[0].assignedHandle;
   uVar3 = 1;
@@ -440,7 +417,6 @@ void RMsg_CheckForHandleLeak(void)
     puVar4 = puVar4 + 8;
     uVar3 = uVar3 + 1;
   } while (lVar2 != 0);
-  __restgprlr_24();
   return;
 }
 
@@ -456,45 +432,42 @@ uint RMsg_NextSequence(uint param_1)
 
 // 82610768  RMsg_DropAllPacketsForClient  (universal/reliablemsg.cpp:392)
 
+/* WARNING: Function: __savegprlr_20 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_20 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 void RMsg_DropAllPacketsForClient(RMsgClient *param_1)
 
 {
-  int iVar1;
-  RMsgSendHandler *pRVar2;
-  longlong lVar3;
-  uint *puVar4;
+  RMsgSendHandler *pRVar1;
+  longlong lVar2;
+  uint *puVar3;
   netadr_t in_stack_ffffff48;
   
-  iVar1 = __savegprlr_20(param_1);
-  if (iVar1 == 0) {
+  if (param_1 == (RMsgClient *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\reliablemsg.cpp",
                     0x18c,0,"%s");
   }
-  puVar4 = (uint *)(iVar1 + 0x1024);
-  lVar3 = 0x14;
+  puVar3 = &param_1->msgs[0].sendHandle;
+  lVar2 = 0x14;
   do {
-    if (*(char *)(puVar4 + -0xe) != '\0') {
-      if (*puVar4 != 0) {
-        pRVar2 = RMsg_GetSendHandler(*puVar4);
-        if (pRVar2->status != RMSG_STATUS_IN_PROGRESS) {
-          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\reliablemsg.cpp"
-                          ,0x12e,0,"%s\n\t(handler->status) = %i");
-        }
-        if ((reliableDebug->current).enabled != false) {
-          NET_AdrToString(in_stack_ffffff48);
-          Com_Printf(0x19,"RMSG: Changing handle state from %i to %i for handle %i (client %s)\n");
-        }
-        pRVar2->status = RMSG_STATUS_ERROR;
-        *puVar4 = 0;
+    if ((((RMsgMessage *)(puVar3 + -0xe))->active != false) && (*puVar3 != 0)) {
+      pRVar1 = RMsg_GetSendHandler(*puVar3);
+      if (pRVar1->status != RMSG_STATUS_IN_PROGRESS) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\reliablemsg.cpp"
+                        ,0x12e,0,"%s\n\t(handler->status) = %i");
       }
+      if ((reliableDebug->current).enabled != false) {
+        NET_AdrToString(in_stack_ffffff48);
+        Com_Printf(0x19,"RMSG: Changing handle state from %i to %i for handle %i (client %s)\n");
+      }
+      pRVar1->status = RMSG_STATUS_ERROR;
+      *puVar3 = 0;
     }
-    lVar3 = lVar3 + -1;
-    puVar4 = puVar4 + 0xf;
-  } while (lVar3 != 0);
+    lVar2 = lVar2 + -1;
+    puVar3 = puVar3 + 0xf;
+  } while (lVar2 != 0);
   memset();
-  __restgprlr_20();
   return;
 }
 
@@ -519,6 +492,8 @@ void RMsg_DropAllPacketsToAddr(netadr_t *param_1)
 
 // 826108B8  RMsg_Init  (universal/reliablemsg.cpp:422)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
@@ -530,7 +505,6 @@ void RMsg_Init(void)
   longlong lVar3;
   RMsgMessage *pRVar4;
   
-  __savegprlr_25();
   pRVar2 = s_reliableMsgClients;
   lVar1 = 0x24;
   do {
@@ -560,13 +534,14 @@ void RMsg_Init(void)
                         "Amount of time (in ms) to wait before timing out a client for not ack\'ing a message"
                        );
   reliableDebug = Dvar_RegisterBool("reliableDebug",false,0,"Reliable message debugging");
-  __restgprlr_25();
   return;
 }
 
 
 // 826109E0  RMsg_AddMessageAtMsgSlot  (universal/reliablemsg.cpp:437)
 
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 void RMsg_AddMessageAtMsgSlot
@@ -574,29 +549,24 @@ void RMsg_AddMessageAtMsgSlot
                uint *param_6)
 
 {
-  netadrtype_t *pnVar1;
-  netadrtype_t *pnVar2;
-  netadrtype_t nVar3;
-  netadrtype_t *pnVar4;
-  int iVar5;
-  ulonglong uVar6;
-  ulonglong uVar7;
+  uint uVar1;
+  undefined2 uVar2;
+  msg_t *pmVar3;
+  int iVar4;
+  uint *puVar5;
   RMsgSendHandler *local_60 [24];
   
-  uVar7 = (ulonglong)(int)param_6;
-  uVar6 = (ulonglong)(int)param_2;
-  pnVar2 = (netadrtype_t *)__savegprlr_22(param_1);
-  if (pnVar2 == (netadrtype_t *)0x0) {
+  if (param_1 == (RMsgClient *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\reliablemsg.cpp",
                     0x1b9,0,"%s");
   }
-  if (3999 < pnVar2[0x11]) {
+  if (3999 < (uint)param_1->bufferUsed) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\reliablemsg.cpp",
                     0x1ba,0,
                     "client->bufferUsed doesn\'t index RMSG_BUF_SIZE_PER_CLIENT\n\t%i not in [0, %i)"
                    );
   }
-  if (0x13 < (uVar6 & 0xffffffff)) {
+  if (0x13 < param_2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\reliablemsg.cpp",
                     0x1bc,0,"msgSlot doesn\'t index RMSG_MAX_MSG_PER_CLIENT\n\t%i not in [0, %i)");
   }
@@ -604,89 +574,79 @@ void RMsg_AddMessageAtMsgSlot
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\reliablemsg.cpp",
                     0x1bd,0,"%s");
   }
-  pnVar1 = pnVar2 + (int)uVar6 * 0xf;
-  MSG_Init((msg_t *)(pnVar1 + 0x3fe),(uchar *)((int)pnVar2 + pnVar2[0x11] + 0x4c),
-           4000 - pnVar2[0x11]);
-  MSG_WriteData((msg_t *)(pnVar1 + 0x3fe),param_3,param_4);
-  nVar3 = pnVar2[0xf];
-  pnVar1[0x3fd] = nVar3;
-  pnVar2[0xf] = nVar3 + NA_BAD & 0xff;
-  pnVar2[0xd] = NA_BOT;
-  nVar3 = Sys_Milliseconds();
-  pnVar2[0xe] = nVar3;
-  pnVar4 = pnVar1 + 0x409;
-  pnVar2[0x11] = pnVar2[0x11] + param_4;
-  *(undefined1 *)(pnVar1 + 0x3fb) = NA_BAD;
-  pnVar1[0x3fc] = param_5;
-  pnVar1[0x409] = NA_BOT;
-  if ((uVar7 & 0xffffffff) != 0) {
-    iVar5 = RMsg_GetFreeMessageHandler(pnVar4,local_60);
-    if (iVar5 != 0) {
+  pmVar3 = &param_1->msgs[param_2].msg;
+  MSG_Init(pmVar3,param_1->reliableBuf + param_1->bufferUsed,4000 - param_1->bufferUsed);
+  MSG_WriteData(pmVar3,param_3,param_4);
+  uVar1 = param_1->nextSequence;
+  param_1->msgs[param_2].sequenceNum = uVar1;
+  param_1->nextSequence = uVar1 + 1 & 0xff;
+  param_1->lastSendTime = 0;
+  iVar4 = Sys_Milliseconds();
+  param_1->lastAddTime = iVar4;
+  puVar5 = &param_1->msgs[param_2].sendHandle;
+  param_1->bufferUsed = param_1->bufferUsed + param_4;
+  param_1->msgs[param_2].active = true;
+  param_1->msgs[param_2].fromLocalNetID = param_5;
+  param_1->msgs[param_2].sendHandle = 0;
+  if (param_6 != (uint *)0x0) {
+    iVar4 = RMsg_GetFreeMessageHandler(puVar5,local_60);
+    if (iVar4 != 0) {
       local_60[0]->status = RMSG_STATUS_IN_PROGRESS;
-      (local_60[0]->clientUID).addr.type = *pnVar2;
-      *(netadrtype_t *)(local_60[0]->clientUID).addr.ip = pnVar2[1];
-      *(netadrtype_t *)&(local_60[0]->clientUID).addr.port = pnVar2[2];
-      (local_60[0]->clientUID).addr.localNetID = pnVar2[3];
-      (local_60[0]->msgUID).sequence = pnVar1[0x3fd];
-      iVar5 = Sys_Milliseconds();
-      local_60[0]->timeCreated = iVar5;
-      local_60[0]->assignedHandle = *pnVar4;
+      (local_60[0]->clientUID).addr.type = (param_1->addr).type;
+      *(undefined4 *)(local_60[0]->clientUID).addr.ip = *(undefined4 *)(param_1->addr).ip;
+      uVar2 = *(undefined2 *)&(param_1->addr).field_0xa;
+      (local_60[0]->clientUID).addr.port = (param_1->addr).port;
+      *(undefined2 *)&(local_60[0]->clientUID).addr.field_0xa = uVar2;
+      (local_60[0]->clientUID).addr.localNetID = (param_1->addr).localNetID;
+      (local_60[0]->msgUID).sequence = param_1->msgs[param_2].sequenceNum;
+      iVar4 = Sys_Milliseconds();
+      local_60[0]->timeCreated = iVar4;
+      local_60[0]->assignedHandle = *puVar5;
     }
-    *(netadrtype_t *)uVar7 = *pnVar4;
+    *param_6 = *puVar5;
   }
   if ((reliableDebug->current).enabled != false) {
     Com_Printf(0x19,"RMSG: Add message with sequence (%i) and handle (%i): %s\n");
   }
-  __restgprlr_22();
   return;
 }
 
 
 // 82610BC8  RMsg_ShiftMessagesBackInBuffer  (universal/reliablemsg.cpp:487)
 
+/* WARNING: Function: __savegprlr_21 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_21 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 void RMsg_ShiftMessagesBackInBuffer(RMsgClient *param_1,int param_2)
 
 {
-  int iVar1;
-  uint *puVar2;
-  longlong lVar3;
-  longlong lVar4;
-  int iVar5;
-  ulonglong uVar6;
-  longlong lVar7;
-  longlong lVar8;
+  uchar *puVar1;
+  longlong lVar2;
+  uchar **ppuVar3;
   
-  lVar4 = (longlong)param_2;
-  lVar3 = __savegprlr_21(param_1);
-  iVar1 = (int)lVar3;
-  iVar5 = (int)lVar4;
-  if (iVar5 != *(int *)(iVar1 + 0x48)) {
+  if (param_2 != param_1->bytesAckd) {
     va("bytesShifted = %i, bytesAckd = %i");
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\reliablemsg.cpp",
                     0x1ea,0,"%s\n\t%s");
   }
-  if ((iVar5 < 1) || (0xf9e < iVar5)) {
+  if ((param_2 < 1) || (0xf9e < param_2)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\reliablemsg.cpp",
                     0x1eb,0,"%s\n\t(bytesShifted) = %i");
   }
   memmove();
-  lVar8 = lVar3 + 0x1000;
-  lVar7 = 0x14;
+  ppuVar3 = &param_1->msgs[0].msg.data;
+  lVar2 = 0x14;
   do {
-    puVar2 = (uint *)lVar8;
-    if (*(char *)(puVar2 + -5) != '\0') {
-      if ((((ulonglong)*puVar2 - lVar4 & 0xffffffff) < (lVar3 + 0x4cU & 0xffffffff)) ||
-         ((lVar3 + 0xfecU & 0xffffffff) <= (ulonglong)*puVar2)) {
+    if (*(char *)(ppuVar3 + -5) != '\0') {
+      if ((*ppuVar3 + -param_2 < param_1->reliableBuf) || (param_1->msgs <= *ppuVar3)) {
         va("bytesShifted = %i, msg.data points to %i bytes after client->reliableBuf");
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\reliablemsg.cpp"
                         ,0x1f2,0,"%s\n\t%s");
       }
-      uVar6 = (ulonglong)*puVar2 - lVar4;
-      *puVar2 = (uint)uVar6;
-      if (((uVar6 & 0xffffffff) < (lVar3 + 0x4cU & 0xffffffff)) ||
-         ((lVar3 + 0xfecU & 0xffffffff) <= (uVar6 & 0xffffffff))) {
+      puVar1 = *ppuVar3 + -param_2;
+      *ppuVar3 = puVar1;
+      if ((puVar1 < param_1->reliableBuf) || (param_1->msgs <= puVar1)) {
         va(
           "buffer corruption while trying to shift buffer back by %i bytes, msg.data is %p, buf start is %p"
           );
@@ -694,110 +654,103 @@ void RMsg_ShiftMessagesBackInBuffer(RMsgClient *param_1,int param_2)
                         ,500,0,"%s\n\t%s");
       }
     }
-    lVar7 = lVar7 + -1;
-    lVar8 = lVar8 + 0x3c;
-  } while (lVar7 != 0);
-  *(int *)(iVar1 + 0x44) = *(int *)(iVar1 + 0x44) - iVar5;
-  __restgprlr_21();
+    lVar2 = lVar2 + -1;
+    ppuVar3 = ppuVar3 + 0xf;
+  } while (lVar2 != 0);
+  param_1->bufferUsed = param_1->bufferUsed - param_2;
   return;
 }
 
 
 // 82610D68  RMsg_DropFailedClient  (universal/reliablemsg.cpp:508)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void RMsg_DropFailedClient(netadr_t *param_1,RMsgClient *param_2)
 
 {
-  int iVar1;
   bool bVar3;
-  PartyData *pPVar2;
-  ulonglong uVar4;
+  PartyData *pPVar1;
+  int iVar2;
   netadr_t in_stack_ffffff78;
   
-  uVar4 = (ulonglong)(int)param_2;
-  iVar1 = __savegprlr_27(param_1);
   if (s_inDropClient != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\reliablemsg.cpp",
                     0x203,0,"%s\n\t%s");
   }
   s_inDropClient = 1;
-  if (iVar1 == 0) {
+  if (param_1 == (netadr_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\reliablemsg.cpp",
                     0x207,0,"%s");
   }
-  if ((uVar4 & 0xffffffff) == 0) {
+  if (param_2 == (RMsgClient *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\reliablemsg.cpp",
                     0x208,0,"%s");
   }
-  RMsg_DropAllPacketsForClient((RMsgClient *)uVar4);
+  RMsg_DropAllPacketsForClient(param_2);
   bVar3 = Lobby_AreWeHost();
   if (bVar3) {
-    pPVar2 = Lobby_GetPartyData();
-    iVar1 = Party_FindFirstMemberAtAddr(pPVar2,in_stack_ffffff78);
-    if (-1 < iVar1) {
+    pPVar1 = Lobby_GetPartyData();
+    iVar2 = Party_FindFirstMemberAtAddr(pPVar1,in_stack_ffffff78);
+    if (-1 < iVar2) {
       Com_Printf(0x19,
                  "RMSG: Dropping lobby/game client at slot %i due to reliable message failure\n");
       if ((com_sv_running->current).enabled != false) {
-        CL_Live_RequestClientDrop(iVar1,SV_LIVE_DROP_RMSG_LOST,"EXE_LOSTRELIABLECOMMANDS");
+        CL_Live_RequestClientDrop(iVar2,SV_LIVE_DROP_RMSG_LOST,"EXE_LOSTRELIABLECOMMANDS");
         s_inDropClient = 0;
-        __restgprlr_27();
         return;
       }
-      pPVar2 = Lobby_GetPartyData();
-      PartyHost_RemovePlayer(pPVar2,iVar1,1,"EXE_LOSTRELIABLECOMMANDS");
+      pPVar1 = Lobby_GetPartyData();
+      PartyHost_RemovePlayer(pPVar1,iVar2,1,"EXE_LOSTRELIABLECOMMANDS");
     }
   }
   s_inDropClient = 0;
-  __restgprlr_27();
   return;
 }
 
 
 // 82610EE0  RMsg_AddMessageInternal  (universal/reliablemsg.cpp:551)
 
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 void RMsg_AddMessageInternal
                (netadr_t *param_1,uchar *param_2,int param_3,netsrc_t param_4,uint *param_5)
 
 {
-  netadr_t *pnVar1;
-  int iVar2;
-  uint uVar3;
-  ulonglong uVar4;
-  RMsgMessage *pRVar5;
+  int iVar1;
+  uint uVar2;
+  RMsgMessage *pRVar3;
   netadr_t in_stack_ffffff58;
   RMsgClient *local_60 [24];
   
-  uVar4 = (ulonglong)(int)param_5;
-  pnVar1 = (netadr_t *)__savegprlr_22(param_1);
-  if (pnVar1 == (netadr_t *)0x0) {
+  if (param_1 == (netadr_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\reliablemsg.cpp",
                     0x22b,0,"%s");
   }
-  iVar2 = NET_IsLocalAddress(in_stack_ffffff58);
-  if (iVar2 != 0) {
+  iVar1 = NET_IsLocalAddress(in_stack_ffffff58);
+  if (iVar1 != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\reliablemsg.cpp",
                     0x22c,0,"%s\n\t%s");
   }
-  if (param_4 == pnVar1->localNetID) {
+  if (param_4 == param_1->localNetID) {
     NET_AdrToString(in_stack_ffffff58);
     Com_PrintError(0x19,
                    "RMSG: Sending a message to the same destination ID as the source ( %i -> %i ). Trying to send to \'%s\'\n"
                   );
   }
-  if ((uVar4 & 0xffffffff) != 0) {
-    *(uint *)uVar4 = 0;
+  if (param_5 != (uint *)0x0) {
+    *param_5 = 0;
   }
-  iVar2 = RMsg_FindClientForAddr(pnVar1,local_60,1);
-  if (iVar2 == 0) {
+  iVar1 = RMsg_FindClientForAddr(param_1,local_60,1);
+  if (iVar1 == 0) {
     Com_PrintWarning(0x19,
                      "RMSG: Unable to get slot for outbound packet - we either ran out of slots or the destination IP is already dead\n"
                     );
-    __restgprlr_22();
     return;
   }
   if (local_60[0] == (RMsgClient *)0x0) {
@@ -808,18 +761,17 @@ void RMsg_AddMessageInternal
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\reliablemsg.cpp",
                     0x23d,0,"%s");
   }
-  iVar2 = local_60[0]->bufferUsed;
-  if (3999 < iVar2 + param_3) {
-    if (3999 < (iVar2 - local_60[0]->bytesAckd) + param_3) {
+  iVar1 = local_60[0]->bufferUsed;
+  if (3999 < iVar1 + param_3) {
+    if (3999 < (iVar1 - local_60[0]->bytesAckd) + param_3) {
       NET_AdrToString(in_stack_ffffff58);
       Com_PrintWarning(0x19,
                        "RMSG: Client at %s already has %i pending reliable bytes of messages, unable to add another %i bytes\n"
                       );
-      RMsg_DropFailedClient(pnVar1,local_60[0]);
-      __restgprlr_22();
+      RMsg_DropFailedClient(param_1,local_60[0]);
       return;
     }
-    if (iVar2 <= local_60[0]->bytesAckd) {
+    if (iVar1 <= local_60[0]->bytesAckd) {
       va("client has %i bytes ackd and %i bytes used in the buffer");
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\reliablemsg.cpp",
                       0x24a,0,"%s\n\t%s");
@@ -827,136 +779,120 @@ void RMsg_AddMessageInternal
     RMsg_ShiftMessagesBackInBuffer(local_60[0],local_60[0]->bytesAckd);
     local_60[0]->bytesAckd = 0;
   }
-  uVar3 = 0;
-  pRVar5 = local_60[0]->msgs;
+  uVar2 = 0;
+  pRVar3 = local_60[0]->msgs;
   do {
-    if (pRVar5->active == false) {
-      RMsg_AddMessageAtMsgSlot(local_60[0],uVar3,param_2,param_3,param_4,(uint *)uVar4);
-      __restgprlr_22();
+    if (pRVar3->active == false) {
+      RMsg_AddMessageAtMsgSlot(local_60[0],uVar2,param_2,param_3,param_4,param_5);
       return;
     }
-    uVar3 = uVar3 + 1;
-    pRVar5 = pRVar5 + 1;
-  } while (uVar3 < 0x14);
+    uVar2 = uVar2 + 1;
+    pRVar3 = pRVar3 + 1;
+  } while (uVar2 < 0x14);
   NET_AdrToString(in_stack_ffffff58);
   Com_PrintWarning(0x19,
                    "RMSG: Client at %s already has %i pending reliable messages - dropping all reliable msgs for them\n"
                   );
-  RMsg_DropFailedClient(pnVar1,local_60[0]);
-  __restgprlr_22();
+  RMsg_DropFailedClient(param_1,local_60[0]);
   return;
 }
 
 
 // 82611160  RMsg_AddMessageWithHandle  (universal/reliablemsg.cpp:607)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 void RMsg_AddMessageWithHandle(netadr_t *param_1,msg_t *param_2,uint *param_3,netsrc_t param_4)
 
 {
-  netadr_t *pnVar1;
-  ulonglong uVar2;
-  
-  uVar2 = (ulonglong)(int)param_2;
-  pnVar1 = (netadr_t *)__savegprlr_26(param_1);
-  if (pnVar1 == (netadr_t *)0x0) {
+  if (param_1 == (netadr_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\reliablemsg.cpp",
                     0x260,0,"%s");
   }
-  if ((uVar2 & 0xffffffff) == 0) {
+  if (param_2 == (msg_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\reliablemsg.cpp",
                     0x261,0,"%s");
   }
-  RMsg_AddMessageInternal
-            (pnVar1,*(uchar **)((int)uVar2 + 8),*(int *)((int)uVar2 + 0x14),param_4,param_3);
-  __restgprlr_26();
+  RMsg_AddMessageInternal(param_1,param_2->data,param_2->cursize,param_4,param_3);
   return;
 }
 
 
 // 826111F8  RMsg_AddMessage  (universal/reliablemsg.cpp:616)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 void RMsg_AddMessage(netadr_t *param_1,msg_t *param_2,netsrc_t param_3)
 
 {
-  netadr_t *pnVar1;
-  ulonglong uVar2;
-  
-  uVar2 = (ulonglong)(int)param_2;
-  pnVar1 = (netadr_t *)__savegprlr_27(param_1);
-  if (pnVar1 == (netadr_t *)0x0) {
+  if (param_1 == (netadr_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\reliablemsg.cpp",
                     0x269,0,"%s");
   }
-  if ((uVar2 & 0xffffffff) == 0) {
+  if (param_2 == (msg_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\reliablemsg.cpp",
                     0x26a,0,"%s");
   }
-  RMsg_AddMessageInternal
-            (pnVar1,*(uchar **)((int)uVar2 + 8),*(int *)((int)uVar2 + 0x14),param_3,(uint *)0x0);
-  __restgprlr_27();
+  RMsg_AddMessageInternal(param_1,param_2->data,param_2->cursize,param_3,(uint *)0x0);
   return;
 }
 
 
 // 82611288  RMsg_AddPrint  (universal/reliablemsg.cpp:625)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 void RMsg_AddPrint(netadr_t *param_1,char *param_2,netsrc_t param_3)
 
 {
-  netadr_t *pnVar1;
-  ulonglong uVar2;
-  char *pcVar4;
-  ulonglong uVar3;
+  char cVar1;
+  char *pcVar2;
   
-  uVar2 = (ulonglong)(int)param_2;
-  pnVar1 = (netadr_t *)__savegprlr_27(param_1);
-  if (pnVar1 == (netadr_t *)0x0) {
+  if (param_1 == (netadr_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\reliablemsg.cpp",
                     0x272,0,"%s");
   }
-  uVar3 = uVar2;
-  if ((uVar2 & 0xffffffff) == 0) {
+  pcVar2 = param_2;
+  if (param_2 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\reliablemsg.cpp",
                     0x273,0,"%s");
   }
   do {
-    pcVar4 = (char *)uVar3;
-    uVar3 = uVar3 + 1;
-  } while (*pcVar4 != '\0');
-  RMsg_AddMessageInternal
-            (pnVar1,(uchar *)uVar2,(int)uVar3 - (int)(uchar *)uVar2,param_3,(uint *)0x0);
-  __restgprlr_27();
+    cVar1 = *pcVar2;
+    pcVar2 = pcVar2 + 1;
+  } while (cVar1 != '\0');
+  RMsg_AddMessageInternal(param_1,(uchar *)param_2,(int)pcVar2 - (int)param_2,param_3,(uint *)0x0);
   return;
 }
 
 
 // 82611338  RMsg_AddRMsgsToPacket  (universal/reliablemsg.cpp:634)
 
+/* WARNING: Function: __savegprlr_18 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_18 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 void RMsg_AddRMsgsToPacket(RMsgClient *param_1,msg_t *param_2)
 
 {
   uint uVar1;
-  RMsgClient *pRVar2;
+  int iVar2;
   int iVar3;
-  int iVar4;
-  uint uVar5;
+  uint uVar4;
   netadr_t in_stack_ffffff38;
   uint local_80 [32];
   
-  pRVar2 = (RMsgClient *)__savegprlr_18(param_1);
-  if (pRVar2 == (RMsgClient *)0x0) {
+  if (param_1 == (RMsgClient *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\reliablemsg.cpp",
                     0x282,0,"%s");
   }
-  if (pRVar2->bufferUsed == 0) {
+  if (param_1->bufferUsed == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\reliablemsg.cpp",
                     0x283,0,"%s");
   }
@@ -969,10 +905,10 @@ void RMsg_AddRMsgsToPacket(RMsgClient *param_1,msg_t *param_2)
                     0x286,0,"%s");
   }
   MSG_WriteString(param_2,"RM");
-  iVar4 = 0;
-  uVar5 = pRVar2->oldestSequence;
-  iVar3 = RMsg_FindMessageSlot(pRVar2,uVar5,local_80);
-  if (iVar3 != 0) {
+  iVar3 = 0;
+  uVar4 = param_1->oldestSequence;
+  iVar2 = RMsg_FindMessageSlot(param_1,uVar4,local_80);
+  if (iVar2 != 0) {
     do {
       uVar1 = local_80[0];
       if (0x13 < local_80[0]) {
@@ -980,11 +916,13 @@ void RMsg_AddRMsgsToPacket(RMsgClient *param_1,msg_t *param_2)
                         ,0x291,0,
                         "msgSlot doesn\'t index RMSG_MAX_MSG_PER_CLIENT\n\t%i not in [0, %i)");
       }
-      if (param_2->maxsize + -1 < pRVar2->msgs[uVar1].msg.cursize + param_2->cursize) {
-        if (iVar4 != 0) goto LAB_826115d4;
+      if (param_2->maxsize + -1 < param_1->msgs[uVar1].msg.cursize + param_2->cursize) {
+        if (iVar3 != 0) {
+          return;
+        }
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\reliablemsg.cpp"
                         ,0x297,0,"%s\n\t%s");
-        iVar4 = 0;
+        iVar3 = 0;
         break;
       }
       if ((showpackets->current).integer != 0) {
@@ -994,30 +932,32 @@ void RMsg_AddRMsgsToPacket(RMsgClient *param_1,msg_t *param_2)
         NET_AdrToString(in_stack_ffffff38);
         Com_Printf(0x19,"RMSG: Sending message \'%s\' to client %s\n");
       }
-      if (0xff < pRVar2->msgs[uVar1].sequenceNum) {
+      if (0xff < param_1->msgs[uVar1].sequenceNum) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\reliablemsg.cpp"
                         ,0x2a5,0,"message->sequenceNum <= RMSG_MAX_SEQUENCE_NUM\n\t%i, %i");
       }
-      MSG_WriteByte(param_2,pRVar2->msgs[uVar1].sequenceNum);
-      MSG_WriteByte(param_2,pRVar2->msgs[uVar1].fromLocalNetID);
-      MSG_WriteLong(param_2,pRVar2->msgs[uVar1].msg.cursize);
-      MSG_WriteData(param_2,pRVar2->msgs[uVar1].msg.data,pRVar2->msgs[uVar1].msg.cursize);
-      uVar5 = uVar5 + 1 & 0xff;
-      iVar4 = iVar4 + 1;
-      iVar3 = RMsg_FindMessageSlot(pRVar2,uVar5,local_80);
-    } while (iVar3 != 0);
-    if (iVar4 != 0) goto LAB_826115d4;
+      MSG_WriteByte(param_2,param_1->msgs[uVar1].sequenceNum);
+      MSG_WriteByte(param_2,param_1->msgs[uVar1].fromLocalNetID);
+      MSG_WriteLong(param_2,param_1->msgs[uVar1].msg.cursize);
+      MSG_WriteData(param_2,param_1->msgs[uVar1].msg.data,param_1->msgs[uVar1].msg.cursize);
+      uVar4 = uVar4 + 1 & 0xff;
+      iVar3 = iVar3 + 1;
+      iVar2 = RMsg_FindMessageSlot(param_1,uVar4,local_80);
+    } while (iVar2 != 0);
+    if (iVar3 != 0) {
+      return;
+    }
   }
   MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\reliablemsg.cpp",0x2ba
                   ,0,"%s\n\t%s");
-LAB_826115d4:
-  __restgprlr_18();
   return;
 }
 
 
 // 826115E0  RMsg_SendMessages  (universal/reliablemsg.cpp:703)
 
+/* WARNING: Function: __savegprlr_16 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_16 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
@@ -1034,7 +974,6 @@ void RMsg_SendMessages(void)
   netadr_t in_stack_fffffef8;
   msg_t local_c0 [4];
   
-  __savegprlr_16();
   if ((_S1 & 1) == 0) {
     _S1 = _S1 | 1;
     lastCallTimer = Sys_Milliseconds();
@@ -1103,7 +1042,6 @@ LAB_8261181c:
     lVar5 = lVar5 + -1;
     piVar6 = piVar6 + 0x527;
     if (lVar5 == 0) {
-      __restgprlr_16();
       return;
     }
   } while( true );
@@ -1153,6 +1091,8 @@ int RMsg_CountOutstandingMessages(RMsgClient *param_1)
 
 // 826118F0  RMsg_MarkOldestSequenceAcked  (universal/reliablemsg.cpp:801)
 
+/* WARNING: Function: __savegprlr_17 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_17 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 void RMsg_MarkOldestSequenceAcked(RMsgClient *param_1)
@@ -1160,26 +1100,24 @@ void RMsg_MarkOldestSequenceAcked(RMsgClient *param_1)
 {
   bool bVar1;
   bool bVar2;
-  RMsgClient *pRVar3;
-  int iVar4;
-  uint uVar5;
-  uchar **ppuVar6;
+  int iVar3;
+  uint uVar4;
+  uchar **ppuVar5;
   netadr_t in_stack_ffffff28;
   uint local_90 [36];
   
-  pRVar3 = (RMsgClient *)__savegprlr_17(param_1);
-  if (pRVar3 == (RMsgClient *)0x0) {
+  if (param_1 == (RMsgClient *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\reliablemsg.cpp",
                     0x32a,0,"%s");
   }
-  if (3999 < (uint)pRVar3->bytesAckd) {
+  if (3999 < (uint)param_1->bytesAckd) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\reliablemsg.cpp",
                     0x32b,0,
                     "client->bytesAckd doesn\'t index RMSG_BUF_SIZE_PER_CLIENT\n\t%i not in [0, %i)"
                    );
   }
-  iVar4 = RMsg_FindMessageSlot(pRVar3,pRVar3->oldestSequence,local_90);
-  if (iVar4 == 0) {
+  iVar3 = RMsg_FindMessageSlot(param_1,param_1->oldestSequence,local_90);
+  if (iVar3 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\reliablemsg.cpp",
                     0x331,0,"%s\n\t%s");
   }
@@ -1187,11 +1125,11 @@ void RMsg_MarkOldestSequenceAcked(RMsgClient *param_1)
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\reliablemsg.cpp",
                     0x333,0,"msgSlot doesn\'t index RMSG_MAX_MSG_PER_CLIENT\n\t%i not in [0, %i)");
   }
-  if (pRVar3->msgs[local_90[0]].msg.cursize < 1) {
+  if (param_1->msgs[local_90[0]].msg.cursize < 1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\reliablemsg.cpp",
                     0x334,0,"%s\n\t(client->msgs[msgSlot].msg.cursize) = %i");
   }
-  if (pRVar3->oldestSequence != pRVar3->msgs[local_90[0]].sequenceNum) {
+  if (param_1->oldestSequence != param_1->msgs[local_90[0]].sequenceNum) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\reliablemsg.cpp",
                     0x335,0,"%s\n\t%s");
   }
@@ -1199,21 +1137,21 @@ void RMsg_MarkOldestSequenceAcked(RMsgClient *param_1)
     NET_AdrToString(in_stack_ffffff28);
     Com_Printf(0x19,"RMSG: Received reliable packet ack for sequence %i (slot %i) from %s\n");
   }
-  RMsg_SetMessageStatus(pRVar3->msgs + local_90[0],RMSG_STATUS_SUCCESS);
-  ppuVar6 = &pRVar3->msgs[0].msg.data;
+  RMsg_SetMessageStatus(param_1->msgs + local_90[0],RMSG_STATUS_SUCCESS);
+  ppuVar5 = &param_1->msgs[0].msg.data;
   bVar1 = false;
-  pRVar3->bytesAckd = pRVar3->bytesAckd + pRVar3->msgs[local_90[0]].msg.cursize;
+  param_1->bytesAckd = param_1->bytesAckd + param_1->msgs[local_90[0]].msg.cursize;
   bVar2 = false;
-  pRVar3->msgs[local_90[0]].active = false;
-  uVar5 = 0;
-  pRVar3->oldestSequence = pRVar3->oldestSequence + 1 & 0xff;
+  param_1->msgs[local_90[0]].active = false;
+  uVar4 = 0;
+  param_1->oldestSequence = param_1->oldestSequence + 1 & 0xff;
   do {
-    if (*(char *)(ppuVar6 + -5) != '\0') {
+    if (*(char *)(ppuVar5 + -5) != '\0') {
       bVar2 = true;
-      if (ppuVar6[-3] == (uchar *)pRVar3->oldestSequence) {
+      if (ppuVar5[-3] == (uchar *)param_1->oldestSequence) {
         bVar1 = true;
       }
-      if ((int)(*ppuVar6 + (-0x4c - (int)pRVar3)) < pRVar3->bytesAckd) {
+      if ((int)(*ppuVar5 + (-0x4c - (int)param_1)) < param_1->bytesAckd) {
         va(
           "for client %i, acking msg slot %i is changing bytesAckd from %i to %i, but active msgSlot %i\'s buffer would get blown away by that because it spans from %i to %i"
           );
@@ -1221,65 +1159,60 @@ void RMsg_MarkOldestSequenceAcked(RMsgClient *param_1)
                         ,0x34b,0,"%s\n\t%s");
       }
     }
-    uVar5 = uVar5 + 1;
-    ppuVar6 = ppuVar6 + 0xf;
-  } while (uVar5 < 0x14);
+    uVar4 = uVar4 + 1;
+    ppuVar5 = ppuVar5 + 0xf;
+  } while (uVar4 < 0x14);
   if ((!bVar1) && (bVar2)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\reliablemsg.cpp",
                     0x34e,0,"%s\n\t%s");
   }
-  if (pRVar3->bytesAckd == pRVar3->bufferUsed) {
-    pRVar3->bytesAckd = 0;
-    pRVar3->bufferUsed = 0;
-    iVar4 = RMsg_CountOutstandingMessages(pRVar3);
-    if (iVar4 != 0) {
+  if (param_1->bytesAckd == param_1->bufferUsed) {
+    param_1->bytesAckd = 0;
+    param_1->bufferUsed = 0;
+    iVar3 = RMsg_CountOutstandingMessages(param_1);
+    if (iVar3 != 0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\reliablemsg.cpp",
                       0x356,0,"%s");
     }
   }
-  __restgprlr_17();
   return;
 }
 
 
 // 82611BF8  RMsg_MarkSequenceReceived  (universal/reliablemsg.cpp:861)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 void RMsg_MarkSequenceReceived(netadr_t *param_1,uint param_2)
 
 {
-  netadr_t *pnVar1;
+  uint uVar1;
   int iVar2;
-  ulonglong uVar3;
   netadr_t in_stack_ffffff88;
   RMsgClient *local_30 [12];
   
-  uVar3 = (ulonglong)(int)param_2;
-  pnVar1 = (netadr_t *)__savegprlr_29(param_1);
-  iVar2 = RMsg_FindClientForAddr(pnVar1,local_30,0);
+  iVar2 = RMsg_FindClientForAddr(param_1,local_30,0);
   if (iVar2 == 0) {
     NET_AdrToString(in_stack_ffffff88);
     Com_Printf(0x19,"Received reliable packet ack for sequence %i from unknown IP %s\n");
-    __restgprlr_29();
     return;
   }
-  iVar2 = RMsg_FindMessageSlot(local_30[0],(uint)uVar3,(uint *)local_30);
-  if (iVar2 == 0) {
-    NET_AdrToString(in_stack_ffffff88);
-    Com_Printf(0x19,
-               "Received reliable packet ack for sequence %i which does not exist from client at %s. LocalNetID %i Most likely already received\n"
-              );
-    __restgprlr_29();
-    return;
-  }
-  if ((uVar3 & 0xffffffff) != (ulonglong)local_30[0]->oldestSequence) {
-    do {
+  iVar2 = RMsg_FindMessageSlot(local_30[0],param_2,(uint *)local_30);
+  if (iVar2 != 0) {
+    uVar1 = local_30[0]->oldestSequence;
+    while (param_2 != uVar1) {
       RMsg_MarkOldestSequenceAcked(local_30[0]);
-    } while ((uVar3 & 0xffffffff) != (ulonglong)local_30[0]->oldestSequence);
+      uVar1 = local_30[0]->oldestSequence;
+    }
+    RMsg_MarkOldestSequenceAcked(local_30[0]);
+    return;
   }
-  RMsg_MarkOldestSequenceAcked(local_30[0]);
-  __restgprlr_29();
+  NET_AdrToString(in_stack_ffffff88);
+  Com_Printf(0x19,
+             "Received reliable packet ack for sequence %i which does not exist from client at %s. LocalNetID %i Most likely already received\n"
+            );
   return;
 }
 
@@ -1307,101 +1240,97 @@ void RMsg_MarkHandleMsgReceived(uint param_1)
 
 // 82611D50  RMsg_HandleAckMessage  (universal/reliablemsg.cpp:906)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 int RMsg_HandleAckMessage(netadr_t *param_1,char *param_2,msg_t *param_3)
 
 {
-  netadrtype_t *pnVar1;
-  int iVar2;
-  uint uVar3;
-  ulonglong uVar5;
-  ulonglong uVar6;
+  int iVar1;
+  uint uVar2;
   netadr_t local_40 [4];
-  msg_t *pmVar4;
   
-  uVar6 = (ulonglong)(int)param_3;
-  uVar5 = (ulonglong)(int)param_2;
-  pnVar1 = (netadrtype_t *)__savegprlr_27(param_1);
-  if ((uVar5 & 0xffffffff) == 0) {
+  if (param_2 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\reliablemsg.cpp",
                     0x38e,0,"%s");
   }
-  if (pnVar1 == (netadrtype_t *)0x0) {
+  if (param_1 == (netadr_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\reliablemsg.cpp",
                     0x38f,0,"%s");
   }
-  if ((uVar6 & 0xffffffff) == 0) {
+  if (param_3 == (msg_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\reliablemsg.cpp",
                     0x390,0,"%s");
   }
-  iVar2 = I_strcmp((char *)uVar5,"RA");
-  if (iVar2 != 0) {
-    iVar2 = __restgprlr_27(0);
-    return iVar2;
+  iVar1 = I_strcmp(param_2,"RA");
+  if (iVar1 != 0) {
+    return 0;
   }
-  local_40[0].type = *pnVar1;
-  local_40[0].ip = *(uchar (*) [4])(pnVar1 + 1);
-  local_40[0]._8_4_ = pnVar1[2];
-  local_40[0].localNetID = pnVar1[3];
-  pmVar4 = (msg_t *)uVar6;
-  uVar3 = MSG_ReadByte(pmVar4);
-  local_40[0].localNetID = MSG_ReadByte(pmVar4);
-  if (pmVar4->overflowed != 0) {
+  local_40[0].type = param_1->type;
+  local_40[0].ip = *&param_1->ip;
+  local_40[0].port = param_1->port;
+  local_40[0]._10_2_ = *(undefined2 *)&param_1->field_0xa;
+  local_40[0].localNetID = param_1->localNetID;
+  uVar2 = MSG_ReadByte(param_3);
+  local_40[0].localNetID = MSG_ReadByte(param_3);
+  if (param_3->overflowed != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\reliablemsg.cpp",
                     0x3a0,0,"%s");
   }
-  if (pmVar4->readcount != pmVar4->splitSize + pmVar4->cursize) {
+  if (param_3->readcount != param_3->splitSize + param_3->cursize) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\reliablemsg.cpp",
                     0x3a1,0,"%s");
   }
-  RMsg_MarkSequenceReceived(local_40,uVar3);
-  iVar2 = __restgprlr_27(1);
-  return iVar2;
+  RMsg_MarkSequenceReceived(local_40,uVar2);
+  return 1;
 }
 
 
 // 82611EB8  RMsg_SendSequenceAck  (universal/reliablemsg.cpp:937)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 void RMsg_SendSequenceAck(LocalClientNum_t param_1,netadr_t *param_2,uint param_3)
 
 {
-  LocalClientNum_t LVar1;
-  netsrc_t nVar2;
-  bool bVar3;
-  ulonglong uVar4;
-  ulonglong uVar5;
+  netsrc_t nVar1;
+  undefined8 uVar2;
+  undefined4 uVar3;
   netadr_t in_stack_ffffff58;
   msg_t amStack_60 [2];
   
-  uVar5 = (ulonglong)(int)param_3;
-  uVar4 = (ulonglong)(int)param_2;
-  LVar1 = __savegprlr_28(param_1);
-  if ((uVar4 & 0xffffffff) == 0) {
+  if (param_2 == (netadr_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\reliablemsg.cpp",
                     0x3ac,0,"%s");
   }
-  if (0xff < (uVar5 & 0xffffffff)) {
+  if (0xff < param_3) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\reliablemsg.cpp",
                     0x3ad,0,"sequenceNum <= RMSG_MAX_SEQUENCE_NUM\n\t%i, %i");
   }
   MSG_Init(amStack_60,s_msgBuildBuf,0x4e1);
   MSG_WriteString(amStack_60,"RA");
-  MSG_WriteByte(amStack_60,(int)uVar5);
-  nVar2 = NET_GetLocalNetIDFromLocalClientNum(LVar1);
-  MSG_WriteByte(amStack_60,nVar2);
-  bVar3 = NET_OutOfBandData(NS_MAXCLIENTS,in_stack_ffffff58,(uchar *)*(undefined8 *)uVar4,
-                            (int)((undefined8 *)uVar4)[1]);
-  __restgprlr_28(bVar3);
+  MSG_WriteByte(amStack_60,param_3);
+  nVar1 = NET_GetLocalNetIDFromLocalClientNum(param_1);
+  MSG_WriteByte(amStack_60,nVar1);
+  uVar2._0_4_ = param_2->type;
+  uVar2._4_1_ = param_2->ip[0];
+  uVar2._5_1_ = param_2->ip[1];
+  uVar2._6_1_ = param_2->ip[2];
+  uVar2._7_1_ = param_2->ip[3];
+  uVar3 = param_2->localNetID;
+  NET_OutOfBandData(NS_MAXCLIENTS,in_stack_ffffff58,(uchar *)uVar2,uVar3);
   return;
 }
 
 
 // 82611F90  RMsg_HandleReliablePacket  (universal/reliablemsg.cpp:960)
 
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
 /* WARNING: Restarted to delay deadcode elimination for space: stack */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
@@ -1415,21 +1344,14 @@ int RMsg_HandleReliablePacket
   bool bVar1;
   netadrtype_t nVar2;
   uchar auVar3 [4];
-  longlong lVar4;
-  int iVar5;
-  uint uVar6;
-  char *pcVar8;
-  byte bVar9;
-  ulonglong uVar10;
-  longlong lVar11;
-  longlong lVar12;
-  ulonglong uVar13;
-  longlong lVar14;
+  int iVar4;
+  uint uVar5;
+  char *pcVar6;
+  byte bVar7;
   code *in_r9;
-  ulonglong in_r10;
-  byte *pbVar15;
-  uint uVar16;
-  uint uVar17;
+  byte *in_r10;
+  uint uVar8;
+  uint uVar9;
   netadrtype_t in_stack_00000020;
   uchar auStack00000024 [4];
   longlong lStack00000028;
@@ -1437,96 +1359,84 @@ int RMsg_HandleReliablePacket
   msg_t mStack_9c0;
   uchar auStack_990 [1264];
   char acStack_4a0 [1184];
-  msg_t *pmVar7;
   
   nVar2 = in_stack_00000020;
-  lVar14 = (longlong)(int)param_7;
-  uVar13 = (ulonglong)(int)param_6;
-  lVar12 = (longlong)param_5;
-  lVar11 = (longlong)(int)param_4;
-  uVar10 = (ulonglong)(int)param_2;
-  lVar4 = (longlong)(int)param_1;
-  __savegprlr();
-  _in_stack_00000020 = lVar11;
-  lStack00000028 = lVar12;
-  if ((uVar10 & 0xffffffff) == 0) {
+  lStack00000028 = (longlong)param_5;
+  _in_stack_00000020 = (longlong)(int)param_4;
+  if (param_2 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\reliablemsg.cpp",
                     0x3cd,0,"%s");
   }
-  if ((uVar13 & 0xffffffff) == 0) {
+  if (param_6 == (_func___cdecl_bool_LocalClientNum_t_netadr_t_char_ptr_msg_t_ptr_int *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\reliablemsg.cpp",
                     0x3ce,0,"%s");
   }
-  if ((in_r10 & 0xffffffff) == 0) {
+  if (in_r10 == (byte *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\reliablemsg.cpp",
                     0x3cf,0,"%s");
   }
-  iVar5 = I_strcmp((char *)uVar10,"RM");
-  if (iVar5 != 0) {
-    iVar5 = 0;
-    __restgprlr();
-    return iVar5;
+  iVar4 = I_strcmp(param_2,"RM");
+  if (iVar4 != 0) {
+    return 0;
   }
-  pbVar15 = (byte *)in_r10;
-  *pbVar15 = 0;
+  *in_r10 = 0;
   bVar1 = false;
   if ((reliableDebug->current).enabled != false) {
     NET_AdrToString(in_stack_fffff5d8);
     Com_Printf(0x19,"RMSG: Received reliable packet from %s\n");
   }
   auVar3 = auStack00000024;
-  pmVar7 = (msg_t *)uVar13;
-  uVar6 = MSG_ReadByte(pmVar7);
-  uVar17 = 0;
-  if (pmVar7->overflowed == 0) {
-    uVar16 = 0;
+  uVar5 = MSG_ReadByte((msg_t *)param_6);
+  uVar9 = 0;
+  if (*(int *)param_6 == 0) {
+    uVar8 = 0;
     do {
-      uVar17 = uVar6;
-      if (0xff < uVar17) {
+      uVar9 = uVar5;
+      if (0xff < uVar9) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\reliablemsg.cpp"
                         ,0x3e6,0,"sequence <= RMSG_MAX_SEQUENCE_NUM\n\t%i, %i");
       }
-      iVar5 = MSG_ReadByte(pmVar7);
-      uVar6 = MSG_ReadLong(pmVar7);
-      if (pmVar7->overflowed != 0) {
+      iVar4 = MSG_ReadByte((msg_t *)param_6);
+      uVar5 = MSG_ReadLong((msg_t *)param_6);
+      if (*(int *)param_6 != 0) {
         if (alwaysfails == 0) {
-          iVar5 = 0x3f3;
-          pcVar8 = "message overflow, packet likely tampered with";
+          iVar4 = 0x3f3;
+          pcVar6 = "message overflow, packet likely tampered with";
 LAB_826122e4:
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\reliablemsg.cpp"
-                          ,iVar5,0,pcVar8);
+                          ,iVar4,0,pcVar6);
         }
 LAB_826122f0:
-        uVar17 = uVar16;
+        uVar9 = uVar8;
         if (!bVar1) goto LAB_826122fc;
         break;
       }
-      if (0x4e1 < uVar6) {
+      if (0x4e1 < uVar5) {
         if (alwaysfails == 0) {
-          iVar5 = 0x3fa;
+          iVar4 = 0x3fa;
 LAB_826122dc:
-          pcVar8 = "msgSize overflow, packet likely tampered with";
+          pcVar6 = "msgSize overflow, packet likely tampered with";
           goto LAB_826122e4;
         }
         goto LAB_826122f0;
       }
-      MSG_ReadData(pmVar7,auStack_990,uVar6);
-      if (pmVar7->overflowed != 0) {
+      MSG_ReadData((msg_t *)param_6,auStack_990,uVar5);
+      if (*(int *)param_6 != 0) {
         if (alwaysfails == 0) {
-          iVar5 = 0x401;
+          iVar4 = 0x401;
           goto LAB_826122dc;
         }
         goto LAB_826122f0;
       }
       bVar1 = true;
-      auStack_990[uVar6] = '\0';
-      if ((uVar17 < uVar16) && (uVar17 != 0)) {
+      auStack_990[uVar5] = '\0';
+      if ((uVar9 < uVar8) && (uVar9 != 0)) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\reliablemsg.cpp"
                         ,0x40e,0,"%s");
       }
-      MSG_InitReadOnly(&mStack_9c0,auStack_990,uVar6);
+      MSG_InitReadOnly(&mStack_9c0,auStack_990,uVar5);
       MSG_BeginReading(&mStack_9c0);
-      pcVar8 = MSG_ReadStringLine(&mStack_9c0,acStack_4a0,0x400);
+      pcVar6 = MSG_ReadStringLine(&mStack_9c0,acStack_4a0,0x400);
       if ((showpackets->current).integer != 0) {
         NET_AdrToString(in_stack_fffff5d8);
         Com_Printf(0x10,"reliable recv: %s (%i)->\'%s\'\n");
@@ -1534,20 +1444,18 @@ LAB_826122dc:
       if ((reliableDebug->current).enabled != false) {
         Com_Printf(0x19,"RMSG: Seq=%i, Str=\'%s\'\n");
       }
-      bVar9 = (*in_r9)(lVar4,CONCAT44(nVar2,auVar3),iVar5,pcVar8,&mStack_9c0,lVar14);
-      *pbVar15 = bVar9 | *pbVar15;
-      uVar6 = MSG_ReadByte(pmVar7);
-      uVar16 = uVar17;
-    } while (pmVar7->overflowed == 0);
+      bVar7 = (*in_r9)(param_1,CONCAT44(nVar2,auVar3),iVar4,pcVar6,&mStack_9c0,param_7);
+      *in_r10 = bVar7 | *in_r10;
+      uVar5 = MSG_ReadByte((msg_t *)param_6);
+      uVar8 = uVar9;
+    } while (*(int *)param_6 == 0);
   }
   else {
 LAB_826122fc:
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\reliablemsg.cpp",
                     0x421,0,"%s");
   }
-  RMsg_SendSequenceAck((LocalClientNum_t)lVar4,(netadr_t *)&stack0x00000020,uVar17);
-  iVar5 = 1;
-  __restgprlr();
-  return iVar5;
+  RMsg_SendSequenceAck(param_1,(netadr_t *)&stack0x00000020,uVar9);
+  return 1;
 }
 

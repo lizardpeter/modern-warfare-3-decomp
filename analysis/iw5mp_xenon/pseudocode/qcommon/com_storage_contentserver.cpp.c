@@ -304,134 +304,121 @@ bool AllocContentServerArray<dwCSDownloadSummaryTask>
 
 // 824F2F10  AllocContentServerArray<contentServerPrivateData>  (qcommon/com_storage_contentserver.h:211)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 bool AllocContentServerArray<contentServerPrivateData>
                (contentServerPrivateData **param_1,int param_2,char *param_3)
 
 {
-  uint *puVar1;
-  undefined1 uVar4;
-  uint uVar2;
-  void *pvVar3;
+  contentServerPrivateData *pcVar1;
+  longlong lVar2;
+  longlong lVar3;
+  longlong lVar4;
   longlong lVar5;
-  longlong lVar6;
-  longlong lVar7;
-  longlong lVar8;
   
-  lVar5 = (longlong)param_2;
-  puVar1 = (uint *)__savegprlr_26(param_1,lVar5,param_3);
-  if (*puVar1 != 0) {
-    uVar4 = __restgprlr_26(1);
-    return (bool)uVar4;
+  lVar2 = (longlong)param_2;
+  if (*param_1 != (contentServerPrivateData *)0x0) {
+    return true;
   }
-  uVar2 = (int)lVar5 * 0x4bb8;
-  pvVar3 = PMem_AllocFromSource_NoDebug(uVar2,8,4,PMEM_SOURCE_DATABASE);
-  if (pvVar3 != (void *)0x0) {
-    *puVar1 = (uint)pvVar3;
-    if (0 < (int)lVar5) {
-      lVar6 = 0;
+  pcVar1 = PMem_AllocFromSource_NoDebug(param_2 * 0x4bb8,8,4,PMEM_SOURCE_DATABASE);
+  if (pcVar1 != (contentServerPrivateData *)0x0) {
+    *param_1 = pcVar1;
+    if (0 < param_2) {
+      lVar3 = 0;
       do {
-        if ((ulonglong)*puVar1 + lVar6 != 0) {
-          lVar7 = (ulonglong)*puVar1 + lVar6 + 0x10;
-          lVar8 = 9;
+        if (ZEXT48(*param_1) + lVar3 != 0) {
+          lVar4 = ZEXT48(*param_1) + lVar3 + 0x10;
+          lVar5 = 9;
           do {
-            bdFileMetaData::bdFileMetaData((bdFileMetaData *)lVar7);
-            lVar8 = lVar8 + -1;
-            lVar7 = lVar7 + 0x790;
-          } while (-1 < lVar8);
+            bdFileMetaData::bdFileMetaData((bdFileMetaData *)lVar4);
+            lVar5 = lVar5 + -1;
+            lVar4 = lVar4 + 0x790;
+          } while (-1 < lVar5);
         }
-        lVar5 = lVar5 + -1;
-        lVar6 = lVar6 + 0x4bb8;
-      } while (lVar5 != 0);
+        lVar2 = lVar2 + -1;
+        lVar3 = lVar3 + 0x4bb8;
+      } while (lVar2 != 0);
     }
-    s_AllocatedContentServerMemorySize = s_AllocatedContentServerMemorySize + uVar2;
-    uVar4 = __restgprlr_26(1);
-    return (bool)uVar4;
+    s_AllocatedContentServerMemorySize = s_AllocatedContentServerMemorySize + param_2 * 0x4bb8;
+    return true;
   }
-  uVar4 = __restgprlr_26(0);
-  return (bool)uVar4;
+  return false;
 }
 
 
 // 824F2FD0  AllocContentServerArray<dwCSReadFileTask>  (qcommon/com_storage_contentserver.h:211)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 bool AllocContentServerArray<dwCSReadFileTask>(dwCSReadFileTask **param_1,int param_2,char *param_3)
 
 {
-  uint *puVar1;
-  undefined1 uVar4;
-  uint uVar2;
-  void *pvVar3;
-  longlong lVar5;
-  longlong lVar6;
+  dwCSReadFileTask *pdVar1;
+  longlong lVar2;
+  longlong lVar3;
   
-  lVar5 = (longlong)param_2;
-  puVar1 = (uint *)__savegprlr_28(param_1,lVar5,param_3);
-  if (*puVar1 != 0) {
-    uVar4 = __restgprlr_28(1);
-    return (bool)uVar4;
+  lVar2 = (longlong)param_2;
+  if (*param_1 != (dwCSReadFileTask *)0x0) {
+    return true;
   }
-  uVar2 = (int)lVar5 * 0x7c8;
-  pvVar3 = PMem_AllocFromSource_NoDebug(uVar2,8,4,PMEM_SOURCE_DATABASE);
-  if (pvVar3 != (void *)0x0) {
-    *puVar1 = (uint)pvVar3;
-    if (0 < (int)lVar5) {
-      lVar6 = 0;
+  pdVar1 = PMem_AllocFromSource_NoDebug(param_2 * 0x7c8,8,4,PMEM_SOURCE_DATABASE);
+  if (pdVar1 != (dwCSReadFileTask *)0x0) {
+    *param_1 = pdVar1;
+    if (0 < param_2) {
+      lVar3 = 0;
       do {
-        if ((ulonglong)*puVar1 + lVar6 != 0) {
-          bdFileMetaData::bdFileMetaData((bdFileMetaData *)((int)((ulonglong)*puVar1 + lVar6) + 8));
+        if (ZEXT48(*param_1) + lVar3 != 0) {
+          bdFileMetaData::bdFileMetaData((bdFileMetaData *)((int)(ZEXT48(*param_1) + lVar3) + 8));
         }
-        lVar5 = lVar5 + -1;
-        lVar6 = lVar6 + 0x7c8;
-      } while (lVar5 != 0);
+        lVar2 = lVar2 + -1;
+        lVar3 = lVar3 + 0x7c8;
+      } while (lVar2 != 0);
     }
-    s_AllocatedContentServerMemorySize = s_AllocatedContentServerMemorySize + uVar2;
-    uVar4 = __restgprlr_28(1);
-    return (bool)uVar4;
+    s_AllocatedContentServerMemorySize = s_AllocatedContentServerMemorySize + param_2 * 0x7c8;
+    return true;
   }
-  uVar4 = __restgprlr_28(0);
-  return (bool)uVar4;
+  return false;
 }
 
 
 // 824F3078  AllocContentServerArray<dwCSWriteFileTask>  (qcommon/com_storage_contentserver.h:211)
+
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 
 bool AllocContentServerArray<dwCSWriteFileTask>
                (dwCSWriteFileTask **param_1,int param_2,char *param_3)
 
 {
   uint uVar1;
-  uint *puVar2;
-  undefined1 uVar4;
-  void *pvVar3;
-  ulonglong uVar5;
-  longlong lVar6;
+  dwCSWriteFileTask *pdVar2;
+  longlong lVar3;
+  longlong lVar4;
   
-  uVar5 = (ulonglong)param_2;
-  puVar2 = (uint *)__savegprlr_28(param_1,uVar5,param_3);
-  if (*puVar2 != 0) {
-    uVar4 = __restgprlr_28(1);
-    return (bool)uVar4;
+  lVar3 = (longlong)param_2;
+  if (*param_1 != (dwCSWriteFileTask *)0x0) {
+    return true;
   }
-  uVar1 = (uint)((uVar5 + (uVar5 & 0x3fffffff) * 4 & 0xffffffff) << 4);
-  pvVar3 = PMem_AllocFromSource_NoDebug(uVar1,8,4,PMEM_SOURCE_DATABASE);
-  if (pvVar3 != (void *)0x0) {
-    *puVar2 = (uint)pvVar3;
-    if (0 < (int)uVar5) {
-      lVar6 = 0;
+  uVar1 = (uint)((lVar3 + ((ulonglong)(uint)param_2 & 0x3fffffff) * 4 & 0xffffffff) << 4);
+  pdVar2 = PMem_AllocFromSource_NoDebug(uVar1,8,4,PMEM_SOURCE_DATABASE);
+  if (pdVar2 != (dwCSWriteFileTask *)0x0) {
+    *param_1 = pdVar2;
+    if (0 < param_2) {
+      lVar4 = 0;
       do {
-        if ((ulonglong)*puVar2 + lVar6 != 0) {
-          bdFileID::bdFileID((bdFileID *)((int)((ulonglong)*puVar2 + lVar6) + 8));
+        if (ZEXT48(*param_1) + lVar4 != 0) {
+          bdFileID::bdFileID((bdFileID *)((int)(ZEXT48(*param_1) + lVar4) + 8));
         }
-        uVar5 = uVar5 - 1;
-        lVar6 = lVar6 + 0x50;
-      } while (uVar5 != 0);
+        lVar3 = lVar3 + -1;
+        lVar4 = lVar4 + 0x50;
+      } while (lVar3 != 0);
     }
     s_AllocatedContentServerMemorySize = s_AllocatedContentServerMemorySize + uVar1;
-    uVar4 = __restgprlr_28(1);
-    return (bool)uVar4;
+    return true;
   }
-  uVar4 = __restgprlr_28(0);
-  return (bool)uVar4;
+  return false;
 }
 
 
@@ -461,6 +448,8 @@ bool LiveStorage_CS_AllocatedAllMemory(void)
 
 // 824F1A10  LiveStorage_CS_AllocPrivateDataMemory  (qcommon/com_storage_contentserver.cpp:483)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void LiveStorage_CS_AllocPrivateDataMemory(void)
@@ -469,7 +458,6 @@ void LiveStorage_CS_AllocPrivateDataMemory(void)
   bool bVar1;
   uint uVar2;
   
-  __savegprlr_27();
   uVar2 = s_ContentServerMemoryState;
   if (((s_ContentServerMemoryState & 2U) == 0) &&
      (bVar1 = AllocContentServerArray<contentServerPrivateData>
@@ -493,7 +481,6 @@ void LiveStorage_CS_AllocPrivateDataMemory(void)
     g_ContentServerSecondary[2].m_valid = false;
     g_ContentServerSecondary[3].m_valid = false;
   }
-  __restgprlr_27();
   return;
 }
 
@@ -739,32 +726,32 @@ void LiveStorage_CS_CancelTask(int param_1,int param_2)
 
 // 824EF4D8  LiveStorage_CS_Shutdown  (qcommon/com_storage_contentserver.cpp:778)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void LiveStorage_CS_Shutdown(int param_1)
 
 {
+  bool bVar2;
   int iVar1;
-  bool bVar3;
-  int iVar2;
   bdContentStreamingBase *this;
   
-  iVar1 = __savegprlr_28(param_1);
-  if (s_ContentServerState[iVar1] != 1) {
-    bVar3 = Sys_IsMainThread();
-    if ((!bVar3) && (iVar2 = Sys_AreThreadsSuspended(), iVar2 == 0)) {
+  if (s_ContentServerState[param_1] != 1) {
+    bVar2 = Sys_IsMainThread();
+    if ((!bVar2) && (iVar1 = Sys_AreThreadsSuspended(), iVar1 == 0)) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage_contentserver.cpp"
                       ,0x30e,0,"%s\n\t%s");
     }
-    this = (bdContentStreamingBase *)dwGetContentStreaming(iVar1);
+    this = (bdContentStreamingBase *)dwGetContentStreaming(param_1);
     if (this != (bdContentStreamingBase *)0x0) {
       bdContentStreamingBase::abortHTTPOperation(this);
       bdContentStreamingBase::pump(this);
     }
     LiveStorage_CheckOngoingSessionTasks();
-    LiveStorage_CS_CancelTasks(iVar1);
-    dwLobbyPump(iVar1);
-    s_ContentServerState[iVar1] = 1;
+    LiveStorage_CS_CancelTasks(param_1);
+    dwLobbyPump(param_1);
+    s_ContentServerState[param_1] = 1;
   }
-  __restgprlr_28();
   return;
 }
 
@@ -812,35 +799,34 @@ bool LiveStorage_CS_IsAvailable(int param_1)
 
 // 824F1E08  LiveStorage_CS_Init  (qcommon/com_storage_contentserver.cpp:891)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void LiveStorage_CS_Init(int param_1)
 
 {
-  int iVar1;
   bdLobbyService *this;
-  bool bVar3;
-  int iVar2;
+  bool bVar2;
+  int iVar1;
   
-  iVar1 = __savegprlr_28(param_1);
-  if ((s_ContentServerState[iVar1] & 4U) == 0) {
-    this = dwGetLobbyService(iVar1);
-    if ((((this != (bdLobbyService *)0x0) && (bVar3 = Live_IsUserSignedInToDemonware(iVar1), bVar3))
-        && (bVar3 = bdLobbyService::isConnected(this), bVar3)) &&
-       (bVar3 = LiveStorage_CS_AllocatedAllMemory(), bVar3)) {
-      if ((s_ContentServerState[iVar1] & 2U) == 0) {
-        iVar2 = LiveStorage_CS_InitDemonware(iVar1);
-        if (iVar2 != 2) {
+  if (((((s_ContentServerState[param_1] & 4U) == 0) &&
+       (this = dwGetLobbyService(param_1), this != (bdLobbyService *)0x0)) &&
+      (bVar2 = Live_IsUserSignedInToDemonware(param_1), bVar2)) &&
+     ((bVar2 = bdLobbyService::isConnected(this), bVar2 &&
+      (bVar2 = LiveStorage_CS_AllocatedAllMemory(), bVar2)))) {
+    if ((s_ContentServerState[param_1] & 2U) == 0) {
+      iVar1 = LiveStorage_CS_InitDemonware(param_1);
+      if (iVar1 != 2) {
                     /* WARNING: Subroutine does not return */
-          Sys_Error("Failed initialization of DW content server.\n");
-        }
-        s_ContentServerState[iVar1] = s_ContentServerState[iVar1] | 2;
+        Sys_Error("Failed initialization of DW content server.\n");
       }
-      if ((s_ContentServerState[iVar1] & 2U) != 0) {
-        s_ContentServerState[iVar1] = s_ContentServerState[iVar1] | 4;
-      }
-      LiveStorage_CS_RefreshPrivateData(iVar1);
+      s_ContentServerState[param_1] = s_ContentServerState[param_1] | 2;
     }
+    if ((s_ContentServerState[param_1] & 2U) != 0) {
+      s_ContentServerState[param_1] = s_ContentServerState[param_1] | 4;
+    }
+    LiveStorage_CS_RefreshPrivateData(param_1);
   }
-  __restgprlr_28();
   return;
 }
 
@@ -965,38 +951,37 @@ void LiveStorage_CS_GetFriendPrivateData_Success(int param_1,contentServerPrivat
 
 // 824F1FC0  LiveStorage_CS_GetFriendPrivateData  (qcommon/com_storage_contentserver.cpp:1020)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 contentServerPrivateData * LiveStorage_CS_GetFriendPrivateData(int param_1,ulong64 param_2)
 
 {
-  int iVar2;
-  bool bVar4;
-  bool bVar5;
+  bool bVar2;
+  bool bVar3;
   ulong64 uVar1;
-  contentServerPrivateData *pcVar3;
   contentServerGetListingInfo local_40 [2];
   
-  iVar2 = __savegprlr_29(param_1);
-  if (g_ContentServerSecondary[iVar2].m_playerXuid != param_2) {
-    g_ContentServerSecondary[iVar2].m_valid = false;
+  if (g_ContentServerSecondary[param_1].m_playerXuid != param_2) {
+    g_ContentServerSecondary[param_1].m_valid = false;
   }
-  pcVar3 = g_ContentServerSecondary + iVar2;
-  if (g_ContentServerSecondary[iVar2].m_valid != false) goto LAB_824f20fc;
-  if ((s_ContentServerState[iVar2] & 4U) == 0) {
-LAB_824f203c:
-    bVar5 = false;
+  if (g_ContentServerSecondary[param_1].m_valid != false) {
+    return g_ContentServerSecondary + param_1;
   }
-  else {
-    bVar4 = LiveStorage_CS_AllocatedAllMemory();
-    bVar5 = true;
-    if (!bVar4) goto LAB_824f203c;
+  if ((s_ContentServerState[param_1] & 4U) != 0) {
+    bVar2 = LiveStorage_CS_AllocatedAllMemory();
+    bVar3 = true;
+    if (bVar2) goto LAB_824f2040;
   }
-  if (!bVar5) {
-    LiveStorage_CS_Init(iVar2);
+  bVar3 = false;
+LAB_824f2040:
+  if (!bVar3) {
+    LiveStorage_CS_Init(param_1);
   }
-  bVar5 = LiveStorage_CS_IsAvailable(iVar2);
-  if ((bVar5) &&
-     (bVar5 = TaskManager_TaskIsInProgressForController(&storageTasks,0x13,iVar2), !bVar5)) {
-    uVar1 = Live_GetXuid(iVar2);
+  bVar3 = LiveStorage_CS_IsAvailable(param_1);
+  if ((bVar3) &&
+     (bVar3 = TaskManager_TaskIsInProgressForController(&storageTasks,0x13,param_1), !bVar3)) {
+    uVar1 = Live_GetXuid(param_1);
     if (param_2 == uVar1) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage_contentserver.cpp"
                       ,0x40d,0,"%s");
@@ -1008,198 +993,187 @@ LAB_824f203c:
     local_40[0].m_successCallback = LiveStorage_CS_GetFriendPrivateData_Success;
     local_40[0].m_failureCallback = (_func___cdecl_void_int_bdLobbyErrorCode *)0x0;
     local_40[0].m_playerXUID = param_2;
-    LiveStorage_CS_GetListing(iVar2,local_40);
-    Commerce_GetSubscriptionStatusFromDW(iVar2,param_2);
+    LiveStorage_CS_GetListing(param_1,local_40);
+    Commerce_GetSubscriptionStatusFromDW(param_1,param_2);
   }
-  pcVar3 = (contentServerPrivateData *)0x0;
-LAB_824f20fc:
-  pcVar3 = (contentServerPrivateData *)__restgprlr_29(pcVar3);
-  return pcVar3;
+  return (contentServerPrivateData *)0x0;
 }
 
 
 // 824EF708  LiveStorage_CS_GetListing  (qcommon/com_storage_contentserver.cpp:1067)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 int LiveStorage_CS_GetListing(int param_1,contentServerGetListingInfo *param_2)
 
 {
   dwCSListTask *pdVar1;
-  dwCSListTask *pdVar2;
+  bool bVar5;
+  bool bVar6;
+  overlappedTask *poVar3;
+  ulong64 uVar2;
   int iVar4;
-  bool bVar7;
-  bool bVar8;
-  overlappedTask *poVar5;
-  ulong64 uVar3;
-  int iVar6;
-  ulong64 *puVar9;
-  ulonglong uVar10;
-  contentServerPrivateData *pcVar11;
+  ulonglong uVar7;
+  contentServerPrivateData *pcVar8;
+  dwCSListTask *pdVar9;
   
-  uVar10 = (ulonglong)(int)param_2;
-  iVar4 = __savegprlr_27(param_1);
-  if ((uVar10 & 0xffffffff) == 0) {
+  if (param_2 == (contentServerGetListingInfo *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage_contentserver.cpp"
                     ,0x42c,0,"%s");
   }
-  puVar9 = (ulong64 *)uVar10;
-  if (*puVar9 == 0) {
+  if (param_2->m_playerXUID == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage_contentserver.cpp"
                     ,0x42d,0,"%s");
   }
-  if ((iVar4 < 0) || (3 < iVar4)) {
+  if ((param_1 < 0) || (3 < param_1)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage_contentserver.cpp"
                     ,0x42e,0,"%s");
   }
-  uVar10 = ZEXT48(g_CSListTask);
-  if (uVar10 == 0) {
+  uVar7 = ZEXT48(g_CSListTask);
+  if (uVar7 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage_contentserver.cpp"
                     ,0x42f,0,"%s");
-    uVar10 = ZEXT48(g_CSListTask);
+    uVar7 = ZEXT48(g_CSListTask);
   }
-  if ((s_ContentServerState[iVar4] & 4U) != 0) {
-    bVar7 = LiveStorage_CS_AllocatedAllMemory();
-    bVar8 = true;
-    if (bVar7) goto LAB_824ef808;
+  if ((s_ContentServerState[param_1] & 4U) != 0) {
+    bVar5 = LiveStorage_CS_AllocatedAllMemory();
+    bVar6 = true;
+    if (bVar5) goto LAB_824ef808;
   }
-  bVar8 = false;
+  bVar6 = false;
 LAB_824ef808:
-  if ((((bVar8) && ((uVar10 & 0xffffffff) != 0)) && (*puVar9 != 0)) && ((-1 < iVar4 && (iVar4 < 4)))
-     ) {
-    bVar8 = LiveStorage_CheckConnection(iVar4);
-    if (bVar8) {
-      bVar8 = TaskManager_TaskIsInProgressForController(&storageTasks,0x13,iVar4);
-      if (bVar8) {
+  if ((((bVar6) && ((uVar7 & 0xffffffff) != 0)) && (param_2->m_playerXUID != 0)) &&
+     ((-1 < param_1 && (param_1 < 4)))) {
+    bVar6 = LiveStorage_CheckConnection(param_1);
+    if (bVar6) {
+      bVar6 = TaskManager_TaskIsInProgressForController(&storageTasks,0x13,param_1);
+      if (bVar6) {
         Com_Printf(0xe,"Get listing task already in progress, earlying out (cont %i)\n");
-        iVar4 = __restgprlr_27(0);
-        return iVar4;
+        return 0;
       }
-      poVar5 = TaskManager_GetOpenTaskSlot(&storageTasks,iVar4,0x13);
-      if (poVar5 != (overlappedTask *)0x0) {
-        uVar3 = Live_GetXuid(iVar4);
-        pcVar11 = g_ContentServerSecondary;
-        if (*puVar9 == uVar3) {
-          pcVar11 = g_ContentServerPrimary;
+      poVar3 = TaskManager_GetOpenTaskSlot(&storageTasks,param_1,0x13);
+      if (poVar3 != (overlappedTask *)0x0) {
+        uVar2 = Live_GetXuid(param_1);
+        pcVar8 = g_ContentServerSecondary;
+        if (param_2->m_playerXUID == uVar2) {
+          pcVar8 = g_ContentServerPrimary;
         }
-        pcVar11 = pcVar11 + iVar4;
-        if (((pcVar11->m_valid != false) &&
-            (iVar6 = Sys_Milliseconds(), iVar6 - pcVar11->m_lastRead < 60000)) &&
-           (pcVar11->m_playerXuid == *puVar9)) {
-          TaskManager_ClearTask(poVar5);
+        pcVar8 = pcVar8 + param_1;
+        if (((pcVar8->m_valid != false) &&
+            (iVar4 = Sys_Milliseconds(), iVar4 - pcVar8->m_lastRead < 60000)) &&
+           (pcVar8->m_playerXuid == param_2->m_playerXUID)) {
+          TaskManager_ClearTask(poVar3);
           Com_Printf(0xe,"Trying to fetch listing too often, earlying out (cont %i)\n");
-          iVar4 = __restgprlr_27(0);
-          return iVar4;
+          return 0;
         }
-        pdVar2 = g_CSListTask;
-        pcVar11->m_valid = false;
-        pdVar1 = pdVar2 + iVar4;
-        pdVar1->m_maxNumResults = 10;
-        pdVar1->m_ownerID = *puVar9;
-        pdVar1->m_category = *(ushort *)(puVar9 + 2);
-        pdVar1->m_fileName = *(char **)((int)puVar9 + 0x14);
-        pdVar1->m_startDate = *(int *)((int)puVar9 + 0xc);
-        pdVar1->m_offset = *(ushort *)(puVar9 + 1);
-        pdVar2[iVar4].m_descriptors = pcVar11->m_descriptors;
-        uVar3 = Live_GetXuid(iVar4);
-        if (*puVar9 != uVar3) {
-          iVar4 = iVar4 + 4;
+        pdVar1 = g_CSListTask;
+        pcVar8->m_valid = false;
+        pdVar9 = pdVar1 + param_1;
+        pdVar9->m_maxNumResults = 10;
+        pdVar9->m_ownerID = param_2->m_playerXUID;
+        pdVar9->m_category = param_2->m_category;
+        pdVar9->m_fileName = param_2->m_fileName;
+        pdVar9->m_startDate = param_2->m_startDate;
+        pdVar9->m_offset = param_2->m_offset;
+        pdVar1[param_1].m_descriptors = pcVar8->m_descriptors;
+        uVar2 = Live_GetXuid(param_1);
+        if (param_2->m_playerXUID != uVar2) {
+          param_1 = param_1 + 4;
         }
-        pdVar1->m_bufferLocation = iVar4;
-        pdVar1->m_successCallback =
-             *(_func___cdecl_void_int_contentServerPrivateData_ptr **)(puVar9 + 3);
-        pdVar1->m_failureCallback =
-             *(_func___cdecl_void_int_bdLobbyErrorCode **)((int)puVar9 + 0x1c);
-        poVar5->data = pdVar1;
-        iVar4 = dwCSGetListing(poVar5,pdVar1);
+        pdVar9->m_bufferLocation = param_1;
+        pdVar9->m_successCallback = param_2->m_successCallback;
+        pdVar9->m_failureCallback = param_2->m_failureCallback;
+        poVar3->data = pdVar9;
+        iVar4 = dwCSGetListing(poVar3,pdVar9);
         if (iVar4 != 0) {
-          iVar4 = __restgprlr_27(1);
-          return iVar4;
+          return 1;
         }
-        TaskManager_ClearTask(poVar5);
+        TaskManager_ClearTask(poVar3);
         Com_Printf(0xe,"Could not create task to fetch file list from DW.\n");
-        iVar4 = __restgprlr_27(0);
-        return iVar4;
+        return 0;
       }
       Com_Printf(0xe,"Couldn\'t allocate task for storage file listing\n");
-      iVar4 = __restgprlr_27(0);
-      return iVar4;
+      return 0;
     }
     Com_Printf(0xe,"Not connected to live or Demonware(cont %i)\n");
   }
-  iVar4 = __restgprlr_27(0);
-  return iVar4;
+  return 0;
 }
 
 
 // 824F1368  LiveStorage_CS_GetListingComplete  (qcommon/com_storage_contentserver.cpp:1147)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 taskCompleteResults LiveStorage_CS_GetListingComplete(int param_1)
 
 {
   dwCSListTask *pdVar1;
-  overlappedTask *poVar2;
-  int iVar3;
-  taskCompleteResults tVar4;
-  uint uVar5;
-  int iVar6;
-  contentServerPrivateData *pcVar7;
+  taskCompleteResults tVar2;
+  uint uVar3;
+  int iVar4;
+  overlappedTask *poVar5;
+  contentServerPrivateData *pcVar6;
   
-  iVar3 = __savegprlr_28(param_1);
-  poVar2 = storageTasks.tasks + iVar3;
-  if (storageTasks.tasks[iVar3].active == false) {
+  poVar5 = storageTasks.tasks + param_1;
+  if (storageTasks.tasks[param_1].active == false) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage_contentserver.cpp"
                     ,0x47f,0,"%s");
   }
-  if (storageTasks.tasks[iVar3].type != 0x13) {
+  if (storageTasks.tasks[param_1].type != 0x13) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage_contentserver.cpp"
                     ,0x480,0,"%s");
   }
-  pdVar1 = storageTasks.tasks[iVar3].data;
-  tVar4 = dwCSGetListingComplete(poVar2,pdVar1);
-  if (tVar4 != TASK_COMPLETE) {
-    if (tVar4 == TASK_ERROR) {
+  pdVar1 = storageTasks.tasks[param_1].data;
+  tVar2 = dwCSGetListingComplete(poVar5,pdVar1);
+  if (tVar2 != TASK_COMPLETE) {
+    if (tVar2 == TASK_ERROR) {
       if (pdVar1->m_failureCallback != (_func___cdecl_void_int_bdLobbyErrorCode *)0x0) {
-        (*pdVar1->m_failureCallback)((int)storageTasks.tasks[iVar3].controllerIndex,pdVar1->m_error)
-        ;
+        (*pdVar1->m_failureCallback)
+                  ((int)storageTasks.tasks[param_1].controllerIndex,pdVar1->m_error);
       }
-      TaskManager_ClearTask(poVar2);
+      TaskManager_ClearTask(poVar5);
       Com_Printf(0xe,"Get Listing task errored out.\n");
     }
-    tVar4 = __restgprlr_28(tVar4);
-    return tVar4;
+    return tVar2;
   }
-  iVar6 = pdVar1->m_bufferLocation;
-  pcVar7 = g_ContentServerPrimary;
-  if (3 < iVar6) {
-    iVar6 = iVar6 + -4;
-    pcVar7 = g_ContentServerSecondary;
+  iVar4 = pdVar1->m_bufferLocation;
+  pcVar6 = g_ContentServerPrimary;
+  if (3 < iVar4) {
+    iVar4 = iVar4 + -4;
+    pcVar6 = g_ContentServerSecondary;
   }
-  pcVar7 = pcVar7 + iVar6;
-  pcVar7->m_playerXuid = pdVar1->m_ownerID;
-  uVar5 = bdRemoteTask::getNumResults(storageTasks.tasks[iVar3].u.remoteTask.m_ptr);
-  pcVar7->m_descriptorCount = uVar5;
-  iVar6 = Sys_Milliseconds();
-  pcVar7->m_lastRead = iVar6;
-  pcVar7->m_valid = true;
+  pcVar6 = pcVar6 + iVar4;
+  pcVar6->m_playerXuid = pdVar1->m_ownerID;
+  uVar3 = bdRemoteTask::getNumResults(storageTasks.tasks[param_1].u.remoteTask.m_ptr);
+  pcVar6->m_descriptorCount = uVar3;
+  iVar4 = Sys_Milliseconds();
+  pcVar6->m_lastRead = iVar4;
+  pcVar6->m_valid = true;
   if (pdVar1->m_successCallback != (_func___cdecl_void_int_contentServerPrivateData_ptr *)0x0) {
-    (*pdVar1->m_successCallback)((int)storageTasks.tasks[iVar3].controllerIndex,pcVar7);
+    (*pdVar1->m_successCallback)((int)storageTasks.tasks[param_1].controllerIndex,pcVar6);
   }
-  TaskManager_ClearTask(poVar2);
-  tVar4 = __restgprlr_28(1);
-  return tVar4;
+  TaskManager_ClearTask(poVar5);
+  return TASK_COMPLETE;
 }
 
 
 // 824F2108  LiveStorage_CS_GetDescriptors  (qcommon/com_storage_contentserver.cpp:1184)
 
+/* WARNING: Function: __savegprlr_20 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_20 replaced with injection: xenon_save_restore */
+
 int LiveStorage_CS_GetDescriptors(int param_1,contentServerGetDescriptorsInfo *param_2)
 
 {
   int *piVar1;
-  dwCSDescriptorsTask *pdVar2;
-  int iVar3;
+  char *pcVar2;
   bool bVar5;
   bool bVar6;
-  overlappedTask *poVar4;
+  overlappedTask *poVar3;
+  int iVar4;
   ulonglong uVar7;
   longlong lVar8;
   bdFileID *this;
@@ -1207,12 +1181,11 @@ int LiveStorage_CS_GetDescriptors(int param_1,contentServerGetDescriptorsInfo *p
   ulonglong uVar10;
   ulonglong uVar11;
   dwCSUploadSummaryTask **ppdVar12;
-  longlong lVar13;
-  int iVar14;
+  dwCSDescriptorsTask *pdVar13;
+  longlong lVar14;
+  int iVar15;
   
-  uVar7 = (ulonglong)(int)param_2;
-  iVar3 = __savegprlr_20(param_1);
-  if ((uVar7 & 0xffffffff) == 0) {
+  if (param_2 == (contentServerGetDescriptorsInfo *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage_contentserver.cpp"
                     ,0x4a1,0,"%s");
   }
@@ -1220,11 +1193,11 @@ int LiveStorage_CS_GetDescriptors(int param_1,contentServerGetDescriptorsInfo *p
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage_contentserver.cpp"
                     ,0x4a2,0,"%s");
   }
-  if ((iVar3 < 0) || (3 < iVar3)) {
+  if ((param_1 < 0) || (3 < param_1)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage_contentserver.cpp"
                     ,0x4a3,0,"%s");
   }
-  if ((s_ContentServerState[iVar3] & 4U) != 0) {
+  if ((s_ContentServerState[param_1] & 4U) != 0) {
     bVar5 = LiveStorage_CS_AllocatedAllMemory();
     bVar6 = true;
     if (bVar5) goto LAB_824f21e0;
@@ -1232,195 +1205,195 @@ int LiveStorage_CS_GetDescriptors(int param_1,contentServerGetDescriptorsInfo *p
   bVar6 = false;
 LAB_824f21e0:
   if ((bVar6) && (g_CSDescriptorsTask != (dwCSDescriptorsTask *)0x0)) {
-    bVar6 = LiveStorage_CheckConnection(iVar3);
+    bVar6 = LiveStorage_CheckConnection(param_1);
     if (bVar6) {
-      bVar6 = TaskManager_TaskIsInProgressForController(&storageTasks,0x14,iVar3);
+      bVar6 = TaskManager_TaskIsInProgressForController(&storageTasks,0x14,param_1);
       if (bVar6) {
         Com_Printf(0xe,"Get top rated task already in progress, earlying out (cont %i)\n");
-        iVar3 = __restgprlr_20(0);
-        return iVar3;
+        return 0;
       }
-      poVar4 = TaskManager_GetOpenTaskSlot(&storageTasks,iVar3,0x14);
-      if (poVar4 == (overlappedTask *)0x0) {
+      poVar3 = TaskManager_GetOpenTaskSlot(&storageTasks,param_1,0x14);
+      if (poVar3 == (overlappedTask *)0x0) {
         Com_Printf(0xe,"Couldn\'t allocate task to get descriptors\n");
-        iVar3 = __restgprlr_20(0);
-        return iVar3;
+        return 0;
       }
-      pdVar2 = g_CSDescriptorsTask + iVar3;
+      pdVar13 = g_CSDescriptorsTask + param_1;
       this = searchFileIDs;
       if ((_S1 & 1) == 0) {
         _S1 = _S1 | 1;
-        lVar13 = 9;
+        lVar14 = 9;
         do {
           bdFileID::bdFileID(this);
-          lVar13 = lVar13 + -1;
+          lVar14 = lVar14 + -1;
           this = this + 1;
-        } while (-1 < lVar13);
+        } while (-1 < lVar14);
         atexit(`LiveStorage_CS_GetDescriptors'::__l24::
                _dynamic_atexit_destructor_for__searchFileIDs__);
       }
-      piVar1 = (int *)uVar7;
-      uVar7 = (ulonglong)(uint)piVar1[1];
+      uVar7 = (ulonglong)(uint)param_2->m_numFiles;
       uVar9 = 0;
       uVar11 = 0;
-      if (9 < piVar1[1]) {
+      if (9 < param_2->m_numFiles) {
         uVar7 = 10;
       }
       if (0 < (int)uVar7) {
-        iVar14 = 0;
-        iVar3 = 0;
+        iVar15 = 0;
+        iVar4 = 0;
         ppdVar12 = &g_CSUploadSummaryTask;
         uVar10 = uVar7;
         uVar9 = 0;
         do {
           bVar6 = LiveStorage_CSCache_GetDescriptor
-                            (*(ulong64 *)(iVar14 + *piVar1 + 8),
-                             (bdFileMetaData *)(iVar3 + piVar1[2]));
+                            (*(ulong64 *)((int)&param_2->m_fileIDs->m_fileID + iVar15),
+                             (bdFileMetaData *)
+                             (param_2->m_outDescriptors->m_ownerName + iVar4 + -0x28));
           if (bVar6) {
             uVar11 = uVar11 + 1;
-            iVar3 = iVar3 + 0x790;
+            iVar4 = iVar4 + 0x790;
           }
           else {
             uVar9 = uVar9 + 1;
             ppdVar12 = ppdVar12 + 4;
-            *(undefined8 *)ppdVar12 = *(undefined8 *)(iVar14 + *piVar1 + 8);
+            *(undefined8 *)ppdVar12 = *(undefined8 *)((int)&param_2->m_fileIDs->m_fileID + iVar15);
           }
           uVar10 = uVar10 - 1;
-          iVar14 = iVar14 + 0x10;
+          iVar15 = iVar15 + 0x10;
         } while (uVar10 != 0);
       }
-      iVar3 = (int)uVar11;
-      if (iVar3 < (int)uVar7) {
-        lVar13 = uVar7 - uVar11;
+      iVar4 = (int)uVar11;
+      if (iVar4 < (int)uVar7) {
+        lVar14 = uVar7 - uVar11;
         lVar8 = uVar11 * 0x790;
         do {
-          iVar14 = (int)lVar8;
+          iVar15 = (int)lVar8;
           lVar8 = lVar8 + 0x790;
-          *(undefined8 *)(iVar14 + piVar1[2] + 8) = 0;
-          lVar13 = lVar13 + -1;
-        } while (lVar13 != 0);
+          pcVar2 = param_2->m_outDescriptors->m_ownerName + iVar15 + -0x20;
+          pcVar2[0] = '\0';
+          pcVar2[1] = '\0';
+          pcVar2[2] = '\0';
+          pcVar2[3] = '\0';
+          pcVar2[4] = '\0';
+          pcVar2[5] = '\0';
+          pcVar2[6] = '\0';
+          pcVar2[7] = '\0';
+          lVar14 = lVar14 + -1;
+        } while (lVar14 != 0);
       }
-      pdVar2->m_numFiles = uVar9;
-      pdVar2->m_fileIDs = searchFileIDs;
-      pdVar2->m_descriptors = (bdFileMetaData *)(iVar3 * 0x790 + piVar1[2]);
-      iVar14 = piVar1[3];
-      pdVar2->m_cacheLoadedFileCount = iVar3;
-      pdVar2->m_descriptorCount = (int *)(iVar14 - (int)((uVar11 & 0xffffffff) << 2));
-      pdVar2->m_successCallback = (_func___cdecl_void_int *)piVar1[4];
-      pdVar2->m_failureCallback = (_func___cdecl_void_int_bdLobbyErrorCode *)piVar1[5];
-      poVar4->data = pdVar2;
-      iVar3 = dwCSGetDescriptors(poVar4,pdVar2);
-      if (iVar3 == 0) {
-        TaskManager_ClearTask(poVar4);
+      pdVar13->m_numFiles = uVar9;
+      pdVar13->m_fileIDs = searchFileIDs;
+      pdVar13->m_descriptors = param_2->m_outDescriptors + iVar4;
+      piVar1 = param_2->m_outDescriptorCount;
+      pdVar13->m_cacheLoadedFileCount = iVar4;
+      pdVar13->m_descriptorCount = (int *)((int)piVar1 - (int)((uVar11 & 0xffffffff) << 2));
+      pdVar13->m_successCallback = param_2->m_successCallback;
+      pdVar13->m_failureCallback = param_2->m_failureCallback;
+      poVar3->data = pdVar13;
+      iVar4 = dwCSGetDescriptors(poVar3,pdVar13);
+      if (iVar4 == 0) {
+        TaskManager_ClearTask(poVar3);
         Com_Printf(0xe,"Could not create task to fetch descriptors from DW.\n");
-        iVar3 = __restgprlr_20(0);
-        return iVar3;
+        return 0;
       }
-      iVar3 = __restgprlr_20(1);
-      return iVar3;
+      return 1;
     }
     Com_Printf(0xe,"Not connected to live or Demonware(cont %i)\n");
   }
-  iVar3 = __restgprlr_20(0);
-  return iVar3;
+  return 0;
 }
 
 
 // 824F14D8  LiveStorage_CS_GetDescriptorsComplete  (qcommon/com_storage_contentserver.cpp:1280)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 taskCompleteResults LiveStorage_CS_GetDescriptorsComplete(int param_1)
 
 {
   dwCSDescriptorsTask *pdVar1;
-  overlappedTask *poVar2;
-  bdFileMetaData *pbVar3;
-  int iVar4;
-  taskCompleteResults tVar5;
-  uint uVar6;
+  bdFileMetaData *pbVar2;
+  taskCompleteResults tVar3;
+  uint uVar4;
+  overlappedTask *poVar5;
+  int iVar6;
   int iVar7;
-  int iVar8;
   
-  iVar4 = __savegprlr_27(param_1);
-  poVar2 = storageTasks.tasks + iVar4;
-  if (storageTasks.tasks[iVar4].active == false) {
+  poVar5 = storageTasks.tasks + param_1;
+  if (storageTasks.tasks[param_1].active == false) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage_contentserver.cpp"
                     ,0x503,0,"%s");
   }
-  if (storageTasks.tasks[iVar4].type != 0x14) {
+  if (storageTasks.tasks[param_1].type != 0x14) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage_contentserver.cpp"
                     ,0x504,0,"%s");
   }
-  pdVar1 = storageTasks.tasks[iVar4].data;
-  tVar5 = dwCSGetDescriptorsComplete(poVar2,pdVar1);
-  if (tVar5 == TASK_COMPLETE) {
-    uVar6 = bdRemoteTask::getNumResults(storageTasks.tasks[iVar4].u.remoteTask.m_ptr);
-    iVar8 = pdVar1->m_cacheLoadedFileCount;
-    iVar7 = iVar8 * 0x790;
-    pdVar1->m_descriptors = pdVar1->m_descriptors + -iVar8;
+  pdVar1 = storageTasks.tasks[param_1].data;
+  tVar3 = dwCSGetDescriptorsComplete(poVar5,pdVar1);
+  if (tVar3 == TASK_COMPLETE) {
+    uVar4 = bdRemoteTask::getNumResults(storageTasks.tasks[param_1].u.remoteTask.m_ptr);
+    iVar7 = pdVar1->m_cacheLoadedFileCount;
+    iVar6 = iVar7 * 0x790;
+    pdVar1->m_descriptors = pdVar1->m_descriptors + -iVar7;
     if (pdVar1->m_descriptorCount != (int *)0x0) {
-      *pdVar1->m_descriptorCount = iVar8 + uVar6;
+      *pdVar1->m_descriptorCount = iVar7 + uVar4;
     }
-    if (iVar8 < (int)(iVar8 + uVar6)) {
-      iVar8 = (iVar8 + uVar6) - iVar8;
+    if (iVar7 < (int)(iVar7 + uVar4)) {
+      iVar7 = (iVar7 + uVar4) - iVar7;
       do {
-        pbVar3 = (bdFileMetaData *)(pdVar1->m_descriptors->m_ownerName + iVar7 + -0x28);
-        LiveStorage_CSCache_AddDescriptor(pbVar3->m_fileID,pbVar3);
-        iVar8 = iVar8 + -1;
-        iVar7 = iVar7 + 0x790;
-      } while (iVar8 != 0);
+        pbVar2 = (bdFileMetaData *)(pdVar1->m_descriptors->m_ownerName + iVar6 + -0x28);
+        LiveStorage_CSCache_AddDescriptor(pbVar2->m_fileID,pbVar2);
+        iVar7 = iVar7 + -1;
+        iVar6 = iVar6 + 0x790;
+      } while (iVar7 != 0);
     }
     if (pdVar1->m_successCallback != (_func___cdecl_void_int *)0x0) {
-      (*pdVar1->m_successCallback)((int)storageTasks.tasks[iVar4].controllerIndex);
-      TaskManager_ClearTask(poVar2);
-      tVar5 = __restgprlr_27(1);
-      return tVar5;
+      (*pdVar1->m_successCallback)((int)storageTasks.tasks[param_1].controllerIndex);
+      TaskManager_ClearTask(poVar5);
+      return TASK_COMPLETE;
     }
   }
   else {
-    if (tVar5 != TASK_ERROR) goto LAB_824f16a4;
-    if (pdVar1->m_error == BD_CONTENTSTREAMING_FILE_NOT_AVAILABLE) {
-      iVar8 = pdVar1->m_cacheLoadedFileCount;
-      if (0 < iVar8) {
-        pdVar1->m_descriptors = pdVar1->m_descriptors + -iVar8;
-        if (pdVar1->m_descriptorCount != (int *)0x0) {
-          *pdVar1->m_descriptorCount = iVar8;
-        }
-        if (pdVar1->m_successCallback != (_func___cdecl_void_int *)0x0) {
-          (*pdVar1->m_successCallback)((int)storageTasks.tasks[iVar4].controllerIndex);
-        }
-        TaskManager_ClearTask(poVar2);
-        tVar5 = __restgprlr_27(2);
-        return tVar5;
+    if (tVar3 != TASK_ERROR) {
+      return tVar3;
+    }
+    if ((pdVar1->m_error == BD_CONTENTSTREAMING_FILE_NOT_AVAILABLE) &&
+       (iVar7 = pdVar1->m_cacheLoadedFileCount, 0 < iVar7)) {
+      pdVar1->m_descriptors = pdVar1->m_descriptors + -iVar7;
+      if (pdVar1->m_descriptorCount != (int *)0x0) {
+        *pdVar1->m_descriptorCount = iVar7;
       }
+      if (pdVar1->m_successCallback != (_func___cdecl_void_int *)0x0) {
+        (*pdVar1->m_successCallback)((int)storageTasks.tasks[param_1].controllerIndex);
+      }
+      TaskManager_ClearTask(poVar5);
+      return TASK_ERROR;
     }
     Com_Printf(0xe,"Get descriptors task failed.\n");
     if (pdVar1->m_failureCallback != (_func___cdecl_void_int_bdLobbyErrorCode *)0x0) {
-      (*pdVar1->m_failureCallback)((int)storageTasks.tasks[iVar4].controllerIndex,pdVar1->m_error);
+      (*pdVar1->m_failureCallback)((int)storageTasks.tasks[param_1].controllerIndex,pdVar1->m_error)
+      ;
     }
   }
-  TaskManager_ClearTask(poVar2);
-LAB_824f16a4:
-  tVar5 = __restgprlr_27(tVar5);
-  return tVar5;
+  TaskManager_ClearTask(poVar5);
+  return tVar3;
 }
 
 
 // 824EFA40  LiveStorage_CS_Search  (qcommon/com_storage_contentserver.cpp:1336)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 int LiveStorage_CS_Search(int param_1,contentServerSearchInfo *param_2)
 
 {
-  dwCSSearchTask *pdVar1;
-  int iVar2;
+  bool bVar3;
   bool bVar4;
-  bool bVar5;
-  overlappedTask *poVar3;
-  ulonglong uVar6;
-  undefined4 *puVar7;
+  overlappedTask *poVar1;
+  int iVar2;
+  dwCSSearchTask *pdVar5;
   
-  uVar6 = (ulonglong)(int)param_2;
-  iVar2 = __savegprlr_27(param_1);
-  if ((uVar6 & 0xffffffff) == 0) {
+  if (param_2 == (contentServerSearchInfo *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage_contentserver.cpp"
                     ,0x539,0,"%s");
   }
@@ -1428,112 +1401,107 @@ int LiveStorage_CS_Search(int param_1,contentServerSearchInfo *param_2)
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage_contentserver.cpp"
                     ,0x53a,0,"%s");
   }
-  if ((iVar2 < 0) || (3 < iVar2)) {
+  if ((param_1 < 0) || (3 < param_1)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage_contentserver.cpp"
                     ,0x53b,0,"%s");
   }
-  if ((s_ContentServerState[iVar2] & 4U) != 0) {
-    bVar4 = LiveStorage_CS_AllocatedAllMemory();
-    bVar5 = true;
-    if (bVar4) goto LAB_824efb14;
+  if ((s_ContentServerState[param_1] & 4U) != 0) {
+    bVar3 = LiveStorage_CS_AllocatedAllMemory();
+    bVar4 = true;
+    if (bVar3) goto LAB_824efb14;
   }
-  bVar5 = false;
+  bVar4 = false;
 LAB_824efb14:
-  if ((bVar5) && (g_CSSearchTask != (dwCSSearchTask *)0x0)) {
-    bVar5 = LiveStorage_CheckConnection(iVar2);
-    if (bVar5) {
-      bVar5 = TaskManager_TaskIsInProgressForController(&storageTasks,0x15,iVar2);
-      if (bVar5) {
+  if ((bVar4) && (g_CSSearchTask != (dwCSSearchTask *)0x0)) {
+    bVar4 = LiveStorage_CheckConnection(param_1);
+    if (bVar4) {
+      bVar4 = TaskManager_TaskIsInProgressForController(&storageTasks,0x15,param_1);
+      if (bVar4) {
         Com_Printf(0xe,"Search task already in progress, earlying out (cont %i)\n");
-        iVar2 = __restgprlr_27(0);
-        return iVar2;
+        return 0;
       }
-      poVar3 = TaskManager_GetOpenTaskSlot(&storageTasks,iVar2,0x15);
-      pdVar1 = g_CSSearchTask;
-      if (poVar3 == (overlappedTask *)0x0) {
+      poVar1 = TaskManager_GetOpenTaskSlot(&storageTasks,param_1,0x15);
+      pdVar5 = g_CSSearchTask;
+      if (poVar1 == (overlappedTask *)0x0) {
         Com_Printf(0xe,"Couldn\'t allocate task for searching\n");
-        iVar2 = __restgprlr_27(0);
-        return iVar2;
+        return 0;
       }
-      puVar7 = (undefined4 *)uVar6;
-      g_CSSearchTask[iVar2].m_tags = (bdTag *)*puVar7;
-      pdVar1 = pdVar1 + iVar2;
-      pdVar1->m_numTags = puVar7[1];
-      pdVar1->m_startIndex = puVar7[2];
-      pdVar1->m_maxNumResults = puVar7[3];
-      pdVar1->m_resultFileIDs = (bdFileID *)puVar7[4];
-      pdVar1->m_resultFileCount = (int *)puVar7[5];
-      pdVar1->m_resultTotalFileCount = (int *)puVar7[6];
-      pdVar1->m_orderNewestFirst = *(bool *)(puVar7 + 7);
-      pdVar1->m_successCallback = (_func___cdecl_void_int *)puVar7[8];
-      pdVar1->m_failureCallback = (_func___cdecl_void_int_bdLobbyErrorCode *)puVar7[9];
-      poVar3->data = pdVar1;
-      iVar2 = dwCSSearch(poVar3,pdVar1);
+      g_CSSearchTask[param_1].m_tags = param_2->m_tags;
+      pdVar5 = pdVar5 + param_1;
+      pdVar5->m_numTags = param_2->m_numTags;
+      pdVar5->m_startIndex = param_2->m_startIndex;
+      pdVar5->m_maxNumResults = param_2->m_maxFileIDs;
+      pdVar5->m_resultFileIDs = param_2->m_outFileIDs;
+      pdVar5->m_resultFileCount = param_2->m_outFileCount;
+      pdVar5->m_resultTotalFileCount = param_2->m_outTotalFileCount;
+      pdVar5->m_orderNewestFirst = param_2->m_orderNewestFirst;
+      pdVar5->m_successCallback = param_2->m_successCallback;
+      pdVar5->m_failureCallback = param_2->m_failureCallback;
+      poVar1->data = pdVar5;
+      iVar2 = dwCSSearch(poVar1,pdVar5);
       if (iVar2 == 0) {
-        TaskManager_ClearTask(poVar3);
+        TaskManager_ClearTask(poVar1);
         Com_Printf(0xe,"Couldn\'t allocate search task\n");
-        iVar2 = __restgprlr_27(0);
-        return iVar2;
+        return 0;
       }
-      iVar2 = __restgprlr_27(1);
-      return iVar2;
+      return 1;
     }
     Com_Printf(0xe,"Not connected to live or Demonware(cont %i)\n");
   }
-  iVar2 = __restgprlr_27(0);
-  return iVar2;
+  return 0;
 }
 
 
 // 824F16B0  LiveStorage_CS_SearchComplete  (qcommon/com_storage_contentserver.cpp:1396)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 taskCompleteResults LiveStorage_CS_SearchComplete(int param_1)
 
 {
   dwCSSearchTask *pdVar1;
-  overlappedTask *poVar2;
-  int iVar3;
-  taskCompleteResults tVar4;
-  uint uVar5;
+  taskCompleteResults tVar2;
+  uint uVar3;
+  overlappedTask *poVar4;
   
-  iVar3 = __savegprlr_29(param_1);
-  poVar2 = storageTasks.tasks + iVar3;
-  if (storageTasks.tasks[iVar3].active == false) {
+  poVar4 = storageTasks.tasks + param_1;
+  if (storageTasks.tasks[param_1].active == false) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage_contentserver.cpp"
                     ,0x577,0,"%s");
   }
-  if (storageTasks.tasks[iVar3].type != 0x15) {
+  if (storageTasks.tasks[param_1].type != 0x15) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage_contentserver.cpp"
                     ,0x578,0,"%s");
   }
-  pdVar1 = storageTasks.tasks[iVar3].data;
-  tVar4 = dwCSSearchComplete(poVar2,pdVar1);
-  if (tVar4 == TASK_COMPLETE) {
+  pdVar1 = storageTasks.tasks[param_1].data;
+  tVar2 = dwCSSearchComplete(poVar4,pdVar1);
+  if (tVar2 == TASK_COMPLETE) {
     if (pdVar1->m_resultFileCount != (int *)0x0) {
-      uVar5 = bdRemoteTask::getNumResults(storageTasks.tasks[iVar3].u.remoteTask.m_ptr);
-      *pdVar1->m_resultFileCount = uVar5;
+      uVar3 = bdRemoteTask::getNumResults(storageTasks.tasks[param_1].u.remoteTask.m_ptr);
+      *pdVar1->m_resultFileCount = uVar3;
     }
     if (pdVar1->m_resultTotalFileCount != (int *)0x0) {
-      uVar5 = bdRemoteTask::getTotalNumResults(storageTasks.tasks[iVar3].u.remoteTask.m_ptr);
-      *pdVar1->m_resultTotalFileCount = uVar5;
+      uVar3 = bdRemoteTask::getTotalNumResults(storageTasks.tasks[param_1].u.remoteTask.m_ptr);
+      *pdVar1->m_resultTotalFileCount = uVar3;
     }
     if (pdVar1->m_successCallback != (_func___cdecl_void_int *)0x0) {
-      (*pdVar1->m_successCallback)((int)storageTasks.tasks[iVar3].controllerIndex);
-      TaskManager_ClearTask(poVar2);
-      tVar4 = __restgprlr_29(1);
-      return tVar4;
+      (*pdVar1->m_successCallback)((int)storageTasks.tasks[param_1].controllerIndex);
+      TaskManager_ClearTask(poVar4);
+      return TASK_COMPLETE;
     }
   }
   else {
-    if (tVar4 != TASK_ERROR) goto LAB_824f17e4;
+    if (tVar2 != TASK_ERROR) {
+      return tVar2;
+    }
     if (pdVar1->m_failureCallback != (_func___cdecl_void_int_bdLobbyErrorCode *)0x0) {
-      (*pdVar1->m_failureCallback)((int)storageTasks.tasks[iVar3].controllerIndex,pdVar1->m_error);
+      (*pdVar1->m_failureCallback)((int)storageTasks.tasks[param_1].controllerIndex,pdVar1->m_error)
+      ;
     }
   }
-  TaskManager_ClearTask(poVar2);
-LAB_824f17e4:
-  tVar4 = __restgprlr_29(tVar4);
-  return tVar4;
+  TaskManager_ClearTask(poVar4);
+  return tVar2;
 }
 
 
@@ -1550,20 +1518,19 @@ uint LiveStorage_CS_ReadFileData(void *param_1,uint param_2,dwCSReadFileTask *pa
 
 // 824F2430  LiveStorage_CS_ReadFile  (qcommon/com_storage_contentserver.cpp:1437)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
+
 int LiveStorage_CS_ReadFile(int param_1,contentServerReadFileInfo *param_2)
 
 {
-  dwCSReadFileTask *pdVar1;
-  int iVar2;
+  bool bVar3;
   bool bVar4;
-  bool bVar5;
-  overlappedTask *poVar3;
-  ulonglong uVar6;
-  ulong64 *puVar7;
+  overlappedTask *poVar1;
+  int iVar2;
+  dwCSReadFileTask *pdVar5;
   
-  uVar6 = (ulonglong)(int)param_2;
-  iVar2 = __savegprlr_25(param_1);
-  if ((uVar6 & 0xffffffff) == 0) {
+  if (param_2 == (contentServerReadFileInfo *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage_contentserver.cpp"
                     ,0x59e,0,"%s");
   }
@@ -1571,7 +1538,7 @@ int LiveStorage_CS_ReadFile(int param_1,contentServerReadFileInfo *param_2)
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage_contentserver.cpp"
                     ,0x59f,0,"%s");
   }
-  if ((iVar2 < 0) || (3 < iVar2)) {
+  if ((param_1 < 0) || (3 < param_1)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage_contentserver.cpp"
                     ,0x5a0,0,"%s");
   }
@@ -1581,164 +1548,155 @@ int LiveStorage_CS_ReadFile(int param_1,contentServerReadFileInfo *param_2)
     downloadInterceptor._padding_ = (int)&csDownloadInterceptor::_vftable_;
     atexit(`LiveStorage_CS_ReadFile'::__l11::_dynamic_atexit_destructor_for__downloadInterceptor__);
   }
-  if ((s_ContentServerState[iVar2] & 4U) != 0) {
-    bVar4 = LiveStorage_CS_AllocatedAllMemory();
-    bVar5 = true;
-    if (bVar4) goto LAB_824f254c;
+  if ((s_ContentServerState[param_1] & 4U) != 0) {
+    bVar3 = LiveStorage_CS_AllocatedAllMemory();
+    bVar4 = true;
+    if (bVar3) goto LAB_824f254c;
   }
-  bVar5 = false;
+  bVar4 = false;
 LAB_824f254c:
-  if ((bVar5) && (g_CSReadFileTask != (dwCSReadFileTask *)0x0)) {
-    bVar5 = LiveStorage_CheckConnection(iVar2);
-    if (bVar5) {
-      bVar5 = TaskManager_TaskIsInProgressForController(&storageTasks,0x16,iVar2);
-      if (bVar5) {
+  if ((bVar4) && (g_CSReadFileTask != (dwCSReadFileTask *)0x0)) {
+    bVar4 = LiveStorage_CheckConnection(param_1);
+    if (bVar4) {
+      bVar4 = TaskManager_TaskIsInProgressForController(&storageTasks,0x16,param_1);
+      if (bVar4) {
         Com_Printf(0xe,"Read file task already in progress, earlying out (cont %i)\n");
-        iVar2 = __restgprlr_25(0);
-        return iVar2;
+        return 0;
       }
-      poVar3 = TaskManager_GetOpenTaskSlot(&storageTasks,iVar2,0x16);
-      pdVar1 = g_CSReadFileTask;
-      if (poVar3 == (overlappedTask *)0x0) {
+      poVar1 = TaskManager_GetOpenTaskSlot(&storageTasks,param_1,0x16);
+      pdVar5 = g_CSReadFileTask;
+      if (poVar1 == (overlappedTask *)0x0) {
         Com_Printf(0xe,"Couldn\'t allocate task for storage file reading\n");
-        iVar2 = __restgprlr_25(0);
-        return iVar2;
+        return 0;
       }
-      puVar7 = (ulong64 *)uVar6;
-      g_CSReadFileTask[iVar2].m_fileID = *puVar7;
-      pdVar1 = pdVar1 + iVar2;
-      pdVar1->m_fileSize = *(uint *)(puVar7 + 1);
-      pdVar1->m_bytesDownloaded = 0;
-      pdVar1->m_loadedFromCache = false;
-      pdVar1->m_cacheBuffer = *(void **)((int)puVar7 + 0x14);
-      pdVar1->m_dataCallback = *(_func___cdecl_void_void_ptr_uint_uint_uint **)(puVar7 + 4);
-      pdVar1->m_failureCallback = *(_func___cdecl_void_int_bdLobbyErrorCode **)(puVar7 + 5);
-      pdVar1->m_successCallback =
-           *(_func___cdecl_void_int_dwCSReadFileTask_ptr **)((int)puVar7 + 0x24);
-      poVar3->data = pdVar1;
-      if (*(char *)(puVar7 + 3) == '\0') {
-        pdVar1->m_buffer = *(void **)((int)puVar7 + 0xc);
-        pdVar1->m_bufferSize = *(uint *)(puVar7 + 2);
-        pdVar1->m_downloadHandler = (bdDownloadInterceptor *)0x0;
+      g_CSReadFileTask[param_1].m_fileID = param_2->m_fileID;
+      pdVar5 = pdVar5 + param_1;
+      pdVar5->m_fileSize = param_2->m_fileSize;
+      pdVar5->m_bytesDownloaded = 0;
+      pdVar5->m_loadedFromCache = false;
+      pdVar5->m_cacheBuffer = param_2->m_cacheBuffer;
+      pdVar5->m_dataCallback = param_2->m_dataCallback;
+      pdVar5->m_failureCallback = param_2->m_failureCallback;
+      pdVar5->m_successCallback = param_2->m_successCallback;
+      poVar1->data = pdVar5;
+      if (param_2->m_isStreamed == false) {
+        pdVar5->m_buffer = param_2->m_buffer;
+        pdVar5->m_bufferSize = param_2->m_bufferSize;
+        pdVar5->m_downloadHandler = (bdDownloadInterceptor *)0x0;
       }
       else {
         downloadInterceptor.callback = LiveStorage_CS_ReadFileData;
-        downloadInterceptor.task = pdVar1;
-        pdVar1->m_downloadHandler = (bdDownloadInterceptor *)&downloadInterceptor;
+        downloadInterceptor.task = pdVar5;
+        pdVar5->m_downloadHandler = (bdDownloadInterceptor *)&downloadInterceptor;
       }
-      bVar5 = DCache_IsCached(*puVar7,DCACHE_LOCATION_USER);
-      if ((bVar5) &&
-         (bVar5 = DCache_ReadFromCache
-                            (*puVar7,*(int *)(puVar7 + 1),DCACHE_LOCATION_USER,
-                             *(char **)((int)puVar7 + 0x14)), bVar5)) {
-        pdVar1->m_loadedFromCache = true;
-        pdVar1->m_bytesDownloaded = pdVar1->m_fileSize;
+      bVar4 = DCache_IsCached(param_2->m_fileID,DCACHE_LOCATION_USER);
+      if ((bVar4) &&
+         (bVar4 = DCache_ReadFromCache
+                            (param_2->m_fileID,param_2->m_fileSize,DCACHE_LOCATION_USER,
+                             param_2->m_cacheBuffer), bVar4)) {
+        pdVar5->m_loadedFromCache = true;
+        pdVar5->m_bytesDownloaded = pdVar5->m_fileSize;
       }
       else {
-        iVar2 = dwCSReadFile(poVar3,pdVar1);
+        iVar2 = dwCSReadFile(poVar1,pdVar5);
         if (iVar2 == 0) {
-          TaskManager_ClearTask(poVar3);
+          TaskManager_ClearTask(poVar1);
           Com_Printf(0xe,"Could not create task to read file from DW.\n");
-          iVar2 = __restgprlr_25(0);
-          return iVar2;
+          return 0;
         }
       }
-      iVar2 = __restgprlr_25(1);
-      return iVar2;
+      return 1;
     }
     Com_Printf(0xe,"Not connected to live or Demonware(cont %i)\n");
   }
-  iVar2 = __restgprlr_25(0);
-  return iVar2;
+  return 0;
 }
 
 
 // 824EFCD0  LiveStorage_CS_ReadFileComplete  (qcommon/com_storage_contentserver.cpp:1517)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 taskCompleteResults LiveStorage_CS_ReadFileComplete(int param_1)
 
 {
   dwCSReadFileTask *pdVar1;
-  overlappedTask *poVar2;
+  bool bVar2;
   bool bVar3;
-  bool bVar4;
+  taskCompleteResults tVar4;
   int iVar5;
-  taskCompleteResults tVar6;
-  int iVar7;
+  overlappedTask *poVar6;
   
-  iVar5 = __savegprlr_28(param_1);
-  poVar2 = storageTasks.tasks + iVar5;
-  bVar4 = false;
-  if (storageTasks.tasks[iVar5].active == false) {
+  poVar6 = storageTasks.tasks + param_1;
+  bVar3 = false;
+  if (storageTasks.tasks[param_1].active == false) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage_contentserver.cpp"
                     ,0x5f2,0,"%s");
   }
-  if (storageTasks.tasks[iVar5].type != 0x16) {
+  if (storageTasks.tasks[param_1].type != 0x16) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage_contentserver.cpp"
                     ,0x5f3,0,"%s");
   }
-  pdVar1 = storageTasks.tasks[iVar5].data;
+  pdVar1 = storageTasks.tasks[param_1].data;
   if (pdVar1->m_loadedFromCache != false) {
     if (pdVar1->m_successCallback != (_func___cdecl_void_int_dwCSReadFileTask_ptr *)0x0) {
-      (*pdVar1->m_successCallback)((int)storageTasks.tasks[iVar5].controllerIndex,pdVar1);
+      (*pdVar1->m_successCallback)((int)storageTasks.tasks[param_1].controllerIndex,pdVar1);
     }
-    TaskManager_ClearTask(poVar2);
-    tVar6 = __restgprlr_28(1);
-    return tVar6;
+    TaskManager_ClearTask(poVar6);
+    return TASK_COMPLETE;
   }
-  tVar6 = dwCSReadFileComplete(poVar2,pdVar1);
-  if (tVar6 == TASK_COMPLETE) {
-    iVar7 = dwCSGetLastHTTPError((uint)storageTasks.tasks[iVar5].controllerIndex);
-    if ((iVar7 == 0) || ((199 < iVar7 && (iVar7 < 300)))) {
-      bVar3 = true;
+  tVar4 = dwCSReadFileComplete(poVar6,pdVar1);
+  if (tVar4 == TASK_COMPLETE) {
+    iVar5 = dwCSGetLastHTTPError((uint)storageTasks.tasks[param_1].controllerIndex);
+    if ((iVar5 == 0) || ((199 < iVar5 && (iVar5 < 300)))) {
+      bVar2 = true;
     }
     else {
-      bVar3 = false;
+      bVar2 = false;
     }
-    if (bVar3) {
+    if (bVar2) {
       if (pdVar1->m_cacheBuffer != (char *)0x0) {
         DCache_WriteToCache(pdVar1->m_fileID,pdVar1->m_fileSize,DCACHE_LOCATION_USER,
                             pdVar1->m_cacheBuffer);
       }
       if (pdVar1->m_successCallback != (_func___cdecl_void_int_dwCSReadFileTask_ptr *)0x0) {
-        (*pdVar1->m_successCallback)((int)storageTasks.tasks[iVar5].controllerIndex,pdVar1);
+        (*pdVar1->m_successCallback)((int)storageTasks.tasks[param_1].controllerIndex,pdVar1);
       }
-      TaskManager_ClearTask(poVar2);
+      TaskManager_ClearTask(poVar6);
       goto LAB_824efe3c;
     }
   }
-  else if (tVar6 != TASK_ERROR) goto LAB_824efe3c;
-  bVar4 = true;
+  else if (tVar4 != TASK_ERROR) goto LAB_824efe3c;
+  bVar3 = true;
 LAB_824efe3c:
-  if (bVar4) {
+  if (bVar3) {
     if (pdVar1->m_failureCallback != (_func___cdecl_void_int_bdLobbyErrorCode *)0x0) {
-      (*pdVar1->m_failureCallback)((int)storageTasks.tasks[iVar5].controllerIndex,pdVar1->m_error);
+      (*pdVar1->m_failureCallback)((int)storageTasks.tasks[param_1].controllerIndex,pdVar1->m_error)
+      ;
     }
-    TaskManager_ClearTask(poVar2);
+    TaskManager_ClearTask(poVar6);
     Com_Printf(0xe,"Read from DW task failed. Error = %d\n");
   }
-  tVar6 = __restgprlr_28(tVar6);
-  return tVar6;
+  return tVar4;
 }
 
 
 // 824EFE90  LiveStorage_CS_RemoveFile  (qcommon/com_storage_contentserver.cpp:1580)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 int LiveStorage_CS_RemoveFile(int param_1,contentServerRemoveFileInfo *param_2)
 
 {
-  dwCSRemoveFileTask *pdVar1;
-  ulonglong uVar2;
-  bool bVar5;
-  bool bVar6;
-  int iVar3;
-  overlappedTask *poVar4;
-  ulonglong uVar7;
-  undefined2 *puVar8;
+  bool bVar3;
+  bool bVar4;
+  overlappedTask *poVar1;
+  int iVar2;
+  dwCSRemoveFileTask *pdVar5;
   
-  uVar7 = (ulonglong)(int)param_2;
-  uVar2 = __savegprlr_27(param_1);
-  if ((uVar7 & 0xffffffff) == 0) {
+  if (param_2 == (contentServerRemoveFileInfo *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage_contentserver.cpp"
                     ,0x62d,0,"%s");
   }
@@ -1746,148 +1704,134 @@ int LiveStorage_CS_RemoveFile(int param_1,contentServerRemoveFileInfo *param_2)
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage_contentserver.cpp"
                     ,0x62e,0,"%s");
   }
-  iVar3 = (int)uVar2;
-  if ((iVar3 < 0) || (3 < iVar3)) {
+  if ((param_1 < 0) || (3 < param_1)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage_contentserver.cpp"
                     ,0x62f,0,"%s");
   }
-  if ((*(uint *)((int)s_ContentServerState + (int)((uVar2 & 0xffffffff) << 2)) & 4) != 0) {
-    bVar5 = LiveStorage_CS_AllocatedAllMemory();
-    bVar6 = true;
-    if (bVar5) goto LAB_824eff64;
+  if ((s_ContentServerState[param_1] & 4U) != 0) {
+    bVar3 = LiveStorage_CS_AllocatedAllMemory();
+    bVar4 = true;
+    if (bVar3) goto LAB_824eff64;
   }
-  bVar6 = false;
+  bVar4 = false;
 LAB_824eff64:
-  if ((bVar6) && (g_CSRemoveFileTask != (dwCSRemoveFileTask *)0x0)) {
-    bVar6 = LiveStorage_CheckConnection(iVar3);
-    if (bVar6) {
-      bVar6 = TaskManager_TaskIsInProgressForController(&storageTasks,0x17,iVar3);
-      if (bVar6) {
+  if ((bVar4) && (g_CSRemoveFileTask != (dwCSRemoveFileTask *)0x0)) {
+    bVar4 = LiveStorage_CheckConnection(param_1);
+    if (bVar4) {
+      bVar4 = TaskManager_TaskIsInProgressForController(&storageTasks,0x17,param_1);
+      if (bVar4) {
         Com_Printf(0xe,"Remove file task already in progress, earlying out (cont %i)\n");
-        iVar3 = __restgprlr_27(0);
-        return iVar3;
+        return 0;
       }
-      poVar4 = TaskManager_GetOpenTaskSlot(&storageTasks,iVar3,0x17);
-      if (poVar4 == (overlappedTask *)0x0) {
+      poVar1 = TaskManager_GetOpenTaskSlot(&storageTasks,param_1,0x17);
+      if (poVar1 == (overlappedTask *)0x0) {
         Com_Printf(0xe,"Couldn\'t allocate task for storage file listing\n");
-        iVar3 = __restgprlr_27(0);
-        return iVar3;
+        return 0;
       }
-      puVar8 = (undefined2 *)uVar7;
-      iVar3 = (int)((uVar2 & 0xfffffff) << 4);
-      pdVar1 = (dwCSRemoveFileTask *)((int)&g_CSRemoveFileTask->m_fileSlot + iVar3);
-      *(undefined2 *)((int)&g_CSRemoveFileTask->m_fileSlot + iVar3) = *puVar8;
-      pdVar1->m_successCallback = *(_func___cdecl_void_int **)(puVar8 + 2);
-      pdVar1->m_failureCallback = *(_func___cdecl_void_int_bdLobbyErrorCode **)(puVar8 + 4);
-      poVar4->data = pdVar1;
-      iVar3 = dwCSRemoveFile(poVar4,pdVar1);
-      if (iVar3 == 0) {
-        TaskManager_ClearTask(poVar4);
+      pdVar5 = g_CSRemoveFileTask + param_1;
+      g_CSRemoveFileTask[param_1].m_fileSlot = param_2->m_fileSlot;
+      pdVar5->m_successCallback = param_2->m_successCallback;
+      pdVar5->m_failureCallback = param_2->m_failureCallback;
+      poVar1->data = pdVar5;
+      iVar2 = dwCSRemoveFile(poVar1,pdVar5);
+      if (iVar2 == 0) {
+        TaskManager_ClearTask(poVar1);
         Com_Printf(0xe,"Could not create task to delete file from DW.\n");
-        iVar3 = __restgprlr_27(0);
-        return iVar3;
+        return 0;
       }
-      iVar3 = __restgprlr_27(1);
-      return iVar3;
+      return 1;
     }
     Com_Printf(0xe,"Not connected to live or Demonware(cont %i)\n");
   }
-  iVar3 = __restgprlr_27(0);
-  return iVar3;
+  return 0;
 }
 
 
 // 824F17F0  LiveStorage_CS_RemoveFileComplete  (qcommon/com_storage_contentserver.cpp:1633)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 taskCompleteResults LiveStorage_CS_RemoveFileComplete(int param_1)
 
 {
   dwCSRemoveFileTask *pdVar1;
-  overlappedTask *poVar2;
-  int iVar3;
-  taskCompleteResults tVar4;
+  taskCompleteResults tVar2;
+  overlappedTask *poVar3;
   
-  iVar3 = __savegprlr_29(param_1);
-  poVar2 = storageTasks.tasks + iVar3;
-  if (storageTasks.tasks[iVar3].active == false) {
+  poVar3 = storageTasks.tasks + param_1;
+  if (storageTasks.tasks[param_1].active == false) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage_contentserver.cpp"
                     ,0x665,0,"%s");
   }
-  if (storageTasks.tasks[iVar3].type != 0x17) {
+  if (storageTasks.tasks[param_1].type != 0x17) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage_contentserver.cpp"
                     ,0x666,0,"%s");
   }
-  pdVar1 = storageTasks.tasks[iVar3].data;
-  tVar4 = dwCSRemoveFileComplete(poVar2,pdVar1);
-  if (tVar4 == TASK_COMPLETE) {
-    LiveStorage_CS_RefreshPrivateData((uint)storageTasks.tasks[iVar3].controllerIndex);
+  pdVar1 = storageTasks.tasks[param_1].data;
+  tVar2 = dwCSRemoveFileComplete(poVar3,pdVar1);
+  if (tVar2 == TASK_COMPLETE) {
+    LiveStorage_CS_RefreshPrivateData((uint)storageTasks.tasks[param_1].controllerIndex);
     if (pdVar1->m_successCallback != (_func___cdecl_void_int *)0x0) {
-      (*pdVar1->m_successCallback)((int)storageTasks.tasks[iVar3].controllerIndex);
-      TaskManager_ClearTask(poVar2);
-      tVar4 = __restgprlr_29(1);
-      return tVar4;
+      (*pdVar1->m_successCallback)((int)storageTasks.tasks[param_1].controllerIndex);
+      TaskManager_ClearTask(poVar3);
+      return TASK_COMPLETE;
     }
   }
   else {
-    if (tVar4 != TASK_ERROR) goto LAB_824f18f4;
+    if (tVar2 != TASK_ERROR) {
+      return tVar2;
+    }
     if (pdVar1->m_failureCallback != (_func___cdecl_void_int_bdLobbyErrorCode *)0x0) {
-      (*pdVar1->m_failureCallback)((int)storageTasks.tasks[iVar3].controllerIndex,pdVar1->m_error);
+      (*pdVar1->m_failureCallback)((int)storageTasks.tasks[param_1].controllerIndex,pdVar1->m_error)
+      ;
     }
   }
-  TaskManager_ClearTask(poVar2);
-LAB_824f18f4:
-  tVar4 = __restgprlr_29(tVar4);
-  return tVar4;
+  TaskManager_ClearTask(poVar3);
+  return tVar2;
 }
 
 
 // 824F0090  LiveStorage_CS_WriteFileData  (qcommon/com_storage_contentserver.cpp:1664)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 uint LiveStorage_CS_WriteFileData
                (void *param_1,uint param_2,uint param_3,dwCSWriteFileTask *param_4)
 
 {
-  undefined8 uVar1;
-  uint uVar2;
-  longlong lVar3;
-  longlong lVar4;
-  ulonglong uVar5;
+  uint uVar1;
   
-  uVar5 = (ulonglong)(int)param_4;
-  lVar4 = (longlong)(int)param_3;
-  lVar3 = (longlong)(int)param_2;
-  uVar1 = __savegprlr_26(param_1,lVar3,lVar4);
-  if ((uVar5 & 0xffffffff) == 0) {
+  if (param_4 == (dwCSWriteFileTask *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage_contentserver.cpp"
                     ,0x681,0,"%s");
   }
-  if (*(int *)((int)uVar5 + 0x40) == 0) {
+  if (param_4->m_dataCallback == (_func___cdecl_uint_void_ptr_uint_uint *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage_contentserver.cpp"
                     ,0x682,0,"%s");
   }
-  (**(code **)((int)uVar5 + 0x40))(uVar1,lVar3,lVar4);
-  uVar2 = __restgprlr_26();
-  return uVar2;
+  uVar1 = (*param_4->m_dataCallback)(param_1,param_2,param_3);
+  return uVar1;
 }
 
 
 // 824F2720  LiveStorage_CS_WriteFile  (qcommon/com_storage_contentserver.cpp:1672)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 int LiveStorage_CS_WriteFile(int param_1,contentServerWriteFileInfo *param_2)
 
 {
   dwCSWriteFileTask *pdVar1;
-  dwCSWriteFileTask *pdVar2;
-  int iVar3;
+  bool bVar4;
   bool bVar5;
-  bool bVar6;
-  overlappedTask *poVar4;
-  ulonglong uVar7;
-  ushort *puVar8;
+  overlappedTask *poVar2;
+  int iVar3;
+  dwCSWriteFileTask *pdVar6;
   
-  uVar7 = (ulonglong)(int)param_2;
-  iVar3 = __savegprlr_26(param_1);
-  if ((uVar7 & 0xffffffff) == 0) {
+  if (param_2 == (contentServerWriteFileInfo *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage_contentserver.cpp"
                     ,0x689,0,"%s");
   }
@@ -1895,7 +1839,7 @@ int LiveStorage_CS_WriteFile(int param_1,contentServerWriteFileInfo *param_2)
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage_contentserver.cpp"
                     ,0x68a,0,"%s");
   }
-  if ((iVar3 < 0) || (3 < iVar3)) {
+  if ((param_1 < 0) || (3 < param_1)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage_contentserver.cpp"
                     ,0x68b,0,"%s");
   }
@@ -1905,145 +1849,138 @@ int LiveStorage_CS_WriteFile(int param_1,contentServerWriteFileInfo *param_2)
     uploadInterceptor._padding_ = (int)&csUploadInterceptor::_vftable_;
     atexit(`LiveStorage_CS_WriteFile'::__l11::_dynamic_atexit_destructor_for__uploadInterceptor__);
   }
-  if ((s_ContentServerState[iVar3] & 4U) != 0) {
-    bVar5 = LiveStorage_CS_AllocatedAllMemory();
-    bVar6 = true;
-    if (bVar5) goto LAB_824f283c;
+  if ((s_ContentServerState[param_1] & 4U) != 0) {
+    bVar4 = LiveStorage_CS_AllocatedAllMemory();
+    bVar5 = true;
+    if (bVar4) goto LAB_824f283c;
   }
-  bVar6 = false;
+  bVar5 = false;
 LAB_824f283c:
-  if ((bVar6) && (g_CSWriteFileTask != (dwCSWriteFileTask *)0x0)) {
-    bVar6 = LiveStorage_CheckConnection(iVar3);
-    if (bVar6) {
-      bVar6 = TaskManager_TaskIsInProgressForController(&storageTasks,0x18,iVar3);
-      if (bVar6) {
+  if ((bVar5) && (g_CSWriteFileTask != (dwCSWriteFileTask *)0x0)) {
+    bVar5 = LiveStorage_CheckConnection(param_1);
+    if (bVar5) {
+      bVar5 = TaskManager_TaskIsInProgressForController(&storageTasks,0x18,param_1);
+      if (bVar5) {
         Com_Printf(0xe,"Write file task already in progress, earlying out (cont %i)\n");
-        iVar3 = __restgprlr_26(0);
-        return iVar3;
+        return 0;
       }
-      poVar4 = TaskManager_GetOpenTaskSlot(&storageTasks,iVar3,0x18);
-      pdVar2 = g_CSWriteFileTask;
-      if (poVar4 == (overlappedTask *)0x0) {
+      poVar2 = TaskManager_GetOpenTaskSlot(&storageTasks,param_1,0x18);
+      pdVar1 = g_CSWriteFileTask;
+      if (poVar2 == (overlappedTask *)0x0) {
         Com_Printf(0xe,"Couldn\'t allocate task for storage file writing\n");
-        iVar3 = __restgprlr_26(0);
-        return iVar3;
+        return 0;
       }
-      puVar8 = (ushort *)uVar7;
-      pdVar1 = g_CSWriteFileTask + iVar3;
-      pdVar1->m_fileSlot = *puVar8;
-      pdVar1->m_fileData = *(void **)(puVar8 + 2);
-      pdVar1->m_fileSize = *(uint *)(puVar8 + 4);
-      pdVar1->m_fileName = *(char **)(puVar8 + 6);
-      pdVar1->m_category = puVar8[8];
-      pdVar1->m_thumbData = *(void **)(puVar8 + 10);
-      pdVar1->m_thumbDataSize = *(uint *)(puVar8 + 0xc);
-      pdVar1->m_numTags = *(uint *)(puVar8 + 0xe);
-      pdVar2[iVar3].m_tags = *(bdTag **)(puVar8 + 0x10);
-      pdVar1->m_successCallback = *(_func___cdecl_void_int_ulong64 **)(puVar8 + 0x16);
-      pdVar1->m_failureCallback = *(_func___cdecl_void_int_bdLobbyErrorCode **)(puVar8 + 0x18);
+      pdVar6 = g_CSWriteFileTask + param_1;
+      pdVar6->m_fileSlot = param_2->m_fileSlot;
+      pdVar6->m_fileData = param_2->m_fileData;
+      pdVar6->m_fileSize = param_2->m_fileSize;
+      pdVar6->m_fileName = param_2->m_fileName;
+      pdVar6->m_category = param_2->m_category;
+      pdVar6->m_thumbData = param_2->m_thumbData;
+      pdVar6->m_thumbDataSize = param_2->m_thumbDataSize;
+      pdVar6->m_numTags = param_2->m_numTags;
+      pdVar1[param_1].m_tags = param_2->m_tags;
+      pdVar6->m_successCallback = param_2->m_successCallback;
+      pdVar6->m_failureCallback = param_2->m_failureCallback;
       uploadInterceptor.callback = LiveStorage_CS_WriteFileData;
-      uploadInterceptor.task = pdVar1;
-      if (*(_func___cdecl_uint_void_ptr_uint_uint **)(puVar8 + 0x14) ==
-          (_func___cdecl_uint_void_ptr_uint_uint *)0x0) {
-        pdVar1->m_dataCallback = (_func___cdecl_uint_void_ptr_uint_uint *)0x0;
-        pdVar1->m_uploadHandler = (bdUploadInterceptor *)0x0;
+      uploadInterceptor.task = pdVar6;
+      if (param_2->m_dataCallback == (_func___cdecl_uint_void_ptr_uint_uint *)0x0) {
+        pdVar6->m_dataCallback = (_func___cdecl_uint_void_ptr_uint_uint *)0x0;
+        pdVar6->m_uploadHandler = (bdUploadInterceptor *)0x0;
       }
       else {
-        pdVar1->m_dataCallback = *(_func___cdecl_uint_void_ptr_uint_uint **)(puVar8 + 0x14);
-        pdVar1->m_uploadHandler = (bdUploadInterceptor *)&uploadInterceptor;
+        pdVar6->m_dataCallback = param_2->m_dataCallback;
+        pdVar6->m_uploadHandler = (bdUploadInterceptor *)&uploadInterceptor;
       }
-      poVar4->data = pdVar1;
-      iVar3 = dwCSWriteFile(poVar4,pdVar1);
+      poVar2->data = pdVar6;
+      iVar3 = dwCSWriteFile(poVar2,pdVar6);
       if (iVar3 == 0) {
-        TaskManager_ClearTask(poVar4);
+        TaskManager_ClearTask(poVar2);
         Com_Printf(0xe,"Could not create task to write file to DW.\n");
-        iVar3 = __restgprlr_26(0);
-        return iVar3;
+        return 0;
       }
-      iVar3 = __restgprlr_26(1);
-      return iVar3;
+      return 1;
     }
     Com_Printf(0xe,"Not connected to live or Demonware(cont %i)\n");
   }
-  iVar3 = __restgprlr_26(0);
-  return iVar3;
+  return 0;
 }
 
 
 // 824F0128  LiveStorage_CS_WriteFileComplete  (qcommon/com_storage_contentserver.cpp:1748)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 taskCompleteResults LiveStorage_CS_WriteFileComplete(int param_1)
 
 {
   dwCSWriteFileTask *pdVar1;
-  overlappedTask *poVar2;
+  bool bVar2;
   bool bVar3;
-  bool bVar4;
+  taskCompleteResults tVar4;
   int iVar5;
-  taskCompleteResults tVar6;
-  int iVar7;
+  overlappedTask *poVar6;
   
-  iVar5 = __savegprlr_28(param_1);
-  poVar2 = storageTasks.tasks + iVar5;
-  bVar4 = false;
-  if (storageTasks.tasks[iVar5].active == false) {
+  poVar6 = storageTasks.tasks + param_1;
+  bVar3 = false;
+  if (storageTasks.tasks[param_1].active == false) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage_contentserver.cpp"
                     ,0x6d9,0,"%s");
   }
-  if (storageTasks.tasks[iVar5].type != 0x18) {
+  if (storageTasks.tasks[param_1].type != 0x18) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage_contentserver.cpp"
                     ,0x6da,0,"%s");
   }
-  pdVar1 = storageTasks.tasks[iVar5].data;
-  tVar6 = dwCSWriteFileComplete(poVar2,pdVar1);
-  if (tVar6 == TASK_COMPLETE) {
-    iVar7 = dwCSGetLastHTTPError((uint)storageTasks.tasks[iVar5].controllerIndex);
-    if ((iVar7 == 0) || ((199 < iVar7 && (iVar7 < 300)))) {
-      bVar3 = true;
+  pdVar1 = storageTasks.tasks[param_1].data;
+  tVar4 = dwCSWriteFileComplete(poVar6,pdVar1);
+  if (tVar4 == TASK_COMPLETE) {
+    iVar5 = dwCSGetLastHTTPError((uint)storageTasks.tasks[param_1].controllerIndex);
+    if ((iVar5 == 0) || ((199 < iVar5 && (iVar5 < 300)))) {
+      bVar2 = true;
     }
     else {
-      bVar3 = false;
+      bVar2 = false;
     }
-    if (bVar3) {
+    if (bVar2) {
       if (pdVar1->m_successCallback != (_func___cdecl_void_int_ulong64 *)0x0) {
         (*pdVar1->m_successCallback)
-                  ((int)storageTasks.tasks[iVar5].controllerIndex,(pdVar1->m_outFileID).m_fileID);
+                  ((int)storageTasks.tasks[param_1].controllerIndex,(pdVar1->m_outFileID).m_fileID);
       }
-      TaskManager_ClearTask(poVar2);
+      TaskManager_ClearTask(poVar6);
       goto LAB_824f023c;
     }
   }
-  else if (tVar6 != TASK_ERROR) goto LAB_824f023c;
-  bVar4 = true;
+  else if (tVar4 != TASK_ERROR) goto LAB_824f023c;
+  bVar3 = true;
 LAB_824f023c:
-  if (bVar4) {
+  if (bVar3) {
     if (pdVar1->m_failureCallback != (_func___cdecl_void_int_bdLobbyErrorCode *)0x0) {
-      (*pdVar1->m_failureCallback)((int)storageTasks.tasks[iVar5].controllerIndex,pdVar1->m_error);
+      (*pdVar1->m_failureCallback)((int)storageTasks.tasks[param_1].controllerIndex,pdVar1->m_error)
+      ;
     }
-    TaskManager_ClearTask(poVar2);
+    TaskManager_ClearTask(poVar6);
     Com_Printf(0xe,"Write to DW task failed.\n");
   }
-  tVar6 = __restgprlr_28(tVar6);
-  return tVar6;
+  return tVar4;
 }
 
 
 // 824F0288  LiveStorage_CS_SetTags  (qcommon/com_storage_contentserver.cpp:1794)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 int LiveStorage_CS_SetTags(int param_1,contentServerSetTagsInfo *param_2)
 
 {
-  dwCSTagTask *pdVar1;
-  int iVar2;
+  bool bVar3;
   bool bVar4;
-  bool bVar5;
-  overlappedTask *poVar3;
-  ulonglong uVar6;
-  ulong64 *puVar7;
+  overlappedTask *poVar1;
+  int iVar2;
+  dwCSTagTask *pdVar5;
   
-  uVar6 = (ulonglong)(int)param_2;
-  iVar2 = __savegprlr_27(param_1);
-  if ((uVar6 & 0xffffffff) == 0) {
+  if (param_2 == (contentServerSetTagsInfo *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage_contentserver.cpp"
                     ,0x703,0,"%s");
   }
@@ -2051,118 +1988,112 @@ int LiveStorage_CS_SetTags(int param_1,contentServerSetTagsInfo *param_2)
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage_contentserver.cpp"
                     ,0x704,0,"%s");
   }
-  if ((iVar2 < 0) || (3 < iVar2)) {
+  if ((param_1 < 0) || (3 < param_1)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage_contentserver.cpp"
                     ,0x705,0,"%s");
   }
-  if ((s_ContentServerState[iVar2] & 4U) != 0) {
-    bVar4 = LiveStorage_CS_AllocatedAllMemory();
-    bVar5 = true;
-    if (bVar4) goto LAB_824f035c;
+  if ((s_ContentServerState[param_1] & 4U) != 0) {
+    bVar3 = LiveStorage_CS_AllocatedAllMemory();
+    bVar4 = true;
+    if (bVar3) goto LAB_824f035c;
   }
-  bVar5 = false;
+  bVar4 = false;
 LAB_824f035c:
-  if ((bVar5) && (g_CSSetTagTask != (dwCSTagTask *)0x0)) {
-    bVar5 = LiveStorage_CheckConnection(iVar2);
-    if (bVar5) {
-      bVar5 = TaskManager_TaskIsInProgressForController(&storageTasks,0x19,iVar2);
-      if (bVar5) {
+  if ((bVar4) && (g_CSSetTagTask != (dwCSTagTask *)0x0)) {
+    bVar4 = LiveStorage_CheckConnection(param_1);
+    if (bVar4) {
+      bVar4 = TaskManager_TaskIsInProgressForController(&storageTasks,0x19,param_1);
+      if (bVar4) {
         Com_Printf(0xe,"Set tag task already in progress, earlying out (cont %i)\n");
-        iVar2 = __restgprlr_27(0);
-        return iVar2;
+        return 0;
       }
-      poVar3 = TaskManager_GetOpenTaskSlot(&storageTasks,iVar2,0x19);
-      if (poVar3 == (overlappedTask *)0x0) {
+      poVar1 = TaskManager_GetOpenTaskSlot(&storageTasks,param_1,0x19);
+      if (poVar1 == (overlappedTask *)0x0) {
         Com_Printf(0xe,"Couldn\'t allocate task for setting tags.\n");
-        iVar2 = __restgprlr_27(0);
-        return iVar2;
+        return 0;
       }
-      puVar7 = (ulong64 *)uVar6;
-      pdVar1 = g_CSSetTagTask + iVar2;
-      g_CSSetTagTask[iVar2].m_entityID = *puVar7;
-      pdVar1->m_numTags = *(uint *)((int)puVar7 + 0xc);
-      pdVar1->m_tags = *(bdTag **)(puVar7 + 1);
-      pdVar1->m_successCallback = *(_func___cdecl_void_int **)(puVar7 + 2);
-      pdVar1->m_failureCallback = *(_func___cdecl_void_int_bdLobbyErrorCode **)((int)puVar7 + 0x14);
-      poVar3->data = pdVar1;
-      iVar2 = dwCSSetTags(poVar3,pdVar1);
+      pdVar5 = g_CSSetTagTask + param_1;
+      g_CSSetTagTask[param_1].m_entityID = param_2->m_entityID;
+      pdVar5->m_numTags = param_2->m_numTags;
+      pdVar5->m_tags = param_2->m_tags;
+      pdVar5->m_successCallback = param_2->m_successCallback;
+      pdVar5->m_failureCallback = param_2->m_failureCallback;
+      poVar1->data = pdVar5;
+      iVar2 = dwCSSetTags(poVar1,pdVar5);
       if (iVar2 == 0) {
-        TaskManager_ClearTask(poVar3);
+        TaskManager_ClearTask(poVar1);
         Com_Printf(0xe,"Could not create task for setting tags.\n");
-        iVar2 = __restgprlr_27(0);
-        return iVar2;
+        return 0;
       }
-      iVar2 = __restgprlr_27(1);
-      return iVar2;
+      return 1;
     }
     Com_Printf(0xe,"Not connected to live or Demonware(cont %i)\n");
   }
-  iVar2 = __restgprlr_27(0);
-  return iVar2;
+  return 0;
 }
 
 
 // 824F1900  LiveStorage_CS_SetTagsComplete  (qcommon/com_storage_contentserver.cpp:1849)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 taskCompleteResults LiveStorage_CS_SetTagsComplete(int param_1)
 
 {
   dwCSTagTask *pdVar1;
-  overlappedTask *poVar2;
-  int iVar3;
-  taskCompleteResults tVar4;
+  taskCompleteResults tVar2;
+  overlappedTask *poVar3;
   
-  iVar3 = __savegprlr_29(param_1);
-  poVar2 = storageTasks.tasks + iVar3;
-  if (storageTasks.tasks[iVar3].active == false) {
+  poVar3 = storageTasks.tasks + param_1;
+  if (storageTasks.tasks[param_1].active == false) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage_contentserver.cpp"
                     ,0x73d,0,"%s");
   }
-  if (storageTasks.tasks[iVar3].type != 0x19) {
+  if (storageTasks.tasks[param_1].type != 0x19) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage_contentserver.cpp"
                     ,0x73e,0,"%s");
   }
-  pdVar1 = storageTasks.tasks[iVar3].data;
-  tVar4 = dwCSSetTagsComplete(poVar2,pdVar1);
-  if (tVar4 == TASK_COMPLETE) {
-    LiveStorage_CS_RefreshPrivateData((uint)storageTasks.tasks[iVar3].controllerIndex);
+  pdVar1 = storageTasks.tasks[param_1].data;
+  tVar2 = dwCSSetTagsComplete(poVar3,pdVar1);
+  if (tVar2 == TASK_COMPLETE) {
+    LiveStorage_CS_RefreshPrivateData((uint)storageTasks.tasks[param_1].controllerIndex);
     if (pdVar1->m_successCallback != (_func___cdecl_void_int *)0x0) {
-      (*pdVar1->m_successCallback)((int)storageTasks.tasks[iVar3].controllerIndex);
-      TaskManager_ClearTask(poVar2);
-      tVar4 = __restgprlr_29(1);
-      return tVar4;
+      (*pdVar1->m_successCallback)((int)storageTasks.tasks[param_1].controllerIndex);
+      TaskManager_ClearTask(poVar3);
+      return TASK_COMPLETE;
     }
   }
   else {
-    if (tVar4 != TASK_ERROR) goto LAB_824f1a04;
+    if (tVar2 != TASK_ERROR) {
+      return tVar2;
+    }
     if (pdVar1->m_failureCallback != (_func___cdecl_void_int_bdLobbyErrorCode *)0x0) {
-      (*pdVar1->m_failureCallback)((int)storageTasks.tasks[iVar3].controllerIndex,pdVar1->m_error);
+      (*pdVar1->m_failureCallback)((int)storageTasks.tasks[param_1].controllerIndex,pdVar1->m_error)
+      ;
     }
   }
-  TaskManager_ClearTask(poVar2);
-LAB_824f1a04:
-  tVar4 = __restgprlr_29(tVar4);
-  return tVar4;
+  TaskManager_ClearTask(poVar3);
+  return tVar2;
 }
 
 
 // 824F0498  LiveStorage_CS_CopyFromOtherUser  (qcommon/com_storage_contentserver.cpp:1880)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 int LiveStorage_CS_CopyFromOtherUser(int param_1,contentServerCopyFromOtherUserInfo *param_2)
 
 {
-  ulong64 *puVar1;
-  dwCSCopyFileTask *pdVar2;
-  dwCSCopyFileTask *pdVar3;
-  int iVar4;
-  bool bVar6;
-  bool bVar7;
-  overlappedTask *poVar5;
-  ulonglong uVar8;
+  dwCSCopyFileTask *pdVar1;
+  bool bVar4;
+  bool bVar5;
+  overlappedTask *poVar2;
+  int iVar3;
+  dwCSCopyFileTask *pdVar6;
   
-  uVar8 = (ulonglong)(int)param_2;
-  iVar4 = __savegprlr_27(param_1);
-  if ((uVar8 & 0xffffffff) == 0) {
+  if (param_2 == (contentServerCopyFromOtherUserInfo *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage_contentserver.cpp"
                     ,0x759,0,"%s");
   }
@@ -2170,123 +2101,117 @@ int LiveStorage_CS_CopyFromOtherUser(int param_1,contentServerCopyFromOtherUserI
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage_contentserver.cpp"
                     ,0x75a,0,"%s");
   }
-  if ((iVar4 < 0) || (3 < iVar4)) {
+  if ((param_1 < 0) || (3 < param_1)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage_contentserver.cpp"
                     ,0x75b,0,"%s");
   }
-  if ((s_ContentServerState[iVar4] & 4U) != 0) {
-    bVar6 = LiveStorage_CS_AllocatedAllMemory();
-    bVar7 = true;
-    if (bVar6) goto LAB_824f056c;
+  if ((s_ContentServerState[param_1] & 4U) != 0) {
+    bVar4 = LiveStorage_CS_AllocatedAllMemory();
+    bVar5 = true;
+    if (bVar4) goto LAB_824f056c;
   }
-  bVar7 = false;
+  bVar5 = false;
 LAB_824f056c:
-  if ((bVar7) && (g_CSCopyFileTask != (dwCSCopyFileTask *)0x0)) {
-    bVar7 = LiveStorage_CheckConnection(iVar4);
-    if (bVar7) {
-      bVar7 = TaskManager_TaskIsInProgressForController(&storageTasks,0x1a,iVar4);
-      if (bVar7) {
+  if ((bVar5) && (g_CSCopyFileTask != (dwCSCopyFileTask *)0x0)) {
+    bVar5 = LiveStorage_CheckConnection(param_1);
+    if (bVar5) {
+      bVar5 = TaskManager_TaskIsInProgressForController(&storageTasks,0x1a,param_1);
+      if (bVar5) {
         Com_Printf(0xe,"Set copy other user file already in progress, earlying out (cont %i)\n");
-        iVar4 = __restgprlr_27(0);
-        return iVar4;
+        return 0;
       }
-      poVar5 = TaskManager_GetOpenTaskSlot(&storageTasks,iVar4,0x1a);
-      pdVar3 = g_CSCopyFileTask;
-      if (poVar5 == (overlappedTask *)0x0) {
+      poVar2 = TaskManager_GetOpenTaskSlot(&storageTasks,param_1,0x1a);
+      pdVar1 = g_CSCopyFileTask;
+      if (poVar2 == (overlappedTask *)0x0) {
         Com_Printf(0xe,"Couldn\'t allocate task for setting tags.\n");
-        iVar4 = __restgprlr_27(0);
-        return iVar4;
+        return 0;
       }
-      puVar1 = (ulong64 *)uVar8;
-      pdVar2 = g_CSCopyFileTask + iVar4;
-      pdVar2->m_category = *(ushort *)(puVar1 + 2);
-      pdVar3[iVar4].m_userFileID = *puVar1;
-      pdVar2->m_fileName = *(char **)((int)puVar1 + 0xc);
-      pdVar2->m_fileSlot = *(ushort *)(puVar1 + 1);
-      pdVar2->m_metaData = *(void **)((int)puVar1 + 0x14);
-      pdVar2->m_metaDataSize = *(uint *)(puVar1 + 3);
-      pdVar2->m_numTags = *(uint *)((int)puVar1 + 0x1c);
-      pdVar2->m_tags = *(bdTag **)(puVar1 + 4);
-      pdVar2->m_outFileID = *(bdFileID **)((int)puVar1 + 0x24);
-      pdVar2->m_successCallback = *(_func___cdecl_void_int **)(puVar1 + 5);
-      pdVar2->m_failureCallback = *(_func___cdecl_void_int_bdLobbyErrorCode **)((int)puVar1 + 0x2c);
-      poVar5->data = pdVar2;
-      iVar4 = dwCSCopyFromUserStorage(poVar5,pdVar2);
-      if (iVar4 == 0) {
-        TaskManager_ClearTask(poVar5);
+      pdVar6 = g_CSCopyFileTask + param_1;
+      pdVar6->m_category = param_2->m_category;
+      pdVar1[param_1].m_userFileID = param_2->m_userFileID;
+      pdVar6->m_fileName = param_2->m_fileName;
+      pdVar6->m_fileSlot = param_2->m_fileSlot;
+      pdVar6->m_metaData = param_2->m_metaData;
+      pdVar6->m_metaDataSize = param_2->m_metaDataSize;
+      pdVar6->m_numTags = param_2->m_numTags;
+      pdVar6->m_tags = param_2->m_tags;
+      pdVar6->m_outFileID = param_2->m_outFileID;
+      pdVar6->m_successCallback = param_2->m_successCallback;
+      pdVar6->m_failureCallback = param_2->m_failureCallback;
+      poVar2->data = pdVar6;
+      iVar3 = dwCSCopyFromUserStorage(poVar2,pdVar6);
+      if (iVar3 == 0) {
+        TaskManager_ClearTask(poVar2);
         Com_Printf(0xe,"Could not create task for copying another user\'s file.\n");
-        iVar4 = __restgprlr_27(0);
-        return iVar4;
+        return 0;
       }
-      iVar4 = __restgprlr_27(1);
-      return iVar4;
+      return 1;
     }
     Com_Printf(0xe,"Not connected to live or Demonware(cont %i)\n");
   }
-  iVar4 = __restgprlr_27(0);
-  return iVar4;
+  return 0;
 }
 
 
 // 824F06D8  LiveStorage_CS_CopyFromOtherUserComplete  (qcommon/com_storage_contentserver.cpp:1941)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 taskCompleteResults LiveStorage_CS_CopyFromOtherUserComplete(int param_1)
 
 {
   dwCSCopyFileTask *pdVar1;
-  overlappedTask *poVar2;
-  int iVar3;
-  taskCompleteResults tVar4;
+  taskCompleteResults tVar2;
+  overlappedTask *poVar3;
   
-  iVar3 = __savegprlr_29(param_1);
-  poVar2 = storageTasks.tasks + iVar3;
-  if (storageTasks.tasks[iVar3].active == false) {
+  poVar3 = storageTasks.tasks + param_1;
+  if (storageTasks.tasks[param_1].active == false) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage_contentserver.cpp"
                     ,0x799,0,"%s");
   }
-  if (storageTasks.tasks[iVar3].type != 0x1a) {
+  if (storageTasks.tasks[param_1].type != 0x1a) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage_contentserver.cpp"
                     ,0x79a,0,"%s");
   }
-  pdVar1 = storageTasks.tasks[iVar3].data;
-  tVar4 = dwCSCopyFromUserStorageComplete(poVar2,pdVar1);
-  if (tVar4 == TASK_COMPLETE) {
+  pdVar1 = storageTasks.tasks[param_1].data;
+  tVar2 = dwCSCopyFromUserStorageComplete(poVar3,pdVar1);
+  if (tVar2 == TASK_COMPLETE) {
     if (pdVar1->m_successCallback != (_func___cdecl_void_int *)0x0) {
-      (*pdVar1->m_successCallback)((int)storageTasks.tasks[iVar3].controllerIndex);
-      TaskManager_ClearTask(poVar2);
-      tVar4 = __restgprlr_29(1);
-      return tVar4;
+      (*pdVar1->m_successCallback)((int)storageTasks.tasks[param_1].controllerIndex);
+      TaskManager_ClearTask(poVar3);
+      return TASK_COMPLETE;
     }
   }
   else {
-    if (tVar4 != TASK_ERROR) goto LAB_824f07d4;
+    if (tVar2 != TASK_ERROR) {
+      return tVar2;
+    }
     if (pdVar1->m_failureCallback != (_func___cdecl_void_int_bdLobbyErrorCode *)0x0) {
-      (*pdVar1->m_failureCallback)((int)storageTasks.tasks[iVar3].controllerIndex,pdVar1->m_error);
+      (*pdVar1->m_failureCallback)((int)storageTasks.tasks[param_1].controllerIndex,pdVar1->m_error)
+      ;
     }
   }
-  TaskManager_ClearTask(poVar2);
-LAB_824f07d4:
-  tVar4 = __restgprlr_29(tVar4);
-  return tVar4;
+  TaskManager_ClearTask(poVar3);
+  return tVar2;
 }
 
 
 // 824F07E0  LiveStorage_CS_UploadSummaryMetadata  (qcommon/com_storage_contentserver.cpp:1971)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 int LiveStorage_CS_UploadSummaryMetadata(int param_1,contentServerUploadSummaryInfo *param_2)
 
 {
-  dwCSUploadSummaryTask *pdVar1;
-  int iVar2;
+  bool bVar3;
   bool bVar4;
-  bool bVar5;
-  overlappedTask *poVar3;
-  ulonglong uVar6;
-  ulong64 *puVar7;
+  overlappedTask *poVar1;
+  int iVar2;
+  dwCSUploadSummaryTask *pdVar5;
   
-  uVar6 = (ulonglong)(int)param_2;
-  iVar2 = __savegprlr_27(param_1);
-  if ((uVar6 & 0xffffffff) == 0) {
+  if (param_2 == (contentServerUploadSummaryInfo *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage_contentserver.cpp"
                     ,0x7b4,0,"%s");
   }
@@ -2294,120 +2219,114 @@ int LiveStorage_CS_UploadSummaryMetadata(int param_1,contentServerUploadSummaryI
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage_contentserver.cpp"
                     ,0x7b5,0,"%s");
   }
-  if ((iVar2 < 0) || (3 < iVar2)) {
+  if ((param_1 < 0) || (3 < param_1)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage_contentserver.cpp"
                     ,0x7b6,0,"%s");
   }
-  if ((s_ContentServerState[iVar2] & 4U) != 0) {
-    bVar4 = LiveStorage_CS_AllocatedAllMemory();
-    bVar5 = true;
-    if (bVar4) goto LAB_824f08b4;
+  if ((s_ContentServerState[param_1] & 4U) != 0) {
+    bVar3 = LiveStorage_CS_AllocatedAllMemory();
+    bVar4 = true;
+    if (bVar3) goto LAB_824f08b4;
   }
-  bVar5 = false;
+  bVar4 = false;
 LAB_824f08b4:
-  if ((bVar5) && (g_CSUploadSummaryTask != (dwCSUploadSummaryTask *)0x0)) {
-    bVar5 = LiveStorage_CheckConnection(iVar2);
-    if (bVar5) {
-      bVar5 = TaskManager_TaskIsInProgressForController(&storageTasks,0x1b,iVar2);
-      if (bVar5) {
+  if ((bVar4) && (g_CSUploadSummaryTask != (dwCSUploadSummaryTask *)0x0)) {
+    bVar4 = LiveStorage_CheckConnection(param_1);
+    if (bVar4) {
+      bVar4 = TaskManager_TaskIsInProgressForController(&storageTasks,0x1b,param_1);
+      if (bVar4) {
         Com_Printf(0xe,"Set tag task already in progress, earlying out (cont %i)\n");
-        iVar2 = __restgprlr_27(0);
-        return iVar2;
+        return 0;
       }
-      poVar3 = TaskManager_GetOpenTaskSlot(&storageTasks,iVar2,0x1b);
-      if (poVar3 == (overlappedTask *)0x0) {
+      poVar1 = TaskManager_GetOpenTaskSlot(&storageTasks,param_1,0x1b);
+      if (poVar1 == (overlappedTask *)0x0) {
         Com_Printf(0xe,"Couldn\'t allocate task for setting tags.\n");
-        iVar2 = __restgprlr_27(0);
-        return iVar2;
+        return 0;
       }
-      puVar7 = (ulong64 *)uVar6;
-      pdVar1 = g_CSUploadSummaryTask + iVar2;
-      g_CSUploadSummaryTask[iVar2].m_fileID = *puVar7;
-      pdVar1->m_metaData = *(void **)(puVar7 + 2);
-      pdVar1->m_metaDataSize = *(uint *)((int)puVar7 + 0x14);
-      pdVar1->m_numTags = *(uint *)(puVar7 + 3);
-      pdVar1->m_tags = *(bdTag **)((int)puVar7 + 0x1c);
-      pdVar1->m_summaryData = *(void **)(puVar7 + 1);
-      pdVar1->m_summaryDataSize = *(uint *)((int)puVar7 + 0xc);
-      pdVar1->m_successCallback = *(_func___cdecl_void_int **)(puVar7 + 4);
-      pdVar1->m_failureCallback = *(_func___cdecl_void_int_bdLobbyErrorCode **)((int)puVar7 + 0x24);
-      poVar3->data = pdVar1;
-      iVar2 = dwCSUploadSummaryMetaData(poVar3,pdVar1);
+      pdVar5 = g_CSUploadSummaryTask + param_1;
+      g_CSUploadSummaryTask[param_1].m_fileID = param_2->m_fileID;
+      pdVar5->m_metaData = param_2->m_metaData;
+      pdVar5->m_metaDataSize = param_2->m_metaDataSize;
+      pdVar5->m_numTags = param_2->m_numTags;
+      pdVar5->m_tags = param_2->m_tags;
+      pdVar5->m_summaryData = param_2->m_summaryData;
+      pdVar5->m_summaryDataSize = param_2->m_summaryDataSize;
+      pdVar5->m_successCallback = param_2->m_successCallback;
+      pdVar5->m_failureCallback = param_2->m_failureCallback;
+      poVar1->data = pdVar5;
+      iVar2 = dwCSUploadSummaryMetaData(poVar1,pdVar5);
       if (iVar2 == 0) {
-        TaskManager_ClearTask(poVar3);
+        TaskManager_ClearTask(poVar1);
         Com_Printf(0xe,"Could not create task for uploading summary metadata.\n");
-        iVar2 = __restgprlr_27(0);
-        return iVar2;
+        return 0;
       }
-      iVar2 = __restgprlr_27(1);
-      return iVar2;
+      return 1;
     }
     Com_Printf(0xe,"Not connected to live or Demonware(cont %i)\n");
   }
-  iVar2 = __restgprlr_27(0);
-  return iVar2;
+  return 0;
 }
 
 
 // 824F0A18  LiveStorage_CS_UploadSummaryMetadataComplete  (qcommon/com_storage_contentserver.cpp:2031)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 taskCompleteResults LiveStorage_CS_UploadSummaryMetadataComplete(int param_1)
 
 {
   dwCSUploadSummaryTask *pdVar1;
-  overlappedTask *poVar2;
-  int iVar3;
-  taskCompleteResults tVar4;
+  taskCompleteResults tVar2;
+  overlappedTask *poVar3;
   
-  iVar3 = __savegprlr_29(param_1);
-  poVar2 = storageTasks.tasks + iVar3;
-  if (storageTasks.tasks[iVar3].active == false) {
+  poVar3 = storageTasks.tasks + param_1;
+  if (storageTasks.tasks[param_1].active == false) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage_contentserver.cpp"
                     ,0x7f3,0,"%s");
   }
-  if (storageTasks.tasks[iVar3].type != 0x1b) {
+  if (storageTasks.tasks[param_1].type != 0x1b) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage_contentserver.cpp"
                     ,0x7f4,0,"%s");
   }
-  pdVar1 = storageTasks.tasks[iVar3].data;
-  tVar4 = dwCSUploadSummaryMetaDataComplete(poVar2,pdVar1);
-  if (tVar4 == TASK_COMPLETE) {
+  pdVar1 = storageTasks.tasks[param_1].data;
+  tVar2 = dwCSUploadSummaryMetaDataComplete(poVar3,pdVar1);
+  if (tVar2 == TASK_COMPLETE) {
     if (pdVar1->m_successCallback != (_func___cdecl_void_int *)0x0) {
-      (*pdVar1->m_successCallback)((int)storageTasks.tasks[iVar3].controllerIndex);
-      TaskManager_ClearTask(poVar2);
-      tVar4 = __restgprlr_29(1);
-      return tVar4;
+      (*pdVar1->m_successCallback)((int)storageTasks.tasks[param_1].controllerIndex);
+      TaskManager_ClearTask(poVar3);
+      return TASK_COMPLETE;
     }
   }
   else {
-    if (tVar4 != TASK_ERROR) goto LAB_824f0b14;
+    if (tVar2 != TASK_ERROR) {
+      return tVar2;
+    }
     if (pdVar1->m_failureCallback != (_func___cdecl_void_int_bdLobbyErrorCode *)0x0) {
-      (*pdVar1->m_failureCallback)((int)storageTasks.tasks[iVar3].controllerIndex,pdVar1->m_error);
+      (*pdVar1->m_failureCallback)((int)storageTasks.tasks[param_1].controllerIndex,pdVar1->m_error)
+      ;
     }
   }
-  TaskManager_ClearTask(poVar2);
-LAB_824f0b14:
-  tVar4 = __restgprlr_29(tVar4);
-  return tVar4;
+  TaskManager_ClearTask(poVar3);
+  return tVar2;
 }
 
 
 // 824F0B20  LiveStorage_CS_DownloadSummaryData  (qcommon/com_storage_contentserver.cpp:2060)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 int LiveStorage_CS_DownloadSummaryData(int param_1,contentServerDownloadSummaryInfo *param_2)
 
 {
-  dwCSDownloadSummaryTask *pdVar1;
-  int iVar2;
+  bool bVar3;
   bool bVar4;
-  bool bVar5;
-  overlappedTask *poVar3;
-  ulonglong uVar6;
-  ulong64 *puVar7;
+  overlappedTask *poVar1;
+  int iVar2;
+  dwCSDownloadSummaryTask *pdVar5;
   
-  uVar6 = (ulonglong)(int)param_2;
-  iVar2 = __savegprlr_27(param_1);
-  if ((uVar6 & 0xffffffff) == 0) {
+  if (param_2 == (contentServerDownloadSummaryInfo *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage_contentserver.cpp"
                     ,0x80d,0,"%s");
   }
@@ -2415,130 +2334,124 @@ int LiveStorage_CS_DownloadSummaryData(int param_1,contentServerDownloadSummaryI
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage_contentserver.cpp"
                     ,0x80e,0,"%s");
   }
-  if ((iVar2 < 0) || (3 < iVar2)) {
+  if ((param_1 < 0) || (3 < param_1)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage_contentserver.cpp"
                     ,0x80f,0,"%s");
   }
-  if ((s_ContentServerState[iVar2] & 4U) != 0) {
-    bVar4 = LiveStorage_CS_AllocatedAllMemory();
-    bVar5 = true;
-    if (bVar4) goto LAB_824f0bf4;
+  if ((s_ContentServerState[param_1] & 4U) != 0) {
+    bVar3 = LiveStorage_CS_AllocatedAllMemory();
+    bVar4 = true;
+    if (bVar3) goto LAB_824f0bf4;
   }
-  bVar5 = false;
+  bVar4 = false;
 LAB_824f0bf4:
-  if ((bVar5) && (g_CSDownloadSummaryTask != (dwCSDownloadSummaryTask *)0x0)) {
-    bVar5 = LiveStorage_CheckConnection(iVar2);
-    if (bVar5) {
-      bVar5 = TaskManager_TaskIsInProgressForController(&storageTasks,0x1c,iVar2);
-      if (bVar5) {
+  if ((bVar4) && (g_CSDownloadSummaryTask != (dwCSDownloadSummaryTask *)0x0)) {
+    bVar4 = LiveStorage_CheckConnection(param_1);
+    if (bVar4) {
+      bVar4 = TaskManager_TaskIsInProgressForController(&storageTasks,0x1c,param_1);
+      if (bVar4) {
         Com_Printf(0xe,"Set tag task already in progress, earlying out (cont %i)\n");
-        iVar2 = __restgprlr_27(0);
-        return iVar2;
+        return 0;
       }
-      poVar3 = TaskManager_GetOpenTaskSlot(&storageTasks,iVar2,0x1c);
-      if (poVar3 == (overlappedTask *)0x0) {
+      poVar1 = TaskManager_GetOpenTaskSlot(&storageTasks,param_1,0x1c);
+      if (poVar1 == (overlappedTask *)0x0) {
         Com_Printf(0xe,"Couldn\'t allocate task for setting tags.\n");
-        iVar2 = __restgprlr_27(0);
-        return iVar2;
+        return 0;
       }
-      puVar7 = (ulong64 *)uVar6;
-      pdVar1 = g_CSDownloadSummaryTask + iVar2;
-      g_CSDownloadSummaryTask[iVar2].m_fileID = *puVar7;
-      pdVar1->m_summaryData = *(void **)(puVar7 + 1);
-      pdVar1->m_summaryDataSize = *(uint *)((int)puVar7 + 0xc);
-      pdVar1->m_successCallback = *(_func___cdecl_void_int **)(puVar7 + 2);
-      pdVar1->m_failureCallback = *(_func___cdecl_void_int_bdLobbyErrorCode **)((int)puVar7 + 0x14);
-      poVar3->data = pdVar1;
-      iVar2 = dwCSDownloadSummaryData(poVar3,pdVar1);
+      pdVar5 = g_CSDownloadSummaryTask + param_1;
+      g_CSDownloadSummaryTask[param_1].m_fileID = param_2->m_fileID;
+      pdVar5->m_summaryData = param_2->m_summaryData;
+      pdVar5->m_summaryDataSize = param_2->m_summaryDataSize;
+      pdVar5->m_successCallback = param_2->m_successCallback;
+      pdVar5->m_failureCallback = param_2->m_failureCallback;
+      poVar1->data = pdVar5;
+      iVar2 = dwCSDownloadSummaryData(poVar1,pdVar5);
       if (iVar2 == 0) {
-        TaskManager_ClearTask(poVar3);
+        TaskManager_ClearTask(poVar1);
         Com_Printf(0xe,"Could not create task for downloading summary data.\n");
-        iVar2 = __restgprlr_27(0);
-        return iVar2;
+        return 0;
       }
-      iVar2 = __restgprlr_27(1);
-      return iVar2;
+      return 1;
     }
     Com_Printf(0xe,"Not connected to live or Demonware(cont %i)\n");
   }
-  iVar2 = __restgprlr_27(0);
-  return iVar2;
+  return 0;
 }
 
 
 // 824F0D30  LiveStorage_CS_DownloadSummaryDataComplete  (qcommon/com_storage_contentserver.cpp:2116)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 taskCompleteResults LiveStorage_CS_DownloadSummaryDataComplete(int param_1)
 
 {
   dwCSDownloadSummaryTask *pdVar1;
-  overlappedTask *poVar2;
-  int iVar3;
-  taskCompleteResults tVar4;
+  taskCompleteResults tVar2;
+  overlappedTask *poVar3;
   
-  iVar3 = __savegprlr_29(param_1);
-  poVar2 = storageTasks.tasks + iVar3;
-  if (storageTasks.tasks[iVar3].active == false) {
+  poVar3 = storageTasks.tasks + param_1;
+  if (storageTasks.tasks[param_1].active == false) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage_contentserver.cpp"
                     ,0x848,0,"%s");
   }
-  if (storageTasks.tasks[iVar3].type != 0x1c) {
+  if (storageTasks.tasks[param_1].type != 0x1c) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage_contentserver.cpp"
                     ,0x849,0,"%s");
   }
-  pdVar1 = storageTasks.tasks[iVar3].data;
-  tVar4 = dwCSDownloadSummaryComplete(poVar2,pdVar1);
-  if (tVar4 == TASK_COMPLETE) {
+  pdVar1 = storageTasks.tasks[param_1].data;
+  tVar2 = dwCSDownloadSummaryComplete(poVar3,pdVar1);
+  if (tVar2 == TASK_COMPLETE) {
     if (pdVar1->m_successCallback != (_func___cdecl_void_int *)0x0) {
-      (*pdVar1->m_successCallback)((int)storageTasks.tasks[iVar3].controllerIndex);
-      TaskManager_ClearTask(poVar2);
-      tVar4 = __restgprlr_29(1);
-      return tVar4;
+      (*pdVar1->m_successCallback)((int)storageTasks.tasks[param_1].controllerIndex);
+      TaskManager_ClearTask(poVar3);
+      return TASK_COMPLETE;
     }
   }
   else {
-    if (tVar4 != TASK_ERROR) goto LAB_824f0e2c;
+    if (tVar2 != TASK_ERROR) {
+      return tVar2;
+    }
     if (pdVar1->m_failureCallback != (_func___cdecl_void_int_bdLobbyErrorCode *)0x0) {
-      (*pdVar1->m_failureCallback)((int)storageTasks.tasks[iVar3].controllerIndex,pdVar1->m_error);
+      (*pdVar1->m_failureCallback)((int)storageTasks.tasks[param_1].controllerIndex,pdVar1->m_error)
+      ;
     }
   }
-  TaskManager_ClearTask(poVar2);
-LAB_824f0e2c:
-  tVar4 = __restgprlr_29(tVar4);
-  return tVar4;
+  TaskManager_ClearTask(poVar3);
+  return tVar2;
 }
 
 
 // 824F0E38  LiveStorage_CS_ClearDWOverlappedTasks  (qcommon/com_storage_contentserver.cpp:2935)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* void __cdecl LiveStorage_CS_ClearDWOverlappedTasks(int) */
 
 void LiveStorage_CS_ClearDWOverlappedTasks(int param_1)
 
 {
+  bool bVar2;
   int iVar1;
-  bool bVar3;
-  int iVar2;
   bdContentStreamingBase *this;
   
-  iVar1 = __savegprlr_28(param_1);
-  if (s_ContentServerState[iVar1] != 1) {
-    bVar3 = Sys_IsMainThread();
-    if ((!bVar3) && (iVar2 = Sys_AreThreadsSuspended(), iVar2 == 0)) {
+  if (s_ContentServerState[param_1] != 1) {
+    bVar2 = Sys_IsMainThread();
+    if ((!bVar2) && (iVar1 = Sys_AreThreadsSuspended(), iVar1 == 0)) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage_contentserver.cpp"
                       ,0x30e,0,"%s\n\t%s");
     }
-    this = (bdContentStreamingBase *)dwGetContentStreaming(iVar1);
+    this = (bdContentStreamingBase *)dwGetContentStreaming(param_1);
     if (this != (bdContentStreamingBase *)0x0) {
       bdContentStreamingBase::abortHTTPOperation(this);
       bdContentStreamingBase::pump(this);
     }
     LiveStorage_CheckOngoingSessionTasks();
-    LiveStorage_CS_CancelTasks(iVar1);
-    dwLobbyPump(iVar1);
-    s_ContentServerState[iVar1] = 1;
+    LiveStorage_CS_CancelTasks(param_1);
+    dwLobbyPump(param_1);
+    s_ContentServerState[param_1] = 1;
   }
-  __restgprlr_28();
   return;
 }
 
@@ -2659,36 +2572,32 @@ uint LiveStorage_CS_GetUploadingFileTotalSize(int param_1)
 
 // 824F10D8  LiveStorage_CS_GetUploadProgress  (qcommon/com_storage_contentserver.cpp:3025)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void LiveStorage_CS_GetUploadProgress(int param_1,uint *param_2,float *param_3)
 
 {
-  int iVar1;
-  bool bVar3;
-  DWOnlineStatus DVar2;
+  bool bVar2;
+  DWOnlineStatus DVar1;
   
-  iVar1 = __savegprlr_29(param_1);
-  bVar3 = LiveStorage_CS_IsAvailable(iVar1);
-  if (!bVar3) {
+  bVar2 = LiveStorage_CS_IsAvailable(param_1);
+  if (!bVar2) {
     Com_PrintError(0x10,
                    "[LiveStorage_CS_GetUploadProgress] Failed to write, LiveStorage_CS_IsAvailable = false\n"
                   );
     *param_2 = 0;
     *param_3 = 0.0;
-    __restgprlr_29();
     return;
   }
-  DVar2 = dwGetLogOnStatus(iVar1);
-  if (DVar2 == DW_LIVE_CONNECTED) {
-    bVar3 = TaskManager_TaskIsInProgressForController(&storageTasks,0x18,iVar1);
-    if (bVar3) {
-      iVar1 = dwCSGetProgress(iVar1,param_2,param_3);
-      __restgprlr_29(iVar1);
-      return;
-    }
+  DVar1 = dwGetLogOnStatus(param_1);
+  if ((DVar1 == DW_LIVE_CONNECTED) &&
+     (bVar2 = TaskManager_TaskIsInProgressForController(&storageTasks,0x18,param_1), bVar2)) {
+    dwCSGetProgress(param_1,param_2,param_3);
+    return;
   }
   *param_2 = 0;
   *param_3 = 0.0;
-  __restgprlr_29();
   return;
 }
 
@@ -2720,36 +2629,32 @@ uint LiveStorage_CS_GetDownloadingFileTotalSize(int param_1)
 
 // 824F1238  LiveStorage_CS_GetDownloadProgress  (qcommon/com_storage_contentserver.cpp:3076)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void LiveStorage_CS_GetDownloadProgress(int param_1,uint *param_2,float *param_3)
 
 {
-  int iVar1;
-  bool bVar3;
-  DWOnlineStatus DVar2;
+  bool bVar2;
+  DWOnlineStatus DVar1;
   
-  iVar1 = __savegprlr_29(param_1);
-  bVar3 = LiveStorage_CS_IsAvailable(iVar1);
-  if (!bVar3) {
+  bVar2 = LiveStorage_CS_IsAvailable(param_1);
+  if (!bVar2) {
     Com_PrintError(0x10,
                    "[LiveStorage_CS_GetDownloadProgress] Failed to write, LiveStorage_CS_IsAvailable = false\n"
                   );
     *param_2 = 0;
     *param_3 = 0.0;
-    __restgprlr_29();
     return;
   }
-  DVar2 = dwGetLogOnStatus(iVar1);
-  if (DVar2 == DW_LIVE_CONNECTED) {
-    bVar3 = TaskManager_TaskIsInProgressForController(&storageTasks,0x16,iVar1);
-    if (bVar3) {
-      iVar1 = dwCSGetProgress(iVar1,param_2,param_3);
-      __restgprlr_29(iVar1);
-      return;
-    }
+  DVar1 = dwGetLogOnStatus(param_1);
+  if ((DVar1 == DW_LIVE_CONNECTED) &&
+     (bVar2 = TaskManager_TaskIsInProgressForController(&storageTasks,0x16,param_1), bVar2)) {
+    dwCSGetProgress(param_1,param_2,param_3);
+    return;
   }
   *param_2 = 0;
   *param_3 = 0.0;
-  __restgprlr_29();
   return;
 }
 

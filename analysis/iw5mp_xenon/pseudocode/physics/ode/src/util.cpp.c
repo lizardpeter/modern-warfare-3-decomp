@@ -102,6 +102,8 @@ void WaitForPhysics(void)
 
 // 826A1338  dxProcessIslands  (physics/ode/src/util.cpp:203)
 
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
 /* WARNING: Type propagation algorithm not settling */
 /* WARNING: Enum "PhysWorld": Some values do not have unique names */
 /* WARNING: Enum "WorkerCmdType": Some values do not have unique names */
@@ -139,7 +141,6 @@ void dxProcessIslands(dxWorld *param_1,float param_2)
   int aiStack_884 [545];
   
   dVar17 = (double)param_2;
-  __savegprlr();
   pdStack00000014 = param_1;
   if (0x1f8 < param_1->bodyCount) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\util.cpp",
@@ -444,7 +445,6 @@ LAB_826a1ca8:
       }
     }
   }
-  __restgprlr();
   return;
 }
 

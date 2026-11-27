@@ -20,68 +20,63 @@ uint FX_GetBoltTemporalBits(LocalClientNum_t param_1,int param_2)
 
 // 824494B8  FXI_FreePool_Generic<FxBolt>  (EffectsCore/fx_pool.h:25)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void FXI_FreePool_Generic<FxBolt>(FxBolt *param_1,int *param_2,FxPool<FxBolt> *param_3)
 
 {
-  uint uVar1;
+  int iVar1;
   uint uVar2;
-  uint *puVar3;
   
-  puVar3 = (uint *)__savegprlr_27(param_1);
-  uVar2 = (int)puVar3 - (int)param_3 >> 5;
+  uVar2 = (int)param_1 - (int)param_3 >> 5;
   if (0xfe < uVar2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\fx_pool.h",0x25,0,
                     "freedIndex doesn\'t index ITEM_TYPE::POOL_SIZE\n\t%i not in [0, %i)");
   }
-  uVar1 = *param_2;
-  if (((int)uVar1 < -1) || (0xfe < (int)uVar1)) {
+  iVar1 = *param_2;
+  if ((iVar1 < -1) || (0xfe < iVar1)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\fx_pool.h",0x28,0,
                     "%s");
   }
-  *puVar3 = uVar1;
+  *(int *)param_1 = iVar1;
   *param_2 = uVar2;
-  __restgprlr_27();
   return;
 }
 
 
 // 82449418  FX_UpdateBoltSceneStatus  (EffectsCore/fx_update_bolt.cpp:44)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 
 void FX_UpdateBoltSceneStatus(LocalClientNum_t param_1,FxEffect *param_2,int param_3)
 
 {
-  LocalClientNum_t LVar1;
-  centity_s *pcVar2;
-  bool bVar3;
-  ulonglong uVar4;
+  centity_s *pcVar1;
+  bool bVar2;
   
-  uVar4 = (ulonglong)param_3;
-  LVar1 = __savegprlr_29(param_1);
-  if (0x801 < (uVar4 & 0xffffffff)) {
+  if (0x801 < (uint)param_3) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_update_bolt.cpp"
                     ,0x31,0,"dobjHandle doesn\'t index CLIENT_DOBJ_HANDLE_MAX\n\t%i not in [0, %i)")
     ;
   }
-  if (((int)uVar4 < 0x7fe) &&
-     (pcVar2 = CG_GetEntity(LVar1,(int)uVar4), (pcVar2->nextState).eType == 1)) {
-    bVar3 = R_IsEntInScene((pcVar2->nextState).number);
-    if (!bVar3) {
-      param_2->status = param_2->status | 0x2000;
-      __restgprlr_29();
-      return;
-    }
+  if (((param_3 < 0x7fe) && (pcVar1 = CG_GetEntity(param_1,param_3), (pcVar1->nextState).eType == 1)
+      ) && (bVar2 = R_IsEntInScene((pcVar1->nextState).number), !bVar2)) {
+    param_2->status = param_2->status | 0x2000;
+    return;
   }
   param_2->status = param_2->status & 0xffffdfff;
-  __restgprlr_29();
   return;
 }
 
 
 // 82449548  FXIW_StopBoltedEffectRequested  (EffectsCore/fx_update_bolt.cpp:70)
 
+/* WARNING: Function: __savegprlr_19 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_19 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 int FXIW_StopBoltedEffectRequested
@@ -89,51 +84,44 @@ int FXIW_StopBoltedEffectRequested
 
 {
   byte bVar1;
-  int iVar2;
+  FxPool<FxBolt> *pFVar2;
   uint uVar3;
-  uint *puVar4;
-  int iVar5;
-  int iVar6;
-  longlong lVar7;
+  int iVar4;
+  uint *puVar5;
   
-  lVar7 = (longlong)(int)param_2;
-  iVar5 = __savegprlr_19(param_1);
-  iVar6 = 0;
+  iVar4 = 0;
   if (0 < param_3) {
-    lVar7 = lVar7 + 8;
+    puVar5 = &param_2->boneIndex;
     do {
-      puVar4 = (uint *)lVar7;
-      if (param_4->def == (FxEffectDef *)puVar4[-2]) {
+      if (param_4->def == ((StopBoltedEffectsRequest *)(puVar5 + -2))->defHandle) {
         bVar1 = param_4->bolt;
-        if (iVar5 == 0) {
+        if (param_1 == (FxSystem *)0x0) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\fx_system_handle.h"
                           ,0x93,0,"%s");
         }
-        iVar2 = *(int *)(iVar5 + 0x18);
+        pFVar2 = param_1->bolts;
         if (0xfe < bVar1) {
           va("%p %i");
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\fx_system_handle.h"
                           ,0x54,0,"%s\n\t%s");
         }
-        uVar3 = *(uint *)((uint)bVar1 * 0x20 + iVar2);
-        if (uVar3 >> 0x14 == puVar4[-1]) {
-          if ((uVar3 >> 8 & 0x7ff) == *puVar4) {
-            iVar5 = __restgprlr_19(1);
-            return iVar5;
-          }
+        uVar3 = pFVar2[bVar1].field0_0x0.nextFree;
+        if ((uVar3 >> 0x14 == puVar5[-1]) && ((uVar3 >> 8 & 0x7ff) == *puVar5)) {
+          return 1;
         }
       }
-      iVar6 = iVar6 + 1;
-      lVar7 = lVar7 + 0xc;
-    } while (iVar6 < param_3);
+      iVar4 = iVar4 + 1;
+      puVar5 = puVar5 + 3;
+    } while (iVar4 < param_3);
   }
-  iVar5 = __restgprlr_19(0);
-  return iVar5;
+  return 0;
 }
 
 
 // 82449660  FXW_UpdateEffectBolt  (EffectsCore/fx_update_bolt.cpp:95)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 
@@ -143,76 +131,74 @@ void FXW_UpdateEffectBolt(FxSystem *param_1,FxEffect *param_2)
   uchar uVar1;
   LocalClientNum_t LVar2;
   undefined4 uVar3;
-  FxSystem *pFVar4;
-  FxBolt *pFVar5;
-  centity_s *pcVar6;
-  bool bVar7;
-  uint uVar8;
-  float *pfVar9;
-  longlong lVar10;
+  FxBolt *pFVar4;
+  centity_s *pcVar5;
+  bool bVar6;
+  uint uVar7;
+  float *pfVar8;
+  longlong lVar9;
   FxSpatialFrame FStack_80;
   orientation_t local_60 [2];
   
-  pFVar4 = (FxSystem *)__savegprlr_28(param_1);
   if (param_2->bolt == 0xff) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_update_bolt.cpp"
                     ,0x66,0,"%s");
   }
   uVar1 = param_2->bolt;
-  if (pFVar4 == (FxSystem *)0x0) {
+  if (param_1 == (FxSystem *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\fx_system_handle.h"
                     ,0x9a,0,"%s");
   }
-  pFVar5 = FX_PoolFromHandle_Generic<FxBolt>(pFVar4->bolts,uVar1);
-  uVar8 = pFVar5->dobjHandle;
-  if (uVar8 != 0xfff) {
-    LVar2 = pFVar4->localClientNum;
-    FX_UpdateBoltSceneStatus(LVar2,param_2,uVar8);
-    uVar8 = pFVar5->dobjHandle;
-    if (uVar8 < 0x7fe) {
-      pcVar6 = CG_GetEntity(LVar2,uVar8);
-      uVar8 = (uint)(pcVar6->nextState).lerp.eFlags >> 1 & 1;
+  pFVar4 = FX_PoolFromHandle_Generic<FxBolt>(param_1->bolts,uVar1);
+  uVar7 = pFVar4->dobjHandle;
+  if (uVar7 != 0xfff) {
+    LVar2 = param_1->localClientNum;
+    FX_UpdateBoltSceneStatus(LVar2,param_2,uVar7);
+    uVar7 = pFVar4->dobjHandle;
+    if (uVar7 < 0x7fe) {
+      pcVar5 = CG_GetEntity(LVar2,uVar7);
+      uVar7 = (uint)(pcVar5->nextState).lerp.eFlags >> 1 & 1;
     }
     else {
-      uVar8 = 0;
+      uVar7 = 0;
     }
-    bVar7 = pFVar5->rewindBits != 0;
-    if (bVar7) {
-      pFVar5->rewindBits = 0;
-      pFVar5->temporalBits = uVar8;
+    bVar6 = pFVar4->rewindBits != 0;
+    if (bVar6) {
+      pFVar4->rewindBits = 0;
+      pFVar4->temporalBits = uVar7;
     }
-    if (bVar7 || pFVar5->temporalBits == uVar8) {
-      bVar7 = FX_GetBoneOrientation(LVar2,pFVar5->dobjHandle,pFVar5->boneIndex,local_60);
-      if (bVar7) {
+    if (bVar6 || pFVar4->temporalBits == uVar7) {
+      bVar6 = FX_GetBoneOrientation(LVar2,pFVar4->dobjHandle,pFVar4->boneIndex,local_60);
+      if (bVar6) {
         FStack_80.origin[0] = local_60[0].origin[0];
         FStack_80.origin[1] = local_60[0].origin[1];
         FStack_80.origin[2] = local_60[0].origin[2];
         AxisToQuat(local_60[0].axis,FStack_80.quat);
-        FX_SpatialFrameMultiply(&pFVar5->offset,&FStack_80,&param_2->frameNow);
-        __restgprlr_28();
+        FX_SpatialFrameMultiply(&pFVar4->offset,&FStack_80,&param_2->frameNow);
         return;
       }
     }
-    FXW_PreventRewind(pFVar4,param_2);
-    FXW_StopEffect(pFVar4,param_2);
-    pfVar9 = pFVar5[-1].offset.origin + 2;
+    FXW_PreventRewind(param_1,param_2);
+    FXW_StopEffect(param_1,param_2);
+    pfVar8 = pFVar4[-1].offset.origin + 2;
     param_2->bolt = 0xff;
-    lVar10 = 8;
+    lVar9 = 8;
     do {
-      pfVar9 = pfVar9 + 1;
-      *pfVar9 = 0.0;
-      lVar10 = lVar10 + -1;
-    } while (lVar10 != 0);
-    FXI_FreePool_Generic<FxBolt>(pFVar5,&pFVar4->firstFreeBolt,pFVar4->bolts);
-    pFVar4->activeBoltCount = pFVar4->activeBoltCount + -1;
+      pfVar8 = pfVar8 + 1;
+      *pfVar8 = 0.0;
+      lVar9 = lVar9 + -1;
+    } while (lVar9 != 0);
+    FXI_FreePool_Generic<FxBolt>(pFVar4,&param_1->firstFreeBolt,param_1->bolts);
+    param_1->activeBoltCount = param_1->activeBoltCount + -1;
   }
-  __restgprlr_28();
   return;
 }
 
 
 // 82449828  FXW_UpdatePass4ProcessStopBoltedEffectRequests  (EffectsCore/fx_update_bolt.cpp:145)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void FXW_UpdatePass4ProcessStopBoltedEffectRequests(FxSystem *param_1,FxPass4Cmd *param_2)
@@ -220,29 +206,26 @@ void FXW_UpdatePass4ProcessStopBoltedEffectRequests(FxSystem *param_1,FxPass4Cmd
 {
   int iVar1;
   StopBoltedEffectsRequest *pSVar2;
-  FxSystem *pFVar3;
-  FxEffect *pFVar4;
-  int iVar5;
-  uint uVar6;
+  FxEffect *pFVar3;
+  int iVar4;
+  uint uVar5;
   
-  pFVar3 = (FxSystem *)__savegprlr_27(param_1);
   iVar1 = param_2->numStopBoltedEffectsRequest;
   pSVar2 = param_2->stopBoltedEffectsRequest;
-  if (((pFVar3->systemFlags & 1) == 0) && (iVar1 != 0)) {
-    uVar6 = pFVar3->firstActiveEffect;
-    if (uVar6 != pFVar3->firstNewEffect) {
+  if (((param_1->systemFlags & 1) == 0) && (iVar1 != 0)) {
+    uVar5 = param_1->firstActiveEffect;
+    if (uVar5 != param_1->firstNewEffect) {
       do {
-        pFVar4 = FX_EffectFromHandle(pFVar3,pFVar3->allEffectHandles[uVar6 & 0x3ff]);
-        if ((pFVar4->bolt != 0xff) &&
-           (iVar5 = FXIW_StopBoltedEffectRequested(pFVar3,pSVar2,iVar1,pFVar4), iVar5 != 0)) {
-          FXW_PreventRewind(pFVar3,pFVar4);
-          FXW_StopEffect(pFVar3,pFVar4);
+        pFVar3 = FX_EffectFromHandle(param_1,param_1->allEffectHandles[uVar5 & 0x3ff]);
+        if ((pFVar3->bolt != 0xff) &&
+           (iVar4 = FXIW_StopBoltedEffectRequested(param_1,pSVar2,iVar1,pFVar3), iVar4 != 0)) {
+          FXW_PreventRewind(param_1,pFVar3);
+          FXW_StopEffect(param_1,pFVar3);
         }
-        uVar6 = uVar6 + 1;
-      } while (uVar6 != pFVar3->firstNewEffect);
+        uVar5 = uVar5 + 1;
+      } while (uVar5 != param_1->firstNewEffect);
     }
   }
-  __restgprlr_27();
   return;
 }
 

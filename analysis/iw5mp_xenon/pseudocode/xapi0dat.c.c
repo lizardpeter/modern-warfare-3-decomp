@@ -2,45 +2,48 @@
 
 // 828B5100  _cinit  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/xapi0dat.c:137)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 int _cinit(int param_1)
 
 {
   _func___cdecl_void *p_Var1;
-  undefined8 uVar2;
-  int iVar3;
-  _func___cdecl_int **pp_Var4;
-  _func___cdecl_void **pp_Var5;
+  int iVar2;
+  _func___cdecl_int **pp_Var3;
+  _func___cdecl_void **pp_Var4;
   
-  uVar2 = __savegprlr_29(param_1);
-  fpmath(uVar2);
-  pp_Var4 = __xi_a;
-  iVar3 = 0;
+  fpmath(param_1);
+  pp_Var3 = __xi_a;
+  iVar2 = 0;
   do {
-    if (iVar3 != 0) goto LAB_828b51e0;
-    if (*pp_Var4 != (_func___cdecl_int *)0x0) {
-      iVar3 = (**pp_Var4)();
+    if (iVar2 != 0) {
+      return iVar2;
     }
-    pp_Var4 = pp_Var4 + 1;
-  } while (pp_Var4 < __xi_z);
-  if (iVar3 == 0) {
-    pp_Var5 = __xc_a;
+    if (*pp_Var3 != (_func___cdecl_int *)0x0) {
+      iVar2 = (**pp_Var3)();
+    }
+    pp_Var3 = pp_Var3 + 1;
+  } while (pp_Var3 < __xi_z);
+  if (iVar2 == 0) {
+    pp_Var4 = __xc_a;
     do {
-      p_Var1 = *pp_Var5;
+      p_Var1 = *pp_Var4;
       if ((p_Var1 != (_func___cdecl_void *)0x0) && (p_Var1 != (_func___cdecl_void *)0xffffffff)) {
         (*p_Var1)();
       }
-      pp_Var5 = pp_Var5 + 1;
-    } while (pp_Var5 < __xc_z);
-    iVar3 = 0;
+      pp_Var4 = pp_Var4 + 1;
+    } while (pp_Var4 < __xc_z);
+    iVar2 = 0;
   }
-LAB_828b51e0:
-  iVar3 = __restgprlr_29(iVar3);
-  return iVar3;
+  return iVar2;
 }
 
 
 // 828B51E8  _rtinit  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/xapi0dat.c:163)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 int _rtinit(void)
@@ -49,17 +52,17 @@ int _rtinit(void)
   int iVar1;
   _func___cdecl_int **pp_Var2;
   
-  __savegprlr_29();
   pp_Var2 = __xri_a;
   iVar1 = 0;
   do {
-    if (iVar1 != 0) break;
+    if (iVar1 != 0) {
+      return iVar1;
+    }
     if (*pp_Var2 != (_func___cdecl_int *)0x0) {
       iVar1 = (**pp_Var2)();
     }
     pp_Var2 = pp_Var2 + 1;
   } while (pp_Var2 < __xri_z);
-  iVar1 = __restgprlr_29(iVar1);
   return iVar1;
 }
 

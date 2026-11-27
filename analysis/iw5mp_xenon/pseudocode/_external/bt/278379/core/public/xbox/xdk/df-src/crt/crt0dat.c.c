@@ -57,21 +57,20 @@ void _amsg_exit(int param_1)
 
 // 8291AAF8  doexit  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/crt0dat.c:277)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
+
 void doexit(int param_1,int param_2,int param_3)
 
 {
   _func___cdecl_void *p_Var1;
-  int iVar2;
-  longlong lVar3;
+  _func___cdecl_void **pp_Var2;
+  _func___cdecl_void **pp_Var3;
   _func___cdecl_void **pp_Var4;
   _func___cdecl_void **pp_Var5;
-  _func___cdecl_void **pp_Var6;
-  _func___cdecl_void **pp_Var7;
   int iStack0000001c;
   
-  lVar3 = (longlong)param_2;
-  iVar2 = __savegprlr_24(param_1,lVar3,param_3);
-  iStack0000001c = (int)lVar3;
+  iStack0000001c = param_2;
   _lock(8);
   if (_C_Exit_Done != 1) {
     if (_C_Termination_Done == 1) {
@@ -79,24 +78,24 @@ void doexit(int param_1,int param_2,int param_3)
       KeBugCheck(0);
     }
     _C_Termination_Done = 1;
-    _exitflag = (char)lVar3;
-    if (iVar2 == 0) {
-      pp_Var5 = __onexitbegin;
-      pp_Var6 = __onexitbegin;
-      pp_Var4 = __onexitend;
-      pp_Var7 = __onexitend;
+    _exitflag = (char)param_2;
+    if (param_1 == 0) {
+      pp_Var3 = __onexitbegin;
+      pp_Var4 = __onexitbegin;
+      pp_Var2 = __onexitend;
+      pp_Var5 = __onexitend;
       if (__onexitbegin != (_func___cdecl_void **)0x0) {
-        while (pp_Var7 = pp_Var7 + -1, pp_Var5 <= pp_Var7) {
-          if (*pp_Var7 != (_func___cdecl_void *)0x0) {
-            if (pp_Var7 < pp_Var5) break;
-            p_Var1 = *pp_Var7;
-            *pp_Var7 = (_func___cdecl_void *)0x0;
+        while (pp_Var5 = pp_Var5 + -1, pp_Var3 <= pp_Var5) {
+          if (*pp_Var5 != (_func___cdecl_void *)0x0) {
+            if (pp_Var5 < pp_Var3) break;
+            p_Var1 = *pp_Var5;
+            *pp_Var5 = (_func___cdecl_void *)0x0;
             (*p_Var1)();
-            if ((pp_Var6 != __onexitbegin) || (pp_Var4 != __onexitend)) {
-              pp_Var5 = __onexitbegin;
-              pp_Var6 = __onexitbegin;
-              pp_Var4 = __onexitend;
-              pp_Var7 = __onexitend;
+            if ((pp_Var4 != __onexitbegin) || (pp_Var2 != __onexitend)) {
+              pp_Var3 = __onexitbegin;
+              pp_Var4 = __onexitbegin;
+              pp_Var2 = __onexitend;
+              pp_Var5 = __onexitend;
             }
           }
         }
@@ -107,7 +106,6 @@ void doexit(int param_1,int param_2,int param_3)
   }
   FUN_8291ac7c();
   if (iStack0000001c != 0) {
-    __restgprlr_24();
     return;
   }
                     /* WARNING: Subroutine does not return */

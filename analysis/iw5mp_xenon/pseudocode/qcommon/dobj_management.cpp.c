@@ -38,41 +38,37 @@ int Com_GetMaxDObjCount(void)
 
 // 824FC8A0  Com_GetClientDObj  (qcommon/dobj_management.cpp:129)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 DObj * Com_GetClientDObj(int param_1,LocalClientNum_t param_2)
 
 {
-  longlong lVar1;
-  DObj *pDVar2;
-  ulonglong uVar3;
+  uint uVar1;
   
-  uVar3 = (ulonglong)(int)param_2;
-  lVar1 = __savegprlr_28(param_1);
-  if (((int)lVar1 < 0) || (0x801 < (int)lVar1)) {
+  if ((param_1 < 0) || (0x801 < param_1)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\dobj_management.cpp",
                     0x89,0,"%s\n\t(handle) = %i");
   }
-  if (3 < (uVar3 & 0xffffffff)) {
+  if (LOCAL_CLIENT_3 < param_2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\dobj_management.cpp",
                     0x8c,0,"localClientIndex doesn\'t index MAX_DOBJ_CLIENTS\n\t%i not in [0, %i)");
   }
-  uVar3 = uVar3 * 0x802 + lVar1;
-  if (0x2007 < (uVar3 & 0xffffffff)) {
+  uVar1 = param_2 * 0x802 + param_1;
+  if (0x2007 < uVar1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\dobj_management.cpp",
                     0x94,0,"%s\n\t(handle) = %i");
   }
-  uVar3 = (ulonglong)*(short *)((int)&DAT_8366a518 + (int)((uVar3 & 0xffffffff) << 1));
-  if ((uVar3 & 0xffffffff) != 0) {
-    if ((ulonglong)g_objCount <= (uVar3 & 0xffffffff)) {
+  uVar1 = (uint)(short)(&DAT_8366a518)[uVar1];
+  if (uVar1 != 0) {
+    if (g_objCount <= uVar1) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\dobj_management.cpp"
                       ,0x96,0,"%s\n\t(objIndex) = %i");
     }
-    pDVar2 = (DObj *)__restgprlr_28(uVar3 * 0x9c + ZEXT48(objBuf));
-    return pDVar2;
+    return (DObj *)(objBuf + uVar1);
   }
-  pDVar2 = (DObj *)__restgprlr_28(0);
-  return pDVar2;
+  return (DObj *)0x0;
 }
 
 
@@ -106,35 +102,35 @@ void Com_GetServerDObjSPUGlob(short **param_1,void **param_2)
 
 // 824FCA00  Com_GetServerDObjForEntnum  (qcommon/dobj_management.cpp:200)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 DObj * Com_GetServerDObjForEntnum(int param_1)
 
 {
   uint uVar1;
-  DObj *pDVar2;
-  ulonglong uVar3;
   
-  uVar1 = __savegprlr_29(param_1);
-  if (0x7ff < uVar1) {
+  if (0x7ff < (uint)param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\dobj_management.cpp",
                     0xd2,0,"handle doesn\'t index ARRAY_COUNT( serverObjMap )\n\t%i not in [0, %i)")
     ;
   }
-  uVar3 = (ulonglong)serverObjMap[uVar1];
-  if ((uVar3 & 0xffffffff) != 0) {
-    if ((ulonglong)g_objCount <= (uVar3 & 0xffffffff)) {
+  uVar1 = (uint)serverObjMap[param_1];
+  if (uVar1 != 0) {
+    if (g_objCount <= uVar1) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\dobj_management.cpp"
                       ,0xd5,0,"%s\n\t(objIndex) = %i");
     }
-    pDVar2 = (DObj *)__restgprlr_29(uVar3 * 0x9c + ZEXT48(objBuf));
-    return pDVar2;
+    return (DObj *)(objBuf + uVar1);
   }
-  pDVar2 = (DObj *)__restgprlr_29(0);
-  return pDVar2;
+  return (DObj *)0x0;
 }
 
 
 // 824FCAB0  Com_GetServerDObjForEnt  (qcommon/dobj_management.cpp:225)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
@@ -142,191 +138,181 @@ DObj * Com_GetServerDObjForEnt(gentity_s *param_1)
 
 {
   uint uVar1;
-  int iVar2;
-  DObj *pDVar3;
-  ulonglong uVar4;
   
-  iVar2 = __savegprlr_29(param_1);
-  uVar1 = (iVar2 + 0x7cc8c980) / 0x280;
+  uVar1 = (int)&param_1[0x31e9ea].s.groundEntityNum / 0x280;
   if (0x7ff < uVar1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\dobj_management.cpp",
                     0xe6,0,"handle doesn\'t index ARRAY_COUNT( serverObjMap )\n\t%i not in [0, %i)")
     ;
   }
-  uVar4 = (ulonglong)serverObjMap[uVar1];
-  if ((ulonglong)g_objCount <= (uVar4 & 0xffffffff)) {
+  uVar1 = (uint)serverObjMap[uVar1];
+  if (g_objCount <= uVar1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\dobj_management.cpp",
                     0xe9,0,"objIndex doesn\'t index g_objCount\n\t%i not in [0, %i)");
   }
-  if ((uVar4 & 0xffffffff) != 0) {
-    pDVar3 = (DObj *)__restgprlr_29(uVar4 * 0x9c + ZEXT48(objBuf));
-    return pDVar3;
+  if (uVar1 != 0) {
+    return (DObj *)(objBuf + uVar1);
   }
-  pDVar3 = (DObj *)__restgprlr_29(0);
-  return pDVar3;
+  return (DObj *)0x0;
 }
 
 
 // 824FCB68  Com_GetFreeDObjIndex  (qcommon/dobj_management.cpp:292)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 int Com_GetFreeDObjIndex(void)
 
 {
   bool bVar1;
-  int iVar2;
-  char *pcVar3;
+  char *pcVar2;
+  uint uVar3;
   uint uVar4;
-  uint uVar5;
   
-  __savegprlr_27();
   Sys_EnterCriticalSection(CRITSECT_DOBJ_ALLOC);
-  uVar5 = com_lastDObjIndex + 1;
+  uVar4 = com_lastDObjIndex + 1;
   if (com_lastDObjIndex + 1 < g_objCount) {
-    pcVar3 = &DAT_83668509 + com_lastDObjIndex;
+    pcVar2 = &DAT_83668509 + com_lastDObjIndex;
     do {
-      if (*pcVar3 == '\0') {
-        com_lastDObjIndex = uVar5;
-        if (uVar5 == 0) {
+      if (*pcVar2 == '\0') {
+        com_lastDObjIndex = uVar4;
+        if (uVar4 == 0) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\dobj_management.cpp"
                           ,0x134,0,"%s");
         }
-        if (g_objCount <= uVar5) {
+        if (g_objCount <= uVar4) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\dobj_management.cpp"
                           ,0x135,0,"i doesn\'t index g_objCount\n\t%i not in [0, %i)");
         }
-        uVar4 = objFreeCount;
+        uVar3 = objFreeCount;
         bVar1 = objFreeCount == 0;
-        (&DAT_83668508)[uVar5] = 1;
+        (&DAT_83668508)[uVar4] = 1;
         if (bVar1) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\dobj_management.cpp"
                           ,0x137,0,"%s");
-          uVar4 = objFreeCount;
+          uVar3 = objFreeCount;
         }
-        objFreeCount = uVar4 - 1;
+        objFreeCount = uVar3 - 1;
         Sys_LeaveCriticalSection(CRITSECT_DOBJ_ALLOC);
-        iVar2 = __restgprlr_27(uVar5);
-        return iVar2;
+        return uVar4;
       }
-      uVar5 = uVar5 + 1;
-      pcVar3 = pcVar3 + 1;
-    } while (uVar5 < g_objCount);
+      uVar4 = uVar4 + 1;
+      pcVar2 = pcVar2 + 1;
+    } while (uVar4 < g_objCount);
   }
-  uVar5 = 1;
+  uVar4 = 1;
   if (com_lastDObjIndex != 0) {
     do {
-      if ((&DAT_83668508)[uVar5] == '\0') {
-        com_lastDObjIndex = uVar5;
-        if (uVar5 == 0) {
+      if ((&DAT_83668508)[uVar4] == '\0') {
+        com_lastDObjIndex = uVar4;
+        if (uVar4 == 0) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\dobj_management.cpp"
                           ,0x146,0,"%s");
         }
-        if (g_objCount <= uVar5) {
+        if (g_objCount <= uVar4) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\dobj_management.cpp"
                           ,0x147,0,"i doesn\'t index g_objCount\n\t%i not in [0, %i)");
         }
-        uVar4 = objFreeCount;
+        uVar3 = objFreeCount;
         bVar1 = objFreeCount == 0;
-        (&DAT_83668508)[uVar5] = 1;
+        (&DAT_83668508)[uVar4] = 1;
         if (bVar1) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\dobj_management.cpp"
                           ,0x149,0,"%s");
-          uVar4 = objFreeCount;
+          uVar3 = objFreeCount;
         }
-        objFreeCount = uVar4 - 1;
+        objFreeCount = uVar3 - 1;
         Sys_LeaveCriticalSection(CRITSECT_DOBJ_ALLOC);
-        iVar2 = __restgprlr_27(uVar5);
-        return iVar2;
+        return uVar4;
       }
-      uVar5 = uVar5 + 1;
-    } while (uVar5 <= com_lastDObjIndex);
+      uVar4 = uVar4 + 1;
+    } while (uVar4 <= com_lastDObjIndex);
   }
   if (alwaysfails == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\dobj_management.cpp",
                     0x153,0,"unreachable");
   }
-  iVar2 = __restgprlr_27(0);
-  return iVar2;
+  return 0;
 }
 
 
 // 824FD4E0  Com_BuildDObjModelList  (qcommon/dobj_management.cpp:358)
+
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
 
 int Com_BuildDObjModelList(DObjModelInstanceCount *param_1)
 
 {
   char cVar1;
   char cVar2;
-  DObjModelInstanceCount *pDVar3;
-  char *pcVar4;
+  char *pcVar3;
+  DObjModelInstanceCount *pDVar4;
   int iVar5;
-  DObjModelInstanceCount *pDVar6;
-  char *pcVar7;
-  ulonglong uVar8;
-  char *pcVar9;
-  longlong lVar10;
-  uint uVar11;
-  ulonglong uVar12;
-  int iVar13;
+  char *pcVar6;
+  ulonglong uVar7;
+  char *pcVar8;
+  longlong lVar9;
+  uint uVar10;
+  int iVar11;
   
-  pDVar3 = (DObjModelInstanceCount *)__savegprlr_22(param_1);
   Sys_EnterCriticalSection(CRITSECT_DOBJ_ALLOC);
-  uVar12 = 0;
-  uVar11 = 0;
+  iVar11 = 0;
+  uVar10 = 0;
   if (g_objCount != 0) {
-    lVar10 = 0;
+    lVar9 = 0;
     do {
-      if ((&DAT_83668508)[uVar11] != '\0') {
-        uVar8 = ZEXT48(objBuf);
-        if (lVar10 + uVar8 == 0) {
+      if ((&DAT_83668508)[uVar10] != '\0') {
+        uVar7 = ZEXT48(objBuf);
+        if (lVar9 + uVar7 == 0) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\dobj_management.cpp"
                           ,0x172,0,"%s");
         }
-        pcVar4 = DObjGetName((DObj *)(lVar10 + uVar8));
+        pcVar3 = DObjGetName((DObj *)(lVar9 + uVar7));
         iVar5 = 0;
-        iVar13 = (int)uVar12;
-        pDVar6 = pDVar3;
-        if (0 < iVar13) {
+        pDVar4 = param_1;
+        if (0 < iVar11) {
           do {
-            pcVar9 = pDVar6->modelName;
-            pcVar7 = pcVar4;
+            pcVar8 = pDVar4->modelName;
+            pcVar6 = pcVar3;
             do {
-              cVar1 = *pcVar9;
-              cVar2 = *pcVar7;
+              cVar1 = *pcVar8;
+              cVar2 = *pcVar6;
               if (cVar1 == '\0') break;
-              pcVar9 = pcVar9 + 1;
-              pcVar7 = pcVar7 + 1;
+              pcVar8 = pcVar8 + 1;
+              pcVar6 = pcVar6 + 1;
             } while (cVar1 == cVar2);
             if (cVar1 == cVar2) {
-              pDVar3[iVar5].dobjCount = pDVar3[iVar5].dobjCount + 1;
+              param_1[iVar5].dobjCount = param_1[iVar5].dobjCount + 1;
               break;
             }
             iVar5 = iVar5 + 1;
-            pDVar6 = pDVar6 + 1;
-          } while (iVar5 < iVar13);
+            pDVar4 = pDVar4 + 1;
+          } while (iVar5 < iVar11);
         }
-        if (iVar5 == iVar13) {
-          uVar12 = uVar12 + 1;
-          pDVar3[iVar5].modelName = pcVar4;
-          pDVar3[iVar5].dobjCount = 1;
+        if (iVar5 == iVar11) {
+          iVar11 = iVar11 + 1;
+          param_1[iVar5].modelName = pcVar3;
+          param_1[iVar5].dobjCount = 1;
         }
       }
-      uVar11 = uVar11 + 1;
-      lVar10 = lVar10 + 0x9c;
-    } while (uVar11 < g_objCount);
+      uVar10 = uVar10 + 1;
+      lVar9 = lVar9 + 0x9c;
+    } while (uVar10 < g_objCount);
   }
-  pDVar6 = (DObjModelInstanceCount *)((int)&pDVar3->modelName + (int)((uVar12 & 0xffffffff) << 3));
   std::_Sort<_anonymous_namespace_::DObjModelInstanceCount_*,int>
-            (pDVar3,pDVar6,(int)pDVar6 - (int)pDVar3 >> 3);
+            (param_1,param_1 + iVar11,(int)(param_1 + iVar11) - (int)param_1 >> 3);
   Sys_LeaveCriticalSection(CRITSECT_DOBJ_ALLOC);
-  iVar5 = __restgprlr_22(uVar12);
-  return iVar5;
+  return iVar11;
 }
 
 
 // 824FD640  Com_ListDobjModels  (qcommon/dobj_management.cpp:403)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void Com_ListDobjModels(void)
@@ -336,7 +322,6 @@ void Com_ListDobjModels(void)
   int iVar2;
   longlong lVar3;
   
-  __savegprlr_28();
   pDVar1 = Z_VirtualAlloc(0x10000,"Com_ListDobjModels",0);
   iVar2 = Com_BuildDObjModelList(pDVar1);
   lVar3 = (longlong)iVar2;
@@ -349,13 +334,13 @@ void Com_ListDobjModels(void)
     } while (lVar3 != 0);
   }
   Z_VirtualFree(pDVar1,0);
-  __restgprlr_28();
   return;
 }
 
 
 // 824FD6D0  Com_HandleNoFreeDobjs  (qcommon/dobj_management.cpp:422)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void Com_HandleNoFreeDobjs(void)
@@ -365,7 +350,6 @@ void Com_HandleNoFreeDobjs(void)
   int iVar2;
   longlong lVar3;
   
-  __savegprlr_27();
   pDVar1 = Z_VirtualAlloc(0x10000,"Com_HandleNoFreeDobjs",0);
   iVar2 = Com_BuildDObjModelList(pDVar1);
   lVar3 = (longlong)iVar2;
@@ -386,6 +370,8 @@ void Com_HandleNoFreeDobjs(void)
 
 // 824FD7F8  Com_ClientDObjCreate  (qcommon/dobj_management.cpp:463)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 DObj * Com_ClientDObjCreate
@@ -394,86 +380,78 @@ DObj * Com_ClientDObjCreate
 
 {
   bool bVar1;
-  DObjModel_s *pDVar2;
-  DObj *pDVar3;
-  uint uVar4;
+  DObj *pDVar2;
+  uint uVar3;
+  int iVar4;
   uint uVar5;
-  ulonglong uVar6;
-  int iVar7;
-  ulonglong uVar8;
   
-  uVar6 = (ulonglong)(int)param_5;
-  uVar8 = (ulonglong)param_4;
-  uVar5 = (uint)(short)param_2;
-  pDVar2 = (DObjModel_s *)__savegprlr_24(param_1);
-  if (pDVar2 == (DObjModel_s *)0x0) {
+  if (param_1 == (DObjModel_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\dobj_management.cpp",
                     0x1d2,0,"%s");
   }
-  if (0x801 < (uVar8 & 0xffffffff)) {
+  if (0x801 < (uint)param_4) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\dobj_management.cpp",
                     0x1d3,0,"%s\n\t(handle) = %i");
   }
-  pDVar3 = Com_GetClientDObj((int)uVar8,(LocalClientNum_t)uVar6);
-  if (pDVar3 != (DObj *)0x0) {
+  pDVar2 = Com_GetClientDObj(param_4,param_5);
+  if (pDVar2 != (DObj *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\dobj_management.cpp",
                     0x1d4,0,"%s");
   }
-  if (3 < (uVar6 & 0xffffffff)) {
+  if (LOCAL_CLIENT_3 < param_5) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\dobj_management.cpp",
                     0x1d5,0,"localClientNum doesn\'t index MAX_DOBJ_CLIENTS\n\t%i not in [0, %i)");
   }
-  uVar8 = uVar6 * 0x802 + uVar8;
-  uVar4 = Com_GetFreeDObjIndex();
-  if (0x2007 < (uVar8 & 0xffffffff)) {
+  iVar4 = param_5 * 0x802;
+  uVar5 = iVar4 + param_4;
+  uVar3 = Com_GetFreeDObjIndex();
+  if (0x2007 < uVar5) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\dobj_management.cpp",
                     0x1dc,0,"%s");
   }
-  iVar7 = (int)(uVar6 * 0x802);
-  if ((int)uVar8 < iVar7) {
+  if ((int)uVar5 < iVar4) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\dobj_management.cpp",
                     0x1de,0,"%s");
   }
-  if (iVar7 + 0x802 <= (int)uVar8) {
+  if (iVar4 + 0x802 <= (int)uVar5) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\dobj_management.cpp",
                     0x1df,0,"%s");
   }
-  bVar1 = g_objCount <= uVar4;
-  *(short *)((int)&DAT_8366a518 + (int)((uVar8 & 0xffffffff) << 1)) = (short)uVar4;
+  bVar1 = g_objCount <= uVar3;
+  (&DAT_8366a518)[uVar5] = (short)uVar3;
   if (bVar1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\dobj_management.cpp",
                     0x1e2,0,"index doesn\'t index g_objCount\n\t%i not in [0, %i)");
   }
-  DObjCreate(pDVar2,uVar5 & 0xffff,param_3,*objBuf + (int)((longlong)(int)uVar4 * 0x9c),0);
+  DObjCreate(param_1,(uint)param_2,param_3,objBuf[uVar3],0);
   if (objFreeCount == 0) {
     Com_HandleNoFreeDobjs();
   }
-  pDVar3 = (DObj *)__restgprlr_24((longlong)(int)uVar4 * 0x9c + ZEXT48(objBuf));
-  return pDVar3;
+  return (DObj *)(objBuf + uVar3);
 }
 
 
 // 824FCD80  Com_ClientDObjClearAllSkel  (qcommon/dobj_management.cpp:500)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void Com_ClientDObjClearAllSkel(LocalClientNum_t param_1)
 
 {
   short sVar1;
-  uint uVar2;
-  longlong lVar3;
-  short *psVar4;
+  longlong lVar2;
+  short *psVar3;
   
-  uVar2 = __savegprlr_26(param_1);
-  if (3 < uVar2) {
+  if (LOCAL_CLIENT_3 < param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\dobj_management.cpp",
                     0x1fb,0,"localClientNum doesn\'t index MAX_DOBJ_CLIENTS\n\t%i not in [0, %i)");
   }
-  lVar3 = 0x802;
-  psVar4 = &DAT_8366a518 + uVar2 * 0x802;
+  lVar2 = 0x802;
+  psVar3 = &DAT_8366a518 + param_1 * 0x802;
   do {
-    sVar1 = *psVar4;
+    sVar1 = *psVar3;
     if ((int)sVar1 != 0) {
       if (g_objCount <= (uint)(int)sVar1) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\dobj_management.cpp"
@@ -481,68 +459,63 @@ void Com_ClientDObjClearAllSkel(LocalClientNum_t param_1)
       }
       DObjSkelClear((DObj *)(objBuf + sVar1));
     }
-    lVar3 = lVar3 + -1;
-    psVar4 = psVar4 + 1;
-  } while (lVar3 != 0);
-  __restgprlr_26();
+    lVar2 = lVar2 + -1;
+    psVar3 = psVar3 + 1;
+  } while (lVar2 != 0);
   return;
 }
 
 
 // 824FD9D0  Com_ServerDObjCreate  (qcommon/dobj_management.cpp:535)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
+
 DObj * Com_ServerDObjCreate(DObjModel_s *param_1,ushort param_2,XAnimTree *param_3,int param_4)
 
 {
   bool bVar1;
-  DObjModel_s *pDVar2;
-  DObj *pDVar3;
-  uint uVar4;
-  uint uVar5;
-  ulonglong uVar6;
-  longlong lVar7;
+  DObj *pDVar2;
+  uint uVar3;
   
-  uVar6 = (ulonglong)param_4;
-  uVar5 = (uint)(short)param_2;
-  pDVar2 = (DObjModel_s *)__savegprlr_25(param_1);
-  if (pDVar2 == (DObjModel_s *)0x0) {
+  if (param_1 == (DObjModel_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\dobj_management.cpp",
                     0x21b,0,"%s");
   }
-  if (0x7ff < (uVar6 & 0xffffffff)) {
+  if (0x7ff < (uint)param_4) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\dobj_management.cpp",
                     0x21c,0,"%s\n\t(handle) = %i");
   }
-  pDVar3 = Com_GetServerDObjForEntnum((int)uVar6);
-  if (pDVar3 != (DObj *)0x0) {
+  pDVar2 = Com_GetServerDObjForEntnum(param_4);
+  if (pDVar2 != (DObj *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\dobj_management.cpp",
                     0x21d,0,"%s");
   }
-  uVar4 = Com_GetFreeDObjIndex();
-  if (0x7ff < (uVar6 & 0xffffffff)) {
+  uVar3 = Com_GetFreeDObjIndex();
+  if (0x7ff < (uint)param_4) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\dobj_management.cpp",
                     0x224,0,"%s");
   }
-  bVar1 = g_objCount <= uVar4;
-  *(short *)((int)serverObjMap + (int)((uVar6 & 0xffffffff) << 1)) = (short)uVar4;
+  bVar1 = g_objCount <= uVar3;
+  serverObjMap[param_4] = (short)uVar3;
   if (bVar1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\dobj_management.cpp",
                     0x226,0,"index doesn\'t index g_objCount\n\t%i not in [0, %i)");
   }
-  DObjCreate(pDVar2,uVar5 & 0xffff,param_3,*objBuf + (int)((longlong)(int)uVar4 * 0x9c),
-             (int)uVar6 + 1U & 0xffff);
+  DObjCreate(param_1,(uint)param_2,param_3,objBuf[uVar3],param_4 + 1U & 0xffff);
   if (objFreeCount == 0) {
     Com_HandleNoFreeDobjs();
   }
-  lVar7 = (longlong)(int)uVar4 * 0x9c + ZEXT48(objBuf);
-  DObjLock((DObj *)lVar7);
-  pDVar3 = (DObj *)__restgprlr_25(lVar7);
-  return pDVar3;
+  pDVar2 = (DObj *)(objBuf + uVar3);
+  DObjLock(pDVar2);
+  return pDVar2;
 }
 
 
 // 824FCE40  Com_SafeClientDObjFree  (qcommon/dobj_management.cpp:629)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void Com_SafeClientDObjFree(int param_1,LocalClientNum_t param_2)
@@ -550,54 +523,51 @@ void Com_SafeClientDObjFree(int param_1,LocalClientNum_t param_2)
 {
   bool bVar1;
   short sVar2;
-  int iVar3;
-  char (*pacVar4) [156];
-  ulonglong uVar5;
-  ulonglong uVar6;
+  char (*pacVar3) [156];
+  uint uVar4;
   
-  uVar6 = (ulonglong)(int)param_2;
-  uVar5 = __savegprlr_28(param_1);
-  if (0x801 < (uVar5 & 0xffffffff)) {
+  if (0x801 < (uint)param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\dobj_management.cpp",
                     0x278,0,"%s\n\t(handle) = %i");
   }
-  if (3 < (uVar6 & 0xffffffff)) {
+  if (LOCAL_CLIENT_3 < param_2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\dobj_management.cpp",
                     0x279,0,"localClientNum doesn\'t index MAX_DOBJ_CLIENTS\n\t%i not in [0, %i)");
   }
-  uVar5 = uVar6 * 0x802 + uVar5;
-  if (0x2007 < (uVar5 & 0xffffffff)) {
+  uVar4 = param_2 * 0x802 + param_1;
+  if (0x2007 < uVar4) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\dobj_management.cpp",
                     0x27f,0,"%s\n\t(handle) = %i");
   }
-  if (0x801 < (uVar5 + uVar6 * -0x802 & 0xffffffff)) {
+  if (0x801 < uVar4 + param_2 * -0x802) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\dobj_management.cpp",
                     0x280,0,
                     "handle - localClientNum * CLIENT_DOBJ_HANDLE_MAX doesn\'t index CLIENT_DOBJ_HANDLE_MAX\n\t%i not in [0, %i)"
                    );
   }
-  iVar3 = (int)((uVar5 & 0xffffffff) << 1);
-  sVar2 = *(short *)((int)&DAT_8366a518 + iVar3);
+  sVar2 = (&DAT_8366a518)[uVar4];
   if ((int)sVar2 != 0) {
     bVar1 = g_objCount <= (uint)(int)sVar2;
-    *(undefined2 *)((int)&DAT_8366a518 + iVar3) = 0;
+    (&DAT_8366a518)[uVar4] = 0;
     if (bVar1) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\dobj_management.cpp"
                       ,0x287,0,"index doesn\'t index g_objCount\n\t%i not in [0, %i)");
     }
     Sys_EnterCriticalSection(CRITSECT_DOBJ_ALLOC);
-    pacVar4 = objBuf;
+    pacVar3 = objBuf;
     objFreeCount = objFreeCount + 1;
     (&DAT_83668508)[sVar2] = 0;
-    DObjFree((DObj *)(pacVar4 + sVar2));
+    DObjFree((DObj *)(pacVar3 + sVar2));
     Sys_LeaveCriticalSection(CRITSECT_DOBJ_ALLOC);
   }
-  __restgprlr_28();
   return;
 }
 
 
 // 824FCF98  Com_SafeServerDObjFree  (qcommon/dobj_management.cpp:674)
+
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 
 void Com_SafeServerDObjFree(int param_1)
 
@@ -605,17 +575,15 @@ void Com_SafeServerDObjFree(int param_1)
   bool bVar1;
   short sVar2;
   char (*pacVar3) [156];
-  uint uVar4;
   
-  uVar4 = __savegprlr_28(param_1);
-  if (0x7ff < uVar4) {
+  if (0x7ff < (uint)param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\dobj_management.cpp",
                     0x2a5,0,"%s\n\t(handle) = %i");
   }
-  sVar2 = serverObjMap[uVar4];
+  sVar2 = serverObjMap[param_1];
   if ((int)sVar2 != 0) {
     bVar1 = g_objCount <= (uint)(int)sVar2;
-    serverObjMap[uVar4] = 0;
+    serverObjMap[param_1] = 0;
     if (bVar1) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\dobj_management.cpp"
                       ,0x2b0,0,"index doesn\'t index g_objCount\n\t%i not in [0, %i)");
@@ -627,19 +595,18 @@ void Com_SafeServerDObjFree(int param_1)
     DObjFree((DObj *)(pacVar3 + sVar2));
     Sys_LeaveCriticalSection(CRITSECT_DOBJ_ALLOC);
   }
-  __restgprlr_28();
   return;
 }
 
 
 // 824FD068  Com_InitDObjBuffer  (qcommon/dobj_management.cpp:716)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void Com_InitDObjBuffer(uint param_1)
 
 {
-  uint uVar1;
-  
-  uVar1 = __savegprlr_28(param_1);
   if (g_objCount != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\dobj_management.cpp",
                     0x2cd,0,"%s\n\t(g_objCount) = %i");
@@ -648,13 +615,12 @@ void Com_InitDObjBuffer(uint param_1)
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\dobj_management.cpp",
                     0x2ce,0,"%s");
   }
-  if (uVar1 == 0) {
+  if (param_1 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\dobj_management.cpp",
                     0x2cf,0,"%s");
   }
-  g_objCount = uVar1;
-  objBuf = PMem_Alloc_NoDebug(uVar1 * 0x9c,0x80,4);
-  __restgprlr_28();
+  g_objCount = param_1;
+  objBuf = PMem_Alloc_NoDebug(param_1 * 0x9c,0x80,4);
   return;
 }
 
@@ -697,6 +663,8 @@ void Com_InitDObj(void)
 
 // 824FD200  Com_ShutdownDObj  (qcommon/dobj_management.cpp:776)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void Com_ShutdownDObj(void)
@@ -706,7 +674,6 @@ void Com_ShutdownDObj(void)
   short *psVar2;
   uint uVar3;
   
-  __savegprlr_25();
   if (g_bDObjInited != 0) {
     g_bDObjInited = 0;
     if (g_objCount == 0) {
@@ -752,7 +719,6 @@ void Com_ShutdownDObj(void)
                       ,0x322,0,"%s\n\t(objFreeCount) = %i");
     }
   }
-  __restgprlr_25();
   return;
 }
 
@@ -927,6 +893,8 @@ void std::
 
 // 824FDCD0  _Make_heap<`anonymous_namespace'::DObjModelInstanceCount_*,int,A0x329c26b1::DObjModelInstanceCount>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2631)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void std::
@@ -936,63 +904,57 @@ void std::
 
 {
   uint uVar1;
-  DObjModelInstanceCount *pDVar2;
-  int iVar3;
-  ulonglong uVar4;
-  longlong lVar5;
-  longlong lVar6;
-  int iVar9;
-  ulonglong uVar7;
-  ulonglong uVar8;
-  uint uVar10;
-  ulonglong uVar11;
-  ulonglong uVar12;
+  int iVar2;
+  ulonglong uVar3;
+  int iVar4;
+  ulonglong uVar5;
+  ulonglong uVar6;
+  uint uVar7;
+  longlong lVar8;
+  ulonglong uVar9;
+  ulonglong uVar10;
   DObjModelInstanceCount local_40 [8];
   
-  lVar6 = (longlong)(int)param_2;
-  lVar5 = __savegprlr_27(param_1,lVar6,param_3,param_4);
-  pDVar2 = (DObjModelInstanceCount *)lVar5;
-  iVar9 = (int)lVar6 - (int)pDVar2;
-  uVar1 = iVar9 >> 3;
-  uVar12 = (longlong)(iVar9 >> 4) + (ulonglong)((int)uVar1 < 0 && (uVar1 & 1) != 0);
-  if (0 < (longlong)uVar12) {
-    uVar11 = (uVar12 + 1 & 0x7fffffff) << 1;
-    lVar5 = (uVar12 & 0x1fffffff) * 8 + lVar5;
+  uVar1 = (int)param_2 - (int)param_1 >> 3;
+  uVar10 = (longlong)((int)param_2 - (int)param_1 >> 4) +
+           (ulonglong)((int)uVar1 < 0 && (uVar1 & 1) != 0);
+  if (0 < (longlong)uVar10) {
+    uVar9 = (uVar10 + 1 & 0x7fffffff) << 1;
+    lVar8 = (uVar10 & 0x1fffffff) * 8 + (longlong)(int)param_1;
     do {
-      lVar5 = lVar5 + -8;
-      local_40[0] = *(DObjModelInstanceCount *)lVar5;
-      uVar11 = uVar11 - 2;
-      uVar12 = uVar12 - 1;
-      uVar10 = (uint)uVar11;
-      uVar8 = uVar11;
-      uVar4 = uVar12;
-      while (uVar7 = uVar8, (int)uVar10 < (int)uVar1) {
-        iVar9 = (int)((uVar7 & 0xffffffff) << 3);
-        if (*(uint *)((int)pDVar2 + iVar9 + -4) < *(uint *)((int)&pDVar2->dobjCount + iVar9)) {
-          uVar7 = uVar7 - 1;
+      lVar8 = lVar8 + -8;
+      local_40[0] = *(DObjModelInstanceCount *)lVar8;
+      uVar9 = uVar9 - 2;
+      uVar10 = uVar10 - 1;
+      uVar7 = (uint)uVar9;
+      uVar6 = uVar9;
+      uVar3 = uVar10;
+      while (uVar5 = uVar6, (int)uVar7 < (int)uVar1) {
+        iVar4 = (int)((uVar5 & 0xffffffff) << 3);
+        if (*(uint *)((int)param_1 + iVar4 + -4) < *(uint *)((int)&param_1->dobjCount + iVar4)) {
+          uVar5 = uVar5 - 1;
         }
-        iVar9 = (int)((uVar7 & 0xffffffff) << 3);
-        iVar3 = (int)((uVar4 & 0xffffffff) << 3);
-        uVar8 = (uVar7 + 1 & 0x7fffffff) << 1;
-        *(undefined4 *)((int)&pDVar2->modelName + iVar3) =
-             *(undefined4 *)((int)&pDVar2->modelName + iVar9);
-        *(undefined4 *)((int)&pDVar2->dobjCount + iVar3) =
-             *(undefined4 *)((int)&pDVar2->dobjCount + iVar9);
-        uVar10 = (uint)uVar8;
-        uVar4 = uVar7;
+        iVar4 = (int)((uVar5 & 0xffffffff) << 3);
+        iVar2 = (int)((uVar3 & 0xffffffff) << 3);
+        uVar6 = (uVar5 + 1 & 0x7fffffff) << 1;
+        *(undefined4 *)((int)&param_1->modelName + iVar2) =
+             *(undefined4 *)((int)&param_1->modelName + iVar4);
+        *(undefined4 *)((int)&param_1->dobjCount + iVar2) =
+             *(undefined4 *)((int)&param_1->dobjCount + iVar4);
+        uVar7 = (uint)uVar6;
+        uVar3 = uVar5;
       }
-      iVar9 = (int)uVar4;
-      if (uVar10 == uVar1) {
-        iVar3 = (int)((uVar4 & 0xffffffff) << 3);
-        iVar9 = uVar1 - 1;
-        *(char **)((int)&pDVar2->modelName + iVar3) = pDVar2[uVar1 - 1].modelName;
-        *(uint *)((int)&pDVar2->dobjCount + iVar3) = pDVar2[uVar1 - 1].dobjCount;
+      iVar4 = (int)uVar3;
+      if (uVar7 == uVar1) {
+        iVar2 = (int)((uVar3 & 0xffffffff) << 3);
+        iVar4 = uVar1 - 1;
+        *(char **)((int)&param_1->modelName + iVar2) = param_1[uVar1 - 1].modelName;
+        *(uint *)((int)&param_1->dobjCount + iVar2) = param_1[uVar1 - 1].dobjCount;
       }
       _Push_heap<_anonymous_namespace_::DObjModelInstanceCount_*,int,A0x329c26b1::DObjModelInstanceCount>
-                (pDVar2,iVar9,(int)uVar12,local_40);
-    } while (0 < (int)uVar12);
+                (param_1,iVar4,(int)uVar10,local_40);
+    } while (0 < (int)uVar10);
   }
-  __restgprlr_27();
   return;
 }
 
@@ -1108,6 +1070,8 @@ void std::_Med3<_anonymous_namespace_::DObjModelInstanceCount_*>
 
 // 824FDE40  _Median<`anonymous_namespace'::DObjModelInstanceCount_*>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3535)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void std::_Median<_anonymous_namespace_::DObjModelInstanceCount_*>
@@ -1118,20 +1082,18 @@ void std::_Median<_anonymous_namespace_::DObjModelInstanceCount_*>
   int iVar1;
   int iVar2;
   DObjModelInstanceCount *pDVar3;
-  DObjModelInstanceCount *pDVar4;
-  uint uVar6;
-  ulonglong uVar5;
+  uint uVar5;
+  ulonglong uVar4;
   
-  pDVar3 = (DObjModelInstanceCount *)__savegprlr_27(param_1);
-  iVar1 = (int)param_3 - (int)pDVar3 >> 3;
+  iVar1 = (int)param_3 - (int)param_1 >> 3;
   if (0x28 < iVar1) {
-    uVar6 = iVar1 + 1;
-    uVar5 = (longlong)((int)uVar6 >> 3) + (ulonglong)((int)uVar6 < 0 && (uVar6 & 7) != 0);
-    iVar2 = (int)((uVar5 & 0xffffffff) << 4);
-    iVar1 = (int)((uVar5 & 0x1fffffff) << 3);
-    pDVar4 = (DObjModelInstanceCount *)((int)&pDVar3->modelName + iVar1);
+    uVar5 = iVar1 + 1;
+    uVar4 = (longlong)((int)uVar5 >> 3) + (ulonglong)((int)uVar5 < 0 && (uVar5 & 7) != 0);
+    iVar2 = (int)((uVar4 & 0xffffffff) << 4);
+    iVar1 = (int)((uVar4 & 0x1fffffff) << 3);
+    pDVar3 = (DObjModelInstanceCount *)((int)&param_1->modelName + iVar1);
     _Med3<_anonymous_namespace_::DObjModelInstanceCount_*>
-              (pDVar3,pDVar4,(DObjModelInstanceCount *)((int)&pDVar3->modelName + iVar2));
+              (param_1,pDVar3,(DObjModelInstanceCount *)((int)&param_1->modelName + iVar2));
     _Med3<_anonymous_namespace_::DObjModelInstanceCount_*>
               ((DObjModelInstanceCount *)((int)param_2 - iVar1),param_2,
                (DObjModelInstanceCount *)((int)&param_2->modelName + iVar1));
@@ -1139,18 +1101,18 @@ void std::_Median<_anonymous_namespace_::DObjModelInstanceCount_*>
               ((DObjModelInstanceCount *)((int)param_3 - iVar2),
                (DObjModelInstanceCount *)((int)param_3 - iVar1),param_3);
     _Med3<_anonymous_namespace_::DObjModelInstanceCount_*>
-              (pDVar4,param_2,(DObjModelInstanceCount *)((int)param_3 - iVar1));
-    __restgprlr_27();
+              (pDVar3,param_2,(DObjModelInstanceCount *)((int)param_3 - iVar1));
     return;
   }
-  _Med3<_anonymous_namespace_::DObjModelInstanceCount_*>(pDVar3,param_2,param_3);
-  __restgprlr_27();
+  _Med3<_anonymous_namespace_::DObjModelInstanceCount_*>(param_1,param_2,param_3);
   return;
 }
 
 
 // 824FDF80  _Unguarded_partition<`anonymous_namespace'::DObjModelInstanceCount_*>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3551)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 pair<_anonymous_namespace_::DObjModelInstanceCount_*,A0x329c26b1::DObjModelInstanceCount_*>
@@ -1158,152 +1120,114 @@ std::_Unguarded_partition<_anonymous_namespace_::DObjModelInstanceCount_*>
           (DObjModelInstanceCount *param_1,DObjModelInstanceCount *param_2)
 
 {
-  bool bVar1;
-  uint uVar2;
+  DObjModelInstanceCount *pDVar1;
+  DObjModelInstanceCount *pDVar2;
   uint uVar3;
-  undefined4 *puVar5;
-  pair<_anonymous_namespace_::DObjModelInstanceCount_*,A0x329c26b1::DObjModelInstanceCount_*> pVar4;
-  ulonglong uVar6;
-  ulonglong in_r5;
-  ulonglong uVar7;
-  undefined8 *puVar8;
-  undefined8 *puVar9;
-  undefined8 uVar10;
-  ulonglong uVar11;
-  undefined8 *puVar12;
-  ulonglong uVar13;
-  int iVar15;
-  ulonglong uVar14;
-  ulonglong uVar16;
+  DObjModelInstanceCount *in_r5;
+  DObjModelInstanceCount *pDVar4;
+  DObjModelInstanceCount *pDVar5;
+  DObjModelInstanceCount *pDVar6;
+  DObjModelInstanceCount DVar7;
+  DObjModelInstanceCount *pDVar8;
   
-  uVar6 = (ulonglong)(int)param_2;
-  puVar5 = (undefined4 *)__savegprlr_28(param_1);
-  iVar15 = (int)in_r5 - (int)(DObjModelInstanceCount *)uVar6;
-  uVar3 = iVar15 >> 3;
-  uVar16 = ((longlong)(iVar15 >> 4) + (ulonglong)((int)uVar3 < 0 && (uVar3 & 1) != 0) & 0x1fffffff)
-           * 8 + uVar6;
-  _Median<_anonymous_namespace_::DObjModelInstanceCount_*>
-            ((DObjModelInstanceCount *)uVar6,(DObjModelInstanceCount *)uVar16,
-             (DObjModelInstanceCount *)((int)in_r5 + -8));
-  uVar7 = uVar16 + 8;
-  if ((uVar6 & 0xffffffff) < (uVar16 & 0xffffffff)) {
-    do {
-      uVar3 = *(uint *)((int)uVar16 + -4);
-      uVar2 = *(uint *)((int)uVar16 + 4);
-      if ((uVar2 < uVar3) || (uVar3 < uVar2)) break;
-      uVar16 = uVar16 - 8;
-    } while ((uVar6 & 0xffffffff) < (uVar16 & 0xffffffff));
+  uVar3 = (int)in_r5 - (int)param_2 >> 3;
+  pDVar8 = param_2 + ((int)in_r5 - (int)param_2 >> 4) + (uint)((int)uVar3 < 0 && (uVar3 & 1) != 0);
+  _Median<_anonymous_namespace_::DObjModelInstanceCount_*>(param_2,pDVar8,in_r5 + -1);
+  pDVar4 = pDVar8 + 1;
+  for (; ((param_2 < pDVar8 && (pDVar8[-1].dobjCount <= pDVar8->dobjCount)) &&
+         (pDVar8->dobjCount <= pDVar8[-1].dobjCount)); pDVar8 = pDVar8 + -1) {
   }
-  uVar11 = uVar7;
-  uVar14 = uVar16;
-  if ((uVar7 & 0xffffffff) < (in_r5 & 0xffffffff)) {
-    uVar3 = *(uint *)((int)uVar16 + 4);
+  pDVar1 = pDVar4;
+  pDVar6 = pDVar8;
+  if (pDVar4 < in_r5) {
     do {
-      uVar2 = *(uint *)((int)uVar7 + 4);
-      uVar11 = uVar7;
-      if ((uVar3 < uVar2) || (uVar2 < uVar3)) break;
-      uVar7 = uVar7 + 8;
-      uVar11 = uVar7;
-    } while ((uVar7 & 0xffffffff) < (in_r5 & 0xffffffff));
+      pDVar1 = pDVar4;
+      if ((pDVar8->dobjCount < pDVar4->dobjCount) || (pDVar4->dobjCount < pDVar8->dobjCount)) break;
+      pDVar4 = pDVar4 + 1;
+      pDVar1 = pDVar4;
+    } while (pDVar4 < in_r5);
   }
+joined_r0x824fe024:
   do {
-    uVar13 = uVar7;
-    if ((uVar11 & 0xffffffff) < (in_r5 & 0xffffffff)) {
-      do {
-        puVar12 = (undefined8 *)uVar11;
-        uVar3 = *(uint *)((int)uVar14 + 4);
-        uVar7 = uVar13;
-        if (uVar3 <= *(uint *)((int)puVar12 + 4)) {
-          if (uVar3 < *(uint *)((int)puVar12 + 4)) break;
-          uVar7 = uVar13 + 8;
-          puVar8 = (undefined8 *)uVar13;
-          uVar10 = *puVar8;
-          *(undefined4 *)puVar8 = *(undefined4 *)puVar12;
-          *(undefined4 *)((int)puVar8 + 4) = *(undefined4 *)((int)puVar12 + 4);
-          *puVar12 = uVar10;
+    pDVar2 = pDVar6;
+    if (in_r5 <= pDVar1) {
+joined_r0x824fe06c:
+      for (; param_2 < pDVar2; pDVar2 = pDVar2 + -1) {
+        pDVar5 = pDVar6 + -1;
+        if (pDVar6[-1].dobjCount <= pDVar8->dobjCount) {
+          if (pDVar6[-1].dobjCount < pDVar8->dobjCount) break;
+          pDVar8 = pDVar8 + -1;
+          DVar7 = *pDVar8;
+          *pDVar8 = *pDVar5;
+          *pDVar5 = DVar7;
         }
-        uVar11 = uVar11 + 8;
-        uVar13 = uVar7;
-      } while ((uVar11 & 0xffffffff) < (in_r5 & 0xffffffff));
-    }
-    bVar1 = (uVar16 & 0xffffffff) == (uVar6 & 0xffffffff);
-    uVar13 = uVar16;
-    if ((uVar6 & 0xffffffff) < (uVar16 & 0xffffffff)) {
-      do {
-        puVar12 = (undefined8 *)(uVar13 - 8);
-        uVar3 = *(uint *)((int)uVar14 + 4);
-        if (*(uint *)((int)puVar12 + 4) <= uVar3) {
-          if (*(uint *)((int)puVar12 + 4) < uVar3) break;
-          uVar14 = uVar14 - 8;
-          uVar10 = *(undefined8 *)uVar14;
-          *(undefined8 *)uVar14 = *puVar12;
-          *puVar12 = uVar10;
-        }
-        uVar16 = uVar16 - 8;
-        uVar13 = uVar13 - 8;
-      } while ((uVar6 & 0xffffffff) < (uVar16 & 0xffffffff));
-      bVar1 = (uVar16 & 0xffffffff) == (uVar6 & 0xffffffff);
-    }
-    puVar12 = (undefined8 *)uVar11;
-    puVar8 = (undefined8 *)uVar14;
-    if (bVar1) {
-      puVar9 = (undefined8 *)uVar7;
-      if ((uVar11 & 0xffffffff) == (in_r5 & 0xffffffff)) {
-        *puVar5 = puVar8;
-        puVar5[1] = puVar9;
-        pVar4 = (pair<_anonymous_namespace_::DObjModelInstanceCount_*,A0x329c26b1::DObjModelInstanceCount_*>
-                 )__restgprlr_28(puVar5);
-        return pVar4;
+        pDVar6 = pDVar5;
       }
-      if ((uVar7 & 0xffffffff) != (uVar11 & 0xffffffff)) {
-        uVar10 = *puVar8;
-        *(undefined4 *)puVar8 = *(undefined4 *)puVar9;
-        *(undefined4 *)((int)puVar8 + 4) = *(undefined4 *)((int)puVar9 + 4);
-        *puVar9 = uVar10;
-      }
-      uVar7 = uVar7 + 8;
-      uVar10 = *puVar8;
-      *(undefined4 *)puVar8 = *(undefined4 *)puVar12;
-      *(undefined4 *)((int)puVar8 + 4) = *(undefined4 *)((int)puVar12 + 4);
-      *puVar12 = uVar10;
-      uVar11 = uVar11 + 8;
-      uVar14 = uVar14 + 8;
-    }
-    else {
-      uVar13 = uVar16 - 8;
-      puVar9 = (undefined8 *)uVar13;
-      if ((uVar11 & 0xffffffff) == (in_r5 & 0xffffffff)) {
-        uVar14 = uVar14 - 8;
-        puVar12 = (undefined8 *)uVar14;
-        if ((uVar13 & 0xffffffff) != (uVar14 & 0xffffffff)) {
-          uVar10 = *puVar9;
-          *(undefined4 *)puVar9 = *(undefined4 *)puVar12;
-          *(undefined4 *)((int)puVar9 + 4) = *(undefined4 *)((int)puVar8 + -4);
-          *puVar12 = uVar10;
+      if (pDVar2 == param_2) {
+        if (pDVar1 == in_r5) {
+          param_1->modelName = (char *)pDVar8;
+          param_1->dobjCount = (uint)pDVar4;
+          return (pair<_anonymous_namespace_::DObjModelInstanceCount_*,A0x329c26b1::DObjModelInstanceCount_*>
+                  )(longlong)(int)param_1;
         }
-        uVar7 = uVar7 - 8;
-        puVar9 = (undefined8 *)uVar7;
-        uVar10 = *puVar12;
-        *(undefined4 *)puVar12 = *(undefined4 *)puVar9;
-        *(undefined4 *)((int)puVar8 + -4) = *(undefined4 *)((int)puVar9 + 4);
-        *puVar9 = uVar10;
-        uVar16 = uVar13;
+        if (pDVar4 != pDVar1) {
+          pDVar8->modelName = pDVar4->modelName;
+          pDVar8->dobjCount = pDVar4->dobjCount;
+          *pDVar4 = *pDVar8;
+        }
+        pDVar8->modelName = pDVar1->modelName;
+        pDVar8->dobjCount = pDVar1->dobjCount;
+        *pDVar1 = *pDVar8;
+        pDVar4 = pDVar4 + 1;
+        pDVar1 = pDVar1 + 1;
+        pDVar8 = pDVar8 + 1;
+        pDVar6 = pDVar2;
       }
       else {
-        uVar10 = *puVar12;
-        *(undefined4 *)puVar12 = *(undefined4 *)puVar9;
-        *(undefined4 *)((int)puVar12 + 4) = *(undefined4 *)((int)uVar16 + -4);
-        *puVar9 = uVar10;
-        uVar16 = uVar13;
-        uVar11 = uVar11 + 8;
+        pDVar6 = pDVar2 + -1;
+        if (pDVar1 == in_r5) {
+          pDVar5 = pDVar8 + -1;
+          if (pDVar6 != pDVar5) {
+            DVar7 = *pDVar6;
+            pDVar6->modelName = pDVar5->modelName;
+            pDVar2[-1].dobjCount = pDVar8[-1].dobjCount;
+            *pDVar5 = DVar7;
+          }
+          pDVar2 = pDVar4 + -1;
+          DVar7 = *pDVar5;
+          pDVar5->modelName = pDVar2->modelName;
+          pDVar8[-1].dobjCount = pDVar4[-1].dobjCount;
+          *pDVar2 = DVar7;
+          pDVar4 = pDVar2;
+          pDVar8 = pDVar5;
+        }
+        else {
+          pDVar1->modelName = pDVar6->modelName;
+          pDVar1->dobjCount = pDVar2[-1].dobjCount;
+          *pDVar6 = *pDVar1;
+          pDVar1 = pDVar1 + 1;
+        }
       }
+      goto joined_r0x824fe024;
     }
+    pDVar5 = pDVar4;
+    if (pDVar8->dobjCount <= pDVar1->dobjCount) {
+      if (pDVar8->dobjCount < pDVar1->dobjCount) goto joined_r0x824fe06c;
+      pDVar5 = pDVar4 + 1;
+      pDVar4->modelName = pDVar1->modelName;
+      pDVar4->dobjCount = pDVar1->dobjCount;
+      *pDVar1 = *pDVar4;
+    }
+    pDVar4 = pDVar5;
+    pDVar1 = pDVar1 + 1;
   } while( true );
 }
 
 
 // 824FE220  _Sort<`anonymous_namespace'::DObjModelInstanceCount_*,int>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3609)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void std::_Sort<_anonymous_namespace_::DObjModelInstanceCount_*,int>
@@ -1311,64 +1235,51 @@ void std::_Sort<_anonymous_namespace_::DObjModelInstanceCount_*,int>
 
 {
   uint uVar1;
-  DObjModelInstanceCount *pDVar2;
-  ulonglong uVar3;
+  int iVar2;
+  uint uVar3;
   DObjModelInstanceCount *pDVar4;
-  int iVar6;
-  ulonglong uVar5;
-  ulonglong uVar7;
-  int iVar8;
   DObjModelInstanceCount local_40 [8];
   
-  uVar5 = (ulonglong)param_3;
-  uVar3 = (ulonglong)(int)param_2;
-  pDVar2 = (DObjModelInstanceCount *)__savegprlr_27(param_1);
-  pDVar4 = (DObjModelInstanceCount *)uVar3;
-  iVar6 = (int)pDVar4 - (int)pDVar2;
+  iVar2 = (int)param_2 - (int)param_1;
   do {
-    iVar6 = iVar6 >> 3;
-    if (iVar6 < 0x21) {
+    iVar2 = iVar2 >> 3;
+    if (iVar2 < 0x21) {
 LAB_824fe2cc:
-      if (1 < iVar6) {
+      if (1 < iVar2) {
         _Insertion_sort1<_anonymous_namespace_::DObjModelInstanceCount_*,A0x329c26b1::DObjModelInstanceCount>
-                  (pDVar2,pDVar4,(DObjModelInstanceCount *)0x0);
+                  (param_1,param_2,(DObjModelInstanceCount *)0x0);
       }
-      __restgprlr_27();
       return;
     }
-    iVar8 = (int)uVar5;
-    pDVar4 = (DObjModelInstanceCount *)uVar3;
-    if (iVar8 < 1) {
-      if (0x20 < iVar6) {
-        if (1 < iVar6) {
+    if (param_3 < 1) {
+      if (0x20 < iVar2) {
+        if (1 < iVar2) {
           _Make_heap<_anonymous_namespace_::DObjModelInstanceCount_*,int,A0x329c26b1::DObjModelInstanceCount>
-                    (pDVar2,pDVar4,(int *)0x0,(DObjModelInstanceCount *)0x0);
+                    (param_1,param_2,(int *)0x0,(DObjModelInstanceCount *)0x0);
         }
-        _Sort_heap<_anonymous_namespace_::DObjModelInstanceCount_*>(pDVar2,pDVar4);
-        __restgprlr_27();
+        _Sort_heap<_anonymous_namespace_::DObjModelInstanceCount_*>(param_1,param_2);
         return;
       }
       goto LAB_824fe2cc;
     }
-    _Unguarded_partition<_anonymous_namespace_::DObjModelInstanceCount_*>(local_40,pDVar2);
+    _Unguarded_partition<_anonymous_namespace_::DObjModelInstanceCount_*>(local_40,param_1);
     uVar1 = local_40[0].dobjCount;
-    uVar5 = (longlong)(iVar8 >> 1) + (ulonglong)(iVar8 < 0 && (uVar5 & 1) != 0);
-    uVar5 = (longlong)((int)uVar5 >> 1) + (ulonglong)((int)uVar5 < 0 && (uVar5 & 1) != 0) + uVar5;
-    uVar7 = ZEXT48(local_40[0].modelName);
-    if ((int)((int)local_40[0].modelName - (int)pDVar2 & 0xfffffff8U) <
-        (int)((int)pDVar4 - local_40[0].dobjCount & 0xfffffff8)) {
+    pDVar4 = (DObjModelInstanceCount *)local_40[0].modelName;
+    uVar3 = (param_3 >> 1) + (uint)(param_3 < 0 && (param_3 & 1U) != 0);
+    param_3 = ((int)uVar3 >> 1) + (uint)((int)uVar3 < 0 && (uVar3 & 1) != 0) + uVar3;
+    if ((int)((int)local_40[0].modelName - (int)param_1 & 0xfffffff8U) <
+        (int)((int)param_2 - local_40[0].dobjCount & 0xfffffff8)) {
       _Sort<_anonymous_namespace_::DObjModelInstanceCount_*,int>
-                (pDVar2,(DObjModelInstanceCount *)local_40[0].modelName,(int)uVar5);
-      uVar7 = uVar3;
-      pDVar2 = (DObjModelInstanceCount *)uVar1;
+                (param_1,(DObjModelInstanceCount *)local_40[0].modelName,param_3);
+      pDVar4 = param_2;
+      param_1 = (DObjModelInstanceCount *)uVar1;
     }
     else {
       _Sort<_anonymous_namespace_::DObjModelInstanceCount_*,int>
-                ((DObjModelInstanceCount *)local_40[0].dobjCount,pDVar4,(int)uVar5);
+                ((DObjModelInstanceCount *)local_40[0].dobjCount,param_2,param_3);
     }
-    pDVar4 = (DObjModelInstanceCount *)uVar7;
-    iVar6 = (int)pDVar4 - (int)pDVar2;
-    uVar3 = uVar7;
+    iVar2 = (int)pDVar4 - (int)param_1;
+    param_2 = pDVar4;
   } while( true );
 }
 

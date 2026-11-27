@@ -13,6 +13,8 @@ uint R_GetSunDvarCount(void)
 
 // 8277A4D8  R_RegisterSunDvars  (gfx_d3d/r_sky.cpp:77)
 
+/* WARNING: Function: __savefpr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_23 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void R_RegisterSunDvars(void)
@@ -32,7 +34,6 @@ void R_RegisterSunDvars(void)
   double dVar12;
   double dVar13;
   
-  __savefpr_23();
   r_sunsprite_shader =
        Dvar_RegisterString("r_sunsprite_shader","sun",0,
                            "name for static sprite; can be any material");
@@ -117,7 +118,6 @@ void R_RegisterSunDvars(void)
   r_sun_fx_position =
        Dvar_RegisterVec3("r_sun_fx_position",(float)dVar13,(float)dVar13,(float)dVar13,-360.0,360.0,
                          0,IMAGE_DOS_HEADER_82000000.e_magic);
-  __restfpr_23();
   return;
 }
 
@@ -215,44 +215,42 @@ void R_SetSunFromDvars(sunflare_t *param_1)
 
 // 8277ACB8  R_LoadSunThroughDvars  (gfx_d3d/r_sky.cpp:158)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void R_LoadSunThroughDvars(char *param_1,sunflare_t *param_2)
 
 {
-  int iVar1;
-  char *pcVar2;
+  char *pcVar1;
   bool bVar3;
-  ulonglong uVar4;
+  int iVar2;
   char *local_30 [12];
   
-  uVar4 = (ulonglong)(int)param_2;
-  iVar1 = __savegprlr_28(param_1);
-  if (iVar1 == 0) {
+  if (param_1 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_sky.cpp",0xa3,0,"%s"
                    );
   }
-  if ((uVar4 & 0xffffffff) == 0) {
+  if (param_2 == (sunflare_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_sky.cpp",0xa4,0,"%s"
                    );
   }
-  pcVar2 = va("sun/%s.sun");
+  pcVar1 = va("sun/%s.sun");
   bVar3 = FS_IsUsingRemotePCSharing();
   if (bVar3) {
-    iVar1 = FS_ReadRemoteFile(pcVar2,(char *)0x0,local_30);
+    iVar2 = FS_ReadRemoteFile(pcVar1,(char *)0x0,local_30);
   }
   else {
-    iVar1 = FS_ReadFile(pcVar2,local_30);
+    iVar2 = FS_ReadFile(pcVar1,local_30);
   }
-  if (iVar1 < 0) {
+  if (iVar2 < 0) {
     Com_Printf(8,"WARNING: couldn\'t load sun file \'%s\'\n");
-    __restgprlr_28();
     return;
   }
-  iVar1 = Com_LoadDvarsFromBuffer(sunDvarNames,0x15,local_30[0],pcVar2);
-  if (iVar1 != 0) {
-    R_SetSunFromDvars((sunflare_t *)uVar4);
+  iVar2 = Com_LoadDvarsFromBuffer(sunDvarNames,0x15,local_30[0],pcVar1);
+  if (iVar2 != 0) {
+    R_SetSunFromDvars(param_2);
   }
   FS_FreeFile(local_30[0]);
-  __restgprlr_28();
   return;
 }
 

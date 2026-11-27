@@ -88,39 +88,41 @@ void ClearObjective(objective_t *param_1)
 
 // 824A8E80  SetObjectiveIcon  (game_mp/g_scr_objectives_mp.cpp:107)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void SetObjectiveIcon(objective_t *param_1,int param_2)
 
 {
-  int iVar1;
+  char *pcVar1;
   char *pcVar2;
-  char *pcVar3;
-  int iVar4;
+  int iVar3;
   
-  iVar1 = __savegprlr_28(param_1);
-  pcVar2 = Scr_GetString(param_2);
-  iVar4 = 0;
-  if (*pcVar2 != '\0') {
+  pcVar1 = Scr_GetString(param_2);
+  iVar3 = 0;
+  if (*pcVar1 != '\0') {
     do {
-      if ((pcVar2[iVar4] < ' ') || ('~' < pcVar2[iVar4])) {
-        pcVar3 = va("Illegal character \'%c\'(ascii %i) in objective icon name: %s\n");
-        Scr_ParamError(3,pcVar3);
+      if ((pcVar1[iVar3] < ' ') || ('~' < pcVar1[iVar3])) {
+        pcVar2 = va("Illegal character \'%c\'(ascii %i) in objective icon name: %s\n");
+        Scr_ParamError(3,pcVar2);
       }
-      iVar4 = iVar4 + 1;
-    } while (pcVar2[iVar4] != '\0');
-    if (0x3f < iVar4) {
-      pcVar3 = va("Objective icon name is too long (> %i): %s\n");
-      Scr_ParamError(3,pcVar3);
+      iVar3 = iVar3 + 1;
+    } while (pcVar1[iVar3] != '\0');
+    if (0x3f < iVar3) {
+      pcVar2 = va("Objective icon name is too long (> %i): %s\n");
+      Scr_ParamError(3,pcVar2);
     }
   }
-  iVar4 = G_MaterialIndex(pcVar2);
-  *(int *)(iVar1 + 0x20) = iVar4;
-  __restgprlr_28();
+  iVar3 = G_MaterialIndex(pcVar1);
+  param_1->icon = iVar3;
   return;
 }
 
 
 // 824A8F38  Scr_Objective_Add  (game_mp/g_scr_objectives_mp.cpp:127)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -138,7 +140,6 @@ void Scr_Objective_Add(void)
   longlong local_30;
   longlong local_28;
   
-  __savegprlr_29();
   uVar3 = Scr_GetNumParam();
   if ((int)uVar3 < 2) {
     Scr_Error(
@@ -181,7 +182,6 @@ void Scr_Objective_Add(void)
   }
   level.objectives[iVar4].teamNum = 0;
   level.objectives[iVar4].clientNum = -1;
-  __restgprlr_29();
   return;
 }
 
@@ -339,6 +339,8 @@ void Scr_Objective_OnEntity(void)
 
 // 824A94C0  Scr_Objective_Current  (game_mp/g_scr_objectives_mp.cpp:257)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -357,7 +359,6 @@ void Scr_Objective_Current(void)
   undefined8 uStack_b8;
   int local_b0 [44];
   
-  __savegprlr_27();
   uVar1 = Scr_GetNumParam();
   puVar5 = &uStack_b8;
   lVar8 = 0x10;
@@ -394,7 +395,6 @@ void Scr_Objective_Current(void)
     piVar4 = piVar4 + 1;
     lVar8 = lVar8 + -1;
   } while (lVar8 != 0);
-  __restgprlr_27();
   return;
 }
 
@@ -468,6 +468,8 @@ void GScr_Objective_Player(void)
 
 // 824A9770  GScr_Objective_PlayerTeam  (game_mp/g_scr_objectives_mp.cpp:363)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
@@ -481,7 +483,6 @@ void GScr_Objective_PlayerTeam(void)
   char *pcVar3;
   int iVar4;
   
-  __savegprlr_29();
   iVar2 = Scr_GetInt(0);
   if ((iVar2 < 0) || (0x1f < iVar2)) {
     pcVar3 = va("index %i is an illegal objective index. Valid indexes are 0 to %i\n");
@@ -499,18 +500,18 @@ void GScr_Objective_PlayerTeam(void)
   if (tVar1 == TEAM_FREE) {
     level.objectives[iVar2].clientNum = iVar4;
     level.objectives[iVar2].invertVisibilityByClientNum = 0;
-    __restgprlr_29();
     return;
   }
   level.objectives[iVar2].teamNum = tVar1;
   level.objectives[iVar2].clientNum = -1;
-  __restgprlr_29();
   return;
 }
 
 
 // 824A9878  GScr_Objective_PlayerEnemyTeam  (game_mp/g_scr_objectives_mp.cpp:410)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
@@ -524,7 +525,6 @@ void GScr_Objective_PlayerEnemyTeam(void)
   int iVar3;
   team_t tVar4;
   
-  __savegprlr_29();
   iVar1 = Scr_GetInt(0);
   if ((iVar1 < 0) || (0x1f < iVar1)) {
     pcVar2 = va("index %i is an illegal objective index. Valid indexes are 0 to %i\n");
@@ -542,17 +542,18 @@ void GScr_Objective_PlayerEnemyTeam(void)
   if (tVar4 == TEAM_FREE) {
     level.objectives[iVar1].clientNum = iVar3;
     level.objectives[iVar1].invertVisibilityByClientNum = 1;
-    __restgprlr_29();
     return;
   }
   level.objectives[iVar1].teamNum = tVar4;
   level.objectives[iVar1].clientNum = -1;
-  __restgprlr_29();
   return;
 }
 
 
 // 824A9988  Objectives_GetFunction  (game_mp/g_scr_objectives_mp.cpp:463)
+
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 
 uint Objectives_GetFunction(char **param_1,int *param_2)
 
@@ -561,54 +562,49 @@ uint Objectives_GetFunction(char **param_1,int *param_2)
   char cVar2;
   char **ppcVar3;
   char **ppcVar4;
-  undefined4 *puVar5;
-  uint uVar6;
-  int iVar7;
-  BuiltinFunctionDef *pBVar8;
-  char *pcVar9;
-  char *pcVar10;
-  longlong lVar11;
-  char **ppcVar12;
+  int iVar5;
+  BuiltinFunctionDef *pBVar6;
+  char *pcVar7;
+  char *pcVar8;
+  longlong lVar9;
+  char **ppcVar10;
+  uint uVar11;
   
-  puVar5 = (undefined4 *)__savegprlr_29(param_1);
-  if (puVar5 == (undefined4 *)0x0) {
-    lVar11 = 0xb;
-    ppcVar12 = WeaponStateNames + 0x1d;
+  if (param_1 == (char **)0x0) {
+    lVar9 = 0xb;
+    ppcVar10 = WeaponStateNames + 0x1d;
     do {
-      ppcVar3 = ppcVar12 + 4;
-      ppcVar4 = ppcVar12 + 5;
-      ppcVar12 = ppcVar12 + 3;
-      Scr_RegisterFunction((int)*ppcVar3,(int)*ppcVar4,(uint)*ppcVar12);
-      lVar11 = lVar11 + -1;
-    } while (lVar11 != 0);
-    uVar6 = __restgprlr_29(0);
-    return uVar6;
+      ppcVar3 = ppcVar10 + 4;
+      ppcVar4 = ppcVar10 + 5;
+      ppcVar10 = ppcVar10 + 3;
+      Scr_RegisterFunction((int)*ppcVar3,(int)*ppcVar4,(uint)*ppcVar10);
+      lVar9 = lVar9 + -1;
+    } while (lVar9 != 0);
+    return 0;
   }
-  pBVar8 = functions;
-  iVar7 = 0;
-  uVar6 = 0;
+  pBVar6 = functions;
+  iVar5 = 0;
+  uVar11 = 0;
   do {
-    pcVar9 = g_scr_opaque_strings[pBVar8->name + 0x824f];
-    pcVar10 = (char *)*puVar5;
+    pcVar7 = g_scr_opaque_strings[pBVar6->name + 0x824f];
+    pcVar8 = *param_1;
     do {
-      cVar1 = *pcVar10;
-      cVar2 = *pcVar9;
+      cVar1 = *pcVar8;
+      cVar2 = *pcVar7;
       if (cVar1 == '\0') break;
-      pcVar10 = pcVar10 + 1;
-      pcVar9 = pcVar9 + 1;
+      pcVar8 = pcVar8 + 1;
+      pcVar7 = pcVar7 + 1;
     } while (cVar1 == cVar2);
     if (cVar1 == cVar2) {
-      *puVar5 = g_scr_opaque_strings[functions[iVar7].name + 0x824f];
-      *param_2 = functions[iVar7].type;
-      uVar6 = __restgprlr_29(functions[iVar7].name);
-      return uVar6;
+      *param_1 = g_scr_opaque_strings[functions[iVar5].name + 0x824f];
+      *param_2 = functions[iVar5].type;
+      return functions[iVar5].name;
     }
-    uVar6 = uVar6 + 0xc;
-    iVar7 = iVar7 + 1;
-    pBVar8 = pBVar8 + 1;
-    if (0x83 < uVar6) {
-      uVar6 = __restgprlr_29(0);
-      return uVar6;
+    uVar11 = uVar11 + 0xc;
+    iVar5 = iVar5 + 1;
+    pBVar6 = pBVar6 + 1;
+    if (0x83 < uVar11) {
+      return 0;
     }
   } while( true );
 }

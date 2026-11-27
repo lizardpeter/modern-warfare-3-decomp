@@ -2,72 +2,74 @@
 
 // 82934C90  updateStatus  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdconnection/bdloopbackconnection.cpp:52)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void __thiscall bdLoopbackConnection::updateStatus(bdLoopbackConnection *this)
 
 {
   bdConnectionListener *pbVar1;
   uint uVar2;
-  int iVar3;
-  longlong lVar4;
-  bdConnectionListener **ppbVar5;
-  undefined4 uVar6;
-  uint *puVar7;
-  uint uVar8;
+  bdConnectionListener **ppbVar3;
+  int iVar4;
+  longlong lVar5;
+  uint *puVar6;
+  uint uVar7;
   char in_RESERVE;
   byte in_cr0;
-  int local_30;
-  int local_2c [11];
+  bdLoopbackConnection *local_30;
+  bdLoopbackConnection *local_2c [11];
   
-  lVar4 = __savegprlr_28(this);
-  iVar3 = (int)lVar4;
-  if (*(int *)(iVar3 + 0x20) == 1) {
-    uVar8 = 0;
-    if (*(int *)(iVar3 + 0x18) != 0) {
+  if (this->_padding_ == 1) {
+    uVar7 = 0;
+    if (this->_padding_ != 0) {
+      lVar5 = (longlong)(int)this + 4;
       do {
-        ppbVar5 = bdFastArray<bdConnectionListener_*>::operator[]
-                            ((bdFastArray<bdConnectionListener_*> *)(iVar3 + 0x10),uVar8);
-        pbVar1 = *ppbVar5;
+        ppbVar3 = bdFastArray<bdConnectionListener_*>::operator[]
+                            ((bdFastArray<bdConnectionListener_*> *)&this->_padding_,uVar7);
+        pbVar1 = *ppbVar3;
         do {
-          puVar7 = (uint *)(lVar4 + 4);
+          puVar6 = (uint *)lVar5;
           if (in_RESERVE != '\0') {
-            uVar2 = storeWordConditionalIndexed((ulonglong)*puVar7 + 1,0,lVar4 + 4);
-            *puVar7 = uVar2;
+            uVar2 = storeWordConditionalIndexed((ulonglong)*puVar6 + 1,0,lVar5);
+            *puVar6 = uVar2;
             in_cr0 = 2;
           }
         } while (!(bool)(in_cr0 >> 1 & 1));
-        local_2c[0] = iVar3;
+        local_2c[0] = this;
         (**(code **)((int)*pbVar1 + 4))(pbVar1,local_2c);
-        uVar8 = uVar8 + 1;
-      } while (uVar8 < *(uint *)(iVar3 + 0x18));
+        uVar7 = uVar7 + 1;
+      } while (uVar7 < (uint)this->_padding_);
     }
-    uVar6 = 2;
+    iVar4 = 2;
   }
   else {
-    if (*(int *)(iVar3 + 0x20) != 3) goto LAB_82934da4;
-    uVar8 = 0;
-    if (*(int *)(iVar3 + 0x18) != 0) {
+    if (this->_padding_ != 3) {
+      return;
+    }
+    uVar7 = 0;
+    if (this->_padding_ != 0) {
+      lVar5 = (longlong)(int)this + 4;
       do {
-        ppbVar5 = bdFastArray<bdConnectionListener_*>::operator[]
-                            ((bdFastArray<bdConnectionListener_*> *)(iVar3 + 0x10),uVar8);
-        pbVar1 = *ppbVar5;
+        ppbVar3 = bdFastArray<bdConnectionListener_*>::operator[]
+                            ((bdFastArray<bdConnectionListener_*> *)&this->_padding_,uVar7);
+        pbVar1 = *ppbVar3;
         do {
-          puVar7 = (uint *)(lVar4 + 4);
+          puVar6 = (uint *)lVar5;
           if (in_RESERVE != '\0') {
-            uVar2 = storeWordConditionalIndexed((ulonglong)*puVar7 + 1,0,lVar4 + 4);
-            *puVar7 = uVar2;
+            uVar2 = storeWordConditionalIndexed((ulonglong)*puVar6 + 1,0,lVar5);
+            *puVar6 = uVar2;
             in_cr0 = 2;
           }
         } while (!(bool)(in_cr0 >> 1 & 1));
-        local_30 = iVar3;
+        local_30 = this;
         (**(code **)((int)*pbVar1 + 0xc))(pbVar1,&local_30);
-        uVar8 = uVar8 + 1;
-      } while (uVar8 < *(uint *)(iVar3 + 0x18));
+        uVar7 = uVar7 + 1;
+      } while (uVar7 < (uint)this->_padding_);
     }
-    uVar6 = 4;
+    iVar4 = 4;
   }
-  *(undefined4 *)(iVar3 + 0x20) = uVar6;
-LAB_82934da4:
-  __restgprlr_28();
+  this->_padding_ = iVar4;
   return;
 }
 

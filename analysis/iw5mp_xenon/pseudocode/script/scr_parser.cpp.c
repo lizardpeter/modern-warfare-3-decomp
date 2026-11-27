@@ -15,12 +15,13 @@ void TRACK_scr_parser(void)
 
 // 82539820  Scr_InitOpcodeLookup  (script/scr_parser.cpp:83)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void Scr_InitOpcodeLookup(void)
 
 {
-  __savegprlr_28();
   if (scrParserGlob.opcodeLookup != (OpcodeLookup *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_parser.cpp",0x54,0,
                     "%s");
@@ -47,13 +48,14 @@ void Scr_InitOpcodeLookup(void)
     scrParserPub.sourceBufferLookupLen = 0;
     scrParserPub.sourceBufferLookup = Z_VirtualReserve(0x40000,"scrParser buffer lookup");
   }
-  __restgprlr_28();
   return;
 }
 
 
 // 82539960  Scr_ShutdownOpcodeLookup  (script/scr_parser.cpp:135)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void Scr_ShutdownOpcodeLookup(void)
@@ -66,7 +68,6 @@ void Scr_ShutdownOpcodeLookup(void)
   uint uVar5;
   int iVar6;
   
-  __savegprlr_28();
   if (scrParserGlob.opcodeLookup != (OpcodeLookup *)0x0) {
     Z_VirtualFree(scrParserGlob.opcodeLookup,0);
     scrParserGlob.opcodeLookup = (OpcodeLookup *)0x0;
@@ -110,38 +111,35 @@ void Scr_ShutdownOpcodeLookup(void)
     Hunk_FreeDebugMem(pSVar2);
     scrParserGlob.saveSourceBufferLookup = (SaveSourceBufferInfo *)0x0;
   }
-  __restgprlr_28();
   return;
 }
 
 
 // 82539A70  AddOpcodePos  (script/scr_parser.cpp:178)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
+
 void AddOpcodePos(uint param_1,uchar param_2)
 
 {
   int iVar1;
   int iVar2;
-  ulonglong uVar3;
-  int iVar4;
-  SourceLookup *pSVar5;
-  uint uVar6;
-  OpcodeLookup *pOVar7;
+  SourceLookup *pSVar3;
+  uint uVar4;
+  OpcodeLookup *pOVar5;
   
-  uVar3 = (ulonglong)(char)param_2;
-  iVar2 = __savegprlr_24(param_1);
-  if (scrVarPub.developer != false) {
+  if (scrVarPub.developer) {
     if (scrCompilePub.developer_statement == 2) {
-      if (scrVarPub.developer_script != false) {
+      if (scrVarPub.developer_script) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_parser.cpp",
                         0xbe,0,"%s");
-        __restgprlr_24();
         return;
       }
     }
     else if (scrCompilePub.developer_statement != 3) {
-      if (scrCompilePub.allowedBreakpoint == false) {
-        uVar3 = uVar3 & 0xfe;
+      if (!scrCompilePub.allowedBreakpoint) {
+        param_2 = param_2 & 0xfe;
       }
       if (scrParserGlob.opcodeLookup == (OpcodeLookup *)0x0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_parser.cpp",
@@ -155,8 +153,8 @@ void AddOpcodePos(uint param_1,uchar param_2)
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_parser.cpp",
                         0xcc,0,"%s");
       }
-      uVar6 = (scrParserGlob.opcodeLookupLen + 1) * 0x18;
-      if (scrParserGlob.opcodeLookupMaxSize < uVar6) {
+      uVar4 = (scrParserGlob.opcodeLookupLen + 1) * 0x18;
+      if (scrParserGlob.opcodeLookupMaxSize < uVar4) {
         if (0xffffff < scrParserGlob.opcodeLookupMaxSize) {
                     /* WARNING: Subroutine does not return */
           Sys_Error("MAX_OPCODE_LOOKUP_SIZE exceeded");
@@ -164,13 +162,13 @@ void AddOpcodePos(uint param_1,uchar param_2)
         Z_VirtualCommit((void *)((int)&(scrParserGlob.opcodeLookup)->codePos +
                                 scrParserGlob.opcodeLookupMaxSize),0x10000,0);
         scrParserGlob.opcodeLookupMaxSize = scrParserGlob.opcodeLookupMaxSize + 0x10000;
-        if (scrParserGlob.opcodeLookupMaxSize < uVar6) {
+        if (scrParserGlob.opcodeLookupMaxSize < uVar4) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_parser.cpp",
                           0xd5,0,"%s");
         }
       }
-      uVar6 = (scrParserGlob.sourcePosLookupLen + 1) * 4;
-      if (scrParserGlob.sourcePosLookupMaxSize < uVar6) {
+      uVar4 = (scrParserGlob.sourcePosLookupLen + 1) * 4;
+      if (scrParserGlob.sourcePosLookupMaxSize < uVar4) {
         if (0x3fffff < scrParserGlob.sourcePosLookupMaxSize) {
                     /* WARNING: Subroutine does not return */
           Sys_Error("MAX_SOURCEPOS_LOOKUP_SIZE exceeded");
@@ -178,7 +176,7 @@ void AddOpcodePos(uint param_1,uchar param_2)
         Z_VirtualCommit((void *)((int)&(scrParserGlob.sourcePosLookup)->sourcePos +
                                 scrParserGlob.sourcePosLookupMaxSize),0x10000,0);
         scrParserGlob.sourcePosLookupMaxSize = scrParserGlob.sourcePosLookupMaxSize + 0x10000;
-        if (scrParserGlob.sourcePosLookupMaxSize < uVar6) {
+        if (scrParserGlob.sourcePosLookupMaxSize < uVar4) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_parser.cpp",
                           0xdf,0,"%s");
         }
@@ -189,70 +187,71 @@ void AddOpcodePos(uint param_1,uchar param_2)
                           0xe4,0,"%s");
         }
         scrParserGlob.opcodeLookupLen = scrParserGlob.opcodeLookupLen - 1;
-        pOVar7 = scrParserGlob.opcodeLookup + scrParserGlob.opcodeLookupLen;
-        if (pOVar7->sourcePosIndex + scrParserGlob.currentSourcePosCount !=
+        pOVar5 = scrParserGlob.opcodeLookup + scrParserGlob.opcodeLookupLen;
+        if (pOVar5->sourcePosIndex + scrParserGlob.currentSourcePosCount !=
             scrParserGlob.sourcePosLookupLen) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_parser.cpp",
                           0xea,0,"%s");
         }
-        if ((uchar *)pOVar7->codePos != scrParserGlob.currentCodePos) {
+        if ((uchar *)pOVar5->codePos != scrParserGlob.currentCodePos) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_parser.cpp",
                           0xeb,0,"%s");
         }
       }
       else {
         scrParserGlob.currentSourcePosCount = 0;
-        pOVar7 = scrParserGlob.opcodeLookup + scrParserGlob.opcodeLookupLen;
+        pOVar5 = scrParserGlob.opcodeLookup + scrParserGlob.opcodeLookupLen;
         scrParserGlob.currentCodePos = scrCompilePub.opcodePos;
-        pOVar7->sourcePosIndex = scrParserGlob.sourcePosLookupLen;
-        pOVar7->codePos = (char *)scrParserGlob.currentCodePos;
+        pOVar5->sourcePosIndex = scrParserGlob.sourcePosLookupLen;
+        pOVar5->codePos = (char *)scrParserGlob.currentCodePos;
       }
-      iVar4 = pOVar7->sourcePosIndex + scrParserGlob.currentSourcePosCount;
-      pSVar5 = scrParserGlob.sourcePosLookup + iVar4;
-      scrParserGlob.sourcePosLookup[iVar4] = (SourceLookup)((uint)pSVar5->type | iVar2 << 8);
-      if (iVar2 == -1) {
+      iVar2 = pOVar5->sourcePosIndex + scrParserGlob.currentSourcePosCount;
+      pSVar3 = scrParserGlob.sourcePosLookup + iVar2;
+      scrParserGlob.sourcePosLookup[iVar2] = (SourceLookup)((uint)pSVar3->type | param_1 << 8);
+      if (param_1 == 0xffffffff) {
         if (scrParserGlob.delayedSourceIndex != -1) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_parser.cpp",
                           0x103,0,"%s");
         }
-        iVar1 = iVar4;
-        iVar4 = scrParserGlob.threadStartSourceIndex;
-        if ((uVar3 & 1) == 0) {
+        iVar1 = iVar2;
+        iVar2 = scrParserGlob.threadStartSourceIndex;
+        if ((param_2 & 1) == 0) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_parser.cpp",
                           0x104,0,"%s");
-          iVar4 = scrParserGlob.threadStartSourceIndex;
+          iVar2 = scrParserGlob.threadStartSourceIndex;
         }
       }
       else {
         iVar1 = scrParserGlob.delayedSourceIndex;
-        if (((iVar2 != -2) &&
-            (iVar4 = scrParserGlob.threadStartSourceIndex, -1 < scrParserGlob.delayedSourceIndex))
-           && ((uVar3 & 1) != 0)) {
+        if (((param_1 != 0xfffffffe) &&
+            (iVar2 = scrParserGlob.threadStartSourceIndex, -1 < scrParserGlob.delayedSourceIndex))
+           && ((param_2 & 1) != 0)) {
           scrParserGlob.sourcePosLookup[scrParserGlob.delayedSourceIndex] =
                (SourceLookup)
                ((uint)scrParserGlob.sourcePosLookup[scrParserGlob.delayedSourceIndex].type |
-               iVar2 << 8);
+               param_1 << 8);
           scrParserGlob.delayedSourceIndex = -1;
           iVar1 = scrParserGlob.delayedSourceIndex;
-          iVar4 = scrParserGlob.threadStartSourceIndex;
+          iVar2 = scrParserGlob.threadStartSourceIndex;
         }
       }
-      scrParserGlob.threadStartSourceIndex = iVar4;
+      scrParserGlob.threadStartSourceIndex = iVar2;
       scrParserGlob.delayedSourceIndex = iVar1;
-      pSVar5->type = (byte)uVar3 | (*pSVar5).type;
+      pSVar3->type = param_2 | (*pSVar3).type;
       scrParserGlob.currentSourcePosCount = scrParserGlob.currentSourcePosCount + 1;
-      pOVar7->sourcePosCount = (ushort)scrParserGlob.currentSourcePosCount;
+      pOVar5->sourcePosCount = (ushort)scrParserGlob.currentSourcePosCount;
       scrParserGlob.sourcePosLookupLen = scrParserGlob.sourcePosLookupLen + 1;
       scrParserGlob.opcodeLookupLen = scrParserGlob.opcodeLookupLen + 1;
     }
   }
-  __restgprlr_24();
   return;
 }
 
 
 // 82539E90  RemoveOpcodePos  (script/scr_parser.cpp:287)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void RemoveOpcodePos(void)
@@ -260,13 +259,11 @@ void RemoveOpcodePos(void)
 {
   OpcodeLookup *pOVar1;
   
-  __savegprlr_28();
-  if (scrVarPub.developer != false) {
+  if (scrVarPub.developer) {
     if (scrCompilePub.developer_statement == 2) {
-      if (scrVarPub.developer_script != false) {
+      if (scrVarPub.developer_script) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_parser.cpp",
                         0x128,0,"%s");
-        __restgprlr_28();
         return;
       }
     }
@@ -318,12 +315,14 @@ void RemoveOpcodePos(void)
       pOVar1->sourcePosCount = (ushort)scrParserGlob.currentSourcePosCount;
     }
   }
-  __restgprlr_28();
   return;
 }
 
 
 // 8253A0F0  AddThreadStartOpcodePos  (script/scr_parser.cpp:330)
+
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 
 void AddThreadStartOpcodePos(uint param_1)
 
@@ -331,15 +330,12 @@ void AddThreadStartOpcodePos(uint param_1)
   byte bVar1;
   SourceLookup *pSVar2;
   int iVar3;
-  int iVar4;
   
-  iVar4 = __savegprlr_28(param_1);
-  if (scrVarPub.developer != false) {
+  if (scrVarPub.developer) {
     if (scrCompilePub.developer_statement == 2) {
-      if (scrVarPub.developer_script != false) {
+      if (scrVarPub.developer_script) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_parser.cpp",
                         0x152,0,"%s");
-        __restgprlr_28();
         return;
       }
     }
@@ -352,7 +348,7 @@ void AddThreadStartOpcodePos(uint param_1)
       pSVar2 = scrParserGlob.sourcePosLookup;
       bVar1 = scrParserGlob.sourcePosLookup[scrParserGlob.threadStartSourceIndex].type;
       scrParserGlob.sourcePosLookup[scrParserGlob.threadStartSourceIndex] =
-           (SourceLookup)((uint)bVar1 | iVar4 << 8);
+           (SourceLookup)((uint)bVar1 | param_1 << 8);
       if (bVar1 != 0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_parser.cpp",
                         0x159,0,"%s");
@@ -361,288 +357,264 @@ void AddThreadStartOpcodePos(uint param_1)
       scrParserGlob.threadStartSourceIndex = -1;
     }
   }
-  __restgprlr_28();
   return;
 }
 
 
 // 8253A200  Scr_GetOpcodePosOfType  (script/scr_parser.cpp:352)
 
+/* WARNING: Function: __savegprlr_17 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_17 replaced with injection: xenon_save_restore */
+
 char * Scr_GetOpcodePosOfType(uint param_1,uint param_2,uint param_3,uchar param_4,uint *param_5)
 
 {
   ushort uVar1;
   char *pcVar2;
-  ulonglong uVar3;
-  int iVar4;
-  char *pcVar5;
-  ulonglong uVar6;
-  ulonglong uVar7;
+  char *pcVar3;
+  uint uVar4;
+  uint uVar5;
+  SourceLookup *pSVar6;
+  char *pcVar7;
   ulonglong uVar8;
-  uint uVar9;
-  SourceLookup *pSVar10;
-  char *pcVar11;
-  ulonglong uVar12;
-  SourceBufferInfo *pSVar13;
-  ulonglong uVar14;
-  uint uVar16;
-  char *pcVar17;
-  uint uVar15;
+  SourceBufferInfo *pSVar9;
+  uint uVar10;
+  uint uVar11;
+  int iVar12;
+  char *pcVar13;
   
-  uVar8 = (ulonglong)(char)param_4;
-  uVar7 = (ulonglong)(int)param_3;
-  uVar6 = (ulonglong)(int)param_2;
-  iVar4 = __savegprlr_17(param_1);
-  if ((uVar8 & 0xff) == 0) {
+  if (param_4 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_parser.cpp",0x172,0
                     ,"%s");
   }
-  uVar14 = 0;
-  uVar15 = 0;
-  pSVar13 = scrParserPub.sourceBufferLookup + iVar4 + 1;
-  if (scrParserPub.sourceBufferLookupLen <= iVar4 + 1U) {
-    pSVar13 = (SourceBufferInfo *)0x0;
+  uVar10 = 0;
+  pSVar9 = scrParserPub.sourceBufferLookup + param_1 + 1;
+  if (scrParserPub.sourceBufferLookupLen <= param_1 + 1) {
+    pSVar9 = (SourceBufferInfo *)0x0;
   }
-  pcVar5 = scrParserPub.sourceBufferLookup[iVar4].codePos;
-  if (pcVar5 == (char *)0x0) {
+  pcVar2 = scrParserPub.sourceBufferLookup[param_1].codePos;
+  if (pcVar2 == (char *)0x0) {
     *param_5 = 0;
-    pcVar5 = (char *)__restgprlr_17(0);
-    return pcVar5;
+    return (char *)0x0;
   }
-  pcVar17 = (char *)0x0;
-  if (pSVar13 == (SourceBufferInfo *)0x0) {
-    pcVar11 = (char *)0x0;
+  pcVar13 = (char *)0x0;
+  if (pSVar9 == (SourceBufferInfo *)0x0) {
+    pcVar7 = (char *)0x0;
   }
   else {
-    pcVar11 = pSVar13->codePos;
+    pcVar7 = pSVar9->codePos;
   }
-  uVar16 = 0;
+  uVar11 = 0;
   if (scrParserGlob.opcodeLookupLen != 0) {
-    iVar4 = 0;
-    uVar9 = scrParserGlob.opcodeLookupLen;
+    iVar12 = 0;
+    uVar5 = scrParserGlob.opcodeLookupLen;
     do {
-      pcVar2 = *(char **)((int)&(scrParserGlob.opcodeLookup)->codePos + iVar4);
-      if (pcVar5 <= pcVar2) {
-        if (pcVar11 + -1 < pcVar2) {
-          if (pSVar13 == (SourceBufferInfo *)0x0) {
+      pcVar3 = *(char **)((int)&(scrParserGlob.opcodeLookup)->codePos + iVar12);
+      if (pcVar2 <= pcVar3) {
+        if (pcVar7 + -1 < pcVar3) {
+          if (pSVar9 == (SourceBufferInfo *)0x0) {
             MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_parser.cpp"
                             ,0x18b,0,"%s");
-            uVar9 = scrParserGlob.opcodeLookupLen;
+            uVar5 = scrParserGlob.opcodeLookupLen;
           }
         }
         else {
-          uVar1 = *(ushort *)((int)&(scrParserGlob.opcodeLookup)->sourcePosCount + iVar4);
-          uVar12 = (ulonglong)uVar1;
+          uVar1 = *(ushort *)((int)&(scrParserGlob.opcodeLookup)->sourcePosCount + iVar12);
+          uVar8 = (ulonglong)uVar1;
           if (uVar1 != 0) {
-            pSVar10 = scrParserGlob.sourcePosLookup +
-                      *(int *)((int)&(scrParserGlob.opcodeLookup)->sourcePosIndex + iVar4);
+            pSVar6 = scrParserGlob.sourcePosLookup +
+                     *(int *)((int)&(scrParserGlob.opcodeLookup)->sourcePosIndex + iVar12);
             do {
-              uVar3 = (ulonglong)((uint)*pSVar10 >> 8);
-              if (((((uVar6 & 0xffffffff) <= uVar3) && (uVar3 < (uVar7 & 0xffffffff))) &&
-                  ((uVar8 & 0xff & (ulonglong)(uint)*pSVar10) != 0)) &&
-                 ((pcVar17 == (char *)0x0 || (pcVar2 < pcVar17)))) {
-                uVar14 = uVar3;
-                pcVar17 = pcVar2;
+              uVar4 = (uint)*pSVar6 >> 8;
+              if ((((param_2 <= uVar4) && (uVar4 < param_3)) &&
+                  (((uint)param_4 & (uint)*pSVar6) != 0)) &&
+                 ((pcVar13 == (char *)0x0 || (pcVar3 < pcVar13)))) {
+                pcVar13 = pcVar3;
+                uVar10 = uVar4;
               }
-              pSVar10 = pSVar10 + 1;
-              uVar12 = uVar12 - 1;
-            } while (uVar12 != 0);
+              pSVar6 = pSVar6 + 1;
+              uVar8 = uVar8 - 1;
+            } while (uVar8 != 0);
           }
         }
       }
-      uVar15 = (uint)uVar14;
-      uVar16 = uVar16 + 1;
-      iVar4 = iVar4 + 0x18;
-    } while (uVar16 < uVar9);
+      uVar11 = uVar11 + 1;
+      iVar12 = iVar12 + 0x18;
+    } while (uVar11 < uVar5);
   }
-  *param_5 = uVar15;
-  pcVar5 = (char *)__restgprlr_17(pcVar17);
-  return pcVar5;
+  *param_5 = uVar10;
+  return pcVar13;
 }
 
 
 // 8253A3A8  Scr_GetClosestSourcePosOfType  (script/scr_parser.cpp:529)
+
+/* WARNING: Function: __savegprlr_17 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_17 replaced with injection: xenon_save_restore */
 
 uint Scr_GetClosestSourcePosOfType(uint param_1,uint param_2,uchar param_3)
 
 {
   ushort uVar1;
   char *pcVar2;
-  ulonglong uVar3;
-  int iVar4;
-  uint uVar5;
-  ulonglong uVar6;
-  ulonglong uVar7;
-  uint uVar8;
-  char *pcVar9;
-  SourceBufferInfo *pSVar10;
-  ulonglong uVar11;
-  int iVar12;
-  uint *puVar13;
+  uint uVar3;
+  char *pcVar4;
+  SourceBufferInfo *pSVar5;
+  uint uVar6;
+  uint uVar7;
+  int iVar8;
+  int iVar9;
+  uint *puVar10;
   
-  uVar7 = (ulonglong)(char)param_3;
-  uVar6 = (ulonglong)(int)param_2;
-  iVar4 = __savegprlr_17(param_1);
-  uVar11 = 0;
-  pSVar10 = scrParserPub.sourceBufferLookup + iVar4 + 1;
-  if (scrParserPub.sourceBufferLookupLen <= iVar4 + 1U) {
-    pSVar10 = (SourceBufferInfo *)0x0;
+  uVar7 = 0;
+  pSVar5 = scrParserPub.sourceBufferLookup + param_1 + 1;
+  if (scrParserPub.sourceBufferLookupLen <= param_1 + 1) {
+    pSVar5 = (SourceBufferInfo *)0x0;
   }
-  pcVar2 = scrParserPub.sourceBufferLookup[iVar4].codePos;
+  pcVar2 = scrParserPub.sourceBufferLookup[param_1].codePos;
   if (pcVar2 != (char *)0x0) {
-    if (pSVar10 == (SourceBufferInfo *)0x0) {
-      pcVar9 = (char *)0x0;
+    if (pSVar5 == (SourceBufferInfo *)0x0) {
+      pcVar4 = (char *)0x0;
     }
     else {
-      pcVar9 = pSVar10->codePos;
+      pcVar4 = pSVar5->codePos;
     }
-    uVar5 = 0;
+    uVar6 = 0;
     if (scrParserGlob.opcodeLookupLen != 0) {
-      iVar4 = 0;
-      uVar8 = scrParserGlob.opcodeLookupLen;
+      iVar8 = 0;
+      uVar3 = scrParserGlob.opcodeLookupLen;
+      uVar7 = 0;
       do {
-        iVar12 = 0;
-        puVar13 = (uint *)((int)&(scrParserGlob.opcodeLookup)->codePos + iVar4);
-        uVar1 = *(ushort *)(puVar13 + 2);
+        iVar9 = 0;
+        puVar10 = (uint *)((int)&(scrParserGlob.opcodeLookup)->codePos + iVar8);
+        uVar1 = *(ushort *)(puVar10 + 2);
         if (uVar1 != 0) {
           do {
-            if (pcVar2 <= (char *)*puVar13) {
-              if (pcVar9 + -1 < (char *)*puVar13) {
-                if (pSVar10 == (SourceBufferInfo *)0x0) {
+            if (pcVar2 <= (char *)*puVar10) {
+              if (pcVar4 + -1 < (char *)*puVar10) {
+                if (pSVar5 == (SourceBufferInfo *)0x0) {
                   MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_parser.cpp"
                                   ,0x236,0,"%s");
                 }
               }
-              else if ((((uVar7 & 0xff &
-                         (ulonglong)(uint)scrParserGlob.sourcePosLookup[puVar13[1] + iVar12]) ==
-                         (uVar7 & 0xff)) &&
-                       (uVar3 = (ulonglong)
-                                ((uint)scrParserGlob.sourcePosLookup[puVar13[1] + iVar12] >> 8),
-                       uVar11 <= uVar3)) && (uVar3 <= (uVar6 & 0xffffffff))) {
-                uVar11 = uVar3;
+              else if (((((uint)param_3 & (uint)scrParserGlob.sourcePosLookup[puVar10[1] + iVar9])
+                         == (uint)param_3) &&
+                       (uVar3 = (uint)scrParserGlob.sourcePosLookup[puVar10[1] + iVar9] >> 8,
+                       uVar7 <= uVar3)) && (uVar3 <= param_2)) {
+                uVar7 = uVar3;
               }
             }
-            iVar12 = iVar12 + 1;
-            uVar8 = scrParserGlob.opcodeLookupLen;
-          } while (iVar12 < (int)(uint)uVar1);
+            iVar9 = iVar9 + 1;
+            uVar3 = scrParserGlob.opcodeLookupLen;
+          } while (iVar9 < (int)(uint)uVar1);
         }
-        uVar5 = uVar5 + 1;
-        iVar4 = iVar4 + 0x18;
-      } while (uVar5 < uVar8);
+        uVar6 = uVar6 + 1;
+        iVar8 = iVar8 + 0x18;
+      } while (uVar6 < uVar3);
     }
-    uVar5 = __restgprlr_17(uVar11);
-    return uVar5;
+    return uVar7;
   }
-  uVar5 = __restgprlr_17(0);
-  return uVar5;
+  return 0;
 }
 
 
 // 8253A508  Scr_GetPrevSourcePosOpcodeLookup  (script/scr_parser.cpp:584)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 OpcodeLookup * Scr_GetPrevSourcePosOpcodeLookup(char *param_1)
 
 {
   ulonglong uVar1;
-  char *pcVar3;
-  int iVar4;
-  longlong lVar2;
-  OpcodeLookup *pOVar5;
-  ulonglong uVar6;
-  ulonglong uVar7;
-  longlong lVar8;
-  ulonglong uVar9;
+  int iVar2;
+  OpcodeLookup *pOVar3;
+  ulonglong uVar4;
+  ulonglong uVar5;
   
-  pcVar3 = (char *)__savegprlr_28(param_1);
-  iVar4 = Scr_IsInOpcodeMemory(pcVar3);
-  if (iVar4 == 0) {
+  iVar2 = Scr_IsInOpcodeMemory(param_1);
+  if (iVar2 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_parser.cpp",0x24d,0
                     ,"%s");
   }
-  uVar7 = ZEXT48(scrParserGlob.opcodeLookup);
-  if (uVar7 == 0) {
+  if (scrParserGlob.opcodeLookup == (OpcodeLookup *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_parser.cpp",0x24e,0
                     ,"%s");
-    uVar7 = ZEXT48(scrParserGlob.opcodeLookup);
   }
-  uVar9 = 0;
-  uVar6 = (ulonglong)scrParserGlob.opcodeLookupLen - 1;
+  uVar5 = 0;
+  uVar4 = (ulonglong)scrParserGlob.opcodeLookupLen - 1;
   do {
-    uVar1 = (uVar6 + uVar9 & 0xffffffff) >> 1;
-    lVar8 = (uVar1 * 3 & 0x1fffffff) * 8;
-    lVar2 = lVar8 + uVar7;
-    if (pcVar3 < *(char **)((int)lVar8 + (int)uVar7)) {
-      uVar6 = uVar1 - 1;
+    uVar1 = (uVar4 + uVar5 & 0xffffffff) >> 1;
+    iVar2 = (int)((uVar1 * 3 & 0xffffffff) << 3);
+    pOVar3 = (OpcodeLookup *)((int)&(scrParserGlob.opcodeLookup)->codePos + iVar2);
+    if (param_1 < *(char **)((int)&(scrParserGlob.opcodeLookup)->codePos + iVar2)) {
+      uVar4 = uVar1 - 1;
     }
     else {
-      uVar9 = uVar1 + 1;
-      if ((uVar9 == scrParserGlob.opcodeLookupLen) ||
-         (pcVar3 < *(char **)((int)((uVar9 + (uVar9 * 2 & 0xfffffffe) & 0xffffffff) << 3) +
-                             (int)uVar7))) goto LAB_8253a614;
+      uVar5 = uVar1 + 1;
+      if (uVar5 == scrParserGlob.opcodeLookupLen) {
+        return pOVar3;
+      }
+      if (param_1 < *(char **)((int)&(scrParserGlob.opcodeLookup)->codePos +
+                              (int)((uVar5 + (uVar5 * 2 & 0xfffffffe) & 0xffffffff) << 3))) {
+        return pOVar3;
+      }
     }
-  } while (uVar9 <= (uVar6 & 0xffffffff));
-  if (alwaysfails == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_parser.cpp",0x261,0
-                    ,"unreachable");
-  }
-  lVar2 = 0;
-LAB_8253a614:
-  pOVar5 = (OpcodeLookup *)__restgprlr_28(lVar2);
-  return pOVar5;
+    if ((uVar4 & 0xffffffff) < uVar5) {
+      if (alwaysfails == 0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_parser.cpp",
+                        0x261,0,"unreachable");
+      }
+      return (OpcodeLookup *)0x0;
+    }
+  } while( true );
 }
 
 
 // 8253A620  Scr_GetSourcePosOpcodeLookup  (script/scr_parser.cpp:615)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 OpcodeLookup * Scr_GetSourcePosOpcodeLookup(char *param_1)
 
 {
   char *pcVar1;
-  char *pcVar3;
-  int iVar4;
-  longlong lVar2;
-  OpcodeLookup *pOVar5;
-  ulonglong uVar6;
-  longlong lVar7;
-  longlong lVar8;
-  longlong lVar9;
-  uint uVar11;
-  ulonglong uVar10;
+  int iVar2;
+  longlong lVar3;
+  longlong lVar4;
+  uint uVar6;
+  ulonglong uVar5;
   
-  pcVar3 = (char *)__savegprlr_28(param_1);
-  iVar4 = Scr_IsInOpcodeMemory(pcVar3);
-  if (iVar4 == 0) {
+  iVar2 = Scr_IsInOpcodeMemory(param_1);
+  if (iVar2 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_parser.cpp",0x26c,0
                     ,"%s");
   }
-  uVar6 = ZEXT48(scrParserGlob.opcodeLookup);
-  if (uVar6 == 0) {
+  if (scrParserGlob.opcodeLookup == (OpcodeLookup *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_parser.cpp",0x26d,0
                     ,"%s");
-    uVar6 = ZEXT48(scrParserGlob.opcodeLookup);
   }
-  lVar7 = 0;
-  lVar8 = (ulonglong)scrParserGlob.opcodeLookupLen - 1;
-  if (-1 < lVar8) {
+  lVar3 = 0;
+  lVar4 = (ulonglong)scrParserGlob.opcodeLookupLen - 1;
+  if (-1 < lVar4) {
     do {
-      uVar11 = (int)lVar8 + (int)lVar7;
-      uVar10 = (longlong)((int)uVar11 >> 1) + (ulonglong)((int)uVar11 < 0 && (uVar11 & 1) != 0);
-      lVar9 = (uVar10 + (uVar10 & 0x7fffffff) * 2 & 0x1fffffff) * 8;
-      lVar2 = lVar9 + uVar6;
-      pcVar1 = *(char **)((int)lVar9 + (int)uVar6);
-      if (pcVar3 < pcVar1) {
-        lVar8 = uVar10 - 1;
+      uVar6 = (int)lVar4 + (int)lVar3;
+      uVar5 = (longlong)((int)uVar6 >> 1) + (ulonglong)((int)uVar6 < 0 && (uVar6 & 1) != 0);
+      iVar2 = (int)((uVar5 + (uVar5 & 0x7fffffff) * 2 & 0xffffffff) << 3);
+      pcVar1 = *(char **)((int)&(scrParserGlob.opcodeLookup)->codePos + iVar2);
+      if (param_1 < pcVar1) {
+        lVar4 = uVar5 - 1;
       }
       else {
-        if (pcVar3 == pcVar1) goto LAB_8253a6f0;
-        lVar7 = uVar10 + 1;
+        if (param_1 == pcVar1) {
+          return (OpcodeLookup *)((int)&(scrParserGlob.opcodeLookup)->codePos + iVar2);
+        }
+        lVar3 = uVar5 + 1;
       }
-    } while ((int)lVar7 <= (int)lVar8);
+    } while ((int)lVar3 <= (int)lVar4);
   }
-  lVar2 = 0;
-LAB_8253a6f0:
-  pOVar5 = (OpcodeLookup *)__restgprlr_28(lVar2);
-  return pOVar5;
+  return (OpcodeLookup *)0x0;
 }
 
 
@@ -660,81 +632,85 @@ uint Scr_GetPrevSourcePos(char *param_1,uint param_2)
 
 // 8253A748  Scr_GetFunctionLineNumInternal  (script/scr_parser.cpp:811)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 int Scr_GetFunctionLineNumInternal(char *param_1,uint param_2,char **param_3)
 
 {
-  char *pcVar1;
-  ulonglong uVar2;
+  int iVar1;
+  int iVar2;
+  char *pcVar3;
   char *pcVar4;
-  longlong lVar3;
   int iVar5;
-  char *pcVar6;
-  longlong lVar7;
-  ulonglong uVar8;
+  longlong lVar6;
   
-  uVar8 = (ulonglong)(int)param_2;
-  pcVar4 = (char *)__savegprlr_29(param_1);
-  if (pcVar4 == (char *)0x0) {
+  lVar6 = (longlong)(int)param_2;
+  if (param_1 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_parser.cpp",0x330,0
                     ,"%s");
   }
-  *param_3 = pcVar4;
-  lVar7 = 0;
-  lVar3 = 0;
-  pcVar1 = pcVar4;
-  uVar2 = uVar8 & 0xffffffff;
-  while (uVar2 != 0) {
-    pcVar6 = pcVar1 + 1;
-    if (*pcVar1 == '\0') {
-      if (*pcVar6 == '{') {
-        pcVar4 = *param_3;
-        lVar3 = lVar7;
+  *param_3 = param_1;
+  iVar5 = 0;
+  iVar2 = 0;
+  pcVar3 = param_1;
+  iVar1 = 0;
+  if (param_2 != 0) {
+    do {
+      iVar2 = iVar1;
+      pcVar4 = param_1 + 1;
+      if (*param_1 == '\0') {
+        if (*pcVar4 == '{') {
+          pcVar3 = *param_3;
+          iVar2 = iVar5;
+        }
+        *param_3 = pcVar4;
+        iVar5 = iVar5 + 1;
       }
-      *param_3 = pcVar6;
-      lVar7 = lVar7 + 1;
-    }
-    uVar8 = uVar8 - 1;
-    pcVar1 = pcVar6;
-    uVar2 = uVar8;
+      lVar6 = lVar6 + -1;
+      param_1 = pcVar4;
+      iVar1 = iVar2;
+    } while (lVar6 != 0);
   }
-  *param_3 = pcVar4;
-  iVar5 = __restgprlr_29(lVar3);
-  return iVar5;
+  *param_3 = pcVar3;
+  return iVar2;
 }
 
 
 // 8253A7E8  Scr_GetLineNumInternal  (script/scr_parser.cpp:846)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 int Scr_GetLineNumInternal(char *param_1,uint param_2,char **param_3,int *param_4)
 
 {
-  ulonglong uVar1;
-  char *pcVar3;
-  longlong lVar2;
-  int iVar4;
-  ulonglong uVar5;
+  int iVar1;
+  int iVar2;
+  longlong lVar3;
   
-  uVar5 = (ulonglong)(int)param_2;
-  pcVar3 = (char *)__savegprlr_28(param_1);
-  if (pcVar3 == (char *)0x0) {
+  lVar3 = (longlong)(int)param_2;
+  if (param_1 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_parser.cpp",0x351,0
                     ,"%s");
   }
-  *param_3 = pcVar3;
-  lVar2 = 0;
-  uVar1 = uVar5 & 0xffffffff;
-  while (uVar1 != 0) {
-    if (*pcVar3 == '\0') {
-      lVar2 = lVar2 + 1;
-      *param_3 = pcVar3 + 1;
-    }
-    pcVar3 = pcVar3 + 1;
-    uVar5 = uVar5 - 1;
-    uVar1 = uVar5;
+  *param_3 = param_1;
+  iVar2 = 0;
+  iVar1 = 0;
+  if (param_2 != 0) {
+    do {
+      iVar2 = iVar1;
+      if (*param_1 == '\0') {
+        iVar2 = iVar2 + 1;
+        *param_3 = param_1 + 1;
+      }
+      param_1 = param_1 + 1;
+      lVar3 = lVar3 + -1;
+      iVar1 = iVar2;
+    } while (lVar3 != 0);
   }
-  *param_4 = (int)pcVar3 - (int)*param_3;
-  iVar4 = __restgprlr_28(lVar2);
-  return iVar4;
+  *param_4 = (int)param_1 - (int)*param_3;
+  return iVar2;
 }
 
 
@@ -778,70 +754,66 @@ int Scr_GetFunctionLineNum(uint param_1,uint param_2)
 
 // 8253CCB8  Scr_GetSourcePosOfType  (script/scr_parser.cpp:893)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 int Scr_GetSourcePosOfType(char *param_1,uchar param_2,int param_3,Scr_SourcePos_t *param_4)
 
 {
-  char *pcVar1;
-  OpcodeLookup *pOVar2;
+  OpcodeLookup *pOVar1;
+  uint uVar2;
   int iVar3;
-  uint uVar4;
-  ulonglong uVar5;
   
-  uVar5 = (ulonglong)(char)param_2;
-  pcVar1 = (char *)__savegprlr_29(param_1);
   if (param_3 == 0) {
-    pOVar2 = Scr_GetPrevSourcePosOpcodeLookup(pcVar1);
+    pOVar1 = Scr_GetPrevSourcePosOpcodeLookup(param_1);
   }
   else {
-    pOVar2 = Scr_GetSourcePosOpcodeLookup(pcVar1);
+    pOVar1 = Scr_GetSourcePosOpcodeLookup(param_1);
   }
-  if (pOVar2 != (OpcodeLookup *)0x0) {
-    uVar4 = 0;
-    if (pOVar2->sourcePosCount != 0) {
+  if (pOVar1 != (OpcodeLookup *)0x0) {
+    uVar2 = 0;
+    if (pOVar1->sourcePosCount != 0) {
       do {
-        if (((uVar5 & 0xff) == 0) ||
-           ((uVar5 & 0xff &
-            (ulonglong)(uint)scrParserGlob.sourcePosLookup[pOVar2->sourcePosIndex + uVar4]) != 0)) {
+        if ((param_2 == 0) ||
+           (((uint)param_2 & (uint)scrParserGlob.sourcePosLookup[pOVar1->sourcePosIndex + uVar2]) !=
+            0)) {
           param_4->sourcePos =
-               (uint)scrParserGlob.sourcePosLookup[pOVar2->sourcePosIndex + uVar4] >> 8;
-          uVar4 = Scr_GetSourceBuffer(pcVar1);
-          param_4->bufferIndex = uVar4;
-          iVar3 = Scr_GetLineNum(uVar4,param_4->sourcePos);
+               (uint)scrParserGlob.sourcePosLookup[pOVar1->sourcePosIndex + uVar2] >> 8;
+          uVar2 = Scr_GetSourceBuffer(param_1);
+          param_4->bufferIndex = uVar2;
+          iVar3 = Scr_GetLineNum(uVar2,param_4->sourcePos);
           param_4->lineNum = iVar3;
-          iVar3 = __restgprlr_29(1);
-          return iVar3;
+          return 1;
         }
-        uVar4 = uVar4 + 1;
-      } while (uVar4 < pOVar2->sourcePosCount);
+        uVar2 = uVar2 + 1;
+      } while (uVar2 < pOVar1->sourcePosCount);
     }
   }
   param_4->sourcePos = 0;
   param_4->bufferIndex = 0;
   param_4->lineNum = 0;
-  iVar3 = __restgprlr_29(0);
-  return iVar3;
+  return 0;
 }
 
 
 // 8253A998  Scr_GetNewSourceBuffer  (script/scr_parser.cpp:920)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 SourceBufferInfo * Scr_GetNewSourceBuffer(void)
 
 {
   SourceBufferInfo *pSVar1;
-  ulonglong uVar2;
-  ulonglong uVar3;
+  uint uVar2;
   
-  __savegprlr_27();
   if (scrParserPub.sourceBufferLookup == (SourceBufferInfo *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_parser.cpp",0x39c,0
                     ,"%s");
   }
-  uVar2 = (ulonglong)scrParserPub.sourceBufferLookupLen;
-  uVar3 = (uVar2 + 1) * 0x2c;
-  if ((ulonglong)scrParserGlob.sourceBufferLookupMaxSize < (uVar3 & 0xffffffff)) {
+  uVar2 = (scrParserPub.sourceBufferLookupLen + 1) * 0x2c;
+  if (scrParserGlob.sourceBufferLookupMaxSize < uVar2) {
     if (0x3ffff < scrParserGlob.sourceBufferLookupMaxSize) {
                     /* WARNING: Subroutine does not return */
       Sys_Error("MAX_SOURCEBUF_LOOKUP_SIZE exceeded");
@@ -849,20 +821,21 @@ SourceBufferInfo * Scr_GetNewSourceBuffer(void)
     Z_VirtualCommit((void *)((int)&(scrParserPub.sourceBufferLookup)->codePos +
                             scrParserGlob.sourceBufferLookupMaxSize),0x10000,0);
     scrParserGlob.sourceBufferLookupMaxSize = scrParserGlob.sourceBufferLookupMaxSize + 0x10000;
-    if ((ulonglong)scrParserGlob.sourceBufferLookupMaxSize < (uVar3 & 0xffffffff)) {
+    if (scrParserGlob.sourceBufferLookupMaxSize < uVar2) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_parser.cpp",0x3a5
                       ,0,"%s");
     }
-    uVar2 = (ulonglong)scrParserPub.sourceBufferLookupLen;
   }
-  scrParserPub.sourceBufferLookupLen = (int)uVar2 + 1;
-  pSVar1 = (SourceBufferInfo *)
-           __restgprlr_27(uVar2 * 0x2c + ZEXT48(scrParserPub.sourceBufferLookup));
+  pSVar1 = scrParserPub.sourceBufferLookup + scrParserPub.sourceBufferLookupLen;
+  scrParserPub.sourceBufferLookupLen = scrParserPub.sourceBufferLookupLen + 1;
   return pSVar1;
 }
 
 
 // 8253AA88  Scr_AddSourceBufferInternal  (script/scr_parser.cpp:944)
+
+/* WARNING: Function: __savegprlr_21 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_21 replaced with injection: xenon_save_restore */
 
 void Scr_AddSourceBufferInternal
                (char *param_1,char *param_2,char *param_3,int param_4,bool param_5,bool param_6,
@@ -870,103 +843,95 @@ void Scr_AddSourceBufferInternal
 
 {
   char cVar1;
-  longlong lVar2;
-  char *pcVar3;
-  SourceBufferInfo *pSVar4;
-  ulonglong uVar5;
-  ulonglong uVar6;
-  ulonglong uVar7;
-  longlong lVar8;
-  int iVar10;
-  longlong lVar9;
-  int iVar11;
-  ulonglong uVar12;
+  char *pcVar2;
+  SourceBufferInfo *pSVar3;
+  char *pcVar4;
+  char *pcVar5;
+  int iVar7;
+  int iVar8;
+  longlong lVar6;
+  char *pcVar9;
   
-  uVar7 = (ulonglong)param_7;
-  uVar6 = (ulonglong)param_5;
-  lVar9 = (longlong)param_4;
-  uVar5 = (ulonglong)(int)param_3;
-  lVar2 = __savegprlr_21(param_1);
   if (scrParserPub.sourceBufferLookup != (SourceBufferInfo *)0x0) {
-    iVar11 = (int)lVar9;
-    if (iVar11 < -1) {
+    if (param_4 < -1) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_parser.cpp",0x3c2
                       ,0,"%s\n\t(len) = %i");
     }
-    lVar8 = lVar2;
-    if ((iVar11 < 0) && ((uVar5 & 0xffffffff) != 0)) {
+    pcVar2 = param_1;
+    if ((param_4 < 0) && (param_3 != (char *)0x0)) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_parser.cpp",0x3c3
                       ,0,"%s");
     }
     do {
-      pcVar3 = (char *)lVar8;
-      lVar8 = lVar8 + 1;
-    } while (*pcVar3 != '\0');
-    uVar7 = uVar7 & 0xff;
-    lVar8 = ((lVar8 - lVar2) - 1U & 0xffffffff) + 1;
-    iVar10 = iVar11 + 1;
-    if (uVar7 == 0) {
-      iVar10 = 0;
-    }
-    pcVar3 = Hunk_AllocDebugMem(iVar10 + (int)lVar8,"Scr_AddSourceBufferInternal");
-    iVar10 = (int)lVar2;
-    do {
-      cVar1 = *(char *)lVar2;
-      ((char *)lVar2)[(int)pcVar3 - iVar10] = cVar1;
-      lVar2 = lVar2 + 1;
+      cVar1 = *pcVar2;
+      pcVar2 = pcVar2 + 1;
     } while (cVar1 != '\0');
-    if ((uVar5 & 0xffffffff) == 0) {
-      uVar12 = 0;
+    iVar7 = (int)pcVar2 - (int)param_1;
+    iVar8 = param_4 + 1;
+    if (!param_7) {
+      iVar8 = 0;
+    }
+    pcVar2 = Hunk_AllocDebugMem(iVar8 + iVar7,"Scr_AddSourceBufferInternal");
+    iVar8 = (int)pcVar2 - (int)param_1;
+    do {
+      cVar1 = *param_1;
+      param_1[iVar8] = cVar1;
+      param_1 = param_1 + 1;
+    } while (cVar1 != '\0');
+    if (param_3 == (char *)0x0) {
+      pcVar9 = (char *)0x0;
     }
     else {
-      uVar12 = uVar5;
-      if (uVar7 != 0) {
-        uVar12 = (int)pcVar3 + lVar8;
+      pcVar9 = param_3;
+      if (param_7) {
+        pcVar9 = pcVar2 + iVar7;
       }
     }
-    if (uVar7 != 0) {
-      if ((uVar6 & 0xff) == 0) {
+    if (param_7) {
+      if (param_5) {
+        if (-1 < param_4) {
+          lVar6 = (longlong)param_4 + 1;
+          pcVar4 = pcVar9;
+          pcVar5 = param_3 + -1;
+          do {
+            cVar1 = pcVar5[1];
+            if ((cVar1 == '\n') || ((cVar1 == '\r' && (pcVar5[2] != '\n')))) {
+              *pcVar4 = '\0';
+            }
+            else {
+              *pcVar4 = cVar1;
+            }
+            pcVar4 = pcVar4 + 1;
+            lVar6 = lVar6 + -1;
+            pcVar5 = pcVar5 + 1;
+          } while (lVar6 != 0);
+        }
+      }
+      else {
         memcpy();
       }
-      else if (-1 < iVar11) {
-        lVar9 = lVar9 + 1;
-        lVar2 = uVar5 - 1;
-        uVar7 = uVar12;
-        do {
-          lVar2 = lVar2 + 1;
-          cVar1 = *(char *)lVar2;
-          if ((cVar1 == '\n') || ((cVar1 == '\r' && (((char *)lVar2)[1] != '\n')))) {
-            *(char *)uVar7 = '\0';
-          }
-          else {
-            *(char *)uVar7 = cVar1;
-          }
-          uVar7 = uVar7 + 1;
-          lVar9 = lVar9 + -1;
-        } while (lVar9 != 0);
-      }
     }
-    pSVar4 = Scr_GetNewSourceBuffer();
-    pSVar4->codePos = param_2;
-    pSVar4->buf = pcVar3;
-    pSVar4->sourceBuf = (char *)uVar12;
-    pSVar4->len = iVar11;
-    pSVar4->sortedIndex = -1;
-    pSVar4->archive = param_6;
-    if ((uVar12 & 0xffffffff) != 0) {
-      scrParserPub.sourceBuf = (char *)uVar12;
+    pSVar3 = Scr_GetNewSourceBuffer();
+    pSVar3->codePos = param_2;
+    pSVar3->buf = pcVar2;
+    pSVar3->sourceBuf = pcVar9;
+    pSVar3->len = param_4;
+    pSVar3->sortedIndex = -1;
+    pSVar3->archive = param_6;
+    if (pcVar9 != (char *)0x0) {
+      scrParserPub.sourceBuf = pcVar9;
     }
-    __restgprlr_21();
     return;
   }
   scrParserPub.sourceBuf = (char *)scrParserPub.sourceBufferLookup;
-  __restgprlr_21();
   return;
 }
 
 
 // 8253AC78  Scr_SendSource  (script/scr_parser.cpp:1023)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void Scr_SendSource(void)
@@ -978,7 +943,6 @@ void Scr_SendSource(void)
   uint uVar4;
   uint uVar5;
   
-  __savegprlr_28();
   iVar3 = Sys_IsRemoteDebugServer();
   if (iVar3 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_parser.cpp",0x403,0
@@ -1011,13 +975,14 @@ void Scr_SendSource(void)
     Sys_WriteDebugSocketMessageType('\x04');
     Sys_EndWriteDebugSocket();
   }
-  __restgprlr_28();
   return;
 }
 
 
 // 8253AD60  Scr_ReadFile_FastFile  (script/scr_parser.cpp:1058)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "XAssetType": Some values do not have unique names */
 /* WARNING: Enum "nodeType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
@@ -1027,33 +992,28 @@ void Scr_SendSource(void)
 char * Scr_ReadFile_FastFile(char *param_1,char *param_2,char *param_3,bool param_4)
 
 {
-  char *pcVar1;
-  XAssetHeader XVar2;
-  int iVar3;
-  char *pcVar4;
-  longlong lVar5;
-  longlong lVar6;
+  XAssetHeader XVar1;
+  int iVar2;
+  char *pcVar3;
   
-  lVar6 = (longlong)(int)param_3;
-  lVar5 = (longlong)(int)param_2;
-  pcVar1 = (char *)__savegprlr_26(param_1,lVar5,lVar6,param_4);
-  XVar2 = DB_FindXAssetHeader(ASSET_TYPE_RAWFILE,pcVar1,1);
-  iVar3 = DB_IsXAssetDefault(ASSET_TYPE_RAWFILE,pcVar1);
-  if (iVar3 != 0) {
-    Scr_AddSourceBufferInternal(pcVar1,(char *)lVar5,(char *)0x0,-1,true,SUB81(lVar6,0),true);
-    pcVar1 = (char *)__restgprlr_26(0);
-    return pcVar1;
+  XVar1 = DB_FindXAssetHeader(ASSET_TYPE_RAWFILE,param_1,1);
+  iVar2 = DB_IsXAssetDefault(ASSET_TYPE_RAWFILE,param_1);
+  if (iVar2 != 0) {
+    Scr_AddSourceBufferInternal(param_1,param_2,(char *)0x0,-1,true,SUB41(param_3,0),true);
+    return (char *)0x0;
   }
-  iVar3 = DB_GetRawFileLen(XVar2.rawfile);
-  pcVar4 = Hunk_AllocateTempMemoryHigh(iVar3,"Scr_ReadFile_FastFile");
-  DB_GetRawBuffer(XVar2.rawfile,pcVar4,iVar3);
-  Scr_AddSourceBufferInternal(pcVar1,(char *)lVar5,pcVar4,iVar3 + -1,true,SUB81(lVar6,0),true);
-  pcVar1 = (char *)__restgprlr_26(pcVar4);
-  return pcVar1;
+  iVar2 = DB_GetRawFileLen(XVar1.rawfile);
+  pcVar3 = Hunk_AllocateTempMemoryHigh(iVar2,"Scr_ReadFile_FastFile");
+  DB_GetRawBuffer(XVar1.rawfile,pcVar3,iVar2);
+  Scr_AddSourceBufferInternal(param_1,param_2,pcVar3,iVar2 + -1,true,SUB41(param_3,0),true);
+  return pcVar3;
 }
 
 
 // 8253AE30  Scr_AddSourceBuffer  (script/scr_parser.cpp:1201)
+
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 
 char * Scr_AddSourceBuffer(char *param_1,char *param_2,char *param_3,bool param_4)
 
@@ -1062,57 +1022,49 @@ char * Scr_AddSourceBuffer(char *param_1,char *param_2,char *param_3,bool param_
   SaveSourceBufferInfo *pSVar2;
   char *pcVar3;
   char *pcVar4;
-  bool bVar5;
-  char *pcVar6;
-  uint uVar7;
-  char cVar8;
-  ulonglong uVar9;
+  char *pcVar5;
+  uint uVar6;
+  char cVar7;
+  ulonglong uVar8;
   
-  uVar9 = (ulonglong)param_4;
-  __savegprlr_25(param_1);
-  bVar5 = SUB81(uVar9,0);
-  if (((uVar9 & 0xff) == 0) || (scrParserGlob.saveSourceBufferLookup == (SaveSourceBufferInfo *)0x0)
-     ) {
-    pcVar3 = Scr_ReadFile_FastFile(param_2,param_3,(char *)uVar9,bVar5);
-    pcVar3 = (char *)__restgprlr_25(pcVar3);
-    return pcVar3;
+  if ((!param_4) || (scrParserGlob.saveSourceBufferLookup == (SaveSourceBufferInfo *)0x0)) {
+    pcVar4 = Scr_ReadFile_FastFile(param_2,param_3,(char *)(int)param_4,param_4);
+    return pcVar4;
   }
   if (scrParserGlob.saveSourceBufferLookupLen == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_parser.cpp",0x4c0,0
                     ,"%s");
   }
   pSVar2 = scrParserGlob.saveSourceBufferLookup;
-  uVar7 = scrParserGlob.saveSourceBufferLookupLen - 1;
-  uVar1 = scrParserGlob.saveSourceBufferLookup[uVar7].len;
-  uVar9 = (ulonglong)uVar1;
-  scrParserGlob.saveSourceBufferLookupLen = uVar7;
+  uVar6 = scrParserGlob.saveSourceBufferLookupLen - 1;
+  uVar1 = scrParserGlob.saveSourceBufferLookup[uVar6].len;
+  uVar8 = (ulonglong)uVar1;
+  scrParserGlob.saveSourceBufferLookupLen = uVar6;
   if ((int)uVar1 < -1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_parser.cpp",0x4c4,0
                     ,"%s");
   }
   if ((int)uVar1 < 0) {
-    Scr_AddSourceBufferInternal(param_2,param_3,(char *)0x0,uVar1,true,bVar5,false);
-    pcVar3 = (char *)__restgprlr_25(0);
-    return pcVar3;
+    Scr_AddSourceBufferInternal(param_2,param_3,(char *)0x0,uVar1,true,param_4,false);
+    return (char *)0x0;
   }
-  pcVar4 = Hunk_AllocateTempMemoryHigh(uVar1 + 1,"Scr_AddSourceBuffer1");
-  pcVar3 = pcVar4;
+  pcVar3 = Hunk_AllocateTempMemoryHigh(uVar1 + 1,"Scr_AddSourceBuffer1");
+  pcVar4 = pcVar3;
   if (0 < (int)uVar1) {
-    pcVar6 = pSVar2[uVar7].sourceBuf + -1;
+    pcVar5 = pSVar2[uVar6].sourceBuf + -1;
     do {
-      pcVar6 = pcVar6 + 1;
-      cVar8 = *pcVar6;
-      if (cVar8 == '\0') {
-        cVar8 = '\n';
+      pcVar5 = pcVar5 + 1;
+      cVar7 = *pcVar5;
+      if (cVar7 == '\0') {
+        cVar7 = '\n';
       }
-      *pcVar3 = cVar8;
-      pcVar3 = pcVar3 + 1;
-      uVar9 = uVar9 - 1;
-    } while (uVar9 != 0);
+      *pcVar4 = cVar7;
+      pcVar4 = pcVar4 + 1;
+      uVar8 = uVar8 - 1;
+    } while (uVar8 != 0);
   }
-  *pcVar3 = '\0';
-  Scr_AddSourceBufferInternal(param_2,param_3,pSVar2[uVar7].sourceBuf,uVar1,false,bVar5,false);
-  pcVar3 = (char *)__restgprlr_25(pcVar4);
+  *pcVar4 = '\0';
+  Scr_AddSourceBufferInternal(param_2,param_3,pSVar2[uVar6].sourceBuf,uVar1,false,param_4,false);
   return pcVar3;
 }
 
@@ -1190,114 +1142,105 @@ int Scr_GetFunctionInfo(char *param_1,uint param_2,char *param_3)
 
 // 8253B0C8  Scr_PrintSourcePos  (script/scr_parser.cpp:1307)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
+
 void Scr_PrintSourcePos(int param_1,char *param_2,char *param_3,uint param_4,bool param_5)
 
 {
-  int iVar1;
-  ulonglong uVar2;
-  ulonglong uVar3;
-  undefined1 *puVar4;
-  int iVar5;
-  int iVar6;
+  undefined1 *puVar1;
+  int iVar2;
+  int iVar3;
   int local_450;
   char *local_44c [2];
   undefined1 uStack_441;
   char local_440 [1088];
   
-  uVar3 = (ulonglong)param_5;
-  uVar2 = (ulonglong)(int)param_2;
-  iVar1 = __savegprlr_25(param_1);
-  if ((uVar2 & 0xffffffff) == 0) {
+  if (param_2 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_parser.cpp",0x521,0
                     ,"%s");
   }
   Scr_GetLineNumInternal(param_3,param_4,local_44c,&local_450);
   Scr_CopyFormattedLine(local_440,local_44c[0]);
-  if ((uVar3 & 0xff) == 0) {
-    Com_Printf(iVar1,"%s: c:\\trees\\iw5\\game\\share\\raw\\%s, line %d\n");
-    Com_Printf(iVar1,"%s\n");
+  if (param_5) {
+    Com_PrintError(param_1,"(file \'%s\'%s, line %d)\n");
+    com_errorPrintsCount = com_errorPrintsCount - 1;
+    Com_PrintError(param_1,"%s\n");
+    com_errorPrintsCount = com_errorPrintsCount - 1;
   }
   else {
-    Com_PrintError(iVar1,"(file \'%s\'%s, line %d)\n");
-    com_errorPrintsCount = com_errorPrintsCount - 1;
-    Com_PrintError(iVar1,"%s\n");
-    com_errorPrintsCount = com_errorPrintsCount - 1;
+    Com_Printf(param_1,"%s: c:\\trees\\iw5\\game\\share\\raw\\%s, line %d\n");
+    Com_Printf(param_1,"%s\n");
   }
-  iVar5 = 0;
+  iVar2 = 0;
   if (0 < local_450) {
-    puVar4 = &uStack_441;
-    for (iVar6 = local_450; iVar5 = local_450, iVar6 != 0; iVar6 = iVar6 + -1) {
-      puVar4 = puVar4 + 1;
-      *puVar4 = 0x20;
+    puVar1 = &uStack_441;
+    for (iVar3 = local_450; iVar2 = local_450, iVar3 != 0; iVar3 = iVar3 + -1) {
+      puVar1 = puVar1 + 1;
+      *puVar1 = 0x20;
     }
   }
-  local_440[iVar5] = '*';
-  local_440[iVar5 + 1] = '\0';
-  if (0x3ff < iVar5 + 1) {
+  local_440[iVar2] = '*';
+  local_440[iVar2 + 1] = '\0';
+  if (0x3ff < iVar2 + 1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_parser.cpp",0x53c,0
                     ,"%s");
   }
-  if ((uVar3 & 0xff) != 0) {
-    Com_PrintError(iVar1,"%s\n");
+  if (param_5) {
+    Com_PrintError(param_1,"%s\n");
     com_errorPrintsCount = com_errorPrintsCount - 1;
-    __restgprlr_25();
     return;
   }
-  Com_Printf(iVar1,"%s\n");
-  __restgprlr_25();
+  Com_Printf(param_1,"%s\n");
   return;
 }
 
 
 // 8253B2B8  Scr_PrintSourcePosSpreadSheet  (script/scr_parser.cpp:1354)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void Scr_PrintSourcePosSpreadSheet(int param_1,char *param_2,char *param_3,uint param_4)
 
 {
-  int iVar1;
-  char *pcVar2;
-  ulonglong uVar3;
+  char *pcVar1;
   int local_440;
   char *local_43c [3];
   char acStack_430 [1072];
   
-  uVar3 = (ulonglong)(int)param_2;
-  iVar1 = __savegprlr_28(param_1);
-  if ((uVar3 & 0xffffffff) == 0) {
+  if (param_2 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_parser.cpp",0x54f,0
                     ,"%s");
   }
   Scr_GetLineNumInternal(param_3,param_4,local_43c,&local_440);
   Scr_CopyFormattedLine(acStack_430,local_43c[0]);
-  pcVar2 = va("%s%s\t%d\t%s\t%d\n");
-  Com_PrintMessage(iVar1,pcVar2,0);
-  __restgprlr_28();
+  pcVar1 = va("%s%s\t%d\t%s\t%d\n");
+  Com_PrintMessage(param_1,pcVar1,0);
   return;
 }
 
 
 // 8253B380  Scr_PrintFunctionPosSpreadSheet  (script/scr_parser.cpp:1368)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void Scr_PrintFunctionPosSpreadSheet(int param_1,char *param_2,char *param_3,uint param_4)
 
 {
-  int iVar1;
-  char *pcVar2;
-  ulonglong uVar3;
+  char *pcVar1;
   char *local_440 [4];
   char acStack_430 [1072];
   
-  uVar3 = (ulonglong)(int)param_2;
-  iVar1 = __savegprlr_28(param_1);
-  if ((uVar3 & 0xffffffff) == 0) {
+  if (param_2 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_parser.cpp",0x55c,0
                     ,"%s");
   }
   Scr_GetFunctionLineNumInternal(param_3,param_4,local_440);
   Scr_CopyFormattedLine(acStack_430,local_440[0]);
-  pcVar2 = va("%s%s\t%d\t%s\n");
-  Com_PrintMessage(iVar1,pcVar2,0);
-  __restgprlr_28();
+  pcVar1 = va("%s%s\t%d\t%s\n");
+  Com_PrintMessage(param_1,pcVar1,0);
   return;
 }
 
@@ -1321,6 +1264,9 @@ void Scr_PrintSourcePosSummary(int param_1,char *param_2,char *param_3,uint para
 
 // 8253B4E8  Scr_GetSourcePos  (script/scr_parser.cpp:1389)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 int Scr_GetSourcePos(uint param_1,uint param_2,char *param_3,int param_4)
 
 {
@@ -1329,76 +1275,74 @@ int Scr_GetSourcePos(uint param_1,uint param_2,char *param_3,int param_4)
   int aiStack_43c [3];
   char acStack_430 [1072];
   
-  iVar1 = __savegprlr_27(param_1);
-  if (scrVarPub.developer == false) {
+  if (!scrVarPub.developer) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_parser.cpp",0x572,0
                     ,"%s");
   }
   iVar1 = Scr_GetLineNumInternal
-                    (scrParserPub.sourceBufferLookup[iVar1].sourceBuf,param_2,&local_440,aiStack_43c
-                    );
+                    (scrParserPub.sourceBufferLookup[param_1].sourceBuf,param_2,&local_440,
+                     aiStack_43c);
   Scr_CopyFormattedLine(acStack_430,local_440);
   Com_sprintf(param_3,param_4,"%s // %s%s, line %d");
-  iVar1 = __restgprlr_27(iVar1);
   return iVar1;
 }
 
 
 // 8253B5D0  Scr_GetSourcePos2  (script/scr_parser.cpp:1403)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void Scr_GetSourcePos2(uint param_1,int param_2,char *param_3,int param_4)
 
 {
-  int iVar1;
-  
-  __savegprlr_28(param_1,param_2);
-  if (scrVarPub.developer == false) {
+  if (!scrVarPub.developer) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_parser.cpp",0x57c,0
                     ,"%s");
   }
-  iVar1 = Com_sprintf(param_3,param_4,"%s%s %d");
-  __restgprlr_28(iVar1);
+  Com_sprintf(param_3,param_4,"%s%s %d");
   return;
 }
 
 
 // 8253B680  Scr_GetSourcePos3  (script/scr_parser.cpp:1411)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void Scr_GetSourcePos3(uint param_1,uint param_2,char *param_3,int param_4)
 
 {
-  int iVar1;
   char *local_440;
   int aiStack_43c [3];
   char acStack_430 [1072];
   
-  iVar1 = __savegprlr_27(param_1);
-  if (scrVarPub.developer == false) {
+  if (!scrVarPub.developer) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_parser.cpp",0x588,0
                     ,"%s");
   }
   Scr_GetLineNumInternal
-            (scrParserPub.sourceBufferLookup[iVar1].sourceBuf,param_2,&local_440,aiStack_43c);
+            (scrParserPub.sourceBufferLookup[param_1].sourceBuf,param_2,&local_440,aiStack_43c);
   Scr_CopyFormattedLine(acStack_430,local_440);
-  iVar1 = Com_sprintf(param_3,param_4,"%s%s %d");
-  __restgprlr_27(iVar1);
+  Com_sprintf(param_3,param_4,"%s%s %d");
   return;
 }
 
 
 // 8253B760  Scr_GetSourceBuffer  (script/scr_parser.cpp:1424)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 uint Scr_GetSourceBuffer(char *param_1)
 
 {
-  char *pcVar1;
-  int iVar2;
-  uint uVar3;
-  SourceBufferInfo *pSVar4;
+  int iVar1;
+  uint uVar2;
+  SourceBufferInfo *pSVar3;
   
-  pcVar1 = (char *)__savegprlr_28(param_1);
-  iVar2 = Scr_IsInOpcodeMemory(pcVar1);
-  if (iVar2 == 0) {
+  iVar1 = Scr_IsInOpcodeMemory(param_1);
+  if (iVar1 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_parser.cpp",0x593,0
                     ,"%s");
   }
@@ -1406,118 +1350,106 @@ uint Scr_GetSourceBuffer(char *param_1)
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_parser.cpp",0x594,0
                     ,"%s");
   }
-  iVar2 = scrParserPub.sourceBufferLookupLen - 1;
-  if (iVar2 != 0) {
-    pSVar4 = scrParserPub.sourceBufferLookup + iVar2;
+  uVar2 = scrParserPub.sourceBufferLookupLen - 1;
+  if (uVar2 != 0) {
+    pSVar3 = scrParserPub.sourceBufferLookup + uVar2;
     do {
-      if ((pSVar4->codePos != (char *)0x0) && (pSVar4->codePos <= pcVar1)) break;
-      iVar2 = iVar2 + -1;
-      pSVar4 = pSVar4 + -1;
-    } while (iVar2 != 0);
+      if ((pSVar3->codePos != (char *)0x0) && (pSVar3->codePos <= param_1)) {
+        return uVar2;
+      }
+      uVar2 = uVar2 - 1;
+      pSVar3 = pSVar3 + -1;
+    } while (uVar2 != 0);
   }
-  uVar3 = __restgprlr_28();
-  return uVar3;
+  return 0;
 }
 
 
 // 8253B818  Scr_GetTextSourcePos  (script/scr_parser.cpp:1443)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void Scr_GetTextSourcePos(char *param_1,char *param_2,char *param_3)
 
 {
-  char *pcVar1;
-  int iVar2;
+  int iVar1;
+  uint uVar2;
   uint uVar3;
-  uint uVar4;
-  longlong lVar5;
   char *local_30;
   int aiStack_2c [11];
   
-  lVar5 = (longlong)(int)param_2;
-  pcVar1 = (char *)__savegprlr_29(param_1,lVar5,param_3);
-  if (((scrVarPub.developer != false) && (pcVar1 != (char *)0x0)) &&
-     (scrVarPub.programBuffer != (char *)0x0)) {
-    iVar2 = Scr_IsInOpcodeMemory(pcVar1);
-    if ((iVar2 != 0) && (pcVar1 != &g_EndPos)) {
-      uVar3 = Scr_GetSourceBuffer(pcVar1 + -1);
-      uVar4 = Scr_GetPrevSourcePos(pcVar1 + -1,0);
-      Scr_GetLineNumInternal
-                (scrParserPub.sourceBufferLookup[uVar3].sourceBuf,uVar4,&local_30,aiStack_2c);
-      Scr_CopyFormattedLine((char *)lVar5,local_30);
-      __restgprlr_29();
-      return;
-    }
+  if ((((scrVarPub.developer) && (param_1 != (char *)0x0)) &&
+      (scrVarPub.programBuffer != (char *)0x0)) &&
+     ((iVar1 = Scr_IsInOpcodeMemory(param_1), iVar1 != 0 && (param_1 != &g_EndPos)))) {
+    uVar2 = Scr_GetSourceBuffer(param_1 + -1);
+    uVar3 = Scr_GetPrevSourcePos(param_1 + -1,0);
+    Scr_GetLineNumInternal
+              (scrParserPub.sourceBufferLookup[uVar2].sourceBuf,uVar3,&local_30,aiStack_2c);
+    Scr_CopyFormattedLine(param_2,local_30);
+    return;
   }
-  *(char *)lVar5 = '\0';
-  __restgprlr_29();
+  *param_2 = '\0';
   return;
 }
 
 
 // 8253B8D8  Scr_PrintPrevCodePos  (script/scr_parser.cpp:1466)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void Scr_PrintPrevCodePos(int param_1,char *param_2,uint param_3,bool param_4)
 
 {
   SourceBufferInfo *pSVar1;
   int iVar2;
-  int iVar3;
+  uint uVar3;
   uint uVar4;
-  uint uVar5;
-  ulonglong uVar6;
-  char *pcVar7;
-  ulonglong uVar8;
+  char *pcVar5;
   
-  uVar8 = (ulonglong)param_4;
-  uVar6 = (ulonglong)(int)param_2;
-  iVar2 = __savegprlr_27(param_1);
-  if ((uVar6 & 0xffffffff) == 0) {
-    pcVar7 = "<frozen thread>\n";
+  if (param_2 == (char *)0x0) {
+    pcVar5 = "<frozen thread>\n";
 LAB_8253b904:
-    Com_PrintError(iVar2,pcVar7);
-    __restgprlr_27();
+    Com_PrintError(param_1,pcVar5);
     return;
   }
-  if ((uVar6 & 0xffffffff) == ZEXT48(&g_EndPos)) {
-    pcVar7 = "<removed thread>\n";
-    if ((uVar8 & 0xff) == 0) {
-      Com_Printf(iVar2,"<removed thread>\n");
-      __restgprlr_27();
+  if (param_2 == &g_EndPos) {
+    pcVar5 = "<removed thread>\n";
+    if (!param_4) {
+      Com_Printf(param_1,"<removed thread>\n");
       return;
     }
     goto LAB_8253b904;
   }
-  pcVar7 = (char *)uVar6;
-  if (scrVarPub.developer == false) {
-    iVar3 = Scr_IsInOpcodeMemory(pcVar7 + -1);
-    if (iVar3 != 0) {
-      pcVar7 = "@ %d\n";
-      if ((uVar8 & 0xff) != 0) {
-        Com_PrintError(iVar2,"@ %d\n");
-        __restgprlr_27();
+  if (scrVarPub.developer) {
+    if ((scrVarPub.programBuffer != (char *)0x0) &&
+       (iVar2 = Scr_IsInOpcodeMemory(param_2), iVar2 != 0)) {
+      uVar3 = Scr_GetSourceBuffer(param_2 + -1);
+      pSVar1 = scrParserPub.sourceBufferLookup;
+      uVar4 = Scr_GetPrevSourcePos(param_2 + -1,param_3);
+      Scr_PrintSourcePos(param_1,pSVar1[uVar3].buf,pSVar1[uVar3].sourceBuf,uVar4,param_4);
+      return;
+    }
+  }
+  else {
+    iVar2 = Scr_IsInOpcodeMemory(param_2 + -1);
+    if (iVar2 != 0) {
+      pcVar5 = "@ %d\n";
+      if (param_4) {
+        Com_PrintError(param_1,"@ %d\n");
         return;
       }
       goto LAB_8253b9d4;
     }
   }
-  else if ((scrVarPub.programBuffer != (char *)0x0) &&
-          (iVar3 = Scr_IsInOpcodeMemory(pcVar7), iVar3 != 0)) {
-    uVar4 = Scr_GetSourceBuffer(pcVar7 + -1);
-    pSVar1 = scrParserPub.sourceBufferLookup;
-    uVar5 = Scr_GetPrevSourcePos(pcVar7 + -1,param_3);
-    Scr_PrintSourcePos(iVar2,pSVar1[uVar4].buf,pSVar1[uVar4].sourceBuf,uVar5,SUB81(uVar8,0));
-    __restgprlr_27();
-    return;
-  }
-  pcVar7 = "%p\n\n";
-  if ((uVar8 & 0xff) != 0) {
-    Com_PrintError(iVar2,"%p\n\n");
-    __restgprlr_27();
+  pcVar5 = "%p\n\n";
+  if (param_4) {
+    Com_PrintError(param_1,"%p\n\n");
     return;
   }
 LAB_8253b9d4:
-  Com_Printf(iVar2,pcVar7);
-  __restgprlr_27();
+  Com_Printf(param_1,pcVar5);
   return;
 }
 
@@ -1584,16 +1516,15 @@ char * Scr_PrevCodePosFunctionName(char *param_1)
 
 // 8253BC08  Scr_PrevCodePosFileNameMatches  (script/scr_parser.cpp:1582)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 bool Scr_PrevCodePosFileNameMatches(char *param_1,char *param_2)
 
 {
   char *pcVar1;
-  undefined1 uVar2;
-  ulonglong uVar3;
   
-  uVar3 = (ulonglong)(int)param_2;
-  pcVar1 = (char *)__savegprlr_28(param_1);
-  if ((uVar3 & 0xffffffff) == 0) {
+  if (param_2 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_parser.cpp",0x631,0
                     ,"%s");
   }
@@ -1601,161 +1532,147 @@ bool Scr_PrevCodePosFileNameMatches(char *param_1,char *param_2)
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_parser.cpp",0x632,0
                     ,"%s");
   }
-  pcVar1 = Scr_PrevCodePosFileName(pcVar1);
+  pcVar1 = Scr_PrevCodePosFileName(param_1);
   if (pcVar1 == (char *)0x0) {
-    uVar2 = __restgprlr_28();
-    return (bool)uVar2;
+    return false;
   }
-  pcVar1 = I_stristr(pcVar1,(char *)uVar3);
-  uVar2 = __restgprlr_28(pcVar1 != (char *)0x0);
-  return (bool)uVar2;
+  pcVar1 = I_stristr(pcVar1,param_2);
+  return (bool)('\x01' - (pcVar1 == (char *)0x0));
 }
 
 
 // 8253BCB8  Scr_PrintPrevCodePosSpreadSheet  (script/scr_parser.cpp:1598)
+
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 
 void Scr_PrintPrevCodePosSpreadSheet(int param_1,char *param_2,bool param_3,bool param_4)
 
 {
   SourceBufferInfo *pSVar1;
   int iVar2;
-  int iVar3;
-  char *pcVar4;
-  uint uVar5;
-  uint uVar6;
+  uint uVar3;
+  uint uVar4;
+  char *pcVar5;
+  char *pcVar6;
   char *pcVar7;
-  ulonglong uVar8;
-  ulonglong uVar9;
-  ulonglong uVar10;
-  char *pcVar11;
   
-  uVar10 = (ulonglong)param_4;
-  uVar9 = (ulonglong)param_3;
-  uVar8 = (ulonglong)(int)param_2;
-  iVar2 = __savegprlr_27(param_1);
-  pcVar11 = (char *)uVar10;
-  pcVar7 = (char *)uVar9;
-  if (scrVarPub.developer == false) {
-    pcVar11 = "%s";
-    pcVar7 = (char *)0x0;
+  pcVar6 = (char *)(int)param_4;
+  pcVar5 = (char *)(int)param_3;
+  if (!scrVarPub.developer) {
+    pcVar6 = "%s";
+    pcVar5 = (char *)0x0;
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_parser.cpp",0x641,0
                     ,"%s");
   }
-  if ((uVar8 & 0xffffffff) == 0) {
-    Com_PrintMessage(iVar2,"<frozen thread>\n",0);
-    __restgprlr_27();
+  if (param_2 == (char *)0x0) {
+    Com_PrintMessage(param_1,"<frozen thread>\n",0);
     return;
   }
-  if ((uVar8 & 0xffffffff) == ZEXT48(&g_EndPos)) {
-    Com_PrintMessage(iVar2,"<removed thread>\n",0);
-    __restgprlr_27();
+  if (param_2 == &g_EndPos) {
+    Com_PrintMessage(param_1,"<removed thread>\n",0);
     return;
   }
   if ((scrVarPub.programBuffer != (char *)0x0) &&
-     (iVar3 = Scr_IsInOpcodeMemory((char *)uVar8), iVar3 != 0)) {
-    pcVar4 = (char *)uVar8 + -1;
-    uVar5 = Scr_GetSourceBuffer(pcVar4);
+     (iVar2 = Scr_IsInOpcodeMemory(param_2), iVar2 != 0)) {
+    pcVar7 = param_2 + -1;
+    uVar3 = Scr_GetSourceBuffer(pcVar7);
     pSVar1 = scrParserPub.sourceBufferLookup;
-    if ((uVar9 & 0xff) != 0) {
-      Scr_GetPrevSourcePos(pcVar4,0);
+    if (param_3) {
+      Scr_GetPrevSourcePos(pcVar7,0);
       Scr_PrintSourcePosSummary
-                (iVar2,scrParserPub.sourceBufferLookup[uVar5].buf,pcVar7,(uint)pcVar11);
-      __restgprlr_27();
+                (param_1,scrParserPub.sourceBufferLookup[uVar3].buf,pcVar5,(uint)pcVar6);
       return;
     }
-    if ((uVar10 & 0xff) != 0) {
-      uVar6 = Scr_GetPrevSourcePos(pcVar4,0);
-      Scr_PrintFunctionPosSpreadSheet(iVar2,pSVar1[uVar5].buf,pSVar1[uVar5].sourceBuf,uVar6);
-      __restgprlr_27();
+    if (param_4) {
+      uVar4 = Scr_GetPrevSourcePos(pcVar7,0);
+      Scr_PrintFunctionPosSpreadSheet(param_1,pSVar1[uVar3].buf,pSVar1[uVar3].sourceBuf,uVar4);
       return;
     }
-    uVar6 = Scr_GetPrevSourcePos(pcVar4,0);
-    Scr_PrintSourcePosSpreadSheet(iVar2,pSVar1[uVar5].buf,pSVar1[uVar5].sourceBuf,uVar6);
-    __restgprlr_27();
+    uVar4 = Scr_GetPrevSourcePos(pcVar7,0);
+    Scr_PrintSourcePosSpreadSheet(param_1,pSVar1[uVar3].buf,pSVar1[uVar3].sourceBuf,uVar4);
     return;
   }
-  pcVar7 = va("%s\n");
-  Com_PrintMessage(iVar2,pcVar7,0);
-  __restgprlr_27();
+  pcVar5 = va("%s\n");
+  Com_PrintMessage(param_1,pcVar5,0);
   return;
 }
 
 
 // 8253CD98  Scr_GetCodePos  (script/scr_parser.cpp:1638)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void Scr_GetCodePos(char *param_1,uint param_2,char *param_3,int param_4)
 
 {
-  char *pcVar1;
-  int iVar2;
+  int iVar1;
   Scr_SourcePos_t local_40 [5];
   
-  pcVar1 = (char *)__savegprlr_28(param_1,param_2);
-  if (scrVarPub.developer != false) {
-    Scr_GetSourcePosOfType(pcVar1,'\b',1,local_40);
-    iVar2 = Scr_GetSourcePos(local_40[0].bufferIndex,local_40[0].sourcePos,param_3,param_4);
-    __restgprlr_28(iVar2);
+  if (scrVarPub.developer) {
+    Scr_GetSourcePosOfType(param_1,'\b',1,local_40);
+    Scr_GetSourcePos(local_40[0].bufferIndex,local_40[0].sourcePos,param_3,param_4);
     return;
   }
-  iVar2 = Scr_IsInOpcodeMemory(pcVar1);
-  if (iVar2 == 0) {
+  iVar1 = Scr_IsInOpcodeMemory(param_1);
+  if (iVar1 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_parser.cpp",0x672,0
                     ,"%s");
   }
-  iVar2 = Com_sprintf(param_3,param_4,"@ %d");
-  __restgprlr_28(iVar2);
+  Com_sprintf(param_3,param_4,"@ %d");
   return;
 }
 
 
 // 8253BE48  Scr_GetFileAndLine  (script/scr_parser.cpp:1658)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void Scr_GetFileAndLine(char *param_1,char **param_2,int *param_3)
 
 {
   SourceLookup SVar1;
-  char *pcVar2;
-  int iVar3;
-  OpcodeLookup *pOVar4;
-  uint uVar5;
+  int iVar2;
+  OpcodeLookup *pOVar3;
+  uint uVar4;
   
-  pcVar2 = (char *)__savegprlr_28(param_1);
-  iVar3 = Scr_IsInOpcodeMemory(pcVar2);
-  if (iVar3 == 0) {
+  iVar2 = Scr_IsInOpcodeMemory(param_1);
+  if (iVar2 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_parser.cpp",0x67f,0
                     ,"%s");
   }
-  pOVar4 = Scr_GetPrevSourcePosOpcodeLookup(pcVar2);
-  if (pOVar4 != (OpcodeLookup *)0x0) {
-    SVar1 = scrParserGlob.sourcePosLookup[pOVar4->sourcePosIndex];
-    uVar5 = Scr_GetSourceBuffer(pcVar2);
-    iVar3 = Scr_GetLineNum(uVar5,(uint)SVar1 >> 8);
-    *param_3 = iVar3 + 1;
-    *param_2 = scrParserPub.sourceBufferLookup[uVar5].buf;
-    __restgprlr_28();
+  pOVar3 = Scr_GetPrevSourcePosOpcodeLookup(param_1);
+  if (pOVar3 != (OpcodeLookup *)0x0) {
+    SVar1 = scrParserGlob.sourcePosLookup[pOVar3->sourcePosIndex];
+    uVar4 = Scr_GetSourceBuffer(param_1);
+    iVar2 = Scr_GetLineNum(uVar4,(uint)SVar1 >> 8);
+    *param_3 = iVar2 + 1;
+    *param_2 = scrParserPub.sourceBufferLookup[uVar4].buf;
     return;
   }
   *param_3 = 0;
   *param_2 = "";
-  __restgprlr_28();
   return;
 }
 
 
 // 8253BF18  Scr_AddProfileTime  (script/scr_parser.cpp:1685)
 
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
+
 void Scr_AddProfileTime(char *param_1,int param_2,int param_3)
 
 {
   ulonglong uVar1;
-  char *pcVar2;
-  int iVar3;
-  ulonglong uVar4;
-  OpcodeLookup *pOVar5;
+  int iVar2;
+  ulonglong uVar3;
+  OpcodeLookup *pOVar4;
+  ulonglong uVar5;
   ulonglong uVar6;
-  ulonglong uVar7;
   
-  pcVar2 = (char *)__savegprlr_22(param_1);
   if (param_2 < 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_parser.cpp",0x69a,0
                     ,"%s\n\t(time) = %i");
@@ -1764,8 +1681,8 @@ void Scr_AddProfileTime(char *param_1,int param_2,int param_3)
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_parser.cpp",0x69b,0
                     ,"builtInTime <= time\n\t%i, %i");
   }
-  iVar3 = Scr_IsInOpcodeMemory(pcVar2);
-  if (iVar3 == 0) {
+  iVar2 = Scr_IsInOpcodeMemory(param_1);
+  if (iVar2 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_parser.cpp",0x69c,0
                     ,"%s");
   }
@@ -1773,42 +1690,41 @@ void Scr_AddProfileTime(char *param_1,int param_2,int param_3)
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_parser.cpp",0x69d,0
                     ,"%s");
   }
-  uVar4 = (ulonglong)scrParserGlob.opcodeLookupLen;
-  uVar7 = 0;
-  uVar6 = uVar4 - 1;
-  pOVar5 = scrParserGlob.opcodeLookup;
+  uVar3 = (ulonglong)scrParserGlob.opcodeLookupLen;
+  uVar6 = 0;
+  uVar5 = uVar3 - 1;
+  pOVar4 = scrParserGlob.opcodeLookup;
   do {
-    uVar1 = (uVar6 + uVar7 & 0xffffffff) >> 1;
-    iVar3 = (int)((uVar1 * 3 & 0x1fffffff) << 3);
-    if (*(char **)((int)&pOVar5->codePos + iVar3) < pcVar2) {
-      uVar7 = uVar1 + 1;
-      if (uVar4 <= uVar7) {
+    uVar1 = (uVar5 + uVar6 & 0xffffffff) >> 1;
+    iVar2 = (int)((uVar1 * 3 & 0x1fffffff) << 3);
+    if (*(char **)((int)&pOVar4->codePos + iVar2) < param_1) {
+      uVar6 = uVar1 + 1;
+      if (uVar3 <= uVar6) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_parser.cpp",
                         0x6a7,0,"%s");
-        uVar4 = (ulonglong)scrParserGlob.opcodeLookupLen;
-        pOVar5 = scrParserGlob.opcodeLookup;
+        uVar3 = (ulonglong)scrParserGlob.opcodeLookupLen;
+        pOVar4 = scrParserGlob.opcodeLookup;
       }
-      if (pcVar2 <= *(char **)((int)&pOVar5->codePos +
-                              (int)((uVar7 + (uVar7 * 2 & 0xfffffffe) & 0xffffffff) << 3))) {
-        *(int *)((int)&pOVar5->profileTime + iVar3) =
-             *(int *)((int)&pOVar5->profileTime + iVar3) + param_2;
-        *(int *)((int)&(scrParserGlob.opcodeLookup)->profileBuiltInTime + iVar3) =
-             *(int *)((int)&(scrParserGlob.opcodeLookup)->profileBuiltInTime + iVar3) + param_3;
-        *(int *)((int)&(scrParserGlob.opcodeLookup)->profileUsage + iVar3) =
-             *(int *)((int)&(scrParserGlob.opcodeLookup)->profileUsage + iVar3) + 1;
-        __restgprlr_22();
+      if (param_1 <=
+          *(char **)((int)&pOVar4->codePos +
+                    (int)((uVar6 + (uVar6 * 2 & 0xfffffffe) & 0xffffffff) << 3))) {
+        *(int *)((int)&pOVar4->profileTime + iVar2) =
+             *(int *)((int)&pOVar4->profileTime + iVar2) + param_2;
+        *(int *)((int)&(scrParserGlob.opcodeLookup)->profileBuiltInTime + iVar2) =
+             *(int *)((int)&(scrParserGlob.opcodeLookup)->profileBuiltInTime + iVar2) + param_3;
+        *(int *)((int)&(scrParserGlob.opcodeLookup)->profileUsage + iVar2) =
+             *(int *)((int)&(scrParserGlob.opcodeLookup)->profileUsage + iVar2) + 1;
         return;
       }
     }
     else {
-      uVar6 = uVar1 - 1;
+      uVar5 = uVar1 - 1;
     }
-    if ((uVar6 & 0xffffffff) < uVar7) {
+    if ((uVar5 & 0xffffffff) < uVar6) {
       if (alwaysfails == 0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_parser.cpp",
                         0x6b6,0,"unreachable");
       }
-      __restgprlr_22();
       return;
     }
   } while( true );
@@ -1837,6 +1753,8 @@ bool Scr_CompareScriptSourceProfileTimes(int param_1,int param_2)
 
 // 8253CE48  Scr_CalcScriptFileProfile  (script/scr_parser.cpp:1734)
 
+/* WARNING: Function: __savegprlr_15 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_15 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void Scr_CalcScriptFileProfile(void)
@@ -1859,8 +1777,7 @@ void Scr_CalcScriptFileProfile(void)
   undefined8 local_1098;
   int local_1090 [1060];
   
-  __savegprlr_15();
-  if (scrVarPub.developer != false) {
+  if (scrVarPub.developer) {
     pPVar6 = Profile_GetScript();
     pPVar6->srcTotal = 0;
     uVar13 = 0;
@@ -1940,12 +1857,14 @@ void Scr_CalcScriptFileProfile(void)
                Scr_CompareScriptSourceProfileTimes);
     memcpy();
   }
-  __restgprlr_15();
   return;
 }
 
 
 // 8253C150  Scr_CalcAnimscriptProfile  (script/scr_parser.cpp:1795)
+
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
 
 void Scr_CalcAnimscriptProfile(int *param_1,int *param_2)
 
@@ -1958,7 +1877,6 @@ void Scr_CalcAnimscriptProfile(int *param_1,int *param_2)
   uint uVar6;
   int iVar7;
   
-  __savegprlr();
   *param_1 = 0;
   *param_2 = 0;
   if ((scrVarPub.developer != false) && (uVar6 = 0, scrParserGlob.opcodeLookupLen != 0)) {
@@ -1998,13 +1916,14 @@ void Scr_CalcAnimscriptProfile(int *param_1,int *param_2)
       iVar7 = iVar7 + 0x18;
     } while (uVar6 < scrParserGlob.opcodeLookupLen);
   }
-  __restgprlr();
   return;
 }
 
 
 // 8253C308  Scr_PrintScriptProfileTimesForScriptFile  (script/scr_parser.cpp:1837)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void Scr_PrintScriptProfileTimesForScriptFile(void)
@@ -2015,7 +1934,6 @@ void Scr_PrintScriptProfileTimesForScriptFile(void)
   int iVar3;
   double dVar4;
   
-  __savegprlr_27();
   Com_Printf(0x17,"name:           time,   avg,    max,   total,   builtin,  total - builtin\n");
   uVar2 = 0;
   if (scrParserPub.sourceBufferLookupLen != 0) {
@@ -2034,7 +1952,6 @@ void Scr_PrintScriptProfileTimesForScriptFile(void)
       iVar3 = iVar3 + 0x2c;
     } while (uVar2 < uVar1);
   }
-  __restgprlr_27();
   return;
 }
 
@@ -2075,176 +1992,176 @@ void Scr_ScriptProfileTimesReset(void)
 
 // 8253D108  Scr_PrintProfileTimes  (script/scr_parser.cpp:1883)
 
+/* WARNING: Function: __savegprlr_20 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_20 replaced with injection: xenon_save_restore */
+
 bool Scr_PrintProfileTimes(float param_1)
 
 {
   char *pcVar1;
   void *pvVar2;
-  undefined1 uVar5;
   OpcodeLookup *pOVar3;
   ProfileScript *pPVar4;
+  int *piVar5;
   int *piVar6;
-  int *piVar7;
-  char (*pacVar8) [20];
+  char (*pacVar7) [20];
+  uint uVar8;
   uint uVar9;
-  uint uVar10;
-  char (*pacVar11) [20];
-  char *pcVar12;
-  int iVar13;
-  char *pcVar14;
-  int iVar15;
-  OpcodeLookup *pOVar16;
-  int iVar17;
-  char (*pacVar18) [20];
-  longlong lVar19;
-  double dVar20;
+  char (*pacVar10) [20];
+  char *pcVar11;
+  int iVar12;
+  char *pcVar13;
+  int iVar14;
+  OpcodeLookup *pOVar15;
+  int iVar16;
+  char (*pacVar17) [20];
+  longlong lVar18;
+  double dVar19;
   
-  dVar20 = (double)__savegprlr_20((double)param_1);
-  pcVar14 = (char *)0x0;
-  if (0.0 < dVar20) {
-    iVar17 = 0;
-    iVar15 = 0;
-    iVar13 = 0;
-    uVar9 = 0;
+  dVar19 = (double)param_1;
+  pcVar13 = (char *)0x0;
+  if (0.0 < dVar19) {
+    iVar16 = 0;
+    iVar14 = 0;
+    iVar12 = 0;
+    uVar8 = 0;
     if (1 < (int)scrParserGlob.opcodeLookupLen) {
-      piVar6 = &scrParserGlob.opcodeLookup[-1].profileTime;
+      piVar5 = &scrParserGlob.opcodeLookup[-1].profileTime;
       do {
-        piVar7 = piVar6 + 6;
-        uVar9 = uVar9 + 2;
-        piVar6 = piVar6 + 0xc;
-        iVar17 = *piVar7 + iVar17;
-        iVar15 = *piVar6 + iVar15;
-      } while (uVar9 < scrParserGlob.opcodeLookupLen - 1);
+        piVar6 = piVar5 + 6;
+        uVar8 = uVar8 + 2;
+        piVar5 = piVar5 + 0xc;
+        iVar16 = *piVar6 + iVar16;
+        iVar14 = *piVar5 + iVar14;
+      } while (uVar8 < scrParserGlob.opcodeLookupLen - 1);
     }
-    if (uVar9 < scrParserGlob.opcodeLookupLen) {
-      iVar13 = scrParserGlob.opcodeLookup[uVar9].profileTime;
+    if (uVar8 < scrParserGlob.opcodeLookupLen) {
+      iVar12 = scrParserGlob.opcodeLookup[uVar8].profileTime;
     }
     pvVar2 = Sys_GetValue(0);
-    if ((double)((float)(longlong)(iVar17 + iVar15 + iVar13) * *(float *)((int)pvVar2 + 0x4ac0)) <
-        dVar20) {
-      uVar9 = 0;
+    if ((double)((float)(longlong)(iVar16 + iVar14 + iVar12) * *(float *)((int)pvVar2 + 0x4ac0)) <
+        dVar19) {
+      uVar8 = 0;
       if (scrParserGlob.opcodeLookupLen != 0) {
         pOVar3 = scrParserGlob.opcodeLookup;
-        iVar13 = 0;
+        iVar12 = 0;
         do {
           pOVar3->profileUsage = 0;
-          uVar9 = uVar9 + 1;
-          *(undefined4 *)((int)&(scrParserGlob.opcodeLookup)->profileTime + iVar13) = 0;
-          *(undefined4 *)((int)&(scrParserGlob.opcodeLookup)->profileBuiltInTime + iVar13) = 0;
-          pOVar3 = (OpcodeLookup *)((int)&scrParserGlob.opcodeLookup[1].codePos + iVar13);
-          iVar13 = iVar13 + 0x18;
-        } while (uVar9 < scrParserGlob.opcodeLookupLen);
+          uVar8 = uVar8 + 1;
+          *(undefined4 *)((int)&(scrParserGlob.opcodeLookup)->profileTime + iVar12) = 0;
+          *(undefined4 *)((int)&(scrParserGlob.opcodeLookup)->profileBuiltInTime + iVar12) = 0;
+          pOVar3 = (OpcodeLookup *)((int)&scrParserGlob.opcodeLookup[1].codePos + iVar12);
+          iVar12 = iVar12 + 0x18;
+        } while (uVar8 < scrParserGlob.opcodeLookupLen);
       }
-      uVar5 = __restgprlr_20(0);
-      return (bool)uVar5;
+      return false;
     }
   }
-  iVar13 = 0;
-  uVar9 = 0;
+  iVar12 = 0;
+  uVar8 = 0;
   if (scrParserGlob.opcodeLookupLen != 0) {
-    iVar15 = 0;
-    uVar10 = scrParserGlob.opcodeLookupLen;
+    iVar14 = 0;
+    uVar9 = scrParserGlob.opcodeLookupLen;
     do {
-      if (*(int *)((int)&(scrParserGlob.opcodeLookup)->profileUsage + iVar15) == 0) {
-        if (*(int *)((int)&(scrParserGlob.opcodeLookup)->profileTime + iVar15) != 0) {
+      if (*(int *)((int)&(scrParserGlob.opcodeLookup)->profileUsage + iVar14) == 0) {
+        if (*(int *)((int)&(scrParserGlob.opcodeLookup)->profileTime + iVar14) != 0) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_parser.cpp",
                           0x77f,0,"%s");
-          uVar10 = scrParserGlob.opcodeLookupLen;
+          uVar9 = scrParserGlob.opcodeLookupLen;
         }
       }
       else {
-        iVar13 = iVar13 + 1;
+        iVar12 = iVar12 + 1;
       }
-      uVar9 = uVar9 + 1;
-      iVar15 = iVar15 + 0x18;
-    } while (uVar9 < uVar10);
+      uVar8 = uVar8 + 1;
+      iVar14 = iVar14 + 0x18;
+    } while (uVar8 < uVar9);
   }
-  pOVar3 = Z_VirtualAlloc(iVar13 * 0x18,"Scr_PrintProfileTimes",0);
-  iVar15 = 0;
-  uVar9 = 0;
+  pOVar3 = Z_VirtualAlloc(iVar12 * 0x18,"Scr_PrintProfileTimes",0);
+  iVar14 = 0;
+  uVar8 = 0;
   if (scrParserGlob.opcodeLookupLen != 0) {
-    iVar17 = 0;
-    iVar15 = 0;
-    pOVar16 = pOVar3;
+    iVar16 = 0;
+    iVar14 = 0;
+    pOVar15 = pOVar3;
     do {
-      if (*(int *)((int)&(scrParserGlob.opcodeLookup)->profileUsage + iVar17) == 0) {
-        if (*(int *)((int)&(scrParserGlob.opcodeLookup)->profileTime + iVar17) != 0) {
+      if (*(int *)((int)&(scrParserGlob.opcodeLookup)->profileUsage + iVar16) == 0) {
+        if (*(int *)((int)&(scrParserGlob.opcodeLookup)->profileTime + iVar16) != 0) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_parser.cpp",
                           0x78c,0,"%s");
         }
       }
       else {
-        piVar6 = (int *)((int)scrParserGlob.opcodeLookup + iVar17 + -4);
-        piVar7 = &pOVar16[-1].profileUsage;
-        lVar19 = 6;
+        piVar5 = (int *)((int)scrParserGlob.opcodeLookup + iVar16 + -4);
+        piVar6 = &pOVar15[-1].profileUsage;
+        lVar18 = 6;
         do {
+          piVar5 = piVar5 + 1;
           piVar6 = piVar6 + 1;
-          piVar7 = piVar7 + 1;
-          *piVar7 = *piVar6;
-          lVar19 = lVar19 + -1;
-        } while (lVar19 != 0);
-        iVar15 = iVar15 + 1;
-        pOVar16 = pOVar16 + 1;
-        *(undefined4 *)((int)&(scrParserGlob.opcodeLookup)->profileUsage + iVar17) = 0;
-        *(undefined4 *)((int)&(scrParserGlob.opcodeLookup)->profileTime + iVar17) = 0;
-        *(undefined4 *)((int)&(scrParserGlob.opcodeLookup)->profileBuiltInTime + iVar17) = 0;
+          *piVar6 = *piVar5;
+          lVar18 = lVar18 + -1;
+        } while (lVar18 != 0);
+        iVar14 = iVar14 + 1;
+        pOVar15 = pOVar15 + 1;
+        *(undefined4 *)((int)&(scrParserGlob.opcodeLookup)->profileUsage + iVar16) = 0;
+        *(undefined4 *)((int)&(scrParserGlob.opcodeLookup)->profileTime + iVar16) = 0;
+        *(undefined4 *)((int)&(scrParserGlob.opcodeLookup)->profileBuiltInTime + iVar16) = 0;
       }
-      uVar9 = uVar9 + 1;
-      iVar17 = iVar17 + 0x18;
-    } while (uVar9 < scrParserGlob.opcodeLookupLen);
+      uVar8 = uVar8 + 1;
+      iVar16 = iVar16 + 0x18;
+    } while (uVar8 < scrParserGlob.opcodeLookupLen);
   }
-  if (iVar15 != iVar13) {
+  if (iVar14 != iVar12) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_parser.cpp",0x796,0
                     ,"%s");
   }
   std::_Sort<OpcodeLookup_*,int,bool_(__cdecl*)(OpcodeLookup_const_&,OpcodeLookup_const_&)>
-            (pOVar3,pOVar3 + iVar13,((int)(pOVar3 + iVar13) - (int)pOVar3) / 0x18,
+            (pOVar3,pOVar3 + iVar12,((int)(pOVar3 + iVar12) - (int)pOVar3) / 0x18,
              Scr_CompareProfileTimes);
   Com_Printf(0x17,"\n");
   pPVar4 = Profile_GetScript();
-  pacVar18 = pPVar4->profileScriptNames;
-  lVar19 = 0x20;
-  pacVar11 = pacVar18;
-  pacVar8 = pacVar18;
+  pacVar17 = pPVar4->profileScriptNames;
+  lVar18 = 0x20;
+  pacVar10 = pacVar17;
+  pacVar7 = pacVar17;
   do {
     do {
-      pcVar12 = *pacVar11;
-      pcVar1 = *pacVar11;
-      pacVar11 = (char (*) [20])(pcVar1 + 1);
-    } while (*pcVar12 != '\0');
-    pcVar12 = (char *)((int)(pcVar1 + 1) + (-1 - (int)pacVar8));
-    if (pcVar14 < pcVar12) {
-      pcVar14 = pcVar12;
+      pcVar11 = *pacVar10;
+      pcVar1 = *pacVar10;
+      pacVar10 = (char (*) [20])(pcVar1 + 1);
+    } while (*pcVar11 != '\0');
+    pcVar11 = (char *)((int)(pcVar1 + 1) + (-1 - (int)pacVar7));
+    if (pcVar13 < pcVar11) {
+      pcVar13 = pcVar11;
     }
-    pacVar11 = pacVar8 + 1;
-    lVar19 = lVar19 + -1;
-    pacVar8 = pacVar11;
-  } while (lVar19 != 0);
-  lVar19 = 0x20;
+    pacVar10 = pacVar7 + 1;
+    lVar18 = lVar18 + -1;
+    pacVar7 = pacVar10;
+  } while (lVar18 != 0);
+  lVar18 = 0x20;
   do {
-    if ((*pacVar18)[0] != '\0') {
+    if ((*pacVar17)[0] != '\0') {
       Sys_GetValue(0);
       Com_Printf(0x17,"%-*s %6.2f\n");
     }
-    lVar19 = lVar19 + -1;
-    pacVar18 = pacVar18 + 1;
-  } while (lVar19 != 0);
+    lVar18 = lVar18 + -1;
+    pacVar17 = pacVar17 + 1;
+  } while (lVar18 != 0);
   Com_Printf(0x17,"\n");
-  if (0 < iVar13) {
-    pOVar16 = pOVar3 + -1;
+  if (0 < iVar12) {
+    pOVar15 = pOVar3 + -1;
     do {
       Sys_GetValue(0);
       Sys_GetValue(0);
       Com_Printf(0x17,"time: %f, builtin: %f, usage: %d\n");
-      pOVar16 = pOVar16 + 1;
-      Scr_PrintPrevCodePos(0x17,pOVar16->codePos + 1,1,true);
-      iVar13 = iVar13 + -1;
-    } while (iVar13 != 0);
+      pOVar15 = pOVar15 + 1;
+      Scr_PrintPrevCodePos(0x17,pOVar15->codePos + 1,1,true);
+      iVar12 = iVar12 + -1;
+    } while (iVar12 != 0);
   }
   Com_Printf(0x17,"\n");
   Z_VirtualFree(pOVar3,0);
-  uVar5 = __restgprlr_20(1);
-  return (bool)uVar5;
+  return true;
 }
 
 
@@ -2313,25 +2230,26 @@ void CompileError(uint param_1,char *param_2)
 
 // 8253C700  CompileError2  (script/scr_parser.cpp:2057)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void CompileError2(char *param_1,char *param_2)
 
 {
-  char *pcVar1;
-  int iVar2;
-  char *pcVar3;
+  int iVar1;
+  char *pcVar2;
   char *pcStack0000001c;
   char acStack_820 [1024];
   char acStack_420 [1056];
   
   pcStack0000001c = param_2;
-  pcVar1 = (char *)__savegprlr_29(param_1);
-  _vsnprintf(acStack_820,0x400,pcStack0000001c,&stack0x00000020);
+  _vsnprintf(acStack_820,0x400,param_2,&stack0x00000020);
   if (scrVarPub.evaluate != false) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_parser.cpp",0x815,0
                     ,"%s");
   }
-  iVar2 = Scr_IsInOpcodeMemory(pcVar1);
-  if (iVar2 == 0) {
+  iVar1 = Scr_IsInOpcodeMemory(param_1);
+  if (iVar1 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_parser.cpp",0x816,0
                     ,"%s");
   }
@@ -2342,132 +2260,131 @@ void CompileError2(char *param_1,char *param_2)
   Com_PrintError(0x17,"\n");
   Com_PrintError(0x17,"******* script compile error *******\n");
   Com_PrintError(0x17,"%s: ");
-  pcVar3 = (char *)0x0;
-  Scr_PrintPrevCodePos(0x17,pcVar1,0,true);
+  pcVar2 = (char *)0x0;
+  Scr_PrintPrevCodePos(0x17,param_1,0,true);
   Com_Printf(0x17,"************************************\n");
-  Scr_GetTextSourcePos(pcVar1,acStack_420,pcVar3);
+  Scr_GetTextSourcePos(param_1,acStack_420,pcVar2);
   Com_Error(ERR_SCRIPT_DROP,"\x15script compile error\n%s\n%s\n(see console for details)\n");
-  __restgprlr_29();
   return;
 }
 
 
 // 8253C868  RuntimeErrorInternal  (script/scr_parser.cpp:2102)
 
+/* WARNING: Function: __savegprlr_18 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_18 replaced with injection: xenon_save_restore */
+
 void RuntimeErrorInternal(int param_1,char *param_2,uint param_3,char *param_4)
 
 {
   SourceBufferInfo *pSVar1;
   int iVar2;
-  int iVar3;
-  char *pcVar4;
-  int iVar5;
+  char *pcVar3;
+  int iVar4;
+  uint uVar5;
   uint uVar6;
-  uint uVar7;
-  longlong lVar8;
-  char *pcVar9;
-  longlong lVar10;
-  function_frame_t *pfVar11;
+  char *pcVar7;
+  function_frame_t *pfVar8;
   
-  lVar10 = (longlong)(int)param_3;
-  lVar8 = (longlong)(int)param_2;
-  iVar2 = __savegprlr_18(param_1,lVar8,lVar10,param_4);
-  iVar3 = Scr_IsInOpcodeMemory((char *)lVar8);
-  if (iVar3 == 0) {
+  iVar2 = Scr_IsInOpcodeMemory(param_2);
+  if (iVar2 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_parser.cpp",0x83b,0
                     ,"%s");
   }
-  Com_PrintError(iVar2,"\n******* script runtime error *******\n%s: ");
-  pcVar4 = va("******* script runtime error ********: %s: ");
-  LSP_LogStringEvenIfControllerIsInactive(pcVar4);
-  Scr_PrintPrevCodePos(iVar2,(char *)lVar8,(uint)lVar10,true);
+  Com_PrintError(param_1,"\n******* script runtime error *******\n%s: ");
+  pcVar3 = va("******* script runtime error ********: %s: ");
+  LSP_LogStringEvenIfControllerIsInactive(pcVar3);
+  Scr_PrintPrevCodePos(param_1,param_2,param_3,true);
   if (scrVmPub.function_count != 0) {
-    iVar3 = scrVmPub.function_count + -1;
-    if (0 < iVar3) {
-      pfVar11 = scrVmPub.function_frame_start + scrVmPub.function_count + -1;
+    iVar2 = scrVmPub.function_count + -1;
+    if (0 < iVar2) {
+      pfVar8 = scrVmPub.function_frame_start + scrVmPub.function_count + -1;
       do {
-        Com_PrintError(iVar2,"called from:\n");
-        uVar7 = (pfVar11->fs).localId;
-        pcVar4 = (pfVar11->fs).pos;
-        pcVar9 = "<frozen thread>\n";
-        if (pcVar4 == (char *)0x0) {
+        Com_PrintError(param_1,"called from:\n");
+        uVar6 = (pfVar8->fs).localId;
+        pcVar3 = (pfVar8->fs).pos;
+        pcVar7 = "<frozen thread>\n";
+        if (pcVar3 == (char *)0x0) {
 LAB_8253ca44:
-          Com_PrintError(0,pcVar9);
+          Com_PrintError(0,pcVar7);
         }
         else {
-          if (pcVar4 == &g_EndPos) {
-            pcVar9 = "<removed thread>\n";
+          if (pcVar3 == &g_EndPos) {
+            pcVar7 = "<removed thread>\n";
             goto LAB_8253ca44;
           }
           if (scrVarPub.developer == false) {
-            iVar5 = Scr_IsInOpcodeMemory(pcVar4 + -1);
-            if (iVar5 == 0) goto LAB_8253ca2c;
+            iVar4 = Scr_IsInOpcodeMemory(pcVar3 + -1);
+            if (iVar4 == 0) goto LAB_8253ca2c;
             Com_PrintError(0,"@ %d\n");
           }
           else if ((scrVarPub.programBuffer == (char *)0x0) ||
-                  (iVar5 = Scr_IsInOpcodeMemory(pcVar4), iVar5 == 0)) {
+                  (iVar4 = Scr_IsInOpcodeMemory(pcVar3), iVar4 == 0)) {
 LAB_8253ca2c:
             Com_PrintError(0,"%p\n\n");
           }
           else {
-            uVar6 = Scr_GetSourceBuffer(pcVar4 + -1);
+            uVar5 = Scr_GetSourceBuffer(pcVar3 + -1);
             pSVar1 = scrParserPub.sourceBufferLookup;
-            uVar7 = Scr_GetPrevSourcePos(pcVar4 + -1,(uint)LZCOUNT(uVar7) >> 5);
-            Scr_PrintSourcePos(0,pSVar1[uVar6].buf,pSVar1[uVar6].sourceBuf,uVar7,true);
+            uVar6 = Scr_GetPrevSourcePos(pcVar3 + -1,(uint)LZCOUNT(uVar6) >> 5);
+            Scr_PrintSourcePos(0,pSVar1[uVar5].buf,pSVar1[uVar5].sourceBuf,uVar6,true);
           }
         }
-        iVar3 = iVar3 + -1;
-        pfVar11 = pfVar11 + -1;
-      } while (iVar3 != 0);
+        iVar2 = iVar2 + -1;
+        pfVar8 = pfVar8 + -1;
+      } while (iVar2 != 0);
     }
-    Com_PrintError(iVar2,"started from:\n");
+    Com_PrintError(param_1,"started from:\n");
     Scr_PrintPrevCodePos(0,scrVmPub.function_frame_start[0].fs.pos,1,true);
   }
   com_fixedConsolePosition = 0;
-  Com_PrintError(iVar2,"************************************\n");
-  __restgprlr_18();
+  Com_PrintError(param_1,"************************************\n");
   return;
 }
 
 
 // 8253CAA0  RuntimeError  (script/scr_parser.cpp:2141)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 void RuntimeError(char *param_1,uint param_2,char *param_3,char *param_4)
 
 {
   bool bVar1;
-  char *pcVar2;
-  int iVar3;
-  bool bVar4;
-  byte bVar5;
+  int iVar2;
+  bool bVar3;
+  byte bVar4;
   
-  pcVar2 = (char *)__savegprlr_26(param_1);
   bVar1 = scrVmPub.terminal_error;
-  if (scrVarPub.developer == false) {
-    iVar3 = Scr_IsInOpcodeMemory(pcVar2);
-    if (iVar3 == 0) {
+  if (!scrVarPub.developer) {
+    iVar2 = Scr_IsInOpcodeMemory(param_1);
+    if (iVar2 == 0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_parser.cpp",0x869
                       ,0,"%s");
     }
-    if (bVar1 == false) goto LAB_8253cc2c;
-  }
-  if (scrVmPub.debugCode == false) {
-    if ((scrVmPub.abort_on_error != false) || (bVar5 = 0, bVar1 != false)) {
-      bVar5 = 1;
-    }
-    iVar3 = Scr_IgnoreErrors();
-    bVar4 = (bool)(iVar3 == 0 & bVar5);
-    RuntimeErrorInternal((-(uint)bVar4 & 0x11) + 6,pcVar2,param_2,param_3);
-    if (!bVar4) goto LAB_8253cc2c;
-  }
-  else {
-    Com_Printf(0x17,"%s\n");
-    if (bVar1 == false) {
-      __restgprlr_26();
+    if (!bVar1) {
       return;
     }
   }
-  if (bVar1 != false) {
+  if (scrVmPub.debugCode == false) {
+    if ((scrVmPub.abort_on_error != false) || (bVar4 = 0, bVar1)) {
+      bVar4 = 1;
+    }
+    iVar2 = Scr_IgnoreErrors();
+    bVar3 = (bool)(iVar2 == 0 & bVar4);
+    RuntimeErrorInternal((-(uint)bVar3 & 0x11) + 6,param_1,param_2,param_3);
+    if (!bVar3) {
+      return;
+    }
+  }
+  else {
+    Com_Printf(0x17,"%s\n");
+    if (!bVar1) {
+      return;
+    }
+  }
+  if (bVar1) {
     if (scrStringDebugGlob != (scrStringDebugGlob_t *)0x0) {
       scrStringDebugGlob->ignoreLeaks = 1;
     }
@@ -2475,8 +2392,6 @@ void RuntimeError(char *param_1,uint param_2,char *param_3,char *param_4)
   }
   Com_Error(((uint)LZCOUNT((uint)bVar1) >> 5 ^ 1) + ERR_SCRIPT,
             "\x15script runtime error\n(see console for details)\n%s%s%s");
-LAB_8253cc2c:
-  __restgprlr_26();
   return;
 }
 
@@ -2519,6 +2434,8 @@ SourceBufferInfo * Scr_GetSourceBufferLookup(void)
 
 // 8253D578  _Push_heap<int_*,int,int,bool_(__cdecl*)(int,int)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2455)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void std::_Push_heap<int_*,int,int,bool_(__cdecl*)(int,int)>
@@ -2527,37 +2444,35 @@ void std::_Push_heap<int_*,int,int,bool_(__cdecl*)(int,int)>
 
 {
   int iVar1;
-  int iVar2;
+  ulonglong uVar2;
   ulonglong uVar3;
   ulonglong uVar4;
-  int iVar5;
-  bool bVar6;
-  ulonglong uVar7;
-  uint uVar8;
+  bool bVar5;
+  uint uVar6;
   
-  uVar7 = (ulonglong)param_2;
-  iVar5 = __savegprlr_25(param_1);
-  iVar1 = (int)uVar7;
-  uVar8 = iVar1 - 1;
-  uVar4 = (longlong)((int)uVar8 >> 1) + (ulonglong)((int)uVar8 < 0 && (uVar8 & 1) != 0);
-  while (uVar3 = uVar4, param_3 < iVar1) {
-    iVar2 = (int)((uVar3 & 0xffffffff) << 2);
-    bVar6 = (*param_5)(*(int *)(iVar2 + iVar5),*param_4);
-    if (!bVar6) break;
-    iVar1 = (int)uVar3;
-    uVar8 = iVar1 - 1;
-    *(undefined4 *)((int)((uVar7 & 0xffffffff) << 2) + iVar5) = *(undefined4 *)(iVar2 + iVar5);
-    uVar4 = (longlong)((int)uVar8 >> 1) + (ulonglong)((int)uVar8 < 0 && (uVar8 & 1) != 0);
-    uVar7 = uVar3;
+  uVar6 = param_2 - 1;
+  uVar4 = (longlong)((int)uVar6 >> 1) + (ulonglong)((int)uVar6 < 0 && (uVar6 & 1) != 0);
+  uVar3 = (longlong)param_2;
+  while (uVar2 = uVar4, param_3 < param_2) {
+    iVar1 = (int)((uVar2 & 0xffffffff) << 2);
+    bVar5 = (*param_5)(*(int *)(iVar1 + (int)param_1),*param_4);
+    if (!bVar5) break;
+    param_2 = (int)uVar2;
+    uVar6 = param_2 - 1;
+    *(undefined4 *)((int)((uVar3 & 0xffffffff) << 2) + (int)param_1) =
+         *(undefined4 *)(iVar1 + (int)param_1);
+    uVar4 = (longlong)((int)uVar6 >> 1) + (ulonglong)((int)uVar6 < 0 && (uVar6 & 1) != 0);
+    uVar3 = uVar2;
   }
-  *(int *)((int)((uVar7 & 0xffffffff) << 2) + iVar5) = *param_4;
-  __restgprlr_25();
+  *(int *)((int)((uVar3 & 0xffffffff) << 2) + (int)param_1) = *param_4;
   return;
 }
 
 
 // 8253D608  _Push_heap<OpcodeLookup_*,int,OpcodeLookup,bool_(__cdecl*)(OpcodeLookup_const_&,OpcodeLookup_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2455)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void std::
@@ -2567,57 +2482,47 @@ void std::
 
 {
   int iVar1;
-  ulonglong uVar2;
-  ulonglong uVar3;
-  longlong lVar4;
-  bool bVar5;
-  ulonglong uVar6;
-  longlong lVar7;
-  uint uVar9;
-  longlong lVar8;
-  longlong lVar10;
-  longlong lVar11;
+  bool bVar2;
+  int *piVar3;
+  uint uVar4;
+  int *piVar5;
+  longlong lVar6;
   
-  lVar7 = (longlong)(int)param_4;
-  uVar6 = (ulonglong)param_2;
-  lVar4 = __savegprlr_25(param_1);
-  iVar1 = (int)uVar6;
-  uVar9 = iVar1 - 1;
-  uVar3 = (longlong)((int)uVar9 >> 1) + (ulonglong)((int)uVar9 < 0 && (uVar9 & 1) != 0);
-  while (uVar2 = uVar3, param_3 < iVar1) {
-    lVar10 = (uVar2 + (uVar2 & 0x7fffffff) * 2 & 0x1fffffff) * 8 + lVar4;
-    bVar5 = (*param_5)((OpcodeLookup *)lVar10,(OpcodeLookup *)lVar7);
-    if (!bVar5) break;
-    lVar10 = lVar10 + -4;
-    lVar11 = 6;
-    lVar8 = (uVar6 + (uVar6 & 0x7fffffff) * 2 & 0x1fffffff) * 8 + lVar4 + -4;
+  uVar4 = param_2 - 1;
+  iVar1 = ((int)uVar4 >> 1) + (uint)((int)uVar4 < 0 && (uVar4 & 1) != 0);
+  while (param_3 < param_2) {
+    bVar2 = (*param_5)(param_1 + iVar1,param_4);
+    if (!bVar2) break;
+    piVar3 = &(param_1 + iVar1)[-1].profileUsage;
+    lVar6 = 6;
+    piVar5 = &param_1[param_2 + -1].profileUsage;
     do {
-      lVar10 = lVar10 + 4;
-      lVar8 = lVar8 + 4;
-      *(undefined4 *)lVar8 = *(undefined4 *)lVar10;
-      lVar11 = lVar11 + -1;
-    } while (lVar11 != 0);
-    iVar1 = (int)uVar2;
-    uVar9 = iVar1 - 1;
-    uVar3 = (longlong)((int)uVar9 >> 1) + (ulonglong)((int)uVar9 < 0 && (uVar9 & 1) != 0);
-    uVar6 = uVar2;
+      piVar3 = piVar3 + 1;
+      piVar5 = piVar5 + 1;
+      *piVar5 = *piVar3;
+      lVar6 = lVar6 + -1;
+    } while (lVar6 != 0);
+    uVar4 = iVar1 - 1;
+    param_2 = iVar1;
+    iVar1 = ((int)uVar4 >> 1) + (uint)((int)uVar4 < 0 && (uVar4 & 1) != 0);
   }
-  lVar7 = lVar7 + -4;
-  lVar10 = 6;
-  lVar4 = (uVar6 + (uVar6 & 0x7fffffff) * 2 & 0x1fffffff) * 8 + lVar4 + -4;
+  piVar3 = &param_4[-1].profileUsage;
+  lVar6 = 6;
+  piVar5 = &param_1[param_2 + -1].profileUsage;
   do {
-    lVar7 = lVar7 + 4;
-    lVar4 = lVar4 + 4;
-    *(undefined4 *)lVar4 = *(undefined4 *)lVar7;
-    lVar10 = lVar10 + -1;
-  } while (lVar10 != 0);
-  __restgprlr_25();
+    piVar3 = piVar3 + 1;
+    piVar5 = piVar5 + 1;
+    *piVar5 = *piVar3;
+    lVar6 = lVar6 + -1;
+  } while (lVar6 != 0);
   return;
 }
 
 
 // 8253D6E0  _Adjust_heap<int_*,int,int,bool_(__cdecl*)(int,int)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2565)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void std::_Adjust_heap<int_*,int,int,bool_(__cdecl*)(int,int)>
@@ -2627,61 +2532,56 @@ void std::_Adjust_heap<int_*,int,int,bool_(__cdecl*)(int,int)>
 {
   int *piVar1;
   int iVar2;
-  int iVar3;
-  bool bVar4;
+  bool bVar3;
+  uint uVar4;
   ulonglong uVar5;
   ulonglong uVar6;
-  uint uVar7;
-  ulonglong uVar8;
-  ulonglong uVar9;
-  int iVar11;
-  ulonglong uVar10;
+  int iVar8;
+  ulonglong uVar7;
   
-  uVar6 = (ulonglong)param_3;
-  uVar5 = (ulonglong)param_2;
-  iVar3 = __savegprlr_25(param_1);
-  uVar9 = (uVar5 + 1 & 0x7fffffff) << 1;
-  iVar11 = (int)uVar9;
-  uVar8 = uVar5;
-  while (uVar10 = uVar9, iVar11 < (int)uVar6) {
-    piVar1 = (int *)((int)(uVar10 << 2) + iVar3);
-    bVar4 = (*param_5)(*piVar1,piVar1[-1]);
-    if (bVar4) {
-      uVar10 = uVar10 - 1;
+  uVar6 = ((longlong)param_2 + 1U & 0x7fffffff) << 1;
+  iVar8 = (int)uVar6;
+  uVar5 = (longlong)param_2;
+  while (uVar7 = uVar6, iVar8 < param_3) {
+    piVar1 = (int *)((int)(uVar7 << 2) + (int)param_1);
+    bVar3 = (*param_5)(*piVar1,piVar1[-1]);
+    if (bVar3) {
+      uVar7 = uVar7 - 1;
     }
-    uVar9 = (uVar10 + 1 & 0x7fffffff) << 1;
-    *(undefined4 *)((int)((uVar8 & 0xffffffff) << 2) + iVar3) =
-         *(undefined4 *)((int)((uVar10 & 0xffffffff) << 2) + iVar3);
-    iVar11 = (int)uVar9;
-    uVar8 = uVar10;
+    uVar6 = (uVar7 + 1 & 0x7fffffff) << 1;
+    *(undefined4 *)((int)((uVar5 & 0xffffffff) << 2) + (int)param_1) =
+         *(undefined4 *)((int)((uVar7 & 0xffffffff) << 2) + (int)param_1);
+    iVar8 = (int)uVar6;
+    uVar5 = uVar7;
   }
-  if (iVar11 == (int)uVar6) {
-    uVar9 = uVar8 & 0xffffffff;
-    uVar8 = uVar6 - 1;
-    *(undefined4 *)((int)(uVar9 << 2) + iVar3) =
-         *(undefined4 *)((int)((uVar6 & 0xffffffff) << 2) + iVar3 + -4);
+  if (iVar8 == param_3) {
+    uVar6 = uVar5 & 0xffffffff;
+    uVar5 = (longlong)param_3 - 1;
+    *(int *)((int)(uVar6 << 2) + (int)param_1) = param_1[param_3 + -1];
   }
-  iVar11 = (int)uVar8;
-  uVar7 = iVar11 - 1;
-  uVar9 = (longlong)((int)uVar7 >> 1) + (ulonglong)((int)uVar7 < 0 && (uVar7 & 1) != 0);
-  while (uVar6 = uVar9, (int)uVar5 < iVar11) {
-    iVar2 = (int)((uVar6 & 0xffffffff) << 2);
-    bVar4 = (*param_5)(*(int *)(iVar2 + iVar3),*param_4);
-    if (!bVar4) break;
-    iVar11 = (int)uVar6;
-    uVar7 = iVar11 - 1;
-    *(undefined4 *)((int)((uVar8 & 0xffffffff) << 2) + iVar3) = *(undefined4 *)(iVar2 + iVar3);
-    uVar9 = (longlong)((int)uVar7 >> 1) + (ulonglong)((int)uVar7 < 0 && (uVar7 & 1) != 0);
-    uVar8 = uVar6;
+  iVar8 = (int)uVar5;
+  uVar4 = iVar8 - 1;
+  uVar6 = (longlong)((int)uVar4 >> 1) + (ulonglong)((int)uVar4 < 0 && (uVar4 & 1) != 0);
+  while (uVar7 = uVar6, param_2 < iVar8) {
+    iVar2 = (int)((uVar7 & 0xffffffff) << 2);
+    bVar3 = (*param_5)(*(int *)(iVar2 + (int)param_1),*param_4);
+    if (!bVar3) break;
+    iVar8 = (int)uVar7;
+    uVar4 = iVar8 - 1;
+    *(undefined4 *)((int)((uVar5 & 0xffffffff) << 2) + (int)param_1) =
+         *(undefined4 *)(iVar2 + (int)param_1);
+    uVar6 = (longlong)((int)uVar4 >> 1) + (ulonglong)((int)uVar4 < 0 && (uVar4 & 1) != 0);
+    uVar5 = uVar7;
   }
-  *(int *)((int)((uVar8 & 0xffffffff) << 2) + iVar3) = *param_4;
-  __restgprlr_25();
+  *(int *)((int)((uVar5 & 0xffffffff) << 2) + (int)param_1) = *param_4;
   return;
 }
 
 
 // 8253D7F0  _Adjust_heap<OpcodeLookup_*,int,OpcodeLookup,bool_(__cdecl*)(OpcodeLookup_const_&,OpcodeLookup_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2565)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void std::
@@ -2690,96 +2590,80 @@ void std::
                _func___cdecl_bool_OpcodeLookup_ptr_OpcodeLookup_ptr *param_5)
 
 {
-  OpcodeLookup *pOVar1;
-  longlong lVar2;
-  bool bVar3;
-  ulonglong uVar4;
-  ulonglong uVar5;
-  longlong lVar6;
+  bool bVar1;
+  int *piVar2;
+  int *piVar3;
+  uint uVar4;
+  int iVar5;
+  int iVar6;
   longlong lVar7;
-  longlong lVar8;
-  uint uVar9;
-  ulonglong uVar10;
-  ulonglong uVar11;
-  int iVar13;
-  ulonglong uVar12;
-  longlong lVar14;
   
-  lVar7 = (longlong)(int)param_4;
-  uVar5 = (ulonglong)param_3;
-  uVar4 = (ulonglong)param_2;
-  lVar2 = __savegprlr_25(param_1);
-  uVar11 = (uVar4 + 1 & 0x7fffffff) << 1;
-  iVar13 = (int)uVar11;
-  uVar10 = uVar4;
-  while (uVar12 = uVar11, iVar13 < (int)uVar5) {
-    pOVar1 = (OpcodeLookup *)((int)uVar12 * 0x18 + (int)lVar2);
-    bVar3 = (*param_5)(pOVar1,pOVar1 + -1);
-    if (bVar3) {
-      uVar12 = uVar12 - 1;
+  iVar5 = param_2;
+  while( true ) {
+    iVar6 = (iVar5 + 1) * 2;
+    if (param_3 <= iVar6) break;
+    bVar1 = (*param_5)(param_1 + (iVar5 + 1) * 2,param_1 + (iVar5 + 1) * 2 + -1);
+    if (bVar1) {
+      iVar6 = iVar6 + -1;
     }
-    lVar6 = (uVar12 + (uVar12 & 0x7fffffff) * 2 & 0x1fffffff) * 8 + lVar2 + -4;
-    lVar8 = (uVar10 + (uVar10 & 0x7fffffff) * 2 & 0x1fffffff) * 8 + lVar2 + -4;
-    lVar14 = 6;
+    piVar2 = &param_1[iVar6 + -1].profileUsage;
+    piVar3 = &param_1[iVar5 + -1].profileUsage;
+    lVar7 = 6;
     do {
-      lVar6 = lVar6 + 4;
-      lVar8 = lVar8 + 4;
-      *(undefined4 *)lVar8 = *(undefined4 *)lVar6;
-      lVar14 = lVar14 + -1;
-    } while (lVar14 != 0);
-    uVar11 = (uVar12 + 1 & 0x7fffffff) << 1;
-    iVar13 = (int)uVar11;
-    uVar10 = uVar12;
+      piVar2 = piVar2 + 1;
+      piVar3 = piVar3 + 1;
+      *piVar3 = *piVar2;
+      lVar7 = lVar7 + -1;
+      iVar5 = iVar6;
+    } while (lVar7 != 0);
   }
-  if (iVar13 == (int)uVar5) {
-    lVar6 = (uVar5 + (uVar5 & 0x7fffffff) * 2 & 0x1fffffff) * 8 + lVar2 + -0x1c;
-    lVar8 = (uVar10 + (uVar10 & 0x7fffffff) * 2 & 0x1fffffff) * 8 + lVar2 + -4;
-    lVar14 = 6;
+  if (iVar6 == param_3) {
+    piVar2 = &param_1[param_3 + -2].profileUsage;
+    piVar3 = &param_1[iVar5 + -1].profileUsage;
+    lVar7 = 6;
     do {
-      lVar6 = lVar6 + 4;
-      lVar8 = lVar8 + 4;
-      *(undefined4 *)lVar8 = *(undefined4 *)lVar6;
-      lVar14 = lVar14 + -1;
-    } while (lVar14 != 0);
-    uVar10 = uVar5 - 1;
+      piVar2 = piVar2 + 1;
+      piVar3 = piVar3 + 1;
+      *piVar3 = *piVar2;
+      lVar7 = lVar7 + -1;
+    } while (lVar7 != 0);
+    iVar5 = param_3 + -1;
   }
-  iVar13 = (int)uVar10;
-  uVar9 = iVar13 - 1;
-  uVar11 = (longlong)((int)uVar9 >> 1) + (ulonglong)((int)uVar9 < 0 && (uVar9 & 1) != 0);
-  while (uVar5 = uVar11, (int)uVar4 < iVar13) {
-    lVar6 = (uVar5 + (uVar5 & 0x7fffffff) * 2 & 0x1fffffff) * 8 + lVar2;
-    bVar3 = (*param_5)((OpcodeLookup *)lVar6,(OpcodeLookup *)lVar7);
-    if (!bVar3) break;
-    lVar6 = lVar6 + -4;
-    lVar14 = 6;
-    lVar8 = (uVar10 + (uVar10 & 0x7fffffff) * 2 & 0x1fffffff) * 8 + lVar2 + -4;
+  uVar4 = iVar5 - 1;
+  iVar6 = ((int)uVar4 >> 1) + (uint)((int)uVar4 < 0 && (uVar4 & 1) != 0);
+  while (param_2 < iVar5) {
+    bVar1 = (*param_5)(param_1 + iVar6,param_4);
+    if (!bVar1) break;
+    piVar2 = &(param_1 + iVar6)[-1].profileUsage;
+    lVar7 = 6;
+    piVar3 = &param_1[iVar5 + -1].profileUsage;
     do {
-      lVar6 = lVar6 + 4;
-      lVar8 = lVar8 + 4;
-      *(undefined4 *)lVar8 = *(undefined4 *)lVar6;
-      lVar14 = lVar14 + -1;
-    } while (lVar14 != 0);
-    iVar13 = (int)uVar5;
-    uVar9 = iVar13 - 1;
-    uVar11 = (longlong)((int)uVar9 >> 1) + (ulonglong)((int)uVar9 < 0 && (uVar9 & 1) != 0);
-    uVar10 = uVar5;
+      piVar2 = piVar2 + 1;
+      piVar3 = piVar3 + 1;
+      *piVar3 = *piVar2;
+      lVar7 = lVar7 + -1;
+    } while (lVar7 != 0);
+    uVar4 = iVar6 - 1;
+    iVar5 = iVar6;
+    iVar6 = ((int)uVar4 >> 1) + (uint)((int)uVar4 < 0 && (uVar4 & 1) != 0);
   }
-  lVar7 = lVar7 + -4;
-  lVar6 = 6;
-  lVar2 = (uVar10 + (uVar10 & 0x7fffffff) * 2 & 0x1fffffff) * 8 + lVar2 + -4;
+  piVar2 = &param_4[-1].profileUsage;
+  lVar7 = 6;
+  piVar3 = &param_1[iVar5 + -1].profileUsage;
   do {
-    lVar7 = lVar7 + 4;
-    lVar2 = lVar2 + 4;
-    *(undefined4 *)lVar2 = *(undefined4 *)lVar7;
-    lVar6 = lVar6 + -1;
-  } while (lVar6 != 0);
-  __restgprlr_25();
+    piVar2 = piVar2 + 1;
+    piVar3 = piVar3 + 1;
+    *piVar3 = *piVar2;
+    lVar7 = lVar7 + -1;
+  } while (lVar7 != 0);
   return;
 }
 
 
 // 8253D9A8  _Make_heap<int_*,int,int,bool_(__cdecl*)(int,int)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2658)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void std::_Make_heap<int_*,int,int,bool_(__cdecl*)(int,int)>
@@ -2789,66 +2673,59 @@ void std::_Make_heap<int_*,int,int,bool_(__cdecl*)(int,int)>
 {
   uint uVar1;
   int *piVar2;
-  int *piVar3;
-  ulonglong uVar4;
+  ulonglong uVar3;
+  bool bVar4;
   longlong lVar5;
-  bool bVar6;
-  longlong lVar7;
-  longlong lVar8;
-  int iVar9;
+  ulonglong uVar6;
+  ulonglong uVar7;
+  int iVar8;
+  ulonglong uVar9;
   ulonglong uVar10;
-  ulonglong uVar11;
-  ulonglong uVar12;
-  ulonglong uVar13;
-  uint uVar14;
+  uint uVar11;
   int local_50 [20];
   
-  lVar8 = (longlong)(int)param_3;
-  lVar7 = (longlong)(int)param_2;
-  lVar5 = __savegprlr_24(param_1,lVar7,lVar8,param_4,param_5);
-  piVar2 = (int *)lVar5;
-  iVar9 = (int)lVar7 - (int)piVar2;
-  uVar1 = iVar9 >> 2;
-  uVar11 = (longlong)(iVar9 >> 3) + (ulonglong)((int)uVar1 < 0 && (uVar1 & 1) != 0);
-  if (0 < (longlong)uVar11) {
-    uVar10 = (uVar11 + 1 & 0x7fffffff) << 1;
-    lVar5 = (uVar11 & 0x3fffffff) * 4 + lVar5;
+  uVar1 = (int)param_2 - (int)param_1 >> 2;
+  uVar7 = (longlong)((int)param_2 - (int)param_1 >> 3) +
+          (ulonglong)((int)uVar1 < 0 && (uVar1 & 1) != 0);
+  if (0 < (longlong)uVar7) {
+    uVar6 = (uVar7 + 1 & 0x7fffffff) << 1;
+    lVar5 = (uVar7 & 0x3fffffff) * 4 + (longlong)(int)param_1;
     do {
       lVar5 = lVar5 + -4;
       local_50[0] = *(int *)lVar5;
-      uVar10 = uVar10 - 2;
-      uVar11 = uVar11 - 1;
-      uVar14 = (uint)uVar10;
-      uVar13 = uVar10;
-      uVar4 = uVar11;
-      while (uVar12 = uVar13, (int)uVar14 < (int)uVar1) {
-        piVar3 = (int *)((int)((uVar12 & 0xffffffff) << 2) + (int)piVar2);
-        bVar6 = (*(_func___cdecl_bool_int_int *)lVar8)(*piVar3,piVar3[-1]);
-        if (bVar6) {
-          uVar12 = uVar12 - 1;
+      uVar6 = uVar6 - 2;
+      uVar7 = uVar7 - 1;
+      uVar11 = (uint)uVar6;
+      uVar10 = uVar6;
+      uVar3 = uVar7;
+      while (uVar9 = uVar10, (int)uVar11 < (int)uVar1) {
+        piVar2 = (int *)((int)((uVar9 & 0xffffffff) << 2) + (int)param_1);
+        bVar4 = (*param_3)(*piVar2,piVar2[-1]);
+        if (bVar4) {
+          uVar9 = uVar9 - 1;
         }
-        uVar13 = (uVar12 + 1 & 0x7fffffff) << 1;
-        *(undefined4 *)((int)((uVar4 & 0xffffffff) << 2) + (int)piVar2) =
-             *(undefined4 *)((int)((uVar12 & 0xffffffff) << 2) + (int)piVar2);
-        uVar14 = (uint)uVar13;
-        uVar4 = uVar12;
+        uVar10 = (uVar9 + 1 & 0x7fffffff) << 1;
+        *(undefined4 *)((int)((uVar3 & 0xffffffff) << 2) + (int)param_1) =
+             *(undefined4 *)((int)((uVar9 & 0xffffffff) << 2) + (int)param_1);
+        uVar11 = (uint)uVar10;
+        uVar3 = uVar9;
       }
-      iVar9 = (int)uVar4;
-      if (uVar14 == uVar1) {
-        iVar9 = uVar1 - 1;
-        *(int *)((int)((uVar4 & 0xffffffff) << 2) + (int)piVar2) = piVar2[uVar1 - 1];
+      iVar8 = (int)uVar3;
+      if (uVar11 == uVar1) {
+        iVar8 = uVar1 - 1;
+        *(int *)((int)((uVar3 & 0xffffffff) << 2) + (int)param_1) = param_1[uVar1 - 1];
       }
-      _Push_heap<int_*,int,int,bool_(__cdecl*)(int,int)>
-                (piVar2,iVar9,(int)uVar11,local_50,(_func___cdecl_bool_int_int *)lVar8);
-    } while (0 < (int)uVar11);
+      _Push_heap<int_*,int,int,bool_(__cdecl*)(int,int)>(param_1,iVar8,(int)uVar7,local_50,param_3);
+    } while (0 < (int)uVar7);
   }
-  __restgprlr_24();
   return;
 }
 
 
 // 8253DB78  _Make_heap<OpcodeLookup_*,int,OpcodeLookup,bool_(__cdecl*)(OpcodeLookup_const_&,OpcodeLookup_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2658)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void std::
@@ -2859,129 +2736,115 @@ void std::
 
 {
   uint uVar1;
-  OpcodeLookup *pOVar2;
-  ulonglong uVar3;
-  longlong lVar4;
-  bool bVar5;
+  ulonglong uVar2;
+  longlong lVar3;
+  bool bVar4;
+  undefined4 *puVar5;
   longlong lVar6;
   longlong lVar7;
-  undefined4 *puVar8;
-  longlong lVar9;
-  ulonglong uVar10;
+  ulonglong uVar8;
+  ulonglong uVar9;
+  int iVar10;
   ulonglong uVar11;
-  int iVar12;
-  ulonglong uVar13;
-  ulonglong uVar14;
-  uint uVar15;
-  longlong lVar16;
-  longlong lVar17;
+  ulonglong uVar12;
+  uint uVar13;
+  longlong lVar14;
+  longlong lVar15;
   undefined4 uStack_64;
   OpcodeLookup local_60 [4];
   
-  lVar7 = (longlong)(int)param_3;
-  lVar6 = (longlong)(int)param_2;
-  lVar4 = __savegprlr_24(param_1,lVar6,lVar7,param_4,param_5);
-  pOVar2 = (OpcodeLookup *)lVar4;
-  uVar1 = ((int)lVar6 - (int)pOVar2) / 0x18;
-  uVar11 = (longlong)((int)uVar1 >> 1) + (ulonglong)((int)uVar1 < 0 && (uVar1 & 1) != 0);
-  if (0 < (longlong)uVar11) {
-    uVar10 = (uVar11 + 1 & 0x7fffffff) << 1;
-    lVar6 = (uVar11 + (uVar11 & 0x7fffffff) * 2 & 0x1fffffff) * 8 + lVar4;
+  lVar3 = (longlong)(int)param_1;
+  uVar1 = ((int)param_2 - (int)param_1) / 0x18;
+  uVar9 = (longlong)((int)uVar1 >> 1) + (ulonglong)((int)uVar1 < 0 && (uVar1 & 1) != 0);
+  if (0 < (longlong)uVar9) {
+    uVar8 = (uVar9 + 1 & 0x7fffffff) << 1;
+    lVar7 = (uVar9 + (uVar9 & 0x7fffffff) * 2 & 0x1fffffff) * 8 + lVar3;
     do {
-      puVar8 = &uStack_64;
-      uVar11 = uVar11 - 1;
-      uVar10 = uVar10 - 2;
-      lVar16 = 6;
-      lVar9 = lVar6 + -0x1c;
+      puVar5 = &uStack_64;
+      uVar9 = uVar9 - 1;
+      uVar8 = uVar8 - 2;
+      lVar14 = 6;
+      lVar6 = lVar7 + -0x1c;
       do {
-        lVar9 = lVar9 + 4;
-        puVar8 = puVar8 + 1;
-        *puVar8 = *(undefined4 *)lVar9;
-        lVar16 = lVar16 + -1;
-      } while (lVar16 != 0);
-      uVar15 = (uint)uVar10;
-      uVar3 = uVar11;
-      uVar13 = uVar10;
-      while ((int)uVar15 < (int)uVar1) {
-        bVar5 = (*(_func___cdecl_bool_OpcodeLookup_ptr_OpcodeLookup_ptr *)lVar7)
-                          (pOVar2 + (int)uVar13,pOVar2 + (int)uVar13 + -1);
-        if (bVar5) {
-          uVar13 = uVar13 - 1;
+        lVar6 = lVar6 + 4;
+        puVar5 = puVar5 + 1;
+        *puVar5 = *(undefined4 *)lVar6;
+        lVar14 = lVar14 + -1;
+      } while (lVar14 != 0);
+      uVar13 = (uint)uVar8;
+      uVar2 = uVar9;
+      uVar11 = uVar8;
+      while ((int)uVar13 < (int)uVar1) {
+        bVar4 = (*param_3)(param_1 + (int)uVar11,param_1 + (int)uVar11 + -1);
+        if (bVar4) {
+          uVar11 = uVar11 - 1;
         }
-        lVar9 = (uVar13 + (uVar13 & 0x7fffffff) * 2 & 0x1fffffff) * 8 + lVar4 + -4;
-        lVar16 = (uVar3 + (uVar3 & 0x7fffffff) * 2 & 0x1fffffff) * 8 + lVar4 + -4;
-        lVar17 = 6;
+        lVar6 = (uVar11 + (uVar11 & 0x7fffffff) * 2 & 0x1fffffff) * 8 + lVar3 + -4;
+        lVar14 = (uVar2 + (uVar2 & 0x7fffffff) * 2 & 0x1fffffff) * 8 + lVar3 + -4;
+        lVar15 = 6;
         do {
-          lVar9 = lVar9 + 4;
-          lVar16 = lVar16 + 4;
-          *(undefined4 *)lVar16 = *(undefined4 *)lVar9;
-          lVar17 = lVar17 + -1;
-        } while (lVar17 != 0);
-        uVar14 = (uVar13 + 1 & 0x7fffffff) << 1;
-        uVar3 = uVar13;
-        uVar13 = uVar14;
-        uVar15 = (uint)uVar14;
+          lVar6 = lVar6 + 4;
+          lVar14 = lVar14 + 4;
+          *(undefined4 *)lVar14 = *(undefined4 *)lVar6;
+          lVar15 = lVar15 + -1;
+        } while (lVar15 != 0);
+        uVar12 = (uVar11 + 1 & 0x7fffffff) << 1;
+        uVar2 = uVar11;
+        uVar11 = uVar12;
+        uVar13 = (uint)uVar12;
       }
-      iVar12 = (int)uVar3;
-      if (uVar15 == uVar1) {
-        lVar9 = ((longlong)(int)uVar1 + ((ulonglong)uVar1 & 0x7fffffff) * 2 & 0x1fffffff) * 8 +
-                lVar4 + -0x1c;
-        lVar16 = (uVar3 + (uVar3 & 0x7fffffff) * 2 & 0x1fffffff) * 8 + lVar4 + -4;
-        lVar17 = 6;
+      iVar10 = (int)uVar2;
+      if (uVar13 == uVar1) {
+        lVar6 = ((longlong)(int)uVar1 + ((ulonglong)uVar1 & 0x7fffffff) * 2 & 0x1fffffff) * 8 +
+                lVar3 + -0x1c;
+        lVar14 = (uVar2 + (uVar2 & 0x7fffffff) * 2 & 0x1fffffff) * 8 + lVar3 + -4;
+        lVar15 = 6;
         do {
-          lVar9 = lVar9 + 4;
-          lVar16 = lVar16 + 4;
-          *(undefined4 *)lVar16 = *(undefined4 *)lVar9;
-          lVar17 = lVar17 + -1;
-        } while (lVar17 != 0);
-        iVar12 = uVar1 - 1;
+          lVar6 = lVar6 + 4;
+          lVar14 = lVar14 + 4;
+          *(undefined4 *)lVar14 = *(undefined4 *)lVar6;
+          lVar15 = lVar15 + -1;
+        } while (lVar15 != 0);
+        iVar10 = uVar1 - 1;
       }
       _Push_heap<OpcodeLookup_*,int,OpcodeLookup,bool_(__cdecl*)(OpcodeLookup_const_&,OpcodeLookup_const_&)>
-                (pOVar2,iVar12,(int)uVar11,local_60,
-                 (_func___cdecl_bool_OpcodeLookup_ptr_OpcodeLookup_ptr *)lVar7);
-      lVar6 = lVar6 + -0x18;
-    } while (0 < (int)uVar11);
+                (param_1,iVar10,(int)uVar9,local_60,param_3);
+      lVar7 = lVar7 + -0x18;
+    } while (0 < (int)uVar9);
   }
-  __restgprlr_24();
   return;
 }
 
 
 // 8253E8A8  _Sort_heap<int_*,bool_(__cdecl*)(int,int)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2700)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void std::_Sort_heap<int_*,bool_(__cdecl*)(int,int)>
                (int *param_1,int *param_2,_func___cdecl_bool_int_int *param_3)
 
 {
-  int iVar1;
-  int *piVar2;
-  longlong lVar3;
-  longlong lVar4;
+  uint uVar1;
   int local_30 [12];
   
-  lVar4 = (longlong)(int)param_2;
-  lVar3 = __savegprlr_28(param_1);
-  lVar4 = lVar4 - lVar3;
-  if (4 < (int)((uint)lVar4 & 0xfffffffc)) {
-    piVar2 = (int *)lVar3;
-    do {
-      iVar1 = (int)lVar4;
-      local_30[0] = *(int *)((int)piVar2 + iVar1 + -4);
-      lVar4 = lVar4 + -4;
-      *(int *)((int)piVar2 + iVar1 + -4) = *piVar2;
-      _Adjust_heap<int_*,int,int,bool_(__cdecl*)(int,int)>
-                (piVar2,0,(int)(uint)lVar4 >> 2,local_30,param_3);
-    } while (4 < (int)((uint)lVar4 & 0xfffffffc));
+  uVar1 = (int)param_2 - (int)param_1;
+  while (4 < (int)(uVar1 & 0xfffffffc)) {
+    local_30[0] = *(int *)((int)param_1 + (uVar1 - 4));
+    *(int *)((int)param_1 + (uVar1 - 4)) = *param_1;
+    _Adjust_heap<int_*,int,int,bool_(__cdecl*)(int,int)>
+              (param_1,0,(int)(uVar1 - 4) >> 2,local_30,param_3);
+    uVar1 = uVar1 - 4;
   }
-  __restgprlr_28();
   return;
 }
 
 
 // 8253E918  _Sort_heap<OpcodeLookup_*,bool_(__cdecl*)(OpcodeLookup_const_&,OpcodeLookup_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2700)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void std::_Sort_heap<OpcodeLookup_*,bool_(__cdecl*)(OpcodeLookup_const_&,OpcodeLookup_const_&)>
@@ -2989,108 +2852,95 @@ void std::_Sort_heap<OpcodeLookup_*,bool_(__cdecl*)(OpcodeLookup_const_&,OpcodeL
                _func___cdecl_bool_OpcodeLookup_ptr_OpcodeLookup_ptr *param_3)
 
 {
-  longlong lVar1;
-  undefined4 *puVar2;
-  longlong lVar3;
-  longlong lVar4;
+  int *piVar1;
+  int *piVar2;
+  int iVar3;
+  OpcodeLookup *pOVar4;
   longlong lVar5;
-  longlong lVar6;
-  longlong lVar7;
-  undefined4 uStack_44;
+  int iStack_44;
   OpcodeLookup local_40 [2];
   
-  lVar5 = (longlong)(int)param_2;
-  lVar1 = __savegprlr_28(param_1);
-  lVar4 = lVar5 - lVar1;
-  if (1 < (int)lVar4 / 0x18) {
-    lVar5 = lVar5 + -0x18;
+  iVar3 = (int)param_2 - (int)param_1;
+  if (1 < iVar3 / 0x18) {
+    pOVar4 = param_2 + -1;
     do {
-      puVar2 = &uStack_44;
-      lVar3 = lVar5 + -4;
-      lVar6 = 6;
+      piVar1 = &iStack_44;
+      piVar2 = &pOVar4[-1].profileUsage;
+      lVar5 = 6;
       do {
-        lVar3 = lVar3 + 4;
-        puVar2 = puVar2 + 1;
-        *puVar2 = *(undefined4 *)lVar3;
-        lVar6 = lVar6 + -1;
-      } while (lVar6 != 0);
-      lVar3 = lVar1 + -4;
-      lVar6 = lVar5 + -4;
-      lVar7 = 6;
+        piVar2 = piVar2 + 1;
+        piVar1 = piVar1 + 1;
+        *piVar1 = *piVar2;
+        lVar5 = lVar5 + -1;
+      } while (lVar5 != 0);
+      piVar2 = &param_1[-1].profileUsage;
+      piVar1 = &pOVar4[-1].profileUsage;
+      lVar5 = 6;
       do {
-        lVar3 = lVar3 + 4;
-        lVar6 = lVar6 + 4;
-        *(undefined4 *)lVar6 = *(undefined4 *)lVar3;
-        lVar7 = lVar7 + -1;
-      } while (lVar7 != 0);
+        piVar2 = piVar2 + 1;
+        piVar1 = piVar1 + 1;
+        *piVar1 = *piVar2;
+        lVar5 = lVar5 + -1;
+      } while (lVar5 != 0);
       _Adjust_heap<OpcodeLookup_*,int,OpcodeLookup,bool_(__cdecl*)(OpcodeLookup_const_&,OpcodeLookup_const_&)>
-                ((OpcodeLookup *)lVar1,0,((int)lVar4 + -0x18) / 0x18,local_40,param_3);
-      lVar5 = lVar5 + -0x18;
-      lVar4 = (lVar5 - lVar1) + 0x18;
-    } while (1 < (int)lVar4 / 0x18);
+                (param_1,0,(iVar3 + -0x18) / 0x18,local_40,param_3);
+      pOVar4 = pOVar4 + -1;
+      iVar3 = (int)pOVar4 + (0x18 - (int)param_1);
+    } while (1 < iVar3 / 0x18);
   }
-  __restgprlr_28();
   return;
 }
 
 
 // 8253DA98  _Insertion_sort1<int_*,bool_(__cdecl*)(int,int),int>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3650)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void std::_Insertion_sort1<int_*,bool_(__cdecl*)(int,int),int>
                (int *param_1,int *param_2,_func___cdecl_bool_int_int *param_3,int *param_4)
 
 {
-  undefined4 uVar1;
-  ulonglong uVar2;
-  ulonglong uVar3;
-  ulonglong uVar4;
-  ulonglong uVar5;
-  char cVar6;
-  ulonglong uVar7;
-  longlong lVar8;
-  code *pcVar9;
-  ulonglong uVar10;
-  undefined4 *puVar11;
+  int iVar1;
+  int *piVar2;
+  int *piVar3;
+  int *piVar4;
+  int *piVar5;
+  bool bVar6;
   
-  lVar8 = (longlong)(int)param_3;
-  uVar7 = (ulonglong)(int)param_2;
-  uVar5 = __savegprlr_24(param_1,uVar7,lVar8,param_4);
-  if (((uVar5 & 0xffffffff) != (uVar7 & 0xffffffff)) &&
-     (uVar10 = uVar5 + 4, (uVar10 & 0xffffffff) != (uVar7 & 0xffffffff))) {
-    do {
-      puVar11 = (undefined4 *)uVar10;
-      uVar1 = *puVar11;
-      pcVar9 = (code *)lVar8;
-      cVar6 = (*pcVar9)(uVar1,*(undefined4 *)uVar5);
-      if (cVar6 == '\0') {
-        cVar6 = (*pcVar9)(uVar1,puVar11[-1]);
-        uVar4 = uVar10 - 4;
-        uVar3 = uVar10;
-        while (uVar2 = uVar4, cVar6 != '\0') {
-          puVar11 = (undefined4 *)uVar2;
-          *(undefined4 *)uVar3 = *puVar11;
-          cVar6 = (*pcVar9)(uVar1,*(undefined4 *)(uVar2 - 4));
-          uVar4 = uVar2 - 4;
-          uVar3 = uVar2;
-        }
-        *puVar11 = uVar1;
+  piVar5 = param_1;
+  if (param_1 != param_2) {
+    while (piVar4 = piVar5 + 1, piVar4 != param_2) {
+      iVar1 = *piVar4;
+      bVar6 = (*param_3)(iVar1,*param_1);
+      if (bVar6) {
+        memmove();
+        *param_1 = iVar1;
+        piVar5 = piVar4;
       }
       else {
-        memmove();
-        *(undefined4 *)uVar5 = uVar1;
+        bVar6 = (*param_3)(iVar1,*piVar5);
+        piVar3 = piVar4;
+        while (piVar2 = piVar5, bVar6 != false) {
+          *piVar3 = *piVar2;
+          bVar6 = (*param_3)(iVar1,piVar2[-1]);
+          piVar5 = piVar2 + -1;
+          piVar3 = piVar2;
+        }
+        *piVar3 = iVar1;
+        piVar5 = piVar4;
       }
-      uVar10 = uVar10 + 4;
-    } while ((uVar10 & 0xffffffff) != (uVar7 & 0xffffffff));
+    }
   }
-  __restgprlr_24();
   return;
 }
 
 
 // 8253E068  _Insertion_sort1<OpcodeLookup_*,bool_(__cdecl*)(OpcodeLookup_const_&,OpcodeLookup_const_&),OpcodeLookup>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3650)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void std::
@@ -3099,106 +2949,95 @@ void std::
                _func___cdecl_bool_OpcodeLookup_ptr_OpcodeLookup_ptr *param_3,OpcodeLookup *param_4)
 
 {
-  ulonglong uVar1;
-  ulonglong uVar2;
-  char cVar3;
-  ulonglong uVar4;
-  longlong lVar5;
-  code *pcVar6;
-  longlong lVar7;
-  ulonglong uVar8;
-  ulonglong uVar9;
-  undefined4 *puVar10;
-  ulonglong uVar11;
-  ulonglong uVar12;
-  longlong lVar13;
-  longlong lVar14;
-  undefined4 uStack_64;
-  undefined1 local_60 [96];
+  OpcodeLookup *pOVar1;
+  OpcodeLookup *pOVar2;
+  OpcodeLookup *pOVar3;
+  bool bVar4;
+  int *piVar5;
+  OpcodeLookup *pOVar6;
+  int *piVar7;
+  longlong lVar8;
+  int iStack_64;
+  OpcodeLookup local_60 [4];
   
-  lVar5 = (longlong)(int)param_3;
-  uVar4 = (ulonglong)(int)param_2;
-  uVar2 = __savegprlr_25(param_1,uVar4,lVar5,param_4);
-  if (((uVar2 & 0xffffffff) != (uVar4 & 0xffffffff)) &&
-     (uVar12 = uVar2 + 0x18, uVar11 = uVar2, (uVar12 & 0xffffffff) != (uVar4 & 0xffffffff))) {
-    do {
-      puVar10 = &uStack_64;
-      lVar7 = uVar12 - 4;
-      lVar13 = 6;
+  pOVar2 = param_1;
+  pOVar1 = param_1;
+  if (param_1 != param_2) {
+    while (pOVar3 = pOVar1 + 1, pOVar3 != param_2) {
+      piVar5 = &iStack_64;
+      piVar7 = &pOVar1->profileUsage;
+      lVar8 = 6;
       do {
-        lVar7 = lVar7 + 4;
-        puVar10 = puVar10 + 1;
-        *puVar10 = *(undefined4 *)lVar7;
-        lVar13 = lVar13 + -1;
-      } while (lVar13 != 0);
-      pcVar6 = (code *)lVar5;
-      cVar3 = (*pcVar6)(local_60,uVar2);
-      if (cVar3 == '\0') {
-        cVar3 = (*pcVar6)(local_60,uVar11);
-        uVar9 = uVar11;
-        uVar8 = uVar12;
-        while (uVar1 = uVar9, cVar3 != '\0') {
-          lVar7 = uVar1 - 4;
-          lVar13 = uVar8 - 4;
-          lVar14 = 6;
+        piVar7 = piVar7 + 1;
+        piVar5 = piVar5 + 1;
+        *piVar5 = *piVar7;
+        lVar8 = lVar8 + -1;
+      } while (lVar8 != 0);
+      bVar4 = (*param_3)(local_60,param_1);
+      pOVar1 = pOVar3;
+      if (bVar4) {
+        while (param_1 != pOVar1) {
+          pOVar6 = pOVar1 + -1;
+          piVar5 = &pOVar1[-1].profileUsage;
+          piVar7 = &pOVar1[-2].profileUsage;
+          lVar8 = 6;
           do {
-            lVar7 = lVar7 + 4;
-            lVar13 = lVar13 + 4;
-            *(undefined4 *)lVar13 = *(undefined4 *)lVar7;
-            lVar14 = lVar14 + -1;
-          } while (lVar14 != 0);
-          cVar3 = (*pcVar6)(local_60,uVar1 - 0x18);
-          uVar9 = uVar1 - 0x18;
-          uVar8 = uVar1;
+            piVar7 = piVar7 + 1;
+            piVar5 = piVar5 + 1;
+            *piVar5 = *piVar7;
+            lVar8 = lVar8 + -1;
+            pOVar1 = pOVar6;
+          } while (lVar8 != 0);
         }
-        puVar10 = &uStack_64;
-        lVar7 = uVar8 - 4;
-        lVar13 = 6;
+        piVar7 = &iStack_64;
+        piVar5 = &param_1[-1].profileUsage;
+        lVar8 = 6;
         do {
-          puVar10 = puVar10 + 1;
-          lVar7 = lVar7 + 4;
-          *(undefined4 *)lVar7 = *puVar10;
-          lVar13 = lVar13 + -1;
-        } while (lVar13 != 0);
+          piVar7 = piVar7 + 1;
+          piVar5 = piVar5 + 1;
+          *piVar5 = *piVar7;
+          lVar8 = lVar8 + -1;
+        } while (lVar8 != 0);
       }
       else {
-        uVar8 = uVar12;
-        if ((uVar2 & 0xffffffff) != (uVar12 & 0xffffffff)) {
+        bVar4 = (*param_3)(local_60,pOVar2);
+        pOVar6 = pOVar2;
+        while (bVar4 != false) {
+          piVar7 = &pOVar6[-1].profileUsage;
+          piVar5 = &pOVar1[-1].profileUsage;
+          lVar8 = 6;
           do {
-            uVar9 = uVar8 - 0x18;
-            lVar13 = uVar8 - 4;
-            lVar7 = uVar8 - 0x1c;
-            lVar14 = 6;
-            do {
-              lVar7 = lVar7 + 4;
-              lVar13 = lVar13 + 4;
-              *(undefined4 *)lVar13 = *(undefined4 *)lVar7;
-              lVar14 = lVar14 + -1;
-            } while (lVar14 != 0);
-            uVar8 = uVar9;
-          } while ((uVar9 & 0xffffffff) != (uVar2 & 0xffffffff));
+            piVar7 = piVar7 + 1;
+            piVar5 = piVar5 + 1;
+            *piVar5 = *piVar7;
+            lVar8 = lVar8 + -1;
+          } while (lVar8 != 0);
+          bVar4 = (*param_3)(local_60,pOVar6 + -1);
+          pOVar1 = pOVar6;
+          pOVar6 = pOVar6 + -1;
         }
-        puVar10 = &uStack_64;
-        lVar7 = uVar2 - 4;
-        lVar13 = 6;
+        piVar7 = &iStack_64;
+        piVar5 = &pOVar1[-1].profileUsage;
+        lVar8 = 6;
         do {
-          puVar10 = puVar10 + 1;
-          lVar7 = lVar7 + 4;
-          *(undefined4 *)lVar7 = *puVar10;
-          lVar13 = lVar13 + -1;
-        } while (lVar13 != 0);
+          piVar7 = piVar7 + 1;
+          piVar5 = piVar5 + 1;
+          *piVar5 = *piVar7;
+          lVar8 = lVar8 + -1;
+        } while (lVar8 != 0);
       }
-      uVar12 = uVar12 + 0x18;
-      uVar11 = uVar11 + 0x18;
-    } while ((uVar12 & 0xffffffff) != (uVar4 & 0xffffffff));
+      pOVar2 = pOVar2 + 1;
+      pOVar1 = pOVar3;
+    }
   }
-  __restgprlr_25();
   return;
 }
 
 
 // 8253DCE0  _Med3<int_*,bool_(__cdecl*)(int,int)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3683)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void std::_Med3<int_*,bool_(__cdecl*)(int,int)>
@@ -3206,35 +3045,34 @@ void std::_Med3<int_*,bool_(__cdecl*)(int,int)>
 
 {
   int iVar1;
-  int *piVar2;
-  bool bVar3;
+  bool bVar2;
   
-  piVar2 = (int *)__savegprlr_28(param_1);
-  bVar3 = (*param_4)(*param_2,*piVar2);
-  if (bVar3) {
+  bVar2 = (*param_4)(*param_2,*param_1);
+  if (bVar2) {
     iVar1 = *param_2;
-    *param_2 = *piVar2;
-    *piVar2 = iVar1;
+    *param_2 = *param_1;
+    *param_1 = iVar1;
   }
-  bVar3 = (*param_4)(*param_3,*param_2);
-  if (bVar3) {
+  bVar2 = (*param_4)(*param_3,*param_2);
+  if (bVar2) {
     iVar1 = *param_3;
     *param_3 = *param_2;
     *param_2 = iVar1;
   }
-  bVar3 = (*param_4)(*param_2,*piVar2);
-  if (bVar3) {
+  bVar2 = (*param_4)(*param_2,*param_1);
+  if (bVar2) {
     iVar1 = *param_2;
-    *param_2 = *piVar2;
-    *piVar2 = iVar1;
+    *param_2 = *param_1;
+    *param_1 = iVar1;
   }
-  __restgprlr_28();
   return;
 }
 
 
 // 8253DD88  _Med3<OpcodeLookup_*,bool_(__cdecl*)(OpcodeLookup_const_&,OpcodeLookup_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3683)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void std::_Med3<OpcodeLookup_*,bool_(__cdecl*)(OpcodeLookup_const_&,OpcodeLookup_const_&)>
@@ -3242,119 +3080,111 @@ void std::_Med3<OpcodeLookup_*,bool_(__cdecl*)(OpcodeLookup_const_&,OpcodeLookup
                _func___cdecl_bool_OpcodeLookup_ptr_OpcodeLookup_ptr *param_4)
 
 {
-  OpcodeLookup *pOVar1;
-  OpcodeLookup *pOVar2;
-  bool bVar3;
+  bool bVar1;
+  int *piVar2;
+  int *piVar3;
   longlong lVar4;
-  longlong lVar5;
-  int *piVar6;
-  longlong lVar7;
-  int *piVar8;
-  longlong lVar9;
   int iStack_44;
   int local_40 [16];
   
-  lVar4 = (longlong)(int)param_3;
-  lVar5 = (longlong)(int)param_2;
-  pOVar2 = (OpcodeLookup *)__savegprlr_28(param_1);
-  pOVar1 = (OpcodeLookup *)lVar5;
-  bVar3 = (*param_4)(pOVar1,pOVar2);
-  if (bVar3) {
-    piVar8 = &iStack_44;
-    lVar7 = lVar5 + -4;
-    lVar9 = 6;
-    do {
-      lVar7 = lVar7 + 4;
-      piVar8 = piVar8 + 1;
-      *piVar8 = *(int *)lVar7;
-      lVar9 = lVar9 + -1;
-    } while (lVar9 != 0);
-    piVar8 = &pOVar2[-1].profileUsage;
-    lVar7 = lVar5 + -4;
-    lVar9 = 6;
-    do {
-      piVar8 = piVar8 + 1;
-      lVar7 = lVar7 + 4;
-      *(int *)lVar7 = *piVar8;
-      lVar9 = lVar9 + -1;
-    } while (lVar9 != 0);
-    piVar8 = &iStack_44;
-    piVar6 = &pOVar2[-1].profileUsage;
-    lVar7 = 6;
-    do {
-      piVar8 = piVar8 + 1;
-      piVar6 = piVar6 + 1;
-      *piVar6 = *piVar8;
-      lVar7 = lVar7 + -1;
-    } while (lVar7 != 0);
-  }
-  bVar3 = (*param_4)((OpcodeLookup *)lVar4,pOVar1);
-  if (bVar3) {
-    piVar8 = &iStack_44;
-    lVar7 = lVar4 + -4;
-    lVar9 = 6;
-    do {
-      lVar7 = lVar7 + 4;
-      piVar8 = piVar8 + 1;
-      *piVar8 = *(int *)lVar7;
-      lVar9 = lVar9 + -1;
-    } while (lVar9 != 0);
-    lVar7 = lVar5 + -4;
-    lVar4 = lVar4 + -4;
-    lVar9 = 6;
-    do {
-      lVar7 = lVar7 + 4;
-      lVar4 = lVar4 + 4;
-      *(undefined4 *)lVar4 = *(undefined4 *)lVar7;
-      lVar9 = lVar9 + -1;
-    } while (lVar9 != 0);
-    piVar8 = &iStack_44;
-    lVar4 = lVar5 + -4;
-    lVar7 = 6;
-    do {
-      piVar8 = piVar8 + 1;
-      lVar4 = lVar4 + 4;
-      *(int *)lVar4 = *piVar8;
-      lVar7 = lVar7 + -1;
-    } while (lVar7 != 0);
-  }
-  bVar3 = (*param_4)(pOVar1,pOVar2);
-  if (bVar3) {
-    piVar8 = &iStack_44;
-    lVar4 = lVar5 + -4;
-    lVar7 = 6;
-    do {
-      lVar4 = lVar4 + 4;
-      piVar8 = piVar8 + 1;
-      *piVar8 = *(int *)lVar4;
-      lVar7 = lVar7 + -1;
-    } while (lVar7 != 0);
-    piVar8 = &pOVar2[-1].profileUsage;
-    lVar5 = lVar5 + -4;
+  bVar1 = (*param_4)(param_2,param_1);
+  if (bVar1) {
+    piVar2 = &iStack_44;
+    piVar3 = &param_2[-1].profileUsage;
     lVar4 = 6;
     do {
-      piVar8 = piVar8 + 1;
-      lVar5 = lVar5 + 4;
-      *(int *)lVar5 = *piVar8;
+      piVar3 = piVar3 + 1;
+      piVar2 = piVar2 + 1;
+      *piVar2 = *piVar3;
       lVar4 = lVar4 + -1;
     } while (lVar4 != 0);
-    piVar8 = &iStack_44;
-    piVar6 = &pOVar2[-1].profileUsage;
+    piVar3 = &param_1[-1].profileUsage;
+    piVar2 = &param_2[-1].profileUsage;
     lVar4 = 6;
     do {
-      piVar8 = piVar8 + 1;
-      piVar6 = piVar6 + 1;
-      *piVar6 = *piVar8;
+      piVar3 = piVar3 + 1;
+      piVar2 = piVar2 + 1;
+      *piVar2 = *piVar3;
+      lVar4 = lVar4 + -1;
+    } while (lVar4 != 0);
+    piVar3 = &iStack_44;
+    piVar2 = &param_1[-1].profileUsage;
+    lVar4 = 6;
+    do {
+      piVar3 = piVar3 + 1;
+      piVar2 = piVar2 + 1;
+      *piVar2 = *piVar3;
       lVar4 = lVar4 + -1;
     } while (lVar4 != 0);
   }
-  __restgprlr_28();
+  bVar1 = (*param_4)(param_3,param_2);
+  if (bVar1) {
+    piVar2 = &iStack_44;
+    piVar3 = &param_3[-1].profileUsage;
+    lVar4 = 6;
+    do {
+      piVar3 = piVar3 + 1;
+      piVar2 = piVar2 + 1;
+      *piVar2 = *piVar3;
+      lVar4 = lVar4 + -1;
+    } while (lVar4 != 0);
+    piVar3 = &param_2[-1].profileUsage;
+    piVar2 = &param_3[-1].profileUsage;
+    lVar4 = 6;
+    do {
+      piVar3 = piVar3 + 1;
+      piVar2 = piVar2 + 1;
+      *piVar2 = *piVar3;
+      lVar4 = lVar4 + -1;
+    } while (lVar4 != 0);
+    piVar3 = &iStack_44;
+    piVar2 = &param_2[-1].profileUsage;
+    lVar4 = 6;
+    do {
+      piVar3 = piVar3 + 1;
+      piVar2 = piVar2 + 1;
+      *piVar2 = *piVar3;
+      lVar4 = lVar4 + -1;
+    } while (lVar4 != 0);
+  }
+  bVar1 = (*param_4)(param_2,param_1);
+  if (bVar1) {
+    piVar2 = &iStack_44;
+    piVar3 = &param_2[-1].profileUsage;
+    lVar4 = 6;
+    do {
+      piVar3 = piVar3 + 1;
+      piVar2 = piVar2 + 1;
+      *piVar2 = *piVar3;
+      lVar4 = lVar4 + -1;
+    } while (lVar4 != 0);
+    piVar3 = &param_1[-1].profileUsage;
+    piVar2 = &param_2[-1].profileUsage;
+    lVar4 = 6;
+    do {
+      piVar3 = piVar3 + 1;
+      piVar2 = piVar2 + 1;
+      *piVar2 = *piVar3;
+      lVar4 = lVar4 + -1;
+    } while (lVar4 != 0);
+    piVar3 = &iStack_44;
+    piVar2 = &param_1[-1].profileUsage;
+    lVar4 = 6;
+    do {
+      piVar3 = piVar3 + 1;
+      piVar2 = piVar2 + 1;
+      *piVar2 = *piVar3;
+      lVar4 = lVar4 + -1;
+    } while (lVar4 != 0);
+  }
   return;
 }
 
 
 // 8253DF00  _Median<int_*,bool_(__cdecl*)(int,int)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3695)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void std::_Median<int_*,bool_(__cdecl*)(int,int)>
@@ -3363,36 +3193,34 @@ void std::_Median<int_*,bool_(__cdecl*)(int,int)>
 {
   int iVar1;
   int iVar2;
-  int *piVar3;
-  uint uVar5;
-  ulonglong uVar4;
+  uint uVar4;
+  ulonglong uVar3;
   
-  piVar3 = (int *)__savegprlr_26(param_1);
-  iVar1 = (int)param_3 - (int)piVar3 >> 2;
+  iVar1 = (int)param_3 - (int)param_1 >> 2;
   if (0x28 < iVar1) {
-    uVar5 = iVar1 + 1;
-    uVar4 = (longlong)((int)uVar5 >> 3) + (ulonglong)((int)uVar5 < 0 && (uVar5 & 7) != 0);
-    iVar2 = (int)((uVar4 & 0xffffffff) << 3);
-    iVar1 = (int)((uVar4 & 0x3fffffff) << 2);
+    uVar4 = iVar1 + 1;
+    uVar3 = (longlong)((int)uVar4 >> 3) + (ulonglong)((int)uVar4 < 0 && (uVar4 & 7) != 0);
+    iVar2 = (int)((uVar3 & 0xffffffff) << 3);
+    iVar1 = (int)((uVar3 & 0x3fffffff) << 2);
     _Med3<int_*,bool_(__cdecl*)(int,int)>
-              (piVar3,(int *)(iVar1 + (int)piVar3),(int *)(iVar2 + (int)piVar3),param_4);
+              (param_1,(int *)(iVar1 + (int)param_1),(int *)(iVar2 + (int)param_1),param_4);
     _Med3<int_*,bool_(__cdecl*)(int,int)>
               ((int *)((int)param_2 - iVar1),param_2,(int *)(iVar1 + (int)param_2),param_4);
     _Med3<int_*,bool_(__cdecl*)(int,int)>
               ((int *)((int)param_3 - iVar2),(int *)((int)param_3 - iVar1),param_3,param_4);
     _Med3<int_*,bool_(__cdecl*)(int,int)>
-              ((int *)(iVar1 + (int)piVar3),param_2,(int *)((int)param_3 - iVar1),param_4);
-    __restgprlr_26();
+              ((int *)(iVar1 + (int)param_1),param_2,(int *)((int)param_3 - iVar1),param_4);
     return;
   }
-  _Med3<int_*,bool_(__cdecl*)(int,int)>(piVar3,param_2,param_3,param_4);
-  __restgprlr_26();
+  _Med3<int_*,bool_(__cdecl*)(int,int)>(param_1,param_2,param_3,param_4);
   return;
 }
 
 
 // 8253DFA8  _Median<OpcodeLookup_*,bool_(__cdecl*)(OpcodeLookup_const_&,OpcodeLookup_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3695)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void std::_Median<OpcodeLookup_*,bool_(__cdecl*)(OpcodeLookup_const_&,OpcodeLookup_const_&)>
@@ -3403,20 +3231,18 @@ void std::_Median<OpcodeLookup_*,bool_(__cdecl*)(OpcodeLookup_const_&,OpcodeLook
   int iVar1;
   int iVar2;
   OpcodeLookup *pOVar3;
-  OpcodeLookup *pOVar4;
-  uint uVar6;
-  ulonglong uVar5;
+  uint uVar5;
+  ulonglong uVar4;
   
-  pOVar3 = (OpcodeLookup *)__savegprlr_26(param_1);
-  iVar1 = ((int)param_3 - (int)pOVar3) / 0x18;
+  iVar1 = ((int)param_3 - (int)param_1) / 0x18;
   if (0x28 < iVar1) {
-    uVar6 = iVar1 + 1;
-    uVar5 = (longlong)((int)uVar6 >> 3) + (ulonglong)((int)uVar6 < 0 && (uVar6 & 7) != 0);
-    iVar2 = (int)((uVar5 + (uVar5 & 0x7fffffff) * 2 & 0xffffffff) << 4);
-    iVar1 = (int)((uVar5 + (uVar5 & 0x7fffffff) * 2 & 0x1fffffff) << 3);
-    pOVar4 = (OpcodeLookup *)((int)&pOVar3->codePos + iVar1);
+    uVar5 = iVar1 + 1;
+    uVar4 = (longlong)((int)uVar5 >> 3) + (ulonglong)((int)uVar5 < 0 && (uVar5 & 7) != 0);
+    iVar2 = (int)((uVar4 + (uVar4 & 0x7fffffff) * 2 & 0xffffffff) << 4);
+    iVar1 = (int)((uVar4 + (uVar4 & 0x7fffffff) * 2 & 0x1fffffff) << 3);
+    pOVar3 = (OpcodeLookup *)((int)&param_1->codePos + iVar1);
     _Med3<OpcodeLookup_*,bool_(__cdecl*)(OpcodeLookup_const_&,OpcodeLookup_const_&)>
-              (pOVar3,pOVar4,(OpcodeLookup *)((int)&pOVar3->codePos + iVar2),param_4);
+              (param_1,pOVar3,(OpcodeLookup *)((int)&param_1->codePos + iVar2),param_4);
     _Med3<OpcodeLookup_*,bool_(__cdecl*)(OpcodeLookup_const_&,OpcodeLookup_const_&)>
               ((OpcodeLookup *)((int)param_2 - iVar1),param_2,
                (OpcodeLookup *)((int)&param_2->codePos + iVar1),param_4);
@@ -3424,19 +3250,19 @@ void std::_Median<OpcodeLookup_*,bool_(__cdecl*)(OpcodeLookup_const_&,OpcodeLook
               ((OpcodeLookup *)((int)param_3 - iVar2),(OpcodeLookup *)((int)param_3 - iVar1),param_3
                ,param_4);
     _Med3<OpcodeLookup_*,bool_(__cdecl*)(OpcodeLookup_const_&,OpcodeLookup_const_&)>
-              (pOVar4,param_2,(OpcodeLookup *)((int)param_3 - iVar1),param_4);
-    __restgprlr_26();
+              (pOVar3,param_2,(OpcodeLookup *)((int)param_3 - iVar1),param_4);
     return;
   }
   _Med3<OpcodeLookup_*,bool_(__cdecl*)(OpcodeLookup_const_&,OpcodeLookup_const_&)>
-            (pOVar3,param_2,param_3,param_4);
-  __restgprlr_26();
+            (param_1,param_2,param_3,param_4);
   return;
 }
 
 
 // 8253E1C0  _Unguarded_partition<int_*,bool_(__cdecl*)(int,int)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3712)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 pair<int_*,int_*>
@@ -3444,143 +3270,112 @@ std::_Unguarded_partition<int_*,bool_(__cdecl*)(int,int)>
           (int *param_1,int *param_2,_func___cdecl_bool_int_int *param_3)
 
 {
-  undefined4 uVar1;
+  int iVar1;
   uint uVar2;
-  undefined4 *puVar4;
-  bool bVar5;
-  pair<int_*,int_*> pVar3;
-  ulonglong uVar6;
-  ulonglong uVar7;
+  _func___cdecl_bool_int_int *p_Var3;
+  bool bVar4;
   _func___cdecl_bool_int_int *in_r6;
-  int iVar8;
-  ulonglong uVar9;
-  undefined4 *puVar10;
-  ulonglong uVar11;
-  undefined4 *puVar12;
-  ulonglong uVar13;
-  ulonglong uVar14;
-  ulonglong uVar15;
-  int *piVar16;
-  undefined4 *puVar17;
+  _func___cdecl_bool_int_int *p_Var5;
+  _func___cdecl_bool_int_int *p_Var6;
+  _func___cdecl_bool_int_int *p_Var7;
+  _func___cdecl_bool_int_int *p_Var8;
   
-  uVar7 = (ulonglong)(int)param_3;
-  uVar6 = (ulonglong)(int)param_2;
-  puVar4 = (undefined4 *)__savegprlr_23(param_1);
-  iVar8 = (int)uVar7 - (int)(int *)uVar6;
-  uVar2 = iVar8 >> 2;
-  uVar15 = ((longlong)(iVar8 >> 3) + (ulonglong)((int)uVar2 < 0 && (uVar2 & 1) != 0) & 0x3fffffff) *
-           4 + uVar6;
-  _Median<int_*,bool_(__cdecl*)(int,int)>((int *)uVar6,(int *)uVar15,(int *)((int)uVar7 + -4),in_r6)
-  ;
-  uVar9 = uVar15 + 4;
-  if ((uVar6 & 0xffffffff) < (uVar15 & 0xffffffff)) {
-    do {
-      piVar16 = (int *)uVar15;
-      uVar13 = uVar15 - 4;
-      bVar5 = (*in_r6)(piVar16[-1],*piVar16);
-      if ((bVar5) || (bVar5 = (*in_r6)(*piVar16,*(int *)uVar13), bVar5)) break;
-      uVar15 = uVar13;
-    } while ((uVar6 & 0xffffffff) < (uVar13 & 0xffffffff));
-  }
-  uVar11 = uVar9;
-  uVar13 = uVar15;
-  if ((uVar9 & 0xffffffff) < (uVar7 & 0xffffffff)) {
-    do {
-      bVar5 = (*in_r6)(*(int *)uVar9,*(int *)uVar15);
-      uVar11 = uVar9;
-      if ((bVar5) || (bVar5 = (*in_r6)(*(int *)uVar15,*(int *)uVar9), bVar5)) break;
-      uVar9 = uVar9 + 4;
-      uVar11 = uVar9;
-    } while ((uVar9 & 0xffffffff) < (uVar7 & 0xffffffff));
+  uVar2 = (int)param_3 - (int)param_2 >> 2;
+  p_Var6 = (_func___cdecl_bool_int_int *)
+           (param_2 +
+           ((int)param_3 - (int)param_2 >> 3) + (uint)((int)uVar2 < 0 && (uVar2 & 1) != 0));
+  _Median<int_*,bool_(__cdecl*)(int,int)>(param_2,(int *)p_Var6,(int *)(param_3 + -4),in_r6);
+  p_Var3 = p_Var6;
+  while (p_Var8 = p_Var3, param_2 < p_Var8) {
+    bVar4 = (*in_r6)(*(int *)(p_Var8 + -4),*(int *)p_Var8);
+    if ((bVar4) ||
+       (bVar4 = (*in_r6)(*(int *)p_Var8,*(int *)(p_Var8 + -4)), p_Var3 = p_Var8 + -4, bVar4)) break;
   }
   do {
-    uVar14 = uVar9;
-    if ((uVar11 & 0xffffffff) < (uVar7 & 0xffffffff)) {
-      do {
-        piVar16 = (int *)uVar11;
-        bVar5 = (*in_r6)(*(int *)uVar13,*piVar16);
-        uVar9 = uVar14;
-        if (!bVar5) {
-          bVar5 = (*in_r6)(*piVar16,*(int *)uVar13);
-          if (bVar5) break;
-          uVar9 = uVar14 + 4;
-          iVar8 = *(int *)uVar14;
-          *(int *)uVar14 = *piVar16;
-          *piVar16 = iVar8;
-        }
-        uVar11 = uVar11 + 4;
-        uVar14 = uVar9;
-      } while ((uVar11 & 0xffffffff) < (uVar7 & 0xffffffff));
-    }
-    bVar5 = (uVar15 & 0xffffffff) == (uVar6 & 0xffffffff);
-    if ((uVar6 & 0xffffffff) < (uVar15 & 0xffffffff)) {
-      do {
-        uVar14 = uVar15 - 4;
-        bVar5 = (*in_r6)(*(int *)((int)uVar15 + -4),*(int *)uVar13);
-        piVar16 = (int *)uVar14;
-        if (!bVar5) {
-          bVar5 = (*in_r6)(*(int *)uVar13,*piVar16);
-          if (bVar5) break;
-          uVar13 = uVar13 - 4;
-          iVar8 = *(int *)uVar13;
-          *(int *)uVar13 = *piVar16;
-          *piVar16 = iVar8;
-        }
-        uVar15 = uVar14;
-      } while ((uVar6 & 0xffffffff) < (uVar14 & 0xffffffff));
-      bVar5 = (uVar15 & 0xffffffff) == (uVar6 & 0xffffffff);
-    }
-    puVar12 = (undefined4 *)uVar11;
-    if (bVar5) {
-      puVar10 = (undefined4 *)uVar9;
-      puVar17 = (undefined4 *)uVar13;
-      if ((uVar11 & 0xffffffff) == (uVar7 & 0xffffffff)) {
-        *puVar4 = puVar17;
-        puVar4[1] = puVar10;
-        pVar3 = (pair<int_*,int_*>)__restgprlr_23(puVar4);
-        return pVar3;
+    p_Var6 = p_Var6 + 4;
+    p_Var3 = p_Var6;
+    p_Var7 = p_Var8;
+    if (param_3 <= p_Var6) break;
+    bVar4 = (*in_r6)(*(int *)p_Var6,*(int *)p_Var8);
+    if ((bVar4) || (bVar4 = (*in_r6)(*(int *)p_Var8,*(int *)p_Var6), bVar4)) break;
+  } while( true );
+joined_r0x8253e2b0:
+  if (param_3 <= p_Var3) {
+joined_r0x8253e314:
+    while (p_Var5 = p_Var7, param_2 < p_Var5) {
+      p_Var7 = p_Var5 + -4;
+      bVar4 = (*in_r6)(*(int *)(p_Var5 + -4),*(int *)p_Var8);
+      if (!bVar4) {
+        bVar4 = (*in_r6)(*(int *)p_Var8,*(int *)p_Var7);
+        if (bVar4) break;
+        p_Var8 = p_Var8 + -4;
+        iVar1 = *(int *)p_Var8;
+        *(int *)p_Var8 = *(int *)p_Var7;
+        *(int *)p_Var7 = iVar1;
       }
-      if ((uVar9 & 0xffffffff) != (uVar11 & 0xffffffff)) {
-        uVar1 = *puVar17;
-        *puVar17 = *puVar10;
-        *puVar10 = uVar1;
+    }
+    if (p_Var5 == (_func___cdecl_bool_int_int *)param_2) {
+      if (p_Var3 == param_3) {
+        *param_1 = (int)p_Var8;
+        param_1[1] = (int)p_Var6;
+        return (pair<int_*,int_*>)(longlong)(int)param_1;
       }
-      uVar9 = uVar9 + 4;
-      uVar1 = *puVar17;
-      *puVar17 = *puVar12;
-      *puVar12 = uVar1;
-      uVar11 = uVar11 + 4;
-      uVar13 = uVar13 + 4;
+      if (p_Var6 != p_Var3) {
+        iVar1 = *(int *)p_Var8;
+        *(int *)p_Var8 = *(int *)p_Var6;
+        *(int *)p_Var6 = iVar1;
+      }
+      p_Var6 = p_Var6 + 4;
+      iVar1 = *(int *)p_Var8;
+      *(int *)p_Var8 = *(int *)p_Var3;
+      *(int *)p_Var3 = iVar1;
+      p_Var3 = p_Var3 + 4;
+      p_Var8 = p_Var8 + 4;
+      p_Var7 = p_Var5;
     }
     else {
-      uVar15 = uVar15 - 4;
-      puVar10 = (undefined4 *)uVar15;
-      if ((uVar11 & 0xffffffff) == (uVar7 & 0xffffffff)) {
-        uVar13 = uVar13 - 4;
-        puVar12 = (undefined4 *)uVar13;
-        if ((uVar15 & 0xffffffff) != (uVar13 & 0xffffffff)) {
-          uVar1 = *puVar10;
-          *puVar10 = *puVar12;
-          *puVar12 = uVar1;
+      p_Var7 = p_Var5 + -4;
+      if (p_Var3 == param_3) {
+        p_Var8 = p_Var8 + -4;
+        if (p_Var7 != p_Var8) {
+          iVar1 = *(int *)p_Var7;
+          *(int *)p_Var7 = *(int *)p_Var8;
+          *(int *)p_Var8 = iVar1;
         }
-        uVar9 = uVar9 - 4;
-        uVar1 = *puVar12;
-        *puVar12 = *(undefined4 *)uVar9;
-        *(undefined4 *)uVar9 = uVar1;
+        p_Var6 = p_Var6 + -4;
+        iVar1 = *(int *)p_Var8;
+        *(int *)p_Var8 = *(int *)p_Var6;
+        *(int *)p_Var6 = iVar1;
       }
       else {
-        uVar1 = *puVar12;
-        *puVar12 = *puVar10;
-        *puVar10 = uVar1;
-        uVar11 = uVar11 + 4;
+        iVar1 = *(int *)p_Var3;
+        *(int *)p_Var3 = *(int *)p_Var7;
+        *(int *)p_Var7 = iVar1;
+        p_Var3 = p_Var3 + 4;
       }
     }
-  } while( true );
+    goto joined_r0x8253e2b0;
+  }
+  bVar4 = (*in_r6)(*(int *)p_Var8,*(int *)p_Var3);
+  p_Var5 = p_Var6;
+  if (!bVar4) {
+    bVar4 = (*in_r6)(*(int *)p_Var3,*(int *)p_Var8);
+    if (bVar4) goto joined_r0x8253e314;
+    p_Var5 = p_Var6 + 4;
+    iVar1 = *(int *)p_Var6;
+    *(int *)p_Var6 = *(int *)p_Var3;
+    *(int *)p_Var3 = iVar1;
+  }
+  p_Var6 = p_Var5;
+  p_Var3 = p_Var3 + 4;
+  goto joined_r0x8253e2b0;
 }
 
 
 // 8253E430  _Unguarded_partition<OpcodeLookup_*,bool_(__cdecl*)(OpcodeLookup_const_&,OpcodeLookup_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3712)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 pair<OpcodeLookup_*,OpcodeLookup_*>
@@ -3591,329 +3386,302 @@ std::_Unguarded_partition<OpcodeLookup_*,bool_(__cdecl*)(OpcodeLookup_const_&,Op
 {
   uint uVar1;
   OpcodeLookup *pOVar2;
-  undefined4 *puVar4;
-  bool bVar5;
-  pair<OpcodeLookup_*,OpcodeLookup_*> pVar3;
-  ulonglong uVar6;
-  ulonglong uVar7;
+  bool bVar3;
   _func___cdecl_bool_OpcodeLookup_ptr_OpcodeLookup_ptr *in_r6;
-  longlong lVar8;
-  ulonglong uVar9;
-  ulonglong uVar10;
-  undefined4 *puVar11;
-  ulonglong uVar12;
-  ulonglong uVar13;
-  ulonglong uVar14;
-  ulonglong uVar15;
-  ulonglong uVar16;
-  ulonglong uVar17;
-  longlong lVar18;
-  longlong lVar19;
-  undefined4 uStack_134;
-  undefined4 local_130 [7];
-  undefined4 uStack_114;
-  undefined4 local_110 [7];
-  undefined4 uStack_f4;
-  undefined4 local_f0 [7];
-  undefined4 uStack_d4;
-  undefined4 local_d0 [7];
-  undefined4 uStack_b4;
-  undefined4 local_b0 [7];
-  undefined4 uStack_94;
-  undefined4 local_90 [7];
-  undefined4 uStack_74;
-  undefined4 local_70 [28];
+  int *piVar4;
+  int *piVar5;
+  OpcodeLookup *pOVar6;
+  OpcodeLookup *pOVar7;
+  OpcodeLookup *pOVar8;
+  OpcodeLookup *pOVar9;
+  OpcodeLookup *pOVar10;
+  OpcodeLookup *pOVar11;
+  longlong lVar12;
+  int iStack_134;
+  int local_130 [7];
+  int iStack_114;
+  int local_110 [7];
+  int iStack_f4;
+  int local_f0 [7];
+  int iStack_d4;
+  int local_d0 [7];
+  int iStack_b4;
+  int local_b0 [7];
+  int iStack_94;
+  int local_90 [7];
+  int iStack_74;
+  int local_70 [28];
   
-  uVar7 = (ulonglong)(int)param_3;
-  uVar6 = (ulonglong)(int)param_2;
-  puVar4 = (undefined4 *)__savegprlr_23(param_1);
-  uVar1 = ((int)uVar7 - (int)(OpcodeLookup *)uVar6) / 0x18;
-  uVar9 = (longlong)((int)uVar1 >> 1) + (ulonglong)((int)uVar1 < 0 && (uVar1 & 1) != 0);
-  uVar16 = (uVar9 + (uVar9 & 0x7fffffff) * 2 & 0x1fffffff) * 8 + uVar6;
+  uVar1 = ((int)param_3 - (int)param_2) / 0x18;
+  pOVar10 = param_2 + ((int)uVar1 >> 1) + (uint)((int)uVar1 < 0 && (uVar1 & 1) != 0);
   _Median<OpcodeLookup_*,bool_(__cdecl*)(OpcodeLookup_const_&,OpcodeLookup_const_&)>
-            ((OpcodeLookup *)uVar6,(OpcodeLookup *)uVar16,(OpcodeLookup *)((int)uVar7 + -0x18),in_r6
-            );
-  uVar9 = uVar16 + 0x18;
-  if ((uVar6 & 0xffffffff) < (uVar16 & 0xffffffff)) {
-    do {
-      uVar17 = uVar16 - 0x18;
-      bVar5 = (*in_r6)((OpcodeLookup *)uVar17,(OpcodeLookup *)uVar16);
-      if ((bVar5) || (bVar5 = (*in_r6)((OpcodeLookup *)uVar16,(OpcodeLookup *)uVar17), bVar5))
-      break;
-      uVar16 = uVar17;
-    } while ((uVar6 & 0xffffffff) < (uVar17 & 0xffffffff));
-  }
-  uVar17 = uVar16;
-  uVar13 = uVar9;
-  if ((uVar9 & 0xffffffff) < (uVar7 & 0xffffffff)) {
-    do {
-      bVar5 = (*in_r6)((OpcodeLookup *)uVar9,(OpcodeLookup *)uVar16);
-      uVar13 = uVar9;
-      if ((bVar5) || (bVar5 = (*in_r6)((OpcodeLookup *)uVar16,(OpcodeLookup *)uVar9), bVar5)) break;
-      uVar9 = uVar9 + 0x18;
-      uVar13 = uVar9;
-    } while ((uVar9 & 0xffffffff) < (uVar7 & 0xffffffff));
+            (param_2,pOVar10,(OpcodeLookup *)(param_3 + -0x18),in_r6);
+  pOVar11 = pOVar10;
+  while (pOVar9 = pOVar11, param_2 < pOVar9) {
+    pOVar11 = pOVar9 + -1;
+    bVar3 = (*in_r6)(pOVar11,pOVar9);
+    if ((bVar3) || (bVar3 = (*in_r6)(pOVar9,pOVar11), bVar3)) break;
   }
   do {
-    uVar12 = uVar9;
-    uVar14 = uVar13;
-    if ((uVar13 & 0xffffffff) < (uVar7 & 0xffffffff)) {
-      do {
-        bVar5 = (*in_r6)((OpcodeLookup *)uVar16,(OpcodeLookup *)uVar13);
-        uVar12 = uVar9;
-        if (!bVar5) {
-          bVar5 = (*in_r6)((OpcodeLookup *)uVar13,(OpcodeLookup *)uVar16);
-          uVar14 = uVar13;
-          if (bVar5) break;
-          puVar11 = &uStack_114;
-          uVar12 = uVar9 + 0x18;
-          lVar8 = uVar9 - 4;
-          lVar18 = 6;
-          do {
-            lVar8 = lVar8 + 4;
-            puVar11 = puVar11 + 1;
-            *puVar11 = *(undefined4 *)lVar8;
-            lVar18 = lVar18 + -1;
-          } while (lVar18 != 0);
-          lVar8 = uVar13 - 4;
-          lVar18 = uVar9 - 4;
-          lVar19 = 6;
-          do {
-            lVar8 = lVar8 + 4;
-            lVar18 = lVar18 + 4;
-            *(undefined4 *)lVar18 = *(undefined4 *)lVar8;
-            lVar19 = lVar19 + -1;
-          } while (lVar19 != 0);
-          puVar11 = &uStack_114;
-          lVar8 = uVar13 - 4;
-          lVar18 = 6;
-          do {
-            puVar11 = puVar11 + 1;
-            lVar8 = lVar8 + 4;
-            *(undefined4 *)lVar8 = *puVar11;
-            lVar18 = lVar18 + -1;
-          } while (lVar18 != 0);
-        }
-        uVar13 = uVar13 + 0x18;
-        uVar9 = uVar12;
-        uVar14 = uVar13;
-      } while ((uVar13 & 0xffffffff) < (uVar7 & 0xffffffff));
-    }
-    bVar5 = (uVar17 & 0xffffffff) == (uVar6 & 0xffffffff);
-    uVar15 = uVar16;
-    uVar9 = uVar17;
-    if ((uVar6 & 0xffffffff) < (uVar17 & 0xffffffff)) {
-      do {
-        pOVar2 = (OpcodeLookup *)(uVar9 - 0x18);
-        bVar5 = (*in_r6)(pOVar2,(OpcodeLookup *)uVar16);
-        uVar15 = uVar16;
-        if (!bVar5) {
-          bVar5 = (*in_r6)((OpcodeLookup *)uVar16,pOVar2);
-          if (bVar5) break;
-          uVar15 = uVar16 - 0x18;
-          puVar11 = &uStack_94;
-          lVar8 = uVar16 - 0x1c;
-          lVar18 = 6;
-          do {
-            lVar8 = lVar8 + 4;
-            puVar11 = puVar11 + 1;
-            *puVar11 = *(undefined4 *)lVar8;
-            lVar18 = lVar18 + -1;
-          } while (lVar18 != 0);
-          lVar8 = uVar9 - 0x1c;
-          lVar18 = uVar16 - 0x1c;
-          lVar19 = 6;
-          do {
-            lVar8 = lVar8 + 4;
-            lVar18 = lVar18 + 4;
-            *(undefined4 *)lVar18 = *(undefined4 *)lVar8;
-            lVar19 = lVar19 + -1;
-          } while (lVar19 != 0);
-          puVar11 = &uStack_94;
-          lVar8 = uVar9 - 0x1c;
-          lVar18 = 6;
-          do {
-            puVar11 = puVar11 + 1;
-            lVar8 = lVar8 + 4;
-            *(undefined4 *)lVar8 = *puVar11;
-            lVar18 = lVar18 + -1;
-          } while (lVar18 != 0);
-        }
-        uVar17 = uVar17 - 0x18;
-        uVar16 = uVar15;
-        uVar9 = uVar9 - 0x18;
-      } while ((uVar6 & 0xffffffff) < (uVar17 & 0xffffffff));
-      bVar5 = (uVar17 & 0xffffffff) == (uVar6 & 0xffffffff);
-    }
-    if (bVar5) {
-      if ((uVar14 & 0xffffffff) == (uVar7 & 0xffffffff)) {
-        *puVar4 = (int)uVar15;
-        puVar4[1] = (int)uVar12;
-        pVar3 = (pair<OpcodeLookup_*,OpcodeLookup_*>)__restgprlr_23(puVar4);
-        return pVar3;
+    pOVar10 = pOVar10 + 1;
+    pOVar11 = pOVar10;
+    pOVar6 = pOVar9;
+    if (param_3 <= pOVar10) break;
+    bVar3 = (*in_r6)(pOVar10,pOVar9);
+    if ((bVar3) || (bVar3 = (*in_r6)(pOVar9,pOVar10), bVar3)) break;
+  } while( true );
+joined_r0x8253e530:
+  pOVar2 = pOVar9;
+  pOVar8 = pOVar6;
+  if (param_3 <= pOVar11) {
+joined_r0x8253e5dc:
+    for (; param_2 < pOVar6; pOVar6 = pOVar6 + -1) {
+      pOVar7 = pOVar8 + -1;
+      bVar3 = (*in_r6)(pOVar7,pOVar2);
+      pOVar9 = pOVar2;
+      if (!bVar3) {
+        bVar3 = (*in_r6)(pOVar2,pOVar7);
+        if (bVar3) break;
+        pOVar9 = pOVar2 + -1;
+        piVar4 = &iStack_94;
+        piVar5 = &pOVar2[-2].profileUsage;
+        lVar12 = 6;
+        do {
+          piVar5 = piVar5 + 1;
+          piVar4 = piVar4 + 1;
+          *piVar4 = *piVar5;
+          lVar12 = lVar12 + -1;
+        } while (lVar12 != 0);
+        piVar5 = &pOVar8[-2].profileUsage;
+        piVar4 = &pOVar2[-2].profileUsage;
+        lVar12 = 6;
+        do {
+          piVar5 = piVar5 + 1;
+          piVar4 = piVar4 + 1;
+          *piVar4 = *piVar5;
+          lVar12 = lVar12 + -1;
+        } while (lVar12 != 0);
+        piVar5 = &iStack_94;
+        piVar4 = &pOVar8[-2].profileUsage;
+        lVar12 = 6;
+        do {
+          piVar5 = piVar5 + 1;
+          piVar4 = piVar4 + 1;
+          *piVar4 = *piVar5;
+          lVar12 = lVar12 + -1;
+        } while (lVar12 != 0);
       }
-      if ((uVar12 & 0xffffffff) != (uVar14 & 0xffffffff)) {
-        puVar11 = &uStack_d4;
-        lVar8 = uVar15 - 4;
-        lVar18 = 6;
-        do {
-          lVar8 = lVar8 + 4;
-          puVar11 = puVar11 + 1;
-          *puVar11 = *(undefined4 *)lVar8;
-          lVar18 = lVar18 + -1;
-        } while (lVar18 != 0);
-        lVar8 = uVar12 - 4;
-        lVar18 = uVar15 - 4;
-        lVar19 = 6;
-        do {
-          lVar8 = lVar8 + 4;
-          lVar18 = lVar18 + 4;
-          *(undefined4 *)lVar18 = *(undefined4 *)lVar8;
-          lVar19 = lVar19 + -1;
-        } while (lVar19 != 0);
-        puVar11 = &uStack_d4;
-        lVar8 = uVar12 - 4;
-        lVar18 = 6;
-        do {
-          puVar11 = puVar11 + 1;
-          lVar8 = lVar8 + 4;
-          *(undefined4 *)lVar8 = *puVar11;
-          lVar18 = lVar18 + -1;
-        } while (lVar18 != 0);
-      }
-      puVar11 = &uStack_134;
-      uVar9 = uVar12 + 0x18;
-      lVar18 = 6;
-      uVar16 = uVar15 + 0x18;
-      uVar13 = uVar14 + 0x18;
-      lVar8 = uVar15 - 4;
-      do {
-        lVar8 = lVar8 + 4;
-        puVar11 = puVar11 + 1;
-        *puVar11 = *(undefined4 *)lVar8;
-        lVar18 = lVar18 + -1;
-      } while (lVar18 != 0);
-      lVar8 = uVar14 - 4;
-      lVar18 = uVar15 - 4;
-      lVar19 = 6;
-      do {
-        lVar8 = lVar8 + 4;
-        lVar18 = lVar18 + 4;
-        *(undefined4 *)lVar18 = *(undefined4 *)lVar8;
-        lVar19 = lVar19 + -1;
-      } while (lVar19 != 0);
-      puVar11 = &uStack_134;
-      lVar8 = uVar14 - 4;
-      lVar18 = 6;
-      do {
-        puVar11 = puVar11 + 1;
-        lVar8 = lVar8 + 4;
-        *(undefined4 *)lVar8 = *puVar11;
-        lVar18 = lVar18 + -1;
-      } while (lVar18 != 0);
+      pOVar2 = pOVar9;
+      pOVar8 = pOVar7;
     }
-    else if ((uVar14 & 0xffffffff) == (uVar7 & 0xffffffff)) {
-      uVar10 = uVar17 - 0x18;
-      uVar16 = uVar15 - 0x18;
-      if ((uVar10 & 0xffffffff) != (uVar16 & 0xffffffff)) {
-        puVar11 = &uStack_f4;
-        lVar8 = uVar17 - 0x1c;
-        lVar18 = 6;
-        do {
-          lVar8 = lVar8 + 4;
-          puVar11 = puVar11 + 1;
-          *puVar11 = *(undefined4 *)lVar8;
-          lVar18 = lVar18 + -1;
-        } while (lVar18 != 0);
-        lVar8 = uVar15 - 0x1c;
-        lVar18 = uVar17 - 0x1c;
-        lVar19 = 6;
-        do {
-          lVar8 = lVar8 + 4;
-          lVar18 = lVar18 + 4;
-          *(undefined4 *)lVar18 = *(undefined4 *)lVar8;
-          lVar19 = lVar19 + -1;
-        } while (lVar19 != 0);
-        puVar11 = &uStack_f4;
-        lVar8 = uVar15 - 0x1c;
-        lVar18 = 6;
-        do {
-          puVar11 = puVar11 + 1;
-          lVar8 = lVar8 + 4;
-          *(undefined4 *)lVar8 = *puVar11;
-          lVar18 = lVar18 + -1;
-        } while (lVar18 != 0);
+    if (pOVar6 == param_2) {
+      if (pOVar11 == (OpcodeLookup *)param_3) {
+        param_1->codePos = (char *)pOVar2;
+        param_1->sourcePosIndex = (uint)pOVar10;
+        return (pair<OpcodeLookup_*,OpcodeLookup_*>)(longlong)(int)param_1;
       }
-      uVar9 = uVar12 - 0x18;
-      puVar11 = &uStack_b4;
-      lVar8 = uVar15 - 0x1c;
-      lVar18 = 6;
+      if (pOVar10 != pOVar11) {
+        piVar4 = &iStack_d4;
+        piVar5 = &pOVar2[-1].profileUsage;
+        lVar12 = 6;
+        do {
+          piVar5 = piVar5 + 1;
+          piVar4 = piVar4 + 1;
+          *piVar4 = *piVar5;
+          lVar12 = lVar12 + -1;
+        } while (lVar12 != 0);
+        piVar5 = &pOVar10[-1].profileUsage;
+        piVar4 = &pOVar2[-1].profileUsage;
+        lVar12 = 6;
+        do {
+          piVar5 = piVar5 + 1;
+          piVar4 = piVar4 + 1;
+          *piVar4 = *piVar5;
+          lVar12 = lVar12 + -1;
+        } while (lVar12 != 0);
+        piVar5 = &iStack_d4;
+        piVar4 = &pOVar10[-1].profileUsage;
+        lVar12 = 6;
+        do {
+          piVar5 = piVar5 + 1;
+          piVar4 = piVar4 + 1;
+          *piVar4 = *piVar5;
+          lVar12 = lVar12 + -1;
+        } while (lVar12 != 0);
+      }
+      piVar4 = &iStack_134;
+      pOVar10 = pOVar10 + 1;
+      lVar12 = 6;
+      pOVar9 = pOVar2 + 1;
+      pOVar8 = pOVar11 + 1;
+      piVar5 = &pOVar2[-1].profileUsage;
       do {
-        lVar8 = lVar8 + 4;
-        puVar11 = puVar11 + 1;
-        *puVar11 = *(undefined4 *)lVar8;
-        lVar18 = lVar18 + -1;
-      } while (lVar18 != 0);
-      lVar8 = uVar12 - 0x1c;
-      lVar18 = uVar15 - 0x1c;
-      lVar19 = 6;
+        piVar5 = piVar5 + 1;
+        piVar4 = piVar4 + 1;
+        *piVar4 = *piVar5;
+        lVar12 = lVar12 + -1;
+      } while (lVar12 != 0);
+      piVar5 = &pOVar11[-1].profileUsage;
+      piVar4 = &pOVar2[-1].profileUsage;
+      lVar12 = 6;
       do {
-        lVar8 = lVar8 + 4;
-        lVar18 = lVar18 + 4;
-        *(undefined4 *)lVar18 = *(undefined4 *)lVar8;
-        lVar19 = lVar19 + -1;
-      } while (lVar19 != 0);
-      puVar11 = &uStack_b4;
-      lVar8 = uVar12 - 0x1c;
-      lVar18 = 6;
+        piVar5 = piVar5 + 1;
+        piVar4 = piVar4 + 1;
+        *piVar4 = *piVar5;
+        lVar12 = lVar12 + -1;
+      } while (lVar12 != 0);
+      piVar5 = &iStack_134;
+      piVar4 = &pOVar11[-1].profileUsage;
+      lVar12 = 6;
       do {
-        puVar11 = puVar11 + 1;
-        lVar8 = lVar8 + 4;
-        *(undefined4 *)lVar8 = *puVar11;
-        lVar18 = lVar18 + -1;
-        uVar17 = uVar10;
-        uVar13 = uVar14;
-      } while (lVar18 != 0);
+        piVar5 = piVar5 + 1;
+        piVar4 = piVar4 + 1;
+        *piVar4 = *piVar5;
+        lVar12 = lVar12 + -1;
+        pOVar11 = pOVar8;
+      } while (lVar12 != 0);
+    }
+    else if (pOVar11 == (OpcodeLookup *)param_3) {
+      pOVar8 = pOVar6 + -1;
+      pOVar9 = pOVar2 + -1;
+      if (pOVar8 != pOVar9) {
+        piVar4 = &iStack_f4;
+        piVar5 = &pOVar6[-2].profileUsage;
+        lVar12 = 6;
+        do {
+          piVar5 = piVar5 + 1;
+          piVar4 = piVar4 + 1;
+          *piVar4 = *piVar5;
+          lVar12 = lVar12 + -1;
+        } while (lVar12 != 0);
+        piVar5 = &pOVar2[-2].profileUsage;
+        piVar4 = &pOVar6[-2].profileUsage;
+        lVar12 = 6;
+        do {
+          piVar5 = piVar5 + 1;
+          piVar4 = piVar4 + 1;
+          *piVar4 = *piVar5;
+          lVar12 = lVar12 + -1;
+        } while (lVar12 != 0);
+        piVar5 = &iStack_f4;
+        piVar4 = &pOVar2[-2].profileUsage;
+        lVar12 = 6;
+        do {
+          piVar5 = piVar5 + 1;
+          piVar4 = piVar4 + 1;
+          *piVar4 = *piVar5;
+          lVar12 = lVar12 + -1;
+        } while (lVar12 != 0);
+      }
+      pOVar7 = pOVar10 + -1;
+      piVar4 = &iStack_b4;
+      piVar5 = &pOVar2[-2].profileUsage;
+      lVar12 = 6;
+      do {
+        piVar5 = piVar5 + 1;
+        piVar4 = piVar4 + 1;
+        *piVar4 = *piVar5;
+        lVar12 = lVar12 + -1;
+      } while (lVar12 != 0);
+      piVar5 = &pOVar10[-2].profileUsage;
+      piVar4 = &pOVar2[-2].profileUsage;
+      lVar12 = 6;
+      do {
+        piVar5 = piVar5 + 1;
+        piVar4 = piVar4 + 1;
+        *piVar4 = *piVar5;
+        lVar12 = lVar12 + -1;
+      } while (lVar12 != 0);
+      piVar5 = &iStack_b4;
+      piVar4 = &pOVar10[-2].profileUsage;
+      lVar12 = 6;
+      do {
+        piVar5 = piVar5 + 1;
+        piVar4 = piVar4 + 1;
+        *piVar4 = *piVar5;
+        lVar12 = lVar12 + -1;
+        pOVar10 = pOVar7;
+        pOVar6 = pOVar8;
+      } while (lVar12 != 0);
     }
     else {
-      puVar11 = &uStack_74;
-      lVar8 = uVar14 - 4;
-      lVar18 = 6;
+      piVar4 = &iStack_74;
+      piVar5 = &pOVar11[-1].profileUsage;
+      lVar12 = 6;
       do {
-        lVar8 = lVar8 + 4;
-        puVar11 = puVar11 + 1;
-        *puVar11 = *(undefined4 *)lVar8;
-        lVar18 = lVar18 + -1;
-      } while (lVar18 != 0);
-      lVar8 = uVar17 - 0x1c;
-      lVar18 = uVar14 - 4;
-      lVar19 = 6;
+        piVar5 = piVar5 + 1;
+        piVar4 = piVar4 + 1;
+        *piVar4 = *piVar5;
+        lVar12 = lVar12 + -1;
+      } while (lVar12 != 0);
+      piVar5 = &pOVar6[-2].profileUsage;
+      piVar4 = &pOVar11[-1].profileUsage;
+      lVar12 = 6;
       do {
-        lVar8 = lVar8 + 4;
-        lVar18 = lVar18 + 4;
-        *(undefined4 *)lVar18 = *(undefined4 *)lVar8;
-        lVar19 = lVar19 + -1;
-      } while (lVar19 != 0);
-      puVar11 = &uStack_74;
-      lVar8 = uVar17 - 0x1c;
-      lVar18 = 6;
+        piVar5 = piVar5 + 1;
+        piVar4 = piVar4 + 1;
+        *piVar4 = *piVar5;
+        lVar12 = lVar12 + -1;
+      } while (lVar12 != 0);
+      piVar5 = &iStack_74;
+      piVar4 = &pOVar6[-2].profileUsage;
+      lVar12 = 6;
       do {
-        puVar11 = puVar11 + 1;
-        lVar8 = lVar8 + 4;
-        *(undefined4 *)lVar8 = *puVar11;
-        lVar18 = lVar18 + -1;
-      } while (lVar18 != 0);
-      uVar17 = uVar17 - 0x18;
-      uVar9 = uVar12;
-      uVar13 = uVar14 + 0x18;
-      uVar16 = uVar15;
+        piVar5 = piVar5 + 1;
+        piVar4 = piVar4 + 1;
+        *piVar4 = *piVar5;
+        lVar12 = lVar12 + -1;
+      } while (lVar12 != 0);
+      pOVar11 = pOVar11 + 1;
+      pOVar9 = pOVar2;
+      pOVar6 = pOVar6 + -1;
     }
-  } while( true );
+    goto joined_r0x8253e530;
+  }
+  bVar3 = (*in_r6)(pOVar9,pOVar11);
+  pOVar7 = pOVar10;
+  if (!bVar3) {
+    bVar3 = (*in_r6)(pOVar11,pOVar9);
+    if (bVar3) goto joined_r0x8253e5dc;
+    piVar4 = &iStack_114;
+    pOVar7 = pOVar10 + 1;
+    piVar5 = &pOVar10[-1].profileUsage;
+    lVar12 = 6;
+    do {
+      piVar5 = piVar5 + 1;
+      piVar4 = piVar4 + 1;
+      *piVar4 = *piVar5;
+      lVar12 = lVar12 + -1;
+    } while (lVar12 != 0);
+    piVar5 = &pOVar11[-1].profileUsage;
+    piVar4 = &pOVar10[-1].profileUsage;
+    lVar12 = 6;
+    do {
+      piVar5 = piVar5 + 1;
+      piVar4 = piVar4 + 1;
+      *piVar4 = *piVar5;
+      lVar12 = lVar12 + -1;
+    } while (lVar12 != 0);
+    piVar5 = &iStack_114;
+    piVar4 = &pOVar11[-1].profileUsage;
+    lVar12 = 6;
+    do {
+      piVar5 = piVar5 + 1;
+      piVar4 = piVar4 + 1;
+      *piVar4 = *piVar5;
+      lVar12 = lVar12 + -1;
+    } while (lVar12 != 0);
+  }
+  pOVar10 = pOVar7;
+  pOVar11 = pOVar11 + 1;
+  goto joined_r0x8253e530;
 }
 
 
 // 8253E9B8  _Sort<int_*,int,bool_(__cdecl*)(int,int)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3771)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void std::_Sort<int_*,int,bool_(__cdecl*)(int,int)>
@@ -3921,69 +3689,58 @@ void std::_Sort<int_*,int,bool_(__cdecl*)(int,int)>
 
 {
   int *piVar1;
-  int *piVar2;
-  ulonglong uVar3;
-  int iVar5;
-  ulonglong uVar4;
-  ulonglong uVar6;
-  int iVar7;
-  _func___cdecl_bool_int_int *p_Var8;
-  int *local_40;
+  int iVar2;
+  uint uVar3;
+  _func___cdecl_bool_int_int *p_Var4;
+  _func___cdecl_bool_int_int *local_40;
   int *local_3c;
   
-  uVar4 = (ulonglong)param_3;
-  uVar3 = (ulonglong)(int)param_2;
-  piVar2 = (int *)__savegprlr_26(param_1);
-  p_Var8 = (_func___cdecl_bool_int_int *)uVar3;
-  iVar5 = (int)p_Var8 - (int)piVar2;
+  iVar2 = (int)param_2 - (int)param_1;
   do {
-    iVar5 = iVar5 >> 2;
-    if (iVar5 < 0x21) {
+    iVar2 = iVar2 >> 2;
+    if (iVar2 < 0x21) {
 LAB_8253ea70:
-      if (1 < iVar5) {
-        _Insertion_sort1<int_*,bool_(__cdecl*)(int,int),int>
-                  (piVar2,(int *)p_Var8,param_4,(int *)0x0);
+      if (1 < iVar2) {
+        _Insertion_sort1<int_*,bool_(__cdecl*)(int,int),int>(param_1,param_2,param_4,(int *)0x0);
       }
-      __restgprlr_26();
       return;
     }
-    p_Var8 = (_func___cdecl_bool_int_int *)uVar3;
-    iVar7 = (int)uVar4;
-    if (iVar7 < 1) {
-      if (0x20 < iVar5) {
-        if (1 < iVar5) {
+    if (param_3 < 1) {
+      if (0x20 < iVar2) {
+        if (1 < iVar2) {
           _Make_heap<int_*,int,int,bool_(__cdecl*)(int,int)>
-                    (piVar2,(int *)p_Var8,param_4,(int *)0x0,(int *)0x0);
+                    (param_1,param_2,param_4,(int *)0x0,(int *)0x0);
         }
-        _Sort_heap<int_*,bool_(__cdecl*)(int,int)>(piVar2,(int *)p_Var8,param_4);
-        __restgprlr_26();
+        _Sort_heap<int_*,bool_(__cdecl*)(int,int)>(param_1,param_2,param_4);
         return;
       }
       goto LAB_8253ea70;
     }
-    _Unguarded_partition<int_*,bool_(__cdecl*)(int,int)>((int *)&local_40,piVar2,p_Var8);
+    _Unguarded_partition<int_*,bool_(__cdecl*)(int,int)>
+              ((int *)&local_40,param_1,(_func___cdecl_bool_int_int *)param_2);
     piVar1 = local_3c;
-    uVar4 = (longlong)(iVar7 >> 1) + (ulonglong)(iVar7 < 0 && (uVar4 & 1) != 0);
-    uVar4 = (longlong)((int)uVar4 >> 1) + (ulonglong)((int)uVar4 < 0 && (uVar4 & 1) != 0) + uVar4;
-    uVar6 = ZEXT48(local_40);
-    if ((int)((int)local_40 - (int)piVar2 & 0xfffffffcU) <
-        (int)((int)p_Var8 - (int)local_3c & 0xfffffffcU)) {
-      _Sort<int_*,int,bool_(__cdecl*)(int,int)>(piVar2,local_40,(int)uVar4,param_4);
-      uVar6 = uVar3;
-      piVar2 = piVar1;
+    p_Var4 = local_40;
+    uVar3 = (param_3 >> 1) + (uint)(param_3 < 0 && (param_3 & 1U) != 0);
+    param_3 = ((int)uVar3 >> 1) + (uint)((int)uVar3 < 0 && (uVar3 & 1) != 0) + uVar3;
+    if ((int)((int)local_40 - (int)param_1 & 0xfffffffcU) <
+        (int)((int)param_2 - (int)local_3c & 0xfffffffcU)) {
+      _Sort<int_*,int,bool_(__cdecl*)(int,int)>(param_1,(int *)local_40,param_3,param_4);
+      p_Var4 = (_func___cdecl_bool_int_int *)param_2;
+      param_1 = piVar1;
     }
     else {
-      _Sort<int_*,int,bool_(__cdecl*)(int,int)>(local_3c,(int *)p_Var8,(int)uVar4,param_4);
+      _Sort<int_*,int,bool_(__cdecl*)(int,int)>(local_3c,param_2,param_3,param_4);
     }
-    p_Var8 = (_func___cdecl_bool_int_int *)uVar6;
-    iVar5 = (int)p_Var8 - (int)piVar2;
-    uVar3 = uVar6;
+    iVar2 = (int)p_Var4 - (int)param_1;
+    param_2 = (int *)p_Var4;
   } while( true );
 }
 
 
 // 8253EAD8  _Sort<OpcodeLookup_*,int,bool_(__cdecl*)(OpcodeLookup_const_&,OpcodeLookup_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3771)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void std::_Sort<OpcodeLookup_*,int,bool_(__cdecl*)(OpcodeLookup_const_&,OpcodeLookup_const_&)>
@@ -3992,66 +3749,53 @@ void std::_Sort<OpcodeLookup_*,int,bool_(__cdecl*)(OpcodeLookup_const_&,OpcodeLo
 
 {
   uint uVar1;
-  OpcodeLookup *pOVar2;
-  ulonglong uVar3;
+  int iVar2;
+  uint uVar3;
   OpcodeLookup *pOVar4;
-  int iVar6;
-  ulonglong uVar5;
-  ulonglong uVar7;
-  int iVar8;
   OpcodeLookup local_50 [3];
   
-  uVar5 = (ulonglong)param_3;
-  uVar3 = (ulonglong)(int)param_2;
-  pOVar2 = (OpcodeLookup *)__savegprlr_25(param_1);
-  pOVar4 = (OpcodeLookup *)uVar3;
-  iVar6 = (int)pOVar4 - (int)pOVar2;
+  iVar2 = (int)param_2 - (int)param_1;
   do {
-    iVar6 = iVar6 / 0x18;
-    if (iVar6 < 0x21) {
+    iVar2 = iVar2 / 0x18;
+    if (iVar2 < 0x21) {
 LAB_8253eb94:
-      if (1 < iVar6) {
+      if (1 < iVar2) {
         _Insertion_sort1<OpcodeLookup_*,bool_(__cdecl*)(OpcodeLookup_const_&,OpcodeLookup_const_&),OpcodeLookup>
-                  (pOVar2,pOVar4,param_4,(OpcodeLookup *)0x0);
+                  (param_1,param_2,param_4,(OpcodeLookup *)0x0);
       }
-      __restgprlr_25();
       return;
     }
-    iVar8 = (int)uVar5;
-    pOVar4 = (OpcodeLookup *)uVar3;
-    if (iVar8 < 1) {
-      if (0x20 < iVar6) {
-        if (1 < iVar6) {
+    if (param_3 < 1) {
+      if (0x20 < iVar2) {
+        if (1 < iVar2) {
           _Make_heap<OpcodeLookup_*,int,OpcodeLookup,bool_(__cdecl*)(OpcodeLookup_const_&,OpcodeLookup_const_&)>
-                    (pOVar2,pOVar4,param_4,(int *)0x0,(OpcodeLookup *)0x0);
+                    (param_1,param_2,param_4,(int *)0x0,(OpcodeLookup *)0x0);
         }
         _Sort_heap<OpcodeLookup_*,bool_(__cdecl*)(OpcodeLookup_const_&,OpcodeLookup_const_&)>
-                  (pOVar2,pOVar4,param_4);
-        __restgprlr_25();
+                  (param_1,param_2,param_4);
         return;
       }
       goto LAB_8253eb94;
     }
     _Unguarded_partition<OpcodeLookup_*,bool_(__cdecl*)(OpcodeLookup_const_&,OpcodeLookup_const_&)>
-              (local_50,pOVar2,(_func___cdecl_bool_OpcodeLookup_ptr_OpcodeLookup_ptr *)pOVar4);
+              (local_50,param_1,(_func___cdecl_bool_OpcodeLookup_ptr_OpcodeLookup_ptr *)param_2);
     uVar1 = local_50[0].sourcePosIndex;
-    uVar5 = (longlong)(iVar8 >> 1) + (ulonglong)(iVar8 < 0 && (uVar5 & 1) != 0);
-    uVar5 = (longlong)((int)uVar5 >> 1) + (ulonglong)((int)uVar5 < 0 && (uVar5 & 1) != 0) + uVar5;
-    uVar7 = ZEXT48(local_50[0].codePos);
-    if (((int)local_50[0].codePos - (int)pOVar2) / 0x18 <
-        (int)((int)pOVar4 - local_50[0].sourcePosIndex) / 0x18) {
+    pOVar4 = (OpcodeLookup *)local_50[0].codePos;
+    uVar3 = (param_3 >> 1) + (uint)(param_3 < 0 && (param_3 & 1U) != 0);
+    param_3 = ((int)uVar3 >> 1) + (uint)((int)uVar3 < 0 && (uVar3 & 1) != 0) + uVar3;
+    if (((int)local_50[0].codePos - (int)param_1) / 0x18 <
+        (int)((int)param_2 - local_50[0].sourcePosIndex) / 0x18) {
       _Sort<OpcodeLookup_*,int,bool_(__cdecl*)(OpcodeLookup_const_&,OpcodeLookup_const_&)>
-                (pOVar2,(OpcodeLookup *)local_50[0].codePos,(int)uVar5,param_4);
-      uVar7 = uVar3;
-      pOVar2 = (OpcodeLookup *)uVar1;
+                (param_1,(OpcodeLookup *)local_50[0].codePos,param_3,param_4);
+      pOVar4 = param_2;
+      param_1 = (OpcodeLookup *)uVar1;
     }
     else {
       _Sort<OpcodeLookup_*,int,bool_(__cdecl*)(OpcodeLookup_const_&,OpcodeLookup_const_&)>
-                ((OpcodeLookup *)local_50[0].sourcePosIndex,pOVar4,(int)uVar5,param_4);
+                ((OpcodeLookup *)local_50[0].sourcePosIndex,param_2,param_3,param_4);
     }
-    pOVar4 = (OpcodeLookup *)uVar7;
-    iVar6 = (int)pOVar4 - (int)pOVar2;
-    uVar3 = uVar7;
+    iVar2 = (int)pOVar4 - (int)param_1;
+    param_2 = pOVar4;
   } while( true );
 }
 

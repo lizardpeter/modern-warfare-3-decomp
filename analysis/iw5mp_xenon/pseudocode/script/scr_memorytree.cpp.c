@@ -34,6 +34,8 @@ char * MT_NodeInfoString(uint param_1)
 
 // 82538858  MT_DumpTree  (script/scr_memorytree.cpp:159)
 
+/* WARNING: Function: __savegprlr_18 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_18 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void MT_DumpTree(void)
@@ -50,7 +52,6 @@ void MT_DumpTree(void)
   undefined8 uStack_e8;
   int local_e0 [56];
   
-  __savegprlr_18();
   lVar8 = 0xb;
   puVar3 = &uStack_e8;
   do {
@@ -96,7 +97,6 @@ void MT_DumpTree(void)
   Com_Printf(0x17,"peak memory alloc buckets: %d (%d instances)\n");
   Com_Printf(0x17,"total memory free buckets: %d\n");
   Com_Printf(0x17,"********************************\n");
-  __restgprlr_18();
   return;
 }
 
@@ -216,6 +216,9 @@ int MT_GetSize(int param_1)
 
 // 82538D88  MT_AllocIndex  (script/scr_memorytree.cpp:409)
 
+/* WARNING: Function: __savegprlr_20 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_20 replaced with injection: xenon_save_restore */
+
 uint MT_AllocIndex(int param_1,int param_2)
 
 {
@@ -223,47 +226,48 @@ uint MT_AllocIndex(int param_1,int param_2)
   uint uVar2;
   uint uVar3;
   ulonglong uVar4;
-  int iVar5;
-  uint uVar6;
-  bool bVar7;
+  uint uVar5;
+  bool bVar6;
+  ulonglong uVar7;
   ulonglong uVar8;
+  uint uVar10;
   ulonglong uVar9;
-  ulonglong uVar10;
   longlong lVar11;
   uint *puVar13;
   ulonglong uVar12;
   longlong lVar14;
-  ulonglong uVar15;
+  int iVar15;
+  ulonglong uVar16;
   char in_RESERVE;
   byte in_cr0;
   
-  iVar5 = __savegprlr_20(param_1);
   Profile_Begin(0x14a);
-  uVar6 = MT_GetSize(iVar5);
-  if (((int)uVar6 < 0) || (0x10 < (int)uVar6)) {
+  uVar5 = MT_GetSize(param_1);
+  if (((int)uVar5 < 0) || (0x10 < (int)uVar5)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_memorytree.cpp",
                     0x1aa,0,"%s");
   }
-  uVar15 = (ulonglong)scrMemTreeGlob.head[uVar6];
-  uVar10 = uVar15;
-  if (4 < uVar6) {
-    uVar8 = (ulonglong)(uint)(1 << (uVar6 - 5 & 0x3f));
-    lVar14 = 0;
+  uVar16 = (ulonglong)scrMemTreeGlob.head[uVar5];
+  if (4 < uVar5) {
+    uVar7 = (ulonglong)(uint)(1 << (uVar5 - 5 & 0x3f));
+    iVar15 = 0;
+    uVar9 = uVar16;
 LAB_825390fc:
+    uVar10 = (uint)uVar9;
     uVar12 = 0;
-    uVar9 = uVar10;
-    if (uVar8 != 0) {
+    uVar8 = uVar9;
+    if (uVar7 != 0) {
       do {
-        if (*(int *)((int)scrMemTreeGlob.nodeBits + (int)(uVar9 << 2)) != -1) goto LAB_825391d0;
+        if (*(int *)((int)scrMemTreeGlob.nodeBits + (int)(uVar8 << 2)) != -1) goto LAB_825391d0;
         uVar12 = uVar12 + 1;
-        uVar9 = uVar9 + 1 & 0x7ff;
-      } while ((uVar12 & 0xffffffff) < uVar8);
+        uVar8 = uVar8 + 1 & 0x7ff;
+      } while ((uVar12 & 0xffffffff) < uVar7);
     }
     uVar12 = 0;
-    uVar9 = uVar10;
+    uVar8 = uVar9;
     do {
-      if (uVar8 <= (uVar12 & 0xffffffff)) goto LAB_82539254;
-      lVar11 = (uVar9 & 0x3fffffff) * 4 + -0x7c7f4880;
+      if (uVar7 <= (uVar12 & 0xffffffff)) goto LAB_82539254;
+      lVar11 = (uVar8 & 0x3fffffff) * 4 + -0x7c7f4880;
       do {
         puVar13 = (uint *)lVar11;
         uVar2 = *puVar13;
@@ -283,15 +287,18 @@ LAB_825390fc:
       } while (!(bool)(in_cr0 >> 1 & 1));
       if (uVar2 != 0xffffffff) goto LAB_825391a4;
       uVar12 = uVar12 + 1;
-      uVar9 = uVar9 + 1 & 0x7ff;
+      uVar8 = uVar8 + 1 & 0x7ff;
     } while( true );
   }
-  if (uVar6 == 1) {
+  uVar9 = uVar16;
+  if (uVar5 == 1) {
     do {
-      lVar14 = (uVar10 & 0x3fffffff) * 4;
+      uVar10 = (uint)uVar9;
+      lVar14 = (uVar9 & 0x3fffffff) * 4;
       lVar11 = lVar14 + -0x7c7f4880;
       uVar2 = *(uint *)((int)scrMemTreeGlob.nodeBits + (int)lVar14);
       lVar14 = LZCOUNT((uint)(((ulonglong)uVar2 & 0xffffffffd5555555) << 1) & uVar2);
+      iVar15 = (int)lVar14;
       if (lVar14 != 0x20) {
         do {
           puVar13 = (uint *)lVar11;
@@ -306,23 +313,25 @@ LAB_825390fc:
           }
           if (in_RESERVE != '\0') {
             uVar3 = storeWordConditionalIndexed
-                              ((ulonglong)uVar2 & ~(ulonglong)(0xc0000000 >> (int)lVar14),0,lVar11);
+                              ((ulonglong)uVar2 & ~(ulonglong)(0xc0000000 >> iVar15),0,lVar11);
             *puVar13 = uVar3;
             in_cr0 = 2;
           }
         } while (!(bool)(in_cr0 >> 1 & 1));
         if (uVar1 == uVar2) goto LAB_82539254;
       }
-      uVar10 = uVar10 + 1 & 0x7ff;
-    } while (uVar10 != uVar15);
+      uVar9 = uVar9 + 1 & 0x7ff;
+    } while (uVar9 != uVar16);
   }
-  else if (uVar6 == 2) {
+  else if (uVar5 == 2) {
     do {
-      lVar14 = (uVar10 & 0x3fffffff) * 4;
+      uVar10 = (uint)uVar9;
+      lVar14 = (uVar9 & 0x3fffffff) * 4;
       lVar11 = lVar14 + -0x7c7f4880;
       uVar2 = *(uint *)((int)scrMemTreeGlob.nodeBits + (int)lVar14);
-      uVar8 = ((ulonglong)uVar2 & 0x7fffffff) << 1 & (ulonglong)uVar2;
-      lVar14 = LZCOUNT((uint)(uVar8 << 2) & 0x88888888 & (uint)uVar8);
+      uVar7 = ((ulonglong)uVar2 & 0x7fffffff) << 1 & (ulonglong)uVar2;
+      lVar14 = LZCOUNT((uint)(uVar7 << 2) & 0x88888888 & (uint)uVar7);
+      iVar15 = (int)lVar14;
       if (lVar14 != 0x20) {
         do {
           puVar13 = (uint *)lVar11;
@@ -337,24 +346,26 @@ LAB_825390fc:
           }
           if (in_RESERVE != '\0') {
             uVar3 = storeWordConditionalIndexed
-                              ((ulonglong)uVar2 & ~(ulonglong)(0xf0000000 >> (int)lVar14),0,lVar11);
+                              ((ulonglong)uVar2 & ~(ulonglong)(0xf0000000 >> iVar15),0,lVar11);
             *puVar13 = uVar3;
             in_cr0 = 2;
           }
         } while (!(bool)(in_cr0 >> 1 & 1));
         if (uVar1 == uVar2) goto LAB_82539254;
       }
-      uVar10 = uVar10 + 1 & 0x7ff;
-    } while (uVar10 != uVar15);
+      uVar9 = uVar9 + 1 & 0x7ff;
+    } while (uVar9 != uVar16);
   }
-  else if (uVar6 == 3) {
+  else if (uVar5 == 3) {
     do {
-      lVar14 = (uVar10 & 0x3fffffff) * 4;
+      uVar10 = (uint)uVar9;
+      lVar14 = (uVar9 & 0x3fffffff) * 4;
       lVar11 = lVar14 + -0x7c7f4880;
       uVar2 = *(uint *)((int)scrMemTreeGlob.nodeBits + (int)lVar14);
-      uVar8 = ((ulonglong)uVar2 & 0x7fffffff) << 1 & (ulonglong)uVar2;
-      uVar8 = (uVar8 & 0x3fffffff) << 2 & uVar8;
-      lVar14 = LZCOUNT((uint)(uVar8 << 4) & 0x80808080 & (uint)uVar8);
+      uVar7 = ((ulonglong)uVar2 & 0x7fffffff) << 1 & (ulonglong)uVar2;
+      uVar7 = (uVar7 & 0x3fffffff) << 2 & uVar7;
+      lVar14 = LZCOUNT((uint)(uVar7 << 4) & 0x80808080 & (uint)uVar7);
+      iVar15 = (int)lVar14;
       if (lVar14 != 0x20) {
         do {
           puVar13 = (uint *)lVar11;
@@ -369,23 +380,24 @@ LAB_825390fc:
           }
           if (in_RESERVE != '\0') {
             uVar3 = storeWordConditionalIndexed
-                              ((ulonglong)uVar2 & ~(ulonglong)(0xff000000 >> (int)lVar14),0,lVar11);
+                              ((ulonglong)uVar2 & ~(ulonglong)(0xff000000 >> iVar15),0,lVar11);
             *puVar13 = uVar3;
             in_cr0 = 2;
           }
         } while (!(bool)(in_cr0 >> 1 & 1));
         if (uVar1 == uVar2) goto LAB_82539254;
       }
-      uVar10 = uVar10 + 1 & 0x7ff;
-    } while (uVar10 != uVar15);
+      uVar9 = uVar9 + 1 & 0x7ff;
+    } while (uVar9 != uVar16);
   }
-  else if (uVar6 == 0) {
+  else if (uVar5 == 0) {
     do {
-      lVar14 = (uVar10 & 0x3fffffff) * 4;
+      uVar10 = (uint)uVar9;
+      lVar14 = (uVar9 & 0x3fffffff) * 4;
       lVar11 = lVar14 + -0x7c7f4880;
       uVar2 = *(uint *)((int)scrMemTreeGlob.nodeBits + (int)lVar14);
-      lVar14 = LZCOUNT(uVar2);
-      if (lVar14 != 0x20) {
+      iVar15 = (int)LZCOUNT(uVar2);
+      if (LZCOUNT(uVar2) != 0x20) {
         do {
           puVar13 = (uint *)lVar11;
           uVar1 = *puVar13;
@@ -399,15 +411,15 @@ LAB_825390fc:
           }
           if (in_RESERVE != '\0') {
             uVar3 = storeWordConditionalIndexed
-                              ((ulonglong)uVar2 & ~(ulonglong)(0x80000000 >> (int)lVar14),0,lVar11);
+                              ((ulonglong)uVar2 & ~(ulonglong)(0x80000000 >> iVar15),0,lVar11);
             *puVar13 = uVar3;
             in_cr0 = 2;
           }
         } while (!(bool)(in_cr0 >> 1 & 1));
         if (uVar1 == uVar2) {
 LAB_82539254:
-          scrMemTreeGlob.head[uVar6] = (uint)uVar10;
-          lVar14 = (uVar10 & 0x7ffffff) * 0x20 + lVar14;
+          scrMemTreeGlob.head[uVar5] = uVar10;
+          uVar10 = uVar10 * 0x20 + iVar15;
           do {
             if (in_RESERVE != '\0') {
               scrMemTreeGlob.totalAlloc =
@@ -420,7 +432,7 @@ LAB_82539254:
             if (in_RESERVE != '\0') {
               scrMemTreeGlob.totalAllocBuckets =
                    storeWordConditionalIndexed
-                             ((ulonglong)(uint)(1 << (uVar6 & 0x3f)) +
+                             ((ulonglong)(uint)(1 << (uVar5 & 0x3f)) +
                               (ulonglong)(uint)scrMemTreeGlob.totalAllocBuckets,0,0xffffffff8380d820
                              );
               in_cr0 = 2;
@@ -436,40 +448,40 @@ LAB_82539254:
             MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_memorytree.cpp"
                             ,0x250,0,"%s");
           }
-          uVar2 = (uint)lVar14;
-          if (scrMemTreeDebugGlob.mt_usage[uVar2] != '\0') {
-            SL_DebugConvertToString(uVar2);
+          if (scrMemTreeDebugGlob.mt_usage[uVar10] != '\0') {
+            SL_DebugConvertToString(uVar10);
             va("%s: \'%s\' (%d)");
             MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_memorytree.cpp"
                             ,0x251,0,"%s\n\t(MT_NodeInfoString( nodeNum )) = %s");
           }
-          if (scrMemTreeDebugGlob.mt_usage_size[uVar2] != '\0') {
-            if (scrMemTreeDebugGlob.mt_usage[uVar2] != '\0') {
-              SL_DebugConvertToString(uVar2);
+          if (scrMemTreeDebugGlob.mt_usage_size[uVar10] != '\0') {
+            if (scrMemTreeDebugGlob.mt_usage[uVar10] != '\0') {
+              SL_DebugConvertToString(uVar10);
               va("%s: \'%s\' (%d)");
             }
             MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_memorytree.cpp"
                             ,0x252,0,"%s\n\t(MT_NodeInfoString( nodeNum )) = %s");
           }
-          scrMemTreeDebugGlob.mt_usage[uVar2] = (uchar)param_2;
-          scrMemTreeDebugGlob.mt_usage_size[uVar2] = (uchar)uVar6;
+          scrMemTreeDebugGlob.mt_usage[uVar10] = (uchar)param_2;
+          scrMemTreeDebugGlob.mt_usage_size[uVar10] = (uchar)uVar5;
           Profile_EndInternal((double *)0x0);
-          uVar6 = __restgprlr_20(lVar14);
-          return uVar6;
+          return uVar10;
         }
       }
-      uVar10 = uVar10 + 1 & 0x7ff;
-    } while (uVar10 != uVar15);
+      uVar9 = uVar9 + 1 & 0x7ff;
+    } while (uVar9 != uVar16);
   }
   else {
     do {
-      lVar14 = (uVar10 & 0x3fffffff) * 4;
+      uVar10 = (uint)uVar9;
+      lVar14 = (uVar9 & 0x3fffffff) * 4;
       lVar11 = lVar14 + -0x7c7f4880;
       uVar2 = *(uint *)((int)scrMemTreeGlob.nodeBits + (int)lVar14);
-      uVar8 = ((ulonglong)uVar2 & 0x7fffffff) << 1 & (ulonglong)uVar2;
-      uVar8 = (uVar8 & 0x3fffffff) << 2 & uVar8;
-      uVar8 = (uVar8 & 0xfffffff) << 4 & uVar8;
-      lVar14 = LZCOUNT((uint)(uVar8 << 8) & 0x80008000 & (uint)uVar8);
+      uVar7 = ((ulonglong)uVar2 & 0x7fffffff) << 1 & (ulonglong)uVar2;
+      uVar7 = (uVar7 & 0x3fffffff) << 2 & uVar7;
+      uVar7 = (uVar7 & 0xfffffff) << 4 & uVar7;
+      lVar14 = LZCOUNT((uint)(uVar7 << 8) & 0x80008000 & (uint)uVar7);
+      iVar15 = (int)lVar14;
       if (lVar14 != 0x20) {
         do {
           puVar13 = (uint *)lVar11;
@@ -484,46 +496,48 @@ LAB_82539254:
           }
           if (in_RESERVE != '\0') {
             uVar3 = storeWordConditionalIndexed
-                              ((ulonglong)uVar2 & ~(ulonglong)(0xffff0000 >> (int)lVar14),0,lVar11);
+                              ((ulonglong)uVar2 & ~(ulonglong)(0xffff0000 >> iVar15),0,lVar11);
             *puVar13 = uVar3;
             in_cr0 = 2;
           }
         } while (!(bool)(in_cr0 >> 1 & 1));
         if (uVar1 == uVar2) goto LAB_82539254;
       }
-      uVar10 = uVar10 + 1 & 0x7ff;
-    } while (uVar10 != uVar15);
+      uVar9 = uVar9 + 1 & 0x7ff;
+    } while (uVar9 != uVar16);
   }
 LAB_825391e0:
   Profile_EndInternal((double *)0x0);
   MT_DumpTree();
   Com_Printf(0x17,"%s: failed memory allocation of %d bytes for script usage\n");
-  bVar7 = Sys_IsServerThread();
-  if (!bVar7) {
+  bVar6 = Sys_IsServerThread();
+  if (!bVar6) {
                     /* WARNING: Subroutine does not return */
     Sys_Error("\x15%s: failed allocation of %d bytes for script usage");
   }
   Scr_TerminalError("failed memory allocation for script usage");
-  uVar6 = __restgprlr_20(0);
-  return uVar6;
+  return 0;
 LAB_825391a4:
-  uVar9 = uVar10;
+  uVar8 = uVar9;
   uVar4 = uVar12 & 0xffffffff;
   while (uVar4 != 0) {
-    lVar11 = uVar9 << 2;
-    uVar9 = uVar9 + 1 & 0x7ff;
+    lVar11 = uVar8 << 2;
+    uVar8 = uVar8 + 1 & 0x7ff;
     *(undefined4 *)((int)scrMemTreeGlob.nodeBits + (int)lVar11) = 0xffffffff;
     uVar12 = uVar12 - 1;
     uVar4 = uVar12;
   }
 LAB_825391d0:
-  uVar10 = uVar8 + uVar10 & 0x7ff;
-  if (uVar10 == uVar15) goto LAB_825391e0;
+  uVar9 = uVar7 + uVar9 & 0x7ff;
+  if (uVar9 == uVar16) goto LAB_825391e0;
   goto LAB_825390fc;
 }
 
 
 // 82539420  MT_FreeIndex  (script/scr_memorytree.cpp:609)
+
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 
 void MT_FreeIndex(uint param_1,int param_2)
 
@@ -531,24 +545,21 @@ void MT_FreeIndex(uint param_1,int param_2)
   uint uVar1;
   ulonglong uVar2;
   uint uVar4;
-  uint uVar5;
   longlong lVar3;
-  uint *puVar6;
-  int iVar7;
-  ulonglong uVar8;
-  ulonglong uVar9;
-  uint uVar10;
+  uint *puVar5;
+  ulonglong uVar6;
+  ulonglong uVar7;
+  uint uVar8;
   char in_RESERVE;
   byte in_cr0;
   
-  uVar4 = __savegprlr_26(param_1);
   Profile_Begin(0x14a);
-  uVar5 = MT_GetSize(param_2);
-  if (((int)uVar5 < 0) || (0x10 < (int)uVar5)) {
+  uVar4 = MT_GetSize(param_2);
+  if (((int)uVar4 < 0) || (0x10 < (int)uVar4)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_memorytree.cpp",
                     0x26f,0,"%s");
   }
-  if ((uVar4 == 0) || (0xffff < uVar4)) {
+  if ((param_1 == 0) || (0xffff < param_1)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_memorytree.cpp",
                     0x270,0,"%s");
   }
@@ -564,7 +575,7 @@ void MT_FreeIndex(uint param_1,int param_2)
     if (in_RESERVE != '\0') {
       scrMemTreeGlob.totalAllocBuckets =
            storeWordConditionalIndexed
-                     ((ulonglong)(uint)(-1 << (uVar5 & 0x3f)) +
+                     ((ulonglong)(uint)(-1 << (uVar4 & 0x3f)) +
                       (ulonglong)(uint)scrMemTreeGlob.totalAllocBuckets,0,0xffffffff8380d820);
       in_cr0 = 2;
     }
@@ -575,51 +586,50 @@ void MT_FreeIndex(uint param_1,int param_2)
   if (scrMemTreeGlob.totalAllocBucketsMax < scrMemTreeGlob.totalAllocBuckets) {
     scrMemTreeGlob.totalAllocBucketsMax = scrMemTreeGlob.totalAllocBuckets;
   }
-  if (scrMemTreeDebugGlob.mt_usage[uVar4] == '\0') {
+  if (scrMemTreeDebugGlob.mt_usage[param_1] == '\0') {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_memorytree.cpp",
                     0x283,0,"%s");
   }
-  if (scrMemTreeDebugGlob.mt_usage_size[uVar4] != uVar5) {
-    MT_NodeInfoString(uVar4);
+  if (scrMemTreeDebugGlob.mt_usage_size[param_1] != uVar4) {
+    MT_NodeInfoString(param_1);
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_memorytree.cpp",
                     0x284,0,"%s\n\t(MT_NodeInfoString( nodeNum )) = %s");
   }
-  uVar8 = (ulonglong)(uVar4 >> 5);
-  scrMemTreeDebugGlob.mt_usage[uVar4] = '\0';
-  scrMemTreeDebugGlob.mt_usage_size[uVar4] = '\0';
+  uVar6 = (ulonglong)(param_1 >> 5);
+  scrMemTreeDebugGlob.mt_usage[param_1] = '\0';
+  scrMemTreeDebugGlob.mt_usage_size[param_1] = '\0';
   sync(1);
-  if ((int)uVar5 < 5) {
-    uVar10 = scrMemTreeGlob.sizeBits[uVar5];
-    lVar3 = uVar8 * 4 + -0x7c7f4880;
+  if ((int)uVar4 < 5) {
+    uVar8 = scrMemTreeGlob.sizeBits[uVar4];
+    lVar3 = uVar6 * 4 + -0x7c7f4880;
     do {
-      puVar6 = (uint *)lVar3;
+      puVar5 = (uint *)lVar3;
       if (in_RESERVE != '\0') {
-        uVar1 = storeWordConditionalIndexed((ulonglong)(uVar10 >> (uVar4 & 0x1f) | *puVar6),0,lVar3)
-        ;
-        *puVar6 = uVar1;
+        uVar1 = storeWordConditionalIndexed
+                          ((ulonglong)(uVar8 >> (param_1 & 0x1f) | *puVar5),0,lVar3);
+        *puVar5 = uVar1;
         in_cr0 = 2;
       }
     } while (!(bool)(in_cr0 >> 1 & 1));
   }
   else {
-    uVar2 = uVar8;
-    for (uVar9 = (ulonglong)(uint)(1 << (uVar5 - 5 & 0x3f)); uVar9 != 0; uVar9 = uVar9 - 1) {
+    uVar2 = uVar6;
+    for (uVar7 = (ulonglong)(uint)(1 << (uVar4 - 5 & 0x3f)); uVar7 != 0; uVar7 = uVar7 - 1) {
       lVar3 = uVar2 << 2;
       uVar2 = uVar2 + 1 & 0x7ff;
       *(undefined4 *)((int)scrMemTreeGlob.nodeBits + (int)lVar3) = 0xffffffff;
     }
   }
-  uVar8 = scrMemTreeGlob.head[uVar5] - uVar8;
-  if (0 < (longlong)uVar8) {
-    uVar10 = scrMemTreeGlob.backtrackAmount[uVar5] + 8;
-    if ((uVar8 & 0xffffffff) < (ulonglong)uVar10) {
-      scrMemTreeGlob.head[uVar5] = uVar4 >> 5;
-      uVar10 = 0;
+  uVar6 = scrMemTreeGlob.head[uVar4] - uVar6;
+  if (0 < (longlong)uVar6) {
+    uVar8 = scrMemTreeGlob.backtrackAmount[uVar4] + 8;
+    if ((uVar6 & 0xffffffff) < (ulonglong)uVar8) {
+      scrMemTreeGlob.head[uVar4] = param_1 >> 5;
+      uVar8 = 0;
     }
-    scrMemTreeGlob.backtrackAmount[uVar5] = uVar10;
+    scrMemTreeGlob.backtrackAmount[uVar4] = uVar8;
   }
-  iVar7 = Profile_EndInternal((double *)0x0);
-  __restgprlr_26(iVar7);
+  Profile_EndInternal((double *)0x0);
   return;
 }
 

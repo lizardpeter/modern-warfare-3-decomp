@@ -2,125 +2,125 @@
 
 // 82926480  raise  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/winsig.c:330)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 int raise(int param_1)
 
 {
   void *pvVar1;
   bool bVar2;
+  int *piVar3;
   int iVar4;
-  undefined8 uVar3;
-  int *piVar5;
-  void *pvVar6;
-  _func___cdecl_void_int *p_Var7;
-  _func___cdecl_void_int **pp_Var8;
+  void *pvVar5;
+  _func___cdecl_void_int *p_Var6;
+  _func___cdecl_void_int **pp_Var7;
   int iStack00000014;
   _tiddata *local_48;
   void *local_40;
   int local_3c;
   
-  iVar4 = __savegprlr_26(param_1);
   bVar2 = false;
   local_48 = (_tiddata *)0x0;
-  iStack00000014 = iVar4;
-  if (iVar4 < 0xc) {
-    if (iVar4 != 0xb) {
-      if (iVar4 == 2) {
-        pp_Var8 = &ctrlc_action;
-        p_Var7 = ctrlc_action;
+  iStack00000014 = param_1;
+  if (param_1 < 0xc) {
+    if (param_1 != 0xb) {
+      if (param_1 == 2) {
+        pp_Var7 = &ctrlc_action;
+        p_Var6 = ctrlc_action;
         goto LAB_829265c0;
       }
-      if (iVar4 != 4) {
-        if (iVar4 == 6) goto LAB_82926588;
-        if (iVar4 != 8) goto LAB_82926574;
+      if (param_1 != 4) {
+        if (param_1 == 6) goto LAB_82926588;
+        if (param_1 != 8) goto LAB_82926574;
       }
     }
     local_48 = _getptd_noexit();
     if (local_48 == (_tiddata *)0x0) {
-LAB_829264e8:
-      uVar3 = 0xffffffffffffffff;
-      goto LAB_82926700;
+      return -1;
     }
     pvVar1 = local_48->_pxcptacttab;
-    pvVar6 = pvVar1;
+    pvVar5 = pvVar1;
     do {
-      if (*(int *)((int)pvVar6 + 4) == iVar4) break;
-      pvVar6 = (void *)((int)pvVar6 + 0xc);
-    } while (pvVar6 < (void *)((int)pvVar1 + 0x90U));
-    if (((void *)((int)pvVar1 + 0x90U) <= pvVar6) || (*(int *)((int)pvVar6 + 4) != iVar4)) {
-      pvVar6 = (void *)0x0;
+      if (*(int *)((int)pvVar5 + 4) == param_1) break;
+      pvVar5 = (void *)((int)pvVar5 + 0xc);
+    } while (pvVar5 < (void *)((int)pvVar1 + 0x90U));
+    if (((void *)((int)pvVar1 + 0x90U) <= pvVar5) || (*(int *)((int)pvVar5 + 4) != param_1)) {
+      pvVar5 = (void *)0x0;
     }
-    pp_Var8 = (_func___cdecl_void_int **)((int)pvVar6 + 8);
-    p_Var7 = *(_func___cdecl_void_int **)((int)pvVar6 + 8);
+    pp_Var7 = (_func___cdecl_void_int **)((int)pvVar5 + 8);
+    p_Var6 = *(_func___cdecl_void_int **)((int)pvVar5 + 8);
   }
   else {
-    if (iVar4 == 0xf) {
-      pp_Var8 = &term_action;
-      p_Var7 = term_action;
+    if (param_1 == 0xf) {
+      pp_Var7 = &term_action;
+      p_Var6 = term_action;
     }
-    else if (iVar4 == 0x15) {
-      pp_Var8 = &ctrlbreak_action;
-      p_Var7 = ctrlbreak_action;
+    else if (param_1 == 0x15) {
+      pp_Var7 = &ctrlbreak_action;
+      p_Var6 = ctrlbreak_action;
     }
     else {
-      if (iVar4 != 0x16) {
+      if (param_1 != 0x16) {
 LAB_82926574:
-        piVar5 = _errno();
-        *piVar5 = 0x16;
+        piVar3 = _errno();
+        *piVar3 = 0x16;
         _invalid_parameter_noinfo();
-        goto LAB_829264e8;
+        return -1;
       }
 LAB_82926588:
-      pp_Var8 = &abort_action;
-      p_Var7 = abort_action;
+      pp_Var7 = &abort_action;
+      p_Var6 = abort_action;
     }
 LAB_829265c0:
     bVar2 = true;
   }
-  if (p_Var7 != (_func___cdecl_void_int *)0x1) {
-    if (p_Var7 == (_func___cdecl_void_int *)0x0) {
+  if (p_Var6 == (_func___cdecl_void_int *)0x1) {
+    return 0;
+  }
+  if (p_Var6 == (_func___cdecl_void_int *)0x0) {
                     /* WARNING: Subroutine does not return */
-      _exit(3);
+    _exit(3);
+  }
+  if (bVar2) {
+    _lock(0);
+  }
+  if (((param_1 == 8) || (param_1 == 0xb)) || (param_1 == 4)) {
+    local_40 = local_48->_tpxcptinfoptrs;
+    local_48->_tpxcptinfoptrs = (void *)0x0;
+    if (param_1 == 8) {
+      local_3c = local_48->_tfpecode;
+      local_48->_tfpecode = 0x8c;
+      goto LAB_82926638;
     }
-    if (bVar2) {
-      _lock(0);
-    }
-    if (((iVar4 == 8) || (iVar4 == 0xb)) || (iVar4 == 4)) {
-      local_40 = local_48->_tpxcptinfoptrs;
-      local_48->_tpxcptinfoptrs = (void *)0x0;
-      if (iVar4 == 8) {
-        local_3c = local_48->_tfpecode;
-        local_48->_tfpecode = 0x8c;
-        goto LAB_82926638;
-      }
-LAB_82926688:
-      *pp_Var8 = (_func___cdecl_void_int *)0x0;
-    }
-    else {
+  }
+  else {
 LAB_82926638:
-      if (iVar4 != 8) goto LAB_82926688;
+    if (param_1 == 8) {
       for (iVar4 = 3; iVar4 < 0xc; iVar4 = iVar4 + 1) {
         *(undefined4 *)((int)local_48->_pxcptacttab + iVar4 * 0xc + 8) = 0;
       }
-    }
-    FUN_82926728();
-    iVar4 = iStack00000014;
-    if (iStack00000014 == 8) {
-      (*p_Var7)(8);
-    }
-    else {
-      (*p_Var7)(iStack00000014);
-      if ((iVar4 != 0xb) && (iVar4 != 4)) goto LAB_829266fc;
-    }
-    local_48->_tpxcptinfoptrs = local_40;
-    if (iVar4 == 8) {
-      local_48->_tfpecode = local_3c;
+      goto LAB_8292668c;
     }
   }
-LAB_829266fc:
-  uVar3 = 0;
-LAB_82926700:
-  iVar4 = __restgprlr_26(uVar3);
-  return iVar4;
+  *pp_Var7 = (_func___cdecl_void_int *)0x0;
+LAB_8292668c:
+  FUN_82926728();
+  iVar4 = iStack00000014;
+  if (iStack00000014 == 8) {
+    (*p_Var6)(8);
+  }
+  else {
+    (*p_Var6)(iStack00000014);
+    if ((iVar4 != 0xb) && (iVar4 != 4)) {
+      return 0;
+    }
+  }
+  local_48->_tpxcptinfoptrs = local_40;
+  if (iVar4 == 8) {
+    local_48->_tfpecode = local_3c;
+  }
+  return 0;
 }
 
 

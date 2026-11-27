@@ -14,88 +14,88 @@ uint Com_BlockChecksum32(void *param_1,uint param_2)
 
 // 824D7AF0  DCache_IO_CreateFile  (qcommon/com_dcache_io.cpp:54)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 dcacheFileResult_t DCache_IO_CreateFile(char *param_1,long param_2,void **param_3)
 
 {
-  char *pcVar2;
-  void *pvVar3;
-  undefined8 uVar1;
-  dcacheFileResult_t dVar4;
-  ulonglong uVar5;
+  char *pcVar1;
+  void *pvVar2;
+  dcacheFileResult_t dVar3;
   
-  uVar5 = (ulonglong)param_2;
-  __savegprlr_29(param_1,uVar5,param_3);
-  if ((uVar5 & 0xffffffff) == 0) {
+  if (param_2 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_dcache_io.cpp",
                     0x39,0,"%s");
   }
-  pcVar2 = va("cache:\\%s");
-  pvVar3 = CreateFileA(pcVar2,0xc0000000,0,(void *)0x0,1,0,(void *)0x0);
-  uVar1 = 2;
-  *(undefined4 *)uVar5 = pvVar3;
-  if ((pvVar3 == (void *)0x0) || (pvVar3 == (void *)0xffffffff)) {
-    pcVar2 = va("cache:\\%s");
-    pvVar3 = CreateFileA(pcVar2,0xc0000000,0,(void *)0x0,3,0,(void *)0x0);
-    uVar1 = 1;
-    *(undefined4 *)uVar5 = pvVar3;
-    if ((pvVar3 == (void *)0x0) || (pvVar3 == (void *)0xffffffff)) {
+  pcVar1 = va("cache:\\%s");
+  pvVar2 = CreateFileA(pcVar1,0xc0000000,0,(void *)0x0,1,0,(void *)0x0);
+  dVar3 = DCACHE_FILERESULT_CREATED;
+  *(void **)param_2 = pvVar2;
+  if ((pvVar2 == (void *)0x0) || (pvVar2 == (void *)0xffffffff)) {
+    pcVar1 = va("cache:\\%s");
+    pvVar2 = CreateFileA(pcVar1,0xc0000000,0,(void *)0x0,3,0,(void *)0x0);
+    dVar3 = DCACHE_FILERESULT_OPENED;
+    *(void **)param_2 = pvVar2;
+    if ((pvVar2 == (void *)0x0) || (pvVar2 == (void *)0xffffffff)) {
       Com_PrintError(0x10,"dcache: Could not create file handle.\n");
-      uVar1 = 0;
+      dVar3 = DCACHE_FILERESULT_ERROR;
     }
   }
-  dVar4 = __restgprlr_29(uVar1);
-  return dVar4;
+  return dVar3;
 }
 
 
 // 824D7BE0  DCache_IO_ReadBytes  (qcommon/com_dcache_io.cpp:128)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 int DCache_IO_ReadBytes(void *param_1,int param_2,int param_3,char *param_4)
 
 {
-  void *pvVar1;
-  int iVar2;
+  int iVar1;
   ulong local_30 [12];
   
-  pvVar1 = (void *)__savegprlr_28(param_1);
   local_30[0] = 0;
-  if (pvVar1 == (void *)0x0) {
+  if (param_1 == (void *)0x0) {
     Com_PrintError(0x10,"dcache: No file handle\n.");
   }
   else {
-    iVar2 = SetFilePointerEx(pvVar1,(_LARGE_INTEGER)(longlong)param_2,(_LARGE_INTEGER *)0x0,0);
-    if (iVar2 == 0) {
+    iVar1 = SetFilePointerEx(param_1,(_LARGE_INTEGER)(longlong)param_2,(_LARGE_INTEGER *)0x0,0);
+    if (iVar1 == 0) {
       Com_PrintError(0x10,"dcache: Could not move to %d.\n");
     }
     else {
-      ReadFile(pvVar1,param_4,param_3,local_30,(_OVERLAPPED *)0x0);
+      ReadFile(param_1,param_4,param_3,local_30,(_OVERLAPPED *)0x0);
     }
   }
   if (local_30[0] == 0) {
     Com_PrintError(0x10,"dcache: Read requested resulted in 0 bytes being read.\n");
   }
-  iVar2 = __restgprlr_28(local_30[0]);
-  return iVar2;
+  return local_30[0];
 }
 
 
 // 824D7C90  DCache_IO_WriteBytes  (qcommon/com_dcache_io.cpp:183)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 int DCache_IO_WriteBytes(void *param_1,int param_2,int param_3,char *param_4)
 
 {
-  void *pvVar1;
-  int iVar2;
+  ulong uVar1;
   ulong local_30 [12];
   
-  pvVar1 = (void *)__savegprlr_29(param_1);
   local_30[0] = 0;
-  if (pvVar1 != (void *)0x0) {
-    SetFilePointerEx(pvVar1,(_LARGE_INTEGER)(longlong)param_2,(_LARGE_INTEGER *)0x0,0);
-    WriteFile(pvVar1,param_4,param_3,local_30,(_OVERLAPPED *)0x0);
+  uVar1 = 0;
+  if (param_1 != (void *)0x0) {
+    SetFilePointerEx(param_1,(_LARGE_INTEGER)(longlong)param_2,(_LARGE_INTEGER *)0x0,0);
+    WriteFile(param_1,param_4,param_3,local_30,(_OVERLAPPED *)0x0);
+    uVar1 = local_30[0];
   }
-  iVar2 = __restgprlr_29(local_30[0]);
-  return iVar2;
+  return uVar1;
 }
 
 
@@ -110,54 +110,52 @@ int DCache_IO_GetFileOffsetFromBlockIndex(int param_1)
 
 // 824D7CF8  DCache_IO_WriteBlock  (qcommon/com_dcache_io.cpp:230)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 int DCache_IO_WriteBlock(int param_1,char *param_2,int param_3)
 
 {
   void *pvVar1;
-  ulonglong uVar2;
-  dcacheTOC_t *pdVar3;
-  bool bVar6;
-  uint uVar4;
-  int iVar5;
+  dcacheTOC_t *pdVar2;
+  bool bVar4;
+  uint uVar3;
   ulong local_30 [12];
   
-  uVar2 = __savegprlr_28(param_1);
-  pdVar3 = DCache_TOC_GetTOC();
-  bVar6 = DCache_TOC_IsBlockReserved((int)uVar2);
-  if (!bVar6) {
+  pdVar2 = DCache_TOC_GetTOC();
+  bVar4 = DCache_TOC_IsBlockReserved(param_1);
+  if (!bVar4) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_dcache_io.cpp",
                     0xed,0,"%s");
   }
-  uVar4 = Com_BlockChecksumKey32(param_2,param_3,0);
+  uVar3 = Com_BlockChecksumKey32(param_2,param_3,0);
   local_30[0] = 0;
-  *(uint *)(pdVar3->m_fileInfo[0].m_bitfield + (int)((uVar2 + 0x2302 & 0xffffffff) << 2) + -0x18) =
-       uVar4;
+  pdVar2->m_checksum[param_1] = uVar3;
   pvVar1 = s_dcacheFileHandle;
   if (s_dcacheFileHandle != (void *)0x0) {
-    SetFilePointerEx(s_dcacheFileHandle,
-                     (_LARGE_INTEGER)(longlong)(int)((uVar2 & 0xffffffff) << 0x11),
+    SetFilePointerEx(s_dcacheFileHandle,(_LARGE_INTEGER)(longlong)(param_1 << 0x11),
                      (_LARGE_INTEGER *)0x0,0);
     WriteFile(pvVar1,param_2,param_3,local_30,(_OVERLAPPED *)0x0);
-    iVar5 = __restgprlr_28(local_30[0]);
-    return iVar5;
+    return local_30[0];
   }
-  iVar5 = __restgprlr_28(0);
-  return iVar5;
+  return 0;
 }
 
 
 // 824D7DD0  DCache_IO_WriteBlockWithOffset  (qcommon/com_dcache_io.cpp:250)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 int DCache_IO_WriteBlockWithOffset(int param_1,int param_2,char *param_3,int param_4)
 
 {
   void *pvVar1;
-  int iVar2;
   bool bVar3;
+  ulong uVar2;
   ulong local_40 [16];
   
-  iVar2 = __savegprlr_26(param_1);
-  bVar3 = DCache_TOC_IsBlockReserved(iVar2);
+  bVar3 = DCache_TOC_IsBlockReserved(param_1);
   if (!bVar3) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_dcache_io.cpp",
                     0xff,0,"%s");
@@ -168,26 +166,29 @@ int DCache_IO_WriteBlockWithOffset(int param_1,int param_2,char *param_3,int par
   }
   pvVar1 = s_dcacheFileHandle;
   local_40[0] = 0;
+  uVar2 = 0;
   if (s_dcacheFileHandle != (void *)0x0) {
-    SetFilePointerEx(s_dcacheFileHandle,(_LARGE_INTEGER)(longlong)(iVar2 * 0x20000 + param_2),
+    SetFilePointerEx(s_dcacheFileHandle,(_LARGE_INTEGER)(longlong)(param_1 * 0x20000 + param_2),
                      (_LARGE_INTEGER *)0x0,0);
     WriteFile(pvVar1,param_3,param_4,local_40,(_OVERLAPPED *)0x0);
+    uVar2 = local_40[0];
   }
-  iVar2 = __restgprlr_26(local_40[0]);
-  return iVar2;
+  return uVar2;
 }
 
 
 // 824D7EB0  DCache_IO_ReadBlockWithOffset  (qcommon/com_dcache_io.cpp:263)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 int DCache_IO_ReadBlockWithOffset(int param_1,int param_2,char *param_3,int param_4)
 
 {
-  int iVar1;
   bool bVar2;
+  int iVar1;
   
-  iVar1 = __savegprlr_26(param_1);
-  bVar2 = DCache_TOC_IsBlockReserved(iVar1);
+  bVar2 = DCache_TOC_IsBlockReserved(param_1);
   if (!bVar2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_dcache_io.cpp",
                     0x10c,0,"%s");
@@ -196,284 +197,263 @@ int DCache_IO_ReadBlockWithOffset(int param_1,int param_2,char *param_3,int para
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_dcache_io.cpp",
                     0x10d,0,"%s");
   }
-  iVar1 = DCache_IO_ReadBytes(s_dcacheFileHandle,iVar1 * 0x20000 + param_2,param_4,param_3);
-  iVar1 = __restgprlr_26(iVar1);
+  iVar1 = DCache_IO_ReadBytes(s_dcacheFileHandle,param_1 * 0x20000 + param_2,param_4,param_3);
   return iVar1;
 }
 
 
 // 824D7F58  DCache_IO_ReadBlock  (qcommon/com_dcache_io.cpp:276)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
+
 int DCache_IO_ReadBlock(int param_1,char *param_2,int param_3,bool param_4)
 
 {
-  ulonglong uVar1;
-  dcacheTOC_t *pdVar2;
-  bool bVar6;
+  dcacheTOC_t *pdVar1;
+  bool bVar4;
+  int iVar2;
   uint uVar3;
-  uint uVar4;
-  int iVar5;
-  ulonglong uVar7;
   
-  uVar7 = (ulonglong)param_4;
-  uVar1 = __savegprlr_25(param_1);
-  pdVar2 = DCache_TOC_GetTOC();
-  bVar6 = DCache_TOC_IsBlockReserved((int)uVar1);
-  if (!bVar6) {
+  pdVar1 = DCache_TOC_GetTOC();
+  bVar4 = DCache_TOC_IsBlockReserved(param_1);
+  if (!bVar4) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_dcache_io.cpp",
                     0x11b,0,"%s");
   }
-  uVar3 = DCache_IO_ReadBytes(s_dcacheFileHandle,(int)((uVar1 & 0xffffffff) << 0x11),param_3,param_2
-                             );
-  if (uVar3 == param_3) {
-    uVar4 = Com_BlockChecksumKey32(param_2,param_3,0);
-    if (((uVar7 & 0xff) == 0) ||
-       (uVar4 == *(uint *)(pdVar2->m_fileInfo[0].m_bitfield +
-                          (int)((uVar1 + 0x2302 & 0xffffffff) << 2) + -0x18))) {
-      iVar5 = __restgprlr_25(uVar3);
-      return iVar5;
+  iVar2 = DCache_IO_ReadBytes(s_dcacheFileHandle,param_1 << 0x11,param_3,param_2);
+  if (iVar2 == param_3) {
+    uVar3 = Com_BlockChecksumKey32(param_2,param_3,0);
+    if ((!param_4) || (uVar3 == pdVar1->m_checksum[param_1])) {
+      return iVar2;
     }
     Com_PrintError(0x10,"dcache: Checksum mismatch for block %d.\n");
     Com_Printf(0x10,"dcache: \t  FILE: Had tried to read %d bytes from file offset %d to %d.\n");
   }
-  iVar5 = __restgprlr_25(0);
-  return iVar5;
+  return 0;
 }
 
 
 // 824D8058  DCache_IO_GetBlockIndexForOffset  (qcommon/com_dcache_io.cpp:310)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 int DCache_IO_GetBlockIndexForOffset(int param_1,int param_2)
 
 {
-  int iVar1;
-  bool bVar2;
-  ulonglong uVar3;
-  int iVar4;
-  longlong lVar5;
+  bool bVar1;
+  int iVar2;
+  int iVar3;
   
-  uVar3 = (ulonglong)param_2;
-  iVar1 = __savegprlr_28(param_1);
-  iVar4 = 0;
-  lVar5 = 0;
+  iVar2 = 0;
+  iVar3 = 0;
   do {
-    bVar2 = DCache_TOC_IsBitSet(iVar1,(int)lVar5);
-    if (bVar2) {
-      if (iVar4 == ((int)uVar3 >> 0x11) + (uint)((int)uVar3 < 0 && (uVar3 & 0x1ffff) != 0)) {
-        iVar1 = __restgprlr_28(lVar5);
-        return iVar1;
+    bVar1 = DCache_TOC_IsBitSet(param_1,iVar3);
+    if (bVar1) {
+      if (iVar2 == (param_2 >> 0x11) + (uint)(param_2 < 0 && (param_2 & 0x1ffffU) != 0)) {
+        return iVar3;
       }
-      iVar4 = iVar4 + 1;
+      iVar2 = iVar2 + 1;
     }
-    lVar5 = lVar5 + 1;
-  } while ((int)lVar5 < 0x800);
+    iVar3 = iVar3 + 1;
+  } while (iVar3 < 0x800);
   if (alwaysfails == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_dcache_io.cpp",
                     0x145,0,"dcache: Reached end of blocks and could not fit an offset.");
   }
-  iVar1 = __restgprlr_28(0);
-  return iVar1;
+  return 0;
 }
 
 
 // 824D80F0  DCache_IO_StreamFileData  (qcommon/com_dcache_io.cpp:334)
 
+/* WARNING: Function: __savegprlr_18 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_18 replaced with injection: xenon_save_restore */
+
 int DCache_IO_StreamFileData(int param_1,int param_2,int param_3,char *param_4)
 
 {
-  int iVar1;
   int iVar2;
   int iVar3;
   int iVar4;
+  longlong lVar1;
   int iVar5;
   longlong lVar6;
   longlong lVar7;
   ulonglong uVar8;
-  int iVar9;
-  longlong lVar10;
   
-  lVar6 = (longlong)param_3;
-  uVar8 = (ulonglong)param_2;
-  iVar1 = __savegprlr_18(param_1);
-  iVar5 = (int)uVar8;
-  lVar10 = uVar8 + ((longlong)(iVar5 >> 0x11) + (ulonglong)(iVar5 < 0 && (uVar8 & 0x1ffff) != 0) &
-                   0x7fff) * -0x20000;
-  iVar2 = DCache_IO_GetBlockIndexForOffset(iVar1,iVar5);
-  lVar7 = 0x20000 - lVar10;
-  if ((int)lVar6 <= (int)lVar7) {
-    lVar7 = lVar6;
+  iVar3 = param_2 + ((param_2 >> 0x11) + (uint)(param_2 < 0 && (param_2 & 0x1ffffU) != 0)) *
+                    -0x20000;
+  iVar2 = DCache_IO_GetBlockIndexForOffset(param_1,param_2);
+  iVar5 = 0x20000 - iVar3;
+  if (param_3 <= iVar5) {
+    iVar5 = param_3;
   }
-  iVar2 = DCache_IO_WriteBlockWithOffset(iVar2,(int)lVar10,param_4,(int)lVar7);
-  lVar7 = (longlong)iVar2;
-  if (iVar2 < 1) {
+  iVar3 = DCache_IO_WriteBlockWithOffset(iVar2,iVar3,param_4,iVar5);
+  lVar6 = (longlong)iVar3;
+  if (iVar3 < 1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_dcache_io.cpp",
                     0x15a,0,"%s");
   }
-  uVar8 = lVar6 - lVar7;
+  uVar8 = param_3 - lVar6;
   if (0 < (longlong)uVar8) {
-    iVar9 = (int)uVar8;
-    iVar2 = (iVar9 >> 0x11) + (uint)(iVar9 < 0 && (uVar8 & 0x1ffff) != 0);
-    if (uVar8 != ((longlong)(iVar9 >> 0x11) + (ulonglong)(iVar9 < 0 && (uVar8 & 0x1ffff) != 0) &
+    iVar2 = (int)uVar8;
+    iVar5 = (iVar2 >> 0x11) + (uint)(iVar2 < 0 && (uVar8 & 0x1ffff) != 0);
+    if (uVar8 != ((longlong)(iVar2 >> 0x11) + (ulonglong)(iVar2 < 0 && (uVar8 & 0x1ffff) != 0) &
                  0x7fff) << 0x11) {
-      iVar2 = iVar2 + 1;
+      iVar5 = iVar5 + 1;
     }
-    iVar9 = 0;
-    lVar6 = lVar7;
-    if (0 < iVar2) {
+    iVar2 = 0;
+    lVar7 = lVar6;
+    if (0 < iVar5) {
       do {
-        iVar4 = (int)uVar8;
-        if (iVar4 < 1) {
+        iVar3 = (int)uVar8;
+        if (iVar3 < 1) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_dcache_io.cpp"
                           ,0x16c,0,"%s");
         }
-        iVar3 = DCache_IO_GetBlockIndexForOffset(iVar1,iVar5);
-        if (0x20000 < iVar4) {
-          iVar4 = 0x20000;
+        iVar4 = DCache_IO_GetBlockIndexForOffset(param_1,param_2);
+        if (0x20000 < iVar3) {
+          iVar3 = 0x20000;
         }
-        iVar4 = DCache_IO_WriteBlock(iVar3 + iVar9 + 1,param_4 + (int)lVar6,iVar4);
-        lVar10 = (longlong)iVar4;
-        if (iVar4 < 1) {
+        iVar3 = DCache_IO_WriteBlock(iVar4 + iVar2 + 1,param_4 + (int)lVar7,iVar3);
+        lVar1 = (longlong)iVar3;
+        if (iVar3 < 1) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_dcache_io.cpp"
                           ,0x175,0,"%s");
         }
-        iVar9 = iVar9 + 1;
-        uVar8 = uVar8 - lVar10;
-        lVar7 = lVar10 + lVar7;
-        lVar6 = lVar10 + lVar6;
-      } while (iVar9 < iVar2);
+        iVar2 = iVar2 + 1;
+        uVar8 = uVar8 - lVar1;
+        lVar6 = lVar1 + lVar6;
+        iVar3 = (int)lVar6;
+        lVar7 = lVar1 + lVar7;
+      } while (iVar2 < iVar5);
     }
   }
   if ((int)uVar8 != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_dcache_io.cpp",
                     0x17d,0,"%s");
   }
-  iVar1 = __restgprlr_18(lVar7);
-  return iVar1;
+  return iVar3;
 }
 
 
 // 824D8280  DCache_IO_WriteFileData  (qcommon/com_dcache_io.cpp:386)
 
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
+
 bool DCache_IO_WriteFileData(int param_1,int param_2,char *param_3)
 
 {
-  int iVar1;
-  dcacheTOC_t *pdVar2;
+  dcacheTOC_t *pdVar1;
+  int iVar2;
   int iVar3;
   int iVar4;
   int iVar5;
-  undefined1 uVar6;
-  int iVar7;
-  longlong lVar8;
-  ulonglong uVar9;
+  longlong lVar6;
+  longlong lVar7;
   
-  uVar9 = (ulonglong)param_2;
-  iVar1 = __savegprlr_22(param_1);
-  pdVar2 = DCache_TOC_GetTOC();
-  iVar4 = (int)uVar9;
-  iVar7 = (iVar4 >> 0x11) + (uint)(iVar4 < 0 && (uVar9 & 0x1ffff) != 0);
-  if (uVar9 != ((longlong)(iVar4 >> 0x11) + (ulonglong)(iVar4 < 0 && (uVar9 & 0x1ffff) != 0) &
-               0x7fff) << 0x11) {
-    iVar7 = iVar7 + 1;
+  lVar7 = (longlong)param_2;
+  pdVar1 = DCache_TOC_GetTOC();
+  iVar5 = (param_2 >> 0x11) + (uint)(param_2 < 0 && (param_2 & 0x1ffffU) != 0);
+  if (lVar7 != ((longlong)(param_2 >> 0x11) + (ulonglong)(param_2 < 0 && (param_2 & 0x1ffffU) != 0)
+               & 0x7fff) << 0x11) {
+    iVar5 = iVar5 + 1;
   }
-  if (pdVar2->m_fileInfo[iVar1].m_size != iVar4) {
+  if (pdVar1->m_fileInfo[param_1].m_size != param_2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_dcache_io.cpp",
                     0x18c,0,"%s");
   }
-  iVar3 = DCache_TOC_GetBlocksUsed(iVar1);
-  if (iVar3 != iVar7) {
+  iVar2 = DCache_TOC_GetBlocksUsed(param_1);
+  if (iVar2 != iVar5) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_dcache_io.cpp",
                     0x18d,0,"%s");
   }
-  if ((pdVar2->m_fileInfo[iVar1].m_size == iVar4) &&
-     (iVar4 = DCache_TOC_GetBlocksUsed(iVar1), iVar4 == iVar7)) {
-    lVar8 = 0;
-    iVar4 = 0;
-    if (0 < iVar7) {
+  if ((pdVar1->m_fileInfo[param_1].m_size == param_2) &&
+     (iVar2 = DCache_TOC_GetBlocksUsed(param_1), iVar2 == iVar5)) {
+    lVar6 = 0;
+    iVar2 = 0;
+    if (0 < iVar5) {
       do {
-        iVar3 = (int)uVar9;
-        if (iVar3 < 1) {
+        iVar4 = (int)lVar7;
+        if (iVar4 < 1) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_dcache_io.cpp"
                           ,0x197,0,"%s");
         }
-        iVar5 = DCache_IO_GetBlockIndexForOffset(iVar1,(int)lVar8);
-        if (0x20000 < iVar3) {
-          iVar3 = 0x20000;
+        iVar3 = DCache_IO_GetBlockIndexForOffset(param_1,(int)lVar6);
+        if (0x20000 < iVar4) {
+          iVar4 = 0x20000;
         }
-        iVar3 = DCache_IO_WriteBlock(iVar5,param_3 + (int)lVar8,iVar3);
-        if (iVar3 == 0) {
+        iVar4 = DCache_IO_WriteBlock(iVar3,param_3 + (int)lVar6,iVar4);
+        if (iVar4 == 0) {
           Com_PrintError(0x10,"dcache: Write requested resulted in 0 bytes being written.\n");
-          goto LAB_824d83e0;
+          return false;
         }
-        iVar4 = iVar4 + 1;
-        lVar8 = iVar3 + lVar8;
-        uVar9 = uVar9 - (longlong)iVar3;
-      } while (iVar4 < iVar7);
+        iVar2 = iVar2 + 1;
+        lVar6 = iVar4 + lVar6;
+        lVar7 = lVar7 - iVar4;
+      } while (iVar2 < iVar5);
     }
     XFlushUtilityDrive();
-    uVar6 = __restgprlr_22(1);
-    return (bool)uVar6;
+    return true;
   }
-LAB_824d83e0:
-  uVar6 = __restgprlr_22(0);
-  return (bool)uVar6;
+  return false;
 }
 
 
 // 824D83F0  DCache_IO_ReadFileData  (qcommon/com_dcache_io.cpp:437)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
+
 bool DCache_IO_ReadFileData(int param_1,int param_2,char *param_3)
 
 {
-  int iVar1;
-  dcacheTOC_t *pdVar2;
+  dcacheTOC_t *pdVar1;
+  int iVar2;
   int iVar3;
   int iVar4;
-  undefined1 uVar5;
   int iVar6;
-  int iVar8;
-  ulonglong uVar7;
-  longlong lVar9;
+  longlong lVar5;
+  longlong lVar7;
   
-  uVar7 = (ulonglong)param_2;
-  iVar1 = __savegprlr_25(param_1);
-  iVar3 = (int)uVar7;
-  iVar6 = (iVar3 >> 0x11) + (uint)(iVar3 < 0 && (uVar7 & 0x1ffff) != 0);
-  if (uVar7 != ((longlong)(iVar3 >> 0x11) + (ulonglong)(iVar3 < 0 && (uVar7 & 0x1ffff) != 0) &
-               0x7fff) << 0x11) {
-    iVar6 = iVar6 + 1;
+  lVar5 = (longlong)param_2;
+  iVar4 = (param_2 >> 0x11) + (uint)(param_2 < 0 && (param_2 & 0x1ffffU) != 0);
+  if (lVar5 != ((longlong)(param_2 >> 0x11) + (ulonglong)(param_2 < 0 && (param_2 & 0x1ffffU) != 0)
+               & 0x7fff) << 0x11) {
+    iVar4 = iVar4 + 1;
   }
-  pdVar2 = DCache_TOC_GetTOC();
-  if (pdVar2->m_fileInfo[iVar1].m_size != iVar3) {
+  pdVar1 = DCache_TOC_GetTOC();
+  if (pdVar1->m_fileInfo[param_1].m_size != param_2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_dcache_io.cpp",
                     0x1bd,0,"%s");
   }
-  iVar3 = DCache_TOC_GetBlocksUsed(iVar1);
-  if (iVar3 != iVar6) {
+  iVar2 = DCache_TOC_GetBlocksUsed(param_1);
+  if (iVar2 != iVar4) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_dcache_io.cpp",
                     0x1be,0,"%s");
   }
-  lVar9 = 0;
-  iVar3 = 0;
-  if (0 < iVar6) {
+  lVar7 = 0;
+  iVar2 = 0;
+  if (0 < iVar4) {
     do {
-      iVar4 = DCache_IO_GetBlockIndexForOffset(iVar1,(int)lVar9);
-      iVar8 = (int)uVar7;
-      if (0x20000 < iVar8) {
-        iVar8 = 0x20000;
+      iVar3 = DCache_IO_GetBlockIndexForOffset(param_1,(int)lVar7);
+      iVar6 = (int)lVar5;
+      if (0x20000 < iVar6) {
+        iVar6 = 0x20000;
       }
-      iVar4 = DCache_IO_ReadBlock(iVar4,param_3 + (int)lVar9,iVar8,true);
-      if (iVar4 == 0) {
-        uVar5 = __restgprlr_25(0);
-        return (bool)uVar5;
+      iVar3 = DCache_IO_ReadBlock(iVar3,param_3 + (int)lVar7,iVar6,true);
+      if (iVar3 == 0) {
+        return false;
       }
-      iVar3 = iVar3 + 1;
-      lVar9 = iVar4 + lVar9;
-      uVar7 = uVar7 - (longlong)iVar4;
-    } while (iVar3 < iVar6);
+      iVar2 = iVar2 + 1;
+      lVar7 = iVar3 + lVar7;
+      lVar5 = lVar5 - iVar3;
+    } while (iVar2 < iVar4);
   }
-  uVar5 = __restgprlr_25(1);
-  return (bool)uVar5;
+  return true;
 }
 
 
@@ -499,145 +479,133 @@ bool DCache_IO_WriteToCache(ulong64 param_1,dcacheLocation_t param_2,int param_3
 
 // 824D8570  DCache_IO_StreamToCache  (qcommon/com_dcache_io.cpp:489)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 int DCache_IO_StreamToCache
               (ulong64 param_1,dcacheLocation_t param_2,int param_3,int param_4,char *param_5)
 
 {
-  ulong64 uVar1;
-  int iVar2;
+  int iVar1;
   
-  uVar1 = __savegprlr_29();
-  iVar2 = DCache_GetFileIndex(uVar1,param_2);
-  if (iVar2 == -1) {
+  iVar1 = DCache_GetFileIndex(param_1,param_2);
+  if (iVar1 == -1) {
     Com_PrintError(0x10,"dcache: Tried to stream a file that is not allocated.\n");
-    iVar2 = __restgprlr_29(0);
-    return iVar2;
+    return 0;
   }
-  iVar2 = DCache_IO_StreamFileData(iVar2,param_3,param_4,param_5);
-  iVar2 = __restgprlr_29(iVar2);
-  return iVar2;
+  iVar1 = DCache_IO_StreamFileData(iVar1,param_3,param_4,param_5);
+  return iVar1;
 }
 
 
 // 824D8C38  DCache_IO_StreamToCacheComplete  (qcommon/com_dcache_io.cpp:502)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 bool DCache_IO_StreamToCacheComplete(ulong64 param_1,dcacheLocation_t param_2,int param_3)
 
 {
-  ulong64 uVar1;
-  int iVar2;
-  undefined1 uVar4;
-  dcacheTOC_t *pdVar3;
+  int iVar1;
+  dcacheTOC_t *pdVar2;
   
-  uVar1 = __savegprlr_29();
-  iVar2 = DCache_GetFileIndex(uVar1,param_2);
-  if (iVar2 == -1) {
+  iVar1 = DCache_GetFileIndex(param_1,param_2);
+  if (iVar1 == -1) {
     Com_PrintError(0x10,"dcache: Tried to complete a streamed file that is not allocated.\n");
-    uVar4 = __restgprlr_29(0);
-    return (bool)uVar4;
+    return false;
   }
-  pdVar3 = DCache_TOC_GetTOC();
-  pdVar3->m_fileInfo[iVar2].m_size = param_3;
-  if (pdVar3->m_version != '\x02') {
+  pdVar2 = DCache_TOC_GetTOC();
+  pdVar2->m_fileInfo[iVar1].m_size = param_3;
+  if (pdVar2->m_version != '\x02') {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_dcache_io.cpp",
                     0x202,0,"%s");
   }
-  DCache_IO_SerializeTOC(pdVar3);
+  DCache_IO_SerializeTOC(pdVar2);
   XFlushUtilityDrive();
-  uVar4 = __restgprlr_29(1);
-  return (bool)uVar4;
+  return true;
 }
 
 
 // 824D85C8  DCache_IO_ReadFromCacheByOffset  (qcommon/com_dcache_io.cpp:525)
+
+/* WARNING: Function: __savegprlr_18 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_18 replaced with injection: xenon_save_restore */
 
 bool DCache_IO_ReadFromCacheByOffset
                (ulong64 param_1,dcacheLocation_t param_2,int param_3,int param_4,char *param_5,
                int *param_6)
 
 {
-  ulong64 uVar1;
+  int iVar1;
   int iVar2;
-  undefined1 uVar4;
-  int iVar3;
-  ulonglong uVar5;
+  longlong lVar3;
+  longlong lVar4;
+  int iVar5;
   longlong lVar6;
-  ulonglong uVar7;
-  longlong lVar8;
-  int iVar9;
-  int iVar10;
-  longlong lVar11;
-  longlong lVar12;
+  longlong lVar7;
   
-  uVar7 = (ulonglong)(int)param_5;
-  lVar11 = (longlong)param_4;
-  uVar5 = (ulonglong)param_3;
-  uVar1 = __savegprlr_18();
-  iVar2 = DCache_GetFileIndex(uVar1,param_2);
-  if (iVar2 == -1) {
+  iVar1 = DCache_GetFileIndex(param_1,param_2);
+  if (iVar1 == -1) {
     Com_PrintError(0x10,"dcache: Tried to read a file that is not allocated.\n");
-    uVar4 = __restgprlr_18(0);
-    return (bool)uVar4;
+    return false;
   }
-  if ((uVar7 & 0xffffffff) == 0) {
+  if (param_5 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_dcache_io.cpp",
                     0x216,0,"%s");
-    uVar4 = __restgprlr_18(0);
-    return (bool)uVar4;
+    return false;
   }
-  iVar9 = (int)uVar5;
-  lVar11 = lVar11 - uVar5;
-  lVar12 = uVar5 + ((longlong)(iVar9 >> 0x11) + (ulonglong)(iVar9 < 0 && (uVar5 & 0x1ffff) != 0) &
-                   0x7fff) * -0x20000;
-  if (lVar11 < 1) {
+  lVar6 = (longlong)param_4 - (longlong)param_3;
+  lVar7 = (longlong)param_3 +
+          ((longlong)(param_3 >> 0x11) + (ulonglong)(param_3 < 0 && (param_3 & 0x1ffffU) != 0) &
+          0x7fff) * -0x20000;
+  if (lVar6 < 1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_dcache_io.cpp",
                     0x221,0,"%s");
   }
-  iVar3 = DCache_IO_GetBlockIndexForOffset(iVar2,iVar9);
-  lVar8 = 0x20000 - lVar12;
-  if ((int)lVar11 <= (int)lVar8) {
-    lVar8 = lVar11;
+  iVar2 = DCache_IO_GetBlockIndexForOffset(iVar1,param_3);
+  lVar4 = 0x20000 - lVar7;
+  if ((int)lVar6 <= (int)lVar4) {
+    lVar4 = lVar6;
   }
-  iVar3 = DCache_IO_ReadBlockWithOffset(iVar3,(int)lVar12,(char *)uVar7,(int)lVar8);
-  lVar12 = (longlong)iVar3;
-  if (iVar3 < 1) {
+  iVar2 = DCache_IO_ReadBlockWithOffset(iVar2,(int)lVar7,param_5,(int)lVar4);
+  lVar7 = (longlong)iVar2;
+  if (iVar2 < 1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_dcache_io.cpp",
                     0x22a,0,"%s");
   }
-  lVar11 = lVar11 - lVar12;
-  if (0 < lVar11) {
-    iVar10 = 0;
-    lVar8 = lVar12;
+  lVar6 = lVar6 - lVar7;
+  if (0 < lVar6) {
+    iVar5 = 0;
+    lVar4 = lVar7;
     do {
-      if ((int)lVar11 < 1) {
+      if ((int)lVar6 < 1) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_dcache_io.cpp"
                         ,0x235,0,"%s");
       }
-      iVar3 = DCache_IO_GetBlockIndexForOffset(iVar2,iVar9);
-      lVar6 = lVar11;
-      if (0x20000 < (int)lVar11) {
-        lVar6 = 0x20000;
+      iVar2 = DCache_IO_GetBlockIndexForOffset(iVar1,param_3);
+      lVar3 = lVar6;
+      if (0x20000 < (int)lVar6) {
+        lVar3 = 0x20000;
       }
-      iVar3 = DCache_IO_ReadBlock(iVar3 + iVar10 + 1,(char *)uVar7 + (int)lVar8,(int)lVar6,false);
-      lVar6 = (longlong)iVar3;
-      if (iVar3 < 1) {
+      iVar2 = DCache_IO_ReadBlock(iVar2 + iVar5 + 1,param_5 + (int)lVar4,(int)lVar3,false);
+      lVar3 = (longlong)iVar2;
+      if (iVar2 < 1) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_dcache_io.cpp"
                         ,0x23e,0,"%s");
       }
-      lVar11 = lVar11 - lVar6;
-      lVar8 = lVar6 + lVar8;
-      lVar12 = lVar6 + lVar12;
-      iVar3 = (int)lVar12;
-      iVar10 = iVar10 + 1;
-    } while (0 < lVar11);
+      lVar6 = lVar6 - lVar3;
+      lVar4 = lVar3 + lVar4;
+      lVar7 = lVar3 + lVar7;
+      iVar2 = (int)lVar7;
+      iVar5 = iVar5 + 1;
+    } while (0 < lVar6);
   }
-  if ((int)lVar11 != 0) {
+  if ((int)lVar6 != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_dcache_io.cpp",
                     0x246,0,"%s");
   }
-  *param_6 = iVar3;
-  uVar4 = __restgprlr_18(1);
-  return (bool)uVar4;
+  *param_6 = iVar2;
+  return true;
 }
 
 

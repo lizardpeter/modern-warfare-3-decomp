@@ -143,198 +143,185 @@ bool DCache_IsCached(ulong64 param_1,dcacheLocation_t param_2)
 
 // 824D7210  DCache_WriteToCache  (qcommon/com_dcache.cpp:157)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 bool DCache_WriteToCache(ulong64 param_1,int param_2,dcacheLocation_t param_3,char *param_4)
 
 {
-  ulong64 uVar1;
-  bool bVar4;
-  dcacheResult_t dVar2;
-  undefined1 uVar5;
-  dcacheTOC_t *pdVar3;
+  bool bVar3;
+  dcacheResult_t dVar1;
+  dcacheTOC_t *pdVar2;
   
-  uVar1 = __savegprlr_27();
-  bVar4 = DCache_IsHDDPresent();
-  if (bVar4) {
-    dVar2 = DCache_IsCachedInternal(uVar1,param_3);
-    if (dVar2 != DCACHE_RESULT_NOTFOUND) {
-      if (dVar2 != DCACHE_RESULT_FOUND) {
-        if (dVar2 == DCACHE_RESULT_NOHDD) {
-          Com_PrintWarning(0x10,"dcache: No HDD detected.\n");
-          uVar5 = __restgprlr_27(0);
-          return (bool)uVar5;
-        }
+  bVar3 = DCache_IsHDDPresent();
+  if (!bVar3) {
+    return false;
+  }
+  dVar1 = DCache_IsCachedInternal(param_1,param_3);
+  if (dVar1 != DCACHE_RESULT_NOTFOUND) {
+    if (dVar1 != DCACHE_RESULT_FOUND) {
+      if (dVar1 != DCACHE_RESULT_NOHDD) {
         Com_PrintError(0x10,
                        "dcache: Tried to cache a file that already exists or a fatal error occurred during cache lookup.\n"
                       );
-        goto LAB_824d7270;
+        return false;
       }
-      Com_PrintWarning(0x10,"dcache: File already exists in dcache. Overwriting.\n");
-      DCache_TOC_FlushTOC();
+      Com_PrintWarning(0x10,"dcache: No HDD detected.\n");
+      return false;
     }
-    bVar4 = param_2 == 0;
-    if (bVar4) {
-      param_2 = 0x10000000;
-    }
-    dVar2 = DCache_TOC_Allocate(uVar1,param_2,param_3);
-    if (dVar2 != DCACHE_RESULT_ALLOCATED) {
-      Com_PrintError(0x10,"dcache: Error %d occurred while allocating.\n");
-      uVar5 = __restgprlr_27(0);
-      return (bool)uVar5;
-    }
-    if (!bVar4) {
-      bVar4 = DCache_IO_WriteToCache(uVar1,param_3,param_2,param_4);
-      if (!bVar4) goto LAB_824d7270;
-      pdVar3 = DCache_TOC_GetTOC();
-      DCache_IO_SerializeTOC(pdVar3);
-    }
-    uVar5 = __restgprlr_27(1);
-    return (bool)uVar5;
+    Com_PrintWarning(0x10,"dcache: File already exists in dcache. Overwriting.\n");
+    DCache_TOC_FlushTOC();
   }
-LAB_824d7270:
-  uVar5 = __restgprlr_27(0);
-  return (bool)uVar5;
+  bVar3 = param_2 == 0;
+  if (bVar3) {
+    param_2 = 0x10000000;
+  }
+  dVar1 = DCache_TOC_Allocate(param_1,param_2,param_3);
+  if (dVar1 == DCACHE_RESULT_ALLOCATED) {
+    if (!bVar3) {
+      bVar3 = DCache_IO_WriteToCache(param_1,param_3,param_2,param_4);
+      if (!bVar3) {
+        return false;
+      }
+      pdVar2 = DCache_TOC_GetTOC();
+      DCache_IO_SerializeTOC(pdVar2);
+    }
+    return true;
+  }
+  Com_PrintError(0x10,"dcache: Error %d occurred while allocating.\n");
+  return false;
 }
 
 
 // 824D7338  DCache_StreamToCache  (qcommon/com_dcache.cpp:215)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 int DCache_StreamToCache
               (ulong64 param_1,dcacheLocation_t param_2,int param_3,int param_4,char *param_5)
 
 {
-  ulong64 uVar1;
-  bool bVar3;
-  int iVar2;
+  bool bVar2;
+  int iVar1;
   
-  uVar1 = __savegprlr_27();
-  bVar3 = DCache_IsHDDPresent();
-  if (!bVar3) {
+  bVar2 = DCache_IsHDDPresent();
+  if (!bVar2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_dcache.cpp",0xd8,0
                     ,"%s");
   }
-  iVar2 = DCache_IO_StreamToCache(uVar1,param_2,param_3,param_4,param_5);
-  iVar2 = __restgprlr_27(iVar2);
-  return iVar2;
+  iVar1 = DCache_IO_StreamToCache(param_1,param_2,param_3,param_4,param_5);
+  return iVar1;
 }
 
 
 // 824D73B0  DCache_StreamToCacheComplete  (qcommon/com_dcache.cpp:225)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* bool __cdecl DCache_StreamToCacheComplete(unsigned __int64,enum dcacheLocation_t,int) */
 
 bool DCache_StreamToCacheComplete(__uint64 param_1,dcacheLocation_t param_2,int param_3)
 
 {
-  ulong64 uVar1;
-  int iVar2;
-  undefined1 uVar4;
-  dcacheTOC_t *pdVar3;
+  int iVar1;
+  dcacheTOC_t *pdVar2;
   
-  uVar1 = __savegprlr_29();
-  iVar2 = DCache_GetFileIndex(uVar1,param_2);
-  if (iVar2 == -1) {
+  iVar1 = DCache_GetFileIndex(param_1,param_2);
+  if (iVar1 == -1) {
     Com_PrintError(0x10,"dcache: Tried to complete a streamed file that is not allocated.\n");
-    uVar4 = __restgprlr_29(0);
-    return (bool)uVar4;
+    return false;
   }
-  pdVar3 = DCache_TOC_GetTOC();
-  pdVar3->m_fileInfo[iVar2].m_size = param_3;
-  if (pdVar3->m_version != '\x02') {
+  pdVar2 = DCache_TOC_GetTOC();
+  pdVar2->m_fileInfo[iVar1].m_size = param_3;
+  if (pdVar2->m_version != '\x02') {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_dcache_io.cpp",
                     0x202,0,"%s");
   }
-  DCache_IO_SerializeTOC(pdVar3);
+  DCache_IO_SerializeTOC(pdVar2);
   XFlushUtilityDrive();
-  uVar4 = __restgprlr_29(1);
-  return (bool)uVar4;
+  return true;
 }
 
 
 // 824D73B8  DCache_ReadFromCache  (qcommon/com_dcache.cpp:233)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 bool DCache_ReadFromCache(ulong64 param_1,int param_2,dcacheLocation_t param_3,char *param_4)
 
 {
-  ulong64 uVar1;
-  bool bVar3;
-  dcacheResult_t dVar2;
-  undefined1 uVar4;
+  bool bVar2;
+  dcacheResult_t dVar1;
   
-  uVar1 = __savegprlr_27();
-  bVar3 = DCache_IsHDDPresent();
-  if (bVar3) {
-    dVar2 = DCache_IsCachedInternal(uVar1,param_3);
-    if (dVar2 == DCACHE_RESULT_FOUND) {
-      bVar3 = DCache_IO_ReadFromCache(uVar1,param_3,param_2,param_4);
-      if (!bVar3) {
+  bVar2 = DCache_IsHDDPresent();
+  if (bVar2) {
+    dVar1 = DCache_IsCachedInternal(param_1,param_3);
+    if (dVar1 == DCACHE_RESULT_FOUND) {
+      bVar2 = DCache_IO_ReadFromCache(param_1,param_3,param_2,param_4);
+      if (!bVar2) {
         Com_PrintError(0x10,
                        "dcache: An error occurred that didn\'t allow file %llu to be read. Removing from cache.\n"
                       );
         DCache_TOC_FlushTOC();
-        uVar4 = __restgprlr_27(0);
-        return (bool)uVar4;
+        return false;
       }
       Com_Printf(0x10,"dcache: Load from cache successful. Enjoy your file!\n");
-      uVar4 = __restgprlr_27(1);
-      return (bool)uVar4;
+      return true;
     }
-    if ((dVar2 != DCACHE_RESULT_NOHDD) &&
+    if ((dVar1 != DCACHE_RESULT_NOHDD) &&
        (MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_dcache.cpp",
-                        0xf4,0,"%s"), dVar2 != DCACHE_RESULT_NOHDD)) {
+                        0xf4,0,"%s"), dVar1 != DCACHE_RESULT_NOHDD)) {
       Com_PrintError(0x10,
                      "dcache: Tried to read a file that doesn\'t exist or a fatal error occurred during cache lookup.\n"
                     );
-      uVar4 = __restgprlr_27(0);
-      return (bool)uVar4;
+      return false;
     }
     Com_PrintWarning(0x10,"dcache: No HDD detected.\n");
   }
-  uVar4 = __restgprlr_27(0);
-  return (bool)uVar4;
+  return false;
 }
 
 
 // 824D74C8  DCache_GetFileIndex  (qcommon/com_dcache.cpp:271)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 int DCache_GetFileIndex(ulong64 param_1,dcacheLocation_t param_2)
 
 {
-  ulong64 uVar1;
-  bool bVar4;
-  dcacheTOC_t *pdVar2;
+  bool bVar2;
+  dcacheTOC_t *pdVar1;
   int iVar3;
-  longlong lVar5;
-  dcacheLocation_t *pdVar6;
+  dcacheLocation_t *pdVar4;
   
-  uVar1 = __savegprlr_28();
-  bVar4 = DCache_IsHDDPresent();
-  if (!bVar4) {
+  bVar2 = DCache_IsHDDPresent();
+  if (!bVar2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_dcache.cpp",0x110,
                     0,"%s");
   }
-  pdVar2 = DCache_TOC_GetTOC();
-  if (pdVar2 == (dcacheTOC_t *)0x0) {
+  pdVar1 = DCache_TOC_GetTOC();
+  if (pdVar1 == (dcacheTOC_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_dcache.cpp",0x112,
                     0,"%s");
   }
   else {
-    lVar5 = 0;
-    if (0 < pdVar2->m_numFiles) {
-      pdVar6 = &pdVar2->m_fileInfo[0].m_location;
-      while ((((dcacheFileInfo_t *)(pdVar6 + -2))->m_fileID != uVar1 || (*pdVar6 != param_2))) {
-        lVar5 = lVar5 + 1;
-        pdVar6 = pdVar6 + 0x46;
-        if (pdVar2->m_numFiles <= (int)lVar5) {
-          iVar3 = __restgprlr_28(0xffffffffffffffff);
-          return iVar3;
+    iVar3 = 0;
+    if (0 < pdVar1->m_numFiles) {
+      pdVar4 = &pdVar1->m_fileInfo[0].m_location;
+      while ((((dcacheFileInfo_t *)(pdVar4 + -2))->m_fileID != param_1 || (*pdVar4 != param_2))) {
+        iVar3 = iVar3 + 1;
+        pdVar4 = pdVar4 + 0x46;
+        if (pdVar1->m_numFiles <= iVar3) {
+          return -1;
         }
       }
-      iVar3 = __restgprlr_28(lVar5);
       return iVar3;
     }
   }
-  iVar3 = __restgprlr_28(0xffffffffffffffff);
-  return iVar3;
+  return -1;
 }
 
 
@@ -374,79 +361,68 @@ void DCache_TranscodeEnd(void)
 
 // 824D7628  DCache_UploadDataCallbackTranscode  (qcommon/com_dcache.cpp:312)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 uint DCache_UploadDataCallbackTranscode(void *param_1,uint param_2,uint param_3)
 
 {
-  void *pvVar1;
-  bool bVar4;
-  int iVar2;
-  uint uVar3;
-  ulonglong uVar5;
+  bool bVar3;
+  int iVar1;
+  uint uVar2;
   
-  uVar5 = (ulonglong)(int)param_3;
-  pvVar1 = (void *)__savegprlr_27(param_1);
-  bVar4 = DCache_IsHDDPresent();
-  if (!bVar4) {
+  bVar3 = DCache_IsHDDPresent();
+  if (!bVar3) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_dcache.cpp",0x13b,
                     0,"%s");
   }
-  if ((ulonglong)(uint)s_dcacheUploadState.m_fileSize < (uVar5 & 0xffffffff)) {
+  if ((uint)s_dcacheUploadState.m_fileSize < param_3) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_dcache.cpp",0x13c,
                     0,"%s");
   }
-  iVar2 = DCache_Throttle((uint)uVar5);
-  Sys_Sleep(iVar2);
-  iVar2 = WebmTranscode::Step(&webmTranscode,pvVar1,param_2,(uint)uVar5);
-  uVar3 = __restgprlr_27(iVar2);
-  return uVar3;
+  iVar1 = DCache_Throttle(param_3);
+  Sys_Sleep(iVar1);
+  uVar2 = WebmTranscode::Step(&webmTranscode,param_1,param_2,param_3);
+  return uVar2;
 }
 
 
 // 824D76D8  DCache_UploadDataCallback  (qcommon/com_dcache.cpp:328)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 uint DCache_UploadDataCallback(void *param_1,uint param_2,uint param_3)
 
 {
-  char *pcVar1;
-  bool bVar4;
-  uint uVar2;
-  int iVar3;
-  longlong lVar5;
-  ulonglong uVar6;
-  int iVar7;
-  int local_40 [16];
+  bool bVar2;
+  int iVar1;
+  uint local_40 [16];
   
-  uVar6 = (ulonglong)(int)param_3;
-  lVar5 = (longlong)(int)param_2;
-  pcVar1 = (char *)__savegprlr_26(param_1);
-  iVar7 = (int)lVar5;
-  bVar4 = DCache_IsHDDPresent();
-  if (!bVar4) {
+  bVar2 = DCache_IsHDDPresent();
+  if (!bVar2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_dcache.cpp",0x149,
                     0,"%s");
   }
-  bVar4 = (uVar6 & 0xffffffff) == (ulonglong)(uint)s_dcacheUploadState.m_fileSize;
-  if ((ulonglong)(uint)s_dcacheUploadState.m_fileSize < (uVar6 & 0xffffffff)) {
+  if ((uint)s_dcacheUploadState.m_fileSize < param_3) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_dcache.cpp",0x14a,
                     0,"%s");
-    bVar4 = (uVar6 & 0xffffffff) == (ulonglong)(uint)s_dcacheUploadState.m_fileSize;
   }
-  if (bVar4) {
+  if (param_3 == s_dcacheUploadState.m_fileSize) {
     Com_Printf(0x10,"dcache: Upload done. %d bytes.\n");
   }
   else {
-    uVar2 = (uint)uVar6;
-    if ((ulonglong)(uint)s_dcacheUploadState.m_fileSize < (lVar5 + uVar6 & 0xffffffff)) {
+    if ((uint)s_dcacheUploadState.m_fileSize < param_2 + param_3) {
       Com_Printf(0x10,"dcache: About to finish up..\n");
-      iVar7 = s_dcacheUploadState.m_fileSize - uVar2;
+      param_2 = s_dcacheUploadState.m_fileSize - param_3;
     }
-    iVar3 = DCache_Throttle(uVar2);
-    Sys_Sleep(iVar3);
-    bVar4 = DCache_IO_ReadFromCacheByOffset
-                      (s_dcacheUploadState.m_fileID,s_dcacheUploadState.m_location,uVar2,
-                       iVar7 + uVar2,pcVar1,local_40);
-    if (bVar4) {
-      if (local_40[0] < 1) {
+    iVar1 = DCache_Throttle(param_3);
+    Sys_Sleep(iVar1);
+    bVar2 = DCache_IO_ReadFromCacheByOffset
+                      (s_dcacheUploadState.m_fileID,s_dcacheUploadState.m_location,param_3,
+                       param_2 + param_3,param_1,(int *)local_40);
+    if (bVar2) {
+      if ((int)local_40[0] < 1) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_dcache.cpp",
                         0x160,0,"%s");
       }
@@ -454,14 +430,12 @@ uint DCache_UploadDataCallback(void *param_1,uint param_2,uint param_3)
         s_dcacheUploadState.m_isStreamingInProgress = false;
         DCache_TOC_FlushTOC();
       }
-      uVar2 = __restgprlr_26(local_40[0]);
-      return uVar2;
+      return local_40[0];
     }
   }
   s_dcacheUploadState.m_isStreamingInProgress = false;
   DCache_TOC_FlushTOC();
-  uVar2 = __restgprlr_26(0);
-  return uVar2;
+  return 0;
 }
 
 
@@ -494,53 +468,49 @@ void DCache_ClearStreaming(void)
 
 // 824D7870  DCache_UploadFromCache  (qcommon/com_dcache.cpp:382)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 bool DCache_UploadFromCache
                (int param_1,ulong64 param_2,dcacheLocation_t param_3,
                contentServerWriteFileInfo *param_4)
 
 {
-  contentServerWriteFileInfo *pcVar1;
+  dcacheTOC_t *pdVar1;
+  bool bVar3;
   int iVar2;
-  dcacheTOC_t *pdVar3;
-  bool bVar4;
-  undefined1 uVar5;
-  ulonglong uVar6;
   
-  uVar6 = (ulonglong)(int)param_4;
-  iVar2 = __savegprlr_26(param_1);
-  if ((uVar6 & 0xffffffff) == 0) {
+  if (param_4 == (contentServerWriteFileInfo *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_dcache.cpp",0x17f,
                     0,"%s");
   }
-  pdVar3 = DCache_TOC_GetTOC();
-  if (pdVar3 == (dcacheTOC_t *)0x0) {
+  pdVar1 = DCache_TOC_GetTOC();
+  if (pdVar1 == (dcacheTOC_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_dcache.cpp",0x180,
                     0,"%s");
   }
-  bVar4 = DCache_IsHDDPresent();
-  if (bVar4) {
+  bVar3 = DCache_IsHDDPresent();
+  if (bVar3) {
     if (s_dcacheUploadState.m_isStreamingInProgress == false) {
       s_dcacheUploadState.m_fileIndex = DCache_GetFileIndex(param_2,param_3);
       if (s_dcacheUploadState.m_fileIndex != -1) {
-        pdVar3 = DCache_TOC_GetTOC();
-        s_dcacheUploadState.m_fileSize = pdVar3->m_fileInfo[s_dcacheUploadState.m_fileIndex].m_size;
-        pcVar1 = (contentServerWriteFileInfo *)uVar6;
+        pdVar1 = DCache_TOC_GetTOC();
+        s_dcacheUploadState.m_fileSize = pdVar1->m_fileInfo[s_dcacheUploadState.m_fileIndex].m_size;
         s_dcacheUploadState.m_fileID = param_2;
         s_dcacheUploadState.m_location = param_3;
-        pcVar1->m_fileSize = s_dcacheUploadState.m_fileSize;
+        param_4->m_fileSize = s_dcacheUploadState.m_fileSize;
         if ((cl_demo_uploadfb->current).enabled == false) {
           WebmTranscode::Start(&webmTranscode);
-          pcVar1->m_dataCallback = DCache_UploadDataCallbackTranscode;
+          param_4->m_dataCallback = DCache_UploadDataCallbackTranscode;
         }
         else {
-          pcVar1->m_dataCallback = DCache_UploadDataCallback;
+          param_4->m_dataCallback = DCache_UploadDataCallback;
         }
         s_xferThrottleStartTime = Sys_Milliseconds();
-        iVar2 = LiveStorage_CS_WriteFile(iVar2,pcVar1);
+        iVar2 = LiveStorage_CS_WriteFile(param_1,param_4);
         if (iVar2 != 0) {
           s_dcacheUploadState.m_isStreamingInProgress = true;
-          uVar5 = __restgprlr_26(1);
-          return (bool)uVar5;
+          return true;
         }
       }
     }
@@ -550,8 +520,7 @@ bool DCache_UploadFromCache
                     );
     }
   }
-  uVar5 = __restgprlr_26(0);
-  return (bool)uVar5;
+  return false;
 }
 
 

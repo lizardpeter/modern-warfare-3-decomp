@@ -80,52 +80,59 @@ undefined4 __thiscall CConformanceList::ReleaseConformanceInfo(CConformanceList 
 
 // 828BC898  GetConformingScopeAndValue  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/online/common/marshsup.cpp:106)
 
-undefined4 __thiscall
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
+int __thiscall
 CConformanceList::GetConformingScopeAndValue
           (CConformanceList *this,SCHEMA_DESCRIPTOR param_1,CSchemaAccess *param_2,
           SCHEMA_CONFORMING_INFO *param_3,ulong *param_4)
 
 {
-  CConformanceList *this_00;
-  int iVar1;
-  undefined4 uVar2;
-  ulonglong uVar3;
+  uint uVar1;
+  uint uVar2;
+  int iVar3;
   CConformanceInfo *pCVar4;
   CConformanceInfo *local_40;
   uint local_3c [15];
   
-  uVar3 = (ulonglong)(char)param_1;
-  this_00 = (CConformanceList *)__savegprlr_27(this);
-  iVar1 = CSchemaAccess::GetConformingInfo(param_2,param_3);
-  if ((iVar1 < 0) || (param_3->ConformsToIndex == 0x3f)) goto LAB_828bc990;
+  iVar3 = CSchemaAccess::GetConformingInfo(param_2,param_3);
+  if (iVar3 < 0) {
+    return iVar3;
+  }
+  if (param_3->ConformsToIndex == 0x3f) {
+    return iVar3;
+  }
   if (param_3->FixedArray != '\0') {
-    iVar1 = CBaseEndianBuffer::GetWord((CBaseEndianBuffer *)param_2,(ushort *)&local_40);
-    if (iVar1 < 0) goto LAB_828bc990;
-    iVar1 = CSchemaData::LookupConstantFromTable(param_2->m_pSchemaData,local_40._0_2_,local_3c);
-    if (iVar1 < 0) goto LAB_828bc990;
-    if ((0x3f < param_3->ConformsToIndex) || (3 < (uVar3 & 3))) {
-      iVar1 = -0x7ff8ffa9;
-      goto LAB_828bc990;
+    iVar3 = CBaseEndianBuffer::GetWord((CBaseEndianBuffer *)param_2,(ushort *)&local_40);
+    if (iVar3 < 0) {
+      return iVar3;
     }
-    pCVar4 = this_00->m_rgConformanceInfo + param_3->ConformsToIndex;
+    iVar3 = CSchemaData::LookupConstantFromTable(param_2->m_pSchemaData,local_40._0_2_,local_3c);
+    if (iVar3 < 0) {
+      return iVar3;
+    }
+    uVar1 = param_1.DataSize;
+    uVar2 = param_3->ConformsToIndex;
+    if ((0x3f < uVar2) || (3 < uVar1)) {
+      return 0x80070057;
+    }
+    pCVar4 = this->m_rgConformanceInfo + uVar2;
     if (pCVar4->m_fInUse != 0) {
-      iVar1 = -0x7fffbffb;
-      goto LAB_828bc990;
+      return 0x80004005;
     }
     pCVar4->m_pbWrittenLocation = (uchar *)0x0;
-    pCVar4->m_ConformanceSize = uVar3;
+    pCVar4->m_ConformanceSize = uVar1;
     pCVar4->m_fInitialized = 1;
     pCVar4->m_fInUse = 0;
     pCVar4->m_Reserved = 0;
     pCVar4->m_Conformance = (ulonglong)local_3c[0];
   }
-  iVar1 = AcquireConformanceInfo(this_00,param_3->ConformsToIndex,&local_40);
-  if (-1 < iVar1) {
+  iVar3 = AcquireConformanceInfo(this,param_3->ConformsToIndex,&local_40);
+  if (-1 < iVar3) {
     *param_4 = (ulong)local_40->m_Conformance;
   }
-LAB_828bc990:
-  uVar2 = __restgprlr_27(iVar1);
-  return uVar2;
+  return iVar3;
 }
 
 

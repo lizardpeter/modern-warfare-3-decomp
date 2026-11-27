@@ -76,6 +76,8 @@ int GetBlocksPerFrame(void)
 
 // 8257B748  SV_MigrationSave  (server_mp/sv_migration.cpp:234)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
@@ -90,7 +92,6 @@ void SV_MigrationSave(void)
   SaveHeader *in_stack_ffffff88;
   MemoryFile *in_stack_ffffff8c;
   
-  __savegprlr_29();
   pSVar1 = SaveMemory_GetSaveHandle(SAVE_MIGRATION_HANDLE);
   pMVar2 = SaveMemory_GetMemoryFile(pSVar1);
   puVar3 = Migration_GetBuffer();
@@ -103,7 +104,6 @@ void SV_MigrationSave(void)
              migGlob.migrationCount,in_stack_ffffff88,in_stack_ffffff8c);
   MemFile_GetUsedSize(pMVar2);
   Com_Printf(0xf,"^6[MIGRATION PROFILE] %i bytes, checksum: %i\n");
-  __restgprlr_29();
   return;
 }
 
@@ -123,12 +123,13 @@ void SV_MigrationInit(void)
 
 // 8257B870  SV_MigrationRegisterDvars  (server_mp/sv_migration.cpp:259)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void SV_MigrationRegisterDvars(void)
 
 {
-  __savegprlr_29();
   migration_blocksperframe =
        Dvar_RegisterInt("migration_blocksperframe",0,0,0x20,0,
                         "Number of blocks to send out each server frame.  A value of 0 means base it off our tested bandwidth.\n"
@@ -147,13 +148,14 @@ void SV_MigrationRegisterDvars(void)
   migration_verboseBroadcastTime =
        Dvar_RegisterInt("migration_verboseBroadcastTime",100,0,0x7fffffff,0,
                         "time in milliseconds between verbose migration state broadcasts");
-  __restgprlr_29();
   return;
 }
 
 
 // 8257B980  ClientRemoteAddr  (server_mp/sv_migration.cpp:286)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
@@ -161,30 +163,25 @@ void SV_MigrationRegisterDvars(void)
 netadr_t * ClientRemoteAddr(netadr_t *__return_storage_ptr__,int param_1)
 
 {
-  netadrtype_t nVar1;
-  netadrtype_t nVar2;
-  netadrtype_t nVar3;
-  netadrtype_t *pnVar4;
-  netadr_t *pnVar5;
-  ulonglong uVar6;
-  int iVar7;
+  undefined4 uVar1;
+  netsrc_t nVar2;
+  ushort uVar3;
+  undefined2 uVar4;
   
-  uVar6 = (ulonglong)param_1;
-  pnVar4 = (netadrtype_t *)__savegprlr_29(__return_storage_ptr__);
-  if ((ulonglong)(uint)svs.clientCount <= (uVar6 & 0xffffffff)) {
+  if ((uint)svs.clientCount <= (uint)param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_migration.cpp",
                     0x11f,0,"clientNum doesn\'t index svs.clientCount\n\t%i not in [0, %i)");
   }
-  iVar7 = (int)uVar6;
-  nVar1 = *(netadrtype_t *)svs.clients[iVar7].header.netchan.remoteAddress.ip;
-  nVar2 = *(netadrtype_t *)&svs.clients[iVar7].header.netchan.remoteAddress.port;
-  nVar3 = svs.clients[iVar7].header.netchan.remoteAddress.localNetID;
-  *pnVar4 = svs.clients[iVar7].header.netchan.remoteAddress.type;
-  pnVar4[1] = nVar1;
-  pnVar4[2] = nVar2;
-  pnVar4[3] = nVar3;
-  pnVar5 = (netadr_t *)__restgprlr_29(pnVar4);
-  return pnVar5;
+  uVar1 = *(undefined4 *)svs.clients[param_1].header.netchan.remoteAddress.ip;
+  uVar3 = svs.clients[param_1].header.netchan.remoteAddress.port;
+  uVar4 = *(undefined2 *)&svs.clients[param_1].header.netchan.remoteAddress.field_0xa;
+  nVar2 = svs.clients[param_1].header.netchan.remoteAddress.localNetID;
+  __return_storage_ptr__->type = svs.clients[param_1].header.netchan.remoteAddress.type;
+  *(undefined4 *)__return_storage_ptr__->ip = uVar1;
+  __return_storage_ptr__->port = uVar3;
+  *(undefined2 *)&__return_storage_ptr__->field_0xa = uVar4;
+  __return_storage_ptr__->localNetID = nVar2;
+  return __return_storage_ptr__;
 }
 
 
@@ -210,6 +207,8 @@ bool IsClientConnected(int param_1)
 
 // 8257BAC0  SendToClient  (server_mp/sv_migration.cpp:300)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
@@ -218,41 +217,36 @@ bool SendToClient(int param_1,uchar *param_2,int param_3)
 
 {
   int iVar1;
-  uint uVar2;
-  int iVar3;
-  bool bVar5;
-  netadr_t *pnVar4;
-  undefined1 uVar6;
-  undefined8 uVar7;
-  undefined4 uVar8;
+  int iVar2;
+  bool bVar4;
+  netadr_t *pnVar3;
+  undefined8 uVar5;
+  undefined4 uVar6;
   netadr_t in_stack_ffffff68;
   netadr_t anStack_50 [5];
   
-  uVar2 = __savegprlr_26(param_1,param_2,param_3);
-  if ((uint)svs.clientCount <= uVar2) {
+  if ((uint)svs.clientCount <= (uint)param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_migration.cpp",
                     0x12d,0,"clientNum doesn\'t index svs.clientCount\n\t%i not in [0, %i)");
   }
   iVar1 = DAT_83f1eb10;
-  migGlob.clients[uVar2].attempts = migGlob.clients[uVar2].attempts + 1;
+  migGlob.clients[param_1].attempts = migGlob.clients[param_1].attempts + 1;
   iVar1 = *(int *)(iVar1 + 0xc);
-  iVar3 = Sys_Milliseconds();
-  migGlob.clients[uVar2].msgTimeout = iVar3 + iVar1;
-  bVar5 = IsClientConnected(uVar2);
-  if (bVar5) {
-    pnVar4 = ClientRemoteAddr(anStack_50,uVar2);
-    uVar7._0_4_ = pnVar4->type;
-    uVar7._4_1_ = pnVar4->ip[0];
-    uVar7._5_1_ = pnVar4->ip[1];
-    uVar7._6_1_ = pnVar4->ip[2];
-    uVar7._7_1_ = pnVar4->ip[3];
-    uVar8 = pnVar4->localNetID;
-    bVar5 = NET_OutOfBandData(NS_MAXCLIENTS,in_stack_ffffff68,(uchar *)uVar7,uVar8);
-    uVar6 = __restgprlr_26(bVar5);
-    return (bool)uVar6;
+  iVar2 = Sys_Milliseconds();
+  migGlob.clients[param_1].msgTimeout = iVar2 + iVar1;
+  bVar4 = IsClientConnected(param_1);
+  if (bVar4) {
+    pnVar3 = ClientRemoteAddr(anStack_50,param_1);
+    uVar5._0_4_ = pnVar3->type;
+    uVar5._4_1_ = pnVar3->ip[0];
+    uVar5._5_1_ = pnVar3->ip[1];
+    uVar5._6_1_ = pnVar3->ip[2];
+    uVar5._7_1_ = pnVar3->ip[3];
+    uVar6 = pnVar3->localNetID;
+    bVar4 = NET_OutOfBandData(NS_MAXCLIENTS,in_stack_ffffff68,(uchar *)uVar5,uVar6);
+    return bVar4;
   }
-  uVar6 = __restgprlr_26(0);
-  return (bool)uVar6;
+  return false;
 }
 
 
@@ -301,43 +295,39 @@ void SendStartMessage(int param_1)
 
 // 8257BCE8  CreateBlock  (server_mp/sv_migration.cpp:407)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void CreateBlock(int param_1,Block *param_2)
 
 {
-  int iVar1;
-  ulonglong uVar2;
-  int *piVar3;
-  
-  uVar2 = (ulonglong)(int)param_2;
-  iVar1 = __savegprlr_28(param_1);
-  if ((uVar2 & 0xffffffff) == 0) {
+  if (param_2 == (Block *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_migration.cpp",
                     0x198,0,"%s");
   }
-  if (iVar1 < 0) {
+  if (param_1 < 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_migration.cpp",
                     0x199,0,"%s");
   }
-  piVar3 = (int *)uVar2;
-  *piVar3 = iVar1;
-  if (migGlob.totalSize < (iVar1 + 1) * 0x4b0) {
-    iVar1 = migGlob.totalSize / 0x4b0 + (migGlob.totalSize >> 0x1f);
-    piVar3[1] = migGlob.totalSize + (iVar1 - (iVar1 >> 0x1f)) * -0x4b0;
+  param_2->num = param_1;
+  if (migGlob.totalSize < (param_1 + 1) * 0x4b0) {
+    param_2->size = migGlob.totalSize % 0x4b0;
   }
   else {
-    piVar3[1] = 0x4b0;
+    param_2->size = 0x4b0;
   }
-  piVar3[2] = 0;
-  if (piVar3[1] == 0) {
-    *piVar3 = -1;
+  param_2->timeout = 0;
+  if (param_2->size == 0) {
+    param_2->num = -1;
   }
-  __restgprlr_28();
   return;
 }
 
 
 // 8257BDC8  SendBlock  (server_mp/sv_migration.cpp:424)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 bool SendBlock(int param_1,Block *param_2)
@@ -348,59 +338,54 @@ bool SendBlock(int param_1,Block *param_2)
   uint uVar3;
   bool bVar5;
   int iVar4;
-  undefined1 uVar6;
-  ulonglong uVar7;
-  int *piVar8;
   msg_t local_550;
   uchar auStack_520 [1312];
   
-  uVar7 = (ulonglong)(int)param_2;
-  iVar1 = __savegprlr_26(param_1);
-  if ((uVar7 & 0xffffffff) == 0) {
+  if (param_2 == (Block *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_migration.cpp",
                     0x1ad,0,"%s");
   }
-  piVar8 = (int *)uVar7;
-  if (*piVar8 < 0) {
+  if (param_2->num < 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_migration.cpp",
                     0x1ae,0,"%s");
   }
-  if ((piVar8[1] < 1) || (0x4b0 < piVar8[1])) {
+  if ((param_2->size < 1) || (0x4b0 < param_2->size)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_migration.cpp",
                     0x1af,0,"%s\n\t(block->size) = %i");
   }
-  if (migGlob.totalSize <= *piVar8 * 0x4b0) {
+  if (migGlob.totalSize <= param_2->num * 0x4b0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_migration.cpp",
                     0x1b0,0,"%s");
   }
   puVar2 = Migration_GetBuffer();
   MSG_Init(&local_550,auStack_520,0x4e1);
   MSG_WriteString(&local_550,"mdata");
-  MSG_WriteShort(&local_550,*piVar8);
-  MSG_WriteShort(&local_550,piVar8[1]);
-  iVar4 = *piVar8;
-  MSG_WriteData(&local_550,puVar2 + iVar4 * 0x4b0,piVar8[1]);
-  uVar3 = SaveMemory_ComputeAdlerChecksum(puVar2 + iVar4 * 0x4b0,piVar8[1]);
+  MSG_WriteShort(&local_550,param_2->num);
+  MSG_WriteShort(&local_550,param_2->size);
+  iVar1 = param_2->num;
+  MSG_WriteData(&local_550,puVar2 + iVar1 * 0x4b0,param_2->size);
+  uVar3 = SaveMemory_ComputeAdlerChecksum(puVar2 + iVar1 * 0x4b0,param_2->size);
   MSG_WriteLong(&local_550,uVar3);
   if (local_550.overflowed != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_migration.cpp",
                     0x1bd,0,"%s");
   }
-  bVar5 = SendToClient(iVar1,local_550.data,local_550.cursize);
+  bVar5 = SendToClient(param_1,local_550.data,local_550.cursize);
   if (bVar5) {
     Com_Printf(0x19,"sending block %i to %i\n");
     iVar1 = *(int *)(DAT_83f1eb10 + 0xc);
     iVar4 = Sys_Milliseconds();
-    piVar8[2] = iVar4 + iVar1;
-    uVar6 = __restgprlr_26(1);
-    return (bool)uVar6;
+    param_2->timeout = iVar4 + iVar1;
+    return true;
   }
-  uVar6 = __restgprlr_26(0);
-  return (bool)uVar6;
+  return false;
 }
 
 
 // 8257BFA0  SendSave  (server_mp/sv_migration.cpp:459)
+
+/* WARNING: Function: __savegprlr_21 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_21 replaced with injection: xenon_save_restore */
 
 void SendSave(int param_1)
 
@@ -411,7 +396,6 @@ void SendSave(int param_1)
   MemoryFile *pMVar4;
   Block *pBVar5;
   
-  __savegprlr_21(param_1);
   pSVar3 = SaveMemory_GetSaveHandle(SAVE_MIGRATION_HANDLE);
   migGlob.state = MSTATE_SENDING;
   pMVar4 = SaveMemory_GetMemoryFile(pSVar3);
@@ -435,8 +419,7 @@ void SendSave(int param_1)
     }
     pBVar5->num = iVar2;
     if (migGlob.totalSize < (iVar2 + 1) * 0x4b0) {
-      iVar1 = migGlob.totalSize / 0x4b0 + (migGlob.totalSize >> 0x1f);
-      migGlob.window[iVar2].size = migGlob.totalSize + (iVar1 - (iVar1 >> 0x1f)) * -0x4b0;
+      migGlob.window[iVar2].size = migGlob.totalSize % 0x4b0;
     }
     else {
       migGlob.window[iVar2].size = 0x4b0;
@@ -448,13 +431,14 @@ void SendSave(int param_1)
     }
     migGlob.block = migGlob.block + 1;
   } while (migGlob.block < 0x20);
-  __restgprlr_21();
   return;
 }
 
 
 // 8257C100  SendMigrateTo  (server_mp/sv_migration.cpp:474)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -463,52 +447,48 @@ void SendSave(int param_1)
 void SendMigrateTo(int param_1)
 
 {
-  uint uVar1;
-  PartyMember *pPVar2;
-  char *pcVar3;
-  PartyData *pPVar4;
-  int iVar5;
-  netadr_t *pnVar6;
-  bool bVar7;
-  undefined8 uVar8;
-  undefined4 uVar9;
-  ulong64 uVar10;
+  PartyMember *pPVar1;
+  char *pcVar2;
+  PartyData *pPVar3;
+  int iVar4;
+  netadr_t *pnVar5;
+  undefined8 uVar6;
+  undefined4 uVar7;
+  ulong64 uVar8;
   netadr_t in_stack_fffffe48;
   msg_t local_170;
   netadr_t nStack_140;
   uchar auStack_130 [304];
   
-  uVar1 = __savegprlr_28(param_1);
-  if ((uint)svs.clientCount <= uVar1) {
+  if ((uint)svs.clientCount <= (uint)param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_migration.cpp",
                     0x1df,0,"clientNum doesn\'t index svs.clientCount\n\t%i not in [0, %i)");
   }
-  pPVar2 = Lobby_GetMember(migGlob.newHost);
-  uVar10 = pPVar2->player;
+  pPVar1 = Lobby_GetMember(migGlob.newHost);
+  uVar8 = pPVar1->player;
   MSG_Init(&local_170,auStack_130,0x100);
-  pcVar3 = va("%imigrateto");
-  MSG_WriteString(&local_170,pcVar3);
-  pPVar4 = Lobby_GetPartyData();
-  MSG_WriteBits(&local_170,(pPVar4->migrateData).indexBits,2);
-  iVar5 = Session_HostNum(&g_serverSession);
-  MSG_WriteBits(&local_170,iVar5,5);
+  pcVar2 = va("%imigrateto");
+  MSG_WriteString(&local_170,pcVar2);
+  pPVar3 = Lobby_GetPartyData();
+  MSG_WriteBits(&local_170,(pPVar3->migrateData).indexBits,2);
+  iVar4 = Session_HostNum(&g_serverSession);
+  MSG_WriteBits(&local_170,iVar4,5);
   MSG_WriteBits(&local_170,migGlob.newHost,5);
   MSG_WriteBits(&local_170,migGlob.flags,2);
   MSG_WriteBits(&local_170,1,1);
-  MSG_WriteInt64(&local_170,uVar10);
+  MSG_WriteInt64(&local_170,uVar8);
   if (local_170.overflowed != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_migration.cpp",
                     0x1eb,0,"%s");
   }
-  pnVar6 = ClientRemoteAddr(&nStack_140,uVar1);
-  uVar8._0_4_ = pnVar6->type;
-  uVar8._4_1_ = pnVar6->ip[0];
-  uVar8._5_1_ = pnVar6->ip[1];
-  uVar8._6_1_ = pnVar6->ip[2];
-  uVar8._7_1_ = pnVar6->ip[3];
-  uVar9 = pnVar6->localNetID;
-  bVar7 = NET_OutOfBandData(NS_MAXCLIENTS,in_stack_fffffe48,(uchar *)uVar8,uVar9);
-  __restgprlr_28(bVar7);
+  pnVar5 = ClientRemoteAddr(&nStack_140,param_1);
+  uVar6._0_4_ = pnVar5->type;
+  uVar6._4_1_ = pnVar5->ip[0];
+  uVar6._5_1_ = pnVar5->ip[1];
+  uVar6._6_1_ = pnVar5->ip[2];
+  uVar6._7_1_ = pnVar5->ip[3];
+  uVar7 = pnVar5->localNetID;
+  NET_OutOfBandData(NS_MAXCLIENTS,in_stack_fffffe48,(uchar *)uVar6,uVar7);
   return;
 }
 
@@ -556,6 +536,8 @@ void NewHostPicked(void)
 
 // 8257C368  PickNewHost  (server_mp/sv_migration.cpp:533)
 
+/* WARNING: Function: __savegprlr_17 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_17 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
@@ -581,8 +563,7 @@ void PickNewHost(void)
   netadr_t nStack_a0;
   netadr_t anStack_90 [9];
   
-  __savegprlr_17();
-  if (migGlob.active == false) {
+  if (!migGlob.active) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_migration.cpp",
                     0x21f,0,"%s");
   }
@@ -631,7 +612,6 @@ void PickNewHost(void)
       migGlob.verboseData = migGlob.clients[uVar7].rating << 5 | uVar7;
       migGlob.clients[uVar7].attempts = 0;
       SendHeader(migGlob.newHost);
-      __restgprlr_17();
       return;
     }
   }
@@ -674,7 +654,6 @@ void PickNewHost(void)
   }
   migGlob.flags = migGlob.flags | 1;
   SV_MatchEnd();
-  __restgprlr_17();
   return;
 }
 
@@ -694,6 +673,8 @@ bool SV_MigrationLimitReached(void)
 
 // 8257C6F0  SV_MigrationRemoveClient  (server_mp/sv_migration.cpp:647)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
@@ -702,29 +683,26 @@ void SV_MigrationRemoveClient(client_t *param_1,char *param_2,bool param_3)
 
 {
   int iVar1;
-  int *piVar2;
-  uint uVar3;
   
-  uVar3 = (uint)param_3;
-  piVar2 = (int *)__savegprlr_27(param_1);
-  if (piVar2 == (int *)0x0) {
+  if (param_1 == (client_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_migration.cpp",
                     0x28a,0,"%s");
   }
-  if (1 < *piVar2) {
+  if (1 < (param_1->header).state) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_migration.cpp",
                     0x28b,0,"%s");
   }
-  iVar1 = ((int)piVar2 - (int)svs.clients) / 0x68b00;
+  iVar1 = ((int)param_1 - (int)svs.clients) / 0x68b00;
   SV_Live_ClearTeamRankEntry(iVar1);
-  SV_Live_RemoveClient(iVar1,param_2,uVar3 & 0xff,1);
-  __restgprlr_27();
+  SV_Live_RemoveClient(iVar1,param_2,(uint)param_3,1);
   return;
 }
 
 
 // 8257C7B0  SV_MigrationStart  (server_mp/sv_migration.cpp:664)
 
+/* WARNING: Function: __savegprlr_20 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_20 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "ConfigString": Some values do not have unique names */
@@ -734,19 +712,16 @@ void SV_MigrationRemoveClient(client_t *param_1,char *param_2,bool param_3)
 void SV_MigrationStart(char *param_1,int param_2)
 
 {
-  char *pcVar1;
-  PartyData *pPVar2;
-  int iVar3;
+  PartyData *pPVar1;
+  int iVar2;
   bool bVar6;
-  int iVar4;
-  uint uVar5;
-  ulonglong uVar7;
-  client_t *pcVar8;
-  int *piVar9;
+  int iVar3;
+  uint uVar4;
+  char *pcVar5;
+  client_t *pcVar7;
+  int *piVar8;
   
-  uVar7 = (ulonglong)param_2;
-  pcVar1 = (char *)__savegprlr_20(param_1);
-  if (migGlob.active != false) {
+  if (migGlob.active) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_migration.cpp",
                     0x29c,0,"%s");
   }
@@ -758,198 +733,188 @@ void SV_MigrationStart(char *param_1,int param_2)
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_migration.cpp",
                     0x29e,0,"%s");
   }
-  uVar5 = (uint)uVar7;
-  pPVar2 = Lobby_GetPartyData();
-  pPVar2->stopAfterRound = uVar5 & 1;
-  if (((uVar7 & 1) != 0) && (g_partyData.inParty != 0)) {
-    iVar3 = SV_ShouldAskPartyMembersToFollowUs(uVar5);
-    g_partyData.stopAfterRound = (uint)LZCOUNT(iVar3) >> 5;
+  pPVar1 = Lobby_GetPartyData();
+  pPVar1->stopAfterRound = param_2 & 1U;
+  if (((param_2 & 1U) != 0) && (g_partyData.inParty != 0)) {
+    iVar2 = SV_ShouldAskPartyMembersToFollowUs(param_2);
+    g_partyData.stopAfterRound = (uint)LZCOUNT(iVar2) >> 5;
     g_partyData.backingOut = (uint)LZCOUNT(g_partyData.stopAfterRound) >> 5;
   }
   if (migGlob.migrationCount < *(int *)(DAT_83f1eb20 + 0xc)) {
-    iVar3 = SV_CountRealClients();
-    if (1 < iVar3) {
-      if (pcVar1 == (char *)0x0) {
+    iVar2 = SV_CountRealClients();
+    if (1 < iVar2) {
+      if (param_1 == (char *)0x0) {
         migGlob.reason[0] = '\0';
       }
       else {
-        I_strncpyz(migGlob.reason,pcVar1,0x40);
+        I_strncpyz(migGlob.reason,param_1,0x40);
       }
       migGlob.migrationCount = migGlob.migrationCount + 1;
-      iVar3 = 0;
+      iVar2 = 0;
       migGlob.active = true;
-      pcVar8 = svs.clients;
-      migGlob.flags = uVar5;
+      pcVar7 = svs.clients;
+      migGlob.flags = param_2;
       if (0 < svs.clientCount) {
         do {
-          iVar4 = (pcVar8->header).state;
-          if (iVar4 == 5) {
-            if (pcVar8->statPacketsReceived != 0x3ff) {
+          iVar3 = (pcVar7->header).state;
+          if (iVar3 == 5) {
+            if (pcVar7->statPacketsReceived != 0x3ff) {
               MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_migration.cpp"
                               ,0x2ca,0,"%s\n\t%s");
             }
           }
           else {
-            if (1 < iVar4) {
-              SV_DropClient(pcVar8,"EXE_MIGRATION_IN_PROGRESS",true);
+            if (1 < iVar3) {
+              SV_DropClient(pcVar7,"EXE_MIGRATION_IN_PROGRESS",true);
             }
-            SV_MigrationRemoveClient(pcVar8,"EXE_MIGRATION_IN_PROGRESS",false);
+            SV_MigrationRemoveClient(pcVar7,"EXE_MIGRATION_IN_PROGRESS",false);
           }
-          iVar3 = iVar3 + 1;
-          pcVar8 = pcVar8 + 1;
-        } while (iVar3 < svs.clientCount);
+          iVar2 = iVar2 + 1;
+          pcVar7 = pcVar7 + 1;
+        } while (iVar2 < svs.clientCount);
       }
       Migration_Init();
       G_PrepareMigration();
       SV_MigrationSave();
-      iVar3 = 0;
+      iVar2 = 0;
       if (0 < svs.clientCount) {
-        piVar9 = &migGlob.clients[0].attempts;
+        piVar8 = &migGlob.clients[0].attempts;
         do {
-          bVar6 = IsClientConnected(iVar3);
+          bVar6 = IsClientConnected(iVar2);
           if (bVar6) {
-            *piVar9 = 0;
-            iVar4 = Sys_Milliseconds();
-            piVar9[4] = iVar4;
-            SendStartMessage(iVar3);
+            *piVar8 = 0;
+            iVar3 = Sys_Milliseconds();
+            piVar8[4] = iVar3;
+            SendStartMessage(iVar2);
           }
           else {
-            ((MigrationClient *)(piVar9 + -1))->state = CSTATE_INACTIVE;
+            ((MigrationClient *)(piVar8 + -1))->state = CSTATE_INACTIVE;
           }
-          iVar3 = iVar3 + 1;
-          piVar9 = piVar9 + 6;
-        } while (iVar3 < svs.clientCount);
+          iVar2 = iVar2 + 1;
+          piVar8 = piVar8 + 6;
+        } while (iVar2 < svs.clientCount);
       }
       migGlob.state = MSTATE_STARTING;
       migGlob.newHost = -1;
-      iVar3 = (migration_blocksperframe->current).integer;
-      if (iVar3 < 1) {
-        uVar5 = Live_GetUploadSpeed();
-        iVar3 = (int)((((int)uVar5 >> 3) + (uint)((int)uVar5 < 0 && (uVar5 & 7) != 0)) * 0x32) /
+      iVar2 = (migration_blocksperframe->current).integer;
+      if (iVar2 < 1) {
+        uVar4 = Live_GetUploadSpeed();
+        iVar2 = (int)((((int)uVar4 >> 3) + (uint)((int)uVar4 < 0 && (uVar4 & 7) != 0)) * 0x32) /
                 1200000;
-        if (iVar3 < 0x20) {
-          if (iVar3 < 2) {
-            iVar3 = 1;
+        if (iVar2 < 0x20) {
+          if (iVar2 < 2) {
+            iVar2 = 1;
           }
         }
         else {
-          iVar3 = 0x20;
+          iVar2 = 0x20;
         }
         Com_Printf(0xf,"Blocks per frame: %i\n");
       }
-      migGlob.blocksPerFrame = iVar3;
+      migGlob.blocksPerFrame = iVar2;
       SV_SetGameEndTime(0);
-      pcVar1 = va("%i %i %g %g");
-      SV_SetConfigstring(CS_TIMESCALE,pcVar1);
+      pcVar5 = va("%i %i %g %g");
+      SV_SetConfigstring(CS_TIMESCALE,pcVar5);
       migGlob.broadcastTime = 0;
       migGlob.verboseState = MVSTATE_WAITING;
-      __restgprlr_20();
       return;
     }
     Com_Printf(0xf,"No client to migrate to.  Ending match instead.\n");
     Cbuf_AddCall(LOCAL_CLIENT_0,SV_SendMatchData);
     SV_MatchEnd();
-    __restgprlr_20();
     return;
   }
   Com_Printf(0xf,"Migration limit (%i) reached.  Ending match instead.\n");
   Cbuf_AddCall(LOCAL_CLIENT_0,SV_SendMatchData);
   SV_MatchEnd();
-  __restgprlr_20();
   return;
 }
 
 
 // 8257CB88  HasTimedOut  (server_mp/sv_migration.cpp:760)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 bool HasTimedOut(int param_1)
 
 {
-  uint uVar1;
-  bool bVar3;
-  undefined1 uVar4;
-  int iVar2;
+  bool bVar2;
+  int iVar1;
   
-  uVar1 = __savegprlr_28(param_1);
-  if (0x11 < uVar1) {
+  if (0x11 < (uint)param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_migration.cpp",
                     0x2f9,0,"clientNum doesn\'t index MAX_CLIENTS\n\t%i not in [0, %i)");
   }
-  bVar3 = IsClientConnected(uVar1);
-  if (!bVar3) {
+  bVar2 = IsClientConnected(param_1);
+  if (!bVar2) {
     Sys_Milliseconds();
     Com_Printf(0x19,"[%i] clientNum %i no longer connected\n");
-    uVar4 = __restgprlr_28(1);
-    return (bool)uVar4;
+    return true;
   }
   if (((migGlob.state != MSTATE_SENDING) && (migGlob.state != MSTATE_FINALIZING)) &&
-     ((migGlob.state != MSTATE_HEADER || (migGlob.newHost == uVar1)))) {
-    iVar2 = Sys_Milliseconds();
-    if ((longlong)((ulonglong)(uint)migGlob.clients[uVar1].msgTimeout - (longlong)iVar2) < 0) {
+     ((migGlob.state != MSTATE_HEADER || (migGlob.newHost == param_1)))) {
+    iVar1 = Sys_Milliseconds();
+    if ((longlong)((ulonglong)(uint)migGlob.clients[param_1].msgTimeout - (longlong)iVar1) < 0) {
       Sys_Milliseconds();
       Com_Printf(0x19,"[%i] clientNum %i msg timed out.  attempt %i of %i\n");
     }
-    iVar2 = Sys_Milliseconds();
-    uVar4 = __restgprlr_28(((ulonglong)(uint)migGlob.clients[uVar1].msgTimeout - (longlong)iVar2 &
-                           0xffffffff) >> 0x1f);
-    return (bool)uVar4;
+    iVar1 = Sys_Milliseconds();
+    return (bool)((byte)((ulonglong)(uint)migGlob.clients[param_1].msgTimeout - (longlong)iVar1 >>
+                        0x18) >> 7);
   }
-  uVar4 = __restgprlr_28(0);
-  return (bool)uVar4;
+  return false;
 }
 
 
 // 8257CCA0  TimedOut  (server_mp/sv_migration.cpp:790)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void TimedOut(int param_1)
 
 {
   bool bVar1;
-  MigrationClient *pMVar2;
-  uint uVar3;
-  ulonglong uVar4;
+  ulonglong uVar2;
+  MigrationClient *pMVar3;
   
-  uVar3 = __savegprlr_28(param_1);
-  if (0x11 < uVar3) {
+  if (0x11 < (uint)param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_migration.cpp",
                     0x319,0,"clientNum doesn\'t index MAX_CLIENTS\n\t%i not in [0, %i)");
   }
-  pMVar2 = migGlob.clients + uVar3;
-  if (migGlob.clients[uVar3].state == CSTATE_INACTIVE) {
+  pMVar3 = migGlob.clients + param_1;
+  if (migGlob.clients[param_1].state == CSTATE_INACTIVE) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_migration.cpp",
                     0x31c,0,"%s");
   }
-  if (4 < migGlob.clients[uVar3].attempts) {
-    pMVar2->state = CSTATE_INACTIVE;
+  if (4 < migGlob.clients[param_1].attempts) {
+    pMVar3->state = CSTATE_INACTIVE;
   }
-  uVar4 = (ulonglong)migGlob.state - 1;
-  if ((uVar4 & 0xffffffff) < 4) {
-    bVar1 = (int)uVar4 != 0;
+  uVar2 = (ulonglong)migGlob.state - 1;
+  if ((uVar2 & 0xffffffff) < 4) {
+    bVar1 = (int)uVar2 != 0;
     if ((ulonglong)migGlob.state == 2 && bVar1) {
-      if (uVar3 == migGlob.newHost) {
-        if (pMVar2->state != CSTATE_INACTIVE) {
+      if (param_1 == migGlob.newHost) {
+        if (pMVar3->state != CSTATE_INACTIVE) {
           SendHeader(migGlob.newHost);
-          __restgprlr_28();
           return;
         }
         migGlob.state = MSTATE_STARTING;
         PickNewHost();
-        __restgprlr_28();
         return;
       }
     }
-    else if (uVar4 == 2 && bVar1) {
-      if (uVar3 == migGlob.newHost) {
-        pMVar2->state = CSTATE_INACTIVE;
+    else if (uVar2 == 2 && bVar1) {
+      if (param_1 == migGlob.newHost) {
+        pMVar3->state = CSTATE_INACTIVE;
         migGlob.state = MSTATE_STARTING;
         PickNewHost();
-        __restgprlr_28();
         return;
       }
     }
-    else if ((!bVar1) && (pMVar2->state == CSTATE_WAITFORRATING)) {
-      SendStartMessage(uVar3);
-      __restgprlr_28();
+    else if ((!bVar1) && (pMVar3->state == CSTATE_WAITFORRATING)) {
+      SendStartMessage(param_1);
       return;
     }
   }
@@ -957,13 +922,14 @@ void TimedOut(int param_1)
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_migration.cpp",
                     0x349,0,"should not be checking migration timeouts if migration is inactive");
   }
-  __restgprlr_28();
   return;
 }
 
 
 // 8257CE08  CheckTimeouts  (server_mp/sv_migration.cpp:848)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
@@ -976,7 +942,6 @@ void CheckTimeouts(void)
   MigrationClient *pMVar2;
   int iVar3;
   
-  __savegprlr_29();
   iVar3 = 0;
   if (0 < svs.clientCount) {
     pMVar2 = migGlob.clients;
@@ -988,7 +953,6 @@ void CheckTimeouts(void)
       pMVar2 = pMVar2 + 1;
     } while (iVar3 < svs.clientCount);
   }
-  __restgprlr_29();
   return;
 }
 
@@ -1023,6 +987,8 @@ bool IsWaitingForClientRatings(void)
 
 // 8257CEE8  SendMigrateToMessages  (server_mp/sv_migration.cpp:877)
 
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -1039,7 +1005,6 @@ void SendMigrateToMessages(void)
   char *pcVar6;
   MigrationClient *pMVar7;
   
-  __savegprlr_22();
   bVar2 = true;
   iVar3 = Sys_Milliseconds();
   if ((longlong)((ulonglong)(uint)migGlob.giveUpTime - (longlong)iVar3) < 1) {
@@ -1082,18 +1047,18 @@ LAB_8257d044:
   if (bVar2) {
     if (migGlob.reason[0] != '\0') {
       Com_Error(ERR_SERVERDISCONNECT,migGlob.reason);
-      __restgprlr_22();
       return;
     }
     SV_MatchEnd();
   }
-  __restgprlr_22();
   return;
 }
 
 
 // 8257D080  SendFrame  (server_mp/sv_migration.cpp:941)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void SendFrame(void)
@@ -1107,7 +1072,6 @@ void SendFrame(void)
   int iVar6;
   uint uVar7;
   
-  __savegprlr_27();
   iVar3 = 0;
   bVar1 = true;
   if (migGlob.blocksPerFrame < 1) {
@@ -1152,13 +1116,14 @@ void SendFrame(void)
     migGlob.giveUpTime = iVar3 + 2000;
     SendMigrateToMessages();
   }
-  __restgprlr_27();
   return;
 }
 
 
 // 8257D250  BroadcastVerboseState  (server_mp/sv_migration.cpp:1011)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -1167,53 +1132,46 @@ void SendFrame(void)
 void BroadcastVerboseState(void)
 
 {
-  longlong lVar1;
-  bool bVar4;
-  netadr_t *pnVar3;
-  undefined8 uVar5;
-  undefined4 uVar6;
-  int iVar7;
-  MigrationClient *pMVar8;
+  int iVar1;
+  bool bVar3;
+  netadr_t *pnVar2;
+  undefined8 uVar4;
+  undefined4 uVar5;
+  int iVar6;
+  MigrationClient *pMVar7;
   netadr_t in_stack_fffffa68;
   msg_t mStack_550;
   netadr_t nStack_520;
   uchar auStack_510 [1296];
-  int iVar2;
   
-  __savegprlr_29();
-  iVar7 = (migration_verboseBroadcastTime->current).integer;
-  iVar2 = Sys_Milliseconds();
-  lVar1 = (longlong)iVar2;
-  if (iVar7 <= iVar2 - migGlob.broadcastTime) {
+  iVar6 = (migration_verboseBroadcastTime->current).integer;
+  iVar1 = Sys_Milliseconds();
+  if (iVar6 <= iVar1 - migGlob.broadcastTime) {
     MSG_Init(&mStack_550,auStack_510,0x4e1);
     MSG_WriteString(&mStack_550,"mstate");
     MSG_WriteByte(&mStack_550,migGlob.verboseState);
     MSG_WriteLong(&mStack_550,migGlob.verboseData);
     migGlob.broadcastTime = Sys_Milliseconds();
-    lVar1 = (longlong)migGlob.broadcastTime;
-    iVar7 = 0;
+    iVar6 = 0;
     if (0 < svs.clientCount) {
-      pMVar8 = migGlob.clients;
+      pMVar7 = migGlob.clients;
       do {
-        bVar4 = IsClientConnected(iVar7);
-        lVar1 = (longlong)bVar4;
-        if ((lVar1 != 0) && (pMVar8->state != CSTATE_INACTIVE)) {
-          pnVar3 = ClientRemoteAddr(&nStack_520,iVar7);
-          uVar5._0_4_ = pnVar3->type;
-          uVar5._4_1_ = pnVar3->ip[0];
-          uVar5._5_1_ = pnVar3->ip[1];
-          uVar5._6_1_ = pnVar3->ip[2];
-          uVar5._7_1_ = pnVar3->ip[3];
-          uVar6 = pnVar3->localNetID;
-          bVar4 = NET_OutOfBandData(NS_MAXCLIENTS,in_stack_fffffa68,(uchar *)uVar5,uVar6);
-          lVar1 = (longlong)bVar4;
+        bVar3 = IsClientConnected(iVar6);
+        if ((bVar3) && (pMVar7->state != CSTATE_INACTIVE)) {
+          pnVar2 = ClientRemoteAddr(&nStack_520,iVar6);
+          uVar4._0_4_ = pnVar2->type;
+          uVar4._4_1_ = pnVar2->ip[0];
+          uVar4._5_1_ = pnVar2->ip[1];
+          uVar4._6_1_ = pnVar2->ip[2];
+          uVar4._7_1_ = pnVar2->ip[3];
+          uVar5 = pnVar2->localNetID;
+          NET_OutOfBandData(NS_MAXCLIENTS,in_stack_fffffa68,(uchar *)uVar4,uVar5);
         }
-        iVar7 = iVar7 + 1;
-        pMVar8 = pMVar8 + 1;
-      } while (iVar7 < svs.clientCount);
+        iVar6 = iVar6 + 1;
+        pMVar7 = pMVar7 + 1;
+      } while (iVar6 < svs.clientCount);
     }
   }
-  __restgprlr_29(lVar1);
   return;
 }
 
@@ -1274,6 +1232,8 @@ void SV_MigrationFrame(void)
 
 // 8257D478  HandleRatingMsg  (server_mp/sv_migration.cpp:1110)
 
+/* WARNING: Function: __savegprlr_20 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_20 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -1283,36 +1243,33 @@ void HandleRatingMsg(int param_1,msg_t *param_2)
 
 {
   int iVar1;
-  int iVar2;
-  uint uVar3;
-  PartyData *pPVar4;
-  MigrationClient *pMVar5;
-  uint uVar6;
+  uint uVar2;
+  PartyData *pPVar3;
+  MigrationClient *pMVar4;
+  uint uVar5;
   
-  iVar1 = __savegprlr_20(param_1);
-  if (migGlob.clients[iVar1].state != CSTATE_WAITFORRATING) {
+  if (migGlob.clients[param_1].state != CSTATE_WAITFORRATING) {
     Com_Printf(0x19,"Got stray %s msg from client %i\n");
-    __restgprlr_20();
     return;
   }
-  migGlob.clients[iVar1].state = CSTATE_MIGRATING;
-  iVar2 = MSG_ReadLong(param_2);
-  migGlob.clients[iVar1].rating = iVar2;
-  migGlob.clients[iVar1].cantTalkToClientCount = 0;
-  uVar3 = MSG_ReadLong(param_2);
-  pPVar4 = Lobby_GetPartyData();
-  Party_GetMemberName(pPVar4,iVar1);
+  migGlob.clients[param_1].state = CSTATE_MIGRATING;
+  iVar1 = MSG_ReadLong(param_2);
+  migGlob.clients[param_1].rating = iVar1;
+  migGlob.clients[param_1].cantTalkToClientCount = 0;
+  uVar2 = MSG_ReadLong(param_2);
+  pPVar3 = Lobby_GetPartyData();
+  Party_GetMemberName(pPVar3,param_1);
   Com_Printf(0x19,
              "HandleRatingMsg - Got %s msg from client %i (%s): rating is %i, connectivity is %i.\n"
             );
-  if (uVar3 != 0xffffffff) {
-    uVar6 = 0;
+  if (uVar2 != 0xffffffff) {
+    uVar5 = 0;
     if (0 < svs.clientCount) {
-      iVar2 = 0;
-      pMVar5 = migGlob.clients;
+      iVar1 = 0;
+      pMVar4 = migGlob.clients;
       do {
-        if ((pMVar5->state != CSTATE_INACTIVE) && ((1 << (uVar6 & 0x3f) & uVar3) == 0)) {
-          if (*(int *)(((svs.clients)->header).netchan.remoteAddress.ip + iVar2 + -0x2c) < 5) {
+        if ((pMVar4->state != CSTATE_INACTIVE) && ((1 << (uVar5 & 0x3f) & uVar2) == 0)) {
+          if (*(int *)(((svs.clients)->header).netchan.remoteAddress.ip + iVar1 + -0x2c) < 5) {
             Com_Printf(0x19,
                        "Client %i cannot get packets to client %i, but that is OK because client %i isn\'t CS_ACTIVE yet.\n"
                       );
@@ -1321,17 +1278,16 @@ void HandleRatingMsg(int param_1,msg_t *param_2)
             Com_Printf(0x19,
                        "Client %i cannot get packets to client %i, so we will reduce their host rating.\n"
                       );
-            migGlob.clients[iVar1].cantTalkToClientCount =
-                 migGlob.clients[iVar1].cantTalkToClientCount + 1;
+            migGlob.clients[param_1].cantTalkToClientCount =
+                 migGlob.clients[param_1].cantTalkToClientCount + 1;
           }
         }
-        uVar6 = uVar6 + 1;
-        pMVar5 = pMVar5 + 1;
-        iVar2 = iVar2 + 0x68b00;
-      } while ((int)uVar6 < svs.clientCount);
+        uVar5 = uVar5 + 1;
+        pMVar4 = pMVar4 + 1;
+        iVar1 = iVar1 + 0x68b00;
+      } while ((int)uVar5 < svs.clientCount);
     }
   }
-  __restgprlr_20();
   return;
 }
 
@@ -1356,6 +1312,8 @@ Block * FindBlock(int param_1)
 
 // 8257D650  HandleSaveAckMsg  (server_mp/sv_migration.cpp:1167)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 void HandleSaveAckMsg(int param_1,msg_t *param_2)
@@ -1364,11 +1322,9 @@ void HandleSaveAckMsg(int param_1,msg_t *param_2)
   int iVar1;
   Block *pBVar2;
   
-  iVar1 = __savegprlr_29(param_1);
-  if (((iVar1 != migGlob.newHost) || (migGlob.clients[iVar1].state != CSTATE_MIGRATING)) ||
+  if (((param_1 != migGlob.newHost) || (migGlob.clients[param_1].state != CSTATE_MIGRATING)) ||
      (migGlob.state != MSTATE_SENDING)) {
     Com_Printf(0x19,"Got stray %s msg from client %i\n");
-    __restgprlr_29();
     return;
   }
   iVar1 = MSG_ReadShort(param_2);
@@ -1377,7 +1333,6 @@ void HandleSaveAckMsg(int param_1,msg_t *param_2)
     pBVar2 = pBVar2 + 1;
     if (-0x7c0e156d < (int)pBVar2) {
       Com_Printf(0x19,"got ack from unexpected block %i.  Ignoring.\n");
-      __restgprlr_29();
       return;
     }
   }
@@ -1389,11 +1344,9 @@ void HandleSaveAckMsg(int param_1,msg_t *param_2)
   if (migGlob.block * 0x4b0 < migGlob.totalSize) {
     CreateBlock(migGlob.block,pBVar2);
     migGlob.block = migGlob.block + 1;
-    __restgprlr_29();
     return;
   }
   pBVar2->num = -1;
-  __restgprlr_29();
   return;
 }
 
@@ -1436,6 +1389,8 @@ void HandleMigrateToAckMsg(int param_1,msg_t *param_2)
 
 // 8257D898  SV_MigrationPacket  (server_mp/sv_migration.cpp:1240)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
@@ -1443,58 +1398,52 @@ void HandleMigrateToAckMsg(int param_1,msg_t *param_2)
 bool SV_MigrationPacket(char *param_1,netadr_t param_2,msg_t *param_3)
 
 {
-  char *pcVar1;
-  bool bVar4;
-  int iVar2;
-  undefined1 uVar5;
-  client_t *pcVar3;
-  longlong lVar6;
+  bool bVar3;
+  int iVar1;
+  client_t *pcVar2;
   undefined8 in_r6;
-  MigrationMessage *pMVar7;
-  int iVar8;
-  int iVar9;
+  MigrationMessage *pMVar4;
+  int iVar5;
+  int iVar6;
   longlong lStack00000020;
   netadr_t in_stack_ffffff68;
   
-  lVar6 = (longlong)(int)param_3;
-  pcVar1 = (char *)__savegprlr_23(param_1);
-  lStack00000020 = lVar6;
-  bVar4 = Sys_IsServerThread();
-  if (!bVar4) {
+  lStack00000020 = (longlong)(int)param_3;
+  bVar3 = Sys_IsServerThread();
+  if (!bVar3) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_migration.cpp",
                     0x4de,0,"%s");
   }
-  iVar9 = 0;
-  pMVar7 = messageHandlers;
-  iVar8 = 0;
-  while (iVar2 = I_stricmp(pcVar1,pMVar7->string), iVar2 != 0) {
-    iVar9 = iVar9 + 1;
-    iVar8 = iVar9 * 8;
-    pMVar7 = messageHandlers + iVar9;
-    if (*messageHandlers[iVar9].string == '\0') {
-      uVar5 = __restgprlr_23(0);
-      return (bool)uVar5;
+  iVar6 = 0;
+  pMVar4 = messageHandlers;
+  iVar5 = 0;
+  while (iVar1 = I_stricmp(param_1,pMVar4->string), iVar1 != 0) {
+    iVar6 = iVar6 + 1;
+    iVar5 = iVar6 * 8;
+    pMVar4 = messageHandlers + iVar6;
+    if (*messageHandlers[iVar6].string == '\0') {
+      return false;
     }
   }
-  if (*(int *)((int)&messageHandlers[0].func + iVar8) == 0) {
+  if (*(int *)((int)&messageHandlers[0].func + iVar5) == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_migration.cpp",
                     0x4e6,0,"%s");
   }
-  pcVar3 = SV_FindClientByAddress(in_stack_ffffff68,(int)lVar6);
-  if (pcVar3 != (client_t *)0x0) {
-    (**(code **)((int)&messageHandlers[0].func + iVar8))
-              (((int)pcVar3 - (int)svs.clients) / 0x68b00,in_r6);
-    uVar5 = __restgprlr_23(1);
-    return (bool)uVar5;
+  pcVar2 = SV_FindClientByAddress(in_stack_ffffff68,(int)param_3);
+  if (pcVar2 != (client_t *)0x0) {
+    (**(code **)((int)&messageHandlers[0].func + iVar5))
+              (((int)pcVar2 - (int)svs.clients) / 0x68b00,in_r6);
+    return true;
   }
   Com_Printf(0x19,"got %s msg from unknown client %u.%u.%u.%u\n");
-  uVar5 = __restgprlr_23(1);
-  return (bool)uVar5;
+  return true;
 }
 
 
 // 8257DA08  SV_MigrationEnd  (server_mp/sv_migration.cpp:1276)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void SV_MigrationEnd(void)
@@ -1502,8 +1451,7 @@ void SV_MigrationEnd(void)
 {
   bool bVar1;
   
-  __savegprlr_29();
-  if (migGlob.active == false) {
+  if (!migGlob.active) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_migration.cpp",
                     0x501,0,"%s");
   }
@@ -1519,7 +1467,6 @@ void SV_MigrationEnd(void)
   migGlob.reason[0] = '\0';
   migGlob.flags = 0;
   Migration_Shutdown();
-  __restgprlr_29();
   return;
 }
 

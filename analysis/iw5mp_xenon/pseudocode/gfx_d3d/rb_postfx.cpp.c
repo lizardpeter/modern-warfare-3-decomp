@@ -86,41 +86,38 @@ bool RB_UsingBlur(GfxViewInfo *param_1)
 
 // 827A71A0  RB_CalcGlowEffect  (gfx_d3d/rb_postfx.cpp:111)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void RB_CalcGlowEffect(GfxViewInfo *param_1)
 
 {
-  GfxViewInfo *pGVar1;
-  
-  pGVar1 = (GfxViewInfo *)__savegprlr_29(param_1);
-  if (pGVar1 == (GfxViewInfo *)0x0) {
+  if (param_1 == (GfxViewInfo *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_postfx.cpp",0x70,0,
                     "%s");
   }
-  if ((pGVar1->glow).bloomIntensity == 0.0) {
+  if ((param_1->glow).bloomIntensity == 0.0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_postfx.cpp",0x71,0,
                     "%s");
   }
-  RB_GlowFilterImage(pGVar1);
-  __restgprlr_29();
+  RB_GlowFilterImage(param_1);
   return;
 }
 
 
 // 827A7228  RB_ApplyGlowEffectPass  (gfx_d3d/rb_postfx.cpp:120)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void RB_ApplyGlowEffectPass(GfxViewInfo *param_1,GfxImage *param_2,bool param_3)
 
 {
-  int iVar1;
-  
-  iVar1 = __savegprlr_26(param_1);
-  if (iVar1 == 0) {
+  if (param_1 == (GfxViewInfo *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_postfx.cpp",0x79,0,
                     "%s");
   }
@@ -129,15 +126,16 @@ void RB_ApplyGlowEffectPass(GfxViewInfo *param_1,GfxImage *param_2,bool param_3)
                     "%s");
   }
   gfxCmdBufSourceState.input.codeImages[8] = param_2;
-  RB_ViewportFilter(rgp.glowApplyBloomMaterial,(GfxViewport *)(iVar1 + 0x160),param_3,
-                    *(bool *)(iVar1 + 0x92c),0.0);
-  __restgprlr_26();
+  RB_ViewportFilter(rgp.glowApplyBloomMaterial,&param_1->displayViewport,param_3,param_1->isPIPScene
+                    ,0.0);
   return;
 }
 
 
 // 827A72D8  RB_ApplyGlowEffect  (gfx_d3d/rb_postfx.cpp:135)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
@@ -145,9 +143,6 @@ void RB_ApplyGlowEffectPass(GfxViewInfo *param_1,GfxImage *param_2,bool param_3)
 void RB_ApplyGlowEffect(GfxViewInfo *param_1,bool param_2)
 
 {
-  GfxViewInfo *pGVar1;
-  
-  pGVar1 = (GfxViewInfo *)__savegprlr_27(param_1);
   if (gfxRenderTargets[gfxCmdBufState.renderTargetId].surface.color !=
       gfxRenderTargets[1].surface.color) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_postfx.cpp",0x89,0,
@@ -158,10 +153,9 @@ void RB_ApplyGlowEffect(GfxViewInfo *param_1,bool param_2)
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_postfx.cpp",0x8e,
                       0,"%s");
     }
-    RB_ApplyGlowEffectPass(pGVar1,backEnd.glowImage,param_2);
+    RB_ApplyGlowEffectPass(param_1,backEnd.glowImage,param_2);
   }
   backEnd.glowCount = 0;
-  __restgprlr_27();
   return;
 }
 
@@ -191,6 +185,9 @@ void RB_GetNearDepthOfFieldEquation
 
 // 827A73E8  RB_GetSceneDepthOfFieldEquation  (gfx_d3d/rb_postfx.cpp:167)
 
+/* WARNING: Function: __savefpr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_26 replaced with injection: xenon_save_restore */
+
 void RB_GetSceneDepthOfFieldEquation
                (float param_1,float param_2,float param_3,float param_4,float *param_5,float param_6
                )
@@ -208,8 +205,8 @@ void RB_GetSceneDepthOfFieldEquation
   dVar5 = (double)param_6;
   dVar4 = (double)param_4;
   dVar3 = (double)param_3;
+  dVar2 = (double)param_1;
   dVar1 = (double)param_2;
-  dVar2 = (double)__savefpr_26((double)param_1,param_5);
   dVar7 = 0.0;
   if (dVar5 == 0.0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_postfx.cpp",0xaa,0,
@@ -237,7 +234,6 @@ void RB_GetSceneDepthOfFieldEquation
     in_r7[1] = (float)dVar7;
     in_r7[3] = (float)dVar7;
   }
-  __restfpr_26();
   return;
 }
 
@@ -281,6 +277,8 @@ int RB_GetBasicColorMaterialIndex(GfxViewInfo *param_1)
 
 // 827A7570  RB_GetDepthOfFieldInputImages  (gfx_d3d/rb_postfx.cpp:235)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
@@ -289,34 +287,31 @@ void RB_GetDepthOfFieldInputImages(GfxCmdBufContext param_1,GfxViewInfo *param_2
 
 {
   GfxCmdBufSourceState *pGVar1;
-  GfxCmdBufContext GVar2;
-  GfxRenderTargetId GVar3;
+  GfxRenderTargetId GVar2;
   GfxCmdBufSourceState *pGStack00000010;
   
-  GVar2 = (GfxCmdBufContext)__savegprlr_26();
-  pGStack00000010 = GVar2.source;
+  pGStack00000010 = param_1.source;
   pGVar1 = pGStack00000010;
-  _pGStack00000010 = GVar2;
+  _pGStack00000010 = param_1;
   R_SetRenderTargetSize(pGVar1,R_RENDERTARGET_POST_EFFECT_1);
-  R_SetRenderTarget(GVar2,R_RENDERTARGET_POST_EFFECT_1);
+  R_SetRenderTarget(param_1,R_RENDERTARGET_POST_EFFECT_1);
   PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffff,"Depth of Field Downsample");
   RB_Filter(rgp.dofDownsampleMaterial,param_2);
   PIXEndNamedEvent();
-  R_Resolve(GVar2,gfxRenderTargets[9].image);
-  GVar3 = ~R_RENDERTARGET_SAVED_SCREEN;
+  R_Resolve(param_1,gfxRenderTargets[9].image);
+  GVar2 = ~R_RENDERTARGET_SAVED_SCREEN;
   PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffff,"Depth of Field Blur");
   RB_GaussianFilterImage
-            ((param_2->dof).nearBlur * 0.25,GVar3,R_RENDERTARGET_POST_EFFECT_1,
+            ((param_2->dof).nearBlur * 0.25,GVar2,R_RENDERTARGET_POST_EFFECT_1,
              (GfxViewInfo *)&DAT_00000008);
   PIXEndNamedEvent();
   R_SetRenderTargetSize(pGVar1,R_RENDERTARGET_POST_EFFECT_1);
-  R_SetRenderTarget(GVar2,R_RENDERTARGET_POST_EFFECT_1);
+  R_SetRenderTarget(param_1,R_RENDERTARGET_POST_EFFECT_1);
   RB_Filter(rgp.dofNearCocMaterial,param_2);
-  R_Resolve(GVar2,gfxRenderTargets[9].image);
+  R_Resolve(param_1,gfxRenderTargets[9].image);
   gfxCmdBufSourceState.input.codeImages[8] = gfxRenderTargets[9].image;
   RB_Filter(rgp.smallBlurMaterial,param_2);
-  R_Resolve(GVar2,gfxRenderTargets[9].image);
-  __restgprlr_26();
+  R_Resolve(param_1,gfxRenderTargets[9].image);
   return;
 }
 
@@ -356,6 +351,10 @@ float RB_GetDepthOfFieldBlurFraction(GfxViewInfo *param_1,float param_2)
 
 // 827A7768  R_SetupDepthOfFieldPostEffects  (gfx_d3d/rb_postfx.cpp:317)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
@@ -363,35 +362,32 @@ void R_SetupDepthOfFieldPostEffects(GfxCmdBufContext param_1,GfxViewInfo *param_
 
 {
   GfxCmdBufSourceState *pGVar1;
-  GfxCmdBufContext GVar2;
-  float *pfVar3;
-  ulonglong uVar5;
+  float *pfVar2;
+  ulonglong uVar4;
+  double dVar5;
   double dVar6;
   double dVar7;
   double dVar8;
   double dVar9;
-  double dVar10;
-  float fVar11;
+  float fVar10;
   GfxCmdBufSourceState *pGStack00000010;
   float local_70;
   float fStack_6c;
   float local_68;
   float local_64;
-  bool bVar4;
+  bool bVar3;
   
-  __savegprlr_27();
-  GVar2 = (GfxCmdBufContext)__savefpr_27();
-  _pGStack00000010 = GVar2;
-  bVar4 = R_UsingDepthOfField(param_2);
-  pfVar3 = (float *)(int)bVar4;
-  if (!bVar4) {
-    pfVar3 = (float *)"c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_postfx.cpp";
+  _pGStack00000010 = param_1;
+  bVar3 = R_UsingDepthOfField(param_2);
+  pfVar2 = (float *)(int)bVar3;
+  if (!bVar3) {
+    pfVar2 = (float *)"c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_postfx.cpp";
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_postfx.cpp",0x142,0
                     ,"%s");
   }
   RB_GetSceneDepthOfFieldEquation
             ((param_2->dof).nearStart,(param_2->dof).nearEnd,(param_2->dof).farStart,
-             (param_2->dof).farEnd,pfVar3,(param_2->viewParms).camera.zNear);
+             (param_2->dof).farEnd,pfVar2,(param_2->viewParms).camera.zNear);
   pGVar1 = pGStack00000010;
   if (((((pGStack00000010->input).consts[0x1c][0] != local_70) ||
        ((pGStack00000010->input).consts[0x1c][1] != fStack_6c)) ||
@@ -403,114 +399,111 @@ void R_SetupDepthOfFieldPostEffects(GfxCmdBufContext param_1,GfxViewInfo *param_
     (pGStack00000010->input).consts[0x1c][3] = local_64;
     R_DirtyCodeConstant(pGStack00000010,0x1c);
   }
-  dVar9 = (double)(param_2->dof).viewModelStart;
-  dVar6 = (double)(param_2->dof).viewModelEnd;
-  dVar10 = 0.0;
-  dVar8 = (double)(r_znear_depthhack->current).value;
-  dVar7 = dVar9;
-  if ((float)(dVar9 - dVar8) < 0.0) {
-    dVar7 = dVar8;
+  dVar8 = (double)(param_2->dof).viewModelStart;
+  dVar5 = (double)(param_2->dof).viewModelEnd;
+  dVar9 = 0.0;
+  dVar7 = (double)(r_znear_depthhack->current).value;
+  dVar6 = dVar8;
+  if ((float)(dVar8 - dVar7) < 0.0) {
+    dVar6 = dVar7;
   }
-  if (dVar6 <= dVar7) {
-    dVar6 = (double)(float)(dVar8 * 0.5);
-    dVar9 = dVar10;
+  if (dVar5 <= dVar6) {
+    dVar5 = (double)(float)(dVar7 * 0.5);
+    dVar8 = dVar9;
   }
-  dVar8 = (double)((float)(dVar8 * 0.015625) / (float)(dVar9 - dVar6));
-  dVar9 = (double)(float)(dVar6 / (double)(float)(dVar6 - dVar9));
-  dVar7 = pow((double)((param_2->dof).farBlur / (param_2->dof).nearBlur),
+  dVar7 = (double)((float)(dVar7 * 0.015625) / (float)(dVar8 - dVar5));
+  dVar8 = (double)(float)(dVar5 / (double)(float)(dVar5 - dVar8));
+  dVar6 = pow((double)((param_2->dof).farBlur / (param_2->dof).nearBlur),
               (double)(r_dof_bias->current).value);
-  if ((((double)(pGVar1->input).consts[0x1b][0] != dVar8) ||
+  if ((((double)(pGVar1->input).consts[0x1b][0] != dVar7) ||
       ((pGVar1->input).consts[0x1b][1] != 0.984375)) ||
-     (((double)(pGVar1->input).consts[0x1b][2] != dVar9 ||
-      ((pGVar1->input).consts[0x1b][3] != (float)dVar7)))) {
-    (pGVar1->input).consts[0x1b][0] = (float)dVar8;
+     (((double)(pGVar1->input).consts[0x1b][2] != dVar8 ||
+      ((pGVar1->input).consts[0x1b][3] != (float)dVar6)))) {
+    (pGVar1->input).consts[0x1b][0] = (float)dVar7;
     (pGVar1->input).consts[0x1b][1] = 0.984375;
-    (pGVar1->input).consts[0x1b][2] = (float)dVar9;
-    (pGVar1->input).consts[0x1b][3] = (float)dVar7;
+    (pGVar1->input).consts[0x1b][2] = (float)dVar8;
+    (pGVar1->input).consts[0x1b][3] = (float)dVar6;
     R_DirtyCodeConstant(pGVar1,0x1b);
   }
-  dVar7 = 1.0;
-  uVar5 = (ulonglong)vidConfig.sceneHeight;
-  if ((((double)(pGVar1->input).consts[0x1f][0] != dVar10) ||
-      ((pGVar1->input).consts[0x1f][1] != (float)(1.0 / (double)uVar5))) ||
-     (((double)(pGVar1->input).consts[0x1f][2] != dVar10 ||
-      ((double)(pGVar1->input).consts[0x1f][3] != dVar10)))) {
-    (pGVar1->input).consts[0x1f][0] = (float)dVar10;
-    (pGVar1->input).consts[0x1f][1] = (float)(1.0 / (double)uVar5);
-    (pGVar1->input).consts[0x1f][2] = (float)dVar10;
-    (pGVar1->input).consts[0x1f][3] = (float)dVar10;
+  dVar6 = 1.0;
+  uVar4 = (ulonglong)vidConfig.sceneHeight;
+  if ((((double)(pGVar1->input).consts[0x1f][0] != dVar9) ||
+      ((pGVar1->input).consts[0x1f][1] != (float)(1.0 / (double)uVar4))) ||
+     (((double)(pGVar1->input).consts[0x1f][2] != dVar9 ||
+      ((double)(pGVar1->input).consts[0x1f][3] != dVar9)))) {
+    (pGVar1->input).consts[0x1f][0] = (float)dVar9;
+    (pGVar1->input).consts[0x1f][1] = (float)(1.0 / (double)uVar4);
+    (pGVar1->input).consts[0x1f][2] = (float)dVar9;
+    (pGVar1->input).consts[0x1f][3] = (float)dVar9;
     R_DirtyCodeConstant(pGVar1,0x1f);
   }
-  fVar11 = RB_GetDepthOfFieldBlurFraction(param_2,1.4);
-  dVar9 = (double)fVar11;
-  fVar11 = RB_GetDepthOfFieldBlurFraction(param_2,(float)0x40666666);
-  dVar6 = (double)fVar11;
-  if (((dVar9 <= dVar10) || (dVar6 <= dVar9)) || (dVar7 <= dVar6)) {
+  fVar10 = RB_GetDepthOfFieldBlurFraction(param_2,1.4);
+  dVar8 = (double)fVar10;
+  fVar10 = RB_GetDepthOfFieldBlurFraction(param_2,(float)0x40666666);
+  dVar5 = (double)fVar10;
+  if (((dVar8 <= dVar9) || (dVar5 <= dVar8)) || (dVar6 <= dVar5)) {
     va("%g, %g, %g, %i");
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_postfx.cpp",0x158,0
                     ,"%s\n\t%s");
   }
-  dVar10 = (double)(float)(dVar7 - dVar6);
-  dVar8 = (double)(float)(dVar6 - dVar9);
-  fVar11 = (float)(dVar7 / dVar10) * -1.0;
-  if ((((pGVar1->input).consts[0x1d][0] != (float)(-1.0 / dVar9)) ||
-      ((pGVar1->input).consts[0x1d][1] != (float)(-1.0 / dVar8))) ||
-     (((pGVar1->input).consts[0x1d][2] != fVar11 ||
-      ((pGVar1->input).consts[0x1d][3] != (float)(dVar7 / dVar10))))) {
-    (pGVar1->input).consts[0x1d][0] = (float)(-1.0 / dVar9);
-    (pGVar1->input).consts[0x1d][1] = (float)(-1.0 / dVar8);
-    (pGVar1->input).consts[0x1d][2] = fVar11;
-    (pGVar1->input).consts[0x1d][3] = (float)(dVar7 / dVar10);
+  dVar9 = (double)(float)(dVar6 - dVar5);
+  dVar7 = (double)(float)(dVar5 - dVar8);
+  fVar10 = (float)(dVar6 / dVar9) * -1.0;
+  if ((((pGVar1->input).consts[0x1d][0] != (float)(-1.0 / dVar8)) ||
+      ((pGVar1->input).consts[0x1d][1] != (float)(-1.0 / dVar7))) ||
+     (((pGVar1->input).consts[0x1d][2] != fVar10 ||
+      ((pGVar1->input).consts[0x1d][3] != (float)(dVar6 / dVar9))))) {
+    (pGVar1->input).consts[0x1d][0] = (float)(-1.0 / dVar8);
+    (pGVar1->input).consts[0x1d][1] = (float)(-1.0 / dVar7);
+    (pGVar1->input).consts[0x1d][2] = fVar10;
+    (pGVar1->input).consts[0x1d][3] = (float)(dVar6 / dVar9);
     R_DirtyCodeConstant(pGVar1,0x1d);
   }
-  fVar11 = -(float)((double)(float)(dVar7 / dVar10) * dVar6);
-  if ((((double)(pGVar1->input).consts[0x1e][0] != dVar7) ||
-      ((pGVar1->input).consts[0x1e][1] != (float)(dVar6 / dVar8))) ||
-     (((pGVar1->input).consts[0x1e][2] != (float)(dVar7 / dVar10) ||
-      ((pGVar1->input).consts[0x1e][3] != fVar11)))) {
-    (pGVar1->input).consts[0x1e][0] = (float)dVar7;
-    (pGVar1->input).consts[0x1e][1] = (float)(dVar6 / dVar8);
-    (pGVar1->input).consts[0x1e][2] = (float)(dVar7 / dVar10);
-    (pGVar1->input).consts[0x1e][3] = fVar11;
+  fVar10 = -(float)((double)(float)(dVar6 / dVar9) * dVar5);
+  if ((((double)(pGVar1->input).consts[0x1e][0] != dVar6) ||
+      ((pGVar1->input).consts[0x1e][1] != (float)(dVar5 / dVar7))) ||
+     (((pGVar1->input).consts[0x1e][2] != (float)(dVar6 / dVar9) ||
+      ((pGVar1->input).consts[0x1e][3] != fVar10)))) {
+    (pGVar1->input).consts[0x1e][0] = (float)dVar6;
+    (pGVar1->input).consts[0x1e][1] = (float)(dVar5 / dVar7);
+    (pGVar1->input).consts[0x1e][2] = (float)(dVar6 / dVar9);
+    (pGVar1->input).consts[0x1e][3] = fVar10;
     R_DirtyCodeConstant(pGVar1,0x1e);
   }
-  RB_GetDepthOfFieldInputImages(GVar2,param_2);
-  __restfpr_27();
-  __restgprlr_27();
+  RB_GetDepthOfFieldInputImages(param_1,param_2);
   return;
 }
 
 
 // 827A7B08  RB_ApplyMergedPostEffects  (gfx_d3d/rb_postfx.cpp:386)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void RB_ApplyMergedPostEffects(GfxViewInfo *param_1,bool param_2)
 
 {
-  GfxViewInfo *pGVar1;
-  bool bVar2;
-  uint uVar3;
+  bool bVar1;
+  uint uVar2;
   
-  pGVar1 = (GfxViewInfo *)__savegprlr_28(param_1);
-  uVar3 = (pGVar1->filmAltShader == false ^ 1) + 1;
-  bVar2 = R_UsingDepthOfField(pGVar1);
-  if (bVar2) {
-    R_SetupDepthOfFieldPostEffects((GfxCmdBufContext)0x8484c7e08484df40,pGVar1);
+  uVar2 = (param_1->filmAltShader == false ^ 1) + 1;
+  bVar1 = R_UsingDepthOfField(param_1);
+  if (bVar1) {
+    R_SetupDepthOfFieldPostEffects((GfxCmdBufContext)0x8484c7e08484df40,param_1);
     R_SetRenderTargetSize(&gfxCmdBufSourceState,R_RENDERTARGET_FRAME_BUFFER);
     R_SetRenderTarget((GfxCmdBufContext)0x8484c7e08484df40,R_RENDERTARGET_FRAME_BUFFER);
-    uVar3 = uVar3 | 4;
+    uVar2 = uVar2 | 4;
   }
-  if (rgp.postFxMaterial[uVar3] == (Material *)0x0) {
+  if (rgp.postFxMaterial[uVar2] == (Material *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_postfx.cpp",0x1b6,0
                     ,"%s");
   }
   PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffff,"Apply Merged Post Effects");
-  RB_ViewportFilter(rgp.postFxMaterial[uVar3],&pGVar1->displayViewport,param_2,pGVar1->isPIPScene,
+  RB_ViewportFilter(rgp.postFxMaterial[uVar2],&param_1->displayViewport,param_2,param_1->isPIPScene,
                     6.0);
   PIXEndNamedEvent();
-  __restgprlr_28();
   return;
 }
 
@@ -533,6 +526,8 @@ float RB_GetBlurRadius(float param_1)
 
 // 827A7C68  RB_BlurScreen  (gfx_d3d/rb_postfx.cpp:467)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
@@ -540,55 +535,57 @@ float RB_GetBlurRadius(float param_1)
 void RB_BlurScreen(GfxViewInfo *param_1,bool param_2)
 
 {
-  char *pcVar1;
-  char *pcVar2;
+  GfxViewInfo *pGVar1;
+  double dVar2;
   double dVar3;
-  double dVar4;
-  float fVar5;
+  float fVar4;
   ulong local_50;
   
-  pcVar1 = (char *)__savegprlr_27(param_1);
-  pcVar2 = pcVar1;
-  if (pcVar1 == (char *)0x0) {
-    pcVar2 = "c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_postfx.cpp";
+  pGVar1 = param_1;
+  if (param_1 == (GfxViewInfo *)0x0) {
+    pGVar1 = (GfxViewInfo *)"c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_postfx.cpp"
+    ;
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_postfx.cpp",0x1d8,0
                     ,"%s");
   }
-  fVar5 = RB_GetBlurRadius(*(float *)(pcVar1 + 0x1b4));
-  dVar3 = (double)fVar5;
-  if (dVar3 <= 0.0) {
-    pcVar2 = "c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_postfx.cpp";
+  fVar4 = RB_GetBlurRadius(param_1->blurRadius);
+  dVar2 = (double)fVar4;
+  if (dVar2 <= 0.0) {
+    pGVar1 = (GfxViewInfo *)"c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_postfx.cpp"
+    ;
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_postfx.cpp",0x1db,1
                     ,"%s\n\t(blurRadius) = %g");
   }
   local_50 = 0xffffffff;
-  dVar4 = (double)(1440.0 / (float)(longlong)gfxCmdBufSourceState.sceneViewport.height);
-  if (dVar3 < dVar4) {
-    dVar3 = floor((double)((float)(dVar3 / dVar4) * 255.0 + 0.5));
-    local_50 = CONCAT13((char)(int)dVar3,0xffffff);
-    dVar3 = dVar4;
+  dVar3 = (double)(1440.0 / (float)(longlong)gfxCmdBufSourceState.sceneViewport.height);
+  if (dVar2 < dVar3) {
+    dVar2 = floor((double)((float)(dVar2 / dVar3) * 255.0 + 0.5));
+    local_50 = CONCAT13((char)(int)dVar2,0xffffff);
+    dVar2 = dVar3;
   }
-  if (*(int *)(pcVar1 + 0x950) == 0x10) {
-    pcVar2 = "c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_postfx.cpp";
+  if (param_1->sceneResolveRenderTargetId == R_RENDERTARGET_NONE) {
+    pGVar1 = (GfxViewInfo *)"c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_postfx.cpp"
+    ;
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_postfx.cpp",0x1e5,0
                     ,"%s");
   }
   RB_GaussianFilterImage
-            ((float)dVar3,(GfxRenderTargetId)pcVar2,*(GfxRenderTargetId *)(pcVar1 + 0x950),
+            ((float)dVar2,(GfxRenderTargetId)pGVar1,param_1->sceneResolveRenderTargetId,
              (GfxViewInfo *)&DAT_00000008);
   R_SetRenderTargetSize(&gfxCmdBufSourceState,R_RENDERTARGET_FRAME_BUFFER);
   R_SetRenderTarget((GfxCmdBufContext)0x8484c7e08484df40,R_RENDERTARGET_FRAME_BUFFER);
   gfxCmdBufSourceState.input.codeImages[8] = gfxRenderTargets[8].image;
   RB_ViewportColoredFilter
-            (rgp.blurApplyFilmMaterial[pcVar1[0x1af] != '\0'],local_50,
-             (GfxViewport *)(pcVar1 + 0x160),param_2,(bool)pcVar1[0x92c],6.0);
-  __restgprlr_27();
+            (rgp.blurApplyFilmMaterial[param_1->filmAltShader != false],local_50,
+             &param_1->displayViewport,param_2,param_1->isPIPScene,6.0);
   return;
 }
 
 
 // 827A7E20  RB_ApplyWaterSheetingFX  (gfx_d3d/rb_postfx.cpp:503)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
@@ -601,23 +598,21 @@ void RB_ApplyWaterSheetingFX(GfxViewInfo *param_1)
   float fVar3;
   float fVar4;
   int iVar5;
-  GfxViewInfo *pGVar6;
+  double dVar6;
   double dVar7;
   double dVar8;
-  double dVar9;
   
-  pGVar6 = (GfxViewInfo *)__savegprlr_28(param_1);
-  if (pGVar6 == (GfxViewInfo *)0x0) {
+  if (param_1 == (GfxViewInfo *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_postfx.cpp",0x1fa,0
                     ,"%s");
   }
-  fVar1 = (pGVar6->waterSheetingFx).distortionScale[1];
-  fVar2 = (pGVar6->waterSheetingFx).distortionScale[0];
-  fVar3 = (pGVar6->waterSheetingFx).distortionMagnitude;
-  dVar9 = 0.0;
-  dVar8 = 1.0;
+  fVar1 = (param_1->waterSheetingFx).distortionScale[1];
+  fVar2 = (param_1->waterSheetingFx).distortionScale[0];
+  fVar3 = (param_1->waterSheetingFx).distortionMagnitude;
+  dVar8 = 0.0;
+  dVar7 = 1.0;
   if (fVar1 <= 0.0) {
-    fVar4 = (pGVar6->waterSheetingFx).distortionScale[2];
+    fVar4 = (param_1->waterSheetingFx).distortionScale[2];
     if ((((gfxCmdBufSourceState.input.consts[0x3a][0] == fVar2) &&
          (gfxCmdBufSourceState.input.consts[0x3a][1] == fVar4)) &&
         (gfxCmdBufSourceState.input.consts[0x3a][2] == 0.0)) &&
@@ -627,7 +622,7 @@ void RB_ApplyWaterSheetingFX(GfxViewInfo *param_1)
   }
   else {
     fVar1 = 1.0 / fVar1;
-    fVar4 = (pGVar6->waterSheetingFx).distortionScale[2];
+    fVar4 = (param_1->waterSheetingFx).distortionScale[2];
     if (((gfxCmdBufSourceState.input.consts[0x3a][0] == fVar2) &&
         (gfxCmdBufSourceState.input.consts[0x3a][1] == fVar4)) &&
        ((gfxCmdBufSourceState.input.consts[0x3a][2] == fVar1 &&
@@ -639,61 +634,60 @@ void RB_ApplyWaterSheetingFX(GfxViewInfo *param_1)
   gfxCmdBufSourceState.input.consts[0x3a][3] = fVar3;
   R_DirtyCodeConstant(&gfxCmdBufSourceState,0x3a);
 LAB_827a7f2c:
-  if (pGVar6->sceneResolveRenderTargetId == R_RENDERTARGET_NONE) {
+  if (param_1->sceneResolveRenderTargetId == R_RENDERTARGET_NONE) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_postfx.cpp",0x201,0
                     ,"%s");
   }
   gfxCmdBufSourceState.input.codeImages[8] =
-       gfxRenderTargets[pGVar6->sceneResolveRenderTargetId].image;
+       gfxRenderTargets[param_1->sceneResolveRenderTargetId].image;
   R_SetRenderTargetSize(&gfxCmdBufSourceState,R_RENDERTARGET_FRAME_BUFFER);
   R_SetRenderTarget((GfxCmdBufContext)0x8484c7e08484df40,R_RENDERTARGET_FRAME_BUFFER);
-  iVar5 = (pGVar6->waterSheetingFx).duration;
-  dVar7 = dVar9;
+  iVar5 = (param_1->waterSheetingFx).duration;
+  dVar6 = dVar8;
   if (iVar5 != 0) {
-    dVar7 = (double)(float)(dVar8 - (double)((float)(longlong)
-                                                    (((pGVar6->waterSheetingFx).startMSec -
-                                                     (pGVar6->waterSheetingFx).currentTime) + iVar5)
-                                            / (float)(longlong)iVar5));
+    dVar6 = (double)(float)(dVar7 - (double)((float)(longlong)
+                                                    (((param_1->waterSheetingFx).startMSec -
+                                                     (param_1->waterSheetingFx).currentTime) + iVar5
+                                                    ) / (float)(longlong)iVar5));
   }
-  if ((((double)gfxCmdBufSourceState.input.consts[0x3b][0] != dVar9) ||
-      ((double)gfxCmdBufSourceState.input.consts[0x3b][1] != dVar8)) ||
-     (((double)gfxCmdBufSourceState.input.consts[0x3b][2] != dVar9 ||
-      ((double)gfxCmdBufSourceState.input.consts[0x3b][3] != dVar7)))) {
-    gfxCmdBufSourceState.input.consts[0x3b][0] = (float)dVar9;
-    gfxCmdBufSourceState.input.consts[0x3b][1] = (float)dVar8;
-    gfxCmdBufSourceState.input.consts[0x3b][2] = (float)dVar9;
-    gfxCmdBufSourceState.input.consts[0x3b][3] = (float)dVar7;
+  if ((((double)gfxCmdBufSourceState.input.consts[0x3b][0] != dVar8) ||
+      ((double)gfxCmdBufSourceState.input.consts[0x3b][1] != dVar7)) ||
+     (((double)gfxCmdBufSourceState.input.consts[0x3b][2] != dVar8 ||
+      ((double)gfxCmdBufSourceState.input.consts[0x3b][3] != dVar6)))) {
+    gfxCmdBufSourceState.input.consts[0x3b][0] = (float)dVar8;
+    gfxCmdBufSourceState.input.consts[0x3b][1] = (float)dVar7;
+    gfxCmdBufSourceState.input.consts[0x3b][2] = (float)dVar8;
+    gfxCmdBufSourceState.input.consts[0x3b][3] = (float)dVar6;
     R_DirtyCodeConstant(&gfxCmdBufSourceState,0x3b);
   }
-  RB_Filter(rgp.waterSheetingFXMaterial,pGVar6);
-  __restgprlr_28();
+  RB_Filter(rgp.waterSheetingFXMaterial,param_1);
   return;
 }
 
 
 // 827A8058  RB_DoEndSceneResample  (gfx_d3d/rb_postfx.cpp:592)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void RB_DoEndSceneResample(GfxViewInfo *param_1,bool param_2)
 
 {
-  GfxViewInfo *pGVar1;
-  
-  pGVar1 = (GfxViewInfo *)__savegprlr_28(param_1);
-  R_InitCmdBufSourceState(&gfxCmdBufSourceState,&pGVar1->input,0);
+  R_InitCmdBufSourceState(&gfxCmdBufSourceState,&param_1->input,0);
   gfxCmdBufSourceState.input.data = backEndData;
   R_InitCmdBufState(&gfxCmdBufState);
-  RB_ResampleScene(pGVar1,param_2);
+  RB_ResampleScene(param_1,param_2);
   R_ShutdownCmdBufState(&gfxCmdBufState);
-  __restgprlr_28();
   return;
 }
 
 
 // 827A80C0  RB_ShowFbColorDebug_Screen  (gfx_d3d/rb_postfx.cpp:614)
 
+/* WARNING: Function: __savefpr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
@@ -713,7 +707,6 @@ void RB_ShowFbColorDebug_Screen(void)
   double dVar9;
   double dVar10;
   
-  __savefpr_26();
   RB_EndSurfaceIfNeeded();
   R_Set2D(&gfxCmdBufSourceState);
   pIVar4 = &IMAGE_DOS_HEADER_82000000;
@@ -738,13 +731,16 @@ void RB_ShowFbColorDebug_Screen(void)
                     (float)dVar9,(float)dVar9,(float)dVar10,(float)dVar10,(ulong)pIVar3,
                     (GfxPrimStatsTarget)pIVar4);
   RB_EndTessSurface();
-  __restfpr_26();
   return;
 }
 
 
 // 827A8250  RB_ShowFbColorDebug_Feedback  (gfx_d3d/rb_postfx.cpp:646)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "GfxPrimStatsTarget": Some values do not have unique names */
@@ -753,9 +749,9 @@ void RB_ShowFbColorDebug_Screen(void)
 void RB_ShowFbColorDebug_Feedback(GfxViewInfo *param_1)
 
 {
-  int iVar1;
-  ulong uVar2;
-  char *pcVar3;
+  ulong uVar1;
+  char *pcVar2;
+  double dVar3;
   double dVar4;
   double dVar5;
   double dVar6;
@@ -764,119 +760,117 @@ void RB_ShowFbColorDebug_Feedback(GfxViewInfo *param_1)
   double dVar9;
   double dVar10;
   double dVar11;
-  double dVar12;
   
-  __savegprlr_28(param_1);
-  iVar1 = __savefpr_23();
   RB_EndSurfaceIfNeeded();
-  dVar11 = 0.5;
-  dVar5 = (double)(float)((double)(longlong)gfxCmdBufSourceState.renderTargetWidth * 0.5);
-  dVar4 = (double)(float)((double)(longlong)gfxCmdBufSourceState.renderTargetHeight * 0.5);
-  dVar9 = (double)(float)(dVar5 * 0.5);
+  dVar10 = 0.5;
+  dVar4 = (double)(float)((double)(longlong)gfxCmdBufSourceState.renderTargetWidth * 0.5);
+  dVar3 = (double)(float)((double)(longlong)gfxCmdBufSourceState.renderTargetHeight * 0.5);
   dVar8 = (double)(float)(dVar4 * 0.5);
-  if (*(int *)(iVar1 + 0x950) == 0x10) {
+  dVar7 = (double)(float)(dVar3 * 0.5);
+  if (param_1->sceneResolveRenderTargetId == R_RENDERTARGET_NONE) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_postfx.cpp",0x293,0
                     ,"%s");
   }
-  gfxCmdBufSourceState.input.codeImages[8] = gfxRenderTargets[*(int *)(iVar1 + 0x950)].image;
+  gfxCmdBufSourceState.input.codeImages[8] =
+       gfxRenderTargets[param_1->sceneResolveRenderTargetId].image;
   R_SetRenderTargetSize(&gfxCmdBufSourceState,R_RENDERTARGET_FRAME_BUFFER);
-  pcVar3 = 
+  pcVar2 = 
   "_8) << 0 | (GPUENDIAN_8IN32) << 6 | (1) << 8 | ((GPUSIGN_UNSIGNED | GPUSIGN_UNSIGNED<<2 | GPUSIGN_UNSIGNED<<4 | GPUSIGN_UNSIGNED<<6)) << 9 | (GPUNUMFORMAT_FRACTION) << 17 | ((GPUSWIZZLE_W | GPUSWIZZLE_Z<<3 | GPUSWIZZLE_Y<<6 | GPUSWIZZLE_X<<9)) << 18), D3DMULTISAMPLE_NONE, 0, 0,surf, params) failed: %s\n"
   ;
   R_SetRenderTarget((GfxCmdBufContext)0x8484c7e08484df40,R_RENDERTARGET_FRAME_BUFFER);
   R_Set2D(&gfxCmdBufSourceState);
-  dVar10 = 1.0;
-  dVar12 = 0.0;
+  dVar9 = 1.0;
+  dVar11 = 0.0;
   gfxCmdBufSourceState.input.consts[0x16][0] = 1.0;
   gfxCmdBufSourceState.input.consts[0x16][1] = 0.0;
   gfxCmdBufSourceState.input.consts[0x16][2] = 0.0;
   gfxCmdBufSourceState.input.consts[0x16][3] = 0.0;
   R_DirtyCodeConstant(&gfxCmdBufSourceState,0x16);
-  gfxCmdBufSourceState.input.consts[0x17][0] = (float)dVar12;
-  gfxCmdBufSourceState.input.consts[0x17][1] = (float)dVar12;
-  gfxCmdBufSourceState.input.consts[0x17][2] = (float)dVar12;
-  gfxCmdBufSourceState.input.consts[0x17][3] = (float)dVar12;
+  gfxCmdBufSourceState.input.consts[0x17][0] = (float)dVar11;
+  gfxCmdBufSourceState.input.consts[0x17][1] = (float)dVar11;
+  gfxCmdBufSourceState.input.consts[0x17][2] = (float)dVar11;
+  gfxCmdBufSourceState.input.consts[0x17][3] = (float)dVar11;
   R_DirtyCodeConstant(&gfxCmdBufSourceState,0x17);
-  gfxCmdBufSourceState.input.consts[0x18][0] = (float)dVar12;
-  gfxCmdBufSourceState.input.consts[0x18][1] = (float)dVar12;
-  gfxCmdBufSourceState.input.consts[0x18][2] = (float)dVar12;
-  uVar2 = 0x18;
-  gfxCmdBufSourceState.input.consts[0x18][3] = (float)dVar12;
+  gfxCmdBufSourceState.input.consts[0x18][0] = (float)dVar11;
+  gfxCmdBufSourceState.input.consts[0x18][1] = (float)dVar11;
+  gfxCmdBufSourceState.input.consts[0x18][2] = (float)dVar11;
+  uVar1 = 0x18;
+  gfxCmdBufSourceState.input.consts[0x18][3] = (float)dVar11;
   R_DirtyCodeConstant(&gfxCmdBufSourceState,0x18);
-  dVar7 = 0.25;
-  RB_DrawStretchPic(rgp.colorChannelMixerMaterial,(float)dVar9,(float)dVar8,(float)dVar9,
-                    (float)dVar8,0.25,0.25,(float)dVar11,(float)dVar11,uVar2,
-                    (GfxPrimStatsTarget)pcVar3);
+  dVar6 = 0.25;
+  RB_DrawStretchPic(rgp.colorChannelMixerMaterial,(float)dVar8,(float)dVar7,(float)dVar8,
+                    (float)dVar7,0.25,0.25,(float)dVar10,(float)dVar10,uVar1,
+                    (GfxPrimStatsTarget)pcVar2);
   RB_EndTessSurface();
-  gfxCmdBufSourceState.input.consts[0x16][0] = (float)dVar12;
-  gfxCmdBufSourceState.input.consts[0x16][1] = (float)dVar12;
-  gfxCmdBufSourceState.input.consts[0x16][2] = (float)dVar12;
-  gfxCmdBufSourceState.input.consts[0x16][3] = (float)dVar12;
+  gfxCmdBufSourceState.input.consts[0x16][0] = (float)dVar11;
+  gfxCmdBufSourceState.input.consts[0x16][1] = (float)dVar11;
+  gfxCmdBufSourceState.input.consts[0x16][2] = (float)dVar11;
+  gfxCmdBufSourceState.input.consts[0x16][3] = (float)dVar11;
   R_DirtyCodeConstant(&gfxCmdBufSourceState,0x16);
-  gfxCmdBufSourceState.input.consts[0x17][0] = (float)dVar12;
-  gfxCmdBufSourceState.input.consts[0x17][1] = (float)dVar10;
-  gfxCmdBufSourceState.input.consts[0x17][2] = (float)dVar12;
-  gfxCmdBufSourceState.input.consts[0x17][3] = (float)dVar12;
+  gfxCmdBufSourceState.input.consts[0x17][0] = (float)dVar11;
+  gfxCmdBufSourceState.input.consts[0x17][1] = (float)dVar9;
+  gfxCmdBufSourceState.input.consts[0x17][2] = (float)dVar11;
+  gfxCmdBufSourceState.input.consts[0x17][3] = (float)dVar11;
   R_DirtyCodeConstant(&gfxCmdBufSourceState,0x17);
-  gfxCmdBufSourceState.input.consts[0x18][0] = (float)dVar12;
-  gfxCmdBufSourceState.input.consts[0x18][1] = (float)dVar12;
-  gfxCmdBufSourceState.input.consts[0x18][2] = (float)dVar12;
-  uVar2 = 0x18;
-  gfxCmdBufSourceState.input.consts[0x18][3] = (float)dVar12;
+  gfxCmdBufSourceState.input.consts[0x18][0] = (float)dVar11;
+  gfxCmdBufSourceState.input.consts[0x18][1] = (float)dVar11;
+  gfxCmdBufSourceState.input.consts[0x18][2] = (float)dVar11;
+  uVar1 = 0x18;
+  gfxCmdBufSourceState.input.consts[0x18][3] = (float)dVar11;
   R_DirtyCodeConstant(&gfxCmdBufSourceState,0x18);
-  dVar6 = 0.75;
-  RB_DrawStretchPic(rgp.colorChannelMixerMaterial,(float)dVar5,(float)dVar8,(float)dVar9,
-                    (float)dVar8,(float)dVar11,(float)dVar7,0.75,(float)dVar11,uVar2,
-                    (GfxPrimStatsTarget)pcVar3);
+  dVar5 = 0.75;
+  RB_DrawStretchPic(rgp.colorChannelMixerMaterial,(float)dVar4,(float)dVar7,(float)dVar8,
+                    (float)dVar7,(float)dVar10,(float)dVar6,0.75,(float)dVar10,uVar1,
+                    (GfxPrimStatsTarget)pcVar2);
   RB_EndTessSurface();
-  gfxCmdBufSourceState.input.consts[0x16][0] = (float)dVar12;
-  gfxCmdBufSourceState.input.consts[0x16][1] = (float)dVar12;
-  gfxCmdBufSourceState.input.consts[0x16][2] = (float)dVar12;
-  gfxCmdBufSourceState.input.consts[0x16][3] = (float)dVar12;
+  gfxCmdBufSourceState.input.consts[0x16][0] = (float)dVar11;
+  gfxCmdBufSourceState.input.consts[0x16][1] = (float)dVar11;
+  gfxCmdBufSourceState.input.consts[0x16][2] = (float)dVar11;
+  gfxCmdBufSourceState.input.consts[0x16][3] = (float)dVar11;
   R_DirtyCodeConstant(&gfxCmdBufSourceState,0x16);
-  gfxCmdBufSourceState.input.consts[0x17][0] = (float)dVar12;
-  gfxCmdBufSourceState.input.consts[0x17][1] = (float)dVar12;
-  gfxCmdBufSourceState.input.consts[0x17][2] = (float)dVar12;
-  gfxCmdBufSourceState.input.consts[0x17][3] = (float)dVar12;
+  gfxCmdBufSourceState.input.consts[0x17][0] = (float)dVar11;
+  gfxCmdBufSourceState.input.consts[0x17][1] = (float)dVar11;
+  gfxCmdBufSourceState.input.consts[0x17][2] = (float)dVar11;
+  gfxCmdBufSourceState.input.consts[0x17][3] = (float)dVar11;
   R_DirtyCodeConstant(&gfxCmdBufSourceState,0x17);
-  gfxCmdBufSourceState.input.consts[0x18][0] = (float)dVar12;
-  gfxCmdBufSourceState.input.consts[0x18][1] = (float)dVar12;
-  gfxCmdBufSourceState.input.consts[0x18][2] = (float)dVar10;
-  uVar2 = 0x18;
-  gfxCmdBufSourceState.input.consts[0x18][3] = (float)dVar12;
+  gfxCmdBufSourceState.input.consts[0x18][0] = (float)dVar11;
+  gfxCmdBufSourceState.input.consts[0x18][1] = (float)dVar11;
+  gfxCmdBufSourceState.input.consts[0x18][2] = (float)dVar9;
+  uVar1 = 0x18;
+  gfxCmdBufSourceState.input.consts[0x18][3] = (float)dVar11;
   R_DirtyCodeConstant(&gfxCmdBufSourceState,0x18);
-  RB_DrawStretchPic(rgp.colorChannelMixerMaterial,(float)dVar9,(float)dVar4,(float)dVar9,
-                    (float)dVar8,(float)dVar7,(float)dVar11,(float)dVar11,(float)dVar6,uVar2,
-                    (GfxPrimStatsTarget)pcVar3);
+  RB_DrawStretchPic(rgp.colorChannelMixerMaterial,(float)dVar8,(float)dVar3,(float)dVar8,
+                    (float)dVar7,(float)dVar6,(float)dVar10,(float)dVar10,(float)dVar5,uVar1,
+                    (GfxPrimStatsTarget)pcVar2);
   RB_EndTessSurface();
-  gfxCmdBufSourceState.input.consts[0x16][0] = (float)dVar12;
-  gfxCmdBufSourceState.input.consts[0x16][1] = (float)dVar12;
-  gfxCmdBufSourceState.input.consts[0x16][2] = (float)dVar12;
-  gfxCmdBufSourceState.input.consts[0x16][3] = (float)dVar10;
+  gfxCmdBufSourceState.input.consts[0x16][0] = (float)dVar11;
+  gfxCmdBufSourceState.input.consts[0x16][1] = (float)dVar11;
+  gfxCmdBufSourceState.input.consts[0x16][2] = (float)dVar11;
+  gfxCmdBufSourceState.input.consts[0x16][3] = (float)dVar9;
   R_DirtyCodeConstant(&gfxCmdBufSourceState,0x16);
-  gfxCmdBufSourceState.input.consts[0x17][0] = (float)dVar12;
-  gfxCmdBufSourceState.input.consts[0x17][1] = (float)dVar12;
-  gfxCmdBufSourceState.input.consts[0x17][2] = (float)dVar12;
-  gfxCmdBufSourceState.input.consts[0x17][3] = (float)dVar10;
+  gfxCmdBufSourceState.input.consts[0x17][0] = (float)dVar11;
+  gfxCmdBufSourceState.input.consts[0x17][1] = (float)dVar11;
+  gfxCmdBufSourceState.input.consts[0x17][2] = (float)dVar11;
+  gfxCmdBufSourceState.input.consts[0x17][3] = (float)dVar9;
   R_DirtyCodeConstant(&gfxCmdBufSourceState,0x17);
-  gfxCmdBufSourceState.input.consts[0x18][0] = (float)dVar12;
-  gfxCmdBufSourceState.input.consts[0x18][1] = (float)dVar12;
-  gfxCmdBufSourceState.input.consts[0x18][2] = (float)dVar12;
-  uVar2 = 0x18;
-  gfxCmdBufSourceState.input.consts[0x18][3] = (float)dVar10;
+  gfxCmdBufSourceState.input.consts[0x18][0] = (float)dVar11;
+  gfxCmdBufSourceState.input.consts[0x18][1] = (float)dVar11;
+  gfxCmdBufSourceState.input.consts[0x18][2] = (float)dVar11;
+  uVar1 = 0x18;
+  gfxCmdBufSourceState.input.consts[0x18][3] = (float)dVar9;
   R_DirtyCodeConstant(&gfxCmdBufSourceState,0x18);
-  RB_DrawStretchPic(rgp.colorChannelMixerMaterial,(float)dVar5,(float)dVar4,(float)dVar9,
-                    (float)dVar8,(float)dVar11,(float)dVar11,(float)dVar6,(float)dVar6,uVar2,
-                    (GfxPrimStatsTarget)pcVar3);
+  RB_DrawStretchPic(rgp.colorChannelMixerMaterial,(float)dVar4,(float)dVar3,(float)dVar8,
+                    (float)dVar7,(float)dVar10,(float)dVar10,(float)dVar5,(float)dVar5,uVar1,
+                    (GfxPrimStatsTarget)pcVar2);
   RB_EndTessSurface();
-  __restfpr_23();
-  __restgprlr_28();
   return;
 }
 
 
 // 827A8590  RB_ShowFloatZDebug  (gfx_d3d/rb_postfx.cpp:694)
 
+/* WARNING: Function: __savefpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
@@ -893,7 +887,6 @@ void RB_ShowFloatZDebug(void)
   double dVar6;
   double dVar7;
   
-  __savefpr_28();
   iVar3 = (r_showFloatZDebug->current).integer;
   if ((iVar3 != 1) && (iVar3 != 2)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_postfx.cpp",0x2bd,0
@@ -918,22 +911,20 @@ void RB_ShowFloatZDebug(void)
                     (float)((double)(float)(dVar6 - dVar7) * dVar4),(float)dVar7,(float)dVar7,
                     (float)dVar6,(float)dVar6,0xffffffff,0x84613780);
   RB_EndTessSurface();
-  __restfpr_28();
   return;
 }
 
 
 // 827A86C0  RB_DrawDebugPostEffects  (gfx_d3d/rb_postfx.cpp:774)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void RB_DrawDebugPostEffects(GfxViewInfo *param_1)
 
 {
-  GfxViewInfo *pGVar1;
-  
-  pGVar1 = (GfxViewInfo *)__savegprlr_27(param_1);
   if (r_showFbColorDebug == (dvar_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_postfx.cpp",0x307,0
                     ,"%s");
@@ -944,24 +935,23 @@ void RB_DrawDebugPostEffects(GfxViewInfo *param_1)
   }
   if ((r_showFbColorDebug->current).integer == 1) {
     RB_ShowFbColorDebug_Screen();
-    __restgprlr_27();
     return;
   }
   if ((r_showFbColorDebug->current).integer == 2) {
-    RB_ShowFbColorDebug_Feedback(pGVar1);
-    __restgprlr_27();
+    RB_ShowFbColorDebug_Feedback(param_1);
     return;
   }
   if ((r_showFloatZDebug->current).integer != 0) {
     RB_ShowFloatZDebug();
   }
-  __restgprlr_27();
   return;
 }
 
 
 // 827A8788  RB_DoResampleAndPostEffects  (gfx_d3d/rb_postfx.cpp:862)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Removing unreachable block (ram,0x827a8884) */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
@@ -970,63 +960,61 @@ void RB_DrawDebugPostEffects(GfxViewInfo *param_1)
 void RB_DoResampleAndPostEffects(GfxViewInfo *param_1,bool param_2)
 
 {
-  GfxViewInfo *pGVar1;
-  bool bVar3;
-  int iVar2;
+  bool bVar1;
   
-  pGVar1 = (GfxViewInfo *)__savegprlr_25(param_1);
-  if (pGVar1 == (GfxViewInfo *)0x0) {
+  if (param_1 == (GfxViewInfo *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_postfx.cpp",0x35f,0
                     ,"%s");
   }
   Profile_Begin(0x6f);
-  R_InitCmdBufSourceState(&gfxCmdBufSourceState,&pGVar1->input,0);
+  R_InitCmdBufSourceState(&gfxCmdBufSourceState,&param_1->input,0);
   R_InitCmdBufState(&gfxCmdBufState);
   R_SetRenderTargetSize(&gfxCmdBufSourceState,R_RENDERTARGET_FRAME_BUFFER);
   R_SetRenderTarget((GfxCmdBufContext)0x8484c7e08484df40,R_RENDERTARGET_FRAME_BUFFER);
-  R_BeginView(&gfxCmdBufSourceState,&pGVar1->sceneDef,(GfxViewParms *)pGVar1);
-  R_SetViewportStruct(&gfxCmdBufSourceState,&pGVar1->displayViewport);
-  if (pGVar1->sceneResolveRenderTargetId == R_RENDERTARGET_NONE) {
+  R_BeginView(&gfxCmdBufSourceState,&param_1->sceneDef,&param_1->viewParms);
+  R_SetViewportStruct(&gfxCmdBufSourceState,&param_1->displayViewport);
+  if (param_1->sceneResolveRenderTargetId == R_RENDERTARGET_NONE) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_postfx.cpp",0x381,0
                     ,"%s");
   }
   gfxCmdBufSourceState.input.codeImages[10] =
-       gfxRenderTargets[pGVar1->sceneResolveRenderTargetId].image;
-  if ((pGVar1->waterSheetingFx).enabled == false) {
-    RB_ApplyMergedPostEffects(pGVar1,param_2);
+       gfxRenderTargets[param_1->sceneResolveRenderTargetId].image;
+  if ((param_1->waterSheetingFx).enabled == false) {
+    RB_ApplyMergedPostEffects(param_1,param_2);
   }
   else {
-    RB_ApplyWaterSheetingFX(pGVar1);
+    RB_ApplyWaterSheetingFX(param_1);
   }
-  bVar3 = R_UsingGlow(pGVar1);
-  if (bVar3) {
-    RB_CalcGlowEffect(pGVar1);
+  bVar1 = R_UsingGlow(param_1);
+  if (bVar1) {
+    RB_CalcGlowEffect(param_1);
     R_SetRenderTargetSize(&gfxCmdBufSourceState,R_RENDERTARGET_FRAME_BUFFER);
     R_SetRenderTarget((GfxCmdBufContext)0x8484c7e08484df40,R_RENDERTARGET_FRAME_BUFFER);
-    RB_ApplyGlowEffect(pGVar1,param_2);
+    RB_ApplyGlowEffect(param_1,param_2);
   }
-  bVar3 = RB_UsingBlur(pGVar1);
-  if (bVar3) {
-    RB_BlurScreen(pGVar1,param_2);
+  bVar1 = RB_UsingBlur(param_1);
+  if (bVar1) {
+    RB_BlurScreen(param_1,param_2);
   }
   R_SetRenderTargetSize(&gfxCmdBufSourceState,R_RENDERTARGET_FRAME_BUFFER);
   R_SetRenderTarget((GfxCmdBufContext)0x8484c7e08484df40,R_RENDERTARGET_FRAME_BUFFER);
-  RB_DrawDebugPostEffects(pGVar1);
-  iVar2 = Profile_EndInternal((double *)0x0);
-  __restgprlr_25(iVar2);
+  RB_DrawDebugPostEffects(param_1);
+  Profile_EndInternal((double *)0x0);
   return;
 }
 
 
 // 827A8968  RB_DoResampleAndPostEffectsWithCutBox  (gfx_d3d/rb_postfx.cpp:959)
 
+/* WARNING: Function: __savegprlr_19 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_19 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void RB_DoResampleAndPostEffectsWithCutBox(GfxViewInfo *param_1,GfxViewport **param_2,int param_3)
 
 {
-  uint *puVar1;
+  GfxViewport *pGVar1;
   uint uVar2;
   uint uVar3;
   uint uVar4;
@@ -1034,83 +1022,73 @@ void RB_DoResampleAndPostEffectsWithCutBox(GfxViewInfo *param_1,GfxViewport **pa
   int iVar6;
   int iVar7;
   int iVar8;
-  GfxViewInfo *pGVar9;
-  int iVar11;
+  longlong lVar9;
   longlong lVar10;
-  int *piVar13;
-  ulonglong uVar12;
-  longlong lVar14;
-  int iVar15;
-  longlong lVar16;
-  longlong lVar17;
-  int iVar18;
-  longlong lVar19;
-  GfxViewport *pGVar20;
+  int iVar11;
+  longlong lVar12;
+  longlong lVar13;
+  int iVar14;
+  longlong lVar15;
+  GfxViewport *pGVar16;
   
-  lVar10 = (longlong)param_3;
-  uVar12 = (ulonglong)(int)param_2;
-  pGVar9 = (GfxViewInfo *)__savegprlr_19(param_1);
   while( true ) {
-    if (pGVar9 == (GfxViewInfo *)0x0) {
+    if (param_1 == (GfxViewInfo *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_postfx.cpp",0x3c8
                       ,0,"%s");
     }
-    if (((uVar12 & 0xffffffff) == 0) || (iVar11 = (int)lVar10, iVar11 == 0)) break;
-    piVar13 = (int *)uVar12;
-    puVar1 = (uint *)*piVar13;
-    if ((0 < (int)puVar1[2]) && (0 < (int)puVar1[3])) {
-      pGVar20 = &pGVar9->displayViewport;
-      uVar2 = (pGVar9->displayViewport).x;
-      lVar14 = (ulonglong)*puVar1 + (ulonglong)puVar1[2];
-      uVar3 = puVar1[1];
-      lVar19 = (ulonglong)(uint)(pGVar9->displayViewport).width + (ulonglong)uVar2;
-      uVar4 = (pGVar9->displayViewport).y;
-      lVar17 = (ulonglong)uVar3 + (ulonglong)puVar1[3];
-      lVar16 = (ulonglong)(uint)(pGVar9->displayViewport).height + (ulonglong)uVar4;
-      if (((int)*puVar1 < (int)lVar19) &&
-         ((((int)uVar3 < (int)lVar16 && (iVar15 = (int)lVar14, (int)uVar2 < iVar15)) &&
-          (iVar18 = (int)lVar17, (int)uVar4 < iVar18)))) {
-        iVar5 = pGVar20->x;
-        iVar6 = (pGVar9->displayViewport).y;
-        lVar10 = (ulonglong)uVar3 - (ulonglong)uVar4;
-        iVar7 = (pGVar9->displayViewport).width;
-        iVar8 = (pGVar9->displayViewport).height;
-        (pGVar9->displayViewport).height = (int)lVar10;
-        if (0 < lVar10) {
-          RB_DoResampleAndPostEffectsWithCutBox(pGVar9,(GfxViewport **)(piVar13 + 1),iVar11 + -1);
+    if ((param_2 == (GfxViewport **)0x0) || (param_3 == 0)) break;
+    pGVar1 = *param_2;
+    if ((0 < pGVar1->width) && (0 < pGVar1->height)) {
+      pGVar16 = &param_1->displayViewport;
+      uVar2 = (param_1->displayViewport).x;
+      lVar10 = (ulonglong)(uint)pGVar1->x + (ulonglong)(uint)pGVar1->width;
+      uVar3 = pGVar1->y;
+      lVar15 = (ulonglong)(uint)(param_1->displayViewport).width + (ulonglong)uVar2;
+      uVar4 = (param_1->displayViewport).y;
+      lVar13 = (ulonglong)uVar3 + (ulonglong)(uint)pGVar1->height;
+      lVar12 = (ulonglong)(uint)(param_1->displayViewport).height + (ulonglong)uVar4;
+      if ((pGVar1->x < (int)lVar15) &&
+         ((((int)uVar3 < (int)lVar12 && (iVar11 = (int)lVar10, (int)uVar2 < iVar11)) &&
+          (iVar14 = (int)lVar13, (int)uVar4 < iVar14)))) {
+        iVar5 = pGVar16->x;
+        iVar6 = (param_1->displayViewport).y;
+        lVar9 = (ulonglong)uVar3 - (ulonglong)uVar4;
+        iVar7 = (param_1->displayViewport).width;
+        iVar8 = (param_1->displayViewport).height;
+        (param_1->displayViewport).height = (int)lVar9;
+        if (0 < lVar9) {
+          RB_DoResampleAndPostEffectsWithCutBox(param_1,param_2 + 1,param_3 + -1);
         }
-        lVar16 = lVar16 - lVar17;
-        (pGVar9->displayViewport).height = (int)lVar16;
-        if (0 < lVar16) {
-          (pGVar9->displayViewport).y = iVar18;
-          RB_DoResampleAndPostEffectsWithCutBox(pGVar9,(GfxViewport **)(piVar13 + 1),iVar11 + -1);
+        lVar12 = lVar12 - lVar13;
+        (param_1->displayViewport).height = (int)lVar12;
+        if (0 < lVar12) {
+          (param_1->displayViewport).y = iVar14;
+          RB_DoResampleAndPostEffectsWithCutBox(param_1,param_2 + 1,param_3 + -1);
         }
-        (pGVar9->displayViewport).y = puVar1[1];
-        (pGVar9->displayViewport).height = puVar1[3];
-        lVar10 = (ulonglong)*puVar1 - (ulonglong)uVar2;
-        (pGVar9->displayViewport).width = (int)lVar10;
-        if (0 < lVar10) {
-          RB_DoResampleAndPostEffectsWithCutBox(pGVar9,(GfxViewport **)(piVar13 + 1),iVar11 + -1);
+        (param_1->displayViewport).y = pGVar1->y;
+        (param_1->displayViewport).height = pGVar1->height;
+        lVar12 = (ulonglong)(uint)pGVar1->x - (ulonglong)uVar2;
+        (param_1->displayViewport).width = (int)lVar12;
+        if (0 < lVar12) {
+          RB_DoResampleAndPostEffectsWithCutBox(param_1,param_2 + 1,param_3 + -1);
         }
-        lVar19 = lVar19 - lVar14;
-        (pGVar9->displayViewport).width = (int)lVar19;
-        if (0 < lVar19) {
-          pGVar20->x = iVar15;
-          RB_DoResampleAndPostEffectsWithCutBox(pGVar9,(GfxViewport **)(piVar13 + 1),iVar11 + -1);
+        lVar15 = lVar15 - lVar10;
+        (param_1->displayViewport).width = (int)lVar15;
+        if (0 < lVar15) {
+          pGVar16->x = iVar11;
+          RB_DoResampleAndPostEffectsWithCutBox(param_1,param_2 + 1,param_3 + -1);
         }
-        pGVar20->x = iVar5;
-        (pGVar9->displayViewport).y = iVar6;
-        (pGVar9->displayViewport).width = iVar7;
-        (pGVar9->displayViewport).height = iVar8;
-        __restgprlr_19();
+        pGVar16->x = iVar5;
+        (param_1->displayViewport).y = iVar6;
+        (param_1->displayViewport).width = iVar7;
+        (param_1->displayViewport).height = iVar8;
         return;
       }
     }
-    lVar10 = lVar10 + -1;
-    uVar12 = uVar12 + 4;
+    param_3 = param_3 + -1;
+    param_2 = param_2 + 1;
   }
-  RB_DoResampleAndPostEffects(pGVar9,false);
-  __restgprlr_19();
+  RB_DoResampleAndPostEffects(param_1,false);
   return;
 }
 

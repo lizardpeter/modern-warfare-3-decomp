@@ -111,31 +111,25 @@ ulong __thiscall XAUDIO::CFrameBuffer::AddRef(CFrameBuffer *this)
 
 // 828D1D98  XAudioCreateFrameBuffer  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/framebuffer.cpp:109)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 undefined4
 XAudioCreateFrameBuffer
           (XAUDIOFRAMEBUFINIT *param_1,IXAudioBatchAllocator *param_2,IXAudioFrameBuffer **param_3)
 
 {
-  XAUDIOFRAMEBUFINIT *pXVar1;
-  CFrameBuffer *pCVar2;
-  undefined4 uVar3;
-  longlong lVar4;
-  longlong lVar5;
+  CFrameBuffer *pCVar1;
   
-  lVar5 = (longlong)(int)param_3;
-  lVar4 = (longlong)(int)param_2;
-  pXVar1 = (XAUDIOFRAMEBUFINIT *)__savegprlr_29(param_1,lVar4,lVar5);
-  pCVar2 = (CFrameBuffer *)(**(code **)((int)*(IXAudioBatchAllocator *)lVar4 + 0x14))(lVar4,0x24);
-  if (pCVar2 != (CFrameBuffer *)0x0) {
-    pCVar2 = XAUDIO::CFrameBuffer::CFrameBuffer(pCVar2,pXVar1,(IXAudioBatchAllocator *)lVar4);
-    if (pCVar2 != (CFrameBuffer *)0x0) {
-      (**(code **)(*(int *)pCVar2 + 0x14))(pCVar2,lVar5);
-      uVar3 = __restgprlr_29(0);
-      return uVar3;
+  pCVar1 = (CFrameBuffer *)(**(code **)((int)*param_2 + 0x14))(param_2,0x24);
+  if (pCVar1 != (CFrameBuffer *)0x0) {
+    pCVar1 = XAUDIO::CFrameBuffer::CFrameBuffer(pCVar1,param_1,param_2);
+    if (pCVar1 != (CFrameBuffer *)0x0) {
+      (**(code **)(*(int *)pCVar1 + 0x14))(pCVar1,param_3);
+      return 0;
     }
   }
-  uVar3 = __restgprlr_29(0xffffffff8007000e);
-  return uVar3;
+  return 0x8007000e;
 }
 
 
@@ -177,63 +171,56 @@ XAUDIO::CFrameBuffer::QueryInterface(CFrameBuffer *this,IXAudioFrameBuffer **par
 
 // 828D1A18  CFrameBuffer  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/framebuffer.cpp:149)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 CFrameBuffer * __thiscall
 XAUDIO::CFrameBuffer::CFrameBuffer
           (CFrameBuffer *this,XAUDIOFRAMEBUFINIT *param_1,IXAudioBatchAllocator *param_2)
 
 {
-  char cVar1;
-  undefined4 uVar2;
-  uint uVar3;
-  undefined4 *puVar4;
-  int iVar5;
-  CFrameBuffer *pCVar6;
-  longlong lVar7;
-  char *pcVar8;
-  longlong lVar9;
-  ulonglong uVar10;
+  uchar uVar1;
+  float *pfVar2;
+  int iVar3;
+  ulonglong uVar4;
+  ulonglong uVar5;
   
-  lVar9 = (longlong)(int)param_2;
-  lVar7 = (longlong)(int)param_1;
-  puVar4 = (undefined4 *)__savegprlr_29(this);
-  puVar4[1] = 1;
-  *puVar4 = &_vftable_;
-  pcVar8 = (char *)lVar7;
-  cVar1 = *pcVar8;
-  *(char *)(puVar4 + 2) = cVar1;
-  puVar4[8] = *(undefined4 *)(pcVar8 + 0x10);
-  *(undefined1 *)(puVar4 + 5) = 0;
-  puVar4[6] = 48000;
-  if (cVar1 != '\0') {
-    uVar2 = *(undefined4 *)(pcVar8 + 0xc);
-    puVar4[3] = 0;
-    puVar4[4] = 0;
-    *(undefined1 *)((int)puVar4 + 0x15) = 0;
-    puVar4[7] = uVar2;
-    pCVar6 = (CFrameBuffer *)__restgprlr_29(puVar4);
-    return pCVar6;
+  *(undefined4 *)&this->field_0x4 = 1;
+  *(undefined ***)this = &_vftable_;
+  uVar1 = param_1->Type;
+  this->m_Type = uVar1;
+  this->m_pContext = param_1->pContext;
+  (this->m_Format)._s_0.SampleType = '\0';
+  (this->m_Format)._s_0.SampleRate = 48000;
+  if (uVar1 != '\0') {
+    pfVar2 = param_1->pSampleBuffer;
+    *(undefined4 *)&this->m_MaxFormat = 0;
+    (this->m_MaxFormat)._s_0.SampleRate = 0;
+    (this->m_Format)._s_0.ChannelCount = '\0';
+    this->m_pSampleBuffer = pfVar2;
+    return this;
   }
-  uVar10 = 48000 / (ulonglong)*(uint *)(pcVar8 + 8);
-  trapWord(6,(ulonglong)*(uint *)(pcVar8 + 8),0);
-  trapWord(6,uVar10,0);
-  iVar5 = (**(code **)(*(int *)lVar9 + 0x14))
-                    (lVar9,((longlong)(int)(0x100 / uVar10) * (longlong)(int)(uint)(byte)pcVar8[5] +
-                           0x20) * 4);
-  uVar3 = iVar5 + 0x7fU & 0xffffff80;
-  if ((lVar7 + 4U & 0xffffffff) != 0) {
-    puVar4[3] = *(undefined4 *)(lVar7 + 4U);
-    puVar4[4] = *(undefined4 *)(pcVar8 + 8);
-    puVar4[7] = uVar3;
-    *(undefined1 *)((int)puVar4 + 0x15) = 0;
-    pCVar6 = (CFrameBuffer *)__restgprlr_29(puVar4);
-    return pCVar6;
+  uVar5 = (ulonglong)(param_1->MaxFormat)._s_0.SampleRate;
+  uVar4 = 48000 / uVar5;
+  trapWord(6,uVar5,0);
+  trapWord(6,uVar4,0);
+  iVar3 = (**(code **)((int)*param_2 + 0x14))
+                    (param_2,((longlong)(int)(0x100 / uVar4) *
+                              (longlong)(int)(uint)(param_1->MaxFormat)._s_0.ChannelCount + 0x20) *
+                             4);
+  pfVar2 = (float *)(iVar3 + 0x7fU & 0xffffff80);
+  if (param_1 != (XAUDIOFRAMEBUFINIT *)0xfffffffc) {
+    *(undefined4 *)&this->m_MaxFormat = *(undefined4 *)&param_1->MaxFormat;
+    (this->m_MaxFormat)._s_0.SampleRate = (param_1->MaxFormat)._s_0.SampleRate;
+    this->m_pSampleBuffer = pfVar2;
+    (this->m_Format)._s_0.ChannelCount = '\0';
+    return this;
   }
-  puVar4[3] = 0;
-  puVar4[4] = 0;
-  puVar4[7] = uVar3;
-  *(undefined1 *)((int)puVar4 + 0x15) = 0;
-  pCVar6 = (CFrameBuffer *)__restgprlr_29(puVar4);
-  return pCVar6;
+  *(undefined4 *)&this->m_MaxFormat = 0;
+  (this->m_MaxFormat)._s_0.SampleRate = 0;
+  this->m_pSampleBuffer = pfVar2;
+  (this->m_Format)._s_0.ChannelCount = '\0';
+  return this;
 }
 
 

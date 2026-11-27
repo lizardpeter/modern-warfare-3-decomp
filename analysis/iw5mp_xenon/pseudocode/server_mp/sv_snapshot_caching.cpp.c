@@ -49,6 +49,8 @@ bool SV_FrameIsStillInArchivedSnapshotBuffer(serverArchive_t *param_1,int param_
 
 // 825812B8  SV_HasCachedSnapshotInternal  (server_mp/sv_snapshot_caching.cpp:149)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
@@ -57,32 +59,25 @@ bool SV_HasCachedSnapshotInternal(int param_1,int param_2)
 
 {
   uint uVar1;
+  uchar *puVar2;
+  bool bVar5;
   int iVar3;
-  uchar *puVar4;
-  bool bVar6;
-  undefined1 uVar7;
-  cachedSnapshot_t *pcVar5;
-  undefined8 uVar2;
-  longlong lVar8;
-  int iVar9;
-  int iVar10;
+  cachedSnapshot_t *pcVar4;
+  int iVar6;
+  int iVar7;
   msg_t amStack_80 [2];
   
-  lVar8 = (longlong)param_2;
-  iVar3 = __savegprlr_24(param_1);
-  puVar4 = Migration_GetBuffer();
-  if (puVar4 != (uchar *)0x0) {
+  puVar2 = Migration_GetBuffer();
+  if (puVar2 != (uchar *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_snapshot_caching.cpp"
                     ,0x9f,0,"%s");
   }
-  iVar9 = iVar3 / 0x4b0 + (iVar3 >> 0x1f);
-  iVar9 = (iVar3 + (iVar9 - (iVar9 >> 0x1f)) * -0x4b0) * 8;
-  bVar6 = SV_FrameIsStillInArchivedSnapshotBuffer
-                    (&svs.archive,*(int *)((int)&svs + iVar9 + 0x203888));
-  if (!bVar6) {
-LAB_82581354:
-    uVar7 = __restgprlr_24(0);
-    return (bool)uVar7;
+  iVar3 = param_1 / 0x4b0 + (param_1 >> 0x1f);
+  iVar3 = (param_1 + (iVar3 - (iVar3 >> 0x1f)) * -0x4b0) * 8;
+  bVar5 = SV_FrameIsStillInArchivedSnapshotBuffer
+                    (&svs.archive,*(int *)((int)&svs + iVar3 + 0x203888));
+  if (!bVar5) {
+    return false;
   }
   uVar1 = svs.nextCachedSnapshotFrames;
   do {
@@ -90,64 +85,66 @@ LAB_82581354:
     if ((int)uVar1 <
         (int)(-((int)(svs.nextCachedSnapshotFrames - 0x200U) >> 0x1f) - 1U &
              svs.nextCachedSnapshotFrames - 0x200U)) goto LAB_82581438;
-    iVar10 = (uVar1 + (((int)uVar1 >> 9) + (uint)((int)uVar1 < 0 && (uVar1 & 0x1ff) != 0) & 0x7fffff
-                      ) * -0x200) * 0x1c;
-  } while (*(int *)((int)&svs + iVar10) != iVar3);
-  if (*(int *)((int)&svs + iVar10 + 0xc) < 0) {
+    iVar6 = (uVar1 + (((int)uVar1 >> 9) + (uint)((int)uVar1 < 0 && (uVar1 & 0x1ff) != 0) & 0x7fffff)
+                     * -0x200) * 0x1c;
+  } while (*(int *)((int)&svs + iVar6) != param_1);
+  if (*(int *)((int)&svs + iVar6 + 0xc) < 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_snapshot_caching.cpp"
                     ,0xae,0,"%s\n\t(cachedFrame->first_entity) = %i");
   }
-  if ((*(int *)((int)&svs + iVar10 + 0xc) <
-       ((int)lVar8 + -9) * 0x4b0 + svs.nextCachedSnapshotEntities) ||
-     (*(int *)((int)&svs + iVar10 + 0x14) <
-      (int)(((lVar8 - 0x12U) + (lVar8 - 0x12U & 0x1fffffff) * 8 & 0xffffffff) << 1) +
-      svs.nextCachedSnapshotClients)) {
+  if ((*(int *)((int)&svs + iVar6 + 0xc) < (param_2 + -9) * 0x4b0 + svs.nextCachedSnapshotEntities)
+     || (*(int *)((int)&svs + iVar6 + 0x14) <
+         (param_2 + -0x12) * 0x12 + svs.nextCachedSnapshotClients)) {
 LAB_82581438:
-    uVar1 = *(uint *)((int)&svs + iVar9 + 0x203888);
-    iVar3 = *(int *)((int)&svs + iVar9 + 0x20388c);
-    iVar9 = uVar1 + (((int)uVar1 >> 0x15) + (uint)((int)uVar1 < 0 && (uVar1 & 0x1fffff) != 0) &
+    uVar1 = *(uint *)((int)&svs + iVar3 + 0x203888);
+    iVar3 = *(int *)((int)&svs + iVar3 + 0x20388c);
+    iVar6 = uVar1 + (((int)uVar1 >> 0x15) + (uint)((int)uVar1 < 0 && (uVar1 & 0x1fffff) != 0) &
                     0x7ff) * -0x200000;
-    iVar10 = 0x200000 - iVar9;
-    if (iVar10 < iVar3) {
+    iVar7 = 0x200000 - iVar6;
+    if (iVar7 < iVar3) {
       MSG_InitReadOnlySplit
-                (amStack_80,(uchar *)((int)&svs + iVar9 + 0x3880),iVar10,
-                 svs.archive.archivedSnapshotBuffer,iVar3 - iVar10);
+                (amStack_80,(uchar *)((int)&svs + iVar6 + 0x3880),iVar7,
+                 svs.archive.archivedSnapshotBuffer,iVar3 - iVar7);
     }
     else {
-      MSG_InitReadOnly(amStack_80,(uchar *)((int)&svs + iVar9 + 0x3880),iVar3);
+      MSG_InitReadOnly(amStack_80,(uchar *)((int)&svs + iVar6 + 0x3880),iVar3);
     }
     MSG_BeginReading(amStack_80);
     iVar3 = MSG_ReadBit(amStack_80);
     if (iVar3 == 0) {
       iVar3 = MSG_ReadLong(amStack_80);
-      if ((iVar3 < svs.archive.nextArchivedSnapshotFrames + -0x4b0) ||
-         (iVar9 = iVar3 / 0x4b0 + (iVar3 >> 0x1f),
-         bVar6 = SV_FrameIsStillInArchivedSnapshotBuffer
-                           (&svs.archive,
-                            *(int *)((int)&svs +
-                                    (iVar3 + (iVar9 - (iVar9 >> 0x1f)) * -0x4b0) * 8 + 0x203888)),
-         !bVar6)) goto LAB_82581354;
-      iVar9 = (int)lVar8 + 1;
-      pcVar5 = SV_GetCachedSnapshotInternal(iVar3,iVar9,false);
-      bVar6 = SV_HasCachedSnapshotInternal(iVar3,iVar9);
-      if (bVar6 != (pcVar5 != (cachedSnapshot_t *)0x0)) {
+      if (iVar3 < svs.archive.nextArchivedSnapshotFrames + -0x4b0) {
+        return false;
+      }
+      iVar6 = iVar3 / 0x4b0 + (iVar3 >> 0x1f);
+      bVar5 = SV_FrameIsStillInArchivedSnapshotBuffer
+                        (&svs.archive,
+                         *(int *)((int)&svs +
+                                 (iVar3 + (iVar6 - (iVar6 >> 0x1f)) * -0x4b0) * 8 + 0x203888));
+      if (!bVar5) {
+        return false;
+      }
+      iVar6 = param_2 + 1;
+      pcVar4 = SV_GetCachedSnapshotInternal(iVar3,iVar6,false);
+      bVar5 = SV_HasCachedSnapshotInternal(iVar3,iVar6);
+      if (bVar5 != (pcVar4 != (cachedSnapshot_t *)0x0)) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_snapshot_caching.cpp"
                         ,0xeb,0,"%s");
       }
-      bVar6 = SV_HasCachedSnapshotInternal(iVar3,iVar9);
-      uVar2 = 0;
-      if (!bVar6) goto LAB_82581578;
+      bVar5 = SV_HasCachedSnapshotInternal(iVar3,iVar6);
+      if (!bVar5) {
+        return false;
+      }
     }
   }
-  uVar2 = 1;
-LAB_82581578:
-  uVar7 = __restgprlr_24(uVar2);
-  return (bool)uVar7;
+  return true;
 }
 
 
 // 8257F138  SV_GetCachedSnapshotInternal  (server_mp/sv_snapshot_caching.cpp:245)
 
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
@@ -156,24 +153,22 @@ LAB_82581578:
 cachedSnapshot_t * SV_GetCachedSnapshotInternal(int param_1,int param_2,bool param_3)
 
 {
-  uint *puVar1;
-  uchar *puVar2;
-  bool bVar6;
-  int iVar3;
-  cachedSnapshot_t *pcVar4;
-  int iVar5;
-  longlong lVar7;
-  ulonglong uVar8;
-  archivedEntity_s *paVar9;
-  cachedClient_s *pcVar10;
-  int iVar11;
-  int iVar12;
-  int iVar13;
-  uint uVar14;
+  uchar *puVar1;
+  bool bVar5;
+  int iVar2;
+  cachedSnapshot_t *pcVar3;
+  int iVar4;
+  archivedEntity_s *paVar6;
+  cachedClient_s *pcVar7;
+  int iVar8;
+  int iVar9;
+  int iVar10;
+  uint uVar11;
+  archivedEntity_s *paVar12;
+  cachedClient_s *pcVar13;
+  uint *puVar14;
   archivedEntity_s *paVar15;
   cachedClient_s *pcVar16;
-  archivedEntity_s *paVar17;
-  cachedClient_s *pcVar18;
   cachedSnapshot_t *local_208;
   msg_t local_200;
   cachedSnapshot_t *local_1d4;
@@ -183,91 +178,86 @@ cachedSnapshot_t * SV_GetCachedSnapshotInternal(int param_1,int param_2,bool par
   char *local_1c4;
   archivedEntity_s local_1c0;
   
-  uVar8 = (ulonglong)param_3;
-  lVar7 = (longlong)param_2;
-  __savegprlr();
-  puVar2 = Migration_GetBuffer();
-  if (puVar2 != (uchar *)0x0) {
+  puVar1 = Migration_GetBuffer();
+  if (puVar1 != (uchar *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_snapshot_caching.cpp"
                     ,0x108,0,"%s");
   }
-  iVar3 = param_1 / 0x4b0 + (param_1 >> 0x1f);
-  iVar3 = (param_1 + (iVar3 - (iVar3 >> 0x1f)) * -0x4b0) * 8;
-  puVar1 = (uint *)((int)&svs + iVar3 + 0x203888);
-  if (*(int *)((int)&svs + iVar3 + 0x20388c) == 0) {
+  iVar2 = param_1 / 0x4b0 + (param_1 >> 0x1f);
+  iVar2 = (param_1 + (iVar2 - (iVar2 >> 0x1f)) * -0x4b0) * 8;
+  puVar14 = (uint *)((int)&svs + iVar2 + 0x203888);
+  if (*(int *)((int)&svs + iVar2 + 0x20388c) == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_snapshot_caching.cpp"
                     ,0x10b,0,"%s\n\t(archivedFrame) = %i");
   }
-  bVar6 = SV_FrameIsStillInArchivedSnapshotBuffer(&svs.archive,*puVar1);
-  if (!bVar6) {
-    if ((uVar8 & 0xff) != 0) {
+  bVar5 = SV_FrameIsStillInArchivedSnapshotBuffer(&svs.archive,*puVar14);
+  if (!bVar5) {
+    if (param_3) {
       Com_Printf(0xf,
                  "Failed to get archived snapshot for archived frame %i - frame->start is too old - %i < %i - %i\n"
                 );
     }
-    pcVar4 = (cachedSnapshot_t *)0x0;
-    __restgprlr();
-    return pcVar4;
+    return (cachedSnapshot_t *)0x0;
   }
-  uVar14 = svs.nextCachedSnapshotFrames;
+  uVar11 = svs.nextCachedSnapshotFrames;
   do {
-    uVar14 = uVar14 - 1;
-    if ((int)uVar14 <
+    uVar11 = uVar11 - 1;
+    if ((int)uVar11 <
         (int)(-((int)(svs.nextCachedSnapshotFrames - 0x200U) >> 0x1f) - 1U &
              svs.nextCachedSnapshotFrames - 0x200U)) goto LAB_8257f324;
-    iVar11 = (uVar14 + (((int)uVar14 >> 9) + (uint)((int)uVar14 < 0 && (uVar14 & 0x1ff) != 0) &
-                       0x7fffff) * -0x200) * 0x1c;
-    local_208 = (cachedSnapshot_t *)((int)&svs + iVar11);
-  } while (*(int *)((int)&svs + iVar11) != param_1);
-  if (*(int *)((int)&svs + iVar11 + 0xc) < 0) {
+    iVar8 = (uVar11 + (((int)uVar11 >> 9) + (uint)((int)uVar11 < 0 && (uVar11 & 0x1ff) != 0) &
+                      0x7fffff) * -0x200) * 0x1c;
+  } while (*(int *)((int)&svs + iVar8) != param_1);
+  if (*(int *)((int)&svs + iVar8 + 0xc) < 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_snapshot_caching.cpp"
                     ,0x11d,0,"%s\n\t(cachedFrame->first_entity) = %i");
   }
-  if ((((int)lVar7 + -9) * 0x4b0 + svs.nextCachedSnapshotEntities <=
-       *(int *)((int)&svs + iVar11 + 0xc)) &&
-     ((int)(((lVar7 - 0x12U) + (lVar7 - 0x12U & 0x1fffffff) * 8 & 0xffffffff) << 1) +
-      svs.nextCachedSnapshotClients <= *(int *)((int)&svs + iVar11 + 0x14))) goto LAB_825801e8;
+  if (((param_2 + -9) * 0x4b0 + svs.nextCachedSnapshotEntities <= *(int *)((int)&svs + iVar8 + 0xc))
+     && ((param_2 + -0x12) * 0x12 + svs.nextCachedSnapshotClients <=
+         *(int *)((int)&svs + iVar8 + 0x14))) {
+    return (cachedSnapshot_t *)((int)&svs + iVar8);
+  }
 LAB_8257f324:
   memset();
-  uVar14 = *puVar1;
-  iVar3 = *(int *)((int)&svs + iVar3 + 0x20388c);
-  iVar11 = uVar14 + (((int)uVar14 >> 0x15) + (uint)((int)uVar14 < 0 && (uVar14 & 0x1fffff) != 0) &
-                    0x7ff) * -0x200000;
-  iVar12 = 0x200000 - iVar11;
-  if (iVar12 < iVar3) {
+  uVar11 = *puVar14;
+  iVar2 = *(int *)((int)&svs + iVar2 + 0x20388c);
+  iVar8 = uVar11 + (((int)uVar11 >> 0x15) + (uint)((int)uVar11 < 0 && (uVar11 & 0x1fffff) != 0) &
+                   0x7ff) * -0x200000;
+  iVar9 = 0x200000 - iVar8;
+  if (iVar9 < iVar2) {
     MSG_InitReadOnlySplit
-              (&local_200,(uchar *)((int)&svs + iVar11 + 0x3880),iVar12,
-               svs.archive.archivedSnapshotBuffer,iVar3 - iVar12);
+              (&local_200,(uchar *)((int)&svs + iVar8 + 0x3880),iVar9,
+               svs.archive.archivedSnapshotBuffer,iVar2 - iVar9);
   }
   else {
-    MSG_InitReadOnly(&local_200,(uchar *)((int)&svs + iVar11 + 0x3880),iVar3);
+    MSG_InitReadOnly(&local_200,(uchar *)((int)&svs + iVar8 + 0x3880),iVar2);
   }
   MSG_BeginReading(&local_200);
-  iVar3 = MSG_ReadBit(&local_200);
-  if (iVar3 != 0) {
+  iVar2 = MSG_ReadBit(&local_200);
+  if (iVar2 != 0) {
     if (local_200.overflowed != 0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_snapshot_caching.cpp"
                       ,0x24b,0,"%s");
     }
-    iVar11 = (svs.nextCachedSnapshotFrames +
-             ((svs.nextCachedSnapshotFrames >> 9) +
-              (uint)(svs.nextCachedSnapshotFrames < 0 &&
-                    (svs.nextCachedSnapshotFrames & 0x1ffU) != 0) & 0x7fffff) * -0x200) * 0x1c;
-    local_208 = (cachedSnapshot_t *)((int)&svs + iVar11);
-    *(undefined4 *)((int)&svs + iVar11 + 8) = 0;
+    iVar8 = (svs.nextCachedSnapshotFrames +
+            ((svs.nextCachedSnapshotFrames >> 9) +
+             (uint)(svs.nextCachedSnapshotFrames < 0 && (svs.nextCachedSnapshotFrames & 0x1ffU) != 0
+                   ) & 0x7fffff) * -0x200) * 0x1c;
+    local_208 = (cachedSnapshot_t *)((int)&svs + iVar8);
+    *(undefined4 *)((int)&svs + iVar8 + 8) = 0;
     local_208->archivedFrame = param_1;
-    iVar3 = svs.nextCachedSnapshotEntities;
-    *(undefined4 *)((int)&svs + iVar11 + 0x10) = 0;
-    *(int *)((int)&svs + iVar11 + 0xc) = iVar3;
-    iVar3 = svs.nextCachedSnapshotClients;
-    *(undefined4 *)((int)&svs + iVar11 + 0x18) = 0;
-    *(int *)((int)&svs + iVar11 + 0x14) = iVar3;
-    iVar3 = MSG_ReadLong(&local_200);
-    *(int *)((int)&svs + iVar11 + 4) = iVar3;
+    iVar2 = svs.nextCachedSnapshotEntities;
+    *(undefined4 *)((int)&svs + iVar8 + 0x10) = 0;
+    *(int *)((int)&svs + iVar8 + 0xc) = iVar2;
+    iVar2 = svs.nextCachedSnapshotClients;
+    *(undefined4 *)((int)&svs + iVar8 + 0x18) = 0;
+    *(int *)((int)&svs + iVar8 + 0x14) = iVar2;
+    iVar2 = MSG_ReadLong(&local_200);
+    *(int *)((int)&svs + iVar8 + 4) = iVar2;
     MSG_ClearLastReferencedEntity(&local_200);
     do {
-      uVar14 = local_200.bit & 7;
-      if (uVar14 == 0) {
+      uVar11 = local_200.bit & 7;
+      if (uVar11 == 0) {
         if (local_200.readcount < local_200.splitSize + local_200.cursize) {
           local_200.bit = local_200.readcount << 3;
           local_200.readcount = local_200.readcount + 1;
@@ -277,40 +267,40 @@ LAB_8257f324:
       }
       else {
 LAB_8257fe04:
-        iVar3 = MSG_GetByte(&local_200,local_200.bit >> 3);
+        iVar2 = MSG_GetByte(&local_200,local_200.bit >> 3);
         local_200.bit = local_200.bit + 1;
-        if ((iVar3 >> uVar14 & 1U) == 0) goto LAB_8257ffbc;
+        if ((iVar2 >> uVar11 & 1U) == 0) goto LAB_8257ffbc;
       }
-      iVar3 = MSG_ReadEntityIndex(&local_200,5);
+      iVar2 = MSG_ReadEntityIndex(&local_200,5);
       if (local_200.overflowed != 0) {
         Com_Error(ERR_DROP,"\x15SV_GetCachedSnapshot: end of message");
       }
-      iVar12 = svs.nextCachedSnapshotClients / 0x144 + (svs.nextCachedSnapshotClients >> 0x1f);
-      pcVar16 = svs.cachedSnapshotClients +
-                svs.nextCachedSnapshotClients + (iVar12 - (iVar12 >> 0x1f)) * -0x144;
-      MSG_ReadDeltaClient(&local_200,*(int *)((int)&svs + iVar11 + 4),(clientState_s *)0x0,
-                          &pcVar16->cs,iVar3);
-      uVar14 = local_200.bit & 7;
-      if (uVar14 == 0) {
+      iVar9 = svs.nextCachedSnapshotClients / 0x144 + (svs.nextCachedSnapshotClients >> 0x1f);
+      pcVar13 = svs.cachedSnapshotClients +
+                svs.nextCachedSnapshotClients + (iVar9 - (iVar9 >> 0x1f)) * -0x144;
+      MSG_ReadDeltaClient(&local_200,*(int *)((int)&svs + iVar8 + 4),(clientState_s *)0x0,
+                          &pcVar13->cs,iVar2);
+      uVar11 = local_200.bit & 7;
+      if (uVar11 == 0) {
         if (local_200.readcount < local_200.splitSize + local_200.cursize) {
           local_200.bit = local_200.readcount << 3;
           local_200.readcount = local_200.readcount + 1;
           goto LAB_8257fee8;
         }
-        uVar14 = 0xffffffff;
+        uVar11 = 0xffffffff;
         local_200.overflowed = 1;
       }
       else {
 LAB_8257fee8:
-        iVar3 = MSG_GetByte(&local_200,local_200.bit >> 3);
+        iVar2 = MSG_GetByte(&local_200,local_200.bit >> 3);
         local_200.bit = local_200.bit + 1;
-        uVar14 = iVar3 >> uVar14 & 1;
+        uVar11 = iVar2 >> uVar11 & 1;
       }
-      pcVar16->playerStateExists = uVar14;
-      if ((uVar14 != 0) &&
+      pcVar13->playerStateExists = uVar11;
+      if ((uVar11 != 0) &&
          (MSG_ReadDeltaPlayerstate
-                    (LOCAL_CLIENT_0,&local_200,*(int *)((int)&svs + iVar11 + 4),(playerState_s *)0x0
-                     ,&pcVar16->ps,false), ((pcVar16->ps).otherFlags & 0x1000U) == 0)) {
+                    (LOCAL_CLIENT_0,&local_200,*(int *)((int)&svs + iVar8 + 4),(playerState_s *)0x0,
+                     &pcVar13->ps,false), ((pcVar13->ps).otherFlags & 0x1000U) == 0)) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_snapshot_caching.cpp"
                         ,0x273,0,"%s");
       }
@@ -322,125 +312,119 @@ LAB_8257fee8:
       if (0x7ffffffd < svs.nextCachedSnapshotClients) {
         Com_Error(ERR_FATAL,"\x15svs.nextCachedSnapshotClients wrapped");
       }
-      *(int *)((int)&svs + iVar11 + 0x10) = *(int *)((int)&svs + iVar11 + 0x10) + 1;
+      *(int *)((int)&svs + iVar8 + 0x10) = *(int *)((int)&svs + iVar8 + 0x10) + 1;
     } while( true );
   }
   if (local_200.overflowed != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_snapshot_caching.cpp"
                     ,0x154,0,"%s");
   }
-  iVar3 = MSG_ReadLong(&local_200);
-  if (iVar3 < svs.archive.nextArchivedSnapshotFrames + -0x4b0) {
-    if ((uVar8 & 0xff) != 0) {
+  iVar2 = MSG_ReadLong(&local_200);
+  if (iVar2 < svs.archive.nextArchivedSnapshotFrames + -0x4b0) {
+    if (param_3) {
       Com_Printf(0xf,
                  "getting archive snapshot failed for time %i - oldArchiveFrame(%i) < svs.nextArchivedSnapshotFrames(%i) - NUM_ARCHIVED_FRAMES(%i)\n"
                 );
     }
-    pcVar4 = (cachedSnapshot_t *)0x0;
-    __restgprlr();
-    return pcVar4;
+    return (cachedSnapshot_t *)0x0;
   }
-  iVar11 = iVar3 / 0x4b0 + (iVar3 >> 0x1f);
-  bVar6 = SV_FrameIsStillInArchivedSnapshotBuffer
+  iVar8 = iVar2 / 0x4b0 + (iVar2 >> 0x1f);
+  bVar5 = SV_FrameIsStillInArchivedSnapshotBuffer
                     (&svs.archive,
                      *(int *)((int)&svs +
-                             (iVar3 + (iVar11 - (iVar11 >> 0x1f)) * -0x4b0) * 8 + 0x203888));
-  if (!bVar6) {
-    if ((uVar8 & 0xff) != 0) {
+                             (iVar2 + (iVar8 - (iVar8 >> 0x1f)) * -0x4b0) * 8 + 0x203888));
+  if (!bVar5) {
+    if (param_3) {
       Com_Printf(0xf,
                  "getting archive snapshot failed for time %i - frame->start(%i) < svs.nextArchivedSnapshotBuffer(%i) - ARCHIVED_SNAPSHOT_BUFFER_SIZE(%i)\n"
                 );
     }
-    pcVar4 = (cachedSnapshot_t *)0x0;
-    __restgprlr();
-    return pcVar4;
+    return (cachedSnapshot_t *)0x0;
   }
-  pcVar4 = SV_GetCachedSnapshotInternal(iVar3,(int)lVar7 + 1,SUB81(uVar8,0));
-  local_1d4 = pcVar4;
-  if (pcVar4 == (cachedSnapshot_t *)0x0) {
-    if ((uVar8 & 0xff) != 0) {
+  pcVar3 = SV_GetCachedSnapshotInternal(iVar2,param_2 + 1,param_3);
+  local_1d4 = pcVar3;
+  if (pcVar3 == (cachedSnapshot_t *)0x0) {
+    if (param_3) {
       Com_Printf(0xf,
                  "failed to get snapshot for time %i - it was delta\'d off time %i, and we couldn\'t get that snapshot\n"
                 );
     }
-    pcVar4 = (cachedSnapshot_t *)0x0;
-    __restgprlr();
-    return pcVar4;
+    return (cachedSnapshot_t *)0x0;
   }
-  if (pcVar4->usesDelta != 0) {
+  if (pcVar3->usesDelta != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_snapshot_caching.cpp"
                     ,0x16e,0,"%s");
   }
-  paVar15 = (archivedEntity_s *)0x0;
-  iVar11 = (svs.nextCachedSnapshotFrames +
-           ((svs.nextCachedSnapshotFrames >> 9) +
-            (uint)(svs.nextCachedSnapshotFrames < 0 && (svs.nextCachedSnapshotFrames & 0x1ffU) != 0)
-           & 0x7fffff) * -0x200) * 0x1c;
-  local_208 = (cachedSnapshot_t *)((int)&svs + iVar11);
-  *(undefined4 *)((int)&svs + iVar11 + 8) = 0;
+  paVar12 = (archivedEntity_s *)0x0;
+  iVar8 = (svs.nextCachedSnapshotFrames +
+          ((svs.nextCachedSnapshotFrames >> 9) +
+           (uint)(svs.nextCachedSnapshotFrames < 0 && (svs.nextCachedSnapshotFrames & 0x1ffU) != 0)
+          & 0x7fffff) * -0x200) * 0x1c;
+  local_208 = (cachedSnapshot_t *)((int)&svs + iVar8);
+  *(undefined4 *)((int)&svs + iVar8 + 8) = 0;
   local_208->archivedFrame = param_1;
-  iVar3 = svs.nextCachedSnapshotEntities;
-  *(undefined4 *)((int)&svs + iVar11 + 0x10) = 0;
-  *(int *)((int)&svs + iVar11 + 0xc) = iVar3;
-  iVar3 = svs.nextCachedSnapshotClients;
-  *(undefined4 *)((int)&svs + iVar11 + 0x18) = 1;
-  *(int *)((int)&svs + iVar11 + 0x14) = iVar3;
-  iVar3 = MSG_ReadLong(&local_200);
-  *(int *)((int)&svs + iVar11 + 4) = iVar3;
-  iVar3 = 0;
-  pcVar16 = (cachedClient_s *)0x0;
-  if (pcVar4->num_clients < 1) {
-    iVar12 = 99999;
+  iVar2 = svs.nextCachedSnapshotEntities;
+  *(undefined4 *)((int)&svs + iVar8 + 0x10) = 0;
+  *(int *)((int)&svs + iVar8 + 0xc) = iVar2;
+  iVar2 = svs.nextCachedSnapshotClients;
+  *(undefined4 *)((int)&svs + iVar8 + 0x18) = 1;
+  *(int *)((int)&svs + iVar8 + 0x14) = iVar2;
+  iVar2 = MSG_ReadLong(&local_200);
+  *(int *)((int)&svs + iVar8 + 4) = iVar2;
+  iVar2 = 0;
+  pcVar13 = (cachedClient_s *)0x0;
+  if (pcVar3->num_clients < 1) {
+    iVar9 = 99999;
   }
   else {
-    iVar12 = pcVar4->first_client;
-    iVar5 = iVar12 / 0x144 + (iVar12 >> 0x1f);
-    pcVar16 = svs.cachedSnapshotClients + iVar12 + (iVar5 - (iVar5 >> 0x1f)) * -0x144;
-    iVar12 = (pcVar16->cs).clientIndex;
+    iVar9 = pcVar3->first_client;
+    iVar4 = iVar9 / 0x144 + (iVar9 >> 0x1f);
+    pcVar13 = svs.cachedSnapshotClients + iVar9 + (iVar4 - (iVar4 >> 0x1f)) * -0x144;
+    iVar9 = (pcVar13->cs).clientIndex;
   }
   MSG_ClearLastReferencedEntity(&local_200);
-  iVar5 = MSG_ReadBit(&local_200);
+  iVar4 = MSG_ReadBit(&local_200);
   local_1c4 = "\x15SV_GetCachedSnapshot: end of message";
-  while (iVar5 != 0) {
-    iVar5 = MSG_ReadEntityIndex(&local_200,5);
-    if (iVar5 < 0) {
+  while (iVar4 != 0) {
+    iVar4 = MSG_ReadEntityIndex(&local_200,5);
+    if (iVar4 < 0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_snapshot_caching.cpp"
                       ,0x19b,0,"%s\n\t(newnum) = %i");
     }
     if (local_200.overflowed != 0) {
       Com_Error(ERR_DROP,"\x15SV_GetCachedSnapshot: end of message");
     }
-    if (iVar12 < iVar5) {
+    if (iVar9 < iVar4) {
       do {
-        iVar3 = iVar3 + 1;
-        if (iVar3 < pcVar4->num_clients) {
-          iVar13 = pcVar4->first_client + iVar3;
-          iVar12 = iVar13 / 0x144 + (iVar13 >> 0x1f);
-          pcVar16 = svs.cachedSnapshotClients + iVar13 + (iVar12 - (iVar12 >> 0x1f)) * -0x144;
-          iVar12 = (pcVar16->cs).clientIndex;
+        iVar2 = iVar2 + 1;
+        if (iVar2 < pcVar3->num_clients) {
+          iVar10 = pcVar3->first_client + iVar2;
+          iVar9 = iVar10 / 0x144 + (iVar10 >> 0x1f);
+          pcVar13 = svs.cachedSnapshotClients + iVar10 + (iVar9 - (iVar9 >> 0x1f)) * -0x144;
+          iVar9 = (pcVar13->cs).clientIndex;
         }
         else {
-          iVar12 = 99999;
+          iVar9 = 99999;
         }
-      } while (iVar12 < iVar5);
+      } while (iVar9 < iVar4);
     }
-    if (iVar12 == iVar5) {
-      iVar12 = svs.nextCachedSnapshotClients / 0x144 + (svs.nextCachedSnapshotClients >> 0x1f);
-      pcVar18 = svs.cachedSnapshotClients +
-                svs.nextCachedSnapshotClients + (iVar12 - (iVar12 >> 0x1f)) * -0x144;
-      MSG_ReadDeltaClient(&local_200,*(int *)((int)&svs + iVar11 + 4),&pcVar16->cs,&pcVar18->cs,
-                          iVar5);
-      iVar12 = MSG_ReadBit(&local_200);
-      pcVar18->playerStateExists = iVar12;
-      if (iVar12 != 0) {
-        pcVar10 = pcVar16;
-        if (pcVar16->playerStateExists == 0) {
-          pcVar10 = (cachedClient_s *)0x0;
+    if (iVar9 == iVar4) {
+      iVar9 = svs.nextCachedSnapshotClients / 0x144 + (svs.nextCachedSnapshotClients >> 0x1f);
+      pcVar16 = svs.cachedSnapshotClients +
+                svs.nextCachedSnapshotClients + (iVar9 - (iVar9 >> 0x1f)) * -0x144;
+      MSG_ReadDeltaClient(&local_200,*(int *)((int)&svs + iVar8 + 4),&pcVar13->cs,&pcVar16->cs,iVar4
+                         );
+      iVar9 = MSG_ReadBit(&local_200);
+      pcVar16->playerStateExists = iVar9;
+      if (iVar9 != 0) {
+        pcVar7 = pcVar13;
+        if (pcVar13->playerStateExists == 0) {
+          pcVar7 = (cachedClient_s *)0x0;
         }
         MSG_ReadDeltaPlayerstate
-                  (LOCAL_CLIENT_0,&local_200,*(int *)((int)&svs + iVar11 + 4),&pcVar10->ps,
-                   &pcVar18->ps,false);
-        if (((pcVar18->ps).otherFlags & 0x1000U) == 0) {
+                  (LOCAL_CLIENT_0,&local_200,*(int *)((int)&svs + iVar8 + 4),&pcVar7->ps,
+                   &pcVar16->ps,false);
+        if (((pcVar16->ps).otherFlags & 0x1000U) == 0) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_snapshot_caching.cpp"
                           ,0x1bf,0,"%s");
         }
@@ -453,34 +437,34 @@ LAB_8257fee8:
       if (0x7ffffffd < svs.nextCachedSnapshotClients) {
         Com_Error(ERR_FATAL,"\x15svs.nextCachedSnapshotClients wrapped");
       }
-      iVar3 = iVar3 + 1;
-      *(int *)((int)&svs + iVar11 + 0x10) = *(int *)((int)&svs + iVar11 + 0x10) + 1;
-      if (iVar3 < pcVar4->num_clients) {
-        iVar5 = pcVar4->first_client + iVar3;
-        iVar12 = iVar5 / 0x144 + (iVar5 >> 0x1f);
-        pcVar16 = svs.cachedSnapshotClients + iVar5 + (iVar12 - (iVar12 >> 0x1f)) * -0x144;
-        iVar12 = (pcVar16->cs).clientIndex;
+      iVar2 = iVar2 + 1;
+      *(int *)((int)&svs + iVar8 + 0x10) = *(int *)((int)&svs + iVar8 + 0x10) + 1;
+      if (iVar2 < pcVar3->num_clients) {
+        iVar4 = pcVar3->first_client + iVar2;
+        iVar9 = iVar4 / 0x144 + (iVar4 >> 0x1f);
+        pcVar13 = svs.cachedSnapshotClients + iVar4 + (iVar9 - (iVar9 >> 0x1f)) * -0x144;
+        iVar9 = (pcVar13->cs).clientIndex;
       }
       else {
-        iVar12 = 99999;
+        iVar9 = 99999;
       }
     }
     else {
-      if (iVar12 <= iVar5) {
+      if (iVar9 <= iVar4) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_snapshot_caching.cpp"
                         ,0x1d7,0,"%s");
       }
-      iVar13 = svs.nextCachedSnapshotClients / 0x144 + (svs.nextCachedSnapshotClients >> 0x1f);
-      pcVar18 = svs.cachedSnapshotClients +
-                svs.nextCachedSnapshotClients + (iVar13 - (iVar13 >> 0x1f)) * -0x144;
-      MSG_ReadDeltaClient(&local_200,*(int *)((int)&svs + iVar11 + 4),(clientState_s *)0x0,
-                          &pcVar18->cs,iVar5);
-      iVar5 = MSG_ReadBit(&local_200);
-      pcVar18->playerStateExists = iVar5;
-      if ((iVar5 != 0) &&
+      iVar10 = svs.nextCachedSnapshotClients / 0x144 + (svs.nextCachedSnapshotClients >> 0x1f);
+      pcVar16 = svs.cachedSnapshotClients +
+                svs.nextCachedSnapshotClients + (iVar10 - (iVar10 >> 0x1f)) * -0x144;
+      MSG_ReadDeltaClient(&local_200,*(int *)((int)&svs + iVar8 + 4),(clientState_s *)0x0,
+                          &pcVar16->cs,iVar4);
+      iVar4 = MSG_ReadBit(&local_200);
+      pcVar16->playerStateExists = iVar4;
+      if ((iVar4 != 0) &&
          (MSG_ReadDeltaPlayerstate
-                    (LOCAL_CLIENT_0,&local_200,*(int *)((int)&svs + iVar11 + 4),(playerState_s *)0x0
-                     ,&pcVar18->ps,false), ((pcVar18->ps).otherFlags & 0x1000U) == 0)) {
+                    (LOCAL_CLIENT_0,&local_200,*(int *)((int)&svs + iVar8 + 4),(playerState_s *)0x0,
+                     &pcVar16->ps,false), ((pcVar16->ps).otherFlags & 0x1000U) == 0)) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_snapshot_caching.cpp"
                         ,0x1e0,0,"%s");
       }
@@ -492,74 +476,74 @@ LAB_8257fee8:
       if (0x7ffffffd < svs.nextCachedSnapshotClients) {
         Com_Error(ERR_FATAL,"\x15svs.nextCachedSnapshotClients wrapped");
       }
-      *(int *)((int)&svs + iVar11 + 0x10) = *(int *)((int)&svs + iVar11 + 0x10) + 1;
+      *(int *)((int)&svs + iVar8 + 0x10) = *(int *)((int)&svs + iVar8 + 0x10) + 1;
     }
-    iVar5 = MSG_ReadBit(&local_200);
+    iVar4 = MSG_ReadBit(&local_200);
   }
   MSG_ClearLastReferencedEntity(&local_200);
-  iVar3 = 0;
+  iVar2 = 0;
   local_1c8 = "%s\n\t(oldCachedFrame->first_entity) = %i";
   local_1d0 = "(oldCachedFrame->first_entity >= 0)";
-  if (pcVar4->num_entities < 1) {
-    iVar12 = 99999;
+  if (pcVar3->num_entities < 1) {
+    iVar9 = 99999;
   }
   else {
-    if (pcVar4->first_entity < 0) {
+    if (pcVar3->first_entity < 0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_snapshot_caching.cpp"
                       ,0x1fe,0,"%s\n\t(oldCachedFrame->first_entity) = %i");
     }
-    iVar5 = pcVar4->first_entity % 0x2a30;
-    iVar12 = svs.cachedSnapshotEntities[iVar5].s.number;
-    paVar15 = svs.cachedSnapshotEntities + iVar5;
+    iVar4 = pcVar3->first_entity % 0x2a30;
+    iVar9 = svs.cachedSnapshotEntities[iVar4].s.number;
+    paVar12 = svs.cachedSnapshotEntities + iVar4;
   }
-  iVar5 = MSG_ReadEntityIndex(&local_200,0xb);
-  if (iVar5 != 0x7ff) {
+  iVar4 = MSG_ReadEntityIndex(&local_200,0xb);
+  if (iVar4 != 0x7ff) {
     local_1cc = "\x15svs.nextCachedSnapshotEntities wrapped";
     do {
-      while (iVar12 < iVar5) {
-        iVar3 = iVar3 + 1;
-        if (iVar3 < local_1d4->num_entities) {
+      while (iVar9 < iVar4) {
+        iVar2 = iVar2 + 1;
+        if (iVar2 < local_1d4->num_entities) {
           if (local_1d4->first_entity < 0) {
             MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_snapshot_caching.cpp"
                             ,0x221,0,local_1c8);
           }
-          iVar13 = (local_1d4->first_entity + iVar3) % 0x2a30;
-          iVar12 = svs.cachedSnapshotEntities[iVar13].s.number;
-          paVar15 = svs.cachedSnapshotEntities + iVar13;
-          if ((iVar12 < 0x12) && (iVar12 != (paVar15->s).clientNum)) {
+          iVar10 = (local_1d4->first_entity + iVar2) % 0x2a30;
+          iVar9 = svs.cachedSnapshotEntities[iVar10].s.number;
+          paVar12 = svs.cachedSnapshotEntities + iVar10;
+          if ((iVar9 < 0x12) && (iVar9 != (paVar12->s).clientNum)) {
             va("%i != %i");
             MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_snapshot_caching.cpp"
                             ,0x225,0,"%s\n\t%s");
           }
-          if (0xc < (int)(paVar15->s).lerp.pos.trType) {
+          if (0xc < (int)(paVar12->s).lerp.pos.trType) {
             MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_snapshot_caching.cpp"
                             ,0x226,0,"%s\n\t(oldCachedEnt->s.lerp.pos.trType) = %i");
           }
-          if (0xc < (int)(paVar15->s).lerp.apos.trType) {
+          if (0xc < (int)(paVar12->s).lerp.apos.trType) {
             MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_snapshot_caching.cpp"
                             ,0x227,0,"%s\n\t(oldCachedEnt->s.lerp.apos.trType) = %i");
           }
         }
         else {
-          paVar15 = &local_1c0;
-          iVar12 = 99999;
+          paVar12 = &local_1c0;
+          iVar9 = 99999;
         }
       }
       if (local_200.overflowed != 0) {
         Com_Error(ERR_DROP,local_1c4);
       }
-      paVar17 = svs.cachedSnapshotEntities + svs.nextCachedSnapshotEntities % 0x2a30;
-      paVar9 = paVar15;
-      if (iVar12 != iVar5) {
-        paVar9 = &local_1c0;
-        local_1c0.s.number = iVar5;
+      paVar15 = svs.cachedSnapshotEntities + svs.nextCachedSnapshotEntities % 0x2a30;
+      paVar6 = paVar12;
+      if (iVar9 != iVar4) {
+        paVar6 = &local_1c0;
+        local_1c0.s.number = iVar4;
       }
-      MSG_ReadDeltaArchivedEntity(&local_200,*(int *)((int)&svs + iVar11 + 4),paVar9,paVar17,iVar5);
-      if (0xc < (int)(paVar17->s).lerp.pos.trType) {
+      MSG_ReadDeltaArchivedEntity(&local_200,*(int *)((int)&svs + iVar8 + 4),paVar6,paVar15,iVar4);
+      if (0xc < (int)(paVar15->s).lerp.pos.trType) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_snapshot_caching.cpp"
                         ,0x23a,0,"%s\n\t(cachedEnt->s.lerp.pos.trType) = %i");
       }
-      if (0xc < (int)(paVar17->s).lerp.apos.trType) {
+      if (0xc < (int)(paVar15->s).lerp.apos.trType) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_snapshot_caching.cpp"
                         ,0x23b,0,"%s\n\t(cachedEnt->s.lerp.apos.trType) = %i");
       }
@@ -567,9 +551,9 @@ LAB_8257fee8:
       if (0x7ffffffd < svs.nextCachedSnapshotEntities) {
         Com_Error(ERR_FATAL,local_1cc);
       }
-      *(int *)((int)&svs + iVar11 + 8) = *(int *)((int)&svs + iVar11 + 8) + 1;
-      iVar5 = MSG_ReadEntityIndex(&local_200,0xb);
-    } while (iVar5 != 0x7ff);
+      *(int *)((int)&svs + iVar8 + 8) = *(int *)((int)&svs + iVar8 + 8) + 1;
+      iVar4 = MSG_ReadEntityIndex(&local_200,0xb);
+    } while (iVar4 != 0x7ff);
   }
 LAB_825800b8:
   svs.nextCachedSnapshotFrames = svs.nextCachedSnapshotFrames + 1;
@@ -598,26 +582,24 @@ LAB_825800b8:
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_snapshot_caching.cpp"
                     ,0x2c2,1,"%s");
   }
-LAB_825801e8:
-  __restgprlr();
   return local_208;
 LAB_8257ffbc:
   MSG_ClearLastReferencedEntity(&local_200);
-  iVar3 = MSG_ReadEntityIndex(&local_200,0xb);
-  while (iVar3 != 0x7ff) {
+  iVar2 = MSG_ReadEntityIndex(&local_200,0xb);
+  while (iVar2 != 0x7ff) {
     if (local_200.overflowed != 0) {
       Com_Error(ERR_DROP,"\x15SV_GetCachedSnapshot: end of message");
     }
-    local_1c0.s.number = iVar3;
+    local_1c0.s.number = iVar2;
     MSG_ReadDeltaArchivedEntity
-              (&local_200,*(int *)((int)&svs + iVar11 + 4),&local_1c0,
-               svs.cachedSnapshotEntities + svs.nextCachedSnapshotEntities % 0x2a30,iVar3);
+              (&local_200,*(int *)((int)&svs + iVar8 + 4),&local_1c0,
+               svs.cachedSnapshotEntities + svs.nextCachedSnapshotEntities % 0x2a30,iVar2);
     svs.nextCachedSnapshotEntities = svs.nextCachedSnapshotEntities + 1;
     if (0x7ffffffd < svs.nextCachedSnapshotEntities) {
       Com_Error(ERR_FATAL,"\x15svs.nextCachedSnapshotEntities wrapped");
     }
-    *(int *)((int)&svs + iVar11 + 8) = *(int *)((int)&svs + iVar11 + 8) + 1;
-    iVar3 = MSG_ReadEntityIndex(&local_200,0xb);
+    *(int *)((int)&svs + iVar8 + 8) = *(int *)((int)&svs + iVar8 + 8) + 1;
+    iVar2 = MSG_ReadEntityIndex(&local_200,0xb);
   }
   goto LAB_825800b8;
 }
@@ -625,6 +607,8 @@ LAB_8257ffbc:
 
 // 825801F8  SV_GetCachedSnapshot  (server_mp/sv_snapshot_caching.cpp:719)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
@@ -632,53 +616,52 @@ LAB_8257ffbc:
 cachedSnapshot_t * SV_GetCachedSnapshot(int *param_1)
 
 {
-  int *piVar1;
-  bool bVar4;
-  uchar *puVar2;
-  cachedSnapshot_t *pcVar3;
+  bool bVar3;
+  uchar *puVar1;
+  cachedSnapshot_t *pcVar2;
+  int iVar4;
   int iVar5;
-  int iVar6;
   
-  piVar1 = (int *)__savegprlr_29(param_1);
-  bVar4 = SV_Loaded();
-  if (!bVar4) {
+  bVar3 = SV_Loaded();
+  if (!bVar3) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_snapshot_caching.cpp"
                     ,0x2d4,0,"%s");
   }
-  iVar6 = *piVar1;
-  if (0 < iVar6) {
-    puVar2 = Migration_GetBuffer();
-    if (puVar2 == (uchar *)0x0) {
-      iVar5 = svs.archive.nextArchivedSnapshotFrames + -0x4b0;
-      iVar6 = svs.archive.nextArchivedSnapshotFrames - iVar6 / 0x32;
-      if (iVar6 < iVar5) {
-        *piVar1 = (svs.archive.nextArchivedSnapshotFrames - iVar5) * 0x32;
-        iVar6 = iVar5;
+  iVar5 = *param_1;
+  if (0 < iVar5) {
+    puVar1 = Migration_GetBuffer();
+    if (puVar1 == (uchar *)0x0) {
+      iVar4 = svs.archive.nextArchivedSnapshotFrames + -0x4b0;
+      iVar5 = svs.archive.nextArchivedSnapshotFrames - iVar5 / 0x32;
+      if (iVar5 < iVar4) {
+        *param_1 = (svs.archive.nextArchivedSnapshotFrames - iVar4) * 0x32;
+        iVar5 = iVar4;
       }
-      if (iVar6 < 0) {
-        *piVar1 = svs.archive.nextArchivedSnapshotFrames * 0x32;
-        iVar6 = 0;
+      if (iVar5 < 0) {
+        *param_1 = svs.archive.nextArchivedSnapshotFrames * 0x32;
+        iVar5 = 0;
       }
-      if (iVar6 < svs.archive.nextArchivedSnapshotFrames) {
+      if (iVar5 < svs.archive.nextArchivedSnapshotFrames) {
         do {
-          pcVar3 = SV_GetCachedSnapshotInternal(iVar6,0,true);
-          if (pcVar3 != (cachedSnapshot_t *)0x0) goto LAB_82580318;
-          iVar6 = iVar6 + 1;
-          *piVar1 = (svs.archive.nextArchivedSnapshotFrames - iVar6) * 0x32;
-        } while (iVar6 < svs.archive.nextArchivedSnapshotFrames);
+          pcVar2 = SV_GetCachedSnapshotInternal(iVar5,0,true);
+          if (pcVar2 != (cachedSnapshot_t *)0x0) {
+            return pcVar2;
+          }
+          iVar5 = iVar5 + 1;
+          *param_1 = (svs.archive.nextArchivedSnapshotFrames - iVar5) * 0x32;
+        } while (iVar5 < svs.archive.nextArchivedSnapshotFrames);
       }
     }
-    *piVar1 = 0;
+    *param_1 = 0;
   }
-  pcVar3 = (cachedSnapshot_t *)0x0;
-LAB_82580318:
-  pcVar3 = (cachedSnapshot_t *)__restgprlr_29(pcVar3);
-  return pcVar3;
+  return (cachedSnapshot_t *)0x0;
 }
 
 
 // 82580320  SV_GetCurrentClientInfo  (server_mp/sv_snapshot_caching.cpp:769)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
@@ -686,33 +669,29 @@ LAB_82580318:
 int SV_GetCurrentClientInfo(int param_1,playerState_s *param_2,clientState_s *param_3)
 
 {
-  uint uVar1;
-  int iVar2;
-  clientState_s *pcVar3;
-  ulonglong uVar4;
+  int iVar1;
+  clientState_s *pcVar2;
   
-  uVar4 = (ulonglong)(int)param_3;
-  uVar1 = __savegprlr_28(param_1);
-  if ((uint)svs.clientCount <= uVar1) {
+  if ((uint)svs.clientCount <= (uint)param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_snapshot_caching.cpp"
                     ,0x304,0,"clientNum doesn\'t index svs.clientCount\n\t%i not in [0, %i)");
   }
-  if ((svs.clients[uVar1].header.state == 5) &&
-     (iVar2 = GetFollowPlayerState(uVar1,param_2), iVar2 != 0)) {
-    if ((uVar4 & 0xffffffff) != 0) {
-      pcVar3 = G_GetClientState(uVar1);
-      Com_Memcpy((void *)uVar4,pcVar3,0xe0);
+  if ((svs.clients[param_1].header.state == 5) &&
+     (iVar1 = GetFollowPlayerState(param_1,param_2), iVar1 != 0)) {
+    if (param_3 != (clientState_s *)0x0) {
+      pcVar2 = G_GetClientState(param_1);
+      Com_Memcpy(param_3,pcVar2,0xe0);
     }
-    iVar2 = __restgprlr_28(1);
-    return iVar2;
+    return 1;
   }
-  iVar2 = __restgprlr_28(0);
-  return iVar2;
+  return 0;
 }
 
 
 // 825803E8  SV_GetClientPositionsFromCachedSnap  (server_mp/sv_snapshot_caching.cpp:785)
 
+/* WARNING: Function: __savegprlr_19 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_19 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
@@ -723,39 +702,40 @@ void SV_GetClientPositionsFromCachedSnap
 {
   int iVar1;
   archivedEntity_s *paVar2;
-  int iVar3;
+  uint uVar3;
   uint uVar4;
-  uint uVar5;
-  double dVar6;
+  double dVar5;
   
-  iVar3 = __savegprlr_19(param_1);
-  uVar5 = 0;
-  if (*(int *)(iVar3 + 8) != 0) {
-    dVar6 = 0.0;
+  uVar4 = 0;
+  if (param_1->num_entities != 0) {
+    dVar5 = 0.0;
     do {
-      if (*(int *)(iVar3 + 0xc) < 0) {
+      if (param_1->first_entity < 0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_snapshot_caching.cpp"
                         ,0x318,0,"%s\n\t(cachedFrame->first_entity) = %i");
       }
       paVar2 = svs.cachedSnapshotEntities;
-      uVar4 = (uVar5 + *(int *)(iVar3 + 0xc)) % 0x2a30;
-      iVar1 = svs.cachedSnapshotEntities[uVar4].s.number;
-      if (0x11 < iVar1) break;
+      uVar3 = (uVar4 + param_1->first_entity) % 0x2a30;
+      iVar1 = svs.cachedSnapshotEntities[uVar3].s.number;
+      if (0x11 < iVar1) {
+        return;
+      }
       param_4[iVar1] = true;
-      BG_EvaluateTrajectory(&paVar2[uVar4].s.lerp.pos,*(int *)(iVar3 + 4),param_2[iVar1]);
-      param_3[iVar1][0] = (float)dVar6;
-      param_3[iVar1][1] = paVar2[uVar4].s.lerp.apos.trBase[1];
-      uVar5 = uVar5 + 1;
-      param_3[iVar1][2] = (float)dVar6;
-    } while (uVar5 < *(uint *)(iVar3 + 8));
+      BG_EvaluateTrajectory(&paVar2[uVar3].s.lerp.pos,param_1->time,param_2[iVar1]);
+      param_3[iVar1][0] = (float)dVar5;
+      param_3[iVar1][1] = paVar2[uVar3].s.lerp.apos.trBase[1];
+      uVar4 = uVar4 + 1;
+      param_3[iVar1][2] = (float)dVar5;
+    } while (uVar4 < (uint)param_1->num_entities);
   }
-  __restgprlr_19();
   return;
 }
 
 
 // 825804F0  SV_GetClientPositionsAtTimeInternal  (server_mp/sv_snapshot_caching.cpp:813)
 
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
@@ -779,16 +759,15 @@ bool SV_GetClientPositionsAtTimeInternal
   uint uVar13;
   cachedSnapshot_t *pcVar14;
   cachedSnapshot_t *pcVar15;
-  undefined1 uVar17;
   cachedSnapshot_t *pcVar16;
+  int iVar17;
   int iVar18;
   int iVar19;
-  int iVar20;
+  double dVar20;
   double dVar21;
   double dVar22;
   double dVar23;
   double dVar24;
-  double dVar25;
   int iStack00000014;
   bool *pbStack0000002c;
   char *local_4cc;
@@ -822,50 +801,47 @@ bool SV_GetClientPositionsAtTimeInternal
   float local_260 [56];
   float local_180 [96];
   
-  __savegprlr();
   iStack00000014 = param_1;
   pbStack0000002c = param_4;
   PIXBeginNamedEvent_Copy_NoVarArgs(0,"SV_GetClientPositionsAtTime(snapshot)");
-  iVar20 = (svs.time - param_1) / 0x32;
-  local_4c8 = (char *)((iVar20 + 2) * 0x32);
-  local_4cc = (char *)((iVar20 + 1) * 0x32);
+  iVar19 = (svs.time - param_1) / 0x32;
+  local_4c8 = (char *)((iVar19 + 2) * 0x32);
+  local_4cc = (char *)((iVar19 + 1) * 0x32);
   pcVar15 = SV_GetCachedSnapshot((int *)&local_4c8);
   local_4c4 = SV_GetCachedSnapshot((int *)&local_4cc);
   if ((pcVar15 == (cachedSnapshot_t *)0x0) && (local_4c4 == (cachedSnapshot_t *)0x0)) {
     PIXEndNamedEvent();
     Com_Printf(0xf,"Failed to get a cached snapshot for antilag - offset is %i\n");
-    uVar17 = 0;
-    __restgprlr();
-    return (bool)uVar17;
+    return false;
   }
-  iVar19 = 1;
+  iVar18 = 1;
   pcVar14 = local_4c4;
   while (local_4c4 = pcVar14, pcVar14 != (cachedSnapshot_t *)0x0) {
     if (param_1 <= pcVar14->time) {
-      if (iVar19 != 1) {
+      if (iVar18 != 1) {
         Com_Printf(0xf,"Adjusted frameEnd by %i snaps. rewindDeltaTime %i, gametime %i.\n");
       }
       break;
     }
-    iVar19 = iVar19 + -1;
-    local_4cc = (char *)((iVar20 + iVar19) * 0x32);
+    iVar18 = iVar18 + -1;
+    local_4cc = (char *)((iVar19 + iVar18) * 0x32);
     pcVar16 = SV_GetCachedSnapshot((int *)&local_4cc);
     pcVar15 = pcVar14;
     pcVar14 = pcVar16;
   }
-  iVar19 = 2;
+  iVar18 = 2;
   while (pcVar15 != (cachedSnapshot_t *)0x0) {
     if (pcVar15->time <= param_1) {
-      if (iVar19 != 2) {
+      if (iVar18 != 2) {
         Com_Printf(0xf,"Adjusted frameStart by %i snaps\n");
       }
       break;
     }
-    iVar19 = iVar19 + 1;
-    local_4c8 = (char *)((iVar20 + iVar19) * 0x32);
+    iVar18 = iVar18 + 1;
+    local_4c8 = (char *)((iVar19 + iVar18) * 0x32);
     pcVar15 = SV_GetCachedSnapshot((int *)&local_4c8);
   }
-  iVar20 = 0;
+  iVar19 = 0;
   local_440[0] = false;
   local_440[1] = false;
   local_440[2] = false;
@@ -925,117 +901,117 @@ bool SV_GetClientPositionsAtTimeInternal
   }
   if (((pcVar15 == (cachedSnapshot_t *)0x0) || (pcVar14 == (cachedSnapshot_t *)0x0)) ||
      (local_4c8 == local_4cc)) {
-    dVar25 = 0.0;
+    dVar24 = 0.0;
   }
   else {
     local_4b8 = (longlong)(pcVar14->time - pcVar15->time);
-    dVar25 = (double)((float)(longlong)(param_1 - pcVar15->time) / (float)local_4b8);
-    if (dVar25 < 0.0) {
+    dVar24 = (double)((float)(longlong)(param_1 - pcVar15->time) / (float)local_4b8);
+    if (dVar24 < 0.0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_snapshot_caching.cpp"
                       ,0x385,0,"%s\n\t(progress) = %g");
     }
-    if (1.0 < dVar25) {
+    if (1.0 < dVar24) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_snapshot_caching.cpp"
                       ,0x386,0,"%s\n\t(progress) = %g");
     }
   }
-  iVar19 = 0;
+  iVar18 = 0;
   local_4c8 = "%i < %i";
   local_4cc = "%i > %i";
   do {
-    iVar18 = iStack00000014;
-    if (local_440[iVar19] == false) {
+    iVar17 = iStack00000014;
+    if (local_440[iVar18] == false) {
 LAB_82580cb0:
-      if (local_460[iVar19] != false) {
-        uVar1 = *(undefined4 *)((int)local_420 + iVar20);
-        uVar2 = *(undefined4 *)((int)local_420 + iVar20 + 4);
-        uVar9 = *(undefined4 *)((int)local_420 + iVar20 + 8);
-        pbStack0000002c[iVar19] = true;
-        uVar10 = *(undefined4 *)((int)local_340 + iVar20);
-        uVar11 = *(undefined4 *)((int)local_340 + iVar20 + 4);
-        uVar12 = *(undefined4 *)((int)local_340 + iVar20 + 8);
-        *(undefined4 *)((int)*param_2 + iVar20) = uVar1;
-        *(undefined4 *)((int)*param_2 + iVar20 + 4) = uVar2;
-        *(undefined4 *)((int)*param_2 + iVar20 + 8) = uVar9;
-        *(undefined4 *)((int)*param_3 + iVar20) = uVar10;
-        *(undefined4 *)((int)*param_3 + iVar20 + 4) = uVar11;
-        *(undefined4 *)((int)*param_3 + iVar20 + 8) = uVar12;
-        local_4a8 = *(uint *)((int)*param_2 + iVar20);
+      if (local_460[iVar18] != false) {
+        uVar1 = *(undefined4 *)((int)local_420 + iVar19);
+        uVar2 = *(undefined4 *)((int)local_420 + iVar19 + 4);
+        uVar9 = *(undefined4 *)((int)local_420 + iVar19 + 8);
+        pbStack0000002c[iVar18] = true;
+        uVar10 = *(undefined4 *)((int)local_340 + iVar19);
+        uVar11 = *(undefined4 *)((int)local_340 + iVar19 + 4);
+        uVar12 = *(undefined4 *)((int)local_340 + iVar19 + 8);
+        *(undefined4 *)((int)*param_2 + iVar19) = uVar1;
+        *(undefined4 *)((int)*param_2 + iVar19 + 4) = uVar2;
+        *(undefined4 *)((int)*param_2 + iVar19 + 8) = uVar9;
+        *(undefined4 *)((int)*param_3 + iVar19) = uVar10;
+        *(undefined4 *)((int)*param_3 + iVar19 + 4) = uVar11;
+        *(undefined4 *)((int)*param_3 + iVar19 + 8) = uVar12;
+        local_4a8 = *(uint *)((int)*param_2 + iVar19);
         if ((local_4a8 & 0x7f800000) == 0x7f800000) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_snapshot_caching.cpp"
                           ,0x3b0,0,"%s");
         }
-        local_4a0 = *(uint *)((int)*param_2 + iVar20 + 4);
+        local_4a0 = *(uint *)((int)*param_2 + iVar19 + 4);
         if ((local_4a0 & 0x7f800000) == 0x7f800000) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_snapshot_caching.cpp"
                           ,0x3b1,0,"%s");
         }
-        local_498 = *(uint *)((int)*param_2 + iVar20 + 8);
+        local_498 = *(uint *)((int)*param_2 + iVar19 + 8);
         if ((local_498 & 0x7f800000) == 0x7f800000) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_snapshot_caching.cpp"
                           ,0x3b2,0,"%s");
         }
-        local_490 = *(uint *)((int)*param_3 + iVar20);
+        local_490 = *(uint *)((int)*param_3 + iVar19);
         if ((local_490 & 0x7f800000) == 0x7f800000) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_snapshot_caching.cpp"
                           ,0x3b3,0,"%s");
         }
-        local_488 = *(uint *)((int)*param_3 + iVar20 + 4);
+        local_488 = *(uint *)((int)*param_3 + iVar19 + 4);
         if ((local_488 & 0x7f800000) == 0x7f800000) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_snapshot_caching.cpp"
                           ,0x3b4,0,"%s");
         }
-        uVar13 = *(uint *)((int)*param_3 + iVar20 + 8);
+        uVar13 = *(uint *)((int)*param_3 + iVar19 + 8);
         local_4b8 = CONCAT44(uVar13,local_4b8._4_4_);
         if ((uVar13 & 0x7f800000) == 0x7f800000) {
-          iVar18 = 0x3b5;
+          iVar17 = 0x3b5;
           goto LAB_82580e20;
         }
       }
     }
-    else if (local_460[iVar19] == false) {
-      if (local_440[iVar19] == false) goto LAB_82580cb0;
-      uVar9 = *(undefined4 *)((int)local_180 + iVar20);
-      uVar1 = *(undefined4 *)((int)local_180 + iVar20 + 4);
-      pbStack0000002c[iVar19] = true;
-      uVar2 = *(undefined4 *)((int)local_180 + iVar20 + 8);
-      uVar10 = *(undefined4 *)((int)local_260 + iVar20);
-      uVar11 = *(undefined4 *)((int)local_260 + iVar20 + 4);
-      uVar12 = *(undefined4 *)((int)local_260 + iVar20 + 8);
-      *(undefined4 *)((int)*param_2 + iVar20) = uVar9;
-      *(undefined4 *)((int)*param_2 + iVar20 + 4) = uVar1;
-      *(undefined4 *)((int)*param_2 + iVar20 + 8) = uVar2;
-      *(undefined4 *)((int)*param_3 + iVar20) = uVar10;
-      *(undefined4 *)((int)*param_3 + iVar20 + 4) = uVar11;
-      *(undefined4 *)((int)*param_3 + iVar20 + 8) = uVar12;
-      local_46c = *(uint *)((int)*param_2 + iVar20);
+    else if (local_460[iVar18] == false) {
+      if (local_440[iVar18] == false) goto LAB_82580cb0;
+      uVar9 = *(undefined4 *)((int)local_180 + iVar19);
+      uVar1 = *(undefined4 *)((int)local_180 + iVar19 + 4);
+      pbStack0000002c[iVar18] = true;
+      uVar2 = *(undefined4 *)((int)local_180 + iVar19 + 8);
+      uVar10 = *(undefined4 *)((int)local_260 + iVar19);
+      uVar11 = *(undefined4 *)((int)local_260 + iVar19 + 4);
+      uVar12 = *(undefined4 *)((int)local_260 + iVar19 + 8);
+      *(undefined4 *)((int)*param_2 + iVar19) = uVar9;
+      *(undefined4 *)((int)*param_2 + iVar19 + 4) = uVar1;
+      *(undefined4 *)((int)*param_2 + iVar19 + 8) = uVar2;
+      *(undefined4 *)((int)*param_3 + iVar19) = uVar10;
+      *(undefined4 *)((int)*param_3 + iVar19 + 4) = uVar11;
+      *(undefined4 *)((int)*param_3 + iVar19 + 8) = uVar12;
+      local_46c = *(uint *)((int)*param_2 + iVar19);
       if ((local_46c & 0x7f800000) == 0x7f800000) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_snapshot_caching.cpp"
                         ,0x3a4,0,"%s");
       }
-      local_48c = *(uint *)((int)*param_2 + iVar20 + 4);
+      local_48c = *(uint *)((int)*param_2 + iVar19 + 4);
       if ((local_48c & 0x7f800000) == 0x7f800000) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_snapshot_caching.cpp"
                         ,0x3a5,0,"%s");
       }
-      local_4b0 = *(uint *)((int)*param_2 + iVar20 + 8);
+      local_4b0 = *(uint *)((int)*param_2 + iVar19 + 8);
       if ((local_4b0 & 0x7f800000) == 0x7f800000) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_snapshot_caching.cpp"
                         ,0x3a6,0,"%s");
       }
-      local_484 = *(uint *)((int)*param_3 + iVar20);
+      local_484 = *(uint *)((int)*param_3 + iVar19);
       if ((local_484 & 0x7f800000) == 0x7f800000) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_snapshot_caching.cpp"
                         ,0x3a7,0,"%s");
       }
-      local_470 = *(uint *)((int)*param_3 + iVar20 + 4);
+      local_470 = *(uint *)((int)*param_3 + iVar19 + 4);
       if ((local_470 & 0x7f800000) == 0x7f800000) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_snapshot_caching.cpp"
                         ,0x3a8,0,"%s");
       }
-      local_4ac = *(uint *)((int)*param_3 + iVar20 + 8);
+      local_4ac = *(uint *)((int)*param_3 + iVar19 + 8);
       if ((local_4ac & 0x7f800000) == 0x7f800000) {
-        iVar18 = 0x3a9;
+        iVar17 = 0x3a9;
         goto LAB_82580e20;
       }
     }
@@ -1045,76 +1021,74 @@ LAB_82580cb0:
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_snapshot_caching.cpp"
                         ,0x393,0,local_4c0);
       }
-      if (local_4c4->time < iVar18) {
+      if (local_4c4->time < iVar17) {
         va(local_4c8);
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_snapshot_caching.cpp"
                         ,0x394,0,local_4c0);
       }
-      pbStack0000002c[iVar19] = true;
-      dVar21 = (double)*(float *)((int)local_180 + iVar20 + 4);
-      fVar3 = *(float *)((int)local_420 + iVar20 + 4);
-      fVar4 = *(float *)((int)local_420 + iVar20 + 8);
-      dVar24 = (double)*(float *)((int)local_180 + iVar20 + 8);
-      fVar5 = *(float *)((int)local_260 + iVar20);
-      dVar23 = (double)*(float *)((int)local_260 + iVar20 + 4);
-      fVar6 = *(float *)((int)local_340 + iVar20);
-      fVar7 = *(float *)((int)local_340 + iVar20 + 4);
-      dVar22 = (double)*(float *)((int)local_260 + iVar20 + 8);
-      fVar8 = *(float *)((int)local_340 + iVar20 + 8);
-      *(float *)((int)*param_2 + iVar20) =
-           (float)((double)(float)((double)*(float *)((int)local_420 + iVar20) -
-                                  (double)*(float *)((int)local_180 + iVar20)) * dVar25 +
-                  (double)*(float *)((int)local_180 + iVar20));
-      *(float *)((int)*param_2 + iVar20 + 4) =
-           (float)((double)(float)((double)fVar3 - dVar21) * dVar25 + dVar21);
-      *(float *)((int)*param_2 + iVar20 + 8) =
-           (float)((double)(float)((double)fVar4 - dVar24) * dVar25 + dVar24);
-      *(float *)((int)*param_3 + iVar20) =
-           (float)((double)(float)((double)fVar6 - (double)fVar5) * dVar25 + (double)fVar5);
-      *(float *)((int)*param_3 + iVar20 + 4) =
-           (float)((double)(float)((double)fVar7 - dVar23) * dVar25 + dVar23);
-      *(float *)((int)*param_3 + iVar20 + 8) =
-           (float)((double)(float)((double)fVar8 - dVar22) * dVar25 + dVar22);
-      local_47c = *(uint *)((int)*param_2 + iVar20);
+      pbStack0000002c[iVar18] = true;
+      dVar20 = (double)*(float *)((int)local_180 + iVar19 + 4);
+      fVar3 = *(float *)((int)local_420 + iVar19 + 4);
+      fVar4 = *(float *)((int)local_420 + iVar19 + 8);
+      dVar23 = (double)*(float *)((int)local_180 + iVar19 + 8);
+      fVar5 = *(float *)((int)local_260 + iVar19);
+      dVar22 = (double)*(float *)((int)local_260 + iVar19 + 4);
+      fVar6 = *(float *)((int)local_340 + iVar19);
+      fVar7 = *(float *)((int)local_340 + iVar19 + 4);
+      dVar21 = (double)*(float *)((int)local_260 + iVar19 + 8);
+      fVar8 = *(float *)((int)local_340 + iVar19 + 8);
+      *(float *)((int)*param_2 + iVar19) =
+           (float)((double)(float)((double)*(float *)((int)local_420 + iVar19) -
+                                  (double)*(float *)((int)local_180 + iVar19)) * dVar24 +
+                  (double)*(float *)((int)local_180 + iVar19));
+      *(float *)((int)*param_2 + iVar19 + 4) =
+           (float)((double)(float)((double)fVar3 - dVar20) * dVar24 + dVar20);
+      *(float *)((int)*param_2 + iVar19 + 8) =
+           (float)((double)(float)((double)fVar4 - dVar23) * dVar24 + dVar23);
+      *(float *)((int)*param_3 + iVar19) =
+           (float)((double)(float)((double)fVar6 - (double)fVar5) * dVar24 + (double)fVar5);
+      *(float *)((int)*param_3 + iVar19 + 4) =
+           (float)((double)(float)((double)fVar7 - dVar22) * dVar24 + dVar22);
+      *(float *)((int)*param_3 + iVar19 + 8) =
+           (float)((double)(float)((double)fVar8 - dVar21) * dVar24 + dVar21);
+      local_47c = *(uint *)((int)*param_2 + iVar19);
       if ((local_47c & 0x7f800000) == 0x7f800000) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_snapshot_caching.cpp"
                         ,0x398,0,"%s");
       }
-      local_4a4 = *(uint *)((int)*param_2 + iVar20 + 4);
+      local_4a4 = *(uint *)((int)*param_2 + iVar19 + 4);
       if ((local_4a4 & 0x7f800000) == 0x7f800000) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_snapshot_caching.cpp"
                         ,0x399,0,"%s");
       }
-      local_468 = *(uint *)((int)*param_2 + iVar20 + 8);
+      local_468 = *(uint *)((int)*param_2 + iVar19 + 8);
       if ((local_468 & 0x7f800000) == 0x7f800000) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_snapshot_caching.cpp"
                         ,0x39a,0,"%s");
       }
-      local_49c = *(uint *)((int)*param_3 + iVar20);
+      local_49c = *(uint *)((int)*param_3 + iVar19);
       if ((local_49c & 0x7f800000) == 0x7f800000) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_snapshot_caching.cpp"
                         ,0x39b,0,"%s");
       }
-      local_474 = *(uint *)((int)*param_3 + iVar20 + 4);
+      local_474 = *(uint *)((int)*param_3 + iVar19 + 4);
       if ((local_474 & 0x7f800000) == 0x7f800000) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_snapshot_caching.cpp"
                         ,0x39c,0,"%s");
       }
-      local_494 = *(uint *)((int)*param_3 + iVar20 + 8);
+      local_494 = *(uint *)((int)*param_3 + iVar19 + 8);
       if ((local_494 & 0x7f800000) == 0x7f800000) {
-        iVar18 = 0x39d;
+        iVar17 = 0x39d;
 LAB_82580e20:
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_snapshot_caching.cpp"
-                        ,iVar18,0,"%s");
+                        ,iVar17,0,"%s");
       }
     }
-    iVar20 = iVar20 + 0xc;
-    iVar19 = iVar19 + 1;
-    if (0xd7 < iVar20) {
+    iVar19 = iVar19 + 0xc;
+    iVar18 = iVar18 + 1;
+    if (0xd7 < iVar19) {
       PIXEndNamedEvent();
-      uVar17 = 1;
-      __restgprlr();
-      return (bool)uVar17;
+      return true;
     }
   } while( true );
 }
@@ -1122,6 +1096,8 @@ LAB_82580e20:
 
 // 82580E60  SV_GetClientPositionsAtTime  (server_mp/sv_snapshot_caching.cpp:1085)
 
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
@@ -1145,16 +1121,15 @@ bool SV_GetClientPositionsAtTime(int param_1,float *param_2,float *param_3,bool 
   uint uVar13;
   cachedSnapshot_t *pcVar14;
   cachedSnapshot_t *pcVar15;
-  undefined1 uVar17;
   cachedSnapshot_t *pcVar16;
+  int iVar17;
   int iVar18;
   int iVar19;
-  int iVar20;
+  double dVar20;
   double dVar21;
   double dVar22;
   double dVar23;
   double dVar24;
-  double dVar25;
   int iStack00000014;
   bool *pbStack0000002c;
   char *pcStack_4cc;
@@ -1188,50 +1163,47 @@ bool SV_GetClientPositionsAtTime(int param_1,float *param_2,float *param_3,bool 
   float afStack_260 [56];
   float afStack_180 [96];
   
-  __savegprlr();
   iStack00000014 = param_1;
   pbStack0000002c = param_4;
   PIXBeginNamedEvent_Copy_NoVarArgs(0,"SV_GetClientPositionsAtTime(snapshot)");
-  iVar20 = (svs.time - param_1) / 0x32;
-  pcStack_4c8 = (char *)((iVar20 + 2) * 0x32);
-  pcStack_4cc = (char *)((iVar20 + 1) * 0x32);
+  iVar19 = (svs.time - param_1) / 0x32;
+  pcStack_4c8 = (char *)((iVar19 + 2) * 0x32);
+  pcStack_4cc = (char *)((iVar19 + 1) * 0x32);
   pcVar15 = SV_GetCachedSnapshot((int *)&pcStack_4c8);
   pcStack_4c4 = SV_GetCachedSnapshot((int *)&pcStack_4cc);
   if ((pcVar15 == (cachedSnapshot_t *)0x0) && (pcStack_4c4 == (cachedSnapshot_t *)0x0)) {
     PIXEndNamedEvent();
     Com_Printf(0xf,"Failed to get a cached snapshot for antilag - offset is %i\n");
-    uVar17 = 0;
-    __restgprlr();
-    return (bool)uVar17;
+    return false;
   }
-  iVar19 = 1;
+  iVar18 = 1;
   pcVar14 = pcStack_4c4;
   while (pcStack_4c4 = pcVar14, pcVar14 != (cachedSnapshot_t *)0x0) {
     if (param_1 <= pcVar14->time) {
-      if (iVar19 != 1) {
+      if (iVar18 != 1) {
         Com_Printf(0xf,"Adjusted frameEnd by %i snaps. rewindDeltaTime %i, gametime %i.\n");
       }
       break;
     }
-    iVar19 = iVar19 + -1;
-    pcStack_4cc = (char *)((iVar20 + iVar19) * 0x32);
+    iVar18 = iVar18 + -1;
+    pcStack_4cc = (char *)((iVar19 + iVar18) * 0x32);
     pcVar16 = SV_GetCachedSnapshot((int *)&pcStack_4cc);
     pcVar15 = pcVar14;
     pcVar14 = pcVar16;
   }
-  iVar19 = 2;
+  iVar18 = 2;
   while (pcVar15 != (cachedSnapshot_t *)0x0) {
     if (pcVar15->time <= param_1) {
-      if (iVar19 != 2) {
+      if (iVar18 != 2) {
         Com_Printf(0xf,"Adjusted frameStart by %i snaps\n");
       }
       break;
     }
-    iVar19 = iVar19 + 1;
-    pcStack_4c8 = (char *)((iVar20 + iVar19) * 0x32);
+    iVar18 = iVar18 + 1;
+    pcStack_4c8 = (char *)((iVar19 + iVar18) * 0x32);
     pcVar15 = SV_GetCachedSnapshot((int *)&pcStack_4c8);
   }
-  iVar20 = 0;
+  iVar19 = 0;
   abStack_440[0] = false;
   abStack_440[1] = false;
   abStack_440[2] = false;
@@ -1291,117 +1263,117 @@ bool SV_GetClientPositionsAtTime(int param_1,float *param_2,float *param_3,bool 
   }
   if (((pcVar15 == (cachedSnapshot_t *)0x0) || (pcVar14 == (cachedSnapshot_t *)0x0)) ||
      (pcStack_4c8 == pcStack_4cc)) {
-    dVar25 = 0.0;
+    dVar24 = 0.0;
   }
   else {
     lStack_4b8 = (longlong)(pcVar14->time - pcVar15->time);
-    dVar25 = (double)((float)(longlong)(param_1 - pcVar15->time) / (float)lStack_4b8);
-    if (dVar25 < 0.0) {
+    dVar24 = (double)((float)(longlong)(param_1 - pcVar15->time) / (float)lStack_4b8);
+    if (dVar24 < 0.0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_snapshot_caching.cpp"
                       ,0x385,0,"%s\n\t(progress) = %g");
     }
-    if (1.0 < dVar25) {
+    if (1.0 < dVar24) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_snapshot_caching.cpp"
                       ,0x386,0,"%s\n\t(progress) = %g");
     }
   }
-  iVar19 = 0;
+  iVar18 = 0;
   pcStack_4c8 = "%i < %i";
   pcStack_4cc = "%i > %i";
   do {
-    iVar18 = iStack00000014;
-    if (abStack_440[iVar19] == false) {
+    iVar17 = iStack00000014;
+    if (abStack_440[iVar18] == false) {
 LAB_82580cb0:
-      if (abStack_460[iVar19] != false) {
-        uVar1 = *(undefined4 *)((int)afStack_420 + iVar20);
-        uVar2 = *(undefined4 *)((int)afStack_420 + iVar20 + 4);
-        uVar9 = *(undefined4 *)((int)afStack_420 + iVar20 + 8);
-        pbStack0000002c[iVar19] = true;
-        uVar10 = *(undefined4 *)((int)afStack_340 + iVar20);
-        uVar11 = *(undefined4 *)((int)afStack_340 + iVar20 + 4);
-        uVar12 = *(undefined4 *)((int)afStack_340 + iVar20 + 8);
-        *(undefined4 *)(iVar20 + (int)param_2) = uVar1;
-        *(undefined4 *)((int)param_2 + iVar20 + 4) = uVar2;
-        *(undefined4 *)((int)param_2 + iVar20 + 8) = uVar9;
-        *(undefined4 *)(iVar20 + (int)param_3) = uVar10;
-        *(undefined4 *)((int)param_3 + iVar20 + 4) = uVar11;
-        *(undefined4 *)((int)param_3 + iVar20 + 8) = uVar12;
-        uStack_4a8 = *(uint *)(iVar20 + (int)param_2);
+      if (abStack_460[iVar18] != false) {
+        uVar1 = *(undefined4 *)((int)afStack_420 + iVar19);
+        uVar2 = *(undefined4 *)((int)afStack_420 + iVar19 + 4);
+        uVar9 = *(undefined4 *)((int)afStack_420 + iVar19 + 8);
+        pbStack0000002c[iVar18] = true;
+        uVar10 = *(undefined4 *)((int)afStack_340 + iVar19);
+        uVar11 = *(undefined4 *)((int)afStack_340 + iVar19 + 4);
+        uVar12 = *(undefined4 *)((int)afStack_340 + iVar19 + 8);
+        *(undefined4 *)(iVar19 + (int)param_2) = uVar1;
+        *(undefined4 *)((int)param_2 + iVar19 + 4) = uVar2;
+        *(undefined4 *)((int)param_2 + iVar19 + 8) = uVar9;
+        *(undefined4 *)(iVar19 + (int)param_3) = uVar10;
+        *(undefined4 *)((int)param_3 + iVar19 + 4) = uVar11;
+        *(undefined4 *)((int)param_3 + iVar19 + 8) = uVar12;
+        uStack_4a8 = *(uint *)(iVar19 + (int)param_2);
         if ((uStack_4a8 & 0x7f800000) == 0x7f800000) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_snapshot_caching.cpp"
                           ,0x3b0,0,"%s");
         }
-        uStack_4a0 = *(uint *)((int)param_2 + iVar20 + 4);
+        uStack_4a0 = *(uint *)((int)param_2 + iVar19 + 4);
         if ((uStack_4a0 & 0x7f800000) == 0x7f800000) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_snapshot_caching.cpp"
                           ,0x3b1,0,"%s");
         }
-        uStack_498 = *(uint *)((int)param_2 + iVar20 + 8);
+        uStack_498 = *(uint *)((int)param_2 + iVar19 + 8);
         if ((uStack_498 & 0x7f800000) == 0x7f800000) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_snapshot_caching.cpp"
                           ,0x3b2,0,"%s");
         }
-        uStack_490 = *(uint *)(iVar20 + (int)param_3);
+        uStack_490 = *(uint *)(iVar19 + (int)param_3);
         if ((uStack_490 & 0x7f800000) == 0x7f800000) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_snapshot_caching.cpp"
                           ,0x3b3,0,"%s");
         }
-        uStack_488 = *(uint *)((int)param_3 + iVar20 + 4);
+        uStack_488 = *(uint *)((int)param_3 + iVar19 + 4);
         if ((uStack_488 & 0x7f800000) == 0x7f800000) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_snapshot_caching.cpp"
                           ,0x3b4,0,"%s");
         }
-        uVar13 = *(uint *)((int)param_3 + iVar20 + 8);
+        uVar13 = *(uint *)((int)param_3 + iVar19 + 8);
         lStack_4b8 = CONCAT44(uVar13,lStack_4b8._4_4_);
         if ((uVar13 & 0x7f800000) == 0x7f800000) {
-          iVar18 = 0x3b5;
+          iVar17 = 0x3b5;
           goto LAB_82580e20;
         }
       }
     }
-    else if (abStack_460[iVar19] == false) {
-      if (abStack_440[iVar19] == false) goto LAB_82580cb0;
-      uVar9 = *(undefined4 *)((int)afStack_180 + iVar20);
-      uVar1 = *(undefined4 *)((int)afStack_180 + iVar20 + 4);
-      pbStack0000002c[iVar19] = true;
-      uVar2 = *(undefined4 *)((int)afStack_180 + iVar20 + 8);
-      uVar10 = *(undefined4 *)((int)afStack_260 + iVar20);
-      uVar11 = *(undefined4 *)((int)afStack_260 + iVar20 + 4);
-      uVar12 = *(undefined4 *)((int)afStack_260 + iVar20 + 8);
-      *(undefined4 *)(iVar20 + (int)param_2) = uVar9;
-      *(undefined4 *)((int)param_2 + iVar20 + 4) = uVar1;
-      *(undefined4 *)((int)param_2 + iVar20 + 8) = uVar2;
-      *(undefined4 *)(iVar20 + (int)param_3) = uVar10;
-      *(undefined4 *)((int)param_3 + iVar20 + 4) = uVar11;
-      *(undefined4 *)((int)param_3 + iVar20 + 8) = uVar12;
-      uStack_46c = *(uint *)(iVar20 + (int)param_2);
+    else if (abStack_460[iVar18] == false) {
+      if (abStack_440[iVar18] == false) goto LAB_82580cb0;
+      uVar9 = *(undefined4 *)((int)afStack_180 + iVar19);
+      uVar1 = *(undefined4 *)((int)afStack_180 + iVar19 + 4);
+      pbStack0000002c[iVar18] = true;
+      uVar2 = *(undefined4 *)((int)afStack_180 + iVar19 + 8);
+      uVar10 = *(undefined4 *)((int)afStack_260 + iVar19);
+      uVar11 = *(undefined4 *)((int)afStack_260 + iVar19 + 4);
+      uVar12 = *(undefined4 *)((int)afStack_260 + iVar19 + 8);
+      *(undefined4 *)(iVar19 + (int)param_2) = uVar9;
+      *(undefined4 *)((int)param_2 + iVar19 + 4) = uVar1;
+      *(undefined4 *)((int)param_2 + iVar19 + 8) = uVar2;
+      *(undefined4 *)(iVar19 + (int)param_3) = uVar10;
+      *(undefined4 *)((int)param_3 + iVar19 + 4) = uVar11;
+      *(undefined4 *)((int)param_3 + iVar19 + 8) = uVar12;
+      uStack_46c = *(uint *)(iVar19 + (int)param_2);
       if ((uStack_46c & 0x7f800000) == 0x7f800000) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_snapshot_caching.cpp"
                         ,0x3a4,0,"%s");
       }
-      uStack_48c = *(uint *)((int)param_2 + iVar20 + 4);
+      uStack_48c = *(uint *)((int)param_2 + iVar19 + 4);
       if ((uStack_48c & 0x7f800000) == 0x7f800000) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_snapshot_caching.cpp"
                         ,0x3a5,0,"%s");
       }
-      uStack_4b0 = *(uint *)((int)param_2 + iVar20 + 8);
+      uStack_4b0 = *(uint *)((int)param_2 + iVar19 + 8);
       if ((uStack_4b0 & 0x7f800000) == 0x7f800000) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_snapshot_caching.cpp"
                         ,0x3a6,0,"%s");
       }
-      uStack_484 = *(uint *)(iVar20 + (int)param_3);
+      uStack_484 = *(uint *)(iVar19 + (int)param_3);
       if ((uStack_484 & 0x7f800000) == 0x7f800000) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_snapshot_caching.cpp"
                         ,0x3a7,0,"%s");
       }
-      uStack_470 = *(uint *)((int)param_3 + iVar20 + 4);
+      uStack_470 = *(uint *)((int)param_3 + iVar19 + 4);
       if ((uStack_470 & 0x7f800000) == 0x7f800000) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_snapshot_caching.cpp"
                         ,0x3a8,0,"%s");
       }
-      uStack_4ac = *(uint *)((int)param_3 + iVar20 + 8);
+      uStack_4ac = *(uint *)((int)param_3 + iVar19 + 8);
       if ((uStack_4ac & 0x7f800000) == 0x7f800000) {
-        iVar18 = 0x3a9;
+        iVar17 = 0x3a9;
         goto LAB_82580e20;
       }
     }
@@ -1411,76 +1383,74 @@ LAB_82580cb0:
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_snapshot_caching.cpp"
                         ,0x393,0,pcStack_4c0);
       }
-      if (pcStack_4c4->time < iVar18) {
+      if (pcStack_4c4->time < iVar17) {
         va(pcStack_4c8);
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_snapshot_caching.cpp"
                         ,0x394,0,pcStack_4c0);
       }
-      pbStack0000002c[iVar19] = true;
-      dVar21 = (double)*(float *)((int)afStack_180 + iVar20 + 4);
-      fVar3 = *(float *)((int)afStack_420 + iVar20 + 4);
-      fVar4 = *(float *)((int)afStack_420 + iVar20 + 8);
-      dVar24 = (double)*(float *)((int)afStack_180 + iVar20 + 8);
-      fVar5 = *(float *)((int)afStack_260 + iVar20);
-      dVar23 = (double)*(float *)((int)afStack_260 + iVar20 + 4);
-      fVar6 = *(float *)((int)afStack_340 + iVar20);
-      fVar7 = *(float *)((int)afStack_340 + iVar20 + 4);
-      dVar22 = (double)*(float *)((int)afStack_260 + iVar20 + 8);
-      fVar8 = *(float *)((int)afStack_340 + iVar20 + 8);
-      *(float *)(iVar20 + (int)param_2) =
-           (float)((double)(float)((double)*(float *)((int)afStack_420 + iVar20) -
-                                  (double)*(float *)((int)afStack_180 + iVar20)) * dVar25 +
-                  (double)*(float *)((int)afStack_180 + iVar20));
-      *(float *)((int)param_2 + iVar20 + 4) =
-           (float)((double)(float)((double)fVar3 - dVar21) * dVar25 + dVar21);
-      *(float *)((int)param_2 + iVar20 + 8) =
-           (float)((double)(float)((double)fVar4 - dVar24) * dVar25 + dVar24);
-      *(float *)(iVar20 + (int)param_3) =
-           (float)((double)(float)((double)fVar6 - (double)fVar5) * dVar25 + (double)fVar5);
-      *(float *)((int)param_3 + iVar20 + 4) =
-           (float)((double)(float)((double)fVar7 - dVar23) * dVar25 + dVar23);
-      *(float *)((int)param_3 + iVar20 + 8) =
-           (float)((double)(float)((double)fVar8 - dVar22) * dVar25 + dVar22);
-      uStack_47c = *(uint *)(iVar20 + (int)param_2);
+      pbStack0000002c[iVar18] = true;
+      dVar20 = (double)*(float *)((int)afStack_180 + iVar19 + 4);
+      fVar3 = *(float *)((int)afStack_420 + iVar19 + 4);
+      fVar4 = *(float *)((int)afStack_420 + iVar19 + 8);
+      dVar23 = (double)*(float *)((int)afStack_180 + iVar19 + 8);
+      fVar5 = *(float *)((int)afStack_260 + iVar19);
+      dVar22 = (double)*(float *)((int)afStack_260 + iVar19 + 4);
+      fVar6 = *(float *)((int)afStack_340 + iVar19);
+      fVar7 = *(float *)((int)afStack_340 + iVar19 + 4);
+      dVar21 = (double)*(float *)((int)afStack_260 + iVar19 + 8);
+      fVar8 = *(float *)((int)afStack_340 + iVar19 + 8);
+      *(float *)(iVar19 + (int)param_2) =
+           (float)((double)(float)((double)*(float *)((int)afStack_420 + iVar19) -
+                                  (double)*(float *)((int)afStack_180 + iVar19)) * dVar24 +
+                  (double)*(float *)((int)afStack_180 + iVar19));
+      *(float *)((int)param_2 + iVar19 + 4) =
+           (float)((double)(float)((double)fVar3 - dVar20) * dVar24 + dVar20);
+      *(float *)((int)param_2 + iVar19 + 8) =
+           (float)((double)(float)((double)fVar4 - dVar23) * dVar24 + dVar23);
+      *(float *)(iVar19 + (int)param_3) =
+           (float)((double)(float)((double)fVar6 - (double)fVar5) * dVar24 + (double)fVar5);
+      *(float *)((int)param_3 + iVar19 + 4) =
+           (float)((double)(float)((double)fVar7 - dVar22) * dVar24 + dVar22);
+      *(float *)((int)param_3 + iVar19 + 8) =
+           (float)((double)(float)((double)fVar8 - dVar21) * dVar24 + dVar21);
+      uStack_47c = *(uint *)(iVar19 + (int)param_2);
       if ((uStack_47c & 0x7f800000) == 0x7f800000) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_snapshot_caching.cpp"
                         ,0x398,0,"%s");
       }
-      uStack_4a4 = *(uint *)((int)param_2 + iVar20 + 4);
+      uStack_4a4 = *(uint *)((int)param_2 + iVar19 + 4);
       if ((uStack_4a4 & 0x7f800000) == 0x7f800000) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_snapshot_caching.cpp"
                         ,0x399,0,"%s");
       }
-      uStack_468 = *(uint *)((int)param_2 + iVar20 + 8);
+      uStack_468 = *(uint *)((int)param_2 + iVar19 + 8);
       if ((uStack_468 & 0x7f800000) == 0x7f800000) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_snapshot_caching.cpp"
                         ,0x39a,0,"%s");
       }
-      uStack_49c = *(uint *)(iVar20 + (int)param_3);
+      uStack_49c = *(uint *)(iVar19 + (int)param_3);
       if ((uStack_49c & 0x7f800000) == 0x7f800000) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_snapshot_caching.cpp"
                         ,0x39b,0,"%s");
       }
-      uStack_474 = *(uint *)((int)param_3 + iVar20 + 4);
+      uStack_474 = *(uint *)((int)param_3 + iVar19 + 4);
       if ((uStack_474 & 0x7f800000) == 0x7f800000) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_snapshot_caching.cpp"
                         ,0x39c,0,"%s");
       }
-      uStack_494 = *(uint *)((int)param_3 + iVar20 + 8);
+      uStack_494 = *(uint *)((int)param_3 + iVar19 + 8);
       if ((uStack_494 & 0x7f800000) == 0x7f800000) {
-        iVar18 = 0x39d;
+        iVar17 = 0x39d;
 LAB_82580e20:
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_snapshot_caching.cpp"
-                        ,iVar18,0,"%s");
+                        ,iVar17,0,"%s");
       }
     }
-    iVar20 = iVar20 + 0xc;
-    iVar19 = iVar19 + 1;
-    if (0xd7 < iVar20) {
+    iVar19 = iVar19 + 0xc;
+    iVar18 = iVar18 + 1;
+    if (0xd7 < iVar19) {
       PIXEndNamedEvent();
-      uVar17 = 1;
-      __restgprlr();
-      return (bool)uVar17;
+      return true;
     }
   } while( true );
 }
@@ -1488,6 +1458,8 @@ LAB_82580e20:
 
 // 82581580  SV_GetEarliestArchivedClientInfoTime  (server_mp/sv_snapshot_caching.cpp:1148)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
@@ -1498,11 +1470,10 @@ int SV_GetEarliestArchivedClientInfoTime(void)
 {
   bool bVar4;
   uchar *puVar1;
-  int iVar2;
-  cachedSnapshot_t *pcVar3;
+  cachedSnapshot_t *pcVar2;
   ulonglong uVar5;
+  int iVar3;
   
-  __savegprlr_26();
   bVar4 = SV_Loaded();
   if (!bVar4) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_snapshot_caching.cpp"
@@ -1510,35 +1481,35 @@ int SV_GetEarliestArchivedClientInfoTime(void)
   }
   puVar1 = Migration_GetBuffer();
   if (puVar1 != (uchar *)0x0) {
-    iVar2 = __restgprlr_26(0);
-    return iVar2;
+    return 0;
   }
   uVar5 = (((ulonglong)(uint)svs.archive.nextArchivedSnapshotFrames - 0x4b0 & 0xffffffff) >> 0x1f) -
           1 & (ulonglong)(uint)svs.archive.nextArchivedSnapshotFrames - 0x4b0;
-  iVar2 = (int)uVar5;
-  if (iVar2 < svs.archive.nextArchivedSnapshotFrames) {
+  iVar3 = (int)uVar5;
+  if (iVar3 < svs.archive.nextArchivedSnapshotFrames) {
     do {
-      iVar2 = (int)uVar5;
-      pcVar3 = SV_GetCachedSnapshotInternal(iVar2,0,false);
-      bVar4 = SV_HasCachedSnapshotInternal(iVar2,0);
-      if (bVar4 != (pcVar3 != (cachedSnapshot_t *)0x0)) {
+      iVar3 = (int)uVar5;
+      pcVar2 = SV_GetCachedSnapshotInternal(iVar3,0,false);
+      bVar4 = SV_HasCachedSnapshotInternal(iVar3,0);
+      if (bVar4 != (pcVar2 != (cachedSnapshot_t *)0x0)) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_snapshot_caching.cpp"
                         ,0x489,0,"%s");
       }
-      bVar4 = SV_HasCachedSnapshotInternal(iVar2,0);
+      bVar4 = SV_HasCachedSnapshotInternal(iVar3,0);
       if (bVar4) break;
       uVar5 = uVar5 + 1;
-      iVar2 = (int)uVar5;
-    } while (iVar2 < svs.archive.nextArchivedSnapshotFrames);
+      iVar3 = (int)uVar5;
+    } while (iVar3 < svs.archive.nextArchivedSnapshotFrames);
   }
-  svs.oldestArchiveTime = (svs.archive.nextArchivedSnapshotFrames - iVar2) * 0x32;
-  iVar2 = __restgprlr_26();
-  return iVar2;
+  svs.oldestArchiveTime = (svs.archive.nextArchivedSnapshotFrames - iVar3) * 0x32;
+  return svs.oldestArchiveTime;
 }
 
 
 // 82580E68  SV_GetArchivedClientInfo  (server_mp/sv_snapshot_caching.cpp:1174)
 
+/* WARNING: Function: __savegprlr_20 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_20 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
@@ -1550,74 +1521,56 @@ int SV_GetArchivedClientInfo
 {
   float fVar1;
   float fVar2;
-  float *pfVar3;
-  int *piVar4;
-  cachedClient_s *pcVar5;
+  cachedClient_s *pcVar3;
+  cachedSnapshot_t *pcVar4;
+  int iVar5;
   int iVar6;
-  cachedSnapshot_t *pcVar7;
-  int *piVar8;
+  int iVar7;
+  uint uVar8;
   playerState_s *ppVar9;
-  ulonglong uVar10;
-  ulonglong uVar11;
-  ulonglong uVar12;
-  int iVar13;
-  ulonglong uVar14;
-  ulonglong uVar15;
-  uint uVar16;
-  int iVar17;
-  ulonglong uVar18;
-  longlong lVar19;
+  int *piVar10;
+  playerState_s pStack_33f0;
   
-  uVar15 = (ulonglong)(int)param_7;
-  uVar14 = (ulonglong)(int)param_6;
-  uVar12 = (ulonglong)(int)param_5;
-  uVar11 = (ulonglong)(int)param_4;
-  uVar10 = (ulonglong)(int)param_3;
-  iVar6 = __savegprlr_20(param_1);
-  if ((uVar14 & 0xffffffff) == 0) {
+  if (param_6 == (int *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_snapshot_caching.cpp"
                     ,0x49c,0,"%s");
   }
-  if ((uVar15 & 0xffffffff) == 0) {
+  if (param_7 == (int *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_snapshot_caching.cpp"
                     ,0x49d,0,"%s");
   }
-  if ((uVar10 & 0x7f) != 0) {
+  if (((uint)param_3 & 0x7f) != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_snapshot_caching.cpp"
                     ,0x4a0,0,"%s");
   }
   Profile_Begin(0xfa);
-  pcVar7 = SV_GetCachedSnapshot(param_2);
-  pfVar3 = (float *)uVar12;
-  if (pcVar7 == (cachedSnapshot_t *)0x0) {
-    uVar18 = (-(ZEXT48(&stack0x00000000) - 0x33f0) & 0x7f) + (ZEXT48(&stack0x00000000) - 0x33f0);
-    if ((uVar18 & 0x7f) != 0) {
+  pcVar4 = SV_GetCachedSnapshot(param_2);
+  if (pcVar4 == (cachedSnapshot_t *)0x0) {
+    ppVar9 = (playerState_s *)((int)pStack_33f0.origin + ((-(int)&pStack_33f0 & 0x7fU) - 0x1c));
+    if (((uint)ppVar9 & 0x7f) != 0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_snapshot_caching.cpp"
                       ,0x4a8,0,"%s");
     }
-    if ((uVar10 & 0xffffffff) == 0) {
-      uVar10 = uVar18;
+    if (param_3 == (playerState_s *)0x0) {
+      param_3 = ppVar9;
     }
     Profile_EndInternal((double *)0x0);
-    if ((uVar10 & 0xffffffff) == 0) {
+    if (param_3 == (playerState_s *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_snapshot_caching.cpp"
                       ,0x4ad,0,"%s");
     }
-    if ((*param_2 < 1) &&
-       (ppVar9 = (playerState_s *)uVar10,
-       iVar6 = SV_GetCurrentClientInfo(iVar6,ppVar9,(clientState_s *)uVar11), iVar6 != 0)) {
-      iVar6 = ppVar9->otherFlags;
-      *(int *)uVar14 = ppVar9->stats[0];
-      *(int *)uVar15 = iVar6;
-      if ((uVar12 & 0xffffffff) != 0) {
-        fVar1 = ppVar9->origin[1];
-        fVar2 = ppVar9->origin[2];
-        *pfVar3 = ppVar9->origin[0];
-        pfVar3[1] = fVar1;
-        pfVar3[2] = fVar2;
+    if ((*param_2 < 1) && (iVar5 = SV_GetCurrentClientInfo(param_1,param_3,param_4), iVar5 != 0)) {
+      iVar5 = param_3->otherFlags;
+      *param_6 = param_3->stats[0];
+      *param_7 = iVar5;
+      if (param_5 != (float *)0x0) {
+        fVar1 = param_3->origin[1];
+        fVar2 = param_3->origin[2];
+        *param_5 = param_3->origin[0];
+        param_5[1] = fVar1;
+        param_5[2] = fVar2;
       }
-      iVar6 = __restgprlr_20(1);
-      return iVar6;
+      return 1;
     }
   }
   else {
@@ -1625,93 +1578,89 @@ int SV_GetArchivedClientInfo
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_snapshot_caching.cpp"
                       ,0x4b9,0,"%s");
     }
-    uVar16 = 0;
-    iVar17 = svs.time - pcVar7->time;
-    if (pcVar7->num_clients != 0) {
+    uVar8 = 0;
+    iVar5 = svs.time - pcVar4->time;
+    if (pcVar4->num_clients != 0) {
       do {
-        pcVar5 = svs.cachedSnapshotClients + (pcVar7->first_client + uVar16) % 0x144;
-        if ((pcVar5->cs).clientIndex == iVar6) {
-          if (pcVar5->playerStateExists != 0) {
-            if (((pcVar5->ps).otherFlags & 0x1000U) == 0) {
+        pcVar3 = svs.cachedSnapshotClients + (pcVar4->first_client + uVar8) % 0x144;
+        if ((pcVar3->cs).clientIndex == param_1) {
+          if (pcVar3->playerStateExists != 0) {
+            if (((pcVar3->ps).otherFlags & 0x1000U) == 0) {
               MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_snapshot_caching.cpp"
                               ,0x4cf,0,"%s");
             }
-            if ((uVar12 & 0xffffffff) != 0) {
-              *pfVar3 = (pcVar5->ps).origin[0];
-              pfVar3[1] = (pcVar5->ps).origin[1];
-              pfVar3[2] = (pcVar5->ps).origin[2];
+            if (param_5 != (float *)0x0) {
+              *param_5 = (pcVar3->ps).origin[0];
+              param_5[1] = (pcVar3->ps).origin[1];
+              param_5[2] = (pcVar3->ps).origin[2];
             }
-            if ((uVar11 & 0xffffffff) != 0) {
-              Com_Memcpy((clientState_s *)uVar11,&pcVar5->cs,0xe0);
+            if (param_4 != (clientState_s *)0x0) {
+              Com_Memcpy(param_4,&pcVar3->cs,0xe0);
             }
-            iVar6 = (pcVar5->ps).otherFlags;
-            *(int *)uVar14 = (pcVar5->ps).stats[0];
-            *(int *)uVar15 = iVar6;
-            if ((uVar10 & 0xffffffff) == 0) goto LAB_825812a4;
-            piVar8 = (int *)uVar10;
-            Com_Memcpy128(piVar8,pcVar5,0x3300);
-            if (*piVar8 != 0) {
-              *piVar8 = *piVar8 + iVar17;
+            iVar7 = (pcVar3->ps).otherFlags;
+            *param_6 = (pcVar3->ps).stats[0];
+            *param_7 = iVar7;
+            if (param_3 == (playerState_s *)0x0) goto LAB_825812a4;
+            Com_Memcpy128(param_3,pcVar3,0x3300);
+            if (param_3->commandTime != 0) {
+              param_3->commandTime = param_3->commandTime + iVar5;
             }
-            if (piVar8[2] != 0) {
-              piVar8[2] = piVar8[2] + iVar17;
+            if (param_3->pm_time != 0) {
+              param_3->pm_time = param_3->pm_time + iVar5;
             }
-            if (piVar8[0x15] != 0) {
-              piVar8[0x15] = piVar8[0x15] + iVar17;
+            if (param_3->foliageSoundTime != 0) {
+              param_3->foliageSoundTime = param_3->foliageSoundTime + iVar5;
             }
-            if (piVar8[0x1f] != 0) {
-              piVar8[0x1f] = piVar8[0x1f] + iVar17;
+            if (param_3->jumpTime != 0) {
+              param_3->jumpTime = param_3->jumpTime + iVar5;
             }
-            if (piVar8[0x5b] != 0) {
-              piVar8[0x5b] = piVar8[0x5b] + iVar17;
+            if (param_3->viewHeightLerpTime != 0) {
+              param_3->viewHeightLerpTime = param_3->viewHeightLerpTime + iVar5;
             }
-            if (piVar8[0x156] != 0) {
-              piVar8[0x156] = piVar8[0x156] + iVar17;
+            if (param_3->shellshockTime != 0) {
+              param_3->shellshockTime = param_3->shellshockTime + iVar5;
             }
-            uVar16 = 0;
-            lVar19 = uVar10 + 0x1ee4;
-            iVar6 = svs.time;
+            uVar8 = 0;
+            piVar10 = &(param_3->hud).archival[0].time;
+            iVar7 = svs.time;
             goto LAB_825811f0;
           }
           break;
         }
-        uVar16 = uVar16 + 1;
-      } while (uVar16 < (uint)pcVar7->num_clients);
+        uVar8 = uVar8 + 1;
+      } while (uVar8 < (uint)pcVar4->num_clients);
     }
     Profile_EndInternal((double *)0x0);
   }
-  iVar6 = __restgprlr_20(0);
-  return iVar6;
+  return 0;
   while( true ) {
-    if (*piVar4 != 0) {
-      *piVar4 = *piVar4 + iVar17;
+    if (*piVar10 != 0) {
+      *piVar10 = *piVar10 + iVar5;
     }
-    if ((piVar4[-0x10] != 0) &&
-       (iVar13 = piVar4[-0x10] + iVar17, piVar4[-0x10] = iVar13, iVar6 < iVar13)) {
+    if ((piVar10[-0x10] != 0) &&
+       (iVar6 = piVar10[-0x10] + iVar5, piVar10[-0x10] = iVar6, iVar7 < iVar6)) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_snapshot_caching.cpp"
                       ,0x4f9,0,"ps->hud.archival[i].fadeStartTime <= svs.time\n\t%i, %i");
-      iVar6 = svs.time;
+      iVar7 = svs.time;
     }
-    if (piVar4[-8] != 0) {
-      piVar4[-8] = piVar4[-8] + iVar17;
+    if (piVar10[-8] != 0) {
+      piVar10[-8] = piVar10[-8] + iVar5;
     }
-    if (piVar4[-2] != 0) {
-      piVar4[-2] = piVar4[-2] + iVar17;
+    if (piVar10[-2] != 0) {
+      piVar10[-2] = piVar10[-2] + iVar5;
     }
-    if (piVar4[-0x17] != 0) {
-      piVar4[-0x17] = piVar4[-0x17] + iVar17;
+    if (piVar10[-0x17] != 0) {
+      piVar10[-0x17] = piVar10[-0x17] + iVar5;
     }
-    uVar16 = uVar16 + 1;
-    lVar19 = lVar19 + 0xa8;
-    if (0x1e < uVar16) break;
+    uVar8 = uVar8 + 1;
+    piVar10 = piVar10 + 0x2a;
+    if (0x1e < uVar8) break;
 LAB_825811f0:
-    piVar4 = (int *)lVar19;
-    if (piVar4[-0x1e] == 0) break;
+    if (((hudelem_s *)(piVar10 + -0x1e))->type == HE_TYPE_FREE) break;
   }
-  piVar8[0x281] = piVar8[0x281] + iVar17;
+  param_3->deltaTime = param_3->deltaTime + iVar5;
 LAB_825812a4:
   Profile_EndInternal((double *)0x0);
-  iVar6 = __restgprlr_20(1);
-  return iVar6;
+  return 1;
 }
 

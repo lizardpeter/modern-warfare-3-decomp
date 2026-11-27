@@ -2,6 +2,8 @@
 
 // 826C9E20  Vehicle_CreateSpawner  (vehicle/vehicle_spawner.cpp:14)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
@@ -9,34 +11,31 @@ void Vehicle_CreateSpawner(gentity_s *param_1,char *param_2)
 
 {
   int iVar1;
-  int iVar2;
-  ulonglong uVar3;
   
-  uVar3 = (ulonglong)(int)param_2;
-  iVar1 = __savegprlr_28(param_1);
-  if (iVar1 == 0) {
+  if (param_1 == (gentity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_spawner.cpp",
                     0xf,0,"%s");
   }
-  if ((uVar3 & 0xffffffff) == 0) {
+  if (param_2 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_spawner.cpp",
                     0x10,0,"%s");
   }
-  *(undefined4 *)(iVar1 + 0x18c) = 0;
-  *(undefined4 *)(iVar1 + 0x11c) = 0;
-  *(undefined1 *)(iVar1 + 0x102) = 1;
-  *(undefined4 *)(iVar1 + 4) = 0x11;
-  *(undefined4 *)(iVar1 + 0x1ac) = 0;
-  *(undefined4 *)(iVar1 + 0x1b0) = 0xffffffff;
-  iVar2 = Vehicle_RegisterServerDef((char *)uVar3);
-  *(int *)(iVar1 + 0x1b4) = iVar2;
-  __restgprlr_28();
+  param_1->clipmask = 0;
+  (param_1->r).contents = 0;
+  (param_1->r).svFlags = '\x01';
+  (param_1->s).eType = 0x11;
+  (param_1->field31_0x1ac).item[0].ammoCount = 0;
+  (param_1->field31_0x1ac).item[0].clipAmmoCount[0] = -1;
+  iVar1 = Vehicle_RegisterServerDef(param_2);
+  (param_1->field31_0x1ac).item[0].clipAmmoCount[1] = iVar1;
   return;
 }
 
 
 // 826C9EC8  Vehicle_DoSpawn  (vehicle/vehicle_spawner.cpp:31)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
@@ -45,29 +44,25 @@ gentity_s * Vehicle_DoSpawn(gentity_s *param_1,uint param_2,gentity_s *param_3)
 
 {
   gentity_s *pgVar1;
-  gentity_s *pgVar2;
-  VehicleDef *pVVar3;
+  VehicleDef *pVVar2;
   
-  pgVar1 = (gentity_s *)__savegprlr_27(param_1);
-  if (pgVar1 == (gentity_s *)0x0) {
+  if (param_1 == (gentity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_spawner.cpp",
                     0x23,0,"%s");
   }
-  if (level.time <= (pgVar1->field31_0x1ac).item[0].clipAmmoCount[0]) {
-    pgVar1 = (gentity_s *)__restgprlr_27(0);
-    return pgVar1;
+  if (level.time <= (param_1->field31_0x1ac).item[0].clipAmmoCount[0]) {
+    return (gentity_s *)0x0;
   }
-  (pgVar1->field31_0x1ac).item[0].clipAmmoCount[0] = level.time;
-  pgVar2 = G_Spawn();
-  pVVar3 = Vehicle_GetServerDef((pgVar1->field31_0x1ac).item[0].clipAmmoCount[1]);
-  G_DuplicateEntityFieldsForSpawn(pgVar2,pgVar1);
-  G_DuplicateScriptFields(pgVar2,pgVar1);
-  pgVar2->spawnflags = pgVar2->spawnflags & 0xfffffffd;
-  Scr_SetString(&pgVar2->targetname,param_2);
-  Vehicle_Create(pgVar2,pVVar3->name,param_3,0);
-  Scr_AddEntity(pgVar2);
-  Scr_Notify(pgVar1,scr_const.spawned,1);
-  pgVar1 = (gentity_s *)__restgprlr_27(pgVar2);
+  (param_1->field31_0x1ac).item[0].clipAmmoCount[0] = level.time;
+  pgVar1 = G_Spawn();
+  pVVar2 = Vehicle_GetServerDef((param_1->field31_0x1ac).item[0].clipAmmoCount[1]);
+  G_DuplicateEntityFieldsForSpawn(pgVar1,param_1);
+  G_DuplicateScriptFields(pgVar1,param_1);
+  pgVar1->spawnflags = pgVar1->spawnflags & 0xfffffffd;
+  Scr_SetString(&pgVar1->targetname,param_2);
+  Vehicle_Create(pgVar1,pVVar2->name,param_3,0);
+  Scr_AddEntity(pgVar1);
+  Scr_Notify(param_1,scr_const.spawned,1);
   return pgVar1;
 }
 

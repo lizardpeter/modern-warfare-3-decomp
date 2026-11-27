@@ -2,66 +2,67 @@
 
 // 82444580  FX_StopBoltedEffects  (EffectsCore/fx_system_api.cpp:37)
 
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void FX_StopBoltedEffects(LocalClientNum_t param_1,FxEffectDef *param_2,uint param_3,uint param_4)
 
 {
   FxSystemCommand *pFVar1;
-  LocalClientNum_t LVar2;
-  FxSystem *pFVar3;
+  FxSystem *pFVar2;
+  ulonglong uVar3;
   ulonglong uVar4;
-  ulonglong uVar5;
+  int *piVar5;
   int *piVar6;
-  int *piVar7;
   
-  LVar2 = __savegprlr_22(param_1);
-  pFVar3 = FX_GetSystem(LVar2);
-  if (pFVar3 == (FxSystem *)0x0) {
+  pFVar2 = FX_GetSystem(param_1);
+  if (pFVar2 == (FxSystem *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_system_api.cpp"
                     ,0x2c,0,"%s");
   }
-  if ((pFVar3->systemFlags & 0x10) != 0) {
-    pFVar1 = pFVar3->command;
+  if ((pFVar2->systemFlags & 0x10) != 0) {
+    pFVar1 = pFVar2->command;
     if (pFVar1 == (FxSystemCommand *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_system_api.cpp"
                       ,0x33,0,"%s");
     }
-    piVar7 = &pFVar1->requestIndex;
-    if ((*piVar7 != 0) && (*piVar7 != 1)) {
+    piVar6 = &pFVar1->requestIndex;
+    if ((*piVar6 != 0) && (*piVar6 != 1)) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_system_api.cpp"
                       ,0x34,0,"%s");
     }
-    piVar6 = &pFVar1->numStopBoltedEffectsRequest;
-    if (0xff < *piVar6) {
+    piVar5 = &pFVar1->numStopBoltedEffectsRequest;
+    if (0xff < *piVar5) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_system_api.cpp"
                       ,0x35,0,"%s");
     }
-    if (0xff < *piVar6) {
-      FX_WaitEnterWriteSystemLock(pFVar3->lock);
-      FXW_SystemFlush(pFVar3,LVar2);
-      FX_ExitWriteSystemLock(pFVar3->lock);
+    if (0xff < *piVar5) {
+      FX_WaitEnterWriteSystemLock(pFVar2->lock);
+      FXW_SystemFlush(pFVar2,param_1);
+      FX_ExitWriteSystemLock(pFVar2->lock);
     }
-    uVar5 = (ulonglong)(uint)*piVar6;
-    uVar4 = ((ulonglong)(uint)*piVar7 & 0xffffff) * 0x100 + uVar5 + 0x3c20;
-    *piVar6 = *piVar6 + 1;
+    uVar4 = (ulonglong)(uint)*piVar5;
+    uVar3 = ((ulonglong)(uint)*piVar6 & 0xffffff) * 0x100 + uVar4 + 0x3c20;
+    *piVar5 = *piVar5 + 1;
     *(FxEffectDef **)
      ((int)pFVar1->spawnCmdList[0].info.frame.quat +
-     (int)((uVar4 + (uVar4 & 0x7fffffff) * 2 & 0xffffffff) << 2) + -4) = param_2;
-    uVar4 = ((ulonglong)(uint)*piVar7 & 0xffffff) * 0x100 + uVar5;
+     (int)((uVar3 + (uVar3 & 0x7fffffff) * 2 & 0xffffffff) << 2) + -4) = param_2;
+    uVar3 = ((ulonglong)(uint)*piVar6 & 0xffffff) * 0x100 + uVar4;
     *(uint *)((int)&pFVar1->stopBoltedEffectsRequest[0][0].dobjHandle +
-             (int)((uVar4 + (uVar4 & 0x7fffffff) * 2 & 0xffffffff) << 2)) = param_3;
-    uVar5 = ((ulonglong)(uint)*piVar7 & 0xffffff) * 0x100 + uVar5;
+             (int)((uVar3 + (uVar3 & 0x7fffffff) * 2 & 0xffffffff) << 2)) = param_3;
+    uVar4 = ((ulonglong)(uint)*piVar6 & 0xffffff) * 0x100 + uVar4;
     *(uint *)((int)&pFVar1->stopBoltedEffectsRequest[0][0].boneIndex +
-             (int)((uVar5 + (uVar5 & 0x7fffffff) * 2 & 0xffffffff) << 2)) = param_4;
+             (int)((uVar4 + (uVar4 & 0x7fffffff) * 2 & 0xffffffff) << 2)) = param_4;
   }
-  __restgprlr_22();
   return;
 }
 
 
 // 82444728  FX_WaitKillAllEffects  (EffectsCore/fx_system_api.cpp:75)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 
@@ -70,67 +71,64 @@ void FX_WaitKillAllEffects(LocalClientNum_t param_1)
 {
   FxSystemCommand *pFVar1;
   int iVar2;
-  LocalClientNum_t LVar3;
-  FxSystem *pFVar4;
-  centity_s *pcVar5;
-  FxEffect *pFVar6;
-  uint uVar7;
-  int iVar8;
-  uint uVar9;
+  FxSystem *pFVar3;
+  centity_s *pcVar4;
+  FxEffect *pFVar5;
+  uint uVar6;
+  int iVar7;
+  uint uVar8;
   
-  LVar3 = __savegprlr_25(param_1);
-  pFVar4 = FX_GetSystem(LVar3);
-  if (pFVar4 == (FxSystem *)0x0) {
+  pFVar3 = FX_GetSystem(param_1);
+  if (pFVar3 == (FxSystem *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_system_api.cpp"
                     ,0x52,0,"%s");
   }
-  if ((pFVar4->systemFlags & 0x10) != 0) {
-    pFVar1 = pFVar4->command;
+  if ((pFVar3->systemFlags & 0x10) != 0) {
+    pFVar1 = pFVar3->command;
     if (pFVar1 == (FxSystemCommand *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_system_api.cpp"
                       ,0x58,0,"%s");
     }
-    FX_WaitEnterWriteSystemLock(pFVar4->lock);
-    iVar8 = 0;
+    FX_WaitEnterWriteSystemLock(pFVar3->lock);
+    iVar7 = 0;
     do {
-      pcVar5 = CG_GetEntity(LVar3,iVar8);
-      iVar2 = (pcVar5->nextState).eType;
+      pcVar4 = CG_GetEntity(param_1,iVar7);
+      iVar2 = (pcVar4->nextState).eType;
       if ((iVar2 == 8) || (iVar2 == 9)) {
-        (pcVar5->pose).field9_0x2c.fx.effect = (FxEffect *)0x0;
-        (pcVar5->pose).field9_0x2c.player.control = (clientControllers_t *)0x0;
+        (pcVar4->pose).field9_0x2c.fx.effect = (FxEffect *)0x0;
+        (pcVar4->pose).field9_0x2c.player.control = (clientControllers_t *)0x0;
       }
-      iVar8 = iVar8 + 1;
-    } while (iVar8 < 0x800);
-    FXW_SystemFlush(pFVar4,LVar3);
-    uVar7 = pFVar4->firstNewEffect;
-    uVar9 = pFVar4->firstActiveEffect;
-    if (uVar9 != uVar7) {
+      iVar7 = iVar7 + 1;
+    } while (iVar7 < 0x800);
+    FXW_SystemFlush(pFVar3,param_1);
+    uVar6 = pFVar3->firstNewEffect;
+    uVar8 = pFVar3->firstActiveEffect;
+    if (uVar8 != uVar6) {
       do {
-        pFVar6 = FX_EffectFromHandle(pFVar4,pFVar4->allEffectHandles[uVar9 & 0x3ff]);
-        if ((pFVar6->status & 0x4000000U) != 0) {
-          FXW_KillEffect(pFVar4,pFVar6,pFVar4->allEffectHandles[uVar9 & 0x3ff],0);
+        pFVar5 = FX_EffectFromHandle(pFVar3,pFVar3->allEffectHandles[uVar8 & 0x3ff]);
+        if ((pFVar5->status & 0x4000000U) != 0) {
+          FXW_KillEffect(pFVar3,pFVar5,pFVar3->allEffectHandles[uVar8 & 0x3ff],0);
         }
-        uVar7 = pFVar4->firstNewEffect;
-        uVar9 = uVar9 + 1;
-      } while (uVar9 != uVar7);
+        uVar6 = pFVar3->firstNewEffect;
+        uVar8 = uVar8 + 1;
+      } while (uVar8 != uVar6);
     }
-    uVar9 = pFVar4->firstActiveEffect;
-    if (uVar9 != uVar7) {
+    uVar8 = pFVar3->firstActiveEffect;
+    if (uVar8 != uVar6) {
       do {
-        pFVar6 = FX_EffectFromHandle(pFVar4,pFVar4->allEffectHandles[uVar9 & 0x3ff]);
-        if ((pFVar6->status & 0x1fffU) != (uint)(pFVar6->flags >> 0xf)) {
+        pFVar5 = FX_EffectFromHandle(pFVar3,pFVar3->allEffectHandles[uVar8 & 0x3ff]);
+        if ((pFVar5->status & 0x1fffU) != (uint)(pFVar5->flags >> 0xf)) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_system_api.cpp"
                           ,0x7b,0,"%s");
         }
-        uVar9 = uVar9 + 1;
-      } while (uVar9 != pFVar4->firstNewEffect);
+        uVar8 = uVar8 + 1;
+      } while (uVar8 != pFVar3->firstNewEffect);
     }
     pFVar1->numUpdatePass0 = 0;
     pFVar1->numUpdatePass4 = 0;
-    ResetSpawnCmds(pFVar4);
-    FX_ExitWriteSystemLock(pFVar4->lock);
+    ResetSpawnCmds(pFVar3);
+    FX_ExitWriteSystemLock(pFVar3->lock);
   }
-  __restgprlr_25();
   return;
 }
 
@@ -149,6 +147,8 @@ void FX_KillEffectDef(LocalClientNum_t param_1,FxEffectDef *param_2)
 
 // 82444908  FX_KillEffectDefNewerThan  (EffectsCore/fx_system_api.cpp:143)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void FX_KillEffectDefNewerThan(LocalClientNum_t param_1,FxEffectDef *param_2,int param_3)
@@ -156,52 +156,50 @@ void FX_KillEffectDefNewerThan(LocalClientNum_t param_1,FxEffectDef *param_2,int
 {
   FxSystemCommand *pFVar1;
   uint uVar2;
-  int iVar3;
-  FxSystem *pFVar4;
-  longlong lVar5;
-  int *piVar6;
-  int *piVar7;
+  FxSystem *pFVar3;
+  int *piVar4;
+  int *piVar5;
   
-  lVar5 = (longlong)(int)param_2;
-  iVar3 = __savegprlr_26(param_1,lVar5,param_3);
-  pFVar4 = FX_GetSystem(iVar3);
-  if (pFVar4 == (FxSystem *)0x0) {
+  pFVar3 = FX_GetSystem(param_1);
+  if (pFVar3 == (FxSystem *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_system_api.cpp"
                     ,0x95,0,"%s");
   }
-  if ((pFVar4->systemFlags & 0x10) != 0) {
-    pFVar1 = pFVar4->command;
+  if ((pFVar3->systemFlags & 0x10) != 0) {
+    pFVar1 = pFVar3->command;
     if (pFVar1 == (FxSystemCommand *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_system_api.cpp"
                       ,0x9b,0,"%s");
     }
-    piVar6 = &pFVar1->requestIndex;
-    if ((*piVar6 != 0) && (*piVar6 != 1)) {
+    piVar4 = &pFVar1->requestIndex;
+    if ((*piVar4 != 0) && (*piVar4 != 1)) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_system_api.cpp"
                       ,0x9c,0,"%s");
     }
-    piVar7 = &pFVar1->numKillEffectDefIndex;
-    if (0x3f < *piVar7) {
+    piVar5 = &pFVar1->numKillEffectDefIndex;
+    if (0x3f < *piVar5) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_system_api.cpp"
                       ,0x9d,0,"%s");
     }
-    uVar2 = *piVar7;
-    *piVar7 = uVar2 + 1;
-    *(int *)((int)pFVar1->spawnCmdList[0].info.frame.quat +
-            (int)((((ulonglong)(uint)*piVar6 & 0x3ffffff) * 0x40 + (ulonglong)uVar2 + 0x6130 &
-                  0xffffffff) << 3) + -4) = (int)lVar5;
+    uVar2 = *piVar5;
+    *piVar5 = uVar2 + 1;
+    *(FxEffectDef **)
+     ((int)pFVar1->spawnCmdList[0].info.frame.quat +
+     (int)((((ulonglong)(uint)*piVar4 & 0x3ffffff) * 0x40 + (ulonglong)uVar2 + 0x6130 & 0xffffffff)
+          << 3) + -4) = param_2;
     *(undefined4 *)
      ((int)&pFVar1->killEffectDefRequest[0][0].time +
-     (int)((((ulonglong)(uint)*piVar6 & 0x3ffffff) * 0x40 + (ulonglong)uVar2 & 0xffffffff) << 3)) =
+     (int)((((ulonglong)(uint)*piVar4 & 0x3ffffff) * 0x40 + (ulonglong)uVar2 & 0xffffffff) << 3)) =
          0xffffffff;
   }
-  __restgprlr_26();
   return;
 }
 
 
 // 82444A48  FX_ThroughWithEffect  (EffectsCore/fx_system_api.cpp:168)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void FX_ThroughWithEffect(LocalClientNum_t param_1,FxEffect *param_2)
@@ -210,17 +208,14 @@ void FX_ThroughWithEffect(LocalClientNum_t param_1,FxEffect *param_2)
   FxSystemCommand *pFVar1;
   int iVar2;
   FxSystem *pFVar3;
-  ulonglong uVar4;
-  int *piVar5;
+  int *piVar4;
   
-  uVar4 = (ulonglong)(int)param_2;
-  iVar2 = __savegprlr_26(param_1);
-  pFVar3 = FX_GetSystem(iVar2);
+  pFVar3 = FX_GetSystem(param_1);
   if (pFVar3 == (FxSystem *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_system_api.cpp"
                     ,0xae,0,"%s");
   }
-  if (((pFVar3->systemFlags & 0x10) != 0) && ((uVar4 & 0xffffffff) != 0)) {
+  if (((pFVar3->systemFlags & 0x10) != 0) && (param_2 != (FxEffect *)0x0)) {
     pFVar1 = pFVar3->command;
     if (pFVar1 == (FxSystemCommand *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_system_api.cpp"
@@ -231,16 +226,15 @@ void FX_ThroughWithEffect(LocalClientNum_t param_1,FxEffect *param_2)
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_system_api.cpp"
                       ,0xb5,0,"%s");
     }
-    piVar5 = &pFVar1->numThroughWithEffectIndex;
-    if (0x3ff < *piVar5) {
+    piVar4 = &pFVar1->numThroughWithEffectIndex;
+    if (0x3ff < *piVar4) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_system_api.cpp"
                       ,0xb6,0,"%s");
     }
-    iVar2 = *piVar5;
-    *piVar5 = iVar2 + 1;
-    pFVar1->throughWithEffectRequest[pFVar1->requestIndex][iVar2] = (FxEffect *)uVar4;
+    iVar2 = *piVar4;
+    *piVar4 = iVar2 + 1;
+    pFVar1->throughWithEffectRequest[pFVar1->requestIndex][iVar2] = param_2;
   }
-  __restgprlr_26();
   return;
 }
 
@@ -265,154 +259,146 @@ bool FX_GetBoneOrientation_IsDObjEntityValid(LocalClientNum_t param_1,int param_
 
 // 82444BB8  FX_GetBoneOrientation  (EffectsCore/fx_system_api.cpp:206)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 
 bool FX_GetBoneOrientation(LocalClientNum_t param_1,int param_2,int param_3,orientation_t *param_4)
 
 {
-  float *pfVar1;
-  LocalClientNum_t LVar2;
-  centity_s *pcVar3;
-  undefined1 uVar8;
-  DObj *pDVar4;
-  int iVar5;
-  cpose_t *pcVar6;
-  int iVar7;
-  ulonglong uVar9;
-  ulonglong uVar10;
-  uint uVar11;
+  centity_s *pcVar1;
+  DObj *pDVar2;
+  int iVar3;
+  cpose_t *pcVar4;
+  uint uVar5;
   
-  uVar10 = (ulonglong)(int)param_4;
-  uVar9 = (ulonglong)param_2;
-  LVar2 = __savegprlr_25(param_1);
-  if (0x801 < (uVar9 & 0xffffffff)) {
+  if (0x801 < (uint)param_2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_system_api.cpp"
                     ,0xd2,0,"dobjHandle doesn\'t index CLIENT_DOBJ_HANDLE_MAX\n\t%i not in [0, %i)")
     ;
   }
-  if ((uVar10 & 0xffffffff) == 0) {
+  if (param_4 == (orientation_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_system_api.cpp"
                     ,0xd3,0,"%s");
   }
-  iVar7 = (int)uVar9;
-  if (iVar7 < 0x7fe) {
-    pcVar3 = CG_GetEntity(LVar2,iVar7);
-    uVar11 = pcVar3->flags & 1;
+  if (param_2 < 0x7fe) {
+    pcVar1 = CG_GetEntity(param_1,param_2);
+    uVar5 = pcVar1->flags & 1;
   }
   else {
-    uVar11 = 1;
+    uVar5 = 1;
   }
-  if (uVar11 == 0) goto LAB_82444c60;
-  pfVar1 = (float *)uVar10;
+  if (uVar5 == 0) {
+    return false;
+  }
   if (param_3 < 0) {
-    CG_GetDObjOrientation(LVar2,iVar7,(float (*) [3])(pfVar1 + 3),pfVar1);
-    if (((((uint)pfVar1[3] & 0x7f800000) == 0x7f800000) ||
-        (((uint)pfVar1[4] & 0x7f800000) == 0x7f800000)) ||
-       (((uint)pfVar1[5] & 0x7f800000) == 0x7f800000)) {
+    CG_GetDObjOrientation(param_1,param_2,param_4->axis,param_4->origin);
+    if (((((uint)param_4->axis[0][0] & 0x7f800000) == 0x7f800000) ||
+        (((uint)param_4->axis[0][1] & 0x7f800000) == 0x7f800000)) ||
+       (((uint)param_4->axis[0][2] & 0x7f800000) == 0x7f800000)) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_system_api.cpp"
                       ,0xdf,0,"%s");
     }
-    if (((((uint)pfVar1[6] & 0x7f800000) == 0x7f800000) ||
-        (((uint)pfVar1[7] & 0x7f800000) == 0x7f800000)) ||
-       (((uint)pfVar1[8] & 0x7f800000) == 0x7f800000)) {
+    if (((((uint)param_4->axis[1][0] & 0x7f800000) == 0x7f800000) ||
+        (((uint)param_4->axis[1][1] & 0x7f800000) == 0x7f800000)) ||
+       (((uint)param_4->axis[1][2] & 0x7f800000) == 0x7f800000)) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_system_api.cpp"
                       ,0xe0,0,"%s");
     }
-    if (((((uint)pfVar1[9] & 0x7f800000) == 0x7f800000) ||
-        (((uint)pfVar1[10] & 0x7f800000) == 0x7f800000)) ||
-       (((uint)pfVar1[0xb] & 0x7f800000) == 0x7f800000)) {
+    if (((((uint)param_4->axis[2][0] & 0x7f800000) == 0x7f800000) ||
+        (((uint)param_4->axis[2][1] & 0x7f800000) == 0x7f800000)) ||
+       (((uint)param_4->axis[2][2] & 0x7f800000) == 0x7f800000)) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_system_api.cpp"
                       ,0xe1,0,"%s");
     }
-    if (((((uint)*pfVar1 & 0x7f800000) != 0x7f800000) &&
-        (((uint)pfVar1[1] & 0x7f800000) != 0x7f800000)) &&
-       (((uint)pfVar1[2] & 0x7f800000) != 0x7f800000)) goto LAB_82444ff4;
-    iVar7 = 0xe2;
+    if (((((uint)param_4->origin[0] & 0x7f800000) != 0x7f800000) &&
+        (((uint)param_4->origin[1] & 0x7f800000) != 0x7f800000)) &&
+       (((uint)param_4->origin[2] & 0x7f800000) != 0x7f800000)) {
+      return true;
+    }
+    iVar3 = 0xe2;
   }
   else {
-    pDVar4 = Com_GetClientDObj(iVar7,LVar2);
-    if ((pDVar4 == (DObj *)0x0) || (iVar5 = DObjNumBones(pDVar4), iVar5 <= param_3)) {
-LAB_82444c60:
-      uVar8 = __restgprlr_25(0);
-      return (bool)uVar8;
+    pDVar2 = Com_GetClientDObj(param_2,param_1);
+    if ((pDVar2 == (DObj *)0x0) || (iVar3 = DObjNumBones(pDVar2), iVar3 <= param_3)) {
+      return false;
     }
-    pcVar6 = CG_GetPose(LVar2,iVar7);
-    iVar7 = CG_DObjGetWorldBoneMatrix(pcVar6,pDVar4,param_3,(float (*) [3])(pfVar1 + 3),pfVar1);
-    if (iVar7 == 0) goto LAB_82444c60;
-    if (((((uint)*pfVar1 & 0x7f800000) == 0x7f800000) ||
-        (((uint)pfVar1[1] & 0x7f800000) == 0x7f800000)) ||
-       (((uint)pfVar1[2] & 0x7f800000) == 0x7f800000)) {
+    pcVar4 = CG_GetPose(param_1,param_2);
+    iVar3 = CG_DObjGetWorldBoneMatrix(pcVar4,pDVar2,param_3,param_4->axis,param_4->origin);
+    if (iVar3 == 0) {
+      return false;
+    }
+    if (((((uint)param_4->origin[0] & 0x7f800000) == 0x7f800000) ||
+        (((uint)param_4->origin[1] & 0x7f800000) == 0x7f800000)) ||
+       (((uint)param_4->origin[2] & 0x7f800000) == 0x7f800000)) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_system_api.cpp"
                       ,0xfb,0,"%s");
     }
-    if (((((uint)(*(float (*) [3])(pfVar1 + 3))[0] & 0x7f800000) == 0x7f800000) ||
-        (((uint)pfVar1[4] & 0x7f800000) == 0x7f800000)) ||
-       (((uint)pfVar1[5] & 0x7f800000) == 0x7f800000)) {
+    if (((((uint)param_4->axis[0][0] & 0x7f800000) == 0x7f800000) ||
+        (((uint)param_4->axis[0][1] & 0x7f800000) == 0x7f800000)) ||
+       (((uint)param_4->axis[0][2] & 0x7f800000) == 0x7f800000)) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_system_api.cpp"
                       ,0xfc,0,"%s");
     }
-    if (((((uint)pfVar1[6] & 0x7f800000) == 0x7f800000) ||
-        (((uint)pfVar1[7] & 0x7f800000) == 0x7f800000)) ||
-       (((uint)pfVar1[8] & 0x7f800000) == 0x7f800000)) {
+    if (((((uint)param_4->axis[1][0] & 0x7f800000) == 0x7f800000) ||
+        (((uint)param_4->axis[1][1] & 0x7f800000) == 0x7f800000)) ||
+       (((uint)param_4->axis[1][2] & 0x7f800000) == 0x7f800000)) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_system_api.cpp"
                       ,0xfd,0,"%s");
     }
-    if (((((uint)pfVar1[9] & 0x7f800000) != 0x7f800000) &&
-        (((uint)pfVar1[10] & 0x7f800000) != 0x7f800000)) &&
-       (((uint)pfVar1[0xb] & 0x7f800000) != 0x7f800000)) goto LAB_82444ff4;
-    iVar7 = 0xfe;
+    if (((((uint)param_4->axis[2][0] & 0x7f800000) != 0x7f800000) &&
+        (((uint)param_4->axis[2][1] & 0x7f800000) != 0x7f800000)) &&
+       (((uint)param_4->axis[2][2] & 0x7f800000) != 0x7f800000)) {
+      return true;
+    }
+    iVar3 = 0xfe;
   }
   MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_system_api.cpp",
-                  iVar7,0,"%s");
-LAB_82444ff4:
-  uVar8 = __restgprlr_25(1);
-  return (bool)uVar8;
+                  iVar3,0,"%s");
+  return true;
 }
 
 
 // 82445000  FX_GetSpotLightDobj  (EffectsCore/fx_system_api.cpp:277)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 int FX_GetSpotLightDobj(LocalClientNum_t param_1,DObj **param_2)
 
 {
-  LocalClientNum_t LVar1;
-  FxSystem *pFVar2;
-  int iVar3;
-  DObj *pDVar4;
-  ulonglong uVar5;
-  int *piVar6;
+  FxSystem *pFVar1;
+  DObj *pDVar2;
   
-  uVar5 = (ulonglong)(int)param_2;
-  LVar1 = __savegprlr_27(param_1);
-  pFVar2 = FX_GetSystem(LVar1);
-  if (pFVar2 == (FxSystem *)0x0) {
+  pFVar1 = FX_GetSystem(param_1);
+  if (pFVar1 == (FxSystem *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_system_api.cpp"
                     ,0x124,0,"%s");
   }
-  if ((uVar5 & 0xffffffff) == 0) {
+  if (param_2 == (DObj **)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_system_api.cpp"
                     ,0x125,0,"%s");
   }
-  piVar6 = (int *)uVar5;
-  *piVar6 = 0;
-  if (pFVar2->activeSpotLightEffectCount == 0) {
-    iVar3 = __restgprlr_27(0);
-    return iVar3;
+  *param_2 = (DObj *)0x0;
+  if (pFVar1->activeSpotLightEffectCount == 0) {
+    return 0;
   }
-  if (pFVar2->activeSpotLightBoltDobj != 0xfff) {
-    pDVar4 = Com_GetClientDObj((int)pFVar2->activeSpotLightBoltDobj,LVar1);
-    *piVar6 = (int)pDVar4;
+  if (pFVar1->activeSpotLightBoltDobj != 0xfff) {
+    pDVar2 = Com_GetClientDObj((int)pFVar1->activeSpotLightBoltDobj,param_1);
+    *param_2 = pDVar2;
   }
-  iVar3 = __restgprlr_27(*piVar6 != 0);
-  return iVar3;
+  return (uint)(*param_2 != (DObj *)0x0);
 }
 
 
 // 824450C8  FX_GetClientVisibility  (EffectsCore/fx_system_api.cpp:340)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 float FX_GetClientVisibility(LocalClientNum_t param_1,float *param_2,float *param_3)
@@ -423,8 +409,8 @@ float FX_GetClientVisibility(LocalClientNum_t param_1,float *param_2,float *para
   float fVar3;
   float fVar4;
   FxVisState *pFVar5;
-  int iVar6;
-  FxSystem *pFVar7;
+  FxSystem *pFVar6;
+  int iVar7;
   float *pfVar8;
   double dVar9;
   double dVar10;
@@ -433,12 +419,10 @@ float FX_GetClientVisibility(LocalClientNum_t param_1,float *param_2,float *para
   double dVar13;
   double dVar14;
   
-  __savegprlr_29(param_1);
-  iVar6 = __savefpr_27();
   PIXBeginNamedEvent_Copy_NoVarArgs(0,"fx client vis");
-  pFVar7 = FX_GetSystem(iVar6);
+  pFVar6 = FX_GetSystem(param_1);
   Sys_EnterCriticalSection(CRITSECT_FX_VIS);
-  pFVar5 = pFVar7->visStateBufferRead;
+  pFVar5 = pFVar6->visStateBufferRead;
   if ((pFVar5 != (FxVisState *)0x0) && (pFVar5->blockerCount != 0)) {
     Profile_Begin(199);
     fVar2 = *param_3 - *param_2;
@@ -460,7 +444,7 @@ float FX_GetClientVisibility(LocalClientNum_t param_1,float *param_2,float *para
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_system_api.cpp"
                         ,0x18a,0,"visState->blockerCount <= FX_VIS_BLOCKER_LIMIT\n\t%i, %i");
       }
-      iVar6 = 0;
+      iVar7 = 0;
       if (0 < pFVar5->blockerCount) {
         pfVar8 = pFVar5->blocker[0].origin + 2;
         do {
@@ -483,23 +467,19 @@ float FX_GetClientVisibility(LocalClientNum_t param_1,float *param_2,float *para
             dVar11 = (double)((float)((double)*(ushort *)((int)pfVar8 + 6) * dVar11) * 1.5258789e-05
                              );
           }
-          iVar6 = iVar6 + 1;
+          iVar7 = iVar7 + 1;
           pfVar8 = pfVar8 + 4;
-        } while (iVar6 < pFVar5->blockerCount);
+        } while (iVar7 < pFVar5->blockerCount);
       }
     }
     Profile_EndInternal((double *)0x0);
     Sys_LeaveCriticalSection(CRITSECT_FX_VIS);
     PIXEndNamedEvent();
-    __restfpr_27(dVar11);
-    dVar12 = (double)__restgprlr_29();
-    return (float)dVar12;
+    return (float)dVar11;
   }
   Sys_LeaveCriticalSection(CRITSECT_FX_VIS);
   PIXEndNamedEvent();
-  __restfpr_27(0x3ff0000000000000);
-  dVar12 = (double)__restgprlr_29();
-  return (float)dVar12;
+  return 1.0;
 }
 
 
@@ -519,26 +499,25 @@ bool FX_ClientVisibilityTest(LocalClientNum_t param_1,float *param_2,float *para
 
 // 82445330  FX_AssertAllocatedEffect  (EffectsCore/fx_system_api.cpp:451)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void FX_AssertAllocatedEffect(LocalClientNum_t param_1,FxEffect *param_2)
 
 {
-  int iVar1;
-  FxSystem *pFVar2;
+  FxSystem *pFVar1;
   
-  iVar1 = __savegprlr_28(param_1);
-  pFVar2 = FX_GetSystem(iVar1);
-  if (pFVar2 == (FxSystem *)0x0) {
+  pFVar1 = FX_GetSystem(param_1);
+  if (pFVar1 == (FxSystem *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_system_api.cpp"
                     ,0x1c7,0,"%s");
   }
-  FX_EffectToHandle(pFVar2,param_2);
+  FX_EffectToHandle(pFVar1,param_2);
   if ((param_2->status & 0x1fffU) == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_system_api.cpp"
                     ,0x1c9,0,"%s");
   }
-  __restgprlr_28();
   return;
 }
 

@@ -2,6 +2,8 @@
 
 // 824BB9D8  GScr_LoadConsts  (game/scr_const.cpp:20)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void GScr_LoadConsts(void)
@@ -10,7 +12,6 @@ void GScr_LoadConsts(void)
   uint uVar1;
   scr_const_t *psVar2;
   
-  __savegprlr_27();
   uVar1 = GScr_AllocString("");
   psVar2 = &scr_const;
   scr_const._ = (ushort)uVar1;
@@ -699,7 +700,6 @@ void GScr_LoadConsts(void)
     uVar1 = uVar1 + 1;
     psVar2 = (scr_const_t *)&psVar2->active;
   } while (uVar1 < 0x153);
-  __restgprlr_27();
   return;
 }
 

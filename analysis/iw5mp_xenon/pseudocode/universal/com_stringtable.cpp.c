@@ -2,37 +2,32 @@
 
 // 825E7638  StringTable_LookupRowNumForValue  (universal/com_stringtable.cpp:16)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
+
 int StringTable_LookupRowNumForValue(StringTable *param_1,int param_2,char *param_3)
 
 {
   char *pcVar1;
-  undefined4 *puVar2;
+  int iVar2;
   int iVar3;
-  int iVar4;
-  int iVar5;
-  longlong lVar6;
-  ulonglong uVar7;
+  ulonglong uVar4;
   
-  lVar6 = (longlong)param_2;
-  iVar3 = __savegprlr_25(param_1);
-  iVar4 = StringTable_HashString(param_3);
-  if (iVar3 == 0) {
+  iVar2 = StringTable_HashString(param_3);
+  if (param_1 == (StringTable *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_stringtable.cpp"
                     ,0x17,0,"%s");
   }
-  if (*(int *)(iVar3 + 4) != 0) {
-    if (*(int *)(iVar3 + 4) <= (int)lVar6) {
+  if (param_1->columnCount != 0) {
+    if (param_1->columnCount <= param_2) {
       Com_Error(ERR_DROP,"Unable to compare against column number %i - there are only %i columns");
     }
-    uVar7 = (ulonglong)*(uint *)(iVar3 + 8);
-    while (uVar7 = uVar7 - 1, -1 < (longlong)uVar7) {
-      puVar2 = (undefined4 *)
-               ((int)(((longlong)*(int *)(iVar3 + 4) * (longlong)(int)uVar7 + lVar6 & 0xffffffffU)
-                     << 3) + *(int *)(iVar3 + 0xc));
-      if (((puVar2[1] == iVar4) && (pcVar1 = (char *)*puVar2, pcVar1 != (char *)0x0)) &&
-         (iVar5 = I_stricmp(param_3,pcVar1), iVar5 == 0)) {
-        iVar3 = __restgprlr_25(uVar7);
-        return iVar3;
+    uVar4 = (ulonglong)(uint)param_1->rowCount;
+    while (uVar4 = uVar4 - 1, -1 < (longlong)uVar4) {
+      if (((param_1->values[param_1->columnCount * (int)uVar4 + param_2].hash == iVar2) &&
+          (pcVar1 = param_1->values[param_1->columnCount * (int)uVar4 + param_2].string,
+          pcVar1 != (char *)0x0)) && (iVar3 = I_stricmp(param_3,pcVar1), iVar3 == 0)) {
+        return (int)uVar4;
       }
     }
     if (stringtable_debug == (dvar_t *)0x0) {
@@ -43,32 +38,29 @@ int StringTable_LookupRowNumForValue(StringTable *param_1,int param_2,char *para
       Com_PrintError(0xd,"Unable to find \'%s\' in column %i of table %s\n");
     }
   }
-  iVar3 = __restgprlr_25(0xffffffffffffffff);
-  return iVar3;
+  return -1;
 }
 
 
 // 825E7780  StringTable_GetColumnValueForRow  (universal/com_stringtable.cpp:47)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
+
 char * StringTable_GetColumnValueForRow(StringTable *param_1,int param_2,int param_3)
 
 {
-  int iVar1;
-  char *pcVar2;
-  longlong lVar3;
+  char *pcVar1;
   
-  lVar3 = (longlong)param_3;
-  iVar1 = __savegprlr_25(param_1);
-  if (iVar1 == 0) {
+  if (param_1 == (StringTable *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_stringtable.cpp"
                     ,0x31,0,"%s");
   }
-  if (((((int)lVar3 < *(int *)(iVar1 + 4)) && (param_2 < *(int *)(iVar1 + 8))) && (-1 < param_2)) &&
-     ((-1 < (int)lVar3 &&
-      (pcVar2 = *(char **)((int)(((longlong)*(int *)(iVar1 + 4) * (longlong)param_2 + lVar3 &
-                                 0xffffffffU) << 3) + *(int *)(iVar1 + 0xc)), pcVar2 != (char *)0x0)
-      ))) {
-    if (*pcVar2 == '\0') {
+  if ((((param_3 < param_1->columnCount) && (param_2 < param_1->rowCount)) && (-1 < param_2)) &&
+     ((-1 < param_3 &&
+      (pcVar1 = param_1->values[param_1->columnCount * param_2 + param_3].string,
+      pcVar1 != (char *)0x0)))) {
+    if (*pcVar1 == '\0') {
       if (stringtable_debug == (dvar_t *)0x0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_stringtable.cpp"
                         ,0x3c,0,"%s");
@@ -79,8 +71,7 @@ char * StringTable_GetColumnValueForRow(StringTable *param_1,int param_2,int par
                       );
       }
     }
-    pcVar2 = (char *)__restgprlr_25(pcVar2);
-    return pcVar2;
+    return pcVar1;
   }
   if (stringtable_debug == (dvar_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_stringtable.cpp"
@@ -91,8 +82,7 @@ char * StringTable_GetColumnValueForRow(StringTable *param_1,int param_2,int par
                    "Trying to read row %i, column %i, but the table \'%s\' has %i rows and %i columns\n"
                   );
   }
-  pcVar2 = (char *)__restgprlr_25(0xffffffff820068af);
-  return pcVar2;
+  return "";
 }
 
 
@@ -131,49 +121,49 @@ int StringTable_GetRowCount(StringTable *param_1)
 
 // 825E79F0  StringTable_Checksum  (universal/com_stringtable.cpp:85)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 uint StringTable_Checksum(StringTable *param_1,uint param_2)
 
 {
   char cVar1;
   char *pcVar2;
-  undefined4 *puVar3;
-  uint uVar4;
-  char *pcVar5;
+  uint uVar3;
+  char *pcVar4;
+  int iVar5;
   int iVar6;
   int iVar7;
-  int iVar8;
   
-  puVar3 = (undefined4 *)__savegprlr_29(param_1);
-  pcVar2 = (char *)*puVar3;
-  pcVar5 = pcVar2;
+  pcVar2 = param_1->name;
+  pcVar4 = pcVar2;
   do {
-    cVar1 = *pcVar5;
-    pcVar5 = pcVar5 + 1;
+    cVar1 = *pcVar4;
+    pcVar4 = pcVar4 + 1;
   } while (cVar1 != '\0');
-  uVar4 = Com_BlockChecksumKey32(pcVar2,(uint)(pcVar5 + (-1 - (int)pcVar2)),param_2);
-  iVar7 = 0;
-  if (0 < (int)puVar3[1]) {
-    iVar6 = puVar3[2];
+  uVar3 = Com_BlockChecksumKey32(pcVar2,(uint)(pcVar4 + (-1 - (int)pcVar2)),param_2);
+  iVar6 = 0;
+  if (0 < param_1->columnCount) {
+    iVar5 = param_1->rowCount;
     do {
-      iVar8 = 0;
-      if (0 < iVar6) {
+      iVar7 = 0;
+      if (0 < iVar5) {
         do {
-          pcVar2 = *(char **)((puVar3[1] * iVar8 + iVar7) * 8 + puVar3[3]);
-          pcVar5 = pcVar2;
+          pcVar2 = param_1->values[param_1->columnCount * iVar7 + iVar6].string;
+          pcVar4 = pcVar2;
           do {
-            cVar1 = *pcVar5;
-            pcVar5 = pcVar5 + 1;
+            cVar1 = *pcVar4;
+            pcVar4 = pcVar4 + 1;
           } while (cVar1 != '\0');
-          uVar4 = Com_BlockChecksumKey32(pcVar2,(uint)(pcVar5 + (-1 - (int)pcVar2)),uVar4);
-          iVar6 = puVar3[2];
-          iVar8 = iVar8 + 1;
-        } while (iVar8 < iVar6);
+          uVar3 = Com_BlockChecksumKey32(pcVar2,(uint)(pcVar4 + (-1 - (int)pcVar2)),uVar3);
+          iVar5 = param_1->rowCount;
+          iVar7 = iVar7 + 1;
+        } while (iVar7 < iVar5);
       }
-      iVar7 = iVar7 + 1;
-    } while (iVar7 < (int)puVar3[1]);
+      iVar6 = iVar6 + 1;
+    } while (iVar6 < param_1->columnCount);
   }
-  uVar4 = __restgprlr_29();
-  return uVar4;
+  return uVar3;
 }
 
 

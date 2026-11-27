@@ -39,30 +39,31 @@ uchar empty_output_buffer(jpeg_compress_struct *param_1)
 
 // 827BC038  term_destination  (jpeg-6/jdatadst.c:107)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void term_destination(jpeg_compress_struct *param_1)
 
 {
-  int *piVar1;
+  jpeg_destination_mgr *pjVar1;
   uint uVar2;
   int iVar3;
   uint uVar4;
   
-  piVar1 = (int *)__savegprlr_28(param_1);
-  iVar3 = piVar1[8];
-  uVar4 = 0x1000 - *(int *)(iVar3 + 4);
+  pjVar1 = param_1->dest;
+  uVar4 = 0x1000 - pjVar1->free_in_buffer;
   if ((uVar4 != 0) &&
-     (uVar2 = fwrite(*(void **)(iVar3 + 0x18),1,uVar4,*(_iobuf **)(iVar3 + 0x14)), uVar2 != uVar4))
-  {
-    *(undefined4 *)(*piVar1 + 0x14) = 0x25;
-    (**(code **)*piVar1)(piVar1);
+     (uVar2 = fwrite((void *)pjVar1[1].free_in_buffer,1,uVar4,(_iobuf *)pjVar1[1].next_output_byte),
+     uVar2 != uVar4)) {
+    param_1->err->msg_code = 0x25;
+    (*param_1->err->error_exit)((jpeg_common_struct *)param_1);
   }
-  fflush(*(_iobuf **)(iVar3 + 0x14));
-  iVar3 = ferror(*(_iobuf **)(iVar3 + 0x14));
+  fflush((_iobuf *)pjVar1[1].next_output_byte);
+  iVar3 = ferror((_iobuf *)pjVar1[1].next_output_byte);
   if (iVar3 != 0) {
-    *(undefined4 *)(*piVar1 + 0x14) = 0x25;
-    (**(code **)*piVar1)(piVar1);
+    param_1->err->msg_code = 0x25;
+    (*param_1->err->error_exit)((jpeg_common_struct *)param_1);
   }
-  __restgprlr_28();
   return;
 }
 

@@ -2,23 +2,23 @@
 
 // 822575B0  mp_sqrmod  (line unknown)
 
-void mp_sqrmod(undefined8 param_1,undefined8 param_2,undefined8 param_3)
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
+undefined8 mp_sqrmod(undefined8 param_1,undefined8 param_2,undefined8 param_3)
 
 {
   undefined8 uVar1;
-  undefined8 uVar2;
   undefined1 auStack_30 [48];
   
-  uVar1 = __savegprlr_29();
-  uVar2 = mp_init(auStack_30);
-  if ((int)uVar2 == 0) {
-    uVar2 = mp_sqr(uVar1,auStack_30);
-    if ((int)uVar2 == 0) {
-      uVar2 = mp_mod(auStack_30,param_2,param_3);
+  uVar1 = mp_init(auStack_30);
+  if ((int)uVar1 == 0) {
+    uVar1 = mp_sqr(param_1,auStack_30);
+    if ((int)uVar1 == 0) {
+      uVar1 = mp_mod(auStack_30,param_2,param_3);
     }
     mp_clear(auStack_30);
   }
-  __restgprlr_29(uVar2);
-  return;
+  return uVar1;
 }
 

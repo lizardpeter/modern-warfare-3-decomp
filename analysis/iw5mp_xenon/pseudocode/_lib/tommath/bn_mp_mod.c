@@ -2,17 +2,17 @@
 
 // 82259E58  mp_mod  (line unknown)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Restarted to delay deadcode elimination for space: stack */
 
-void mp_mod(undefined8 param_1,undefined8 param_2,undefined8 param_3)
+undefined8 mp_mod(undefined8 param_1,int param_2,undefined4 *param_3)
 
 {
   undefined4 uVar1;
-  int iVar2;
+  undefined4 uVar2;
   undefined4 uVar3;
   undefined8 uVar4;
-  undefined8 uVar5;
-  undefined4 *puVar6;
   undefined4 local_50;
   undefined4 local_4c;
   int local_48;
@@ -21,39 +21,34 @@ void mp_mod(undefined8 param_1,undefined8 param_2,undefined8 param_3)
   int local_38;
   undefined4 local_34;
   
-  uVar4 = __savegprlr_28();
-  uVar5 = mp_init(&local_50);
-  if ((int)uVar5 == 0) {
-    uVar4 = mp_div(uVar4,param_2,0,&local_50);
+  uVar4 = mp_init(&local_50);
+  if ((int)uVar4 == 0) {
+    uVar4 = mp_div(param_1,param_2,0,&local_50);
     if ((int)uVar4 != 0) {
       mp_clear(&local_50);
-      __restgprlr_28(uVar4);
-      return;
+      return uVar4;
     }
-    if (local_48 != *(int *)((int)param_2 + 8)) {
+    if (local_48 != *(int *)(param_2 + 8)) {
       uVar4 = mp_add(param_2,&local_50,param_3);
       mp_clear(&local_50);
-      __restgprlr_28(uVar4);
-      return;
+      return uVar4;
     }
-    puVar6 = (undefined4 *)param_3;
-    uVar1 = puVar6[1];
-    iVar2 = puVar6[2];
-    uVar3 = puVar6[3];
+    uVar1 = param_3[1];
+    uVar2 = param_3[2];
+    uVar3 = param_3[3];
     local_3c = local_4c;
     local_38 = local_48;
     local_34 = local_44;
-    puVar6[1] = local_4c;
-    puVar6[2] = local_48;
-    *puVar6 = local_50;
-    puVar6[3] = local_44;
+    param_3[1] = local_4c;
+    param_3[2] = local_48;
+    *param_3 = local_50;
+    param_3[3] = local_44;
     local_4c = uVar1;
-    local_48 = iVar2;
+    local_48 = uVar2;
     local_44 = uVar3;
     mp_clear(&local_50);
-    uVar5 = 0;
+    uVar4 = 0;
   }
-  __restgprlr_28(uVar5);
-  return;
+  return uVar4;
 }
 

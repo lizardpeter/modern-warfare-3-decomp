@@ -27,6 +27,8 @@ playerState_s * SV_GetPlayerstateForClientNum(int param_1)
 
 // 825708E8  SV_GameSendServerCommand  (server/sv_game.cpp:137)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
@@ -34,32 +36,27 @@ playerState_s * SV_GetPlayerstateForClientNum(int param_1)
 void SV_GameSendServerCommand(int param_1,svscmd_type param_2,char *param_3)
 
 {
-  uint uVar1;
-  longlong lVar2;
-  
-  lVar2 = (longlong)(int)param_2;
-  uVar1 = __savegprlr_27(param_1,lVar2,param_3);
-  if (uVar1 == 0xffffffff) {
-    SV_SendServerCommand((client_t *)0x0,(svscmd_type)lVar2,"%s");
-    __restgprlr_27();
+  if (param_1 == -1) {
+    SV_SendServerCommand((client_t *)0x0,param_2,"%s");
     return;
   }
   if (((sv_maxclients->current).integer < 1) || (0x12 < (sv_maxclients->current).integer)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server\\sv_game.cpp",0x90,0,
                     "%s\n\t(sv_maxclients->current.integer) = %i");
   }
-  if ((sv_maxclients->current).unsignedInt <= uVar1) {
+  if ((sv_maxclients->current).unsignedInt <= (uint)param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server\\sv_game.cpp",0x91,0,
                     "clientNum doesn\'t index sv_maxclients->current.integer\n\t%i not in [0, %i)");
   }
-  SV_SendServerCommand(svs.clients + uVar1,(svscmd_type)lVar2,"%s");
-  __restgprlr_27();
+  SV_SendServerCommand(svs.clients + param_1,param_2,"%s");
   return;
 }
 
 
 // 825709D8  SV_GameDropClient  (server/sv_game.cpp:169)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
@@ -67,17 +64,13 @@ void SV_GameSendServerCommand(int param_1,svscmd_type param_2,char *param_3)
 void SV_GameDropClient(int param_1,char *param_2)
 
 {
-  int iVar1;
-  
-  iVar1 = __savegprlr_29(param_1);
   if (((sv_maxclients->current).integer < 1) || (0x12 < (sv_maxclients->current).integer)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server\\sv_game.cpp",0xaa,0,
                     "%s\n\t(sv_maxclients->current.integer) = %i");
   }
-  if ((-1 < iVar1) && (iVar1 < (sv_maxclients->current).integer)) {
-    SV_DropClient(svs.clients + iVar1,param_2,true);
+  if ((-1 < param_1) && (param_1 < (sv_maxclients->current).integer)) {
+    SV_DropClient(svs.clients + param_1,param_2,true);
   }
-  __restgprlr_29();
   return;
 }
 
@@ -352,47 +345,45 @@ int SV_EntityContactPoint(float *param_1,gentity_s *param_2)
 
 // 825710A8  SV_Hunk_Alloc  (server/sv_game.cpp:352)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
 void * SV_Hunk_Alloc(int param_1,char *param_2,int param_3)
 
 {
-  int iVar1;
-  void *pvVar2;
+  void *pvVar1;
   
-  iVar1 = __savegprlr_29(param_1);
   if (sv.state != SS_LOADING) {
     Com_Error(ERR_DROP,
               "\x15Hunk_Alloc can only be called in G_InitGame and the first few frames of G_RunFrame\n"
              );
   }
-  pvVar2 = Hunk_Alloc(iVar1,param_2,param_3);
-  pvVar2 = (void *)__restgprlr_29(pvVar2);
-  return pvVar2;
+  pvVar1 = Hunk_Alloc(param_1,param_2,param_3);
+  return pvVar1;
 }
 
 
 // 825710F8  SV_Hunk_AllocAlign  (server/sv_game.cpp:368)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
 void * SV_Hunk_AllocAlign(int param_1,int param_2,char *param_3,int param_4)
 
 {
-  int iVar1;
-  void *pvVar2;
+  void *pvVar1;
   
-  iVar1 = __savegprlr_28(param_1);
   if (sv.state != SS_LOADING) {
     Com_Error(ERR_DROP,
               "\x15Hunk_AllocAlign can only be called in G_InitGame and the first few frames of G_RunFrame\n"
              );
   }
-  pvVar2 = Hunk_AllocAlign(iVar1,param_2,param_3,param_4);
-  pvVar2 = (void *)__restgprlr_28(pvVar2);
-  return pvVar2;
+  pvVar1 = Hunk_AllocAlign(param_1,param_2,param_3,param_4);
+  return pvVar1;
 }
 
 
@@ -414,6 +405,8 @@ void SV_LocateGameData(gentity_s *param_1,int param_2,playerState_s *param_3,int
 
 // 82571190  SV_GetUsercmd  (server/sv_game.cpp:459)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
@@ -421,10 +414,7 @@ void SV_LocateGameData(gentity_s *param_1,int param_2,playerState_s *param_3,int
 void SV_GetUsercmd(int param_1,usercmd_s *param_2)
 
 {
-  int iVar1;
-  
-  iVar1 = __savegprlr_27(param_1,param_2);
-  if (iVar1 < 0) {
+  if (param_1 < 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server\\sv_game.cpp",0x1cc,0,
                     "%s");
   }
@@ -432,12 +422,11 @@ void SV_GetUsercmd(int param_1,usercmd_s *param_2)
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server\\sv_game.cpp",0x1ce,0,
                     "%s\n\t(sv_maxclients->current.integer) = %i");
   }
-  if ((sv_maxclients->current).integer <= iVar1) {
+  if ((sv_maxclients->current).integer <= param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server\\sv_game.cpp",0x1cf,0,
                     "%s");
   }
   memcpy();
-  __restgprlr_27();
   return;
 }
 
@@ -524,6 +513,8 @@ void SV_ResetSkeletonCache(void)
 
 // 82571380  SV_AllocSkelMemory  (server/sv_game.cpp:554)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
@@ -531,16 +522,14 @@ char * SV_AllocSkelMemory(uint param_1)
 
 {
   uint uVar1;
-  int iVar2;
+  ulonglong uVar2;
   char *pcVar3;
-  ulonglong uVar4;
   
-  iVar2 = __savegprlr_23(param_1);
-  if (iVar2 == 0) {
+  if (param_1 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server\\sv_game.cpp",0x22e,0,
                     "%s");
   }
-  uVar1 = iVar2 + 0xfU & 0xfffffff0;
+  uVar1 = param_1 + 0xf & 0xfffffff0;
   if (0x3fff0 < uVar1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server\\sv_game.cpp",0x231,0,
                     "%s");
@@ -553,17 +542,17 @@ char * SV_AllocSkelMemory(uint param_1)
   sv.skelMemPos = sv.skelMemPos + uVar1;
   if (0x3fff0 < sv.skelMemPos) {
     pcVar3 = g_sv_skel_memory;
-    uVar4 = (ulonglong)(uint)sv.skelTimeStamp;
+    uVar2 = (ulonglong)(uint)sv.skelTimeStamp;
     do {
-      if (warnCount != (int)uVar4) {
-        warnCount = (int)uVar4;
+      if (warnCount != (int)uVar2) {
+        warnCount = (int)uVar2;
         Com_PrintWarning(0xf,"WARNING: SV_SKEL_MEMORY_SIZE exceeded\n");
-        uVar4 = (ulonglong)(uint)sv.skelTimeStamp;
+        uVar2 = (ulonglong)(uint)sv.skelTimeStamp;
       }
-      uVar4 = uVar4 + 1;
-      sv.skelTimeStamp = (int)uVar4;
-      if (uVar4 == 0) {
-        uVar4 = 1;
+      uVar2 = uVar2 + 1;
+      sv.skelTimeStamp = (int)uVar2;
+      if (uVar2 == 0) {
+        uVar2 = 1;
         sv.skelTimeStamp = 1;
       }
       g_sv_skel_memory_start = g_sv_skel_memory;
@@ -574,82 +563,77 @@ char * SV_AllocSkelMemory(uint param_1)
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server\\sv_game.cpp",0x23b,0,
                     "%s");
   }
-  pcVar3 = (char *)__restgprlr_23(pcVar3);
   return pcVar3;
 }
 
 
 // 82571518  SV_DObjCreateSkelForBone  (server/sv_game.cpp:594)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
 int SV_DObjCreateSkelForBone(DObj *param_1,int param_2)
 
 {
-  DObj *pDVar1;
-  int iVar2;
-  uint uVar3;
-  char *pcVar4;
+  int iVar1;
+  uint uVar2;
+  char *pcVar3;
   
-  pDVar1 = (DObj *)__savegprlr_28(param_1);
-  if (pDVar1 == (DObj *)0x0) {
+  if (param_1 == (DObj *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server\\sv_game.cpp",0x256,0,
                     "%s");
   }
-  iVar2 = DObjNumBones(pDVar1);
-  if (iVar2 < 1) {
+  iVar1 = DObjNumBones(param_1);
+  if (iVar1 < 1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server\\sv_game.cpp",599,0,"%s"
                    );
   }
-  iVar2 = DObjSkelExists(pDVar1,sv.skelTimeStamp);
-  if (iVar2 != 0) {
-    iVar2 = DObjSkelIsBoneUpToDate(pDVar1,param_2);
-    iVar2 = __restgprlr_28(iVar2);
-    return iVar2;
+  iVar1 = DObjSkelExists(param_1,sv.skelTimeStamp);
+  if (iVar1 != 0) {
+    iVar1 = DObjSkelIsBoneUpToDate(param_1,param_2);
+    return iVar1;
   }
-  uVar3 = DObjGetAllocSkelSize(pDVar1);
-  pcVar4 = SV_AllocSkelMemory(uVar3);
-  DObjCreateSkel(pDVar1,pcVar4,sv.skelTimeStamp);
-  iVar2 = __restgprlr_28(0);
-  return iVar2;
+  uVar2 = DObjGetAllocSkelSize(param_1);
+  pcVar3 = SV_AllocSkelMemory(uVar2);
+  DObjCreateSkel(param_1,pcVar3,sv.skelTimeStamp);
+  return 0;
 }
 
 
 // 825715F0  SV_DObjCreateSkelForBones  (server/sv_game.cpp:623)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
 int SV_DObjCreateSkelForBones(DObj *param_1,int *param_2)
 
 {
-  DObj *pDVar1;
-  int iVar2;
-  uint uVar3;
-  char *pcVar4;
+  int iVar1;
+  uint uVar2;
+  char *pcVar3;
   
-  pDVar1 = (DObj *)__savegprlr_28(param_1);
-  if (pDVar1 == (DObj *)0x0) {
+  if (param_1 == (DObj *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server\\sv_game.cpp",0x273,0,
                     "%s");
   }
-  iVar2 = DObjNumBones(pDVar1);
-  if (iVar2 < 1) {
+  iVar1 = DObjNumBones(param_1);
+  if (iVar1 < 1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server\\sv_game.cpp",0x274,0,
                     "%s");
   }
-  iVar2 = DObjSkelExists(pDVar1,sv.skelTimeStamp);
-  if (iVar2 != 0) {
-    iVar2 = DObjSkelAreBonesUpToDate(pDVar1,param_2);
-    iVar2 = __restgprlr_28(iVar2);
-    return iVar2;
+  iVar1 = DObjSkelExists(param_1,sv.skelTimeStamp);
+  if (iVar1 != 0) {
+    iVar1 = DObjSkelAreBonesUpToDate(param_1,param_2);
+    return iVar1;
   }
-  uVar3 = DObjGetAllocSkelSize(pDVar1);
-  pcVar4 = SV_AllocSkelMemory(uVar3);
-  DObjCreateSkel(pDVar1,pcVar4,sv.skelTimeStamp);
-  iVar2 = __restgprlr_28(0);
-  return iVar2;
+  uVar2 = DObjGetAllocSkelSize(param_1);
+  pcVar3 = SV_AllocSkelMemory(uVar2);
+  DObjCreateSkel(param_1,pcVar3,sv.skelTimeStamp);
+  return 0;
 }
 
 
@@ -805,49 +789,47 @@ DObjAnimMat * SV_DObjGetRotTransArray(gentity_s *param_1)
 
 // 82571928  SV_DObjSetRotTransIndex  (server/sv_game.cpp:755)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
 int SV_DObjSetRotTransIndex(gentity_s *param_1,int *param_2,int param_3)
 
 {
-  gentity_s *pgVar1;
-  DObj *pDVar2;
-  int iVar3;
+  DObj *pDVar1;
+  int iVar2;
   
-  pgVar1 = (gentity_s *)__savegprlr_29(param_1);
-  pDVar2 = Com_GetServerDObjForEnt(pgVar1);
-  if (pDVar2 == (DObj *)0x0) {
+  pDVar1 = Com_GetServerDObjForEnt(param_1);
+  if (pDVar1 == (DObj *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server\\sv_game.cpp",0x2f7,0,
                     "%s");
   }
-  iVar3 = DObjSetRotTransIndex(pDVar2,param_2,param_3);
-  iVar3 = __restgprlr_29(iVar3);
-  return iVar3;
+  iVar2 = DObjSetRotTransIndex(pDVar1,param_2,param_3);
+  return iVar2;
 }
 
 
 // 82571988  SV_DObjSetControlRotTransIndex  (server/sv_game.cpp:766)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
 int SV_DObjSetControlRotTransIndex(gentity_s *param_1,int *param_2,int param_3)
 
 {
-  gentity_s *pgVar1;
-  DObj *pDVar2;
-  int iVar3;
+  DObj *pDVar1;
+  int iVar2;
   
-  pgVar1 = (gentity_s *)__savegprlr_29(param_1);
-  pDVar2 = Com_GetServerDObjForEnt(pgVar1);
-  if (pDVar2 == (DObj *)0x0) {
+  pDVar1 = Com_GetServerDObjForEnt(param_1);
+  if (pDVar1 == (DObj *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server\\sv_game.cpp",0x302,0,
                     "%s");
   }
-  iVar3 = DObjSetControlRotTransIndex(pDVar2,param_2,param_3);
-  iVar3 = __restgprlr_29(iVar3);
-  return iVar3;
+  iVar2 = DObjSetControlRotTransIndex(pDVar1,param_2,param_3);
+  return iVar2;
 }
 
 
@@ -893,6 +875,8 @@ XAnimTree * SV_DObjGetTree(gentity_s *param_1)
 
 // 82571A98  SV_XModelDebugBoxes  (server/sv_game.cpp:810)
 
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
@@ -956,7 +940,6 @@ void SV_XModelDebugBoxes(gentity_s *param_1,float *param_2,int param_3)
   float afStack_3e0 [12];
   XBoneInfo *local_3b0 [236];
   
-  __savegprlr();
   pDVar11 = Com_GetServerDObjForEnt(param_1);
   if (pDVar11 == (DObj *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server\\sv_game.cpp",0x342,0,
@@ -973,13 +956,13 @@ void SV_XModelDebugBoxes(gentity_s *param_1,float *param_2,int param_3)
   iVar12 = DObjGetNumModels(pDVar11);
   iVar17 = 0;
   local_470 = 0;
-  local_43c = iVar12;
   if (0 < iVar12) {
     dVar23 = -1.0;
     dVar24 = 1.0;
     local_42c = 
     "!IS_NAN((mat->quat)[0]) && !IS_NAN((mat->quat)[1]) && !IS_NAN((mat->quat)[2]) && !IS_NAN((mat->quat)[3])"
     ;
+    local_43c = iVar12;
     do {
       pXVar14 = DObjGetModel(pDVar11,local_470);
       iVar15 = XModelNumBones(pXVar14);
@@ -1092,7 +1075,6 @@ void SV_XModelDebugBoxes(gentity_s *param_1,float *param_2,int param_3)
       local_470 = local_470 + 1;
     } while (local_470 < iVar12);
   }
-  __restgprlr();
   return;
 }
 
@@ -1230,6 +1212,8 @@ void SV_ShutdownGameProgs(void)
 
 // 825720B8  SV_SetGametype  (server/sv_game.cpp:1020)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
@@ -1250,7 +1234,6 @@ void SV_SetGametype(void)
   PartyActiveClient aPStack_90 [2];
   char local_80 [128];
   
-  __savegprlr_26();
   iVar2 = *in_r13;
   uVar3 = *(undefined4 *)(iVar2 + 0xf4);
   *(undefined4 *)(iVar2 + 0xf4) = 0xffffedff;
@@ -1289,13 +1272,14 @@ void SV_SetGametype(void)
     Live_SetGametype(aPStack_90[0].localControllerIndex,local_80,(pdVar4->current).color[0]);
   }
   *(undefined4 *)(iVar2 + 0xf4) = uVar3;
-  __restgprlr_26();
   return;
 }
 
 
 // 82572240  SV_InitGameVM  (server/sv_game.cpp:1075)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "ConfigString": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
@@ -1304,20 +1288,18 @@ void SV_SetGametype(void)
 void SV_InitGameVM(int param_1,int param_2,int param_3)
 
 {
-  int iVar1;
-  uint uVar2;
-  char *pcVar3;
-  client_t *pcVar4;
-  int iVar5;
-  ulonglong uVar6;
-  int iVar7;
-  longlong lVar8;
+  uint uVar1;
+  char *pcVar2;
+  client_t *pcVar3;
+  int iVar4;
+  ulonglong uVar5;
+  int iVar6;
+  longlong lVar7;
   char in_RESERVE;
   byte in_cr0;
   
-  iVar1 = __savegprlr_24(param_1);
   do {
-    iVar5 = g_serverThreadOwnership;
+    iVar4 = g_serverThreadOwnership;
     if (g_serverThreadOwnership != 0) {
       if (in_RESERVE != '\0') {
         g_serverThreadOwnership =
@@ -1331,14 +1313,14 @@ void SV_InitGameVM(int param_1,int param_2,int param_3)
       in_cr0 = 2;
     }
   } while (!(bool)(in_cr0 >> 1 & 1));
-  if (iVar5 != 1) {
+  if (iVar4 != 1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server\\sv_game.cpp",0x436,0,
                     "%s\n\t(g_serverThreadOwnership) = %i");
   }
   G_ResetEntityParsePoint();
-  uVar6 = (ulonglong)(uint)sv.skelTimeStamp;
-  sv.skelTimeStamp = (int)(uVar6 + 1);
-  if (uVar6 + 1 == 0) {
+  uVar5 = (ulonglong)(uint)sv.skelTimeStamp;
+  sv.skelTimeStamp = (int)(uVar5 + 1);
+  if (uVar5 + 1 == 0) {
     sv.skelTimeStamp = 1;
   }
   sv.skelMemPos = 0;
@@ -1347,28 +1329,28 @@ void SV_InitGameVM(int param_1,int param_2,int param_3)
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server\\sv_game.cpp",0x442,0,
                     "%s\n\t(sv_maxclients->current.integer) = %i");
   }
-  iVar5 = 0;
+  iVar4 = 0;
   if (0 < (sv_maxclients->current).integer) {
-    pcVar4 = svs.clients;
-    iVar7 = 0;
+    pcVar3 = svs.clients;
+    iVar6 = 0;
     do {
-      pcVar4->gentity = (gentity_s *)0x0;
-      iVar5 = iVar5 + 1;
-      pcVar4 = (client_t *)(svs.clients[1].header.netchan.remoteAddress.ip + iVar7 + -0x2c);
-      iVar7 = iVar7 + 0x68b00;
-    } while (iVar5 < (sv_maxclients->current).integer);
+      pcVar3->gentity = (gentity_s *)0x0;
+      iVar4 = iVar4 + 1;
+      pcVar3 = (client_t *)(svs.clients[1].header.netchan.remoteAddress.ip + iVar6 + -0x2c);
+      iVar6 = iVar6 + 0x68b00;
+    } while (iVar4 < (sv_maxclients->current).integer);
   }
   ProfLoad_Begin("G_InitGame");
-  uVar2 = Sys_MillisecondsRaw();
-  G_InitGame(svs.time,uVar2,iVar1,param_2,param_3);
+  uVar1 = Sys_MillisecondsRaw();
+  G_InitGame(svs.time,uVar1,param_1,param_2,param_3);
   ProfLoad_End();
   sv.levelTime = svs.time;
   I_strncpyz(sv.gametype,(sv_gametype->current).string,0x40);
-  pcVar3 = va("%i");
-  SV_SetConfigstring(CS_SERVERID,pcVar3);
+  pcVar2 = va("%i");
+  SV_SetConfigstring(CS_SERVERID,pcVar2);
   Migration_Shutdown();
   if (param_3 == 0) {
-    lVar8 = 3;
+    lVar7 = 3;
     do {
       sv.levelTime = sv.levelTime + 0x32;
       SV_RunFrame();
@@ -1376,10 +1358,9 @@ void SV_InitGameVM(int param_1,int param_2,int param_3)
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server\\sv_game.cpp",0x473,
                         0,"%s");
       }
-      lVar8 = lVar8 + -1;
-    } while (lVar8 != 0);
+      lVar7 = lVar7 + -1;
+    } while (lVar7 != 0);
   }
-  __restgprlr_24();
   return;
 }
 
@@ -1425,18 +1406,19 @@ void SV_ShutdownGameVM(int param_1)
 
 // 825725B0  SV_RestartGameProgs  (server/sv_game.cpp:1325)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void SV_RestartGameProgs(int param_1,int param_2)
 
 {
   int iVar1;
-  int iVar2;
-  bool bVar3;
+  bool bVar2;
   char in_RESERVE;
   byte in_cr0;
   
-  iVar2 = __savegprlr_29(param_1);
-  bVar3 = Sys_IsMainThread();
-  if (!bVar3) {
+  bVar2 = Sys_IsMainThread();
+  if (!bVar2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server\\sv_game.cpp",0x52e,0,
                     "%s");
   }
@@ -1461,8 +1443,7 @@ void SV_RestartGameProgs(int param_1,int param_2)
   }
   SV_ShutdownGameVM(0);
   com_fixedConsolePosition = 0;
-  SV_InitGameVM(1,iVar2,param_2);
-  __restgprlr_29();
+  SV_InitGameVM(1,param_1,param_2);
   return;
 }
 

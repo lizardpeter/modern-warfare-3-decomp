@@ -2,32 +2,30 @@
 
 // 82355298  LAN_GetServerAddressString  (client_mp/cl_ui_xenon_mp.cpp:29)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 
 void LAN_GetServerAddressString(int param_1,int param_2,char *param_3,int param_4)
 
 {
-  int iVar1;
-  char *pcVar2;
+  char *pcVar1;
   char acStack_f0 [32];
   char acStack_d0 [32];
   char acStack_b0 [48];
   char acStack_80 [128];
   
-  iVar1 = __savegprlr_28(param_1);
-  if (((iVar1 == 0) && (-1 < param_2)) && (param_2 < 0x10)) {
+  if (((param_1 == 0) && (-1 < param_2)) && (param_2 < 0x10)) {
     Int128ToString(cls.localServers[param_2].xnkey.ab,acStack_b0);
     Int64ToString(*(long64 *)cls.localServers[param_2].xnkid.ab,acStack_f0);
     XNAddrToString(&cls.localServers[param_2].xnaddr,acStack_80);
     Int64ToString(cls.localServers[param_2].nonce,acStack_d0);
-    pcVar2 = va("%s %s %s %i %i %s");
-    I_strncpyz(param_3,pcVar2,param_4);
-    __restgprlr_28();
+    pcVar1 = va("%s %s %s %i %i %s");
+    I_strncpyz(param_3,pcVar1,param_4);
     return;
   }
   *param_3 = '\0';
-  __restgprlr_28();
   return;
 }
 
@@ -56,42 +54,39 @@ void LAN_SaveServersToCache(void)
 
 // 82355378  CL_XenonHudIsOffscreen  (client_mp/cl_ui_xenon_mp.cpp:123)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void CL_XenonHudIsOffscreen(LocalClientNum_t param_1)
 
 {
-  LocalClientNum_t LVar1;
-  bool bVar2;
+  bool bVar1;
   char acStack_120 [255];
   undefined1 local_21;
   
-  LVar1 = __savegprlr_29(param_1);
-  if (isGuideKeyboardActive != false) {
+  if (isGuideKeyboardActive) {
     if (guideKeyboard_pOverlapped.dwExtendedError == 0) {
       WideCharToMultiByte(0,0,guideKeyboard_Buffer,-1,acStack_120,0x100,(char *)0x0,(int *)0x0);
       local_21 = 0;
       Com_Printf(0x10,"%s\n");
-      bVar2 = UI_VerifyString(acStack_120,guideKeyboard_Buffer);
-      if (!bVar2) {
+      bVar1 = UI_VerifyString(acStack_120,guideKeyboard_Buffer);
+      if (!bVar1) {
         Com_SetErrorMessage("MENU_INVALIDCHARS");
-        UI_OpenMenu(LVar1,"error_popmenu_party");
+        UI_OpenMenu(param_1,"error_popmenu_party");
         isGuideKeyboardActive = false;
-        UI_CallKeyboardCallbackCancelled(LVar1);
-        __restgprlr_29();
+        UI_CallKeyboardCallbackCancelled(param_1);
         return;
       }
-      UI_CallKeyboardCallback(LVar1,acStack_120);
+      UI_CallKeyboardCallback(param_1,acStack_120);
       isGuideKeyboardActive = false;
-      __restgprlr_29();
       return;
     }
     if (guideKeyboard_pOverlapped.dwExtendedError == 0x4c7) {
-      UI_CallKeyboardCallbackCancelled(LVar1);
+      UI_CallKeyboardCallbackCancelled(param_1);
     }
     isGuideKeyboardActive = false;
   }
-  __restgprlr_29();
   return;
 }
 

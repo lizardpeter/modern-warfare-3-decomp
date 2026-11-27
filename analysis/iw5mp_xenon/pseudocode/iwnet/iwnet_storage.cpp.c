@@ -103,6 +103,8 @@ void IWNet_WriteStorageUtil_FileId(IWNetCommandData *param_1,msg_t *param_2)
 
 // 826E2FA8  IWNet_WriteStorageUtil_FileName  (iwnet/iwnet_storage.cpp:82)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "IWNetCommand": Some values do not have unique names */
 /* WARNING: Enum "IWNetClientNetworkMessage": Some values do not have unique names */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
@@ -110,21 +112,19 @@ void IWNet_WriteStorageUtil_FileId(IWNetCommandData *param_1,msg_t *param_2)
 void IWNet_WriteStorageUtil_FileName(IWNetCommandData *param_1,msg_t *param_2)
 
 {
-  char cVar1;
-  char *pcVar2;
-  int iVar3;
-  char *pcVar4;
+  IWNetStorageTaskState *pIVar1;
+  IWNetStorageTaskState *pIVar2;
+  char *pcVar3;
   
-  iVar3 = __savegprlr_29(param_1);
-  pcVar2 = *(char **)(iVar3 + 0xc);
-  pcVar4 = pcVar2;
+  pIVar1 = (param_1->params).storageParams;
+  pIVar2 = pIVar1;
   do {
-    cVar1 = *pcVar4;
-    pcVar4 = pcVar4 + 1;
-  } while (cVar1 != '\0');
-  MSG_WriteByte(param_2,(int)(pcVar4 + (-1 - (int)pcVar2)));
-  MSG_WriteData(param_2,pcVar2,(int)(pcVar4 + (-1 - (int)pcVar2)));
-  __restgprlr_29();
+    pcVar3 = pIVar2->filename;
+    pIVar2 = (IWNetStorageTaskState *)(pIVar2->filename + 1);
+  } while (*pcVar3 != '\0');
+  pcVar3 = (char *)((int)pIVar2 + (-1 - (int)pIVar1));
+  MSG_WriteByte(param_2,(int)pcVar3);
+  MSG_WriteData(param_2,pIVar1,(int)pcVar3);
   return;
 }
 
@@ -145,6 +145,8 @@ void IWNet_WriteStorage_BeginWrite(int param_1,IWNetCommandData *param_2,msg_t *
 
 // 826E3008  IWNet_WriteStorage_Write  (iwnet/iwnet_storage.cpp:101)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "IWNetCommand": Some values do not have unique names */
 /* WARNING: Enum "IWNetClientNetworkMessage": Some values do not have unique names */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
@@ -155,7 +157,6 @@ void IWNet_WriteStorage_Write(int param_1,IWNetCommandData *param_2,msg_t *param
   uint uVar1;
   uint uVar2;
   
-  __savegprlr_28(param_1);
   uVar1 = IWNet_Storage_UtilWriteSpaceLeft(param_2);
   if (uVar1 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\iwnet\\iwnet_storage.cpp",0x71,
@@ -171,13 +172,14 @@ void IWNet_WriteStorage_Write(int param_1,IWNetCommandData *param_2,msg_t *param
   MSG_WriteLong(param_3,uVar1);
   MSG_WriteLong(param_3,uVar2);
   MSG_WriteData(param_3,((param_2->params).storageParams)->data + uVar1,uVar2);
-  __restgprlr_28();
   return;
 }
 
 
 // 826E30C8  IWNet_WriteStorage_EndWrite  (iwnet/iwnet_storage.cpp:140)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "IWNetCommand": Some values do not have unique names */
 /* WARNING: Enum "IWNetClientNetworkMessage": Some values do not have unique names */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
@@ -189,7 +191,6 @@ void IWNet_WriteStorage_EndWrite(int param_1,IWNetCommandData *param_2,msg_t *pa
   IWNetStorageTaskState *pIVar2;
   char *pcVar3;
   
-  __savegprlr_29(param_1);
   IWNet_WriteCommandHeader(IWN_BLOB_FILEENDWRITE,param_2,param_3);
   MSG_WriteInt64(param_3,((param_2->params).storageParams)->fileId);
   pIVar1 = (param_2->params).storageParams;
@@ -201,13 +202,14 @@ void IWNet_WriteStorage_EndWrite(int param_1,IWNetCommandData *param_2,msg_t *pa
   pcVar3 = (char *)((int)pIVar2 + (-1 - (int)pIVar1));
   MSG_WriteByte(param_3,(int)pcVar3);
   MSG_WriteData(param_3,pIVar1,(int)pcVar3);
-  __restgprlr_29();
   return;
 }
 
 
 // 826E3140  IWNet_WriteStorage_BeginRead  (iwnet/iwnet_storage.cpp:150)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "IWNetCommand": Some values do not have unique names */
 /* WARNING: Enum "IWNetClientNetworkMessage": Some values do not have unique names */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
@@ -219,7 +221,6 @@ void IWNet_WriteStorage_BeginRead(int param_1,IWNetCommandData *param_2,msg_t *p
   IWNetStorageTaskState *pIVar2;
   char *pcVar3;
   
-  __savegprlr_29(param_1);
   IWNet_WriteCommandHeader(IWN_BLOB_FILEBEGINREAD,param_2,param_3);
   pIVar1 = (param_2->params).storageParams;
   pIVar2 = pIVar1;
@@ -230,13 +231,14 @@ void IWNet_WriteStorage_BeginRead(int param_1,IWNetCommandData *param_2,msg_t *p
   pcVar3 = (char *)((int)pIVar2 + (-1 - (int)pIVar1));
   MSG_WriteByte(param_3,(int)pcVar3);
   MSG_WriteData(param_3,pIVar1,(int)pcVar3);
-  __restgprlr_29();
   return;
 }
 
 
 // 826E31A8  IWNet_WriteStorage_Read  (iwnet/iwnet_storage.cpp:159)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "IWNetCommand": Some values do not have unique names */
 /* WARNING: Enum "IWNetClientNetworkMessage": Some values do not have unique names */
@@ -247,7 +249,6 @@ void IWNet_WriteStorage_Read(int param_1,IWNetCommandData *param_2,msg_t *param_
   uint uVar1;
   uint uVar2;
   
-  __savegprlr_28(param_1);
   uVar1 = IWNet_Storage_UtilReadSpaceLeft(param_2);
   if (uVar1 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\iwnet\\iwnet_storage.cpp",0xa7,
@@ -262,7 +263,6 @@ void IWNet_WriteStorage_Read(int param_1,IWNetCommandData *param_2,msg_t *param_
   MSG_WriteInt64(param_3,((param_2->params).storageParams)->fileId);
   MSG_WriteLong(param_3,uVar1);
   MSG_WriteLong(param_3,uVar2);
-  __restgprlr_28();
   return;
 }
 
@@ -291,6 +291,8 @@ void IWNet_WriteStorage_EndRead(int param_1,IWNetCommandData *param_2,msg_t *par
 
 // 826E32E0  IWNet_Storage_WriteCommand  (iwnet/iwnet_storage.cpp:216)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "IWNetCommand": Some values do not have unique names */
 /* WARNING: Enum "IWNetClientNetworkMessage": Some values do not have unique names */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
@@ -298,21 +300,18 @@ void IWNet_WriteStorage_EndRead(int param_1,IWNetCommandData *param_2,msg_t *par
 void IWNet_Storage_WriteCommand(int param_1,IWNetCommandData *param_2,msg_t *param_3)
 
 {
-  int iVar2;
-  _func___cdecl_void_int_IWNetCommandData_ptr_msg_t_ptr *p_Var3;
+  _func___cdecl_void_int_IWNetCommandData_ptr_msg_t_ptr *p_Var2;
   ulong64 uVar1;
   
-  iVar2 = __savegprlr_28(param_1);
-  p_Var3 = IWNet_UtilFindWriter(iwnetStorageCommandWriters,param_2->command);
-  if (p_Var3 == (_func___cdecl_void_int_IWNetCommandData_ptr_msg_t_ptr *)0x0) {
+  p_Var2 = IWNet_UtilFindWriter(iwnetStorageCommandWriters,param_2->command);
+  if (p_Var2 == (_func___cdecl_void_int_IWNetCommandData_ptr_msg_t_ptr *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\iwnet\\iwnet_storage.cpp",0xdd,
                     0,"%s\n\t(cmd->command) = %i");
   }
   MSG_WriteByte(param_3,2);
-  uVar1 = Live_GetXuid(iVar2);
+  uVar1 = Live_GetXuid(param_1);
   MSG_WriteInt64(param_3,uVar1);
-  (*p_Var3)(iVar2,param_2,param_3);
-  __restgprlr_28();
+  (*p_Var2)(param_1,param_2,param_3);
   return;
 }
 
@@ -458,6 +457,8 @@ void IWNet_Storage_HandleReplyFileBeginRead(IWNetCommandData *param_1,msg_t *par
 
 // 826E3630  IWNet_Storage_HandleReplyFileRead  (iwnet/iwnet_storage.cpp:318)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "IWNetCommand": Some values do not have unique names */
 /* WARNING: Enum "IWNetClientNetworkMessage": Some values do not have unique names */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
@@ -465,52 +466,44 @@ void IWNet_Storage_HandleReplyFileBeginRead(IWNetCommandData *param_1,msg_t *par
 void IWNet_Storage_HandleReplyFileRead(IWNetCommandData *param_1,msg_t *param_2)
 
 {
-  IWNetCommandData *pIVar1;
+  uint uVar1;
   uint uVar2;
   uint uVar3;
-  uint uVar4;
-  bool bVar5;
-  IWNetParameters *pIVar6;
+  IWNetParameters *pIVar4;
   
-  pIVar1 = (IWNetCommandData *)__savegprlr_27(param_1);
-  pIVar6 = &pIVar1->params;
-  uVar4 = ((pIVar1->params).storageParams)->size;
-  uVar2 = MSG_ReadLong(param_2);
+  pIVar4 = &param_1->params;
+  uVar3 = ((param_1->params).storageParams)->size;
+  uVar1 = MSG_ReadLong(param_2);
   if (param_2->overflowed != 0) {
     Com_PrintError(0x19,"IWNet: underflow in IWNet_Storage_HandleReplyFileRead\n");
-    IWNet_Storage_UtilComplete(pIVar1,IWNET_STORAGE_ERROR_GENERAL);
-    __restgprlr_27();
+    IWNet_Storage_UtilComplete(param_1,IWNET_STORAGE_ERROR_GENERAL);
     return;
   }
-  uVar3 = IWNet_Storage_UtilReadSpaceLeft(pIVar1);
-  if (uVar3 < uVar2) {
-    IWNet_Storage_UtilReadSpaceLeft(pIVar1);
+  uVar2 = IWNet_Storage_UtilReadSpaceLeft(param_1);
+  if (uVar2 < uVar1) {
+    IWNet_Storage_UtilReadSpaceLeft(param_1);
     Com_PrintError(0x19,"IWNet: Storage read reply would overflow buffer (suspicious.) (%i > %i)\n")
     ;
-    IWNet_Storage_UtilComplete(pIVar1,IWNET_STORAGE_ERROR_GENERAL);
-    __restgprlr_27();
+    IWNet_Storage_UtilComplete(param_1,IWNET_STORAGE_ERROR_GENERAL);
     return;
   }
-  if (uVar2 == 0) {
+  if (uVar1 == 0) {
     Com_PrintError(0x19,"IWNet: Zero-size storage read reply. (%i left to get)\n");
-    IWNet_Storage_UtilComplete(pIVar1,IWNET_STORAGE_ERROR_GENERAL);
-    __restgprlr_27();
+    IWNet_Storage_UtilComplete(param_1,IWNET_STORAGE_ERROR_GENERAL);
     return;
   }
-  MSG_ReadData(param_2,pIVar6->storageParams->data + uVar4,uVar2);
+  MSG_ReadData(param_2,pIVar4->storageParams->data + uVar3,uVar1);
   if (param_2->overflowed != 0) {
     Com_PrintError(0x19,"IWNet: underflow in data portion of IWNet_Storage_HandleReplyFileRead\n");
-    IWNet_Storage_UtilComplete(pIVar1,IWNET_STORAGE_ERROR_GENERAL);
-    __restgprlr_27();
+    IWNet_Storage_UtilComplete(param_1,IWNET_STORAGE_ERROR_GENERAL);
     return;
   }
   if ((iwnet_testinfinitedownload->current).enabled == false) {
-    pIVar6->storageParams->size = pIVar6->storageParams->size + uVar2;
+    pIVar4->storageParams->size = pIVar4->storageParams->size + uVar1;
   }
-  uVar4 = IWNet_Storage_UtilReadSpaceLeft(pIVar1);
-  bVar5 = IWNet_AddCommand((pIVar1->internalData).localControllerIndex,
-                           ((uint)LZCOUNT(uVar4) >> 5) + IWNET_STORAGE_READ,pIVar6);
-  __restgprlr_27(bVar5);
+  uVar3 = IWNet_Storage_UtilReadSpaceLeft(param_1);
+  IWNet_AddCommand((param_1->internalData).localControllerIndex,
+                   ((uint)LZCOUNT(uVar3) >> 5) + IWNET_STORAGE_READ,pIVar4);
   return;
 }
 
@@ -583,6 +576,8 @@ void IWNet_Storage_HandleError<1>(IWNetCommandData *param_1,msg_t *param_2)
 
 // 826E3D30  IWNet_Storage_ParsePacket  (iwnet/iwnet_storage.cpp:462)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "IWNetCommand": Some values do not have unique names */
 /* WARNING: Enum "IWNetClientNetworkMessage": Some values do not have unique names */
@@ -591,85 +586,76 @@ void IWNet_Storage_ParsePacket(msg_t *param_1)
 
 {
   StorageHandler *pSVar1;
-  msg_t *pmVar2;
+  int iVar2;
   int iVar3;
-  int iVar4;
-  uint uVar5;
-  IWNetCommandData *pIVar6;
-  bool bVar7;
-  StorageHandler *pSVar8;
+  uint uVar4;
+  IWNetCommandData *pIVar5;
+  bool bVar6;
+  StorageHandler *pSVar7;
   
-  pmVar2 = (msg_t *)__savegprlr_27(param_1);
-  iVar3 = MSG_ReadByte(pmVar2);
-  iVar4 = MSG_ReadByte(pmVar2);
-  MSG_ReadByte(pmVar2);
-  uVar5 = MSG_ReadShort(pmVar2);
-  if (pmVar2->overflowed != 0) {
+  iVar2 = MSG_ReadByte(param_1);
+  iVar3 = MSG_ReadByte(param_1);
+  MSG_ReadByte(param_1);
+  uVar4 = MSG_ReadShort(param_1);
+  if (param_1->overflowed != 0) {
     Com_PrintError(0x19,"IWNet: underflowed storage packet\n");
-    __restgprlr_27();
     return;
   }
-  pIVar6 = IWNet_GetCommandSlotByIndex(iVar4);
-  if (pIVar6 == (IWNetCommandData *)0x0) {
+  pIVar5 = IWNet_GetCommandSlotByIndex(iVar3);
+  if (pIVar5 == (IWNetCommandData *)0x0) {
     Com_PrintError(0x19,"IWNet: corrupt packet referring to IWNet command slot %i\n");
-    __restgprlr_27();
     return;
   }
-  if (pIVar6->active != false) {
-    if ((uint)pIVar6->sequenceNumber != (uVar5 & 0xffff)) {
+  if (pIVar5->active != false) {
+    if ((uint)pIVar5->sequenceNumber != (uVar4 & 0xffff)) {
       Com_PrintError(0x19,
                      "IWNet_Storage_ParsePacket(): out of sequence packet (expected %i, got %i), so ignoring packet.\n"
                     );
-      __restgprlr_27();
       return;
     }
-    bVar7 = IWNet_Storage_IsComplete((pIVar6->params).storageParams);
-    if (bVar7) {
+    bVar6 = IWNet_Storage_IsComplete((pIVar5->params).storageParams);
+    if (bVar6) {
       if (alwaysfails == 0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\iwnet\\iwnet_storage.cpp",
                         0x1fa,0,"Storage command is Complete, but still active.\n");
       }
       Com_PrintError(0x19,"IWNet_Storage_ParsePacket(): task is complete, so ignoring packet.\n");
-      __restgprlr_27();
       return;
     }
-    pSVar8 = s_storageHandlers;
+    pSVar7 = s_storageHandlers;
     do {
-      if ((pSVar8->result == iVar3) &&
-         ((pSVar8->anyClientMessage != false ||
-          (pSVar8->clientNetworkMessage == pIVar6->networkCommand)))) {
-        (*pSVar8->function)(pIVar6,pmVar2);
-        IWNet_CloseTask(pIVar6);
-        __restgprlr_27();
+      if ((pSVar7->result == iVar2) &&
+         ((pSVar7->anyClientMessage != false ||
+          (pSVar7->clientNetworkMessage == pIVar5->networkCommand)))) {
+        (*pSVar7->function)(pIVar5,param_1);
+        IWNet_CloseTask(pIVar5);
         return;
       }
-      pSVar1 = pSVar8 + 1;
-      pSVar8 = pSVar8 + 1;
+      pSVar1 = pSVar7 + 1;
+      pSVar7 = pSVar7 + 1;
     } while (pSVar1->function != (_func___cdecl_void_IWNetCommandData_ptr_msg_t_ptr *)0x0);
     Com_PrintError(0x19,
                    "IWNet_Storage_ParsePacket(): Received a response for command %i, but command %i is wrong result type %i for outgoing command %i\n"
                   );
-    IWNet_CloseTask(pIVar6);
+    IWNet_CloseTask(pIVar5);
   }
-  __restgprlr_27();
   return;
 }
 
 
 // 826E3800  IWNet_Storage_Write  (iwnet/iwnet_storage.cpp:527)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "IWNetCommand": Some values do not have unique names */
 
 bool IWNet_Storage_Write(int param_1,IWNetStorageTaskState *param_2,char *param_3,uchar *param_4,
                         uint param_5)
 
 {
-  int iVar1;
-  bool bVar2;
-  undefined1 uVar3;
+  bool bVar1;
   IWNetParameters local_40 [16];
   
-  iVar1 = __savegprlr_27(param_1);
   local_40[0].storageParams = param_2;
   memset();
   param_2->state = IWNET_STORAGE_WORKING;
@@ -684,26 +670,24 @@ bool IWNet_Storage_Write(int param_1,IWNetStorageTaskState *param_2,char *param_
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\iwnet\\iwnet_storage.cpp",0x21b
                     ,0,"%s");
   }
-  bVar2 = IWNet_AddCommand(iVar1,IWNET_STORAGE_BEGIN_WRITE,local_40);
-  uVar3 = __restgprlr_27(bVar2);
-  return (bool)uVar3;
+  bVar1 = IWNet_AddCommand(param_1,IWNET_STORAGE_BEGIN_WRITE,local_40);
+  return bVar1;
 }
 
 
 // 826E38D0  IWNet_Storage_Read  (iwnet/iwnet_storage.cpp:546)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "IWNetCommand": Some values do not have unique names */
 
 bool IWNet_Storage_Read(int param_1,IWNetStorageTaskState *param_2,char *param_3,uchar *param_4,
                        uint param_5)
 
 {
-  int iVar1;
-  bool bVar2;
-  undefined1 uVar3;
+  bool bVar1;
   IWNetParameters local_40 [16];
   
-  iVar1 = __savegprlr_27(param_1);
   local_40[0].storageParams = param_2;
   memset();
   param_2->state = IWNET_STORAGE_WORKING;
@@ -718,9 +702,8 @@ bool IWNet_Storage_Read(int param_1,IWNetStorageTaskState *param_2,char *param_3
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\iwnet\\iwnet_storage.cpp",0x22f
                     ,0,"%s");
   }
-  bVar2 = IWNet_AddCommand(iVar1,IWNET_STORAGE_BEGIN_READ,local_40);
-  uVar3 = __restgprlr_27(bVar2);
-  return (bool)uVar3;
+  bVar1 = IWNet_AddCommand(param_1,IWNET_STORAGE_BEGIN_READ,local_40);
+  return bVar1;
 }
 
 

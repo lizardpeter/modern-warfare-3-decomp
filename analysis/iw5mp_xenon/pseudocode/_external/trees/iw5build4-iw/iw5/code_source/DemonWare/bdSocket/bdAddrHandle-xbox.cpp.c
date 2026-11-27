@@ -2,25 +2,24 @@
 
 // 8292CC68  getRealAddr  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdsocket/bdaddrhandle-xbox.cpp:19)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 bdAddr __thiscall bdAddrHandle::getRealAddr(bdAddrHandle *this)
 
 {
-  undefined8 uVar1;
-  bdAddr bVar2;
   int in_r4;
-  bdAddr *pbStack00000014;
+  bdAddrHandle *pbStack00000014;
   bdInetAddr bStack_30;
   undefined4 local_2c;
   
-  uVar1 = __savegprlr_29(this);
   local_2c = 0;
-  pbStack00000014 = (bdAddr *)uVar1;
+  pbStack00000014 = this;
   bdInetAddr::bdInetAddr(&bStack_30,*(uint *)(in_r4 + 0x14));
-  bdAddr::bdAddr((bdAddr *)uVar1,&bStack_30,*(ushort *)(in_r4 + 0x18));
+  bdAddr::bdAddr((bdAddr *)this,&bStack_30,*(ushort *)(in_r4 + 0x18));
   local_2c = 1;
   bdInetAddr::~bdInetAddr(&bStack_30);
-  bVar2 = (bdAddr)__restgprlr_29(uVar1);
-  return bVar2;
+  return (bdAddr)(longlong)(int)this;
 }
 
 

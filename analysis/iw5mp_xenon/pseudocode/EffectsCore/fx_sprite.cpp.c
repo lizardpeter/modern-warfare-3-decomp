@@ -2,6 +2,10 @@
 
 // 824429A8  FX_BuildQuadStampCodeMeshVerts  (EffectsCore/fx_sprite.cpp:37)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
 /* WARNING: Restarted to delay deadcode elimination for space: stack */
 
 void FX_BuildQuadStampCodeMeshVerts
@@ -12,24 +16,20 @@ void FX_BuildQuadStampCodeMeshVerts
 {
   float fVar1;
   ulonglong uVar2;
-  GfxCodeSurfGlob *pGVar3;
-  bool bVar5;
-  GfxPackedVertex *pGVar4;
-  longlong lVar6;
-  longlong lVar7;
-  float *pfVar8;
-  PackedUnitVec *pPVar9;
-  GfxColor GVar10;
+  bool bVar4;
+  GfxPackedVertex *pGVar3;
+  PackedUnitVec *pPVar5;
+  GfxColor GVar6;
+  double dVar7;
+  double dVar8;
+  double dVar9;
+  double dVar10;
   double dVar11;
   double dVar12;
-  double dVar13;
-  double dVar14;
-  double dVar15;
-  double dVar16;
-  undefined1 auVar17 [16];
-  undefined1 auVar18 [16];
-  undefined1 auVar19 [16];
-  undefined1 auVar20 [16];
+  undefined1 auVar13 [16];
+  undefined1 auVar14 [16];
+  undefined1 auVar15 [16];
+  undefined1 auVar16 [16];
   ushort local_c0 [2];
   PackedUnitVec local_bc;
   r_double_index_t *local_b8;
@@ -37,113 +37,106 @@ void FX_BuildQuadStampCodeMeshVerts
   undefined1 local_b0 [8];
   float fStack_a8;
   
-  lVar7 = (longlong)(int)param_5;
-  lVar6 = (longlong)(int)param_3;
   uVar2 = ZEXT48(&stack0x00000000);
-  __savegprlr_23((double)param_8,param_1);
-  pGVar3 = (GfxCodeSurfGlob *)__savefpr_22();
-  bVar5 = R_ReserveCodeSurfBuffers(pGVar3,4,6,0,local_c0,&local_b8,(uint *)0x0);
-  if (bVar5) {
-    R_AddCodeSurf(pGVar3,param_2,local_b8,6,0,0,"");
-    auVar20 = vectorSplatImmediateSignedWord(0xff);
+  bVar4 = R_ReserveCodeSurfBuffers(param_1,4,6,0,local_c0,&local_b8,(uint *)0x0);
+  if (bVar4) {
+    R_AddCodeSurf(param_1,param_2,local_b8,6,0,0,"");
+    auVar16 = vectorSplatImmediateSignedWord(0xff);
     local_bc.packed._0_2_ = local_c0[0];
     local_bc.packed._2_2_ = local_c0[0] + 1;
     *(PackedUnitVec *)local_b8->value = local_bc;
-    auVar19 = vectorShiftLeftWord128(auVar20,auVar20);
-    auVar20 = vectorShiftLeftWord128(auVar20,auVar20);
+    auVar15 = vectorShiftLeftWord128(auVar16,auVar16);
+    auVar16 = vectorShiftLeftWord128(auVar16,auVar16);
     local_bc.packed._0_2_ = local_c0[0] + 3;
     local_bc.packed._2_2_ = local_c0[0] + 3;
     *(PackedUnitVec *)local_b8[1].value = local_bc;
-    pPVar9 = (PackedUnitVec *)(local_b8 + 2);
+    pPVar5 = (PackedUnitVec *)(local_b8 + 2);
     local_bc.packed._0_2_ = local_c0[0] + 1;
     local_bc.packed._2_2_ = local_c0[0] + 2;
     local_b8 = local_b8 + 3;
-    *pPVar9 = local_bc;
-    auVar18 = loadVectorRightIndexed(lVar6 + 0x10);
-    pfVar8 = (float *)lVar7;
-    auVar17 = loadVectorLeftIndexed(lVar6);
-    dVar16 = (double)(*param_6 + *pfVar8);
-    GVar10.array[0] = param_7[3];
-    GVar10.array[1] = *param_7;
-    dVar15 = (double)(param_6[1] + pfVar8[1]);
-    dVar14 = (double)(param_6[2] + pfVar8[2]);
-    auVar19 = (auVar17 | auVar18) & (undefined1  [16])g_keepXYZ.field0_0x0 ^ auVar19;
-    dVar13 = (double)(*pfVar8 - *param_6);
-    auVar17 = vectorMultiplyAddFloatingPoint
-                        (auVar19,(undefined1  [16])g_packMul101010.field0_0x0,
+    *pPVar5 = local_bc;
+    auVar14 = loadVectorRightIndexed((longlong)(int)param_3 + 0x10);
+    auVar13 = loadVectorLeftIndexed((longlong)(int)param_3);
+    dVar12 = (double)(*param_6 + *param_5);
+    GVar6.array[0] = param_7[3];
+    GVar6.array[1] = *param_7;
+    dVar11 = (double)(param_6[1] + param_5[1]);
+    dVar10 = (double)(param_6[2] + param_5[2]);
+    auVar15 = (auVar13 | auVar14) & (undefined1  [16])g_keepXYZ.field0_0x0 ^ auVar15;
+    dVar9 = (double)(*param_5 - *param_6);
+    auVar13 = vectorMultiplyAddFloatingPoint
+                        (auVar15,(undefined1  [16])g_packMul101010.field0_0x0,
                          (undefined1  [16])g_packAdd.field0_0x0);
-    auVar19 = vectorPackD3Dtype(auVar19,auVar17,9,3);
-    auVar19 = vectorSplatWord(auVar19,0);
-    GVar10.array[2] = param_7[1];
-    dVar12 = (double)(pfVar8[1] - param_6[1]);
-    dVar11 = (double)(pfVar8[2] - param_6[2]);
-    GVar10.array[3] = param_7[2];
-    storeVectorElementWordIndexed(auVar19,uVar2 - 0xb4);
-    auVar17 = loadVectorRightIndexed(lVar7 + 0x10);
-    auVar19 = loadVectorLeftIndexed(lVar7);
-    auVar20 = (auVar19 | auVar17) & (undefined1  [16])g_keepXYZ.field0_0x0 ^ auVar20;
-    auVar19 = vectorMultiplyAddFloatingPoint
-                        (auVar20,(undefined1  [16])g_packMul101010.field0_0x0,
+    auVar15 = vectorPackD3Dtype(auVar15,auVar13,9,3);
+    auVar15 = vectorSplatWord(auVar15,0);
+    GVar6.array[2] = param_7[1];
+    dVar8 = (double)(param_5[1] - param_6[1]);
+    dVar7 = (double)(param_5[2] - param_6[2]);
+    GVar6.array[3] = param_7[2];
+    storeVectorElementWordIndexed(auVar15,uVar2 - 0xb4);
+    auVar13 = loadVectorRightIndexed((longlong)(int)param_5 + 0x10);
+    auVar15 = loadVectorLeftIndexed((longlong)(int)param_5);
+    auVar16 = (auVar15 | auVar13) & (undefined1  [16])g_keepXYZ.field0_0x0 ^ auVar16;
+    auVar15 = vectorMultiplyAddFloatingPoint
+                        (auVar16,(undefined1  [16])g_packMul101010.field0_0x0,
                          (undefined1  [16])g_packAdd.field0_0x0);
-    auVar19 = vectorPackD3Dtype(auVar20,auVar19,9,3);
-    auVar19 = vectorSplatWord(auVar19,0);
-    storeVectorElementWordIndexed(auVar19,uVar2 - 0xbc);
-    Vec3Cross((float *)lVar6,pfVar8,(float *)local_b0);
+    auVar15 = vectorPackD3Dtype(auVar16,auVar15,9,3);
+    auVar15 = vectorSplatWord(auVar15,0);
+    storeVectorElementWordIndexed(auVar15,uVar2 - 0xbc);
+    Vec3Cross(param_3,param_5,(float *)local_b0);
     if (fStack_a8 * param_6[2] +
         (float)local_b0._4_4_ * param_6[1] + *param_6 * (float)local_b0._0_4_ <= 0.0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_sprite.cpp",
                       0x4c,0,"Vec3Dot( up, testBinormal ) > 0.0f\n\t%g, %g");
     }
-    pGVar4 = R_CodeSurfVertIter_Begin(pGVar3,local_c0[0]);
-    pGVar4->xyz[0] = (float)(dVar16 + (double)*param_4);
-    auVar19 = vectorPackD3Dtype(_local_b0,_local_b0,0xd,3);
-    pGVar4->xyz[1] = (float)((double)param_4[1] + dVar15);
+    pGVar3 = R_CodeSurfVertIter_Begin(param_1,local_c0[0]);
+    pGVar3->xyz[0] = (float)(dVar12 + (double)*param_4);
+    auVar15 = vectorPackD3Dtype(_local_b0,_local_b0,0xd,3);
+    pGVar3->xyz[1] = (float)((double)param_4[1] + dVar11);
     fVar1 = param_4[2];
-    auVar19 = vectorSplatWord(auVar19,0);
-    pGVar4->normal = local_b4;
-    pGVar4->color = GVar10;
-    pGVar4->binormalSign = 1.0;
-    pGVar4->xyz[2] = (float)(dVar14 + (double)fVar1);
-    storeVectorElementWordIndexed(auVar19,uVar2 - 0xb4);
-    pGVar4->texCoord = (PackedTexCoords)local_b4;
-    pGVar4->tangent = local_bc;
-    auVar19 = vectorPackD3Dtype(_local_b0,_local_b0,0xd,3);
-    auVar20 = vectorPackD3Dtype(_local_b0,_local_b0,0xd,3);
-    auVar19 = vectorSplatWord(auVar19,0);
-    auVar20 = vectorSplatWord(auVar20,0);
-    pGVar4[1].xyz[0] = (float)((double)*param_4 - dVar13);
-    pGVar4[1].xyz[1] = (float)((double)param_4[1] - dVar12);
+    auVar15 = vectorSplatWord(auVar15,0);
+    pGVar3->normal = local_b4;
+    pGVar3->color = GVar6;
+    pGVar3->binormalSign = 1.0;
+    pGVar3->xyz[2] = (float)(dVar10 + (double)fVar1);
+    storeVectorElementWordIndexed(auVar15,uVar2 - 0xb4);
+    pGVar3->texCoord = (PackedTexCoords)local_b4;
+    pGVar3->tangent = local_bc;
+    auVar15 = vectorPackD3Dtype(_local_b0,_local_b0,0xd,3);
+    auVar16 = vectorPackD3Dtype(_local_b0,_local_b0,0xd,3);
+    auVar15 = vectorSplatWord(auVar15,0);
+    auVar16 = vectorSplatWord(auVar16,0);
+    pGVar3[1].xyz[0] = (float)((double)*param_4 - dVar9);
+    pGVar3[1].xyz[1] = (float)((double)param_4[1] - dVar8);
     fVar1 = param_4[2];
-    pGVar4[1].normal = local_b4;
-    pGVar4[1].xyz[2] = (float)((double)fVar1 - dVar11);
-    pGVar4[1].binormalSign = 1.0;
-    pGVar4[1].color = GVar10;
-    storeVectorElementWordIndexed(auVar20,uVar2 - 0xb4);
-    pGVar4[1].texCoord = (PackedTexCoords)local_b4;
-    pGVar4[1].tangent = local_bc;
-    pGVar4[2].xyz[0] = (float)((double)*param_4 - dVar16);
-    pGVar4[2].xyz[1] = (float)((double)param_4[1] - dVar15);
-    pGVar4[2].xyz[2] = (float)((double)param_4[2] - dVar14);
-    pGVar4[2].normal = local_b4;
-    pGVar4[2].binormalSign = 1.0;
-    pGVar4[2].color = GVar10;
-    storeVectorElementWordIndexed(auVar19,uVar2 - 0xb4);
-    pGVar4[2].texCoord = (PackedTexCoords)local_b4;
-    pGVar4[2].tangent = local_bc;
-    pGVar4[3].xyz[0] = (float)(dVar13 + (double)*param_4);
-    pGVar4[3].xyz[1] = (float)((double)param_4[1] + dVar12);
-    auVar19 = vectorPackD3Dtype(_local_b0,_local_b0,0xd,3);
-    pGVar4[3].xyz[2] = (float)(dVar11 + (double)param_4[2]);
-    pGVar4[3].binormalSign = 1.0;
-    pGVar4[3].normal = local_b4;
-    pGVar4[3].color = GVar10;
-    auVar19 = vectorSplatWord(auVar19,0);
-    storeVectorElementWordIndexed(auVar19,uVar2 - 0xb4);
-    pGVar4[3].tangent = local_bc;
-    pGVar4[3].texCoord = (PackedTexCoords)local_b4;
+    pGVar3[1].normal = local_b4;
+    pGVar3[1].xyz[2] = (float)((double)fVar1 - dVar7);
+    pGVar3[1].binormalSign = 1.0;
+    pGVar3[1].color = GVar6;
+    storeVectorElementWordIndexed(auVar16,uVar2 - 0xb4);
+    pGVar3[1].texCoord = (PackedTexCoords)local_b4;
+    pGVar3[1].tangent = local_bc;
+    pGVar3[2].xyz[0] = (float)((double)*param_4 - dVar12);
+    pGVar3[2].xyz[1] = (float)((double)param_4[1] - dVar11);
+    pGVar3[2].xyz[2] = (float)((double)param_4[2] - dVar10);
+    pGVar3[2].normal = local_b4;
+    pGVar3[2].binormalSign = 1.0;
+    pGVar3[2].color = GVar6;
+    storeVectorElementWordIndexed(auVar15,uVar2 - 0xb4);
+    pGVar3[2].texCoord = (PackedTexCoords)local_b4;
+    pGVar3[2].tangent = local_bc;
+    pGVar3[3].xyz[0] = (float)(dVar9 + (double)*param_4);
+    pGVar3[3].xyz[1] = (float)((double)param_4[1] + dVar8);
+    auVar15 = vectorPackD3Dtype(_local_b0,_local_b0,0xd,3);
+    pGVar3[3].xyz[2] = (float)(dVar7 + (double)param_4[2]);
+    pGVar3[3].binormalSign = 1.0;
+    pGVar3[3].normal = local_b4;
+    pGVar3[3].color = GVar6;
+    auVar15 = vectorSplatWord(auVar15,0);
+    storeVectorElementWordIndexed(auVar15,uVar2 - 0xb4);
+    pGVar3[3].tangent = local_bc;
+    pGVar3[3].texCoord = (PackedTexCoords)local_b4;
   }
-  __restfpr_22();
-  __restgprlr_23();
   return;
 }
 
@@ -208,113 +201,101 @@ float FX_GetClipSpaceW(float *param_1,float *param_2,float (*param_3) [3])
 
 // 82442EC8  FX_HeightScreenToWorld  (EffectsCore/fx_sprite.cpp:154)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 bool FX_HeightScreenToWorld(float *param_1,float param_2,float *param_3,FxGenerateVertsCmd *param_4)
 
 {
-  int iVar1;
-  float fVar2;
-  float *pfVar3;
-  undefined1 uVar4;
-  ulonglong uVar5;
-  ulonglong in_r6;
-  double dVar6;
-  double extraout_f1;
-  double dVar7;
-  double dVar8;
+  FxSystem *pFVar1;
+  int in_r6;
+  double dVar2;
+  double dVar3;
+  double dVar4;
   
-  uVar5 = (ulonglong)(int)param_4;
-  pfVar3 = (float *)__savegprlr_27((double)param_2,param_1,param_3);
-  dVar7 = extraout_f1;
-  if ((uVar5 & 0xffffffff) == 0) {
+  dVar3 = (double)param_2;
+  if (param_4 == (FxGenerateVertsCmd *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_sprite.cpp",
                     0x9e,0,"%s");
   }
-  dVar8 = 0.0;
-  if (dVar7 <= 0.0) {
+  dVar4 = 0.0;
+  if (dVar3 <= 0.0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_sprite.cpp",
                     0x9f,0,"%s\n\t(screenHeight) = %g");
   }
-  if ((in_r6 & 0xffffffff) == 0) {
+  if (in_r6 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_sprite.cpp",
                     0xa0,0,"%s");
   }
-  iVar1 = (int)in_r6;
-  dVar6 = (double)(*(float *)(iVar1 + 0x2c) * (pfVar3[2] - *(float *)(iVar1 + 0x20)) +
-                  *(float *)(iVar1 + 0x28) * (pfVar3[1] - *(float *)(iVar1 + 0x1c)) +
-                  *(float *)(iVar1 + 0x24) * (*pfVar3 - *(float *)(iVar1 + 0x18)));
-  if (dVar6 < 1e-06) {
-    *(float *)uVar5 = (float)dVar8;
-    uVar4 = __restgprlr_27(0);
-    return (bool)uVar4;
+  dVar2 = (double)(*(float *)(in_r6 + 0x2c) * (param_1[2] - *(float *)(in_r6 + 0x20)) +
+                  *(float *)(in_r6 + 0x28) * (param_1[1] - *(float *)(in_r6 + 0x1c)) +
+                  *(float *)(in_r6 + 0x24) * (*param_1 - *(float *)(in_r6 + 0x18)));
+  if (dVar2 < 1e-06) {
+    param_4->system = (FxSystem *)(float)dVar4;
+    return false;
   }
-  fVar2 = (float)(dVar6 * dVar7) * 2.0 * (g_activeRefDef->view).tanHalfFovY;
-  *(float *)uVar5 = fVar2;
-  if ((double)fVar2 <= dVar8) {
+  pFVar1 = (FxSystem *)((float)(dVar2 * dVar3) * 2.0 * (g_activeRefDef->view).tanHalfFovY);
+  param_4->system = pFVar1;
+  if ((double)(float)pFVar1 <= dVar4) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_sprite.cpp",
                     0xac,1,"%s\n\t(*worldHeight) = %g");
   }
-  uVar4 = __restgprlr_27(1);
-  return (bool)uVar4;
+  return true;
 }
 
 
 // 82443050  FX_HeightWorldToScreen  (EffectsCore/fx_sprite.cpp:179)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 bool FX_HeightWorldToScreen(float *param_1,float param_2,float *param_3,FxGenerateVertsCmd *param_4)
 
 {
-  int iVar1;
-  float fVar2;
-  float *pfVar3;
-  undefined1 uVar4;
-  ulonglong uVar5;
-  ulonglong in_r6;
-  double extraout_f1;
-  double dVar6;
-  double dVar7;
+  float fVar1;
+  FxSystem *pFVar2;
+  int in_r6;
+  double dVar3;
+  double dVar4;
   
-  uVar5 = (ulonglong)(int)param_4;
-  pfVar3 = (float *)__savegprlr_27((double)param_2,param_1,param_3);
-  dVar6 = extraout_f1;
-  if ((uVar5 & 0xffffffff) == 0) {
+  dVar3 = (double)param_2;
+  if (param_4 == (FxGenerateVertsCmd *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_sprite.cpp",
                     0xb7,0,"%s");
   }
-  dVar7 = 0.0;
-  if (dVar6 <= 0.0) {
+  dVar4 = 0.0;
+  if (dVar3 <= 0.0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_sprite.cpp",
                     0xb8,0,"%s\n\t(worldHeight) = %g");
   }
-  if ((in_r6 & 0xffffffff) == 0) {
+  if (in_r6 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_sprite.cpp",
                     0xb9,0,"%s");
   }
-  iVar1 = (int)in_r6;
-  fVar2 = *(float *)(iVar1 + 0x2c) * (pfVar3[2] - *(float *)(iVar1 + 0x20)) +
-          *(float *)(iVar1 + 0x28) * (pfVar3[1] - *(float *)(iVar1 + 0x1c)) +
-          *(float *)(iVar1 + 0x24) * (*pfVar3 - *(float *)(iVar1 + 0x18));
-  if (fVar2 < 1e-06) {
-    *(float *)uVar5 = (float)dVar7;
-    uVar4 = __restgprlr_27(0);
-    return (bool)uVar4;
+  fVar1 = *(float *)(in_r6 + 0x2c) * (param_1[2] - *(float *)(in_r6 + 0x20)) +
+          *(float *)(in_r6 + 0x28) * (param_1[1] - *(float *)(in_r6 + 0x1c)) +
+          *(float *)(in_r6 + 0x24) * (*param_1 - *(float *)(in_r6 + 0x18));
+  if (fVar1 < 1e-06) {
+    param_4->system = (FxSystem *)(float)dVar4;
+    return false;
   }
-  fVar2 = (float)(dVar6 / (double)(g_activeRefDef->view).tanHalfFovY) / (fVar2 * 2.0);
-  *(float *)uVar5 = fVar2;
-  if ((double)fVar2 <= dVar7) {
+  pFVar2 = (FxSystem *)((float)(dVar3 / (double)(g_activeRefDef->view).tanHalfFovY) / (fVar1 * 2.0))
+  ;
+  param_4->system = pFVar2;
+  if ((double)(float)pFVar2 <= dVar4) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_sprite.cpp",
                     0xc5,1,"%s\n\t(*screenHeight) = %g");
   }
-  uVar4 = __restgprlr_27(1);
-  return (bool)uVar4;
+  return true;
 }
 
 
 // 824431D8  FX_GenerateSpriteCodeMeshVertsFixedScreenSize  (EffectsCore/fx_sprite.cpp:204)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void FX_GenerateSpriteCodeMeshVertsFixedScreenSize
@@ -322,34 +303,24 @@ void FX_GenerateSpriteCodeMeshVertsFixedScreenSize
                uchar *param_5,int param_6,FxGenerateVertsCmd *param_7)
 
 {
-  GfxCodeSurfGlob *pGVar1;
-  bool bVar2;
-  longlong lVar3;
-  longlong lVar4;
-  longlong lVar5;
+  bool bVar1;
   uchar *in_r9;
-  double extraout_f1;
   FxSystem *local_40;
   
-  lVar5 = (longlong)param_6;
-  lVar4 = (longlong)(int)param_3;
-  lVar3 = (longlong)(int)param_2;
-  pGVar1 = (GfxCodeSurfGlob *)
-           __savegprlr_27((double)param_4,param_1,lVar3,lVar4,param_5,lVar5,param_7);
-  bVar2 = FX_HeightScreenToWorld
-                    ((float *)lVar4,(float)extraout_f1,(float *)(Material *)lVar3,
-                     (FxGenerateVertsCmd *)&local_40);
-  if (bVar2) {
-    FX_BuildSpriteCodeMeshVerts
-              (pGVar1,(Material *)lVar3,(float *)lVar4,(float)local_40,in_r9,(int)lVar5);
+  bVar1 = FX_HeightScreenToWorld(param_3,param_4,(float *)param_2,(FxGenerateVertsCmd *)&local_40);
+  if (bVar1) {
+    FX_BuildSpriteCodeMeshVerts(param_1,param_2,param_3,(float)local_40,in_r9,param_6);
   }
-  __restgprlr_27();
   return;
 }
 
 
 // 82443238  FX_GenerateSpriteCodeMeshVertsFixedWorldSize  (EffectsCore/fx_sprite.cpp:217)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void FX_GenerateSpriteCodeMeshVertsFixedWorldSize
@@ -357,47 +328,42 @@ void FX_GenerateSpriteCodeMeshVertsFixedWorldSize
                float param_5,uchar *param_6,int param_7,FxGenerateVertsCmd *param_8)
 
 {
-  GfxCodeSurfGlob *pGVar1;
-  bool bVar2;
-  char *pcVar3;
+  bool bVar1;
   uchar *in_r10;
-  double extraout_f1;
+  double dVar2;
+  double dVar3;
   double dVar4;
   double dVar5;
-  double dVar6;
-  double dVar7;
   FxGenerateVertsCmd local_60;
   
-  dVar4 = (double)param_5;
-  pcVar3 = (char *)param_6;
-  __savegprlr_27((double)param_4,param_1);
-  pGVar1 = (GfxCodeSurfGlob *)__savefpr_28();
-  dVar6 = 0.0;
-  dVar5 = extraout_f1;
-  if (0.0 < dVar4) {
-    pcVar3 = (char *)in_r10;
-    bVar2 = FX_HeightWorldToScreen(param_3,(float)extraout_f1,(float *)param_2,&local_60);
-    if (!bVar2) goto LAB_824432fc;
-    dVar7 = (double)(float)local_60.system;
-    if (dVar7 <= dVar6) {
-      pcVar3 = "%s\n\t(screenRadius) = %g";
+  dVar2 = (double)param_5;
+  dVar3 = (double)param_4;
+  dVar4 = 0.0;
+  if (0.0 < dVar2) {
+    param_6 = in_r10;
+    bVar1 = FX_HeightWorldToScreen(param_3,param_4,(float *)param_2,&local_60);
+    if (!bVar1) {
+      return;
+    }
+    dVar5 = (double)(float)local_60.system;
+    if (dVar5 <= dVar4) {
+      param_6 = (uchar *)"%s\n\t(screenRadius) = %g";
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_sprite.cpp",
                       0xe6,0,"%s\n\t(screenRadius) = %g");
     }
-    if (dVar7 < dVar4) {
-      dVar5 = (double)(float)((double)(float)(dVar4 / dVar7) * dVar5);
+    if (dVar5 < dVar2) {
+      dVar3 = (double)(float)((double)(float)(dVar2 / dVar5) * dVar3);
     }
   }
-  FX_BuildSpriteCodeMeshVerts(pGVar1,param_2,param_3,(float)dVar5,(uchar *)pcVar3,(int)param_8);
-LAB_824432fc:
-  __restfpr_28();
-  __restgprlr_27();
+  FX_BuildSpriteCodeMeshVerts(param_1,param_2,param_3,(float)dVar3,param_6,(int)param_8);
   return;
 }
 
 
 // 82443310  FX_GenerateSpriteCodeMeshVerts  (EffectsCore/fx_sprite.cpp:243)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void FX_GenerateSpriteCodeMeshVerts
@@ -405,38 +371,36 @@ void FX_GenerateSpriteCodeMeshVerts
 
 {
   Material *pMVar1;
-  GfxCodeSurfGlob *pGVar2;
-  bool bVar3;
+  bool bVar2;
   uchar *in_r6;
   int in_r7;
   FxSystem *local_40;
   
-  pGVar2 = (GfxCodeSurfGlob *)__savegprlr_27(param_1);
   if ((param_2->flags & 2U) == 0) {
     FX_GenerateSpriteCodeMeshVertsFixedWorldSize
-              (pGVar2,param_2->material,param_2->pos,param_2->radius,param_2->minScreenRadius,in_r6,
-               in_r7,(FxGenerateVertsCmd *)param_2->rgbaColor);
+              (param_1,param_2->material,param_2->pos,param_2->radius,param_2->minScreenRadius,in_r6
+               ,in_r7,(FxGenerateVertsCmd *)param_2->rgbaColor);
   }
   else {
     pMVar1 = param_2->material;
-    bVar3 = FX_HeightScreenToWorld
+    bVar2 = FX_HeightScreenToWorld
                       (param_2->pos,param_2->radius,(float *)param_2,(FxGenerateVertsCmd *)&local_40
                       );
-    if (bVar3) {
+    if (bVar2) {
       FX_BuildSpriteCodeMeshVerts
-                (pGVar2,pMVar1,param_2->pos,(float)local_40,(uchar *)param_3,(int)param_2->rgbaColor
-                );
-      __restgprlr_27();
+                (param_1,pMVar1,param_2->pos,(float)local_40,(uchar *)param_3,
+                 (int)param_2->rgbaColor);
       return;
     }
   }
-  __restgprlr_27();
   return;
 }
 
 
 // 824433A8  FX_SpriteGenerateVerts  (EffectsCore/fx_sprite.cpp:252)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void FX_SpriteGenerateVerts(GfxCodeSurfGlob *param_1,FxGenerateVertsCmd *param_2)
@@ -445,110 +409,105 @@ void FX_SpriteGenerateVerts(GfxCodeSurfGlob *param_1,FxGenerateVertsCmd *param_2
   float fVar1;
   float fVar2;
   float fVar3;
-  int *piVar4;
+  FxSpriteInfo *pFVar4;
   Material *pMVar5;
-  GfxCodeSurfGlob *pGVar6;
-  bool bVar7;
-  ulonglong uVar8;
-  ulonglong uVar9;
+  bool bVar6;
+  ulonglong uVar7;
   ulonglong in_r6;
   longlong in_r7;
-  int iVar10;
-  ulonglong uVar11;
-  longlong lVar12;
-  uint *puVar13;
-  double dVar14;
-  double dVar15;
+  int iVar8;
+  ulonglong uVar9;
+  longlong lVar10;
+  uint *puVar11;
+  double dVar12;
+  double dVar13;
   FxGenerateVertsCmd local_60;
   
-  uVar8 = (ulonglong)(int)param_2;
-  pGVar6 = (GfxCodeSurfGlob *)__savegprlr_24(param_1);
-  uVar11 = 0xffffffff82000f98;
-  uVar9 = uVar8;
-  if ((uVar8 & 0xffffffff) == 0) {
+  uVar9 = 0xffffffff82000f98;
+  uVar7 = (longlong)(int)param_2;
+  if (param_2 == (FxGenerateVertsCmd *)0x0) {
     in_r7 = -0x7dff4f04;
-    uVar9 = 0x100;
-    in_r6 = uVar11;
+    uVar7 = 0x100;
+    in_r6 = uVar9;
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_sprite.cpp",
                     0x100,0,"%s");
   }
-  piVar4 = *(int **)((int)uVar8 + 0xc);
-  if (ZEXT48(piVar4) == 0) {
+  pFVar4 = param_2->spriteInfo;
+  if (ZEXT48(pFVar4) == 0) {
     in_r7 = -0x7df97730;
-    uVar9 = 0x105;
+    uVar7 = 0x105;
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_sprite.cpp",
                     0x105,0,"%s");
-    in_r6 = uVar11;
+    in_r6 = uVar9;
   }
-  uVar11 = 0xffffffff820011f4;
-  dVar15 = 1.0;
-  dVar14 = 0.0020000000949949026;
+  uVar9 = 0xffffffff820011f4;
+  dVar13 = 1.0;
+  dVar12 = 0.0020000000949949026;
   fVar1 = (g_activeRefDef->view).axis[0][1];
   fVar2 = (g_activeRefDef->view).axis[0][0];
   fVar3 = (g_activeRefDef->view).axis[0][2];
   if (0.002 <= ABS((fVar3 * fVar3 + fVar2 * fVar2 + fVar1 * fVar1) - 1.0)) {
     va("(%g %g %g) len %g");
     in_r7 = -0x7df97764;
-    uVar9 = 0x106;
-    in_r6 = uVar11;
+    uVar7 = 0x106;
+    in_r6 = uVar9;
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_sprite.cpp",
                     0x106,0,"%s\n\t%s");
   }
   fVar1 = (g_activeRefDef->view).axis[1][1];
   fVar2 = (g_activeRefDef->view).axis[1][0];
   fVar3 = (g_activeRefDef->view).axis[1][2];
-  if (dVar14 <= ABS((double)(float)((double)(fVar3 * fVar3 + fVar2 * fVar2 + fVar1 * fVar1) - dVar15
+  if (dVar12 <= ABS((double)(float)((double)(fVar3 * fVar3 + fVar2 * fVar2 + fVar1 * fVar1) - dVar13
                                    ))) {
     va("(%g %g %g) len %g");
     in_r7 = -0x7df97798;
-    uVar9 = 0x107;
-    in_r6 = uVar11;
+    uVar7 = 0x107;
+    in_r6 = uVar9;
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_sprite.cpp",
                     0x107,0,"%s\n\t%s");
   }
   fVar1 = (g_activeRefDef->view).axis[2][1];
   fVar2 = (g_activeRefDef->view).axis[2][0];
   fVar3 = (g_activeRefDef->view).axis[2][2];
-  if (dVar14 <= ABS((double)(float)((double)(fVar3 * fVar3 + fVar2 * fVar2 + fVar1 * fVar1) - dVar15
+  if (dVar12 <= ABS((double)(float)((double)(fVar3 * fVar3 + fVar2 * fVar2 + fVar1 * fVar1) - dVar13
                                    ))) {
     va("(%g %g %g) len %g");
     in_r7 = -0x7df977cc;
-    uVar9 = 0x108;
+    uVar7 = 0x108;
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_sprite.cpp",
                     0x108,0,"%s\n\t%s");
-    in_r6 = uVar11;
+    in_r6 = uVar9;
   }
-  iVar10 = 0;
-  if (0 < *piVar4) {
-    lVar12 = ZEXT48(piVar4) + 0x2c;
+  iVar8 = 0;
+  if (0 < (int)pFVar4->indices) {
+    lVar10 = ZEXT48(pFVar4) + 0x2c;
     do {
-      puVar13 = (uint *)lVar12;
-      if ((*puVar13 & 2) == 0) {
-        uVar9 = ZEXT48((Material *)puVar13[-7]);
+      puVar11 = (uint *)lVar10;
+      if ((*puVar11 & 2) == 0) {
+        uVar7 = ZEXT48((Material *)puVar11[-7]);
         FX_GenerateSpriteCodeMeshVertsFixedWorldSize
-                  (pGVar6,(Material *)puVar13[-7],(float *)(puVar13 + -6),(float)puVar13[-2],
-                   (float)puVar13[-1],(uchar *)in_r6,(int)in_r7,(FxGenerateVertsCmd *)(puVar13 + -3)
+                  (param_1,(Material *)puVar11[-7],(float *)(puVar11 + -6),(float)puVar11[-2],
+                   (float)puVar11[-1],(uchar *)in_r6,(int)in_r7,(FxGenerateVertsCmd *)(puVar11 + -3)
                   );
       }
       else {
-        pMVar5 = (Material *)puVar13[-7];
-        uVar11 = ZEXT48(pMVar5);
-        in_r6 = uVar8;
-        bVar7 = FX_HeightScreenToWorld
-                          ((float *)(puVar13 + -6),(float)puVar13[-2],(float *)uVar9,&local_60);
-        if (bVar7) {
-          in_r7 = lVar12 + -0xc;
+        pMVar5 = (Material *)puVar11[-7];
+        uVar9 = ZEXT48(pMVar5);
+        in_r6 = (longlong)(int)param_2;
+        bVar6 = FX_HeightScreenToWorld
+                          ((float *)(puVar11 + -6),(float)puVar11[-2],(float *)uVar7,&local_60);
+        if (bVar6) {
+          in_r7 = lVar10 + -0xc;
           FX_BuildSpriteCodeMeshVerts
-                    (pGVar6,pMVar5,(float *)(puVar13 + -6),(float)local_60.system,(uchar *)in_r6,
+                    (param_1,pMVar5,(float *)(puVar11 + -6),(float)local_60.system,(uchar *)in_r6,
                      (int)in_r7);
-          uVar9 = uVar11;
+          uVar7 = uVar9;
         }
       }
-      iVar10 = iVar10 + 1;
-      lVar12 = lVar12 + 0x20;
-    } while (iVar10 < *piVar4);
+      iVar8 = iVar8 + 1;
+      lVar10 = lVar10 + 0x20;
+    } while (iVar8 < (int)pFVar4->indices);
   }
-  __restgprlr_24();
   return;
 }
 

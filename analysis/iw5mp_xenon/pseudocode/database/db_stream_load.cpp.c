@@ -2,67 +2,63 @@
 
 // 823F6B20  Load_Stream  (database/db_stream_load.cpp:17)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void Load_Stream(bool param_1,void *param_2,int param_3)
 
 {
-  uint uVar1;
-  uchar *puVar2;
-  ulonglong uVar3;
-  longlong lVar4;
-  int iVar6;
-  longlong lVar5;
+  uchar *puVar1;
+  longlong lVar2;
+  longlong lVar3;
   uchar auStack_b0 [176];
   
-  lVar5 = (longlong)param_3;
-  uVar3 = (ulonglong)(int)param_2;
-  uVar1 = __savegprlr_27(param_1);
-  puVar2 = DB_GetStreamPos();
-  if ((uVar1 & 0xff) != (uint)LZCOUNT((int)puVar2 - (int)(uchar *)uVar3) >> 5) {
+  lVar3 = (longlong)param_3;
+  puVar1 = DB_GetStreamPos();
+  if ((uint)param_1 != (uint)LZCOUNT((int)puVar1 - (int)param_2) >> 5) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_stream_load.cpp",
                     0x17,0,"%s");
   }
-  if (((uVar1 & 0xff) != 0) && (iVar6 = (int)lVar5, iVar6 != 0)) {
+  if ((param_1 != 0) && (param_3 != 0)) {
     if (g_streamPosIndex == 2) {
       memset();
-      DB_IncStreamPos(iVar6);
-      __restgprlr_27();
+      DB_IncStreamPos(param_3);
       return;
     }
     if (g_streamPosIndex == 6) {
-      if ((uVar3 & 0xffffffff) != 0) {
+      if (param_2 != (void *)0x0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_stream_load.cpp"
                         ,0x27,0,"%s");
       }
       do {
-        lVar4 = lVar5;
-        if (0x80 < (int)lVar5) {
-          lVar4 = 0x80;
+        lVar2 = lVar3;
+        if (0x80 < (int)lVar3) {
+          lVar2 = 0x80;
         }
-        DB_ReadXFile(auStack_b0,(int)lVar4,0);
-        lVar5 = lVar5 - lVar4;
-      } while (lVar5 != 0);
-      __restgprlr_27();
+        DB_ReadXFile(auStack_b0,(int)lVar2,0);
+        lVar3 = lVar3 - lVar2;
+      } while (lVar3 != 0);
       return;
     }
-    DB_ReadXFile((uchar *)uVar3,iVar6,0);
-    DB_IncStreamPos(iVar6);
+    DB_ReadXFile(param_2,param_3,0);
+    DB_IncStreamPos(param_3);
   }
-  __restgprlr_27();
   return;
 }
 
 
 // 823F6C38  DB_ConvertOffsetToAlias  (database/db_stream_load.cpp:60)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void DB_ConvertOffsetToAlias(void *param_1)
 
 {
   int iVar1;
   uint uVar2;
-  int *piVar3;
   
-  piVar3 = (int *)__savegprlr_28(param_1);
-  iVar1 = *piVar3;
+  iVar1 = *(int *)param_1;
   if (((iVar1 == 0) || (iVar1 == -1)) || (iVar1 == -2)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_stream_load.cpp",
                     0x41,0,"%s\n\t(offset) = %i");
@@ -74,23 +70,24 @@ void DB_ConvertOffsetToAlias(void *param_1)
                     "streamIndex doesn\'t index ARRAY_COUNT( g_streamZoneMem->blocks )\n\t%i not in [0, %i)"
                    );
   }
-  *piVar3 = *(int *)(g_streamZoneMem->blocks[uVar2].data + (iVar1 - 1U & 0xfffffff));
-  __restgprlr_28();
+  *(undefined4 *)param_1 =
+       *(undefined4 *)(g_streamZoneMem->blocks[uVar2].data + (iVar1 - 1U & 0xfffffff));
   return;
 }
 
 
 // 823F6CE8  DB_ConvertOffsetToPointer  (database/db_stream_load.cpp:75)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void DB_ConvertOffsetToPointer(void *param_1)
 
 {
   int iVar1;
   uint uVar2;
-  int *piVar3;
   
-  piVar3 = (int *)__savegprlr_29(param_1);
-  iVar1 = *piVar3;
+  iVar1 = *(int *)param_1;
   uVar2 = iVar1 - 1U >> 0x1c;
   if (6 < uVar2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_stream_load.cpp",
@@ -98,8 +95,7 @@ void DB_ConvertOffsetToPointer(void *param_1)
                     "streamIndex doesn\'t index ARRAY_COUNT( g_streamZoneMem->blocks )\n\t%i not in [0, %i)"
                    );
   }
-  *piVar3 = (int)(g_streamZoneMem->blocks[uVar2].data + (iVar1 - 1U & 0xfffffff));
-  __restgprlr_29();
+  *(uchar **)param_1 = g_streamZoneMem->blocks[uVar2].data + (iVar1 - 1U & 0xfffffff);
   return;
 }
 

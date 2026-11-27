@@ -2,182 +2,171 @@
 
 // 82922638  _write  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/write.c:61)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
+
 int _write(int param_1,void *param_2,uint param_3)
 
 {
   int iVar1;
-  uint uVar3;
-  ulong *puVar4;
-  int *piVar5;
-  ulonglong uVar2;
-  int iVar6;
-  uint uStack00000014;
-  uint local_50;
+  ulong *puVar2;
+  int *piVar3;
+  int iVar4;
+  int iStack00000014;
+  int local_50;
   
-  uVar3 = __savegprlr_25(param_1);
-  uStack00000014 = uVar3;
-  if (uVar3 == 0xfffffffe) {
-    puVar4 = __doserrno();
-    *puVar4 = 0;
-    piVar5 = _errno();
-    uVar2 = 0xffffffffffffffff;
-    *piVar5 = 9;
+  iStack00000014 = param_1;
+  if (param_1 == -2) {
+    puVar2 = __doserrno();
+    *puVar2 = 0;
+    piVar3 = _errno();
+    *piVar3 = 9;
   }
   else {
-    if ((-1 < (int)uVar3) && (uVar3 < (uint)_nhandle)) {
-      iVar6 = ((int)uVar3 >> 5) * 4;
-      iVar1 = (uVar3 & 0x1f) * 0x48;
-      if ((*(byte *)(*(int *)(&__pioinfo + iVar6) + iVar1 + 4) & 1) != 0) {
-        __lock_fhandle(uVar3);
-        if ((*(byte *)(*(int *)(&__pioinfo + iVar6) + iVar1 + 4) & 1) == 0) {
-          piVar5 = _errno();
-          *piVar5 = 9;
-          puVar4 = __doserrno();
-          *puVar4 = 0;
-          local_50 = 0xffffffff;
+    if ((-1 < param_1) && ((uint)param_1 < (uint)_nhandle)) {
+      iVar1 = (param_1 >> 5) * 4;
+      iVar4 = (param_1 & 0x1fU) * 0x48;
+      if ((*(byte *)(*(int *)(&__pioinfo + iVar1) + iVar4 + 4) & 1) != 0) {
+        __lock_fhandle(param_1);
+        if ((*(byte *)(*(int *)(&__pioinfo + iVar1) + iVar4 + 4) & 1) == 0) {
+          piVar3 = _errno();
+          *piVar3 = 9;
+          puVar2 = __doserrno();
+          *puVar2 = 0;
+          local_50 = -1;
         }
         else {
-          local_50 = _write_nolock(uVar3,param_2,param_3);
+          local_50 = _write_nolock(param_1,param_2,param_3);
         }
         FUN_8292277c();
-        uVar2 = (ulonglong)local_50;
-        goto LAB_82922754;
+        return local_50;
       }
     }
-    puVar4 = __doserrno();
-    *puVar4 = 0;
-    piVar5 = _errno();
-    *piVar5 = 9;
+    puVar2 = __doserrno();
+    *puVar2 = 0;
+    piVar3 = _errno();
+    *piVar3 = 9;
     _invalid_parameter_noinfo();
-    uVar2 = 0xffffffffffffffff;
   }
-LAB_82922754:
-  iVar6 = __restgprlr_25(uVar2);
-  return iVar6;
+  return -1;
 }
 
 
 // 829223F0  _write_nolock  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/write.c:95)
 
+/* WARNING: Function: __savegprlr_21 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_21 replaced with injection: xenon_save_restore */
+
 int _write_nolock(int param_1,void *param_2,uint param_3)
 
 {
   int iVar1;
-  uint uVar2;
+  int iVar2;
   ulong *puVar3;
   int *piVar4;
   int iVar5;
   ulong uVar6;
-  int iVar7;
-  ulonglong uVar8;
-  ulonglong uVar9;
-  ulonglong uVar10;
-  char cVar12;
-  char *pcVar11;
-  longlong lVar13;
-  ulonglong uVar14;
-  ulonglong uVar15;
-  uint local_1470 [4];
+  uint uVar7;
+  uint uVar8;
+  char cVar10;
+  char *pcVar9;
+  int iVar11;
+  ulong uVar12;
+  int iVar13;
+  char *pcVar14;
+  ulong local_1470 [4];
   char local_1460 [5216];
   
-  uVar9 = (ulonglong)(int)param_3;
-  uVar8 = (ulonglong)(int)param_2;
-  uVar2 = __savegprlr_21(param_1);
-  uVar14 = 0;
-  lVar13 = 0;
-  if ((uVar9 & 0xffffffff) == 0) {
-LAB_8292241c:
-    lVar13 = 0;
-    goto LAB_82922628;
+  uVar12 = 0;
+  iVar11 = 0;
+  if (param_3 == 0) {
+    return 0;
   }
-  if ((uVar8 & 0xffffffff) == 0) {
+  if (param_2 == (void *)0x0) {
 LAB_8292242c:
     puVar3 = __doserrno();
     *puVar3 = 0;
     piVar4 = _errno();
     *piVar4 = 0x16;
     _invalid_parameter_noinfo();
+    return -1;
   }
-  else {
-    iVar7 = ((int)uVar2 >> 5) * 4;
-    iVar1 = (uVar2 & 0x1f) * 0x48;
-    cVar12 = *(char *)(*(int *)(&__pioinfo + iVar7) + iVar1 + 0x28) >> 1;
-    if (((cVar12 == '\x02') || (cVar12 == '\x01')) && ((~uVar9 & 1) == 0)) goto LAB_8292242c;
-    if ((*(byte *)(*(int *)(&__pioinfo + iVar7) + iVar1 + 4) & 0x20) != 0) {
-      _lseeki64_nolock(uVar2,0,2);
-    }
-    if ((*(byte *)((undefined4 *)(*(int *)(&__pioinfo + iVar7) + iVar1) + 1) & 0x80) != 0) {
-      uVar6 = 0;
-      uVar15 = uVar8;
-      if ((uVar9 & 0xffffffff) != 0) {
-        do {
-          pcVar11 = local_1460;
-          uVar2 = 0;
-          uVar10 = uVar15 - uVar8;
-          do {
-            if ((uVar9 & 0xffffffff) <= (uVar10 & 0xffffffff)) break;
-            cVar12 = *(char *)uVar15;
-            uVar15 = uVar15 + 1;
-            uVar10 = uVar10 + 1;
-            if (cVar12 == '\n') {
-              lVar13 = lVar13 + 1;
-              *pcVar11 = '\r';
-              pcVar11 = pcVar11 + 1;
-              uVar2 = uVar2 + 1;
-            }
-            uVar2 = uVar2 + 1;
-            *pcVar11 = cVar12;
-            pcVar11 = pcVar11 + 1;
-          } while (uVar2 < 0x13ff);
-          iVar5 = WriteFile(*(void **)(*(int *)(&__pioinfo + iVar7) + iVar1),local_1460,
-                            (int)pcVar11 - (int)local_1460,local_1470,(_OVERLAPPED *)0x0);
-          if (iVar5 == 0) goto LAB_8292259c;
-          uVar14 = local_1470[0] + uVar14;
-        } while (((int)pcVar11 - (int)local_1460 <= (int)local_1470[0]) &&
-                ((uVar15 - uVar8 & 0xffffffff) < (uVar9 & 0xffffffff)));
-        goto LAB_829225a4;
-      }
-LAB_829225e4:
-      if (((*(byte *)(*(int *)(&__pioinfo + iVar7) + iVar1 + 4) & 0x40) == 0) ||
-         (*(char *)uVar8 != '\x1a')) {
-        piVar4 = _errno();
-        *piVar4 = 0x1c;
-        puVar3 = __doserrno();
-        lVar13 = -1;
-        *puVar3 = 0;
-        goto LAB_82922628;
-      }
-      goto LAB_8292241c;
-    }
-    iVar5 = WriteFile(*(void **)(*(int *)(&__pioinfo + iVar7) + iVar1),(char *)uVar8,(ulong)uVar9,
-                      local_1470,(_OVERLAPPED *)0x0);
+  iVar1 = (param_1 >> 5) * 4;
+  iVar13 = (param_1 & 0x1fU) * 0x48;
+  cVar10 = *(char *)(*(int *)(&__pioinfo + iVar1) + iVar13 + 0x28) >> 1;
+  if (((cVar10 == '\x02') || (cVar10 == '\x01')) && ((~param_3 & 1) == 0)) goto LAB_8292242c;
+  if ((*(byte *)(*(int *)(&__pioinfo + iVar1) + iVar13 + 4) & 0x20) != 0) {
+    _lseeki64_nolock(param_1,0,2);
+  }
+  if ((*(byte *)((undefined4 *)(*(int *)(&__pioinfo + iVar1) + iVar13) + 1) & 0x80) == 0) {
+    iVar5 = WriteFile(*(void **)(*(int *)(&__pioinfo + iVar1) + iVar13),param_2,param_3,local_1470,
+                      (_OVERLAPPED *)0x0);
+    iVar2 = 0;
     if (iVar5 == 0) {
 LAB_8292259c:
+      iVar11 = iVar2;
       uVar6 = GetLastError();
     }
     else {
-      uVar14 = (ulonglong)local_1470[0];
       uVar6 = 0;
+      uVar12 = local_1470[0];
     }
-LAB_829225a4:
-    if ((int)uVar14 != 0) {
-      lVar13 = uVar14 - lVar13;
-      goto LAB_82922628;
-    }
-    if (uVar6 == 0) goto LAB_829225e4;
+  }
+  else {
+    uVar6 = 0;
+    pcVar14 = param_2;
+    iVar11 = 0;
+    if (param_3 == 0) goto LAB_829225e4;
+    do {
+      pcVar9 = local_1460;
+      uVar8 = 0;
+      uVar7 = (int)pcVar14 - (int)param_2;
+      do {
+        if (param_3 <= uVar7) break;
+        cVar10 = *pcVar14;
+        pcVar14 = pcVar14 + 1;
+        uVar7 = uVar7 + 1;
+        if (cVar10 == '\n') {
+          iVar11 = iVar11 + 1;
+          *pcVar9 = '\r';
+          pcVar9 = pcVar9 + 1;
+          uVar8 = uVar8 + 1;
+        }
+        uVar8 = uVar8 + 1;
+        *pcVar9 = cVar10;
+        pcVar9 = pcVar9 + 1;
+      } while (uVar8 < 0x13ff);
+      iVar5 = WriteFile(*(void **)(*(int *)(&__pioinfo + iVar1) + iVar13),local_1460,
+                        (int)pcVar9 - (int)local_1460,local_1470,(_OVERLAPPED *)0x0);
+      iVar2 = iVar11;
+      if (iVar5 == 0) goto LAB_8292259c;
+      uVar12 = local_1470[0] + uVar12;
+    } while (((int)pcVar9 - (int)local_1460 <= (int)local_1470[0]) &&
+            ((uint)((int)pcVar14 - (int)param_2) < param_3));
+  }
+  if (uVar12 != 0) {
+    return uVar12 - iVar11;
+  }
+  if (uVar6 != 0) {
     if (uVar6 == 5) {
       piVar4 = _errno();
       *piVar4 = 9;
       puVar3 = __doserrno();
       *puVar3 = 5;
+      return -1;
     }
-    else {
-      _dosmaperr(uVar6);
-    }
+    _dosmaperr(uVar6);
+    return -1;
   }
-  lVar13 = -1;
-LAB_82922628:
-  iVar7 = __restgprlr_21(lVar13);
-  return iVar7;
+LAB_829225e4:
+  if (((*(byte *)(*(int *)(&__pioinfo + iVar1) + iVar13 + 4) & 0x40) != 0) &&
+     (*(char *)param_2 == '\x1a')) {
+    return 0;
+  }
+  piVar4 = _errno();
+  *piVar4 = 0x1c;
+  puVar3 = __doserrno();
+  *puVar3 = 0;
+  return -1;
 }
 

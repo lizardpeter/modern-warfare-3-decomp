@@ -2,6 +2,8 @@
 
 // 82335D18  CreateDebugStringsIfNeeded  (client/cl_debugdata.cpp:18)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -9,9 +11,6 @@
 bool CreateDebugStringsIfNeeded(void)
 
 {
-  undefined1 uVar1;
-  
-  __savegprlr_28();
   if (cls.debug.clStrings.strings == (trDebugString_t *)0x0) {
     if (cls.debug.svStrings.strings != (trDebugString_t *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_debugdata.cpp",
@@ -29,8 +28,7 @@ bool CreateDebugStringsIfNeeded(void)
     cls.debug.svStringsBuffer.num = 0;
     R_DebugAlloc(&cls.debug.clStrings.strings,0x4b000,"Client Debug Strings");
     if (cls.debug.clStrings.strings == (trDebugString_t *)0x0) {
-      uVar1 = __restgprlr_28(0);
-      return (bool)uVar1;
+      return false;
     }
     cls.debug.clStrings.durations = (int *)(cls.debug.clStrings.strings + cls.debug.clStrings.max);
     cls.debug.svStrings.strings =
@@ -49,49 +47,47 @@ bool CreateDebugStringsIfNeeded(void)
                       0x38,0,"%s");
     }
   }
-  uVar1 = __restgprlr_28(1);
-  return (bool)uVar1;
+  return true;
 }
 
 
 // 82335E98  AddDebugStringInternal  (client/cl_debugdata.cpp:66)
+
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 
 void AddDebugStringInternal
                (float *param_1,float *param_2,float param_3,char *param_4,int param_5,
                clientDebugStringInfo_t *param_6)
 
 {
-  char *pcVar1;
-  longlong lVar2;
   int *in_r8;
-  int iVar3;
-  int iVar4;
-  double extraout_f1;
-  double dVar5;
+  int iVar1;
+  int iVar2;
+  double dVar3;
   
-  lVar2 = (longlong)(int)param_2;
-  pcVar1 = (char *)__savegprlr_28((double)param_3,param_1,lVar2,param_4);
+  dVar3 = (double)param_3;
   if (in_r8[1] + 1 <= *in_r8) {
-    iVar3 = in_r8[1] * 0x60;
-    iVar4 = iVar3 + in_r8[2];
-    *(undefined4 *)(iVar3 + in_r8[2]) = *(undefined4 *)pcVar1;
-    *(undefined4 *)(iVar4 + 4) = *(undefined4 *)(pcVar1 + 4);
-    *(undefined4 *)(iVar4 + 8) = *(undefined4 *)(pcVar1 + 8);
-    dVar5 = extraout_f1;
-    Byte4PackVertexColor((float *)lVar2,(uchar *)(iVar4 + 0xc));
-    *(float *)(iVar4 + 0x10) = (float)dVar5;
-    pcVar1 = strncpy((char *)(iVar4 + 0x14),(char *)param_5,0x4b);
-    *(undefined1 *)(iVar4 + 0x5f) = 0;
+    iVar1 = in_r8[1] * 0x60;
+    iVar2 = iVar1 + in_r8[2];
+    *(float *)(iVar1 + in_r8[2]) = *param_1;
+    *(float *)(iVar2 + 4) = param_1[1];
+    *(float *)(iVar2 + 8) = param_1[2];
+    Byte4PackVertexColor(param_2,(uchar *)(iVar2 + 0xc));
+    *(float *)(iVar2 + 0x10) = (float)dVar3;
+    strncpy((char *)(iVar2 + 0x14),(char *)param_5,0x4b);
+    *(undefined1 *)(iVar2 + 0x5f) = 0;
     *(clientDebugStringInfo_t **)(in_r8[3] + in_r8[1] * 4) = param_6;
     in_r8[1] = in_r8[1] + 1;
   }
-  __restgprlr_28(pcVar1);
   return;
 }
 
 
 // 82335F50  CL_AddDebugString  (client/cl_debugdata.cpp:85)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 
@@ -99,25 +95,23 @@ void CL_AddDebugString(float *param_1,float *param_2,float param_3,char *param_4
                       int param_6)
 
 {
-  float *pfVar1;
-  bool bVar2;
+  bool bVar1;
   clientDebugStringInfo_t *in_r8;
-  double extraout_f1;
-  double dVar3;
+  double dVar2;
   
-  pfVar1 = (float *)__savegprlr_26((double)param_3,param_1);
-  if (((cls.rendererStarted != 0) &&
-      (dVar3 = extraout_f1, bVar2 = CreateDebugStringsIfNeeded(), bVar2)) &&
-     (AddDebugStringInternal(pfVar1,param_2,(float)dVar3,param_4,param_5,in_r8), param_6 != 0)) {
+  dVar2 = (double)param_3;
+  if (((cls.rendererStarted != 0) && (bVar1 = CreateDebugStringsIfNeeded(), bVar1)) &&
+     (AddDebugStringInternal(param_1,param_2,(float)dVar2,param_4,param_5,in_r8), param_6 != 0)) {
     cls.debug.fromServer = 1;
   }
-  __restgprlr_26();
   return;
 }
 
 
 // 82335FE0  CreateDebugLinesIfNeeded  (client/cl_debugdata.cpp:107)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -125,9 +119,6 @@ void CL_AddDebugString(float *param_1,float *param_2,float param_3,char *param_4
 bool CreateDebugLinesIfNeeded(void)
 
 {
-  undefined1 uVar1;
-  
-  __savegprlr_28();
   if (cls.debug.clLines.lines == (trDebugLine_t *)0x0) {
     if (cls.debug.svLines.lines != (trDebugLine_t *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_debugdata.cpp",
@@ -145,8 +136,7 @@ bool CreateDebugLinesIfNeeded(void)
     cls.debug.svLinesBuffer.num = 0;
     R_DebugAlloc(&cls.debug.clLines.lines,0x36000,"Client Debug Lines");
     if (cls.debug.clLines.lines == (trDebugLine_t *)0x0) {
-      uVar1 = __restgprlr_28(0);
-      return (bool)uVar1;
+      return false;
     }
     cls.debug.clLines.durations = (int *)(cls.debug.clLines.lines + cls.debug.clLines.max);
     cls.debug.svLines.lines =
@@ -165,12 +155,14 @@ bool CreateDebugLinesIfNeeded(void)
                       0x8c,0,"%s");
     }
   }
-  uVar1 = __restgprlr_28(1);
-  return (bool)uVar1;
+  return true;
 }
 
 
 // 82336148  AddDebugLineInternal  (client/cl_debugdata.cpp:150)
+
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 
 void AddDebugLineInternal
                (float *param_1,float *param_2,float *param_3,int param_4,int param_5,
@@ -179,15 +171,13 @@ void AddDebugLineInternal
 {
   int iVar1;
   trDebugLine_t *ptVar2;
-  float *pfVar3;
   
-  pfVar3 = (float *)__savegprlr_28(param_1);
   iVar1 = param_6->num;
   if (iVar1 + 1 <= param_6->max) {
     ptVar2 = param_6->lines;
-    ptVar2[iVar1].start[0] = *pfVar3;
-    ptVar2[iVar1].start[1] = pfVar3[1];
-    ptVar2[iVar1].start[2] = pfVar3[2];
+    ptVar2[iVar1].start[0] = *param_1;
+    ptVar2[iVar1].start[1] = param_1[1];
+    ptVar2[iVar1].start[2] = param_1[2];
     ptVar2[iVar1].end[0] = *param_2;
     ptVar2[iVar1].end[1] = param_2[1];
     ptVar2[iVar1].end[2] = param_2[2];
@@ -196,13 +186,14 @@ void AddDebugLineInternal
     param_6->durations[param_6->num] = param_5;
     param_6->num = param_6->num + 1;
   }
-  __restgprlr_28();
   return;
 }
 
 
 // 823361F0  CL_AddDebugLine  (client/cl_debugdata.cpp:167)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 
@@ -210,44 +201,43 @@ void CL_AddDebugLine(float *param_1,float *param_2,float *param_3,int param_4,in
                     int param_6)
 
 {
-  float *pfVar1;
-  bool bVar2;
-  clientDebugLineInfo_t *pcVar3;
+  bool bVar1;
+  clientDebugLineInfo_t *pcVar2;
   
-  pfVar1 = (float *)__savegprlr_25(param_1);
-  if ((cls.rendererStarted != 0) && (bVar2 = CreateDebugLinesIfNeeded(), bVar2)) {
-    pcVar3 = &cls.debug.svLines;
+  if ((cls.rendererStarted != 0) && (bVar1 = CreateDebugLinesIfNeeded(), bVar1)) {
+    pcVar2 = &cls.debug.svLines;
     if (param_6 == 0) {
-      pcVar3 = &cls.debug.clLines;
+      pcVar2 = &cls.debug.clLines;
     }
-    AddDebugLineInternal(pfVar1,param_2,param_3,param_4,param_5,pcVar3);
+    AddDebugLineInternal(param_1,param_2,param_3,param_4,param_5,pcVar2);
     if (param_6 != 0) {
       cls.debug.fromServer = 1;
     }
   }
-  __restgprlr_25();
   return;
 }
 
 
 // 82336278  CL_AddDebugStarWithText  (client/cl_debugdata.cpp:189)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 void CL_AddDebugStarWithText
                (float *param_1,float *param_2,float *param_3,char *param_4,float param_5,int param_6
                ,int param_7)
 
 {
-  float *pfVar1;
-  ulonglong uVar2;
   int in_r9;
+  double dVar1;
+  double dVar2;
   double dVar3;
-  double extraout_f1;
   double dVar4;
   double dVar5;
   double dVar6;
   double dVar7;
-  double dVar8;
-  double dVar9;
   float local_a0;
   float local_9c;
   float local_98;
@@ -255,40 +245,35 @@ void CL_AddDebugStarWithText
   float local_8c;
   float local_88;
   
-  uVar2 = (ulonglong)(int)param_4;
-  __savegprlr_26((double)param_5,param_1);
-  pfVar1 = (float *)__savefpr_24();
-  local_9c = pfVar1[1];
-  dVar3 = (double)local_9c;
-  local_98 = pfVar1[2];
-  dVar4 = (double)local_98;
-  dVar5 = (double)(float)(extraout_f1 * 5.0);
-  local_90 = (float)((double)*pfVar1 + dVar5);
-  dVar7 = (double)local_90;
-  local_a0 = (float)((double)*pfVar1 - dVar5);
-  dVar6 = (double)local_a0;
-  dVar8 = dVar3;
-  dVar9 = extraout_f1;
+  dVar2 = (double)param_5;
+  local_9c = param_1[1];
+  dVar1 = (double)local_9c;
+  local_98 = param_1[2];
+  dVar3 = (double)local_98;
+  dVar4 = (double)(float)(dVar2 * 5.0);
+  local_90 = (float)((double)*param_1 + dVar4);
+  dVar6 = (double)local_90;
+  local_a0 = (float)((double)*param_1 - dVar4);
+  dVar5 = (double)local_a0;
+  dVar7 = dVar1;
   local_8c = local_9c;
   local_88 = local_98;
   CL_AddDebugLine(&local_90,&local_a0,param_2,0,param_7,in_r9);
-  local_90 = (float)(dVar7 - dVar5);
-  local_a0 = (float)(dVar6 + dVar5);
-  local_8c = (float)(dVar8 + dVar5);
-  dVar6 = (double)local_8c;
-  local_9c = (float)(dVar3 - dVar5);
-  dVar8 = (double)local_9c;
+  local_90 = (float)(dVar6 - dVar4);
+  local_a0 = (float)(dVar5 + dVar4);
+  local_8c = (float)(dVar7 + dVar4);
+  dVar5 = (double)local_8c;
+  local_9c = (float)(dVar1 - dVar4);
+  dVar7 = (double)local_9c;
   CL_AddDebugLine(&local_90,&local_a0,param_2,0,param_7,in_r9);
-  local_8c = (float)(dVar6 - dVar5);
-  local_9c = (float)(dVar8 + dVar5);
-  local_88 = (float)(dVar4 + dVar5);
-  local_98 = (float)(dVar4 - dVar5);
+  local_8c = (float)(dVar5 - dVar4);
+  local_9c = (float)(dVar7 + dVar4);
+  local_88 = (float)(dVar3 + dVar4);
+  local_98 = (float)(dVar3 - dVar4);
   CL_AddDebugLine(&local_90,&local_a0,param_2,0,param_7,in_r9);
-  if (((uVar2 & 0xffffffff) != 0) && (*(char *)uVar2 != '\0')) {
-    CL_AddDebugString(pfVar1,param_3,(float)dVar9,(char *)param_2,(int)(char *)uVar2,in_r9);
+  if ((param_4 != (char *)0x0) && (*param_4 != '\0')) {
+    CL_AddDebugString(param_1,param_3,(float)dVar2,(char *)param_2,(int)param_4,in_r9);
   }
-  __restfpr_24();
-  __restgprlr_26();
   return;
 }
 
@@ -327,19 +312,18 @@ void CL_AddDebugStar(float *param_1,float *param_2,int param_3,int param_4)
 
 // 823363E8  CL_AddOrientedDebugStar  (client/cl_debugdata.cpp:230)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void CL_AddOrientedDebugStar
                (float *param_1,float (*param_2) [3],float *param_3,float param_4,int param_5,
                int param_6)
 
 {
-  float *pfVar1;
-  longlong lVar2;
-  float *pfVar3;
   int in_r8;
-  double extraout_f1;
-  double dVar4;
-  double dVar5;
-  double dVar6;
+  double dVar1;
+  double dVar2;
+  double dVar3;
   float local_60;
   float local_5c;
   float local_58;
@@ -348,42 +332,41 @@ void CL_AddOrientedDebugStar
   float local_48;
   float local_44;
   
-  lVar2 = (longlong)(int)param_2;
-  pfVar1 = (float *)__savegprlr_28((double)param_4,param_1,lVar2,param_3,param_5);
-  pfVar3 = (float *)lVar2;
-  dVar4 = (double)(float)(extraout_f1 * 25.0);
-  dVar6 = 0.0;
-  dVar5 = 1.0;
+  dVar1 = (double)(param_4 * 25.0);
+  dVar3 = 0.0;
+  dVar2 = 1.0;
   local_50 = 1.0;
   local_4c = 0.0;
   local_48 = 0.0;
   local_44 = 0.0;
-  local_60 = (float)((double)*pfVar3 * dVar4 + (double)*pfVar1);
-  local_5c = (float)((double)pfVar3[1] * dVar4 + (double)pfVar1[1]);
-  local_58 = (float)((double)pfVar3[2] * dVar4 + (double)pfVar1[2]);
-  CL_AddDebugLine(pfVar1,&local_60,&local_50,0,param_6,in_r8);
-  local_60 = (float)((double)pfVar3[3] * dVar4 + (double)*pfVar1);
-  local_5c = (float)((double)pfVar3[4] * dVar4 + (double)pfVar1[1]);
-  local_58 = (float)((double)pfVar3[5] * dVar4 + (double)pfVar1[2]);
-  local_50 = (float)dVar6;
-  local_4c = (float)dVar5;
-  local_48 = (float)dVar6;
-  local_44 = (float)dVar6;
-  CL_AddDebugLine(pfVar1,&local_60,&local_50,0,param_6,in_r8);
-  local_60 = (float)((double)pfVar3[6] * dVar4 + (double)*pfVar1);
-  local_5c = (float)((double)pfVar3[7] * dVar4 + (double)pfVar1[1]);
-  local_58 = (float)((double)pfVar3[8] * dVar4 + (double)pfVar1[2]);
-  local_50 = (float)dVar6;
-  local_4c = (float)dVar6;
-  local_48 = (float)dVar5;
-  local_44 = (float)dVar6;
-  CL_AddDebugLine(pfVar1,&local_60,&local_50,0,param_6,in_r8);
-  __restgprlr_28();
+  local_60 = (float)((double)(*param_2)[0] * dVar1 + (double)*param_1);
+  local_5c = (float)((double)(*param_2)[1] * dVar1 + (double)param_1[1]);
+  local_58 = (float)((double)(*param_2)[2] * dVar1 + (double)param_1[2]);
+  CL_AddDebugLine(param_1,&local_60,&local_50,0,param_6,in_r8);
+  local_60 = (float)((double)param_2[1][0] * dVar1 + (double)*param_1);
+  local_5c = (float)((double)param_2[1][1] * dVar1 + (double)param_1[1]);
+  local_58 = (float)((double)param_2[1][2] * dVar1 + (double)param_1[2]);
+  local_50 = (float)dVar3;
+  local_4c = (float)dVar2;
+  local_48 = (float)dVar3;
+  local_44 = (float)dVar3;
+  CL_AddDebugLine(param_1,&local_60,&local_50,0,param_6,in_r8);
+  local_60 = (float)((double)param_2[2][0] * dVar1 + (double)*param_1);
+  local_5c = (float)((double)param_2[2][1] * dVar1 + (double)param_1[1]);
+  local_58 = (float)((double)param_2[2][2] * dVar1 + (double)param_1[2]);
+  local_50 = (float)dVar3;
+  local_4c = (float)dVar3;
+  local_48 = (float)dVar2;
+  local_44 = (float)dVar3;
+  CL_AddDebugLine(param_1,&local_60,&local_50,0,param_6,in_r8);
   return;
 }
 
 
 // 82336548  CL_AddOrientedDebugStarWithText  (client/cl_debugdata.cpp:252)
+
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 
 void CL_AddOrientedDebugStarWithText
                (float *param_1,float (*param_2) [3],float *param_3,float param_4,char *param_5,
@@ -391,21 +374,15 @@ void CL_AddOrientedDebugStarWithText
 
 {
   float *pfVar1;
-  float *pfVar2;
-  ulonglong uVar3;
   int in_r9;
-  double extraout_f1;
-  double dVar4;
+  double dVar2;
   
-  uVar3 = (ulonglong)param_6;
-  pfVar1 = (float *)__savegprlr_27((double)param_4,param_1);
-  dVar4 = extraout_f1;
-  pfVar2 = param_3;
-  CL_AddOrientedDebugStar(pfVar1,param_2,param_3,(float)extraout_f1,(int)param_5,param_7);
-  if (((uVar3 & 0xffffffff) != 0) && (*(char *)uVar3 != '\0')) {
-    CL_AddDebugString(pfVar1,param_3,(float)dVar4,(char *)pfVar2,(int)(char *)uVar3,in_r9);
+  dVar2 = (double)param_4;
+  pfVar1 = param_3;
+  CL_AddOrientedDebugStar(param_1,param_2,param_3,param_4,(int)param_5,param_7);
+  if ((param_6 != 0) && (*(char *)param_6 != '\0')) {
+    CL_AddDebugString(param_1,param_3,(float)dVar2,(char *)pfVar1,param_6,in_r9);
   }
-  __restgprlr_27();
   return;
 }
 
@@ -431,6 +408,8 @@ void Byte4PackVertexColor(float *param_1,uchar *param_2)
 
 // 823365B8  CL_AddDebugBox  (client/cl_debugdata.cpp:262)
 
+/* WARNING: Function: __savegprlr_21 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_21 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 
@@ -452,159 +431,153 @@ void CL_AddDebugBox(float (*param_1) [3],float *param_2,float *param_3,float *pa
   int iVar12;
   int iVar13;
   trDebugLine_t *ptVar14;
-  float *pfVar15;
-  bool bVar16;
-  ulonglong uVar17;
+  bool bVar15;
+  ulonglong uVar16;
+  float *pfVar17;
   float *pfVar18;
-  ulonglong uVar19;
-  float *pfVar20;
-  float *pfVar21;
-  int iVar22;
-  int (*paiVar23) [2];
-  clientDebugLineInfo_t *pcVar24;
-  longlong lVar25;
-  double dVar26;
-  double dVar27;
-  double dVar28;
+  int iVar19;
+  int (*paiVar20) [2];
+  clientDebugLineInfo_t *pcVar21;
+  longlong lVar22;
+  double dVar23;
+  double dVar24;
+  double dVar25;
   float local_d0 [52];
   
-  uVar17 = (ulonglong)(int)param_2;
-  pfVar15 = (float *)__savegprlr_21(param_1);
-  uVar19 = 0;
-  bVar16 = false;
-  pfVar21 = local_d0 + 2;
-  lVar25 = 8;
-  pfVar20 = local_d0 + 1;
+  uVar16 = 0;
+  bVar15 = false;
+  pfVar18 = local_d0 + 2;
+  lVar22 = 8;
+  pfVar17 = local_d0 + 1;
   do {
-    if (bVar16) {
+    if (bVar15) {
       fVar1 = *param_4;
     }
     else {
       fVar1 = *param_3;
     }
-    pfVar20[-1] = fVar1;
-    if ((uVar19 & 2) == 0) {
+    pfVar17[-1] = fVar1;
+    if ((uVar16 & 2) == 0) {
       fVar1 = param_3[1];
     }
     else {
       fVar1 = param_4[1];
     }
-    *pfVar20 = fVar1;
-    if ((uVar19 & 4) == 0) {
+    *pfVar17 = fVar1;
+    if ((uVar16 & 4) == 0) {
       fVar1 = param_3[2];
     }
     else {
       fVar1 = param_4[2];
     }
-    pfVar20[1] = fVar1;
-    if ((pfVar15 != (float *)0x0) && ((uVar17 & 0xffffffff) != 0)) {
-      fVar1 = pfVar21[-2];
-      pfVar18 = (float *)uVar17;
-      fVar2 = pfVar15[1];
-      fVar3 = pfVar18[1];
-      fVar4 = pfVar15[2];
-      fVar5 = pfVar18[2];
-      fVar6 = pfVar21[-1];
-      fVar7 = pfVar15[4];
-      fVar8 = pfVar15[5];
-      fVar9 = *pfVar21;
-      fVar10 = pfVar15[7];
-      fVar11 = pfVar15[8];
-      pfVar21[-2] = pfVar15[6] * fVar9 + pfVar15[3] * fVar6 + fVar1 * *pfVar15 + *pfVar18;
-      pfVar21[-1] = fVar10 * fVar9 + fVar7 * fVar6 + fVar2 * fVar1 + fVar3;
-      *pfVar21 = fVar11 * fVar9 + fVar8 * fVar6 + fVar4 * fVar1 + fVar5;
+    pfVar17[1] = fVar1;
+    if ((param_1 != (float (*) [3])0x0) && (param_2 != (float *)0x0)) {
+      fVar1 = pfVar18[-2];
+      fVar2 = (*param_1)[1];
+      fVar3 = param_2[1];
+      fVar4 = (*param_1)[2];
+      fVar5 = param_2[2];
+      fVar6 = pfVar18[-1];
+      fVar7 = param_1[1][1];
+      fVar8 = param_1[1][2];
+      fVar9 = *pfVar18;
+      fVar10 = param_1[2][1];
+      fVar11 = param_1[2][2];
+      pfVar18[-2] = param_1[2][0] * fVar9 + param_1[1][0] * fVar6 + fVar1 * (*param_1)[0] + *param_2
+      ;
+      pfVar18[-1] = fVar10 * fVar9 + fVar7 * fVar6 + fVar2 * fVar1 + fVar3;
+      *pfVar18 = fVar11 * fVar9 + fVar8 * fVar6 + fVar4 * fVar1 + fVar5;
     }
-    uVar19 = uVar19 + 1;
-    bVar16 = (bool)(bVar16 ^ 1);
-    pfVar20 = pfVar20 + 3;
-    pfVar21 = pfVar21 + 3;
-    lVar25 = lVar25 + -1;
-  } while (lVar25 != 0);
-  paiVar23 = iEdgePairs;
-  lVar25 = 0xc;
-  dVar27 = 0.5;
-  dVar28 = 255.0;
+    uVar16 = uVar16 + 1;
+    bVar15 = (bool)(bVar15 ^ 1);
+    pfVar17 = pfVar17 + 3;
+    pfVar18 = pfVar18 + 3;
+    lVar22 = lVar22 + -1;
+  } while (lVar22 != 0);
+  paiVar20 = iEdgePairs;
+  lVar22 = 0xc;
+  dVar24 = 0.5;
+  dVar25 = 255.0;
   do {
-    iVar22 = (*paiVar23)[1];
-    iVar12 = (*paiVar23)[0];
+    iVar19 = (*paiVar20)[1];
+    iVar12 = (*paiVar20)[0];
     if (cls.rendererStarted != 0) {
-      bVar16 = CreateDebugLinesIfNeeded();
-      if (bVar16) {
-        pcVar24 = &cls.debug.svLines;
+      bVar15 = CreateDebugLinesIfNeeded();
+      if (bVar15) {
+        pcVar21 = &cls.debug.svLines;
         if (param_8 == 0) {
-          pcVar24 = &cls.debug.clLines;
+          pcVar21 = &cls.debug.clLines;
         }
-        iVar13 = pcVar24->num;
-        if (iVar13 + 1 <= pcVar24->max) {
-          ptVar14 = pcVar24->lines;
+        iVar13 = pcVar21->num;
+        if (iVar13 + 1 <= pcVar21->max) {
+          ptVar14 = pcVar21->lines;
           fVar1 = local_d0[iVar12 * 3 + 1];
           fVar2 = local_d0[iVar12 * 3 + 2];
-          fVar3 = local_d0[iVar22 * 3];
-          fVar4 = local_d0[iVar22 * 3 + 1];
-          fVar5 = local_d0[iVar22 * 3 + 2];
+          fVar3 = local_d0[iVar19 * 3];
+          fVar4 = local_d0[iVar19 * 3 + 1];
+          fVar5 = local_d0[iVar19 * 3 + 2];
           ptVar14[iVar13].start[0] = local_d0[iVar12 * 3];
           ptVar14[iVar13].start[1] = fVar1;
           ptVar14[iVar13].start[2] = fVar2;
           ptVar14[iVar13].end[0] = fVar3;
           ptVar14[iVar13].end[1] = fVar4;
           ptVar14[iVar13].end[2] = fVar5;
-          dVar26 = floor((double)(float)((double)*param_5 * dVar28 + dVar27));
-          iVar22 = (int)dVar26;
-          if (iVar22 < 0xff) {
-            if (iVar22 < 1) {
-              iVar22 = 0;
+          dVar23 = floor((double)(float)((double)*param_5 * dVar25 + dVar24));
+          iVar19 = (int)dVar23;
+          if (iVar19 < 0xff) {
+            if (iVar19 < 1) {
+              iVar19 = 0;
             }
           }
           else {
-            iVar22 = 0xff;
+            iVar19 = 0xff;
           }
-          ptVar14[iVar13].color.array[1] = (uchar)iVar22;
-          dVar26 = floor((double)(float)((double)param_5[1] * dVar28 + dVar27));
-          iVar22 = (int)dVar26;
-          if (iVar22 < 0xff) {
-            if (iVar22 < 1) {
-              iVar22 = 0;
+          ptVar14[iVar13].color.array[1] = (uchar)iVar19;
+          dVar23 = floor((double)(float)((double)param_5[1] * dVar25 + dVar24));
+          iVar19 = (int)dVar23;
+          if (iVar19 < 0xff) {
+            if (iVar19 < 1) {
+              iVar19 = 0;
             }
           }
           else {
-            iVar22 = 0xff;
+            iVar19 = 0xff;
           }
-          ptVar14[iVar13].color.array[2] = (uchar)iVar22;
-          dVar26 = floor((double)(float)((double)param_5[2] * dVar28 + dVar27));
-          iVar22 = (int)dVar26;
-          if (iVar22 < 0xff) {
-            if (iVar22 < 1) {
-              iVar22 = 0;
+          ptVar14[iVar13].color.array[2] = (uchar)iVar19;
+          dVar23 = floor((double)(float)((double)param_5[2] * dVar25 + dVar24));
+          iVar19 = (int)dVar23;
+          if (iVar19 < 0xff) {
+            if (iVar19 < 1) {
+              iVar19 = 0;
             }
           }
           else {
-            iVar22 = 0xff;
+            iVar19 = 0xff;
           }
-          ptVar14[iVar13].color.array[3] = (uchar)iVar22;
-          dVar26 = floor((double)(float)((double)param_5[3] * dVar28 + dVar27));
-          iVar22 = (int)dVar26;
-          if (iVar22 < 0xff) {
-            if (iVar22 < 1) {
-              iVar22 = 0;
+          ptVar14[iVar13].color.array[3] = (uchar)iVar19;
+          dVar23 = floor((double)(float)((double)param_5[3] * dVar25 + dVar24));
+          iVar19 = (int)dVar23;
+          if (iVar19 < 0xff) {
+            if (iVar19 < 1) {
+              iVar19 = 0;
             }
           }
           else {
-            iVar22 = 0xff;
+            iVar19 = 0xff;
           }
-          ptVar14[iVar13].color.array[0] = (uchar)iVar22;
+          ptVar14[iVar13].color.array[0] = (uchar)iVar19;
           ptVar14[iVar13].depthTest = param_6;
-          pcVar24->durations[pcVar24->num] = param_7;
-          pcVar24->num = pcVar24->num + 1;
+          pcVar21->durations[pcVar21->num] = param_7;
+          pcVar21->num = pcVar21->num + 1;
         }
         if (param_8 != 0) {
           cls.debug.fromServer = 1;
         }
       }
     }
-    lVar25 = lVar25 + -1;
-    paiVar23 = paiVar23 + 1;
-  } while (lVar25 != 0);
-  __restgprlr_21();
+    lVar22 = lVar22 + -1;
+    paiVar20 = paiVar20 + 1;
+  } while (lVar22 != 0);
   return;
 }
 
@@ -626,43 +599,42 @@ void CL_RecordServerDebugData(void)
 
 // 82336900  FlushDebugStrings  (client/cl_debugdata.cpp:313)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 
 void FlushDebugStrings(clientDebugStringInfo_t *param_1,int param_2)
 
 {
-  int iVar1;
+  int *piVar1;
   int iVar2;
   int iVar3;
   int iVar4;
-  int iVar5;
   
-  iVar2 = __savegprlr_26(param_1);
-  if (*(int *)(iVar2 + 8) != 0) {
-    iVar4 = 0;
-    if (0 < *(int *)(iVar2 + 4)) {
-      iVar5 = 0;
+  if (param_1->strings != (trDebugString_t *)0x0) {
+    iVar3 = 0;
+    if (0 < param_1->num) {
+      iVar4 = 0;
       do {
-        *(int *)(*(int *)(iVar2 + 0xc) + iVar5) = *(int *)(*(int *)(iVar2 + 0xc) + iVar5) + -1;
-        iVar1 = *(int *)(iVar2 + 0xc);
-        if (*(int *)(iVar5 + iVar1) < 1) {
-          iVar3 = *(int *)(iVar2 + 4) + -1;
-          *(int *)(iVar2 + 4) = iVar3;
-          *(undefined4 *)(iVar5 + iVar1) = *(undefined4 *)(iVar3 * 4 + iVar1);
+        *(int *)((int)param_1->durations + iVar4) = *(int *)((int)param_1->durations + iVar4) + -1;
+        piVar1 = param_1->durations;
+        if (*(int *)(iVar4 + (int)piVar1) < 1) {
+          iVar2 = param_1->num + -1;
+          param_1->num = iVar2;
+          *(int *)(iVar4 + (int)piVar1) = piVar1[iVar2];
           memcpy();
         }
         else {
           if (param_2 != 0) {
             cls.debug.fromServer = 1;
           }
-          iVar4 = iVar4 + 1;
-          iVar5 = iVar5 + 4;
+          iVar3 = iVar3 + 1;
+          iVar4 = iVar4 + 4;
         }
-      } while (iVar4 < *(int *)(iVar2 + 4));
+      } while (iVar3 < param_1->num);
     }
   }
-  __restgprlr_26();
   return;
 }
 

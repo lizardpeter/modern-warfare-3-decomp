@@ -2,90 +2,102 @@
 
 // 82657A20  adler32  (zlib/adler32.c:31)
 
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
+
 ulong adler32(ulong param_1,uchar *param_2,uint param_3)
 
 {
-  int iVar1;
-  ulonglong uVar2;
-  ulong uVar3;
-  ulonglong uVar4;
-  ulonglong uVar5;
-  longlong lVar6;
-  longlong lVar7;
-  longlong lVar8;
-  longlong lVar9;
-  longlong lVar10;
-  longlong lVar11;
-  longlong lVar12;
-  longlong lVar13;
-  longlong lVar14;
-  longlong lVar15;
-  longlong lVar16;
-  longlong lVar17;
-  longlong lVar18;
-  longlong lVar19;
-  longlong lVar20;
-  ulonglong uVar21;
-  longlong lVar22;
-  ulonglong uVar23;
+  byte *pbVar1;
+  byte *pbVar2;
+  byte *pbVar3;
+  byte *pbVar4;
+  byte *pbVar5;
+  byte *pbVar6;
+  byte *pbVar7;
+  byte *pbVar8;
+  ulonglong uVar9;
+  ulonglong uVar10;
+  uint uVar11;
+  int iVar12;
+  int iVar13;
+  int iVar14;
+  int iVar15;
+  int iVar16;
+  int iVar17;
+  int iVar18;
+  int iVar19;
+  int iVar20;
+  int iVar21;
+  int iVar22;
+  int iVar23;
+  int iVar24;
+  int iVar25;
+  int iVar26;
+  uint uVar27;
+  byte *pbVar28;
+  ulonglong uVar29;
   
-  uVar4 = (ulonglong)(int)param_3;
-  uVar5 = (ulonglong)(int)param_2;
-  uVar2 = __savegprlr_22(param_1);
-  uVar21 = uVar2 & 0xffff;
-  uVar2 = (uVar2 & 0xffffffff) >> 0x10;
-  if ((uVar5 & 0xffffffff) == 0) {
-    uVar3 = __restgprlr_22(1);
-    return uVar3;
+  uVar9 = (ulonglong)(int)param_3;
+  uVar27 = param_1 & 0xffff;
+  uVar11 = param_1 >> 0x10;
+  if (param_2 == (uchar *)0x0) {
+    return 1;
   }
-  if ((uVar4 & 0xffffffff) != 0) {
-    lVar22 = uVar5 - 1;
+  if (param_3 != 0) {
+    pbVar28 = param_2 + -1;
     do {
-      uVar5 = uVar4;
-      if (0x15af < (uVar4 & 0xffffffff)) {
-        uVar5 = 0x15b0;
+      uVar10 = uVar9;
+      if (0x15af < (uVar9 & 0xffffffff)) {
+        uVar10 = 0x15b0;
       }
-      uVar4 = uVar4 - uVar5;
-      if (0xf < (int)uVar5) {
-        uVar23 = (uVar5 & 0xffffffff) >> 4;
-        uVar5 = uVar5 - (uVar5 & 0xfffffff0);
+      uVar9 = uVar9 - uVar10;
+      if (0xf < (int)uVar10) {
+        uVar29 = (uVar10 & 0xffffffff) >> 4;
+        uVar10 = uVar10 - (uVar10 & 0xfffffff0);
         do {
-          iVar1 = (int)lVar22;
-          lVar6 = *(byte *)(iVar1 + 1) + uVar21;
-          lVar7 = (ulonglong)*(byte *)(iVar1 + 2) + lVar6;
-          lVar8 = (ulonglong)*(byte *)(iVar1 + 3) + lVar7;
-          lVar9 = (ulonglong)*(byte *)(iVar1 + 4) + lVar8;
-          lVar10 = (ulonglong)*(byte *)(iVar1 + 5) + lVar9;
-          lVar11 = (ulonglong)*(byte *)(iVar1 + 6) + lVar10;
-          lVar12 = (ulonglong)*(byte *)(iVar1 + 7) + lVar11;
-          lVar13 = (ulonglong)*(byte *)(iVar1 + 8) + lVar12;
-          lVar22 = lVar22 + 0x10;
-          lVar14 = (ulonglong)*(byte *)(iVar1 + 9) + lVar13;
-          lVar15 = (ulonglong)*(byte *)(iVar1 + 10) + lVar14;
-          lVar16 = (ulonglong)*(byte *)(iVar1 + 0xb) + lVar15;
-          lVar17 = (ulonglong)*(byte *)(iVar1 + 0xc) + lVar16;
-          lVar18 = (ulonglong)*(byte *)(iVar1 + 0xd) + lVar17;
-          lVar19 = (ulonglong)*(byte *)(iVar1 + 0xe) + lVar18;
-          lVar20 = (ulonglong)*(byte *)(iVar1 + 0xf) + lVar19;
-          uVar21 = (ulonglong)*(byte *)(iVar1 + 0x10) + lVar20;
-          uVar2 = uVar2 + lVar6 + lVar7 + lVar8 + lVar9 + lVar10 + lVar11 + lVar12 + lVar13 + lVar14
-                  + lVar15 + lVar16 + lVar17 + lVar18 + lVar19 + lVar20 + uVar21;
-          uVar23 = uVar23 - 1;
-        } while (uVar23 != 0);
+          iVar12 = pbVar28[1] + uVar27;
+          iVar13 = (uint)pbVar28[2] + iVar12;
+          iVar14 = (uint)pbVar28[3] + iVar13;
+          pbVar1 = pbVar28 + 10;
+          pbVar2 = pbVar28 + 9;
+          pbVar3 = pbVar28 + 0xb;
+          iVar15 = (uint)pbVar28[4] + iVar14;
+          pbVar4 = pbVar28 + 0xd;
+          pbVar5 = pbVar28 + 0xc;
+          pbVar6 = pbVar28 + 0xe;
+          iVar16 = (uint)pbVar28[5] + iVar15;
+          pbVar7 = pbVar28 + 0x10;
+          pbVar8 = pbVar28 + 0xf;
+          iVar17 = (uint)pbVar28[6] + iVar16;
+          iVar18 = (uint)pbVar28[7] + iVar17;
+          iVar19 = (uint)pbVar28[8] + iVar18;
+          pbVar28 = pbVar28 + 0x10;
+          iVar20 = (uint)*pbVar2 + iVar19;
+          iVar21 = (uint)*pbVar1 + iVar20;
+          iVar22 = (uint)*pbVar3 + iVar21;
+          iVar23 = (uint)*pbVar5 + iVar22;
+          iVar24 = (uint)*pbVar4 + iVar23;
+          iVar25 = (uint)*pbVar6 + iVar24;
+          iVar26 = (uint)*pbVar8 + iVar25;
+          uVar27 = (uint)*pbVar7 + iVar26;
+          uVar11 = uVar11 + iVar12 + iVar13 + iVar14 + iVar15 + iVar16 + iVar17 + iVar18 + iVar19 +
+                   iVar20 + iVar21 + iVar22 + iVar23 + iVar24 + iVar25 + iVar26 + uVar27;
+          uVar29 = uVar29 - 1;
+        } while (uVar29 != 0);
       }
-      if ((int)uVar5 != 0) {
+      if ((int)uVar10 != 0) {
         do {
-          lVar22 = lVar22 + 1;
-          uVar5 = uVar5 - 1;
-          uVar21 = *(byte *)lVar22 + uVar21;
-          uVar2 = uVar2 + uVar21;
-        } while (uVar5 != 0);
+          pbVar28 = pbVar28 + 1;
+          uVar10 = uVar10 - 1;
+          uVar27 = *pbVar28 + uVar27;
+          uVar11 = uVar11 + uVar27;
+        } while (uVar10 != 0);
       }
-      uVar21 = uVar21 + (longlong)(int)((uVar21 & 0xffffffff) / 0xfff1) * -0xfff1;
-      uVar2 = uVar2 + (longlong)(int)((uVar2 & 0xffffffff) / 0xfff1) * -0xfff1;
-    } while ((uVar4 & 0xffffffff) != 0);
+      uVar27 = uVar27 % 0xfff1;
+      uVar11 = uVar11 % 0xfff1;
+    } while ((uVar9 & 0xffffffff) != 0);
   }
-  uVar3 = __restgprlr_22((uVar2 & 0xffff) << 0x10 | uVar21);
-  return uVar3;
+  return uVar11 << 0x10 | uVar27;
 }
 

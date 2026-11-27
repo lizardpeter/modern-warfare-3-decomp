@@ -51,12 +51,14 @@ void __thiscall bdHTTPClient::~bdHTTPClient(bdHTTPClient *this)
 
 // 82915CD0  performOperation  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdhttpwrapper/bdhttpclient.cpp:82)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
+
 void __thiscall bdHTTPClient::performOperation(bdHTTPClient *this)
 
 {
-  bdHTTPClient *this_00;
   bool bVar3;
-  bdInetAddr *this_01;
+  bdInetAddr *this_00;
   bdNetImpl *pbVar1;
   bool bVar4;
   bdAddr *pbVar2;
@@ -67,40 +69,39 @@ void __thiscall bdHTTPClient::performOperation(bdHTTPClient *this)
   bdAddr bStack_60;
   bdAddr abStack_58 [11];
   
-  this_00 = (bdHTTPClient *)__savegprlr_24(this);
   bdLogMessage(BD_LOG_INFO,"info/","http",
                "c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdLobby\\bdHTTPWrapper\\bdHTTPClient.cpp"
                ,"bdHTTPClient::performOperation",0x53,"Starting HTTP operation");
-  if (this_00->m_abort == false) {
-    this_00->m_socketErrorCode = 1;
-    this_00->m_status = BD_HTTP_STATUS_BUSY;
+  if (this->m_abort == false) {
+    this->m_socketErrorCode = 1;
+    this->m_status = BD_HTTP_STATUS_BUSY;
     bdAddr::bdAddr(&bStack_60);
     bdStreamSocket::bdStreamSocket(&bStack_70);
-    bVar3 = resolveHostIP(this_00,&bStack_60);
+    bVar3 = resolveHostIP(this,&bStack_60);
     if (bVar3) {
-      this_01 = bdAddr::getAddress(&bStack_60);
-      local_68[0].S_addr = bdInetAddr::toUInt32(this_01);
+      this_00 = bdAddr::getAddress(&bStack_60);
+      local_68[0].S_addr = bdInetAddr::toUInt32(this_00);
       pbVar1 = bdSingleton<bdNetImpl>::getInstance();
       if (pbVar1 != (bdNetImpl *)0x0) {
         bdNetImpl::registerSecureAddr(pbVar1,(in_addr *)&local_68[0].S_un_b,false);
       }
     }
-    if (((bVar3) && (this_00->m_abort == false)) &&
+    if (((bVar3) && (this->m_abort == false)) &&
        (bVar4 = bdStreamSocket::create(&bStack_70,false), bVar4)) {
       pbVar2 = bdAddr::bdAddr(abStack_58,&bStack_60);
       local_6c = bdStreamSocket::connect(&bStack_70,(bdAddr)(longlong)(int)pbVar2);
       bVar4 = false;
       if ((local_6c == BD_NET_SUCCESS) || (local_6c == BD_NET_WOULD_BLOCK)) {
-        while ((bVar5 = bdStreamSocket::isWritable(&bStack_70,&local_6c), this_00->m_abort == false
-               && ((!bVar5 && (local_6c == BD_NET_SUCCESS))))) {
+        while ((bVar5 = bdStreamSocket::isWritable(&bStack_70,&local_6c), this->m_abort == false &&
+               ((!bVar5 && (local_6c == BD_NET_SUCCESS))))) {
           _sleep_bdPlatformTiming__SAXI_Z(0x32);
         }
         if ((bVar5) && (local_6c == BD_NET_SUCCESS)) {
           bVar4 = true;
-          bVar5 = performOperation(this_00,&bStack_70);
+          bVar5 = performOperation(this,&bStack_70);
           if (bVar5) {
-            this_00->m_status = BD_HTTP_STATUS_DONE;
-            this_00->m_socketErrorCode = 0;
+            this->m_status = BD_HTTP_STATUS_DONE;
+            this->m_socketErrorCode = 0;
           }
         }
       }
@@ -108,7 +109,7 @@ void __thiscall bdHTTPClient::performOperation(bdHTTPClient *this)
         bdLogMessage(BD_LOG_ERROR,"err/","http",
                      "c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdLobby\\bdHTTPWrapper\\bdHTTPClient.cpp"
                      ,"bdHTTPClient::performOperation",0x8f,"Failed to connect to host");
-        this_00->m_socketErrorCode = (longlong)(int)local_6c;
+        this->m_socketErrorCode = (longlong)(int)local_6c;
       }
       bdStreamSocket::close(&bStack_70);
     }
@@ -121,8 +122,8 @@ void __thiscall bdHTTPClient::performOperation(bdHTTPClient *this)
     if ((bVar3) && (pbVar1 = bdSingleton<bdNetImpl>::getInstance(), pbVar1 != (bdNetImpl *)0x0)) {
       bdNetImpl::unregisterSecureAddr(pbVar1,(in_addr *)&local_68[0].S_un_b);
     }
-    if (this_00->m_status != BD_HTTP_STATUS_DONE) {
-      this_00->m_status = BD_HTTP_STATUS_ERROR;
+    if (this->m_status != BD_HTTP_STATUS_DONE) {
+      this->m_status = BD_HTTP_STATUS_ERROR;
     }
     bdStreamSocket::~bdStreamSocket(&bStack_70);
     bdInetAddr::~bdInetAddr(&bStack_60.m_address);
@@ -131,67 +132,59 @@ void __thiscall bdHTTPClient::performOperation(bdHTTPClient *this)
     bdLogMessage(BD_LOG_ERROR,"err/","http",
                  "c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdLobby\\bdHTTPWrapper\\bdHTTPClient.cpp"
                  ,"bdHTTPClient::performOperation",0x57,"Not executing HTTP operation");
-    this_00->m_status = BD_HTTP_STATUS_ERROR;
+    this->m_status = BD_HTTP_STATUS_ERROR;
   }
-  __restgprlr_24();
   return;
 }
 
 
 // 82915BB8  performOperation  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdhttpwrapper/bdhttpclient.cpp:175)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 bool __thiscall bdHTTPClient::performOperation(bdHTTPClient *this,bdStreamSocket *param_1)
 
 {
   uint uVar1;
-  bdHTTPClient *this_00;
-  int iVar3;
-  undefined8 uVar2;
-  bool bVar4;
-  undefined1 uVar5;
+  int iVar2;
+  bool bVar3;
   uint local_30 [2];
   bdStopwatch abStack_28 [5];
   
-  this_00 = (bdHTTPClient *)__savegprlr_29(this);
   bdStopwatch::bdStopwatch(abStack_28);
   bdStopwatch::start(abStack_28);
-  uVar1 = (this_00->m_buffer).m_httpCommonBufferSize;
-  this_00->m_bytesTransfered = 0;
-  this_00->m_dataRate = 0.0;
-  iVar3 = bdStreamSocket::send(param_1,(this_00->m_buffer).m_httpCommonBuffer,uVar1);
-  if (iVar3 < 0) {
+  uVar1 = (this->m_buffer).m_httpCommonBufferSize;
+  this->m_bytesTransfered = 0;
+  this->m_dataRate = 0.0;
+  iVar2 = bdStreamSocket::send(param_1,(this->m_buffer).m_httpCommonBuffer,uVar1);
+  if (iVar2 < 0) {
     bdLogMessage(BD_LOG_ERROR,"err/","http",
                  "c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdLobby\\bdHTTPWrapper\\bdHTTPClient.cpp"
                  ,"bdHTTPClient::performOperation",0xbb,
                  "Failed to send HTTP request with status code %d");
   }
-  else {
-    if (((this_00->m_buffer).m_contentSendBufferSize != 0) ||
-       (this_00->m_uploadHandler != (bdUploadInterceptor *)0x0)) {
-      bVar4 = sendPayload(this_00,param_1,abStack_28);
-      if (!bVar4) goto LAB_82915c3c;
-    }
+  else if ((((this->m_buffer).m_contentSendBufferSize == 0) &&
+           (this->m_uploadHandler == (bdUploadInterceptor *)0x0)) ||
+          (bVar3 = sendPayload(this,param_1,abStack_28), bVar3)) {
     local_30[0] = 0;
-    bVar4 = recvResponseHeader(this_00,param_1,local_30);
-    if (bVar4) {
-      if (this_00->m_operation == BD_HTTP_GET_OPERATION) {
-        bVar4 = recvResponsePayload(this_00,param_1,local_30[0]);
-        uVar2 = 0;
-        if (!bVar4) goto LAB_82915cbc;
+    bVar3 = recvResponseHeader(this,param_1,local_30);
+    if (bVar3) {
+      if ((this->m_operation == BD_HTTP_GET_OPERATION) &&
+         (bVar3 = recvResponsePayload(this,param_1,local_30[0]), !bVar3)) {
+        return false;
       }
-      uVar2 = 1;
-      goto LAB_82915cbc;
+      return true;
     }
   }
-LAB_82915c3c:
-  uVar2 = 0;
-LAB_82915cbc:
-  uVar5 = __restgprlr_29(uVar2);
-  return (bool)uVar5;
+  return false;
 }
 
 
 // 82915358  httpGet  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdhttpwrapper/bdhttpclient.cpp:223)
+
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 
 bool __thiscall
 bdHTTPClient::httpGet
@@ -199,45 +192,38 @@ bdHTTPClient::httpGet
           bdDownloadInterceptor *param_5,uint param_6,ulong64 param_7,uint param_8,uint param_9)
 
 {
-  bdHTTPClient *this_00;
   bool bVar3;
   char *pcVar1;
   uint uVar2;
-  undefined1 uVar4;
-  ulonglong uVar5;
-  longlong lVar6;
   int in_stack_00000054;
   int in_stack_0000005c;
   
-  lVar6 = (longlong)(int)param_5;
-  uVar5 = (ulonglong)(int)param_4;
-  this_00 = (bdHTTPClient *)__savegprlr_24(this);
   bVar3 = validateRequestInput
-                    (this_00,param_1,param_2,param_3,uVar5 & 0xffffffff,
-                     (bool)('\x01' - (lVar6 == 0)));
+                    (this,param_1,param_2,param_3,(ulonglong)param_4,
+                     (bool)('\x01' - (param_5 == (bdDownloadInterceptor *)0x0)));
   if (bVar3) {
-    this_00->m_serverName[0] = '\0';
-    this_00->m_port = 0;
-    this_00->m_uploadHandler = (bdUploadInterceptor *)0x0;
-    this_00->m_downloadHandler = (bdDownloadInterceptor *)0x0;
-    this_00->m_status = BD_HTTP_STATUS_READY;
-    (this_00->m_buffer).m_httpCommonBufferSize = 0;
-    pcVar1 = (this_00->m_buffer).m_httpCommonBuffer;
-    (this_00->m_buffer).m_contentSendBuffer = (void *)0x0;
-    (this_00->m_buffer).m_contentSendBufferSize = 0;
-    (this_00->m_buffer).m_contentReceiveBuffer = (void *)0x0;
-    (this_00->m_buffer).m_contentReceiveBufferSize = 0;
-    (this_00->m_buffer).m_responseStatusBufferSize = 0;
-    this_00->m_dataRate = 0.0;
-    this_00->m_chunked = false;
-    this_00->m_httpResponseCode = 0;
-    this_00->m_expectedContentSize = 0;
-    this_00->m_socketErrorCode = 0;
-    this_00->m_bytesTransfered = 0;
-    this_00->m_abort = false;
-    this_00->m_operation = BD_HTTP_GET_OPERATION;
-    (this_00->m_buffer).m_contentReceiveBuffer = param_3;
-    (this_00->m_buffer).m_contentReceiveBufferSize = (uint)uVar5;
+    this->m_serverName[0] = '\0';
+    this->m_port = 0;
+    this->m_uploadHandler = (bdUploadInterceptor *)0x0;
+    this->m_downloadHandler = (bdDownloadInterceptor *)0x0;
+    this->m_status = BD_HTTP_STATUS_READY;
+    (this->m_buffer).m_httpCommonBufferSize = 0;
+    pcVar1 = (this->m_buffer).m_httpCommonBuffer;
+    (this->m_buffer).m_contentSendBuffer = (void *)0x0;
+    (this->m_buffer).m_contentSendBufferSize = 0;
+    (this->m_buffer).m_contentReceiveBuffer = (void *)0x0;
+    (this->m_buffer).m_contentReceiveBufferSize = 0;
+    (this->m_buffer).m_responseStatusBufferSize = 0;
+    this->m_dataRate = 0.0;
+    this->m_chunked = false;
+    this->m_httpResponseCode = 0;
+    this->m_expectedContentSize = 0;
+    this->m_socketErrorCode = 0;
+    this->m_bytesTransfered = 0;
+    this->m_abort = false;
+    this->m_operation = BD_HTTP_GET_OPERATION;
+    (this->m_buffer).m_contentReceiveBuffer = param_3;
+    (this->m_buffer).m_contentReceiveBufferSize = param_4;
     if (in_stack_0000005c == 0) {
       if (in_stack_00000054 == 0) {
         uVar2 = bdSnprintf(pcVar1,0x4f0,
@@ -254,33 +240,33 @@ bdHTTPClient::httpGet
                          "GET %s HTTP/1.1\r\nHost: %s\r\nRange: bytes=%I32u-%I32u\r\nX-TransactionID: %I64u\r\n\r\n"
                         );
     }
-    (this_00->m_buffer).m_httpCommonBufferSize = uVar2;
+    (this->m_buffer).m_httpCommonBufferSize = uVar2;
     if ((0 < (int)uVar2) && ((int)uVar2 < 0x4ef)) {
-      this_00->m_downloadHandler = (bdDownloadInterceptor *)lVar6;
-      bVar3 = initHttpOperation(this_00,param_1,param_6);
-      goto LAB_82915508;
+      this->m_downloadHandler = param_5;
+      bVar3 = initHttpOperation(this,param_1,param_6);
+      return bVar3;
     }
     bdLogMessage(BD_LOG_ERROR,"err/","http",
                  "c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdLobby\\bdHTTPWrapper\\bdHTTPClient.cpp"
                  ,"bdHTTPClient::httpGet",0x105,
                  "Error writing http GET request string. Bytes written: %d.");
-    this_00->m_status = BD_HTTP_STATUS_ERROR;
+    this->m_status = BD_HTTP_STATUS_ERROR;
   }
   else {
-    this_00->m_status = BD_HTTP_STATUS_ERROR;
+    this->m_status = BD_HTTP_STATUS_ERROR;
     if (alwaysfails == 0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdLobby\\bdHTTPWrapper\\bdHTTPClient.cpp"
                       ,0xe3,0,"Invalid HTTP request input for HTTP get");
     }
   }
-  bVar3 = false;
-LAB_82915508:
-  uVar4 = __restgprlr_24(bVar3);
-  return (bool)uVar4;
+  return false;
 }
 
 
 // 82915510  httpPut  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdhttpwrapper/bdhttpclient.cpp:282)
+
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 
 bool __thiscall
 bdHTTPClient::httpPut
@@ -288,44 +274,39 @@ bdHTTPClient::httpPut
           bdUploadInterceptor *param_5,uint param_6,ulong64 param_7,char *param_8)
 
 {
-  bdHTTPClient *this_00;
   bool bVar3;
   char *pcVar1;
   uint uVar2;
-  undefined1 uVar4;
-  longlong lVar5;
   int in_stack_00000054;
   
-  lVar5 = (longlong)(int)param_5;
-  this_00 = (bdHTTPClient *)__savegprlr_24(this);
   bVar3 = validateRequestInput
-                    (this_00,param_1,param_2,param_3,(longlong)param_4,(bool)('\x01' - (lVar5 == 0))
-                    );
+                    (this,param_1,param_2,param_3,(longlong)param_4,
+                     (bool)('\x01' - (param_5 == (bdUploadInterceptor *)0x0)));
   if (bVar3) {
-    this_00->m_serverName[0] = '\0';
-    this_00->m_port = 0;
-    this_00->m_uploadHandler = (bdUploadInterceptor *)0x0;
-    this_00->m_downloadHandler = (bdDownloadInterceptor *)0x0;
-    this_00->m_status = BD_HTTP_STATUS_READY;
-    (this_00->m_buffer).m_httpCommonBufferSize = 0;
-    (this_00->m_buffer).m_contentSendBuffer = (void *)0x0;
-    (this_00->m_buffer).m_contentSendBufferSize = 0;
-    pcVar1 = (this_00->m_buffer).m_httpCommonBuffer;
-    (this_00->m_buffer).m_contentReceiveBuffer = (void *)0x0;
-    (this_00->m_buffer).m_contentReceiveBufferSize = 0;
-    (this_00->m_buffer).m_responseStatusBufferSize = 0;
-    this_00->m_dataRate = 0.0;
-    this_00->m_chunked = false;
-    this_00->m_httpResponseCode = 0;
-    this_00->m_expectedContentSize = 0;
-    this_00->m_socketErrorCode = 0;
-    this_00->m_bytesTransfered = 0;
-    this_00->m_abort = false;
-    this_00->m_operation = BD_HTTP_PUT_OPERATION;
-    (this_00->m_buffer).m_contentSendBuffer = param_3;
-    (this_00->m_buffer).m_contentSendBufferSize = param_4;
+    this->m_serverName[0] = '\0';
+    this->m_port = 0;
+    this->m_uploadHandler = (bdUploadInterceptor *)0x0;
+    this->m_downloadHandler = (bdDownloadInterceptor *)0x0;
+    this->m_status = BD_HTTP_STATUS_READY;
+    (this->m_buffer).m_httpCommonBufferSize = 0;
+    (this->m_buffer).m_contentSendBuffer = (void *)0x0;
+    (this->m_buffer).m_contentSendBufferSize = 0;
+    pcVar1 = (this->m_buffer).m_httpCommonBuffer;
+    (this->m_buffer).m_contentReceiveBuffer = (void *)0x0;
+    (this->m_buffer).m_contentReceiveBufferSize = 0;
+    (this->m_buffer).m_responseStatusBufferSize = 0;
+    this->m_dataRate = 0.0;
+    this->m_chunked = false;
+    this->m_httpResponseCode = 0;
+    this->m_expectedContentSize = 0;
+    this->m_socketErrorCode = 0;
+    this->m_bytesTransfered = 0;
+    this->m_abort = false;
+    this->m_operation = BD_HTTP_PUT_OPERATION;
+    (this->m_buffer).m_contentSendBuffer = param_3;
+    (this->m_buffer).m_contentSendBufferSize = param_4;
     if (param_4 == 0) {
-      this_00->m_chunked = true;
+      this->m_chunked = true;
       uVar2 = bdSnprintf(pcVar1,0x4f0,
                          "PUT %s HTTP/1.1\r\nHost: %s:%d\r\nAccept: */*\r\nTransfer-Encoding: chunked\r\nX-TransactionID: %I64u\r\n\r\n"
                         );
@@ -340,94 +321,93 @@ bdHTTPClient::httpPut
                          "PUT %s HTTP/1.1\r\nHost: %s:%d\r\nAccept: */*\r\nContent-Length: %d\r\nX-Checksum: %s\r\nX-TransactionID: %I64u\r\n\r\n"
                         );
     }
-    (this_00->m_buffer).m_httpCommonBufferSize = uVar2;
+    (this->m_buffer).m_httpCommonBufferSize = uVar2;
     if ((0 < (int)uVar2) && ((int)uVar2 < 0x4ef)) {
-      this_00->m_uploadHandler = (bdUploadInterceptor *)lVar5;
-      bVar3 = initHttpOperation(this_00,param_1,param_6);
-      goto LAB_829156cc;
+      this->m_uploadHandler = param_5;
+      bVar3 = initHttpOperation(this,param_1,param_6);
+      return bVar3;
     }
     bdLogMessage(BD_LOG_ERROR,"err/","http",
                  "c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdLobby\\bdHTTPWrapper\\bdHTTPClient.cpp"
                  ,"bdHTTPClient::httpPut",0x144,
                  "Error writing http PUT request string. Bytes written: %d.");
-    this_00->m_status = BD_HTTP_STATUS_ERROR;
+    this->m_status = BD_HTTP_STATUS_ERROR;
   }
   else {
-    this_00->m_status = BD_HTTP_STATUS_ERROR;
+    this->m_status = BD_HTTP_STATUS_ERROR;
     if (alwaysfails == 0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdLobby\\bdHTTPWrapper\\bdHTTPClient.cpp"
                       ,0x11e,0,"Invalid HTTP request input for HTTP put");
     }
   }
-  bVar3 = false;
-LAB_829156cc:
-  uVar4 = __restgprlr_24(bVar3);
-  return (bool)uVar4;
+  return false;
 }
 
 
 // 829156D8  httpDelete  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdhttpwrapper/bdhttpclient.cpp:341)
+
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 
 bool __thiscall
 bdHTTPClient::httpDelete
           (bdHTTPClient *this,char *param_1,char *param_2,uint param_3,ulong64 param_4)
 
 {
-  bdHTTPClient *this_00;
   bool bVar2;
   uint uVar1;
-  undefined1 uVar3;
   
-  this_00 = (bdHTTPClient *)__savegprlr_26(this);
-  bVar2 = validateRequestInput(this_00,param_1,param_2,(void *)0x0,0,false);
+  bVar2 = validateRequestInput(this,param_1,param_2,(void *)0x0,0,false);
   if (bVar2) {
-    this_00->m_serverName[0] = '\0';
-    this_00->m_port = 0;
-    this_00->m_uploadHandler = (bdUploadInterceptor *)0x0;
-    this_00->m_downloadHandler = (bdDownloadInterceptor *)0x0;
-    this_00->m_status = BD_HTTP_STATUS_READY;
-    (this_00->m_buffer).m_httpCommonBufferSize = 0;
-    (this_00->m_buffer).m_contentSendBuffer = (void *)0x0;
-    (this_00->m_buffer).m_contentSendBufferSize = 0;
-    (this_00->m_buffer).m_contentReceiveBuffer = (void *)0x0;
-    (this_00->m_buffer).m_contentReceiveBufferSize = 0;
-    (this_00->m_buffer).m_responseStatusBufferSize = 0;
-    this_00->m_dataRate = 0.0;
-    this_00->m_chunked = false;
-    this_00->m_httpResponseCode = 0;
-    this_00->m_expectedContentSize = 0;
-    this_00->m_socketErrorCode = 0;
-    this_00->m_bytesTransfered = 0;
-    this_00->m_abort = false;
-    this_00->m_operation = BD_HTTP_DELETE_OPERATION;
-    uVar1 = bdSnprintf((this_00->m_buffer).m_httpCommonBuffer,0x4f0,
+    this->m_serverName[0] = '\0';
+    this->m_port = 0;
+    this->m_uploadHandler = (bdUploadInterceptor *)0x0;
+    this->m_downloadHandler = (bdDownloadInterceptor *)0x0;
+    this->m_status = BD_HTTP_STATUS_READY;
+    (this->m_buffer).m_httpCommonBufferSize = 0;
+    (this->m_buffer).m_contentSendBuffer = (void *)0x0;
+    (this->m_buffer).m_contentSendBufferSize = 0;
+    (this->m_buffer).m_contentReceiveBuffer = (void *)0x0;
+    (this->m_buffer).m_contentReceiveBufferSize = 0;
+    (this->m_buffer).m_responseStatusBufferSize = 0;
+    this->m_dataRate = 0.0;
+    this->m_chunked = false;
+    this->m_httpResponseCode = 0;
+    this->m_expectedContentSize = 0;
+    this->m_socketErrorCode = 0;
+    this->m_bytesTransfered = 0;
+    this->m_abort = false;
+    this->m_operation = BD_HTTP_DELETE_OPERATION;
+    uVar1 = bdSnprintf((this->m_buffer).m_httpCommonBuffer,0x4f0,
                        "DELETE %s HTTP/1.1\r\nHost: %s:%d\r\nX-TransactionID: %I64u\r\n\r\n");
     if ((int)uVar1 < 1) {
       bdLogMessage(BD_LOG_ERROR,"err/","http",
                    "c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdLobby\\bdHTTPWrapper\\bdHTTPClient.cpp"
                    ,"bdHTTPClient::httpDelete",0x167,"Error writing http request string");
       bVar2 = false;
-      this_00->m_status = BD_HTTP_STATUS_ERROR;
+      this->m_status = BD_HTTP_STATUS_ERROR;
     }
     else {
-      (this_00->m_buffer).m_httpCommonBufferSize = uVar1;
-      bVar2 = initHttpOperation(this_00,param_1,param_3);
+      (this->m_buffer).m_httpCommonBufferSize = uVar1;
+      bVar2 = initHttpOperation(this,param_1,param_3);
     }
   }
   else {
-    this_00->m_status = BD_HTTP_STATUS_ERROR;
+    this->m_status = BD_HTTP_STATUS_ERROR;
     if (alwaysfails == 0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdLobby\\bdHTTPWrapper\\bdHTTPClient.cpp"
                       ,0x159,0,"Invalid HTTP request input for HTTP delete");
     }
     bVar2 = false;
   }
-  uVar3 = __restgprlr_26(bVar2);
-  return (bool)uVar3;
+  return bVar2;
 }
 
 
 // 82915830  httpCopy  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdhttpwrapper/bdhttpclient.cpp:374)
+
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 
 bool __thiscall
 bdHTTPClient::httpCopy
@@ -435,38 +415,31 @@ bdHTTPClient::httpCopy
           ulong64 param_6)
 
 {
-  bdHTTPClient *this_00;
   bool bVar2;
   uint uVar1;
-  undefined1 uVar3;
-  longlong lVar4;
-  longlong lVar5;
   
-  lVar5 = (longlong)(int)param_2;
-  lVar4 = (longlong)(int)param_1;
-  this_00 = (bdHTTPClient *)__savegprlr_24(this,lVar4,lVar5,param_3,param_4);
-  bVar2 = validateRequestInput(this_00,(char *)lVar4,(char *)lVar5,(void *)0x0,0,false);
+  bVar2 = validateRequestInput(this,param_1,param_2,(void *)0x0,0,false);
   if (bVar2) {
-    this_00->m_serverName[0] = '\0';
-    this_00->m_port = 0;
-    this_00->m_uploadHandler = (bdUploadInterceptor *)0x0;
-    this_00->m_downloadHandler = (bdDownloadInterceptor *)0x0;
-    this_00->m_status = BD_HTTP_STATUS_READY;
-    (this_00->m_buffer).m_httpCommonBufferSize = 0;
-    (this_00->m_buffer).m_contentSendBuffer = (void *)0x0;
-    (this_00->m_buffer).m_contentSendBufferSize = 0;
-    (this_00->m_buffer).m_contentReceiveBuffer = (void *)0x0;
-    (this_00->m_buffer).m_contentReceiveBufferSize = 0;
-    (this_00->m_buffer).m_responseStatusBufferSize = 0;
-    this_00->m_dataRate = 0.0;
-    this_00->m_chunked = false;
-    this_00->m_httpResponseCode = 0;
-    this_00->m_expectedContentSize = 0;
-    this_00->m_socketErrorCode = 0;
-    this_00->m_bytesTransfered = 0;
-    this_00->m_abort = false;
-    this_00->m_operation = BD_HTTP_COPY_OPERATION;
-    uVar1 = bdSnprintf((this_00->m_buffer).m_httpCommonBuffer,0x4f0,
+    this->m_serverName[0] = '\0';
+    this->m_port = 0;
+    this->m_uploadHandler = (bdUploadInterceptor *)0x0;
+    this->m_downloadHandler = (bdDownloadInterceptor *)0x0;
+    this->m_status = BD_HTTP_STATUS_READY;
+    (this->m_buffer).m_httpCommonBufferSize = 0;
+    (this->m_buffer).m_contentSendBuffer = (void *)0x0;
+    (this->m_buffer).m_contentSendBufferSize = 0;
+    (this->m_buffer).m_contentReceiveBuffer = (void *)0x0;
+    (this->m_buffer).m_contentReceiveBufferSize = 0;
+    (this->m_buffer).m_responseStatusBufferSize = 0;
+    this->m_dataRate = 0.0;
+    this->m_chunked = false;
+    this->m_httpResponseCode = 0;
+    this->m_expectedContentSize = 0;
+    this->m_socketErrorCode = 0;
+    this->m_bytesTransfered = 0;
+    this->m_abort = false;
+    this->m_operation = BD_HTTP_COPY_OPERATION;
+    uVar1 = bdSnprintf((this->m_buffer).m_httpCommonBuffer,0x4f0,
                        "COPY %s HTTP/1.1\r\nHost: %s\r\nDestination: %s\r\nOverwrite: T\r\nX-TransactionID: %I64u\r\n\r\n"
                       );
     if ((int)uVar1 < 1) {
@@ -474,48 +447,46 @@ bdHTTPClient::httpCopy
                    "c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdLobby\\bdHTTPWrapper\\bdHTTPClient.cpp"
                    ,"bdHTTPClient::httpCopy",0x188,"Error writing http request string");
       bVar2 = false;
-      this_00->m_status = BD_HTTP_STATUS_ERROR;
+      this->m_status = BD_HTTP_STATUS_ERROR;
     }
     else {
-      (this_00->m_buffer).m_httpCommonBufferSize = uVar1;
-      bVar2 = initHttpOperation(this_00,(char *)lVar4,param_5);
+      (this->m_buffer).m_httpCommonBufferSize = uVar1;
+      bVar2 = initHttpOperation(this,param_1,param_5);
     }
   }
   else {
-    this_00->m_status = BD_HTTP_STATUS_ERROR;
+    this->m_status = BD_HTTP_STATUS_ERROR;
     if (alwaysfails == 0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdLobby\\bdHTTPWrapper\\bdHTTPClient.cpp"
                       ,0x17a,0,"Invalid HTTP request input for HTTP delete");
     }
     bVar2 = false;
   }
-  uVar3 = __restgprlr_24(bVar2);
-  return (bool)uVar3;
+  return bVar2;
 }
 
 
 // 82914D60  parseIncomingHttpResponse  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdhttpwrapper/bdhttpclient.cpp:421)
+
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 
 bool __thiscall
 bdHTTPClient::parseIncomingHttpResponse(bdHTTPClient *this,char *param_1,uint param_2)
 
 {
   char cVar1;
-  bdHTTPClient *this_00;
-  bool bVar5;
-  undefined8 uVar2;
-  char *pcVar3;
-  int iVar4;
-  undefined1 uVar6;
-  char *pcVar7;
+  bool bVar4;
+  char *pcVar2;
+  int iVar3;
+  char *pcVar5;
   
-  this_00 = (bdHTTPClient *)__savegprlr_29(this);
-  bVar5 = parseStatusLine(this_00,param_1,param_2);
-  if (bVar5) {
-    if (this_00->m_operation == BD_HTTP_GET_OPERATION) {
-      pcVar3 = strstr(param_1,contentLengthHeader);
-      pcVar7 = contentLengthHeader;
-      if (pcVar3 == (char *)0x0) {
+  bVar4 = parseStatusLine(this,param_1,param_2);
+  if (bVar4) {
+    if (this->m_operation == BD_HTTP_GET_OPERATION) {
+      pcVar2 = strstr(param_1,contentLengthHeader);
+      pcVar5 = contentLengthHeader;
+      if (pcVar2 == (char *)0x0) {
         bdLogMessage(BD_LOG_ERROR,"err/","http",
                      "c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdLobby\\bdHTTPWrapper\\bdHTTPClient.cpp"
                      ,"bdHTTPClient::parseIncomingHttpResponse",0x1b7,
@@ -523,126 +494,114 @@ bdHTTPClient::parseIncomingHttpResponse(bdHTTPClient *this,char *param_1,uint pa
       }
       else {
         do {
-          cVar1 = *pcVar7;
-          pcVar7 = pcVar7 + 1;
+          cVar1 = *pcVar5;
+          pcVar5 = pcVar5 + 1;
         } while (cVar1 != '\0');
-        iVar4 = atoi(pcVar3 + (int)(pcVar7 + (-1 - (int)contentLengthHeader)));
-        this_00->m_expectedContentSize = (longlong)iVar4;
+        iVar3 = atoi(pcVar2 + (int)(pcVar5 + (-1 - (int)contentLengthHeader)));
+        this->m_expectedContentSize = (longlong)iVar3;
       }
     }
-    uVar2 = 1;
+    bVar4 = true;
   }
   else {
-    uVar2 = 0;
+    bVar4 = false;
   }
-  uVar6 = __restgprlr_29(uVar2);
-  return (bool)uVar6;
+  return bVar4;
 }
 
 
 // 82914458  parseStatusLine  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdhttpwrapper/bdhttpclient.cpp:447)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 bool __thiscall bdHTTPClient::parseStatusLine(bdHTTPClient *this,char *param_1,uint param_2)
 
 {
-  bool bVar1;
+  byte bVar1;
+  byte bVar2;
   int iVar3;
-  int iVar4;
-  uint uVar5;
-  undefined8 uVar2;
-  undefined1 uVar6;
-  longlong lVar7;
-  longlong lVar8;
-  char *pcVar9;
-  longlong lVar10;
-  byte *pbVar11;
-  char cVar12;
-  ulonglong uVar13;
+  uint uVar4;
+  char *pcVar5;
+  byte *pbVar6;
+  byte *pbVar7;
+  char cVar8;
   
-  uVar13 = (ulonglong)(int)param_2;
-  lVar7 = (longlong)(int)param_1;
-  iVar3 = __savegprlr_29(this);
-  if ((uVar13 & 0xffffffff) < 0xc) {
-    pcVar9 = "Error parsing HTTP response: server response too short to be valid";
-    uVar5 = 0x1c3;
-LAB_8291448c:
-    bdLogMessage(BD_LOG_ERROR,"err/","http",
-                 "c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdLobby\\bdHTTPWrapper\\bdHTTPClient.cpp"
-                 ,"bdHTTPClient::parseStatusLine",uVar5,pcVar9);
+  if (param_2 < 0xc) {
+    pcVar5 = "Error parsing HTTP response: server response too short to be valid";
+    uVar4 = 0x1c3;
   }
   else {
-    pbVar11 = &s_HTTP;
-    lVar10 = lVar7;
+    pbVar7 = &s_HTTP;
+    pbVar6 = (byte *)param_1;
     do {
-      lVar8 = (ulonglong)*pbVar11 - (ulonglong)*(byte *)lVar10;
-      if (lVar8 != 0) break;
-      pbVar11 = pbVar11 + 1;
-      lVar10 = lVar10 + 1;
-    } while (pbVar11 != &DAT_82213690);
-    if ((int)lVar8 != 0) {
-      pcVar9 = "Error parsing HTTP response: HTTP protocol string not found.";
-      uVar5 = 0x1ca;
-      goto LAB_8291448c;
-    }
-    cVar12 = *(char *)lVar7;
-    while( true ) {
-      iVar4 = isspace((int)cVar12);
-      bVar1 = (uVar13 & 0xffffffff) == 0;
-      if (iVar4 != 0) break;
-      if (bVar1) goto LAB_8291452c;
-      lVar7 = lVar7 + 1;
-      cVar12 = *(char *)lVar7;
-      uVar13 = uVar13 - 1;
-    }
-    if (bVar1) {
+      bVar1 = *pbVar7;
+      bVar2 = *pbVar6;
+      if ((ulonglong)bVar1 - (ulonglong)bVar2 != 0) break;
+      pbVar7 = pbVar7 + 1;
+      pbVar6 = pbVar6 + 1;
+    } while (pbVar7 != &UNK_82213690);
+    if ((int)((ulonglong)bVar1 - (ulonglong)bVar2) == 0) {
+      cVar8 = *param_1;
+      while( true ) {
+        iVar3 = isspace((int)cVar8);
+        if (iVar3 != 0) break;
+        if (param_2 == 0) goto LAB_8291452c;
+        param_1 = param_1 + 1;
+        cVar8 = *param_1;
+        param_2 = param_2 - 1;
+      }
+      if (param_2 != 0) {
+        uVar4 = atoi(param_1);
+        this->m_httpResponseCode = uVar4;
+        if ((199 < uVar4) && (uVar4 < 300)) {
+          return true;
+        }
+        bdLogMessage(BD_LOG_ERROR,"err/","http",
+                     "c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdLobby\\bdHTTPWrapper\\bdHTTPClient.cpp"
+                     ,"bdHTTPClient::parseStatusLine",0x1e1,
+                     "Error reading HTTP response: error code is not in range 200 to 299. Error: %d"
+                    );
+        return false;
+      }
 LAB_8291452c:
-      pcVar9 = "Error parsing HTTP response: No space character found after HTTP protocol string.";
-      uVar5 = 0x1d7;
-      goto LAB_8291448c;
+      pcVar5 = "Error parsing HTTP response: No space character found after HTTP protocol string.";
+      uVar4 = 0x1d7;
     }
-    uVar5 = atoi((char *)lVar7);
-    *(uint *)(iVar3 + 0x634) = uVar5;
-    if ((199 < uVar5) && (uVar5 < 300)) {
-      uVar2 = 1;
-      goto LAB_829145a4;
+    else {
+      pcVar5 = "Error parsing HTTP response: HTTP protocol string not found.";
+      uVar4 = 0x1ca;
     }
-    bdLogMessage(BD_LOG_ERROR,"err/","http",
-                 "c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdLobby\\bdHTTPWrapper\\bdHTTPClient.cpp"
-                 ,"bdHTTPClient::parseStatusLine",0x1e1,
-                 "Error reading HTTP response: error code is not in range 200 to 299. Error: %d");
   }
-  uVar2 = 0;
-LAB_829145a4:
-  uVar6 = __restgprlr_29(uVar2);
-  return (bool)uVar6;
+  bdLogMessage(BD_LOG_ERROR,"err/","http",
+               "c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdLobby\\bdHTTPWrapper\\bdHTTPClient.cpp"
+               ,"bdHTTPClient::parseStatusLine",uVar4,pcVar5);
+  return false;
 }
 
 
 // 82914E28  initHttpOperation  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdhttpwrapper/bdhttpclient.cpp:489)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 bool __thiscall bdHTTPClient::initHttpOperation(bdHTTPClient *this,char *param_1,uint param_2)
 
 {
   int iVar1;
-  int iVar2;
-  undefined1 uVar3;
-  undefined2 uVar4;
   
-  uVar4 = (undefined2)param_2;
-  iVar1 = __savegprlr_29(this);
-  *(undefined4 *)(iVar1 + 0xa4) = 1;
-  iVar2 = bdSnprintf((char *)(iVar1 + 0x14),0x80,param_1);
-  if (0 < iVar2) {
-    *(undefined2 *)(iVar1 + 0x94) = uVar4;
+  this->m_status = BD_HTTP_STATUS_BUSY;
+  iVar1 = bdSnprintf(this->m_serverName,0x80,param_1);
+  if (0 < iVar1) {
+    this->m_port = (ushort)param_2;
   }
   else {
     bdLogMessage(BD_LOG_ERROR,"err/","http",
                  "c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdLobby\\bdHTTPWrapper\\bdHTTPClient.cpp"
                  ,"bdHTTPClient::initHttpOperation",0x1f1,"Error writing http server name \'%s\'");
-    *(undefined4 *)(iVar1 + 0xa4) = 3;
+    this->m_status = BD_HTTP_STATUS_ERROR;
   }
-  uVar3 = __restgprlr_29(0 < iVar2);
-  return (bool)uVar3;
+  return 0 < iVar1;
 }
 
 
@@ -691,139 +650,130 @@ bdHTTPClient::validateRequestInput
 
 // 829146D0  resolveHostIP  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdhttpwrapper/bdhttpclient.cpp:540)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
+
 bool __thiscall bdHTTPClient::resolveHostIP(bdHTTPClient *this,bdAddr *param_1)
 
 {
   <unnamed_type_inUn> <Var1;
   uint uVar2;
-  int iVar4;
-  <unnamed_type_S_un> <Var5;
-  uint uVar6;
-  int iVar7;
-  undefined8 uVar3;
-  undefined1 uVar8;
-  XNDNS *local_60;
+  <unnamed_type_S_un> <Var3;
+  uint uVar4;
+  int iVar5;
+  <unnamed_type_inUn> *local_60;
   <unnamed_type_inUn> local_5c;
   <unnamed_type_S_un> local_58 [22];
   
-  iVar4 = __savegprlr_23(this);
-  <Var5.S_addr = inet_addr((char *)(iVar4 + 0x14));
-  local_60 = (XNDNS *)0x0;
-  if (<Var5.S_addr == 0xffffffff) {
-    XNetDnsLookup((char *)(iVar4 + 0x14),*(void **)(iVar4 + 0x10),&local_60);
-    WaitForSingleObject(*(void **)(iVar4 + 0x10),0xffffffff);
-    WSAResetEvent(*(void **)(iVar4 + 0x10));
-    <Var1.m_caddr = (<unnamed_type_m_caddr>)local_60->iStatus;
-    if (<Var1.m_iaddr == 0) {
-      if (local_60->cina == 1) {
-        <Var5 = (<unnamed_type_S_un>)*(<unnamed_type_S_un> *)&local_60->aina[0].S_un.S_un_b;
-      }
-      else if (1 < local_60->cina) {
-        bdRandom::bdRandom((bdRandom *)&local_5c.m_caddr);
-        uVar6 = bdRandom::nextUInt((bdRandom *)&local_5c.m_caddr);
-        uVar2 = local_60->cina;
-        trapWord(6,(ulonglong)uVar2,0);
-        bdLogMessage(BD_LOG_INFO,"info/","http",
-                     "c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdLobby\\bdHTTPWrapper\\bdHTTPClient.cpp"
-                     ,"bdHTTPClient::resolveHostIP",0x23e,
-                     "DNS returned multiple IPs - choosing at random.");
-        <Var5 = (<unnamed_type_S_un>)
-                *(<unnamed_type_S_un> *)
-                 &((<unnamed_type_S_un> *)
-                  (((uVar6 - (uVar6 / uVar2) * uVar2) + 2) * 4 + (int)local_60))->S_un_b;
-        bdRandom::~bdRandom((bdRandom *)&local_5c.m_caddr);
-      }
-      XNetDnsRelease(local_60);
-      goto LAB_829147f8;
+  <Var3.S_addr = inet_addr(this->m_serverName);
+  local_60 = (<unnamed_type_inUn> *)0x0;
+  if (<Var3.S_addr == 0xffffffff) {
+    XNetDnsLookup(this->m_serverName,(this->m_overlapped).hEvent,(XNDNS **)&local_60);
+    WaitForSingleObject((this->m_overlapped).hEvent,0xffffffff);
+    WSAResetEvent((this->m_overlapped).hEvent);
+    <Var1.m_caddr = (<unnamed_type_m_caddr>)local_60->m_iaddr;
+    if (<Var1.m_iaddr != 0) {
+      local_5c.m_caddr = <Var1.m_caddr;
+      XNetDnsRelease((XNDNS *)&local_60->m_caddr);
+      this->m_socketErrorCode = (longlong)(int)<Var1.m_iaddr;
+      return false;
     }
-    local_5c.m_caddr = <Var1.m_caddr;
-    XNetDnsRelease(local_60);
-    *(longlong *)(iVar4 + 0x640) = (longlong)(int)<Var1.m_iaddr;
-  }
-  else {
-LAB_829147f8:
-    iVar7 = XNetServerToInAddr((in_addr)<Var5,*(ulong *)(iVar4 + 0x65c),
-                               (in_addr *)&local_58[0].S_un_b);
-    if (iVar7 == 0) {
+    if (local_60[1].m_iaddr == 1) {
+      <Var3 = (<unnamed_type_S_un>)
+              *(<unnamed_type_S_un> *)&((<unnamed_type_S_un> *)(local_60 + 2))->S_un_b;
+    }
+    else if (1 < local_60[1].m_iaddr) {
+      bdRandom::bdRandom((bdRandom *)&local_5c.m_caddr);
+      uVar4 = bdRandom::nextUInt((bdRandom *)&local_5c.m_caddr);
+      uVar2 = local_60[1].m_iaddr;
+      trapWord(6,(ulonglong)uVar2,0);
       bdLogMessage(BD_LOG_INFO,"info/","http",
                    "c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdLobby\\bdHTTPWrapper\\bdHTTPClient.cpp"
-                   ,"bdHTTPClient::resolveHostIP",0x24a,
-                   "Converted unsercured web server addr to secure addr succeeded OK.");
-      bdInetAddr::bdInetAddr((bdInetAddr *)&local_5c.m_caddr,local_58[0].S_addr);
-      bdAddr::set(param_1,(bdInetAddr *)&local_5c.m_caddr,*(ushort *)(iVar4 + 0x94));
-      bdInetAddr::~bdInetAddr((bdInetAddr *)&local_5c.m_caddr);
-      uVar3 = 1;
-      goto LAB_82914880;
+                   ,"bdHTTPClient::resolveHostIP",0x23e,
+                   "DNS returned multiple IPs - choosing at random.");
+      <Var3 = (<unnamed_type_S_un>)
+              *(<unnamed_type_S_un> *)
+               &((<unnamed_type_S_un> *)(local_60 + (uVar4 - (uVar4 / uVar2) * uVar2) + 2))->S_un_b;
+      bdRandom::~bdRandom((bdRandom *)&local_5c.m_caddr);
     }
+    XNetDnsRelease((XNDNS *)&local_60->m_caddr);
+  }
+  iVar5 = XNetServerToInAddr((in_addr)<Var3,this->m_lspServiceID,(in_addr *)&local_58[0].S_un_b);
+  if (iVar5 != 0) {
     bdLogMessage(BD_LOG_ERROR,"err/","http",
                  "c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdLobby\\bdHTTPWrapper\\bdHTTPClient.cpp"
                  ,"bdHTTPClient::resolveHostIP",0x24e,"Failed to convert IP addr to secure IP addr")
     ;
+    return false;
   }
-  uVar3 = 0;
-LAB_82914880:
-  uVar8 = __restgprlr_23(uVar3);
-  return (bool)uVar8;
+  bdLogMessage(BD_LOG_INFO,"info/","http",
+               "c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdLobby\\bdHTTPWrapper\\bdHTTPClient.cpp"
+               ,"bdHTTPClient::resolveHostIP",0x24a,
+               "Converted unsercured web server addr to secure addr succeeded OK.");
+  bdInetAddr::bdInetAddr((bdInetAddr *)&local_5c.m_caddr,local_58[0].S_addr);
+  bdAddr::set(param_1,(bdInetAddr *)&local_5c.m_caddr,this->m_port);
+  bdInetAddr::~bdInetAddr((bdInetAddr *)&local_5c.m_caddr);
+  return true;
 }
 
 
 // 82915998  sendPayload  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdhttpwrapper/bdhttpclient.cpp:654)
 
+/* WARNING: Function: __savegprlr_16 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_16 replaced with injection: xenon_save_restore */
+
 bool __thiscall
 bdHTTPClient::sendPayload(bdHTTPClient *this,bdStreamSocket *param_1,bdStopwatch *param_2)
 
 {
-  bdHTTPClient *this_00;
   int iVar2;
   longlong lVar1;
   bool bVar4;
-  undefined1 uVar5;
-  ulonglong uVar6;
-  uint uVar7;
-  undefined8 uVar8;
-  longlong lVar9;
-  double dVar10;
-  float fVar11;
+  ulonglong uVar5;
+  uint uVar6;
+  bool bVar7;
+  longlong lVar8;
+  double dVar9;
+  float fVar10;
   uint local_a0 [2];
   ulonglong local_98;
   int iVar3;
   
-  this_00 = (bdHTTPClient *)__savegprlr_16(this);
   local_a0[0] = 0;
-  dVar10 = 0.0;
-  lVar9 = 0;
-  uVar8 = 1;
+  dVar9 = 0.0;
+  lVar8 = 0;
+  bVar7 = true;
   do {
-    iVar2 = (int)lVar9;
-    if (this_00->m_abort != false) {
+    iVar2 = (int)lVar8;
+    if (this->m_abort != false) {
       bdLogMessage(BD_LOG_WARNING,"warn/","http",
                    "c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdLobby\\bdHTTPWrapper\\bdHTTPClient.cpp"
                    ,"bdHTTPClient::sendPayload",0x29a,
                    "Aborting HTTP operation with incomplete payload sent");
 LAB_82915b8c:
-      uVar8 = 0;
+      bVar7 = false;
       break;
     }
-    iVar2 = writePayloadData(this_00,param_1,local_a0);
-    uVar7 = local_a0[0];
-    lVar9 = (longlong)iVar2;
-    if (0 < lVar9) {
-      this_00->m_bytesTransfered = (ulonglong)local_a0[0];
-      fVar11 = bdStopwatch::getElapsedTimeInSeconds(param_2);
-      if (dVar10 < (double)fVar11) {
-        local_98 = (ulonglong)uVar7;
-        this_00->m_dataRate = (float)((double)local_98 / (double)fVar11);
-        if (this_00->m_progressMeter != false) {
+    iVar2 = writePayloadData(this,param_1,local_a0);
+    uVar6 = local_a0[0];
+    lVar8 = (longlong)iVar2;
+    if (0 < lVar8) {
+      this->m_bytesTransfered = (ulonglong)local_a0[0];
+      fVar10 = bdStopwatch::getElapsedTimeInSeconds(param_2);
+      if (dVar9 < (double)fVar10) {
+        local_98 = (ulonglong)uVar6;
+        this->m_dataRate = (float)((double)local_98 / (double)fVar10);
+        if (this->m_progressMeter != false) {
           bdLogMessage(BD_LOG_INFO,"info/","http",
                        "c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdLobby\\bdHTTPWrapper\\bdHTTPClient.cpp"
                        ,"bdHTTPClient::sendPayload",0x2ac,"Bytes sent %d @ %.2f bytes/sec");
         }
       }
     }
-    if (this_00->m_httpResponseCode == 0) {
-      uVar7 = (this_00->m_buffer).m_responseStatusBufferSize;
+    if (this->m_httpResponseCode == 0) {
+      uVar6 = (this->m_buffer).m_responseStatusBufferSize;
       iVar3 = bdStreamSocket::recv
-                        (param_1,(this_00->m_buffer).m_responseStatusBuffer + uVar7,0x80 - uVar7);
+                        (param_1,(this->m_buffer).m_responseStatusBuffer + uVar6,0x80 - uVar6);
       lVar1 = (longlong)iVar3;
       if (lVar1 < 1) {
         if (iVar3 != -2) {
@@ -831,116 +781,115 @@ LAB_82915b8c:
                        "c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdLobby\\bdHTTPWrapper\\bdHTTPClient.cpp"
                        ,"bdHTTPClient::sendPayload",0x2c7,
                        "Socket error reading HTTP status line (%d)");
-          lVar9 = lVar1;
+          lVar8 = lVar1;
         }
       }
       else {
-        uVar6 = (ulonglong)(this_00->m_buffer).m_responseStatusBufferSize + lVar1;
-        uVar7 = (uint)uVar6;
-        (this_00->m_buffer).m_responseStatusBufferSize = uVar7;
-        if (0xb < (uVar6 & 0xffffffff)) {
-          bVar4 = parseStatusLine(this_00,(this_00->m_buffer).m_responseStatusBuffer,uVar7);
+        uVar5 = (ulonglong)(this->m_buffer).m_responseStatusBufferSize + lVar1;
+        uVar6 = (uint)uVar5;
+        (this->m_buffer).m_responseStatusBufferSize = uVar6;
+        if (0xb < (uVar5 & 0xffffffff)) {
+          bVar4 = parseStatusLine(this,(this->m_buffer).m_responseStatusBuffer,uVar6);
           if (!bVar4) goto LAB_82915b8c;
-          if (this_00->m_httpResponseCode == 0) {
+          if (this->m_httpResponseCode == 0) {
             MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdLobby\\bdHTTPWrapper\\bdHTTPClient.cpp"
                             ,0x2c2,0,"%s\n\t%s");
           }
         }
       }
     }
-    iVar2 = (int)lVar9;
+    iVar2 = (int)lVar8;
   } while (0 < iVar2);
   if (iVar2 < 0) {
-    uVar8 = 0;
-    this_00->m_socketErrorCode = (longlong)iVar2;
+    bVar7 = false;
+    this->m_socketErrorCode = (longlong)iVar2;
   }
-  uVar5 = __restgprlr_16(uVar8);
-  return (bool)uVar5;
+  return bVar7;
 }
 
 
 // 82914EB8  writePayloadData  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdhttpwrapper/bdhttpclient.cpp:728)
+
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
 
 int __thiscall
 bdHTTPClient::writePayloadData(bdHTTPClient *this,bdStreamSocket *param_1,uint *param_2)
 
 {
   bool bVar1;
-  int iVar2;
+  uint uVar2;
   uint uVar3;
   uint uVar4;
   uint uVar5;
-  uint uVar6;
+  char *pcVar6;
   uint uVar7;
-  int iVar8;
-  void *pvVar9;
   char acStack_150 [336];
   
-  iVar2 = __savegprlr_23(this);
-  uVar6 = 0;
-  if (*(int *)(iVar2 + 0x9c) == 0) {
-    uVar3 = *(int *)(iVar2 + 0xb4) - *param_2;
-    pvVar9 = (void *)(*(int *)(iVar2 + 0xb0) + *param_2);
-    if (0x4ef < uVar3) {
-      uVar3 = 0x4f0;
+  uVar4 = 0;
+  if (this->m_uploadHandler == (bdUploadInterceptor *)0x0) {
+    uVar2 = (this->m_buffer).m_contentSendBufferSize - *param_2;
+    pcVar6 = (char *)((int)(this->m_buffer).m_contentSendBuffer + *param_2);
+    if (0x4ef < uVar2) {
+      uVar2 = 0x4f0;
     }
   }
   else {
-    uVar7 = -(uint)(*(char *)(iVar2 + 0x630) != '\0') & 10;
-    iVar8 = uVar7 + iVar2;
-    uVar6 = (-(uint)(*(char *)(iVar2 + 0x630) != '\0') & 2) + uVar7;
-    uVar3 = (**(code **)(**(int **)(iVar2 + 0x9c) + 4))
-                      (*(int **)(iVar2 + 0x9c),iVar8 + 0xb8,0x4f0 - uVar6,*param_2);
-    if (0x4f0 - uVar6 < uVar3) {
+    uVar7 = -(uint)(this->m_chunked != false) & 10;
+    uVar4 = (-(uint)(this->m_chunked != false) & 2) + uVar7;
+    uVar2 = (**(code **)((int)*this->m_uploadHandler + 4))
+                      (this->m_uploadHandler,(this->m_buffer).m_httpCommonBuffer + uVar7,
+                       0x4f0 - uVar4,*param_2);
+    if (0x4f0 - uVar4 < uVar2) {
       Com_sprintf(acStack_150,0x100,
                   "bdUploadInterceptore::handleUpload must only send <= writeAvail (%s) bytes");
       if (alwaysfails == 0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdLobby\\bdHTTPWrapper\\bdHTTPClient.cpp"
                         ,0x2f6,0,acStack_150);
       }
-      uVar7 = 0xffffffff;
-      goto LAB_829150a8;
+      return -1;
     }
-    if (*(char *)(iVar2 + 0x630) != '\0') {
-      uVar4 = bdSnprintf((char *)(iVar2 + 0xb8),uVar7,"%x");
-      *(undefined1 *)(iVar8 + 0xb7) = 10;
-      *(undefined1 *)(iVar8 + 0xb6) = 0xd;
-      for (; uVar4 < uVar7 - 2; uVar4 = uVar4 + 1) {
-        ((char *)(iVar2 + 0xb8))[uVar4] = ' ';
+    if (this->m_chunked != false) {
+      pcVar6 = (this->m_buffer).m_httpCommonBuffer;
+      uVar3 = bdSnprintf(pcVar6,uVar7,"%x");
+      (this->m_buffer).m_httpCommonBuffer[uVar7 - 1] = '\n';
+      (this->m_buffer).m_httpCommonBuffer[uVar7 - 2] = '\r';
+      for (; uVar3 < uVar7 - 2; uVar3 = uVar3 + 1) {
+        pcVar6[uVar3] = ' ';
       }
-      iVar8 = uVar7 + uVar3 + iVar2;
-      *(undefined1 *)(iVar8 + 0xb8) = 0xd;
-      *(undefined1 *)(iVar8 + 0xb9) = 10;
+      (this->m_buffer).m_httpCommonBuffer[uVar7 + uVar2] = '\r';
+      this->m_serverName[uVar7 + uVar2 + 0xa5] = '\n';
     }
-    pvVar9 = (void *)(iVar2 + 0xb8);
-    uVar3 = uVar3 + uVar6;
+    pcVar6 = (this->m_buffer).m_httpCommonBuffer;
+    uVar2 = uVar2 + uVar4;
   }
-  uVar4 = 0;
+  uVar7 = 0;
   do {
-    while ((uVar5 = bdStreamSocket::send(param_1,pvVar9,uVar3), uVar5 == 0xfffffffe &&
-           (*(char *)(iVar2 + 0x658) == '\0'))) {
+    while ((uVar3 = bdStreamSocket::send(param_1,pcVar6,uVar2), uVar3 == 0xfffffffe &&
+           (this->m_abort == false))) {
       _sleep_bdPlatformTiming__SAXI_Z(0x32);
     }
-    uVar7 = uVar5;
-    if (0 < (int)uVar5) {
-      uVar3 = uVar3 - uVar5;
-      pvVar9 = (void *)(uVar5 + (int)pvVar9);
-      uVar7 = uVar5 + uVar4;
+    uVar5 = uVar3;
+    if (0 < (int)uVar3) {
+      uVar2 = uVar2 - uVar3;
+      pcVar6 = pcVar6 + uVar3;
+      uVar5 = uVar3 + uVar7;
     }
-  } while ((uVar3 != 0) && (uVar4 = uVar7, 0 < (int)uVar5));
-  if (0 < (int)uVar7) {
-    if ((uVar6 != 0) && (bVar1 = uVar7 <= uVar6, uVar7 = uVar7 - uVar6, bVar1)) {
-      uVar7 = 0;
+  } while ((uVar2 != 0) && (uVar7 = uVar5, 0 < (int)uVar3));
+  if (0 < (int)uVar5) {
+    if ((uVar4 != 0) && (bVar1 = uVar5 <= uVar4, uVar5 = uVar5 - uVar4, bVar1)) {
+      uVar5 = 0;
     }
-    *param_2 = *param_2 + uVar7;
+    *param_2 = *param_2 + uVar5;
   }
-LAB_829150a8:
-  iVar2 = __restgprlr_23(uVar7);
-  return iVar2;
+  return uVar5;
 }
 
 
 // 829150B0  recvResponseHeader  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdhttpwrapper/bdhttpclient.cpp:830)
+
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
 
 bool __thiscall
 bdHTTPClient::recvResponseHeader(bdHTTPClient *this,bdStreamSocket *param_1,uint *param_2)
@@ -949,37 +898,33 @@ bdHTTPClient::recvResponseHeader(bdHTTPClient *this,bdStreamSocket *param_1,uint
   char cVar1;
   uint uVar2;
   bdDownloadInterceptor *pbVar3;
-  uint uVar4;
-  bdHTTPClient *this_00;
+  int iVar4;
   bdSocketStatusCode bVar6;
   char *pcVar7;
   bool bVar8;
   longlong lVar5;
-  undefined1 uVar9;
+  char *pcVar9;
   char *pcVar10;
   char *pcVar11;
-  byte bVar12;
-  char *pcVar13;
   uint local_60;
-  uint local_5c [23];
+  int local_5c [23];
   
-  this_00 = (bdHTTPClient *)__savegprlr_22(this);
-  uVar2 = (this_00->m_buffer).m_responseStatusBufferSize;
+  uVar2 = (this->m_buffer).m_responseStatusBufferSize;
   local_60 = 0;
-  local_5c[0] = 0xffffffff;
-  pcVar7 = (this_00->m_buffer).m_httpCommonBuffer;
+  local_5c[0] = -1;
+  pcVar7 = (this->m_buffer).m_httpCommonBuffer;
   if (uVar2 != 0) {
     if ((0x80 < uVar2) || (0x4f0 < uVar2)) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdLobby\\bdHTTPWrapper\\bdHTTPClient.cpp"
                       ,0x34b,0,"%s\n\t%s");
     }
     memcpy();
-    local_60 = (this_00->m_buffer).m_responseStatusBufferSize;
-    (this_00->m_buffer).m_responseStatusBufferSize = 0;
+    local_60 = (this->m_buffer).m_responseStatusBufferSize;
+    (this->m_buffer).m_responseStatusBufferSize = 0;
   }
-  bVar6 = readUntilStr(this_00,param_1,headerEndStr,pcVar7,0x4f0,&local_60,(int *)local_5c);
-  pcVar11 = (char *)0x0;
-  if (((int)local_5c[0] < 0) && (bVar6 == BD_NET_SUCCESS)) {
+  bVar6 = readUntilStr(this,param_1,headerEndStr,pcVar7,0x4f0,&local_60,local_5c);
+  pcVar10 = (char *)0x0;
+  if ((local_5c[0] < 0) && (bVar6 == BD_NET_SUCCESS)) {
     if (alwaysfails == 0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdLobby\\bdHTTPWrapper\\bdHTTPClient.cpp"
                       ,0x356,0,
@@ -987,136 +932,134 @@ bdHTTPClient::recvResponseHeader(bdHTTPClient *this,bdStreamSocket *param_1,uint
     }
     pcVar7 = bdMemory::allocate(0x13c0);
     memcpy();
-    bVar6 = readUntilStr(this_00,param_1,headerEndStr,pcVar7,0x13c0,&local_60,(int *)local_5c);
-    pcVar11 = pcVar7;
+    bVar6 = readUntilStr(this,param_1,headerEndStr,pcVar7,0x13c0,&local_60,local_5c);
+    pcVar10 = pcVar7;
   }
-  uVar4 = local_5c[0];
+  iVar4 = local_5c[0];
   uVar2 = local_60;
   *param_2 = 0;
-  if ((((local_60 == 0) || (bVar6 != BD_NET_SUCCESS)) || ((int)local_5c[0] < 0)) ||
-     (bVar8 = parseIncomingHttpResponse(this_00,pcVar7,local_60), pcVar10 = headerEndStr, !bVar8)) {
-    if (pcVar11 != (char *)0x0) {
-      bdMemory::deallocate(pcVar11);
+  if ((((local_60 == 0) || (bVar6 != BD_NET_SUCCESS)) || (local_5c[0] < 0)) ||
+     (bVar8 = parseIncomingHttpResponse(this,pcVar7,local_60), pcVar9 = headerEndStr, !bVar8)) {
+    if (pcVar10 != (char *)0x0) {
+      bdMemory::deallocate(pcVar10);
     }
     bdLogMessage(BD_LOG_ERROR,"err/","http",
                  "c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdLobby\\bdHTTPWrapper\\bdHTTPClient.cpp"
                  ,"bdHTTPClient::recvResponseHeader",0x370,
                  "Error occured when reading response from server.");
-    bVar12 = 0;
-    goto LAB_8291534c;
+    return false;
   }
   do {
-    cVar1 = *pcVar10;
-    pcVar10 = pcVar10 + 1;
+    cVar1 = *pcVar9;
+    pcVar9 = pcVar9 + 1;
   } while (cVar1 != '\0');
-  pbVar3 = this_00->m_downloadHandler;
-  bVar12 = 1;
-  pcVar13 = pcVar7 + (uVar2 - (int)(pcVar10 + (int)(pcVar7 + uVar4 + (-1 - (int)headerEndStr))));
+  pbVar3 = this->m_downloadHandler;
+  bVar8 = true;
+  pcVar11 = pcVar7 + (uVar2 - (int)(pcVar7 + (int)(pcVar9 + iVar4 + (-1 - (int)headerEndStr))));
   if (pbVar3 == (bdDownloadInterceptor *)0x0) {
-    if ((undefined1 *)(this_00->m_buffer).m_contentReceiveBufferSize < pcVar13) {
+    if ((undefined1 *)(this->m_buffer).m_contentReceiveBufferSize < pcVar11) {
       bdLogMessage(BD_LOG_ERROR,"err/","http",
                    "c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdLobby\\bdHTTPWrapper\\bdHTTPClient.cpp"
                    ,"bdHTTPClient::recvResponseHeader",0x382,
                    "Error occured when reading data from socket: insufficent space to write %d bytes"
                   );
-      bVar12 = 0;
+      bVar8 = false;
+      goto LAB_829152f0;
     }
-    else if (pcVar13 != (char *)0x0) {
-      memmove();
-      goto LAB_829152ec;
-    }
+    if (pcVar11 == (char *)0x0) goto LAB_829152f0;
+    memmove();
+    bVar8 = true;
   }
   else {
-    if (pcVar13 != (char *)0x0) {
+    bVar8 = true;
+    if (pcVar11 != (char *)0x0) {
       lVar5 = (**(code **)((int)*pbVar3 + 4))
-                        (pbVar3,pcVar10 + (int)(pcVar7 + uVar4 + (-1 - (int)headerEndStr)),pcVar13);
-      bVar12 = -(lVar5 != 0) & 1;
+                        (pbVar3,pcVar7 + (int)(pcVar9 + iVar4 + (-1 - (int)headerEndStr)),pcVar11);
+      bVar8 = (bool)(-(lVar5 != 0) & 1);
     }
-LAB_829152ec:
-    *param_2 = (uint)pcVar13;
   }
-  if (pcVar11 != (char *)0x0) {
-    bdMemory::deallocate(pcVar11);
+  *param_2 = (uint)pcVar11;
+LAB_829152f0:
+  if (pcVar10 != (char *)0x0) {
+    bdMemory::deallocate(pcVar10);
   }
-LAB_8291534c:
-  uVar9 = __restgprlr_22(bVar12);
-  return (bool)uVar9;
+  return bVar8;
 }
 
 
 // 829148D8  recvResponsePayload  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdhttpwrapper/bdhttpclient.cpp:927)
 
+/* WARNING: Function: __savegprlr_20 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_20 replaced with injection: xenon_save_restore */
+
 bool __thiscall
 bdHTTPClient::recvResponsePayload(bdHTTPClient *this,bdStreamSocket *param_1,uint param_2)
 
 {
-  int *piVar1;
+  bdDownloadInterceptor *pbVar1;
   bool bVar2;
+  int iVar3;
   int iVar4;
-  int iVar5;
-  int iVar6;
-  undefined8 uVar3;
-  undefined1 uVar7;
-  ulonglong uVar8;
-  longlong lVar9;
-  ulonglong uVar10;
-  double dVar11;
-  float fVar12;
+  ulonglong uVar5;
+  longlong lVar6;
+  ulonglong uVar7;
+  double dVar8;
+  float fVar9;
   bdStopwatch bStack_80;
   ulonglong local_78;
   
-  uVar10 = (ulonglong)(int)param_2;
-  iVar4 = __savegprlr_20(this);
+  uVar7 = (ulonglong)(int)param_2;
   bdStopwatch::bdStopwatch(&bStack_80);
   bdStopwatch::start(&bStack_80);
-  uVar8 = uVar10 & 0xffffffff;
-  dVar11 = 0.0;
+  uVar5 = (ulonglong)param_2;
+  dVar8 = 0.0;
   bVar2 = false;
-  lVar9 = 0;
-  if (uVar8 < *(ulonglong *)(iVar4 + 0x638)) {
+  lVar6 = 0;
+  if (uVar5 < this->m_expectedContentSize) {
     do {
-      iVar5 = (int)lVar9;
+      iVar3 = (int)lVar6;
       if (bVar2) break;
-      if (*(char *)(iVar4 + 0x658) != '\0') {
+      if (this->m_abort != false) {
         bdLogMessage(BD_LOG_WARNING,"warn/","http",
                      "c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdLobby\\bdHTTPWrapper\\bdHTTPClient.cpp"
                      ,"bdHTTPClient::recvResponsePayload",0x3ae,
                      "Aborting HTTP operation after %u bytes received");
         break;
       }
-      iVar5 = bdStreamSocket::recv(param_1,(void *)(iVar4 + 0xb8),0x4f0);
-      lVar9 = (longlong)iVar5;
-      if (iVar5 == -2) {
+      iVar3 = bdStreamSocket::recv(param_1,(void *)((longlong)(int)this + 0xb8),0x4f0);
+      lVar6 = (longlong)iVar3;
+      if (iVar3 == -2) {
         _sleep_bdPlatformTiming__SAXI_Z(0x32);
       }
       else {
-        if (iVar5 < 1) break;
-        piVar1 = *(int **)(iVar4 + 0x98);
-        if (piVar1 == (int *)0x0) {
-          if ((ulonglong)*(uint *)(iVar4 + 0xac) < (lVar9 + uVar10 & 0xffffffff)) {
+        if (iVar3 < 1) break;
+        pbVar1 = this->m_downloadHandler;
+        if (pbVar1 == (bdDownloadInterceptor *)0x0) {
+          if ((ulonglong)(this->m_buffer).m_contentReceiveBufferSize < (lVar6 + uVar7 & 0xffffffff))
+          {
             bdLogMessage(BD_LOG_ERROR,"err/","http",
                          "c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdLobby\\bdHTTPWrapper\\bdHTTPClient.cpp"
                          ,"bdHTTPClient::recvResponsePayload",0x3d4,
                          "Client specified buffer was not of sufficient size (allocated: %d, required: %d)"
                         );
-            goto LAB_82914af8;
+            return false;
           }
           memcpy();
         }
         else {
-          iVar6 = (**(code **)(*piVar1 + 4))(piVar1,(void *)(iVar4 + 0xb8),lVar9);
-          if (iVar6 == 0) {
+          iVar4 = (**(code **)((int)*pbVar1 + 4))(pbVar1,(longlong)(int)this + 0xb8,lVar6);
+          if (iVar4 == 0) {
             bVar2 = true;
           }
         }
-        uVar10 = lVar9 + uVar10;
-        fVar12 = bdStopwatch::getElapsedTimeInSeconds(&bStack_80);
-        uVar8 = uVar10 & 0xffffffff;
-        *(ulonglong *)(iVar4 + 0x650) = uVar8;
-        if (dVar11 < (double)fVar12) {
-          local_78 = uVar10 & 0xffffffff;
-          *(float *)(iVar4 + 0x648) = (float)((double)local_78 / (double)fVar12);
-          if (*(char *)(iVar4 + 0x632) != '\0') {
+        uVar7 = lVar6 + uVar7;
+        fVar9 = bdStopwatch::getElapsedTimeInSeconds(&bStack_80);
+        uVar5 = uVar7 & 0xffffffff;
+        this->m_bytesTransfered = uVar5;
+        if (dVar8 < (double)fVar9) {
+          local_78 = uVar7 & 0xffffffff;
+          this->m_dataRate = (float)((double)local_78 / (double)fVar9);
+          if (this->m_progressMeter != false) {
             bdLogMessage(BD_LOG_INFO,"info/","http",
                          "c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdLobby\\bdHTTPWrapper\\bdHTTPClient.cpp"
                          ,"bdHTTPClient::recvResponsePayload",0x3e5,"bytes recv %d @ %.2f bytes/sec"
@@ -1124,47 +1067,44 @@ bdHTTPClient::recvResponsePayload(bdHTTPClient *this,bdStreamSocket *param_1,uin
           }
         }
       }
-    } while (uVar8 < *(ulonglong *)(iVar4 + 0x638));
-    if (-1 < iVar5) goto LAB_82914b00;
-    bdLogMessage(BD_LOG_ERROR,"err/","http",
-                 "c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdLobby\\bdHTTPWrapper\\bdHTTPClient.cpp"
-                 ,"bdHTTPClient::recvResponsePayload",0x3ed,
-                 "Error %d occured when reading http payload");
+    } while (uVar5 < this->m_expectedContentSize);
+    if (iVar3 < 0) {
+      bdLogMessage(BD_LOG_ERROR,"err/","http",
+                   "c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdLobby\\bdHTTPWrapper\\bdHTTPClient.cpp"
+                   ,"bdHTTPClient::recvResponsePayload",0x3ed,
+                   "Error %d occured when reading http payload");
+      return false;
+    }
   }
-  else {
-LAB_82914b00:
-    fVar12 = bdStopwatch::getElapsedTimeInSeconds(&bStack_80);
-    *(ulonglong *)(iVar4 + 0x650) = uVar8;
-    if (dVar11 < (double)fVar12) {
-      local_78 = uVar10 & 0xffffffff;
-      *(float *)(iVar4 + 0x648) = (float)((double)local_78 / (double)fVar12);
-      if (*(char *)(iVar4 + 0x632) != '\0') {
-        bdLogMessage(BD_LOG_INFO,"info/","http",
-                     "c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdLobby\\bdHTTPWrapper\\bdHTTPClient.cpp"
-                     ,"bdHTTPClient::recvResponsePayload",0x3fb,
-                     "total bytes recv %d @ %.2f bytes/sec");
-      }
+  fVar9 = bdStopwatch::getElapsedTimeInSeconds(&bStack_80);
+  this->m_bytesTransfered = uVar5;
+  if (dVar8 < (double)fVar9) {
+    local_78 = uVar7 & 0xffffffff;
+    this->m_dataRate = (float)((double)local_78 / (double)fVar9);
+    if (this->m_progressMeter != false) {
+      bdLogMessage(BD_LOG_INFO,"info/","http",
+                   "c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdLobby\\bdHTTPWrapper\\bdHTTPClient.cpp"
+                   ,"bdHTTPClient::recvResponsePayload",0x3fb,"total bytes recv %d @ %.2f bytes/sec"
+                  );
     }
-    if (*(ulonglong *)(iVar4 + 0x638) <= uVar8) {
-      uVar3 = 1;
-      goto LAB_82914bb4;
-    }
-    if (*(char *)(iVar4 + 0x658) == '\0') {
+  }
+  if (uVar5 < this->m_expectedContentSize) {
+    if (this->m_abort == false) {
       bdLogMessage(BD_LOG_ERROR,"err/","http",
                    "c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdLobby\\bdHTTPWrapper\\bdHTTPClient.cpp"
                    ,"bdHTTPClient::recvResponsePayload",0x404,
                    "Expected to receive %u bytes but instead received %u bytes");
     }
+    return false;
   }
-LAB_82914af8:
-  uVar3 = 0;
-LAB_82914bb4:
-  uVar7 = __restgprlr_20(uVar3);
-  return (bool)uVar7;
+  return true;
 }
 
 
 // 82914BC0  readUntilStr  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdhttpwrapper/bdhttpclient.cpp:1044)
+
+/* WARNING: Function: __savegprlr_20 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_20 replaced with injection: xenon_save_restore */
 
 bdSocketStatusCode __thiscall
 bdHTTPClient::readUntilStr
@@ -1172,69 +1112,57 @@ bdHTTPClient::readUntilStr
           uint *param_5,int *param_6)
 
 {
-  int iVar1;
+  uint uVar1;
   char *pcVar2;
-  char *pcVar3;
-  int iVar4;
-  bdSocketStatusCode bVar5;
-  longlong lVar6;
-  ulonglong uVar7;
-  ulonglong uVar8;
-  undefined8 uVar9;
-  ulonglong uVar10;
-  longlong lVar11;
+  int iVar3;
+  bdSocketStatusCode bVar4;
+  uint uVar5;
+  char *pcVar6;
   
-  uVar7 = (ulonglong)(int)param_4;
-  lVar6 = (longlong)(int)param_3;
-  iVar1 = __savegprlr_20(this);
-  uVar8 = (ulonglong)*param_5;
-  uVar9 = 1;
-  if (uVar8 < (uVar7 & 0xffffffff)) {
-    uVar10 = (uVar7 - uVar8) - 1;
+  uVar1 = *param_5;
+  bVar4 = BD_NET_SUCCESS;
+  if (uVar1 < param_4) {
+    uVar5 = (param_4 - uVar1) - 1;
   }
   else {
-    uVar10 = 0;
+    uVar5 = 0;
   }
-  lVar11 = uVar8 + lVar6;
+  pcVar6 = param_3 + uVar1;
   *param_6 = -1;
-  pcVar2 = (char *)lVar6;
-  if ((*param_5 != 0) && ((uVar10 & 0xffffffff) != 0)) {
-    *(undefined1 *)lVar11 = 0;
-    pcVar3 = strstr(pcVar2,param_2);
-    if (pcVar3 != (char *)0x0) {
-      uVar9 = 1;
-      *param_6 = (int)pcVar3 - (int)pcVar2;
-      goto LAB_82914d54;
+  if ((*param_5 != 0) && (uVar5 != 0)) {
+    *pcVar6 = '\0';
+    pcVar2 = strstr(param_3,param_2);
+    if (pcVar2 != (char *)0x0) {
+      *param_6 = (int)pcVar2 - (int)param_3;
+      return BD_NET_SUCCESS;
     }
   }
   do {
     while( true ) {
-      if ((uVar10 & 0xffffffff) == 0) goto LAB_82914d1c;
-      iVar4 = bdStreamSocket::recv(param_1,(void *)lVar11,(uint)uVar10);
-      if ((*(char *)(iVar1 + 0x658) != '\0') || (iVar4 != -2)) break;
+      if (uVar5 == 0) goto LAB_82914d1c;
+      iVar3 = bdStreamSocket::recv(param_1,pcVar6,uVar5);
+      if ((this->m_abort != false) || (iVar3 != -2)) break;
       _sleep_bdPlatformTiming__SAXI_Z(0x32);
     }
-    if ((*(char *)(iVar1 + 0x658) != '\0') || (iVar4 < 1)) {
+    if ((this->m_abort != false) || (iVar3 < 1)) {
       bdLogMessage(BD_LOG_ERROR,"err/","http",
                    "c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdLobby\\bdHTTPWrapper\\bdHTTPClient.cpp"
                    ,"bdHTTPClient::readUntilStr",0x434,"Failed to receive data from host %d");
-      uVar9 = 0xffffffffffffffff;
+      bVar4 = BD_NET_ERROR;
       goto LAB_82914d1c;
     }
-    uVar10 = uVar10 - (longlong)iVar4;
-    *param_5 = *param_5 + iVar4;
-    lVar11 = lVar11 + iVar4;
-    *(undefined1 *)lVar11 = 0;
-    pcVar3 = strstr(pcVar2,param_2);
-  } while (pcVar3 == (char *)0x0);
-  *param_6 = (int)pcVar3 - (int)pcVar2;
+    uVar5 = uVar5 - iVar3;
+    *param_5 = *param_5 + iVar3;
+    pcVar6 = pcVar6 + iVar3;
+    *pcVar6 = '\0';
+    pcVar2 = strstr(param_3,param_2);
+  } while (pcVar2 == (char *)0x0);
+  *param_6 = (int)pcVar2 - (int)param_3;
 LAB_82914d1c:
-  if ((uVar7 & 0xffffffff) < (ulonglong)*param_5) {
+  if (param_4 < *param_5) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdLobby\\bdHTTPWrapper\\bdHTTPClient.cpp"
                     ,0x449,0,"%s\n\t%s");
   }
-LAB_82914d54:
-  bVar5 = __restgprlr_20(uVar9);
-  return bVar5;
+  return bVar4;
 }
 

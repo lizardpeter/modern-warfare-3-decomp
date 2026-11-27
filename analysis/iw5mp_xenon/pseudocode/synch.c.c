@@ -17,34 +17,29 @@ int PulseEvent(void *param_1)
 
 // 828AB258  CreateSemaphoreA  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/synch.c:177)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void * CreateSemaphoreA(void *param_1,long param_2,long param_3,char *param_4)
 
 {
   _OBJECT_ATTRIBUTES *p_Var1;
   long lVar2;
   ulong uVar3;
-  void *pvVar4;
-  longlong lVar5;
-  longlong lVar6;
-  ulonglong uVar7;
-  undefined4 local_40 [2];
+  void *local_40 [2];
   _STRING _Stack_38;
   _OBJECT_ATTRIBUTES a_Stack_30 [4];
   
-  uVar7 = (ulonglong)(int)param_4;
-  lVar6 = (longlong)param_3;
-  lVar5 = (longlong)param_2;
-  __savegprlr_29(param_1,lVar5,lVar6);
-  if ((uVar7 & 0xffffffff) == 0) {
+  if (param_4 == (char *)0x0) {
     p_Var1 = (_OBJECT_ATTRIBUTES *)0x0;
   }
   else {
-    p_Var1 = XapiFormatObjectAttributes(a_Stack_30,&_Stack_38,(uchar *)uVar7);
+    p_Var1 = XapiFormatObjectAttributes(a_Stack_30,&_Stack_38,(uchar *)param_4);
   }
-  lVar2 = NtCreateSemaphore(local_40,p_Var1,lVar5,lVar6);
+  lVar2 = NtCreateSemaphore(local_40,p_Var1,param_2,param_3);
   if (lVar2 < 0) {
     XapiSetLastNTError(lVar2);
-    local_40[0] = 0;
+    local_40[0] = (void *)0x0;
   }
   else {
     uVar3 = 0xb7;
@@ -53,83 +48,75 @@ void * CreateSemaphoreA(void *param_1,long param_2,long param_3,char *param_4)
     }
     SetLastError(uVar3);
   }
-  pvVar4 = (void *)__restgprlr_29(local_40[0]);
-  return pvVar4;
+  return local_40[0];
 }
 
 
 // 828AB2E8  ReleaseSemaphore  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/synch.c:299)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 int ReleaseSemaphore(void *param_1,long param_2,long *param_3)
 
 {
-  undefined8 uVar1;
-  long lVar2;
-  int iVar3;
-  longlong lVar4;
-  longlong lVar5;
+  long lVar1;
   
-  lVar5 = (longlong)(int)param_3;
-  lVar4 = (longlong)param_2;
-  uVar1 = __savegprlr_29(param_1,lVar4,lVar5);
-  lVar2 = NtReleaseSemaphore(uVar1,lVar4,lVar5);
-  if (lVar2 < 0) {
-    XapiSetLastNTError(lVar2);
+  lVar1 = NtReleaseSemaphore(param_1,param_2,param_3);
+  if (lVar1 < 0) {
+    XapiSetLastNTError(lVar1);
   }
-  iVar3 = __restgprlr_29(lVar2 >= 0);
-  return iVar3;
+  return (int)(lVar1 >= 0);
 }
 
 
 // 828AB408  WaitForMultipleObjects  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/synch.c:404)
+
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 
 ulong WaitForMultipleObjects(ulong param_1,void **param_2,int param_3,ulong param_4)
 
 {
   ulong uVar1;
   
-  uVar1 = __savegprlr_28(param_1);
-  uVar1 = WaitForMultipleObjectsEx(uVar1,param_2,param_3,param_4,0);
-  uVar1 = __restgprlr_28(uVar1);
+  uVar1 = WaitForMultipleObjectsEx(param_1,param_2,param_3,param_4,0);
   return uVar1;
 }
 
 
 // 828AB340  WaitForMultipleObjectsEx  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/synch.c:486)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 ulong WaitForMultipleObjectsEx(ulong param_1,void **param_2,int param_3,ulong param_4,int param_5)
 
 {
-  uint uVar2;
-  longlong lVar1;
+  ulong uVar2;
   _LARGE_INTEGER *p_Var3;
-  ulong uVar4;
-  longlong lVar5;
-  ulonglong uVar6;
+  longlong lVar1;
   _LARGE_INTEGER a_Stack_150 [2];
   undefined1 auStack_140 [320];
   
-  uVar6 = (ulonglong)param_5;
-  lVar5 = (longlong)param_3;
-  uVar2 = __savegprlr_26(param_1,param_2,lVar5);
-  if (uVar2 < 0x41) {
+  if (param_1 < 0x41) {
     memcpy();
     p_Var3 = XapiFormatTimeOut(a_Stack_150,param_4);
     while( true ) {
       lVar1 = NtWaitForMultipleObjectsEx
-                        ((char)uVar2,auStack_140,(int)lVar5 == 0,1,uVar6 & 0xff,p_Var3);
+                        ((char)param_1,auStack_140,param_3 == 0,1,param_5 & 0xff,p_Var3);
       if (lVar1 < 0) break;
-      if (((int)uVar6 == 0) || ((int)lVar1 != 0x101)) goto LAB_828ab400;
+      if ((param_5 == 0) || ((int)lVar1 != 0x101)) goto LAB_828ab3f8;
     }
     XapiSetLastNTError((int)lVar1);
     lVar1 = -1;
+LAB_828ab3f8:
+    uVar2 = (ulong)lVar1;
   }
   else {
     XapiSetLastNTError(-0x3ffffff3);
-    lVar1 = -1;
+    uVar2 = 0xffffffff;
   }
-LAB_828ab400:
-  uVar4 = __restgprlr_26(lVar1);
-  return uVar4;
+  return uVar2;
 }
 

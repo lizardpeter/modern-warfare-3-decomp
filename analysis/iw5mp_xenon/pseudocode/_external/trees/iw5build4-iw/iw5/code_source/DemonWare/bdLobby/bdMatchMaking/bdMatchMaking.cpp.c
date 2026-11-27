@@ -23,82 +23,82 @@ void __thiscall bdMatchMaking::~bdMatchMaking(bdMatchMaking *this)
 
 // 829054A8  submitPerformance  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdmatchmaking/bdmatchmaking.cpp:354)
 
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
+
 bdReference<bdRemoteTask> __thiscall
 bdMatchMaking::submitPerformance
           (bdMatchMaking *this,uint param_1,bdPerformanceValue *param_2,uint param_3)
 
 {
   ulonglong uVar1;
-  bdReference<bdRemoteTask> *pbVar3;
   longlong lVar2;
-  bdTaskByteBuffer *pbVar4;
-  bool bVar7;
-  bdLobbyErrorCode bVar5;
-  bdRemoteTask *pbVar6;
+  bdTaskByteBuffer *pbVar3;
+  bool bVar5;
+  bdLobbyErrorCode bVar4;
   ulonglong in_r7;
-  uint *puVar8;
-  longlong lVar9;
-  ulonglong uVar11;
-  longlong lVar12;
-  longlong lVar13;
+  uint *puVar6;
+  longlong lVar7;
+  ulonglong uVar9;
+  int *piVar10;
   char in_RESERVE;
-  byte bVar14;
-  bdReference<bdRemoteTask> *pbStack00000014;
+  byte bVar11;
+  bdMatchMaking *pbStack00000014;
   bdReference<bdTaskByteBuffer> local_70;
   undefined4 local_6c;
   bdTaskByteBuffer *local_68;
-  uint uVar10;
+  uint uVar8;
   
-  lVar13 = (longlong)(int)param_3;
-  pbVar3 = (bdReference<bdRemoteTask> *)__savegprlr_22(this);
-  pbVar3->m_ptr = (bdRemoteTask *)0x0;
-  lVar9 = in_r7 + 0x45;
-  uVar10 = (uint)lVar9;
+  this->m_remoteTaskManager = (bdRemoteTaskManager *)0x0;
+  lVar7 = in_r7 + 0x45;
+  uVar8 = (uint)lVar7;
   local_6c = 1;
-  lVar12 = lVar13;
-  uVar11 = in_r7;
-  pbStack00000014 = pbVar3;
+  pbStack00000014 = this;
+  piVar10 = (int *)param_3;
+  uVar9 = in_r7;
   uVar1 = in_r7 & 0xffffffff;
   while (uVar1 != 0) {
-    lVar2 = (**(code **)(*(int *)lVar12 + 8))(lVar12);
-    lVar9 = lVar2 + lVar9;
-    uVar10 = (uint)lVar9;
-    lVar12 = lVar12 + 0x18;
-    uVar11 = uVar11 - 1;
-    uVar1 = uVar11;
+    lVar2 = (**(code **)(*piVar10 + 8))(piVar10);
+    lVar7 = lVar2 + lVar7;
+    uVar8 = (uint)lVar7;
+    piVar10 = piVar10 + 6;
+    uVar9 = uVar9 - 1;
+    uVar1 = uVar9;
   }
   local_68 = bdMemory::allocate(0x2c);
-  bVar14 = (local_68 == (bdTaskByteBuffer *)0x0) << 1;
+  bVar11 = (local_68 == (bdTaskByteBuffer *)0x0) << 1;
   if (local_68 == (bdTaskByteBuffer *)0x0) {
-    uVar11 = 0;
+    uVar9 = 0;
   }
   else {
-    pbVar4 = bdTaskByteBuffer::bdTaskByteBuffer(local_68,uVar10,true);
-    uVar11 = (ulonglong)(int)pbVar4;
+    pbVar3 = bdTaskByteBuffer::bdTaskByteBuffer(local_68,uVar8,true);
+    uVar9 = (ulonglong)(int)pbVar3;
   }
-  local_70.m_ptr = (bdTaskByteBuffer *)uVar11;
-  if ((uVar11 & 0xffffffff) != 0) {
+  local_70.m_ptr = (bdTaskByteBuffer *)uVar9;
+  if ((uVar9 & 0xffffffff) != 0) {
     do {
-      puVar8 = (uint *)(uVar11 + 4);
+      puVar6 = (uint *)(uVar9 + 4);
       if (in_RESERVE != '\0') {
-        uVar10 = storeWordConditionalIndexed((ulonglong)*puVar8 + 1,0,uVar11 + 4);
-        *puVar8 = uVar10;
-        bVar14 = 2;
+        uVar8 = storeWordConditionalIndexed((ulonglong)*puVar6 + 1,0,uVar9 + 4);
+        *puVar6 = uVar8;
+        bVar11 = 2;
       }
-    } while (!(bool)(bVar14 >> 1 & 1));
+    } while (!(bool)(bVar11 >> 1 & 1));
   }
   bdRemoteTaskManager::initTaskBuffer(&local_70,'\x15','\t');
-  bVar7 = bdByteBuffer::writeUInt32((bdByteBuffer *)local_70.m_ptr,(uint)param_2);
-  uVar11 = in_r7 & 0xffffffff;
-  while (uVar11 != 0) {
-    (**(code **)(*(int *)lVar13 + 0xc))(lVar13,local_70.m_ptr);
-    lVar13 = lVar13 + 0x18;
+  bVar5 = bdByteBuffer::writeUInt32((bdByteBuffer *)local_70.m_ptr,(uint)param_2);
+  uVar9 = in_r7 & 0xffffffff;
+  while (uVar9 != 0) {
+    (**(code **)(*(int *)param_3 + 0xc))(param_3,local_70.m_ptr);
+    param_3 = param_3 + 0x18;
     in_r7 = in_r7 - 1;
-    uVar11 = in_r7;
+    uVar9 = in_r7;
   }
-  if (bVar7) {
-    bVar5 = bdRemoteTaskManager::startTask(*(bdRemoteTaskManager **)param_1,pbVar3,&local_70);
-    if (bVar5 != BD_NO_ERROR) {
+  if (bVar5) {
+    bVar4 = bdRemoteTaskManager::startTask
+                      (*(bdRemoteTaskManager **)param_1,(bdReference<bdRemoteTask> *)this,&local_70)
+    ;
+    if (bVar4 != BD_NO_ERROR) {
       bdLogMessage(BD_LOG_WARNING,"warn/","matchmaking",
                    "c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdLobby\\bdMatchMaking\\bdMatchMaking.cpp"
                    ,"bdMatchMaking::submitPerformance",0x179,"Failed to start task: Error %i");
@@ -110,12 +110,14 @@ bdMatchMaking::submitPerformance
                  ,"bdMatchMaking::submitPerformance",0x17e,"Failed to write param into buffer");
   }
   bdReference<bdTaskByteBuffer>::~bdReference<bdTaskByteBuffer>(&local_70);
-  pbVar6 = (bdRemoteTask *)__restgprlr_22(pbVar3);
-  return (bdReference<bdRemoteTask>)pbVar6;
+  return (bdReference<bdRemoteTask>)(bdRemoteTask *)this;
 }
 
 
 // 82905700  getPerformanceValues  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdmatchmaking/bdmatchmaking.cpp:393)
+
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
 
 bdReference<bdRemoteTask> __thiscall
 bdMatchMaking::getPerformanceValues
@@ -124,91 +126,81 @@ bdMatchMaking::getPerformanceValues
 
 {
   uint uVar1;
-  uint uVar2;
-  bdReference<bdRemoteTask> *pbVar4;
-  bdTaskByteBuffer *pbVar5;
-  ulonglong uVar3;
-  bool bVar8;
-  bool bVar9;
-  bdLobbyErrorCode bVar6;
-  bdRemoteTask *pbVar7;
+  bdTaskByteBuffer *pbVar3;
+  ulonglong uVar2;
+  bool bVar5;
+  bool bVar6;
+  bdLobbyErrorCode bVar4;
   bdTaskResult *in_r8;
-  uint *puVar10;
-  longlong lVar11;
-  ulonglong uVar12;
+  uint *puVar7;
+  longlong lVar8;
   char in_RESERVE;
-  byte bVar13;
-  bdReference<bdRemoteTask> *pbStack00000014;
+  byte bVar9;
+  bdMatchMaking *pbStack00000014;
   bdReference<bdTaskByteBuffer> local_60;
   undefined4 local_5c;
   bdTaskByteBuffer *local_58;
   
-  uVar12 = (ulonglong)(int)param_3;
-  lVar11 = (longlong)(int)param_2;
-  pbVar4 = (bdReference<bdRemoteTask> *)__savegprlr_23(this);
-  pbVar4->m_ptr = (bdRemoteTask *)0x0;
-  uVar2 = (uint)uVar12;
+  lVar8 = (longlong)(int)param_3;
+  this->m_remoteTaskManager = (bdRemoteTaskManager *)0x0;
   local_5c = 1;
-  pbStack00000014 = pbVar4;
+  pbStack00000014 = this;
   local_58 = bdMemory::allocate(0x2c);
-  bVar13 = (local_58 == (bdTaskByteBuffer *)0x0) << 1;
+  bVar9 = (local_58 == (bdTaskByteBuffer *)0x0) << 1;
   if (local_58 == (bdTaskByteBuffer *)0x0) {
-    uVar3 = 0;
+    uVar2 = 0;
   }
   else {
-    pbVar5 = bdTaskByteBuffer::bdTaskByteBuffer(local_58,uVar2 * 9 + 0x45,true);
-    uVar3 = (ulonglong)(int)pbVar5;
+    pbVar3 = bdTaskByteBuffer::bdTaskByteBuffer(local_58,param_3 * 9 + 0x45,true);
+    uVar2 = (ulonglong)(int)pbVar3;
   }
-  local_60.m_ptr = (bdTaskByteBuffer *)uVar3;
-  if ((uVar3 & 0xffffffff) != 0) {
+  local_60.m_ptr = (bdTaskByteBuffer *)uVar2;
+  if ((uVar2 & 0xffffffff) != 0) {
     do {
-      puVar10 = (uint *)(uVar3 + 4);
+      puVar7 = (uint *)(uVar2 + 4);
       if (in_RESERVE != '\0') {
-        uVar1 = storeWordConditionalIndexed((ulonglong)*puVar10 + 1,0,uVar3 + 4);
-        *puVar10 = uVar1;
-        bVar13 = 2;
+        uVar1 = storeWordConditionalIndexed((ulonglong)*puVar7 + 1,0,uVar2 + 4);
+        *puVar7 = uVar1;
+        bVar9 = 2;
       }
-    } while (!(bool)(bVar13 >> 1 & 1));
+    } while (!(bool)(bVar9 >> 1 & 1));
   }
   bdRemoteTaskManager::initTaskBuffer(&local_60,'\x15','\n');
-  bVar8 = bdByteBuffer::writeUInt32((bdByteBuffer *)local_60.m_ptr,(uint)param_4);
-  uVar3 = uVar12 & 0xffffffff;
-  do {
-    if (uVar3 == 0) {
-      if (bVar8 == true) {
-        bVar6 = bdRemoteTaskManager::startTask(*(bdRemoteTaskManager **)param_1,pbVar4,&local_60);
-        if (bVar6 == BD_NO_ERROR) {
-          bdRemoteTask::setTaskResult(pbVar4->m_ptr,in_r8,uVar2);
-        }
-        else {
-          bdLogMessage(BD_LOG_WARNING,"warn/","matchmaking",
-                       "c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdLobby\\bdMatchMaking\\bdMatchMaking.cpp"
-                       ,"bdMatchMaking::getPerformanceValues",0x19b,"Failed to start task: Error %i"
-                      );
-        }
+  bVar5 = bdByteBuffer::writeUInt32((bdByteBuffer *)local_60.m_ptr,(uint)param_4);
+  if (param_3 != 0) {
+    do {
+      if (bVar5 == false) {
+LAB_829057e8:
+        bVar5 = false;
       }
       else {
-        bdLogMessage(BD_LOG_WARNING,"warn/","matchmaking",
-                     "c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdLobby\\bdMatchMaking\\bdMatchMaking.cpp"
-                     ,"bdMatchMaking::getPerformanceValues",0x1a4,
-                     "Failed to write param into buffer");
+        bVar6 = bdByteBuffer::writeUInt64((bdByteBuffer *)local_60.m_ptr,*(ulong64 *)param_2);
+        bVar5 = true;
+        if (!bVar6) goto LAB_829057e8;
       }
-      bdReference<bdTaskByteBuffer>::~bdReference<bdTaskByteBuffer>(&local_60);
-      pbVar7 = (bdRemoteTask *)__restgprlr_23(pbVar4);
-      return (bdReference<bdRemoteTask>)pbVar7;
-    }
-    if (bVar8 == false) {
-LAB_829057e8:
-      bVar8 = false;
+      lVar8 = lVar8 + -1;
+      param_2 = param_2 + 8;
+    } while (lVar8 != 0);
+  }
+  if (bVar5 == true) {
+    bVar4 = bdRemoteTaskManager::startTask
+                      (*(bdRemoteTaskManager **)param_1,(bdReference<bdRemoteTask> *)this,&local_60)
+    ;
+    if (bVar4 == BD_NO_ERROR) {
+      bdRemoteTask::setTaskResult((bdRemoteTask *)this->m_remoteTaskManager,in_r8,param_3);
     }
     else {
-      bVar9 = bdByteBuffer::writeUInt64((bdByteBuffer *)local_60.m_ptr,*(ulong64 *)lVar11);
-      bVar8 = true;
-      if (!bVar9) goto LAB_829057e8;
+      bdLogMessage(BD_LOG_WARNING,"warn/","matchmaking",
+                   "c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdLobby\\bdMatchMaking\\bdMatchMaking.cpp"
+                   ,"bdMatchMaking::getPerformanceValues",0x19b,"Failed to start task: Error %i");
     }
-    uVar12 = uVar12 - 1;
-    lVar11 = lVar11 + 8;
-    uVar3 = uVar12;
-  } while( true );
+  }
+  else {
+    bdLogMessage(BD_LOG_WARNING,"warn/","matchmaking",
+                 "c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdLobby\\bdMatchMaking\\bdMatchMaking.cpp"
+                 ,"bdMatchMaking::getPerformanceValues",0x1a4,"Failed to write param into buffer");
+  }
+  bdReference<bdTaskByteBuffer>::~bdReference<bdTaskByteBuffer>(&local_60);
+  return (bdReference<bdRemoteTask>)(bdRemoteTask *)this;
 }
 

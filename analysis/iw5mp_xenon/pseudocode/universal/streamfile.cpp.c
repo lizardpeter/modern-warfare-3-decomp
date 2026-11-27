@@ -11,62 +11,57 @@ bool FileIndexIsInPackfile(uint param_1)
 
 // 82612CD8  PakFile_Open  (universal/streamfile.cpp:51)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 Sys_File PakFile_Open(Sys_File *param_1,PackfileUser param_2,uint param_3)
 
 {
-  int iVar1;
-  int iVar2;
-  Sys_File SVar3;
-  void *pvVar4;
-  ulonglong uVar5;
+  Sys_File SVar1;
   char acStack_130 [304];
   
-  uVar5 = (ulonglong)(int)param_3;
-  iVar2 = __savegprlr_28(param_1);
-  iVar1 = (int)((uVar5 & 0x3fffffff) << 2);
-  if (*(int *)(iVar1 + iVar2) == 0) {
+  if (param_1[param_3].handle == (void *)0x0) {
     if ((param_2 != PACKFILE_USER_SOUND) && (param_2 != PACKFILE_USER_IMAGE)) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\streamfile.cpp",
                       0x40,0,"%s\n\t(user) = %i");
     }
     Com_sprintf(acStack_130,0x100,"%s%d.pak");
-    SVar3 = Sys_CreateFile("",acStack_130);
-    if (SVar3.handle != (void *)0xffffffff) {
-      if (SVar3.handle == (void *)0x0) {
+    SVar1 = Sys_CreateFile("",acStack_130);
+    if (SVar1.handle != (void *)0xffffffff) {
+      if (SVar1.handle == (void *)0x0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\streamfile.cpp",
                         0x48,0,"%s");
       }
-      *(void **)(iVar1 + iVar2) = SVar3.handle;
+      param_1[param_3].handle = SVar1.handle;
     }
   }
-  pvVar4 = (void *)__restgprlr_28(*(undefined4 *)(iVar1 + iVar2));
-  return (Sys_File)pvVar4;
+  return (Sys_File)param_1[param_3].handle;
 }
 
 
 // 82612DB8  StreamFileOpen  (universal/streamfile.cpp:87)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void StreamFileOpen(StreamFile *param_1,CacheFileName *param_2)
 
 {
-  StreamFile *pSVar1;
-  Sys_File SVar2;
-  void *pvVar3;
+  Sys_File SVar1;
+  void *pvVar2;
   char acStack_120 [288];
   
-  pSVar1 = (StreamFile *)__savegprlr_29(param_1);
   if (param_2->fileIndex == 0) {
     Sys_DefaultInstallPath();
     Com_sprintf(acStack_120,0x100,"%s\\%s.xma");
-    pvVar3 = Sys_OpenFileReliable(acStack_120);
-    (pSVar1->handle).handle = pvVar3;
-    if (pvVar3 == (void *)0x0) {
+    pvVar2 = Sys_OpenFileReliable(acStack_120);
+    (param_1->handle).handle = pvVar2;
+    if (pvVar2 == (void *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\streamfile.cpp",
                       0x70,0,"%s");
     }
-    pSVar1->length = 0;
-    pSVar1->startOffset = 0;
-    __restgprlr_29();
+    param_1->length = 0;
+    param_1->startOffset = 0;
     return;
   }
   if (9 < param_2->fileIndex) {
@@ -75,20 +70,18 @@ void StreamFileOpen(StreamFile *param_1,CacheFileName *param_2)
                     "fileName->fileIndex doesn\'t index ARRAY_COUNT( g_streamFile )\n\t%i not in [0, %i)"
                    );
   }
-  SVar2 = PakFile_Open(g_streamFile,PACKFILE_USER_SOUND,param_2->fileIndex);
-  if (SVar2.handle == (void *)0x0) {
-    StreamFileSetMissing(pSVar1);
-    __restgprlr_29();
+  SVar1 = PakFile_Open(g_streamFile,PACKFILE_USER_SOUND,param_2->fileIndex);
+  if (SVar1.handle == (void *)0x0) {
+    StreamFileSetMissing(param_1);
     return;
   }
-  (pSVar1->handle).handle = SVar2.handle;
-  pSVar1->length = (param_2->field1_0x4).packed.length;
+  (param_1->handle).handle = SVar1.handle;
+  param_1->length = (param_2->field1_0x4).packed.length;
   if ((param_2->field1_0x4).packed.offset == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\streamfile.cpp",0x68
                     ,0,"%s");
   }
-  pSVar1->startOffset = (param_2->field1_0x4).packed.offset;
-  __restgprlr_29();
+  param_1->startOffset = (param_2->field1_0x4).packed.offset;
   return;
 }
 
@@ -158,50 +151,54 @@ void StreamFileReadCompletion(ulong param_1,ulong param_2,_OVERLAPPED *param_3)
 
 // 82612460  StreamFileRead  (universal/streamfile.cpp:173)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
+
 int StreamFileRead(StreamFile *param_1,uchar **param_2,int param_3,int param_4)
 
 {
-  undefined4 *puVar1;
-  bool bVar4;
+  uint uVar1;
+  bool bVar3;
   int iVar2;
-  int iVar3;
-  ulonglong uVar5;
-  ulonglong uVar6;
-  ulonglong uVar7;
+  longlong lVar4;
+  uint uVar5;
+  longlong lVar6;
+  longlong lVar7;
   _OVERLAPPED local_70 [5];
   
-  uVar5 = (ulonglong)param_4;
-  uVar6 = (ulonglong)param_3;
-  puVar1 = (undefined4 *)__savegprlr_23(param_1);
-  bVar4 = Sys_IsMainThread();
-  if (bVar4) {
+  lVar4 = (longlong)param_4;
+  bVar3 = Sys_IsMainThread();
+  if (bVar3) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\streamfile.cpp",0xb4
                     ,0,"%s");
   }
-  uVar7 = uVar5;
-  if (puVar1[1] == 0) {
-    if (puVar1[2] != 0) {
+  lVar7 = lVar4;
+  if (param_1->length == 0) {
+    if (param_1->startOffset != 0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\streamfile.cpp",
                       0xc9,0,"%s");
     }
   }
   else {
-    uVar7 = (uint)puVar1[1] - uVar6;
-    if ((longlong)uVar7 < 1) {
+    lVar7 = (ulonglong)(uint)param_1->length - (longlong)param_3;
+    if (lVar7 < 1) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\streamfile.cpp",
                       0xb9,0,"%s\n\t(maxBytes) = %i");
     }
-    uVar6 = (uint)puVar1[2] + uVar6;
-    if (((int)uVar5 < (int)uVar7) &&
-       (uVar7 = uVar5, ((ulonglong)(uint)puVar1[1] + (ulonglong)(uint)puVar1[2] & 0x7ff) == 0)) {
-      uVar7 = (uVar6 + uVar5 & 0xffff8000) - uVar6;
+    lVar6 = (ulonglong)(uint)param_1->startOffset + (longlong)param_3;
+    param_3 = (int)lVar6;
+    if ((param_4 < (int)lVar7) &&
+       (lVar7 = lVar4,
+       ((ulonglong)(uint)param_1->length + (ulonglong)(uint)param_1->startOffset & 0x7ff) == 0)) {
+      lVar7 = (lVar6 + lVar4 & 0xffff8000U) - lVar6;
     }
   }
-  iVar3 = (int)(uVar6 & 0x7ff);
+  uVar1 = param_3 & 0x7ff;
   local_70[0].Internal = 0;
   local_70[0].InternalHigh = 0;
+  uVar5 = (uint)lVar7;
   local_70[0].hEvent = (void *)0x0;
-  local_70[0]._8_8_ = (ulonglong)(uint)((int)uVar6 - iVar3) << 0x20;
+  local_70[0]._8_8_ = (ulonglong)(param_3 - uVar1) << 0x20;
   iVar2 = R_HasDeviceOwnership();
   if (iVar2 != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\streamfile.cpp",0xdb
@@ -210,28 +207,25 @@ int StreamFileRead(StreamFile *param_1,uchar **param_2,int param_3,int param_4)
   Sys_LockFileRead();
   Sys_Sleep(100);
   PIXBeginNamedEvent_Copy_VarArgs(0xffffffff,"ReadFileEx: %x %x");
-  *param_2 = *param_2 + -(-iVar3 & 3U);
+  *param_2 = *param_2 + -(-uVar1 & 3);
   g_recentReadFile = (DBFile *)0x0;
-  iVar3 = ReadFileEx((void *)*puVar1,*param_2 + -iVar3,iVar3 + (int)uVar7 + 0x7ffU & 0xfffff800,
+  iVar2 = ReadFileEx((param_1->handle).handle,*param_2 + -uVar1,uVar1 + uVar5 + 0x7ff & 0xfffff800,
                      local_70,StreamFileReadCompletion);
   PIXEndNamedEvent();
-  if (iVar3 != 0) {
+  if (iVar2 != 0) {
     PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffff,"SleepEx");
     SleepEx(0xffffffff,1);
     PIXEndNamedEvent();
     if (g_streamFileReadError == 0) {
       Sys_UnlockFileRead(0x1e);
-      uVar6 = (ulonglong)DAT_841db424 - (uVar6 & 0x7ff);
-      if ((int)uVar6 < (int)uVar7) {
-        uVar7 = uVar6;
+      if ((int)(DAT_841db424 - uVar1) < (int)uVar5) {
+        uVar5 = DAT_841db424 - uVar1;
       }
-      iVar3 = __restgprlr_23(((uVar7 & 0xffffffff) >> 0x1f) - 1 & uVar7);
-      return iVar3;
+      return -((int)uVar5 >> 0x1f) - 1U & uVar5;
     }
   }
   Sys_UnlockFileRead(0);
-  iVar3 = __restgprlr_23(0);
-  return iVar3;
+  return 0;
 }
 
 
@@ -484,65 +478,65 @@ void * Sys_OpenFileReliable(char *param_1)
 
 // 82612B00  Sys_CreateFile  (universal/streamfile.cpp:943)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 Sys_File Sys_CreateFile(char *param_1,char *param_2)
 
 {
-  char *pcVar1;
-  int iVar2;
-  void *pvVar3;
+  int iVar1;
+  void *pvVar2;
+  char *pcVar3;
   char *pcVar4;
   char acStack_230 [256];
   char acStack_130 [304];
   
-  pcVar1 = (char *)__savegprlr_28(param_1);
-  if (*pcVar1 != '\0') {
+  if (*param_1 != '\0') {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\streamfile.cpp",
                     0x3b6,0,"%s");
   }
-  iVar2 = I_strncmp(param_2,"patch",5);
-  if ((iVar2 == 0) || (iVar2 = I_strncmp(param_2,"dlc",3), iVar2 == 0)) {
+  iVar1 = I_strncmp(param_2,"patch",5);
+  if ((iVar1 == 0) || (iVar1 = I_strncmp(param_2,"dlc",3), iVar1 == 0)) {
     Com_sprintf(acStack_230,0x100,"update:\\%s");
-    pvVar3 = Sys_OpenFileReliable(acStack_230);
-    if (pvVar3 != (void *)0xffffffff) goto LAB_82612cd0;
+    pvVar2 = Sys_OpenFileReliable(acStack_230);
+    if (pvVar2 != (void *)0xffffffff) {
+      return (Sys_File)pvVar2;
+    }
     Com_Printf(0x10,"Loading %s from disc, not from the update drive\n");
   }
-  iVar2 = I_strncmp(param_2,"dev_",4);
-  pcVar1 = "%s\\%sd";
-  if (iVar2 == 0) {
+  iVar1 = I_strncmp(param_2,"dev_",4);
+  pcVar4 = "%s\\%sd";
+  if (iVar1 == 0) {
     Sys_DefaultInstallPath();
     Com_sprintf(acStack_130,0x100,"%s\\%sd");
     Sys_DefaultInstallPath();
-    pcVar4 = "%s\\%sdm";
+    pcVar3 = "%s\\%sdm";
   }
   else {
     Sys_DefaultInstallPath();
     Com_sprintf(acStack_130,0x100,"%s\\%s");
     Sys_DefaultInstallPath();
-    pcVar4 = "%s\\%sm";
+    pcVar3 = "%s\\%sm";
   }
-  Com_sprintf(acStack_230,0x100,pcVar4);
+  Com_sprintf(acStack_230,0x100,pcVar3);
   MoveFileExA(acStack_130,acStack_230,1);
-  pvVar3 = Sys_OpenFileReliable(acStack_230);
-  if (pvVar3 == (void *)0xffffffff) {
-    iVar2 = I_strncmp(param_2,"dev_",4);
-    if (iVar2 == 0) {
+  pvVar2 = Sys_OpenFileReliable(acStack_230);
+  if (pvVar2 == (void *)0xffffffff) {
+    iVar1 = I_strncmp(param_2,"dev_",4);
+    if (iVar1 == 0) {
       Sys_DefaultInstallPath();
     }
     else {
       Sys_DefaultInstallPath();
-      pcVar1 = "%s\\%s";
+      pcVar4 = "%s\\%s";
     }
-    Com_sprintf(acStack_230,0x100,pcVar1);
-    pvVar3 = Sys_OpenFileReliable(acStack_230);
-    if (pvVar3 == (void *)0xffffffff) {
-      pvVar3 = Content_CreateFile(param_2);
-      if (pvVar3 == (void *)0xffffffff) {
-        pvVar3 = (void *)0xffffffff;
-      }
+    Com_sprintf(acStack_230,0x100,pcVar4);
+    pvVar2 = Sys_OpenFileReliable(acStack_230);
+    if ((pvVar2 == (void *)0xffffffff) &&
+       (pvVar2 = Content_CreateFile(param_2), pvVar2 == (void *)0xffffffff)) {
+      pvVar2 = (void *)0xffffffff;
     }
   }
-LAB_82612cd0:
-  pvVar3 = (void *)__restgprlr_28(pvVar3);
-  return (Sys_File)pvVar3;
+  return (Sys_File)pvVar2;
 }
 

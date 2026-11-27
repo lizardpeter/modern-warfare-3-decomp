@@ -57,6 +57,10 @@ BoneOrientation * Ragdoll_BodyPrevBoneOrientations(RagdollBody *param_1)
 
 // 826A4470  Ragdoll_DoControllers  (ragdoll/ragdoll_controller.cpp:57)
 
+/* WARNING: Function: __savegprlr_19 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_19 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void Ragdoll_DoControllers(cpose_t *param_1,DObj *param_2,int *param_3)
@@ -67,142 +71,130 @@ void Ragdoll_DoControllers(cpose_t *param_1,DObj *param_2,int *param_3)
   float fVar3;
   float fVar4;
   float fVar5;
-  int iVar6;
-  RagdollBody *pRVar7;
-  bool bVar12;
-  DObjAnimMat *pDVar9;
-  BoneOrientation *pBVar11;
-  ulonglong uVar13;
-  DObjAnimMat *pDVar14;
-  uchar *puVar15;
-  float *pfVar16;
+  RagdollBody *pRVar6;
+  bool bVar10;
+  DObjAnimMat *pDVar8;
+  BoneOrientation *pBVar9;
+  DObjAnimMat *pDVar11;
+  uchar *puVar12;
+  float *pfVar13;
+  double dVar14;
+  double dVar15;
+  double dVar16;
   double dVar17;
   double dVar18;
   double dVar19;
   double dVar20;
-  double dVar21;
-  double dVar22;
-  double dVar23;
-  int iVar8;
-  DObj *pDVar10;
+  int iVar7;
   
-  uVar13 = (ulonglong)(int)param_2;
-  __savegprlr_19(param_1);
-  iVar6 = __savefpr_26();
-  if (iVar6 == 0) {
+  if (param_1 == (cpose_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ragdoll\\ragdoll_controller.cpp"
                     ,0x45,0,"%s");
   }
-  if ((uVar13 & 0xffffffff) == 0) {
+  if (param_2 == (DObj *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ragdoll\\ragdoll_controller.cpp"
                     ,0x46,0,"%s");
   }
-  if ((*(char *)(iVar6 + 4) != '\0') && ((*(int *)(iVar6 + 8) != 0 || (*(int *)(iVar6 + 0xc) != 0)))
-     ) {
-    iVar8 = *(int *)(iVar6 + 8);
-    if (*(int *)(iVar6 + 0xc) != 0) {
-      iVar8 = *(int *)(iVar6 + 0xc);
+  if ((param_1->isRagdoll != '\0') &&
+     ((param_1->ragdollHandle != 0 || (param_1->killcamRagdollHandle != 0)))) {
+    iVar7 = param_1->ragdollHandle;
+    if (param_1->killcamRagdollHandle != 0) {
+      iVar7 = param_1->killcamRagdollHandle;
     }
-    pRVar7 = Ragdoll_HandleBody(iVar8);
-    if (pRVar7 == (RagdollBody *)0x0) {
+    pRVar6 = Ragdoll_HandleBody(iVar7);
+    if (pRVar6 == (RagdollBody *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ragdoll\\ragdoll_controller.cpp"
                       ,0x58,0,"%s");
     }
-    bVar12 = Ragdoll_BodyPoseValid(pRVar7);
-    if (bVar12) {
-      pDVar10 = (DObj *)uVar13;
-      pDVar9 = DObjGetRotTransArray(pDVar10);
-      if (pDVar9 != (DObjAnimMat *)0x0) {
-        dVar23 = (double)g_activeRefDef->viewOffset[0];
-        dVar22 = (double)g_activeRefDef->viewOffset[1];
-        dVar21 = (double)g_activeRefDef->viewOffset[2];
-        pBVar11 = Ragdoll_BodyBoneOrientations(pRVar7);
-        dVar18 = 1.0;
-        dVar19 = 2.0;
-        dVar20 = 1e-06;
-        iVar6 = 0;
-        if (0 < pRVar7->numBones) {
-          puVar15 = (pRVar7->state).bones[0].animBones;
-          pfVar16 = pBVar11->orientation + 2;
-          do {
-            bVar1 = *puVar15;
-            bVar12 = DObjSetSkelRotTransIndex(pDVar10,param_3,(uint)bVar1);
-            if (bVar12) {
-              pDVar14 = pDVar9 + bVar1;
-              pDVar14->trans[0] = (float)((double)pBVar11->origin[0] - dVar23);
-              pDVar14->trans[1] = (float)((double)pfVar16[-5] - dVar22);
-              pDVar14->trans[2] = (float)((double)pfVar16[-4] - dVar21);
-              fVar2 = pfVar16[-2];
-              pDVar14->quat[0] = fVar2;
-              fVar3 = pfVar16[-1];
-              pDVar14->quat[1] = fVar3;
-              fVar4 = *pfVar16;
-              pDVar14->quat[2] = fVar4;
-              fVar5 = pfVar16[1];
-              pDVar14->quat[3] = fVar5;
-              dVar17 = (double)(fVar5 * fVar5 + fVar4 * fVar4 + fVar2 * fVar2 + fVar3 * fVar3);
-              if (dVar17 <= dVar20) {
-                pDVar14->quat[3] = (float)dVar18;
-                pDVar14->transWeight = (float)dVar19;
-              }
-              else {
-                pDVar14->transWeight = (float)(dVar19 / dVar17);
-              }
-              if (((uint)pDVar14->transWeight & 0x7f800000) == 0x7f800000) {
-                MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ragdoll\\../xanim/xanim_public.h"
-                                ,0x2fa,0,"%s");
-              }
+    bVar10 = Ragdoll_BodyPoseValid(pRVar6);
+    if ((bVar10) && (pDVar8 = DObjGetRotTransArray(param_2), pDVar8 != (DObjAnimMat *)0x0)) {
+      dVar20 = (double)g_activeRefDef->viewOffset[0];
+      dVar19 = (double)g_activeRefDef->viewOffset[1];
+      dVar18 = (double)g_activeRefDef->viewOffset[2];
+      pBVar9 = Ragdoll_BodyBoneOrientations(pRVar6);
+      dVar15 = 1.0;
+      dVar16 = 2.0;
+      dVar17 = 1e-06;
+      iVar7 = 0;
+      if (0 < pRVar6->numBones) {
+        puVar12 = (pRVar6->state).bones[0].animBones;
+        pfVar13 = pBVar9->orientation + 2;
+        do {
+          bVar1 = *puVar12;
+          bVar10 = DObjSetSkelRotTransIndex(param_2,param_3,(uint)bVar1);
+          if (bVar10) {
+            pDVar11 = pDVar8 + bVar1;
+            pDVar11->trans[0] = (float)((double)pBVar9->origin[0] - dVar20);
+            pDVar11->trans[1] = (float)((double)pfVar13[-5] - dVar19);
+            pDVar11->trans[2] = (float)((double)pfVar13[-4] - dVar18);
+            fVar2 = pfVar13[-2];
+            pDVar11->quat[0] = fVar2;
+            fVar3 = pfVar13[-1];
+            pDVar11->quat[1] = fVar3;
+            fVar4 = *pfVar13;
+            pDVar11->quat[2] = fVar4;
+            fVar5 = pfVar13[1];
+            pDVar11->quat[3] = fVar5;
+            dVar14 = (double)(fVar5 * fVar5 + fVar4 * fVar4 + fVar2 * fVar2 + fVar3 * fVar3);
+            if (dVar14 <= dVar17) {
+              pDVar11->quat[3] = (float)dVar15;
+              pDVar11->transWeight = (float)dVar16;
             }
-            iVar6 = iVar6 + 1;
-            puVar15 = puVar15 + 0x10;
-            pBVar11 = pBVar11 + 1;
-            pfVar16 = pfVar16 + 8;
-          } while (iVar6 < pRVar7->numBones);
-        }
-        iVar6 = 0;
-        if (0 < pRVar7->numLerpBones) {
-          puVar15 = &(pRVar7->state).lerpBones[0].animBone;
-          pfVar16 = pBVar11->orientation + 2;
-          do {
-            bVar1 = *puVar15;
-            bVar12 = DObjSetSkelRotTransIndex(pDVar10,param_3,(uint)bVar1);
-            if (bVar12) {
-              pDVar14 = pDVar9 + bVar1;
-              pDVar14->trans[0] =
-                   (float)((double)((BoneOrientation *)(pfVar16 + -6))->origin[0] - dVar23);
-              pDVar14->trans[1] = (float)((double)pfVar16[-5] - dVar22);
-              pDVar14->trans[2] = (float)((double)pfVar16[-4] - dVar21);
-              fVar2 = pfVar16[-2];
-              pDVar14->quat[0] = fVar2;
-              fVar3 = pfVar16[-1];
-              pDVar14->quat[1] = fVar3;
-              fVar4 = *pfVar16;
-              pDVar14->quat[2] = fVar4;
-              fVar5 = pfVar16[1];
-              dVar17 = (double)(fVar5 * fVar5 + fVar4 * fVar4 + fVar2 * fVar2 + fVar3 * fVar3);
-              pDVar14->quat[3] = fVar5;
-              if (dVar17 <= dVar20) {
-                pDVar14->quat[3] = (float)dVar18;
-                pDVar14->transWeight = (float)dVar19;
-              }
-              else {
-                pDVar14->transWeight = (float)(dVar19 / dVar17);
-              }
-              if (((uint)pDVar14->transWeight & 0x7f800000) == 0x7f800000) {
-                MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ragdoll\\../xanim/xanim_public.h"
-                                ,0x2fa,0,"%s");
-              }
+            else {
+              pDVar11->transWeight = (float)(dVar16 / dVar14);
             }
-            iVar6 = iVar6 + 1;
-            puVar15 = puVar15 + 8;
-            pfVar16 = pfVar16 + 8;
-          } while (iVar6 < pRVar7->numLerpBones);
-        }
+            if (((uint)pDVar11->transWeight & 0x7f800000) == 0x7f800000) {
+              MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ragdoll\\../xanim/xanim_public.h"
+                              ,0x2fa,0,"%s");
+            }
+          }
+          iVar7 = iVar7 + 1;
+          puVar12 = puVar12 + 0x10;
+          pBVar9 = pBVar9 + 1;
+          pfVar13 = pfVar13 + 8;
+        } while (iVar7 < pRVar6->numBones);
+      }
+      iVar7 = 0;
+      if (0 < pRVar6->numLerpBones) {
+        puVar12 = &(pRVar6->state).lerpBones[0].animBone;
+        pfVar13 = pBVar9->orientation + 2;
+        do {
+          bVar1 = *puVar12;
+          bVar10 = DObjSetSkelRotTransIndex(param_2,param_3,(uint)bVar1);
+          if (bVar10) {
+            pDVar11 = pDVar8 + bVar1;
+            pDVar11->trans[0] =
+                 (float)((double)((BoneOrientation *)(pfVar13 + -6))->origin[0] - dVar20);
+            pDVar11->trans[1] = (float)((double)pfVar13[-5] - dVar19);
+            pDVar11->trans[2] = (float)((double)pfVar13[-4] - dVar18);
+            fVar2 = pfVar13[-2];
+            pDVar11->quat[0] = fVar2;
+            fVar3 = pfVar13[-1];
+            pDVar11->quat[1] = fVar3;
+            fVar4 = *pfVar13;
+            pDVar11->quat[2] = fVar4;
+            fVar5 = pfVar13[1];
+            dVar14 = (double)(fVar5 * fVar5 + fVar4 * fVar4 + fVar2 * fVar2 + fVar3 * fVar3);
+            pDVar11->quat[3] = fVar5;
+            if (dVar14 <= dVar17) {
+              pDVar11->quat[3] = (float)dVar15;
+              pDVar11->transWeight = (float)dVar16;
+            }
+            else {
+              pDVar11->transWeight = (float)(dVar16 / dVar14);
+            }
+            if (((uint)pDVar11->transWeight & 0x7f800000) == 0x7f800000) {
+              MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ragdoll\\../xanim/xanim_public.h"
+                              ,0x2fa,0,"%s");
+            }
+          }
+          iVar7 = iVar7 + 1;
+          puVar12 = puVar12 + 8;
+          pfVar13 = pfVar13 + 8;
+        } while (iVar7 < pRVar6->numLerpBones);
       }
     }
   }
-  __restfpr_26();
-  __restgprlr_19();
   return;
 }
 

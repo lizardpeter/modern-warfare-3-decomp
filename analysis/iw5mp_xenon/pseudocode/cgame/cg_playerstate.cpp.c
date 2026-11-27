@@ -93,6 +93,10 @@ void CG_PainVisionDisable(cg_s *param_1)
 
 // 822EF908  CG_PainVisionUpdate  (cgame/cg_playerstate.cpp:148)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -102,100 +106,92 @@ void CG_PainVisionUpdate(LocalClientNum_t param_1,playerState_s *param_2,transPl
 
 {
   bool bVar1;
-  LocalClientNum_t LVar2;
-  cg_s *pcVar3;
-  playerState_s *ppVar4;
-  bool bVar5;
-  ulonglong uVar6;
-  ulonglong uVar7;
-  float *pfVar8;
-  bool *pbVar9;
-  double dVar10;
-  double dVar11;
-  double dVar12;
-  double dVar13;
-  float fVar14;
+  cg_s *pcVar2;
+  bool bVar3;
+  float *pfVar4;
+  bool *pbVar5;
+  double dVar6;
+  double dVar7;
+  double dVar8;
+  double dVar9;
+  float fVar10;
   
-  uVar7 = (ulonglong)(int)param_3;
-  uVar6 = (ulonglong)(int)param_2;
-  __savegprlr_27(param_1);
-  LVar2 = __savefpr_28();
-  if ((uVar6 & 0xffffffff) == 0) {
+  if (param_2 == (playerState_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_playerstate.cpp",0x9c
                     ,0,"%s");
   }
-  if ((uVar7 & 0xffffffff) == 0) {
+  if (param_3 == (transPlayerState_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_playerstate.cpp",0x9d
                     ,0,"%s");
   }
-  pcVar3 = CG_GetLocalClientGlobals(LVar2);
-  dVar12 = (double)((float)(longlong)pcVar3->frametime * 0.001);
-  ppVar4 = (playerState_s *)uVar6;
-  fVar14 = CG_CalcPlayerHealth(ppVar4);
-  dVar10 = (double)fVar14;
-  dVar11 = 0.0;
-  if ((dVar10 == 0.0) || (bVar1 = false, ppVar4->pm_type == 5)) {
+  pcVar2 = CG_GetLocalClientGlobals(param_1);
+  dVar8 = (double)((float)(longlong)pcVar2->frametime * 0.001);
+  fVar10 = CG_CalcPlayerHealth(param_2);
+  dVar6 = (double)fVar10;
+  dVar7 = 0.0;
+  if ((dVar6 == 0.0) || (bVar1 = false, param_2->pm_type == 5)) {
     bVar1 = true;
   }
-  if ((bVar1) || (((ppVar4->otherFlags & 0x800U) != 0 && (pcVar3->renderingThirdPerson != 0)))) {
+  if ((bVar1) || (((param_2->otherFlags & 0x800U) != 0 && (pcVar2->renderingThirdPerson != 0)))) {
     bVar1 = true;
   }
   else {
     bVar1 = false;
   }
-  if (((bVar1) || ((ppVar4->otherFlags & 2U) != 0)) ||
-     (bVar1 = false, (ppVar4->linkFlags & 4U) != 0)) {
+  if (((bVar1) || ((param_2->otherFlags & 2U) != 0)) ||
+     (bVar1 = false, (param_2->linkFlags & 4U) != 0)) {
     bVar1 = true;
   }
-  if ((bVar1) || (bVar1 = false, (ppVar4->vehicleState).entity != 0x7ff)) {
+  if ((bVar1) || (bVar1 = false, (param_2->vehicleState).entity != 0x7ff)) {
     bVar1 = true;
   }
-  bVar5 = CG_KillCamEntityEnabled(LVar2);
-  if (bVar5) {
+  bVar3 = CG_KillCamEntityEnabled(param_1);
+  if (bVar3) {
     bVar1 = true;
   }
   if (!bVar1) {
-    pbVar9 = &(pcVar3->cvsData).painVisionActive;
-    dVar13 = 1.0;
-    if (*pbVar9 == false) {
+    pbVar5 = &(pcVar2->cvsData).painVisionActive;
+    dVar9 = 1.0;
+    if (*pbVar5 == false) {
       bVar1 = true;
-      if ((double)(painVisionTriggerHealth->current).value < dVar10) {
+      if ((double)(painVisionTriggerHealth->current).value < dVar6) {
         bVar1 = false;
       }
     }
     else {
       bVar1 = false;
-      if (dVar10 != 1.0) {
+      if (dVar6 != 1.0) {
         bVar1 = true;
       }
     }
     if (bVar1) {
-      CG_PainVisionEnable(pcVar3);
+      CG_PainVisionEnable(pcVar2);
     }
     else {
-      CG_PainVisionStopSound(pcVar3);
+      CG_PainVisionStopSound(pcVar2);
     }
-    if (*pbVar9 == false) goto LAB_822efb78;
-    fVar14 = (float)(dVar13 - dVar10);
-    pfVar8 = &(pcVar3->cvsData).painVisionLerp;
-    if ((double)fVar14 < (double)*pfVar8) {
-      if ((double)(painVisionLerpOutRate->current).value == dVar11) {
-        *pfVar8 = fVar14;
+    if (*pbVar5 == false) {
+      return;
+    }
+    fVar10 = (float)(dVar9 - dVar6);
+    pfVar4 = &(pcVar2->cvsData).painVisionLerp;
+    if ((double)fVar10 < (double)*pfVar4) {
+      if ((double)(painVisionLerpOutRate->current).value == dVar7) {
+        *pfVar4 = fVar10;
       }
       else {
-        *pfVar8 = -(float)((double)(painVisionLerpOutRate->current).value * dVar12 - (double)*pfVar8
-                          );
+        *pfVar4 = -(float)((double)(painVisionLerpOutRate->current).value * dVar8 - (double)*pfVar4)
+        ;
       }
     }
-    if ((double)*pfVar8 < (double)fVar14) {
-      *pfVar8 = fVar14;
+    if ((double)*pfVar4 < (double)fVar10) {
+      *pfVar4 = fVar10;
     }
-    if (dVar11 < (double)*pfVar8) goto LAB_822efb78;
+    if (dVar7 < (double)*pfVar4) {
+      return;
+    }
   }
-  CG_PainVisionDisable(pcVar3);
-LAB_822efb78:
-  __restfpr_28();
-  __restgprlr_27();
+  CG_PainVisionDisable(pcVar2);
   return;
 }
 
@@ -238,6 +234,8 @@ viewDamage_t * CG_FindLruDamageSlot(cg_s *param_1)
 
 // 822EFBE8  CG_DamageFeedback  (cgame/cg_playerstate.cpp:231)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -247,15 +245,13 @@ void CG_DamageFeedback(LocalClientNum_t param_1,int param_2,int param_3,int para
 {
   float fVar1;
   float fVar2;
-  LocalClientNum_t LVar3;
-  cg_s *pcVar4;
-  viewDamage_t *pvVar5;
-  ulonglong uVar6;
-  int iVar7;
-  float (*pafVar8) [3];
-  double dVar9;
-  double dVar10;
-  float fVar11;
+  cg_s *pcVar3;
+  viewDamage_t *pvVar4;
+  int iVar5;
+  float (*pafVar6) [3];
+  double dVar7;
+  double dVar8;
+  float fVar9;
   float local_70;
   float local_6c;
   float local_68;
@@ -263,65 +259,64 @@ void CG_DamageFeedback(LocalClientNum_t param_1,int param_2,int param_3,int para
   float local_5c;
   float local_58;
   
-  uVar6 = (ulonglong)param_5;
-  LVar3 = __savegprlr_26(param_1);
-  pcVar4 = CG_GetLocalClientGlobals(LVar3);
-  dVar9 = 0.0;
-  if ((pcVar4->predictedPlayerState).viewKickScale < 0.0) {
+  pcVar3 = CG_GetLocalClientGlobals(param_1);
+  dVar7 = 0.0;
+  if ((pcVar3->predictedPlayerState).viewKickScale < 0.0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_playerstate.cpp",0xf6
                     ,0,"ps->viewKickScale >= 0.0f\n\t%g, %g");
   }
-  fVar11 = ClampFloat((bg_viewKickScale->current).value * (float)(longlong)param_4,
-                      (bg_viewKickMin->current).value,(bg_viewKickMax->current).value);
-  dVar10 = (double)(fVar11 * (pcVar4->predictedPlayerState).viewKickScale);
+  fVar9 = ClampFloat((bg_viewKickScale->current).value * (float)(longlong)param_4,
+                     (bg_viewKickMin->current).value,(bg_viewKickMax->current).value);
+  dVar8 = (double)(fVar9 * (pcVar3->predictedPlayerState).viewKickScale);
   if ((param_2 == 0xff) && (param_3 == 0xff)) {
-    pcVar4->v_dmg_roll = (float)dVar9;
-    pcVar4->v_dmg_pitch = (float)-dVar10;
+    pcVar3->v_dmg_roll = (float)dVar7;
+    pcVar3->v_dmg_pitch = (float)-dVar8;
   }
   else {
-    local_58 = (float)dVar9;
+    local_58 = (float)dVar7;
     local_5c = (float)(longlong)param_2 * 1.4117647;
-    dVar9 = (double)local_5c;
+    dVar7 = (double)local_5c;
     local_60 = (float)(longlong)param_3 * 1.4117647;
     AngleVectors(&local_60,&local_70,(float *)0x0,(float *)0x0);
-    pafVar8 = (pcVar4->refdef).view.axis;
-    fVar11 = (pcVar4->refdef).view.axis[1][0];
-    fVar1 = (pcVar4->refdef).view.axis[1][1];
-    fVar2 = (pcVar4->refdef).view.axis[1][2];
-    pcVar4->v_dmg_pitch =
-         (float)((double)((pcVar4->refdef).view.axis[0][2] * local_68 +
-                         (pcVar4->refdef).view.axis[0][1] * local_6c + (*pafVar8)[0] * local_70) *
-                dVar10);
-    pcVar4->v_dmg_roll =
-         -(float)((double)(fVar2 * local_68 + fVar1 * local_6c + fVar11 * local_70) * dVar10);
-    pvVar5 = CG_FindLruDamageSlot(pcVar4);
-    pvVar5->time = pcVar4->snap->serverTime;
-    pvVar5->duration = (cg_hudDamageIconTime->current).integer;
-    fVar11 = random();
-    fVar11 = AngleNormalize360((float)((double)(fVar11 - 0.5) * 20.0 + dVar9));
-    pvVar5->yaw = fVar11;
-    pvVar5->stun = SUB81(uVar6,0);
-    pvVar5->dir[0] = local_70;
-    pvVar5->dir[1] = local_6c;
-    pvVar5->dir[2] = local_68;
-    AxisCopy(pafVar8,pvVar5->playerDir);
-    fVar11 = vectoyaw(*pafVar8);
-    pvVar5->playerYaw = fVar11;
+    pafVar6 = (pcVar3->refdef).view.axis;
+    fVar9 = (pcVar3->refdef).view.axis[1][0];
+    fVar1 = (pcVar3->refdef).view.axis[1][1];
+    fVar2 = (pcVar3->refdef).view.axis[1][2];
+    pcVar3->v_dmg_pitch =
+         (float)((double)((pcVar3->refdef).view.axis[0][2] * local_68 +
+                         (pcVar3->refdef).view.axis[0][1] * local_6c + (*pafVar6)[0] * local_70) *
+                dVar8);
+    pcVar3->v_dmg_roll =
+         -(float)((double)(fVar2 * local_68 + fVar1 * local_6c + fVar9 * local_70) * dVar8);
+    pvVar4 = CG_FindLruDamageSlot(pcVar3);
+    pvVar4->time = pcVar3->snap->serverTime;
+    pvVar4->duration = (cg_hudDamageIconTime->current).integer;
+    fVar9 = random();
+    fVar9 = AngleNormalize360((float)((double)(fVar9 - 0.5) * 20.0 + dVar7));
+    pvVar4->yaw = fVar9;
+    pvVar4->stun = param_5;
+    pvVar4->dir[0] = local_70;
+    pvVar4->dir[1] = local_6c;
+    pvVar4->dir[2] = local_68;
+    AxisCopy(pafVar6,pvVar4->playerDir);
+    fVar9 = vectoyaw(*pafVar6);
+    pvVar4->playerYaw = fVar9;
   }
-  pcVar4->damageTime = pcVar4->snap->serverTime;
-  iVar7 = 0x7976c;
-  if ((uVar6 & 0xff) == 0) {
-    iVar7 = 0x79768;
+  pcVar3->damageTime = pcVar3->snap->serverTime;
+  iVar5 = 0x7976c;
+  if (!param_5) {
+    iVar5 = 0x79768;
   }
-  *(int *)((int)(pcVar4->predictedPlayerState).origin + iVar7 + -0x1c) = pcVar4->time + 500;
-  CG_MenuShowNotify(LVar3,0);
-  __restgprlr_26();
+  *(int *)((int)(pcVar3->predictedPlayerState).origin + iVar5 + -0x1c) = pcVar3->time + 500;
+  CG_MenuShowNotify(param_1,0);
   return;
 }
 
 
 // 822EFE80  CG_Respawn  (cgame/cg_playerstate.cpp:307)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -330,95 +325,93 @@ void CG_Respawn(LocalClientNum_t param_1,int param_2)
 
 {
   Weapon WVar1;
-  LocalClientNum_t LVar2;
-  cg_s *pcVar3;
-  bool bVar4;
-  playerEntity_t *ppVar5;
-  longlong lVar6;
-  double dVar7;
+  cg_s *pcVar2;
+  bool bVar3;
+  playerEntity_t *ppVar4;
+  longlong lVar5;
+  double dVar6;
   
-  LVar2 = __savegprlr_27(param_1);
-  pcVar3 = CG_GetLocalClientGlobals(LVar2);
-  if (pcVar3->nextSnap == (snapshot_s *)0x0) {
+  pcVar2 = CG_GetLocalClientGlobals(param_1);
+  if (pcVar2->nextSnap == (snapshot_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_playerstate.cpp",
                     0x13c,0,"%s");
   }
   if (param_2 == 0) {
-    CG_ClearSavedPlayerState(LVar2);
-    (pcVar3->oldTransPlayerState).otherFlags = (pcVar3->oldTransPlayerState).otherFlags | 0x8000;
+    CG_ClearSavedPlayerState(param_1);
+    (pcVar2->oldTransPlayerState).otherFlags = (pcVar2->oldTransPlayerState).otherFlags | 0x8000;
   }
   else {
-    CG_SavePlayerState(LVar2);
+    CG_SavePlayerState(param_1);
   }
   memcpy();
-  pcVar3->groundEntityTime = pcVar3->time + -1000;
+  pcVar2->groundEntityTime = pcVar2->time + -1000;
   if ((param_2 != 0) ||
-     (bVar4 = CG_SelectWeapon(LVar2,(pcVar3->predictedPlayerState).weapCommon.weapon,0), !bVar4)) {
-    pcVar3->weaponSelectInAlt = 0;
-    (pcVar3->weaponSelect).data = 0;
+     (bVar3 = CG_SelectWeapon(param_1,(pcVar2->predictedPlayerState).weapCommon.weapon,0), !bVar3))
+  {
+    pcVar2->weaponSelectInAlt = 0;
+    (pcVar2->weaponSelect).data = 0;
   }
-  WVar1 = (pcVar3->predictedPlayerState).weapCommon.offHand;
-  pcVar3->weaponSelectTime = pcVar3->time;
-  pcVar3->equippedOffHand = WVar1;
-  pcVar3->cursorHintType = 0;
-  pcVar3->cursorHintTime = 0;
-  pcVar3->crosshairClientNum = -1;
+  WVar1 = (pcVar2->predictedPlayerState).weapCommon.offHand;
+  pcVar2->weaponSelectTime = pcVar2->time;
+  pcVar2->equippedOffHand = WVar1;
+  pcVar2->cursorHintType = 0;
+  pcVar2->cursorHintTime = 0;
+  pcVar2->crosshairClientNum = -1;
   CG_ClearOverheadFade();
-  dVar7 = 0.0;
-  ppVar5 = (playerEntity_t *)&pcVar3->predictedPlayerEntity;
-  pcVar3->kickAngles[0] = 0.0;
-  pcVar3->kickAngles[1] = 0.0;
-  pcVar3->kickAngles[2] = 0.0;
-  pcVar3->kickAVel[0] = 0.0;
-  lVar6 = 8;
-  pcVar3->kickAVel[1] = 0.0;
-  pcVar3->kickAVel[2] = 0.0;
-  pcVar3->xyspeed = 0.0;
+  dVar6 = 0.0;
+  ppVar4 = (playerEntity_t *)&pcVar2->predictedPlayerEntity;
+  pcVar2->kickAngles[0] = 0.0;
+  pcVar2->kickAngles[1] = 0.0;
+  pcVar2->kickAngles[2] = 0.0;
+  pcVar2->kickAVel[0] = 0.0;
+  lVar5 = 8;
+  pcVar2->kickAVel[1] = 0.0;
+  pcVar2->kickAVel[2] = 0.0;
+  pcVar2->xyspeed = 0.0;
   do {
-    ppVar5 = (playerEntity_t *)&ppVar5->fLastIdleFactor;
-    ppVar5->bPositionToADS = 0;
-    lVar6 = lVar6 + -1;
-  } while (lVar6 != 0);
-  pcVar3->damageTime = 0;
-  pcVar3->v_dmg_pitch = 0.0;
-  pcVar3->v_dmg_roll = 0.0;
-  pcVar3->recoilAngles[0] = 0.0;
-  pcVar3->recoilAngles[1] = 0.0;
-  pcVar3->recoilAngles[2] = 0.0;
-  pcVar3->recoilSpeed[0] = 0.0;
-  pcVar3->recoilSpeed[1] = 0.0;
-  pcVar3->recoilSpeed[2] = 0.0;
-  pcVar3->swayViewAngles[0] = 0.0;
-  pcVar3->swayViewAngles[1] = 0.0;
-  pcVar3->swayViewAngles[2] = 0.0;
-  pcVar3->swayAngles[0] = 0.0;
-  pcVar3->swayAngles[1] = 0.0;
-  pcVar3->swayAngles[2] = 0.0;
-  pcVar3->swayOffset[0] = 0.0;
-  pcVar3->swayOffset[1] = 0.0;
-  pcVar3->swayOffset[2] = 0.0;
+    ppVar4 = (playerEntity_t *)&ppVar4->fLastIdleFactor;
+    ppVar4->bPositionToADS = 0;
+    lVar5 = lVar5 + -1;
+  } while (lVar5 != 0);
+  pcVar2->damageTime = 0;
+  pcVar2->v_dmg_pitch = 0.0;
+  pcVar2->v_dmg_roll = 0.0;
+  pcVar2->recoilAngles[0] = 0.0;
+  pcVar2->recoilAngles[1] = 0.0;
+  pcVar2->recoilAngles[2] = 0.0;
+  pcVar2->recoilSpeed[0] = 0.0;
+  pcVar2->recoilSpeed[1] = 0.0;
+  pcVar2->recoilSpeed[2] = 0.0;
+  pcVar2->swayViewAngles[0] = 0.0;
+  pcVar2->swayViewAngles[1] = 0.0;
+  pcVar2->swayViewAngles[2] = 0.0;
+  pcVar2->swayAngles[0] = 0.0;
+  pcVar2->swayAngles[1] = 0.0;
+  pcVar2->swayAngles[2] = 0.0;
+  pcVar2->swayOffset[0] = 0.0;
+  pcVar2->swayOffset[1] = 0.0;
+  pcVar2->swayOffset[2] = 0.0;
   memset();
-  pcVar3->predictedError[0] = (float)dVar7;
-  pcVar3->predictedError[1] = (float)dVar7;
-  pcVar3->predictedError[2] = (float)dVar7;
-  pcVar3->adsViewErrorDone = 0;
-  CL_SetStance(LVar2,CL_STANCE_STAND);
-  CL_SetADS(LVar2,false);
-  CG_SetEquippedOffHand(LVar2,(pcVar3->predictedPlayerState).weapCommon.offHand);
-  (pcVar3->playerEntity).fLastIdleFactor = 1.0;
-  (pcVar3->diveView).roll = (float)dVar7;
-  FX_ClearViewmodelMarks(LVar2);
-  CG_SetDefaultVisionAndFogSet(LVar2,-1);
-  CG_ClearCameraShakes(LVar2);
-  pcVar3->vehicleInitView = 1;
-  pcVar3->playerVehicleEntity = 0x7ff;
-  pcVar3->heightToCeiling = 3.4028235e+38;
-  CG_HoldBreathInit(pcVar3);
-  CG_BloodOverlayReset(pcVar3);
-  CG_PainVisionDisable(pcVar3);
-  CG_MotionTrackerReset(LVar2);
+  pcVar2->predictedError[0] = (float)dVar6;
+  pcVar2->predictedError[1] = (float)dVar6;
+  pcVar2->predictedError[2] = (float)dVar6;
+  pcVar2->adsViewErrorDone = 0;
+  CL_SetStance(param_1,CL_STANCE_STAND);
+  CL_SetADS(param_1,false);
+  CG_SetEquippedOffHand(param_1,(pcVar2->predictedPlayerState).weapCommon.offHand);
+  (pcVar2->playerEntity).fLastIdleFactor = 1.0;
+  (pcVar2->diveView).roll = (float)dVar6;
+  FX_ClearViewmodelMarks(param_1);
+  CG_SetDefaultVisionAndFogSet(param_1,-1);
+  CG_ClearCameraShakes(param_1);
+  pcVar2->vehicleInitView = 1;
+  pcVar2->playerVehicleEntity = 0x7ff;
+  pcVar2->heightToCeiling = 3.4028235e+38;
+  CG_HoldBreathInit(pcVar2);
+  CG_BloodOverlayReset(pcVar2);
+  CG_PainVisionDisable(pcVar2);
+  CG_MotionTrackerReset(param_1);
   memcpy();
-  __restgprlr_27();
   return;
 }
 
@@ -442,6 +435,8 @@ void CG_ResetSpectatorViewAngles(LocalClientNum_t param_1)
 
 // 822F01C0  CG_CheckPlayerstateEvents  (cgame/cg_playerstate.cpp:449)
 
+/* WARNING: Function: __savegprlr_21 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_21 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -453,66 +448,65 @@ void CG_CheckPlayerstateEvents
   centity_s *pcVar1;
   int iVar2;
   uint uVar3;
-  LocalClientNum_t LVar4;
-  cg_s *pcVar5;
-  char *pcVar6;
-  uint uVar7;
+  cg_s *pcVar4;
+  char *pcVar5;
+  uint uVar6;
+  int iVar7;
   int iVar8;
-  int iVar9;
   
-  LVar4 = __savegprlr_21(param_1);
-  pcVar5 = CG_GetLocalClientGlobals(LVar4);
-  pcVar1 = pcVar5->predictedPlayerEntity;
+  pcVar4 = CG_GetLocalClientGlobals(param_1);
+  pcVar1 = pcVar4->predictedPlayerEntity;
   if ((pcVar1->flags & 1U) == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_playerstate.cpp",
                     0x1cc,0,"%s");
   }
-  iVar9 = (param_2->pe).eventSequence;
-  iVar8 = param_3->eventSequence;
-  if (iVar9 + 0x400000 < iVar8) {
-    iVar8 = iVar8 + -0x1000000;
+  iVar8 = (param_2->pe).eventSequence;
+  iVar7 = param_3->eventSequence;
+  if (iVar8 + 0x400000 < iVar7) {
+    iVar7 = iVar7 + -0x1000000;
   }
-  uVar7 = iVar9 - 4;
-  if ((int)uVar7 < iVar9) {
-    iVar9 = uVar7 - iVar8;
-    iVar8 = iVar8 - uVar7;
+  uVar6 = iVar8 - 4;
+  if ((int)uVar6 < iVar8) {
+    iVar8 = uVar6 - iVar7;
+    iVar7 = iVar7 - uVar6;
     do {
-      uVar3 = uVar7 & 3;
+      uVar3 = uVar6 & 3;
       iVar2 = (param_2->pe).events[uVar3];
-      if ((-1 < iVar9) || ((iVar8 < 4 && (iVar2 != param_3->events[uVar3])))) {
+      if ((-1 < iVar8) || ((iVar7 < 4 && (iVar2 != param_3->events[uVar3])))) {
         (pcVar1->nextState).eventParm = (param_2->pe).eventParms[uVar3];
-        pcVar6 = BG_GetEntityTypeName((pcVar1->nextState).eType);
-        PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffff,pcVar6);
-        CG_EntityEvent(LVar4,pcVar1,iVar2,1);
+        pcVar5 = BG_GetEntityTypeName((pcVar1->nextState).eType);
+        PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffff,pcVar5);
+        CG_EntityEvent(param_1,pcVar1,iVar2,1);
         PIXEndNamedEvent();
       }
-      uVar7 = uVar7 + 1;
-      iVar9 = iVar9 + 1;
-      iVar8 = iVar8 + -1;
-    } while ((int)uVar7 < (param_2->pe).eventSequence);
+      uVar6 = uVar6 + 1;
+      iVar8 = iVar8 + 1;
+      iVar7 = iVar7 + -1;
+    } while ((int)uVar6 < (param_2->pe).eventSequence);
   }
-  uVar7 = param_3->unpredictableEventSequence;
-  if (param_2->unpredictableEventSequence + 0x400000 < (int)uVar7) {
-    uVar7 = uVar7 - 0x1000000;
+  uVar6 = param_3->unpredictableEventSequence;
+  if (param_2->unpredictableEventSequence + 0x400000 < (int)uVar6) {
+    uVar6 = uVar6 - 0x1000000;
   }
-  if ((int)uVar7 < param_2->unpredictableEventSequence) {
+  if ((int)uVar6 < param_2->unpredictableEventSequence) {
     do {
-      iVar9 = param_2->unpredictableEvents[uVar7 & 3];
-      (pcVar1->nextState).eventParm = param_2->unpredictableEventParms[uVar7 & 3];
-      pcVar6 = BG_GetEntityTypeName((pcVar1->nextState).eType);
-      PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffff,pcVar6);
-      CG_EntityEvent(LVar4,pcVar1,iVar9,1);
+      iVar8 = param_2->unpredictableEvents[uVar6 & 3];
+      (pcVar1->nextState).eventParm = param_2->unpredictableEventParms[uVar6 & 3];
+      pcVar5 = BG_GetEntityTypeName((pcVar1->nextState).eType);
+      PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffff,pcVar5);
+      CG_EntityEvent(param_1,pcVar1,iVar8,1);
       PIXEndNamedEvent();
-      uVar7 = uVar7 + 1;
-    } while ((int)uVar7 < param_2->unpredictableEventSequence);
+      uVar6 = uVar6 + 1;
+    } while ((int)uVar6 < param_2->unpredictableEventSequence);
   }
-  __restgprlr_21();
   return;
 }
 
 
 // 822F0360  CG_TransitionPlayerState  (cgame/cg_playerstate.cpp:507)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -521,27 +515,24 @@ void CG_TransitionPlayerState
                (LocalClientNum_t param_1,playerState_s *param_2,transPlayerState_t *param_3)
 
 {
-  LocalClientNum_t LVar1;
-  cg_s *pcVar2;
-  int iVar3;
+  cg_s *pcVar1;
+  int iVar2;
   
-  LVar1 = __savegprlr_28(param_1);
-  pcVar2 = CG_GetLocalClientGlobals(LVar1);
-  iVar3 = CG_ShouldProcessPlayerEntity(LVar1);
-  if (iVar3 != 0) {
-    CG_PrePlayer(LVar1,pcVar2->predictedPlayerEntity);
+  pcVar1 = CG_GetLocalClientGlobals(param_1);
+  iVar2 = CG_ShouldProcessPlayerEntity(param_1);
+  if (iVar2 != 0) {
+    CG_PrePlayer(param_1,pcVar1->predictedPlayerEntity);
   }
   if ((param_2->damageEvent != param_3->damageEvent) && (param_2->damageCount != 0)) {
-    CG_DamageFeedback(LVar1,param_2->damageYaw,param_2->damagePitch,param_2->damageCount,
+    CG_DamageFeedback(param_1,param_2->damageYaw,param_2->damagePitch,param_2->damageCount,
                       (bool)((byte)param_2->damageFlags & 1));
   }
-  iVar3 = CL_GetLocalClientActiveCount();
-  if ((iVar3 == 1) && (((param_2->otherFlags ^ param_3->otherFlags) & 0x8000U) != 0)) {
-    CG_StartAmbient(LVar1);
+  iVar2 = CL_GetLocalClientActiveCount();
+  if ((iVar2 == 1) && (((param_2->otherFlags ^ param_3->otherFlags) & 0x8000U) != 0)) {
+    CG_StartAmbient(param_1);
   }
-  CG_CheckPlayerstateEvents(LVar1,param_2,param_3);
-  CG_PainVisionUpdate(LVar1,param_2,param_3);
-  __restgprlr_28();
+  CG_CheckPlayerstateEvents(param_1,param_2,param_3);
+  CG_PainVisionUpdate(param_1,param_2,param_3);
   return;
 }
 

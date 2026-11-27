@@ -26,118 +26,107 @@ void * Material_Alloc(int param_1)
 
 // 82754078  Load_CreateMaterialVertexShader  (gfx_d3d/r_material.cpp:335)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 
 void Load_CreateMaterialVertexShader(GfxShaderLoadDef *param_1,MaterialVertexShader *param_2)
 
 {
-  ulonglong uVar1;
-  longlong lVar2;
-  
-  lVar2 = (longlong)(int)param_2;
-  uVar1 = __savegprlr_27(param_1);
   if (dx.device == (D3DDevice *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_material.cpp",0x150,
                     0,"%s");
   }
-  if ((uVar1 & 0xffffffff) != (lVar2 + 4U & 0xffffffff)) {
+  if (param_1 != (GfxShaderLoadDef *)&param_2->prog) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_material.cpp",0x151,
                     0,"%s");
   }
-  XGRegisterVertexShader((D3DVertexShader *)*(undefined4 *)(lVar2 + 4U),*(void **)((int)lVar2 + 8));
-  __restgprlr_27();
+  XGRegisterVertexShader((param_2->prog).vs,(param_2->prog).loadDef.physicalPart);
   return;
 }
 
 
 // 82754108  Load_CreateMaterialPixelShader  (gfx_d3d/r_material.cpp:348)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 
 void Load_CreateMaterialPixelShader(GfxShaderLoadDef *param_1,MaterialPixelShader *param_2)
 
 {
-  ulonglong uVar1;
-  longlong lVar2;
-  undefined4 *puVar3;
-  
-  lVar2 = (longlong)(int)param_2;
-  uVar1 = __savegprlr_27(param_1);
   if (dx.device == (D3DDevice *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_material.cpp",0x15d,
                     0,"%s");
   }
-  if ((uVar1 & 0xffffffff) != (lVar2 + 4U & 0xffffffff)) {
+  if (param_1 != (GfxShaderLoadDef *)&param_2->prog) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_material.cpp",0x15e,
                     0,"%s");
   }
-  puVar3 = (undefined4 *)(lVar2 + 4U);
-  if (*(short *)((int)lVar2 + 0xe) != 0) {
-    XGRegisterPixelShader((D3DPixelShader *)*puVar3,*(void **)((int)lVar2 + 8));
-    __restgprlr_27();
+  if ((param_2->prog).loadDef.physicalPartSize != 0) {
+    XGRegisterPixelShader((param_2->prog).ps,(param_2->prog).loadDef.physicalPart);
     return;
   }
-  *puVar3 = 0;
-  __restgprlr_27();
+  (param_2->prog).ps = (D3DPixelShader *)0x0;
   return;
 }
 
 
 // 827541B8  Load_BindVertexShader  (gfx_d3d/r_material.cpp:666)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 void Load_BindVertexShader(MaterialVertexShader **param_1,MaterialPass *param_2)
 
 {
-  int iVar1;
-  int iVar2;
+  MaterialVertexShader *pMVar1;
+  MaterialVertexDeclaration *pMVar2;
   D3DVertexDeclaration *pDVar3;
   D3DVertexShader *pDVar4;
-  ulonglong uVar5;
-  ulonglong uVar6;
-  ulonglong uVar7;
-  uint uVar8;
+  MaterialPass *pMVar5;
+  uint uVar6;
   ulong local_40;
   undefined4 local_3c;
   
-  uVar6 = (ulonglong)(int)param_2;
-  uVar5 = __savegprlr_26(param_1);
-  uVar8 = 0;
-  uVar7 = uVar6;
+  uVar6 = 0;
+  pMVar5 = param_2;
   do {
-    uVar7 = uVar7 + 4;
-    if ((uVar7 & 0xffffffff) == (uVar5 & 0xffffffff)) break;
-    uVar8 = uVar8 + 1;
-  } while (uVar8 < 0x15);
-  if (uVar8 == 0x15) {
+    pMVar5 = (MaterialPass *)pMVar5->vertexShaderArray;
+    if (pMVar5 == (MaterialPass *)param_1) break;
+    uVar6 = uVar6 + 1;
+  } while (uVar6 < 0x15);
+  if (uVar6 == 0x15) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_material.cpp",0x2a8,
                     0,"%s");
   }
-  iVar1 = ((int *)uVar6)[uVar8 + 1];
-  if (iVar1 != 0) {
-    iVar2 = *(int *)uVar6;
-    if (iVar2 == 0) {
+  pMVar1 = param_2->vertexShaderArray[uVar6];
+  if (pMVar1 != (MaterialVertexShader *)0x0) {
+    pMVar2 = param_2->vertexDecl;
+    if (pMVar2 == (MaterialVertexDeclaration *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_material.cpp",
                       0x2b0,0,"%s");
     }
-    pDVar3 = *(D3DVertexDeclaration **)(uVar8 * 4 + iVar2 + 4);
+    pDVar3 = *(D3DVertexDeclaration **)((int)&pMVar2->routing + uVar6 * 4);
     if (pDVar3 != (D3DVertexDeclaration *)0x0) {
-      pDVar4 = *(D3DVertexShader **)(iVar1 + 4);
+      pDVar4 = (pMVar1->prog).vs;
       if (pDVar4 == (D3DVertexShader *)0x0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_material.cpp",
                         0x2b6,0,"%s");
       }
-      local_40 = g_streamStride[uVar8];
-      local_3c = *(undefined4 *)(&g_layerDataStride + uVar8 * 4);
+      local_40 = g_streamStride[uVar6];
+      local_3c = *(undefined4 *)(&g_layerDataStride + uVar6 * 4);
       D3DVertexShader_Bind(pDVar4,0,pDVar3,&local_40,(D3DPixelShader *)0x0);
     }
   }
-  __restgprlr_26();
   return;
 }
 
 
 // 827542D0  Material_FindTechniqueSet_FastFile  (gfx_d3d/r_material.cpp:749)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "XAssetType": Some values do not have unique names */
 /* WARNING: Enum "nodeType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
@@ -148,28 +137,22 @@ MaterialTechniqueSet *
 Material_FindTechniqueSet_FastFile(char *param_1,MtlTechSetNotFoundBehavior param_2)
 
 {
-  char *pcVar1;
-  XAssetHeader XVar2;
-  int iVar3;
-  XAssetHeader XVar4;
-  MaterialTechniqueSet *pMVar5;
+  XAssetHeader XVar1;
+  int iVar2;
   
-  pcVar1 = (char *)__savegprlr_29(param_1);
-  XVar2 = DB_FindXAssetHeader(ASSET_TYPE_TECHNIQUE_SET,pcVar1,1);
-  if (param_2 == MTL_TECHSET_NOT_FOUND_RETURN_NULL) {
-    iVar3 = DB_IsXAssetDefault(ASSET_TYPE_TECHNIQUE_SET,pcVar1);
-    XVar4.physPreset = (PhysPreset *)0x0;
-    if (iVar3 != 0) goto LAB_8275431c;
+  XVar1 = DB_FindXAssetHeader(ASSET_TYPE_TECHNIQUE_SET,param_1,1);
+  if ((param_2 == MTL_TECHSET_NOT_FOUND_RETURN_NULL) &&
+     (iVar2 = DB_IsXAssetDefault(ASSET_TYPE_TECHNIQUE_SET,param_1), iVar2 != 0)) {
+    return (MaterialTechniqueSet *)0x0;
   }
-  XVar4 = XVar2;
-LAB_8275431c:
-  pMVar5 = (MaterialTechniqueSet *)__restgprlr_29(XVar4.physPreset);
-  return pMVar5;
+  return XVar1.techniqueSet;
 }
 
 
 // 82754328  Material_FindTechniqueSet  (gfx_d3d/r_material.cpp:761)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "XAssetType": Some values do not have unique names */
 /* WARNING: Enum "nodeType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
@@ -179,23 +162,15 @@ LAB_8275431c:
 MaterialTechniqueSet * Material_FindTechniqueSet(char *param_1,MtlTechSetNotFoundBehavior param_2)
 
 {
-  char *pcVar1;
-  XAssetHeader XVar2;
-  int iVar3;
-  XAssetHeader XVar4;
-  MaterialTechniqueSet *pMVar5;
+  XAssetHeader XVar1;
+  int iVar2;
   
-  pcVar1 = (char *)__savegprlr_29(param_1);
-  XVar2 = DB_FindXAssetHeader(ASSET_TYPE_TECHNIQUE_SET,pcVar1,1);
-  if (param_2 == MTL_TECHSET_NOT_FOUND_RETURN_NULL) {
-    iVar3 = DB_IsXAssetDefault(ASSET_TYPE_TECHNIQUE_SET,pcVar1);
-    XVar4.physPreset = (PhysPreset *)0x0;
-    if (iVar3 != 0) goto LAB_82754374;
+  XVar1 = DB_FindXAssetHeader(ASSET_TYPE_TECHNIQUE_SET,param_1,1);
+  if ((param_2 == MTL_TECHSET_NOT_FOUND_RETURN_NULL) &&
+     (iVar2 = DB_IsXAssetDefault(ASSET_TYPE_TECHNIQUE_SET,param_1), iVar2 != 0)) {
+    return (MaterialTechniqueSet *)0x0;
   }
-  XVar4 = XVar2;
-LAB_82754374:
-  pMVar5 = (MaterialTechniqueSet *)__restgprlr_29(XVar4.physPreset);
-  return pMVar5;
+  return XVar1.techniqueSet;
 }
 
 
@@ -213,14 +188,13 @@ void Material_DirtySort(void)
 
 // 82754398  Material_IsDefault  (gfx_d3d/r_material.cpp:1097)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 bool Material_IsDefault(Material *param_1)
 
 {
-  int iVar1;
-  undefined1 uVar2;
-  
-  iVar1 = __savegprlr_28(param_1);
-  if (iVar1 == 0) {
+  if (param_1 == (Material *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_material.cpp",0x44a,
                     0,"%s");
   }
@@ -228,15 +202,11 @@ bool Material_IsDefault(Material *param_1)
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_material.cpp",1099,0
                     ,"%s");
   }
-  if (*(MaterialTextureDef **)(iVar1 + 0x48) == (rgp.defaultMaterial)->textureTable) {
-    if (*(MaterialConstantDef **)(iVar1 + 0x4c) == (rgp.defaultMaterial)->constantTable) {
-      uVar2 = __restgprlr_28((rgp.defaultMaterial)->techniqueSet ==
-                             *(MaterialTechniqueSet **)(iVar1 + 0x44));
-      return (bool)uVar2;
-    }
+  if ((param_1->textureTable == (rgp.defaultMaterial)->textureTable) &&
+     (param_1->constantTable == (rgp.defaultMaterial)->constantTable)) {
+    return (rgp.defaultMaterial)->techniqueSet == param_1->techniqueSet;
   }
-  uVar2 = __restgprlr_28(0);
-  return (bool)uVar2;
+  return false;
 }
 
 
@@ -287,6 +257,8 @@ Material * Material_LoadRawImage(char *param_1,int param_2)
 
 // 82754488  Material_RegisterHandle  (gfx_d3d/r_material.cpp:1244)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "XAssetType": Some values do not have unique names */
 /* WARNING: Enum "nodeType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
@@ -296,41 +268,33 @@ Material * Material_LoadRawImage(char *param_1,int param_2)
 Material * Material_RegisterHandle(char *param_1,int param_2)
 
 {
-  char *pcVar2;
-  ulonglong uVar1;
-  XAssetHeader XVar3;
-  Material *pMVar4;
+  XAssetHeader XVar1;
   
-  pcVar2 = (char *)__savegprlr_28(param_1,param_2);
-  if (pcVar2 == (char *)0x0) {
+  if (param_1 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_material.cpp",0x4df,
                     0,"%s");
   }
-  uVar1 = ZEXT48(rgp.defaultMaterial);
-  if (uVar1 == 0) {
+  if (rgp.defaultMaterial == (Material *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_material.cpp",0x4e0,
                     0,"%s");
-    uVar1 = ZEXT48(rgp.defaultMaterial);
   }
-  if (*pcVar2 != '\0') {
-    XVar3 = DB_FindXAssetHeader(ASSET_TYPE_MATERIAL,pcVar2,1);
-    uVar1 = (ulonglong)(int)XVar3;
+  XVar1.material = rgp.defaultMaterial;
+  if (*param_1 != '\0') {
+    XVar1 = DB_FindXAssetHeader(ASSET_TYPE_MATERIAL,param_1,1);
   }
-  pMVar4 = (Material *)__restgprlr_28(uVar1);
-  return pMVar4;
+  return XVar1.material;
 }
 
 
 // 82754528  Material_RegisterRawImage  (gfx_d3d/r_material.cpp:1335)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 Material * Material_RegisterRawImage(char *param_1,int param_2)
 
 {
-  int iVar1;
-  Material *pMVar2;
-  
-  iVar1 = __savegprlr_29(param_1,param_2);
-  if (iVar1 == 0) {
+  if (param_1 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_material.cpp",0x53a,
                     0,"%s");
   }
@@ -338,8 +302,7 @@ Material * Material_RegisterRawImage(char *param_1,int param_2)
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_material.cpp",0x53b,
                     0,"%s");
   }
-  pMVar2 = (Material *)__restgprlr_29(rgp.defaultMaterial);
-  return pMVar2;
+  return rgp.defaultMaterial;
 }
 
 
@@ -370,6 +333,8 @@ int R_GetMaterialMemory(Material *param_1)
 
 // 82754608  R_GetMaterialList  (gfx_d3d/r_material.cpp:1377)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "nodeType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
@@ -378,25 +343,22 @@ int R_GetMaterialMemory(Material *param_1)
 void R_GetMaterialList(XAssetHeader param_1,void *param_2)
 
 {
-  uint uVar1;
-  Material *pMVar2;
-  uint uVar3;
-  uint *puVar4;
+  int iVar1;
+  int iVar2;
+  uint *puVar3;
   
-  pMVar2 = (Material *)__savegprlr_29(param_1.physPreset);
-  puVar4 = param_2;
-  uVar3 = R_GetMaterialMemory(pMVar2);
-  if (uVar3 != 0) {
-    if (0x165f < *puVar4) {
+  puVar3 = param_2;
+  iVar2 = R_GetMaterialMemory(param_1.material);
+  if (iVar2 != 0) {
+    if (0x165f < *puVar3) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_material.cpp",
                       0x56b,0,"%s");
     }
-    uVar1 = *(uint *)param_2;
-    *(Material **)((int)param_2 + (uVar1 * 2 + 1) * 4) = pMVar2;
-    *(uint *)((int)param_2 + (uVar1 * 2 + 2) * 4) = uVar3;
-    *(uint *)param_2 = *(uint *)param_2 + 1;
+    iVar1 = *(int *)param_2;
+    *(XAssetHeader *)((int)param_2 + iVar1 * 8 + 4) = param_1;
+    *(int *)((int)param_2 + iVar1 * 8 + 8) = iVar2;
+    *(int *)param_2 = *(int *)param_2 + 1;
   }
-  __restgprlr_29();
   return;
 }
 
@@ -413,6 +375,8 @@ bool R_MaterialCompare(MaterialMemory *param_1,MaterialMemory *param_2)
 
 // 82754D88  R_MaterialList_f  (gfx_d3d/r_material.cpp:1402)
 
+/* WARNING: Function: __savegprlr_21 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_21 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "XAssetType": Some values do not have unique names */
 /* WARNING: Enum "nodeType": Some values do not have unique names */
@@ -434,7 +398,6 @@ void R_MaterialList_f(void)
   double dVar9;
   double dVar10;
   
-  __savegprlr_21();
   lVar5 = -0xb3e0;
   _RtlCheckStack12();
   iVar2 = (int)(ZEXT48(&stack0x00000000) + lVar5);
@@ -481,7 +444,6 @@ void R_MaterialList_f(void)
   Com_Printf(8,
              "Related commands: meminfo, imagelist, gfx_world, gfx_model, cg_drawfps, com_statmon, tempmeminfo\n"
             );
-  __restgprlr_21();
   return;
 }
 
@@ -533,6 +495,8 @@ char * Material_GetNameWithoutPrefix(Material *param_1)
 
 // 82754798  Material_LoadBuiltIn  (gfx_d3d/r_material.cpp:1501)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "XAssetType": Some values do not have unique names */
 /* WARNING: Enum "nodeType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
@@ -542,30 +506,28 @@ char * Material_GetNameWithoutPrefix(Material *param_1)
 void Material_LoadBuiltIn(BuiltInMaterialTable *param_1,int param_2)
 
 {
-  int iVar1;
-  XAssetHeader XVar2;
-  longlong lVar3;
-  undefined4 *puVar4;
+  XAssetHeader XVar1;
+  longlong lVar2;
+  Material ***pppMVar3;
   
-  lVar3 = (longlong)param_2;
-  iVar1 = __savegprlr_26(param_1);
-  if (0 < (int)lVar3) {
-    puVar4 = (undefined4 *)(iVar1 + 4);
+  lVar2 = (longlong)param_2;
+  if (0 < param_2) {
+    pppMVar3 = &param_1->material;
     do {
-      if (*(int *)*puVar4 != 0) {
+      if (**pppMVar3 != (Material *)0x0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_material.cpp",
                         0x5e2,0,"%s");
       }
-      XVar2 = DB_FindXAssetHeader(ASSET_TYPE_MATERIAL,(char *)puVar4[-1],1);
-      *(XAssetHeader *)*puVar4 = XVar2;
-      if (*(int *)*puVar4 == 0) {
+      XVar1 = DB_FindXAssetHeader(ASSET_TYPE_MATERIAL,
+                                  ((BuiltInMaterialTable *)(pppMVar3 + -1))->name,1);
+      *(XAssetHeader *)*pppMVar3 = XVar1;
+      if (**pppMVar3 == (Material *)0x0) {
         Com_Error(ERR_FATAL,"Could not find material \'%s\'");
       }
-      lVar3 = lVar3 + -1;
-      puVar4 = puVar4 + 2;
-    } while (lVar3 != 0);
+      lVar2 = lVar2 + -1;
+      pppMVar3 = pppMVar3 + 2;
+    } while (lVar2 != 0);
   }
-  __restgprlr_26();
   return;
 }
 
@@ -689,6 +651,8 @@ void ValidMaterialCallback(XAssetHeader param_1,void *param_2)
 
 // 827549C0  IsValidMaterialHandle  (gfx_d3d/r_material.cpp:1862)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "XAssetType": Some values do not have unique names */
 /* WARNING: Enum "nodeType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
@@ -700,18 +664,15 @@ bool IsValidMaterialHandle(Material *param_1)
 {
   char *pcVar1;
   Material *pMVar2;
-  Material *pMVar3;
-  undefined1 uVar4;
-  undefined8 uVar5;
+  bool bVar3;
   char local_30 [4];
   Material *local_2c;
   
-  pMVar2 = (Material *)__savegprlr_29(param_1);
   local_30[0] = '\0';
-  local_2c = pMVar2;
+  local_2c = param_1;
   DB_EnumXAssets(ASSET_TYPE_MATERIAL,ValidMaterialCallback,local_30,true);
-  pMVar3 = Material_FromHandle(pMVar2);
-  if (((uint)pMVar3 & 3) != 0) {
+  pMVar2 = Material_FromHandle(param_1);
+  if (((uint)pMVar2 & 3) != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_material.cpp",0x74e,
                     0,"%s");
   }
@@ -719,16 +680,18 @@ bool IsValidMaterialHandle(Material *param_1)
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_material.cpp",0x74f,
                     0,"%s");
   }
-  if (((pMVar2 == (Material *)0x0) || (pcVar1 = (pMVar2->info).name, pcVar1 == (char *)0x0)) ||
-     (uVar5 = 1, *pcVar1 == '\0')) {
-    uVar5 = 0;
+  if (((param_1 == (Material *)0x0) || (pcVar1 = (param_1->info).name, pcVar1 == (char *)0x0)) ||
+     (bVar3 = true, *pcVar1 == '\0')) {
+    bVar3 = false;
   }
-  uVar4 = __restgprlr_29(uVar5);
-  return (bool)uVar4;
+  return bVar3;
 }
 
 
 // 82754A90  Material_Process2DTextureCoordsForAtlasing  (gfx_d3d/r_material.cpp:1879)
+
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
 
 void Material_Process2DTextureCoordsForAtlasing
                (Material *param_1,float *param_2,float *param_3,float *param_4,float *param_5)
@@ -736,90 +699,82 @@ void Material_Process2DTextureCoordsForAtlasing
 {
   uint uVar1;
   uint uVar2;
-  int iVar3;
+  ulonglong uVar3;
   ulonglong uVar4;
   ulonglong uVar5;
   ulonglong uVar6;
-  ulonglong uVar7;
-  ulonglong uVar8;
-  ulonglong uVar9;
-  ulonglong uVar10;
-  ulonglong uVar11;
   float local_70;
   float local_6c;
   float local_68;
   float local_64 [25];
   
-  uVar7 = (ulonglong)(int)param_5;
-  uVar6 = (ulonglong)(int)param_4;
-  uVar5 = (ulonglong)(int)param_3;
-  uVar4 = (ulonglong)(int)param_2;
-  iVar3 = __savegprlr_22(param_1);
-  if ((uVar4 & 0xffffffff) == 0) {
+  if (param_2 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_material.cpp",0x759,
                     0,"%s");
   }
-  if ((uVar5 & 0xffffffff) == 0) {
+  if (param_3 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_material.cpp",0x75a,
                     0,"%s");
   }
-  if ((uVar6 & 0xffffffff) == 0) {
+  if (param_4 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_material.cpp",0x75b,
                     0,"%s");
   }
-  if ((uVar7 & 0xffffffff) == 0) {
+  if (param_5 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_material.cpp",0x75c,
                     0,"%s");
   }
-  if ((iVar3 != 0) && ((*(char *)(iVar3 + 7) != '\x01' || (*(char *)(iVar3 + 6) != '\x01')))) {
+  if ((param_1 != (Material *)0x0) &&
+     (((param_1->info).textureAtlasColumnCount != '\x01' ||
+      ((param_1->info).textureAtlasRowCount != '\x01')))) {
     if ((r_atlasAnimFPS->current).integer < 1) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_material.cpp",
                       0x763,0,"%s");
     }
-    if (*(char *)(iVar3 + 7) == '\0') {
+    if ((param_1->info).textureAtlasColumnCount == '\0') {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_material.cpp",
                       0x764,0,"%s");
     }
-    if (*(char *)(iVar3 + 6) == '\0') {
+    if ((param_1->info).textureAtlasRowCount == '\0') {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_material.cpp",
                       0x765,0,"%s");
     }
     uVar2 = rg.textureAtlasTime;
-    if (((*(char *)(iVar3 + 7) != '\0') && (*(char *)(iVar3 + 6) != '\0')) &&
-       (0 < (r_atlasAnimFPS->current).integer)) {
+    if ((((param_1->info).textureAtlasColumnCount != '\0') &&
+        ((param_1->info).textureAtlasRowCount != '\0')) && (0 < (r_atlasAnimFPS->current).integer))
+    {
       uVar1 = (r_atlasAnimFPS->current).integer;
-      uVar10 = (ulonglong)uVar1;
-      uVar9 = (ulonglong)rg.textureAtlasTime;
-      if (uVar10 == 0) {
+      uVar5 = (ulonglong)uVar1;
+      uVar4 = (ulonglong)rg.textureAtlasTime;
+      if (uVar5 == 0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_material.cpp",
                         0x778,0,"%s");
       }
-      uVar11 = (longlong)(int)(uint)*(byte *)(iVar3 + 6) * (longlong)(int)(uint)*(byte *)(iVar3 + 7)
-      ;
-      if (uVar11 == 0) {
+      uVar6 = (longlong)(int)(uint)(param_1->info).textureAtlasRowCount *
+              (longlong)(int)(uint)(param_1->info).textureAtlasColumnCount;
+      if (uVar6 == 0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_material.cpp",
                         0x77a,0,"%s");
       }
-      uVar8 = (uVar11 * 1000) / uVar10;
-      trapWord(6,uVar10,0);
-      trapWord(6,uVar8,0);
-      uVar9 = ((longlong)(int)(uVar2 - (int)(uVar9 / uVar8) * (int)uVar8) * (longlong)(int)uVar1 &
+      uVar3 = (uVar6 * 1000) / uVar5;
+      trapWord(6,uVar5,0);
+      trapWord(6,uVar3,0);
+      uVar4 = ((longlong)(int)(uVar2 - (int)(uVar4 / uVar3) * (int)uVar3) * (longlong)(int)uVar1 &
               0xffffffffU) / 1000;
-      if (uVar11 <= uVar9) {
+      if (uVar6 <= uVar4) {
         va("frame:%i  ms:%i  fps:%i  fc:%i  msTtP:%i  msSLB:%i\n");
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_material.cpp",
                         0x77f,0,"%s\n\t%s");
       }
       TextureAtlas_GetCoords_ByIndex
-                ((uint)uVar9,(uint)*(byte *)(iVar3 + 7),(uint)*(byte *)(iVar3 + 6),&local_6c,
-                 &local_70,local_64,&local_68);
-      *(float *)uVar4 = *(float *)uVar4 * local_70 + local_6c;
-      *(float *)uVar5 = *(float *)uVar5 * local_70 + local_6c;
-      *(float *)uVar6 = *(float *)uVar6 * local_68 + local_64[0];
-      *(float *)uVar7 = *(float *)uVar7 * local_68 + local_64[0];
+                ((uint)uVar4,(uint)(param_1->info).textureAtlasColumnCount,
+                 (uint)(param_1->info).textureAtlasRowCount,&local_6c,&local_70,local_64,&local_68);
+      *param_2 = *param_2 * local_70 + local_6c;
+      *param_3 = *param_3 * local_70 + local_6c;
+      *param_4 = *param_4 * local_68 + local_64[0];
+      *param_5 = *param_5 * local_68 + local_64[0];
     }
   }
-  __restgprlr_22();
   return;
 }
 
@@ -851,6 +806,8 @@ void Material_SetTextureAtlasTime(uint param_1)
 
 // 82754F70  _Push_heap<MaterialMemory_*,int,MaterialMemory,bool_(__cdecl*)(MaterialMemory_const_&,MaterialMemory_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2455)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void std::
@@ -860,42 +817,39 @@ void std::
 
 {
   int iVar1;
-  int iVar2;
+  ulonglong uVar2;
   ulonglong uVar3;
   MaterialMemory *pMVar4;
   ulonglong uVar5;
-  int iVar6;
-  bool bVar7;
-  ulonglong uVar8;
-  uint uVar9;
+  bool bVar6;
+  uint uVar7;
   
-  uVar8 = (ulonglong)param_2;
-  iVar6 = __savegprlr_25(param_1);
-  iVar1 = (int)uVar8;
-  uVar9 = iVar1 - 1;
-  uVar5 = (longlong)((int)uVar9 >> 1) + (ulonglong)((int)uVar9 < 0 && (uVar9 & 1) != 0);
-  while (uVar3 = uVar5, param_3 < iVar1) {
-    iVar1 = (int)uVar3;
-    pMVar4 = (MaterialMemory *)(iVar1 * 8 + iVar6);
-    bVar7 = (*param_5)(pMVar4,param_4);
-    if (!bVar7) break;
-    iVar2 = (int)((uVar8 & 0xffffffff) << 3);
-    uVar9 = iVar1 - 1;
-    *(Material **)(iVar2 + iVar6) = pMVar4->material;
-    *(int *)(iVar2 + iVar6 + 4) = pMVar4->memory;
-    uVar5 = (longlong)((int)uVar9 >> 1) + (ulonglong)((int)uVar9 < 0 && (uVar9 & 1) != 0);
-    uVar8 = uVar3;
+  uVar7 = param_2 - 1;
+  uVar5 = (longlong)((int)uVar7 >> 1) + (ulonglong)((int)uVar7 < 0 && (uVar7 & 1) != 0);
+  uVar3 = (longlong)param_2;
+  while (uVar2 = uVar5, param_3 < param_2) {
+    param_2 = (int)uVar2;
+    pMVar4 = param_1 + param_2;
+    bVar6 = (*param_5)(pMVar4,param_4);
+    if (!bVar6) break;
+    iVar1 = (int)((uVar3 & 0xffffffff) << 3);
+    uVar7 = param_2 - 1;
+    *(Material **)((int)&param_1->material + iVar1) = pMVar4->material;
+    *(int *)((int)&param_1->memory + iVar1) = pMVar4->memory;
+    uVar5 = (longlong)((int)uVar7 >> 1) + (ulonglong)((int)uVar7 < 0 && (uVar7 & 1) != 0);
+    uVar3 = uVar2;
   }
-  iVar1 = (int)((uVar8 & 0x1fffffff) << 3);
-  *(Material **)(iVar1 + iVar6) = param_4->material;
-  *(int *)(iVar1 + iVar6 + 4) = param_4->memory;
-  __restgprlr_25();
+  iVar1 = (int)((uVar3 & 0xffffffff) << 3);
+  *(Material **)((int)&param_1->material + iVar1) = param_4->material;
+  *(int *)((int)&param_1->memory + iVar1) = param_4->memory;
   return;
 }
 
 
 // 82755018  _Adjust_heap<MaterialMemory_*,int,MaterialMemory,bool_(__cdecl*)(MaterialMemory_const_&,MaterialMemory_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2565)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void std::
@@ -906,68 +860,62 @@ void std::
 {
   int iVar1;
   MaterialMemory *pMVar2;
-  int iVar3;
-  bool bVar4;
+  bool bVar3;
+  uint uVar4;
   ulonglong uVar5;
   ulonglong uVar6;
-  uint uVar7;
-  ulonglong uVar8;
-  ulonglong uVar9;
-  int iVar11;
-  ulonglong uVar10;
+  int iVar8;
+  ulonglong uVar7;
   
-  uVar6 = (ulonglong)param_3;
-  uVar5 = (ulonglong)param_2;
-  iVar3 = __savegprlr_25(param_1);
-  uVar9 = (uVar5 + 1 & 0x7fffffff) << 1;
-  iVar11 = (int)uVar9;
-  uVar8 = uVar5;
-  while (uVar10 = uVar9, iVar11 < (int)uVar6) {
-    pMVar2 = (MaterialMemory *)((int)uVar10 * 8 + iVar3);
-    bVar4 = (*param_5)(pMVar2,pMVar2 + -1);
-    if (bVar4) {
-      uVar10 = uVar10 - 1;
+  uVar6 = ((longlong)param_2 + 1U & 0x7fffffff) << 1;
+  iVar8 = (int)uVar6;
+  uVar5 = (longlong)param_2;
+  while (uVar7 = uVar6, iVar8 < param_3) {
+    bVar3 = (*param_5)(param_1 + (int)uVar7,param_1 + (int)uVar7 + -1);
+    if (bVar3) {
+      uVar7 = uVar7 - 1;
     }
-    iVar11 = (int)((uVar10 & 0xffffffff) << 3);
-    iVar1 = (int)((uVar8 & 0xffffffff) << 3);
-    uVar9 = (uVar10 + 1 & 0x7fffffff) << 1;
-    *(undefined4 *)(iVar1 + iVar3) = *(undefined4 *)(iVar11 + iVar3);
-    *(undefined4 *)(iVar1 + iVar3 + 4) = *(undefined4 *)(iVar11 + iVar3 + 4);
-    iVar11 = (int)uVar9;
-    uVar8 = uVar10;
+    iVar8 = (int)((uVar7 & 0xffffffff) << 3);
+    iVar1 = (int)((uVar5 & 0xffffffff) << 3);
+    uVar6 = (uVar7 + 1 & 0x7fffffff) << 1;
+    *(undefined4 *)((int)&param_1->material + iVar1) =
+         *(undefined4 *)((int)&param_1->material + iVar8);
+    *(undefined4 *)((int)&param_1->memory + iVar1) = *(undefined4 *)((int)&param_1->memory + iVar8);
+    iVar8 = (int)uVar6;
+    uVar5 = uVar7;
   }
-  if (iVar11 == (int)uVar6) {
-    iVar1 = (int)((uVar8 & 0xffffffff) << 3);
-    iVar11 = (int)((uVar6 & 0xffffffff) << 3) + iVar3;
-    uVar8 = uVar6 - 1;
-    *(undefined4 *)(iVar1 + iVar3) = *(undefined4 *)(iVar11 + -8);
-    *(undefined4 *)(iVar1 + iVar3 + 4) = *(undefined4 *)(iVar11 + -4);
+  if (iVar8 == param_3) {
+    iVar8 = (int)((uVar5 & 0xffffffff) << 3);
+    uVar5 = (longlong)param_3 - 1;
+    *(Material **)((int)&param_1->material + iVar8) = param_1[param_3 + -1].material;
+    *(int *)((int)&param_1->memory + iVar8) = param_1[param_3 + -1].memory;
   }
-  iVar11 = (int)uVar8;
-  uVar7 = iVar11 - 1;
-  uVar9 = (longlong)((int)uVar7 >> 1) + (ulonglong)((int)uVar7 < 0 && (uVar7 & 1) != 0);
-  while (uVar6 = uVar9, (int)uVar5 < iVar11) {
-    iVar11 = (int)uVar6;
-    pMVar2 = (MaterialMemory *)(iVar11 * 8 + iVar3);
-    bVar4 = (*param_5)(pMVar2,param_4);
-    if (!bVar4) break;
-    iVar1 = (int)((uVar8 & 0xffffffff) << 3);
-    uVar7 = iVar11 - 1;
-    *(Material **)(iVar1 + iVar3) = pMVar2->material;
-    *(int *)(iVar1 + iVar3 + 4) = pMVar2->memory;
-    uVar9 = (longlong)((int)uVar7 >> 1) + (ulonglong)((int)uVar7 < 0 && (uVar7 & 1) != 0);
-    uVar8 = uVar6;
+  iVar8 = (int)uVar5;
+  uVar4 = iVar8 - 1;
+  uVar6 = (longlong)((int)uVar4 >> 1) + (ulonglong)((int)uVar4 < 0 && (uVar4 & 1) != 0);
+  while (uVar7 = uVar6, param_2 < iVar8) {
+    iVar8 = (int)uVar7;
+    pMVar2 = param_1 + iVar8;
+    bVar3 = (*param_5)(pMVar2,param_4);
+    if (!bVar3) break;
+    iVar1 = (int)((uVar5 & 0xffffffff) << 3);
+    uVar4 = iVar8 - 1;
+    *(Material **)((int)&param_1->material + iVar1) = pMVar2->material;
+    *(int *)((int)&param_1->memory + iVar1) = pMVar2->memory;
+    uVar6 = (longlong)((int)uVar4 >> 1) + (ulonglong)((int)uVar4 < 0 && (uVar4 & 1) != 0);
+    uVar5 = uVar7;
   }
-  iVar11 = (int)((uVar8 & 0x1fffffff) << 3);
-  *(Material **)(iVar11 + iVar3) = param_4->material;
-  *(int *)(iVar11 + iVar3 + 4) = param_4->memory;
-  __restgprlr_25();
+  iVar8 = (int)((uVar5 & 0xffffffff) << 3);
+  *(Material **)((int)&param_1->material + iVar8) = param_4->material;
+  *(int *)((int)&param_1->memory + iVar8) = param_4->memory;
   return;
 }
 
 
 // 82755160  _Make_heap<MaterialMemory_*,int,MaterialMemory,bool_(__cdecl*)(MaterialMemory_const_&,MaterialMemory_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2658)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void std::
@@ -978,74 +926,66 @@ void std::
 
 {
   uint uVar1;
-  MaterialMemory *pMVar2;
-  int iVar3;
-  ulonglong uVar4;
+  int iVar2;
+  ulonglong uVar3;
+  bool bVar4;
   longlong lVar5;
-  bool bVar6;
-  longlong lVar7;
-  longlong lVar8;
-  int iVar9;
+  ulonglong uVar6;
+  ulonglong uVar7;
+  int iVar8;
+  ulonglong uVar9;
   ulonglong uVar10;
-  ulonglong uVar11;
-  ulonglong uVar12;
-  ulonglong uVar13;
-  uint uVar14;
+  uint uVar11;
   MaterialMemory local_50 [10];
   
-  lVar8 = (longlong)(int)param_3;
-  lVar7 = (longlong)(int)param_2;
-  lVar5 = __savegprlr_24(param_1,lVar7,lVar8,param_4,param_5);
-  pMVar2 = (MaterialMemory *)lVar5;
-  iVar9 = (int)lVar7 - (int)pMVar2;
-  uVar1 = iVar9 >> 3;
-  uVar11 = (longlong)(iVar9 >> 4) + (ulonglong)((int)uVar1 < 0 && (uVar1 & 1) != 0);
-  if (0 < (longlong)uVar11) {
-    uVar10 = (uVar11 + 1 & 0x7fffffff) << 1;
-    lVar5 = (uVar11 & 0x1fffffff) * 8 + lVar5;
+  uVar1 = (int)param_2 - (int)param_1 >> 3;
+  uVar7 = (longlong)((int)param_2 - (int)param_1 >> 4) +
+          (ulonglong)((int)uVar1 < 0 && (uVar1 & 1) != 0);
+  if (0 < (longlong)uVar7) {
+    uVar6 = (uVar7 + 1 & 0x7fffffff) << 1;
+    lVar5 = (uVar7 & 0x1fffffff) * 8 + (longlong)(int)param_1;
     do {
       lVar5 = lVar5 + -8;
       local_50[0] = *(MaterialMemory *)lVar5;
-      uVar10 = uVar10 - 2;
-      uVar11 = uVar11 - 1;
-      uVar14 = (uint)uVar10;
-      uVar13 = uVar10;
-      uVar4 = uVar11;
-      while (uVar12 = uVar13, (int)uVar14 < (int)uVar1) {
-        bVar6 = (*(_func___cdecl_bool_MaterialMemory_ptr_MaterialMemory_ptr *)lVar8)
-                          (pMVar2 + (int)uVar12,pMVar2 + (int)uVar12 + -1);
-        if (bVar6) {
-          uVar12 = uVar12 - 1;
+      uVar6 = uVar6 - 2;
+      uVar7 = uVar7 - 1;
+      uVar11 = (uint)uVar6;
+      uVar10 = uVar6;
+      uVar3 = uVar7;
+      while (uVar9 = uVar10, (int)uVar11 < (int)uVar1) {
+        bVar4 = (*param_3)(param_1 + (int)uVar9,param_1 + (int)uVar9 + -1);
+        if (bVar4) {
+          uVar9 = uVar9 - 1;
         }
-        iVar9 = (int)((uVar12 & 0xffffffff) << 3);
-        iVar3 = (int)((uVar4 & 0xffffffff) << 3);
-        uVar13 = (uVar12 + 1 & 0x7fffffff) << 1;
-        *(undefined4 *)((int)&pMVar2->material + iVar3) =
-             *(undefined4 *)((int)&pMVar2->material + iVar9);
-        *(undefined4 *)((int)&pMVar2->memory + iVar3) =
-             *(undefined4 *)((int)&pMVar2->memory + iVar9);
-        uVar14 = (uint)uVar13;
-        uVar4 = uVar12;
+        iVar8 = (int)((uVar9 & 0xffffffff) << 3);
+        iVar2 = (int)((uVar3 & 0xffffffff) << 3);
+        uVar10 = (uVar9 + 1 & 0x7fffffff) << 1;
+        *(undefined4 *)((int)&param_1->material + iVar2) =
+             *(undefined4 *)((int)&param_1->material + iVar8);
+        *(undefined4 *)((int)&param_1->memory + iVar2) =
+             *(undefined4 *)((int)&param_1->memory + iVar8);
+        uVar11 = (uint)uVar10;
+        uVar3 = uVar9;
       }
-      iVar9 = (int)uVar4;
-      if (uVar14 == uVar1) {
-        iVar3 = (int)((uVar4 & 0xffffffff) << 3);
-        iVar9 = uVar1 - 1;
-        *(Material **)((int)&pMVar2->material + iVar3) = pMVar2[uVar1 - 1].material;
-        *(int *)((int)&pMVar2->memory + iVar3) = pMVar2[uVar1 - 1].memory;
+      iVar8 = (int)uVar3;
+      if (uVar11 == uVar1) {
+        iVar2 = (int)((uVar3 & 0xffffffff) << 3);
+        iVar8 = uVar1 - 1;
+        *(Material **)((int)&param_1->material + iVar2) = param_1[uVar1 - 1].material;
+        *(int *)((int)&param_1->memory + iVar2) = param_1[uVar1 - 1].memory;
       }
       _Push_heap<MaterialMemory_*,int,MaterialMemory,bool_(__cdecl*)(MaterialMemory_const_&,MaterialMemory_const_&)>
-                (pMVar2,iVar9,(int)uVar11,local_50,
-                 (_func___cdecl_bool_MaterialMemory_ptr_MaterialMemory_ptr *)lVar8);
-    } while (0 < (int)uVar11);
+                (param_1,iVar8,(int)uVar7,local_50,param_3);
+    } while (0 < (int)uVar7);
   }
-  __restgprlr_24();
   return;
 }
 
 
 // 82755780  _Sort_heap<MaterialMemory_*,bool_(__cdecl*)(MaterialMemory_const_&,MaterialMemory_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2700)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void std::
@@ -1054,37 +994,31 @@ void std::
                _func___cdecl_bool_MaterialMemory_ptr_MaterialMemory_ptr *param_3)
 
 {
-  longlong lVar1;
+  uint uVar1;
   MaterialMemory *pMVar2;
-  longlong lVar3;
-  longlong lVar4;
-  MaterialMemory *pMVar5;
   MaterialMemory local_30 [6];
   
-  lVar4 = (longlong)(int)param_2;
-  lVar1 = __savegprlr_29(param_1);
-  lVar3 = lVar4 - lVar1;
-  if (8 < (int)((uint)lVar3 & 0xfffffff8)) {
-    lVar4 = lVar4 + -8;
+  uVar1 = (int)param_2 - (int)param_1;
+  if (8 < (int)(uVar1 & 0xfffffff8)) {
+    pMVar2 = param_2 + -1;
     do {
-      pMVar2 = (MaterialMemory *)lVar1;
-      pMVar5 = (MaterialMemory *)lVar4;
-      local_30[0] = *pMVar5;
-      pMVar5->material = pMVar2->material;
-      pMVar5->memory = pMVar2->memory;
+      local_30[0] = *pMVar2;
+      pMVar2->material = param_1->material;
+      pMVar2->memory = param_1->memory;
       _Adjust_heap<MaterialMemory_*,int,MaterialMemory,bool_(__cdecl*)(MaterialMemory_const_&,MaterialMemory_const_&)>
-                (pMVar2,0,(int)lVar3 + -8 >> 3,local_30,param_3);
-      lVar4 = lVar4 + -8;
-      lVar3 = (lVar4 - lVar1) + 8;
-    } while (8 < (int)((uint)lVar3 & 0xfffffff8));
+                (param_1,0,(int)(uVar1 - 8) >> 3,local_30,param_3);
+      pMVar2 = pMVar2 + -1;
+      uVar1 = (int)pMVar2 + (8 - (int)param_1);
+    } while (8 < (int)(uVar1 & 0xfffffff8));
   }
-  __restgprlr_29();
   return;
 }
 
 
 // 827553D0  _Insertion_sort1<MaterialMemory_*,bool_(__cdecl*)(MaterialMemory_const_&,MaterialMemory_const_&),MaterialMemory>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3650)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void std::
@@ -1094,66 +1028,51 @@ void std::
                MaterialMemory *param_4)
 
 {
-  undefined4 *puVar1;
-  ulonglong uVar2;
-  ulonglong uVar3;
-  char cVar4;
-  ulonglong uVar5;
-  longlong lVar6;
-  code *pcVar7;
-  ulonglong uVar8;
-  ulonglong uVar10;
-  ulonglong uVar11;
-  undefined8 *puVar12;
-  undefined8 local_50 [10];
-  ulonglong uVar9;
+  MaterialMemory *pMVar1;
+  MaterialMemory *pMVar2;
+  MaterialMemory *pMVar3;
+  MaterialMemory *pMVar4;
+  bool bVar5;
+  MaterialMemory local_50 [10];
   
-  lVar6 = (longlong)(int)param_3;
-  uVar5 = (ulonglong)(int)param_2;
-  uVar3 = __savegprlr_25(param_1,uVar5,lVar6,param_4);
-  if (((uVar3 & 0xffffffff) != (uVar5 & 0xffffffff)) &&
-     (uVar11 = uVar3 + 8, uVar10 = uVar3, (uVar11 & 0xffffffff) != (uVar5 & 0xffffffff))) {
-    do {
-      local_50[0] = *(undefined8 *)uVar11;
-      pcVar7 = (code *)lVar6;
-      cVar4 = (*pcVar7)(local_50,uVar3);
-      if (cVar4 == '\0') {
-        cVar4 = (*pcVar7)(local_50,uVar10);
-        uVar8 = uVar10;
-        uVar9 = uVar11;
-        while (uVar2 = uVar8, puVar12 = (undefined8 *)uVar9, cVar4 != '\0') {
-          *(undefined4 *)puVar12 = *(undefined4 *)uVar2;
-          *(undefined4 *)((int)puVar12 + 4) = ((undefined4 *)uVar2)[1];
-          cVar4 = (*pcVar7)(local_50,uVar2 - 8);
-          uVar8 = uVar2 - 8;
-          uVar9 = uVar2;
+  pMVar3 = param_1;
+  pMVar4 = param_1;
+  if (param_1 != param_2) {
+    while (pMVar4 = pMVar4 + 1, pMVar4 != param_2) {
+      local_50[0] = *pMVar4;
+      bVar5 = (*param_3)(local_50,param_1);
+      pMVar1 = pMVar4;
+      if (bVar5) {
+        while (param_1 != pMVar1) {
+          pMVar1->material = pMVar1[-1].material;
+          pMVar1->memory = pMVar1[-1].memory;
+          pMVar1 = pMVar1 + -1;
         }
-        *puVar12 = local_50[0];
+        *param_1 = local_50[0];
       }
       else {
-        uVar9 = uVar11;
-        if ((uVar3 & 0xffffffff) != (uVar11 & 0xffffffff)) {
-          do {
-            uVar8 = uVar9 - 8;
-            puVar1 = (undefined4 *)uVar9;
-            *puVar1 = *(undefined4 *)uVar8;
-            puVar1[1] = puVar1[-1];
-            uVar9 = uVar8;
-          } while ((uVar8 & 0xffffffff) != (uVar3 & 0xffffffff));
+        bVar5 = (*param_3)(local_50,pMVar3);
+        pMVar2 = pMVar3;
+        while (bVar5 != false) {
+          pMVar1->material = pMVar2->material;
+          pMVar1->memory = pMVar2->memory;
+          bVar5 = (*param_3)(local_50,pMVar2 + -1);
+          pMVar1 = pMVar2;
+          pMVar2 = pMVar2 + -1;
         }
-        *(undefined8 *)uVar3 = local_50[0];
+        *pMVar1 = local_50[0];
       }
-      uVar11 = uVar11 + 8;
-      uVar10 = uVar10 + 8;
-    } while ((uVar11 & 0xffffffff) != (uVar5 & 0xffffffff));
+      pMVar3 = pMVar3 + 1;
+    }
   }
-  __restgprlr_25();
   return;
 }
 
 
 // 82755268  _Med3<MaterialMemory_*,bool_(__cdecl*)(MaterialMemory_const_&,MaterialMemory_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3683)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void std::_Med3<MaterialMemory_*,bool_(__cdecl*)(MaterialMemory_const_&,MaterialMemory_const_&)>
@@ -1161,35 +1080,34 @@ void std::_Med3<MaterialMemory_*,bool_(__cdecl*)(MaterialMemory_const_&,Material
                _func___cdecl_bool_MaterialMemory_ptr_MaterialMemory_ptr *param_4)
 
 {
-  MaterialMemory *pMVar1;
-  bool bVar2;
+  bool bVar1;
   
-  pMVar1 = (MaterialMemory *)__savegprlr_28(param_1);
-  bVar2 = (*param_4)(param_2,pMVar1);
-  if (bVar2) {
-    param_2->material = pMVar1->material;
-    param_2->memory = pMVar1->memory;
-    *pMVar1 = *param_2;
+  bVar1 = (*param_4)(param_2,param_1);
+  if (bVar1) {
+    param_2->material = param_1->material;
+    param_2->memory = param_1->memory;
+    *param_1 = *param_2;
   }
-  bVar2 = (*param_4)(param_3,param_2);
-  if (bVar2) {
+  bVar1 = (*param_4)(param_3,param_2);
+  if (bVar1) {
     param_3->material = param_2->material;
     param_3->memory = param_2->memory;
     *param_2 = *param_3;
   }
-  bVar2 = (*param_4)(param_2,pMVar1);
-  if (bVar2) {
-    param_2->material = pMVar1->material;
-    param_2->memory = pMVar1->memory;
-    *pMVar1 = *param_2;
+  bVar1 = (*param_4)(param_2,param_1);
+  if (bVar1) {
+    param_2->material = param_1->material;
+    param_2->memory = param_1->memory;
+    *param_1 = *param_2;
   }
-  __restgprlr_28();
   return;
 }
 
 
 // 82755328  _Median<MaterialMemory_*,bool_(__cdecl*)(MaterialMemory_const_&,MaterialMemory_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3695)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void std::_Median<MaterialMemory_*,bool_(__cdecl*)(MaterialMemory_const_&,MaterialMemory_const_&)>
@@ -1200,20 +1118,18 @@ void std::_Median<MaterialMemory_*,bool_(__cdecl*)(MaterialMemory_const_&,Materi
   int iVar1;
   int iVar2;
   MaterialMemory *pMVar3;
-  MaterialMemory *pMVar4;
-  uint uVar6;
-  ulonglong uVar5;
+  uint uVar5;
+  ulonglong uVar4;
   
-  pMVar3 = (MaterialMemory *)__savegprlr_26(param_1);
-  iVar1 = (int)param_3 - (int)pMVar3 >> 3;
+  iVar1 = (int)param_3 - (int)param_1 >> 3;
   if (0x28 < iVar1) {
-    uVar6 = iVar1 + 1;
-    uVar5 = (longlong)((int)uVar6 >> 3) + (ulonglong)((int)uVar6 < 0 && (uVar6 & 7) != 0);
-    iVar2 = (int)((uVar5 & 0xffffffff) << 4);
-    iVar1 = (int)((uVar5 & 0x1fffffff) << 3);
-    pMVar4 = (MaterialMemory *)((int)&pMVar3->material + iVar1);
+    uVar5 = iVar1 + 1;
+    uVar4 = (longlong)((int)uVar5 >> 3) + (ulonglong)((int)uVar5 < 0 && (uVar5 & 7) != 0);
+    iVar2 = (int)((uVar4 & 0xffffffff) << 4);
+    iVar1 = (int)((uVar4 & 0x1fffffff) << 3);
+    pMVar3 = (MaterialMemory *)((int)&param_1->material + iVar1);
     _Med3<MaterialMemory_*,bool_(__cdecl*)(MaterialMemory_const_&,MaterialMemory_const_&)>
-              (pMVar3,pMVar4,(MaterialMemory *)((int)&pMVar3->material + iVar2),param_4);
+              (param_1,pMVar3,(MaterialMemory *)((int)&param_1->material + iVar2),param_4);
     _Med3<MaterialMemory_*,bool_(__cdecl*)(MaterialMemory_const_&,MaterialMemory_const_&)>
               ((MaterialMemory *)((int)param_2 - iVar1),param_2,
                (MaterialMemory *)((int)&param_2->material + iVar1),param_4);
@@ -1221,19 +1137,19 @@ void std::_Median<MaterialMemory_*,bool_(__cdecl*)(MaterialMemory_const_&,Materi
               ((MaterialMemory *)((int)param_3 - iVar2),(MaterialMemory *)((int)param_3 - iVar1),
                param_3,param_4);
     _Med3<MaterialMemory_*,bool_(__cdecl*)(MaterialMemory_const_&,MaterialMemory_const_&)>
-              (pMVar4,param_2,(MaterialMemory *)((int)param_3 - iVar1),param_4);
-    __restgprlr_26();
+              (pMVar3,param_2,(MaterialMemory *)((int)param_3 - iVar1),param_4);
     return;
   }
   _Med3<MaterialMemory_*,bool_(__cdecl*)(MaterialMemory_const_&,MaterialMemory_const_&)>
-            (pMVar3,param_2,param_3,param_4);
-  __restgprlr_26();
+            (param_1,param_2,param_3,param_4);
   return;
 }
 
 
 // 827554D0  _Unguarded_partition<MaterialMemory_*,bool_(__cdecl*)(MaterialMemory_const_&,MaterialMemory_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3712)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 pair<MaterialMemory_*,MaterialMemory_*>
@@ -1243,157 +1159,156 @@ _Unguarded_partition<MaterialMemory_*,bool_(__cdecl*)(MaterialMemory_const_&,Mat
           _func___cdecl_bool_MaterialMemory_ptr_MaterialMemory_ptr *param_3)
 
 {
-  uint uVar1;
-  MaterialMemory *pMVar2;
-  undefined4 *puVar4;
-  bool bVar5;
-  pair<MaterialMemory_*,MaterialMemory_*> pVar3;
-  ulonglong uVar6;
-  ulonglong uVar7;
+  MaterialMemory *pMVar1;
+  uint uVar2;
+  Material *pMVar3;
+  GfxStateBits *pGVar4;
+  char **ppcVar5;
+  int iVar6;
+  bool bVar7;
   _func___cdecl_bool_MaterialMemory_ptr_MaterialMemory_ptr *in_r6;
   undefined8 uVar8;
-  int iVar10;
-  ulonglong uVar9;
-  ulonglong uVar11;
-  MaterialMemory *pMVar12;
-  undefined8 *puVar13;
-  ulonglong uVar14;
-  undefined8 *puVar15;
-  ulonglong uVar16;
-  ulonglong uVar17;
-  undefined8 *puVar18;
+  undefined8 uVar9;
+  undefined8 uVar10;
+  MaterialMemory *pMVar11;
+  Material *pMVar12;
+  GfxStateBits **ppGVar13;
+  Material *pMVar14;
+  Material *pMVar15;
+  Material *pMVar16;
   
-  uVar7 = (ulonglong)(int)param_3;
-  uVar6 = (ulonglong)(int)param_2;
-  puVar4 = (undefined4 *)__savegprlr_23(param_1);
-  iVar10 = (int)uVar7 - (int)(MaterialMemory *)uVar6;
-  uVar1 = iVar10 >> 3;
-  uVar17 = ((longlong)(iVar10 >> 4) + (ulonglong)((int)uVar1 < 0 && (uVar1 & 1) != 0) & 0x1fffffff)
-           * 8 + uVar6;
+  uVar2 = (int)param_3 - (int)param_2 >> 3;
+  pMVar14 = (Material *)
+            (param_2 +
+            ((int)param_3 - (int)param_2 >> 4) + (uint)((int)uVar2 < 0 && (uVar2 & 1) != 0));
   _Median<MaterialMemory_*,bool_(__cdecl*)(MaterialMemory_const_&,MaterialMemory_const_&)>
-            ((MaterialMemory *)uVar6,(MaterialMemory *)uVar17,(MaterialMemory *)((int)uVar7 + -8),
-             in_r6);
-  uVar11 = uVar17 + 8;
-  if ((uVar6 & 0xffffffff) < (uVar17 & 0xffffffff)) {
-    do {
-      uVar16 = uVar17 - 8;
-      bVar5 = (*in_r6)((MaterialMemory *)uVar16,(MaterialMemory *)uVar17);
-      if ((bVar5) || (bVar5 = (*in_r6)((MaterialMemory *)uVar17,(MaterialMemory *)uVar16), bVar5))
-      break;
-      uVar17 = uVar16;
-    } while ((uVar6 & 0xffffffff) < (uVar16 & 0xffffffff));
-  }
-  uVar14 = uVar11;
-  uVar16 = uVar17;
-  if ((uVar11 & 0xffffffff) < (uVar7 & 0xffffffff)) {
-    do {
-      bVar5 = (*in_r6)((MaterialMemory *)uVar11,(MaterialMemory *)uVar17);
-      uVar14 = uVar11;
-      if ((bVar5) || (bVar5 = (*in_r6)((MaterialMemory *)uVar17,(MaterialMemory *)uVar11), bVar5))
-      break;
-      uVar11 = uVar11 + 8;
-      uVar14 = uVar11;
-    } while ((uVar11 & 0xffffffff) < (uVar7 & 0xffffffff));
+            (param_2,(MaterialMemory *)pMVar14,(MaterialMemory *)(param_3 + -8),in_r6);
+  pMVar12 = pMVar14;
+  while (pMVar15 = pMVar12, param_2 < pMVar15) {
+    pMVar12 = (Material *)&pMVar15[-1].stateBitsTable;
+    bVar7 = (*in_r6)((MaterialMemory *)pMVar12,(MaterialMemory *)pMVar15);
+    if ((bVar7) || (bVar7 = (*in_r6)((MaterialMemory *)pMVar15,(MaterialMemory *)pMVar12), bVar7))
+    break;
   }
   do {
-    uVar9 = uVar11;
-    if ((uVar14 & 0xffffffff) < (uVar7 & 0xffffffff)) {
-      do {
-        pMVar2 = (MaterialMemory *)uVar14;
-        bVar5 = (*in_r6)((MaterialMemory *)uVar16,pMVar2);
-        uVar11 = uVar9;
-        if (!bVar5) {
-          bVar5 = (*in_r6)(pMVar2,(MaterialMemory *)uVar16);
-          if (bVar5) break;
-          uVar11 = uVar9 + 8;
-          pMVar12 = (MaterialMemory *)uVar9;
-          pMVar12->material = pMVar2->material;
-          pMVar12->memory = pMVar2->memory;
-          *pMVar2 = *pMVar12;
-        }
-        uVar14 = uVar14 + 8;
-        uVar9 = uVar11;
-      } while ((uVar14 & 0xffffffff) < (uVar7 & 0xffffffff));
-    }
-    bVar5 = (uVar17 & 0xffffffff) == (uVar6 & 0xffffffff);
-    uVar9 = uVar17;
-    if ((uVar6 & 0xffffffff) < (uVar17 & 0xffffffff)) {
-      do {
-        pMVar2 = (MaterialMemory *)(uVar9 - 8);
-        bVar5 = (*in_r6)(pMVar2,(MaterialMemory *)uVar16);
-        if (!bVar5) {
-          bVar5 = (*in_r6)((MaterialMemory *)uVar16,pMVar2);
-          if (bVar5) break;
-          uVar16 = uVar16 - 8;
-          pMVar12 = (MaterialMemory *)uVar16;
-          pMVar12->material = pMVar2->material;
-          pMVar12->memory = *(int *)((int)uVar9 + -4);
-          *pMVar2 = *pMVar12;
-        }
-        uVar17 = uVar17 - 8;
-        uVar9 = uVar9 - 8;
-      } while ((uVar6 & 0xffffffff) < (uVar17 & 0xffffffff));
-      bVar5 = (uVar17 & 0xffffffff) == (uVar6 & 0xffffffff);
-    }
-    puVar15 = (undefined8 *)uVar14;
-    puVar18 = (undefined8 *)uVar16;
-    if (bVar5) {
-      puVar13 = (undefined8 *)uVar11;
-      if ((uVar14 & 0xffffffff) == (uVar7 & 0xffffffff)) {
-        *puVar4 = puVar18;
-        puVar4[1] = puVar13;
-        pVar3 = (pair<MaterialMemory_*,MaterialMemory_*>)__restgprlr_23(puVar4);
-        return pVar3;
+    pMVar14 = (Material *)&(pMVar14->info).drawSurf;
+    pMVar1 = (MaterialMemory *)pMVar14;
+    pMVar12 = pMVar15;
+    if (param_3 <= pMVar14) break;
+    bVar7 = (*in_r6)((MaterialMemory *)pMVar14,(MaterialMemory *)pMVar15);
+    if ((bVar7) || (bVar7 = (*in_r6)((MaterialMemory *)pMVar15,(MaterialMemory *)pMVar14), bVar7))
+    break;
+  } while( true );
+joined_r0x827555c0:
+  pMVar3 = pMVar12;
+  if (param_3 <= pMVar1) {
+joined_r0x8275562c:
+    for (; param_2 < pMVar3; pMVar3 = (Material *)&pMVar3[-1].stateBitsTable) {
+      ppGVar13 = &pMVar12[-1].stateBitsTable;
+      bVar7 = (*in_r6)((MaterialMemory *)ppGVar13,(MaterialMemory *)pMVar15);
+      pMVar16 = pMVar15;
+      if (!bVar7) {
+        bVar7 = (*in_r6)((MaterialMemory *)pMVar15,(MaterialMemory *)ppGVar13);
+        if (bVar7) break;
+        pMVar16 = (Material *)&pMVar15[-1].stateBitsTable;
+        pGVar4 = pMVar15[-0xffffffff00000001].stateBitsTable;
+        ppcVar5 = pMVar15[-0xffffffff00000001].subMaterials;
+        *(GfxStateBits **)pMVar16 = *ppGVar13;
+        pMVar15[-1].subMaterials = pMVar12[-1].subMaterials;
+        pMVar12[-0xffffffff00000001].stateBitsTable = pGVar4;
+        pMVar12[-0xffffffff00000001].subMaterials = ppcVar5;
       }
-      if ((uVar11 & 0xffffffff) != (uVar14 & 0xffffffff)) {
-        uVar8 = *puVar18;
-        *(undefined4 *)puVar18 = *(undefined4 *)puVar13;
-        *(undefined4 *)((int)puVar18 + 4) = *(undefined4 *)((int)puVar13 + 4);
-        *puVar13 = uVar8;
+      pMVar15 = pMVar16;
+      pMVar12 = (Material *)ppGVar13;
+    }
+    if (pMVar3 == (Material *)param_2) {
+      if (pMVar1 == (MaterialMemory *)param_3) {
+        param_1->material = pMVar15;
+        param_1->memory = (int)pMVar14;
+        return (pair<MaterialMemory_*,MaterialMemory_*>)(longlong)(int)param_1;
       }
-      uVar11 = uVar11 + 8;
-      uVar8 = *puVar18;
-      *(undefined4 *)puVar18 = *(undefined4 *)puVar15;
-      *(undefined4 *)((int)puVar18 + 4) = *(undefined4 *)((int)puVar15 + 4);
-      *puVar15 = uVar8;
-      uVar14 = uVar14 + 8;
-      uVar16 = uVar16 + 8;
+      if (pMVar14 != (Material *)pMVar1) {
+        uVar10._0_4_ = (pMVar15->info).name;
+        uVar10._4_1_ = (pMVar15->info).gameFlags;
+        uVar10._5_1_ = (pMVar15->info).sortKey;
+        uVar10._6_1_ = (pMVar15->info).textureAtlasRowCount;
+        uVar10._7_1_ = (pMVar15->info).textureAtlasColumnCount;
+        (pMVar15->info).name = (char *)((MaterialMemory *)pMVar14)->material;
+        *(int *)&(pMVar15->info).gameFlags = ((MaterialMemory *)pMVar14)->memory;
+        ((MaterialMemory *)pMVar14)->material = (Material *)(int)((ulonglong)uVar10 >> 0x20);
+        ((MaterialMemory *)pMVar14)->memory = (int)uVar10;
+      }
+      uVar8._0_4_ = (pMVar15->info).name;
+      uVar8._4_1_ = (pMVar15->info).gameFlags;
+      uVar8._5_1_ = (pMVar15->info).sortKey;
+      uVar8._6_1_ = (pMVar15->info).textureAtlasRowCount;
+      uVar8._7_1_ = (pMVar15->info).textureAtlasColumnCount;
+      (pMVar15->info).name = (char *)pMVar1->material;
+      *(int *)&(pMVar15->info).gameFlags = pMVar1->memory;
+      pMVar1->material = (Material *)(int)((ulonglong)uVar8 >> 0x20);
+      pMVar1->memory = (int)uVar8;
+      pMVar14 = (Material *)((int)pMVar14 + 8);
+      pMVar1 = pMVar1 + 1;
+      pMVar15 = (Material *)&(pMVar15->info).drawSurf;
+      pMVar12 = pMVar3;
     }
     else {
-      uVar9 = uVar17 - 8;
-      puVar13 = (undefined8 *)uVar9;
-      if ((uVar14 & 0xffffffff) == (uVar7 & 0xffffffff)) {
-        uVar16 = uVar16 - 8;
-        puVar15 = (undefined8 *)uVar16;
-        if ((uVar9 & 0xffffffff) != (uVar16 & 0xffffffff)) {
-          uVar8 = *puVar13;
-          *(undefined4 *)puVar13 = *(undefined4 *)puVar15;
-          *(undefined4 *)((int)puVar13 + 4) = *(undefined4 *)((int)puVar18 + -4);
-          *puVar15 = uVar8;
+      pMVar12 = (Material *)&pMVar3[-1].stateBitsTable;
+      if (pMVar1 == (MaterialMemory *)param_3) {
+        ppGVar13 = &pMVar15[-1].stateBitsTable;
+        if (pMVar12 != (Material *)ppGVar13) {
+          pGVar4 = pMVar3[-0xffffffff00000001].stateBitsTable;
+          ppcVar5 = pMVar3[-0xffffffff00000001].subMaterials;
+          *(GfxStateBits **)pMVar12 = *ppGVar13;
+          pMVar3[-1].subMaterials = pMVar15[-1].subMaterials;
+          pMVar15[-0xffffffff00000001].stateBitsTable = pGVar4;
+          pMVar15[-0xffffffff00000001].subMaterials = ppcVar5;
         }
-        uVar11 = uVar11 - 8;
-        puVar13 = (undefined8 *)uVar11;
-        uVar8 = *puVar15;
-        *(undefined4 *)puVar15 = *(undefined4 *)puVar13;
-        *(undefined4 *)((int)puVar18 + -4) = *(undefined4 *)((int)puVar13 + 4);
-        *puVar13 = uVar8;
-        uVar17 = uVar9;
+        pMVar11 = (MaterialMemory *)((int)pMVar14 + -8);
+        pGVar4 = pMVar15[-0xffffffff00000001].stateBitsTable;
+        ppcVar5 = pMVar15[-0xffffffff00000001].subMaterials;
+        *ppGVar13 = (GfxStateBits *)pMVar11->material;
+        pMVar15[-1].subMaterials = (char **)((MaterialMemory *)((int)pMVar14 + -8))->memory;
+        pMVar11->material = (Material *)pGVar4;
+        pMVar11->memory = (int)ppcVar5;
+        pMVar14 = (Material *)pMVar11;
+        pMVar15 = (Material *)ppGVar13;
       }
       else {
-        uVar8 = *puVar15;
-        *(undefined4 *)puVar15 = *(undefined4 *)puVar13;
-        *(undefined4 *)((int)puVar15 + 4) = *(undefined4 *)((int)uVar17 + -4);
-        *puVar13 = uVar8;
-        uVar17 = uVar9;
-        uVar14 = uVar14 + 8;
+        pMVar16 = pMVar1->material;
+        iVar6 = pMVar1->memory;
+        pMVar1->material = *(Material **)pMVar12;
+        pMVar1->memory = (int)pMVar3[-1].subMaterials;
+        pMVar3[-0xffffffff00000001].stateBitsTable = (GfxStateBits *)pMVar16;
+        pMVar3[-0xffffffff00000001].subMaterials = (char **)iVar6;
+        pMVar1 = pMVar1 + 1;
       }
     }
-  } while( true );
+    goto joined_r0x827555c0;
+  }
+  bVar7 = (*in_r6)((MaterialMemory *)pMVar15,pMVar1);
+  pMVar11 = (MaterialMemory *)pMVar14;
+  if (!bVar7) {
+    bVar7 = (*in_r6)(pMVar1,(MaterialMemory *)pMVar15);
+    if (bVar7) goto joined_r0x8275562c;
+    pMVar11 = (MaterialMemory *)((int)pMVar14 + 8);
+    uVar9._0_4_ = ((MaterialMemory *)pMVar14)->material;
+    uVar9._4_4_ = ((MaterialMemory *)pMVar14)->memory;
+    ((MaterialMemory *)pMVar14)->material = pMVar1->material;
+    ((MaterialMemory *)pMVar14)->memory = pMVar1->memory;
+    pMVar1->material = (Material *)(int)((ulonglong)uVar9 >> 0x20);
+    pMVar1->memory = uVar9._4_4_;
+  }
+  pMVar14 = (Material *)pMVar11;
+  pMVar1 = pMVar1 + 1;
+  goto joined_r0x827555c0;
 }
 
 
 // 82755800  _Sort<MaterialMemory_*,int,bool_(__cdecl*)(MaterialMemory_const_&,MaterialMemory_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3771)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void std::_Sort<MaterialMemory_*,int,bool_(__cdecl*)(MaterialMemory_const_&,MaterialMemory_const_&)>
@@ -1401,66 +1316,54 @@ void std::_Sort<MaterialMemory_*,int,bool_(__cdecl*)(MaterialMemory_const_&,Mate
                _func___cdecl_bool_MaterialMemory_ptr_MaterialMemory_ptr *param_4)
 
 {
-  MaterialMemory *pMVar1;
-  ulonglong uVar2;
-  int iVar4;
-  ulonglong uVar3;
-  ulonglong uVar5;
-  int iVar6;
-  MaterialMemory *pMVar7;
+  int iVar1;
+  uint uVar2;
+  Material *pMVar3;
   MaterialMemory local_40 [8];
   
-  uVar3 = (ulonglong)param_3;
-  uVar2 = (ulonglong)(int)param_2;
-  pMVar1 = (MaterialMemory *)__savegprlr_26(param_1);
-  pMVar7 = (MaterialMemory *)uVar2;
-  iVar4 = (int)pMVar7 - (int)pMVar1;
+  iVar1 = (int)param_2 - (int)param_1;
   do {
-    iVar4 = iVar4 >> 3;
-    if (iVar4 < 0x21) {
+    iVar1 = iVar1 >> 3;
+    if (iVar1 < 0x21) {
 LAB_827558b8:
-      if (1 < iVar4) {
+      if (1 < iVar1) {
         _Insertion_sort1<MaterialMemory_*,bool_(__cdecl*)(MaterialMemory_const_&,MaterialMemory_const_&),MaterialMemory>
-                  (pMVar1,pMVar7,param_4,(MaterialMemory *)0x0);
+                  (param_1,param_2,param_4,(MaterialMemory *)0x0);
       }
-      __restgprlr_26();
       return;
     }
-    pMVar7 = (MaterialMemory *)uVar2;
-    iVar6 = (int)uVar3;
-    if (iVar6 < 1) {
-      if (0x20 < iVar4) {
-        if (1 < iVar4) {
+    if (param_3 < 1) {
+      if (0x20 < iVar1) {
+        if (1 < iVar1) {
           _Make_heap<MaterialMemory_*,int,MaterialMemory,bool_(__cdecl*)(MaterialMemory_const_&,MaterialMemory_const_&)>
-                    (pMVar1,pMVar7,param_4,(int *)0x0,(MaterialMemory *)0x0);
+                    (param_1,param_2,param_4,(int *)0x0,(MaterialMemory *)0x0);
         }
         _Sort_heap<MaterialMemory_*,bool_(__cdecl*)(MaterialMemory_const_&,MaterialMemory_const_&)>
-                  (pMVar1,pMVar7,param_4);
-        __restgprlr_26();
+                  (param_1,param_2,param_4);
         return;
       }
       goto LAB_827558b8;
     }
     _Unguarded_partition<MaterialMemory_*,bool_(__cdecl*)(MaterialMemory_const_&,MaterialMemory_const_&)>
-              (local_40,pMVar1,(_func___cdecl_bool_MaterialMemory_ptr_MaterialMemory_ptr *)pMVar7);
-    iVar4 = local_40[0].memory;
-    uVar3 = (longlong)(iVar6 >> 1) + (ulonglong)(iVar6 < 0 && (uVar3 & 1) != 0);
-    uVar3 = (longlong)((int)uVar3 >> 1) + (ulonglong)((int)uVar3 < 0 && (uVar3 & 1) != 0) + uVar3;
-    uVar5 = ZEXT48(local_40[0].material);
-    if ((int)((int)local_40[0].material - (int)pMVar1 & 0xfffffff8U) <
-        (int)((int)pMVar7 - local_40[0].memory & 0xfffffff8U)) {
+              (local_40,param_1,(_func___cdecl_bool_MaterialMemory_ptr_MaterialMemory_ptr *)param_2)
+    ;
+    iVar1 = local_40[0].memory;
+    pMVar3 = local_40[0].material;
+    uVar2 = (param_3 >> 1) + (uint)(param_3 < 0 && (param_3 & 1U) != 0);
+    param_3 = ((int)uVar2 >> 1) + (uint)((int)uVar2 < 0 && (uVar2 & 1) != 0) + uVar2;
+    if ((int)((int)local_40[0].material - (int)param_1 & 0xfffffff8U) <
+        (int)((int)param_2 - local_40[0].memory & 0xfffffff8U)) {
       _Sort<MaterialMemory_*,int,bool_(__cdecl*)(MaterialMemory_const_&,MaterialMemory_const_&)>
-                (pMVar1,(MaterialMemory *)local_40[0].material,(int)uVar3,param_4);
-      uVar5 = uVar2;
-      pMVar1 = (MaterialMemory *)iVar4;
+                (param_1,(MaterialMemory *)local_40[0].material,param_3,param_4);
+      pMVar3 = (Material *)param_2;
+      param_1 = (MaterialMemory *)iVar1;
     }
     else {
       _Sort<MaterialMemory_*,int,bool_(__cdecl*)(MaterialMemory_const_&,MaterialMemory_const_&)>
-                ((MaterialMemory *)local_40[0].memory,pMVar7,(int)uVar3,param_4);
+                ((MaterialMemory *)local_40[0].memory,param_2,param_3,param_4);
     }
-    pMVar7 = (MaterialMemory *)uVar5;
-    iVar4 = (int)pMVar7 - (int)pMVar1;
-    uVar2 = uVar5;
+    iVar1 = (int)pMVar3 - (int)param_1;
+    param_2 = (MaterialMemory *)pMVar3;
   } while( true );
 }
 

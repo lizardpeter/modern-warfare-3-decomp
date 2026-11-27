@@ -2,39 +2,29 @@
 
 // 826A4848  Ragdoll_QuatMul  (ragdoll/ragdoll_quat.h:13)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void Ragdoll_QuatMul(float *param_1,float *param_2,float *param_3)
 
 {
   float fVar1;
   float fVar2;
-  float *pfVar3;
-  ulonglong uVar4;
-  ulonglong uVar5;
-  float *pfVar6;
-  ulonglong uVar7;
-  float *pfVar8;
   
-  uVar7 = (ulonglong)(int)param_3;
-  uVar5 = (ulonglong)(int)param_2;
-  uVar4 = __savegprlr_29(param_1);
-  if (((uVar4 & 0xffffffff) == (uVar7 & 0xffffffff)) ||
-     ((uVar5 & 0xffffffff) == (uVar7 & 0xffffffff))) {
+  if ((param_1 == param_3) || (param_2 == param_3)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ragdoll\\ragdoll_quat.h",0x11,0
                     ,"%s");
   }
-  pfVar3 = (float *)uVar4;
-  fVar1 = pfVar3[3];
-  pfVar6 = (float *)uVar5;
-  fVar2 = pfVar6[3];
-  pfVar8 = (float *)uVar7;
-  *pfVar8 = -(pfVar3[2] * pfVar6[1] - (pfVar6[2] * pfVar3[1] + *pfVar3 * fVar2 + *pfVar6 * fVar1));
-  pfVar8[1] = -(*pfVar3 * pfVar6[2] - (fVar1 * pfVar6[1] + pfVar3[2] * *pfVar6 + fVar2 * pfVar3[1]))
-  ;
-  pfVar8[2] = -(*pfVar6 * pfVar3[1] - (pfVar6[2] * fVar1 + pfVar3[2] * fVar2 + *pfVar3 * pfVar6[1]))
-  ;
-  pfVar8[3] = -(pfVar3[2] * pfVar6[2] -
-               -(pfVar3[1] * pfVar6[1] - (fVar2 * fVar1 - *pfVar3 * *pfVar6)));
-  __restgprlr_29();
+  fVar1 = param_1[3];
+  fVar2 = param_2[3];
+  *param_3 = -(param_1[2] * param_2[1] -
+              (param_2[2] * param_1[1] + *param_1 * fVar2 + *param_2 * fVar1));
+  param_3[1] = -(*param_1 * param_2[2] -
+                (fVar1 * param_2[1] + param_1[2] * *param_2 + fVar2 * param_1[1]));
+  param_3[2] = -(*param_2 * param_1[1] -
+                (param_2[2] * fVar1 + param_1[2] * fVar2 + *param_1 * param_2[1]));
+  param_3[3] = -(param_1[2] * param_2[2] -
+                -(param_1[1] * param_2[1] - (fVar2 * fVar1 - *param_1 * *param_2)));
   return;
 }
 
@@ -58,35 +48,31 @@ void Ragdoll_CopyMirrorQuat(float *param_1,bool param_2,float *param_3)
 
 // 826A4DE0  Ragdoll_CalcPoseForParts  (ragdoll/ragdoll_update.cpp:58)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 DObjAnimMat * Ragdoll_CalcPoseForParts(cpose_t *param_1,DObj *param_2,int *param_3)
 
 {
   uchar uVar1;
-  cpose_t *pcVar2;
-  DObj *pDVar3;
-  DObjAnimMat *pDVar4;
-  ulonglong uVar5;
+  DObjAnimMat *pDVar2;
   
-  uVar5 = (ulonglong)(int)param_2;
-  pcVar2 = (cpose_t *)__savegprlr_27(param_1);
-  if (pcVar2 == (cpose_t *)0x0) {
+  if (param_1 == (cpose_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ragdoll\\ragdoll_update.cpp",
                     0x42,0,"%s");
   }
-  if ((uVar5 & 0xffffffff) == 0) {
+  if (param_2 == (DObj *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ragdoll\\ragdoll_update.cpp",
                     0x43,0,"%s");
   }
-  pDVar3 = (DObj *)uVar5;
-  DObjLock(pDVar3);
-  uVar1 = pcVar2->isRagdoll;
-  pcVar2->isRagdoll = '\0';
-  pDVar4 = CG_DObjCalcPose(pcVar2,pDVar3,param_3);
-  pcVar2->isRagdoll = uVar1;
-  DObjUnlock(pDVar3);
-  CG_UsedDObjCalcPose(pcVar2);
-  pDVar4 = (DObjAnimMat *)__restgprlr_27(pDVar4);
-  return pDVar4;
+  DObjLock(param_2);
+  uVar1 = param_1->isRagdoll;
+  param_1->isRagdoll = '\0';
+  pDVar2 = CG_DObjCalcPose(param_1,param_2,param_3);
+  param_1->isRagdoll = uVar1;
+  DObjUnlock(param_2);
+  CG_UsedDObjCalcPose(param_1);
+  return pDVar2;
 }
 
 
@@ -112,24 +98,25 @@ void Ragdoll_QuatInverse(float *param_1,float *param_2)
 
 // 826A4E98  Ragdoll_GetDObjBaseBoneMatrix  (ragdoll/ragdoll_update.cpp:91)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void Ragdoll_GetDObjBaseBoneMatrix(DObj *param_1,uchar param_2,DObjAnimMat *param_3)
 
 {
-  DObj *pDVar1;
-  
-  pDVar1 = (DObj *)__savegprlr_29(param_1);
-  if (pDVar1 == (DObj *)0x0) {
+  if (param_1 == (DObj *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ragdoll\\ragdoll_update.cpp",
                     0x5c,0,"%s");
   }
-  DObjGetBasePoseMatrix(pDVar1,param_2,param_3);
-  __restgprlr_29();
+  DObjGetBasePoseMatrix(param_1,param_2,param_3);
   return;
 }
 
 
 // 826A4EF8  Ragdoll_GetDObjBaseBoneOrigin  (ragdoll/ragdoll_update.cpp:99)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 bool Ragdoll_GetDObjBaseBoneOrigin
@@ -137,33 +124,30 @@ bool Ragdoll_GetDObjBaseBoneOrigin
                uchar param_5,float *param_6)
 
 {
-  DObj *pDVar1;
-  undefined1 uVar2;
-  uchar uVar3;
-  float *pfVar4;
+  float fVar1;
   DObjAnimMat aDStack_70 [3];
   
-  pfVar4 = (float *)(int)(char)param_5;
-  uVar3 = (uchar)param_4;
-  pDVar1 = (DObj *)__savegprlr_24(param_1);
-  if (pDVar1 == (DObj *)0x0) {
+  if (param_1 == LOCAL_CLIENT_0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ragdoll\\ragdoll_update.cpp",
                     0x66,0,"%s");
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ragdoll\\ragdoll_update.cpp",
                     0x5c,0,"%s");
   }
-  DObjGetBasePoseMatrix(pDVar1,uVar3,aDStack_70);
-  Vec3Rotate(aDStack_70[0].trans,(float (*) [3])param_3,pfVar4);
-  *pfVar4 = (float)param_2->tree + *pfVar4;
-  pfVar4[1] = *(float *)&param_2->duplicateParts + pfVar4[1];
-  pfVar4[2] = *(float *)&param_2->duplicatePartsSize + pfVar4[2];
-  uVar2 = __restgprlr_24(1);
-  return (bool)uVar2;
+  DObjGetBasePoseMatrix((DObj *)param_1,(uchar)param_4,aDStack_70);
+  Vec3Rotate(aDStack_70[0].trans,(float (*) [3])param_3,(float *)(int)(char)param_5);
+  fVar1 = *(float *)((char)param_5 + 4);
+  *(float *)(int)(char)param_5 = (float)param_2->tree + *(float *)(int)(char)param_5;
+  *(float *)((char)param_5 + 4) = *(float *)&param_2->duplicateParts + fVar1;
+  *(float *)((char)param_5 + 8) =
+       *(float *)&param_2->duplicatePartsSize + *(float *)((char)param_5 + 8);
+  return true;
 }
 
 
 // 826A4FC8  Ragdoll_GetDObjBaseBoneOriginQuat  (ragdoll/ragdoll_update.cpp:114)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 bool Ragdoll_GetDObjBaseBoneOriginQuat
@@ -171,31 +155,26 @@ bool Ragdoll_GetDObjBaseBoneOriginQuat
                uchar param_5,float *param_6,float *param_7)
 
 {
-  DObj *pDVar1;
-  undefined1 uVar2;
-  uchar uVar3;
-  float *pfVar4;
+  float fVar1;
   float afStack_80 [4];
   DObjAnimMat aDStack_70 [3];
   
-  pfVar4 = (float *)(int)(char)param_5;
-  uVar3 = (uchar)param_4;
-  pDVar1 = (DObj *)__savegprlr_23(param_1);
-  if (pDVar1 == (DObj *)0x0) {
+  if (param_1 == LOCAL_CLIENT_0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ragdoll\\ragdoll_update.cpp",
                     0x76,0,"%s");
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ragdoll\\ragdoll_update.cpp",
                     0x5c,0,"%s");
   }
-  DObjGetBasePoseMatrix(pDVar1,uVar3,aDStack_70);
+  DObjGetBasePoseMatrix((DObj *)param_1,(uchar)param_4,aDStack_70);
   Ragdoll_Mat33ToQuat((float (*) [3])param_3,afStack_80);
   Ragdoll_QuatMul(afStack_80,aDStack_70[0].quat,param_6);
-  Vec3Rotate(aDStack_70[0].trans,(float (*) [3])param_3,pfVar4);
-  *pfVar4 = (float)param_2->tree + *pfVar4;
-  pfVar4[1] = *(float *)&param_2->duplicateParts + pfVar4[1];
-  pfVar4[2] = *(float *)&param_2->duplicatePartsSize + pfVar4[2];
-  uVar2 = __restgprlr_23(1);
-  return (bool)uVar2;
+  Vec3Rotate(aDStack_70[0].trans,(float (*) [3])param_3,(float *)(int)(char)param_5);
+  fVar1 = *(float *)((char)param_5 + 4);
+  *(float *)(int)(char)param_5 = (float)param_2->tree + *(float *)(int)(char)param_5;
+  *(float *)((char)param_5 + 4) = *(float *)&param_2->duplicateParts + fVar1;
+  *(float *)((char)param_5 + 8) =
+       *(float *)&param_2->duplicatePartsSize + *(float *)((char)param_5 + 8);
+  return true;
 }
 
 
@@ -246,6 +225,9 @@ void Ragdoll_PoseInvAxis(cpose_t *param_1,float (*param_2) [3])
 
 // 826A5130  Ragdoll_AnimMatToMat43  (ragdoll/ragdoll_update.cpp:144)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void Ragdoll_AnimMatToMat43(DObjAnimMat *param_1,float (*param_2) [3])
 
 {
@@ -257,28 +239,26 @@ void Ragdoll_AnimMatToMat43(DObjAnimMat *param_1,float (*param_2) [3])
   float fVar6;
   float fVar7;
   float fVar8;
-  float *pfVar9;
   
-  pfVar9 = (float *)__savegprlr_27(param_1);
-  if ((((((uint)*pfVar9 & 0x7f800000) == 0x7f800000) ||
-       (((uint)pfVar9[1] & 0x7f800000) == 0x7f800000)) ||
-      (((uint)pfVar9[2] & 0x7f800000) == 0x7f800000)) ||
-     (((uint)pfVar9[3] & 0x7f800000) == 0x7f800000)) {
+  if ((((((uint)param_1->quat[0] & 0x7f800000) == 0x7f800000) ||
+       (((uint)param_1->quat[1] & 0x7f800000) == 0x7f800000)) ||
+      (((uint)param_1->quat[2] & 0x7f800000) == 0x7f800000)) ||
+     (((uint)param_1->quat[3] & 0x7f800000) == 0x7f800000)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ragdoll\\../xanim/xanim_public.h"
                     ,0x205,0,"%s");
   }
-  if (((uint)pfVar9[7] & 0x7f800000) == 0x7f800000) {
+  if (((uint)param_1->transWeight & 0x7f800000) == 0x7f800000) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ragdoll\\../xanim/xanim_public.h"
                     ,0x206,0,"%s");
   }
-  fVar1 = pfVar9[2];
-  fVar2 = pfVar9[7];
-  fVar3 = pfVar9[1];
+  fVar1 = param_1->quat[2];
+  fVar2 = param_1->transWeight;
+  fVar3 = param_1->quat[1];
   fVar7 = fVar3 * fVar2;
-  fVar8 = *pfVar9 * fVar2;
-  fVar4 = pfVar9[3];
+  fVar8 = param_1->quat[0] * fVar2;
+  fVar4 = param_1->quat[3];
   fVar5 = fVar1 * fVar1 * fVar2;
-  fVar6 = *pfVar9 * fVar8;
+  fVar6 = param_1->quat[0] * fVar8;
   fVar2 = fVar4 * fVar1 * fVar2;
   (*param_2)[2] = fVar1 * fVar8 - fVar4 * fVar7;
   param_2[1][2] = fVar1 * fVar7 + fVar4 * fVar8;
@@ -289,16 +269,19 @@ void Ragdoll_AnimMatToMat43(DObjAnimMat *param_1,float (*param_2) [3])
   param_2[1][1] = 1.0 - (fVar5 + fVar6);
   param_2[2][1] = fVar1 * fVar7 - fVar4 * fVar8;
   param_2[2][2] = 1.0 - (fVar3 * fVar7 + fVar6);
-  param_2[3][0] = pfVar9[4];
-  param_2[3][1] = pfVar9[5];
-  param_2[3][2] = pfVar9[6];
-  __restgprlr_27();
+  param_2[3][0] = param_1->trans[0];
+  param_2[3][1] = param_1->trans[1];
+  param_2[3][2] = param_1->trans[2];
   return;
 }
 
 
 // 826A8488  Ragdoll_SnapshotBaseLerpBones  (ragdoll/ragdoll_update.cpp:151)
 
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 bool Ragdoll_SnapshotBaseLerpBones(RagdollBody *param_1,BoneOrientation *param_2)
@@ -316,31 +299,28 @@ bool Ragdoll_SnapshotBaseLerpBones(RagdollBody *param_1,BoneOrientation *param_2
   float fVar10;
   float fVar11;
   float fVar12;
-  float *pfVar13;
-  RagdollBody *pRVar14;
-  RagdollDef *pRVar15;
-  DObj *pDVar16;
-  cpose_t *pcVar17;
-  DObjAnimMat *pDVar18;
-  undefined1 uVar20;
+  RagdollDef *pRVar13;
+  DObj *pDVar14;
+  cpose_t *pcVar15;
+  DObjAnimMat *pDVar16;
+  BoneOrientation *pBVar17;
+  int *piVar18;
   BoneOrientation *pBVar19;
-  int *piVar21;
-  BoneOrientation *pBVar22;
-  LerpBone *pLVar23;
-  ulonglong uVar24;
-  ulonglong uVar25;
-  float *pfVar26;
-  uint uVar27;
-  LerpBone *pLVar29;
-  longlong lVar28;
-  DObjAnimMat *pDVar30;
+  LerpBone *pLVar20;
+  ulonglong uVar21;
+  ulonglong uVar22;
+  float *pfVar23;
+  uint uVar24;
+  LerpBone *pLVar25;
+  BoneOrientation *pBVar26;
+  DObjAnimMat *pDVar27;
+  double dVar28;
+  double dVar29;
+  double dVar30;
   double dVar31;
   double dVar32;
   double dVar33;
   double dVar34;
-  double dVar35;
-  double dVar36;
-  double dVar37;
   float local_240;
   float local_23c;
   float local_238;
@@ -381,18 +361,15 @@ bool Ragdoll_SnapshotBaseLerpBones(RagdollBody *param_1,BoneOrientation *param_2
   float afStack_130 [12];
   float afStack_100 [64];
   
-  lVar28 = (longlong)(int)param_2;
-  __savegprlr();
-  pRVar14 = (RagdollBody *)__savefpr_25();
-  pRVar15 = Ragdoll_BodyDef(pRVar14);
-  if (pRVar15 == (RagdollDef *)0x0) {
+  pRVar13 = Ragdoll_BodyDef(param_1);
+  if (pRVar13 == (RagdollDef *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ragdoll\\ragdoll_update.cpp",
                     0xb4,0,"%s");
   }
-  pDVar16 = Ragdoll_BodyDObj(pRVar14);
-  if ((pDVar16 != (DObj *)0x0) && (pcVar17 = Ragdoll_BodyPose(pRVar14), pcVar17 != (cpose_t *)0x0))
+  pDVar14 = Ragdoll_BodyDObj(param_1);
+  if ((pDVar14 != (DObj *)0x0) && (pcVar15 = Ragdoll_BodyPose(param_1), pcVar15 != (cpose_t *)0x0))
   {
-    pLVar23 = (pRVar14->state).lerpBones;
+    pLVar20 = (param_1->state).lerpBones;
     local_200[0] = 0;
     local_200[1] = 0;
     local_200[2] = 0;
@@ -400,164 +377,160 @@ bool Ragdoll_SnapshotBaseLerpBones(RagdollBody *param_1,BoneOrientation *param_2
     local_200[4] = 0;
     local_200[5] = 0;
     local_21c = "boneIdx != parentBoneIdx";
-    uVar24 = (ulonglong)(uint)pRVar15->numBaseLerpBones;
-    pLVar29 = pLVar23;
-    for (uVar25 = uVar24; uVar25 != 0; uVar25 = uVar25 - 1) {
-      bVar1 = pLVar29->animBone;
-      uVar27 = pLVar29->parentBone;
+    uVar21 = (ulonglong)(uint)pRVar13->numBaseLerpBones;
+    pLVar25 = pLVar20;
+    for (uVar22 = uVar21; uVar22 != 0; uVar22 = uVar22 - 1) {
+      bVar1 = pLVar25->animBone;
+      uVar24 = pLVar25->parentBone;
       uVar8 = bVar1 >> 3 & 0x1ffffffc;
-      uVar7 = pRVar14->numBones;
+      uVar7 = param_1->numBones;
       *(uint *)((int)local_200 + uVar8) =
            *(uint *)(&g_bitShift + (bVar1 & 0x1f) * 4) | *(uint *)((int)local_200 + uVar8);
-      if (uVar7 <= uVar27) {
+      if (uVar7 <= uVar24) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ragdoll\\ragdoll_update.cpp"
                         ,0xd0,0,"parentBoneNum doesn\'t index body->numBones\n\t%i not in [0, %i)");
       }
-      bVar2 = (pRVar14->state).bones[uVar27].animBones[0];
+      bVar2 = (param_1->state).bones[uVar24].animBones[0];
       if (bVar1 == bVar2) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ragdoll\\ragdoll_update.cpp"
                         ,0xd4,0,"%s");
       }
-      uVar27 = bVar2 >> 3 & 0x1ffffffc;
-      pLVar29 = pLVar29 + 1;
-      *(uint *)((int)local_200 + uVar27) =
-           *(uint *)(&g_bitShift + (bVar2 & 0x1f) * 4) | *(uint *)((int)local_200 + uVar27);
+      uVar24 = bVar2 >> 3 & 0x1ffffffc;
+      pLVar25 = pLVar25 + 1;
+      *(uint *)((int)local_200 + uVar24) =
+           *(uint *)(&g_bitShift + (bVar2 & 0x1f) * 4) | *(uint *)((int)local_200 + uVar24);
     }
-    pDVar18 = Ragdoll_CalcPoseForParts(pcVar17,pDVar16,(int *)local_200);
-    if (pDVar18 != (DObjAnimMat *)0x0) {
-      pBVar22 = (pRVar14->state).lerpBoneOffsets;
-      lVar28 = ((ulonglong)(uint)pRVar14->numBones & 0x7ffffff) * 0x20 + lVar28;
-      if (uVar24 != 0) {
-        dVar35 = 400.0;
-        piVar21 = &pRVar15->baseLerpBoneDefs[0].lerpTime;
-        dVar34 = 0.0;
-        dVar37 = 1.0;
-        pfVar26 = (pRVar14->state).lerpBoneOffsets[0].orientation + 2;
+    pDVar16 = Ragdoll_CalcPoseForParts(pcVar15,pDVar14,(int *)local_200);
+    if (pDVar16 != (DObjAnimMat *)0x0) {
+      pBVar19 = (param_1->state).lerpBoneOffsets;
+      pBVar26 = param_2 + param_1->numBones;
+      if (uVar21 != 0) {
+        dVar32 = 400.0;
+        piVar18 = &pRVar13->baseLerpBoneDefs[0].lerpTime;
+        dVar31 = 0.0;
+        dVar34 = 1.0;
+        pfVar23 = (param_1->state).lerpBoneOffsets[0].orientation + 2;
         do {
-          dVar36 = dVar37;
-          if (0 < *piVar21) {
-            local_198 = (longlong)*piVar21;
-            local_1a0 = (longlong)(pRVar14->state).msec;
-            dVar32 = (double)((float)local_1a0 / (float)local_198);
-            dVar31 = dVar37;
-            if ((float)(dVar32 - dVar37) < 0.0) {
-              dVar31 = dVar32;
+          dVar33 = dVar34;
+          if (0 < *piVar18) {
+            local_198 = (longlong)*piVar18;
+            local_1a0 = (longlong)(param_1->state).msec;
+            dVar29 = (double)((float)local_1a0 / (float)local_198);
+            dVar28 = dVar34;
+            if ((float)(dVar29 - dVar34) < 0.0) {
+              dVar28 = dVar29;
             }
-            dVar36 = dVar34;
-            if (-dVar32 < 0.0) {
-              dVar36 = dVar31;
+            dVar33 = dVar31;
+            if (-dVar29 < 0.0) {
+              dVar33 = dVar28;
             }
           }
-          uVar27 = pLVar23->parentBone;
-          bVar1 = pLVar23->animBone;
-          if ((uint)pRVar14->numBones <= uVar27) {
+          uVar24 = pLVar20->parentBone;
+          bVar1 = pLVar20->animBone;
+          if ((uint)param_1->numBones <= uVar24) {
             MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ragdoll\\ragdoll_update.cpp"
                             ,0xf8,0,
                             "parentBoneNum doesn\'t index body->numBones\n\t%i not in [0, %i)");
           }
-          pBVar19 = Ragdoll_BodyBoneOrientations(pRVar14);
-          pBVar19 = pBVar19 + uVar27;
-          uVar27 = (uint)(pRVar14->state).bones[uVar27].animBones[0];
-          if (bVar1 == uVar27) {
+          pBVar17 = Ragdoll_BodyBoneOrientations(param_1);
+          pBVar17 = pBVar17 + uVar24;
+          uVar24 = (uint)(param_1->state).bones[uVar24].animBones[0];
+          if (bVar1 == uVar24) {
             MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ragdoll\\ragdoll_update.cpp"
                             ,0xfd,0,"%s");
           }
-          pDVar30 = pDVar18 + uVar27;
-          local_224 = pDVar18[uVar27].quat[0];
+          pDVar27 = pDVar16 + uVar24;
+          local_224 = pDVar16[uVar24].quat[0];
           if ((((((uint)local_224 & 0x7f800000) == 0x7f800000) ||
-               (local_220 = pDVar30->quat[1], ((uint)local_220 & 0x7f800000) == 0x7f800000)) ||
-              (local_210 = pDVar30->quat[2], ((uint)local_210 & 0x7f800000) == 0x7f800000)) ||
-             (local_214 = pDVar30->quat[3], ((uint)local_214 & 0x7f800000) == 0x7f800000)) {
+               (local_220 = pDVar27->quat[1], ((uint)local_220 & 0x7f800000) == 0x7f800000)) ||
+              (local_210 = pDVar27->quat[2], ((uint)local_210 & 0x7f800000) == 0x7f800000)) ||
+             (local_214 = pDVar27->quat[3], ((uint)local_214 & 0x7f800000) == 0x7f800000)) {
             MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ragdoll\\../xanim/xanim_public.h"
                             ,0x26d,0,"%s");
           }
-          local_218 = pDVar30->transWeight;
+          local_218 = pDVar27->transWeight;
           if (((uint)local_218 & 0x7f800000) == 0x7f800000) {
             MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ragdoll\\../xanim/xanim_public.h"
                             ,0x26e,0,"%s");
           }
-          fVar3 = pDVar30->quat[2];
-          fVar4 = pDVar30->transWeight;
-          fVar5 = pDVar30->quat[1];
+          fVar3 = pDVar27->quat[2];
+          fVar4 = pDVar27->transWeight;
+          fVar5 = pDVar27->quat[1];
           fVar11 = fVar5 * fVar4;
-          fVar12 = pDVar30->quat[0] * fVar4;
-          fVar6 = pDVar30->quat[3];
+          fVar12 = pDVar27->quat[0] * fVar4;
+          fVar6 = pDVar27->quat[3];
           fVar9 = fVar3 * fVar3 * fVar4;
-          fVar10 = pDVar30->quat[0] * fVar12;
+          fVar10 = pDVar27->quat[0] * fVar12;
           local_1c4 = fVar6 * fVar3 * fVar4;
           local_1c8 = fVar6 * fVar11 + fVar3 * fVar12;
           local_1b8 = fVar3 * fVar12 - fVar6 * fVar11;
           local_1cc = fVar5 * fVar12 - local_1c4;
           local_1c4 = local_1c4 + fVar5 * fVar12;
           local_1bc = fVar3 * fVar11 - fVar6 * fVar12;
-          local_1d0 = (float)(dVar37 - (double)(fVar9 + fVar5 * fVar11));
-          local_1c0 = (float)(dVar37 - (double)(fVar9 + fVar10));
+          local_1d0 = (float)(dVar34 - (double)(fVar9 + fVar5 * fVar11));
+          local_1c0 = (float)(dVar34 - (double)(fVar9 + fVar10));
           local_1b4 = fVar3 * fVar11 + fVar6 * fVar12;
-          local_1b0 = (float)(dVar37 - (double)(fVar5 * fVar11 + fVar10));
-          local_1ac = -(local_1c4 * pDVar30->trans[1] +
-                       pDVar30->trans[0] * local_1d0 + local_1b8 * pDVar30->trans[2]);
-          local_1a8 = -(local_1c0 * pDVar30->trans[1] +
-                       pDVar30->trans[0] * local_1cc + local_1b4 * pDVar30->trans[2]);
-          local_1a4 = -(pDVar30->trans[0] * local_1c8 +
-                       local_1b0 * pDVar30->trans[2] + local_1bc * pDVar30->trans[1]);
-          Ragdoll_AnimMatToMat43(pDVar18 + bVar1,(float (*) [3])afStack_100);
+          local_1b0 = (float)(dVar34 - (double)(fVar5 * fVar11 + fVar10));
+          local_1ac = -(local_1c4 * pDVar27->trans[1] +
+                       pDVar27->trans[0] * local_1d0 + local_1b8 * pDVar27->trans[2]);
+          local_1a8 = -(local_1c0 * pDVar27->trans[1] +
+                       pDVar27->trans[0] * local_1cc + local_1b4 * pDVar27->trans[2]);
+          local_1a4 = -(pDVar27->trans[0] * local_1c8 +
+                       local_1b0 * pDVar27->trans[2] + local_1bc * pDVar27->trans[1]);
+          Ragdoll_AnimMatToMat43(pDVar16 + bVar1,(float (*) [3])afStack_100);
           MatrixMultiply43((float (*) [3])afStack_100,(float (*) [3])&local_1d0,
                            (float (*) [3])afStack_190);
           AxisToQuat((float (*) [3])afStack_190,&local_1e0);
-          dVar31 = (double)local_16c;
-          dVar33 = (double)local_168;
-          dVar32 = (double)local_164;
-          if ((double)SQRT((float)(dVar32 * dVar32 +
-                                  (double)(float)(dVar33 * dVar33 + (double)(float)(dVar31 * dVar31)
-                                                 ))) <= dVar35) {
-            local_240 = (float)((double)(float)((double)pfVar26[-2] - (double)local_1e0) * dVar36 +
+          dVar28 = (double)local_16c;
+          dVar30 = (double)local_168;
+          dVar29 = (double)local_164;
+          if ((double)SQRT((float)(dVar29 * dVar29 +
+                                  (double)(float)(dVar30 * dVar30 + (double)(float)(dVar28 * dVar28)
+                                                 ))) <= dVar32) {
+            local_240 = (float)((double)(float)((double)pfVar23[-2] - (double)local_1e0) * dVar33 +
                                (double)local_1e0);
-            local_23c = (float)((double)(float)((double)pfVar26[-1] - (double)local_1dc) * dVar36 +
+            local_23c = (float)((double)(float)((double)pfVar23[-1] - (double)local_1dc) * dVar33 +
                                (double)local_1dc);
-            local_238 = (float)((double)(float)((double)*pfVar26 - (double)local_1d8) * dVar36 +
+            local_238 = (float)((double)(float)((double)*pfVar23 - (double)local_1d8) * dVar33 +
                                (double)local_1d8);
-            local_234 = (float)((double)(float)((double)pfVar26[1] - (double)local_1d4) * dVar36 +
+            local_234 = (float)((double)(float)((double)pfVar23[1] - (double)local_1d4) * dVar33 +
                                (double)local_1d4);
             Vec4Normalize(&local_240);
-            local_230 = (float)((double)(float)((double)pBVar22->origin[0] - dVar31) * dVar36 +
-                               dVar31);
-            local_22c = (float)((double)(float)((double)pfVar26[-5] - dVar33) * dVar36 + dVar33);
-            local_228 = (float)((double)(float)((double)pfVar26[-4] - dVar32) * dVar36 + dVar32);
+            local_230 = (float)((double)(float)((double)pBVar19->origin[0] - dVar28) * dVar33 +
+                               dVar28);
+            local_22c = (float)((double)(float)((double)pfVar23[-5] - dVar30) * dVar33 + dVar30);
+            local_228 = (float)((double)(float)((double)pfVar23[-4] - dVar29) * dVar33 + dVar29);
           }
           else {
-            local_240 = pfVar26[-2];
-            local_23c = pfVar26[-1];
-            local_238 = *pfVar26;
-            local_234 = pfVar26[1];
-            local_230 = pBVar22->origin[0];
-            local_22c = pfVar26[-5];
-            local_228 = pfVar26[-4];
+            local_240 = pfVar23[-2];
+            local_23c = pfVar23[-1];
+            local_238 = *pfVar23;
+            local_234 = pfVar23[1];
+            local_230 = pBVar19->origin[0];
+            local_22c = pfVar23[-5];
+            local_228 = pfVar23[-4];
           }
-          pfVar13 = (float *)lVar28;
-          Ragdoll_QuatMul(pBVar19->orientation,&local_240,pfVar13 + 4);
-          QuatToAxis(pBVar19->orientation,(float (*) [3])afStack_130);
+          Ragdoll_QuatMul(pBVar17->orientation,&local_240,pBVar26->orientation);
+          QuatToAxis(pBVar17->orientation,(float (*) [3])afStack_130);
           AxisTranspose((float (*) [3])afStack_130,(float (*) [3])afStack_160);
-          Vec3Rotate(&local_230,(float (*) [3])afStack_160,pfVar13);
-          uVar24 = uVar24 - 1;
-          *pfVar13 = pBVar19->origin[0] + *pfVar13;
-          piVar21 = piVar21 + 8;
-          pLVar23 = pLVar23 + 1;
-          pfVar13[1] = pBVar19->origin[1] + pfVar13[1];
-          pBVar22 = pBVar22 + 1;
-          pfVar13[2] = pBVar19->origin[2] + pfVar13[2];
-          pfVar26 = pfVar26 + 8;
-          lVar28 = lVar28 + 0x20;
-        } while (uVar24 != 0);
+          Vec3Rotate(&local_230,(float (*) [3])afStack_160,pBVar26->origin);
+          uVar21 = uVar21 - 1;
+          fVar3 = pBVar26->origin[1];
+          pBVar26->origin[0] = pBVar17->origin[0] + pBVar26->origin[0];
+          piVar18 = piVar18 + 8;
+          pLVar20 = pLVar20 + 1;
+          pBVar26->origin[1] = pBVar17->origin[1] + fVar3;
+          pBVar19 = pBVar19 + 1;
+          pBVar26->origin[2] = pBVar17->origin[2] + pBVar26->origin[2];
+          pfVar23 = pfVar23 + 8;
+          pBVar26 = pBVar26 + 1;
+        } while (uVar21 != 0);
       }
-      uVar20 = __restfpr_25(1);
-      __restgprlr();
-      return (bool)uVar20;
+      return true;
     }
-    Ragdoll_BodyNewState(pRVar14,BS_DEAD);
+    Ragdoll_BodyNewState(param_1,BS_DEAD);
   }
-  uVar20 = __restfpr_25(0);
-  __restgprlr();
-  return (bool)uVar20;
+  return false;
 }
 
 
@@ -645,74 +618,67 @@ void Ragdoll_QuatToAxisAngle(float *param_1,float *param_2)
 
 // 826A8AA8  Ragdoll_SnapshotBonePositions  (ragdoll/ragdoll_update.cpp:292)
 
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PhysWorld": Some values do not have unique names */
 
 bool Ragdoll_SnapshotBonePositions(RagdollBody *param_1,BoneOrientation *param_2)
 
 {
-  undefined4 *puVar1;
-  RagdollBody *pRVar2;
-  bool bVar4;
-  undefined1 uVar5;
-  RagdollDef *pRVar3;
-  ulonglong uVar6;
-  int iVar7;
-  bool *pbVar8;
-  int *piVar9;
-  longlong lVar10;
+  bool bVar2;
+  RagdollDef *pRVar1;
+  int iVar3;
+  bool *pbVar4;
+  int *piVar5;
+  float *pfVar6;
   float local_70;
-  undefined4 local_6c;
-  undefined4 local_68;
-  undefined4 local_64;
+  float local_6c;
+  float local_68;
+  float local_64;
   
-  uVar6 = (ulonglong)(int)param_2;
-  pRVar2 = (RagdollBody *)__savegprlr_22(param_1);
-  if ((pRVar2 == (RagdollBody *)0x0) || ((uVar6 & 0xffffffff) == 0)) {
+  if ((param_1 == (RagdollBody *)0x0) || (param_2 == (BoneOrientation *)0x0)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ragdoll\\ragdoll_update.cpp",
                     300,0,"%s");
   }
-  bVar4 = Ragdoll_BodyHasPhysics(pRVar2);
-  if (!bVar4) {
-    uVar5 = __restgprlr_22(0);
-    return (bool)uVar5;
+  bVar2 = Ragdoll_BodyHasPhysics(param_1);
+  if (!bVar2) {
+    return false;
   }
-  pRVar3 = Ragdoll_BodyDef(pRVar2);
-  if (pRVar3 == (RagdollDef *)0x0) {
+  pRVar1 = Ragdoll_BodyDef(param_1);
+  if (pRVar1 == (RagdollDef *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ragdoll\\ragdoll_update.cpp",
                     0x132,0,"%s");
   }
-  iVar7 = 0;
-  if (0 < pRVar2->numBones) {
-    pbVar8 = &pRVar3->boneDefs[0].mirror;
-    piVar9 = &(pRVar2->state).bones[0].rigidBody;
-    lVar10 = uVar6 + 0x18;
+  iVar3 = 0;
+  if (0 < param_1->numBones) {
+    pbVar4 = &pRVar1->boneDefs[0].mirror;
+    piVar5 = &(param_1->state).bones[0].rigidBody;
+    pfVar6 = param_2->orientation + 2;
     do {
-      if (*piVar9 == 0) {
+      if (*piVar5 == 0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ragdoll\\ragdoll_update.cpp"
                         ,0x13a,0,"%s");
       }
-      puVar1 = (undefined4 *)lVar10;
       Phys_ObjGetInterpolatedState
-                (PHYS_WORLD_LAST_CLIENT_WORLD,*piVar9,(float *)(puVar1 + -6),&local_70);
-      if (*pbVar8 == false) {
-        puVar1[-2] = local_70;
-        puVar1[-1] = local_6c;
-        *puVar1 = local_68;
-        puVar1[1] = local_64;
+                (PHYS_WORLD_LAST_CLIENT_WORLD,*piVar5,(float *)(pfVar6 + -6),&local_70);
+      if (*pbVar4 == false) {
+        pfVar6[-2] = local_70;
+        pfVar6[-1] = local_6c;
+        *pfVar6 = local_68;
+        pfVar6[1] = local_64;
       }
       else {
-        Ragdoll_QuatMul(&local_70,quatZRot,(float *)(puVar1 + -2));
+        Ragdoll_QuatMul(&local_70,quatZRot,pfVar6 + -2);
       }
-      iVar7 = iVar7 + 1;
-      piVar9 = piVar9 + 4;
-      lVar10 = lVar10 + 0x20;
-      pbVar8 = pbVar8 + 0x50;
-    } while (iVar7 < pRVar2->numBones);
+      iVar3 = iVar3 + 1;
+      piVar5 = piVar5 + 4;
+      pfVar6 = pfVar6 + 8;
+      pbVar4 = pbVar4 + 0x50;
+    } while (iVar3 < param_1->numBones);
   }
-  bVar4 = Ragdoll_SnapshotBaseLerpBones(pRVar2,(BoneOrientation *)uVar6);
-  uVar5 = __restgprlr_22(bVar4);
-  return (bool)uVar5;
+  bVar2 = Ragdoll_SnapshotBaseLerpBones(param_1,param_2);
+  return bVar2;
 }
 
 
@@ -733,6 +699,8 @@ bool Ragdoll_BodyIdle(RagdollBody *param_1)
 
 // 826A8C28  Ragdoll_SnapshotAnimOrientations  (ragdoll/ragdoll_update.cpp:344)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -742,280 +710,273 @@ bool Ragdoll_SnapshotAnimOrientations(RagdollBody *param_1,BoneOrientation *para
 {
   uint uVar1;
   uint uVar2;
-  int iVar3;
-  RagdollBody *pRVar4;
-  RagdollDef *pRVar5;
-  DObj *pDVar6;
-  cpose_t *pcVar7;
-  DObjAnimMat *pDVar8;
-  cg_s *pcVar9;
-  undefined1 uVar10;
-  float *pfVar11;
-  Bone *pBVar12;
-  uchar *puVar13;
-  DObjAnimMat *pDVar14;
-  longlong lVar15;
-  ulonglong uVar16;
-  longlong lVar17;
-  ulonglong uVar18;
+  RagdollDef *pRVar3;
+  DObj *pDVar4;
+  cpose_t *pcVar5;
+  DObjAnimMat *pDVar6;
+  cg_s *pcVar7;
+  Bone *pBVar8;
+  float *pfVar9;
+  DObjAnimMat *pDVar10;
+  longlong lVar11;
+  float *pfVar12;
+  ulonglong uVar13;
+  ulonglong uVar14;
   uint local_50 [20];
   
-  lVar17 = (longlong)(int)param_2;
-  pRVar4 = (RagdollBody *)__savegprlr_26(param_1);
-  if (pRVar4 == (RagdollBody *)0x0) {
+  if (param_1 == (RagdollBody *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ragdoll\\ragdoll_update.cpp",
                     0x165,0,"%s");
   }
-  pRVar5 = Ragdoll_BodyDef(pRVar4);
-  pDVar6 = Ragdoll_BodyDObj(pRVar4);
-  pcVar7 = Ragdoll_BodyPose(pRVar4);
-  if (((pRVar5 != (RagdollDef *)0x0) && (pDVar6 != (DObj *)0x0)) && (pcVar7 != (cpose_t *)0x0)) {
-    uVar1 = pRVar4->numBones;
-    uVar16 = (ulonglong)uVar1;
-    pBVar12 = (pRVar4->state).bones;
+  pRVar3 = Ragdoll_BodyDef(param_1);
+  pDVar4 = Ragdoll_BodyDObj(param_1);
+  pcVar5 = Ragdoll_BodyPose(param_1);
+  if (((pRVar3 != (RagdollDef *)0x0) && (pDVar4 != (DObj *)0x0)) && (pcVar5 != (cpose_t *)0x0)) {
+    uVar1 = param_1->numBones;
+    uVar13 = (ulonglong)uVar1;
+    pBVar8 = (param_1->state).bones;
     local_50[0] = 0;
     local_50[1] = 0;
     local_50[2] = 0;
     local_50[3] = 0;
     local_50[4] = 0;
     local_50[5] = 0;
-    if (uVar16 != 0) {
-      pfVar11 = (pRVar4->state).lerpBoneOffsets[8].orientation + 1;
-      uVar18 = uVar16;
+    if (uVar13 != 0) {
+      pfVar9 = (param_1->state).lerpBoneOffsets[8].orientation + 1;
+      uVar14 = uVar13;
       do {
-        pfVar11 = pfVar11 + 4;
-        uVar2 = *(byte *)pfVar11 >> 3 & 0x1ffffffc;
+        pfVar9 = pfVar9 + 4;
+        uVar2 = *(byte *)pfVar9 >> 3 & 0x1ffffffc;
         *(uint *)((int)local_50 + uVar2) =
-             *(uint *)(&g_bitShift + (*(byte *)pfVar11 & 0x1f) * 4) |
+             *(uint *)(&g_bitShift + (*(byte *)pfVar9 & 0x1f) * 4) |
              *(uint *)((int)local_50 + uVar2);
-        uVar18 = uVar18 - 1;
-      } while (uVar18 != 0);
+        uVar14 = uVar14 - 1;
+      } while (uVar14 != 0);
     }
-    pDVar8 = Ragdoll_CalcPoseForParts(pcVar7,pDVar6,(int *)local_50);
-    if (pDVar8 != (DObjAnimMat *)0x0) {
-      pcVar9 = CG_GetLocalClientGlobals(pRVar4->localClientNum);
-      uVar18 = 0;
+    pDVar6 = Ragdoll_CalcPoseForParts(pcVar5,pDVar4,(int *)local_50);
+    if (pDVar6 != (DObjAnimMat *)0x0) {
+      pcVar7 = CG_GetLocalClientGlobals(param_1->localClientNum);
+      uVar14 = 0;
       if (3 < (int)uVar1) {
-        pfVar11 = (pcVar9->refdef).viewOffset;
-        lVar15 = lVar17 + -0x18;
+        pfVar12 = (pcVar7->refdef).viewOffset;
+        pfVar9 = param_2[-1].origin + 2;
         do {
-          uVar18 = uVar18 + 4;
-          pDVar14 = pDVar8 + pBVar12->animBones[0];
-          iVar3 = (int)lVar15;
-          *(float *)(iVar3 + 0x28) = pDVar14->quat[0];
-          *(float *)(iVar3 + 0x2c) = pDVar14->quat[1];
-          *(float *)(iVar3 + 0x30) = pDVar14->quat[2];
-          *(float *)(iVar3 + 0x34) = pDVar14->quat[3];
-          *(float *)lVar17 = *pfVar11 + pDVar14->trans[0];
-          *(float *)(iVar3 + 0x1c) = pDVar14->trans[1] + (pcVar9->refdef).viewOffset[1];
-          *(float *)(iVar3 + 0x20) = pDVar14->trans[2] + (pcVar9->refdef).viewOffset[2];
-          pDVar14 = pDVar8 + pBVar12[1].animBones[0];
-          *(float *)(iVar3 + 0x48) = pDVar14->quat[0];
-          *(float *)(iVar3 + 0x4c) = pDVar14->quat[1];
-          *(float *)(iVar3 + 0x50) = pDVar14->quat[2];
-          *(float *)(iVar3 + 0x54) = pDVar14->quat[3];
-          *(float *)(iVar3 + 0x38) = *pfVar11 + pDVar14->trans[0];
-          *(float *)(iVar3 + 0x3c) = pDVar14->trans[1] + (pcVar9->refdef).viewOffset[1];
-          *(float *)(iVar3 + 0x40) = pDVar14->trans[2] + (pcVar9->refdef).viewOffset[2];
-          pDVar14 = pDVar8 + pBVar12[2].animBones[0];
-          *(float *)(iVar3 + 0x68) = pDVar14->quat[0];
-          *(float *)(iVar3 + 0x6c) = pDVar14->quat[1];
-          *(float *)(iVar3 + 0x70) = pDVar14->quat[2];
-          *(float *)(iVar3 + 0x74) = pDVar14->quat[3];
-          *(float *)(iVar3 + 0x58) = *pfVar11 + pDVar14->trans[0];
-          *(float *)(iVar3 + 0x5c) = pDVar14->trans[1] + (pcVar9->refdef).viewOffset[1];
-          *(float *)(iVar3 + 0x60) = pDVar14->trans[2] + (pcVar9->refdef).viewOffset[2];
-          pDVar14 = pDVar8 + pBVar12[3].animBones[0];
-          *(float *)(iVar3 + 0x88) = pDVar14->quat[0];
-          *(float *)(iVar3 + 0x8c) = pDVar14->quat[1];
-          *(float *)(iVar3 + 0x90) = pDVar14->quat[2];
-          *(float *)(iVar3 + 0x94) = pDVar14->quat[3];
-          lVar17 = lVar17 + 0x80;
-          pBVar12 = pBVar12 + 4;
-          *(float *)(iVar3 + 0x78) = *pfVar11 + pDVar14->trans[0];
-          *(float *)(iVar3 + 0x7c) = pDVar14->trans[1] + (pcVar9->refdef).viewOffset[1];
-          lVar15 = lVar15 + 0x80;
-          *(float *)lVar15 = pDVar14->trans[2] + (pcVar9->refdef).viewOffset[2];
-        } while ((uVar18 & 0xffffffff) < (uVar16 - 3 & 0xffffffff));
+          uVar14 = uVar14 + 4;
+          pDVar10 = pDVar6 + pBVar8->animBones[0];
+          pfVar9[10] = pDVar10->quat[0];
+          pfVar9[0xb] = pDVar10->quat[1];
+          pfVar9[0xc] = pDVar10->quat[2];
+          pfVar9[0xd] = pDVar10->quat[3];
+          param_2->origin[0] = *pfVar12 + pDVar10->trans[0];
+          pfVar9[7] = pDVar10->trans[1] + (pcVar7->refdef).viewOffset[1];
+          pfVar9[8] = pDVar10->trans[2] + (pcVar7->refdef).viewOffset[2];
+          pDVar10 = pDVar6 + pBVar8[1].animBones[0];
+          pfVar9[0x12] = pDVar10->quat[0];
+          pfVar9[0x13] = pDVar10->quat[1];
+          pfVar9[0x14] = pDVar10->quat[2];
+          pfVar9[0x15] = pDVar10->quat[3];
+          pfVar9[0xe] = *pfVar12 + pDVar10->trans[0];
+          pfVar9[0xf] = pDVar10->trans[1] + (pcVar7->refdef).viewOffset[1];
+          pfVar9[0x10] = pDVar10->trans[2] + (pcVar7->refdef).viewOffset[2];
+          pDVar10 = pDVar6 + pBVar8[2].animBones[0];
+          pfVar9[0x1a] = pDVar10->quat[0];
+          pfVar9[0x1b] = pDVar10->quat[1];
+          pfVar9[0x1c] = pDVar10->quat[2];
+          pfVar9[0x1d] = pDVar10->quat[3];
+          pfVar9[0x16] = *pfVar12 + pDVar10->trans[0];
+          pfVar9[0x17] = pDVar10->trans[1] + (pcVar7->refdef).viewOffset[1];
+          pfVar9[0x18] = pDVar10->trans[2] + (pcVar7->refdef).viewOffset[2];
+          pDVar10 = pDVar6 + pBVar8[3].animBones[0];
+          pfVar9[0x22] = pDVar10->quat[0];
+          pfVar9[0x23] = pDVar10->quat[1];
+          pfVar9[0x24] = pDVar10->quat[2];
+          pfVar9[0x25] = pDVar10->quat[3];
+          param_2 = param_2 + 4;
+          pBVar8 = pBVar8 + 4;
+          pfVar9[0x1e] = *pfVar12 + pDVar10->trans[0];
+          pfVar9[0x1f] = pDVar10->trans[1] + (pcVar7->refdef).viewOffset[1];
+          pfVar9 = pfVar9 + 0x20;
+          *pfVar9 = pDVar10->trans[2] + (pcVar7->refdef).viewOffset[2];
+        } while ((uVar14 & 0xffffffff) < (uVar13 - 3 & 0xffffffff));
       }
-      if ((uVar18 & 0xffffffff) < (ulonglong)uVar1) {
-        lVar15 = uVar16 - uVar18;
-        puVar13 = pBVar12[-1].animBones;
-        lVar17 = lVar17 + -0x18;
+      if ((uVar14 & 0xffffffff) < (ulonglong)uVar1) {
+        lVar11 = uVar13 - uVar14;
+        pfVar9 = (float *)((int)(pBVar8 + -1) + 4);
+        pfVar12 = param_2[-1].origin + 2;
         do {
-          puVar13 = puVar13 + 0x10;
-          pDVar14 = pDVar8 + *puVar13;
-          iVar3 = (int)lVar17;
-          *(float *)(iVar3 + 0x28) = pDVar14->quat[0];
-          *(float *)(iVar3 + 0x2c) = pDVar14->quat[1];
-          *(float *)(iVar3 + 0x30) = pDVar14->quat[2];
-          *(float *)(iVar3 + 0x34) = pDVar14->quat[3];
-          *(float *)(iVar3 + 0x18) = (pcVar9->refdef).viewOffset[0] + pDVar14->trans[0];
-          *(float *)(iVar3 + 0x1c) = pDVar14->trans[1] + (pcVar9->refdef).viewOffset[1];
-          lVar17 = lVar17 + 0x20;
-          *(float *)lVar17 = pDVar14->trans[2] + (pcVar9->refdef).viewOffset[2];
-          lVar15 = lVar15 + -1;
-        } while (lVar15 != 0);
+          pfVar9 = pfVar9 + 4;
+          pDVar10 = pDVar6 + *(byte *)pfVar9;
+          pfVar12[10] = pDVar10->quat[0];
+          pfVar12[0xb] = pDVar10->quat[1];
+          pfVar12[0xc] = pDVar10->quat[2];
+          pfVar12[0xd] = pDVar10->quat[3];
+          pfVar12[6] = (pcVar7->refdef).viewOffset[0] + pDVar10->trans[0];
+          pfVar12[7] = pDVar10->trans[1] + (pcVar7->refdef).viewOffset[1];
+          pfVar12 = pfVar12 + 8;
+          *pfVar12 = pDVar10->trans[2] + (pcVar7->refdef).viewOffset[2];
+          lVar11 = lVar11 + -1;
+        } while (lVar11 != 0);
       }
-      uVar10 = __restgprlr_26(1);
-      return (bool)uVar10;
+      return true;
     }
   }
-  Ragdoll_BodyNewState(pRVar4,BS_DEAD);
-  uVar10 = __restgprlr_26(0);
-  return (bool)uVar10;
+  Ragdoll_BodyNewState(param_1,BS_DEAD);
+  return false;
 }
 
 
 // 826A52C8  Ragdoll_SetCurrentPoseFromSnapshot  (ragdoll/ragdoll_update.cpp:417)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void Ragdoll_SetCurrentPoseFromSnapshot(RagdollBody *param_1,BoneOrientation *param_2)
 
 {
-  undefined4 *puVar1;
-  RagdollBody *pRVar2;
-  RagdollDef *pRVar3;
-  int iVar4;
-  bool *pbVar5;
-  int *piVar6;
-  longlong lVar7;
+  RagdollDef *pRVar1;
+  int iVar2;
+  bool *pbVar3;
+  int *piVar4;
+  float *pfVar5;
   float local_70;
-  undefined4 local_6c;
-  undefined4 local_68;
-  undefined4 local_64;
+  float local_6c;
+  float local_68;
+  float local_64;
   float afStack_60 [24];
   
-  lVar7 = (longlong)(int)param_2;
-  pRVar2 = (RagdollBody *)__savegprlr_26(param_1);
-  if (pRVar2 == (RagdollBody *)0x0) {
+  if (param_1 == (RagdollBody *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ragdoll\\ragdoll_update.cpp",
                     0x1a9,0,"%s");
   }
-  pRVar3 = Ragdoll_BodyDef(pRVar2);
-  if (pRVar3 == (RagdollDef *)0x0) {
+  pRVar1 = Ragdoll_BodyDef(param_1);
+  if (pRVar1 == (RagdollDef *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ragdoll\\ragdoll_update.cpp",
                     0x1ac,0,"%s");
   }
-  iVar4 = 0;
-  if (0 < pRVar2->numBones) {
-    piVar6 = &(pRVar2->state).bones[0].rigidBody;
-    lVar7 = lVar7 + 0x18;
-    pbVar5 = &pRVar3->boneDefs[0].mirror;
+  iVar2 = 0;
+  if (0 < param_1->numBones) {
+    piVar4 = &(param_1->state).bones[0].rigidBody;
+    pfVar5 = param_2->orientation + 2;
+    pbVar3 = &pRVar1->boneDefs[0].mirror;
     do {
-      puVar1 = (undefined4 *)lVar7;
-      if (*pbVar5 == false) {
-        local_70 = (float)puVar1[-2];
-        local_6c = puVar1[-1];
-        local_68 = *puVar1;
-        local_64 = puVar1[1];
+      if (*pbVar3 == false) {
+        local_70 = pfVar5[-2];
+        local_6c = pfVar5[-1];
+        local_68 = *pfVar5;
+        local_64 = pfVar5[1];
       }
       else {
-        Ragdoll_QuatMul((float *)(puVar1 + -2),quatZRot,&local_70);
+        Ragdoll_QuatMul(pfVar5 + -2,quatZRot,&local_70);
       }
-      if (*piVar6 != 0) {
+      if (*piVar4 != 0) {
         QuatToAxis(&local_70,(float (*) [3])afStack_60);
-        Phys_ObjSetOrientation(*piVar6,(float *)(puVar1 + -6),(float (*) [3])afStack_60);
+        Phys_ObjSetOrientation(*piVar4,(float *)(pfVar5 + -6),(float (*) [3])afStack_60);
       }
-      iVar4 = iVar4 + 1;
-      piVar6 = piVar6 + 4;
-      pbVar5 = pbVar5 + 0x50;
-      lVar7 = lVar7 + 0x20;
-    } while (iVar4 < pRVar2->numBones);
+      iVar2 = iVar2 + 1;
+      piVar4 = piVar4 + 4;
+      pbVar3 = pbVar3 + 0x50;
+      pfVar5 = pfVar5 + 8;
+    } while (iVar2 < param_1->numBones);
   }
-  __restgprlr_26();
   return;
 }
 
 
 // 826A53F8  Ragdoll_ValidateBodyObj  (ragdoll/ragdoll_update.cpp:448)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 bool Ragdoll_ValidateBodyObj(RagdollBody *param_1)
 
 {
-  RagdollBody *pRVar1;
-  RagdollDef *pRVar2;
-  DObj *pDVar3;
-  undefined1 uVar5;
+  RagdollDef *pRVar1;
+  DObj *pDVar2;
+  int iVar3;
   int iVar4;
-  int iVar6;
-  uint *puVar7;
+  uint *puVar5;
   uchar local_40 [64];
   
-  pRVar1 = (RagdollBody *)__savegprlr_26(param_1);
-  if (pRVar1 == (RagdollBody *)0x0) {
+  if (param_1 == (RagdollBody *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ragdoll\\ragdoll_update.cpp",
                     0x1c8,0,"%s");
   }
-  pRVar2 = Ragdoll_BodyDef(pRVar1);
-  if (pRVar2 == (RagdollDef *)0x0) {
+  pRVar1 = Ragdoll_BodyDef(param_1);
+  if (pRVar1 == (RagdollDef *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ragdoll\\ragdoll_update.cpp",
                     0x1cb,0,"%s");
   }
-  pDVar3 = Ragdoll_BodyDObj(pRVar1);
-  if (pDVar3 == (DObj *)0x0) {
-LAB_826a5480:
-    uVar5 = __restgprlr_26(0);
-    return (bool)uVar5;
+  pDVar2 = Ragdoll_BodyDObj(param_1);
+  if (pDVar2 == (DObj *)0x0) {
+    return false;
   }
-  iVar6 = 0;
-  if (0 < pRVar1->numBones) {
-    puVar7 = pRVar2->boneDefs[0].animBoneNames + 1;
+  iVar4 = 0;
+  if (0 < param_1->numBones) {
+    puVar5 = pRVar1->boneDefs[0].animBoneNames + 1;
     do {
       local_40[0] = '\0';
-      iVar4 = DObjGetBoneIndex(pDVar3,puVar7[-1],local_40);
-      if ((iVar4 == 0) || (local_40[0] == 0xff)) goto LAB_826a5480;
+      iVar3 = DObjGetBoneIndex(pDVar2,puVar5[-1],local_40);
+      if (iVar3 == 0) {
+        return false;
+      }
+      if (local_40[0] == 0xff) {
+        return false;
+      }
       local_40[0] = '\0';
-      if (((*puVar7 != 0) && (iVar4 = DObjGetBoneIndex(pDVar3,*puVar7,local_40), iVar4 == 0)) ||
-         (local_40[0] == 0xff)) goto LAB_826a5480;
-      iVar6 = iVar6 + 1;
-      puVar7 = puVar7 + 0x14;
-    } while (iVar6 < pRVar1->numBones);
+      if ((*puVar5 != 0) && (iVar3 = DObjGetBoneIndex(pDVar2,*puVar5,local_40), iVar3 == 0)) {
+        return false;
+      }
+      if (local_40[0] == 0xff) {
+        return false;
+      }
+      iVar4 = iVar4 + 1;
+      puVar5 = puVar5 + 0x14;
+    } while (iVar4 < param_1->numBones);
   }
-  iVar6 = 0;
-  if (0 < pRVar1->numLerpBones) {
-    puVar7 = &pRVar2->baseLerpBoneDefs[0].animBoneName;
+  iVar4 = 0;
+  if (0 < param_1->numLerpBones) {
+    puVar5 = &pRVar1->baseLerpBoneDefs[0].animBoneName;
     do {
       local_40[0] = '\0';
-      iVar4 = DObjGetBoneIndex(pDVar3,*puVar7,local_40);
-      if ((iVar4 == 0) || (local_40[0] == 0xff)) goto LAB_826a5480;
-      iVar6 = iVar6 + 1;
-      puVar7 = puVar7 + 8;
-    } while (iVar6 < pRVar1->numLerpBones);
+      iVar3 = DObjGetBoneIndex(pDVar2,*puVar5,local_40);
+      if (iVar3 == 0) {
+        return false;
+      }
+      if (local_40[0] == 0xff) {
+        return false;
+      }
+      iVar4 = iVar4 + 1;
+      puVar5 = puVar5 + 8;
+    } while (iVar4 < param_1->numLerpBones);
   }
-  uVar5 = __restgprlr_26(1);
-  return (bool)uVar5;
+  return true;
 }
 
 
 // 826A5578  Ragdoll_CreatePhysObj  (ragdoll/ragdoll_update.cpp:490)
 
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PhysWorld": Some values do not have unique names */
 
 bool Ragdoll_CreatePhysObj(RagdollBody *param_1,BoneDef *param_2,Bone *param_3,float *param_4)
 
 {
-  int iVar1;
-  undefined4 *puVar2;
-  RagdollBody *pRVar3;
-  RagdollDef *pRVar4;
-  DObj *pDVar5;
-  int iVar6;
-  undefined1 uVar8;
-  cpose_t *pcVar7;
-  ulonglong uVar9;
-  ulonglong uVar10;
-  byte *pbVar11;
-  byte *pbVar12;
-  float *pfVar13;
+  PhysicsGeomType PVar1;
+  RagdollDef *pRVar2;
+  DObj *pDVar3;
+  int iVar4;
+  cpose_t *pcVar5;
+  uchar *puVar6;
+  uchar *puVar7;
+  float *pfVar8;
   float *in_r9;
   char in_RESERVE;
   byte in_cr0;
-  double dVar14;
+  double dVar9;
   undefined1 *local_1a0 [20];
   float local_150;
   float local_14c;
@@ -1038,63 +999,63 @@ bool Ragdoll_CreatePhysObj(RagdollBody *param_1,BoneDef *param_2,Bone *param_3,f
   PhysPreset local_e0;
   float afStack_90 [36];
   
-  uVar10 = (ulonglong)(int)param_3;
-  uVar9 = (ulonglong)(int)param_2;
-  pRVar3 = (RagdollBody *)__savegprlr_22(param_1);
   local_1a0[0] = (undefined1 *)register0x0000000c;
-  if (pRVar3 == (RagdollBody *)0x0) {
+  if (param_1 == (RagdollBody *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ragdoll\\ragdoll_update.cpp",
                     0x1f9,0,"%s");
   }
-  if ((uVar9 & 0xffffffff) == 0) {
+  if (param_2 == (BoneDef *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ragdoll\\ragdoll_update.cpp",
                     0x1fa,0,"%s");
   }
-  if ((uVar10 & 0xffffffff) == 0) {
+  if (param_3 == (Bone *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ragdoll\\ragdoll_update.cpp",
                     0x1fb,0,"%s");
   }
-  pRVar4 = Ragdoll_BodyDef(pRVar3);
-  if (pRVar4 == (RagdollDef *)0x0) {
+  pRVar2 = Ragdoll_BodyDef(param_1);
+  if (pRVar2 == (RagdollDef *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ragdoll\\ragdoll_update.cpp",
                     0x200,0,"%s");
   }
-  pDVar5 = Ragdoll_BodyDObj(pRVar3);
-  if (pDVar5 != (DObj *)0x0) {
-    if (pRVar4->bound == false) {
+  pDVar3 = Ragdoll_BodyDObj(param_1);
+  if (pDVar3 != (DObj *)0x0) {
+    if (pRVar2->bound == false) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ragdoll\\ragdoll_update.cpp",
                       0x207,0,"%s");
     }
-    iVar1 = (int)uVar9;
-    if (*(int *)(iVar1 + 0x28) == 0) {
+    if (param_2->animBoneNames[0] == 0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ragdoll\\ragdoll_update.cpp",
                       0x208,0,"%s");
     }
-    puVar2 = (undefined4 *)uVar10;
-    pbVar11 = (byte *)(puVar2 + 1);
-    *(undefined1 *)(puVar2 + 1) = 0;
-    *(undefined1 *)((int)puVar2 + 5) = 0;
-    pbVar12 = (byte *)((int)puVar2 + 5);
-    iVar6 = DObjGetBoneIndex(pDVar5,*(uint *)(iVar1 + 0x28),pbVar11);
-    if ((iVar6 != 0) && (*pbVar11 != 0xff)) {
-      if (*(uint *)(iVar1 + 0x2c) == 0) {
-        *pbVar12 = 0;
+    puVar6 = param_3->animBones;
+    param_3->animBones[0] = '\0';
+    param_3->animBones[1] = '\0';
+    puVar7 = param_3->animBones + 1;
+    iVar4 = DObjGetBoneIndex(pDVar3,param_2->animBoneNames[0],puVar6);
+    if ((iVar4 != 0) && (*puVar6 != 0xff)) {
+      if (param_2->animBoneNames[1] == 0) {
+        *puVar7 = 0;
       }
       else {
-        iVar6 = DObjGetBoneIndex(pDVar5,*(uint *)(iVar1 + 0x2c),pbVar12);
-        if ((iVar6 == 0) || (*pbVar11 == 0xff)) goto LAB_826a570c;
+        iVar4 = DObjGetBoneIndex(pDVar3,param_2->animBoneNames[1],puVar7);
+        if (iVar4 == 0) {
+          return false;
+        }
+        if (*puVar6 == 0xff) {
+          return false;
+        }
       }
-      pcVar7 = Ragdoll_BodyPose(pRVar3);
-      if (pcVar7 == (cpose_t *)0x0) {
+      pcVar5 = Ragdoll_BodyPose(param_1);
+      if (pcVar5 == (cpose_t *)0x0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ragdoll\\ragdoll_update.cpp"
                         ,0x21b,0,"%s");
       }
-      Ragdoll_PoseInvAxis(pcVar7,(float (*) [3])afStack_90);
-      pfVar13 = &local_110;
+      Ragdoll_PoseInvAxis(pcVar5,(float (*) [3])afStack_90);
+      pfVar8 = &local_110;
       Ragdoll_GetDObjBaseBoneOriginQuat
-                ((LocalClientNum_t)pDVar5,(DObj *)pcVar7->origin,afStack_90,
-                 (float (*) [3])(uint)*pbVar11,(char)local_1a0 + 'P',pfVar13,in_r9);
-      if (*(char *)(iVar1 + 0x34) == '\0') {
+                ((LocalClientNum_t)pDVar3,(DObj *)pcVar5->origin,afStack_90,
+                 (float (*) [3])(uint)*puVar6,(char)local_1a0 + 'P',pfVar8,in_r9);
+      if (param_2->mirror == false) {
         local_130 = local_110;
         local_12c = local_10c;
         local_128 = local_108;
@@ -1103,35 +1064,34 @@ bool Ragdoll_CreatePhysObj(RagdollBody *param_1,BoneDef *param_2,Bone *param_3,f
       else {
         Ragdoll_QuatMul(&local_110,quatZRot,&local_130);
       }
-      if (*pbVar12 == 0) {
+      if (*puVar7 == 0) {
         local_140 = local_150;
         local_13c = local_14c;
         local_138 = local_148;
       }
       else {
         Ragdoll_GetDObjBaseBoneOrigin
-                  ((LocalClientNum_t)pDVar5,(DObj *)pcVar7->origin,afStack_90,
-                   (float (*) [3])(uint)*pbVar12,(char)local_1a0 + '`',pfVar13);
+                  ((LocalClientNum_t)pDVar3,(DObj *)pcVar5->origin,afStack_90,
+                   (float (*) [3])(uint)*puVar7,(char)local_1a0 + '`',pfVar8);
       }
-      local_e0.friction = *(float *)(iVar1 + 0x40);
-      local_e0.mass = *(float *)(iVar1 + 0x3c);
-      dVar14 = 0.0;
+      local_e0.friction = param_2->friction;
+      local_e0.mass = param_2->mass;
+      dVar9 = 0.0;
       local_e0.type = 0x40;
       local_e0.name = "ragdoll_bone";
       local_e0.bounce = 0.0;
       local_e0.sndAliasPrefix = (char *)0x0;
       local_e0.bulletForceScale = 1.0;
-      *puVar2 = *(undefined4 *)(iVar1 + 0x44);
+      param_3->parentBone = param_2->parentBone;
       local_e0.explosiveForceScale = 1.0;
       Vec4Normalize(&local_130);
-      pfVar13 = vec3_origin;
-      iVar6 = Phys_ObjCreate(PHYS_WORLD_LAST_CLIENT_WORLD,&local_150,&local_130,vec3_origin,
+      pfVar8 = vec3_origin;
+      iVar4 = Phys_ObjCreate(PHYS_WORLD_LAST_CLIENT_WORLD,&local_150,&local_130,vec3_origin,
                              &local_e0);
-      puVar2[2] = iVar6;
-      if (iVar6 == 0) {
+      param_3->rigidBody = iVar4;
+      if (iVar4 == 0) {
         Com_PrintWarning(0xe,"Ragdoll: Failed to create rigid body\n");
-        uVar8 = __restgprlr_22(0);
-        return (bool)uVar8;
+        return false;
       }
       do {
         if (in_RESERVE != '\0') {
@@ -1144,68 +1104,60 @@ bool Ragdoll_CreatePhysObj(RagdollBody *param_1,BoneDef *param_2,Bone *param_3,f
       param_4[1] = local_14c;
       *param_4 = local_150;
       param_4[2] = local_148;
-      local_11c = (float)dVar14;
-      local_118 = (float)dVar14;
+      local_11c = (float)dVar9;
+      local_118 = (float)dVar9;
       local_120 = SQRT((local_140 - local_150) * (local_140 - local_150) +
                        (local_138 - local_148) * (local_138 - local_148) +
                        (local_13c - local_14c) * (local_13c - local_14c));
-      puVar2[3] = local_120;
-      iVar6 = *(int *)(iVar1 + 0x4c);
+      param_3->length = local_120;
+      PVar1 = param_2->geomType;
       local_120 = local_120 * 0.5;
-      if (iVar6 == 1) {
-        local_100.halfSize[1] = *(float *)(iVar1 + 0x30);
-        local_100.midPoint[1] = (float)dVar14;
-        local_100.midPoint[2] = (float)dVar14;
-        local_100.midPoint[0] = local_120;
-        local_100.halfSize[0] = local_120;
-        local_100.halfSize[2] = local_100.halfSize[1];
-        Phys_ObjAddGeomBox(PHYS_WORLD_LAST_CLIENT_WORLD,puVar2[2],&local_100,false);
-        uVar8 = __restgprlr_22(1);
-        return (bool)uVar8;
-      }
-      if (iVar6 == 5) {
-        Phys_ObjAddGeomCylinderDirection
-                  (PHYS_WORLD_LAST_CLIENT_WORLD,puVar2[2],0,*(float *)(iVar1 + 0x30),local_120,
-                   pfVar13,false);
-        uVar8 = __restgprlr_22(1);
-        return (bool)uVar8;
-      }
-      if (iVar6 == 6) {
+      if (PVar1 != PHYS_GEOM_BOX) {
+        if (PVar1 == PHYS_GEOM_CYLINDER) {
+          Phys_ObjAddGeomCylinderDirection
+                    (PHYS_WORLD_LAST_CLIENT_WORLD,param_3->rigidBody,0,param_2->radius,local_120,
+                     pfVar8,false);
+          return true;
+        }
+        if (PVar1 != PHYS_GEOM_CAPSULE) {
+          Com_PrintWarning(0xe,"Ragdoll: Unknown bone geom type %d\n");
+          return true;
+        }
         Phys_ObjAddGeomCapsule
-                  (PHYS_WORLD_LAST_CLIENT_WORLD,puVar2[2],0,*(float *)(iVar1 + 0x30),local_120,
-                   pfVar13,false);
-        uVar8 = __restgprlr_22(1);
-        return (bool)uVar8;
+                  (PHYS_WORLD_LAST_CLIENT_WORLD,param_3->rigidBody,0,param_2->radius,local_120,
+                   pfVar8,false);
+        return true;
       }
-      Com_PrintWarning(0xe,"Ragdoll: Unknown bone geom type %d\n");
-      uVar8 = __restgprlr_22(1);
-      return (bool)uVar8;
+      local_100.halfSize[1] = param_2->radius;
+      local_100.midPoint[1] = (float)dVar9;
+      local_100.midPoint[2] = (float)dVar9;
+      local_100.midPoint[0] = local_120;
+      local_100.halfSize[0] = local_120;
+      local_100.halfSize[2] = local_100.halfSize[1];
+      Phys_ObjAddGeomBox(PHYS_WORLD_LAST_CLIENT_WORLD,param_3->rigidBody,&local_100,false);
+      return true;
     }
   }
-LAB_826a570c:
-  uVar8 = __restgprlr_22(0);
-  return (bool)uVar8;
+  return false;
 }
 
 
 // 826A59F0  Ragdoll_CreatePhysJoint  (ragdoll/ragdoll_update.cpp:612)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PhysWorld": Some values do not have unique names */
 
 bool Ragdoll_CreatePhysJoint(RagdollBody *param_1,JointDef *param_2,Joint *param_3)
 
 {
-  int iVar1;
+  byte bVar1;
   int iVar2;
-  undefined1 uVar4;
-  int iVar3;
-  byte *pbVar5;
-  ulonglong uVar6;
-  int *piVar7;
-  ulonglong uVar8;
-  float *pfVar9;
-  double dVar10;
+  Bone *pBVar3;
+  JointDef *pJVar4;
+  float *pfVar5;
+  double dVar6;
   float *in_stack_fffffeb8;
   float local_f0;
   float local_ec;
@@ -1215,202 +1167,175 @@ bool Ragdoll_CreatePhysJoint(RagdollBody *param_1,JointDef *param_2,Joint *param
   float afStack_a0 [12];
   float afStack_70 [28];
   
-  uVar6 = (ulonglong)(int)param_3;
-  uVar8 = (ulonglong)(int)param_2;
-  iVar2 = __savegprlr_25(param_1);
-  if (iVar2 == 0) {
+  if (param_1 == (RagdollBody *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ragdoll\\ragdoll_update.cpp",
                     0x26e,0,"%s");
   }
-  if ((uVar8 & 0xffffffff) == 0) {
+  if (param_2 == (JointDef *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ragdoll\\ragdoll_update.cpp",
                     0x26f,0,"%s");
   }
-  if ((uVar6 & 0xffffffff) == 0) {
+  if (param_3 == (Joint *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ragdoll\\ragdoll_update.cpp",
                     0x270,0,"%s");
   }
-  pbVar5 = (byte *)uVar8;
-  if (*(uint *)(iVar2 + 0x18) <= (uint)*pbVar5) {
+  if ((uint)param_1->numBones <= (uint)param_2->bone) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ragdoll\\ragdoll_update.cpp",
                     0x271,0,"jointDef->bone doesn\'t index body->numBones\n\t%i not in [0, %i)");
   }
-  iVar1 = (uint)*pbVar5 * 0x10 + iVar2;
-  if (*(int *)(iVar1 + 0x81c) == -1) {
-    iVar2 = 0;
+  bVar1 = param_2->bone;
+  iVar2 = (param_1->state).bones[bVar1].parentBone;
+  if (iVar2 == -1) {
+    pBVar3 = (Bone *)0x0;
   }
   else {
-    iVar2 = *(int *)(iVar1 + 0x81c) * 0x10 + iVar2 + 0x81c;
+    pBVar3 = (param_1->state).bones + iVar2;
   }
-  if (*(int *)(iVar1 + 0x824) == 0) {
-    uVar4 = __restgprlr_25();
-    return (bool)uVar4;
+  iVar2 = (param_1->state).bones[bVar1].rigidBody;
+  if (iVar2 == 0) {
+    return false;
   }
-  Phys_ObjGetPosition(*(int *)(iVar1 + 0x824),afStack_e0,(float (*) [3])afStack_a0);
+  Phys_ObjGetPosition(iVar2,afStack_e0,(float (*) [3])afStack_a0);
   AxisTranspose((float (*) [3])afStack_a0,(float (*) [3])afStack_70);
-  dVar10 = 0.0;
-  if (*(int *)(pbVar5 + 8) == 0) {
-    pbVar5[0xc] = 0;
-    pbVar5[0xd] = 0;
-    pbVar5[0xe] = 0;
-    pbVar5[0xf] = 0;
-    pbVar5[0x10] = 0;
-    pbVar5[0x11] = 0;
-    pbVar5[0x12] = 0;
-    pbVar5[0x13] = 0;
-    pbVar5[0x14] = 0x3f;
-    pbVar5[0x15] = 0x80;
-    pbVar5[0x16] = 0;
-    pbVar5[0x17] = 0;
-    *(int *)(pbVar5 + 8) = *(int *)(pbVar5 + 8) + 1;
-    pbVar5[0x30] = 0xbf;
-    pbVar5[0x31] = 0xc9;
-    pbVar5[0x32] = 0xf;
-    pbVar5[0x33] = 0xdb;
-    pbVar5[0x48] = 0;
-    pbVar5[0x49] = 0;
-    pbVar5[0x4a] = 0;
-    pbVar5[0x4b] = 0;
-    pbVar5[0x3c] = 0x3f;
-    pbVar5[0x3d] = 0xc9;
-    pbVar5[0x3e] = 0xf;
-    pbVar5[0x3f] = 0xdb;
+  dVar6 = 0.0;
+  if (param_2->numLimitAxes == 0) {
+    param_2->limitAxes[0][0] = 0.0;
+    param_2->limitAxes[0][1] = 0.0;
+    param_2->limitAxes[0][2] = 1.0;
+    param_2->numLimitAxes = param_2->numLimitAxes + 1;
+    param_2->minAngles[0] = -1.5707964;
+    param_2->axisFriction[0] = 0.0;
+    param_2->maxAngles[0] = 1.5707964;
   }
-  iVar3 = 0;
-  if (0 < *(int *)(pbVar5 + 8)) {
-    pfVar9 = afStack_d0;
+  iVar2 = 0;
+  if (0 < param_2->numLimitAxes) {
+    pfVar5 = afStack_d0;
+    pJVar4 = param_2;
     do {
-      uVar8 = uVar8 + 0xc;
-      Vec3Rotate((float *)uVar8,(float (*) [3])afStack_70,pfVar9);
-      iVar3 = iVar3 + 1;
-      pfVar9 = pfVar9 + 3;
-    } while (iVar3 < *(int *)(pbVar5 + 8));
+      pJVar4 = (JointDef *)pJVar4->limitAxes;
+      Vec3Rotate((float *)pJVar4,(float (*) [3])afStack_70,pfVar5);
+      iVar2 = iVar2 + 1;
+      pfVar5 = pfVar5 + 3;
+    } while (iVar2 < param_2->numLimitAxes);
   }
-  local_f0 = *(float *)(pbVar5 + 0x48) * 15.0;
-  local_ec = *(float *)(pbVar5 + 0x4c) * 15.0;
-  local_e8 = *(float *)(pbVar5 + 0x50) * 15.0;
-  piVar7 = (int *)uVar6;
-  if (*(int *)(pbVar5 + 4) == 1) {
-    iVar2 = Phys_CreateHinge(PHYS_WORLD_LAST_CLIENT_WORLD,*(int *)(iVar1 + 0x824),
-                             *(int *)(iVar2 + 8),afStack_e0,afStack_d0,(float)dVar10,local_f0,
-                             *(float *)(pbVar5 + 0x30),*(float *)(pbVar5 + 0x3c));
-    *piVar7 = iVar2;
-    piVar7[1] = 0;
+  local_f0 = param_2->axisFriction[0] * 15.0;
+  local_ec = param_2->axisFriction[1] * 15.0;
+  local_e8 = param_2->axisFriction[2] * 15.0;
+  if (param_2->type == RAGDOLL_JOINT_HINGE) {
+    iVar2 = Phys_CreateHinge(PHYS_WORLD_LAST_CLIENT_WORLD,(param_1->state).bones[bVar1].rigidBody,
+                             pBVar3->rigidBody,afStack_e0,afStack_d0,(float)dVar6,local_f0,
+                             param_2->minAngles[0],param_2->maxAngles[0]);
+    param_3->joint = iVar2;
+    param_3->joint2 = 0;
   }
-  else if (*(int *)(pbVar5 + 4) == 2) {
-    iVar3 = Phys_CreateBallAndSocket
-                      (PHYS_WORLD_LAST_CLIENT_WORLD,*(int *)(iVar1 + 0x824),*(int *)(iVar2 + 8),
-                       afStack_e0);
-    *piVar7 = iVar3;
+  else if (param_2->type == RAGDOLL_JOINT_SWIVEL) {
+    iVar2 = Phys_CreateBallAndSocket
+                      (PHYS_WORLD_LAST_CLIENT_WORLD,(param_1->state).bones[bVar1].rigidBody,
+                       pBVar3->rigidBody,afStack_e0);
+    param_3->joint = iVar2;
     iVar2 = Phys_CreateAngularMotor
-                      (PHYS_WORLD_LAST_CLIENT_WORLD,*(int *)(iVar1 + 0x824),*(int *)(iVar2 + 8),
-                       *(int *)(pbVar5 + 8),(float (*) [3])afStack_d0,vec3_origin,&local_f0,
-                       (float *)(pbVar5 + 0x30),in_stack_fffffeb8);
-    piVar7[1] = iVar2;
-    uVar4 = __restgprlr_25(1);
-    return (bool)uVar4;
+                      (PHYS_WORLD_LAST_CLIENT_WORLD,(param_1->state).bones[bVar1].rigidBody,
+                       pBVar3->rigidBody,param_2->numLimitAxes,(float (*) [3])afStack_d0,vec3_origin
+                       ,&local_f0,param_2->minAngles,in_stack_fffffeb8);
+    param_3->joint2 = iVar2;
+    return true;
   }
-  uVar4 = __restgprlr_25(1);
-  return (bool)uVar4;
+  return true;
 }
 
 
 // 826A5C80  Ragdoll_CreatePhysJoints  (ragdoll/ragdoll_update.cpp:674)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 bool Ragdoll_CreatePhysJoints(RagdollBody *param_1)
 
 {
-  RagdollBody *pRVar1;
-  RagdollDef *pRVar2;
-  bool bVar3;
-  undefined1 uVar4;
-  int iVar5;
-  JointDef *pJVar6;
-  Joint *pJVar7;
+  RagdollDef *pRVar1;
+  bool bVar2;
+  int iVar3;
+  JointDef *pJVar4;
+  Joint *pJVar5;
   
-  pRVar1 = (RagdollBody *)__savegprlr_27(param_1);
-  if (pRVar1 == (RagdollBody *)0x0) {
+  if (param_1 == (RagdollBody *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ragdoll\\ragdoll_update.cpp",
                     0x2a6,0,"%s");
   }
-  pRVar2 = Ragdoll_BodyDef(pRVar1);
-  if (pRVar2 == (RagdollDef *)0x0) {
+  pRVar1 = Ragdoll_BodyDef(param_1);
+  if (pRVar1 == (RagdollDef *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ragdoll\\ragdoll_update.cpp",
                     0x2a9,0,"%s");
   }
-  iVar5 = 0;
-  if (0 < pRVar1->numJoints) {
-    pJVar6 = pRVar2->jointDefs;
-    pJVar7 = pRVar1->joints;
+  iVar3 = 0;
+  if (0 < param_1->numJoints) {
+    pJVar4 = pRVar1->jointDefs;
+    pJVar5 = param_1->joints;
     do {
-      bVar3 = Ragdoll_CreatePhysJoint(pRVar1,pJVar6,pJVar7);
-      if (!bVar3) {
-        uVar4 = __restgprlr_27(0);
-        return (bool)uVar4;
+      bVar2 = Ragdoll_CreatePhysJoint(param_1,pJVar4,pJVar5);
+      if (!bVar2) {
+        return false;
       }
-      iVar5 = iVar5 + 1;
-      pJVar7 = pJVar7 + 1;
-      pJVar6 = pJVar6 + 1;
-    } while (iVar5 < pRVar1->numJoints);
+      iVar3 = iVar3 + 1;
+      pJVar5 = pJVar5 + 1;
+      pJVar4 = pJVar4 + 1;
+    } while (iVar3 < param_1->numJoints);
   }
-  uVar4 = __restgprlr_27(1);
-  return (bool)uVar4;
+  return true;
 }
 
 
 // 826A5D58  Ragdoll_CreatePhysObjs  (ragdoll/ragdoll_update.cpp:692)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 bool Ragdoll_CreatePhysObjs(RagdollBody *param_1)
 
 {
-  RagdollBody *pRVar1;
-  RagdollDef *pRVar2;
-  bool bVar3;
-  undefined1 uVar4;
-  int iVar5;
-  BoneDef *pBVar6;
-  Bone *pBVar7;
-  float *pfVar8;
+  RagdollDef *pRVar1;
+  bool bVar2;
+  int iVar3;
+  BoneDef *pBVar4;
+  Bone *pBVar5;
+  float *pfVar6;
   float afStack_150 [84];
   
-  pRVar1 = (RagdollBody *)__savegprlr_27(param_1);
-  if (pRVar1 == (RagdollBody *)0x0) {
+  if (param_1 == (RagdollBody *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ragdoll\\ragdoll_update.cpp",
                     0x2b9,0,"%s");
   }
-  pRVar2 = Ragdoll_BodyDef(pRVar1);
-  if (pRVar2 == (RagdollDef *)0x0) {
+  pRVar1 = Ragdoll_BodyDef(param_1);
+  if (pRVar1 == (RagdollDef *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ragdoll\\ragdoll_update.cpp",
                     700,0,"%s");
   }
-  iVar5 = 0;
-  if (0 < pRVar1->numBones) {
-    pfVar8 = afStack_150;
-    pBVar6 = pRVar2->boneDefs;
-    pBVar7 = (pRVar1->state).bones;
+  iVar3 = 0;
+  if (0 < param_1->numBones) {
+    pfVar6 = afStack_150;
+    pBVar4 = pRVar1->boneDefs;
+    pBVar5 = (param_1->state).bones;
     do {
-      bVar3 = Ragdoll_CreatePhysObj(pRVar1,pBVar6,pBVar7,pfVar8);
-      if (!bVar3) {
-        uVar4 = __restgprlr_27(0);
-        return (bool)uVar4;
+      bVar2 = Ragdoll_CreatePhysObj(param_1,pBVar4,pBVar5,pfVar6);
+      if (!bVar2) {
+        return false;
       }
-      iVar5 = iVar5 + 1;
-      pfVar8 = pfVar8 + 3;
-      pBVar7 = pBVar7 + 1;
-      pBVar6 = pBVar6 + 1;
-    } while (iVar5 < pRVar1->numBones);
+      iVar3 = iVar3 + 1;
+      pfVar6 = pfVar6 + 3;
+      pBVar5 = pBVar5 + 1;
+      pBVar4 = pBVar4 + 1;
+    } while (iVar3 < param_1->numBones);
   }
-  uVar4 = __restgprlr_27(1);
-  return (bool)uVar4;
+  return true;
 }
 
 
 // 826A5E40  Ragdoll_DestroyPhysJoints  (ragdoll/ragdoll_update.cpp:713)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PhysWorld": Some values do not have unique names */
 
@@ -1418,36 +1343,35 @@ void Ragdoll_DestroyPhysJoints(RagdollBody *param_1)
 
 {
   int iVar1;
-  int iVar2;
-  int *piVar3;
+  int *piVar2;
   
-  iVar1 = __savegprlr_29(param_1);
-  if (iVar1 == 0) {
+  if (param_1 == (RagdollBody *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ragdoll\\ragdoll_update.cpp",
                     0x2cc,0,"%s");
   }
-  iVar2 = 0;
-  if (0 < *(int *)(iVar1 + 0x20)) {
-    piVar3 = (int *)(iVar1 + 0x28);
+  iVar1 = 0;
+  if (0 < param_1->numJoints) {
+    piVar2 = &param_1->joints[0].joint2;
     do {
-      if (piVar3[-1] != 0) {
-        Phys_JointDestroy(PHYS_WORLD_LAST_CLIENT_WORLD,piVar3[-1]);
+      if (((Joint *)(piVar2 + -1))->joint != 0) {
+        Phys_JointDestroy(PHYS_WORLD_LAST_CLIENT_WORLD,((Joint *)(piVar2 + -1))->joint);
       }
-      if (*piVar3 != 0) {
-        Phys_JointDestroy(PHYS_WORLD_LAST_CLIENT_WORLD,*piVar3);
+      if (*piVar2 != 0) {
+        Phys_JointDestroy(PHYS_WORLD_LAST_CLIENT_WORLD,*piVar2);
       }
-      iVar2 = iVar2 + 1;
-      piVar3 = piVar3 + 2;
-    } while (iVar2 < *(int *)(iVar1 + 0x20));
+      iVar1 = iVar1 + 1;
+      piVar2 = piVar2 + 2;
+    } while (iVar1 < param_1->numJoints);
   }
   memset();
-  __restgprlr_29();
   return;
 }
 
 
 // 826A5EE8  Ragdoll_DestroyPhysObjs  (ragdoll/ragdoll_update.cpp:731)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PhysWorld": Some values do not have unique names */
 
@@ -1455,23 +1379,21 @@ void Ragdoll_DestroyPhysObjs(RagdollBody *param_1)
 
 {
   int iVar1;
-  int iVar2;
-  int *piVar3;
+  int *piVar2;
   char in_RESERVE;
   byte in_cr0;
   
-  iVar1 = __savegprlr_27(param_1);
-  if (iVar1 == 0) {
+  if (param_1 == (RagdollBody *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ragdoll\\ragdoll_update.cpp",
                     0x2de,0,"%s");
   }
-  iVar2 = 0;
-  if (0 < *(int *)(iVar1 + 0x18)) {
-    piVar3 = (int *)(iVar1 + 0x824);
+  iVar1 = 0;
+  if (0 < param_1->numBones) {
+    piVar2 = &(param_1->state).bones[0].rigidBody;
     do {
-      if (*piVar3 != 0) {
-        Phys_ObjDestroy(PHYS_WORLD_LAST_CLIENT_WORLD,*piVar3);
-        *piVar3 = 0;
+      if (*piVar2 != 0) {
+        Phys_ObjDestroy(PHYS_WORLD_LAST_CLIENT_WORLD,*piVar2);
+        *piVar2 = 0;
         do {
           if (in_RESERVE != '\0') {
             g_ragdollPhysObjCount =
@@ -1481,17 +1403,18 @@ void Ragdoll_DestroyPhysObjs(RagdollBody *param_1)
           }
         } while (!(bool)(in_cr0 >> 1 & 1));
       }
-      iVar2 = iVar2 + 1;
-      piVar3 = piVar3 + 4;
-    } while (iVar2 < *(int *)(iVar1 + 0x18));
+      iVar1 = iVar1 + 1;
+      piVar2 = piVar2 + 4;
+    } while (iVar1 < param_1->numBones);
   }
-  __restgprlr_27();
   return;
 }
 
 
 // 826A5F98  Ragdoll_SnapshotBaseLerpOffsets  (ragdoll/ragdoll_update.cpp:751)
 
+/* WARNING: Function: __savegprlr_16 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_16 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void Ragdoll_SnapshotBaseLerpOffsets(RagdollBody *param_1)
@@ -1502,13 +1425,12 @@ void Ragdoll_SnapshotBaseLerpOffsets(RagdollBody *param_1)
   float fVar3;
   float fVar4;
   float fVar5;
-  RagdollBody *pRVar6;
-  RagdollDef *pRVar7;
-  DObj *pDVar8;
-  int iVar9;
-  LerpBone *pLVar10;
-  BoneOrientation *pBVar11;
-  double dVar12;
+  RagdollDef *pRVar6;
+  DObj *pDVar7;
+  int iVar8;
+  LerpBone *pLVar9;
+  BoneOrientation *pBVar10;
+  double dVar11;
   DObjAnimMat local_190;
   float local_170;
   float local_16c;
@@ -1534,44 +1456,43 @@ void Ragdoll_SnapshotBaseLerpOffsets(RagdollBody *param_1)
   DObjAnimMat DStack_f0;
   float afStack_d0 [52];
   
-  pRVar6 = (RagdollBody *)__savegprlr_16(param_1);
-  if (pRVar6 == (RagdollBody *)0x0) {
+  if (param_1 == (RagdollBody *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ragdoll\\ragdoll_update.cpp",
                     0x2fc,0,"%s");
   }
-  pRVar7 = Ragdoll_BodyDef(pRVar6);
-  if (pRVar7 == (RagdollDef *)0x0) {
+  pRVar6 = Ragdoll_BodyDef(param_1);
+  if (pRVar6 == (RagdollDef *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ragdoll\\ragdoll_update.cpp",
                     0x2ff,0,"%s");
   }
-  pDVar8 = Ragdoll_BodyDObj(pRVar6);
-  if (pDVar8 == (DObj *)0x0) {
+  pDVar7 = Ragdoll_BodyDObj(param_1);
+  if (pDVar7 == (DObj *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ragdoll\\ragdoll_update.cpp",
                     0x302,0,"%s");
   }
-  pLVar10 = (pRVar6->state).lerpBones;
-  pBVar11 = (pRVar6->state).lerpBoneOffsets;
-  iVar9 = 0;
-  if (0 < pRVar7->numBaseLerpBones) {
-    dVar12 = 1.0;
+  pLVar9 = (param_1->state).lerpBones;
+  pBVar10 = (param_1->state).lerpBoneOffsets;
+  iVar8 = 0;
+  if (0 < pRVar6->numBaseLerpBones) {
+    dVar11 = 1.0;
     do {
-      uVar2 = pLVar10->parentBone;
-      if ((uint)pRVar6->numBones <= uVar2) {
+      uVar2 = pLVar9->parentBone;
+      if ((uint)param_1->numBones <= uVar2) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ragdoll\\ragdoll_update.cpp"
                         ,0x30a,0,"parentIndex doesn\'t index body->numBones\n\t%i not in [0, %i)");
       }
-      uVar1 = pLVar10->animBone;
-      if (pDVar8 == (DObj *)0x0) {
+      uVar1 = pLVar9->animBone;
+      if (pDVar7 == (DObj *)0x0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ragdoll\\ragdoll_update.cpp"
                         ,0x5c,0,"%s");
       }
-      DObjGetBasePoseMatrix(pDVar8,uVar1,&DStack_f0);
-      uVar1 = (pRVar6->state).bones[uVar2].animBones[0];
-      if (pDVar8 == (DObj *)0x0) {
+      DObjGetBasePoseMatrix(pDVar7,uVar1,&DStack_f0);
+      uVar1 = (param_1->state).bones[uVar2].animBones[0];
+      if (pDVar7 == (DObj *)0x0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ragdoll\\ragdoll_update.cpp"
                         ,0x5c,0,"%s");
       }
-      DObjGetBasePoseMatrix(pDVar8,uVar1,&local_190);
+      DObjGetBasePoseMatrix(pDVar7,uVar1,&local_190);
       local_164 = local_190.quat[0];
       if (((uint)local_190.quat[0] & 0x7f800000) == 0x7f800000) {
 LAB_826a6188:
@@ -1601,9 +1522,9 @@ LAB_826a6188:
       local_138 = local_190.quat[2] * fVar5 - local_190.quat[3] * fVar3;
       local_148 = local_190.quat[3] * fVar3 + local_190.quat[2] * fVar5;
       local_14c = fVar5 * local_190.quat[1] - local_14c;
-      local_140 = (float)(dVar12 - (double)(fVar4 + local_190.quat[0] * fVar5));
-      local_130 = (float)(dVar12 - (double)(fVar3 * local_190.quat[1] + local_190.quat[0] * fVar5));
-      local_150 = (float)(dVar12 - (double)(fVar4 + fVar3 * local_190.quat[1]));
+      local_140 = (float)(dVar11 - (double)(fVar4 + local_190.quat[0] * fVar5));
+      local_130 = (float)(dVar11 - (double)(fVar3 * local_190.quat[1] + local_190.quat[0] * fVar5));
+      local_150 = (float)(dVar11 - (double)(fVar4 + fVar3 * local_190.quat[1]));
       local_12c = -(local_190.trans[0] * local_150 +
                    local_190.trans[2] * local_138 + local_190.trans[1] * local_144);
       local_124 = -(local_190.trans[0] * local_148 +
@@ -1613,152 +1534,144 @@ LAB_826a6188:
       Ragdoll_AnimMatToMat43(&DStack_f0,(float (*) [3])afStack_d0);
       MatrixMultiply43((float (*) [3])afStack_d0,(float (*) [3])&local_150,
                        (float (*) [3])afStack_120);
-      AxisToQuat((float (*) [3])afStack_120,pBVar11->orientation);
-      iVar9 = iVar9 + 1;
-      pLVar10 = pLVar10 + 1;
-      pBVar11->origin[0] = local_fc;
-      pBVar11->origin[1] = local_f8;
-      pBVar11->origin[2] = local_f4;
-      pBVar11 = pBVar11 + 1;
-    } while (iVar9 < pRVar7->numBaseLerpBones);
+      AxisToQuat((float (*) [3])afStack_120,pBVar10->orientation);
+      iVar8 = iVar8 + 1;
+      pLVar9 = pLVar9 + 1;
+      pBVar10->origin[0] = local_fc;
+      pBVar10->origin[1] = local_f8;
+      pBVar10->origin[2] = local_f4;
+      pBVar10 = pBVar10 + 1;
+    } while (iVar8 < pRVar6->numBaseLerpBones);
   }
-  __restgprlr_16();
   return;
 }
 
 
 // 826A8F68  Ragdoll_BodyCenterOfMass  (ragdoll/ragdoll_update.cpp:796)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void Ragdoll_BodyCenterOfMass(RagdollBody *param_1,float *param_2)
 
 {
   float fVar1;
-  RagdollBody *pRVar2;
-  RagdollDef *pRVar3;
-  bool bVar4;
-  int iVar5;
-  int *piVar6;
-  float *pfVar7;
-  double dVar8;
+  RagdollDef *pRVar2;
+  int iVar3;
+  int *piVar4;
+  float *pfVar5;
+  double dVar6;
   float local_50;
   float local_4c;
   float local_48;
   
-  pRVar2 = (RagdollBody *)__savegprlr_27(param_1);
-  if (pRVar2 == (RagdollBody *)0x0) {
+  if (param_1 == (RagdollBody *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ragdoll\\ragdoll_update.cpp",
                     0x324,0,"%s");
   }
-  dVar8 = 0.0;
+  dVar6 = 0.0;
   *param_2 = 0.0;
   param_2[1] = 0.0;
   param_2[2] = 0.0;
-  pRVar3 = Ragdoll_BodyDef(pRVar2);
-  iVar5 = 0;
-  if (0 < pRVar2->numBones) {
-    pfVar7 = &pRVar3->boneDefs[0].mass;
-    piVar6 = &(pRVar2->state).bones[0].rigidBody;
+  pRVar2 = Ragdoll_BodyDef(param_1);
+  iVar3 = 0;
+  if (0 < param_1->numBones) {
+    pfVar5 = &pRVar2->boneDefs[0].mass;
+    piVar4 = &(param_1->state).bones[0].rigidBody;
     do {
-      dVar8 = (double)(float)((double)*pfVar7 + dVar8);
-      if (*piVar6 != 0) {
-        Phys_ObjGetCenterOfMass(*piVar6,&local_50);
-        fVar1 = *pfVar7;
+      dVar6 = (double)(float)((double)*pfVar5 + dVar6);
+      if (*piVar4 != 0) {
+        Phys_ObjGetCenterOfMass(*piVar4,&local_50);
+        fVar1 = *pfVar5;
         *param_2 = local_50 * fVar1 + *param_2;
         param_2[1] = fVar1 * local_4c + param_2[1];
         param_2[2] = local_48 * fVar1 + param_2[2];
       }
-      iVar5 = iVar5 + 1;
-      piVar6 = piVar6 + 4;
-      pfVar7 = pfVar7 + 0x14;
-    } while (iVar5 < pRVar2->numBones);
+      iVar3 = iVar3 + 1;
+      piVar4 = piVar4 + 4;
+      pfVar5 = pfVar5 + 0x14;
+    } while (iVar3 < param_1->numBones);
   }
-  if (dVar8 <= 1e-06) {
-    bVar4 = Ragdoll_BodyNewState(pRVar2,BS_DEAD);
-    __restgprlr_27(bVar4);
+  if (dVar6 <= 1e-06) {
+    Ragdoll_BodyNewState(param_1,BS_DEAD);
     return;
   }
-  fVar1 = (float)(1.0 / dVar8);
+  fVar1 = (float)(1.0 / dVar6);
   *param_2 = *param_2 * fVar1;
   param_2[1] = param_2[1] * fVar1;
   param_2[2] = fVar1 * param_2[2];
-  __restgprlr_27();
   return;
 }
 
 
 // 826A90B8  Ragdoll_UpdateBodyContactCentroids  (ragdoll/ragdoll_update.cpp:834)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void Ragdoll_UpdateBodyContactCentroids(RagdollBody *param_1)
 
 {
-  RagdollBody *pRVar1;
-  int iVar2;
-  int *piVar3;
+  int iVar1;
+  int *piVar2;
   float local_30;
   float local_2c;
   float local_28;
   
-  pRVar1 = (RagdollBody *)__savegprlr_29(param_1);
-  Ragdoll_BodyCenterOfMass(pRVar1,&local_30);
-  iVar2 = 0;
-  (pRVar1->state).centroidPosition[0] = local_30;
-  (pRVar1->state).centroidPosition[1] = local_2c;
-  (pRVar1->state).centroidPosition[2] = local_28;
-  if (0 < pRVar1->numBones) {
-    piVar3 = &(pRVar1->state).bones[0].rigidBody;
+  Ragdoll_BodyCenterOfMass(param_1,&local_30);
+  iVar1 = 0;
+  (param_1->state).centroidPosition[0] = local_30;
+  (param_1->state).centroidPosition[1] = local_2c;
+  (param_1->state).centroidPosition[2] = local_28;
+  if (0 < param_1->numBones) {
+    piVar2 = &(param_1->state).bones[0].rigidBody;
     do {
-      if (*piVar3 != 0) {
-        Phys_ObjSetContactCentroid(*piVar3,&local_30);
+      if (*piVar2 != 0) {
+        Phys_ObjSetContactCentroid(*piVar2,&local_30);
       }
-      iVar2 = iVar2 + 1;
-      piVar3 = piVar3 + 4;
-    } while (iVar2 < pRVar1->numBones);
+      iVar1 = iVar1 + 1;
+      piVar2 = piVar2 + 4;
+    } while (iVar1 < param_1->numBones);
   }
-  __restgprlr_29();
   return;
 }
 
 
 // 826A6320  Ragdoll_CreateBodyPhysics  (ragdoll/ragdoll_update.cpp:852)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 bool Ragdoll_CreateBodyPhysics(RagdollBody *param_1)
 
 {
-  RagdollBody *pRVar1;
-  bool bVar2;
-  undefined1 uVar3;
+  bool bVar1;
   
-  pRVar1 = (RagdollBody *)__savegprlr_29(param_1);
-  if (pRVar1 == (RagdollBody *)0x0) {
+  if (param_1 == (RagdollBody *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ragdoll\\ragdoll_update.cpp",
                     0x355,0,"%s");
   }
-  if ((int)(pRVar1->state).state < 3) {
+  if ((int)(param_1->state).state < 3) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ragdoll\\ragdoll_update.cpp",
                     0x356,0,"%s");
   }
-  if (pRVar1->references < 1) {
+  if (param_1->references < 1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ragdoll\\ragdoll_update.cpp",
                     0x357,0,"%s");
   }
-  bVar2 = Ragdoll_CreatePhysObjs(pRVar1);
-  if (bVar2) {
-    bVar2 = Ragdoll_CreatePhysJoints(pRVar1);
-    if (bVar2) {
-      uVar3 = __restgprlr_29(1);
-      return (bool)uVar3;
+  bVar1 = Ragdoll_CreatePhysObjs(param_1);
+  if (bVar1) {
+    bVar1 = Ragdoll_CreatePhysJoints(param_1);
+    if (bVar1) {
+      return true;
     }
-    Ragdoll_DestroyPhysJoints(pRVar1);
+    Ragdoll_DestroyPhysJoints(param_1);
   }
-  Ragdoll_DestroyPhysObjs(pRVar1);
-  uVar3 = __restgprlr_29(0);
-  return (bool)uVar3;
+  Ragdoll_DestroyPhysObjs(param_1);
+  return false;
 }
 
 
@@ -1781,118 +1694,116 @@ void Ragdoll_RemoveBodyPhysics(RagdollBody *param_1)
 
 // 826A6470  Ragdoll_RebindBody  (ragdoll/ragdoll_update.cpp:884)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 bool Ragdoll_RebindBody(RagdollBody *param_1)
 
 {
-  RagdollBody *pRVar1;
-  bool bVar5;
-  undefined1 uVar6;
-  DObj *pDVar2;
-  RagdollDef *pRVar3;
-  int iVar4;
-  int iVar7;
-  PhysicsGeomType *pPVar8;
-  LerpBone *pLVar9;
+  bool bVar4;
+  DObj *pDVar1;
+  RagdollDef *pRVar2;
+  int iVar3;
+  int iVar5;
+  PhysicsGeomType *pPVar6;
+  LerpBone *pLVar7;
   
-  pRVar1 = (RagdollBody *)__savegprlr_24(param_1);
-  if (pRVar1 == (RagdollBody *)0x0) {
+  if (param_1 == (RagdollBody *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ragdoll\\ragdoll_update.cpp",
                     0x37a,0,"%s");
   }
-  bVar5 = Ragdoll_ValidateBodyObj(pRVar1);
-  if (bVar5) {
-    pDVar2 = Ragdoll_BodyDObj(pRVar1);
-    if (pDVar2 == (DObj *)0x0) {
+  bVar4 = Ragdoll_ValidateBodyObj(param_1);
+  if (bVar4) {
+    pDVar1 = Ragdoll_BodyDObj(param_1);
+    if (pDVar1 == (DObj *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ragdoll\\ragdoll_update.cpp",
                       0x380,0,"%s");
     }
-    pRVar3 = Ragdoll_BodyDef(pRVar1);
-    if (pRVar3 == (RagdollDef *)0x0) {
+    pRVar2 = Ragdoll_BodyDef(param_1);
+    if (pRVar2 == (RagdollDef *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ragdoll\\ragdoll_update.cpp",
                       899,0,"%s");
     }
-    pRVar1->numBones = pRVar3->numBones;
-    pRVar1->numLerpBones = pRVar3->numBaseLerpBones;
-    pRVar1->numJoints = pRVar3->numJoints;
-    Ragdoll_RemoveBodyPhysics(pRVar1);
-    bVar5 = Ragdoll_CreateBodyPhysics(pRVar1);
-    if (bVar5) {
-      pLVar9 = (pRVar1->state).lerpBones;
-      iVar7 = 0;
-      if (0 < pRVar3->numBaseLerpBones) {
-        pPVar8 = &pRVar3->boneDefs[0xd].geomType;
+    param_1->numBones = pRVar2->numBones;
+    param_1->numLerpBones = pRVar2->numBaseLerpBones;
+    param_1->numJoints = pRVar2->numJoints;
+    Ragdoll_RemoveBodyPhysics(param_1);
+    bVar4 = Ragdoll_CreateBodyPhysics(param_1);
+    if (bVar4) {
+      pLVar7 = (param_1->state).lerpBones;
+      iVar5 = 0;
+      if (0 < pRVar2->numBaseLerpBones) {
+        pPVar6 = &pRVar2->boneDefs[0xd].geomType;
         do {
-          pLVar9->animBone = '\0';
-          iVar4 = DObjGetBoneIndex(pDVar2,pPVar8[7],&pLVar9->animBone);
-          if ((iVar4 == 0) || (pLVar9->animBone == 0xff)) goto LAB_826a64c8;
-          pPVar8 = pPVar8 + 8;
-          iVar7 = iVar7 + 1;
-          pLVar9->parentBone = *pPVar8;
-          pLVar9 = pLVar9 + 1;
-        } while (iVar7 < pRVar3->numBaseLerpBones);
+          pLVar7->animBone = '\0';
+          iVar3 = DObjGetBoneIndex(pDVar1,pPVar6[7],&pLVar7->animBone);
+          if (iVar3 == 0) {
+            return false;
+          }
+          if (pLVar7->animBone == 0xff) {
+            return false;
+          }
+          pPVar6 = pPVar6 + 8;
+          iVar5 = iVar5 + 1;
+          pLVar7->parentBone = *pPVar6;
+          pLVar7 = pLVar7 + 1;
+        } while (iVar5 < pRVar2->numBaseLerpBones);
       }
-      Ragdoll_SnapshotBaseLerpOffsets(pRVar1);
-      uVar6 = __restgprlr_24(1);
-      return (bool)uVar6;
+      Ragdoll_SnapshotBaseLerpOffsets(param_1);
+      return true;
     }
   }
-LAB_826a64c8:
-  uVar6 = __restgprlr_24(0);
-  return (bool)uVar6;
+  return false;
 }
 
 
 // 826A65E0  Ragdoll_ValidatePrecalcBoneDef  (ragdoll/ragdoll_update.cpp:927)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 bool Ragdoll_ValidatePrecalcBoneDef(RagdollDef *param_1,BoneDef *param_2)
 
 {
-  int iVar1;
-  undefined1 uVar2;
-  ulonglong uVar3;
-  
-  uVar3 = (ulonglong)(int)param_2;
-  iVar1 = __savegprlr_29(param_1);
-  if (iVar1 == 0) {
+  if (param_1 == (RagdollDef *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ragdoll\\ragdoll_update.cpp",
                     0x3a0,0,"%s");
   }
-  if ((uVar3 & 0xffffffff) == 0) {
+  if (param_2 == (BoneDef *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ragdoll\\ragdoll_update.cpp",
                     0x3a1,0,"%s");
   }
-  uVar2 = __restgprlr_29(1e-06 <= ABS(*(float *)((int)uVar3 + 0x3c)));
-  return (bool)uVar2;
+  return 1e-06 <= ABS(param_2->mass);
 }
 
 
 // 826A6670  Ragdoll_ValidatePrecalcJointDef  (ragdoll/ragdoll_update.cpp:939)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 bool Ragdoll_ValidatePrecalcJointDef(RagdollDef *param_1,JointDef *param_2)
 
 {
-  int iVar1;
-  undefined1 uVar2;
-  ulonglong uVar3;
-  
-  uVar3 = (ulonglong)(int)param_2;
-  iVar1 = __savegprlr_29(param_1);
-  if (iVar1 == 0) {
+  if (param_1 == (RagdollDef *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ragdoll\\ragdoll_update.cpp",
                     0x3ac,0,"%s");
   }
-  if ((uVar3 & 0xffffffff) == 0) {
+  if (param_2 == (JointDef *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ragdoll\\ragdoll_update.cpp",
                     0x3ad,0,"%s");
   }
-  uVar2 = __restgprlr_29(1);
-  return (bool)uVar2;
+  return true;
 }
 
 
 // 826A66E8  Ragdoll_ClosestPointsTwoSegs  (ragdoll/ragdoll_update.cpp:950)
+
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 
 void Ragdoll_ClosestPointsTwoSegs
                (float (*param_1) [3],float (*param_2) [3],float *param_3,float *param_4,
@@ -1919,31 +1830,24 @@ void Ragdoll_ClosestPointsTwoSegs
   float fVar18;
   float fVar19;
   float fVar20;
-  float *pfVar21;
-  ulonglong uVar22;
-  ulonglong uVar23;
   
-  uVar23 = (ulonglong)(int)param_4;
-  uVar22 = (ulonglong)(int)param_3;
-  __savegprlr_25(param_1);
-  pfVar21 = (float *)__savefpr_27();
-  if ((uVar22 & 0xffffffff) == 0) {
+  if (param_3 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ragdoll\\ragdoll_update.cpp",
                     0x3c0,0,"%s");
   }
-  if ((uVar23 & 0xffffffff) == 0) {
+  if (param_4 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ragdoll\\ragdoll_update.cpp",
                     0x3c1,0,"%s");
   }
-  fVar1 = pfVar21[1] - (*param_2)[1];
-  fVar2 = pfVar21[4] - pfVar21[1];
+  fVar1 = (*param_1)[1] - (*param_2)[1];
+  fVar2 = param_1[1][1] - (*param_1)[1];
   fVar3 = param_2[1][1] - (*param_2)[1];
-  fVar4 = *pfVar21 - (*param_2)[0];
-  fVar5 = pfVar21[3] - *pfVar21;
+  fVar4 = (*param_1)[0] - (*param_2)[0];
+  fVar5 = param_1[1][0] - (*param_1)[0];
   fVar6 = param_2[1][0] - (*param_2)[0];
-  fVar7 = pfVar21[2] - (*param_2)[2];
+  fVar7 = (*param_1)[2] - (*param_2)[2];
   fVar9 = param_2[1][2] - (*param_2)[2];
-  fVar8 = pfVar21[5] - pfVar21[2];
+  fVar8 = param_1[1][2] - (*param_1)[2];
   fVar15 = fVar8 * fVar8 + fVar5 * fVar5 + fVar2 * fVar2;
   fVar13 = fVar9 * fVar8 + fVar6 * fVar5 + fVar3 * fVar2;
   fVar14 = fVar7 * fVar8 + fVar4 * fVar5 + fVar1 * fVar2;
@@ -1990,13 +1894,11 @@ LAB_826a68b4:
   if (0.0001 <= ABS(fVar16)) {
     fVar12 = fVar16 / fVar18;
   }
-  *(float *)uVar22 = fVar10;
-  *(float *)uVar23 = fVar12;
+  *param_3 = fVar10;
+  *param_4 = fVar12;
   param_5[1] = -(fVar3 * fVar12 - (fVar2 * fVar10 + fVar1));
   *param_5 = -(fVar6 * fVar12 - (fVar5 * fVar10 + fVar4));
   param_5[2] = -(fVar9 * fVar12 - (fVar8 * fVar10 + fVar7));
-  __restfpr_27();
-  __restgprlr_25();
   return;
 }
 
@@ -2022,32 +1924,32 @@ void Ragdoll_GenBoneCapsuleSegment(Bone *param_1,float (*param_2) [3])
 
 // 826A69A0  Ragdoll_GenBoneCapsuleSegments  (ragdoll/ragdoll_update.cpp:1069)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void Ragdoll_GenBoneCapsuleSegments
                (RagdollBody *param_1,uchar *param_2,float (*param_3) [3],float (*param_4) [3])
 
 {
-  int iVar1;
-  
-  iVar1 = __savegprlr_27(param_1);
-  if (*(uint *)(iVar1 + 0x18) <= (uint)*param_2) {
+  if ((uint)param_1->numBones <= (uint)*param_2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ragdoll\\ragdoll_update.cpp",
                     0x42e,0,"bones[0] doesn\'t index body->numBones\n\t%i not in [0, %i)");
   }
-  if (*(uint *)(iVar1 + 0x18) <= (uint)param_2[1]) {
+  if ((uint)param_1->numBones <= (uint)param_2[1]) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ragdoll\\ragdoll_update.cpp",
                     0x42f,0,"bones[1] doesn\'t index body->numBones\n\t%i not in [0, %i)");
   }
-  Ragdoll_GenBoneCapsuleSegment((Bone *)((uint)*param_2 * 0x10 + iVar1 + 0x81c),param_3);
-  Ragdoll_GenBoneCapsuleSegment((Bone *)((uint)param_2[1] * 0x10 + iVar1 + 0x81c),param_4);
-  __restgprlr_27();
+  Ragdoll_GenBoneCapsuleSegment((param_1->state).bones + *param_2,param_3);
+  Ragdoll_GenBoneCapsuleSegment((param_1->state).bones + param_2[1],param_4);
   return;
 }
 
 
 // 826A6A50  Ragdoll_AddSelfContact  (ragdoll/ragdoll_update.cpp:1079)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PhysWorld": Some values do not have unique names */
 
@@ -2057,64 +1959,56 @@ void Ragdoll_AddSelfContact
 
 {
   float fVar1;
-  byte bVar2;
-  float fVar3;
-  float fVar4;
-  float fVar5;
-  RagdollBody *pRVar6;
-  RagdollDef *pRVar7;
-  longlong lVar8;
+  float fVar2;
+  RagdollDef *pRVar3;
   float *in_r7;
   float *in_r8;
-  double extraout_f1;
-  double dVar9;
-  double dVar10;
+  double dVar4;
+  double dVar5;
   PhysContact local_70 [3];
   
-  dVar10 = (double)param_4;
-  lVar8 = (longlong)(int)param_2;
-  pRVar6 = (RagdollBody *)__savegprlr_27((double)param_3,param_1,lVar8,param_5,param_6);
-  dVar9 = extraout_f1;
-  pRVar7 = Ragdoll_BodyDef(pRVar6);
+  dVar5 = (double)param_4;
+  dVar4 = (double)param_3;
+  pRVar3 = Ragdoll_BodyDef(param_1);
   fVar1 = in_r8[2] - in_r7[2];
-  fVar4 = *in_r8 - *in_r7;
-  fVar5 = in_r8[1] - in_r7[1];
-  fVar3 = fVar5 * fVar5 + fVar4 * fVar4 + fVar1 * fVar1;
-  if (0.002 <= fVar3) {
-    fVar3 = SQRT(fVar3);
+  local_70[0].normal[0] = *in_r8 - *in_r7;
+  local_70[0].normal[1] = in_r8[1] - in_r7[1];
+  fVar2 = local_70[0].normal[1] * local_70[0].normal[1] +
+          local_70[0].normal[0] * local_70[0].normal[0] + fVar1 * fVar1;
+  if (0.002 <= fVar2) {
+    fVar2 = SQRT(fVar2);
     local_70[0].normal[2] = 1.0;
-    if (-fVar3 < 0.0) {
-      local_70[0].normal[2] = fVar3;
+    if (-fVar2 < 0.0) {
+      local_70[0].normal[2] = fVar2;
     }
     local_70[0].normal[2] = 1.0 / local_70[0].normal[2];
-    dVar10 = (double)(((float)(dVar9 + dVar10) - fVar3) * 0.5);
-    local_70[0].normal[0] = local_70[0].normal[2] * fVar4;
-    local_70[0].normal[1] = local_70[0].normal[2] * fVar5;
+    dVar5 = (double)(((float)(dVar4 + dVar5) - fVar2) * 0.5);
+    local_70[0].normal[0] = local_70[0].normal[2] * local_70[0].normal[0];
+    local_70[0].normal[1] = local_70[0].normal[2] * local_70[0].normal[1];
     local_70[0].normal[2] = local_70[0].normal[2] * fVar1;
-    if (dVar10 < -1e-06) {
+    if (dVar5 < -1e-06) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ragdoll\\ragdoll_update.cpp",
                       0x449,0,"%s");
     }
-    bVar2 = *(byte *)lVar8;
-    fVar1 = (float)(dVar9 - dVar10);
-    local_70[0].depth = (float)dVar10;
+    fVar1 = (float)(dVar4 - dVar5);
+    local_70[0].depth = (float)dVar5;
     local_70[0].bounce = 0.0;
     local_70[0].pos[0] = fVar1 * local_70[0].normal[0] + *in_r7;
     local_70[0].pos[1] = local_70[0].normal[1] * fVar1 + in_r7[1];
     local_70[0].pos[2] = local_70[0].normal[2] * fVar1 + in_r7[2];
-    local_70[0].friction = pRVar7->boneDefs[bVar2].friction;
+    local_70[0].friction = pRVar3->boneDefs[*param_2].friction;
     Phys_AddCollisionContact
-              (PHYS_WORLD_LAST_CLIENT_WORLD,local_70,
-               (pRVar6->state).bones[((byte *)lVar8)[1]].rigidBody,
-               (pRVar6->state).bones[bVar2].rigidBody);
+              (PHYS_WORLD_LAST_CLIENT_WORLD,local_70,(param_1->state).bones[param_2[1]].rigidBody,
+               (param_1->state).bones[*param_2].rigidBody);
   }
-  __restgprlr_27();
   return;
 }
 
 
 // 826A6BD8  Ragdoll_GenerateAllSelfCollisionContacts  (ragdoll/ragdoll_update.cpp:1110)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
@@ -2153,7 +2047,6 @@ void Ragdoll_GenerateAllSelfCollisionContacts(void)
   float local_70;
   float local_6c;
   
-  __savegprlr_23();
   pRVar9 = (RagdollBody *)&ragdollBodies;
   do {
     if (pRVar9 == (RagdollBody *)0x0) {
@@ -2197,13 +2090,14 @@ void Ragdoll_GenerateAllSelfCollisionContacts(void)
     }
     pRVar9 = pRVar9 + 1;
   } while ((int)pRVar9 < -0x7bbb7358);
-  __restgprlr_23();
   return;
 }
 
 
 // 826A6DE8  Ragdoll_PullJointsTogether  (ragdoll/ragdoll_update.cpp:1313)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void Ragdoll_PullJointsTogether(RagdollBody *param_1)
@@ -2211,36 +2105,33 @@ void Ragdoll_PullJointsTogether(RagdollBody *param_1)
 {
   int iVar1;
   int iVar2;
-  int iVar3;
-  int *piVar4;
+  Joint *pJVar3;
+  double dVar4;
   double dVar5;
   double dVar6;
-  double dVar7;
-  float fVar8;
+  float fVar7;
   
-  iVar1 = __savegprlr_27(param_1);
-  iVar2 = 0;
-  dVar5 = 0.10000000149011612;
-  dVar6 = 0.0;
+  iVar1 = 0;
+  dVar4 = 0.10000000149011612;
+  dVar5 = 0.0;
   do {
-    iVar2 = iVar2 + 1;
-    iVar3 = 0;
-    dVar7 = dVar6;
-    if (0 < *(int *)(iVar1 + 0x20)) {
-      piVar4 = (int *)(iVar1 + 0x24);
+    iVar1 = iVar1 + 1;
+    iVar2 = 0;
+    dVar6 = dVar5;
+    if (0 < param_1->numJoints) {
+      pJVar3 = param_1->joints;
       do {
-        if (*piVar4 != 0) {
-          fVar8 = Phys_PullJointTogether(*piVar4);
-          if (dVar7 < (double)fVar8) {
-            dVar7 = (double)fVar8;
+        if (pJVar3->joint != 0) {
+          fVar7 = Phys_PullJointTogether(pJVar3->joint);
+          if (dVar6 < (double)fVar7) {
+            dVar6 = (double)fVar7;
           }
         }
-        iVar3 = iVar3 + 1;
-        piVar4 = piVar4 + 2;
-      } while (iVar3 < *(int *)(iVar1 + 0x20));
+        iVar2 = iVar2 + 1;
+        pJVar3 = pJVar3 + 1;
+      } while (iVar2 < param_1->numJoints);
     }
-  } while ((iVar2 < (ragdoll_stretch_iters->current).integer) && (dVar5 < dVar7));
-  __restgprlr_27();
+  } while ((iVar1 < (ragdoll_stretch_iters->current).integer) && (dVar4 < dVar6));
   return;
 }
 
@@ -2269,6 +2160,10 @@ void Ragdoll_GetTorsoPosition(RagdollBody *param_1,float *param_2)
 
 // 826A9130  Ragdoll_ExplosionEvent  (ragdoll/ragdoll_update.cpp:1355)
 
+/* WARNING: Function: __savegprlr_19 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_15 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_15 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_19 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PhysWorld": Some values do not have unique names */
 
@@ -2282,18 +2177,17 @@ void Ragdoll_ExplosionEvent
   float fVar3;
   dvar_t *pdVar4;
   LocalClientNum_t LVar6;
-  LocalClientNum_t LVar7;
-  bool bVar8;
-  ulonglong uVar9;
-  ulonglong uVar10;
-  float *pfVar11;
+  bool bVar7;
   float *in_r8;
   int in_r10;
-  int *piVar12;
-  int iVar13;
-  RagdollBody *pRVar14;
-  int *piVar15;
-  double extraout_f1;
+  int *piVar8;
+  int iVar9;
+  RagdollBody *pRVar10;
+  int *piVar11;
+  double dVar12;
+  double dVar13;
+  double dVar14;
+  double dVar15;
   double dVar16;
   double dVar17;
   double dVar18;
@@ -2307,11 +2201,7 @@ void Ragdoll_ExplosionEvent
   double dVar26;
   double dVar27;
   double dVar28;
-  double dVar29;
-  double dVar30;
-  double dVar31;
-  double dVar32;
-  float fVar33;
+  float fVar29;
   float local_128;
   float local_124;
   float local_120;
@@ -2323,25 +2213,21 @@ void Ragdoll_ExplosionEvent
   float local_100;
   dvar_t *pdVar5;
   
-  dVar16 = (double)param_7;
-  dVar24 = (double)param_5;
-  uVar10 = (ulonglong)(int)param_3;
-  uVar9 = (ulonglong)param_2;
-  __savegprlr_19((double)param_4,param_1,uVar9,uVar10,param_6,param_8);
-  LVar6 = __savefpr_15();
-  dVar19 = extraout_f1;
-  if ((uVar10 & 0xffffffff) == 0) {
+  dVar12 = (double)param_7;
+  dVar20 = (double)param_5;
+  dVar15 = (double)param_4;
+  if (param_3 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ragdoll\\ragdoll_update.cpp",
                     0x55d,0,"%s");
   }
-  if ((((dVar19 <= dVar24) && (dVar17 = 0.0, 0.0 <= dVar19)) && (dVar24 != 0.0)) &&
-     (LVar7 = CL_GetFirstActiveLocalClient(), LVar6 == LVar7)) {
-    dVar18 = (double)(float)(dVar19 * dVar19);
-    dVar24 = (double)(float)(dVar24 * dVar24);
-    dVar32 = 1.0;
-    dVar19 = dVar17;
-    if (dVar18 < dVar24) {
-      dVar19 = (double)(1.0 / (float)(dVar24 - dVar18));
+  if ((((dVar15 <= dVar20) && (dVar13 = 0.0, 0.0 <= dVar15)) && (dVar20 != 0.0)) &&
+     (LVar6 = CL_GetFirstActiveLocalClient(), param_1 == LVar6)) {
+    dVar14 = (double)(float)(dVar15 * dVar15);
+    dVar20 = (double)(float)(dVar20 * dVar20);
+    dVar28 = 1.0;
+    dVar15 = dVar13;
+    if (dVar14 < dVar20) {
+      dVar15 = (double)(1.0 / (float)(dVar20 - dVar14));
     }
     pdVar4 = ragdoll_explode_force;
     pdVar5 = ragdoll_explode_upbias;
@@ -2349,110 +2235,111 @@ void Ragdoll_ExplosionEvent
       pdVar4 = ragdoll_exploding_bullet_force;
       pdVar5 = ragdoll_exploding_bullet_upbias;
     }
-    dVar21 = (double)(pdVar5->current).value;
-    dVar20 = (double)(pdVar4->current).value;
-    piVar12 = &DAT_84436240;
-    dVar25 = -1.0;
+    dVar17 = (double)(pdVar5->current).value;
+    dVar16 = (double)(pdVar4->current).value;
+    piVar8 = &DAT_84436240;
+    dVar21 = -1.0;
     do {
-      pRVar14 = (RagdollBody *)(piVar12 + -6);
-      bVar8 = Ragdoll_BodyInUse(pRVar14);
-      if ((bVar8) && (3 < piVar12[0x3b])) {
-        Ragdoll_GetTorsoPosition(pRVar14,&local_118);
-        pfVar11 = (float *)uVar10;
-        if ((uVar9 & 0xff) == 0) {
-          fVar33 = local_118 - *pfVar11;
-          dVar22 = (double)(local_110 - pfVar11[2]);
-          fVar2 = local_114 - pfVar11[1];
+      pRVar10 = (RagdollBody *)(piVar8 + -6);
+      bVar7 = Ragdoll_BodyInUse(pRVar10);
+      if ((bVar7) && (3 < piVar8[0x3b])) {
+        Ragdoll_GetTorsoPosition(pRVar10,&local_118);
+        if (param_2) {
+          fVar29 = *param_3 - local_118;
+          fVar2 = param_3[1] - local_114;
+          dVar18 = dVar13;
         }
         else {
-          fVar33 = *pfVar11 - local_118;
-          fVar2 = pfVar11[1] - local_114;
-          dVar22 = dVar17;
+          fVar29 = local_118 - *param_3;
+          dVar18 = (double)(local_110 - param_3[2]);
+          fVar2 = local_114 - param_3[1];
         }
-        if (((double)(fVar2 * fVar2 + (float)(dVar22 * dVar22 + (double)(fVar33 * fVar33))) < dVar24
-            ) && ((bVar8 = Ragdoll_BodyIdle(pRVar14), !bVar8 ||
-                  (bVar8 = Ragdoll_BodyNewState(pRVar14,BS_RUNNING), bVar8)))) {
-          iVar13 = 0;
-          piVar12[0x3c] = 0;
-          dVar22 = (double)(float)(dVar32 / (double)(longlong)*piVar12);
-          if (0 < *piVar12) {
-            piVar15 = piVar12 + 0x203;
+        if (((double)(fVar2 * fVar2 + (float)(dVar18 * dVar18 + (double)(fVar29 * fVar29))) < dVar20
+            ) && ((bVar7 = Ragdoll_BodyIdle(pRVar10), !bVar7 ||
+                  (bVar7 = Ragdoll_BodyNewState(pRVar10,BS_RUNNING), bVar7)))) {
+          iVar9 = 0;
+          piVar8[0x3c] = 0;
+          dVar18 = (double)(float)(dVar28 / (double)(longlong)*piVar8);
+          if (0 < *piVar8) {
+            piVar11 = piVar8 + 0x203;
             do {
-              if (*piVar15 != 0) {
-                dVar23 = dVar16;
-                Phys_ObjGetCenterOfMass(*piVar15,&local_128);
-                fVar33 = flrand((float)dVar25,(float)dVar32);
-                local_128 = fVar33 + local_128;
-                fVar33 = flrand((float)dVar25,(float)dVar32);
-                local_124 = fVar33 + local_124;
-                fVar33 = flrand((float)dVar25,(float)dVar32);
-                local_120 = fVar33 + local_120;
-                dVar31 = (double)(local_124 - pfVar11[1]);
-                dVar30 = (double)(local_128 - *pfVar11);
-                dVar28 = (double)(local_120 - pfVar11[2]);
-                dVar27 = (double)(float)(dVar31 * dVar31);
-                dVar26 = (double)(float)(dVar30 * dVar30);
-                dVar29 = (double)(float)((double)(float)(dVar28 * dVar28 + dVar27) + dVar26);
-                if (dVar29 < dVar24) {
-                  if (dVar18 < dVar29) {
-                    if (dVar24 <= dVar18) {
+              if (*piVar11 != 0) {
+                dVar19 = dVar12;
+                Phys_ObjGetCenterOfMass(*piVar11,&local_128);
+                fVar29 = flrand((float)dVar21,(float)dVar28);
+                local_128 = fVar29 + local_128;
+                fVar29 = flrand((float)dVar21,(float)dVar28);
+                local_124 = fVar29 + local_124;
+                fVar29 = flrand((float)dVar21,(float)dVar28);
+                local_120 = fVar29 + local_120;
+                dVar27 = (double)(local_124 - param_3[1]);
+                dVar26 = (double)(local_128 - *param_3);
+                dVar24 = (double)(local_120 - param_3[2]);
+                dVar23 = (double)(float)(dVar27 * dVar27);
+                dVar22 = (double)(float)(dVar26 * dVar26);
+                dVar25 = (double)(float)((double)(float)(dVar24 * dVar24 + dVar23) + dVar22);
+                if (dVar25 < dVar20) {
+                  if (dVar14 < dVar25) {
+                    if (dVar20 <= dVar14) {
                       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ragdoll\\ragdoll_update.cpp"
                                       ,0x5ab,1,"%s");
                     }
-                    dVar23 = (double)(float)((double)(float)((double)(float)(dVar24 - dVar29) *
-                                                            dVar19) * dVar16);
+                    dVar19 = (double)(float)((double)(float)((double)(float)(dVar20 - dVar25) *
+                                                            dVar15) * dVar12);
                   }
-                  fVar33 = *in_r8;
-                  if (((fVar33 == 0.0) && (in_r8[1] == 0.0)) && (in_r8[2] == 0.0)) {
-                    if ((uVar9 & 0xff) != 0) {
-                      dVar28 = dVar17;
+                  fVar29 = *in_r8;
+                  if (((fVar29 == 0.0) && (in_r8[1] == 0.0)) && (in_r8[2] == 0.0)) {
+                    if (param_2) {
+                      dVar24 = dVar13;
                     }
-                    dVar27 = (double)SQRT((float)((double)(float)(dVar28 * dVar28 + dVar27) + dVar26
+                    dVar23 = (double)SQRT((float)((double)(float)(dVar24 * dVar24 + dVar23) + dVar22
                                                  ));
-                    dVar26 = dVar32;
-                    if (-dVar27 < 0.0) {
-                      dVar26 = dVar27;
+                    dVar22 = dVar28;
+                    if (-dVar23 < 0.0) {
+                      dVar22 = dVar23;
                     }
-                    dVar26 = (double)(float)(dVar32 / dVar26);
-                    fVar33 = (float)(dVar26 * dVar30);
-                    fVar2 = (float)(dVar26 * dVar31);
-                    fVar3 = (float)(dVar26 * dVar28);
+                    dVar22 = (double)(float)(dVar28 / dVar22);
+                    fVar29 = (float)(dVar22 * dVar26);
+                    fVar2 = (float)(dVar22 * dVar27);
+                    fVar3 = (float)(dVar22 * dVar24);
                   }
                   else {
                     fVar2 = in_r8[1];
                     fVar3 = in_r8[2];
                   }
-                  fVar3 = (float)((double)fVar3 + dVar21);
-                  local_100 = (float)((double)(float)(dVar23 * dVar22) * dVar20);
-                  dVar23 = (double)SQRT(fVar3 * fVar3 + fVar2 * fVar2 + fVar33 * fVar33);
-                  dVar28 = dVar32;
-                  if (-dVar23 < 0.0) {
-                    dVar28 = dVar23;
+                  fVar3 = (float)((double)fVar3 + dVar17);
+                  local_100 = (float)((double)(float)(dVar19 * dVar18) * dVar16);
+                  dVar19 = (double)SQRT(fVar3 * fVar3 + fVar2 * fVar2 + fVar29 * fVar29);
+                  dVar24 = dVar28;
+                  if (-dVar19 < 0.0) {
+                    dVar24 = dVar19;
                   }
-                  fVar1 = (float)(dVar32 / dVar28);
-                  local_108 = local_100 * fVar1 * fVar33;
+                  fVar1 = (float)(dVar28 / dVar24);
+                  local_108 = local_100 * fVar1 * fVar29;
                   local_104 = fVar2 * fVar1 * local_100;
                   local_100 = local_100 * fVar1 * fVar3;
-                  Phys_ObjAddImpulse(PHYS_WORLD_LAST_CLIENT_WORLD,*piVar15,&local_128,&local_108);
+                  Phys_ObjAddImpulse(PHYS_WORLD_LAST_CLIENT_WORLD,*piVar11,&local_128,&local_108);
                 }
               }
-              iVar13 = iVar13 + 1;
-              piVar15 = piVar15 + 4;
-            } while (iVar13 < *piVar12);
+              iVar9 = iVar9 + 1;
+              piVar11 = piVar11 + 4;
+            } while (iVar9 < *piVar8);
           }
         }
       }
-      piVar12 = piVar12 + 0x255;
-    } while ((int)piVar12 < -0x7bbb7340);
+      piVar8 = piVar8 + 0x255;
+    } while ((int)piVar8 < -0x7bbb7340);
   }
-  __restfpr_15();
-  __restgprlr_19();
   return;
 }
 
 
 // 826A9500  Ragdoll_JitterEvent  (ragdoll/ragdoll_update.cpp:1481)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PhysWorld": Some values do not have unique names */
 
@@ -2461,86 +2348,77 @@ void Ragdoll_JitterEvent(LocalClientNum_t param_1,float *param_2,float param_3,f
 
 {
   LocalClientNum_t LVar1;
-  LocalClientNum_t LVar2;
-  bool bVar3;
-  ulonglong uVar4;
-  float *pfVar5;
-  RagdollBody *pRVar6;
-  double extraout_f1;
+  bool bVar2;
+  RagdollBody *pRVar3;
+  double dVar4;
+  double dVar5;
+  double dVar6;
   double dVar7;
   double dVar8;
-  double dVar9;
-  double dVar10;
-  double dVar11;
   float local_70;
   float local_6c;
   
-  dVar8 = (double)param_6;
-  dVar11 = (double)param_4;
-  dVar7 = (double)param_5;
-  uVar4 = (ulonglong)(int)param_2;
-  __savegprlr_26((double)param_3,param_1);
-  LVar1 = __savefpr_27();
-  dVar10 = extraout_f1;
-  if ((uVar4 & 0xffffffff) == 0) {
+  dVar6 = (double)param_6;
+  dVar4 = (double)param_3;
+  dVar8 = (double)param_4;
+  dVar5 = (double)param_5;
+  if (param_2 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ragdoll\\ragdoll_update.cpp",
                     0x5d2,0,"%s");
   }
-  dVar9 = 0.0;
-  if (dVar10 < 0.0) {
+  dVar7 = 0.0;
+  if (dVar4 < 0.0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ragdoll\\ragdoll_update.cpp",
                     0x5d3,0,"%s");
   }
-  if (dVar11 < dVar10) {
+  if (dVar8 < dVar4) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ragdoll\\ragdoll_update.cpp",
                     0x5d4,0,"%s");
   }
-  LVar2 = CL_GetFirstActiveLocalClient();
-  if ((LVar1 == LVar2) && (dVar11 != dVar9)) {
-    dVar11 = (double)(float)(dVar11 * dVar11);
-    pRVar6 = (RagdollBody *)&ragdollBodies;
+  LVar1 = CL_GetFirstActiveLocalClient();
+  if ((param_1 == LVar1) && (dVar8 != dVar7)) {
+    dVar8 = (double)(float)(dVar8 * dVar8);
+    pRVar3 = (RagdollBody *)&ragdollBodies;
     do {
-      if (pRVar6 == (RagdollBody *)0x0) {
+      if (pRVar3 == (RagdollBody *)0x0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ragdoll\\ragdoll.h",0x134,0
                         ,"%s");
       }
-      pfVar5 = (float *)uVar4;
-      if ((((0 < pRVar6->references) && (3 < (int)(pRVar6->state).state)) &&
-          (Ragdoll_GetTorsoPosition(pRVar6,&local_70),
-          (double)((*pfVar5 - local_70) * (*pfVar5 - local_70) +
-                  (pfVar5[1] - local_6c) * (pfVar5[1] - local_6c)) < dVar11)) &&
-         (bVar3 = Ragdoll_BodyIdle(pRVar6), bVar3)) {
-        Ragdoll_BodyNewState(pRVar6,BS_RUNNING);
+      if ((((0 < pRVar3->references) && (3 < (int)(pRVar3->state).state)) &&
+          (Ragdoll_GetTorsoPosition(pRVar3,&local_70),
+          (double)((*param_2 - local_70) * (*param_2 - local_70) +
+                  (param_2[1] - local_6c) * (param_2[1] - local_6c)) < dVar8)) &&
+         (bVar2 = Ragdoll_BodyIdle(pRVar3), bVar2)) {
+        Ragdoll_BodyNewState(pRVar3,BS_RUNNING);
       }
-      pRVar6 = pRVar6 + 1;
-    } while ((int)pRVar6 < -0x7bbb7358);
+      pRVar3 = pRVar3 + 1;
+    } while ((int)pRVar3 < -0x7bbb7358);
     Phys_AddJitterRegion
-              (PHYS_WORLD_LAST_CLIENT_WORLD,pfVar5,(float)dVar10,(float)dVar11,
-               (float)((double)(ragdoll_jitter_scale->current).value * dVar7),
-               (float)((double)(ragdoll_jitter_scale->current).value * dVar8));
+              (PHYS_WORLD_LAST_CLIENT_WORLD,param_2,(float)dVar4,(float)dVar8,
+               (float)((double)(ragdoll_jitter_scale->current).value * dVar5),
+               (float)((double)(ragdoll_jitter_scale->current).value * dVar6));
   }
-  __restfpr_27();
-  __restgprlr_26();
   return;
 }
 
 
 // 826A6F28  Ragdoll_EstimateInitialVelocities  (ragdoll/ragdoll_update.cpp:1530)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void Ragdoll_EstimateInitialVelocities(RagdollBody *param_1)
 
 {
-  RagdollBody *pRVar1;
+  BoneOrientation *pBVar1;
   BoneOrientation *pBVar2;
-  BoneOrientation *pBVar3;
-  int iVar4;
+  int iVar3;
+  float *pfVar4;
   float *pfVar5;
   float *pfVar6;
-  float *pfVar7;
+  double dVar7;
   double dVar8;
-  double dVar9;
   undefined8 local_c0;
   float local_b8;
   float local_b0;
@@ -2563,46 +2441,45 @@ void Ragdoll_EstimateInitialVelocities(RagdollBody *param_1)
   float local_64;
   float afStack_60 [24];
   
-  pRVar1 = (RagdollBody *)__savegprlr_25(param_1);
-  if (pRVar1 == (RagdollBody *)0x0) {
+  if (param_1 == (RagdollBody *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ragdoll\\ragdoll_update.cpp",
                     0x607,0,"%s");
   }
-  iVar4 = (pRVar1->state).velCaptureMsec;
-  if (iVar4 != 0) {
-    local_c0 = (longlong)iVar4;
-    dVar9 = (double)(1000.0 / (float)local_c0);
-    pBVar2 = Ragdoll_BodyBoneOrientations(pRVar1);
-    pBVar3 = Ragdoll_BodyPrevBoneOrientations(pRVar1);
-    iVar4 = 0;
-    if (0 < pRVar1->numBones) {
-      pfVar5 = (pRVar1->state).lerpBoneOffsets[8].orientation + 2;
-      pfVar6 = pBVar3->orientation + 2;
-      pfVar7 = pBVar2->orientation + 2;
-      dVar8 = 0.0;
+  iVar3 = (param_1->state).velCaptureMsec;
+  if (iVar3 != 0) {
+    local_c0 = (longlong)iVar3;
+    dVar8 = (double)(1000.0 / (float)local_c0);
+    pBVar1 = Ragdoll_BodyBoneOrientations(param_1);
+    pBVar2 = Ragdoll_BodyPrevBoneOrientations(param_1);
+    iVar3 = 0;
+    if (0 < param_1->numBones) {
+      pfVar4 = (param_1->state).lerpBoneOffsets[8].orientation + 2;
+      pfVar5 = pBVar2->orientation + 2;
+      pfVar6 = pBVar1->orientation + 2;
+      dVar7 = 0.0;
       do {
-        local_b0 = ((BoneOrientation *)(pfVar7 + -6))->origin[0] -
-                   *(float *)((int)pfVar7 + (int)pBVar3 + (-0x18 - (int)pBVar2));
-        local_ac = pfVar7[-5] - pfVar6[-5];
-        local_a8 = pfVar7[-4] - pfVar6[-4];
-        local_90 = pfVar6[-2];
-        if (dVar8 <= (double)(*pfVar7 * *pfVar6 +
-                             pfVar7[-2] * local_90 + pfVar7[-1] * pfVar6[-1] + pfVar7[1] * pfVar6[1]
+        local_b0 = ((BoneOrientation *)(pfVar6 + -6))->origin[0] -
+                   *(float *)((int)pfVar6 + (int)pBVar2 + (-0x18 - (int)pBVar1));
+        local_ac = pfVar6[-5] - pfVar5[-5];
+        local_a8 = pfVar6[-4] - pfVar5[-4];
+        local_90 = pfVar5[-2];
+        if (dVar7 <= (double)(*pfVar6 * *pfVar5 +
+                             pfVar6[-2] * local_90 + pfVar6[-1] * pfVar5[-1] + pfVar6[1] * pfVar5[1]
                              )) {
-          local_8c = pfVar6[-1];
-          local_88 = *pfVar6;
-          local_84 = pfVar6[1];
+          local_8c = pfVar5[-1];
+          local_88 = *pfVar5;
+          local_84 = pfVar5[1];
         }
         else {
           local_90 = -local_90;
-          local_8c = -pfVar6[-1];
-          local_88 = -*pfVar6;
-          local_84 = -pfVar6[1];
+          local_8c = -pfVar5[-1];
+          local_88 = -*pfVar5;
+          local_84 = -pfVar5[1];
         }
-        local_80 = pfVar7[-2];
-        local_7c = pfVar7[-1];
-        local_78 = *pfVar7;
-        local_74 = pfVar7[1];
+        local_80 = pfVar6[-2];
+        local_7c = pfVar6[-1];
+        local_78 = *pfVar6;
+        local_74 = pfVar6[1];
         Vec4Normalize(&local_80);
         Vec4Normalize(&local_90);
         local_70 = -local_90;
@@ -2613,40 +2490,40 @@ void Ragdoll_EstimateInitialVelocities(RagdollBody *param_1)
         Vec4Normalize(afStack_60);
         Ragdoll_QuatToAxisAngle(afStack_60,&local_a0);
         Ragdoll_QuatPointRotate(&local_a0,&local_80,(float *)&local_c0);
-        local_b0 = (float)((double)local_b0 * dVar9);
-        local_ac = (float)((double)local_ac * dVar9);
-        local_a8 = (float)((double)local_a8 * dVar9);
-        local_98 = (float)((double)(ragdoll_rotvel_scale->current).value * dVar9);
+        local_b0 = (float)((double)local_b0 * dVar8);
+        local_ac = (float)((double)local_ac * dVar8);
+        local_a8 = (float)((double)local_a8 * dVar8);
+        local_98 = (float)((double)(ragdoll_rotvel_scale->current).value * dVar8);
         local_a0 = local_c0._0_4_ * local_98;
         local_9c = local_c0._4_4_ * local_98;
         local_98 = local_b8 * local_98;
-        Phys_ObjSetAngularVelocityRaw((int)pfVar5[4],&local_a0);
-        pfVar5 = pfVar5 + 4;
-        Phys_ObjSetVelocity((int)*pfVar5,&local_b0);
-        iVar4 = iVar4 + 1;
+        Phys_ObjSetAngularVelocityRaw((int)pfVar4[4],&local_a0);
+        pfVar4 = pfVar4 + 4;
+        Phys_ObjSetVelocity((int)*pfVar4,&local_b0);
+        iVar3 = iVar3 + 1;
+        pfVar5 = pfVar5 + 8;
         pfVar6 = pfVar6 + 8;
-        pfVar7 = pfVar7 + 8;
-      } while (iVar4 < pRVar1->numBones);
+      } while (iVar3 < param_1->numBones);
     }
   }
-  __restgprlr_25();
   return;
 }
 
 
 // 826A71B8  Ragdoll_SetInitialVelocities  (ragdoll/ragdoll_update.cpp:1583)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void Ragdoll_SetInitialVelocities(RagdollBody *param_1)
 
 {
   float fVar1;
-  RagdollBody *pRVar2;
-  RagdollDef *pRVar3;
-  float *pfVar4;
-  int iVar5;
-  int *piVar6;
+  RagdollDef *pRVar2;
+  float *pfVar3;
+  int iVar4;
+  int *piVar5;
   float local_58 [4];
   float local_48;
   float local_44;
@@ -2655,139 +2532,128 @@ void Ragdoll_SetInitialVelocities(RagdollBody *param_1)
   float local_34;
   float local_30;
   
-  pRVar2 = (RagdollBody *)__savegprlr_28(param_1);
-  if (pRVar2 == (RagdollBody *)0x0) {
+  if (param_1 == (RagdollBody *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ragdoll\\ragdoll_update.cpp",
                     0x637,0,"%s");
   }
-  if ((pRVar2->state).hitLocation == 0) {
+  if ((param_1->state).hitLocation == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ragdoll\\ragdoll_update.cpp",
                     0x638,0,"%s");
   }
-  pRVar3 = Ragdoll_BodyDef(pRVar2);
-  if (pRVar3 == (RagdollDef *)0x0) {
+  pRVar2 = Ragdoll_BodyDef(param_1);
+  if (pRVar2 == (RagdollDef *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ragdoll\\ragdoll_update.cpp",
                     0x63b,0,"%s");
   }
-  if (pRVar3->hitLocMapping[(pRVar2->state).hitLocation] < 0) {
+  if (pRVar2->hitLocMapping[(param_1->state).hitLocation] < 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ragdoll\\ragdoll_update.cpp",
                     0x63c,0,"%s");
   }
-  local_38 = (pRVar2->state).impactVector[0];
-  local_34 = (pRVar2->state).impactVector[1];
-  local_30 = (pRVar2->state).impactVector[2];
+  local_38 = (param_1->state).impactVector[0];
+  local_34 = (param_1->state).impactVector[1];
+  local_30 = (param_1->state).impactVector[2];
   local_48 = local_38 * 0.19999999;
   local_58[0] = 0.0;
   local_44 = local_34 * 0.19999999;
   local_58[1] = 0.0;
   local_40 = local_30 * 0.19999999;
   local_58[2] = 0.0;
-  iVar5 = 0;
-  fVar1 = 0.8 / (float)(longlong)(pRVar2->numBones + -1);
+  iVar4 = 0;
+  fVar1 = 0.8 / (float)(longlong)(param_1->numBones + -1);
   local_38 = local_38 * fVar1;
   local_34 = local_34 * fVar1;
   local_30 = local_30 * fVar1;
-  if (0 < pRVar2->numBones) {
-    piVar6 = &(pRVar2->state).bones[0].rigidBody;
+  if (0 < param_1->numBones) {
+    piVar5 = &(param_1->state).bones[0].rigidBody;
     do {
-      Phys_ObjSetAngularVelocityRaw(*piVar6,local_58);
-      pfVar4 = &local_48;
-      if (pRVar3->hitLocMapping[(pRVar2->state).hitLocation] != iVar5) {
-        pfVar4 = &local_38;
+      Phys_ObjSetAngularVelocityRaw(*piVar5,local_58);
+      pfVar3 = &local_48;
+      if (pRVar2->hitLocMapping[(param_1->state).hitLocation] != iVar4) {
+        pfVar3 = &local_38;
       }
-      Phys_ObjSetVelocity(*piVar6,pfVar4);
-      iVar5 = iVar5 + 1;
-      piVar6 = piVar6 + 4;
-    } while (iVar5 < pRVar2->numBones);
+      Phys_ObjSetVelocity(*piVar5,pfVar3);
+      iVar4 = iVar4 + 1;
+      piVar5 = piVar5 + 4;
+    } while (iVar4 < param_1->numBones);
   }
-  __restgprlr_28();
   return;
 }
 
 
 // 826A7370  Ragdoll_FindBoneChildren  (ragdoll/ragdoll_update.cpp:1621)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 int Ragdoll_FindBoneChildren(RagdollBody *param_1,int param_2,int *param_3)
 
 {
   int iVar1;
-  int iVar2;
-  longlong lVar3;
-  int *piVar4;
-  int iVar5;
+  int *piVar2;
+  Bone *pBVar3;
+  int iVar4;
   
-  lVar3 = (longlong)(int)param_3;
-  iVar1 = __savegprlr_29(param_1);
-  if (iVar1 == 0) {
+  if (param_1 == (RagdollBody *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ragdoll\\ragdoll_update.cpp",
                     0x659,0,"%s");
   }
-  iVar2 = 0;
-  iVar5 = 0;
-  if (0 < *(int *)(iVar1 + 0x18)) {
-    lVar3 = lVar3 + -4;
-    piVar4 = (int *)(iVar1 + 0x81c);
-    do {
-      if (*piVar4 == param_2) {
-        if (iVar2 == 6) {
-          iVar2 = 6;
-          break;
-        }
-        lVar3 = lVar3 + 4;
-        *(int *)lVar3 = iVar5;
-        iVar2 = iVar2 + 1;
-      }
-      iVar5 = iVar5 + 1;
-      piVar4 = piVar4 + 4;
-      if (*(int *)(iVar1 + 0x18) <= iVar5) {
-        iVar1 = __restgprlr_29();
-        return iVar1;
-      }
-    } while( true );
+  iVar1 = 0;
+  iVar4 = 0;
+  if (param_1->numBones < 1) {
+    return 0;
   }
-  iVar1 = __restgprlr_29(iVar2);
+  piVar2 = param_3 + -1;
+  pBVar3 = (param_1->state).bones;
+  do {
+    if (pBVar3->parentBone == param_2) {
+      if (iVar1 == 6) {
+        return 6;
+      }
+      piVar2 = piVar2 + 1;
+      *piVar2 = iVar4;
+      iVar1 = iVar1 + 1;
+    }
+    iVar4 = iVar4 + 1;
+    pBVar3 = pBVar3 + 1;
+  } while (iVar4 < param_1->numBones);
   return iVar1;
 }
 
 
 // 826A7418  Ragdoll_BoneTrace  (ragdoll/ragdoll_update.cpp:1645)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 bool Ragdoll_BoneTrace(trace_t *param_1,trace_t *param_2,float *param_3,float *param_4)
 
 {
-  trace_t *ptVar2;
-  undefined1 uVar3;
-  undefined8 uVar1;
-  double dVar4;
+  double dVar1;
   
-  ptVar2 = (trace_t *)__savegprlr_26(param_1);
-  CG_WorldTrace(ptVar2,param_3,param_4,&bounds_origin,0x2806491);
-  if (ptVar2->startsolid == false) {
-    dVar4 = 1.0;
-    if (ptVar2->fraction != 1.0) {
-      CG_WorldTrace(param_2,param_4,param_3,&bounds_origin,0x2806491);
-      uVar1 = 0;
-      if ((double)param_2->fraction != dVar4) goto LAB_826a74dc;
+  CG_WorldTrace(param_1,param_3,param_4,&bounds_origin,0x2806491);
+  if (param_1->startsolid == false) {
+    dVar1 = 1.0;
+    if ((param_1->fraction != 1.0) &&
+       (CG_WorldTrace(param_2,param_4,param_3,&bounds_origin,0x2806491),
+       (double)param_2->fraction != dVar1)) {
+      return false;
     }
   }
   else {
     CG_WorldTrace(param_2,param_4,param_3,&bounds_origin,0x2806491);
     if (param_2->startsolid != false) {
-      uVar3 = __restgprlr_26(0);
-      return (bool)uVar3;
+      return false;
     }
   }
-  uVar1 = 1;
-LAB_826a74dc:
-  uVar3 = __restgprlr_26(uVar1);
-  return (bool)uVar3;
+  return true;
 }
 
 
 // 826A74E8  Ragdoll_TunnelTest  (ragdoll/ragdoll_update.cpp:1673)
 
+/* WARNING: Function: __savegprlr_18 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_18 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 bool Ragdoll_TunnelTest(RagdollBody *param_1)
@@ -2795,20 +2661,18 @@ bool Ragdoll_TunnelTest(RagdollBody *param_1)
 {
   float fVar1;
   uint uVar2;
-  RagdollBody *pRVar3;
-  RagdollDef *pRVar4;
-  BoneOrientation *pBVar5;
-  int iVar6;
-  bool bVar7;
-  undefined1 uVar8;
-  bool *pbVar9;
-  int iVar10;
-  float *pfVar11;
-  BoneOrientation *pBVar12;
-  int iVar13;
-  float *pfVar14;
-  uint *puVar15;
-  double dVar16;
+  RagdollDef *pRVar3;
+  BoneOrientation *pBVar4;
+  int iVar5;
+  bool bVar6;
+  bool *pbVar7;
+  int iVar8;
+  float *pfVar9;
+  BoneOrientation *pBVar10;
+  int iVar11;
+  float *pfVar12;
+  uint *puVar13;
+  double dVar14;
   float local_190;
   float local_18c;
   float local_188;
@@ -2829,112 +2693,109 @@ bool Ragdoll_TunnelTest(RagdollBody *param_1)
   trace_t tStack_100;
   trace_t atStack_c0 [3];
   
-  pRVar3 = (RagdollBody *)__savegprlr_18(param_1);
-  if (pRVar3 == (RagdollBody *)0x0) {
+  if (param_1 == (RagdollBody *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ragdoll\\ragdoll_update.cpp",
                     0x69d,0,"%s");
   }
-  pRVar4 = Ragdoll_BodyDef(pRVar3);
-  if (pRVar4 == (RagdollDef *)0x0) {
+  pRVar3 = Ragdoll_BodyDef(param_1);
+  if (pRVar3 == (RagdollDef *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ragdoll\\ragdoll_update.cpp",
                     0x6a0,0,"%s");
   }
-  pBVar5 = Ragdoll_BodyBoneOrientations(pRVar3);
-  iVar10 = 0;
-  if (0 < pRVar3->numBones) {
-    pfVar11 = &(pRVar3->state).bones[0].length;
-    pbVar9 = &pRVar4->boneDefs[0].mirror;
-    dVar16 = 0.5;
-    pfVar14 = pBVar5->orientation + 2;
-    pBVar12 = pBVar5;
+  pBVar4 = Ragdoll_BodyBoneOrientations(param_1);
+  iVar8 = 0;
+  if (0 < param_1->numBones) {
+    pfVar9 = &(param_1->state).bones[0].length;
+    pbVar7 = &pRVar3->boneDefs[0].mirror;
+    dVar14 = 0.5;
+    pfVar12 = pBVar4->orientation + 2;
+    pBVar10 = pBVar4;
     do {
-      if (pfVar11[-1] != 0.0) {
-        if (*pbVar9 == false) {
-          local_180 = pfVar14[-2];
-          local_17c = pfVar14[-1];
-          local_178 = *pfVar14;
-          local_174 = pfVar14[1];
+      if (pfVar9[-1] != 0.0) {
+        if (*pbVar7 == false) {
+          local_180 = pfVar12[-2];
+          local_17c = pfVar12[-1];
+          local_178 = *pfVar12;
+          local_174 = pfVar12[1];
         }
         else {
-          Ragdoll_QuatMul(pfVar14 + -2,quatZRot,&local_180);
+          Ragdoll_QuatMul(pfVar12 + -2,quatZRot,&local_180);
         }
         QuatToAxis(&local_180,(float (*) [3])&local_150);
-        local_190 = pBVar12->origin[0];
-        local_18c = pfVar14[-5];
-        local_188 = pfVar14[-4];
-        iVar6 = Ragdoll_FindBoneChildren(pRVar3,iVar10,(int *)local_120);
-        if (1 < iVar6) {
-          iVar13 = 0;
-          fVar1 = (float)((double)*pfVar11 * dVar16);
+        local_190 = pBVar10->origin[0];
+        local_18c = pfVar12[-5];
+        local_188 = pfVar12[-4];
+        iVar5 = Ragdoll_FindBoneChildren(param_1,iVar8,(int *)local_120);
+        if (1 < iVar5) {
+          iVar11 = 0;
+          fVar1 = (float)((double)*pfVar9 * dVar14);
           local_170 = local_150 * fVar1 + local_190;
           local_16c = local_14c * fVar1 + local_18c;
           local_168 = local_148 * fVar1 + local_188;
-          if (0 < iVar6) {
-            puVar15 = local_120;
+          if (0 < iVar5) {
+            puVar13 = local_120;
             do {
-              uVar2 = *puVar15;
-              if ((uint)pRVar3->numBones <= uVar2) {
+              uVar2 = *puVar13;
+              if ((uint)param_1->numBones <= uVar2) {
                 MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ragdoll\\ragdoll_update.cpp"
                                 ,0x6bc,0,
                                 "childIdx doesn\'t index body->numBones\n\t%i not in [0, %i)");
               }
-              bVar7 = Ragdoll_BoneTrace(atStack_c0,&tStack_100,&local_170,pBVar5[uVar2].origin);
-              if (!bVar7) goto LAB_826a7760;
-              iVar13 = iVar13 + 1;
-              puVar15 = puVar15 + 1;
-            } while (iVar13 < iVar6);
+              bVar6 = Ragdoll_BoneTrace(atStack_c0,&tStack_100,&local_170,pBVar4[uVar2].origin);
+              if (!bVar6) {
+                return false;
+              }
+              iVar11 = iVar11 + 1;
+              puVar13 = puVar13 + 1;
+            } while (iVar11 < iVar5);
           }
         }
-        fVar1 = *pfVar11;
-        local_160 = local_150 * fVar1 + pBVar12->origin[0];
-        local_15c = local_14c * fVar1 + pfVar14[-5];
-        local_158 = local_148 * fVar1 + pfVar14[-4];
-        bVar7 = Ragdoll_BoneTrace(atStack_c0,&tStack_100,&local_190,&local_160);
-        if (!bVar7) {
-LAB_826a7760:
-          uVar8 = __restgprlr_18(0);
-          return (bool)uVar8;
+        fVar1 = *pfVar9;
+        local_160 = local_150 * fVar1 + pBVar10->origin[0];
+        local_15c = local_14c * fVar1 + pfVar12[-5];
+        local_158 = local_148 * fVar1 + pfVar12[-4];
+        bVar6 = Ragdoll_BoneTrace(atStack_c0,&tStack_100,&local_190,&local_160);
+        if (!bVar6) {
+          return false;
         }
       }
-      iVar10 = iVar10 + 1;
-      pfVar11 = pfVar11 + 4;
-      pbVar9 = pbVar9 + 0x50;
-      pBVar12 = pBVar12 + 1;
-      pfVar14 = pfVar14 + 8;
-    } while (iVar10 < pRVar3->numBones);
+      iVar8 = iVar8 + 1;
+      pfVar9 = pfVar9 + 4;
+      pbVar7 = pbVar7 + 0x50;
+      pBVar10 = pBVar10 + 1;
+      pfVar12 = pfVar12 + 8;
+    } while (iVar8 < param_1->numBones);
   }
-  uVar8 = __restgprlr_18(1);
-  return (bool)uVar8;
+  return true;
 }
 
 
 // 826A7770  Ragdoll_PrintTunnelFail  (ragdoll/ragdoll_update.cpp:1747)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void Ragdoll_PrintTunnelFail(RagdollBody *param_1)
 
 {
-  RagdollBody *pRVar1;
-  cpose_t *pcVar2;
-  DObj *pDVar3;
+  cpose_t *pcVar1;
+  DObj *pDVar2;
   
-  pRVar1 = (RagdollBody *)__savegprlr_28(param_1);
   if ((ragdoll_dump_anims->current).enabled != false) {
-    pcVar2 = Ragdoll_BodyPose(pRVar1);
-    pDVar3 = Ragdoll_BodyDObj(pRVar1);
-    if (pcVar2 == (cpose_t *)0x0) {
+    pcVar1 = Ragdoll_BodyPose(param_1);
+    pDVar2 = Ragdoll_BodyDObj(param_1);
+    if (pcVar1 == (cpose_t *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ragdoll\\ragdoll_update.cpp",
                       0x6df,0,"%s");
     }
-    if (pDVar3 == (DObj *)0x0) {
+    if (pDVar2 == (DObj *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ragdoll\\ragdoll_update.cpp",
                       0x6e0,0,"%s");
     }
     Com_Printf(0x14,"Ragdoll initial state in solid, using regular anim. Pos (%0.f %0.f %0.f)\n");
-    DObjDisplayAnim(pDVar3,"Ragdoll anim tree: ");
+    DObjDisplayAnim(pDVar2,"Ragdoll anim tree: ");
   }
-  __restgprlr_28();
   return;
 }
 
@@ -3017,6 +2878,8 @@ void Ragdoll_UpdateVelocityCapture(RagdollBody *param_1)
 
 // 826A7850  Ragdoll_UpdateFriction  (ragdoll/ragdoll_update.cpp:1835)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PhysWorld": Some values do not have unique names */
 
@@ -3024,58 +2887,55 @@ void Ragdoll_UpdateFriction(RagdollBody *param_1)
 
 {
   float fVar1;
-  RagdollBody *pRVar2;
-  RagdollDef *pRVar3;
-  int iVar4;
-  Joint *pJVar5;
-  float *pfVar6;
+  RagdollDef *pRVar2;
+  int iVar3;
+  Joint *pJVar4;
+  float *pfVar5;
+  double dVar6;
   double dVar7;
-  double dVar8;
   float local_58;
   float local_54;
   float local_50;
   
-  pRVar2 = (RagdollBody *)__savegprlr_27(param_1);
-  if (pRVar2 == (RagdollBody *)0x0) {
+  if (param_1 == (RagdollBody *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ragdoll\\ragdoll_update.cpp",
                     0x734,0,"%s");
   }
-  pRVar3 = Ragdoll_BodyDef(pRVar2);
-  if (pRVar3 == (RagdollDef *)0x0) {
+  pRVar2 = Ragdoll_BodyDef(param_1);
+  if (pRVar2 == (RagdollDef *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ragdoll\\ragdoll_update.cpp",
                     0x737,0,"%s");
   }
-  pJVar5 = pRVar2->joints;
-  iVar4 = 0;
-  fVar1 = 1.0 - (float)(longlong)(pRVar2->state).msec /
+  pJVar4 = param_1->joints;
+  iVar3 = 0;
+  fVar1 = 1.0 - (float)(longlong)(param_1->state).msec /
                 (float)(longlong)(ragdoll_jointlerp_time->current).integer;
-  dVar8 = (double)(fVar1 * fVar1 * 0.9 + 0.1);
-  if (0 < pRVar3->numJoints) {
-    pfVar6 = pRVar3->jointDefs[0].axisFriction + 2;
-    dVar7 = 0.0;
+  dVar7 = (double)(fVar1 * fVar1 * 0.9 + 0.1);
+  if (0 < pRVar2->numJoints) {
+    pfVar5 = pRVar2->jointDefs[0].axisFriction + 2;
+    dVar6 = 0.0;
     do {
-      if (pfVar6[-0x13] == 1.4013e-45) {
-        if (pJVar5->joint != 0) {
-          Phys_SetHingeParams(PHYS_WORLD_LAST_CLIENT_WORLD,pJVar5->joint,(float)dVar7,
-                              (float)((double)pfVar6[-2] * dVar8),pfVar6[-8],pfVar6[-5]);
+      if (pfVar5[-0x13] == 1.4013e-45) {
+        if (pJVar4->joint != 0) {
+          Phys_SetHingeParams(PHYS_WORLD_LAST_CLIENT_WORLD,pJVar4->joint,(float)dVar6,
+                              (float)((double)pfVar5[-2] * dVar7),pfVar5[-8],pfVar5[-5]);
         }
       }
-      else if (pfVar6[-0x13] == 2.8026e-45) {
-        local_58 = (float)((double)pfVar6[-2] * dVar8);
-        local_54 = (float)((double)pfVar6[-1] * dVar8);
-        local_50 = (float)((double)*pfVar6 * dVar8);
-        if (pJVar5->joint2 != 0) {
+      else if (pfVar5[-0x13] == 2.8026e-45) {
+        local_58 = (float)((double)pfVar5[-2] * dVar7);
+        local_54 = (float)((double)pfVar5[-1] * dVar7);
+        local_50 = (float)((double)*pfVar5 * dVar7);
+        if (pJVar4->joint2 != 0) {
           Phys_SetAngularMotorParams
-                    (PHYS_WORLD_LAST_CLIENT_WORLD,pJVar5->joint2,vec3_origin,&local_58,pfVar6 + -8,
-                     pfVar6 + -5);
+                    (PHYS_WORLD_LAST_CLIENT_WORLD,pJVar4->joint2,vec3_origin,&local_58,pfVar5 + -8,
+                     pfVar5 + -5);
         }
       }
-      iVar4 = iVar4 + 1;
-      pfVar6 = pfVar6 + 0x15;
-      pJVar5 = pJVar5 + 1;
-    } while (iVar4 < pRVar3->numJoints);
+      iVar3 = iVar3 + 1;
+      pfVar5 = pfVar5 + 0x15;
+      pJVar4 = pJVar4 + 1;
+    } while (iVar3 < pRVar2->numJoints);
   }
-  __restgprlr_27();
   return;
 }
 
@@ -3106,180 +2966,178 @@ bool Ragdoll_IsBodyRootMoving(RagdollBody *param_1)
 
 // 826A7A78  Ragdoll_CheckIdle  (ragdoll/ragdoll_update.cpp:1892)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 bool Ragdoll_CheckIdle(RagdollBody *param_1)
 
 {
-  RagdollBody *pRVar1;
-  bool bVar2;
-  undefined1 uVar3;
-  int *piVar4;
-  int iVar5;
+  bool bVar1;
+  int *piVar2;
+  int iVar3;
   
-  pRVar1 = (RagdollBody *)__savegprlr_29(param_1);
-  bVar2 = Ragdoll_IsBodyRootMoving(pRVar1);
-  if (bVar2) {
-LAB_826a7a98:
-    uVar3 = __restgprlr_29(0);
-    return (bool)uVar3;
+  bVar1 = Ragdoll_IsBodyRootMoving(param_1);
+  if (bVar1) {
+    return false;
   }
-  if ((pRVar1->state).msec <= (ragdoll_max_life->current).integer) {
-    iVar5 = 0;
-    if (0 < pRVar1->numBones) {
-      piVar4 = &(pRVar1->state).bones[0].rigidBody;
-      do {
-        bVar2 = Phys_ObjIsAsleep(*piVar4);
-        if (!bVar2) goto LAB_826a7a98;
-        iVar5 = iVar5 + 1;
-        piVar4 = piVar4 + 4;
-      } while (iVar5 < pRVar1->numBones);
-    }
+  if (((param_1->state).msec <= (ragdoll_max_life->current).integer) &&
+     (iVar3 = 0, 0 < param_1->numBones)) {
+    piVar2 = &(param_1->state).bones[0].rigidBody;
+    do {
+      bVar1 = Phys_ObjIsAsleep(*piVar2);
+      if (!bVar1) {
+        return false;
+      }
+      iVar3 = iVar3 + 1;
+      piVar2 = piVar2 + 4;
+    } while (iVar3 < param_1->numBones);
   }
-  uVar3 = __restgprlr_29(1);
-  return (bool)uVar3;
+  return true;
 }
 
 
 // 826A7B08  Ragdoll_EnterDead  (ragdoll/ragdoll_update.cpp:1915)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 bool Ragdoll_EnterDead(RagdollBody *param_1,BodyState param_2,BodyState param_3)
 
 {
   int iVar1;
-  RagdollBody *pRVar2;
-  undefined1 uVar3;
   
-  pRVar2 = (RagdollBody *)__savegprlr_28(param_1,param_2,param_3);
-  if (pRVar2 == (RagdollBody *)0x0) {
+  if (param_1 == (RagdollBody *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ragdoll\\ragdoll_update.cpp",
                     0x77d,0,"%s");
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ragdoll\\ragdoll_update.cpp",
                     0x36c,0,"%s");
   }
-  Ragdoll_DestroyPhysJoints(pRVar2);
-  Ragdoll_DestroyPhysObjs(pRVar2);
-  iVar1 = pRVar2->references;
+  Ragdoll_DestroyPhysJoints(param_1);
+  Ragdoll_DestroyPhysObjs(param_1);
+  iVar1 = param_1->references;
   memset();
-  pRVar2->references = iVar1;
-  uVar3 = __restgprlr_28(1);
-  return (bool)uVar3;
+  param_1->references = iVar1;
+  return true;
 }
 
 
 // 826A7BA0  Ragdoll_ExitDead  (ragdoll/ragdoll_update.cpp:1931)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 bool Ragdoll_ExitDead(RagdollBody *param_1,BodyState param_2,BodyState param_3)
 
 {
-  RagdollBody *pRVar1;
-  RagdollDef *pRVar2;
-  undefined1 uVar3;
+  RagdollDef *pRVar1;
   
-  pRVar1 = (RagdollBody *)__savegprlr_28(param_1,param_2,param_3);
-  if (pRVar1 == (RagdollBody *)0x0) {
+  if (param_1 == (RagdollBody *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ragdoll\\ragdoll_update.cpp",
                     0x78e,0,"%s");
   }
-  pRVar2 = Ragdoll_BodyDef(pRVar1);
-  if (pRVar2 == (RagdollDef *)0x0) {
+  pRVar1 = Ragdoll_BodyDef(param_1);
+  if (pRVar1 == (RagdollDef *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ragdoll\\ragdoll_update.cpp",
                     0x791,0,"%s");
   }
-  pRVar1->numBones = pRVar2->numBones;
-  pRVar1->numLerpBones = pRVar2->numBaseLerpBones;
-  pRVar1->numJoints = pRVar2->numJoints;
-  uVar3 = __restgprlr_28(1);
-  return (bool)uVar3;
+  param_1->numBones = pRVar1->numBones;
+  param_1->numLerpBones = pRVar1->numBaseLerpBones;
+  param_1->numJoints = pRVar1->numJoints;
+  return true;
 }
 
 
 // 826A7C38  Ragdoll_ExitDObjWait  (ragdoll/ragdoll_update.cpp:1948)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 bool Ragdoll_ExitDObjWait(RagdollBody *param_1,BodyState param_2,BodyState param_3)
 
 {
   uint uVar1;
-  RagdollBody *pRVar2;
-  RagdollDef *pRVar3;
-  DObj *pDVar4;
+  RagdollDef *pRVar2;
+  DObj *pDVar3;
+  int iVar4;
   int iVar5;
-  undefined1 uVar6;
-  uchar *puVar7;
-  int iVar8;
-  PhysicsGeomType *pPVar9;
-  uint *puVar10;
-  Bone *pBVar11;
-  LerpBone *pLVar12;
+  uchar *puVar6;
+  PhysicsGeomType *pPVar7;
+  uint *puVar8;
+  Bone *pBVar9;
+  LerpBone *pLVar10;
   
-  pRVar2 = (RagdollBody *)__savegprlr_23(param_1,param_2);
-  if (pRVar2 == (RagdollBody *)0x0) {
+  if (param_1 == (RagdollBody *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ragdoll\\ragdoll_update.cpp",
                     0x7a4,0,"%s");
   }
   if (param_3 != BS_DEAD) {
-    pRVar3 = Ragdoll_BodyDef(pRVar2);
-    if (pRVar3 == (RagdollDef *)0x0) {
+    pRVar2 = Ragdoll_BodyDef(param_1);
+    if (pRVar2 == (RagdollDef *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ragdoll\\ragdoll_update.cpp",
                       0x7aa,0,"%s");
     }
-    pDVar4 = Ragdoll_BodyDObj(pRVar2);
-    if (pDVar4 == (DObj *)0x0) {
+    pDVar3 = Ragdoll_BodyDObj(param_1);
+    if (pDVar3 == (DObj *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ragdoll\\ragdoll_update.cpp",
                       0x7ad,0,"%s");
     }
-    pBVar11 = (pRVar2->state).bones;
-    iVar8 = 0;
-    if (0 < pRVar2->numBones) {
-      puVar10 = pRVar3->boneDefs[0].animBoneNames + 1;
+    pBVar9 = (param_1->state).bones;
+    iVar5 = 0;
+    if (0 < param_1->numBones) {
+      puVar8 = pRVar2->boneDefs[0].animBoneNames + 1;
       do {
-        uVar1 = puVar10[6];
-        puVar7 = pBVar11->animBones;
-        pBVar11->animBones[0] = '\0';
-        pBVar11->animBones[1] = '\0';
-        pBVar11->parentBone = uVar1;
-        iVar5 = DObjGetBoneIndex(pDVar4,puVar10[-1],puVar7);
-        if ((iVar5 == 0) || (*puVar7 == 0xff)) goto LAB_826a7d70;
-        if (*puVar10 == 0xffffffff) {
-          pBVar11->animBones[1] = '\0';
+        uVar1 = puVar8[6];
+        puVar6 = pBVar9->animBones;
+        pBVar9->animBones[0] = '\0';
+        pBVar9->animBones[1] = '\0';
+        pBVar9->parentBone = uVar1;
+        iVar4 = DObjGetBoneIndex(pDVar3,puVar8[-1],puVar6);
+        if (iVar4 == 0) {
+          return false;
+        }
+        if (*puVar6 == 0xff) {
+          return false;
+        }
+        if (*puVar8 == 0xffffffff) {
+          pBVar9->animBones[1] = '\0';
         }
         else {
-          iVar5 = DObjGetBoneIndex(pDVar4,*puVar10,pBVar11->animBones + 1);
-          if ((iVar5 == 0) || (*puVar7 == 0xff)) goto LAB_826a7d70;
+          iVar4 = DObjGetBoneIndex(pDVar3,*puVar8,pBVar9->animBones + 1);
+          if (iVar4 == 0) {
+            return false;
+          }
+          if (*puVar6 == 0xff) {
+            return false;
+          }
         }
-        iVar8 = iVar8 + 1;
-        pBVar11 = pBVar11 + 1;
-        puVar10 = puVar10 + 0x14;
-      } while (iVar8 < pRVar2->numBones);
+        iVar5 = iVar5 + 1;
+        pBVar9 = pBVar9 + 1;
+        puVar8 = puVar8 + 0x14;
+      } while (iVar5 < param_1->numBones);
     }
-    pLVar12 = (pRVar2->state).lerpBones;
-    iVar8 = 0;
-    if (0 < pRVar2->numLerpBones) {
-      pPVar9 = &pRVar3->boneDefs[0xd].geomType;
+    pLVar10 = (param_1->state).lerpBones;
+    iVar5 = 0;
+    if (0 < param_1->numLerpBones) {
+      pPVar7 = &pRVar2->boneDefs[0xd].geomType;
       do {
-        pLVar12->animBone = '\0';
-        iVar5 = DObjGetBoneIndex(pDVar4,pPVar9[7],&pLVar12->animBone);
-        if ((iVar5 == 0) || (pLVar12->animBone == 0xff)) {
-LAB_826a7d70:
-          uVar6 = __restgprlr_23(0);
-          return (bool)uVar6;
+        pLVar10->animBone = '\0';
+        iVar4 = DObjGetBoneIndex(pDVar3,pPVar7[7],&pLVar10->animBone);
+        if ((iVar4 == 0) || (pLVar10->animBone == 0xff)) {
+          return false;
         }
-        pPVar9 = pPVar9 + 8;
-        iVar8 = iVar8 + 1;
-        pLVar12->parentBone = *pPVar9;
-        pLVar12 = pLVar12 + 1;
-      } while (iVar8 < pRVar2->numLerpBones);
+        pPVar7 = pPVar7 + 8;
+        iVar5 = iVar5 + 1;
+        pLVar10->parentBone = *pPVar7;
+        pLVar10 = pLVar10 + 1;
+      } while (iVar5 < param_1->numLerpBones);
     }
-    Ragdoll_SnapshotBaseLerpOffsets(pRVar2);
+    Ragdoll_SnapshotBaseLerpOffsets(param_1);
   }
-  uVar6 = __restgprlr_23(1);
-  return (bool)uVar6;
+  return true;
 }
 
 
@@ -3315,34 +3173,32 @@ bool Ragdoll_ExitIdle(RagdollBody *param_1,BodyState param_2,BodyState param_3)
 
 // 826A9870  Ragdoll_EnterIdle  (ragdoll/ragdoll_update.cpp:2027)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 bool Ragdoll_EnterIdle(RagdollBody *param_1,BodyState param_2,BodyState param_3)
 
 {
-  RagdollBody *pRVar1;
-  bool bVar3;
-  BoneOrientation *pBVar2;
-  undefined1 uVar4;
+  bool bVar2;
+  BoneOrientation *pBVar1;
   
-  pRVar1 = (RagdollBody *)__savegprlr_28(param_1,param_2,param_3);
-  if (pRVar1 == (RagdollBody *)0x0) {
+  if (param_1 == (RagdollBody *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ragdoll\\ragdoll_update.cpp",
                     0x7ec,0,"%s");
   }
-  bVar3 = Ragdoll_BodyHasPhysics(pRVar1);
-  if (bVar3) {
-    pBVar2 = Ragdoll_BodyBoneOrientations(pRVar1);
-    Ragdoll_SnapshotBonePositions(pRVar1,pBVar2);
+  bVar2 = Ragdoll_BodyHasPhysics(param_1);
+  if (bVar2) {
+    pBVar1 = Ragdoll_BodyBoneOrientations(param_1);
+    Ragdoll_SnapshotBonePositions(param_1,pBVar1);
   }
-  if (pRVar1 == (RagdollBody *)0x0) {
+  if (param_1 == (RagdollBody *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ragdoll\\ragdoll_update.cpp",
                     0x36c,0,"%s");
   }
-  Ragdoll_DestroyPhysJoints(pRVar1);
-  Ragdoll_DestroyPhysObjs(pRVar1);
-  uVar4 = __restgprlr_28(1);
-  return (bool)uVar4;
+  Ragdoll_DestroyPhysJoints(param_1);
+  Ragdoll_DestroyPhysObjs(param_1);
+  return true;
 }
 
 
@@ -3458,98 +3314,81 @@ void Ragdoll_UpdateRunning(RagdollBody *param_1)
 
 // 826A7EF8  Ragdoll_BodyNewState  (ragdoll/ragdoll_update.cpp:2136)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 bool Ragdoll_BodyNewState(RagdollBody *param_1,BodyState param_2)
 
 {
   BodyState BVar1;
-  code *pcVar2;
-  RagdollBody *pRVar3;
-  bool bVar4;
-  char cVar5;
-  undefined1 uVar6;
-  ulonglong uVar7;
-  BodyState BVar8;
+  bool bVar2;
   
-  uVar7 = (ulonglong)(int)param_2;
-  pRVar3 = (RagdollBody *)__savegprlr_28(param_1);
-  if (pRVar3 == (RagdollBody *)0x0) {
+  if (param_1 == (RagdollBody *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ragdoll\\ragdoll_update.cpp",
                     0x85c,0,"%s");
   }
-  if (5 < (uVar7 & 0xffffffff)) {
+  if (BS_IDLE < param_2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ragdoll\\ragdoll_update.cpp",
                     0x85d,0,"state doesn\'t index RAGDOLL_NUM_STATES\n\t%i not in [0, %i)");
   }
-  BVar1 = (pRVar3->state).state;
+  BVar1 = (param_1->state).state;
   if (BS_IDLE < BVar1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ragdoll\\ragdoll_update.cpp",
                     0x860,0,"prevState doesn\'t index RAGDOLL_NUM_STATES\n\t%i not in [0, %i)");
   }
-  BVar8 = (BodyState)uVar7;
-  if (BVar1 != BVar8) {
-    if ((stateEntries[BVar1].exitFunc ==
-         (_func___cdecl_bool_RagdollBody_ptr_BodyState_BodyState *)0x0) ||
-       (bVar4 = (*stateEntries[BVar1].exitFunc)(pRVar3,BVar1,BVar8), bVar4)) {
-      (pRVar3->state).state = BVar8;
-      pcVar2 = *(code **)((int)&stateEntries[0].enterFunc +
-                         (int)((uVar7 + (uVar7 & 0x7fffffff) * 2 & 0xffffffff) << 2));
-      if ((pcVar2 == (code *)0x0) || (cVar5 = (*pcVar2)(pRVar3,BVar1,uVar7), cVar5 != '\0')) {
-        (pRVar3->state).frames = 0;
-        (pRVar3->state).msec = 0;
-        goto LAB_826a8040;
-      }
-      if ((pRVar3->state).state == BVar8) {
-        (pRVar3->state).state = BVar1;
-      }
-    }
-    uVar6 = __restgprlr_28(0);
-    return (bool)uVar6;
+  if (BVar1 == param_2) {
+    return true;
   }
-LAB_826a8040:
-  uVar6 = __restgprlr_28(1);
-  return (bool)uVar6;
+  if ((stateEntries[BVar1].exitFunc == (_func___cdecl_bool_RagdollBody_ptr_BodyState_BodyState *)0x0
+      ) || (bVar2 = (*stateEntries[BVar1].exitFunc)(param_1,BVar1,param_2), bVar2)) {
+    (param_1->state).state = param_2;
+    if ((stateEntries[param_2].enterFunc ==
+         (_func___cdecl_bool_RagdollBody_ptr_BodyState_BodyState *)0x0) ||
+       (bVar2 = (*stateEntries[param_2].enterFunc)(param_1,BVar1,param_2), bVar2)) {
+      (param_1->state).frames = 0;
+      (param_1->state).msec = 0;
+      return true;
+    }
+    if ((param_1->state).state == param_2) {
+      (param_1->state).state = BVar1;
+    }
+  }
+  return false;
 }
 
 
 // 826A8050  Ragdoll_BodyUpdate  (ragdoll/ragdoll_update.cpp:2180)
 
-/* WARNING: Type propagation algorithm not settling */
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void Ragdoll_BodyUpdate(int param_1,RagdollBody *param_2)
 
 {
   BodyState BVar1;
-  RagdollBody *pRVar2;
-  int iVar3;
-  ulonglong uVar4;
   
-  uVar4 = (ulonglong)(int)param_2;
-  iVar3 = __savegprlr_28(param_1);
-  if ((uVar4 & 0xffffffff) == 0) {
+  if (param_2 == (RagdollBody *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ragdoll\\ragdoll_update.cpp",
                     0x888,0,"%s");
   }
-  pRVar2 = (RagdollBody *)uVar4;
-  if (BS_IDLE < (pRVar2->state).state) {
+  if (BS_IDLE < (param_2->state).state) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ragdoll\\ragdoll_update.cpp",
                     0x889,0,
                     "body->state.state doesn\'t index RAGDOLL_NUM_STATES\n\t%i not in [0, %i)");
   }
-  (pRVar2->state).centroidVelocityEstimate[0] = 0.0;
-  (pRVar2->state).centroidVelocityEstimate[1] = 0.0;
-  (pRVar2->state).centroidVelocityEstimate[2] = 0.0;
+  (param_2->state).centroidVelocityEstimate[0] = 0.0;
+  (param_2->state).centroidVelocityEstimate[1] = 0.0;
+  (param_2->state).centroidVelocityEstimate[2] = 0.0;
   do {
-    BVar1 = (pRVar2->state).state;
+    BVar1 = (param_2->state).state;
     if (stateEntries[BVar1].updateFunc != (_func___cdecl_void_RagdollBody_ptr *)0x0) {
-      (*stateEntries[BVar1].updateFunc)(pRVar2);
+      (*stateEntries[BVar1].updateFunc)(param_2);
     }
-  } while (BVar1 != (pRVar2->state).state);
-  (pRVar2->state).frames = (pRVar2->state).frames + 1;
-  (pRVar2->state).msec = (pRVar2->state).msec + iVar3;
-  __restgprlr_28();
+  } while (BVar1 != (param_2->state).state);
+  (param_2->state).frames = (param_2->state).frames + 1;
+  (param_2->state).msec = (param_2->state).msec + param_1;
   return;
 }
 
@@ -3566,6 +3405,8 @@ void Ragdoll_SetUpdateTime(int param_1)
 
 // 826A8140  Ragdoll_UpdatePreviousCentroids  (ragdoll/ragdoll_update.cpp:2216)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void Ragdoll_UpdatePreviousCentroids(void)
@@ -3573,7 +3414,6 @@ void Ragdoll_UpdatePreviousCentroids(void)
 {
   undefined4 *puVar1;
   
-  __savegprlr_27();
   puVar1 = &DAT_84436340;
   do {
     if (puVar1 == (undefined4 *)0x118) {
@@ -3587,13 +3427,14 @@ void Ragdoll_UpdatePreviousCentroids(void)
     }
     puVar1 = puVar1 + 0x255;
   } while ((int)puVar1 < -0x7bbb7240);
-  __restgprlr_27();
   return;
 }
 
 
 // 826A81D0  Ragdoll_RunToTime  (ragdoll/ragdoll_update.cpp:2231)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "PhysWorld": Some values do not have unique names */
 
@@ -3603,7 +3444,6 @@ void Ragdoll_RunToTime(void)
   bool bVar1;
   bool bVar2;
   
-  __savegprlr_29();
   bVar1 = Sys_IsMainThread();
   if (!bVar1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ragdoll\\ragdoll_update.cpp",
@@ -3633,27 +3473,26 @@ LAB_826a82ac:
   }
   Profile_EndInternal((double *)0x0);
   Ragdoll_UpdatePreviousCentroids();
-  __restgprlr_29();
   return;
 }
 
 
 // 826A8308  Ragdoll_Update  (ragdoll/ragdoll_update.cpp:2260)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void Ragdoll_Update(LocalClientNum_t param_1)
 
 {
   int iVar1;
-  LocalClientNum_t LVar2;
+  bool bVar2;
   bool bVar3;
-  bool bVar4;
-  RagdollBody *pRVar5;
+  RagdollBody *pRVar4;
   
-  LVar2 = __savegprlr_28(param_1);
-  bVar3 = Sys_IsMainThread();
-  if (!bVar3) {
+  bVar2 = Sys_IsMainThread();
+  if (!bVar2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ragdoll\\ragdoll_update.cpp",
                     0x8da,0,"%s");
   }
@@ -3667,30 +3506,29 @@ void Ragdoll_Update(LocalClientNum_t param_1)
   }
   iVar1 = ragdollFrametime;
   if (((ragdoll_enable->current).enabled != false) && ((cg_paused->current).integer == 0)) {
-    bVar4 = CL_Demo_IsTimeStopped();
-    bVar3 = true;
-    if (!bVar4) goto LAB_826a83f0;
+    bVar3 = CL_Demo_IsTimeStopped();
+    bVar2 = true;
+    if (!bVar3) goto LAB_826a83f0;
   }
-  bVar3 = false;
+  bVar2 = false;
 LAB_826a83f0:
-  if (bVar3) {
+  if (bVar2) {
     Profile_Begin(0x198);
     PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffff,"Ragdoll_Update");
-    pRVar5 = (RagdollBody *)&ragdollBodies;
+    pRVar4 = (RagdollBody *)&ragdollBodies;
     do {
-      if ((pRVar5->localClientNum == LVar2) && (0 < pRVar5->references)) {
-        Ragdoll_BodyUpdate(iVar1,pRVar5);
+      if ((pRVar4->localClientNum == param_1) && (0 < pRVar4->references)) {
+        Ragdoll_BodyUpdate(iVar1,pRVar4);
       }
-      pRVar5 = pRVar5 + 1;
-    } while ((int)pRVar5 < -0x7bbb7358);
+      pRVar4 = pRVar4 + 1;
+    } while ((int)pRVar4 < -0x7bbb7358);
     PIXEndNamedEvent();
     Profile_EndInternal((double *)0x0);
   }
-  bVar3 = CL_IsLastActiveLocalClient(LVar2);
-  if (bVar3) {
+  bVar2 = CL_IsLastActiveLocalClient(param_1);
+  if (bVar2) {
     Ragdoll_RunToTime();
   }
-  __restgprlr_28();
   return;
 }
 

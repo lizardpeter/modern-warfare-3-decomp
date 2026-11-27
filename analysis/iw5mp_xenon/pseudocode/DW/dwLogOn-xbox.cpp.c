@@ -63,6 +63,8 @@ void dwLogOn_CleanupEnumHandle_Internal(int param_1)
 
 // 826E85E8  dwLogOn_Init  (DW/dwLogOn-xbox.cpp:69)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void dwLogOn_Init(void)
@@ -74,7 +76,6 @@ void dwLogOn_Init(void)
   int *piVar4;
   bdAddr abStack_50 [10];
   
-  __savegprlr_25();
   TaskManager_ConstructTaskSet(&overlappedTasks,"dwLogOn_Init");
   ppvVar3 = s_ServerEnumHandle;
   iVar2 = 0;
@@ -101,7 +102,6 @@ void dwLogOn_Init(void)
   s_LastEnumerateTime = 0;
   s_NumTitleServers = 0;
   memset();
-  __restgprlr_25();
   return;
 }
 
@@ -118,6 +118,8 @@ void dwLogon_ClearOverlappedTasks(int param_1)
 
 // 826E86E0  dwLogOn_Shutdown  (DW/dwLogOn-xbox.cpp:96)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void dwLogOn_Shutdown(void)
@@ -127,7 +129,6 @@ void dwLogOn_Shutdown(void)
   int iVar2;
   void **ppvVar3;
   
-  __savegprlr_26();
   ppvVar3 = s_ServerEnumHandle;
   iVar2 = 0;
   pIVar1 = &overlappedTasks.tasks[0x1f].u.storageRequest.errorCode;
@@ -143,7 +144,6 @@ void dwLogOn_Shutdown(void)
     iVar2 = iVar2 + 1;
   } while ((int)ppvVar3 < -0x7bb0ddb8);
   TaskManager_DestructTaskSet(&overlappedTasks);
-  __restgprlr_26();
   return;
 }
 
@@ -196,108 +196,107 @@ DWOnlineStatus dwGetLogOnStatus(int param_1)
 
 // 826E8888  dwLogOnStart  (DW/dwLogOn-xbox.cpp:150)
 
+/* WARNING: Function: __savegprlr_20 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_20 replaced with injection: xenon_save_restore */
+
 void dwLogOnStart(int param_1)
 
 {
   int iVar1;
+  bool bVar4;
   int iVar2;
-  bool bVar5;
-  int iVar3;
-  uint uVar4;
+  uint uVar3;
   
-  iVar2 = __savegprlr_20(param_1);
-  bVar5 = Live_IsUserSignedInToLive(iVar2);
-  if (!bVar5) goto LAB_826e8a3c;
-  bVar5 = Live_UserIsGuest(iVar2);
-  if (bVar5) goto LAB_826e8a3c;
-  bVar5 = dwAllDemonWareReconnectsDisabled();
-  if (bVar5) goto LAB_826e8a3c;
-  iVar3 = Sys_Milliseconds();
-  bVar5 = false;
-  iVar1 = (iVar3 - g_dwControllerData[iVar2].lastLogOnAttemptTime) / 1000;
-  if (g_dwControllerData[iVar2].numLogOnAttempts == 0) {
-    g_dwControllerData[iVar2].connectInterval = 0;
-LAB_826e8960:
-    bVar5 = true;
+  bVar4 = Live_IsUserSignedInToLive(param_1);
+  if (!bVar4) {
+    return;
+  }
+  bVar4 = Live_UserIsGuest(param_1);
+  if (bVar4) {
+    return;
+  }
+  bVar4 = dwAllDemonWareReconnectsDisabled();
+  if (bVar4) {
+    return;
+  }
+  iVar2 = Sys_Milliseconds();
+  bVar4 = false;
+  iVar1 = (iVar2 - g_dwControllerData[param_1].lastLogOnAttemptTime) / 1000;
+  if (g_dwControllerData[param_1].numLogOnAttempts == 0) {
+    g_dwControllerData[param_1].connectInterval = 0;
+  }
+  else if (iVar1 < 0x79) {
+    if (g_dwControllerData[param_1].connectInterval == 0) {
+      uVar3 = Live_GenerateRandomTimeToRetryInSeconds
+                        (g_dwControllerData[param_1].numLogOnAttempts,0x3c);
+      g_dwControllerData[param_1].connectInterval = uVar3;
+    }
+    if (iVar1 < g_dwControllerData[param_1].connectInterval) goto LAB_826e8964;
+    g_dwControllerData[param_1].connectInterval = 0;
   }
   else {
-    if (0x78 < iVar1) {
-      g_dwControllerData[iVar2].numLogOnAttempts = 0;
-      g_dwControllerData[iVar2].connectInterval = 0;
-      goto LAB_826e8960;
-    }
-    if (g_dwControllerData[iVar2].connectInterval == 0) {
-      uVar4 = Live_GenerateRandomTimeToRetryInSeconds
-                        (g_dwControllerData[iVar2].numLogOnAttempts,0x3c);
-      g_dwControllerData[iVar2].connectInterval = uVar4;
-    }
-    if (g_dwControllerData[iVar2].connectInterval <= iVar1) {
-      g_dwControllerData[iVar2].connectInterval = 0;
-      goto LAB_826e8960;
-    }
+    g_dwControllerData[param_1].numLogOnAttempts = 0;
+    g_dwControllerData[param_1].connectInterval = 0;
   }
-  if (bVar5) {
-    if ((s_ServerEnumHandle[iVar2] == (void *)0x0) &&
-       ((0x3b < (iVar3 - s_LastEnumerateTime) / 1000 || (s_LastEnumerateTime == 0)))) {
-      iVar1 = g_dwControllerData[iVar2].numLogOnAttempts;
-      g_dwControllerData[iVar2].lastLogOnAttemptTime = iVar3;
+  bVar4 = true;
+LAB_826e8964:
+  if (bVar4) {
+    if ((s_ServerEnumHandle[param_1] == (void *)0x0) &&
+       ((0x3b < (iVar2 - s_LastEnumerateTime) / 1000 || (s_LastEnumerateTime == 0)))) {
+      iVar1 = g_dwControllerData[param_1].numLogOnAttempts;
+      g_dwControllerData[param_1].lastLogOnAttemptTime = iVar2;
       s_EnumerationComplete = false;
-      s_LastEnumerateTime = iVar3;
-      g_dwControllerData[iVar2].numLogOnAttempts = iVar1 + 1;
+      s_LastEnumerateTime = iVar2;
+      g_dwControllerData[param_1].numLogOnAttempts = iVar1 + 1;
       s_NumTitleServers = 0;
       Com_Printf(0x10,
                  "Starting DW connect: attempt %u, time since last connect %us, time since last enumeration %us\n"
                 );
-      g_dwControllerData[iVar2].logOnStatus = DW_LIVE_CONNECT;
-      __restgprlr_20();
+      g_dwControllerData[param_1].logOnStatus = DW_LIVE_CONNECT;
       return;
     }
     if (s_EnumerationComplete != false) {
-      iVar1 = g_dwControllerData[iVar2].numLogOnAttempts;
-      g_dwControllerData[iVar2].lastLogOnAttemptTime = iVar3;
-      g_dwControllerData[iVar2].numLogOnAttempts = iVar1 + 1;
+      iVar1 = g_dwControllerData[param_1].numLogOnAttempts;
+      g_dwControllerData[param_1].lastLogOnAttemptTime = iVar2;
+      g_dwControllerData[param_1].numLogOnAttempts = iVar1 + 1;
       Com_Printf(0x10,
                  "Starting DW connect: attempt %u, time since last connect %us. Skipping enumeration step.\n"
                 );
-      g_dwControllerData[iVar2].logOnStatus = DW_SELECT_TITLE_SERVER;
-      __restgprlr_20();
+      g_dwControllerData[param_1].logOnStatus = DW_SELECT_TITLE_SERVER;
       return;
     }
-    if (s_ServerEnumHandle[iVar2] != (void *)0x0) {
-      g_dwControllerData[iVar2].logOnStatus = DW_LIVE_CONNECT;
+    if (s_ServerEnumHandle[param_1] != (void *)0x0) {
+      g_dwControllerData[param_1].logOnStatus = DW_LIVE_CONNECT;
     }
   }
-LAB_826e8a3c:
-  __restgprlr_20();
   return;
 }
 
 
 // 826E8A48  dwStartEnumerateTitleServers  (DW/dwLogOn-xbox.cpp:244)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 bool dwStartEnumerateTitleServers(int param_1)
 
 {
-  int iVar1;
+  bool bVar1;
   bool bVar5;
   ulong uVar2;
   overlappedTask *poVar3;
   _XOVERLAPPED *p_Var4;
-  undefined1 uVar6;
-  ulong *puVar7;
-  void **ppvVar8;
-  bool bVar10;
-  undefined8 uVar9;
-  longlong lVar11;
+  ulong *puVar6;
+  void **ppvVar7;
+  longlong lVar8;
   ulong local_40 [16];
   
-  iVar1 = __savegprlr_26(param_1);
   local_40[0] = 0;
   bVar5 = TaskManager_TaskIsInProgress(&overlappedTasks,1);
-  if ((bVar5) || (ppvVar8 = s_ServerEnumHandle + iVar1, s_ServerEnumHandle[iVar1] != (void *)0x0)) {
+  if ((bVar5) ||
+     (ppvVar7 = s_ServerEnumHandle + param_1, s_ServerEnumHandle[param_1] != (void *)0x0)) {
     Com_Printf(0x19,"Aborting redundant lsp enumeration - already enumerating LSP servers\n");
-    uVar6 = __restgprlr_26(1);
-    return (bool)uVar6;
+    return true;
   }
   Com_Printf(0x19,"dwLogOn-xbox: Enumerating LSP servers\n");
   uVar2 = XOnlineGetServiceInfo(0x415607e9,(_XONLINE_SERVICE_INFO *)0x0);
@@ -320,56 +319,57 @@ bool dwStartEnumerateTitleServers(int param_1)
     }
     bVar5 = false;
   }
-  bVar10 = false;
+  bVar1 = false;
   if (bVar5) {
-    if (*ppvVar8 != (void *)0x0) {
+    if (*ppvVar7 != (void *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DW\\dwLogOn-xbox.cpp",0x127,0
                       ,"%s");
     }
-    uVar2 = XTitleServerCreateEnumerator("MW3 - DW ATVI LSP",0x32,local_40,ppvVar8);
+    uVar2 = XTitleServerCreateEnumerator("MW3 - DW ATVI LSP",0x32,local_40,ppvVar7);
     if (uVar2 == 0) {
-      bVar10 = true;
+      bVar1 = true;
     }
     else {
-      dwLogOn_CleanupEnumHandle_Internal(iVar1);
-      bVar10 = false;
+      dwLogOn_CleanupEnumHandle_Internal(param_1);
+      bVar1 = false;
       Com_PrintError(0x10,"dwLogOn-xbox: Failed to create a server query: 0x%0x.");
     }
   }
-  uVar9 = 0;
-  if (bVar10) {
+  bVar5 = false;
+  if (bVar1) {
     if (local_40[0] != 0x28a0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DW\\dwLogOn-xbox.cpp",0x138,0
                       ,"%s\n\t(itemBufferRequiredSize) = %i");
     }
-    poVar3 = TaskManager_GetOpenTaskSlot(&overlappedTasks,iVar1,1);
+    poVar3 = TaskManager_GetOpenTaskSlot(&overlappedTasks,param_1,1);
     p_Var4 = TaskManager_TaskToXOverlapped(poVar3);
-    puVar7 = &p_Var4[-1].dwExtendedError;
-    lVar11 = 7;
+    puVar6 = &p_Var4[-1].dwExtendedError;
+    lVar8 = 7;
     do {
-      puVar7 = puVar7 + 1;
-      *puVar7 = 0;
-      lVar11 = lVar11 + -1;
-    } while (lVar11 != 0);
-    uVar2 = XEnumerate(*ppvVar8,s_LspList,0x28a0,(ulong *)0x0,p_Var4);
+      puVar6 = puVar6 + 1;
+      *puVar6 = 0;
+      lVar8 = lVar8 + -1;
+    } while (lVar8 != 0);
+    uVar2 = XEnumerate(*ppvVar7,s_LspList,0x28a0,(ulong *)0x0,p_Var4);
     if ((uVar2 != 0) && (uVar2 != 0x3e5)) {
-      dwLogOn_CleanupEnumHandle_Internal(iVar1);
+      dwLogOn_CleanupEnumHandle_Internal(param_1);
       poVar3 = TaskManager_TaskFromXOverlapped(&overlappedTasks,p_Var4);
       TaskManager_ClearTask(poVar3);
       Com_PrintError(1,
                      "dwLogOn-xbox: Xbox 360 Error %llx while trying to enumerate lsp title servers"
                     );
-      uVar6 = __restgprlr_26(0);
-      return (bool)uVar6;
+      return false;
     }
-    uVar9 = 1;
+    bVar5 = true;
   }
-  uVar6 = __restgprlr_26(uVar9);
-  return (bool)uVar6;
+  return bVar5;
 }
 
 
 // 826E8CB8  dwEnumerateTitleServerComplete  (DW/dwLogOn-xbox.cpp:337)
+
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
 
 bool dwEnumerateTitleServerComplete(int param_1,bool *param_2)
 
@@ -378,22 +378,20 @@ bool dwEnumerateTitleServerComplete(int param_1,bool *param_2)
   ulong uVar2;
   overlappedTask *poVar3;
   bool bVar4;
-  undefined1 uVar5;
-  int iVar6;
-  int *piVar7;
+  int iVar5;
+  int *piVar6;
   ulong local_60 [24];
   
-  __savegprlr_23(param_1);
-  iVar6 = 0;
+  iVar5 = 0;
   *param_2 = false;
   local_60[0] = 0;
   p_Var1 = (_XOVERLAPPED *)0x0;
   bVar4 = false;
-  piVar7 = &overlappedTasks.tasks[0].type;
-  while ((*(bool *)(piVar7 + 1) == false || (*piVar7 != 1))) {
-    piVar7 = piVar7 + 0x28;
-    iVar6 = iVar6 + 1;
-    if (-0x7bb0a071 < (int)piVar7) {
+  piVar6 = &overlappedTasks.tasks[0].type;
+  while ((*(bool *)(piVar6 + 1) == false || (*piVar6 != 1))) {
+    piVar6 = piVar6 + 0x28;
+    iVar5 = iVar5 + 1;
+    if (-0x7bb0a071 < (int)piVar6) {
 LAB_826e8d80:
       if (bVar4) {
         if (p_Var1 == (_XOVERLAPPED *)0x0) {
@@ -411,26 +409,22 @@ LAB_826e8d80:
             if ((int)local_60[0] < 1) {
               Com_PrintError(0x19,"dwLogOn-xbox: Got no results for LSP servers query.\n");
               *param_2 = true;
-              uVar5 = __restgprlr_23(1);
-              return (bool)uVar5;
+              return true;
             }
             Com_Printf(0x19,"dwLogOn-xbox: Found %i title servers\n");
             s_EnumerationComplete = true;
             *param_2 = true;
-            uVar5 = __restgprlr_23(1);
-            return (bool)uVar5;
+            return true;
           }
           poVar3 = TaskManager_TaskFromXOverlapped(&overlappedTasks,p_Var1);
           TaskManager_ClearTask(poVar3);
           if (uVar2 != 0x8015000a) {
             if (uVar2 == 0x80070012) {
               Com_Printf(0x19,"We have no LSP title servers\n");
-              uVar5 = __restgprlr_23(1);
-              return (bool)uVar5;
+              return true;
             }
             Com_PrintError(0x19,"Error listing LSP servers - error %x\n");
-            uVar5 = __restgprlr_23(1);
-            return (bool)uVar5;
+            return true;
           }
           Com_Printf(0x19,"Microsoft error SERVER_ERROR trying to get a list of LSP title servers\n"
                     );
@@ -440,103 +434,100 @@ LAB_826e8d80:
         bVar4 = true;
         if (s_EnumerationComplete != false) {
           *param_2 = true;
-          uVar5 = __restgprlr_23(1);
-          return (bool)uVar5;
+          return bVar4;
         }
       }
-      uVar5 = __restgprlr_23(bVar4);
-      return (bool)uVar5;
+      return bVar4;
     }
   }
-  if (overlappedTasks.tasks[iVar6].active == false) {
+  if (overlappedTasks.tasks[iVar5].active == false) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DW\\dwLogOn-xbox.cpp",0x161,0,
                     "%s");
   }
   bVar4 = true;
-  p_Var1 = TaskManager_TaskToXOverlapped(overlappedTasks.tasks + iVar6);
+  p_Var1 = TaskManager_TaskToXOverlapped(overlappedTasks.tasks + iVar5);
   goto LAB_826e8d80;
 }
 
 
 // 826E8EF8  dwSelectTitleServer  (DW/dwLogOn-xbox.cpp:433)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 bool dwSelectTitleServer(int param_1)
 
 {
   undefined2 uVar1;
   int iVar2;
-  int iVar3;
-  bdInetAddr *pbVar4;
-  bdAddr *pbVar5;
-  undefined1 uVar6;
-  longlong lVar7;
+  bdInetAddr *pbVar3;
+  bdAddr *pbVar4;
+  longlong lVar5;
   uint local_50;
   <unnamed_type_S_un> local_4c;
   bdInetAddr abStack_48 [2];
   bdAddr abStack_40 [8];
   
-  iVar2 = __savegprlr_26(param_1);
   local_50 = 0;
-  if ((s_NumTitleServers != 0) && (s_EnumerationComplete != false)) {
+  if ((s_NumTitleServers != 0) && (s_EnumerationComplete)) {
     XNetRandom((uchar *)&local_50,4);
     trapWord(6,(ulonglong)(uint)s_NumTitleServers,0);
-    lVar7 = (ulonglong)local_50 -
+    lVar5 = (ulonglong)local_50 -
             (longlong)((int)local_50 / s_NumTitleServers) * (longlong)s_NumTitleServers;
     trapWord(5,(ulonglong)(uint)s_NumTitleServers &
                ~((((ulonglong)local_50 & 0x7fffffff) << 1 | (ulonglong)(local_50 >> 0x1f)) - 1),
              0xffff);
-    if ((lVar7 < 0) || (s_NumTitleServers <= (int)lVar7)) {
-      lVar7 = 0;
+    if ((lVar5 < 0) || (s_NumTitleServers <= (int)lVar5)) {
+      lVar5 = 0;
     }
-    if (s_LspList[(int)lVar7].szServerInfo[0] == '\0') {
+    if (s_LspList[(int)lVar5].szServerInfo[0] == '\0') {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DW\\dwLogOn-xbox.cpp",0x1be,0
                       ,"%s");
     }
     Com_Printf(0x19,"dwLogOn-xbox: Selecting LSP server %i (\'%s\')\n");
-    iVar3 = XNetServerToInAddr((in_addr)((<unnamed_type_S_un> *)(s_LspList + (int)lVar7))->S_un_b,
+    iVar2 = XNetServerToInAddr((in_addr)((<unnamed_type_S_un> *)(s_LspList + (int)lVar5))->S_un_b,
                                0x415607e9,(in_addr *)&local_4c.S_un_b);
-    if (iVar3 == 0) {
-      pbVar4 = bdInetAddr::bdInetAddr(abStack_48,local_4c.S_addr);
-      pbVar5 = bdAddr::bdAddr(abStack_40,pbVar4,0x3fd);
-      g_dwControllerData[iVar2].serverAddr.m_address.m_addr.inUn = (pbVar5->m_address).m_addr.inUn;
-      uVar1 = *(undefined2 *)&pbVar5->field_0x6;
-      g_dwControllerData[iVar2].serverAddr.m_port = pbVar5->m_port;
-      *(undefined2 *)&g_dwControllerData[iVar2].serverAddr.field_0x6 = uVar1;
+    if (iVar2 == 0) {
+      pbVar3 = bdInetAddr::bdInetAddr(abStack_48,local_4c.S_addr);
+      pbVar4 = bdAddr::bdAddr(abStack_40,pbVar3,0x3fd);
+      g_dwControllerData[param_1].serverAddr.m_address.m_addr.inUn = (pbVar4->m_address).m_addr.inUn
+      ;
+      uVar1 = *(undefined2 *)&pbVar4->field_0x6;
+      g_dwControllerData[param_1].serverAddr.m_port = pbVar4->m_port;
+      *(undefined2 *)&g_dwControllerData[param_1].serverAddr.field_0x6 = uVar1;
       bdInetAddr::~bdInetAddr(&abStack_40[0].m_address);
       bdInetAddr::~bdInetAddr(abStack_48);
-      uVar6 = __restgprlr_26(1);
-      return (bool)uVar6;
+      return true;
     }
     Com_Printf(0x19,"dwLogOn-xbox: Failed to convert server address. Error %i\n");
   }
-  uVar6 = __restgprlr_26(0);
-  return (bool)uVar6;
+  return false;
 }
 
 
 // 826E9068  dwConnectToLobby  (DW/dwLogOn-xbox.cpp:466)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 bool dwConnectToLobby(int param_1)
 
 {
-  ulong uVar2;
   bdLobbyService *this;
   ulong64 uVar1;
-  ulong uVar3;
-  bdAddr *pbVar4;
-  bool bVar5;
-  undefined1 uVar6;
+  ulong uVar2;
+  bdAddr *pbVar3;
+  bool bVar4;
   char acStack_180 [16];
   bdAddr abStack_170 [2];
   bdAuthTicket bStack_160;
   bdAuthInfo local_d0;
   
-  uVar2 = __savegprlr_28(param_1);
-  this = dwGetLobbyService(uVar2);
+  this = dwGetLobbyService(param_1);
   if (this != (bdLobbyService *)0x0) {
-    uVar1 = Live_GetXuid(uVar2);
-    uVar3 = XUserGetName(uVar2,acStack_180,0x10);
-    if ((int)uVar3 < 0) {
+    uVar1 = Live_GetXuid(param_1);
+    uVar2 = XUserGetName(param_1,acStack_180,0x10);
+    if ((int)uVar2 < 0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DW\\dwLogOn-xbox.cpp",0x1df,0
                       ,"%s\n\t(res) = %08x");
     }
@@ -549,41 +540,40 @@ bool dwConnectToLobby(int param_1)
     memset();
     local_d0.m_titleID = 0x47c4;
     bdAuthTicket::serialize(&bStack_160,local_d0.m_data);
-    pbVar4 = bdAddr::bdAddr(abStack_170,&g_dwControllerData[uVar2].serverAddr);
-    bVar5 = bdLobbyService::connect(this,(bdAddr)(longlong)(int)pbVar4,&local_d0);
+    pbVar3 = bdAddr::bdAddr(abStack_170,&g_dwControllerData[param_1].serverAddr);
+    bVar4 = bdLobbyService::connect(this,(bdAddr)(longlong)(int)pbVar3,&local_d0);
     bdAuthTicket::~bdAuthTicket(&bStack_160);
-    uVar6 = __restgprlr_28(bVar5);
-    return (bool)uVar6;
+    return bVar4;
   }
-  uVar6 = __restgprlr_28(0);
-  return (bool)uVar6;
+  return false;
 }
 
 
 // 826E9188  dwLogOnComplete  (DW/dwLogOn-xbox.cpp:500)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 void dwLogOnComplete(int param_1)
 
 {
   DWLogonStatus DVar1;
-  int iVar2;
-  bool bVar5;
-  Status SVar3;
-  bdLobbyService *pbVar4;
+  bool bVar4;
+  Status SVar2;
+  bdLobbyService *pbVar3;
   bool local_40 [64];
   
-  iVar2 = __savegprlr_26(param_1);
-  DVar1 = g_dwControllerData[iVar2].logOnStatus;
-  g_dwControllerData[iVar2].logOnStatus = DW_LOGON_ERROR;
+  DVar1 = g_dwControllerData[param_1].logOnStatus;
+  g_dwControllerData[param_1].logOnStatus = DW_LOGON_ERROR;
   if (6 < DVar1 - DW_LIVE_CONNECT) goto LAB_826e936c;
   if (DVar1 == DW_LIVE_NOT_CONNECTED) {
 LAB_826e91e0:
-    bVar5 = Live_IsUserSignedInToLive(iVar2);
-    if (bVar5) {
-      g_dwControllerData[iVar2].logOnStatus = DW_ENUMERATE_TITLE_SERVERS;
+    bVar4 = Live_IsUserSignedInToLive(param_1);
+    if (bVar4) {
+      g_dwControllerData[param_1].logOnStatus = DW_ENUMERATE_TITLE_SERVERS;
     }
     else {
-      g_dwControllerData[iVar2].logOnStatus = DW_LIVE_NOT_CONNECTED;
+      g_dwControllerData[param_1].logOnStatus = DW_LIVE_NOT_CONNECTED;
       if (DVar1 != DW_LIVE_NOT_CONNECTED) {
         Com_Printf(0x10,
                    "dwLogOn-xbox: No Live account signed in for controller %i. Demonware not available.\n"
@@ -593,43 +583,43 @@ LAB_826e91e0:
   }
   else {
     if (DVar1 == DW_ENUMERATE_TITLE_SERVERS) {
-      bVar5 = dwStartEnumerateTitleServers(iVar2);
-      if (!bVar5) {
-        g_dwControllerData[iVar2].logOnStatus = DW_LIVE_NOT_CONNECTED;
-        dwLogOn_CleanupEnumHandle_Internal(iVar2);
+      bVar4 = dwStartEnumerateTitleServers(param_1);
+      if (!bVar4) {
+        g_dwControllerData[param_1].logOnStatus = DW_LIVE_NOT_CONNECTED;
+        dwLogOn_CleanupEnumHandle_Internal(param_1);
         goto LAB_826e936c;
       }
     }
     else {
       if (DVar1 != DW_ENUMERATING_TITLE_SERVERS) {
         if (DVar1 == DW_SELECT_TITLE_SERVER) {
-          bVar5 = dwSelectTitleServer(iVar2);
-          g_dwControllerData[iVar2].logOnStatus = (-(uint)bVar5 & 4) + DW_LIVE_NOT_CONNECTED;
+          bVar4 = dwSelectTitleServer(param_1);
+          g_dwControllerData[param_1].logOnStatus = (-(uint)bVar4 & 4) + DW_LIVE_NOT_CONNECTED;
           goto LAB_826e936c;
         }
         if (DVar1 == DW_CONNECT_TO_LOBBY) {
-          bVar5 = dwConnectToLobby(iVar2);
-          if (bVar5) {
-            g_dwControllerData[iVar2].logOnStatus = DW_LOBBY_CONNECTING;
+          bVar4 = dwConnectToLobby(param_1);
+          if (bVar4) {
+            g_dwControllerData[param_1].logOnStatus = DW_LOBBY_CONNECTING;
           }
           goto LAB_826e936c;
         }
         if (DVar1 != DW_LIVE_CONNECT) {
-          pbVar4 = dwGetLobbyService(iVar2);
-          if (pbVar4 != (bdLobbyService *)0x0) {
-            bdLobbyService::pump(pbVar4);
-            SVar3 = bdLobbyService::getStatus(pbVar4);
-            if (SVar3 == BD_CONNECTED) {
+          pbVar3 = dwGetLobbyService(param_1);
+          if (pbVar3 != (bdLobbyService *)0x0) {
+            bdLobbyService::pump(pbVar3);
+            SVar2 = bdLobbyService::getStatus(pbVar3);
+            if (SVar2 == BD_CONNECTED) {
               Com_Printf(0x10,"Controller %i: DW_LOGON_COMPLETE\n");
-              g_dwControllerData[iVar2].logOnStatus = DW_LOGON_COMPLETE;
+              g_dwControllerData[param_1].logOnStatus = DW_LOGON_COMPLETE;
               LiveRegionInfo_Init();
-              LiveAntiCheat_UserSignedInToDW(iVar2);
+              LiveAntiCheat_UserSignedInToDW(param_1);
             }
-            else if (SVar3 == BD_CONNECTING) {
-              g_dwControllerData[iVar2].logOnStatus = DW_LOBBY_CONNECTING;
+            else if (SVar2 == BD_CONNECTING) {
+              g_dwControllerData[param_1].logOnStatus = DW_LOBBY_CONNECTING;
             }
             else {
-              bdLobbyService::getErrorCode(pbVar4);
+              bdLobbyService::getErrorCode(pbVar3);
               Com_Printf(0x10,"Controller %i: Failed to connect to lobby. Reason %i Status %i\n");
             }
           }
@@ -637,26 +627,25 @@ LAB_826e91e0:
         }
         goto LAB_826e91e0;
       }
-      bVar5 = dwEnumerateTitleServerComplete(iVar2,local_40);
-      if (bVar5) {
-        g_dwControllerData[iVar2].logOnStatus =
+      bVar4 = dwEnumerateTitleServerComplete(param_1,local_40);
+      if (bVar4) {
+        g_dwControllerData[param_1].logOnStatus =
              (-(uint)(local_40[0] != false) & 3) + DW_LIVE_NOT_CONNECTED;
-        dwLogOn_CleanupEnumHandle_Internal(iVar2);
+        dwLogOn_CleanupEnumHandle_Internal(param_1);
         goto LAB_826e936c;
       }
     }
-    g_dwControllerData[iVar2].logOnStatus = DW_ENUMERATING_TITLE_SERVERS;
+    g_dwControllerData[param_1].logOnStatus = DW_ENUMERATING_TITLE_SERVERS;
   }
 LAB_826e936c:
-  if (g_dwControllerData[iVar2].logOnStatus != DVar1) {
+  if (g_dwControllerData[param_1].logOnStatus != DVar1) {
     Com_Printf(0x10,"Controller %i: dwlogon status transitioned from %i to %i\n");
   }
-  if ((g_dwControllerData[iVar2].logOnStatus == DW_LOGON_ERROR) &&
-     (pbVar4 = dwGetLobbyService(iVar2), pbVar4 != (bdLobbyService *)0x0)) {
-    bdLobbyService::disconnect(pbVar4);
-    dwLobbyServiceCleanup(iVar2);
+  if ((g_dwControllerData[param_1].logOnStatus == DW_LOGON_ERROR) &&
+     (pbVar3 = dwGetLobbyService(param_1), pbVar3 != (bdLobbyService *)0x0)) {
+    bdLobbyService::disconnect(pbVar3);
+    dwLobbyServiceCleanup(param_1);
   }
-  __restgprlr_26();
   return;
 }
 

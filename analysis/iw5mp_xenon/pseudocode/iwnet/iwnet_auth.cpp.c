@@ -11,27 +11,23 @@ bool IWNet_IsLoggedIn(int param_1)
 
 // 826E2808  IWNet_WriteTicket  (iwnet/iwnet_auth.cpp:149)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 void IWNet_WriteTicket(msg_t *param_1,IwNetTicket *param_2)
 
 {
-  msg_t *pmVar1;
-  ulonglong uVar2;
-  
-  uVar2 = (ulonglong)(int)param_2;
-  pmVar1 = (msg_t *)__savegprlr_28(param_1);
-  if (pmVar1 == (msg_t *)0x0) {
+  if (param_1 == (msg_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\iwnet\\iwnet_auth.cpp",0x96,0,
                     "%s");
   }
-  if ((uVar2 & 0xffffffff) == 0) {
+  if (param_2 == (IwNetTicket *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\iwnet\\iwnet_auth.cpp",0x97,0,
                     "%s");
   }
-  MSG_WriteData(pmVar1,(void *)uVar2,0x10);
-  MSG_WriteInt64(pmVar1,*(ulong64 *)((int)(void *)uVar2 + 0x10));
-  __restgprlr_28();
+  MSG_WriteData(param_1,param_2,0x10);
+  MSG_WriteInt64(param_1,param_2->xuid);
   return;
 }
 

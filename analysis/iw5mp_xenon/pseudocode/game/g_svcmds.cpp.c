@@ -13,58 +13,59 @@ void TRACK_g_svcmds(void)
 
 // 824ACA60  StringToFilter  (game/g_svcmds.cpp:73)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 int StringToFilter(char *param_1,ipFilter_s *param_2)
 
 {
   int iVar1;
-  char *pcVar2;
-  uint uVar3;
-  int iVar4;
+  uint uVar2;
+  int iVar3;
+  char cVar4;
   int iVar5;
-  char cVar6;
   uint local_c0;
   uint local_bc [3];
   char acStack_b0 [176];
   
-  pcVar2 = (char *)__savegprlr_27(param_1);
-  iVar4 = 0;
+  iVar5 = 0;
   local_bc[0] = 0;
   local_c0 = 0;
   do {
-    cVar6 = *pcVar2;
-    if ((cVar6 < '0') || ('9' < cVar6)) {
+    cVar4 = *param_1;
+    if ((cVar4 < '0') || ('9' < cVar4)) {
       Com_Printf(0xf,"Bad filter address: %s\n");
-      iVar4 = __restgprlr_27(0);
-      return iVar4;
+      return 0;
     }
-    iVar5 = 0;
-    iVar1 = -(int)pcVar2;
+    iVar3 = 0;
+    iVar1 = -(int)param_1;
     do {
-      if ('9' < cVar6) break;
-      acStack_b0[(int)(pcVar2 + iVar1)] = cVar6;
-      iVar5 = iVar5 + 1;
-      pcVar2 = pcVar2 + 1;
-      cVar6 = *pcVar2;
-    } while ('/' < cVar6);
-    acStack_b0[iVar5] = '\0';
-    uVar3 = atoi(acStack_b0);
-    *(char *)((int)local_bc + iVar4 + -4) = (char)uVar3;
-    if ((uVar3 & 0xff) != 0) {
-      *(undefined1 *)((int)local_bc + iVar4) = 0xff;
+      if ('9' < cVar4) break;
+      param_1[(int)(acStack_b0 + iVar1)] = cVar4;
+      iVar3 = iVar3 + 1;
+      param_1 = param_1 + 1;
+      cVar4 = *param_1;
+    } while ('/' < cVar4);
+    acStack_b0[iVar3] = '\0';
+    uVar2 = atoi(acStack_b0);
+    *(char *)((int)local_bc + iVar5 + -4) = (char)uVar2;
+    if ((uVar2 & 0xff) != 0) {
+      *(undefined1 *)((int)local_bc + iVar5) = 0xff;
     }
-    if (*pcVar2 == '\0') break;
-    iVar4 = iVar4 + 1;
-    pcVar2 = pcVar2 + 1;
-  } while (iVar4 < 4);
+    if (*param_1 == '\0') break;
+    iVar5 = iVar5 + 1;
+    param_1 = param_1 + 1;
+  } while (iVar5 < 4);
   param_2->mask = local_bc[0];
   param_2->compare = local_c0;
-  iVar4 = __restgprlr_27(1);
-  return iVar4;
+  return 1;
 }
 
 
 // 824ACB70  UpdateIPBans  (game/g_svcmds.cpp:121)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void UpdateIPBans(void)
@@ -77,7 +78,6 @@ void UpdateIPBans(void)
   uint *puVar5;
   char local_430 [1072];
   
-  __savegprlr_28();
   iVar4 = 0;
   local_430[0] = '\0';
   if (0 < DAT_8359d624) {
@@ -99,7 +99,6 @@ void UpdateIPBans(void)
     } while (iVar4 < iVar2);
   }
   Dvar_SetString(g_banIPs,local_430);
-  __restgprlr_28();
   return;
 }
 
@@ -140,6 +139,8 @@ void AddIP(char *param_1)
 
 // 824ACCE8  G_ProcessIPBans  (game/g_svcmds.cpp:175)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void G_ProcessIPBans(void)
@@ -153,13 +154,11 @@ void G_ProcessIPBans(void)
   int iVar6;
   char local_440 [1088];
   
-  __savegprlr_25();
   DAT_8359d624 = 0;
   I_strncpyz(local_440,(g_banIPs->current).string,0x400);
   uVar2 = ZEXT48(&stack0x00000000) - 0x440;
   do {
     if ((local_440[0] == '\0') || (uVar3 = uVar2, strchr(), (uVar3 & 0xffffffff) == 0)) {
-      __restgprlr_25();
       return;
     }
     cVar1 = *(char *)uVar3;
@@ -269,6 +268,8 @@ void Svcmd_RemoveIP_f(void)
 
 // 824AD018  Svcmd_EntityList_f  (game/g_svcmds.cpp:268)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -280,7 +281,6 @@ void Svcmd_EntityList_f(void)
   int iVar2;
   ushort *puVar3;
   
-  __savegprlr_25();
   iVar2 = 1;
   if (1 < level.num_entities) {
     puVar3 = &g_entities[1].classname;
@@ -301,7 +301,6 @@ void Svcmd_EntityList_f(void)
       puVar3 = puVar3 + 0x140;
     } while (iVar2 < iVar1);
   }
-  __restgprlr_25();
   return;
 }
 

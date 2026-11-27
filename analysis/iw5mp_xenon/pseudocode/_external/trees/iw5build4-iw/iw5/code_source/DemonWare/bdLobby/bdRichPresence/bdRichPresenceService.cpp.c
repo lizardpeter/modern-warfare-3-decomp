@@ -23,66 +23,67 @@ void __thiscall bdRichPresenceService::~bdRichPresenceService(bdRichPresenceServ
 
 // 8290C450  setInfo  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdrichpresence/bdrichpresenceservice.cpp:27)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 bdReference<bdRemoteTask> __thiscall
 bdRichPresenceService::setInfo(bdRichPresenceService *this,bdRichPresenceInfo *param_1)
 
 {
   uint uVar1;
-  bdReference<bdRemoteTask> *pbVar3;
-  bdTaskByteBuffer *pbVar4;
+  bdTaskByteBuffer *pbVar3;
   ulonglong uVar2;
-  bool bVar7;
-  bool bVar8;
-  bdLobbyErrorCode bVar5;
-  bdRemoteTask *pbVar6;
+  bool bVar5;
+  bool bVar6;
+  bdLobbyErrorCode bVar4;
   int in_r5;
-  uint *puVar9;
+  uint *puVar7;
   char in_RESERVE;
-  byte bVar10;
-  bdReference<bdRemoteTask> *pbStack00000014;
+  byte bVar8;
+  bdRichPresenceService *pbStack00000014;
   bdReference<bdTaskByteBuffer> local_40;
   undefined4 local_3c;
   bdTaskByteBuffer *local_38;
   
-  pbVar3 = (bdReference<bdRemoteTask> *)__savegprlr_27(this);
   local_3c = 0;
-  pbStack00000014 = pbVar3;
+  pbStack00000014 = this;
   local_38 = bdMemory::allocate(0x2c);
-  bVar10 = (local_38 == (bdTaskByteBuffer *)0x0) << 1;
+  bVar8 = (local_38 == (bdTaskByteBuffer *)0x0) << 1;
   if (local_38 == (bdTaskByteBuffer *)0x0) {
     uVar2 = 0;
   }
   else {
-    pbVar4 = bdTaskByteBuffer::bdTaskByteBuffer(local_38,0x6a,true);
-    uVar2 = (ulonglong)(int)pbVar4;
+    pbVar3 = bdTaskByteBuffer::bdTaskByteBuffer(local_38,0x6a,true);
+    uVar2 = (ulonglong)(int)pbVar3;
   }
   local_40.m_ptr = (bdTaskByteBuffer *)uVar2;
   if ((uVar2 & 0xffffffff) != 0) {
     do {
-      puVar9 = (uint *)(uVar2 + 4);
+      puVar7 = (uint *)(uVar2 + 4);
       if (in_RESERVE != '\0') {
-        uVar1 = storeWordConditionalIndexed((ulonglong)*puVar9 + 1,0,uVar2 + 4);
-        *puVar9 = uVar1;
-        bVar10 = 2;
+        uVar1 = storeWordConditionalIndexed((ulonglong)*puVar7 + 1,0,uVar2 + 4);
+        *puVar7 = uVar1;
+        bVar8 = 2;
       }
-    } while (!(bool)(bVar10 >> 1 & 1));
+    } while (!(bool)(bVar8 >> 1 & 1));
   }
-  pbVar3->m_ptr = (bdRemoteTask *)0x0;
+  this->m_remoteTaskManager = (bdRemoteTaskManager *)0x0;
   local_3c = 1;
   bdRemoteTaskManager::initTaskBuffer(&local_40,'D','\x01');
-  bVar7 = bdByteBuffer::writeUInt64((bdByteBuffer *)local_40.m_ptr,0);
-  if (bVar7) {
-    bVar8 = bdByteBuffer::writeBlob
+  bVar5 = bdByteBuffer::writeUInt64((bdByteBuffer *)local_40.m_ptr,0);
+  if (bVar5) {
+    bVar6 = bdByteBuffer::writeBlob
                       ((bdByteBuffer *)local_40.m_ptr,(void *)(in_r5 + 5),*(uint *)(in_r5 + 0x28));
-    bVar7 = true;
-    if (bVar8) goto LAB_8290c52c;
+    bVar5 = true;
+    if (bVar6) goto LAB_8290c52c;
   }
-  bVar7 = false;
+  bVar5 = false;
 LAB_8290c52c:
-  if (bVar7) {
-    bVar5 = bdRemoteTaskManager::startTask
-                      ((bdRemoteTaskManager *)param_1->_padding_,pbVar3,&local_40);
-    if (bVar5 != BD_NO_ERROR) {
+  if (bVar5) {
+    bVar4 = bdRemoteTaskManager::startTask
+                      ((bdRemoteTaskManager *)param_1->_padding_,(bdReference<bdRemoteTask> *)this,
+                       &local_40);
+    if (bVar4 != BD_NO_ERROR) {
       bdLogMessage(BD_LOG_WARNING,"warn/","richPresence",
                    "c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdLobby\\bdRichPresence\\bdRichPresenceService.cpp"
                    ,"bdRichPresenceService::setInfo",0x30,"Failed to start task: Error %i");
@@ -94,12 +95,14 @@ LAB_8290c52c:
                  ,"bdRichPresenceService::setInfo",0x35,"Failed to write param into buffer");
   }
   bdReference<bdTaskByteBuffer>::~bdReference<bdTaskByteBuffer>(&local_40);
-  pbVar6 = (bdRemoteTask *)__restgprlr_27(pbVar3);
-  return (bdReference<bdRemoteTask>)pbVar6;
+  return (bdReference<bdRemoteTask>)(bdRemoteTask *)this;
 }
 
 
 // 8290C668  getInfo  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdrichpresence/bdrichpresenceservice.cpp:59)
+
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 
 bdReference<bdRemoteTask> __thiscall
 bdRichPresenceService::getInfo
@@ -109,70 +112,74 @@ bdRichPresenceService::getInfo
   uint uVar1;
   uint uVar2;
   bool bVar3;
-  bdReference<bdRemoteTask> *pbVar5;
-  bdTaskByteBuffer *pbVar6;
+  bdTaskByteBuffer *pbVar5;
   ulonglong uVar4;
-  bool bVar9;
-  bdLobbyErrorCode bVar7;
-  bdRemoteTask *pbVar8;
+  bool bVar7;
+  bdLobbyErrorCode bVar6;
+  ulong64 uVar8;
   longlong in_r7;
-  uint *puVar10;
-  longlong lVar11;
+  uint *puVar9;
   char in_RESERVE;
-  byte bVar12;
-  bdReference<bdRemoteTask> *pbStack00000014;
+  byte bVar10;
+  bdRichPresenceService *pbStack00000014;
   bdReference<bdTaskByteBuffer> local_60;
   undefined4 local_5c;
   bdTaskByteBuffer *local_58;
   
-  lVar11 = (longlong)(int)param_2;
-  pbVar5 = (bdReference<bdRemoteTask> *)__savegprlr_24(this);
   uVar2 = (uint)in_r7;
   local_5c = 0;
-  pbStack00000014 = pbVar5;
+  pbStack00000014 = this;
   local_58 = bdMemory::allocate(0x2c);
-  bVar12 = (local_58 == (bdTaskByteBuffer *)0x0) << 1;
+  bVar10 = (local_58 == (bdTaskByteBuffer *)0x0) << 1;
   if (local_58 == (bdTaskByteBuffer *)0x0) {
     uVar4 = 0;
   }
   else {
-    pbVar6 = bdTaskByteBuffer::bdTaskByteBuffer(local_58,uVar2 * 9 + 0x40,true);
-    uVar4 = (ulonglong)(int)pbVar6;
+    pbVar5 = bdTaskByteBuffer::bdTaskByteBuffer(local_58,uVar2 * 9 + 0x40,true);
+    uVar4 = (ulonglong)(int)pbVar5;
   }
   local_60.m_ptr = (bdTaskByteBuffer *)uVar4;
   if ((uVar4 & 0xffffffff) != 0) {
     do {
-      puVar10 = (uint *)(uVar4 + 4);
+      puVar9 = (uint *)(uVar4 + 4);
       if (in_RESERVE != '\0') {
-        uVar1 = storeWordConditionalIndexed((ulonglong)*puVar10 + 1,0,uVar4 + 4);
-        *puVar10 = uVar1;
-        bVar12 = 2;
+        uVar1 = storeWordConditionalIndexed((ulonglong)*puVar9 + 1,0,uVar4 + 4);
+        *puVar9 = uVar1;
+        bVar10 = 2;
       }
-    } while (!(bool)(bVar12 >> 1 & 1));
+    } while (!(bool)(bVar10 >> 1 & 1));
   }
-  pbVar5->m_ptr = (bdRemoteTask *)0x0;
+  this->m_remoteTaskManager = (bdRemoteTaskManager *)0x0;
   local_5c = 1;
   bdRemoteTaskManager::initTaskBuffer(&local_60,'D','\x02');
   bVar3 = true;
   if (0 < (int)uVar2) {
     do {
       if (bVar3) {
-        bVar9 = bdByteBuffer::writeUInt64((bdByteBuffer *)local_60.m_ptr,*(ulong64 *)lVar11);
+        uVar8._0_4_ = param_2->_padding_;
+        uVar8._4_1_ = param_2->m_online;
+        uVar8._5_1_ = param_2->m_richPresence[0];
+        uVar8._6_1_ = param_2->m_richPresence[1];
+        uVar8._7_1_ = param_2->m_richPresence[2];
+        bVar7 = bdByteBuffer::writeUInt64((bdByteBuffer *)local_60.m_ptr,uVar8);
         bVar3 = true;
-        if (!bVar9) goto LAB_8290c744;
+        if (!bVar7) goto LAB_8290c744;
       }
       else {
 LAB_8290c744:
         bVar3 = false;
       }
       in_r7 = in_r7 + -1;
-      lVar11 = lVar11 + 8;
+      param_2 = (bdRichPresenceInfo *)(param_2->m_richPresence + 3);
     } while (in_r7 != 0);
   }
   if (bVar3) {
-    bVar7 = bdRemoteTaskManager::startTask(*(bdRemoteTaskManager **)param_1,pbVar5,&local_60);
-    if (bVar7 == BD_NO_ERROR) {
-      bdRemoteTask::setTaskResult(pbVar5->m_ptr,(bdTaskResult *)param_3,uVar2);
+    bVar6 = bdRemoteTaskManager::startTask
+                      (*(bdRemoteTaskManager **)param_1,(bdReference<bdRemoteTask> *)this,&local_60)
+    ;
+    if (bVar6 == BD_NO_ERROR) {
+      bdRemoteTask::setTaskResult
+                ((bdRemoteTask *)this->m_remoteTaskManager,(bdTaskResult *)param_3,uVar2);
     }
     else {
       bdLogMessage(BD_LOG_WARNING,"warn/",(char *)0x0,
@@ -186,7 +193,6 @@ LAB_8290c744:
                  ,"bdRichPresenceService::getInfo",0x57,"Failed to write param into buffer");
   }
   bdReference<bdTaskByteBuffer>::~bdReference<bdTaskByteBuffer>(&local_60);
-  pbVar8 = (bdRemoteTask *)__restgprlr_24(pbVar5);
-  return (bdReference<bdRemoteTask>)pbVar8;
+  return (bdReference<bdRemoteTask>)(bdRemoteTask *)this;
 }
 

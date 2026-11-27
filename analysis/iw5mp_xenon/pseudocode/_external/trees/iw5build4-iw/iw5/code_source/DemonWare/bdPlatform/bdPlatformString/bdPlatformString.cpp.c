@@ -2,51 +2,47 @@
 
 // 828F4E90  bdStrGetToken  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdplatform/bdplatformstring/bdplatformstring.cpp:18)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
+
 uint bdStrGetToken(char *param_1,char *param_2,char *param_3,uint param_4,char **param_5)
 
 {
-  char *pcVar1;
+  uint uVar1;
   uint uVar2;
   uint uVar3;
-  uint uVar4;
-  ulonglong uVar5;
-  ulonglong uVar6;
-  longlong lVar7;
   
-  uVar6 = (ulonglong)(int)param_5;
-  uVar5 = (ulonglong)(int)param_4;
-  pcVar1 = (char *)__savegprlr_25(param_1);
-  lVar7 = 0;
-  if (pcVar1 != (char *)0x0) {
-    uVar2 = strspn(pcVar1,param_2);
-    uVar3 = strcspn(pcVar1 + uVar2,param_2);
-    lVar7 = (longlong)(int)uVar3;
-    uVar4 = (uint)(lVar7 + 1U);
-    if ((uVar5 & 0xffffffff) <= (lVar7 + 1U & 0xffffffff)) {
-      uVar4 = (uint)uVar5;
+  uVar2 = 0;
+  if (param_1 != (char *)0x0) {
+    uVar1 = strspn(param_1,param_2);
+    uVar2 = strcspn(param_1 + uVar1,param_2);
+    uVar3 = uVar2 + 1;
+    if (param_4 <= uVar2 + 1) {
+      uVar3 = param_4;
     }
-    bdStrlcpy(param_3,pcVar1 + uVar2,uVar4);
-    if ((uVar6 & 0xffffffff) != 0) {
-      *(undefined4 *)uVar6 = pcVar1 + uVar2 + uVar3;
+    bdStrlcpy(param_3,param_1 + uVar1,uVar3);
+    if (param_5 != (char **)0x0) {
+      *param_5 = param_1 + uVar1 + uVar2;
     }
   }
-  uVar4 = __restgprlr_25(lVar7);
-  return uVar4;
+  return uVar2;
 }
 
 
 // 828F4F18  bdDelimSubstr  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdplatform/bdplatformstring/bdplatformstring.cpp:45)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 bool bdDelimSubstr(char *param_1,char *param_2,char *param_3)
 
 {
-  uint uVar1;
+  bool bVar1;
   uint uVar2;
-  char *pcVar3;
-  undefined1 uVar4;
+  uint uVar3;
+  char *pcVar4;
   undefined8 *puVar5;
-  bool bVar6;
-  longlong lVar7;
+  longlong lVar6;
   char *pcStack00000014;
   char *pcStack0000001c;
   undefined8 uStack_a8;
@@ -54,35 +50,34 @@ bool bdDelimSubstr(char *param_1,char *param_2,char *param_3)
   undefined8 uStack_68;
   char local_60 [96];
   
+  bVar1 = true;
+  pcStack00000014 = param_1;
   pcStack0000001c = param_2;
-  pcStack00000014 = (char *)__savegprlr_29(param_1);
-  bVar6 = true;
   do {
     puVar5 = &uStack_68;
-    lVar7 = 8;
+    lVar6 = 8;
     do {
       puVar5 = puVar5 + 1;
       *puVar5 = 0;
-      lVar7 = lVar7 + -1;
-    } while (lVar7 != 0);
-    uVar1 = bdStrGetToken(pcStack0000001c,param_3,local_60,0x40,&stack0x0000001c);
-    if ((uVar1 < 0x40) && (uVar1 != 0)) {
+      lVar6 = lVar6 + -1;
+    } while (lVar6 != 0);
+    uVar2 = bdStrGetToken(pcStack0000001c,param_3,local_60,0x40,&stack0x0000001c);
+    if ((uVar2 < 0x40) && (uVar2 != 0)) {
       puVar5 = &uStack_a8;
-      lVar7 = 8;
+      lVar6 = 8;
       do {
         puVar5 = puVar5 + 1;
         *puVar5 = 0;
-        lVar7 = lVar7 + -1;
-      } while (lVar7 != 0);
-      uVar2 = bdStrGetToken(pcStack00000014,param_3,local_a0,0x40,&stack0x00000014);
-      if (uVar2 < 0x40) {
-        pcVar3 = local_60;
+        lVar6 = lVar6 + -1;
+      } while (lVar6 != 0);
+      uVar3 = bdStrGetToken(pcStack00000014,param_3,local_a0,0x40,&stack0x00000014);
+      if (uVar3 < 0x40) {
+        pcVar4 = local_60;
         _stricmp();
-        bVar6 = pcVar3 == (char *)0x0;
+        bVar1 = pcVar4 == (char *)0x0;
       }
     }
-  } while ((bVar6 != false) && (uVar1 != 0));
-  uVar4 = __restgprlr_29(bVar6);
-  return (bool)uVar4;
+  } while ((bVar1) && (uVar2 != 0));
+  return bVar1;
 }
 

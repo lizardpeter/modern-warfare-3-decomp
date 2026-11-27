@@ -35,173 +35,172 @@ int TeamMaking_GetMemberCount(TeamMakingRequest *param_1)
 
 // 826E4188  TeamMaking_FindTeamsImmediate  (iwnet/iwnet_teammaking_core.cpp:50)
 
+/* WARNING: Function: __savegprlr_17 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_17 replaced with injection: xenon_save_restore */
+
 bool TeamMaking_FindTeamsImmediate(TeamMakingRequest *param_1,TeamMakingResponse *param_2)
 
 {
-  TeamMakingRequest *pTVar1;
-  uint uVar2;
-  undefined1 uVar3;
-  TeamMakingRequest *pTVar4;
-  longlong lVar5;
-  longlong lVar6;
-  int iVar7;
+  uint uVar1;
+  TeamMakingRequest *pTVar2;
+  longlong lVar3;
+  longlong lVar4;
+  int iVar5;
+  uint uVar6;
   uint uVar8;
-  uint uVar10;
+  longlong lVar7;
+  bool bVar10;
   longlong lVar9;
-  bool bVar12;
+  int iVar13;
+  int iVar14;
   longlong lVar11;
-  int iVar15;
+  ulonglong uVar12;
+  ulonglong uVar15;
   int iVar16;
-  longlong lVar13;
-  ulonglong uVar14;
-  ulonglong uVar17;
-  int iVar18;
+  int iVar17;
+  longlong lVar18;
   int iVar19;
-  longlong lVar20;
-  int iVar21;
   
-  pTVar1 = (TeamMakingRequest *)__savegprlr_17(param_1);
-  iVar19 = pTVar1->partyCount;
-  uVar2 = TeamMaking_GetMemberCount(pTVar1);
-  uVar10 = uVar2 + 1;
-  uVar8 = pTVar1->totalSkill + 1;
-  uVar17 = (longlong)((int)uVar10 >> 1) + (ulonglong)((int)uVar10 < 0 && (uVar10 & 1) != 0);
-  iVar18 = (int)uVar17;
-  lVar20 = (longlong)((int)uVar8 >> 1) + (ulonglong)((int)uVar8 < 0 && (uVar8 & 1) != 0);
-  uVar14 = (ulonglong)(uint)pTVar1->maxCountDiff;
-  if (iVar18 <= pTVar1->maxCountDiff) {
-    uVar14 = uVar17;
+  iVar17 = param_1->partyCount;
+  uVar1 = TeamMaking_GetMemberCount(param_1);
+  uVar8 = uVar1 + 1;
+  uVar6 = param_1->totalSkill + 1;
+  uVar15 = (longlong)((int)uVar8 >> 1) + (ulonglong)((int)uVar8 < 0 && (uVar8 & 1) != 0);
+  iVar16 = (int)uVar15;
+  lVar18 = (longlong)((int)uVar6 >> 1) + (ulonglong)((int)uVar6 < 0 && (uVar6 & 1) != 0);
+  uVar12 = (ulonglong)(uint)param_1->maxCountDiff;
+  if (iVar16 <= param_1->maxCountDiff) {
+    uVar12 = uVar15;
   }
-  iVar21 = (int)lVar20;
-  uVar2 = uVar2 + (((int)uVar2 >> 1) + (uint)((int)uVar2 < 0 && (uVar2 & 1) != 0)) * -2 +
-          (-((int)(uint)uVar14 >> 0x1f) - (uint)(uVar14 != 0) & (uint)uVar14);
-  if ((iVar21 < 0) || (0x1c2 < iVar21)) {
+  iVar19 = (int)lVar18;
+  uVar1 = uVar1 + (((int)uVar1 >> 1) + (uint)((int)uVar1 < 0 && (uVar1 & 1) != 0)) * -2 +
+          (-((int)(uint)uVar12 >> 0x1f) - (uint)(uVar12 != 0) & (uint)uVar12);
+  if ((iVar19 < 0) || (0x1c2 < iVar19)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\iwnet\\iwnet_teammaking_core.cpp"
                     ,0x47,0,"maxTeamSkill not in [0, MAX_TEAMSKILL]\n\t%i not in [%i, %i]");
   }
-  if ((iVar18 < 1) || (9 < iVar18)) {
+  if ((iVar16 < 1) || (9 < iVar16)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\iwnet\\iwnet_teammaking_core.cpp"
                     ,0x48,0,"maxTeamSize not in [1, MAX_TEAMSIZE]\n\t%i not in [%i, %i]");
   }
-  if ((iVar19 < 0) || (0x12 < iVar19)) {
+  if ((iVar17 < 0) || (0x12 < iVar17)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\iwnet\\iwnet_teammaking_core.cpp"
                     ,0x49,0,"partyCount not in [0, MAX_CLIENTS]\n\t%i not in [%i, %i]");
   }
-  iVar7 = 0;
+  iVar5 = 0;
   do {
-    iVar15 = 0;
+    iVar13 = 0;
     do {
-      if ((iVar7 != 0) || (bVar12 = true, iVar15 != 0)) {
-        bVar12 = false;
+      if ((iVar5 != 0) || (bVar10 = true, iVar13 != 0)) {
+        bVar10 = false;
       }
-      iVar16 = iVar15 + 1;
-      possibleTeams[iVar7][iVar15].realizable = bVar12;
-      possibleTeams[iVar7][iVar15].partyIdx = -1;
-      iVar15 = iVar16;
-    } while (iVar16 < 0x1c3);
-    iVar7 = iVar7 + 1;
-  } while (iVar7 < 10);
-  iVar7 = 0;
-  pTVar4 = pTVar1;
-  if (0 < iVar19) {
+      iVar14 = iVar13 + 1;
+      possibleTeams[iVar5][iVar13].realizable = bVar10;
+      possibleTeams[iVar5][iVar13].partyIdx = -1;
+      iVar13 = iVar14;
+    } while (iVar14 < 0x1c3);
+    iVar5 = iVar5 + 1;
+  } while (iVar5 < 10);
+  iVar5 = 0;
+  pTVar2 = param_1;
+  if (0 < iVar17) {
     do {
-      lVar6 = 0;
-      param_2->teams[iVar7] = '\x02';
-      if (-1 < iVar18) {
-        lVar5 = 0;
+      lVar4 = 0;
+      param_2->teams[iVar5] = '\x02';
+      if (-1 < iVar16) {
+        lVar3 = 0;
         do {
-          lVar9 = 0;
-          if (-1 < iVar21) {
-            lVar13 = lVar20 + 1;
+          lVar7 = 0;
+          if (-1 < iVar19) {
+            lVar11 = lVar18 + 1;
             do {
-              iVar15 = (int)((lVar5 + lVar9 & 0x1fffffffU) << 3);
-              if (((((&possibleTeams[0][0].realizable)[iVar15] == false) &&
-                   (lVar11 = lVar6 - (ulonglong)(uint)pTVar4->parties[0].memberCount, -1 < lVar11))
-                  && (uVar14 = (ulonglong)(uint)pTVar4->parties[0].totalSkill,
-                     -1 < (longlong)(lVar9 - uVar14))) &&
-                 ((iVar16 = (int)(((lVar11 * 0x1c3 - uVar14) + lVar9 & 0xffffffff) << 3),
-                  (&possibleTeams[0][0].realizable)[iVar16] != false &&
-                  (*(int *)((int)&possibleTeams[0][0].partyIdx + iVar16) != iVar7)))) {
-                (&possibleTeams[0][0].realizable)[iVar15] = true;
-                *(int *)((int)&possibleTeams[0][0].partyIdx + iVar15) = iVar7;
+              iVar13 = (int)((lVar3 + lVar7 & 0x1fffffffU) << 3);
+              if (((((&possibleTeams[0][0].realizable)[iVar13] == false) &&
+                   (lVar9 = lVar4 - (ulonglong)(uint)pTVar2->parties[0].memberCount, -1 < lVar9)) &&
+                  (uVar12 = (ulonglong)(uint)pTVar2->parties[0].totalSkill,
+                  -1 < (longlong)(lVar7 - uVar12))) &&
+                 ((iVar14 = (int)(((lVar9 * 0x1c3 - uVar12) + lVar7 & 0xffffffff) << 3),
+                  (&possibleTeams[0][0].realizable)[iVar14] != false &&
+                  (*(int *)((int)&possibleTeams[0][0].partyIdx + iVar14) != iVar5)))) {
+                (&possibleTeams[0][0].realizable)[iVar13] = true;
+                *(int *)((int)&possibleTeams[0][0].partyIdx + iVar13) = iVar5;
               }
-              lVar9 = lVar9 + 1;
-              lVar13 = lVar13 + -1;
-            } while (lVar13 != 0);
+              lVar7 = lVar7 + 1;
+              lVar11 = lVar11 + -1;
+            } while (lVar11 != 0);
           }
-          lVar6 = lVar6 + 1;
-          lVar5 = lVar5 + 0x1c3;
-        } while ((int)lVar6 <= iVar18);
+          lVar4 = lVar4 + 1;
+          lVar3 = lVar3 + 0x1c3;
+        } while ((int)lVar4 <= iVar16);
       }
-      iVar7 = iVar7 + 1;
-      pTVar4 = (TeamMakingRequest *)(pTVar4->parties + 1);
-    } while (iVar7 < iVar19);
+      iVar5 = iVar5 + 1;
+      pTVar2 = (TeamMakingRequest *)(pTVar2->parties + 1);
+    } while (iVar5 < iVar17);
   }
-  lVar5 = 0;
-  lVar6 = lVar20;
-  if (0 < iVar18) {
-    lVar9 = uVar17 * 0x1c3;
-    while ((int)(iVar18 - (((int)uVar2 >> 1) + (uint)((int)uVar2 < 0 && (uVar2 & 1) != 0))) <=
-           (int)uVar17) {
-      lVar6 = lVar20;
-      if (-1 < iVar21) {
+  bVar10 = false;
+  lVar4 = lVar18;
+  if (0 < iVar16) {
+    lVar3 = uVar15 * 0x1c3;
+    while ((int)(iVar16 - (((int)uVar1 >> 1) + (uint)((int)uVar1 < 0 && (uVar1 & 1) != 0))) <=
+           (int)uVar15) {
+      lVar4 = lVar18;
+      if (-1 < iVar19) {
         do {
-          if ((&possibleTeams[0][0].realizable)[(int)((lVar9 + lVar6 & 0xffffffffU) << 3)] != false)
+          if ((&possibleTeams[0][0].realizable)[(int)((lVar3 + lVar4 & 0xffffffffU) << 3)] != false)
           {
-            lVar5 = 1;
+            bVar10 = true;
             goto LAB_826e4430;
           }
-          lVar6 = lVar6 + -1;
-        } while (-1 < lVar6);
+          lVar4 = lVar4 + -1;
+        } while (-1 < lVar4);
       }
-      uVar17 = uVar17 - 1;
-      lVar9 = lVar9 + -0x1c3;
-      if ((longlong)uVar17 < 1) break;
+      uVar15 = uVar15 - 1;
+      lVar3 = lVar3 + -0x1c3;
+      if ((longlong)uVar15 < 1) break;
     }
   }
 LAB_826e4430:
-  iVar19 = (int)lVar6;
-  if (lVar5 != 0) {
-    iVar18 = (int)uVar17;
-    if (0 < iVar18) {
+  iVar17 = (int)lVar4;
+  if (bVar10) {
+    iVar16 = (int)uVar15;
+    if (0 < iVar16) {
       do {
-        iVar19 = (int)((uVar17 * 0x1c3 + lVar6 & 0x1fffffff) << 3);
-        if ((&possibleTeams[0][0].realizable)[iVar19] == false) {
+        iVar17 = (int)((uVar15 * 0x1c3 + lVar4 & 0x1fffffff) << 3);
+        if ((&possibleTeams[0][0].realizable)[iVar17] == false) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\iwnet\\iwnet_teammaking_core.cpp"
                           ,0x83,0,"%s");
         }
-        if (0x11 < *(uint *)((int)&possibleTeams[0][0].partyIdx + iVar19)) {
+        if (0x11 < *(uint *)((int)&possibleTeams[0][0].partyIdx + iVar17)) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\iwnet\\iwnet_teammaking_core.cpp"
                           ,0x84,0,
                           "possibleTeams[ members ][ skill ].partyIdx doesn\'t index MAX_CLIENTS\n\t%i not in [0, %i)"
                          );
         }
-        if (param_2->teams[*(int *)((int)&possibleTeams[0][0].partyIdx + iVar19)] != '\x02') {
+        if (param_2->teams[*(int *)((int)&possibleTeams[0][0].partyIdx + iVar17)] != '\x02') {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\iwnet\\iwnet_teammaking_core.cpp"
                           ,0x85,0,"%s");
         }
-        uVar14 = uVar17 * 0x1c3 + lVar6;
-        param_2->teams[*(int *)((int)&possibleTeams[0][0].partyIdx + iVar19)] = '\x01';
-        lVar6 = lVar6 - (ulonglong)
-                        (uint)pTVar1->parties[*(int *)((int)&possibleTeams[0][0].partyIdx + iVar19)]
-                              .totalSkill;
-        iVar19 = (int)lVar6;
-        uVar17 = uVar17 - (uint)pTVar1->parties
+        uVar12 = uVar15 * 0x1c3 + lVar4;
+        param_2->teams[*(int *)((int)&possibleTeams[0][0].partyIdx + iVar17)] = '\x01';
+        lVar4 = lVar4 - (ulonglong)
+                        (uint)param_1->parties
+                              [*(int *)((int)&possibleTeams[0][0].partyIdx + iVar17)].totalSkill;
+        iVar17 = (int)lVar4;
+        uVar15 = uVar15 - (uint)param_1->parties
                                 [*(int *)((int)&possibleTeams[0][0].partyIdx +
-                                         (int)((uVar14 & 0xffffffff) << 3))].memberCount;
-      } while (0 < (longlong)uVar17);
-      iVar18 = (int)uVar17;
+                                         (int)((uVar12 & 0xffffffff) << 3))].memberCount;
+      } while (0 < (longlong)uVar15);
+      iVar16 = (int)uVar15;
     }
-    if (iVar18 < 0) {
+    if (iVar16 < 0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\iwnet\\iwnet_teammaking_core.cpp"
                       ,0x8c,0,"%s");
     }
-    if (iVar19 < 0) {
+    if (iVar17 < 0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\iwnet\\iwnet_teammaking_core.cpp"
                       ,0x8d,0,"%s");
     }
   }
-  uVar3 = __restgprlr_17(lVar5);
-  return (bool)uVar3;
+  return bVar10;
 }
 

@@ -2,31 +2,29 @@
 
 // 82257E48  mp_sub  (line unknown)
 
-void mp_sub(undefined8 param_1,undefined8 param_2,int param_3)
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
+void mp_sub(int param_1,int param_2,int param_3)
 
 {
   int iVar1;
   int iVar2;
-  int iVar3;
   
-  iVar2 = __savegprlr_29();
-  iVar1 = *(int *)(iVar2 + 8);
-  if (iVar1 != *(int *)((int)param_2 + 8)) {
+  iVar1 = *(int *)(param_1 + 8);
+  if (iVar1 != *(int *)(param_2 + 8)) {
     *(int *)(param_3 + 8) = iVar1;
     s_mp_add();
-    __restgprlr_29();
     return;
   }
-  iVar3 = mp_cmp_mag();
-  if (iVar3 != -1) {
+  iVar2 = mp_cmp_mag();
+  if (iVar2 != -1) {
     *(int *)(param_3 + 8) = iVar1;
-    s_mp_sub(iVar2,param_2);
-    __restgprlr_29();
+    s_mp_sub(param_1,param_2);
     return;
   }
   *(uint *)(param_3 + 8) = (uint)(iVar1 == 0);
-  s_mp_sub(param_2,iVar2);
-  __restgprlr_29();
+  s_mp_sub(param_2,param_1);
   return;
 }
 

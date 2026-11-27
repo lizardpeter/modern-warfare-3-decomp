@@ -14,74 +14,75 @@ bdContentStreaming::bdContentStreaming(bdContentStreaming *this,bdRemoteTaskMana
 
 // 82906C90  getFileMetaDataByID  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdcontentstreaming/bdcontentstreaming.cpp:68)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
+
 bdReference<bdRemoteTask> __thiscall
 bdContentStreaming::getFileMetaDataByID
           (bdContentStreaming *this,uint param_1,ulong64 *param_2,bdFileMetaData *param_3)
 
 {
   uint uVar1;
-  uint uVar2;
-  bdReference<bdRemoteTask> *pbVar4;
-  bdTaskByteBuffer *pbVar5;
-  ulonglong uVar3;
-  bdRemoteTask *pbVar6;
+  bdTaskByteBuffer *pbVar3;
+  ulonglong uVar2;
   bdTaskResult *in_r7;
-  uint *puVar7;
-  longlong lVar8;
-  ulonglong uVar9;
+  uint *puVar4;
+  ulong64 *puVar5;
+  longlong lVar6;
   char in_RESERVE;
-  byte bVar10;
-  bdReference<bdRemoteTask> *pbStack00000014;
+  byte bVar7;
+  bdContentStreaming *pbStack00000014;
   bdReference<bdTaskByteBuffer> local_60;
   undefined4 local_5c;
   bdTaskByteBuffer *local_58;
   
-  lVar8 = (longlong)(int)param_3;
-  uVar9 = (ulonglong)(int)param_2;
-  pbVar4 = (bdReference<bdRemoteTask> *)__savegprlr_24(this);
-  pbVar4->m_ptr = (bdRemoteTask *)0x0;
-  uVar2 = (uint)uVar9;
+  lVar6 = (longlong)(int)param_2;
+  *(undefined4 *)this = 0;
   local_5c = 1;
-  pbStack00000014 = pbVar4;
+  pbStack00000014 = this;
   local_58 = bdMemory::allocate(0x2c);
-  bVar10 = (local_58 == (bdTaskByteBuffer *)0x0) << 1;
+  bVar7 = (local_58 == (bdTaskByteBuffer *)0x0) << 1;
   if (local_58 == (bdTaskByteBuffer *)0x0) {
-    uVar3 = 0;
+    uVar2 = 0;
   }
   else {
-    pbVar5 = bdTaskByteBuffer::bdTaskByteBuffer(local_58,uVar2 * 9 + 0x45,true);
-    uVar3 = (ulonglong)(int)pbVar5;
+    pbVar3 = bdTaskByteBuffer::bdTaskByteBuffer(local_58,(int)param_2 * 9 + 0x45,true);
+    uVar2 = (ulonglong)(int)pbVar3;
   }
-  local_60.m_ptr = (bdTaskByteBuffer *)uVar3;
-  if ((uVar3 & 0xffffffff) != 0) {
+  local_60.m_ptr = (bdTaskByteBuffer *)uVar2;
+  if ((uVar2 & 0xffffffff) != 0) {
     do {
-      puVar7 = (uint *)(uVar3 + 4);
+      puVar4 = (uint *)(uVar2 + 4);
       if (in_RESERVE != '\0') {
-        uVar1 = storeWordConditionalIndexed((ulonglong)*puVar7 + 1,0,uVar3 + 4);
-        *puVar7 = uVar1;
-        bVar10 = 2;
+        uVar1 = storeWordConditionalIndexed((ulonglong)*puVar4 + 1,0,uVar2 + 4);
+        *puVar4 = uVar1;
+        bVar7 = 2;
       }
-    } while (!(bool)(bVar10 >> 1 & 1));
+    } while (!(bool)(bVar7 >> 1 & 1));
   }
   bdRemoteTaskManager::initTaskBuffer(&local_60,'2','\x01');
-  bdByteBuffer::writeUInt32((bdByteBuffer *)local_60.m_ptr,uVar2);
-  if ((uVar9 & 0xffffffff) != 0) {
-    lVar8 = lVar8 + -8;
+  bdByteBuffer::writeUInt32((bdByteBuffer *)local_60.m_ptr,(uint)param_2);
+  if (param_2 != (ulong64 *)0x0) {
+    puVar5 = &param_3[-1].m_tags[0x20].m_secTag;
     do {
-      lVar8 = lVar8 + 8;
-      bdByteBuffer::writeUInt64((bdByteBuffer *)local_60.m_ptr,*(ulong64 *)lVar8);
-      uVar9 = uVar9 - 1;
-    } while (uVar9 != 0);
+      puVar5 = puVar5 + 1;
+      bdByteBuffer::writeUInt64((bdByteBuffer *)local_60.m_ptr,*puVar5);
+      lVar6 = lVar6 + -1;
+    } while (lVar6 != 0);
   }
-  bdRemoteTaskManager::startTask(*(bdRemoteTaskManager **)(param_1 + 0x20f4),pbVar4,&local_60);
-  bdRemoteTask::setTaskResult(pbVar4->m_ptr,in_r7,uVar2);
+  bdRemoteTaskManager::startTask
+            (*(bdRemoteTaskManager **)(param_1 + 0x20f4),(bdReference<bdRemoteTask> *)this,&local_60
+            );
+  bdRemoteTask::setTaskResult(*(bdRemoteTask **)this,in_r7,(uint)param_2);
   bdReference<bdTaskByteBuffer>::~bdReference<bdTaskByteBuffer>(&local_60);
-  pbVar6 = (bdRemoteTask *)__restgprlr_24(pbVar4);
-  return (bdReference<bdRemoteTask>)pbVar6;
+  return (bdReference<bdRemoteTask>)(bdRemoteTask *)this;
 }
 
 
 // 829080E8  uploadUserSummaryMetaData  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdcontentstreaming/bdcontentstreaming.cpp:96)
+
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 
 bdReference<bdRemoteTask> __thiscall
 bdContentStreaming::uploadUserSummaryMetaData
@@ -89,102 +90,97 @@ bdContentStreaming::uploadUserSummaryMetaData
           uint param_5,uint param_6,bdTag *param_7)
 
 {
-  uint uVar1;
-  uint *puVar2;
-  bool bVar6;
-  bdReference<bdRemoteTask> bVar3;
-  int iVar4;
-  bdRemoteTask *pbVar5;
   bdContentStreamingBase *this_00;
-  ulong64 uVar7;
-  uint uVar8;
-  uint *puVar10;
-  longlong lVar9;
-  uint uVar11;
+  bdReference<bdRemoteTask> bVar1;
+  int iVar2;
+  uint uVar4;
+  uint *puVar6;
+  longlong lVar5;
+  uint uVar7;
   char in_RESERVE;
-  byte bVar12;
-  uint *puStack00000014;
+  byte bVar8;
+  bdContentStreaming *pbStack00000014;
   uint in_stack_ffffff48;
   uint in_stack_ffffff4c;
   bdTag *in_stack_ffffff50;
   bdFileID *in_stack_ffffff54;
   uint in_stack_ffffff58;
-  undefined1 in_stack_ffffff5f;
+  bool in_stack_ffffff5f;
   undefined1 local_40 [64];
+  bool bVar3;
   
-  this_00 = (bdContentStreamingBase *)param_1;
-  uVar7 = (ulong64)(int)param_2;
-  puVar2 = (uint *)__savegprlr_27(this);
   local_40._4_4_ = 0;
-  puStack00000014 = puVar2;
-  bVar6 = bdContentStreamingBase::initUpload
+  this_00 = (bdContentStreamingBase *)param_1;
+  pbStack00000014 = this;
+  bVar3 = bdContentStreamingBase::initUpload
                     (this_00,0,(void *)param_3,(bdUploadInterceptor *)0x0,(uint)param_4,(char *)0x0,
                      0,(void *)param_5,in_stack_ffffff48,in_stack_ffffff4c,in_stack_ffffff50,
-                     in_stack_ffffff54,in_stack_ffffff58,(bool)in_stack_ffffff5f);
-  bVar12 = !bVar6 << 1;
-  if (!bVar6) {
-    *puVar2 = 0;
+                     in_stack_ffffff54,in_stack_ffffff58,in_stack_ffffff5f);
+  bVar8 = !bVar3 << 1;
+  if (!bVar3) {
+    *(undefined4 *)this = 0;
   }
   else {
-    (this_00->m_taskData).m_fileID = uVar7;
+    (this_00->m_taskData).m_fileID = (longlong)(int)param_2;
     this_00->m_uploadSummary = true;
-    bVar3 = _preUploadSummary((bdContentStreaming *)local_40);
+    bVar1 = _preUploadSummary((bdContentStreaming *)local_40);
     bdReference<bdRemoteTask>::operator=
-              (&this_00->m_remoteTask,(bdReference<bdRemoteTask> *)bVar3.m_ptr);
+              (&this_00->m_remoteTask,(bdReference<bdRemoteTask> *)bVar1.m_ptr);
     bdReference<bdRemoteTask>::~bdReference<bdRemoteTask>((bdReference<bdRemoteTask> *)local_40);
-    iVar4 = (**(code **)(((this_00->m_remoteTask).m_ptr)->_padding_ + 4))();
-    if (iVar4 == 1) {
-      bVar3 = bdContentStreamingBase::startUpload((bdContentStreamingBase *)(local_40 + 8));
-      uVar8 = 2;
+    iVar2 = (**(code **)(((this_00->m_remoteTask).m_ptr)->_padding_ + 4))();
+    if (iVar2 == 1) {
+      bVar1 = bdContentStreamingBase::startUpload((bdContentStreamingBase *)(local_40 + 8));
+      uVar4 = 2;
     }
     else {
       local_40._0_4_ = (this_00->m_remoteTask).m_ptr;
       if ((ulonglong)(uint)local_40._0_4_ != 0) {
-        lVar9 = (ulonglong)(uint)local_40._0_4_ + 4;
+        lVar5 = (ulonglong)(uint)local_40._0_4_ + 4;
         do {
-          puVar10 = (uint *)lVar9;
+          puVar6 = (uint *)lVar5;
           if (in_RESERVE != '\0') {
-            uVar8 = storeWordConditionalIndexed((ulonglong)*puVar10 + 1,0,lVar9);
-            *puVar10 = uVar8;
-            bVar12 = 2;
+            uVar4 = storeWordConditionalIndexed((ulonglong)*puVar6 + 1,0,lVar5);
+            *puVar6 = uVar4;
+            bVar8 = 2;
           }
-        } while (!(bool)(bVar12 >> 1 & 1));
+        } while (!(bool)(bVar8 >> 1 & 1));
       }
-      bVar3.m_ptr = (bdRemoteTask *)local_40;
-      uVar8 = 4;
+      bVar1.m_ptr = (bdRemoteTask *)local_40;
+      uVar4 = 4;
     }
-    uVar11 = (bVar3.m_ptr)->_padding_;
-    *puVar2 = uVar11;
-    if ((ulonglong)uVar11 != 0) {
-      lVar9 = (ulonglong)uVar11 + 4;
+    uVar7 = (bVar1.m_ptr)->_padding_;
+    *(uint *)this = uVar7;
+    if ((ulonglong)uVar7 != 0) {
+      lVar5 = (ulonglong)uVar7 + 4;
       do {
-        puVar10 = (uint *)lVar9;
+        puVar6 = (uint *)lVar5;
         if (in_RESERVE != '\0') {
-          uVar1 = storeWordConditionalIndexed((ulonglong)*puVar10 + 1,0,lVar9);
-          *puVar10 = uVar1;
-          bVar12 = 2;
+          uVar7 = storeWordConditionalIndexed((ulonglong)*puVar6 + 1,0,lVar5);
+          *puVar6 = uVar7;
+          bVar8 = 2;
         }
-        local_40._4_4_ = uVar11;
-      } while (!(bool)(bVar12 >> 1 & 1));
+      } while (!(bool)(bVar8 >> 1 & 1));
     }
-    uVar11 = uVar8 | 1;
-    if ((uVar8 & 4) != 0) {
-      uVar11 = uVar8 & 0xfffffffb | 1;
-      local_40._4_4_ = uVar11;
+    uVar7 = uVar4 | 1;
+    if ((uVar4 & 4) != 0) {
+      uVar7 = uVar4 & 0xfffffffb | 1;
+      local_40._4_4_ = uVar7;
       bdReference<bdRemoteTask>::~bdReference<bdRemoteTask>((bdReference<bdRemoteTask> *)local_40);
     }
-    if ((uVar11 & 2) != 0) {
-      local_40._4_4_ = uVar11 & 0xfffffffd;
+    if ((uVar7 & 2) != 0) {
+      local_40._4_4_ = uVar7 & 0xfffffffd;
       bdReference<bdRemoteTask>::~bdReference<bdRemoteTask>
                 ((bdReference<bdRemoteTask> *)(local_40 + 8));
     }
   }
-  pbVar5 = (bdRemoteTask *)__restgprlr_27(puVar2);
-  return (bdReference<bdRemoteTask>)pbVar5;
+  return (bdReference<bdRemoteTask>)(bdRemoteTask *)this;
 }
 
 
 // 82908328  downloadUserSummary  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdcontentstreaming/bdcontentstreaming.cpp:113)
+
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
 
 bdReference<bdRemoteTask> __thiscall
 bdContentStreaming::downloadUserSummary
@@ -192,96 +188,91 @@ bdContentStreaming::downloadUserSummary
           uint param_5)
 
 {
-  uint uVar1;
-  uint *puVar2;
-  bool bVar6;
-  bdReference<bdRemoteTask> bVar3;
-  int iVar4;
-  bdRemoteTask *pbVar5;
   bdContentStreamingBase *this_00;
-  ulong64 uVar7;
+  bool bVar3;
+  bdReference<bdRemoteTask> bVar1;
+  int iVar2;
   uint in_r9;
-  uint uVar8;
-  uint *puVar10;
-  longlong lVar9;
-  uint uVar11;
+  uint uVar4;
+  uint *puVar6;
+  longlong lVar5;
+  uint uVar7;
   char in_RESERVE;
-  byte bVar12;
-  uint *puStack00000014;
+  byte bVar8;
+  bdContentStreaming *pbStack00000014;
   undefined1 local_70 [112];
   
   this_00 = (bdContentStreamingBase *)param_1;
-  uVar7 = (ulong64)(int)param_2;
-  puVar2 = (uint *)__savegprlr_22(this);
   local_70._4_4_ = 0;
-  puStack00000014 = puVar2;
+  pbStack00000014 = this;
   bdFileMetaData::reset((bdFileMetaData *)&this_00->m_summaryMeta);
-  bVar6 = bdContentStreamingBase::initDownload
+  bVar3 = bdContentStreamingBase::initDownload
                     (this_00,(void *)param_3,param_4,(bdDownloadInterceptor *)0x0,
                      (bdFileMetaData *)&this_00->m_summaryMeta,param_5,in_r9);
-  bVar12 = !bVar6 << 1;
-  if (!bVar6) {
-    *puVar2 = 0;
+  bVar8 = !bVar3 << 1;
+  if (!bVar3) {
+    *(undefined4 *)this = 0;
   }
   else {
-    (this_00->m_taskData).m_fileID = uVar7;
-    bVar3 = _preDownloadSummary((bdContentStreaming *)local_70);
+    (this_00->m_taskData).m_fileID = (longlong)(int)param_2;
+    bVar1 = _preDownloadSummary((bdContentStreaming *)local_70);
     bdReference<bdRemoteTask>::operator=
-              (&this_00->m_remoteTask,(bdReference<bdRemoteTask> *)bVar3.m_ptr);
+              (&this_00->m_remoteTask,(bdReference<bdRemoteTask> *)bVar1.m_ptr);
     bdReference<bdRemoteTask>::~bdReference<bdRemoteTask>((bdReference<bdRemoteTask> *)local_70);
-    iVar4 = (**(code **)(((this_00->m_remoteTask).m_ptr)->_padding_ + 4))();
-    if (iVar4 == 1) {
-      bVar3 = bdContentStreamingBase::startDownload((bdContentStreamingBase *)(local_70 + 8));
-      uVar8 = 2;
+    iVar2 = (**(code **)(((this_00->m_remoteTask).m_ptr)->_padding_ + 4))();
+    if (iVar2 == 1) {
+      bVar1 = bdContentStreamingBase::startDownload((bdContentStreamingBase *)(local_70 + 8));
+      uVar4 = 2;
     }
     else {
       local_70._0_4_ = (this_00->m_remoteTask).m_ptr;
       if ((ulonglong)(uint)local_70._0_4_ != 0) {
-        lVar9 = (ulonglong)(uint)local_70._0_4_ + 4;
+        lVar5 = (ulonglong)(uint)local_70._0_4_ + 4;
         do {
-          puVar10 = (uint *)lVar9;
+          puVar6 = (uint *)lVar5;
           if (in_RESERVE != '\0') {
-            uVar8 = storeWordConditionalIndexed((ulonglong)*puVar10 + 1,0,lVar9);
-            *puVar10 = uVar8;
-            bVar12 = 2;
+            uVar4 = storeWordConditionalIndexed((ulonglong)*puVar6 + 1,0,lVar5);
+            *puVar6 = uVar4;
+            bVar8 = 2;
           }
-        } while (!(bool)(bVar12 >> 1 & 1));
+        } while (!(bool)(bVar8 >> 1 & 1));
       }
-      bVar3.m_ptr = (bdRemoteTask *)local_70;
-      uVar8 = 4;
+      bVar1.m_ptr = (bdRemoteTask *)local_70;
+      uVar4 = 4;
     }
-    uVar11 = (bVar3.m_ptr)->_padding_;
-    *puVar2 = uVar11;
-    if ((ulonglong)uVar11 != 0) {
-      lVar9 = (ulonglong)uVar11 + 4;
+    uVar7 = (bVar1.m_ptr)->_padding_;
+    *(uint *)this = uVar7;
+    if ((ulonglong)uVar7 != 0) {
+      lVar5 = (ulonglong)uVar7 + 4;
       do {
-        puVar10 = (uint *)lVar9;
+        puVar6 = (uint *)lVar5;
         if (in_RESERVE != '\0') {
-          uVar1 = storeWordConditionalIndexed((ulonglong)*puVar10 + 1,0,lVar9);
-          *puVar10 = uVar1;
-          bVar12 = 2;
+          uVar7 = storeWordConditionalIndexed((ulonglong)*puVar6 + 1,0,lVar5);
+          *puVar6 = uVar7;
+          bVar8 = 2;
         }
-        local_70._4_4_ = uVar11;
-      } while (!(bool)(bVar12 >> 1 & 1));
+      } while (!(bool)(bVar8 >> 1 & 1));
     }
-    uVar11 = uVar8 | 1;
-    if ((uVar8 & 4) != 0) {
-      uVar11 = uVar8 & 0xfffffffb | 1;
-      local_70._4_4_ = uVar11;
+    uVar7 = uVar4 | 1;
+    if ((uVar4 & 4) != 0) {
+      uVar7 = uVar4 & 0xfffffffb | 1;
+      local_70._4_4_ = uVar7;
       bdReference<bdRemoteTask>::~bdReference<bdRemoteTask>((bdReference<bdRemoteTask> *)local_70);
     }
-    if ((uVar11 & 2) != 0) {
-      local_70._4_4_ = uVar11 & 0xfffffffd;
+    if ((uVar7 & 2) != 0) {
+      local_70._4_4_ = uVar7 & 0xfffffffd;
       bdReference<bdRemoteTask>::~bdReference<bdRemoteTask>
                 ((bdReference<bdRemoteTask> *)(local_70 + 8));
     }
   }
-  pbVar5 = (bdRemoteTask *)__restgprlr_22(puVar2);
-  return (bdReference<bdRemoteTask>)pbVar5;
+  return (bdReference<bdRemoteTask>)(bdRemoteTask *)this;
 }
 
 
 // 82906E38  listFilesByOwner  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdcontentstreaming/bdcontentstreaming.cpp:133)
+
+/* WARNING: Function: __savegprlr_20 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_20 replaced with injection: xenon_save_restore */
 
 bdReference<bdRemoteTask> __thiscall
 bdContentStreaming::listFilesByOwner
@@ -289,81 +280,69 @@ bdContentStreaming::listFilesByOwner
           bdFileMetaData *param_4,ushort param_5,ushort param_6,char *param_7)
 
 {
-  bdReference<bdRemoteTask> *pbVar2;
-  uint uVar3;
-  bdTaskByteBuffer *pbVar4;
+  uint uVar2;
+  bdTaskByteBuffer *pbVar3;
   ulonglong uVar1;
-  bdRemoteTask *pbVar5;
-  int iVar6;
-  ulong64 uVar7;
-  uint uVar8;
-  ushort uVar9;
-  bdTaskResult *pbVar10;
-  uint uVar11;
-  ushort uVar12;
-  uint *puVar13;
+  uint *puVar4;
   char in_RESERVE;
-  byte bVar14;
-  bdReference<bdRemoteTask> *pbStack00000014;
+  byte bVar5;
+  bdContentStreaming *pbStack00000014;
   char *in_stack_00000054;
   bdReference<bdTaskByteBuffer> local_80;
   undefined4 local_7c;
   bdTaskByteBuffer *local_78;
   
-  iVar6 = (int)param_1;
-  uVar12 = (ushort)param_7;
-  uVar11 = (uint)(short)param_6;
-  pbVar10 = (bdTaskResult *)(int)(short)param_5;
-  uVar9 = (ushort)param_4;
-  uVar8 = (uint)(short)param_3;
-  uVar7 = (ulong64)(int)param_2;
-  pbVar2 = (bdReference<bdRemoteTask> *)__savegprlr_20(this);
-  pbVar2->m_ptr = (bdRemoteTask *)0x0;
-  uVar3 = 0x57;
+  *(undefined4 *)this = 0;
+  uVar2 = 0x57;
   local_7c = 1;
-  pbStack00000014 = pbVar2;
+  pbStack00000014 = this;
   if (in_stack_00000054 != (char *)0x0) {
-    uVar3 = bdStrnlen(in_stack_00000054,0x80);
-    uVar3 = uVar3 + 0x59;
+    uVar2 = bdStrnlen(in_stack_00000054,0x80);
+    uVar2 = uVar2 + 0x59;
   }
   local_78 = bdMemory::allocate(0x2c);
-  bVar14 = (local_78 == (bdTaskByteBuffer *)0x0) << 1;
+  bVar5 = (local_78 == (bdTaskByteBuffer *)0x0) << 1;
   if (local_78 == (bdTaskByteBuffer *)0x0) {
     uVar1 = 0;
   }
   else {
-    pbVar4 = bdTaskByteBuffer::bdTaskByteBuffer(local_78,uVar3,true);
-    uVar1 = (ulonglong)(int)pbVar4;
+    pbVar3 = bdTaskByteBuffer::bdTaskByteBuffer(local_78,uVar2,true);
+    uVar1 = (ulonglong)(int)pbVar3;
   }
   local_80.m_ptr = (bdTaskByteBuffer *)uVar1;
   if ((uVar1 & 0xffffffff) != 0) {
     do {
-      puVar13 = (uint *)(uVar1 + 4);
+      puVar4 = (uint *)(uVar1 + 4);
       if (in_RESERVE != '\0') {
-        uVar3 = storeWordConditionalIndexed((ulonglong)*puVar13 + 1,0,uVar1 + 4);
-        *puVar13 = uVar3;
-        bVar14 = 2;
+        uVar2 = storeWordConditionalIndexed((ulonglong)*puVar4 + 1,0,uVar1 + 4);
+        *puVar4 = uVar2;
+        bVar5 = 2;
       }
-    } while (!(bool)(bVar14 >> 1 & 1));
+    } while (!(bool)(bVar5 >> 1 & 1));
   }
   bdRemoteTaskManager::initTaskBuffer(&local_80,'2','\x02');
-  bdByteBuffer::writeUInt64((bdByteBuffer *)local_80.m_ptr,uVar7);
-  bdByteBuffer::writeUInt32((bdByteBuffer *)local_80.m_ptr,uVar8);
-  bdByteBuffer::writeUInt16((bdByteBuffer *)local_80.m_ptr,(ushort)uVar11);
-  bdByteBuffer::writeUInt16((bdByteBuffer *)local_80.m_ptr,uVar12);
-  bdByteBuffer::writeUInt16((bdByteBuffer *)local_80.m_ptr,uVar9);
+  bdByteBuffer::writeUInt64((bdByteBuffer *)local_80.m_ptr,(longlong)(int)param_2);
+  bdByteBuffer::writeUInt32((bdByteBuffer *)local_80.m_ptr,(int)(short)param_3);
+  bdByteBuffer::writeUInt16((bdByteBuffer *)local_80.m_ptr,param_6);
+  bdByteBuffer::writeUInt16((bdByteBuffer *)local_80.m_ptr,(ushort)param_7);
+  bdByteBuffer::writeUInt16((bdByteBuffer *)local_80.m_ptr,(ushort)param_4);
   if (in_stack_00000054 != (char *)0x0) {
     bdByteBuffer::writeString((bdByteBuffer *)local_80.m_ptr,in_stack_00000054,0x81);
   }
-  bdRemoteTaskManager::startTask(*(bdRemoteTaskManager **)(iVar6 + 0x20f4),pbVar2,&local_80);
-  bdRemoteTask::setTaskResult(pbVar2->m_ptr,pbVar10,uVar11 & 0xffff);
+  bdRemoteTaskManager::startTask
+            (*(bdRemoteTaskManager **)((int)param_1 + 0x20f4),(bdReference<bdRemoteTask> *)this,
+             &local_80);
+  bdRemoteTask::setTaskResult
+            (*(bdRemoteTask **)this,(bdTaskResult *)(int)(short)param_5,(uint)param_6);
   bdReference<bdTaskByteBuffer>::~bdReference<bdTaskByteBuffer>(&local_80);
-  pbVar5 = (bdRemoteTask *)__restgprlr_20(pbVar2);
-  return (bdReference<bdRemoteTask>)pbVar5;
+  return (bdReference<bdRemoteTask>)(bdRemoteTask *)this;
 }
 
 
 // 82908560  upload  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdcontentstreaming/bdcontentstreaming.cpp:263)
+
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
 
 bdReference<bdRemoteTask> __thiscall
 bdContentStreaming::upload
@@ -371,72 +350,68 @@ bdContentStreaming::upload
           ushort param_5,void *param_6,uint param_7,uint param_8,bdTag *param_9,bdFileID *param_10)
 
 {
-  uint uVar1;
-  bdContentStreamingBase *this_00;
+  bdRemoteTask *pbVar1;
+  uint uVar2;
   bool bVar5;
-  bdReference<bdRemoteTask> bVar2;
-  int iVar3;
-  bdRemoteTask *pbVar4;
-  bdContentStreamingBase *this_01;
-  char *pcVar6;
-  longlong lVar7;
-  uint *puVar8;
+  bdReference<bdRemoteTask> bVar3;
+  int iVar4;
+  longlong lVar6;
+  uint *puVar7;
   char in_RESERVE;
-  byte bVar9;
+  byte bVar8;
   uint in_stack_ffffff28;
   uint in_stack_ffffff2c;
   bdTag *in_stack_ffffff30;
   bdFileID *in_stack_ffffff34;
   uint in_stack_ffffff38;
-  undefined1 in_stack_ffffff3f;
+  bool in_stack_ffffff3f;
   bdReference<bdRemoteTask> local_60 [24];
   
-  pcVar6 = (char *)(int)(short)param_5;
-  this_01 = (bdContentStreamingBase *)(int)(short)param_1;
-  this_00 = (bdContentStreamingBase *)__savegprlr_22(this);
   local_60[0].m_ptr = (bdRemoteTask *)0x0;
   bVar5 = bdContentStreamingBase::initUpload
-                    (this_01,(ushort)param_2,(void *)param_3,(bdUploadInterceptor *)0x0,
-                     (uint)param_4,pcVar6,(ushort)param_6,(void *)param_7,in_stack_ffffff28,
-                     in_stack_ffffff2c,in_stack_ffffff30,in_stack_ffffff34,in_stack_ffffff38,
-                     (bool)in_stack_ffffff3f);
-  bVar9 = !bVar5 << 1;
+                    ((bdContentStreamingBase *)(int)(short)param_1,(ushort)param_2,(void *)param_3,
+                     (bdUploadInterceptor *)0x0,(uint)param_4,(char *)(int)(short)param_5,
+                     (ushort)param_6,(void *)param_7,in_stack_ffffff28,in_stack_ffffff2c,
+                     in_stack_ffffff30,in_stack_ffffff34,in_stack_ffffff38,in_stack_ffffff3f);
+  bVar8 = !bVar5 << 1;
   if (!bVar5) {
-    this_00->_padding_ = 0;
+    *(undefined4 *)this = 0;
   }
   else {
-    bVar2 = _preUpload((bdContentStreaming *)local_60,(char *)this_01,(ushort)pcVar6,(uint)param_2,
-                       (ushort)param_4,param_6);
+    bVar3 = _preUpload((bdContentStreaming *)local_60,(char *)(int)(short)param_1,param_5,
+                       (uint)param_2,(ushort)param_4,param_6);
     bdReference<bdRemoteTask>::operator=
-              (&this_01->m_remoteTask,(bdReference<bdRemoteTask> *)bVar2.m_ptr);
+              ((bdReference<bdRemoteTask> *)((short)param_1 + 0x1a64),
+               (bdReference<bdRemoteTask> *)bVar3.m_ptr);
     bdReference<bdRemoteTask>::~bdReference<bdRemoteTask>(local_60);
-    iVar3 = (**(code **)(((this_01->m_remoteTask).m_ptr)->_padding_ + 4))();
-    if (iVar3 == 1) {
-      bdContentStreamingBase::startUpload(this_00);
+    iVar4 = (**(code **)(**(int **)((short)param_1 + 0x1a64) + 4))();
+    if (iVar4 == 1) {
+      bdContentStreamingBase::startUpload((bdContentStreamingBase *)this);
     }
     else {
-      pbVar4 = (this_01->m_remoteTask).m_ptr;
-      this_00->_padding_ = (int)pbVar4;
-      if (ZEXT48(pbVar4) != 0) {
-        lVar7 = ZEXT48(pbVar4) + 4;
+      pbVar1 = ((bdReference<bdRemoteTask> *)((short)param_1 + 0x1a64))->m_ptr;
+      *(bdRemoteTask **)this = pbVar1;
+      if (ZEXT48(pbVar1) != 0) {
+        lVar6 = ZEXT48(pbVar1) + 4;
         do {
-          puVar8 = (uint *)lVar7;
+          puVar7 = (uint *)lVar6;
           if (in_RESERVE != '\0') {
-            uVar1 = storeWordConditionalIndexed((ulonglong)*puVar8 + 1,0,lVar7);
-            *puVar8 = uVar1;
-            bVar9 = 2;
+            uVar2 = storeWordConditionalIndexed((ulonglong)*puVar7 + 1,0,lVar6);
+            *puVar7 = uVar2;
+            bVar8 = 2;
           }
-          local_60[0].m_ptr = pbVar4;
-        } while (!(bool)(bVar9 >> 1 & 1));
+        } while (!(bool)(bVar8 >> 1 & 1));
       }
     }
   }
-  pbVar4 = (bdRemoteTask *)__restgprlr_22(this_00);
-  return (bdReference<bdRemoteTask>)pbVar4;
+  return (bdReference<bdRemoteTask>)(bdRemoteTask *)this;
 }
 
 
 // 829086B8  upload  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdcontentstreaming/bdcontentstreaming.cpp:292)
+
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
 
 bdReference<bdRemoteTask> __thiscall
 bdContentStreaming::upload
@@ -445,72 +420,68 @@ bdContentStreaming::upload
           bdFileID *param_10)
 
 {
-  uint uVar1;
-  bdContentStreamingBase *this_00;
+  bdRemoteTask *pbVar1;
+  uint uVar2;
   bool bVar5;
-  bdReference<bdRemoteTask> bVar2;
-  int iVar3;
-  bdRemoteTask *pbVar4;
-  bdContentStreamingBase *this_01;
-  char *pcVar6;
-  longlong lVar7;
-  uint *puVar8;
+  bdReference<bdRemoteTask> bVar3;
+  int iVar4;
+  longlong lVar6;
+  uint *puVar7;
   char in_RESERVE;
-  byte bVar9;
+  byte bVar8;
   uint in_stack_ffffff28;
   uint in_stack_ffffff2c;
   bdTag *in_stack_ffffff30;
   bdFileID *in_stack_ffffff34;
   uint in_stack_ffffff38;
-  undefined1 in_stack_ffffff3f;
+  bool in_stack_ffffff3f;
   bdReference<bdRemoteTask> local_60 [24];
   
-  pcVar6 = (char *)(int)(short)param_5;
-  this_01 = (bdContentStreamingBase *)(int)(short)param_1;
-  this_00 = (bdContentStreamingBase *)__savegprlr_22(this);
   local_60[0].m_ptr = (bdRemoteTask *)0x0;
   bVar5 = bdContentStreamingBase::initUpload
-                    (this_01,(ushort)param_2,(void *)0x0,(bdUploadInterceptor *)param_3,
-                     (uint)param_4,pcVar6,(ushort)param_6,(void *)param_7,in_stack_ffffff28,
-                     in_stack_ffffff2c,in_stack_ffffff30,in_stack_ffffff34,in_stack_ffffff38,
-                     (bool)in_stack_ffffff3f);
-  bVar9 = !bVar5 << 1;
+                    ((bdContentStreamingBase *)(int)(short)param_1,(ushort)param_2,(void *)0x0,
+                     (bdUploadInterceptor *)param_3,(uint)param_4,(char *)(int)(short)param_5,
+                     (ushort)param_6,(void *)param_7,in_stack_ffffff28,in_stack_ffffff2c,
+                     in_stack_ffffff30,in_stack_ffffff34,in_stack_ffffff38,in_stack_ffffff3f);
+  bVar8 = !bVar5 << 1;
   if (!bVar5) {
-    this_00->_padding_ = 0;
+    *(undefined4 *)this = 0;
   }
   else {
-    bVar2 = _preUpload((bdContentStreaming *)local_60,(char *)this_01,(ushort)pcVar6,(uint)param_2,
-                       (ushort)param_4,param_6);
+    bVar3 = _preUpload((bdContentStreaming *)local_60,(char *)(int)(short)param_1,param_5,
+                       (uint)param_2,(ushort)param_4,param_6);
     bdReference<bdRemoteTask>::operator=
-              (&this_01->m_remoteTask,(bdReference<bdRemoteTask> *)bVar2.m_ptr);
+              ((bdReference<bdRemoteTask> *)((short)param_1 + 0x1a64),
+               (bdReference<bdRemoteTask> *)bVar3.m_ptr);
     bdReference<bdRemoteTask>::~bdReference<bdRemoteTask>(local_60);
-    iVar3 = (**(code **)(((this_01->m_remoteTask).m_ptr)->_padding_ + 4))();
-    if (iVar3 == 1) {
-      bdContentStreamingBase::startUpload(this_00);
+    iVar4 = (**(code **)(**(int **)((short)param_1 + 0x1a64) + 4))();
+    if (iVar4 == 1) {
+      bdContentStreamingBase::startUpload((bdContentStreamingBase *)this);
     }
     else {
-      pbVar4 = (this_01->m_remoteTask).m_ptr;
-      this_00->_padding_ = (int)pbVar4;
-      if (ZEXT48(pbVar4) != 0) {
-        lVar7 = ZEXT48(pbVar4) + 4;
+      pbVar1 = ((bdReference<bdRemoteTask> *)((short)param_1 + 0x1a64))->m_ptr;
+      *(bdRemoteTask **)this = pbVar1;
+      if (ZEXT48(pbVar1) != 0) {
+        lVar6 = ZEXT48(pbVar1) + 4;
         do {
-          puVar8 = (uint *)lVar7;
+          puVar7 = (uint *)lVar6;
           if (in_RESERVE != '\0') {
-            uVar1 = storeWordConditionalIndexed((ulonglong)*puVar8 + 1,0,lVar7);
-            *puVar8 = uVar1;
-            bVar9 = 2;
+            uVar2 = storeWordConditionalIndexed((ulonglong)*puVar7 + 1,0,lVar6);
+            *puVar7 = uVar2;
+            bVar8 = 2;
           }
-          local_60[0].m_ptr = pbVar4;
-        } while (!(bool)(bVar9 >> 1 & 1));
+        } while (!(bool)(bVar8 >> 1 & 1));
       }
     }
   }
-  pbVar4 = (bdRemoteTask *)__restgprlr_22(this_00);
-  return (bdReference<bdRemoteTask>)pbVar4;
+  return (bdReference<bdRemoteTask>)(bdRemoteTask *)this;
 }
 
 
 // 82908808  copyFromUserStorage  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdcontentstreaming/bdcontentstreaming.cpp:339)
+
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 
 bdReference<bdRemoteTask> __thiscall
 bdContentStreaming::copyFromUserStorage
@@ -518,106 +489,96 @@ bdContentStreaming::copyFromUserStorage
           void *param_5,uint param_6,uint param_7,bdTag *param_8,bdFileID *param_9)
 
 {
-  uint uVar1;
-  uint *puVar2;
   bdContentStreamingBase *this_00;
-  bdReference<bdRemoteTask> bVar3;
-  int iVar4;
-  bdRemoteTask *pbVar5;
-  uchar uVar7;
-  ushort uVar8;
-  char *pcVar9;
-  ushort uVar10;
-  uint uVar11;
-  uint *puVar13;
-  longlong lVar12;
-  uint uVar14;
+  bdReference<bdRemoteTask> bVar1;
+  int iVar2;
+  uint uVar4;
+  uint *puVar6;
+  longlong lVar5;
+  uint uVar7;
   char in_RESERVE;
-  byte bVar15;
-  uint *puStack00000014;
+  byte bVar8;
+  bdContentStreaming *pbStack00000014;
   uint in_stack_ffffff38;
   uint in_stack_ffffff3c;
   bdTag *in_stack_ffffff40;
   bdFileID *in_stack_ffffff44;
   uint in_stack_ffffff48;
-  undefined1 in_stack_ffffff4f;
+  bool in_stack_ffffff4f;
   undefined1 local_50 [80];
-  bool bVar6;
+  bool bVar3;
   
-  uVar10 = (ushort)param_5;
-  pcVar9 = (char *)(int)(short)param_4;
-  uVar8 = (ushort)param_3;
-  uVar7 = (uchar)param_2;
-  puVar2 = (uint *)__savegprlr_25(this);
   local_50._4_4_ = 0;
   this_00 = (bdContentStreamingBase *)param_1;
-  puStack00000014 = puVar2;
-  bVar6 = bdContentStreamingBase::initUpload
-                    (this_00,uVar8,(void *)0x0,(bdUploadInterceptor *)0x0,0,pcVar9,uVar10,
-                     (void *)param_6,in_stack_ffffff38,in_stack_ffffff3c,in_stack_ffffff40,
-                     in_stack_ffffff44,in_stack_ffffff48,(bool)in_stack_ffffff4f);
-  bVar15 = !bVar6 << 1;
-  if (!bVar6) {
-    *puVar2 = 0;
+  pbStack00000014 = this;
+  bVar3 = bdContentStreamingBase::initUpload
+                    (this_00,(ushort)param_3,(void *)0x0,(bdUploadInterceptor *)0x0,0,
+                     (char *)(int)(short)param_4,(ushort)param_5,(void *)param_6,in_stack_ffffff38,
+                     in_stack_ffffff3c,in_stack_ffffff40,in_stack_ffffff44,in_stack_ffffff48,
+                     in_stack_ffffff4f);
+  bVar8 = !bVar3 << 1;
+  if (!bVar3) {
+    *(undefined4 *)this = 0;
   }
   else {
-    bVar3 = _preCopy((bdContentStreaming *)local_50,param_1,uVar7);
+    bVar1 = _preCopy((bdContentStreaming *)local_50,param_1,(uchar)param_2);
     bdReference<bdRemoteTask>::operator=
-              (&this_00->m_remoteTask,(bdReference<bdRemoteTask> *)bVar3.m_ptr);
+              (&this_00->m_remoteTask,(bdReference<bdRemoteTask> *)bVar1.m_ptr);
     bdReference<bdRemoteTask>::~bdReference<bdRemoteTask>((bdReference<bdRemoteTask> *)local_50);
-    iVar4 = (**(code **)(((this_00->m_remoteTask).m_ptr)->_padding_ + 4))();
-    if (iVar4 == 1) {
-      bVar3 = bdContentStreamingBase::startCopy((bdContentStreamingBase *)(local_50 + 8));
-      uVar11 = 2;
+    iVar2 = (**(code **)(((this_00->m_remoteTask).m_ptr)->_padding_ + 4))();
+    if (iVar2 == 1) {
+      bVar1 = bdContentStreamingBase::startCopy((bdContentStreamingBase *)(local_50 + 8));
+      uVar4 = 2;
     }
     else {
       local_50._0_4_ = (this_00->m_remoteTask).m_ptr;
       if ((ulonglong)(uint)local_50._0_4_ != 0) {
-        lVar12 = (ulonglong)(uint)local_50._0_4_ + 4;
+        lVar5 = (ulonglong)(uint)local_50._0_4_ + 4;
         do {
-          puVar13 = (uint *)lVar12;
+          puVar6 = (uint *)lVar5;
           if (in_RESERVE != '\0') {
-            uVar11 = storeWordConditionalIndexed((ulonglong)*puVar13 + 1,0,lVar12);
-            *puVar13 = uVar11;
-            bVar15 = 2;
+            uVar4 = storeWordConditionalIndexed((ulonglong)*puVar6 + 1,0,lVar5);
+            *puVar6 = uVar4;
+            bVar8 = 2;
           }
-        } while (!(bool)(bVar15 >> 1 & 1));
+        } while (!(bool)(bVar8 >> 1 & 1));
       }
-      bVar3.m_ptr = (bdRemoteTask *)local_50;
-      uVar11 = 4;
+      bVar1.m_ptr = (bdRemoteTask *)local_50;
+      uVar4 = 4;
     }
-    uVar14 = (bVar3.m_ptr)->_padding_;
-    *puVar2 = uVar14;
-    if ((ulonglong)uVar14 != 0) {
-      lVar12 = (ulonglong)uVar14 + 4;
+    uVar7 = (bVar1.m_ptr)->_padding_;
+    *(uint *)this = uVar7;
+    if ((ulonglong)uVar7 != 0) {
+      lVar5 = (ulonglong)uVar7 + 4;
       do {
-        puVar13 = (uint *)lVar12;
+        puVar6 = (uint *)lVar5;
         if (in_RESERVE != '\0') {
-          uVar1 = storeWordConditionalIndexed((ulonglong)*puVar13 + 1,0,lVar12);
-          *puVar13 = uVar1;
-          bVar15 = 2;
+          uVar7 = storeWordConditionalIndexed((ulonglong)*puVar6 + 1,0,lVar5);
+          *puVar6 = uVar7;
+          bVar8 = 2;
         }
-        local_50._4_4_ = uVar14;
-      } while (!(bool)(bVar15 >> 1 & 1));
+      } while (!(bool)(bVar8 >> 1 & 1));
     }
-    uVar14 = uVar11 | 1;
-    if ((uVar11 & 4) != 0) {
-      uVar14 = uVar11 & 0xfffffffb | 1;
-      local_50._4_4_ = uVar14;
+    uVar7 = uVar4 | 1;
+    if ((uVar4 & 4) != 0) {
+      uVar7 = uVar4 & 0xfffffffb | 1;
+      local_50._4_4_ = uVar7;
       bdReference<bdRemoteTask>::~bdReference<bdRemoteTask>((bdReference<bdRemoteTask> *)local_50);
     }
-    if ((uVar14 & 2) != 0) {
-      local_50._4_4_ = uVar14 & 0xfffffffd;
+    if ((uVar7 & 2) != 0) {
+      local_50._4_4_ = uVar7 & 0xfffffffd;
       bdReference<bdRemoteTask>::~bdReference<bdRemoteTask>
                 ((bdReference<bdRemoteTask> *)(local_50 + 8));
     }
   }
-  pbVar5 = (bdRemoteTask *)__restgprlr_25(puVar2);
-  return (bdReference<bdRemoteTask>)pbVar5;
+  return (bdReference<bdRemoteTask>)(bdRemoteTask *)this;
 }
 
 
 // 82908A50  download  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdcontentstreaming/bdcontentstreaming.cpp:406)
+
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 
 bdReference<bdRemoteTask> __thiscall
 bdContentStreaming::download
@@ -625,12 +586,11 @@ bdContentStreaming::download
           bdFileMetaData *param_3,uint param_4,uint param_5)
 
 {
-  uint uVar1;
+  bdRemoteTask *pbVar1;
+  uint uVar2;
   bdContentStreamingBase *this_00;
-  bdContentStreamingBase *this_01;
-  bdReference<bdRemoteTask> bVar2;
-  int iVar3;
-  bdRemoteTask *pbVar4;
+  bdReference<bdRemoteTask> bVar3;
+  int iVar4;
   uint in_r9;
   longlong lVar6;
   uint *puVar7;
@@ -639,50 +599,50 @@ bdContentStreaming::download
   bdReference<bdRemoteTask> local_40 [16];
   bool bVar5;
   
-  this_00 = (bdContentStreamingBase *)__savegprlr_27(this);
   local_40[0].m_ptr = (bdRemoteTask *)0x0;
-  this_01 = (bdContentStreamingBase *)param_1;
+  this_00 = (bdContentStreamingBase *)param_1;
   bVar5 = bdContentStreamingBase::initDownload
-                    (this_01,(void *)0x0,0,(bdDownloadInterceptor *)param_3,
+                    (this_00,(void *)0x0,0,(bdDownloadInterceptor *)param_3,
                      (bdFileMetaData *)param_4,param_5,in_r9);
   bVar8 = !bVar5 << 1;
   if (!bVar5) {
-    this_00->_padding_ = 0;
+    *(undefined4 *)this = 0;
   }
   else {
-    bVar2 = _preDownloadByFileID
+    bVar3 = _preDownloadByFileID
                       ((bdContentStreaming *)local_40,param_1,(uint)param_2,
                        (bdFileMetaData *)0x40000000);
     bdReference<bdRemoteTask>::operator=
-              (&this_01->m_remoteTask,(bdReference<bdRemoteTask> *)bVar2.m_ptr);
+              (&this_00->m_remoteTask,(bdReference<bdRemoteTask> *)bVar3.m_ptr);
     bdReference<bdRemoteTask>::~bdReference<bdRemoteTask>(local_40);
-    iVar3 = (**(code **)(((this_01->m_remoteTask).m_ptr)->_padding_ + 4))();
-    if (iVar3 == 1) {
-      bdContentStreamingBase::startDownload(this_00);
+    iVar4 = (**(code **)(((this_00->m_remoteTask).m_ptr)->_padding_ + 4))();
+    if (iVar4 == 1) {
+      bdContentStreamingBase::startDownload((bdContentStreamingBase *)this);
     }
     else {
-      pbVar4 = (this_01->m_remoteTask).m_ptr;
-      this_00->_padding_ = (int)pbVar4;
-      if (ZEXT48(pbVar4) != 0) {
-        lVar6 = ZEXT48(pbVar4) + 4;
+      pbVar1 = (this_00->m_remoteTask).m_ptr;
+      *(bdRemoteTask **)this = pbVar1;
+      if (ZEXT48(pbVar1) != 0) {
+        lVar6 = ZEXT48(pbVar1) + 4;
         do {
           puVar7 = (uint *)lVar6;
           if (in_RESERVE != '\0') {
-            uVar1 = storeWordConditionalIndexed((ulonglong)*puVar7 + 1,0,lVar6);
-            *puVar7 = uVar1;
+            uVar2 = storeWordConditionalIndexed((ulonglong)*puVar7 + 1,0,lVar6);
+            *puVar7 = uVar2;
             bVar8 = 2;
           }
-          local_40[0].m_ptr = pbVar4;
         } while (!(bool)(bVar8 >> 1 & 1));
       }
     }
   }
-  pbVar4 = (bdRemoteTask *)__restgprlr_27(this_00);
-  return (bdReference<bdRemoteTask>)pbVar4;
+  return (bdReference<bdRemoteTask>)(bdRemoteTask *)this;
 }
 
 
 // 82908B68  download  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdcontentstreaming/bdcontentstreaming.cpp:431)
+
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 
 bdReference<bdRemoteTask> __thiscall
 bdContentStreaming::download
@@ -690,12 +650,11 @@ bdContentStreaming::download
           bdFileMetaData *param_4,uint param_5,uint param_6)
 
 {
-  uint uVar1;
+  bdRemoteTask *pbVar1;
+  uint uVar2;
   bdContentStreamingBase *this_00;
-  bdContentStreamingBase *this_01;
-  bdReference<bdRemoteTask> bVar2;
-  int iVar3;
-  bdRemoteTask *pbVar4;
+  bdReference<bdRemoteTask> bVar3;
+  int iVar4;
   uint in_r10;
   longlong lVar6;
   uint *puVar7;
@@ -704,60 +663,58 @@ bdContentStreaming::download
   bdReference<bdRemoteTask> local_40 [16];
   bool bVar5;
   
-  this_00 = (bdContentStreamingBase *)__savegprlr_26(this);
   local_40[0].m_ptr = (bdRemoteTask *)0x0;
-  this_01 = (bdContentStreamingBase *)param_1;
+  this_00 = (bdContentStreamingBase *)param_1;
   bVar5 = bdContentStreamingBase::initDownload
-                    (this_01,(void *)param_3,(uint)param_4,(bdDownloadInterceptor *)0x0,
+                    (this_00,(void *)param_3,(uint)param_4,(bdDownloadInterceptor *)0x0,
                      (bdFileMetaData *)param_5,param_6,in_r10);
   bVar8 = !bVar5 << 1;
   if (!bVar5) {
-    this_00->_padding_ = 0;
+    *(undefined4 *)this = 0;
   }
   else {
-    bVar2 = _preDownloadByFileID((bdContentStreaming *)local_40,param_1,(uint)param_2,param_4);
+    bVar3 = _preDownloadByFileID((bdContentStreaming *)local_40,param_1,(uint)param_2,param_4);
     bdReference<bdRemoteTask>::operator=
-              (&this_01->m_remoteTask,(bdReference<bdRemoteTask> *)bVar2.m_ptr);
+              (&this_00->m_remoteTask,(bdReference<bdRemoteTask> *)bVar3.m_ptr);
     bdReference<bdRemoteTask>::~bdReference<bdRemoteTask>(local_40);
-    iVar3 = (**(code **)(((this_01->m_remoteTask).m_ptr)->_padding_ + 4))();
-    if (iVar3 == 1) {
-      bdContentStreamingBase::startDownload(this_00);
+    iVar4 = (**(code **)(((this_00->m_remoteTask).m_ptr)->_padding_ + 4))();
+    if (iVar4 == 1) {
+      bdContentStreamingBase::startDownload((bdContentStreamingBase *)this);
     }
     else {
-      pbVar4 = (this_01->m_remoteTask).m_ptr;
-      this_00->_padding_ = (int)pbVar4;
-      if (ZEXT48(pbVar4) != 0) {
-        lVar6 = ZEXT48(pbVar4) + 4;
+      pbVar1 = (this_00->m_remoteTask).m_ptr;
+      *(bdRemoteTask **)this = pbVar1;
+      if (ZEXT48(pbVar1) != 0) {
+        lVar6 = ZEXT48(pbVar1) + 4;
         do {
           puVar7 = (uint *)lVar6;
           if (in_RESERVE != '\0') {
-            uVar1 = storeWordConditionalIndexed((ulonglong)*puVar7 + 1,0,lVar6);
-            *puVar7 = uVar1;
+            uVar2 = storeWordConditionalIndexed((ulonglong)*puVar7 + 1,0,lVar6);
+            *puVar7 = uVar2;
             bVar8 = 2;
           }
-          local_40[0].m_ptr = pbVar4;
         } while (!(bool)(bVar8 >> 1 & 1));
       }
     }
   }
-  pbVar4 = (bdRemoteTask *)__restgprlr_26(this_00);
-  return (bdReference<bdRemoteTask>)pbVar4;
+  return (bdReference<bdRemoteTask>)(bdRemoteTask *)this;
 }
 
 
 // 82908C90  removeFile  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdcontentstreaming/bdcontentstreaming.cpp:568)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 bdReference<bdRemoteTask> __thiscall
 bdContentStreaming::removeFile(bdContentStreaming *this,ushort param_1)
 
 {
-  uint uVar1;
-  bdContentStreamingBase *this_00;
+  bdRemoteTask *pbVar1;
+  uint uVar2;
   bool bVar5;
-  bdReference<bdRemoteTask> bVar2;
-  int iVar3;
-  bdRemoteTask *pbVar4;
-  bdContentStreamingBase *this_01;
+  bdReference<bdRemoteTask> bVar3;
+  int iVar4;
   bdURL *in_r5;
   longlong lVar6;
   uint *puVar7;
@@ -765,46 +722,46 @@ bdContentStreaming::removeFile(bdContentStreaming *this,ushort param_1)
   byte bVar8;
   bdReference<bdRemoteTask> local_40 [16];
   
-  this_01 = (bdContentStreamingBase *)(int)(short)param_1;
-  this_00 = (bdContentStreamingBase *)__savegprlr_27(this);
   local_40[0].m_ptr = (bdRemoteTask *)0x0;
-  bVar5 = bdContentStreamingBase::initDelete(this_01);
+  bVar5 = bdContentStreamingBase::initDelete((bdContentStreamingBase *)(int)(short)param_1);
   bVar8 = !bVar5 << 1;
   if (!bVar5) {
-    this_00->_padding_ = 0;
+    *(undefined4 *)this = 0;
   }
   else {
-    bVar2 = _preDeleteFile((bdContentStreaming *)local_40,(ushort)this_01,in_r5);
+    bVar3 = _preDeleteFile((bdContentStreaming *)local_40,param_1,in_r5);
     bdReference<bdRemoteTask>::operator=
-              (&this_01->m_remoteTask,(bdReference<bdRemoteTask> *)bVar2.m_ptr);
+              ((bdReference<bdRemoteTask> *)((short)param_1 + 0x1a64),
+               (bdReference<bdRemoteTask> *)bVar3.m_ptr);
     bdReference<bdRemoteTask>::~bdReference<bdRemoteTask>(local_40);
-    iVar3 = (**(code **)(((this_01->m_remoteTask).m_ptr)->_padding_ + 4))();
-    if (iVar3 == 1) {
-      bdContentStreamingBase::startDelete(this_00);
+    iVar4 = (**(code **)(**(int **)((short)param_1 + 0x1a64) + 4))();
+    if (iVar4 == 1) {
+      bdContentStreamingBase::startDelete((bdContentStreamingBase *)this);
     }
     else {
-      pbVar4 = (this_01->m_remoteTask).m_ptr;
-      this_00->_padding_ = (int)pbVar4;
-      if (ZEXT48(pbVar4) != 0) {
-        lVar6 = ZEXT48(pbVar4) + 4;
+      pbVar1 = ((bdReference<bdRemoteTask> *)((short)param_1 + 0x1a64))->m_ptr;
+      *(bdRemoteTask **)this = pbVar1;
+      if (ZEXT48(pbVar1) != 0) {
+        lVar6 = ZEXT48(pbVar1) + 4;
         do {
           puVar7 = (uint *)lVar6;
           if (in_RESERVE != '\0') {
-            uVar1 = storeWordConditionalIndexed((ulonglong)*puVar7 + 1,0,lVar6);
-            *puVar7 = uVar1;
+            uVar2 = storeWordConditionalIndexed((ulonglong)*puVar7 + 1,0,lVar6);
+            *puVar7 = uVar2;
             bVar8 = 2;
           }
-          local_40[0].m_ptr = pbVar4;
         } while (!(bool)(bVar8 >> 1 & 1));
       }
     }
   }
-  pbVar4 = (bdRemoteTask *)__restgprlr_27(this_00);
-  return (bdReference<bdRemoteTask>)pbVar4;
+  return (bdReference<bdRemoteTask>)(bdRemoteTask *)this;
 }
 
 
 // 82907030  _preUpload  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdcontentstreaming/bdcontentstreaming.cpp:592)
+
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
 
 bdReference<bdRemoteTask> __thiscall
 bdContentStreaming::_preUpload
@@ -812,77 +769,70 @@ bdContentStreaming::_preUpload
           bdURL *param_5)
 
 {
-  bdReference<bdRemoteTask> *pbVar2;
-  uint uVar3;
-  bdTaskByteBuffer *pbVar4;
+  uint uVar2;
+  bdTaskByteBuffer *pbVar3;
   ulonglong uVar1;
-  bdRemoteTask *pbVar5;
-  ulonglong uVar6;
-  ushort uVar7;
-  uint uVar8;
-  ushort uVar9;
   bdTaskResult *in_r9;
-  int iVar10;
-  uint *puVar11;
+  int iVar4;
+  uint *puVar5;
   char in_RESERVE;
-  byte bVar12;
-  bdReference<bdRemoteTask> *pbStack00000014;
+  byte bVar6;
+  bdContentStreaming *pbStack00000014;
   bdReference<bdTaskByteBuffer> local_70;
   undefined4 local_6c;
   bdTaskByteBuffer *local_68;
   
-  uVar9 = (ushort)param_5;
-  uVar8 = (uint)(short)param_4;
-  uVar7 = (ushort)param_3;
-  uVar6 = (ulonglong)(short)param_2;
-  pbVar2 = (bdReference<bdRemoteTask> *)__savegprlr_22(this);
-  pbVar2->m_ptr = (bdRemoteTask *)0x0;
+  *(undefined4 *)this = 0;
   local_6c = 1;
-  pbStack00000014 = pbVar2;
-  if ((uVar6 & 0xffffffff) == 0) {
-    iVar10 = 0;
+  pbStack00000014 = this;
+  if (param_2 == 0) {
+    iVar4 = 0;
   }
   else {
-    uVar3 = bdStrnlen((char *)uVar6,0x80);
-    iVar10 = uVar3 + 2;
+    uVar2 = bdStrnlen((char *)(int)(short)param_2,0x80);
+    iVar4 = uVar2 + 2;
   }
   local_68 = bdMemory::allocate(0x2c);
-  bVar12 = (local_68 == (bdTaskByteBuffer *)0x0) << 1;
+  bVar6 = (local_68 == (bdTaskByteBuffer *)0x0) << 1;
   if (local_68 == (bdTaskByteBuffer *)0x0) {
     uVar1 = 0;
   }
   else {
-    pbVar4 = bdTaskByteBuffer::bdTaskByteBuffer(local_68,iVar10 + 0x70,true);
-    uVar1 = (ulonglong)(int)pbVar4;
+    pbVar3 = bdTaskByteBuffer::bdTaskByteBuffer(local_68,iVar4 + 0x70,true);
+    uVar1 = (ulonglong)(int)pbVar3;
   }
   local_70.m_ptr = (bdTaskByteBuffer *)uVar1;
   if ((uVar1 & 0xffffffff) != 0) {
     do {
-      puVar11 = (uint *)(uVar1 + 4);
+      puVar5 = (uint *)(uVar1 + 4);
       if (in_RESERVE != '\0') {
-        uVar3 = storeWordConditionalIndexed((ulonglong)*puVar11 + 1,0,uVar1 + 4);
-        *puVar11 = uVar3;
-        bVar12 = 2;
+        uVar2 = storeWordConditionalIndexed((ulonglong)*puVar5 + 1,0,uVar1 + 4);
+        *puVar5 = uVar2;
+        bVar6 = 2;
       }
-    } while (!(bool)(bVar12 >> 1 & 1));
+    } while (!(bool)(bVar6 >> 1 & 1));
   }
   bdRemoteTaskManager::initTaskBuffer(&local_70,'2','\x05');
-  bdByteBuffer::writeString((bdByteBuffer *)local_70.m_ptr,(char *)uVar6,0x81);
-  bdByteBuffer::writeUInt16((bdByteBuffer *)local_70.m_ptr,uVar7);
-  bdByteBuffer::writeUInt32((bdByteBuffer *)local_70.m_ptr,uVar8);
-  bdByteBuffer::writeUInt16((bdByteBuffer *)local_70.m_ptr,uVar9);
+  bdByteBuffer::writeString((bdByteBuffer *)local_70.m_ptr,(char *)(int)(short)param_2,0x81);
+  bdByteBuffer::writeUInt16((bdByteBuffer *)local_70.m_ptr,(ushort)param_3);
+  bdByteBuffer::writeUInt32((bdByteBuffer *)local_70.m_ptr,(int)(short)param_4);
+  bdByteBuffer::writeUInt16((bdByteBuffer *)local_70.m_ptr,(ushort)param_5);
   if (param_1[0xdea] != '\0') {
     bdByteBuffer::writeBlob((bdByteBuffer *)local_70.m_ptr,param_1 + 0xdeb,0x20);
   }
-  bdRemoteTaskManager::startTask(*(bdRemoteTaskManager **)(param_1 + 0x20f4),pbVar2,&local_70);
-  bdRemoteTask::setTaskResult(pbVar2->m_ptr,in_r9,3);
+  bdRemoteTaskManager::startTask
+            (*(bdRemoteTaskManager **)(param_1 + 0x20f4),(bdReference<bdRemoteTask> *)this,&local_70
+            );
+  bdRemoteTask::setTaskResult(*(bdRemoteTask **)this,in_r9,3);
   bdReference<bdTaskByteBuffer>::~bdReference<bdTaskByteBuffer>(&local_70);
-  pbVar5 = (bdRemoteTask *)__restgprlr_22(pbVar2);
-  return (bdReference<bdRemoteTask>)pbVar5;
+  return (bdReference<bdRemoteTask>)(bdRemoteTask *)this;
 }
 
 
 // 82907220  _preUploadSummary  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdcontentstreaming/bdcontentstreaming.cpp:621)
+
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 
 bdReference<bdRemoteTask> __thiscall bdContentStreaming::_preUploadSummary(bdContentStreaming *this)
 
@@ -890,404 +840,399 @@ bdReference<bdRemoteTask> __thiscall bdContentStreaming::_preUploadSummary(bdCon
   int iVar1;
   int iVar2;
   uint uVar3;
-  int iVar4;
-  bdReference<bdRemoteTask> *pbVar6;
-  bdTaskByteBuffer *pbVar7;
-  ulonglong uVar5;
-  bdRemoteTask *pbVar8;
-  longlong in_r4;
-  uint *puVar9;
-  uint uVar10;
+  bdTaskByteBuffer *pbVar5;
+  ulonglong uVar4;
+  int in_r4;
+  uint *puVar6;
+  uint uVar7;
+  ulong64 *puVar8;
   char in_RESERVE;
-  byte bVar11;
-  bdReference<bdRemoteTask> *pbStack00000014;
+  byte bVar9;
+  bdContentStreaming *pbStack00000014;
   bdReference<bdTaskByteBuffer> local_40;
   undefined4 local_3c;
   bdTaskByteBuffer *local_38;
   
-  pbVar6 = (bdReference<bdRemoteTask> *)__savegprlr_27(this);
-  uVar10 = 0;
-  pbVar6->m_ptr = (bdRemoteTask *)0x0;
-  iVar4 = (int)in_r4;
-  iVar1 = *(int *)(iVar4 + 0x284);
+  uVar7 = 0;
+  *(undefined4 *)this = 0;
+  iVar1 = *(int *)(in_r4 + 0x284);
   local_3c = 1;
-  iVar2 = *(int *)(iVar4 + 0xde4);
-  pbStack00000014 = pbVar6;
+  iVar2 = *(int *)(in_r4 + 0xde4);
+  pbStack00000014 = this;
   local_38 = bdMemory::allocate(0x2c);
-  bVar11 = (local_38 == (bdTaskByteBuffer *)0x0) << 1;
+  bVar9 = (local_38 == (bdTaskByteBuffer *)0x0) << 1;
   if (local_38 == (bdTaskByteBuffer *)0x0) {
-    uVar5 = 0;
+    uVar4 = 0;
   }
   else {
-    pbVar7 = bdTaskByteBuffer::bdTaskByteBuffer(local_38,iVar1 * 0x10 + iVar2 + 0x5e,true);
-    uVar5 = (ulonglong)(int)pbVar7;
+    pbVar5 = bdTaskByteBuffer::bdTaskByteBuffer(local_38,iVar1 * 0x10 + iVar2 + 0x5e,true);
+    uVar4 = (ulonglong)(int)pbVar5;
   }
-  local_40.m_ptr = (bdTaskByteBuffer *)uVar5;
-  if ((uVar5 & 0xffffffff) != 0) {
+  local_40.m_ptr = (bdTaskByteBuffer *)uVar4;
+  if ((uVar4 & 0xffffffff) != 0) {
     do {
-      puVar9 = (uint *)(uVar5 + 4);
+      puVar6 = (uint *)(uVar4 + 4);
       if (in_RESERVE != '\0') {
-        uVar3 = storeWordConditionalIndexed((ulonglong)*puVar9 + 1,0,uVar5 + 4);
-        *puVar9 = uVar3;
-        bVar11 = 2;
+        uVar3 = storeWordConditionalIndexed((ulonglong)*puVar6 + 1,0,uVar4 + 4);
+        *puVar6 = uVar3;
+        bVar9 = 2;
       }
-    } while (!(bool)(bVar11 >> 1 & 1));
+    } while (!(bool)(bVar9 >> 1 & 1));
   }
   bdRemoteTaskManager::initTaskBuffer(&local_40,'2','\x11');
-  bdByteBuffer::writeUInt64((bdByteBuffer *)local_40.m_ptr,*(ulong64 *)(iVar4 + 0x20));
-  bdByteBuffer::writeUInt32((bdByteBuffer *)local_40.m_ptr,*(uint *)(iVar4 + 0x30));
+  bdByteBuffer::writeUInt64((bdByteBuffer *)local_40.m_ptr,*(ulong64 *)(in_r4 + 0x20));
+  bdByteBuffer::writeUInt32((bdByteBuffer *)local_40.m_ptr,*(uint *)(in_r4 + 0x30));
   bdByteBuffer::writeBlob
-            ((bdByteBuffer *)local_40.m_ptr,*(void **)(iVar4 + 0xde0),*(uint *)(iVar4 + 0xde4));
-  bdByteBuffer::writeArrayStart((bdByteBuffer *)local_40.m_ptr,'\n',*(int *)(iVar4 + 0x284) << 1,8);
-  if (*(int *)(iVar4 + 0x284) != 0) {
-    in_r4 = in_r4 + 0x488;
+            ((bdByteBuffer *)local_40.m_ptr,*(void **)(in_r4 + 0xde0),*(uint *)(in_r4 + 0xde4));
+  bdByteBuffer::writeArrayStart((bdByteBuffer *)local_40.m_ptr,'\n',*(int *)(in_r4 + 0x284) << 1,8);
+  if (*(int *)(in_r4 + 0x284) != 0) {
+    puVar8 = (ulong64 *)(in_r4 + 0x488);
     do {
-      bdByteBuffer::writeUInt64((bdByteBuffer *)local_40.m_ptr,*(ulong64 *)((int)in_r4 + 0x10));
-      in_r4 = in_r4 + 0x18;
-      bdByteBuffer::writeUInt64((bdByteBuffer *)local_40.m_ptr,*(ulong64 *)in_r4);
-      uVar10 = uVar10 + 1;
-    } while (uVar10 < *(uint *)(iVar4 + 0x284));
+      bdByteBuffer::writeUInt64((bdByteBuffer *)local_40.m_ptr,puVar8[2]);
+      puVar8 = puVar8 + 3;
+      bdByteBuffer::writeUInt64((bdByteBuffer *)local_40.m_ptr,*puVar8);
+      uVar7 = uVar7 + 1;
+    } while (uVar7 < *(uint *)(in_r4 + 0x284));
   }
   bdByteBuffer::writeArrayEnd((bdByteBuffer *)local_40.m_ptr);
-  if (*(char *)(iVar4 + 0xdea) != '\0') {
-    bdByteBuffer::writeBlob((bdByteBuffer *)local_40.m_ptr,(void *)(iVar4 + 0xdeb),0x20);
+  if (*(char *)(in_r4 + 0xdea) != '\0') {
+    bdByteBuffer::writeBlob((bdByteBuffer *)local_40.m_ptr,(void *)(in_r4 + 0xdeb),0x20);
   }
-  bdRemoteTaskManager::startTask(*(bdRemoteTaskManager **)(iVar4 + 0x20f4),pbVar6,&local_40);
-  bdRemoteTask::setTaskResult(pbVar6->m_ptr,(bdTaskResult *)(iVar4 + 0x7b0),3);
+  bdRemoteTaskManager::startTask
+            (*(bdRemoteTaskManager **)(in_r4 + 0x20f4),(bdReference<bdRemoteTask> *)this,&local_40);
+  bdRemoteTask::setTaskResult(*(bdRemoteTask **)this,(bdTaskResult *)(in_r4 + 0x7b0),3);
   bdReference<bdTaskByteBuffer>::~bdReference<bdTaskByteBuffer>(&local_40);
-  pbVar8 = (bdRemoteTask *)__restgprlr_27(pbVar6);
-  return (bdReference<bdRemoteTask>)pbVar8;
+  return (bdReference<bdRemoteTask>)(bdRemoteTask *)this;
 }
 
 
 // 82907438  _postUploadFile  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdcontentstreaming/bdcontentstreaming.cpp:655)
+
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 
 bdReference<bdRemoteTask> __thiscall bdContentStreaming::_postUploadFile(bdContentStreaming *this)
 
 {
   int iVar1;
   int iVar2;
-  int iVar3;
-  bdReference<bdRemoteTask> *pbVar6;
-  char *pcVar7;
-  longlong lVar4;
-  uint uVar8;
-  bdTaskByteBuffer *pbVar9;
-  ulonglong uVar5;
-  bdRemoteTask *pbVar10;
-  longlong in_r4;
-  int iVar11;
-  int iVar12;
-  uint *puVar13;
-  uint uVar14;
+  char *pcVar4;
+  uint uVar5;
+  bdTaskByteBuffer *pbVar6;
+  ulonglong uVar3;
+  int in_r4;
+  int iVar7;
+  int iVar8;
+  uint *puVar9;
+  char *pcVar10;
+  ulong64 *puVar11;
+  uint uVar12;
   char in_RESERVE;
-  byte bVar15;
-  bdReference<bdRemoteTask> *pbStack00000014;
+  byte bVar13;
+  bdContentStreaming *pbStack00000014;
   bdReference<bdTaskByteBuffer> local_50;
   undefined4 local_4c;
   bdTaskByteBuffer *local_48;
   
-  pbVar6 = (bdReference<bdRemoteTask> *)__savegprlr_26(this);
-  uVar14 = 0;
-  pbVar6->m_ptr = (bdRemoteTask *)0x0;
+  uVar12 = 0;
+  *(undefined4 *)this = 0;
+  pcVar10 = (char *)(in_r4 + 0x82);
   local_4c = 1;
-  pcVar7 = (char *)(in_r4 + 0x82);
-  pbStack00000014 = pbVar6;
-  if (in_r4 + 0x82 == 0) {
-    iVar12 = 0;
+  pbStack00000014 = this;
+  if (pcVar10 == (char *)0x0) {
+    iVar8 = 0;
   }
   else {
-    uVar8 = bdStrnlen(pcVar7,0x80);
-    iVar12 = uVar8 + 2;
+    uVar5 = bdStrnlen(pcVar10,0x80);
+    iVar8 = uVar5 + 2;
   }
-  iVar3 = (int)in_r4;
-  lVar4 = (ulonglong)*(ushort *)(iVar3 + 0xde8) * 0x210 + in_r4 + 0x936;
-  if (lVar4 == 0) {
-    iVar11 = 0;
+  pcVar4 = (char *)((uint)*(ushort *)(in_r4 + 0xde8) * 0x210 + in_r4 + 0x936);
+  if (pcVar4 == (char *)0x0) {
+    iVar7 = 0;
   }
   else {
-    uVar8 = bdStrnlen((char *)lVar4,0x80);
-    iVar11 = uVar8 + 2;
+    uVar5 = bdStrnlen(pcVar4,0x80);
+    iVar7 = uVar5 + 2;
   }
-  iVar1 = *(int *)(iVar3 + 0x284);
-  iVar2 = *(int *)(iVar3 + 0xde4);
+  iVar1 = *(int *)(in_r4 + 0x284);
+  iVar2 = *(int *)(in_r4 + 0xde4);
   local_48 = bdMemory::allocate(0x2c);
-  bVar15 = (local_48 == (bdTaskByteBuffer *)0x0) << 1;
+  bVar13 = (local_48 == (bdTaskByteBuffer *)0x0) << 1;
   if (local_48 == (bdTaskByteBuffer *)0x0) {
-    uVar5 = 0;
+    uVar3 = 0;
   }
   else {
-    pbVar9 = bdTaskByteBuffer::bdTaskByteBuffer
-                       (local_48,iVar1 * 0x10 + iVar11 + iVar12 + iVar2 + 0x5e,true);
-    uVar5 = (ulonglong)(int)pbVar9;
+    pbVar6 = bdTaskByteBuffer::bdTaskByteBuffer
+                       (local_48,iVar1 * 0x10 + iVar7 + iVar8 + iVar2 + 0x5e,true);
+    uVar3 = (ulonglong)(int)pbVar6;
   }
-  local_50.m_ptr = (bdTaskByteBuffer *)uVar5;
-  if ((uVar5 & 0xffffffff) != 0) {
+  local_50.m_ptr = (bdTaskByteBuffer *)uVar3;
+  if ((uVar3 & 0xffffffff) != 0) {
     do {
-      puVar13 = (uint *)(uVar5 + 4);
+      puVar9 = (uint *)(uVar3 + 4);
       if (in_RESERVE != '\0') {
-        uVar8 = storeWordConditionalIndexed((ulonglong)*puVar13 + 1,0,uVar5 + 4);
-        *puVar13 = uVar8;
-        bVar15 = 2;
+        uVar5 = storeWordConditionalIndexed((ulonglong)*puVar9 + 1,0,uVar3 + 4);
+        *puVar9 = uVar5;
+        bVar13 = 2;
       }
-    } while (!(bool)(bVar15 >> 1 & 1));
+    } while (!(bool)(bVar13 >> 1 & 1));
   }
   bdRemoteTaskManager::initTaskBuffer(&local_50,'2','\x06');
-  bdByteBuffer::writeString((bdByteBuffer *)local_50.m_ptr,pcVar7,0x81);
-  bdByteBuffer::writeUInt16((bdByteBuffer *)local_50.m_ptr,*(ushort *)(iVar3 + 0x80));
+  bdByteBuffer::writeString((bdByteBuffer *)local_50.m_ptr,pcVar10,0x81);
+  bdByteBuffer::writeUInt16((bdByteBuffer *)local_50.m_ptr,*(ushort *)(in_r4 + 0x80));
   bdByteBuffer::writeUInt16
             ((bdByteBuffer *)local_50.m_ptr,
-             *(ushort *)((uint)*(ushort *)(iVar3 + 0xde8) * 0x210 + iVar3 + 0x934));
+             *(ushort *)((uint)*(ushort *)(in_r4 + 0xde8) * 0x210 + in_r4 + 0x934));
   bdByteBuffer::writeString
             ((bdByteBuffer *)local_50.m_ptr,
-             (char *)((uint)*(ushort *)(iVar3 + 0xde8) * 0x210 + iVar3 + 0x936),0x81);
-  bdByteBuffer::writeUInt32((bdByteBuffer *)local_50.m_ptr,*(uint *)(iVar3 + 0x30));
-  bdByteBuffer::writeUInt16((bdByteBuffer *)local_50.m_ptr,*(ushort *)(iVar3 + 0x282));
+             (char *)((uint)*(ushort *)(in_r4 + 0xde8) * 0x210 + in_r4 + 0x936),0x81);
+  bdByteBuffer::writeUInt32((bdByteBuffer *)local_50.m_ptr,*(uint *)(in_r4 + 0x30));
+  bdByteBuffer::writeUInt16((bdByteBuffer *)local_50.m_ptr,*(ushort *)(in_r4 + 0x282));
   bdByteBuffer::writeBlob
-            ((bdByteBuffer *)local_50.m_ptr,*(void **)(iVar3 + 0xde0),*(uint *)(iVar3 + 0xde4));
-  bdByteBuffer::writeArrayStart((bdByteBuffer *)local_50.m_ptr,'\n',*(int *)(iVar3 + 0x284) << 1,8);
-  if (*(int *)(iVar3 + 0x284) != 0) {
-    in_r4 = in_r4 + 0x488;
+            ((bdByteBuffer *)local_50.m_ptr,*(void **)(in_r4 + 0xde0),*(uint *)(in_r4 + 0xde4));
+  bdByteBuffer::writeArrayStart((bdByteBuffer *)local_50.m_ptr,'\n',*(int *)(in_r4 + 0x284) << 1,8);
+  if (*(int *)(in_r4 + 0x284) != 0) {
+    puVar11 = (ulong64 *)(in_r4 + 0x488);
     do {
-      bdByteBuffer::writeUInt64((bdByteBuffer *)local_50.m_ptr,*(ulong64 *)((int)in_r4 + 0x10));
-      in_r4 = in_r4 + 0x18;
-      bdByteBuffer::writeUInt64((bdByteBuffer *)local_50.m_ptr,*(ulong64 *)in_r4);
-      uVar14 = uVar14 + 1;
-    } while (uVar14 < *(uint *)(iVar3 + 0x284));
+      bdByteBuffer::writeUInt64((bdByteBuffer *)local_50.m_ptr,puVar11[2]);
+      puVar11 = puVar11 + 3;
+      bdByteBuffer::writeUInt64((bdByteBuffer *)local_50.m_ptr,*puVar11);
+      uVar12 = uVar12 + 1;
+    } while (uVar12 < *(uint *)(in_r4 + 0x284));
   }
   bdByteBuffer::writeArrayEnd((bdByteBuffer *)local_50.m_ptr);
-  bdRemoteTaskManager::startTask(*(bdRemoteTaskManager **)(iVar3 + 0x20f4),pbVar6,&local_50);
-  bdRemoteTask::setTaskResult(pbVar6->m_ptr,*(bdTaskResult **)(iVar3 + 0x7ac),1);
+  bdRemoteTaskManager::startTask
+            (*(bdRemoteTaskManager **)(in_r4 + 0x20f4),(bdReference<bdRemoteTask> *)this,&local_50);
+  bdRemoteTask::setTaskResult(*(bdRemoteTask **)this,*(bdTaskResult **)(in_r4 + 0x7ac),1);
   bdReference<bdTaskByteBuffer>::~bdReference<bdTaskByteBuffer>(&local_50);
-  pbVar10 = (bdRemoteTask *)__restgprlr_26(pbVar6);
-  return (bdReference<bdRemoteTask>)pbVar10;
+  return (bdReference<bdRemoteTask>)(bdRemoteTask *)this;
 }
 
 
 // 829076D8  _postUploadSummary  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdcontentstreaming/bdcontentstreaming.cpp:696)
+
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 
 bdReference<bdRemoteTask> __thiscall
 bdContentStreaming::_postUploadSummary(bdContentStreaming *this)
 
 {
   uint uVar1;
-  bdReference<bdRemoteTask> *pbVar3;
-  bdTaskByteBuffer *pbVar4;
+  bdTaskByteBuffer *pbVar3;
   ulonglong uVar2;
-  bdRemoteTask *pbVar5;
   int in_r4;
-  uint *puVar6;
+  uint *puVar4;
   char in_RESERVE;
-  byte bVar7;
-  bdReference<bdRemoteTask> *pbStack00000014;
+  byte bVar5;
+  bdContentStreaming *pbStack00000014;
   bdReference<bdTaskByteBuffer> local_40;
   undefined4 local_3c;
   bdTaskByteBuffer *local_38;
   
-  pbVar3 = (bdReference<bdRemoteTask> *)__savegprlr_28(this);
-  pbVar3->m_ptr = (bdRemoteTask *)0x0;
+  *(undefined4 *)this = 0;
   local_3c = 1;
-  pbStack00000014 = pbVar3;
+  pbStack00000014 = this;
   local_38 = bdMemory::allocate(0x2c);
-  bVar7 = (local_38 == (bdTaskByteBuffer *)0x0) << 1;
+  bVar5 = (local_38 == (bdTaskByteBuffer *)0x0) << 1;
   if (local_38 == (bdTaskByteBuffer *)0x0) {
     uVar2 = 0;
   }
   else {
-    pbVar4 = bdTaskByteBuffer::bdTaskByteBuffer(local_38,0x4e,true);
-    uVar2 = (ulonglong)(int)pbVar4;
+    pbVar3 = bdTaskByteBuffer::bdTaskByteBuffer(local_38,0x4e,true);
+    uVar2 = (ulonglong)(int)pbVar3;
   }
   local_40.m_ptr = (bdTaskByteBuffer *)uVar2;
   if ((uVar2 & 0xffffffff) != 0) {
     do {
-      puVar6 = (uint *)(uVar2 + 4);
+      puVar4 = (uint *)(uVar2 + 4);
       if (in_RESERVE != '\0') {
-        uVar1 = storeWordConditionalIndexed((ulonglong)*puVar6 + 1,0,uVar2 + 4);
-        *puVar6 = uVar1;
-        bVar7 = 2;
+        uVar1 = storeWordConditionalIndexed((ulonglong)*puVar4 + 1,0,uVar2 + 4);
+        *puVar4 = uVar1;
+        bVar5 = 2;
       }
-    } while (!(bool)(bVar7 >> 1 & 1));
+    } while (!(bool)(bVar5 >> 1 & 1));
   }
   bdRemoteTaskManager::initTaskBuffer(&local_40,'2','\x12');
   bdByteBuffer::writeUInt64((bdByteBuffer *)local_40.m_ptr,*(ulong64 *)(in_r4 + 0x20));
   bdByteBuffer::writeUInt32((bdByteBuffer *)local_40.m_ptr,*(uint *)(in_r4 + 0x30));
-  bdRemoteTaskManager::startTask(*(bdRemoteTaskManager **)(in_r4 + 0x20f4),pbVar3,&local_40);
+  bdRemoteTaskManager::startTask
+            (*(bdRemoteTaskManager **)(in_r4 + 0x20f4),(bdReference<bdRemoteTask> *)this,&local_40);
   bdReference<bdTaskByteBuffer>::~bdReference<bdTaskByteBuffer>(&local_40);
-  pbVar5 = (bdRemoteTask *)__restgprlr_28(pbVar3);
-  return (bdReference<bdRemoteTask>)pbVar5;
+  return (bdReference<bdRemoteTask>)(bdRemoteTask *)this;
 }
 
 
 // 82907848  _preCopy  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdcontentstreaming/bdcontentstreaming.cpp:713)
+
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 
 bdReference<bdRemoteTask> __thiscall
 bdContentStreaming::_preCopy(bdContentStreaming *this,ulong64 param_1,uchar param_2)
 
 {
   uint uVar1;
-  bdReference<bdRemoteTask> *pbVar3;
+  int iVar2;
   bdTaskByteBuffer *pbVar4;
-  ulonglong uVar2;
-  bdRemoteTask *pbVar5;
-  int iVar6;
-  ulong64 uVar7;
+  ulonglong uVar3;
   uchar in_r6;
-  uint *puVar8;
+  uint *puVar5;
   char in_RESERVE;
-  byte bVar9;
-  bdReference<bdRemoteTask> *pbStack00000014;
+  byte bVar6;
+  bdContentStreaming *pbStack00000014;
   bdReference<bdTaskByteBuffer> local_50;
   undefined4 local_4c;
   bdTaskByteBuffer *local_48;
   
-  iVar6 = (int)param_1;
-  uVar7 = (ulong64)(char)param_2;
-  pbVar3 = (bdReference<bdRemoteTask> *)__savegprlr_26(this);
-  pbVar3->m_ptr = (bdRemoteTask *)0x0;
+  *(undefined4 *)this = 0;
   local_4c = 1;
-  pbStack00000014 = pbVar3;
+  pbStack00000014 = this;
   local_48 = bdMemory::allocate(0x2c);
-  bVar9 = (local_48 == (bdTaskByteBuffer *)0x0) << 1;
+  bVar6 = (local_48 == (bdTaskByteBuffer *)0x0) << 1;
   if (local_48 == (bdTaskByteBuffer *)0x0) {
-    uVar2 = 0;
+    uVar3 = 0;
   }
   else {
     pbVar4 = bdTaskByteBuffer::bdTaskByteBuffer(local_48,0x4c,true);
-    uVar2 = (ulonglong)(int)pbVar4;
+    uVar3 = (ulonglong)(int)pbVar4;
   }
-  local_50.m_ptr = (bdTaskByteBuffer *)uVar2;
-  if ((uVar2 & 0xffffffff) != 0) {
+  local_50.m_ptr = (bdTaskByteBuffer *)uVar3;
+  if ((uVar3 & 0xffffffff) != 0) {
     do {
-      puVar8 = (uint *)(uVar2 + 4);
+      puVar5 = (uint *)(uVar3 + 4);
       if (in_RESERVE != '\0') {
-        uVar1 = storeWordConditionalIndexed((ulonglong)*puVar8 + 1,0,uVar2 + 4);
-        *puVar8 = uVar1;
-        bVar9 = 2;
+        uVar1 = storeWordConditionalIndexed((ulonglong)*puVar5 + 1,0,uVar3 + 4);
+        *puVar5 = uVar1;
+        bVar6 = 2;
       }
-    } while (!(bool)(bVar9 >> 1 & 1));
+    } while (!(bool)(bVar6 >> 1 & 1));
   }
   bdRemoteTaskManager::initTaskBuffer(&local_50,'2',in_r6);
-  bdByteBuffer::writeUInt64((bdByteBuffer *)local_50.m_ptr,uVar7);
-  bdByteBuffer::writeUInt16((bdByteBuffer *)local_50.m_ptr,*(ushort *)(iVar6 + 0x80));
-  bdRemoteTaskManager::startTask(*(bdRemoteTaskManager **)(iVar6 + 0x20f4),pbVar3,&local_50);
-  bdRemoteTask::setTaskResult(pbVar3->m_ptr,(bdTaskResult *)(iVar6 + 0xe24),3);
+  bdByteBuffer::writeUInt64((bdByteBuffer *)local_50.m_ptr,(longlong)(char)param_2);
+  iVar2 = (int)param_1;
+  bdByteBuffer::writeUInt16((bdByteBuffer *)local_50.m_ptr,*(ushort *)(iVar2 + 0x80));
+  bdRemoteTaskManager::startTask
+            (*(bdRemoteTaskManager **)(iVar2 + 0x20f4),(bdReference<bdRemoteTask> *)this,&local_50);
+  bdRemoteTask::setTaskResult(*(bdRemoteTask **)this,(bdTaskResult *)(iVar2 + 0xe24),3);
   bdReference<bdTaskByteBuffer>::~bdReference<bdTaskByteBuffer>(&local_50);
-  pbVar5 = (bdRemoteTask *)__restgprlr_26(pbVar3);
-  return (bdReference<bdRemoteTask>)pbVar5;
+  return (bdReference<bdRemoteTask>)(bdRemoteTask *)this;
 }
 
 
 // 829079D0  _postCopy  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdcontentstreaming/bdcontentstreaming.cpp:732)
+
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 
 bdReference<bdRemoteTask> __thiscall bdContentStreaming::_postCopy(bdContentStreaming *this)
 
 {
   int iVar1;
   int iVar2;
-  int iVar3;
-  bdReference<bdRemoteTask> *pbVar6;
-  char *pcVar7;
-  longlong lVar4;
-  uint uVar8;
-  bdTaskByteBuffer *pbVar9;
-  ulonglong uVar5;
-  bdRemoteTask *pbVar10;
-  longlong in_r4;
-  int iVar11;
-  int iVar12;
-  uint *puVar13;
-  uint uVar14;
-  uint uVar15;
+  longlong lVar3;
+  uint uVar5;
+  bdTaskByteBuffer *pbVar6;
+  ulonglong uVar4;
+  int in_r4;
+  int iVar7;
+  int iVar8;
+  uint *puVar9;
+  uint uVar10;
+  char *pcVar11;
+  ulong64 *puVar12;
+  uint uVar13;
   char in_RESERVE;
-  byte bVar16;
-  bdReference<bdRemoteTask> *pbStack00000014;
+  byte bVar14;
+  bdContentStreaming *pbStack00000014;
   bdReference<bdTaskByteBuffer> local_50;
   undefined4 local_4c;
   bdTaskByteBuffer *local_48;
   
-  pbVar6 = (bdReference<bdRemoteTask> *)__savegprlr_25(this);
-  uVar15 = 0;
-  pbVar6->m_ptr = (bdRemoteTask *)0x0;
-  iVar3 = (int)in_r4;
+  uVar13 = 0;
+  *(undefined4 *)this = 0;
   local_4c = 1;
-  if (*(ushort *)(iVar3 + 0xde8) < 2) {
-    uVar14 = 0;
+  if (*(ushort *)(in_r4 + 0xde8) < 2) {
+    uVar10 = 0;
   }
   else {
-    uVar14 = *(uint *)(iVar3 + 0x1138);
+    uVar10 = *(uint *)(in_r4 + 0x1138);
   }
-  pcVar7 = (char *)(in_r4 + 0x82);
-  pbStack00000014 = pbVar6;
-  if (in_r4 + 0x82 == 0) {
-    iVar12 = 0;
-  }
-  else {
-    uVar8 = bdStrnlen(pcVar7,0x80);
-    iVar12 = uVar8 + 2;
-  }
-  lVar4 = (ulonglong)*(uint *)(iVar3 + 0xe28) + 0x186;
-  if (lVar4 == 0) {
-    iVar11 = 0;
+  pcVar11 = (char *)(in_r4 + 0x82);
+  pbStack00000014 = this;
+  if (pcVar11 == (char *)0x0) {
+    iVar8 = 0;
   }
   else {
-    uVar8 = bdStrnlen((char *)lVar4,0x80);
-    iVar11 = uVar8 + 2;
+    uVar5 = bdStrnlen(pcVar11,0x80);
+    iVar8 = uVar5 + 2;
   }
-  iVar1 = *(int *)(iVar3 + 0x284);
-  iVar2 = *(int *)(iVar3 + 0xde4);
+  lVar3 = (ulonglong)*(uint *)(in_r4 + 0xe28) + 0x186;
+  if (lVar3 == 0) {
+    iVar7 = 0;
+  }
+  else {
+    uVar5 = bdStrnlen((char *)lVar3,0x80);
+    iVar7 = uVar5 + 2;
+  }
+  iVar1 = *(int *)(in_r4 + 0x284);
+  iVar2 = *(int *)(in_r4 + 0xde4);
   local_48 = bdMemory::allocate(0x2c);
-  bVar16 = (local_48 == (bdTaskByteBuffer *)0x0) << 1;
+  bVar14 = (local_48 == (bdTaskByteBuffer *)0x0) << 1;
   if (local_48 == (bdTaskByteBuffer *)0x0) {
-    uVar5 = 0;
+    uVar4 = 0;
   }
   else {
-    pbVar9 = bdTaskByteBuffer::bdTaskByteBuffer
-                       (local_48,iVar1 * 0x10 + iVar2 + iVar11 + iVar12 + 99,true);
-    uVar5 = (ulonglong)(int)pbVar9;
+    pbVar6 = bdTaskByteBuffer::bdTaskByteBuffer
+                       (local_48,iVar1 * 0x10 + iVar2 + iVar7 + iVar8 + 99,true);
+    uVar4 = (ulonglong)(int)pbVar6;
   }
-  local_50.m_ptr = (bdTaskByteBuffer *)uVar5;
-  if ((uVar5 & 0xffffffff) != 0) {
+  local_50.m_ptr = (bdTaskByteBuffer *)uVar4;
+  if ((uVar4 & 0xffffffff) != 0) {
     do {
-      puVar13 = (uint *)(uVar5 + 4);
+      puVar9 = (uint *)(uVar4 + 4);
       if (in_RESERVE != '\0') {
-        uVar8 = storeWordConditionalIndexed((ulonglong)*puVar13 + 1,0,uVar5 + 4);
-        *puVar13 = uVar8;
-        bVar16 = 2;
+        uVar5 = storeWordConditionalIndexed((ulonglong)*puVar9 + 1,0,uVar4 + 4);
+        *puVar9 = uVar5;
+        bVar14 = 2;
       }
-    } while (!(bool)(bVar16 >> 1 & 1));
+    } while (!(bool)(bVar14 >> 1 & 1));
   }
   bdRemoteTaskManager::initTaskBuffer(&local_50,'2','\x10');
-  bdByteBuffer::writeString((bdByteBuffer *)local_50.m_ptr,pcVar7,0x81);
-  bdByteBuffer::writeUInt16((bdByteBuffer *)local_50.m_ptr,*(ushort *)(iVar3 + 0x80));
+  bdByteBuffer::writeString((bdByteBuffer *)local_50.m_ptr,pcVar11,0x81);
+  bdByteBuffer::writeUInt16((bdByteBuffer *)local_50.m_ptr,*(ushort *)(in_r4 + 0x80));
   bdByteBuffer::writeUInt16
-            ((bdByteBuffer *)local_50.m_ptr,*(ushort *)(*(int *)(iVar3 + 0xe28) + 0x184));
+            ((bdByteBuffer *)local_50.m_ptr,*(ushort *)(*(int *)(in_r4 + 0xe28) + 0x184));
   bdByteBuffer::writeString
-            ((bdByteBuffer *)local_50.m_ptr,(char *)(*(int *)(iVar3 + 0xe28) + 0x186),0x80);
-  bdByteBuffer::writeUInt32((bdByteBuffer *)local_50.m_ptr,*(uint *)(iVar3 + 0xfac));
-  bdByteBuffer::writeUInt16((bdByteBuffer *)local_50.m_ptr,*(ushort *)(iVar3 + 0x282));
-  bdByteBuffer::writeUInt32((bdByteBuffer *)local_50.m_ptr,uVar14);
+            ((bdByteBuffer *)local_50.m_ptr,(char *)(*(int *)(in_r4 + 0xe28) + 0x186),0x80);
+  bdByteBuffer::writeUInt32((bdByteBuffer *)local_50.m_ptr,*(uint *)(in_r4 + 0xfac));
+  bdByteBuffer::writeUInt16((bdByteBuffer *)local_50.m_ptr,*(ushort *)(in_r4 + 0x282));
+  bdByteBuffer::writeUInt32((bdByteBuffer *)local_50.m_ptr,uVar10);
   bdByteBuffer::writeBlob
-            ((bdByteBuffer *)local_50.m_ptr,*(void **)(iVar3 + 0xde0),*(uint *)(iVar3 + 0xde4));
-  bdByteBuffer::writeArrayStart((bdByteBuffer *)local_50.m_ptr,'\n',*(int *)(iVar3 + 0x284) << 1,8);
-  if (*(int *)(iVar3 + 0x284) != 0) {
-    in_r4 = in_r4 + 0x488;
+            ((bdByteBuffer *)local_50.m_ptr,*(void **)(in_r4 + 0xde0),*(uint *)(in_r4 + 0xde4));
+  bdByteBuffer::writeArrayStart((bdByteBuffer *)local_50.m_ptr,'\n',*(int *)(in_r4 + 0x284) << 1,8);
+  if (*(int *)(in_r4 + 0x284) != 0) {
+    puVar12 = (ulong64 *)(in_r4 + 0x488);
     do {
-      bdByteBuffer::writeUInt64((bdByteBuffer *)local_50.m_ptr,*(ulong64 *)((int)in_r4 + 0x10));
-      in_r4 = in_r4 + 0x18;
-      bdByteBuffer::writeUInt64((bdByteBuffer *)local_50.m_ptr,*(ulong64 *)in_r4);
-      uVar15 = uVar15 + 1;
-    } while (uVar15 < *(uint *)(iVar3 + 0x284));
+      bdByteBuffer::writeUInt64((bdByteBuffer *)local_50.m_ptr,puVar12[2]);
+      puVar12 = puVar12 + 3;
+      bdByteBuffer::writeUInt64((bdByteBuffer *)local_50.m_ptr,*puVar12);
+      uVar13 = uVar13 + 1;
+    } while (uVar13 < *(uint *)(in_r4 + 0x284));
   }
   bdByteBuffer::writeArrayEnd((bdByteBuffer *)local_50.m_ptr);
-  bdRemoteTaskManager::startTask(*(bdRemoteTaskManager **)(iVar3 + 0x20f4),pbVar6,&local_50);
-  bdRemoteTask::setTaskResult(pbVar6->m_ptr,*(bdTaskResult **)(iVar3 + 0x7ac),1);
+  bdRemoteTaskManager::startTask
+            (*(bdRemoteTaskManager **)(in_r4 + 0x20f4),(bdReference<bdRemoteTask> *)this,&local_50);
+  bdRemoteTask::setTaskResult(*(bdRemoteTask **)this,*(bdTaskResult **)(in_r4 + 0x7ac),1);
   bdReference<bdTaskByteBuffer>::~bdReference<bdTaskByteBuffer>(&local_50);
-  pbVar10 = (bdRemoteTask *)__restgprlr_25(pbVar6);
-  return (bdReference<bdRemoteTask>)pbVar10;
+  return (bdReference<bdRemoteTask>)(bdRemoteTask *)this;
 }
 
 
 // 82907C78  _preDownloadByFileID  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdcontentstreaming/bdcontentstreaming.cpp:804)
+
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 
 bdReference<bdRemoteTask> __thiscall
 bdContentStreaming::_preDownloadByFileID
@@ -1295,167 +1240,158 @@ bdContentStreaming::_preDownloadByFileID
 
 {
   uint uVar1;
-  bdReference<bdRemoteTask> *pbVar3;
-  bdTaskByteBuffer *pbVar4;
+  bdTaskByteBuffer *pbVar3;
   ulonglong uVar2;
-  bdRemoteTask *pbVar5;
-  int iVar6;
-  ulong64 uVar7;
   bdTaskResult *in_r7;
-  uint *puVar8;
+  uint *puVar4;
   char in_RESERVE;
-  byte bVar9;
-  bdReference<bdRemoteTask> *pbStack00000014;
+  byte bVar5;
+  bdContentStreaming *pbStack00000014;
   bdReference<bdTaskByteBuffer> local_50;
   undefined4 local_4c;
   bdTaskByteBuffer *local_48;
   
-  iVar6 = (int)param_1;
-  uVar7 = (ulong64)(int)param_2;
-  pbVar3 = (bdReference<bdRemoteTask> *)__savegprlr_25(this);
-  pbVar3->m_ptr = (bdRemoteTask *)0x0;
+  *(undefined4 *)this = 0;
   local_4c = 1;
-  pbStack00000014 = pbVar3;
+  pbStack00000014 = this;
   local_48 = bdMemory::allocate(0x2c);
-  bVar9 = (local_48 == (bdTaskByteBuffer *)0x0) << 1;
+  bVar5 = (local_48 == (bdTaskByteBuffer *)0x0) << 1;
   if (local_48 == (bdTaskByteBuffer *)0x0) {
     uVar2 = 0;
   }
   else {
-    pbVar4 = bdTaskByteBuffer::bdTaskByteBuffer(local_48,0x4e,true);
-    uVar2 = (ulonglong)(int)pbVar4;
+    pbVar3 = bdTaskByteBuffer::bdTaskByteBuffer(local_48,0x4e,true);
+    uVar2 = (ulonglong)(int)pbVar3;
   }
   local_50.m_ptr = (bdTaskByteBuffer *)uVar2;
   if ((uVar2 & 0xffffffff) != 0) {
     do {
-      puVar8 = (uint *)(uVar2 + 4);
+      puVar4 = (uint *)(uVar2 + 4);
       if (in_RESERVE != '\0') {
-        uVar1 = storeWordConditionalIndexed((ulonglong)*puVar8 + 1,0,uVar2 + 4);
-        *puVar8 = uVar1;
-        bVar9 = 2;
+        uVar1 = storeWordConditionalIndexed((ulonglong)*puVar4 + 1,0,uVar2 + 4);
+        *puVar4 = uVar1;
+        bVar5 = 2;
       }
-    } while (!(bool)(bVar9 >> 1 & 1));
+    } while (!(bool)(bVar5 >> 1 & 1));
   }
   bdRemoteTaskManager::initTaskBuffer(&local_50,'2','\t');
-  bdByteBuffer::writeUInt64((bdByteBuffer *)local_50.m_ptr,uVar7);
+  bdByteBuffer::writeUInt64((bdByteBuffer *)local_50.m_ptr,(longlong)(int)param_2);
   bdByteBuffer::writeUInt32((bdByteBuffer *)local_50.m_ptr,(uint)param_3);
-  bdRemoteTaskManager::startTask(*(bdRemoteTaskManager **)(iVar6 + 0x20f4),pbVar3,&local_50);
-  bdRemoteTask::setTaskResult(pbVar3->m_ptr,in_r7,1);
+  bdRemoteTaskManager::startTask
+            (*(bdRemoteTaskManager **)((int)param_1 + 0x20f4),(bdReference<bdRemoteTask> *)this,
+             &local_50);
+  bdRemoteTask::setTaskResult(*(bdRemoteTask **)this,in_r7,1);
   bdReference<bdTaskByteBuffer>::~bdReference<bdTaskByteBuffer>(&local_50);
-  pbVar5 = (bdRemoteTask *)__restgprlr_25(pbVar3);
-  return (bdReference<bdRemoteTask>)pbVar5;
+  return (bdReference<bdRemoteTask>)(bdRemoteTask *)this;
 }
 
 
 // 82907E00  _preDownloadSummary  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdcontentstreaming/bdcontentstreaming.cpp:869)
+
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 
 bdReference<bdRemoteTask> __thiscall
 bdContentStreaming::_preDownloadSummary(bdContentStreaming *this)
 
 {
   uint uVar1;
-  bdReference<bdRemoteTask> *pbVar3;
-  bdTaskByteBuffer *pbVar4;
+  bdTaskByteBuffer *pbVar3;
   ulonglong uVar2;
-  bdRemoteTask *pbVar5;
   int in_r4;
-  uint *puVar6;
+  uint *puVar4;
   char in_RESERVE;
-  byte bVar7;
-  bdReference<bdRemoteTask> *pbStack00000014;
+  byte bVar5;
+  bdContentStreaming *pbStack00000014;
   bdReference<bdTaskByteBuffer> local_40;
   undefined4 local_3c;
   bdTaskByteBuffer *local_38;
   
-  pbVar3 = (bdReference<bdRemoteTask> *)__savegprlr_28(this);
-  pbVar3->m_ptr = (bdRemoteTask *)0x0;
+  *(undefined4 *)this = 0;
   local_3c = 1;
-  pbStack00000014 = pbVar3;
+  pbStack00000014 = this;
   local_38 = bdMemory::allocate(0x2c);
-  bVar7 = (local_38 == (bdTaskByteBuffer *)0x0) << 1;
+  bVar5 = (local_38 == (bdTaskByteBuffer *)0x0) << 1;
   if (local_38 == (bdTaskByteBuffer *)0x0) {
     uVar2 = 0;
   }
   else {
-    pbVar4 = bdTaskByteBuffer::bdTaskByteBuffer(local_38,0x49,true);
-    uVar2 = (ulonglong)(int)pbVar4;
+    pbVar3 = bdTaskByteBuffer::bdTaskByteBuffer(local_38,0x49,true);
+    uVar2 = (ulonglong)(int)pbVar3;
   }
   local_40.m_ptr = (bdTaskByteBuffer *)uVar2;
   if ((uVar2 & 0xffffffff) != 0) {
     do {
-      puVar6 = (uint *)(uVar2 + 4);
+      puVar4 = (uint *)(uVar2 + 4);
       if (in_RESERVE != '\0') {
-        uVar1 = storeWordConditionalIndexed((ulonglong)*puVar6 + 1,0,uVar2 + 4);
-        *puVar6 = uVar1;
-        bVar7 = 2;
+        uVar1 = storeWordConditionalIndexed((ulonglong)*puVar4 + 1,0,uVar2 + 4);
+        *puVar4 = uVar1;
+        bVar5 = 2;
       }
-    } while (!(bool)(bVar7 >> 1 & 1));
+    } while (!(bool)(bVar5 >> 1 & 1));
   }
   bdRemoteTaskManager::initTaskBuffer(&local_40,'2','\x13');
   bdByteBuffer::writeUInt64((bdByteBuffer *)local_40.m_ptr,*(ulong64 *)(in_r4 + 0x20));
-  bdRemoteTaskManager::startTask(*(bdRemoteTaskManager **)(in_r4 + 0x20f4),pbVar3,&local_40);
-  bdRemoteTask::setTaskResult(pbVar3->m_ptr,(bdTaskResult *)(in_r4 + 0x12d0),1);
+  bdRemoteTaskManager::startTask
+            (*(bdRemoteTaskManager **)(in_r4 + 0x20f4),(bdReference<bdRemoteTask> *)this,&local_40);
+  bdRemoteTask::setTaskResult(*(bdRemoteTask **)this,(bdTaskResult *)(in_r4 + 0x12d0),1);
   bdReference<bdTaskByteBuffer>::~bdReference<bdTaskByteBuffer>(&local_40);
-  pbVar5 = (bdRemoteTask *)__restgprlr_28(pbVar3);
-  return (bdReference<bdRemoteTask>)pbVar5;
+  return (bdReference<bdRemoteTask>)(bdRemoteTask *)this;
 }
 
 
 // 82907F70  _preDeleteFile  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdcontentstreaming/bdcontentstreaming.cpp:887)
+
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 
 bdReference<bdRemoteTask> __thiscall
 bdContentStreaming::_preDeleteFile(bdContentStreaming *this,ushort param_1,bdURL *param_2)
 
 {
   uint uVar1;
-  bdReference<bdRemoteTask> *pbVar3;
-  bdTaskByteBuffer *pbVar4;
+  bdTaskByteBuffer *pbVar3;
   ulonglong uVar2;
-  bdRemoteTask *pbVar5;
-  int iVar6;
-  ushort uVar7;
   bdTaskResult *in_r6;
-  uint *puVar8;
+  uint *puVar4;
   char in_RESERVE;
-  byte bVar9;
-  bdReference<bdRemoteTask> *pbStack00000014;
+  byte bVar5;
+  bdContentStreaming *pbStack00000014;
   bdReference<bdTaskByteBuffer> local_50;
   undefined4 local_4c;
   bdTaskByteBuffer *local_48;
   
-  uVar7 = (ushort)param_2;
-  iVar6 = (int)(short)param_1;
-  pbVar3 = (bdReference<bdRemoteTask> *)__savegprlr_26(this);
-  pbVar3->m_ptr = (bdRemoteTask *)0x0;
+  *(undefined4 *)this = 0;
   local_4c = 1;
-  pbStack00000014 = pbVar3;
+  pbStack00000014 = this;
   local_48 = bdMemory::allocate(0x2c);
-  bVar9 = (local_48 == (bdTaskByteBuffer *)0x0) << 1;
+  bVar5 = (local_48 == (bdTaskByteBuffer *)0x0) << 1;
   if (local_48 == (bdTaskByteBuffer *)0x0) {
     uVar2 = 0;
   }
   else {
-    pbVar4 = bdTaskByteBuffer::bdTaskByteBuffer(local_48,0x43,true);
-    uVar2 = (ulonglong)(int)pbVar4;
+    pbVar3 = bdTaskByteBuffer::bdTaskByteBuffer(local_48,0x43,true);
+    uVar2 = (ulonglong)(int)pbVar3;
   }
   local_50.m_ptr = (bdTaskByteBuffer *)uVar2;
   if ((uVar2 & 0xffffffff) != 0) {
     do {
-      puVar8 = (uint *)(uVar2 + 4);
+      puVar4 = (uint *)(uVar2 + 4);
       if (in_RESERVE != '\0') {
-        uVar1 = storeWordConditionalIndexed((ulonglong)*puVar8 + 1,0,uVar2 + 4);
-        *puVar8 = uVar1;
-        bVar9 = 2;
+        uVar1 = storeWordConditionalIndexed((ulonglong)*puVar4 + 1,0,uVar2 + 4);
+        *puVar4 = uVar1;
+        bVar5 = 2;
       }
-    } while (!(bool)(bVar9 >> 1 & 1));
+    } while (!(bool)(bVar5 >> 1 & 1));
   }
   bdRemoteTaskManager::initTaskBuffer(&local_50,'2','\b');
-  bdByteBuffer::writeUInt16((bdByteBuffer *)local_50.m_ptr,uVar7);
-  bdRemoteTaskManager::startTask(*(bdRemoteTaskManager **)(iVar6 + 0x20f4),pbVar3,&local_50);
-  bdRemoteTask::setTaskResult(pbVar3->m_ptr,in_r6,2);
+  bdByteBuffer::writeUInt16((bdByteBuffer *)local_50.m_ptr,(ushort)param_2);
+  bdRemoteTaskManager::startTask
+            (*(bdRemoteTaskManager **)((short)param_1 + 0x20f4),(bdReference<bdRemoteTask> *)this,
+             &local_50);
+  bdRemoteTask::setTaskResult(*(bdRemoteTask **)this,in_r6,2);
   bdReference<bdTaskByteBuffer>::~bdReference<bdTaskByteBuffer>(&local_50);
-  pbVar5 = (bdRemoteTask *)__restgprlr_26(pbVar3);
-  return (bdReference<bdRemoteTask>)pbVar5;
+  return (bdReference<bdRemoteTask>)(bdRemoteTask *)this;
 }
 
 

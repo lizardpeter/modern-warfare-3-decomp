@@ -2,85 +2,88 @@
 
 // 828AE6D8  IopCopyTemplateFileName  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/stfc/kstuff-io.c:31)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
+
 ulong IopCopyTemplateFileName(_UNICODE_STRING *param_1,ulong param_2,_STRING *param_3)
 
 {
-  undefined2 *puVar1;
+  wchar_t *pwVar1;
   bool bVar2;
-  short *psVar4;
-  uint uVar5;
-  undefined2 uVar7;
-  undefined8 uVar3;
-  ulong uVar6;
-  ulonglong uVar8;
-  undefined2 *puVar9;
+  uint uVar3;
+  wchar_t wVar4;
+  wchar_t *pwVar5;
+  byte *pbVar6;
+  int iVar7;
+  int iVar8;
+  byte *pbVar9;
   byte *pbVar10;
-  int iVar11;
-  int iVar12;
-  byte *pbVar13;
-  byte *pbVar14;
   
-  uVar8 = (ulonglong)(int)param_2;
-  psVar4 = (short *)__savegprlr_24(param_1);
-  pbVar13 = param_3->Buffer;
+  pbVar9 = param_3->Buffer;
   bVar2 = false;
-  puVar1 = *(undefined2 **)(psVar4 + 2);
-  pbVar10 = pbVar13 + param_3->Length;
-  puVar9 = puVar1;
-  if (pbVar13 < pbVar10) {
-    iVar11 = (int)pbVar10 - (int)pbVar13;
+  pwVar1 = param_1->Buffer;
+  pbVar6 = pbVar9 + param_3->Length;
+  pwVar5 = pwVar1;
+  if (pbVar9 < pbVar6) {
+    iVar7 = (int)pbVar6 - (int)pbVar9;
     do {
-      uVar5 = (uint)*pbVar13;
-      pbVar14 = pbVar13 + 1;
-      iVar12 = iVar11 + -1;
-      if (((uVar8 & 0xffffffff) != 0) && (0x7f < uVar5)) {
-        if (0xbf < uVar5) {
-          if (uVar5 < 0xe0) {
-            if (0 < iVar12) {
-              if (*pbVar14 - 0x80 < 0x40) {
-                uVar5 = (uVar5 & 0x1f) << 6 | *pbVar14 - 0x80 & 0x3f;
-                pbVar14 = pbVar13 + 2;
-                iVar12 = iVar11 + -2;
-                goto LAB_828ae7b8;
-              }
-            }
-          }
-          else if ((uVar5 < 0xf0) && (1 < iVar12)) {
-            if ((*pbVar14 - 0x80 < 0x40) && (pbVar13[2] - 0x80 < 0x40)) {
-              uVar5 = ((uVar5 & 0xf) << 6 | *pbVar14 - 0x80 & 0x3f) << 6 | pbVar13[2] - 0x80 & 0x3f;
-              pbVar14 = pbVar13 + 3;
-              iVar12 = iVar11 + -3;
-              goto LAB_828ae7b8;
-            }
-          }
+      uVar3 = (uint)*pbVar9;
+      pbVar10 = pbVar9 + 1;
+      iVar8 = iVar7 + -1;
+      if ((param_2 != 0) && (0x7f < uVar3)) {
+        if (uVar3 < 0xc0) {
+          return 0;
         }
-LAB_828ae80c:
-        uVar3 = 0;
-        goto LAB_828ae804;
+        if (uVar3 < 0xe0) {
+          if (iVar8 < 1) {
+            return 0;
+          }
+          if (0x3f < *pbVar10 - 0x80) {
+            return 0;
+          }
+          uVar3 = (uVar3 & 0x1f) << 6 | *pbVar10 - 0x80 & 0x3f;
+          pbVar10 = pbVar9 + 2;
+          iVar8 = iVar7 + -2;
+        }
+        else {
+          if (0xef < uVar3) {
+            return 0;
+          }
+          if (iVar8 < 2) {
+            return 0;
+          }
+          if (0x3f < *pbVar10 - 0x80) {
+            return 0;
+          }
+          if (0x3f < pbVar9[2] - 0x80) {
+            return 0;
+          }
+          uVar3 = ((uVar3 & 0xf) << 6 | *pbVar10 - 0x80 & 0x3f) << 6 | pbVar9[2] - 0x80 & 0x3f;
+          pbVar10 = pbVar9 + 3;
+          iVar8 = iVar7 + -3;
+        }
       }
-LAB_828ae7b8:
-      iVar11 = iVar12;
-      pbVar13 = pbVar14;
+      iVar7 = iVar8;
+      pbVar9 = pbVar10;
       if (bVar2) {
-        if (uVar5 != 0x2e) goto LAB_828ae80c;
+        if (uVar3 != 0x2e) {
+          return 0;
+        }
         bVar2 = false;
       }
-      if (uVar5 == 0x2a) {
+      if (uVar3 == 0x2a) {
         bVar2 = true;
-        uVar7 = 0x2a;
+        wVar4 = L'*';
       }
       else {
-        uVar7 = RtlUpcaseUnicodeChar();
+        wVar4 = RtlUpcaseUnicodeChar();
       }
-      *puVar9 = uVar7;
-      puVar9 = puVar9 + 1;
-    } while (pbVar13 < pbVar10);
+      *pwVar5 = wVar4;
+      pwVar5 = pwVar5 + 1;
+    } while (pbVar9 < pbVar6);
   }
-  *psVar4 = (short)puVar9 - (short)puVar1;
-  uVar3 = 1;
-LAB_828ae804:
-  uVar6 = __restgprlr_24(uVar3);
-  return uVar6;
+  param_1->Length = (short)pwVar5 - (short)pwVar1;
+  return 1;
 }
 
 
@@ -152,22 +155,21 @@ void StfcBuildVolumeDescriptorFn(_STFC_VOLUME_EXTENSION *param_1,_STFC_VOLUME_DE
 
 // 828AF778  StfcFsdClose  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/stfc/close.c:41)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void StfcFsdClose(_STFC_VOLUME_EXTENSION *param_1,_IRP *param_2)
 
 {
   int iVar1;
   int iVar2;
   int *piVar3;
-  undefined8 uVar4;
-  longlong lVar5;
   
-  lVar5 = (longlong)(int)param_2;
-  uVar4 = __savegprlr_29(param_1);
-  iVar1 = *(int *)(*(int *)((int)lVar5 + 0x50) + 0x18);
+  iVar1 = *(int *)((int)(param_2->Tail).Apc.SystemArgument1 + 0x18);
   if (*(int *)(iVar1 + 0xc) != 0) {
     ExFreePool();
   }
-  RtlEnterCriticalSection(uVar4);
+  RtlEnterCriticalSection(param_1);
   if (*(_STFC_FCB **)(iVar1 + 8) != (_STFC_FCB *)0x0) {
     StfcDereferenceFcb(*(_STFC_FCB **)(iVar1 + 8));
   }
@@ -175,164 +177,159 @@ void StfcFsdClose(_STFC_VOLUME_EXTENSION *param_1,_IRP *param_2)
   piVar3 = *(int **)(iVar1 + 0x54);
   *piVar3 = iVar2;
   *(int **)(iVar2 + 4) = piVar3;
-  RtlLeaveCriticalSection(uVar4);
-  *(undefined4 *)((int)lVar5 + 0x10) = 0;
-  IoCompleteRequest(lVar5,1);
-  __restgprlr_29();
+  RtlLeaveCriticalSection(param_1);
+  (param_2->IoStatus).field0_0x0.Status = 0;
+  IoCompleteRequest(param_2,1);
   return;
 }
 
 
 // 828AFB48  StfcFsdFlushBuffers  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/stfc/flush.c:41)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void StfcFsdFlushBuffers(_STFC_VOLUME_EXTENSION *param_1,_IRP *param_2)
 
 {
-  _STFC_VOLUME_EXTENSION *p_Var1;
-  int iVar2;
-  longlong lVar3;
+  int iVar1;
   
-  lVar3 = (longlong)(int)param_2;
-  p_Var1 = (_STFC_VOLUME_EXTENSION *)__savegprlr_29(param_1);
-  RtlEnterCriticalSection(p_Var1);
-  iVar2 = p_Var1->PersistentStatus;
-  if (iVar2 == 0) {
-    iVar2 = StfcFlushBlockCache(p_Var1,0,0xffffffff);
+  RtlEnterCriticalSection(param_1);
+  iVar1 = param_1->PersistentStatus;
+  if (iVar1 == 0) {
+    iVar1 = StfcFlushBlockCache(param_1,0,0xffffffff);
   }
-  RtlLeaveCriticalSection(p_Var1);
-  *(int *)((int)lVar3 + 0x10) = iVar2;
-  IoCompleteRequest(lVar3,1);
-  __restgprlr_29();
+  RtlLeaveCriticalSection(param_1);
+  (param_2->IoStatus).field0_0x0.Status = iVar1;
+  IoCompleteRequest(param_2,1);
   return;
 }
 
 
 // 828B2268  StfcFsdWrite  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/stfc/write.c:41)
 
+/* WARNING: Function: __savegprlr_18 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_18 replaced with injection: xenon_save_restore */
+
 void StfcFsdWrite(_STFC_VOLUME_EXTENSION *param_1,_IRP *param_2)
 
 {
-  int iVar1;
+  void *pvVar1;
   int iVar2;
   uint uVar3;
   _STFC_FCB *p_Var4;
   _STFC_FILE_BOUNDS _Var5;
   uint uVar6;
   int iVar7;
-  void *pvVar8;
-  _STFC_VOLUME_EXTENSION *p_Var9;
-  int iVar10;
-  longlong lVar11;
-  ulonglong uVar12;
-  ulonglong uVar13;
-  ulonglong uVar14;
-  ulonglong uVar15;
+  ulonglong uVar8;
+  ulonglong uVar9;
+  ulonglong uVar10;
+  ulonglong uVar11;
   void *local_90;
   _STFC_HASH_BLOCK *local_8c;
   ulong local_88 [2];
   _LARGE_INTEGER local_80 [16];
   
-  lVar11 = (longlong)(int)param_2;
-  p_Var9 = (_STFC_VOLUME_EXTENSION *)__savegprlr_18(param_1);
-  iVar7 = (int)lVar11;
-  iVar1 = *(int *)(iVar7 + 0x50);
-  iVar2 = *(int *)(iVar1 + 0x18);
-  uVar3 = *(uint *)(iVar1 + 4);
-  uVar12 = (ulonglong)uVar3;
+  pvVar1 = (param_2->Tail).Apc.SystemArgument1;
+  iVar2 = *(int *)((int)pvVar1 + 0x18);
+  uVar3 = *(uint *)((int)pvVar1 + 4);
+  uVar8 = (ulonglong)uVar3;
   p_Var4 = *(_STFC_FCB **)(iVar2 + 8);
-  RtlEnterCriticalSection(p_Var9);
-  iVar10 = p_Var9->PersistentStatus;
-  if (iVar10 == 0) {
+  RtlEnterCriticalSection(param_1);
+  iVar7 = param_1->PersistentStatus;
+  if (iVar7 == 0) {
     if ((*(byte *)(iVar2 + 2) & 0x10) == 0) {
       if ((p_Var4->Flags & 2) == 0) {
-        if (p_Var9->HashBlockPairShift == '\0') {
-          iVar10 = -0x3fffffde;
+        if (param_1->HashBlockPairShift == '\0') {
+          iVar7 = -0x3fffffde;
         }
-        else if (uVar12 == 0) {
-          iVar10 = 0;
-          *(undefined4 *)(iVar7 + 0x14) = 0;
+        else if (uVar8 == 0) {
+          iVar7 = 0;
+          (param_2->IoStatus).Information = 0;
         }
         else {
-          iVar10 = StfcEnsureWriteableDirectoryEntry(p_Var9,p_Var4);
-          if (-1 < iVar10) {
-            if ((*(int *)(iVar1 + 0x10) == -1) && (*(int *)(iVar1 + 0xc) == -1)) {
+          iVar7 = StfcEnsureWriteableDirectoryEntry(param_1,p_Var4);
+          if (-1 < iVar7) {
+            if ((*(int *)((int)pvVar1 + 0x10) == -1) && (*(int *)((int)pvVar1 + 0xc) == -1)) {
               _Var5 = p_Var4->FileBounds;
-              *(undefined4 *)(iVar1 + 0xc) = 0;
-              *(_STFC_FILE_BOUNDS *)(iVar1 + 0x10) = _Var5;
+              *(undefined4 *)((int)pvVar1 + 0xc) = 0;
+              *(_STFC_FILE_BOUNDS *)((int)pvVar1 + 0x10) = _Var5;
             }
-            uVar6 = *(uint *)(iVar1 + 0x10);
-            uVar14 = (ulonglong)uVar6;
-            uVar13 = uVar14 + uVar12;
-            uVar15 = uVar13 + 0xfff & 0xfffff000;
-            if ((*(int *)(iVar1 + 0xc) == 0) && (uVar14 < uVar15)) {
-              iVar10 = StfcEnsureWriteableBlocksAvailable(p_Var9,p_Var4,uVar3,uVar6);
-              if ((-1 < iVar10) &&
-                 (((uVar13 & 0xffffffff) <= (ulonglong)p_Var4->AllocationSize ||
-                  (iVar10 = StfcSetAllocationSize(p_Var9,p_Var4,(ulong)uVar15,0), -1 < iVar10)))) {
+            uVar6 = *(uint *)((int)pvVar1 + 0x10);
+            uVar10 = (ulonglong)uVar6;
+            uVar9 = uVar10 + uVar8;
+            uVar11 = uVar9 + 0xfff & 0xfffff000;
+            if ((*(int *)((int)pvVar1 + 0xc) == 0) && (uVar10 < uVar11)) {
+              iVar7 = StfcEnsureWriteableBlocksAvailable(param_1,p_Var4,uVar3,uVar6);
+              if ((-1 < iVar7) &&
+                 (((uVar9 & 0xffffffff) <= (ulonglong)p_Var4->AllocationSize ||
+                  (iVar7 = StfcSetAllocationSize(param_1,p_Var4,(ulong)uVar11,0), -1 < iVar7)))) {
                 while (p_Var4->ValidDataSize < (uVar6 & 0xfffff000)) {
-                  iVar10 = StfcBeginDataBlockUpdate
-                                     (p_Var9,p_Var4,p_Var4->ValidDataSize,1,local_88,&local_90,
-                                      &local_8c);
-                  if (iVar10 < 0) goto LAB_828b24f4;
-                  StfcEndDataBlockUpdate(p_Var9,local_88[0],local_90,local_8c);
+                  iVar7 = StfcBeginDataBlockUpdate
+                                    (param_1,p_Var4,p_Var4->ValidDataSize,1,local_88,&local_90,
+                                     &local_8c);
+                  if (iVar7 < 0) goto LAB_828b24f4;
+                  StfcEndDataBlockUpdate(param_1,local_88[0],local_90,local_8c);
                   p_Var4->ValidDataSize = p_Var4->ValidDataSize + 0x1000;
                 }
                 do {
-                  uVar15 = 0x1000 - (uVar14 & 0xfff);
-                  if ((uVar12 & 0xffffffff) < (uVar15 & 0xffffffff)) {
-                    uVar15 = uVar12;
+                  uVar11 = 0x1000 - (uVar10 & 0xfff);
+                  if ((uVar8 & 0xffffffff) < (uVar11 & 0xffffffff)) {
+                    uVar11 = uVar8;
                   }
-                  iVar10 = StfcBeginDataBlockUpdate
-                                     (p_Var9,p_Var4,(ulong)uVar14,
-                                      (uint)LZCOUNT((int)uVar15 + -0x1000) >> 5,local_88,&local_90,
-                                      &local_8c);
-                  pvVar8 = local_90;
-                  if (iVar10 < 0) goto LAB_828b24f4;
+                  iVar7 = StfcBeginDataBlockUpdate
+                                    (param_1,p_Var4,(ulong)uVar10,
+                                     (uint)LZCOUNT((int)uVar11 + -0x1000) >> 5,local_88,&local_90,
+                                     &local_8c);
+                  pvVar1 = local_90;
+                  if (iVar7 < 0) goto LAB_828b24f4;
                   memcpy();
-                  StfcEndDataBlockUpdate(p_Var9,local_88[0],pvVar8,local_8c);
-                  if ((ulonglong)p_Var4->ValidDataSize == (uVar14 & 0xfffff000)) {
+                  StfcEndDataBlockUpdate(param_1,local_88[0],pvVar1,local_8c);
+                  if ((ulonglong)p_Var4->ValidDataSize == (uVar10 & 0xfffff000)) {
                     p_Var4->ValidDataSize = p_Var4->ValidDataSize + 0x1000;
                   }
-                  uVar12 = uVar12 - uVar15;
-                  uVar14 = uVar15 + uVar14;
-                } while (uVar12 != 0);
-                if ((ulonglong)(p_Var4->FileBounds).FileSize < (uVar13 & 0xffffffff)) {
-                  (p_Var4->FileBounds).FileSize = (ulong)uVar13;
+                  uVar8 = uVar8 - uVar11;
+                  uVar10 = uVar11 + uVar10;
+                } while (uVar8 != 0);
+                if ((ulonglong)(p_Var4->FileBounds).FileSize < (uVar9 & 0xffffffff)) {
+                  (p_Var4->FileBounds).FileSize = (ulong)uVar9;
                 }
                 KeQuerySystemTime(local_80);
                 StfcTimeToTimeStamp(local_80[0],&p_Var4->LastWriteTimeStamp);
                 p_Var4->Flags = p_Var4->Flags | 0x10;
                 if ((*(byte *)(iVar2 + 2) & 1) != 0) {
-                  *(ulong *)(iVar2 + 0x18) = (ulong)uVar13;
+                  *(ulong *)(iVar2 + 0x18) = (ulong)uVar9;
                   *(undefined4 *)(iVar2 + 0x14) = 0;
                 }
-                *(uint *)(iVar7 + 0x14) = uVar3;
+                (param_2->IoStatus).Information = uVar3;
               }
             }
             else {
-              iVar10 = -0x3fffff81;
+              iVar7 = -0x3fffff81;
             }
           }
         }
       }
       else {
-        iVar10 = -0x3ffffff0;
+        iVar7 = -0x3ffffff0;
       }
     }
     else {
-      iVar10 = -0x3ffffed8;
+      iVar7 = -0x3ffffed8;
     }
   }
 LAB_828b24f4:
-  RtlLeaveCriticalSection(p_Var9);
-  *(int *)(iVar7 + 0x10) = iVar10;
-  IoCompleteRequest(lVar11,1);
-  __restgprlr_18();
+  RtlLeaveCriticalSection(param_1);
+  (param_2->IoStatus).field0_0x0.Status = iVar7;
+  IoCompleteRequest(param_2,1);
   return;
 }
 
 
 // 828B2518  StfcFsdCleanup  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/stfc/cleanup.c:41)
+
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 
 void StfcFsdCleanup(_STFC_VOLUME_EXTENSION *param_1,_IRP *param_2)
 
@@ -341,27 +338,23 @@ void StfcFsdCleanup(_STFC_VOLUME_EXTENSION *param_1,_IRP *param_2)
   _STFC_FCB *p_Var2;
   _LIST_ENTRY *p_Var3;
   _LIST_ENTRY *p_Var4;
-  _STFC_VOLUME_EXTENSION *p_Var5;
-  long lVar6;
-  longlong lVar7;
+  long lVar5;
   
-  lVar7 = (longlong)(int)param_2;
-  p_Var5 = (_STFC_VOLUME_EXTENSION *)__savegprlr_27(param_1);
-  iVar1 = *(int *)(*(int *)((int)lVar7 + 0x50) + 0x18);
+  iVar1 = *(int *)((int)(param_2->Tail).Apc.SystemArgument1 + 0x18);
   p_Var2 = *(_STFC_FCB **)(iVar1 + 8);
-  RtlEnterCriticalSection(p_Var5);
+  RtlEnterCriticalSection(param_1);
   IoRemoveShareAccess(iVar1,&p_Var2->ShareAccess);
-  if ((p_Var5->PersistentStatus == 0) && (p_Var2->ReferenceCount == 1)) {
+  if ((param_1->PersistentStatus == 0) && (p_Var2->ReferenceCount == 1)) {
     if ((p_Var2->Flags & 8) == 0) {
       if ((p_Var2->Flags & 0x10) != 0) {
-        StfcUpdateDirectoryEntry(p_Var5,p_Var2,0);
+        StfcUpdateDirectoryEntry(param_1,p_Var2,0);
       }
     }
     else {
-      lVar6 = StfcUpdateDirectoryEntry(p_Var5,p_Var2,1);
-      if (-1 < lVar6) {
+      lVar5 = StfcUpdateDirectoryEntry(param_1,p_Var2,1);
+      if (-1 < lVar5) {
         if (((p_Var2->Flags & 2) == 0) && (p_Var2->AllocationSize != 0)) {
-          StfcFreeBlocks(p_Var5,p_Var2->FirstBlockNumber,0,(_STFC_HASH_ENTRY *)0x0);
+          StfcFreeBlocks(param_1,p_Var2->FirstBlockNumber,0,(_STFC_HASH_ENTRY *)0x0);
         }
         p_Var3 = (p_Var2->SiblingFcbLink).Flink;
         p_Var4 = (p_Var2->SiblingFcbLink).Blink;
@@ -373,203 +366,194 @@ void StfcFsdCleanup(_STFC_VOLUME_EXTENSION *param_1,_IRP *param_2)
     }
   }
   *(byte *)(iVar1 + 2) = *(byte *)(iVar1 + 2) | 0x10;
-  RtlLeaveCriticalSection(p_Var5);
-  *(undefined4 *)((int)lVar7 + 0x10) = 0;
-  IoCompleteRequest(lVar7,1);
-  __restgprlr_27();
+  RtlLeaveCriticalSection(param_1);
+  (param_2->IoStatus).field0_0x0.Status = 0;
+  IoCompleteRequest(param_2,1);
   return;
 }
 
 
 // 828ADF28  StfcFsdQueryVolumeInformation  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/stfc/volinfo.c:42)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void StfcFsdQueryVolumeInformation(_STFC_VOLUME_EXTENSION *param_1,_IRP *param_2)
 
 {
-  int iVar1;
+  void *pvVar1;
   int iVar2;
   undefined4 *puVar3;
   ulonglong *puVar4;
-  int iVar5;
-  int iVar6;
-  longlong lVar7;
-  undefined4 uVar8;
-  uint uVar9;
-  int iVar10;
+  ulong uVar5;
+  void *pvVar6;
   
-  lVar7 = (longlong)(int)param_2;
-  iVar6 = __savegprlr_28(param_1);
-  iVar5 = (int)lVar7;
-  iVar1 = *(int *)(iVar5 + 0x50);
-  RtlEnterCriticalSection(iVar6);
-  iVar10 = *(int *)(iVar6 + 0x88);
-  if (iVar10 == 0) {
+  pvVar1 = (param_2->Tail).Apc.SystemArgument1;
+  RtlEnterCriticalSection(param_1);
+  pvVar6 = (void *)param_1->PersistentStatus;
+  if (pvVar6 == (void *)0x0) {
     memset();
-    iVar2 = *(int *)(iVar1 + 8);
-    uVar8 = 0;
-    iVar10 = 0;
+    iVar2 = *(int *)((int)pvVar1 + 8);
+    uVar5 = 0;
+    pvVar6 = (void *)0x0;
     if (iVar2 == 1) {
-      uVar8 = 0x11;
+      uVar5 = 0x11;
     }
     else if (iVar2 == 3) {
-      puVar4 = *(ulonglong **)(iVar5 + 0x1c);
-      uVar9 = *(uint *)(iVar6 + 0xa0);
-      if ((*(char *)(iVar6 + 0xcd) == '\0') || (*(uint *)(iVar6 + 0x98) < *(uint *)(iVar6 + 0x9c)))
-      {
-        *puVar4 = (ulonglong)*(uint *)(iVar6 + 0x9c);
+      puVar4 = param_2->UserBuffer;
+      uVar5 = param_1->NumberOfFreeBlocks;
+      if ((param_1->BackingFilePresized == '\0') ||
+         (param_1->MaximumNumberOfTotalBlocks < param_1->NumberOfTotalBlocks)) {
+        *puVar4 = (ulonglong)param_1->NumberOfTotalBlocks;
       }
       else {
-        *puVar4 = (ulonglong)*(uint *)(iVar6 + 0x98);
-        uVar9 = (uVar9 - *(int *)(iVar6 + 0x9c)) + *(int *)(iVar6 + 0x98);
+        *puVar4 = (ulonglong)param_1->MaximumNumberOfTotalBlocks;
+        uVar5 = (uVar5 - param_1->NumberOfTotalBlocks) + param_1->MaximumNumberOfTotalBlocks;
       }
-      if (*(uint *)(iVar6 + 0xa8) <= uVar9) {
-        uVar9 = uVar9 - *(uint *)(iVar6 + 0xa8);
+      if (param_1->NumberOfUnwriteableDirectoryBlocks <= uVar5) {
+        uVar5 = uVar5 - param_1->NumberOfUnwriteableDirectoryBlocks;
       }
       *(undefined4 *)(puVar4 + 2) = 8;
-      puVar4[1] = (ulonglong)uVar9;
-      uVar8 = 0x18;
+      puVar4[1] = (ulonglong)uVar5;
+      uVar5 = 0x18;
       *(undefined4 *)((int)puVar4 + 0x14) = 0x200;
     }
     else if (iVar2 == 4) {
-      puVar3 = *(undefined4 **)(iVar5 + 0x1c);
-      uVar8 = 8;
+      puVar3 = param_2->UserBuffer;
+      uVar5 = 8;
       *puVar3 = 0x3d;
-      puVar3[1] = (uint)*(byte *)(iVar6 + 0xcf);
+      puVar3[1] = (uint)param_1->DeviceCharacteristics;
     }
     else if (iVar2 == 5) {
-      puVar3 = *(undefined4 **)(iVar5 + 0x1c);
+      puVar3 = param_2->UserBuffer;
       *puVar3 = 0;
       puVar3[1] = 0x28;
       puVar3[2] = 4;
-      if (*(uint *)(iVar1 + 4) < 0x10) {
-        uVar8 = 0xc;
-        iVar10 = -0x7ffffffb;
+      if (*(uint *)((int)pvVar1 + 4) < 0x10) {
+        uVar5 = 0xc;
+        pvVar6 = (void *)0x80000005;
       }
       else {
-        uVar8 = 0x10;
+        uVar5 = 0x10;
         puVar3[3] = 0x53544643;
       }
     }
     else {
-      iVar10 = -0x3ffffff3;
+      pvVar6 = (void *)0xc000000d;
     }
-    *(undefined4 *)(iVar5 + 0x14) = uVar8;
+    (param_2->IoStatus).Information = uVar5;
   }
-  RtlLeaveCriticalSection(iVar6);
-  *(int *)(iVar5 + 0x10) = iVar10;
-  IoCompleteRequest(lVar7,1);
-  __restgprlr_28();
+  RtlLeaveCriticalSection(param_1);
+  (param_2->IoStatus).field0_0x0.Pointer = pvVar6;
+  IoCompleteRequest(param_2,1);
   return;
 }
 
 
 // 828B0DF8  StfcFsdDirectoryControl  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/stfc/dirctrl.c:42)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
+
 void StfcFsdDirectoryControl(_STFC_VOLUME_EXTENSION *param_1,_IRP *param_2)
 
 {
-  int iVar1;
+  void *pvVar1;
   _FILE_OBJECT *p_Var2;
   _STFC_FCB *p_Var3;
-  int iVar4;
-  int iVar5;
-  bool bVar6;
-  uint uVar7;
-  _DIRECTORY_ENUM_CONTEXT *p_Var8;
-  _STFC_VOLUME_EXTENSION *p_Var10;
-  int iVar11;
-  _LARGE_INTEGER _Var9;
-  longlong lVar12;
-  uint uVar13;
+  void *pvVar4;
+  bool bVar5;
+  uint uVar6;
+  _DIRECTORY_ENUM_CONTEXT *p_Var7;
+  void *pvVar9;
+  _LARGE_INTEGER _Var8;
+  uint uVar10;
   _DIRECTORY_ENUM_CONTEXT *local_a0 [4];
   _STFC_DIRECTORY_LOOKUP a_Stack_90 [2];
   
-  lVar12 = (longlong)(int)param_2;
-  p_Var10 = (_STFC_VOLUME_EXTENSION *)__savegprlr_24(param_1);
-  iVar5 = (int)lVar12;
-  iVar1 = *(int *)(iVar5 + 0x50);
-  p_Var2 = *(_FILE_OBJECT **)(iVar1 + 0x18);
+  pvVar1 = (param_2->Tail).Apc.SystemArgument1;
+  p_Var2 = *(_FILE_OBJECT **)((int)pvVar1 + 0x18);
   p_Var3 = p_Var2->FsContext;
-  RtlEnterCriticalSection(p_Var10);
+  RtlEnterCriticalSection(param_1);
   if ((p_Var3->Flags & 2) == 0) {
-    iVar11 = -0x3ffffff3;
+    pvVar9 = (void *)0xc000000d;
   }
   else {
-    iVar11 = p_Var10->PersistentStatus;
-    if (iVar11 == 0) {
+    pvVar9 = (void *)param_1->PersistentStatus;
+    if (pvVar9 == (void *)0x0) {
       if ((p_Var2->Flags & 0x10) == 0) {
         local_a0[0] = p_Var2->FsContext2;
         if (local_a0[0] == (_DIRECTORY_ENUM_CONTEXT *)0x0) {
-          iVar11 = IoCreateDirectoryEnumContext(p_Var2,*(_STRING **)(iVar1 + 8),0,local_a0);
-          if (iVar11 < 0) goto LAB_828b0fc4;
+          pvVar9 = (void *)IoCreateDirectoryEnumContext
+                                     (p_Var2,*(_STRING **)((int)pvVar1 + 8),0,local_a0);
+          if ((int)pvVar9 < 0) goto LAB_828b0fc4;
           p_Var2->FsContext2 = local_a0[0];
-          bVar6 = true;
+          bVar5 = true;
         }
         else {
-          bVar6 = false;
+          bVar5 = false;
         }
-        p_Var8 = local_a0[0];
-        if ((*(byte *)(iVar1 + 2) & 1) != 0) {
+        p_Var7 = local_a0[0];
+        if ((*(byte *)((int)pvVar1 + 2) & 1) != 0) {
           local_a0[0]->QueryOffset = 0;
         }
-        iVar11 = StfcLookupElementNameInDirectory
-                           (p_Var10,p_Var3,(_STRING *)0x0,local_a0[0],a_Stack_90);
-        if (iVar11 < 0) {
-          if (iVar11 == -0x3fffffcc) {
-            if (bVar6) {
-              iVar11 = -0x3ffffff1;
+        pvVar9 = (void *)StfcLookupElementNameInDirectory
+                                   (param_1,p_Var3,(_STRING *)0x0,local_a0[0],a_Stack_90);
+        if ((int)pvVar9 < 0) {
+          if (pvVar9 == (void *)0xc0000034) {
+            if (bVar5) {
+              pvVar9 = (void *)0xc000000f;
             }
             else {
-              iVar11 = -0x7ffffffa;
+              pvVar9 = (void *)0x80000006;
             }
           }
         }
         else {
           StfcRefreshDirectoryEntryFromOpenChildFcb(p_Var3,a_Stack_90);
-          iVar4 = *(int *)(iVar5 + 0x1c);
-          _Var9 = StfcTimeStampToTime(a_Stack_90[0].DirectoryEntry.CreationTimeStamp);
-          *(_LARGE_INTEGER *)(iVar4 + 8) = _Var9;
-          _Var9 = StfcTimeStampToTime(a_Stack_90[0].DirectoryEntry.LastWriteTimeStamp);
-          *(_LARGE_INTEGER *)(iVar4 + 0x18) = _Var9;
-          *(_LARGE_INTEGER *)(iVar4 + 0x10) = _Var9;
-          *(_LARGE_INTEGER *)(iVar4 + 0x20) = _Var9;
+          pvVar4 = param_2->UserBuffer;
+          _Var8 = StfcTimeStampToTime(a_Stack_90[0].DirectoryEntry.CreationTimeStamp);
+          *(_LARGE_INTEGER *)((int)pvVar4 + 8) = _Var8;
+          _Var8 = StfcTimeStampToTime(a_Stack_90[0].DirectoryEntry.LastWriteTimeStamp);
+          *(_LARGE_INTEGER *)((int)pvVar4 + 0x18) = _Var8;
+          *(_LARGE_INTEGER *)((int)pvVar4 + 0x10) = _Var8;
+          *(_LARGE_INTEGER *)((int)pvVar4 + 0x20) = _Var8;
           if (ZPULL(a_Stack_90[0].DirectoryEntry,7,1) == '\0') {
-            *(undefined4 *)(iVar4 + 0x38) = 0x80;
-            *(ulonglong *)(iVar4 + 0x28) =
+            *(undefined4 *)((int)pvVar4 + 0x38) = 0x80;
+            *(ulonglong *)((int)pvVar4 + 0x28) =
                  (ulonglong)a_Stack_90[0].DirectoryEntry.FileBounds.FileSize;
-            *(ulonglong *)(iVar4 + 0x30) =
+            *(ulonglong *)((int)pvVar4 + 0x30) =
                  (ulonglong)a_Stack_90[0].DirectoryEntry.FileBounds.FileSize;
           }
           else {
-            *(undefined8 *)(iVar4 + 0x28) = 0;
-            *(undefined8 *)(iVar4 + 0x30) = 0;
-            *(undefined4 *)(iVar4 + 0x38) = 0x10;
+            *(undefined8 *)((int)pvVar4 + 0x28) = 0;
+            *(undefined8 *)((int)pvVar4 + 0x30) = 0;
+            *(undefined4 *)((int)pvVar4 + 0x38) = 0x10;
           }
-          uVar7 = ZPULL(a_Stack_90[0].DirectoryEntry,0,6);
-          uVar13 = *(int *)(iVar1 + 4) - 0x40U & 0xfffffffc;
-          if (uVar13 < uVar7) {
-            iVar11 = -0x7ffffffb;
+          uVar6 = ZPULL(a_Stack_90[0].DirectoryEntry,0,6);
+          uVar10 = *(int *)((int)pvVar1 + 4) - 0x40U & 0xfffffffc;
+          if (uVar10 < uVar6) {
+            pvVar9 = (void *)0x80000005;
           }
           else {
-            iVar11 = 0;
-            uVar13 = uVar7;
+            pvVar9 = (void *)0x0;
+            uVar10 = uVar6;
           }
           memcpy();
-          *(uint *)(iVar4 + 0x3c) = uVar7;
-          *(uint *)(iVar5 + 0x14) = uVar13 + 0x40;
-          p_Var8->QueryOffset = a_Stack_90[0].DirectoryByteOffset + 0x40;
+          *(uint *)((int)pvVar4 + 0x3c) = uVar6;
+          (param_2->IoStatus).Information = uVar10 + 0x40;
+          p_Var7->QueryOffset = a_Stack_90[0].DirectoryByteOffset + 0x40;
         }
       }
       else {
-        iVar11 = -0x3ffffed8;
+        pvVar9 = (void *)0xc0000128;
       }
     }
   }
 LAB_828b0fc4:
-  RtlLeaveCriticalSection(p_Var10);
-  *(int *)(iVar5 + 0x10) = iVar11;
-  IoCompleteRequest(lVar12,1);
-  __restgprlr_24();
+  RtlLeaveCriticalSection(param_1);
+  (param_2->IoStatus).field0_0x0.Pointer = pvVar9;
+  IoCompleteRequest(param_2,1);
   return;
 }
 
@@ -597,41 +581,41 @@ ulong StfcIsLevel0HashBlockResident(_STFC_VOLUME_EXTENSION *param_1,ulong param_
 
 // 828AF9B8  StfcQueryNetworkOpenInformation  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/stfc/fileinfo.c:43)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void StfcQueryNetworkOpenInformation(_STFC_FCB *param_1,_FILE_NETWORK_OPEN_INFORMATION *param_2)
 
 {
-  int iVar2;
   _LARGE_INTEGER _Var1;
-  _LARGE_INTEGER _Var3;
+  _LARGE_INTEGER _Var2;
   
-  iVar2 = __savegprlr_29(param_1);
-  if ((*(byte *)(iVar2 + 0x35) & 4) == 0) {
-    _Var1 = StfcTimeStampToTime(*(_STFC_TIME_STAMP *)(iVar2 + 0x40));
+  if ((param_1->Flags & 4) == 0) {
+    _Var1 = StfcTimeStampToTime(param_1->CreationTimeStamp);
     param_2->CreationTime = _Var1;
-    _Var1 = StfcTimeStampToTime(*(_STFC_TIME_STAMP *)(iVar2 + 0x44));
+    _Var1 = StfcTimeStampToTime(param_1->LastWriteTimeStamp);
   }
   else {
     _Var1.QuadPart = 0;
-    *(long64 *)param_2 = 0;
+    (param_2->CreationTime).QuadPart = 0;
   }
-  ((_LARGE_INTEGER *)((int)param_2 + 8))->QuadPart = (long64)_Var1;
-  ((_LARGE_INTEGER *)((int)param_2 + 0x10))->QuadPart = (long64)_Var1;
-  ((_LARGE_INTEGER *)((int)param_2 + 0x18))->QuadPart = (long64)_Var1;
-  if ((*(byte *)(iVar2 + 0x35) & 2) == 0) {
-    (((_LARGE_INTEGER *)((int)param_2 + 0x30))->_s_0).HighPart = 0x80;
+  (param_2->LastAccessTime).QuadPart = (long64)_Var1;
+  (param_2->LastWriteTime).QuadPart = (long64)_Var1;
+  (param_2->ChangeTime).QuadPart = (long64)_Var1;
+  if ((param_1->Flags & 2) == 0) {
+    param_2->FileAttributes = 0x80;
     _Var1._s_0.HighPart = 0;
-    _Var1._s_0.LowPart = *(uint *)(iVar2 + 0x14);
-    *(_LARGE_INTEGER *)((int)param_2 + 0x20) = _Var1;
-    _Var3._s_0.HighPart = 0;
-    _Var3._s_0.LowPart = *(uint *)(iVar2 + 0x18);
-    *(_LARGE_INTEGER *)((int)param_2 + 0x28) = _Var3;
+    _Var1._s_0.LowPart = param_1->AllocationSize;
+    param_2->AllocationSize = _Var1;
+    _Var2._s_0.HighPart = 0;
+    _Var2._s_0.LowPart = (param_1->FileBounds).FileSize;
+    param_2->EndOfFile = _Var2;
   }
   else {
-    ((_LARGE_INTEGER *)((int)param_2 + 0x20))->QuadPart = 0;
-    ((_LARGE_INTEGER *)((int)param_2 + 0x28))->QuadPart = 0;
-    (((_LARGE_INTEGER *)((int)param_2 + 0x30))->_s_0).HighPart = 0x10;
+    (param_2->AllocationSize).QuadPart = 0;
+    (param_2->EndOfFile).QuadPart = 0;
+    param_2->FileAttributes = 0x10;
   }
-  __restgprlr_29();
   return;
 }
 
@@ -667,49 +651,43 @@ ulong StfcIsValidFileName(_STRING *param_1)
 
 // 828AF7F8  StfcOpenTargetDirectory  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/stfc/create.c:48)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 long StfcOpenTargetDirectory
                (_STFC_VOLUME_EXTENSION *param_1,_IRP *param_2,_STFC_FCB *param_3,ulong param_4)
 
 {
   void *pvVar1;
   int iVar2;
-  int iVar3;
-  _STFC_FCB *p_Var4;
-  int iVar6;
-  longlong lVar5;
-  long lVar7;
+  _LIST_ENTRY *p_Var3;
+  longlong lVar4;
   
-  lVar5 = (longlong)(int)param_3;
-  iVar6 = __savegprlr_26(param_1);
   pvVar1 = (param_2->Tail).Apc.SystemArgument1;
   iVar2 = *(int *)((int)pvVar1 + 0x18);
-  if (*(char *)(iVar6 + 0xce) == '\0') {
-    lVar5 = -0x3fffffde;
+  if (param_1->HashBlockPairShift == '\0') {
+    return -0x3fffffde;
+  }
+  if ((param_3->ShareAccess).OpenCount == '\0') {
+    IoSetShareAccess();
   }
   else {
-    p_Var4 = (_STFC_FCB *)lVar5;
-    if ((p_Var4->ShareAccess).OpenCount == '\0') {
-      IoSetShareAccess();
-    }
-    else {
-      lVar5 = IoCheckShareAccess(*(undefined4 *)((int)pvVar1 + 4),*(undefined2 *)((int)pvVar1 + 0xe)
-                                 ,iVar2,lVar5 + 0x38,1);
-      if (lVar5 < 0) goto LAB_828af8b8;
-    }
-    StfcReferenceFcb(p_Var4,p_Var4->Flags & 1);
-    lVar5 = 0;
-    *(_STFC_FCB **)(iVar2 + 8) = p_Var4;
-    *(undefined4 *)(iVar2 + 0xc) = 0;
-    iVar3 = *(int *)(iVar6 + 0x80);
-    *(int *)(iVar2 + 0x54) = iVar6 + 0x80;
-    *(int *)(iVar2 + 0x50) = iVar3;
-    *(int *)(iVar3 + 4) = iVar2 + 0x50;
-    *(int *)(iVar6 + 0x80) = iVar2 + 0x50;
-    (param_2->IoStatus).Information = param_4;
+    lVar4 = IoCheckShareAccess(*(undefined4 *)((int)pvVar1 + 4),*(undefined2 *)((int)pvVar1 + 0xe),
+                               iVar2,(longlong)(int)param_3 + 0x38,1);
+    if (lVar4 < 0) goto LAB_828af8b0;
   }
-LAB_828af8b8:
-  lVar7 = __restgprlr_26(lVar5);
-  return lVar7;
+  StfcReferenceFcb(param_3,param_3->Flags & 1);
+  lVar4 = 0;
+  *(_STFC_FCB **)(iVar2 + 8) = param_3;
+  *(undefined4 *)(iVar2 + 0xc) = 0;
+  p_Var3 = (param_1->FileObjectList).Flink;
+  *(_LIST_ENTRY **)(iVar2 + 0x54) = &param_1->FileObjectList;
+  *(_LIST_ENTRY **)(iVar2 + 0x50) = p_Var3;
+  p_Var3->Blink = (_LIST_ENTRY *)(iVar2 + 0x50);
+  (param_1->FileObjectList).Flink = (_LIST_ENTRY *)(iVar2 + 0x50);
+  (param_2->IoStatus).Information = param_4;
+LAB_828af8b0:
+  return (long)lVar4;
 }
 
 
@@ -756,6 +734,9 @@ void ObDissectName(_STRING param_1,_STRING *param_2,_STRING *param_3)
 
 // 828B01D8  StfcExtendBackingFileSize  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/stfc/allocsup.c:65)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
+
 long StfcExtendBackingFileSize(_STFC_VOLUME_EXTENSION *param_1,ulong param_2)
 
 {
@@ -764,227 +745,220 @@ long StfcExtendBackingFileSize(_STFC_VOLUME_EXTENSION *param_1,ulong param_2)
   uint uVar3;
   uint uVar4;
   void *pvVar5;
-  _STFC_VOLUME_EXTENSION *p_Var6;
-  int iVar7;
-  long lVar8;
+  int iVar6;
+  long lVar7;
+  undefined4 *puVar8;
   ulonglong uVar9;
-  undefined4 *puVar10;
-  ulonglong uVar11;
+  ulonglong uVar10;
+  _STFC_HASH_ENTRY *p_Var11;
   ulonglong uVar12;
-  _STFC_HASH_ENTRY *p_Var13;
+  uint uVar13;
   ulonglong uVar14;
   uint uVar15;
-  ulonglong uVar16;
-  uint uVar17;
-  uint uVar18;
-  longlong lVar19;
+  uint uVar16;
+  longlong lVar17;
   void *local_60;
   _STFC_BLOCK_CACHE_ELEMENT *p_Stack_5c;
   longlong local_58;
   undefined1 auStack_50 [80];
   
-  uVar9 = (ulonglong)(int)param_2;
-  p_Var6 = (_STFC_VOLUME_EXTENSION *)__savegprlr_24(param_1);
-  uVar1 = p_Var6->NumberOfTotalBlocks;
-  uVar16 = uVar1 + uVar9;
-  if (((ulonglong)p_Var6->MaximumNumberOfTotalBlocks < (uVar9 & 0xffffffff)) ||
-     ((ulonglong)p_Var6->MaximumNumberOfTotalBlocks < (uVar16 & 0xffffffff))) {
-    iVar7 = -0x3fffff81;
+  uVar1 = param_1->NumberOfTotalBlocks;
+  uVar14 = (ulonglong)uVar1 + (longlong)(int)param_2;
+  if ((param_1->MaximumNumberOfTotalBlocks < param_2) ||
+     ((ulonglong)param_1->MaximumNumberOfTotalBlocks < (uVar14 & 0xffffffff))) {
+    lVar7 = -0x3fffff81;
   }
   else {
-    uVar11 = (uVar16 + 0xa9 & 0xffffffff) / 0xaa;
-    if (uVar11 < 2) {
-      uVar14 = 0;
-    }
-    else {
-      uVar14 = (uVar11 + 0xa9) / 0xaa;
-    }
-    uVar17 = (uint)(uVar11 >= 2);
-    if (uVar14 < 2) {
+    uVar9 = (uVar14 + 0xa9 & 0xffffffff) / 0xaa;
+    if (uVar9 < 2) {
       uVar12 = 0;
     }
     else {
-      uVar17 = 2;
-      uVar12 = (uVar14 + 0xa9) / 0xaa;
+      uVar12 = (uVar9 + 0xa9) / 0xaa;
     }
-    if (p_Var6->BackingFilePresized == '\0') {
-      local_58 = (((uVar12 + uVar14 + uVar11) * 2 + uVar16) * 0x1000 & 0xffffffff000) +
-                 p_Var6->BackingFileOffset;
-      iVar7 = NtSetInformationFile(p_Var6->BackingFileHandle,auStack_50,&local_58,8,0x14);
-      if (iVar7 < 0) goto LAB_828b0404;
+    uVar15 = (uint)(uVar9 >= 2);
+    if (uVar12 < 2) {
+      uVar10 = 0;
     }
-    if (((ulonglong)uVar1 != 0) && (p_Var6->RootHashHierarchy < uVar17)) {
-      StfcFlushBlockCache(p_Var6,0,0xffffffff);
-      uVar18 = p_Var6->RootHashHierarchy + 1;
-      while (uVar18 <= uVar17) {
-        uVar18 = uVar18 + 1;
-        iVar7 = StfcMapNewEmptyBlock(p_Var6,0,uVar18,&local_60,&p_Stack_5c);
-        pvVar5 = local_60;
-        if (iVar7 < 0) goto LAB_828b0404;
-        puVar10 = (undefined4 *)((int)local_60 + -4);
-        p_Var13 = (_STFC_HASH_ENTRY *)&p_Var6->DataBlockStart;
-        lVar19 = 5;
-        do {
-          p_Var13 = (_STFC_HASH_ENTRY *)((int)p_Var13->Hash + 4);
-          puVar10 = puVar10 + 1;
-          *puVar10 = *(undefined4 *)p_Var13->Hash;
-          lVar19 = lVar19 + -1;
-        } while (lVar19 != 0);
-        uVar15 = *(uint *)((int)local_60 + 0x14);
-        uVar2 = p_Var6->NumberOfFreeBlocks & 0x7fff;
-        *(uint *)((int)local_60 + 0x14) = uVar15 & 0xffff8000 | uVar2;
-        uVar4 = (p_Var6->NumberOfFreePendingBlocks & 0x7fff) << 0xf;
-        *(uint *)((int)local_60 + 0x14) = uVar4 | uVar15 & 0xc0000000 | uVar2;
-        uVar3 = (p_Var6->RootHashEntry).field1_0x14.LevelAsULONG & 0x80000000;
-        *(uint *)((int)local_60 + 0x14) = uVar4 | uVar15 & 0x40000000 | uVar2 | uVar3;
-        *(ulong *)((int)local_60 + 0x14) =
-             (p_Var6->RootHashEntry).field1_0x14.LevelAsULONG & 0x40000000 | uVar4 | uVar2 | uVar3;
-        *(uint *)((int)local_60 + 0xff0) = uVar1;
-        XeCryptSha(local_60,0x1000,0,0,0,0,&p_Var6->RootHashEntry,0x14);
-        uVar15 = (int)pvVar5 - (int)p_Var6->BlockArray;
-        iVar7 = ((int)uVar15 >> 0xc) + (uint)((int)uVar15 < 0 && (uVar15 & 0xfff) != 0);
-        p_Var6->BlockCache[iVar7].ReferenceCount = p_Var6->BlockCache[iVar7].ReferenceCount + 0xff;
-        (p_Var6->RootHashEntry).field1_0x14.LevelAsULONG =
-             (p_Var6->RootHashEntry).field1_0x14.LevelAsULONG & 0x3fffffff | 0x80000000;
+    else {
+      uVar15 = 2;
+      uVar10 = (uVar12 + 0xa9) / 0xaa;
+    }
+    if (param_1->BackingFilePresized == '\0') {
+      local_58 = (((uVar10 + uVar12 + uVar9) * 2 + uVar14) * 0x1000 & 0xffffffff000) +
+                 param_1->BackingFileOffset;
+      iVar6 = NtSetInformationFile(param_1->BackingFileHandle,auStack_50,&local_58,8,0x14);
+      if (iVar6 < 0) {
+        return iVar6;
       }
     }
-    p_Var6->NumberOfTotalBlocks = (ulong)uVar16;
-    p_Var6->RootHashHierarchy = (uchar)uVar17;
-    p_Var6->NumberOfFreeBlocks = p_Var6->NumberOfFreeBlocks + (int)uVar9;
-    iVar7 = 0;
+    if (((ulonglong)uVar1 != 0) && (param_1->RootHashHierarchy < uVar15)) {
+      StfcFlushBlockCache(param_1,0,0xffffffff);
+      uVar16 = param_1->RootHashHierarchy + 1;
+      while (uVar16 <= uVar15) {
+        uVar16 = uVar16 + 1;
+        lVar7 = StfcMapNewEmptyBlock(param_1,0,uVar16,&local_60,&p_Stack_5c);
+        pvVar5 = local_60;
+        if (lVar7 < 0) {
+          return lVar7;
+        }
+        puVar8 = (undefined4 *)((int)local_60 + -4);
+        p_Var11 = (_STFC_HASH_ENTRY *)&param_1->DataBlockStart;
+        lVar17 = 5;
+        do {
+          p_Var11 = (_STFC_HASH_ENTRY *)((int)p_Var11->Hash + 4);
+          puVar8 = puVar8 + 1;
+          *puVar8 = *(undefined4 *)p_Var11->Hash;
+          lVar17 = lVar17 + -1;
+        } while (lVar17 != 0);
+        uVar13 = *(uint *)((int)local_60 + 0x14);
+        uVar2 = param_1->NumberOfFreeBlocks & 0x7fff;
+        *(uint *)((int)local_60 + 0x14) = uVar13 & 0xffff8000 | uVar2;
+        uVar4 = (param_1->NumberOfFreePendingBlocks & 0x7fff) << 0xf;
+        *(uint *)((int)local_60 + 0x14) = uVar4 | uVar13 & 0xc0000000 | uVar2;
+        uVar3 = (param_1->RootHashEntry).field1_0x14.LevelAsULONG & 0x80000000;
+        *(uint *)((int)local_60 + 0x14) = uVar4 | uVar13 & 0x40000000 | uVar2 | uVar3;
+        *(ulong *)((int)local_60 + 0x14) =
+             (param_1->RootHashEntry).field1_0x14.LevelAsULONG & 0x40000000 | uVar4 | uVar2 | uVar3;
+        *(uint *)((int)local_60 + 0xff0) = uVar1;
+        XeCryptSha(local_60,0x1000,0,0,0,0,&param_1->RootHashEntry,0x14);
+        uVar13 = (int)pvVar5 - (int)param_1->BlockArray;
+        iVar6 = ((int)uVar13 >> 0xc) + (uint)((int)uVar13 < 0 && (uVar13 & 0xfff) != 0);
+        param_1->BlockCache[iVar6].ReferenceCount = param_1->BlockCache[iVar6].ReferenceCount + 0xff
+        ;
+        (param_1->RootHashEntry).field1_0x14.LevelAsULONG =
+             (param_1->RootHashEntry).field1_0x14.LevelAsULONG & 0x3fffffff | 0x80000000;
+      }
+    }
+    param_1->NumberOfTotalBlocks = (ulong)uVar14;
+    param_1->RootHashHierarchy = (uchar)uVar15;
+    param_1->NumberOfFreeBlocks = param_1->NumberOfFreeBlocks + param_2;
+    lVar7 = 0;
   }
-LAB_828b0404:
-  lVar8 = __restgprlr_24(iVar7);
-  return lVar8;
+  return lVar7;
 }
 
 
 // 828AE0B0  StfcSynchronousReadFile  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/stfc/worker.c:81)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 long StfcSynchronousReadFile
                (_STFC_VOLUME_EXTENSION *param_1,void *param_2,ulong param_3,ulong64 param_4)
 
 {
-  undefined4 uVar1;
-  int iVar3;
-  ulonglong uVar2;
-  long lVar4;
-  longlong lVar5;
-  ulonglong uVar6;
-  uint local_40;
-  uint local_3c;
+  void *pvVar1;
+  int iVar2;
+  int local_40;
+  ulong local_3c;
   ulong64 local_38 [7];
   
-  uVar6 = (ulonglong)(int)param_3;
-  lVar5 = (longlong)(int)param_2;
-  iVar3 = __savegprlr_27(param_1,lVar5);
-  uVar1 = *(undefined4 *)(iVar3 + 0x2c);
+  pvVar1 = param_1->SynchronousIoEventHandle;
   gStfcStats.StfcSynchronousReadFile = gStfcStats.StfcSynchronousReadFile + 1;
   local_38[0] = param_4;
-  uVar2 = NtReadFile(*(undefined4 *)(iVar3 + 0x28),uVar1,0,0,&local_40,lVar5,uVar6,local_38);
-  if ((int)uVar2 == 0x103) {
-    NtWaitForSingleObjectEx(uVar1,0,0,0);
-    uVar2 = (ulonglong)local_40;
+  iVar2 = NtReadFile(param_1->BackingFileHandle,pvVar1,0,0,&local_40,param_2,param_3,local_38);
+  if (iVar2 == 0x103) {
+    NtWaitForSingleObjectEx(pvVar1,0,0,0);
+    iVar2 = local_40;
   }
-  if ((-1 < (int)uVar2) && ((uVar6 & 0xffffffff) != (ulonglong)local_3c)) {
-    uVar2 = 0xffffffffc0000185;
+  if ((-1 < iVar2) && (param_3 != local_3c)) {
+    iVar2 = -0x3ffffe7b;
   }
-  lVar4 = __restgprlr_27(uVar2);
-  return lVar4;
+  return iVar2;
 }
 
 
 // 828B0FE8  StfcPreloadLevel0Hashblocks  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/stfc/read.c:87)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void StfcPreloadLevel0Hashblocks(_STFC_VOLUME_EXTENSION *param_1,ulong param_2,ulong param_3)
 
 {
-  _STFC_VOLUME_EXTENSION *p_Var1;
-  ulong uVar2;
-  longlong lVar3;
-  ulonglong uVar4;
-  ulonglong uVar5;
+  uint uVar1;
   
-  uVar4 = (ulonglong)(int)param_3;
-  lVar3 = (longlong)(int)param_2;
-  p_Var1 = (_STFC_VOLUME_EXTENSION *)__savegprlr_28(param_1);
-  uVar5 = 0;
-  if ((uVar4 & 0xffffffff) != 0) {
+  uVar1 = 0;
+  if (param_3 != 0) {
     do {
-      uVar2 = StfcFindExitingBlock(p_Var1,(ulong)lVar3,1,(ulong *)0x0);
-      lVar3 = (longlong)(int)uVar2;
-      if ((uVar2 == 0xffffffff) || (uVar2 == 0xffffff)) break;
-      uVar5 = uVar5 + 1;
-    } while ((uVar5 & 0xffffffff) < (uVar4 & 0xffffffff));
+      param_2 = StfcFindExitingBlock(param_1,param_2,1,(ulong *)0x0);
+      if (param_2 == 0xffffffff) {
+        return;
+      }
+      if (param_2 == 0xffffff) {
+        return;
+      }
+      uVar1 = uVar1 + 1;
+    } while (uVar1 < param_3);
   }
-  __restgprlr_28();
   return;
 }
 
 
 // 828AFA50  StfcFsdQueryInformation  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/stfc/fileinfo.c:105)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 void StfcFsdQueryInformation(_STFC_VOLUME_EXTENSION *param_1,_IRP *param_2)
 
 {
-  int iVar1;
+  void *pvVar1;
   int iVar2;
   _STFC_FCB *p_Var3;
-  int *piVar4;
-  int iVar5;
-  int iVar6;
-  longlong lVar7;
-  undefined4 uVar8;
-  int iVar9;
+  int iVar4;
+  undefined4 *puVar5;
+  ulong uVar6;
+  void *pvVar7;
   
-  lVar7 = (longlong)(int)param_2;
-  iVar6 = __savegprlr_26(param_1);
-  iVar5 = (int)lVar7;
-  iVar1 = *(int *)(iVar5 + 0x50);
-  iVar2 = *(int *)(iVar1 + 0x18);
+  pvVar1 = (param_2->Tail).Apc.SystemArgument1;
+  iVar2 = *(int *)((int)pvVar1 + 0x18);
   p_Var3 = *(_STFC_FCB **)(iVar2 + 8);
-  RtlEnterCriticalSection(iVar6);
-  iVar9 = *(int *)(iVar6 + 0x88);
-  if (iVar9 != 0) goto LAB_828afb20;
+  RtlEnterCriticalSection(param_1);
+  pvVar7 = (void *)param_1->PersistentStatus;
+  if (pvVar7 != (void *)0x0) goto LAB_828afb20;
   if ((*(byte *)(iVar2 + 2) & 0x10) != 0) {
-    iVar9 = -0x3ffffed8;
+    pvVar7 = (void *)0xc0000128;
     goto LAB_828afb20;
   }
   memset();
-  iVar1 = *(int *)(iVar1 + 8);
-  iVar9 = 0;
-  if (iVar1 == 6) {
-    piVar4 = *(int **)(iVar5 + 0x1c);
-    *piVar4 = iVar6;
-    piVar4[1] = (int)p_Var3;
+  iVar4 = *(int *)((int)pvVar1 + 8);
+  pvVar7 = (void *)0x0;
+  if (iVar4 == 6) {
+    puVar5 = param_2->UserBuffer;
+    *puVar5 = param_1;
+    puVar5[1] = p_Var3;
 LAB_828afb18:
-    uVar8 = 8;
+    uVar6 = 8;
   }
   else {
-    if (iVar1 == 0xe) {
-      **(undefined8 **)(iVar5 + 0x1c) = *(undefined8 *)(iVar2 + 0x14);
+    if (iVar4 == 0xe) {
+      *(undefined8 *)param_2->UserBuffer = *(undefined8 *)(iVar2 + 0x14);
       goto LAB_828afb18;
     }
-    if (iVar1 == 0x22) {
-      StfcQueryNetworkOpenInformation(p_Var3,*(_FILE_NETWORK_OPEN_INFORMATION **)(iVar5 + 0x1c));
-      uVar8 = 0x38;
+    if (iVar4 == 0x22) {
+      StfcQueryNetworkOpenInformation(p_Var3,param_2->UserBuffer);
+      uVar6 = 0x38;
     }
     else {
-      uVar8 = 0;
-      iVar9 = -0x3ffffff3;
+      uVar6 = 0;
+      pvVar7 = (void *)0xc000000d;
     }
   }
-  *(undefined4 *)(iVar5 + 0x14) = uVar8;
+  (param_2->IoStatus).Information = uVar6;
 LAB_828afb20:
-  RtlLeaveCriticalSection(iVar6);
-  *(int *)(iVar5 + 0x10) = iVar9;
-  IoCompleteRequest(lVar7,1);
-  __restgprlr_26();
+  RtlLeaveCriticalSection(param_1);
+  (param_2->IoStatus).field0_0x0.Pointer = pvVar7;
+  IoCompleteRequest(param_2,1);
   return;
 }
 
 
 // 828AD378  StfcCreateFcb  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/stfc/fcbsup.c:120)
+
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 
 _STFC_FCB *
 StfcCreateFcb(_STFC_VOLUME_EXTENSION *param_1,_STFC_FCB *param_2,ulong param_3,
@@ -1001,66 +975,61 @@ StfcCreateFcb(_STFC_VOLUME_EXTENSION *param_1,_STFC_FCB *param_2,ulong param_3,
   undefined1 *puVar8;
   undefined1 uVar9;
   undefined1 uVar10;
-  int iVar11;
-  _STFC_FCB *p_Var12;
-  ulonglong uVar13;
-  int iVar14;
-  ulong uVar15;
-  _STFC_FCB *p_Var16;
+  _STFC_FCB *p_Var11;
+  int iVar12;
+  ulong uVar13;
+  _STFC_FCB *p_Var14;
   
-  uVar13 = (ulonglong)(int)param_3;
-  iVar11 = __savegprlr_26(param_1);
-  p_Var12 = StfcAllocateFcb((ulong)uVar13);
-  if (p_Var12 != (_STFC_FCB *)0x0) {
+  p_Var11 = StfcAllocateFcb(param_3);
+  if (p_Var11 != (_STFC_FCB *)0x0) {
     uVar4 = param_4->DirectoryByteOffset;
-    p_Var12->FileNameLength = (param_4->DirectoryEntry).FileNameLength;
-    p_Var12->DirectoryIndex = (ushort)(uVar4 >> 6);
+    p_Var11->FileNameLength = (param_4->DirectoryEntry).FileNameLength;
+    p_Var11->DirectoryIndex = (ushort)(uVar4 >> 6);
     memcpy();
     if ((param_4->DirectoryEntry).Directory != '\0') {
-      p_Var12->Flags = p_Var12->Flags | 2;
+      p_Var11->Flags = p_Var11->Flags | 2;
     }
     bVar1 = (param_4->DirectoryEntry).ValidDataBlocks2;
     bVar2 = (param_4->DirectoryEntry).ValidDataBlocks1;
     bVar3 = (param_4->DirectoryEntry).ValidDataBlocks0;
-    iVar14 = ((uint)(param_4->DirectoryEntry).AllocationBlocks2 * 0x100 +
+    iVar12 = ((uint)(param_4->DirectoryEntry).AllocationBlocks2 * 0x100 +
              (uint)(param_4->DirectoryEntry).AllocationBlocks1) * 0x100 +
              (uint)(param_4->DirectoryEntry).AllocationBlocks0;
     _Var5 = (param_4->DirectoryEntry).CreationTimeStamp;
     _Var6 = (param_4->DirectoryEntry).LastWriteTimeStamp;
-    uVar15 = ((uint)(param_4->DirectoryEntry).FirstBlockNumber2 * 0x100 +
+    uVar13 = ((uint)(param_4->DirectoryEntry).FirstBlockNumber2 * 0x100 +
              (uint)(param_4->DirectoryEntry).FirstBlockNumber1) * 0x100 +
              (uint)(param_4->DirectoryEntry).FirstBlockNumber0;
-    p_Var12->FileBounds = (param_4->DirectoryEntry).FileBounds;
-    p_Var12->FirstBlockNumber = uVar15;
-    p_Var12->AllocationSize = iVar14 * 0x1000;
-    p_Var12->ValidDataSize = (((uint)bVar1 * 0x100 + (uint)bVar2) * 0x100 + (uint)bVar3) * 0x1000;
-    p_Var12->CreationTimeStamp = _Var5;
-    p_Var12->LastWriteTimeStamp = _Var6;
-    if (((param_4->DirectoryEntry).Contiguous == '\0') || (iVar14 == 0)) {
-      uVar15 = 0xffffffff;
-      p_Var12->LastMappedFileByteOffset = 0xffffffff;
+    p_Var11->FileBounds = (param_4->DirectoryEntry).FileBounds;
+    p_Var11->FirstBlockNumber = uVar13;
+    p_Var11->AllocationSize = iVar12 * 0x1000;
+    p_Var11->ValidDataSize = (((uint)bVar1 * 0x100 + (uint)bVar2) * 0x100 + (uint)bVar3) * 0x1000;
+    p_Var11->CreationTimeStamp = _Var5;
+    p_Var11->LastWriteTimeStamp = _Var6;
+    if (((param_4->DirectoryEntry).Contiguous == '\0') || (iVar12 == 0)) {
+      uVar13 = 0xffffffff;
+      p_Var11->LastMappedFileByteOffset = 0xffffffff;
     }
     else {
-      p_Var12->LastMappedFileRunLength = iVar14 * 0x1000;
-      p_Var12->LastMappedBlockNumber = uVar15;
-      uVar15 = (uVar15 + iVar14) - 1;
-      p_Var12->LastMappedFileByteOffset = 0;
+      p_Var11->LastMappedFileRunLength = iVar12 * 0x1000;
+      p_Var11->LastMappedBlockNumber = uVar13;
+      uVar13 = (uVar13 + iVar12) - 1;
+      p_Var11->LastMappedFileByteOffset = 0;
     }
-    p_Var12->LastBlockNumber = uVar15;
-    p_Var12->ParentFcb = param_2;
+    p_Var11->LastBlockNumber = uVar13;
+    p_Var11->ParentFcb = param_2;
     param_2->ReferenceCount = param_2->ReferenceCount + 1;
-    if (((uVar13 & 0xffffffff) != 0) ||
-       (p_Var16 = (_STFC_FCB *)(iVar11 + 0x78), (param_2->Flags & 4) == 0)) {
-      p_Var16 = param_2;
+    if ((param_3 != 0) ||
+       (p_Var14 = (_STFC_FCB *)&param_1->SystemChildFcbList, (param_2->Flags & 4) == 0)) {
+      p_Var14 = param_2;
     }
-    p_Var7 = (p_Var16->ChildFcbList).Flink;
-    (p_Var12->SiblingFcbLink).Blink = &p_Var16->ChildFcbList;
-    (p_Var12->SiblingFcbLink).Flink = p_Var7;
-    p_Var7->Blink = &p_Var12->SiblingFcbLink;
-    (p_Var16->ChildFcbList).Flink = &p_Var12->SiblingFcbLink;
+    p_Var7 = (p_Var14->ChildFcbList).Flink;
+    (p_Var11->SiblingFcbLink).Blink = &p_Var14->ChildFcbList;
+    (p_Var11->SiblingFcbLink).Flink = p_Var7;
+    p_Var7->Blink = &p_Var11->SiblingFcbLink;
+    (p_Var14->ChildFcbList).Flink = &p_Var11->SiblingFcbLink;
   }
-  p_Var12 = (_STFC_FCB *)__restgprlr_26(p_Var12);
-  return p_Var12;
+  return p_Var11;
 }
 
 
@@ -1095,172 +1064,176 @@ _LARGE_INTEGER StfcTimeStampToTime(_STFC_TIME_STAMP param_1)
 
 // 828B2DF0  StfcFlushUpdateDirectoryEntries  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/stfc/driver.c:130)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 long StfcFlushUpdateDirectoryEntries(_STFC_VOLUME_EXTENSION *param_1)
 
 {
   _LIST_ENTRY *p_Var1;
-  _STFC_VOLUME_EXTENSION *p_Var2;
-  long lVar3;
-  _LIST_ENTRY *p_Var4;
+  long lVar2;
+  _LIST_ENTRY *p_Var3;
   
-  p_Var2 = (_STFC_VOLUME_EXTENSION *)__savegprlr_28(param_1);
-  p_Var4 = (p_Var2->FileObjectList).Flink;
+  p_Var3 = (param_1->FileObjectList).Flink;
   do {
-    if (p_Var4 == &p_Var2->FileObjectList) {
-      lVar3 = 0;
-      break;
+    if (p_Var3 == &param_1->FileObjectList) {
+      return 0;
     }
-    p_Var1 = p_Var4 + -9;
-    p_Var4 = p_Var4->Flink;
+    p_Var1 = p_Var3 + -9;
+    p_Var3 = p_Var3->Flink;
   } while (((((_STFC_FCB *)p_Var1->Flink)->Flags & 0x10) == 0) ||
-          (lVar3 = StfcUpdateDirectoryEntry(p_Var2,(_STFC_FCB *)p_Var1->Flink,0), -1 < lVar3));
-  lVar3 = __restgprlr_28(lVar3);
-  return lVar3;
+          (lVar2 = StfcUpdateDirectoryEntry(param_1,(_STFC_FCB *)p_Var1->Flink,0), -1 < lVar2));
+  return lVar2;
 }
 
 
 // 828B1058  StfcNonCachedRead  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/stfc/read.c:138)
+
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
 
 long StfcNonCachedRead(_STFC_VOLUME_EXTENSION *param_1,_STFC_FCB *param_2,void *param_3,
                       ulong param_4,ulong param_5)
 
 {
   _STFC_HASH_BLOCK *p_Var1;
-  _STFC_VOLUME_EXTENSION *p_Var2;
-  long lVar3;
-  ulong uVar4;
-  longlong lVar5;
-  byte *pbVar6;
-  ulonglong uVar7;
-  longlong lVar8;
-  uint uVar9;
-  int iVar10;
+  long lVar2;
+  ulong uVar3;
+  longlong lVar4;
+  byte *pbVar5;
+  ulonglong uVar6;
+  longlong lVar7;
+  uint uVar8;
+  int iVar9;
+  longlong lVar10;
   longlong lVar11;
-  longlong lVar12;
+  ulonglong uVar12;
   ulonglong uVar13;
   ulonglong uVar14;
-  ulonglong uVar15;
-  longlong lVar16;
-  ulonglong uVar17;
+  longlong lVar15;
+  ulonglong uVar16;
   uint local_80;
   _STFC_HASH_BLOCK *local_7c;
   ulong local_78;
   uint local_74;
   byte local_70 [112];
   
-  lVar11 = (longlong)(int)param_5;
-  uVar13 = (ulonglong)(int)param_4;
-  lVar12 = (longlong)(int)param_3;
-  p_Var2 = (_STFC_VOLUME_EXTENSION *)__savegprlr_23(param_1);
+  lVar10 = (longlong)(int)param_5;
+  uVar12 = (ulonglong)(int)param_4;
+  lVar11 = (longlong)(int)param_3;
   do {
-    lVar3 = StfcByteOffsetToBlockNumber(p_Var2,param_2,(ulong)lVar11,&local_74,&local_80,&local_78);
-    uVar9 = local_74;
-    if (lVar3 < 0) goto LAB_828b1248;
-    uVar15 = (ulonglong)local_74;
-    if ((local_78 != 0) || (uVar4 = StfcIsLevel0HashBlockResident(p_Var2,local_74), uVar4 == 0)) {
-      StfcPreloadLevel0Hashblocks(p_Var2,uVar9,(p_Var2->PerformanceParameters).HashPreloadCount);
+    lVar2 = StfcByteOffsetToBlockNumber(param_1,param_2,(ulong)lVar10,&local_74,&local_80,&local_78)
+    ;
+    uVar8 = local_74;
+    if (lVar2 < 0) {
+      return lVar2;
     }
-    uVar14 = uVar15 % 0xaa;
-    uVar7 = (0xaa - uVar14 & 0xfffff) << 0xc;
-    uVar17 = (ulonglong)local_80;
-    if (uVar7 < local_80) {
-      uVar17 = uVar7;
+    uVar14 = (ulonglong)local_74;
+    if ((local_78 != 0) || (uVar3 = StfcIsLevel0HashBlockResident(param_1,local_74), uVar3 == 0)) {
+      StfcPreloadLevel0Hashblocks(param_1,uVar8,(param_1->PerformanceParameters).HashPreloadCount);
     }
-    if ((uVar13 & 0xffffffff) < uVar17) {
-      uVar17 = uVar13;
+    uVar13 = uVar14 % 0xaa;
+    uVar6 = (0xaa - uVar13 & 0xfffff) << 0xc;
+    uVar16 = (ulonglong)local_80;
+    if (uVar6 < local_80) {
+      uVar16 = uVar6;
     }
-    if (0x10000 < (uVar17 & 0xffffffff)) {
-      uVar17 = 0x10000;
+    if ((uVar12 & 0xffffffff) < uVar16) {
+      uVar16 = uVar12;
     }
-    if (((p_Var2->HashBlockPairShift != '\0') &&
-        (lVar3 = StfcFlushBlockCache(p_Var2,uVar9,(((ulong)uVar17 >> 0xc) + uVar9) - 1), lVar3 < 0))
-       || (lVar3 = StfcMapReadableHashBlock(p_Var2,uVar9,0,&local_7c), lVar3 < 0))
-    goto LAB_828b1248;
-    lVar3 = StfcSynchronousReadFile
-                      (p_Var2,(void *)lVar12,(ulong)uVar17,
-                       ((p_Var2->DataBlockStart + uVar15) * 0x1000 & 0xffffffff000) +
-                       p_Var2->BackingFileOffset);
+    if (0x10000 < (uVar16 & 0xffffffff)) {
+      uVar16 = 0x10000;
+    }
+    if ((param_1->HashBlockPairShift != '\0') &&
+       (lVar2 = StfcFlushBlockCache(param_1,uVar8,(((ulong)uVar16 >> 0xc) + uVar8) - 1), lVar2 < 0))
+    {
+      return lVar2;
+    }
+    lVar2 = StfcMapReadableHashBlock(param_1,uVar8,0,&local_7c);
+    if (lVar2 < 0) {
+      return lVar2;
+    }
+    lVar2 = StfcSynchronousReadFile
+                      (param_1,(void *)lVar11,(ulong)uVar16,
+                       ((param_1->DataBlockStart + uVar14) * 0x1000 & 0xffffffff000) +
+                       param_1->BackingFileOffset);
     p_Var1 = local_7c;
-    if (lVar3 < 0) {
-      uVar9 = (int)local_7c - (int)p_Var2->BlockArray;
-      iVar10 = ((int)uVar9 >> 0xc) + (uint)((int)uVar9 < 0 && (uVar9 & 0xfff) != 0);
-      p_Var2->BlockCache[iVar10].ReferenceCount = p_Var2->BlockCache[iVar10].ReferenceCount + 0xff;
-      goto LAB_828b1248;
+    if (lVar2 < 0) {
+      uVar8 = (int)local_7c - (int)param_1->BlockArray;
+      iVar9 = ((int)uVar8 >> 0xc) + (uint)((int)uVar8 < 0 && (uVar8 & 0xfff) != 0);
+      param_1->BlockCache[iVar9].ReferenceCount = param_1->BlockCache[iVar9].ReferenceCount + 0xff;
+      return lVar2;
     }
-    uVar13 = uVar13 - uVar17;
-    lVar11 = uVar17 + lVar11;
-    lVar16 = uVar14 * 0x18 + ZEXT48(local_7c);
+    uVar12 = uVar12 - uVar16;
+    lVar10 = uVar16 + lVar10;
+    lVar15 = uVar13 * 0x18 + ZEXT48(local_7c);
     do {
-      XeCryptSha(lVar12,0x1000,0,0,0,0,local_70,0x14);
-      pbVar6 = local_70;
-      lVar8 = lVar16;
+      XeCryptSha(lVar11,0x1000,0,0,0,0,local_70,0x14);
+      pbVar5 = local_70;
+      lVar7 = lVar15;
       do {
-        lVar5 = (ulonglong)*(byte *)lVar8 - (ulonglong)*pbVar6;
-        if (lVar5 != 0) break;
-        lVar8 = lVar8 + 1;
-        pbVar6 = pbVar6 + 1;
-      } while ((int)lVar8 != (int)lVar16 + 0x14);
-      if ((int)lVar5 != 0) {
-        uVar9 = (int)p_Var1 - (int)p_Var2->BlockArray;
-        iVar10 = ((int)uVar9 >> 0xc) + (uint)((int)uVar9 < 0 && (uVar9 & 0xfff) != 0);
-        p_Var2->BlockCache[iVar10].ReferenceCount = p_Var2->BlockCache[iVar10].ReferenceCount + 0xff
+        lVar4 = (ulonglong)*(byte *)lVar7 - (ulonglong)*pbVar5;
+        if (lVar4 != 0) break;
+        lVar7 = lVar7 + 1;
+        pbVar5 = pbVar5 + 1;
+      } while ((int)lVar7 != (int)lVar15 + 0x14);
+      if ((int)lVar4 != 0) {
+        uVar8 = (int)p_Var1 - (int)param_1->BlockArray;
+        iVar9 = ((int)uVar8 >> 0xc) + (uint)((int)uVar8 < 0 && (uVar8 & 0xfff) != 0);
+        param_1->BlockCache[iVar9].ReferenceCount = param_1->BlockCache[iVar9].ReferenceCount + 0xff
         ;
-        StfcSetPersistentStatus(p_Var2,-0x3fffffce);
-        lVar3 = -0x3fffffce;
-        goto LAB_828b1248;
+        StfcSetPersistentStatus(param_1,-0x3fffffce);
+        return -0x3fffffce;
       }
-      uVar17 = uVar17 - 0x1000;
-      lVar16 = lVar16 + 0x18;
-      local_80 = (uint)uVar17;
-      lVar12 = lVar12 + 0x1000;
-    } while (uVar17 != 0);
-    uVar9 = (int)p_Var1 - (int)p_Var2->BlockArray;
-    iVar10 = ((int)uVar9 >> 0xc) + (uint)((int)uVar9 < 0 && (uVar9 & 0xfff) != 0);
-    p_Var2->BlockCache[iVar10].ReferenceCount = p_Var2->BlockCache[iVar10].ReferenceCount + 0xff;
-  } while ((uVar13 & 0xffffffff) != 0);
-  lVar3 = 0;
-LAB_828b1248:
-  lVar3 = __restgprlr_23(lVar3);
-  return lVar3;
+      uVar16 = uVar16 - 0x1000;
+      lVar15 = lVar15 + 0x18;
+      local_80 = (uint)uVar16;
+      lVar11 = lVar11 + 0x1000;
+    } while (uVar16 != 0);
+    uVar8 = (int)p_Var1 - (int)param_1->BlockArray;
+    iVar9 = ((int)uVar8 >> 0xc) + (uint)((int)uVar8 < 0 && (uVar8 & 0xfff) != 0);
+    param_1->BlockCache[iVar9].ReferenceCount = param_1->BlockCache[iVar9].ReferenceCount + 0xff;
+    if ((uVar12 & 0xffffffff) == 0) {
+      return 0;
+    }
+  } while( true );
 }
 
 
 // 828AE160  StfcSynchronousWriteFile  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/stfc/worker.c:143)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 long StfcSynchronousWriteFile
                (_STFC_VOLUME_EXTENSION *param_1,void *param_2,ulong param_3,ulong64 param_4)
 
 {
-  undefined4 uVar1;
-  int iVar3;
-  ulonglong uVar2;
-  long lVar4;
-  longlong lVar5;
-  ulonglong uVar6;
-  uint local_40;
-  uint local_3c;
+  void *pvVar1;
+  int iVar2;
+  int local_40;
+  ulong local_3c;
   ulong64 local_38 [7];
   
-  uVar6 = (ulonglong)(int)param_3;
-  lVar5 = (longlong)(int)param_2;
-  iVar3 = __savegprlr_27(param_1,lVar5);
-  uVar1 = *(undefined4 *)(iVar3 + 0x2c);
+  pvVar1 = param_1->SynchronousIoEventHandle;
   gStfcStats.StfcSynchronousWriteFile = gStfcStats.StfcSynchronousWriteFile + 1;
   local_38[0] = param_4;
-  uVar2 = NtWriteFile(*(undefined4 *)(iVar3 + 0x28),uVar1,0,0,&local_40,lVar5,uVar6,local_38);
-  if ((int)uVar2 == 0x103) {
-    NtWaitForSingleObjectEx(uVar1,0,0,0);
-    uVar2 = (ulonglong)local_40;
+  iVar2 = NtWriteFile(param_1->BackingFileHandle,pvVar1,0,0,&local_40,param_2,param_3,local_38);
+  if (iVar2 == 0x103) {
+    NtWaitForSingleObjectEx(pvVar1,0,0,0);
+    iVar2 = local_40;
   }
-  if ((-1 < (int)uVar2) && ((uVar6 & 0xffffffff) != (ulonglong)local_3c)) {
-    uVar2 = 0xffffffffc0000185;
+  if ((-1 < iVar2) && (param_3 != local_3c)) {
+    iVar2 = -0x3ffffe7b;
   }
-  lVar4 = __restgprlr_27(uVar2);
-  return lVar4;
+  return iVar2;
 }
 
 
 // 828AC6A0  StfcMoveBlockCacheEntry  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/stfc/blocksup.c:157)
+
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 
 void StfcMoveBlockCacheEntry(_STFC_VOLUME_EXTENSION *param_1,ulong param_2,ulong param_3)
 
@@ -1268,43 +1241,34 @@ void StfcMoveBlockCacheEntry(_STFC_VOLUME_EXTENSION *param_1,ulong param_2,ulong
   byte bVar1;
   byte bVar2;
   byte bVar3;
-  int iVar4;
-  int iVar5;
-  int iVar6;
-  int iVar7;
-  ulonglong uVar8;
-  ulonglong uVar9;
-  undefined1 uVar10;
+  _STFC_BLOCK_CACHE_ELEMENT *p_Var4;
+  uint uVar5;
+  uchar uVar6;
   
-  uVar9 = (ulonglong)(int)param_3;
-  uVar8 = (ulonglong)(int)param_2;
-  iVar7 = __savegprlr_29(param_1);
-  bVar1 = *(byte *)(iVar7 + 0xc9);
-  iVar4 = *(int *)(iVar7 + 0x30);
-  iVar5 = (uint)bVar1 * 8 + iVar4;
-  if ((uVar8 & 0xffffffff) == (ulonglong)bVar1) {
-    if ((uVar9 & 0xffffffff) == 0) {
-      *(undefined1 *)(iVar7 + 0xc9) = *(undefined1 *)(iVar5 + 5);
+  bVar1 = param_1->BlockCacheLruHead;
+  uVar5 = (uint)bVar1;
+  p_Var4 = param_1->BlockCache;
+  if (param_2 == uVar5) {
+    if (param_3 == 0) {
+      param_1->BlockCacheLruHead = p_Var4[uVar5].LruFlink;
     }
   }
   else {
-    uVar10 = (undefined1)uVar8;
-    if ((uVar8 & 0xffffffff) != (ulonglong)*(byte *)(iVar5 + 6)) {
-      iVar6 = (int)uVar8 * 8 + iVar4;
-      bVar2 = *(byte *)(iVar6 + 6);
-      bVar3 = *(byte *)(iVar6 + 5);
-      *(byte *)((uint)bVar2 * 8 + iVar4 + 5) = bVar3;
-      *(byte *)((uint)bVar3 * 8 + iVar4 + 6) = bVar2;
-      *(byte *)(iVar6 + 5) = bVar1;
-      *(undefined1 *)(iVar6 + 6) = *(undefined1 *)(iVar5 + 6);
-      *(undefined1 *)((uint)*(byte *)(iVar5 + 6) * 8 + iVar4 + 5) = uVar10;
-      *(undefined1 *)(iVar5 + 6) = uVar10;
+    uVar6 = (uchar)param_2;
+    if (param_2 != p_Var4[uVar5].LruBlink) {
+      bVar2 = p_Var4[param_2].LruBlink;
+      bVar3 = p_Var4[param_2].LruFlink;
+      p_Var4[bVar2].LruFlink = bVar3;
+      p_Var4[bVar3].LruBlink = bVar2;
+      p_Var4[param_2].LruFlink = bVar1;
+      p_Var4[param_2].LruBlink = p_Var4[uVar5].LruBlink;
+      p_Var4[p_Var4[uVar5].LruBlink].LruFlink = uVar6;
+      p_Var4[uVar5].LruBlink = uVar6;
     }
-    if ((uVar9 & 0xffffffff) != 0) {
-      *(undefined1 *)(iVar7 + 0xc9) = uVar10;
+    if (param_3 != 0) {
+      param_1->BlockCacheLruHead = uVar6;
     }
   }
-  __restgprlr_29();
   return;
 }
 
@@ -1337,6 +1301,9 @@ ulong StfcTimeToTimeStamp(_LARGE_INTEGER param_1,_STFC_TIME_STAMP *param_2)
 
 // 828B2628  StfcCreateNewFile  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/stfc/create.c:166)
 
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
+
 long StfcCreateNewFile(_STFC_VOLUME_EXTENSION *param_1,_STFC_FCB *param_2,_STRING *param_3,
                       ulong param_4,ulong param_5,_STFC_DIRECTORY_LOOKUP *param_6,ulong param_7,
                       _STFC_FCB **param_8)
@@ -1344,61 +1311,58 @@ long StfcCreateNewFile(_STFC_VOLUME_EXTENSION *param_1,_STFC_FCB *param_2,_STRIN
 {
   undefined1 *puVar1;
   undefined1 *puVar2;
-  _STFC_VOLUME_EXTENSION *p_Var3;
+  long lVar3;
   _STFC_FCB *p_Var4;
-  long lVar5;
-  ulonglong uVar6;
-  uint uVar7;
+  uint uVar5;
   _STFC_TIME_STAMP local_70 [2];
   _LARGE_INTEGER local_68 [13];
   
-  uVar6 = (ulonglong)(int)param_4;
-  p_Var3 = (_STFC_VOLUME_EXTENSION *)__savegprlr_22(param_1);
-  if (p_Var3->HashBlockPairShift == '\0') {
+  if (param_1->HashBlockPairShift == '\0') {
 LAB_828b2664:
-    lVar5 = -0x3ffffd16;
+    lVar3 = -0x3ffffd16;
   }
   else {
-    uVar7 = param_6->EmptyDirectoryByteOffset;
-    if (uVar7 == 0xffffffff) {
-      uVar7 = (p_Var3->RootDirectoryFcb).ValidDataSize;
-      lVar5 = StfcSetAllocationSize(p_Var3,(_STFC_FCB *)&p_Var3->RootDirectoryFcb,uVar7 + 0x1000,0);
-      if (lVar5 < 0) goto LAB_828b27a8;
+    uVar5 = param_6->EmptyDirectoryByteOffset;
+    if (uVar5 == 0xffffffff) {
+      uVar5 = (param_1->RootDirectoryFcb).ValidDataSize;
+      lVar3 = StfcSetAllocationSize
+                        (param_1,(_STFC_FCB *)&param_1->RootDirectoryFcb,uVar5 + 0x1000,0);
+      if (lVar3 < 0) {
+        return lVar3;
+      }
     }
-    else if (0x3fff80 < uVar7) goto LAB_828b2664;
-    param_6->DirectoryByteOffset = uVar7;
+    else if (0x3fff80 < uVar5) goto LAB_828b2664;
+    param_6->DirectoryByteOffset = uVar5;
     memset();
     memcpy();
     puVar2 = &(param_6->DirectoryEntry).field_0x28;
     (param_6->DirectoryEntry).FileNameLength = param_3->Length;
-    (param_6->DirectoryEntry).Directory = uVar6;
+    (param_6->DirectoryEntry).Directory = param_4;
     KeQuerySystemTime(local_68);
     StfcTimeToTimeStamp(local_68[0],local_70);
     (param_6->DirectoryEntry).CreationTimeStamp = local_70[0];
     (param_6->DirectoryEntry).LastWriteTimeStamp = local_70[0];
-    p_Var4 = StfcCreateFcb(p_Var3,param_2,param_7,param_6);
+    p_Var4 = StfcCreateFcb(param_1,param_2,param_7,param_6);
     if (p_Var4 == (_STFC_FCB *)0x0) {
-      lVar5 = -0x3fffff66;
+      lVar3 = -0x3fffff66;
     }
     else {
       if ((p_Var4->Flags & 2) == 0) {
-        lVar5 = StfcSetAllocationSize(p_Var3,p_Var4,param_5,0);
+        lVar3 = StfcSetAllocationSize(param_1,p_Var4,param_5,0);
       }
       else {
-        lVar5 = 0;
+        lVar3 = 0;
       }
-      if ((lVar5 < 0) || (lVar5 = StfcUpdateDirectoryEntry(p_Var3,p_Var4,0), lVar5 < 0)) {
+      if ((lVar3 < 0) || (lVar3 = StfcUpdateDirectoryEntry(param_1,p_Var4,0), lVar3 < 0)) {
         StfcDereferenceFcb(p_Var4);
       }
       else {
         *param_8 = p_Var4;
-        lVar5 = 0;
+        lVar3 = 0;
       }
     }
   }
-LAB_828b27a8:
-  lVar5 = __restgprlr_22(lVar5);
-  return lVar5;
+  return lVar3;
 }
 
 
@@ -1423,137 +1387,127 @@ void StfcResetWriteableDirectoryEntries(_STFC_VOLUME_EXTENSION *param_1)
 
 // 828AE818  IoCreateDirectoryEnumContext  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/stfc/kstuff-io.c:198)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 long IoCreateDirectoryEnumContext
                (_FILE_OBJECT *param_1,_STRING *param_2,ulong param_3,
                _DIRECTORY_ENUM_CONTEXT **param_4)
 
 {
-  undefined8 uVar1;
-  int iVar2;
-  _DIRECTORY_ENUM_CONTEXT *p_Var3;
+  int iVar1;
+  _DIRECTORY_ENUM_CONTEXT *p_Var2;
+  long lVar3;
   ulong uVar4;
-  long lVar5;
-  _STRING *p_Var6;
-  ulonglong uVar7;
-  longlong lVar8;
+  ulonglong uVar5;
+  longlong lVar6;
   
-  uVar7 = (ulonglong)(int)param_2;
-  uVar1 = __savegprlr_26(param_1);
-  p_Var6 = (_STRING *)uVar7;
-  if ((uVar7 & 0xffffffff) == 0) {
-LAB_828ae870:
-    lVar8 = 0;
+  if (((param_2 == (_STRING *)0x0) || (uVar5 = (ulonglong)param_2->Length, uVar5 == 0)) ||
+     ((uVar5 == 1 && (*param_2->Buffer == '*')))) {
+    lVar6 = 0;
   }
   else {
-    uVar7 = (ulonglong)p_Var6->Length;
-    if ((uVar7 == 0) || ((uVar7 == 1 && (*p_Var6->Buffer == '*')))) goto LAB_828ae870;
-    lVar8 = uVar7 << 1;
+    lVar6 = uVar5 << 1;
   }
-  iVar2 = ObIsTitleObject(uVar1);
-  p_Var3 = (_DIRECTORY_ENUM_CONTEXT *)
-           ExAllocatePoolTypeWithTag(lVar8 + 0xc,0x65446f49,(iVar2 == 0) + '\x01');
-  if (p_Var3 == (_DIRECTORY_ENUM_CONTEXT *)0x0) {
-    uVar1 = 0xffffffffc000009a;
+  iVar1 = ObIsTitleObject(param_1);
+  p_Var2 = (_DIRECTORY_ENUM_CONTEXT *)
+           ExAllocatePoolTypeWithTag(lVar6 + 0xc,0x65446f49,(iVar1 == 0) + '\x01');
+  if (p_Var2 == (_DIRECTORY_ENUM_CONTEXT *)0x0) {
+    lVar3 = -0x3fffff66;
   }
   else {
-    p_Var3->QueryOffset = 0;
-    (p_Var3->TemplateFileName).Length = 0;
-    (p_Var3->TemplateFileName).MaximumLength = 0;
-    (p_Var3->TemplateFileName).Buffer = (wchar_t *)0x0;
-    if (lVar8 != 0) {
-      (p_Var3->TemplateFileName).MaximumLength = (ushort)lVar8;
-      (p_Var3->TemplateFileName).Buffer = (wchar_t *)(p_Var3 + 1);
-      uVar4 = IopCopyTemplateFileName(&p_Var3->TemplateFileName,param_3,p_Var6);
+    p_Var2->QueryOffset = 0;
+    (p_Var2->TemplateFileName).Length = 0;
+    (p_Var2->TemplateFileName).MaximumLength = 0;
+    (p_Var2->TemplateFileName).Buffer = (wchar_t *)0x0;
+    if (lVar6 != 0) {
+      (p_Var2->TemplateFileName).MaximumLength = (ushort)lVar6;
+      (p_Var2->TemplateFileName).Buffer = (wchar_t *)(p_Var2 + 1);
+      uVar4 = IopCopyTemplateFileName(&p_Var2->TemplateFileName,param_3,param_2);
       if (uVar4 == 0) {
-        ExFreePool(p_Var3);
-        uVar1 = 0xffffffffc000000d;
-        goto LAB_828ae90c;
+        ExFreePool(p_Var2);
+        return -0x3ffffff3;
       }
     }
-    *param_4 = p_Var3;
-    uVar1 = 0;
+    *param_4 = p_Var2;
+    lVar3 = 0;
   }
-LAB_828ae90c:
-  lVar5 = __restgprlr_26(uVar1);
-  return lVar5;
+  return lVar3;
 }
 
 
 // 828AE210  StfcSynchronousWriteFileGather  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/stfc/worker.c:205)
+
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 
 long StfcSynchronousWriteFileGather
                (_STFC_VOLUME_EXTENSION *param_1,_FILE_SEGMENT_ELEMENT *param_2,ulong param_3,
                ulong64 param_4)
 
 {
-  undefined4 uVar1;
-  int iVar3;
-  ulonglong uVar2;
-  long lVar4;
-  longlong lVar5;
-  ulonglong uVar6;
-  uint local_40;
-  uint local_3c;
+  void *pvVar1;
+  int iVar2;
+  int local_40;
+  ulong local_3c;
   ulong64 local_38 [7];
   
-  uVar6 = (ulonglong)(int)param_3;
-  lVar5 = (longlong)(int)param_2;
-  iVar3 = __savegprlr_27(param_1,lVar5);
-  uVar1 = *(undefined4 *)(iVar3 + 0x2c);
+  pvVar1 = param_1->SynchronousIoEventHandle;
   gStfcStats.StfcSynchronousWriteFile = gStfcStats.StfcSynchronousWriteFile + 1;
   local_38[0] = param_4;
-  uVar2 = NtWriteFileGather(*(undefined4 *)(iVar3 + 0x28),uVar1,0,0,&local_40,lVar5,uVar6,local_38);
-  if ((int)uVar2 == 0x103) {
-    NtWaitForSingleObjectEx(uVar1,0,0,0);
-    uVar2 = (ulonglong)local_40;
+  iVar2 = NtWriteFileGather(param_1->BackingFileHandle,pvVar1,0,0,&local_40,param_2,param_3,local_38
+                           );
+  if (iVar2 == 0x103) {
+    NtWaitForSingleObjectEx(pvVar1,0,0,0);
+    iVar2 = local_40;
   }
-  if ((-1 < (int)uVar2) && ((uVar6 & 0xffffffff) != (ulonglong)local_3c)) {
-    uVar2 = 0xffffffffc0000185;
+  if ((-1 < iVar2) && (param_3 != local_3c)) {
+    iVar2 = -0x3ffffe7b;
   }
-  lVar4 = __restgprlr_27(uVar2);
-  return lVar4;
+  return iVar2;
 }
 
 
 // 828ADB68  StfcComputeLevelNBackingHashBlockNumber  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/stfc/stfsup.c:214)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 ulong StfcComputeLevelNBackingHashBlockNumber
                 (_STFC_VOLUME_EXTENSION *param_1,ulong param_2,ulong param_3)
 
 {
-  int iVar1;
+  uint uVar1;
   ulong uVar2;
-  ulonglong uVar3;
-  uint uVar4;
-  ulonglong uVar5;
   
-  uVar5 = (ulonglong)(int)param_3;
-  uVar3 = (ulonglong)(int)param_2;
-  iVar1 = __savegprlr_29(param_1);
-  uVar4 = (uint)*(byte *)(iVar1 + 0xce);
-  if ((uVar5 & 0xffffffff) == 0) {
-    iVar1 = (int)((uVar3 & 0xffffffff) / 0xaa);
-    uVar5 = (ulonglong)(uint)(iVar1 << (uVar4 & 0x3f));
-    if ((iVar1 == 0) ||
-       (iVar1 = (int)((uVar3 & 0xffffffff) / 0x70e4),
-       uVar5 = (uint)(iVar1 + 1 << (uVar4 & 0x3f)) + uVar5, iVar1 == 0)) goto LAB_828adc0c;
+  uVar1 = (uint)param_1->HashBlockPairShift;
+  if (param_3 == 0) {
+    uVar2 = param_2 / 0xaa << (uVar1 & 0x3f);
+    if (param_2 / 0xaa == 0) {
+      return uVar2;
+    }
+    uVar2 = (param_2 / 0x70e4 + 1 << (uVar1 & 0x3f)) + uVar2;
+    if (param_2 / 0x70e4 == 0) {
+      return uVar2;
+    }
   }
   else {
-    if ((uVar5 & 0xffffffff) != 1) {
-      uVar5 = (ulonglong)(uint)(0xaa << (uVar4 & 0x3f)) + (ulonglong)(uint)(1 << (uVar4 & 0x3f));
-      goto LAB_828adc0c;
+    if (param_3 != 1) {
+      return (0xaa << (uVar1 & 0x3f)) + (1 << (uVar1 & 0x3f));
     }
-    uVar5 = (ulonglong)(uint)((int)((uVar3 & 0xffffffff) / 0x70e4) * 0xab + 1 << (uVar4 & 0x3f));
-    if ((uVar3 & 0xffffffff) < 0x4af768) goto LAB_828adc0c;
+    uVar2 = (param_2 / 0x70e4) * 0xab + 1 << (uVar1 & 0x3f);
+    if (param_2 < 0x4af768) {
+      return uVar2;
+    }
   }
-  uVar5 = (uint)(1 << (uVar4 & 0x3f)) + uVar5;
-LAB_828adc0c:
-  uVar2 = __restgprlr_29(uVar5);
-  return uVar2;
+  return (1 << (uVar1 & 0x3f)) + uVar2;
 }
 
 
 // 828B2FE0  StfcSetBasicInformation  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/stfc/fileinfo.c:236)
+
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 
 long StfcSetBasicInformation
                (_STFC_VOLUME_EXTENSION *param_1,_STFC_FCB *param_2,_FILE_BASIC_INFORMATION *param_3)
@@ -1561,21 +1515,19 @@ long StfcSetBasicInformation
 {
   uint uVar1;
   bool bVar2;
-  _STFC_VOLUME_EXTENSION *p_Var3;
-  ulong uVar4;
-  long lVar5;
-  _LARGE_INTEGER _Var6;
+  ulong uVar3;
+  long lVar4;
+  _LARGE_INTEGER _Var5;
+  _STFC_TIME_STAMP _Var6;
   _STFC_TIME_STAMP _Var7;
-  _STFC_TIME_STAMP _Var8;
   _STFC_TIME_STAMP local_40 [16];
   
-  p_Var3 = (_STFC_VOLUME_EXTENSION *)__savegprlr_26(param_1);
-  _Var6._s_0 = *(_LARGE_INTEGER_s_0 *)&param_3->CreationTime;
+  _Var5._s_0 = *(_LARGE_INTEGER_s_0 *)&param_3->CreationTime;
   bVar2 = false;
-  if ((_Var6.QuadPart != -1) && (_Var6.QuadPart != 0)) {
-    uVar4 = StfcTimeToTimeStamp(_Var6,local_40);
-    if (uVar4 != 0) {
-      _Var7 = local_40[0];
+  if ((_Var5.QuadPart != -1) && (_Var5.QuadPart != 0)) {
+    uVar3 = StfcTimeToTimeStamp(_Var5,local_40);
+    if (uVar3 != 0) {
+      _Var6 = local_40[0];
       if (local_40[0].AsULONG != (param_2->CreationTimeStamp).AsULONG) {
         bVar2 = true;
       }
@@ -1583,16 +1535,16 @@ long StfcSetBasicInformation
     }
     goto LAB_828b3028;
   }
-  _Var7 = param_2->CreationTimeStamp;
+  _Var6 = param_2->CreationTimeStamp;
 LAB_828b3054:
-  _Var6 = param_3->LastWriteTime;
-  if ((_Var6.QuadPart == -1) || (_Var6.QuadPart == 0)) {
-    _Var8 = param_2->LastWriteTimeStamp;
+  _Var5 = param_3->LastWriteTime;
+  if ((_Var5.QuadPart == -1) || (_Var5.QuadPart == 0)) {
+    _Var7 = param_2->LastWriteTimeStamp;
   }
   else {
-    uVar4 = StfcTimeToTimeStamp(_Var6,local_40);
-    if (uVar4 == 0) goto LAB_828b3028;
-    _Var8 = local_40[0];
+    uVar3 = StfcTimeToTimeStamp(_Var5,local_40);
+    if (uVar3 == 0) goto LAB_828b3028;
+    _Var7 = local_40[0];
     if (local_40[0].AsULONG != (param_2->LastWriteTimeStamp).AsULONG) {
       bVar2 = true;
     }
@@ -1601,13 +1553,15 @@ LAB_828b3054:
   if (uVar1 == 0) {
 LAB_828b30c8:
     if (bVar2) {
-      lVar5 = StfcEnsureWriteableDirectoryEntry(p_Var3,param_2);
-      if (lVar5 < 0) goto LAB_828b310c;
-      (param_2->CreationTimeStamp).AsULONG = (ulong)_Var7;
-      (param_2->LastWriteTimeStamp).AsULONG = (ulong)_Var8;
+      lVar4 = StfcEnsureWriteableDirectoryEntry(param_1,param_2);
+      if (lVar4 < 0) {
+        return lVar4;
+      }
+      (param_2->CreationTimeStamp).AsULONG = (ulong)_Var6;
+      (param_2->LastWriteTimeStamp).AsULONG = (ulong)_Var7;
       param_2->Flags = param_2->Flags | 0x10;
     }
-    lVar5 = 0;
+    lVar4 = 0;
   }
   else {
     if ((param_2->Flags & 2) == 0) {
@@ -1615,102 +1569,87 @@ LAB_828b30c8:
     }
     else if ((uVar1 & 0x10) != 0) goto LAB_828b30c8;
 LAB_828b3028:
-    lVar5 = -0x3ffffff3;
+    lVar4 = -0x3ffffff3;
   }
-LAB_828b310c:
-  lVar5 = __restgprlr_26(lVar5);
-  return lVar5;
+  return lVar4;
 }
 
 
 // 828B2E60  StfcControlDevice  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/stfc/driver.c:249)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 long StfcControlDevice(_DEVICE_OBJECT *param_1,_STFC_CONTROL_CODE param_2,void *param_3)
 
 {
-  bool bVar1;
-  _STFC_VOLUME_EXTENSION *p_Var2;
+  _STFC_VOLUME_EXTENSION *p_Var1;
+  ulong uVar2;
   uint uVar3;
   uint uVar4;
-  ulong uVar5;
-  int iVar6;
-  long lVar7;
-  ulonglong uVar8;
-  ulonglong uVar9;
+  int iVar5;
   
-  uVar8 = (ulonglong)(int)param_2;
-  iVar6 = __savegprlr_28(param_1);
-  p_Var2 = *(_STFC_VOLUME_EXTENSION **)(iVar6 + 0x18);
-  iVar6 = (int)uVar8;
-  if (((iVar6 == 0) || (iVar6 == 1)) ||
-     (uVar9 = (ulonglong)(uint)p_Var2->PersistentStatus, p_Var2->PersistentStatus == 0)) {
-    uVar9 = 0;
-    if ((uVar8 & 0xffffffff) < 9) {
-      bVar1 = iVar6 != 0;
-      if (uVar8 == 1 && bVar1) {
-        RtlLeaveCriticalSection(p_Var2);
+  p_Var1 = param_1->DeviceExtension;
+  if (((param_2 == StfcLockVolume) || (param_2 == StfcUnlockVolume)) ||
+     (iVar5 = p_Var1->PersistentStatus, iVar5 == 0)) {
+    iVar5 = 0;
+    if (param_2 < (StfcSetSuicideMode|StfcUnlockVolume)) {
+      if (param_2 == StfcUnlockVolume) {
+        RtlLeaveCriticalSection(p_Var1);
       }
-      else if (uVar8 == 2 && bVar1) {
-        uVar9 = (ulonglong)(uint)p_Var2->PersistentStatus;
-        if (p_Var2->PersistentStatus == 0) {
-          lVar7 = StfcFlushUpdateDirectoryEntries(p_Var2);
-          uVar9 = (ulonglong)lVar7;
-          if (-1 < (longlong)uVar9) {
-            lVar7 = StfcFlushBlockCache(p_Var2,0,0xffffffff);
-            uVar9 = (ulonglong)lVar7;
-          }
+      else if (param_2 == StfcFlushDirtyBuffers) {
+        iVar5 = p_Var1->PersistentStatus;
+        if ((iVar5 == 0) && (iVar5 = StfcFlushUpdateDirectoryEntries(p_Var1), -1 < iVar5)) {
+          iVar5 = StfcFlushBlockCache(p_Var1,0,0xffffffff);
         }
       }
-      else if (uVar8 == 3 && bVar1) {
-        uVar9 = (ulonglong)(uint)p_Var2->PersistentStatus;
-        StfcBuildVolumeDescriptorFn(p_Var2,param_3);
+      else if (param_2 == StfcBuildVolumeDescriptor) {
+        iVar5 = p_Var1->PersistentStatus;
+        StfcBuildVolumeDescriptorFn(p_Var1,param_3);
       }
-      else if (uVar8 == 4 && bVar1) {
-        uVar9 = (ulonglong)(uint)p_Var2->PersistentStatus;
-        if (p_Var2->PersistentStatus == 0) {
-          uVar5 = p_Var2->NumberOfFreePendingBlocks;
-          uVar3 = (p_Var2->RootHashEntry).field1_0x14.LevelAsULONG;
-          uVar4 = (p_Var2->RootDirectoryFcb).AllocationSize;
-          p_Var2->NumberOfFreePendingBlocks = 0;
-          p_Var2->NumberOfFreeBlocks = p_Var2->NumberOfFreeBlocks + uVar5;
-          (p_Var2->RootHashEntry).field1_0x14.LevelAsULONG = uVar3 & 0x7fffffff;
-          p_Var2->NumberOfUnwriteableDirectoryBlocks = uVar4 >> 0xc;
-          StfcResetWriteableDirectoryEntries(p_Var2);
-          StfcResetWriteableBlockCache(p_Var2);
+      else if (param_2 == StfcResetWriteState) {
+        iVar5 = p_Var1->PersistentStatus;
+        if (iVar5 == 0) {
+          uVar2 = p_Var1->NumberOfFreePendingBlocks;
+          uVar3 = (p_Var1->RootHashEntry).field1_0x14.LevelAsULONG;
+          uVar4 = (p_Var1->RootDirectoryFcb).AllocationSize;
+          p_Var1->NumberOfFreePendingBlocks = 0;
+          p_Var1->NumberOfFreeBlocks = p_Var1->NumberOfFreeBlocks + uVar2;
+          (p_Var1->RootHashEntry).field1_0x14.LevelAsULONG = uVar3 & 0x7fffffff;
+          p_Var1->NumberOfUnwriteableDirectoryBlocks = uVar4 >> 0xc;
+          StfcResetWriteableDirectoryEntries(p_Var1);
+          StfcResetWriteableBlockCache(p_Var1);
         }
       }
-      else if (uVar8 == 5 && bVar1) {
-        uVar5 = (p_Var2->PerformanceParameters).HashPreloadCount;
-        ((_STFC_VOLUME_DESCRIPTOR *)param_3)->DescriptorLength = (char)(uVar5 >> 0x18);
-        ((_STFC_VOLUME_DESCRIPTOR *)param_3)->Version = (char)(uVar5 >> 0x10);
-        ((_STFC_VOLUME_DESCRIPTOR *)param_3)->field_0x2 = (char)(uVar5 >> 8);
-        ((_STFC_VOLUME_DESCRIPTOR *)param_3)->DirectoryAllocationBlocks0 = (char)uVar5;
+      else if (param_2 == StfcGetPerformanceParameters) {
+        *(ulong *)param_3 = (p_Var1->PerformanceParameters).HashPreloadCount;
       }
-      else if (uVar8 == 6 && bVar1) {
-        (p_Var2->PerformanceParameters).HashPreloadCount = *(ulong *)param_3;
+      else if (param_2 == StfcSetPerformanceParameters) {
+        (p_Var1->PerformanceParameters).HashPreloadCount = *(ulong *)param_3;
       }
-      else if (uVar8 == 7 && bVar1) {
+      else if (param_2 == StfcGetStats) {
         memcpy();
       }
-      else if (bVar1) {
-        (p_Var2->SuicideParameters).Callback = *(_func___cdecl_void_void_ptr_long **)param_3;
-        (p_Var2->SuicideParameters).Context =
-             *(void **)&((_STFC_VOLUME_DESCRIPTOR *)param_3)->DirectoryAllocationBlocks1;
+      else if (param_2 == StfcLockVolume) {
+        RtlEnterCriticalSection(p_Var1);
       }
       else {
-        RtlEnterCriticalSection(p_Var2);
+        (p_Var1->SuicideParameters).Callback = *(_func___cdecl_void_void_ptr_long **)param_3;
+        (p_Var1->SuicideParameters).Context = *(void **)((int)param_3 + 4);
       }
     }
     else {
-      uVar9 = 0xffffffffc0000010;
+      iVar5 = -0x3ffffff0;
     }
   }
-  lVar7 = __restgprlr_28(uVar9);
-  return lVar7;
+  return iVar5;
 }
 
 
 // 828AD4F0  StfcCreateCloneFcb  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/stfc/fcbsup.c:251)
+
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 
 _STFC_FCB * StfcCreateCloneFcb(_STFC_FCB *param_1,ulong param_2)
 
@@ -1726,46 +1665,46 @@ _STFC_FCB * StfcCreateCloneFcb(_STFC_FCB *param_1,ulong param_2)
   ulong uVar9;
   ulong uVar10;
   _STFC_FCB *p_Var11;
-  _STFC_FCB *p_Var12;
   
-  p_Var11 = (_STFC_FCB *)__savegprlr_29(param_1);
-  p_Var12 = StfcAllocateFcb(param_2);
-  if (p_Var12 != (_STFC_FCB *)0x0) {
-    uVar1 = p_Var11->DirectoryIndex;
-    p_Var12->FileNameLength = p_Var11->FileNameLength;
-    p_Var12->DirectoryIndex = uVar1;
+  p_Var11 = StfcAllocateFcb(param_2);
+  if (p_Var11 != (_STFC_FCB *)0x0) {
+    uVar1 = param_1->DirectoryIndex;
+    p_Var11->FileNameLength = param_1->FileNameLength;
+    p_Var11->DirectoryIndex = uVar1;
     memcpy();
-    if ((p_Var11->Flags & 2) != 0) {
-      p_Var12->Flags = p_Var12->Flags | 2;
+    if ((param_1->Flags & 2) != 0) {
+      p_Var11->Flags = p_Var11->Flags | 2;
     }
-    uVar2 = p_Var11->AllocationSize;
-    _Var3 = p_Var11->FileBounds;
-    uVar4 = p_Var11->ValidDataSize;
-    _Var5 = p_Var11->CreationTimeStamp;
-    _Var6 = p_Var11->LastWriteTimeStamp;
-    uVar7 = p_Var11->LastBlockNumber;
-    uVar8 = p_Var11->LastMappedFileByteOffset;
-    uVar9 = p_Var11->LastMappedFileRunLength;
-    uVar10 = p_Var11->LastMappedBlockNumber;
-    p_Var12->FirstBlockNumber = p_Var11->FirstBlockNumber;
-    p_Var12->AllocationSize = uVar2;
-    p_Var12->FileBounds = _Var3;
-    p_Var12->ValidDataSize = uVar4;
-    p_Var12->CreationTimeStamp = _Var5;
-    p_Var12->LastWriteTimeStamp = _Var6;
-    p_Var12->LastBlockNumber = uVar7;
-    p_Var12->LastMappedFileByteOffset = uVar8;
-    p_Var12->LastMappedFileRunLength = uVar9;
-    p_Var12->LastMappedBlockNumber = uVar10;
-    p_Var12->CloneFcb = p_Var11;
-    p_Var11->CloneFcb = p_Var12;
+    uVar2 = param_1->AllocationSize;
+    _Var3 = param_1->FileBounds;
+    uVar4 = param_1->ValidDataSize;
+    _Var5 = param_1->CreationTimeStamp;
+    _Var6 = param_1->LastWriteTimeStamp;
+    uVar7 = param_1->LastBlockNumber;
+    uVar8 = param_1->LastMappedFileByteOffset;
+    uVar9 = param_1->LastMappedFileRunLength;
+    uVar10 = param_1->LastMappedBlockNumber;
+    p_Var11->FirstBlockNumber = param_1->FirstBlockNumber;
+    p_Var11->AllocationSize = uVar2;
+    p_Var11->FileBounds = _Var3;
+    p_Var11->ValidDataSize = uVar4;
+    p_Var11->CreationTimeStamp = _Var5;
+    p_Var11->LastWriteTimeStamp = _Var6;
+    p_Var11->LastBlockNumber = uVar7;
+    p_Var11->LastMappedFileByteOffset = uVar8;
+    p_Var11->LastMappedFileRunLength = uVar9;
+    p_Var11->LastMappedBlockNumber = uVar10;
+    p_Var11->CloneFcb = param_1;
+    param_1->CloneFcb = p_Var11;
   }
-  p_Var11 = (_STFC_FCB *)__restgprlr_29(p_Var12);
   return p_Var11;
 }
 
 
 // 828AE2C0  StfcWorkerThread  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/stfc/worker.c:256)
+
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 
 void StfcWorkerThread(void *param_1)
 
@@ -1773,282 +1712,258 @@ void StfcWorkerThread(void *param_1)
   int *piVar1;
   int *piVar2;
   int iVar3;
-  int iVar5;
   undefined8 uVar4;
-  int iVar6;
+  int iVar5;
   
-  iVar5 = __savegprlr_25(param_1);
-  if (*(int *)(iVar5 + 0x20) == 0) {
+  if (*(int *)((int)param_1 + 0x20) == 0) {
     do {
-      KeWaitForSingleObject(iVar5 + 0x10,0,0,0,0);
+      KeWaitForSingleObject((int)param_1 + 0x10,0,0,0,0);
       while( true ) {
-        uVar4 = KfAcquireSpinLock(iVar5 + 4);
-        piVar1 = *(int **)(iVar5 + 8);
+        uVar4 = KfAcquireSpinLock((int)param_1 + 4);
+        piVar1 = *(int **)((int)param_1 + 8);
         piVar2 = (int *)piVar1[1];
-        iVar6 = *piVar1;
-        *piVar2 = iVar6;
-        *(int **)(iVar6 + 4) = piVar2;
-        KfReleaseSpinLock(iVar5 + 4,uVar4);
-        if (piVar1 == (int *)(iVar5 + 8)) break;
+        iVar5 = *piVar1;
+        *piVar2 = iVar5;
+        *(int **)(iVar5 + 4) = piVar2;
+        KfReleaseSpinLock((int)param_1 + 4,uVar4);
+        if (piVar1 == (int *)((int)param_1 + 8)) break;
         gStfcStats.Requests = gStfcStats.Requests + 1;
         (*StfcWorkerDispatch[*(byte *)piVar1[8]])
                   (*(_STFC_VOLUME_EXTENSION **)(*(int *)((byte *)piVar1[8] + 0x14) + 0x18),
                    (_IRP *)(piVar1 + -0xc));
       }
-    } while (*(int *)(iVar5 + 0x20) == 0);
+    } while (*(int *)((int)param_1 + 0x20) == 0);
   }
-  iVar6 = iVar5 + 4;
-  uVar4 = KfAcquireSpinLock(iVar6);
-  piVar1 = *(int **)(iVar5 + 8);
+  iVar5 = (int)param_1 + 4;
+  uVar4 = KfAcquireSpinLock(iVar5);
+  piVar1 = *(int **)((int)param_1 + 8);
   while( true ) {
     piVar2 = (int *)piVar1[1];
     iVar3 = *piVar1;
     *piVar2 = iVar3;
     *(int **)(iVar3 + 4) = piVar2;
-    KfReleaseSpinLock(iVar6,uVar4);
-    if (piVar1 == (int *)(iVar5 + 8)) break;
+    KfReleaseSpinLock(iVar5,uVar4);
+    if (piVar1 == (int *)((int)param_1 + 8)) break;
     piVar1[-8] = -0x3ffffd92;
     IoCompleteRequest(piVar1 + -0xc,1);
-    uVar4 = KfAcquireSpinLock(iVar6);
-    piVar1 = *(int **)(iVar5 + 8);
+    uVar4 = KfAcquireSpinLock(iVar5);
+    piVar1 = *(int **)((int)param_1 + 8);
   }
-  __restgprlr_25();
   return;
 }
 
 
 // 828B0410  StfcAllocateBlocksFromLevel0HashBlock  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/stfc/allocsup.c:257)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 long StfcAllocateBlocksFromLevel0HashBlock
                (_STFC_VOLUME_EXTENSION *param_1,ulong param_2,ulong param_3,
                _STFC_ALLOCATE_BLOCK_STATE *param_4)
 
 {
-  _STFC_VOLUME_EXTENSION *p_Var1;
-  long lVar2;
-  ulonglong uVar3;
-  ulong uVar4;
-  _STFC_HASH_ENTRY_u_20 *p_Var5;
-  ulonglong uVar6;
-  _STFC_HASH_BLOCK *p_Var7;
-  ulonglong uVar8;
-  _STFC_HASH_ENTRY *p_Var9;
-  ulonglong uVar10;
-  uint uVar12;
-  int iVar13;
-  ulonglong uVar14;
-  _STFC_HASH_BLOCK *local_30 [12];
+  long lVar1;
+  uint uVar2;
+  ulong uVar3;
+  _STFC_HASH_ENTRY_u_20 *p_Var4;
+  ulonglong uVar5;
+  _STFC_HASH_BLOCK *p_Var6;
+  uint uVar7;
+  _STFC_HASH_ENTRY *p_Var8;
+  uint uVar9;
+  int iVar10;
   ulong uVar11;
+  _STFC_HASH_BLOCK *local_30 [12];
   
-  uVar14 = (ulonglong)(int)param_2;
-  p_Var1 = (_STFC_VOLUME_EXTENSION *)__savegprlr_28(param_1);
-  lVar2 = StfcMapWriteableHashBlock(p_Var1,(ulong)uVar14,0,param_3,local_30);
-  if (-1 < lVar2) {
-    uVar8 = p_Var1->NumberOfTotalBlocks - uVar14;
-    if (0xaa < (uVar8 & 0xffffffff)) {
-      uVar8 = 0xaa;
+  lVar1 = StfcMapWriteableHashBlock(param_1,param_2,0,param_3,local_30);
+  if (-1 < lVar1) {
+    uVar7 = param_1->NumberOfTotalBlocks - param_2;
+    if (0xaa < uVar7) {
+      uVar7 = 0xaa;
     }
-    uVar8 = uVar8 + uVar14;
-    uVar6 = (ulonglong)param_4->NumberOfRemainingBlocks;
-    uVar10 = 0xffffffffffffffff;
+    uVar7 = uVar7 + param_2;
+    uVar5 = (ulonglong)param_4->NumberOfRemainingBlocks;
+    p_Var8 = param_4->LastHashEntry;
+    p_Var6 = param_4->LastHashBlock;
+    uVar2 = 0xffffffff;
+    uVar3 = param_1->NumberOfFreeBlocks;
     uVar11 = 0xffffffff;
-    p_Var9 = param_4->LastHashEntry;
-    p_Var7 = param_4->LastHashBlock;
-    uVar3 = 0xffffffffffffffff;
-    uVar4 = p_Var1->NumberOfFreeBlocks;
-    if ((uVar14 & 0xffffffff) < (uVar8 & 0xffffffff)) {
-      p_Var5 = &local_30[0]->Entries[0].field1_0x14;
+    if (param_2 < uVar7) {
+      p_Var4 = &local_30[0]->Entries[0].field1_0x14;
+      uVar11 = 0xffffffff;
       do {
-        uVar11 = (ulong)uVar14;
-        if ((p_Var5->LevelAsULONG & 0xc0000000) == 0) {
-          if ((p_Var9 != (_STFC_HASH_ENTRY *)0x0) &&
-             ((p_Var9->field1_0x14).LevelAsULONG =
-                   (p_Var9->field1_0x14).LevelAsULONG & 0xff000000 | uVar11 & 0xffffff,
-             p_Var7 != (_STFC_HASH_BLOCK *)0x0)) {
-            uVar12 = (int)p_Var7 - (int)p_Var1->BlockArray;
-            p_Var7 = (_STFC_HASH_BLOCK *)0x0;
-            iVar13 = ((int)uVar12 >> 0xc) + (uint)((int)uVar12 < 0 && (uVar12 & 0xfff) != 0);
-            p_Var1->BlockCache[iVar13].ReferenceCount =
-                 p_Var1->BlockCache[iVar13].ReferenceCount + 0xff;
+        if ((p_Var4->LevelAsULONG & 0xc0000000) == 0) {
+          if ((p_Var8 != (_STFC_HASH_ENTRY *)0x0) &&
+             ((p_Var8->field1_0x14).LevelAsULONG =
+                   (p_Var8->field1_0x14).LevelAsULONG & 0xff000000 | param_2 & 0xffffff,
+             p_Var6 != (_STFC_HASH_BLOCK *)0x0)) {
+            uVar9 = (int)p_Var6 - (int)param_1->BlockArray;
+            p_Var6 = (_STFC_HASH_BLOCK *)0x0;
+            iVar10 = ((int)uVar9 >> 0xc) + (uint)((int)uVar9 < 0 && (uVar9 & 0xfff) != 0);
+            param_1->BlockCache[iVar10].ReferenceCount =
+                 param_1->BlockCache[iVar10].ReferenceCount + 0xff;
             param_4->LastHashBlock = (_STFC_HASH_BLOCK *)0x0;
           }
-          p_Var5->LevelAsULONG = p_Var5->LevelAsULONG | 0xc0000000;
-          if ((uVar14 & 0xffffffff) < (uVar3 & 0xffffffff)) {
-            uVar3 = uVar14;
+          p_Var4->LevelAsULONG = p_Var4->LevelAsULONG | 0xc0000000;
+          if (param_2 < uVar2) {
+            uVar2 = param_2;
           }
-          uVar6 = uVar6 - 1;
-          p_Var9 = (_STFC_HASH_ENTRY *)(p_Var5 + -5);
-          uVar4 = uVar4 - 1;
-          uVar10 = uVar14;
-          if (uVar6 == 0) break;
+          uVar5 = uVar5 - 1;
+          p_Var8 = (_STFC_HASH_ENTRY *)(p_Var4 + -5);
+          uVar3 = uVar3 - 1;
+          uVar11 = param_2;
+          if (uVar5 == 0) break;
         }
-        uVar11 = (ulong)uVar10;
-        uVar14 = uVar14 + 1;
-        p_Var5 = p_Var5 + 6;
-      } while ((uVar14 & 0xffffffff) < (uVar8 & 0xffffffff));
+        param_2 = param_2 + 1;
+        p_Var4 = p_Var4 + 6;
+      } while (param_2 < uVar7);
     }
-    param_4->NumberOfRemainingBlocks = (ulong)uVar6;
-    p_Var1->NumberOfFreeBlocks = uVar4;
-    if ((uVar3 & 0xffffffff) < (ulonglong)param_4->FirstBlockNumber) {
-      param_4->FirstBlockNumber = (ulong)uVar3;
+    param_4->NumberOfRemainingBlocks = (ulong)uVar5;
+    param_1->NumberOfFreeBlocks = uVar3;
+    if (uVar2 < param_4->FirstBlockNumber) {
+      param_4->FirstBlockNumber = uVar2;
     }
     param_4->LastBlockNumber = uVar11;
-    param_4->LastHashEntry = p_Var9;
+    param_4->LastHashEntry = p_Var8;
     param_4->LastHashBlock = local_30[0];
-    lVar2 = 0;
+    lVar1 = 0;
   }
-  lVar2 = __restgprlr_28(lVar2);
-  return lVar2;
+  return lVar1;
 }
 
 
 // 828AC760  StfcLookupBlockCacheEntry  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/stfc/blocksup.c:263)
+
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 
 ulong StfcLookupBlockCacheEntry
                 (_STFC_VOLUME_EXTENSION *param_1,ulong param_2,ulong param_3,ulong *param_4,
                 _STFC_BLOCK_CACHE_ELEMENT **param_5)
 
 {
-  uint uVar1;
-  int iVar3;
-  undefined8 uVar2;
-  ulong uVar4;
-  ulonglong uVar5;
-  uint uVar6;
-  uint uVar7;
-  ulonglong uVar8;
-  _STFC_BLOCK_CACHE_ELEMENT *p_Var9;
+  GPUANISOFILTER GVar1;
+  uint uVar2;
+  uint uVar3;
+  _STFC_BLOCK_CACHE_ELEMENT *p_Var4;
   
-  uVar5 = (ulonglong)(int)param_3;
-  uVar8 = (ulonglong)(int)param_2;
-  iVar3 = __savegprlr_27(param_1);
-  uVar6 = (uint)*(byte *)(iVar3 + 0xc9);
-  uVar7 = uVar6;
-  if (((uVar5 & 0xffffffff) != 0) && ((uVar5 & 0xffffffff) < 4)) {
-    uVar1 = *(uint *)((int)anisoFilterMap + (int)((uVar5 & 0xffffffff) << 2) + 0x40);
-    trapWord(6,(ulonglong)uVar1,0);
-    uVar8 = (longlong)(int)((uVar8 & 0xffffffff) / (ulonglong)uVar1) * (longlong)(int)uVar1;
+  uVar2 = (uint)param_1->BlockCacheLruHead;
+  uVar3 = uVar2;
+  if ((param_3 != 0) && (param_3 < 4)) {
+    GVar1 = anisoFilterMap[param_3 + 0x10];
+    trapWord(6,(ulonglong)GVar1,0);
+    param_2 = (param_2 / GVar1) * GVar1;
   }
-  do {
-    p_Var9 = (_STFC_BLOCK_CACHE_ELEMENT *)(uVar7 * 8 + *(int *)(iVar3 + 0x30));
-    if (((p_Var9->field4_0x7).FlagsAsUCHAR & 0x80) == 0) break;
-    if (((ulonglong)p_Var9->BlockNumber == (uVar8 & 0xffffffff)) &&
-       (((ulonglong)(p_Var9->field4_0x7).FlagsAsUCHAR & 3) == (uVar5 & 0xffffffff))) {
-      *param_4 = uVar7;
-      *param_5 = p_Var9;
-      uVar2 = 1;
-      goto LAB_828ac810;
+  while( true ) {
+    p_Var4 = param_1->BlockCache + uVar3;
+    if (((p_Var4->field4_0x7).FlagsAsUCHAR & 0x80) == 0) {
+      return 0;
     }
-    uVar7 = (uint)p_Var9->LruFlink;
-  } while (uVar7 != uVar6);
-  uVar2 = 0;
-LAB_828ac810:
-  uVar4 = __restgprlr_27(uVar2);
-  return uVar4;
+    if ((p_Var4->BlockNumber == param_2) && (((p_Var4->field4_0x7).FlagsAsUCHAR & 3) == param_3))
+    break;
+    uVar3 = (uint)p_Var4->LruFlink;
+    if (uVar3 == uVar2) {
+      return 0;
+    }
+  }
+  *param_4 = uVar3;
+  *param_5 = p_Var4;
+  return 1;
 }
 
 
 // 828AE918  IoIsNameInExpression  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/stfc/kstuff-io.c:294)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 ulong IoIsNameInExpression(_UNICODE_STRING *param_1,uchar *param_2,ulong param_3,ulong param_4)
 
 {
-  ushort *puVar1;
-  uint uVar2;
-  bool bVar4;
-  ulong uVar3;
-  ulonglong uVar5;
-  ulonglong uVar6;
-  ushort *puVar7;
-  uint uVar8;
-  ushort *puVar9;
-  short *psVar11;
-  ulonglong uVar10;
-  char *pcVar12;
-  ushort *puVar13;
+  byte bVar1;
+  ushort uVar2;
+  uint uVar3;
+  ushort *puVar4;
+  wchar_t *pwVar5;
+  uint uVar6;
+  wchar_t *pwVar7;
+  wchar_t *pwVar8;
   
-  uVar5 = (ulonglong)(int)param_4;
-  uVar6 = (ulonglong)(int)param_3;
-  uVar10 = (ulonglong)(int)param_2;
-  puVar1 = (ushort *)__savegprlr_26(param_1);
-  if ((uVar6 & 0xffffffff) != 0) {
-    uVar6 = uVar10 + uVar6;
-    puVar7 = (ushort *)((uint)*puVar1 + (int)*(ushort **)(puVar1 + 2));
-    puVar1 = *(ushort **)(puVar1 + 2);
+  if (param_3 != 0) {
+    puVar4 = (ushort *)(param_2 + param_3);
+    pwVar5 = (wchar_t *)((uint)param_1->Length + (int)param_1->Buffer);
+    pwVar8 = param_1->Buffer;
 LAB_828ae9fc:
     do {
-      puVar13 = (ushort *)uVar10;
-      if (puVar7 <= puVar1) {
-        bVar4 = (ushort *)uVar6 == puVar13;
-        goto LAB_828aea14;
+      if (pwVar5 <= pwVar8) {
+        return (uint)LZCOUNT((int)puVar4 - (int)param_2) >> 5;
       }
-      uVar8 = (uint)*puVar1;
-      puVar9 = puVar1 + 1;
-      if (uVar8 == 0x2a) {
-        if (puVar9 == puVar7) {
-          bVar4 = true;
-          goto LAB_828aea14;
+      uVar6 = (uint)(ushort)*pwVar8;
+      pwVar7 = pwVar8 + 1;
+      if (uVar6 == 0x2a) {
+        if (pwVar7 == pwVar5) {
+          return 1;
         }
-        puVar1 = puVar1 + 2;
-        if ((uVar5 & 0xffffffff) == 0) {
+        pwVar8 = pwVar8 + 2;
+        if (param_4 == 0) {
           do {
-            if ((uVar10 & 0xffffffff) == (uVar6 & 0xffffffff)) break;
-            pcVar12 = (char *)uVar10;
-            uVar10 = uVar10 + 1;
-          } while (*pcVar12 != '.');
+            if ((ushort *)param_2 == puVar4) break;
+            bVar1 = *param_2;
+            param_2 = (uchar *)((int)param_2 + 1);
+          } while (bVar1 != 0x2e);
         }
         else {
           do {
-            if ((uVar10 & 0xffffffff) == (uVar6 & 0xffffffff)) break;
-            psVar11 = (short *)uVar10;
-            uVar10 = uVar10 + 2;
-          } while (*psVar11 != 0x2e);
+            if ((ushort *)param_2 == puVar4) break;
+            uVar2 = *(ushort *)param_2;
+            param_2 = (uchar *)((int)param_2 + 2);
+          } while (uVar2 != 0x2e);
         }
         goto LAB_828ae9fc;
       }
-      if ((uVar10 & 0xffffffff) == (uVar6 & 0xffffffff)) break;
-      if ((uVar5 & 0xffffffff) == 0) {
-        uVar2 = (uint)*(byte *)puVar13;
-        uVar10 = uVar10 + 1;
+      if ((ushort *)param_2 == puVar4) {
+        return 0;
+      }
+      if (param_4 == 0) {
+        uVar3 = (uint)*param_2;
+        param_2 = (uchar *)((int)param_2 + 1);
       }
       else {
-        uVar2 = (uint)*puVar13;
-        uVar10 = uVar10 + 2;
+        uVar3 = (uint)*(ushort *)param_2;
+        param_2 = (uchar *)((int)param_2 + 2);
       }
-      puVar1 = puVar9;
-    } while (((uVar8 == 0x3f) || (uVar2 == uVar8)) ||
-            (uVar2 = RtlUpcaseUnicodeChar(), uVar2 == uVar8));
+      pwVar8 = pwVar7;
+    } while (((uVar6 == 0x3f) || (uVar3 == uVar6)) ||
+            (uVar3 = RtlUpcaseUnicodeChar(), uVar3 == uVar6));
   }
-  bVar4 = false;
-LAB_828aea14:
-  uVar3 = __restgprlr_26(bVar4);
-  return uVar3;
+  return 0;
 }
 
 
 // 828B27B0  StfcOverwriteExistingFile  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/stfc/create.c:323)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 long StfcOverwriteExistingFile(_STFC_VOLUME_EXTENSION *param_1,_STFC_FCB *param_2,ulong param_3)
 
 {
-  _STFC_VOLUME_EXTENSION *p_Var1;
-  long lVar2;
+  long lVar1;
   _STFC_TIME_STAMP local_30 [2];
   _LARGE_INTEGER local_28 [5];
   
-  p_Var1 = (_STFC_VOLUME_EXTENSION *)__savegprlr_29(param_1);
   (param_2->FileBounds).FileSize = 0;
   param_2->ValidDataSize = 0;
   KeQuerySystemTime(local_28);
   StfcTimeToTimeStamp(local_28[0],local_30);
   param_2->CreationTimeStamp = local_30[0];
   param_2->LastWriteTimeStamp = local_30[0];
-  lVar2 = StfcSetAllocationSize(p_Var1,param_2,param_3,0);
-  if (-1 < lVar2) {
-    lVar2 = StfcUpdateDirectoryEntry(p_Var1,param_2,0);
+  lVar1 = StfcSetAllocationSize(param_1,param_2,param_3,0);
+  if (-1 < lVar1) {
+    lVar1 = StfcUpdateDirectoryEntry(param_1,param_2,0);
   }
-  lVar2 = __restgprlr_29(lVar2);
-  return lVar2;
+  return lVar1;
 }
 
 
@@ -2087,138 +2002,142 @@ void StfcDereferenceFcb(_STFC_FCB *param_1)
 
 // 828B12E8  StfcFullyCachedRead  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/stfc/read.c:348)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
+
 long StfcFullyCachedRead(_STFC_VOLUME_EXTENSION *param_1,_STFC_FCB *param_2,void *param_3,
                         ulong param_4,ulong param_5)
 
 {
   void *pvVar1;
-  _STFC_VOLUME_EXTENSION *p_Var2;
-  long lVar3;
-  longlong lVar4;
-  uint uVar5;
-  int iVar6;
+  long lVar2;
+  uint uVar3;
+  int iVar4;
+  ulonglong uVar5;
+  ulonglong uVar6;
   ulonglong uVar7;
-  ulonglong uVar8;
-  ulonglong uVar9;
   ulong local_60;
   void *local_5c;
   ulong auStack_58 [22];
   
-  uVar8 = (ulonglong)(int)param_5;
-  uVar7 = (ulonglong)(int)param_4;
-  lVar4 = (longlong)(int)param_2;
-  p_Var2 = (_STFC_VOLUME_EXTENSION *)__savegprlr_24(param_1,lVar4,param_3);
+  uVar6 = (ulonglong)(int)param_5;
+  uVar5 = (ulonglong)(int)param_4;
   do {
-    uVar9 = 0x1000 - (uVar8 & 0xfff);
-    if ((uVar7 & 0xffffffff) < (uVar9 & 0xffffffff)) {
-      uVar9 = uVar7;
+    uVar7 = 0x1000 - (uVar6 & 0xfff);
+    if ((uVar5 & 0xffffffff) < (uVar7 & 0xffffffff)) {
+      uVar7 = uVar5;
     }
-    if ((uVar8 & 0xffffffff) < (ulonglong)((_STFC_FCB *)lVar4)->ValidDataSize) {
-      lVar3 = StfcByteOffsetToBlockNumber
-                        (p_Var2,(_STFC_FCB *)lVar4,(ulong)uVar8,&local_60,auStack_58,(ulong *)0x0);
-      if ((lVar3 < 0) ||
-         (lVar3 = StfcMapReadableDataBlock(p_Var2,local_60,&local_5c), pvVar1 = local_5c, lVar3 < 0)
-         ) goto LAB_828b13d0;
+    if ((uVar6 & 0xffffffff) < (ulonglong)param_2->ValidDataSize) {
+      lVar2 = StfcByteOffsetToBlockNumber
+                        (param_1,param_2,(ulong)uVar6,&local_60,auStack_58,(ulong *)0x0);
+      if (lVar2 < 0) {
+        return lVar2;
+      }
+      lVar2 = StfcMapReadableDataBlock(param_1,local_60,&local_5c);
+      pvVar1 = local_5c;
+      if (lVar2 < 0) {
+        return lVar2;
+      }
       memcpy();
-      uVar5 = (int)pvVar1 - (int)p_Var2->BlockArray;
-      iVar6 = ((int)uVar5 >> 0xc) + (uint)((int)uVar5 < 0 && (uVar5 & 0xfff) != 0);
-      p_Var2->BlockCache[iVar6].ReferenceCount = p_Var2->BlockCache[iVar6].ReferenceCount + 0xff;
+      uVar3 = (int)pvVar1 - (int)param_1->BlockArray;
+      iVar4 = ((int)uVar3 >> 0xc) + (uint)((int)uVar3 < 0 && (uVar3 & 0xfff) != 0);
+      param_1->BlockCache[iVar4].ReferenceCount = param_1->BlockCache[iVar4].ReferenceCount + 0xff;
     }
     else {
       memset();
     }
-    uVar7 = uVar7 - uVar9;
-    uVar8 = uVar9 + uVar8;
-  } while (uVar7 != 0);
-  lVar3 = 0;
-LAB_828b13d0:
-  lVar3 = __restgprlr_24(lVar3);
-  return lVar3;
+    uVar5 = uVar5 - uVar7;
+    uVar6 = uVar7 + uVar6;
+    if (uVar5 == 0) {
+      return 0;
+    }
+  } while( true );
 }
 
 
 // 828AE3F0  StfcFsdQueueWorkerThread  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/stfc/worker.c:354)
+
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 
 long StfcFsdQueueWorkerThread(_DEVICE_OBJECT *param_1,_IRP *param_2)
 
 {
   _KTHREAD *p_Var1;
   void *pvVar2;
-  int iVar4;
+  long lVar4;
   undefined8 uVar3;
-  long lVar5;
   int in_r13;
   
-  iVar4 = __savegprlr_29(param_1);
   p_Var1 = *(_KTHREAD **)(in_r13 + 0x100);
   if (StfcForegroundWorkerThreadContext.Stopped == 0) {
     pvVar2 = (param_2->Tail).Apc.SystemArgument1;
     *(byte *)((int)pvVar2 + 3) = *(byte *)((int)pvVar2 + 3) | 1;
     if (p_Var1 == StfcForegroundWorkerThreadContext.Thread) {
       (*StfcWorkerDispatch[*(byte *)(param_2->Tail).Apc.SystemArgument1])
-                (*(_STFC_VOLUME_EXTENSION **)(iVar4 + 0x18),param_2);
+                (param_1->DeviceExtension,param_2);
     }
     else {
       uVar3 = KfAcquireSpinLock(0xffffffff84895794);
-      (param_2->Tail).CompletionKey = (void *)0x84895798;
+      (param_2->Tail).CompletionKey = &StfcForegroundWorkerThreadContext.IrpListHead;
       (param_2->Tail).Apc.Thread = (_KTHREAD *)StfcForegroundWorkerThreadContext.IrpListHead.Blink;
       (StfcForegroundWorkerThreadContext.IrpListHead.Blink)->Flink = (_LIST_ENTRY *)&param_2->Tail;
       StfcForegroundWorkerThreadContext.IrpListHead.Blink = (_LIST_ENTRY *)&param_2->Tail;
       KfReleaseSpinLock(0xffffffff84895794,uVar3);
       KeSetEvent(0xffffffff848957a0,1,0);
     }
-    uVar3 = 0x103;
+    lVar4 = 0x103;
   }
   else {
-    uVar3 = 0xffffffffc000026e;
+    lVar4 = -0x3ffffd92;
   }
-  lVar5 = __restgprlr_29(uVar3);
-  return lVar5;
+  return lVar4;
 }
 
 
 // 828AC830  StfcCleanBlockCacheEntry  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/stfc/blocksup.c:364)
+
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 
 void StfcCleanBlockCacheEntry
                (_STFC_VOLUME_EXTENSION *param_1,ulong param_2,_STFC_BLOCK_CACHE_ELEMENT *param_3)
 
 {
   void *pvVar1;
-  _STFC_VOLUME_EXTENSION *p_Var2;
-  ulonglong uVar3;
-  uint uVar4;
-  int iVar5;
+  uint uVar2;
+  int iVar3;
   ulong local_50;
   _STFC_BLOCK_CACHE_ELEMENT *ap_Stack_4c [3];
   undefined1 auStack_40 [64];
   
-  uVar3 = (ulonglong)(int)param_2;
-  p_Var2 = (_STFC_VOLUME_EXTENSION *)__savegprlr_28(param_1,uVar3);
-  uVar4 = (param_3->field4_0x7).FlagsAsUCHAR & 3;
+  uVar2 = (param_3->field4_0x7).FlagsAsUCHAR & 3;
   if (((param_3->field4_0x7).FlagsAsUCHAR & 0x10) != 0) {
-    XeCryptSha((uVar3 & 0xfffff) * 0x1000 + ZEXT48(p_Var2->BlockArray),0x1000,0,0,0,0,auStack_40,
-               0x14);
-    if (uVar4 == p_Var2->RootHashHierarchy + 1) {
+    XeCryptSha(((ulonglong)param_2 & 0xfffff) * 0x1000 + ZEXT48(param_1->BlockArray),0x1000,0,0,0,0,
+               auStack_40,0x14);
+    if (uVar2 == param_1->RootHashHierarchy + 1) {
       memcpy();
     }
     else {
-      StfcLookupBlockCacheEntry(p_Var2,param_3->BlockNumber,uVar4 + 1,&local_50,ap_Stack_4c);
-      pvVar1 = p_Var2->BlockArray;
-      trapWord(6,(ulonglong)anisoFilterMap[uVar4 + 0x10],0);
+      StfcLookupBlockCacheEntry(param_1,param_3->BlockNumber,uVar2 + 1,&local_50,ap_Stack_4c);
+      pvVar1 = param_1->BlockArray;
+      trapWord(6,(ulonglong)anisoFilterMap[uVar2 + 0x10],0);
       memcpy();
-      uVar4 = (int)pvVar1 + (local_50 * 0x1000 - (int)p_Var2->BlockArray);
-      iVar5 = ((int)uVar4 >> 0xc) + (uint)((int)uVar4 < 0 && (uVar4 & 0xfff) != 0);
-      p_Var2->BlockCache[iVar5].ReferenceCount = p_Var2->BlockCache[iVar5].ReferenceCount + 0xff;
+      uVar2 = (int)pvVar1 + (local_50 * 0x1000 - (int)param_1->BlockArray);
+      iVar3 = ((int)uVar2 >> 0xc) + (uint)((int)uVar2 < 0 && (uVar2 & 0xfff) != 0);
+      param_1->BlockCache[iVar3].ReferenceCount = param_1->BlockCache[iVar3].ReferenceCount + 0xff;
     }
     (param_3->field4_0x7).FlagsAsUCHAR = (param_3->field4_0x7).FlagsAsUCHAR & 0xef;
   }
   (param_3->field4_0x7).FlagsAsUCHAR = (param_3->field4_0x7).FlagsAsUCHAR & 0xbf;
-  __restgprlr_28();
   return;
 }
 
 
 // 828B2838  StfcFsdCreate  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/stfc/create.c:385)
+
+/* WARNING: Function: __savegprlr_18 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_18 replaced with injection: xenon_save_restore */
 
 void StfcFsdCreate(_STFC_VOLUME_EXTENSION *param_1,_IRP *param_2)
 
@@ -2230,237 +2149,231 @@ void StfcFsdCreate(_STFC_VOLUME_EXTENSION *param_1,_IRP *param_2)
   int iVar5;
   _STFC_FCB *p_Var6;
   _LIST_ENTRY *p_Var7;
-  _IRP *p_Var8;
-  bool bVar9;
-  uint uVar10;
-  _STFC_VOLUME_EXTENSION *p_Var11;
-  ulong uVar12;
-  _STFC_FCB *p_Var13;
-  _STFC_FCB *p_Var14;
+  bool bVar8;
+  uint uVar9;
+  ulong uVar10;
+  _STFC_FCB *p_Var11;
+  _STFC_FCB *p_Var12;
+  ulong uVar13;
+  int iVar14;
   ulong uVar15;
-  int iVar16;
-  longlong lVar17;
-  ulong uVar18;
-  ushort uVar19;
-  uint uVar20;
+  ushort uVar16;
+  uint uVar17;
   _STFC_FCB *local_e0 [2];
   _STRING local_d8;
   _STRING a_Stack_d0 [2];
   _STFC_DIRECTORY_LOOKUP a_Stack_c0 [2];
   
-  lVar17 = (longlong)(int)param_2;
-  p_Var11 = (_STFC_VOLUME_EXTENSION *)__savegprlr_18(param_1);
-  p_Var8 = (_IRP *)lVar17;
-  pvVar2 = (p_Var8->Tail).Apc.SystemArgument1;
+  pvVar2 = (param_2->Tail).Apc.SystemArgument1;
   iVar3 = *(int *)((int)pvVar2 + 0x18);
-  uVar18 = *(ulong *)((int)pvVar2 + 8);
+  uVar15 = *(ulong *)((int)pvVar2 + 8);
   uVar4 = *(uint *)((int)pvVar2 + 4);
   uVar1 = *(undefined2 *)((int)pvVar2 + 0xe);
-  uVar10 = uVar18 >> 0x18;
-  uVar12 = ObIsTitleObject(iVar3);
+  uVar9 = uVar15 >> 0x18;
+  uVar10 = ObIsTitleObject(iVar3);
   iVar5 = *(int *)(iVar3 + 0x1c);
   local_d8 = **(_STRING **)((int)pvVar2 + 0x10);
-  RtlEnterCriticalSection(p_Var11);
-  iVar16 = p_Var11->PersistentStatus;
-  if (iVar16 != 0) goto LAB_828b2a68;
-  if ((p_Var11->HashBlockPairShift == '\0') &&
-     ((((uVar10 == 2 || (uVar10 == 0)) || (uVar10 == 4)) || (uVar10 == 5)))) {
+  RtlEnterCriticalSection(param_1);
+  iVar14 = param_1->PersistentStatus;
+  if (iVar14 != 0) goto LAB_828b2a68;
+  if ((param_1->HashBlockPairShift == '\0') &&
+     ((((uVar9 == 2 || (uVar9 == 0)) || (uVar9 == 4)) || (uVar9 == 5)))) {
 LAB_828b28c4:
-    iVar16 = -0x3fffffde;
+    iVar14 = -0x3fffffde;
     goto LAB_828b2a68;
   }
-  if ((p_Var8->Overlay).AsynchronousParameters.UserApcRoutine !=
+  if ((param_2->Overlay).AsynchronousParameters.UserApcRoutine !=
       (_func___cdecl_void_void_ptr__IO_STATUS_BLOCK_ptr_ulong *)0x0) {
 LAB_828b28dc:
-    iVar16 = -0x3ffffff3;
+    iVar14 = -0x3ffffff3;
     goto LAB_828b2a68;
   }
   if (iVar5 == 0) {
-    uVar20 = (uint)local_d8.Length;
-    if (uVar20 == 0) goto LAB_828b28c4;
-    p_Var13 = (_STFC_FCB *)&p_Var11->RootDirectoryFcb;
-    StfcReferenceFcb(p_Var13,uVar12);
+    uVar17 = (uint)local_d8.Length;
+    if (uVar17 == 0) goto LAB_828b28c4;
+    p_Var11 = (_STFC_FCB *)&param_1->RootDirectoryFcb;
+    StfcReferenceFcb(p_Var11,uVar10);
     if (*local_d8.Buffer == '\\') {
-      if (uVar20 == 1) {
+      if (uVar17 == 1) {
         if ((*(byte *)((int)pvVar2 + 2) & 4) == 0) goto LAB_828b2944;
-        iVar16 = -0x3ffffff3;
+        iVar14 = -0x3ffffff3;
       }
       else {
 LAB_828b29b4:
-        if (local_d8.Buffer[uVar20 - 1] == '\\') {
-          bVar9 = true;
-          local_d8.Length = (short)uVar20 - 1;
+        if (local_d8.Buffer[uVar17 - 1] == '\\') {
+          bVar8 = true;
+          local_d8.Length = (short)uVar17 - 1;
         }
         else {
-          bVar9 = false;
+          bVar8 = false;
         }
         do {
           ObDissectName(local_d8,a_Stack_d0,&local_d8);
-          uVar19 = local_d8.Length;
+          uVar16 = local_d8.Length;
           if ((local_d8.Length != 0) && (*local_d8.Buffer == '\\')) goto LAB_828b295c;
-          local_e0[0] = StfcFindOpenChildFcb(p_Var13,a_Stack_d0);
+          local_e0[0] = StfcFindOpenChildFcb(p_Var11,a_Stack_d0);
           if (local_e0[0] == (_STFC_FCB *)0x0) goto LAB_828b2b20;
-          p_Var14 = StfcReferenceFcb(local_e0[0],uVar12);
-          if (p_Var14 == (_STFC_FCB *)0x0) goto LAB_828b2c04;
-          StfcDereferenceFcb(p_Var13);
-          p_Var13 = p_Var14;
-          if (uVar19 == 0) {
-            p_Var6 = p_Var14->CloneFcb;
+          p_Var12 = StfcReferenceFcb(local_e0[0],uVar10);
+          if (p_Var12 == (_STFC_FCB *)0x0) goto LAB_828b2c04;
+          StfcDereferenceFcb(p_Var11);
+          p_Var11 = p_Var12;
+          if (uVar16 == 0) {
+            p_Var6 = p_Var12->CloneFcb;
             if (p_Var6 != (_STFC_FCB *)0x0) {
-              if (((uVar18 & 0x1000) != 0) || ((p_Var6->Flags & 8) != 0)) goto LAB_828b2c8c;
-              if (((p_Var14->Flags & 2) == 0) &&
+              if (((uVar15 & 0x1000) != 0) || ((p_Var6->Flags & 8) != 0)) goto LAB_828b2c8c;
+              if (((p_Var12->Flags & 2) == 0) &&
                  ((((uVar4 & 0x10106) != 0 || ((p_Var6->ShareAccess).Writers != '\0')) ||
                   ((p_Var6->ShareAccess).Deleters != '\0')))) goto LAB_828b2938;
             }
             if ((*(byte *)((int)pvVar2 + 2) & 4) != 0) goto LAB_828b2c70;
-            iVar16 = 0;
+            iVar14 = 0;
             goto LAB_828b2c9c;
           }
-        } while ((p_Var14->Flags & 2) != 0);
+        } while ((p_Var12->Flags & 2) != 0);
 LAB_828b2a50:
-        iVar16 = -0x3fffffc6;
+        iVar14 = -0x3fffffc6;
       }
     }
     else {
 LAB_828b295c:
-      iVar16 = -0x3fffffcd;
+      iVar14 = -0x3fffffcd;
     }
   }
   else {
-    p_Var13 = *(_STFC_FCB **)(iVar5 + 8);
-    if ((p_Var13->Flags & 2) == 0) goto LAB_828b28dc;
-    p_Var13 = StfcReferenceFcb(p_Var13,uVar12);
-    if (p_Var13 == (_STFC_FCB *)0x0) {
-      iVar16 = -0x3fffff66;
+    p_Var11 = *(_STFC_FCB **)(iVar5 + 8);
+    if ((p_Var11->Flags & 2) == 0) goto LAB_828b28dc;
+    p_Var11 = StfcReferenceFcb(p_Var11,uVar10);
+    if (p_Var11 == (_STFC_FCB *)0x0) {
+      iVar14 = -0x3fffff66;
       goto LAB_828b2a68;
     }
-    uVar20 = (uint)local_d8.Length;
-    if (uVar20 != 0) {
+    uVar17 = (uint)local_d8.Length;
+    if (uVar17 != 0) {
       if (*local_d8.Buffer != '\\') goto LAB_828b29b4;
       goto LAB_828b295c;
     }
-    p_Var14 = p_Var13;
+    p_Var12 = p_Var11;
     if ((*(byte *)((int)pvVar2 + 2) & 4) == 0) {
 LAB_828b2944:
-      iVar16 = 0;
-      p_Var14 = p_Var13;
+      iVar14 = 0;
+      p_Var12 = p_Var11;
       goto LAB_828b2ca8;
     }
 LAB_828b2938:
-    iVar16 = -0x3fffffde;
-    p_Var13 = p_Var14;
+    iVar14 = -0x3fffffde;
+    p_Var11 = p_Var12;
   }
   goto LAB_828b2a58;
 LAB_828b2c04:
-  iVar16 = -0x3fffff66;
+  iVar14 = -0x3fffff66;
   goto LAB_828b2a58;
 LAB_828b2c8c:
-  iVar16 = -0x3fffffaa;
+  iVar14 = -0x3fffffaa;
   goto LAB_828b2a58;
 LAB_828b2c70:
-  p_Var13 = p_Var14->ParentFcb;
-  uVar18 = 4;
+  p_Var11 = p_Var12->ParentFcb;
+  uVar15 = 4;
 LAB_828b2c78:
-  iVar16 = StfcOpenTargetDirectory(p_Var11,p_Var8,p_Var13,uVar18);
-  p_Var13 = p_Var14;
+  iVar14 = StfcOpenTargetDirectory(param_1,param_2,p_Var11,uVar15);
+  p_Var11 = p_Var12;
   goto LAB_828b2a58;
 LAB_828b2b20:
-  uVar15 = StfcIsValidFileName(a_Stack_d0);
-  if (uVar15 == 0) goto LAB_828b295c;
-  iVar16 = StfcLookupElementNameInDirectory
-                     (p_Var11,p_Var13,a_Stack_d0,(_DIRECTORY_ENUM_CONTEXT *)0x0,a_Stack_c0);
-  if (iVar16 < 0) {
-    if (iVar16 != -0x3fffffcc) goto LAB_828b2a58;
-    if (uVar19 != 0) goto LAB_828b2a50;
-    if ((p_Var13->Flags & 8) != 0) goto LAB_828b2c8c;
+  uVar13 = StfcIsValidFileName(a_Stack_d0);
+  if (uVar13 == 0) goto LAB_828b295c;
+  iVar14 = StfcLookupElementNameInDirectory
+                     (param_1,p_Var11,a_Stack_d0,(_DIRECTORY_ENUM_CONTEXT *)0x0,a_Stack_c0);
+  if (iVar14 < 0) {
+    if (iVar14 != -0x3fffffcc) goto LAB_828b2a58;
+    if (uVar16 != 0) goto LAB_828b2a50;
+    if ((p_Var11->Flags & 8) != 0) goto LAB_828b2c8c;
     if ((*(byte *)((int)pvVar2 + 2) & 4) != 0) {
-      uVar18 = 5;
-      p_Var14 = p_Var13;
+      uVar15 = 5;
+      p_Var12 = p_Var11;
       goto LAB_828b2c78;
     }
-    if ((uVar10 == 1) || (uVar10 == 4)) goto LAB_828b2a58;
-    if ((!bVar9) || ((uVar18 & 0x40) == 0)) {
-      iVar16 = StfcCreateNewFile(p_Var11,p_Var13,a_Stack_d0,uVar18,
-                                 (ulong)(p_Var8->Overlay).AsynchronousParameters.UserApcContext,
-                                 a_Stack_c0,uVar12,local_e0);
-      if (iVar16 < 0) goto LAB_828b2a58;
-      StfcDereferenceFcb(p_Var13);
-      p_Var13 = local_e0[0];
+    if ((uVar9 == 1) || (uVar9 == 4)) goto LAB_828b2a58;
+    if ((!bVar8) || ((uVar15 & 0x40) == 0)) {
+      iVar14 = StfcCreateNewFile(param_1,p_Var11,a_Stack_d0,uVar15,
+                                 (ulong)(param_2->Overlay).AsynchronousParameters.UserApcContext,
+                                 a_Stack_c0,uVar10,local_e0);
+      if (iVar14 < 0) goto LAB_828b2a58;
+      StfcDereferenceFcb(p_Var11);
+      p_Var11 = local_e0[0];
       IoSetShareAccess(uVar4,uVar1,iVar3,ZEXT48(local_e0[0]) + 0x38);
-      *(_STFC_FCB **)(iVar3 + 8) = p_Var13;
+      *(_STFC_FCB **)(iVar3 + 8) = p_Var11;
       *(undefined4 *)(iVar3 + 0xc) = 0;
-      (p_Var8->IoStatus).Information = 2;
+      (param_2->IoStatus).Information = 2;
       goto LAB_828b2dc8;
     }
     goto LAB_828b295c;
   }
-  if ((uVar19 != 0) && (ZPULL(a_Stack_c0[0].DirectoryEntry,7,1) == '\0')) goto LAB_828b2a50;
-  p_Var14 = StfcCreateFcb(p_Var11,p_Var13,uVar12,a_Stack_c0);
-  local_e0[0] = p_Var14;
-  if (p_Var14 == (_STFC_FCB *)0x0) goto LAB_828b2c04;
-  StfcDereferenceFcb(p_Var13);
-  if (uVar19 != 0) {
+  if ((uVar16 != 0) && (ZPULL(a_Stack_c0[0].DirectoryEntry,7,1) == '\0')) goto LAB_828b2a50;
+  p_Var12 = StfcCreateFcb(param_1,p_Var11,uVar10,a_Stack_c0);
+  local_e0[0] = p_Var12;
+  if (p_Var12 == (_STFC_FCB *)0x0) goto LAB_828b2c04;
+  StfcDereferenceFcb(p_Var11);
+  if (uVar16 != 0) {
     ObDissectName(local_d8,a_Stack_d0,&local_d8);
-    uVar19 = local_d8.Length;
-    p_Var13 = p_Var14;
+    uVar16 = local_d8.Length;
+    p_Var11 = p_Var12;
     if ((local_d8.Length == 0) || (*local_d8.Buffer != '\\')) goto LAB_828b2b20;
     goto LAB_828b295c;
   }
   if ((*(byte *)((int)pvVar2 + 2) & 4) != 0) goto LAB_828b2c70;
 LAB_828b2c9c:
-  if ((p_Var14->Flags & 2) == 0) {
-    if (uVar10 != 2) {
-      if ((bVar9) || ((uVar18 & 1) != 0)) {
-        iVar16 = -0x3ffffefd;
+  if ((p_Var12->Flags & 2) == 0) {
+    if (uVar9 != 2) {
+      if ((bVar8) || ((uVar15 & 1) != 0)) {
+        iVar14 = -0x3ffffefd;
       }
       goto LAB_828b2cf8;
     }
   }
   else {
 LAB_828b2ca8:
-    if ((uVar10 == 1) || (uVar10 == 3)) {
-      if ((uVar18 & 0x40) != 0) {
-        iVar16 = -0x3fffff46;
+    if ((uVar9 == 1) || (uVar9 == 3)) {
+      if ((uVar15 & 0x40) != 0) {
+        iVar14 = -0x3fffff46;
       }
 LAB_828b2cf8:
-      p_Var13 = p_Var14;
-      if (-1 < iVar16) {
-        if ((p_Var14->ShareAccess).OpenCount == '\0') {
+      p_Var11 = p_Var12;
+      if (-1 < iVar14) {
+        if ((p_Var12->ShareAccess).OpenCount == '\0') {
           IoSetShareAccess();
         }
         else {
-          iVar16 = IoCheckShareAccess(uVar4,uVar1,iVar3,&p_Var14->ShareAccess,1);
+          iVar14 = IoCheckShareAccess(uVar4,uVar1,iVar3,&p_Var12->ShareAccess,1);
         }
-        if (-1 < iVar16) {
-          if (((uVar10 == 0) || (uVar10 == 4)) || (uVar10 == 5)) {
-            iVar16 = StfcOverwriteExistingFile
-                               (p_Var11,p_Var14,
-                                (ulong)(p_Var8->Overlay).AsynchronousParameters.UserApcContext);
-            if (-1 < iVar16) {
-              uVar12 = 3;
+        if (-1 < iVar14) {
+          if (((uVar9 == 0) || (uVar9 == 4)) || (uVar9 == 5)) {
+            iVar14 = StfcOverwriteExistingFile
+                               (param_1,p_Var12,
+                                (ulong)(param_2->Overlay).AsynchronousParameters.UserApcContext);
+            if (-1 < iVar14) {
+              uVar10 = 3;
               goto LAB_828b2d78;
             }
-            IoRemoveShareAccess(iVar3,&p_Var14->ShareAccess);
+            IoRemoveShareAccess(iVar3,&p_Var12->ShareAccess);
           }
           else {
-            uVar12 = 1;
+            uVar10 = 1;
 LAB_828b2d78:
-            (p_Var8->IoStatus).Information = uVar12;
+            (param_2->IoStatus).Information = uVar10;
           }
-          if (-1 < iVar16) {
-            *(_STFC_FCB **)(iVar3 + 8) = p_Var14;
+          if (-1 < iVar14) {
+            *(_STFC_FCB **)(iVar3 + 8) = p_Var12;
             *(undefined4 *)(iVar3 + 0xc) = 0;
-            if (((p_Var11->HashBlockPairShift != '\0') && ((uVar18 & 0x1000) != 0)) &&
-               ((p_Var14->Flags & 2) == 0)) {
-              p_Var14->Flags = p_Var14->Flags | 8;
+            if (((param_1->HashBlockPairShift != '\0') && ((uVar15 & 0x1000) != 0)) &&
+               ((p_Var12->Flags & 2) == 0)) {
+              p_Var12->Flags = p_Var12->Flags | 8;
             }
 LAB_828b2dc8:
-            p_Var7 = (p_Var11->FileObjectList).Flink;
-            *(_LIST_ENTRY **)(iVar3 + 0x54) = &p_Var11->FileObjectList;
-            iVar16 = 0;
+            p_Var7 = (param_1->FileObjectList).Flink;
+            *(_LIST_ENTRY **)(iVar3 + 0x54) = &param_1->FileObjectList;
+            iVar14 = 0;
             *(_LIST_ENTRY **)(iVar3 + 0x50) = p_Var7;
             p_Var7->Blink = (_LIST_ENTRY *)(iVar3 + 0x50);
-            (p_Var11->FileObjectList).Flink = (_LIST_ENTRY *)(iVar3 + 0x50);
+            (param_1->FileObjectList).Flink = (_LIST_ENTRY *)(iVar3 + 0x50);
             goto LAB_828b2a68;
           }
         }
@@ -2468,17 +2381,16 @@ LAB_828b2dc8:
       goto LAB_828b2a58;
     }
   }
-  iVar16 = -0x3fffffcb;
-  p_Var13 = p_Var14;
+  iVar14 = -0x3fffffcb;
+  p_Var11 = p_Var12;
 LAB_828b2a58:
-  if (p_Var13 != (_STFC_FCB *)0x0) {
-    StfcDereferenceFcb(p_Var13);
+  if (p_Var11 != (_STFC_FCB *)0x0) {
+    StfcDereferenceFcb(p_Var11);
   }
 LAB_828b2a68:
-  RtlLeaveCriticalSection(p_Var11);
-  (p_Var8->IoStatus).field0_0x0.Status = iVar16;
-  IoCompleteRequest(lVar17,1);
-  __restgprlr_18();
+  RtlLeaveCriticalSection(param_1);
+  (param_2->IoStatus).field0_0x0.Status = iVar14;
+  IoCompleteRequest(param_2,1);
   return;
 }
 
@@ -2525,6 +2437,9 @@ ulong StfcComputeNumberOfDataBlocks(ulong param_1)
 
 // 828B3118  StfcSetRenameInformation  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/stfc/fileinfo.c:394)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
+
 long StfcSetRenameInformation
                (_STFC_VOLUME_EXTENSION *param_1,_IRP *param_2,_STFC_FCB *param_3,
                _FILE_RENAME_INFORMATION *param_4)
@@ -2536,127 +2451,127 @@ long StfcSetRenameInformation
   int iVar4;
   _LIST_ENTRY *p_Var5;
   _LIST_ENTRY *p_Var6;
-  _STFC_FCB *p_Var7;
-  _STFC_VOLUME_EXTENSION *p_Var8;
-  ulong uVar9;
-  _STFC_FCB *p_Var10;
-  long lVar11;
-  ulonglong uVar12;
-  uint uVar13;
-  uchar *puVar14;
-  int iVar15;
-  undefined2 uVar16;
-  _STFC_FCB *p_Var17;
-  _LIST_ENTRY *p_Var18;
+  ulong uVar7;
+  long lVar8;
+  _STFC_FCB *p_Var9;
+  uint uVar10;
+  uchar *puVar11;
+  int iVar12;
+  undefined2 uVar13;
+  _STFC_FCB *p_Var14;
+  _LIST_ENTRY *p_Var15;
   _STFC_DIRECTORY_ENTRY *local_b0;
   _STFC_HASH_BLOCK *local_ac;
   void *local_a8 [2];
   _STRING local_a0 [2];
   _STFC_DIRECTORY_LOOKUP a_Stack_90 [2];
   
-  uVar12 = (ulonglong)(int)param_3;
-  p_Var8 = (_STFC_VOLUME_EXTENSION *)__savegprlr_25(param_1);
-  uVar13 = (uint)(param_4->FileName).Length;
+  uVar10 = (uint)(param_4->FileName).Length;
   pvVar2 = (param_2->Tail).Apc.SystemArgument1;
-  if (uVar13 == 0) {
-    lVar11 = -0x3ffffff3;
-    goto LAB_828b33c4;
+  if (uVar10 == 0) {
+    return -0x3ffffff3;
   }
   puVar3 = (param_4->FileName).Buffer;
-  puVar14 = puVar3 + uVar13;
-  local_a0[0].Buffer = puVar14;
-  if (puVar14[-1] == '\\') {
-    local_a0[0].Buffer = puVar14 + -1;
-    puVar14 = puVar14 + -1;
+  puVar11 = puVar3 + uVar10;
+  local_a0[0].Buffer = puVar11;
+  if (puVar11[-1] == '\\') {
+    local_a0[0].Buffer = puVar11 + -1;
+    puVar11 = puVar11 + -1;
   }
-  for (; puVar3 < local_a0[0].Buffer; local_a0[0].Buffer = local_a0[0].Buffer + -1) {
-    if (*local_a0[0].Buffer == '\\') {
-      local_a0[0].Buffer = local_a0[0].Buffer + 1;
-      break;
-    }
-  }
-  iVar15 = (int)puVar14 - (int)local_a0[0].Buffer;
-  uVar16 = (undefined2)iVar15;
-  local_a0[0]._0_4_ = CONCAT22(uVar16,uVar16);
-  uVar9 = StfcIsValidFileName(local_a0);
-  if (uVar9 == 0) {
-    lVar11 = -0x3fffffcd;
-    goto LAB_828b33c4;
-  }
-  iVar4 = *(int *)((int)pvVar2 + 0xc);
-  p_Var7 = (_STFC_FCB *)uVar12;
-  if (iVar4 == 0) {
-    p_Var17 = p_Var7->ParentFcb;
-LAB_828b3214:
-    if (ZEXT48((p_Var7->ChildFcbList).Flink) == (uVar12 & 0xffffffff)) {
-      lVar11 = StfcLookupElementNameInDirectory
-                         (p_Var8,p_Var17,local_a0,(_DIRECTORY_ENUM_CONTEXT *)0x0,a_Stack_90);
-      if (lVar11 < 0) {
-        if (lVar11 != -0x3fffffcc) goto LAB_828b33c4;
+  do {
+    if (local_a0[0].Buffer <= puVar3) {
+LAB_828b31a0:
+      iVar12 = (int)puVar11 - (int)local_a0[0].Buffer;
+      uVar13 = (undefined2)iVar12;
+      local_a0[0]._0_4_ = CONCAT22(uVar13,uVar13);
+      uVar7 = StfcIsValidFileName(local_a0);
+      if (uVar7 == 0) {
+        return -0x3fffffcd;
+      }
+      iVar4 = *(int *)((int)pvVar2 + 0xc);
+      if (iVar4 == 0) {
+        p_Var14 = param_3->ParentFcb;
+      }
+      else {
+        p_Var14 = *(_STFC_FCB **)(iVar4 + 8);
+        if (((p_Var14->Flags & 4) == 0) && (((param_3->Flags ^ p_Var14->Flags) & 1) != 0)) {
+          return -0x3fffffde;
+        }
+      }
+      if ((_STFC_FCB *)(param_3->ChildFcbList).Flink != param_3) {
+        return -0x3fffffde;
+      }
+      lVar8 = StfcLookupElementNameInDirectory
+                        (param_1,p_Var14,local_a0,(_DIRECTORY_ENUM_CONTEXT *)0x0,a_Stack_90);
+      if (lVar8 < 0) {
+        if (lVar8 != -0x3fffffcc) {
+          return lVar8;
+        }
       }
       else {
         if ((param_4->ReplaceIfExists == '\0') || (ZPULL(a_Stack_90[0].DirectoryEntry,7,1) != '\0'))
         {
-          lVar11 = -0x3fffffcb;
-          goto LAB_828b33c4;
+          return -0x3fffffcb;
         }
-        p_Var10 = StfcFindOpenChildFcb(p_Var17,local_a0);
-        if (p_Var10 != (_STFC_FCB *)0x0) goto LAB_828b3200;
-        lVar11 = StfcBeginDirectoryEntryUpdate
-                           (p_Var8,a_Stack_90[0].DirectoryByteOffset,&local_b0,(ulong *)local_a0,
-                            local_a8,&local_ac);
-        if (lVar11 < 0) goto LAB_828b33c4;
+        p_Var9 = StfcFindOpenChildFcb(p_Var14,local_a0);
+        if (p_Var9 != (_STFC_FCB *)0x0) {
+          return -0x3fffffde;
+        }
+        lVar8 = StfcBeginDirectoryEntryUpdate
+                          (param_1,a_Stack_90[0].DirectoryByteOffset,&local_b0,(ulong *)local_a0,
+                           local_a8,&local_ac);
+        if (lVar8 < 0) {
+          return lVar8;
+        }
         local_b0->FileNameLength = '\0';
-        StfcEndDataBlockUpdate(p_Var8,local_a0[0]._0_4_,local_a8[0],local_ac);
+        StfcEndDataBlockUpdate(param_1,local_a0[0]._0_4_,local_a8[0],local_ac);
         if (((ulonglong)a_Stack_90[0].DirectoryEntry.AllocationBlocks2 * 0x100 +
             (ulonglong)a_Stack_90[0].DirectoryEntry.AllocationBlocks1) * 0x100 +
             (ulonglong)a_Stack_90[0].DirectoryEntry.AllocationBlocks0 != 0) {
-          StfcFreeBlocks(p_Var8,((uint)a_Stack_90[0].DirectoryEntry.FirstBlockNumber2 * 0x100 +
-                                (uint)a_Stack_90[0].DirectoryEntry.FirstBlockNumber1) * 0x100 +
-                                (uint)a_Stack_90[0].DirectoryEntry.FirstBlockNumber0,0,
+          StfcFreeBlocks(param_1,((uint)a_Stack_90[0].DirectoryEntry.FirstBlockNumber2 * 0x100 +
+                                 (uint)a_Stack_90[0].DirectoryEntry.FirstBlockNumber1) * 0x100 +
+                                 (uint)a_Stack_90[0].DirectoryEntry.FirstBlockNumber0,0,
                          (_STFC_HASH_ENTRY *)0x0);
         }
       }
       memcpy();
-      p_Var7->FileNameLength = (uchar)iVar15;
-      if (p_Var7->ParentFcb != p_Var17) {
-        p_Var5 = (p_Var7->SiblingFcbLink).Flink;
-        p_Var18 = &p_Var7->SiblingFcbLink;
-        p_Var6 = (p_Var7->SiblingFcbLink).Blink;
+      param_3->FileNameLength = (uchar)iVar12;
+      if (param_3->ParentFcb != p_Var14) {
+        p_Var5 = (param_3->SiblingFcbLink).Flink;
+        p_Var15 = &param_3->SiblingFcbLink;
+        p_Var6 = (param_3->SiblingFcbLink).Blink;
         p_Var6->Flink = p_Var5;
         p_Var5->Blink = p_Var6;
-        StfcDereferenceFcb(p_Var7->ParentFcb);
-        bVar1 = p_Var17->Flags;
-        p_Var7->ParentFcb = p_Var17;
-        StfcReferenceFcb(p_Var17,bVar1 & 1);
+        StfcDereferenceFcb(param_3->ParentFcb);
+        bVar1 = p_Var14->Flags;
+        param_3->ParentFcb = p_Var14;
+        StfcReferenceFcb(p_Var14,bVar1 & 1);
         if (((bVar1 & 1) != 0) ||
-           (p_Var10 = (_STFC_FCB *)&p_Var8->SystemChildFcbList, (p_Var17->Flags & 4) == 0)) {
-          p_Var10 = p_Var17;
+           (p_Var9 = (_STFC_FCB *)&param_1->SystemChildFcbList, (p_Var14->Flags & 4) == 0)) {
+          p_Var9 = p_Var14;
         }
-        p_Var5 = (p_Var10->ChildFcbList).Flink;
-        (p_Var7->SiblingFcbLink).Blink = &p_Var10->ChildFcbList;
-        p_Var18->Flink = p_Var5;
-        p_Var5->Blink = p_Var18;
-        (p_Var10->ChildFcbList).Flink = p_Var18;
+        p_Var5 = (p_Var9->ChildFcbList).Flink;
+        (param_3->SiblingFcbLink).Blink = &p_Var9->ChildFcbList;
+        p_Var15->Flink = p_Var5;
+        p_Var5->Blink = p_Var15;
+        (p_Var9->ChildFcbList).Flink = p_Var15;
       }
-      lVar11 = StfcUpdateDirectoryEntry(p_Var8,p_Var7,0);
-      goto LAB_828b33c4;
+      lVar8 = StfcUpdateDirectoryEntry(param_1,param_3,0);
+      return lVar8;
     }
-  }
-  else {
-    p_Var17 = *(_STFC_FCB **)(iVar4 + 8);
-    if (((p_Var17->Flags & 4) != 0) || (((p_Var7->Flags ^ p_Var17->Flags) & 1) == 0))
-    goto LAB_828b3214;
-  }
-LAB_828b3200:
-  lVar11 = -0x3fffffde;
-LAB_828b33c4:
-  lVar11 = __restgprlr_25(lVar11);
-  return lVar11;
+    if (*local_a0[0].Buffer == '\\') {
+      local_a0[0].Buffer = local_a0[0].Buffer + 1;
+      goto LAB_828b31a0;
+    }
+    local_a0[0].Buffer = local_a0[0].Buffer + -1;
+  } while( true );
 }
 
 
 // 828AD648  StfcReferenceFcb  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/stfc/fcbsup.c:422)
+
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 
 _STFC_FCB * StfcReferenceFcb(_STFC_FCB *param_1,ulong param_2)
 
@@ -2665,70 +2580,63 @@ _STFC_FCB * StfcReferenceFcb(_STFC_FCB *param_1,ulong param_2)
   _STFC_FCB *p_Var2;
   _STFC_FCB *p_Var3;
   _STFC_FCB *p_Var4;
-  ulonglong uVar5;
-  _STFC_FCB *p_Var6;
-  _STFC_FCB *p_Var7;
+  _STFC_FCB *p_Var5;
   
-  uVar5 = (ulonglong)(int)param_2;
-  p_Var2 = (_STFC_FCB *)__savegprlr_28(param_1);
-  if (((p_Var2->Flags & 4) == 0) && ((bool)(p_Var2->Flags & 1) != (uVar5 != 0))) {
-    p_Var7 = p_Var2->CloneFcb;
-    if (p_Var7 == (_STFC_FCB *)0x0) {
-      p_Var3 = StfcCreateCloneFcb(p_Var2,(ulong)uVar5);
-      p_Var6 = (_STFC_FCB *)0x0;
-      p_Var7 = p_Var2;
-      if (p_Var3 != (_STFC_FCB *)0x0) {
+  if (((param_1->Flags & 4) == 0) && ((bool)(param_1->Flags & 1) != (param_2 != 0))) {
+    p_Var5 = param_1->CloneFcb;
+    if (p_Var5 == (_STFC_FCB *)0x0) {
+      p_Var2 = StfcCreateCloneFcb(param_1,param_2);
+      p_Var5 = param_1;
+      p_Var4 = (_STFC_FCB *)0x0;
+      if (p_Var2 != (_STFC_FCB *)0x0) {
         do {
-          p_Var4 = p_Var3;
-          if (p_Var6 != (_STFC_FCB *)0x0) {
-            p_Var6->ParentFcb = p_Var4;
-            p_Var1 = (p_Var4->ChildFcbList).Flink;
-            (p_Var6->SiblingFcbLink).Blink = &p_Var4->ChildFcbList;
-            (p_Var6->SiblingFcbLink).Flink = p_Var1;
-            p_Var1->Blink = &p_Var6->SiblingFcbLink;
-            (p_Var4->ChildFcbList).Flink = &p_Var6->SiblingFcbLink;
-          }
-          p_Var7 = p_Var7->ParentFcb;
-          if ((p_Var7->Flags & 4) != 0) {
-            p_Var3 = p_Var7;
-            p_Var6 = p_Var7;
-            if ((uVar5 & 0xffffffff) == 0) {
-              p_Var6 = (_STFC_FCB *)&p_Var7->CreationTimeStamp;
-            }
-LAB_828ad750:
+          p_Var3 = p_Var2;
+          if (p_Var4 != (_STFC_FCB *)0x0) {
             p_Var4->ParentFcb = p_Var3;
-            p_Var3->ReferenceCount = p_Var3->ReferenceCount + 1;
-            p_Var1 = (p_Var6->ChildFcbList).Flink;
-            (p_Var4->SiblingFcbLink).Blink = &p_Var6->ChildFcbList;
+            p_Var1 = (p_Var3->ChildFcbList).Flink;
+            (p_Var4->SiblingFcbLink).Blink = &p_Var3->ChildFcbList;
             (p_Var4->SiblingFcbLink).Flink = p_Var1;
             p_Var1->Blink = &p_Var4->SiblingFcbLink;
-            (p_Var6->ChildFcbList).Flink = &p_Var4->SiblingFcbLink;
-            p_Var2 = p_Var2->CloneFcb;
-            goto LAB_828ad798;
+            (p_Var3->ChildFcbList).Flink = &p_Var4->SiblingFcbLink;
           }
-          p_Var3 = p_Var7->CloneFcb;
-          p_Var6 = p_Var3;
-          if (p_Var3 != (_STFC_FCB *)0x0) goto LAB_828ad750;
-          p_Var3 = StfcCreateCloneFcb(p_Var7,(ulong)uVar5);
-          p_Var6 = p_Var4;
-        } while (p_Var3 != (_STFC_FCB *)0x0);
-        if (p_Var7 != p_Var2) {
-          StfcDereferenceFcb(p_Var2->CloneFcb);
+          p_Var5 = p_Var5->ParentFcb;
+          if ((p_Var5->Flags & 4) != 0) {
+            p_Var2 = p_Var5;
+            p_Var4 = p_Var5;
+            if (param_2 == 0) {
+              p_Var2 = (_STFC_FCB *)&p_Var5->CreationTimeStamp;
+            }
+LAB_828ad750:
+            p_Var3->ParentFcb = p_Var4;
+            p_Var4->ReferenceCount = p_Var4->ReferenceCount + 1;
+            p_Var1 = (p_Var2->ChildFcbList).Flink;
+            (p_Var3->SiblingFcbLink).Blink = &p_Var2->ChildFcbList;
+            (p_Var3->SiblingFcbLink).Flink = p_Var1;
+            p_Var1->Blink = &p_Var3->SiblingFcbLink;
+            (p_Var2->ChildFcbList).Flink = &p_Var3->SiblingFcbLink;
+            return param_1->CloneFcb;
+          }
+          p_Var2 = p_Var5->CloneFcb;
+          p_Var4 = p_Var2;
+          if (p_Var2 != (_STFC_FCB *)0x0) goto LAB_828ad750;
+          p_Var2 = StfcCreateCloneFcb(p_Var5,param_2);
+          p_Var4 = p_Var3;
+        } while (p_Var2 != (_STFC_FCB *)0x0);
+        if (p_Var5 != param_1) {
+          StfcDereferenceFcb(param_1->CloneFcb);
         }
       }
-      p_Var2 = (_STFC_FCB *)0x0;
+      param_1 = (_STFC_FCB *)0x0;
     }
     else {
-      p_Var7->ReferenceCount = p_Var7->ReferenceCount + 1;
-      p_Var2 = p_Var7;
+      p_Var5->ReferenceCount = p_Var5->ReferenceCount + 1;
+      param_1 = p_Var5;
     }
   }
   else {
-    p_Var2->ReferenceCount = p_Var2->ReferenceCount + 1;
+    param_1->ReferenceCount = param_1->ReferenceCount + 1;
   }
-LAB_828ad798:
-  p_Var2 = (_STFC_FCB *)__restgprlr_28(p_Var2);
-  return p_Var2;
+  return param_1;
 }
 
 
@@ -2765,283 +2673,273 @@ long StfcInitializeWorkerThreadContext(_STFC_WORKER_THREAD_CONTEXT *param_1,ulon
 
 // 828B0570  StfcAllocateBlocksFromLevelNHashBlock  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/stfc/allocsup.c:457)
 
+/* WARNING: Function: __savegprlr_21 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_21 replaced with injection: xenon_save_restore */
+
 long StfcAllocateBlocksFromLevelNHashBlock
                (_STFC_VOLUME_EXTENSION *param_1,ulong param_2,ulong param_3,ulong param_4,
                _STFC_ALLOCATE_BLOCK_STATE *param_5)
 
 {
-  uint uVar1;
-  _STFC_VOLUME_EXTENSION *p_Var2;
-  long lVar3;
+  GPUANISOFILTER GVar1;
+  long lVar2;
+  ulong uVar3;
   ulonglong uVar4;
-  ulong uVar5;
+  longlong lVar5;
   ulonglong uVar6;
-  longlong lVar7;
-  uint uVar8;
-  int iVar9;
-  ulonglong uVar10;
-  longlong lVar11;
-  ulonglong uVar12;
-  uint *puVar13;
-  ulonglong uVar14;
-  ulonglong uVar15;
+  uint uVar7;
+  int iVar8;
+  ulonglong uVar9;
+  longlong lVar10;
+  ulonglong uVar11;
+  uint *puVar12;
+  ulonglong uVar13;
   _STFC_HASH_BLOCK *local_70 [28];
   
-  uVar4 = (ulonglong)(int)param_3;
-  uVar14 = (ulonglong)(int)param_2;
-  p_Var2 = (_STFC_VOLUME_EXTENSION *)__savegprlr_21(param_1);
-  iVar9 = (int)((uVar4 & 0xffffffff) << 2);
-  uVar15 = (ulonglong)*(uint *)((int)StfcDataBlocksPerHashTreeLevel + iVar9);
-  uVar8 = *(uint *)((int)anisoFilterMap + iVar9 + 0x40);
-  uVar12 = (ulonglong)uVar8;
-  lVar3 = StfcMapWriteableHashBlock(p_Var2,(ulong)uVar14,(ulong)uVar4,param_4,local_70);
-  if (-1 < lVar3) {
-    uVar6 = p_Var2->NumberOfTotalBlocks - uVar14;
-    uVar10 = (ulonglong)local_70[0]->NumberOfCommittedBlocks;
-    if (uVar15 < (uVar6 & 0xffffffff)) {
-      uVar6 = uVar15;
+  uVar13 = (ulonglong)(int)param_2;
+  uVar7 = StfcDataBlocksPerHashTreeLevel[param_3];
+  GVar1 = anisoFilterMap[param_3 + 0x10];
+  uVar11 = (ulonglong)GVar1;
+  lVar2 = StfcMapWriteableHashBlock(param_1,param_2,param_3,param_4,local_70);
+  if (-1 < lVar2) {
+    uVar4 = param_1->NumberOfTotalBlocks - uVar13;
+    uVar9 = (ulonglong)local_70[0]->NumberOfCommittedBlocks;
+    if ((ulonglong)uVar7 < (uVar4 & 0xffffffff)) {
+      uVar4 = (ulonglong)uVar7;
     }
-    uVar15 = uVar6 - uVar10;
-    if (uVar15 != 0) {
-      trapWord(6,uVar12,0);
-      trapWord(6,uVar12,0);
-      lVar11 = uVar10 - (longlong)(int)(local_70[0]->NumberOfCommittedBlocks / uVar8) *
-                        (longlong)(int)uVar8;
-      lVar7 = ((uVar10 / uVar12) % 0xaa) * 0x18 + ZEXT48(local_70[0]);
-      if (lVar11 != 0) {
-        uVar10 = uVar12 - lVar11;
-        if (uVar10 != 0) {
-          if ((uVar15 & 0xffffffff) < (uVar10 & 0xffffffff)) {
-            uVar10 = uVar15;
+    uVar6 = uVar4 - uVar9;
+    if (uVar6 != 0) {
+      trapWord(6,uVar11,0);
+      trapWord(6,uVar11,0);
+      lVar10 = uVar9 - (longlong)(int)(local_70[0]->NumberOfCommittedBlocks / GVar1) *
+                       (longlong)(int)GVar1;
+      lVar5 = ((uVar9 / uVar11) % 0xaa) * 0x18 + ZEXT48(local_70[0]);
+      if (lVar10 != 0) {
+        uVar9 = uVar11 - lVar10;
+        if (uVar9 != 0) {
+          if ((uVar6 & 0xffffffff) < (uVar9 & 0xffffffff)) {
+            uVar9 = uVar6;
           }
-          uVar1 = *(uint *)((int)lVar7 + 0x14);
-          uVar15 = uVar15 - uVar10;
-          *(uint *)((int)lVar7 + 0x14) = uVar1 & 0xffff8000 | uVar1 + (int)uVar10 & 0x7fff;
-          lVar7 = lVar7 + 0x18;
+          uVar7 = *(uint *)((int)lVar5 + 0x14);
+          uVar6 = uVar6 - uVar9;
+          *(uint *)((int)lVar5 + 0x14) = uVar7 & 0xffff8000 | uVar7 + (int)uVar9 & 0x7fff;
+          lVar5 = lVar5 + 0x18;
         }
       }
-      if ((uVar15 & 0xffffffff) != 0) {
-        lVar7 = lVar7 + -4;
+      if ((uVar6 & 0xffffffff) != 0) {
+        lVar5 = lVar5 + -4;
         do {
-          uVar10 = uVar12;
-          if ((uVar15 & 0xffffffff) < (ulonglong)uVar8) {
-            uVar10 = uVar15;
+          uVar9 = uVar11;
+          if ((uVar6 & 0xffffffff) < (ulonglong)GVar1) {
+            uVar9 = uVar6;
           }
-          iVar9 = (int)lVar7;
-          uVar15 = uVar15 - uVar10;
-          lVar7 = lVar7 + 0x18;
-          *(uint *)lVar7 = (uint)uVar10 & 0x7fff | *(uint *)(iVar9 + 0x18) & 0xffff8000;
-        } while (uVar15 != 0);
+          iVar8 = (int)lVar5;
+          uVar6 = uVar6 - uVar9;
+          lVar5 = lVar5 + 0x18;
+          *(uint *)lVar5 = (uint)uVar9 & 0x7fff | *(uint *)(iVar8 + 0x18) & 0xffff8000;
+        } while (uVar6 != 0);
       }
-      local_70[0]->NumberOfCommittedBlocks = (ulong)uVar6;
-      uVar10 = uVar6;
+      local_70[0]->NumberOfCommittedBlocks = (ulong)uVar4;
+      uVar9 = uVar4;
     }
-    uVar10 = uVar10 + uVar14;
-    uVar15 = (ulonglong)param_5->NumberOfRemainingBlocks;
-    if ((uVar14 & 0xffffffff) < (uVar10 & 0xffffffff)) {
-      lVar7 = ZEXT48(local_70[0]) + 0x14;
+    uVar9 = uVar9 + uVar13;
+    uVar4 = (ulonglong)param_5->NumberOfRemainingBlocks;
+    if ((ulonglong)param_2 < (uVar9 & 0xffffffff)) {
+      lVar5 = ZEXT48(local_70[0]) + 0x14;
       do {
-        puVar13 = (uint *)lVar7;
-        uVar6 = (ulonglong)*puVar13 & 0x7fff;
-        if ((*puVar13 & 0x7fff) != 0) {
-          if ((uVar6 == uVar12) || (uVar5 = 0, (uVar10 - uVar14 & 0xffffffff) == uVar6)) {
-            uVar5 = 1;
+        puVar12 = (uint *)lVar5;
+        uVar6 = (ulonglong)*puVar12 & 0x7fff;
+        if ((*puVar12 & 0x7fff) != 0) {
+          if ((uVar6 == uVar11) || (uVar3 = 0, (uVar9 - uVar13 & 0xffffffff) == uVar6)) {
+            uVar3 = 1;
           }
-          if ((uVar4 & 0xffffffff) == 1) {
-            lVar3 = StfcAllocateBlocksFromLevel0HashBlock(p_Var2,(ulong)uVar14,uVar5,param_5);
+          if (param_3 == 1) {
+            lVar2 = StfcAllocateBlocksFromLevel0HashBlock(param_1,(ulong)uVar13,uVar3,param_5);
           }
           else {
-            lVar3 = StfcAllocateBlocksFromLevelNHashBlock
-                              (p_Var2,(ulong)uVar14,(ulong)uVar4 - 1,uVar5,param_5);
+            lVar2 = StfcAllocateBlocksFromLevelNHashBlock
+                              (param_1,(ulong)uVar13,param_3 - 1,uVar3,param_5);
           }
-          if (lVar3 < 0) break;
-          if ((uVar15 & 0xffffffff) < uVar6) {
-            uVar6 = uVar15;
+          if (lVar2 < 0) break;
+          if ((uVar4 & 0xffffffff) < uVar6) {
+            uVar6 = uVar4;
           }
-          uVar15 = uVar15 - uVar6;
-          *puVar13 = *puVar13 & 0xffff8000 | *puVar13 - (int)uVar6 & 0x7fff;
-          if (uVar15 == 0) break;
+          uVar4 = uVar4 - uVar6;
+          *puVar12 = *puVar12 & 0xffff8000 | *puVar12 - (int)uVar6 & 0x7fff;
+          if (uVar4 == 0) break;
         }
-        uVar14 = uVar12 + uVar14;
-        lVar7 = lVar7 + 0x18;
-      } while ((uVar14 & 0xffffffff) < (uVar10 & 0xffffffff));
+        uVar13 = uVar11 + uVar13;
+        lVar5 = lVar5 + 0x18;
+      } while ((uVar13 & 0xffffffff) < (uVar9 & 0xffffffff));
     }
-    param_5->NumberOfRemainingBlocks = (ulong)uVar15;
-    uVar8 = (int)local_70[0] - (int)p_Var2->BlockArray;
-    iVar9 = ((int)uVar8 >> 0xc) + (uint)((int)uVar8 < 0 && (uVar8 & 0xfff) != 0);
-    p_Var2->BlockCache[iVar9].ReferenceCount = p_Var2->BlockCache[iVar9].ReferenceCount + 0xff;
+    param_5->NumberOfRemainingBlocks = (ulong)uVar4;
+    uVar7 = (int)local_70[0] - (int)param_1->BlockArray;
+    iVar8 = ((int)uVar7 >> 0xc) + (uint)((int)uVar7 < 0 && (uVar7 & 0xfff) != 0);
+    param_1->BlockCache[iVar8].ReferenceCount = param_1->BlockCache[iVar8].ReferenceCount + 0xff;
   }
-  lVar3 = __restgprlr_21(lVar3);
-  return lVar3;
+  return lVar2;
 }
 
 
 // 828AFBB8  StfcByteOffsetToBlockNumber  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/stfc/stfsup.c:466)
+
+/* WARNING: Function: __savegprlr_15 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_15 replaced with injection: xenon_save_restore */
 
 long StfcByteOffsetToBlockNumber
                (_STFC_VOLUME_EXTENSION *param_1,_STFC_FCB *param_2,ulong param_3,ulong *param_4,
                ulong *param_5,ulong *param_6)
 
 {
-  bool bVar1;
-  uint uVar2;
-  ulonglong uVar3;
-  _STFC_VOLUME_EXTENSION *p_Var4;
-  ulong uVar5;
-  long lVar6;
-  ulonglong uVar7;
-  uint *puVar8;
-  _STFC_HASH_BLOCK *p_Var9;
+  uint uVar1;
+  ulong uVar2;
+  long lVar3;
+  _STFC_HASH_BLOCK *p_Var4;
+  ulonglong uVar5;
+  uint uVar7;
+  int iVar8;
+  ulonglong uVar6;
+  uint uVar9;
   ulonglong uVar10;
   ulonglong uVar11;
-  uint uVar13;
-  int iVar14;
-  ulonglong uVar12;
+  uint uVar12;
+  longlong lVar13;
+  uint uVar14;
   uint uVar15;
   ulonglong uVar16;
-  ulonglong uVar17;
-  ulonglong uVar18;
-  longlong lVar19;
-  ulonglong uVar20;
-  ulonglong uVar21;
-  ulonglong uVar22;
   _STFC_HASH_BLOCK *local_a0;
   _STFC_BLOCK_CACHE_ELEMENT *ap_Stack_9c [39];
   
-  uVar7 = (ulonglong)(int)param_6;
-  uVar16 = (ulonglong)(int)param_3;
-  p_Var4 = (_STFC_VOLUME_EXTENSION *)__savegprlr_15(param_1);
-  uVar3 = uVar16 & 0xfffff000;
-  uVar15 = (uint)uVar16 & 0xfff;
+  uVar9 = param_3 & 0xfffff000;
+  uVar1 = param_3 & 0xfff;
   gStfcStats.StfcByteOffsetToBlockNumber = gStfcStats.StfcByteOffsetToBlockNumber + 1;
-  if (uVar3 < param_2->AllocationSize) {
-    puVar8 = (uint *)uVar7;
-    if ((uVar7 & 0xffffffff) != 0) {
-      *puVar8 = 0;
+  if (uVar9 < param_2->AllocationSize) {
+    if (param_6 != (ulong *)0x0) {
+      *param_6 = 0;
     }
-    uVar18 = (ulonglong)param_2->LastMappedFileByteOffset;
-    uVar13 = param_2->LastMappedFileRunLength;
-    uVar21 = (ulonglong)uVar13;
-    uVar16 = (ulonglong)param_2->LastMappedBlockNumber;
-    if ((uVar3 < uVar18) || ((uVar21 + uVar18 & 0xffffffff) <= uVar3)) {
-      if (uVar3 == 0) {
-        uVar5 = param_2->FirstBlockNumber;
+    uVar12 = param_2->LastMappedFileByteOffset;
+    uVar15 = param_2->LastMappedFileRunLength;
+    uVar10 = (ulonglong)param_2->LastMappedBlockNumber;
+    if ((uVar9 < uVar12) || (uVar15 + uVar12 <= uVar9)) {
+      if ((param_3 & 0xfffff000) == 0) {
+        uVar2 = param_2->FirstBlockNumber;
       }
-      else if (((uVar3 + 0x1000 & 0xffffffff) != (ulonglong)param_2->AllocationSize) ||
-              (uVar5 = param_2->LastBlockNumber, uVar5 == 0xffffffff)) {
-        if (uVar18 < uVar3) {
-          uVar20 = (uVar21 + uVar18) - 0x1000;
-          uVar22 = ((uVar13 >> 0xc) + uVar16) - 1;
+      else if ((uVar9 + 0x1000 != param_2->AllocationSize) ||
+              (uVar2 = param_2->LastBlockNumber, uVar2 == 0xffffffff)) {
+        if (uVar12 < uVar9) {
+          uVar7 = (uVar15 + uVar12) - 0x1000;
+          uVar16 = ((uVar15 >> 0xc) + uVar10) - 1;
         }
         else {
-          uVar16 = (ulonglong)param_2->FirstBlockNumber;
-          uVar20 = 0;
-          uVar18 = 0;
-          uVar21 = 0x1000;
-          uVar22 = uVar16;
+          uVar10 = (ulonglong)param_2->FirstBlockNumber;
+          uVar7 = 0;
+          uVar12 = 0;
+          uVar15 = 0x1000;
+          uVar16 = uVar10;
         }
-        p_Var9 = (_STFC_HASH_BLOCK *)0x0;
+        p_Var4 = (_STFC_HASH_BLOCK *)0x0;
         local_a0 = (_STFC_HASH_BLOCK *)0x0;
-        uVar10 = 0;
+        uVar5 = 0;
         do {
-          uVar11 = uVar20;
+          uVar14 = uVar7;
           gStfcStats.StfcByteOffsetToBlockNumberProbes =
                gStfcStats.StfcByteOffsetToBlockNumberProbes + 1;
-          lVar19 = uVar22 + ((uVar22 & 0xffffffff) / 0xaa) * -0xaa;
-          uVar17 = uVar22 - lVar19;
-          if (p_Var9 == (_STFC_HASH_BLOCK *)0x0) {
+          lVar13 = uVar16 + ((uVar16 & 0xffffffff) / 0xaa) * -0xaa;
+          uVar11 = uVar16 - lVar13;
+          if (p_Var4 == (_STFC_HASH_BLOCK *)0x0) {
 LAB_828afd60:
-            uVar5 = StfcMapExistingBlock(p_Var4,(ulong)uVar17,1,&local_a0,ap_Stack_9c);
-            bVar1 = (uVar7 & 0xffffffff) != 0;
-            uVar10 = uVar17;
-            if (uVar5 == 0) {
-              if (bVar1) {
-                *puVar8 = 1;
+            uVar2 = StfcMapExistingBlock(param_1,(ulong)uVar11,1,&local_a0,ap_Stack_9c);
+            uVar5 = uVar11;
+            if (uVar2 == 0) {
+              if (param_6 != (ulong *)0x0) {
+                *param_6 = 1;
               }
-              lVar6 = StfcMapReadableHashBlock(p_Var4,(ulong)uVar17,0,&local_a0);
-              p_Var9 = local_a0;
-              if (lVar6 < 0) goto LAB_828afec8;
+              lVar3 = StfcMapReadableHashBlock(param_1,(ulong)uVar11,0,&local_a0);
+              p_Var4 = local_a0;
+              if (lVar3 < 0) {
+                return lVar3;
+              }
             }
             else {
-              p_Var9 = local_a0;
-              if (bVar1) {
-                *puVar8 = 0;
+              p_Var4 = local_a0;
+              if (param_6 != (ulong *)0x0) {
+                *param_6 = 0;
               }
             }
           }
-          else if ((uVar17 & 0xffffffff) != (uVar10 & 0xffffffff)) {
-            uVar13 = (int)p_Var9 - (int)p_Var4->BlockArray;
-            iVar14 = ((int)uVar13 >> 0xc) + (uint)((int)uVar13 < 0 && (uVar13 & 0xfff) != 0);
-            p_Var4->BlockCache[iVar14].ReferenceCount =
-                 p_Var4->BlockCache[iVar14].ReferenceCount + 0xff;
+          else if ((uVar11 & 0xffffffff) != (uVar5 & 0xffffffff)) {
+            uVar7 = (int)p_Var4 - (int)param_1->BlockArray;
+            iVar8 = ((int)uVar7 >> 0xc) + (uint)((int)uVar7 < 0 && (uVar7 & 0xfff) != 0);
+            param_1->BlockCache[iVar8].ReferenceCount =
+                 param_1->BlockCache[iVar8].ReferenceCount + 0xff;
             goto LAB_828afd60;
           }
-          uVar12 = (ulonglong)p_Var9->Entries[(int)lVar19].field1_0x14.LevelAsULONG & 0xffffff;
-          if (p_Var4->NumberOfTotalBlocks <= uVar12) {
-            lVar6 = -0x3fffffce;
+          uVar6 = (ulonglong)p_Var4->Entries[(int)lVar13].field1_0x14.LevelAsULONG & 0xffffff;
+          if (param_1->NumberOfTotalBlocks <= uVar6) {
+            lVar3 = -0x3fffffce;
             goto LAB_828afe90;
           }
-          uVar20 = uVar11 + 0x1000;
-          if (uVar12 == (uVar22 + 1 & 0xffffffff)) {
-            uVar21 = uVar21 + 0x1000;
+          uVar7 = uVar14 + 0x1000;
+          if (uVar6 == (uVar16 + 1 & 0xffffffff)) {
+            uVar15 = uVar15 + 0x1000;
           }
           else {
-            uVar21 = 0x1000;
-            uVar16 = uVar12;
-            uVar18 = uVar20;
+            uVar15 = 0x1000;
+            uVar10 = uVar6;
+            uVar12 = uVar7;
           }
-          uVar22 = uVar12;
-        } while ((uVar20 & 0xffffffff) != uVar3);
-        *param_4 = (ulong)uVar12;
-        for (uVar11 = uVar11 + 0x2000; (uVar11 & 0xffffffff) != (ulonglong)param_2->AllocationSize;
-            uVar11 = uVar11 + 0x1000) {
-          if (((0xa8 < (uVar12 - uVar17 & 0xffffffff)) ||
-              (uVar7 = (ulonglong)p_Var9->Entries[(int)(uVar12 - uVar17)].field1_0x14.LevelAsULONG &
-                       0xffffff, p_Var4->NumberOfTotalBlocks <= uVar7)) || (uVar7 != uVar12 + 1))
+          uVar16 = uVar6;
+        } while (uVar7 != uVar9);
+        *param_4 = (ulong)uVar6;
+        for (uVar2 = uVar14 + 0x2000; uVar2 != param_2->AllocationSize; uVar2 = uVar2 + 0x1000) {
+          if (((0xa8 < (uVar6 - uVar11 & 0xffffffff)) ||
+              (uVar16 = (ulonglong)p_Var4->Entries[(int)(uVar6 - uVar11)].field1_0x14.LevelAsULONG &
+                        0xffffff, param_1->NumberOfTotalBlocks <= uVar16)) || (uVar16 != uVar6 + 1))
           goto LAB_828afe74;
-          uVar21 = uVar21 + 0x1000;
-          uVar12 = uVar7;
+          uVar15 = uVar15 + 0x1000;
+          uVar6 = uVar16;
         }
-        param_2->LastBlockNumber = (ulong)uVar12;
+        param_2->LastBlockNumber = (ulong)uVar6;
 LAB_828afe74:
-        param_2->LastMappedFileByteOffset = (ulong)uVar18;
-        param_2->LastMappedFileRunLength = (ulong)uVar21;
-        lVar6 = 0;
-        param_2->LastMappedBlockNumber = (ulong)uVar16;
-        *param_5 = ((int)uVar11 - uVar15) - (int)uVar3;
+        param_2->LastMappedFileByteOffset = uVar12;
+        param_2->LastMappedFileRunLength = uVar15;
+        lVar3 = 0;
+        param_2->LastMappedBlockNumber = (ulong)uVar10;
+        *param_5 = (uVar2 - uVar1) - uVar9;
 LAB_828afe90:
-        if (p_Var9 != (_STFC_HASH_BLOCK *)0x0) {
-          uVar15 = (int)p_Var9 - (int)p_Var4->BlockArray;
-          iVar14 = ((int)uVar15 >> 0xc) + (uint)((int)uVar15 < 0 && (uVar15 & 0xfff) != 0);
-          p_Var4->BlockCache[iVar14].ReferenceCount =
-               p_Var4->BlockCache[iVar14].ReferenceCount + 0xff;
+        if (p_Var4 == (_STFC_HASH_BLOCK *)0x0) {
+          return lVar3;
         }
-        goto LAB_828afec8;
+        uVar9 = (int)p_Var4 - (int)param_1->BlockArray;
+        iVar8 = ((int)uVar9 >> 0xc) + (uint)((int)uVar9 < 0 && (uVar9 & 0xfff) != 0);
+        param_1->BlockCache[iVar8].ReferenceCount = param_1->BlockCache[iVar8].ReferenceCount + 0xff
+        ;
+        return lVar3;
       }
-      *param_4 = uVar5;
-      *param_5 = 0x1000 - uVar15;
+      *param_4 = uVar2;
+      *param_5 = 0x1000 - uVar1;
     }
     else {
-      uVar2 = (int)uVar3 - param_2->LastMappedFileByteOffset;
-      *param_4 = (uVar2 >> 0xc) + param_2->LastMappedBlockNumber;
-      *param_5 = (uVar13 - uVar2) - uVar15;
-      if ((uVar7 & 0xffffffff) != 0) {
-        uVar5 = StfcIsLevel0HashBlockResident(p_Var4,*param_4);
-        *puVar8 = (uint)LZCOUNT(uVar5) >> 5;
+      *param_4 = (uVar9 - uVar12 >> 0xc) + param_2->LastMappedBlockNumber;
+      *param_5 = (uVar15 - (uVar9 - uVar12)) - uVar1;
+      if (param_6 != (ulong *)0x0) {
+        uVar2 = StfcIsLevel0HashBlockResident(param_1,*param_4);
+        *param_6 = (uint)LZCOUNT(uVar2) >> 5;
       }
     }
-    lVar6 = 0;
+    lVar3 = 0;
   }
   else {
-    lVar6 = -0x3fffffef;
+    lVar3 = -0x3fffffef;
   }
-LAB_828afec8:
-  lVar6 = __restgprlr_15(lVar6);
-  return lVar6;
+  return lVar3;
 }
 
 
 // 828B13E8  StfcPartiallyCachedRead  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/stfc/read.c:472)
+
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 
 long StfcPartiallyCachedRead
                (_STFC_VOLUME_EXTENSION *param_1,_STFC_FCB *param_2,void *param_3,ulong param_4,
@@ -3049,73 +2947,67 @@ long StfcPartiallyCachedRead
 
 {
   void *pvVar1;
-  _STFC_VOLUME_EXTENSION *p_Var2;
-  long lVar3;
-  ulong uVar4;
-  uint uVar5;
-  int iVar6;
-  longlong lVar7;
-  ulonglong uVar8;
-  longlong lVar9;
-  void *pvVar10;
-  ulonglong uVar11;
-  ulong uVar12;
+  long lVar2;
+  ulong uVar3;
+  uint uVar4;
+  int iVar5;
   ulong local_50;
   void *local_4c;
   _STFC_BLOCK_CACHE_ELEMENT *ap_Stack_48 [18];
   
-  uVar11 = (ulonglong)(int)param_5;
-  uVar8 = (ulonglong)(int)param_4;
-  lVar9 = (longlong)(int)param_3;
-  p_Var2 = (_STFC_VOLUME_EXTENSION *)__savegprlr_25(param_1);
-  if ((uVar11 & 0xfff) != 0) {
-    lVar7 = 0x1000 - (uVar11 & 0xfff);
-    lVar3 = StfcFullyCachedRead(p_Var2,param_2,(void *)lVar9,(ulong)lVar7,(ulong)uVar11);
-    if (lVar3 < 0) goto LAB_828b1568;
-    lVar9 = lVar7 + lVar9;
-    uVar8 = uVar8 - lVar7;
-    uVar11 = lVar7 + uVar11;
-  }
-  do {
-    pvVar10 = (void *)lVar9;
-    uVar12 = (ulong)uVar11;
-    lVar3 = StfcByteOffsetToBlockNumber
-                      (p_Var2,param_2,uVar12,&local_50,(ulong *)ap_Stack_48,(ulong *)0x0);
-    if (lVar3 < 0) goto LAB_828b1568;
-    uVar4 = StfcMapExistingBlock(p_Var2,local_50,0,&local_4c,ap_Stack_48);
-    pvVar1 = local_4c;
-    if (uVar4 == 0) {
-      if (0xfff < (uVar8 & 0xffffffff)) {
-        uVar4 = (ulong)(uVar8 & 0xfffff000);
-        lVar3 = StfcNonCachedRead(p_Var2,param_2,pvVar10,uVar4,uVar12);
-        if (lVar3 < 0) goto LAB_828b1568;
-        pvVar10 = (void *)(uVar4 + (int)pvVar10);
-        uVar8 = uVar8 - (uVar8 & 0xfffff000);
-        uVar12 = uVar4 + uVar12;
-      }
-      break;
+  if ((param_5 & 0xfff) != 0) {
+    uVar3 = 0x1000 - (param_5 & 0xfff);
+    lVar2 = StfcFullyCachedRead(param_1,param_2,param_3,uVar3,param_5);
+    if (lVar2 < 0) {
+      return lVar2;
     }
-    memcpy();
-    uVar8 = uVar8 - 0x1000;
-    uVar5 = (int)pvVar1 - (int)p_Var2->BlockArray;
-    lVar9 = lVar9 + 0x1000;
-    pvVar10 = (void *)lVar9;
-    uVar11 = uVar11 + 0x1000;
-    uVar12 = (ulong)uVar11;
-    iVar6 = ((int)uVar5 >> 0xc) + (uint)((int)uVar5 < 0 && (uVar5 & 0xfff) != 0);
-    p_Var2->BlockCache[iVar6].ReferenceCount = p_Var2->BlockCache[iVar6].ReferenceCount + 0xff;
-  } while (0xfff < (uVar8 & 0xffffffff));
-  if (((uVar8 & 0xffffffff) == 0) ||
-     (lVar3 = StfcFullyCachedRead(p_Var2,param_2,pvVar10,(ulong)uVar8,uVar12), -1 < lVar3)) {
-    lVar3 = 0;
+    param_3 = (void *)(uVar3 + (int)param_3);
+    param_4 = param_4 - uVar3;
+    param_5 = uVar3 + param_5;
   }
-LAB_828b1568:
-  lVar3 = __restgprlr_25(lVar3);
-  return lVar3;
+  while( true ) {
+    lVar2 = StfcByteOffsetToBlockNumber
+                      (param_1,param_2,param_5,&local_50,(ulong *)ap_Stack_48,(ulong *)0x0);
+    if (lVar2 < 0) {
+      return lVar2;
+    }
+    uVar3 = StfcMapExistingBlock(param_1,local_50,0,&local_4c,ap_Stack_48);
+    pvVar1 = local_4c;
+    if (uVar3 == 0) break;
+    memcpy();
+    param_4 = param_4 - 0x1000;
+    uVar4 = (int)pvVar1 - (int)param_1->BlockArray;
+    param_3 = (void *)((int)param_3 + 0x1000);
+    param_5 = param_5 + 0x1000;
+    iVar5 = ((int)uVar4 >> 0xc) + (uint)((int)uVar4 < 0 && (uVar4 & 0xfff) != 0);
+    param_1->BlockCache[iVar5].ReferenceCount = param_1->BlockCache[iVar5].ReferenceCount + 0xff;
+    if (param_4 < 0x1000) {
+LAB_828b152c:
+      if ((param_4 == 0) ||
+         (lVar2 = StfcFullyCachedRead(param_1,param_2,param_3,param_4,param_5), -1 < lVar2)) {
+        lVar2 = 0;
+      }
+      return lVar2;
+    }
+  }
+  if (0xfff < param_4) {
+    uVar4 = param_4 & 0xfffff000;
+    lVar2 = StfcNonCachedRead(param_1,param_2,param_3,uVar4,param_5);
+    if (lVar2 < 0) {
+      return lVar2;
+    }
+    param_3 = (void *)(uVar4 + (int)param_3);
+    param_4 = param_4 - uVar4;
+    param_5 = uVar4 + param_5;
+  }
+  goto LAB_828b152c;
 }
 
 
 // 828AEA28  StfcFlushBlockCacheEntry  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/stfc/blocksup.c:482)
+
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
 
 long StfcFlushBlockCacheEntry
                (_STFC_VOLUME_EXTENSION *param_1,ulong param_2,_STFC_BLOCK_CACHE_ELEMENT *param_3)
@@ -3125,64 +3017,59 @@ long StfcFlushBlockCacheEntry
   uint uVar2;
   _STFC_BLOCK_CACHE_ELEMENT *p_Var3;
   _STFC_BLOCK_CACHE_ELEMENT *p_Var4;
-  _STFC_VOLUME_EXTENSION *p_Var5;
-  int iVar6;
-  long lVar7;
-  ulong64 uVar8;
-  longlong lVar9;
-  _FILE_SEGMENT_ELEMENT *p_Var10;
-  ulong uVar11;
-  ulonglong uVar12;
+  int iVar5;
+  ulong64 uVar6;
+  longlong lVar7;
+  _FILE_SEGMENT_ELEMENT *p_Var8;
+  ulong uVar9;
+  ulonglong uVar10;
   _FILE_SEGMENT_ELEMENT local_d0;
   void *local_cc [51];
   
-  uVar12 = (ulonglong)(int)param_2;
-  p_Var5 = (_STFC_VOLUME_EXTENSION *)__savegprlr_23(param_1);
   bVar1 = (param_3->field4_0x7).FlagsAsUCHAR;
-  local_d0.Buffer = (int)((uVar12 & 0xffffffff) << 0xc) + p_Var5->BlockArray;
+  local_d0.Buffer = param_2 * 0x1000 + param_1->BlockArray;
   uVar2 = param_3->BlockNumber;
-  StfcCleanBlockCacheEntry(p_Var5,(ulong)uVar12,param_3);
+  StfcCleanBlockCacheEntry(param_1,param_2,param_3);
   if ((bVar1 & 3) == 0) {
-    uVar12 = 1;
-    uVar11 = (ulong)param_3->LruBlink;
-    lVar9 = (ulonglong)p_Var5->DataBlockStart + (ulonglong)uVar2;
-    p_Var3 = p_Var5->BlockCache;
-    if (uVar11 != p_Var5->BlockCacheLruHead) {
-      p_Var10 = &local_d0;
+    uVar10 = 1;
+    uVar9 = (ulong)param_3->LruBlink;
+    lVar7 = (ulonglong)param_1->DataBlockStart + (ulonglong)uVar2;
+    p_Var3 = param_1->BlockCache;
+    if (uVar9 != param_1->BlockCacheLruHead) {
+      p_Var8 = &local_d0;
       do {
-        p_Var4 = p_Var3 + uVar11;
+        p_Var4 = p_Var3 + uVar9;
         if ((((p_Var4->ReferenceCount == '\0') && (((p_Var4->field4_0x7).FlagsAsUCHAR & 0x40) != 0))
-            && ((ulonglong)p_Var4->BlockNumber == (uVar12 + uVar2 & 0xffffffff))) &&
+            && ((ulonglong)p_Var4->BlockNumber == (uVar10 + uVar2 & 0xffffffff))) &&
            (((p_Var4->field4_0x7).FlagsAsUCHAR & 3) == 0)) {
-          StfcCleanBlockCacheEntry(p_Var5,uVar11,p_Var4);
-          uVar12 = uVar12 + 1;
-          p_Var10 = p_Var10 + 1;
-          p_Var10->Buffer = (void *)(uVar11 * 0x1000 + (int)p_Var5->BlockArray);
-          if ((uVar12 & 0xffffffff) == 0x20) break;
+          StfcCleanBlockCacheEntry(param_1,uVar9,p_Var4);
+          uVar10 = uVar10 + 1;
+          p_Var8 = p_Var8 + 1;
+          p_Var8->Buffer = (void *)(uVar9 * 0x1000 + (int)param_1->BlockArray);
+          if ((uVar10 & 0xffffffff) == 0x20) break;
         }
-        uVar11 = (ulong)p_Var4->LruBlink;
-      } while (uVar11 != p_Var5->BlockCacheLruHead);
+        uVar9 = (ulong)p_Var4->LruBlink;
+      } while (uVar9 != param_1->BlockCacheLruHead);
     }
   }
   else {
-    uVar11 = StfcComputeLevelNBackingHashBlockNumber(p_Var5,uVar2,(bVar1 & 3) - 1);
-    lVar9 = (longlong)(int)uVar11;
-    uVar12 = 1;
+    uVar9 = StfcComputeLevelNBackingHashBlockNumber(param_1,uVar2,(bVar1 & 3) - 1);
+    lVar7 = (longlong)(int)uVar9;
+    uVar10 = 1;
   }
-  uVar8 = ((((ulonglong)((param_3->field4_0x7).FlagsAsUCHAR >> 5) & 1) + lVar9) * 0x1000 &
-          0xffffffff000) + p_Var5->BackingFileOffset;
-  if ((uVar12 & 0xffffffff) == 1) {
-    iVar6 = StfcSynchronousWriteFile(p_Var5,local_d0.Buffer,0x1000,uVar8);
+  uVar6 = ((((ulonglong)((param_3->field4_0x7).FlagsAsUCHAR >> 5) & 1) + lVar7) * 0x1000 &
+          0xffffffff000) + param_1->BackingFileOffset;
+  if ((uVar10 & 0xffffffff) == 1) {
+    iVar5 = StfcSynchronousWriteFile(param_1,local_d0.Buffer,0x1000,uVar6);
   }
   else {
-    iVar6 = StfcSynchronousWriteFileGather
-                      (p_Var5,&local_d0,(ulong)((uVar12 & 0xffffffff) << 0xc),uVar8);
+    iVar5 = StfcSynchronousWriteFileGather
+                      (param_1,&local_d0,(ulong)((uVar10 & 0xffffffff) << 0xc),uVar6);
   }
-  if (iVar6 < 0) {
-    StfcSetPersistentStatus(p_Var5,iVar6);
+  if (iVar5 < 0) {
+    StfcSetPersistentStatus(param_1,iVar5);
   }
-  lVar7 = __restgprlr_23(iVar6);
-  return lVar7;
+  return iVar5;
 }
 
 
@@ -3206,6 +3093,9 @@ void StfcSetPersistentStatus(_STFC_VOLUME_EXTENSION *param_1,long param_2)
 
 // 828ACE60  StfcCreateDevice  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/stfc/driver.c:551)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
+
 long StfcCreateDevice(_STFC_CREATE_PACKET *param_1,ulong param_2)
 
 {
@@ -3219,254 +3109,234 @@ long StfcCreateDevice(_STFC_CREATE_PACKET *param_1,ulong param_2)
   void *pvVar8;
   _STFC_VOLUME_EXTENSION *p_Var9;
   uint uVar10;
-  int iVar12;
+  long lVar12;
   longlong lVar11;
   ulong uVar13;
-  long lVar14;
-  ulonglong uVar15;
-  undefined4 *puVar16;
-  ulong uVar17;
-  _STFC_HASH_ENTRY *p_Var18;
-  ulong64 uVar19;
-  uchar uVar20;
+  uchar *puVar14;
+  ulong uVar15;
+  _STFC_HASH_ENTRY *p_Var16;
+  _ULARGE_INTEGER _Var17;
+  uchar uVar19;
+  ulonglong uVar18;
   void *local_90;
-  int local_8c;
+  _DEVICE_OBJECT *local_8c;
   uint local_88 [2];
   undefined1 auStack_80 [16];
   undefined1 auStack_70 [20];
   uint local_5c;
   
-  uVar15 = (ulonglong)(int)param_2;
-  iVar12 = __savegprlr_23(param_1);
-  if ((((uVar15 & 0xffffffff) == 0x58) && (4 < *(byte *)(iVar12 + 0x50))) &&
-     ((*(uint *)(iVar12 + 0x40) & 0xfff) == 0)) {
-    pvVar8 = *(void **)(iVar12 + 0x18);
+  if (((param_2 == 0x58) && (4 < param_1->BlockCacheElementCount)) &&
+     (((uint)param_1->BlockArray & 0xfff) == 0)) {
+    pvVar8 = param_1->BackingFileHandle;
     lVar11 = NtQueryVolumeInformationFile(pvVar8,auStack_80,auStack_70,0x18,3);
     if (-1 < lVar11) {
-      if (local_5c < 0x1001) {
-        lVar11 = NtQueryInformationFile(pvVar8,auStack_80,local_88,4,0x11);
-        if ((-1 < lVar11) && (lVar11 = NtCreateEvent(&local_90,0,1,0), -1 < lVar11)) {
-          bVar1 = *(byte *)(iVar12 + 0x50);
-          lVar11 = IoCreateDevice(0xffffffff829a8584,
-                                  (ulonglong)*(uint *)(iVar12 + 0x44) + (ulonglong)bVar1 * 8 + 0xd8,
-                                  iVar12,0x3d,
-                                  (-(ulonglong)(*(char *)(iVar12 + 0x51) != '\0') & 0xfffff000) +
-                                  0x2000,&local_8c);
-          if (lVar11 < 0) {
-            NtClose(local_90);
+      if (0x1000 < local_5c) {
+        return -0x3ffffff0;
+      }
+      lVar11 = NtQueryInformationFile(pvVar8,auStack_80,local_88,4,0x11);
+      if ((-1 < lVar11) && (lVar11 = NtCreateEvent(&local_90,0,1,0), -1 < lVar11)) {
+        bVar1 = param_1->BlockCacheElementCount;
+        lVar11 = IoCreateDevice(0xffffffff829a8584,
+                                (ulonglong)param_1->DeviceExtensionSize + (ulonglong)bVar1 * 8 +
+                                0xd8,param_1,0x3d,
+                                (-(ulonglong)(param_1->TitleOwned != '\0') & 0xfffff000) + 0x2000,
+                                &local_8c);
+        if (-1 < lVar11) {
+          local_8c->MountedOrSelfDevice = local_8c;
+          if (local_8c->AlignmentRequirement < local_88[0]) {
+            local_8c->AlignmentRequirement = local_88[0];
+          }
+          p_Var9 = local_8c->DeviceExtension;
+          local_8c->SectorSize = local_5c & 0xffff;
+          _Var17 = param_1->BackingFileOffset;
+          p_Var9->BackingFileHandle = pvVar8;
+          p_Var9->BackingFileOffset = (ulong64)_Var17;
+          p_Var9->SynchronousIoEventHandle = local_90;
+          p_Var9->DeviceCharacteristics = param_1->DeviceCharacteristics;
+          uVar10 = *(uint *)(param_1->VolumeDescriptor + 0x1c);
+          bVar2 = param_1->VolumeDescriptor[2];
+          p_Var9->NumberOfTotalBlocks = uVar10;
+          p_Var9->NumberOfFreeBlocks = *(ulong *)(param_1->VolumeDescriptor + 0x20);
+          if (uVar10 < 0x70e5) {
+            if (uVar10 < 0xab) {
+              p_Var9->RootHashHierarchy = '\0';
+            }
+            else {
+              p_Var9->RootHashHierarchy = '\x01';
+            }
           }
           else {
-            *(int *)(local_8c + 0xc) = local_8c;
-            if (*(uint *)(local_8c + 0x24) < local_88[0]) {
-              *(uint *)(local_8c + 0x24) = local_88[0];
-            }
-            p_Var9 = *(_STFC_VOLUME_EXTENSION **)(local_8c + 0x18);
-            *(uint *)(local_8c + 0x20) = local_5c & 0xffff;
-            uVar19 = *(ulong64 *)(iVar12 + 8);
-            p_Var9->BackingFileHandle = pvVar8;
-            p_Var9->BackingFileOffset = uVar19;
-            p_Var9->SynchronousIoEventHandle = local_90;
-            p_Var9->DeviceCharacteristics = *(uchar *)(iVar12 + 0x53);
-            uVar10 = *(uint *)(iVar12 + 0x38);
-            bVar2 = *(byte *)(iVar12 + 0x1e);
-            p_Var9->NumberOfTotalBlocks = uVar10;
-            p_Var9->NumberOfFreeBlocks = *(ulong *)(iVar12 + 0x3c);
-            if (uVar10 < 0x70e5) {
-              if (uVar10 < 0xab) {
-                p_Var9->RootHashHierarchy = '\0';
-              }
-              else {
-                p_Var9->RootHashHierarchy = '\x01';
-              }
-            }
-            else {
-              p_Var9->RootHashHierarchy = '\x02';
-            }
-            if ((bVar2 & 1) == 0) {
-              uVar20 = 0xac;
-              p_Var9->HashBlockPairShift = '\x01';
-              uVar13 = 0x723a;
-            }
-            else {
-              p_Var9->HashBlockPairShift = '\0';
-              uVar20 = 0xab;
-              uVar13 = 0x718f;
-            }
-            p_Var9->BackingBlocksPerLevel1HashTree = uVar13;
-            p_Var9->BackingBlocksPerLevel0HashTree = uVar20;
-            if ((bVar2 & 1) == 0) {
-              uVar15 = *(ulonglong *)(iVar12 + 0x10) >> 0xc;
-              if (0xffffffff < uVar15) {
-                uVar15 = 0xffffffff;
-              }
-              uVar13 = StfcComputeNumberOfDataBlocks((ulong)uVar15);
-              p_Var9->MaximumNumberOfTotalBlocks = uVar13;
-              p_Var9->BackingFilePresized = *(uchar *)(iVar12 + 0x52);
-              p_Var9->DataBlockStart = (ulong)uVar15 - uVar13;
-            }
-            (p_Var9->PerformanceParameters).HashPreloadCount = 0x14;
-            (p_Var9->RootDirectoryFcb).ChildFcbList.Flink = &(p_Var9->RootDirectoryFcb).ChildFcbList
-            ;
-            (p_Var9->RootDirectoryFcb).ReferenceCount = 1;
-            (p_Var9->RootDirectoryFcb).Flags = '\x06';
-            (p_Var9->RootDirectoryFcb).ChildFcbList.Blink = &(p_Var9->RootDirectoryFcb).ChildFcbList
-            ;
-            (p_Var9->SystemChildFcbList).Flink = &p_Var9->SystemChildFcbList;
-            (p_Var9->SystemChildFcbList).Blink = &p_Var9->SystemChildFcbList;
-            (p_Var9->RootDirectoryFcb).DirectoryIndex = 0xffff;
-            bVar3 = *(byte *)(iVar12 + 0x1f);
-            bVar4 = *(byte *)(iVar12 + 0x22);
-            bVar5 = *(byte *)(iVar12 + 0x21);
-            bVar6 = *(byte *)(iVar12 + 0x23);
-            bVar7 = *(byte *)(iVar12 + 0x20);
-            (p_Var9->RootDirectoryFcb).LastBlockNumber = 0xffffffff;
-            uVar17 = (uint)bVar7 * 0x100 + (uint)bVar3;
-            (p_Var9->RootDirectoryFcb).LastMappedFileByteOffset = 0xffffffff;
-            (p_Var9->RootDirectoryFcb).FileBounds._s_1.LastChildDirectoryIndex = 0xfffe;
-            uVar13 = uVar17 * 0x1000;
-            (p_Var9->RootDirectoryFcb).AllocationSize = uVar13;
-            (p_Var9->RootDirectoryFcb).FirstBlockNumber =
-                 ((uint)bVar6 * 0x100 + (uint)bVar4) * 0x100 + (uint)bVar5;
-            (p_Var9->RootDirectoryFcb).ValidDataSize = uVar13;
-            p_Var9->NumberOfUnwriteableDirectoryBlocks = uVar17;
-            if ((*(byte *)(iVar12 + 0x1e) & 4) != 0) {
-              (p_Var9->RootDirectoryFcb).ValidDataSize =
-                   (p_Var9->RootDirectoryFcb).ValidDataSize - 0x1000;
-            }
-            puVar16 = (undefined4 *)(iVar12 + 0x20);
-            p_Var18 = (_STFC_HASH_ENTRY *)&p_Var9->DataBlockStart;
-            lVar11 = 5;
-            do {
-              puVar16 = puVar16 + 1;
-              p_Var18 = (_STFC_HASH_ENTRY *)((int)p_Var18->Hash + 4);
-              *(undefined4 *)p_Var18->Hash = *puVar16;
-              lVar11 = lVar11 + -1;
-            } while (lVar11 != 0);
-            (p_Var9->RootHashEntry).field1_0x14.LevelAsULONG =
-                 (*(byte *)(iVar12 + 0x1e) & 2) << 0x1d |
-                 (p_Var9->RootHashEntry).field1_0x14.LevelAsULONG & 0xbfffffff;
-            if ((bVar2 & 1) != 0) {
-              p_Var9->DirectoryIndexBoundsValid = *(byte *)(iVar12 + 0x1e) >> 3 & 1;
-            }
-            RtlInitializeCriticalSection(p_Var9,0xffffffffffffffff);
-            (p_Var9->FileObjectList).Flink = &p_Var9->FileObjectList;
-            (p_Var9->FileObjectList).Blink = &p_Var9->FileObjectList;
-            p_Var9->BlockCacheElementCount = bVar1;
-            p_Var9->BlockCache = (_STFC_BLOCK_CACHE_ELEMENT *)(p_Var9 + 1);
-            p_Var9->BlockArray = *(void **)(iVar12 + 0x40);
-            StfcResetBlockCache(p_Var9);
-            ObReferenceObject(local_8c);
-            *(int *)(iVar12 + 0x48) = local_8c;
-            *(uint *)(iVar12 + 0x4c) = (int)&p_Var9[1].VolumeMutex.Synchronization + (uint)bVar1 * 8
-            ;
-            *(uint *)(local_8c + 0x14) = *(uint *)(local_8c + 0x14) & 0xffffffef;
-            lVar11 = 0;
+            p_Var9->RootHashHierarchy = '\x02';
           }
+          if ((bVar2 & 1) == 0) {
+            uVar19 = 0xac;
+            p_Var9->HashBlockPairShift = '\x01';
+            uVar13 = 0x723a;
+          }
+          else {
+            p_Var9->HashBlockPairShift = '\0';
+            uVar19 = 0xab;
+            uVar13 = 0x718f;
+          }
+          p_Var9->BackingBlocksPerLevel1HashTree = uVar13;
+          p_Var9->BackingBlocksPerLevel0HashTree = uVar19;
+          if ((bVar2 & 1) == 0) {
+            uVar18 = (param_1->BackingMaximumVolumeSize).QuadPart >> 0xc;
+            if (0xffffffff < uVar18) {
+              uVar18 = 0xffffffff;
+            }
+            uVar13 = StfcComputeNumberOfDataBlocks((ulong)uVar18);
+            p_Var9->MaximumNumberOfTotalBlocks = uVar13;
+            p_Var9->BackingFilePresized = param_1->BackingFilePresized;
+            p_Var9->DataBlockStart = (ulong)uVar18 - uVar13;
+          }
+          (p_Var9->PerformanceParameters).HashPreloadCount = 0x14;
+          (p_Var9->RootDirectoryFcb).ChildFcbList.Flink = &(p_Var9->RootDirectoryFcb).ChildFcbList;
+          (p_Var9->RootDirectoryFcb).ReferenceCount = 1;
+          (p_Var9->RootDirectoryFcb).Flags = '\x06';
+          (p_Var9->RootDirectoryFcb).ChildFcbList.Blink = &(p_Var9->RootDirectoryFcb).ChildFcbList;
+          (p_Var9->SystemChildFcbList).Flink = &p_Var9->SystemChildFcbList;
+          (p_Var9->SystemChildFcbList).Blink = &p_Var9->SystemChildFcbList;
+          (p_Var9->RootDirectoryFcb).DirectoryIndex = 0xffff;
+          bVar3 = param_1->VolumeDescriptor[3];
+          bVar4 = param_1->VolumeDescriptor[6];
+          bVar5 = param_1->VolumeDescriptor[5];
+          bVar6 = param_1->VolumeDescriptor[7];
+          bVar7 = param_1->VolumeDescriptor[4];
+          (p_Var9->RootDirectoryFcb).LastBlockNumber = 0xffffffff;
+          uVar15 = (uint)bVar7 * 0x100 + (uint)bVar3;
+          (p_Var9->RootDirectoryFcb).LastMappedFileByteOffset = 0xffffffff;
+          (p_Var9->RootDirectoryFcb).FileBounds._s_1.LastChildDirectoryIndex = 0xfffe;
+          uVar13 = uVar15 * 0x1000;
+          (p_Var9->RootDirectoryFcb).AllocationSize = uVar13;
+          (p_Var9->RootDirectoryFcb).FirstBlockNumber =
+               ((uint)bVar6 * 0x100 + (uint)bVar4) * 0x100 + (uint)bVar5;
+          (p_Var9->RootDirectoryFcb).ValidDataSize = uVar13;
+          p_Var9->NumberOfUnwriteableDirectoryBlocks = uVar15;
+          if ((param_1->VolumeDescriptor[2] & 4) != 0) {
+            (p_Var9->RootDirectoryFcb).ValidDataSize =
+                 (p_Var9->RootDirectoryFcb).ValidDataSize - 0x1000;
+          }
+          puVar14 = param_1->VolumeDescriptor + 4;
+          p_Var16 = (_STFC_HASH_ENTRY *)&p_Var9->DataBlockStart;
+          lVar11 = 5;
+          do {
+            puVar14 = puVar14 + 4;
+            p_Var16 = (_STFC_HASH_ENTRY *)((int)p_Var16->Hash + 4);
+            *(undefined4 *)p_Var16->Hash = *(undefined4 *)puVar14;
+            lVar11 = lVar11 + -1;
+          } while (lVar11 != 0);
+          (p_Var9->RootHashEntry).field1_0x14.LevelAsULONG =
+               (param_1->VolumeDescriptor[2] & 2) << 0x1d |
+               (p_Var9->RootHashEntry).field1_0x14.LevelAsULONG & 0xbfffffff;
+          if ((bVar2 & 1) != 0) {
+            p_Var9->DirectoryIndexBoundsValid = param_1->VolumeDescriptor[2] >> 3 & 1;
+          }
+          RtlInitializeCriticalSection(p_Var9,0xffffffffffffffff);
+          (p_Var9->FileObjectList).Flink = &p_Var9->FileObjectList;
+          (p_Var9->FileObjectList).Blink = &p_Var9->FileObjectList;
+          p_Var9->BlockCacheElementCount = bVar1;
+          p_Var9->BlockCache = (_STFC_BLOCK_CACHE_ELEMENT *)(p_Var9 + 1);
+          p_Var9->BlockArray = param_1->BlockArray;
+          StfcResetBlockCache(p_Var9);
+          ObReferenceObject(local_8c);
+          param_1->DeviceObject = local_8c;
+          param_1->DeviceExtension =
+               (void *)((int)&p_Var9[1].VolumeMutex.Synchronization + (uint)bVar1 * 8);
+          local_8c->Flags = local_8c->Flags & 0xffffffef;
+          return 0;
         }
-      }
-      else {
-        lVar11 = -0x3ffffff0;
+        NtClose(local_90);
       }
     }
+    lVar12 = (long)lVar11;
   }
   else {
-    lVar11 = -0x3ffffff3;
+    lVar12 = -0x3ffffff3;
   }
-  lVar14 = __restgprlr_23(lVar11);
-  return lVar14;
+  return lVar12;
 }
 
 
 // 828AD7A0  StfcFindOpenChildFcb  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/stfc/fcbsup.c:574)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 _STFC_FCB * StfcFindOpenChildFcb(_STFC_FCB *param_1,_STRING *param_2)
 
 {
-  undefined4 *puVar1;
+  _STFC_FCB *p_Var1;
   bool bVar2;
-  undefined4 *puVar3;
-  int iVar4;
-  undefined4 *puVar5;
-  _STFC_FCB *p_Var6;
-  undefined4 *puVar7;
+  int iVar3;
+  _STFC_FCB *p_Var4;
   
-  puVar3 = (undefined4 *)__savegprlr_27(param_1);
   bVar2 = false;
-  puVar7 = puVar3;
-  do {
-    for (puVar1 = (undefined4 *)*puVar7; puVar1 != puVar7; puVar1 = (undefined4 *)*puVar1) {
-      puVar5 = puVar1 + -0x12;
-      iVar4 = RtlCompareStringN(param_2->Buffer,param_2->Length,puVar1 + 2,
-                                *(undefined1 *)(puVar1 + -5),1);
-      if (iVar4 == 0) goto LAB_828ad83c;
+  p_Var4 = param_1;
+  while( true ) {
+    for (p_Var1 = (_STFC_FCB *)(p_Var4->ChildFcbList).Flink; p_Var1 != p_Var4;
+        p_Var1 = (_STFC_FCB *)(p_Var1->ChildFcbList).Flink) {
+      iVar3 = RtlCompareStringN(param_2->Buffer,param_2->Length,&p_Var1->ParentFcb,
+                                p_Var1[-1].FileName[0x14],1);
+      if (iVar3 == 0) {
+        return (_STFC_FCB *)&p_Var1[-1].LastMappedBlockNumber;
+      }
     }
-    if (bVar2) goto LAB_828ad834;
-    if ((*(byte *)((int)puVar3 + 0x35) & 4) == 0) {
-      puVar7 = (undefined4 *)puVar3[3];
-      if (puVar7 == (undefined4 *)0x0) {
-LAB_828ad834:
-        puVar5 = (undefined4 *)0x0;
-LAB_828ad83c:
-        p_Var6 = (_STFC_FCB *)__restgprlr_27(puVar5);
-        return p_Var6;
+    if (bVar2) break;
+    if ((param_1->Flags & 4) == 0) {
+      p_Var4 = param_1->CloneFcb;
+      if (p_Var4 == (_STFC_FCB *)0x0) {
+        return (_STFC_FCB *)0x0;
       }
     }
     else {
-      puVar7 = puVar3 + 0x10;
+      p_Var4 = (_STFC_FCB *)&param_1->CreationTimeStamp;
     }
     bVar2 = true;
-  } while( true );
+  }
+  return (_STFC_FCB *)0x0;
 }
 
 
 // 828AD8E0  StfcTestForFullyCachedRead  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/stfc/read.c:626)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 ulong StfcTestForFullyCachedRead(_DEVICE_OBJECT *param_1,void *param_2,ulong param_3,ulong param_4)
 
 {
-  int iVar3;
   ulonglong uVar1;
-  undefined8 uVar2;
-  ulong uVar4;
-  ulonglong uVar5;
-  ulonglong uVar6;
   
-  uVar6 = (ulonglong)(int)param_4;
-  uVar5 = (ulonglong)(int)param_3;
-  uVar1 = (ulonglong)(int)param_2;
-  iVar3 = __savegprlr_28(param_1);
-  if ((*(uint *)(iVar3 + 0x24) & uVar6) == 0) {
-    if (((*(uint *)(iVar3 + 0x24) & uVar1 & 0xfff) == 0) && (0xfff < (uVar5 & 0xffffffff))) {
-      if ((((uVar5 + uVar6 ^ uVar6 + 0xfff) & 0xfffff000) != 0) &&
-         (uVar1 = MmQueryAddressProtect(uVar1), (uVar1 & 0x600) == 0)) {
-        uVar2 = 0;
-        goto LAB_828ad958;
-      }
-    }
+  uVar1 = (ulonglong)(int)param_4;
+  if (((((param_1->AlignmentRequirement & uVar1) == 0) &&
+       (((ulonglong)param_1->AlignmentRequirement & (longlong)(int)param_2 & 0xfff) == 0)) &&
+      (0xfff < param_3)) &&
+     (((((longlong)(int)param_3 + uVar1 ^ uVar1 + 0xfff) & 0xfffff000) != 0 &&
+      (uVar1 = MmQueryAddressProtect((longlong)(int)param_2), (uVar1 & 0x600) == 0)))) {
+    return 0;
   }
-  uVar2 = 1;
-LAB_828ad958:
-  uVar4 = __restgprlr_28(uVar2);
-  return uVar4;
+  return 1;
 }
 
 
 // 828B33D0  StfcSetDispositionInformation  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/stfc/fileinfo.c:652)
+
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 
 long StfcSetDispositionInformation
                (_STFC_VOLUME_EXTENSION *param_1,_STFC_FCB *param_2,
                _FILE_DISPOSITION_INFORMATION *param_3)
 
 {
-  _STFC_VOLUME_EXTENSION *p_Var1;
-  long lVar2;
-  byte bVar3;
+  long lVar1;
+  byte bVar2;
   _DIRECTORY_ENUM_CONTEXT local_80;
   _STFC_DIRECTORY_LOOKUP _Stack_70;
   
-  p_Var1 = (_STFC_VOLUME_EXTENSION *)__savegprlr_29(param_1);
   if (param_3->DeleteFile == '\0') {
-    bVar3 = param_2->Flags & 0xf7;
+    bVar2 = param_2->Flags & 0xf7;
   }
   else {
     if ((param_2->Flags & 2) != 0) {
@@ -3474,57 +3344,52 @@ long StfcSetDispositionInformation
       local_80.TemplateFileName.Length = 0;
       local_80.TemplateFileName.MaximumLength = 0;
       local_80.TemplateFileName.Buffer = (wchar_t *)0x0;
-      lVar2 = StfcLookupElementNameInDirectory(p_Var1,param_2,(_STRING *)0x0,&local_80,&_Stack_70);
-      if (-1 < lVar2) {
-        lVar2 = -0x3ffffeff;
-        goto LAB_828b3490;
+      lVar1 = StfcLookupElementNameInDirectory(param_1,param_2,(_STRING *)0x0,&local_80,&_Stack_70);
+      if (-1 < lVar1) {
+        return -0x3ffffeff;
       }
-      if (lVar2 != -0x3fffffcc) goto LAB_828b3490;
+      if (lVar1 != -0x3fffffcc) {
+        return lVar1;
+      }
     }
-    lVar2 = StfcEnsureWriteableDirectoryEntry(p_Var1,param_2);
-    if (lVar2 < 0) goto LAB_828b3490;
-    bVar3 = param_2->Flags | 8;
+    lVar1 = StfcEnsureWriteableDirectoryEntry(param_1,param_2);
+    if (lVar1 < 0) {
+      return lVar1;
+    }
+    bVar2 = param_2->Flags | 8;
   }
-  param_2->Flags = bVar3;
-  lVar2 = 0;
-LAB_828b3490:
-  lVar2 = __restgprlr_29(lVar2);
-  return lVar2;
+  param_2->Flags = bVar2;
+  return 0;
 }
 
 
 // 828AEB98  StfcFlushInAllocationSupportBlocks  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/stfc/blocksup.c:654)
+
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 
 long StfcFlushInAllocationSupportBlocks(_STFC_VOLUME_EXTENSION *param_1)
 
 {
   byte bVar1;
   _STFC_BLOCK_CACHE_ELEMENT *p_Var2;
-  _STFC_VOLUME_EXTENSION *p_Var3;
-  long lVar4;
+  long lVar3;
+  _STFC_BLOCK_CACHE_ELEMENT *p_Var4;
   _STFC_BLOCK_CACHE_ELEMENT *p_Var5;
-  _STFC_BLOCK_CACHE_ELEMENT *p_Var6;
   
-  p_Var3 = (_STFC_VOLUME_EXTENSION *)__savegprlr_27(param_1);
-  p_Var2 = p_Var3->BlockCache;
-  p_Var5 = p_Var2 + p_Var3->BlockCacheLruHead;
-  bVar1 = p_Var5->LruBlink;
-  while( true ) {
-    p_Var6 = p_Var2 + bVar1;
-    if (p_Var6->ReferenceCount == '\0') {
-      if ((((p_Var6->field4_0x7).FlagsAsUCHAR & 0x40) != 0) &&
-         (((p_Var6->field4_0x7).FlagsAsUCHAR & 8) != 0)) {
-        lVar4 = StfcFlushBlockCacheEntry(p_Var3,(uint)bVar1,p_Var6);
-        if (lVar4 < 0) goto LAB_828aec10;
-      }
+  p_Var2 = param_1->BlockCache;
+  p_Var4 = p_Var2 + param_1->BlockCacheLruHead;
+  bVar1 = p_Var4->LruBlink;
+  while ((((p_Var5 = p_Var2 + bVar1, p_Var5->ReferenceCount != '\0' ||
+           (((p_Var5->field4_0x7).FlagsAsUCHAR & 0x40) == 0)) ||
+          (((p_Var5->field4_0x7).FlagsAsUCHAR & 8) == 0)) ||
+         (lVar3 = StfcFlushBlockCacheEntry(param_1,(uint)bVar1,p_Var5), -1 < lVar3))) {
+    if (p_Var5 == p_Var4) {
+      return 0;
     }
-    if (p_Var6 == p_Var5) break;
-    bVar1 = p_Var6->LruBlink;
+    bVar1 = p_Var5->LruBlink;
   }
-  lVar4 = 0;
-LAB_828aec10:
-  lVar4 = __restgprlr_27(lVar4);
-  return lVar4;
+  return lVar3;
 }
 
 
@@ -3566,180 +3431,171 @@ void StfcRefreshDirectoryEntryFromOpenChildFcb(_STFC_FCB *param_1,_STFC_DIRECTOR
 
 // 828B1570  StfcFsdRead  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/stfc/read.c:707)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
+
 void StfcFsdRead(_STFC_VOLUME_EXTENSION *param_1,_IRP *param_2)
 
 {
-  int iVar1;
+  void *pvVar1;
   int iVar2;
   _STFC_FCB *p_Var3;
   ulong uVar4;
-  int iVar5;
-  _STFC_VOLUME_EXTENSION *p_Var6;
-  ulong uVar7;
-  int iVar8;
-  longlong lVar9;
-  uint uVar10;
-  uint uVar11;
+  ulong uVar5;
+  void *pvVar6;
+  uint uVar7;
+  uint uVar8;
   
-  lVar9 = (longlong)(int)param_2;
-  p_Var6 = (_STFC_VOLUME_EXTENSION *)__savegprlr_24(param_1);
-  iVar5 = (int)lVar9;
-  iVar1 = *(int *)(iVar5 + 0x50);
-  iVar2 = *(int *)(iVar1 + 0x18);
-  uVar11 = *(uint *)(iVar1 + 4);
+  pvVar1 = (param_2->Tail).Apc.SystemArgument1;
+  iVar2 = *(int *)((int)pvVar1 + 0x18);
+  uVar8 = *(uint *)((int)pvVar1 + 4);
   gStfcStats.StfcFsdRead = gStfcStats.StfcFsdRead + 1;
   p_Var3 = *(_STFC_FCB **)(iVar2 + 8);
-  RtlEnterCriticalSection(p_Var6);
-  iVar8 = p_Var6->PersistentStatus;
-  if (iVar8 == 0) {
+  RtlEnterCriticalSection(param_1);
+  pvVar6 = (void *)param_1->PersistentStatus;
+  if (pvVar6 == (void *)0x0) {
     if ((*(byte *)(iVar2 + 2) & 0x10) == 0) {
       if ((p_Var3->Flags & 2) == 0) {
-        if (uVar11 == 0) {
-          iVar8 = 0;
-          *(undefined4 *)(iVar5 + 0x14) = 0;
+        if (uVar8 == 0) {
+          pvVar6 = (void *)0x0;
+          (param_2->IoStatus).Information = 0;
         }
         else {
-          uVar4 = *(ulong *)(iVar1 + 0x10);
-          if ((*(int *)(iVar1 + 0xc) == 0) && (uVar4 < (p_Var3->FileBounds).FileSize)) {
-            uVar10 = (p_Var3->FileBounds).FileSize - uVar4;
-            if (uVar10 <= uVar11) {
-              uVar11 = uVar10;
+          uVar4 = *(ulong *)((int)pvVar1 + 0x10);
+          if ((*(int *)((int)pvVar1 + 0xc) == 0) && (uVar4 < (p_Var3->FileBounds).FileSize)) {
+            uVar7 = (p_Var3->FileBounds).FileSize - uVar4;
+            if (uVar7 <= uVar8) {
+              uVar8 = uVar7;
             }
-            if ((p_Var3->ValidDataSize < uVar4 + uVar11) ||
-               (uVar7 = StfcTestForFullyCachedRead
-                                  (*(_DEVICE_OBJECT **)(iVar1 + 0x14),*(void **)(iVar5 + 0x1c),
-                                   uVar11,uVar4), uVar7 != 0)) {
-              iVar8 = StfcFullyCachedRead(p_Var6,p_Var3,*(void **)(iVar5 + 0x1c),uVar11,uVar4);
+            if ((p_Var3->ValidDataSize < uVar4 + uVar8) ||
+               (uVar5 = StfcTestForFullyCachedRead
+                                  (*(_DEVICE_OBJECT **)((int)pvVar1 + 0x14),param_2->UserBuffer,
+                                   uVar8,uVar4), uVar5 != 0)) {
+              pvVar6 = (void *)StfcFullyCachedRead(param_1,p_Var3,param_2->UserBuffer,uVar8,uVar4);
             }
             else {
-              iVar8 = StfcPartiallyCachedRead(p_Var6,p_Var3,*(void **)(iVar5 + 0x1c),uVar11,uVar4);
+              pvVar6 = (void *)StfcPartiallyCachedRead
+                                         (param_1,p_Var3,param_2->UserBuffer,uVar8,uVar4);
             }
-            if (iVar8 < 0) {
+            if ((int)pvVar6 < 0) {
               memset();
             }
             else {
               if ((*(byte *)(iVar2 + 2) & 1) != 0) {
-                *(ulong *)(iVar2 + 0x18) = uVar4 + uVar11;
+                *(ulong *)(iVar2 + 0x18) = uVar4 + uVar8;
                 *(undefined4 *)(iVar2 + 0x14) = 0;
               }
-              *(uint *)(iVar5 + 0x14) = uVar11;
+              (param_2->IoStatus).Information = uVar8;
             }
           }
           else {
-            iVar8 = -0x3fffffef;
+            pvVar6 = (void *)0xc0000011;
           }
         }
       }
       else {
-        iVar8 = -0x3ffffff0;
+        pvVar6 = (void *)0xc0000010;
       }
     }
     else {
-      iVar8 = -0x3ffffed8;
+      pvVar6 = (void *)0xc0000128;
     }
   }
-  RtlLeaveCriticalSection(p_Var6);
-  *(int *)(iVar5 + 0x10) = iVar8;
-  IoCompleteRequest(lVar9,1);
-  __restgprlr_24();
+  RtlLeaveCriticalSection(param_1);
+  (param_2->IoStatus).field0_0x0.Pointer = pvVar6;
+  IoCompleteRequest(param_2,1);
   return;
 }
 
 
 // 828B0770  StfcAllocateBlocks  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/stfc/allocsup.c:731)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
+
 long StfcAllocateBlocks(_STFC_VOLUME_EXTENSION *param_1,ulong param_2,
                        _STFC_ALLOCATE_BLOCKS_TYPE param_3,ulong param_4,ulong param_5,ulong *param_6
                        ,ulong *param_7)
 
 {
-  _STFC_VOLUME_EXTENSION *p_Var1;
-  long lVar2;
-  longlong lVar3;
-  ulonglong uVar4;
-  ulonglong uVar5;
-  ulonglong uVar6;
-  ulonglong uVar7;
-  uint uVar8;
-  int iVar9;
-  ulong uVar10;
+  long lVar1;
+  uint uVar2;
+  int iVar3;
   _STFC_HASH_BLOCK *local_70 [4];
   _STFC_ALLOCATE_BLOCK_STATE local_60 [4];
   
-  uVar6 = (ulonglong)(int)param_7;
-  uVar5 = (ulonglong)(int)param_4;
-  uVar4 = (ulonglong)(int)param_3;
-  lVar3 = (longlong)(int)param_2;
-  p_Var1 = (_STFC_VOLUME_EXTENSION *)__savegprlr_24(param_1);
   if (param_5 == 0xffffffff) {
     param_5 = 0xffffff;
   }
-  if ((uVar4 & 0xffffffff) == 0) {
-LAB_828b07e0:
-    uVar7 = (ulonglong)p_Var1->NumberOfUnwriteableDirectoryBlocks + lVar3;
+  if (param_3 != AllocateDataBlock) {
+    if (param_3 == AllocateNewDirectoryBlock) {
+      uVar2 = param_1->NumberOfUnwriteableDirectoryBlocks + param_2 + 1;
+      goto LAB_828b07e8;
+    }
+    if (param_3 < AllocateDataBlockReserve) {
+      uVar2 = (param_1->NumberOfUnwriteableDirectoryBlocks + param_2) - 1;
+      goto LAB_828b07e8;
+    }
   }
-  else if ((uVar4 & 0xffffffff) == 1) {
-    uVar7 = (ulonglong)p_Var1->NumberOfUnwriteableDirectoryBlocks + lVar3 + 1;
-  }
-  else {
-    if (2 < (uVar4 & 0xffffffff)) goto LAB_828b07e0;
-    uVar7 = ((ulonglong)p_Var1->NumberOfUnwriteableDirectoryBlocks + lVar3) - 1;
-  }
-  if (((uVar7 & 0xffffffff) <= (ulonglong)p_Var1->NumberOfFreeBlocks) ||
-     (lVar2 = StfcExtendBackingFileSize(p_Var1,(int)uVar7 - p_Var1->NumberOfFreeBlocks), -1 < lVar2)
-     ) {
-    if ((int)uVar4 == 3) {
-      lVar2 = 0;
+  uVar2 = param_1->NumberOfUnwriteableDirectoryBlocks + param_2;
+LAB_828b07e8:
+  if ((uVar2 <= param_1->NumberOfFreeBlocks) ||
+     (lVar1 = StfcExtendBackingFileSize(param_1,uVar2 - param_1->NumberOfFreeBlocks), -1 < lVar1)) {
+    if (param_3 == AllocateDataBlockReserve) {
+      lVar1 = 0;
     }
     else {
       local_60[0].LastBlockNumber = 0;
       local_60[0].LastHashEntry = (_STFC_HASH_ENTRY *)0x0;
       local_60[0].LastHashBlock = (_STFC_HASH_BLOCK *)0x0;
-      uVar8 = (uint)LZCOUNT(p_Var1->NumberOfFreeBlocks - p_Var1->NumberOfTotalBlocks) >> 5;
-      local_60[0].NumberOfRemainingBlocks = (ulong)lVar3;
+      uVar2 = (uint)LZCOUNT(param_1->NumberOfFreeBlocks - param_1->NumberOfTotalBlocks) >> 5;
+      local_60[0].NumberOfRemainingBlocks = param_2;
       local_60[0].FirstBlockNumber = 0xffffffff;
-      StfcSetInAllocationSupport(p_Var1,'\x01');
-      if (p_Var1->RootHashHierarchy == 0) {
-        lVar2 = StfcAllocateBlocksFromLevel0HashBlock(p_Var1,0,uVar8,local_60);
+      StfcSetInAllocationSupport(param_1,'\x01');
+      if (param_1->RootHashHierarchy == 0) {
+        lVar1 = StfcAllocateBlocksFromLevel0HashBlock(param_1,0,uVar2,local_60);
       }
       else {
-        lVar2 = StfcAllocateBlocksFromLevelNHashBlock
-                          (p_Var1,0,(uint)p_Var1->RootHashHierarchy,uVar8,local_60);
+        lVar1 = StfcAllocateBlocksFromLevelNHashBlock
+                          (param_1,0,(uint)param_1->RootHashHierarchy,uVar2,local_60);
       }
-      StfcSetInAllocationSupport(p_Var1,'\0');
+      StfcSetInAllocationSupport(param_1,'\0');
       if (local_60[0].LastHashEntry != (_STFC_HASH_ENTRY *)0x0) {
         ((local_60[0].LastHashEntry)->field1_0x14).LevelAsULONG =
              ((local_60[0].LastHashEntry)->field1_0x14).LevelAsULONG & 0xff000000 |
              param_5 & 0xffffff;
-        uVar8 = (int)local_60[0].LastHashBlock - (int)p_Var1->BlockArray;
-        iVar9 = ((int)uVar8 >> 0xc) + (uint)((int)uVar8 < 0 && (uVar8 & 0xfff) != 0);
-        p_Var1->BlockCache[iVar9].ReferenceCount = p_Var1->BlockCache[iVar9].ReferenceCount + 0xff;
+        uVar2 = (int)local_60[0].LastHashBlock - (int)param_1->BlockArray;
+        iVar3 = ((int)uVar2 >> 0xc) + (uint)((int)uVar2 < 0 && (uVar2 & 0xfff) != 0);
+        param_1->BlockCache[iVar3].ReferenceCount = param_1->BlockCache[iVar3].ReferenceCount + 0xff
+        ;
       }
-      uVar10 = (ulong)uVar5;
-      if (uVar10 != 0xffffffff) {
-        lVar2 = StfcMapWriteableHashBlock(p_Var1,uVar10,0,0,local_70);
-        if (lVar2 < 0) goto LAB_828b0988;
-        iVar9 = uVar10 + (int)((uVar5 & 0xffffffff) / 0xaa) * -0xaa;
-        *(ulong *)((int)local_70[0] + iVar9 * 0x18 + 0x14) =
+      if (param_4 != 0xffffffff) {
+        lVar1 = StfcMapWriteableHashBlock(param_1,param_4,0,0,local_70);
+        if (lVar1 < 0) {
+          return lVar1;
+        }
+        local_70[0]->Entries[param_4 % 0xaa].field1_0x14.LevelAsULONG =
              local_60[0].FirstBlockNumber & 0xffffff |
-             *(uint *)((int)local_70[0] + iVar9 * 0x18 + 0x14) & 0xff000000;
-        uVar8 = (int)local_70[0] - (int)p_Var1->BlockArray;
-        iVar9 = ((int)uVar8 >> 0xc) + (uint)((int)uVar8 < 0 && (uVar8 & 0xfff) != 0);
-        p_Var1->BlockCache[iVar9].ReferenceCount = p_Var1->BlockCache[iVar9].ReferenceCount + 0xff;
+             local_70[0]->Entries[param_4 % 0xaa].field1_0x14.LevelAsULONG & 0xff000000;
+        uVar2 = (int)local_70[0] - (int)param_1->BlockArray;
+        iVar3 = ((int)uVar2 >> 0xc) + (uint)((int)uVar2 < 0 && (uVar2 & 0xfff) != 0);
+        param_1->BlockCache[iVar3].ReferenceCount = param_1->BlockCache[iVar3].ReferenceCount + 0xff
+        ;
       }
       *param_6 = local_60[0].FirstBlockNumber;
-      if ((uVar6 & 0xffffffff) != 0) {
-        *(ulong *)uVar6 = local_60[0].LastBlockNumber;
+      if (param_7 != (ulong *)0x0) {
+        *param_7 = local_60[0].LastBlockNumber;
       }
     }
   }
-LAB_828b0988:
-  lVar2 = __restgprlr_24(lVar2);
-  return lVar2;
+  return lVar1;
 }
 
 
 // 828B3498  StfcSetEndOfFileInformation  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/stfc/fileinfo.c:743)
+
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 
 long StfcSetEndOfFileInformation
                (_STFC_VOLUME_EXTENSION *param_1,_STFC_FCB *param_2,
@@ -3748,183 +3604,179 @@ long StfcSetEndOfFileInformation
 {
   ulong uVar1;
   uint uVar2;
-  _STFC_VOLUME_EXTENSION *p_Var3;
-  long lVar4;
+  long lVar3;
   
-  p_Var3 = (_STFC_VOLUME_EXTENSION *)__savegprlr_27(param_1);
   if ((param_3->EndOfFile)._s_0.HighPart == 0) {
     uVar1 = (param_3->EndOfFile)._s_0.LowPart;
     uVar2 = (param_2->FileBounds).FileSize;
     if (uVar1 != uVar2) {
-      lVar4 = StfcEnsureWriteableDirectoryEntry(p_Var3,param_2);
-      if ((lVar4 < 0) ||
-         ((uVar2 < uVar1 && (lVar4 = StfcSetAllocationSize(p_Var3,param_2,uVar1,1), lVar4 < 0))))
-      goto LAB_828b353c;
+      lVar3 = StfcEnsureWriteableDirectoryEntry(param_1,param_2);
+      if (lVar3 < 0) {
+        return lVar3;
+      }
+      if ((uVar2 < uVar1) && (lVar3 = StfcSetAllocationSize(param_1,param_2,uVar1,1), lVar3 < 0)) {
+        return lVar3;
+      }
       (param_2->FileBounds).FileSize = uVar1;
       param_2->Flags = param_2->Flags | 0x10;
     }
-    lVar4 = 0;
+    lVar3 = 0;
   }
   else {
-    lVar4 = -0x3fffff81;
+    lVar3 = -0x3fffff81;
   }
-LAB_828b353c:
-  lVar4 = __restgprlr_27(lVar4);
-  return lVar4;
+  return lVar3;
 }
 
 
 // 828AEC20  StfcAllocateBlockCacheEntry  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/stfc/blocksup.c:744)
+
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 
 long StfcAllocateBlockCacheEntry
                (_STFC_VOLUME_EXTENSION *param_1,ulong *param_2,_STFC_BLOCK_CACHE_ELEMENT **param_3)
 
 {
   byte bVar1;
-  _STFC_VOLUME_EXTENSION *p_Var2;
-  int iVar3;
-  long lVar4;
-  _STFC_BLOCK_CACHE_ELEMENT *p_Var5;
-  _STFC_BLOCK_CACHE_ELEMENT *p_Var6;
+  int iVar2;
+  _STFC_BLOCK_CACHE_ELEMENT *p_Var3;
+  _STFC_BLOCK_CACHE_ELEMENT *p_Var4;
   
-  p_Var2 = (_STFC_VOLUME_EXTENSION *)__savegprlr_26(param_1);
-  p_Var5 = p_Var2->BlockCache + p_Var2->BlockCacheLruHead;
-  bVar1 = p_Var5->LruBlink;
-  while (p_Var6 = p_Var2->BlockCache + bVar1, p_Var6->ReferenceCount != '\0') {
-    if (p_Var6 == p_Var5) {
-      StfcSetPersistentStatus(p_Var2,-0x3fffff1b);
-      iVar3 = -0x3fffff1b;
-      goto LAB_828aed00;
+  p_Var3 = param_1->BlockCache + param_1->BlockCacheLruHead;
+  bVar1 = p_Var3->LruBlink;
+  while (p_Var4 = param_1->BlockCache + bVar1, p_Var4->ReferenceCount != '\0') {
+    if (p_Var4 == p_Var3) {
+      StfcSetPersistentStatus(param_1,-0x3fffff1b);
+      return -0x3fffff1b;
     }
-    bVar1 = p_Var6->LruBlink;
+    bVar1 = p_Var4->LruBlink;
   }
-  if (((p_Var6->field4_0x7).FlagsAsUCHAR & 0x40) != 0) {
-    if (((p_Var6->field4_0x7).FlagsAsUCHAR & 8) == 0) {
-      iVar3 = StfcFlushBlockCacheEntry(p_Var2,(uint)bVar1,p_Var6);
+  if (((p_Var4->field4_0x7).FlagsAsUCHAR & 0x40) != 0) {
+    if (((p_Var4->field4_0x7).FlagsAsUCHAR & 8) == 0) {
+      iVar2 = StfcFlushBlockCacheEntry(param_1,(uint)bVar1,p_Var4);
     }
     else {
-      iVar3 = StfcFlushInAllocationSupportBlocks(p_Var2);
+      iVar2 = StfcFlushInAllocationSupportBlocks(param_1);
     }
-    if (iVar3 < 0) goto LAB_828aed00;
+    if (iVar2 < 0) {
+      return iVar2;
+    }
   }
-  (p_Var6->field4_0x7).FlagsAsUCHAR = '\0';
-  StfcMoveBlockCacheEntry(p_Var2,(uint)bVar1,0);
+  (p_Var4->field4_0x7).FlagsAsUCHAR = '\0';
+  StfcMoveBlockCacheEntry(param_1,(uint)bVar1,0);
   *param_2 = (uint)bVar1;
-  *param_3 = p_Var6;
-  iVar3 = 0;
-LAB_828aed00:
-  lVar4 = __restgprlr_26(iVar3);
-  return lVar4;
+  *param_3 = p_Var4;
+  return 0;
 }
 
 
 // 828B1708  StfcEnsureWriteableBlocksAvailable  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/stfc/stfsup.c:784)
+
+/* WARNING: Function: __savegprlr_21 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_21 replaced with injection: xenon_save_restore */
 
 long StfcEnsureWriteableBlocksAvailable
                (_STFC_VOLUME_EXTENSION *param_1,_STFC_FCB *param_2,ulong param_3,ulong param_4)
 
 {
   _STFC_BLOCK_CACHE_ELEMENT *p_Var1;
-  _STFC_VOLUME_EXTENSION *p_Var2;
+  ulong uVar2;
   long lVar3;
-  longlong lVar4;
-  uint uVar5;
-  int iVar6;
-  ulonglong uVar7;
-  uint uVar8;
-  ulonglong uVar9;
+  uint uVar4;
+  int iVar5;
+  uint uVar6;
+  uint uVar7;
+  ulong uVar8;
+  ulong uVar9;
   ulong uVar10;
-  ulong uVar11;
-  ulong uVar12;
-  ulonglong uVar13;
-  ulonglong uVar14;
-  uint local_70;
+  uint uVar11;
+  uint uVar12;
+  ulong local_70;
   _STFC_HASH_BLOCK *local_6c;
   ulong auStack_68 [26];
   
-  uVar14 = (ulonglong)(int)param_4;
-  lVar4 = (longlong)(int)param_3;
-  p_Var2 = (_STFC_VOLUME_EXTENSION *)__savegprlr_21(param_1);
-  uVar7 = (ulonglong)param_2->AllocationSize;
-  uVar9 = 0;
-  uVar13 = lVar4 + uVar14 + 0xfff & 0xfffff000;
-  if (uVar7 < uVar13) {
-    uVar9 = (uVar13 - uVar7 & 0xffffffff) >> 0xc;
-    uVar13 = uVar7;
+  uVar6 = param_2->AllocationSize;
+  uVar7 = 0;
+  uVar11 = param_3 + param_4 + 0xfff & 0xfffff000;
+  if (uVar6 < uVar11) {
+    uVar7 = uVar11 - uVar6 >> 0xc;
+    uVar11 = uVar6;
   }
-  if (param_2->ValidDataSize < uVar13) {
-    uVar13 = (ulonglong)param_2->ValidDataSize;
+  if (param_2->ValidDataSize < uVar11) {
+    uVar11 = param_2->ValidDataSize;
   }
-  uVar7 = uVar14 & 0xfffff000;
-  if (uVar13 < (uVar14 & 0xfffff000)) {
-    uVar7 = uVar13;
+  uVar6 = param_4 & 0xfffff000;
+  if (uVar11 < (param_4 & 0xfffff000)) {
+    uVar6 = uVar11;
   }
-  if (((uVar9 == 0) && ((uVar13 - uVar7 & 0xffffffff) == 0x1000)) ||
-     ((((uVar13 - uVar7 & 0xffffffff) >> 0xc) + uVar9 +
-       (ulonglong)p_Var2->NumberOfUnwriteableDirectoryBlocks & 0xffffffff) <=
-      (ulonglong)p_Var2->NumberOfFreeBlocks)) {
-    lVar3 = 0;
-  }
-  else {
-    uVar12 = param_2->LastMappedFileByteOffset;
-    uVar11 = param_2->LastMappedFileRunLength;
-    uVar10 = param_2->LastMappedBlockNumber;
-    for (uVar14 = uVar7; (uVar14 & 0xffffffff) < uVar13; uVar14 = uVar14 + 0x1000) {
-      lVar3 = StfcByteOffsetToBlockNumber
-                        (p_Var2,param_2,(ulong)uVar14,&local_70,auStack_68,(ulong *)0x0);
-      uVar8 = local_70;
-      if ((lVar3 < 0) || (lVar3 = StfcMapReadableHashBlock(p_Var2,local_70,0,&local_6c), lVar3 < 0))
-      goto LAB_828b1910;
-      p_Var1 = p_Var2->BlockCache;
-      uVar5 = (int)local_6c - (int)p_Var2->BlockArray;
-      iVar6 = ((int)uVar5 >> 0xc) + (uint)((int)uVar5 < 0 && (uVar5 & 0xfff) != 0);
-      uVar8 = local_6c->Entries[uVar8 % 0xaa].field1_0x14.LevelAsULONG >> 0x1e;
-      if (((p_Var1[iVar6].field4_0x7.FlagsAsUCHAR & 4) == 0) && (uVar8 == 3)) {
-        uVar8 = 2;
+  if (((uVar7 != 0) || (uVar11 - uVar6 != 0x1000)) &&
+     (param_1->NumberOfFreeBlocks <
+      (uVar11 - uVar6 >> 0xc) + uVar7 + param_1->NumberOfUnwriteableDirectoryBlocks)) {
+    uVar10 = param_2->LastMappedFileByteOffset;
+    uVar9 = param_2->LastMappedFileRunLength;
+    uVar8 = param_2->LastMappedBlockNumber;
+    for (uVar12 = uVar6; uVar12 < uVar11; uVar12 = uVar12 + 0x1000) {
+      lVar3 = StfcByteOffsetToBlockNumber(param_1,param_2,uVar12,&local_70,auStack_68,(ulong *)0x0);
+      uVar2 = local_70;
+      if (lVar3 < 0) {
+        return lVar3;
       }
-      if (uVar8 == 2) {
-        uVar9 = uVar9 + 1;
-        if (((uVar14 & 0xffffffff) == uVar7) && (uVar7 < uVar12)) {
+      lVar3 = StfcMapReadableHashBlock(param_1,local_70,0,&local_6c);
+      if (lVar3 < 0) {
+        return lVar3;
+      }
+      p_Var1 = param_1->BlockCache;
+      uVar4 = (int)local_6c - (int)param_1->BlockArray;
+      iVar5 = ((int)uVar4 >> 0xc) + (uint)((int)uVar4 < 0 && (uVar4 & 0xfff) != 0);
+      uVar4 = local_6c->Entries[uVar2 % 0xaa].field1_0x14.LevelAsULONG >> 0x1e;
+      if (((p_Var1[iVar5].field4_0x7.FlagsAsUCHAR & 4) == 0) && (uVar4 == 3)) {
+        uVar4 = 2;
+      }
+      if (uVar4 == 2) {
+        uVar7 = uVar7 + 1;
+        if ((uVar12 == uVar6) && (uVar6 < uVar10)) {
 LAB_828b1890:
-          uVar10 = param_2->LastMappedBlockNumber;
-          uVar11 = param_2->LastMappedFileRunLength;
-          uVar12 = param_2->LastMappedFileByteOffset;
+          uVar8 = param_2->LastMappedBlockNumber;
+          uVar9 = param_2->LastMappedFileRunLength;
+          uVar10 = param_2->LastMappedFileByteOffset;
         }
       }
       else {
-        if (uVar8 != 3) {
-          StfcSetPersistentStatus(p_Var2,-0x3fffffce);
-          uVar8 = (int)local_6c - (int)p_Var2->BlockArray;
-          iVar6 = ((int)uVar8 >> 0xc) + (uint)((int)uVar8 < 0 && (uVar8 & 0xfff) != 0);
-          p_Var2->BlockCache[iVar6].ReferenceCount = p_Var2->BlockCache[iVar6].ReferenceCount + 0xff
-          ;
-          lVar3 = -0x3fffffce;
-          goto LAB_828b1910;
+        if (uVar4 != 3) {
+          StfcSetPersistentStatus(param_1,-0x3fffffce);
+          uVar6 = (int)local_6c - (int)param_1->BlockArray;
+          iVar5 = ((int)uVar6 >> 0xc) + (uint)((int)uVar6 < 0 && (uVar6 & 0xfff) != 0);
+          param_1->BlockCache[iVar5].ReferenceCount =
+               param_1->BlockCache[iVar5].ReferenceCount + 0xff;
+          return -0x3fffffce;
         }
-        if ((uVar14 & 0xffffffff) == uVar7) goto LAB_828b1890;
+        if (uVar12 == uVar6) goto LAB_828b1890;
       }
-      p_Var1[iVar6].ReferenceCount = p_Var1[iVar6].ReferenceCount + 0xff;
+      p_Var1[iVar5].ReferenceCount = p_Var1[iVar5].ReferenceCount + 0xff;
     }
-    if (uVar12 != param_2->LastMappedFileByteOffset) {
-      param_2->LastMappedFileByteOffset = uVar12;
-      param_2->LastMappedFileRunLength = uVar11;
-      param_2->LastMappedBlockNumber = uVar10;
+    if (uVar10 != param_2->LastMappedFileByteOffset) {
+      param_2->LastMappedFileByteOffset = uVar10;
+      param_2->LastMappedFileRunLength = uVar9;
+      param_2->LastMappedBlockNumber = uVar8;
     }
-    if ((uVar9 & 0xffffffff) != 0) {
-      uVar9 = uVar9 + p_Var2->NumberOfUnwriteableDirectoryBlocks;
-      if (((ulonglong)p_Var2->NumberOfFreeBlocks < (uVar9 & 0xffffffff)) &&
-         (lVar3 = StfcExtendBackingFileSize(p_Var2,(int)uVar9 - p_Var2->NumberOfFreeBlocks),
-         lVar3 < 0)) goto LAB_828b1910;
+    if (uVar7 != 0) {
+      uVar7 = uVar7 + param_1->NumberOfUnwriteableDirectoryBlocks;
+      if ((param_1->NumberOfFreeBlocks < uVar7) &&
+         (lVar3 = StfcExtendBackingFileSize(param_1,uVar7 - param_1->NumberOfFreeBlocks), lVar3 < 0)
+         ) {
+        return lVar3;
+      }
     }
-    lVar3 = 0;
   }
-LAB_828b1910:
-  lVar3 = __restgprlr_21(lVar3);
-  return lVar3;
+  return 0;
 }
 
 
 // 828B3548  StfcFsdSetInformation  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/stfc/fileinfo.c:839)
+
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 
 void StfcFsdSetInformation(_STFC_VOLUME_EXTENSION *param_1,_IRP *param_2)
 
@@ -3933,61 +3785,56 @@ void StfcFsdSetInformation(_STFC_VOLUME_EXTENSION *param_1,_IRP *param_2)
   int iVar2;
   _STFC_FCB *p_Var3;
   int iVar4;
-  _IRP *p_Var5;
-  _STFC_VOLUME_EXTENSION *p_Var6;
-  int iVar7;
-  longlong lVar8;
+  int iVar5;
   
-  lVar8 = (longlong)(int)param_2;
-  p_Var6 = (_STFC_VOLUME_EXTENSION *)__savegprlr_26(param_1);
-  p_Var5 = (_IRP *)lVar8;
-  pvVar1 = (p_Var5->Tail).Apc.SystemArgument1;
+  pvVar1 = (param_2->Tail).Apc.SystemArgument1;
   iVar2 = *(int *)((int)pvVar1 + 0x18);
   p_Var3 = *(_STFC_FCB **)(iVar2 + 8);
-  RtlEnterCriticalSection(p_Var6);
-  iVar7 = p_Var6->PersistentStatus;
-  if (iVar7 != 0) goto LAB_828b3710;
+  RtlEnterCriticalSection(param_1);
+  iVar5 = param_1->PersistentStatus;
+  if (iVar5 != 0) goto LAB_828b3710;
   if ((*(byte *)(iVar2 + 2) & 0x10) != 0) {
-    iVar7 = -0x3ffffed8;
+    iVar5 = -0x3ffffed8;
     goto LAB_828b3710;
   }
-  if ((p_Var6->HashBlockPairShift != '\0') || (*(int *)((int)pvVar1 + 8) == 0xe)) {
+  if ((param_1->HashBlockPairShift != '\0') || (*(int *)((int)pvVar1 + 8) == 0xe)) {
     iVar4 = *(int *)((int)pvVar1 + 8);
-    iVar7 = 0;
+    iVar5 = 0;
     if (iVar4 == 4) {
       if ((p_Var3->Flags & 4) != 0) goto LAB_828b36e4;
       if (p_Var3->CloneFcb == (_STFC_FCB *)0x0) {
-        iVar7 = StfcSetBasicInformation(p_Var6,p_Var3,p_Var5->UserBuffer);
+        iVar5 = StfcSetBasicInformation(param_1,p_Var3,param_2->UserBuffer);
         goto LAB_828b3710;
       }
     }
     else if (iVar4 == 10) {
       if ((p_Var3->Flags & 4) != 0) goto LAB_828b36e4;
       if (p_Var3->CloneFcb == (_STFC_FCB *)0x0) {
-        iVar7 = StfcSetRenameInformation(p_Var6,p_Var5,p_Var3,p_Var5->UserBuffer);
+        iVar5 = StfcSetRenameInformation(param_1,param_2,p_Var3,param_2->UserBuffer);
         goto LAB_828b3710;
       }
     }
     else if (iVar4 == 0xd) {
       if ((p_Var3->Flags & 4) != 0) goto LAB_828b36e4;
       if (p_Var3->CloneFcb == (_STFC_FCB *)0x0) {
-        iVar7 = StfcSetDispositionInformation(p_Var6,p_Var3,p_Var5->UserBuffer);
+        iVar5 = StfcSetDispositionInformation(param_1,p_Var3,param_2->UserBuffer);
         goto LAB_828b3710;
       }
     }
     else {
       if (iVar4 == 0xe) {
-        *(undefined8 *)(iVar2 + 0x14) = *(undefined8 *)p_Var5->UserBuffer;
+        *(undefined8 *)(iVar2 + 0x14) = *(undefined8 *)param_2->UserBuffer;
         goto LAB_828b3710;
       }
       if (iVar4 == 0x13) {
         if ((p_Var3->Flags & 2) != 0) goto LAB_828b36e4;
         if (p_Var3->CloneFcb == (_STFC_FCB *)0x0) {
-          if (*(int *)p_Var5->UserBuffer == 0) {
-            iVar7 = StfcSetAllocationSize(p_Var6,p_Var3,*(ulong *)((int)p_Var5->UserBuffer + 4),0);
+          if (*(int *)param_2->UserBuffer == 0) {
+            iVar5 = StfcSetAllocationSize(param_1,p_Var3,*(ulong *)((int)param_2->UserBuffer + 4),0)
+            ;
           }
           else {
-            iVar7 = -0x3fffff81;
+            iVar5 = -0x3fffff81;
           }
           goto LAB_828b3710;
         }
@@ -3995,91 +3842,87 @@ void StfcFsdSetInformation(_STFC_VOLUME_EXTENSION *param_1,_IRP *param_2)
       else {
         if ((iVar4 != 0x14) || ((p_Var3->Flags & 2) != 0)) {
 LAB_828b36e4:
-          iVar7 = -0x3ffffff3;
+          iVar5 = -0x3ffffff3;
           goto LAB_828b3710;
         }
         if (p_Var3->CloneFcb == (_STFC_FCB *)0x0) {
-          iVar7 = StfcSetEndOfFileInformation(p_Var6,p_Var3,p_Var5->UserBuffer);
+          iVar5 = StfcSetEndOfFileInformation(param_1,p_Var3,param_2->UserBuffer);
           goto LAB_828b3710;
         }
       }
     }
   }
-  iVar7 = -0x3fffffde;
+  iVar5 = -0x3fffffde;
 LAB_828b3710:
-  RtlLeaveCriticalSection(p_Var6);
-  (p_Var5->IoStatus).field0_0x0.Status = iVar7;
-  IoCompleteRequest(lVar8,1);
-  __restgprlr_26();
+  RtlLeaveCriticalSection(param_1);
+  (param_2->IoStatus).field0_0x0.Status = iVar5;
+  IoCompleteRequest(param_2,1);
   return;
 }
 
 
 // 828AC968  StfcDiscardBlock  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/stfc/blocksup.c:878)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void StfcDiscardBlock(_STFC_VOLUME_EXTENSION *param_1,ulong param_2,ulong param_3)
 
 {
   int iVar1;
   _STFC_BLOCK_CACHE_ELEMENT *p_Var2;
-  _STFC_VOLUME_EXTENSION *p_Var3;
-  ulong uVar4;
-  ulonglong uVar5;
+  ulong uVar3;
   _STFC_BLOCK_CACHE_ELEMENT *local_40;
   ulong local_3c;
   _STFC_BLOCK_CACHE_ELEMENT *ap_Stack_38 [14];
   
-  uVar5 = (ulonglong)(int)param_3;
-  p_Var3 = (_STFC_VOLUME_EXTENSION *)__savegprlr_28(param_1);
-  uVar4 = StfcLookupBlockCacheEntry(p_Var3,param_2,(ulong)uVar5,&local_3c,&local_40);
+  uVar3 = StfcLookupBlockCacheEntry(param_1,param_2,param_3,&local_3c,&local_40);
   p_Var2 = local_40;
-  if (uVar4 != 0) {
+  if (uVar3 != 0) {
     if ((((local_40->field4_0x7).FlagsAsUCHAR & 0x10) != 0) &&
-       ((uVar5 & 0xffffffff) != (ulonglong)p_Var3->RootHashHierarchy + 1)) {
-      StfcLookupBlockCacheEntry(p_Var3,param_2,(ulong)uVar5 + 1,(ulong *)&local_40,ap_Stack_38);
+       (param_3 != param_1->RootHashHierarchy + 1)) {
+      StfcLookupBlockCacheEntry(param_1,param_2,param_3 + 1,(ulong *)&local_40,ap_Stack_38);
       iVar1 = (int)((int)local_40 << 0xc | (uint)local_40 >> 0x14) >> 0xc;
-      p_Var3->BlockCache[iVar1].ReferenceCount = p_Var3->BlockCache[iVar1].ReferenceCount + 0xff;
+      param_1->BlockCache[iVar1].ReferenceCount = param_1->BlockCache[iVar1].ReferenceCount + 0xff;
     }
     (p_Var2->field4_0x7).FlagsAsUCHAR = '\0';
-    StfcMoveBlockCacheEntry(p_Var3,local_3c,0);
+    StfcMoveBlockCacheEntry(param_1,local_3c,0);
   }
-  __restgprlr_28();
   return;
 }
 
 
 // 828AD1E0  StfcDismountVolume  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/stfc/driver.c:898)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 long StfcDismountVolume(_DEVICE_OBJECT *param_1)
 
 {
-  int iVar1;
+  void *pvVar1;
   int iVar2;
-  long lVar3;
-  undefined8 uVar4;
   
-  iVar2 = __savegprlr_29(param_1);
-  iVar1 = *(int *)(iVar2 + 0x18);
+  pvVar1 = param_1->DeviceExtension;
   KeEnterCriticalRegion();
-  RtlEnterCriticalSection(iVar1);
-  if (*(char *)(iVar1 + 0xcb) == '\0') {
-    *(undefined1 *)(iVar1 + 0xcb) = 1;
-    *(undefined4 *)(iVar1 + 0x88) = 0xc000026e;
-    NtClose(*(undefined4 *)(iVar1 + 0x2c));
-    uVar4 = 0;
-    *(undefined4 *)(iVar1 + 0x2c) = 0;
-    *(undefined4 *)(iVar1 + 0x34) = 0;
+  RtlEnterCriticalSection(pvVar1);
+  if (*(char *)((int)pvVar1 + 0xcb) == '\0') {
+    *(undefined1 *)((int)pvVar1 + 0xcb) = 1;
+    *(undefined4 *)((int)pvVar1 + 0x88) = 0xc000026e;
+    NtClose(*(undefined4 *)((int)pvVar1 + 0x2c));
+    iVar2 = 0;
+    *(undefined4 *)((int)pvVar1 + 0x2c) = 0;
+    *(undefined4 *)((int)pvVar1 + 0x34) = 0;
   }
   else {
-    uVar4 = 0xffffffffc000026e;
+    iVar2 = -0x3ffffd92;
   }
-  RtlLeaveCriticalSection(iVar1);
-  if (-1 < (int)uVar4) {
-    IoDeleteDevice(iVar2);
+  RtlLeaveCriticalSection(pvVar1);
+  if (-1 < iVar2) {
+    IoDeleteDevice(param_1);
   }
   KeLeaveCriticalRegion();
-  lVar3 = __restgprlr_29(uVar4);
-  return lVar3;
+  return iVar2;
 }
 
 
@@ -4099,84 +3942,85 @@ long StfcDriverEntry(void)
 
 // 828B0990  StfcFreeBlocksFromLevel0HashBlock  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/stfc/allocsup.c:979)
 
+/* WARNING: Function: __savegprlr_19 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_19 replaced with injection: xenon_save_restore */
+
 long StfcFreeBlocksFromLevel0HashBlock
                (_STFC_VOLUME_EXTENSION *param_1,ulong param_2,ulong *param_3,ulong *param_4,
                ulong *param_5,_STFC_FREE_BLOCK_STATE *param_6)
 
 {
-  ulonglong uVar1;
-  _STFC_VOLUME_EXTENSION *p_Var2;
-  long lVar3;
-  ulonglong uVar4;
+  long lVar1;
+  uint uVar2;
+  uint uVar3;
+  int iVar4;
   uint uVar5;
-  int iVar6;
+  ulong uVar6;
   ulong uVar7;
-  ulong uVar8;
   _STFC_HASH_BLOCK *local_80 [32];
   
-  uVar4 = (ulonglong)(int)param_2;
-  p_Var2 = (_STFC_VOLUME_EXTENSION *)__savegprlr_19(param_1);
-  if ((uVar4 & 0xffffffff) < (ulonglong)p_Var2->NumberOfTotalBlocks) {
-    lVar3 = StfcMapWriteableHashBlock(p_Var2,(ulong)uVar4,0,0,local_80);
-    if (-1 < lVar3) {
+  if (param_2 < param_1->NumberOfTotalBlocks) {
+    lVar1 = StfcMapWriteableHashBlock(param_1,param_2,0,0,local_80);
+    if (-1 < lVar1) {
+      uVar6 = 0;
+      uVar3 = param_2 / 0xaa;
       uVar7 = 0;
-      uVar1 = uVar4 & 0xffffffff;
-      uVar8 = 0;
-LAB_828b0a14:
-      iVar6 = (int)uVar4 + (int)((uVar4 & 0xffffffff) / 0xaa) * -0xaa;
-      uVar5 = *(uint *)((int)local_80[0] + iVar6 * 0x18 + 0x14);
-      uVar4 = (ulonglong)uVar5 & 0xffffff;
-      if (param_6->MarkFirstAsLast == 0) {
-        if (uVar5 >> 0x1e == 2) {
-          uVar7 = uVar7 + 1;
-          uVar5 = uVar5 & 0x3fffffff | 0x40000000;
+      do {
+        uVar2 = param_2 % 0xaa;
+        uVar5 = local_80[0]->Entries[uVar2].field1_0x14.LevelAsULONG;
+        param_2 = uVar5 & 0xffffff;
+        if (param_6->MarkFirstAsLast == 0) {
+          if (uVar5 >> 0x1e == 2) {
+            uVar6 = uVar6 + 1;
+            uVar5 = uVar5 & 0x3fffffff | 0x40000000;
+          }
+          else {
+            if (uVar5 >> 0x1e != 3) goto LAB_828b0a5c;
+            uVar5 = uVar5 & 0x3fffffff;
+            uVar7 = uVar7 + 1;
+          }
+          local_80[0]->Entries[uVar2].field1_0x14.LevelAsULONG = uVar5;
         }
         else {
-          if (uVar5 >> 0x1e != 3) goto LAB_828b0a5c;
-          uVar5 = uVar5 & 0x3fffffff;
-          uVar8 = uVar8 + 1;
-        }
-        *(uint *)((int)local_80[0] + iVar6 * 0x18 + 0x14) = uVar5;
-      }
-      else {
-        param_6->MarkFirstAsLast = 0;
-        uVar5 = *(uint *)((int)local_80[0] + iVar6 * 0x18 + 0x14) >> 0x1e;
-        if ((uVar5 != 2) && (uVar5 != 3)) {
+          param_6->MarkFirstAsLast = 0;
+          uVar5 = local_80[0]->Entries[uVar2].field1_0x14.LevelAsULONG >> 0x1e;
+          if ((uVar5 != 2) && (uVar5 != 3)) {
 LAB_828b0a5c:
-          lVar3 = -0x3fffffce;
-          StfcSetPersistentStatus(p_Var2,-0x3fffffce);
+            lVar1 = -0x3fffffce;
+            StfcSetPersistentStatus(param_1,-0x3fffffce);
 LAB_828b0a70:
-          uVar5 = (int)local_80[0] - (int)p_Var2->BlockArray;
-          iVar6 = ((int)uVar5 >> 0xc) + (uint)((int)uVar5 < 0 && (uVar5 & 0xfff) != 0);
-          p_Var2->BlockCache[iVar6].ReferenceCount = p_Var2->BlockCache[iVar6].ReferenceCount + 0xff
-          ;
-          *param_3 = uVar7;
-          *param_4 = uVar8;
-          *param_5 = (ulong)uVar4;
-          goto LAB_828b0aa4;
+            uVar3 = (int)local_80[0] - (int)param_1->BlockArray;
+            iVar4 = ((int)uVar3 >> 0xc) + (uint)((int)uVar3 < 0 && (uVar3 & 0xfff) != 0);
+            param_1->BlockCache[iVar4].ReferenceCount =
+                 param_1->BlockCache[iVar4].ReferenceCount + 0xff;
+            *param_3 = uVar6;
+            *param_4 = uVar7;
+            *param_5 = param_2;
+            return lVar1;
+          }
         }
-      }
-      *(uint *)((int)local_80[0] + iVar6 * 0x18 + 0x14) =
-           *(uint *)((int)local_80[0] + iVar6 * 0x18 + 0x14) | 0xffffff;
-      if (param_6->FreeSingleHashEntry != (_STFC_HASH_ENTRY *)0x0) {
-        memcpy();
-        uVar4 = 0xffffff;
-      }
-      if ((uVar4 == 0xffffff) || (uVar4 / 0xaa != uVar1 / 0xaa)) goto LAB_828b0a70;
-      goto LAB_828b0a14;
+        local_80[0]->Entries[uVar2].field1_0x14.LevelAsULONG =
+             local_80[0]->Entries[uVar2].field1_0x14.LevelAsULONG | 0xffffff;
+        if (param_6->FreeSingleHashEntry != (_STFC_HASH_ENTRY *)0x0) {
+          memcpy();
+          param_2 = 0xffffff;
+        }
+        if ((param_2 == 0xffffff) || (param_2 / 0xaa != uVar3)) goto LAB_828b0a70;
+      } while( true );
     }
   }
   else {
-    lVar3 = -0x3fffffce;
-    StfcSetPersistentStatus(p_Var2,-0x3fffffce);
+    lVar1 = -0x3fffffce;
+    StfcSetPersistentStatus(param_1,-0x3fffffce);
   }
-LAB_828b0aa4:
-  lVar3 = __restgprlr_19(lVar3);
-  return lVar3;
+  return lVar1;
 }
 
 
 // 828ACA28  StfcMapExistingBlock  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/stfc/blocksup.c:980)
+
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 
 ulong StfcMapExistingBlock
                 (_STFC_VOLUME_EXTENSION *param_1,ulong param_2,ulong param_3,void **param_4,
@@ -4184,22 +4028,19 @@ ulong StfcMapExistingBlock
 
 {
   void *pvVar1;
-  _STFC_VOLUME_EXTENSION *p_Var2;
-  ulong uVar3;
+  ulong uVar2;
   ulong local_40;
   _STFC_BLOCK_CACHE_ELEMENT *local_3c [15];
   
-  p_Var2 = (_STFC_VOLUME_EXTENSION *)__savegprlr_27(param_1);
-  uVar3 = StfcLookupBlockCacheEntry(p_Var2,param_2,param_3,&local_40,local_3c);
-  if (uVar3 != 0) {
-    pvVar1 = p_Var2->BlockArray;
-    StfcMoveBlockCacheEntry(p_Var2,local_40,1);
+  uVar2 = StfcLookupBlockCacheEntry(param_1,param_2,param_3,&local_40,local_3c);
+  if (uVar2 != 0) {
+    pvVar1 = param_1->BlockArray;
+    StfcMoveBlockCacheEntry(param_1,local_40,1);
     local_3c[0]->ReferenceCount = local_3c[0]->ReferenceCount + '\x01';
     *param_4 = (void *)(local_40 * 0x1000 + (int)pvVar1);
     *param_5 = local_3c[0];
   }
-  uVar3 = __restgprlr_27(uVar3);
-  return uVar3;
+  return uVar2;
 }
 
 
@@ -4220,240 +4061,227 @@ long StfcDriverShutdown(void)
 
 // 828ADC20  StfcResetWriteableDirectoryBlock  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/stfc/stfsup.c:1058)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void StfcResetWriteableDirectoryBlock(_STFC_VOLUME_EXTENSION *param_1,ulong param_2,void *param_3)
 
 {
-  int iVar1;
-  byte *pbVar2;
-  uint uVar3;
-  int iVar4;
-  ulonglong uVar5;
-  ulonglong uVar6;
-  longlong lVar7;
-  undefined4 *puVar8;
-  longlong lVar9;
+  _LIST_ENTRY *p_Var1;
+  ulonglong uVar2;
+  _LIST_ENTRY *p_Var3;
+  uint uVar4;
+  longlong lVar5;
+  _LIST_ENTRY *p_Var6;
+  byte *pbVar7;
   
-  uVar6 = (ulonglong)(int)param_3;
-  uVar5 = (ulonglong)(int)param_2;
-  iVar4 = __savegprlr_29(param_1);
-  if ((uVar6 & 0xffffffff) < (uVar6 + 0x1000 & 0xffffffff)) {
-    lVar9 = uVar6 + 0x29;
-    lVar7 = ((((uVar6 + 0x1000) - uVar6) - 1 & 0xffffffff) >> 6) + 1;
+  if (param_3 < (void *)((int)param_3 + 0x1000U)) {
+    pbVar7 = (byte *)((int)param_3 + 0x29);
+    lVar5 = 0x40;
     do {
-      pbVar2 = (byte *)lVar9;
-      if ((pbVar2[-1] & 0x80) == 0) {
-        uVar6 = ((ulonglong)*(uint *)(pbVar2 + 0xb) + 0xfff & 0xffffffff) >> 0xc;
-        if (uVar6 < ((ulonglong)pbVar2[2] * 0x100 + (ulonglong)pbVar2[1]) * 0x100 +
-                    (ulonglong)*pbVar2) {
-          *pbVar2 = (byte)uVar6;
-          pbVar2[1] = (byte)(uVar6 >> 8);
-          pbVar2[2] = (byte)(uVar6 >> 0x10);
+      if ((pbVar7[-1] & 0x80) == 0) {
+        uVar2 = ((ulonglong)*(uint *)(pbVar7 + 0xb) + 0xfff & 0xffffffff) >> 0xc;
+        if (uVar2 < ((ulonglong)pbVar7[2] * 0x100 + (ulonglong)pbVar7[1]) * 0x100 +
+                    (ulonglong)*pbVar7) {
+          *pbVar7 = (byte)uVar2;
+          pbVar7[1] = (byte)(uVar2 >> 8);
+          pbVar7[2] = (byte)(uVar2 >> 0x10);
         }
       }
-      lVar9 = lVar9 + 0x40;
-      lVar7 = lVar7 + -1;
-    } while (lVar7 != 0);
+      pbVar7 = pbVar7 + 0x40;
+      lVar5 = lVar5 + -1;
+    } while (lVar5 != 0);
   }
-  uVar5 = (uVar5 & 0xffffffff) >> 6;
-  puVar8 = *(undefined4 **)(iVar4 + 0x80);
-  while (puVar8 != (undefined4 *)(iVar4 + 0x80)) {
-    iVar1 = puVar8[-0x12];
-    puVar8 = (undefined4 *)*puVar8;
-    if (((((*(byte *)(iVar1 + 0x35) & 2) == 0) && (uVar5 <= *(ushort *)(iVar1 + 0x36))) &&
-        ((ulonglong)*(ushort *)(iVar1 + 0x36) < uVar5 + 0x40)) &&
-       (uVar3 = *(int *)(iVar1 + 0x18) + 0xfffU & 0xfffff000, uVar3 < *(uint *)(iVar1 + 0x1c))) {
-      *(uint *)(iVar1 + 0x1c) = uVar3;
+  p_Var6 = (param_1->FileObjectList).Flink;
+  while (p_Var6 != &param_1->FileObjectList) {
+    p_Var1 = p_Var6[-9].Flink;
+    p_Var6 = p_Var6->Flink;
+    if ((((((uint)p_Var1[6].Blink & 0x20000) == 0) &&
+         (uVar4 = (uint)*(ushort *)((int)&p_Var1[6].Blink + 2), param_2 >> 6 <= uVar4)) &&
+        (uVar4 < (param_2 >> 6) + 0x40)) &&
+       (p_Var3 = (_LIST_ENTRY *)((uint)((int)&p_Var1[3].Flink[0x1ff].Blink + 3) & 0xfffff000),
+       p_Var3 < p_Var1[3].Blink)) {
+      p_Var1[3].Blink = p_Var3;
     }
   }
-  __restgprlr_29();
   return;
 }
 
 
 // 828AED08  StfcMapNewBlock  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/stfc/blocksup.c:1103)
 
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
+
 long StfcMapNewBlock(_STFC_VOLUME_EXTENSION *param_1,ulong param_2,ulong param_3,
                     _STFC_HASH_ENTRY *param_4,void **param_5,_STFC_BLOCK_CACHE_ELEMENT **param_6)
 
 {
-  uint uVar1;
-  int iVar2;
-  _STFC_VOLUME_EXTENSION *p_Var4;
-  long lVar5;
-  longlong lVar3;
-  ulong uVar6;
-  void *pvVar7;
-  ulonglong uVar8;
-  byte *pbVar9;
-  ulonglong uVar10;
-  ulonglong uVar11;
-  ulonglong uVar12;
-  longlong lVar13;
+  GPUANISOFILTER GVar1;
+  long lVar3;
+  longlong lVar2;
+  ulong uVar4;
+  void *pvVar5;
+  _STFC_HASH_ENTRY_u_20 *p_Var6;
+  byte *pbVar7;
+  longlong lVar8;
+  ulonglong uVar9;
+  longlong lVar10;
   uint local_80;
   _STFC_BLOCK_CACHE_ELEMENT *local_7c [3];
   byte local_70 [112];
   
-  uVar11 = (ulonglong)(int)param_4;
-  uVar8 = (ulonglong)(int)param_3;
-  uVar10 = (ulonglong)(int)param_2;
-  p_Var4 = (_STFC_VOLUME_EXTENSION *)__savegprlr_22(param_1);
-  lVar5 = StfcAllocateBlockCacheEntry(p_Var4,&local_80,local_7c);
-  if (-1 < lVar5) {
-    iVar2 = (int)uVar11;
-    if (((uVar8 & 0xffffffff) == 0) || (3 < (uVar8 & 0xffffffff))) {
-      uVar12 = 0;
+  lVar8 = (longlong)(int)param_2;
+  lVar3 = StfcAllocateBlockCacheEntry(param_1,&local_80,local_7c);
+  if (-1 < lVar3) {
+    if ((param_3 == 0) || (3 < param_3)) {
+      uVar9 = 0;
     }
     else {
-      uVar12 = (ulonglong)(*(uint *)(iVar2 + 0x14) >> 0x1e) & 1;
-      uVar1 = *(uint *)((int)anisoFilterMap + (int)((uVar8 & 0xffffffff) << 2) + 0x40);
-      trapWord(6,(ulonglong)uVar1,0);
-      uVar10 = (longlong)(int)((uVar10 & 0xffffffff) / (ulonglong)uVar1) * (longlong)(int)uVar1;
+      uVar9 = (ulonglong)((param_4->field1_0x14).LevelAsULONG >> 0x1e) & 1;
+      GVar1 = anisoFilterMap[param_3 + 0x10];
+      trapWord(6,(ulonglong)GVar1,0);
+      lVar8 = (longlong)(int)(param_2 / GVar1) * (longlong)(int)GVar1;
     }
-    if ((uVar8 & 0xffffffff) == 0) {
-      lVar3 = p_Var4->DataBlockStart + uVar10;
-    }
-    else {
-      uVar6 = StfcComputeLevelNBackingHashBlockNumber(p_Var4,(ulong)uVar10,(int)uVar8 - 1);
-      lVar3 = (longlong)(int)uVar6;
-    }
-    lVar13 = ((ulonglong)local_80 & 0xfffff) * 0x1000 + ZEXT48(p_Var4->BlockArray);
-    pvVar7 = (void *)lVar13;
-    lVar5 = StfcSynchronousReadFile
-                      (p_Var4,pvVar7,0x1000,
-                       ((lVar3 + uVar12) * 0x1000 & 0xffffffff000) + p_Var4->BackingFileOffset);
-    if (lVar5 < 0) {
-      StfcSetPersistentStatus(p_Var4,lVar5);
+    if (param_3 == 0) {
+      lVar2 = (ulonglong)param_1->DataBlockStart + lVar8;
     }
     else {
-      if ((uVar11 & 0xffffffff) != 0) {
-        XeCryptSha(lVar13,0x1000,0,0,0,0,local_70,0x14);
-        pbVar9 = local_70;
+      uVar4 = StfcComputeLevelNBackingHashBlockNumber(param_1,(ulong)lVar8,param_3 - 1);
+      lVar2 = (longlong)(int)uVar4;
+    }
+    lVar10 = ((ulonglong)local_80 & 0xfffff) * 0x1000 + ZEXT48(param_1->BlockArray);
+    pvVar5 = (void *)lVar10;
+    lVar3 = StfcSynchronousReadFile
+                      (param_1,pvVar5,0x1000,
+                       ((lVar2 + uVar9) * 0x1000 & 0xffffffff000) + param_1->BackingFileOffset);
+    if (lVar3 < 0) {
+      StfcSetPersistentStatus(param_1,lVar3);
+    }
+    else {
+      if (param_4 != (_STFC_HASH_ENTRY *)0x0) {
+        XeCryptSha(lVar10,0x1000,0,0,0,0,local_70,0x14);
+        pbVar7 = local_70;
+        p_Var6 = &param_4->field1_0x14;
         do {
-          lVar3 = (ulonglong)*(byte *)uVar11 - (ulonglong)*pbVar9;
-          if (lVar3 != 0) break;
-          uVar11 = uVar11 + 1;
-          pbVar9 = pbVar9 + 1;
-        } while ((int)uVar11 != iVar2 + 0x14);
-        if ((int)lVar3 != 0) {
-          StfcSetPersistentStatus(p_Var4,-0x3fffffce);
-          lVar5 = -0x3fffffce;
-          goto LAB_828aeedc;
+          lVar2 = (ulonglong)param_4->Hash[0] - (ulonglong)*pbVar7;
+          if (lVar2 != 0) break;
+          param_4 = (_STFC_HASH_ENTRY *)(param_4->Hash + 1);
+          pbVar7 = pbVar7 + 1;
+        } while (param_4 != (_STFC_HASH_ENTRY *)p_Var6);
+        if ((int)lVar2 != 0) {
+          StfcSetPersistentStatus(param_1,-0x3fffffce);
+          return -0x3fffffce;
         }
       }
-      *param_5 = pvVar7;
+      *param_5 = pvVar5;
       *param_6 = local_7c[0];
-      StfcMoveBlockCacheEntry(p_Var4,local_80,1);
-      local_7c[0]->BlockNumber = (ulong)uVar10;
+      StfcMoveBlockCacheEntry(param_1,local_80,1);
+      local_7c[0]->BlockNumber = (ulong)lVar8;
       (local_7c[0]->field4_0x7).FlagsAsUCHAR =
-           (byte)(uVar12 << 5) | 0x80 | (local_7c[0]->field4_0x7).FlagsAsUCHAR & 0xdc |
-           (byte)uVar8 & 3;
+           (byte)(uVar9 << 5) | 0x80 | (local_7c[0]->field4_0x7).FlagsAsUCHAR & 0xdc |
+           (byte)param_3 & 3;
       local_7c[0]->ReferenceCount = '\x01';
-      lVar5 = 0;
+      lVar3 = 0;
     }
   }
-LAB_828aeedc:
-  lVar5 = __restgprlr_22(lVar5);
-  return lVar5;
+  return lVar3;
 }
 
 
 // 828B0B20  StfcFreeBlocksFromLevelNHashBlock  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/stfc/allocsup.c:1175)
+
+/* WARNING: Function: __savegprlr_17 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_17 replaced with injection: xenon_save_restore */
 
 long StfcFreeBlocksFromLevelNHashBlock
                (_STFC_VOLUME_EXTENSION *param_1,ulong param_2,ulong param_3,ulong *param_4,
                ulong *param_5,ulong *param_6,_STFC_FREE_BLOCK_STATE *param_7)
 
 {
-  ulonglong uVar1;
-  uint uVar2;
-  _STFC_VOLUME_EXTENSION *p_Var3;
-  long lVar4;
+  GPUANISOFILTER GVar1;
+  long lVar2;
+  longlong lVar3;
+  ulonglong uVar4;
   ulonglong uVar5;
-  ulong uVar6;
-  longlong lVar7;
+  uint uVar6;
+  int iVar7;
   ulonglong uVar8;
-  ulonglong uVar9;
-  uint uVar10;
-  int iVar11;
+  ulong uVar9;
+  ulong uVar10;
+  ulonglong uVar11;
   ulonglong uVar12;
-  ulong uVar13;
-  ulong uVar14;
-  ulonglong uVar15;
-  ulonglong uVar16;
   uint local_90;
   uint local_8c;
   uint local_88;
   _STFC_HASH_BLOCK *local_84 [33];
   
-  uVar5 = (ulonglong)(int)param_3;
-  uVar16 = (ulonglong)(int)param_2;
-  p_Var3 = (_STFC_VOLUME_EXTENSION *)__savegprlr_17(param_1);
-  iVar11 = (int)((uVar5 & 0xffffffff) << 2);
-  uVar12 = (ulonglong)*(uint *)((int)StfcDataBlocksPerHashTreeLevel + iVar11);
-  uVar10 = *(uint *)((int)anisoFilterMap + iVar11 + 0x40);
-  uVar15 = (ulonglong)uVar10;
-  if ((uVar16 & 0xffffffff) < (ulonglong)p_Var3->NumberOfTotalBlocks) {
-    uVar6 = (ulong)uVar5;
-    lVar4 = StfcMapWriteableHashBlock(p_Var3,(ulong)uVar16,uVar6,0,local_84);
-    if (-1 < lVar4) {
-      uVar1 = uVar16 & 0xffffffff;
-      trapWord(6,uVar12,0);
-      uVar14 = 0;
-      uVar13 = 0;
+  uVar12 = (ulonglong)(int)param_2;
+  uVar8 = (ulonglong)StfcDataBlocksPerHashTreeLevel[param_3];
+  GVar1 = anisoFilterMap[param_3 + 0x10];
+  uVar11 = (ulonglong)GVar1;
+  if (param_2 < param_1->NumberOfTotalBlocks) {
+    lVar2 = StfcMapWriteableHashBlock(param_1,param_2,param_3,0,local_84);
+    if (-1 < lVar2) {
+      trapWord(6,uVar8,0);
+      uVar10 = 0;
+      uVar9 = 0;
       while( true ) {
-        trapWord(6,uVar15,0);
-        iVar11 = (int)(((uVar16 & 0xffffffff) / uVar15) % 0xaa);
-        if ((uVar5 & 0xffffffff) == 1) {
-          lVar4 = StfcFreeBlocksFromLevel0HashBlock
-                            (p_Var3,(ulong)uVar16,&local_90,&local_8c,&local_88,param_7);
+        trapWord(6,uVar11,0);
+        iVar7 = (int)(((uVar12 & 0xffffffff) / uVar11) % 0xaa);
+        if (param_3 == 1) {
+          lVar2 = StfcFreeBlocksFromLevel0HashBlock
+                            (param_1,(ulong)uVar12,&local_90,&local_8c,&local_88,param_7);
         }
         else {
-          lVar4 = StfcFreeBlocksFromLevelNHashBlock
-                            (p_Var3,(ulong)uVar16,uVar6 - 1,&local_90,&local_8c,&local_88,param_7);
+          lVar2 = StfcFreeBlocksFromLevelNHashBlock
+                            (param_1,(ulong)uVar12,param_3 - 1,&local_90,&local_8c,&local_88,param_7
+                            );
         }
-        if (lVar4 < 0) break;
-        uVar2 = local_84[0]->Entries[iVar11].field1_0x14.LevelAsULONG;
-        trapWord(6,uVar15,0);
-        lVar7 = (longlong)(int)((uVar16 & 0xffffffff) / uVar15) * (longlong)(int)uVar10;
-        uVar16 = ((ulonglong)uVar2 & 0xffff8000) + ((ulonglong)local_90 & 0x1ffff) * 0x8000 &
+        if (lVar2 < 0) break;
+        uVar6 = local_84[0]->Entries[iVar7].field1_0x14.LevelAsULONG;
+        trapWord(6,uVar11,0);
+        lVar3 = (longlong)(int)((uVar12 & 0xffffffff) / uVar11) * (longlong)(int)GVar1;
+        uVar12 = ((ulonglong)uVar6 & 0xffff8000) + ((ulonglong)local_90 & 0x1ffff) * 0x8000 &
                  0x3fff8000;
-        uVar8 = CONCAT44(uVar2,uVar2) & 0xffffffffc0007fff | uVar16;
-        local_84[0]->Entries[iVar11].field1_0x14.LevelAsULONG = (ulong)uVar8;
-        uVar8 = uVar8 + local_8c;
-        local_84[0]->Entries[iVar11].field1_0x14.LevelAsULONG =
-             uVar2 & 0xc0000000 | (uint)uVar16 | (uint)uVar8 & 0x7fff;
-        uVar9 = (ulonglong)p_Var3->NumberOfTotalBlocks - lVar7;
-        if ((ulonglong)uVar10 < (uVar9 & 0xffffffff)) {
-          uVar9 = uVar15;
+        uVar4 = CONCAT44(uVar6,uVar6) & 0xffffffffc0007fff | uVar12;
+        local_84[0]->Entries[iVar7].field1_0x14.LevelAsULONG = (ulong)uVar4;
+        uVar4 = uVar4 + local_8c;
+        local_84[0]->Entries[iVar7].field1_0x14.LevelAsULONG =
+             uVar6 & 0xc0000000 | (uint)uVar12 | (uint)uVar4 & 0x7fff;
+        uVar5 = (ulonglong)param_1->NumberOfTotalBlocks - lVar3;
+        if ((ulonglong)GVar1 < (uVar5 & 0xffffffff)) {
+          uVar5 = uVar11;
         }
-        if ((((uVar9 & 0xffffffff) == uVar16 >> 0xf) && ((uVar9 & 0xffffffff) == uVar15)) ||
-           ((uVar9 & 0xffffffff) == (uVar8 & 0x7fff))) {
-          StfcDiscardBlock(p_Var3,(ulong)lVar7,uVar6);
+        if ((((uVar5 & 0xffffffff) == uVar12 >> 0xf) && ((uVar5 & 0xffffffff) == uVar11)) ||
+           ((uVar5 & 0xffffffff) == (uVar4 & 0x7fff))) {
+          StfcDiscardBlock(param_1,(ulong)lVar3,param_3);
         }
-        uVar16 = (ulonglong)local_88;
-        uVar14 = local_90 + uVar14;
-        uVar13 = local_8c + uVar13;
-        if ((uVar16 == 0xffffff) || (trapWord(6,uVar12,0), uVar16 / uVar12 != uVar1 / uVar12))
-        break;
+        uVar12 = (ulonglong)local_88;
+        uVar10 = local_90 + uVar10;
+        uVar9 = local_8c + uVar9;
+        if ((uVar12 == 0xffffff) || (trapWord(6,uVar8,0), uVar12 / uVar8 != param_2 / uVar8)) break;
       }
-      uVar10 = (int)local_84[0] - (int)p_Var3->BlockArray;
-      iVar11 = ((int)uVar10 >> 0xc) + (uint)((int)uVar10 < 0 && (uVar10 & 0xfff) != 0);
-      p_Var3->BlockCache[iVar11].ReferenceCount = p_Var3->BlockCache[iVar11].ReferenceCount + 0xff;
-      *param_4 = uVar14;
-      *param_5 = uVar13;
+      uVar6 = (int)local_84[0] - (int)param_1->BlockArray;
+      iVar7 = ((int)uVar6 >> 0xc) + (uint)((int)uVar6 < 0 && (uVar6 & 0xfff) != 0);
+      param_1->BlockCache[iVar7].ReferenceCount = param_1->BlockCache[iVar7].ReferenceCount + 0xff;
+      *param_4 = uVar10;
+      *param_5 = uVar9;
       *param_6 = local_88;
     }
   }
   else {
-    StfcSetPersistentStatus(p_Var3,-0x3fffffce);
-    lVar4 = -0x3fffffce;
+    StfcSetPersistentStatus(param_1,-0x3fffffce);
+    lVar2 = -0x3fffffce;
   }
-  lVar4 = __restgprlr_17(lVar4);
-  return lVar4;
+  return lVar2;
 }
 
 
 // 828B1970  StfcBeginDataBlockUpdate  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/stfc/stfsup.c:1192)
+
+/* WARNING: Function: __savegprlr_19 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_19 replaced with injection: xenon_save_restore */
 
 long StfcBeginDataBlockUpdate
                (_STFC_VOLUME_EXTENSION *param_1,_STFC_FCB *param_2,ulong param_3,ulong param_4,
@@ -4465,202 +4293,194 @@ long StfcBeginDataBlockUpdate
   _STFC_HASH_BLOCK *p_Var3;
   uint uVar4;
   uint uVar5;
-  ulong uVar6;
-  _STFC_VOLUME_EXTENSION *p_Var7;
+  uint uVar6;
+  ulong uVar7;
   long lVar8;
-  ulonglong uVar9;
-  ulong uVar11;
-  ulonglong uVar10;
-  ulonglong uVar12;
-  uint uVar13;
-  int iVar14;
-  uint uVar15;
-  ulong uVar16;
-  ulonglong uVar17;
-  _STFC_HASH_ENTRY *p_Var18;
+  int iVar9;
+  uint uVar10;
+  uint uVar11;
+  ulong uVar12;
+  int iVar13;
+  _STFC_HASH_ENTRY *p_Var14;
   ulong local_a0;
   _STFC_BLOCK_CACHE_ELEMENT *local_9c [3];
   _STFC_HASH_ENTRY a_Stack_90 [6];
   
-  uVar12 = (ulonglong)(int)param_4;
-  uVar9 = (ulonglong)(int)param_3;
-  p_Var7 = (_STFC_VOLUME_EXTENSION *)__savegprlr_19(param_1);
-  uVar9 = uVar9 & 0xfffff000;
-  uVar13 = param_2->LastMappedFileByteOffset;
-  uVar17 = (ulonglong)uVar13;
+  uVar5 = param_3 & 0xfffff000;
+  uVar10 = param_2->LastMappedFileByteOffset;
   uVar1 = param_2->LastMappedFileRunLength;
   uVar2 = param_2->LastMappedBlockNumber;
-  uVar11 = (ulong)uVar9;
   lVar8 = StfcByteOffsetToBlockNumber
-                    (p_Var7,param_2,uVar11,&local_a0,(ulong *)local_9c,(ulong *)0x0);
-  uVar6 = local_a0;
-  if ((lVar8 < 0) || (lVar8 = StfcMapWriteableHashBlock(p_Var7,local_a0,0,0,param_7), lVar8 < 0))
-  goto LAB_828b1d58;
+                    (param_1,param_2,uVar5,&local_a0,(ulong *)local_9c,(ulong *)0x0);
+  uVar7 = local_a0;
+  if (lVar8 < 0) {
+    return lVar8;
+  }
+  lVar8 = StfcMapWriteableHashBlock(param_1,local_a0,0,0,param_7);
+  if (lVar8 < 0) {
+    return lVar8;
+  }
   p_Var3 = *param_7;
-  p_Var18 = p_Var3->Entries + uVar6 % 0xaa;
-  uVar4 = (p_Var18->field1_0x14).LevelAsULONG;
-  uVar5 = uVar4 >> 0x1e;
-  if (uVar9 == param_2->ValidDataSize) {
-    if ((uVar5 == 2) || (uVar5 == 3)) {
-      lVar8 = StfcMapNewEmptyBlock(p_Var7,uVar6,0,param_6,local_9c);
+  p_Var14 = p_Var3->Entries + local_a0 % 0xaa;
+  uVar4 = (p_Var14->field1_0x14).LevelAsULONG;
+  uVar6 = uVar4 >> 0x1e;
+  if (uVar5 == param_2->ValidDataSize) {
+    if ((uVar6 == 2) || (uVar6 == 3)) {
+      lVar8 = StfcMapNewEmptyBlock(param_1,local_a0,0,param_6,local_9c);
       if (-1 < lVar8) {
-        (p_Var18->field1_0x14).LevelAsULONG = (p_Var18->field1_0x14).LevelAsULONG | 0xc0000000;
+        (p_Var14->field1_0x14).LevelAsULONG = (p_Var14->field1_0x14).LevelAsULONG | 0xc0000000;
 LAB_828b1adc:
-        *param_5 = uVar6;
-        lVar8 = 0;
-        goto LAB_828b1d58;
+        *param_5 = local_a0;
+        return 0;
       }
 LAB_828b1a9c:
-      uVar13 = (int)p_Var3 - (int)p_Var7->BlockArray;
-      iVar14 = ((int)uVar13 >> 0xc) + (uint)((int)uVar13 < 0 && (uVar13 & 0xfff) != 0);
-      p_Var7->BlockCache[iVar14].ReferenceCount = p_Var7->BlockCache[iVar14].ReferenceCount + 0xff;
-      goto LAB_828b1d58;
+      uVar10 = (int)p_Var3 - (int)param_1->BlockArray;
+      iVar9 = ((int)uVar10 >> 0xc) + (uint)((int)uVar10 < 0 && (uVar10 & 0xfff) != 0);
+      param_1->BlockCache[iVar9].ReferenceCount = param_1->BlockCache[iVar9].ReferenceCount + 0xff;
+      return lVar8;
     }
-    StfcSetPersistentStatus(p_Var7,-0x3fffffce);
-    uVar13 = (int)p_Var3 - (int)p_Var7->BlockArray;
-    iVar14 = ((int)uVar13 >> 0xc) + (uint)((int)uVar13 < 0 && (uVar13 & 0xfff) != 0);
-    p_Var7->BlockCache[iVar14].ReferenceCount = p_Var7->BlockCache[iVar14].ReferenceCount + 0xff;
+    StfcSetPersistentStatus(param_1,-0x3fffffce);
+    uVar10 = (int)p_Var3 - (int)param_1->BlockArray;
+    iVar9 = ((int)uVar10 >> 0xc) + (uint)((int)uVar10 < 0 && (uVar10 & 0xfff) != 0);
+    param_1->BlockCache[iVar9].ReferenceCount = param_1->BlockCache[iVar9].ReferenceCount + 0xff;
   }
   else {
-    if (uVar5 == 3) {
-      if ((uVar12 & 0xffffffff) == 0) {
-        lVar8 = StfcMapWriteableDataBlock(p_Var7,uVar6,p_Var18,param_6);
+    if (uVar6 == 3) {
+      if (param_4 == 0) {
+        lVar8 = StfcMapWriteableDataBlock(param_1,local_a0,p_Var14,param_6);
       }
       else {
-        lVar8 = StfcMapNewEmptyBlock(p_Var7,uVar6,0,param_6,local_9c);
+        lVar8 = StfcMapNewEmptyBlock(param_1,local_a0,0,param_6,local_9c);
       }
       if (-1 < lVar8) goto LAB_828b1adc;
       goto LAB_828b1a9c;
     }
-    uVar15 = (int)p_Var3 - (int)p_Var7->BlockArray;
-    iVar14 = ((int)uVar15 >> 0xc) + (uint)((int)uVar15 < 0 && (uVar15 & 0xfff) != 0);
-    p_Var7->BlockCache[iVar14].ReferenceCount = p_Var7->BlockCache[iVar14].ReferenceCount + 0xff;
-    if (uVar5 == 2) {
+    uVar11 = (int)p_Var3 - (int)param_1->BlockArray;
+    iVar9 = ((int)uVar11 >> 0xc) + (uint)((int)uVar11 < 0 && (uVar11 & 0xfff) != 0);
+    param_1->BlockCache[iVar9].ReferenceCount = param_1->BlockCache[iVar9].ReferenceCount + 0xff;
+    if (uVar6 == 2) {
       local_a0 = 0xffffffff;
-      uVar16 = 0xffffffff;
-      if (uVar9 != 0) {
-        uVar10 = uVar9 - 0x1000;
-        if (((uVar10 & 0xffffffff) < uVar17) ||
-           ((uVar1 + uVar17 & 0xffffffff) <= (uVar10 & 0xffffffff))) {
+      uVar12 = 0xffffffff;
+      if ((param_3 & 0xfffff000) != 0) {
+        uVar12 = uVar5 - 0x1000;
+        if ((uVar12 < uVar10) || (uVar1 + uVar10 <= uVar12)) {
           lVar8 = StfcByteOffsetToBlockNumber
-                            (p_Var7,param_2,(ulong)uVar10,&local_a0,(ulong *)local_9c,(ulong *)0x0);
-          uVar16 = local_a0;
-          if (lVar8 < 0) goto LAB_828b1d58;
+                            (param_1,param_2,uVar12,&local_a0,(ulong *)local_9c,(ulong *)0x0);
+          uVar12 = local_a0;
+          if (lVar8 < 0) {
+            return lVar8;
+          }
         }
         else {
-          uVar16 = ((ulong)uVar10 - uVar13 >> 0xc) + uVar2;
+          uVar12 = (uVar12 - uVar10 >> 0xc) + uVar2;
         }
       }
-      lVar8 = StfcAllocateBlocks(p_Var7,1,param_2->Flags >> 1 & AllocateWriteableDirectoryBlock,
-                                 uVar16,uVar4 & 0xffffff,(ulong *)local_9c,(ulong *)0x0);
-      if (-1 < lVar8) {
-        if (param_2->FirstBlockNumber == uVar6) {
-          param_2->FirstBlockNumber = (ulong)local_9c[0];
+      lVar8 = StfcAllocateBlocks(param_1,1,param_2->Flags >> 1 & AllocateWriteableDirectoryBlock,
+                                 uVar12,uVar4 & 0xffffff,(ulong *)local_9c,(ulong *)0x0);
+      if (lVar8 < 0) {
+        return lVar8;
+      }
+      if (param_2->FirstBlockNumber == uVar7) {
+        param_2->FirstBlockNumber = (ulong)local_9c[0];
+      }
+      if (param_2->LastBlockNumber == uVar7) {
+        param_2->LastBlockNumber = (ulong)local_9c[0];
+      }
+      if ((uVar1 + uVar10 == uVar5) &&
+         ((_STFC_BLOCK_CACHE_ELEMENT *)((uVar1 >> 0xc) + uVar2) == local_9c[0])) {
+        uVar12 = uVar1 + 0x1000;
+        param_2->LastMappedFileByteOffset = uVar10;
+        param_2->LastMappedBlockNumber = uVar2;
+      }
+      else {
+        uVar12 = 0x1000;
+        param_2->LastMappedFileByteOffset = uVar5;
+        param_2->LastMappedBlockNumber = (ulong)local_9c[0];
+      }
+      param_2->LastMappedFileRunLength = uVar12;
+      if ((param_2->Flags & 4) == 0) {
+        param_2->Flags = param_2->Flags | 0x10;
+      }
+      else {
+        param_1->NumberOfUnwriteableDirectoryBlocks =
+             param_1->NumberOfUnwriteableDirectoryBlocks - 1;
+      }
+      lVar8 = StfcFreeBlocks(param_1,uVar7,0,a_Stack_90);
+      if (lVar8 < 0) {
+        return lVar8;
+      }
+      if (param_4 == 0) {
+        iVar9 = StfcMapWriteableCopyOfDataBlock(param_1,(ulong)local_9c[0],uVar7,a_Stack_90,param_6)
+        ;
+      }
+      else {
+        iVar9 = StfcMapNewEmptyBlock(param_1,(ulong)local_9c[0],0,param_6,local_9c);
+      }
+      if (-1 < iVar9) {
+        if ((param_4 == 0) && ((param_2->Flags & 4) != 0)) {
+          StfcResetWriteableDirectoryBlock(param_1,uVar5,*param_6);
         }
-        if (param_2->LastBlockNumber == uVar6) {
-          param_2->LastBlockNumber = (ulong)local_9c[0];
-        }
-        if (((uVar1 + uVar17 & 0xffffffff) == uVar9) &&
-           ((_STFC_BLOCK_CACHE_ELEMENT *)((uVar1 >> 0xc) + uVar2) == local_9c[0])) {
-          uVar16 = uVar1 + 0x1000;
-          param_2->LastMappedFileByteOffset = uVar13;
-          param_2->LastMappedBlockNumber = uVar2;
-        }
-        else {
-          uVar16 = 0x1000;
-          param_2->LastMappedFileByteOffset = uVar11;
-          param_2->LastMappedBlockNumber = (ulong)local_9c[0];
-        }
-        param_2->LastMappedFileRunLength = uVar16;
-        if ((param_2->Flags & 4) == 0) {
-          param_2->Flags = param_2->Flags | 0x10;
-        }
-        else {
-          p_Var7->NumberOfUnwriteableDirectoryBlocks =
-               p_Var7->NumberOfUnwriteableDirectoryBlocks - 1;
-        }
-        lVar8 = StfcFreeBlocks(p_Var7,uVar6,0,a_Stack_90);
-        if (-1 < lVar8) {
-          if ((uVar12 & 0xffffffff) == 0) {
-            lVar8 = StfcMapWriteableCopyOfDataBlock
-                              (p_Var7,(ulong)local_9c[0],uVar6,a_Stack_90,param_6);
-          }
-          else {
-            lVar8 = StfcMapNewEmptyBlock(p_Var7,(ulong)local_9c[0],0,param_6,local_9c);
-          }
-          if (-1 < lVar8) {
-            if (((uVar12 & 0xffffffff) == 0) && ((param_2->Flags & 4) != 0)) {
-              StfcResetWriteableDirectoryBlock(p_Var7,uVar11,*param_6);
-            }
-            lVar8 = StfcMapWriteableHashBlock(p_Var7,(ulong)local_9c[0],0,0,param_7);
-            if (lVar8 < 0) {
-              uVar13 = (int)*param_6 - (int)p_Var7->BlockArray;
-              iVar14 = ((int)uVar13 >> 0xc) + (uint)((int)uVar13 < 0 && (uVar13 & 0xfff) != 0);
-              p_Var7->BlockCache[iVar14].ReferenceCount =
-                   p_Var7->BlockCache[iVar14].ReferenceCount + 0xff;
-            }
-          }
-          *param_5 = (ulong)local_9c[0];
+        iVar9 = StfcMapWriteableHashBlock(param_1,(ulong)local_9c[0],0,0,param_7);
+        if (iVar9 < 0) {
+          uVar10 = (int)*param_6 - (int)param_1->BlockArray;
+          iVar13 = ((int)uVar10 >> 0xc) + (uint)((int)uVar10 < 0 && (uVar10 & 0xfff) != 0);
+          param_1->BlockCache[iVar13].ReferenceCount =
+               param_1->BlockCache[iVar13].ReferenceCount + 0xff;
         }
       }
-      goto LAB_828b1d58;
+      *param_5 = (ulong)local_9c[0];
+      return iVar9;
     }
-    StfcSetPersistentStatus(p_Var7,-0x3fffffce);
+    StfcSetPersistentStatus(param_1,-0x3fffffce);
   }
-  lVar8 = -0x3fffffce;
-LAB_828b1d58:
-  lVar8 = __restgprlr_19(lVar8);
-  return lVar8;
+  return -0x3fffffce;
 }
 
 
 // 828AEEE8  StfcMapNewEmptyBlock  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/stfc/blocksup.c:1255)
+
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 
 long StfcMapNewEmptyBlock
                (_STFC_VOLUME_EXTENSION *param_1,ulong param_2,ulong param_3,void **param_4,
                _STFC_BLOCK_CACHE_ELEMENT **param_5)
 
 {
-  uint uVar1;
+  GPUANISOFILTER GVar1;
   void *pvVar2;
-  _STFC_VOLUME_EXTENSION *p_Var3;
-  ulong uVar4;
-  long lVar5;
-  ulonglong uVar6;
-  ulonglong uVar7;
-  ulong uVar8;
+  ulong uVar3;
+  long lVar4;
   ulong local_50;
   _STFC_BLOCK_CACHE_ELEMENT *local_4c [19];
   
-  uVar7 = (ulonglong)(int)param_3;
-  uVar6 = (ulonglong)(int)param_2;
-  p_Var3 = (_STFC_VOLUME_EXTENSION *)__savegprlr_24(param_1);
-  uVar8 = (ulong)uVar6;
-  uVar4 = StfcLookupBlockCacheEntry(p_Var3,uVar8,(ulong)uVar7,&local_50,local_4c);
-  if ((uVar4 != 0) || (lVar5 = StfcAllocateBlockCacheEntry(p_Var3,&local_50,local_4c), -1 < lVar5))
+  uVar3 = StfcLookupBlockCacheEntry(param_1,param_2,param_3,&local_50,local_4c);
+  if ((uVar3 != 0) || (lVar4 = StfcAllocateBlockCacheEntry(param_1,&local_50,local_4c), -1 < lVar4))
   {
-    if (((uVar7 & 0xffffffff) != 0) && ((uVar7 & 0xffffffff) < 4)) {
-      uVar1 = *(uint *)((int)anisoFilterMap + (int)((uVar7 & 0xffffffff) << 2) + 0x40);
-      trapWord(6,(ulonglong)uVar1,0);
-      uVar8 = (int)((uVar6 & 0xffffffff) / (ulonglong)uVar1) * uVar1;
+    if ((param_3 != 0) && (param_3 < 4)) {
+      GVar1 = anisoFilterMap[param_3 + 0x10];
+      trapWord(6,(ulonglong)GVar1,0);
+      param_2 = (param_2 / GVar1) * GVar1;
     }
-    pvVar2 = p_Var3->BlockArray;
+    pvVar2 = param_1->BlockArray;
     memset();
     *param_4 = (void *)(local_50 * 0x1000 + (int)pvVar2);
     *param_5 = local_4c[0];
-    StfcMoveBlockCacheEntry(p_Var3,local_50,1);
-    local_4c[0]->BlockNumber = uVar8;
+    StfcMoveBlockCacheEntry(param_1,local_50,1);
+    local_4c[0]->BlockNumber = param_2;
     (local_4c[0]->field4_0x7).FlagsAsUCHAR =
-         (byte)uVar7 & 3 | (local_4c[0]->field4_0x7).FlagsAsUCHAR & 0x1c | 0xc0;
+         (byte)param_3 & 3 | (local_4c[0]->field4_0x7).FlagsAsUCHAR & 0x1c | 0xc0;
     local_4c[0]->ReferenceCount = local_4c[0]->ReferenceCount + '\x01';
-    lVar5 = 0;
+    lVar4 = 0;
   }
-  lVar5 = __restgprlr_24(lVar5);
-  return lVar5;
+  return lVar4;
 }
 
 
 // 828AEFF8  StfcMapReadableHashBlock  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/stfc/blocksup.c:1365)
+
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
 
 long StfcMapReadableHashBlock
                (_STFC_VOLUME_EXTENSION *param_1,ulong param_2,ulong param_3,
@@ -4670,142 +4490,136 @@ long StfcMapReadableHashBlock
   byte bVar1;
   _STFC_HASH_BLOCK *p_Var2;
   _STFC_BLOCK_CACHE_ELEMENT *p_Var3;
-  ulonglong uVar4;
-  _STFC_VOLUME_EXTENSION *p_Var5;
+  ulong uVar4;
+  ulong uVar5;
   ulong uVar6;
   long lVar7;
-  ulonglong uVar8;
-  uint uVar9;
-  int iVar10;
-  _STFC_HASH_ENTRY *p_Var11;
-  ulonglong uVar12;
-  ulonglong uVar13;
+  uint uVar8;
+  int iVar9;
+  _STFC_HASH_ENTRY *p_Var10;
+  ulong uVar11;
   _STFC_HASH_BLOCK *local_80;
   _STFC_BLOCK_CACHE_ELEMENT *local_7c [3];
   _STFC_HASH_ENTRY a_Stack_70 [4];
   
-  uVar8 = (ulonglong)(int)param_3;
-  p_Var5 = (_STFC_VOLUME_EXTENSION *)__savegprlr_23(param_1);
-  bVar1 = p_Var5->RootHashHierarchy;
+  bVar1 = param_1->RootHashHierarchy;
   gStfcStats.StfcMapReadableHashBlock = gStfcStats.StfcMapReadableHashBlock + 1;
-  uVar6 = StfcMapExistingBlock(p_Var5,param_2,(ulong)(uVar8 + 1),&local_80,local_7c);
-  uVar4 = uVar8 + 1;
-  uVar13 = uVar8;
-  if (uVar6 == 0) {
+  uVar5 = StfcMapExistingBlock(param_1,param_2,param_3 + 1,&local_80,local_7c);
+  uVar4 = param_3 + 1;
+  uVar11 = param_3;
+  if (uVar5 == 0) {
     do {
-      uVar12 = uVar4;
-      if ((uVar13 & 0xffffffff) == (ulonglong)bVar1) {
-        p_Var11 = &p_Var5->RootHashEntry;
+      uVar5 = uVar4;
+      if (uVar11 == bVar1) {
+        p_Var10 = &param_1->RootHashEntry;
         gStfcStats.StfcMapReadableHashBlockMiss = gStfcStats.StfcMapReadableHashBlockMiss + 1;
+        uVar5 = uVar11;
         goto LAB_828af0c0;
       }
-      uVar6 = StfcMapExistingBlock(p_Var5,param_2,(ulong)(uVar12 + 1),&local_80,local_7c);
-      uVar4 = uVar12 + 1;
-      uVar13 = uVar12;
+      uVar6 = StfcMapExistingBlock(param_1,param_2,uVar5 + 1,&local_80,local_7c);
+      uVar4 = uVar5 + 1;
+      uVar11 = uVar5;
     } while (uVar6 == 0);
-    if ((uVar12 & 0xffffffff) != (uVar8 & 0xffffffff)) {
+    if (uVar5 != param_3) {
       do {
         p_Var3 = local_7c[0];
         p_Var2 = local_80;
-        trapWord(6,(ulonglong)
-                   *(uint *)((int)anisoFilterMap + (int)((uVar12 & 0xffffffff) << 2) + 0x40),0);
+        trapWord(6,(ulonglong)anisoFilterMap[uVar5 + 0x10],0);
         memcpy();
-        p_Var11 = a_Stack_70;
+        p_Var10 = a_Stack_70;
         if (((p_Var3->field4_0x7).FlagsAsUCHAR & 4) == 0) {
           a_Stack_70[0].field1_0x14.LevelAsULONG =
                a_Stack_70[0].field1_0x14.LevelAsULONG & 0x7fffffff;
         }
-        uVar13 = uVar12 - 1;
-        uVar9 = (int)p_Var2 - (int)p_Var5->BlockArray;
-        iVar10 = ((int)uVar9 >> 0xc) + (uint)((int)uVar9 < 0 && (uVar9 & 0xfff) != 0);
-        p_Var5->BlockCache[iVar10].ReferenceCount = p_Var5->BlockCache[iVar10].ReferenceCount + 0xff
+        uVar8 = (int)p_Var2 - (int)param_1->BlockArray;
+        iVar9 = ((int)uVar8 >> 0xc) + (uint)((int)uVar8 < 0 && (uVar8 & 0xfff) != 0);
+        param_1->BlockCache[iVar9].ReferenceCount = param_1->BlockCache[iVar9].ReferenceCount + 0xff
         ;
+        uVar5 = uVar5 - 1;
 LAB_828af0c0:
-        lVar7 = StfcMapNewBlock(p_Var5,param_2,(int)uVar13 + 1,p_Var11,&local_80,local_7c);
-        if (lVar7 < 0) goto LAB_828af118;
-        if (((p_Var11->field1_0x14).LevelAsULONG & 0x80000000) != 0) {
+        lVar7 = StfcMapNewBlock(param_1,param_2,uVar5 + 1,p_Var10,&local_80,local_7c);
+        if (lVar7 < 0) {
+          return lVar7;
+        }
+        if (((p_Var10->field1_0x14).LevelAsULONG & 0x80000000) != 0) {
           (local_7c[0]->field4_0x7).FlagsAsUCHAR = (local_7c[0]->field4_0x7).FlagsAsUCHAR | 4;
         }
-        uVar12 = uVar13;
-      } while ((uVar13 & 0xffffffff) != (uVar8 & 0xffffffff));
+      } while (uVar5 != param_3);
       *param_4 = local_80;
-      goto LAB_828af110;
+      return 0;
     }
   }
   gStfcStats.StfcMapReadableHashBlockHit = gStfcStats.StfcMapReadableHashBlockHit + 1;
   *param_4 = local_80;
-LAB_828af110:
-  lVar7 = 0;
-LAB_828af118:
-  lVar7 = __restgprlr_23(lVar7);
-  return lVar7;
+  return 0;
 }
 
 
 // 828B0D38  StfcFreeBlocks  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/stfc/allocsup.c:1387)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 long StfcFreeBlocks(_STFC_VOLUME_EXTENSION *param_1,ulong param_2,ulong param_3,
                    _STFC_HASH_ENTRY *param_4)
 
 {
-  _STFC_VOLUME_EXTENSION *p_Var1;
-  long lVar2;
+  long lVar1;
   ulong local_40;
   ulong local_3c;
   ulong auStack_38 [2];
   _STFC_FREE_BLOCK_STATE local_30 [6];
   
-  p_Var1 = (_STFC_VOLUME_EXTENSION *)__savegprlr_28(param_1);
   local_30[0].MarkFirstAsLast = param_3;
   local_30[0].FreeSingleHashEntry = param_4;
-  StfcSetInAllocationSupport(p_Var1,'\x01');
-  if (p_Var1->RootHashHierarchy == 0) {
-    lVar2 = StfcFreeBlocksFromLevel0HashBlock
-                      (p_Var1,param_2,&local_40,&local_3c,auStack_38,local_30);
+  StfcSetInAllocationSupport(param_1,'\x01');
+  if (param_1->RootHashHierarchy == 0) {
+    lVar1 = StfcFreeBlocksFromLevel0HashBlock
+                      (param_1,param_2,&local_40,&local_3c,auStack_38,local_30);
   }
   else {
-    lVar2 = StfcFreeBlocksFromLevelNHashBlock
-                      (p_Var1,param_2,(uint)p_Var1->RootHashHierarchy,&local_40,&local_3c,auStack_38
-                       ,local_30);
+    lVar1 = StfcFreeBlocksFromLevelNHashBlock
+                      (param_1,param_2,(uint)param_1->RootHashHierarchy,&local_40,&local_3c,
+                       auStack_38,local_30);
   }
-  StfcSetInAllocationSupport(p_Var1,'\0');
-  p_Var1->NumberOfFreePendingBlocks = p_Var1->NumberOfFreePendingBlocks + local_40;
-  p_Var1->NumberOfFreeBlocks = p_Var1->NumberOfFreeBlocks + local_3c;
-  lVar2 = __restgprlr_28(lVar2);
-  return lVar2;
+  StfcSetInAllocationSupport(param_1,'\0');
+  param_1->NumberOfFreePendingBlocks = param_1->NumberOfFreePendingBlocks + local_40;
+  param_1->NumberOfFreeBlocks = param_1->NumberOfFreeBlocks + local_3c;
+  return lVar1;
 }
 
 
 // 828B1D60  StfcBeginDirectoryEntryUpdate  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/stfc/stfsup.c:1569)
+
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 
 long StfcBeginDirectoryEntryUpdate
                (_STFC_VOLUME_EXTENSION *param_1,ulong param_2,_STFC_DIRECTORY_ENTRY **param_3,
                ulong *param_4,void **param_5,_STFC_HASH_BLOCK **param_6)
 
 {
-  uint uVar1;
-  _STFC_VOLUME_EXTENSION *p_Var2;
-  long lVar3;
-  ulonglong uVar4;
+  ulong uVar1;
+  long lVar2;
   
-  uVar4 = (ulonglong)(int)param_2;
-  p_Var2 = (_STFC_VOLUME_EXTENSION *)__savegprlr_26(param_1);
-  lVar3 = StfcBeginDataBlockUpdate
-                    (p_Var2,(_STFC_FCB *)&p_Var2->RootDirectoryFcb,(ulong)uVar4,0,param_4,param_5,
+  lVar2 = StfcBeginDataBlockUpdate
+                    (param_1,(_STFC_FCB *)&param_1->RootDirectoryFcb,param_2,0,param_4,param_5,
                      param_6);
-  if (-1 < lVar3) {
-    *param_3 = (_STFC_DIRECTORY_ENTRY *)(((ulong)uVar4 & 0xfff) + (int)*param_5);
-    uVar1 = (p_Var2->RootDirectoryFcb).ValidDataSize;
-    if ((uVar4 & 0xffffffff) == (ulonglong)uVar1) {
-      (p_Var2->RootDirectoryFcb).ValidDataSize = uVar1 + 0x1000;
+  if (-1 < lVar2) {
+    *param_3 = (_STFC_DIRECTORY_ENTRY *)((param_2 & 0xfff) + (int)*param_5);
+    uVar1 = (param_1->RootDirectoryFcb).ValidDataSize;
+    if (param_2 == uVar1) {
+      (param_1->RootDirectoryFcb).ValidDataSize = uVar1 + 0x1000;
     }
   }
-  lVar3 = __restgprlr_26(lVar3);
-  return lVar3;
+  return lVar2;
 }
 
 
 // 828AF1C0  StfcMapWriteableHashBlock  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/stfc/blocksup.c:1577)
+
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
 
 long StfcMapWriteableHashBlock
                (_STFC_VOLUME_EXTENSION *param_1,ulong param_2,ulong param_3,ulong param_4,
@@ -4813,170 +4627,153 @@ long StfcMapWriteableHashBlock
 
 {
   byte bVar1;
-  _STFC_VOLUME_EXTENSION *p_Var2;
-  longlong lVar3;
-  long lVar4;
-  ulong uVar5;
-  ulonglong uVar6;
-  ulong uVar7;
-  ulonglong uVar8;
-  ulonglong uVar9;
-  _STFC_HASH_ENTRY *p_Var10;
-  ulonglong uVar11;
-  uint uVar12;
-  byte bVar15;
-  int iVar13;
-  int iVar14;
-  ulonglong uVar16;
-  longlong lVar17;
-  uint *puVar18;
-  uint uVar19;
-  ulonglong uVar20;
+  long lVar2;
+  ulong uVar3;
+  _STFC_HASH_ENTRY *p_Var4;
+  ulonglong uVar5;
+  uint uVar6;
+  byte bVar9;
+  int iVar7;
+  int iVar8;
+  ulonglong uVar10;
+  longlong lVar11;
+  uint *puVar12;
+  uint uVar13;
+  ulonglong uVar14;
+  longlong lVar15;
   _STFC_BLOCK_CACHE_ELEMENT *local_60;
   _STFC_HASH_BLOCK *local_5c [23];
   
-  uVar9 = (ulonglong)(int)param_4;
-  uVar8 = (ulonglong)(int)param_3;
-  uVar6 = (ulonglong)(int)param_2;
-  lVar3 = __savegprlr_22(param_1);
-  p_Var2 = (_STFC_VOLUME_EXTENSION *)lVar3;
-  lVar3 = lVar3 + 0xb0;
-  uVar20 = 0;
-  uVar19 = (uint)p_Var2->RootHashHierarchy;
+  lVar15 = (longlong)(int)param_1 + 0xb0;
+  uVar14 = 0;
+  uVar13 = (uint)param_1->RootHashHierarchy;
   do {
-    uVar7 = (ulong)uVar6;
-    p_Var10 = (_STFC_HASH_ENTRY *)lVar3;
-    iVar14 = (int)uVar20;
-    if (((ulonglong)uVar19 == (uVar8 & 0xffffffff)) && ((uVar9 & 0xffffffff) != 0)) {
-      lVar4 = StfcMapNewEmptyBlock(p_Var2,uVar7,uVar19 + 1,local_5c,&local_60);
-      if (lVar4 < 0) {
+    p_Var4 = (_STFC_HASH_ENTRY *)lVar15;
+    iVar8 = (int)uVar14;
+    if ((uVar13 == param_3) && (param_4 != 0)) {
+      lVar2 = StfcMapNewEmptyBlock(param_1,param_2,uVar13 + 1,local_5c,&local_60);
+      if (lVar2 < 0) {
 LAB_828af414:
-        if (uVar20 != 0) {
-          uVar19 = iVar14 - (int)p_Var2->BlockArray;
-          iVar14 = ((int)uVar19 >> 0xc) + (uint)((int)uVar19 < 0 && (uVar19 & 0xfff) != 0);
-          p_Var2->BlockCache[iVar14].ReferenceCount =
-               p_Var2->BlockCache[iVar14].ReferenceCount + 0xff;
+        if (uVar14 == 0) {
+          return lVar2;
         }
-        goto LAB_828af45c;
+        uVar13 = iVar8 - (int)param_1->BlockArray;
+        iVar8 = ((int)uVar13 >> 0xc) + (uint)((int)uVar13 < 0 && (uVar13 & 0xfff) != 0);
+        param_1->BlockCache[iVar8].ReferenceCount = param_1->BlockCache[iVar8].ReferenceCount + 0xff
+        ;
+        return lVar2;
       }
-      (p_Var10->field1_0x14).LevelAsULONG =
-           (p_Var10->field1_0x14).LevelAsULONG & 0x3fffffff | 0x80000000;
+      (p_Var4->field1_0x14).LevelAsULONG =
+           (p_Var4->field1_0x14).LevelAsULONG & 0x3fffffff | 0x80000000;
     }
     else {
-      uVar5 = StfcMapExistingBlock(p_Var2,uVar7,uVar19 + 1,local_5c,&local_60);
-      if ((uVar5 == 0) &&
-         (lVar4 = StfcMapNewBlock(p_Var2,uVar7,uVar19 + 1,p_Var10,local_5c,&local_60), lVar4 < 0))
+      uVar3 = StfcMapExistingBlock(param_1,param_2,uVar13 + 1,local_5c,&local_60);
+      if ((uVar3 == 0) &&
+         (lVar2 = StfcMapNewBlock(param_1,param_2,uVar13 + 1,p_Var4,local_5c,&local_60), lVar2 < 0))
       goto LAB_828af414;
     }
-    uVar11 = ZEXT48(local_5c[0]);
-    if (((p_Var10->field1_0x14).LevelAsULONG & 0x80000000) == 0) {
-      uVar16 = (~(ulonglong)(p_Var10->field1_0x14).LevelAsULONG & 0xffffffff) >> 0x1e & 1;
+    uVar5 = ZEXT48(local_5c[0]);
+    if (((p_Var4->field1_0x14).LevelAsULONG & 0x80000000) == 0) {
+      uVar10 = (~(ulonglong)(p_Var4->field1_0x14).LevelAsULONG & 0xffffffff) >> 0x1e & 1;
       (local_60->field4_0x7).FlagsAsUCHAR =
-           (byte)(uVar16 << 5) | (local_60->field4_0x7).FlagsAsUCHAR & 0xdf;
-      lVar3 = 0xaa;
-      (p_Var10->field1_0x14).LevelAsULONG =
-           (uint)(uVar16 << 0x1e) | 0x80000000 | (p_Var10->field1_0x14).LevelAsULONG & 0x3fffffff;
-      if (uVar19 == 0) {
-        lVar17 = uVar11 + 0x14;
+           (byte)(uVar10 << 5) | (local_60->field4_0x7).FlagsAsUCHAR & 0xdf;
+      lVar15 = 0xaa;
+      (p_Var4->field1_0x14).LevelAsULONG =
+           (uint)(uVar10 << 0x1e) | 0x80000000 | (p_Var4->field1_0x14).LevelAsULONG & 0x3fffffff;
+      if (uVar13 == 0) {
+        lVar11 = uVar5 + 0x14;
         do {
-          puVar18 = (uint *)lVar17;
-          if (*puVar18 >> 0x1e == 1) {
-            uVar12 = *puVar18 & 0x3fffffff;
+          puVar12 = (uint *)lVar11;
+          if (*puVar12 >> 0x1e == 1) {
+            uVar6 = *puVar12 & 0x3fffffff;
 LAB_828af308:
-            *puVar18 = uVar12;
+            *puVar12 = uVar6;
           }
-          else if (*puVar18 >> 0x1e == 3) {
-            uVar12 = *puVar18 & 0x3fffffff | 0x80000000;
+          else if (*puVar12 >> 0x1e == 3) {
+            uVar6 = *puVar12 & 0x3fffffff | 0x80000000;
             goto LAB_828af308;
           }
-          lVar17 = lVar17 + 0x18;
-          lVar3 = lVar3 + -1;
-        } while (lVar3 != 0);
+          lVar11 = lVar11 + 0x18;
+          lVar15 = lVar15 + -1;
+        } while (lVar15 != 0);
       }
       else {
-        lVar17 = uVar11 - 4;
+        lVar11 = uVar5 - 4;
         do {
-          uVar12 = *(uint *)((int)lVar17 + 0x18);
-          lVar17 = lVar17 + 0x18;
-          *(uint *)lVar17 =
-               (uVar12 >> 0xf & 0xffff) + (uVar12 & 0x7fffffff) & 0x7fff | uVar12 & 0x40000000;
-          lVar3 = lVar3 + -1;
-        } while (lVar3 != 0);
+          uVar6 = *(uint *)((int)lVar11 + 0x18);
+          lVar11 = lVar11 + 0x18;
+          *(uint *)lVar11 =
+               (uVar6 >> 0xf & 0xffff) + (uVar6 & 0x7fffffff) & 0x7fff | uVar6 & 0x40000000;
+          lVar15 = lVar15 + -1;
+        } while (lVar15 != 0);
       }
     }
     bVar1 = (local_60->field4_0x7).FlagsAsUCHAR;
     (local_60->field4_0x7).FlagsAsUCHAR = bVar1 | 0x44;
-    bVar15 = (p_Var2->InAllocationSupport & 1) << 3 | bVar1 & 0xf7 | 0x44;
-    (local_60->field4_0x7).FlagsAsUCHAR = bVar15;
+    bVar9 = (param_1->InAllocationSupport & 1) << 3 | bVar1 & 0xf7 | 0x44;
+    (local_60->field4_0x7).FlagsAsUCHAR = bVar9;
     if ((bVar1 & 0x10) == 0) {
-      (local_60->field4_0x7).FlagsAsUCHAR = bVar15 | 0x10;
-      if (uVar20 != 0) {
-        uVar12 = iVar14 - (int)p_Var2->BlockArray;
-        iVar13 = ((int)uVar12 >> 0xc) + (uint)((int)uVar12 < 0 && (uVar12 & 0xfff) != 0);
-        p_Var2->BlockCache[iVar13].ReferenceCount =
-             p_Var2->BlockCache[iVar13].ReferenceCount + '\x01';
+      (local_60->field4_0x7).FlagsAsUCHAR = bVar9 | 0x10;
+      if (uVar14 != 0) {
+        uVar6 = iVar8 - (int)param_1->BlockArray;
+        iVar7 = ((int)uVar6 >> 0xc) + (uint)((int)uVar6 < 0 && (uVar6 & 0xfff) != 0);
+        param_1->BlockCache[iVar7].ReferenceCount =
+             param_1->BlockCache[iVar7].ReferenceCount + '\x01';
         goto LAB_828af3a4;
       }
     }
     else {
 LAB_828af3a4:
-      if (uVar20 != 0) {
-        uVar12 = iVar14 - (int)p_Var2->BlockArray;
-        iVar14 = ((int)uVar12 >> 0xc) + (uint)((int)uVar12 < 0 && (uVar12 & 0xfff) != 0);
-        p_Var2->BlockCache[iVar14].ReferenceCount = p_Var2->BlockCache[iVar14].ReferenceCount + 0xff
+      if (uVar14 != 0) {
+        uVar6 = iVar8 - (int)param_1->BlockArray;
+        iVar8 = ((int)uVar6 >> 0xc) + (uint)((int)uVar6 < 0 && (uVar6 & 0xfff) != 0);
+        param_1->BlockCache[iVar8].ReferenceCount = param_1->BlockCache[iVar8].ReferenceCount + 0xff
         ;
       }
     }
-    if ((ulonglong)uVar19 == (uVar8 & 0xffffffff)) {
+    if (uVar13 == param_3) {
       *param_5 = local_5c[0];
-      lVar4 = 0;
-LAB_828af45c:
-      lVar4 = __restgprlr_22(lVar4);
-      return lVar4;
+      return 0;
     }
-    trapWord(6,(ulonglong)anisoFilterMap[uVar19 + 0x10],0);
-    lVar3 = (((uVar6 & 0xffffffff) / (ulonglong)anisoFilterMap[uVar19 + 0x10]) % 0xaa) * 0x18 +
-            uVar11;
-    uVar20 = uVar11;
-    uVar19 = uVar19 - 1;
+    trapWord(6,(ulonglong)anisoFilterMap[uVar13 + 0x10],0);
+    lVar15 = (((ulonglong)param_2 / (ulonglong)anisoFilterMap[uVar13 + 0x10]) % 0xaa) * 0x18 + uVar5
+    ;
+    uVar14 = uVar5;
+    uVar13 = uVar13 - 1;
   } while( true );
 }
 
 
 // 828ADD28  StfcEndDataBlockUpdate  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/stfc/stfsup.c:1641)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void StfcEndDataBlockUpdate
                (_STFC_VOLUME_EXTENSION *param_1,ulong param_2,void *param_3,
                _STFC_HASH_BLOCK *param_4)
 
 {
-  int iVar1;
+  uint uVar1;
   int iVar2;
-  ulonglong uVar3;
-  longlong lVar4;
-  longlong lVar5;
-  uint uVar6;
   
-  lVar5 = (longlong)(int)param_4;
-  lVar4 = (longlong)(int)param_3;
-  uVar3 = (ulonglong)(int)param_2;
-  iVar2 = __savegprlr_28(param_1,uVar3);
-  XeCryptSha(lVar4,0x1000,0,0,0,0,(uVar3 + ((uVar3 & 0xffffffff) / 0xaa) * -0xaa) * 0x18 + lVar5,
-             0x14);
-  uVar6 = (int)lVar4 - *(int *)(iVar2 + 0x34);
-  iVar1 = (((int)uVar6 >> 0xc) + (uint)((int)uVar6 < 0 && (uVar6 & 0xfff) != 0)) * 8 +
-          *(int *)(iVar2 + 0x30);
-  *(char *)(iVar1 + 4) = *(char *)(iVar1 + 4) + -1;
-  uVar6 = (int)lVar5 - *(int *)(iVar2 + 0x34);
-  iVar1 = (((int)uVar6 >> 0xc) + (uint)((int)uVar6 < 0 && (uVar6 & 0xfff) != 0)) * 8 +
-          *(int *)(iVar2 + 0x30);
-  *(char *)(iVar1 + 4) = *(char *)(iVar1 + 4) + -1;
-  __restgprlr_28();
+  XeCryptSha(param_3,0x1000,0,0,0,0,
+             ((longlong)(int)param_2 + ((ulonglong)param_2 / 0xaa) * -0xaa) * 0x18 +
+             (longlong)(int)param_4,0x14);
+  uVar1 = (int)param_3 - (int)param_1->BlockArray;
+  iVar2 = ((int)uVar1 >> 0xc) + (uint)((int)uVar1 < 0 && (uVar1 & 0xfff) != 0);
+  param_1->BlockCache[iVar2].ReferenceCount = param_1->BlockCache[iVar2].ReferenceCount + 0xff;
+  uVar1 = (int)param_4 - (int)param_1->BlockArray;
+  iVar2 = ((int)uVar1 >> 0xc) + (uint)((int)uVar1 < 0 && (uVar1 & 0xfff) != 0);
+  param_1->BlockCache[iVar2].ReferenceCount = param_1->BlockCache[iVar2].ReferenceCount + 0xff;
   return;
 }
 
 
 // 828ADDE0  StfcFillDirectoryEntryFromFcb  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/stfc/stfsup.c:1694)
+
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 
 void StfcFillDirectoryEntryFromFcb(_STFC_FCB *param_1,ulong param_2,_STFC_DIRECTORY_ENTRY *param_3)
 
@@ -4985,172 +4782,168 @@ void StfcFillDirectoryEntryFromFcb(_STFC_FCB *param_1,ulong param_2,_STFC_DIRECT
   ushort uVar2;
   uint uVar3;
   uint uVar4;
-  int iVar5;
-  _STFC_FILE_BOUNDS _Var6;
-  _STFC_TIME_STAMP _Var7;
+  ulong uVar5;
+  _STFC_FCB *p_Var6;
+  _STFC_FILE_BOUNDS _Var7;
   _STFC_TIME_STAMP _Var8;
-  undefined1 *puVar9;
-  uint uVar10;
+  _STFC_TIME_STAMP _Var9;
+  undefined1 *puVar10;
   uint uVar11;
-  int iVar12;
-  ulonglong uVar13;
-  int iVar14;
-  int iVar15;
-  byte bVar16;
+  uint uVar12;
+  ulong uVar13;
+  ulong uVar14;
+  byte bVar15;
   
-  uVar13 = (ulonglong)(int)param_2;
-  iVar12 = __savegprlr_25(param_1);
-  uVar3 = *(uint *)(iVar12 + 0x1c);
-  bVar16 = 0;
-  uVar4 = *(uint *)(iVar12 + 0x14);
-  uVar10 = uVar3 >> 0xc;
-  iVar5 = *(int *)(iVar12 + 0x20);
-  uVar11 = uVar4 >> 0xc;
-  if (*(int *)(iVar12 + 0x28) == 0) {
-    if (*(uint *)(iVar12 + 0x2c) != uVar4) {
-      if (*(uint *)(iVar12 + 0x2c) + 0x1000 != uVar4) goto LAB_828ade64;
-      iVar14 = *(int *)(iVar12 + 0x24);
-      iVar15 = iVar5 + uVar11 + -1;
+  uVar3 = param_1->ValidDataSize;
+  bVar15 = 0;
+  uVar4 = param_1->AllocationSize;
+  uVar11 = uVar3 >> 0xc;
+  uVar5 = param_1->FirstBlockNumber;
+  uVar12 = uVar4 >> 0xc;
+  if (param_1->LastMappedFileByteOffset == 0) {
+    if (param_1->LastMappedFileRunLength != uVar4) {
+      if (param_1->LastMappedFileRunLength + 0x1000 != uVar4) goto LAB_828ade64;
+      uVar13 = param_1->LastBlockNumber;
+      uVar14 = (uVar5 + uVar12) - 1;
       goto LAB_828ade58;
     }
   }
   else {
-    if (uVar11 != 2) goto LAB_828ade64;
-    iVar15 = *(int *)(iVar12 + 0x24);
-    iVar14 = iVar5 + 1;
+    if (uVar12 != 2) goto LAB_828ade64;
+    uVar14 = param_1->LastBlockNumber;
+    uVar13 = uVar5 + 1;
 LAB_828ade58:
-    if (iVar14 != iVar15) goto LAB_828ade64;
+    if (uVar13 != uVar14) goto LAB_828ade64;
   }
-  bVar16 = 1;
+  bVar15 = 1;
 LAB_828ade64:
   memcpy();
-  bVar1 = *(byte *)(iVar12 + 0x35);
-  param_3->Contiguous = bVar16;
+  bVar1 = param_1->Flags;
+  param_3->Contiguous = bVar15;
   param_3->Directory = bVar1 >> 1;
-  if (((uVar13 & 0xffffffff) == 0) || ((bVar1 & 8) == 0)) {
-    puVar9 = &param_3->field_0x28;
-    param_3->FileNameLength = *(byte *)(iVar12 + 0x34);
+  if ((param_2 == 0) || ((bVar1 & 8) == 0)) {
+    puVar10 = &param_3->field_0x28;
+    param_3->FileNameLength = param_1->FileNameLength;
     param_3->Directory = bVar1 >> 1;
-    param_3->Contiguous = bVar16;
+    param_3->Contiguous = bVar15;
   }
   else {
-    puVar9 = &param_3->field_0x28;
+    puVar10 = &param_3->field_0x28;
     param_3->FileNameLength = '\0';
     param_3->Directory = bVar1 >> 1;
-    param_3->Contiguous = bVar16;
+    param_3->Contiguous = bVar15;
   }
-  iVar14 = *(int *)(iVar12 + 8);
-  _Var6 = *(_STFC_FILE_BOUNDS *)(iVar12 + 0x18);
-  _Var7 = *(_STFC_TIME_STAMP *)(iVar12 + 0x40);
-  _Var8 = *(_STFC_TIME_STAMP *)(iVar12 + 0x44);
-  param_3->ValidDataBlocks1 = (uchar)(uVar10 >> 8);
-  uVar2 = *(ushort *)(iVar14 + 0x36);
+  p_Var6 = param_1->ParentFcb;
+  _Var7 = param_1->FileBounds;
+  _Var8 = param_1->CreationTimeStamp;
+  _Var9 = param_1->LastWriteTimeStamp;
+  param_3->ValidDataBlocks1 = (uchar)(uVar11 >> 8);
+  uVar2 = p_Var6->DirectoryIndex;
   param_3->ValidDataBlocks2 = (byte)(uVar3 >> 0x1c);
-  param_3->ValidDataBlocks0 = (uchar)uVar10;
-  param_3->AllocationBlocks0 = (uchar)uVar11;
-  param_3->AllocationBlocks1 = (uchar)(uVar4 >> 0x14);
+  param_3->ValidDataBlocks0 = (uchar)uVar11;
+  param_3->AllocationBlocks0 = (uchar)uVar12;
+  param_3->AllocationBlocks1 = (uchar)(uVar12 >> 8);
   param_3->AllocationBlocks2 = (byte)(uVar4 >> 0x1c);
-  param_3->FirstBlockNumber0 = (uchar)iVar5;
-  param_3->FirstBlockNumber1 = (uchar)((uint)iVar5 >> 8);
-  param_3->FirstBlockNumber2 = (uchar)((uint)iVar5 >> 0x10);
+  param_3->FirstBlockNumber0 = (uchar)uVar5;
+  param_3->FirstBlockNumber1 = (uchar)(uVar5 >> 8);
+  param_3->FirstBlockNumber2 = (uchar)(uVar5 >> 0x10);
   param_3->DirectoryIndex = uVar2;
-  param_3->FileBounds = _Var6;
-  param_3->CreationTimeStamp = _Var7;
-  param_3->LastWriteTimeStamp = _Var8;
-  __restgprlr_25();
+  param_3->FileBounds = _Var7;
+  param_3->CreationTimeStamp = _Var8;
+  param_3->LastWriteTimeStamp = _Var9;
   return;
 }
 
 
 // 828B1DE8  StfcUpdateDirectoryEntry  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/stfc/stfsup.c:1789)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 long StfcUpdateDirectoryEntry(_STFC_VOLUME_EXTENSION *param_1,_STFC_FCB *param_2,ulong param_3)
 
 {
-  _STFC_VOLUME_EXTENSION *p_Var1;
-  long lVar2;
+  long lVar1;
   _STFC_DIRECTORY_ENTRY *local_40;
   _STFC_HASH_BLOCK *local_3c;
   void *local_38;
   ulong local_34 [13];
   
-  p_Var1 = (_STFC_VOLUME_EXTENSION *)__savegprlr_28(param_1);
-  lVar2 = StfcBeginDirectoryEntryUpdate
-                    (p_Var1,(uint)param_2->DirectoryIndex << 6,&local_40,local_34,&local_38,
+  lVar1 = StfcBeginDirectoryEntryUpdate
+                    (param_1,(uint)param_2->DirectoryIndex << 6,&local_40,local_34,&local_38,
                      &local_3c);
-  if (-1 < lVar2) {
+  if (-1 < lVar1) {
     StfcFillDirectoryEntryFromFcb(param_2,param_3,local_40);
     param_2->Flags = param_2->Flags & 0xcf | 0x20;
-    StfcEndDataBlockUpdate(p_Var1,local_34[0],local_38,local_3c);
+    StfcEndDataBlockUpdate(param_1,local_34[0],local_38,local_3c);
   }
-  lVar2 = __restgprlr_28(lVar2);
-  return lVar2;
+  return lVar1;
 }
 
 
 // 828AF468  StfcMapReadableDataBlock  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/stfc/blocksup.c:1827)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 long StfcMapReadableDataBlock(_STFC_VOLUME_EXTENSION *param_1,ulong param_2,void **param_3)
 
 {
-  _STFC_VOLUME_EXTENSION *p_Var1;
-  ulong uVar2;
-  long lVar3;
-  uint uVar4;
-  int iVar5;
+  ulong uVar1;
+  long lVar2;
+  uint uVar3;
+  int iVar4;
   _STFC_HASH_BLOCK *local_50 [4];
   _STFC_HASH_ENTRY a_Stack_40 [2];
   
-  p_Var1 = (_STFC_VOLUME_EXTENSION *)__savegprlr_28(param_1);
-  lVar3 = 0;
-  uVar2 = StfcMapExistingBlock(p_Var1,param_2,0,param_3,(_STFC_BLOCK_CACHE_ELEMENT **)local_50);
-  if ((uVar2 == 0) && (lVar3 = StfcMapReadableHashBlock(p_Var1,param_2,0,local_50), -1 < lVar3)) {
+  lVar2 = 0;
+  uVar1 = StfcMapExistingBlock(param_1,param_2,0,param_3,(_STFC_BLOCK_CACHE_ELEMENT **)local_50);
+  if ((uVar1 == 0) && (lVar2 = StfcMapReadableHashBlock(param_1,param_2,0,local_50), -1 < lVar2)) {
     memcpy();
-    uVar4 = (int)local_50[0] - (int)p_Var1->BlockArray;
-    iVar5 = ((int)uVar4 >> 0xc) + (uint)((int)uVar4 < 0 && (uVar4 & 0xfff) != 0);
-    p_Var1->BlockCache[iVar5].ReferenceCount = p_Var1->BlockCache[iVar5].ReferenceCount + 0xff;
+    uVar3 = (int)local_50[0] - (int)param_1->BlockArray;
+    iVar4 = ((int)uVar3 >> 0xc) + (uint)((int)uVar3 < 0 && (uVar3 & 0xfff) != 0);
+    param_1->BlockCache[iVar4].ReferenceCount = param_1->BlockCache[iVar4].ReferenceCount + 0xff;
     if ((a_Stack_40[0].field1_0x14.LevelAsULONG >> 0x1e == 2) ||
        (a_Stack_40[0].field1_0x14.LevelAsULONG >> 0x1e == 3)) {
-      lVar3 = StfcMapNewBlock(p_Var1,param_2,0,a_Stack_40,param_3,
+      lVar2 = StfcMapNewBlock(param_1,param_2,0,a_Stack_40,param_3,
                               (_STFC_BLOCK_CACHE_ELEMENT **)local_50);
     }
     else {
-      StfcSetPersistentStatus(p_Var1,-0x3fffffce);
-      lVar3 = -0x3fffffce;
+      StfcSetPersistentStatus(param_1,-0x3fffffce);
+      lVar2 = -0x3fffffce;
     }
   }
-  lVar3 = __restgprlr_28(lVar3);
-  return lVar3;
+  return lVar2;
 }
 
 
 // 828B1E70  StfcEnsureWriteableDirectoryEntry  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/stfc/stfsup.c:1873)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 long StfcEnsureWriteableDirectoryEntry(_STFC_VOLUME_EXTENSION *param_1,_STFC_FCB *param_2)
 
 {
-  _STFC_VOLUME_EXTENSION *p_Var1;
-  long lVar2;
+  long lVar1;
   _STFC_HASH_BLOCK *local_30;
   void *local_2c;
   ulong local_28;
   _STFC_DIRECTORY_ENTRY *ap_Stack_24 [9];
   
-  p_Var1 = (_STFC_VOLUME_EXTENSION *)__savegprlr_29(param_1);
   if ((param_2->Flags & 0x20) == 0) {
-    lVar2 = StfcBeginDirectoryEntryUpdate
-                      (p_Var1,(uint)param_2->DirectoryIndex << 6,ap_Stack_24,&local_28,&local_2c,
+    lVar1 = StfcBeginDirectoryEntryUpdate
+                      (param_1,(uint)param_2->DirectoryIndex << 6,ap_Stack_24,&local_28,&local_2c,
                        &local_30);
-    if (-1 < lVar2) {
+    if (-1 < lVar1) {
       param_2->Flags = param_2->Flags | 0x20;
-      StfcEndDataBlockUpdate(p_Var1,local_28,local_2c,local_30);
+      StfcEndDataBlockUpdate(param_1,local_28,local_2c,local_30);
     }
   }
   else {
-    lVar2 = 0;
+    lVar1 = 0;
   }
-  lVar2 = __restgprlr_29(lVar2);
-  return lVar2;
+  return lVar1;
 }
 
 
@@ -5178,164 +4971,154 @@ long StfcDeleteFileAllocation(_STFC_VOLUME_EXTENSION *param_1,_STFC_FCB *param_2
 
 // 828AF580  StfcMapWriteableDataBlock  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/stfc/blocksup.c:1959)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 long StfcMapWriteableDataBlock
                (_STFC_VOLUME_EXTENSION *param_1,ulong param_2,_STFC_HASH_ENTRY *param_3,
                void **param_4)
 
 {
-  _STFC_VOLUME_EXTENSION *p_Var1;
-  ulong uVar2;
-  long lVar3;
+  ulong uVar1;
+  long lVar2;
   _STFC_BLOCK_CACHE_ELEMENT *local_40 [16];
   
-  p_Var1 = (_STFC_VOLUME_EXTENSION *)__savegprlr_27(param_1);
-  lVar3 = 0;
-  uVar2 = StfcMapExistingBlock(p_Var1,param_2,0,param_4,local_40);
-  if (uVar2 == 0) {
-    lVar3 = StfcMapNewBlock(p_Var1,param_2,0,param_3,param_4,local_40);
-    if (lVar3 < 0) goto LAB_828af5f8;
+  lVar2 = 0;
+  uVar1 = StfcMapExistingBlock(param_1,param_2,0,param_4,local_40);
+  if ((uVar1 != 0) ||
+     (lVar2 = StfcMapNewBlock(param_1,param_2,0,param_3,param_4,local_40), -1 < lVar2)) {
+    (local_40[0]->field4_0x7).FlagsAsUCHAR = (local_40[0]->field4_0x7).FlagsAsUCHAR | 0x40;
   }
-  (local_40[0]->field4_0x7).FlagsAsUCHAR = (local_40[0]->field4_0x7).FlagsAsUCHAR | 0x40;
-LAB_828af5f8:
-  lVar3 = __restgprlr_27(lVar3);
-  return lVar3;
+  return lVar2;
 }
 
 
 // 828B1F90  StfcTruncateFileAllocation  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/stfc/stfsup.c:2016)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 long StfcTruncateFileAllocation(_STFC_VOLUME_EXTENSION *param_1,_STFC_FCB *param_2,ulong param_3)
 
 {
-  ulong uVar1;
-  _STFC_VOLUME_EXTENSION *p_Var2;
-  long lVar3;
-  ulonglong uVar4;
+  long lVar1;
   ulong local_30;
   ulong auStack_2c [11];
   
-  uVar4 = (ulonglong)(int)param_3;
-  p_Var2 = (_STFC_VOLUME_EXTENSION *)__savegprlr_28(param_1);
-  uVar1 = (ulong)uVar4;
-  lVar3 = StfcByteOffsetToBlockNumber(p_Var2,param_2,uVar1 - 1,&local_30,auStack_2c,(ulong *)0x0);
-  if ((-1 < lVar3) &&
-     (lVar3 = StfcFreeBlocks(p_Var2,local_30,1,(_STFC_HASH_ENTRY *)0x0), -1 < lVar3)) {
+  lVar1 = StfcByteOffsetToBlockNumber(param_1,param_2,param_3 - 1,&local_30,auStack_2c,(ulong *)0x0)
+  ;
+  if ((-1 < lVar1) &&
+     (lVar1 = StfcFreeBlocks(param_1,local_30,1,(_STFC_HASH_ENTRY *)0x0), -1 < lVar1)) {
     param_2->LastBlockNumber = local_30;
-    param_2->AllocationSize = uVar1;
+    param_2->AllocationSize = param_3;
     param_2->LastMappedFileByteOffset = 0xffffffff;
-    if ((uVar4 & 0xffffffff) < (ulonglong)(param_2->FileBounds).FileSize) {
-      (param_2->FileBounds).FileSize = uVar1;
+    if (param_3 < (param_2->FileBounds).FileSize) {
+      (param_2->FileBounds).FileSize = param_3;
     }
-    if ((uVar4 & 0xffffffff) < (ulonglong)param_2->ValidDataSize) {
-      param_2->ValidDataSize = uVar1;
+    if (param_3 < param_2->ValidDataSize) {
+      param_2->ValidDataSize = param_3;
     }
     param_2->Flags = param_2->Flags | 0x10;
-    lVar3 = 0;
+    lVar1 = 0;
   }
-  lVar3 = __restgprlr_28(lVar3);
-  return lVar3;
+  return lVar1;
 }
 
 
 // 828AF608  StfcMapWriteableCopyOfDataBlock  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/stfc/blocksup.c:2031)
+
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 
 long StfcMapWriteableCopyOfDataBlock
                (_STFC_VOLUME_EXTENSION *param_1,ulong param_2,ulong param_3,
                _STFC_HASH_ENTRY *param_4,void **param_5)
 
 {
-  _STFC_VOLUME_EXTENSION *p_Var1;
-  ulong uVar2;
-  long lVar3;
+  ulong uVar1;
+  long lVar2;
   _STFC_BLOCK_CACHE_ELEMENT *local_40 [16];
   
-  p_Var1 = (_STFC_VOLUME_EXTENSION *)__savegprlr_26(param_1);
-  StfcDiscardBlock(p_Var1,param_2,0);
-  lVar3 = 0;
-  uVar2 = StfcMapExistingBlock(p_Var1,param_3,0,param_5,local_40);
-  if (uVar2 == 0) {
-    lVar3 = StfcMapNewBlock(p_Var1,param_3,0,param_4,param_5,local_40);
-    if (lVar3 < 0) goto LAB_828af698;
+  StfcDiscardBlock(param_1,param_2,0);
+  lVar2 = 0;
+  uVar1 = StfcMapExistingBlock(param_1,param_3,0,param_5,local_40);
+  if ((uVar1 != 0) ||
+     (lVar2 = StfcMapNewBlock(param_1,param_3,0,param_4,param_5,local_40), -1 < lVar2)) {
+    local_40[0]->BlockNumber = param_2;
+    (local_40[0]->field4_0x7).FlagsAsUCHAR = (local_40[0]->field4_0x7).FlagsAsUCHAR | 0x40;
   }
-  local_40[0]->BlockNumber = param_2;
-  (local_40[0]->field4_0x7).FlagsAsUCHAR = (local_40[0]->field4_0x7).FlagsAsUCHAR | 0x40;
-LAB_828af698:
-  lVar3 = __restgprlr_26(lVar3);
-  return lVar3;
+  return lVar2;
 }
 
 
 // 828ACAB0  StfcResetBlockCache  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/stfc/blocksup.c:2097)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void StfcResetBlockCache(_STFC_VOLUME_EXTENSION *param_1)
 
 {
   byte bVar1;
-  int iVar2;
-  int iVar3;
-  int iVar4;
-  char *pcVar5;
-  char cVar6;
-  uint uVar7;
+  _STFC_BLOCK_CACHE_ELEMENT *p_Var2;
+  uchar *puVar3;
+  uchar uVar4;
+  ulonglong uVar5;
   
-  iVar4 = __savegprlr_28(param_1);
-  bVar1 = *(byte *)(iVar4 + 200);
-  uVar7 = (uint)bVar1;
-  iVar2 = *(int *)(iVar4 + 0x30);
-  iVar3 = uVar7 * 8;
+  bVar1 = param_1->BlockCacheElementCount;
+  uVar5 = (ulonglong)bVar1;
+  p_Var2 = param_1->BlockCache;
   memset();
-  if (uVar7 != 0) {
-    pcVar5 = (char *)(iVar2 + -3);
-    cVar6 = '\x01';
+  if (uVar5 != 0) {
+    puVar3 = &p_Var2[-1].LruFlink;
+    uVar4 = '\x01';
     do {
-      pcVar5[9] = cVar6 + -2;
-      pcVar5 = pcVar5 + 8;
-      *pcVar5 = cVar6;
-      uVar7 = uVar7 - 1;
-      cVar6 = cVar6 + '\x01';
-    } while (uVar7 != 0);
+      puVar3[9] = uVar4 + 0xfe;
+      puVar3 = puVar3 + 8;
+      *puVar3 = uVar4;
+      uVar5 = uVar5 - 1;
+      uVar4 = uVar4 + '\x01';
+    } while (uVar5 != 0);
   }
-  *(byte *)(iVar2 + 6) = bVar1 - 1;
-  *(undefined1 *)(iVar3 + iVar2 + -3) = 0;
-  *(undefined1 *)(iVar4 + 0xc9) = 0;
-  __restgprlr_28();
+  p_Var2->LruBlink = bVar1 - 1;
+  p_Var2[bVar1 - 1].LruFlink = '\0';
+  param_1->BlockCacheLruHead = '\0';
   return;
 }
 
 
 // 828B2058  StfcExtendFileAllocation  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/stfc/stfsup.c:2113)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 long StfcExtendFileAllocation(_STFC_VOLUME_EXTENSION *param_1,_STFC_FCB *param_2,ulong param_3)
 
 {
-  ulonglong uVar1;
-  _STFC_VOLUME_EXTENSION *p_Var2;
+  ulong uVar1;
+  uint uVar2;
   long lVar3;
-  longlong lVar4;
-  ulonglong uVar5;
   ulong local_40;
-  uint local_3c [15];
+  ulong local_3c [15];
   
-  lVar4 = (longlong)(int)param_3;
-  p_Var2 = (_STFC_VOLUME_EXTENSION *)__savegprlr_26(param_1);
   local_40 = param_2->LastBlockNumber;
-  uVar5 = (ulonglong)param_2->AllocationSize;
-  if ((uVar5 != 0) && (local_40 == 0xffffffff)) {
-    lVar3 = StfcByteOffsetToBlockNumber
-                      (p_Var2,param_2,param_2->AllocationSize - 1,&local_40,local_3c,(ulong *)0x0);
-    if (lVar3 < 0) goto LAB_828b216c;
+  uVar1 = param_2->AllocationSize;
+  if ((uVar1 != 0) && (local_40 == 0xffffffff)) {
+    lVar3 = StfcByteOffsetToBlockNumber(param_1,param_2,uVar1 - 1,&local_40,local_3c,(ulong *)0x0);
+    if (lVar3 < 0) {
+      return lVar3;
+    }
     param_2->LastBlockNumber = local_40;
   }
-  uVar1 = (lVar4 - uVar5 & 0xffffffff) >> 0xc;
-  lVar3 = StfcAllocateBlocks(p_Var2,(ulong)uVar1,param_2->Flags >> 2 & AllocateNewDirectoryBlock,
-                             local_40,0xffffffff,local_3c,&local_40);
+  uVar2 = param_3 - uVar1 >> 0xc;
+  lVar3 = StfcAllocateBlocks(param_1,uVar2,param_2->Flags >> 2 & AllocateNewDirectoryBlock,local_40,
+                             0xffffffff,local_3c,&local_40);
   if (-1 < lVar3) {
-    param_2->AllocationSize = (ulong)lVar4;
+    param_2->AllocationSize = param_3;
     param_2->LastBlockNumber = local_40;
-    if ((uVar5 == 0) &&
-       (param_2->FirstBlockNumber = local_3c[0],
-       (((ulonglong)local_40 - (ulonglong)local_3c[0]) + 1 & 0xffffffff) == uVar1)) {
-      param_2->LastMappedFileRunLength = (ulong)lVar4;
+    if ((uVar1 == 0) &&
+       (param_2->FirstBlockNumber = local_3c[0], (local_40 - local_3c[0]) + 1 == uVar2)) {
+      param_2->LastMappedFileRunLength = param_3;
       param_2->LastMappedBlockNumber = local_3c[0];
       param_2->LastMappedFileByteOffset = 0;
     }
@@ -5343,94 +5126,86 @@ long StfcExtendFileAllocation(_STFC_VOLUME_EXTENSION *param_1,_STFC_FCB *param_2
       param_2->Flags = param_2->Flags | 0x10;
     }
     else {
-      p_Var2->NumberOfUnwriteableDirectoryBlocks = p_Var2->NumberOfUnwriteableDirectoryBlocks + 1;
+      param_1->NumberOfUnwriteableDirectoryBlocks = param_1->NumberOfUnwriteableDirectoryBlocks + 1;
     }
     lVar3 = 0;
   }
-LAB_828b216c:
-  lVar3 = __restgprlr_26(lVar3);
   return lVar3;
 }
 
 
 // 828AF6A8  StfcFlushBlockCache  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/stfc/blocksup.c:2162)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
+
 long StfcFlushBlockCache(_STFC_VOLUME_EXTENSION *param_1,ulong param_2,ulong param_3)
 
 {
   byte bVar1;
   _STFC_BLOCK_CACHE_ELEMENT *p_Var2;
-  _STFC_VOLUME_EXTENSION *p_Var3;
-  long lVar4;
-  ulonglong uVar5;
-  ulonglong uVar6;
-  uint uVar7;
-  _STFC_BLOCK_CACHE_ELEMENT *p_Var8;
-  uint uVar9;
-  _STFC_BLOCK_CACHE_ELEMENT *p_Var10;
+  long lVar3;
+  uint uVar4;
+  _STFC_BLOCK_CACHE_ELEMENT *p_Var5;
+  uint uVar6;
+  _STFC_BLOCK_CACHE_ELEMENT *p_Var7;
   
-  uVar6 = (ulonglong)(int)param_3;
-  uVar5 = (ulonglong)(int)param_2;
-  p_Var3 = (_STFC_VOLUME_EXTENSION *)__savegprlr_23(param_1);
-  p_Var2 = p_Var3->BlockCache;
-  p_Var8 = p_Var2 + p_Var3->BlockCacheLruHead;
-  if ((int)uVar6 == -1) {
-    uVar7 = p_Var3->RootHashHierarchy + 1;
+  p_Var2 = param_1->BlockCache;
+  p_Var5 = p_Var2 + param_1->BlockCacheLruHead;
+  if (param_3 == 0xffffffff) {
+    uVar4 = param_1->RootHashHierarchy + 1;
   }
   else {
-    uVar7 = 0;
+    uVar4 = 0;
   }
-  uVar9 = 0;
+  uVar6 = 0;
   do {
-    bVar1 = p_Var8->LruBlink;
+    bVar1 = p_Var5->LruBlink;
     while( true ) {
-      p_Var10 = p_Var2 + bVar1;
-      if ((((((p_Var10->field4_0x7).FlagsAsUCHAR & 3) == uVar9) &&
-           (((p_Var10->field4_0x7).FlagsAsUCHAR & 0x40) != 0)) &&
-          ((uVar5 & 0xffffffff) <= (ulonglong)p_Var10->BlockNumber)) &&
-         (((ulonglong)p_Var10->BlockNumber <= (uVar6 & 0xffffffff) &&
-          (lVar4 = StfcFlushBlockCacheEntry(p_Var3,(uint)bVar1,p_Var10), lVar4 < 0))))
-      goto LAB_828af760;
-      if (p_Var10 == p_Var8) break;
-      bVar1 = p_Var10->LruBlink;
+      p_Var7 = p_Var2 + bVar1;
+      if ((((((p_Var7->field4_0x7).FlagsAsUCHAR & 3) == uVar6) &&
+           (((p_Var7->field4_0x7).FlagsAsUCHAR & 0x40) != 0)) && (param_2 <= p_Var7->BlockNumber))
+         && ((p_Var7->BlockNumber <= param_3 &&
+             (lVar3 = StfcFlushBlockCacheEntry(param_1,(uint)bVar1,p_Var7), lVar3 < 0)))) {
+        return lVar3;
+      }
+      if (p_Var7 == p_Var5) break;
+      bVar1 = p_Var7->LruBlink;
     }
-    uVar9 = uVar9 + 1;
-  } while (uVar9 <= uVar7);
-  lVar4 = 0;
-LAB_828af760:
-  lVar4 = __restgprlr_23(lVar4);
-  return lVar4;
+    uVar6 = uVar6 + 1;
+    if (uVar4 < uVar6) {
+      return 0;
+    }
+  } while( true );
 }
 
 
 // 828B2178  StfcSetAllocationSize  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/stfc/stfsup.c:2265)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 long StfcSetAllocationSize
                (_STFC_VOLUME_EXTENSION *param_1,_STFC_FCB *param_2,ulong param_3,ulong param_4)
 
 {
-  _STFC_VOLUME_EXTENSION *p_Var1;
+  uint uVar1;
   long lVar2;
-  ulonglong uVar3;
-  ulonglong uVar4;
   
-  uVar4 = (ulonglong)(int)param_4;
-  uVar3 = (ulonglong)(int)param_3;
-  p_Var1 = (_STFC_VOLUME_EXTENSION *)__savegprlr_27(param_1);
-  if ((uVar3 & 0xffffffff) < 0xfffff001) {
+  if (param_3 < 0xfffff001) {
     lVar2 = 0;
-    uVar3 = uVar3 + 0xfff & 0xfffff000;
-    if ((param_2->AllocationSize != uVar3) &&
+    uVar1 = param_3 + 0xfff & 0xfffff000;
+    if ((param_2->AllocationSize != uVar1) &&
        ((((param_2->Flags & 4) != 0 || ((param_2->Flags & 0x20) != 0)) ||
-        (lVar2 = StfcEnsureWriteableDirectoryEntry(p_Var1,param_2), -1 < lVar2)))) {
-      if (uVar3 == 0) {
-        lVar2 = StfcDeleteFileAllocation(p_Var1,param_2);
+        (lVar2 = StfcEnsureWriteableDirectoryEntry(param_1,param_2), -1 < lVar2)))) {
+      if (uVar1 == 0) {
+        lVar2 = StfcDeleteFileAllocation(param_1,param_2);
       }
-      else if (param_2->AllocationSize < uVar3) {
-        lVar2 = StfcExtendFileAllocation(p_Var1,param_2,(ulong)uVar3);
+      else if (param_2->AllocationSize < uVar1) {
+        lVar2 = StfcExtendFileAllocation(param_1,param_2,uVar1);
       }
-      else if (((uVar4 & 0xffffffff) == 0) && (uVar3 < param_2->AllocationSize)) {
-        lVar2 = StfcTruncateFileAllocation(p_Var1,param_2,(ulong)uVar3);
+      else if ((param_4 == 0) && (uVar1 < param_2->AllocationSize)) {
+        lVar2 = StfcTruncateFileAllocation(param_1,param_2,uVar1);
       }
       else {
         lVar2 = 0;
@@ -5440,7 +5215,6 @@ long StfcSetAllocationSize
   else {
     lVar2 = -0x3fffff81;
   }
-  lVar2 = __restgprlr_27(lVar2);
   return lVar2;
 }
 
@@ -5496,153 +5270,146 @@ void StfcSetInAllocationSupport(_STFC_VOLUME_EXTENSION *param_1,uchar param_2)
 
 // 828AFED0  StfcLookupElementNameInDirectory  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/stfc/stfsup.c:2365)
 
+/* WARNING: Function: __savegprlr_21 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_21 replaced with injection: xenon_save_restore */
+
 long StfcLookupElementNameInDirectory
                (_STFC_VOLUME_EXTENSION *param_1,_STFC_FCB *param_2,_STRING *param_3,
                _DIRECTORY_ENUM_CONTEXT *param_4,_STFC_DIRECTORY_LOOKUP *param_5)
 
 {
   ushort uVar1;
-  _STFC_VOLUME_EXTENSION *p_Var2;
-  long lVar3;
-  ulong uVar4;
-  int iVar5;
-  ulonglong uVar6;
-  uint *puVar7;
-  uint uVar8;
-  uint uVar9;
-  ulong uVar10;
-  ulong uVar11;
-  uchar *puVar12;
-  void *pvVar13;
-  uchar *puVar14;
+  long lVar2;
+  ulong uVar3;
+  int iVar4;
+  uint uVar5;
+  uint uVar6;
+  ulong uVar7;
+  ulong uVar8;
+  uchar *puVar9;
+  void *pvVar10;
+  uchar *puVar11;
   void *local_70;
   ulong local_6c;
   ulong auStack_68 [26];
   
-  uVar6 = (ulonglong)(int)param_4;
-  p_Var2 = (_STFC_VOLUME_EXTENSION *)__savegprlr_21(param_1);
   uVar1 = param_2->DirectoryIndex;
-  if (p_Var2->DirectoryIndexBoundsValid == '\0') {
-    uVar11 = (p_Var2->RootDirectoryFcb).ValidDataSize;
-    uVar9 = 0;
+  if (param_1->DirectoryIndexBoundsValid == '\0') {
+    uVar8 = (param_1->RootDirectoryFcb).ValidDataSize;
+    uVar6 = 0;
   }
   else {
-    uVar9 = (uint)(param_2->FileBounds)._s_1.FirstChildDirectoryIndex << 6;
-    uVar11 = ((param_2->FileBounds)._s_1.LastChildDirectoryIndex + 1) * 0x40;
+    uVar6 = (uint)(param_2->FileBounds)._s_1.FirstChildDirectoryIndex << 6;
+    uVar8 = ((param_2->FileBounds)._s_1.LastChildDirectoryIndex + 1) * 0x40;
   }
-  puVar7 = (uint *)uVar6;
-  if (((uVar6 & 0xffffffff) != 0) && (uVar9 < *puVar7)) {
-    uVar9 = *puVar7;
+  if ((param_4 != (_DIRECTORY_ENUM_CONTEXT *)0x0) && (uVar6 < param_4->QueryOffset)) {
+    uVar6 = param_4->QueryOffset;
   }
-  pvVar13 = (void *)0x0;
-  puVar14 = (uchar *)0x0;
+  pvVar10 = (void *)0x0;
+  puVar11 = (uchar *)0x0;
   local_70 = (void *)0x0;
-  puVar12 = (uchar *)0x0;
-  uVar10 = 0xffffffff;
+  puVar9 = (uchar *)0x0;
+  uVar7 = 0xffffffff;
   do {
-    if (puVar14 == puVar12) {
-      if (pvVar13 != (void *)0x0) {
-        uVar8 = (int)pvVar13 - (int)p_Var2->BlockArray;
-        pvVar13 = (void *)0x0;
+    if (puVar11 == puVar9) {
+      if (pvVar10 != (void *)0x0) {
+        uVar5 = (int)pvVar10 - (int)param_1->BlockArray;
+        pvVar10 = (void *)0x0;
         local_70 = (void *)0x0;
-        iVar5 = ((int)uVar8 >> 0xc) + (uint)((int)uVar8 < 0 && (uVar8 & 0xfff) != 0);
-        p_Var2->BlockCache[iVar5].ReferenceCount = p_Var2->BlockCache[iVar5].ReferenceCount + 0xff;
+        iVar4 = ((int)uVar5 >> 0xc) + (uint)((int)uVar5 < 0 && (uVar5 & 0xfff) != 0);
+        param_1->BlockCache[iVar4].ReferenceCount = param_1->BlockCache[iVar4].ReferenceCount + 0xff
+        ;
       }
-      if (uVar11 <= uVar9) {
-        lVar3 = -0x3fffffcc;
+      if (uVar8 <= uVar6) {
+        lVar2 = -0x3fffffcc;
         goto LAB_828b0050;
       }
-      lVar3 = StfcByteOffsetToBlockNumber
-                        (p_Var2,(_STFC_FCB *)&p_Var2->RootDirectoryFcb,uVar9,&local_6c,auStack_68,
+      lVar2 = StfcByteOffsetToBlockNumber
+                        (param_1,(_STFC_FCB *)&param_1->RootDirectoryFcb,uVar6,&local_6c,auStack_68,
                          (ulong *)0x0);
-      if (lVar3 < 0) goto LAB_828b0050;
-      lVar3 = StfcMapReadableDataBlock(p_Var2,local_6c,&local_70);
-      pvVar13 = local_70;
-      if (lVar3 < 0) goto LAB_828b0050;
-      puVar12 = (uchar *)((int)local_70 + 0x1000);
-      puVar14 = (uchar *)((uVar9 & 0xfff) + (int)local_70);
+      if (lVar2 < 0) goto LAB_828b0050;
+      lVar2 = StfcMapReadableDataBlock(param_1,local_6c,&local_70);
+      pvVar10 = local_70;
+      if (lVar2 < 0) goto LAB_828b0050;
+      puVar9 = (uchar *)((int)local_70 + 0x1000);
+      puVar11 = (uchar *)((uVar6 & 0xfff) + (int)local_70);
     }
-    uVar8 = puVar14[0x28] & 0x3f;
-    if ((puVar14[0x28] & 0x3f) == 0) {
-      if (uVar10 == 0xffffffff) {
-        uVar10 = uVar9;
+    uVar5 = puVar11[0x28] & 0x3f;
+    if ((puVar11[0x28] & 0x3f) == 0) {
+      if (uVar7 == 0xffffffff) {
+        uVar7 = uVar6;
       }
     }
-    else if (*(ushort *)(puVar14 + 0x32) == uVar1) {
-      if ((uVar6 & 0xffffffff) == 0) {
-        iVar5 = RtlCompareStringN(param_3->Buffer,param_3->Length,puVar14,uVar8,1);
-        if (iVar5 == 0) goto LAB_828b0038;
+    else if (*(ushort *)(puVar11 + 0x32) == uVar1) {
+      if (param_4 == (_DIRECTORY_ENUM_CONTEXT *)0x0) {
+        iVar4 = RtlCompareStringN(param_3->Buffer,param_3->Length,puVar11,uVar5,1);
+        if (iVar4 == 0) goto LAB_828b0038;
       }
       else {
-        if (puVar7[2] == 0) {
+        if ((param_4->TemplateFileName).Buffer == (wchar_t *)0x0) {
 LAB_828b0038:
           memcpy();
-          param_5->DirectoryByteOffset = uVar9;
-          lVar3 = 0;
+          param_5->DirectoryByteOffset = uVar6;
+          lVar2 = 0;
 LAB_828b0050:
-          if (pvVar13 != (void *)0x0) {
-            uVar9 = (int)pvVar13 - (int)p_Var2->BlockArray;
-            iVar5 = ((int)uVar9 >> 0xc) + (uint)((int)uVar9 < 0 && (uVar9 & 0xfff) != 0);
-            p_Var2->BlockCache[iVar5].ReferenceCount =
-                 p_Var2->BlockCache[iVar5].ReferenceCount + 0xff;
+          if (pvVar10 != (void *)0x0) {
+            uVar6 = (int)pvVar10 - (int)param_1->BlockArray;
+            iVar4 = ((int)uVar6 >> 0xc) + (uint)((int)uVar6 < 0 && (uVar6 & 0xfff) != 0);
+            param_1->BlockCache[iVar4].ReferenceCount =
+                 param_1->BlockCache[iVar4].ReferenceCount + 0xff;
           }
-          param_5->EmptyDirectoryByteOffset = uVar10;
-          lVar3 = __restgprlr_21(lVar3);
-          return lVar3;
+          param_5->EmptyDirectoryByteOffset = uVar7;
+          return lVar2;
         }
-        uVar4 = IoIsNameInExpression((_UNICODE_STRING *)(puVar7 + 1),puVar14,uVar8,0);
-        if (uVar4 != 0) goto LAB_828b0038;
+        uVar3 = IoIsNameInExpression(&param_4->TemplateFileName,puVar11,uVar5,0);
+        if (uVar3 != 0) goto LAB_828b0038;
       }
     }
-    puVar14 = puVar14 + 0x40;
-    uVar9 = uVar9 + 0x40;
+    puVar11 = puVar11 + 0x40;
+    uVar6 = uVar6 + 0x40;
   } while( true );
 }
 
 
 // 828B00D0  StfcFindExitingBlock  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/stfc/stfsup.c:2592)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 ulong StfcFindExitingBlock(_STFC_VOLUME_EXTENSION *param_1,ulong param_2,int param_3,ulong *param_4)
 
 {
+  ulong uVar2;
   ulonglong uVar1;
-  _STFC_VOLUME_EXTENSION *p_Var3;
-  ulong uVar4;
-  ulonglong uVar2;
-  long lVar5;
-  ulonglong uVar6;
-  int iVar7;
-  uint uVar8;
-  int iVar9;
+  long lVar3;
+  uint uVar4;
+  int iVar5;
   _STFC_HASH_BLOCK *local_30;
   _STFC_BLOCK_CACHE_ELEMENT *ap_Stack_2c [11];
   
-  uVar6 = (ulonglong)(int)param_4;
-  uVar2 = (ulonglong)(int)param_2;
-  p_Var3 = (_STFC_VOLUME_EXTENSION *)__savegprlr_28(param_1);
-  uVar4 = StfcMapExistingBlock(p_Var3,(ulong)uVar2,1,&local_30,ap_Stack_2c);
-  if ((uVar4 == 0) &&
-     ((param_3 == 0 ||
-      (lVar5 = StfcMapReadableHashBlock(p_Var3,(ulong)uVar2,0,&local_30), lVar5 < 0)))) {
-    uVar2 = 0xffffffffffffffff;
+  uVar1 = (ulonglong)(int)param_2;
+  uVar2 = StfcMapExistingBlock(param_1,param_2,1,&local_30,ap_Stack_2c);
+  if ((uVar2 == 0) &&
+     ((param_3 == 0 || (lVar3 = StfcMapReadableHashBlock(param_1,param_2,0,&local_30), lVar3 < 0))))
+  {
+    uVar1 = 0xffffffffffffffff;
   }
   else {
-    uVar1 = uVar2 & 0xffffffff;
-    iVar7 = 0;
-    while ((uVar2 = (ulonglong)
+    uVar2 = 0;
+    while ((uVar1 = (ulonglong)
                     *(uint *)((int)local_30 +
-                             ((int)uVar2 + (int)((uVar2 & 0xffffffff) / 0xaa) * -0xaa) * 0x18 + 0x14
-                             ) & 0xffffff, uVar2 != 0xffffff && (uVar2 / 0xaa == uVar1 / 0xaa))) {
-      iVar7 = iVar7 + 1;
+                             ((int)uVar1 + (int)((uVar1 & 0xffffffff) / 0xaa) * -0xaa) * 0x18 + 0x14
+                             ) & 0xffffff, uVar1 != 0xffffff &&
+           (uVar1 / 0xaa == (ulonglong)param_2 / 0xaa))) {
+      uVar2 = uVar2 + 1;
     }
-    uVar8 = (int)local_30 - (int)p_Var3->BlockArray;
-    iVar9 = ((int)uVar8 >> 0xc) + (uint)((int)uVar8 < 0 && (uVar8 & 0xfff) != 0);
-    p_Var3->BlockCache[iVar9].ReferenceCount = p_Var3->BlockCache[iVar9].ReferenceCount + 0xff;
-    if ((uVar6 & 0xffffffff) != 0) {
-      *(int *)uVar6 = iVar7;
+    uVar4 = (int)local_30 - (int)param_1->BlockArray;
+    iVar5 = ((int)uVar4 >> 0xc) + (uint)((int)uVar4 < 0 && (uVar4 & 0xfff) != 0);
+    param_1->BlockCache[iVar5].ReferenceCount = param_1->BlockCache[iVar5].ReferenceCount + 0xff;
+    if (param_4 != (ulong *)0x0) {
+      *param_4 = uVar2;
     }
   }
-  uVar4 = __restgprlr_28(uVar2);
-  return uVar4;
+  return (ulong)uVar1;
 }
 

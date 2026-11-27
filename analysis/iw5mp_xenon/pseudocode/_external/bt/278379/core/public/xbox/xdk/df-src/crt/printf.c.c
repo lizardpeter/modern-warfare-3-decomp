@@ -2,41 +2,39 @@
 
 // 82918538  printf  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/printf.c:49)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 int printf(char *param_1)
 
 {
   char *pcVar1;
-  longlong lVar2;
-  int *piVar4;
-  ulonglong uVar3;
-  _iobuf *p_Var5;
-  uint uVar6;
-  int iVar7;
+  int *piVar2;
+  _iobuf *p_Var3;
+  int iVar4;
+  int iVar5;
   char *pcStack00000014;
   
-  lVar2 = __savegprlr_29(param_1);
-  pcStack00000014 = (char *)lVar2;
-  if (lVar2 == 0) {
-    piVar4 = _errno();
-    *piVar4 = 0x16;
+  pcStack00000014 = param_1;
+  if (param_1 == (char *)0x0) {
+    piVar2 = _errno();
+    *piVar2 = 0x16;
     _invalid_parameter_noinfo();
-    uVar3 = 0xffffffffffffffff;
+    iVar5 = -1;
   }
   else {
-    p_Var5 = __iob_func();
-    _lock_file2(1,p_Var5 + 1);
-    p_Var5 = __iob_func();
-    iVar7 = _stbuf(p_Var5 + 1);
+    p_Var3 = __iob_func();
+    _lock_file2(1,p_Var3 + 1);
+    p_Var3 = __iob_func();
+    iVar4 = _stbuf(p_Var3 + 1);
     pcVar1 = pcStack00000014;
-    p_Var5 = __iob_func();
-    uVar6 = _output_l(p_Var5 + 1,pcVar1,(localeinfo_struct *)0x0,&stack0x00000018);
-    p_Var5 = __iob_func();
-    _ftbuf(iVar7,p_Var5 + 1);
+    p_Var3 = __iob_func();
+    iVar5 = _output_l(p_Var3 + 1,pcVar1,(localeinfo_struct *)0x0,&stack0x00000018);
+    p_Var3 = __iob_func();
+    _ftbuf(iVar4,p_Var3 + 1);
     FUN_82918604();
-    uVar3 = (ulonglong)uVar6;
   }
-  iVar7 = __restgprlr_29(uVar3);
-  return iVar7;
+  return iVar5;
 }
 
 

@@ -2,46 +2,39 @@
 
 // 82919BA8  _fsopen  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/fopen.c:50)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 _iobuf * _fsopen(char *param_1,char *param_2,int param_3)
 
 {
-  char *pcVar1;
-  int *piVar2;
-  _iobuf *p_Var3;
-  longlong lVar4;
+  int *piVar1;
+  _iobuf *p_Var2;
+  longlong lVar3;
   
-  lVar4 = (longlong)(int)param_2;
-  pcVar1 = (char *)__savegprlr_26(param_1);
-  if (pcVar1 != (char *)0x0) {
-    if (lVar4 != lVar4 + -1 + (ulonglong)(lVar4 == 0)) {
-      if (*(char *)lVar4 != '\0') {
-        p_Var3 = _getstream();
-        if (p_Var3 == (_iobuf *)0x0) {
-          piVar2 = _errno();
-          p_Var3 = (_iobuf *)0x0;
-          *piVar2 = 0x18;
-        }
-        else if (*pcVar1 == '\0') {
-          piVar2 = _errno();
-          *piVar2 = 0x16;
-          __jump_unwind();
-          p_Var3 = (_iobuf *)0x0;
-        }
-        else {
-          p_Var3 = _openfile(pcVar1,(char *)lVar4,param_3,p_Var3);
-          FUN_82919ccc();
-        }
-        goto LAB_82919ca4;
-      }
-    }
+  lVar3 = (longlong)(int)param_2;
+  if (((param_1 == (char *)0x0) || (lVar3 == lVar3 + -1 + (ulonglong)(lVar3 == 0))) ||
+     (*param_2 == '\0')) {
+    piVar1 = _errno();
+    *piVar1 = 0x16;
+    _invalid_parameter_noinfo();
+    return (_iobuf *)0x0;
   }
-  piVar2 = _errno();
-  *piVar2 = 0x16;
-  _invalid_parameter_noinfo();
-  p_Var3 = (_iobuf *)0x0;
-LAB_82919ca4:
-  p_Var3 = (_iobuf *)__restgprlr_26(p_Var3);
-  return p_Var3;
+  p_Var2 = _getstream();
+  if (p_Var2 == (_iobuf *)0x0) {
+    piVar1 = _errno();
+    *piVar1 = 0x18;
+    return (_iobuf *)0x0;
+  }
+  if (*param_1 == '\0') {
+    piVar1 = _errno();
+    *piVar1 = 0x16;
+    __jump_unwind();
+    return (_iobuf *)0x0;
+  }
+  p_Var2 = _openfile(param_1,param_2,param_3,p_Var2);
+  FUN_82919ccc();
+  return p_Var2;
 }
 
 

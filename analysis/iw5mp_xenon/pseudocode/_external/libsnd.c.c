@@ -32,105 +32,101 @@ void FreeSpCBM(void **param_1)
 
 // 828C8D88  PutFrameSpCBM  (<external>/Xenon/mar09/core/private/xam/codecs/nci/enc/src/libsnd.c:180)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
+
 void PutFrameSpCBM(void *param_1,int param_2,int param_3,float *param_4)
 
 {
   uint uVar1;
   uint uVar2;
-  uint uVar3;
-  uint *puVar4;
-  uint *puVar5;
-  void *pvVar6;
-  ulonglong uVar7;
-  ulonglong uVar8;
-  longlong lVar9;
-  longlong lVar10;
-  int iVar11;
-  ulonglong uVar12;
+  void *pvVar3;
+  void *pvVar4;
+  ulonglong uVar5;
+  longlong lVar6;
+  longlong lVar7;
+  int iVar8;
+  ulonglong uVar9;
   
-  lVar9 = (longlong)(int)param_4;
-  uVar7 = (ulonglong)param_3;
-  uVar8 = (ulonglong)param_2;
-  puVar4 = (uint *)__savegprlr_23(param_1,uVar8,uVar7,lVar9);
-  pvVar6 = (void *)lVar9;
-  uVar1 = *puVar4;
-  uVar12 = (ulonglong)uVar1;
-  uVar2 = puVar4[1];
-  trapWord(5,uVar12 & ~(((uVar8 & 0x7fffffff) << 1 | (uVar8 & 0xffffffff) >> 0x1f) - 1),0xffff);
-  uVar8 = (uVar8 - (longlong)((int)uVar8 / (int)uVar1) * (longlong)(int)uVar1) + (ulonglong)uVar2 +
-          uVar12;
-  lVar9 = uVar8 - (longlong)((int)uVar8 / (int)uVar1) * (longlong)(int)uVar1;
-  lVar10 = uVar12 - lVar9;
-  trapWord(6,uVar12,0);
-  trapWord(6,uVar12,0);
-  trapWord(5,uVar12 & ~(((uVar8 & 0x7fffffff) << 1 | (uVar8 & 0xffffffff) >> 0x1f) - 1),0xffff);
-  iVar11 = (int)lVar10;
-  puVar5 = puVar4 + 2 + (int)lVar9;
-  uVar8 = uVar7;
-  if (iVar11 < (int)uVar7) {
-    uVar3 = iVar11 * 4;
-    (*memcpyfunc)(puVar5,pvVar6,uVar3);
-    pvVar6 = (void *)(uVar3 + (int)pvVar6);
-    uVar8 = uVar7 - lVar10;
-    puVar5 = puVar4 + 2;
+  uVar1 = *(uint *)param_1;
+  uVar9 = (ulonglong)uVar1;
+  uVar2 = *(uint *)((int)param_1 + 4);
+  pvVar4 = (void *)((int)param_1 + 8);
+  trapWord(5,uVar9 & ~((((ulonglong)(uint)param_2 & 0x7fffffff) << 1 |
+                       (ulonglong)((uint)param_2 >> 0x1f)) - 1),0xffff);
+  uVar5 = ((longlong)param_2 - (longlong)(param_2 / (int)uVar1) * (longlong)(int)uVar1) +
+          (ulonglong)uVar2 + uVar9;
+  lVar6 = uVar5 - (longlong)((int)uVar5 / (int)uVar1) * (longlong)(int)uVar1;
+  lVar7 = uVar9 - lVar6;
+  trapWord(6,uVar9,0);
+  trapWord(6,uVar9,0);
+  trapWord(5,uVar9 & ~(((uVar5 & 0x7fffffff) << 1 | (uVar5 & 0xffffffff) >> 0x1f) - 1),0xffff);
+  iVar8 = (int)lVar7;
+  pvVar3 = (void *)((int)lVar6 * 4 + (int)pvVar4);
+  if (iVar8 < param_3) {
+    (*memcpyfunc)(pvVar3,param_4,iVar8 * 4);
+    param_4 = param_4 + iVar8;
+    uVar5 = param_3 - lVar7 & 0xffffffff;
   }
-  (*memcpyfunc)(puVar5,pvVar6,(uint)((uVar8 & 0x3fffffff) << 2));
-  uVar8 = (uVar7 - (longlong)((int)uVar7 / (int)uVar1) * (longlong)(int)uVar1) + (ulonglong)uVar2 +
-          uVar12;
-  trapWord(5,uVar12 & ~(((uVar7 & 0x7fffffff) << 1 | (uVar7 & 0xffffffff) >> 0x1f) - 1),0xffff);
-  trapWord(6,uVar12,0);
-  puVar4[1] = (int)uVar8 - ((int)uVar8 / (int)uVar1) * uVar1;
-  trapWord(6,uVar12,0);
-  trapWord(5,uVar12 & ~(((uVar8 & 0x7fffffff) << 1 | (uVar8 & 0xffffffff) >> 0x1f) - 1),0xffff);
-  __restgprlr_23();
+  else {
+    uVar5 = CONCAT44(param_3,param_3);
+    pvVar4 = pvVar3;
+  }
+  (*memcpyfunc)(pvVar4,param_4,(uint)((uVar5 & 0x3fffffff) << 2));
+  uVar5 = ((longlong)param_3 - (longlong)(param_3 / (int)uVar1) * (longlong)(int)uVar1) +
+          (ulonglong)uVar2 + uVar9;
+  trapWord(5,uVar9 & ~((((ulonglong)(uint)param_3 & 0x7fffffff) << 1 |
+                       (ulonglong)((uint)param_3 >> 0x1f)) - 1),0xffff);
+  trapWord(6,uVar9,0);
+  *(uint *)((int)param_1 + 4) = (int)uVar5 - ((int)uVar5 / (int)uVar1) * uVar1;
+  trapWord(6,uVar9,0);
+  trapWord(5,uVar9 & ~(((uVar5 & 0x7fffffff) << 1 | (uVar5 & 0xffffffff) >> 0x1f) - 1),0xffff);
   return;
 }
 
 
 // 828C8EA8  GetFrameSpCBM  (<external>/Xenon/mar09/core/private/xam/codecs/nci/enc/src/libsnd.c:266)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 void GetFrameSpCBM(void *param_1,int param_2,int param_3,float *param_4)
 
 {
   uint uVar1;
-  uint *puVar2;
+  void *pvVar2;
   void *pvVar3;
-  uint *puVar4;
+  ulonglong uVar4;
   ulonglong uVar5;
-  ulonglong uVar6;
-  longlong lVar7;
-  ulonglong uVar8;
-  ulonglong uVar9;
-  longlong lVar10;
-  int iVar11;
+  longlong lVar6;
+  ulonglong uVar7;
+  longlong lVar8;
+  int iVar9;
   
-  lVar10 = (longlong)(int)param_4;
-  uVar9 = (ulonglong)param_3;
-  lVar7 = (longlong)param_2;
-  puVar2 = (uint *)__savegprlr_26(param_1,lVar7,uVar9,lVar10);
-  pvVar3 = (void *)lVar10;
-  uVar1 = *puVar2;
-  uVar8 = (ulonglong)uVar1;
-  trapWord(6,uVar8,0);
-  uVar5 = -(((int)uVar9 + 1 >> 1) + lVar7);
-  trapWord(6,uVar8,0);
-  uVar6 = (uVar5 - (longlong)((int)uVar5 / (int)uVar1) * (longlong)(int)uVar1) +
-          (ulonglong)puVar2[1] + uVar8;
-  trapWord(5,uVar8 & ~(((uVar5 & 0x7fffffff) << 1 | (uVar5 & 0xffffffff) >> 0x1f) - 1),0xffff);
-  lVar7 = uVar6 - (longlong)((int)uVar6 / (int)uVar1) * (longlong)(int)uVar1;
-  lVar10 = uVar8 - lVar7;
-  trapWord(5,uVar8 & ~(((uVar6 & 0x7fffffff) << 1 | (uVar6 & 0xffffffff) >> 0x1f) - 1),0xffff);
-  iVar11 = (int)lVar10;
-  puVar4 = puVar2 + 2 + (int)lVar7;
-  if (iVar11 < (int)uVar9) {
-    uVar1 = iVar11 * 4;
-    (*memcpyfunc)(pvVar3,puVar4,uVar1);
-    uVar9 = uVar9 - lVar10;
-    pvVar3 = (void *)(uVar1 + (int)pvVar3);
-    puVar4 = puVar2 + 2;
+  pvVar3 = (void *)((int)param_1 + 8);
+  uVar1 = *(uint *)param_1;
+  uVar7 = (ulonglong)uVar1;
+  trapWord(6,uVar7,0);
+  uVar4 = -((longlong)(param_3 + 1 >> 1) + (longlong)param_2);
+  trapWord(6,uVar7,0);
+  uVar5 = (uVar4 - (longlong)((int)uVar4 / (int)uVar1) * (longlong)(int)uVar1) +
+          (ulonglong)*(uint *)((int)param_1 + 4) + uVar7;
+  trapWord(5,uVar7 & ~(((uVar4 & 0x7fffffff) << 1 | (uVar4 & 0xffffffff) >> 0x1f) - 1),0xffff);
+  lVar6 = uVar5 - (longlong)((int)uVar5 / (int)uVar1) * (longlong)(int)uVar1;
+  lVar8 = uVar7 - lVar6;
+  trapWord(5,uVar7 & ~(((uVar5 & 0x7fffffff) << 1 | (uVar5 & 0xffffffff) >> 0x1f) - 1),0xffff);
+  iVar9 = (int)lVar8;
+  pvVar2 = (void *)((int)lVar6 * 4 + (int)pvVar3);
+  if (iVar9 < param_3) {
+    (*memcpyfunc)(param_4,pvVar2,iVar9 * 4);
+    uVar4 = param_3 - lVar8 & 0xffffffff;
+    param_4 = param_4 + iVar9;
   }
-  (*memcpyfunc)(pvVar3,puVar4,(uint)((uVar9 & 0x3fffffff) << 2));
-  __restgprlr_26();
+  else {
+    uVar4 = CONCAT44(param_3,param_3);
+    pvVar3 = pvVar2;
+  }
+  (*memcpyfunc)(param_4,pvVar3,(uint)((uVar4 & 0x3fffffff) << 2));
   return;
 }
 

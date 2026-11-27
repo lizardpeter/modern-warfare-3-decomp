@@ -80,60 +80,55 @@ uchar EncodeFloatInByte(float param_1)
 
 // 82761CE8  GatherIncidentEnergyInSpaceForLightFromDir  (gfx_d3d/r_pointlights.cpp:60)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void GatherIncidentEnergyInSpaceForLightFromDir(float *param_1,float *param_2,float (*param_3) [3])
 
 {
   float fVar1;
   float *pfVar2;
-  int iVar3;
-  float *pfVar4;
-  float *pfVar5;
-  longlong lVar6;
-  longlong lVar7;
+  float *pfVar3;
+  longlong lVar4;
   
-  lVar6 = (longlong)(int)param_3;
-  pfVar4 = (float *)__savegprlr_28(param_1);
-  lVar7 = 0xe;
-  iVar3 = (int)lVar6;
-  pfVar5 = gridBasisDirs[0] + 2;
-  lVar6 = lVar6 + 0x14;
+  lVar4 = 0xe;
+  pfVar2 = gridBasisDirs[0] + 2;
+  pfVar3 = param_3[1] + 2;
   do {
-    fVar1 = *pfVar5 * param_2[2] +
-            pfVar5[-1] * param_2[1] + (*(float (*) [3])(pfVar5 + -2))[0] * *param_2;
-    pfVar2 = (float *)lVar6;
+    fVar1 = *pfVar2 * param_2[2] +
+            pfVar2[-1] * param_2[1] + (*(float (*) [3])(pfVar2 + -2))[0] * *param_2;
     if (0.0 < fVar1) {
-      pfVar2[-5] = *pfVar4 * fVar1 + pfVar2[-5];
-      pfVar2[-4] = pfVar4[1] * fVar1 + pfVar2[-4];
-      pfVar2[-3] = pfVar4[2] * fVar1 + pfVar2[-3];
+      pfVar3[-5] = *param_1 * fVar1 + pfVar3[-5];
+      pfVar3[-4] = param_1[1] * fVar1 + pfVar3[-4];
+      pfVar3[-3] = param_1[2] * fVar1 + pfVar3[-3];
     }
-    fVar1 = *(float *)(((int)gridBasisDirs - iVar3) + (int)pfVar2) * param_2[2] +
-            pfVar5[2] * param_2[1] + pfVar5[1] * *param_2;
+    fVar1 = *(float *)(((int)gridBasisDirs - (int)param_3) + (int)pfVar3) * param_2[2] +
+            pfVar2[2] * param_2[1] + pfVar2[1] * *param_2;
     if (0.0 < fVar1) {
-      pfVar2[-2] = *pfVar4 * fVar1 + pfVar2[-2];
-      pfVar2[-1] = pfVar4[1] * fVar1 + pfVar2[-1];
-      *pfVar2 = pfVar4[2] * fVar1 + *pfVar2;
+      (*(float (*) [3])(pfVar3 + -2))[0] = *param_1 * fVar1 + (*(float (*) [3])(pfVar3 + -2))[0];
+      pfVar3[-1] = param_1[1] * fVar1 + pfVar3[-1];
+      *pfVar3 = param_1[2] * fVar1 + *pfVar3;
     }
-    fVar1 = *(float *)((-0x7b9d795c - iVar3) + (int)pfVar2) * param_2[2] +
-            *(float *)((-0x7b9d7964 - iVar3) + (int)pfVar2) * *param_2 +
-            *(float *)((-0x7b9d7960 - iVar3) + (int)pfVar2) * param_2[1];
+    fVar1 = *(float *)((-0x7b9d795c - (int)param_3) + (int)pfVar3) * param_2[2] +
+            *(float *)((-0x7b9d7964 - (int)param_3) + (int)pfVar3) * *param_2 +
+            *(float *)((-0x7b9d7960 - (int)param_3) + (int)pfVar3) * param_2[1];
     if (0.0 < fVar1) {
-      pfVar2[1] = *pfVar4 * fVar1 + pfVar2[1];
-      pfVar2[2] = pfVar4[1] * fVar1 + pfVar2[2];
-      pfVar2[3] = pfVar4[2] * fVar1 + pfVar2[3];
+      pfVar3[1] = *param_1 * fVar1 + pfVar3[1];
+      pfVar3[2] = param_1[1] * fVar1 + pfVar3[2];
+      pfVar3[3] = param_1[2] * fVar1 + pfVar3[3];
     }
-    fVar1 = *(float *)((-0x7b9d7950 - iVar3) + (int)pfVar2) * param_2[2] +
-            *(float *)((-0x7b9d7958 - iVar3) + (int)pfVar2) * *param_2 +
-            *(float *)((-0x7b9d7954 - iVar3) + (int)pfVar2) * param_2[1];
+    fVar1 = *(float *)((-0x7b9d7950 - (int)param_3) + (int)pfVar3) * param_2[2] +
+            *(float *)((-0x7b9d7958 - (int)param_3) + (int)pfVar3) * *param_2 +
+            *(float *)((-0x7b9d7954 - (int)param_3) + (int)pfVar3) * param_2[1];
     if (0.0 < fVar1) {
-      pfVar2[4] = *pfVar4 * fVar1 + pfVar2[4];
-      pfVar2[5] = pfVar4[1] * fVar1 + pfVar2[5];
-      pfVar2[6] = pfVar4[2] * fVar1 + pfVar2[6];
+      pfVar3[4] = *param_1 * fVar1 + pfVar3[4];
+      pfVar3[5] = param_1[1] * fVar1 + pfVar3[5];
+      pfVar3[6] = param_1[2] * fVar1 + pfVar3[6];
     }
-    pfVar5 = pfVar5 + 0xc;
-    lVar6 = lVar6 + 0x30;
-    lVar7 = lVar7 + -1;
-  } while (lVar7 != 0);
-  __restgprlr_28();
+    pfVar2 = pfVar2 + 0xc;
+    pfVar3 = pfVar3 + 0xc;
+    lVar4 = lVar4 + -1;
+  } while (lVar4 != 0);
   return;
 }
 
@@ -216,6 +211,9 @@ EvaluateHeroOnlyLightForGrid(GfxHeroOnlyLight *param_1,float *param_2,float *par
 
 // 82762058  R_AddHeroOnlyLightsToGridColors  (gfx_d3d/r_pointlights.cpp:341)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
+
 void R_AddHeroOnlyLightsToGridColors
                (ushort *param_1,float *param_2,float (*param_3) [3],float (*param_4) [3])
 
@@ -229,179 +227,165 @@ void R_AddHeroOnlyLightsToGridColors
   ushort uVar7;
   ushort *puVar8;
   float fVar9;
-  float fVar10;
-  int iVar11;
-  LightInfluenceType LVar12;
-  ulonglong uVar13;
-  ulonglong uVar14;
-  undefined2 *puVar15;
-  float *pfVar17;
-  ulonglong uVar16;
-  ushort *puVar18;
-  uint uVar19;
-  float *pfVar20;
-  int iVar21;
-  longlong lVar22;
-  longlong lVar23;
-  double dVar24;
+  LightInfluenceType LVar10;
+  ushort *puVar11;
+  float *pfVar12;
+  uint uVar13;
+  float *pfVar14;
+  float *pfVar15;
+  int iVar16;
+  longlong lVar17;
+  longlong lVar18;
+  double dVar19;
   int iStack_34c;
   float afStack_310 [4];
   float afStack_300 [3];
   float fStack_2f4;
   float local_2f0 [188];
   
-  uVar14 = (ulonglong)(int)param_4;
-  uVar13 = (ulonglong)(int)param_3;
-  uVar16 = (ulonglong)(int)param_2;
-  iVar11 = __savegprlr_24(param_1);
-  if ((uVar14 & 0xffffffff) == 0) {
+  if (param_4 == (float (*) [3])0x0) {
 LAB_827620ac:
-    if ((uVar13 & 0xffffffff) == 0) goto LAB_827620b4;
+    if (param_3 == (float (*) [3])0x0) goto LAB_827620b4;
   }
   else {
-    if ((uVar13 & 0xffffffff) != 0) {
+    if (param_3 != (float (*) [3])0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_pointlights.cpp",
                       0x166,0,"%s");
       goto LAB_827620ac;
     }
 LAB_827620b4:
-    uVar13 = uVar14;
+    param_3 = param_4;
   }
-  if (((r_heroLighting->current).enabled == false) && ((uVar14 & 0xffffffff) == 0))
-  goto LAB_827624fc;
+  if (((r_heroLighting->current).enabled == false) && (param_4 == (float (*) [3])0x0)) {
+    return;
+  }
   Profile_Begin(0x51);
-  pfVar20 = (float *)0x0;
-  dVar24 = 3.0637256713816896e-05;
-  if (((r_heroLighting->current).enabled == false) ||
-     (((uVar16 & 0xffffffff) == 0 || (uVar19 = 0, (rgp.world)->heroOnlyLightCount == 0)))) {
+  pfVar14 = (float *)0x0;
+  dVar19 = 3.0637256713816896e-05;
+  if ((((r_heroLighting->current).enabled == false) || (param_2 == (float *)0x0)) ||
+     (uVar13 = 0, (rgp.world)->heroOnlyLightCount == 0)) {
 LAB_827622a0:
-    if ((uVar13 & 0xffffffff) != 0) {
-      pfVar20 = local_2f0;
-      pfVar17 = &fStack_2f4;
-      puVar18 = (ushort *)(iVar11 + -2);
-      lVar22 = 0x15;
-      do {
-        puVar8 = puVar18 + 4;
-        uVar1 = puVar18[5];
-        uVar2 = puVar18[7];
-        uVar3 = puVar18[2];
-        uVar4 = puVar18[3];
-        uVar5 = puVar18[1];
-        uVar6 = puVar18[6];
-        puVar18 = puVar18 + 8;
-        uVar7 = *puVar18;
-        pfVar17[4] = (float)((double)*puVar8 * dVar24) * (float)((double)*puVar8 * dVar24);
-        pfVar17[2] = (float)((double)uVar3 * dVar24) * (float)((double)uVar3 * dVar24);
-        pfVar17[3] = (float)((double)uVar4 * dVar24) * (float)((double)uVar4 * dVar24);
-        pfVar17[1] = (float)((double)uVar5 * dVar24) * (float)((double)uVar5 * dVar24);
-        pfVar17[5] = (float)((double)uVar1 * dVar24) * (float)((double)uVar1 * dVar24);
-        pfVar17[6] = (float)((double)uVar6 * dVar24) * (float)((double)uVar6 * dVar24);
-        pfVar17[7] = (float)((double)uVar2 * dVar24) * (float)((double)uVar2 * dVar24);
-        pfVar17 = pfVar17 + 8;
-        *pfVar17 = (float)((double)uVar7 * dVar24) * (float)((double)uVar7 * dVar24);
-        lVar22 = lVar22 + -1;
-      } while (lVar22 != 0);
-      goto LAB_827623e0;
-    }
+    if (param_3 == (float (*) [3])0x0) goto LAB_827624f4;
+    pfVar14 = local_2f0;
+    pfVar12 = &fStack_2f4;
+    puVar11 = param_1 + -1;
+    lVar17 = 0x15;
+    do {
+      puVar8 = puVar11 + 4;
+      uVar1 = puVar11[5];
+      uVar2 = puVar11[7];
+      uVar3 = puVar11[2];
+      uVar4 = puVar11[3];
+      uVar5 = puVar11[1];
+      uVar6 = puVar11[6];
+      puVar11 = puVar11 + 8;
+      uVar7 = *puVar11;
+      pfVar12[4] = (float)((double)*puVar8 * dVar19) * (float)((double)*puVar8 * dVar19);
+      pfVar12[2] = (float)((double)uVar3 * dVar19) * (float)((double)uVar3 * dVar19);
+      pfVar12[3] = (float)((double)uVar4 * dVar19) * (float)((double)uVar4 * dVar19);
+      pfVar12[1] = (float)((double)uVar5 * dVar19) * (float)((double)uVar5 * dVar19);
+      pfVar12[5] = (float)((double)uVar1 * dVar19) * (float)((double)uVar1 * dVar19);
+      pfVar12[6] = (float)((double)uVar6 * dVar19) * (float)((double)uVar6 * dVar19);
+      pfVar12[7] = (float)((double)uVar2 * dVar19) * (float)((double)uVar2 * dVar19);
+      pfVar12 = pfVar12 + 8;
+      *pfVar12 = (float)((double)uVar7 * dVar19) * (float)((double)uVar7 * dVar19);
+      lVar17 = lVar17 + -1;
+    } while (lVar17 != 0);
   }
   else {
-    iVar21 = 0;
+    iVar16 = 0;
     do {
-      LVar12 = EvaluateHeroOnlyLightForGrid
-                         ((GfxHeroOnlyLight *)((rgp.world)->heroOnlyLights->unused + iVar21 + -1),
-                          (float *)uVar16,afStack_310,afStack_300);
-      if (LVar12 == LIGHT_INFLUENCE_SECONDARY) {
-        if (pfVar20 == (float *)0x0) {
-          pfVar20 = local_2f0;
-          pfVar17 = &fStack_2f4;
-          puVar18 = (ushort *)(iVar11 + -2);
-          lVar22 = 0x15;
+      LVar10 = EvaluateHeroOnlyLightForGrid
+                         ((GfxHeroOnlyLight *)((rgp.world)->heroOnlyLights->unused + iVar16 + -1),
+                          param_2,afStack_310,afStack_300);
+      if (LVar10 == LIGHT_INFLUENCE_SECONDARY) {
+        if (pfVar14 == (float *)0x0) {
+          pfVar14 = local_2f0;
+          pfVar12 = &fStack_2f4;
+          puVar11 = param_1 + -1;
+          lVar17 = 0x15;
           do {
-            puVar8 = puVar18 + 4;
-            uVar1 = puVar18[1];
-            uVar2 = puVar18[7];
-            uVar3 = puVar18[3];
-            uVar4 = puVar18[2];
-            uVar5 = puVar18[6];
-            uVar6 = puVar18[5];
-            puVar18 = puVar18 + 8;
-            uVar7 = *puVar18;
-            pfVar17[4] = (float)((double)*puVar8 * dVar24) * (float)((double)*puVar8 * dVar24);
-            pfVar17[3] = (float)((double)uVar3 * dVar24) * (float)((double)uVar3 * dVar24);
-            pfVar17[2] = (float)((double)uVar4 * dVar24) * (float)((double)uVar4 * dVar24);
-            pfVar17[1] = (float)((double)uVar1 * dVar24) * (float)((double)uVar1 * dVar24);
-            pfVar17[5] = (float)((double)uVar6 * dVar24) * (float)((double)uVar6 * dVar24);
-            pfVar17[6] = (float)((double)uVar5 * dVar24) * (float)((double)uVar5 * dVar24);
-            pfVar17[7] = (float)((double)uVar2 * dVar24) * (float)((double)uVar2 * dVar24);
-            pfVar17 = pfVar17 + 8;
-            *pfVar17 = (float)((double)uVar7 * dVar24) * (float)((double)uVar7 * dVar24);
-            lVar22 = lVar22 + -1;
-          } while (lVar22 != 0);
+            puVar8 = puVar11 + 4;
+            uVar1 = puVar11[1];
+            uVar2 = puVar11[7];
+            uVar3 = puVar11[3];
+            uVar4 = puVar11[2];
+            uVar5 = puVar11[6];
+            uVar6 = puVar11[5];
+            puVar11 = puVar11 + 8;
+            uVar7 = *puVar11;
+            pfVar12[4] = (float)((double)*puVar8 * dVar19) * (float)((double)*puVar8 * dVar19);
+            pfVar12[3] = (float)((double)uVar3 * dVar19) * (float)((double)uVar3 * dVar19);
+            pfVar12[2] = (float)((double)uVar4 * dVar19) * (float)((double)uVar4 * dVar19);
+            pfVar12[1] = (float)((double)uVar1 * dVar19) * (float)((double)uVar1 * dVar19);
+            pfVar12[5] = (float)((double)uVar6 * dVar19) * (float)((double)uVar6 * dVar19);
+            pfVar12[6] = (float)((double)uVar5 * dVar19) * (float)((double)uVar5 * dVar19);
+            pfVar12[7] = (float)((double)uVar2 * dVar19) * (float)((double)uVar2 * dVar19);
+            pfVar12 = pfVar12 + 8;
+            *pfVar12 = (float)((double)uVar7 * dVar19) * (float)((double)uVar7 * dVar19);
+            lVar17 = lVar17 + -1;
+          } while (lVar17 != 0);
         }
         GatherIncidentEnergyInSpaceForLightFromDir(afStack_300,afStack_310,(float (*) [3])local_2f0)
         ;
       }
-      uVar19 = uVar19 + 1;
-      iVar21 = iVar21 + 0x44;
-    } while (uVar19 < (rgp.world)->heroOnlyLightCount);
-    if (pfVar20 == (float *)0x0) goto LAB_827622a0;
-LAB_827623e0:
-    if ((uVar13 & 0xffffffff) != 0) {
-      lVar22 = 0x38;
-      puVar15 = (undefined2 *)(iVar11 + -2);
-      do {
-        pfVar17 = pfVar20 + 3;
-        lVar23 = 3;
-        uVar16 = uVar13;
-        do {
-          fVar10 = *(float *)uVar16 + *pfVar20;
-          fVar9 = 0.0;
-          if (0.0 < fVar10) {
-            fVar9 = SQRT(fVar10);
-          }
-          iStack_34c = (int)(longlong)(fVar9 * 32640.0);
-          if (0xfeff < iStack_34c) {
-            iStack_34c = 0xff00;
-          }
-          uVar16 = uVar16 + 4;
-          puVar15 = puVar15 + 1;
-          *puVar15 = (short)iStack_34c;
-          pfVar20 = pfVar20 + 1;
-          lVar23 = lVar23 + -1;
-        } while (lVar23 != 0);
-        lVar22 = lVar22 + -1;
-        pfVar20 = pfVar17;
-      } while (lVar22 != 0);
-      iVar11 = Profile_EndInternal((double *)0x0);
-      __restgprlr_24(iVar11);
-      return;
-    }
-    lVar22 = 0x38;
-    puVar15 = (undefined2 *)(iVar11 + -2);
+      uVar13 = uVar13 + 1;
+      iVar16 = iVar16 + 0x44;
+    } while (uVar13 < (rgp.world)->heroOnlyLightCount);
+    if (pfVar14 == (float *)0x0) goto LAB_827622a0;
+  }
+  if (param_3 != (float (*) [3])0x0) {
+    lVar17 = 0x38;
+    puVar11 = param_1 + -1;
     do {
-      pfVar17 = pfVar20 + 3;
-      lVar23 = 3;
+      pfVar15 = pfVar14 + 3;
+      lVar18 = 3;
+      pfVar12 = *param_3;
       do {
         fVar9 = 0.0;
-        if (0.0 < *pfVar20) {
-          fVar9 = SQRT(*pfVar20);
+        if (0.0 < *pfVar12 + *pfVar14) {
+          fVar9 = SQRT(*pfVar12 + *pfVar14);
         }
         iStack_34c = (int)(longlong)(fVar9 * 32640.0);
         if (0xfeff < iStack_34c) {
           iStack_34c = 0xff00;
         }
-        pfVar20 = pfVar20 + 1;
-        puVar15 = puVar15 + 1;
-        *puVar15 = (short)iStack_34c;
-        lVar23 = lVar23 + -1;
-      } while (lVar23 != 0);
-      lVar22 = lVar22 + -1;
-      pfVar20 = pfVar17;
-    } while (lVar22 != 0);
+        pfVar12 = pfVar12 + 1;
+        puVar11 = puVar11 + 1;
+        *puVar11 = (ushort)iStack_34c;
+        pfVar14 = pfVar14 + 1;
+        lVar18 = lVar18 + -1;
+      } while (lVar18 != 0);
+      lVar17 = lVar17 + -1;
+      pfVar14 = pfVar15;
+    } while (lVar17 != 0);
+    Profile_EndInternal((double *)0x0);
+    return;
   }
+  lVar17 = 0x38;
+  puVar11 = param_1 + -1;
+  do {
+    pfVar12 = pfVar14 + 3;
+    lVar18 = 3;
+    do {
+      fVar9 = 0.0;
+      if (0.0 < *pfVar14) {
+        fVar9 = SQRT(*pfVar14);
+      }
+      iStack_34c = (int)(longlong)(fVar9 * 32640.0);
+      if (0xfeff < iStack_34c) {
+        iStack_34c = 0xff00;
+      }
+      pfVar14 = pfVar14 + 1;
+      puVar11 = puVar11 + 1;
+      *puVar11 = (ushort)iStack_34c;
+      lVar18 = lVar18 + -1;
+    } while (lVar18 != 0);
+    lVar17 = lVar17 + -1;
+    pfVar14 = pfVar12;
+  } while (lVar17 != 0);
+LAB_827624f4:
   Profile_EndInternal((double *)0x0);
-LAB_827624fc:
-  __restgprlr_24();
   return;
 }
 

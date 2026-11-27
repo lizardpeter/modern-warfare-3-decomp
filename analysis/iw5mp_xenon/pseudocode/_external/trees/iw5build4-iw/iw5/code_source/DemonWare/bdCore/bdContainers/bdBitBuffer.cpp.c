@@ -22,42 +22,38 @@ bdFastArray<unsigned_char>::bdFastArray<unsigned_char>
 
 // 828F7E60  bdBitBuffer  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdcontainers/bdbitbuffer.cpp:23)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 bdBitBuffer * __thiscall bdBitBuffer::bdBitBuffer(bdBitBuffer *this,uint param_1,bool param_2)
 
 {
-  bdBitBuffer *pbVar1;
-  ulonglong uVar2;
-  ulonglong uVar3;
   bdBitBuffer *pbStack00000014;
   undefined1 local_30 [48];
   
-  uVar3 = (ulonglong)param_2;
-  uVar2 = (ulonglong)(int)param_1;
-  pbVar1 = (bdBitBuffer *)__savegprlr_28(this);
-  pbVar1->_padding_ = 0;
-  pbVar1->_padding_ = (int)&_vftable_;
-  pbStack00000014 = pbVar1;
+  this->_padding_ = 0;
+  this->_padding_ = (int)&_vftable_;
+  pbStack00000014 = this;
   bdFastArray<unsigned_char>::bdFastArray<unsigned_char>
-            (&pbVar1->m_data,(uint)((uVar2 & 7) != 0) + ((uint)uVar2 >> 3));
-  pbVar1->m_typeChecked = SUB81(uVar3,0);
-  pbVar1->m_writePosition = 0;
-  pbVar1->m_maxWritePosition = 0;
-  pbVar1->m_readPosition = 0;
-  pbVar1->m_failedRead = false;
-  if ((uVar3 & 0xff) == 0) {
-    local_30[0] = 0;
-  }
-  else {
+            (&this->m_data,(uint)((param_1 & 7) != 0) + (param_1 >> 3));
+  this->m_typeChecked = param_2;
+  this->m_writePosition = 0;
+  this->m_maxWritePosition = 0;
+  this->m_readPosition = 0;
+  this->m_failedRead = false;
+  if (param_2) {
     local_30[0] = 0xff;
   }
-  writeBits(pbVar1,local_30,1);
-  if (pbVar1->m_writePosition != 1) {
+  else {
+    local_30[0] = 0;
+  }
+  writeBits(this,local_30,1);
+  if (this->m_writePosition != 1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdCore\\bdContainers\\bdBitBuffer.cpp"
                     ,0x24,0,"%s\n\t%s");
   }
-  pbVar1->m_readPosition = 1;
-  pbVar1 = (bdBitBuffer *)__restgprlr_28(pbVar1);
-  return pbVar1;
+  this->m_readPosition = 1;
+  return this;
 }
 
 
@@ -77,48 +73,43 @@ bdFastArray<unsigned_char>::~bdFastArray<unsigned_char>(bdFastArray<unsigned_cha
 
 // 828F7FA0  bdBitBuffer  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdcontainers/bdbitbuffer.cpp:50)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 bdBitBuffer * __thiscall
 bdBitBuffer::bdBitBuffer(bdBitBuffer *this,uchar *param_1,uint param_2,bool param_3)
 
 {
-  bdBitBuffer *pbVar1;
-  ulonglong uVar2;
-  ulonglong uVar3;
-  uint uVar4;
   bdBitBuffer *pbStack00000014;
   undefined1 local_40 [4];
   bdFastArray<unsigned_char> *local_3c;
   
-  uVar3 = (ulonglong)param_3;
-  uVar2 = (ulonglong)(int)param_2;
-  pbVar1 = (bdBitBuffer *)__savegprlr_27(this);
-  pbVar1->_padding_ = 0;
-  local_3c = &pbVar1->m_data;
-  pbVar1->_padding_ = (int)&_vftable_;
-  (pbVar1->m_data).m_data = (uchar *)0x0;
-  (pbVar1->m_data).m_capacity = 0;
-  (pbVar1->m_data).m_size = 0;
-  pbVar1->m_writePosition = 0;
-  pbVar1->m_maxWritePosition = 0;
-  pbVar1->m_readPosition = 0;
-  pbVar1->m_failedRead = false;
-  pbVar1->m_typeChecked = false;
-  uVar4 = (uint)uVar2;
-  pbStack00000014 = pbVar1;
-  if (((uVar3 & 0xff) == 0) || ((uVar2 & 0xffffffff) == 0)) {
-    local_40[0] = 0;
-    writeBits(pbVar1,local_40,1);
-    writeBits(pbVar1,param_1,uVar4);
-    pbVar1->m_readPosition = 1;
+  this->_padding_ = 0;
+  local_3c = &this->m_data;
+  this->_padding_ = (int)&_vftable_;
+  (this->m_data).m_data = (uchar *)0x0;
+  (this->m_data).m_capacity = 0;
+  (this->m_data).m_size = 0;
+  this->m_writePosition = 0;
+  this->m_maxWritePosition = 0;
+  this->m_readPosition = 0;
+  this->m_failedRead = false;
+  this->m_typeChecked = false;
+  pbStack00000014 = this;
+  if ((param_3) && (param_2 != 0)) {
+    bdFastArray<unsigned_char>::pushBack
+              (local_3c,param_1,(uint)((param_2 & 7) != 0) + (param_2 >> 3));
+    this->m_writePosition = param_2;
+    this->m_maxWritePosition = param_2;
+    readBits(this,&this->m_typeChecked,1);
   }
   else {
-    bdFastArray<unsigned_char>::pushBack(local_3c,param_1,(uint)((uVar2 & 7) != 0) + (uVar4 >> 3));
-    pbVar1->m_writePosition = uVar4;
-    pbVar1->m_maxWritePosition = uVar4;
-    readBits(pbVar1,&pbVar1->m_typeChecked,1);
+    local_40[0] = 0;
+    writeBits(this,local_40,1);
+    writeBits(this,param_1,param_2);
+    this->m_readPosition = 1;
   }
-  pbVar1 = (bdBitBuffer *)__restgprlr_27(pbVar1);
-  return pbVar1;
+  return this;
 }
 
 
@@ -171,96 +162,87 @@ bdFastArray<unsigned_char>::operator[](bdFastArray<unsigned_char> *this,uint par
 
 // 828F80D0  writeRangedUInt32  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdcontainers/bdbitbuffer.cpp:80)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void __thiscall
 bdBitBuffer::writeRangedUInt32
           (bdBitBuffer *this,uint param_1,uint param_2,uint param_3,bool param_4)
 
 {
   int iVar1;
-  bdBitBuffer *this_00;
   uint uVar2;
-  ulonglong uVar3;
-  ulonglong uVar4;
-  ulonglong uVar5;
-  ulonglong uVar6;
-  undefined1 *puVar7;
-  int iVar8;
-  longlong lVar9;
+  undefined1 *puVar3;
+  int iVar4;
+  longlong lVar5;
   int local_40;
   undefined1 auStack_3c [3];
   undefined1 local_39 [57];
   
-  uVar6 = (ulonglong)param_4;
-  uVar5 = (ulonglong)(int)param_3;
-  uVar4 = (ulonglong)(int)param_2;
-  uVar3 = (ulonglong)(int)param_1;
-  this_00 = (bdBitBuffer *)__savegprlr_27(this);
-  if ((uVar5 & 0xffffffff) < (uVar4 & 0xffffffff)) {
+  if (param_3 < param_2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdCore\\bdContainers\\bdBitBuffer.cpp"
                     ,0x52,0,"%s\n\t%s");
   }
-  if ((uVar6 & 0xff) != 0) {
-    if (this_00->m_typeChecked != false) {
-      writeRangedUInt32(this_00,0xc,0,0x1f,false);
+  if (param_4) {
+    if (this->m_typeChecked != false) {
+      writeRangedUInt32(this,0xc,0,0x1f,false);
     }
-    if (this_00->m_typeChecked != false) {
-      writeUInt32(this_00,(uint)uVar4);
-      writeUInt32(this_00,(uint)uVar5);
+    if (this->m_typeChecked != false) {
+      writeUInt32(this,param_2);
+      writeUInt32(this,param_3);
     }
   }
   uVar2 = 0;
-  if (uVar5 - uVar4 != 0) {
-    uVar2 = bdBitOperations::highBitNumber((uint)(uVar5 - uVar4));
+  if ((longlong)(int)param_3 - (longlong)(int)param_2 != 0) {
+    uVar2 = bdBitOperations::highBitNumber((uint)((longlong)(int)param_3 - (longlong)(int)param_2));
     uVar2 = uVar2 + 1;
   }
-  if (((uVar3 & 0xffffffff) <= (uVar5 & 0xffffffff)) &&
-     (uVar5 = uVar4, (uVar4 & 0xffffffff) <= (uVar3 & 0xffffffff))) {
-    uVar5 = uVar3;
+  if ((param_1 <= param_3) && (param_3 = param_2, param_2 <= param_1)) {
+    param_3 = param_1;
   }
-  iVar8 = 0;
-  local_40 = (int)uVar5 - (uint)uVar4;
-  puVar7 = local_39 + 1;
-  lVar9 = 4;
+  iVar4 = 0;
+  local_40 = param_3 - param_2;
+  puVar3 = local_39 + 1;
+  lVar5 = 4;
   do {
-    iVar1 = iVar8 + -4;
-    iVar8 = iVar8 + 1;
-    puVar7 = puVar7 + -1;
-    *puVar7 = auStack_3c[iVar1];
-    lVar9 = lVar9 + -1;
-  } while (lVar9 != 0);
-  writeBits(this_00,auStack_3c,uVar2);
-  __restgprlr_27();
+    iVar1 = iVar4 + -4;
+    iVar4 = iVar4 + 1;
+    puVar3 = puVar3 + -1;
+    *puVar3 = auStack_3c[iVar1];
+    lVar5 = lVar5 + -1;
+  } while (lVar5 != 0);
+  writeBits(this,auStack_3c,uVar2);
   return;
 }
 
 
 // 828F7908  increaseCapacity  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdcontainers/bdfastarray.inl:113)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void __thiscall
 bdFastArray<unsigned_char>::increaseCapacity(bdFastArray<unsigned_char> *this,uint param_1)
 
 {
-  undefined4 *puVar1;
-  void *pvVar2;
+  uchar *puVar1;
+  ulonglong uVar2;
   ulonglong uVar3;
-  ulonglong uVar4;
-  uint uVar5;
+  uint uVar4;
   
-  uVar3 = (ulonglong)(int)param_1;
-  puVar1 = (undefined4 *)__savegprlr_29(this);
-  uVar4 = (ulonglong)(uint)puVar1[1];
-  if ((uVar3 & 0xffffffff) <= uVar4) {
-    uVar3 = uVar4;
+  uVar3 = (ulonglong)this->m_capacity;
+  uVar2 = (longlong)(int)param_1;
+  if (param_1 <= uVar3) {
+    uVar2 = uVar3;
   }
-  pvVar2 = (void *)0x0;
-  uVar5 = (uint)(uVar4 + uVar3);
-  if ((uVar4 + uVar3 != 0) && (pvVar2 = bdMemory::allocate(uVar5), puVar1[2] != 0)) {
+  puVar1 = (uchar *)0x0;
+  uVar4 = (uint)(uVar3 + uVar2);
+  if ((uVar3 + uVar2 != 0) && (puVar1 = bdMemory::allocate(uVar4), this->m_size != 0)) {
     memcpy();
   }
-  bdMemory::deallocate((void *)*puVar1);
-  *puVar1 = pvVar2;
-  puVar1[1] = uVar5;
-  __restgprlr_29();
+  bdMemory::deallocate(this->m_data);
+  this->m_data = puVar1;
+  this->m_capacity = uVar4;
   return;
 }
 
@@ -299,6 +281,9 @@ void __thiscall bdBitBuffer::writeUInt32(bdBitBuffer *this,uint param_1)
 
 // 828F7C90  writeBits  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdcontainers/bdbitbuffer.cpp:199)
 
+/* WARNING: Function: __savegprlr_16 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_16 replaced with injection: xenon_save_restore */
+
 void __thiscall bdBitBuffer::writeBits(bdBitBuffer *this,void *param_1,uint param_2)
 
 {
@@ -309,117 +294,107 @@ void __thiscall bdBitBuffer::writeBits(bdBitBuffer *this,void *param_1,uint para
   int iVar5;
   byte bVar6;
   uint uVar7;
-  int iVar8;
-  byte *pbVar9;
+  byte *pbVar8;
+  ulonglong uVar9;
   ulonglong uVar10;
   ulonglong uVar11;
-  ulonglong uVar12;
+  uint uVar12;
   uint uVar13;
-  uint uVar14;
-  ulonglong uVar15;
+  ulonglong uVar14;
   uchar local_90 [144];
   
-  uVar10 = (ulonglong)(int)param_2;
-  iVar8 = __savegprlr_16(this);
-  uVar15 = ((uVar10 + *(uint *)(iVar8 + 0x14)) - 1 & 0xffffffff) >> 3;
-  if (*(uint *)(iVar8 + 0x10) <= uVar15) {
+  uVar9 = (ulonglong)(int)param_2;
+  uVar14 = ((uVar9 + this->m_writePosition) - 1 & 0xffffffff) >> 3;
+  if ((this->m_data).m_size <= uVar14) {
     local_90[0] = '\0';
-    bdFastArray<unsigned_char>::setGrow
-              ((bdFastArray<unsigned_char> *)(iVar8 + 8),(uint)uVar15,local_90);
+    bdFastArray<unsigned_char>::setGrow(&this->m_data,(uint)uVar14,local_90);
   }
-  if ((uVar10 & 0xffffffff) != 0) {
-    uVar15 = uVar10;
+  if (param_2 != 0) {
+    uVar14 = uVar9;
     do {
-      uVar3 = (ulonglong)*(uint *)(iVar8 + 0x14) & 7;
-      uVar11 = 8 - uVar3;
-      uVar12 = uVar15;
-      if ((uVar11 & 0xffffffff) <= (uVar15 & 0xffffffff)) {
-        uVar12 = uVar11;
+      uVar3 = (ulonglong)this->m_writePosition & 7;
+      uVar10 = 8 - uVar3;
+      uVar11 = uVar14;
+      if ((uVar10 & 0xffffffff) <= (uVar14 & 0xffffffff)) {
+        uVar11 = uVar10;
       }
       iVar4 = (int)uVar3;
-      uVar7 = *(uint *)(iVar8 + 0x14) >> 3;
-      bVar6 = (byte)(0xff << ((int)uVar12 + iVar4 & 0x3fU)) | (byte)(0xff >> ((uint)uVar11 & 0x3f));
-      pbVar9 = bdFastArray<unsigned_char>::operator[]
-                         ((bdFastArray<unsigned_char> *)(iVar8 + 8),uVar7);
-      bVar1 = *pbVar9;
-      uVar14 = 0;
-      uVar3 = (uVar10 - uVar15 & 0xffffffff) >> 3;
-      uVar13 = (uint)(uVar10 - uVar15) & 7;
+      uVar7 = this->m_writePosition >> 3;
+      bVar6 = (byte)(0xff << ((int)uVar11 + iVar4 & 0x3fU)) | (byte)(0xff >> ((uint)uVar10 & 0x3f));
+      pbVar8 = bdFastArray<unsigned_char>::operator[](&this->m_data,uVar7);
+      bVar1 = *pbVar8;
+      uVar13 = 0;
+      uVar3 = (uVar9 - uVar14 & 0xffffffff) >> 3;
+      uVar12 = (uint)(uVar9 - uVar14) & 7;
       iVar5 = (int)uVar3;
       bVar2 = *(byte *)(iVar5 + (int)param_1);
-      if (uVar3 < (uVar10 - 1 & 0xffffffff) >> 3) {
-        uVar14 = (uint)*(byte *)((int)param_1 + iVar5 + 1);
+      if (uVar3 < (uVar9 - 1 & 0xffffffff) >> 3) {
+        uVar13 = (uint)*(byte *)((int)param_1 + iVar5 + 1);
       }
-      pbVar9 = bdFastArray<unsigned_char>::operator[]
-                         ((bdFastArray<unsigned_char> *)(iVar8 + 8),uVar7);
-      uVar15 = uVar15 - uVar12;
-      *pbVar9 = (byte)((uVar14 << (8 - uVar13 & 0x3f) & 0xff | (uint)(bVar2 >> uVar13)) << iVar4) &
+      pbVar8 = bdFastArray<unsigned_char>::operator[](&this->m_data,uVar7);
+      uVar14 = uVar14 - uVar11;
+      *pbVar8 = (byte)((uVar13 << (8 - uVar12 & 0x3f) & 0xff | (uint)(bVar2 >> uVar12)) << iVar4) &
                 ~bVar6 | bVar1 & bVar6;
-      uVar12 = uVar12 + *(uint *)(iVar8 + 0x14);
-      uVar13 = (uint)uVar12;
-      *(uint *)(iVar8 + 0x14) = uVar13;
-      if ((uVar12 & 0xffffffff) < (ulonglong)*(uint *)(iVar8 + 0x18)) {
-        uVar13 = *(uint *)(iVar8 + 0x18);
+      uVar11 = uVar11 + this->m_writePosition;
+      uVar12 = (uint)uVar11;
+      this->m_writePosition = uVar12;
+      if ((uVar11 & 0xffffffff) < (ulonglong)this->m_maxWritePosition) {
+        uVar12 = this->m_maxWritePosition;
       }
-      *(uint *)(iVar8 + 0x18) = uVar13;
-    } while ((uVar15 & 0xffffffff) != 0);
+      this->m_maxWritePosition = uVar12;
+    } while ((uVar14 & 0xffffffff) != 0);
   }
-  __restgprlr_16();
   return;
 }
 
 
 // 828F7B80  setGrow  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdcontainers/bdfastarray.inl:205)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void __thiscall
 bdFastArray<unsigned_char>::setGrow(bdFastArray<unsigned_char> *this,uint param_1,uchar *param_2)
 
 {
-  bdFastArray<unsigned_char> *this_00;
-  ulonglong uVar1;
-  uint uVar2;
-  
-  uVar1 = (ulonglong)(int)param_1;
-  this_00 = (bdFastArray<unsigned_char> *)__savegprlr_28(this);
-  if ((ulonglong)this_00->m_size <= (uVar1 & 0xffffffff)) {
-    uVar2 = (uint)(uVar1 + 1);
-    if ((ulonglong)this_00->m_capacity < (uVar1 + 1 & 0xffffffff)) {
-      increaseCapacity(this_00,uVar2 - this_00->m_capacity);
+  if (this->m_size <= param_1) {
+    if (this->m_capacity < param_1 + 1) {
+      increaseCapacity(this,(param_1 + 1) - this->m_capacity);
     }
-    this_00->m_size = uVar2;
+    this->m_size = param_1 + 1;
   }
-  this_00->m_data[(int)uVar1] = *param_2;
-  __restgprlr_28();
+  this->m_data[param_1] = *param_2;
   return;
 }
 
 
 // 828F7BD8  pushBack  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdcontainers/bdfastarray.inl:231)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void __thiscall
 bdFastArray<unsigned_char>::pushBack(bdFastArray<unsigned_char> *this,uchar *param_1,uint param_2)
 
 {
-  bdFastArray<unsigned_char> *this_00;
-  ulonglong uVar1;
-  ulonglong uVar2;
+  uint uVar1;
   
-  uVar1 = (ulonglong)(int)param_2;
-  this_00 = (bdFastArray<unsigned_char> *)__savegprlr_29(this,param_1);
-  uVar2 = uVar1 + this_00->m_size;
-  if ((ulonglong)this_00->m_capacity < (uVar2 & 0xffffffff)) {
-    increaseCapacity(this_00,(int)uVar2 - this_00->m_capacity);
+  uVar1 = param_2 + this->m_size;
+  if (this->m_capacity < uVar1) {
+    increaseCapacity(this,uVar1 - this->m_capacity);
   }
-  if ((uVar1 & 0xffffffff) != 0) {
+  if (param_2 != 0) {
     memcpy();
   }
-  this_00->m_size = (int)uVar1 + this_00->m_size;
-  __restgprlr_29();
+  this->m_size = param_2 + this->m_size;
   return;
 }
 
 
 // 828F7970  readBits  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdcontainers/bdbitbuffer.cpp:429)
+
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
 
 bool __thiscall bdBitBuffer::readBits(bdBitBuffer *this,void *param_1,uint param_2)
 
@@ -428,61 +403,50 @@ bool __thiscall bdBitBuffer::readBits(bdBitBuffer *this,void *param_1,uint param
   int iVar2;
   int iVar3;
   ulonglong uVar4;
-  int iVar6;
-  undefined8 uVar5;
-  byte *pbVar7;
-  uchar *puVar8;
-  undefined1 uVar9;
+  byte *pbVar5;
+  uchar *puVar6;
+  ulonglong uVar7;
+  int iVar8;
+  uint uVar9;
   ulonglong uVar10;
-  longlong lVar11;
-  uint uVar12;
-  ulonglong uVar13;
   
-  uVar10 = (ulonglong)(int)param_2;
-  lVar11 = (longlong)(int)param_1;
-  iVar6 = __savegprlr_23(this);
-  if ((uVar10 & 0xffffffff) != 0) {
-    if ((ulonglong)*(uint *)(iVar6 + 0x18) < (*(uint *)(iVar6 + 0x1c) + uVar10 & 0xffffffff)) {
+  uVar7 = (ulonglong)(int)param_2;
+  if (param_2 != 0) {
+    if ((ulonglong)this->m_maxWritePosition < (this->m_readPosition + uVar7 & 0xffffffff)) {
 LAB_828f79a0:
-      uVar5 = 0;
-      *(undefined1 *)(iVar6 + 0x20) = 1;
-      goto LAB_828f7a90;
+      this->m_failedRead = true;
+      return false;
     }
-    lVar11 = lVar11 + -1;
-    uVar12 = *(uint *)(iVar6 + 0x1c) >> 3;
+    iVar8 = (int)param_1 + -1;
+    uVar9 = this->m_readPosition >> 3;
     do {
-      if (*(uint *)(iVar6 + 0x10) <= uVar12) goto LAB_828f79a0;
-      uVar13 = uVar10;
-      if (7 < (uVar10 & 0xffffffff)) {
-        uVar13 = 8;
+      if ((this->m_data).m_size <= uVar9) goto LAB_828f79a0;
+      uVar10 = uVar7;
+      if (7 < (uVar7 & 0xffffffff)) {
+        uVar10 = 8;
       }
-      pbVar7 = bdFastArray<unsigned_char>::operator[]
-                         ((bdFastArray<unsigned_char> *)(iVar6 + 8),uVar12);
-      bVar1 = *pbVar7;
-      uVar12 = uVar12 + 1;
-      uVar4 = (ulonglong)*(uint *)(iVar6 + 0x1c) & 7;
-      iVar3 = (int)uVar13;
+      pbVar5 = bdFastArray<unsigned_char>::operator[](&this->m_data,uVar9);
+      bVar1 = *pbVar5;
+      uVar9 = uVar9 + 1;
+      uVar4 = (ulonglong)this->m_readPosition & 7;
+      iVar3 = (int)uVar10;
       iVar2 = (int)uVar4;
-      if ((uVar4 + uVar13 & 0xffffffff) < 9) {
-        *(byte *)((int)lVar11 + 1) = (byte)(0xff >> (8U - iVar3 & 0x3f)) & bVar1 >> iVar2;
+      if ((uVar4 + uVar10 & 0xffffffff) < 9) {
+        *(byte *)(iVar8 + 1) = (byte)(0xff >> (8U - iVar3 & 0x3f)) & bVar1 >> iVar2;
       }
       else {
-        if (*(uint *)(iVar6 + 0x10) <= uVar12) goto LAB_828f79a0;
-        puVar8 = bdFastArray<unsigned_char>::operator[]
-                           ((bdFastArray<unsigned_char> *)(iVar6 + 8),uVar12);
-        *(byte *)((int)lVar11 + 1) =
-             (*puVar8 << (8U - iVar2 & 0x3f) | bVar1 >> iVar2) & (byte)(0xff >> (8U - iVar3 & 0x3f))
+        if ((this->m_data).m_size <= uVar9) goto LAB_828f79a0;
+        puVar6 = bdFastArray<unsigned_char>::operator[](&this->m_data,uVar9);
+        *(byte *)(iVar8 + 1) =
+             (*puVar6 << (8U - iVar2 & 0x3f) | bVar1 >> iVar2) & (byte)(0xff >> (8U - iVar3 & 0x3f))
         ;
       }
-      lVar11 = lVar11 + 1;
-      uVar10 = uVar10 - uVar13;
-      *(int *)(iVar6 + 0x1c) = *(int *)(iVar6 + 0x1c) + iVar3;
-    } while (uVar10 != 0);
+      iVar8 = iVar8 + 1;
+      uVar7 = uVar7 - uVar10;
+      this->m_readPosition = this->m_readPosition + iVar3;
+    } while (uVar7 != 0);
   }
-  uVar5 = 1;
-LAB_828f7a90:
-  uVar9 = __restgprlr_23(uVar5);
-  return (bool)uVar9;
+  return true;
 }
 
 
@@ -520,11 +484,13 @@ void __thiscall bdBitBuffer::writeDataType(bdBitBuffer *this,bdBitBufferDataType
 
 // 828F76E8  typeToString  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdcontainers/bdbitbuffer.cpp:580)
 
+/* WARNING: Function: __savegprlr_16 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_16 replaced with injection: xenon_save_restore */
+
 void bdBitBuffer::typeToString(bdBitBufferDataType param_1,char *param_2,uint param_3)
 
 {
-  ulonglong uVar1;
-  uint uVar2;
+  bdBitBufferDataType bVar1;
   char *local_f0 [4];
   char *local_e0;
   char *local_dc;
@@ -546,7 +512,6 @@ void bdBitBuffer::typeToString(bdBitBufferDataType param_1,char *param_2,uint pa
   char *local_9c;
   char *local_98;
   
-  uVar1 = __savegprlr_16(param_1);
   local_f0[0] = "NoType";
   local_f0[1] = "Bool";
   local_f0[2] = "Char8";
@@ -570,14 +535,13 @@ void bdBitBuffer::typeToString(bdBitBufferDataType param_1,char *param_2,uint pa
   local_a0 = "NaN";
   local_9c = "FullType";
   local_98 = "Unknown Type";
-  if ((int)uVar1 < 0x17) {
-    uVar1 = ((uVar1 & 0xffffffff) >> 0x1f) - 1 & uVar1;
+  if ((int)param_1 < 0x17) {
+    bVar1 = ~BD_BB_NO_TYPE - ((int)param_1 >> 0x1f) & param_1;
   }
   else {
-    uVar1 = 0x16;
+    bVar1 = BD_BB_NAN_TYPE|BD_BB_SIGNED_CHAR8_TYPE;
   }
-  uVar2 = bdStrlcpy(param_2,*(char **)((int)local_f0 + (int)((uVar1 & 0xffffffff) << 2)),param_3);
-  __restgprlr_16(uVar2);
+  bdStrlcpy(param_2,local_f0[bVar1],param_3);
   return;
 }
 

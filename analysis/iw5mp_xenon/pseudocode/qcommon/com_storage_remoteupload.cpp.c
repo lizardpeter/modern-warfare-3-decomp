@@ -74,127 +74,117 @@ bool LiveStorage_HaveWeCheckedForARemoteConsoleChallenge(int param_1)
 
 // 824F37D8  LiveStorage_CheckForRemoteConsoleChallenge  (qcommon/com_storage_remoteupload.cpp:88)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
+
 void LiveStorage_CheckForRemoteConsoleChallenge(int param_1)
 
 {
-  int iVar1;
+  bool bVar4;
+  DWOnlineStatus DVar1;
+  int iVar2;
   bool bVar5;
-  DWOnlineStatus DVar2;
-  int iVar3;
-  bool bVar6;
-  overlappedTask *poVar4;
+  overlappedTask *poVar3;
   
-  iVar1 = __savegprlr_25(param_1);
-  if ((s_remoteConsoleCheckData.remoteConsoleFileChecked[iVar1] != false) ||
-     (s_remoteConsoleCheckData.checkingRemoteConsoleFile != false)) goto LAB_824f3908;
-  bVar5 = TaskManager_TaskIsInProgress(&storageTasks,3);
-  if (bVar5) goto LAB_824f3908;
-  bVar5 = Live_IsUserSignedInToLive(iVar1);
-  if (!bVar5) goto LAB_824f3908;
-  DVar2 = dwGetLogOnStatus(iVar1);
-  if (DVar2 != DW_LIVE_CONNECTED) goto LAB_824f3908;
-  iVar3 = Sys_Milliseconds();
-  bVar5 = false;
-  if (g_NumFetchRCCheckAttempts == 0) {
-LAB_824f3894:
-    bVar5 = true;
+  if (s_remoteConsoleCheckData.remoteConsoleFileChecked[param_1] != false) {
+    return;
   }
-  else {
-    bVar6 = Live_GetShouldDemonwareRetry
-                      ((iVar3 - g_LastFetchRCCheckAttemptTime) / 1000,g_NumFetchRCCheckAttempts,0x3c
-                      );
-    if (bVar6) goto LAB_824f3894;
+  if (s_remoteConsoleCheckData.checkingRemoteConsoleFile) {
+    return;
   }
-  if (bVar5) {
-    g_NumFetchRCCheckAttempts = g_NumFetchRCCheckAttempts + 1;
-    g_LastFetchRCCheckAttemptTime = iVar3;
-    poVar4 = TaskManager_GetOpenTaskSlot(&storageTasks,iVar1,3);
-    if (poVar4 != (overlappedTask *)0x0) {
-      s_remoteConsoleCheckData.RCCheckFileTask.m_filename = "RCCheck";
-      iVar1 = dwFetchFileInfoPersonalStorage(poVar4,&s_remoteConsoleCheckData.RCCheckFileTask);
-      if (iVar1 == 0) {
-        s_remoteConsoleCheckData.checkingRemoteConsoleFile = false;
-        TaskManager_ClearTask(poVar4);
-        __restgprlr_25();
-        return;
-      }
-      s_remoteConsoleCheckData.checkingRemoteConsoleFile = true;
+  bVar4 = TaskManager_TaskIsInProgress(&storageTasks,3);
+  if (bVar4) {
+    return;
+  }
+  bVar4 = Live_IsUserSignedInToLive(param_1);
+  if (bVar4) {
+    DVar1 = dwGetLogOnStatus(param_1);
+    if (DVar1 != DW_LIVE_CONNECTED) {
+      return;
     }
+    iVar2 = Sys_Milliseconds();
+    bVar4 = false;
+    if ((g_NumFetchRCCheckAttempts == 0) ||
+       (bVar5 = Live_GetShouldDemonwareRetry
+                          ((iVar2 - g_LastFetchRCCheckAttemptTime) / 1000,g_NumFetchRCCheckAttempts,
+                           0x3c), bVar5)) {
+      bVar4 = true;
+    }
+    if (bVar4) {
+      g_NumFetchRCCheckAttempts = g_NumFetchRCCheckAttempts + 1;
+      g_LastFetchRCCheckAttemptTime = iVar2;
+      poVar3 = TaskManager_GetOpenTaskSlot(&storageTasks,param_1,3);
+      if (poVar3 != (overlappedTask *)0x0) {
+        s_remoteConsoleCheckData.RCCheckFileTask.m_filename = "RCCheck";
+        iVar2 = dwFetchFileInfoPersonalStorage(poVar3,&s_remoteConsoleCheckData.RCCheckFileTask);
+        if (iVar2 == 0) {
+          s_remoteConsoleCheckData.checkingRemoteConsoleFile = false;
+          TaskManager_ClearTask(poVar3);
+          return;
+        }
+        s_remoteConsoleCheckData.checkingRemoteConsoleFile = true;
+      }
+    }
+    return;
   }
-LAB_824f3908:
-  __restgprlr_25();
   return;
 }
 
 
 // 824F3910  LiveStorage_FileShare_WriteExeToStream  (qcommon/com_storage_remoteupload.cpp:141)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 uint LiveStorage_FileShare_WriteExeToStream(void *param_1,uint param_2,uint param_3)
 
 {
-  uint uVar1;
-  ulonglong uVar2;
-  ulonglong uVar3;
-  
-  uVar3 = (ulonglong)(int)param_3;
-  uVar2 = (ulonglong)(int)param_2;
-  __savegprlr_29(param_1);
-  s_remoteConsoleCheckData.bytesWritten = (uint)uVar3;
-  if ((ulonglong)s_remoteConsoleCheckData.totalSize == (uVar3 & 0xffffffff)) {
-    uVar1 = __restgprlr_29(0);
-    return uVar1;
+  s_remoteConsoleCheckData.bytesWritten = param_3;
+  if (s_remoteConsoleCheckData.totalSize == param_3) {
+    return 0;
   }
-  uVar3 = s_remoteConsoleCheckData.totalSize - uVar3;
-  if ((uVar3 & 0xffffffff) < (uVar2 & 0xffffffff)) {
-    uVar2 = uVar3;
+  if (s_remoteConsoleCheckData.totalSize - param_3 < param_2) {
+    param_2 = s_remoteConsoleCheckData.totalSize - param_3;
   }
   memcpy();
   Com_Printf(0xe,"Bytes Uploaded: %i DataSize: %i Total Bytes Written: %i Bytes Left: %i \n");
-  uVar1 = __restgprlr_29(uVar2);
-  return uVar1;
+  return param_2;
 }
 
 
 // 824F3998  LiveStorage_FileShare_WriteExeToStreamFastFile  (qcommon/com_storage_remoteupload.cpp:158)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 uint LiveStorage_FileShare_WriteExeToStreamFastFile(void *param_1,uint param_2,uint param_3)
 
 {
-  void *pvVar1;
-  int iVar2;
-  uint uVar3;
-  ulonglong uVar4;
-  ulonglong uVar5;
+  int iVar1;
   ulong local_30 [12];
   
-  uVar5 = (ulonglong)(int)param_3;
-  uVar4 = (ulonglong)(int)param_2;
-  pvVar1 = (void *)__savegprlr_29(param_1);
-  s_remoteConsoleCheckData.bytesWritten = (uint)uVar5;
-  if ((ulonglong)s_remoteConsoleCheckData.totalSize == (uVar5 & 0xffffffff)) {
-LAB_824f3a5c:
-    uVar3 = __restgprlr_29(0);
-    return uVar3;
+  if (s_remoteConsoleCheckData.totalSize == param_3) {
+    s_remoteConsoleCheckData.bytesWritten = param_3;
+    return 0;
   }
-  uVar5 = s_remoteConsoleCheckData.totalSize - uVar5;
-  if ((uVar5 & 0xffffffff) < (uVar4 & 0xffffffff)) {
-    uVar4 = uVar5;
+  if (s_remoteConsoleCheckData.totalSize - param_3 < param_2) {
+    param_2 = s_remoteConsoleCheckData.totalSize - param_3;
   }
+  s_remoteConsoleCheckData.bytesWritten = param_3;
   if (s_remoteConsoleCheckData.FFUploadFile != (void *)0xffffffff) {
     local_30[0] = 0;
-    iVar2 = ReadFile(s_remoteConsoleCheckData.FFUploadFile,pvVar1,(ulong)uVar4,local_30,
+    iVar1 = ReadFile(s_remoteConsoleCheckData.FFUploadFile,param_1,param_2,local_30,
                      (_OVERLAPPED *)0x0);
-    if (iVar2 == 0) {
+    if (iVar1 == 0) {
       Com_Printf(0xe,"error uploading file to content server\n");
-      goto LAB_824f3a5c;
+      return 0;
     }
-    if ((ulonglong)local_30[0] != (uVar4 & 0xffffffff)) {
-      uVar4 = (ulonglong)local_30[0];
+    if (local_30[0] != param_2) {
+      param_2 = local_30[0];
     }
   }
   Com_Printf(0xe,"Bytes Uploaded: %i DataSize: %i Total Bytes Written: %i Bytes Left: %i \n");
-  uVar3 = __restgprlr_29(uVar4);
-  return uVar3;
+  return param_2;
 }
 
 
@@ -238,25 +228,25 @@ void LiveStorage_FileShare_ExeWriteSetTagsSuccess(int param_1)
 
 // 824F3F00  LiveStorage_FileShare_ExeWriteSuccessful  (qcommon/com_storage_remoteupload.cpp:239)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void LiveStorage_FileShare_ExeWriteSuccessful(int param_1,ulong64 param_2)
 
 {
-  int iVar2;
-  overlappedTask *poVar3;
-  ulonglong uVar1;
+  overlappedTask *poVar1;
   bdTag *this;
-  longlong lVar4;
+  longlong lVar2;
   
-  iVar2 = __savegprlr_27(param_1);
   this = tags;
   if ((_S1 & 1) == 0) {
     _S1 = _S1 | 1;
-    lVar4 = 1;
+    lVar2 = 1;
     do {
       bdTag::bdTag(this);
-      lVar4 = lVar4 + -1;
+      lVar2 = lVar2 + -1;
       this = this + 1;
-    } while (-1 < lVar4);
+    } while (-1 < lVar2);
     atexit(`LiveStorage_FileShare_ExeWriteSuccessful'::__l2::_dynamic_atexit_destructor_for__tags__)
     ;
   }
@@ -264,45 +254,42 @@ void LiveStorage_FileShare_ExeWriteSuccessful(int param_1,ulong64 param_2)
   tags[0].m_priTag = 2;
   tags[0].m_secTag = 6;
   tags[1].m_priTag = 4;
-  tags[1].m_secTag = Live_GetXuid(iVar2);
+  tags[1].m_secTag = Live_GetXuid(param_1);
   s_uploadFileInfo.m_tags = tags;
   s_uploadFileInfo.m_numTags = 2;
   s_uploadFileInfo.m_failureCallback = LiveStorage_FileShare_ExeWriteFailure;
   s_uploadFileInfo.m_successCallback = LiveStorage_FileShare_ExeWriteSetTagsSuccess;
   s_uploadFileInfo.m_entityID = param_2;
-  LiveStorage_CS_SetTags(iVar2,&s_uploadFileInfo);
-  poVar3 = TaskManager_GetOpenTaskSlot(&storageTasks,iVar2,5);
-  if (poVar3 != (overlappedTask *)0x0) {
-    dwDeleteFile(poVar3,"RCCheck");
+  LiveStorage_CS_SetTags(param_1,&s_uploadFileInfo);
+  poVar1 = TaskManager_GetOpenTaskSlot(&storageTasks,param_1,5);
+  if (poVar1 != (overlappedTask *)0x0) {
+    dwDeleteFile(poVar1,"RCCheck");
   }
-  uVar1 = ZEXT48(s_remoteConsoleCheckData.FFUploadFile);
   if ((s_remoteConsoleCheckData.FFUploadFile != (void *)0xffffffff) &&
      (s_remoteConsoleCheckData.FFUploadFile != (void *)0x0)) {
-    iVar2 = CloseHandle(s_remoteConsoleCheckData.FFUploadFile);
-    uVar1 = (ulonglong)iVar2;
+    CloseHandle(s_remoteConsoleCheckData.FFUploadFile);
     s_remoteConsoleCheckData.FFUploadFile = (void *)0x0;
   }
-  __restgprlr_27(uVar1);
   return;
 }
 
 
 // 824F4028  LiveStorage_UploadExe  (qcommon/com_storage_remoteupload.cpp:282)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void LiveStorage_UploadExe(int param_1)
 
 {
-  int iVar1;
-  bool bVar2;
+  bool bVar1;
   uint local_70;
   uchar *local_6c [3];
   contentServerWriteFileInfo local_60;
   
-  iVar1 = __savegprlr_29(param_1);
-  bVar2 = Sys_GetTextSection((uint *)local_6c,&local_70);
-  if (!bVar2) {
+  bVar1 = Sys_GetTextSection((uint *)local_6c,&local_70);
+  if (!bVar1) {
     Com_PrintError(0x10,"Unable to get text section of the exe.");
-    __restgprlr_29();
     return;
   }
   local_60.m_category = 100;
@@ -313,34 +300,34 @@ void LiveStorage_UploadExe(int param_1)
   s_remoteConsoleCheckData.data = local_6c[0];
   local_60.m_numTags = 0;
   local_60.m_tags = (bdTag *)0x0;
-  Live_GetXuid(iVar1);
+  Live_GetXuid(param_1);
   local_60.m_fileName = va("EXM_%lld");
   local_60.m_thumbData = (void *)0x0;
   local_60.m_thumbDataSize = 0;
   local_60.m_dataCallback = LiveStorage_FileShare_WriteExeToStream;
   local_60.m_failureCallback = LiveStorage_FileShare_ExeWriteFailure;
   local_60.m_successCallback = LiveStorage_FileShare_ExeWriteSuccessful;
-  iVar1 = LiveStorage_CS_WriteFile(iVar1,&local_60);
+  LiveStorage_CS_WriteFile(param_1,&local_60);
   s_remoteConsoleCheckData.checkingRemoteConsoleFile = true;
-  __restgprlr_29(iVar1);
   return;
 }
 
 
 // 824F4108  LiveStorage_UploadFfotd  (qcommon/com_storage_remoteupload.cpp:317)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void LiveStorage_UploadFfotd(int param_1)
 
 {
-  int iVar1;
   contentServerWriteFileInfo local_60;
   
-  iVar1 = __savegprlr_28(param_1);
   local_60.m_category = 100;
   local_60.m_fileData = LiveStorage_GetFFotDBuffer(&local_60.m_fileSize);
   local_60.m_numTags = 0;
   local_60.m_tags = (bdTag *)0x0;
-  Live_GetXuid(iVar1);
+  Live_GetXuid(param_1);
   local_60.m_fileName = va("ffotd_%lld");
   local_60.m_thumbData = (void *)0x0;
   local_60.m_thumbDataSize = 0;
@@ -350,15 +337,16 @@ void LiveStorage_UploadFfotd(int param_1)
   local_60.m_dataCallback = LiveStorage_FileShare_WriteExeToStream;
   s_remoteConsoleCheckData.totalSize = local_60.m_fileSize;
   s_remoteConsoleCheckData.data = local_60.m_fileData;
-  iVar1 = LiveStorage_CS_WriteFile(iVar1,&local_60);
+  LiveStorage_CS_WriteFile(param_1,&local_60);
   s_remoteConsoleCheckData.checkingRemoteConsoleFile = true;
-  __restgprlr_28(iVar1);
   return;
 }
 
 
 // 824F41B8  LiveStorage_UploadFileToCS  (qcommon/com_storage_remoteupload.cpp:343)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "XAssetType": Some values do not have unique names */
 /* WARNING: Enum "nodeType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
@@ -368,31 +356,29 @@ void LiveStorage_UploadFfotd(int param_1)
 void LiveStorage_UploadFileToCS(int param_1)
 
 {
-  int iVar1;
-  XAssetHeader XVar2;
-  int iVar3;
-  uint uVar4;
+  XAssetHeader XVar1;
+  int iVar2;
+  uint uVar3;
   contentServerWriteFileInfo local_60;
   
-  iVar1 = __savegprlr_28(param_1);
   s_remoteConsoleCheckData.RCCheckFileBuffer = (char *)0x0;
-  XVar2 = DB_FindXAssetHeader(ASSET_TYPE_RAWFILE,s_remoteConsoleCheckData.RCCheckFileNameBuffer,1);
-  iVar3 = DB_IsXAssetDefault(ASSET_TYPE_RAWFILE,s_remoteConsoleCheckData.RCCheckFileNameBuffer);
-  if (iVar3 == 0) {
-    uVar4 = DB_GetRawFileLen(XVar2.rawfile);
+  XVar1 = DB_FindXAssetHeader(ASSET_TYPE_RAWFILE,s_remoteConsoleCheckData.RCCheckFileNameBuffer,1);
+  iVar2 = DB_IsXAssetDefault(ASSET_TYPE_RAWFILE,s_remoteConsoleCheckData.RCCheckFileNameBuffer);
+  if (iVar2 == 0) {
+    uVar3 = DB_GetRawFileLen(XVar1.rawfile);
     s_remoteConsoleCheckData.RCCheckFileBuffer =
-         *(char **)((int)&((XVar2.material)->info).drawSurf + 4);
+         *(char **)((int)&((XVar1.material)->info).drawSurf + 4);
     local_60.m_fileData = s_remoteConsoleCheckData.RCCheckFileBuffer;
-    local_60.m_fileSize = uVar4;
-    Live_GetXuid(iVar1);
+    local_60.m_fileSize = uVar3;
+    Live_GetXuid(param_1);
     local_60.m_fileName = va("%s_%lld");
     s_remoteConsoleCheckData.data = (uchar *)s_remoteConsoleCheckData.RCCheckFileBuffer;
-    s_remoteConsoleCheckData.totalSize = uVar4;
+    s_remoteConsoleCheckData.totalSize = uVar3;
   }
   else {
     local_60.m_fileSize = 0x80;
     s_remoteConsoleCheckData.totalSize = 0x80;
-    Live_GetXuid(iVar1);
+    Live_GetXuid(param_1);
     local_60.m_fileName = va("%s_error_%lld");
     local_60.m_fileData = s_remoteConsoleCheckData.RCCheckFileNameBuffer;
     s_remoteConsoleCheckData.totalSize = local_60.m_fileSize;
@@ -407,24 +393,23 @@ void LiveStorage_UploadFileToCS(int param_1)
   local_60.m_dataCallback = LiveStorage_FileShare_WriteExeToStream;
   local_60.m_successCallback = LiveStorage_FileShare_ExeWriteSuccessful;
   local_60.m_failureCallback = LiveStorage_FileShare_ExeWriteFailure;
-  iVar1 = LiveStorage_CS_WriteFile(iVar1,&local_60);
+  LiveStorage_CS_WriteFile(param_1,&local_60);
   s_remoteConsoleCheckData.checkingRemoteConsoleFile = true;
-  __restgprlr_28(iVar1);
   return;
 }
 
 
 // 824F42E8  LiveStorage_UploadFastFile  (qcommon/com_storage_remoteupload.cpp:388)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 bool LiveStorage_UploadFastFile(int param_1)
 
 {
-  int iVar1;
-  undefined1 uVar2;
   contentServerWriteFileInfo local_160;
   char acStack_120 [288];
   
-  iVar1 = __savegprlr_29(param_1);
   s_remoteConsoleCheckData.FFUploadFile = (void *)0xffffffff;
   Sys_DefaultInstallPath();
   Com_sprintf(acStack_120,0x100,"%s\\%s");
@@ -435,7 +420,7 @@ bool LiveStorage_UploadFastFile(int param_1)
          GetFileSize(s_remoteConsoleCheckData.FFUploadFile,(ulong *)0x0);
     local_160.m_category = 100;
     local_160.m_fileSize = s_remoteConsoleCheckData.totalSize;
-    Live_GetXuid(iVar1);
+    Live_GetXuid(param_1);
     local_160.m_fileName = va("%s_%lld");
     local_160.m_fileSlot = 100;
     local_160.m_numTags = 0;
@@ -445,218 +430,206 @@ bool LiveStorage_UploadFastFile(int param_1)
     local_160.m_thumbDataSize = 0;
     local_160.m_successCallback = LiveStorage_FileShare_ExeWriteSuccessful;
     local_160.m_failureCallback = LiveStorage_FileShare_ExeWriteFailure;
-    LiveStorage_CS_WriteFile(iVar1,&local_160);
+    LiveStorage_CS_WriteFile(param_1,&local_160);
     s_remoteConsoleCheckData.checkingRemoteConsoleFile = true;
-    uVar2 = __restgprlr_29(1);
-    return (bool)uVar2;
+    return true;
   }
-  uVar2 = __restgprlr_29(0);
-  return (bool)uVar2;
+  return false;
 }
 
 
 // 824F43F8  LiveStorage_DownloadRemoteConsoleChallengeComplete  (qcommon/com_storage_remoteupload.cpp:470)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 taskCompleteResults LiveStorage_DownloadRemoteConsoleChallengeComplete(int param_1)
 
 {
   bdRemoteTask *this;
-  int iVar1;
-  overlappedTask *poVar2;
-  bdLobbyService *pbVar3;
-  Status SVar4;
-  taskCompleteResults tVar5;
-  int iVar6;
-  bool bVar8;
-  bdLobbyErrorCode bVar7;
+  bdLobbyService *pbVar1;
+  Status SVar2;
+  taskCompleteResults tVar3;
+  int iVar4;
+  bool bVar6;
+  bdLobbyErrorCode bVar5;
+  overlappedTask *poVar7;
   
-  iVar1 = __savegprlr_27(param_1);
-  poVar2 = storageTasks.tasks + iVar1;
-  if (storageTasks.tasks[iVar1].active == false) {
+  poVar7 = storageTasks.tasks + param_1;
+  if (storageTasks.tasks[param_1].active == false) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage_remoteupload.cpp"
                     ,0x1d9,0,"%s");
   }
-  if (storageTasks.tasks[iVar1].type != 4) {
+  if (storageTasks.tasks[param_1].type != 4) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage_remoteupload.cpp"
                     ,0x1da,0,"%s");
   }
-  pbVar3 = dwGetLobbyService((uint)storageTasks.tasks[iVar1].controllerIndex);
-  if (pbVar3 != (bdLobbyService *)0x0) {
-    pbVar3 = dwGetLobbyService((uint)storageTasks.tasks[iVar1].controllerIndex);
-    SVar4 = bdLobbyService::getStatus(pbVar3);
-    if (SVar4 != BD_CONNECTED) {
-      tVar5 = __restgprlr_27(0);
-      return tVar5;
+  pbVar1 = dwGetLobbyService((uint)storageTasks.tasks[param_1].controllerIndex);
+  if (pbVar1 != (bdLobbyService *)0x0) {
+    pbVar1 = dwGetLobbyService((uint)storageTasks.tasks[param_1].controllerIndex);
+    SVar2 = bdLobbyService::getStatus(pbVar1);
+    if (SVar2 != BD_CONNECTED) {
+      return TASK_NOTCOMPLETE;
     }
   }
-  tVar5 = dwFetchFileComplete(poVar2,&s_remoteConsoleCheckData.RCCheckFileTask);
-  if (tVar5 != TASK_COMPLETE) {
-    if (tVar5 == TASK_ERROR) {
-      this = storageTasks.tasks[iVar1].u.remoteTask.m_ptr;
+  tVar3 = dwFetchFileComplete(poVar7,&s_remoteConsoleCheckData.RCCheckFileTask);
+  if (tVar3 != TASK_COMPLETE) {
+    if (tVar3 == TASK_ERROR) {
+      this = storageTasks.tasks[param_1].u.remoteTask.m_ptr;
       if ((this != (bdRemoteTask *)0x0) &&
-         (bVar7 = bdRemoteTask::getErrorCode(this), bVar7 == BD_NO_FILE)) {
-        s_remoteConsoleCheckData.remoteConsoleFileChecked[storageTasks.tasks[iVar1].controllerIndex]
-             = true;
+         (bVar5 = bdRemoteTask::getErrorCode(this), bVar5 == BD_NO_FILE)) {
+        s_remoteConsoleCheckData.remoteConsoleFileChecked
+        [storageTasks.tasks[param_1].controllerIndex] = true;
         s_remoteConsoleCheckData.checkingRemoteConsoleFile = false;
-        TaskManager_ClearTask(poVar2);
+        TaskManager_ClearTask(poVar7);
         g_NumFetchRCCheckAttempts = 0;
         g_LastFetchRCCheckAttemptTime = 0;
-        tVar5 = __restgprlr_27(1);
-        return tVar5;
+        return TASK_COMPLETE;
       }
       s_remoteConsoleCheckData.checkingRemoteConsoleFile = false;
-      TaskManager_ClearTask(poVar2);
-      tVar5 = TASK_ERROR;
+      TaskManager_ClearTask(poVar7);
+      tVar3 = TASK_ERROR;
     }
-    tVar5 = __restgprlr_27(tVar5);
-    return tVar5;
+    return tVar3;
   }
   s_remoteConsoleCheckData.RCCheckFileBuffer = (char *)0x0;
-  iVar6 = I_strcmp(s_remoteConsoleCheckData.RCCheckFileNameBuffer,"exe");
-  if (iVar6 == 0) {
-    LiveStorage_UploadExe((uint)storageTasks.tasks[iVar1].controllerIndex);
-    TaskManager_ClearTask(poVar2);
-    tVar5 = __restgprlr_27(1);
-    return tVar5;
+  iVar4 = I_strcmp(s_remoteConsoleCheckData.RCCheckFileNameBuffer,"exe");
+  if (iVar4 == 0) {
+    LiveStorage_UploadExe((uint)storageTasks.tasks[param_1].controllerIndex);
+    TaskManager_ClearTask(poVar7);
+    return TASK_COMPLETE;
   }
-  iVar6 = I_strcmp(s_remoteConsoleCheckData.RCCheckFileNameBuffer,"ffotd");
-  if (iVar6 != 0) {
-    bVar8 = LiveStorage_UploadFastFile((uint)storageTasks.tasks[iVar1].controllerIndex);
-    if (!bVar8) {
-      LiveStorage_UploadFileToCS((uint)storageTasks.tasks[iVar1].controllerIndex);
+  iVar4 = I_strcmp(s_remoteConsoleCheckData.RCCheckFileNameBuffer,"ffotd");
+  if (iVar4 != 0) {
+    bVar6 = LiveStorage_UploadFastFile((uint)storageTasks.tasks[param_1].controllerIndex);
+    if (!bVar6) {
+      LiveStorage_UploadFileToCS((uint)storageTasks.tasks[param_1].controllerIndex);
     }
-    TaskManager_ClearTask(poVar2);
-    tVar5 = __restgprlr_27(1);
-    return tVar5;
+    TaskManager_ClearTask(poVar7);
+    return TASK_COMPLETE;
   }
-  bVar8 = LiveStorage_DoWeHaveFFotD();
-  if (!bVar8) {
+  bVar6 = LiveStorage_DoWeHaveFFotD();
+  if (!bVar6) {
     s_remoteConsoleCheckData.checkingRemoteConsoleFile = false;
-    TaskManager_ClearTask(poVar2);
-    tVar5 = __restgprlr_27(1);
-    return tVar5;
+    TaskManager_ClearTask(poVar7);
+    return TASK_COMPLETE;
   }
-  LiveStorage_UploadFfotd((uint)storageTasks.tasks[iVar1].controllerIndex);
-  TaskManager_ClearTask(poVar2);
-  tVar5 = __restgprlr_27(1);
-  return tVar5;
+  LiveStorage_UploadFfotd((uint)storageTasks.tasks[param_1].controllerIndex);
+  TaskManager_ClearTask(poVar7);
+  return TASK_COMPLETE;
 }
 
 
 // 824F3B50  LiveStorage_CheckForRemoteConsoleChallengeComplete  (qcommon/com_storage_remoteupload.cpp:536)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 taskCompleteResults LiveStorage_CheckForRemoteConsoleChallengeComplete(int param_1)
 
 {
-  int iVar1;
-  overlappedTask *poVar2;
-  bdLobbyService *pbVar3;
-  Status SVar4;
-  taskCompleteResults tVar5;
-  overlappedTask *poVar6;
+  overlappedTask *poVar1;
+  bdLobbyService *pbVar2;
+  Status SVar3;
+  taskCompleteResults tVar4;
+  overlappedTask *poVar5;
+  int iVar6;
   
-  iVar1 = __savegprlr_27(param_1);
-  poVar2 = storageTasks.tasks + iVar1;
-  if (storageTasks.tasks[iVar1].active == false) {
+  poVar1 = storageTasks.tasks + param_1;
+  if (storageTasks.tasks[param_1].active == false) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage_remoteupload.cpp"
                     ,0x21b,0,"%s");
   }
-  if (storageTasks.tasks[iVar1].type != 3) {
+  if (storageTasks.tasks[param_1].type != 3) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage_remoteupload.cpp"
                     ,0x21c,0,"%s");
   }
-  pbVar3 = dwGetLobbyService((uint)storageTasks.tasks[iVar1].controllerIndex);
-  if (pbVar3 != (bdLobbyService *)0x0) {
-    pbVar3 = dwGetLobbyService((uint)storageTasks.tasks[iVar1].controllerIndex);
-    SVar4 = bdLobbyService::getStatus(pbVar3);
-    if (SVar4 != BD_CONNECTED) {
-      tVar5 = __restgprlr_27(0);
-      return tVar5;
+  pbVar2 = dwGetLobbyService((uint)storageTasks.tasks[param_1].controllerIndex);
+  if (pbVar2 != (bdLobbyService *)0x0) {
+    pbVar2 = dwGetLobbyService((uint)storageTasks.tasks[param_1].controllerIndex);
+    SVar3 = bdLobbyService::getStatus(pbVar2);
+    if (SVar3 != BD_CONNECTED) {
+      return TASK_NOTCOMPLETE;
     }
   }
-  tVar5 = dwFetchFileInfoComplete(poVar2,&s_remoteConsoleCheckData.RCCheckFileTask);
-  if (tVar5 != TASK_COMPLETE) {
-    if (tVar5 == TASK_ERROR) {
+  tVar4 = dwFetchFileInfoComplete(poVar1,&s_remoteConsoleCheckData.RCCheckFileTask);
+  if (tVar4 != TASK_COMPLETE) {
+    if (tVar4 == TASK_ERROR) {
       Com_PrintWarning(0x10,"got error while checking for RCCHECK file in user storage\n");
-      s_remoteConsoleCheckData.remoteConsoleFileChecked[storageTasks.tasks[iVar1].controllerIndex] =
-           true;
+      s_remoteConsoleCheckData.remoteConsoleFileChecked[storageTasks.tasks[param_1].controllerIndex]
+           = true;
       s_remoteConsoleCheckData.checkingRemoteConsoleFile = false;
-      TaskManager_ClearTask(poVar2);
-      tVar5 = TASK_ERROR;
+      TaskManager_ClearTask(poVar1);
+      tVar4 = TASK_ERROR;
     }
-    tVar5 = __restgprlr_27(tVar5);
-    return tVar5;
+    return tVar4;
   }
   if (s_remoteConsoleCheckData.RCCheckFileTask.m_infoResult.m_fileID == 0) {
-    s_remoteConsoleCheckData.remoteConsoleFileChecked[storageTasks.tasks[iVar1].controllerIndex] =
+    s_remoteConsoleCheckData.remoteConsoleFileChecked[storageTasks.tasks[param_1].controllerIndex] =
          true;
     s_remoteConsoleCheckData.checkingRemoteConsoleFile = false;
-    TaskManager_ClearTask(poVar2);
-    tVar5 = __restgprlr_27(1);
-    return tVar5;
+    TaskManager_ClearTask(poVar1);
+    return TASK_COMPLETE;
   }
-  poVar6 = TaskManager_GetOpenTaskSlot
-                     (&storageTasks,(uint)storageTasks.tasks[iVar1].controllerIndex,4);
-  if (poVar6 != (overlappedTask *)0x0) {
+  poVar5 = TaskManager_GetOpenTaskSlot
+                     (&storageTasks,(uint)storageTasks.tasks[param_1].controllerIndex,4);
+  if (poVar5 != (overlappedTask *)0x0) {
     memset();
     s_remoteConsoleCheckData.RCCheckFileTask.m_bufferSize = 0x80;
     s_remoteConsoleCheckData.RCCheckFileTask.m_filename = "RCCheck";
     s_remoteConsoleCheckData.RCCheckFileTask.m_buffer =
          s_remoteConsoleCheckData.RCCheckFileNameBuffer;
-    iVar1 = dwFetchUserFile(poVar6,&s_remoteConsoleCheckData.RCCheckFileTask);
-    if (iVar1 != 0) {
+    iVar6 = dwFetchUserFile(poVar5,&s_remoteConsoleCheckData.RCCheckFileTask);
+    if (iVar6 != 0) {
       s_remoteConsoleCheckData.checkingRemoteConsoleFile = true;
-      TaskManager_ClearTask(poVar2);
-      tVar5 = __restgprlr_27(1);
-      return tVar5;
+      TaskManager_ClearTask(poVar1);
+      return TASK_COMPLETE;
     }
     s_remoteConsoleCheckData.checkingRemoteConsoleFile = false;
-    TaskManager_ClearTask(poVar6);
-    TaskManager_ClearTask(poVar2);
-    tVar5 = __restgprlr_27(1);
-    return tVar5;
+    TaskManager_ClearTask(poVar5);
+    TaskManager_ClearTask(poVar1);
+    return TASK_COMPLETE;
   }
   s_remoteConsoleCheckData.checkingRemoteConsoleFile = false;
-  TaskManager_ClearTask(poVar2);
-  tVar5 = __restgprlr_27(1);
-  return tVar5;
+  TaskManager_ClearTask(poVar1);
+  return TASK_COMPLETE;
 }
 
 
 // 824F3D58  LiveStorage_CheckForRemoteConsoleDeleteComplete  (qcommon/com_storage_remoteupload.cpp:596)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 taskCompleteResults LiveStorage_CheckForRemoteConsoleDeleteComplete(int param_1)
 
 {
-  int iVar1;
-  bdLobbyService *pbVar2;
-  Status SVar3;
-  taskCompleteResults tVar4;
+  bdLobbyService *pbVar1;
+  Status SVar2;
+  taskCompleteResults tVar3;
   
-  iVar1 = __savegprlr_27(param_1);
-  if (storageTasks.tasks[iVar1].active == false) {
+  if (storageTasks.tasks[param_1].active == false) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage_remoteupload.cpp"
                     ,599,0,"%s");
   }
-  if (storageTasks.tasks[iVar1].type != 5) {
+  if (storageTasks.tasks[param_1].type != 5) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage_remoteupload.cpp"
                     ,600,0,"%s");
   }
-  pbVar2 = dwGetLobbyService((uint)storageTasks.tasks[iVar1].controllerIndex);
-  if (pbVar2 != (bdLobbyService *)0x0) {
-    pbVar2 = dwGetLobbyService((uint)storageTasks.tasks[iVar1].controllerIndex);
-    SVar3 = bdLobbyService::getStatus(pbVar2);
-    if (SVar3 != BD_CONNECTED) goto LAB_824f3e10;
+  pbVar1 = dwGetLobbyService((uint)storageTasks.tasks[param_1].controllerIndex);
+  if (pbVar1 != (bdLobbyService *)0x0) {
+    pbVar1 = dwGetLobbyService((uint)storageTasks.tasks[param_1].controllerIndex);
+    SVar2 = bdLobbyService::getStatus(pbVar1);
+    if (SVar2 != BD_CONNECTED) {
+      return TASK_NOTCOMPLETE;
+    }
   }
-  tVar4 = dwDeleteFileComplete(storageTasks.tasks + iVar1);
-  if (tVar4 != TASK_NOTCOMPLETE) {
-    TaskManager_ClearTask(storageTasks.tasks + iVar1);
-    tVar4 = __restgprlr_27(tVar4);
-    return tVar4;
+  tVar3 = dwDeleteFileComplete(storageTasks.tasks + param_1);
+  if (tVar3 == TASK_NOTCOMPLETE) {
+    return TASK_NOTCOMPLETE;
   }
-LAB_824f3e10:
-  tVar4 = __restgprlr_27(0);
-  return tVar4;
+  TaskManager_ClearTask(storageTasks.tasks + param_1);
+  return tVar3;
 }
 
 

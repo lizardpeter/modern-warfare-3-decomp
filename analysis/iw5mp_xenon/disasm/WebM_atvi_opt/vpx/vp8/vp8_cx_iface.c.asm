@@ -692,66 +692,66 @@ LAB_82810198:
   828101F8  7C0903A6             mtspr CTR,r0
 switchD:
   828101FC  4E800420             bctr
-caseD_0:
+caseD_c:
   82810230  397F0007             addi r11,r31,0x7
   82810234  556A0038             rlwinm r10,r11,0x0,0x0,0x1c
   82810238  812A0004             lwz r9,0x4(r10)
   8281023C  913E2528             stw r9,0x2528(r30)
   82810240  480000B4             b 0x828102f4
-caseD_1:
+caseD_d:
   82810244  397F0007             addi r11,r31,0x7
   82810248  556A0038             rlwinm r10,r11,0x0,0x0,0x1c
   8281024C  812A0004             lwz r9,0x4(r10)
   82810250  912100D8             stw r9,0xd8(r1)
   82810254  480000A0             b 0x828102f4
-caseD_2:
+caseD_e:
   82810258  397F0007             addi r11,r31,0x7
   8281025C  556A0038             rlwinm r10,r11,0x0,0x0,0x1c
   82810260  812A0004             lwz r9,0x4(r10)
   82810264  912100DC             stw r9,0xdc(r1)
   82810268  4800008C             b 0x828102f4
-caseD_3:
+caseD_f:
   8281026C  397F0007             addi r11,r31,0x7
   82810270  556A0038             rlwinm r10,r11,0x0,0x0,0x1c
   82810274  812A0004             lwz r9,0x4(r10)
   82810278  912100E0             stw r9,0xe0(r1)
   8281027C  48000078             b 0x828102f4
-caseD_4:
+caseD_10:
   82810280  397F0007             addi r11,r31,0x7
   82810284  556A0038             rlwinm r10,r11,0x0,0x0,0x1c
   82810288  812A0004             lwz r9,0x4(r10)
   8281028C  912100E4             stw r9,0xe4(r1)
   82810290  48000064             b 0x828102f4
-caseD_5:
+caseD_11:
   82810294  397F0007             addi r11,r31,0x7
   82810298  556A0038             rlwinm r10,r11,0x0,0x0,0x1c
   8281029C  812A0004             lwz r9,0x4(r10)
   828102A0  912100E8             stw r9,0xe8(r1)
   828102A4  48000050             b 0x828102f4
-caseD_6:
+caseD_12:
   828102A8  397F0007             addi r11,r31,0x7
   828102AC  556A0038             rlwinm r10,r11,0x0,0x0,0x1c
   828102B0  812A0004             lwz r9,0x4(r10)
   828102B4  912100EC             stw r9,0xec(r1)
   828102B8  4800003C             b 0x828102f4
-caseD_9:
+caseD_15:
   828102BC  397F0007             addi r11,r31,0x7
   828102C0  556A0038             rlwinm r10,r11,0x0,0x0,0x1c
   828102C4  812A0004             lwz r9,0x4(r10)
   828102C8  912100F0             stw r9,0xf0(r1)
   828102CC  48000028             b 0x828102f4
-caseD_a:
+caseD_16:
   828102D0  397F0007             addi r11,r31,0x7
   828102D4  556A0038             rlwinm r10,r11,0x0,0x0,0x1c
   828102D8  812A0004             lwz r9,0x4(r10)
   828102DC  912100F4             stw r9,0xf4(r1)
   828102E0  48000014             b 0x828102f4
-caseD_b:
+caseD_17:
   828102E4  397F0007             addi r11,r31,0x7
   828102E8  556A0038             rlwinm r10,r11,0x0,0x0,0x1c
   828102EC  812A0004             lwz r9,0x4(r10)
   828102F0  912100F8             stw r9,0xf8(r1)
-caseD_7:
+caseD_13:
   828102F4  3BFE00C8             addi r31,r30,0xc8
   828102F8  38A100D0             addi r5,r1,0xd0
   828102FC  7FE4FB78             or r4,r31,r31

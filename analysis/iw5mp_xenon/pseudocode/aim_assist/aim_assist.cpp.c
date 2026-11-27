@@ -2,103 +2,92 @@
 
 // 82260D30  BG_HasPerk  (bgame/bg_perks.h:75)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 bool BG_HasPerk(uint *param_1,uint param_2)
 
 {
-  ulonglong uVar1;
-  int iVar2;
-  undefined1 uVar3;
-  ulonglong uVar4;
-  
-  uVar4 = (ulonglong)(int)param_2;
-  iVar2 = __savegprlr_28(param_1);
-  if (iVar2 == 0) {
+  if (param_1 == (uint *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\../bgame/bg_perks.h",
                     0x4f,0,"%s");
   }
-  if (0x31 < (uVar4 & 0xffffffff)) {
+  if (0x31 < param_2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\../bgame/bg_perks.h",
                     0x50,0,"perkIndex doesn\'t index PERK_COUNT\n\t%i not in [0, %i)");
   }
-  uVar1 = (uVar4 & 0xffffffff) >> 5;
-  if (1 < uVar1) {
+  if (1 < param_2 >> 5) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\../bgame/bg_perks.h",
                     0x53,0,"arrayIndex doesn\'t index PERK_ARRAY_COUNT\n\t%i not in [0, %i)");
   }
-  uVar3 = __restgprlr_28((1 << ((uint)uVar4 & 0x1f) & *(uint *)((int)(uVar1 << 2) + iVar2)) != 0);
-  return (bool)uVar3;
+  return (bool)('\x01' - ((1 << (param_2 & 0x1f) & param_1[param_2 >> 5]) == 0));
 }
 
 
 // 82261238  MemFile_ArchiveData  (universal/memfile.h:212)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void MemFile_ArchiveData(MemoryFile *param_1,int param_2,void *param_3)
 
 {
-  int iVar1;
-  longlong lVar2;
-  longlong lVar3;
-  
-  lVar3 = (longlong)(int)param_3;
-  lVar2 = (longlong)param_2;
-  iVar1 = __savegprlr_27(param_1,lVar2,lVar3);
-  if (iVar1 == 0) {
+  if (param_1 == (MemoryFile *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\../universal/memfile.h"
                     ,0xd5,0,"%s");
   }
-  if (*(int *)(iVar1 + 0x20) == 0) {
+  if (param_1->archiveProc == (_func___cdecl_void_MemoryFile_ptr_int_void_ptr *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\../universal/memfile.h"
                     ,0xd6,0,"%s");
   }
-  (**(code **)(iVar1 + 0x20))(iVar1,lVar2,lVar3);
-  __restgprlr_27();
+  (*param_1->archiveProc)(param_1,param_2,param_3);
   return;
 }
 
 
 // 82260DF0  Profile_Begin  (universal/profile.h:229)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void Profile_Begin(int param_1)
 
 {
   uint uVar1;
   undefined8 uVar2;
-  int iVar3;
-  void *pvVar4;
-  undefined4 *puVar5;
-  uint *puVar6;
+  void *pvVar3;
+  undefined4 *puVar4;
+  uint *puVar5;
   
-  iVar3 = __savegprlr_27(param_1);
-  pvVar4 = Sys_GetValue(0);
-  puVar6 = (uint *)((int)pvVar4 + iVar3 * 0x28 + 0x42c);
-  if (2 < *(int *)((int)pvVar4 + iVar3 * 0x28 + 0x42c) + 1U) {
+  pvVar3 = Sys_GetValue(0);
+  puVar5 = (uint *)((int)pvVar3 + param_1 * 0x28 + 0x42c);
+  if (2 < *(int *)((int)pvVar3 + param_1 * 0x28 + 0x42c) + 1U) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\../universal/profile.h"
                     ,0xee,0,
                     "p->write.nesting + 1 doesn\'t index ARRAY_COUNT( p->write.start )\n\t%i not in [0, %i)"
                    );
   }
-  uVar1 = *puVar6;
-  *puVar6 = uVar1 + 1;
+  uVar1 = *puVar5;
+  *puVar5 = uVar1 + 1;
   if (2 < uVar1 + 1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\../universal/profile.h"
                     ,0xf0,0,
                     "p->write.nesting doesn\'t index ARRAY_COUNT( p->write.start )\n\t%i not in [0, %i)"
                    );
   }
-  if (*(uint *)((int)pvVar4 + 0x428) < (int)pvVar4 + 0x28U) {
+  if (*(uint *)((int)pvVar3 + 0x428) < (int)pvVar3 + 0x28U) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\../universal/profile.h"
                     ,0xf2,0,"%s");
   }
-  puVar5 = (undefined4 *)(*(int *)((int)pvVar4 + 0x428) + 4);
-  *(undefined4 **)((int)pvVar4 + 0x428) = puVar5;
-  *puVar5 = puVar6;
-  if (*(uint *)((int)pvVar4 + 0x428) <= (int)pvVar4 + 0x28U) {
+  puVar4 = (undefined4 *)(*(int *)((int)pvVar3 + 0x428) + 4);
+  *(undefined4 **)((int)pvVar3 + 0x428) = puVar4;
+  *puVar4 = puVar5;
+  if (*(uint *)((int)pvVar3 + 0x428) <= (int)pvVar3 + 0x28U) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\../universal/profile.h"
                     ,0xf5,0,"%s");
   }
   uVar2 = TBLr;
-  puVar6[*puVar6 + 2] = (uint)uVar2;
-  __restgprlr_27();
+  puVar5[*puVar5 + 2] = (uint)uVar2;
   return;
 }
 
@@ -122,22 +111,23 @@ bool BG_UsingAlternate(playerState_s *param_1)
 
 // 82260F18  Profile_EndInternal  (universal/profile.h:254)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
+
 int Profile_EndInternal(double *param_1)
 
 {
   uint *puVar1;
   uint uVar2;
-  uint uVar3;
-  double *pdVar4;
+  int iVar3;
+  uint uVar4;
   void *pvVar5;
-  int iVar6;
-  ulonglong uVar7;
-  int *piVar8;
-  int iVar9;
+  ulonglong uVar6;
+  int *piVar7;
+  int iVar8;
   
-  pdVar4 = (double *)__savegprlr_25(param_1);
   pvVar5 = Sys_GetValue(0);
-  uVar7 = TBLr;
+  uVar6 = TBLr;
   if (*(uint *)((int)pvVar5 + 0x428) <= (int)pvVar5 + 0x28U) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\../universal/profile.h"
                     ,0x10a,0,"%s");
@@ -150,31 +140,30 @@ int Profile_EndInternal(double *param_1)
                    );
   }
   uVar2 = *(uint *)((int)pvVar5 + 0x49b4);
-  uVar3 = puVar1[*puVar1 + 2];
+  uVar4 = puVar1[*puVar1 + 2];
   *puVar1 = *puVar1 - 1;
   puVar1[1] = puVar1[1] + 1;
-  uVar7 = ((uVar7 & 0xffffffff) - (ulonglong)uVar3) - (ulonglong)uVar2;
-  uVar7 = -(ulonglong)(uVar7 < 0xffffffffffff0001) & uVar7;
-  iVar9 = (int)uVar7;
-  puVar1[5] = puVar1[5] + iVar9;
-  piVar8 = (int *)(*(int *)((int)pvVar5 + 0x428) + -4);
-  *(int **)((int)pvVar5 + 0x428) = piVar8;
-  iVar6 = *piVar8;
-  if (iVar6 == 0) {
+  uVar6 = ((uVar6 & 0xffffffff) - (ulonglong)uVar4) - (ulonglong)uVar2;
+  uVar6 = -(ulonglong)(uVar6 < 0xffffffffffff0001) & uVar6;
+  iVar8 = (int)uVar6;
+  puVar1[5] = puVar1[5] + iVar8;
+  piVar7 = (int *)(*(int *)((int)pvVar5 + 0x428) + -4);
+  *(int **)((int)pvVar5 + 0x428) = piVar7;
+  iVar3 = *piVar7;
+  if (iVar3 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\../universal/profile.h"
                     ,0x120,0,"%s");
   }
-  *(int *)(iVar6 + 0x18) = *(int *)(iVar6 + 0x18) + iVar9;
-  iVar9 = *(uint *)(iVar6 + 0x14) - *(uint *)((int)pvVar5 + 0x49b8);
-  if (*(uint *)(iVar6 + 0x14) < *(uint *)((int)pvVar5 + 0x49b8)) {
-    iVar9 = 0;
+  *(int *)(iVar3 + 0x18) = *(int *)(iVar3 + 0x18) + iVar8;
+  iVar8 = *(uint *)(iVar3 + 0x14) - *(uint *)((int)pvVar5 + 0x49b8);
+  if (*(uint *)(iVar3 + 0x14) < *(uint *)((int)pvVar5 + 0x49b8)) {
+    iVar8 = 0;
   }
-  *(int *)(iVar6 + 0x14) = iVar9;
-  if (pdVar4 != (double *)0x0) {
-    *pdVar4 = (double)(uVar7 & 0xffffffff) * msecPerRawTimerTick;
+  *(int *)(iVar3 + 0x14) = iVar8;
+  if (param_1 != (double *)0x0) {
+    *param_1 = (double)(uVar6 & 0xffffffff) * msecPerRawTimerTick;
   }
-  iVar6 = __restgprlr_25(((int)puVar1 + (-0x42c - (int)pvVar5)) / 0x28);
-  return iVar6;
+  return ((int)puVar1 + (-0x42c - (int)pvVar5)) / 0x28;
 }
 
 
@@ -195,141 +184,126 @@ void TRACK_aim_assist(void)
 
 // 82261348  AimAssist_LerpConstDvars  (aim_assist/aim_assist.cpp:342)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 float AimAssist_LerpConstDvars
                 (dvar_t *param_1,float param_2,dvar_t *param_3,float param_4,float param_5)
 
 {
-  int iVar1;
-  ulonglong uVar2;
-  double extraout_f1;
-  double dVar3;
+  double dVar1;
   
-  uVar2 = (ulonglong)(int)param_3;
-  iVar1 = __savegprlr_28((double)param_2,(double)param_4,(double)param_5,param_1);
-  dVar3 = extraout_f1;
-  if (iVar1 == 0) {
+  dVar1 = (double)param_2;
+  if (param_1 == (dvar_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\aim_assist.cpp",
                     0x158,0,"%s");
   }
-  if ((uVar2 & 0xffffffff) == 0) {
+  if (param_3 == (dvar_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\aim_assist.cpp",
                     0x159,0,"%s");
   }
-  if ((dVar3 < 0.0) || (1.0 < dVar3)) {
+  if ((dVar1 < 0.0) || (1.0 < dVar1)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\aim_assist.cpp",
                     0x15b,0,"%s");
   }
-  dVar3 = (double)__restgprlr_28((double)(float)((double)(float)((double)*(float *)((int)uVar2 + 0xc
-                                                                                   ) -
-                                                                (double)*(float *)(iVar1 + 0xc)) *
-                                                 dVar3 + (double)*(float *)(iVar1 + 0xc)));
-  return (float)dVar3;
+  return (float)((double)(float)((double)(param_3->current).value - (double)(param_1->current).value
+                                ) * dVar1 + (double)(param_1->current).value);
 }
 
 
 // 82261418  AimAssist_GetClipWidthFromVirtualWidth  (aim_assist/aim_assist.cpp:443)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 float AimAssist_GetClipWidthFromVirtualWidth
                 (LocalClientNum_t param_1,ScreenPlacement *param_2,float param_3)
 
 {
-  uint uVar1;
-  ulonglong uVar2;
-  double extraout_f1;
-  double dVar3;
-  float fVar4;
+  double dVar1;
+  float fVar2;
   
-  uVar2 = (ulonglong)(int)param_2;
-  uVar1 = __savegprlr_29((double)param_3,param_1);
-  dVar3 = extraout_f1;
-  if (3 < uVar1) {
+  dVar1 = (double)param_3;
+  if (LOCAL_CLIENT_3 < param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\aim_assist.cpp",
                     0x1bc,0,
                     "localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)");
   }
-  if ((uVar2 & 0xffffffff) == 0) {
+  if (param_2 == (ScreenPlacement *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\aim_assist.cpp",
                     0x1bd,0,"%s");
   }
-  dVar3 = (double)(float)((double)cg_hudSplitscreenScale * dVar3);
-  fVar4 = ScrPlace_HiResGetScaleX();
-  dVar3 = (double)__restgprlr_29((double)((*(float *)uVar2 / aaGlobArray[uVar1].screenWidth) *
-                                         (float)((double)fVar4 * dVar3)));
-  return (float)dVar3;
+  dVar1 = (double)(float)((double)cg_hudSplitscreenScale * dVar1);
+  fVar2 = ScrPlace_HiResGetScaleX();
+  return (param_2->scaleVirtualToReal[0] / aaGlobArray[param_1].screenWidth) *
+         (float)((double)fVar2 * dVar1);
 }
 
 
 // 822614D0  AimAssist_GetClipHeightFromVirtualHeight  (aim_assist/aim_assist.cpp:452)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 float AimAssist_GetClipHeightFromVirtualHeight
                 (LocalClientNum_t param_1,ScreenPlacement *param_2,float param_3)
 
 {
-  uint uVar1;
-  ulonglong uVar2;
-  double extraout_f1;
-  double dVar3;
-  float fVar4;
+  double dVar1;
+  float fVar2;
   
-  uVar2 = (ulonglong)(int)param_2;
-  uVar1 = __savegprlr_29((double)param_3,param_1);
-  dVar3 = extraout_f1;
-  if (3 < uVar1) {
+  dVar1 = (double)param_3;
+  if (LOCAL_CLIENT_3 < param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\aim_assist.cpp",
                     0x1c5,0,
                     "localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)");
   }
-  if ((uVar2 & 0xffffffff) == 0) {
+  if (param_2 == (ScreenPlacement *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\aim_assist.cpp",
                     0x1c6,0,"%s");
   }
-  dVar3 = (double)(float)((double)cg_hudSplitscreenScale * dVar3);
-  fVar4 = ScrPlace_HiResGetScaleY();
-  dVar3 = (double)__restgprlr_29((double)((*(float *)((int)uVar2 + 4) /
-                                          aaGlobArray[uVar1].screenHeight) *
-                                         (float)((double)fVar4 * dVar3)));
-  return (float)dVar3;
+  dVar1 = (double)(float)((double)cg_hudSplitscreenScale * dVar1);
+  fVar2 = ScrPlace_HiResGetScaleY();
+  return (param_2->scaleVirtualToReal[1] / aaGlobArray[param_1].screenHeight) *
+         (float)((double)fVar2 * dVar1);
 }
 
 
 // 82261588  AimAssist_UpdateTweakables  (aim_assist/aim_assist.cpp:461)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void AimAssist_UpdateTweakables(LocalClientNum_t param_1)
 
 {
   int iVar1;
-  LocalClientNum_t LVar2;
-  ScreenPlacement *pSVar3;
-  float fVar4;
+  ScreenPlacement *pSVar2;
+  float fVar3;
   
-  LVar2 = __savegprlr_27(param_1);
-  if (LOCAL_CLIENT_3 < LVar2) {
+  if (LOCAL_CLIENT_3 < param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\aim_assist.cpp",
                     0x1d2,0,
                     "localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)");
   }
-  pSVar3 = ScrPlace_GetViewPlacement(LVar2);
-  fVar4 = AimAssist_GetClipWidthFromVirtualWidth(LVar2,pSVar3,*(float *)(DAT_829b51d8 + 0xc));
-  aaGlobArray[LVar2].tweakables.slowdownRegionWidth = fVar4;
-  fVar4 = AimAssist_GetClipHeightFromVirtualHeight(LVar2,pSVar3,*(float *)(DAT_829b51e0 + 0xc));
-  aaGlobArray[LVar2].tweakables.slowdownRegionHeight = fVar4;
-  fVar4 = AimAssist_GetClipWidthFromVirtualWidth(LVar2,pSVar3,*(float *)(DAT_829b4ca0 + 0xc));
+  pSVar2 = ScrPlace_GetViewPlacement(param_1);
+  fVar3 = AimAssist_GetClipWidthFromVirtualWidth(param_1,pSVar2,*(float *)(DAT_829b51d8 + 0xc));
+  aaGlobArray[param_1].tweakables.slowdownRegionWidth = fVar3;
+  fVar3 = AimAssist_GetClipHeightFromVirtualHeight(param_1,pSVar2,*(float *)(DAT_829b51e0 + 0xc));
+  aaGlobArray[param_1].tweakables.slowdownRegionHeight = fVar3;
+  fVar3 = AimAssist_GetClipWidthFromVirtualWidth(param_1,pSVar2,*(float *)(DAT_829b4ca0 + 0xc));
   iVar1 = DAT_829b51ec;
-  aaGlobArray[LVar2].tweakables.autoMeleeRegionWidth = fVar4 * aaGlobArray[LVar2].fovScaleInv;
-  fVar4 = AimAssist_GetClipHeightFromVirtualHeight(LVar2,pSVar3,*(float *)(iVar1 + 0xc));
-  aaGlobArray[LVar2].tweakables.autoMeleeRegionHeight = fVar4 * aaGlobArray[LVar2].fovScaleInv;
-  fVar4 = AimAssist_GetClipWidthFromVirtualWidth(LVar2,pSVar3,*(float *)(DAT_829b51f0 + 0xc));
-  aaGlobArray[LVar2].tweakables.lockOnRegionWidth = fVar4;
-  fVar4 = AimAssist_GetClipHeightFromVirtualHeight
-                    (LVar2,pSVar3,(aim_lockon_region_height->current).value);
-  aaGlobArray[LVar2].tweakables.lockOnRegionHeight = fVar4;
-  __restgprlr_27();
+  aaGlobArray[param_1].tweakables.autoMeleeRegionWidth = fVar3 * aaGlobArray[param_1].fovScaleInv;
+  fVar3 = AimAssist_GetClipHeightFromVirtualHeight(param_1,pSVar2,*(float *)(iVar1 + 0xc));
+  aaGlobArray[param_1].tweakables.autoMeleeRegionHeight = fVar3 * aaGlobArray[param_1].fovScaleInv;
+  fVar3 = AimAssist_GetClipWidthFromVirtualWidth(param_1,pSVar2,*(float *)(DAT_829b51f0 + 0xc));
+  aaGlobArray[param_1].tweakables.lockOnRegionWidth = fVar3;
+  fVar3 = AimAssist_GetClipHeightFromVirtualHeight
+                    (param_1,pSVar2,(aim_lockon_region_height->current).value);
+  aaGlobArray[param_1].tweakables.lockOnRegionHeight = fVar3;
   return;
 }
 
@@ -377,6 +351,8 @@ void AimAssist_UpdateAdsLerp(AimInput *param_1)
 
 // 82261790  AimAssist_RegisterDvars  (aim_assist/aim_assist.cpp:513)
 
+/* WARNING: Function: __savefpr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void AimAssist_RegisterDvars(void)
@@ -393,7 +369,6 @@ void AimAssist_RegisterDvars(void)
   double dVar9;
   double dVar10;
   
-  __savefpr_25();
   DAT_829b4cac = Dvar_RegisterBool("aim_input_graph_enabled",true,4,
                                    "Use graph for adjusting view input");
   DAT_829b5218 = Dvar_RegisterBool("aim_input_graph_debug",false,4,"Debug the view input graphs");
@@ -479,54 +454,54 @@ void AimAssist_RegisterDvars(void)
        Dvar_RegisterBool("aim_scale_view_axis",true,4,
                          "Scale the influence of each input axis so that the major axis has more influence on the control"
                         );
-  __restfpr_25();
   return;
 }
 
 
 // 82261CC8  AimAssist_Init  (aim_assist/aim_assist.cpp:606)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void AimAssist_Init(LocalClientNum_t param_1)
 
 {
-  uint uVar1;
-  GraphFloat *pGVar2;
-  DevGraph *pDVar3;
-  double dVar4;
+  GraphFloat *pGVar1;
+  DevGraph *pDVar2;
+  double dVar3;
   char acStack_c0 [192];
   
-  uVar1 = __savegprlr_27(param_1);
-  if (3 < uVar1) {
+  if (LOCAL_CLIENT_3 < param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\aim_assist.cpp",
                     0x262,0,
                     "localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)");
   }
-  pDVar3 = aaInputDevGraph;
+  pDVar2 = aaInputDevGraph;
   memset();
-  pGVar2 = (GraphFloat *)&DAT_829b4cb8;
-  dVar4 = 1.0;
+  pGVar1 = (GraphFloat *)&DAT_829b4cb8;
+  dVar3 = 1.0;
   do {
     Com_sprintf(acStack_c0,0x80,"aim_assist/view_input_%d.graph");
-    GraphFloat_Load(pGVar2,acStack_c0,(float)dVar4);
-    pGVar2 = pGVar2 + 1;
-  } while ((int)pGVar2 < -0x7d64ae28);
+    GraphFloat_Load(pGVar1,acStack_c0,(float)dVar3);
+    pGVar1 = pGVar1 + 1;
+  } while ((int)pGVar1 < -0x7d64ae28);
   Cbuf_InsertText(LOCAL_CLIENT_0,"exec devgui_aimassist\n");
-  pGVar2 = (GraphFloat *)&DAT_829b4cb8;
+  pGVar1 = (GraphFloat *)&DAT_829b4cb8;
   do {
     Com_sprintf(acStack_c0,0x80,"Aim Assist/Input Graph:1/Graph %d");
-    GraphFloat_CreateDevGui(pGVar2,pDVar3,acStack_c0);
-    pDVar3 = pDVar3 + 1;
-    pGVar2 = pGVar2 + 1;
-  } while ((int)pDVar3 < -0x7d64ecf8);
-  __restgprlr_27();
+    GraphFloat_CreateDevGui(pGVar1,pDVar2,acStack_c0);
+    pDVar2 = pDVar2 + 1;
+    pGVar1 = pGVar1 + 1;
+  } while ((int)pDVar2 < -0x7d64ecf8);
   return;
 }
 
 
 // 82264EE8  AimAssist_Setup  (aim_assist/aim_assist.cpp:632)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
@@ -534,39 +509,36 @@ void AimAssist_Setup(LocalClientNum_t param_1,playerState_s *param_2)
 
 {
   float fVar1;
-  LocalClientNum_t LVar2;
-  ScreenPlacement *pSVar3;
-  ulonglong uVar4;
+  ScreenPlacement *pSVar2;
   
-  uVar4 = (ulonglong)(int)param_2;
-  LVar2 = __savegprlr_29(param_1);
-  if (LOCAL_CLIENT_3 < LVar2) {
+  if (LOCAL_CLIENT_3 < param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\aim_assist.cpp",
                     0x27c,0,
                     "localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)");
   }
-  if ((uVar4 & 0xffffffff) == 0) {
+  if (param_2 == (playerState_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\aim_assist.cpp",
                     0x27d,0,"%s");
   }
   memset();
-  pSVar3 = ScrPlace_GetViewPlacement(LVar2);
-  aaGlobArray[LVar2].initialized = true;
-  aaGlobArray[LVar2].fovTurnRateScale = 1.0;
-  aaGlobArray[LVar2].fovScaleInv = 1.0;
-  aaGlobArray[LVar2].screenWidth = pSVar3->realViewportSize[0];
-  fVar1 = pSVar3->realViewportSize[1];
-  aaGlobArray[LVar2].autoMeleeTargetEnt = 0x7ff;
-  aaGlobArray[LVar2].screenHeight = fVar1;
-  aaGlobArray[LVar2].lockOnTargetEnt = 0x7ff;
-  AimAssist_BackupPlayerState(LVar2,(playerState_s *)uVar4);
-  __restgprlr_29();
+  pSVar2 = ScrPlace_GetViewPlacement(param_1);
+  aaGlobArray[param_1].initialized = true;
+  aaGlobArray[param_1].fovTurnRateScale = 1.0;
+  aaGlobArray[param_1].fovScaleInv = 1.0;
+  aaGlobArray[param_1].screenWidth = pSVar2->realViewportSize[0];
+  fVar1 = pSVar2->realViewportSize[1];
+  aaGlobArray[param_1].autoMeleeTargetEnt = 0x7ff;
+  aaGlobArray[param_1].screenHeight = fVar1;
+  aaGlobArray[param_1].lockOnTargetEnt = 0x7ff;
+  AimAssist_BackupPlayerState(param_1,param_2);
   return;
 }
 
 
 // 82261DE8  AimAssist_BackupPlayerState  (aim_assist/aim_assist.cpp:663)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -575,83 +547,77 @@ void AimAssist_BackupPlayerState(LocalClientNum_t param_1,playerState_s *param_2
 
 {
   float fVar1;
-  playerState_s *ppVar2;
-  LocalClientNum_t LVar3;
-  centity_s *pcVar4;
-  Weapon WVar5;
-  uint uVar6;
-  int iVar7;
-  bool bVar8;
-  ulonglong uVar9;
+  centity_s *pcVar2;
+  Weapon WVar3;
+  uint uVar4;
+  int iVar5;
+  bool bVar6;
   
-  uVar9 = (ulonglong)(int)param_2;
-  LVar3 = __savegprlr_27(param_1);
-  if (LOCAL_CLIENT_3 < LVar3) {
+  if (LOCAL_CLIENT_3 < param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\aim_assist.cpp",
                     0x29a,0,
                     "localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)");
   }
-  if ((uVar9 & 0xffffffff) == 0) {
+  if (param_2 == (playerState_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\aim_assist.cpp",
                     0x29b,0,"%s");
   }
-  ppVar2 = (playerState_s *)uVar9;
-  if ((ppVar2->vehicleState).entity == 0x7ff) {
-    aaGlobArray[LVar3].ps.velocity[0] = ppVar2->velocity[0];
-    aaGlobArray[LVar3].ps.velocity[1] = ppVar2->velocity[1];
-    fVar1 = ppVar2->velocity[2];
+  if ((param_2->vehicleState).entity == 0x7ff) {
+    aaGlobArray[param_1].ps.velocity[0] = param_2->velocity[0];
+    aaGlobArray[param_1].ps.velocity[1] = param_2->velocity[1];
+    fVar1 = param_2->velocity[2];
   }
   else {
-    aaGlobArray[LVar3].ps.velocity[0] = (ppVar2->vehicleState).velocity[0];
-    aaGlobArray[LVar3].ps.velocity[1] = (ppVar2->vehicleState).velocity[1];
-    fVar1 = (ppVar2->vehicleState).velocity[2];
+    aaGlobArray[param_1].ps.velocity[0] = (param_2->vehicleState).velocity[0];
+    aaGlobArray[param_1].ps.velocity[1] = (param_2->vehicleState).velocity[1];
+    fVar1 = (param_2->vehicleState).velocity[2];
   }
-  aaGlobArray[LVar3].ps.velocity[2] = fVar1;
-  aaGlobArray[LVar3].ps.eFlags = ppVar2->eFlags;
-  aaGlobArray[LVar3].ps.linkFlags = ppVar2->linkFlags;
-  aaGlobArray[LVar3].ps.pm_flags = ppVar2->pm_flags;
-  aaGlobArray[LVar3].ps.weapFlags = (ppVar2->weapCommon).weapFlags;
-  aaGlobArray[LVar3].ps.weaponState = ppVar2->weapState[0].weaponState;
-  aaGlobArray[LVar3].ps.fWeaponPosFrac = (ppVar2->weapCommon).fWeaponPosFrac;
-  if ((ppVar2->eFlags & 0x203800U) == 0) {
-    WVar5 = BG_GetViewmodelWeapon(ppVar2);
-    aaGlobArray[LVar3].ps.weapon = WVar5;
+  aaGlobArray[param_1].ps.velocity[2] = fVar1;
+  aaGlobArray[param_1].ps.eFlags = param_2->eFlags;
+  aaGlobArray[param_1].ps.linkFlags = param_2->linkFlags;
+  aaGlobArray[param_1].ps.pm_flags = param_2->pm_flags;
+  aaGlobArray[param_1].ps.weapFlags = (param_2->weapCommon).weapFlags;
+  aaGlobArray[param_1].ps.weaponState = param_2->weapState[0].weaponState;
+  aaGlobArray[param_1].ps.fWeaponPosFrac = (param_2->weapCommon).fWeaponPosFrac;
+  if ((param_2->eFlags & 0x203800U) == 0) {
+    WVar3 = BG_GetViewmodelWeapon(param_2);
+    aaGlobArray[param_1].ps.weapon = WVar3;
   }
   else {
-    if (ppVar2->viewlocked_entNum == 0x7ff) {
+    if (param_2->viewlocked_entNum == 0x7ff) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\aim_assist.cpp",
                       0x2b5,0,"%s");
     }
-    if ((ppVar2->viewlocked_entNum < 0) || (0x7ff < ppVar2->viewlocked_entNum)) {
+    if ((param_2->viewlocked_entNum < 0) || (0x7ff < param_2->viewlocked_entNum)) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\aim_assist.cpp",
                       0x2b6,0,"%s\n\t(ps->viewlocked_entNum) = %i");
     }
-    pcVar4 = CG_GetEntity(LVar3,ppVar2->viewlocked_entNum);
-    aaGlobArray[LVar3].ps.weapon = (pcVar4->nextState).weapon;
+    pcVar2 = CG_GetEntity(param_1,param_2->viewlocked_entNum);
+    aaGlobArray[param_1].ps.weapon = (pcVar2->nextState).weapon;
   }
-  uVar6 = BG_GetNumWeapons();
-  if (uVar6 <= aaGlobArray[LVar3].ps.weapon._s_0.weaponIdx) {
+  uVar4 = BG_GetNumWeapons();
+  if (uVar4 <= aaGlobArray[param_1].ps.weapon._s_0.weaponIdx) {
     BG_GetNumWeapons();
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\aim_assist.cpp",
                     0x2be,0,
                     "aaGlob->ps.weapon.weaponIdx doesn\'t index BG_GetNumWeapons()\n\t%i not in [0, %i)"
                    );
   }
-  iVar7 = BG_WeaponAmmo(ppVar2,aaGlobArray[LVar3].ps.weapon,
-                        (bool)((byte)((uint)(ppVar2->weapCommon).weapFlags >> 0xf) & 1));
-  if ((0 < iVar7) || (bVar8 = false, 0 < ppVar2->throwbackGrenadeTimeLeft)) {
-    bVar8 = true;
+  iVar5 = BG_WeaponAmmo(param_2,aaGlobArray[param_1].ps.weapon,
+                        (bool)((byte)((uint)(param_2->weapCommon).weapFlags >> 0xf) & 1));
+  if ((0 < iVar5) || (bVar6 = false, 0 < param_2->throwbackGrenadeTimeLeft)) {
+    bVar6 = true;
   }
-  aaGlobArray[LVar3].ps.hasAmmo = bVar8;
-  *(bool *)(LVar3 * 0xe60 + -0x7d64ecc7) = (ppVar2->weapCommon).lastWeaponHand == WEAPON_HAND_LEFT;
-  bVar8 = BG_IsThirdPersonMode(ppVar2);
-  *(bool *)(LVar3 * 0xe60 + -0x7d64ecc6) = bVar8;
-  if (uVar9 + 0x4ec == 0) {
+  aaGlobArray[param_1].ps.hasAmmo = bVar6;
+  *(bool *)(param_1 * 0xe60 + -0x7d64ecc7) =
+       (param_2->weapCommon).lastWeaponHand == WEAPON_HAND_LEFT;
+  bVar6 = BG_IsThirdPersonMode(param_2);
+  *(bool *)(param_1 * 0xe60 + -0x7d64ecc6) = bVar6;
+  if (param_2->perks == (uint *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\../bgame/bg_perks.h",
                     0x4f,0,"%s");
   }
-  aaGlobArray[LVar3].ps.isExtendedMelee = (bool)((byte)(*(uint *)(uVar9 + 0x4ec) >> 0x12) & 1);
-  __restgprlr_27();
+  aaGlobArray[param_1].ps.isExtendedMelee = (bool)((byte)(param_2->perks[0] >> 0x12) & 1);
   return;
 }
 
@@ -675,40 +641,38 @@ void AimAssist_ArchiveState(LocalClientNum_t param_1,MemoryFile *param_2)
 
 // 822620B0  AimAssist_FovScale  (aim_assist/aim_assist.cpp:741)
 
+/* WARNING: Function: __savefpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void AimAssist_FovScale(LocalClientNum_t param_1,AimAssistGlobals *param_2,float param_3)
 
 {
-  int iVar1;
-  double extraout_f1;
+  double dVar1;
   double dVar2;
   double dVar3;
   double dVar4;
   double dVar5;
   double dVar6;
-  double dVar7;
   
-  iVar1 = __savefpr_28((double)param_3,param_1,param_2);
-  dVar4 = extraout_f1;
-  if (iVar1 == 0) {
+  dVar1 = (double)param_3;
+  if (param_1 == LOCAL_CLIENT_0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\aim_assist.cpp",
                     0x2e9,0,"%s");
   }
-  dVar6 = 0.01745329238474369;
-  dVar5 = 0.5;
+  dVar5 = 0.01745329238474369;
+  dVar4 = 0.5;
   dVar3 = (double)(cg_fov->current).value;
   dVar2 = tan((double)((cg_fovScale->current).value * 65.0 * 0.017453292 * 0.5));
-  dVar7 = 0.75;
-  *(float *)(iVar1 + 0x118) = (float)(dVar4 / (double)((float)dVar2 * 0.75));
-  dVar2 = tan((double)(float)((double)(float)(dVar3 * dVar6) * dVar5));
-  dVar2 = (double)(float)((double)(float)dVar2 * dVar7);
+  dVar6 = 0.75;
+  *(float *)(param_1 + 0x118) = (float)(dVar1 / (double)((float)dVar2 * 0.75));
+  dVar2 = tan((double)(float)((double)(float)(dVar3 * dVar5) * dVar4));
+  dVar2 = (double)(float)((double)(float)dVar2 * dVar6);
   if (dVar2 == 0.0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\aim_assist.cpp",
                     0x2f9,0,"%s\n\t(tanHalfBaseFovY) = %g");
   }
-  *(float *)(iVar1 + 0x11c) = (float)(dVar2 / dVar4);
-  __restfpr_28();
+  *(float *)(param_1 + 0x11c) = (float)(dVar2 / dVar1);
   return;
 }
 
@@ -750,6 +714,9 @@ void AimAssist_CreateScreenMatrix
 
 // 822622C0  AimAssist_XfmWorldPointToClipSpace  (aim_assist/aim_assist.cpp:788)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 bool AimAssist_XfmWorldPointToClipSpace(AimAssistGlobals *param_1,float *param_2,float *param_3)
 
 {
@@ -765,75 +732,68 @@ bool AimAssist_XfmWorldPointToClipSpace(AimAssistGlobals *param_1,float *param_2
   float fVar10;
   float fVar11;
   float fVar12;
-  int iVar13;
-  undefined1 uVar14;
-  ulonglong uVar15;
-  ulonglong uVar16;
-  float *pfVar17;
   
-  uVar16 = (ulonglong)(int)param_3;
-  uVar15 = (ulonglong)(int)param_2;
-  iVar13 = __savegprlr_27(param_1);
-  if (iVar13 == 0) {
+  if (param_1 == (AimAssistGlobals *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\aim_assist.cpp",
                     0x318,0,"%s");
   }
-  if ((uVar15 & 0xffffffff) == 0) {
+  if (param_2 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\aim_assist.cpp",
                     0x319,0,"%s");
   }
-  if ((uVar16 & 0xffffffff) == 0) {
+  if (param_3 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\aim_assist.cpp",
                     0x31a,0,"%s");
   }
-  pfVar17 = (float *)uVar15;
-  fVar1 = pfVar17[1];
-  fVar2 = pfVar17[2];
-  fVar3 = *pfVar17;
-  fVar12 = *(float *)(iVar13 + 0x60) * fVar3 +
-           *(float *)(iVar13 + 0x68) * fVar2 + *(float *)(iVar13 + 100) * fVar1 +
-           *(float *)(iVar13 + 0x6c);
+  fVar1 = param_2[1];
+  fVar2 = param_2[2];
+  fVar3 = *param_2;
+  fVar12 = param_1->screenMtx[3][0] * fVar3 +
+           param_1->screenMtx[3][2] * fVar2 + param_1->screenMtx[3][1] * fVar1 +
+           param_1->screenMtx[3][3];
   if (fVar12 <= 0.0) {
-    uVar14 = __restgprlr_27(0);
-    return (bool)uVar14;
+    return false;
   }
-  fVar4 = *(float *)(iVar13 + 0x44);
-  fVar5 = *(float *)(iVar13 + 0x54);
-  fVar6 = *(float *)(iVar13 + 0x48);
-  fVar7 = *(float *)(iVar13 + 0x58);
-  fVar8 = *(float *)(iVar13 + 0x40);
-  fVar9 = *(float *)(iVar13 + 0x50);
-  fVar10 = *(float *)(iVar13 + 0x4c);
-  fVar11 = *(float *)(iVar13 + 0x5c);
+  fVar4 = param_1->screenMtx[1][1];
+  fVar5 = param_1->screenMtx[2][1];
+  fVar6 = param_1->screenMtx[1][2];
+  fVar7 = param_1->screenMtx[2][2];
+  fVar8 = param_1->screenMtx[1][0];
+  fVar9 = param_1->screenMtx[2][0];
+  fVar10 = param_1->screenMtx[1][3];
+  fVar11 = param_1->screenMtx[2][3];
   fVar12 = 1.0 / fVar12;
-  pfVar17 = (float *)uVar16;
-  *pfVar17 = fVar12 * (*(float *)(iVar13 + 0x30) * fVar3 +
-                       *(float *)(iVar13 + 0x38) * fVar2 + *(float *)(iVar13 + 0x34) * fVar1 +
-                      *(float *)(iVar13 + 0x3c));
-  pfVar17[2] = fVar12 * (fVar3 * fVar9 + fVar7 * fVar2 + fVar5 * fVar1 + fVar11);
-  pfVar17[1] = fVar12 * (fVar8 * fVar3 + fVar6 * fVar2 + fVar4 * fVar1 + fVar10) * -1.0;
-  uVar14 = __restgprlr_27(1);
-  return (bool)uVar14;
+  *param_3 = fVar12 * (param_1->screenMtx[0][0] * fVar3 +
+                       param_1->screenMtx[0][2] * fVar2 + param_1->screenMtx[0][1] * fVar1 +
+                      param_1->screenMtx[0][3]);
+  param_3[2] = fVar12 * (fVar3 * fVar9 + fVar7 * fVar2 + fVar5 * fVar1 + fVar11);
+  param_3[1] = fVar12 * (fVar8 * fVar3 + fVar6 * fVar2 + fVar4 * fVar1 + fVar10) * -1.0;
+  return true;
 }
 
 
 // 82262438  AimAssist_ConvertToClipBounds  (aim_assist/aim_assist.cpp:816)
+
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 
 bool AimAssist_ConvertToClipBounds
                (AimAssistGlobals *param_1,Bounds *param_2,float (*param_3) [3],ExtentBounds *param_4
                )
 
 {
-  float *pfVar1;
+  float fVar1;
   float fVar2;
-  AimAssistGlobals *pAVar3;
-  bool bVar4;
-  undefined1 uVar5;
-  ulonglong uVar6;
-  ulonglong uVar7;
-  ulonglong uVar8;
-  float *pfVar9;
-  uint uVar10;
+  float fVar3;
+  float fVar4;
+  float fVar5;
+  float fVar6;
+  bool bVar7;
+  uint uVar8;
+  double dVar9;
+  double dVar10;
   double dVar11;
   double dVar12;
   double dVar13;
@@ -846,8 +806,6 @@ bool AimAssist_ConvertToClipBounds
   double dVar20;
   double dVar21;
   double dVar22;
-  double dVar23;
-  double dVar24;
   float local_90;
   float local_8c;
   float local_88;
@@ -856,226 +814,207 @@ bool AimAssist_ConvertToClipBounds
   float local_78;
   float afStack_70 [28];
   
-  uVar8 = (ulonglong)(int)param_4;
-  uVar7 = (ulonglong)(int)param_3;
-  uVar6 = (ulonglong)(int)param_2;
-  __savegprlr_26(param_1);
-  pAVar3 = (AimAssistGlobals *)__savefpr_27();
-  if ((uVar6 & 0xffffffff) == 0) {
+  if (param_2 == (Bounds *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\aim_assist.cpp",
                     0x336,0,"%s");
   }
-  if ((uVar7 & 0xffffffff) == 0) {
+  if (param_3 == (float (*) [3])0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\aim_assist.cpp",
                     0x337,0,"%s");
   }
-  if ((uVar8 & 0xffffffff) == 0) {
+  if (param_4 == (ExtentBounds *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\aim_assist.cpp",
                     0x338,0,"%s");
   }
-  uVar10 = 0;
-  pfVar9 = (float *)uVar8;
-  *pfVar9 = 131072.0;
-  pfVar9[1] = 131072.0;
-  pfVar9[2] = 131072.0;
-  dVar23 = -1.0;
-  dVar24 = 1.0;
-  pfVar9[3] = -131072.0;
-  pfVar9[4] = -131072.0;
-  pfVar9[5] = -131072.0;
+  uVar8 = 0;
+  param_4->mins[0] = 131072.0;
+  param_4->mins[1] = 131072.0;
+  param_4->mins[2] = 131072.0;
+  dVar21 = -1.0;
+  dVar22 = 1.0;
+  param_4->maxs[0] = -131072.0;
+  param_4->maxs[1] = -131072.0;
+  param_4->maxs[2] = -131072.0;
   do {
-    dVar16 = dVar23;
-    if ((uVar10 & 1) != 0) {
-      dVar16 = dVar24;
+    dVar14 = dVar21;
+    if ((uVar8 & 1) != 0) {
+      dVar14 = dVar22;
     }
-    pfVar1 = (float *)uVar6;
-    local_90 = (float)((double)pfVar1[3] * dVar16 + (double)*pfVar1);
-    dVar16 = dVar23;
-    if ((uVar10 & 2) != 0) {
-      dVar16 = dVar24;
+    local_90 = (float)((double)param_2->halfSize[0] * dVar14 + (double)param_2->midPoint[0]);
+    dVar14 = dVar21;
+    if ((uVar8 & 2) != 0) {
+      dVar14 = dVar22;
     }
-    local_8c = (float)((double)pfVar1[4] * dVar16 + (double)pfVar1[1]);
-    dVar16 = dVar23;
-    if ((uVar10 & 4) != 0) {
-      dVar16 = dVar24;
+    local_8c = (float)((double)param_2->halfSize[1] * dVar14 + (double)param_2->midPoint[1]);
+    dVar14 = dVar21;
+    if ((uVar8 & 4) != 0) {
+      dVar14 = dVar22;
     }
-    local_88 = (float)(dVar16 * (double)pfVar1[5] + (double)pfVar1[2]);
-    MatrixTransformVector43(&local_90,(float (*) [3])uVar7,afStack_70);
-    bVar4 = AimAssist_XfmWorldPointToClipSpace(pAVar3,afStack_70,&local_80);
-    if (bVar4) {
-      fVar2 = *pfVar9;
-      if (local_80 - *pfVar9 < 0.0) {
-        fVar2 = local_80;
+    local_88 = (float)(dVar14 * (double)param_2->halfSize[2] + (double)param_2->midPoint[2]);
+    MatrixTransformVector43(&local_90,param_3,afStack_70);
+    bVar7 = AimAssist_XfmWorldPointToClipSpace(param_1,afStack_70,&local_80);
+    if (bVar7) {
+      fVar1 = param_4->mins[1];
+      fVar2 = param_4->mins[2];
+      fVar3 = param_4->maxs[0];
+      fVar4 = param_4->maxs[1];
+      fVar5 = param_4->maxs[2];
+      fVar6 = param_4->mins[0];
+      if (local_80 - param_4->mins[0] < 0.0) {
+        fVar6 = local_80;
       }
-      *pfVar9 = fVar2;
-      fVar2 = pfVar9[1];
-      if (local_7c - pfVar9[1] < 0.0) {
-        fVar2 = local_7c;
+      param_4->mins[0] = fVar6;
+      if (local_7c - fVar1 < 0.0) {
+        fVar1 = local_7c;
       }
-      pfVar9[1] = fVar2;
-      fVar2 = pfVar9[2];
-      if (local_78 - pfVar9[2] < 0.0) {
+      param_4->mins[1] = fVar1;
+      if (local_78 - fVar2 < 0.0) {
         fVar2 = local_78;
       }
-      pfVar9[2] = fVar2;
-      fVar2 = pfVar9[3];
-      if (pfVar9[3] - local_80 < 0.0) {
-        fVar2 = local_80;
+      param_4->mins[2] = fVar2;
+      if (fVar3 - local_80 < 0.0) {
+        fVar3 = local_80;
       }
-      pfVar9[3] = fVar2;
-      fVar2 = pfVar9[4];
-      if (pfVar9[4] - local_7c < 0.0) {
-        fVar2 = local_7c;
+      param_4->maxs[0] = fVar3;
+      if (fVar4 - local_7c < 0.0) {
+        fVar4 = local_7c;
       }
-      pfVar9[4] = fVar2;
-      fVar2 = pfVar9[5];
-      if (pfVar9[5] - local_78 < 0.0) {
-        fVar2 = local_78;
+      param_4->maxs[1] = fVar4;
+      if (fVar5 - local_78 < 0.0) {
+        fVar5 = local_78;
       }
-      pfVar9[5] = fVar2;
+      param_4->maxs[2] = fVar5;
     }
-    uVar10 = uVar10 + 1;
-  } while ((int)uVar10 < 8);
-  dVar17 = (double)*pfVar9;
-  dVar16 = (double)pfVar9[3];
-  if (dVar17 < dVar16) {
-    dVar20 = (double)pfVar9[1];
-    dVar19 = (double)pfVar9[4];
-    if (dVar20 < dVar19) {
-      dVar11 = (double)pfVar9[2];
-      dVar21 = (double)pfVar9[5];
-      if ((((dVar11 < dVar21) && (dVar17 <= dVar24)) && (dVar20 <= dVar24)) &&
-         (((dVar11 <= dVar24 && (dVar23 <= dVar16)) && ((dVar23 <= dVar19 && (0.0 <= dVar21)))))) {
-        dVar18 = dVar24;
-        if ((float)(dVar17 - dVar24) < 0.0) {
-          dVar18 = dVar17;
+    uVar8 = uVar8 + 1;
+  } while ((int)uVar8 < 8);
+  dVar15 = (double)param_4->mins[0];
+  dVar14 = (double)param_4->maxs[0];
+  if (dVar15 < dVar14) {
+    dVar18 = (double)param_4->mins[1];
+    dVar17 = (double)param_4->maxs[1];
+    if (dVar18 < dVar17) {
+      dVar9 = (double)param_4->mins[2];
+      dVar19 = (double)param_4->maxs[2];
+      if ((((dVar9 < dVar19) && (dVar15 <= dVar22)) && (dVar18 <= dVar22)) &&
+         (((dVar9 <= dVar22 && (dVar21 <= dVar14)) && ((dVar21 <= dVar17 && (0.0 <= dVar19)))))) {
+        dVar16 = dVar22;
+        if ((float)(dVar15 - dVar22) < 0.0) {
+          dVar16 = dVar15;
         }
-        dVar15 = dVar24;
-        if ((float)(dVar20 - dVar24) < 0.0) {
-          dVar15 = dVar20;
+        dVar13 = dVar22;
+        if ((float)(dVar18 - dVar22) < 0.0) {
+          dVar13 = dVar18;
         }
-        dVar14 = dVar24;
-        if ((float)(dVar11 - dVar24) < 0.0) {
-          dVar14 = dVar11;
+        dVar12 = dVar22;
+        if ((float)(dVar9 - dVar22) < 0.0) {
+          dVar12 = dVar9;
         }
-        dVar13 = dVar24;
-        if ((float)(dVar16 - dVar24) < 0.0) {
-          dVar13 = dVar16;
+        dVar11 = dVar22;
+        if ((float)(dVar14 - dVar22) < 0.0) {
+          dVar11 = dVar14;
         }
-        dVar12 = dVar24;
-        if ((float)(dVar19 - dVar24) < 0.0) {
-          dVar12 = dVar19;
+        dVar10 = dVar22;
+        if ((float)(dVar17 - dVar22) < 0.0) {
+          dVar10 = dVar17;
         }
-        if ((float)(dVar21 - dVar24) < 0.0) {
-          dVar24 = dVar21;
+        if ((float)(dVar19 - dVar22) < 0.0) {
+          dVar22 = dVar19;
         }
-        dVar22 = dVar23;
-        if ((float)(dVar23 - dVar17) < 0.0) {
-          dVar22 = dVar18;
+        dVar20 = dVar21;
+        if ((float)(dVar21 - dVar15) < 0.0) {
+          dVar20 = dVar16;
         }
-        *pfVar9 = (float)dVar22;
-        dVar17 = dVar23;
-        if ((float)(dVar23 - dVar20) < 0.0) {
-          dVar17 = dVar15;
+        param_4->mins[0] = (float)dVar20;
+        dVar15 = dVar21;
+        if ((float)(dVar21 - dVar18) < 0.0) {
+          dVar15 = dVar13;
         }
-        pfVar9[1] = (float)dVar17;
-        dVar17 = 0.0;
-        if (-dVar11 < 0.0) {
-          dVar17 = dVar14;
+        param_4->mins[1] = (float)dVar15;
+        dVar15 = 0.0;
+        if (-dVar9 < 0.0) {
+          dVar15 = dVar12;
         }
-        pfVar9[2] = (float)dVar17;
-        dVar17 = dVar23;
-        if ((float)(dVar23 - dVar16) < 0.0) {
-          dVar17 = dVar13;
+        param_4->mins[2] = (float)dVar15;
+        dVar15 = dVar21;
+        if ((float)(dVar21 - dVar14) < 0.0) {
+          dVar15 = dVar11;
         }
-        pfVar9[3] = (float)dVar17;
-        if ((float)(dVar23 - dVar19) < 0.0) {
-          dVar23 = dVar12;
+        param_4->maxs[0] = (float)dVar15;
+        if ((float)(dVar21 - dVar17) < 0.0) {
+          dVar21 = dVar10;
         }
-        pfVar9[4] = (float)dVar23;
-        dVar23 = 0.0;
-        if (-dVar21 < 0.0) {
-          dVar23 = dVar24;
+        param_4->maxs[1] = (float)dVar21;
+        dVar21 = 0.0;
+        if (-dVar19 < 0.0) {
+          dVar21 = dVar22;
         }
-        pfVar9[5] = (float)dVar23;
-        __restfpr_27(1);
-        uVar5 = __restgprlr_26();
-        return (bool)uVar5;
+        param_4->maxs[2] = (float)dVar21;
+        return true;
       }
     }
   }
-  __restfpr_27(0);
-  uVar5 = __restgprlr_26();
-  return (bool)uVar5;
+  return false;
 }
 
 
 // 82262738  AimAssist_GetCrosshairDistSqr  (aim_assist/aim_assist.cpp:857)
+
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 
 float AimAssist_GetCrosshairDistSqr(float *param_1,float *param_2)
 
 {
   float fVar1;
   float fVar2;
-  float *pfVar3;
-  ulonglong uVar4;
-  double dVar5;
   
-  uVar4 = (ulonglong)(int)param_2;
-  pfVar3 = (float *)__savegprlr_28(param_1);
-  if (pfVar3 == (float *)0x0) {
+  if (param_1 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\aim_assist.cpp",
                     0x35d,0,"%s");
   }
-  if ((uVar4 & 0xffffffff) == 0) {
+  if (param_2 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\aim_assist.cpp",
                     0x35e,0,"%s");
   }
-  fVar1 = (pfVar3[1] + ((float *)uVar4)[1]) * 0.5;
-  fVar2 = (*pfVar3 + *(float *)uVar4) * 0.5;
-  dVar5 = (double)__restgprlr_28((double)(fVar2 * fVar2 + fVar1 * fVar1));
-  return (float)dVar5;
+  fVar1 = (param_1[1] + param_2[1]) * 0.5;
+  fVar2 = (*param_1 + *param_2) * 0.5;
+  return fVar2 * fVar2 + fVar1 * fVar1;
 }
 
 
 // 822627E0  AimAssist_DoBoundsIntersectCenterBox  (aim_assist/aim_assist.cpp:872)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 bool AimAssist_DoBoundsIntersectCenterBox(float *param_1,float *param_2,float param_3,float param_4)
 
 {
   bool bVar1;
-  float *pfVar2;
-  undefined1 uVar3;
-  ulonglong uVar4;
-  bool bVar6;
-  undefined8 uVar5;
-  double extraout_f1;
-  double dVar7;
-  double dVar8;
+  bool bVar2;
+  double dVar3;
+  double dVar4;
   
-  dVar7 = (double)param_4;
-  uVar4 = (ulonglong)(int)param_2;
-  pfVar2 = (float *)__savegprlr_28((double)param_3,param_1);
-  dVar8 = extraout_f1;
-  if (pfVar2 == (float *)0x0) {
+  dVar3 = (double)param_3;
+  dVar4 = (double)param_4;
+  if (param_1 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\aim_assist.cpp",
                     0x36c,0,"%s");
   }
-  if ((uVar4 & 0xffffffff) == 0) {
+  if (param_2 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\aim_assist.cpp",
                     0x36d,0,"%s");
   }
-  if ((dVar8 < (double)*pfVar2) || (bVar6 = true, (double)*(float *)uVar4 < -dVar8)) {
-    bVar6 = false;
+  if ((dVar3 < (double)*param_1) || (bVar2 = true, (double)*param_2 < -dVar3)) {
+    bVar2 = false;
   }
-  if ((dVar7 < (double)pfVar2[1]) || (bVar1 = true, (double)((float *)uVar4)[1] < -dVar7)) {
+  if ((dVar4 < (double)param_1[1]) || (bVar1 = true, (double)param_2[1] < -dVar4)) {
     bVar1 = false;
   }
-  if ((!bVar6) || (uVar5 = 1, !bVar1)) {
-    uVar5 = 0;
+  if ((!bVar2) || (bVar2 = true, !bVar1)) {
+    bVar2 = false;
   }
-  uVar3 = __restgprlr_28(uVar5);
-  return (bool)uVar3;
+  return bVar2;
 }
 
 
@@ -1102,92 +1041,86 @@ float AimAssist_GetAimAssistRange(Weapon param_1,bool param_2,float param_3)
 
 // 822629B8  AimAssist_CompareTargets  (aim_assist/aim_assist.cpp:920)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 int AimAssist_CompareTargets(AimScreenTarget *param_1,AimScreenTarget *param_2)
 
 {
-  float fVar1;
-  int iVar3;
-  undefined8 uVar2;
-  ulonglong uVar4;
+  int iVar1;
   
-  uVar4 = (ulonglong)(int)param_2;
-  iVar3 = __savegprlr_28(param_1);
-  if (iVar3 == 0) {
+  if (param_1 == (AimScreenTarget *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\aim_assist.cpp",
                     0x399,0,"%s");
   }
-  if ((uVar4 & 0xffffffff) == 0) {
+  if (param_2 == (AimScreenTarget *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\aim_assist.cpp",
                     0x39a,0,"%s");
   }
-  fVar1 = *(float *)((int)uVar4 + 0x30);
-  if (*(float *)(iVar3 + 0x30) < fVar1) {
-    iVar3 = __restgprlr_28(1);
-    return iVar3;
+  if (param_1->crosshairDistSqr < param_2->crosshairDistSqr) {
+    return 1;
   }
-  uVar2 = 0xffffffffffffffff;
-  if (*(float *)(iVar3 + 0x30) <= fVar1) {
-    uVar2 = 0;
+  iVar1 = -1;
+  if (param_1->crosshairDistSqr <= param_2->crosshairDistSqr) {
+    iVar1 = 0;
   }
-  iVar3 = __restgprlr_28(uVar2);
-  return iVar3;
+  return iVar1;
 }
 
 
 // 82262A58  AimAssist_AddToTargetList  (aim_assist/aim_assist.cpp:936)
 
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
+
 void AimAssist_AddToTargetList(AimAssistGlobals *param_1,AimScreenTarget *param_2)
 
 {
-  int iVar1;
-  ulonglong uVar2;
-  uint uVar3;
+  uint uVar1;
+  int iVar2;
+  int iVar3;
   int iVar4;
   int iVar5;
-  int iVar6;
-  int iVar7;
   
-  uVar2 = (ulonglong)(int)param_2;
-  iVar1 = __savegprlr_22(param_1);
-  if (iVar1 == 0) {
+  if (param_1 == (AimAssistGlobals *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\aim_assist.cpp",
                     0x3ad,0,"%s");
   }
-  if ((uVar2 & 0xffffffff) == 0) {
+  if (param_2 == (AimScreenTarget *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\aim_assist.cpp",
                     0x3ae,0,"%s");
   }
-  iVar5 = *(int *)(iVar1 + 0xe34);
-  iVar6 = 0;
-  if (0 < iVar5) {
+  iVar3 = param_1->screenTargetCount;
+  iVar4 = 0;
+  if (0 < iVar3) {
     do {
-      uVar3 = iVar5 + iVar6;
-      iVar7 = ((int)uVar3 >> 1) + (uint)((int)uVar3 < 0 && (uVar3 & 1) != 0);
-      iVar4 = iVar7 * 0x34 + iVar1;
-      if ((uVar2 & 0xffffffff) == 0) {
+      uVar1 = iVar3 + iVar4;
+      iVar5 = ((int)uVar1 >> 1) + (uint)((int)uVar1 < 0 && (uVar1 & 1) != 0);
+      iVar2 = (int)&param_1->ps + iVar5 * 0x34;
+      if (param_2 == (AimScreenTarget *)0x0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\aim_assist.cpp"
                         ,0x399,0,"%s");
       }
-      if (iVar4 == -0x134) {
+      if (iVar2 == -0x134) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\aim_assist.cpp"
                         ,0x39a,0,"%s");
       }
-      if (*(float *)(iVar4 + 0x164) <= *(float *)((int)uVar2 + 0x30)) {
-        iVar6 = iVar7 + 1;
-        iVar7 = iVar5;
+      if (*(float *)(iVar2 + 0x164) <= param_2->crosshairDistSqr) {
+        iVar4 = iVar5 + 1;
+        iVar5 = iVar3;
       }
-      iVar5 = iVar7;
-    } while (iVar6 < iVar7);
-    if (0x3f < iVar6) goto LAB_82262bbc;
+      iVar3 = iVar5;
+    } while (iVar4 < iVar5);
+    if (0x3f < iVar4) {
+      return;
+    }
   }
-  if (*(int *)(iVar1 + 0xe34) == 0x40) {
-    *(undefined4 *)(iVar1 + 0xe34) = 0x3f;
+  if (param_1->screenTargetCount == 0x40) {
+    param_1->screenTargetCount = 0x3f;
   }
   memmove();
   memcpy();
-  *(int *)(iVar1 + 0xe34) = *(int *)(iVar1 + 0xe34) + 1;
-LAB_82262bbc:
-  __restgprlr_22();
+  param_1->screenTargetCount = param_1->screenTargetCount + 1;
   return;
 }
 
@@ -1208,46 +1141,42 @@ float AngleSubtract(float param_1,float param_2)
 
 // 82262BC8  AimAssist_GetTagPos  (aim_assist/aim_assist.cpp:972)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 int AimAssist_GetTagPos(LocalClientNum_t param_1,centity_s *param_2,uint param_3,float *param_4)
 
 {
-  LocalClientNum_t LVar1;
-  DObj *pDVar2;
-  int iVar3;
-  ulonglong uVar4;
-  ulonglong uVar5;
+  DObj *pDVar1;
+  int iVar2;
   
-  uVar5 = (ulonglong)(int)param_4;
-  uVar4 = (ulonglong)(int)param_2;
-  LVar1 = __savegprlr_26(param_1);
-  if ((uVar4 & 0xffffffff) == 0) {
+  if (param_2 == (centity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\aim_assist.cpp",
                     0x3cf,0,"%s");
   }
-  if ((uVar5 & 0xffffffff) == 0) {
+  if (param_4 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\aim_assist.cpp",
                     0x3d0,0,"%s");
   }
-  pDVar2 = Com_GetClientDObj(((cpose_t *)uVar4)[2].killcamRagdollHandle,LVar1);
-  if (pDVar2 == (DObj *)0x0) {
-    iVar3 = __restgprlr_26();
-    return iVar3;
+  pDVar1 = Com_GetClientDObj((param_2->nextState).number,param_1);
+  if (pDVar1 == (DObj *)0x0) {
+    return 0;
   }
-  iVar3 = CG_DObjGetWorldTagPos((cpose_t *)uVar4,pDVar2,param_3,(float *)uVar5);
-  if (iVar3 == 0) {
+  iVar2 = CG_DObjGetWorldTagPos(&param_2->pose,pDVar1,param_3,param_4);
+  if (iVar2 == 0) {
     SL_ConvertToString(param_3);
     Com_Error(ERR_DROP,"AimAssist_GetTagPos: Cannot find tag [%s] on entity %i.\n");
   }
-  iVar3 = __restgprlr_26(1);
-  return iVar3;
+  return 1;
 }
 
 
 // 82262CA8  AimAssist_CalcAimPos  (aim_assist/aim_assist.cpp:990)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
@@ -1257,50 +1186,36 @@ int AimAssist_CalcAimPos
 {
   float fVar1;
   float fVar2;
-  centity_s *pcVar3;
-  LocalClientNum_t LVar4;
-  int iVar5;
-  ulonglong uVar6;
-  ulonglong uVar7;
-  ulonglong uVar8;
-  float *pfVar9;
+  int iVar3;
   
-  uVar8 = (ulonglong)(int)param_4;
-  uVar7 = (ulonglong)(int)param_3;
-  uVar6 = (ulonglong)(int)param_2;
-  LVar4 = __savegprlr_26(param_1);
-  if ((uVar6 & 0xffffffff) == 0) {
+  if (param_2 == (centity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\aim_assist.cpp",
                     0x3e1,0,"%s");
   }
-  if ((uVar8 & 0xffffffff) == 0) {
+  if (param_4 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\aim_assist.cpp",
                     0x3e2,0,"%s");
   }
-  pcVar3 = (centity_s *)uVar6;
-  pfVar9 = (float *)uVar8;
-  if ((pcVar3->nextState).eType == 1) {
-    iVar5 = AimAssist_GetTagPos(LVar4,pcVar3,(uint)scr_const.aim_bone,pfVar9);
-    iVar5 = __restgprlr_26(iVar5);
-    return iVar5;
+  if ((param_2->nextState).eType == 1) {
+    iVar3 = AimAssist_GetTagPos(param_1,param_2,(uint)scr_const.aim_bone,param_4);
+    return iVar3;
   }
-  if ((uVar7 & 0xffffffff) == 0) {
-    iVar5 = __restgprlr_26(0);
-    return iVar5;
+  if (param_3 == (AimTarget *)0x0) {
+    return 0;
   }
-  iVar5 = (int)uVar7;
-  fVar1 = *(float *)(iVar5 + 0xc);
-  fVar2 = *(float *)(iVar5 + 0x10);
-  *pfVar9 = (pcVar3->pose).origin[0] + *(float *)(iVar5 + 8);
-  pfVar9[1] = (pcVar3->pose).origin[1] + fVar1;
-  pfVar9[2] = (pcVar3->pose).origin[2] + fVar2;
-  iVar5 = __restgprlr_26(1);
-  return iVar5;
+  fVar1 = (param_3->box).midPoint[1];
+  fVar2 = (param_3->box).midPoint[2];
+  *param_4 = (param_2->pose).origin[0] + (param_3->box).midPoint[0];
+  param_4[1] = (param_2->pose).origin[1] + fVar1;
+  param_4[2] = (param_2->pose).origin[2] + fVar2;
+  return 1;
 }
 
 
 // 82262DA0  AimAssist_UpdateScreenTargets  (aim_assist/aim_assist.cpp:1015)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 
@@ -1309,18 +1224,16 @@ void AimAssist_UpdateScreenTargets
                float param_6)
 
 {
-  AimAssistGlobals *pAVar1;
-  LocalClientNum_t LVar2;
-  centity_s *pcVar3;
-  bool bVar6;
-  int iVar4;
+  centity_s *pcVar1;
+  bool bVar3;
+  int iVar2;
+  AimAssistGlobals *pAVar4;
   int iVar5;
-  AimAssistGlobals *pAVar7;
-  int iVar8;
-  AimTarget *pAVar9;
-  double extraout_f1;
+  int iVar6;
+  AimTarget *pAVar7;
+  AimAssistGlobals *pAVar8;
+  double dVar9;
   double dVar10;
-  double dVar11;
   int local_f0;
   AimTarget *local_ec [3];
   AimScreenTarget local_e0;
@@ -1330,70 +1243,68 @@ void AimAssist_UpdateScreenTargets
   float local_58;
   float local_54;
   
+  dVar9 = (double)param_5;
   dVar10 = (double)param_6;
-  LVar2 = __savegprlr_26((double)param_5,param_1);
-  dVar11 = extraout_f1;
   Profile_Begin(0x39);
-  if (LOCAL_CLIENT_3 < LVar2) {
+  if (LOCAL_CLIENT_3 < param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\aim_assist.cpp",
                     0x403,0,
                     "localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)");
   }
-  pAVar1 = aaGlobArray + LVar2;
-  if (aaGlobArray[LVar2].initialized != false) {
-    pAVar7 = (AimAssistGlobals *)aaGlobArray[LVar2].viewAxis;
-    aaGlobArray[LVar2].eyeOrigin[0] = *param_2;
-    aaGlobArray[LVar2].eyeOrigin[1] = param_2[1];
-    aaGlobArray[LVar2].eyeOrigin[2] = param_2[2];
-    aaGlobArray[LVar2].viewOrigin[0] = *param_3;
-    aaGlobArray[LVar2].viewOrigin[1] = param_3[1];
-    aaGlobArray[LVar2].viewOrigin[2] = param_3[2];
-    aaGlobArray[LVar2].viewAngles[0] = *param_4;
-    aaGlobArray[LVar2].viewAngles[1] = param_4[1];
-    aaGlobArray[LVar2].viewAngles[2] = param_4[2];
-    AnglesToAxis(param_4,(float (*) [3])pAVar7);
-    AimAssist_FovScale((LocalClientNum_t)pAVar1,pAVar7,(float)dVar10);
-    AimAssist_CreateScreenMatrix(LVar2,pAVar1,(float)dVar11,(float)dVar10);
+  pAVar8 = aaGlobArray + param_1;
+  if (aaGlobArray[param_1].initialized != false) {
+    pAVar4 = (AimAssistGlobals *)aaGlobArray[param_1].viewAxis;
+    aaGlobArray[param_1].eyeOrigin[0] = *param_2;
+    aaGlobArray[param_1].eyeOrigin[1] = param_2[1];
+    aaGlobArray[param_1].eyeOrigin[2] = param_2[2];
+    aaGlobArray[param_1].viewOrigin[0] = *param_3;
+    aaGlobArray[param_1].viewOrigin[1] = param_3[1];
+    aaGlobArray[param_1].viewOrigin[2] = param_3[2];
+    aaGlobArray[param_1].viewAngles[0] = *param_4;
+    aaGlobArray[param_1].viewAngles[1] = param_4[1];
+    aaGlobArray[param_1].viewAngles[2] = param_4[2];
+    AnglesToAxis(param_4,(float (*) [3])pAVar4);
+    AimAssist_FovScale((LocalClientNum_t)pAVar8,pAVar4,(float)dVar10);
+    AimAssist_CreateScreenMatrix(param_1,pAVar8,(float)dVar9,(float)dVar10);
     iVar5 = 0;
-    aaGlobArray[LVar2].screenTargetCount = 0;
-    AimTarget_GetClientTargetList(LVar2,local_ec,&local_f0);
+    aaGlobArray[param_1].screenTargetCount = 0;
+    AimTarget_GetClientTargetList(param_1,local_ec,&local_f0);
     if (0 < local_f0) {
-      iVar8 = 0;
+      iVar6 = 0;
       do {
-        pAVar9 = (AimTarget *)((int)(local_ec[0]->box).midPoint + iVar8 + -8);
-        pcVar3 = CG_GetEntity(LVar2,*(int *)((int)(local_ec[0]->box).midPoint + iVar8 + -8));
-        if ((pcVar3->flags & 1U) != 0) {
-          AnglesToAxis((pcVar3->pose).angles,(float (*) [3])afStack_80);
-          local_5c = (pcVar3->pose).origin[0];
-          local_58 = (pcVar3->pose).origin[1];
-          local_54 = (pcVar3->pose).origin[2];
-          bVar6 = AimAssist_ConvertToClipBounds
-                            (pAVar1,&pAVar9->box,(float (*) [3])afStack_80,&local_a0);
-          if (bVar6) {
-            local_e0.entIndex = pAVar9->entIndex;
+        pAVar7 = (AimTarget *)((int)(local_ec[0]->box).midPoint + iVar6 + -8);
+        pcVar1 = CG_GetEntity(param_1,*(int *)((int)(local_ec[0]->box).midPoint + iVar6 + -8));
+        if ((pcVar1->flags & 1U) != 0) {
+          AnglesToAxis((pcVar1->pose).angles,(float (*) [3])afStack_80);
+          local_5c = (pcVar1->pose).origin[0];
+          local_58 = (pcVar1->pose).origin[1];
+          local_54 = (pcVar1->pose).origin[2];
+          bVar3 = AimAssist_ConvertToClipBounds
+                            (pAVar8,&pAVar7->box,(float (*) [3])afStack_80,&local_a0);
+          if (bVar3) {
+            local_e0.entIndex = pAVar7->entIndex;
             local_e0.clipMaxs[0] = local_a0.maxs[0];
             local_e0.clipMins[1] = local_a0.mins[1];
             local_e0.clipMins[0] = local_a0.mins[0];
             local_e0.clipMaxs[1] = local_a0.maxs[1];
-            local_e0.velocity[0] = pAVar9->velocity[0];
-            local_e0.velocity[1] = pAVar9->velocity[1];
-            local_e0.velocity[2] = pAVar9->velocity[2];
-            iVar4 = AimAssist_CalcAimPos(LVar2,pcVar3,pAVar9,local_e0.aimPos);
-            if (iVar4 != 0) {
-              local_e0.distSqr = pAVar9->worldDistSqr;
+            local_e0.velocity[0] = pAVar7->velocity[0];
+            local_e0.velocity[1] = pAVar7->velocity[1];
+            local_e0.velocity[2] = pAVar7->velocity[2];
+            iVar2 = AimAssist_CalcAimPos(param_1,pcVar1,pAVar7,local_e0.aimPos);
+            if (iVar2 != 0) {
+              local_e0.distSqr = pAVar7->worldDistSqr;
               local_e0.crosshairDistSqr =
                    AimAssist_GetCrosshairDistSqr(local_e0.clipMins,local_e0.clipMaxs);
-              AimAssist_AddToTargetList(pAVar1,&local_e0);
+              AimAssist_AddToTargetList(pAVar8,&local_e0);
             }
           }
         }
         iVar5 = iVar5 + 1;
-        iVar8 = iVar8 + 0x2c;
+        iVar6 = iVar6 + 0x2c;
       } while (iVar5 < local_f0);
     }
   }
-  iVar5 = Profile_EndInternal((double *)0x0);
-  __restgprlr_26(iVar5);
+  Profile_EndInternal((double *)0x0);
   return;
 }
 
@@ -1416,29 +1327,24 @@ int AimAssist_GetScreenTargetCount(LocalClientNum_t param_1)
 
 // 82263038  AimAssist_GetScreenTargetEntity  (aim_assist/aim_assist.cpp:1093)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 int AimAssist_GetScreenTargetEntity(LocalClientNum_t param_1,int param_2)
 
 {
-  uint uVar1;
-  int iVar2;
-  ulonglong uVar3;
-  
-  uVar3 = (ulonglong)param_2;
-  uVar1 = __savegprlr_29(param_1);
-  if (3 < uVar1) {
+  if (LOCAL_CLIENT_3 < param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\aim_assist.cpp",
                     0x448,0,
                     "localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)");
   }
-  if ((ulonglong)(uint)aaGlobArray[uVar1].screenTargetCount <= (uVar3 & 0xffffffff)) {
+  if ((uint)aaGlobArray[param_1].screenTargetCount <= (uint)param_2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\aim_assist.cpp",
                     1099,0,
                     "targetIndex doesn\'t index aaGlob->screenTargetCount\n\t%i not in [0, %i)");
   }
-  iVar2 = __restgprlr_29(aaGlobArray[uVar1].screenTargets[(int)uVar3].entIndex);
-  return iVar2;
+  return aaGlobArray[param_1].screenTargets[param_2].entIndex;
 }
 
 
@@ -1495,108 +1401,103 @@ AimScreenTarget * AimAssist_GetTargetFromEntity(AimAssistGlobals *param_1,int pa
 
 // 82263200  AimAssist_GetBestTarget  (aim_assist/aim_assist.cpp:1148)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
+
 AimScreenTarget *
 AimAssist_GetBestTarget(AimAssistGlobals *param_1,float param_2,float param_3,float param_4)
 
 {
   bool bVar1;
-  int iVar2;
-  AimScreenTarget *pAVar3;
-  bool bVar4;
-  int iVar5;
-  float *pfVar6;
-  double extraout_f1;
+  bool bVar2;
+  int iVar3;
+  float *pfVar4;
+  double dVar5;
+  double dVar6;
   double dVar7;
-  double dVar8;
-  double dVar9;
   
-  dVar8 = (double)param_4;
-  dVar7 = (double)param_3;
-  iVar2 = __savegprlr_24((double)param_2,param_1);
-  dVar9 = extraout_f1;
-  if (iVar2 == 0) {
+  dVar6 = (double)param_4;
+  dVar5 = (double)param_3;
+  dVar7 = (double)param_2;
+  if (param_1 == (AimAssistGlobals *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\aim_assist.cpp",
                     0x480,0,"%s");
   }
-  if (dVar9 < 0.0) {
+  if (dVar7 < 0.0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\aim_assist.cpp",
                     0x481,0,"%s\n\t(range) = %g");
   }
-  iVar5 = 0;
-  if (0 < *(int *)(iVar2 + 0xe34)) {
-    dVar9 = (double)(float)(dVar9 * dVar9);
-    pfVar6 = (float *)(iVar2 + 0x144);
+  iVar3 = 0;
+  if (0 < param_1->screenTargetCount) {
+    dVar7 = (double)(float)(dVar7 * dVar7);
+    pfVar4 = param_1->screenTargets[0].clipMaxs + 1;
     do {
-      if ((double)pfVar6[7] <= dVar9) {
-        if (pfVar6 == (float *)0xc) {
+      if ((double)pfVar4[7] <= dVar7) {
+        if (pfVar4 == (float *)&DAT_0000000c) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\aim_assist.cpp"
                           ,0x36c,0,"%s");
         }
-        if (pfVar6 == (float *)0x4) {
+        if (pfVar4 == (float *)&DAT_00000004) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\aim_assist.cpp"
                           ,0x36d,0,"%s");
         }
-        if ((dVar7 < (double)pfVar6[-3]) || (bVar4 = true, (double)pfVar6[-1] < -dVar7)) {
-          bVar4 = false;
+        if ((dVar5 < (double)pfVar4[-3]) || (bVar2 = true, (double)pfVar4[-1] < -dVar5)) {
+          bVar2 = false;
         }
-        if ((dVar8 < (double)pfVar6[-2]) || (bVar1 = true, (double)*pfVar6 < -dVar8)) {
+        if ((dVar6 < (double)pfVar4[-2]) || (bVar1 = true, (double)*pfVar4 < -dVar6)) {
           bVar1 = false;
         }
-        if ((!bVar4) || (bVar4 = true, !bVar1)) {
-          bVar4 = false;
+        if ((!bVar2) || (bVar2 = true, !bVar1)) {
+          bVar2 = false;
         }
-        if (bVar4) {
-          pAVar3 = (AimScreenTarget *)__restgprlr_24(pfVar6 + -4);
-          return pAVar3;
+        if (bVar2) {
+          return (AimScreenTarget *)(pfVar4 + -4);
         }
       }
-      iVar5 = iVar5 + 1;
-      pfVar6 = pfVar6 + 0xd;
-    } while (iVar5 < *(int *)(iVar2 + 0xe34));
+      iVar3 = iVar3 + 1;
+      pfVar4 = pfVar4 + 0xd;
+    } while (iVar3 < param_1->screenTargetCount);
   }
-  pAVar3 = (AimScreenTarget *)__restgprlr_24(0);
-  return pAVar3;
+  return (AimScreenTarget *)0x0;
 }
 
 
 // 822633D0  AimAssist_GetPrevOrBestTarget  (aim_assist/aim_assist.cpp:1176)
+
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 
 AimScreenTarget *
 AimAssist_GetPrevOrBestTarget
           (AimAssistGlobals *param_1,float param_2,float param_3,float param_4,int param_5)
 
 {
-  AimAssistGlobals *pAVar1;
-  AimScreenTarget *pAVar2;
-  bool bVar3;
+  AimScreenTarget *pAVar1;
+  bool bVar2;
   int in_r7;
-  double extraout_f1;
+  double dVar3;
   double dVar4;
   double dVar5;
-  double dVar6;
   
   dVar5 = (double)param_4;
+  dVar3 = (double)param_2;
   dVar4 = (double)param_3;
-  pAVar1 = (AimAssistGlobals *)__savegprlr_29((double)param_2,param_1,param_5);
-  dVar6 = extraout_f1;
-  if (pAVar1 == (AimAssistGlobals *)0x0) {
+  if (param_1 == (AimAssistGlobals *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\aim_assist.cpp",
                     0x49b,0,"%s");
   }
-  if (dVar6 < 0.0) {
+  if (dVar3 < 0.0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\aim_assist.cpp",
                     0x49c,0,"%s\n\t(range) = %g");
   }
-  pAVar2 = AimAssist_GetTargetFromEntity(pAVar1,in_r7);
-  if (((pAVar2 != (AimScreenTarget *)0x0) && (pAVar2->distSqr < (float)(dVar6 * dVar6))) &&
-     (bVar3 = AimAssist_DoBoundsIntersectCenterBox
-                        (pAVar2->clipMins,pAVar2->clipMaxs,(float)dVar4,(float)dVar5), bVar3)) {
-    pAVar2 = (AimScreenTarget *)__restgprlr_29(pAVar2);
-    return pAVar2;
+  pAVar1 = AimAssist_GetTargetFromEntity(param_1,in_r7);
+  if (((pAVar1 != (AimScreenTarget *)0x0) && (pAVar1->distSqr < (float)(dVar3 * dVar3))) &&
+     (bVar2 = AimAssist_DoBoundsIntersectCenterBox
+                        (pAVar1->clipMins,pAVar1->clipMaxs,(float)dVar4,(float)dVar5), bVar2)) {
+    return pAVar1;
   }
-  pAVar2 = AimAssist_GetBestTarget(pAVar1,(float)dVar6,(float)dVar4,(float)dVar5);
-  pAVar2 = (AimScreenTarget *)__restgprlr_29(pAVar2);
-  return pAVar2;
+  pAVar1 = AimAssist_GetBestTarget(param_1,(float)dVar3,(float)dVar4,(float)dVar5);
+  return pAVar1;
 }
 
 
@@ -1618,55 +1519,47 @@ connstate_t CL_GetLocalClientConnectionState(LocalClientNum_t param_1)
 
 // 822634F0  AimAssist_CalcAdjustedAxis  (aim_assist/aim_assist.cpp:1195)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void AimAssist_CalcAdjustedAxis(AimInput *param_1,float *param_2,float *param_3)
 
 {
   int iVar1;
-  int iVar2;
-  ulonglong uVar3;
-  float *pfVar4;
-  ulonglong uVar5;
-  float *pfVar6;
-  double dVar7;
-  double dVar8;
-  double dVar9;
-  double dVar10;
-  float fVar11;
+  double dVar2;
+  double dVar3;
+  double dVar4;
+  double dVar5;
+  float fVar6;
   
-  uVar5 = (ulonglong)(int)param_3;
-  uVar3 = (ulonglong)(int)param_2;
-  iVar2 = __savegprlr_26(param_1);
-  if (iVar2 == 0) {
+  if (param_1 == (AimInput *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\aim_assist.cpp",
                     0x4b1,0,"%s");
   }
-  if ((uVar3 & 0xffffffff) == 0) {
+  if (param_2 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\aim_assist.cpp",
                     0x4b2,0,"%s");
   }
-  if ((uVar5 & 0xffffffff) == 0) {
+  if (param_3 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\aim_assist.cpp",
                     0x4b3,0,"%s");
   }
-  fVar11 = *(float *)(iVar2 + 0xc);
-  dVar10 = 1.0;
-  pfVar4 = (float *)uVar3;
-  pfVar6 = (float *)uVar5;
+  fVar6 = param_1->pitchAxis;
+  dVar5 = 1.0;
   if (*(char *)(DAT_829b4cac + 0xc) == '\0') {
-    *pfVar4 = fVar11;
-    *pfVar6 = *(float *)(iVar2 + 0x18);
+    *param_2 = fVar6;
+    *param_3 = param_1->yawAxis;
   }
   else {
-    dVar7 = (double)SQRT(*(float *)(iVar2 + 0x18) * *(float *)(iVar2 + 0x18) + fVar11 * fVar11);
-    dVar8 = dVar10;
-    if ((float)(dVar7 - 1.0) < 0.0) {
-      dVar8 = dVar7;
+    dVar2 = (double)SQRT(param_1->yawAxis * param_1->yawAxis + fVar6 * fVar6);
+    dVar3 = dVar5;
+    if ((float)(dVar2 - 1.0) < 0.0) {
+      dVar3 = dVar2;
     }
-    dVar9 = 0.0;
-    if (-dVar7 < 0.0) {
-      dVar9 = dVar8;
+    dVar4 = 0.0;
+    if (-dVar2 < 0.0) {
+      dVar4 = dVar3;
     }
     if (3 < *(uint *)(DAT_829b4c98 + 0xc)) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\aim_assist.cpp",
@@ -1674,36 +1567,33 @@ void AimAssist_CalcAdjustedAxis(AimInput *param_1,float *param_2,float *param_3)
                       "ConstDvar_GetInt( aim_input_graph_index, AIM_INPUT_GRAPH_INDEX ) doesn\'t index AIM_INPUT_GRAPH_COUNT\n\t%i not in [0, %i)"
                      );
     }
-    fVar11 = GraphFloat_GetValue((GraphFloat *)
-                                 (&DAT_829b4cb8 + *(int *)(DAT_829b4c98 + 0xc) * 0x148),(float)dVar9
-                                );
+    fVar6 = GraphFloat_GetValue((GraphFloat *)(&DAT_829b4cb8 + *(int *)(DAT_829b4c98 + 0xc) * 0x148)
+                                ,(float)dVar4);
     iVar1 = DAT_829b5218;
-    *pfVar4 = fVar11 * *(float *)(iVar2 + 0xc);
-    *pfVar6 = *(float *)(iVar2 + 0x18) * fVar11;
+    *param_2 = fVar6 * param_1->pitchAxis;
+    *param_3 = param_1->yawAxis * fVar6;
     if (*(char *)(iVar1 + 0xc) != '\0') {
       Com_Printf(0x11,"Input Pit = %f, Output Pit = %f\n");
       Com_Printf(0x11,"Input Yaw = %f, Output Yaw = %f\n");
     }
   }
   if ((aim_scale_view_axis->current).enabled != false) {
-    dVar8 = ABS((double)*pfVar4);
-    dVar7 = ABS((double)*pfVar6);
-    if (dVar10 < dVar8) {
+    dVar3 = ABS((double)*param_2);
+    dVar2 = ABS((double)*param_3);
+    if (dVar5 < dVar3) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\aim_assist.cpp",
                       0x4da,0,"%s");
     }
-    if (dVar10 < dVar7) {
+    if (dVar5 < dVar2) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\aim_assist.cpp",
                       0x4db,0,"%s");
     }
-    if (dVar7 < dVar8) {
-      *pfVar6 = (float)(dVar10 - (double)(float)(dVar8 - dVar7)) * *pfVar6;
-      __restgprlr_26();
+    if (dVar2 < dVar3) {
+      *param_3 = (float)(dVar5 - (double)(float)(dVar3 - dVar2)) * *param_3;
       return;
     }
-    *pfVar4 = (float)(dVar10 - (double)(float)(dVar7 - dVar8)) * *pfVar4;
+    *param_2 = (float)(dVar5 - (double)(float)(dVar2 - dVar3)) * *param_2;
   }
-  __restgprlr_26();
   return;
 }
 
@@ -1772,98 +1662,96 @@ int AimAssist_IsSlowdownActive(AimAssistPlayerState *param_1)
 
 // 82263968  AimAssist_CalcSlowdown  (aim_assist/aim_assist.cpp:1326)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void AimAssist_CalcSlowdown(AimInput *param_1,float *param_2,float *param_3)
 
 {
   float fVar1;
-  int iVar2;
+  LocalClientNum_t LVar2;
   int iVar3;
   AimScreenTarget *pAVar4;
   bool bVar5;
-  ulonglong uVar6;
-  float *pfVar7;
-  ulonglong uVar8;
-  AimAssistGlobals *pAVar9;
+  AimAssistGlobals *pAVar6;
+  double dVar7;
+  double dVar8;
+  double dVar9;
   double dVar10;
   double dVar11;
-  double dVar12;
-  double dVar13;
-  double dVar14;
-  float fVar15;
-  float fVar16;
+  float fVar12;
+  float fVar13;
   
-  uVar8 = (ulonglong)(int)param_3;
-  uVar6 = (ulonglong)(int)param_2;
-  iVar2 = __savegprlr_26(param_1);
-  if (iVar2 == 0) {
+  if (param_1 == (AimInput *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\aim_assist.cpp",
                     0x534,0,"%s");
   }
-  if ((uVar6 & 0xffffffff) == 0) {
+  if (param_2 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\aim_assist.cpp",
                     0x535,0,"%s");
   }
-  if ((uVar8 & 0xffffffff) == 0) {
+  if (param_3 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\aim_assist.cpp",
                     0x536,0,"%s");
   }
-  if (3 < *(uint *)(iVar2 + 0x2c)) {
+  if (LOCAL_CLIENT_3 < param_1->localClientNum) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\aim_assist.cpp",
                     0x538,0,
                     "input->localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)"
                    );
   }
-  iVar2 = *(int *)(iVar2 + 0x2c);
-  dVar14 = 1.0;
-  pfVar7 = (float *)uVar6;
-  *pfVar7 = 1.0;
-  *(float *)uVar8 = 1.0;
-  pAVar9 = aaGlobArray + iVar2;
-  iVar3 = AimAssist_IsSlowdownActive(&pAVar9->ps);
+  LVar2 = param_1->localClientNum;
+  dVar11 = 1.0;
+  *param_2 = 1.0;
+  *param_3 = 1.0;
+  pAVar6 = aaGlobArray + LVar2;
+  iVar3 = AimAssist_IsSlowdownActive(&pAVar6->ps);
   if (iVar3 != 0) {
-    if (aaGlobArray[iVar2].ps.weapon._s_0.weaponIdx == 0) {
+    if (aaGlobArray[LVar2].ps.weapon._s_0.weaponIdx == 0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\aim_assist.cpp",
                       0x54b,0,"%s");
     }
-    fVar15 = AimAssist_GetAimAssistRange
-                       (aaGlobArray[iVar2].ps.weapon,
-                        (bool)((byte)((uint)aaGlobArray[iVar2].ps.weapFlags >> 0xf) & 1),
-                        aaGlobArray[iVar2].adsLerp);
-    fVar16 = aaGlobArray[iVar2].tweakables.slowdownRegionHeight;
-    fVar1 = aaGlobArray[iVar2].tweakables.slowdownRegionWidth;
-    dVar10 = (double)fVar1;
-    dVar12 = (double)fVar16;
-    pAVar4 = AimAssist_GetBestTarget(pAVar9,fVar15,fVar1,fVar16);
+    fVar12 = AimAssist_GetAimAssistRange
+                       (aaGlobArray[LVar2].ps.weapon,
+                        (bool)((byte)((uint)aaGlobArray[LVar2].ps.weapFlags >> 0xf) & 1),
+                        aaGlobArray[LVar2].adsLerp);
+    fVar13 = aaGlobArray[LVar2].tweakables.slowdownRegionHeight;
+    fVar1 = aaGlobArray[LVar2].tweakables.slowdownRegionWidth;
+    dVar7 = (double)fVar1;
+    dVar9 = (double)fVar13;
+    pAVar4 = AimAssist_GetBestTarget(pAVar6,fVar12,fVar1,fVar13);
     if (pAVar4 != (AimScreenTarget *)0x0) {
-      dVar11 = (double)(float)dVar10;
-      dVar13 = (double)(float)dVar12;
-      fVar16 = AimAssist_LerpConstDvars
-                         (DAT_829b5204,aaGlobArray[iVar2].adsLerp,DAT_829b5214,(float)dVar10,
-                          (float)dVar12);
-      *pfVar7 = fVar16;
-      fVar16 = AimAssist_LerpConstDvars
-                         (DAT_829b51fc,aaGlobArray[iVar2].adsLerp,DAT_829b5200,(float)dVar11,
-                          (float)dVar13);
-      *(float *)uVar8 = fVar16;
+      dVar8 = (double)(float)dVar7;
+      dVar10 = (double)(float)dVar9;
+      fVar13 = AimAssist_LerpConstDvars
+                         (DAT_829b5204,aaGlobArray[LVar2].adsLerp,DAT_829b5214,(float)dVar7,
+                          (float)dVar9);
+      *param_2 = fVar13;
+      fVar13 = AimAssist_LerpConstDvars
+                         (DAT_829b51fc,aaGlobArray[LVar2].adsLerp,DAT_829b5200,(float)dVar8,
+                          (float)dVar10);
+      *param_3 = fVar13;
     }
-    bVar5 = AimAssist_IsPlayerUsingOffhand(&pAVar9->ps);
+    bVar5 = AimAssist_IsPlayerUsingOffhand(&pAVar6->ps);
     if (bVar5) {
-      *pfVar7 = (float)dVar14;
+      *param_2 = (float)dVar11;
     }
     if ((aim_slowdown_debug->current).enabled != false) {
       Com_Printf(0x11,"Target slowdown pitch scale = %f\n");
       Com_Printf(0x11,"Target slowdown yaw scale = %f\n");
     }
   }
-  __restgprlr_26();
   return;
 }
 
 
 // 82263B48  AimAssist_ApplyTurnRates  (aim_assist/aim_assist.cpp:1381)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void AimAssist_ApplyTurnRates(AimInput *param_1,AimOutput *param_2)
@@ -1871,129 +1759,121 @@ void AimAssist_ApplyTurnRates(AimInput *param_1,AimOutput *param_2)
 {
   float fVar1;
   LocalClientNum_t LVar2;
-  AimInput *pAVar3;
-  int iVar4;
-  GamerSettingState *pGVar5;
-  ulonglong uVar6;
-  float *pfVar7;
-  double dVar8;
+  int iVar3;
+  GamerSettingState *pGVar4;
+  double dVar5;
   double in_f2;
   double in_f3;
+  double dVar6;
+  double dVar7;
+  double dVar8;
   double dVar9;
   double dVar10;
   double dVar11;
   double dVar12;
   double dVar13;
   double dVar14;
-  double dVar15;
-  double dVar16;
-  double dVar17;
-  float fVar18;
+  float fVar15;
   float local_70;
   float local_6c;
   float local_68;
   float local_64 [25];
   
-  uVar6 = (ulonglong)(int)param_2;
-  __savegprlr_28(param_1);
-  pAVar3 = (AimInput *)__savefpr_25();
-  if (pAVar3 == (AimInput *)0x0) {
+  if (param_1 == (AimInput *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\aim_assist.cpp",
                     0x574,0,"%s");
   }
-  if ((uVar6 & 0xffffffff) == 0) {
+  if (param_2 == (AimOutput *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\aim_assist.cpp",
                     0x575,0,"%s");
   }
-  if (LOCAL_CLIENT_3 < pAVar3->localClientNum) {
+  if (LOCAL_CLIENT_3 < param_1->localClientNum) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\aim_assist.cpp",
                     0x577,0,
                     "input->localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)"
                    );
   }
-  LVar2 = pAVar3->localClientNum;
-  iVar4 = CL_ControllerIndexFromClientNum(LVar2);
-  pGVar5 = GamerProfile_GetProfileSettings(iVar4);
-  dVar11 = (double)(pGVar5->commonConfig).viewSensitivity;
-  dVar14 = 1.0;
-  dVar17 = 0.0;
-  dVar16 = dVar17;
-  dVar12 = dVar14;
+  LVar2 = param_1->localClientNum;
+  iVar3 = CL_ControllerIndexFromClientNum(LVar2);
+  pGVar4 = GamerProfile_GetProfileSettings(iVar3);
+  dVar8 = (double)(pGVar4->commonConfig).viewSensitivity;
+  dVar11 = 1.0;
+  dVar14 = 0.0;
+  dVar13 = dVar14;
+  dVar9 = dVar11;
+  dVar7 = dVar11;
   dVar10 = dVar14;
-  dVar13 = dVar17;
   if (aaGlobArray[LVar2].autoMeleeState != AIM_MELEE_STATE_UPDATING) {
-    AimAssist_CalcAdjustedAxis(pAVar3,&local_70,&local_6c);
-    dVar12 = dVar14;
-    dVar13 = dVar17;
-    AimAssist_CalcSlowdown(pAVar3,&local_68,local_64);
-    dVar17 = (double)local_6c;
-    dVar14 = (double)local_64[0];
-    dVar16 = (double)local_70;
-    dVar10 = (double)local_68;
+    AimAssist_CalcAdjustedAxis(param_1,&local_70,&local_6c);
+    dVar9 = dVar11;
+    dVar10 = dVar14;
+    AimAssist_CalcSlowdown(param_1,&local_68,local_64);
+    dVar14 = (double)local_6c;
+    dVar11 = (double)local_64[0];
+    dVar13 = (double)local_70;
+    dVar7 = (double)local_68;
   }
-  dVar8 = (double)(float)in_f2;
-  dVar9 = (double)(float)in_f3;
-  fVar18 = AimAssist_LerpConstDvars
+  dVar5 = (double)(float)in_f2;
+  dVar6 = (double)(float)in_f3;
+  fVar15 = AimAssist_LerpConstDvars
                      (DAT_829b51e8,aaGlobArray[LVar2].adsLerp,DAT_829b4ca8,(float)in_f2,(float)in_f3
                      );
-  dVar15 = (double)((float)((double)(float)((double)fVar18 * dVar10) * dVar11) *
+  dVar12 = (double)((float)((double)(float)((double)fVar15 * dVar7) * dVar8) *
                    aaGlobArray[LVar2].fovTurnRateScale);
-  fVar18 = AimAssist_LerpConstDvars
-                     (DAT_829b1308,aaGlobArray[LVar2].adsLerp,DAT_829b51f8,(float)dVar8,(float)dVar9
+  fVar15 = AimAssist_LerpConstDvars
+                     (DAT_829b1308,aaGlobArray[LVar2].adsLerp,DAT_829b51f8,(float)dVar5,(float)dVar6
                      );
-  dVar8 = (double)pAVar3->pitchMax;
-  dVar10 = (double)((float)((double)(float)((double)fVar18 * dVar14) * dVar11) *
-                   aaGlobArray[LVar2].fovTurnRateScale);
-  if ((dVar8 != dVar13) && (dVar8 < dVar15)) {
-    dVar15 = dVar8;
+  dVar5 = (double)param_1->pitchMax;
+  dVar7 = (double)((float)((double)(float)((double)fVar15 * dVar11) * dVar8) *
+                  aaGlobArray[LVar2].fovTurnRateScale);
+  if ((dVar5 != dVar10) && (dVar5 < dVar12)) {
+    dVar12 = dVar5;
   }
-  dVar14 = (double)pAVar3->yawMax;
-  if ((dVar14 != dVar13) && (dVar14 < dVar10)) {
-    dVar10 = dVar14;
+  dVar11 = (double)param_1->yawMax;
+  if ((dVar11 != dVar10) && (dVar11 < dVar7)) {
+    dVar7 = dVar11;
   }
-  dVar13 = dVar12;
-  if (dVar16 < 0.0) {
-    dVar13 = -1.0;
+  dVar10 = dVar9;
+  if (dVar13 < 0.0) {
+    dVar10 = -1.0;
   }
-  if (dVar17 < 0.0) {
-    dVar12 = -1.0;
+  if (dVar14 < 0.0) {
+    dVar9 = -1.0;
   }
-  fVar18 = (float)(ABS(dVar16) * dVar15);
-  dVar16 = (double)(float)(ABS(dVar17) * dVar10);
+  fVar15 = (float)(ABS(dVar13) * dVar12);
+  dVar13 = (double)(float)(ABS(dVar14) * dVar7);
   if (*(char *)(DAT_829b1284 + 0xc) == '\0') {
-    aaGlobArray[LVar2].pitchDelta = fVar18;
-    aaGlobArray[LVar2].yawDelta = (float)(ABS(dVar17) * dVar10);
+    aaGlobArray[LVar2].pitchDelta = fVar15;
+    aaGlobArray[LVar2].yawDelta = (float)(ABS(dVar14) * dVar7);
   }
   else {
-    fVar1 = (float)((double)*(float *)(DAT_829b5210 + 0xc) * dVar11);
-    dVar10 = (double)fVar1;
-    if (fVar18 <= aaGlobArray[LVar2].pitchDelta) {
-      aaGlobArray[LVar2].pitchDelta = fVar18;
+    fVar1 = (float)((double)*(float *)(DAT_829b5210 + 0xc) * dVar8);
+    dVar7 = (double)fVar1;
+    if (fVar15 <= aaGlobArray[LVar2].pitchDelta) {
+      aaGlobArray[LVar2].pitchDelta = fVar15;
     }
     else {
-      fVar18 = LinearTrack(fVar18,aaGlobArray[LVar2].pitchDelta,fVar1,pAVar3->deltaTime);
-      aaGlobArray[LVar2].pitchDelta = fVar18;
+      fVar15 = LinearTrack(fVar15,aaGlobArray[LVar2].pitchDelta,fVar1,param_1->deltaTime);
+      aaGlobArray[LVar2].pitchDelta = fVar15;
     }
-    if (dVar16 <= (double)aaGlobArray[LVar2].yawDelta) {
-      aaGlobArray[LVar2].yawDelta = (float)dVar16;
+    if (dVar13 <= (double)aaGlobArray[LVar2].yawDelta) {
+      aaGlobArray[LVar2].yawDelta = (float)dVar13;
     }
     else {
-      fVar18 = LinearTrack((float)dVar16,aaGlobArray[LVar2].yawDelta,(float)dVar10,pAVar3->deltaTime
+      fVar15 = LinearTrack((float)dVar13,aaGlobArray[LVar2].yawDelta,(float)dVar7,param_1->deltaTime
                           );
-      aaGlobArray[LVar2].yawDelta = fVar18;
+      aaGlobArray[LVar2].yawDelta = fVar15;
     }
     if ((aim_accel_turnrate_debug->current).enabled != false) {
       Com_Printf(0x11,"Target Pit = %f, Current Pit = %f\n");
       Com_Printf(0x11,"Target Yaw = %f, Current Yaw = %f\n");
     }
   }
-  pfVar7 = (float *)uVar6;
-  *pfVar7 = (float)((double)(aaGlobArray[LVar2].pitchDelta * pAVar3->deltaTime) * dVar13 +
-                   (double)*pfVar7);
-  pfVar7[1] = (float)((double)(aaGlobArray[LVar2].yawDelta * pAVar3->deltaTime) * dVar12 +
-                     (double)pfVar7[1]);
-  __restfpr_25();
-  __restgprlr_28();
+  param_2->pitch =
+       (float)((double)(aaGlobArray[LVar2].pitchDelta * param_1->deltaTime) * dVar10 +
+              (double)param_2->pitch);
+  param_2->yaw = (float)((double)(aaGlobArray[LVar2].yawDelta * param_1->deltaTime) * dVar9 +
+                        (double)param_2->yaw);
   return;
 }
 
@@ -2019,41 +1899,43 @@ void AimAssist_ClearAutoMeleeTarget(AimAssistGlobals *param_1)
 
 // 82263E98  AimAssist_SetAutoMeleeTarget  (aim_assist/aim_assist.cpp:1637)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void AimAssist_SetAutoMeleeTarget(AimAssistGlobals *param_1,AimScreenTarget *param_2)
 
 {
-  undefined4 uVar1;
+  float fVar1;
   int iVar2;
-  ulonglong uVar3;
   
-  uVar3 = (ulonglong)(int)param_2;
-  iVar2 = __savegprlr_28(param_1);
-  if (iVar2 == 0) {
+  if (param_1 == (AimAssistGlobals *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\aim_assist.cpp",
                     0x666,0,"%s");
   }
-  if (*(int *)(iVar2 + 0xe38) == 2) {
+  if (param_1->autoMeleeState == AIM_MELEE_STATE_UPDATING) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\aim_assist.cpp",
                     0x667,0,"%s");
   }
-  if ((uVar3 & 0xffffffff) == 0) {
+  if (param_2 == (AimScreenTarget *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\aim_assist.cpp",
                     0x668,0,"%s");
   }
-  *(undefined4 *)(iVar2 + 0xe38) = 1;
-  uVar1 = *(undefined4 *)uVar3;
-  *(undefined4 *)(iVar2 + 0xe40) = *(undefined4 *)(iVar2 + 0xe8);
-  *(undefined4 *)(iVar2 + 0xe3c) = uVar1;
-  *(undefined4 *)(iVar2 + 0xe44) = 0;
-  *(undefined4 *)(iVar2 + 0xe48) = *(undefined4 *)(iVar2 + 0xec);
-  *(undefined4 *)(iVar2 + 0xe4c) = 0;
-  __restgprlr_28();
+  fVar1 = param_1->viewAngles[1];
+  param_1->autoMeleeState = AIM_MELEE_STATE_TARGETED;
+  iVar2 = param_2->entIndex;
+  param_1->autoMeleePitch = param_1->viewAngles[0];
+  param_1->autoMeleeTargetEnt = iVar2;
+  param_1->autoMeleePitchTarget = 0.0;
+  param_1->autoMeleeYaw = fVar1;
+  param_1->autoMeleeYawTarget = 0.0;
   return;
 }
 
 
 // 82263F68  AimAssist_UpdateAutoMeleeTarget  (aim_assist/aim_assist.cpp:1654)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 
@@ -2061,12 +1943,9 @@ bool AimAssist_UpdateAutoMeleeTarget(AimAssistGlobals *param_1,AimInput *param_2
 
 {
   bool bVar1;
-  AimAssistGlobals *pAVar2;
-  AimScreenTarget *pAVar3;
-  centity_s *pcVar4;
-  int iVar5;
-  undefined1 uVar6;
-  ulonglong uVar7;
+  AimScreenTarget *pAVar2;
+  centity_s *pcVar3;
+  int iVar4;
   float local_60;
   float local_5c;
   float local_58;
@@ -2076,53 +1955,49 @@ bool AimAssist_UpdateAutoMeleeTarget(AimAssistGlobals *param_1,AimInput *param_2
   float local_40;
   float local_3c;
   
-  uVar7 = (ulonglong)(int)param_2;
-  pAVar2 = (AimAssistGlobals *)__savegprlr_28(param_1);
-  if (pAVar2 == (AimAssistGlobals *)0x0) {
+  if (param_1 == (AimAssistGlobals *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\aim_assist.cpp",
                     0x67d,0,"%s");
   }
-  if (pAVar2->autoMeleeState != AIM_MELEE_STATE_UPDATING) {
+  if (param_1->autoMeleeState != AIM_MELEE_STATE_UPDATING) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\aim_assist.cpp",
                     0x67e,0,"%s");
   }
-  if ((uVar7 & 0xffffffff) == 0) {
+  if (param_2 == (AimInput *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\aim_assist.cpp",
                     0x67f,0,"%s");
   }
-  pAVar3 = AimAssist_GetTargetFromEntity(pAVar2,pAVar2->autoMeleeTargetEnt);
-  if (pAVar3 == (AimScreenTarget *)0x0) {
-    if (pAVar2->autoMeleeTargetEnt != 0x7ff) {
-      pcVar4 = CG_GetEntity(*(LocalClientNum_t *)((int)uVar7 + 0x2c),pAVar2->autoMeleeTargetEnt);
-      iVar5 = AimAssist_CalcAimPos
-                        (*(LocalClientNum_t *)((int)uVar7 + 0x2c),pcVar4,(AimTarget *)0x0,&local_60)
-      ;
-      if (iVar5 != 0) goto LAB_82264064;
+  pAVar2 = AimAssist_GetTargetFromEntity(param_1,param_1->autoMeleeTargetEnt);
+  if (pAVar2 == (AimScreenTarget *)0x0) {
+    if (param_1->autoMeleeTargetEnt != 0x7ff) {
+      pcVar3 = CG_GetEntity(param_2->localClientNum,param_1->autoMeleeTargetEnt);
+      iVar4 = AimAssist_CalcAimPos(param_2->localClientNum,pcVar3,(AimTarget *)0x0,&local_60);
+      if (iVar4 != 0) goto LAB_82264064;
     }
-    uVar6 = __restgprlr_28(0);
-    return (bool)uVar6;
+    return false;
   }
-  local_60 = pAVar3->aimPos[0];
-  local_5c = pAVar3->aimPos[1];
-  local_58 = pAVar3->aimPos[2];
+  local_60 = pAVar2->aimPos[0];
+  local_5c = pAVar2->aimPos[1];
+  local_58 = pAVar2->aimPos[2];
 LAB_82264064:
-  local_50 = local_60 - pAVar2->eyeOrigin[0];
-  local_4c = local_5c - pAVar2->eyeOrigin[1];
-  local_48 = local_58 - pAVar2->eyeOrigin[2];
+  local_50 = local_60 - param_1->eyeOrigin[0];
+  local_4c = local_5c - param_1->eyeOrigin[1];
+  local_48 = local_58 - param_1->eyeOrigin[2];
   vectoangles(&local_50,&local_40);
-  bVar1 = (pAVar2->ps).isThirdPerson;
-  pAVar2->autoMeleePitchTarget = local_40;
-  pAVar2->autoMeleeYawTarget = local_3c;
+  bVar1 = (param_1->ps).isThirdPerson;
+  param_1->autoMeleePitchTarget = local_40;
+  param_1->autoMeleeYawTarget = local_3c;
   if (bVar1 != false) {
-    pAVar2->autoMeleePitchTarget = local_40 - 15.0;
+    param_1->autoMeleePitchTarget = local_40 - 15.0;
   }
-  uVar6 = __restgprlr_28(1);
-  return (bool)uVar6;
+  return true;
 }
 
 
 // 82261100  CG_GetLocalClientGlobals  (cgame_mp/cg_local_mp.h:1665)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -2130,28 +2005,25 @@ LAB_82264064:
 cg_s * CG_GetLocalClientGlobals(LocalClientNum_t param_1)
 
 {
-  LocalClientNum_t LVar1;
-  cg_s *pcVar2;
-  
-  LVar1 = __savegprlr_29(param_1);
   if (cgArray == (cg_s *)0x0) {
-    CL_GetLocalClientConnectionState(LVar1);
+    CL_GetLocalClientConnectionState(param_1);
     va("Trying to access unallocated cgArray when connectionstate is %i for localClientNum %i");
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\../cgame_mp/cg_local_mp.h"
                     ,0x682,0,"%s\n\t%s");
   }
-  if (LOCAL_CLIENT_3 < LVar1) {
+  if (LOCAL_CLIENT_3 < param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\../cgame_mp/cg_local_mp.h"
                     ,0x684,0,
                     "localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)");
   }
-  pcVar2 = (cg_s *)__restgprlr_29((longlong)(int)LVar1 * 0x108600 + ZEXT48(cgArray));
-  return pcVar2;
+  return cgArray + param_1;
 }
 
 
 // 822640D8  AimAssist_ApplyAutoMelee  (aim_assist/aim_assist.cpp:1702)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void AimAssist_ApplyAutoMelee(AimInput *param_1,AimOutput *param_2)
@@ -2159,82 +2031,75 @@ void AimAssist_ApplyAutoMelee(AimInput *param_1,AimOutput *param_2)
 {
   LocalClientNum_t LVar1;
   int iVar2;
-  float *pfVar3;
-  AimInput *pAVar4;
-  bool bVar6;
-  AimScreenTarget *pAVar5;
-  ulonglong uVar7;
-  undefined1 uVar8;
-  AimAssistGlobals *pAVar9;
-  double dVar10;
-  double dVar11;
-  double dVar12;
-  float fVar13;
+  bool bVar4;
+  AimScreenTarget *pAVar3;
+  uchar uVar5;
+  AimAssistGlobals *pAVar6;
+  double dVar7;
+  double dVar8;
+  double dVar9;
+  float fVar10;
   float local_60;
   float local_5c;
   undefined8 local_58;
   
-  uVar7 = (ulonglong)(int)param_2;
-  pAVar4 = (AimInput *)__savegprlr_27(param_1);
-  if (pAVar4 == (AimInput *)0x0) {
+  if (param_1 == (AimInput *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\aim_assist.cpp",
                     0x6b7,0,"%s");
   }
-  if ((uVar7 & 0xffffffff) == 0) {
+  if (param_2 == (AimOutput *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\aim_assist.cpp",
                     0x6b8,0,"%s");
   }
-  if (LOCAL_CLIENT_3 < pAVar4->localClientNum) {
+  if (LOCAL_CLIENT_3 < param_1->localClientNum) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\aim_assist.cpp",
                     0x6ba,0,
                     "input->localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)"
                    );
   }
-  LVar1 = pAVar4->localClientNum;
-  pfVar3 = (float *)uVar7;
-  *(undefined2 *)(pfVar3 + 3) = 0x7ff;
+  LVar1 = param_1->localClientNum;
+  param_2->meleeChargeEnt = 0x7ff;
   iVar2 = DAT_829b4ca4;
-  dVar12 = 0.0;
-  pfVar3[2] = 0.0;
-  *(undefined1 *)((int)pfVar3 + 0xe) = 0;
-  pAVar9 = aaGlobArray + LVar1;
+  dVar9 = 0.0;
+  param_2->meleeChargeYaw = 0.0;
+  param_2->meleeChargeDist = '\0';
+  pAVar6 = aaGlobArray + LVar1;
   if (((*(char *)(iVar2 + 0xc) != '\0') && (aaGlobArray[LVar1].ps.weapon._s_0.weaponIdx != 0)) &&
-     (bVar6 = AimAssist_IsPlayerStunned(&pAVar9->ps), !bVar6)) {
-    if (((aaGlobArray[LVar1].prevButtons & 4U) != 0) || (bVar6 = true, (pAVar4->buttons & 4U) == 0))
-    {
-      bVar6 = false;
+     (bVar4 = AimAssist_IsPlayerStunned(&pAVar6->ps), !bVar4)) {
+    if (((aaGlobArray[LVar1].prevButtons & 4U) != 0) || (bVar4 = true, (param_1->buttons & 4U) == 0)
+       ) {
+      bVar4 = false;
     }
-    if ((aaGlobArray[LVar1].autoMeleeState != AIM_MELEE_STATE_UPDATING) && (bVar6)) {
-      fVar13 = *(float *)(DAT_829b4c90 + 0xc);
+    if ((aaGlobArray[LVar1].autoMeleeState != AIM_MELEE_STATE_UPDATING) && (bVar4)) {
+      fVar10 = *(float *)(DAT_829b4c90 + 0xc);
       if (aaGlobArray[LVar1].ps.isExtendedMelee != false) {
-        fVar13 = (perk_extendedMeleeRange->current).value;
+        fVar10 = (perk_extendedMeleeRange->current).value;
       }
-      dVar11 = (double)fVar13;
-      pAVar5 = AimAssist_GetTargetFromEntity(pAVar9,aaGlobArray[LVar1].autoMeleeTargetEnt);
-      if ((pAVar5 == (AimScreenTarget *)0x0) &&
-         (pAVar5 = AimAssist_GetBestTarget
-                             (pAVar9,(float)dVar11,
-                              aaGlobArray[LVar1].tweakables.autoMeleeRegionWidth,
-                              aaGlobArray[LVar1].tweakables.autoMeleeRegionHeight),
-         pAVar5 == (AimScreenTarget *)0x0)) goto LAB_822643f8;
-      AimAssist_SetAutoMeleeTarget(pAVar9,pAVar5);
-      if (((aaGlobArray[LVar1].ps.pm_flags & 1U) == 0) && (dVar12 < (double)pAVar5->distSqr)) {
-        fVar13 = (float)SQRT((double)pAVar5->distSqr) - 30.0;
-        dVar11 = (double)fVar13;
-        if (dVar12 < dVar11) {
-          if (dVar11 <= 255.0) {
-            local_58 = (longlong)fVar13;
-            uVar8 = (undefined1)local_58;
+      dVar8 = (double)fVar10;
+      pAVar3 = AimAssist_GetTargetFromEntity(pAVar6,aaGlobArray[LVar1].autoMeleeTargetEnt);
+      if ((pAVar3 == (AimScreenTarget *)0x0) &&
+         (pAVar3 = AimAssist_GetBestTarget
+                             (pAVar6,(float)dVar8,aaGlobArray[LVar1].tweakables.autoMeleeRegionWidth
+                              ,aaGlobArray[LVar1].tweakables.autoMeleeRegionHeight),
+         pAVar3 == (AimScreenTarget *)0x0)) goto LAB_822643f8;
+      AimAssist_SetAutoMeleeTarget(pAVar6,pAVar3);
+      if (((aaGlobArray[LVar1].ps.pm_flags & 1U) == 0) && (dVar9 < (double)pAVar3->distSqr)) {
+        fVar10 = (float)SQRT((double)pAVar3->distSqr) - 30.0;
+        dVar8 = (double)fVar10;
+        if (dVar9 < dVar8) {
+          if (dVar8 <= 255.0) {
+            local_58 = (longlong)fVar10;
+            uVar5 = (uchar)local_58;
           }
           else {
-            uVar8 = 0xff;
+            uVar5 = 0xff;
           }
-          *(undefined1 *)((int)pfVar3 + 0xe) = uVar8;
-          local_60 = pAVar5->aimPos[0] - aaGlobArray[LVar1].eyeOrigin[0];
-          local_5c = pAVar5->aimPos[1] - aaGlobArray[LVar1].eyeOrigin[1];
-          fVar13 = vectoyaw(&local_60);
-          pfVar3[2] = fVar13;
-          *(short *)(pfVar3 + 3) = (short)aaGlobArray[LVar1].autoMeleeTargetEnt;
+          param_2->meleeChargeDist = uVar5;
+          local_60 = pAVar3->aimPos[0] - aaGlobArray[LVar1].eyeOrigin[0];
+          local_5c = pAVar3->aimPos[1] - aaGlobArray[LVar1].eyeOrigin[1];
+          fVar10 = vectoyaw(&local_60);
+          param_2->meleeChargeYaw = fVar10;
+          param_2->meleeChargeEnt = (ushort)aaGlobArray[LVar1].autoMeleeTargetEnt;
         }
       }
     }
@@ -2242,70 +2107,65 @@ void AimAssist_ApplyAutoMelee(AimInput *param_1,AimOutput *param_2)
        (aaGlobArray[LVar1].ps.weaponState == 0xd)) {
       aaGlobArray[LVar1].autoMeleeState = AIM_MELEE_STATE_UPDATING;
     }
-    if (aaGlobArray[LVar1].autoMeleeState != AIM_MELEE_STATE_UPDATING) goto LAB_82264400;
+    if (aaGlobArray[LVar1].autoMeleeState != AIM_MELEE_STATE_UPDATING) {
+      return;
+    }
     iVar2 = aaGlobArray[LVar1].ps.weaponState;
-    if ((iVar2 != 0xe) && ((iVar2 == 0xd || (iVar2 == 0xf)))) {
-      bVar6 = AimAssist_UpdateAutoMeleeTarget(pAVar9,pAVar4);
-      if (bVar6) {
-        fVar13 = DiffTrackAngle(aaGlobArray[LVar1].autoMeleePitchTarget,
-                                aaGlobArray[LVar1].autoMeleePitch,
-                                (aim_automelee_lerp->current).value,pAVar4->deltaTime);
-        dVar12 = (double)fVar13;
-        fVar13 = DiffTrackAngle(aaGlobArray[LVar1].autoMeleeYawTarget,
-                                aaGlobArray[LVar1].autoMeleeYaw,(aim_automelee_lerp->current).value,
-                                pAVar4->deltaTime);
-        dVar11 = (double)fVar13;
-        fVar13 = AngleSubtract((float)dVar12,aaGlobArray[LVar1].autoMeleePitch);
-        dVar10 = (double)fVar13;
-        fVar13 = AngleSubtract((float)dVar11,aaGlobArray[LVar1].autoMeleeYaw);
-        aaGlobArray[LVar1].autoMeleePitch = (float)dVar12;
-        aaGlobArray[LVar1].autoMeleeYaw = (float)dVar11;
-        *pfVar3 = (float)((double)*pfVar3 + dVar10);
-        pfVar3[1] = pfVar3[1] + fVar13;
-        __restgprlr_27();
-        return;
-      }
+    if ((iVar2 != 0xe) &&
+       (((iVar2 == 0xd || (iVar2 == 0xf)) &&
+        (bVar4 = AimAssist_UpdateAutoMeleeTarget(pAVar6,param_1), bVar4)))) {
+      fVar10 = DiffTrackAngle(aaGlobArray[LVar1].autoMeleePitchTarget,
+                              aaGlobArray[LVar1].autoMeleePitch,(aim_automelee_lerp->current).value,
+                              param_1->deltaTime);
+      dVar9 = (double)fVar10;
+      fVar10 = DiffTrackAngle(aaGlobArray[LVar1].autoMeleeYawTarget,aaGlobArray[LVar1].autoMeleeYaw,
+                              (aim_automelee_lerp->current).value,param_1->deltaTime);
+      dVar8 = (double)fVar10;
+      fVar10 = AngleSubtract((float)dVar9,aaGlobArray[LVar1].autoMeleePitch);
+      dVar7 = (double)fVar10;
+      fVar10 = AngleSubtract((float)dVar8,aaGlobArray[LVar1].autoMeleeYaw);
+      aaGlobArray[LVar1].autoMeleePitch = (float)dVar9;
+      aaGlobArray[LVar1].autoMeleeYaw = (float)dVar8;
+      param_2->pitch = (float)((double)param_2->pitch + dVar7);
+      param_2->yaw = param_2->yaw + fVar10;
+      return;
     }
   }
 LAB_822643f8:
-  AimAssist_ClearAutoMeleeTarget(pAVar9);
-LAB_82264400:
-  __restgprlr_27();
+  AimAssist_ClearAutoMeleeTarget(pAVar6);
   return;
 }
 
 
 // 822611A8  CG_GetEntity  (cgame_mp/cg_local_mp.h:1714)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 
 centity_s * CG_GetEntity(LocalClientNum_t param_1,int param_2)
 
 {
-  ulonglong uVar1;
-  centity_s *pcVar2;
-  ulonglong uVar3;
-  
-  uVar3 = (ulonglong)param_2;
-  uVar1 = __savegprlr_29(param_1);
-  if (0x7ff < (uVar3 & 0xffffffff)) {
+  if (0x7ff < (uint)param_2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\../cgame_mp/cg_local_mp.h"
                     ,0x6b4,0,"entityIndex doesn\'t index MAX_GENTITIES\n\t%i not in [0, %i)");
   }
-  if ((ulonglong)(uint)cg_maxLocalClients <= (uVar1 & 0xffffffff)) {
+  if ((uint)cg_maxLocalClients <= param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\../cgame_mp/cg_local_mp.h"
                     ,0x6b9,0,"localClientNum doesn\'t index cg_maxLocalClients\n\t%i not in [0, %i)"
                    );
   }
-  pcVar2 = (centity_s *)
-           __restgprlr_29(((uVar1 & 0x1fffff) * 0x800 + uVar3) * 0x1ec + ZEXT48(cg_entitiesArray));
-  return pcVar2;
+  return cg_entitiesArray + param_1 * 0x800 + param_2;
 }
 
 
 // 82264418  AimAssist_ApplyLockOn  (aim_assist/aim_assist.cpp:1850)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void AimAssist_ApplyLockOn(AimInput *param_1,AimOutput *param_2)
@@ -2323,182 +2183,173 @@ void AimAssist_ApplyLockOn(AimInput *param_1,AimOutput *param_2)
   float fVar10;
   float fVar11;
   float fVar12;
-  int iVar13;
-  float *pfVar14;
-  int iVar15;
-  int iVar16;
-  bool bVar18;
-  AimScreenTarget *pAVar17;
-  ulonglong uVar19;
-  uint uVar20;
-  AimAssistGlobals *pAVar21;
-  double dVar22;
-  float fVar23;
+  LocalClientNum_t LVar13;
+  int iVar14;
+  bool bVar16;
+  AimScreenTarget *pAVar15;
+  uint uVar17;
+  AimAssistGlobals *pAVar18;
+  double dVar19;
+  float fVar20;
   
-  uVar19 = (ulonglong)(int)param_2;
-  __savegprlr_25(param_1);
-  iVar16 = __savefpr_28();
-  if (iVar16 == 0) {
+  if (param_1 == (AimInput *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\aim_assist.cpp",
                     0x748,0,"%s");
   }
-  if ((uVar19 & 0xffffffff) == 0) {
+  if (param_2 == (AimOutput *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\aim_assist.cpp",
                     0x749,0,"%s");
   }
-  if (3 < *(uint *)(iVar16 + 0x2c)) {
+  if (LOCAL_CLIENT_3 < param_1->localClientNum) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\aim_assist.cpp",
                     0x74a,0,
                     "input->localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)"
                    );
   }
-  iVar15 = DAT_829b51f4;
-  iVar13 = *(int *)(iVar16 + 0x2c);
-  pAVar21 = aaGlobArray + iVar13;
-  aaGlobArray[iVar13].lockOnTargetEnt = 0x7ff;
-  if (((((*(char *)(iVar15 + 0xc) != '\0') &&
-        (bVar18 = AimAssist_IsPlayerUsingOffhand(&pAVar21->ps), !bVar18)) &&
-       ((aaGlobArray[iVar13].ps.linkFlags & 4U) == 0)) &&
-      (aaGlobArray[iVar13].autoMeleeState != AIM_MELEE_STATE_UPDATING)) &&
-     ((((fVar23 = *(float *)(DAT_829b51dc + 0xc), fVar23 <= ABS(*(float *)(iVar16 + 0xc)) ||
-        (fVar23 <= ABS(*(float *)(iVar16 + 0x18)))) || (fVar23 <= ABS(*(float *)(iVar16 + 0x24))))
-      && (aaGlobArray[iVar13].ps.weapon._s_0.weaponIdx != 0)))) {
-    uVar20 = (uint)aaGlobArray[iVar13].ps.weapFlags >> 0xf & 1;
-    fVar23 = AimAssist_GetAimAssistRange
-                       (aaGlobArray[iVar13].ps.weapon,SUB41(uVar20,0),aaGlobArray[iVar13].adsLerp);
-    pAVar17 = AimAssist_GetPrevOrBestTarget
-                        (pAVar21,fVar23,aaGlobArray[iVar13].tweakables.lockOnRegionWidth,
-                         aaGlobArray[iVar13].tweakables.lockOnRegionHeight,uVar20);
-    if ((pAVar17 != (AimScreenTarget *)0x0) && (0.0 < pAVar17->distSqr)) {
-      aaGlobArray[iVar13].lockOnTargetEnt = pAVar17->entIndex;
-      dVar22 = (double)(SQRT(pAVar17->distSqr) * 3.1415927);
-      if (dVar22 <= 0.0) {
+  iVar14 = DAT_829b51f4;
+  LVar13 = param_1->localClientNum;
+  pAVar18 = aaGlobArray + LVar13;
+  aaGlobArray[LVar13].lockOnTargetEnt = 0x7ff;
+  if (((((*(char *)(iVar14 + 0xc) != '\0') &&
+        (bVar16 = AimAssist_IsPlayerUsingOffhand(&pAVar18->ps), !bVar16)) &&
+       ((aaGlobArray[LVar13].ps.linkFlags & 4U) == 0)) &&
+      (aaGlobArray[LVar13].autoMeleeState != AIM_MELEE_STATE_UPDATING)) &&
+     ((((fVar20 = *(float *)(DAT_829b51dc + 0xc), fVar20 <= ABS(param_1->pitchAxis) ||
+        (fVar20 <= ABS(param_1->yawAxis))) || (fVar20 <= ABS(param_1->rightAxis))) &&
+      (aaGlobArray[LVar13].ps.weapon._s_0.weaponIdx != 0)))) {
+    uVar17 = (uint)aaGlobArray[LVar13].ps.weapFlags >> 0xf & 1;
+    fVar20 = AimAssist_GetAimAssistRange
+                       (aaGlobArray[LVar13].ps.weapon,SUB41(uVar17,0),aaGlobArray[LVar13].adsLerp);
+    pAVar15 = AimAssist_GetPrevOrBestTarget
+                        (pAVar18,fVar20,aaGlobArray[LVar13].tweakables.lockOnRegionWidth,
+                         aaGlobArray[LVar13].tweakables.lockOnRegionHeight,uVar17);
+    if ((pAVar15 != (AimScreenTarget *)0x0) && (0.0 < pAVar15->distSqr)) {
+      aaGlobArray[LVar13].lockOnTargetEnt = pAVar15->entIndex;
+      dVar19 = (double)(SQRT(pAVar15->distSqr) * 3.1415927);
+      if (dVar19 <= 0.0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\aim_assist.cpp"
                         ,0x77d,0,"%s");
       }
-      fVar23 = aaGlobArray[iVar13].ps.velocity[1];
-      fVar1 = aaGlobArray[iVar13].viewAxis[1][1];
-      fVar2 = pAVar17->velocity[0];
-      fVar3 = aaGlobArray[iVar13].viewAxis[1][0];
-      fVar4 = aaGlobArray[iVar13].viewAxis[2][1];
-      fVar5 = aaGlobArray[iVar13].viewAxis[2][0];
-      fVar6 = (pAVar21->ps).velocity[0];
-      fVar7 = pAVar17->velocity[1];
-      fVar8 = aaGlobArray[iVar13].ps.velocity[2];
-      fVar9 = aaGlobArray[iVar13].viewAxis[1][2];
-      fVar10 = pAVar17->velocity[2];
-      fVar11 = aaGlobArray[iVar13].viewAxis[2][2];
-      pfVar14 = (float *)uVar19;
+      fVar20 = aaGlobArray[LVar13].ps.velocity[1];
+      fVar1 = aaGlobArray[LVar13].viewAxis[1][1];
+      fVar2 = pAVar15->velocity[0];
+      fVar3 = aaGlobArray[LVar13].viewAxis[1][0];
+      fVar4 = aaGlobArray[LVar13].viewAxis[2][1];
+      fVar5 = aaGlobArray[LVar13].viewAxis[2][0];
+      fVar6 = (pAVar18->ps).velocity[0];
+      fVar7 = pAVar15->velocity[1];
+      fVar8 = aaGlobArray[LVar13].ps.velocity[2];
+      fVar9 = aaGlobArray[LVar13].viewAxis[1][2];
+      fVar10 = pAVar15->velocity[2];
+      fVar11 = aaGlobArray[LVar13].viewAxis[2][2];
       fVar12 = (aim_lockon_strength->current).value;
-      pfVar14[1] = ((fVar9 * fVar10 + fVar1 * fVar7 + fVar3 * fVar2) -
-                   (fVar9 * fVar8 + fVar3 * fVar6 + fVar1 * fVar23)) * (float)(1.0 / dVar22) * 180.0
-                   * fVar12 * *(float *)(iVar16 + 4) + pfVar14[1];
-      *pfVar14 = -(*(float *)(iVar16 + 4) *
-                   ((fVar11 * fVar10 + fVar4 * fVar7 + fVar5 * fVar2) -
-                   (fVar11 * fVar8 + fVar5 * fVar6 + fVar4 * fVar23)) * (float)(1.0 / dVar22) *
-                   180.0 * fVar12 - *pfVar14);
+      param_2->yaw = ((fVar9 * fVar10 + fVar1 * fVar7 + fVar3 * fVar2) -
+                     (fVar9 * fVar8 + fVar3 * fVar6 + fVar1 * fVar20)) * (float)(1.0 / dVar19) *
+                     180.0 * fVar12 * param_1->deltaTimeScaled + param_2->yaw;
+      param_2->pitch =
+           -(param_1->deltaTimeScaled *
+             ((fVar11 * fVar10 + fVar4 * fVar7 + fVar5 * fVar2) -
+             (fVar11 * fVar8 + fVar5 * fVar6 + fVar4 * fVar20)) * (float)(1.0 / dVar19) * 180.0 *
+             fVar12 - param_2->pitch);
     }
   }
-  __restfpr_28();
-  __restgprlr_25();
   return;
 }
 
 
 // 822646C0  AimAssist_UpdateGamePadInput  (aim_assist/aim_assist.cpp:1937)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void AimAssist_UpdateGamePadInput(AimInput *param_1,AimOutput *param_2)
 
 {
   LocalClientNum_t LVar1;
-  AimInput *pAVar2;
-  int iVar3;
-  ulonglong uVar4;
-  AimOutput *pAVar5;
   
-  uVar4 = (ulonglong)(int)param_2;
-  pAVar2 = (AimInput *)__savegprlr_28(param_1);
   Profile_Begin(0x37);
-  if (pAVar2 == (AimInput *)0x0) {
+  if (param_1 == (AimInput *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\aim_assist.cpp",
                     0x796,0,"%s");
   }
-  if ((uVar4 & 0xffffffff) == 0) {
+  if (param_2 == (AimOutput *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\aim_assist.cpp",
                     0x797,0,"%s");
   }
-  if (LOCAL_CLIENT_3 < pAVar2->localClientNum) {
+  if (LOCAL_CLIENT_3 < param_1->localClientNum) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\aim_assist.cpp",
                     0x798,0,
                     "input->localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)"
                    );
   }
-  pAVar5 = (AimOutput *)uVar4;
-  pAVar5->pitch = pAVar2->pitch;
-  pAVar5->yaw = pAVar2->yaw;
-  LVar1 = pAVar2->localClientNum;
+  param_2->pitch = param_1->pitch;
+  param_2->yaw = param_1->yaw;
+  LVar1 = param_1->localClientNum;
   if (aaGlobArray[LVar1].initialized != false) {
     AimAssist_UpdateTweakables(LVar1);
-    AimAssist_UpdateAdsLerp(pAVar2);
-    AimAssist_ApplyTurnRates(pAVar2,pAVar5);
-    AimAssist_ApplyAutoMelee(pAVar2,pAVar5);
-    AimAssist_ApplyLockOn(pAVar2,pAVar5);
-    aaGlobArray[LVar1].prevButtons = pAVar2->buttons;
+    AimAssist_UpdateAdsLerp(param_1);
+    AimAssist_ApplyTurnRates(param_1,param_2);
+    AimAssist_ApplyAutoMelee(param_1,param_2);
+    AimAssist_ApplyLockOn(param_1,param_2);
+    aaGlobArray[LVar1].prevButtons = param_1->buttons;
   }
-  iVar3 = Profile_EndInternal((double *)0x0);
-  __restgprlr_28(iVar3);
+  Profile_EndInternal((double *)0x0);
   return;
 }
 
 
 // 822647D8  AimAssist_DrawCenterBox  (aim_assist/aim_assist.cpp:2036)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void AimAssist_DrawCenterBox
                (AimAssistGlobals *param_1,float param_2,float param_3,float param_4,float *param_5)
 
 {
   float fVar1;
-  float *pfVar2;
-  float *pfVar3;
-  ulonglong in_r7;
-  double extraout_f1;
+  AimAssistGlobals *pAVar2;
+  int in_r7;
+  double dVar3;
   double dVar4;
   double dVar5;
   double dVar6;
-  double dVar7;
   
   dVar5 = (double)param_4;
   dVar4 = (double)param_3;
-  pfVar2 = (float *)__savegprlr_28((double)param_2,param_1);
-  dVar7 = extraout_f1;
-  pfVar3 = pfVar2;
-  if (pfVar2 == (float *)0x0) {
+  dVar3 = (double)param_2;
+  pAVar2 = param_1;
+  if (param_1 == (AimAssistGlobals *)0x0) {
     param_5 = (float *)0x7fa;
-    pfVar3 = (float *)"c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\aim_assist.cpp";
+    pAVar2 = (AimAssistGlobals *)
+             "c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\aim_assist.cpp";
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\aim_assist.cpp",
                     0x7fa,0,"%s");
   }
-  if ((in_r7 & 0xffffffff) == 0) {
+  if (in_r7 == 0) {
     param_5 = (float *)0x7fb;
-    pfVar3 = (float *)"c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\aim_assist.cpp";
+    pAVar2 = (AimAssistGlobals *)
+             "c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\aim_assist.cpp";
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\aim_assist.cpp",
                     0x7fb,0,"%s");
   }
-  dVar6 = (double)pfVar2[0x4c];
-  fVar1 = (float)((double)pfVar2[0x4b] * dVar4);
+  dVar6 = (double)param_1->screenHeight;
+  fVar1 = (float)((double)param_1->screenWidth * dVar4);
   CL_DrawStretchPicPhysical
-            ((float)((double)pfVar2[0x4b] - (double)fVar1) * 0.5,
-             (float)(dVar6 - (double)(float)(dVar6 * dVar5)) * 0.5 - (float)(dVar6 * dVar7) * 0.5,
-             fVar1,(float)(dVar6 * dVar5),0.0,0.0,1.0,1.0,pfVar3,(Material *)param_5);
-  __restgprlr_28();
+            ((float)((double)param_1->screenWidth - (double)fVar1) * 0.5,
+             (float)(dVar6 - (double)(float)(dVar6 * dVar5)) * 0.5 - (float)(dVar6 * dVar3) * 0.5,
+             fVar1,(float)(dVar6 * dVar5),0.0,0.0,1.0,1.0,(float *)pAVar2,(Material *)param_5);
   return;
 }
 
 
 // 822648D0  AimAssist_DrawTargets  (aim_assist/aim_assist.cpp:2057)
 
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_20 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_20 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
@@ -2506,17 +2357,17 @@ void AimAssist_DrawTargets(LocalClientNum_t param_1,playerState_s *param_2,float
 
 {
   float fVar1;
-  LocalClientNum_t LVar2;
-  ScreenPlacement *pSVar3;
-  char *pcVar4;
-  ulonglong uVar5;
-  longlong lVar6;
-  Material *pMVar7;
-  ulonglong uVar8;
-  undefined8 uVar9;
-  undefined8 uVar10;
-  int iVar11;
-  int iVar12;
+  ScreenPlacement *pSVar2;
+  char *pcVar3;
+  Material *pMVar4;
+  undefined8 uVar5;
+  undefined8 uVar6;
+  int iVar7;
+  longlong lVar8;
+  int iVar9;
+  double dVar10;
+  double dVar11;
+  double dVar12;
   double dVar13;
   double dVar14;
   double dVar15;
@@ -2524,110 +2375,104 @@ void AimAssist_DrawTargets(LocalClientNum_t param_1,playerState_s *param_2,float
   double dVar17;
   double dVar18;
   double dVar19;
-  double dVar20;
-  double dVar21;
-  double dVar22;
-  float fVar23;
+  float fVar20;
   
-  uVar8 = (ulonglong)(int)param_3;
-  uVar5 = (ulonglong)(int)param_2;
-  __savegprlr();
-  LVar2 = __savefpr_20();
-  if ((uVar5 & 0xffffffff) == 0) {
+  if (param_2 == (playerState_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\aim_assist.cpp",
                     0x81a,0,"%s");
   }
-  if ((uVar8 & 0xffffffff) == 0) {
+  if (param_3 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\aim_assist.cpp",
                     0x81b,0,"%s");
   }
-  if (LOCAL_CLIENT_3 < LVar2) {
+  if (LOCAL_CLIENT_3 < param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\aim_assist.cpp",
                     0x81c,0,
                     "localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)");
   }
-  if (aaGlobArray[LVar2].ps.weapon._s_0.weaponIdx != 0) {
-    fVar23 = AimAssist_GetAimAssistRange
-                       (aaGlobArray[LVar2].ps.weapon,
-                        (bool)((byte)((uint)aaGlobArray[LVar2].ps.weapFlags >> 0xf) & 1),
-                        aaGlobArray[LVar2].adsLerp);
-    dVar13 = (double)fVar23;
-    dVar14 = (double)*(float *)(DAT_829b4c90 + 0xc);
-    if (uVar5 + 0x4ec == 0) {
+  if (aaGlobArray[param_1].ps.weapon._s_0.weaponIdx != 0) {
+    fVar20 = AimAssist_GetAimAssistRange
+                       (aaGlobArray[param_1].ps.weapon,
+                        (bool)((byte)((uint)aaGlobArray[param_1].ps.weapFlags >> 0xf) & 1),
+                        aaGlobArray[param_1].adsLerp);
+    dVar10 = (double)fVar20;
+    lVar8 = (longlong)(int)param_2 + 0x4ec;
+    dVar11 = (double)*(float *)(DAT_829b4c90 + 0xc);
+    if (lVar8 == 0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\../bgame/bg_perks.h",
                       0x4f,0,"%s");
     }
-    if ((*(uint *)(uVar5 + 0x4ec) & 0x40000) != 0) {
-      dVar14 = (double)(perk_extendedMeleeRange->current).value;
+    if ((*(uint *)lVar8 & 0x40000) != 0) {
+      dVar11 = (double)(perk_extendedMeleeRange->current).value;
     }
-    pSVar3 = ScrPlace_GetActivePlacement(LVar2);
-    iVar11 = 0;
-    if (0 < aaGlobArray[LVar2].screenTargetCount) {
-      dVar19 = 10.0;
-      dVar18 = 0.0;
-      dVar22 = 1.0;
-      dVar15 = 0.5;
-      uVar10 = 0xffffffff82000000;
-      uVar9 = 0xffffffff82000000;
-      lVar6 = -0x7d5c0000;
-      iVar12 = LVar2 * 0xe60 + -0x7d64eb98;
+    pSVar2 = ScrPlace_GetActivePlacement(param_1);
+    iVar7 = 0;
+    if (0 < aaGlobArray[param_1].screenTargetCount) {
+      dVar16 = 10.0;
+      dVar15 = 0.0;
+      dVar19 = 1.0;
+      dVar12 = 0.5;
+      uVar6 = 0xffffffff82000000;
+      uVar5 = 0xffffffff82000000;
+      lVar8 = -0x7d5c0000;
+      iVar9 = param_1 * 0xe60 + -0x7d64eb98;
       do {
-        pMVar7 = (Material *)lVar6;
+        pMVar4 = (Material *)lVar8;
         if ((((*(char *)(DAT_829b130c + 0xc) == '\0') ||
-             (*(float *)(iVar12 + 8) <= (float)(dVar14 * dVar14))) &&
+             (*(float *)(iVar9 + 8) <= (float)(dVar11 * dVar11))) &&
             (((aim_slowdown_debug->current).enabled == false ||
-             (*(float *)(iVar12 + 8) <= (float)(dVar13 * dVar13))))) &&
+             (*(float *)(iVar9 + 8) <= (float)(dVar10 * dVar10))))) &&
            (((aim_lockon_debug->current).enabled == false ||
-            (*(float *)(iVar12 + 8) <= (float)(dVar13 * dVar13))))) {
-          fVar23 = (float)((double)aaGlobArray[LVar2].screenWidth * dVar15);
-          fVar1 = (float)((double)aaGlobArray[LVar2].screenHeight * dVar15);
-          dVar21 = (double)((float)((double)*(float *)(iVar12 + -0x20) + dVar22) * fVar23);
-          dVar20 = (double)((float)((double)*(float *)(iVar12 + -0x1c) + dVar22) * fVar1);
-          dVar17 = (double)(float)((double)((float)((double)*(float *)(iVar12 + -0x18) + dVar22) *
-                                           fVar23) - dVar21);
-          dVar16 = (double)(float)((double)((float)((double)*(float *)(iVar12 + -0x14) + dVar22) *
-                                           fVar1) - dVar20);
-          uVar8 = uVar5;
-          fVar23 = CG_GetCrosshairVerticalOffset((playerState_s *)uVar5);
-          dVar20 = -(double)(float)((double)(fVar23 * aaGlobArray[LVar2].screenHeight) * dVar15 -
-                                   dVar20);
+            (*(float *)(iVar9 + 8) <= (float)(dVar10 * dVar10))))) {
+          fVar20 = (float)((double)aaGlobArray[param_1].screenWidth * dVar12);
+          fVar1 = (float)((double)aaGlobArray[param_1].screenHeight * dVar12);
+          dVar18 = (double)((float)((double)*(float *)(iVar9 + -0x20) + dVar19) * fVar20);
+          dVar17 = (double)((float)((double)*(float *)(iVar9 + -0x1c) + dVar19) * fVar1);
+          dVar14 = (double)(float)((double)((float)((double)*(float *)(iVar9 + -0x18) + dVar19) *
+                                           fVar20) - dVar18);
+          dVar13 = (double)(float)((double)((float)((double)*(float *)(iVar9 + -0x14) + dVar19) *
+                                           fVar1) - dVar17);
+          lVar8 = (longlong)(int)param_2;
+          fVar20 = CG_GetCrosshairVerticalOffset(param_2);
+          dVar17 = -(double)(float)((double)(fVar20 * aaGlobArray[param_1].screenHeight) * dVar12 -
+                                   dVar17);
           CL_DrawStretchPicPhysical
-                    ((float)dVar21,(float)dVar20,(float)dVar17,(float)dVar16,(float)dVar18,
-                     (float)dVar18,(float)dVar22,(float)dVar22,(float *)uVar8,pMVar7);
-          pcVar4 = va("Pri: %i");
-          CL_DrawText(pSVar3,pcVar4,0x7fffffff,cgMedia.smallDevFont,(float)dVar21,(float)dVar20,
-                      (int)uVar9,(int)uVar10,(float)dVar22,(float)dVar22,(float *)0x5,5);
-          dVar16 = (double)(float)(dVar20 - dVar19);
-          pcVar4 = va("Ent: %i");
-          CL_DrawText(pSVar3,pcVar4,0x7fffffff,cgMedia.smallDevFont,(float)dVar21,(float)dVar16,
-                      (int)uVar9,(int)uVar10,(float)dVar22,(float)dVar22,(float *)0x5,5);
-          dVar16 = (double)(float)(dVar16 - dVar19);
-          pcVar4 = va("Dist: %.2f");
-          CL_DrawText(pSVar3,pcVar4,0x7fffffff,cgMedia.smallDevFont,(float)dVar21,(float)dVar16,
-                      (int)uVar9,(int)uVar10,(float)dVar22,(float)dVar22,(float *)0x5,5);
-          dVar16 = (double)(float)(dVar16 - dVar19);
-          pcVar4 = va("Speed: %.2f");
-          CL_DrawText(pSVar3,pcVar4,0x7fffffff,cgMedia.smallDevFont,(float)dVar21,(float)dVar16,
-                      (int)uVar9,(int)uVar10,(float)dVar22,(float)dVar22,(float *)0x5,5);
-          pcVar4 = va("XHairDist: %.4f");
-          lVar6 = (longlong)(int)pcVar4;
-          CL_DrawText(pSVar3,pcVar4,0x7fffffff,cgMedia.smallDevFont,(float)dVar21,
-                      (float)(dVar16 - dVar19),(int)uVar9,(int)uVar10,(float)dVar22,(float)dVar22,
+                    ((float)dVar18,(float)dVar17,(float)dVar14,(float)dVar13,(float)dVar15,
+                     (float)dVar15,(float)dVar19,(float)dVar19,(float *)lVar8,pMVar4);
+          pcVar3 = va("Pri: %i");
+          CL_DrawText(pSVar2,pcVar3,0x7fffffff,cgMedia.smallDevFont,(float)dVar18,(float)dVar17,
+                      (int)uVar5,(int)uVar6,(float)dVar19,(float)dVar19,(float *)0x5,5);
+          dVar13 = (double)(float)(dVar17 - dVar16);
+          pcVar3 = va("Ent: %i");
+          CL_DrawText(pSVar2,pcVar3,0x7fffffff,cgMedia.smallDevFont,(float)dVar18,(float)dVar13,
+                      (int)uVar5,(int)uVar6,(float)dVar19,(float)dVar19,(float *)0x5,5);
+          dVar13 = (double)(float)(dVar13 - dVar16);
+          pcVar3 = va("Dist: %.2f");
+          CL_DrawText(pSVar2,pcVar3,0x7fffffff,cgMedia.smallDevFont,(float)dVar18,(float)dVar13,
+                      (int)uVar5,(int)uVar6,(float)dVar19,(float)dVar19,(float *)0x5,5);
+          dVar13 = (double)(float)(dVar13 - dVar16);
+          pcVar3 = va("Speed: %.2f");
+          CL_DrawText(pSVar2,pcVar3,0x7fffffff,cgMedia.smallDevFont,(float)dVar18,(float)dVar13,
+                      (int)uVar5,(int)uVar6,(float)dVar19,(float)dVar19,(float *)0x5,5);
+          pcVar3 = va("XHairDist: %.4f");
+          lVar8 = (longlong)(int)pcVar3;
+          CL_DrawText(pSVar2,pcVar3,0x7fffffff,cgMedia.smallDevFont,(float)dVar18,
+                      (float)(dVar13 - dVar16),(int)uVar5,(int)uVar6,(float)dVar19,(float)dVar19,
                       (float *)0x5,5);
         }
-        iVar11 = iVar11 + 1;
-        iVar12 = iVar12 + 0x34;
-      } while (iVar11 < aaGlobArray[LVar2].screenTargetCount);
+        iVar7 = iVar7 + 1;
+        iVar9 = iVar9 + 0x34;
+      } while (iVar7 < aaGlobArray[param_1].screenTargetCount);
     }
   }
-  __restfpr_20();
-  __restgprlr();
   return;
 }
 
 
 // 82264D88  AimAssist_DrawDebugOverlay  (aim_assist/aim_assist.cpp:2159)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -2635,15 +2480,13 @@ void AimAssist_DrawTargets(LocalClientNum_t param_1,playerState_s *param_2,float
 void AimAssist_DrawDebugOverlay(LocalClientNum_t param_1)
 
 {
-  AimAssistGlobals *pAVar1;
-  LocalClientNum_t LVar2;
-  cg_s *pcVar3;
-  cg_s *pcVar4;
-  double dVar5;
-  float fVar6;
+  cg_s *pcVar1;
+  cg_s *pcVar2;
+  AimAssistGlobals *pAVar3;
+  double dVar4;
+  float fVar5;
   float local_50 [20];
   
-  LVar2 = __savegprlr_28(param_1);
   local_50[0] = 1.0;
   local_50[1] = 0.0;
   local_50[2] = 0.0;
@@ -2652,38 +2495,37 @@ void AimAssist_DrawDebugOverlay(LocalClientNum_t param_1)
   local_50[5] = 1.0;
   local_50[6] = 0.0;
   local_50[7] = 0.25;
-  if (LOCAL_CLIENT_3 < LVar2) {
+  if (LOCAL_CLIENT_3 < param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\aim_assist.cpp",
                     0x877,0,
                     "localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)");
   }
-  pAVar1 = aaGlobArray + LVar2;
-  if (aaGlobArray[LVar2].initialized != false) {
-    pcVar3 = CG_GetLocalClientGlobals(LVar2);
-    fVar6 = CG_GetCrosshairVerticalOffset(&pcVar3->predictedPlayerState);
-    dVar5 = (double)fVar6;
+  pAVar3 = aaGlobArray + param_1;
+  if (aaGlobArray[param_1].initialized != false) {
+    pcVar1 = CG_GetLocalClientGlobals(param_1);
+    fVar5 = CG_GetCrosshairVerticalOffset(&pcVar1->predictedPlayerState);
+    dVar4 = (double)fVar5;
     if ((aim_slowdown_debug->current).enabled != false) {
-      pcVar4 = pcVar3;
-      AimAssist_DrawTargets(LVar2,&pcVar3->predictedPlayerState,local_50);
+      pcVar2 = pcVar1;
+      AimAssist_DrawTargets(param_1,&pcVar1->predictedPlayerState,local_50);
       AimAssist_DrawCenterBox
-                (pAVar1,(float)dVar5,aaGlobArray[LVar2].tweakables.slowdownRegionWidth,
-                 aaGlobArray[LVar2].tweakables.slowdownRegionHeight,(float *)pcVar4);
+                (pAVar3,(float)dVar4,aaGlobArray[param_1].tweakables.slowdownRegionWidth,
+                 aaGlobArray[param_1].tweakables.slowdownRegionHeight,(float *)pcVar2);
     }
     if (*(char *)(DAT_829b130c + 0xc) != '\0') {
-      pcVar4 = pcVar3;
-      AimAssist_DrawTargets(LVar2,&pcVar3->predictedPlayerState,local_50);
+      pcVar2 = pcVar1;
+      AimAssist_DrawTargets(param_1,&pcVar1->predictedPlayerState,local_50);
       AimAssist_DrawCenterBox
-                (pAVar1,(float)dVar5,aaGlobArray[LVar2].tweakables.autoMeleeRegionWidth,
-                 aaGlobArray[LVar2].tweakables.autoMeleeRegionHeight,(float *)pcVar4);
+                (pAVar3,(float)dVar4,aaGlobArray[param_1].tweakables.autoMeleeRegionWidth,
+                 aaGlobArray[param_1].tweakables.autoMeleeRegionHeight,(float *)pcVar2);
     }
     if ((aim_lockon_debug->current).enabled != false) {
-      AimAssist_DrawTargets(LVar2,&pcVar3->predictedPlayerState,local_50);
+      AimAssist_DrawTargets(param_1,&pcVar1->predictedPlayerState,local_50);
       AimAssist_DrawCenterBox
-                (pAVar1,(float)dVar5,aaGlobArray[LVar2].tweakables.lockOnRegionWidth,
-                 aaGlobArray[LVar2].tweakables.lockOnRegionHeight,(float *)pcVar3);
+                (pAVar3,(float)dVar4,aaGlobArray[param_1].tweakables.lockOnRegionWidth,
+                 aaGlobArray[param_1].tweakables.lockOnRegionHeight,(float *)pcVar1);
     }
   }
-  __restgprlr_28();
   return;
 }
 

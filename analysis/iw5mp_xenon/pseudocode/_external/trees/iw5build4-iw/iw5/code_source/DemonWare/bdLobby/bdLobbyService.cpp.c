@@ -162,79 +162,75 @@ bool __thiscall bdBitBuffer::writeBool(bdBitBuffer *this,bool param_1)
 
 // 828FCDE0  connect  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdlobbyservice.cpp:137)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 bool __thiscall bdLobbyService::connect(bdLobbyService *this,bdAddr param_1,bdAuthInfo *param_2)
 
 {
-  bdLobbyService *this_00;
   bdAddr *pbVar1;
   bool bVar2;
-  undefined1 uVar3;
-  bdAddr *this_01;
+  bdAddr *this_00;
   bdAddr *pbStack0000001c;
   bdAddr abStack_30 [6];
   
-  this_01 = param_1._4_4_;
-  this_00 = (bdLobbyService *)__savegprlr_28(this);
-  pbStack0000001c = this_01;
-  pbVar1 = bdAddr::bdAddr(abStack_30,this_01);
-  bVar2 = connect(this_00,(bdAddr)(longlong)(int)pbVar1,param_2,0xffff,0xffff);
-  bdInetAddr::~bdInetAddr(&this_01->m_address);
-  uVar3 = __restgprlr_28(bVar2);
-  return (bool)uVar3;
+  this_00 = param_1._4_4_;
+  pbStack0000001c = this_00;
+  pbVar1 = bdAddr::bdAddr(abStack_30,this_00);
+  bVar2 = connect(this,(bdAddr)(longlong)(int)pbVar1,param_2,0xffff,0xffff);
+  bdInetAddr::~bdInetAddr(&this_00->m_address);
+  return bVar2;
 }
 
 
 // 828FBB88  connect  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdlobbyservice.cpp:156)
+
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 
 bool __thiscall
 bdLobbyService::connect
           (bdLobbyService *this,bdAddr param_1,bdAuthInfo *param_2,uint param_3,uint param_4)
 
 {
-  bdLobbyService *this_00;
   bdLobbyConnection *pbVar1;
   bdAddr *pbVar2;
   bool bVar3;
-  undefined1 uVar4;
-  bdAddr *this_01;
-  ulonglong uVar5;
+  bdAddr *this_00;
   bdAddr *pbStack0000001c;
   bdAddr abStack_58 [11];
   
-  this_01 = param_1._4_4_;
-  uVar5 = (ulonglong)(int)param_2;
-  this_00 = (bdLobbyService *)__savegprlr_24(this);
-  pbStack0000001c = this_01;
-  if ((uVar5 & 0xffffffff) == 0) {
+  this_00 = param_1._4_4_;
+  pbStack0000001c = this_00;
+  if (param_2 == (bdAuthInfo *)0x0) {
     bdLogMessage(BD_LOG_ERROR,"err/","lobby service",
                  "c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdLobby\\bdLobbyService.cpp"
                  ,"bdLobbyService::connect",0xa0,"No authentication info specified");
     bVar3 = false;
   }
   else {
-    pbVar1 = (this_00->m_lobbyConnection).m_ptr;
+    pbVar1 = (this->m_lobbyConnection).m_ptr;
     if (pbVar1 != (bdLobbyConnection *)0x0) {
       bdLobbyConnection::disconnect(pbVar1);
-      cleanup(this_00);
+      cleanup(this);
     }
-    this_00->m_encryptedConnection = false;
+    this->m_encryptedConnection = false;
     memcpy();
     pbVar1 = bdMemory::allocate(0x70);
     if (pbVar1 == (bdLobbyConnection *)0x0) {
       pbVar1 = (bdLobbyConnection *)0x0;
     }
     else {
-      pbVar2 = bdAddr::bdAddr(abStack_58,this_01);
+      pbVar2 = bdAddr::bdAddr(abStack_58,this_00);
       pbVar1 = bdLobbyConnection::bdLobbyConnection
                          (pbVar1,(bdAddr)(longlong)(int)pbVar2,param_3,param_4,
-                          (bdLobbyConnectionListener *)this_00);
+                          (bdLobbyConnectionListener *)this);
     }
-    bdReference<bdLobbyConnection>::operator=(&this_00->m_lobbyConnection,pbVar1);
-    bVar3 = bdLobbyConnection::connect((this_00->m_lobbyConnection).m_ptr,&this_00->m_authInfo);
+    bdReference<bdLobbyConnection>::operator=(&this->m_lobbyConnection,pbVar1);
+    bVar3 = bdLobbyConnection::connect((this->m_lobbyConnection).m_ptr,&this->m_authInfo);
   }
-  bdInetAddr::~bdInetAddr(&this_01->m_address);
-  uVar4 = __restgprlr_24(bVar3);
-  return (bool)uVar4;
+  bdInetAddr::~bdInetAddr(&this_00->m_address);
+  return bVar3;
 }
 
 
@@ -309,11 +305,12 @@ void __thiscall bdLobbyService::disconnect(bdLobbyService *this)
 
 // 828FBD78  pump  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdlobbyservice.cpp:259)
 
+/* WARNING: Function: __savegprlr_15 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_15 replaced with injection: xenon_save_restore */
+
 void __thiscall bdLobbyService::pump(bdLobbyService *this)
 
 {
-  bdLobbyConnection *this_00;
-  bdLobbyService *this_01;
   bool bVar4;
   int iVar1;
   ulong uVar2;
@@ -334,7 +331,6 @@ void __thiscall bdLobbyService::pump(bdLobbyService *this)
   bdLobbyConnection *local_ac;
   ulonglong local_a8 [21];
   
-  this_01 = (bdLobbyService *)__savegprlr_15(this);
   bVar4 = Sys_IsMainThread();
   if ((!bVar4) && (iVar1 = Sys_AreThreadsSuspended(), iVar1 == 0)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdLobby\\bdLobbyService.cpp"
@@ -343,20 +339,19 @@ void __thiscall bdLobbyService::pump(bdLobbyService *this)
   uVar2 = _getLoResTimeStamp_bdPlatformTiming__SAIXZ();
   local_a8[0] = (ulonglong)uVar2;
   dVar11 = (double)((float)local_a8[0] * 0.001);
-  if (((double)this_01->m_lastPumpTime != 0.0) &&
-     (10.0 <= (float)(dVar11 - (double)this_01->m_lastPumpTime))) {
+  if (((double)this->m_lastPumpTime != 0.0) &&
+     (10.0 <= (float)(dVar11 - (double)this->m_lastPumpTime))) {
     bdLogMessage(BD_LOG_WARNING,"warn/","lobby service",
                  "c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdLobby\\bdLobbyService.cpp"
                  ,"bdLobbyService::pump",0x10b,
                  "\nSTARVATION - bdLobbyService has been starved for %.2f seconds\n");
   }
-  this_00 = (this_01->m_lobbyConnection).m_ptr;
-  this_01->m_lastPumpTime = (float)dVar11;
-  if (this_00 != (bdLobbyConnection *)0x0) {
+  local_ac = (this->m_lobbyConnection).m_ptr;
+  this->m_lastPumpTime = (float)dVar11;
+  if (local_ac != (bdLobbyConnection *)0x0) {
     local_bc.m_ptr = (bdByteBuffer *)0x0;
     local_c0[0] = '\0';
-    local_ac = this_00;
-    bVar4 = bdLobbyConnection::getMessageToDispatch(this_00,local_c0,&local_bc);
+    bVar4 = bdLobbyConnection::getMessageToDispatch(local_ac,local_c0,&local_bc);
     bVar4 = !bVar4;
     if (!bVar4) {
       do {
@@ -367,7 +362,7 @@ void __thiscall bdLobbyService::pump(bdLobbyService *this)
                        "c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdLobby\\bdLobbyService.cpp"
                        ,"bdLobbyService::pump",299,
                        "Received message of type: BD_LOBBY_SERVICE_TASK_REPLY");
-          if (this_01->m_taskManager == (bdRemoteTaskManager *)0x0) {
+          if (this->m_taskManager == (bdRemoteTaskManager *)0x0) {
             uVar6 = 0x133;
             goto LAB_828fc144;
           }
@@ -383,7 +378,7 @@ void __thiscall bdLobbyService::pump(bdLobbyService *this)
               }
             } while (!(bool)(bVar10 >> 1 & 1));
           }
-          bdRemoteTaskManager::handleLSGTaskReply(this_01->m_taskManager,(bdByteBuffer *)&local_ac);
+          bdRemoteTaskManager::handleLSGTaskReply(this->m_taskManager,(bdByteBuffer *)&local_ac);
         }
         else if (local_c0[0] == '\x02') {
           bdLogMessage(BD_LOG_INFO,"info/","lobby service",
@@ -402,7 +397,7 @@ void __thiscall bdLobbyService::pump(bdLobbyService *this)
               }
             } while (!(bool)(bVar10 >> 1 & 1));
           }
-          handlePushMessage(this_01,(bdByteBuffer *)&local_b0);
+          handlePushMessage(this,(bdByteBuffer *)&local_b0);
         }
         else {
           if (local_c0[0] == '\x03') {
@@ -410,7 +405,7 @@ void __thiscall bdLobbyService::pump(bdLobbyService *this)
             if (bVar4) {
               uVar6 = 0x144;
               bVar3 = BD_LOG_INFO;
-              this_01->m_errorCode = local_b4;
+              this->m_errorCode = local_b4;
               pcVar5 = "info/";
               pcVar7 = "Received LSG error: %u";
 LAB_828fbf34:
@@ -425,11 +420,11 @@ LAB_828fbf34:
           else if (local_c0[0] == '\x04') {
             bVar4 = bdByteBuffer::readUInt64(local_bc.m_ptr,local_a8);
             if (bVar4) {
-              if (this_01->m_taskManager != (bdRemoteTaskManager *)0x0) {
+              if (this->m_taskManager != (bdRemoteTaskManager *)0x0) {
                 bdLogMessage(BD_LOG_INFO,"info/","lobby service",
                              "c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdLobby\\bdLobbyService.cpp"
                              ,"bdLobbyService::pump",0x153,"Received LSG connection ID:%I64u");
-                this_01->m_taskManager->m_connectionID = local_a8[0];
+                this->m_taskManager->m_connectionID = local_a8[0];
                 goto LAB_828fc150;
               }
               uVar6 = 0x158;
@@ -452,8 +447,8 @@ LAB_828fbf34:
                          "c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdLobby\\bdLobbyService.cpp"
                          ,"bdLobbyService::pump",0x11d,
                          "Received message of type: BD_LSG_SERVICE_TASK_REPLY");
-            if ((this_01->m_taskManager != (bdRemoteTaskManager *)0x0) &&
-               (ZEXT48(local_bc.m_ptr) != 0)) {
+            if ((this->m_taskManager != (bdRemoteTaskManager *)0x0) && (ZEXT48(local_bc.m_ptr) != 0)
+               ) {
               local_b8 = (bdLobbyConnection *)local_bc.m_ptr;
               lVar8 = ZEXT48(local_bc.m_ptr) + 4;
               do {
@@ -464,8 +459,7 @@ LAB_828fbf34:
                   bVar10 = 2;
                 }
               } while (!(bool)(bVar10 >> 1 & 1));
-              bdRemoteTaskManager::handleTaskReply(this_01->m_taskManager,(bdByteBuffer *)&local_b8)
-              ;
+              bdRemoteTaskManager::handleTaskReply(this->m_taskManager,(bdByteBuffer *)&local_b8);
               goto LAB_828fc150;
             }
             uVar6 = 0x125;
@@ -477,16 +471,15 @@ LAB_828fc144:
         }
 LAB_828fc150:
         bVar4 = bdLobbyConnection::getMessageToDispatch
-                          ((this_01->m_lobbyConnection).m_ptr,local_c0,&local_bc);
+                          ((this->m_lobbyConnection).m_ptr,local_c0,&local_bc);
         bVar4 = !bVar4;
       } while (!bVar4);
     }
-    if (this_01->m_taskManager != (bdRemoteTaskManager *)0x0) {
-      bdRemoteTaskManager::cleanUpAsyncState(this_01->m_taskManager);
+    if (this->m_taskManager != (bdRemoteTaskManager *)0x0) {
+      bdRemoteTaskManager::cleanUpAsyncState(this->m_taskManager);
     }
     bdReference<bdByteBuffer>::~bdReference<bdByteBuffer>(&local_bc);
   }
-  __restgprlr_15();
   return;
 }
 
@@ -1128,54 +1121,52 @@ uint __thiscall bdLobbyService::getErrorCode(bdLobbyService *this)
 
 // 828FA5B8  bdLobbyService  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdlobbyservice.cpp:862)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 bdLobbyService * __thiscall bdLobbyService::bdLobbyService(bdLobbyService *this)
 
 {
-  bdLobbyConnectionListener *this_00;
-  bdLobbyService *pbVar1;
-  
-  this_00 = (bdLobbyConnectionListener *)__savegprlr_29(this);
-  bdLobbyConnectionListener::bdLobbyConnectionListener(this_00);
-  this_00[1] = (bdLobbyConnectionListener)0x0;
-  this_00[2] = (bdLobbyConnectionListener)0x0;
-  *this_00 = (bdLobbyConnectionListener)&_vftable_;
-  this_00[3] = (bdLobbyConnectionListener)0x0;
-  this_00[4] = (bdLobbyConnectionListener)0x0;
-  this_00[5] = (bdLobbyConnectionListener)0x0;
-  this_00[6] = (bdLobbyConnectionListener)0x0;
-  this_00[7] = (bdLobbyConnectionListener)0x0;
-  this_00[8] = (bdLobbyConnectionListener)0x0;
-  this_00[9] = (bdLobbyConnectionListener)0x0;
-  this_00[10] = (bdLobbyConnectionListener)0x0;
-  this_00[0xb] = (bdLobbyConnectionListener)0x0;
-  this_00[0xc] = (bdLobbyConnectionListener)0x0;
-  this_00[0xd] = (bdLobbyConnectionListener)0x0;
-  this_00[0xe] = (bdLobbyConnectionListener)0x0;
-  this_00[0xf] = (bdLobbyConnectionListener)0x0;
-  this_00[0x10] = (bdLobbyConnectionListener)0x0;
-  this_00[0x11] = (bdLobbyConnectionListener)0x0;
-  this_00[0x12] = (bdLobbyConnectionListener)0x0;
-  this_00[0x13] = (bdLobbyConnectionListener)0x0;
-  this_00[0x14] = (bdLobbyConnectionListener)0x0;
-  this_00[0x15] = (bdLobbyConnectionListener)0x0;
-  this_00[0x16] = (bdLobbyConnectionListener)0x0;
-  this_00[0x17] = (bdLobbyConnectionListener)0x0;
-  this_00[0x18] = (bdLobbyConnectionListener)0x0;
-  this_00[0x19] = (bdLobbyConnectionListener)0x0;
-  this_00[0x1a] = (bdLobbyConnectionListener)0x0;
-  this_00[0x1b] = (bdLobbyConnectionListener)0x0;
-  this_00[0x1c] = (bdLobbyConnectionListener)0x0;
-  this_00[0x1d] = (bdLobbyConnectionListener)0x0;
-  this_00[0x1e] = (bdLobbyConnectionListener)0x0;
-  this_00[0x1f] = (bdLobbyConnectionListener)0x0;
-  this_00[0x20] = (bdLobbyConnectionListener)0x0;
-  this_00[0x21] = (bdLobbyConnectionListener)0x0;
+  bdLobbyConnectionListener::bdLobbyConnectionListener((bdLobbyConnectionListener *)this);
+  this->m_taskManager = (bdRemoteTaskManager *)0x0;
+  this->m_profiles = (bdProfiles *)0x0;
+  this->_padding_ = (int)&_vftable_;
+  this->m_messaging = (bdMessaging *)0x0;
+  this->m_matchMaking = (bdMatchMaking *)0x0;
+  this->m_statsManager = (bdStats *)0x0;
+  this->m_friendsManager = (bdFriends *)0x0;
+  this->m_teamsManager = (bdTeams *)0x0;
+  this->m_storageManager = (bdStorage *)0x0;
+  this->m_contentUnlockManager = (bdContentUnlock *)0x0;
+  this->m_titleUtilitiesManager = (bdTitleUtilities *)0x0;
+  this->m_eventLogManager = (bdEventLog *)0x0;
+  this->m_keyArchive = (bdKeyArchive *)0x0;
+  this->m_counter = (bdCounter *)0x0;
+  this->m_group = (bdGroup *)0x0;
+  this->m_contentStreamingManager = (bdContentStreaming *)0x0;
+  this->m_pooledStorageManager = (bdPooledStorage *)0x0;
+  this->m_lspEnumState = (bdLSPEnumerator *)0x0;
+  this->m_tags = (bdTags *)0x0;
+  this->m_voteRankManager = (bdVoteRank *)0x0;
+  this->m_twitter = (bdTwitter *)0x0;
+  this->m_facebook = (bdFacebook *)0x0;
+  this->m_linkCode = (bdLinkCode *)0x0;
+  this->m_antiCheat = (bdAntiCheat *)0x0;
+  this->m_DML = (bdDML *)0x0;
+  this->m_crux = (bdCRUX *)0x0;
+  this->m_userGroups = (bdUserGroups *)0x0;
+  this->m_richPresence = (bdRichPresenceService *)0x0;
+  this->m_subscription = (bdSubscription *)0x0;
+  this->m_titleID = 0;
+  this->m_eventHandler = (bdLobbyEventHandler *)0x0;
+  (this->m_lobbyConnection).m_ptr = (bdLobbyConnection *)0x0;
+  (this->m_authInfo).m_titleID = 0;
+  (this->m_authInfo).m_IVSeed = 0;
   memset();
   memset();
-  this_00[0x49] = (bdLobbyConnectionListener)0x0;
-  this_00[0x4a] = (bdLobbyConnectionListener)0x0;
-  pbVar1 = (bdLobbyService *)__restgprlr_29(this_00);
-  return pbVar1;
+  this->m_errorCode = 0;
+  this->m_lastPumpTime = 0.0;
+  return this;
 }
 
 
@@ -1197,26 +1188,28 @@ void __thiscall bdLobbyService::~bdLobbyService(bdLobbyService *this)
 
 // 828FA6A8  onConnect  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdlobbyservice.cpp:875)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void __thiscall
 bdLobbyService::onConnect(bdLobbyService *this,bdReference<bdLobbyConnection> param_1)
 
 {
   bool bVar1;
   int iVar2;
-  int iVar3;
-  bdByteBuffer *pbVar4;
-  bdBitBuffer *pbVar5;
-  bdRemoteTaskManager *pbVar6;
-  uint uVar7;
-  undefined1 *puVar8;
-  bdReference<bdBitBuffer> *pbVar9;
-  uint *puVar10;
-  int iVar11;
-  ulonglong uVar12;
+  bdByteBuffer *pbVar3;
+  bdBitBuffer *pbVar4;
+  bdRemoteTaskManager *pbVar5;
+  uint uVar6;
+  undefined1 *puVar7;
+  bdReference<bdBitBuffer> *pbVar8;
+  uint *puVar9;
+  int iVar10;
+  ulonglong uVar11;
   char in_RESERVE;
-  byte bVar13;
-  longlong lVar14;
-  bdLobbyConnection *pbStack0000001c;
+  byte bVar12;
+  longlong lVar13;
+  bdReference<bdLobbyConnection> bStack0000001c;
   uchar local_50 [4];
   bdByteBuffer *local_4c;
   undefined1 auStack_48 [3];
@@ -1226,126 +1219,125 @@ bdLobbyService::onConnect(bdLobbyService *this,bdReference<bdLobbyConnection> pa
   bdReference<bdByteBuffer> local_3c;
   bdRemoteTaskManager *local_38;
   
-  iVar3 = __savegprlr_28(this);
-  pbStack0000001c = param_1.m_ptr;
+  bStack0000001c.m_ptr = param_1.m_ptr;
   local_3c.m_ptr = bdMemory::allocate(0x1c);
-  bVar13 = (local_3c.m_ptr == (bdByteBuffer *)0x0) << 1;
+  bVar12 = (local_3c.m_ptr == (bdByteBuffer *)0x0) << 1;
   if (local_3c.m_ptr == (bdByteBuffer *)0x0) {
-    uVar12 = 0;
+    uVar11 = 0;
   }
   else {
-    pbVar4 = bdByteBuffer::bdByteBuffer(local_3c.m_ptr,8,false);
-    uVar12 = (ulonglong)(int)pbVar4;
+    pbVar3 = bdByteBuffer::bdByteBuffer(local_3c.m_ptr,8,false);
+    uVar11 = (ulonglong)(int)pbVar3;
   }
-  pbVar4 = (bdByteBuffer *)uVar12;
-  local_3c.m_ptr = pbVar4;
-  if ((uVar12 & 0xffffffff) != 0) {
+  pbVar3 = (bdByteBuffer *)uVar11;
+  local_3c.m_ptr = pbVar3;
+  if ((uVar11 & 0xffffffff) != 0) {
     do {
-      puVar10 = (uint *)(uVar12 + 4);
+      puVar9 = (uint *)(uVar11 + 4);
       if (in_RESERVE != '\0') {
-        uVar7 = storeWordConditionalIndexed((ulonglong)*puVar10 + 1,0,uVar12 + 4);
-        *puVar10 = uVar7;
-        bVar13 = 2;
+        uVar6 = storeWordConditionalIndexed((ulonglong)*puVar9 + 1,0,uVar11 + 4);
+        *puVar9 = uVar6;
+        bVar12 = 2;
       }
-    } while (!(bool)(bVar13 >> 1 & 1));
+    } while (!(bool)(bVar12 >> 1 & 1));
   }
-  iVar11 = 0;
+  iVar10 = 0;
   local_4c = (bdByteBuffer *)0xc8;
-  puVar8 = local_45 + 1;
-  lVar14 = 4;
+  puVar7 = local_45 + 1;
+  lVar13 = 4;
   do {
-    iVar2 = iVar11 + -4;
-    iVar11 = iVar11 + 1;
-    puVar8 = puVar8 + -1;
-    *puVar8 = auStack_48[iVar2];
-    lVar14 = lVar14 + -1;
-  } while (lVar14 != 0);
-  bdByteBuffer::write(pbVar4,auStack_48,4);
+    iVar2 = iVar10 + -4;
+    iVar10 = iVar10 + 1;
+    puVar7 = puVar7 + -1;
+    *puVar7 = auStack_48[iVar2];
+    lVar13 = lVar13 + -1;
+  } while (lVar13 != 0);
+  bdByteBuffer::write(pbVar3,auStack_48,4);
   local_4c = (bdByteBuffer *)
              bdLobbyConnection::getReceiveBufferSize
                        ((bdLobbyConnection *)(param_1.m_ptr)->_padding_);
-  iVar11 = 0;
-  pbVar9 = &local_40;
-  lVar14 = 4;
+  iVar10 = 0;
+  pbVar8 = &local_40;
+  lVar13 = 4;
   do {
-    iVar2 = iVar11 + -4;
-    iVar11 = iVar11 + 1;
-    pbVar9 = (bdReference<bdBitBuffer> *)((int)&pbVar9[-1].m_ptr + 3);
-    *(undefined1 *)&pbVar9->m_ptr = auStack_48[iVar2];
-    lVar14 = lVar14 + -1;
-  } while (lVar14 != 0);
-  bdByteBuffer::write(pbVar4,local_45 + 1,4);
-  if ((uVar12 & 0xffffffff) != 0) {
+    iVar2 = iVar10 + -4;
+    iVar10 = iVar10 + 1;
+    pbVar8 = (bdReference<bdBitBuffer> *)((int)&pbVar8[-1].m_ptr + 3);
+    *(undefined1 *)&pbVar8->m_ptr = auStack_48[iVar2];
+    lVar13 = lVar13 + -1;
+  } while (lVar13 != 0);
+  bdByteBuffer::write(pbVar3,local_45 + 1,4);
+  if ((uVar11 & 0xffffffff) != 0) {
     do {
-      puVar10 = (uint *)(uVar12 + 4);
+      puVar9 = (uint *)(uVar11 + 4);
       if (in_RESERVE != '\0') {
-        uVar7 = storeWordConditionalIndexed((ulonglong)*puVar10 + 1,0,uVar12 + 4);
-        *puVar10 = uVar7;
-        bVar13 = 2;
+        uVar6 = storeWordConditionalIndexed((ulonglong)*puVar9 + 1,0,uVar11 + 4);
+        *puVar9 = uVar6;
+        bVar12 = 2;
       }
-    } while (!(bool)(bVar13 >> 1 & 1));
+    } while (!(bool)(bVar12 >> 1 & 1));
   }
-  local_4c = pbVar4;
+  local_4c = pbVar3;
   bdLobbyConnection::sendRaw
             ((bdLobbyConnection *)(param_1.m_ptr)->_padding_,(bdByteBuffer *)&local_4c,8);
   local_50[0] = '\a';
   local_40.m_ptr = bdMemory::allocate(0x24);
-  bVar13 = (local_40.m_ptr == (bdBitBuffer *)0x0) << 1;
+  bVar12 = (local_40.m_ptr == (bdBitBuffer *)0x0) << 1;
   if (local_40.m_ptr == (bdBitBuffer *)0x0) {
-    uVar12 = 0;
+    uVar11 = 0;
   }
   else {
-    pbVar5 = bdBitBuffer::bdBitBuffer(local_40.m_ptr,local_50,8,true);
-    uVar12 = (ulonglong)(int)pbVar5;
+    pbVar4 = bdBitBuffer::bdBitBuffer(local_40.m_ptr,local_50,8,true);
+    uVar11 = (ulonglong)(int)pbVar4;
   }
-  pbVar5 = (bdBitBuffer *)uVar12;
-  if ((uVar12 & 0xffffffff) != 0) {
+  pbVar4 = (bdBitBuffer *)uVar11;
+  if ((uVar11 & 0xffffffff) != 0) {
     do {
-      puVar10 = (uint *)(uVar12 + 4);
+      puVar9 = (uint *)(uVar11 + 4);
       if (in_RESERVE != '\0') {
-        uVar7 = storeWordConditionalIndexed((ulonglong)*puVar10 + 1,0,uVar12 + 4);
-        *puVar10 = uVar7;
-        bVar13 = 2;
+        uVar6 = storeWordConditionalIndexed((ulonglong)*puVar9 + 1,0,uVar11 + 4);
+        *puVar9 = uVar6;
+        bVar12 = 2;
       }
-    } while (!(bool)(bVar13 >> 1 & 1));
+    } while (!(bool)(bVar12 >> 1 & 1));
   }
-  local_40.m_ptr = pbVar5;
-  bdBitBuffer::setTypeCheck(pbVar5,false);
-  bdBitBuffer::writeBool(pbVar5,true);
-  bdBitBuffer::setTypeCheck(pbVar5,true);
-  bdBitBuffer::writeUInt32(pbVar5,*(uint *)(iVar3 + 0x80));
-  if (*(char *)(iVar3 + 0x120) == '\0') {
-    uVar7 = 0;
+  local_40.m_ptr = pbVar4;
+  bdBitBuffer::setTypeCheck(pbVar4,false);
+  bdBitBuffer::writeBool(pbVar4,true);
+  bdBitBuffer::setTypeCheck(pbVar4,true);
+  bdBitBuffer::writeUInt32(pbVar4,(this->m_authInfo).m_titleID);
+  if (this->m_encryptedConnection == false) {
+    uVar6 = 0;
   }
   else {
-    uVar7 = *(uint *)(iVar3 + 0x84);
+    uVar6 = (this->m_authInfo).m_IVSeed;
   }
-  bdBitBuffer::writeUInt32(pbVar5,uVar7);
-  bdBitBuffer::writeBits(pbVar5,(void *)(iVar3 + 0x88),0x400);
+  bdBitBuffer::writeUInt32(pbVar4,uVar6);
+  bdBitBuffer::writeBits(pbVar4,(this->m_authInfo).m_data,0x400);
   (**(code **)(*(int *)(param_1.m_ptr)->_padding_ + 8))
-            ((int *)(param_1.m_ptr)->_padding_,(pbVar5->m_data).m_data,(pbVar5->m_data).m_size,0);
+            ((int *)(param_1.m_ptr)->_padding_,(pbVar4->m_data).m_data,(pbVar4->m_data).m_size,0);
   local_38 = bdMemory::allocate(0x60);
   if (local_38 == (bdRemoteTaskManager *)0x0) {
-    pbVar6 = (bdRemoteTaskManager *)0x0;
+    pbVar5 = (bdRemoteTaskManager *)0x0;
   }
   else {
     local_4c = (bdByteBuffer *)(param_1.m_ptr)->_padding_;
     if (ZEXT48(local_4c) != 0) {
-      lVar14 = ZEXT48(local_4c) + 4;
+      lVar13 = ZEXT48(local_4c) + 4;
       bVar1 = false;
       do {
-        puVar10 = (uint *)lVar14;
+        puVar9 = (uint *)lVar13;
         if (in_RESERVE != '\0') {
-          uVar7 = storeWordConditionalIndexed((ulonglong)*puVar10 + 1,0,lVar14);
-          *puVar10 = uVar7;
+          uVar6 = storeWordConditionalIndexed((ulonglong)*puVar9 + 1,0,lVar13);
+          *puVar9 = uVar6;
           bVar1 = true;
         }
       } while (!bVar1);
     }
-    pbVar6 = bdRemoteTaskManager::bdRemoteTaskManager
-                       (local_38,(bdLobbyConnection *)&local_4c,*(bool *)(iVar3 + 0x120));
+    pbVar5 = bdRemoteTaskManager::bdRemoteTaskManager
+                       (local_38,(bdLobbyConnection *)&local_4c,this->m_encryptedConnection);
   }
-  *(bdRemoteTaskManager **)(iVar3 + 4) = pbVar6;
+  this->m_taskManager = pbVar5;
   bdLogMessage(BD_LOG_INFO,"info/","lobby service",
                "c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdLobby\\bdLobbyService.cpp",
                "bdLobbyService::onConnect",0x393,"Connected to MatchMaking Service.");
@@ -1353,7 +1345,6 @@ bdLobbyService::onConnect(bdLobbyService *this,bdReference<bdLobbyConnection> pa
   bdReference<bdByteBuffer>::~bdReference<bdByteBuffer>(&local_3c);
   bdReference<bdLobbyConnection>::~bdReference<bdLobbyConnection>
             ((bdReference<bdLobbyConnection> *)param_1.m_ptr);
-  __restgprlr_28();
   return;
 }
 
@@ -1377,6 +1368,9 @@ bdLobbyService::onDisconnect(bdLobbyService *this,bdReference<bdLobbyConnection>
 
 
 // 828FAB10  cleanup  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdlobbyservice.cpp:925)
+
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 
 void __thiscall bdLobbyService::cleanup(bdLobbyService *this)
 
@@ -1408,204 +1402,203 @@ void __thiscall bdLobbyService::cleanup(bdLobbyService *this)
   bdUserGroups *this_22;
   bdRichPresenceService *this_23;
   bdSubscription *this_24;
-  bdLobbyService *this_25;
   
-  this_25 = (bdLobbyService *)__savegprlr_29(this);
-  pbVar1 = this_25->m_taskManager;
+  pbVar1 = this->m_taskManager;
   if (pbVar1 != (bdRemoteTaskManager *)0x0) {
     (**(code **)pbVar1->_padding_)(pbVar1,1);
-    this_25->m_taskManager = (bdRemoteTaskManager *)0x0;
+    this->m_taskManager = (bdRemoteTaskManager *)0x0;
   }
-  this_00 = this_25->m_profiles;
+  this_00 = this->m_profiles;
   if (this_00 != (bdProfiles *)0x0) {
     bdProfiles::~bdProfiles(this_00);
     bdMemory::deallocate(this_00);
-    this_25->m_profiles = (bdProfiles *)0x0;
+    this->m_profiles = (bdProfiles *)0x0;
   }
-  this_01 = this_25->m_messaging;
+  this_01 = this->m_messaging;
   if (this_01 != (bdMessaging *)0x0) {
     bdMessaging::~bdMessaging(this_01);
     bdMemory::deallocate(this_01);
-    this_25->m_messaging = (bdMessaging *)0x0;
+    this->m_messaging = (bdMessaging *)0x0;
   }
-  this_02 = this_25->m_matchMaking;
+  this_02 = this->m_matchMaking;
   if (this_02 != (bdMatchMaking *)0x0) {
     bdMatchMaking::~bdMatchMaking(this_02);
     bdMemory::deallocate(this_02);
-    this_25->m_matchMaking = (bdMatchMaking *)0x0;
+    this->m_matchMaking = (bdMatchMaking *)0x0;
   }
-  this_03 = this_25->m_statsManager;
+  this_03 = this->m_statsManager;
   if (this_03 != (bdStats *)0x0) {
     bdStats::~bdStats(this_03);
     bdMemory::deallocate(this_03);
-    this_25->m_statsManager = (bdStats *)0x0;
+    this->m_statsManager = (bdStats *)0x0;
   }
-  this_04 = this_25->m_friendsManager;
+  this_04 = this->m_friendsManager;
   if (this_04 != (bdFriends *)0x0) {
     bdFriends::~bdFriends(this_04);
     bdMemory::deallocate(this_04);
-    this_25->m_friendsManager = (bdFriends *)0x0;
+    this->m_friendsManager = (bdFriends *)0x0;
   }
-  this_05 = this_25->m_teamsManager;
+  this_05 = this->m_teamsManager;
   if (this_05 != (bdTeams *)0x0) {
     bdTeams::~bdTeams(this_05);
     bdMemory::deallocate(this_05);
-    this_25->m_teamsManager = (bdTeams *)0x0;
+    this->m_teamsManager = (bdTeams *)0x0;
   }
-  this_06 = this_25->m_storageManager;
+  this_06 = this->m_storageManager;
   if (this_06 != (bdStorage *)0x0) {
     bdStorage::~bdStorage(this_06);
     bdMemory::deallocate(this_06);
-    this_25->m_storageManager = (bdStorage *)0x0;
+    this->m_storageManager = (bdStorage *)0x0;
   }
-  this_07 = this_25->m_contentUnlockManager;
+  this_07 = this->m_contentUnlockManager;
   if (this_07 != (bdContentUnlock *)0x0) {
     bdContentUnlock::~bdContentUnlock(this_07);
     bdMemory::deallocate(this_07);
-    this_25->m_contentUnlockManager = (bdContentUnlock *)0x0;
+    this->m_contentUnlockManager = (bdContentUnlock *)0x0;
   }
-  this_08 = this_25->m_titleUtilitiesManager;
+  this_08 = this->m_titleUtilitiesManager;
   if (this_08 != (bdTitleUtilities *)0x0) {
     bdTitleUtilities::~bdTitleUtilities(this_08);
     bdMemory::deallocate(this_08);
-    this_25->m_titleUtilitiesManager = (bdTitleUtilities *)0x0;
+    this->m_titleUtilitiesManager = (bdTitleUtilities *)0x0;
   }
-  this_09 = this_25->m_eventLogManager;
+  this_09 = this->m_eventLogManager;
   if (this_09 != (bdEventLog *)0x0) {
     bdEventLog::~bdEventLog(this_09);
     bdMemory::deallocate(this_09);
-    this_25->m_eventLogManager = (bdEventLog *)0x0;
+    this->m_eventLogManager = (bdEventLog *)0x0;
   }
-  this_10 = this_25->m_keyArchive;
+  this_10 = this->m_keyArchive;
   if (this_10 != (bdKeyArchive *)0x0) {
     bdKeyArchive::~bdKeyArchive(this_10);
     bdMemory::deallocate(this_10);
-    this_25->m_keyArchive = (bdKeyArchive *)0x0;
+    this->m_keyArchive = (bdKeyArchive *)0x0;
   }
-  this_11 = this_25->m_counter;
+  this_11 = this->m_counter;
   if (this_11 != (bdCounter *)0x0) {
     bdCounter::~bdCounter(this_11);
     bdMemory::deallocate(this_11);
-    this_25->m_counter = (bdCounter *)0x0;
+    this->m_counter = (bdCounter *)0x0;
   }
-  this_12 = this_25->m_group;
+  this_12 = this->m_group;
   if (this_12 != (bdGroup *)0x0) {
     bdGroup::~bdGroup(this_12);
     bdMemory::deallocate(this_12);
-    this_25->m_group = (bdGroup *)0x0;
+    this->m_group = (bdGroup *)0x0;
   }
-  deleteContentStreaming(this_25);
-  pbVar2 = this_25->m_pooledStorageManager;
+  deleteContentStreaming(this);
+  pbVar2 = this->m_pooledStorageManager;
   if (pbVar2 != (bdPooledStorage *)0x0) {
     (*(code *)**(undefined4 **)pbVar2)(pbVar2,1);
-    this_25->m_pooledStorageManager = (bdPooledStorage *)0x0;
+    this->m_pooledStorageManager = (bdPooledStorage *)0x0;
   }
-  this_13 = this_25->m_lspEnumState;
+  this_13 = this->m_lspEnumState;
   if (this_13 != (bdLSPEnumerator *)0x0) {
     bdLSPEnumerator::~bdLSPEnumerator(this_13);
     bdMemory::deallocate(this_13);
-    this_25->m_lspEnumState = (bdLSPEnumerator *)0x0;
+    this->m_lspEnumState = (bdLSPEnumerator *)0x0;
   }
-  this_14 = this_25->m_tags;
+  this_14 = this->m_tags;
   if (this_14 != (bdTags *)0x0) {
     bdTags::~bdTags(this_14);
     bdMemory::deallocate(this_14);
-    this_25->m_tags = (bdTags *)0x0;
+    this->m_tags = (bdTags *)0x0;
   }
-  this_15 = this_25->m_voteRankManager;
+  this_15 = this->m_voteRankManager;
   if (this_15 != (bdVoteRank *)0x0) {
     bdVoteRank::~bdVoteRank(this_15);
     bdMemory::deallocate(this_15);
-    this_25->m_voteRankManager = (bdVoteRank *)0x0;
+    this->m_voteRankManager = (bdVoteRank *)0x0;
   }
-  this_16 = this_25->m_twitter;
+  this_16 = this->m_twitter;
   if (this_16 != (bdTwitter *)0x0) {
     bdTwitter::~bdTwitter(this_16);
     bdMemory::deallocate(this_16);
-    this_25->m_twitter = (bdTwitter *)0x0;
+    this->m_twitter = (bdTwitter *)0x0;
   }
-  this_17 = this_25->m_facebook;
+  this_17 = this->m_facebook;
   if (this_17 != (bdFacebook *)0x0) {
     bdFacebook::~bdFacebook(this_17);
     bdMemory::deallocate(this_17);
-    this_25->m_facebook = (bdFacebook *)0x0;
+    this->m_facebook = (bdFacebook *)0x0;
   }
-  this_18 = this_25->m_linkCode;
+  this_18 = this->m_linkCode;
   if (this_18 != (bdLinkCode *)0x0) {
     bdLinkCode::~bdLinkCode(this_18);
     bdMemory::deallocate(this_18);
-    this_25->m_linkCode = (bdLinkCode *)0x0;
+    this->m_linkCode = (bdLinkCode *)0x0;
   }
-  this_19 = this_25->m_antiCheat;
+  this_19 = this->m_antiCheat;
   if (this_19 != (bdAntiCheat *)0x0) {
     bdAntiCheat::~bdAntiCheat(this_19);
     bdMemory::deallocate(this_19);
-    this_25->m_antiCheat = (bdAntiCheat *)0x0;
+    this->m_antiCheat = (bdAntiCheat *)0x0;
   }
-  this_20 = this_25->m_DML;
+  this_20 = this->m_DML;
   if (this_20 != (bdDML *)0x0) {
     bdDML::~bdDML(this_20);
     bdMemory::deallocate(this_20);
-    this_25->m_DML = (bdDML *)0x0;
+    this->m_DML = (bdDML *)0x0;
   }
-  this_21 = this_25->m_crux;
+  this_21 = this->m_crux;
   if (this_21 != (bdCRUX *)0x0) {
     bdCRUX::~bdCRUX(this_21);
     bdMemory::deallocate(this_21);
-    this_25->m_crux = (bdCRUX *)0x0;
+    this->m_crux = (bdCRUX *)0x0;
   }
-  this_22 = this_25->m_userGroups;
+  this_22 = this->m_userGroups;
   if (this_22 != (bdUserGroups *)0x0) {
     bdUserGroups::~bdUserGroups(this_22);
     bdMemory::deallocate(this_22);
-    this_25->m_userGroups = (bdUserGroups *)0x0;
+    this->m_userGroups = (bdUserGroups *)0x0;
   }
-  this_23 = this_25->m_richPresence;
+  this_23 = this->m_richPresence;
   if (this_23 != (bdRichPresenceService *)0x0) {
     bdRichPresenceService::~bdRichPresenceService(this_23);
     bdMemory::deallocate(this_23);
-    this_25->m_richPresence = (bdRichPresenceService *)0x0;
+    this->m_richPresence = (bdRichPresenceService *)0x0;
   }
-  this_24 = this_25->m_subscription;
+  this_24 = this->m_subscription;
   if (this_24 != (bdSubscription *)0x0) {
     bdSubscription::~bdSubscription(this_24);
     bdMemory::deallocate(this_24);
-    this_25->m_subscription = (bdSubscription *)0x0;
+    this->m_subscription = (bdSubscription *)0x0;
   }
-  bdReference<bdLobbyConnection>::operator=(&this_25->m_lobbyConnection,(bdLobbyConnection *)0x0);
-  __restgprlr_29();
+  bdReference<bdLobbyConnection>::operator=(&this->m_lobbyConnection,(bdLobbyConnection *)0x0);
   return;
 }
 
 
 // 828FAEB0  handlePushMessage  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdlobbyservice.cpp:1090)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 void __thiscall
 bdLobbyService::handlePushMessage(bdLobbyService *this,bdReference<bdByteBuffer> param_1)
 
 {
   uint uVar1;
-  int *piVar2;
+  bdLobbyEventHandler *pbVar2;
   undefined4 *puVar3;
-  int iVar4;
+  bool bVar6;
+  bdSessionID *pbVar4;
+  bdAntiCheatChallenges *pbVar5;
   bool bVar7;
-  bdSessionID *pbVar5;
-  bdAntiCheatChallenges *pbVar6;
-  bool bVar8;
-  ulong64 uVar9;
-  char *pcVar10;
-  bdSessionInvite *pbVar11;
-  ulong64 uVar12;
-  undefined8 *puVar13;
-  longlong lVar14;
-  uint *puVar15;
-  undefined4 *puVar16;
-  ulonglong uVar17;
+  ulong64 uVar8;
+  char *pcVar9;
+  bdSessionInvite *pbVar10;
+  ulong64 uVar11;
+  undefined8 *puVar12;
+  longlong lVar13;
+  uint *puVar14;
+  undefined4 *puVar15;
+  ulonglong uVar16;
   char in_RESERVE;
   byte in_cr0;
-  byte bVar18;
-  code *pcVar19;
-  bdByteBuffer *pbStack0000001c;
+  byte bVar17;
+  code *pcVar18;
+  bdReference<bdByteBuffer> bStack0000001c;
   ulong64 local_23f0;
   ulong64 local_23e8;
   ulong64 local_23e0;
@@ -1641,84 +1634,82 @@ bdLobbyService::handlePushMessage(bdLobbyService *this,bdReference<bdByteBuffer>
   uchar auStack_1440 [1024];
   uchar auStack_1040 [4160];
   
-  iVar4 = __savegprlr_26(this);
   local_23d8 = 0;
-  pbStack0000001c = param_1.m_ptr;
-  bVar7 = bdByteBuffer::readUInt32((bdByteBuffer *)(param_1.m_ptr)->_padding_,&local_23d8);
+  bStack0000001c.m_ptr = param_1.m_ptr;
+  bVar6 = bdByteBuffer::readUInt32((bdByteBuffer *)(param_1.m_ptr)->_padding_,&local_23d8);
   uVar1 = local_23d8;
   if (local_23d8 == 0x14) {
     uVar1 = (param_1.m_ptr)->_padding_;
     local_23e8 = CONCAT44(uVar1,local_23e8._4_4_);
     if ((ulonglong)uVar1 != 0) {
-      lVar14 = (ulonglong)uVar1 + 4;
+      lVar13 = (ulonglong)uVar1 + 4;
       do {
-        puVar15 = (uint *)lVar14;
+        puVar14 = (uint *)lVar13;
         if (in_RESERVE != '\0') {
-          uVar1 = storeWordConditionalIndexed((ulonglong)*puVar15 + 1,0,lVar14);
-          *puVar15 = uVar1;
+          uVar1 = storeWordConditionalIndexed((ulonglong)*puVar14 + 1,0,lVar13);
+          *puVar14 = uVar1;
           in_cr0 = 2;
         }
       } while (!(bool)(in_cr0 >> 1 & 1));
     }
-    bdRemoteTaskManager::handleAsyncResult
-              (*(bdRemoteTaskManager **)(iVar4 + 4),(bdByteBuffer *)&local_23e8);
+    bdRemoteTaskManager::handleAsyncResult(this->m_taskManager,(bdByteBuffer *)&local_23e8);
     goto switchD_828faf80_caseD_14;
   }
-  if (*(int *)(iVar4 + 0x78) == 0) goto LAB_828fbaa8;
+  if (this->m_eventHandler == (bdLobbyEventHandler *)0x0) goto LAB_828fbaa8;
   switch(local_23d8) {
   case 1:
-    pcVar19 = *(code **)(**(int **)(iVar4 + 0x78) + 0x2c);
+    pcVar18 = *(code **)((int)*this->m_eventHandler + 0x2c);
     goto LAB_828faf94;
   case 2:
-    pcVar19 = *(code **)(**(int **)(iVar4 + 0x78) + 0x24);
+    pcVar18 = *(code **)((int)*this->m_eventHandler + 0x24);
     goto LAB_828faf94;
   case 3:
-    pcVar19 = *(code **)(**(int **)(iVar4 + 0x78) + 0x28);
+    pcVar18 = *(code **)((int)*this->m_eventHandler + 0x28);
     goto LAB_828faf94;
   case 4:
   case 5:
     local_23e8 = 0;
-    if (bVar7) {
-      bVar8 = bdByteBuffer::readUInt64((bdByteBuffer *)(param_1.m_ptr)->_padding_,&local_23e8);
-      bVar7 = true;
-      if (!bVar8) goto LAB_828fafe4;
+    if (bVar6) {
+      bVar7 = bdByteBuffer::readUInt64((bdByteBuffer *)(param_1.m_ptr)->_padding_,&local_23e8);
+      bVar6 = true;
+      if (!bVar7) goto LAB_828fafe4;
     }
     else {
 LAB_828fafe4:
-      bVar7 = false;
+      bVar6 = false;
     }
-    lVar14 = 0x10;
+    lVar13 = 0x10;
     puVar3 = &uStack_2314;
     do {
-      puVar16 = puVar3;
-      puVar3 = puVar16 + 1;
+      puVar15 = puVar3;
+      puVar3 = puVar15 + 1;
       *puVar3 = 0;
-      lVar14 = lVar14 + -1;
-    } while (lVar14 != 0);
-    *(undefined1 *)(puVar16 + 2) = 0;
-    if (bVar7) {
+      lVar13 = lVar13 + -1;
+    } while (lVar13 != 0);
+    *(undefined1 *)(puVar15 + 2) = 0;
+    if (bVar6) {
       bdByteBuffer::readString((bdByteBuffer *)(param_1.m_ptr)->_padding_,local_2310,0x40);
     }
-    (**(code **)(**(int **)(iVar4 + 0x78) + 4))
-              (*(int **)(iVar4 + 0x78),local_23e8,local_2310,uVar1 == 4);
+    (**(code **)((int)*this->m_eventHandler + 4))
+              (this->m_eventHandler,local_23e8,local_2310,uVar1 == 4);
     break;
   case 6:
     bdSessionInvite::bdSessionInvite(&bStack_20a0);
     local_23d4 = (param_1.m_ptr)->_padding_;
     if ((ulonglong)local_23d4 != 0) {
-      lVar14 = (ulonglong)local_23d4 + 4;
+      lVar13 = (ulonglong)local_23d4 + 4;
       do {
-        puVar15 = (uint *)lVar14;
+        puVar14 = (uint *)lVar13;
         if (in_RESERVE != '\0') {
-          uVar1 = storeWordConditionalIndexed((ulonglong)*puVar15 + 1,0,lVar14);
-          *puVar15 = uVar1;
+          uVar1 = storeWordConditionalIndexed((ulonglong)*puVar14 + 1,0,lVar13);
+          *puVar14 = uVar1;
           in_cr0 = 2;
         }
       } while (!(bool)(in_cr0 >> 1 & 1));
     }
-    bVar7 = bdSessionInvite::deserialize(&bStack_20a0,(bdByteBuffer *)&local_23d4);
-    if (bVar7) {
-      (**(code **)(**(int **)(iVar4 + 0x78) + 0x1c))(*(int **)(iVar4 + 0x78),&bStack_20a0);
+    bVar6 = bdSessionInvite::deserialize(&bStack_20a0,(bdByteBuffer *)&local_23d4);
+    if (bVar6) {
+      (**(code **)((int)*this->m_eventHandler + 0x1c))(this->m_eventHandler,&bStack_20a0);
     }
     else {
       bdLogMessage(BD_LOG_WARNING,"warn/","lobby service",
@@ -1730,370 +1721,370 @@ LAB_828fafe4:
   case 7:
   case 8:
     local_23e0 = 0;
-    if (bVar7) {
-      bVar8 = bdByteBuffer::readUInt64((bdByteBuffer *)(param_1.m_ptr)->_padding_,&local_23e0);
-      bVar7 = true;
-      if (!bVar8) goto LAB_828fb228;
+    if (bVar6) {
+      bVar7 = bdByteBuffer::readUInt64((bdByteBuffer *)(param_1.m_ptr)->_padding_,&local_23e0);
+      bVar6 = true;
+      if (!bVar7) goto LAB_828fb228;
     }
     else {
 LAB_828fb228:
-      bVar7 = false;
+      bVar6 = false;
     }
-    if (bVar7) {
-      bVar8 = bdByteBuffer::readString((bdByteBuffer *)(param_1.m_ptr)->_padding_,acStack_23b0,0x40)
+    if (bVar6) {
+      bVar7 = bdByteBuffer::readString((bdByteBuffer *)(param_1.m_ptr)->_padding_,acStack_23b0,0x40)
       ;
-      bVar7 = true;
-      if (!bVar8) goto LAB_828fb250;
+      bVar6 = true;
+      if (!bVar7) goto LAB_828fb250;
     }
     else {
 LAB_828fb250:
-      bVar7 = false;
+      bVar6 = false;
     }
     local_23f0 = 0;
-    if (bVar7) {
-      bVar8 = bdByteBuffer::readUInt64((bdByteBuffer *)(param_1.m_ptr)->_padding_,&local_23f0);
-      bVar7 = true;
-      if (!bVar8) goto LAB_828fb278;
+    if (bVar6) {
+      bVar7 = bdByteBuffer::readUInt64((bdByteBuffer *)(param_1.m_ptr)->_padding_,&local_23f0);
+      bVar6 = true;
+      if (!bVar7) goto LAB_828fb278;
     }
     else {
 LAB_828fb278:
-      bVar7 = false;
+      bVar6 = false;
     }
     local_23e8 = CONCAT44(0x400,local_23e8._4_4_);
     memset();
-    if (bVar7) {
+    if (bVar6) {
       bdByteBuffer::readBlob
                 ((bdByteBuffer *)(param_1.m_ptr)->_padding_,auStack_1440,(uint *)&local_23e8);
     }
-    (**(code **)(**(int **)(iVar4 + 0x78) + 0x14))
-              (*(int **)(iVar4 + 0x78),local_23f0,local_23e0,acStack_23b0,auStack_1440,
-               local_23e8._0_4_);
+    (**(code **)((int)*this->m_eventHandler + 0x14))
+              (this->m_eventHandler,local_23f0,local_23e0,acStack_23b0,auStack_1440,local_23e8._0_4_
+              );
     break;
   case 9:
   case 10:
     local_23f0 = 0;
-    if (bVar7) {
-      bVar8 = bdByteBuffer::readUInt64((bdByteBuffer *)(param_1.m_ptr)->_padding_,&local_23f0);
-      bVar7 = true;
-      if (!bVar8) goto LAB_828fb300;
+    if (bVar6) {
+      bVar7 = bdByteBuffer::readUInt64((bdByteBuffer *)(param_1.m_ptr)->_padding_,&local_23f0);
+      bVar6 = true;
+      if (!bVar7) goto LAB_828fb300;
     }
     else {
 LAB_828fb300:
-      bVar7 = false;
+      bVar6 = false;
     }
-    if (bVar7) {
-      bVar8 = bdByteBuffer::readString((bdByteBuffer *)(param_1.m_ptr)->_padding_,acStack_23b0,0x40)
+    if (bVar6) {
+      bVar7 = bdByteBuffer::readString((bdByteBuffer *)(param_1.m_ptr)->_padding_,acStack_23b0,0x40)
       ;
-      bVar7 = true;
-      if (!bVar8) goto LAB_828fb328;
+      bVar6 = true;
+      if (!bVar7) goto LAB_828fb328;
     }
     else {
 LAB_828fb328:
-      bVar7 = false;
+      bVar6 = false;
     }
     local_23e0 = 0;
-    if (bVar7) {
+    if (bVar6) {
       bdByteBuffer::readUInt64((bdByteBuffer *)(param_1.m_ptr)->_padding_,&local_23e0);
     }
-    (**(code **)(**(int **)(iVar4 + 0x78) + 0x10))
-              (*(int **)(iVar4 + 0x78),local_23e0,local_23f0,acStack_23b0,uVar1 == 9);
+    (**(code **)((int)*this->m_eventHandler + 0x10))
+              (this->m_eventHandler,local_23e0,local_23f0,acStack_23b0,uVar1 == 9);
     break;
   case 0xb:
   case 0xc:
     local_23e0 = 0;
-    if (bVar7) {
-      bVar8 = bdByteBuffer::readUInt64((bdByteBuffer *)(param_1.m_ptr)->_padding_,&local_23e0);
-      bVar7 = true;
-      if (!bVar8) goto LAB_828fb074;
+    if (bVar6) {
+      bVar7 = bdByteBuffer::readUInt64((bdByteBuffer *)(param_1.m_ptr)->_padding_,&local_23e0);
+      bVar6 = true;
+      if (!bVar7) goto LAB_828fb074;
     }
     else {
 LAB_828fb074:
-      bVar7 = false;
+      bVar6 = false;
     }
-    lVar14 = 0x10;
+    lVar13 = 0x10;
     puVar3 = &uStack_2364;
     do {
-      puVar16 = puVar3;
-      puVar3 = puVar16 + 1;
+      puVar15 = puVar3;
+      puVar3 = puVar15 + 1;
       *puVar3 = 0;
-      lVar14 = lVar14 + -1;
-    } while (lVar14 != 0);
-    *(undefined1 *)(puVar16 + 2) = 0;
-    if (bVar7) {
-      bVar8 = bdByteBuffer::readString((bdByteBuffer *)(param_1.m_ptr)->_padding_,local_2360,0x40);
-      bVar7 = true;
-      if (!bVar8) goto LAB_828fb0b8;
+      lVar13 = lVar13 + -1;
+    } while (lVar13 != 0);
+    *(undefined1 *)(puVar15 + 2) = 0;
+    if (bVar6) {
+      bVar7 = bdByteBuffer::readString((bdByteBuffer *)(param_1.m_ptr)->_padding_,local_2360,0x40);
+      bVar6 = true;
+      if (!bVar7) goto LAB_828fb0b8;
     }
     else {
 LAB_828fb0b8:
-      bVar7 = false;
+      bVar6 = false;
     }
     local_23e8 = 0;
-    if (bVar7) {
-      bVar8 = bdByteBuffer::readUInt64((bdByteBuffer *)(param_1.m_ptr)->_padding_,&local_23e8);
-      bVar7 = true;
-      if (!bVar8) goto LAB_828fb0e0;
+    if (bVar6) {
+      bVar7 = bdByteBuffer::readUInt64((bdByteBuffer *)(param_1.m_ptr)->_padding_,&local_23e8);
+      bVar6 = true;
+      if (!bVar7) goto LAB_828fb0e0;
     }
     else {
 LAB_828fb0e0:
-      bVar7 = false;
+      bVar6 = false;
     }
-    lVar14 = 0x10;
+    lVar13 = 0x10;
     puVar3 = &uStack_22c4;
     do {
-      puVar16 = puVar3;
-      puVar3 = puVar16 + 1;
+      puVar15 = puVar3;
+      puVar3 = puVar15 + 1;
       *puVar3 = 0;
-      lVar14 = lVar14 + -1;
-    } while (lVar14 != 0);
-    *(undefined1 *)(puVar16 + 2) = 0;
-    if (bVar7) {
+      lVar13 = lVar13 + -1;
+    } while (lVar13 != 0);
+    *(undefined1 *)(puVar15 + 2) = 0;
+    if (bVar6) {
       bdByteBuffer::readString((bdByteBuffer *)(param_1.m_ptr)->_padding_,local_22c0,0x40);
     }
-    (**(code **)(**(int **)(iVar4 + 0x78) + 8))
-              (*(int **)(iVar4 + 0x78),local_23e0,local_2360,local_23e8,local_22c0,uVar1 == 0xb);
+    (**(code **)((int)*this->m_eventHandler + 8))
+              (this->m_eventHandler,local_23e0,local_2360,local_23e8,local_22c0,uVar1 == 0xb);
     break;
   case 0xd:
     local_23f0 = 0;
-    if (bVar7) {
-      bVar8 = bdByteBuffer::readUInt64((bdByteBuffer *)(param_1.m_ptr)->_padding_,&local_23f0);
-      bVar7 = true;
-      if (!bVar8) goto LAB_828fb57c;
+    if (bVar6) {
+      bVar7 = bdByteBuffer::readUInt64((bdByteBuffer *)(param_1.m_ptr)->_padding_,&local_23f0);
+      bVar6 = true;
+      if (!bVar7) goto LAB_828fb57c;
     }
     else {
 LAB_828fb57c:
-      bVar7 = false;
+      bVar6 = false;
     }
-    puVar13 = &uStack_2238;
-    lVar14 = 8;
+    puVar12 = &uStack_2238;
+    lVar13 = 8;
     do {
-      puVar13 = puVar13 + 1;
-      *puVar13 = 0;
-      lVar14 = lVar14 + -1;
-    } while (lVar14 != 0);
-    if (bVar7) {
-      bVar8 = bdByteBuffer::readString((bdByteBuffer *)(param_1.m_ptr)->_padding_,local_2230,0x40);
-      bVar7 = true;
-      if (!bVar8) goto LAB_828fb5bc;
+      puVar12 = puVar12 + 1;
+      *puVar12 = 0;
+      lVar13 = lVar13 + -1;
+    } while (lVar13 != 0);
+    if (bVar6) {
+      bVar7 = bdByteBuffer::readString((bdByteBuffer *)(param_1.m_ptr)->_padding_,local_2230,0x40);
+      bVar6 = true;
+      if (!bVar7) goto LAB_828fb5bc;
     }
     else {
 LAB_828fb5bc:
-      bVar7 = false;
+      bVar6 = false;
     }
     local_23e8 = CONCAT44(0x400,local_23e8._4_4_);
-    if (bVar7) {
+    if (bVar6) {
       bdByteBuffer::readBlob
                 ((bdByteBuffer *)(param_1.m_ptr)->_padding_,(uchar *)&bStack_20a0,
                  (uint *)&local_23e8);
     }
-    uVar12 = 0;
-    pcVar10 = local_2230;
-    uVar9 = local_23f0;
+    uVar11 = 0;
+    pcVar9 = local_2230;
+    uVar8 = local_23f0;
     goto LAB_828fb5ec;
   case 0xe:
     local_23f0 = 0;
-    if (bVar7) {
-      bVar8 = bdByteBuffer::readUInt64((bdByteBuffer *)(param_1.m_ptr)->_padding_,&local_23f0);
-      bVar7 = true;
-      if (!bVar8) goto LAB_828fb624;
+    if (bVar6) {
+      bVar7 = bdByteBuffer::readUInt64((bdByteBuffer *)(param_1.m_ptr)->_padding_,&local_23f0);
+      bVar6 = true;
+      if (!bVar7) goto LAB_828fb624;
     }
     else {
 LAB_828fb624:
-      bVar7 = false;
+      bVar6 = false;
     }
     local_23e0 = 0;
-    if (bVar7) {
-      bVar8 = bdByteBuffer::readUInt64((bdByteBuffer *)(param_1.m_ptr)->_padding_,&local_23e0);
-      bVar7 = true;
-      if (!bVar8) goto LAB_828fb64c;
+    if (bVar6) {
+      bVar7 = bdByteBuffer::readUInt64((bdByteBuffer *)(param_1.m_ptr)->_padding_,&local_23e0);
+      bVar6 = true;
+      if (!bVar7) goto LAB_828fb64c;
     }
     else {
 LAB_828fb64c:
-      bVar7 = false;
+      bVar6 = false;
     }
-    puVar13 = &uStack_2278;
-    lVar14 = 8;
+    puVar12 = &uStack_2278;
+    lVar13 = 8;
     do {
-      puVar13 = puVar13 + 1;
-      *puVar13 = 0;
-      lVar14 = lVar14 + -1;
-    } while (lVar14 != 0);
-    if (bVar7) {
-      bVar8 = bdByteBuffer::readString((bdByteBuffer *)(param_1.m_ptr)->_padding_,local_2270,0x40);
-      bVar7 = true;
-      if (!bVar8) goto LAB_828fb68c;
+      puVar12 = puVar12 + 1;
+      *puVar12 = 0;
+      lVar13 = lVar13 + -1;
+    } while (lVar13 != 0);
+    if (bVar6) {
+      bVar7 = bdByteBuffer::readString((bdByteBuffer *)(param_1.m_ptr)->_padding_,local_2270,0x40);
+      bVar6 = true;
+      if (!bVar7) goto LAB_828fb68c;
     }
     else {
 LAB_828fb68c:
-      bVar7 = false;
+      bVar6 = false;
     }
     local_23e8 = CONCAT44(0x400,local_23e8._4_4_);
-    if (bVar7) {
+    if (bVar6) {
       bdByteBuffer::readBlob
                 ((bdByteBuffer *)(param_1.m_ptr)->_padding_,(uchar *)&bStack_20a0,
                  (uint *)&local_23e8);
     }
-    pcVar10 = local_2270;
-    uVar9 = local_23e0;
-    uVar12 = local_23f0;
+    pcVar9 = local_2270;
+    uVar8 = local_23e0;
+    uVar11 = local_23f0;
 LAB_828fb5ec:
-    piVar2 = *(int **)(iVar4 + 0x78);
-    pbVar11 = &bStack_20a0;
-    pcVar19 = *(code **)(*piVar2 + 0xc);
+    pbVar2 = this->m_eventHandler;
+    pbVar10 = &bStack_20a0;
+    pcVar18 = *(code **)((int)*pbVar2 + 0xc);
 LAB_828fb42c:
-    (*pcVar19)(piVar2,uVar9,pcVar10,pbVar11,local_23e8._0_4_,uVar12);
+    (*pcVar18)(pbVar2,uVar8,pcVar9,pbVar10,local_23e8._0_4_,uVar11);
     break;
   case 0xf:
     local_23f0 = 0;
-    if (bVar7) {
-      bVar8 = bdByteBuffer::readUInt64((bdByteBuffer *)(param_1.m_ptr)->_padding_,&local_23f0);
-      bVar7 = true;
-      if (!bVar8) goto LAB_828fb398;
+    if (bVar6) {
+      bVar7 = bdByteBuffer::readUInt64((bdByteBuffer *)(param_1.m_ptr)->_padding_,&local_23f0);
+      bVar6 = true;
+      if (!bVar7) goto LAB_828fb398;
     }
     else {
 LAB_828fb398:
-      bVar7 = false;
+      bVar6 = false;
     }
-    puVar13 = &uStack_21b8;
-    lVar14 = 8;
+    puVar12 = &uStack_21b8;
+    lVar13 = 8;
     do {
-      puVar13 = puVar13 + 1;
-      *puVar13 = 0;
-      lVar14 = lVar14 + -1;
-    } while (lVar14 != 0);
-    if (bVar7) {
-      bVar8 = bdByteBuffer::readString((bdByteBuffer *)(param_1.m_ptr)->_padding_,local_21b0,0x40);
-      bVar7 = true;
-      if (!bVar8) goto LAB_828fb3d8;
+      puVar12 = puVar12 + 1;
+      *puVar12 = 0;
+      lVar13 = lVar13 + -1;
+    } while (lVar13 != 0);
+    if (bVar6) {
+      bVar7 = bdByteBuffer::readString((bdByteBuffer *)(param_1.m_ptr)->_padding_,local_21b0,0x40);
+      bVar6 = true;
+      if (!bVar7) goto LAB_828fb3d8;
     }
     else {
 LAB_828fb3d8:
-      bVar7 = false;
+      bVar6 = false;
     }
     local_23e8 = CONCAT44(0x400,local_23e8._4_4_);
     memset();
-    if (bVar7) {
+    if (bVar6) {
       bdByteBuffer::readBlob
                 ((bdByteBuffer *)(param_1.m_ptr)->_padding_,auStack_1c40 + 0x400,(uint *)&local_23e8
                 );
     }
-    uVar12 = 0;
-    pbVar11 = (bdSessionInvite *)(auStack_1c40 + 0x400);
-    pcVar10 = local_21b0;
-    uVar9 = local_23f0;
+    uVar11 = 0;
+    pbVar10 = (bdSessionInvite *)(auStack_1c40 + 0x400);
+    pcVar9 = local_21b0;
+    uVar8 = local_23f0;
     goto LAB_828fb420;
   case 0x10:
     local_23e0 = 0;
-    if (bVar7) {
-      bVar8 = bdByteBuffer::readUInt64((bdByteBuffer *)(param_1.m_ptr)->_padding_,&local_23e0);
-      bVar7 = true;
-      if (!bVar8) goto LAB_828fb460;
+    if (bVar6) {
+      bVar7 = bdByteBuffer::readUInt64((bdByteBuffer *)(param_1.m_ptr)->_padding_,&local_23e0);
+      bVar6 = true;
+      if (!bVar7) goto LAB_828fb460;
     }
     else {
 LAB_828fb460:
-      bVar7 = false;
+      bVar6 = false;
     }
-    puVar13 = &uStack_21f8;
-    lVar14 = 8;
+    puVar12 = &uStack_21f8;
+    lVar13 = 8;
     do {
-      puVar13 = puVar13 + 1;
-      *puVar13 = 0;
-      lVar14 = lVar14 + -1;
-    } while (lVar14 != 0);
-    if (bVar7) {
-      bVar8 = bdByteBuffer::readString((bdByteBuffer *)(param_1.m_ptr)->_padding_,local_21f0,0x40);
-      bVar7 = true;
-      if (!bVar8) goto LAB_828fb4a0;
+      puVar12 = puVar12 + 1;
+      *puVar12 = 0;
+      lVar13 = lVar13 + -1;
+    } while (lVar13 != 0);
+    if (bVar6) {
+      bVar7 = bdByteBuffer::readString((bdByteBuffer *)(param_1.m_ptr)->_padding_,local_21f0,0x40);
+      bVar6 = true;
+      if (!bVar7) goto LAB_828fb4a0;
     }
     else {
 LAB_828fb4a0:
-      bVar7 = false;
+      bVar6 = false;
     }
     local_23f0 = 0;
-    if (bVar7) {
-      bVar8 = bdByteBuffer::readUInt64((bdByteBuffer *)(param_1.m_ptr)->_padding_,&local_23f0);
-      bVar7 = true;
-      if (!bVar8) goto LAB_828fb4c8;
+    if (bVar6) {
+      bVar7 = bdByteBuffer::readUInt64((bdByteBuffer *)(param_1.m_ptr)->_padding_,&local_23f0);
+      bVar6 = true;
+      if (!bVar7) goto LAB_828fb4c8;
     }
     else {
 LAB_828fb4c8:
-      bVar7 = false;
+      bVar6 = false;
     }
-    lVar14 = 0x10;
+    lVar13 = 0x10;
     puVar3 = &uStack_20f4;
     do {
-      puVar16 = puVar3;
-      puVar3 = puVar16 + 1;
+      puVar15 = puVar3;
+      puVar3 = puVar15 + 1;
       *puVar3 = 0;
-      lVar14 = lVar14 + -1;
-    } while (lVar14 != 0);
-    *(undefined1 *)(puVar16 + 2) = 0;
-    if (bVar7) {
-      bVar8 = bdByteBuffer::readString((bdByteBuffer *)(param_1.m_ptr)->_padding_,local_20f0,0x40);
-      bVar7 = true;
-      if (!bVar8) goto LAB_828fb50c;
+      lVar13 = lVar13 + -1;
+    } while (lVar13 != 0);
+    *(undefined1 *)(puVar15 + 2) = 0;
+    if (bVar6) {
+      bVar7 = bdByteBuffer::readString((bdByteBuffer *)(param_1.m_ptr)->_padding_,local_20f0,0x40);
+      bVar6 = true;
+      if (!bVar7) goto LAB_828fb50c;
     }
     else {
 LAB_828fb50c:
-      bVar7 = false;
+      bVar6 = false;
     }
     local_23e8 = CONCAT44(0x400,local_23e8._4_4_);
     memset();
-    if (bVar7) {
+    if (bVar6) {
       bdByteBuffer::readBlob
                 ((bdByteBuffer *)(param_1.m_ptr)->_padding_,auStack_1c40,(uint *)&local_23e8);
     }
-    pbVar11 = (bdSessionInvite *)auStack_1c40;
-    pcVar10 = local_21f0;
-    uVar9 = local_23e0;
-    uVar12 = local_23f0;
+    pbVar10 = (bdSessionInvite *)auStack_1c40;
+    pcVar9 = local_21f0;
+    uVar8 = local_23e0;
+    uVar11 = local_23f0;
 LAB_828fb420:
-    piVar2 = *(int **)(iVar4 + 0x78);
-    pcVar19 = *(code **)(*piVar2 + 0x18);
+    pbVar2 = this->m_eventHandler;
+    pcVar18 = *(code **)((int)*pbVar2 + 0x18);
     goto LAB_828fb42c;
   case 0x11:
     local_23f0 = 0;
-    if (bVar7) {
-      bVar8 = bdByteBuffer::readUInt64((bdByteBuffer *)(param_1.m_ptr)->_padding_,&local_23f0);
-      bVar7 = true;
-      if (!bVar8) goto LAB_828fb6e4;
+    if (bVar6) {
+      bVar7 = bdByteBuffer::readUInt64((bdByteBuffer *)(param_1.m_ptr)->_padding_,&local_23f0);
+      bVar6 = true;
+      if (!bVar7) goto LAB_828fb6e4;
     }
     else {
 LAB_828fb6e4:
-      bVar7 = false;
+      bVar6 = false;
     }
-    puVar13 = &uStack_2178;
-    lVar14 = 8;
+    puVar12 = &uStack_2178;
+    lVar13 = 8;
     do {
-      puVar13 = puVar13 + 1;
-      *puVar13 = 0;
-      lVar14 = lVar14 + -1;
-    } while (lVar14 != 0);
-    if (bVar7) {
-      bVar8 = bdByteBuffer::readString((bdByteBuffer *)(param_1.m_ptr)->_padding_,local_2170,0x40);
-      bVar7 = true;
-      if (!bVar8) goto LAB_828fb724;
+      puVar12 = puVar12 + 1;
+      *puVar12 = 0;
+      lVar13 = lVar13 + -1;
+    } while (lVar13 != 0);
+    if (bVar6) {
+      bVar7 = bdByteBuffer::readString((bdByteBuffer *)(param_1.m_ptr)->_padding_,local_2170,0x40);
+      bVar6 = true;
+      if (!bVar7) goto LAB_828fb724;
     }
     else {
 LAB_828fb724:
-      bVar7 = false;
+      bVar6 = false;
     }
     bdSessionID::bdSessionID(abStack_23c8);
     local_23e8 = CONCAT44(8,local_23e8._4_4_);
-    if (bVar7) {
-      bVar8 = bdByteBuffer::readBlob
+    if (bVar6) {
+      bVar7 = bdByteBuffer::readBlob
                         ((bdByteBuffer *)(param_1.m_ptr)->_padding_,abStack_23c8[0].m_sessionID.ab,
                          (uint *)&local_23e8);
-      bVar7 = true;
-      if (!bVar8) goto LAB_828fb760;
+      bVar6 = true;
+      if (!bVar7) goto LAB_828fb760;
     }
     else {
 LAB_828fb760:
-      bVar7 = false;
+      bVar6 = false;
     }
-    if (bVar7) {
-      pbVar5 = bdSessionID::bdSessionID(&bStack_2370,abStack_23c8);
-      (**(code **)(**(int **)(iVar4 + 0x78) + 0x20))(*(int **)(iVar4 + 0x78),local_23f0,pbVar5);
+    if (bVar6) {
+      pbVar4 = bdSessionID::bdSessionID(&bStack_2370,abStack_23c8);
+      (**(code **)((int)*this->m_eventHandler + 0x20))(this->m_eventHandler,local_23f0,pbVar4);
     }
     else {
       bdLogMessage(BD_LOG_WARNING,"warn/","lobby service",
@@ -2104,96 +2095,95 @@ LAB_828fb760:
     bdTaskResult::~bdTaskResult((bdTaskResult *)abStack_23c8);
     break;
   case 0x12:
-    pcVar19 = *(code **)(**(int **)(iVar4 + 0x78) + 0x30);
+    pcVar18 = *(code **)((int)*this->m_eventHandler + 0x30);
 LAB_828faf94:
-    (*pcVar19)();
+    (*pcVar18)();
     break;
   case 0x13:
     local_23f0 = 0;
-    if (bVar7) {
-      bVar8 = bdByteBuffer::readUInt64((bdByteBuffer *)(param_1.m_ptr)->_padding_,&local_23f0);
-      bVar7 = true;
-      if (!bVar8) goto LAB_828fb814;
+    if (bVar6) {
+      bVar7 = bdByteBuffer::readUInt64((bdByteBuffer *)(param_1.m_ptr)->_padding_,&local_23f0);
+      bVar6 = true;
+      if (!bVar7) goto LAB_828fb814;
     }
     else {
 LAB_828fb814:
-      bVar7 = false;
+      bVar6 = false;
     }
-    puVar13 = &uStack_2138;
-    lVar14 = 8;
+    puVar12 = &uStack_2138;
+    lVar13 = 8;
     do {
-      puVar13 = puVar13 + 1;
-      *puVar13 = 0;
-      lVar14 = lVar14 + -1;
-    } while (lVar14 != 0);
-    if (bVar7) {
-      bVar8 = bdByteBuffer::readString((bdByteBuffer *)(param_1.m_ptr)->_padding_,local_2130,0x40);
-      bVar7 = true;
-      if (!bVar8) goto LAB_828fb854;
+      puVar12 = puVar12 + 1;
+      *puVar12 = 0;
+      lVar13 = lVar13 + -1;
+    } while (lVar13 != 0);
+    if (bVar6) {
+      bVar7 = bdByteBuffer::readString((bdByteBuffer *)(param_1.m_ptr)->_padding_,local_2130,0x40);
+      bVar6 = true;
+      if (!bVar7) goto LAB_828fb854;
     }
     else {
 LAB_828fb854:
-      bVar7 = false;
+      bVar6 = false;
     }
-    pbVar6 = bdMemory::allocate(0xc);
-    local_23e8 = CONCAT44(pbVar6,local_23e8._4_4_);
-    bVar18 = (pbVar6 == (bdAntiCheatChallenges *)0x0) << 1;
-    if (pbVar6 == (bdAntiCheatChallenges *)0x0) {
-      uVar17 = 0;
+    pbVar5 = bdMemory::allocate(0xc);
+    local_23e8 = CONCAT44(pbVar5,local_23e8._4_4_);
+    bVar17 = (pbVar5 == (bdAntiCheatChallenges *)0x0) << 1;
+    if (pbVar5 == (bdAntiCheatChallenges *)0x0) {
+      uVar16 = 0;
     }
     else {
-      pbVar6 = bdAntiCheatChallenges::bdAntiCheatChallenges(pbVar6);
-      uVar17 = (ulonglong)(int)pbVar6;
+      pbVar5 = bdAntiCheatChallenges::bdAntiCheatChallenges(pbVar5);
+      uVar16 = (ulonglong)(int)pbVar5;
     }
-    pbVar6 = (bdAntiCheatChallenges *)uVar17;
-    local_23e8 = CONCAT44(pbVar6,local_23e8._4_4_);
-    if ((uVar17 & 0xffffffff) != 0) {
+    pbVar5 = (bdAntiCheatChallenges *)uVar16;
+    local_23e8 = CONCAT44(pbVar5,local_23e8._4_4_);
+    if ((uVar16 & 0xffffffff) != 0) {
       do {
-        puVar15 = (uint *)(uVar17 + 4);
+        puVar14 = (uint *)(uVar16 + 4);
         if (in_RESERVE != '\0') {
-          uVar1 = storeWordConditionalIndexed((ulonglong)*puVar15 + 1,0,uVar17 + 4);
-          *puVar15 = uVar1;
-          bVar18 = 2;
+          uVar1 = storeWordConditionalIndexed((ulonglong)*puVar14 + 1,0,uVar16 + 4);
+          *puVar14 = uVar1;
+          bVar17 = 2;
         }
-      } while (!(bool)(bVar18 >> 1 & 1));
+      } while (!(bool)(bVar17 >> 1 & 1));
     }
-    if (bVar7) {
+    if (bVar6) {
       local_23cc = (param_1.m_ptr)->_padding_;
       if ((ulonglong)local_23cc != 0) {
-        lVar14 = (ulonglong)local_23cc + 4;
-        bVar7 = false;
+        lVar13 = (ulonglong)local_23cc + 4;
+        bVar6 = false;
         do {
-          puVar15 = (uint *)lVar14;
+          puVar14 = (uint *)lVar13;
           if (in_RESERVE != '\0') {
-            uVar1 = storeWordConditionalIndexed((ulonglong)*puVar15 + 1,0,lVar14);
-            *puVar15 = uVar1;
-            bVar7 = true;
+            uVar1 = storeWordConditionalIndexed((ulonglong)*puVar14 + 1,0,lVar13);
+            *puVar14 = uVar1;
+            bVar6 = true;
           }
-        } while (!bVar7);
+        } while (!bVar6);
       }
-      bVar8 = bdAntiCheatChallenges::deserialize(pbVar6,(bdByteBuffer *)&local_23cc);
-      bVar7 = true;
-      if (!bVar8) goto LAB_828fb904;
+      bVar7 = bdAntiCheatChallenges::deserialize(pbVar5,(bdByteBuffer *)&local_23cc);
+      bVar6 = true;
+      if (!bVar7) goto LAB_828fb904;
     }
     else {
 LAB_828fb904:
-      bVar7 = false;
+      bVar6 = false;
     }
-    if (bVar7) {
-      if ((uVar17 & 0xffffffff) != 0) {
-        bVar7 = false;
+    if (bVar6) {
+      if ((uVar16 & 0xffffffff) != 0) {
+        bVar6 = false;
         do {
-          puVar15 = (uint *)(uVar17 + 4);
+          puVar14 = (uint *)(uVar16 + 4);
           if (in_RESERVE != '\0') {
-            uVar1 = storeWordConditionalIndexed((ulonglong)*puVar15 + 1,0,uVar17 + 4);
-            *puVar15 = uVar1;
-            bVar7 = true;
+            uVar1 = storeWordConditionalIndexed((ulonglong)*puVar14 + 1,0,uVar16 + 4);
+            *puVar14 = uVar1;
+            bVar6 = true;
           }
-        } while (!bVar7);
+        } while (!bVar6);
       }
-      local_23d0 = pbVar6;
-      (**(code **)(**(int **)(iVar4 + 0x78) + 0x38))(*(int **)(iVar4 + 0x78),local_23f0,&local_23d0)
-      ;
+      local_23d0 = pbVar5;
+      (**(code **)((int)*this->m_eventHandler + 0x38))(this->m_eventHandler,local_23f0,&local_23d0);
     }
     else {
       bdLogMessage(BD_LOG_WARNING,"warn/","lobby service",
@@ -2205,56 +2195,55 @@ LAB_828fb904:
     break;
   case 0x15:
     local_23f0 = 0;
-    if (bVar7) {
-      bVar8 = bdByteBuffer::readUInt64((bdByteBuffer *)(param_1.m_ptr)->_padding_,&local_23f0);
-      bVar7 = true;
-      if (!bVar8) goto LAB_828fba20;
+    if (bVar6) {
+      bVar7 = bdByteBuffer::readUInt64((bdByteBuffer *)(param_1.m_ptr)->_padding_,&local_23f0);
+      bVar6 = true;
+      if (!bVar7) goto LAB_828fba20;
     }
     else {
 LAB_828fba20:
-      bVar7 = false;
+      bVar6 = false;
     }
-    if (bVar7) {
-      bVar8 = bdByteBuffer::readString((bdByteBuffer *)(param_1.m_ptr)->_padding_,acStack_23b0,0x40)
+    if (bVar6) {
+      bVar7 = bdByteBuffer::readString((bdByteBuffer *)(param_1.m_ptr)->_padding_,acStack_23b0,0x40)
       ;
-      bVar7 = true;
-      if (!bVar8) goto LAB_828fba48;
+      bVar6 = true;
+      if (!bVar7) goto LAB_828fba48;
     }
     else {
 LAB_828fba48:
-      bVar7 = false;
+      bVar6 = false;
     }
     local_23e8 = CONCAT44(0x1000,local_23e8._4_4_);
     memset();
-    if (bVar7) {
+    if (bVar6) {
       bdByteBuffer::readBlob
                 ((bdByteBuffer *)(param_1.m_ptr)->_padding_,auStack_1040,(uint *)&local_23e8);
     }
-    (**(code **)(**(int **)(iVar4 + 0x78) + 0x40))
-              (*(int **)(iVar4 + 0x78),local_23f0,acStack_23b0,auStack_1040,local_23e8._0_4_);
+    (**(code **)((int)*this->m_eventHandler + 0x40))
+              (this->m_eventHandler,local_23f0,acStack_23b0,auStack_1040,local_23e8._0_4_);
     break;
   case 0x1d:
     local_23f0 = 0;
-    if (bVar7) {
+    if (bVar6) {
       bdByteBuffer::readUInt64((bdByteBuffer *)(param_1.m_ptr)->_padding_,&local_23f0);
     }
-    piVar2 = *(int **)(iVar4 + 0x78);
-    pcVar19 = *(code **)(*piVar2 + 0x34);
+    pbVar2 = this->m_eventHandler;
+    pcVar18 = *(code **)((int)*pbVar2 + 0x34);
     goto LAB_828fb9c4;
   case 0x1e:
     local_23f0 = 0;
-    if (bVar7) {
+    if (bVar6) {
       bdByteBuffer::readUInt64((bdByteBuffer *)(param_1.m_ptr)->_padding_,&local_23f0);
     }
-    piVar2 = *(int **)(iVar4 + 0x78);
-    pcVar19 = *(code **)(*piVar2 + 0x3c);
+    pbVar2 = this->m_eventHandler;
+    pcVar18 = *(code **)((int)*pbVar2 + 0x3c);
 LAB_828fb9c4:
-    (*pcVar19)(piVar2,local_23f0);
+    (*pcVar18)(pbVar2,local_23f0);
   }
 switchD_828faf80_caseD_14:
 LAB_828fbaa8:
   bdReference<bdByteBuffer>::~bdReference<bdByteBuffer>((bdReference<bdByteBuffer> *)param_1.m_ptr);
-  __restgprlr_26();
   return;
 }
 

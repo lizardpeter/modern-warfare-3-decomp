@@ -17,25 +17,22 @@ voiceCommunication_t * CL_GetLocalClientVoiceCommunication(LocalClientNum_t para
 
 // 82340D58  StructuredData_MakeBuffer  (universal/com_structureddatadef.h:82)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void StructuredData_MakeBuffer(StructuredDataBuffer *param_1,uchar *param_2,int param_3)
 
 {
-  undefined4 *puVar1;
-  ulonglong uVar2;
-  
-  uVar2 = (ulonglong)(int)param_2;
-  puVar1 = (undefined4 *)__savegprlr_27(param_1);
-  if (puVar1 == (undefined4 *)0x0) {
+  if (param_1 == (StructuredDataBuffer *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\../universal/com_structureddatadef.h"
                     ,0x53,0,"%s");
   }
-  if (((uVar2 & 0xffffffff) == 0) && (param_3 != 0)) {
+  if ((param_2 == (uchar *)0x0) && (param_3 != 0)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\../universal/com_structureddatadef.h"
                     ,0x54,0,"%s");
   }
-  *puVar1 = (int)uVar2;
-  puVar1[1] = param_3;
-  __restgprlr_27();
+  param_1->data = param_2;
+  param_1->size = param_3;
   return;
 }
 
@@ -162,6 +159,8 @@ void CL_AddReliableCommand(LocalClientNum_t param_1,char *param_2)
 
 // 82340F70  CL_Live_StartLobby  (client_mp/cl_main_mp.cpp:526)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
@@ -178,7 +177,6 @@ void CL_Live_StartLobby(void)
   int iVar7;
   PartyActiveClient aPStack_40 [8];
   
-  __savegprlr_26();
   if ((onlinegame->current).enabled == false) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_main_mp.cpp",
                     0x217,0,"%s\n\t%s");
@@ -262,13 +260,14 @@ void CL_Live_StartLobby(void)
   pPVar1 = Lobby_GetPartyData();
   PartyHost_StartParty(pPVar1,LVar3,iVar2,iVar4,iVar7,iVar6,bVar5);
   R_EndRemoteScreenUpdate();
-  __restgprlr_26();
   return;
 }
 
 
 // 82341250  CL_Live_SessionUpdate  (client_mp/cl_main_mp.cpp:651)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
@@ -283,7 +282,6 @@ void CL_Live_SessionUpdate(void)
   bool bVar6;
   LocalClientNum_t LVar5;
   
-  __savegprlr_26();
   pPVar3 = Lobby_GetPartyData();
   if (((pPVar3->inParty != 0) && (pPVar3->areWeHost != 0)) &&
      ((xblive_privatematch->current).enabled != false)) {
@@ -308,11 +306,9 @@ void CL_Live_SessionUpdate(void)
     }
     Party_SetDisplayMapName(pPVar3);
     Party_SetDisplayGameType(pPVar3);
-    __restgprlr_26();
     return;
   }
   Com_PrintWarning(0xe,"xsessionupdate should only be called as a private match lobby host.\n");
-  __restgprlr_26();
   return;
 }
 
@@ -353,6 +349,8 @@ void CL_Live_TogglePrivateSlots(void)
 
 // 82341470  CL_Live_DecrementPrivateSlots  (client_mp/cl_main_mp.cpp:698)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
@@ -366,7 +364,6 @@ void CL_Live_DecrementPrivateSlots(void)
   uint uVar4;
   int iVar5;
   
-  __savegprlr_29();
   iVar1 = (sv_privateClients->current).integer;
   iVar2 = (party_maxplayers->current).integer;
   pPVar3 = Lobby_GetPartyData();
@@ -383,7 +380,6 @@ void CL_Live_DecrementPrivateSlots(void)
                     0x2c7,0,"%s\n\t(sv_privateClients->current.integer) = %i");
   }
   Dvar_SetInt(sv_privateClients,iVar5);
-  __restgprlr_29();
   return;
 }
 
@@ -421,6 +417,8 @@ void CL_Live_IncrementPrivateSlots(void)
 
 // 823415F0  CL_Live_StartPrivateMatchHost  (client_mp/cl_main_mp.cpp:739)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
@@ -436,7 +434,6 @@ void CL_Live_StartPrivateMatchHost(void)
   int iVar6;
   PartyActiveClient aPStack_40 [8];
   
-  __savegprlr_27();
   if ((onlinegame->current).enabled == false) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_main_mp.cpp",
                     0x2e9,0,"%s\n\t%s");
@@ -485,13 +482,14 @@ void CL_Live_StartPrivateMatchHost(void)
   PartyHost_StartParty(pPVar4,LVar3,iVar2,uVar5 & 0xfffffff7,iVar6,(int)pcVar1 - iVar6,true);
   GameStateInfo_SetUsingGameStateInfo(1);
   R_EndRemoteScreenUpdate();
-  __restgprlr_27();
   return;
 }
 
 
 // 823417A8  Live_StartPrivateParty  (client_mp/cl_main_mp.cpp:815)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
@@ -499,34 +497,32 @@ void Live_StartPrivateParty(LocalClientNum_t param_1,int param_2)
 
 {
   ulonglong uVar1;
-  LocalClientNum_t LVar2;
-  bool bVar5;
-  int iVar3;
-  PartyData *pPVar4;
+  bool bVar4;
+  int iVar2;
+  PartyData *pPVar3;
   int local_50 [2];
   PartyActiveClient aPStack_48 [9];
   
-  LVar2 = __savegprlr_26(param_1);
-  bVar5 = Live_CanUserPlayOnline(param_2,local_50);
-  if (bVar5) {
-    bVar5 = LiveAntiCheat_IsPlayerBanned(param_2);
-    if (!bVar5) {
+  bVar4 = Live_CanUserPlayOnline(param_2,local_50);
+  if (bVar4) {
+    bVar4 = LiveAntiCheat_IsPlayerBanned(param_2);
+    if (!bVar4) {
       if ((onlinegame->current).enabled == false) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_main_mp.cpp",
                         0x348,0,"%s\n\t%s");
       }
-      iVar3 = Party_AreWeHost(&g_partyData);
-      uVar1 = (-(longlong)iVar3 & ~(longlong)iVar3 & 0xffffffffU) >> 0x1f;
-      pPVar4 = Lobby_GetPartyData();
-      Party_Sleep(pPVar4);
+      iVar2 = Party_AreWeHost(&g_partyData);
+      uVar1 = (-(longlong)iVar2 & ~(longlong)iVar2 & 0xffffffffU) >> 0x1f;
+      pPVar3 = Lobby_GetPartyData();
+      Party_Sleep(pPVar3);
       if (uVar1 == 0) {
         Party_Sleep(&g_partyData);
       }
       Live_CleanUpQoSProbes(param_2);
       Session_CleanUpSearches();
       Com_Printf(0xe,"CL_Live_StartPrivateParty() was called, calling Party_StopParty\n");
-      pPVar4 = Lobby_GetPartyData();
-      Party_StopParty(pPVar4);
+      pPVar3 = Lobby_GetPartyData();
+      Party_StopParty(pPVar3);
       if (uVar1 == 0) {
         Party_StopParty(&g_partyData);
         if (g_partyData.presenceSession != (SessionData *)0x0) {
@@ -541,32 +537,30 @@ void Live_StartPrivateParty(LocalClientNum_t param_1,int param_2)
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_main_mp.cpp",
                         0x35f,0,"%s");
       }
-      pPVar4 = Lobby_GetPartyData();
-      Party_ClearPartyList(pPVar4);
+      pPVar3 = Lobby_GetPartyData();
+      Party_ClearPartyList(pPVar3);
       if (uVar1 == 0) {
         Party_Awake(&g_partyData,param_2,1);
       }
       Live_SetCurrentGametype();
       if (uVar1 == 0) {
-        PartyHost_StartPrivateParty(LVar2,param_2,true);
+        PartyHost_StartPrivateParty(param_1,param_2,true);
       }
       Live_SetPartyPresence(param_2);
-      iVar3 = Party_GetSecondaryActiveClient(&g_partyData,aPStack_48);
-      if (iVar3 != 0) {
+      iVar2 = Party_GetSecondaryActiveClient(&g_partyData,aPStack_48);
+      if (iVar2 != 0) {
         Live_SetPartyPresence(aPStack_48[0].localControllerIndex);
       }
     }
   }
   else {
     Live_HandleOnlineRequirementFailed(param_2,local_50[0],1,0);
-    iVar3 = Live_RequiresSignInResolve(local_50[0]);
-    if (iVar3 != 0) {
+    iVar2 = Live_RequiresSignInResolve(local_50[0]);
+    if (iVar2 != 0) {
       Dvar_SetString(com_errorResolveCommand,"xsigninlive;");
-      __restgprlr_26();
       return;
     }
   }
-  __restgprlr_26();
   return;
 }
 
@@ -976,6 +970,8 @@ bool CL_AnyLocalClientsRunning(void)
 
 // 8234A280  CL_MapLoading  (client_mp/cl_main_mp.cpp:1234)
 
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
 /* WARNING: Type propagation algorithm not settling */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
@@ -1001,7 +997,6 @@ void CL_MapLoading(char *param_1,char *param_2)
   char *pcStack00000014;
   byte local_a8 [168];
   
-  __savegprlr();
   pbVar10 = &clientUIActives[0].isRunning;
   do {
     if (*pbVar10 != false) {
@@ -1012,8 +1007,9 @@ void CL_MapLoading(char *param_1,char *param_2)
   } while ((int)pbVar10 < -0x7d4c137f);
   bVar5 = false;
 LAB_8234a2c4:
-  pcStack00000014 = param_1;
-  if (!bVar5) goto LAB_8234a72c;
+  if (!bVar5) {
+    return;
+  }
   LVar11 = LOCAL_CLIENT_0;
   pbVar10 = &clientUIActives[0].displayHUDWithKeycatchUI;
   local_a8[0] = 0;
@@ -1025,6 +1021,7 @@ LAB_8234a2c4:
   local_a8[6] = 0;
   local_a8[7] = 0;
   g_waitingForServer = false;
+  pcStack00000014 = param_1;
   do {
     Con_Close(LVar11);
     *(int *)(pbVar10 + -4) = 0;
@@ -1048,15 +1045,13 @@ LAB_8234a2c4:
     } while ((int)LVar11 < 4);
   }
   cl_serverLoadingMap = true;
-  if ((int)clientUIActives[0].connectionState < 5) {
-LAB_8234a3b0:
-    bVar5 = false;
-  }
-  else {
+  if (4 < (int)clientUIActives[0].connectionState) {
     iVar3 = I_stricmp(cls.servername,"localhost");
     bVar5 = true;
-    if (iVar3 != 0) goto LAB_8234a3b0;
+    if (iVar3 == 0) goto LAB_8234a3b4;
   }
+  bVar5 = false;
+LAB_8234a3b4:
   if (bVar5) {
     pcVar9 = (char *)0x0;
     iVar3 = 0;
@@ -1165,8 +1160,6 @@ LAB_8234a3b0:
     } while ((int)pbVar10 < -0x7d4c1314);
   }
   SND_FadeAllSounds(0.0,(int)pcVar4);
-LAB_8234a72c:
-  __restgprlr();
   return;
 }
 
@@ -1246,6 +1239,8 @@ uint CL_CalcSnapshotMemory(int param_1,int param_2,int param_3)
 
 // 82342210  CL_AllocSnapshotMemory  (client_mp/cl_main_mp.cpp:1443)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -1256,78 +1251,76 @@ void CL_AllocSnapshotMemory(LocalClientNum_t param_1)
   clientActive_t *pcVar1;
   HunkUser *pHVar2;
   int iVar3;
-  int iVar4;
-  clSnapshot_t *pcVar5;
-  entityState_s *peVar6;
-  clientState_s *pcVar7;
+  clSnapshot_t *pcVar4;
+  entityState_s *peVar5;
+  clientState_s *pcVar6;
+  int iVar7;
   int iVar8;
-  int iVar9;
   
-  iVar3 = __savegprlr_24(param_1);
   pHVar2 = g_serverHunkUser;
   pcVar1 = clients;
   if (g_serverHunkUser == (HunkUser *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_main_mp.cpp",
                     0x5ab,0,"%s");
   }
-  if (pcVar1[iVar3].snapshots == (clSnapshot_t *)0x0) {
-    if (pcVar1[iVar3].parseEntities != (entityState_s *)0x0) {
+  if (pcVar1[param_1].snapshots == (clSnapshot_t *)0x0) {
+    if (pcVar1[param_1].parseEntities != (entityState_s *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_main_mp.cpp",
                       0x5b4,0,"%s");
     }
-    if (pcVar1[iVar3].parseClients != (clientState_s *)0x0) {
+    if (pcVar1[param_1].parseClients != (clientState_s *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_main_mp.cpp",
                       0x5b5,0,"%s");
     }
-    iVar4 = cl_maxClients;
+    iVar3 = cl_maxClients;
     if ((((onlinegame->current).enabled == false) || ((com_sv_running->current).enabled != false))
        && ((DAT_82aa1ab8 & 2) == 0)) {
-      iVar9 = 8;
-      iVar8 = 7;
+      iVar8 = 8;
+      iVar7 = 7;
     }
     else {
-      iVar9 = 0x10;
-      iVar8 = 0xf;
+      iVar8 = 0x10;
+      iVar7 = 0xf;
     }
-    pcVar1[iVar3].packetBackupMask = iVar8;
-    pcVar1[iVar3].packetBackupCount = iVar9;
-    pcVar1[iVar3].parseClientsCount = iVar9 * iVar4;
-    pcVar1[iVar3].parseEntitiesCount = iVar9 * 600;
-    iVar4 = Hunk_Inuse();
-    if (iVar4 == 0) {
+    pcVar1[param_1].packetBackupMask = iVar7;
+    pcVar1[param_1].packetBackupCount = iVar8;
+    pcVar1[param_1].parseClientsCount = iVar8 * iVar3;
+    pcVar1[param_1].parseEntitiesCount = iVar8 * 600;
+    iVar3 = Hunk_Inuse();
+    if (iVar3 == 0) {
       Hunk_Begin();
     }
-    pcVar5 = Hunk_UserAlloc(pHVar2,pcVar1[iVar3].packetBackupCount * 0x3380,4);
-    pcVar1[iVar3].snapshots = pcVar5;
-    peVar6 = Hunk_UserAlloc(pHVar2,pcVar1[iVar3].parseEntitiesCount << 8,4);
-    pcVar1[iVar3].parseEntities = peVar6;
-    pcVar7 = Hunk_UserAlloc(pHVar2,pcVar1[iVar3].parseClientsCount * 0xe0,4);
-    pcVar1[iVar3].parseClients = pcVar7;
+    pcVar4 = Hunk_UserAlloc(pHVar2,pcVar1[param_1].packetBackupCount * 0x3380,4);
+    pcVar1[param_1].snapshots = pcVar4;
+    peVar5 = Hunk_UserAlloc(pHVar2,pcVar1[param_1].parseEntitiesCount << 8,4);
+    pcVar1[param_1].parseEntities = peVar5;
+    pcVar6 = Hunk_UserAlloc(pHVar2,pcVar1[param_1].parseClientsCount * 0xe0,4);
+    pcVar1[param_1].parseClients = pcVar6;
     Hunk_UserFreeMemoryAmount(pHVar2);
     Com_Printf(0,"%d bytes free at end of CL_AllocSnapshotMemory\n");
-    if (iVar4 == 0) {
+    if (iVar3 == 0) {
       Hunk_End();
     }
   }
   else {
-    if (pcVar1[iVar3].parseEntities == (entityState_s *)0x0) {
+    if (pcVar1[param_1].parseEntities == (entityState_s *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_main_mp.cpp",
                       0x5af,0,"%s");
     }
-    if (pcVar1[iVar3].parseClients == (clientState_s *)0x0) {
+    if (pcVar1[param_1].parseClients == (clientState_s *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_main_mp.cpp",
                       0x5b0,0,"%s");
-      __restgprlr_24();
       return;
     }
   }
-  __restgprlr_24();
   return;
 }
 
 
 // 82342470  CL_FreeSnapshotMemory  (client_mp/cl_main_mp.cpp:1493)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -1339,7 +1332,6 @@ void CL_FreeSnapshotMemory(void)
   int iVar2;
   ulonglong uVar3;
   
-  __savegprlr_27();
   uVar3 = (ulonglong)(uint)cl_maxLocalClients;
   if (0 < cl_maxLocalClients) {
     iVar2 = 0;
@@ -1356,13 +1348,14 @@ void CL_FreeSnapshotMemory(void)
       iVar2 = iVar2 + 0xd480;
     } while (uVar3 != 0);
   }
-  __restgprlr_27();
   return;
 }
 
 
 // 82342508  CL_ClearClientState  (client_mp/cl_main_mp.cpp:1518)
 
+/* WARNING: Function: __savegprlr_15 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_15 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -1378,20 +1371,18 @@ void CL_ClearClientState(LocalClientNum_t param_1)
   int iVar6;
   int iVar7;
   int iVar8;
-  LocalClientNum_t LVar9;
-  clientActive_t *pcVar10;
+  clientActive_t *pcVar9;
   
-  LVar9 = __savegprlr_15(param_1);
-  if ((int)LVar9 < cl_maxLocalClients) {
-    pcVar10 = CL_GetLocalClientGlobals(LVar9);
-    iVar1 = pcVar10->packetBackupCount;
-    poVar2 = pcVar10->outPackets;
-    pcVar3 = pcVar10->snapshots;
-    peVar4 = pcVar10->parseEntities;
-    pcVar5 = pcVar10->parseClients;
-    iVar6 = pcVar10->parseClientsCount;
-    iVar7 = pcVar10->parseEntitiesCount;
-    iVar8 = pcVar10->packetBackupMask;
+  if ((int)param_1 < cl_maxLocalClients) {
+    pcVar9 = CL_GetLocalClientGlobals(param_1);
+    iVar1 = pcVar9->packetBackupCount;
+    poVar2 = pcVar9->outPackets;
+    pcVar3 = pcVar9->snapshots;
+    peVar4 = pcVar9->parseEntities;
+    pcVar5 = pcVar9->parseClients;
+    iVar6 = pcVar9->parseClientsCount;
+    iVar7 = pcVar9->parseEntitiesCount;
+    iVar8 = pcVar9->packetBackupMask;
     memset();
     if (pcVar3 != (clSnapshot_t *)0x0) {
       memset();
@@ -1405,16 +1396,15 @@ void CL_ClearClientState(LocalClientNum_t param_1)
     memset();
     cls.nextNoDeltaEntity = 0;
     memset();
-    pcVar10->outPackets = poVar2;
-    pcVar10->snapshots = pcVar3;
-    pcVar10->parseEntities = peVar4;
-    pcVar10->parseClients = pcVar5;
-    pcVar10->parseClientsCount = iVar6;
-    pcVar10->parseEntitiesCount = iVar7;
-    pcVar10->packetBackupCount = iVar1;
-    pcVar10->packetBackupMask = iVar8;
+    pcVar9->outPackets = poVar2;
+    pcVar9->snapshots = pcVar3;
+    pcVar9->parseEntities = peVar4;
+    pcVar9->parseClients = pcVar5;
+    pcVar9->parseClientsCount = iVar6;
+    pcVar9->parseEntitiesCount = iVar7;
+    pcVar9->packetBackupCount = iVar1;
+    pcVar9->packetBackupMask = iVar8;
   }
-  __restgprlr_15();
   return;
 }
 
@@ -1444,6 +1434,8 @@ bool WasConnected(connstate_t param_1)
 
 // 823426C0  CL_Disconnect  (client_mp/cl_main_mp.cpp:1604)
 
+/* WARNING: Function: __savegprlr_20 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_20 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
@@ -1453,161 +1445,156 @@ void CL_Disconnect(LocalClientNum_t param_1)
 
 {
   ulonglong uVar1;
-  LocalClientNum_t LVar2;
+  bool bVar8;
+  connstate_t cVar2;
+  clientConnection_t *pcVar3;
   bool bVar9;
-  connstate_t cVar3;
-  clientConnection_t *pcVar4;
-  bool bVar10;
+  int iVar4;
   int iVar5;
-  int iVar6;
-  clientActive_t *pcVar7;
-  PartyData *pPVar8;
-  double dVar11;
+  clientActive_t *pcVar6;
+  PartyData *pPVar7;
+  double dVar10;
   
-  LVar2 = __savegprlr_20(param_1);
-  bVar9 = Sys_IsMainThread();
-  if (!bVar9) {
+  bVar8 = Sys_IsMainThread();
+  if (!bVar8) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_main_mp.cpp",
                     0x652,0,"%s");
   }
-  if (LOCAL_CLIENT_3 < LVar2) {
+  if (LOCAL_CLIENT_3 < param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\client_mp.h",0x47f,0
                     ,"localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)");
   }
-  if (clientUIActives[LVar2].isRunning != false) {
+  if (clientUIActives[param_1].isRunning != false) {
     Com_Printf(0xe,"CL_Disconnect called for local client %i\n");
-    cVar3 = CL_GetLocalClientConnectionState(LVar2);
-    uVar1 = (longlong)((int)cVar3 >> 0x1f) + (ulonglong)(CA_LOGO < cVar3) & 0xff;
+    cVar2 = CL_GetLocalClientConnectionState(param_1);
+    uVar1 = (longlong)((int)cVar2 >> 0x1f) + (ulonglong)(CA_LOGO < cVar2) & 0xff;
     if ((uVar1 == 0) || (clientConnections == (clientConnection_t *)0x0)) {
-      pcVar4 = (clientConnection_t *)0x0;
+      pcVar3 = (clientConnection_t *)0x0;
     }
     else {
-      pcVar4 = CL_GetLocalClientConnection(LVar2);
+      pcVar3 = CL_GetLocalClientConnection(param_1);
     }
-    bVar9 = false;
-    if ((pcVar4 != (clientConnection_t *)0x0) &&
-       ((bVar10 = CL_Demo_IsPlaying(LVar2), bVar10 ||
-        (bVar10 = CL_Demo_IsShutdownInProgress(), bVar10)))) {
-      bVar9 = true;
+    bVar8 = false;
+    if ((pcVar3 != (clientConnection_t *)0x0) &&
+       ((bVar9 = CL_Demo_IsPlaying(param_1), bVar9 ||
+        (bVar9 = CL_Demo_IsShutdownInProgress(), bVar9)))) {
+      bVar8 = true;
     }
-    CL_Demo_End(LVar2);
-    SCR_StopCinematic(LVar2);
-    UI_SetActiveMenu(LVar2,0);
+    CL_Demo_End(param_1);
+    SCR_StopCinematic(param_1);
+    UI_SetActiveMenu(param_1,0);
     if ((((g_serverSession.dyn.sessionHandle != (void *)0x0) &&
-         (pcVar4 != (clientConnection_t *)0x0)) && (4 < (int)cVar3)) &&
-       (pcVar4->reliableSequence - pcVar4->reliableAcknowledge < 0x81)) {
-      CL_AddReliableCommand(LVar2,"disconnect");
-      CL_WritePacket(LVar2);
-      CL_WritePacket(LVar2);
-      CL_WritePacket(LVar2);
+         (pcVar3 != (clientConnection_t *)0x0)) && (4 < (int)cVar2)) &&
+       (pcVar3->reliableSequence - pcVar3->reliableAcknowledge < 0x81)) {
+      CL_AddReliableCommand(param_1,"disconnect");
+      CL_WritePacket(param_1);
+      CL_WritePacket(param_1);
+      CL_WritePacket(param_1);
     }
-    CL_ClearClientState(LVar2);
-    Com_ClientDObjClearAllSkel(LVar2);
-    CL_ClearKeys(LVar2);
-    iVar5 = CL_ControllerIndexFromClientNum(LVar2);
-    dVar11 = 0.0;
-    GPad_SetLowRumble(iVar5,0.0);
-    GPad_SetHighRumble(iVar5,(float)dVar11);
+    CL_ClearClientState(param_1);
+    Com_ClientDObjClearAllSkel(param_1);
+    CL_ClearKeys(param_1);
+    iVar4 = CL_ControllerIndexFromClientNum(param_1);
+    dVar10 = 0.0;
+    GPad_SetLowRumble(iVar4,0.0);
+    GPad_SetHighRumble(iVar4,(float)dVar10);
     if (uVar1 != 0) {
-      if (!bVar9) {
-        iVar6 = CL_ControllerIndexFromClientNum(LVar2);
-        bVar9 = LiveStorage_DoWeHaveStats(iVar6);
-        if (bVar9) {
-          iVar6 = CL_ControllerIndexFromClientNum(LVar2);
-          LiveStorage_ValidateStats(iVar6);
+      if (!bVar8) {
+        iVar5 = CL_ControllerIndexFromClientNum(param_1);
+        bVar8 = LiveStorage_DoWeHaveStats(iVar5);
+        if (bVar8) {
+          iVar5 = CL_ControllerIndexFromClientNum(param_1);
+          LiveStorage_ValidateStats(iVar5);
         }
-        CG_FindItemsUnlockedLastGame(LVar2);
-        CG_MarkUnlockedItemsNew(LVar2);
-        LiveStorage_EndGame(LVar2);
+        CG_FindItemsUnlockedLastGame(param_1);
+        CG_MarkUnlockedItemsNew(param_1);
+        LiveStorage_EndGame(param_1);
       }
-      if ((uVar1 != 0) && (pcVar4 != (clientConnection_t *)0x0)) {
+      if ((uVar1 != 0) && (pcVar3 != (clientConnection_t *)0x0)) {
         memset();
-        pcVar7 = CL_GetLocalClientGlobals(LVar2);
-        pcVar7->serverId = 0;
+        pcVar6 = CL_GetLocalClientGlobals(param_1);
+        pcVar6->serverId = 0;
       }
     }
-    clientUIActives[LVar2].connectionState = CA_DISCONNECTED;
-    if (LOCAL_CLIENT_3 < LVar2) {
+    clientUIActives[param_1].connectionState = CA_DISCONNECTED;
+    if (LOCAL_CLIENT_3 < param_1) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\client_mp.h",0x4d0
                       ,0,"client doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)");
     }
-    CL_UpdateMigrationProfile(clientUIActives[LVar2].migrationState,CMSTATE_INACTIVE);
-    clientUIActives[LVar2].migrationState = CMSTATE_INACTIVE;
+    CL_UpdateMigrationProfile(clientUIActives[param_1].migrationState,CMSTATE_INACTIVE);
+    clientUIActives[param_1].migrationState = CMSTATE_INACTIVE;
     CL_ResetLastGamePadEventTime();
     Phys_EndFrame();
-    DynEntCl_Shutdown(LVar2);
-    SND_DisconnectListener(LVar2);
+    DynEntCl_Shutdown(param_1);
+    SND_DisconnectListener(param_1);
     if (uVar1 != 0) {
-      clientUIActives[LVar2].keyCatchers = clientUIActives[LVar2].keyCatchers & 1;
+      clientUIActives[param_1].keyCatchers = clientUIActives[param_1].keyCatchers & 1;
     }
     if ((splitscreen->current).enabled == false) {
-      CL_SetLocalClientActive(LVar2,false);
+      CL_SetLocalClientActive(param_1,false);
     }
     if (uVar1 != 0) {
       CL_SetupScreenPlacements();
-      Live_Disconnected(iVar5);
+      Live_Disconnected(iVar4);
       if ((xblive_privatematch->current).enabled == false) {
-        LB_UploadPlayerData(iVar5);
+        LB_UploadPlayerData(iVar4);
       }
       LB_EndOngoingTasks();
     }
-    bVar9 = CL_AllLocalClientsDisconnected();
-    if (bVar9) {
+    bVar8 = CL_AllLocalClientsDisconnected();
+    if (bVar8) {
       cls.serverId = 0;
       Ragdoll_Shutdown();
-      if (uVar1 == 0) goto LAB_82342a98;
+      if (uVar1 == 0) {
+        return;
+      }
       Session_CleanUpStatsWrites();
       Session_EndGameSessionWithTimeout(&g_serverSession,5000);
       if (((onlinegame->current).enabled == false) && ((com_sv_running->current).enabled == false))
       {
         Session_DeleteSession(&g_serverSession);
         Com_Printf(0xe,"CL_Disconnect was called, calling Party_StopParty\n");
-        pPVar8 = Lobby_GetPartyData();
-        Party_StopParty(pPVar8);
+        pPVar7 = Lobby_GetPartyData();
+        Party_StopParty(pPVar7);
         Party_StopParty(&g_partyData);
       }
     }
     if (uVar1 != 0) {
-      Cbuf_AddText(LVar2,"updategamerprofile\n");
+      Cbuf_AddText(param_1,"updategamerprofile\n");
     }
   }
-LAB_82342a98:
-  __restgprlr_20();
   return;
 }
 
 
 // 82342AA8  CL_ForwardCommandToServer  (client_mp/cl_main_mp.cpp:1835)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void CL_ForwardCommandToServer(LocalClientNum_t param_1,char *param_2)
 
 {
-  LocalClientNum_t LVar1;
-  char *pcVar2;
-  connstate_t cVar3;
-  bool bVar5;
-  int iVar4;
+  char *pcVar1;
+  connstate_t cVar2;
+  bool bVar4;
+  int iVar3;
   
-  LVar1 = __savegprlr_29(param_1);
-  pcVar2 = Cmd_Argv(0);
-  if (*pcVar2 != '-') {
-    cVar3 = CL_GetLocalClientConnectionState(LVar1);
-    if (((4 < (int)cVar3) && (*pcVar2 != '+')) && (bVar5 = CL_Demo_IsPlaying(LVar1), !bVar5)) {
-      iVar4 = Cmd_Argc();
-      if (1 < iVar4) {
-        CL_AddReliableCommand(LVar1,param_2);
-        __restgprlr_29();
+  pcVar1 = Cmd_Argv(0);
+  if (*pcVar1 != '-') {
+    cVar2 = CL_GetLocalClientConnectionState(param_1);
+    if (((4 < (int)cVar2) && (*pcVar1 != '+')) && (bVar4 = CL_Demo_IsPlaying(param_1), !bVar4)) {
+      iVar3 = Cmd_Argc();
+      if (1 < iVar3) {
+        CL_AddReliableCommand(param_1,param_2);
         return;
       }
-      CL_AddReliableCommand(LVar1,pcVar2);
-      __restgprlr_29();
+      CL_AddReliableCommand(param_1,pcVar1);
       return;
     }
     Com_Printf(0xe,"Unknown command \"%s\"\n");
   }
-  __restgprlr_29();
   return;
 }
 
@@ -1673,6 +1660,8 @@ void CL_ForwardToServer_f(void)
 
 // 82342CA0  CL_Setenv_f  (client_mp/cl_main_mp.cpp:1948)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void CL_Setenv_f(void)
@@ -1683,7 +1672,6 @@ void CL_Setenv_f(void)
   int iVar3;
   char acStack_420 [1056];
   
-  __savegprlr_29();
   iVar1 = Cmd_Argc();
   if (iVar1 < 3) {
     if (iVar1 == 2) {
@@ -1703,17 +1691,17 @@ void CL_Setenv_f(void)
         I_strncat(acStack_420,0x400," ");
         iVar3 = iVar3 + 1;
       } while (iVar3 < iVar1);
-      __restgprlr_29();
       return;
     }
   }
-  __restgprlr_29();
   return;
 }
 
 
 // 82342D60  CL_DisconnectLocalClient_Helper  (client_mp/cl_main_mp.cpp:1995)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
@@ -1721,43 +1709,39 @@ void CL_DisconnectLocalClient_Helper(LocalClientNum_t param_1,int param_2)
 
 {
   connstate_t cVar1;
-  LocalClientNum_t LVar2;
+  bool bVar3;
   bool bVar4;
-  bool bVar5;
-  PartyData *pPVar3;
-  byte bVar6;
+  PartyData *pPVar2;
+  byte bVar5;
   int *in_r13;
   
-  LVar2 = __savegprlr_29(param_1);
-  SCR_StopCinematic(LVar2);
-  if (LOCAL_CLIENT_3 < LVar2) {
+  SCR_StopCinematic(param_1);
+  if (LOCAL_CLIENT_3 < param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\client_mp.h",0x4aa,0
                     ,"localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)");
   }
-  cVar1 = clientUIActives[LVar2].connectionState;
-  if (((cVar1 == CA_DISCONNECTED) || (cVar1 == CA_CINEMATIC)) || (bVar6 = 1, cVar1 == CA_LOGO)) {
-    bVar6 = 0;
+  cVar1 = clientUIActives[param_1].connectionState;
+  if (((cVar1 == CA_DISCONNECTED) || (cVar1 == CA_CINEMATIC)) || (bVar5 = 1, cVar1 == CA_LOGO)) {
+    bVar5 = 0;
   }
-  bVar4 = CL_Demo_IsShutdownInProgress();
-  CL_Disconnect(LVar2);
-  bVar5 = CL_AllLocalClientsDisconnected();
-  if (bVar5) {
-    pPVar3 = Lobby_GetPartyData();
-    Party_StopParty(pPVar3);
+  bVar3 = CL_Demo_IsShutdownInProgress();
+  CL_Disconnect(param_1);
+  bVar4 = CL_AllLocalClientsDisconnected();
+  if (bVar4) {
+    pPVar2 = Lobby_GetPartyData();
+    Party_StopParty(pPVar2);
   }
-  if (((bool)(!bVar4 & bVar6)) && (bVar4 = CL_AllLocalClientsDisconnected(), bVar4)) {
+  if (((bool)(!bVar3 & bVar5)) && (bVar3 = CL_AllLocalClientsDisconnected(), bVar3)) {
     *(undefined4 *)(*in_r13 + 0xf4) = 0xffffedff;
     if (g_partyData.inParty == 0) {
       Dvar_SetBool(onlinegame,false);
     }
     if (param_2 != 0) {
       Live_ThrowError(ERR_DISCONNECT,"PLATFORM_DISCONNECTED_FROM_SERVER");
-      __restgprlr_29();
       return;
     }
     Live_ThrowError_DontDeclineInvite(ERR_DISCONNECT,"PLATFORM_DISCONNECTED_FROM_SERVER");
   }
-  __restgprlr_29();
   return;
 }
 
@@ -1788,6 +1772,8 @@ void CL_DisconnectLocalClient(LocalClientNum_t param_1)
 
 // 82342EA0  CL_Disconnect_f  (client_mp/cl_main_mp.cpp:2057)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
@@ -1797,7 +1783,6 @@ void CL_Disconnect_f(void)
   connstate_t *pcVar1;
   LocalClientNum_t LVar2;
   
-  __savegprlr_27();
   LVar2 = LOCAL_CLIENT_0;
   pcVar1 = &clientUIActives[0].connectionState;
   do {
@@ -1813,7 +1798,6 @@ void CL_Disconnect_f(void)
     pcVar1 = pcVar1 + 0x79;
     LVar2 = LVar2 + LOCAL_CLIENT_1;
   } while ((int)pcVar1 < -0x7d4c1324);
-  __restgprlr_27();
   return;
 }
 
@@ -1926,6 +1910,8 @@ void LoadMapLoadscreen(char *param_1)
 
 // 82343180  CL_Configstrings_f  (client_mp/cl_main_mp.cpp:2442)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
@@ -1937,7 +1923,6 @@ void CL_Configstrings_f(void)
   LocalClientNum_t LVar1;
   gameState_t *pgVar2;
   
-  __savegprlr_28();
   LVar1 = Cmd_LocalClientNum();
   if (LOCAL_CLIENT_3 < LVar1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\client_mp.h",0x4aa,0
@@ -1945,7 +1930,6 @@ void CL_Configstrings_f(void)
   }
   if (clientUIActives[LVar1].connectionState != CA_ACTIVE) {
     Com_Printf(0,"Not connected to a server.\n");
-    __restgprlr_28();
     return;
   }
   pgVar2 = &cls.gameState;
@@ -1955,7 +1939,6 @@ void CL_Configstrings_f(void)
     }
     pgVar2 = (gameState_t *)(pgVar2->stringOffsets + 1);
   } while ((int)pgVar2 < -0x7d51935c);
-  __restgprlr_28();
   return;
 }
 
@@ -2008,6 +1991,8 @@ int CL_WasMapAlreadyLoaded(LocalClientNum_t param_1)
 
 // 82347458  CL_DownloadsComplete  (client_mp/cl_main_mp.cpp:2539)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -2015,49 +2000,47 @@ int CL_WasMapAlreadyLoaded(LocalClientNum_t param_1)
 void CL_DownloadsComplete(LocalClientNum_t param_1)
 
 {
-  LocalClientNum_t LVar1;
-  bool bVar5;
+  bool bVar4;
+  char *pcVar1;
   char *pcVar2;
-  char *pcVar3;
-  int iVar4;
+  int iVar3;
   char acStack_a0 [64];
   char acStack_60 [96];
   
-  LVar1 = __savegprlr_29(param_1);
   Com_SyncThreads();
   Phys_EndFrame();
-  clientUIActives[LVar1].connectionState = CA_LOADING;
+  clientUIActives[param_1].connectionState = CA_LOADING;
   Com_Printf(0xe,"Setting state to CA_LOADING in CL_DownloadsComplete\n");
-  if ((((com_sv_running->current).enabled != false) || (bVar5 = CL_Demo_IsPlaying(LVar1), bVar5)) ||
-     (cls.mapPreloaded != false)) {
+  if ((((com_sv_running->current).enabled != false) || (bVar4 = CL_Demo_IsPlaying(param_1), bVar4))
+     || (cls.mapPreloaded != false)) {
     if (cls.hunkUsersStarted == 0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_main_mp.cpp",
                       0xa2c,0,"%s");
     }
-    iVar4 = CL_IsCgameInitialized(LVar1);
-    if (iVar4 != 0) {
-      CL_RestartCGame(LVar1);
+    iVar3 = CL_IsCgameInitialized(param_1);
+    if (iVar3 != 0) {
+      CL_RestartCGame(param_1);
       goto LAB_823475d4;
     }
   }
   else {
-    pcVar2 = CL_GetConfigString(0);
-    pcVar3 = Info_ValueForKey(pcVar2,"mapname");
-    I_strncpyz(acStack_a0,pcVar3,0x40);
-    pcVar2 = Info_ValueForKey(pcVar2,"g_gametype");
-    I_strncpyz(acStack_60,pcVar2,0x40);
-    iVar4 = Live_GetMapIndex(acStack_a0);
-    iVar4 = Live_GetMapSource(iVar4);
-    bVar5 = Content_DoWeHaveContentPack(iVar4);
-    if (!bVar5) {
+    pcVar1 = CL_GetConfigString(0);
+    pcVar2 = Info_ValueForKey(pcVar1,"mapname");
+    I_strncpyz(acStack_a0,pcVar2,0x40);
+    pcVar1 = Info_ValueForKey(pcVar1,"g_gametype");
+    I_strncpyz(acStack_60,pcVar1,0x40);
+    iVar3 = Live_GetMapIndex(acStack_a0);
+    iVar3 = Live_GetMapSource(iVar3);
+    bVar4 = Content_DoWeHaveContentPack(iVar3);
+    if (!bVar4) {
       UI_MissingMapError();
     }
     if (g_waitingForServer == false) {
       LoadMapLoadscreen(acStack_a0);
     }
     UI_SetMap(acStack_a0,acStack_60);
-    iVar4 = Hunk_Inuse();
-    if (iVar4 == 0) {
+    iVar3 = Hunk_Inuse();
+    if (iVar3 == 0) {
       Hunk_Begin();
     }
     SCR_UpdateScreen();
@@ -2072,12 +2055,11 @@ void CL_DownloadsComplete(LocalClientNum_t param_1)
     SCR_UpdateScreen();
   }
   Dvar_SetInt(cl_paused,1);
-  CL_InitCGame(LVar1);
+  CL_InitCGame(param_1);
 LAB_823475d4:
-  CL_WritePacket(LVar1);
-  CL_WritePacket(LVar1);
-  CL_WritePacket(LVar1);
-  __restgprlr_29();
+  CL_WritePacket(param_1);
+  CL_WritePacket(param_1);
+  CL_WritePacket(param_1);
   return;
 }
 
@@ -2125,6 +2107,8 @@ int CL_HighestPriorityStatPacket(clientConnection_t *param_1)
 
 // 82347640  CL_CheckForResend  (client_mp/cl_main_mp.cpp:2674)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
@@ -2134,18 +2118,17 @@ void CL_CheckForResend(LocalClientNum_t param_1)
 
 {
   connstate_t cVar1;
-  LocalClientNum_t LVar2;
-  clientConnection_t *pcVar3;
-  bool bVar11;
-  netsrc_t nVar4;
-  char *pcVar5;
-  clientMigState_t cVar6;
+  clientConnection_t *pcVar2;
+  bool bVar10;
+  netsrc_t nVar3;
+  char *pcVar4;
+  clientMigState_t cVar5;
+  int iVar6;
   int iVar7;
-  int iVar8;
-  uchar *puVar9;
-  netsrc_t nVar10;
+  uchar *puVar8;
+  netsrc_t nVar9;
   int *in_r13;
-  char *pcVar12;
+  char *pcVar11;
   netadr_t in_stack_ffffea28;
   msg_t mStack_1580;
   char acStack_1550 [32];
@@ -2154,137 +2137,138 @@ void CL_CheckForResend(LocalClientNum_t param_1)
   char acStack_c50 [1024];
   uchar auStack_850 [2128];
   
-  LVar2 = __savegprlr_23(param_1);
-  if (LOCAL_CLIENT_3 < LVar2) {
+  if (LOCAL_CLIENT_3 < param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\client_mp.h",0x4aa,0
                     ,"localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)");
   }
-  cVar1 = clientUIActives[LVar2].connectionState;
-  if (4 < cVar1 - CA_CONNECTING) goto LAB_82347ff8;
-  if (cVar1 == CA_CHALLENGING) {
-LAB_823476b8:
-    pcVar3 = CL_GetLocalClientConnection(LVar2);
-    bVar11 = cls.realtime - pcVar3->connectTime < 3000;
+  cVar1 = clientUIActives[param_1].connectionState;
+  if (4 < cVar1 - CA_CONNECTING) {
+    return;
   }
-  else {
-    if (cVar1 == CA_CONNECTED) goto LAB_82347ff8;
+  if (cVar1 != CA_CHALLENGING) {
+    if (cVar1 == CA_CONNECTED) {
+      return;
+    }
     if (cVar1 == CA_SENDINGSTATS) {
-      pcVar3 = CL_GetLocalClientConnection(LVar2);
-      bVar11 = cls.realtime - pcVar3->lastPacketSentTime < 100;
+      pcVar2 = CL_GetLocalClientConnection(param_1);
+      bVar10 = cls.realtime - pcVar2->lastPacketSentTime < 100;
+      goto LAB_8234772c;
     }
-    else {
-      if (cVar1 == CA_CONNECTING) goto LAB_823476b8;
-      pcVar3 = CL_GetLocalClientConnection(LVar2);
-      bVar11 = cls.realtime - pcVar3->lastPacketSentTime < 200;
+    if (cVar1 != CA_CONNECTING) {
+      pcVar2 = CL_GetLocalClientConnection(param_1);
+      bVar10 = cls.realtime - pcVar2->lastPacketSentTime < 200;
+      goto LAB_8234772c;
     }
   }
-  if ((!bVar11) && (bVar11 = CL_Demo_IsPlaying(LVar2), iVar7 = cls.realtime, !bVar11)) {
-    pcVar3->connectPacketCount = pcVar3->connectPacketCount + 1;
-    pcVar3->connectTime = iVar7;
+  pcVar2 = CL_GetLocalClientConnection(param_1);
+  bVar10 = cls.realtime - pcVar2->connectTime < 3000;
+LAB_8234772c:
+  if ((!bVar10) && (bVar10 = CL_Demo_IsPlaying(param_1), iVar6 = cls.realtime, !bVar10)) {
+    pcVar2->connectPacketCount = pcVar2->connectPacketCount + 1;
+    pcVar2->connectTime = iVar6;
     if (cVar1 == CA_CHALLENGING) {
-      pcVar5 = Dvar_InfoString(LVar2,0x200);
-      I_strncpyz(acStack_1530,pcVar5,0x400);
+      pcVar4 = Dvar_InfoString(param_1,0x200);
+      I_strncpyz(acStack_1530,pcVar4,0x400);
       GetProtocolVersion();
-      pcVar5 = va("%i");
-      Info_SetValueForKey(acStack_1530,"protocol",pcVar5);
+      pcVar4 = va("%i");
+      Info_SetValueForKey(acStack_1530,"protocol",pcVar4);
       BG_NetDataChecksum();
-      pcVar5 = va("%i");
-      Info_SetValueForKey(acStack_1530,"checksum",pcVar5);
-      pcVar5 = va("%i");
-      Info_SetValueForKey(acStack_1530,"challenge",pcVar5);
+      pcVar4 = va("%i");
+      Info_SetValueForKey(acStack_1530,"checksum",pcVar4);
+      pcVar4 = va("%i");
+      Info_SetValueForKey(acStack_1530,"challenge",pcVar4);
       LiveStorage_GetPersistentDataDefFormatChecksum();
       LiveStorage_GetPersistentDataDefVersion();
-      pcVar5 = va("%i %u");
-      Info_SetValueForKey(acStack_1530,"statver",pcVar5);
-      pcVar5 = va("%i");
-      Info_SetValueForKey(acStack_1530,"invited",pcVar5);
-      iVar7 = CL_ControllerIndexFromClientNum(LVar2);
-      pcVar5 = CL_GetXuidForLocalClient(iVar7);
+      pcVar4 = va("%i %u");
+      Info_SetValueForKey(acStack_1530,"statver",pcVar4);
+      pcVar4 = va("%i");
+      Info_SetValueForKey(acStack_1530,"invited",pcVar4);
+      iVar6 = CL_ControllerIndexFromClientNum(param_1);
+      pcVar4 = CL_GetXuidForLocalClient(iVar6);
       if ((onlinegame->current).enabled != false) {
-        iVar7 = CL_ControllerIndexFromClientNum(LVar2);
-        bVar11 = Live_UserIsGuest(iVar7);
-        if (!bVar11) {
-          if (*pcVar5 != '0') {
+        iVar6 = CL_ControllerIndexFromClientNum(param_1);
+        bVar10 = Live_UserIsGuest(iVar6);
+        if (!bVar10) {
+          if (*pcVar4 != '0') {
             MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_main_mp.cpp"
                             ,0xadd,0,"%s");
           }
-          if (pcVar5[1] != '0') {
+          if (pcVar4[1] != '0') {
             MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_main_mp.cpp"
                             ,0xade,0,"%s");
           }
-          if (pcVar5[2] != '0') {
+          if (pcVar4[2] != '0') {
             MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_main_mp.cpp"
                             ,0xadf,0,"%s");
           }
-          if (pcVar5[3] != '9') {
+          if (pcVar4[3] != '9') {
             MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_main_mp.cpp"
                             ,0xae0,0,"%s");
           }
         }
       }
-      Info_SetValueForKey(acStack_1530,"xuid",pcVar5);
-      bVar11 = LiveStorage_ClientUsingOnlineStatsOffline(LVar2);
-      pcVar12 = "1";
-      pcVar5 = pcVar12;
-      if (!bVar11) {
-        pcVar5 = "0";
+      Info_SetValueForKey(acStack_1530,"xuid",pcVar4);
+      bVar10 = LiveStorage_ClientUsingOnlineStatsOffline(param_1);
+      pcVar11 = "1";
+      pcVar4 = pcVar11;
+      if (!bVar10) {
+        pcVar4 = "0";
       }
-      Info_SetValueForKey(acStack_1530,"onlineStats",pcVar5);
-      cVar6 = CL_GetLocalClientMigrationState(LVar2);
-      if (cVar6 == CMSTATE_INACTIVE) {
-        pcVar12 = "0";
+      Info_SetValueForKey(acStack_1530,"onlineStats",pcVar4);
+      cVar5 = CL_GetLocalClientMigrationState(param_1);
+      if (cVar5 == CMSTATE_INACTIVE) {
+        pcVar11 = "0";
       }
-      Info_SetValueForKey(acStack_1530,"migrating",pcVar12);
+      Info_SetValueForKey(acStack_1530,"migrating",pcVar11);
       Com_DPrintf(0xe,
                   "Sending the server a connect string with userinfo \'%s\' - onlinegame is %i\n");
       if ((onlinegame->current).enabled != false) {
-        iVar7 = CL_ControllerIndexFromClientNum(LVar2);
-        bVar11 = Live_UserIsGuest(iVar7);
-        if (!bVar11) {
-          pcVar5 = Info_ValueForKey(acStack_1530,"xuid");
-          if (*pcVar5 != '0') {
+        iVar6 = CL_ControllerIndexFromClientNum(param_1);
+        bVar10 = Live_UserIsGuest(iVar6);
+        if (!bVar10) {
+          pcVar4 = Info_ValueForKey(acStack_1530,"xuid");
+          if (*pcVar4 != '0') {
             va("testVal is %s, xuidString was %s");
             MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_main_mp.cpp"
                             ,0xb16,0,"%s\n\t%s");
           }
-          if (pcVar5[1] != '0') {
+          if (pcVar4[1] != '0') {
             va("testVal is %s, xuidString was %s");
             MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_main_mp.cpp"
                             ,0xb17,0,"%s\n\t%s");
           }
-          if (pcVar5[2] != '0') {
+          if (pcVar4[2] != '0') {
             va("testVal is %s, xuidString was %s");
             MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_main_mp.cpp"
                             ,0xb18,0,"%s\n\t%s");
           }
-          if (pcVar5[3] != '9') {
+          if (pcVar4[3] != '9') {
             va("testVal is %s, xuidString was %s");
             MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_main_mp.cpp"
                             ,0xb19,0,"%s\n\t%s");
           }
         }
       }
-      CL_BuildPlayerGuid(LVar2,acStack_1550);
+      CL_BuildPlayerGuid(param_1,acStack_1550);
       Com_sprintf(acStack_c50,0x400,"connect %s \"%s\"");
-      puVar9 = *(uchar **)(pcVar3->serverAddress).ip;
-      nVar4 = (pcVar3->serverAddress).localNetID;
-      nVar10 = NET_GetLocalNetIDFromLocalClientNum(LVar2);
-      bVar11 = NET_OutOfBandData(nVar10,in_stack_ffffea28,puVar9,nVar4);
-      if ((!bVar11) && (bVar11 = Com_ErrorEntered(), !bVar11)) {
-        CL_DisconnectError(LVar2,"EXE_DISCONNECTED");
-        bVar11 = Com_ErrorEntered();
-        if (!bVar11) {
+      puVar8 = *(uchar **)(pcVar2->serverAddress).ip;
+      nVar3 = (pcVar2->serverAddress).localNetID;
+      nVar9 = NET_GetLocalNetIDFromLocalClientNum(param_1);
+      bVar10 = NET_OutOfBandData(nVar9,in_stack_ffffea28,puVar8,nVar3);
+      if ((!bVar10) && (bVar10 = Com_ErrorEntered(), !bVar10)) {
+        CL_DisconnectError(param_1,"EXE_DISCONNECTED");
+        bVar10 = Com_ErrorEntered();
+        if (!bVar10) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_main_mp.cpp"
                           ,0xb26,0,"%s");
         }
       }
-      iVar7 = *in_r13;
-      if ((*(uint *)(iVar7 + 0xf4) & 0x200) == 0) {
+      iVar6 = *in_r13;
+      if ((*(uint *)(iVar6 + 0xf4) & 0x200) == 0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_main_mp.cpp",
                         0xb2c,0,"%s");
       }
-      *(uint *)(iVar7 + 0xf0) = *(uint *)(iVar7 + 0xf0) & 0xfffffdff;
-      __restgprlr_23();
+      *(uint *)(iVar6 + 0xf0) = *(uint *)(iVar6 + 0xf0) & 0xfffffdff;
       return;
     }
     if (cVar1 == CA_CONNECTED) {
@@ -2295,25 +2279,25 @@ LAB_823476b8:
         R_BeginRemoteScreenUpdate();
         MSG_Init(&mStack_1580,auStack_850,0x800);
         MSG_WriteString(&mStack_1580,"stats");
-        iVar7 = CL_HighestPriorityStatPacket(pcVar3);
-        if ((iVar7 < 0) || (9 < iVar7)) {
+        iVar6 = CL_HighestPriorityStatPacket(pcVar2);
+        if ((iVar6 < 0) || (9 < iVar6)) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_main_mp.cpp"
                           ,0xb3c,0,"%s\n\t(packetToSend) = %i");
         }
         if ((onlinegame->current).enabled != false) {
-          iVar8 = CL_ControllerIndexFromClientNum(LVar2);
-          bVar11 = LiveStorage_GettingStats(iVar8);
-          if (bVar11) {
+          iVar7 = CL_ControllerIndexFromClientNum(param_1);
+          bVar10 = LiveStorage_GettingStats(iVar7);
+          if (bVar10) {
             MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_main_mp.cpp"
                             ,0xb3e,0,"%s\n\t(localClientNum) = %i");
           }
         }
-        iVar8 = CL_ControllerIndexFromClientNum(LVar2);
-        bVar11 = LiveStorage_DoWeHaveStats(iVar8);
-        if (bVar11) {
-          iVar8 = CL_ControllerIndexFromClientNum(LVar2);
-          puVar9 = LiveStorage_GetStatBuffer(iVar8);
-          puVar9 = puVar9 + iVar7 * 0x4d8;
+        iVar7 = CL_ControllerIndexFromClientNum(param_1);
+        bVar10 = LiveStorage_DoWeHaveStats(iVar7);
+        if (bVar10) {
+          iVar7 = CL_ControllerIndexFromClientNum(param_1);
+          puVar8 = LiveStorage_GetStatBuffer(iVar7);
+          puVar8 = puVar8 + iVar6 * 0x4d8;
         }
         else {
           if ((onlinegame->current).enabled != false) {
@@ -2321,70 +2305,65 @@ LAB_823476b8:
                             ,0xb4a,0,"%s");
           }
           memset();
-          puVar9 = auStack_1130;
+          puVar8 = auStack_1130;
         }
-        MSG_WriteByte(&mStack_1580,iVar7);
-        iVar8 = iVar7 * -0x4d8 + 0x3000;
-        if (0x4d8 < iVar8) {
-          iVar8 = 0x4d8;
+        MSG_WriteByte(&mStack_1580,iVar6);
+        iVar7 = iVar6 * -0x4d8 + 0x3000;
+        if (0x4d8 < iVar7) {
+          iVar7 = 0x4d8;
         }
-        MSG_WriteData(&mStack_1580,puVar9,iVar8);
-        pcVar3->statPacketSendTime[iVar7] = cls.realtime;
-        pcVar3->lastPacketSentTime = cls.realtime;
+        MSG_WriteData(&mStack_1580,puVar8,iVar7);
+        pcVar2->statPacketSendTime[iVar6] = cls.realtime;
+        pcVar2->lastPacketSentTime = cls.realtime;
         Com_Printf(0xe,"Sending stats packet %i at 0x%x to host in CA_SENDINGSTATS state\n");
-        puVar9 = *(uchar **)(pcVar3->serverAddress).ip;
-        nVar4 = (pcVar3->serverAddress).localNetID;
-        nVar10 = NET_GetLocalNetIDFromLocalClientNum(LVar2);
-        bVar11 = NET_OutOfBandData(nVar10,in_stack_ffffea28,puVar9,nVar4);
-        if ((!bVar11) && (bVar11 = Com_ErrorEntered(), !bVar11)) {
-          CL_DisconnectError(LVar2,"EXE_DISCONNECTED");
-          bVar11 = Com_ErrorEntered();
-          if (!bVar11) {
+        puVar8 = *(uchar **)(pcVar2->serverAddress).ip;
+        nVar3 = (pcVar2->serverAddress).localNetID;
+        nVar9 = NET_GetLocalNetIDFromLocalClientNum(param_1);
+        bVar10 = NET_OutOfBandData(nVar9,in_stack_ffffea28,puVar8,nVar3);
+        if ((!bVar10) && (bVar10 = Com_ErrorEntered(), !bVar10)) {
+          CL_DisconnectError(param_1,"EXE_DISCONNECTED");
+          bVar10 = Com_ErrorEntered();
+          if (!bVar10) {
             MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_main_mp.cpp"
                             ,0xb60,0,"%s");
           }
         }
         R_EndRemoteScreenUpdate();
-        __restgprlr_23();
         return;
       }
       if (cVar1 == CA_CONNECTING) {
-        CL_BuildPlayerGuid(LVar2,acStack_1550);
+        CL_BuildPlayerGuid(param_1,acStack_1550);
         va("getchallenge 0 \"%s\"");
-        pcVar5 = *(char **)(pcVar3->serverAddress).ip;
-        nVar4 = NET_GetLocalNetIDFromLocalClientNum(LVar2);
-        bVar11 = NET_OutOfBandPrint(nVar4,in_stack_ffffea28,pcVar5);
-        if (!bVar11) {
+        pcVar4 = *(char **)(pcVar2->serverAddress).ip;
+        nVar3 = NET_GetLocalNetIDFromLocalClientNum(param_1);
+        bVar10 = NET_OutOfBandPrint(nVar3,in_stack_ffffea28,pcVar4);
+        if (!bVar10) {
           Com_Error(ERR_DROP,"EXE_HOSTUNREACH");
-          __restgprlr_23();
           return;
         }
       }
       else {
         MSG_Init(&mStack_1580,auStack_850,0x800);
         MSG_WriteString(&mStack_1580,"mrules");
-        MSG_WriteByte(&mStack_1580,pcVar3->currentGamestatePacket);
+        MSG_WriteByte(&mStack_1580,pcVar2->currentGamestatePacket);
         Com_Printf(0xe,"Sending match rules request %i to host in CA_REQUESTING_MATCH_RULES state\n"
                   );
-        puVar9 = *(uchar **)(pcVar3->serverAddress).ip;
-        nVar4 = (pcVar3->serverAddress).localNetID;
-        nVar10 = NET_GetLocalNetIDFromLocalClientNum(LVar2);
-        bVar11 = NET_OutOfBandData(nVar10,in_stack_ffffea28,puVar9,nVar4);
-        if ((!bVar11) && (bVar11 = Com_ErrorEntered(), !bVar11)) {
-          CL_DisconnectError(LVar2,"EXE_DISCONNECTED");
-          bVar11 = Com_ErrorEntered();
-          if (!bVar11) {
+        puVar8 = *(uchar **)(pcVar2->serverAddress).ip;
+        nVar3 = (pcVar2->serverAddress).localNetID;
+        nVar9 = NET_GetLocalNetIDFromLocalClientNum(param_1);
+        bVar10 = NET_OutOfBandData(nVar9,in_stack_ffffea28,puVar8,nVar3);
+        if ((!bVar10) && (bVar10 = Com_ErrorEntered(), !bVar10)) {
+          CL_DisconnectError(param_1,"EXE_DISCONNECTED");
+          bVar10 = Com_ErrorEntered();
+          if (!bVar10) {
             MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_main_mp.cpp"
                             ,0xb77,0,"%s");
-            __restgprlr_23();
             return;
           }
         }
       }
     }
   }
-LAB_82347ff8:
-  __restgprlr_23();
   return;
 }
 
@@ -2411,60 +2390,54 @@ int CL_DisconnectError_ShouldShowGenericMessage(char *param_1)
 
 // 82343518  CL_DisconnectError  (client_mp/cl_main_mp.cpp:2970)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 void CL_DisconnectError(LocalClientNum_t param_1,char *param_2)
 
 {
-  LocalClientNum_t LVar1;
-  int iVar2;
-  uint uVar3;
-  PartyData *pPVar4;
+  int iVar1;
+  uint uVar2;
+  PartyData *pPVar3;
+  char *pcVar4;
   char *pcVar5;
-  char *pcVar6;
-  bool bVar8;
-  SessionData *pSVar7;
-  ulonglong uVar9;
+  bool bVar7;
+  SessionData *pSVar6;
   PartyActiveClient local_30 [6];
   
-  uVar9 = (ulonglong)(int)param_2;
-  LVar1 = __savegprlr_29(param_1);
-  if ((uVar9 & 0xffffffff) == 0) {
+  if (param_2 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_main_mp.cpp",
                     0xb9b,0,"%s");
   }
-  pcVar5 = (char *)uVar9;
-  iVar2 = I_stricmp("EXE_MATCHENDED",pcVar5);
-  if ((iVar2 == 0) || (iVar2 = I_stricmp("EXE_SERVERQUIT",pcVar5), iVar2 == 0)) {
+  iVar1 = I_stricmp("EXE_MATCHENDED",param_2);
+  if ((iVar1 == 0) || (iVar1 = I_stricmp("EXE_SERVERQUIT",param_2), iVar1 == 0)) {
     Com_Error(ERR_DISCONNECT,"EXE_DISCONNECTED");
-    __restgprlr_29();
     return;
   }
-  iVar2 = I_stricmp("EXE_MIGRATIONABORTED",pcVar5);
-  if ((iVar2 == 0) || (iVar2 = I_stricmp("EXE_MIGRATION_IN_PROGRESS",pcVar5), iVar2 == 0)) {
-    Com_Error(ERR_DROP,pcVar5);
+  iVar1 = I_stricmp("EXE_MIGRATIONABORTED",param_2);
+  if ((iVar1 == 0) || (iVar1 = I_stricmp("EXE_MIGRATION_IN_PROGRESS",param_2), iVar1 == 0)) {
+    Com_Error(ERR_DROP,param_2);
   }
   else {
-    iVar2 = I_stricmp("EXE_MIGRATIONABORTED_BACKOUT",pcVar5);
-    if (iVar2 == 0) {
-      if ((g_partyData.inParty != 0) && (iVar2 = Party_IsGameHostInPrivateParty(), iVar2 != 0)) {
-        uVar3 = CL_ControllerIndexFromClientNum(LVar1);
-        local_30[0] = Party_GetMainActiveClient(&g_partyData,uVar3);
-        iVar2 = Party_Backout(local_30);
-        __restgprlr_29(iVar2);
+    iVar1 = I_stricmp("EXE_MIGRATIONABORTED_BACKOUT",param_2);
+    if (iVar1 == 0) {
+      if ((g_partyData.inParty != 0) && (iVar1 = Party_IsGameHostInPrivateParty(), iVar1 != 0)) {
+        uVar2 = CL_ControllerIndexFromClientNum(param_1);
+        local_30[0] = Party_GetMainActiveClient(&g_partyData,uVar2);
+        Party_Backout(local_30);
         return;
       }
       Com_Error(ERR_DROP,"EXE_MIGRATIONABORTED");
-      __restgprlr_29();
       return;
     }
-    iVar2 = I_stricmp("hostquit",pcVar5);
-    if (iVar2 != 0) {
-      iVar2 = I_strnicmp("EXE_PLAYERKICKED",pcVar5,0x10);
-      if (iVar2 == 0) {
-        pPVar4 = Lobby_GetPartyData();
-        Party_StopParty(pPVar4);
+    iVar1 = I_stricmp("hostquit",param_2);
+    if (iVar1 != 0) {
+      iVar1 = I_strnicmp("EXE_PLAYERKICKED",param_2,0x10);
+      if (iVar1 == 0) {
+        pPVar3 = Lobby_GetPartyData();
+        Party_StopParty(pPVar3);
         Com_Printf(0xe,
                    "CL_DisconnectError - Stopping private party and lobby since we got kicked from the game.\n"
                   );
@@ -2474,132 +2447,128 @@ void CL_DisconnectError(LocalClientNum_t param_1,char *param_2)
         }
       }
       else {
-        iVar2 = I_stricmp("roundsdone",pcVar5);
-        if (iVar2 == 0) goto LAB_82343790;
-        bVar8 = Lobby_IsInLobby();
-        if (bVar8) {
-          pSVar7 = Lobby_GetSession();
-          uVar3 = (pSVar7->dyn).sessionCreateController;
-          pPVar4 = Lobby_GetPartyData();
-          local_30[0] = Party_GetMainActiveClient(pPVar4,uVar3);
-          pPVar4 = Lobby_GetPartyData();
-          PartyClient_LostConnectionToHost(pPVar4,local_30);
+        iVar1 = I_stricmp("roundsdone",param_2);
+        if (iVar1 == 0) {
+          return;
         }
-        iVar2 = CL_DisconnectError_ShouldShowGenericMessage(pcVar5);
-        if (iVar2 != 0) {
+        bVar7 = Lobby_IsInLobby();
+        if (bVar7) {
+          pSVar6 = Lobby_GetSession();
+          uVar2 = (pSVar6->dyn).sessionCreateController;
+          pPVar3 = Lobby_GetPartyData();
+          local_30[0] = Party_GetMainActiveClient(pPVar3,uVar2);
+          pPVar3 = Lobby_GetPartyData();
+          PartyClient_LostConnectionToHost(pPVar3,local_30);
+        }
+        iVar1 = CL_DisconnectError_ShouldShowGenericMessage(param_2);
+        if (iVar1 != 0) {
           Com_PrintError(0x10,
                          "Showing generic disconnect error. Server sent us \'%s\' as their disconnect reason.\n"
                         );
           Com_Error(ERR_SERVERDISCONNECT,"EXE_DISCONNECTED");
-          __restgprlr_29();
           return;
         }
       }
-      pcVar5 = SEH_SafeTranslateString(pcVar5);
-      pcVar6 = SEH_SafeTranslateString("EXE_SERVERDISCONNECTREASON");
-      pcVar5 = UI_ReplaceConversionString(pcVar6,pcVar5);
-      Com_Error(ERR_SERVERDISCONNECT,pcVar5);
-      __restgprlr_29();
+      pcVar4 = SEH_SafeTranslateString(param_2);
+      pcVar5 = SEH_SafeTranslateString("EXE_SERVERDISCONNECTREASON");
+      pcVar4 = UI_ReplaceConversionString(pcVar5,pcVar4);
+      Com_Error(ERR_SERVERDISCONNECT,pcVar4);
       return;
     }
   }
-LAB_82343790:
-  __restgprlr_29();
   return;
 }
 
 
 // 82343798  CL_DisconnectPacket  (client_mp/cl_main_mp.cpp:3051)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void CL_DisconnectPacket(LocalClientNum_t param_1,netadr_t param_2,char *param_3)
 
 {
-  LocalClientNum_t LVar1;
-  int iVar2;
-  ulonglong in_r6;
+  int iVar1;
+  char *in_r6;
   netadr_t in_stack_ffffff88;
   netadr_t in_stack_ffffff98;
   
-  LVar1 = __savegprlr_28(param_1,param_3);
-  if (LOCAL_CLIENT_3 < LVar1) {
+  if (LOCAL_CLIENT_3 < param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\client_mp.h",0x4aa,0
                     ,"localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)");
   }
-  if (2 < (int)clientUIActives[LVar1].connectionState) {
+  if (2 < (int)clientUIActives[param_1].connectionState) {
     if (clientConnections != (clientConnection_t *)0x0) {
-      CL_GetLocalClientConnection(LVar1);
-      iVar2 = NET_CompareAdr(in_stack_ffffff88,in_stack_ffffff98);
-      if (iVar2 == 0) goto LAB_82343868;
+      CL_GetLocalClientConnection(param_1);
+      iVar1 = NET_CompareAdr(in_stack_ffffff88,in_stack_ffffff98);
+      if (iVar1 == 0) {
+        return;
+      }
     }
-    if ((in_r6 & 0xffffffff) != 0) {
-      CL_DisconnectError(LVar1,(char *)in_r6);
-      __restgprlr_28();
+    if (in_r6 != (char *)0x0) {
+      CL_DisconnectError(param_1,in_r6);
       return;
     }
     Com_Error(ERR_DROP,"EXE_SERVER_DISCONNECTED");
   }
-LAB_82343868:
-  __restgprlr_28();
   return;
 }
 
 
 // 82343870  CL_HandleRelayPacket  (client_mp/cl_main_mp.cpp:3092)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void CL_HandleRelayPacket(LocalClientNum_t param_1,msg_t *param_2)
 
 {
-  LocalClientNum_t LVar1;
-  uchar *puVar2;
-  char *pcVar3;
+  uchar *puVar1;
+  char *pcVar2;
+  int iVar3;
   int iVar4;
-  int iVar5;
-  SessionData *pSVar6;
-  bool bVar7;
-  int iVar8;
+  SessionData *pSVar5;
+  bool bVar6;
+  int iVar7;
   LargeLocal aLStack_40 [8];
   
-  LVar1 = __savegprlr_26(param_1);
   LargeLocal::LargeLocal(aLStack_40,0x10000);
-  puVar2 = LargeLocal::GetBuf(aLStack_40);
-  pcVar3 = Cmd_Argv(1);
-  iVar4 = atoi(pcVar3);
-  pcVar3 = Cmd_Argv(2);
-  iVar5 = atoi(pcVar3);
-  pSVar6 = Live_GetCurrentSession();
-  bVar7 = Session_IsUserRegistered(pSVar6,iVar5);
-  if (!bVar7) {
+  puVar1 = LargeLocal::GetBuf(aLStack_40);
+  pcVar2 = Cmd_Argv(1);
+  iVar3 = atoi(pcVar2);
+  pcVar2 = Cmd_Argv(2);
+  iVar4 = atoi(pcVar2);
+  pSVar5 = Live_GetCurrentSession();
+  bVar6 = Session_IsUserRegistered(pSVar5,iVar4);
+  if (!bVar6) {
     Com_PrintWarning(0xe,"We were asked to relay a packet to an unregistered client (%i)\n");
     LargeLocal::~LargeLocal(aLStack_40);
-    __restgprlr_26();
     return;
   }
-  bVar7 = Session_PlayerHasLoopbackAddr(pSVar6,iVar5);
-  if (bVar7) {
+  bVar6 = Session_PlayerHasLoopbackAddr(pSVar5,iVar4);
+  if (bVar6) {
     Com_PrintWarning(0xe,"We were asked to relay a packet to a local client (%i)\n");
     LargeLocal::~LargeLocal(aLStack_40);
-    __restgprlr_26();
     return;
   }
-  iVar8 = param_2->cursize - param_2->readcount;
-  MSG_ReadData(param_2,puVar2,iVar8);
+  iVar7 = param_2->cursize - param_2->readcount;
+  MSG_ReadData(param_2,puVar1,iVar7);
   CL_WritePeerToPeerOOBData
-            (pSVar6,LVar1,iVar5,puVar2,iVar8,
-             SUB81((-(longlong)iVar4 & ~(longlong)iVar4 & 0xffffffffU) >> 0x1f,0),0);
+            (pSVar5,param_1,iVar4,puVar1,iVar7,
+             SUB81((-(longlong)iVar3 & ~(longlong)iVar3 & 0xffffffffU) >> 0x1f,0),0);
   LargeLocal::~LargeLocal(aLStack_40);
-  __restgprlr_26();
   return;
 }
 
 
 // 8234A738  CL_DispatchConnectionlessPacket  (client_mp/cl_main_mp.cpp:3155)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "MatchRulesReturnCode": Some values do not have unique names */
@@ -2611,12 +2580,11 @@ bool CL_DispatchConnectionlessPacket
 
 {
   uchar auVar1 [4];
-  LocalClientNum_t LVar2;
+  longlong lVar2;
   char *pcVar3;
   int iVar4;
-  undefined1 uVar13;
   SessionData *pSVar5;
-  bool bVar14;
+  bool bVar13;
   PartyData *pPVar6;
   connstate_t cVar7;
   clientConnection_t *pcVar8;
@@ -2624,9 +2592,7 @@ bool CL_DispatchConnectionlessPacket
   MatchRulesReturnCode MVar10;
   netsrc_t nVar11;
   InviteCheckExeState IVar12;
-  longlong lVar15;
-  char *pcVar16;
-  longlong lVar17;
+  char *pcVar14;
   msg_t *in_r6;
   netadrtype_t nStack00000020;
   uchar auStack00000024 [4];
@@ -2639,44 +2605,40 @@ bool CL_DispatchConnectionlessPacket
   char acStack_c30 [1024];
   char acStack_830 [2096];
   
-  lVar17 = (longlong)param_4;
-  lVar15 = (longlong)(int)param_3;
-  LVar2 = __savegprlr_27(param_1);
-  _nStack00000020 = lVar15;
-  _uStack00000028 = lVar17;
+  _uStack00000028 = (longlong)param_4;
+  _nStack00000020 = (longlong)(int)param_3;
   pcVar3 = Cmd_Argv(0);
   iVar4 = I_stricmp(pcVar3,"v");
   if (iVar4 == 0) {
-    CL_VoicePacket(LVar2,in_r6);
-    goto LAB_8234a784;
+    CL_VoicePacket(param_1,in_r6);
+    return true;
   }
   iVar4 = I_stricmp(pcVar3,"vt");
   if (iVar4 == 0) {
-    CL_VoiceConnectionTestPacket(LVar2,in_r6,in_stack_fffff328);
-    uVar13 = __restgprlr_27(1);
-    return (bool)uVar13;
+    CL_VoiceConnectionTestPacket(param_1,in_r6,in_stack_fffff328);
+    return true;
   }
   iVar4 = I_strcmp(pcVar3,"voicefail");
   if (iVar4 == 0) {
     pcVar3 = Cmd_Argv(1);
     iVar4 = atoi(pcVar3);
     pSVar5 = Live_GetCurrentSession();
-    CL_WeNowCantHearSomeone(LVar2,pSVar5,iVar4);
-    uVar13 = __restgprlr_27(1);
-    return (bool)uVar13;
+    CL_WeNowCantHearSomeone(param_1,pSVar5,iVar4);
+    return true;
   }
   iVar4 = RMsg_HandleAckMessage((netadr_t *)&stack0x00000020,pcVar3,in_r6);
-  if (iVar4 != 0) goto LAB_8234a784;
+  if (iVar4 != 0) {
+    return true;
+  }
   iVar4 = I_stricmp(pcVar3,"relay");
   if (iVar4 == 0) {
-    CL_HandleRelayPacket(LVar2,in_r6);
-    uVar13 = __restgprlr_27(1);
-    return (bool)uVar13;
+    CL_HandleRelayPacket(param_1,in_r6);
+    return true;
   }
   iVar4 = I_stricmp(pcVar3,"hostquit");
   if (iVar4 == 0) {
-    bVar14 = Lobby_AreWeHost();
-    if (!bVar14) {
+    bVar13 = Lobby_AreWeHost();
+    if (!bVar13) {
       pPVar6 = Lobby_GetPartyData();
       iVar4 = Party_PacketIsFromHost(pPVar6,in_stack_fffff328);
       if (iVar4 != 0) {
@@ -2684,22 +2646,22 @@ bool CL_DispatchConnectionlessPacket
           pSVar5 = Lobby_GetSession();
           LB_UploadPlayerData((pSVar5->dyn).sessionCreateController);
         }
-        bVar14 = CL_AllLocalClientsDisconnected();
-        if (!bVar14) {
+        bVar13 = CL_AllLocalClientsDisconnected();
+        if (!bVar13) {
           Com_Error(ERR_DISCONNECT,"EXE_DISCONNECTED");
         }
         goto LAB_8234a9a4;
       }
     }
-    pcVar16 = "Got \'hostquit\' from non-host\n";
+    pcVar14 = "Got \'hostquit\' from non-host\n";
 LAB_8234a99c:
-    Com_PrintError(0xe,pcVar16);
+    Com_PrintError(0xe,pcVar14);
   }
   else {
     iVar4 = I_stricmp(pcVar3,"roundsdone");
     if (iVar4 == 0) {
-      bVar14 = Lobby_AreWeHost();
-      if (!bVar14) {
+      bVar13 = Lobby_AreWeHost();
+      if (!bVar13) {
         pPVar6 = Lobby_GetPartyData();
         iVar4 = Party_PacketIsFromHost(pPVar6,in_stack_fffff328);
         if (iVar4 != 0) {
@@ -2709,53 +2671,51 @@ LAB_8234a99c:
           goto LAB_8234a9a4;
         }
       }
-      pcVar16 = "Got BEST_OF_ROUNDS_DONE from non-host\n";
+      pcVar14 = "Got BEST_OF_ROUNDS_DONE from non-host\n";
       goto LAB_8234a99c;
     }
   }
 LAB_8234a9a4:
   auVar1 = auStack00000024;
   pPVar6 = Lobby_GetPartyData();
-  iVar4 = Party_HandlePacket(pPVar6,pcVar3,LVar2,in_stack_fffff328,(msg_t *)auVar1);
+  iVar4 = Party_HandlePacket(pPVar6,pcVar3,param_1,in_stack_fffff328,(msg_t *)auVar1);
   if ((((iVar4 != 0) ||
-       (iVar4 = Party_HandlePacket(&g_partyData,pcVar3,LVar2,in_stack_fffff328,
+       (iVar4 = Party_HandlePacket(&g_partyData,pcVar3,param_1,in_stack_fffff328,
                                    (msg_t *)_nStack00000020), iVar4 != 0)) ||
-      (bVar14 = CL_MigrationPacket(LVar2,pcVar3,in_stack_fffff328,(msg_t *)_nStack00000020), bVar14)
-      ) || (bVar14 = UserGroups_HandlePacket
-                               (pcVar3,LVar2,in_stack_fffff328,(msg_t *)_nStack00000020), bVar14)) {
-LAB_8234a784:
-    uVar13 = __restgprlr_27(1);
-    return (bool)uVar13;
+      (bVar13 = CL_MigrationPacket(param_1,pcVar3,in_stack_fffff328,(msg_t *)_nStack00000020),
+      bVar13)) ||
+     (bVar13 = UserGroups_HandlePacket(pcVar3,param_1,in_stack_fffff328,(msg_t *)_nStack00000020),
+     bVar13)) {
+    return true;
   }
-  cVar7 = CL_GetLocalClientConnectionState(LVar2);
+  cVar7 = CL_GetLocalClientConnectionState(param_1);
   iVar4 = I_stricmp(pcVar3,"challengeResponse");
   if (iVar4 == 0) {
     if (nStack0000002c != NS_MAXCLIENTS) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_main_mp.cpp",
                       0xce3,0,"%s");
     }
-    if (cVar7 == CA_CONNECTING) {
-      pcVar8 = CL_GetLocalClientConnection(LVar2);
-      pcVar3 = Cmd_Argv(1);
-      iVar4 = atoi(pcVar3);
-      lVar15 = _uStack00000028;
-      pcVar8->challenge = iVar4;
-      clientUIActives[LVar2].connectionState = CA_CHALLENGING;
-      pcVar8->connectPacketCount = 0;
-      pcVar8->connectTime = -99999;
-      (pcVar8->serverAddress).type = nStack00000020;
-      *&(pcVar8->serverAddress).ip = auStack00000024;
-      (pcVar8->serverAddress).port = uStack00000028;
-      *(undefined2 *)&(pcVar8->serverAddress).field_0xa = uStack0000002a;
-      nStack0000002c = (netsrc_t)lVar15;
-      (pcVar8->serverAddress).localNetID = nStack0000002c;
-      _uStack00000028 = lVar15;
-      Com_DPrintf(0xe,"challenge: %d\n");
-      uVar13 = __restgprlr_27(1);
-      return (bool)uVar13;
+    if (cVar7 != CA_CONNECTING) {
+      Com_Printf(0xe,"Unwanted challenge response received.  Ignored.\n");
+      return false;
     }
-    Com_Printf(0xe,"Unwanted challenge response received.  Ignored.\n");
-    goto LAB_8234aacc;
+    pcVar8 = CL_GetLocalClientConnection(param_1);
+    pcVar3 = Cmd_Argv(1);
+    iVar4 = atoi(pcVar3);
+    lVar2 = _uStack00000028;
+    pcVar8->challenge = iVar4;
+    clientUIActives[param_1].connectionState = CA_CHALLENGING;
+    pcVar8->connectPacketCount = 0;
+    pcVar8->connectTime = -99999;
+    (pcVar8->serverAddress).type = nStack00000020;
+    *&(pcVar8->serverAddress).ip = auStack00000024;
+    (pcVar8->serverAddress).port = uStack00000028;
+    *(undefined2 *)&(pcVar8->serverAddress).field_0xa = uStack0000002a;
+    nStack0000002c = (netsrc_t)lVar2;
+    (pcVar8->serverAddress).localNetID = nStack0000002c;
+    _uStack00000028 = lVar2;
+    Com_DPrintf(0xe,"challenge: %d\n");
+    return true;
   }
   iVar4 = I_stricmp(pcVar3,"connectResponse");
   if (iVar4 == 0) {
@@ -2763,56 +2723,53 @@ LAB_8234a784:
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_main_mp.cpp",
                       0xd01,0,"%s");
     }
-    if ((int)cVar7 < 5) {
-      if (cVar7 == CA_CHALLENGING) {
-        pcVar8 = CL_GetLocalClientConnection(LVar2);
-        Netchan_Setup(LVar2,&pcVar8->netchan,in_stack_fffff328,(int)_nStack00000020,
-                      (char *)_uStack00000028,0,pcVar8->netchanOutgoingBuffer,0x800);
-        iVar4 = Cmd_Argc();
-        if (iVar4 < 2) {
-          uVar9 = 0x3ff;
-        }
-        else {
-          pcVar3 = Cmd_Argv(1);
-          uVar9 = atoi(pcVar3);
-          uVar9 = uVar9 & 0x3ff;
-        }
-        Com_Printf(0xe,"Received \'connectResponse\' with statPacketsNeeded = %i\n");
-        if (uVar9 == 0) {
-          CL_SetLocalClientConnectionState(LVar2,CA_CONNECTED);
-          Com_Printf(0xe,"Setting state to CA_CONNECTED in CL_DispatchConnectionlessPacket\n");
-          pcVar8->statPacketsToSend = 0;
-        }
-        else {
-          CL_SetLocalClientConnectionState(LVar2,CA_SENDINGSTATS);
-          Com_Printf(0xe,"Setting state to CA_SENDINGSTATS in CL_DispatchConnectionlessPacket\n");
-          pcVar8->statPacketsToSend = (ushort)uVar9 & 0xff;
-          pcVar8->statPacketSendTime[0] = 0;
-          pcVar8->statPacketSendTime[1] = 0;
-          pcVar8->statPacketSendTime[2] = 0;
-          pcVar8->statPacketSendTime[3] = 0;
-          pcVar8->statPacketSendTime[4] = 0;
-          pcVar8->statPacketSendTime[5] = 0;
-          pcVar8->statPacketSendTime[6] = 0;
-          pcVar8->statPacketSendTime[7] = 0;
-          pcVar8->statPacketSendTime[8] = 0;
-          pcVar8->statPacketSendTime[9] = 0;
-          LB_CopyAccoladesStats(LVar2);
-        }
-        LiveStorage_BeginGame(LVar2);
-        iVar4 = cls.realtime;
-        pcVar8->lastPacketSentTime = -9999;
-        pcVar8->lastPacketTime = iVar4;
-        uVar13 = __restgprlr_27(1);
-        return (bool)uVar13;
-      }
-      Com_Printf(0xe,"connectResponse packet while not connecting.  Ignored.\n");
-      uVar13 = __restgprlr_27(0);
-      return (bool)uVar13;
+    if (4 < (int)cVar7) {
+      Com_Printf(0xe,"Dup connect received.  Ignored.\n");
+      return false;
     }
-    Com_Printf(0xe,"Dup connect received.  Ignored.\n");
-    uVar13 = __restgprlr_27(0);
-    return (bool)uVar13;
+    if (cVar7 != CA_CHALLENGING) {
+      Com_Printf(0xe,"connectResponse packet while not connecting.  Ignored.\n");
+      return false;
+    }
+    pcVar8 = CL_GetLocalClientConnection(param_1);
+    Netchan_Setup(param_1,&pcVar8->netchan,in_stack_fffff328,(int)_nStack00000020,
+                  (char *)_uStack00000028,0,pcVar8->netchanOutgoingBuffer,0x800);
+    iVar4 = Cmd_Argc();
+    if (iVar4 < 2) {
+      uVar9 = 0x3ff;
+    }
+    else {
+      pcVar3 = Cmd_Argv(1);
+      uVar9 = atoi(pcVar3);
+      uVar9 = uVar9 & 0x3ff;
+    }
+    Com_Printf(0xe,"Received \'connectResponse\' with statPacketsNeeded = %i\n");
+    if (uVar9 == 0) {
+      CL_SetLocalClientConnectionState(param_1,CA_CONNECTED);
+      Com_Printf(0xe,"Setting state to CA_CONNECTED in CL_DispatchConnectionlessPacket\n");
+      pcVar8->statPacketsToSend = 0;
+    }
+    else {
+      CL_SetLocalClientConnectionState(param_1,CA_SENDINGSTATS);
+      Com_Printf(0xe,"Setting state to CA_SENDINGSTATS in CL_DispatchConnectionlessPacket\n");
+      pcVar8->statPacketsToSend = (ushort)uVar9 & 0xff;
+      pcVar8->statPacketSendTime[0] = 0;
+      pcVar8->statPacketSendTime[1] = 0;
+      pcVar8->statPacketSendTime[2] = 0;
+      pcVar8->statPacketSendTime[3] = 0;
+      pcVar8->statPacketSendTime[4] = 0;
+      pcVar8->statPacketSendTime[5] = 0;
+      pcVar8->statPacketSendTime[6] = 0;
+      pcVar8->statPacketSendTime[7] = 0;
+      pcVar8->statPacketSendTime[8] = 0;
+      pcVar8->statPacketSendTime[9] = 0;
+      LB_CopyAccoladesStats(param_1);
+    }
+    LiveStorage_BeginGame(param_1);
+    iVar4 = cls.realtime;
+    pcVar8->lastPacketSentTime = -9999;
+    pcVar8->lastPacketTime = iVar4;
+    return true;
   }
   iVar4 = I_stricmp(pcVar3,"statResponse");
   if (iVar4 == 0) {
@@ -2820,44 +2777,40 @@ LAB_8234a784:
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_main_mp.cpp",
                       0xd64,0,"%s");
     }
-    if ((int)cVar7 < 7) {
-      if (cVar7 == CA_SENDINGSTATS) {
-        pcVar8 = CL_GetLocalClientConnection(LVar2);
-        pcVar3 = Cmd_Argv(1);
-        iVar4 = atoi(pcVar3);
-        Com_Printf(0xe,"Received \'statResponse\' with statPacketsNeeded = %i\n");
-        if (iVar4 == 0) {
-          if (((systemlink->current).enabled == false) ||
-             (iVar4 = NET_IsLocalAddress(in_stack_fffff328), iVar4 != 0)) {
-            BG_SaveMatchRulesToHistory(LVar2);
-            CL_SetLocalClientConnectionState(LVar2,CA_CONNECTED);
-            pcVar3 = "Setting state to CA_CONNECTED in CL_DispatchConnectionlessPacket\n";
-          }
-          else {
-            pcVar8->currentGamestatePacket = 0;
-            CL_SetLocalClientConnectionState(LVar2,CA_REQUESTING_MATCH_RULES);
-            pcVar3 = 
-            "Setting state to CA_REQUESTING_MATCH_RULES in CL_DispatchConnectionlessPacket\n";
-          }
-          Com_Printf(0xe,pcVar3);
-          pcVar8->statPacketsToSend = 0;
-        }
-        else {
-          pcVar8->statPacketsToSend = (ushort)iVar4 & 0x3ff;
-        }
-        iVar4 = cls.realtime;
-        pcVar8->lastPacketSentTime = -9999;
-        pcVar8->lastPacketTime = iVar4;
-        uVar13 = __restgprlr_27(1);
-        return (bool)uVar13;
-      }
-      Com_Printf(0xe,"statResponse packet while not syncing stats (connstate = %i).  Ignored.\n");
-      uVar13 = __restgprlr_27(0);
-      return (bool)uVar13;
+    if (6 < (int)cVar7) {
+      Com_Printf(0xe,"Dup statResponse received (connstate = %i).  Ignored.\n");
+      return false;
     }
-    Com_Printf(0xe,"Dup statResponse received (connstate = %i).  Ignored.\n");
-    uVar13 = __restgprlr_27(0);
-    return (bool)uVar13;
+    if (cVar7 != CA_SENDINGSTATS) {
+      Com_Printf(0xe,"statResponse packet while not syncing stats (connstate = %i).  Ignored.\n");
+      return false;
+    }
+    pcVar8 = CL_GetLocalClientConnection(param_1);
+    pcVar3 = Cmd_Argv(1);
+    iVar4 = atoi(pcVar3);
+    Com_Printf(0xe,"Received \'statResponse\' with statPacketsNeeded = %i\n");
+    if (iVar4 == 0) {
+      if (((systemlink->current).enabled == false) ||
+         (iVar4 = NET_IsLocalAddress(in_stack_fffff328), iVar4 != 0)) {
+        BG_SaveMatchRulesToHistory(param_1);
+        CL_SetLocalClientConnectionState(param_1,CA_CONNECTED);
+        pcVar3 = "Setting state to CA_CONNECTED in CL_DispatchConnectionlessPacket\n";
+      }
+      else {
+        pcVar8->currentGamestatePacket = 0;
+        CL_SetLocalClientConnectionState(param_1,CA_REQUESTING_MATCH_RULES);
+        pcVar3 = "Setting state to CA_REQUESTING_MATCH_RULES in CL_DispatchConnectionlessPacket\n";
+      }
+      Com_Printf(0xe,pcVar3);
+      pcVar8->statPacketsToSend = 0;
+    }
+    else {
+      pcVar8->statPacketsToSend = (ushort)iVar4 & 0x3ff;
+    }
+    iVar4 = cls.realtime;
+    pcVar8->lastPacketSentTime = -9999;
+    pcVar8->lastPacketTime = iVar4;
+    return true;
   }
   iVar4 = I_stricmp(pcVar3,"mruleResponse");
   if (iVar4 == 0) {
@@ -2865,45 +2818,40 @@ LAB_8234a784:
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_main_mp.cpp",
                       0xd98,0,"%s");
     }
-    if ((int)cVar7 < 8) {
-      if (cVar7 == CA_REQUESTING_MATCH_RULES) {
-        Com_Printf(0xe,"Received \'mruleResponse\' packet from host\n");
-        pcVar8 = CL_GetLocalClientConnection(LVar2);
-        MVar10 = CL_ReceiveGameStateInfoMessage
-                           (in_stack_fffff328,(msg_t *)_nStack00000020,
-                            (clientConnection_t *)_uStack00000028);
-        if (MVar10 == MR_RETCODE_COMPLETE) {
-          BG_SaveMatchRulesToHistory(LVar2);
-          CL_SetLocalClientConnectionState(LVar2,CA_CONNECTED);
-          Com_Printf(0xe,"Setting state to CA_CONNECTED in CL_DispatchConnectionlessPacket\n");
-        }
-        iVar4 = cls.realtime;
-        pcVar8->lastPacketSentTime = -9999;
-        pcVar8->lastPacketTime = iVar4;
-        uVar13 = __restgprlr_27(1);
-        return (bool)uVar13;
-      }
+    if (7 < (int)cVar7) {
+      Com_Printf(0xe,"Dup mruleResponse received (connstate = %i).  Ignored.\n");
+      return false;
+    }
+    if (cVar7 != CA_REQUESTING_MATCH_RULES) {
       Com_Printf(0xe,
                  "mruleResponse packet while not syncing match rules (connstate = %i).  Ignored.\n")
       ;
-      uVar13 = __restgprlr_27(0);
-      return (bool)uVar13;
+      return false;
     }
-    Com_Printf(0xe,"Dup mruleResponse received (connstate = %i).  Ignored.\n");
-    uVar13 = __restgprlr_27(0);
-    return (bool)uVar13;
+    Com_Printf(0xe,"Received \'mruleResponse\' packet from host\n");
+    pcVar8 = CL_GetLocalClientConnection(param_1);
+    MVar10 = CL_ReceiveGameStateInfoMessage
+                       (in_stack_fffff328,(msg_t *)_nStack00000020,
+                        (clientConnection_t *)_uStack00000028);
+    if (MVar10 == MR_RETCODE_COMPLETE) {
+      BG_SaveMatchRulesToHistory(param_1);
+      CL_SetLocalClientConnectionState(param_1,CA_CONNECTED);
+      Com_Printf(0xe,"Setting state to CA_CONNECTED in CL_DispatchConnectionlessPacket\n");
+    }
+    iVar4 = cls.realtime;
+    pcVar8->lastPacketSentTime = -9999;
+    pcVar8->lastPacketTime = iVar4;
+    return true;
   }
   iVar4 = I_stricmp(pcVar3,"infoResponse");
   if (iVar4 == 0) {
     CL_ServerInfoPacket(in_stack_fffff328,(msg_t *)_nStack00000020,(int)_uStack00000028);
-    uVar13 = __restgprlr_27(1);
-    return (bool)uVar13;
+    return true;
   }
   iVar4 = I_stricmp(pcVar3,"statusResponse");
   if (iVar4 == 0) {
     CL_ServerStatusResponse(in_stack_fffff328,(msg_t *)_nStack00000020);
-    uVar13 = __restgprlr_27(1);
-    return (bool)uVar13;
+    return true;
   }
   iVar4 = I_stricmp(pcVar3,"disconnect");
   if (iVar4 == 0) {
@@ -2911,63 +2859,58 @@ LAB_8234a784:
     if (1 < iVar4) {
       Cmd_Argv(1);
     }
-    CL_DisconnectPacket(LVar2,in_stack_fffff328,(char *)_nStack00000020);
-    uVar13 = __restgprlr_27(1);
-    return (bool)uVar13;
+    CL_DisconnectPacket(param_1,in_stack_fffff328,(char *)_nStack00000020);
+    return true;
   }
   iVar4 = I_stricmp(pcVar3,"echo");
   if (iVar4 == 0) {
     Cmd_Argv(1);
     va("%s");
     auVar1 = auStack00000024;
-    nVar11 = NET_GetLocalNetIDFromLocalClientNum(LVar2);
+    nVar11 = NET_GetLocalNetIDFromLocalClientNum(param_1);
     NET_OutOfBandPrint(nVar11,in_stack_fffff328,(char *)auVar1);
-    uVar13 = __restgprlr_27(1);
-    return (bool)uVar13;
+    return true;
   }
   iVar4 = I_stricmp(pcVar3,"keyAuthorize");
-  if (iVar4 == 0) goto LAB_8234a784;
+  if (iVar4 == 0) {
+    return true;
+  }
   iVar4 = I_stricmp(pcVar3,"print");
   if (iVar4 == 0) {
-    pcVar8 = CL_GetLocalClientConnection(LVar2);
+    pcVar8 = CL_GetLocalClientConnection(param_1);
     pcVar3 = MSG_ReadBigString(in_r6);
     I_strncpyz(pcVar8->serverMessage,pcVar3,0x100);
     Com_sprintf(acStack_830,0x800,"%s");
     Com_PrintMessage(0xe,acStack_830,0);
-    uVar13 = __restgprlr_27(1);
-    return (bool)uVar13;
+    return true;
   }
   iVar4 = I_stricmp(pcVar3,"error");
   if (iVar4 == 0) {
     if (cVar7 != CA_DISCONNECTED) {
-      CL_GetLocalClientConnection(LVar2);
+      CL_GetLocalClientConnection(param_1);
       iVar4 = NET_CompareBaseAdr(in_stack_fffff328,in_stack_fffff338);
       if (iVar4 != 0) {
         MSG_ReadBigString(in_r6);
         Com_Error(ERR_DROP,"%s");
-        uVar13 = __restgprlr_27(1);
-        return (bool)uVar13;
+        return true;
       }
     }
-LAB_8234aacc:
-    uVar13 = __restgprlr_27(0);
-    return (bool)uVar13;
+    return false;
   }
   iVar4 = I_stricmp(pcVar3,"loadingnewmap");
   if (iVar4 == 0) {
     if (0 < (int)cVar7) {
-      CL_GetLocalClientConnection(LVar2);
+      CL_GetLocalClientConnection(param_1);
       iVar4 = NET_CompareBaseAdr(in_stack_fffff328,in_stack_fffff338);
       if (iVar4 != 0) {
         pcVar3 = MSG_ReadStringLine(in_r6,acStack_c30,0x400);
         I_strncpyz(acStack_c70,pcVar3,0x40);
-        clientUIActives[LVar2].connectionState = CA_CONNECTED;
+        clientUIActives[param_1].connectionState = CA_CONNECTED;
         pcVar3 = MSG_ReadStringLine(in_r6,acStack_c30,0x400);
         CL_SetupForNewServerMap(acStack_c70,pcVar3);
       }
     }
-    uVar13 = __restgprlr_27(1);
-    return (bool)uVar13;
+    return true;
   }
   iVar4 = I_stricmp(pcVar3,"fastrestart");
   if (iVar4 != 0) {
@@ -2978,92 +2921,83 @@ LAB_8234aacc:
         Com_PrintWarning(0x19,
                          "Ignoring stray \'SP\' network message since we\'re not trying discover the host\'s exe at this time\n"
                         );
-        uVar13 = __restgprlr_27(1);
-        return (bool)uVar13;
+        return true;
       }
-      bVar14 = Live_CheckInviteHostInfo((netadr_t *)&stack0x00000020);
-      if (!bVar14) {
-        Com_PrintWarning(0x19,
-                         "Received <SP> connection-less packet, but the invitation data is invalid.\n"
-                        );
-        uVar13 = __restgprlr_27(1);
-        return (bool)uVar13;
+      bVar13 = Live_CheckInviteHostInfo((netadr_t *)&stack0x00000020);
+      if (bVar13) {
+        Com_Printf(0x19,
+                   "Received <SP> connection-less packet, starting SP to proceed with join-in-progress.\n"
+                  );
+        Live_SetInvitedStateToSP();
+        Cbuf_AddText(param_1,"startSingleplayer\n");
+        return true;
       }
-      Com_Printf(0x19,
-                 "Received <SP> connection-less packet, starting SP to proceed with join-in-progress.\n"
-                );
-      Live_SetInvitedStateToSP();
-      Cbuf_AddText(LVar2,"startSingleplayer\n");
-      uVar13 = __restgprlr_27(1);
-      return (bool)uVar13;
+      Com_PrintWarning(0x19,
+                       "Received <SP> connection-less packet, but the invitation data is invalid.\n"
+                      );
+      return true;
     }
     iVar4 = I_strcmp(pcVar3,"exe_check");
     if (iVar4 == 0) {
       RMsg_AddPrint((netadr_t *)&stack0x00000020,"MP",NS_MAXCLIENTS);
-      uVar13 = __restgprlr_27(1);
-      return (bool)uVar13;
+      return true;
     }
     iVar4 = I_strcmp(pcVar3,"exe_check_fail");
-    if (iVar4 == 0) {
-      Com_PrintWarning(0x19,
-                       "Received <exe_check_fail> connection-less packet, we tried to send a \"joinParty\" message to a singleplayer host\n"
-                      );
-      uVar13 = __restgprlr_27(1);
-      return (bool)uVar13;
-    }
-    iVar4 = I_strcmp(pcVar3,"MP");
-    if (iVar4 == 0) {
+    if (iVar4 != 0) {
+      iVar4 = I_strcmp(pcVar3,"MP");
+      if (iVar4 != 0) {
+        iVar4 = I_strcmp(pcVar3,"coopConnect");
+        if (iVar4 != 0) {
+          return false;
+        }
+        RMsg_AddPrint((netadr_t *)&stack0x00000020,"exe_check_fail",NS_MAXCLIENTS);
+        return true;
+      }
       IVar12 = Live_GetCheckInviteExeState();
       if (IVar12 != CHECK_EXE_STATE_QUERY) {
         Com_PrintWarning(0x19,
                          "Ignoring stray \'MP\' network message since we\'re not trying to check invite state currently\n"
                         );
-        uVar13 = __restgprlr_27(1);
-        return (bool)uVar13;
+        return true;
       }
-      bVar14 = Live_CheckInviteHostInfo((netadr_t *)&stack0x00000020);
-      if (!bVar14) {
-        Com_PrintWarning(0x19,
-                         "Received <MP> connection-less packet, but the invitation check state data is invalid.\n"
-                        );
-        uVar13 = __restgprlr_27(1);
-        return (bool)uVar13;
+      bVar13 = Live_CheckInviteHostInfo((netadr_t *)&stack0x00000020);
+      if (bVar13) {
+        Com_Printf(0x19,"Received <MP> connection-less packet, advancing to invite accept.\n");
+        Live_SetCheckInviteExeStateToMP();
+        return true;
       }
-      Com_Printf(0x19,"Received <MP> connection-less packet, advancing to invite accept.\n");
-      Live_SetCheckInviteExeStateToMP();
-      uVar13 = __restgprlr_27(1);
-      return (bool)uVar13;
+      Com_PrintWarning(0x19,
+                       "Received <MP> connection-less packet, but the invitation check state data is invalid.\n"
+                      );
+      return true;
     }
-    iVar4 = I_strcmp(pcVar3,"coopConnect");
-    if (iVar4 == 0) {
-      RMsg_AddPrint((netadr_t *)&stack0x00000020,"exe_check_fail",NS_MAXCLIENTS);
-      uVar13 = __restgprlr_27(1);
-      return (bool)uVar13;
-    }
-    goto LAB_8234aacc;
+    Com_PrintWarning(0x19,
+                     "Received <exe_check_fail> connection-less packet, we tried to send a \"joinParty\" message to a singleplayer host\n"
+                    );
+    return true;
   }
-  cVar7 = CL_GetLocalClientConnectionState(LVar2);
-  if ((int)cVar7 < 3) goto LAB_8234b308;
-  pcVar8 = CL_GetLocalClientConnection(LVar2);
-  cVar7 = CL_GetLocalClientConnectionState(LVar2);
+  cVar7 = CL_GetLocalClientConnectionState(param_1);
+  if ((int)cVar7 < 3) {
+    return true;
+  }
+  pcVar8 = CL_GetLocalClientConnection(param_1);
+  cVar7 = CL_GetLocalClientConnectionState(param_1);
   if (cVar7 == CA_ACTIVE) {
     iVar4 = NET_CompareBaseAdr(in_stack_fffff328,in_stack_fffff338);
-    bVar14 = true;
-    if (iVar4 == 0) goto LAB_8234b2f8;
+    bVar13 = true;
+    if (iVar4 != 0) goto LAB_8234b2fc;
   }
-  else {
-LAB_8234b2f8:
-    bVar14 = false;
-  }
-  pcVar8->isServerRestarting = bVar14;
-LAB_8234b308:
-  uVar13 = __restgprlr_27(1);
-  return (bool)uVar13;
+  bVar13 = false;
+LAB_8234b2fc:
+  pcVar8->isServerRestarting = bVar13;
+  return true;
 }
 
 
 // 8234B4E0  CL_ConnectionLessPacketCmd  (client_mp/cl_main_mp.cpp:3763)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
@@ -3071,66 +3005,61 @@ bool CL_ConnectionLessPacketCmd
                (LocalClientNum_t param_1,netadr_t param_2,char *param_3,msg_t *param_4,int param_5)
 
 {
-  LocalClientNum_t LVar1;
-  bool bVar2;
-  undefined1 uVar3;
+  bool bVar1;
   netadr_t in_stack_ffffff88;
   
-  LVar1 = __savegprlr_27(param_1);
   Cmd_TokenizeString((char *)param_5);
-  bVar2 = CL_DispatchConnectionlessPacket(LVar1,in_stack_ffffff88,(msg_t *)param_3,(int)param_4);
+  bVar1 = CL_DispatchConnectionlessPacket(param_1,in_stack_ffffff88,(msg_t *)param_3,(int)param_4);
   Cmd_EndTokenizedString();
-  uVar3 = __restgprlr_27(bVar2);
-  return (bool)uVar3;
+  return bVar1;
 }
 
 
 // 8234B538  CL_ConnectionlessPacket  (client_mp/cl_main_mp.cpp:3775)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 bool CL_ConnectionlessPacket(LocalClientNum_t param_1,netadr_t param_2,msg_t *param_3,int param_4)
 
 {
-  LocalClientNum_t LVar1;
-  char *pcVar2;
-  int iVar3;
-  undefined1 uVar4;
-  bool bVar5;
+  char *pcVar1;
+  int iVar2;
+  bool bVar3;
   msg_t *in_r6;
   bool *in_r7;
   netadr_t in_stack_fffffb68;
   undefined1 local_450;
   char acStack_440 [1088];
   
-  LVar1 = __savegprlr_26(param_1);
   MSG_BeginReading(in_r6);
   MSG_ReadLong(in_r6);
-  CL_Netchan_AddOOBProfilePacket(LVar1,in_r6->cursize);
-  pcVar2 = MSG_ReadStringLine(in_r6,acStack_440,0x400);
-  iVar3 = RMsg_HandleReliablePacket
-                    (LVar1,pcVar2,in_stack_fffffb68,param_3,param_4,
+  CL_Netchan_AddOOBProfilePacket(param_1,in_r6->cursize);
+  pcVar1 = MSG_ReadStringLine(in_r6,acStack_440,0x400);
+  iVar2 = RMsg_HandleReliablePacket
+                    (param_1,pcVar1,in_stack_fffffb68,param_3,param_4,
                      (_func___cdecl_bool_LocalClientNum_t_netadr_t_char_ptr_msg_t_ptr_int *)in_r6,
                      in_r7);
-  if (iVar3 != 0) {
-    uVar4 = __restgprlr_26(local_450);
-    return (bool)uVar4;
+  if (iVar2 != 0) {
+    return (bool)local_450;
   }
   if ((showpackets->current).integer != 0) {
     NET_AdrToString(in_stack_fffffb68);
     Com_Printf(0x10,"recv: %s->\'%s\'\n");
   }
-  Cmd_TokenizeString(pcVar2);
-  bVar5 = CL_DispatchConnectionlessPacket(LVar1,in_stack_fffffb68,param_3,param_4);
+  Cmd_TokenizeString(pcVar1);
+  bVar3 = CL_DispatchConnectionlessPacket(param_1,in_stack_fffffb68,param_3,param_4);
   Cmd_EndTokenizedString();
-  uVar4 = __restgprlr_26(bVar5);
-  return (bool)uVar4;
+  return bVar3;
 }
 
 
 // 82343990  CL_InitLoad  (client_mp/cl_main_mp.cpp:3817)
 
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 void CL_InitLoad(char *param_1,char *param_2)
@@ -3139,55 +3068,54 @@ void CL_InitLoad(char *param_1,char *param_2)
   uint uVar1;
   bool bVar2;
   int iVar3;
-  char *pcVar4;
-  bool *pbVar5;
-  char *pcVar6;
-  uint uVar7;
+  bool *pbVar4;
+  char *pcVar5;
+  uint uVar6;
   
-  pcVar4 = (char *)__savegprlr_22(param_1);
-  pbVar5 = &clientUIActives[0].isRunning;
+  pbVar4 = &clientUIActives[0].isRunning;
   do {
-    if (*pbVar5 != false) {
+    if (*pbVar4 != false) {
       bVar2 = true;
       goto LAB_823439d0;
     }
-    pbVar5 = pbVar5 + 0x1e4;
-  } while ((int)pbVar5 < -0x7d4c137f);
+    pbVar4 = pbVar4 + 0x1e4;
+  } while ((int)pbVar4 < -0x7d4c137f);
   bVar2 = false;
 LAB_823439d0:
   if (bVar2) {
     MSG_SetupNetFieldListsForGame();
-    uVar7 = 0;
+    uVar6 = 0;
     if (0 < cl_maxLocalClients) {
-      pcVar6 = cl_pinglist[0xf].info + 0x2a8;
+      pcVar5 = cl_pinglist[0xf].info + 0x2a8;
       do {
-        if (3 < uVar7) {
+        if (3 < uVar6) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\client_mp.h",
                           0x4aa,0,
                           "localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)"
                          );
         }
-        uVar1 = *(uint *)(pcVar6 + 0x1e4);
-        if (3 < uVar7) {
+        uVar1 = *(uint *)(pcVar5 + 0x1e4);
+        if (3 < uVar6) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\client_mp.h",
                           0x4b5,0,
                           "client doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)");
         }
         iVar3 = cl_maxLocalClients;
-        uVar7 = uVar7 + 1;
-        pcVar6 = pcVar6 + 0x1e4;
-        *(uint *)pcVar6 = -(uint)((ulonglong)uVar1 - 5 < 0xffffffff7ffffffb) & 5;
-      } while ((int)uVar7 < iVar3);
+        uVar6 = uVar6 + 1;
+        pcVar5 = pcVar5 + 0x1e4;
+        *(uint *)pcVar5 = -(uint)((ulonglong)uVar1 - 5 < 0xffffffff7ffffffb) & 5;
+      } while ((int)uVar6 < iVar3);
     }
-    UI_SetMap(pcVar4,param_2);
+    UI_SetMap(param_1,param_2);
   }
-  __restgprlr_22();
   return;
 }
 
 
 // 8234B630  CL_PacketEvent  (client_mp/cl_main_mp.cpp:3852)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
@@ -3196,26 +3124,23 @@ LAB_823439d0:
 bool CL_PacketEvent(LocalClientNum_t param_1,netadr_t param_2,msg_t *param_3,int param_4)
 
 {
-  int iVar1;
-  LocalClientNum_t LVar2;
+  LocalClientNum_t LVar1;
+  int iVar2;
   bool bVar8;
-  undefined1 uVar9;
   connstate_t cVar3;
   clientConnection_t *pcVar4;
   int iVar5;
   int iVar6;
   int iVar7;
   msg_t *in_r6;
-  int *piVar10;
-  _func___cdecl_void_void_ptr_int_int **pp_Var11;
+  int *piVar9;
+  _func___cdecl_void_void_ptr_int_int **pp_Var10;
   netadr_t in_stack_ffffff68;
   netadr_t in_stack_ffffff78;
   
-  LVar2 = __savegprlr_24(param_1);
   if ((3 < in_r6->cursize) && (*(int *)in_r6->data == -1)) {
-    bVar8 = CL_ConnectionlessPacket(LVar2,in_stack_ffffff68,param_3,param_4);
-    uVar9 = __restgprlr_24(bVar8);
-    return (bool)uVar9;
+    bVar8 = CL_ConnectionlessPacket(param_1,in_stack_ffffff68,param_3,param_4);
+    return bVar8;
   }
   if (in_r6->targetLocalNetID == NS_MAXCLIENTS) {
     NET_AdrToString(in_stack_ffffff68);
@@ -3229,33 +3154,30 @@ bool CL_PacketEvent(LocalClientNum_t param_1,netadr_t param_2,msg_t *param_3,int
                       0xf1e,0,
                       "msg->targetLocalNetID doesn\'t index NS_MAXCLIENTS\n\t%i not in [0, %i)");
     }
-    LVar2 = in_r6->targetLocalNetID;
-    if (LOCAL_CLIENT_3 < LVar2) {
+    LVar1 = in_r6->targetLocalNetID;
+    if (LOCAL_CLIENT_3 < LVar1) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_main_mp.cpp",
                       0xf20,0,
                       "localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)")
       ;
     }
-    cVar3 = CL_GetLocalClientConnectionState(LVar2);
+    cVar3 = CL_GetLocalClientConnectionState(LVar1);
     if ((int)cVar3 < 5) {
       NET_AdrToString(in_stack_ffffff68);
       Com_DPrintf(0xe,"%s: Got msg sequence %i but connstate (%i) is < CA_CONNECTED\n");
-      uVar9 = __restgprlr_24(0);
-      return (bool)uVar9;
+      return false;
     }
-    pcVar4 = CL_GetLocalClientConnection(LVar2);
+    pcVar4 = CL_GetLocalClientConnection(LVar1);
     if (in_r6->cursize < 4) {
       NET_AdrToString(in_stack_ffffff68);
       Com_Printf(0xe,"%s: Runt packet\n");
-      uVar9 = __restgprlr_24(1);
-      return (bool)uVar9;
+      return true;
     }
     iVar5 = NET_CompareAdr(in_stack_ffffff68,in_stack_ffffff78);
     if (iVar5 == 0) {
       NET_AdrToString(in_stack_ffffff68);
       Com_DPrintf(0xe,"%s:sequenced packet without connection\n");
-      uVar9 = __restgprlr_24(0);
-      return (bool)uVar9;
+      return false;
     }
     pcVar4->lastPacketTime = cls.realtime;
     iVar5 = Netchan_Process(&pcVar4->netchan,in_r6);
@@ -3265,11 +3187,11 @@ bool CL_PacketEvent(LocalClientNum_t param_1,netadr_t param_2,msg_t *param_3,int
                         0xf44,0,"%s\n\t(msg->readcount) = %i");
       }
       iVar5 = pcVar4->reliableAcknowledge;
-      piVar10 = &pcVar4->serverMessageSequence;
-      iVar1 = *piVar10;
+      piVar9 = &pcVar4->serverMessageSequence;
+      iVar2 = *piVar9;
       in_r6->readcount = 0;
       iVar6 = MSG_ReadLong(in_r6);
-      *piVar10 = iVar6;
+      *piVar9 = iVar6;
       iVar7 = MSG_ReadLong(in_r6);
       pcVar4->reliableAcknowledge = iVar7;
       if (iVar7 < pcVar4->reliableSequence + -0x80) {
@@ -3277,47 +3199,44 @@ bool CL_PacketEvent(LocalClientNum_t param_1,netadr_t param_2,msg_t *param_3,int
                          "CL_PacketEvent - cannot decode message since lost command which generates the key - %i %i\n"
                         );
         pcVar4->reliableAcknowledge = pcVar4->reliableSequence;
-        uVar9 = __restgprlr_24(0);
-        return (bool)uVar9;
+        return false;
       }
       PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffff,"parse msg");
-      CL_ParseServerMessage(LVar2,in_r6);
+      CL_ParseServerMessage(LVar1,in_r6);
       PIXEndNamedEvent();
       if (in_r6->overflowed != 0) {
         Com_DPrintf(0xe,"CL_PacketEvent - ignoring illegible message\n");
-        *piVar10 = iVar1;
+        *piVar9 = iVar2;
         pcVar4->reliableAcknowledge = iVar5;
-        uVar9 = __restgprlr_24(0);
-        return (bool)uVar9;
+        return false;
       }
-      bVar8 = CL_Demo_IsRecording(LVar2);
-      if ((bVar8) && (bVar8 = CL_Demo_IsWaitingForUncompressedSnapshot(LVar2), !bVar8)) {
-        if (*piVar10 != iVar6) {
+      bVar8 = CL_Demo_IsRecording(LVar1);
+      if ((bVar8) && (bVar8 = CL_Demo_IsWaitingForUncompressedSnapshot(LVar1), !bVar8)) {
+        if (*piVar9 != iVar6) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_main_mp.cpp"
                           ,0xf74,0,"clc->serverMessageSequence == serverMessageSequence\n\t%i, %i");
         }
-        bVar8 = CL_Demo_ReachedFileSizeLimit(LVar2);
+        bVar8 = CL_Demo_ReachedFileSizeLimit(LVar1);
         if (bVar8) {
-          CL_Demo_FlushToHardDriveAndEndDemo(LVar2);
-          uVar9 = __restgprlr_24(1);
-          return (bool)uVar9;
+          CL_Demo_FlushToHardDriveAndEndDemo(LVar1);
+          return true;
         }
-        pp_Var11 = &(pcVar4->clientDemo).demoWrite;
-        CL_Demo_WriteAllClientArchives(*pp_Var11,LVar2);
-        CL_Demo_WriteRawMessage(*pp_Var11,LVar2,iVar6,in_r6->data + 4,in_r6->cursize + -4);
-        CL_Demo_UpdateRuntimeFooterInformation(LVar2);
+        pp_Var10 = &(pcVar4->clientDemo).demoWrite;
+        CL_Demo_WriteAllClientArchives(*pp_Var10,LVar1);
+        CL_Demo_WriteRawMessage(*pp_Var10,LVar1,iVar6,in_r6->data + 4,in_r6->cursize + -4);
+        CL_Demo_UpdateRuntimeFooterInformation(LVar1);
       }
-      uVar9 = __restgprlr_24(1);
-      return (bool)uVar9;
+      return true;
     }
   }
-  uVar9 = __restgprlr_24(0);
-  return (bool)uVar9;
+  return false;
 }
 
 
 // 82343AA8  CL_ServerTimedOut  (client_mp/cl_main_mp.cpp:3978)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
@@ -3325,53 +3244,52 @@ void CL_ServerTimedOut(LocalClientNum_t param_1)
 
 {
   uint uVar1;
-  LocalClientNum_t LVar2;
-  bool bVar5;
-  PartyData *pPVar3;
-  SessionData *pSVar4;
+  bool bVar4;
+  PartyData *pPVar2;
+  SessionData *pSVar3;
   PartyActiveClient local_40 [8];
   
-  LVar2 = __savegprlr_27(param_1);
-  if (LOCAL_CLIENT_3 < LVar2) {
+  if (LOCAL_CLIENT_3 < param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\client_mp.h",0x4aa,0
                     ,"localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)");
   }
-  bVar5 = IsServerRunning();
-  if (!bVar5) {
-    CL_GetLocalClientMigrationState(LVar2);
+  bVar4 = IsServerRunning();
+  if (!bVar4) {
+    CL_GetLocalClientMigrationState(param_1);
     Com_Printf(0xe,"Server timed out. Connection state is %i. Migration state is %i.\n");
-    if (LOCAL_CLIENT_3 < LVar2) {
+    if (LOCAL_CLIENT_3 < param_1) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\client_mp.h",0x4d0
                       ,0,"client doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)");
     }
-    CL_UpdateMigrationProfile(clientUIActives[LVar2].migrationState,CMSTATE_INACTIVE);
-    clientUIActives[LVar2].migrationState = CMSTATE_INACTIVE;
+    CL_UpdateMigrationProfile(clientUIActives[param_1].migrationState,CMSTATE_INACTIVE);
+    clientUIActives[param_1].migrationState = CMSTATE_INACTIVE;
     Migration_Shutdown();
-    bVar5 = Lobby_IsInLobby();
-    if (bVar5) {
-      bVar5 = Lobby_AreWeHost();
-      if (bVar5) {
-        pPVar3 = Lobby_GetPartyData();
-        Party_StopPartyOnBackout(pPVar3);
+    bVar4 = Lobby_IsInLobby();
+    if (bVar4) {
+      bVar4 = Lobby_AreWeHost();
+      if (bVar4) {
+        pPVar2 = Lobby_GetPartyData();
+        Party_StopPartyOnBackout(pPVar2);
       }
       else {
-        pSVar4 = Lobby_GetSession();
-        uVar1 = (pSVar4->dyn).sessionCreateController;
-        pPVar3 = Lobby_GetPartyData();
-        local_40[0] = Party_GetMainActiveClient(pPVar3,uVar1);
-        pPVar3 = Lobby_GetPartyData();
-        PartyClient_LostConnectionToHost(pPVar3,local_40);
+        pSVar3 = Lobby_GetSession();
+        uVar1 = (pSVar3->dyn).sessionCreateController;
+        pPVar2 = Lobby_GetPartyData();
+        local_40[0] = Party_GetMainActiveClient(pPVar2,uVar1);
+        pPVar2 = Lobby_GetPartyData();
+        PartyClient_LostConnectionToHost(pPVar2,local_40);
       }
     }
     Com_Error(ERR_DROP,"EXE_ERR_SERVER_TIMEOUT");
   }
-  __restgprlr_27();
   return;
 }
 
 
 // 82343BD8  CL_CheckTimeout  (client_mp/cl_main_mp.cpp:4020)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -3381,85 +3299,78 @@ void CL_CheckTimeout(LocalClientNum_t param_1)
 
 {
   connstate_t cVar1;
-  LocalClientNum_t LVar2;
-  clientActive_t *pcVar3;
-  clientConnection_t *pcVar4;
-  bool bVar5;
-  int iVar6;
+  clientActive_t *pcVar2;
+  clientConnection_t *pcVar3;
+  bool bVar4;
+  int iVar5;
   
-  LVar2 = __savegprlr_28(param_1);
-  if (LOCAL_CLIENT_3 < LVar2) {
+  if (LOCAL_CLIENT_3 < param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\client_mp.h",0x4aa,0
                     ,"localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)");
   }
-  cVar1 = clientUIActives[LVar2].connectionState;
+  cVar1 = clientUIActives[param_1].connectionState;
   if ((int)cVar1 < 3) {
-    if ((int)LVar2 < cl_maxLocalClients) {
-      pcVar3 = CL_GetLocalClientGlobals(LVar2);
-      pcVar3->timeoutcount = 0;
-      __restgprlr_28();
+    if ((int)param_1 < cl_maxLocalClients) {
+      pcVar2 = CL_GetLocalClientGlobals(param_1);
+      pcVar2->timeoutcount = 0;
       return;
     }
   }
   else {
-    pcVar3 = CL_GetLocalClientGlobals(LVar2);
-    pcVar4 = CL_GetLocalClientConnection(LVar2);
-    bVar5 = CL_Demo_IsPlaying(LVar2);
-    if (!bVar5) {
+    pcVar2 = CL_GetLocalClientGlobals(param_1);
+    pcVar3 = CL_GetLocalClientConnection(param_1);
+    bVar4 = CL_Demo_IsPlaying(param_1);
+    if (!bVar4) {
       if (((((cl_paused->current).integer != 0) && ((sv_paused->current).integer != 0)) ||
           ((int)cVar1 < 10)) ||
-         ((pcVar4->lastPacketTime < 1 ||
-          ((float)(longlong)(cls.realtime - pcVar4->lastPacketTime) <=
+         ((pcVar3->lastPacketTime < 1 ||
+          ((float)(longlong)(cls.realtime - pcVar3->lastPacketTime) <=
            (cl_timeout->current).value * 1000.0)))) {
-        if ((((int)cVar1 < 4) || ((9 < (int)cVar1 || (pcVar4->lastPacketTime < 1)))) ||
-           ((float)(longlong)(cls.realtime - pcVar4->lastPacketTime) <=
+        if ((((int)cVar1 < 4) || ((9 < (int)cVar1 || (pcVar3->lastPacketTime < 1)))) ||
+           ((float)(longlong)(cls.realtime - pcVar3->lastPacketTime) <=
             (cl_connectTimeout->current).value * 1000.0)) {
           if ((((cVar1 == CA_CONNECTING) || (cVar1 == CA_CHALLENGING)) &&
-              (pcVar4->lastPacketTime == 0)) &&
-             ((cl_connectionAttempts->current).integer < pcVar4->connectPacketCount)) {
-            iVar6 = pcVar3->timeoutcount + 1;
-            pcVar3->timeoutcount = iVar6;
-            if (5 < iVar6) {
+              (pcVar3->lastPacketTime == 0)) &&
+             ((cl_connectionAttempts->current).integer < pcVar3->connectPacketCount)) {
+            iVar5 = pcVar2->timeoutcount + 1;
+            pcVar2->timeoutcount = iVar5;
+            if (5 < iVar5) {
               Com_Printf(0xe,
                          "Server timed out during connstate %d due to realtime %d - lastPacketTime %d > cl_connectionAttempts %d\n"
                         );
-              CL_ServerTimedOut(LVar2);
-              __restgprlr_28();
+              CL_ServerTimedOut(param_1);
               return;
             }
           }
           else {
-            pcVar3->timeoutcount = 0;
+            pcVar2->timeoutcount = 0;
           }
         }
         else {
-          iVar6 = pcVar3->timeoutcount + 1;
-          pcVar3->timeoutcount = iVar6;
-          if (5 < iVar6) {
+          iVar5 = pcVar2->timeoutcount + 1;
+          pcVar2->timeoutcount = iVar5;
+          if (5 < iVar5) {
             Com_Printf(0xe,
                        "Server timed out during connstate %d due to realtime %d - lastPacketTime %d > cl_connectTimeout %d\n"
                       );
-            CL_ServerTimedOut(LVar2);
-            __restgprlr_28();
+            CL_ServerTimedOut(param_1);
             return;
           }
         }
       }
       else {
-        iVar6 = pcVar3->timeoutcount + 1;
-        pcVar3->timeoutcount = iVar6;
-        if (5 < iVar6) {
+        iVar5 = pcVar2->timeoutcount + 1;
+        pcVar2->timeoutcount = iVar5;
+        if (5 < iVar5) {
           Com_Printf(0xe,
                      "Server timed out during connstate %d due to realtime %d - lastPacketTime %d > cl_timeout %d\n"
                     );
-          CL_ServerTimedOut(LVar2);
-          __restgprlr_28();
+          CL_ServerTimedOut(param_1);
           return;
         }
       }
     }
   }
-  __restgprlr_28();
   return;
 }
 
@@ -3574,6 +3485,8 @@ void CL_RunOncePerClientFrame(int param_1,float param_2)
 
 // 82348108  CL_Frame  (client_mp/cl_main_mp.cpp:4206)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -3585,32 +3498,30 @@ void CL_Frame(LocalClientNum_t param_1)
   char cVar1;
   connstate_t cVar2;
   long lVar3;
-  LocalClientNum_t LVar4;
-  int iVar5;
-  bool bVar12;
-  char *pcVar6;
-  int iVar7;
-  connstate_t cVar8;
-  uiMenuCommand_t uVar9;
-  clientMigState_t cVar10;
-  clientActive_t *pcVar11;
-  char *pcVar13;
+  int iVar4;
+  bool bVar11;
+  char *pcVar5;
+  int iVar6;
+  connstate_t cVar7;
+  uiMenuCommand_t uVar8;
+  clientMigState_t cVar9;
+  clientActive_t *pcVar10;
+  char *pcVar12;
   char in_RESERVE;
   byte in_cr0;
   
-  LVar4 = __savegprlr_25(param_1);
-  if (LOCAL_CLIENT_3 < LVar4) {
+  if (LOCAL_CLIENT_3 < param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\client_mp.h",0x47f,0
                     ,"localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)");
   }
-  if (LOCAL_CLIENT_3 < LVar4) {
+  if (LOCAL_CLIENT_3 < param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\client_mp.h",0x4aa,0
                     ,"localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)");
   }
-  cVar2 = clientUIActives[LVar4].connectionState;
-  iVar5 = CL_ControllerIndexFromClientNum(LVar4);
-  bVar12 = CL_AllLocalClientsInactive();
-  if ((bVar12) || (bVar12 = CL_IsLocalClientActive(LVar4), bVar12)) {
+  cVar2 = clientUIActives[param_1].connectionState;
+  iVar4 = CL_ControllerIndexFromClientNum(param_1);
+  bVar11 = CL_AllLocalClientsInactive();
+  if ((bVar11) || (bVar11 = CL_IsLocalClientActive(param_1), bVar11)) {
     do {
       lVar3 = cls.scriptError;
       if (in_RESERVE != '\0') {
@@ -3619,55 +3530,56 @@ void CL_Frame(LocalClientNum_t param_1)
       }
     } while (!(bool)(in_cr0 >> 1 & 1));
     if (lVar3 != 0) {
-      pcVar6 = Dvar_GetString("com_errorMessage");
-      pcVar13 = pcVar6;
+      pcVar5 = Dvar_GetString("com_errorMessage");
+      pcVar12 = pcVar5;
       do {
-        cVar1 = *pcVar13;
-        pcVar13 = pcVar13 + 1;
+        cVar1 = *pcVar12;
+        pcVar12 = pcVar12 + 1;
       } while (cVar1 != '\0');
-      if (((int)pcVar13 - (int)pcVar6 != 1) && (iVar7 = I_stricmp(pcVar6,";"), iVar7 != 0)) {
-        UI_OpenMenu(LVar4,"error_popmenu");
-        bVar12 = CL_IsLocalClientActive(LVar4);
-        if (bVar12) {
-          bVar12 = Menu_IsMenuOpenAndVisible(LVar4,"error_popmenu");
-          if (!bVar12) {
+      if (((int)pcVar12 - (int)pcVar5 != 1) && (iVar6 = I_stricmp(pcVar5,";"), iVar6 != 0)) {
+        UI_OpenMenu(param_1,"error_popmenu");
+        bVar11 = CL_IsLocalClientActive(param_1);
+        if (bVar11) {
+          bVar11 = Menu_IsMenuOpenAndVisible(param_1,"error_popmenu");
+          if (!bVar11) {
             MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_main_mp.cpp"
                             ,0x108b,0,"%s");
           }
-          cVar8 = CL_GetLocalClientConnectionState(LVar4);
-          if ((int)cVar8 < 1) {
+          cVar7 = CL_GetLocalClientConnectionState(param_1);
+          if ((int)cVar7 < 1) {
             MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_main_mp.cpp"
                             ,0x108c,0,"%s");
           }
-          Key_AddCatcher(LVar4,0x10);
+          Key_AddCatcher(param_1,0x10);
         }
       }
     }
   }
-  bVar12 = CL_AllLocalClientsDisconnected();
-  if (((bVar12) && (LVar4 == LOCAL_CLIENT_0)) && ((clientUIActives[0].keyCatchers & 0x10U) == 0)) {
+  bVar11 = CL_AllLocalClientsDisconnected();
+  if (((bVar11) && (param_1 == LOCAL_CLIENT_0)) && ((clientUIActives[0].keyCatchers & 0x10U) == 0))
+  {
     clientUIActives[0].keyCatchers = clientUIActives[0].keyCatchers | 0x10;
   }
   Hunk_CheckTempMemoryClear();
   Hunk_CheckTempMemoryHighClear();
-  if (clientUIActives[LVar4].isRunning != false) {
-    CL_DevGuiFrame(LVar4);
-    UI_ScreenshotUpdate(LVar4);
-    if ((clientUIActives[LVar4].active != false) ||
-       (bVar12 = CL_AllLocalClientsDisconnected(), bVar12)) {
+  if (clientUIActives[param_1].isRunning != false) {
+    CL_DevGuiFrame(param_1);
+    UI_ScreenshotUpdate(param_1);
+    if ((clientUIActives[param_1].active != false) ||
+       (bVar11 = CL_AllLocalClientsDisconnected(), bVar11)) {
       if ((((g_generateAllMaps != 0) &&
-           ((bVar12 = Live_IsUserSignedInToLive(iVar5), bVar12 &&
-            (bVar12 = Live_UserIsGuest(iVar5), !bVar12)))) &&
-          (bVar12 = LiveStorage_DoWeHavePlaylists(), bVar12)) &&
-         ((bVar12 = LiveStorage_DoWeHaveStatsForSource(iVar5,STATS_ONLINE), bVar12 &&
-          (iVar5 = Live_GetUploadSpeed(), 0 < iVar5)))) {
-        iVar5 = Playlist_GetPlaylistCount();
-        if ((iVar5 < 2) && (iVar5 = Playlist_GetPlaylistCount(), 0 < iVar5)) {
-          uVar9 = UI_GetActiveMenu(LOCAL_CLIENT_0);
-          if (uVar9 != UIMENU_NONE) {
-            iVar5 = CL_ControllerIndexFromClientNum(LOCAL_CLIENT_0);
+           ((bVar11 = Live_IsUserSignedInToLive(iVar4), bVar11 &&
+            (bVar11 = Live_UserIsGuest(iVar4), !bVar11)))) &&
+          (bVar11 = LiveStorage_DoWeHavePlaylists(), bVar11)) &&
+         ((bVar11 = LiveStorage_DoWeHaveStatsForSource(iVar4,STATS_ONLINE), bVar11 &&
+          (iVar4 = Live_GetUploadSpeed(), 0 < iVar4)))) {
+        iVar4 = Playlist_GetPlaylistCount();
+        if ((iVar4 < 2) && (iVar4 = Playlist_GetPlaylistCount(), 0 < iVar4)) {
+          uVar8 = UI_GetActiveMenu(LOCAL_CLIENT_0);
+          if (uVar8 != UIMENU_NONE) {
+            iVar4 = CL_ControllerIndexFromClientNum(LOCAL_CLIENT_0);
             if (cl_multi_gamepads_enabled != 0) {
-              CL_ForceNoSplitscreenControl("CL_Frame_1",iVar5);
+              CL_ForceNoSplitscreenControl("CL_Frame_1",iVar4);
             }
             if ((onlinegame->current).enabled == false) {
               Dvar_SetBool(onlinegame,true);
@@ -3678,16 +3590,16 @@ void CL_Frame(LocalClientNum_t param_1)
             if ((session_advertiseFailedSearchCount->current).integer != 0) {
               Dvar_SetInt(session_advertiseFailedSearchCount,0);
             }
-            bVar12 = Lobby_IsInLobby();
-            if (!bVar12) {
-              Cbuf_ExecuteBuffer(LOCAL_CLIENT_0,iVar5,"xstartlobby");
+            bVar11 = Lobby_IsInLobby();
+            if (!bVar11) {
+              Cbuf_ExecuteBuffer(LOCAL_CLIENT_0,iVar4,"xstartlobby");
             }
             if ((onlinegame->current).enabled == false) {
               MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_main_mp.cpp"
                               ,0x10ce,0,"%s");
             }
-            bVar12 = Lobby_IsInLobby();
-            if (!bVar12) {
+            bVar11 = Lobby_IsInLobby();
+            if (!bVar11) {
               MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_main_mp.cpp"
                               ,0x10cf,0,"%s");
             }
@@ -3698,39 +3610,38 @@ void CL_Frame(LocalClientNum_t param_1)
         }
       }
       Profile_Begin(0x160);
-      CL_VoiceFrame(LVar4);
+      CL_VoiceFrame(param_1);
       Profile_EndInternal((double *)0x0);
-      CL_MigrationFrame(LVar4);
-      cVar10 = CL_GetLocalClientMigrationState(LVar4);
-      if (cVar10 != CMSTATE_LIMBO) {
-        CL_UpdateColor(LVar4);
-        CL_CheckUserinfo(LVar4);
-        CL_CheckForResend(LVar4);
-        CL_CheckTimeout(LVar4);
-        CL_UpdateInGameState(LVar4);
-        if ((clientUIActives[LVar4].keyCatchers & 0x10U) != 0) {
-          iVar5 = CL_ControllerIndexFromClientNum(LVar4);
-          CL_GamepadRepeatScrollingButtons(LVar4,iVar5);
+      CL_MigrationFrame(param_1);
+      cVar9 = CL_GetLocalClientMigrationState(param_1);
+      if (cVar9 != CMSTATE_LIMBO) {
+        CL_UpdateColor(param_1);
+        CL_CheckUserinfo(param_1);
+        CL_CheckForResend(param_1);
+        CL_CheckTimeout(param_1);
+        CL_UpdateInGameState(param_1);
+        if ((clientUIActives[param_1].keyCatchers & 0x10U) != 0) {
+          iVar4 = CL_ControllerIndexFromClientNum(param_1);
+          CL_GamepadRepeatScrollingButtons(param_1,iVar4);
         }
-        CL_SetCGameTime(LVar4);
-        CL_CreateCmdsDuringConnection(LVar4);
+        CL_SetCGameTime(param_1);
+        CL_CreateCmdsDuringConnection(param_1);
         if (((int)cVar2 < 10) && (4 < (int)cVar2)) {
-          CL_SendCmd(LVar4);
+          CL_SendCmd(param_1);
         }
         if (((com_sv_running->current).enabled == false) && (cVar2 == CA_ACTIVE)) {
-          pcVar11 = CL_GetLocalClientGlobals(LVar4);
-          iVar5 = CL_Demo_GetTimeDemoBaseTime(LVar4);
-          if ((1999 < pcVar11->serverTime - iVar5) &&
-             (bVar12 = Session_Started(&g_serverSession), !bVar12)) {
-            iVar5 = CL_ControllerIndexFromClientNum(LVar4);
-            Session_StartGameSession(iVar5,&g_serverSession);
+          pcVar10 = CL_GetLocalClientGlobals(param_1);
+          iVar4 = CL_Demo_GetTimeDemoBaseTime(param_1);
+          if ((1999 < pcVar10->serverTime - iVar4) &&
+             (bVar11 = Session_Started(&g_serverSession), !bVar11)) {
+            iVar4 = CL_ControllerIndexFromClientNum(param_1);
+            Session_StartGameSession(iVar4,&g_serverSession);
           }
         }
-        CG_Frame(LVar4);
+        CG_Frame(param_1);
       }
     }
   }
-  __restgprlr_25();
   return;
 }
 
@@ -3752,38 +3663,35 @@ int CL_IsLocalClientInGame(LocalClientNum_t param_1)
 
 // 823440C0  CL_IsClientLocal  (client_mp/cl_main_mp.cpp:4385)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 bool CL_IsClientLocal(int param_1)
 
 {
   int iVar1;
-  int iVar2;
-  undefined1 uVar3;
-  connstate_t *pcVar4;
-  LocalClientNum_t LVar5;
+  connstate_t *pcVar2;
+  LocalClientNum_t LVar3;
   
-  iVar1 = __savegprlr_26(param_1);
-  LVar5 = LOCAL_CLIENT_0;
+  LVar3 = LOCAL_CLIENT_0;
   if (0 < cl_maxLocalClients) {
-    pcVar4 = &clientUIActives[0].connectionState;
+    pcVar2 = &clientUIActives[0].connectionState;
     do {
-      if (LOCAL_CLIENT_3 < LVar5) {
+      if (LOCAL_CLIENT_3 < LVar3) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\client_mp.h",
                         0x4aa,0,
                         "localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)"
                        );
       }
-      if ((8 < (int)*pcVar4) && (iVar2 = CG_GetClientNum(LVar5), iVar2 == iVar1)) {
-        uVar3 = __restgprlr_26(1);
-        return (bool)uVar3;
+      if ((8 < (int)*pcVar2) && (iVar1 = CG_GetClientNum(LVar3), iVar1 == param_1)) {
+        return true;
       }
-      LVar5 = LVar5 + LOCAL_CLIENT_1;
-      pcVar4 = pcVar4 + 0x79;
-    } while ((int)LVar5 < cl_maxLocalClients);
+      LVar3 = LVar3 + LOCAL_CLIENT_1;
+      pcVar2 = pcVar2 + 0x79;
+    } while ((int)LVar3 < cl_maxLocalClients);
   }
-  uVar3 = __restgprlr_26(0);
-  return (bool)uVar3;
+  return false;
 }
 
 
@@ -4057,6 +3965,8 @@ void CL_InitDevGui(void)
 
 // 82344640  CL_StartHunkUsers  (client_mp/cl_main_mp.cpp:4602)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -4067,7 +3977,6 @@ void CL_StartHunkUsers(void)
   bool bVar1;
   bool *pbVar2;
   
-  __savegprlr_29();
   if (cls.hunkUsersStarted != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_main_mp.cpp",
                     0x11fb,0,"%s");
@@ -4101,7 +4010,6 @@ LAB_823446b8:
     }
     cls.hunkUsersStarted = 1;
   }
-  __restgprlr_29();
   return;
 }
 
@@ -4213,6 +4121,10 @@ void CL_startMultiplayer(char *param_1)
 
 // 82348670  CL_DrawLogo  (client_mp/cl_main_mp.cpp:4887)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -4221,68 +4133,63 @@ void CL_DrawLogo(LocalClientNum_t param_1)
 
 {
   float fVar1;
-  float *pfVar2;
-  char *pcVar3;
+  char *pcVar2;
   Material *in_r4;
-  int iVar4;
+  int iVar3;
+  double dVar4;
   double dVar5;
   double dVar6;
   double dVar7;
   double dVar8;
-  double dVar9;
   undefined1 local_60 [8];
   GfxDrawSurf local_58 [11];
   
-  __savegprlr_28(param_1);
-  pfVar2 = (float *)__savefpr_27();
-  pcVar3 = (char *)pfVar2;
-  if ((float *)0x3 < pfVar2) {
-    pcVar3 = "c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\client_mp.h";
+  pcVar2 = (char *)param_1;
+  if (LOCAL_CLIENT_3 < param_1) {
+    pcVar2 = "c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\client_mp.h";
     in_r4 = (Material *)0x4aa;
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\client_mp.h",0x4aa,0
                     ,"localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)");
   }
-  if (clientUIActives[(int)pfVar2].connectionState != CA_LOGO) {
-    pcVar3 = "c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_main_mp.cpp";
+  if (clientUIActives[param_1].connectionState != CA_LOGO) {
+    pcVar2 = "c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_main_mp.cpp";
     in_r4 = (Material *)0x131f;
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_main_mp.cpp",
                     0x131f,0,"%s");
   }
-  dVar9 = 0.0;
-  dVar8 = 1.0;
-  iVar4 = cls.realtime - cls.logo.startTime;
-  if (iVar4 < cls.logo.fadein) {
-    fVar1 = (float)(longlong)iVar4 / (float)(longlong)cls.logo.fadein;
+  dVar8 = 0.0;
+  dVar7 = 1.0;
+  iVar3 = cls.realtime - cls.logo.startTime;
+  if (iVar3 < cls.logo.fadein) {
+    fVar1 = (float)(longlong)iVar3 / (float)(longlong)cls.logo.fadein;
 LAB_82348798:
-    dVar5 = (double)fVar1;
-    dVar6 = dVar9;
-    if ((dVar5 < 0.0) || (dVar6 = dVar5, dVar5 <= 1.0)) goto LAB_823487b4;
+    dVar4 = (double)fVar1;
+    dVar5 = dVar8;
+    if ((dVar4 < 0.0) || (dVar5 = dVar4, dVar4 <= 1.0)) goto LAB_823487b4;
   }
-  else if (cls.logo.duration - cls.logo.fadeout < iVar4) {
-    fVar1 = (float)(longlong)(cls.logo.duration - iVar4) / (float)(longlong)cls.logo.fadeout;
+  else if (cls.logo.duration - cls.logo.fadeout < iVar3) {
+    fVar1 = (float)(longlong)(cls.logo.duration - iVar3) / (float)(longlong)cls.logo.fadeout;
     goto LAB_82348798;
   }
-  dVar6 = dVar8;
+  dVar5 = dVar7;
 LAB_823487b4:
-  local_60._0_4_ = (undefined4)dVar6;
-  local_60._4_4_ = (undefined4)dVar6;
-  local_58[0]._0_4_ = (undefined4)dVar6;
+  local_60._0_4_ = (undefined4)dVar5;
+  local_60._4_4_ = (undefined4)dVar5;
+  local_58[0]._0_4_ = (undefined4)dVar5;
   local_58[0].packed._4_4_ = 0x3f800000;
-  dVar7 = (double)cls.vidConfig.displayWidth;
+  dVar6 = (double)cls.vidConfig.displayWidth;
   fVar1 = (float)((double)cls.vidConfig.displayHeight * 2.0) * 0.33333334;
-  dVar5 = (double)fVar1;
-  dVar6 = (double)(float)((double)cls.vidConfig.displayHeight - dVar5);
+  dVar4 = (double)fVar1;
+  dVar5 = (double)(float)((double)cls.vidConfig.displayHeight - dVar4);
   R_AddCmdDrawStretchPic
-            (0.0,0.0,(float)cls.vidConfig.displayWidth,fVar1,0.0,0.0,1.0,1.0,(float *)pcVar3,in_r4);
+            (0.0,0.0,(float)cls.vidConfig.displayWidth,fVar1,0.0,0.0,1.0,1.0,(float *)pcVar2,in_r4);
   R_AddCmdDrawStretchPic
-            ((float)dVar9,(float)dVar5,(float)dVar7,(float)dVar6,(float)dVar9,(float)dVar9,
-             (float)dVar8,(float)dVar8,(float *)pcVar3,(Material *)local_60);
-  if (cls.logo.duration < iVar4) {
-    clientUIActives[(int)pfVar2].connectionState = CA_DISCONNECTED;
+            ((float)dVar8,(float)dVar4,(float)dVar6,(float)dVar5,(float)dVar8,(float)dVar8,
+             (float)dVar7,(float)dVar7,(float *)pcVar2,(Material *)local_60);
+  if (cls.logo.duration < iVar3) {
+    clientUIActives[param_1].connectionState = CA_DISCONNECTED;
     CL_ResetLastGamePadEventTime();
   }
-  __restfpr_27();
-  __restgprlr_28();
   return;
 }
 
@@ -4376,76 +4283,71 @@ void CL_PlayLogo_f(void)
 
 // 82344BF0  CL_StopLogoOrCinematic_ByUserRequest  (client_mp/cl_main_mp.cpp:4987)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void CL_StopLogoOrCinematic_ByUserRequest(LocalClientNum_t param_1)
 
 {
   connstate_t cVar1;
-  LocalClientNum_t LVar2;
-  int iVar3;
   
-  LVar2 = __savegprlr_28(param_1);
-  if (LOCAL_CLIENT_3 < LVar2) {
+  if (LOCAL_CLIENT_3 < param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\client_mp.h",0x4aa,0
                     ,"localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)");
   }
-  cVar1 = clientUIActives[LVar2].connectionState;
+  cVar1 = clientUIActives[param_1].connectionState;
   if (cVar1 == CA_CINEMATIC) {
-    SCR_StopCinematic_ByUserRequest(LVar2);
+    SCR_StopCinematic_ByUserRequest(param_1);
   }
   else {
     if (cVar1 != CA_LOGO) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_main_mp.cpp",
                       4999,0,"%s");
     }
-    clientUIActives[LVar2].connectionState = CA_DISCONNECTED;
+    clientUIActives[param_1].connectionState = CA_DISCONNECTED;
     CL_ResetLastGamePadEventTime();
   }
   SND_StopSounds(SND_STOP_ALL);
-  iVar3 = UI_SetActiveMenu(LVar2,(uint)(cVar1 == CA_DISCONNECTED));
-  __restgprlr_28(iVar3);
+  UI_SetActiveMenu(param_1,(uint)(cVar1 == CA_DISCONNECTED));
   return;
 }
 
 
 // 82344CB8  CL_ToggleMenu  (client_mp/cl_main_mp.cpp:5012)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void CL_ToggleMenu(LocalClientNum_t param_1)
 
 {
   connstate_t cVar1;
-  LocalClientNum_t LVar2;
-  uiMenuCommand_t uVar3;
-  int iVar4;
+  uiMenuCommand_t uVar2;
   
-  LVar2 = __savegprlr_26(param_1);
-  if (LOCAL_CLIENT_3 < LVar2) {
+  if (LOCAL_CLIENT_3 < param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\client_mp.h",0x47f,0
                     ,"localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)");
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\client_mp.h",0x4aa,0
                     ,"localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)");
   }
-  cVar1 = clientUIActives[LVar2].connectionState;
-  if ((clientUIActives[LVar2].keyCatchers & 0x10U) == 0) {
-    uVar3 = UIMENU_NONE;
+  cVar1 = clientUIActives[param_1].connectionState;
+  if ((clientUIActives[param_1].keyCatchers & 0x10U) == 0) {
+    uVar2 = UIMENU_NONE;
   }
   else {
-    uVar3 = UI_GetActiveMenu(LVar2);
+    uVar2 = UI_GetActiveMenu(param_1);
   }
   if (cVar1 == CA_ACTIVE) {
-    if (((clientUIActives[LVar2].keyCatchers & 0x10U) != 0) && (uVar3 == UIMENU_INGAME)) {
-      iVar4 = UI_SetActiveMenu(LVar2,0);
-      __restgprlr_26(iVar4);
+    if (((clientUIActives[param_1].keyCatchers & 0x10U) != 0) && (uVar2 == UIMENU_INGAME)) {
+      UI_SetActiveMenu(param_1,0);
       return;
     }
-    if ((clientUIActives[LVar2].keyCatchers & 0xfffffff7U) == 0) {
-      uVar3 = UI_SetActiveMenu(LVar2,2);
+    if ((clientUIActives[param_1].keyCatchers & 0xfffffff7U) == 0) {
+      UI_SetActiveMenu(param_1,2);
     }
   }
-  __restgprlr_26(uVar3);
   return;
 }
 
@@ -5095,49 +4997,46 @@ void CL_Live_SignInAny(void)
 
 // 82345860  CL_Live_SetErrorResolveWithControllerAndArgs  (client_mp/cl_main_mp.cpp:5595)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void CL_Live_SetErrorResolveWithControllerAndArgs(char *param_1,int param_2,char *param_3)
 
 {
-  char *pcVar1;
-  ulonglong uVar2;
-  longlong lVar3;
-  ulonglong uVar4;
+  char cVar1;
+  char *pcVar2;
+  char *pcVar3;
   char acStack_80 [16];
   char local_70 [112];
   
-  uVar2 = (ulonglong)(int)param_3;
-  uVar4 = (ulonglong)param_2;
-  pcVar1 = (char *)__savegprlr_28(param_1);
-  I_strncpyz(local_70,pcVar1,0x40);
+  I_strncpyz(local_70,param_1,0x40);
   I_strncat(local_70,0x40," ");
-  if (3 < (uVar4 & 0xffffffff)) {
+  if (3 < (uint)param_2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_main_mp.cpp",
                     0x15e3,0,"controllerIndex doesn\'t index MAX_GPAD_COUNT\n\t%i not in [0, %i)");
   }
-  _itoa((int)uVar4,acStack_80,10);
+  _itoa(param_2,acStack_80,10);
   I_strncat(local_70,0x40,acStack_80);
-  if (((uVar2 & 0xffffffff) != 0) && (*(char *)uVar2 != '\0')) {
-    lVar3 = ZEXT48(&stack0x00000000) - 0x70;
+  if ((param_3 != (char *)0x0) && (*param_3 != '\0')) {
+    pcVar2 = local_70;
     do {
-      pcVar1 = (char *)lVar3;
-      lVar3 = lVar3 + 1;
-    } while (*pcVar1 != '\0');
-    uVar4 = uVar2;
+      cVar1 = *pcVar2;
+      pcVar2 = pcVar2 + 1;
+    } while (cVar1 != '\0');
+    pcVar3 = param_3;
     do {
-      pcVar1 = (char *)uVar4;
-      uVar4 = uVar4 + 1;
-    } while (*pcVar1 != '\0');
-    if (0x3f < (((uVar4 - uVar2) - 1 & 0xffffffff) +
-                ((lVar3 - (ZEXT48(&stack0x00000000) - 0x70)) - 1 & 0xffffffff) + 2 & 0xffffffff)) {
+      cVar1 = *pcVar3;
+      pcVar3 = pcVar3 + 1;
+    } while (cVar1 != '\0');
+    if ((char *)0x3f < pcVar2 + (int)(pcVar3 + (-(int)param_3 - (int)local_70))) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_main_mp.cpp",
                       0x15e9,0,"%s");
     }
     I_strncat(local_70,0x40," ");
-    I_strncat(local_70,0x40,(char *)uVar2);
+    I_strncat(local_70,0x40,param_3);
   }
   I_strncat(local_70,0x40,";");
   Dvar_SetString(com_errorResolveCommand,local_70);
-  __restgprlr_28();
   return;
 }
 
@@ -5154,45 +5053,43 @@ void CL_Live_SetErrorResolveWithController(char *param_1,int param_2)
 
 // 823459C8  CL_Live_RequireLiveSigninInternal  (client_mp/cl_main_mp.cpp:5627)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void CL_Live_RequireLiveSigninInternal(int param_1,int param_2,int param_3,int param_4)
 
 {
   int iVar1;
-  int iVar2;
-  ulonglong uVar3;
-  int iVar4;
   
-  uVar3 = (ulonglong)param_2;
-  iVar1 = __savegprlr_28(param_1);
-  iVar4 = (int)uVar3;
-  if (iVar4 == 0) {
+  if (param_2 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_main_mp.cpp",
                     0x15fc,0,"%s");
   }
-  else if (0x10 < (uVar3 & 0xffffffff)) {
+  else if (0x10 < (uint)param_2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_main_mp.cpp",
                     0x15fd,0,"failureReason doesn\'t index OPFR_COUNT\n\t%i not in [0, %i)");
   }
-  Live_HandleOnlineRequirementFailed(iVar1,iVar4,param_4,param_3);
-  iVar2 = Live_RequiresSignInResolve(iVar4);
-  if (iVar2 == 0) {
-    if ((iVar4 == 9) || (iVar4 == 0x10)) goto LAB_82345ad0;
-  }
-  else if (param_4 != 0) {
-    if (param_3 != 0) {
-      CL_Live_SetErrorResolveWithControllerAndArgs("xsigninlive",iVar1,"vault");
-      Live_SetForcedLiveSignInByUI(iVar1);
-      __restgprlr_28();
+  Live_HandleOnlineRequirementFailed(param_1,param_2,param_4,param_3);
+  iVar1 = Live_RequiresSignInResolve(param_2);
+  if (iVar1 == 0) {
+    if (param_2 == 9) {
       return;
     }
-    CL_Live_SetErrorResolveWithControllerAndArgs("xsigninlive",iVar1,(char *)0x0);
-    Live_SetForcedLiveSignInByUI(iVar1);
-    __restgprlr_28();
+    if (param_2 == 0x10) {
+      return;
+    }
+  }
+  else if (param_4 != 0) {
+    if (param_3 == 0) {
+      CL_Live_SetErrorResolveWithControllerAndArgs("xsigninlive",param_1,(char *)0x0);
+      Live_SetForcedLiveSignInByUI(param_1);
+      return;
+    }
+    CL_Live_SetErrorResolveWithControllerAndArgs("xsigninlive",param_1,"vault");
+    Live_SetForcedLiveSignInByUI(param_1);
     return;
   }
   UI_ClearCompletionResolve();
-LAB_82345ad0:
-  __restgprlr_28();
   return;
 }
 
@@ -5422,6 +5319,10 @@ void CL_RunResolveItemDefAction(void)
 
 // 82348898  CL_InitOnceForAllClients  (client_mp/cl_main_mp.cpp:5904)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
@@ -5439,8 +5340,6 @@ void CL_InitOnceForAllClients(void)
   double dVar7;
   double dVar8;
   
-  __savegprlr_25();
-  __savefpr_28();
   uVar1 = Sys_MillisecondsRaw();
   srand(uVar1);
   Con_Init();
@@ -5731,93 +5630,89 @@ void CL_InitOnceForAllClients(void)
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_main_mp.cpp",
                     0x1916,0,"%s");
   }
-  __restfpr_28();
-  __restgprlr_25();
   return;
 }
 
 
 // 82345F70  CL_Init  (client_mp/cl_main_mp.cpp:6427)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void CL_Init(LocalClientNum_t param_1)
 
 {
   bool bVar1;
-  LocalClientNum_t LVar2;
-  int iVar3;
+  int iVar2;
   
-  LVar2 = __savegprlr_27(param_1);
   Com_Printf(0xe,"----- Client Initialization -----\n");
-  CL_ClearClientState(LVar2);
-  Com_ClientDObjClearAllSkel(LVar2);
-  CL_ClearKeys(LVar2);
-  iVar3 = CountBitsEnabled(0xffffffff);
-  if (iVar3 != 0x20) {
+  CL_ClearClientState(param_1);
+  Com_ClientDObjClearAllSkel(param_1);
+  CL_ClearKeys(param_1);
+  iVar2 = CountBitsEnabled(0xffffffff);
+  if (iVar2 != 0x20) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_main_mp.cpp",
                     0x1922,0,"%s");
   }
-  iVar3 = CountBitsEnabled(0);
-  if (iVar3 != 0) {
+  iVar2 = CountBitsEnabled(0);
+  if (iVar2 != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_main_mp.cpp",
                     0x1923,0,"%s");
   }
-  iVar3 = CountBitsEnabled(0x11111111);
-  if (iVar3 != 8) {
+  iVar2 = CountBitsEnabled(0x11111111);
+  if (iVar2 != 8) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_main_mp.cpp",
                     0x1924,0,"%s");
   }
-  iVar3 = CountBitsEnabled(0x77777777);
-  if (iVar3 != 0x18) {
+  iVar2 = CountBitsEnabled(0x77777777);
+  if (iVar2 != 0x18) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_main_mp.cpp",
                     0x1925,0,"%s");
   }
-  if (LOCAL_CLIENT_3 < LVar2) {
+  if (LOCAL_CLIENT_3 < param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\client_mp.h",0x47f,0
                     ,"localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)");
   }
-  clientUIActives[LVar2].active = true;
-  bVar1 = cl_waitingOnServerToLoadMap[LVar2];
-  clientUIActives[LVar2].connectionState = CA_DISCONNECTED;
+  clientUIActives[param_1].active = true;
+  bVar1 = cl_waitingOnServerToLoadMap[param_1];
+  clientUIActives[param_1].connectionState = CA_DISCONNECTED;
   if (bVar1 != false) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_main_mp.cpp",
                     0x192b,0,"%s");
   }
-  iVar3 = CL_ControllerIndexFromClientNum(LVar2);
-  Cbuf_Execute(LVar2,iVar3);
-  clientUIActives[LVar2].isRunning = true;
+  iVar2 = CL_ControllerIndexFromClientNum(param_1);
+  Cbuf_Execute(param_1,iVar2);
+  clientUIActives[param_1].isRunning = true;
   Com_Printf(0xe,"----- Client Initialization Complete -----\n");
-  __restgprlr_27();
   return;
 }
 
 
 // 82346120  CL_ShutdownOnceForAllClients  (client_mp/cl_main_mp.cpp:6456)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void CL_ShutdownOnceForAllClients(void)
 
 {
-  bool bVar2;
-  int iVar1;
+  bool bVar1;
   
-  __savegprlr_29();
-  bVar2 = Sys_IsMainThread();
-  if (!bVar2) {
+  bVar1 = Sys_IsMainThread();
+  if (!bVar1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_main_mp.cpp",
                     0x193b,0,"%s");
   }
   Com_Printf(0xe,"----- CL_ShutdownOnceForAllClients -----\n");
   if (recursive != false) {
-    iVar1 = printf("recursive CL_ShutdownOnceForAllClients\n");
-    __restgprlr_29(iVar1);
+    printf("recursive CL_ShutdownOnceForAllClients\n");
     return;
   }
   recursive = true;
-  bVar2 = CL_AllLocalClientsDisconnected();
-  if (!bVar2) {
+  bVar1 = CL_AllLocalClientsDisconnected();
+  if (!bVar1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_main_mp.cpp",
                     0x1946,0,"%s");
   }
@@ -5853,7 +5748,6 @@ void CL_ShutdownOnceForAllClients(void)
   memset();
   recursive = false;
   Com_Printf(0xe,"-----------------------\n");
-  __restgprlr_29();
   return;
 }
 
@@ -5903,6 +5797,8 @@ void CL_ShowIP_f(void)
 
 // 82346418  CL_LocalServers  (client_mp/cl_main_mp.cpp:6634)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
@@ -5912,12 +5808,10 @@ void CL_LocalServers(LocalClientNum_t param_1)
 
 {
   uchar uVar1;
-  LocalClientNum_t LVar2;
-  short sVar4;
-  netsrc_t nVar3;
-  bool bVar5;
-  uchar *puVar6;
-  longlong lVar7;
+  short sVar3;
+  netsrc_t nVar2;
+  uchar *puVar4;
+  longlong lVar5;
   netadr_t in_stack_ffffff68;
   undefined4 local_50;
   uchar *local_4c;
@@ -5928,33 +5822,31 @@ void CL_LocalServers(LocalClientNum_t param_1)
   undefined4 local_38;
   int iStack_34;
   
-  LVar2 = __savegprlr_27(param_1);
   Com_Printf(0,"Scanning for servers on the local network...\n");
-  puVar6 = &cls.localServers[0].dirty;
+  puVar4 = &cls.localServers[0].dirty;
   cls.numlocalservers = 0;
   cls.pingUpdateSource = 0;
   do {
-    uVar1 = *puVar6;
-    Com_Memset((serverInfo_t *)(puVar6 + -0x5b),0,0xd0);
-    *puVar6 = uVar1;
-    puVar6 = puVar6 + 0xd0;
-  } while ((int)puVar6 < -0x7d55d64d);
+    uVar1 = *puVar4;
+    Com_Memset((serverInfo_t *)(puVar4 + -0x5b),0,0xd0);
+    *puVar4 = uVar1;
+    puVar4 = puVar4 + 0xd0;
+  } while ((int)puVar4 < -0x7d55d64d);
   Com_Memset(&local_50,0,0x10);
-  lVar7 = 2;
+  lVar5 = 2;
   local_44 = 4;
   do {
-    sVar4 = BigShort(1000);
-    local_48 = CONCAT22(sVar4,local_48._2_2_);
+    sVar3 = BigShort(1000);
+    local_48 = CONCAT22(sVar3,local_48._2_2_);
     local_50 = 3;
     local_40 = 3;
     puStack_3c = local_4c;
     local_38 = local_48;
     iStack_34 = local_44;
-    nVar3 = NET_GetLocalNetIDFromLocalClientNum(LVar2);
-    bVar5 = NET_OutOfBandData(nVar3,in_stack_ffffff68,puStack_3c,iStack_34);
-    lVar7 = lVar7 + -1;
-  } while (lVar7 != 0);
-  __restgprlr_27(bVar5);
+    nVar2 = NET_GetLocalNetIDFromLocalClientNum(param_1);
+    NET_OutOfBandData(nVar2,in_stack_ffffff68,puStack_3c,iStack_34);
+    lVar5 = lVar5 + -1;
+  } while (lVar5 != 0);
   return;
 }
 
@@ -5977,32 +5869,26 @@ void CL_LocalServers_f(void)
 
 // 82346538  CL_GetServerList  (client_mp/cl_main_mp.cpp:6693)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 
 void CL_GetServerList(int param_1,serverInfo_t **param_2,int *param_3)
 
 {
-  int iVar1;
-  ulonglong uVar2;
-  ulonglong uVar3;
-  
-  uVar3 = (ulonglong)(int)param_3;
-  uVar2 = (ulonglong)(int)param_2;
-  iVar1 = __savegprlr_27(param_1);
-  if ((uVar2 & 0xffffffff) == 0) {
+  if (param_2 == (serverInfo_t **)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_main_mp.cpp",
                     0x1a26,0,"%s");
   }
-  if ((uVar3 & 0xffffffff) == 0) {
+  if (param_3 == (int *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_main_mp.cpp",
                     0x1a27,0,"%s");
   }
-  if (iVar1 == 0) {
-    *(undefined4 *)uVar2 = 0x82aa1c58;
-    *(int *)uVar3 = cls.numlocalservers;
+  if (param_1 == 0) {
+    *param_2 = cls.localServers;
+    *param_3 = cls.numlocalservers;
   }
-  __restgprlr_27();
   return;
 }
 
@@ -6019,6 +5905,8 @@ void InitMapLoad_FastFile(char *param_1)
 
 // 82349C20  PreloadMap  (client_mp/cl_main_mp.cpp:6827)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
@@ -6027,19 +5915,15 @@ void InitMapLoad_FastFile(char *param_1)
 void PreloadMap(char *param_1,char *param_2)
 
 {
-  char *pcVar1;
-  int iVar2;
-  bool bVar4;
-  PartyData *pPVar3;
-  ulonglong uVar5;
+  int iVar1;
+  bool bVar3;
+  PartyData *pPVar2;
   
-  uVar5 = (ulonglong)(int)param_2;
-  pcVar1 = (char *)__savegprlr_28(param_1);
-  if (pcVar1 == (char *)0x0) {
+  if (param_1 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_main_mp.cpp",
                     0x1aac,0,"%s");
   }
-  if ((uVar5 & 0xffffffff) == 0) {
+  if (param_2 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_main_mp.cpp",
                     0x1aad,0,"%s");
   }
@@ -6047,19 +5931,19 @@ void PreloadMap(char *param_1,char *param_2)
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_main_mp.cpp",
                     0x1aae,0,"%s");
   }
-  iVar2 = Live_GetMapIndex(pcVar1);
-  iVar2 = Live_GetMapSource(iVar2);
-  bVar4 = Content_DoWeHaveContentPack(iVar2);
-  if (!bVar4) {
-    pPVar3 = Lobby_GetPartyData();
-    Party_StopParty(pPVar3);
+  iVar1 = Live_GetMapIndex(param_1);
+  iVar1 = Live_GetMapSource(iVar1);
+  bVar3 = Content_DoWeHaveContentPack(iVar1);
+  if (!bVar3) {
+    pPVar2 = Lobby_GetPartyData();
+    Party_StopParty(pPVar2);
     UI_MissingMapError();
   }
-  LoadMapLoadscreen(pcVar1);
-  UI_SetMap(pcVar1,(char *)uVar5);
+  LoadMapLoadscreen(param_1);
+  UI_SetMap(param_1,param_2);
   R_BeginRemoteScreenUpdate();
-  iVar2 = Hunk_Inuse();
-  if (iVar2 == 0) {
+  iVar1 = Hunk_Inuse();
+  if (iVar1 == 0) {
     Hunk_Begin();
   }
   R_EndRemoteScreenUpdate();
@@ -6072,26 +5956,25 @@ void PreloadMap(char *param_1,char *param_2)
   CL_InitRenderer();
   CL_StartHunkUsers();
   Com_InitDObj();
-  DB_LoadLevelXAssets(pcVar1,0);
-  __restgprlr_28();
+  DB_LoadLevelXAssets(param_1,0);
   return;
 }
 
 
 // 82349D68  CL_SetupForNewServerMap  (client_mp/cl_main_mp.cpp:6884)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 
 void CL_SetupForNewServerMap(char *param_1,char *param_2)
 
 {
-  char *pcVar1;
-  int iVar2;
+  int iVar1;
   
-  pcVar1 = (char *)__savegprlr_29(param_1);
   Com_Printf(0xe,"Server changing map %s, gametype %s\n");
-  if ((*pcVar1 == '\0') || (*param_2 == '\0')) {
+  if ((*param_1 == '\0') || (*param_2 == '\0')) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_main_mp.cpp",
                     0x1ae9,0,"%s");
   }
@@ -6105,20 +5988,18 @@ void CL_SetupForNewServerMap(char *param_1,char *param_2)
     g_waitingForServer = true;
     UI_SetMap("","");
     if ((cl_useMapPreloading->current).enabled != false) {
-      PreloadMap(pcVar1,param_2);
+      PreloadMap(param_1,param_2);
       SCR_UpdateScreen();
-      __restgprlr_29();
       return;
     }
-    LoadMapLoadscreen(pcVar1);
-    UI_SetMap(pcVar1,param_2);
-    iVar2 = Hunk_Inuse();
-    if (iVar2 == 0) {
+    LoadMapLoadscreen(param_1);
+    UI_SetMap(param_1,param_2);
+    iVar1 = Hunk_Inuse();
+    if (iVar1 == 0) {
       Hunk_Begin();
     }
   }
   SCR_UpdateScreen();
-  __restgprlr_29();
   return;
 }
 
@@ -6194,19 +6075,15 @@ void CL_DrawTextPhysical(char *param_1,int param_2,Font_s *param_3,float param_4
 
 // 82346708  CL_DrawTextPhysicalWithEffects  (client_mp/cl_main_mp.cpp:6971)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void CL_DrawTextPhysicalWithEffects
                (char *param_1,int param_2,Font_s *param_3,float param_4,float param_5,float param_6,
                float param_7,float *param_8,int param_9,float *param_10,Material *param_11,
                Material *param_12,int param_13,int param_14,int param_15,int param_16)
 
 {
-  char *pcVar1;
-  longlong lVar2;
-  longlong lVar3;
-  double extraout_f1;
-  double dVar4;
-  double dVar5;
-  double dVar6;
   float *in_stack_00000074;
   int in_stack_0000007c;
   float *in_stack_00000084;
@@ -6216,97 +6093,75 @@ void CL_DrawTextPhysicalWithEffects
   int in_stack_ffffff50;
   int in_stack_ffffff54;
   
-  dVar6 = (double)param_7;
-  dVar5 = (double)param_6;
-  dVar4 = (double)param_5;
-  lVar3 = (longlong)(int)param_3;
-  lVar2 = (longlong)param_2;
-  pcVar1 = (char *)__savegprlr_29((double)param_4,param_1,lVar2,lVar3,param_8,param_9,param_10,
-                                  param_11);
   R_AddCmdDrawTextWithEffects
-            (pcVar1,(int)lVar2,(Font_s *)lVar3,(float)extraout_f1,(float)dVar4,(float)dVar5,
-             (float)dVar6,0.0,in_stack_00000074,in_stack_0000007c,in_stack_00000084,
-             in_stack_0000008c,param_12,in_stack_ffffff48,in_stack_ffffff4c,in_stack_ffffff50,
-             in_stack_ffffff54);
-  __restgprlr_29();
+            (param_1,param_2,param_3,param_4,param_5,param_6,param_7,0.0,in_stack_00000074,
+             in_stack_0000007c,in_stack_00000084,in_stack_0000008c,param_12,in_stack_ffffff48,
+             in_stack_ffffff4c,in_stack_ffffff50,in_stack_ffffff54);
   return;
 }
 
 
 // 82346770  CL_DrawText  (client_mp/cl_main_mp.cpp:6977)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void CL_DrawText(ScreenPlacement *param_1,char *param_2,int param_3,Font_s *param_4,float param_5,
                 float param_6,int param_7,int param_8,float param_9,float param_10,float *param_11,
                 int param_12)
 
 {
-  ScreenPlacement *pSVar1;
+  float *pfVar1;
   float *pfVar2;
-  float *pfVar3;
-  double extraout_f1;
-  double dVar4;
-  double dVar5;
-  double dVar6;
   float fStack00000034;
   float fStack0000003c;
   float fStack00000054;
   float fStack0000005c;
   
-  dVar6 = (double)param_10;
-  dVar5 = (double)param_9;
-  dVar4 = (double)param_6;
-  pSVar1 = (ScreenPlacement *)__savegprlr_29((double)param_5,param_1);
-  fStack00000034 = (float)extraout_f1;
-  fStack0000003c = (float)dVar4;
-  fStack00000054 = (float)dVar5;
-  fStack0000005c = (float)dVar6;
-  pfVar3 = &stack0x0000005c;
-  pfVar2 = &stack0x00000054;
-  ScrPlace_ApplyRect(pSVar1,&stack0x00000034,&stack0x0000003c,pfVar2,pfVar3,(int)param_11,param_12);
+  pfVar2 = &stack0x0000005c;
+  pfVar1 = &stack0x00000054;
+  fStack00000034 = param_5;
+  fStack0000003c = param_6;
+  fStack00000054 = param_9;
+  fStack0000005c = param_10;
+  ScrPlace_ApplyRect(param_1,&stack0x00000034,&stack0x0000003c,pfVar1,pfVar2,(int)param_11,param_12)
+  ;
   R_AddCmdDrawText(param_2,param_3,param_4,fStack00000034,fStack0000003c,fStack00000054,
-                   fStack0000005c,0.0,pfVar2,(int)pfVar3);
-  __restgprlr_29();
+                   fStack0000005c,0.0,pfVar1,(int)pfVar2);
   return;
 }
 
 
 // 823467F8  CL_DrawTextRotate  (client_mp/cl_main_mp.cpp:6984)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void CL_DrawTextRotate(ScreenPlacement *param_1,char *param_2,int param_3,Font_s *param_4,
                       float param_5,float param_6,float param_7,int param_8,int param_9,
                       float param_10,float param_11,float *param_12,int param_13)
 
 {
-  ScreenPlacement *pSVar1;
+  float *pfVar1;
   float *pfVar2;
-  float *pfVar3;
-  double extraout_f1;
-  double dVar4;
-  double dVar5;
-  double dVar6;
-  double dVar7;
+  double dVar3;
   float fStack00000034;
   float fStack0000003c;
   int in_stack_00000054;
   float fStack0000005c;
   float fStack00000064;
   
-  dVar7 = (double)param_11;
-  dVar6 = (double)param_10;
-  dVar4 = (double)param_6;
-  dVar5 = (double)param_7;
-  pSVar1 = (ScreenPlacement *)__savegprlr_29((double)param_5,param_1);
-  fStack00000034 = (float)extraout_f1;
-  fStack0000003c = (float)dVar4;
-  fStack0000005c = (float)dVar6;
-  fStack00000064 = (float)dVar7;
-  pfVar3 = &stack0x00000064;
-  pfVar2 = &stack0x0000005c;
-  ScrPlace_ApplyRect(pSVar1,&stack0x00000034,&stack0x0000003c,pfVar2,pfVar3,param_13,
+  dVar3 = (double)param_7;
+  pfVar2 = &stack0x00000064;
+  pfVar1 = &stack0x0000005c;
+  fStack00000034 = param_5;
+  fStack0000003c = param_6;
+  fStack0000005c = param_10;
+  fStack00000064 = param_11;
+  ScrPlace_ApplyRect(param_1,&stack0x00000034,&stack0x0000003c,pfVar1,pfVar2,param_13,
                      in_stack_00000054);
   R_AddCmdDrawText(param_2,param_3,param_4,fStack00000034,fStack0000003c,fStack0000005c,
-                   fStack00000064,(float)dVar5,pfVar2,(int)pfVar3);
-  __restgprlr_29();
+                   fStack00000064,(float)dVar3,pfVar1,(int)pfVar2);
   return;
 }
 
@@ -6331,18 +6186,16 @@ void CL_DrawTextPhysicalWithCursor
 
 // 823468D0  CL_DrawTextWithCursor  (client_mp/cl_main_mp.cpp:6997)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void CL_DrawTextWithCursor
                (ScreenPlacement *param_1,char *param_2,int param_3,Font_s *param_4,float param_5,
                float param_6,int param_7,int param_8,float param_9,float param_10,float *param_11,
                int param_12,int param_13,char param_14)
 
 {
-  ScreenPlacement *pSVar1;
-  float *pfVar2;
-  double extraout_f1;
-  double dVar3;
-  double dVar4;
-  double dVar5;
+  float *pfVar1;
   float fStack00000034;
   float fStack0000003c;
   float fStack00000054;
@@ -6351,21 +6204,16 @@ void CL_DrawTextWithCursor
   int in_stack_0000006c;
   char in_stack_00000077;
   
-  dVar5 = (double)param_10;
-  dVar4 = (double)param_9;
-  dVar3 = (double)param_6;
-  pSVar1 = (ScreenPlacement *)__savegprlr_29((double)param_5,param_1);
-  fStack00000034 = (float)extraout_f1;
-  fStack0000003c = (float)dVar3;
-  fStack00000054 = (float)dVar4;
-  fStack0000005c = (float)dVar5;
-  pfVar2 = &stack0x00000054;
-  ScrPlace_ApplyRect(pSVar1,&stack0x00000034,&stack0x0000003c,pfVar2,&stack0x0000005c,(int)param_11,
-                     param_12);
+  pfVar1 = &stack0x00000054;
+  fStack00000034 = param_5;
+  fStack0000003c = param_6;
+  fStack00000054 = param_9;
+  fStack0000005c = param_10;
+  ScrPlace_ApplyRect(param_1,&stack0x00000034,&stack0x0000003c,pfVar1,&stack0x0000005c,(int)param_11
+                     ,param_12);
   R_AddCmdDrawTextWithCursor
             (param_2,param_3,param_4,fStack00000034,fStack0000003c,fStack00000054,fStack0000005c,0.0
-             ,pfVar2,in_stack_00000064,in_stack_0000006c,in_stack_00000077);
-  __restgprlr_29();
+             ,pfVar1,in_stack_00000064,in_stack_0000006c,in_stack_00000077);
   return;
 }
 
@@ -6458,6 +6306,8 @@ void CL_UpdateSound(void)
 
 // 8234B9B8  CL_ConnectFromParty  (client_mp/cl_main_mp.cpp:7062)
 
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
@@ -6467,8 +6317,8 @@ void CL_ConnectFromParty(LocalClientNum_t param_1,_XSESSION_INFO *param_2,netadr
                         int param_4,int param_5,char *param_6,char *param_7)
 
 {
-  int iVar1;
-  void *pvVar2;
+  void *pvVar1;
+  int iVar2;
   clientConnection_t *pcVar3;
   XNADDR *pXVar4;
   bool bVar6;
@@ -6477,13 +6327,12 @@ void CL_ConnectFromParty(LocalClientNum_t param_1,_XSESSION_INFO *param_2,netadr
   XNADDR *pXVar8;
   char *in_r9;
   longlong lVar9;
-  longlong lVar10;
   char *in_r10;
-  ulonglong uVar11;
+  _XSESSION_INFO *p_Var10;
+  XNADDR *pXVar11;
   byte *pbVar12;
-  ulonglong uVar13;
-  int *piVar14;
-  LocalClientNum_t LVar15;
+  int *piVar13;
+  LocalClientNum_t LVar14;
   netadrtype_t nStack00000020;
   undefined4 uStack00000024;
   undefined4 uStack00000028;
@@ -6492,12 +6341,8 @@ void CL_ConnectFromParty(LocalClientNum_t param_1,_XSESSION_INFO *param_2,netadr
   char *pcStack0000004c;
   byte local_a8 [168];
   
-  lVar10 = (longlong)param_5;
-  lVar9 = (longlong)param_4;
-  uVar13 = (ulonglong)(int)param_2;
-  __savegprlr();
-  _nStack00000020 = lVar9;
-  _uStack00000028 = lVar10;
+  _uStack00000028 = (longlong)param_5;
+  _nStack00000020 = (longlong)param_4;
   pcStack00000044 = in_r9;
   pcStack0000004c = in_r10;
   Com_Printf(0xe,"CL_ConnectFromParty called for local client %i\n");
@@ -6515,19 +6360,19 @@ void CL_ConnectFromParty(LocalClientNum_t param_1,_XSESSION_INFO *param_2,netadr
   }
   if ((debug_onlinePlayEvenIfDown->current).enabled == false) {
     pbVar12 = local_a8;
-    uVar11 = uVar13;
+    p_Var10 = param_2;
     do {
-      lVar9 = (ulonglong)*pbVar12 - (ulonglong)*(byte *)uVar11;
+      lVar9 = (ulonglong)*pbVar12 - (ulonglong)(p_Var10->sessionID).ab[0];
       if (lVar9 != 0) break;
       pbVar12 = pbVar12 + 1;
-      uVar11 = uVar11 + 1;
+      p_Var10 = (_XSESSION_INFO *)((p_Var10->sessionID).ab + 1);
     } while (pbVar12 != local_a8 + 8);
     if ((int)lVar9 == 0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_main_mp.cpp",
                       0x1ba3,0,"%s");
     }
   }
-  if ((uVar13 & 0xffffffff) == 0) {
+  if (param_2 == (_XSESSION_INFO *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_main_mp.cpp",
                     0x1ba6,0,"%s");
   }
@@ -6548,15 +6393,15 @@ void CL_ConnectFromParty(LocalClientNum_t param_1,_XSESSION_INFO *param_2,netadr
   SV_Frame(0);
   Con_Close(param_1);
   pXVar4 = Xenon_GetXNAddr();
-  lVar9 = uVar13 + 8;
+  pXVar11 = &param_2->hostAddress;
   pXVar8 = pXVar4 + 1;
   do {
-    lVar10 = (ulonglong)(pXVar4->ina).S_un.S_un_b.s_b1 - (ulonglong)*(byte *)lVar9;
-    if (lVar10 != 0) break;
+    lVar9 = (ulonglong)(pXVar4->ina).S_un.S_un_b.s_b1 - (ulonglong)(pXVar11->ina).S_un.S_un_b.s_b1;
+    if (lVar9 != 0) break;
     pXVar4 = (XNADDR *)((int)&(pXVar4->ina).S_un + 1);
-    lVar9 = lVar9 + 1;
+    pXVar11 = (XNADDR *)((int)&(pXVar11->ina).S_un + 1);
   } while (pXVar4 != pXVar8);
-  if ((int)lVar10 == 0) {
+  if ((int)lVar9 == 0) {
     pcVar7 = "localhost";
   }
   else {
@@ -6564,7 +6409,7 @@ void CL_ConnectFromParty(LocalClientNum_t param_1,_XSESSION_INFO *param_2,netadr
   }
   I_strncpyz(cls.servername,pcVar7,0x100);
   pbVar12 = local_a8;
-  iVar1 = (int)uVar13;
+  pXVar4 = &param_2->hostAddress;
   local_a8[0] = 0;
   local_a8[1] = 0;
   local_a8[2] = 0;
@@ -6574,26 +6419,26 @@ void CL_ConnectFromParty(LocalClientNum_t param_1,_XSESSION_INFO *param_2,netadr
   local_a8[6] = 0;
   local_a8[7] = 0;
   do {
-    lVar9 = (ulonglong)*(byte *)uVar13 - (ulonglong)*pbVar12;
+    lVar9 = (ulonglong)(param_2->sessionID).ab[0] - (ulonglong)*pbVar12;
     if (lVar9 != 0) break;
-    uVar13 = uVar13 + 1;
+    param_2 = (_XSESSION_INFO *)((param_2->sessionID).ab + 1);
     pbVar12 = pbVar12 + 1;
-  } while ((int)uVar13 != iVar1 + 8);
+  } while (param_2 != (_XSESSION_INFO *)pXVar4);
   if ((int)lVar9 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_main_mp.cpp",
                     0x1bdc,0,"%s");
   }
-  iVar1 = nStack0000002c;
-  LVar15 = LOCAL_CLIENT_0;
-  piVar14 = &clientUIActives[0].keyCatchers;
+  iVar2 = nStack0000002c;
+  LVar14 = LOCAL_CLIENT_0;
+  piVar13 = &clientUIActives[0].keyCatchers;
   do {
-    bVar6 = CL_IsLocalClientActive(LVar15);
+    bVar6 = CL_IsLocalClientActive(LVar14);
     if (bVar6) {
-      CL_Disconnect(LVar15);
-      CL_SetLocalClientActive(LVar15,true);
-      pcVar3 = CL_GetLocalClientConnection(LVar15);
-      pcVar5 = CL_GetLocalClientGlobals(LVar15);
-      if (LOCAL_CLIENT_3 < LVar15) {
+      CL_Disconnect(LVar14);
+      CL_SetLocalClientActive(LVar14,true);
+      pcVar3 = CL_GetLocalClientConnection(LVar14);
+      pcVar5 = CL_GetLocalClientGlobals(LVar14);
+      if (LOCAL_CLIENT_3 < LVar14) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\client_mp.h",
                         0x47f,0,
                         "localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)"
@@ -6602,13 +6447,13 @@ void CL_ConnectFromParty(LocalClientNum_t param_1,_XSESSION_INFO *param_2,netadr
                         0x4b5,0,
                         "client doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)");
       }
-      pvVar2 = g_serverSession.dyn.sessionHandle;
-      piVar14[2] = CA_CONNECTING;
-      if (pvVar2 == (void *)0x0) {
+      pvVar1 = g_serverSession.dyn.sessionHandle;
+      piVar13[2] = CA_CONNECTING;
+      if (pvVar1 == (void *)0x0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_main_mp.cpp",
                         0x1bf2,0,"%s");
       }
-      if (iVar1 != 4) {
+      if (iVar2 != 4) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_main_mp.cpp",
                         0x1bf5,0,"%s");
       }
@@ -6616,22 +6461,21 @@ void CL_ConnectFromParty(LocalClientNum_t param_1,_XSESSION_INFO *param_2,netadr
       *(undefined4 *)(pcVar3->serverAddress).ip = uStack00000024;
       *(undefined4 *)&(pcVar3->serverAddress).port = uStack00000028;
       (pcVar3->serverAddress).localNetID = nStack0000002c;
-      UI_CloseAll(LVar15);
-      *piVar14 = *piVar14 & 1;
+      UI_CloseAll(LVar14);
+      *piVar13 = *piVar13 & 1;
       pcVar3->connectTime = -99999;
       pcVar3->connectPacketCount = 0;
       pcVar5->timeoutcount = 0;
     }
-    piVar14 = piVar14 + 0x79;
-    LVar15 = LVar15 + LOCAL_CLIENT_1;
-  } while ((int)piVar14 < -0x7d4c132c);
+    piVar13 = piVar13 + 0x79;
+    LVar14 = LVar14 + LOCAL_CLIENT_1;
+  } while ((int)piVar13 < -0x7d4c132c);
   cls.mapPreloaded = (cl_useMapPreloading->current).enabled;
   UI_CloseAll(param_1);
   if (((com_sv_running->current).enabled == false) &&
      ((cl_useMapPreloading->current).enabled != false)) {
     PreloadMap(pcStack00000044,pcStack0000004c);
   }
-  __restgprlr();
   return;
 }
 
@@ -6668,56 +6512,57 @@ void CL_CheckNotify(LocalClientNum_t param_1,int param_2)
 
 // 82346C20  CL_GetMaxClients  (client_mp/cl_main_mp.cpp:7225)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void CL_GetMaxClients(int param_1,int *param_2,int *param_3)
 
 {
-  ulonglong uVar1;
-  int iVar2;
-  char *pcVar3;
+  int iVar1;
+  char *pcVar2;
   
-  uVar1 = __savegprlr_27(param_1);
   if ((((splitscreen->current).enabled == false) || ((onlinegame->current).enabled != false)) ||
      ((systemlink->current).enabled != false)) {
     if (((onlinegame->current).enabled == false) ||
-       (iVar2 = CL_GetLocalClientActiveCount(), iVar2 < 3)) goto LAB_82346d1c;
+       (iVar1 = CL_GetLocalClientActiveCount(), iVar1 < 3)) goto LAB_82346d1c;
     CL_GetLocalClientActiveCount();
-    pcVar3 = "MAX_PARTY_CLIENT_COUNT >= CL_GetLocalClientActiveCount()\n\t%i, %i";
-    iVar2 = 0x1c44;
+    pcVar2 = "MAX_PARTY_CLIENT_COUNT >= CL_GetLocalClientActiveCount()\n\t%i, %i";
+    iVar1 = 0x1c44;
   }
   else {
     if (4 < (sv_maxclients->current).integer) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_main_mp.cpp",
                       0x1c3d,0,"%s\n\t(sv_maxclients->current.integer) = %i");
     }
-    iVar2 = CL_GetLocalClientActiveCount();
-    if ((sv_maxclients->current).integer == iVar2) goto LAB_82346d1c;
+    iVar1 = CL_GetLocalClientActiveCount();
+    if ((sv_maxclients->current).integer == iVar1) goto LAB_82346d1c;
     CL_GetLocalClientActiveCount();
-    iVar2 = 0x1c3e;
-    pcVar3 = "sv_maxclients->current.integer == CL_GetLocalClientActiveCount()\n\t%i, %i";
+    iVar1 = 0x1c3e;
+    pcVar2 = "sv_maxclients->current.integer == CL_GetLocalClientActiveCount()\n\t%i, %i";
   }
-  MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_main_mp.cpp",iVar2,
-                  0,pcVar3);
+  MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_main_mp.cpp",iVar1,
+                  0,pcVar2);
 LAB_82346d1c:
-  if (((uVar1 & 2) != 0) && (iVar2 = CL_GetLocalClientActiveCount(), iVar2 != 1)) {
+  if (((param_1 & 2U) != 0) && (iVar1 = CL_GetLocalClientActiveCount(), iVar1 != 1)) {
     CL_GetLocalClientActiveCount();
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_main_mp.cpp",
                     0x1c49,0,"CL_GetLocalClientActiveCount() == 1\n\t%i, %i");
   }
-  iVar2 = CL_GetLocalClientActiveCount();
-  *param_2 = iVar2;
-  if ((uVar1 & 2) == 0) {
+  iVar1 = CL_GetLocalClientActiveCount();
+  *param_2 = iVar1;
+  if ((param_1 & 2U) == 0) {
     *param_3 = (sv_maxclients->current).integer;
-    __restgprlr_27();
     return;
   }
   *param_3 = 0x12;
-  __restgprlr_27();
   return;
 }
 
 
 // 82349E98  CL_AllocatePerLocalClientMemory  (client_mp/cl_main_mp.cpp:7254)
 
+/* WARNING: Function: __savegprlr_19 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_19 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
@@ -6734,7 +6579,6 @@ void CL_AllocatePerLocalClientMemory(int param_1)
   uint local_80;
   int local_7c [31];
   
-  uVar1 = __savegprlr_19(param_1);
   if (splitscreen == (dvar_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_main_mp.cpp",
                     0x1c5c,0,"%s");
@@ -6759,7 +6603,7 @@ void CL_AllocatePerLocalClientMemory(int param_1)
   if ((((cl_maxLocalClients == 0) || ((bool)DAT_82aa1aa3 != (splitscreen->current).enabled)) ||
       (((bool)DAT_82aa1aa1 != (onlinegame->current).enabled ||
        (((bool)DAT_82aa1aa2 != (systemlink->current).enabled ||
-        (DAT_82aa1a90 != (sv_maxclients->current).integer)))))) || (DAT_82aa1ab8 != uVar1)) {
+        (DAT_82aa1a90 != (sv_maxclients->current).integer)))))) || (DAT_82aa1ab8 != param_1)) {
     if ((com_sv_running->current).enabled != false) {
       if (cl_maxLocalClients == 0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_main_mp.cpp",
@@ -6769,10 +6613,10 @@ void CL_AllocatePerLocalClientMemory(int param_1)
       Dvar_SetBool(onlinegame,(bool)DAT_82aa1aa1);
       Dvar_SetBool(systemlink,(bool)DAT_82aa1aa2);
       Dvar_SetInt(sv_maxclients,DAT_82aa1a90);
-      __restgprlr_19();
       return;
     }
-    if (((uVar1 & 2) == 0) && (bVar4 = CL_Demo_IsDemoDownloadMemoryAllocated(), bVar4)) {
+    uVar1 = param_1 & 2;
+    if ((uVar1 == 0) && (bVar4 = CL_Demo_IsDemoDownloadMemoryAllocated(), bVar4)) {
       CL_Demo_DeallocateDemoDownloadMemory();
     }
     CL_FreePerLocalClientMemory();
@@ -6780,8 +6624,8 @@ void CL_AllocatePerLocalClientMemory(int param_1)
     DAT_82aa1aa1 = (onlinegame->current).enabled;
     DAT_82aa1aa2 = (systemlink->current).enabled;
     DAT_82aa1a90 = (sv_maxclients->current).integer;
-    DAT_82aa1ab8 = uVar1;
-    CL_GetMaxClients(uVar1,(int *)&local_80,local_7c);
+    DAT_82aa1ab8 = param_1;
+    CL_GetMaxClients(param_1,(int *)&local_80,local_7c);
     PMem_BeginAlloc(g_perLocalClientName,0);
     uVar6 = (ulonglong)local_80;
     clients = PMem_Alloc_NoDebug(local_80 * 0xd480,0x80,4);
@@ -6789,7 +6633,7 @@ void CL_AllocatePerLocalClientMemory(int param_1)
     if (0 < (int)local_80) {
       iVar2 = 0;
       do {
-        if (((onlinegame->current).enabled != false) || (iVar5 = 8, (uVar1 & 2) != 0)) {
+        if (((onlinegame->current).enabled != false) || (iVar5 = 8, uVar1 != 0)) {
           iVar5 = 0x10;
         }
         pvVar3 = PMem_Alloc_NoDebug(iVar5 * 0xc,4,4);
@@ -6800,9 +6644,9 @@ void CL_AllocatePerLocalClientMemory(int param_1)
       } while (uVar6 != 0);
     }
     clientConnections = PMem_Alloc_NoDebug(local_80 * 0x65670,4,4);
-    SV_AllocateDObjMemory(uVar1,local_80);
-    if ((uVar1 & 2) != 0) {
-      CL_Demo_AllocatePlaybackMemory(uVar1 >> 2 & 1);
+    SV_AllocateDObjMemory(param_1,local_80);
+    if (uVar1 != 0) {
+      CL_Demo_AllocatePlaybackMemory((uint)param_1 >> 2 & 1);
     }
     PMem_EndAlloc(g_perLocalClientName,0);
     Com_Printf(10,"Loaded local client memory\n");
@@ -6813,13 +6657,14 @@ void CL_AllocatePerLocalClientMemory(int param_1)
     cls.serverId = 0;
     DB_UpdateDebugZone();
   }
-  __restgprlr_19();
   return;
 }
 
 
 // 82346D90  CL_AllocatePerLocalClientMemory2  (client_mp/cl_main_mp.cpp:7348)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void CL_AllocatePerLocalClientMemory2(void)
@@ -6828,7 +6673,6 @@ void CL_AllocatePerLocalClientMemory2(void)
   int local_30;
   int local_2c [11];
   
-  __savegprlr_28();
   if ((bool)DAT_82aa1aa3 != (splitscreen->current).enabled) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_main_mp.cpp",
                     0x1cb8,0,"%s");
@@ -6861,7 +6705,6 @@ void CL_AllocatePerLocalClientMemory2(void)
   if (((DAT_82aa1ab8 & 2) != 0) && (LiveStorage_CS_AllocMemory(), (DAT_82aa1ab8 & 4) != 0)) {
     CL_Demo_AllocateRenderingMovieMemory();
   }
-  __restgprlr_28();
   return;
 }
 
@@ -6936,90 +6779,83 @@ PartyData * CL_Live_SplitscreenGetCurrentLobby(void)
 
 // 82347060  CL_Live_LocalClientJoinParty  (client_mp/cl_main_mp.cpp:7472)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 bool CL_Live_LocalClientJoinParty(PartyData *param_1,int param_2)
 
 {
-  PartyData *pPVar1;
-  int iVar2;
-  uint uVar3;
-  bool bVar7;
-  _XUSER_SIGNIN_STATE _Var4;
-  undefined1 uVar8;
-  ulong uVar5;
-  LocalClientNum_t LVar6;
+  int iVar1;
+  uint uVar2;
+  bool bVar6;
+  _XUSER_SIGNIN_STATE _Var3;
+  ulong uVar4;
+  LocalClientNum_t LVar5;
   int local_40 [16];
   
-  pPVar1 = (PartyData *)__savegprlr_27(param_1);
-  if (pPVar1 == (PartyData *)0x0) {
+  if (param_1 == (PartyData *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_main_mp.cpp",
                     0x1d34,0,"%s");
   }
-  if ((splitscreen_online_enabled->current).integer != 0) {
-    iVar2 = Party_InParty(pPVar1);
-    if ((((iVar2 != 0) && (iVar2 = Party_AreWeHost(pPVar1), iVar2 != 0)) &&
-        (uVar3 = PartyClient_CountMembers(pPVar1), uVar3 != 0)) &&
-       ((uVar3 < (party_maxplayers->current).unsignedInt &&
-        (uVar3 = PartyClient_CountLocalMembers(pPVar1), uVar3 < 2)))) {
-      bVar7 = CL_IsSplitscreenControllerActive(param_2);
-      if (bVar7) {
-        if (((systemlink->current).enabled == false) || ((onlinegame->current).enabled != false)) {
-          uVar5 = XUserCheckPrivilege(param_2,XPRIVILEGE_MULTIPLAYER_SESSIONS,local_40);
-          if (uVar5 != 0) {
-            local_40[0] = 0;
-            Com_PrintError(0x10,
-                           "XUserCheckPrivilege for XPRIVILEGE_MULTIPLAYER_SESSIONS failed - error %x.\n"
-                          );
-          }
-          if (local_40[0] == 0) {
-            Com_Printf(0x10,
-                       "Since the active profile doesn\'t have permission to play MP, so we are going to sign them out\n"
+  if ((((((splitscreen_online_enabled->current).integer != 0) &&
+        (iVar1 = Party_InParty(param_1), iVar1 != 0)) &&
+       (iVar1 = Party_AreWeHost(param_1), iVar1 != 0)) &&
+      ((uVar2 = PartyClient_CountMembers(param_1), uVar2 != 0 &&
+       (uVar2 < (party_maxplayers->current).unsignedInt)))) &&
+     ((uVar2 = PartyClient_CountLocalMembers(param_1), uVar2 < 2 &&
+      (bVar6 = CL_IsSplitscreenControllerActive(param_2), bVar6)))) {
+    if (((systemlink->current).enabled == false) || ((onlinegame->current).enabled != false)) {
+      uVar4 = XUserCheckPrivilege(param_2,XPRIVILEGE_MULTIPLAYER_SESSIONS,local_40);
+      if (uVar4 != 0) {
+        local_40[0] = 0;
+        Com_PrintError(0x10,
+                       "XUserCheckPrivilege for XPRIVILEGE_MULTIPLAYER_SESSIONS failed - error %x.\n"
                       );
-            CL_MakeLocalClientInactive(param_2);
-            CL_ForceNoSplitscreenControl
-                      ("CL_Live_LocalClientJoinParty",(pPVar1->splitscreenData).mainControllerIndex)
-            ;
-            Dvar_SetBool(splitscreen,false);
-            (pPVar1->splitscreenData).waitingForStats = 0;
-            iVar2 = CL_GetLocalClientActiveCount();
-            if (iVar2 != 1) {
-              MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_main_mp.cpp"
-                              ,0x1d72,0,"%s");
-            }
-            LVar6 = CL_GetFirstActiveLocalClient();
-            if (LVar6 != LOCAL_CLIENT_0) {
-              MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_main_mp.cpp"
-                              ,0x1d73,0,"%s");
-            }
-            Com_Error(ERR_DROP,"XBOXLIVE_MPNOTALLOWED");
-            uVar8 = __restgprlr_27(0);
-            return (bool)uVar8;
-          }
+      }
+      if (local_40[0] == 0) {
+        Com_Printf(0x10,
+                   "Since the active profile doesn\'t have permission to play MP, so we are going to sign them out\n"
+                  );
+        CL_MakeLocalClientInactive(param_2);
+        CL_ForceNoSplitscreenControl
+                  ("CL_Live_LocalClientJoinParty",(param_1->splitscreenData).mainControllerIndex);
+        Dvar_SetBool(splitscreen,false);
+        (param_1->splitscreenData).waitingForStats = 0;
+        iVar1 = CL_GetLocalClientActiveCount();
+        if (iVar1 != 1) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_main_mp.cpp"
+                          ,0x1d72,0,"%s");
         }
-        else {
-          _Var4 = XUserGetSigninState(param_2);
-          if ((int)_Var4 < 1) goto LAB_8234715c;
+        LVar5 = CL_GetFirstActiveLocalClient();
+        if (LVar5 != LOCAL_CLIENT_0) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_main_mp.cpp"
+                          ,0x1d73,0,"%s");
         }
-        if ((pPVar1->splitscreenData).otherClientActive == 0) {
-          Party_SetupSplitscreenData
-                    (&pPVar1->splitscreenData,(pPVar1->splitscreenData).mainControllerIndex,
-                     (pPVar1->splitscreenData).mainClientNum);
-        }
-        PartyHost_AddOtherSplitscreenLocalPlayer(pPVar1);
-        if ((pPVar1->splitscreenData).otherClientActive != 0) {
-          Live_SetPartyPresence((pPVar1->splitscreenData).otherControllerIndex);
-          PlayercardCache_Upload();
-          uVar8 = __restgprlr_27(1);
-          return (bool)uVar8;
-        }
+        Com_Error(ERR_DROP,"XBOXLIVE_MPNOTALLOWED");
+        return false;
       }
     }
+    else {
+      _Var3 = XUserGetSigninState(param_2);
+      if ((int)_Var3 < 1) {
+        return false;
+      }
+    }
+    if ((param_1->splitscreenData).otherClientActive == 0) {
+      Party_SetupSplitscreenData
+                (&param_1->splitscreenData,(param_1->splitscreenData).mainControllerIndex,
+                 (param_1->splitscreenData).mainClientNum);
+    }
+    PartyHost_AddOtherSplitscreenLocalPlayer(param_1);
+    if ((param_1->splitscreenData).otherClientActive != 0) {
+      Live_SetPartyPresence((param_1->splitscreenData).otherControllerIndex);
+      PlayercardCache_Upload();
+      return true;
+    }
   }
-LAB_8234715c:
-  uVar8 = __restgprlr_27(0);
-  return (bool)uVar8;
+  return false;
 }
 
 

@@ -2,79 +2,78 @@
 
 // 82683850  collideAABBs  (physics/ode/src/collision_space_internal.h:51)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 void collideAABBs(dxGeom *param_1,dxGeom *param_2,void *param_3,
                  _func___cdecl_void_void_ptr_dxGeom_ptr_dxGeom_ptr *param_4)
 
 {
-  dxGeom *pdVar1;
-  dxGeom *pdVar2;
-  int iVar3;
-  longlong lVar4;
-  longlong lVar5;
+  longlong lVar1;
+  int iVar2;
   
-  lVar5 = (longlong)(int)param_3;
-  lVar4 = (longlong)(int)param_2;
-  pdVar2 = (dxGeom *)__savegprlr_26(param_1,lVar4,lVar5);
-  if ((pdVar2->gflags & 2U) != 0) {
+  lVar1 = (longlong)(int)param_1;
+  if ((param_1->gflags & 2U) != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\collision_space_internal.h"
                     ,0x34,0,"%s");
   }
-  pdVar1 = (dxGeom *)lVar4;
-  if ((pdVar1->gflags & 2U) != 0) {
+  if ((param_2->gflags & 2U) != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\collision_space_internal.h"
                     ,0x35,0,"%s");
   }
-  if ((pdVar2->body != pdVar1->body) &&
-     (((pdVar2->category_bits & pdVar1->collide_bits) != 0 ||
-      ((pdVar2->collide_bits & pdVar1->category_bits) != 0)))) {
-    if (((pdVar2->aabb[0] <= pdVar1->aabb[1]) &&
-        (((pdVar1->aabb[0] <= pdVar2->aabb[1] && (pdVar2->aabb[2] <= pdVar1->aabb[3])) &&
-         (pdVar1->aabb[2] <= pdVar2->aabb[3])))) &&
-       (((pdVar2->aabb[4] <= pdVar1->aabb[5] && (pdVar1->aabb[4] <= pdVar2->aabb[5])) &&
-        ((iVar3 = (**(code **)(pdVar2->_padding_ + 8))(pdVar2,lVar4), iVar3 != 0 &&
-         (iVar3 = (**(code **)(pdVar1->_padding_ + 8))(lVar4,pdVar2,pdVar2->aabb), iVar3 != 0))))))
-    {
-      (*param_4)((void *)lVar5,pdVar2,pdVar1);
+  if ((param_1->body != param_2->body) &&
+     (((param_1->category_bits & param_2->collide_bits) != 0 ||
+      ((param_1->collide_bits & param_2->category_bits) != 0)))) {
+    if (((param_1->aabb[0] <= param_2->aabb[1]) &&
+        (((param_2->aabb[0] <= param_1->aabb[1] && (param_1->aabb[2] <= param_2->aabb[3])) &&
+         (param_2->aabb[2] <= param_1->aabb[3])))) &&
+       (((param_1->aabb[4] <= param_2->aabb[5] && (param_2->aabb[4] <= param_1->aabb[5])) &&
+        ((iVar2 = (**(code **)(param_1->_padding_ + 8))(lVar1,param_2), iVar2 != 0 &&
+         (iVar2 = (**(code **)(param_2->_padding_ + 8))(param_2,lVar1,lVar1 + 0x2c), iVar2 != 0)))))
+       ) {
+      (*param_4)(param_3,param_1,param_2);
     }
   }
-  __restgprlr_26();
   return;
 }
 
 
 // 826839D8  dGeomMoved  (physics/ode/src/collision_space.cpp:51)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 void dGeomMoved(dxGeom *param_1)
 
 {
-  int *piVar1;
-  int *piVar2;
-  int *piVar3;
+  dxSpace *pdVar1;
+  dxSpace *pdVar2;
   
-  piVar3 = (int *)__savegprlr_26(param_1);
-  if (piVar3 == (int *)0x0) {
+  if (param_1 == (dxGeom *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\collision_space.cpp"
                     ,0x34,0,"%s");
   }
-  piVar2 = (int *)piVar3[10];
-  while ((piVar1 = piVar2, piVar1 != (int *)0x0 && ((piVar3[2] & 1U) == 0))) {
-    if ((piVar1 != (int *)0x0) && (piVar1[0x18] != 0)) {
+  pdVar2 = param_1->parent_space;
+  while ((pdVar1 = pdVar2, pdVar1 != (dxSpace *)0x0 &&
+         ((*(uint *)&((dxSpace *)param_1)->field_0x8 & 1) == 0))) {
+    if ((pdVar1 != (dxSpace *)0x0) && (pdVar1->lock_count != 0)) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\collision_space.cpp"
                       ,0x3b,0,"%s\n\t%s");
     }
-    piVar3[2] = piVar3[2] | 3;
-    (**(code **)(*piVar1 + 0x18))(piVar1,piVar3);
-    piVar2 = (int *)piVar1[10];
-    piVar3 = piVar1;
+    *(uint *)&((dxSpace *)param_1)->field_0x8 = *(uint *)&((dxSpace *)param_1)->field_0x8 | 3;
+    (**(code **)(*(int *)pdVar1 + 0x18))(pdVar1,param_1);
+    pdVar2 = *(dxSpace **)&pdVar1->field_0x28;
+    param_1 = (dxGeom *)pdVar1;
   }
-  for (; piVar3 != (int *)0x0; piVar3 = (int *)piVar3[10]) {
-    piVar3[2] = piVar3[2] | 3;
-    if ((piVar3[10] != 0) && (*(int *)(piVar3[10] + 0x60) != 0)) {
+  for (; (dxSpace *)param_1 != (dxSpace *)0x0;
+      param_1 = *(dxGeom **)&((dxSpace *)param_1)->field_0x28) {
+    *(uint *)&((dxSpace *)param_1)->field_0x8 = *(uint *)&((dxSpace *)param_1)->field_0x8 | 3;
+    if ((*(int *)&((dxSpace *)param_1)->field_0x28 != 0) &&
+       (*(int *)(*(int *)&((dxSpace *)param_1)->field_0x28 + 0x60) != 0)) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\collision_space.cpp"
                       ,0x46,0,"%s\n\t%s");
     }
   }
-  __restgprlr_26();
   return;
 }
 
@@ -285,79 +284,69 @@ dxGeom * __thiscall dxSpace::getGeom(dxSpace *this,int param_1)
 
 // 82683EF0  add  (physics/ode/src/collision_space.cpp:192)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void __thiscall dxSpace::add(dxSpace *this,dxGeom *param_1)
 
 {
-  int iVar1;
-  dxGeom *pdVar2;
-  ulonglong uVar3;
-  
-  uVar3 = (ulonglong)(int)param_1;
-  pdVar2 = (dxGeom *)__savegprlr_28(this);
-  if ((pdVar2 != (dxGeom *)0x0) && (pdVar2[1].body != (dxBody *)0x0)) {
+  if ((this != (dxSpace *)0x0) && (this->lock_count != 0)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\collision_space.cpp"
                     ,0xc1,0,"%s\n\t%s");
   }
-  if ((uVar3 & 0xffffffff) == 0) {
+  if (param_1 == (dxGeom *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\collision_space.cpp"
                     ,0xc2,0,"%s");
   }
-  iVar1 = (int)uVar3;
-  if ((*(int *)(iVar1 + 0x28) != 0) || (*(int *)(iVar1 + 0x20) != 0)) {
+  if ((param_1->parent_space != (dxSpace *)0x0) || (param_1->next != (dxGeom *)0x0)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\collision_space.cpp"
                     ,0xc4,0,"%s\n\t%s");
   }
-  *(dxGeom **)(iVar1 + 0x28) = pdVar2;
-  *(int *)(iVar1 + 0x20) = pdVar2[1]._padding_;
-  *(dxGeom **)(iVar1 + 0x24) = pdVar2 + 1;
-  if (pdVar2[1]._padding_ != 0) {
-    *(int *)(pdVar2[1]._padding_ + 0x24) = iVar1 + 0x20;
+  param_1->parent_space = this;
+  param_1->next = this->first;
+  param_1->tome = &this->first;
+  if (this->first != (dxGeom *)0x0) {
+    this->first->tome = &param_1->next;
   }
-  pdVar2[1]._padding_ = iVar1;
-  pdVar2[1].data = (void *)0x0;
-  *(int *)&pdVar2->field_0x4c = *(int *)&pdVar2->field_0x4c + 1;
-  *(uint *)(iVar1 + 8) = *(uint *)(iVar1 + 8) | 3;
-  dGeomMoved(pdVar2);
-  __restgprlr_28();
+  this->first = param_1;
+  this->current_geom = (dxGeom *)0x0;
+  this->count = this->count + 1;
+  param_1->gflags = param_1->gflags | 3;
+  dGeomMoved((dxGeom *)this);
   return;
 }
 
 
 // 82684010  remove  (physics/ode/src/collision_space.cpp:215)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void __thiscall dxSpace::remove(dxSpace *this,dxGeom *param_1)
 
 {
-  int iVar1;
-  dxGeom *pdVar2;
-  ulonglong uVar3;
-  
-  uVar3 = (ulonglong)(int)param_1;
-  pdVar2 = (dxGeom *)__savegprlr_28(this);
-  if ((pdVar2 != (dxGeom *)0x0) && (pdVar2[1].body != (dxBody *)0x0)) {
+  if ((this != (dxSpace *)0x0) && (this->lock_count != 0)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\collision_space.cpp"
                     ,0xd8,0,"%s\n\t%s");
   }
-  if ((uVar3 & 0xffffffff) == 0) {
+  if (param_1 == (dxGeom *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\collision_space.cpp"
                     ,0xd9,0,"%s");
   }
-  iVar1 = (int)uVar3;
-  if (*(dxGeom **)(iVar1 + 0x28) != pdVar2) {
+  if (param_1->parent_space != this) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\collision_space.cpp"
                     ,0xda,0,"%s\n\t%s");
   }
-  if (*(int *)(iVar1 + 0x20) != 0) {
-    *(undefined4 *)(*(int *)(iVar1 + 0x20) + 0x24) = *(undefined4 *)(iVar1 + 0x24);
+  if (param_1->next != (dxGeom *)0x0) {
+    param_1->next->tome = param_1->tome;
   }
-  **(undefined4 **)(iVar1 + 0x24) = *(undefined4 *)(iVar1 + 0x20);
-  *(int *)&pdVar2->field_0x4c = *(int *)&pdVar2->field_0x4c + -1;
-  *(undefined4 *)(iVar1 + 0x20) = 0;
-  *(undefined4 *)(iVar1 + 0x24) = 0;
-  *(undefined4 *)(iVar1 + 0x28) = 0;
-  pdVar2[1].data = (void *)0x0;
-  dGeomMoved(pdVar2);
-  __restgprlr_28();
+  *param_1->tome = param_1->next;
+  this->count = this->count + -1;
+  param_1->next = (dxGeom *)0x0;
+  param_1->tome = (dxGeom **)0x0;
+  param_1->parent_space = (dxSpace *)0x0;
+  this->current_geom = (dxGeom *)0x0;
+  dGeomMoved((dxGeom *)this);
   return;
 }
 
@@ -438,34 +427,37 @@ dxSimpleSpace * __thiscall dxSimpleSpace::dxSimpleSpace(dxSimpleSpace *this,dxSp
 
 // 826841D0  cleanGeoms  (physics/ode/src/collision_space.cpp:271)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void __thiscall dxSimpleSpace::cleanGeoms(dxSimpleSpace *this)
 
 {
   int *piVar1;
-  int iVar2;
-  uint *puVar3;
+  uint *puVar2;
   
-  iVar2 = __savegprlr_29(this);
-  piVar1 = *(int **)(iVar2 + 0x50);
-  *(int *)(iVar2 + 0x60) = *(int *)(iVar2 + 0x60) + 1;
-  while ((piVar1 != (int *)0x0 && (puVar3 = (uint *)(piVar1 + 2), (piVar1[2] & 1U) != 0))) {
+  piVar1 = *(int **)&this->field_0x50;
+  *(int *)&this->field_0x60 = *(int *)&this->field_0x60 + 1;
+  while ((piVar1 != (int *)0x0 && (puVar2 = (uint *)(piVar1 + 2), (piVar1[2] & 1U) != 0))) {
     if ((1 < piVar1[1]) && (piVar1[1] < 3)) {
       (**(code **)(*piVar1 + 0x1c))(piVar1);
     }
-    if ((*puVar3 & 2) != 0) {
+    if ((*puVar2 & 2) != 0) {
       (**(code **)(*piVar1 + 4))(piVar1);
-      *puVar3 = *puVar3 & 0xfffffffd;
+      *puVar2 = *puVar2 & 0xfffffffd;
     }
     piVar1 = (int *)piVar1[8];
-    *puVar3 = *puVar3 & 0xfffffffc;
+    *puVar2 = *puVar2 & 0xfffffffc;
   }
-  *(int *)(iVar2 + 0x60) = *(int *)(iVar2 + 0x60) + -1;
-  __restgprlr_29();
+  *(int *)&this->field_0x60 = *(int *)&this->field_0x60 + -1;
   return;
 }
 
 
 // 82684290  collide  (physics/ode/src/collision_space.cpp:286)
+
+/* WARNING: Function: __savegprlr_21 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_21 replaced with injection: xenon_save_restore */
 
 void __thiscall
 dxSimpleSpace::collide
@@ -473,116 +465,107 @@ dxSimpleSpace::collide
           _func___cdecl_void_void_ptr_dxGeom_ptr_dxGeom_ptr *param_2)
 
 {
-  int *piVar1;
-  int *piVar2;
+  dxGeom *pdVar1;
+  dxGeom *pdVar2;
   bool bVar3;
-  int *piVar4;
-  int iVar5;
-  longlong lVar6;
-  ulonglong uVar7;
+  int iVar4;
   
-  uVar7 = (ulonglong)(int)param_2;
-  lVar6 = (longlong)(int)param_1;
-  piVar4 = (int *)__savegprlr_21(this,lVar6);
-  if ((uVar7 & 0xffffffff) == 0) {
+  if (param_2 == (_func___cdecl_void_void_ptr_dxGeom_ptr_dxGeom_ptr *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\collision_space.cpp"
                     ,0x123,0,"%s");
   }
-  piVar4[0x18] = piVar4[0x18] + 1;
-  (**(code **)(*piVar4 + 0x1c))(piVar4);
-  for (piVar1 = (int *)piVar4[0x14]; piVar1 != (int *)0x0; piVar1 = (int *)piVar1[8]) {
-    if ((piVar1[2] & 8U) != 0) {
-      if ((piVar1[4] == 0) || (bVar3 = true, (*(uint *)(piVar1[4] + 0x18) & 4) == 0)) {
+  *(int *)&this->field_0x60 = *(int *)&this->field_0x60 + 1;
+  (**(code **)(*(int *)this + 0x1c))(this);
+  for (pdVar1 = *(dxGeom **)&this->field_0x50; pdVar1 != (dxGeom *)0x0; pdVar1 = pdVar1->next) {
+    if ((pdVar1->gflags & 8U) != 0) {
+      if ((pdVar1->body == (dxBody *)0x0) || (bVar3 = true, (pdVar1->body->flags & 4U) == 0)) {
         bVar3 = false;
       }
-      for (piVar2 = (int *)piVar1[8]; piVar2 != (int *)0x0; piVar2 = (int *)piVar2[8]) {
-        if ((((!bVar3) || (piVar2[4] == 0)) || ((*(uint *)(piVar2[4] + 0x18) & 4) == 0)) &&
-           ((piVar2[2] & 8U) != 0)) {
-          if ((piVar1[2] & 2U) != 0) {
+      for (pdVar2 = pdVar1->next; pdVar2 != (dxGeom *)0x0; pdVar2 = pdVar2->next) {
+        if ((((!bVar3) || (pdVar2->body == (dxBody *)0x0)) || ((pdVar2->body->flags & 4U) == 0)) &&
+           ((pdVar2->gflags & 8U) != 0)) {
+          if ((pdVar1->gflags & 2U) != 0) {
             MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\collision_space_internal.h"
                             ,0x34,0,"%s");
           }
-          if ((piVar2[2] & 2U) != 0) {
+          if ((pdVar2->gflags & 2U) != 0) {
             MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\collision_space_internal.h"
                             ,0x35,0,"%s");
           }
-          if ((piVar1[4] != piVar2[4]) &&
-             (((piVar2[0x12] & piVar1[0x11]) != 0 || ((piVar2[0x11] & piVar1[0x12]) != 0)))) {
-            if (((float)piVar1[0xb] <= (float)piVar2[0xc]) &&
-               (((((float)piVar2[0xb] <= (float)piVar1[0xc] &&
-                  ((float)piVar1[0xd] <= (float)piVar2[0xe])) &&
-                 (((float)piVar2[0xd] <= (float)piVar1[0xe] &&
-                  ((((float)piVar1[0xf] <= (float)piVar2[0x10] &&
-                    ((float)piVar2[0xf] <= (float)piVar1[0x10])) &&
-                   (iVar5 = (**(code **)(*piVar1 + 8))(piVar1,piVar2), iVar5 != 0)))))) &&
-                (iVar5 = (**(code **)(*piVar2 + 8))(piVar2,piVar1,piVar1 + 0xb), iVar5 != 0)))) {
-              (*(code *)uVar7)(lVar6,piVar1,piVar2);
+          if ((pdVar1->body != pdVar2->body) &&
+             (((pdVar2->collide_bits & pdVar1->category_bits) != 0 ||
+              ((pdVar2->category_bits & pdVar1->collide_bits) != 0)))) {
+            if ((pdVar1->aabb[0] <= pdVar2->aabb[1]) &&
+               ((((pdVar2->aabb[0] <= pdVar1->aabb[1] && (pdVar1->aabb[2] <= pdVar2->aabb[3])) &&
+                 ((pdVar2->aabb[2] <= pdVar1->aabb[3] &&
+                  (((pdVar1->aabb[4] <= pdVar2->aabb[5] && (pdVar2->aabb[4] <= pdVar1->aabb[5])) &&
+                   (iVar4 = (**(code **)(pdVar1->_padding_ + 8))(pdVar1,pdVar2), iVar4 != 0)))))) &&
+                (iVar4 = (**(code **)(pdVar2->_padding_ + 8))(pdVar2,pdVar1,pdVar1->aabb),
+                iVar4 != 0)))) {
+              (*param_2)(param_1,pdVar1,pdVar2);
             }
           }
         }
       }
     }
   }
-  piVar4[0x18] = piVar4[0x18] + -1;
-  __restgprlr_21();
+  *(int *)&this->field_0x60 = *(int *)&this->field_0x60 + -1;
   return;
 }
 
 
 // 82684510  ODE_CollideSimpleSpaceWithGeomNoAABBTest  (physics/ode/src/collision_space.cpp:320)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
+
 void ODE_CollideSimpleSpaceWithGeomNoAABBTest(dxSpace *param_1,dxGeom *param_2,void *param_3)
 
 {
   dxGeom *pdVar1;
-  dxGeom *pdVar2;
-  int iVar3;
-  ulonglong uVar4;
   
-  uVar4 = (ulonglong)(int)param_2;
-  iVar3 = __savegprlr_24(param_1);
-  if ((uVar4 & 0xffffffff) == 0) {
+  if (param_2 == (dxGeom *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\collision_space.cpp"
                     ,0x144,0,"%s");
   }
-  if (iVar3 == 0) {
+  if (param_1 == (dxSpace *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\collision_space.cpp"
                     ,0x145,0,"%s");
   }
-  pdVar2 = (dxGeom *)uVar4;
-  if ((pdVar2->body != (dxBody *)0x0) && ((pdVar2->body->flags & 4U) != 0)) {
+  if ((param_2->body != (dxBody *)0x0) && ((param_2->body->flags & 4U) != 0)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\collision_space.cpp"
                     ,0x146,0,"%s");
   }
-  if ((pdVar2->gflags & 8U) == 0) {
+  if ((param_2->gflags & 8U) == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\collision_space.cpp"
                     ,0x147,0,"%s");
   }
   PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffff,"physics collide");
-  *(int *)(iVar3 + 0x60) = *(int *)(iVar3 + 0x60) + 1;
-  for (pdVar1 = *(dxGeom **)(iVar3 + 0x50); ZEXT48(pdVar1) != 0; pdVar1 = pdVar1->next) {
+  param_1->lock_count = param_1->lock_count + 1;
+  for (pdVar1 = param_1->first; pdVar1 != (dxGeom *)0x0; pdVar1 = pdVar1->next) {
     if (((pdVar1->body == (dxBody *)0x0) || ((pdVar1->body->flags & 4U) == 0)) &&
        ((pdVar1->gflags & 8U) != 0)) {
-      if ((uVar4 & 0xffffffff) == ZEXT48(pdVar1)) {
+      if (param_2 == pdVar1) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\collision_space.cpp"
                         ,0x155,0,"%s");
       }
-      if (pdVar2->body == pdVar1->body) {
+      if (param_2->body == pdVar1->body) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\collision_space.cpp"
                         ,0x156,0,"%s");
       }
-      Phys_NearCallback(param_3,pdVar1,pdVar2);
+      Phys_NearCallback(param_3,pdVar1,param_2);
     }
   }
-  *(int *)(iVar3 + 0x60) = *(int *)(iVar3 + 0x60) + -1;
+  param_1->lock_count = param_1->lock_count + -1;
   PIXEndNamedEvent();
-  __restgprlr_24();
   return;
 }
 
 
 // 826846C8  ODE_SpaceCheck  (physics/ode/src/collision_space.cpp:355)
 
+/* WARNING: Function: __savegprlr_19 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_19 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PhysWorld": Some values do not have unique names */
 
 void ODE_SpaceCheck(dxSpace *param_1,PhysWorld param_2)
@@ -590,24 +573,20 @@ void ODE_SpaceCheck(dxSpace *param_1,PhysWorld param_2)
 {
   dxGeom *pdVar1;
   bool bVar2;
-  int iVar3;
-  dxGeom *pdVar4;
-  ulonglong uVar5;
-  int iVar6;
+  dxGeom *pdVar3;
+  int iVar4;
   
-  uVar5 = (ulonglong)(int)param_2;
-  iVar3 = __savegprlr_19(param_1);
-  if (iVar3 == 0) {
+  if (param_1 == (dxSpace *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\collision_space.cpp"
                     ,0x16a,0,"%s");
   }
-  if (4 < (uVar5 & 0xffffffff)) {
+  if (PHYS_WORLD_LAST_SERVER_WORLD < param_2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\collision_space.cpp"
                     ,0x16b,0,"worldIndex doesn\'t index PHYS_WORLD_COUNT\n\t%i not in [0, %i)");
   }
-  iVar6 = 0;
-  for (pdVar1 = *(dxGeom **)(iVar3 + 0x50); pdVar1 != (dxGeom *)0x0; pdVar1 = pdVar1->next) {
-    iVar6 = iVar6 + 1;
+  iVar4 = 0;
+  for (pdVar1 = param_1->first; pdVar1 != (dxGeom *)0x0; pdVar1 = pdVar1->next) {
+    iVar4 = iVar4 + 1;
     if (pdVar1->body == (dxBody *)0x0) {
       dGeomGetClass(pdVar1);
       va("Geom has no body. Type %i, World %i");
@@ -615,13 +594,13 @@ void ODE_SpaceCheck(dxSpace *param_1,PhysWorld param_2)
                       ,0x172,0,"%s\n\t%s");
     }
     bVar2 = false;
-    for (pdVar4 = ODE_BodyGetFirstGeom(pdVar1->body); pdVar4 != (dxGeom *)0x0;
-        pdVar4 = dGeomGetBodyNext(pdVar4)) {
-      if (pdVar4->body != pdVar1->body) {
+    for (pdVar3 = ODE_BodyGetFirstGeom(pdVar1->body); pdVar3 != (dxGeom *)0x0;
+        pdVar3 = dGeomGetBodyNext(pdVar3)) {
+      if (pdVar3->body != pdVar1->body) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\collision_space.cpp"
                         ,0x177,0,"%s");
       }
-      if (pdVar4 == pdVar1) {
+      if (pdVar3 == pdVar1) {
         bVar2 = true;
       }
     }
@@ -630,17 +609,19 @@ void ODE_SpaceCheck(dxSpace *param_1,PhysWorld param_2)
                       ,0x17c,0,"%s");
     }
   }
-  if (iVar6 != *(int *)(iVar3 + 0x4c)) {
+  if (iVar4 != param_1->count) {
     va("Physics space geom-counter got off: geomCount: %i, space->count: %i, world: %i");
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\collision_space.cpp"
                     ,0x17e,0,"%s\n\t%s");
   }
-  __restgprlr_19();
   return;
 }
 
 
 // 82684890  collide2  (physics/ode/src/collision_space.cpp:388)
+
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 
 void __thiscall
 dxSimpleSpace::collide2
@@ -649,42 +630,32 @@ dxSimpleSpace::collide2
 
 {
   dxGeom *pdVar1;
-  dxGeom *pdVar2;
-  int *piVar3;
-  ulonglong uVar4;
-  ulonglong uVar5;
   
-  uVar5 = (ulonglong)(int)param_3;
-  uVar4 = (ulonglong)(int)param_2;
-  piVar3 = (int *)__savegprlr_26(this);
-  if ((uVar4 & 0xffffffff) == 0) {
+  if (param_2 == (dxGeom *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\collision_space.cpp"
                     ,0x187,0,"%s");
   }
-  if ((uVar5 & 0xffffffff) == 0) {
+  if (param_3 == (_func___cdecl_void_void_ptr_dxGeom_ptr_dxGeom_ptr *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\collision_space.cpp"
                     ,0x188,0,"%s");
   }
-  pdVar2 = (dxGeom *)uVar4;
-  if ((pdVar2->body != (dxBody *)0x0) && ((pdVar2->body->flags & 4U) != 0)) {
+  if ((param_2->body != (dxBody *)0x0) && ((param_2->body->flags & 4U) != 0)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\collision_space.cpp"
                     ,0x189,0,"%s");
   }
-  piVar3[0x18] = piVar3[0x18] + 1;
-  (**(code **)(*piVar3 + 0x1c))(piVar3);
-  if ((pdVar2->gflags & 2U) != 0) {
-    (**(code **)(pdVar2->_padding_ + 4))(uVar4);
-    pdVar2->gflags = pdVar2->gflags & 0xfffffffd;
+  *(int *)&this->field_0x60 = *(int *)&this->field_0x60 + 1;
+  (**(code **)(*(int *)this + 0x1c))(this);
+  if ((param_2->gflags & 2U) != 0) {
+    (**(code **)(param_2->_padding_ + 4))(param_2);
+    param_2->gflags = param_2->gflags & 0xfffffffd;
   }
-  for (pdVar1 = (dxGeom *)piVar3[0x14]; pdVar1 != (dxGeom *)0x0; pdVar1 = pdVar1->next) {
+  for (pdVar1 = *(dxGeom **)&this->field_0x50; pdVar1 != (dxGeom *)0x0; pdVar1 = pdVar1->next) {
     if (((pdVar1->body == (dxBody *)0x0) || ((pdVar1->body->flags & 4U) == 0)) &&
        ((pdVar1->gflags & 8U) != 0)) {
-      collideAABBs(pdVar1,pdVar2,param_1,(_func___cdecl_void_void_ptr_dxGeom_ptr_dxGeom_ptr *)uVar5)
-      ;
+      collideAABBs(pdVar1,param_2,param_1,param_3);
     }
   }
-  piVar3[0x18] = piVar3[0x18] + -1;
-  __restgprlr_26();
+  *(int *)&this->field_0x60 = *(int *)&this->field_0x60 + -1;
   return;
 }
 
@@ -725,26 +696,24 @@ void ODE_SpaceDestroy(dxSpace *param_1)
 
 // 82684A98  dSpaceSetCleanup  (physics/ode/src/collision_space.cpp:429)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void dSpaceSetCleanup(dxSpace *param_1,int param_2)
 
 {
-  dxGeom *pdVar1;
-  int iVar2;
-  longlong lVar3;
+  int iVar1;
   
-  lVar3 = (longlong)param_2;
-  pdVar1 = (dxGeom *)__savegprlr_29(param_1);
-  if (pdVar1 == (dxGeom *)0x0) {
+  if (param_1 == (dxSpace *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\collision_space.cpp"
                     ,0x1ae,0,"%s");
   }
-  iVar2 = dGeomIsSpace(pdVar1);
-  if (iVar2 == 0) {
+  iVar1 = dGeomIsSpace((dxGeom *)param_1);
+  if (iVar1 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\collision_space.cpp"
                     ,0x1af,0,"%s\n\t%s");
   }
-  pdVar1[1].type = (uint)(lVar3 != 0);
-  __restgprlr_29();
+  param_1->cleanup = (uint)(param_2 != 0);
   return;
 }
 
@@ -771,90 +740,84 @@ int dSpaceGetCleanup(dxSpace *param_1)
 
 // 82684BC8  dSpaceAdd  (physics/ode/src/collision_space.cpp:445)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void dSpaceAdd(dxSpace *param_1,dxGeom *param_2)
 
 {
-  dxGeom *pdVar1;
-  int iVar2;
-  longlong lVar3;
+  int iVar1;
   
-  lVar3 = (longlong)(int)param_2;
-  pdVar1 = (dxGeom *)__savegprlr_28(param_1,lVar3);
-  if (pdVar1 == (dxGeom *)0x0) {
+  if (param_1 == (dxSpace *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\collision_space.cpp"
                     ,0x1be,0,"%s");
   }
-  iVar2 = dGeomIsSpace(pdVar1);
-  if (iVar2 == 0) {
+  iVar1 = dGeomIsSpace((dxGeom *)param_1);
+  if (iVar1 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\collision_space.cpp"
                     ,0x1bf,0,"%s\n\t%s");
   }
-  if ((pdVar1 != (dxGeom *)0x0) && (pdVar1[1].body != (dxBody *)0x0)) {
+  if ((param_1 != (dxSpace *)0x0) && (param_1->lock_count != 0)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\collision_space.cpp"
                     ,0x1c0,0,"%s\n\t%s");
   }
-  (**(code **)(pdVar1->_padding_ + 0x10))(pdVar1,lVar3);
-  __restgprlr_28();
+  (**(code **)(*(int *)param_1 + 0x10))(param_1,param_2);
   return;
 }
 
 
 // 82684CA0  dSpaceRemove  (physics/ode/src/collision_space.cpp:454)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void dSpaceRemove(dxSpace *param_1,dxGeom *param_2)
 
 {
-  dxGeom *pdVar1;
-  int iVar2;
-  longlong lVar3;
+  int iVar1;
   
-  lVar3 = (longlong)(int)param_2;
-  pdVar1 = (dxGeom *)__savegprlr_28(param_1,lVar3);
-  if (pdVar1 == (dxGeom *)0x0) {
+  if (param_1 == (dxSpace *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\collision_space.cpp"
                     ,0x1c7,0,"%s");
   }
-  iVar2 = dGeomIsSpace(pdVar1);
-  if (iVar2 == 0) {
+  iVar1 = dGeomIsSpace((dxGeom *)param_1);
+  if (iVar1 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\collision_space.cpp"
                     ,0x1c8,0,"%s\n\t%s");
   }
-  if ((pdVar1 != (dxGeom *)0x0) && (pdVar1[1].body != (dxBody *)0x0)) {
+  if ((param_1 != (dxSpace *)0x0) && (param_1->lock_count != 0)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\collision_space.cpp"
                     ,0x1c9,0,"%s\n\t%s");
   }
-  (**(code **)(pdVar1->_padding_ + 0x14))(pdVar1,lVar3);
-  __restgprlr_28();
+  (**(code **)(*(int *)param_1 + 0x14))(param_1,param_2);
   return;
 }
 
 
 // 82684D78  dSpaceQuery  (physics/ode/src/collision_space.cpp:463)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 int dSpaceQuery(dxSpace *param_1,dxGeom *param_2)
 
 {
-  dxGeom *pdVar1;
-  int iVar2;
-  ulonglong uVar3;
+  int iVar1;
   
-  uVar3 = (ulonglong)(int)param_2;
-  pdVar1 = (dxGeom *)__savegprlr_28(param_1);
-  if (pdVar1 == (dxGeom *)0x0) {
+  if (param_1 == (dxSpace *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\collision_space.cpp"
                     ,0x1d0,0,"%s");
   }
-  iVar2 = dGeomIsSpace(pdVar1);
-  if (iVar2 == 0) {
+  iVar1 = dGeomIsSpace((dxGeom *)param_1);
+  if (iVar1 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\collision_space.cpp"
                     ,0x1d1,0,"%s\n\t%s");
   }
-  if ((uVar3 & 0xffffffff) == 0) {
+  if (param_2 == (dxGeom *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\collision_space.cpp"
                     ,0x9e,0,"%s");
   }
-  iVar2 = __restgprlr_28(pdVar1 == *(dxGeom **)((int)uVar3 + 0x28));
-  return iVar2;
+  return (uint)LZCOUNT((int)param_1 - (int)param_2->parent_space) >> 5;
 }
 
 
@@ -901,152 +864,126 @@ int dSpaceGetNumGeoms(dxSpace *param_1)
 
 // 82684F88  dSpaceGetGeom  (physics/ode/src/collision_space.cpp:485)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 dxGeom * dSpaceGetGeom(dxSpace *param_1,int param_2)
 
 {
-  dxGeom *pdVar1;
-  int iVar2;
-  longlong lVar3;
+  int iVar1;
+  dxGeom *pdVar2;
   
-  lVar3 = (longlong)param_2;
-  pdVar1 = (dxGeom *)__savegprlr_29(param_1,lVar3);
-  if (pdVar1 == (dxGeom *)0x0) {
+  if (param_1 == (dxSpace *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\collision_space.cpp"
                     ,0x1e6,0,"%s");
   }
-  iVar2 = dGeomIsSpace(pdVar1);
-  if (iVar2 == 0) {
+  iVar1 = dGeomIsSpace((dxGeom *)param_1);
+  if (iVar1 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\collision_space.cpp"
                     ,0x1e7,0,"%s\n\t%s");
   }
-  (**(code **)(pdVar1->_padding_ + 0xc))(pdVar1,lVar3);
-  pdVar1 = (dxGeom *)__restgprlr_29();
-  return pdVar1;
+  pdVar2 = (dxGeom *)(**(code **)(*(int *)param_1 + 0xc))(param_1,param_2);
+  return pdVar2;
 }
 
 
 // 82685028  dSpaceCollide  (physics/ode/src/collision_space.cpp:493)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void dSpaceCollide(dxSpace *param_1,void *param_2,
                   _func___cdecl_void_void_ptr_dxGeom_ptr_dxGeom_ptr *param_3)
 
 {
-  dxGeom *pdVar1;
-  int iVar2;
-  longlong lVar3;
-  ulonglong uVar4;
+  int iVar1;
   
-  uVar4 = (ulonglong)(int)param_3;
-  lVar3 = (longlong)(int)param_2;
-  pdVar1 = (dxGeom *)__savegprlr_28(param_1,lVar3);
-  if ((pdVar1 == (dxGeom *)0x0) || ((uVar4 & 0xffffffff) == 0)) {
+  if ((param_1 == (dxSpace *)0x0) ||
+     (param_3 == (_func___cdecl_void_void_ptr_dxGeom_ptr_dxGeom_ptr *)0x0)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\collision_space.cpp"
                     ,0x1ee,0,"%s");
   }
-  iVar2 = dGeomIsSpace(pdVar1);
-  if (iVar2 == 0) {
+  iVar1 = dGeomIsSpace((dxGeom *)param_1);
+  if (iVar1 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\collision_space.cpp"
                     ,0x1ef,0,"%s\n\t%s");
   }
-  (**(code **)(pdVar1->_padding_ + 0x20))(pdVar1,lVar3,uVar4);
-  __restgprlr_28();
+  (**(code **)(*(int *)param_1 + 0x20))(param_1,param_2,param_3);
   return;
 }
 
 
 // 826850D8  dSpaceCollide2  (physics/ode/src/collision_space.cpp:502)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 void dSpaceCollide2(dxGeom *param_1,dxGeom *param_2,void *param_3,
                    _func___cdecl_void_void_ptr_dxGeom_ptr_dxGeom_ptr *param_4)
 
 {
-  int *piVar1;
-  ulonglong uVar2;
-  ulonglong uVar3;
-  longlong lVar4;
-  ulonglong uVar5;
-  ulonglong uVar6;
-  int *piVar7;
-  int iVar8;
-  ulonglong uVar9;
+  dxGeom *pdVar1;
+  int iVar2;
+  dxGeom *pdVar3;
   
-  uVar5 = (ulonglong)(int)param_4;
-  lVar4 = (longlong)(int)param_3;
-  uVar3 = (ulonglong)(int)param_2;
-  uVar2 = __savegprlr_26(param_1,uVar3,lVar4);
-  if ((((uVar2 & 0xffffffff) == 0) || ((uVar3 & 0xffffffff) == 0)) || ((uVar5 & 0xffffffff) == 0)) {
+  if (((param_1 == (dxGeom *)0x0) || (param_2 == (dxGeom *)0x0)) ||
+     (param_4 == (_func___cdecl_void_void_ptr_dxGeom_ptr_dxGeom_ptr *)0x0)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\collision_space.cpp"
                     ,0x1f7,0,"%s");
   }
-  iVar8 = *(int *)((int)uVar2 + 4);
-  if ((iVar8 < 2) || (uVar6 = uVar2, 2 < iVar8)) {
-    uVar6 = 0;
+  if ((param_1->type < 2) || (pdVar1 = param_1, 2 < param_1->type)) {
+    pdVar1 = (dxGeom *)0x0;
   }
-  iVar8 = *(int *)((int)uVar3 + 4);
-  if ((iVar8 < 2) || (uVar9 = uVar3, 2 < iVar8)) {
-    uVar9 = 0;
+  if ((param_2->type < 2) || (pdVar3 = param_2, 2 < param_2->type)) {
+    pdVar3 = (dxGeom *)0x0;
   }
-  piVar1 = (int *)uVar9;
-  if ((uVar6 & 0xffffffff) == 0) {
-    if ((uVar9 & 0xffffffff) == 0) {
-      (*(code *)uVar5)(lVar4,uVar2,uVar3);
+  if (pdVar1 == (dxGeom *)0x0) {
+    if (pdVar3 == (dxGeom *)0x0) {
+      (*param_4)(param_3,param_1,param_2);
     }
-    else {
-      iVar8 = *(int *)((int)uVar2 + 0x10);
-      if ((iVar8 == 0) || ((*(uint *)(iVar8 + 0x18) & 4) == 0)) {
-        (**(code **)(*piVar1 + 0x24))(uVar9,lVar4,uVar2,uVar5);
-        __restgprlr_26();
-        return;
-      }
+    else if ((param_1->body == (dxBody *)0x0) || ((param_1->body->flags & 4U) == 0)) {
+      (**(code **)(pdVar3->_padding_ + 0x24))(pdVar3,param_3,param_1,param_4);
+      return;
+    }
+  }
+  else if (pdVar3 == (dxGeom *)0x0) {
+    if ((param_2->body == (dxBody *)0x0) || ((param_2->body->flags & 4U) == 0)) {
+      (**(code **)(pdVar1->_padding_ + 0x24))(pdVar1,param_3,param_2,param_4);
+      return;
     }
   }
   else {
-    piVar7 = (int *)uVar6;
-    if ((uVar9 & 0xffffffff) == 0) {
-      iVar8 = *(int *)((int)uVar3 + 0x10);
-      if ((iVar8 == 0) || ((*(uint *)(iVar8 + 0x18) & 4) == 0)) {
-        (**(code **)(*piVar7 + 0x24))(uVar6,lVar4,uVar3,uVar5);
-        __restgprlr_26();
+    if (pdVar1 == pdVar3) {
+      (**(code **)(pdVar1->_padding_ + 0x20))(pdVar1,param_3,param_4);
+      return;
+    }
+    if (*(int *)&pdVar1->field_0x4c < *(int *)&pdVar3->field_0x4c) {
+      iVar2 = pdVar1[1]._padding_;
+      if (iVar2 != 0) {
+        do {
+          if ((*(int *)(iVar2 + 0x10) == 0) || ((*(uint *)(*(int *)(iVar2 + 0x10) + 0x18) & 4) == 0)
+             ) {
+            (**(code **)(pdVar3->_padding_ + 0x24))(pdVar3,param_3,iVar2,param_4);
+          }
+          iVar2 = *(int *)(iVar2 + 0x20);
+        } while (iVar2 != 0);
         return;
       }
     }
     else {
-      if ((uVar6 & 0xffffffff) == (uVar9 & 0xffffffff)) {
-        (**(code **)(*piVar7 + 0x20))(uVar6,lVar4,uVar5);
-        __restgprlr_26();
+      iVar2 = pdVar3[1]._padding_;
+      if (iVar2 != 0) {
+        do {
+          if ((*(int *)(iVar2 + 0x10) == 0) || ((*(uint *)(*(int *)(iVar2 + 0x10) + 0x18) & 4) == 0)
+             ) {
+            (**(code **)(pdVar1->_padding_ + 0x24))(pdVar1,param_3,iVar2,param_4);
+          }
+          iVar2 = *(int *)(iVar2 + 0x20);
+        } while (iVar2 != 0);
         return;
-      }
-      if (piVar7[0x13] < piVar1[0x13]) {
-        iVar8 = piVar7[0x14];
-        if (iVar8 != 0) {
-          do {
-            if ((*(int *)(iVar8 + 0x10) == 0) ||
-               ((*(uint *)(*(int *)(iVar8 + 0x10) + 0x18) & 4) == 0)) {
-              (**(code **)(*piVar1 + 0x24))(uVar9,lVar4,iVar8,uVar5);
-            }
-            iVar8 = *(int *)(iVar8 + 0x20);
-          } while (iVar8 != 0);
-          __restgprlr_26();
-          return;
-        }
-      }
-      else {
-        iVar8 = piVar1[0x14];
-        if (iVar8 != 0) {
-          do {
-            if ((*(int *)(iVar8 + 0x10) == 0) ||
-               ((*(uint *)(*(int *)(iVar8 + 0x10) + 0x18) & 4) == 0)) {
-              (**(code **)(*piVar7 + 0x24))(uVar6,lVar4,iVar8,uVar5);
-            }
-            iVar8 = *(int *)(iVar8 + 0x20);
-          } while (iVar8 != 0);
-          __restgprlr_26();
-          return;
-        }
       }
     }
   }
-  __restgprlr_26();
   return;
 }
 

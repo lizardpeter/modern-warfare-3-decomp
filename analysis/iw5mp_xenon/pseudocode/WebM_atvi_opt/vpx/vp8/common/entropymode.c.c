@@ -26,28 +26,27 @@ int vp8_mv_cont(MV *param_1,MV *param_2)
 
 // 82811B88  vp8_init_mbmode_probs  (WebM_atvi_opt/vpx/vp8/common/entropymode.c:195)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void vp8_init_mbmode_probs(VP8Common *param_1)
 
 {
-  int iVar1;
-  void *pvVar2;
   uint auStack_50 [20];
   
-  iVar1 = __savegprlr_28(param_1);
   vp8_tree_probs_from_distribution
-            (5,vp8_ymode_encodings,"",(uchar *)(iVar1 + 0x67e4),(uint (*) [2])auStack_50,y_mode_cts,
+            (5,vp8_ymode_encodings,"",(param_1->fc).ymode_prob,(uint (*) [2])auStack_50,y_mode_cts,
              0x100,1);
   vp8_tree_probs_from_distribution
-            (5,vp8_kf_ymode_encodings,&vp8_kf_ymode_tree,(uchar *)(iVar1 + 0x6355),
+            (5,vp8_kf_ymode_encodings,&vp8_kf_ymode_tree,param_1->kf_ymode_prob,
              (uint (*) [2])auStack_50,kf_y_mode_cts,0x100,1);
   vp8_tree_probs_from_distribution
-            (4,vp8_uv_mode_encodings,"",(uchar *)(iVar1 + 0x67e8),(uint (*) [2])auStack_50,
+            (4,vp8_uv_mode_encodings,"",(param_1->fc).uv_mode_prob,(uint (*) [2])auStack_50,
              uv_mode_cts,0x100,1);
   vp8_tree_probs_from_distribution
-            (4,vp8_uv_mode_encodings,"",(uchar *)(iVar1 + 0x6359),(uint (*) [2])auStack_50,
+            (4,vp8_uv_mode_encodings,"",param_1->kf_uv_mode_prob,(uint (*) [2])auStack_50,
              kf_uv_mode_cts,0x100,1);
-  pvVar2 = vpx_memcpy((void *)(iVar1 + 0x67eb),sub_mv_ref_prob,3);
-  __restgprlr_28(pvVar2);
+  vpx_memcpy((param_1->fc).sub_mv_ref_prob,sub_mv_ref_prob,3);
   return;
 }
 
@@ -77,32 +76,32 @@ void vp8_default_bmode_probs(uchar *param_1)
 
 // 82811CE8  vp8_kf_default_bmode_probs  (WebM_atvi_opt/vpx/vp8/common/entropymode.c:242)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 void vp8_kf_default_bmode_probs(uchar (*param_1) [10] [9])
 
 {
-  int iVar1;
-  ulonglong uVar2;
+  ulonglong uVar1;
+  longlong lVar2;
   longlong lVar3;
-  longlong lVar4;
   uint auStack_80 [32];
   
-  iVar1 = __savegprlr_26(param_1);
-  lVar3 = 0;
+  lVar2 = 0;
   do {
-    lVar4 = 0;
+    lVar3 = 0;
     do {
-      uVar2 = lVar3 + lVar4;
+      uVar1 = lVar2 + lVar3;
       vp8_tree_probs_from_distribution
                 (10,vp8_bmode_encodings,"",
-                 (uchar *)((int)uVar2 + (int)((uVar2 & 0xffffffff) << 3) + iVar1),
+                 (*param_1)[0] + (int)uVar1 + (int)((uVar1 & 0xffffffff) << 3),
                  (uint (*) [2])auStack_80,
                  (uint *)((int)vp8_kf_default_bmode_counts[0][0] +
-                         (int)((uVar2 + (uVar2 & 0x3fffffff) * 4 & 0xffffffff) << 3)),0x100,1);
-      lVar4 = lVar4 + 1;
-    } while ((int)lVar4 < 10);
-    lVar3 = lVar3 + 10;
-  } while ((int)lVar3 < 100);
-  __restgprlr_26();
+                         (int)((uVar1 + (uVar1 & 0x3fffffff) * 4 & 0xffffffff) << 3)),0x100,1);
+      lVar3 = lVar3 + 1;
+    } while ((int)lVar3 < 10);
+    lVar2 = lVar2 + 10;
+  } while ((int)lVar2 < 100);
   return;
 }
 

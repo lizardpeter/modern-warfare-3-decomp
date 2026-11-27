@@ -2,43 +2,43 @@
 
 // 8225ED68  mp_reduce_2k_l  (line unknown)
 
-void mp_reduce_2k_l(undefined8 param_1,undefined8 param_2,undefined8 param_3)
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
+undefined8 mp_reduce_2k_l(undefined8 param_1,uint *param_2,undefined8 param_3)
 
 {
   uint uVar1;
   undefined8 uVar2;
-  undefined8 uVar3;
-  int iVar4;
-  ulonglong uVar5;
-  longlong lVar6;
+  int iVar3;
+  ulonglong uVar4;
+  longlong lVar5;
   undefined1 auStack_40 [64];
   
-  uVar2 = __savegprlr_27();
-  uVar3 = mp_init(auStack_40);
-  if ((int)uVar3 == 0) {
-    uVar1 = *(uint *)param_2;
+  uVar2 = mp_init(auStack_40);
+  if ((int)uVar2 == 0) {
+    uVar1 = *param_2;
     if (uVar1 == 0) {
-      lVar6 = 0;
+      lVar5 = 0;
     }
     else {
-      lVar6 = (ulonglong)uVar1 * 0x1c + -0x1c;
-      for (uVar5 = (ulonglong)*(uint *)(uVar1 * 4 + ((uint *)param_2)[3] + -4); uVar5 != 0;
-          uVar5 = uVar5 >> 1) {
-        lVar6 = lVar6 + 1;
+      lVar5 = (ulonglong)uVar1 * 0x1c + -0x1c;
+      for (uVar4 = (ulonglong)*(uint *)(uVar1 * 4 + param_2[3] + -4); uVar4 != 0; uVar4 = uVar4 >> 1
+          ) {
+        lVar5 = lVar5 + 1;
       }
     }
-    uVar3 = mp_div_2d(uVar2,lVar6,auStack_40,uVar2);
-    iVar4 = (int)uVar3;
-    while ((((iVar4 == 0 && (uVar3 = mp_mul(auStack_40,param_3,auStack_40), (int)uVar3 == 0)) &&
-            (uVar3 = s_mp_add(uVar2,auStack_40,uVar2), (int)uVar3 == 0)) &&
-           (iVar4 = mp_cmp_mag(uVar2,param_2), iVar4 != -1))) {
-      s_mp_sub(uVar2);
-      uVar3 = mp_div_2d(uVar2,lVar6,auStack_40,uVar2);
-      iVar4 = (int)uVar3;
+    uVar2 = mp_div_2d(param_1,lVar5,auStack_40,param_1);
+    iVar3 = (int)uVar2;
+    while ((((iVar3 == 0 && (uVar2 = mp_mul(auStack_40,param_3,auStack_40), (int)uVar2 == 0)) &&
+            (uVar2 = s_mp_add(param_1,auStack_40,param_1), (int)uVar2 == 0)) &&
+           (iVar3 = mp_cmp_mag(param_1,param_2), iVar3 != -1))) {
+      s_mp_sub(param_1);
+      uVar2 = mp_div_2d(param_1,lVar5,auStack_40,param_1);
+      iVar3 = (int)uVar2;
     }
     mp_clear(auStack_40);
   }
-  __restgprlr_27(uVar3);
-  return;
+  return uVar2;
 }
 

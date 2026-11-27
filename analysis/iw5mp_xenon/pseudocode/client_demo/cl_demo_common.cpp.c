@@ -54,12 +54,13 @@ void CL_Demo_RegisterDvars(void)
 
 // 827CE3C0  CL_Demo_RegisterCommands  (client_demo/cl_demo_common.cpp:134)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void CL_Demo_RegisterCommands(void)
 
 {
-  __savegprlr_28();
   Cmd_AddCommandInternal("cl_demo_play",CL_Demo_Play_f,&CL_Demo_Play_f_VAR);
   Cmd_AddCommandInternal("cl_demo_timedemo",CL_Demo_Play_f,&CL_Demo_Play_f_VAR);
   Cmd_AddCommandInternal("cl_demo_previewclip",CL_Demo_PreviewClip_f,&CL_Demo_PreviewClip_f_VAR);
@@ -82,7 +83,6 @@ void CL_Demo_RegisterCommands(void)
             ("cl_demo_startcliprecord",CL_Demo_StartClipRecord_f,&CL_Demo_StartClipRecord_f_VAR);
   Cmd_AddCommandInternal
             ("cl_demo_pausecliprecord",CL_Demo_PauseClipRecord_f,&CL_Demo_PauseClipRecord_f_VAR);
-  __restgprlr_28();
   return;
 }
 
@@ -129,6 +129,8 @@ void CL_Demo_StopRecord_f(void)
 
 // 827CD288  CL_Demo_Play_f  (client_demo/cl_demo_common.cpp:215)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
@@ -158,16 +160,13 @@ void CL_Demo_Play_f(void)
   char acStack_250 [256];
   char acStack_150 [336];
   
-  __savegprlr_24();
   iVar2 = Cmd_Argc();
   if ((iVar2 < 2) && (iVar2 = Cmd_Argc(), 4 < iVar2)) {
     Com_Printf(0,"Usage: cl_demo_play <filename> [useMemoryFileSystem][renderMovie]\n");
-    __restgprlr_24();
     return;
   }
   if ((com_sv_running->current).enabled != false) {
     Com_Printf(0xe,"listen server cannot play a demo.\n");
-    __restgprlr_24();
     return;
   }
   iVar5 = 0;
@@ -288,23 +287,18 @@ void CL_Demo_Play_f(void)
           }
           Dvar_SetBool(cl_demo_pause,false);
           Dvar_SetInt(cl_demo_client,(pcVar12->clientDemo).header.defaultClientNum);
-          __restgprlr_24();
           return;
         }
         Com_Error(ERR_DROP,"\x15Exe Mode Mismatch.\nDemo\'s Mode: %s Current Mode: %s");
-        __restgprlr_24();
         return;
       }
       Com_Error(ERR_DROP,"EXE_ERR_INVALID_DEMO_FILE");
-      __restgprlr_24();
       return;
     }
     Com_Error(ERR_DROP,"EXE_ERR_OUT_OF_MEMORY");
-    __restgprlr_24();
     return;
   }
   Com_Printf(0,"Demo Initialization Failed!!. Couldn\'t start demo playback.\n");
-  __restgprlr_24();
   return;
 }
 
@@ -376,6 +370,8 @@ void CL_Demo_Back_f(void)
 
 // 827CD930  CL_Demo_JumpToStart_f  (client_demo/cl_demo_common.cpp:492)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
@@ -392,7 +388,6 @@ void CL_Demo_JumpToStart_f(void)
   int *piVar7;
   ulonglong uVar8;
   
-  __savegprlr_28();
   LVar1 = Cmd_LocalClientNum();
   if (((clientConnections != (clientConnection_t *)0x0) &&
       (pcVar2 = CL_GetLocalClientConnection(LVar1), pcVar2 != (clientConnection_t *)0x0)) &&
@@ -400,7 +395,6 @@ void CL_Demo_JumpToStart_f(void)
     bVar5 = CL_Demo_IsPlaybackMemoryAllocated();
     if (!bVar5) {
       Com_PrintError(0xe,"Playback memory is not inited.\n");
-      __restgprlr_28();
       return;
     }
     pcVar3 = CL_Demo_GetPlaybackData();
@@ -465,11 +459,9 @@ void CL_Demo_JumpToStart_f(void)
       }
       CL_Demo_ProcessKeyFrameJump(LVar1,(int)uVar8);
     }
-    __restgprlr_28();
     return;
   }
   Com_PrintError(0xe,"We are not playing a demo.\n");
-  __restgprlr_28();
   return;
 }
 
@@ -668,6 +660,8 @@ void CL_Demo_DeleteClip_f(void)
 
 // 827CDFF8  CL_Demo_SaveSegment_f  (client_demo/cl_demo_common.cpp:735)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
@@ -683,11 +677,9 @@ void CL_Demo_SaveSegment_f(void)
   bool bVar6;
   int *piVar7;
   
-  __savegprlr_27();
   iVar1 = Cmd_Argc();
   if (iVar1 != 2) {
     Com_Printf(0,"Usage: demo_savesegment <discard>");
-    __restgprlr_27();
     return;
   }
   LVar2 = Cmd_LocalClientNum();
@@ -695,7 +687,6 @@ void CL_Demo_SaveSegment_f(void)
       (pcVar3 = CL_GetLocalClientConnection(LVar2), pcVar3 == (clientConnection_t *)0x0)) ||
      ((pcVar3->clientDemo).state != 2)) {
     Com_PrintError(0xe,"We are not playing a demo.\n");
-    __restgprlr_27();
     return;
   }
   pcVar4 = Cmd_Argv(1);
@@ -727,13 +718,14 @@ void CL_Demo_SaveSegment_f(void)
 LAB_827ce1c4:
   CL_Demo_ActivateTransitionScreen(1);
   pcVar5->pendingSegmentSave = false;
-  __restgprlr_27();
   return;
 }
 
 
 // 827CE1E8  CL_Demo_PreviewSegment_f  (client_demo/cl_demo_common.cpp:792)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
@@ -747,11 +739,9 @@ void CL_Demo_PreviewSegment_f(void)
   clientDemoPlayback_t *pcVar4;
   char *pcVar5;
   
-  __savegprlr_29();
   iVar1 = Cmd_Argc();
   if ((iVar1 != 1) && (iVar1 = Cmd_Argc(), iVar1 != 2)) {
     Com_Printf(0,"Usage: demo_previewsegment [segmentIndex].\n");
-    __restgprlr_29();
     return;
   }
   LVar2 = Cmd_LocalClientNum();
@@ -769,13 +759,11 @@ void CL_Demo_PreviewSegment_f(void)
       iVar1 = atoi(pcVar5);
       if ((iVar1 < 0) || (pcVar4->segmentCount <= iVar1)) {
         Com_PrintError(0xe,"Bad segment index specified.\n");
-        __restgprlr_29();
         return;
       }
       if (pcVar4->previewAllSegments == false) {
         CL_Demo_WriteRestorePoint(LVar2,0);
         CL_Demo_PreviewSegment(LVar2,iVar1);
-        __restgprlr_29();
         return;
       }
     }
@@ -787,11 +775,9 @@ void CL_Demo_PreviewSegment_f(void)
       iVar1 = -1;
     }
     CL_Demo_PreviewSegment(LVar2,iVar1);
-    __restgprlr_29();
     return;
   }
   Com_PrintError(0xe,"We are not playing a demo.\n");
-  __restgprlr_29();
   return;
 }
 
@@ -962,49 +948,50 @@ void CL_Demo_WriteHeader(LocalClientNum_t param_1,clientDemoHeader_t *param_2)
 
 // 827CC620  CL_Demo_WriteFooter  (client_demo/cl_demo_common.cpp:1033)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 void CL_Demo_WriteFooter(LocalClientNum_t param_1,clientDemoFooter_t *param_2)
 
 {
-  LocalClientNum_t LVar1;
-  clientConnection_t *pcVar2;
-  char *pcVar3;
-  uint uVar4;
-  _func___cdecl_void_void_ptr_int_int **pp_Var5;
+  clientConnection_t *pcVar1;
+  char *pcVar2;
+  uint uVar3;
+  _func___cdecl_void_void_ptr_int_int **pp_Var4;
   int local_30 [12];
   
-  LVar1 = __savegprlr_28(param_1);
-  pcVar2 = CL_GetLocalClientConnection(LVar1);
+  pcVar1 = CL_GetLocalClientConnection(param_1);
   local_30[0] = 0;
-  pp_Var5 = &(pcVar2->clientDemo).demoWrite;
-  (**pp_Var5)(param_2,0x254,LVar1);
+  pp_Var4 = &(pcVar1->clientDemo).demoWrite;
+  (**pp_Var4)(param_2,0x254,param_1);
   local_30[0] = local_30[0] + 0x254;
-  (**pp_Var5)(&param_2->numConnectedPlayers,4,LVar1);
+  (**pp_Var4)(&param_2->numConnectedPlayers,4,param_1);
   local_30[0] = local_30[0] + 4;
   if (param_2->numConnectedPlayers != 0) {
-    (**pp_Var5)(param_2->connectedPlayers,param_2->numConnectedPlayers * 0x18,LVar1);
+    (**pp_Var4)(param_2->connectedPlayers,param_2->numConnectedPlayers * 0x18,param_1);
     local_30[0] = param_2->numConnectedPlayers * 0x18 + local_30[0];
   }
-  (**pp_Var5)(&param_2->numBookmarks,4,LVar1);
+  (**pp_Var4)(&param_2->numBookmarks,4,param_1);
   local_30[0] = local_30[0] + 4;
   if (param_2->numBookmarks != 0) {
-    (**pp_Var5)(param_2->bookmarks,param_2->numBookmarks << 3,LVar1);
+    (**pp_Var4)(param_2->bookmarks,param_2->numBookmarks << 3,param_1);
     local_30[0] = param_2->numBookmarks * 8 + local_30[0];
   }
-  (**pp_Var5)(local_30,4,LVar1);
-  (**pp_Var5)(param_2,4,LVar1);
-  pcVar3 = CL_GetConfigString(0x3d5);
-  uVar4 = atoi(pcVar3);
-  param_2->matchID = uVar4;
-  __restgprlr_28();
+  (**pp_Var4)(local_30,4,param_1);
+  (**pp_Var4)(param_2,4,param_1);
+  pcVar2 = CL_GetConfigString(0x3d5);
+  uVar3 = atoi(pcVar2);
+  param_2->matchID = uVar3;
   return;
 }
 
 
 // 827CC788  CL_Demo_WriteConfigStrings  (client_demo/cl_demo_common.cpp:1082)
 
+/* WARNING: Function: __savegprlr_16 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_16 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
@@ -1021,33 +1008,27 @@ void CL_Demo_WriteConfigStrings(LocalClientNum_t param_1,msg_t *param_2,bool par
   int iVar6;
   char *pcVar7;
   char *pcVar8;
-  ulonglong uVar9;
+  int iVar9;
   int iVar10;
   int iVar11;
   int iVar12;
-  int iVar13;
   
-  uVar9 = (ulonglong)param_3;
-  __savegprlr_16(param_1);
   MSG_WriteByte(param_2,1);
-  iVar10 = 0;
+  iVar9 = 0;
   iVar6 = 0;
   iVar4 = CCS_GetConfigStringNum(0);
-  iVar12 = 0;
+  iVar11 = 0;
   do {
-    if ((iVar12 == 1) || (iVar12 == 0)) {
+    if ((iVar11 == 1) || (iVar11 == 0)) {
 LAB_827cc874:
-      iVar10 = iVar10 + 1;
+      iVar9 = iVar9 + 1;
     }
     else {
-      iVar11 = cls.gameState.stringOffsets[iVar12];
-      pcVar7 = cls.gameState.stringData + iVar11;
-      if (((uVar9 & 0xff) == 0) || (iVar4 != iVar12)) {
-        if (iVar11 != 0) goto LAB_827cc874;
-      }
-      else {
+      iVar10 = cls.gameState.stringOffsets[iVar11];
+      pcVar7 = cls.gameState.stringData + iVar10;
+      if ((param_3) && (iVar4 == iVar11)) {
         pcVar5 = CCS_GetConfigStringValue(iVar6);
-        if (iVar12 < 0x3d6) {
+        if (iVar11 < 0x3d6) {
           do {
             cVar2 = *pcVar5;
             cVar3 = *pcVar7;
@@ -1062,67 +1043,53 @@ LAB_827cc874:
           bVar1 = iVar4 == 0;
         }
         if (!bVar1) {
-          iVar10 = iVar10 + 1;
+          iVar9 = iVar9 + 1;
         }
         iVar6 = iVar6 + 1;
         iVar4 = CCS_GetConfigStringNum(iVar6);
       }
+      else if (iVar10 != 0) goto LAB_827cc874;
     }
-    iVar12 = iVar12 + 1;
-  } while (iVar12 < 0xeeb);
-  MSG_WriteShort(param_2,iVar10);
-  iVar12 = 0;
-  iVar6 = CCS_GetConfigStringNum(0);
+    iVar11 = iVar11 + 1;
+  } while (iVar11 < 0xeeb);
+  MSG_WriteShort(param_2,iVar9);
   iVar11 = 0;
+  iVar6 = CCS_GetConfigStringNum(0);
+  iVar10 = 0;
   iVar4 = -1;
-  iVar13 = 0;
+  iVar12 = 0;
   do {
-    if (iVar13 == 1) {
+    if (iVar12 == 1) {
       pcVar7 = Dvar_InfoString_Big(0x1000);
       MSG_WriteBit1(param_2);
       MSG_WriteBit1(param_2);
       MSG_WriteBigString(param_2,pcVar7);
       iVar4 = 1;
 LAB_827ccaf8:
-      iVar11 = iVar11 + 1;
+      iVar10 = iVar10 + 1;
     }
     else {
-      pcVar7 = cls.gameState.stringData + cls.gameState.stringOffsets[iVar13];
-      if (iVar13 == 0) {
+      pcVar7 = cls.gameState.stringData + cls.gameState.stringOffsets[iVar12];
+      if (iVar12 == 0) {
         MSG_WriteBit1(param_2);
         MSG_WriteBit1(param_2);
         MSG_WriteBigString(param_2,pcVar7);
         iVar4 = 0;
         goto LAB_827ccaf8;
       }
-      if ((uVar9 & 0xff) == 0) {
-LAB_827ccaac:
-        if (cls.gameState.stringOffsets[iVar13] != 0) {
-          if (iVar13 == iVar4 + 1) {
-            MSG_WriteBit1(param_2);
-          }
-          else {
-            MSG_WriteBit0(param_2);
-            MSG_WriteBits(param_2,iVar13,0xc);
-          }
-          MSG_WriteBit1(param_2);
-          MSG_WriteBigString(param_2,pcVar7);
-          goto LAB_827ccaf8;
-        }
-      }
-      else {
-        if (((iVar6 != 0) && (iVar6 < iVar13)) && (alwaysfails == 0)) {
+      if (param_3) {
+        if (((iVar6 != 0) && (iVar6 < iVar12)) && (alwaysfails == 0)) {
           pcVar5 = va(
                      "Invalid line in the config string csv - config string indexes must only go up, but it went down and is now %i (line %i) - check the bottom of the file to see if it\'s corrupt"
                      );
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_demo\\cl_demo_common.cpp"
                           ,0x49e,0,pcVar5);
         }
-        if (iVar6 != iVar13) goto LAB_827ccaac;
+        if (iVar6 != iVar12) goto LAB_827ccaac;
         bVar1 = false;
-        pcVar8 = CCS_GetConfigStringValue(iVar12);
+        pcVar8 = CCS_GetConfigStringValue(iVar11);
         pcVar5 = pcVar7;
-        if (iVar13 < 0x3d6) {
+        if (iVar12 < 0x3d6) {
           do {
             cVar2 = *pcVar8;
             cVar3 = *pcVar5;
@@ -1138,41 +1105,55 @@ LAB_827cca04:
           iVar6 = I_stricmp(pcVar8,pcVar7);
           if (iVar6 != 0) goto LAB_827cca04;
 LAB_827cc9f8:
-          if (cls.gameState.stringOffsets[iVar13] == 0) goto LAB_827cca04;
+          if (cls.gameState.stringOffsets[iVar12] == 0) goto LAB_827cca04;
         }
         if (bVar1) {
-          if (cls.gameState.stringOffsets[iVar13] == 0) {
+          if (cls.gameState.stringOffsets[iVar12] == 0) {
             MSG_WriteBit0(param_2);
-            MSG_WriteBits(param_2,iVar13,0xc);
+            MSG_WriteBits(param_2,iVar12,0xc);
             MSG_WriteBit1(param_2);
             pcVar7 = "";
           }
-          else if (iVar13 == iVar4 + 1) {
+          else if (iVar12 == iVar4 + 1) {
             MSG_WriteBit1(param_2);
             MSG_WriteBit1(param_2);
           }
           else {
             MSG_WriteBit0(param_2);
-            MSG_WriteBits(param_2,iVar13,0xc);
+            MSG_WriteBits(param_2,iVar12,0xc);
             MSG_WriteBit1(param_2);
           }
           MSG_WriteBigString(param_2,pcVar7);
-          iVar11 = iVar11 + 1;
-          iVar4 = iVar13;
+          iVar10 = iVar10 + 1;
+          iVar4 = iVar12;
         }
-        iVar12 = iVar12 + 1;
-        iVar6 = CCS_GetConfigStringNum(iVar12);
+        iVar11 = iVar11 + 1;
+        iVar6 = CCS_GetConfigStringNum(iVar11);
+      }
+      else {
+LAB_827ccaac:
+        if (cls.gameState.stringOffsets[iVar12] != 0) {
+          if (iVar12 == iVar4 + 1) {
+            MSG_WriteBit1(param_2);
+          }
+          else {
+            MSG_WriteBit0(param_2);
+            MSG_WriteBits(param_2,iVar12,0xc);
+          }
+          MSG_WriteBit1(param_2);
+          MSG_WriteBigString(param_2,pcVar7);
+          goto LAB_827ccaf8;
+        }
       }
     }
-    iVar13 = iVar13 + 1;
-    if (0xeea < iVar13) {
-      if (iVar11 != iVar10) {
+    iVar12 = iVar12 + 1;
+    if (0xeea < iVar12) {
+      if (iVar10 != iVar9) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_demo\\cl_demo_common.cpp"
                         ,0x4ef,0,"%s");
       }
       pcVar7 = va("CL_Demo_WriteConfigStrings() - NumConfigStrings: %d\n");
       Com_Printf(0xe,pcVar7);
-      __restgprlr_16();
       return;
     }
   } while( true );
@@ -1200,6 +1181,8 @@ void CL_Demo_EndAll(void)
 
 // 827CCB58  CL_Demo_End  (client_demo/cl_demo_common.cpp:1292)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
@@ -1212,142 +1195,132 @@ void CL_Demo_End(LocalClientNum_t param_1)
   connstate_t cVar2;
   int iVar3;
   void *pvVar4;
-  LocalClientNum_t LVar5;
-  clientConnection_t *pcVar6;
-  clientActive_t *pcVar7;
-  bool bVar11;
+  clientConnection_t *pcVar5;
+  clientActive_t *pcVar6;
+  bool bVar10;
+  int iVar7;
   int iVar8;
-  int iVar9;
-  clientDemoPlayback_t *pcVar10;
+  clientDemoPlayback_t *pcVar9;
+  int *piVar11;
   int *piVar12;
-  int *piVar13;
-  clientDemoFooter_t *pcVar14;
-  int *piVar15;
+  clientDemoFooter_t *pcVar13;
+  int *piVar14;
   undefined1 local_ff0 [16];
   undefined8 local_fe0;
   undefined8 local_fd8;
   undefined8 local_fd0;
   undefined8 local_fc8;
   
-  LVar5 = __savegprlr_23(param_1);
-  if (LOCAL_CLIENT_3 < LVar5) {
+  if (LOCAL_CLIENT_3 < param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\../client_mp/client_mp.h"
                     ,0x4aa,0,
                     "localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)");
   }
-  cVar2 = clientUIActives[LVar5].connectionState;
-  if (LOCAL_CLIENT_3 < LVar5) {
+  cVar2 = clientUIActives[param_1].connectionState;
+  if (LOCAL_CLIENT_3 < param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\../client_mp/client_mp.h"
                     ,0x4c5,0,
                     "localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)");
   }
-  if (((int)cVar2 < 5) && (clientUIActives[LVar5].migrationState == CMSTATE_INACTIVE)) {
+  if (((int)cVar2 < 5) && (clientUIActives[param_1].migrationState == CMSTATE_INACTIVE)) {
     if ((cl_demo_log->current).enabled != false) {
       Com_Printf(0xe,
                  "CL_Demo_End( %d ): early return, not connected and not migrating (cs: %08x cms: %08x)\n"
                 );
-      __restgprlr_23();
+      return;
+    }
+  }
+  else if ((clientConnections == (clientConnection_t *)0x0) ||
+          ((pcVar5 = CL_GetLocalClientConnection(param_1), pcVar5 == (clientConnection_t *)0x0 ||
+           (iVar3 = (pcVar5->clientDemo).state, iVar3 == 0)))) {
+    if ((cl_demo_log->current).enabled != false) {
+      Com_Printf(0xe,"CL_Demo_End( %d ): early return, idle\n");
       return;
     }
   }
   else {
-    if (clientConnections != (clientConnection_t *)0x0) {
-      pcVar6 = CL_GetLocalClientConnection(LVar5);
-      if ((pcVar6 != (clientConnection_t *)0x0) && (iVar3 = (pcVar6->clientDemo).state, iVar3 != 0))
-      {
-        if ((cl_demo_log->current).enabled != false) {
-          Com_Printf(0xe,"CL_Demo_End( %d ): success\n");
+    if ((cl_demo_log->current).enabled != false) {
+      Com_Printf(0xe,"CL_Demo_End( %d ): success\n");
+    }
+    pcVar5 = CL_GetLocalClientConnection(param_1);
+    if (pcVar5 != (clientConnection_t *)0x0) {
+      (pcVar5->clientDemo).state = 0;
+    }
+    pcVar5 = CL_GetLocalClientConnection(param_1);
+    if (iVar3 == 1) {
+      local_ff0[0] = 0;
+      CL_Demo_Write(local_ff0,1,param_1);
+      pcVar6 = CL_GetLocalClientGlobals(param_1);
+      piVar11 = &(pcVar5->clientDemo).footer.numConnectedPlayers;
+      piVar14 = &(pcVar5->clientDemo).footer.info.endTime;
+      iVar7 = (pcVar5->clientDemo).header.version;
+      pcVar13 = &(pcVar5->clientDemo).footer;
+      iVar1 = *piVar11;
+      iVar8 = 0;
+      *piVar14 = (pcVar6->snap).serverTime;
+      (pcVar13->info).version = iVar7;
+      if (0 < iVar1) {
+        piVar12 = &(pcVar5->clientDemo).footer.connectedPlayers[0].disconnectTime;
+        do {
+          if (*piVar12 == 0) {
+            *piVar12 = *piVar14;
+          }
+          iVar8 = iVar8 + 1;
+          piVar12 = piVar12 + 6;
+        } while (iVar8 < *piVar11);
+      }
+      CL_Demo_WriteFooter(param_1,pcVar13);
+      iVar1 = (pcVar5->clientDemo).bufferIndex;
+      if (iVar1 != 0) {
+        if ((((pcVar5->clientDemo).fileWriteFailed == false) &&
+            (bVar10 = CL_Demo_FlushToHardDrive
+                                ((pcVar5->clientDemo).buffer +
+                                 (pcVar5->clientDemo).currentActiveBufferFlag,iVar1,param_1,true),
+            bVar10)) && (1000 < *piVar14 - (pcVar5->clientDemo).footer.info.startTime)) {
+          memcpy();
+          pvVar4 = (pcVar5->clientDemo).demoFileHandle;
+          iVar1 = (pcVar5->clientDemo).demoEnumFileIndex;
+          iVar7 = CL_ControllerIndexFromClientNum(param_1);
+          memcpy();
+          CL_Demo_EnumFinishAddingDemoFile
+                    (iVar7,iVar1,&pcVar5->clientDemo,pvVar4,local_fe0,local_fd8,local_fd0,local_fc8)
+          ;
         }
-        pcVar6 = CL_GetLocalClientConnection(LVar5);
-        if (pcVar6 != (clientConnection_t *)0x0) {
-          (pcVar6->clientDemo).state = 0;
+        else {
+          iVar1 = (pcVar5->clientDemo).bytesWritten;
+          iVar7 = (pcVar5->clientDemo).demoEnumFileIndex;
+          iVar8 = CL_ControllerIndexFromClientNum(param_1);
+          CL_Demo_EnumFinishAddingCorruptDemoFile(iVar8,iVar7,(pcVar5->clientDemo).demoName,iVar1);
         }
-        pcVar6 = CL_GetLocalClientConnection(LVar5);
-        if (iVar3 == 1) {
-          local_ff0[0] = 0;
-          CL_Demo_Write(local_ff0,1,LVar5);
-          pcVar7 = CL_GetLocalClientGlobals(LVar5);
-          piVar12 = &(pcVar6->clientDemo).footer.numConnectedPlayers;
-          piVar15 = &(pcVar6->clientDemo).footer.info.endTime;
-          iVar8 = (pcVar6->clientDemo).header.version;
-          pcVar14 = &(pcVar6->clientDemo).footer;
-          iVar1 = *piVar12;
-          iVar9 = 0;
-          *piVar15 = (pcVar7->snap).serverTime;
-          (pcVar14->info).version = iVar8;
-          if (0 < iVar1) {
-            piVar13 = &(pcVar6->clientDemo).footer.connectedPlayers[0].disconnectTime;
-            do {
-              if (*piVar13 == 0) {
-                *piVar13 = *piVar15;
-              }
-              iVar9 = iVar9 + 1;
-              piVar13 = piVar13 + 6;
-            } while (iVar9 < *piVar12);
-          }
-          CL_Demo_WriteFooter(LVar5,pcVar14);
-          iVar1 = (pcVar6->clientDemo).bufferIndex;
-          if (iVar1 != 0) {
-            if ((((pcVar6->clientDemo).fileWriteFailed == false) &&
-                (bVar11 = CL_Demo_FlushToHardDrive
-                                    ((pcVar6->clientDemo).buffer +
-                                     (pcVar6->clientDemo).currentActiveBufferFlag,iVar1,LVar5,true),
-                bVar11)) && (1000 < *piVar15 - (pcVar6->clientDemo).footer.info.startTime)) {
-              memcpy();
-              pvVar4 = (pcVar6->clientDemo).demoFileHandle;
-              iVar1 = (pcVar6->clientDemo).demoEnumFileIndex;
-              iVar8 = CL_ControllerIndexFromClientNum(LVar5);
-              memcpy();
-              CL_Demo_EnumFinishAddingDemoFile
-                        (iVar8,iVar1,&pcVar6->clientDemo,pvVar4,local_fe0,local_fd8,local_fd0,
-                         local_fc8);
-            }
-            else {
-              iVar1 = (pcVar6->clientDemo).bytesWritten;
-              iVar8 = (pcVar6->clientDemo).demoEnumFileIndex;
-              iVar9 = CL_ControllerIndexFromClientNum(LVar5);
-              CL_Demo_EnumFinishAddingCorruptDemoFile
-                        (iVar9,iVar8,(pcVar6->clientDemo).demoName,iVar1);
-            }
-          }
-        }
-        CL_Demo_CloseFile(LVar5,(pcVar6->clientDemo).demoFileHandle);
-        (pcVar6->clientDemo).demoFileHandle = (void *)0x0;
-        if (iVar3 == 2) {
-          bVar11 = CL_Demo_IsPlaybackMemoryAllocated();
-          if (bVar11) {
-            pcVar10 = CL_Demo_GetPlaybackData();
-            pcVar10->shutdownInProgress = true;
-          }
-          bVar11 = mjpeg_is_encoding();
-          if (bVar11) {
-            mjpeg_close();
-            bVar11 = CL_Demo_IsRenderingCancelled();
-            if (bVar11) {
-              CL_Demo_SetPlayingFlag(CLIENT_DEMO_PLAYING_FLAG_REGULAR);
-              CL_Demo_CancelRendering(false);
-              DCache_DeleteFromCache(1,DCACHE_LOCATION_AVI_RENDER);
-            }
-            (pcVar6->clientDemo).renderingMovie = false;
-          }
-          CL_DisconnectLocalClient(LVar5);
-          bVar11 = CL_Demo_IsPlaybackMemoryAllocated();
-          if (bVar11) {
-            pcVar10 = CL_Demo_GetPlaybackData();
-            pcVar10->shutdownInProgress = false;
-          }
-        }
-        goto LAB_827ccf3c;
       }
     }
-    if ((cl_demo_log->current).enabled != false) {
-      Com_Printf(0xe,"CL_Demo_End( %d ): early return, idle\n");
-      __restgprlr_23();
-      return;
+    CL_Demo_CloseFile(param_1,(pcVar5->clientDemo).demoFileHandle);
+    (pcVar5->clientDemo).demoFileHandle = (void *)0x0;
+    if (iVar3 == 2) {
+      bVar10 = CL_Demo_IsPlaybackMemoryAllocated();
+      if (bVar10) {
+        pcVar9 = CL_Demo_GetPlaybackData();
+        pcVar9->shutdownInProgress = true;
+      }
+      bVar10 = mjpeg_is_encoding();
+      if (bVar10) {
+        mjpeg_close();
+        bVar10 = CL_Demo_IsRenderingCancelled();
+        if (bVar10) {
+          CL_Demo_SetPlayingFlag(CLIENT_DEMO_PLAYING_FLAG_REGULAR);
+          CL_Demo_CancelRendering(false);
+          DCache_DeleteFromCache(1,DCACHE_LOCATION_AVI_RENDER);
+        }
+        (pcVar5->clientDemo).renderingMovie = false;
+      }
+      CL_DisconnectLocalClient(param_1);
+      bVar10 = CL_Demo_IsPlaybackMemoryAllocated();
+      if (bVar10) {
+        pcVar9 = CL_Demo_GetPlaybackData();
+        pcVar9->shutdownInProgress = false;
+      }
     }
   }
-LAB_827ccf3c:
-  __restgprlr_23();
   return;
 }
 
@@ -1377,36 +1350,35 @@ void CL_Demo_Frame(int param_1)
 
 // 827CCFB0  CL_Demo_PopulateStaticFooterInformation  (client_demo/cl_demo_common.cpp:1476)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void CL_Demo_PopulateStaticFooterInformation(int param_1,clientDemoFooter_t *param_2,uint param_3)
 
 {
-  int iVar2;
-  char *pcVar3;
+  char *pcVar2;
   ulong64 uVar1;
-  PartyData *pPVar4;
-  team_t tVar5;
+  PartyData *pPVar3;
+  team_t tVar4;
   
-  iVar2 = __savegprlr_29(param_1);
-  pcVar3 = Dvar_GetString("g_gametype");
-  I_strncpyz((param_2->info).gameType,pcVar3,0x100);
-  pcVar3 = Dvar_GetString("mapname");
-  I_strncpyz((param_2->info).mapName,pcVar3,0x100);
-  pcVar3 = Live_GetLocalClientName(iVar2);
-  I_strncpyz((param_2->info).authorName,pcVar3,0x20);
+  pcVar2 = Dvar_GetString("g_gametype");
+  I_strncpyz((param_2->info).gameType,pcVar2,0x100);
+  pcVar2 = Dvar_GetString("mapname");
+  I_strncpyz((param_2->info).mapName,pcVar2,0x100);
+  pcVar2 = Live_GetLocalClientName(param_1);
+  I_strncpyz((param_2->info).authorName,pcVar2,0x20);
   (param_2->info).createTime = param_3;
-  uVar1 = Live_GetXuid(iVar2);
-  pPVar4 = Lobby_GetPartyData();
-  tVar5 = Party_GetAssignedTeam(pPVar4,uVar1);
+  uVar1 = Live_GetXuid(param_1);
+  pPVar3 = Lobby_GetPartyData();
+  tVar4 = Party_GetAssignedTeam(pPVar3,uVar1);
   if (TEAM_SPECTATOR < (param_2->info).team) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_demo\\cl_demo_common.cpp"
                     ,0x5ce,1,"footer->info.team doesn\'t index TEAM_NUM_TEAMS\n\t%i not in [0, %i)")
     ;
   }
-  (param_2->info).team = tVar5;
-  __restgprlr_29();
+  (param_2->info).team = tVar4;
   return;
 }
 

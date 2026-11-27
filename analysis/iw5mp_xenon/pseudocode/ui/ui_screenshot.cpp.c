@@ -62,6 +62,8 @@ int UI_GetLetterBoxBiasX(ushort param_1,ushort param_2,int param_3,int param_4)
 
 // 825B99F0  UI_ScreenshotViewerDecompress  (ui/ui_screenshot.cpp:199)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 bool UI_ScreenshotViewerDecompress(LocalClientNum_t param_1)
@@ -73,12 +75,10 @@ bool UI_ScreenshotViewerDecompress(LocalClientNum_t param_1)
   GfxImage *pGVar4;
   int iVar5;
   uchar *puVar6;
-  undefined1 uVar7;
   uint in_stack_ffffff68;
   _func___cdecl_uint_uint_uint_uint_uint_uint_uint *in_stack_ffffff6c;
   _func___cdecl_void_uchar_ptr_uchar_uchar_uchar *in_stack_ffffff70;
   
-  __savegprlr_27(param_1);
   pGVar4 = Image_Register(s_constScreenshotValues[0].imageName,'\0',3);
   puVar6 = s_screenshotInfo[0].downloadedBuffer;
   s_screenshotInfo[0].image = pGVar4;
@@ -101,12 +101,10 @@ bool UI_ScreenshotViewerDecompress(LocalClientNum_t param_1)
                          (puVar6,s_screenshotInfo[0].jpeg.size,puVar3,(uint)uVar2,(uint)uVar1,iVar5,
                           0,4,in_stack_ffffff68,in_stack_ffffff6c,in_stack_ffffff70);
       stbi_clear_memglob();
-      uVar7 = __restgprlr_27(puVar6 != (uchar *)0x0);
-      return (bool)uVar7;
+      return (bool)('\x01' - (puVar6 == (uchar *)0x0));
     }
   }
-  uVar7 = __restgprlr_27(0);
-  return (bool)uVar7;
+  return false;
 }
 
 
@@ -153,6 +151,8 @@ void UI_ScreenshotUpdateViewer(LocalClientNum_t param_1)
 
 // 825B9C28  UI_ScreenshotViewerDraw  (ui/ui_screenshot.cpp:316)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void UI_ScreenshotViewerDraw(LocalClientNum_t param_1,rectDef_s *param_2,float *param_3)
@@ -163,28 +163,22 @@ void UI_ScreenshotViewerDraw(LocalClientNum_t param_1,rectDef_s *param_2,float *
   ushort uVar3;
   ushort uVar4;
   int iVar5;
-  LocalClientNum_t LVar6;
-  int iVar7;
-  ScreenPlacement *pSVar8;
-  longlong lVar9;
-  float *pfVar10;
-  Material *pMVar11;
-  int iVar12;
-  double dVar13;
-  double dVar14;
-  double dVar15;
+  int iVar6;
+  ScreenPlacement *pSVar7;
+  Material *pMVar8;
+  int iVar9;
+  double dVar10;
+  double dVar11;
+  double dVar12;
   float local_70;
   float local_6c;
   float local_68;
   Material local_64;
   
-  lVar9 = (longlong)(int)param_2;
-  LVar6 = __savegprlr_26(param_1,lVar9,param_3);
-  pfVar10 = (float *)lVar9;
-  local_64.info.name = (char *)*pfVar10;
-  local_68 = pfVar10[1];
-  local_6c = pfVar10[2];
-  local_70 = pfVar10[3];
+  local_64.info.name = (char *)param_2->x;
+  local_68 = param_2->y;
+  local_6c = param_2->w;
+  local_70 = param_2->h;
   if (s_screenshotInfo[0].state == SCREENSHOT_CREATED) {
     if (s_screenshotInfo[0].image == (GfxImage *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_screenshot.cpp",0x14e,
@@ -193,90 +187,86 @@ void UI_ScreenshotViewerDraw(LocalClientNum_t param_1,rectDef_s *param_2,float *
     iVar5 = s_screenshotInfo[0].jpeg.height;
     uVar3 = (s_screenshotInfo[0].image)->height;
     uVar4 = (s_screenshotInfo[0].image)->width;
-    iVar12 = s_screenshotInfo[0].jpeg.width;
-    iVar7 = UI_GetLetterBoxBiasX
+    iVar9 = s_screenshotInfo[0].jpeg.width;
+    iVar6 = UI_GetLetterBoxBiasX
                       (uVar4,uVar3,s_screenshotInfo[0].jpeg.width,s_screenshotInfo[0].jpeg.height);
     local_64.info._12_8_ = SEXT48(iVar5);
-    dVar14 = (double)((float)(longlong)(iVar7 * 2 + iVar12) / (float)uVar4);
-    dVar13 = (double)((float)(longlong)local_64.info._12_8_ / (float)uVar3);
+    dVar11 = (double)((float)(longlong)(iVar6 * 2 + iVar9) / (float)uVar4);
+    dVar10 = (double)((float)(longlong)local_64.info._12_8_ / (float)uVar3);
     local_64.info._4_8_ = (ulonglong)uVar4;
     Material_RegisterHandle(s_constScreenshotValues[0].imageName,3);
-    dVar15 = 0.0;
+    dVar12 = 0.0;
     R_AddCmdSetCodeConstant(0x3f,0.0,0.0,0.0,0.0);
-    bVar1 = *(byte *)((int)pfVar10 + 0x11);
-    bVar2 = *(byte *)(pfVar10 + 4);
-    pSVar8 = ScrPlace_GetViewPlacement(LVar6);
-    pMVar11 = &local_64;
-    ScrPlace_ApplyRect(pSVar8,(float *)pMVar11,&local_68,&local_6c,&local_70,(uint)bVar2,(uint)bVar1
-                      );
+    bVar1 = param_2->vertAlign;
+    bVar2 = param_2->horzAlign;
+    pSVar7 = ScrPlace_GetViewPlacement(param_1);
+    pMVar8 = &local_64;
+    ScrPlace_ApplyRect(pSVar7,(float *)pMVar8,&local_68,&local_6c,&local_70,(uint)bVar2,(uint)bVar1)
+    ;
     R_AddCmdDrawStretchPic
-              ((float)local_64.info.name,local_68,local_6c,local_70,(float)dVar15,(float)dVar15,
-               (float)dVar14,(float)dVar13,pSVar8->scaleVirtualToReal,pMVar11);
+              ((float)local_64.info.name,local_68,local_6c,local_70,(float)dVar12,(float)dVar12,
+               (float)dVar11,(float)dVar10,pSVar7->scaleVirtualToReal,pMVar8);
   }
-  __restgprlr_26();
   return;
 }
 
 
 // 825B9DD8  UI_ScreenshotThumbnailDecompress  (ui/ui_screenshot.cpp:352)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 bool UI_ScreenshotThumbnailDecompress(int param_1)
 
 {
   uchar *puVar1;
-  int iVar2;
-  uint uVar3;
-  int iVar4;
-  GfxImage *pGVar5;
-  undefined1 uVar8;
-  uint uVar6;
-  uchar *puVar7;
-  uint uVar9;
+  uint uVar2;
+  GfxImage *pGVar3;
+  uint uVar4;
+  int iVar5;
+  uchar *puVar6;
+  uint uVar7;
   uint in_stack_ffffff68;
   _func___cdecl_uint_uint_uint_uint_uint_uint_uint *in_stack_ffffff6c;
   _func___cdecl_void_uchar_ptr_uchar_uchar_uchar *in_stack_ffffff70;
   
-  iVar4 = __savegprlr_26(param_1);
   Sys_Microseconds();
-  pGVar5 = Image_Register(s_constScreenshotValues[1].imageName,'\0',3);
-  s_screenshotInfo[1].image = pGVar5;
-  if (pGVar5->cached == '\0') {
-    iVar2 = s_screenshotThumbnailInfo.files[iVar4].jpegBufferSize;
-    puVar7 = s_screenshotThumbnailInfo.files[iVar4].jpegBuffer;
-    if (iVar2 == 4) {
+  pGVar3 = Image_Register(s_constScreenshotValues[1].imageName,'\0',3);
+  s_screenshotInfo[1].image = pGVar3;
+  if (pGVar3->cached == '\0') {
+    iVar5 = s_screenshotThumbnailInfo.files[param_1].jpegBufferSize;
+    puVar6 = s_screenshotThumbnailInfo.files[param_1].jpegBuffer;
+    if (iVar5 == 4) {
       Com_Printf(0xe,
                  "Error processing thumbnail. Looks like the buffer size is less than 4 bytes.\n");
     }
     else {
-      uVar9 = iVar2 - 4;
-      uVar3 = *(uint *)(puVar7 + uVar9);
-      uVar6 = Com_BlockChecksumKey32(puVar7,uVar9,0);
-      if (uVar6 != uVar3) {
+      uVar7 = iVar5 - 4;
+      uVar2 = *(uint *)(puVar6 + uVar7);
+      uVar4 = Com_BlockChecksumKey32(puVar6,uVar7,0);
+      if (uVar4 != uVar2) {
         Com_Printf(0xe,"Error processing thumbnail. Checksum failure.\n");
-        uVar8 = __restgprlr_26(0);
-        return (bool)uVar8;
+        return false;
       }
-      iVar4 = stbi_jpeg_info_from_memory
-                        (puVar7,uVar9,&s_screenshotInfo[1].jpeg.width,
+      iVar5 = stbi_jpeg_info_from_memory
+                        (puVar6,uVar7,&s_screenshotInfo[1].jpeg.width,
                          &s_screenshotInfo[1].jpeg.height,&s_screenshotInfo[1].jpeg.comp);
-      if (iVar4 != 0) {
-        puVar1 = pGVar5->pixels;
+      if (iVar5 != 0) {
+        puVar1 = pGVar3->pixels;
         stbi_set_memglob(g_jpegDecompressionBuffer,0x600000);
-        puVar7 = stbi_jpeg_load_from_memory_swizzle
-                           (puVar7,uVar9,puVar1,(uint)pGVar5->width,(uint)pGVar5->height,0,0,4,
+        puVar6 = stbi_jpeg_load_from_memory_swizzle
+                           (puVar6,uVar7,puVar1,(uint)pGVar3->width,(uint)pGVar3->height,0,0,4,
                             in_stack_ffffff68,in_stack_ffffff6c,in_stack_ffffff70);
         stbi_clear_memglob();
-        if (puVar7 != (uchar *)0x0) {
+        if (puVar6 != (uchar *)0x0) {
           Sys_Microseconds();
           Com_Printf(0,"Decompress took %dus (%d bytes)\n");
-          uVar8 = __restgprlr_26(1);
-          return (bool)uVar8;
+          return true;
         }
       }
     }
   }
-  uVar8 = __restgprlr_26(0);
-  return (bool)uVar8;
+  return false;
 }
 
 
@@ -352,6 +342,8 @@ ulong64 UI_ScreenshotThumbnailGetFileIDForSelectedIndex(int param_1)
 
 // 825BA0C8  UI_ScreenshotThumbnailStateChangeHandler  (ui/ui_screenshot.cpp:488)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 
@@ -360,52 +352,44 @@ void UI_ScreenshotThumbnailStateChangeHandler
 
 {
   int iVar2;
-  int iVar3;
   ulong64 uVar1;
-  bool bVar4;
+  bool bVar3;
   int local_30 [2];
   Operand aOStack_28 [5];
   
-  iVar2 = __savegprlr_29(param_1);
   local_30[0] = 0;
   if ((param_2 != SCREENSHOT_ERROR) && (param_2 != SCREENSHOT_CREATED)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_screenshot.cpp",0x1ed,0,
                     "%s");
   }
-  iVar3 = OnlineVaultUI_GetStackCount(iVar2);
-  if (iVar3 == 0) {
+  iVar2 = OnlineVaultUI_GetStackCount(param_1);
+  if (iVar2 == 0) {
     s_screenshotInfo[1].image = (GfxImage *)0x0;
     s_screenshotInfo[1].state = SCREENSHOT_IDLE;
-    __restgprlr_29();
     return;
   }
-  if ((param_3 != 0) || (param_4 != 0)) {
-    iVar3 = UI_ScreenshotThumbnailIsFileTypeValidForSelectedIndex(iVar2);
-    if (iVar3 != 0) {
-      OnlineVault_FeederGetData
-                (iVar2,"fileID",s_screenshotThumbnailInfo.onlineVaultFeederSelectIndex,aOStack_28);
-      uVar1 = I_atoi64((char *)aOStack_28[0].internals.function);
-      iVar2 = UI_ScreenshotGetThumbnailCacheIndexForFileID(uVar1,local_30);
-      if (iVar2 != 0) {
-        bVar4 = UI_ScreenshotThumbnailDecompress(local_30[0]);
-        if (bVar4) {
-          s_screenshotInfo[1].state = SCREENSHOT_CREATED;
-          s_screenshotThumbnailInfo.currentFileID = uVar1;
-          __restgprlr_29();
-          return;
-        }
-      }
-      s_screenshotInfo[1].state = SCREENSHOT_IDLE;
-      s_screenshotInfo[1].image = (GfxImage *)0x0;
+  if (((param_3 != 0) || (param_4 != 0)) &&
+     (iVar2 = UI_ScreenshotThumbnailIsFileTypeValidForSelectedIndex(param_1), iVar2 != 0)) {
+    OnlineVault_FeederGetData
+              (param_1,"fileID",s_screenshotThumbnailInfo.onlineVaultFeederSelectIndex,aOStack_28);
+    uVar1 = I_atoi64((char *)aOStack_28[0].internals.function);
+    iVar2 = UI_ScreenshotGetThumbnailCacheIndexForFileID(uVar1,local_30);
+    if ((iVar2 != 0) && (bVar3 = UI_ScreenshotThumbnailDecompress(local_30[0]), bVar3)) {
+      s_screenshotThumbnailInfo.currentFileID = uVar1;
+      s_screenshotInfo[1].state = SCREENSHOT_CREATED;
+      return;
     }
+    s_screenshotInfo[1].state = SCREENSHOT_IDLE;
+    s_screenshotInfo[1].image = (GfxImage *)0x0;
   }
-  __restgprlr_29();
   return;
 }
 
 
 // 825BAEF8  UI_ScreenshotUpdateThumbnail  (ui/ui_screenshot.cpp:533)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
@@ -414,41 +398,38 @@ void UI_ScreenshotUpdateThumbnail(LocalClientNum_t param_1)
 
 {
   uint uVar1;
-  LocalClientNum_t LVar3;
+  int iVar3;
   int iVar4;
-  int iVar5;
   ulong64 uVar2;
-  bool bVar6;
-  ScreenshotState SVar7;
-  int iVar8;
+  bool bVar5;
+  ScreenshotState SVar6;
+  int iVar7;
   int local_50;
   int local_4c;
   int local_48 [2];
   Operand OStack_40;
   Operand aOStack_38 [7];
   
-  LVar3 = __savegprlr_27(param_1);
   local_50 = 0;
-  iVar4 = CL_ControllerIndexFromClientNum(LVar3);
-  iVar8 = 0;
-  iVar5 = OnlineVaultUI_GetStackCount(iVar4);
-  bVar6 = s_screenshotThumbnailInfo.onlineVaultStackCount != iVar5;
-  if (bVar6) {
-    s_screenshotThumbnailInfo.onlineVaultStackCount = OnlineVaultUI_GetStackCount(iVar4);
+  iVar3 = CL_ControllerIndexFromClientNum(param_1);
+  iVar7 = 0;
+  iVar4 = OnlineVaultUI_GetStackCount(iVar3);
+  bVar5 = s_screenshotThumbnailInfo.onlineVaultStackCount != iVar4;
+  if (bVar5) {
+    s_screenshotThumbnailInfo.onlineVaultStackCount = OnlineVaultUI_GetStackCount(iVar3);
   }
   if (((s_screenshotThumbnailInfo.onlineVaultStackCount != 0) &&
-      (iVar5 = OnlineVaultUI_GetSelectedFeederParam(iVar4,&local_4c,local_48), iVar5 != 0)) &&
-     ((local_4c != s_screenshotThumbnailInfo.onlineVaultFeederSelectIndex || (bVar6)))) {
-    iVar8 = 1;
+      (iVar4 = OnlineVaultUI_GetSelectedFeederParam(iVar3,&local_4c,local_48), iVar4 != 0)) &&
+     ((local_4c != s_screenshotThumbnailInfo.onlineVaultFeederSelectIndex || (bVar5)))) {
+    iVar7 = 1;
     s_screenshotThumbnailInfo.onlineVaultFeederSelectIndex = local_4c;
     s_screenshotThumbnailInfo.onlineVaultFeederSelectTime = local_48[0];
   }
   if (s_screenshotInfo[1].state < (SCREENSHOT_ERROR|SCREENSHOT_DOWNLOADING)) {
     if (s_screenshotInfo[1].state == SCREENSHOT_DOWNLOADING) {
-      if ((bVar6) || (iVar8 != 0)) {
-        UI_ScreenshotAbortDownload(iVar4,UI_SCREENSHOT_TYPE_THUMBNAIL);
+      if ((bVar5) || (iVar7 != 0)) {
+        UI_ScreenshotAbortDownload(iVar3,UI_SCREENSHOT_TYPE_THUMBNAIL);
         s_screenshotThumbnailInfo.currentFileID = 0;
-        __restgprlr_27();
         return;
       }
     }
@@ -460,75 +441,81 @@ void UI_ScreenshotUpdateThumbnail(LocalClientNum_t param_1)
              g_screenshotThumbnailBuffers[s_screenshotThumbnailInfo.imageIndex];
         s_screenshotThumbnailInfo.files[s_screenshotThumbnailInfo.imageIndex].jpegBufferSize = uVar1
         ;
-        bVar6 = UI_ScreenshotThumbnailDecompress(s_screenshotThumbnailInfo.imageIndex);
-        if (!bVar6) {
-          s_screenshotInfo[1].state = SCREENSHOT_ERROR;
-          s_screenshotThumbnailInfo.currentFileID = 0;
+        bVar5 = UI_ScreenshotThumbnailDecompress(s_screenshotThumbnailInfo.imageIndex);
+        if (bVar5) {
+          s_screenshotInfo[1].state = SCREENSHOT_CREATED;
+          s_screenshotThumbnailInfo.files[s_screenshotThumbnailInfo.imageIndex].id =
+               s_screenshotThumbnailInfo.currentFileID;
+          s_screenshotThumbnailInfo.imageIndex = (s_screenshotThumbnailInfo.imageIndex + 1) % 0x19;
           R_EndRemoteScreenUpdate();
-          __restgprlr_27();
           return;
         }
-        s_screenshotInfo[1].state = SCREENSHOT_CREATED;
-        s_screenshotThumbnailInfo.files[s_screenshotThumbnailInfo.imageIndex].id =
-             s_screenshotThumbnailInfo.currentFileID;
-        s_screenshotThumbnailInfo.imageIndex = (s_screenshotThumbnailInfo.imageIndex + 1) % 0x19;
+        s_screenshotInfo[1].state = SCREENSHOT_ERROR;
+        s_screenshotThumbnailInfo.currentFileID = 0;
         R_EndRemoteScreenUpdate();
-        __restgprlr_27();
         return;
       }
       if (s_screenshotInfo[1].state == SCREENSHOT_CREATED) {
-        SVar7 = SCREENSHOT_CREATED;
+        SVar6 = SCREENSHOT_CREATED;
       }
       else {
         if (s_screenshotInfo[1].state == SCREENSHOT_IDLE) {
-          if ((s_screenshotThumbnailInfo.onlineVaultStackCount != 0) &&
-             (iVar5 = UI_ScreenshotThumbnailIsFileTypeValidForSelectedIndex(iVar4), iVar5 != 0)) {
-            OnlineVault_FeederGetData
-                      (iVar4,"fileID",s_screenshotThumbnailInfo.onlineVaultFeederSelectIndex,
-                       &OStack_40);
-            uVar2 = I_atoi64((char *)OStack_40.internals.function);
-            iVar5 = UI_ScreenshotGetThumbnailCacheIndexForFileID(uVar2,&local_50);
-            if (iVar5 != 0) {
-              bVar6 = UI_ScreenshotThumbnailDecompress(local_50);
-              if (!bVar6) {
-                Com_PrintError(0xd,
-                               "Cached data at index %d for thumbnail file %d can\'t be decompressed.\n"
-                              );
-                __restgprlr_27();
-                return;
-              }
-              s_screenshotInfo[1].state = SCREENSHOT_CREATED;
-              s_screenshotThumbnailInfo.currentFileID = uVar2;
-              __restgprlr_27();
-              return;
-            }
-            bVar6 = LiveStorage_CS_IsTaskInProgress(iVar4,"readfile");
-            if (((!bVar6) && (iVar8 == 0)) &&
-               (iVar5 = Sys_Milliseconds(),
-               1999 < iVar5 - s_screenshotThumbnailInfo.onlineVaultFeederSelectTime)) {
-              OnlineVault_FeederGetData
-                        (iVar4,"summaryFileSize",
-                         s_screenshotThumbnailInfo.onlineVaultFeederSelectIndex,aOStack_38);
-              UI_ScreenshotThumbnailDownload(LVar3,uVar2,aOStack_38[0].internals.intVal);
-              __restgprlr_27();
-              return;
-            }
+          if (s_screenshotThumbnailInfo.onlineVaultStackCount == 0) {
+            return;
           }
-          goto LAB_825bb1cc;
+          iVar4 = UI_ScreenshotThumbnailIsFileTypeValidForSelectedIndex(iVar3);
+          if (iVar4 == 0) {
+            return;
+          }
+          OnlineVault_FeederGetData
+                    (iVar3,"fileID",s_screenshotThumbnailInfo.onlineVaultFeederSelectIndex,
+                     &OStack_40);
+          uVar2 = I_atoi64((char *)OStack_40.internals.function);
+          iVar4 = UI_ScreenshotGetThumbnailCacheIndexForFileID(uVar2,&local_50);
+          if (iVar4 != 0) {
+            bVar5 = UI_ScreenshotThumbnailDecompress(local_50);
+            if (bVar5) {
+              s_screenshotThumbnailInfo.currentFileID = uVar2;
+              s_screenshotInfo[1].state = SCREENSHOT_CREATED;
+              return;
+            }
+            Com_PrintError(0xd,
+                           "Cached data at index %d for thumbnail file %d can\'t be decompressed.\n"
+                          );
+            return;
+          }
+          bVar5 = LiveStorage_CS_IsTaskInProgress(iVar3,"readfile");
+          if (bVar5) {
+            return;
+          }
+          if (iVar7 != 0) {
+            return;
+          }
+          iVar4 = Sys_Milliseconds();
+          if (iVar4 - s_screenshotThumbnailInfo.onlineVaultFeederSelectTime < 2000) {
+            return;
+          }
+          OnlineVault_FeederGetData
+                    (iVar3,"summaryFileSize",s_screenshotThumbnailInfo.onlineVaultFeederSelectIndex,
+                     aOStack_38);
+          UI_ScreenshotThumbnailDownload(param_1,uVar2,aOStack_38[0].internals.intVal);
+          return;
         }
-        SVar7 = SCREENSHOT_ERROR;
+        SVar6 = SCREENSHOT_ERROR;
       }
-      UI_ScreenshotThumbnailStateChangeHandler(iVar4,SVar7,(uint)bVar6,iVar8);
+      UI_ScreenshotThumbnailStateChangeHandler(iVar3,SVar6,(uint)bVar5,iVar7);
     }
   }
-LAB_825bb1cc:
-  __restgprlr_27();
   return;
 }
 
 
 // 825BA1E8  UI_ScreenshotThumbnailDraw  (ui/ui_screenshot.cpp:642)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -540,102 +527,86 @@ void UI_ScreenshotThumbnailDraw
 {
   byte bVar1;
   byte bVar2;
-  LocalClientNum_t LVar3;
-  int iVar4;
-  ScreenPlacement *pSVar5;
-  Material *pMVar6;
-  char *pcVar7;
-  uint uVar8;
-  longlong lVar9;
-  float *pfVar10;
-  Material *pMVar11;
-  longlong lVar12;
-  Font_s *pFVar13;
-  GfxDrawSurf GVar14;
-  double extraout_f1;
-  double dVar15;
-  double dVar16;
-  double dVar17;
-  double dVar18;
-  double dVar19;
+  int iVar3;
+  ScreenPlacement *pSVar4;
+  Material *pMVar5;
+  char *pcVar6;
+  uint uVar7;
+  Material *pMVar8;
+  GfxDrawSurf GVar9;
+  double dVar10;
+  double dVar11;
+  double dVar12;
+  double dVar13;
+  double dVar14;
   float local_70;
   float local_6c;
   undefined1 local_68 [4];
   float local_64;
   GfxDrawSurf local_60 [12];
   
-  lVar12 = (longlong)(int)param_3;
-  lVar9 = (longlong)(int)param_2;
-  __savegprlr_26((double)param_4,param_1,lVar9,lVar12,param_5);
-  pfVar10 = (float *)lVar9;
-  pFVar13 = (Font_s *)lVar12;
-  LVar3 = __savefpr_28();
-  local_68 = (undefined1  [4])*pfVar10;
-  local_70 = pfVar10[1];
-  local_64 = pfVar10[2];
-  local_6c = pfVar10[3];
+  dVar11 = (double)param_4;
+  local_68 = (undefined1  [4])param_2->x;
+  local_70 = param_2->y;
+  local_64 = param_2->w;
+  local_6c = param_2->h;
   local_60[0].packed._0_4_ = 0;
   if (s_screenshotInfo[1].state == SCREENSHOT_CREATED) {
-    iVar4 = UI_ScreenshotGetThumbnailCacheIndexForFileID
+    iVar3 = UI_ScreenshotGetThumbnailCacheIndexForFileID
                       (s_screenshotThumbnailInfo.currentFileID,(int *)&local_60[0].packed);
-    if (iVar4 != 0) {
-      bVar1 = *(byte *)((int)pfVar10 + 0x11);
-      bVar2 = *(byte *)(pfVar10 + 4);
-      pSVar5 = ScrPlace_GetViewPlacement(LVar3);
-      pMVar6 = (Material *)local_68;
-      ScrPlace_ApplyRect(pSVar5,(float *)pMVar6,&local_70,&local_64,&local_6c,(uint)bVar2,
+    if (iVar3 != 0) {
+      bVar1 = param_2->vertAlign;
+      bVar2 = param_2->horzAlign;
+      pSVar4 = ScrPlace_GetViewPlacement(param_1);
+      pMVar5 = (Material *)local_68;
+      ScrPlace_ApplyRect(pSVar4,(float *)pMVar5,&local_70,&local_64,&local_6c,(uint)bVar2,
                          (uint)bVar1);
-      dVar19 = 1.0;
-      dVar16 = 0.0;
+      dVar14 = 1.0;
+      dVar11 = 0.0;
       R_AddCmdDrawStretchPic
                 ((float)local_68,local_70,local_64,local_6c,0.0,0.0,1.0,1.0,
-                 pSVar5->scaleVirtualToReal,pMVar6);
+                 pSVar4->scaleVirtualToReal,pMVar5);
       local_60[0] = (GfxDrawSurf)(longlong)(int)(uint)(s_screenshotInfo[1].image)->width;
-      dVar17 = (double)((float)(longlong)s_screenshotInfo[1].jpeg.height /
+      dVar12 = (double)((float)(longlong)s_screenshotInfo[1].jpeg.height /
                        (float)(s_screenshotInfo[1].image)->height);
-      dVar18 = (double)((float)(longlong)s_screenshotInfo[1].jpeg.width / (float)local_60[0].packed)
+      dVar13 = (double)((float)(longlong)s_screenshotInfo[1].jpeg.width / (float)local_60[0].packed)
       ;
-      if (dVar17 <= dVar18) {
-        dVar15 = (double)local_6c;
-        local_6c = (float)((double)(float)(dVar17 / dVar18) * dVar15);
-        local_70 = (float)((double)((float)(dVar19 - (double)(float)(dVar17 / dVar18)) * 0.5) *
-                           dVar15 + (double)local_70);
+      if (dVar12 <= dVar13) {
+        dVar10 = (double)local_6c;
+        local_6c = (float)((double)(float)(dVar12 / dVar13) * dVar10);
+        local_70 = (float)((double)((float)(dVar14 - (double)(float)(dVar12 / dVar13)) * 0.5) *
+                           dVar10 + (double)local_70);
       }
       else {
-        dVar15 = (double)local_64;
-        local_64 = (float)((double)(float)(dVar18 / dVar17) * dVar15);
+        dVar10 = (double)local_64;
+        local_64 = (float)((double)(float)(dVar13 / dVar12) * dVar10);
         local_68 = (undefined1  [4])
-                   (float)((double)((float)(dVar19 - (double)(float)(dVar18 / dVar17)) * 0.5) *
-                           dVar15 + (double)(float)local_68);
+                   (float)((double)((float)(dVar14 - (double)(float)(dVar13 / dVar12)) * 0.5) *
+                           dVar10 + (double)(float)local_68);
       }
-      pMVar11 = (Material *)0x3;
-      pMVar6 = Material_RegisterHandle(s_constScreenshotValues[1].imageName,3);
+      pMVar8 = (Material *)0x3;
+      pMVar5 = Material_RegisterHandle(s_constScreenshotValues[1].imageName,3);
       R_AddCmdDrawStretchPic
-                ((float)local_68,local_70,local_64,local_6c,(float)dVar16,(float)dVar16,
-                 (float)dVar18,(float)dVar17,(float *)pMVar6,pMVar11);
-      __restfpr_28();
-      __restgprlr_26();
+                ((float)local_68,local_70,local_64,local_6c,(float)dVar11,(float)dVar11,
+                 (float)dVar13,(float)dVar12,(float *)pMVar5,pMVar8);
       return;
     }
   }
   else {
-    dVar16 = extraout_f1;
-    pcVar7 = UI_SafeTranslateString("MENU_LOADING_DOTS");
-    uVar8 = UI_TextWidth(pcVar7,0x7fffffff,pFVar13,(float)dVar16);
-    iVar4 = ((int)uVar8 >> 1) + (uint)((int)uVar8 < 0 && (uVar8 & 1) != 0);
-    GVar14 = (GfxDrawSurf)(longlong)iVar4;
-    bVar1 = *(byte *)((int)pfVar10 + 0x11);
-    bVar2 = *(byte *)(pfVar10 + 4);
-    dVar18 = (double)(local_6c * 0.5 + local_70);
-    dVar17 = (double)(local_64 * 0.5 + (float)local_68);
-    local_60[0] = GVar14;
-    pSVar5 = ScrPlace_GetViewPlacement(LVar3);
-    UI_DrawText(pSVar5,pcVar7,0x7fffffff,pFVar13,
-                (float)(dVar17 - (double)(longlong)local_60[0].packed),(float)dVar18,
-                (int)GVar14.packed,iVar4,(float)dVar16,(float *)(uint)bVar2,(uint)bVar1);
+    pcVar6 = UI_SafeTranslateString("MENU_LOADING_DOTS");
+    uVar7 = UI_TextWidth(pcVar6,0x7fffffff,param_3,(float)dVar11);
+    iVar3 = ((int)uVar7 >> 1) + (uint)((int)uVar7 < 0 && (uVar7 & 1) != 0);
+    GVar9 = (GfxDrawSurf)(longlong)iVar3;
+    bVar1 = param_2->vertAlign;
+    bVar2 = param_2->horzAlign;
+    dVar13 = (double)(local_6c * 0.5 + local_70);
+    dVar12 = (double)(local_64 * 0.5 + (float)local_68);
+    local_60[0] = GVar9;
+    pSVar4 = ScrPlace_GetViewPlacement(param_1);
+    UI_DrawText(pSVar4,pcVar6,0x7fffffff,param_3,
+                (float)(dVar12 - (double)(longlong)local_60[0].packed),(float)dVar13,
+                (int)GVar9.packed,iVar3,(float)dVar11,(float *)(uint)bVar2,(uint)bVar1);
   }
-  __restfpr_28();
-  __restgprlr_26();
   return;
 }
 
@@ -676,22 +647,20 @@ void UI_Screenshot_Failure(int param_1,bdLobbyErrorCode param_2)
 
 // 825BA5B8  UI_ScreenshotDownload  (ui/ui_screenshot.cpp:724)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void UI_ScreenshotDownload(LocalClientNum_t param_1,ulong64 param_2,uint param_3)
 
 {
-  LocalClientNum_t LVar1;
-  int iVar2;
-  bool bVar3;
-  ulonglong uVar4;
-  undefined8 *puVar5;
-  longlong lVar6;
+  int iVar1;
+  bool bVar2;
+  undefined8 *puVar3;
+  longlong lVar4;
   undefined8 uStack_78;
   contentServerReadFileInfo local_70 [2];
   
-  uVar4 = (ulonglong)(int)param_3;
-  LVar1 = __savegprlr_25(param_1);
   if (s_screenshotInfo[0].state != SCREENSHOT_IDLE) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_screenshot.cpp",0x2dc,0,
                     "%s");
@@ -700,42 +669,39 @@ void UI_ScreenshotDownload(LocalClientNum_t param_1,ulong64 param_2,uint param_3
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_screenshot.cpp",0x2dd,0,
                     "%s");
   }
-  puVar5 = &uStack_78;
-  lVar6 = 6;
+  puVar3 = &uStack_78;
+  lVar4 = 6;
   do {
-    puVar5 = puVar5 + 1;
-    *puVar5 = 0;
-    lVar6 = lVar6 + -1;
-  } while (lVar6 != 0);
-  iVar2 = CL_ControllerIndexFromClientNum(LVar1);
-  bVar3 = LiveStorage_CS_IsInited(iVar2);
-  if (!bVar3) {
-    LiveStorage_CS_Init(iVar2);
+    puVar3 = puVar3 + 1;
+    *puVar3 = 0;
+    lVar4 = lVar4 + -1;
+  } while (lVar4 != 0);
+  iVar1 = CL_ControllerIndexFromClientNum(param_1);
+  bVar2 = LiveStorage_CS_IsInited(iVar1);
+  if (!bVar2) {
+    LiveStorage_CS_Init(iVar1);
   }
-  bVar3 = LiveStorage_CS_IsAvailable(iVar2);
-  if (!bVar3) {
+  bVar2 = LiveStorage_CS_IsAvailable(iVar1);
+  if (!bVar2) {
     Com_PrintError(0x10,
                    "[UI_ScreenshotDownload] Failed to write, LiveStorage_CS_IsAvailable = false\n");
-    __restgprlr_25();
     return;
   }
   s_screenshotInfo[0].state = SCREENSHOT_DOWNLOADING;
-  if (((uVar4 & 0xffffffff) != 0) && ((uVar4 & 0xffffffff) < 0x100000)) {
-    s_screenshotInfo[0].jpeg.size = (uint)uVar4;
+  if ((param_3 != 0) && (param_3 < 0x100000)) {
     local_70[0].m_bufferSize = 0x100000;
     s_screenshotInfo[0].downloadedBuffer = g_downloadedScreenshotBuffer;
     local_70[0].m_buffer = (char *)g_downloadedScreenshotBuffer;
     local_70[0].m_isStreamed = false;
     local_70[0].m_successCallback = UI_Screenshot_Success;
     local_70[0].m_failureCallback = UI_Screenshot_Failure;
+    s_screenshotInfo[0].jpeg.size = param_3;
     local_70[0].m_fileID = param_2;
-    local_70[0].m_fileSize = s_screenshotInfo[0].jpeg.size;
-    iVar2 = LiveStorage_CS_ReadFile(iVar2,local_70);
-    __restgprlr_25(iVar2);
+    local_70[0].m_fileSize = param_3;
+    LiveStorage_CS_ReadFile(iVar1,local_70);
     return;
   }
-  UI_Screenshot_Failure(iVar2,BD_NO_ERROR);
-  __restgprlr_25();
+  UI_Screenshot_Failure(iVar1,BD_NO_ERROR);
   return;
 }
 
@@ -772,19 +738,17 @@ void UI_ScreenshotThumbnail_Failure(int param_1,bdLobbyErrorCode param_2)
 
 // 825BA800  UI_ScreenshotThumbnailDownload  (ui/ui_screenshot.cpp:797)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void UI_ScreenshotThumbnailDownload(LocalClientNum_t param_1,ulong64 param_2,uint param_3)
 
 {
-  LocalClientNum_t LVar1;
-  int iVar2;
-  bool bVar3;
-  ulonglong uVar4;
+  int iVar1;
+  bool bVar2;
   contentServerDownloadSummaryInfo local_60 [4];
   
-  uVar4 = (ulonglong)(int)param_3;
-  LVar1 = __savegprlr_25(param_1);
   if (s_screenshotInfo[1].state != SCREENSHOT_IDLE) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_screenshot.cpp",0x325,0,
                     "%s");
@@ -798,36 +762,33 @@ void UI_ScreenshotThumbnailDownload(LocalClientNum_t param_1,ulong64 param_2,uin
   local_60[0].m_summaryDataSize = 0;
   local_60[0].m_successCallback = (_func___cdecl_void_int *)0x0;
   local_60[0].m_failureCallback = (_func___cdecl_void_int_bdLobbyErrorCode *)0x0;
-  iVar2 = CL_ControllerIndexFromClientNum(LVar1);
-  bVar3 = LiveStorage_CS_IsInited(iVar2);
-  if (!bVar3) {
-    LiveStorage_CS_Init(iVar2);
+  iVar1 = CL_ControllerIndexFromClientNum(param_1);
+  bVar2 = LiveStorage_CS_IsInited(iVar1);
+  if (!bVar2) {
+    LiveStorage_CS_Init(iVar1);
   }
-  bVar3 = LiveStorage_CS_IsAvailable(iVar2);
-  if (!bVar3) {
+  bVar2 = LiveStorage_CS_IsAvailable(iVar1);
+  if (!bVar2) {
     Com_PrintError(0x10,
                    "[UI_ScreenshotThumbnailDownload] Failed to write, LiveStorage_CS_IsAvailable = false\n"
                   );
-    __restgprlr_25();
     return;
   }
   s_screenshotInfo[1].state = SCREENSHOT_DOWNLOADING;
-  if (((uVar4 & 0xffffffff) != 0) && ((uVar4 & 0xffffffff) < 0x8000)) {
-    s_screenshotInfo[1].jpeg.size = (uint)uVar4;
+  if ((param_3 != 0) && (param_3 < 0x8000)) {
     local_60[0].m_successCallback = UI_ScreenshotThumbnail_Success;
     local_60[0].m_failureCallback = UI_ScreenshotThumbnail_Failure;
     s_screenshotInfo[1].downloadedBuffer =
          g_screenshotThumbnailBuffers[s_screenshotThumbnailInfo.imageIndex];
     local_60[0].m_summaryData = s_screenshotInfo[1].downloadedBuffer;
-    local_60[0].m_summaryDataSize = s_screenshotInfo[1].jpeg.size;
+    local_60[0].m_summaryDataSize = param_3;
+    s_screenshotInfo[1].jpeg.size = param_3;
     s_screenshotThumbnailInfo.currentFileID = param_2;
     local_60[0].m_fileID = param_2;
-    iVar2 = LiveStorage_CS_DownloadSummaryData(iVar2,local_60);
-    __restgprlr_25(iVar2);
+    LiveStorage_CS_DownloadSummaryData(iVar1,local_60);
     return;
   }
-  UI_ScreenshotThumbnail_Failure(iVar2,BD_NO_ERROR);
-  __restgprlr_25();
+  UI_ScreenshotThumbnail_Failure(iVar1,BD_NO_ERROR);
   return;
 }
 
@@ -907,6 +868,8 @@ void UI_ScreenshotInit(void)
 
 // 825BB2E8  UI_ScreenshotShutdown  (ui/ui_screenshot.cpp:884)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void UI_ScreenshotShutdown(void)
@@ -916,7 +879,6 @@ void UI_ScreenshotShutdown(void)
   int *piVar2;
   ScreenshotInfo *pSVar3;
   
-  __savegprlr_26();
   iVar1 = 0;
   do {
     piVar2 = &s_constScreenshotValues[0].taskType;
@@ -931,7 +893,6 @@ void UI_ScreenshotShutdown(void)
     } while ((int)piVar2 < -0x7d66de24);
     iVar1 = iVar1 + 1;
   } while (iVar1 < 4);
-  __restgprlr_26();
   return;
 }
 
@@ -1027,6 +988,9 @@ void UI_ScreenshotClearMemory(void)
 
 // 825BAB38  UI_GeneratePlaylistPopulationImage  (ui/ui_screenshot.cpp:963)
 
+/* WARNING: Function: __savegprlr_19 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_19 replaced with injection: xenon_save_restore */
+
 bool UI_GeneratePlaylistPopulationImage(uchar *param_1)
 
 {
@@ -1036,70 +1000,61 @@ bool UI_GeneratePlaylistPopulationImage(uchar *param_1)
   int iVar4;
   uint uVar5;
   uint uVar6;
-  int iVar7;
-  GfxImage *pGVar8;
-  undefined1 uVar9;
-  longlong lVar10;
-  longlong lVar11;
-  ulonglong uVar12;
-  ulonglong uVar13;
-  uchar *puVar14;
-  uint uVar15;
-  ulonglong uVar16;
-  longlong lVar17;
+  GfxImage *pGVar7;
+  longlong lVar8;
+  longlong lVar9;
+  ulonglong uVar10;
+  ulonglong uVar11;
+  uchar *puVar12;
+  uint uVar13;
+  ulonglong uVar14;
+  longlong lVar15;
   
-  iVar7 = __savegprlr_19(param_1);
-  pGVar8 = Image_Register("menu_mp_playlist_population",'\0',3);
-  if (pGVar8 == (GfxImage *)0x0) {
+  pGVar7 = Image_Register("menu_mp_playlist_population",'\0',3);
+  if (pGVar7 == (GfxImage *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_screenshot.cpp",0x3cc,0,
                     "%s");
   }
-  if (pGVar8->cached == '\0') {
-    if ((pGVar8->width == 0x100) && (pGVar8->height == 0x100)) {
-      puVar2 = pGVar8->pixels;
-      lVar17 = 0;
-      uVar15 = 0x100;
-      do {
-        iVar4 = uVar15 * (int)lVar17;
-        lVar11 = 0;
-        if (uVar15 != 0) {
-          do {
-            uVar1 = pGVar8->width;
-            uVar12 = (ulonglong)uVar1;
-            iVar3 = (int)lVar11;
-            uVar16 = (uVar12 + lVar11) - 7;
-            uVar13 = ((ulonglong)pGVar8->height - lVar17) - 1;
-            lVar10 = uVar16 - (longlong)((int)uVar16 / (int)(uint)uVar1) *
-                              (longlong)(int)(uint)uVar1;
-            uVar5 = (uint)lVar10;
-            uVar6 = (uint)uVar13;
-            uVar15 = (((uint)((uVar13 & 0xffffffff) << 2) & 0x18) + (uVar5 & 7)) * 4;
-            uVar15 = ((uVar1 + 0x1f >> 5) * (uVar6 >> 5) + (uVar5 >> 5)) * 0x200 +
-                     ((uVar6 & 1) * 8 + (uVar15 & 0xfffffff0)) * 2 + (uVar6 & 8) * 0x20 +
-                     (uVar15 & 0xf);
-            puVar14 = puVar2 + (((uVar6 & 0x10) * 0x10 + (uVar15 & 0xfffffe00)) * 2 +
-                               (uVar15 & 0x1c0)) * 4 +
-                               ((uint)(((uVar13 & 0x7ffffff8) * 2 + lVar10 & 0xffffffff) << 3) &
-                               0xc0) + (uVar15 & 0x3f);
-            trapWord(6,uVar12,0);
-            lVar11 = lVar11 + 1;
-            *puVar14 = -(*(char *)(iVar4 + iVar7 + iVar3) != '\0');
-            puVar14[1] = 0xff;
-            puVar14[2] = 0xff;
-            trapWord(5,uVar12 & ~(((uVar16 & 0x7fffffff) << 1 | (uVar16 & 0xffffffff) >> 0x1f) - 1),
-                     0xffff);
-            puVar14[3] = 0xff;
-            uVar15 = (uint)pGVar8->width;
-          } while ((int)lVar11 < (int)(uint)pGVar8->width);
-        }
-        lVar17 = lVar17 + 1;
-      } while ((int)lVar17 < (int)(uint)pGVar8->height);
-      uVar9 = __restgprlr_19(1);
-      return (bool)uVar9;
-    }
+  if (((pGVar7->cached == '\0') && (pGVar7->width == 0x100)) && (pGVar7->height == 0x100)) {
+    puVar2 = pGVar7->pixels;
+    lVar15 = 0;
+    uVar13 = 0x100;
+    do {
+      iVar4 = uVar13 * (int)lVar15;
+      lVar9 = 0;
+      if (uVar13 != 0) {
+        do {
+          uVar1 = pGVar7->width;
+          uVar10 = (ulonglong)uVar1;
+          iVar3 = (int)lVar9;
+          uVar14 = (uVar10 + lVar9) - 7;
+          uVar11 = ((ulonglong)pGVar7->height - lVar15) - 1;
+          lVar8 = uVar14 - (longlong)((int)uVar14 / (int)(uint)uVar1) * (longlong)(int)(uint)uVar1;
+          uVar5 = (uint)lVar8;
+          uVar6 = (uint)uVar11;
+          uVar13 = (((uint)((uVar11 & 0xffffffff) << 2) & 0x18) + (uVar5 & 7)) * 4;
+          uVar13 = ((uVar1 + 0x1f >> 5) * (uVar6 >> 5) + (uVar5 >> 5)) * 0x200 +
+                   ((uVar6 & 1) * 8 + (uVar13 & 0xfffffff0)) * 2 + (uVar6 & 8) * 0x20 +
+                   (uVar13 & 0xf);
+          puVar12 = puVar2 + (((uVar6 & 0x10) * 0x10 + (uVar13 & 0xfffffe00)) * 2 + (uVar13 & 0x1c0)
+                             ) * 4 + ((uint)(((uVar11 & 0x7ffffff8) * 2 + lVar8 & 0xffffffff) << 3)
+                                     & 0xc0) + (uVar13 & 0x3f);
+          trapWord(6,uVar10,0);
+          lVar9 = lVar9 + 1;
+          *puVar12 = -(param_1[iVar3 + iVar4] != '\0');
+          puVar12[1] = 0xff;
+          puVar12[2] = 0xff;
+          trapWord(5,uVar10 & ~(((uVar14 & 0x7fffffff) << 1 | (uVar14 & 0xffffffff) >> 0x1f) - 1),
+                   0xffff);
+          puVar12[3] = 0xff;
+          uVar13 = (uint)pGVar7->width;
+        } while ((int)lVar9 < (int)(uint)pGVar7->width);
+      }
+      lVar15 = lVar15 + 1;
+    } while ((int)lVar15 < (int)(uint)pGVar7->height);
+    return true;
   }
-  uVar9 = __restgprlr_19(0);
-  return (bool)uVar9;
+  return false;
 }
 
 
@@ -1122,58 +1077,53 @@ float UI_CalculateDeclination(void)
 
 // 825BADA8  UI_DrawPlaylistPopulation  (ui/ui_screenshot.cpp:1038)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void UI_DrawPlaylistPopulation(LocalClientNum_t param_1,rectDef_s *param_2,float *param_3)
 
 {
-  float *pfVar1;
-  LocalClientNum_t LVar2;
-  bool bVar7;
-  uchar *puVar3;
-  uint uVar4;
-  int iVar5;
-  ScreenPlacement *pSVar6;
-  longlong lVar8;
-  int iVar9;
-  float *pfVar10;
-  Material *pMVar11;
-  double dVar12;
-  float fVar13;
+  bool bVar5;
+  uchar *puVar1;
+  uint uVar2;
+  int iVar3;
+  ScreenPlacement *pSVar4;
+  int iVar6;
+  float *pfVar7;
+  Material *pMVar8;
+  double dVar9;
+  float fVar10;
   
-  lVar8 = (longlong)(int)param_2;
-  LVar2 = __savegprlr_28(param_1,lVar8,param_3);
-  bVar7 = LiveStorage_DoWeHavePlaylistPopulation();
-  if (bVar7) {
-    bVar7 = LiveStorage_DoWeHavePlaylistPopulationImage();
-    if (!bVar7) {
-      puVar3 = LiveStorage_GetPlaylistPopulationBuffer();
-      bVar7 = UI_GeneratePlaylistPopulationImage(puVar3);
-      if (bVar7) {
+  bVar5 = LiveStorage_DoWeHavePlaylistPopulation();
+  if (bVar5) {
+    bVar5 = LiveStorage_DoWeHavePlaylistPopulationImage();
+    if (!bVar5) {
+      puVar1 = LiveStorage_GetPlaylistPopulationBuffer();
+      bVar5 = UI_GeneratePlaylistPopulationImage(puVar1);
+      if (bVar5) {
         LiveStorage_GeneratePlaylistPopulationImageDone();
       }
     }
-    bVar7 = LiveStorage_DoWeHavePlaylistPopulationImage();
-    if ((bVar7) && (bVar7 = LiveStorage_IsTimeSynced(), bVar7)) {
-      uVar4 = LiveStorage_GetUTC();
-      pfVar10 = (float *)(uVar4 / 0x15180);
-      iVar9 = (int)pfVar10 * 0x15180;
-      fVar13 = UI_CalculateDeclination();
-      dVar12 = (double)fVar13;
-      iVar5 = Sys_Milliseconds();
+    bVar5 = LiveStorage_DoWeHavePlaylistPopulationImage();
+    if ((bVar5) && (bVar5 = LiveStorage_IsTimeSynced(), bVar5)) {
+      uVar2 = LiveStorage_GetUTC();
+      pfVar7 = (float *)(uVar2 / 0x15180);
+      iVar6 = (int)pfVar7 * 0x15180;
+      fVar10 = UI_CalculateDeclination();
+      dVar9 = (double)fVar10;
+      iVar3 = Sys_Milliseconds();
       R_AddCmdSetCodeConstant
-                (0x3f,(float)(longlong)iVar5 * 0.001,
-                 -((float)(longlong)(int)(uVar4 % 0x15180) * 1.1574074e-05 - 1.0),(float)dVar12,0.0)
-      ;
-      pMVar11 = (Material *)0x82170000;
-      iVar5 = 3;
+                (0x3f,(float)(longlong)iVar3 * 0.001,
+                 -((float)(longlong)(int)(uVar2 % 0x15180) * 1.1574074e-05 - 1.0),(float)dVar9,0.0);
+      pMVar8 = (Material *)0x82170000;
+      iVar3 = 3;
       Material_RegisterHandle("playlist_population",3);
-      pSVar6 = ScrPlace_GetActivePlacement(LVar2);
-      pfVar1 = (float *)lVar8;
-      UI_DrawHandlePic(pSVar6,*pfVar1,pfVar1[1],pfVar1[2],pfVar1[3],iVar5,iVar9,pfVar10,pMVar11);
+      pSVar4 = ScrPlace_GetActivePlacement(param_1);
+      UI_DrawHandlePic(pSVar4,param_2->x,param_2->y,param_2->w,param_2->h,iVar3,iVar6,pfVar7,pMVar8)
+      ;
     }
   }
-  __restgprlr_28();
   return;
 }
 

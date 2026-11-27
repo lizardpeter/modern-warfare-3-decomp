@@ -42,6 +42,9 @@ void EntHandle::Init(void)
 
 // 824546E0  Shutdown  (game/enthandle.cpp:81)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void EntHandle::Shutdown(void)
 
 {
@@ -49,7 +52,6 @@ void EntHandle::Shutdown(void)
   longlong lVar2;
   uint uVar3;
   
-  __savegprlr_27();
   pEVar1 = g_entHandleInfoArray;
   if (g_usedEntHandle != 0) {
     Com_Printf(1,"EntHandle BEGIN\n");
@@ -74,50 +76,49 @@ void EntHandle::Shutdown(void)
                       "%s\n\t(g_usedEntHandle) = %i");
     }
   }
-  __restgprlr_27();
   return;
 }
 
 
 // 824547E0  EntHandleDissociateInternal  (game/enthandle.cpp:120)
 
+/* WARNING: Function: __savegprlr_21 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_21 replaced with injection: xenon_save_restore */
+
 void EntHandleDissociateInternal(EntHandleList *param_1)
 
 {
   bool bVar1;
   ushort uVar2;
-  ushort *puVar3;
-  uint uVar4;
-  ushort uVar5;
-  uint uVar6;
+  uint uVar3;
+  ushort uVar4;
+  uint uVar5;
   
-  puVar3 = (ushort *)__savegprlr_21(param_1);
-  uVar2 = *puVar3;
-  uVar6 = (uint)uVar2;
-  if (uVar6 != 0) {
-    *puVar3 = 0;
-    uVar4 = uVar6;
+  uVar2 = param_1->infoIndex;
+  uVar5 = (uint)uVar2;
+  if (uVar5 != 0) {
+    param_1->infoIndex = 0;
+    uVar3 = uVar5;
     do {
-      if (g_entHandleInfoArray[uVar4].handle == (void *)0x0) {
+      if (g_entHandleInfoArray[uVar3].handle == (void *)0x0) {
         va("%d %p");
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\enthandle.cpp",0x89,0
                         ,"%s\n\t%s");
       }
       bVar1 = g_usedEntHandle == 0;
-      *(undefined4 *)g_entHandleInfoArray[uVar4].handle = 0;
-      g_entHandleInfoArray[uVar4].handle = (void *)0x0;
+      *(undefined4 *)g_entHandleInfoArray[uVar3].handle = 0;
+      g_entHandleInfoArray[uVar3].handle = (void *)0x0;
       if (bVar1) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\enthandle.cpp",0x8e,0
                         ,"%s");
       }
-      uVar4 = (uint)g_entHandleInfoArray[uVar4].next;
+      uVar3 = (uint)g_entHandleInfoArray[uVar3].next;
       g_usedEntHandle = g_usedEntHandle - 1;
-    } while (uVar4 != uVar6);
-    uVar5 = (ushort)g_entHandleInfoHead;
+    } while (uVar3 != uVar5);
+    uVar4 = (ushort)g_entHandleInfoHead;
     g_entHandleInfoHead = (uint)uVar2;
-    g_entHandleInfoArray[g_entHandleInfoArray[uVar2].prev].next = uVar5;
+    g_entHandleInfoArray[g_entHandleInfoArray[uVar2].prev].next = uVar4;
   }
-  __restgprlr_21();
   return;
 }
 
@@ -138,58 +139,56 @@ void EntHandleDissociate(gentity_s *param_1)
 
 // 82454918  RemoveEntHandleInfo  (game/enthandle.cpp:175)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void RemoveEntHandleInfo(EntHandleList *param_1,uint param_2)
 
 {
   ushort uVar1;
   uint uVar2;
-  uint uVar3;
-  ushort *puVar4;
-  ulonglong uVar5;
   
-  uVar5 = (ulonglong)(int)param_2;
-  puVar4 = (ushort *)__savegprlr_27(param_1);
-  if ((uVar5 & 0xffffffff) != 0) {
-    if ((ulonglong)*puVar4 == (uVar5 & 0xffffffff)) {
-      uVar1 = *(ushort *)((int)&g_entHandleInfoArray[0].next + (int)((uVar5 & 0xffffffff) << 3));
-      *puVar4 = -(ushort)(uVar5 != uVar1) & uVar1;
+  if (param_2 != 0) {
+    if (param_1->infoIndex == param_2) {
+      param_1->infoIndex =
+           -(ushort)(param_2 != g_entHandleInfoArray[param_2].next) &
+           g_entHandleInfoArray[param_2].next;
     }
-    uVar2 = (uint)uVar5;
-    if (g_entHandleInfoArray[uVar2].handle == (void *)0x0) {
+    if (g_entHandleInfoArray[param_2].handle == (void *)0x0) {
       va("%d %p");
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\enthandle.cpp",0xc2,0,
                       "%s\n\t%s");
     }
-    g_entHandleInfoArray[uVar2].handle = (void *)0x0;
+    g_entHandleInfoArray[param_2].handle = (void *)0x0;
     if (g_usedEntHandle == 0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\enthandle.cpp",0xc4,0,
                       "%s");
     }
-    uVar3 = g_entHandleInfoHead;
-    uVar1 = g_entHandleInfoArray[uVar2].prev;
+    uVar2 = g_entHandleInfoHead;
+    uVar1 = g_entHandleInfoArray[param_2].prev;
     g_usedEntHandle = g_usedEntHandle - 1;
-    g_entHandleInfoHead = uVar2;
-    g_entHandleInfoArray[g_entHandleInfoArray[uVar2].next].prev = uVar1;
-    g_entHandleInfoArray[uVar1].next = g_entHandleInfoArray[uVar2].next;
-    g_entHandleInfoArray[uVar2].next = (ushort)uVar3;
+    g_entHandleInfoHead = param_2;
+    g_entHandleInfoArray[g_entHandleInfoArray[param_2].next].prev = uVar1;
+    g_entHandleInfoArray[uVar1].next = g_entHandleInfoArray[param_2].next;
+    g_entHandleInfoArray[param_2].next = (ushort)uVar2;
   }
-  __restgprlr_27();
   return;
 }
 
 
 // 82454A38  AddEntHandleInfo  (game/enthandle.cpp:213)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 uint AddEntHandleInfo(EntHandleList *param_1,void *param_2)
 
 {
   ushort uVar1;
-  ushort *puVar2;
+  ushort uVar2;
   uint uVar3;
-  ushort uVar4;
-  uint uVar5;
+  uint uVar4;
   
-  puVar2 = (ushort *)__savegprlr_28(param_1);
   uVar3 = g_entHandleInfoHead;
   if (g_entHandleInfoHead == 0) {
     Com_Error(ERR_DROP,"ENT_HANDLE_COUNT exceeded - increase size");
@@ -200,63 +199,60 @@ uint AddEntHandleInfo(EntHandleList *param_1,void *param_2)
     g_maxUsedEntHandle = g_usedEntHandle;
   }
   g_entHandleInfoArray[uVar3].handle = param_2;
-  uVar5 = (uint)*puVar2;
-  uVar4 = (ushort)uVar3;
-  if (uVar5 != 0) {
-    uVar1 = g_entHandleInfoArray[uVar5].next;
-    g_entHandleInfoArray[uVar3].prev = *puVar2;
+  uVar4 = (uint)param_1->infoIndex;
+  uVar2 = (ushort)uVar3;
+  if (uVar4 != 0) {
+    uVar1 = g_entHandleInfoArray[uVar4].next;
+    g_entHandleInfoArray[uVar3].prev = param_1->infoIndex;
     g_entHandleInfoArray[uVar3].next = uVar1;
-    g_entHandleInfoArray[g_entHandleInfoArray[uVar5].next].prev = uVar4;
-    g_entHandleInfoArray[uVar5].next = uVar4;
-    uVar3 = __restgprlr_28(uVar3);
+    g_entHandleInfoArray[g_entHandleInfoArray[uVar4].next].prev = uVar2;
+    g_entHandleInfoArray[uVar4].next = uVar2;
     return uVar3;
   }
-  g_entHandleInfoArray[uVar3].next = uVar4;
-  g_entHandleInfoArray[uVar3].prev = uVar4;
-  *puVar2 = uVar4;
-  uVar3 = __restgprlr_28(uVar3);
+  g_entHandleInfoArray[uVar3].next = uVar2;
+  g_entHandleInfoArray[uVar3].prev = uVar2;
+  param_1->infoIndex = uVar2;
   return uVar3;
 }
 
 
 // 82454B08  setEnt  (game/enthandle.cpp:257)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
 void __thiscall EntHandle::setEnt(EntHandle *this,gentity_s *param_1)
 
 {
-  EntHandle *this_00;
   int iVar1;
   gentity_s *pgVar2;
   uint uVar3;
-  ulonglong uVar4;
   
-  uVar4 = (ulonglong)(int)param_1;
-  this_00 = (EntHandle *)__savegprlr_27(this);
-  iVar1 = isDefined(this_00);
+  iVar1 = isDefined(this);
   if (iVar1 == 0) {
-    if ((uVar4 & 0xffffffff) == 0) goto LAB_82454bac;
-  }
-  else {
-    pgVar2 = ent(this_00);
-    if ((uVar4 & 0xffffffff) == ZEXT48(pgVar2)) goto LAB_82454bac;
-    RemoveEntHandleInfo(g_entitiesHandleList + (int)&pgVar2[0x31e9ea].s.groundEntityNum / 0x280,
-                        (uint)this_00->infoIndex);
-    if ((uVar4 & 0xffffffff) == 0) {
-      this_00->number = 0;
-      this_00->infoIndex = 0;
-      __restgprlr_27();
+    if (param_1 == (gentity_s *)0x0) {
       return;
     }
   }
-  iVar1 = ((int)uVar4 + 0x7cc8c980) / 0x280;
-  uVar3 = AddEntHandleInfo(g_entitiesHandleList + iVar1,this_00);
-  this_00->infoIndex = (ushort)uVar3;
-  this_00->number = (short)iVar1 + 1;
-LAB_82454bac:
-  __restgprlr_27();
+  else {
+    pgVar2 = ent(this);
+    if (param_1 == pgVar2) {
+      return;
+    }
+    RemoveEntHandleInfo(g_entitiesHandleList + (int)&pgVar2[0x31e9ea].s.groundEntityNum / 0x280,
+                        (uint)this->infoIndex);
+    if (param_1 == (gentity_s *)0x0) {
+      this->number = 0;
+      this->infoIndex = 0;
+      return;
+    }
+  }
+  iVar1 = (int)&param_1[0x31e9ea].s.groundEntityNum / 0x280;
+  uVar3 = AddEntHandleInfo(g_entitiesHandleList + iVar1,this);
+  this->infoIndex = (ushort)uVar3;
+  this->number = (short)iVar1 + 1;
   return;
 }
 
@@ -280,25 +276,22 @@ int __thiscall EntHandle::isDefined(EntHandle *this)
 
 // 82454540  ent  (game_mp/g_public_mp.h:397)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
 gentity_s * __thiscall EntHandle::ent(EntHandle *this)
 
 {
-  ushort *puVar1;
-  gentity_s *pgVar2;
-  
-  puVar1 = (ushort *)__savegprlr_29(this);
-  if (0x7fe < *puVar1 - 1) {
+  if (0x7fe < this->number - 1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_public_mp.h",0x18e,0
                     ,"number - 1 doesn\'t index ENTITYNUM_NONE\n\t%i not in [0, %i)");
   }
-  if (*(char *)((int)&g_dummyHudCurrent + (uint)*puVar1 * 0x280 + 0xb) == '\0') {
+  if (*(char *)((int)&g_dummyHudCurrent + (uint)this->number * 0x280 + 0xb) == '\0') {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_public_mp.h",400,0,
                     "%s\n\t(number - 1) = %i");
   }
-  pgVar2 = (gentity_s *)__restgprlr_29((ulonglong)*puVar1 * 0x280 + -0x7cc8cc00);
-  return pgVar2;
+  return (gentity_s *)((int)g_hudelems + (uint)this->number * 0x280 + 0x2cf10);
 }
 

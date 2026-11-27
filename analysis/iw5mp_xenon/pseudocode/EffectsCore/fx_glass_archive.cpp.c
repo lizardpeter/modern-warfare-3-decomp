@@ -2,29 +2,25 @@
 
 // 8241F6C0  Glass_WriteActivePiece  (EffectsCore/fx_glass_archive.cpp:19)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void Glass_WriteActivePiece(FxGlassSystem *param_1,MemoryFile *param_2,uint param_3)
 
 {
-  int iVar1;
-  int iVar2;
+  FxGlassPieceState *pFVar1;
+  FxGlassPieceDynamics *pFVar2;
   int iVar3;
-  ulonglong uVar4;
-  void *pvVar5;
   
-  uVar4 = (ulonglong)(int)param_3;
-  iVar3 = __savegprlr_29(param_1);
-  iVar2 = (int)((uVar4 & 0xffffffff) << 5);
-  iVar1 = *(int *)(iVar3 + 0x38);
-  pvVar5 = (void *)(*(int *)(iVar3 + 0x3c) +
-                   (int)((uVar4 + (uVar4 & 0x1fffffff) * 8 & 0xffffffff) << 2));
-  MemFile_WriteData(param_2,0x20,(void *)(*(int *)(iVar3 + 0x34) + iVar2));
-  MemFile_WriteData(param_2,0x20,(void *)(iVar1 + iVar2));
-  MemFile_WriteData(param_2,0x24,pvVar5);
-  iVar1 = *(int *)((int)pvVar5 + 4);
-  if (iVar1 != 0) {
-    Phys_ObjSave(iVar1,param_2);
+  pFVar1 = param_1->pieceStates;
+  pFVar2 = param_1->pieceDynamics;
+  MemFile_WriteData(param_2,0x20,param_1->piecePlaces + param_3);
+  MemFile_WriteData(param_2,0x20,pFVar1 + param_3);
+  MemFile_WriteData(param_2,0x24,pFVar2 + param_3);
+  iVar3 = pFVar2[param_3].physObjId;
+  if (iVar3 != 0) {
+    Phys_ObjSave(iVar3,param_2);
   }
-  __restgprlr_29();
   return;
 }
 
@@ -67,6 +63,8 @@ void Glass_Save(MemoryFile *param_1)
 
 // 8241F740  Glass_Restore  (EffectsCore/fx_glass_archive.cpp:65)
 
+/* WARNING: Function: __savegprlr_20 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_20 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "XAssetType": Some values do not have unique names */
 /* WARNING: Enum "PhysWorld": Some values do not have unique names */
 
@@ -75,28 +73,26 @@ void Glass_Restore(MemoryFile *param_1)
 {
   uint uVar1;
   uint uVar2;
-  MemoryFile *pMVar3;
+  int iVar3;
   int iVar4;
   int iVar5;
   int iVar6;
-  int iVar7;
+  void *pvVar7;
   void *pvVar8;
-  void *pvVar9;
-  uint uVar10;
+  uint uVar9;
   char in_RESERVE;
   byte in_cr0;
   char local_70;
   char local_6f [3];
   uint local_6c [27];
   
-  pMVar3 = (MemoryFile *)__savegprlr_20(param_1);
-  iVar4 = DB_AssetCount(ASSET_TYPE_FXWORLD);
-  if (iVar4 != 1) {
+  iVar3 = DB_AssetCount(ASSET_TYPE_FXWORLD);
+  if (iVar3 != 1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_glass_archive.cpp"
                     ,0x4d,0,"%s");
   }
-  MemFile_ReadData(pMVar3,1,&local_70);
-  MemFile_ReadData(pMVar3,1,local_6f);
+  MemFile_ReadData(param_1,1,&local_70);
+  MemFile_ReadData(param_1,1,local_6f);
   if ((local_70 == 'g') && (local_6f[0] == 'g')) {
     if (fxWorld.glassSys.initPieceCount != 0) {
       Glass_FreeAllPieces();
@@ -107,35 +103,35 @@ void Glass_Restore(MemoryFile *param_1)
       (fxWorld.glassSys.pieceDynamics)->fallTime = -0x30303031;
       (fxWorld.glassSys.pieceStates)->texCoordOrigin[0] = -6.9730053e+09;
       (fxWorld.glassSys.piecePlaces)->nextFree = 0xcfcfcfcf;
-      MemFile_ReadData(pMVar3,4,local_6c);
+      MemFile_ReadData(param_1,4,local_6c);
       fxWorld.glassSys.geoDataCount = local_6c[0];
       if (local_6c[0] != 0) {
-        MemFile_ReadData(pMVar3,local_6c[0] << 2,fxWorld.glassSys.geoData);
+        MemFile_ReadData(param_1,local_6c[0] << 2,fxWorld.glassSys.geoData);
       }
-      MemFile_ReadData(pMVar3,4,local_6c);
+      MemFile_ReadData(param_1,4,local_6c);
       if (fxWorld.glassSys.pieceLimit < local_6c[0]) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_glass_archive.cpp"
                         ,0x6b,0,"activeCount <= glassSys->pieceLimit\n\t%i, %i");
       }
-      uVar10 = 0;
+      uVar9 = 0;
       if (local_6c[0] != 0) {
-        iVar4 = 0;
-        iVar7 = 0;
+        iVar3 = 0;
         iVar6 = 0;
+        iVar5 = 0;
         do {
-          pvVar8 = (void *)((int)(fxWorld.glassSys.pieceStates)->texCoordOrigin + iVar7);
-          pvVar9 = (void *)((int)(fxWorld.glassSys.pieceDynamics)->vel + iVar6 + -0xc);
-          MemFile_ReadData(pMVar3,0x20,(void *)(iVar7 + (int)fxWorld.glassSys.piecePlaces));
-          MemFile_ReadData(pMVar3,0x20,pvVar8);
-          MemFile_ReadData(pMVar3,0x24,pvVar9);
-          *(float *)(iVar4 + (int)fxWorld.glassSys.halfThickness) =
-               fxWorld.glassSys.defs[*(byte *)((int)pvVar8 + 0x10)].halfThickness;
-          if (*(int *)((int)pvVar9 + 4) == 0) {
-            Glass_LinkPiece_Static(&fxWorld.glassSys,uVar10);
+          pvVar7 = (void *)((int)(fxWorld.glassSys.pieceStates)->texCoordOrigin + iVar6);
+          pvVar8 = (void *)((int)(fxWorld.glassSys.pieceDynamics)->vel + iVar5 + -0xc);
+          MemFile_ReadData(param_1,0x20,(void *)(iVar6 + (int)fxWorld.glassSys.piecePlaces));
+          MemFile_ReadData(param_1,0x20,pvVar7);
+          MemFile_ReadData(param_1,0x24,pvVar8);
+          *(float *)(iVar3 + (int)fxWorld.glassSys.halfThickness) =
+               fxWorld.glassSys.defs[*(byte *)((int)pvVar7 + 0x10)].halfThickness;
+          if (*(int *)((int)pvVar8 + 4) == 0) {
+            Glass_LinkPiece_Static(&fxWorld.glassSys,uVar9);
           }
           else {
-            iVar5 = Phys_ObjLoad(PHYS_WORLD_FX,pMVar3);
-            *(int *)((int)pvVar9 + 4) = iVar5;
+            iVar4 = Phys_ObjLoad(PHYS_WORLD_FX,param_1);
+            *(int *)((int)pvVar8 + 4) = iVar4;
             do {
               if (in_RESERVE != '\0') {
                 g_glassPhysObjCount =
@@ -144,36 +140,35 @@ void Glass_Restore(MemoryFile *param_1)
                 in_cr0 = 2;
               }
             } while (!(bool)(in_cr0 >> 1 & 1));
-            *(undefined4 *)((int)pvVar9 + 8) = 0;
+            *(undefined4 *)((int)pvVar8 + 8) = 0;
             Glass_AddPiecePhysicsObject
-                      (&fxWorld.glassSys,uVar10,
-                       fxWorld.glassSys.defs + *(byte *)((int)pvVar8 + 0x10),true);
-            Glass_LinkPiece_Dynamic(&fxWorld.glassSys,uVar10);
+                      (&fxWorld.glassSys,uVar9,fxWorld.glassSys.defs + *(byte *)((int)pvVar7 + 0x10)
+                       ,true);
+            Glass_LinkPiece_Dynamic(&fxWorld.glassSys,uVar9);
           }
-          uVar1 = uVar10 >> 3 & 0x1ffffffc;
-          uVar2 = uVar10 & 0x1f;
-          uVar10 = uVar10 + 1;
-          iVar6 = iVar6 + 0x24;
-          iVar7 = iVar7 + 0x20;
-          iVar4 = iVar4 + 4;
+          uVar1 = uVar9 >> 3 & 0x1ffffffc;
+          uVar2 = uVar9 & 0x1f;
+          uVar9 = uVar9 + 1;
+          iVar5 = iVar5 + 0x24;
+          iVar6 = iVar6 + 0x20;
+          iVar3 = iVar3 + 4;
           *(uint *)(uVar1 + (int)fxWorld.glassSys.isInUse) =
                *(uint *)(&g_bitShift + uVar2 * 4) | *(uint *)(uVar1 + (int)fxWorld.glassSys.isInUse)
           ;
-        } while (uVar10 < local_6c[0]);
+        } while (uVar9 < local_6c[0]);
       }
-      if (uVar10 < fxWorld.glassSys.pieceLimit - 1) {
-        iVar4 = uVar10 << 5;
+      if (uVar9 < fxWorld.glassSys.pieceLimit - 1) {
+        iVar3 = uVar9 << 5;
         do {
-          uVar10 = uVar10 + 1;
-          *(uint *)(iVar4 + (int)fxWorld.glassSys.piecePlaces) = uVar10;
-          iVar4 = iVar4 + 0x20;
-        } while (uVar10 < fxWorld.glassSys.pieceLimit - 1);
+          uVar9 = uVar9 + 1;
+          *(uint *)(iVar3 + (int)fxWorld.glassSys.piecePlaces) = uVar9;
+          iVar3 = iVar3 + 0x20;
+        } while (uVar9 < fxWorld.glassSys.pieceLimit - 1);
       }
-      fxWorld.glassSys.piecePlaces[uVar10]._s_0.frame.quat[0] = 9.18341e-41;
+      fxWorld.glassSys.piecePlaces[uVar9]._s_0.frame.quat[0] = 9.18341e-41;
       fxWorld.glassSys.activePieceCount = local_6c[0];
       fxWorld.glassSys.firstFreePiece = local_6c[0];
     }
-    __restgprlr_20();
     return;
   }
   Com_PrintError(0xe,
@@ -186,43 +181,41 @@ void Glass_Restore(MemoryFile *param_1)
 
 // 8241FBC0  Glass_ForEachPiece<MemoryFile_*,void_(__cdecl*)(FxGlassSystem_*___restrict,MemoryFile_*___restrict,unsigned_int)>  (EffectsCore/fx_glass_api.h:80)
 
+/* WARNING: Function: __savegprlr_20 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_20 replaced with injection: xenon_save_restore */
+
 void Glass_ForEachPiece<MemoryFile_*,void_(__cdecl*)(FxGlassSystem_*___restrict,MemoryFile_*___restrict,unsigned_int)>
                (FxGlassSystem *param_1,MemoryFile *param_2,
                _func___cdecl_void_FxGlassSystem_ptr_MemoryFile_ptr_uint *param_3)
 
 {
   uint uVar1;
-  FxGlassSystem *pFVar2;
-  longlong lVar3;
-  int iVar4;
+  int iVar2;
+  uint uVar3;
+  ulonglong uVar4;
   uint uVar5;
-  ulonglong uVar6;
-  uint uVar7;
   
-  lVar3 = (longlong)(int)param_2;
-  pFVar2 = (FxGlassSystem *)__savegprlr_20(param_1,lVar3);
-  uVar1 = pFVar2->pieceWordCount;
-  uVar5 = 0;
+  uVar1 = param_1->pieceWordCount;
+  uVar3 = 0;
   if (uVar1 != 0) {
-    iVar4 = 0;
+    iVar2 = 0;
     do {
-      uVar7 = *(uint *)(iVar4 + (int)pFVar2->isInUse);
-      if (uVar7 != 0) {
+      uVar5 = *(uint *)(iVar2 + (int)param_1->isInUse);
+      if (uVar5 != 0) {
         do {
-          uVar6 = LZCOUNT(uVar7);
-          if (0x20 < uVar6) {
+          uVar4 = LZCOUNT(uVar5);
+          if (0x20 < uVar4) {
             MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_math.h",
                             0x475,0,"count doesn\'t index 33\n\t%i not in [0, %i)");
           }
-          uVar7 = uVar7 & ~*(uint *)(&g_bitShift + (int)(uVar6 << 2));
-          (*param_3)(pFVar2,(MemoryFile *)lVar3,uVar5 << 5 | (uint)uVar6);
-        } while (uVar7 != 0);
+          uVar5 = uVar5 & ~*(uint *)(&g_bitShift + (int)(uVar4 << 2));
+          (*param_3)(param_1,param_2,uVar3 << 5 | (uint)uVar4);
+        } while (uVar5 != 0);
       }
-      uVar5 = uVar5 + 1;
-      iVar4 = iVar4 + 4;
-    } while (uVar5 < uVar1);
+      uVar3 = uVar3 + 1;
+      iVar2 = iVar2 + 4;
+    } while (uVar3 < uVar1);
   }
-  __restgprlr_20();
   return;
 }
 

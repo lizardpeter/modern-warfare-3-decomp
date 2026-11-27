@@ -2,64 +2,51 @@
 
 // 828A5480  NtAllocateVirtualMemoryWrapper  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/xrtl/rtlheap.c:181)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 long NtAllocateVirtualMemoryWrapper
                (void **param_1,ulong *param_2,ulong param_3,ulong param_4,
                _MEMORY_REGION_TYPE param_5)
 
 {
-  undefined8 uVar1;
-  long lVar2;
-  longlong lVar3;
-  ulonglong uVar4;
-  longlong lVar5;
-  longlong lVar6;
+  long lVar1;
   
-  lVar6 = (longlong)(int)param_5;
-  lVar5 = (longlong)(int)param_4;
-  uVar4 = (ulonglong)(int)param_3;
-  lVar3 = (longlong)(int)param_2;
-  uVar1 = __savegprlr_27(param_1,lVar3,uVar4,lVar5,lVar6);
-  uVar1 = NtAllocateVirtualMemory(uVar1,lVar3,uVar4 | 0x20000000,lVar5,lVar6);
-  lVar2 = __restgprlr_27(uVar1);
-  return lVar2;
+  lVar1 = NtAllocateVirtualMemory(param_1,param_2,param_3 | 0x20000000,param_4,param_5);
+  return lVar1;
 }
 
 
 // 828A6F60  RtlCreateHeap  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/xrtl/rtlheap.c:343)
 
+/* WARNING: Function: __savegprlr_20 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_20 replaced with injection: xenon_save_restore */
 /* WARNING: Removing unreachable block (ram,0x828a7270) */
 
 void * RtlCreateHeap(ulong param_1,void *param_2,ulong param_3,ulong param_4,void *param_5,
                     _RTL_HEAP_PARAMETERS *param_6)
 
 {
-  bool bVar1;
-  uint uVar2;
-  int iVar3;
-  uchar uVar6;
-  ulong uVar4;
-  void *pvVar5;
-  ulonglong uVar7;
-  _HEAP *p_Var8;
-  ulonglong uVar9;
-  longlong lVar10;
-  undefined8 *puVar11;
-  undefined4 *puVar12;
-  _LIST_ENTRY *p_Var13;
-  ulonglong uVar14;
-  ulonglong uVar15;
-  _MEMORY_REGION_TYPE _Var16;
-  ulonglong uVar17;
-  longlong lVar18;
-  longlong lVar19;
-  uint uStack00000014;
-  _HEAP *p_Stack0000001c;
+  int iVar1;
+  uchar uVar3;
+  ulong uVar2;
+  longlong lVar4;
+  undefined8 *puVar5;
+  _HEAP_UNCOMMMTTED_RANGE *p_Var6;
+  _HEAP_UNCOMMMTTED_RANGE *p_Var7;
+  _LIST_ENTRY *p_Var8;
+  _MEMORY_REGION_TYPE _Var9;
+  _HEAP_UNCOMMMTTED_RANGE *p_Var10;
+  longlong lVar11;
+  longlong lVar12;
+  ulong uStack00000014;
+  void *pvStack0000001c;
   uint uStack00000024;
   uint uStack0000002c;
-  undefined4 uStack00000034;
+  void *pvStack00000034;
   _HEAP *local_d0;
-  _HEAP *local_cc [3];
-  _HEAP *local_c0 [3];
+  void *local_cc [3];
+  void *local_c0 [3];
   uint local_b4;
   int local_b0;
   undefined8 uStack_a8;
@@ -73,35 +60,26 @@ void * RtlCreateHeap(ulong param_1,void *param_2,ulong param_3,ulong param_4,voi
   uint local_80;
   _func___cdecl_long_void_ptr_void_ptr_ptr_ulong_ptr *local_7c;
   
-  uVar9 = (ulonglong)(int)param_6;
-  uVar14 = (ulonglong)(int)param_5;
-  uVar15 = (ulonglong)(int)param_4;
-  uVar17 = (ulonglong)(int)param_3;
-  uVar7 = (ulonglong)(int)param_2;
-  uVar2 = __savegprlr_20(param_1);
-  p_Var8 = (_HEAP *)uVar7;
-  uStack00000024 = (uint)uVar17;
-  uStack0000002c = (uint)uVar15;
-  uStack00000034 = (undefined4)uVar14;
-  puVar11 = &uStack_a8;
+  puVar5 = &uStack_a8;
   local_d0 = (_HEAP *)0x0;
-  lVar18 = 6;
+  lVar11 = 6;
   do {
-    puVar11 = puVar11 + 1;
-    *puVar11 = 0;
-    lVar18 = lVar18 + -1;
-  } while (lVar18 != 0);
-  uStack00000014 = uVar2;
-  p_Stack0000001c = p_Var8;
-  if ((uVar9 & 0xffffffff) != 0) {
-    if (*(int *)uVar9 == 0x30) {
-      memmove();
-      uVar17 = (ulonglong)uStack00000024;
-    }
-    uVar15 = (ulonglong)uStack0000002c;
+    puVar5 = puVar5 + 1;
+    *puVar5 = 0;
+    lVar11 = lVar11 + -1;
+  } while (lVar11 != 0);
+  uStack00000014 = param_1;
+  pvStack0000001c = param_2;
+  pvStack00000034 = param_5;
+  if ((param_6 != (_RTL_HEAP_PARAMETERS *)0x0) && (param_6->Length == 0x30)) {
+    uStack00000024 = param_3;
+    uStack0000002c = param_4;
+    memmove();
+    param_3 = uStack00000024;
+    param_4 = uStack0000002c;
   }
   if ((NtGlobalFlag & 0x200000) != 0) {
-    uVar2 = uVar2 | 0x80;
+    param_1 = param_1 | 0x80;
   }
   if (uStack_9c == 0) {
     uStack_9c = MmHeapSegmentReserve;
@@ -121,233 +99,240 @@ void * RtlCreateHeap(ulong param_1,void *param_2,ulong param_3,ulong param_4,voi
   if ((local_88 == 0) || (0xf0000 < local_88)) {
     local_88 = 0xf0000;
   }
-  if ((uVar15 & 0xffffffff) == 0) {
+  if (param_4 == 0) {
     uStack0000002c = 0x10000;
-    if ((uVar17 & 0xffffffff) == 0) {
+    if (param_3 == 0) {
       uStack00000024 = 0x400000;
     }
     else {
 LAB_828a7110:
-      uStack00000024 = (int)uVar17 + 0xffffU & 0xffff0000;
+      uStack00000024 = param_3 + 0xffff & 0xffff0000;
     }
   }
   else {
-    uStack0000002c = (int)uVar15 + 0xffffU & 0xffff0000;
-    if ((uVar17 & 0xffffffff) != 0) goto LAB_828a7110;
+    uStack0000002c = param_4 + 0xffff & 0xffff0000;
+    if (param_3 != 0) goto LAB_828a7110;
     uStack00000024 = uStack0000002c + 0xfffff & 0xfff00000;
   }
-  lVar18 = 0x598;
-  bVar1 = (uVar14 & 0xffffffff) == 0;
-  if ((uVar2 & 1) == 0) {
-    if (bVar1) {
-      lVar18 = 0x5b4;
-      uVar14 = 0xffffffffffffffff;
+  lVar11 = 0x598;
+  if ((param_1 & 1) == 0) {
+    if (param_5 == (void *)0x0) {
+      lVar11 = 0x5b4;
+      param_5 = (_HEAP_UNCOMMMTTED_RANGE *)0xffffffff;
     }
     else {
-      uVar2 = uVar2 | 0x80000000;
-    }
-LAB_828a7174:
-    if ((uVar2 & 0x80000) == 0) {
-LAB_828a718c:
-      _Var16 = MemoryRegionThread;
-    }
-    else {
-      iVar3 = KeGetCurrentProcessType();
-      _Var16 = MemoryRegionTitleDebug;
-      if (iVar3 != 1) goto LAB_828a718c;
-    }
-    if ((uVar7 & 0xffffffff) == 0) {
-      if ((local_7c == (_func___cdecl_long_void_ptr_void_ptr_ptr_ulong_ptr *)0x0) &&
-         (iVar3 = NtAllocateVirtualMemory(&local_d0,&stack0x00000024,0x60002000,4,_Var16),
-         -1 < iVar3)) {
-        uVar4 = 0;
-        if (uStack0000002c == 0) {
-          uStack0000002c = 0x10000;
-        }
-        uVar17 = 0;
-        local_cc[0] = (_HEAP *)0x0;
-        uVar15 = uVar17;
-LAB_828a72e4:
-        pvVar5 = (void *)uVar15;
-        if (ZEXT48(local_cc[0]) == (uVar15 & 0xffffffff)) {
-          iVar3 = NtAllocateVirtualMemory(local_cc,&stack0x0000002c,0x60001000,4,_Var16);
-          if (iVar3 < 0) {
-            if ((uVar7 & 0xffffffff) == 0) {
-              NtFreeVirtualMemory(&local_d0,&stack0x00000024,0x8000,_Var16);
-            }
-            goto LAB_828a7024;
-          }
-          uVar17 = ZEXT48(local_d0);
-          pvVar5 = (void *)((int)pvVar5 + uStack0000002c);
-        }
-        lVar10 = lVar18 + 0x80;
-        lVar19 = 8;
-        uVar7 = uVar17 + 0x4c;
-        uVar17 = uVar17 + 0x59f & 0xfffffff8;
-        do {
-          puVar12 = (undefined4 *)uVar17;
-          *(undefined4 *)uVar7 = puVar12;
-          uVar15 = uVar17 + 0x10;
-          lVar19 = lVar19 + -1;
-          uVar7 = uVar17;
-          uVar17 = uVar15;
-        } while (lVar19 != 0);
-        *puVar12 = 0;
-        if ((NtGlobalFlag & 0x800) != 0) {
-          lVar10 = lVar18 + 0x68c;
-          local_d0->PseudoTagEntries = (_HEAP_PSEUDO_TAG_ENTRY *)(puVar12 + 4);
-          uVar15 = ZEXT48(local_d0->PseudoTagEntries) + 0x60c;
-        }
-        (local_d0->Entry).Size = (ushort)(lVar10 + 0xfU >> 4);
-        (local_d0->Entry).Flags = '\x01';
-        local_d0->Signature = 0xeeffeeff;
-        local_d0->Flags = uVar2;
-        local_d0->ForceFlags = uVar2 & 0x6001007d;
-        local_d0->FreeListsInUseTerminate = 0xffff;
-        local_d0->HeaderValidateLength = (short)uVar15 - (short)local_d0;
-        local_d0->HeaderValidateCopy = (void *)0x0;
-        uVar6 = KeGetCurrentProcessType();
-        local_d0->ProcessType = uVar6;
-        lVar18 = 0x80;
-        local_d0->MemoryRegionType = _Var16;
-        p_Var13 = local_d0->FreeLists;
-        do {
-          p_Var13->Flink = p_Var13;
-          p_Var13->Blink = p_Var13;
-          p_Var13 = p_Var13 + 1;
-          lVar18 = lVar18 + -1;
-        } while (lVar18 != 0);
-        (local_d0->VirtualAllocdBlocks).Flink = &local_d0->VirtualAllocdBlocks;
-        (local_d0->VirtualAllocdBlocks).Blink = &local_d0->VirtualAllocdBlocks;
-        if ((int)uVar14 == -1) {
-          RtlInitializeCriticalSection(uVar15);
-          uVar14 = uVar15;
-        }
-        local_d0->LockVariable = (_HEAP_LOCK *)uVar14;
-        uVar4 = RtlpInitializeHeapSegment
-                          (local_d0,(_HEAP_SEGMENT *)
-                                    ((int)local_d0->Segments +
-                                    (((uint)(lVar10 + 0xfU) & 0xfffffff0) - 0x60)),'\0',uVar4,
-                           local_cc[0],pvVar5,
-                           (void *)((int)local_cc[0]->Segments + (uStack00000024 - 0x60)));
-        if (uVar4 != 0) {
-          local_d0->ProcessHeapsListIndex = 0;
-          local_d0->SegmentReserve = uStack_9c;
-          local_d0->SegmentCommit = local_98;
-          local_d0->DeCommitFreeBlockThreshold = local_94 >> 4;
-          local_d0->DeCommitTotalFreeThreshold = local_90 >> 4;
-          local_d0->MaximumAllocationSize = local_8c;
-          local_d0->VirtualMemoryThreshold = local_88 + 0xf >> 4;
-          local_d0->CommitRoutine = local_7c;
-          local_d0->AlignRound = 0x1f;
-          local_d0->AlignMask = 0xfffffff0;
-          goto LAB_828a7528;
-        }
-      }
-    }
-    else if (local_7c == (_func___cdecl_long_void_ptr_void_ptr_ptr_ulong_ptr *)0x0) {
-      iVar3 = NtQueryVirtualMemory(uVar7,local_c0,_Var16);
-      if (((-1 < iVar3) && (uVar15 = ZEXT48(local_c0[0]), uVar15 == (uVar7 & 0xffffffff))) &&
-         (local_b0 != 0x10000)) {
-        local_cc[0] = local_c0[0];
-        if (local_b0 == 0x1000) {
-          memset();
-          uVar15 = (ulonglong)local_b4 + ZEXT48(local_c0[0]);
-          uStack0000002c = local_b4;
-          NtQueryVirtualMemory(uVar15,local_c0,_Var16);
-          uStack00000024 = uStack0000002c;
-        }
-        else {
-          uStack0000002c = 0x10000;
-        }
-        goto LAB_828a7288;
-      }
-    }
-    else {
-      uVar15 = (ulonglong)local_84;
-      if (((uVar15 != 0) && (local_80 != 0)) && ((uVar15 <= local_80 && ((uVar2 & 2) == 0)))) {
-        uStack00000024 = local_80;
-        uVar15 = uVar15 + uVar7;
-        memset();
-        local_cc[0] = p_Var8;
-LAB_828a7288:
-        uVar4 = 1;
-        uVar17 = uVar7;
-        local_d0 = p_Var8;
-        goto LAB_828a72e4;
-      }
+      param_1 = param_1 | 0x80000000;
     }
   }
-  else if (bVar1) goto LAB_828a7174;
-LAB_828a7024:
-  local_d0 = (_HEAP *)0x0;
-LAB_828a7528:
-  pvVar5 = (void *)__restgprlr_20(local_d0);
-  return pvVar5;
+  else if (param_5 != (void *)0x0) {
+    return (void *)0x0;
+  }
+  if ((param_1 & 0x80000) != 0) {
+    iVar1 = KeGetCurrentProcessType();
+    _Var9 = MemoryRegionTitleDebug;
+    if (iVar1 == 1) goto LAB_828a7190;
+  }
+  _Var9 = MemoryRegionThread;
+LAB_828a7190:
+  if (param_2 == (void *)0x0) {
+    if (local_7c != (_func___cdecl_long_void_ptr_void_ptr_ptr_ulong_ptr *)0x0) {
+      return (void *)0x0;
+    }
+    iVar1 = NtAllocateVirtualMemory(&local_d0,&stack0x00000024,0x60002000,4,_Var9);
+    if (iVar1 < 0) {
+      return (void *)0x0;
+    }
+    uVar2 = 0;
+    if (uStack0000002c == 0) {
+      uStack0000002c = 0x10000;
+    }
+    local_c0[0] = (void *)0x0;
+    local_cc[0] = (void *)0x0;
+  }
+  else {
+    if (local_7c == (_func___cdecl_long_void_ptr_void_ptr_ptr_ulong_ptr *)0x0) {
+      iVar1 = NtQueryVirtualMemory(param_2,local_c0,_Var9);
+      if (iVar1 < 0) {
+        return (void *)0x0;
+      }
+      if (local_c0[0] != param_2) {
+        return (void *)0x0;
+      }
+      if (local_b0 == 0x10000) {
+        return (void *)0x0;
+      }
+      local_cc[0] = local_c0[0];
+      if (local_b0 == 0x1000) {
+        memset();
+        local_c0[0] = (void *)(local_b4 + (int)local_c0[0]);
+        uStack0000002c = local_b4;
+        NtQueryVirtualMemory(local_c0[0],local_c0,_Var9);
+        uStack00000024 = uStack0000002c;
+      }
+      else {
+        uStack0000002c = 0x10000;
+      }
+    }
+    else {
+      if (local_84 == 0) {
+        return (void *)0x0;
+      }
+      if (local_80 == 0) {
+        return (void *)0x0;
+      }
+      if (local_80 < local_84) {
+        return (void *)0x0;
+      }
+      if ((param_1 & 2) != 0) {
+        return (void *)0x0;
+      }
+      uStack00000024 = local_80;
+      local_c0[0] = (void *)(local_84 + (int)param_2);
+      memset();
+      local_cc[0] = param_2;
+    }
+    uVar2 = 1;
+    local_d0 = param_2;
+  }
+  if (local_cc[0] == local_c0[0]) {
+    iVar1 = NtAllocateVirtualMemory(local_cc,&stack0x0000002c,0x60001000,4,_Var9);
+    if (iVar1 < 0) {
+      if (param_2 != (void *)0x0) {
+        return (void *)0x0;
+      }
+      NtFreeVirtualMemory(&local_d0,&stack0x00000024,0x8000,_Var9);
+      return (void *)0x0;
+    }
+    local_c0[0] = (void *)((int)local_c0[0] + uStack0000002c);
+  }
+  lVar4 = lVar11 + 0x80;
+  lVar12 = 8;
+  p_Var6 = (_HEAP_UNCOMMMTTED_RANGE *)&local_d0->UnusedUnCommittedRanges;
+  p_Var10 = (_HEAP_UNCOMMMTTED_RANGE *)((uint)&local_d0[1].Entry.SmallTagIndex & 0xfffffff8);
+  do {
+    p_Var7 = p_Var10;
+    p_Var6->Next = p_Var7;
+    p_Var10 = p_Var7 + 1;
+    lVar12 = lVar12 + -1;
+    p_Var6 = p_Var7;
+  } while (lVar12 != 0);
+  p_Var7->Next = (_HEAP_UNCOMMMTTED_RANGE *)0x0;
+  if ((NtGlobalFlag & 0x800) != 0) {
+    lVar4 = lVar11 + 0x68c;
+    local_d0->PseudoTagEntries = (_HEAP_PSEUDO_TAG_ENTRY *)(p_Var7 + 1);
+    p_Var10 = (_HEAP_UNCOMMMTTED_RANGE *)(local_d0->PseudoTagEntries + 0x81);
+  }
+  (local_d0->Entry).Size = (ushort)(lVar4 + 0xfU >> 4);
+  (local_d0->Entry).Flags = '\x01';
+  local_d0->Signature = 0xeeffeeff;
+  local_d0->Flags = param_1;
+  local_d0->ForceFlags = param_1 & 0x6001007d;
+  local_d0->FreeListsInUseTerminate = 0xffff;
+  local_d0->HeaderValidateLength = (short)p_Var10 - (short)local_d0;
+  local_d0->HeaderValidateCopy = (void *)0x0;
+  uVar3 = KeGetCurrentProcessType();
+  local_d0->ProcessType = uVar3;
+  lVar11 = 0x80;
+  local_d0->MemoryRegionType = _Var9;
+  p_Var8 = local_d0->FreeLists;
+  do {
+    p_Var8->Flink = p_Var8;
+    p_Var8->Blink = p_Var8;
+    p_Var8 = p_Var8 + 1;
+    lVar11 = lVar11 + -1;
+  } while (lVar11 != 0);
+  (local_d0->VirtualAllocdBlocks).Flink = &local_d0->VirtualAllocdBlocks;
+  (local_d0->VirtualAllocdBlocks).Blink = &local_d0->VirtualAllocdBlocks;
+  if (param_5 == (_HEAP_UNCOMMMTTED_RANGE *)0xffffffff) {
+    RtlInitializeCriticalSection(p_Var10);
+    param_5 = p_Var10;
+  }
+  local_d0->LockVariable = param_5;
+  uVar2 = RtlpInitializeHeapSegment
+                    (local_d0,(_HEAP_SEGMENT *)
+                              ((int)local_d0->Segments +
+                              (((uint)(lVar4 + 0xfU) & 0xfffffff0) - 0x60)),'\0',uVar2,local_cc[0],
+                     local_c0[0],(void *)((int)local_cc[0] + uStack00000024));
+  if (uVar2 == 0) {
+    return (void *)0x0;
+  }
+  local_d0->ProcessHeapsListIndex = 0;
+  local_d0->SegmentReserve = uStack_9c;
+  local_d0->SegmentCommit = local_98;
+  local_d0->DeCommitFreeBlockThreshold = local_94 >> 4;
+  local_d0->DeCommitTotalFreeThreshold = local_90 >> 4;
+  local_d0->MaximumAllocationSize = local_8c;
+  local_d0->VirtualMemoryThreshold = local_88 + 0xf >> 4;
+  local_d0->CommitRoutine = local_7c;
+  local_d0->AlignRound = 0x1f;
+  local_d0->AlignMask = 0xfffffff0;
+  return local_d0;
 }
 
 
 // 828A60C8  RtlDestroyHeap  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/xrtl/rtlheap.c:1276)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void * RtlDestroyHeap(void *param_1)
 
 {
-  uint *puVar1;
-  uint *puVar2;
+  undefined4 *puVar1;
+  undefined4 *puVar2;
   _MEMORY_REGION_TYPE _Var3;
   _HEAP_SEGMENT *p_Var4;
-  int iVar5;
-  uint uVar6;
-  void *pvVar7;
-  uint *local_30;
+  uint uVar5;
+  undefined4 *local_30;
   undefined4 local_2c [9];
   undefined4 local_8;
   
-  iVar5 = __savegprlr_28(param_1);
-  if (iVar5 != 0) {
-    if ((*(uint *)(iVar5 + 0x14) & 0x40000) != 0) {
-      uVar6 = KeGetCurrentProcessType();
-      if (*(byte *)(iVar5 + 0x17b) != uVar6) {
+  if (param_1 != (void *)0x0) {
+    if ((*(uint *)((int)param_1 + 0x14) & 0x40000) != 0) {
+      uVar5 = KeGetCurrentProcessType();
+      if (*(byte *)((int)param_1 + 0x17b) != uVar5) {
                     /* WARNING: Subroutine does not return */
-        KeBugCheckEx(0xf4,iVar5,local_8,0x521,0);
+        KeBugCheckEx(0xf4,param_1,local_8,0x521,0);
       }
     }
-    puVar1 = *(uint **)(iVar5 + 0x58);
-    while ((uint *)(iVar5 + 0x58) != puVar1) {
-      puVar2 = (uint *)*puVar1;
+    puVar1 = *(undefined4 **)((int)param_1 + 0x58);
+    while ((undefined4 *)((int)param_1 + 0x58) != puVar1) {
+      puVar2 = (undefined4 *)*puVar1;
       local_2c[0] = 0;
       local_30 = puVar1;
-      NtFreeVirtualMemory(&local_30,local_2c,0x8000,*(undefined4 *)(iVar5 + 0x590));
+      NtFreeVirtualMemory(&local_30,local_2c,0x8000,*(undefined4 *)((int)param_1 + 0x590));
       puVar1 = puVar2;
     }
-    if ((*(uint *)(iVar5 + 0x14) & 1) == 0) {
-      *(undefined4 *)(iVar5 + 0x580) = 0;
+    if ((*(uint *)((int)param_1 + 0x14) & 1) == 0) {
+      *(undefined4 *)((int)param_1 + 0x580) = 0;
     }
-    puVar1 = *(uint **)(iVar5 + 0x48);
-    *(undefined4 *)(iVar5 + 0x48) = 0;
-    while (puVar1 != (uint *)0x0) {
-      puVar2 = (uint *)*puVar1;
+    puVar1 = *(undefined4 **)((int)param_1 + 0x48);
+    *(undefined4 *)((int)param_1 + 0x48) = 0;
+    while (puVar1 != (undefined4 *)0x0) {
+      puVar2 = (undefined4 *)*puVar1;
       local_2c[0] = 0;
       local_30 = puVar1;
-      NtFreeVirtualMemory(&local_30,local_2c,0x8000,*(undefined4 *)(iVar5 + 0x590));
+      NtFreeVirtualMemory(&local_30,local_2c,0x8000,*(undefined4 *)((int)param_1 + 0x590));
       puVar1 = puVar2;
     }
-    _Var3 = *(_MEMORY_REGION_TYPE *)(iVar5 + 0x590);
-    uVar6 = 0x40;
+    _Var3 = *(_MEMORY_REGION_TYPE *)((int)param_1 + 0x590);
+    uVar5 = 0x40;
     do {
-      uVar6 = uVar6 + 0xff & 0xff;
-      p_Var4 = *(_HEAP_SEGMENT **)((uVar6 + 0x18) * 4 + iVar5);
+      uVar5 = uVar5 + 0xff & 0xff;
+      p_Var4 = *(_HEAP_SEGMENT **)((uVar5 + 0x18) * 4 + (int)param_1);
       if (p_Var4 != (_HEAP_SEGMENT *)0x0) {
         RtlpDestroyHeapSegment(p_Var4,_Var3);
       }
-    } while (uVar6 != 0);
+    } while (uVar5 != 0);
   }
-  pvVar7 = (void *)__restgprlr_28(0);
-  return pvVar7;
+  return (void *)0x0;
 }
 
 
 // 828A7548  RtlAllocateHeap  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/xrtl/rtlheap.c:1482)
+
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
 
 void * RtlAllocateHeap(void *param_1,ulong param_2,ulong param_3)
 
@@ -357,40 +342,34 @@ void * RtlAllocateHeap(void *param_1,ulong param_2,ulong param_3)
   uint *puVar3;
   undefined4 *puVar4;
   _LIST_ENTRY *p_Var5;
-  _HEAP *p_Var6;
-  _HEAP_FREE_ENTRY *p_Var7;
-  ushort *puVar8;
-  bool bVar9;
-  longlong lVar10;
-  uint uVar12;
-  longlong lVar11;
-  long lVar13;
-  void *pvVar14;
-  ulonglong uVar15;
-  ulong *puVar16;
-  _HEAP_SEGMENT *p_Var17;
-  ulonglong uVar18;
-  ulonglong uVar19;
-  ulonglong uVar20;
-  ulonglong uVar21;
-  uint *puVar23;
-  ulonglong uVar22;
-  _LIST_ENTRY *p_Var24;
-  ulong uVar25;
-  _HEAP_FREE_ENTRY *p_Var26;
+  _HEAP_FREE_ENTRY *p_Var6;
+  ushort *puVar7;
+  bool bVar8;
+  longlong lVar9;
+  uint uVar10;
+  long lVar11;
+  uint *puVar12;
+  uint uVar13;
+  ulonglong uVar14;
+  longlong lVar15;
+  ulonglong uVar16;
+  ulonglong uVar17;
+  _LIST_ENTRY *p_Var18;
+  int iVar19;
+  _HEAP_FREE_ENTRY *p_Var20;
   _LIST_ENTRY *local_f0;
   byte local_ec;
   _LIST_ENTRY *local_e8;
   _HEAP_FREE_ENTRY *local_e4;
-  ulong *local_e0;
+  uint *local_e0;
   _LIST_ENTRY *local_dc;
   undefined4 local_d8;
   uint local_d4;
-  _LIST_ENTRY *local_d0;
+  uint local_d0;
   _LIST_ENTRY *local_cc;
   _LIST_ENTRY *local_c8;
   _HEAP_FREE_ENTRY *local_c4;
-  _HEAP *local_c0;
+  void *local_c0;
   _LIST_ENTRY *local_bc;
   undefined4 local_b0;
   undefined4 local_ac;
@@ -399,91 +378,88 @@ void * RtlAllocateHeap(void *param_1,ulong param_2,ulong param_3)
   _LIST_ENTRY *local_9c;
   undefined4 local_8;
   
-  uVar22 = (ulonglong)(int)param_3;
-  uVar15 = (ulonglong)(int)param_2;
-  lVar10 = __savegprlr_22(param_1);
-  p_Var6 = (_HEAP *)lVar10;
+  lVar15 = (longlong)(int)param_3;
+  lVar9 = (longlong)(int)param_1;
   local_dc = (_LIST_ENTRY *)0x0;
   local_d8 = 0;
-  local_c0 = p_Var6;
-  if (((p_Var6->Flags & 0x40000) != 0) &&
-     (uVar12 = KeGetCurrentProcessType(), p_Var6->ProcessType != uVar12)) {
+  local_c0 = param_1;
+  if (((*(uint *)((int)param_1 + 0x14) & 0x40000) != 0) &&
+     (uVar10 = KeGetCurrentProcessType(), *(byte *)((int)param_1 + 0x17b) != uVar10)) {
                     /* WARNING: Subroutine does not return */
-    KeBugCheckEx(0xf4,lVar10,local_8,0x5eb,uVar22);
+    KeBugCheckEx(0xf4,lVar9,local_8,0x5eb,lVar15);
   }
-  uVar19 = (ulonglong)p_Var6->ForceFlags;
-  uVar20 = uVar22;
-  if ((uVar22 & 0xffffffff) == 0) {
-    uVar20 = 1;
+  uVar10 = *(uint *)((int)param_1 + 0x18);
+  if (param_3 == 0) {
+    lVar15 = 1;
   }
-  uVar18 = uVar20 + 0x1f & 0xfffffff0;
-  local_e8 = (_LIST_ENTRY *)uVar18;
-  uVar20 = uVar18 >> 4;
-  bVar9 = ((uVar19 | uVar15 & 0xffffffff) & 1) == 0;
-  if (bVar9) {
-    RtlEnterCriticalSection(p_Var6->LockVariable);
+  uVar14 = lVar15 + 0x1fU & 0xfffffff0;
+  local_e8 = (_LIST_ENTRY *)uVar14;
+  uVar17 = uVar14 >> 4;
+  bVar8 = ((uVar10 | param_2) & 1) == 0;
+  if (bVar8) {
+    RtlEnterCriticalSection(*(undefined4 *)((int)param_1 + 0x580));
     local_d8 = 1;
   }
-  if (0x7f < uVar20) {
-    if (p_Var6->VirtualMemoryThreshold < uVar20) {
-      if ((p_Var6->Flags & 2) != 0) {
+  if (0x7f < uVar17) {
+    if (*(uint *)((int)param_1 + 0x1c) < uVar17) {
+      if ((*(uint *)((int)param_1 + 0x14) & 2) != 0) {
         local_e8 = local_e8 + 4;
         local_f0 = (_LIST_ENTRY *)0x0;
-        lVar13 = NtAllocateVirtualMemoryWrapper
+        lVar11 = NtAllocateVirtualMemoryWrapper
                            (&local_f0,(ulong *)&local_e8,
-                            (uint)((~(uVar19 | uVar15) & 0xffffffff) << 0x14) & 0x800000 |
-                            0x40001000,4,p_Var6->MemoryRegionType);
-        if (-1 < lVar13) {
+                            (~(uVar10 | param_2) & 8) << 0x14 | 0x40001000,4,
+                            *(_MEMORY_REGION_TYPE *)((int)param_1 + 0x590));
+        if (-1 < lVar11) {
           memset();
-          *(short *)&local_f0[4].Flink = ((short)local_e8 - (short)uVar22) + -0x30;
+          *(short *)&local_f0[4].Flink = ((short)local_e8 - (short)param_3) + -0x30;
           *(undefined1 *)((int)&local_f0[4].Blink + 1) = 0xb;
           local_f0[3].Flink = local_e8;
           local_f0[3].Blink = local_e8;
-          p_Var24 = (p_Var6->VirtualAllocdBlocks).Blink;
-          local_f0->Flink = &p_Var6->VirtualAllocdBlocks;
-          local_f0->Blink = p_Var24;
-          p_Var24->Flink = local_f0;
+          p_Var18 = *(_LIST_ENTRY **)((int)param_1 + 0x5c);
+          local_f0->Flink = (_LIST_ENTRY *)((int)param_1 + 0x58);
+          local_f0->Blink = p_Var18;
+          p_Var18->Flink = local_f0;
           local_dc = local_f0 + 6;
-          (p_Var6->VirtualAllocdBlocks).Blink = local_f0;
+          *(_LIST_ENTRY **)((int)param_1 + 0x5c) = local_f0;
           goto LAB_828a7db4;
         }
       }
     }
     else {
 LAB_828a7804:
-      local_d0 = p_Var6->FreeLists[0].Blink;
-      uVar18 = lVar10 + 0x180;
-      if (((uVar18 & 0xffffffff) != ZEXT48(local_d0)) &&
-         (local_e4 = (_HEAP_FREE_ENTRY *)(local_d0 + -1), uVar20 <= local_e4->Size)) {
-        for (local_d0 = (_LIST_ENTRY *)*(uint *)uVar18; uVar21 = ZEXT48(local_d0),
-            (uVar18 & 0xffffffff) != uVar21; local_d0 = local_d0->Flink) {
-          lVar11 = uVar21 - 8;
-          local_e4 = (_HEAP_FREE_ENTRY *)lVar11;
-          if (uVar20 <= local_e4->Size) {
-            p_Var24 = local_d0->Blink;
-            p_Var5 = local_d0->Flink;
-            if ((p_Var24->Flink == p_Var5->Blink) && (ZEXT48(p_Var24->Flink) == uVar21)) {
-              p_Var24->Flink = p_Var5;
-              p_Var5->Blink = p_Var24;
+      local_d0 = *(uint *)((int)param_1 + 0x184);
+      uVar14 = lVar9 + 0x180;
+      if (((uVar14 & 0xffffffff) != (ulonglong)local_d0) &&
+         (local_e4 = (_HEAP_FREE_ENTRY *)(local_d0 - 8), uVar17 <= local_e4->Size)) {
+        for (local_d0 = *(uint *)uVar14; uVar16 = (ulonglong)local_d0,
+            (uVar14 & 0xffffffff) != uVar16; local_d0 = *(uint *)local_d0) {
+          lVar15 = uVar16 - 8;
+          local_e4 = (_HEAP_FREE_ENTRY *)lVar15;
+          if (uVar17 <= local_e4->Size) {
+            puVar12 = *(uint **)(local_d0 + 4);
+            uVar13 = *(uint *)local_d0;
+            if ((*puVar12 == *(uint *)(uVar13 + 4)) && (*puVar12 == uVar16)) {
+              *puVar12 = uVar13;
+              *(uint **)(uVar13 + 4) = puVar12;
             }
             goto LAB_828a78d8;
           }
         }
       }
-      local_e4 = RtlpExtendHeap(p_Var6,(ulong)local_e8);
-      lVar11 = (longlong)(int)local_e4;
+      local_e4 = RtlpExtendHeap(param_1,(ulong)local_e8);
+      lVar15 = (longlong)(int)local_e4;
       if (local_e4 != (_HEAP_FREE_ENTRY *)0x0) {
-        p_Var24 = (local_e4->FreeList).Blink;
+        p_Var18 = (local_e4->FreeList).Blink;
         p_Var5 = (local_e4->FreeList).Flink;
-        if ((p_Var24->Flink == p_Var5->Blink) &&
-           (ZEXT48(p_Var24->Flink) == (lVar11 + 8U & 0xffffffff))) {
-          p_Var24->Flink = p_Var5;
-          p_Var5->Blink = p_Var24;
+        if ((p_Var18->Flink == p_Var5->Blink) &&
+           (ZEXT48(p_Var18->Flink) == (lVar15 + 8U & 0xffffffff))) {
+          p_Var18->Flink = p_Var5;
+          p_Var5->Blink = p_Var18;
         }
         goto LAB_828a78d8;
       }
     }
-    if (((uVar19 | uVar15 & 0xffffffff) & 4) != 0) {
+    if (((uVar10 | param_2) & 4) != 0) {
       local_b0 = 0xc0000017;
       local_a8 = 0;
       local_a0 = 1;
@@ -494,237 +470,238 @@ LAB_828a7804:
     local_dc = (_LIST_ENTRY *)0x0;
     goto LAB_828a7db4;
   }
-  uVar21 = (uVar20 + 0x30) * 8 + lVar10;
-  puVar23 = (uint *)uVar21;
-  if ((ulonglong)*puVar23 == (uVar21 & 0xffffffff)) {
-    uVar18 = uVar18 >> 9;
-    puVar16 = p_Var6->FreeListsInUseUlong + (int)uVar18;
-    local_e0 = puVar16 + 1;
-    local_d4 = *puVar16 & ~((1 << ((uint)uVar20 & 0x1f)) - 1U);
-    if (uVar18 == 0) {
+  uVar16 = (uVar17 + 0x30) * 8 + lVar9;
+  puVar12 = (uint *)uVar16;
+  if ((ulonglong)*puVar12 == (uVar16 & 0xffffffff)) {
+    uVar14 = uVar14 >> 9;
+    puVar12 = (uint *)(((int)uVar14 + 0x58) * 4 + (int)param_1);
+    local_e0 = puVar12 + 1;
+    local_d4 = *puVar12 & ~((1 << ((uint)uVar17 & 0x1f)) - 1U);
+    if (uVar14 == 0) {
       if (local_d4 == 0) {
         local_d4 = *local_e0;
-        local_e0 = puVar16 + 2;
+        local_e0 = puVar12 + 2;
         goto LAB_828a772c;
       }
-      p_Var24 = p_Var6->FreeLists;
+      iVar19 = (int)param_1 + 0x180;
     }
-    else if (uVar18 == 1) {
+    else if (uVar14 == 1) {
 LAB_828a772c:
       if (local_d4 == 0) {
         local_d4 = *local_e0;
         local_e0 = local_e0 + 1;
         goto LAB_828a774c;
       }
-      p_Var24 = p_Var6->FreeLists + 0x20;
+      iVar19 = (int)param_1 + 0x280;
     }
     else {
-      if (uVar18 < 3) {
+      if (uVar14 < 3) {
 LAB_828a774c:
         if (local_d4 != 0) {
-          p_Var24 = p_Var6->FreeLists + 0x40;
+          iVar19 = (int)param_1 + 0x380;
           goto LAB_828a7778;
         }
         local_d4 = *local_e0;
         local_e0 = local_e0 + 1;
       }
-      else if (uVar18 != 3) goto LAB_828a7804;
+      else if (uVar14 != 3) goto LAB_828a7804;
       if (local_d4 == 0) goto LAB_828a7804;
-      p_Var24 = p_Var6->FreeLists + 0x60;
+      iVar19 = (int)param_1 + 0x480;
     }
 LAB_828a7778:
     puVar4 = *(undefined4 **)
-              ((int)&p_Var24->Blink +
-              (int)((0x1fU - LZCOUNT(local_d4 & ~(local_d4 - 1)) & 0xffffffff) << 3));
-    lVar11 = ZEXT48(puVar4) - 8;
-    local_e4 = (_HEAP_FREE_ENTRY *)lVar11;
-    puVar23 = (uint *)puVar4[1];
+              ((int)((0x1fU - LZCOUNT(local_d4 & ~(local_d4 - 1)) & 0xffffffff) << 3) + iVar19 + 4);
+    lVar15 = ZEXT48(puVar4) - 8;
+    local_e4 = (_HEAP_FREE_ENTRY *)lVar15;
+    puVar12 = (uint *)puVar4[1];
     puVar2 = (uint *)*puVar4;
-    if ((*puVar23 == puVar2[1]) && ((ulonglong)*puVar23 == ZEXT48(puVar4))) {
-      *puVar23 = (uint)puVar2;
-      puVar2[1] = (uint)puVar23;
-      if (puVar2 == puVar23) {
-        uVar1 = local_e4->Size >> 5;
-        p_Var6->FreeListsInUseUlong[uVar1] =
-             p_Var6->FreeListsInUseUlong[uVar1] ^ 1 << (local_e4->Size & 0x1f);
+    if ((*puVar12 == puVar2[1]) && ((ulonglong)*puVar12 == ZEXT48(puVar4))) {
+      *puVar12 = (uint)puVar2;
+      puVar2[1] = (uint)puVar12;
+      if (puVar2 == puVar12) {
+        iVar19 = ((local_e4->Size >> 5) + 0x58) * 4;
+        *(uint *)(iVar19 + (int)param_1) =
+             *(uint *)(iVar19 + (int)param_1) ^ 1 << (local_e4->Size & 0x1f);
       }
     }
 LAB_828a78d8:
-    p_Var26 = (_HEAP_FREE_ENTRY *)lVar11;
-    local_ec = p_Var26->Flags;
-    p_Var6->TotalFreeSize = p_Var6->TotalFreeSize - (uint)p_Var26->Size;
-    p_Var26->Flags = '\x01';
-    uVar18 = p_Var26->Size - uVar20;
-    p_Var26->Size = (ushort)uVar20;
-    p_Var26->Index_UNUSED = (char)local_e8 - (char)uVar22;
-    p_Var26->Mask_UNUSED = '\0';
-    local_c4 = p_Var26;
-    if (uVar18 != 0) {
-      if ((uVar18 & 0xffffffff) == 1) {
-        p_Var26->Size = p_Var26->Size + 1;
-        p_Var26->Index_UNUSED = p_Var26->Index_UNUSED + '\x10';
+    p_Var20 = (_HEAP_FREE_ENTRY *)lVar15;
+    local_ec = p_Var20->Flags;
+    *(uint *)((int)param_1 + 0x30) = *(int *)((int)param_1 + 0x30) - (uint)p_Var20->Size;
+    p_Var20->Flags = '\x01';
+    uVar14 = p_Var20->Size - uVar17;
+    p_Var20->Size = (ushort)uVar17;
+    p_Var20->Index_UNUSED = (char)local_e8 - (char)param_3;
+    p_Var20->Mask_UNUSED = '\0';
+    local_c4 = p_Var20;
+    if (uVar14 != 0) {
+      if ((uVar14 & 0xffffffff) == 1) {
+        p_Var20->Size = p_Var20->Size + 1;
+        p_Var20->Index_UNUSED = p_Var20->Index_UNUSED + '\x10';
       }
       else {
-        lVar11 = uVar20 * 0x10 + lVar11;
-        uVar22 = uVar18 & 0xffff;
-        p_Var7 = (_HEAP_FREE_ENTRY *)lVar11;
-        p_Var7->Flags = local_ec;
-        p_Var7->PreviousSize = (ushort)uVar20;
-        p_Var7->SegmentIndex = p_Var26->SegmentIndex;
-        p_Var7->Size = (ushort)uVar18;
+        lVar15 = uVar17 * 0x10 + lVar15;
+        uVar16 = uVar14 & 0xffff;
+        p_Var6 = (_HEAP_FREE_ENTRY *)lVar15;
+        p_Var6->Flags = local_ec;
+        p_Var6->PreviousSize = (ushort)uVar17;
+        p_Var6->SegmentIndex = p_Var20->SegmentIndex;
+        p_Var6->Size = (ushort)uVar14;
         if ((local_ec & 0x10) == 0) {
-          lVar11 = (uVar18 & 0xfffffff) * 0x10 + lVar11;
-          puVar8 = (ushort *)lVar11;
-          if ((*(byte *)((int)puVar8 + 5) & 1) != 0) {
-            puVar8[1] = (ushort)uVar18;
-            if (uVar22 < 0x80) {
-              p_Var7->Flags = p_Var7->Flags & 0x10;
-              uVar22 = (uVar22 + 0x30) * 8 + lVar10;
-              p_Var24 = (_LIST_ENTRY *)uVar22;
-              if (ZEXT48(p_Var24->Flink) == (uVar22 & 0xffffffff)) {
-                uVar12 = (uint)(p_Var7->Size >> 5);
-                p_Var17 = (_HEAP_SEGMENT *)
-                          (p_Var6->FreeListsInUseUlong[uVar12] | 1 << (p_Var7->Size & 0x1f));
+          lVar15 = (uVar14 & 0xfffffff) * 0x10 + lVar15;
+          puVar7 = (ushort *)lVar15;
+          if ((*(byte *)((int)puVar7 + 5) & 1) != 0) {
+            puVar7[1] = (ushort)uVar14;
+            if (uVar16 < 0x80) {
+              p_Var6->Flags = p_Var6->Flags & 0x10;
+              uVar17 = (uVar16 + 0x30) * 8 + lVar9;
+              p_Var18 = (_LIST_ENTRY *)uVar17;
+              if (ZEXT48(p_Var18->Flink) == (uVar17 & 0xffffffff)) {
+                iVar19 = ((p_Var6->Size >> 5) + 0x58) * 4;
+                uVar13 = *(uint *)(iVar19 + (int)param_1) | 1 << (p_Var6->Size & 0x1f);
                 goto LAB_828a7a6c;
               }
             }
             else {
-              p_Var7->Flags = p_Var7->Flags & 0x10;
-              local_bc = p_Var6->FreeLists[0].Flink;
-              while ((p_Var24 = local_bc, (lVar10 + 0x180U & 0xffffffff) != ZEXT48(local_bc) &&
-                     (local_f0 = local_bc + -1, *(ushort *)&local_bc[-1].Flink < uVar22))) {
+              p_Var6->Flags = p_Var6->Flags & 0x10;
+              local_bc = *(_LIST_ENTRY **)((int)param_1 + 0x180);
+              while ((p_Var18 = local_bc, (lVar9 + 0x180U & 0xffffffff) != ZEXT48(local_bc) &&
+                     (local_f0 = local_bc + -1, *(ushort *)&local_bc[-1].Flink < uVar16))) {
                 local_bc = local_bc->Flink;
               }
             }
             goto LAB_828a7a70;
           }
-          p_Var7->Flags = *(byte *)((int)puVar8 + 5);
-          puVar23 = *(uint **)(puVar8 + 4);
-          puVar2 = *(uint **)(puVar8 + 6);
-          if ((*puVar2 == puVar23[1]) && ((ulonglong)*puVar2 == (lVar11 + 8U & 0xffffffff))) {
-            *puVar2 = (uint)puVar23;
-            puVar23[1] = (uint)puVar2;
-            if ((puVar23 == puVar2) && (uVar1 = *puVar8, uVar1 < 0x80)) {
-              p_Var6->FreeListsInUseUlong[uVar1 >> 5] =
-                   1 << (uVar1 & 0x1f) ^ p_Var6->FreeListsInUseUlong[uVar1 >> 5];
+          p_Var6->Flags = *(byte *)((int)puVar7 + 5);
+          puVar12 = *(uint **)(puVar7 + 4);
+          puVar2 = *(uint **)(puVar7 + 6);
+          if ((*puVar2 == puVar12[1]) && ((ulonglong)*puVar2 == (lVar15 + 8U & 0xffffffff))) {
+            *puVar2 = (uint)puVar12;
+            puVar12[1] = (uint)puVar2;
+            if ((puVar12 == puVar2) && (uVar1 = *puVar7, uVar1 < 0x80)) {
+              iVar19 = ((uVar1 >> 5) + 0x58) * 4;
+              *(uint *)(iVar19 + (int)param_1) =
+                   1 << (uVar1 & 0x1f) ^ *(uint *)(iVar19 + (int)param_1);
             }
           }
-          p_Var6->TotalFreeSize = p_Var6->TotalFreeSize - (uint)*puVar8;
-          uVar18 = *puVar8 + uVar18;
-          if ((uVar18 & 0xffffffff) < 0xf001) {
-            uVar22 = uVar18 & 0xffff;
-            p_Var7->Size = (ushort)uVar18;
-            if ((p_Var7->Flags & 0x10) == 0) {
-              *(ushort *)((int)&p_Var7->PreviousSize + (int)((uVar18 & 0xffffffff) << 4)) =
-                   (ushort)uVar18;
+          *(uint *)((int)param_1 + 0x30) = *(int *)((int)param_1 + 0x30) - (uint)*puVar7;
+          uVar14 = *puVar7 + uVar14;
+          if ((uVar14 & 0xffffffff) < 0xf001) {
+            uVar17 = uVar14 & 0xffff;
+            p_Var6->Size = (ushort)uVar14;
+            if ((p_Var6->Flags & 0x10) == 0) {
+              *(ushort *)((int)&p_Var6->PreviousSize + (int)((uVar14 & 0xffffffff) << 4)) =
+                   (ushort)uVar14;
             }
-            if (uVar22 < 0x80) {
-              p_Var7->Flags = p_Var7->Flags & 0x10;
-              uVar22 = (uVar22 + 0x30) * 8 + lVar10;
-              p_Var24 = (_LIST_ENTRY *)uVar22;
-              if (ZEXT48(p_Var24->Flink) == (uVar22 & 0xffffffff)) {
-                uVar1 = p_Var7->Size >> 5;
-                p_Var6->FreeListsInUseUlong[uVar1] =
-                     p_Var6->FreeListsInUseUlong[uVar1] | 1 << (p_Var7->Size & 0x1f);
+            if (uVar17 < 0x80) {
+              p_Var6->Flags = p_Var6->Flags & 0x10;
+              uVar17 = (uVar17 + 0x30) * 8 + lVar9;
+              p_Var18 = (_LIST_ENTRY *)uVar17;
+              if (ZEXT48(p_Var18->Flink) == (uVar17 & 0xffffffff)) {
+                iVar19 = ((p_Var6->Size >> 5) + 0x58) * 4;
+                *(uint *)(iVar19 + (int)param_1) =
+                     *(uint *)(iVar19 + (int)param_1) | 1 << (p_Var6->Size & 0x1f);
               }
             }
             else {
-              p_Var7->Flags = p_Var7->Flags & 0x10;
-              local_c8 = p_Var6->FreeLists[0].Flink;
-              while ((p_Var24 = local_c8, (lVar10 + 0x180U & 0xffffffff) != ZEXT48(local_c8) &&
-                     (local_f0 = local_c8 + -1, *(ushort *)&local_c8[-1].Flink < uVar22))) {
+              p_Var6->Flags = p_Var6->Flags & 0x10;
+              local_c8 = *(_LIST_ENTRY **)((int)param_1 + 0x180);
+              while ((p_Var18 = local_c8, (lVar9 + 0x180U & 0xffffffff) != ZEXT48(local_c8) &&
+                     (local_f0 = local_c8 + -1, *(ushort *)&local_c8[-1].Flink < uVar17))) {
                 local_c8 = local_c8->Flink;
               }
             }
-            p_Var5 = p_Var24->Blink;
-            (p_Var7->FreeList).Flink = p_Var24;
-            (p_Var7->FreeList).Blink = p_Var5;
-            p_Var5->Flink = &p_Var7->FreeList;
-            p_Var24->Blink = &p_Var7->FreeList;
-            uVar25 = (ulong)uVar18 + p_Var6->TotalFreeSize;
+            p_Var5 = p_Var18->Blink;
+            (p_Var6->FreeList).Flink = p_Var18;
+            (p_Var6->FreeList).Blink = p_Var5;
+            p_Var5->Flink = &p_Var6->FreeList;
+            p_Var18->Blink = &p_Var6->FreeList;
+            iVar19 = (ulong)uVar14 + *(int *)((int)param_1 + 0x30);
             goto LAB_828a7c30;
           }
-          RtlpInsertFreeBlock(p_Var6,p_Var7,(ulong)uVar18);
+          RtlpInsertFreeBlock(param_1,p_Var6,(ulong)uVar14);
         }
         else {
-          if (uVar22 < 0x80) {
-            uVar22 = (uVar22 + 0x30) * 8 + lVar10;
-            p_Var7->Flags = p_Var7->Flags & 0x10;
-            p_Var24 = (_LIST_ENTRY *)uVar22;
-            if (ZEXT48(p_Var24->Flink) == (uVar22 & 0xffffffff)) {
-              uVar12 = (uint)(p_Var7->Size >> 5);
-              p_Var17 = (_HEAP_SEGMENT *)
-                        (1 << (p_Var7->Size & 0x1f) | p_Var6->FreeListsInUseUlong[uVar12]);
+          if (uVar16 < 0x80) {
+            uVar17 = (uVar16 + 0x30) * 8 + lVar9;
+            p_Var6->Flags = p_Var6->Flags & 0x10;
+            p_Var18 = (_LIST_ENTRY *)uVar17;
+            if (ZEXT48(p_Var18->Flink) == (uVar17 & 0xffffffff)) {
+              iVar19 = ((p_Var6->Size >> 5) + 0x58) * 4;
+              uVar13 = 1 << (p_Var6->Size & 0x1f) | *(uint *)(iVar19 + (int)param_1);
 LAB_828a7a6c:
-              p_Var6->Segments[uVar12 + 0x40] = p_Var17;
+              *(uint *)(iVar19 + (int)param_1) = uVar13;
             }
           }
           else {
-            p_Var7->Flags = p_Var7->Flags & 0x10;
-            local_cc = p_Var6->FreeLists[0].Flink;
-            while ((p_Var24 = local_cc, (lVar10 + 0x180U & 0xffffffff) != ZEXT48(local_cc) &&
-                   (local_f0 = local_cc + -1, *(ushort *)&local_cc[-1].Flink < uVar22))) {
+            p_Var6->Flags = p_Var6->Flags & 0x10;
+            local_cc = *(_LIST_ENTRY **)((int)param_1 + 0x180);
+            while ((p_Var18 = local_cc, (lVar9 + 0x180U & 0xffffffff) != ZEXT48(local_cc) &&
+                   (local_f0 = local_cc + -1, *(ushort *)&local_cc[-1].Flink < uVar16))) {
               local_cc = local_cc->Flink;
             }
           }
 LAB_828a7a70:
-          p_Var5 = p_Var24->Blink;
-          (p_Var7->FreeList).Flink = p_Var24;
-          (p_Var7->FreeList).Blink = p_Var5;
-          p_Var5->Flink = &p_Var7->FreeList;
-          p_Var24->Blink = &p_Var7->FreeList;
-          uVar25 = (int)uVar18 + p_Var6->TotalFreeSize;
+          p_Var5 = p_Var18->Blink;
+          (p_Var6->FreeList).Flink = p_Var18;
+          (p_Var6->FreeList).Blink = p_Var5;
+          p_Var5->Flink = &p_Var6->FreeList;
+          p_Var18->Blink = &p_Var6->FreeList;
+          iVar19 = (int)uVar14 + *(int *)((int)param_1 + 0x30);
 LAB_828a7c30:
-          p_Var6->TotalFreeSize = uVar25;
+          *(int *)((int)param_1 + 0x30) = iVar19;
         }
         local_ec = 0;
-        if ((p_Var7->Flags & 0x10) != 0) {
-          p_Var6->Segments[p_Var7->SegmentIndex]->LastEntryInSegment = (_HEAP_ENTRY *)p_Var7;
+        if ((p_Var6->Flags & 0x10) != 0) {
+          *(_HEAP_FREE_ENTRY **)(*(int *)((p_Var6->SegmentIndex + 0x18) * 4 + (int)param_1) + 0x40)
+               = p_Var6;
         }
       }
     }
     if ((local_ec & 0x10) != 0) {
-      p_Var26->Flags = p_Var26->Flags | 0x10;
+      p_Var20->Flags = p_Var20->Flags | 0x10;
     }
   }
   else {
-    puVar23 = (uint *)puVar23[1];
-    local_e4 = (_HEAP_FREE_ENTRY *)(puVar23 + -2);
-    local_ec = *(byte *)((int)puVar23 - 3);
-    puVar2 = (uint *)puVar23[1];
-    puVar3 = (uint *)*puVar23;
-    if (((uint *)*puVar2 == (uint *)puVar3[1]) && ((uint *)*puVar2 == puVar23)) {
+    puVar12 = (uint *)puVar12[1];
+    local_e4 = (_HEAP_FREE_ENTRY *)(puVar12 + -2);
+    local_ec = *(byte *)((int)puVar12 - 3);
+    puVar2 = (uint *)puVar12[1];
+    puVar3 = (uint *)*puVar12;
+    if (((uint *)*puVar2 == (uint *)puVar3[1]) && ((uint *)*puVar2 == puVar12)) {
       *puVar2 = (uint)puVar3;
       puVar3[1] = (uint)puVar2;
       if (puVar3 == puVar2) {
-        uVar1 = local_e4->Size >> 5;
-        p_Var6->FreeListsInUseUlong[uVar1] =
-             p_Var6->FreeListsInUseUlong[uVar1] ^ 1 << (local_e4->Size & 0x1f);
+        iVar19 = ((local_e4->Size >> 5) + 0x58) * 4;
+        *(uint *)(iVar19 + (int)param_1) =
+             *(uint *)(iVar19 + (int)param_1) ^ 1 << (local_e4->Size & 0x1f);
       }
     }
-    p_Var6->TotalFreeSize = p_Var6->TotalFreeSize - (uint)uVar20;
-    *(byte *)((int)puVar23 - 3) = local_ec & 0x10 | 1;
-    *(char *)((int)puVar23 - 2) = (char)local_e8 - (char)uVar22;
-    *(undefined1 *)((int)puVar23 - 1) = 0;
+    *(uint *)((int)param_1 + 0x30) = *(int *)((int)param_1 + 0x30) - (uint)uVar17;
+    *(byte *)((int)puVar12 - 3) = local_ec & 0x10 | 1;
+    *(char *)((int)puVar12 - 2) = (char)local_e8 - (char)param_3;
+    *(undefined1 *)((int)puVar12 - 1) = 0;
     local_c4 = local_e4;
-    p_Var26 = local_e4;
+    p_Var20 = local_e4;
   }
-  local_dc = (_LIST_ENTRY *)&p_Var26->Reserved1;
-  if (bVar9) {
-    RtlLeaveCriticalSection(p_Var6->LockVariable);
+  local_dc = (_LIST_ENTRY *)&p_Var20->Reserved1;
+  if (bVar8) {
+    RtlLeaveCriticalSection(*(undefined4 *)((int)param_1 + 0x580));
     local_d8 = 0;
   }
-  if (((uVar19 | uVar15 & 0xffffffff) & 8) != 0) {
+  if (((uVar10 | param_2) & 8) != 0) {
     memset();
   }
 LAB_828a7db4:
   FUN_828a7df8();
-  pvVar14 = (void *)__restgprlr_22(local_dc);
-  return pvVar14;
+  return local_dc;
 }
 
 
 // 828A8148  RtlReAllocateHeap  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/xrtl/rtlheap.c:3162)
+
+/* WARNING: Function: __savegprlr_19 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_19 replaced with injection: xenon_save_restore */
 
 void * RtlReAllocateHeap(void *param_1,ulong param_2,void *param_3,ulong param_4)
 
@@ -734,30 +711,24 @@ void * RtlReAllocateHeap(void *param_1,ulong param_2,void *param_3,ulong param_4
   _LIST_ENTRY *p_Var3;
   uint *puVar4;
   uint *puVar5;
-  ulonglong uVar6;
-  _HEAP_FREE_ENTRY *p_Var7;
-  ushort *puVar8;
-  longlong lVar9;
-  _HEAP *p_Var10;
-  uint uVar11;
-  int iVar12;
-  ulong uVar13;
+  _HEAP_FREE_ENTRY *p_Var6;
+  ushort *puVar7;
+  longlong lVar8;
+  uint uVar9;
+  int iVar10;
+  ulong uVar11;
+  _HEAP_ENTRY_EXTRA *p_Var12;
+  void *pvVar13;
   _HEAP_ENTRY_EXTRA *p_Var14;
-  void *pvVar15;
-  _HEAP_ENTRY_EXTRA *p_Var16;
-  void *pvVar17;
-  ulonglong uVar18;
-  ulonglong uVar19;
-  ulonglong uVar20;
-  ulonglong uVar21;
-  ulonglong uVar22;
-  _LIST_ENTRY *p_Var23;
-  ulong uVar24;
-  ulonglong uVar25;
-  int iVar26;
-  longlong lVar27;
-  _HEAP_ENTRY *p_Var28;
-  _HEAP *p_Stack00000014;
+  ulonglong uVar15;
+  ulonglong uVar16;
+  ulonglong uVar17;
+  _LIST_ENTRY *p_Var18;
+  uint uVar19;
+  uint uVar20;
+  longlong lVar21;
+  _HEAP_ENTRY *p_Var22;
+  void *pvStack00000014;
   void *pvStack00000024;
   ulong uStack0000002c;
   undefined1 local_e8 [16];
@@ -765,275 +736,266 @@ void * RtlReAllocateHeap(void *param_1,ulong param_2,void *param_3,ulong param_4
   undefined1 local_c0 [184];
   undefined4 local_8;
   
-  uVar22 = (ulonglong)(int)param_4;
-  uVar18 = (ulonglong)(int)param_3;
-  uVar21 = (ulonglong)(int)param_2;
-  lVar9 = __savegprlr_19(param_1);
-  p_Var10 = (_HEAP *)lVar9;
-  pvVar17 = (void *)uVar18;
-  uVar24 = (ulong)uVar22;
-  p_Stack00000014 = p_Var10;
-  pvStack00000024 = pvVar17;
-  uStack0000002c = uVar24;
-  if (((p_Var10->Flags & 0x40000) != 0) &&
-     (uVar11 = KeGetCurrentProcessType(), p_Var10->ProcessType != uVar11)) {
+  uVar15 = (ulonglong)(int)param_3;
+  lVar8 = (longlong)(int)param_1;
+  pvStack00000014 = param_1;
+  pvStack00000024 = param_3;
+  uStack0000002c = param_4;
+  if (((*(uint *)((int)param_1 + 0x14) & 0x40000) != 0) &&
+     (uVar9 = KeGetCurrentProcessType(), *(byte *)((int)param_1 + 0x17b) != uVar9)) {
                     /* WARNING: Subroutine does not return */
-    KeBugCheckEx(0xf4,lVar9,local_8,0xc7e,uVar18);
+    KeBugCheckEx(0xf4,lVar8,local_8,0xc7e,uVar15);
   }
-  if ((uVar18 & 0xffffffff) != 0) {
-    uVar19 = (ulonglong)p_Var10->ForceFlags;
-    uVar25 = uVar19 | uVar21;
-    if ((uVar22 & 0xffffffff) < 0x80000000) {
-      uVar20 = uVar22;
-      if ((uVar22 & 0xffffffff) == 0) {
-        uVar20 = 1;
-      }
-      uVar6 = uVar19 | uVar21 & 0xffffffff;
-      uVar20 = p_Var10->AlignRound + uVar20 & (ulonglong)p_Var10->AlignMask;
-      if ((((uVar6 & 0x3fffff00) != 0 || (uVar6 & 0x3c000100) != 0) ||
-          (p_Var10->PseudoTagEntries != (_HEAP_PSEUDO_TAG_ENTRY *)0x0)) ||
-         ((*(byte *)((int)pvVar17 + -0xb) & 2) != 0)) {
-        uVar20 = uVar20 + 0x10;
-      }
-      if (((uVar19 | uVar21 & 0xffffffff) & 1) == 0) {
-        RtlEnterCriticalSection(p_Var10->LockVariable);
-        uVar25 = uVar25 ^ 1;
-      }
-      p_Var28 = (_HEAP_ENTRY *)(uVar18 - 0x10);
-      bVar1 = *(byte *)((int)pvVar17 + -0xb);
-      if ((bVar1 & 1) != 0) {
-        uVar2 = p_Var28->Size;
-        uVar21 = (ulonglong)uVar2;
-        if ((bVar1 & 8) == 0) {
-          uVar11 = (uint)uVar2 * 0x10 - (uint)*(byte *)((int)pvVar17 + -10);
+  if (param_3 == (void *)0x0) {
+    return (void *)0x0;
+  }
+  uVar9 = *(uint *)((int)param_1 + 0x18);
+  uVar19 = uVar9 | param_2;
+  if (0x7fffffff < param_4) {
+    return (void *)0x0;
+  }
+  uVar11 = param_4;
+  if (param_4 == 0) {
+    uVar11 = 1;
+  }
+  uVar20 = *(int *)((int)param_1 + 0x50) + uVar11 & *(uint *)((int)param_1 + 0x54);
+  if (((((uVar9 | param_2) & 0x3fffff00) != 0 || ((uVar9 | param_2) & 0x3c000100) != 0) ||
+      (*(int *)((int)param_1 + 0x17c) != 0)) || ((*(byte *)((int)param_3 + -0xb) & 2) != 0)) {
+    uVar20 = uVar20 + 0x10;
+  }
+  if (((uVar9 | param_2) & 1) == 0) {
+    RtlEnterCriticalSection(*(undefined4 *)((int)param_1 + 0x580));
+    uVar19 = uVar19 ^ 1;
+  }
+  p_Var22 = (_HEAP_ENTRY *)(uVar15 - 0x10);
+  bVar1 = *(byte *)((int)param_3 + -0xb);
+  if ((bVar1 & 1) == 0) goto LAB_828a8908;
+  uVar2 = p_Var22->Size;
+  uVar16 = (ulonglong)uVar2;
+  if ((bVar1 & 8) == 0) {
+    uVar9 = (uint)uVar2 * 0x10 - (uint)*(byte *)((int)param_3 + -10);
+  }
+  else {
+    uVar20 = uVar20 + 0x1001f & 0xffff0000;
+    uVar9 = (*(uint *)((int)param_3 + -0x18) - (uint)uVar2) - 0x30;
+    uVar16 = (ulonglong)(*(uint *)((int)param_3 + -0x18) >> 4);
+  }
+  uVar17 = (ulonglong)(uVar20 >> 4);
+  if (uVar16 < uVar17) {
+    if (((bVar1 & 8) == 0) &&
+       (uVar11 = RtlpGrowBlockInPlace(param_1,uVar19,p_Var22,param_4,uVar20 >> 4),
+       pvVar13 = pvStack00000024, uVar11 != 0)) goto LAB_828a88d4;
+    if ((uVar19 & 0x10) == 0) {
+      uVar20 = uVar19 & 0xc003ffff;
+      if ((*(byte *)((int)param_3 + -0xb) & 2) == 0) {
+        uVar19 = uVar20;
+        if (*(byte *)((int)param_3 + -9) != 0) {
+          uVar19 = (uint)*(byte *)((int)param_3 + -9) << 0x12 | uVar20;
         }
-        else {
-          uVar20 = uVar20 + 0x1001f & 0xffff0000;
-          uVar11 = (*(uint *)((int)pvVar17 + -0x18) - (uint)uVar2) - 0x30;
-          uVar21 = (ulonglong)(*(uint *)((int)pvVar17 + -0x18) >> 4);
+      }
+      else {
+        uVar19 = (*(byte *)((int)param_3 + -0xb) & 0xe0) << 4 | 0x100 | uVar19 & 0xc003f1ff;
+        p_Var12 = RtlpGetExtraStuffPointer(p_Var22);
+        uVar2 = (p_Var12->field0_0x0)._s_0.TagIndex;
+        if ((uVar2 != 0) && ((uVar2 & 0x8000) == 0)) {
+          uVar19 = (uint)uVar2 << 0x12 | uVar19;
         }
-        iVar26 = (int)uVar20;
-        uVar19 = (uVar20 & 0xffffffff) >> 4;
-        uVar20 = uVar25;
-        if (uVar21 < uVar19) {
-          if (((bVar1 & 8) == 0) &&
-             (uVar13 = RtlpGrowBlockInPlace(p_Var10,(ulong)uVar25,p_Var28,uVar24,(ulong)uVar19),
-             pvVar15 = pvStack00000024, uVar13 != 0)) goto LAB_828a88d4;
-          if ((uVar25 & 0x10) == 0) {
-            uVar20 = uVar25 & 0xc003ffff;
-            if ((*(byte *)((int)pvVar17 + -0xb) & 2) == 0) {
-              if ((ulonglong)*(byte *)((int)pvVar17 + -9) != 0) {
-                uVar20 = (ulonglong)*(byte *)((int)pvVar17 + -9) << 0x12 | uVar20;
-              }
+      }
+      pvVar13 = RtlAllocateHeap(param_1,uVar19 & 0xfffffff7,param_4);
+      uVar15 = (ulonglong)(int)pvVar13;
+      if (uVar15 != 0) {
+        if ((*(byte *)((int)pvVar13 + -0xb) & 2) != 0) {
+          p_Var12 = RtlpGetExtraStuffPointer((_HEAP_ENTRY *)((int)pvVar13 + -0x10));
+          if ((*(byte *)((int)param_3 + -0xb) & 2) == 0) {
+            (p_Var12->field0_0x0).ZeroInit = 0;
+            p_Var12->ZeroInit1 = 0;
+          }
+          else {
+            p_Var14 = RtlpGetExtraStuffPointer(p_Var22);
+            (p_Var12->field0_0x0)._s_0.Settable = (p_Var14->field0_0x0)._s_0.Settable;
+          }
+        }
+        memmove();
+        if ((uVar9 < param_4) && ((uVar19 & 8) != 0)) {
+          memset();
+        }
+        RtlFreeHeap(param_1,uVar19,param_3);
+      }
+      goto LAB_828a88d4;
+    }
+    pvStack00000024 = (void *)0x0;
+  }
+  else {
+    if (uVar17 + 1 == uVar16) {
+      uVar20 = uVar20 + 0x10;
+      uVar17 = uVar17 + 1;
+    }
+    if ((bVar1 & 8) == 0) {
+      if ((bVar1 & 2) == 0) {
+        *(char *)((int)param_3 + -10) = (char)uVar20 - (char)param_4;
+      }
+      else {
+        iVar10 = (int)(uVar17 << 4);
+        *(undefined8 *)((int)&p_Var22[-1].Size + iVar10) = *(undefined8 *)(p_Var22 + (uVar2 - 1));
+        *(_HEAP_ENTRY_u_8 *)((int)p_Var22 + iVar10 + -8) = p_Var22[uVar2 - 1].field6_0x8;
+        *(char *)((int)param_3 + -10) = (char)uVar20 - (char)param_4;
+      }
+    }
+    else {
+      p_Var22->Size = ((short)uVar20 - (short)param_4) - 0x30;
+    }
+    if ((uVar9 < param_4) && ((uVar19 & 8) != 0)) {
+      memset();
+    }
+    pvVar13 = pvStack00000024;
+    if (uVar17 != uVar16) {
+      bVar1 = *(byte *)((int)param_3 + -0xb);
+      if ((bVar1 & 8) == 0) {
+        lVar21 = (uVar17 & 0xfffffff) * 0x10 + (uVar15 - 0x10);
+        p_Var6 = (_HEAP_FREE_ENTRY *)lVar21;
+        p_Var6->Flags = bVar1 & 0xfe;
+        p_Var6->PreviousSize = (ushort)uVar17;
+        p_Var6->SegmentIndex = *(uchar *)((int)param_3 + -0xc);
+        uVar16 = p_Var22->Size - uVar17;
+        p_Var22->Size = (ushort)uVar17;
+        *(byte *)((int)param_3 + -0xb) = *(byte *)((int)param_3 + -0xb) & 0xef;
+        uVar2 = (ushort)uVar16;
+        if ((bVar1 & 0x10) == 0) {
+          lVar21 = (uVar16 & 0xfffffff) * 0x10 + lVar21;
+          puVar7 = (ushort *)lVar21;
+          if ((*(byte *)((int)puVar7 + 5) & 1) != 0) {
+            p_Var6->Size = uVar2;
+            puVar7[1] = uVar2;
+            p_Var6->Flags = p_Var6->Flags & 0xf8;
+            if ((uVar16 & 0xffff) < 0x80) goto LAB_828a84d8;
+            p_Var18 = *(_LIST_ENTRY **)((int)param_1 + 0x180);
+            while (((lVar8 + 0x180U & 0xffffffff) != ZEXT48(p_Var18) &&
+                   ((ulonglong)*(ushort *)&p_Var18[-1].Flink < (uVar16 & 0xffff)))) {
+              p_Var18 = p_Var18->Flink;
             }
-            else {
-              uVar20 = ((ulonglong)*(byte *)((int)pvVar17 + -0xb) & 0xe0) << 4 | 0x100 |
-                       uVar25 & 0xc003f1ff;
-              p_Var14 = RtlpGetExtraStuffPointer(p_Var28);
-              uVar2 = (p_Var14->field0_0x0)._s_0.TagIndex;
-              if (((ulonglong)uVar2 != 0) && ((uVar2 & 0x8000) == 0)) {
-                uVar20 = ((ulonglong)uVar2 & 0x3fff) << 0x12 | uVar20;
-              }
+            goto LAB_828a8510;
+          }
+          p_Var6->Flags = *(byte *)((int)puVar7 + 5);
+          puVar4 = *(uint **)(puVar7 + 6);
+          puVar5 = *(uint **)(puVar7 + 4);
+          if (((ulonglong)*puVar4 == (ulonglong)puVar5[1]) &&
+             ((ulonglong)*puVar4 == (lVar21 + 8U & 0xffffffff))) {
+            *puVar4 = (uint)puVar5;
+            puVar5[1] = (uint)puVar4;
+            if ((puVar5 == puVar4) && (uVar2 = *puVar7, uVar2 < 0x80)) {
+              iVar10 = ((uVar2 >> 5) + 0x58) * 4;
+              *(uint *)(iVar10 + (int)param_1) =
+                   *(uint *)(iVar10 + (int)param_1) ^ 1 << (uVar2 & 0x1f);
             }
-            pvVar15 = RtlAllocateHeap(p_Var10,(uint)uVar20 & 0xfffffff7,uVar24);
-            uVar18 = (ulonglong)(int)pvVar15;
-            if (uVar18 != 0) {
-              if ((*(byte *)((int)pvVar15 + -0xb) & 2) != 0) {
-                p_Var14 = RtlpGetExtraStuffPointer((_HEAP_ENTRY *)((int)pvVar15 + -0x10));
-                if ((*(byte *)((int)pvVar17 + -0xb) & 2) == 0) {
-                  (p_Var14->field0_0x0).ZeroInit = 0;
-                  p_Var14->ZeroInit1 = 0;
-                }
-                else {
-                  p_Var16 = RtlpGetExtraStuffPointer(p_Var28);
-                  (p_Var14->field0_0x0)._s_0.Settable = (p_Var16->field0_0x0)._s_0.Settable;
-                }
-              }
-              memmove();
-              if (((ulonglong)uVar11 < (uVar22 & 0xffffffff)) && ((uVar20 & 8) != 0)) {
-                memset();
-              }
-              RtlFreeHeap(p_Var10,(uint)uVar20,pvVar17);
+          }
+          if ((*(byte *)((int)puVar7 + 5) & 4) != 0) {
+            uVar17 = (ulonglong)*puVar7 * 0x10 - 0x18;
+            if (((*(byte *)((int)puVar7 + 5) & 2) != 0) && (4 < (uVar17 & 0xffffffff))) {
+              uVar17 = (ulonglong)*puVar7 * 0x10 - 0x1c;
             }
+            RtlCompareMemoryUlong(lVar21 + 0x18,uVar17,0xfffffffffeeefeee);
+          }
+          *(uint *)((int)param_1 + 0x30) = *(int *)((int)param_1 + 0x30) - (uint)*puVar7;
+          uVar16 = *puVar7 + uVar16;
+          if (0xf000 < (uVar16 & 0xffffffff)) {
+            RtlpInsertFreeBlock(param_1,p_Var6,(ulong)uVar16);
+            pvVar13 = pvStack00000024;
             goto LAB_828a88d4;
           }
-          pvStack00000024 = (void *)0x0;
-        }
-        else {
-          if (uVar19 + 1 == uVar21) {
-            iVar26 = iVar26 + 0x10;
-            uVar19 = uVar19 + 1;
+          uVar17 = uVar16 & 0xffff;
+          p_Var6->Size = (ushort)uVar16;
+          if ((p_Var6->Flags & 0x10) == 0) {
+            *(ushort *)((int)&p_Var6->PreviousSize + (int)((uVar16 & 0xffffffff) << 4)) =
+                 (ushort)uVar16;
           }
-          if ((bVar1 & 8) == 0) {
-            if ((bVar1 & 2) == 0) {
-              *(char *)((int)pvVar17 + -10) = (char)iVar26 - (char)uVar22;
-            }
-            else {
-              iVar12 = (int)(uVar19 << 4);
-              *(undefined8 *)((int)&p_Var28[-1].Size + iVar12) =
-                   *(undefined8 *)(p_Var28 + (uVar2 - 1));
-              *(_HEAP_ENTRY_u_8 *)((int)p_Var28 + iVar12 + -8) = p_Var28[uVar2 - 1].field6_0x8;
-              *(char *)((int)pvVar17 + -10) = (char)iVar26 - (char)uVar22;
+          else {
+            *(_HEAP_FREE_ENTRY **)
+             (*(int *)((p_Var6->SegmentIndex + 0x18) * 4 + (int)param_1) + 0x40) = p_Var6;
+          }
+          p_Var6->Flags = p_Var6->Flags & 0xf8;
+          if (uVar17 < 0x80) {
+            uVar17 = (uVar17 + 0x30) * 8 + lVar8;
+            p_Var18 = (_LIST_ENTRY *)uVar17;
+            if (ZEXT48(p_Var18->Flink) == (uVar17 & 0xffffffff)) {
+              iVar10 = ((p_Var6->Size >> 5) + 0x58) * 4;
+              *(uint *)(iVar10 + (int)param_1) =
+                   *(uint *)(iVar10 + (int)param_1) | 1 << (p_Var6->Size & 0x1f);
             }
           }
           else {
-            p_Var28->Size = ((short)iVar26 - (short)uVar22) - 0x30;
-          }
-          if (((ulonglong)uVar11 < (uVar22 & 0xffffffff)) && ((uVar25 & 8) != 0)) {
-            memset();
-          }
-          pvVar15 = pvStack00000024;
-          if (uVar19 != uVar21) {
-            bVar1 = *(byte *)((int)pvVar17 + -0xb);
-            if ((bVar1 & 8) == 0) {
-              lVar27 = (uVar19 & 0xfffffff) * 0x10 + (uVar18 - 0x10);
-              p_Var7 = (_HEAP_FREE_ENTRY *)lVar27;
-              p_Var7->Flags = bVar1 & 0xfe;
-              p_Var7->PreviousSize = (ushort)uVar19;
-              p_Var7->SegmentIndex = *(uchar *)((int)pvVar17 + -0xc);
-              uVar21 = p_Var28->Size - uVar19;
-              p_Var28->Size = (ushort)uVar19;
-              *(byte *)((int)pvVar17 + -0xb) = *(byte *)((int)pvVar17 + -0xb) & 0xef;
-              uVar2 = (ushort)uVar21;
-              if ((bVar1 & 0x10) == 0) {
-                lVar27 = (uVar21 & 0xfffffff) * 0x10 + lVar27;
-                puVar8 = (ushort *)lVar27;
-                if ((*(byte *)((int)puVar8 + 5) & 1) != 0) {
-                  p_Var7->Size = uVar2;
-                  puVar8[1] = uVar2;
-                  p_Var7->Flags = p_Var7->Flags & 0xf8;
-                  if ((uVar21 & 0xffff) < 0x80) goto LAB_828a84d8;
-                  p_Var23 = p_Var10->FreeLists[0].Flink;
-                  while (((lVar9 + 0x180U & 0xffffffff) != ZEXT48(p_Var23) &&
-                         ((ulonglong)*(ushort *)&p_Var23[-1].Flink < (uVar21 & 0xffff)))) {
-                    p_Var23 = p_Var23->Flink;
-                  }
-                  goto LAB_828a8510;
-                }
-                p_Var7->Flags = *(byte *)((int)puVar8 + 5);
-                puVar4 = *(uint **)(puVar8 + 6);
-                puVar5 = *(uint **)(puVar8 + 4);
-                if (((ulonglong)*puVar4 == (ulonglong)puVar5[1]) &&
-                   ((ulonglong)*puVar4 == (lVar27 + 8U & 0xffffffff))) {
-                  *puVar4 = (uint)puVar5;
-                  puVar5[1] = (uint)puVar4;
-                  if ((puVar5 == puVar4) && (uVar2 = *puVar8, uVar2 < 0x80)) {
-                    p_Var10->FreeListsInUseUlong[uVar2 >> 5] =
-                         p_Var10->FreeListsInUseUlong[uVar2 >> 5] ^ 1 << (uVar2 & 0x1f);
-                  }
-                }
-                if ((*(byte *)((int)puVar8 + 5) & 4) != 0) {
-                  uVar22 = (ulonglong)*puVar8 * 0x10 - 0x18;
-                  if (((*(byte *)((int)puVar8 + 5) & 2) != 0) && (4 < (uVar22 & 0xffffffff))) {
-                    uVar22 = (ulonglong)*puVar8 * 0x10 - 0x1c;
-                  }
-                  RtlCompareMemoryUlong(lVar27 + 0x18,uVar22,0xfffffffffeeefeee);
-                }
-                p_Var10->TotalFreeSize = p_Var10->TotalFreeSize - (uint)*puVar8;
-                uVar21 = *puVar8 + uVar21;
-                if (0xf000 < (uVar21 & 0xffffffff)) {
-                  RtlpInsertFreeBlock(p_Var10,p_Var7,(ulong)uVar21);
-                  pvVar15 = pvStack00000024;
-                  goto LAB_828a88d4;
-                }
-                uVar22 = uVar21 & 0xffff;
-                p_Var7->Size = (ushort)uVar21;
-                if ((p_Var7->Flags & 0x10) == 0) {
-                  *(ushort *)((int)&p_Var7->PreviousSize + (int)((uVar21 & 0xffffffff) << 4)) =
-                       (ushort)uVar21;
-                }
-                else {
-                  p_Var10->Segments[p_Var7->SegmentIndex]->LastEntryInSegment =
-                       (_HEAP_ENTRY *)p_Var7;
-                }
-                p_Var7->Flags = p_Var7->Flags & 0xf8;
-                if (uVar22 < 0x80) {
-                  uVar22 = (uVar22 + 0x30) * 8 + lVar9;
-                  p_Var23 = (_LIST_ENTRY *)uVar22;
-                  if (ZEXT48(p_Var23->Flink) == (uVar22 & 0xffffffff)) {
-                    uVar2 = p_Var7->Size >> 5;
-                    p_Var10->FreeListsInUseUlong[uVar2] =
-                         p_Var10->FreeListsInUseUlong[uVar2] | 1 << (p_Var7->Size & 0x1f);
-                  }
-                }
-                else {
-                  p_Var23 = p_Var10->FreeLists[0].Flink;
-                  while (((lVar9 + 0x180U & 0xffffffff) != ZEXT48(p_Var23) &&
-                         (*(ushort *)&p_Var23[-1].Flink < uVar22))) {
-                    p_Var23 = p_Var23->Flink;
-                  }
-                }
-                p_Var3 = p_Var23->Blink;
-                (p_Var7->FreeList).Flink = p_Var23;
-                (p_Var7->FreeList).Blink = p_Var3;
-                p_Var3->Flink = &p_Var7->FreeList;
-                p_Var23->Blink = &p_Var7->FreeList;
-                uVar24 = (ulong)uVar21 + p_Var10->TotalFreeSize;
-              }
-              else {
-                p_Var10->Segments[p_Var7->SegmentIndex]->LastEntryInSegment = (_HEAP_ENTRY *)p_Var7;
-                p_Var7->Size = uVar2;
-                p_Var7->Flags = p_Var7->Flags & 0xf8;
-                if ((uVar21 & 0xffff) < 0x80) {
-LAB_828a84d8:
-                  uVar22 = ((uVar21 & 0xffff) + 0x30) * 8 + lVar9;
-                  p_Var23 = (_LIST_ENTRY *)uVar22;
-                  if (ZEXT48(p_Var23->Flink) == (uVar22 & 0xffffffff)) {
-                    uVar2 = p_Var7->Size >> 5;
-                    p_Var10->FreeListsInUseUlong[uVar2] =
-                         p_Var10->FreeListsInUseUlong[uVar2] | 1 << (p_Var7->Size & 0x1f);
-                  }
-                }
-                else {
-                  p_Var23 = p_Var10->FreeLists[0].Flink;
-                  while (((lVar9 + 0x180U & 0xffffffff) != ZEXT48(p_Var23) &&
-                         ((ulonglong)*(ushort *)&p_Var23[-1].Flink < (uVar21 & 0xffff)))) {
-                    p_Var23 = p_Var23->Flink;
-                  }
-                }
-LAB_828a8510:
-                p_Var3 = p_Var23->Blink;
-                (p_Var7->FreeList).Flink = p_Var23;
-                (p_Var7->FreeList).Blink = p_Var3;
-                p_Var3->Flink = &p_Var7->FreeList;
-                p_Var23->Blink = &p_Var7->FreeList;
-                uVar24 = (int)uVar21 + p_Var10->TotalFreeSize;
-              }
-              p_Var10->TotalFreeSize = uVar24;
-              pvVar15 = pvStack00000024;
-            }
-            else {
-              iVar12 = NtFreeVirtualMemory(local_d8,local_e8,0x8000,p_Var10->MemoryRegionType);
-              pvVar15 = pvStack00000024;
-              if (-1 < iVar12) {
-                *(int *)((int)pvVar17 + -0x18) =
-                     *(int *)((int)pvVar17 + -0x18) - ((int)(uVar21 << 4) - iVar26);
-              }
+            p_Var18 = *(_LIST_ENTRY **)((int)param_1 + 0x180);
+            while (((lVar8 + 0x180U & 0xffffffff) != ZEXT48(p_Var18) &&
+                   (*(ushort *)&p_Var18[-1].Flink < uVar17))) {
+              p_Var18 = p_Var18->Flink;
             }
           }
-LAB_828a88d4:
-          pvStack00000024 = pvVar15;
-          uVar25 = uVar20;
-          if ((uVar18 & 0xffffffff) != 0) goto LAB_828a8908;
+          p_Var3 = p_Var18->Blink;
+          (p_Var6->FreeList).Flink = p_Var18;
+          (p_Var6->FreeList).Blink = p_Var3;
+          p_Var3->Flink = &p_Var6->FreeList;
+          p_Var18->Blink = &p_Var6->FreeList;
+          iVar10 = (ulong)uVar16 + *(int *)((int)param_1 + 0x30);
         }
-        if ((uVar25 & 4) != 0) {
-          RtlRaiseException(local_c0);
+        else {
+          *(_HEAP_FREE_ENTRY **)(*(int *)((p_Var6->SegmentIndex + 0x18) * 4 + (int)param_1) + 0x40)
+               = p_Var6;
+          p_Var6->Size = uVar2;
+          p_Var6->Flags = p_Var6->Flags & 0xf8;
+          if ((uVar16 & 0xffff) < 0x80) {
+LAB_828a84d8:
+            uVar17 = ((uVar16 & 0xffff) + 0x30) * 8 + lVar8;
+            p_Var18 = (_LIST_ENTRY *)uVar17;
+            if (ZEXT48(p_Var18->Flink) == (uVar17 & 0xffffffff)) {
+              iVar10 = ((p_Var6->Size >> 5) + 0x58) * 4;
+              *(uint *)(iVar10 + (int)param_1) =
+                   *(uint *)(iVar10 + (int)param_1) | 1 << (p_Var6->Size & 0x1f);
+            }
+          }
+          else {
+            p_Var18 = *(_LIST_ENTRY **)((int)param_1 + 0x180);
+            while (((lVar8 + 0x180U & 0xffffffff) != ZEXT48(p_Var18) &&
+                   ((ulonglong)*(ushort *)&p_Var18[-1].Flink < (uVar16 & 0xffff)))) {
+              p_Var18 = p_Var18->Flink;
+            }
+          }
+LAB_828a8510:
+          p_Var3 = p_Var18->Blink;
+          (p_Var6->FreeList).Flink = p_Var18;
+          (p_Var6->FreeList).Blink = p_Var3;
+          p_Var3->Flink = &p_Var6->FreeList;
+          p_Var18->Blink = &p_Var6->FreeList;
+          iVar10 = (int)uVar16 + *(int *)((int)param_1 + 0x30);
+        }
+        *(int *)((int)param_1 + 0x30) = iVar10;
+        pvVar13 = pvStack00000024;
+      }
+      else {
+        iVar10 = NtFreeVirtualMemory(local_d8,local_e8,0x8000,*(undefined4 *)((int)param_1 + 0x590))
+        ;
+        pvVar13 = pvStack00000024;
+        if (-1 < iVar10) {
+          *(uint *)((int)param_3 + -0x18) =
+               *(int *)((int)param_3 + -0x18) - ((int)(uVar16 << 4) - uVar20);
         }
       }
-LAB_828a8908:
-      FUN_828a8960();
-      pvVar17 = pvStack00000024;
-      goto LAB_828a8938;
     }
+LAB_828a88d4:
+    pvStack00000024 = pvVar13;
+    if ((uVar15 & 0xffffffff) != 0) goto LAB_828a8908;
   }
-  pvVar17 = (void *)0x0;
-LAB_828a8938:
-  pvVar17 = (void *)__restgprlr_19(pvVar17);
-  return pvVar17;
+  if ((uVar19 & 4) != 0) {
+    RtlRaiseException(local_c0);
+  }
+LAB_828a8908:
+  FUN_828a8960();
+  return pvStack00000024;
 }
 
 
 // 828A61E8  RtlpGrowBlockInPlace  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/xrtl/rtlheap.c:3895)
+
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
 
 ulong RtlpGrowBlockInPlace
                 (_HEAP *param_1,ulong param_2,_HEAP_ENTRY *param_3,ulong param_4,ulong param_5)
@@ -1046,327 +1008,307 @@ ulong RtlpGrowBlockInPlace
   uint *puVar5;
   uint *puVar6;
   _LIST_ENTRY *p_Var7;
-  uint uVar8;
-  int iVar9;
-  _HEAP *p_Var11;
-  undefined8 uVar10;
-  _HEAP_FREE_ENTRY *p_Var12;
-  ulong uVar13;
-  ulonglong uVar14;
-  _HEAP_ENTRY *p_Var15;
-  ulonglong uVar16;
-  ushort *puVar17;
-  ulonglong uVar18;
-  ushort uVar20;
-  _LIST_ENTRY *p_Var19;
-  ulonglong uVar21;
-  longlong lVar22;
-  longlong lVar23;
+  int iVar8;
+  _HEAP_FREE_ENTRY *p_Var9;
+  ushort *puVar10;
+  uint uVar11;
+  ulonglong uVar12;
+  ushort uVar14;
+  _LIST_ENTRY *p_Var13;
+  ulonglong uVar15;
+  longlong lVar16;
+  longlong lVar17;
   ulong local_60 [24];
   
-  uVar21 = (ulonglong)(int)param_5;
-  uVar16 = (ulonglong)(int)param_4;
-  lVar23 = (longlong)(int)param_3;
-  uVar14 = (ulonglong)(int)param_2;
-  p_Var11 = (_HEAP *)__savegprlr_22(param_1);
-  if ((uVar21 & 0xffffffff) <= (ulonglong)p_Var11->VirtualMemoryThreshold) {
-    p_Var15 = (_HEAP_ENTRY *)lVar23;
-    uVar4 = p_Var15->Size;
-    bVar1 = p_Var15->Flags;
-    lVar22 = (ulonglong)uVar4 * 0x10 + lVar23;
-    puVar17 = (ushort *)lVar22;
-    if ((bVar1 & 0x10) == 0) {
-      bVar2 = *(byte *)((int)puVar17 + 5);
-      if (((bVar2 & 1) == 0) &&
-         (local_60[0] = (uint)*puVar17 + (uint)uVar4,
-         (uVar21 & 0xffffffff) <= (ulonglong)local_60[0])) {
-        puVar5 = *(uint **)(puVar17 + 6);
-        puVar6 = *(uint **)(puVar17 + 4);
-        if (((ulonglong)*puVar5 == (ulonglong)puVar6[1]) &&
-           ((ulonglong)*puVar5 == (lVar22 + 8U & 0xffffffff))) {
-          *puVar5 = (uint)puVar6;
-          puVar6[1] = (uint)puVar5;
-          if ((puVar6 == puVar5) && (uVar4 = *puVar17, uVar4 < 0x80)) {
-            p_Var11->FreeListsInUseUlong[uVar4 >> 5] =
-                 1 << (uVar4 & 0x1f) ^ p_Var11->FreeListsInUseUlong[uVar4 >> 5];
-          }
+  uVar15 = (ulonglong)(int)param_5;
+  if (param_1->VirtualMemoryThreshold < param_5) {
+    return 0;
+  }
+  uVar4 = param_3->Size;
+  bVar1 = param_3->Flags;
+  lVar16 = (ulonglong)uVar4 * 0x10 + (longlong)(int)param_3;
+  puVar10 = (ushort *)lVar16;
+  if ((bVar1 & 0x10) == 0) {
+    bVar2 = *(byte *)((int)puVar10 + 5);
+    if ((bVar2 & 1) != 0) {
+      return 0;
+    }
+    local_60[0] = (uint)*puVar10 + (uint)uVar4;
+    if (local_60[0] < param_5) {
+      return 0;
+    }
+    puVar5 = *(uint **)(puVar10 + 6);
+    puVar6 = *(uint **)(puVar10 + 4);
+    if (((ulonglong)*puVar5 == (ulonglong)puVar6[1]) &&
+       ((ulonglong)*puVar5 == (lVar16 + 8U & 0xffffffff))) {
+      *puVar5 = (uint)puVar6;
+      puVar6[1] = (uint)puVar5;
+      if ((puVar6 == puVar5) && (uVar4 = *puVar10, uVar4 < 0x80)) {
+        param_1->FreeListsInUseUlong[uVar4 >> 5] =
+             1 << (uVar4 & 0x1f) ^ param_1->FreeListsInUseUlong[uVar4 >> 5];
+      }
+    }
+    if ((*(byte *)((int)puVar10 + 5) & 4) != 0) {
+      uVar12 = (ulonglong)*puVar10 * 0x10 - 0x18;
+      if (((*(byte *)((int)puVar10 + 5) & 2) != 0) && (4 < (uVar12 & 0xffffffff))) {
+        uVar12 = (ulonglong)*puVar10 * 0x10 - 0x1c;
+      }
+      RtlCompareMemoryUlong(lVar16 + 0x18,uVar12,0xfffffffffeeefeee);
+    }
+    uVar12 = (ulonglong)local_60[0];
+    param_1->TotalFreeSize = param_1->TotalFreeSize - (uint)*puVar10;
+  }
+  else {
+    local_60[0] = (int)((uVar15 - uVar4 & 0xffffffff) << 4) + 0xffffU & 0xffff0000;
+    p_Var9 = RtlpFindAndCommitPages
+                       (param_1,param_1->Segments[param_3->SegmentIndex],local_60,puVar10);
+    if (p_Var9 == (_HEAP_FREE_ENTRY *)0x0) {
+      return 0;
+    }
+    local_60[0] = local_60[0] >> 4;
+    p_Var9 = RtlpCoalesceFreeBlocks(param_1,p_Var9,local_60,0);
+    bVar2 = p_Var9->Flags;
+    uVar12 = (ulonglong)param_3->Size + (ulonglong)local_60[0];
+    if ((uVar12 & 0xffffffff) < (ulonglong)param_5) {
+      RtlpInsertFreeBlock(param_1,p_Var9,local_60[0]);
+      param_1->TotalFreeSize = param_1->TotalFreeSize + local_60[0];
+      return 0;
+    }
+  }
+  uVar4 = param_3->Size;
+  uVar12 = uVar12 - uVar15;
+  bVar3 = param_3->UnusedBytes;
+  local_60[0] = (ulong)uVar12;
+  if ((uVar12 & 0xffffffff) < 3) {
+    uVar15 = uVar12 + uVar15;
+    uVar12 = 0;
+    local_60[0] = 0;
+  }
+  if ((bVar1 & 2) != 0) {
+    uVar14 = param_3->Size;
+    iVar8 = (int)((uVar15 & 0xffffffff) << 4);
+    *(undefined8 *)((int)&param_3[-1].Size + iVar8) = *(undefined8 *)(param_3 + (uVar14 - 1));
+    *(_HEAP_ENTRY_u_8 *)((int)param_3 + iVar8 + -8) = param_3[uVar14 - 1].field6_0x8;
+    uVar12 = (ulonglong)local_60[0];
+  }
+  uVar14 = (ushort)uVar15;
+  if ((uVar12 & 0xffffffff) == 0) {
+    param_3->Flags = param_3->Flags | bVar2 & 0x10;
+    param_3->UnusedBytes = (char)((uVar15 & 0xffffffff) << 4) - (char)param_4;
+    param_3->Size = uVar14;
+    if ((bVar2 & 0x10) == 0) {
+      *(ushort *)((int)&param_3->PreviousSize + (int)((uVar15 & 0xffff) << 4)) = uVar14;
+    }
+    else {
+      param_1->Segments[param_3->SegmentIndex]->LastEntryInSegment = param_3;
+    }
+    goto LAB_828a6730;
+  }
+  lVar16 = (uVar15 & 0xfffffff) * 0x10;
+  lVar17 = lVar16 + (int)param_3;
+  param_3->Size = uVar14;
+  param_3->UnusedBytes = (char)lVar16 - (char)param_4;
+  p_Var9 = (_HEAP_FREE_ENTRY *)lVar17;
+  p_Var9->PreviousSize = uVar14;
+  bVar1 = param_3->SegmentIndex;
+  p_Var9->SegmentIndex = bVar1;
+  uVar14 = (ushort)local_60[0];
+  if ((bVar2 & 0x10) == 0) {
+    lVar17 = ((ulonglong)local_60[0] & 0xfffffff) * 0x10 + lVar17;
+    puVar10 = (ushort *)lVar17;
+    bVar1 = *(byte *)((int)puVar10 + 5);
+    if ((bVar1 & 1) == 0) {
+      puVar5 = *(uint **)(puVar10 + 6);
+      puVar6 = *(uint **)(puVar10 + 4);
+      if (((ulonglong)*puVar5 == (ulonglong)puVar6[1]) &&
+         ((ulonglong)*puVar5 == (lVar17 + 8U & 0xffffffff))) {
+        *puVar5 = (uint)puVar6;
+        puVar6[1] = (uint)puVar5;
+        if ((puVar6 == puVar5) && (uVar14 = *puVar10, uVar14 < 0x80)) {
+          param_1->FreeListsInUseUlong[uVar14 >> 5] =
+               1 << (uVar14 & 0x1f) ^ param_1->FreeListsInUseUlong[uVar14 >> 5];
         }
-        if ((*(byte *)((int)puVar17 + 5) & 4) != 0) {
-          uVar18 = (ulonglong)*puVar17 * 0x10 - 0x18;
-          if (((*(byte *)((int)puVar17 + 5) & 2) != 0) && (4 < (uVar18 & 0xffffffff))) {
-            uVar18 = (ulonglong)*puVar17 * 0x10 - 0x1c;
-          }
-          RtlCompareMemoryUlong(lVar22 + 0x18,uVar18,0xfffffffffeeefeee);
+      }
+      if ((*(byte *)((int)puVar10 + 5) & 4) != 0) {
+        uVar15 = (ulonglong)*puVar10 * 0x10 - 0x18;
+        if (((*(byte *)((int)puVar10 + 5) & 2) != 0) && (4 < (uVar15 & 0xffffffff))) {
+          uVar15 = (ulonglong)*puVar10 * 0x10 - 0x1c;
         }
-        uVar18 = (ulonglong)local_60[0];
-        p_Var11->TotalFreeSize = p_Var11->TotalFreeSize - (uint)*puVar17;
-LAB_828a63a8:
-        uVar4 = p_Var15->Size;
-        uVar18 = uVar18 - uVar21;
-        bVar3 = p_Var15->UnusedBytes;
-        local_60[0] = (ulong)uVar18;
-        if ((uVar18 & 0xffffffff) < 3) {
-          uVar21 = uVar18 + uVar21;
-          uVar18 = 0;
-          local_60[0] = 0;
+        RtlCompareMemoryUlong(lVar17 + 0x18,uVar15,0xfffffffffeeefeee);
+      }
+      param_1->TotalFreeSize = param_1->TotalFreeSize - (uint)*puVar10;
+      local_60[0] = *puVar10 + local_60[0];
+      p_Var9->Flags = bVar1;
+      if (0xf000 < local_60[0]) {
+        RtlpInsertFreeBlock(param_1,p_Var9,local_60[0]);
+        goto LAB_828a6730;
+      }
+      p_Var9->Size = (ushort)local_60[0];
+      if ((bVar1 & 0x10) == 0) {
+        (&p_Var9->PreviousSize)[local_60[0] * 8] = (ushort)local_60[0];
+      }
+      else {
+        param_1->Segments[p_Var9->SegmentIndex]->LastEntryInSegment = (_HEAP_ENTRY *)p_Var9;
+      }
+      p_Var9->Flags = p_Var9->Flags & 0xf8;
+      uVar11 = local_60[0] & 0xffff;
+      if (0x7f < uVar11) {
+        p_Var13 = param_1->FreeLists[0].Flink;
+        while ((param_1->FreeLists != p_Var13 && (*(ushort *)&p_Var13[-1].Flink < uVar11))) {
+          p_Var13 = p_Var13->Flink;
         }
-        if ((bVar1 & 2) != 0) {
-          uVar20 = p_Var15->Size;
-          iVar9 = (int)((uVar21 & 0xffffffff) << 4);
-          *(undefined8 *)((int)&p_Var15[-1].Size + iVar9) = *(undefined8 *)(p_Var15 + (uVar20 - 1));
-          *(_HEAP_ENTRY_u_8 *)((int)p_Var15 + iVar9 + -8) = p_Var15[uVar20 - 1].field6_0x8;
-          uVar18 = (ulonglong)local_60[0];
-        }
-        uVar20 = (ushort)uVar21;
-        if ((uVar18 & 0xffffffff) == 0) {
-          p_Var15->Flags = p_Var15->Flags | bVar2 & 0x10;
-          p_Var15->UnusedBytes = (char)((uVar21 & 0xffffffff) << 4) - (char)uVar16;
-          p_Var15->Size = uVar20;
-          if ((bVar2 & 0x10) == 0) {
-            *(ushort *)((int)&p_Var15->PreviousSize + (int)((uVar21 & 0xffff) << 4)) = uVar20;
-          }
-          else {
-            p_Var11->Segments[p_Var15->SegmentIndex]->LastEntryInSegment = p_Var15;
-          }
-        }
-        else {
-          lVar22 = (uVar21 & 0xfffffff) * 0x10;
-          lVar23 = lVar22 + lVar23;
-          p_Var15->Size = uVar20;
-          p_Var15->UnusedBytes = (char)lVar22 - (char)uVar16;
-          p_Var12 = (_HEAP_FREE_ENTRY *)lVar23;
-          p_Var12->PreviousSize = uVar20;
-          bVar1 = p_Var15->SegmentIndex;
-          p_Var12->SegmentIndex = bVar1;
-          uVar20 = (ushort)local_60[0];
-          if ((bVar2 & 0x10) == 0) {
-            lVar23 = ((ulonglong)local_60[0] & 0xfffffff) * 0x10 + lVar23;
-            puVar17 = (ushort *)lVar23;
-            bVar1 = *(byte *)((int)puVar17 + 5);
-            if ((bVar1 & 1) == 0) {
-              puVar5 = *(uint **)(puVar17 + 6);
-              puVar6 = *(uint **)(puVar17 + 4);
-              if (((ulonglong)*puVar5 == (ulonglong)puVar6[1]) &&
-                 ((ulonglong)*puVar5 == (lVar23 + 8U & 0xffffffff))) {
-                *puVar5 = (uint)puVar6;
-                puVar6[1] = (uint)puVar5;
-                if ((puVar6 == puVar5) && (uVar20 = *puVar17, uVar20 < 0x80)) {
-                  p_Var11->FreeListsInUseUlong[uVar20 >> 5] =
-                       1 << (uVar20 & 0x1f) ^ p_Var11->FreeListsInUseUlong[uVar20 >> 5];
-                }
-              }
-              if ((*(byte *)((int)puVar17 + 5) & 4) != 0) {
-                uVar21 = (ulonglong)*puVar17 * 0x10 - 0x18;
-                if (((*(byte *)((int)puVar17 + 5) & 2) != 0) && (4 < (uVar21 & 0xffffffff))) {
-                  uVar21 = (ulonglong)*puVar17 * 0x10 - 0x1c;
-                }
-                RtlCompareMemoryUlong(lVar23 + 0x18,uVar21,0xfffffffffeeefeee);
-              }
-              p_Var11->TotalFreeSize = p_Var11->TotalFreeSize - (uint)*puVar17;
-              local_60[0] = *puVar17 + local_60[0];
-              p_Var12->Flags = bVar1;
-              if (0xf000 < local_60[0]) {
-                RtlpInsertFreeBlock(p_Var11,p_Var12,local_60[0]);
-                goto LAB_828a6730;
-              }
-              p_Var12->Size = (ushort)local_60[0];
-              if ((bVar1 & 0x10) == 0) {
-                (&p_Var12->PreviousSize)[local_60[0] * 8] = (ushort)local_60[0];
-              }
-              else {
-                p_Var11->Segments[p_Var12->SegmentIndex]->LastEntryInSegment =
-                     (_HEAP_ENTRY *)p_Var12;
-              }
-              p_Var12->Flags = p_Var12->Flags & 0xf8;
-              uVar8 = local_60[0] & 0xffff;
-              if (uVar8 < 0x80) goto LAB_828a6698;
-              p_Var19 = p_Var11->FreeLists[0].Flink;
-              while ((p_Var11->FreeLists != p_Var19 && (*(ushort *)&p_Var19[-1].Flink < uVar8))) {
-                p_Var19 = p_Var19->Flink;
-              }
-            }
-            else {
-              p_Var12->Flags = bVar2 & 0xef;
-              p_Var12->Size = uVar20;
-              (&p_Var12->PreviousSize)[local_60[0] * 8] = uVar20;
-              p_Var12->Flags = p_Var12->Flags & 0xf8;
-              uVar8 = local_60[0] & 0xffff;
-              if (uVar8 < 0x80) goto LAB_828a6698;
-              p_Var19 = p_Var11->FreeLists[0].Flink;
-              while ((p_Var11->FreeLists != p_Var19 && (*(ushort *)&p_Var19[-1].Flink < uVar8))) {
-                p_Var19 = p_Var19->Flink;
-              }
-            }
-          }
-          else {
-            p_Var11->Segments[bVar1]->LastEntryInSegment = (_HEAP_ENTRY *)p_Var12;
-            p_Var12->Flags = bVar2;
-            p_Var12->Flags = bVar2 & 0xf8;
-            p_Var12->Size = uVar20;
-            uVar8 = local_60[0] & 0xffff;
-            if (uVar8 < 0x80) {
+        goto LAB_828a66f8;
+      }
+      goto LAB_828a6698;
+    }
+    p_Var9->Flags = bVar2 & 0xef;
+    p_Var9->Size = uVar14;
+    (&p_Var9->PreviousSize)[local_60[0] * 8] = uVar14;
+    p_Var9->Flags = p_Var9->Flags & 0xf8;
+    if ((local_60[0] & 0xffff) < 0x80) goto LAB_828a6548;
+    p_Var13 = param_1->FreeLists[0].Flink;
+    while ((param_1->FreeLists != p_Var13 &&
+           ((uint)*(ushort *)&p_Var13[-1].Flink < (local_60[0] & 0xffff)))) {
+      p_Var13 = p_Var13->Flink;
+    }
+  }
+  else {
+    param_1->Segments[bVar1]->LastEntryInSegment = (_HEAP_ENTRY *)p_Var9;
+    p_Var9->Flags = bVar2;
+    p_Var9->Flags = bVar2 & 0xf8;
+    p_Var9->Size = uVar14;
+    if ((local_60[0] & 0xffff) < 0x80) {
+LAB_828a6548:
+      uVar11 = local_60[0] & 0xffff;
 LAB_828a6698:
-              p_Var19 = p_Var11->FreeLists + uVar8;
-              if (p_Var19->Flink == p_Var19) {
-                uVar20 = p_Var12->Size >> 5;
-                p_Var11->FreeListsInUseUlong[uVar20] =
-                     1 << (p_Var12->Size & 0x1f) | p_Var11->FreeListsInUseUlong[uVar20];
-              }
-            }
-            else {
-              p_Var19 = p_Var11->FreeLists[0].Flink;
-              while ((p_Var11->FreeLists != p_Var19 && (*(ushort *)&p_Var19[-1].Flink < uVar8))) {
-                p_Var19 = p_Var19->Flink;
-              }
-            }
-          }
-          p_Var7 = p_Var19->Blink;
-          (p_Var12->FreeList).Flink = p_Var19;
-          (p_Var12->FreeList).Blink = p_Var7;
-          p_Var7->Flink = &p_Var12->FreeList;
-          p_Var19->Blink = &p_Var12->FreeList;
-          p_Var11->TotalFreeSize = p_Var11->TotalFreeSize + local_60[0];
-        }
-LAB_828a6730:
-        if (((uVar14 & 8) != 0) &&
-           (((ulonglong)uVar4 * 0x10 - (ulonglong)bVar3 & 0xffffffff) < (uVar16 & 0xffffffff))) {
-          memset();
-        }
-        p_Var15->Flags = (byte)((uVar14 & 0xffffffff) >> 4) & 0xe0 | p_Var15->Flags & 0x1f;
-        uVar10 = 1;
-        goto LAB_828a6768;
+      p_Var13 = param_1->FreeLists + uVar11;
+      if (p_Var13->Flink == p_Var13) {
+        uVar14 = p_Var9->Size >> 5;
+        param_1->FreeListsInUseUlong[uVar14] =
+             1 << (p_Var9->Size & 0x1f) | param_1->FreeListsInUseUlong[uVar14];
       }
     }
     else {
-      local_60[0] = (int)((uVar21 - uVar4 & 0xffffffff) << 4) + 0xffffU & 0xffff0000;
-      p_Var12 = RtlpFindAndCommitPages
-                          (p_Var11,p_Var11->Segments[p_Var15->SegmentIndex],local_60,puVar17);
-      if (p_Var12 != (_HEAP_FREE_ENTRY *)0x0) {
-        local_60[0] = local_60[0] >> 4;
-        p_Var12 = RtlpCoalesceFreeBlocks(p_Var11,p_Var12,local_60,0);
-        bVar2 = p_Var12->Flags;
-        uVar18 = (ulonglong)p_Var15->Size + (ulonglong)local_60[0];
-        if ((uVar21 & 0xffffffff) <= (uVar18 & 0xffffffff)) goto LAB_828a63a8;
-        RtlpInsertFreeBlock(p_Var11,p_Var12,local_60[0]);
-        p_Var11->TotalFreeSize = p_Var11->TotalFreeSize + local_60[0];
+      p_Var13 = param_1->FreeLists[0].Flink;
+      while ((param_1->FreeLists != p_Var13 &&
+             ((uint)*(ushort *)&p_Var13[-1].Flink < (local_60[0] & 0xffff)))) {
+        p_Var13 = p_Var13->Flink;
       }
     }
   }
-  uVar10 = 0;
-LAB_828a6768:
-  uVar13 = __restgprlr_22(uVar10);
-  return uVar13;
+LAB_828a66f8:
+  p_Var7 = p_Var13->Blink;
+  (p_Var9->FreeList).Flink = p_Var13;
+  (p_Var9->FreeList).Blink = p_Var7;
+  p_Var7->Flink = &p_Var9->FreeList;
+  p_Var13->Blink = &p_Var9->FreeList;
+  param_1->TotalFreeSize = param_1->TotalFreeSize + local_60[0];
+LAB_828a6730:
+  if (((param_2 & 8) != 0) && ((uint)uVar4 * 0x10 - (uint)bVar3 < param_4)) {
+    memset();
+  }
+  param_3->Flags = (byte)(param_2 >> 4) & 0xe0 | param_3->Flags & 0x1f;
+  return 1;
 }
 
 
 // 828A7E48  RtlFreeHeap  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/xrtl/rtlheap.c:4424)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 ulong RtlFreeHeap(void *param_1,ulong param_2,void *param_3)
 
 {
   _LIST_ENTRY *p_Var1;
-  int iVar2;
-  int *piVar3;
-  bool bVar4;
-  ushort uVar5;
-  _HEAP *p_Var6;
-  uint uVar7;
-  _HEAP_FREE_ENTRY *p_Var8;
-  int iVar9;
-  ulong uVar10;
-  ulonglong uVar11;
-  ulonglong uVar12;
-  _LIST_ENTRY *p_Var13;
-  ulong local_50 [2];
-  uint local_48;
+  int *piVar2;
+  bool bVar3;
+  uint uVar4;
+  _HEAP_FREE_ENTRY *p_Var5;
+  int iVar6;
+  _LIST_ENTRY *p_Var7;
+  ulong local_50 [3];
   _LIST_ENTRY *local_44;
   _LIST_ENTRY *local_40;
-  _HEAP *local_3c;
+  void *local_3c;
   undefined4 local_8;
   
-  uVar12 = (ulonglong)(int)param_3;
-  uVar11 = (ulonglong)(int)param_2;
-  p_Var6 = (_HEAP *)__savegprlr_26(param_1);
   local_50[1] = 0;
-  local_48 = 1;
-  local_3c = p_Var6;
-  if (((p_Var6->Flags & 0x40000) != 0) &&
-     (uVar7 = KeGetCurrentProcessType(), p_Var6->ProcessType != uVar7)) {
+  local_50[2] = 1;
+  local_3c = param_1;
+  if (((*(uint *)((int)param_1 + 0x14) & 0x40000) != 0) &&
+     (uVar4 = KeGetCurrentProcessType(), *(byte *)((int)param_1 + 0x17b) != uVar4)) {
                     /* WARNING: Subroutine does not return */
-    KeBugCheckEx(0xf4,p_Var6,local_8,0x1162,uVar12);
+    KeBugCheckEx(0xf4,param_1,local_8,0x1162,param_3);
   }
-  if ((uVar12 & 0xffffffff) == 0) {
-    uVar7 = 1;
-    goto LAB_828a80c8;
+  if (param_3 == (void *)0x0) {
+    return 1;
   }
-  iVar9 = (int)uVar12;
-  bVar4 = (((ulonglong)p_Var6->ForceFlags | uVar11 & 0xffffffff) & 1) == 0;
-  if (bVar4) {
-    RtlEnterCriticalSection(p_Var6->LockVariable);
+  bVar3 = ((*(uint *)((int)param_1 + 0x18) | param_2) & 1) == 0;
+  if (bVar3) {
+    RtlEnterCriticalSection(*(undefined4 *)((int)param_1 + 0x580));
     local_50[1] = 1;
   }
-  if ((*(byte *)(iVar9 + -0xb) & 8) == 0) {
-    local_50[0] = (ulong)((_HEAP_FREE_ENTRY *)(iVar9 + -0x10))->Size;
-    p_Var8 = RtlpCoalesceFreeBlocks(p_Var6,(_HEAP_FREE_ENTRY *)(iVar9 + -0x10),local_50,0);
-    if (local_50[0] < 0x80) {
-      p_Var8->Flags = p_Var8->Flags & 0x10;
-      p_Var13 = p_Var6->FreeLists + (local_50[0] & 0xffff);
-      if (p_Var13->Flink == p_Var13) {
-        uVar5 = p_Var8->Size >> 5;
-        p_Var6->FreeListsInUseUlong[uVar5] =
-             1 << (p_Var8->Size & 0x1f) | p_Var6->FreeListsInUseUlong[uVar5];
-      }
-      p_Var1 = p_Var13->Blink;
-      (p_Var8->FreeList).Flink = p_Var13;
-      (p_Var8->FreeList).Blink = p_Var1;
-      p_Var1->Flink = &p_Var8->FreeList;
-      p_Var13->Blink = &p_Var8->FreeList;
-      uVar10 = p_Var6->TotalFreeSize;
-LAB_828a8040:
-      p_Var6->TotalFreeSize = uVar10 + local_50[0];
-    }
-    else if ((local_50[0] < p_Var6->DeCommitFreeBlockThreshold) ||
-            (p_Var6->TotalFreeSize + local_50[0] < p_Var6->DeCommitTotalFreeThreshold)) {
-      if (local_50[0] < 0xf001) {
-        p_Var8->Flags = p_Var8->Flags & 0x10;
-        for (local_44 = p_Var6->FreeLists[0].Flink; p_Var6->FreeLists != local_44;
-            local_44 = local_44->Flink) {
-          local_40 = local_44 + -1;
-          if ((local_50[0] & 0xffff) <= (uint)*(ushort *)&local_44[-1].Flink) break;
-        }
-        p_Var13 = local_44->Blink;
-        (p_Var8->FreeList).Flink = local_44;
-        (p_Var8->FreeList).Blink = p_Var13;
-        p_Var13->Flink = &p_Var8->FreeList;
-        local_44->Blink = &p_Var8->FreeList;
-        uVar10 = p_Var6->TotalFreeSize;
-        goto LAB_828a8040;
-      }
-      RtlpInsertFreeBlock(p_Var6,p_Var8,local_50[0]);
-    }
-    else {
-      RtlpDeCommitFreeBlock(p_Var6,p_Var8,local_50[0]);
-    }
-  }
-  else {
-    local_40 = (_LIST_ENTRY *)(iVar9 + -0x30);
-    iVar2 = *(int *)(iVar9 + -0x30);
-    piVar3 = *(int **)(iVar9 + -0x2c);
-    *piVar3 = iVar2;
-    *(int **)(iVar2 + 4) = piVar3;
-    if (bVar4) {
-      RtlLeaveCriticalSection(p_Var6->LockVariable);
+  if ((*(byte *)((int)param_3 + -0xb) & 8) != 0) {
+    local_40 = (_LIST_ENTRY *)((int)param_3 + -0x30);
+    iVar6 = *(int *)((int)param_3 + -0x30);
+    piVar2 = *(int **)((int)param_3 + -0x2c);
+    *piVar2 = iVar6;
+    *(int **)(iVar6 + 4) = piVar2;
+    if (bVar3) {
+      RtlLeaveCriticalSection(*(undefined4 *)((int)param_1 + 0x580));
       local_50[1] = 0;
     }
     local_50[0] = 0;
-    iVar9 = NtFreeVirtualMemory(&local_40,local_50,0x8000,p_Var6->MemoryRegionType);
-    local_48 = -(iVar9 >> 0x1f) - 1U & 1;
+    iVar6 = NtFreeVirtualMemory(&local_40,local_50,0x8000,*(undefined4 *)((int)param_1 + 0x590));
+    local_50[2] = -(iVar6 >> 0x1f) - 1U & 1;
+    goto LAB_828a80b4;
   }
+  local_50[0] = (ulong)((_HEAP_FREE_ENTRY *)((int)param_3 + -0x10))->Size;
+  p_Var5 = RtlpCoalesceFreeBlocks(param_1,(_HEAP_FREE_ENTRY *)((int)param_3 + -0x10),local_50,0);
+  if (local_50[0] < 0x80) {
+    p_Var5->Flags = p_Var5->Flags & 0x10;
+    p_Var7 = (_LIST_ENTRY *)(((local_50[0] & 0xffff) + 0x30) * 8 + (int)param_1);
+    if (p_Var7->Flink == p_Var7) {
+      iVar6 = ((p_Var5->Size >> 5) + 0x58) * 4;
+      *(uint *)(iVar6 + (int)param_1) = 1 << (p_Var5->Size & 0x1f) | *(uint *)(iVar6 + (int)param_1)
+      ;
+    }
+    p_Var1 = p_Var7->Blink;
+    (p_Var5->FreeList).Flink = p_Var7;
+    (p_Var5->FreeList).Blink = p_Var1;
+    p_Var1->Flink = &p_Var5->FreeList;
+    p_Var7->Blink = &p_Var5->FreeList;
+    iVar6 = *(int *)((int)param_1 + 0x30);
+  }
+  else {
+    if ((*(uint *)((int)param_1 + 0x28) <= local_50[0]) &&
+       (*(uint *)((int)param_1 + 0x2c) <= *(int *)((int)param_1 + 0x30) + local_50[0])) {
+      RtlpDeCommitFreeBlock(param_1,p_Var5,local_50[0]);
+      goto LAB_828a80b4;
+    }
+    if (0xf000 < local_50[0]) {
+      RtlpInsertFreeBlock(param_1,p_Var5,local_50[0]);
+      goto LAB_828a80b4;
+    }
+    p_Var5->Flags = p_Var5->Flags & 0x10;
+    local_44 = *(_LIST_ENTRY **)((int)param_1 + 0x180);
+    while (((_LIST_ENTRY *)((int)param_1 + 0x180) != local_44 &&
+           (local_40 = local_44 + -1, (uint)*(ushort *)&local_44[-1].Flink < (local_50[0] & 0xffff))
+           )) {
+      local_44 = local_44->Flink;
+    }
+    p_Var7 = local_44->Blink;
+    (p_Var5->FreeList).Flink = local_44;
+    (p_Var5->FreeList).Blink = p_Var7;
+    p_Var7->Flink = &p_Var5->FreeList;
+    local_44->Blink = &p_Var5->FreeList;
+    iVar6 = *(int *)((int)param_1 + 0x30);
+  }
+  *(ulong *)((int)param_1 + 0x30) = iVar6 + local_50[0];
+LAB_828a80b4:
   FUN_828a80f8();
-  uVar7 = local_48;
-LAB_828a80c8:
-  uVar10 = __restgprlr_26(uVar7);
-  return uVar10;
+  return local_50[2];
 }
 
 
@@ -1475,84 +1417,74 @@ LAB_828a568c:
 
 // 828A56B8  RtlpInsertUnCommittedPages  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/xrtl/rtlheap.c:5791)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void RtlpInsertUnCommittedPages(_HEAP_SEGMENT *param_1,ulong param_2,ulong param_3)
 
 {
   _HEAP_UNCOMMMTTED_RANGE *p_Var1;
-  _HEAP_SEGMENT *p_Var2;
-  _HEAP_UNCOMMMTTED_RANGE *p_Var3;
-  ulonglong uVar4;
-  uint uVar5;
-  ulonglong uVar6;
-  ulong uVar7;
-  _HEAP_UNCOMMMTTED_RANGE *p_Var8;
-  ulonglong uVar9;
+  _HEAP_UNCOMMMTTED_RANGE *p_Var2;
+  uint uVar3;
+  _HEAP_UNCOMMMTTED_RANGE *p_Var4;
   
-  uVar9 = (ulonglong)(int)param_3;
-  uVar4 = (ulonglong)(int)param_2;
-  p_Var2 = (_HEAP_SEGMENT *)__savegprlr_28(param_1);
-  uVar7 = (ulong)uVar4;
-  uVar5 = (uint)uVar9;
-  p_Var3 = p_Var2->UnCommittedRanges;
-  p_Var1 = (_HEAP_UNCOMMMTTED_RANGE *)&p_Var2->UnCommittedRanges;
+  p_Var2 = param_1->UnCommittedRanges;
+  p_Var1 = (_HEAP_UNCOMMMTTED_RANGE *)&param_1->UnCommittedRanges;
   do {
-    p_Var8 = p_Var3;
-    if (p_Var8 == (_HEAP_UNCOMMMTTED_RANGE *)0x0) {
+    p_Var4 = p_Var2;
+    if (p_Var4 == (_HEAP_UNCOMMMTTED_RANGE *)0x0) {
 LAB_828a5760:
-      p_Var3 = RtlpCreateUnCommittedRange(p_Var2);
-      if (p_Var3 != (_HEAP_UNCOMMMTTED_RANGE *)0x0) {
-        p_Var3->Size = uVar5;
-        p_Var3->Address = uVar7;
-        p_Var3->Next = p_Var1->Next;
-        p_Var1->Next = p_Var3;
-        p_Var2->NumberOfUnCommittedRanges = p_Var2->NumberOfUnCommittedRanges + 1;
-        if (p_Var2->LargestUnCommittedRange <= uVar5) {
-          p_Var2->LargestUnCommittedRange = uVar5;
+      p_Var2 = RtlpCreateUnCommittedRange(param_1);
+      if (p_Var2 != (_HEAP_UNCOMMMTTED_RANGE *)0x0) {
+        p_Var2->Size = param_3;
+        p_Var2->Address = param_2;
+        p_Var2->Next = p_Var1->Next;
+        p_Var1->Next = p_Var2;
+        param_1->NumberOfUnCommittedRanges = param_1->NumberOfUnCommittedRanges + 1;
+        if (param_1->LargestUnCommittedRange <= param_3) {
+          param_1->LargestUnCommittedRange = param_3;
         }
       }
-LAB_828a57a0:
-      __restgprlr_28();
       return;
     }
-    uVar7 = (ulong)uVar4;
-    uVar5 = (uint)uVar9;
-    uVar6 = (ulonglong)p_Var8->Address;
-    if ((uVar4 & 0xffffffff) < uVar6) {
-      if ((uVar4 + uVar9 & 0xffffffff) == uVar6) {
-        p_Var8->Address = uVar7;
-        uVar9 = uVar9 + p_Var8->Size;
-        uVar7 = (ulong)uVar9;
-        p_Var8->Size = uVar7;
-        if ((ulonglong)p_Var2->LargestUnCommittedRange < (uVar9 & 0xffffffff)) {
-          p_Var2->LargestUnCommittedRange = uVar7;
+    uVar3 = p_Var4->Address;
+    if (param_2 < uVar3) {
+      if (param_2 + param_3 == uVar3) {
+        p_Var4->Address = param_2;
+        uVar3 = param_3 + p_Var4->Size;
+        p_Var4->Size = uVar3;
+        if (uVar3 <= param_1->LargestUnCommittedRange) {
+          return;
         }
-        goto LAB_828a57a0;
+        param_1->LargestUnCommittedRange = uVar3;
+        return;
       }
       goto LAB_828a5760;
     }
-    if ((p_Var8->Size + uVar6 & 0xffffffff) == (uVar4 & 0xffffffff)) {
-      uVar9 = p_Var8->Size + uVar9;
-      p_Var1->Next = p_Var8->Next;
-      p_Var8->Next = p_Var2->Heap->UnusedUnCommittedRanges;
-      p_Var2->Heap->UnusedUnCommittedRanges = p_Var8;
-      p_Var8->Address = 0;
-      p_Var8->Size = 0;
-      p_Var2->NumberOfUnCommittedRanges = p_Var2->NumberOfUnCommittedRanges - 1;
-      uVar4 = uVar6;
-      p_Var8 = p_Var1;
-      if ((ulonglong)p_Var2->LargestUnCommittedRange < (uVar9 & 0xffffffff)) {
-        p_Var2->LargestUnCommittedRange = (ulong)uVar9;
+    if (p_Var4->Size + uVar3 == param_2) {
+      param_3 = p_Var4->Size + param_3;
+      p_Var1->Next = p_Var4->Next;
+      p_Var4->Next = param_1->Heap->UnusedUnCommittedRanges;
+      param_1->Heap->UnusedUnCommittedRanges = p_Var4;
+      p_Var4->Address = 0;
+      p_Var4->Size = 0;
+      param_1->NumberOfUnCommittedRanges = param_1->NumberOfUnCommittedRanges - 1;
+      param_2 = uVar3;
+      p_Var4 = p_Var1;
+      if (param_1->LargestUnCommittedRange < param_3) {
+        param_1->LargestUnCommittedRange = param_3;
       }
     }
-    uVar7 = (ulong)uVar4;
-    uVar5 = (uint)uVar9;
-    p_Var3 = p_Var8->Next;
-    p_Var1 = p_Var8;
+    p_Var2 = p_Var4->Next;
+    p_Var1 = p_Var4;
   } while( true );
 }
 
 
 // 828A57E0  RtlpFindAndCommitPages  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/xrtl/rtlheap.c:5993)
+
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
 
 _HEAP_FREE_ENTRY *
 RtlpFindAndCommitPages(_HEAP *param_1,_HEAP_SEGMENT *param_2,ulong *param_3,void *param_4)
@@ -1560,134 +1492,123 @@ RtlpFindAndCommitPages(_HEAP *param_1,_HEAP_SEGMENT *param_2,ulong *param_3,void
 {
   bool bVar1;
   uint uVar2;
-  uint uVar3;
-  undefined4 *puVar4;
-  int iVar5;
-  uint *puVar6;
-  int iVar7;
+  _HEAP_UNCOMMMTTED_RANGE *p_Var3;
+  int iVar4;
+  longlong lVar5;
+  ushort uVar6;
+  _HEAP_FREE_ENTRY *p_Var7;
   _HEAP_FREE_ENTRY *p_Var8;
-  longlong lVar9;
-  longlong lVar10;
-  uint *puVar11;
-  ulonglong uVar12;
-  ushort uVar13;
-  ushort *puVar14;
-  ushort *puVar15;
-  ulonglong uVar16;
-  ulonglong uVar17;
-  ulonglong uVar18;
-  ushort *local_60 [24];
+  _HEAP_UNCOMMMTTED_RANGE *p_Var9;
+  _HEAP_UNCOMMMTTED_RANGE *p_Var10;
+  _HEAP_UNCOMMMTTED_RANGE *p_Var11;
+  _HEAP_FREE_ENTRY *local_60 [24];
   
-  uVar12 = (ulonglong)(int)param_4;
-  lVar10 = (longlong)(int)param_3;
-  lVar9 = (longlong)(int)param_2;
-  iVar7 = __savegprlr_23(param_1);
-  iVar5 = (int)lVar9;
-  if ((ulonglong)*(uint *)(iVar5 + 0x38) != 0) {
-    puVar11 = (uint *)lVar10;
-    uVar16 = lVar9 + 0x38U;
-    uVar17 = 0;
-    uVar18 = (ulonglong)*(uint *)(iVar5 + 0x38);
+  if (param_2->UnCommittedRanges != (_HEAP_UNCOMMMTTED_RANGE *)0x0) {
+    p_Var3 = param_2->UnCommittedRanges;
+    p_Var9 = (_HEAP_UNCOMMMTTED_RANGE *)&param_2->UnCommittedRanges;
+    p_Var10 = (_HEAP_UNCOMMMTTED_RANGE *)0x0;
     do {
-      puVar6 = (uint *)uVar18;
-      if ((*puVar11 <= puVar6[2]) &&
-         (((uVar12 & 0xffffffff) == 0 || ((ulonglong)puVar6[1] == (uVar12 & 0xffffffff))))) {
-        local_60[0] = (ushort *)puVar6[1];
-        if (*(code **)(iVar7 + 0x584) == (code *)0x0) {
-          iVar7 = NtAllocateVirtualMemory
-                            (local_60,lVar10,0x60001000,4,*(undefined4 *)(iVar7 + 0x590));
+      p_Var11 = p_Var3;
+      if ((*param_3 <= p_Var11->Size) &&
+         ((param_4 == (void *)0x0 || ((void *)p_Var11->Address == param_4)))) {
+        local_60[0] = (_HEAP_FREE_ENTRY *)p_Var11->Address;
+        if (param_1->CommitRoutine == (_func___cdecl_long_void_ptr_void_ptr_ptr_ulong_ptr *)0x0) {
+          iVar4 = NtAllocateVirtualMemory(local_60,param_3,0x60001000,4,param_1->MemoryRegionType);
         }
         else {
-          iVar7 = (**(code **)(iVar7 + 0x584))(iVar7,local_60,lVar10);
+          iVar4 = (*param_1->CommitRoutine)(param_1,local_60,param_3);
         }
-        if (-1 < iVar7) {
-          *(uint *)(iVar5 + 0x30) = *(int *)(iVar5 + 0x30) - (uint)*(ushort *)puVar11;
-          if (*(uint *)(iVar5 + 0x1c) == puVar6[2]) {
-            *(undefined4 *)(iVar5 + 0x1c) = 0;
-          }
-          puVar15 = *(ushort **)(iVar5 + 0x40);
-          if (((*(byte *)((int)puVar15 + 5) & 0x10) != 0) &&
-             (puVar15 + (uint)*puVar15 * 8 == (ushort *)puVar6[1])) goto LAB_828a5974;
-          if (uVar17 == 0) {
-            puVar15 = *(ushort **)(iVar5 + 0x28);
-          }
-          else {
-            puVar15 = (ushort *)(*(int *)((int)uVar17 + 8) + *(int *)((int)uVar17 + 4));
-          }
-          if ((*(byte *)((int)puVar15 + 5) & 0x10) != 0) goto LAB_828a5974;
-          puVar14 = puVar15;
-          goto LAB_828a5934;
+        if (iVar4 < 0) {
+          return (_HEAP_FREE_ENTRY *)0x0;
         }
-        break;
+        param_2->NumberOfUnCommittedPages =
+             param_2->NumberOfUnCommittedPages - (uint)*(ushort *)param_3;
+        if (param_2->LargestUnCommittedRange == p_Var11->Size) {
+          param_2->LargestUnCommittedRange = 0;
+        }
+        p_Var8 = (_HEAP_FREE_ENTRY *)param_2->LastEntryInSegment;
+        if (((p_Var8->Flags & 0x10) != 0) &&
+           (&p_Var8->Size + (uint)p_Var8->Size * 8 == (ushort *)p_Var11->Address))
+        goto LAB_828a5974;
+        if (p_Var10 == (_HEAP_UNCOMMMTTED_RANGE *)0x0) {
+          p_Var8 = (_HEAP_FREE_ENTRY *)param_2->FirstEntry;
+        }
+        else {
+          p_Var8 = (_HEAP_FREE_ENTRY *)(p_Var10->Size + p_Var10->Address);
+        }
+        if ((p_Var8->Flags & 0x10) != 0) goto LAB_828a5974;
+        p_Var7 = p_Var8;
+        goto LAB_828a5934;
       }
-      uVar16 = uVar18;
-      uVar17 = uVar18;
-      uVar18 = (ulonglong)*puVar6;
-    } while ((ulonglong)*puVar6 != 0);
+      p_Var3 = p_Var11->Next;
+      p_Var9 = p_Var11;
+      p_Var10 = p_Var11;
+    } while (p_Var11->Next != (_HEAP_UNCOMMMTTED_RANGE *)0x0);
   }
-LAB_828a5854:
-  puVar15 = (ushort *)0x0;
-  goto LAB_828a585c;
-  while (puVar14 = puVar15, (*(byte *)((int)puVar15 + 5) & 0x10) == 0) {
+  return (_HEAP_FREE_ENTRY *)0x0;
 LAB_828a5934:
-    puVar15 = puVar14 + (uint)*puVar14 * 8;
-    if ((*(ushort **)(iVar5 + 0x2c) <= puVar15) || (*puVar15 == 0)) {
-      bVar1 = puVar15 != local_60[0];
-      puVar15 = puVar14;
-      if (bVar1) goto LAB_828a5854;
-      break;
+  p_Var8 = (_HEAP_FREE_ENTRY *)(&p_Var7->Size + (uint)p_Var7->Size * 8);
+  if (((_HEAP_FREE_ENTRY *)param_2->LastValidEntry <= p_Var8) || (p_Var8->Size == 0)) {
+    bVar1 = p_Var8 != local_60[0];
+    p_Var8 = p_Var7;
+    if (bVar1) {
+      return (_HEAP_FREE_ENTRY *)0x0;
     }
+    goto LAB_828a5974;
   }
+  p_Var7 = p_Var8;
+  if ((p_Var8->Flags & 0x10) != 0) {
 LAB_828a5974:
-  *(byte *)((int)puVar15 + 5) = *(byte *)((int)puVar15 + 5) & 0xef;
-  uVar2 = puVar6[2];
-  puVar6[1] = puVar6[1] + *puVar11;
-  uVar3 = *puVar11;
-  puVar6[2] = (uint)((ulonglong)uVar2 - (ulonglong)uVar3);
-  if ((ulonglong)uVar2 - (ulonglong)uVar3 == 0) {
-    if (puVar6[1] == *(uint *)(iVar5 + 0x2c)) {
-      *(undefined1 *)((int)local_60[0] + 5) = 0x10;
-      *(ushort **)(iVar5 + 0x40) = local_60[0];
+    p_Var8->Flags = p_Var8->Flags & 0xef;
+    p_Var11->Address = p_Var11->Address + *param_3;
+    lVar5 = (ulonglong)p_Var11->Size - (ulonglong)*param_3;
+    p_Var11->Size = (ulong)lVar5;
+    if (lVar5 == 0) {
+      if ((_HEAP_ENTRY *)p_Var11->Address == param_2->LastValidEntry) {
+        local_60[0]->Flags = '\x10';
+        param_2->LastEntryInSegment = (_HEAP_ENTRY *)local_60[0];
+      }
+      else {
+        local_60[0]->Flags = '\0';
+        param_2->LastEntryInSegment = param_2->FirstEntry;
+      }
+      p_Var9->Next = p_Var11->Next;
+      p_Var11->Next = param_2->Heap->UnusedUnCommittedRanges;
+      param_2->Heap->UnusedUnCommittedRanges = p_Var11;
+      p_Var11->Address = 0;
+      p_Var11->Size = 0;
+      param_2->NumberOfUnCommittedRanges = param_2->NumberOfUnCommittedRanges - 1;
     }
     else {
-      *(undefined1 *)((int)local_60[0] + 5) = 0;
-      *(undefined4 *)(iVar5 + 0x40) = *(undefined4 *)(iVar5 + 0x28);
+      local_60[0]->Flags = '\x10';
+      param_2->LastEntryInSegment = (_HEAP_ENTRY *)local_60[0];
     }
-    *(uint *)uVar16 = *puVar6;
-    *puVar6 = *(uint *)(*(int *)(iVar5 + 0x18) + 0x4c);
-    *(uint **)(*(int *)(iVar5 + 0x18) + 0x4c) = puVar6;
-    puVar6[1] = 0;
-    puVar6[2] = 0;
-    *(int *)(iVar5 + 0x34) = *(int *)(iVar5 + 0x34) + -1;
-  }
-  else {
-    *(undefined1 *)((int)local_60[0] + 5) = 0x10;
-    *(ushort **)(iVar5 + 0x40) = local_60[0];
-  }
-  *(undefined1 *)(local_60[0] + 2) = *(undefined1 *)(puVar15 + 2);
-  uVar2 = *puVar11;
-  uVar13 = (ushort)(uVar2 >> 4);
-  *local_60[0] = uVar13;
-  local_60[0][1] = *puVar15;
-  if ((*(byte *)((int)local_60[0] + 5) & 0x10) == 0) {
-    local_60[0][(uVar2 >> 4 & 0xffff) * 8 + 1] = uVar13;
-  }
-  puVar15 = local_60[0];
-  if (*(int *)(iVar5 + 0x1c) == 0) {
-    for (puVar4 = (undefined4 *)*(undefined4 *)(lVar9 + 0x38U); puVar4 != (undefined4 *)0x0;
-        puVar4 = (undefined4 *)*puVar4) {
-      if (*(uint *)(iVar5 + 0x1c) <= (uint)puVar4[2]) {
-        *(undefined4 *)(iVar5 + 0x1c) = puVar4[2];
+    local_60[0]->SegmentIndex = p_Var8->SegmentIndex;
+    uVar2 = *param_3;
+    uVar6 = (ushort)(uVar2 >> 4);
+    local_60[0]->Size = uVar6;
+    local_60[0]->PreviousSize = p_Var8->Size;
+    if ((local_60[0]->Flags & 0x10) == 0) {
+      (&local_60[0]->PreviousSize)[(uVar2 >> 4 & 0xffff) * 8] = uVar6;
+    }
+    if (param_2->LargestUnCommittedRange == 0) {
+      for (p_Var3 = param_2->UnCommittedRanges; p_Var3 != (_HEAP_UNCOMMMTTED_RANGE *)0x0;
+          p_Var3 = p_Var3->Next) {
+        if (param_2->LargestUnCommittedRange <= p_Var3->Size) {
+          param_2->LargestUnCommittedRange = p_Var3->Size;
+        }
       }
     }
+    return local_60[0];
   }
-LAB_828a585c:
-  p_Var8 = (_HEAP_FREE_ENTRY *)__restgprlr_23(puVar15);
-  return p_Var8;
+  goto LAB_828a5934;
 }
 
 
 // 828A6828  RtlpInitializeHeapSegment  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/xrtl/rtlheap.c:6310)
+
+/* WARNING: Function: __savegprlr_21 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_21 replaced with injection: xenon_save_restore */
 
 ulong RtlpInitializeHeapSegment
                 (_HEAP *param_1,_HEAP_SEGMENT *param_2,uchar param_3,ulong param_4,void *param_5,
@@ -1695,88 +1616,66 @@ ulong RtlpInitializeHeapSegment
 
 {
   _HEAP_FREE_ENTRY *p_Var1;
-  _HEAP_SEGMENT *p_Var2;
-  void *pvVar3;
-  ulonglong uVar4;
-  _HEAP *p_Var6;
-  undefined8 uVar5;
-  int iVar7;
-  ulong uVar8;
-  longlong lVar9;
-  uint uVar10;
-  ulonglong uVar11;
-  ulonglong uVar12;
-  ulonglong uVar13;
-  uint uVar15;
-  ulonglong uVar14;
-  ushort uVar16;
-  ulong uStack0000003c;
+  int iVar2;
+  uint uVar4;
+  ulonglong uVar3;
+  ushort uVar5;
+  ulong uVar6;
+  void *pvStack0000003c;
   int local_70 [28];
   
-  uVar13 = (ulonglong)(int)param_7;
-  uVar12 = (ulonglong)(int)param_6;
-  uVar11 = (ulonglong)(int)param_5;
-  uVar10 = (uint)(char)param_3;
-  lVar9 = (longlong)(int)param_2;
-  uVar4 = __savegprlr_21(param_1);
-  uStack0000003c = (ulong)uVar12;
-  pvVar3 = (void *)uVar11;
-  uVar15 = (int)uVar13 - (int)pvVar3;
-  uVar14 = lVar9 + 0x57U & 0xfffffff0;
-  uVar8 = ((int)uVar15 >> 0x10) + (uint)((int)uVar15 < 0 && (uVar15 & 0xffff) != 0);
-  p_Var6 = (_HEAP *)uVar4;
-  if ((uVar4 & 0xffffffff) == (uVar11 & 0xffffffff)) {
-    uVar16 = (p_Var6->Entry).Size;
+  uVar4 = (int)param_7 - (int)param_5;
+  p_Var1 = (_HEAP_FREE_ENTRY *)((uint)((int)&param_2[1].Entry.field6_0x8 + 7) & 0xfffffff0);
+  uVar6 = ((int)uVar4 >> 0x10) + (uint)((int)uVar4 < 0 && (uVar4 & 0xffff) != 0);
+  if (param_1 == param_5) {
+    uVar5 = (param_1->Entry).Size;
   }
   else {
-    uVar16 = 0;
+    uVar5 = 0;
   }
-  p_Var2 = (_HEAP_SEGMENT *)lVar9;
-  p_Var1 = (_HEAP_FREE_ENTRY *)uVar14;
-  uVar14 = uVar14 + 0x10;
-  if ((uVar14 & 0xffffffff) < (uVar12 & 0xffffffff)) {
+  if (&p_Var1->Reserved1 < param_6) {
 LAB_828a68ec:
-    uVar15 = (int)uVar13 - uStack0000003c;
-    (p_Var2->Entry).PreviousSize = uVar16;
-    (p_Var2->Entry).Size = (ushort)((int)p_Var1 - (int)p_Var2 >> 4);
-    (p_Var2->Entry).SegmentIndex = (uchar)uVar10;
-    p_Var2->Flags = param_4;
-    uVar14 = (longlong)((int)uVar15 >> 0x10) +
-             (ulonglong)((int)uVar15 < 0 && (uVar15 & 0xffff) != 0);
-    p_Var2->Heap = p_Var6;
-    p_Var2->BaseAddress = pvVar3;
-    p_Var2->FirstEntry = (_HEAP_ENTRY *)p_Var1;
-    (p_Var2->Entry).Flags = '\x01';
-    p_Var2->Signature = 0xffeeffee;
-    p_Var2->LastValidEntry = (_HEAP_ENTRY *)(uVar8 * 0x10000 + (int)pvVar3);
-    p_Var2->NumberOfPages = uVar8;
-    p_Var2->NumberOfUnCommittedPages = (ulong)uVar14;
-    if (uVar14 != 0) {
-      RtlpInsertUnCommittedPages(p_Var2,uStack0000003c,(ulong)((uVar14 & 0xffffffff) << 0x10));
+    uVar4 = (int)param_7 - (int)param_6;
+    (param_2->Entry).PreviousSize = uVar5;
+    (param_2->Entry).Size = (ushort)((int)p_Var1 - (int)param_2 >> 4);
+    (param_2->Entry).SegmentIndex = param_3;
+    param_2->Flags = param_4;
+    uVar3 = (longlong)((int)uVar4 >> 0x10) + (ulonglong)((int)uVar4 < 0 && (uVar4 & 0xffff) != 0);
+    param_2->Heap = param_1;
+    param_2->BaseAddress = param_5;
+    param_2->FirstEntry = (_HEAP_ENTRY *)p_Var1;
+    (param_2->Entry).Flags = '\x01';
+    param_2->Signature = 0xffeeffee;
+    param_2->LastValidEntry = (_HEAP_ENTRY *)(uVar6 * 0x10000 + (int)param_5);
+    param_2->NumberOfPages = uVar6;
+    param_2->NumberOfUnCommittedPages = (ulong)uVar3;
+    pvStack0000003c = param_6;
+    if (uVar3 != 0) {
+      RtlpInsertUnCommittedPages(param_2,(ulong)param_6,(ulong)((uVar3 & 0xffffffff) << 0x10));
     }
-    p_Var6->Segments[uVar10 & 0xff] = p_Var2;
-    uVar16 = (p_Var2->Entry).Size;
+    param_1->Segments[param_3] = param_2;
+    uVar5 = (param_2->Entry).Size;
     p_Var1->Flags = '\x10';
-    p_Var2->LastEntryInSegment = (_HEAP_ENTRY *)p_Var1;
-    p_Var1->SegmentIndex = (uchar)uVar10;
-    p_Var1->PreviousSize = uVar16;
-    RtlpInsertFreeBlock(p_Var6,p_Var1,(int)(uStack0000003c - (int)p_Var1) >> 4);
-    uVar5 = 1;
+    param_2->LastEntryInSegment = (_HEAP_ENTRY *)p_Var1;
+    p_Var1->SegmentIndex = param_3;
+    p_Var1->PreviousSize = uVar5;
+    RtlpInsertFreeBlock(param_1,p_Var1,(int)pvStack0000003c - (int)p_Var1 >> 4);
+    uVar6 = 1;
   }
   else {
-    if ((uVar14 & 0xffffffff) < (uVar13 & 0xffffffff)) {
-      local_70[0] = (int)p_Var1 + (0x10 - uStack0000003c);
-      iVar7 = NtAllocateVirtualMemory
-                        (&stack0x0000003c,local_70,0x60001000,4,p_Var6->MemoryRegionType);
-      if (-1 < iVar7) {
-        uStack0000003c = local_70[0] + uStack0000003c;
+    if (&p_Var1->Reserved1 < param_7) {
+      local_70[0] = (int)p_Var1 + (0x10 - (int)param_6);
+      pvStack0000003c = param_6;
+      iVar2 = NtAllocateVirtualMemory
+                        (&stack0x0000003c,local_70,0x60001000,4,param_1->MemoryRegionType);
+      if (-1 < iVar2) {
+        param_6 = (void *)(local_70[0] + (int)pvStack0000003c);
         goto LAB_828a68ec;
       }
     }
-    uVar5 = 0;
+    uVar6 = 0;
   }
-  uVar8 = __restgprlr_21(uVar5);
-  return uVar8;
+  return uVar6;
 }
 
 
@@ -1803,98 +1702,95 @@ long RtlpDestroyHeapSegment(_HEAP_SEGMENT *param_1,_MEMORY_REGION_TYPE param_2)
 
 // 828A69A0  RtlpExtendHeap  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/xrtl/rtlheap.c:6582)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 _HEAP_FREE_ENTRY * RtlpExtendHeap(_HEAP *param_1,ulong param_2)
 
 {
-  _HEAP *p_Var2;
-  _HEAP_FREE_ENTRY *p_Var3;
-  int iVar4;
+  _HEAP_FREE_ENTRY *p_Var2;
+  int iVar3;
   longlong lVar1;
-  ulong uVar5;
+  ulong uVar4;
+  uint uVar5;
   uint uVar6;
-  ulonglong uVar7;
-  uint uVar8;
+  uint uVar7;
   uint local_40;
   _HEAP_SEGMENT *local_3c;
   uint local_38;
   uint local_34 [13];
   
-  lVar1 = (longlong)(int)param_2;
-  p_Var2 = (_HEAP *)__savegprlr_27(param_1);
-  uVar6 = 0x40;
-  uVar8 = 0;
-  uVar7 = (lVar1 + 0xffffU & 0xffffffff) >> 0x10;
-  local_38 = (uint)(uVar7 << 0x10);
+  uVar5 = 0x40;
+  uVar6 = 0;
+  uVar7 = param_2 + 0xffff >> 0x10;
+  local_38 = uVar7 << 0x10;
   do {
-    local_3c = p_Var2->Segments[uVar8];
+    local_3c = param_1->Segments[uVar6];
     if (local_3c == (_HEAP_SEGMENT *)0x0) {
-      if (uVar6 == 0x40) {
-        uVar6 = uVar8;
+      if (uVar5 == 0x40) {
+        uVar5 = uVar6;
       }
     }
-    else if ((uVar7 <= local_3c->NumberOfUnCommittedPages) &&
-            (local_38 <= local_3c->LargestUnCommittedRange)) {
-      p_Var3 = RtlpFindAndCommitPages(p_Var2,local_3c,&local_38,(void *)0x0);
-      if (p_Var3 != (_HEAP_FREE_ENTRY *)0x0) {
-        local_38 = local_38 >> 4;
-        p_Var3 = RtlpCoalesceFreeBlocks(p_Var2,p_Var3,&local_38,0);
-        uVar7 = (ulonglong)(int)p_Var3;
-        RtlpInsertFreeBlock(p_Var2,p_Var3,local_38);
-        goto LAB_828a6be4;
-      }
+    else if (((uVar7 <= local_3c->NumberOfUnCommittedPages) &&
+             (local_38 <= local_3c->LargestUnCommittedRange)) &&
+            (p_Var2 = RtlpFindAndCommitPages(param_1,local_3c,&local_38,(void *)0x0),
+            p_Var2 != (_HEAP_FREE_ENTRY *)0x0)) {
+      local_38 = local_38 >> 4;
+      p_Var2 = RtlpCoalesceFreeBlocks(param_1,p_Var2,&local_38,0);
+      RtlpInsertFreeBlock(param_1,p_Var2,local_38);
+      return p_Var2;
     }
-    uVar8 = uVar8 + 1 & 0xff;
-  } while (uVar8 < 0x40);
-  if ((uVar6 != 0x40) && ((p_Var2->Flags & 2) != 0)) {
-    uVar7 = lVar1 + 0x10000;
-    uVar8 = (uint)uVar7;
+    uVar6 = uVar6 + 1 & 0xff;
+  } while (uVar6 < 0x40);
+  if ((uVar5 != 0x40) && ((param_1->Flags & 2) != 0)) {
+    uVar7 = param_2 + 0x10000;
     local_3c = (_HEAP_SEGMENT *)0x0;
-    local_40 = uVar8;
-    if ((uVar7 & 0xffffffff) <= (ulonglong)p_Var2->SegmentReserve) {
-      local_40 = p_Var2->SegmentReserve;
+    local_40 = uVar7;
+    if (uVar7 <= param_1->SegmentReserve) {
+      local_40 = param_1->SegmentReserve;
     }
-    iVar4 = NtAllocateVirtualMemory(&local_3c,&local_40,0x60002000,4,p_Var2->MemoryRegionType);
-    if (iVar4 < 0) {
+    iVar3 = NtAllocateVirtualMemory(&local_3c,&local_40,0x60002000,4,param_1->MemoryRegionType);
+    if (iVar3 < 0) {
       do {
-        if ((ulonglong)local_40 == (uVar7 & 0xffffffff)) break;
+        if (local_40 == uVar7) break;
         local_40 = local_40 >> 1;
-        if ((ulonglong)local_40 < (uVar7 & 0xffffffff)) {
-          local_40 = uVar8;
+        if (local_40 < uVar7) {
+          local_40 = uVar7;
         }
-        iVar4 = NtAllocateVirtualMemory(&local_3c,&local_40,0x60002000,4,p_Var2->MemoryRegionType);
-      } while (iVar4 < 0);
-      if (iVar4 < 0) goto LAB_828a6bdc;
+        iVar3 = NtAllocateVirtualMemory(&local_3c,&local_40,0x60002000,4,param_1->MemoryRegionType);
+      } while (iVar3 < 0);
+      if (iVar3 < 0) {
+        return (_HEAP_FREE_ENTRY *)0x0;
+      }
     }
-    p_Var2->SegmentReserve = p_Var2->SegmentReserve + local_40;
-    local_34[0] = uVar8;
-    if ((uVar7 & 0xffffffff) <= (ulonglong)p_Var2->SegmentCommit) {
-      local_34[0] = p_Var2->SegmentCommit;
+    param_1->SegmentReserve = param_1->SegmentReserve + local_40;
+    local_34[0] = uVar7;
+    if (uVar7 <= param_1->SegmentCommit) {
+      local_34[0] = param_1->SegmentCommit;
     }
-    lVar1 = NtAllocateVirtualMemory(&local_3c,local_34,0x60001000,4,p_Var2->MemoryRegionType);
+    lVar1 = NtAllocateVirtualMemory(&local_3c,local_34,0x60001000,4,param_1->MemoryRegionType);
     if (-1 < lVar1) {
-      uVar5 = RtlpInitializeHeapSegment
-                        (p_Var2,local_3c,(uchar)uVar6,0,local_3c,
+      uVar4 = RtlpInitializeHeapSegment
+                        (param_1,local_3c,(uchar)uVar5,0,local_3c,
                          (void *)((int)&(local_3c->Entry).Size + local_34[0]),
                          (void *)((int)&(local_3c->Entry).Size + local_40));
-      if (uVar5 == 0) {
+      if (uVar4 == 0) {
         lVar1 = -0x3fffffe9;
       }
       if (-1 < (int)lVar1) {
-        uVar7 = ZEXT48(local_3c->FirstEntry);
-        goto LAB_828a6be4;
+        return (_HEAP_FREE_ENTRY *)local_3c->FirstEntry;
       }
     }
-    NtFreeVirtualMemory(&local_3c,&local_40,0x8000,p_Var2->MemoryRegionType);
+    NtFreeVirtualMemory(&local_3c,&local_40,0x8000,param_1->MemoryRegionType);
   }
-LAB_828a6bdc:
-  uVar7 = 0;
-LAB_828a6be4:
-  p_Var3 = (_HEAP_FREE_ENTRY *)__restgprlr_27(uVar7);
-  return p_Var3;
+  return (_HEAP_FREE_ENTRY *)0x0;
 }
 
 
 // 828A5B10  RtlpCoalesceFreeBlocks  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/xrtl/rtlheap.c:6873)
+
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 
 _HEAP_FREE_ENTRY *
 RtlpCoalesceFreeBlocks(_HEAP *param_1,_HEAP_FREE_ENTRY *param_2,ulong *param_3,ulong param_4)
@@ -1902,155 +1798,151 @@ RtlpCoalesceFreeBlocks(_HEAP *param_1,_HEAP_FREE_ENTRY *param_2,ulong *param_3,u
 {
   byte bVar1;
   ushort uVar2;
-  uint *puVar3;
-  uint *puVar4;
-  int iVar5;
-  ushort *puVar6;
-  ushort *puVar7;
-  int iVar8;
-  _HEAP_FREE_ENTRY *p_Var9;
+  _LIST_ENTRY *p_Var3;
+  _LIST_ENTRY *p_Var4;
+  int *piVar5;
+  int *piVar6;
+  undefined4 *puVar7;
+  undefined4 *puVar8;
+  longlong lVar9;
   ulonglong uVar10;
-  ulonglong uVar11;
-  ulonglong uVar12;
-  longlong lVar13;
+  _HEAP_FREE_ENTRY *p_Var11;
+  ushort *puVar12;
   
-  uVar10 = (ulonglong)(int)param_4;
-  uVar11 = (ulonglong)(int)param_2;
-  iVar8 = __savegprlr_25(param_1);
-  puVar6 = (ushort *)uVar11;
-  uVar12 = uVar11 + (ulonglong)puVar6[1] * -0x10;
-  if ((uVar12 & 0xffffffff) != (uVar11 & 0xffffffff)) {
-    puVar7 = (ushort *)uVar12;
-    if (((*(byte *)((int)puVar7 + 5) & 1) == 0) && ((uint)*puVar7 + *param_3 < 0xf001)) {
-      if ((uVar10 & 0xffffffff) != 0) {
-        puVar3 = *(uint **)(puVar6 + 6);
-        puVar4 = *(uint **)(puVar6 + 4);
-        if (((ulonglong)*puVar3 == (ulonglong)puVar4[1]) &&
-           ((ulonglong)*puVar3 == (uVar11 + 8 & 0xffffffff))) {
-          *puVar3 = (uint)puVar4;
-          puVar4[1] = (uint)puVar3;
-          if (puVar4 == puVar3) {
-            uVar2 = *puVar6;
+  p_Var11 = (_HEAP_FREE_ENTRY *)((int)param_2 + (uint)param_2->PreviousSize * -0x10);
+  if (p_Var11 != param_2) {
+    if (((p_Var11->Flags & 1) == 0) && ((uint)p_Var11->Size + *param_3 < 0xf001)) {
+      if (param_4 != 0) {
+        p_Var3 = (param_2->FreeList).Blink;
+        p_Var4 = (param_2->FreeList).Flink;
+        if ((p_Var3->Flink == p_Var4->Blink) && (p_Var3->Flink == &param_2->FreeList)) {
+          p_Var3->Flink = p_Var4;
+          p_Var4->Blink = p_Var3;
+          if (p_Var4 == p_Var3) {
+            uVar2 = param_2->Size;
             if (uVar2 < 0x80) {
-              iVar5 = ((uVar2 >> 5) + 0x58) * 4;
-              *(uint *)(iVar5 + iVar8) = 1 << (uVar2 & 0x1f) ^ *(uint *)(iVar5 + iVar8);
+              param_1->FreeListsInUseUlong[uVar2 >> 5] =
+                   1 << (uVar2 & 0x1f) ^ param_1->FreeListsInUseUlong[uVar2 >> 5];
             }
           }
         }
-        if ((*(byte *)((int)puVar6 + 5) & 4) != 0) {
-          uVar10 = (ulonglong)*puVar6 * 0x10 - 0x18;
-          if (((*(byte *)((int)puVar6 + 5) & 2) != 0) && (4 < (uVar10 & 0xffffffff))) {
-            uVar10 = (ulonglong)*puVar6 * 0x10 - 0x1c;
+        if ((param_2->Flags & 4) != 0) {
+          lVar9 = (ulonglong)param_2->Size * 0x10;
+          uVar10 = lVar9 - 0x18;
+          if (((param_2->Flags & 2) != 0) && (4 < (uVar10 & 0xffffffff))) {
+            uVar10 = lVar9 - 0x1c;
           }
-          RtlCompareMemoryUlong(uVar11 + 0x18,uVar10,0xfffffffffeeefeee);
+          RtlCompareMemoryUlong(param_2 + 1,uVar10,0xfffffffffeeefeee);
         }
-        uVar10 = 0;
-        *(uint *)(iVar8 + 0x30) = *(int *)(iVar8 + 0x30) - (uint)*puVar6;
+        param_4 = 0;
+        param_1->TotalFreeSize = param_1->TotalFreeSize - (uint)param_2->Size;
       }
-      puVar3 = *(uint **)(puVar7 + 6);
-      puVar4 = *(uint **)(puVar7 + 4);
-      if (((ulonglong)*puVar3 == (ulonglong)puVar4[1]) &&
-         ((ulonglong)*puVar3 == (uVar12 + 8 & 0xffffffff))) {
-        *puVar3 = (uint)puVar4;
-        puVar4[1] = (uint)puVar3;
-        if (puVar4 == puVar3) {
-          uVar2 = *puVar7;
+      piVar5 = *(int **)((int)&p_Var11->FreeList + 4);
+      piVar6 = (int *)((_HEAP_ENTRY_u_8 *)&p_Var11->FreeList)->AllocAttributes;
+      if (((undefined1 *)*piVar5 == (undefined1 *)piVar6[1]) &&
+         ((_HEAP_ENTRY_u_8 *)*piVar5 == (_HEAP_ENTRY_u_8 *)&p_Var11->FreeList)) {
+        *piVar5 = (int)piVar6;
+        piVar6[1] = (int)piVar5;
+        if (piVar6 == piVar5) {
+          uVar2 = p_Var11->Size;
           if (uVar2 < 0x80) {
-            iVar5 = ((uVar2 >> 5) + 0x58) * 4;
-            *(uint *)(iVar5 + iVar8) = 1 << (uVar2 & 0x1f) ^ *(uint *)(iVar5 + iVar8);
+            param_1->FreeListsInUseUlong[uVar2 >> 5] =
+                 1 << (uVar2 & 0x1f) ^ param_1->FreeListsInUseUlong[uVar2 >> 5];
           }
         }
       }
-      if ((*(byte *)((int)puVar7 + 5) & 4) != 0) {
-        uVar11 = (ulonglong)*puVar7 * 0x10 - 0x18;
-        if (((*(byte *)((int)puVar7 + 5) & 2) != 0) && (4 < (uVar11 & 0xffffffff))) {
-          uVar11 = (ulonglong)*puVar7 * 0x10 - 0x1c;
+      if ((p_Var11->Flags & 4) != 0) {
+        lVar9 = (ulonglong)p_Var11->Size * 0x10;
+        uVar10 = lVar9 - 0x18;
+        if (((p_Var11->Flags & 2) != 0) && (4 < (uVar10 & 0xffffffff))) {
+          uVar10 = lVar9 - 0x1c;
         }
-        RtlCompareMemoryUlong(uVar12 + 0x18,uVar11,0xfffffffffeeefeee);
+        RtlCompareMemoryUlong(p_Var11 + 1,uVar10,0xfffffffffeeefeee);
       }
-      bVar1 = *(byte *)((int)puVar6 + 5);
-      *(byte *)((int)puVar7 + 5) = bVar1 & 0x10;
+      bVar1 = param_2->Flags;
+      p_Var11->Flags = bVar1 & 0x10;
       if ((bVar1 & 0x10) != 0) {
-        *(ushort **)(*(int *)((*(byte *)(puVar7 + 2) + 0x18) * 4 + iVar8) + 0x40) = puVar7;
+        param_1->Segments[p_Var11->SegmentIndex]->LastEntryInSegment = (_HEAP_ENTRY *)p_Var11;
       }
-      *param_3 = (uint)*puVar7 + *param_3;
-      *(uint *)(iVar8 + 0x30) = *(int *)(iVar8 + 0x30) - (uint)*puVar7;
-      *puVar7 = (ushort)*param_3;
-      uVar11 = uVar12;
-      if ((*(byte *)((int)puVar7 + 5) & 0x10) == 0) {
-        puVar7[*param_3 * 8 + 1] = (ushort)*param_3;
+      *param_3 = (uint)p_Var11->Size + *param_3;
+      param_1->TotalFreeSize = param_1->TotalFreeSize - (uint)p_Var11->Size;
+      p_Var11->Size = (ushort)*param_3;
+      param_2 = p_Var11;
+      if ((p_Var11->Flags & 0x10) == 0) {
+        (&p_Var11->PreviousSize)[*param_3 * 8] = (ushort)*param_3;
       }
     }
   }
-  puVar6 = (ushort *)uVar11;
-  if ((*(byte *)((int)puVar6 + 5) & 0x10) == 0) {
-    lVar13 = ((ulonglong)*param_3 & 0xfffffff) * 0x10 + uVar11;
-    puVar7 = (ushort *)lVar13;
-    if (((*(byte *)((int)puVar7 + 5) & 1) == 0) && ((uint)*puVar7 + *param_3 < 0xf001)) {
-      if ((uVar10 & 0xffffffff) != 0) {
-        puVar3 = *(uint **)(puVar6 + 6);
-        puVar4 = *(uint **)(puVar6 + 4);
-        if (((ulonglong)*puVar3 == (ulonglong)puVar4[1]) &&
-           ((ulonglong)*puVar3 == (uVar11 + 8 & 0xffffffff))) {
-          *puVar3 = (uint)puVar4;
-          puVar4[1] = (uint)puVar3;
-          if (puVar4 == puVar3) {
-            uVar2 = *puVar6;
+  if ((param_2->Flags & 0x10) == 0) {
+    puVar12 = &param_2->Size + *param_3 * 8;
+    if (((*(uchar *)((int)puVar12 + 5) & 1) == 0) && ((uint)*puVar12 + *param_3 < 0xf001)) {
+      if (param_4 != 0) {
+        piVar5 = *(int **)((int)&param_2->FreeList + 4);
+        piVar6 = (int *)((_HEAP_ENTRY_u_8 *)&param_2->FreeList)->AllocAttributes;
+        if (((undefined1 *)*piVar5 == (undefined1 *)piVar6[1]) &&
+           ((_HEAP_ENTRY_u_8 *)*piVar5 == (_HEAP_ENTRY_u_8 *)&param_2->FreeList)) {
+          *piVar5 = (int)piVar6;
+          piVar6[1] = (int)piVar5;
+          if (piVar6 == piVar5) {
+            uVar2 = param_2->Size;
             if (uVar2 < 0x80) {
-              iVar5 = ((uVar2 >> 5) + 0x58) * 4;
-              *(uint *)(iVar5 + iVar8) = 1 << (uVar2 & 0x1f) ^ *(uint *)(iVar5 + iVar8);
+              param_1->FreeListsInUseUlong[uVar2 >> 5] =
+                   1 << (uVar2 & 0x1f) ^ param_1->FreeListsInUseUlong[uVar2 >> 5];
             }
           }
         }
-        if ((*(byte *)((int)puVar6 + 5) & 4) != 0) {
-          uVar10 = (ulonglong)*puVar6 * 0x10 - 0x18;
-          if (((*(byte *)((int)puVar6 + 5) & 2) != 0) && (4 < (uVar10 & 0xffffffff))) {
-            uVar10 = (ulonglong)*puVar6 * 0x10 - 0x1c;
+        if ((param_2->Flags & 4) != 0) {
+          lVar9 = (ulonglong)param_2->Size * 0x10;
+          uVar10 = lVar9 - 0x18;
+          if (((param_2->Flags & 2) != 0) && (4 < (uVar10 & 0xffffffff))) {
+            uVar10 = lVar9 - 0x1c;
           }
-          RtlCompareMemoryUlong(uVar11 + 0x18,uVar10,0xfffffffffeeefeee);
+          RtlCompareMemoryUlong(param_2 + 1,uVar10,0xfffffffffeeefeee);
         }
-        *(uint *)(iVar8 + 0x30) = *(int *)(iVar8 + 0x30) - (uint)*puVar6;
+        param_1->TotalFreeSize = param_1->TotalFreeSize - (uint)param_2->Size;
       }
-      bVar1 = *(byte *)((int)puVar7 + 5);
-      *(byte *)((int)puVar6 + 5) = bVar1 & 0x10;
+      bVar1 = *(uchar *)((int)puVar12 + 5);
+      param_2->Flags = bVar1 & 0x10;
       if ((bVar1 & 0x10) != 0) {
-        *(ushort **)(*(int *)((*(byte *)(puVar6 + 2) + 0x18) * 4 + iVar8) + 0x40) = puVar6;
+        param_1->Segments[param_2->SegmentIndex]->LastEntryInSegment = (_HEAP_ENTRY *)param_2;
       }
-      puVar3 = *(uint **)(puVar7 + 6);
-      puVar4 = *(uint **)(puVar7 + 4);
-      if (((ulonglong)*puVar3 == (ulonglong)puVar4[1]) &&
-         ((ulonglong)*puVar3 == (lVar13 + 8U & 0xffffffff))) {
-        *puVar3 = (uint)puVar4;
-        puVar4[1] = (uint)puVar3;
-        if (puVar4 == puVar3) {
-          uVar2 = *puVar7;
+      puVar7 = *(undefined4 **)(puVar12 + 6);
+      puVar8 = (undefined4 *)((_HEAP_ENTRY_u_8 *)(puVar12 + 4))->AllocAttributes;
+      if (((ushort *)*puVar7 == (ushort *)puVar8[1]) &&
+         ((_HEAP_ENTRY_u_8 *)*puVar7 == (_HEAP_ENTRY_u_8 *)(puVar12 + 4))) {
+        *puVar7 = puVar8;
+        puVar8[1] = puVar7;
+        if (puVar8 == puVar7) {
+          uVar2 = *puVar12;
           if (uVar2 < 0x80) {
-            iVar5 = ((uVar2 >> 5) + 0x58) * 4;
-            *(uint *)(iVar5 + iVar8) = 1 << (uVar2 & 0x1f) ^ *(uint *)(iVar5 + iVar8);
+            param_1->FreeListsInUseUlong[uVar2 >> 5] =
+                 1 << (uVar2 & 0x1f) ^ param_1->FreeListsInUseUlong[uVar2 >> 5];
           }
         }
       }
-      if ((*(byte *)((int)puVar7 + 5) & 4) != 0) {
-        uVar10 = (ulonglong)*puVar7 * 0x10 - 0x18;
-        if (((*(byte *)((int)puVar7 + 5) & 2) != 0) && (4 < (uVar10 & 0xffffffff))) {
-          uVar10 = (ulonglong)*puVar7 * 0x10 - 0x1c;
+      if ((*(uchar *)((int)puVar12 + 5) & 4) != 0) {
+        uVar10 = (ulonglong)*puVar12 * 0x10 - 0x18;
+        if (((*(uchar *)((int)puVar12 + 5) & 2) != 0) && (4 < (uVar10 & 0xffffffff))) {
+          uVar10 = (ulonglong)*puVar12 * 0x10 - 0x1c;
         }
-        RtlCompareMemoryUlong(lVar13 + 0x18,uVar10,0xfffffffffeeefeee);
+        RtlCompareMemoryUlong(puVar12 + 0xc,uVar10,0xfffffffffeeefeee);
       }
-      *param_3 = (uint)*puVar7 + *param_3;
-      *(uint *)(iVar8 + 0x30) = *(int *)(iVar8 + 0x30) - (uint)*puVar7;
-      *puVar6 = (ushort)*param_3;
-      if ((*(byte *)((int)puVar6 + 5) & 0x10) == 0) {
-        puVar6[*param_3 * 8 + 1] = (ushort)*param_3;
+      *param_3 = (uint)*puVar12 + *param_3;
+      param_1->TotalFreeSize = param_1->TotalFreeSize - (uint)*puVar12;
+      param_2->Size = (ushort)*param_3;
+      if ((param_2->Flags & 0x10) == 0) {
+        (&param_2->PreviousSize)[*param_3 * 8] = (ushort)*param_3;
       }
     }
   }
-  p_Var9 = (_HEAP_FREE_ENTRY *)__restgprlr_25(uVar11);
-  return p_Var9;
+  return param_2;
 }
 
 
 // 828A6BF0  RtlpDeCommitFreeBlock  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/xrtl/rtlheap.c:7084)
+
+/* WARNING: Function: __savegprlr_19 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_19 replaced with injection: xenon_save_restore */
 
 void RtlpDeCommitFreeBlock(_HEAP *param_1,_HEAP_FREE_ENTRY *param_2,ulong param_3)
 
@@ -2059,233 +1951,220 @@ void RtlpDeCommitFreeBlock(_HEAP *param_1,_HEAP_FREE_ENTRY *param_2,ulong param_
   _LIST_ENTRY *p_Var2;
   _HEAP_SEGMENT *p_Var3;
   uint uVar4;
-  _HEAP_FREE_ENTRY *p_Var5;
-  _HEAP_ENTRY *p_Var6;
-  ushort *puVar7;
-  ushort uVar8;
-  _HEAP *p_Var9;
-  _HEAP_UNCOMMMTTED_RANGE *p_Var10;
-  int iVar11;
-  ulonglong uVar12;
-  ulonglong uVar13;
-  ulonglong uVar14;
-  ulonglong uVar15;
-  _LIST_ENTRY *p_Var16;
-  ulonglong uVar17;
-  ulonglong uVar18;
-  uint uVar19;
-  uint uVar20;
+  ushort uVar5;
+  _HEAP_UNCOMMMTTED_RANGE *p_Var6;
+  int iVar7;
+  ushort *puVar8;
+  _HEAP_FREE_ENTRY *p_Var9;
+  _LIST_ENTRY *p_Var10;
+  ushort *puVar11;
+  _HEAP_FREE_ENTRY *p_Var12;
+  uint uVar13;
+  uint uVar14;
   ulong local_80;
-  _HEAP_ENTRY *local_7c [31];
+  _HEAP_FREE_ENTRY *local_7c [31];
   
-  uVar12 = (ulonglong)(int)param_3;
-  uVar14 = (ulonglong)(int)param_2;
-  p_Var9 = (_HEAP *)__savegprlr_19(param_1);
-  p_Var5 = (_HEAP_FREE_ENTRY *)uVar14;
-  if (p_Var9->CommitRoutine == (_func___cdecl_long_void_ptr_void_ptr_ptr_ulong_ptr *)0x0) {
-    uVar13 = uVar14 + 0xffff & 0xffff0000;
-    local_7c[0] = (_HEAP_ENTRY *)uVar13;
-    uVar18 = 0;
-    uVar19 = (int)local_7c[0] - (int)p_Var5 >> 4 & 0xffff;
-    p_Var3 = p_Var9->Segments[p_Var5->SegmentIndex];
-    if (uVar19 == 1) {
-      uVar13 = uVar13 + 0x10000;
-      uVar19 = 0x1001;
-      local_7c[0] = (_HEAP_ENTRY *)uVar13;
+  if (param_1->CommitRoutine == (_func___cdecl_long_void_ptr_void_ptr_ptr_ulong_ptr *)0x0) {
+    local_7c[0] = (_HEAP_FREE_ENTRY *)((uint)((int)&param_2[0xaaa].FreeList.Blink + 3) & 0xffff0000)
+    ;
+    p_Var12 = (_HEAP_FREE_ENTRY *)0x0;
+    uVar13 = (int)local_7c[0] - (int)param_2 >> 4 & 0xffff;
+    p_Var3 = param_1->Segments[param_2->SegmentIndex];
+    if (uVar13 == 1) {
+      local_7c[0] = (_HEAP_FREE_ENTRY *)&local_7c[0][0xaaa].Reserved1;
+      uVar13 = 0x1001;
     }
-    else if (((ulonglong)p_Var5->PreviousSize != 0) && (uVar13 == (uVar14 & 0xffffffff))) {
-      uVar18 = uVar14 + (ulonglong)p_Var5->PreviousSize * -0x10;
+    else if ((param_2->PreviousSize != 0) && (local_7c[0] == param_2)) {
+      p_Var12 = (_HEAP_FREE_ENTRY *)((int)param_2 + (uint)param_2->PreviousSize * -0x10);
     }
-    uVar17 = 0;
-    uVar14 = (uVar12 & 0xfffffff) * 0x10 + uVar14;
-    uVar15 = uVar14 & 0xffff0000;
-    uVar4 = (int)uVar14 - (int)uVar15 >> 4;
-    uVar20 = uVar4 & 0xffff;
-    if (uVar20 == 1) {
-      uVar20 = 0x1001;
-      uVar15 = uVar15 - 0x10000;
+    puVar11 = (ushort *)0x0;
+    puVar8 = &param_2->Size + param_3 * 8;
+    p_Var9 = (_HEAP_FREE_ENTRY *)((uint)puVar8 & 0xffff0000);
+    uVar4 = (int)puVar8 - (int)p_Var9 >> 4;
+    uVar14 = uVar4 & 0xffff;
+    if (uVar14 == 1) {
+      uVar14 = 0x1001;
+      p_Var9 = (_HEAP_FREE_ENTRY *)&p_Var9[-0xaab].FreeList;
     }
-    else if (((uVar4 & 0xffff) == 0) && ((p_Var5->Flags & 0x10) == 0)) {
-      uVar17 = uVar14;
+    else if (((uVar4 & 0xffff) == 0) && ((param_2->Flags & 0x10) == 0)) {
+      puVar11 = puVar8;
     }
-    puVar7 = (ushort *)((int)uVar14 + uVar20 * -0x10);
-    local_80 = (int)uVar15 - (int)uVar13;
-    if ((uVar15 & 0xffffffff) <= (uVar13 & 0xffffffff)) {
+    puVar8 = puVar8 + uVar14 * -8;
+    local_80 = (int)p_Var9 - (int)local_7c[0];
+    if (p_Var9 <= local_7c[0]) {
       local_80 = 0;
     }
     if ((local_80 != 0) &&
-       (p_Var10 = RtlpCreateUnCommittedRange(p_Var3), p_Var10 != (_HEAP_UNCOMMMTTED_RANGE *)0x0)) {
-      iVar11 = NtFreeVirtualMemory(local_7c,&local_80,0x4000,p_Var9->MemoryRegionType);
-      p_Var10->Next = p_Var3->Heap->UnusedUnCommittedRanges;
-      p_Var3->Heap->UnusedUnCommittedRanges = p_Var10;
-      p_Var10->Address = 0;
-      p_Var10->Size = 0;
-      if (-1 < iVar11) {
+       (p_Var6 = RtlpCreateUnCommittedRange(p_Var3), p_Var6 != (_HEAP_UNCOMMMTTED_RANGE *)0x0)) {
+      iVar7 = NtFreeVirtualMemory(local_7c,&local_80,0x4000,param_1->MemoryRegionType);
+      p_Var6->Next = p_Var3->Heap->UnusedUnCommittedRanges;
+      p_Var3->Heap->UnusedUnCommittedRanges = p_Var6;
+      p_Var6->Address = 0;
+      p_Var6->Size = 0;
+      if (-1 < iVar7) {
         RtlpInsertUnCommittedPages(p_Var3,(ulong)local_7c[0],local_80);
         p_Var3->NumberOfUnCommittedPages = (local_80 >> 0x10) + p_Var3->NumberOfUnCommittedPages;
-        if (uVar19 == 0) {
-          if ((uVar18 & 0xffffffff) == 0) {
-            if ((local_7c[0] <= p_Var3->LastEntryInSegment) &&
-               (p_Var3->LastEntryInSegment < (_HEAP_ENTRY *)((int)&local_7c[0]->Size + local_80))) {
+        if (uVar13 == 0) {
+          if (p_Var12 == (_HEAP_FREE_ENTRY *)0x0) {
+            if ((local_7c[0] <= (_HEAP_FREE_ENTRY *)p_Var3->LastEntryInSegment) &&
+               ((_HEAP_FREE_ENTRY *)p_Var3->LastEntryInSegment <
+                (_HEAP_FREE_ENTRY *)((int)&local_7c[0]->Size + local_80))) {
               p_Var3->LastEntryInSegment = p_Var3->FirstEntry;
             }
           }
           else {
-            p_Var6 = (_HEAP_ENTRY *)uVar18;
-            p_Var6->Flags = p_Var6->Flags | 0x10;
-            p_Var3->LastEntryInSegment = p_Var6;
+            p_Var12->Flags = p_Var12->Flags | 0x10;
+            p_Var3->LastEntryInSegment = (_HEAP_ENTRY *)p_Var12;
           }
         }
         else {
-          p_Var5->Size = (ushort)uVar19;
-          p_Var5->Flags = '\x10';
-          p_Var9->TotalFreeSize = uVar19 + p_Var9->TotalFreeSize;
-          p_Var3->LastEntryInSegment = (_HEAP_ENTRY *)p_Var5;
-          p_Var5->Flags = p_Var5->Flags & 0xf8;
-          if (uVar19 < 0x80) {
-            p_Var16 = p_Var9->FreeLists + uVar19;
-            if (p_Var16->Flink == p_Var16) {
-              uVar8 = p_Var5->Size >> 5;
-              p_Var9->FreeListsInUseUlong[uVar8] =
-                   1 << (p_Var5->Size & 0x1f) | p_Var9->FreeListsInUseUlong[uVar8];
+          param_2->Size = (ushort)uVar13;
+          param_2->Flags = '\x10';
+          param_1->TotalFreeSize = uVar13 + param_1->TotalFreeSize;
+          p_Var3->LastEntryInSegment = (_HEAP_ENTRY *)param_2;
+          param_2->Flags = param_2->Flags & 0xf8;
+          if (uVar13 < 0x80) {
+            p_Var10 = param_1->FreeLists + uVar13;
+            if (p_Var10->Flink == p_Var10) {
+              uVar5 = param_2->Size >> 5;
+              param_1->FreeListsInUseUlong[uVar5] =
+                   1 << (param_2->Size & 0x1f) | param_1->FreeListsInUseUlong[uVar5];
             }
           }
           else {
-            p_Var16 = p_Var9->FreeLists[0].Flink;
-            while ((p_Var9->FreeLists != p_Var16 && (*(ushort *)&p_Var16[-1].Flink < uVar19))) {
-              p_Var16 = p_Var16->Flink;
+            for (p_Var10 = param_1->FreeLists[0].Flink;
+                (param_1->FreeLists != p_Var10 && (*(ushort *)(p_Var10 + -1) < uVar13));
+                p_Var10 = p_Var10->Flink) {
             }
           }
-          p_Var2 = p_Var16->Blink;
-          (p_Var5->FreeList).Flink = p_Var16;
-          (p_Var5->FreeList).Blink = p_Var2;
-          p_Var2->Flink = &p_Var5->FreeList;
-          p_Var16->Blink = &p_Var5->FreeList;
+          p_Var2 = p_Var10->Blink;
+          (param_2->FreeList).Flink = p_Var10;
+          (param_2->FreeList).Blink = p_Var2;
+          p_Var2->Flink = &param_2->FreeList;
+          p_Var10->Blink = &param_2->FreeList;
         }
-        if (uVar20 == 0) {
-          if ((uVar17 & 0xffffffff) != 0) {
-            *(undefined2 *)((int)uVar17 + 2) = 0;
-          }
-        }
-        else {
-          puVar7[1] = 0;
+        if (uVar14 != 0) {
+          puVar8[1] = 0;
           uVar1 = (p_Var3->Entry).SegmentIndex;
-          *(undefined1 *)((int)puVar7 + 5) = 0;
-          *(uchar *)(puVar7 + 2) = uVar1;
-          *puVar7 = (ushort)uVar20;
-          puVar7[uVar20 * 8 + 1] = (ushort)uVar20;
-          *(byte *)((int)puVar7 + 5) = *(byte *)((int)puVar7 + 5) & 0xf8;
-          if (uVar20 < 0x80) {
-            p_Var16 = p_Var9->FreeLists + uVar20;
-            if (p_Var16->Flink == p_Var16) {
-              uVar8 = *puVar7 >> 5;
-              p_Var9->FreeListsInUseUlong[uVar8] =
-                   1 << (*puVar7 & 0x1f) | p_Var9->FreeListsInUseUlong[uVar8];
+          *(uchar *)((int)puVar8 + 5) = '\0';
+          *(uchar *)(puVar8 + 2) = uVar1;
+          *puVar8 = (ushort)uVar14;
+          puVar8[uVar14 * 8 + 1] = (ushort)uVar14;
+          *(byte *)((int)puVar8 + 5) = *(uchar *)((int)puVar8 + 5) & 0xf8;
+          if (uVar14 < 0x80) {
+            p_Var10 = param_1->FreeLists + uVar14;
+            if (p_Var10->Flink == p_Var10) {
+              uVar5 = *puVar8 >> 5;
+              param_1->FreeListsInUseUlong[uVar5] =
+                   1 << (*puVar8 & 0x1f) | param_1->FreeListsInUseUlong[uVar5];
             }
           }
           else {
-            for (p_Var16 = p_Var9->FreeLists[0].Flink;
-                (p_Var9->FreeLists != p_Var16 && (*(ushort *)(p_Var16 + -1) < uVar20));
-                p_Var16 = p_Var16->Flink) {
+            for (p_Var10 = param_1->FreeLists[0].Flink;
+                (param_1->FreeLists != p_Var10 && (*(ushort *)(p_Var10 + -1) < uVar14));
+                p_Var10 = p_Var10->Flink) {
             }
           }
-          p_Var2 = p_Var16->Blink;
-          *(_LIST_ENTRY **)(puVar7 + 4) = p_Var16;
-          *(_LIST_ENTRY **)(puVar7 + 6) = p_Var2;
-          p_Var2->Flink = (_LIST_ENTRY *)(puVar7 + 4);
-          p_Var16->Blink = (_LIST_ENTRY *)(puVar7 + 4);
-          p_Var9->TotalFreeSize = uVar20 + p_Var9->TotalFreeSize;
+          p_Var2 = p_Var10->Blink;
+          ((_LIST_ENTRY *)(puVar8 + 4))->Flink = p_Var10;
+          *(_LIST_ENTRY **)(puVar8 + 6) = p_Var2;
+          p_Var2->Flink = (_LIST_ENTRY *)(puVar8 + 4);
+          p_Var10->Blink = (_LIST_ENTRY *)(puVar8 + 4);
+          param_1->TotalFreeSize = uVar14 + param_1->TotalFreeSize;
+          return;
         }
-        goto LAB_828a6f4c;
+        if (puVar11 == (ushort *)0x0) {
+          return;
+        }
+        puVar11[1] = 0;
+        return;
       }
     }
   }
-  RtlpInsertFreeBlock(p_Var9,p_Var5,(ulong)uVar12);
-LAB_828a6f4c:
-  __restgprlr_19();
+  RtlpInsertFreeBlock(param_1,param_2,param_3);
   return;
 }
 
 
 // 828A5F20  RtlpInsertFreeBlock  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/xrtl/rtlheap.c:7409)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void RtlpInsertFreeBlock(_HEAP *param_1,_HEAP_FREE_ENTRY *param_2,ulong param_3)
 
 {
   byte bVar1;
   byte bVar2;
-  uint *puVar3;
-  int iVar4;
-  int iVar5;
-  undefined2 *puVar6;
-  ulonglong uVar7;
-  int iVar8;
-  longlong lVar9;
+  _LIST_ENTRY *p_Var3;
+  _HEAP_SEGMENT *p_Var4;
+  undefined2 *puVar5;
+  ulonglong uVar6;
+  int iVar7;
+  ulonglong uVar8;
+  undefined2 uVar9;
   ulonglong uVar10;
-  undefined2 uVar11;
+  _LIST_ENTRY *p_Var11;
   ulonglong uVar12;
-  uint *puVar13;
-  ulonglong uVar14;
-  ulonglong uVar15;
+  ulonglong uVar13;
   
-  uVar14 = (ulonglong)(int)param_3;
-  uVar15 = (ulonglong)(int)param_2;
-  lVar9 = __savegprlr_28(param_1);
-  iVar4 = (int)uVar15;
-  bVar1 = *(byte *)(iVar4 + 4);
-  iVar5 = (int)lVar9;
-  uVar10 = (ulonglong)*(ushort *)(iVar4 + 2);
-  bVar2 = *(byte *)(iVar4 + 5);
-  iVar4 = *(int *)((bVar1 + 0x18) * 4 + iVar5);
-  *(int *)(iVar5 + 0x30) = *(int *)(iVar5 + 0x30) + (int)uVar14;
+  uVar12 = (ulonglong)(int)param_3;
+  uVar13 = (ulonglong)(int)param_2;
+  bVar1 = param_2->SegmentIndex;
+  uVar8 = (ulonglong)param_2->PreviousSize;
+  bVar2 = param_2->Flags;
+  p_Var4 = param_1->Segments[bVar1];
+  param_1->TotalFreeSize = param_1->TotalFreeSize + param_3;
   do {
-    uVar11 = (undefined2)uVar10;
-    puVar6 = (undefined2 *)uVar15;
-    if ((uVar14 & 0xffffffff) == 0) {
-      if ((bVar2 & 0x10) == 0) {
-        puVar6[1] = uVar11;
+    uVar9 = (undefined2)uVar8;
+    puVar5 = (undefined2 *)uVar13;
+    if ((uVar12 & 0xffffffff) == 0) {
+      if ((bVar2 & 0x10) != 0) {
+        return;
       }
-      break;
+      puVar5[1] = uVar9;
+      return;
     }
-    if ((uVar14 & 0xffffffff) < 0xf001) {
-      uVar10 = uVar14 & 0xffff;
-      *(byte *)((int)puVar6 + 5) = bVar2;
+    if ((uVar12 & 0xffffffff) < 0xf001) {
+      uVar8 = uVar12 & 0xffff;
+      *(byte *)((int)puVar5 + 5) = bVar2;
     }
     else {
-      uVar10 = 0xfffffffffffff000;
-      if ((uVar14 & 0xffffffff) == 0xf001) {
-        uVar10 = 0xffffffffffffeff0;
+      uVar8 = 0xfffffffffffff000;
+      if ((uVar12 & 0xffffffff) == 0xf001) {
+        uVar8 = 0xffffffffffffeff0;
       }
-      *(undefined1 *)((int)puVar6 + 5) = 0;
+      *(undefined1 *)((int)puVar5 + 5) = 0;
     }
-    uVar7 = uVar10 & 0xffff;
-    puVar6[1] = uVar11;
-    *(byte *)(puVar6 + 2) = bVar1;
-    *puVar6 = (short)uVar10;
-    *(byte *)((int)puVar6 + 5) = *(byte *)((int)puVar6 + 5) & 0xf8;
-    if (uVar7 < 0x80) {
-      uVar12 = (uVar7 + 0x30) * 8 + lVar9;
-      puVar13 = (uint *)uVar12;
-      if ((ulonglong)*puVar13 == (uVar12 & 0xffffffff)) {
-        iVar8 = ((int)(uVar7 >> 5) + 0x58) * 4;
-        *(uint *)(iVar8 + iVar5) = 1 << ((uint)uVar7 & 0x1f) | *(uint *)(iVar8 + iVar5);
+    uVar6 = uVar8 & 0xffff;
+    puVar5[1] = uVar9;
+    *(byte *)(puVar5 + 2) = bVar1;
+    *puVar5 = (short)uVar8;
+    *(byte *)((int)puVar5 + 5) = *(byte *)((int)puVar5 + 5) & 0xf8;
+    if (uVar6 < 0x80) {
+      uVar10 = (uVar6 + 0x30) * 8 + (longlong)(int)param_1;
+      p_Var11 = (_LIST_ENTRY *)uVar10;
+      if (ZEXT48(p_Var11->Flink) == (uVar10 & 0xffffffff)) {
+        iVar7 = (int)(uVar6 >> 5);
+        param_1->FreeListsInUseUlong[iVar7] =
+             1 << ((uint)uVar6 & 0x1f) | param_1->FreeListsInUseUlong[iVar7];
       }
     }
     else {
-      for (puVar13 = *(uint **)(iVar5 + 0x180);
-          ((lVar9 + 0x180U & 0xffffffff) != ZEXT48(puVar13) && (*(ushort *)(puVar13 + -2) < uVar7));
-          puVar13 = (uint *)*puVar13) {
+      p_Var11 = param_1->FreeLists[0].Flink;
+      while ((((longlong)(int)param_1 + 0x180U & 0xffffffff) != ZEXT48(p_Var11) &&
+             (*(ushort *)&p_Var11[-1].Flink < uVar6))) {
+        p_Var11 = p_Var11->Flink;
       }
     }
-    puVar3 = (uint *)puVar13[1];
-    *(uint **)(puVar6 + 4) = puVar13;
-    uVar14 = uVar14 - uVar7;
-    *(uint **)(puVar6 + 6) = puVar3;
-    uVar15 = (uVar10 & 0xffff) * 0x10 + uVar15;
-    *puVar3 = (uint)(puVar6 + 4);
-    puVar13[1] = (uint)(puVar6 + 4);
-  } while ((uVar15 & 0xffffffff) < (ulonglong)*(uint *)(iVar4 + 0x2c));
-  __restgprlr_28();
+    p_Var3 = p_Var11->Blink;
+    *(_LIST_ENTRY **)(puVar5 + 4) = p_Var11;
+    uVar12 = uVar12 - uVar6;
+    *(_LIST_ENTRY **)(puVar5 + 6) = p_Var3;
+    uVar13 = (uVar8 & 0xffff) * 0x10 + uVar13;
+    p_Var3->Flink = (_LIST_ENTRY *)(puVar5 + 4);
+    p_Var11->Blink = (_LIST_ENTRY *)(puVar5 + 4);
+  } while ((uVar13 & 0xffffffff) < ZEXT48(p_Var4->LastValidEntry));
   return;
 }
 

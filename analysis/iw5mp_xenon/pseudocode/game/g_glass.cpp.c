@@ -26,6 +26,8 @@ void G_RegisterGlassDvars(void)
 
 // 8246F428  G_InitGlass  (game/g_glass.cpp:66)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "XAssetType": Some values do not have unique names */
 /* WARNING: Enum "nodeType": Some values do not have unique names */
@@ -43,7 +45,6 @@ void G_InitGlass(void)
   int iVar5;
   char acStack_b0 [176];
   
-  __savegprlr_28();
   if (sv_mapname == (dvar_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_glass.cpp",0x46,0,"%s")
     ;
@@ -68,13 +69,14 @@ void G_InitGlass(void)
       iVar5 = iVar5 + 0xc;
     } while (uVar4 < g_glassData->glassNameCount);
   }
-  __restgprlr_28();
   return;
 }
 
 
 // 8246F550  G_ShutdownGlass  (game/g_glass.cpp:115)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void G_ShutdownGlass(void)
@@ -83,7 +85,6 @@ void G_ShutdownGlass(void)
   uint uVar1;
   int iVar2;
   
-  __savegprlr_29();
   if (g_glassData != (G_GlassData *)0x0) {
     if ((g_glassData->glassNameCount != 0) && (g_glassData->glassNames == (G_GlassName *)0x0)) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_glass.cpp",0x79,0,
@@ -100,7 +101,6 @@ void G_ShutdownGlass(void)
     }
     g_glassData = (G_GlassData *)0x0;
   }
-  __restgprlr_29();
   return;
 }
 
@@ -150,24 +150,24 @@ bool G_Glass_IsIndexValid(uint param_1)
 
 // 8246F700  G_Glass_GetPieceOrigin  (game/g_glass.cpp:160)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void G_Glass_GetPieceOrigin(uint param_1,float *param_2)
 
 {
   FxGlassInitPieceState *pFVar1;
-  uint uVar2;
   
-  uVar2 = __savegprlr_29(param_1);
-  if (fxWorld.glassSys.initPieceCount <= uVar2) {
+  if (fxWorld.glassSys.initPieceCount <= param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_glass.cpp",
                     0x36c,0,
                     "initialPieceIndex doesn\'t index fxWorld.glassSys.initPieceCount\n\t%i not in [0, %i)"
                    );
   }
   pFVar1 = fxWorld.glassSys.initPieceStates;
-  *param_2 = fxWorld.glassSys.initPieceStates[uVar2].frame.origin[0];
-  param_2[1] = pFVar1[uVar2].frame.origin[1];
-  param_2[2] = pFVar1[uVar2].frame.origin[2];
-  __restgprlr_29();
+  *param_2 = fxWorld.glassSys.initPieceStates[param_1].frame.origin[0];
+  param_2[1] = pFVar1[param_1].frame.origin[1];
+  param_2[2] = pFVar1[param_1].frame.origin[2];
   return;
 }
 
@@ -240,18 +240,19 @@ uchar PackFloat(float param_1)
 
 // 8246F8E0  G_Glass_PieceStateChanged  (game/g_glass.cpp:271)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 
 void G_Glass_PieceStateChanged(uint param_1,GlassPieceState param_2,float *param_3,float *param_4)
 
 {
-  uint uVar1;
-  G_GlassPiece *pGVar2;
-  GlassPieceState GVar3;
-  uchar uVar4;
-  double dVar5;
-  float fVar6;
+  G_GlassPiece *pGVar1;
+  GlassPieceState GVar2;
+  uchar uVar3;
+  double dVar4;
+  float fVar5;
   float local_88;
   float local_84;
   float local_80;
@@ -262,132 +263,133 @@ void G_Glass_PieceStateChanged(uint param_1,GlassPieceState param_2,float *param
   float local_60;
   float local_5c;
   
-  uVar1 = __savegprlr_26(param_1);
-  pGVar2 = G_GlassPieceFromIndex(uVar1);
-  pGVar2->lastStateChangeTime = level.time;
-  GVar3 = G_Glass_GetPieceState(uVar1);
-  if (GVar3 == GLASS_DAMAGED) {
-    fVar6 = G_random();
-    if (0.3 <= fVar6) {
-      if ((float)0x3f333333 <= fVar6) {
-        pGVar2->collapseTime = 0;
+  pGVar1 = G_GlassPieceFromIndex(param_1);
+  pGVar1->lastStateChangeTime = level.time;
+  GVar2 = G_Glass_GetPieceState(param_1);
+  if (GVar2 == GLASS_DAMAGED) {
+    fVar5 = G_random();
+    if (0.3 <= fVar5) {
+      if ((float)0x3f333333 <= fVar5) {
+        pGVar1->collapseTime = 0;
       }
       else {
-        fVar6 = G_random();
-        pGVar2->collapseTime = (ushort)((60000 - (int)(fVar6 * -540000.0)) / 100);
+        fVar5 = G_random();
+        pGVar1->collapseTime = (ushort)((60000 - (int)(fVar5 * -540000.0)) / 100);
       }
     }
     else {
-      fVar6 = G_random();
-      pGVar2->collapseTime = (ushort)((3000 - (int)(fVar6 * -57000.0)) / 100);
+      fVar5 = G_random();
+      pGVar1->collapseTime = (ushort)((3000 - (int)(fVar5 * -57000.0)) / 100);
     }
   }
-  else if (GVar3 == GLASS_DESTROYED) {
+  else if (GVar2 == GLASS_DESTROYED) {
     if (param_4[2] * param_4[2] + *param_4 * *param_4 + param_4[1] * param_4[1] <= 0.0) {
-      pGVar2->impactPos[0] = '\0';
-      pGVar2->impactDir = 0xff;
-      pGVar2->impactPos[1] = '\0';
+      pGVar1->impactPos[0] = '\0';
+      pGVar1->impactDir = 0xff;
+      pGVar1->impactPos[1] = '\0';
     }
     else {
-      uVar4 = DirToByte(param_4);
-      pGVar2->impactDir = uVar4;
-      Glass_GetInitialPieceCenter(uVar1,&local_88);
-      Glass_GetInitialPieceAxis(uVar1,(float (*) [3])&local_70);
-      dVar5 = (double)(local_5c * (param_3[2] - local_80) +
+      uVar3 = DirToByte(param_4);
+      pGVar1->impactDir = uVar3;
+      Glass_GetInitialPieceCenter(param_1,&local_88);
+      Glass_GetInitialPieceAxis(param_1,(float (*) [3])&local_70);
+      dVar4 = (double)(local_5c * (param_3[2] - local_80) +
                       local_60 * (param_3[1] - local_84) + local_64 * (*param_3 - local_88));
-      uVar4 = PackFloat(local_68 * (param_3[2] - local_80) +
+      uVar3 = PackFloat(local_68 * (param_3[2] - local_80) +
                         local_6c * (param_3[1] - local_84) + (*param_3 - local_88) * local_70);
-      pGVar2->impactPos[0] = uVar4;
-      uVar4 = PackFloat((float)dVar5);
-      pGVar2->impactPos[1] = uVar4;
+      pGVar1->impactPos[0] = uVar3;
+      uVar3 = PackFloat((float)dVar4);
+      pGVar1->impactPos[1] = uVar3;
     }
   }
-  if (((int)param_2 < 2) && (1 < (int)GVar3)) {
-    Scr_AddInt(uVar1);
+  if (((int)param_2 < 2) && (1 < (int)GVar2)) {
+    Scr_AddInt(param_1);
     Scr_NotifyLevel((uint)scr_const.glass_destroyed,1);
   }
-  __restgprlr_26();
   return;
 }
 
 
 // 8246FAD0  G_Glass_DamagePiece  (game/g_glass.cpp:329)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void G_Glass_DamagePiece(uint param_1,int param_2,float *param_3,float *param_4)
 
 {
-  uint uVar1;
-  GlassPieceState GVar2;
-  G_GlassPiece *pGVar3;
-  GlassPieceState GVar4;
-  longlong lVar5;
-  ulonglong uVar6;
+  GlassPieceState GVar1;
+  G_GlassPiece *pGVar2;
+  GlassPieceState GVar3;
+  uint uVar4;
   
-  lVar5 = (longlong)param_2;
-  uVar1 = __savegprlr_27(param_1);
-  GVar2 = G_Glass_GetPieceState(uVar1);
-  pGVar3 = G_GlassPieceFromIndex(uVar1);
-  uVar6 = (ulonglong)pGVar3->damageTaken + lVar5;
-  if (0xfffe < (uVar6 & 0xffffffff)) {
-    uVar6 = 0xfffffffffffffffe;
+  GVar1 = G_Glass_GetPieceState(param_1);
+  pGVar2 = G_GlassPieceFromIndex(param_1);
+  uVar4 = (uint)pGVar2->damageTaken + param_2;
+  if (0xfffe < uVar4) {
+    uVar4 = 0xfffffffe;
   }
-  pGVar3->damageTaken = (ushort)uVar6;
-  GVar4 = G_Glass_GetPieceState(uVar1);
-  if (GVar4 != GVar2) {
-    G_Glass_PieceStateChanged(uVar1,GVar2,param_3,param_4);
+  pGVar2->damageTaken = (ushort)uVar4;
+  GVar3 = G_Glass_GetPieceState(param_1);
+  if (GVar3 != GVar1) {
+    G_Glass_PieceStateChanged(param_1,GVar1,param_3,param_4);
   }
-  __restgprlr_27();
   return;
 }
 
 
 // 8246FB40  G_Glass_DestroyPiece  (game/g_glass.cpp:348)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void G_Glass_DestroyPiece(uint param_1,float *param_2,float *param_3)
 
 {
-  uint uVar1;
-  GlassPieceState GVar2;
-  G_GlassPiece *pGVar3;
+  GlassPieceState GVar1;
+  G_GlassPiece *pGVar2;
   
-  uVar1 = __savegprlr_28(param_1);
-  GVar2 = G_Glass_GetPieceState(uVar1);
-  if ((int)GVar2 < 2) {
-    pGVar3 = G_GlassPieceFromIndex(uVar1);
-    pGVar3->damageTaken = (ushort)(glass_damageToDestroy->current).integer;
-    G_Glass_PieceStateChanged(uVar1,GVar2,param_2,param_3);
+  GVar1 = G_Glass_GetPieceState(param_1);
+  if ((int)GVar1 < 2) {
+    pGVar2 = G_GlassPieceFromIndex(param_1);
+    pGVar2->damageTaken = (ushort)(glass_damageToDestroy->current).integer;
+    G_Glass_PieceStateChanged(param_1,GVar1,param_2,param_3);
   }
-  __restgprlr_28();
   return;
 }
 
 
 // 8246FBA0  G_Glass_DeletePiece  (game/g_glass.cpp:363)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void G_Glass_DeletePiece(uint param_1)
 
 {
-  uint uVar1;
-  GlassPieceState GVar2;
-  G_GlassPiece *pGVar3;
+  GlassPieceState GVar1;
+  G_GlassPiece *pGVar2;
   
-  uVar1 = __savegprlr_29(param_1);
-  GVar2 = G_Glass_GetPieceState(uVar1);
-  if ((int)GVar2 < 3) {
-    pGVar3 = G_GlassPieceFromIndex(uVar1);
-    if (pGVar3->damageTaken == 0xffff) {
+  GVar1 = G_Glass_GetPieceState(param_1);
+  if ((int)GVar1 < 3) {
+    pGVar2 = G_GlassPieceFromIndex(param_1);
+    if (pGVar2->damageTaken == 0xffff) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_glass.cpp",0x174,0,
                       "%s");
     }
-    pGVar3->damageTaken = 0xffff;
-    G_Glass_PieceStateChanged(uVar1,GVar2,vec3_origin,vec3_origin);
+    pGVar2->damageTaken = 0xffff;
+    G_Glass_PieceStateChanged(param_1,GVar1,vec3_origin,vec3_origin);
   }
-  __restgprlr_29();
   return;
 }
 
 
 // 8246FC28  G_Glass_RadiusDamage  (game/g_glass.cpp:380)
+
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 
 void G_Glass_RadiusDamage
                (float *param_1,float param_2,float param_3,float *param_4,float param_5,
@@ -396,19 +398,16 @@ void G_Glass_RadiusDamage
 {
   int iVar1;
   float fVar2;
-  float *pfVar3;
-  GlassPieceState GVar4;
-  ulonglong in_r6;
-  float *pfVar5;
-  uint uVar6;
-  double extraout_f1;
+  GlassPieceState GVar3;
+  float *in_r6;
+  uint uVar4;
+  double dVar5;
+  double dVar6;
   double dVar7;
   double dVar8;
   double dVar9;
   double dVar10;
   double dVar11;
-  double dVar12;
-  double dVar13;
   float local_88;
   float local_84;
   float local_80;
@@ -416,52 +415,49 @@ void G_Glass_RadiusDamage
   float local_74;
   float local_70;
   
-  dVar9 = (double)param_6;
-  dVar7 = (double)param_3;
-  dVar8 = (double)param_5;
-  __savegprlr_27((double)param_2,param_1,param_4);
-  pfVar3 = (float *)__savefpr_25();
-  dVar11 = extraout_f1;
-  if (256.0 < extraout_f1) {
-    dVar11 = 256.0;
+  dVar7 = (double)param_6;
+  dVar5 = (double)param_3;
+  dVar6 = (double)param_5;
+  dVar9 = (double)param_2;
+  if (256.0 < (double)param_2) {
+    dVar9 = 256.0;
   }
-  dVar10 = (double)(float)(dVar11 * dVar11);
-  uVar6 = 0;
+  dVar8 = (double)(float)(dVar9 * dVar9);
+  uVar4 = 0;
   if (g_glassData->pieceCount != 0) {
-    dVar12 = 1.0;
+    dVar10 = 1.0;
     do {
-      Glass_GetInitialPieceCenter(uVar6,&local_78);
-      local_88 = local_78 - *pfVar3;
-      local_80 = local_70 - pfVar3[2];
-      local_84 = local_74 - pfVar3[1];
-      dVar13 = (double)(local_84 * local_84 + local_80 * local_80 + local_88 * local_88);
-      if ((dVar13 < dVar10) && (GVar4 = G_Glass_GetPieceState(uVar6), (int)GVar4 < 2)) {
-        fVar2 = (float)(dVar12 / (double)(float)SQRT(dVar13));
+      Glass_GetInitialPieceCenter(uVar4,&local_78);
+      local_88 = local_78 - *param_1;
+      local_80 = local_70 - param_1[2];
+      local_84 = local_74 - param_1[1];
+      dVar11 = (double)(local_84 * local_84 + local_80 * local_80 + local_88 * local_88);
+      if ((dVar11 < dVar8) && (GVar3 = G_Glass_GetPieceState(uVar4), (int)GVar3 < 2)) {
+        fVar2 = (float)(dVar10 / (double)(float)SQRT(dVar11));
         local_88 = local_88 * fVar2;
         local_84 = local_84 * fVar2;
         local_80 = local_80 * fVar2;
-        if (((in_r6 & 0xffffffff) == 0) ||
-           (pfVar5 = (float *)in_r6,
-           dVar7 <= (double)(pfVar5[2] * local_80 + pfVar5[1] * local_84 + *pfVar5 * local_88))) {
-          iVar1 = (int)((float)((double)(float)((double)(float)(dVar9 - dVar8) / dVar11) *
-                                (double)(float)SQRT(dVar13) + dVar8) *
+        if ((in_r6 == (float *)0x0) ||
+           (dVar5 <= (double)(in_r6[2] * local_80 + in_r6[1] * local_84 + *in_r6 * local_88))) {
+          iVar1 = (int)((float)((double)(float)((double)(float)(dVar7 - dVar6) / dVar9) *
+                                (double)(float)SQRT(dVar11) + dVar6) *
                        (glass_radiusDamageMultiplier->current).value);
           if (iVar1 != 0) {
-            G_Glass_DamagePiece(uVar6,iVar1,&local_78,&local_88);
+            G_Glass_DamagePiece(uVar4,iVar1,&local_78,&local_88);
           }
         }
       }
-      uVar6 = uVar6 + 1;
-    } while (uVar6 < g_glassData->pieceCount);
+      uVar4 = uVar4 + 1;
+    } while (uVar4 < g_glassData->pieceCount);
   }
-  __restfpr_25();
-  __restgprlr_27();
   return;
 }
 
 
 // 8246FDA8  G_Glass_Update  (game/g_glass.cpp:454)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -475,7 +471,6 @@ void G_Glass_Update(void)
   int iVar4;
   uint uVar5;
   
-  __savegprlr_23();
   uVar5 = 0;
   if (g_glassData->pieceCount != 0) {
     iVar4 = 0;
@@ -496,7 +491,6 @@ void G_Glass_Update(void)
       iVar4 = iVar4 + 0xc;
     } while (uVar5 < g_glassData->pieceCount);
   }
-  __restgprlr_23();
   return;
 }
 
@@ -582,6 +576,8 @@ void G_Glass_WriteImpactInfo(msg_t *param_1,G_GlassPiece *param_2,int param_3)
 
 // 8246FFA8  G_Glass_WriteChanges  (game/g_glass.cpp:522)
 
+/* WARNING: Function: __savegprlr_18 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_18 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -589,144 +585,140 @@ void G_Glass_WriteImpactInfo(msg_t *param_1,G_GlassPiece *param_2,int param_3)
 void G_Glass_WriteChanges(msg_t *param_1,int param_2)
 
 {
-  msg_t *pmVar1;
+  int iVar1;
   int iVar2;
   GlassPieceState GVar3;
-  int iVar4;
-  uint uVar5;
-  G_GlassData *pGVar6;
+  uint uVar4;
+  G_GlassData *pGVar5;
+  uint uVar6;
   uint uVar7;
-  uint uVar8;
-  int iVar9;
-  G_GlassPiece *pGVar10;
-  int iVar11;
+  int iVar8;
+  G_GlassPiece *pGVar9;
+  int iVar10;
   
-  pmVar1 = (msg_t *)__savegprlr_18(param_1);
-  iVar2 = MSG_GetUsedBitCount(pmVar1);
-  iVar4 = level.time;
-  iVar9 = 0;
-  uVar8 = 0;
-  uVar5 = 0;
+  iVar2 = MSG_GetUsedBitCount(param_1);
+  iVar1 = level.time;
+  iVar8 = 0;
+  uVar7 = 0;
+  uVar4 = 0;
   if (g_glassData->pieceCount != 0) {
-    iVar11 = 0;
+    iVar10 = 0;
     if (g_glassData->pieceCount == 0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_glass.cpp",0xa7,0,
                       "pieceIndex doesn\'t index g_glassData->pieceCount\n\t%i not in [0, %i)");
     }
     do {
-      if ((param_2 <= *(int *)(g_glassData->glassPieces->impactPos + iVar11 + -5)) &&
-         (GVar3 = G_Glass_GetPieceState(uVar5), GVar3 != GLASS_UNDAMAGED)) {
-        iVar9 = iVar9 + 1;
-        uVar8 = uVar5 + 1;
+      if ((param_2 <= *(int *)(g_glassData->glassPieces->impactPos + iVar10 + -5)) &&
+         (GVar3 = G_Glass_GetPieceState(uVar4), GVar3 != GLASS_UNDAMAGED)) {
+        iVar8 = iVar8 + 1;
+        uVar7 = uVar4 + 1;
       }
-      uVar5 = uVar5 + 1;
-      iVar11 = iVar11 + 0xc;
-    } while (uVar5 < g_glassData->pieceCount);
-    if (iVar9 != 0) {
-      MSG_WriteBit1(pmVar1);
-      if ((uint)((iVar9 + 1) * 0xd) < uVar8 * 2 + 0xb) {
-        MSG_WriteBit1(pmVar1);
-        uVar8 = 0;
+      uVar4 = uVar4 + 1;
+      iVar10 = iVar10 + 0xc;
+    } while (uVar4 < g_glassData->pieceCount);
+    if (iVar8 != 0) {
+      MSG_WriteBit1(param_1);
+      if ((uint)((iVar8 + 1) * 0xd) < uVar7 * 2 + 0xb) {
+        MSG_WriteBit1(param_1);
+        uVar7 = 0;
         if (g_glassData->pieceCount != 0) {
-          iVar9 = 0;
-          pGVar6 = g_glassData;
+          iVar8 = 0;
+          pGVar5 = g_glassData;
           if (g_glassData->pieceCount == 0) {
             MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_glass.cpp",0xa7
                             ,0,
                             "pieceIndex doesn\'t index g_glassData->pieceCount\n\t%i not in [0, %i)"
                            );
-            pGVar6 = g_glassData;
+            pGVar5 = g_glassData;
           }
           do {
-            pGVar10 = (G_GlassPiece *)(pGVar6->glassPieces->impactPos + iVar9 + -9);
-            if (param_2 <= pGVar10->lastStateChangeTime) {
-              if (pGVar6->pieceCount <= uVar8) {
+            pGVar9 = (G_GlassPiece *)(pGVar5->glassPieces->impactPos + iVar8 + -9);
+            if (param_2 <= pGVar9->lastStateChangeTime) {
+              if (pGVar5->pieceCount <= uVar7) {
                 MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_glass.cpp",
                                 0xa7,0,
                                 "pieceIndex doesn\'t index g_glassData->pieceCount\n\t%i not in [0, %i)"
                                );
-                pGVar6 = g_glassData;
+                pGVar5 = g_glassData;
               }
-              uVar5 = (uint)*(ushort *)(pGVar6->glassPieces->impactPos + iVar9 + -9);
-              if (uVar5 == 0xffff) {
-                iVar11 = 3;
+              uVar4 = (uint)*(ushort *)(pGVar5->glassPieces->impactPos + iVar8 + -9);
+              if (uVar4 == 0xffff) {
+                iVar10 = 3;
               }
-              else if (uVar5 < ((glass_damageToDestroy->current).unsignedInt & 0xffff)) {
-                if (uVar5 < ((glass_damageToWeaken->current).unsignedInt & 0xffff))
+              else if (uVar4 < ((glass_damageToDestroy->current).unsignedInt & 0xffff)) {
+                if (uVar4 < ((glass_damageToWeaken->current).unsignedInt & 0xffff))
                 goto LAB_824701e0;
-                iVar11 = 1;
+                iVar10 = 1;
               }
               else {
-                iVar11 = 2;
+                iVar10 = 2;
               }
-              if (0x3ff < uVar8) {
+              if (0x3ff < uVar7) {
                 MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_glass.cpp",
                                 0x254,0,
                                 "pieceIndex doesn\'t index MAX_MAP_GLASS_PIECES\n\t%i not in [0, %i)"
                                );
               }
-              MSG_WriteBits(pmVar1,uVar8,0xb);
-              MSG_WriteBits(pmVar1,iVar11,2);
-              pGVar6 = g_glassData;
-              if (iVar11 == 2) {
-                G_Glass_WriteImpactInfo(pmVar1,pGVar10,iVar4);
-                pGVar6 = g_glassData;
+              MSG_WriteBits(param_1,uVar7,0xb);
+              MSG_WriteBits(param_1,iVar10,2);
+              pGVar5 = g_glassData;
+              if (iVar10 == 2) {
+                G_Glass_WriteImpactInfo(param_1,pGVar9,iVar1);
+                pGVar5 = g_glassData;
               }
             }
 LAB_824701e0:
-            uVar8 = uVar8 + 1;
-            iVar9 = iVar9 + 0xc;
-          } while (uVar8 < pGVar6->pieceCount);
+            uVar7 = uVar7 + 1;
+            iVar8 = iVar8 + 0xc;
+          } while (uVar7 < pGVar5->pieceCount);
         }
-        MSG_WriteBits(pmVar1,0x400,0xb);
+        MSG_WriteBits(param_1,0x400,0xb);
       }
       else {
-        MSG_WriteBit0(pmVar1);
-        MSG_WriteBits(pmVar1,uVar8,0xb);
-        uVar5 = 0;
-        if (uVar8 != 0) {
-          iVar9 = 0;
+        MSG_WriteBit0(param_1);
+        MSG_WriteBits(param_1,uVar7,0xb);
+        uVar4 = 0;
+        if (uVar7 != 0) {
+          iVar8 = 0;
           do {
-            if (g_glassData->pieceCount <= uVar5) {
+            if (g_glassData->pieceCount <= uVar4) {
               MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_glass.cpp",
                               0xa7,0,
                               "pieceIndex doesn\'t index g_glassData->pieceCount\n\t%i not in [0, %i)"
                              );
             }
-            uVar7 = (uint)*(ushort *)(g_glassData->glassPieces->impactPos + iVar9 + -9);
-            if (uVar7 == 0xffff) {
-              iVar11 = 3;
+            uVar6 = (uint)*(ushort *)(g_glassData->glassPieces->impactPos + iVar8 + -9);
+            if (uVar6 == 0xffff) {
+              iVar10 = 3;
             }
-            else if (uVar7 < ((glass_damageToDestroy->current).unsignedInt & 0xffff)) {
-              iVar11 = -((uVar7 < ((glass_damageToWeaken->current).unsignedInt & 0xffff)) - 1);
+            else if (uVar6 < ((glass_damageToDestroy->current).unsignedInt & 0xffff)) {
+              iVar10 = -((uVar6 < ((glass_damageToWeaken->current).unsignedInt & 0xffff)) - 1);
             }
             else {
-              iVar11 = 2;
+              iVar10 = 2;
             }
-            MSG_WriteBits(pmVar1,iVar11,2);
-            if (iVar11 == 2) {
-              if (g_glassData->pieceCount <= uVar5) {
+            MSG_WriteBits(param_1,iVar10,2);
+            if (iVar10 == 2) {
+              if (g_glassData->pieceCount <= uVar4) {
                 MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_glass.cpp",
                                 0xa7,0,
                                 "pieceIndex doesn\'t index g_glassData->pieceCount\n\t%i not in [0, %i)"
                                );
               }
               G_Glass_WriteImpactInfo
-                        (pmVar1,(G_GlassPiece *)(g_glassData->glassPieces->impactPos + iVar9 + -9),
-                         iVar4);
+                        (param_1,(G_GlassPiece *)(g_glassData->glassPieces->impactPos + iVar8 + -9),
+                         iVar1);
             }
-            uVar5 = uVar5 + 1;
-            iVar9 = iVar9 + 0xc;
-          } while (uVar5 < uVar8);
+            uVar4 = uVar4 + 1;
+            iVar8 = iVar8 + 0xc;
+          } while (uVar4 < uVar7);
         }
       }
-      iVar4 = SV_TrackPacketData(0,ANALYZE_SNAPSHOT_GLASSDATA,0,0,iVar2,pmVar1);
-      __restgprlr_18(iVar4);
+      SV_TrackPacketData(0,ANALYZE_SNAPSHOT_GLASSDATA,0,0,iVar2,param_1);
       return;
     }
   }
-  MSG_WriteBit0(pmVar1);
-  __restgprlr_18();
+  MSG_WriteBit0(param_1);
   return;
 }
 

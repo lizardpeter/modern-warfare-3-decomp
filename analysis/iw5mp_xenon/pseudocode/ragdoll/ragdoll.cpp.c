@@ -15,12 +15,13 @@ void TRACK_ragdoll(void)
 
 // 826A1FE8  Ragdoll_DrawAxisOrigin  (ragdoll/ragdoll.cpp:77)
 
+/* WARNING: Function: __savefpr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_26 replaced with injection: xenon_save_restore */
+
 void Ragdoll_DrawAxisOrigin(float (*param_1) [3],float *param_2,float param_3)
 
 {
-  float *pfVar1;
-  double extraout_f1;
-  double dVar2;
+  double dVar1;
   float local_90;
   float local_8c;
   float local_88;
@@ -37,98 +38,89 @@ void Ragdoll_DrawAxisOrigin(float (*param_1) [3],float *param_2,float param_3)
   float local_58;
   float local_54;
   
-  pfVar1 = (float *)__savefpr_26((double)param_3,param_1);
-  local_80 = (float)(extraout_f1 * 1.0);
-  local_70 = (float)(extraout_f1 * 0.0);
-  local_7c = (float)(extraout_f1 * 0.0);
-  local_74 = (float)(extraout_f1 * 1.0);
-  local_78 = (float)(extraout_f1 * 0.0);
-  local_6c = (float)(extraout_f1 * 1.0);
-  local_68 = (float)(extraout_f1 * 0.0);
-  local_64 = (float)(extraout_f1 * 1.0);
-  dVar2 = 5.0;
-  local_60 = (float)(extraout_f1 * 0.0);
-  local_5c = (float)(extraout_f1 * 0.0);
-  local_90 = *pfVar1 * 5.0 + *param_2;
-  local_58 = (float)(extraout_f1 * 1.0);
-  local_54 = (float)(extraout_f1 * 1.0);
-  local_8c = pfVar1[1] * 5.0 + param_2[1];
-  local_88 = pfVar1[2] * 5.0 + param_2[2];
+  local_80 = param_3 * 1.0;
+  local_70 = param_3 * 0.0;
+  local_7c = param_3 * 0.0;
+  local_74 = param_3 * 1.0;
+  local_78 = param_3 * 0.0;
+  local_6c = param_3 * 1.0;
+  local_68 = param_3 * 0.0;
+  local_64 = param_3 * 1.0;
+  dVar1 = 5.0;
+  local_60 = param_3 * 0.0;
+  local_5c = param_3 * 0.0;
+  local_90 = (*param_1)[0] * 5.0 + *param_2;
+  local_58 = param_3 * 1.0;
+  local_54 = param_3 * 1.0;
+  local_8c = (*param_1)[1] * 5.0 + param_2[1];
+  local_88 = (*param_1)[2] * 5.0 + param_2[2];
   CG_DebugLine(param_2,&local_90,&local_80,0,300);
-  local_90 = (float)((double)pfVar1[3] * dVar2 + (double)*param_2);
-  local_8c = (float)((double)pfVar1[4] * dVar2 + (double)param_2[1]);
-  local_88 = (float)((double)pfVar1[5] * dVar2 + (double)param_2[2]);
+  local_90 = (float)((double)param_1[1][0] * dVar1 + (double)*param_2);
+  local_8c = (float)((double)param_1[1][1] * dVar1 + (double)param_2[1]);
+  local_88 = (float)((double)param_1[1][2] * dVar1 + (double)param_2[2]);
   CG_DebugLine(param_2,&local_90,&local_70,0,300);
-  local_90 = (float)((double)pfVar1[6] * dVar2 + (double)*param_2);
-  local_8c = (float)((double)pfVar1[7] * dVar2 + (double)param_2[1]);
-  local_88 = (float)((double)pfVar1[8] * dVar2 + (double)param_2[2]);
+  local_90 = (float)((double)param_1[2][0] * dVar1 + (double)*param_2);
+  local_8c = (float)((double)param_1[2][1] * dVar1 + (double)param_2[1]);
+  local_88 = (float)((double)param_1[2][2] * dVar1 + (double)param_2[2]);
   CG_DebugLine(param_2,&local_90,&local_60,0,300);
-  __restfpr_26();
   return;
 }
 
 
 // 826A21B8  Ragdoll_DebugDraw  (ragdoll/ragdoll.cpp:97)
 
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void Ragdoll_DebugDraw(LocalClientNum_t param_1)
 
 {
-  LocalClientNum_t LVar1;
-  ScreenPlacement *pSVar2;
+  ScreenPlacement *pSVar1;
+  char *pcVar2;
   char *pcVar3;
-  char *pcVar4;
-  float *pfVar5;
-  uint *puVar6;
-  undefined8 in_f30;
+  float *pfVar4;
+  uint *puVar5;
+  double dVar6;
   double dVar7;
-  undefined8 in_f31;
-  double dVar8;
   undefined8 local_80;
   undefined8 local_78;
   undefined8 local_70;
-  undefined8 local_68;
-  undefined8 local_60;
   
-  LVar1 = __savegprlr_22(param_1);
-  local_68 = in_f30;
-  local_60 = in_f31;
   if ((ragdoll_debug->current).integer != 0) {
     local_80 = 0;
     local_78 = 0;
     local_70 = 0;
-    pcVar4 = (char *)0x0;
-    puVar6 = &DAT_8443632c;
+    pcVar3 = (char *)0x0;
+    puVar5 = &DAT_8443632c;
     do {
-      if (puVar6 == (uint *)0x104) {
+      if (puVar5 == (uint *)0x104) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ragdoll\\ragdoll.h",0x134,0
                         ,"%s");
       }
-      if (0 < (int)puVar6[-0x41]) {
-        if (5 < *puVar6) {
+      if (0 < (int)puVar5[-0x41]) {
+        if (5 < *puVar5) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ragdoll\\ragdoll.cpp",
                           0x76,0,
                           "(int)body->state.state doesn\'t index RAGDOLL_NUM_STATES\n\t%i not in [0, %i)"
                          );
         }
-        pcVar4 = pcVar4 + 1;
-        *(int *)((int)&local_80 + *puVar6 * 4) = *(int *)((int)&local_80 + *puVar6 * 4) + 1;
+        pcVar3 = pcVar3 + 1;
+        *(int *)((int)&local_80 + *puVar5 * 4) = *(int *)((int)&local_80 + *puVar5 * 4) + 1;
       }
-      puVar6 = puVar6 + 0x255;
-    } while ((int)puVar6 < -0x7bbb7254);
-    pSVar2 = ScrPlace_GetActivePlacement(LVar1);
-    pcVar3 = va("RB Total: %d");
-    dVar8 = 0.0;
-    dVar7 = 12.0;
-    CG_DrawStringExt(pSVar2,0.0,72.0,pcVar4,(float *)&IMAGE_DOS_HEADER_82000000,(int)pcVar3,
+      puVar5 = puVar5 + 0x255;
+    } while ((int)puVar5 < -0x7bbb7254);
+    pSVar1 = ScrPlace_GetActivePlacement(param_1);
+    pcVar2 = va("RB Total: %d");
+    dVar7 = 0.0;
+    dVar6 = 12.0;
+    CG_DrawStringExt(pSVar1,0.0,72.0,pcVar3,(float *)&IMAGE_DOS_HEADER_82000000,(int)pcVar2,
                      -0x7de7e808,12.0,0);
-    pcVar4 = local_80._0_4_;
-    pfVar5 = local_80._4_4_;
-    pcVar3 = va("RB State: %d %d %d %d %d %d");
-    CG_DrawStringExt(pSVar2,(float)dVar8,84.0,pcVar4,pfVar5,(int)pcVar3,-0x7de7e808,(float)dVar7,0);
+    pcVar3 = local_80._0_4_;
+    pfVar4 = local_80._4_4_;
+    pcVar2 = va("RB State: %d %d %d %d %d %d");
+    CG_DrawStringExt(pSVar1,(float)dVar7,84.0,pcVar3,pfVar4,(int)pcVar2,-0x7de7e808,(float)dVar6,0);
   }
-  __restgprlr_22();
   return;
 }
 
@@ -151,6 +143,8 @@ void Ragdoll_InitBody(RagdollBody *param_1)
 
 // 826A23D8  Ragdoll_GetUnusedBody  (ragdoll/ragdoll.cpp:140)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
@@ -158,62 +152,56 @@ int Ragdoll_GetUnusedBody(void)
 
 {
   int iVar1;
-  longlong lVar2;
-  RagdollBody *pRVar3;
+  RagdollBody *pRVar2;
   
-  __savegprlr_26();
-  pRVar3 = (RagdollBody *)&ragdollBodies;
-  lVar2 = 0;
+  pRVar2 = (RagdollBody *)&ragdollBodies;
+  iVar1 = 0;
   while( true ) {
-    if (pRVar3 == (RagdollBody *)0x0) {
+    if (pRVar2 == (RagdollBody *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ragdoll\\ragdoll.h",0x134,0,
                       "%s");
     }
-    if (pRVar3->references < 1) break;
-    lVar2 = lVar2 + 1;
-    pRVar3 = pRVar3 + 1;
-    if (0x1f < (int)lVar2) {
-      iVar1 = __restgprlr_26(0);
-      return iVar1;
+    if (pRVar2->references < 1) break;
+    iVar1 = iVar1 + 1;
+    pRVar2 = pRVar2 + 1;
+    if (0x1f < iVar1) {
+      return 0;
     }
   }
   memset();
-  Ragdoll_BodyNewState(pRVar3,BS_DEAD);
-  iVar1 = (int)lVar2 * 0x954;
-  *(int *)(&ragdollBodies + iVar1) = *(int *)(&ragdollBodies + iVar1) + 1;
-  iVar1 = __restgprlr_26(lVar2 + 1);
-  return iVar1;
+  Ragdoll_BodyNewState(pRVar2,BS_DEAD);
+  *(int *)(&ragdollBodies + iVar1 * 0x954) = *(int *)(&ragdollBodies + iVar1 * 0x954) + 1;
+  return iVar1 + 1;
 }
 
 
 // 826A2490  Ragdoll_ReferenceDObjBody  (ragdoll/ragdoll.cpp:162)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 int Ragdoll_ReferenceDObjBody(int param_1)
 
 {
   int iVar1;
-  longlong lVar2;
-  int *piVar3;
+  int *piVar2;
   
-  iVar1 = __savegprlr_26(param_1);
-  piVar3 = (int *)&ragdollBodies;
-  lVar2 = 0;
+  piVar2 = (int *)&ragdollBodies;
+  iVar1 = 0;
   while( true ) {
-    if (piVar3 == (int *)0x0) {
+    if (piVar2 == (int *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ragdoll\\ragdoll.h",0x134,0,
                       "%s");
     }
-    if ((0 < *piVar3) && (piVar3[2] == iVar1)) break;
-    lVar2 = lVar2 + 1;
-    piVar3 = piVar3 + 0x255;
-    if (0x1f < (int)lVar2) {
-      iVar1 = __restgprlr_26(0);
-      return iVar1;
+    if ((0 < *piVar2) && (piVar2[2] == param_1)) break;
+    iVar1 = iVar1 + 1;
+    piVar2 = piVar2 + 0x255;
+    if (0x1f < iVar1) {
+      return 0;
     }
   }
-  *piVar3 = *piVar3 + 1;
-  iVar1 = __restgprlr_26(lVar2 + 1);
-  return iVar1;
+  *piVar2 = *piVar2 + 1;
+  return iVar1 + 1;
 }
 
 
@@ -258,61 +246,55 @@ RagdollDef * Ragdoll_BodyDef(RagdollBody *param_1)
 
 // 826A2640  Ragdoll_BodyDObj  (ragdoll/ragdoll.cpp:203)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 DObj * Ragdoll_BodyDObj(RagdollBody *param_1)
 
 {
-  int iVar2;
-  ulonglong uVar1;
-  DObj *pDVar3;
+  DObj *pDVar1;
   
-  iVar2 = __savegprlr_29(param_1);
-  if (iVar2 == 0) {
+  if (param_1 == (RagdollBody *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ragdoll\\ragdoll.cpp",0xcc,0,
                     "%s");
   }
-  uVar1 = (ulonglong)*(uint *)(iVar2 + 0xc);
-  if (uVar1 == 0) {
-    if (*(int *)(iVar2 + 8) == -1) {
+  pDVar1 = param_1->obj;
+  if (pDVar1 == (DObj *)0x0) {
+    if (param_1->dobj == -1) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ragdoll\\ragdoll.cpp",0xd6,0,
                       "%s");
     }
-    pDVar3 = Com_GetClientDObj(*(int *)(iVar2 + 8),*(LocalClientNum_t *)(iVar2 + 0x14));
-    uVar1 = (ulonglong)(int)pDVar3;
+    pDVar1 = Com_GetClientDObj(param_1->dobj,param_1->localClientNum);
   }
-  pDVar3 = (DObj *)__restgprlr_29(uVar1);
-  return pDVar3;
+  return pDVar1;
 }
 
 
 // 826A26D0  Ragdoll_BodyPose  (ragdoll/ragdoll.cpp:221)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 cpose_t * Ragdoll_BodyPose(RagdollBody *param_1)
 
 {
-  int iVar2;
-  ulonglong uVar1;
-  cpose_t *pcVar3;
+  cpose_t *pcVar1;
   
-  iVar2 = __savegprlr_29(param_1);
-  if (iVar2 == 0) {
+  if (param_1 == (RagdollBody *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ragdoll\\ragdoll.cpp",0xde,0,
                     "%s");
   }
-  uVar1 = (ulonglong)*(uint *)(iVar2 + 0x10);
-  if (uVar1 == 0) {
-    if (*(int *)(iVar2 + 8) == -1) {
+  pcVar1 = param_1->pose;
+  if (pcVar1 == (cpose_t *)0x0) {
+    if (param_1->dobj == -1) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ragdoll\\ragdoll.cpp",0xe8,0,
                       "%s");
     }
-    pcVar3 = CG_GetPose(*(LocalClientNum_t *)(iVar2 + 0x14),*(int *)(iVar2 + 8));
-    uVar1 = (ulonglong)(int)pcVar3;
+    pcVar1 = CG_GetPose(param_1->localClientNum,param_1->dobj);
   }
-  pcVar3 = (cpose_t *)__restgprlr_29(uVar1);
-  return pcVar3;
+  return pcVar1;
 }
 
 
@@ -375,84 +357,88 @@ bool Ragdoll_ValidateDef(int param_1)
 
 // 826A28D0  Ragdoll_BindDef  (ragdoll/ragdoll.cpp:285)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
+
 bool Ragdoll_BindDef(int param_1)
 
 {
+  bool bVar3;
   int iVar1;
-  bool bVar4;
-  undefined1 uVar5;
-  int iVar2;
-  uint uVar3;
-  uint *puVar6;
-  char *pcVar7;
+  uint uVar2;
+  int iVar4;
+  uint *puVar5;
+  char *pcVar6;
+  int iVar7;
   int iVar8;
-  int iVar9;
-  char *pcVar10;
+  char *pcVar9;
   
-  iVar1 = __savegprlr_23(param_1);
-  bVar4 = Ragdoll_ValidateDef(iVar1);
-  if (bVar4) {
-    iVar1 = iVar1 * 0xf58;
-    if ((&DAT_84448cb9)[iVar1] == '\0') {
-      pcVar7 = (char *)(iVar1 + -0x7bbb7340);
-      iVar8 = 0;
-      if (0 < *(int *)(&DAT_84448cbc + iVar1)) {
+  bVar3 = Ragdoll_ValidateDef(param_1);
+  if (!bVar3) {
+    return false;
+  }
+  iVar4 = param_1 * 0xf58;
+  if ((&DAT_84448cb9)[iVar4] == '\0') {
+    pcVar6 = (char *)(iVar4 + -0x7bbb7340);
+    iVar7 = 0;
+    if (0 < *(int *)(&DAT_84448cbc + iVar4)) {
+      do {
+        iVar8 = 0;
+        puVar5 = (uint *)(pcVar6 + 0x28);
+        pcVar9 = pcVar6;
         do {
-          iVar9 = 0;
-          puVar6 = (uint *)(pcVar7 + 0x28);
-          pcVar10 = pcVar7;
-          do {
-            iVar2 = I_stricmp(pcVar10,"none");
-            if (iVar2 == 0) {
-              *puVar6 = 0;
+          iVar1 = I_stricmp(pcVar9,"none");
+          if (iVar1 == 0) {
+            *puVar5 = 0;
+          }
+          else {
+            uVar2 = SL_FindString(pcVar9);
+            *puVar5 = uVar2;
+            if (uVar2 == 0) {
+              return false;
             }
-            else {
-              uVar3 = SL_FindString(pcVar10);
-              *puVar6 = uVar3;
-              if (uVar3 == 0) goto LAB_826a28f0;
-            }
-            iVar9 = iVar9 + 1;
-            puVar6 = puVar6 + 1;
-            pcVar10 = pcVar10 + 0x14;
-          } while (iVar9 < 2);
-          iVar8 = iVar8 + 1;
-          pcVar7 = pcVar7 + 0x50;
-        } while (iVar8 < *(int *)(&DAT_84448cbc + iVar1));
-      }
-      pcVar7 = (char *)(iVar1 + -0x7bbb6edc);
-      iVar8 = 0;
-      if (0 < *(int *)(&DAT_84449120 + iVar1)) {
-        do {
-          uVar3 = SL_FindString(pcVar7);
-          *(uint *)(pcVar7 + 0x14) = uVar3;
-          if (uVar3 == 0) goto LAB_826a28f0;
-          if (*(int *)(pcVar7 + 0x18) == 0) {
-            iVar9 = 0;
-            if (0 < *(int *)(&DAT_84448cbc + iVar1)) {
-              puVar6 = (uint *)(&DAT_84448cec + iVar1);
-              do {
-                if (*puVar6 == uVar3) {
-                  *(int *)(pcVar7 + 0x18) = iVar9;
-                  break;
-                }
-                iVar9 = iVar9 + 1;
-                puVar6 = puVar6 + 0x14;
-              } while (iVar9 < *(int *)(&DAT_84448cbc + iVar1));
-            }
-            if (iVar9 == *(int *)(&DAT_84448cbc + iVar1)) goto LAB_826a28f0;
           }
           iVar8 = iVar8 + 1;
-          pcVar7 = pcVar7 + 0x20;
-        } while (iVar8 < *(int *)(&DAT_84449120 + iVar1));
-      }
-      (&DAT_84448cb9)[iVar1] = 1;
+          puVar5 = puVar5 + 1;
+          pcVar9 = pcVar9 + 0x14;
+        } while (iVar8 < 2);
+        iVar7 = iVar7 + 1;
+        pcVar6 = pcVar6 + 0x50;
+      } while (iVar7 < *(int *)(&DAT_84448cbc + iVar4));
     }
-    uVar5 = __restgprlr_23(1);
-    return (bool)uVar5;
+    pcVar6 = (char *)(iVar4 + -0x7bbb6edc);
+    iVar7 = 0;
+    if (0 < *(int *)(&DAT_84449120 + iVar4)) {
+      do {
+        uVar2 = SL_FindString(pcVar6);
+        *(uint *)(pcVar6 + 0x14) = uVar2;
+        if (uVar2 == 0) {
+          return false;
+        }
+        if (*(int *)(pcVar6 + 0x18) == 0) {
+          iVar8 = 0;
+          if (0 < *(int *)(&DAT_84448cbc + iVar4)) {
+            puVar5 = (uint *)(&DAT_84448cec + iVar4);
+            do {
+              if (*puVar5 == uVar2) {
+                *(int *)(pcVar6 + 0x18) = iVar8;
+                break;
+              }
+              iVar8 = iVar8 + 1;
+              puVar5 = puVar5 + 0x14;
+            } while (iVar8 < *(int *)(&DAT_84448cbc + iVar4));
+          }
+          if (iVar8 == *(int *)(&DAT_84448cbc + iVar4)) {
+            return false;
+          }
+        }
+        iVar7 = iVar7 + 1;
+        pcVar6 = pcVar6 + 0x20;
+      } while (iVar7 < *(int *)(&DAT_84449120 + iVar4));
+    }
+    (&DAT_84448cb9)[iVar4] = 1;
   }
-LAB_826a28f0:
-  uVar5 = __restgprlr_23(0);
-  return (bool)uVar5;
+  return true;
 }
 
 
@@ -514,6 +500,8 @@ bool Ragdoll_BodyHasPhysics(RagdollBody *param_1)
 
 // 826A2A48  Ragdoll_CountPhysicsBodies  (ragdoll/ragdoll.cpp:353)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 int Ragdoll_CountPhysicsBodies(void)
@@ -521,34 +509,33 @@ int Ragdoll_CountPhysicsBodies(void)
 {
   bool bVar1;
   int iVar2;
-  longlong lVar3;
-  int *piVar4;
+  int *piVar3;
   
-  __savegprlr_26();
-  piVar4 = (int *)&ragdollBodies;
-  lVar3 = 0;
+  piVar3 = (int *)&ragdollBodies;
+  iVar2 = 0;
   do {
-    if (piVar4 == (int *)0x0) {
+    if (piVar3 == (int *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ragdoll\\ragdoll.h",0x134,0,
                       "%s");
     }
-    if (0 < *piVar4) {
-      if ((piVar4[0x41] < 3) || (bVar1 = true, 4 < piVar4[0x41])) {
+    if (0 < *piVar3) {
+      if ((piVar3[0x41] < 3) || (bVar1 = true, 4 < piVar3[0x41])) {
         bVar1 = false;
       }
       if (bVar1) {
-        lVar3 = lVar3 + 1;
+        iVar2 = iVar2 + 1;
       }
     }
-    piVar4 = piVar4 + 0x255;
-  } while ((int)piVar4 < -0x7bbb7358);
-  iVar2 = __restgprlr_26(lVar3);
+    piVar3 = piVar3 + 0x255;
+  } while ((int)piVar3 < -0x7bbb7358);
   return iVar2;
 }
 
 
 // 826A2AF8  Ragdoll_CreateRagdollForDObj  (ragdoll/ragdoll.cpp:372)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 int Ragdoll_CreateRagdollForDObj
@@ -556,181 +543,159 @@ int Ragdoll_CreateRagdollForDObj
               float *param_6)
 
 {
-  LocalClientNum_t LVar1;
-  bool bVar5;
-  int iVar2;
-  RagdollBody *pRVar3;
-  RagdollDef *pRVar4;
-  ulonglong uVar6;
-  ulonglong uVar7;
-  longlong lVar8;
+  bool bVar4;
+  int iVar1;
+  RagdollBody *pRVar2;
+  RagdollDef *pRVar3;
   
-  lVar8 = (longlong)param_5;
-  uVar7 = (ulonglong)param_4;
-  uVar6 = (ulonglong)param_3;
-  LVar1 = __savegprlr_23(param_1);
   if (param_2 == -1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ragdoll\\ragdoll.cpp",0x17a,0,
                     "%s");
   }
-  bVar5 = Ragdoll_BindDef(1);
-  if (((bVar5) &&
-      (iVar2 = Ragdoll_CountPhysicsBodies(), iVar2 < (ragdoll_max_simulating->current).integer)) &&
-     ((((uVar7 & 0xff) != 0 && (iVar2 = Ragdoll_ReferenceDObjBody(param_2), iVar2 != 0)) ||
-      (iVar2 = Ragdoll_GetUnusedBody(), iVar2 != 0)))) {
-    pRVar3 = Ragdoll_HandleBody(iVar2);
-    if (pRVar3 == (RagdollBody *)0x0) {
+  bVar4 = Ragdoll_BindDef(1);
+  if (((bVar4) &&
+      (iVar1 = Ragdoll_CountPhysicsBodies(), iVar1 < (ragdoll_max_simulating->current).integer)) &&
+     (((param_4 && (iVar1 = Ragdoll_ReferenceDObjBody(param_2), iVar1 != 0)) ||
+      (iVar1 = Ragdoll_GetUnusedBody(), iVar1 != 0)))) {
+    pRVar2 = Ragdoll_HandleBody(iVar1);
+    if (pRVar2 == (RagdollBody *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ragdoll\\ragdoll.cpp",0x1a4,0
                       ,"%s");
     }
-    if ((uVar6 & 0xff) != 0) {
-      Ragdoll_BodyNewState(pRVar3,BS_DEAD);
+    if (param_3) {
+      Ragdoll_BodyNewState(pRVar2,BS_DEAD);
     }
-    if ((pRVar3->state).state == BS_DEAD) {
-      pRVar3->dobj = param_2;
-      pRVar3->localClientNum = LVar1;
-      pRVar3->ragdollDef = 1;
-      pRVar4 = Ragdoll_BodyDef(pRVar3);
-      if (pRVar4 == (RagdollDef *)0x0) {
+    if ((pRVar2->state).state == BS_DEAD) {
+      pRVar2->dobj = param_2;
+      pRVar2->localClientNum = param_1;
+      pRVar2->ragdollDef = 1;
+      pRVar3 = Ragdoll_BodyDef(pRVar2);
+      if (pRVar3 == (RagdollDef *)0x0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ragdoll\\ragdoll.cpp",0x1b0
                         ,0,"%s");
       }
-      if (*(int *)((int)(pRVar4->boneDefs[0].animBoneTextNames + -1) + 0xc +
-                  (int)((lVar8 + 0x3c2U & 0xffffffff) << 2)) < 0) {
-        (pRVar3->state).hitLocation = 0;
+      if (pRVar3->hitLocMapping[param_5] < 0) {
+        (pRVar2->state).hitLocation = 0;
       }
       else {
-        (pRVar3->state).hitLocation = (int)lVar8;
-        (pRVar3->state).impactVector[0] = *param_6;
-        (pRVar3->state).impactVector[1] = param_6[1];
-        (pRVar3->state).impactVector[2] = param_6[2];
+        (pRVar2->state).hitLocation = param_5;
+        (pRVar2->state).impactVector[0] = *param_6;
+        (pRVar2->state).impactVector[1] = param_6[1];
+        (pRVar2->state).impactVector[2] = param_6[2];
       }
-      Ragdoll_BodyNewState(pRVar3,BS_DOBJ_WAIT);
+      Ragdoll_BodyNewState(pRVar2,BS_DOBJ_WAIT);
     }
-    iVar2 = __restgprlr_23(iVar2);
-    return iVar2;
+    return iVar1;
   }
-  iVar2 = __restgprlr_23(0);
-  return iVar2;
+  return 0;
 }
 
 
 // 826A2CA0  Ragdoll_CreateRagdollForDObjRaw  (ragdoll/ragdoll.cpp:453)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 int Ragdoll_CreateRagdollForDObjRaw
               (LocalClientNum_t param_1,int param_2,cpose_t *param_3,DObj *param_4)
 
 {
-  LocalClientNum_t LVar1;
-  bool bVar4;
-  int iVar2;
-  RagdollBody *pRVar3;
-  ulonglong uVar5;
-  ulonglong uVar6;
+  bool bVar3;
+  int iVar1;
+  RagdollBody *pRVar2;
   
-  uVar6 = (ulonglong)(int)param_4;
-  uVar5 = (ulonglong)(int)param_3;
-  LVar1 = __savegprlr_24(param_1);
-  if ((uVar6 & 0xffffffff) == 0) {
+  if (param_4 == (DObj *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ragdoll\\ragdoll.cpp",0x1c9,0,
                     "%s");
   }
-  if ((uVar5 & 0xffffffff) == 0) {
+  if (param_3 == (cpose_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ragdoll\\ragdoll.cpp",0x1ca,0,
                     "%s");
   }
-  bVar4 = Ragdoll_BindDef(param_2);
-  if (bVar4) {
-    iVar2 = Ragdoll_GetUnusedBody();
-    if (iVar2 != 0) {
-      pRVar3 = Ragdoll_HandleBody(iVar2);
-      if (pRVar3 == (RagdollBody *)0x0) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ragdoll\\ragdoll.cpp",0x1d5
-                        ,0,"%s");
-      }
-      pRVar3->obj = (DObj *)uVar6;
-      pRVar3->pose = (cpose_t *)uVar5;
-      pRVar3->dobj = -1;
-      pRVar3->localClientNum = LVar1;
-      pRVar3->ragdollDef = param_2;
-      Ragdoll_BodyNewState(pRVar3,BS_DOBJ_WAIT);
-      iVar2 = __restgprlr_24(iVar2);
-      return iVar2;
+  bVar3 = Ragdoll_BindDef(param_2);
+  if ((bVar3) && (iVar1 = Ragdoll_GetUnusedBody(), iVar1 != 0)) {
+    pRVar2 = Ragdoll_HandleBody(iVar1);
+    if (pRVar2 == (RagdollBody *)0x0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ragdoll\\ragdoll.cpp",0x1d5,0
+                      ,"%s");
     }
+    pRVar2->obj = param_4;
+    pRVar2->pose = param_3;
+    pRVar2->dobj = -1;
+    pRVar2->localClientNum = param_1;
+    pRVar2->ragdollDef = param_2;
+    Ragdoll_BodyNewState(pRVar2,BS_DOBJ_WAIT);
+    return iVar1;
   }
-  iVar2 = __restgprlr_24(0);
-  return iVar2;
+  return 0;
 }
 
 
 // 826A2DA0  Ragdoll_Remove  (ragdoll/ragdoll.cpp:484)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void Ragdoll_Remove(int param_1)
 
 {
-  int iVar1;
-  RagdollBody *pRVar2;
+  RagdollBody *pRVar1;
   
-  iVar1 = __savegprlr_27(param_1);
-  pRVar2 = Ragdoll_HandleBody(iVar1);
-  if (pRVar2 == (RagdollBody *)0x0) {
+  pRVar1 = Ragdoll_HandleBody(param_1);
+  if (pRVar1 == (RagdollBody *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ragdoll\\ragdoll.cpp",0x1e8,0,
                     "%s");
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ragdoll\\ragdoll.h",0x134,0,
                     "%s");
   }
-  if (pRVar2->references < 1) {
+  if (pRVar1->references < 1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ragdoll\\ragdoll.cpp",0x1ea,0,
                     "%s");
   }
-  if (pRVar2->references == 1) {
-    Ragdoll_BodyNewState(pRVar2,BS_DEAD);
-    Ragdoll_FreeBody(iVar1);
-    __restgprlr_27();
+  if (pRVar1->references == 1) {
+    Ragdoll_BodyNewState(pRVar1,BS_DEAD);
+    Ragdoll_FreeBody(param_1);
     return;
   }
-  pRVar2->references = pRVar2->references + -1;
-  __restgprlr_27();
+  pRVar1->references = pRVar1->references + -1;
   return;
 }
 
 
 // 826A2E70  Ragdoll_IsActive  (ragdoll/ragdoll.cpp:507)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 bool Ragdoll_IsActive(int param_1)
 
 {
   BodyState BVar1;
-  int iVar2;
-  RagdollBody *pRVar3;
-  undefined1 uVar4;
-  undefined8 uVar5;
+  RagdollBody *pRVar2;
+  bool bVar3;
   
-  iVar2 = __savegprlr_29(param_1);
-  pRVar3 = Ragdoll_HandleBody(iVar2);
-  if (pRVar3 == (RagdollBody *)0x0) {
+  pRVar2 = Ragdoll_HandleBody(param_1);
+  if (pRVar2 == (RagdollBody *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ragdoll\\ragdoll.cpp",0x1ff,0,
                     "%s");
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ragdoll\\ragdoll.h",0x134,0,
                     "%s");
   }
-  if (((pRVar3->references < 1) || (BVar1 = (pRVar3->state).state, (int)BVar1 < 1)) ||
-     (uVar5 = 1, BVar1 == BS_IDLE)) {
-    uVar5 = 0;
+  if (((pRVar2->references < 1) || (BVar1 = (pRVar2->state).state, (int)BVar1 < 1)) ||
+     (bVar3 = true, BVar1 == BS_IDLE)) {
+    bVar3 = false;
   }
-  uVar4 = __restgprlr_29(uVar5);
-  return (bool)uVar4;
+  return bVar3;
 }
 
 
 // 826A2F08  Ragdoll_InitDvars  (ragdoll/ragdoll.cpp:518)
 
+/* WARNING: Function: __savefpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void Ragdoll_InitDvars(void)
@@ -743,7 +708,6 @@ void Ragdoll_InitDvars(void)
   double dVar5;
   double dVar6;
   
-  __savefpr_28();
   ragdoll_enable = Dvar_RegisterBool("ragdoll_enable",true,0,"Turn on ragdoll death animations");
   ragdoll_debug =
        Dvar_RegisterInt("ragdoll_debug",0,0,0x7fffffff,4,"Draw ragdoll debug info (bitflags)");
@@ -802,13 +766,14 @@ void Ragdoll_InitDvars(void)
                         "Iterations to run the alternate limb solver");
   ragdoll_idle_min_velsq =
        Dvar_RegisterFloat("ragdoll_idle_min_velsq",(float)dVar5,(float)dVar6,(float)dVar3,0,"");
-  __restfpr_28();
   return;
 }
 
 
 // 826A32F8  Ragdoll_Register  (ragdoll/ragdoll.cpp:547)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
@@ -818,7 +783,6 @@ void Ragdoll_Register(void)
   bool bVar2;
   int iVar1;
   
-  __savegprlr_29();
   bVar2 = Sys_IsMainThread();
   if (!bVar2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ragdoll\\ragdoll.cpp",0x224,0,
@@ -833,7 +797,6 @@ void Ragdoll_Register(void)
   iVar1 = CL_ControllerIndexFromClientNum(LOCAL_CLIENT_0);
   Cmd_ExecuteSingleCommand(LOCAL_CLIENT_0,iVar1,"exec ragdoll.cfg");
   ragdollFirstInit = true;
-  __restgprlr_29();
   return;
 }
 

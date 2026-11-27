@@ -14,24 +14,24 @@ void TRACK_r_buffers(void)
 
 // 8271E1D0  R_AllocPhysicalBuffer  (gfx_d3d/r_buffers.cpp:27)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void * R_AllocPhysicalBuffer(uint param_1,char *param_2)
 
 {
-  uint uVar1;
-  void *pvVar2;
+  void *pvVar1;
   
-  uVar1 = __savegprlr_29(param_1);
-  if ((uVar1 == 0) || (0x1000000 < uVar1)) {
+  if ((param_1 == 0) || (0x1000000 < param_1)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_buffers.cpp",0x1e,0,
                     "%s\n\t(sizeInBytes) = %i");
   }
-  pvVar2 = PMem_Alloc_NoDebug(uVar1,4,0x404);
-  if (pvVar2 == (void *)0x0) {
+  pvVar1 = PMem_Alloc_NoDebug(param_1,4,0x404);
+  if (pvVar1 == (void *)0x0) {
     Com_Error(ERR_DROP,"\x15Physical buffer allocation failed on %i bytes");
   }
-  track_static_alloc_internal(pvVar2,uVar1,param_2,0x12);
-  pvVar2 = (void *)__restgprlr_29(pvVar2);
-  return pvVar2;
+  track_static_alloc_internal(pvVar1,param_1,param_2,0x12);
+  return pvVar1;
 }
 
 
@@ -61,35 +61,35 @@ void Load_VertexBuffer(D3DVertexBuffer *param_1,void *param_2,int param_3)
 
 // 8271E9B0  R_AllocDynamicVertexBuffer  (gfx_d3d/r_buffers.cpp:57)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void * R_AllocDynamicVertexBuffer(D3DVertexBuffer *param_1,int param_2,char *param_3)
 
 {
-  D3DVertexBuffer *pDVar1;
-  void *pvVar2;
+  void *pvVar1;
   
-  pDVar1 = (D3DVertexBuffer *)__savegprlr_29(param_1);
-  pvVar2 = R_AllocPhysicalBuffer(param_2,param_3);
-  XGSetVertexBufferHeader(param_2,0,0,0,pDVar1);
-  XGOffsetResourceAddress((D3DResource *)pDVar1,pvVar2);
-  pvVar2 = (void *)__restgprlr_29(pvVar2);
-  return pvVar2;
+  pvVar1 = R_AllocPhysicalBuffer(param_2,param_3);
+  XGSetVertexBufferHeader(param_2,0,0,0,param_1);
+  XGOffsetResourceAddress((D3DResource *)param_1,pvVar1);
+  return pvVar1;
 }
 
 
 // 8271E328  R_AllocStaticVertexBuffer  (gfx_d3d/r_buffers.cpp:63)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void * R_AllocStaticVertexBuffer(D3DVertexBuffer *param_1,int param_2,char *param_3)
 
 {
-  D3DVertexBuffer *pDVar1;
-  void *pvVar2;
+  void *pvVar1;
   
-  pDVar1 = (D3DVertexBuffer *)__savegprlr_29(param_1);
-  pvVar2 = R_AllocPhysicalBuffer(param_2,param_3);
-  XGSetVertexBufferHeader(param_2,0,0,0,pDVar1);
-  XGOffsetResourceAddress((D3DResource *)pDVar1,pvVar2);
-  pvVar2 = (void *)__restgprlr_29(pvVar2);
-  return pvVar2;
+  pvVar1 = R_AllocPhysicalBuffer(param_2,param_3);
+  XGSetVertexBufferHeader(param_2,0,0,0,param_1);
+  XGOffsetResourceAddress((D3DResource *)param_1,pvVar1);
+  return pvVar1;
 }
 
 
@@ -108,131 +108,120 @@ void R_LocateIndexBufferData(D3DIndexBuffer *param_1,void *param_2,int param_3)
 
 // 8271E3E0  Load_IndexBuffer  (gfx_d3d/r_buffers.cpp:82)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 
 void Load_IndexBuffer(D3DIndexBuffer *param_1,void *param_2,int param_3)
 
 {
-  D3DIndexBuffer *pDVar1;
-  ulonglong uVar2;
-  ulonglong uVar3;
-  
-  uVar3 = (ulonglong)param_3;
-  uVar2 = (ulonglong)(int)param_2;
-  pDVar1 = (D3DIndexBuffer *)__savegprlr_29(param_1);
-  if ((uVar2 & 0xffffffff) == 0) {
+  if (param_2 == (void *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_buffers.cpp",0x55,0,
                     "%s");
   }
-  XGSetIndexBufferHeader((uint)((uVar3 & 0xffffffff) << 1),0,D3DFMT_INDEX16,0,0,pDVar1);
-  XGOffsetResourceAddress((D3DResource *)pDVar1,(void *)uVar2);
-  __restgprlr_29();
+  XGSetIndexBufferHeader(param_3 << 1,0,D3DFMT_INDEX16,0,0,param_1);
+  XGOffsetResourceAddress((D3DResource *)param_1,param_2);
   return;
 }
 
 
 // 8271EA08  R_AllocDynamicIndexBuffer  (gfx_d3d/r_buffers.cpp:93)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 
 void * R_AllocDynamicIndexBuffer(D3DIndexBuffer *param_1,int param_2,char *param_3)
 
 {
-  D3DIndexBuffer *pDVar1;
-  void *pvVar2;
+  void *pvVar1;
   
-  pDVar1 = (D3DIndexBuffer *)__savegprlr_29(param_1);
-  pvVar2 = R_AllocPhysicalBuffer(param_2,param_3);
-  XGSetIndexBufferHeader(param_2,0,D3DFMT_INDEX16,0,0,pDVar1);
-  XGOffsetResourceAddress((D3DResource *)pDVar1,pvVar2);
-  pvVar2 = (void *)__restgprlr_29(pvVar2);
-  return pvVar2;
+  pvVar1 = R_AllocPhysicalBuffer(param_2,param_3);
+  XGSetIndexBufferHeader(param_2,0,D3DFMT_INDEX16,0,0,param_1);
+  XGOffsetResourceAddress((D3DResource *)param_1,pvVar1);
+  return pvVar1;
 }
 
 
 // 8271E458  R_AllocStaticIndexBuffer  (gfx_d3d/r_buffers.cpp:99)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 
 void * R_AllocStaticIndexBuffer(D3DIndexBuffer *param_1,int param_2,char *param_3)
 
 {
-  D3DIndexBuffer *pDVar1;
-  void *pvVar2;
+  void *pvVar1;
   
-  pDVar1 = (D3DIndexBuffer *)__savegprlr_29(param_1);
-  pvVar2 = R_AllocPhysicalBuffer(param_2,param_3);
-  XGSetIndexBufferHeader(param_2,0,D3DFMT_INDEX16,0,0,pDVar1);
-  XGOffsetResourceAddress((D3DResource *)pDVar1,pvVar2);
-  pvVar2 = (void *)__restgprlr_29(pvVar2);
-  return pvVar2;
+  pvVar1 = R_AllocPhysicalBuffer(param_2,param_3);
+  XGSetIndexBufferHeader(param_2,0,D3DFMT_INDEX16,0,0,param_1);
+  XGOffsetResourceAddress((D3DResource *)param_1,pvVar1);
+  return pvVar1;
 }
 
 
 // 8271EA60  R_InitDynamicVertexBufferState  (gfx_d3d/r_buffers.cpp:436)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 void R_InitDynamicVertexBufferState(GfxVertexBufferState *param_1,int param_2)
 
 {
-  undefined4 *puVar1;
-  void *pvVar2;
+  uchar *puVar1;
   
-  puVar1 = (undefined4 *)__savegprlr_26(param_1);
-  if (puVar1 == (undefined4 *)0x0) {
+  if (param_1 == (GfxVertexBufferState *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_buffers.cpp",0x1b7,0
                     ,"%s");
   }
-  puVar1[1] = param_2;
-  *puVar1 = 0;
-  pvVar2 = R_AllocPhysicalBuffer(param_2,"Dynamic Vertex Buffer");
-  XGSetVertexBufferHeader(param_2,0,0,0,(D3DVertexBuffer *)(puVar1 + 2));
-  XGOffsetResourceAddress((D3DResource *)(puVar1 + 2),pvVar2);
-  if (pvVar2 == (void *)0x0) {
+  param_1->total = param_2;
+  param_1->used = 0;
+  puVar1 = R_AllocPhysicalBuffer(param_2,"Dynamic Vertex Buffer");
+  XGSetVertexBufferHeader(param_2,0,0,0,&param_1->buffer);
+  XGOffsetResourceAddress((D3DResource *)&param_1->buffer,puVar1);
+  if (puVar1 == (uchar *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_buffers.cpp",0x1be,1
                     ,"%s");
   }
-  puVar1[10] = pvVar2;
-  __restgprlr_26();
+  param_1->verts = puVar1;
   return;
 }
 
 
 // 8271EB20  R_InitDynamicIndices  (gfx_d3d/r_buffers.cpp:483)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 
 void R_InitDynamicIndices(GfxDynamicIndices *param_1,int param_2)
 
 {
-  uint uVar1;
-  undefined4 *puVar2;
-  void *pvVar3;
-  ulonglong uVar4;
+  ushort *puVar1;
   
-  uVar4 = (ulonglong)param_2;
-  puVar2 = (undefined4 *)__savegprlr_26(param_1);
-  if (puVar2 == (undefined4 *)0x0) {
+  if (param_1 == (GfxDynamicIndices *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_buffers.cpp",0x1e7,0
                     ,"%s");
   }
-  puVar2[1] = (int)uVar4;
-  *puVar2 = 0;
-  uVar1 = (uint)((uVar4 & 0xffffffff) << 1);
-  pvVar3 = R_AllocPhysicalBuffer(uVar1,"Dynamic Index Buffer");
-  XGSetIndexBufferHeader(uVar1,0,D3DFMT_INDEX16,0,0,(D3DIndexBuffer *)(puVar2 + 2));
-  XGOffsetResourceAddress((D3DResource *)(puVar2 + 2),pvVar3);
-  if (pvVar3 == (void *)0x0) {
+  param_1->total = param_2;
+  param_1->used = 0;
+  puVar1 = R_AllocPhysicalBuffer(param_2 << 1,"Dynamic Index Buffer");
+  XGSetIndexBufferHeader(param_2 << 1,0,D3DFMT_INDEX16,0,0,&param_1->buffer);
+  XGOffsetResourceAddress((D3DResource *)&param_1->buffer,puVar1);
+  if (puVar1 == (ushort *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_buffers.cpp",0x1fc,1
                     ,"%s");
   }
-  puVar2[10] = pvVar3;
-  __restgprlr_26();
+  param_1->indices = puVar1;
   return;
 }
 
 
 // 8271EBE8  R_CreateDynamicBuffers  (gfx_d3d/r_buffers.cpp:514)
 
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void R_CreateDynamicBuffers(void)
@@ -241,7 +230,6 @@ void R_CreateDynamicBuffers(void)
   void *pvVar1;
   D3DVertexBuffer *pDVar2;
   
-  __savegprlr_22();
   pDVar2 = &gfxBuf.skinnedCacheVbPool[0].buffer;
   do {
     if (pDVar2 == (D3DVertexBuffer *)&DAT_00000008) {
@@ -260,7 +248,6 @@ void R_CreateDynamicBuffers(void)
     pDVar2[1]._padding_ = (int)pvVar1;
     pDVar2 = (D3DVertexBuffer *)&pDVar2[1]._padding_;
   } while (pDVar2 != (D3DVertexBuffer *)&gfxBuf.dynamicBufferFrame);
-  __restgprlr_22();
   return;
 }
 
@@ -301,6 +288,10 @@ void SortVerticesByDistanceToOrigin(GfxPosTexVertex *param_1,uint param_2,uint p
 
 // 8271E520  R_CreateParticleCloudBuffer  (gfx_d3d/r_buffers.cpp:641)
 
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 
@@ -347,8 +338,6 @@ void R_CreateParticleCloudBuffer(void)
   longlong local_f0;
   longlong local_e8;
   
-  __savegprlr();
-  __savefpr_23();
   dVar24 = 1.0;
   local_170[0] = 0;
   local_170[1] = 0;
@@ -508,8 +497,6 @@ void R_CreateParticleCloudBuffer(void)
   } while (local_1c0 != 8);
   qsort(pvVar5,0x400,0x50,SortVerticesByDistanceToOrigin_CompareFunc);
   qsort(local_17c,0x400,0xa0,SortVerticesByDistanceToOrigin_CompareFunc);
-  __restfpr_23();
-  __restgprlr();
   return;
 }
 

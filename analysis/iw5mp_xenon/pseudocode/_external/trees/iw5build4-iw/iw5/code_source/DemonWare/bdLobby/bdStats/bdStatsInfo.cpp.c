@@ -44,66 +44,61 @@ void __thiscall bdStatsInfo::serialize(bdStatsInfo *this,bdByteBuffer *param_1)
 
 // 828F86E0  deserialize  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdstats/bdstatsinfo.cpp:42)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 bool __thiscall bdStatsInfo::deserialize(bdStatsInfo *this,bdReference<bdByteBuffer> param_1)
 
 {
-  int iVar1;
+  bool bVar1;
   bool bVar2;
-  bool bVar3;
-  undefined1 uVar4;
-  longlong lVar5;
-  bdByteBuffer *pbStack0000001c;
+  bdReference<bdByteBuffer> bStack0000001c;
   
-  iVar1 = __savegprlr_29(this);
-  pbStack0000001c = param_1.m_ptr;
-  bVar2 = bdByteBuffer::readUInt64
-                    ((bdByteBuffer *)(param_1.m_ptr)->_padding_,(ulong64 *)(iVar1 + 8));
-  if (bVar2) {
-    bVar3 = bdByteBuffer::readInt64
-                      ((bdByteBuffer *)(param_1.m_ptr)->_padding_,(long64 *)(iVar1 + 0x18));
-    bVar2 = true;
-    if (!bVar3) goto LAB_828f8728;
+  bStack0000001c.m_ptr = param_1.m_ptr;
+  bVar1 = bdByteBuffer::readUInt64((bdByteBuffer *)(param_1.m_ptr)->_padding_,&this->m_entityID);
+  if (bVar1) {
+    bVar2 = bdByteBuffer::readInt64((bdByteBuffer *)(param_1.m_ptr)->_padding_,&this->m_rating);
+    bVar1 = true;
+    if (!bVar2) goto LAB_828f8728;
   }
   else {
 LAB_828f8728:
-    bVar2 = false;
+    bVar1 = false;
   }
-  if (bVar2) {
-    bVar3 = bdByteBuffer::readUInt64
-                      ((bdByteBuffer *)(param_1.m_ptr)->_padding_,(ulong64 *)(iVar1 + 0x20));
-    bVar2 = true;
-    if (!bVar3) goto LAB_828f874c;
+  if (bVar1) {
+    bVar2 = bdByteBuffer::readUInt64((bdByteBuffer *)(param_1.m_ptr)->_padding_,&this->m_rank);
+    bVar1 = true;
+    if (!bVar2) goto LAB_828f874c;
   }
   else {
 LAB_828f874c:
-    bVar2 = false;
+    bVar1 = false;
   }
-  if (bVar2) {
-    bVar3 = bdByteBuffer::readString
-                      ((bdByteBuffer *)(param_1.m_ptr)->_padding_,(char *)(iVar1 + 0x28),0x40);
-    bVar2 = true;
-    if (!bVar3) goto LAB_828f8774;
+  if (bVar1) {
+    bVar2 = bdByteBuffer::readString
+                      ((bdByteBuffer *)(param_1.m_ptr)->_padding_,this->m_entityName,0x40);
+    bVar1 = true;
+    if (!bVar2) goto LAB_828f8774;
   }
   else {
 LAB_828f8774:
-    bVar2 = false;
+    bVar1 = false;
   }
-  if (bVar2) {
+  if (bVar1) {
     bVar2 = bdByteBuffer::readUInt32
-                      ((bdByteBuffer *)(param_1.m_ptr)->_padding_,(uint *)(iVar1 + 0x6c));
-    lVar5 = 1;
+                      ((bdByteBuffer *)(param_1.m_ptr)->_padding_,&this->m_secondsSinceUpdate);
+    bVar1 = true;
     if (bVar2) goto LAB_828f879c;
   }
-  lVar5 = 0;
+  bVar1 = false;
 LAB_828f879c:
-  if (lVar5 == 0) {
+  if (!bVar1) {
     bdLogMessage(BD_LOG_ERROR,"err/","statsInfo",
                  "c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdLobby\\bdStats\\bdStatsInfo.cpp"
                  ,"bdStatsInfo::deserialize",0x32,"Deserialization failed");
   }
   bdReference<bdByteBuffer>::~bdReference<bdByteBuffer>((bdReference<bdByteBuffer> *)param_1.m_ptr);
-  uVar4 = __restgprlr_29(lVar5);
-  return (bool)uVar4;
+  return bVar1;
 }
 
 
@@ -157,62 +152,60 @@ void __thiscall bdStatsInfoEx::~bdStatsInfoEx(bdStatsInfoEx *this)
 
 // 828F8878  deserialize  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdstats/bdstatsinfo.cpp:83)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 bool __thiscall bdStatsInfoEx::deserialize(bdStatsInfoEx *this,bdReference<bdByteBuffer> param_1)
 
 {
   uint uVar1;
-  int iVar2;
+  bool bVar2;
   bool bVar3;
-  bool bVar4;
-  undefined1 uVar5;
-  ulonglong uVar6;
-  longlong lVar7;
-  uint *puVar8;
+  char cVar4;
+  longlong lVar5;
+  uint *puVar6;
   char in_RESERVE;
-  bdByteBuffer *pbStack0000001c;
+  bdReference<bdByteBuffer> bStack0000001c;
   undefined1 local_30 [48];
   
-  iVar2 = __savegprlr_28(this);
-  pbStack0000001c = param_1.m_ptr;
-  if (*(int *)(iVar2 + 0xc) == 0) {
+  bStack0000001c.m_ptr = param_1.m_ptr;
+  if (this->m_statsInfo == (bdStatsInfo *)0x0) {
 LAB_828f88b8:
-    bVar4 = false;
+    bVar3 = false;
   }
   else {
-    bVar3 = bdByteBuffer::readUInt32((bdByteBuffer *)(param_1.m_ptr)->_padding_,(uint *)(iVar2 + 4))
-    ;
-    bVar4 = true;
-    if (!bVar3) goto LAB_828f88b8;
+    bVar2 = bdByteBuffer::readUInt32
+                      ((bdByteBuffer *)(param_1.m_ptr)->_padding_,&this->m_leaderboardID);
+    bVar3 = true;
+    if (!bVar2) goto LAB_828f88b8;
   }
-  if (bVar4) {
-    bVar4 = bdByteBuffer::readUInt32((bdByteBuffer *)(param_1.m_ptr)->_padding_,(uint *)(iVar2 + 8))
-    ;
-    uVar6 = 1;
-    if (bVar4) goto LAB_828f88e0;
+  if (bVar3) {
+    bVar3 = bdByteBuffer::readUInt32((bdByteBuffer *)(param_1.m_ptr)->_padding_,&this->m_error);
+    cVar4 = true;
+    if (bVar3) goto LAB_828f88e0;
   }
-  uVar6 = 0;
+  cVar4 = false;
 LAB_828f88e0:
-  bVar4 = uVar6 == 0;
-  if ((!bVar4) && (*(int *)(iVar2 + 8) == 0)) {
+  bVar3 = !(bool)cVar4;
+  if ((!bVar3) && (this->m_error == 0)) {
     if ((ulonglong)(uint)(param_1.m_ptr)->_padding_ != 0) {
-      lVar7 = (ulonglong)(uint)(param_1.m_ptr)->_padding_ + 4;
+      lVar5 = (ulonglong)(uint)(param_1.m_ptr)->_padding_ + 4;
       do {
-        puVar8 = (uint *)lVar7;
+        puVar6 = (uint *)lVar5;
         if (in_RESERVE != '\0') {
-          uVar1 = storeWordConditionalIndexed((ulonglong)*puVar8 + 1,0,lVar7);
-          *puVar8 = uVar1;
-          bVar4 = true;
+          uVar1 = storeWordConditionalIndexed((ulonglong)*puVar6 + 1,0,lVar5);
+          *puVar6 = uVar1;
+          bVar3 = true;
         }
-      } while (!bVar4);
+      } while (!bVar3);
     }
-    uVar6 = (**(code **)(**(int **)(iVar2 + 0xc) + 4))(*(int **)(iVar2 + 0xc),local_30);
-    if ((uVar6 & 0xff) != 0) {
-      *(undefined4 *)(*(int *)(iVar2 + 0xc) + 4) = *(undefined4 *)(iVar2 + 4);
+    cVar4 = (**(code **)(this->m_statsInfo->_padding_ + 4))(this->m_statsInfo,local_30);
+    if (cVar4 != '\0') {
+      this->m_statsInfo->m_leaderboardID = this->m_leaderboardID;
     }
   }
   bdReference<bdByteBuffer>::~bdReference<bdByteBuffer>((bdReference<bdByteBuffer> *)param_1.m_ptr);
-  uVar5 = __restgprlr_28(uVar6);
-  return (bool)uVar5;
+  return (bool)cVar4;
 }
 
 

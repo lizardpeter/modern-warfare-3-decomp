@@ -61,70 +61,70 @@ void __thiscall bdFileMetaData::reset(bdFileMetaData *this)
 
 // 828F8A30  resetArrays  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdcontentstreaming/bdfilemetadata.cpp:44)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void __thiscall bdFileMetaData::resetArrays(bdFileMetaData *this)
 
 {
-  int iVar1;
-  uint uVar2;
+  uint uVar1;
   bdTag *this_00;
   
-  iVar1 = __savegprlr_29(this);
   memset();
   memset();
   memset();
   memset();
-  uVar2 = 0;
-  if (*(int *)(iVar1 + 0x26c) != 0) {
-    this_00 = (bdTag *)(iVar1 + 0x478);
+  uVar1 = 0;
+  if (this->m_numTags != 0) {
+    this_00 = this->m_tags;
     do {
       bdTag::set(this_00,0,0);
-      uVar2 = uVar2 + 1;
+      uVar1 = uVar1 + 1;
       this_00 = this_00 + 1;
-    } while (uVar2 < *(uint *)(iVar1 + 0x26c));
+    } while (uVar1 < this->m_numTags);
   }
-  __restgprlr_29();
   return;
 }
 
 
 // 828F8C58  deserialize  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdcontentstreaming/bdfilemetadata.cpp:58)
 
+/* WARNING: Function: __savegprlr_19 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_19 replaced with injection: xenon_save_restore */
+
 bool __thiscall bdFileMetaData::deserialize(bdFileMetaData *this,bdReference<bdByteBuffer> param_1)
 
 {
   uint uVar1;
-  bdFileMetaData *this_00;
   bool bVar2;
   bool bVar3;
   char cVar4;
-  undefined1 uVar5;
-  uint *puVar6;
-  longlong lVar7;
-  uint *puVar8;
-  uint uVar9;
-  bdTag *pbVar10;
+  uint *puVar5;
+  longlong lVar6;
+  uint *puVar7;
+  uint uVar8;
+  bdTag *pbVar9;
   char in_RESERVE;
-  bdByteBuffer *pbStack0000001c;
+  bdReference<bdByteBuffer> bStack0000001c;
   undefined1 local_80 [128];
   
-  this_00 = (bdFileMetaData *)__savegprlr_19(this);
-  uVar9 = 0;
-  this_00->m_fileID = 0;
-  this_00->m_fileSlot = 0;
-  this_00->m_createTime = 0;
-  this_00->m_modifedTime = 0;
-  this_00->m_fileSize = 0;
-  puVar6 = &this_00->m_numTags;
-  this_00->m_ownerID = 0;
-  this_00->m_numTags = 0;
-  this_00->m_metaDataSize = 0;
-  this_00->m_summaryFileSize = 0;
-  pbStack0000001c = param_1.m_ptr;
-  resetArrays(this_00);
-  bVar2 = bdByteBuffer::readUInt64((bdByteBuffer *)(param_1.m_ptr)->_padding_,&this_00->m_fileID);
+  uVar8 = 0;
+  this->m_fileID = 0;
+  this->m_fileSlot = 0;
+  this->m_createTime = 0;
+  this->m_modifedTime = 0;
+  this->m_fileSize = 0;
+  puVar5 = &this->m_numTags;
+  this->m_ownerID = 0;
+  this->m_numTags = 0;
+  this->m_metaDataSize = 0;
+  this->m_summaryFileSize = 0;
+  bStack0000001c.m_ptr = param_1.m_ptr;
+  resetArrays(this);
+  bVar2 = bdByteBuffer::readUInt64((bdByteBuffer *)(param_1.m_ptr)->_padding_,&this->m_fileID);
   if (bVar2) {
-    bVar3 = bdByteBuffer::readUInt32
-                      ((bdByteBuffer *)(param_1.m_ptr)->_padding_,&this_00->m_createTime);
+    bVar3 = bdByteBuffer::readUInt32((bdByteBuffer *)(param_1.m_ptr)->_padding_,&this->m_createTime)
+    ;
     bVar2 = true;
     if (!bVar3) goto LAB_828f8cfc;
   }
@@ -134,7 +134,7 @@ LAB_828f8cfc:
   }
   if (bVar2) {
     bVar3 = bdByteBuffer::readUInt32
-                      ((bdByteBuffer *)(param_1.m_ptr)->_padding_,&this_00->m_modifedTime);
+                      ((bdByteBuffer *)(param_1.m_ptr)->_padding_,&this->m_modifedTime);
     bVar2 = true;
     if (!bVar3) goto LAB_828f8d20;
   }
@@ -143,8 +143,7 @@ LAB_828f8d20:
     bVar2 = false;
   }
   if (bVar2) {
-    bVar3 = bdByteBuffer::readUInt32
-                      ((bdByteBuffer *)(param_1.m_ptr)->_padding_,&this_00->m_fileSize);
+    bVar3 = bdByteBuffer::readUInt32((bdByteBuffer *)(param_1.m_ptr)->_padding_,&this->m_fileSize);
     bVar2 = true;
     if (!bVar3) goto LAB_828f8d44;
   }
@@ -153,8 +152,7 @@ LAB_828f8d44:
     bVar2 = false;
   }
   if (bVar2) {
-    bVar3 = bdByteBuffer::readUInt64((bdByteBuffer *)(param_1.m_ptr)->_padding_,&this_00->m_ownerID)
-    ;
+    bVar3 = bdByteBuffer::readUInt64((bdByteBuffer *)(param_1.m_ptr)->_padding_,&this->m_ownerID);
     bVar2 = true;
     if (!bVar3) goto LAB_828f8d68;
   }
@@ -164,7 +162,7 @@ LAB_828f8d68:
   }
   if (bVar2) {
     bVar3 = bdByteBuffer::readString
-                      ((bdByteBuffer *)(param_1.m_ptr)->_padding_,this_00->m_ownerName,0x40);
+                      ((bdByteBuffer *)(param_1.m_ptr)->_padding_,this->m_ownerName,0x40);
     bVar2 = true;
     if (!bVar3) goto LAB_828f8d90;
   }
@@ -173,8 +171,7 @@ LAB_828f8d90:
     bVar2 = false;
   }
   if (bVar2) {
-    bVar3 = bdByteBuffer::readUInt16
-                      ((bdByteBuffer *)(param_1.m_ptr)->_padding_,&this_00->m_fileSlot);
+    bVar3 = bdByteBuffer::readUInt16((bdByteBuffer *)(param_1.m_ptr)->_padding_,&this->m_fileSlot);
     bVar2 = true;
     if (!bVar3) goto LAB_828f8db4;
   }
@@ -184,7 +181,7 @@ LAB_828f8db4:
   }
   if (bVar2) {
     bVar3 = bdByteBuffer::readString
-                      ((bdByteBuffer *)(param_1.m_ptr)->_padding_,this_00->m_fileName,0x80);
+                      ((bdByteBuffer *)(param_1.m_ptr)->_padding_,this->m_fileName,0x80);
     bVar2 = true;
     if (!bVar3) goto LAB_828f8ddc;
   }
@@ -193,8 +190,7 @@ LAB_828f8ddc:
     bVar2 = false;
   }
   if (bVar2) {
-    bVar3 = bdByteBuffer::readString
-                      ((bdByteBuffer *)(param_1.m_ptr)->_padding_,this_00->m_url,0x180);
+    bVar3 = bdByteBuffer::readString((bdByteBuffer *)(param_1.m_ptr)->_padding_,this->m_url,0x180);
     bVar2 = true;
     if (!bVar3) goto LAB_828f8e04;
   }
@@ -203,8 +199,7 @@ LAB_828f8e04:
     bVar2 = false;
   }
   if (bVar2) {
-    bVar3 = bdByteBuffer::readUInt16
-                      ((bdByteBuffer *)(param_1.m_ptr)->_padding_,&this_00->m_category);
+    bVar3 = bdByteBuffer::readUInt16((bdByteBuffer *)(param_1.m_ptr)->_padding_,&this->m_category);
     bVar2 = true;
     if (!bVar3) goto LAB_828f8e28;
   }
@@ -212,11 +207,11 @@ LAB_828f8e04:
 LAB_828f8e28:
     bVar2 = false;
   }
-  this_00->m_metaDataSize = 0x200;
+  this->m_metaDataSize = 0x200;
   if (bVar2) {
     bVar3 = bdByteBuffer::readBlob
-                      ((bdByteBuffer *)(param_1.m_ptr)->_padding_,this_00->m_metaData,
-                       &this_00->m_metaDataSize);
+                      ((bdByteBuffer *)(param_1.m_ptr)->_padding_,this->m_metaData,
+                       &this->m_metaDataSize);
     bVar2 = true;
     if (!bVar3) goto LAB_828f8e58;
   }
@@ -226,7 +221,7 @@ LAB_828f8e58:
   }
   if (bVar2) {
     bVar3 = bdByteBuffer::readUInt32
-                      ((bdByteBuffer *)(param_1.m_ptr)->_padding_,&this_00->m_summaryFileSize);
+                      ((bdByteBuffer *)(param_1.m_ptr)->_padding_,&this->m_summaryFileSize);
     bVar2 = true;
     if (!bVar3) goto LAB_828f8e7c;
   }
@@ -235,43 +230,40 @@ LAB_828f8e7c:
     bVar2 = false;
   }
   if (bVar2) {
-    bVar3 = bdByteBuffer::readArrayStart((bdByteBuffer *)(param_1.m_ptr)->_padding_,'\n',puVar6);
+    bVar3 = bdByteBuffer::readArrayStart((bdByteBuffer *)(param_1.m_ptr)->_padding_,'\n',puVar5);
     bVar2 = true;
     if (bVar3) goto LAB_828f8ea8;
   }
   bVar2 = false;
 LAB_828f8ea8:
-  if (*puVar6 != 0) {
-    *puVar6 = *puVar6 >> 1;
+  if (*puVar5 != 0) {
+    *puVar5 = *puVar5 >> 1;
   }
-  if (*puVar6 != 0) {
-    pbVar10 = this_00->m_tags;
+  if (*puVar5 != 0) {
+    pbVar9 = this->m_tags;
     do {
-      bVar3 = bVar2 == false;
-      bVar2 = false;
-      if (bVar3) break;
+      if (!bVar2) break;
       if ((ulonglong)(uint)(param_1.m_ptr)->_padding_ != 0) {
-        lVar7 = (ulonglong)(uint)(param_1.m_ptr)->_padding_ + 4;
+        lVar6 = (ulonglong)(uint)(param_1.m_ptr)->_padding_ + 4;
         bVar2 = false;
         do {
-          puVar8 = (uint *)lVar7;
+          puVar7 = (uint *)lVar6;
           if (in_RESERVE != '\0') {
-            uVar1 = storeWordConditionalIndexed((ulonglong)*puVar8 + 1,0,lVar7);
-            *puVar8 = uVar1;
+            uVar1 = storeWordConditionalIndexed((ulonglong)*puVar7 + 1,0,lVar6);
+            *puVar7 = uVar1;
             bVar2 = true;
           }
         } while (!bVar2);
       }
-      cVar4 = (**(code **)(pbVar10->_padding_ + 4))(pbVar10,local_80);
-      uVar9 = uVar9 + 1;
+      cVar4 = (**(code **)(pbVar9->_padding_ + 4))(pbVar9,local_80);
+      uVar8 = uVar8 + 1;
       bVar2 = cVar4 != '\0';
-      pbVar10 = pbVar10 + 1;
-    } while (uVar9 < *puVar6);
+      pbVar9 = pbVar9 + 1;
+    } while (uVar8 < *puVar5);
   }
   bdByteBuffer::readArrayEnd((bdByteBuffer *)(param_1.m_ptr)->_padding_);
   bdReference<bdByteBuffer>::~bdReference<bdByteBuffer>((bdReference<bdByteBuffer> *)param_1.m_ptr);
-  uVar5 = __restgprlr_19(bVar2);
-  return (bool)uVar5;
+  return bVar2;
 }
 
 

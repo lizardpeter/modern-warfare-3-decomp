@@ -13,6 +13,8 @@ void TRACK_sv_init(void)
 
 // 82573E18  SV_SetConfigstring  (server_mp/sv_init_mp.cpp:149)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "ConfigString": Some values do not have unique names */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -23,75 +25,67 @@ void SV_SetConfigstring(ConfigString param_1,char *param_2)
 {
   char cVar1;
   char cVar2;
-  ushort uVar3;
-  ulonglong uVar4;
-  char *pcVar5;
-  uint uVar6;
-  ulonglong uVar8;
-  int iVar9;
-  ulonglong uVar10;
-  int iVar11;
-  client_t *pcVar12;
+  char *pcVar3;
+  uint uVar4;
+  char *pcVar6;
+  int iVar7;
+  int iVar8;
+  client_t *pcVar9;
   char local_440 [1088];
-  undefined2 uVar7;
+  ushort uVar5;
   
-  uVar10 = (ulonglong)(int)param_2;
-  uVar4 = __savegprlr_25(param_1);
-  if (((int)uVar4 < 0) || (0xeea < (int)uVar4)) {
+  if (((int)param_1 < 0) || (0xeea < (int)param_1)) {
     Com_Error(ERR_DROP,"\x15SV_SetConfigstring: bad index %i\n");
   }
-  iVar9 = (int)((uVar4 & 0x7fffffff) << 1);
-  uVar3 = *(ushort *)((int)sv.configstrings + iVar9);
-  if (uVar3 == 0) {
-    if ((uVar10 & 0xffffffff) != 0) {
+  if (sv.configstrings[param_1] == 0) {
+    if (param_2 != (char *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_init_mp.cpp",
                       0xac,0,"%s");
-      __restgprlr_25();
       return;
     }
   }
   else {
-    if ((uVar10 & 0xffffffff) == 0) {
-      uVar10 = 0xffffffff820068af;
+    if (param_2 == (char *)0x0) {
+      param_2 = "";
     }
-    pcVar5 = SL_ConvertToString((uint)uVar3);
-    uVar8 = uVar10;
+    pcVar3 = SL_ConvertToString((uint)sv.configstrings[param_1]);
+    pcVar6 = param_2;
     do {
-      cVar1 = *(char *)uVar8;
-      cVar2 = *pcVar5;
+      cVar1 = *pcVar6;
+      cVar2 = *pcVar3;
       if (cVar1 == '\0') break;
-      uVar8 = uVar8 + 1;
-      pcVar5 = pcVar5 + 1;
+      pcVar6 = pcVar6 + 1;
+      pcVar3 = pcVar3 + 1;
     } while (cVar1 == cVar2);
     if (cVar1 != cVar2) {
-      SL_RemoveRefToString((uint)*(ushort *)((int)sv.configstrings + iVar9));
-      uVar8 = uVar10;
+      SL_RemoveRefToString((uint)sv.configstrings[param_1]);
+      pcVar6 = param_2;
       do {
-        pcVar5 = (char *)uVar8;
-        uVar8 = uVar8 + 1;
-      } while (*pcVar5 != '\0');
-      pcVar5 = (char *)uVar10;
-      uVar6 = (int)uVar8 - (int)pcVar5;
-      if (0x3f8 < (int)uVar6) {
+        cVar1 = *pcVar6;
+        pcVar6 = pcVar6 + 1;
+      } while (cVar1 != '\0');
+      uVar4 = (int)pcVar6 - (int)param_2;
+      if (0x3f8 < (int)uVar4) {
         Com_Error(ERR_DROP,"\x15max config string length exceeded for %s");
       }
-      if ((((~uVar4 & 0xffffffff) >> 0x1f) + (ulonglong)(0x3d5 < uVar4) & 1) == 0) {
-        uVar6 = GetLowercaseStringOfSize(pcVar5,0,uVar6,0x14);
-        uVar7 = (undefined2)uVar6;
+      if ((((~(longlong)(int)param_1 & 0xffffffffU) >> 0x1f) +
+           (ulonglong)(0x3d5 < (ulonglong)(longlong)(int)param_1) & 1) == 0) {
+        uVar4 = GetLowercaseStringOfSize(param_2,0,uVar4,0x14);
+        uVar5 = (ushort)uVar4;
       }
       else {
-        uVar6 = SL_GetStringOfSize(pcVar5,0,uVar6,0x14);
-        uVar7 = (undefined2)uVar6;
+        uVar4 = SL_GetStringOfSize(param_2,0,uVar4,0x14);
+        uVar5 = (ushort)uVar4;
       }
-      *(undefined2 *)((int)sv.configstrings + iVar9) = uVar7;
+      sv.configstrings[param_1] = uVar5;
       if ((sv.state == SS_GAME) || (sv.restarting != 0)) {
         sprintf(local_440,"%i");
-        pcVar5 = local_440;
+        pcVar6 = local_440;
         do {
-          cVar1 = *pcVar5;
-          pcVar5 = pcVar5 + 1;
+          cVar1 = *pcVar6;
+          pcVar6 = pcVar6 + 1;
         } while (cVar1 != '\0');
-        if (8 < (int)(pcVar5 + (3 - (int)local_440))) {
+        if (8 < (int)(pcVar6 + (3 - (int)local_440))) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_init_mp.cpp"
                           ,0xc9,0,"%s\n\t(index) = %i");
         }
@@ -99,29 +93,30 @@ void SV_SetConfigstring(ConfigString param_1,char *param_2)
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_init_mp.cpp"
                           ,0xd0,0,"%s");
         }
-        iVar11 = 0;
-        iVar9 = svs.clientCount;
-        pcVar12 = svs.clients;
+        iVar8 = 0;
+        iVar7 = svs.clientCount;
+        pcVar9 = svs.clients;
         if (0 < svs.clientCount) {
           do {
-            if (3 < (pcVar12->header).state) {
-              SV_SendServerCommand(pcVar12,SV_CMD_RELIABLE,"%c %i %s");
-              iVar9 = svs.clientCount;
+            if (3 < (pcVar9->header).state) {
+              SV_SendServerCommand(pcVar9,SV_CMD_RELIABLE,"%c %i %s");
+              iVar7 = svs.clientCount;
             }
-            iVar11 = iVar11 + 1;
-            pcVar12 = pcVar12 + 1;
-          } while (iVar11 < iVar9);
+            iVar8 = iVar8 + 1;
+            pcVar9 = pcVar9 + 1;
+          } while (iVar8 < iVar7);
         }
       }
     }
   }
-  __restgprlr_25();
   return;
 }
 
 
 // 82572828  SV_GetConfigstring  (server_mp/sv_init_mp.cpp:227)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "ConfigString": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
@@ -129,31 +124,30 @@ void SV_SetConfigstring(ConfigString param_1,char *param_2)
 void SV_GetConfigstring(ConfigString param_1,char *param_2,int param_3)
 
 {
-  int iVar1;
-  char *pcVar2;
+  char *pcVar1;
   
-  iVar1 = __savegprlr_27(param_1);
   if (param_3 < 1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_init_mp.cpp",0xe4
                     ,0,"%s\n\t(bufferSize) = %i");
   }
-  if ((iVar1 < 0) || (0xeea < iVar1)) {
+  if (((int)param_1 < 0) || (0xeea < (int)param_1)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_init_mp.cpp",0xe5
                     ,0,"%s\n\t(index) = %i");
   }
-  if (sv.configstrings[iVar1] == 0) {
+  if (sv.configstrings[param_1] == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_init_mp.cpp",0xe7
                     ,0,"%s");
   }
-  pcVar2 = SL_ConvertToString((uint)sv.configstrings[iVar1]);
-  I_strncpyz(param_2,pcVar2,param_3);
-  __restgprlr_27();
+  pcVar1 = SL_ConvertToString((uint)sv.configstrings[param_1]);
+  I_strncpyz(param_2,pcVar1,param_3);
   return;
 }
 
 
 // 82572908  SV_GetConfigstringConst  (server_mp/sv_init_mp.cpp:243)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "ConfigString": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
@@ -161,24 +155,22 @@ void SV_GetConfigstring(ConfigString param_1,char *param_2,int param_3)
 uint SV_GetConfigstringConst(ConfigString param_1)
 
 {
-  uint uVar1;
-  
-  uVar1 = __savegprlr_28(param_1);
-  if (0xeea < uVar1) {
+  if (CS_USE_TRIG_STRINGS_LAST < param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_init_mp.cpp",0xf4
                     ,0,"%s");
   }
-  if (sv.configstrings[uVar1] == 0) {
+  if (sv.configstrings[param_1] == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_init_mp.cpp",0xf6
                     ,0,"%s");
   }
-  uVar1 = __restgprlr_28(sv.configstrings[uVar1]);
-  return uVar1;
+  return (uint)sv.configstrings[param_1];
 }
 
 
 // 825740C0  SV_SetConfigValueForKey  (server_mp/sv_init_mp.cpp:258)
 
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "ConfigString": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
@@ -186,63 +178,62 @@ uint SV_GetConfigstringConst(ConfigString param_1)
 void SV_SetConfigValueForKey(ConfigString param_1,int param_2,char *param_3,char *param_4)
 
 {
-  int iVar1;
-  uint uVar2;
-  ushort *puVar3;
-  int iVar4;
-  ConfigString CVar5;
+  uint uVar1;
+  ushort *puVar2;
+  int iVar3;
+  ConfigString CVar4;
   
-  iVar1 = __savegprlr_22(param_1);
-  if (iVar1 < 0x3d6) {
-    uVar2 = SL_FindString(param_3);
+  if ((int)param_1 < 0x3d6) {
+    uVar1 = SL_FindString(param_3);
   }
   else {
-    uVar2 = SL_FindLowercaseString(param_3);
+    uVar1 = SL_FindLowercaseString(param_3);
   }
-  iVar4 = 0;
+  iVar3 = 0;
   if (0 < param_2) {
-    puVar3 = (ushort *)(iVar1 * 2 + -0x7c3118da);
+    puVar2 = sv.configstrings + param_1;
     do {
-      if ((uint)*puVar3 == (uint)sv.emptyConfigString) {
-        if ((0xeea < iVar4 + iVar1) || (iVar1 < 0)) {
+      if ((uint)*puVar2 == (uint)sv.emptyConfigString) {
+        if ((0xeea < (int)(iVar3 + param_1)) || ((int)param_1 < 0)) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\../bgame/bg_public.h"
                           ,0x285,0,"%s");
         }
-        SV_SetConfigstring(iVar4 + iVar1,param_3);
+        SV_SetConfigstring(iVar3 + param_1,param_3);
         break;
       }
-      if (uVar2 == *puVar3) break;
-      iVar4 = iVar4 + 1;
-      puVar3 = puVar3 + 1;
-    } while (iVar4 < param_2);
+      if (uVar1 == *puVar2) break;
+      iVar3 = iVar3 + 1;
+      puVar2 = puVar2 + 1;
+    } while (iVar3 < param_2);
   }
-  if (iVar4 == param_2) {
+  if (iVar3 == param_2) {
     Com_Printf(0xf,"Overflow at config string start value of %i: key values printed below\n");
-    iVar4 = 0;
+    iVar3 = 0;
     if (0 < param_2) {
-      puVar3 = (ushort *)(iVar1 * 2 + -0x7c3118dc);
+      puVar2 = sv.configstrings + (param_1 - CS_SYSTEMINFO);
       do {
-        puVar3 = puVar3 + 1;
-        SL_ConvertToString((uint)*puVar3);
+        puVar2 = puVar2 + 1;
+        SL_ConvertToString((uint)*puVar2);
         Com_Printf(0xf,"%i: %i ( %s )\n");
-        iVar4 = iVar4 + 1;
-      } while (iVar4 < param_2);
+        iVar3 = iVar3 + 1;
+      } while (iVar3 < param_2);
     }
     Com_Error(ERR_DROP,"\x15SV_SetConfigValueForKey: overflow");
   }
-  CVar5 = iVar4 + param_2 + iVar1;
-  if ((0xeea < (int)CVar5) || (iVar1 < 0)) {
+  CVar4 = iVar3 + param_2 + param_1;
+  if ((0xeea < (int)CVar4) || ((int)param_1 < 0)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\../bgame/bg_public.h"
                     ,0x285,0,"%s");
   }
-  SV_SetConfigstring(CVar5,param_4);
-  __restgprlr_22();
+  SV_SetConfigstring(CVar4,param_4);
   return;
 }
 
 
 // 82572990  SV_SetUserinfo  (server_mp/sv_init_mp.cpp:301)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
@@ -250,29 +241,25 @@ void SV_SetConfigValueForKey(ConfigString param_1,int param_2,char *param_3,char
 void SV_SetUserinfo(int param_1,char *param_2)
 
 {
-  int iVar1;
-  char *pcVar2;
-  ulonglong uVar3;
+  char *pcVar1;
   
-  uVar3 = (ulonglong)(int)param_2;
-  iVar1 = __savegprlr_29(param_1);
-  pcVar2 = (char *)uVar3;
-  if ((iVar1 < 0) || (svs.clientCount <= iVar1)) {
+  if ((param_1 < 0) || (svs.clientCount <= param_1)) {
     Com_Error(ERR_DROP,"\x15SV_SetUserinfo: bad index %i\n");
   }
-  if ((uVar3 & 0xffffffff) == 0) {
-    pcVar2 = "";
+  if (param_2 == (char *)0x0) {
+    param_2 = "";
   }
-  I_strncpyz(svs.clients[iVar1].userinfo,pcVar2,0x400);
-  pcVar2 = Info_ValueForKey(pcVar2,"name");
-  I_strncpyz(svs.clients[iVar1].name,pcVar2,0x20);
-  __restgprlr_29();
+  I_strncpyz(svs.clients[param_1].userinfo,param_2,0x400);
+  pcVar1 = Info_ValueForKey(param_2,"name");
+  I_strncpyz(svs.clients[param_1].name,pcVar1,0x20);
   return;
 }
 
 
 // 82572A58  SV_GetUserinfo  (server_mp/sv_init_mp.cpp:324)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
@@ -280,17 +267,13 @@ void SV_SetUserinfo(int param_1,char *param_2)
 void SV_GetUserinfo(int param_1,char *param_2,int param_3)
 
 {
-  int iVar1;
-  
-  iVar1 = __savegprlr_28(param_1);
   if (param_3 < 1) {
     Com_Error(ERR_DROP,"\x15SV_GetUserinfo: bufferSize == %i");
   }
-  if ((iVar1 < 0) || (svs.clientCount <= iVar1)) {
+  if ((param_1 < 0) || (svs.clientCount <= param_1)) {
     Com_Error(ERR_DROP,"\x15SV_GetUserinfo: bad index %i\n");
   }
-  I_strncpyz(param_2,svs.clients[iVar1].userinfo,param_3);
-  __restgprlr_28();
+  I_strncpyz(param_2,svs.clients[param_1].userinfo,param_3);
   return;
 }
 
@@ -314,6 +297,8 @@ void SV_BoundMaxClients(int param_1)
 
 // 82574250  SV_SetXUIDConfigStrings  (server_mp/sv_init_mp.cpp:366)
 
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
 /* WARNING: Type propagation algorithm not settling */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
@@ -343,13 +328,11 @@ void SV_SetXUIDConfigStrings(void)
   XNADDR XStack_120;
   char acStack_f0 [240];
   
-  __savegprlr();
   local_170 = &g_serverSession;
   if (g_serverSession.dyn.sessionHandle == (void *)0x0) {
     if (((onlinegame->current).enabled != false) || ((systemlink->current).enabled != false)) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_init_mp.cpp",
                       0x181,0,"%s\n\t%s");
-      __restgprlr();
       return;
     }
   }
@@ -406,13 +389,14 @@ LAB_82574514:
       } while (iVar7 < local_178->clientCount);
     }
   }
-  __restgprlr();
   return;
 }
 
 
 // 82574588  SV_Startup  (server_mp/sv_init_mp.cpp:488)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
@@ -421,15 +405,13 @@ void SV_Startup(int param_1)
 
 {
   uint uVar1;
-  int iVar2;
   
-  iVar2 = __savegprlr_28(param_1);
   if (svs.initialized != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_init_mp.cpp",
                     0x1e9,0,"%s");
   }
   SV_BoundMaxClients(1);
-  if (iVar2 == 0) {
+  if (param_1 == 0) {
     svs.packetBackupCount = 0x10;
     svs.packetBackupMask = 0xf;
     svs.clientCount = 0x12;
@@ -501,7 +483,6 @@ void SV_Startup(int param_1)
   Com_Printf(0,"%d bytes free at end of SV_Startup\n");
   svs.initialized = 1;
   Dvar_SetBool(com_sv_running,true);
-  __restgprlr_28();
   return;
 }
 
@@ -528,24 +509,25 @@ uint SV_GetTotalSizeForClientMemory(int param_1,int param_2,int param_3)
 
 // 82572C08  SV_AllocateClientMemory  (server_mp/sv_init_mp.cpp:626)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void SV_AllocateClientMemory(int param_1,int param_2,int param_3)
 
 {
   uint uVar1;
   uint uVar2;
   
-  uVar1 = __savegprlr_28(param_1);
-  uVar2 = CL_CalcSnapshotMemory(uVar1,param_2,param_3);
-  if ((uVar1 & 2) == 0) {
-    uVar1 = SV_GetTotalSizeForClientMemory(uVar1,param_2,param_3);
-    uVar2 = uVar1 + uVar2;
+  uVar1 = CL_CalcSnapshotMemory(param_1,param_2,param_3);
+  if ((param_1 & 2U) == 0) {
+    uVar2 = SV_GetTotalSizeForClientMemory(param_1,param_2,param_3);
+    uVar1 = uVar2 + uVar1;
   }
   if (g_serverHunkUser != (HunkUser *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_init_mp.cpp",
                     0x27c,0,"%s");
   }
-  g_serverHunkUser = Hunk_UserCreate(uVar2 + 0xffff & 0xffff0000,"g_serverHunkUser",true,9);
-  __restgprlr_28();
+  g_serverHunkUser = Hunk_UserCreate(uVar1 + 0xffff & 0xffff0000,"g_serverHunkUser",true,9);
   return;
 }
 
@@ -684,6 +666,8 @@ void SV_SetSystemInfoConfig(void)
 
 // 82574988  SV_SaveSystemInfo  (server_mp/sv_init_mp.cpp:884)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "ConfigString": Some values do not have unique names */
@@ -697,7 +681,6 @@ void SV_SaveSystemInfo(void)
   char *pcVar2;
   int *in_r13;
   
-  __savegprlr_27();
   SV_SetSystemInfoConfig();
   pcVar2 = Dvar_InfoString(LOCAL_CLIENT_0,0x400);
   SV_SetConfigstring(CS_FIRST,pcVar2);
@@ -716,13 +699,14 @@ void SV_SaveSystemInfo(void)
   sv.state = SS_GAME;
   *(uint *)(iVar1 + 0xf0) = *(uint *)(iVar1 + 0xf0) & 0xffffffe7;
   sv.restarting = 0;
-  __restgprlr_27();
   return;
 }
 
 
 // 82574A78  SV_SpawnServer  (server_mp/sv_init_mp.cpp:977)
 
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
 /* WARNING: Restarted to delay deadcode elimination for space: ram */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
@@ -759,7 +743,6 @@ void SV_SpawnServer(char *param_1,int param_2,int param_3,bool param_4)
   char acStack_100 [32];
   char acStack_e0 [224];
   
-  __savegprlr();
   iStack00000024 = param_3;
   Com_SyncThreads();
   do {
@@ -1144,7 +1127,6 @@ void SV_SpawnServer(char *param_1,int param_2,int param_3,bool param_4)
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_init_mp.cpp",
                     0x62b,0,"%s\n\t(g_serverThreadOwnership) = %i");
   }
-  __restgprlr();
   return;
 }
 
@@ -1284,6 +1266,8 @@ void SV_Init(void)
 
 // 82573618  SV_FinalMessage  (server_mp/sv_init_mp.cpp:1825)
 
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
@@ -1302,7 +1286,6 @@ void SV_FinalMessage(char *param_1)
   LargeLocal aLStack_e0 [2];
   msg_t amStack_d0 [4];
   
-  __savegprlr();
   LargeLocal::LargeLocal(aLStack_e0,0x10000);
   puVar3 = LargeLocal::GetBuf(aLStack_e0);
   lVar5 = 2;
@@ -1355,13 +1338,14 @@ void SV_FinalMessage(char *param_1)
     lVar5 = lVar5 + -1;
   } while (lVar5 != 0);
   LargeLocal::~LargeLocal(aLStack_e0);
-  __restgprlr();
   return;
 }
 
 
 // 82573838  SV_DropAllClients  (server_mp/sv_init_mp.cpp:1947)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -1374,7 +1358,6 @@ void SV_DropAllClients(void)
   int iVar2;
   client_t *pcVar3;
   
-  __savegprlr_27();
   if (svs.clientCount < (sv_maxclients->current).integer) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_init_mp.cpp",
                     0x7a0,0,"%s");
@@ -1392,13 +1375,14 @@ void SV_DropAllClients(void)
       pcVar3 = pcVar3 + 1;
     } while (iVar2 < iVar1);
   }
-  __restgprlr_27();
   return;
 }
 
 
 // 82573908  FlushServerLoopbackPackets  (server_mp/sv_init_mp.cpp:1965)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
@@ -1412,7 +1396,6 @@ void FlushServerLoopbackPackets(void)
   netadr_t nStack_60;
   msg_t mStack_50;
   
-  __savegprlr_29();
   LargeLocal::LargeLocal(aLStack_70,0x10000);
   puVar1 = LargeLocal::GetBuf(aLStack_70);
   bVar3 = Sys_IsMainThread();
@@ -1429,13 +1412,14 @@ void FlushServerLoopbackPackets(void)
     iVar2 = NET_GetLoopPacket(NS_MAXCLIENTS,&nStack_60,&mStack_50);
   } while (iVar2 != 0);
   LargeLocal::~LargeLocal(aLStack_70);
-  __restgprlr_29();
   return;
 }
 
 
 // 825739D0  SV_Shutdown  (server_mp/sv_init_mp.cpp:1990)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
@@ -1443,30 +1427,28 @@ void SV_Shutdown(char *param_1)
 
 {
   int iVar1;
-  char *pcVar2;
-  bool bVar4;
-  PartyData *pPVar3;
-  ulonglong uVar5;
+  bool bVar3;
+  PartyData *pPVar2;
+  ulonglong uVar4;
   int *in_r13;
   char in_RESERVE;
   byte in_cr0;
   
-  pcVar2 = (char *)__savegprlr_26(param_1);
-  bVar4 = Sys_IsMainThread();
-  if (!bVar4) {
+  bVar3 = Sys_IsMainThread();
+  if (!bVar3) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_init_mp.cpp",
                     0x7c7,0,"%s");
   }
   if ((com_sv_running != (dvar_t *)0x0) && ((com_sv_running->current).enabled != false)) {
     Com_SyncThreads();
     do {
-      uVar5 = (ulonglong)(uint)g_serverThreadOwnership;
+      uVar4 = (ulonglong)(uint)g_serverThreadOwnership;
       if (in_RESERVE != '\0') {
-        g_serverThreadOwnership = storeWordConditionalIndexed(uVar5 + 1,0,0xffffffff83f1e19c);
+        g_serverThreadOwnership = storeWordConditionalIndexed(uVar4 + 1,0,0xffffffff83f1e19c);
         in_cr0 = 2;
       }
     } while (!(bool)(in_cr0 >> 1 & 1));
-    if ((int)(uVar5 + 1) != 1) {
+    if ((int)(uVar4 + 1) != 1) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_init_mp.cpp",
                       0x7ce,0,"%s\n\t(g_serverThreadOwnership) = %i");
     }
@@ -1474,12 +1456,12 @@ void SV_Shutdown(char *param_1)
     Com_Printf(0xf,"----- Server Shutdown -----\n");
     iVar1 = *in_r13;
     *(undefined4 *)(iVar1 + 0xf4) = 0xffffffff;
-    bVar4 = SV_IsMigrating();
-    if (bVar4) {
+    bVar3 = SV_IsMigrating();
+    if (bVar3) {
       SV_MigrationEnd();
     }
     else {
-      SV_FinalMessage(pcVar2);
+      SV_FinalMessage(param_1);
     }
     SV_RemoveOperatorCommands();
     SV_ShutdownGameProgs();
@@ -1492,16 +1474,16 @@ void SV_Shutdown(char *param_1)
     CL_FreePerLocalClientMemory();
     DB_UpdateDebugZone();
     memset();
-    bVar4 = Party_IsStoppingAfterRound(&g_partyData);
-    if (bVar4) {
+    bVar3 = Party_IsStoppingAfterRound(&g_partyData);
+    if (bVar3) {
       Com_DPrintf(0xe,"SV - Shutdown - Stopping private party after round as requested\n");
       Party_StopParty(&g_partyData);
     }
-    pPVar3 = Lobby_GetPartyData();
-    bVar4 = Party_IsStoppingAfterRound(pPVar3);
-    if (bVar4) {
-      pPVar3 = Lobby_GetPartyData();
-      Party_StopAfterRound(pPVar3);
+    pPVar2 = Lobby_GetPartyData();
+    bVar3 = Party_IsStoppingAfterRound(pPVar2);
+    if (bVar3) {
+      pPVar2 = Lobby_GetPartyData();
+      Party_StopAfterRound(pPVar2);
     }
     else if ((onlinegame->current).enabled == false) {
       Com_DPrintf(0xe,"Destroying session since onlinegame is false\n");
@@ -1510,18 +1492,17 @@ void SV_Shutdown(char *param_1)
     *(undefined4 *)(iVar1 + 8) = 0;
     Com_Printf(0xf,"---------------------------\n");
     do {
-      uVar5 = (ulonglong)(uint)g_serverThreadOwnership;
+      uVar4 = (ulonglong)(uint)g_serverThreadOwnership;
       if (in_RESERVE != '\0') {
-        g_serverThreadOwnership = storeWordConditionalIndexed(uVar5 - 1,0,0xffffffff83f1e19c);
+        g_serverThreadOwnership = storeWordConditionalIndexed(uVar4 - 1,0,0xffffffff83f1e19c);
         in_cr0 = 2;
       }
     } while (!(bool)(in_cr0 >> 1 & 1));
-    if ((int)(uVar5 - 1) != 0) {
+    if ((int)(uVar4 - 1) != 0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_init_mp.cpp",
                       0x819,0,"%s\n\t(g_serverThreadOwnership) = %i");
     }
   }
-  __restgprlr_26();
   return;
 }
 
@@ -1547,6 +1528,8 @@ void SV_ClearServerThreadOwnsGame(void)
 
 // 82573C78  SV_IncServerThreadOwnsGame  (server_mp/sv_init_mp.cpp:2088)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void SV_IncServerThreadOwnsGame(void)
@@ -1554,7 +1537,6 @@ void SV_IncServerThreadOwnsGame(void)
 {
   bool bVar1;
   
-  __savegprlr_29();
   bVar1 = Sys_IsServerThread();
   if (!bVar1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_init_mp.cpp",
@@ -1565,13 +1547,14 @@ void SV_IncServerThreadOwnsGame(void)
                     0x82a,0,"%s");
   }
   sv_thread_owns_game = 1;
-  __restgprlr_29();
   return;
 }
 
 
 // 82573D00  SV_DecServerThreadOwnsGame  (server_mp/sv_init_mp.cpp:2097)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void SV_DecServerThreadOwnsGame(void)
@@ -1579,7 +1562,6 @@ void SV_DecServerThreadOwnsGame(void)
 {
   bool bVar1;
   
-  __savegprlr_29();
   bVar1 = Sys_IsServerThread();
   if (!bVar1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_init_mp.cpp",
@@ -1590,7 +1572,6 @@ void SV_DecServerThreadOwnsGame(void)
                     0x833,0,"%s");
   }
   sv_thread_owns_game = 0;
-  __restgprlr_29();
   return;
 }
 

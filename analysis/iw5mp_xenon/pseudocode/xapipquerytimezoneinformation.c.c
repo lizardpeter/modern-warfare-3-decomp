@@ -2,17 +2,17 @@
 
 // 8292BC38  XapipQueryTimeZoneInformation  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/xrtl/xapipquerytimezoneinformation.c:29)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 ulong XapipQueryTimeZoneInformation(_TIME_ZONE_INFORMATION *param_1,int *param_2)
 
 {
-  undefined4 *puVar2;
-  int iVar3;
-  undefined8 uVar1;
-  ulong uVar4;
-  ulonglong uVar5;
-  ushort *puVar6;
-  byte *pbVar7;
-  longlong lVar8;
+  int iVar1;
+  ulong uVar2;
+  wchar_t *pwVar3;
+  byte *pbVar4;
+  longlong lVar5;
   undefined2 local_50 [2];
   byte local_4c;
   byte local_4b;
@@ -22,75 +22,72 @@ ulong XapipQueryTimeZoneInformation(_TIME_ZONE_INFORMATION *param_1,int *param_2
   byte local_47;
   byte local_46;
   byte local_45;
-  undefined4 local_44;
-  undefined4 local_40;
-  undefined4 local_3c;
+  long local_44;
+  long local_40;
+  long local_3c;
   undefined4 local_38;
   undefined1 local_34 [3];
   byte bStack_31;
   undefined1 local_30 [48];
   
-  uVar5 = (ulonglong)(int)param_2;
-  puVar2 = (undefined4 *)__savegprlr_29(param_1);
   local_50[0] = 0;
   local_44 = 0;
   local_40 = 0;
   local_3c = 0;
   local_38 = 0;
-  iVar3 = ExGetXConfigSetting(3,1,&local_44,4,local_50);
-  if (-1 < iVar3) {
-    *puVar2 = local_44;
-    iVar3 = ExGetXConfigSetting(3,2,local_34,4,local_50);
-    if (-1 < iVar3) {
-      pbVar7 = (byte *)((int)&local_38 + 3);
-      puVar6 = (ushort *)((int)puVar2 + 2);
-      lVar8 = 4;
+  iVar1 = ExGetXConfigSetting(3,1,&local_44,4,local_50);
+  if (-1 < iVar1) {
+    param_1->Bias = local_44;
+    iVar1 = ExGetXConfigSetting(3,2,local_34,4,local_50);
+    if (-1 < iVar1) {
+      pbVar4 = (byte *)((int)&local_38 + 3);
+      pwVar3 = (wchar_t *)((int)&param_1->Bias + 2);
+      lVar5 = 4;
       do {
-        pbVar7 = pbVar7 + 1;
-        puVar6 = puVar6 + 1;
-        *puVar6 = (ushort)*pbVar7;
-        lVar8 = lVar8 + -1;
-      } while (lVar8 != 0);
-      *(undefined2 *)(puVar2 + 3) = 0;
-      iVar3 = ExGetXConfigSetting(3,3,local_30,4,local_50);
-      if (-1 < iVar3) {
-        pbVar7 = &bStack_31;
-        puVar6 = (ushort *)((int)puVar2 + 0x56);
-        lVar8 = 4;
+        pbVar4 = pbVar4 + 1;
+        pwVar3 = pwVar3 + 1;
+        *pwVar3 = (ushort)*pbVar4;
+        lVar5 = lVar5 + -1;
+      } while (lVar5 != 0);
+      param_1->StandardName[4] = L'\0';
+      iVar1 = ExGetXConfigSetting(3,3,local_30,4,local_50);
+      if (-1 < iVar1) {
+        pbVar4 = &bStack_31;
+        pwVar3 = (wchar_t *)((int)&param_1->StandardBias + 2);
+        lVar5 = 4;
         do {
-          pbVar7 = pbVar7 + 1;
-          puVar6 = puVar6 + 1;
-          *puVar6 = (ushort)*pbVar7;
-          lVar8 = lVar8 + -1;
-        } while (lVar8 != 0);
-        *(undefined2 *)(puVar2 + 0x18) = 0;
-        iVar3 = ExGetXConfigSetting(3,4,&local_4c,4,local_50);
-        if (-1 < iVar3) {
+          pbVar4 = pbVar4 + 1;
+          pwVar3 = pwVar3 + 1;
+          *pwVar3 = (ushort)*pbVar4;
+          lVar5 = lVar5 + -1;
+        } while (lVar5 != 0);
+        param_1->DaylightName[4] = L'\0';
+        iVar1 = ExGetXConfigSetting(3,4,&local_4c,4,local_50);
+        if (-1 < iVar1) {
           memset();
-          *(ushort *)((int)puVar2 + 0x46) = (ushort)local_4c;
-          *(ushort *)(puVar2 + 0x13) = (ushort)local_49;
-          *(ushort *)((int)puVar2 + 0x4a) = (ushort)local_4b;
-          *(ushort *)(puVar2 + 0x12) = (ushort)local_4a;
-          iVar3 = ExGetXConfigSetting(3,5,&local_48,4,local_50);
-          if (-1 < iVar3) {
+          (param_1->StandardDate).wMonth = (ushort)local_4c;
+          (param_1->StandardDate).wHour = (ushort)local_49;
+          (param_1->StandardDate).wDay = (ushort)local_4b;
+          (param_1->StandardDate).wDayOfWeek = (ushort)local_4a;
+          iVar1 = ExGetXConfigSetting(3,5,&local_48,4,local_50);
+          if (-1 < iVar1) {
             memset();
-            *(ushort *)((int)puVar2 + 0x9a) = (ushort)local_48;
-            *(ushort *)(puVar2 + 0x28) = (ushort)local_45;
-            *(ushort *)((int)puVar2 + 0x9e) = (ushort)local_47;
-            *(ushort *)(puVar2 + 0x27) = (ushort)local_46;
-            iVar3 = ExGetXConfigSetting(3,6,&local_40,4,local_50);
-            if (-1 < iVar3) {
-              puVar2[0x15] = local_40;
-              iVar3 = ExGetXConfigSetting(3,7,&local_3c,4,local_50);
-              if (-1 < iVar3) {
-                puVar2[0x2a] = local_3c;
-                if ((uVar5 & 0xffffffff) != 0) {
-                  iVar3 = ExGetXConfigSetting(3,0xc,&local_38,4,local_50);
-                  if (iVar3 < 0) goto LAB_8292bc84;
-                  *(uint *)uVar5 = ~local_38 >> 1 & 1;
+            (param_1->DaylightDate).wMonth = (ushort)local_48;
+            (param_1->DaylightDate).wHour = (ushort)local_45;
+            (param_1->DaylightDate).wDay = (ushort)local_47;
+            (param_1->DaylightDate).wDayOfWeek = (ushort)local_46;
+            iVar1 = ExGetXConfigSetting(3,6,&local_40,4,local_50);
+            if (-1 < iVar1) {
+              param_1->StandardBias = local_40;
+              iVar1 = ExGetXConfigSetting(3,7,&local_3c,4,local_50);
+              if (-1 < iVar1) {
+                param_1->DaylightBias = local_3c;
+                if (param_2 != (int *)0x0) {
+                  iVar1 = ExGetXConfigSetting(3,0xc,&local_38,4,local_50);
+                  if (iVar1 < 0) goto LAB_8292bc84;
+                  *param_2 = ~local_38 >> 1 & 1;
                 }
-                uVar1 = 0;
-                goto LAB_8292be50;
+                return 0;
               }
             }
           }
@@ -99,9 +96,7 @@ ulong XapipQueryTimeZoneInformation(_TIME_ZONE_INFORMATION *param_1,int *param_2
     }
   }
 LAB_8292bc84:
-  uVar1 = RtlNtStatusToDosError();
-LAB_8292be50:
-  uVar4 = __restgprlr_29(uVar1);
-  return uVar4;
+  uVar2 = RtlNtStatusToDosError();
+  return uVar2;
 }
 

@@ -2,51 +2,65 @@
 
 // 826C4908  Vehicle_IsBadSteeringPoint  (vehicle/vehicle_physics.cpp:26)
 
+/* WARNING: Function: __savefpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
 bool Vehicle_IsBadSteeringPoint(Vehicle *param_1,float *param_2,float *param_3,float *param_4)
 
 {
-  int iVar1;
-  undefined1 uVar2;
-  undefined8 uVar3;
+  double dVar1;
+  double dVar2;
+  double dVar3;
   double dVar4;
-  double dVar5;
-  double dVar6;
-  double dVar7;
-  float fVar8;
+  float fVar5;
   
-  iVar1 = __savefpr_28(param_1);
-  dVar7 = (double)(param_2[1] * param_4[1] + *param_2 * *param_4);
-  dVar6 = (double)(param_3[1] * param_4[1] + *param_3 * *param_4);
-  fVar8 = PhysVeh_GetSteeringPointDist(*(PhysVehicle **)(iVar1 + 0x1f0));
-  dVar4 = (double)fVar8;
-  fVar8 = PhysVeh_GetWheelBaseHalfWidth(*(PhysVehicle **)(iVar1 + 0x1f0));
-  dVar5 = (double)fVar8;
-  if (*(int *)(iVar1 + 8) == 0) {
-    if (((dVar4 < 0.0) && (dVar7 < 0.0)) && (dVar4 < dVar7)) {
-LAB_826c49e0:
-      uVar3 = 1;
-      if (ABS(dVar6) < dVar5) goto LAB_826c49f4;
+  dVar4 = (double)(param_2[1] * param_4[1] + *param_2 * *param_4);
+  dVar3 = (double)(param_3[1] * param_4[1] + *param_3 * *param_4);
+  fVar5 = PhysVeh_GetSteeringPointDist(param_1->physVeh);
+  dVar1 = (double)fVar5;
+  fVar5 = PhysVeh_GetWheelBaseHalfWidth(param_1->physVeh);
+  dVar2 = (double)fVar5;
+  if (param_1->transMode == VEH_TRANS_FORWARD) {
+    if (0.0 <= dVar1) {
+      return false;
+    }
+    if (0.0 <= dVar4) {
+      return false;
+    }
+    if (dVar4 <= dVar1) {
+      return false;
     }
   }
   else {
-    if (*(int *)(iVar1 + 8) != 1) {
+    if (param_1->transMode != VEH_TRANS_REVERSE) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_physics.cpp"
                       ,0x2b,0,"%s");
     }
-    if (((0.0 < dVar4) && (0.0 < dVar7)) && (dVar7 < dVar4)) goto LAB_826c49e0;
+    if (dVar1 <= 0.0) {
+      return false;
+    }
+    if (dVar4 <= 0.0) {
+      return false;
+    }
+    if (dVar1 <= dVar4) {
+      return false;
+    }
   }
-  uVar3 = 0;
-LAB_826c49f4:
-  uVar2 = __restfpr_28(uVar3);
-  return (bool)uVar2;
+  if (dVar2 <= ABS(dVar3)) {
+    return false;
+  }
+  return true;
 }
 
 
 // 826C4A18  Vehicle_MoveToLookAhead  (vehicle/vehicle_physics.cpp:52)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
@@ -62,22 +76,18 @@ void Vehicle_MoveToLookAhead
   PhysVehicle *pPVar4;
   float fVar5;
   float fVar6;
-  Vehicle *pVVar7;
-  VehicleDef *pVVar8;
-  bool bVar9;
-  ulonglong uVar10;
-  float *pfVar11;
-  PhysVehicleControl *pPVar12;
-  double extraout_f1;
+  VehicleDef *pVVar7;
+  bool bVar8;
+  PhysVehicleControl *pPVar9;
+  double dVar10;
+  double dVar12;
   double dVar13;
+  double dVar14;
   double dVar15;
   double dVar16;
   double dVar17;
   double dVar18;
   double dVar19;
-  double dVar20;
-  double dVar21;
-  double dVar22;
   float local_98;
   float local_94;
   float local_90;
@@ -86,109 +96,105 @@ void Vehicle_MoveToLookAhead
   float local_84;
   float local_80;
   float local_7c;
-  double dVar14;
+  double dVar11;
   
-  dVar17 = (double)param_6;
-  dVar15 = (double)param_4;
-  dVar16 = (double)param_5;
-  uVar10 = (ulonglong)(int)param_2;
-  __savegprlr_27((double)param_3,param_1);
-  pVVar7 = (Vehicle *)__savefpr_25();
-  dVar19 = extraout_f1;
-  if (pVVar7 == (Vehicle *)0x0) {
+  dVar14 = (double)param_6;
+  dVar16 = (double)param_3;
+  dVar12 = (double)param_4;
+  dVar13 = (double)param_5;
+  if (param_1 == (Vehicle *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_physics.cpp",
                     0x3c,0,"%s");
   }
-  if (pVVar7->ent == (gentity_s *)0x0) {
+  if (param_1->ent == (gentity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_physics.cpp",
                     0x3d,0,"%s");
   }
-  if (pVVar7->physVeh == (PhysVehicle *)0x0) {
+  if (param_1->physVeh == (PhysVehicle *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_physics.cpp",
                     0x3e,0,"%s");
   }
-  if ((uVar10 & 0xffffffff) == 0) {
+  if (param_2 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_physics.cpp",
                     0x3f,0,"%s");
   }
-  pVVar8 = Vehicle_GetServerDef(pVVar7->defIndex);
-  pgVar3 = pVVar7->ent;
-  dVar20 = 0.0;
-  (pVVar7->physVehCtrl).accelOverride = 0.0;
-  YawVectors2D((pgVar3->r).currentAngles[1],(float *)pVVar8,&local_90);
-  if ((pVVar7->pathDir == VEH_PATH_REVERSE) || ((pVVar8->vehPhysDef).steeringAxle == VEH_AXLE_REAR))
-  {
-    if (pVVar7->transMode == VEH_TRANS_REVERSE) {
-      PhysVeh_GetRearWheelCenter(pVVar7->physVeh,&local_80);
+  pVVar7 = Vehicle_GetServerDef(param_1->defIndex);
+  pgVar3 = param_1->ent;
+  dVar17 = 0.0;
+  (param_1->physVehCtrl).accelOverride = 0.0;
+  YawVectors2D((pgVar3->r).currentAngles[1],(float *)pVVar7,&local_90);
+  if ((param_1->pathDir == VEH_PATH_REVERSE) || ((pVVar7->vehPhysDef).steeringAxle == VEH_AXLE_REAR)
+     ) {
+    if (param_1->transMode == VEH_TRANS_REVERSE) {
+      PhysVeh_GetRearWheelCenter(param_1->physVeh,&local_80);
     }
     else {
-      PhysVeh_GetFrontWheelCenter(pVVar7->physVeh,&local_80);
+      PhysVeh_GetFrontWheelCenter(param_1->physVeh,&local_80);
     }
   }
   else {
-    PhysVeh_GetSteeringPoint(pVVar7->physVeh,&local_80);
+    PhysVeh_GetSteeringPoint(param_1->physVeh,&local_80);
   }
-  pfVar11 = (float *)uVar10;
   if ((g_vehicleDebug->current).enabled != false) {
-    G_DebugLine(&local_80,pfVar11,colorGreen,0);
+    G_DebugLine(&local_80,param_2,colorGreen,0);
   }
-  local_98 = *pfVar11 - local_80;
-  local_94 = pfVar11[1] - local_7c;
-  bVar9 = Vehicle_IsBadSteeringPoint(pVVar7,&local_90,&local_88,&local_98);
-  if (bVar9) {
-    (pVVar7->physVehCtrl).steering = (float)dVar20;
+  local_98 = *param_2 - local_80;
+  local_94 = param_2[1] - local_7c;
+  bVar8 = Vehicle_IsBadSteeringPoint(param_1,&local_90,&local_88,&local_98);
+  if (bVar8) {
+    (param_1->physVehCtrl).steering = (float)dVar17;
   }
   else {
-    if (pVVar7->transMode == VEH_TRANS_REVERSE) {
+    if (param_1->transMode == VEH_TRANS_REVERSE) {
       local_98 = -local_98;
       local_94 = -local_94;
     }
     Vec2Normalize(&local_98);
-    dVar21 = 1.0;
-    dVar22 = -1.0;
-    dVar18 = (double)(local_8c * local_94 + local_98 * local_90);
-    dVar13 = dVar21;
-    if ((float)(dVar18 - 1.0) < 0.0) {
-      dVar13 = dVar18;
+    dVar18 = 1.0;
+    dVar19 = -1.0;
+    dVar15 = (double)(local_8c * local_94 + local_98 * local_90);
+    dVar10 = dVar18;
+    if ((float)(dVar15 - 1.0) < 0.0) {
+      dVar10 = dVar15;
     }
-    dVar14 = dVar22;
-    if ((float)(-1.0 - dVar18) < 0.0) {
-      dVar14 = dVar13;
+    dVar11 = dVar19;
+    if ((float)(-1.0 - dVar15) < 0.0) {
+      dVar11 = dVar10;
     }
-    dVar13 = acos(dVar14);
-    pPVar12 = &pVVar7->physVehCtrl;
-    fVar1 = (float)dVar13 * 57.295776 * (veh_aiOverSteerScale->current).value;
-    (pVVar7->physVehCtrl).steering = fVar1;
+    dVar10 = acos(dVar11);
+    pPVar9 = &param_1->physVehCtrl;
+    fVar1 = (float)dVar10 * 57.295776 * (veh_aiOverSteerScale->current).value;
+    (param_1->physVehCtrl).steering = fVar1;
     if (((uint)fVar1 & 0x7f800000) == 0x7f800000) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_physics.cpp"
                       ,0x72,0,"%s");
     }
-    if (dVar20 < (double)(local_84 * local_94 + local_88 * local_98)) {
-      pPVar12->steering = (float)((double)pPVar12->steering * dVar22);
+    if (dVar17 < (double)(local_84 * local_94 + local_88 * local_98)) {
+      pPVar9->steering = (float)((double)pPVar9->steering * dVar19);
     }
-    if ((pVVar7->phys).bodyVel[0] < -8.8) {
-      pPVar12->steering = (float)((double)pPVar12->steering * dVar22);
+    if ((param_1->phys).bodyVel[0] < -8.8) {
+      pPVar9->steering = (float)((double)pPVar9->steering * dVar19);
     }
-    fVar1 = (float)(dVar19 * (double)pVVar8->maxSteeringAngle + (double)pPVar12->steering);
-    pPVar12->steering = fVar1;
-    if (pVVar8->type == VEH_TANK) {
-      dVar19 = (double)(fVar1 * 0.022222223);
-      pPVar12->steering = fVar1 * 0.022222223;
-      if ((float)(dVar19 - dVar21) < 0.0) {
-        dVar21 = dVar19;
+    fVar1 = (float)(dVar16 * (double)pVVar7->maxSteeringAngle + (double)pPVar9->steering);
+    pPVar9->steering = fVar1;
+    if (pVVar7->type == VEH_TANK) {
+      dVar16 = (double)(fVar1 * 0.022222223);
+      pPVar9->steering = fVar1 * 0.022222223;
+      if ((float)(dVar16 - dVar18) < 0.0) {
+        dVar18 = dVar16;
       }
-      if ((float)(dVar22 - dVar19) < 0.0) {
-        dVar22 = dVar21;
+      if ((float)(dVar19 - dVar16) < 0.0) {
+        dVar19 = dVar18;
       }
-      pPVar12->steering = (float)dVar22;
-      dVar19 = (double)(pVVar7->physVehCtrl).steering;
-      if ((float)(ABS(dVar22) - 0.019999999552965164) < 0.0) {
-        dVar19 = dVar20;
+      pPVar9->steering = (float)dVar19;
+      dVar16 = (double)(param_1->physVehCtrl).steering;
+      if ((float)(ABS(dVar19) - 0.019999999552965164) < 0.0) {
+        dVar16 = dVar17;
       }
-      (pVVar7->physVehCtrl).steering = (float)dVar19;
+      (param_1->physVehCtrl).steering = (float)dVar16;
     }
     else {
-      fVar2 = pVVar8->maxSteeringAngle;
+      fVar2 = pVVar7->maxSteeringAngle;
       fVar5 = fVar2;
       if (fVar1 - fVar2 < 0.0) {
         fVar5 = fVar1;
@@ -197,23 +203,25 @@ void Vehicle_MoveToLookAhead
       if (-fVar2 - fVar1 < 0.0) {
         fVar6 = fVar5;
       }
-      pPVar12->steering = fVar6;
+      pPVar9->steering = fVar6;
     }
   }
-  (pVVar7->physVehCtrl).desiredSpeed = (float)dVar15;
-  (pVVar7->physVehCtrl).desiredSpeedReverse = (float)(dVar16 * dVar17);
-  (pVVar7->physVehCtrl).brake = (float)dVar17;
-  pPVar4 = pVVar7->physVeh;
-  (pVVar7->physVehCtrl).pitch = (float)dVar20;
-  PhysVeh_UpdateControls(pPVar4,&pVVar7->physVehCtrl);
-  __restfpr_25();
-  __restgprlr_27();
+  (param_1->physVehCtrl).desiredSpeed = (float)dVar12;
+  (param_1->physVehCtrl).desiredSpeedReverse = (float)(dVar13 * dVar14);
+  (param_1->physVehCtrl).brake = (float)dVar14;
+  pPVar4 = param_1->physVeh;
+  (param_1->physVehCtrl).pitch = (float)dVar17;
+  PhysVeh_UpdateControls(pPVar4,&param_1->physVehCtrl);
   return;
 }
 
 
 // 826C54D8  Vehicle_UpdatePathFollowMove_Physics  (vehicle/vehicle_physics.cpp:146)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
@@ -222,93 +230,87 @@ void Vehicle_UpdatePathFollowMove_Physics(Vehicle *param_1)
 
 {
   float fVar1;
-  Vehicle *pVVar2;
-  VehicleDef *pVVar3;
-  bool bVar4;
+  VehicleDef *pVVar2;
+  bool bVar3;
   VehiclePathDir in_r4;
+  double dVar4;
   double dVar5;
   double dVar6;
   double dVar7;
   double dVar8;
-  double dVar9;
-  float fVar10;
+  float fVar9;
   
-  __savegprlr_29(param_1);
-  pVVar2 = (Vehicle *)__savefpr_28();
-  if (pVVar2 == (Vehicle *)0x0) {
+  if (param_1 == (Vehicle *)0x0) {
     in_r4 = 0x9a;
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_physics.cpp",
                     0x9a,0,"%s");
   }
-  if (pVVar2->physVeh == (PhysVehicle *)0x0) {
+  if (param_1->physVeh == (PhysVehicle *)0x0) {
     in_r4 = 0x9b;
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_physics.cpp",
                     0x9b,0,"%s");
   }
-  if (pVVar2->drivingState != VEH_DRIVE_PATH_FOLLOW) {
+  if (param_1->drivingState != VEH_DRIVE_PATH_FOLLOW) {
     in_r4 = 0x9c;
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_physics.cpp",
                     0x9c,0,"%s");
   }
-  pVVar3 = Vehicle_GetServerDef(pVVar2->defIndex);
-  if ((0x7fff < (ushort)(pVVar2->pathPos).nodeIdx) ||
-     (bVar4 = VehPath_IsEndOfPath(&pVVar2->pathPos), bVar4)) {
-    Vehicle_UpdateDefaultMove_Physics(pVVar2);
-    __restfpr_28();
-    __restgprlr_29();
+  pVVar2 = Vehicle_GetServerDef(param_1->defIndex);
+  if ((0x7fff < (ushort)(param_1->pathPos).nodeIdx) ||
+     (bVar3 = VehPath_IsEndOfPath(&param_1->pathPos), bVar3)) {
+    Vehicle_UpdateDefaultMove_Physics(param_1);
     return;
   }
-  bVar4 = PhysVeh_IsWrecked(pVVar2->physVeh);
-  if (bVar4) {
-    pVVar2->manualMode = VEH_MANUAL_OFF;
-    dVar8 = 0.0;
-    dVar6 = dVar8;
-    dVar7 = dVar8;
+  bVar3 = PhysVeh_IsWrecked(param_1->physVeh);
+  if (bVar3) {
+    param_1->manualMode = VEH_MANUAL_OFF;
+    dVar7 = 0.0;
+    dVar5 = dVar7;
+    dVar6 = dVar7;
   }
   else {
-    fVar10 = pVVar2->throttle;
-    if (pVVar2->manualMode == VEH_MANUAL_ON) {
-      fVar1 = pVVar2->manualSpeed;
-      dVar8 = 0.0;
-      if (pVVar2->transMode == VEH_TRANS_REVERSE) {
-        dVar7 = (double)(fVar10 * fVar1);
-        dVar6 = 1.0;
+    fVar9 = param_1->throttle;
+    if (param_1->manualMode == VEH_MANUAL_ON) {
+      fVar1 = param_1->manualSpeed;
+      dVar7 = 0.0;
+      if (param_1->transMode == VEH_TRANS_REVERSE) {
+        dVar6 = (double)(fVar9 * fVar1);
+        dVar5 = 1.0;
         goto LAB_826c565c;
       }
     }
     else {
-      fVar1 = (pVVar2->pathPos).speed;
-      pVVar2->manualMode = VEH_MANUAL_OFF;
-      dVar8 = 0.0;
-      if (pVVar2->transMode == VEH_TRANS_REVERSE) {
-        dVar7 = (double)(fVar10 * fVar1);
-        dVar6 = 1.0;
+      fVar1 = (param_1->pathPos).speed;
+      param_1->manualMode = VEH_MANUAL_OFF;
+      dVar7 = 0.0;
+      if (param_1->transMode == VEH_TRANS_REVERSE) {
+        dVar6 = (double)(fVar9 * fVar1);
+        dVar5 = 1.0;
         goto LAB_826c565c;
       }
     }
-    dVar7 = 0.0;
-    dVar6 = (double)pVVar2->brake;
-    dVar8 = (double)(fVar10 * fVar1);
+    dVar6 = 0.0;
+    dVar5 = (double)param_1->brake;
+    dVar7 = (double)(fVar9 * fVar1);
   }
 LAB_826c565c:
-  dVar5 = 0.0;
-  dVar9 = dVar5;
-  if ((pVVar2->pathDir == VEH_PATH_REVERSE) || ((pVVar3->vehPhysDef).steeringAxle == VEH_AXLE_REAR))
-  {
-    if (pVVar2->transMode == VEH_TRANS_REVERSE) {
-      fVar10 = PhysVeh_GetRearWheelDist(pVVar2->physVeh);
-      dVar5 = (double)fVar10;
+  dVar4 = 0.0;
+  dVar8 = dVar4;
+  if ((param_1->pathDir == VEH_PATH_REVERSE) || ((pVVar2->vehPhysDef).steeringAxle == VEH_AXLE_REAR)
+     ) {
+    if (param_1->transMode == VEH_TRANS_REVERSE) {
+      fVar9 = PhysVeh_GetRearWheelDist(param_1->physVeh);
+      dVar4 = (double)fVar9;
     }
     else {
-      fVar10 = PhysVeh_GetFrontWheelDist(pVVar2->physVeh);
-      dVar5 = (double)fVar10;
+      fVar9 = PhysVeh_GetFrontWheelDist(param_1->physVeh);
+      dVar4 = (double)fVar9;
     }
   }
-  VehPath_UpdatePathPosLookAhead(&pVVar2->pathPos,(float)dVar5,in_r4);
+  VehPath_UpdatePathPosLookAhead(&param_1->pathPos,(float)dVar4,in_r4);
   Vehicle_MoveToLookAhead
-            (pVVar2,(pVVar2->pathPos).lookPos,(float)dVar9,(float)dVar8,(float)dVar7,(float)dVar6);
-  __restfpr_28();
-  __restgprlr_29();
+            (param_1,(param_1->pathPos).lookPos,(float)dVar8,(float)dVar7,(float)dVar6,(float)dVar5)
+  ;
   return;
 }
 
@@ -345,6 +347,8 @@ void Vehicle_TankLerpSteering(Vehicle *param_1,VehicleDef *param_2,float param_3
 
 // 826C4E20  Vehicle_LerpSteering  (vehicle/vehicle_physics.cpp:250)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
@@ -353,68 +357,60 @@ void Vehicle_LerpSteering(Vehicle *param_1,VehicleDef *param_2,float param_3)
 
 {
   float fVar1;
-  int iVar2;
-  int iVar3;
-  ulonglong uVar4;
-  double extraout_f1;
-  double dVar5;
-  float fVar6;
+  double dVar2;
+  float fVar3;
   
-  uVar4 = (ulonglong)(int)param_2;
-  iVar3 = __savegprlr_28((double)param_3,param_1);
-  dVar5 = extraout_f1;
-  if (iVar3 == 0) {
+  dVar2 = (double)param_3;
+  if (param_1 == (Vehicle *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_physics.cpp",
                     0xfb,0,"%s");
   }
-  if ((uVar4 & 0xffffffff) == 0) {
+  if (param_2 == (VehicleDef *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_physics.cpp",
                     0xfc,0,"%s");
   }
-  iVar2 = (int)uVar4;
-  if (*(float *)(iVar2 + 0x174) == 0.0) {
-    fVar6 = (float)((double)(float)((double)*(float *)(iVar2 + 0x170) * dVar5) * dVar5);
-    if (dVar5 < 0.0) {
-      *(float *)(iVar3 + 500) = -fVar6;
-      __restgprlr_28();
+  if (param_2->steeringLerp == 0.0) {
+    fVar3 = (float)((double)(float)((double)param_2->maxSteeringAngle * dVar2) * dVar2);
+    if (dVar2 < 0.0) {
+      (param_1->physVehCtrl).steering = -fVar3;
       return;
     }
-    *(float *)(iVar3 + 500) = fVar6;
-    __restgprlr_28();
+    (param_1->physVehCtrl).steering = fVar3;
     return;
   }
-  if (0.0 <= dVar5) {
-    if (dVar5 <= 0.0) {
-      *(float *)(iVar3 + 500) = (float)dVar5;
-      __restgprlr_28();
+  if (0.0 <= dVar2) {
+    if (dVar2 <= 0.0) {
+      (param_1->physVehCtrl).steering = (float)dVar2;
       return;
     }
-    fVar1 = *(float *)(iVar3 + 500);
-    fVar6 = (float)((double)(float)((double)*(float *)(iVar2 + 0x170) * dVar5) * dVar5);
-    if (fVar6 <= fVar1) goto LAB_826c4f50;
+    fVar1 = (param_1->physVehCtrl).steering;
+    fVar3 = (float)((double)(float)((double)param_2->maxSteeringAngle * dVar2) * dVar2);
+    if (fVar3 <= fVar1) goto LAB_826c4f50;
     if (fVar1 < 0.0) goto LAB_826c4f0c;
   }
   else {
-    fVar1 = *(float *)(iVar3 + 500);
-    fVar6 = -(float)((double)(float)((double)*(float *)(iVar2 + 0x170) * dVar5) * dVar5);
-    if (fVar1 <= fVar6) goto LAB_826c4f50;
+    fVar1 = (param_1->physVehCtrl).steering;
+    fVar3 = -(float)((double)(float)((double)param_2->maxSteeringAngle * dVar2) * dVar2);
+    if (fVar1 <= fVar3) goto LAB_826c4f50;
     if (0.0 < fVar1) {
 LAB_826c4f0c:
-      *(undefined4 *)(iVar3 + 500) = 0;
-      __restgprlr_28();
+      (param_1->physVehCtrl).steering = 0.0;
       return;
     }
   }
-  fVar6 = DiffTrack(fVar6,fVar1,*(float *)(iVar2 + 0x174),0.05);
+  fVar3 = DiffTrack(fVar3,fVar1,param_2->steeringLerp,0.05);
 LAB_826c4f50:
-  *(float *)(iVar3 + 500) = fVar6;
-  __restgprlr_28();
+  (param_1->physVehCtrl).steering = fVar3;
   return;
 }
 
 
 // 826C4F70  Vehicle_UpdatePlayerMove_Physics  (vehicle/vehicle_physics.cpp:304)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
@@ -424,18 +420,17 @@ void Vehicle_UpdatePlayerMove_Physics(Vehicle *param_1)
 {
   float fVar1;
   gclient_s *pgVar2;
-  Vehicle *pVVar3;
-  VehicleDef *pVVar4;
-  int iVar5;
-  gentity_s *pgVar6;
-  gclient_s **ppgVar7;
+  VehicleDef *pVVar3;
+  int iVar4;
+  gentity_s *pgVar5;
+  gclient_s **ppgVar6;
+  double dVar7;
   double dVar8;
   double dVar9;
   double dVar10;
   double dVar11;
   double dVar12;
-  double dVar13;
-  float fVar14;
+  float fVar13;
   char cStack_89;
   char cStack_81;
   float local_80;
@@ -444,55 +439,53 @@ void Vehicle_UpdatePlayerMove_Physics(Vehicle *param_1)
   float local_70;
   float local_6c;
   
-  __savegprlr_26(param_1);
-  pVVar3 = (Vehicle *)__savefpr_28();
-  if (pVVar3 == (Vehicle *)0x0) {
+  if (param_1 == (Vehicle *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_physics.cpp",
                     0x13d,0,"%s");
   }
-  if (pVVar3->ent == (gentity_s *)0x0) {
+  if (param_1->ent == (gentity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_physics.cpp",
                     0x13e,0,"%s");
   }
-  if (pVVar3->physVeh == (PhysVehicle *)0x0) {
+  if (param_1->physVeh == (PhysVehicle *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_physics.cpp",
                     0x13f,0,"%s");
   }
-  pVVar4 = Vehicle_GetServerDef(pVVar3->defIndex);
-  iVar5 = EntHandle::isDefined(&pVVar3->ent->remoteControlledOwner);
-  if (iVar5 == 0) {
-    iVar5 = EntHandle::isDefined(&(pVVar3->ent->r).ownerNum);
-    if (iVar5 == 0) {
+  pVVar3 = Vehicle_GetServerDef(param_1->defIndex);
+  iVar4 = EntHandle::isDefined(&param_1->ent->remoteControlledOwner);
+  if (iVar4 == 0) {
+    iVar4 = EntHandle::isDefined(&(param_1->ent->r).ownerNum);
+    if (iVar4 == 0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_physics.cpp"
                       ,0x14e,0,"%s");
     }
-    pgVar6 = EntHandle::ent(&(pVVar3->ent->r).ownerNum);
-    if (pgVar6 == (gentity_s *)0x0) {
+    pgVar5 = EntHandle::ent(&(param_1->ent->r).ownerNum);
+    if (pgVar5 == (gentity_s *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_physics.cpp"
                       ,0x150,0,"%s");
     }
-    ppgVar7 = &pgVar6->client;
-    if (pgVar6->client != (gclient_s *)0x0) goto LAB_826c5140;
-    iVar5 = 0x151;
+    ppgVar6 = &pgVar5->client;
+    if (pgVar5->client != (gclient_s *)0x0) goto LAB_826c5140;
+    iVar4 = 0x151;
   }
   else {
-    pgVar6 = EntHandle::ent(&pVVar3->ent->remoteControlledOwner);
-    if (pgVar6 == (gentity_s *)0x0) {
+    pgVar5 = EntHandle::ent(&param_1->ent->remoteControlledOwner);
+    if (pgVar5 == (gentity_s *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_physics.cpp"
                       ,0x147,0,"%s");
     }
-    ppgVar7 = &pgVar6->client;
-    if (pgVar6->client == (gclient_s *)0x0) {
+    ppgVar6 = &pgVar5->client;
+    if (pgVar5->client == (gclient_s *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_physics.cpp"
                       ,0x148,0,"%s");
     }
-    if (((*ppgVar7)->ps).remoteControlEnt == (pVVar3->ent->s).number) goto LAB_826c5140;
-    iVar5 = 0x149;
+    if (((*ppgVar6)->ps).remoteControlEnt == (param_1->ent->s).number) goto LAB_826c5140;
+    iVar4 = 0x149;
   }
   MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_physics.cpp",
-                  iVar5,0,"%s");
+                  iVar4,0,"%s");
 LAB_826c5140:
-  pgVar2 = *ppgVar7;
+  pgVar2 = *ppgVar6;
   if (((pgVar2->sess).cmd.buttons & 0x100000U) == 0) {
     cStack_81 = (pgVar2->sess).cmd.forwardmove;
     cStack_89 = (pgVar2->sess).cmd.rightmove;
@@ -501,94 +494,94 @@ LAB_826c5140:
     cStack_81 = (pgVar2->sess).cmd.remoteControlMove[0];
     cStack_89 = (pgVar2->sess).cmd.remoteControlMove[1];
   }
-  dVar13 = 0.0;
-  dVar11 = 0.007874015718698502;
-  if (pVVar4->camRelativeControl != 0) {
+  dVar12 = 0.0;
+  dVar10 = 0.007874015718698502;
+  if (pVVar3->camRelativeControl != 0) {
     local_78 = 0;
     local_7c = (float)((double)(longlong)cStack_81 * 0.007874015718698502);
     local_80 = (float)((double)(longlong)cStack_89 * 0.007874015718698502);
     Vehicle_TransformInputCamRelative
-              (((*ppgVar7)->ps).viewangles,(pVVar3->ent->r).currentAngles,&local_80,&local_70);
+              (((*ppgVar6)->ps).viewangles,(param_1->ent->r).currentAngles,&local_80,&local_70);
     cStack_89 = (char)(int)(local_70 * 127.0);
     cStack_81 = (char)(int)(local_6c * 127.0);
   }
-  dVar12 = 1.0;
-  if (pVVar4->type == VEH_TANK) {
-    Vehicle_TankLerpSteering(pVVar3,pVVar4,-(float)((double)(longlong)cStack_89 * dVar11));
+  dVar11 = 1.0;
+  if (pVVar3->type == VEH_TANK) {
+    Vehicle_TankLerpSteering(param_1,pVVar3,-(float)((double)(longlong)cStack_89 * dVar10));
   }
   else {
-    Vehicle_LerpSteering(pVVar3,pVVar4,-(float)((double)(longlong)cStack_89 * dVar11));
-    if (((double)pVVar4->minSteeringScale != dVar12) && (dVar13 < (double)pVVar4->minSteeringSpeed))
+    Vehicle_LerpSteering(param_1,pVVar3,-(float)((double)(longlong)cStack_89 * dVar10));
+    if (((double)pVVar3->minSteeringScale != dVar11) && (dVar12 < (double)pVVar3->minSteeringSpeed))
     {
-      dVar10 = (double)(float)((double)pVVar3->speed / (double)pVVar4->minSteeringSpeed);
+      dVar9 = (double)(float)((double)param_1->speed / (double)pVVar3->minSteeringSpeed);
+      dVar7 = dVar11;
+      if ((float)(dVar9 - dVar11) < 0.0) {
+        dVar7 = dVar9;
+      }
       dVar8 = dVar12;
-      if ((float)(dVar10 - dVar12) < 0.0) {
-        dVar8 = dVar10;
+      if (-dVar9 < 0.0) {
+        dVar8 = dVar7;
       }
-      dVar9 = dVar13;
-      if (-dVar10 < 0.0) {
-        dVar9 = dVar8;
-      }
-      (pVVar3->physVehCtrl).steering =
-           (float)((double)pVVar4->minSteeringScale * dVar9 + (double)(float)(dVar12 - dVar9)) *
-           (pVVar3->physVehCtrl).steering;
+      (param_1->physVehCtrl).steering =
+           (float)((double)pVVar3->minSteeringScale * dVar8 + (double)(float)(dVar11 - dVar8)) *
+           (param_1->physVehCtrl).steering;
     }
-    dVar8 = (double)(float)((double)(longlong)cStack_81 * dVar11);
-    (pVVar3->physVehCtrl).pitch = (float)((double)(longlong)cStack_81 * dVar11);
-    if (dVar13 <= dVar8) {
-      (pVVar3->physVehCtrl).pitch = (float)(dVar8 * dVar8);
+    dVar7 = (double)(float)((double)(longlong)cStack_81 * dVar10);
+    (param_1->physVehCtrl).pitch = (float)((double)(longlong)cStack_81 * dVar10);
+    if (dVar12 <= dVar7) {
+      (param_1->physVehCtrl).pitch = (float)(dVar7 * dVar7);
     }
     else {
-      (pVVar3->physVehCtrl).pitch = -(float)(dVar8 * dVar8);
+      (param_1->physVehCtrl).pitch = -(float)(dVar7 * dVar7);
     }
-    (pVVar3->physVehCtrl).pitch = pVVar4->maxSteeringAngle * (pVVar3->physVehCtrl).pitch;
+    (param_1->physVehCtrl).pitch = pVVar3->maxSteeringAngle * (param_1->physVehCtrl).pitch;
   }
-  fVar14 = PhysVeh_GetTopSpeed(pVVar3->physVeh);
-  dVar8 = (double)fVar14;
-  fVar14 = PhysVeh_GetReverseSpeed(pVVar3->physVeh);
-  if (pVVar4->type == VEH_TANK) {
+  fVar13 = PhysVeh_GetTopSpeed(param_1->physVeh);
+  dVar7 = (double)fVar13;
+  fVar13 = PhysVeh_GetReverseSpeed(param_1->physVeh);
+  if (pVVar3->type == VEH_TANK) {
     if (cStack_81 < 1) {
-      pVVar3->throttle = (float)dVar13;
-      (pVVar3->physVehCtrl).desiredSpeed = (float)dVar13;
-      fVar1 = (float)((double)(longlong)-(int)cStack_81 * dVar11);
-      pVVar3->brake = fVar1;
-      (pVVar3->physVehCtrl).brake = fVar1;
-      (pVVar3->physVehCtrl).desiredSpeedReverse = (float)((double)fVar1 * (double)fVar14);
+      param_1->throttle = (float)dVar12;
+      (param_1->physVehCtrl).desiredSpeed = (float)dVar12;
+      fVar1 = (float)((double)(longlong)-(int)cStack_81 * dVar10);
+      param_1->brake = fVar1;
+      (param_1->physVehCtrl).brake = fVar1;
+      (param_1->physVehCtrl).desiredSpeedReverse = (float)((double)fVar1 * (double)fVar13);
     }
     else {
-      pVVar3->brake = (float)dVar13;
-      (pVVar3->physVehCtrl).brake = (float)dVar13;
-      (pVVar3->physVehCtrl).desiredSpeedReverse = (float)dVar13;
-      fVar14 = (float)((double)(longlong)(int)cStack_81 * dVar11);
-      pVVar3->throttle = fVar14;
-      (pVVar3->physVehCtrl).desiredSpeed = (float)((double)fVar14 * dVar8);
+      param_1->brake = (float)dVar12;
+      (param_1->physVehCtrl).brake = (float)dVar12;
+      (param_1->physVehCtrl).desiredSpeedReverse = (float)dVar12;
+      fVar13 = (float)((double)(longlong)(int)cStack_81 * dVar10);
+      param_1->throttle = fVar13;
+      (param_1->physVehCtrl).desiredSpeed = (float)((double)fVar13 * dVar7);
     }
   }
   else {
-    dVar11 = dVar13;
+    dVar10 = dVar12;
     if (((pgVar2->sess).cmd.buttons & 0x1000000U) != 0) {
-      dVar11 = dVar12;
+      dVar10 = dVar11;
     }
-    pVVar3->throttle = (float)dVar11;
-    dVar10 = dVar13;
+    param_1->throttle = (float)dVar10;
+    dVar9 = dVar12;
     if (((pgVar2->sess).cmd.buttons & 0x2000000U) != 0) {
-      dVar10 = dVar12;
+      dVar9 = dVar11;
     }
-    pVVar3->brake = (float)dVar10;
-    (pVVar3->physVehCtrl).brake = (float)dVar10;
-    (pVVar3->physVehCtrl).desiredSpeed = (float)(dVar11 * dVar8);
-    (pVVar3->physVehCtrl).desiredSpeedReverse = (float)(dVar10 * (double)fVar14);
+    param_1->brake = (float)dVar9;
+    (param_1->physVehCtrl).brake = (float)dVar9;
+    (param_1->physVehCtrl).desiredSpeed = (float)(dVar10 * dVar7);
+    (param_1->physVehCtrl).desiredSpeedReverse = (float)(dVar9 * (double)fVar13);
   }
-  (pVVar3->physVehCtrl).accelOverride = (float)dVar13;
-  PhysVeh_UpdateControls(pVVar3->physVeh,&pVVar3->physVehCtrl);
-  __restfpr_28();
-  __restgprlr_26();
+  (param_1->physVehCtrl).accelOverride = (float)dVar12;
+  PhysVeh_UpdateControls(param_1->physVeh,&param_1->physVehCtrl);
   return;
 }
 
 
 // 826C53F0  Vehicle_UpdateDefaultMove_Physics  (vehicle/vehicle_physics.cpp:468)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
@@ -596,37 +589,38 @@ LAB_826c5140:
 void Vehicle_UpdateDefaultMove_Physics(Vehicle *param_1)
 
 {
-  int *piVar1;
-  VehicleDef *pVVar2;
+  uint uVar1;
+  PhysVehicle *pPVar2;
+  VehicleDef *pVVar3;
   
-  piVar1 = (int *)__savegprlr_29(param_1);
-  if (piVar1 == (int *)0x0) {
+  if (param_1 == (Vehicle *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_physics.cpp",
                     0x1da,0,"%s");
   }
-  if (piVar1[0x7c] == 0) {
+  if (param_1->physVeh == (PhysVehicle *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_physics.cpp",
                     0x1db,0,"%s");
   }
-  pVVar2 = Vehicle_GetServerDef(piVar1[0x84]);
-  if ((*(uint *)(*piVar1 + 0x58) & 0x4000000) == 0) {
-    if ((*(uint *)(*piVar1 + 0x58) & 0x8000000) == 0) {
-      piVar1[0x7d] = 0;
+  pVVar3 = Vehicle_GetServerDef(param_1->defIndex);
+  uVar1 = (param_1->ent->s).lerp.u.vehicle.flags;
+  if ((uVar1 & 0x4000000) == 0) {
+    if ((uVar1 & 0x8000000) == 0) {
+      (param_1->physVehCtrl).steering = 0.0;
     }
     else {
-      piVar1[0x7d] = (int)-pVVar2->maxSteeringAngle;
+      (param_1->physVehCtrl).steering = -pVVar3->maxSteeringAngle;
     }
   }
   else {
-    piVar1[0x7d] = (int)pVVar2->maxSteeringAngle;
+    (param_1->physVehCtrl).steering = pVVar3->maxSteeringAngle;
   }
-  piVar1[0x81] = piVar1[0xf6];
-  piVar1[0x82] = 0;
-  piVar1[0x7e] = 0;
-  piVar1[0x7f] = 0;
-  piVar1[0x80] = 0;
-  PhysVeh_UpdateControls((PhysVehicle *)piVar1[0x7c],(PhysVehicleControl *)(piVar1 + 0x7d));
-  __restgprlr_29();
+  (param_1->physVehCtrl).brake = param_1->brake;
+  pPVar2 = param_1->physVeh;
+  (param_1->physVehCtrl).pitch = 0.0;
+  (param_1->physVehCtrl).desiredSpeed = 0.0;
+  (param_1->physVehCtrl).desiredSpeedReverse = 0.0;
+  (param_1->physVehCtrl).accelOverride = 0.0;
+  PhysVeh_UpdateControls(pPVar2,&param_1->physVehCtrl);
   return;
 }
 

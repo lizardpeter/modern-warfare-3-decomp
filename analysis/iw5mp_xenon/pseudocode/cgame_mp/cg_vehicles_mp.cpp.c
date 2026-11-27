@@ -33,94 +33,92 @@ void CG_VehRegisterDvars(void)
 
 // 82309680  VehicleGetFxInfo  (cgame_mp/cg_vehicles_mp.cpp:55)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 vehicleEffects * VehicleGetFxInfo(LocalClientNum_t param_1,int param_2)
 
 {
-  ulonglong uVar1;
+  int iVar1;
   int iVar2;
-  int iVar3;
-  vehicleEffects *pvVar4;
+  longlong lVar3;
+  ulonglong uVar4;
   longlong lVar5;
-  ulonglong uVar6;
-  longlong lVar7;
-  longlong lVar8;
+  vehicleEffects *pvVar6;
   
-  uVar1 = __savegprlr_28(param_1);
-  lVar5 = 0;
-  uVar1 = (uVar1 & 0x1fffffff) * 8;
+  lVar3 = 0;
+  lVar5 = ((ulonglong)param_1 & 0x1fffffff) * 8;
   do {
-    lVar7 = (uVar1 + lVar5 + (uVar1 + lVar5 & 0x3fffffff) * 4 & 0x1fffffff) * 8;
-    iVar3 = (int)lVar7;
-    if ((&vehEffects[0][0].active)[iVar3] == false) break;
-    if (*(int *)((int)&vehEffects[0][0].entityNum + iVar3) == param_2) {
+    iVar1 = (int)((lVar5 + lVar3 + (lVar5 + lVar3 & 0x3fffffffU) * 4 & 0xffffffff) << 3);
+    if ((&vehEffects[0][0].active)[iVar1] == false) break;
+    if (*(int *)((int)&vehEffects[0][0].entityNum + iVar1) == param_2) {
       iVar2 = Sys_Milliseconds();
-      *(int *)((int)&vehEffects[0][0].lastAccessed + iVar3) = iVar2;
-      pvVar4 = (vehicleEffects *)__restgprlr_28(lVar7 + -0x7d589600);
-      return pvVar4;
+      *(int *)((int)&vehEffects[0][0].lastAccessed + iVar1) = iVar2;
+      return (vehicleEffects *)(&vehEffects[0][0].active + iVar1);
     }
-    lVar5 = lVar5 + 1;
-  } while ((int)lVar5 < 8);
-  uVar6 = 0;
+    lVar3 = lVar3 + 1;
+  } while ((int)lVar3 < 8);
+  uVar4 = 0;
   do {
     if ((&vehEffects[0][0].active)
-        [(int)((uVar1 + uVar6 + (uVar1 + uVar6 & 0x3fffffff) * 4 & 0xffffffff) << 3)] == false) {
-      if ((int)uVar6 < 8) goto LAB_82309870;
+        [(int)((lVar5 + uVar4 + (lVar5 + uVar4 & 0x3fffffff) * 4 & 0xffffffff) << 3)] == false) {
+      if ((int)uVar4 < 8) goto LAB_82309870;
       break;
     }
-    uVar6 = uVar6 + 1;
-  } while ((int)uVar6 < 8);
-  iVar3 = (int)((uVar1 + 1 + ((uVar1 + 1) * 4 & 0xfffffffc) & 0x1fffffff) << 3);
-  uVar6 = (ulonglong)
-          (*(int *)((int)&vehEffects[0][0].lastAccessed + iVar3) <
+    uVar4 = uVar4 + 1;
+  } while ((int)uVar4 < 8);
+  iVar1 = (int)((lVar5 + 1 + ((lVar5 + 1) * 4 & 0xfffffffcU) & 0x1fffffff) << 3);
+  uVar4 = (ulonglong)
+          (*(int *)((int)&vehEffects[0][0].lastAccessed + iVar1) <
           *(int *)((int)&vehEffects[0][0].lastAccessed +
-                  (int)((uVar1 + (uVar1 & 0x3fffffff) * 4 & 0xffffffff) << 3)));
-  if (*(int *)((int)&vehEffects[0][1].lastAccessed + iVar3) <
+                  (int)((lVar5 + ((ulonglong)param_1 & 0x7ffffff) * 0x20 & 0xffffffff) << 3)));
+  if (*(int *)((int)&vehEffects[0][1].lastAccessed + iVar1) <
       *(int *)((int)&vehEffects[0][0].lastAccessed +
-              (int)((uVar1 + uVar6 + ((uVar1 + uVar6) * 4 & 0xfffffffc) & 0xffffffff) << 3))) {
-    uVar6 = 2;
+              (int)((lVar5 + uVar4 + ((lVar5 + uVar4) * 4 & 0xfffffffc) & 0xffffffff) << 3))) {
+    uVar4 = 2;
   }
-  if (*(int *)((int)&vehEffects[0][2].lastAccessed + iVar3) <
+  if (*(int *)((int)&vehEffects[0][2].lastAccessed + iVar1) <
       *(int *)((int)&vehEffects[0][0].lastAccessed +
-              (int)((uVar1 + uVar6 + ((uVar1 + uVar6) * 4 & 0xfffffffc) & 0xffffffff) << 3))) {
-    uVar6 = 3;
+              (int)((lVar5 + uVar4 + ((lVar5 + uVar4) * 4 & 0xfffffffc) & 0xffffffff) << 3))) {
+    uVar4 = 3;
   }
-  if (*(int *)((int)&vehEffects[0][3].lastAccessed + iVar3) <
+  if (*(int *)((int)&vehEffects[0][3].lastAccessed + iVar1) <
       *(int *)((int)&vehEffects[0][0].lastAccessed +
-              (int)((uVar1 + uVar6 + ((uVar1 + uVar6) * 4 & 0xfffffffc) & 0xffffffff) << 3))) {
-    uVar6 = 4;
+              (int)((lVar5 + uVar4 + ((lVar5 + uVar4) * 4 & 0xfffffffc) & 0xffffffff) << 3))) {
+    uVar4 = 4;
   }
-  if (*(int *)((int)&vehEffects[0][4].lastAccessed + iVar3) <
+  if (*(int *)((int)&vehEffects[0][4].lastAccessed + iVar1) <
       *(int *)((int)&vehEffects[0][0].lastAccessed +
-              (int)((uVar1 + uVar6 + ((uVar1 + uVar6) * 4 & 0xfffffffc) & 0xffffffff) << 3))) {
-    uVar6 = 5;
+              (int)((lVar5 + uVar4 + ((lVar5 + uVar4) * 4 & 0xfffffffc) & 0xffffffff) << 3))) {
+    uVar4 = 5;
   }
-  if (*(int *)((int)&vehEffects[0][5].lastAccessed + iVar3) <
+  if (*(int *)((int)&vehEffects[0][5].lastAccessed + iVar1) <
       *(int *)((int)&vehEffects[0][0].lastAccessed +
-              (int)((uVar1 + uVar6 + ((uVar1 + uVar6) * 4 & 0xfffffffc) & 0xffffffff) << 3))) {
-    uVar6 = 6;
+              (int)((lVar5 + uVar4 + ((lVar5 + uVar4) * 4 & 0xfffffffc) & 0xffffffff) << 3))) {
+    uVar4 = 6;
   }
-  if (*(int *)((int)&vehEffects[0][6].lastAccessed + iVar3) <
+  if (*(int *)((int)&vehEffects[0][6].lastAccessed + iVar1) <
       *(int *)((int)&vehEffects[0][0].lastAccessed +
-              (int)((uVar1 + uVar6 + ((uVar1 + uVar6) * 4 & 0xfffffffc) & 0xffffffff) << 3))) {
-    uVar6 = 7;
+              (int)((lVar5 + uVar4 + ((lVar5 + uVar4) * 4 & 0xfffffffc) & 0xffffffff) << 3))) {
+    uVar4 = 7;
   }
 LAB_82309870:
-  lVar7 = (uVar1 + uVar6 + (uVar1 + uVar6 & 0x3fffffff) * 4 & 0x1fffffff) * 8;
-  lVar8 = 10;
-  lVar5 = lVar7 + -0x7d589604;
+  lVar3 = (lVar5 + uVar4 + (lVar5 + uVar4 & 0x3fffffff) * 4 & 0x1fffffff) * 8;
+  lVar5 = 10;
+  iVar1 = (int)lVar3;
+  pvVar6 = (vehicleEffects *)(&vehEffects[0][0].active + iVar1);
+  lVar3 = lVar3 + -0x7d589604;
   do {
-    lVar5 = lVar5 + 4;
-    *(undefined4 *)lVar5 = 0;
-    lVar8 = lVar8 + -1;
-  } while (lVar8 != 0);
-  *(undefined1 *)(lVar7 + -0x7d589600) = 1;
-  iVar3 = Sys_Milliseconds();
-  *(int *)((int)&vehEffects[0][0].lastAccessed + (int)lVar7) = iVar3;
-  *(int *)((int)&vehEffects[0][0].entityNum + (int)lVar7) = param_2;
-  pvVar4 = (vehicleEffects *)__restgprlr_28(lVar7 + -0x7d589600);
-  return pvVar4;
+    lVar3 = lVar3 + 4;
+    *(undefined4 *)lVar3 = 0;
+    lVar5 = lVar5 + -1;
+  } while (lVar5 != 0);
+  pvVar6->active = true;
+  iVar2 = Sys_Milliseconds();
+  *(int *)((int)&vehEffects[0][0].lastAccessed + iVar1) = iVar2;
+  *(int *)((int)&vehEffects[0][0].entityNum + iVar1) = param_2;
+  return pvVar6;
 }
 
 
@@ -184,6 +182,8 @@ void Veh_IncTurretBarrelRoll(LocalClientNum_t param_1,int param_2,float param_3)
 
 // 823099F0  VehicleFXTest  (cgame_mp/cg_vehicles_mp.cpp:134)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
@@ -195,16 +195,15 @@ void VehicleFXTest(LocalClientNum_t param_1,DObj *param_2,centity_s *param_3)
   float fVar2;
   float fVar3;
   FxEffectDef *pFVar4;
-  LocalClientNum_t LVar5;
-  VehicleClient *pVVar6;
-  vehicleEffects *pvVar7;
-  int iVar8;
-  cg_s *pcVar9;
-  float *pfVar10;
-  int iVar11;
+  VehicleClient *pVVar5;
+  vehicleEffects *pvVar6;
+  int iVar7;
+  cg_s *pcVar8;
+  float *pfVar9;
+  int iVar10;
+  double dVar11;
   double dVar12;
   double dVar13;
-  double dVar14;
   float local_f0;
   float local_ec;
   float local_e8;
@@ -220,61 +219,59 @@ void VehicleFXTest(LocalClientNum_t param_1,DObj *param_2,centity_s *param_3)
   float afStack_98 [6];
   trace_t local_80 [2];
   
-  LVar5 = __savegprlr_27(param_1,param_2);
-  pVVar6 = VehicleCl_GetClient(LVar5,param_3);
-  if (pVVar6 == (VehicleClient *)0x0) {
+  pVVar5 = VehicleCl_GetClient(param_1,param_3);
+  if (pVVar5 == (VehicleClient *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_vehicles_mp.cpp",
                     0x98,0,"%s");
   }
-  if (((param_3->nextState).eType == 0xc) && ((pVVar6->flags & 0x40) == 0)) {
-    iVar11 = (param_3->nextState).number;
-    pvVar7 = VehicleGetFxInfo(LVar5,iVar11);
-    iVar8 = Sys_Milliseconds();
-    if (pvVar7->nextDustFx <= iVar8) {
+  if (((param_3->nextState).eType == 0xc) && ((pVVar5->flags & 0x40) == 0)) {
+    iVar10 = (param_3->nextState).number;
+    pvVar6 = VehicleGetFxInfo(param_1,iVar10);
+    iVar7 = Sys_Milliseconds();
+    if (pvVar6->nextDustFx <= iVar7) {
       local_ec = (param_3->prevState).pos.trBase[1];
       local_f0 = (param_3->prevState).pos.trBase[0];
-      pfVar10 = (param_3->prevState).pos.trBase;
-      dVar13 = 1200.0;
+      pfVar9 = (param_3->prevState).pos.trBase;
+      dVar12 = 1200.0;
       local_e8 = (param_3->prevState).pos.trBase[2] - 1200.0;
-      dVar14 = 0.0;
+      dVar13 = 0.0;
       local_d0.midPoint[0] = 0.0;
       local_d0.midPoint[1] = 0.0;
       local_d0.midPoint[2] = 0.0;
       local_d0.halfSize[0] = 0.5;
       local_d0.halfSize[1] = 0.5;
       local_d0.halfSize[2] = 0.5;
-      CG_TraceCapsule(local_80,pfVar10,&local_f0,&local_d0,iVar11,0x831);
-      iVar11 = 1000;
+      CG_TraceCapsule(local_80,pfVar9,&local_f0,&local_d0,iVar10,0x831);
+      iVar10 = 1000;
       if (local_80[0].fraction < 1.0) {
         fVar1 = (param_3->prevState).pos.trBase[1];
         fVar2 = (param_3->prevState).pos.trBase[2];
-        fVar3 = *pfVar10;
+        fVar3 = *pfVar9;
         local_dc = (local_ec - fVar1) * local_80[0].fraction + fVar1;
         local_d8 = (local_e8 - fVar2) * local_80[0].fraction + fVar2;
         local_e0 = (local_f0 - fVar3) * local_80[0].fraction + fVar3;
-        dVar12 = (double)SQRT((local_e0 - fVar3) * (local_e0 - fVar3) +
+        dVar11 = (double)SQRT((local_e0 - fVar3) * (local_e0 - fVar3) +
                               (local_d8 - fVar2) * (local_d8 - fVar2) +
                               (local_dc - fVar1) * (local_dc - fVar1));
-        if (dVar12 < dVar13) {
+        if (dVar11 < dVar12) {
           local_a8 = 1.0;
-          local_b0 = (float)dVar14;
-          local_ac = (float)dVar14;
-          iVar11 = (int)(((float)(dVar12 - 350.0) * 0.0011764705 * 0.10000001 + 0.05) * 1000.0);
-          local_b8 = (longlong)iVar11;
+          local_b0 = (float)dVar13;
+          local_ac = (float)dVar13;
+          iVar10 = (int)(((float)(dVar11 - 350.0) * 0.0011764705 * 0.10000001 + 0.05) * 1000.0);
+          local_b8 = (longlong)iVar10;
           Vec3Basis_RightHanded(&local_b0,afStack_a4,afStack_98);
           pFVar4 = cgMedia.heliDustEffect;
           if ((local_80[0].surfaceFlags & 0x1f00000U) == 0x1400000) {
             pFVar4 = cgMedia.heliWaterEffect;
           }
-          pcVar9 = CG_GetLocalClientGlobals(LVar5);
-          FX_PlayOrientedEffect(LVar5,pFVar4,pcVar9->time,&local_e0,(float (*) [3])&local_b0);
+          pcVar8 = CG_GetLocalClientGlobals(param_1);
+          FX_PlayOrientedEffect(param_1,pFVar4,pcVar8->time,&local_e0,(float (*) [3])&local_b0);
         }
       }
-      iVar8 = Sys_Milliseconds();
-      pvVar7->nextDustFx = iVar8 + iVar11;
+      iVar7 = Sys_Milliseconds();
+      pvVar6->nextDustFx = iVar7 + iVar10;
     }
   }
-  __restgprlr_27();
   return;
 }
 

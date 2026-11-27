@@ -167,6 +167,9 @@ FxGlassInitPieceState * Glass_PrefetchInitPieceState(FxGlassSystem *param_1,uint
 
 // 8242CED8  Glass_GetBufferReserveCounts  (EffectsCore/fx_glass_draw.cpp:262)
 
+/* WARNING: Function: __savegprlr_21 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_21 replaced with injection: xenon_save_restore */
+
 void Glass_GetBufferReserveCounts
                (FxGlassPieceState *param_1,FxGlassGeometryData *param_2,uint param_3,uint *param_4,
                uint *param_5)
@@ -176,95 +179,90 @@ void Glass_GetBufferReserveCounts
   byte bVar2;
   byte bVar3;
   FxGlassGeometryData *pFVar4;
-  uint uVar5;
-  int iVar6;
-  ulonglong uVar7;
+  int iVar5;
+  ulonglong uVar6;
+  longlong lVar7;
   ulonglong uVar8;
   longlong lVar9;
   ulonglong uVar10;
-  longlong lVar11;
-  ulonglong uVar12;
+  ulonglong uVar11;
+  int iVar12;
   ulonglong uVar13;
-  int iVar14;
-  ulonglong uVar15;
+  ulonglong uVar14;
   ulonglong uVar16;
-  ulonglong uVar18;
-  ulonglong uVar19;
-  uint uVar17;
+  ulonglong uVar17;
+  uint uVar15;
   
-  uVar7 = (ulonglong)(int)param_3;
-  iVar6 = __savegprlr_21(param_1);
-  bVar1 = *(byte *)(iVar6 + 0x16);
-  uVar16 = (ulonglong)bVar1;
-  uVar17 = (uint)bVar1;
-  bVar2 = *(byte *)(iVar6 + 0x17);
-  bVar3 = *(byte *)(iVar6 + 0x18);
-  uVar12 = 0;
-  uVar8 = uVar16 - 2;
-  uVar18 = uVar16 + 1;
-  uVar15 = uVar16;
-  uVar19 = uVar16;
+  bVar1 = param_1->vertCount;
+  uVar14 = (ulonglong)bVar1;
+  uVar15 = (uint)bVar1;
+  bVar2 = param_1->holeDataCount;
+  bVar3 = param_1->crackDataCount;
+  uVar10 = 0;
+  uVar6 = uVar14 - 2;
+  uVar16 = uVar14 + 1;
+  uVar13 = uVar14;
+  uVar17 = uVar14;
   if ((ulonglong)bVar2 != 0) {
     do {
-      uVar10 = (ulonglong)
-               *(byte *)((int)(param_2->asBytes + (int)((uVar12 + uVar16 & 0xffffffff) << 2)) + 2);
-      uVar13 = (ulonglong)*(ushort *)(param_2->asBytes + (int)((uVar12 + uVar16 & 0xffffffff) << 2))
+      uVar8 = (ulonglong)
+              *(byte *)((int)(param_2->asBytes + (int)((uVar10 + uVar14 & 0xffffffff) << 2)) + 2);
+      uVar11 = (ulonglong)*(ushort *)(param_2->asBytes + (int)((uVar10 + uVar14 & 0xffffffff) << 2))
       ;
-      lVar11 = uVar10 - 0xff;
-      uVar15 = uVar13 + uVar15;
-      uVar17 = (uint)uVar15;
-      lVar11 = lVar11 - ((uVar10 - 0x100) + (ulonglong)(lVar11 == 0));
-      uVar12 = uVar13 + uVar12 + 1;
-      lVar9 = uVar13 + lVar11;
-      uVar18 = lVar9 + uVar18 + 1;
-      uVar8 = (uVar13 - lVar11) + uVar8 + 2;
-      uVar19 = lVar9 + uVar19;
-    } while ((uVar12 & 0xffffffff) < (ulonglong)bVar2);
+      lVar9 = uVar8 - 0xff;
+      uVar13 = uVar11 + uVar13;
+      uVar15 = (uint)uVar13;
+      lVar9 = lVar9 - ((uVar8 - 0x100) + (ulonglong)(lVar9 == 0));
+      uVar10 = uVar11 + uVar10 + 1;
+      lVar7 = uVar11 + lVar9;
+      uVar16 = lVar7 + uVar16 + 1;
+      uVar6 = (uVar11 - lVar9) + uVar6 + 2;
+      uVar17 = lVar7 + uVar17;
+    } while ((uVar10 & 0xffffffff) < (ulonglong)bVar2);
   }
-  if ((uVar7 & 0xffffffff) == 0) {
-    iVar6 = 0x12e;
+  if (param_3 == 0) {
+    iVar5 = 0x12e;
   }
   else {
-    if ((uVar7 & 0xffffffff) < 4) goto LAB_8242cfc0;
-    iVar6 = 0x12f;
+    if (param_3 < 4) goto LAB_8242cfc0;
+    iVar5 = 0x12f;
   }
   MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_glass_draw.cpp",
-                  iVar6,0,"%s\n\t(drawFlags) = %i");
+                  iVar5,0,"%s\n\t(drawFlags) = %i");
 LAB_8242cfc0:
-  uVar5 = (uint)uVar7 & 1;
-  uVar15 = 0;
-  iVar6 = 0;
-  if ((uVar7 & 2) == 0) {
-    iVar14 = 0;
+  uVar13 = 0;
+  iVar5 = 0;
+  if ((param_3 & 2) == 0) {
+    iVar12 = 0;
   }
   else {
     if ((ulonglong)bVar3 != 0) {
       do {
-        pFVar4 = param_2 + (uint)bVar2 + (uint)bVar1 + (int)uVar15;
-        lVar9 = (ulonglong)(pFVar4->hole).pad[0] - 0xff;
-        lVar11 = (ulonglong)(pFVar4->hole).touchVert - 0xff;
-        uVar15 = (pFVar4->hole).uniqueVertCount + uVar15 + 1;
-        lVar9 = (ulonglong)(pFVar4->hole).uniqueVertCount +
-                (lVar9 - (((ulonglong)(pFVar4->hole).pad[0] - 0x100) + (ulonglong)(lVar9 == 0))) +
-                (lVar11 - (((ulonglong)(pFVar4->hole).touchVert - 0x100) + (ulonglong)(lVar11 == 0))
-                );
-        uVar19 = (lVar9 + uVar19) - 1;
-        uVar18 = (lVar9 - 1U & 0x7fffffff) * 2 + uVar18;
-      } while ((uVar15 & 0xffffffff) < (ulonglong)bVar3);
+        pFVar4 = param_2 + (uint)bVar2 + (uint)bVar1 + (int)uVar13;
+        lVar7 = (ulonglong)(pFVar4->hole).pad[0] - 0xff;
+        lVar9 = (ulonglong)(pFVar4->hole).touchVert - 0xff;
+        uVar13 = (pFVar4->hole).uniqueVertCount + uVar13 + 1;
+        lVar7 = (ulonglong)(pFVar4->hole).uniqueVertCount +
+                (lVar7 - (((ulonglong)(pFVar4->hole).pad[0] - 0x100) + (ulonglong)(lVar7 == 0))) +
+                (lVar9 - (((ulonglong)(pFVar4->hole).touchVert - 0x100) + (ulonglong)(lVar9 == 0)));
+        uVar17 = (lVar7 + uVar17) - 1;
+        uVar16 = (lVar7 - 1U & 0x7fffffff) * 2 + uVar16;
+      } while ((uVar13 & 0xffffffff) < (ulonglong)bVar3);
     }
-    iVar14 = (int)((uVar18 & 0xffffffff) << 1);
-    iVar6 = (int)((uVar19 + (uVar19 & 0x7fffffff) * 2 & 0x7fffffff) << 1);
+    iVar12 = (int)((uVar16 & 0xffffffff) << 1);
+    iVar5 = (int)((uVar17 + (uVar17 & 0x7fffffff) * 2 & 0xffffffff) << 1);
   }
-  *param_4 = iVar14 + uVar5 * uVar17;
-  *param_5 = iVar6 + uVar5 * ((int)uVar8 + (int)((uVar8 & 0xffffffff) << 1)) + 1 & 0xfffffffe;
-  __restgprlr_21();
+  *param_4 = iVar12 + (param_3 & 1) * uVar15;
+  *param_5 = iVar5 + (param_3 & 1) * ((int)uVar6 + (int)((uVar6 & 0xffffffff) << 1)) + 1 &
+             0xfffffffe;
   return;
 }
 
 
 // 8242B358  Glass_TransformVertexArray  (EffectsCore/fx_glass_draw.cpp:335)
 
-/* WARNING: Restarted to delay deadcode elimination for space: stack */
+/* WARNING: Function: __savefpr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_24 replaced with injection: xenon_save_restore */
 
 void Glass_TransformVertexArray(FxGlassDrawState *param_1,FxGlassVertex *param_2,uint param_3)
 
@@ -284,69 +282,63 @@ void Glass_TransformVertexArray(FxGlassDrawState *param_1,FxGlassVertex *param_2
   float fVar13;
   float fVar14;
   float fVar15;
-  int iVar16;
-  float *pfVar17;
+  uint uVar16;
+  float (*pafVar17) [2];
   float fVar18;
   float fVar19;
   int iVar20;
-  int iVar21;
-  ulonglong uVar22;
-  ulonglong uVar23;
-  float *pfVar24;
-  short *psVar26;
-  longlong lVar25;
-  undefined1 auVar27 [16];
+  uint uVar21;
+  float *pfVar22;
+  undefined1 auVar23 [16];
   undefined4 local_80;
   undefined8 uStack_58;
   
-  uVar22 = (ulonglong)(int)param_3;
-  lVar25 = (longlong)(int)param_2;
-  iVar21 = __savefpr_24(param_1);
-  iVar16 = *(int *)(iVar21 + 0x840);
-  fVar1 = *(float *)(iVar21 + 0x830);
-  pfVar17 = *(float **)(iVar21 + 0x83c);
-  fVar2 = *(float *)(iVar21 + 0x834);
-  fVar3 = pfVar17[1];
-  fVar4 = *pfVar17;
-  fVar5 = pfVar17[3];
-  *(int *)(iVar21 + 0x840) = iVar16 + (int)uVar22;
-  fVar6 = *(float *)(iVar21 + 0x818);
-  uVar23 = 0;
-  fVar7 = *(float *)(iVar21 + 0x80c);
-  fVar8 = *(float *)(iVar21 + 0x800);
-  pfVar24 = (float *)(iVar16 * 0xc + iVar21 + -4);
-  fVar9 = *(float *)(iVar21 + 0x810);
-  iVar20 = (int)lVar25;
-  fVar10 = *(float *)(iVar21 + 0x81c);
-  fVar11 = *(float *)(iVar21 + 0x804);
-  fVar12 = *(float *)(iVar21 + 0x814);
-  fVar13 = *(float *)(iVar21 + 0x820);
-  fVar14 = *(float *)(iVar21 + 0x808);
-  fVar15 = pfVar17[2];
+  uVar16 = param_1->vertCount;
+  fVar1 = param_1->texCoordOrigin[0];
+  pafVar17 = param_1->texVecs;
+  fVar2 = param_1->texCoordOrigin[1];
+  fVar3 = (*pafVar17)[1];
+  fVar4 = (*pafVar17)[0];
+  fVar5 = pafVar17[1][1];
+  param_1->vertCount = uVar16 + param_3;
+  fVar6 = param_1->axis[1][0];
+  uVar21 = 0;
+  fVar7 = param_1->axis[0][0];
+  fVar8 = param_1->origin[0];
+  pfVar22 = param_1->localVerts[uVar16 - 1] + 2;
+  fVar9 = param_1->axis[0][1];
+  iVar20 = (uVar16 + 0x180) * 4 - (int)param_2;
+  fVar10 = param_1->axis[1][1];
+  fVar11 = param_1->origin[1];
+  fVar12 = param_1->axis[0][2];
+  fVar13 = param_1->axis[1][2];
+  fVar14 = param_1->origin[2];
+  fVar15 = pafVar17[1][0];
   do {
-    psVar26 = (short *)lVar25;
-    uVar23 = uVar23 + 1;
-    fVar18 = (float)(longlong)psVar26[1];
-    fVar19 = (float)(longlong)*psVar26;
-    auVar27._0_4_ = fVar4 * fVar19 + fVar3 * fVar18 + fVar1;
-    auVar27._4_4_ = fVar15 * fVar19 + fVar5 * fVar18 + fVar2;
-    auVar27._8_8_ = uStack_58;
-    auVar27 = vectorPackD3Dtype(auVar27,auVar27,0xd,3);
-    pfVar24[1] = fVar7 * fVar19 + fVar6 * fVar18 + fVar8;
-    auVar27 = vectorSplatWord(auVar27,0);
-    pfVar24[2] = fVar10 * fVar18 + fVar9 * fVar19 + fVar11;
-    pfVar24 = pfVar24 + 3;
-    *pfVar24 = fVar13 * fVar18 + fVar12 * fVar19 + fVar14;
-    storeVectorElementWordIndexed(auVar27,ZEXT48(&stack0x00000000) - 0x80);
-    *(undefined4 *)((((iVar16 + 0x180) * 4 + iVar21) - iVar20) + (int)psVar26) = local_80;
-    lVar25 = lVar25 + 4;
-  } while ((uVar23 & 0xffffffff) != (uVar22 & 0xffffffff));
-  __restfpr_24();
+    fVar18 = (float)(longlong)param_2->y;
+    uVar21 = uVar21 + 1;
+    fVar19 = (float)(longlong)param_2->x;
+    auVar23._0_4_ = fVar4 * fVar19 + fVar3 * fVar18 + fVar1;
+    auVar23._4_4_ = fVar15 * fVar19 + fVar5 * fVar18 + fVar2;
+    auVar23._8_8_ = uStack_58;
+    auVar23 = vectorPackD3Dtype(auVar23,auVar23,0xd,3);
+    pfVar22[1] = fVar7 * fVar19 + fVar6 * fVar18 + fVar8;
+    auVar23 = vectorSplatWord(auVar23,0);
+    pfVar22[2] = fVar10 * fVar18 + fVar9 * fVar19 + fVar11;
+    pfVar22 = pfVar22 + 3;
+    *pfVar22 = fVar13 * fVar18 + fVar12 * fVar19 + fVar14;
+    storeVectorElementWordIndexed(auVar23,ZEXT48(&stack0x00000000) - 0x80);
+    *(undefined4 *)((int)param_1 + iVar20 + (int)param_2) = local_80;
+    param_2 = param_2 + 1;
+  } while (uVar21 != param_3);
   return;
 }
 
 
 // 8242B4A8  Glass_TransformHoleVertices  (EffectsCore/fx_glass_draw.cpp:366)
+
+/* WARNING: Function: __savegprlr_18 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_18 replaced with injection: xenon_save_restore */
 
 void Glass_TransformHoleVertices
                (FxGlassDrawState *param_1,FxGlassGeometryData *param_2,uint param_3)
@@ -357,66 +349,61 @@ void Glass_TransformHoleVertices
   float fVar3;
   float fVar4;
   ushort uVar5;
-  int iVar6;
-  float fVar7;
+  uint uVar6;
+  float (*pafVar7) [2];
   float fVar8;
-  int iVar9;
-  longlong lVar10;
-  ulonglong uVar11;
+  float fVar9;
+  FxGlassGeometryData *pFVar10;
+  uint uVar11;
   float *pfVar12;
-  short *psVar14;
-  longlong lVar13;
-  ulonglong uVar15;
-  undefined1 auVar16 [16];
+  FxGlassGeometryData *pFVar13;
+  FxGlassGeometryData *pFVar14;
+  undefined1 auVar15 [16];
   undefined4 local_b0;
   undefined8 uStack_88;
   
-  uVar15 = (ulonglong)(int)param_3;
-  uVar11 = (ulonglong)(int)param_2;
-  iVar9 = __savegprlr_18(param_1);
-  uVar15 = (uVar15 & 0x3fffffff) * 4 + uVar11;
+  pFVar14 = param_2 + param_3;
   do {
-    iVar6 = *(int *)(iVar9 + 0x840);
-    lVar10 = uVar11 + 4;
-    pfVar12 = *(float **)(iVar9 + 0x83c);
-    uVar5 = *(ushort *)uVar11;
-    fVar1 = pfVar12[1];
-    fVar2 = *pfVar12;
-    fVar3 = pfVar12[3];
-    fVar4 = pfVar12[2];
-    *(int *)(iVar9 + 0x840) = iVar6 + (uint)uVar5;
+    uVar6 = param_1->vertCount;
+    pFVar10 = param_2 + 1;
+    pafVar7 = param_1->texVecs;
+    uVar5 = (param_2->hole).uniqueVertCount;
+    fVar1 = (*pafVar7)[1];
+    fVar2 = (*pafVar7)[0];
+    fVar3 = pafVar7[1][1];
+    fVar4 = pafVar7[1][0];
+    param_1->vertCount = uVar6 + uVar5;
     uVar11 = 0;
-    pfVar12 = (float *)(iVar6 * 0xc + iVar9 + -4);
-    lVar13 = lVar10;
+    pfVar12 = param_1->localVerts[uVar6 - 1] + 2;
+    pFVar13 = pFVar10;
     do {
-      psVar14 = (short *)lVar13;
-      fVar7 = (float)(longlong)psVar14[1];
+      fVar8 = (float)(longlong)(pFVar13->vert).y;
+      fVar9 = (float)(longlong)(pFVar13->vert).x;
       uVar11 = uVar11 + 1;
-      fVar8 = (float)(longlong)*psVar14;
-      pfVar12[1] = *(float *)(iVar9 + 0x80c) * fVar8 + *(float *)(iVar9 + 0x818) * fVar7 +
-                   *(float *)(iVar9 + 0x800);
-      pfVar12[2] = *(float *)(iVar9 + 0x81c) * fVar7 + *(float *)(iVar9 + 0x810) * fVar8 +
-                   *(float *)(iVar9 + 0x804);
+      pfVar12[1] = param_1->axis[0][0] * fVar9 + param_1->axis[1][0] * fVar8 + param_1->origin[0];
+      pfVar12[2] = param_1->axis[1][1] * fVar8 + param_1->axis[0][1] * fVar9 + param_1->origin[1];
       pfVar12 = pfVar12 + 3;
-      *pfVar12 = fVar7 * *(float *)(iVar9 + 0x820) + fVar8 * *(float *)(iVar9 + 0x814) +
-                 *(float *)(iVar9 + 0x808);
-      auVar16._0_4_ = fVar2 * fVar8 + fVar1 * fVar7 + *(float *)(iVar9 + 0x830);
-      auVar16._4_4_ = fVar4 * fVar8 + fVar3 * fVar7 + *(float *)(iVar9 + 0x834);
-      auVar16._8_8_ = uStack_88;
-      auVar16 = vectorPackD3Dtype(auVar16,auVar16,0xd,3);
-      auVar16 = vectorSplatWord(auVar16,0);
-      storeVectorElementWordIndexed(auVar16,ZEXT48(&stack0x00000000) - 0xb0);
-      *(undefined4 *)((((iVar6 + 0x180) * 4 + iVar9) - (int)lVar10) + (int)psVar14) = local_b0;
-      lVar13 = lVar13 + 4;
-    } while ((uVar11 & 0xffffffff) != (ulonglong)uVar5);
-    uVar11 = (ulonglong)uVar5 * 4 + lVar10;
-  } while ((uVar11 & 0xffffffff) != (uVar15 & 0xffffffff));
-  __restgprlr_18();
+      *pfVar12 = fVar8 * param_1->axis[1][2] + fVar9 * param_1->axis[0][2] + param_1->origin[2];
+      auVar15._0_4_ = fVar2 * fVar9 + fVar1 * fVar8 + param_1->texCoordOrigin[0];
+      auVar15._4_4_ = fVar4 * fVar9 + fVar3 * fVar8 + param_1->texCoordOrigin[1];
+      auVar15._8_8_ = uStack_88;
+      auVar15 = vectorPackD3Dtype(auVar15,auVar15,0xd,3);
+      auVar15 = vectorSplatWord(auVar15,0);
+      storeVectorElementWordIndexed(auVar15,ZEXT48(&stack0x00000000) - 0xb0);
+      *(undefined4 *)((int)param_1 + ((uVar6 + 0x180) * 4 - (int)pFVar10) + (int)pFVar13) = local_b0
+      ;
+      pFVar13 = pFVar13 + 1;
+    } while (uVar11 != uVar5);
+    param_2 = pFVar10 + uVar5;
+  } while (param_2 != pFVar14);
   return;
 }
 
 
 // 8242B630  Glass_MakeFaceVerts  (EffectsCore/fx_glass_draw.cpp:383)
+
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 
 void Glass_MakeFaceVerts(FxGlassDrawState *param_1,FxGlassFaceDef *param_2,uint param_3)
 
@@ -430,116 +417,103 @@ void Glass_MakeFaceVerts(FxGlassDrawState *param_1,FxGlassFaceDef *param_2,uint 
   PackedTexCoords PVar7;
   PackedUnitVec PVar8;
   PackedUnitVec PVar9;
-  int iVar10;
-  GfxPackedVertex *pGVar11;
-  ulonglong uVar12;
-  PackedTexCoords *pPVar13;
-  float *pfVar14;
+  GfxPackedVertex *pGVar10;
+  longlong lVar11;
+  PackedTexCoords *pPVar12;
+  float *pfVar13;
   
-  uVar12 = (ulonglong)(int)param_3;
-  iVar10 = __savegprlr_28(param_1);
-  if ((uVar12 & 0xffffffff) == 0) {
+  lVar11 = (longlong)(int)param_3;
+  if (param_3 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_glass_draw.cpp"
-                    ,0x184,(int)uVar12,"%s");
+                    ,0x184,0,"%s");
   }
-  pGVar11 = R_GlassMeshVertIter_Begin(*(ushort *)(iVar10 + 0x858));
-  pPVar13 = (PackedTexCoords *)(iVar10 + 0x600);
-  pfVar14 = (float *)(iVar10 + 8);
+  pGVar10 = R_GlassMeshVertIter_Begin(param_1->baseVertex);
+  pPVar12 = param_1->texCoords;
+  pfVar13 = param_1->localVerts[0] + 2;
   while( true ) {
     GVar6 = param_2->color;
-    PVar7 = *pPVar13;
+    PVar7 = *pPVar12;
     PVar8 = param_2->normal;
-    fVar1 = pfVar14[-1];
+    fVar1 = pfVar13[-1];
     PVar9 = param_2->tangent;
     fVar2 = param_2->offset[1];
-    fVar3 = *pfVar14;
+    fVar3 = *pfVar13;
     fVar4 = param_2->offset[2];
     fVar5 = param_2->binormalSign;
-    pGVar11->xyz[0] = param_2->offset[0] + pfVar14[-2];
-    uVar12 = uVar12 - 1;
-    pGVar11->xyz[1] = fVar1 + fVar2;
-    pGVar11->color = GVar6;
-    pGVar11->xyz[2] = fVar3 + fVar4;
-    pGVar11->texCoord = PVar7;
-    pGVar11->binormalSign = fVar5;
-    pGVar11->normal = PVar8;
-    pGVar11->tangent = PVar9;
-    if (uVar12 == 0) break;
-    pfVar14 = pfVar14 + 3;
-    pPVar13 = pPVar13 + 1;
-    pGVar11 = R_GlassMeshVertIter_Next(pGVar11);
+    pGVar10->xyz[0] = param_2->offset[0] + (*(float (*) [3])(pfVar13 + -2))[0];
+    lVar11 = lVar11 + -1;
+    pGVar10->xyz[1] = fVar1 + fVar2;
+    pGVar10->color = GVar6;
+    pGVar10->xyz[2] = fVar3 + fVar4;
+    pGVar10->texCoord = PVar7;
+    pGVar10->binormalSign = fVar5;
+    pGVar10->normal = PVar8;
+    pGVar10->tangent = PVar9;
+    if (lVar11 == 0) break;
+    pfVar13 = pfVar13 + 3;
+    pPVar12 = pPVar12 + 1;
+    pGVar10 = R_GlassMeshVertIter_Next(pGVar10);
   }
-  R_GlassMeshVertIter_End(pGVar11);
-  __restgprlr_28();
+  R_GlassMeshVertIter_End(pGVar10);
   return;
 }
 
 
 // 8242B700  Glass_MakeSimpleFanFaceIndices  (EffectsCore/fx_glass_draw.cpp:418)
 
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
+
 void Glass_MakeSimpleFanFaceIndices
                (uint param_1,ushort param_2,int param_3,int param_4,r_double_index_t *param_5)
 
 {
-  short sVar1;
+  ushort uVar1;
   short sVar2;
-  int iVar3;
-  int iVar4;
+  longlong lVar3;
+  r_double_index_t *prVar4;
   uint uVar5;
-  ulonglong uVar6;
-  ulonglong uVar7;
-  undefined4 *puVar9;
-  longlong lVar8;
-  longlong lVar10;
-  longlong lVar11;
-  uint uVar12;
-  undefined4 local_70;
-  undefined4 local_6c;
+  r_double_index_t local_70;
+  r_double_index_t local_6c;
   undefined4 local_68;
   
-  lVar8 = (longlong)(int)param_5;
-  uVar7 = (ulonglong)param_4;
-  uVar6 = (ulonglong)param_3;
-  uVar5 = __savegprlr_22(param_1);
-  puVar9 = (undefined4 *)lVar8;
-  local_70 = CONCAT22(param_2,local_70._2_2_);
-  local_6c = CONCAT22(local_6c._0_2_,param_2);
-  uVar12 = 3;
-  if (3 < uVar5) {
-    iVar3 = (int)((uVar6 & 0xffffffff) << 1);
-    lVar10 = (ulonglong)(uVar5 - 4 >> 1) + 1;
-    iVar4 = (int)((uVar7 & 0xffffffff) << 1);
-    lVar11 = lVar8 + -4;
+  local_70.value[0] = param_2;
+  local_6c.value[1] = param_2;
+  uVar5 = 3;
+  if (3 < param_1) {
+    lVar3 = (((longlong)(int)param_1 - 4U & 0xffffffff) >> 1) + 1;
+    prVar4 = param_5 + -1;
     do {
-      sVar2 = (short)uVar12;
-      sVar1 = param_2 + sVar2 + -1;
-      *(ushort *)((int)&local_70 + iVar3) = param_2 + sVar2 + -2;
-      uVar12 = uVar12 + 2;
-      *(short *)((int)&local_70 + iVar4) = sVar1;
-      *(short *)((int)&local_6c + iVar3 + 2) = sVar1;
-      *(ushort *)((int)&local_6c + iVar4 + 2) = param_2 + sVar2;
-      *(undefined4 *)lVar8 = local_70;
-      lVar8 = lVar8 + 0xc;
-      puVar9 = (undefined4 *)lVar8;
-      *(undefined4 *)((int)lVar11 + 8) = local_6c;
-      lVar11 = lVar11 + 0xc;
-      *(undefined4 *)lVar11 = local_68;
-      lVar10 = lVar10 + -1;
-    } while (lVar10 != 0);
+      sVar2 = (short)uVar5;
+      uVar1 = (param_2 + sVar2) - 1;
+      local_70.value[param_3] = (param_2 + sVar2) - 2;
+      uVar5 = uVar5 + 2;
+      local_70.value[param_4] = uVar1;
+      local_6c.value[param_3 + 1] = uVar1;
+      local_6c.value[param_4 + 1] = param_2 + sVar2;
+      *&param_5->value = local_70.value;
+      param_5 = param_5 + 3;
+      *&prVar4[2].value = local_6c.value;
+      prVar4 = prVar4 + 3;
+      *(undefined4 *)prVar4->value = local_68;
+      lVar3 = lVar3 + -1;
+    } while (lVar3 != 0);
   }
-  if (uVar12 == uVar5) {
-    sVar1 = param_2 + (short)uVar12;
-    *(short *)((int)&local_70 + (int)((uVar6 & 0xffffffff) << 1)) = sVar1 + -2;
-    *(short *)((int)&local_70 + (int)((uVar7 & 0xffffffff) << 1)) = sVar1 + -1;
-    puVar9[1] = local_6c;
-    *puVar9 = local_70;
+  if (uVar5 == param_1) {
+    sVar2 = param_2 + (short)uVar5;
+    local_70.value[param_3] = sVar2 - 2;
+    local_70.value[param_4] = sVar2 - 1;
+    *&param_5[1].value = local_6c.value;
+    *&param_5->value = local_70.value;
   }
-  __restgprlr_22();
   return;
 }
 
 
 // 8242B7F0  Glass_MakeFaceIndices  (EffectsCore/fx_glass_draw.cpp:457)
+
+/* WARNING: Function: __savegprlr_21 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_21 replaced with injection: xenon_save_restore */
 
 uint Glass_MakeFaceIndices
                (FxGlassDrawState *param_1,uint param_2,FxGlassGeometryData *param_3,uint param_4,
@@ -547,81 +521,69 @@ uint Glass_MakeFaceIndices
 
 {
   byte bVar1;
-  short sVar2;
-  int iVar4;
-  uint uVar5;
-  longlong lVar3;
-  ushort uVar6;
-  longlong lVar7;
-  r_double_index_t *prVar8;
-  longlong lVar9;
-  longlong lVar10;
-  ushort uVar12;
-  longlong lVar11;
-  ulonglong uVar13;
-  ulonglong uVar14;
-  r_double_index_t *prVar15;
-  ulonglong uVar16;
+  ushort uVar2;
+  int iVar3;
+  uint uVar4;
+  ushort uVar5;
+  ushort *puVar6;
+  int iVar7;
+  ushort uVar9;
+  longlong lVar8;
+  ulonglong uVar10;
+  undefined4 *puVar11;
+  FxGlassGeometryData *pFVar12;
+  FxGlassGeometryData *pFVar13;
   r_double_index_t local_70;
   undefined4 local_6c;
   undefined4 local_68;
   
-  lVar9 = (longlong)param_6;
-  lVar7 = (longlong)param_5;
-  uVar14 = (ulonglong)(int)param_4;
-  uVar16 = (ulonglong)(int)param_3;
-  uVar13 = (ulonglong)(int)param_2;
-  iVar4 = __savegprlr_21(param_1);
-  prVar8 = (r_double_index_t *)
-           ((*(uint *)(iVar4 + 0x860) & 0x7ffffffe) * 2 + *(int *)(iVar4 + 0x854));
-  if ((uVar14 & 0xffffffff) == 0) {
+  puVar6 = param_1->dstIndices->value + (param_1->totalIndexCount & 0x7ffffffe);
+  if (param_4 == 0) {
     Glass_MakeSimpleFanFaceIndices
-              ((uint)uVar13,*(ushort *)(iVar4 + 0x858),(int)lVar7,(int)lVar9,prVar8);
-    uVar5 = __restgprlr_21(uVar13 + (uVar13 & 0x7fffffff) * 2 + -6);
-    return uVar5;
+              (param_2,param_1->baseVertex,param_5,param_6,(r_double_index_t *)puVar6);
+    return param_2 * 3 - 6;
   }
-  sVar2 = *(short *)(iVar4 + 0x858);
-  uVar12 = (ushort)*(byte *)uVar16;
-  uVar13 = 0;
-  lVar3 = 0;
-  uVar14 = (uVar14 & 0x3fffffff) * 4 + uVar16;
+  uVar2 = param_1->baseVertex;
+  uVar9 = (ushort)param_3->asBytes[0];
+  uVar10 = 0;
+  uVar4 = 0;
+  pFVar12 = param_3;
   do {
-    iVar4 = (int)uVar16;
-    uVar6 = (ushort)*(byte *)(iVar4 + 2);
-    lVar10 = 2;
-    prVar15 = prVar8 + -1;
+    uVar5 = (ushort)(pFVar12->hole).touchVert;
+    puVar11 = (undefined4 *)(puVar6 + -2);
+    iVar3 = 2;
     do {
-      bVar1 = *(byte *)(iVar4 + -1 + (int)lVar10);
-      lVar11 = uVar13 + (uVar13 & 0x7fffffff) * 2;
+      iVar7 = iVar3;
+      bVar1 = pFVar12->asBytes[iVar7 + -1];
+      lVar8 = uVar10 + (uVar10 & 0x7fffffff) * 2;
       *(ushort *)
-       ((int)local_70.value + (int)((uVar13 + (uVar13 & 0x7fffffff) * 2 & 0xffffffff) << 1)) =
-           uVar12 + sVar2;
-      uVar13 = 1 - uVar13;
-      *(ushort *)((int)local_70.value + (int)((lVar11 + lVar7 & 0xffffffffU) << 1)) =
-           (ushort)bVar1 + sVar2;
-      lVar3 = lVar3 + 3;
-      *(ushort *)((int)local_70.value + (int)((lVar11 + lVar9 & 0xffffffffU) << 1)) = uVar6 + sVar2;
-      if ((int)uVar13 == 0) {
-        *&prVar8->value = local_70.value;
-        prVar8 = prVar8 + 3;
-        *(undefined4 *)prVar15[2].value = local_6c;
-        prVar15 = prVar15 + 3;
-        *(undefined4 *)prVar15->value = local_68;
+       ((int)local_70.value + (int)((uVar10 + (uVar10 & 0x7fffffff) * 2 & 0xffffffff) << 1)) =
+           uVar9 + uVar2;
+      uVar10 = 1 - uVar10;
+      *(ushort *)((int)local_70.value + (int)((lVar8 + param_5 & 0xffffffffU) << 1)) = bVar1 + uVar2
+      ;
+      uVar4 = uVar4 + 3;
+      *(ushort *)((int)local_70.value + (int)((lVar8 + param_6 & 0xffffffffU) << 1)) = uVar5 + uVar2
+      ;
+      if ((int)uVar10 == 0) {
+        *(ushort (*) [2])puVar6 = local_70.value;
+        puVar6 = puVar6 + 6;
+        puVar11[2] = local_6c;
+        puVar11 = puVar11 + 3;
+        *puVar11 = local_68;
       }
-      lVar10 = lVar10 + 1;
-      lVar11 = lVar10 + uVar16;
-      uVar6 = (ushort)*(byte *)((int)lVar10 + iVar4);
-    } while (uVar6 != 0xff);
-    uVar16 = lVar11 + 1;
-    uVar12 = (ushort)*(byte *)((int)lVar11 + 1);
-  } while ((uVar12 != 0xff) && ((uVar16 & 0xffffffff) != (uVar14 & 0xffffffff)));
-  if ((int)uVar13 != 0) {
-    *&prVar8->value = local_70.value;
+      uVar5 = (ushort)pFVar12->asBytes[iVar7 + 1];
+      iVar3 = iVar7 + 1;
+    } while (uVar5 != 0xff);
+    pFVar13 = (FxGlassGeometryData *)(pFVar12->asBytes + iVar7 + 2);
+    uVar9 = (ushort)pFVar12->asBytes[iVar7 + 2];
+  } while ((uVar9 != 0xff) && (pFVar12 = pFVar13, pFVar13 != param_3 + param_4));
+  if ((int)uVar10 != 0) {
+    *(ushort (*) [2])puVar6 = local_70.value;
     local_6c = CONCAT22(local_6c._0_2_,0xffff);
-    *(undefined4 *)prVar8[1].value = local_6c;
+    *(undefined4 *)(puVar6 + 2) = local_6c;
   }
-  uVar5 = __restgprlr_21(lVar3);
-  return uVar5;
+  return uVar4;
 }
 
 
@@ -653,6 +615,9 @@ float Glass_TestCamAgainstBorderSegmentPlane
 
 // 8242BA20  Glass_DrawBorderSegment  (EffectsCore/fx_glass_draw.cpp:549)
 
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
+
 void Glass_DrawBorderSegment
                (FxGlassDrawState *param_1,uint param_2,uint param_3,uint param_4,uint param_5,
                bool param_6)
@@ -669,26 +634,20 @@ void Glass_DrawBorderSegment
   PackedUnitVec PVar9;
   uint uVar10;
   uint uVar11;
-  PackedUnitVec PVar12;
-  PackedTexCoords PVar13;
-  int iVar14;
-  int iVar15;
-  ulonglong uVar16;
-  GfxPackedVertex *pGVar17;
-  ulonglong uVar18;
-  ulonglong uVar19;
-  ulonglong uVar20;
-  float (*pafVar21) [3];
-  float (*pafVar22) [3];
-  ushort *puVar23;
-  ushort *puVar24;
-  double dVar25;
-  double dVar26;
-  double dVar27;
-  undefined1 auVar28 [16];
-  undefined1 auVar29 [16];
+  PackedTexCoords PVar12;
+  ulonglong uVar13;
+  GfxPackedVertex *pGVar14;
+  float (*pafVar15) [3];
+  float (*pafVar16) [3];
+  ushort *puVar17;
+  ushort *puVar18;
+  double dVar19;
+  double dVar20;
+  double dVar21;
+  undefined1 auVar22 [16];
+  undefined1 auVar23 [16];
   uint uStack00000034;
-  PackedUnitVec local_d0;
+  PackedTexCoords local_d0;
   float local_c8;
   float local_c4;
   float local_c0;
@@ -696,331 +655,306 @@ void Glass_DrawBorderSegment
   float local_b4;
   float local_b0;
   
-  uVar20 = (ulonglong)param_6;
-  uVar19 = (ulonglong)(int)param_4;
-  uVar18 = (ulonglong)(int)param_3;
-  uVar16 = ZEXT48(&stack0x00000000);
-  __savegprlr();
-  puVar24 = &param_1->baseVertex;
+  uVar13 = ZEXT48(&stack0x00000000);
+  puVar18 = &param_1->baseVertex;
   uStack00000034 = param_5;
-  pGVar17 = R_GlassMeshVertIter_Begin(param_1->baseVertex);
+  pGVar14 = R_GlassMeshVertIter_Begin(param_1->baseVertex);
   GVar8 = param_1->def->color;
-  dVar27 = 1.0;
-  iVar14 = (int)uVar19;
-  iVar15 = (int)uVar18;
-  if ((uVar20 & 0xff) == 0) {
-    pafVar22 = param_1->localVerts + param_2;
-    pafVar21 = param_1->localVerts + iVar14;
-    local_b8 = (*pafVar21)[0] - (*pafVar22)[0];
-    local_b4 = (*pafVar21)[1] - (*pafVar22)[1];
-    local_b0 = (*pafVar21)[2] - (*pafVar22)[2];
+  dVar21 = 1.0;
+  if (!param_6) {
+    pafVar16 = param_1->localVerts + param_2;
+    pafVar15 = param_1->localVerts + param_4;
+    local_b8 = (*pafVar15)[0] - (*pafVar16)[0];
+    local_b4 = (*pafVar15)[1] - (*pafVar16)[1];
+    local_b0 = (*pafVar15)[2] - (*pafVar16)[2];
     Vec3Cross(param_1->axis[2],&local_b8,&local_c8);
-    pafVar21 = param_1->localVerts + iVar15;
-    dVar25 = (double)SQRT(local_c8 * local_c8 + local_c0 * local_c0 + local_c4 * local_c4);
-    dVar26 = dVar27;
-    if (-dVar25 < 0.0) {
-      dVar26 = dVar25;
+    pafVar15 = param_1->localVerts + param_3;
+    dVar19 = (double)SQRT(local_c8 * local_c8 + local_c0 * local_c0 + local_c4 * local_c4);
+    dVar20 = dVar21;
+    if (-dVar19 < 0.0) {
+      dVar20 = dVar19;
     }
-    fVar1 = (float)(dVar27 / dVar26);
+    fVar1 = (float)(dVar21 / dVar20);
     local_c4 = local_c4 * fVar1;
     local_c0 = local_c0 * fVar1;
     local_c8 = local_c8 * fVar1;
-    auVar29 = loadVectorRightIndexed(uVar16 - 0xb8);
-    auVar28 = loadVectorLeftIndexed(uVar16 - 200);
-    auVar28 = (auVar28 | auVar29) & (undefined1  [16])g_keepXYZ.field0_0x0;
-    auVar29 = vectorMultiplyAddFloatingPoint
-                        (auVar28,(undefined1  [16])g_packMul101010.field0_0x0,
+    auVar23 = loadVectorRightIndexed(uVar13 - 0xb8);
+    auVar22 = loadVectorLeftIndexed(uVar13 - 200);
+    auVar22 = (auVar22 | auVar23) & (undefined1  [16])g_keepXYZ.field0_0x0;
+    auVar23 = vectorMultiplyAddFloatingPoint
+                        (auVar22,(undefined1  [16])g_packMul101010.field0_0x0,
                          (undefined1  [16])g_packAdd.field0_0x0);
-    auVar28 = vectorPackD3Dtype(auVar28,auVar29,9,3);
-    auVar28 = vectorSplatWord(auVar28,0);
-    storeVectorElementWordIndexed(auVar28,uVar16 - 0xd0);
-    PVar12 = *(PackedUnitVec *)((int)param_1->texCoords + (int)((uVar18 & 0xffffffff) << 2));
+    auVar22 = vectorPackD3Dtype(auVar22,auVar23,9,3);
+    auVar22 = vectorSplatWord(auVar22,0);
+    storeVectorElementWordIndexed(auVar22,uVar13 - 0xd0);
+    PVar12 = param_1->texCoords[param_3];
     fVar1 = param_1->thicknessOffset[0];
     PVar9 = param_1->packedTangent;
-    fVar6 = param_1->localVerts[iVar15][0];
+    fVar6 = param_1->localVerts[param_3][0];
     fVar2 = param_1->thicknessOffset[1];
-    pGVar17->color = GVar8;
-    fVar3 = (*pafVar21)[1];
-    pGVar17->normal = local_d0;
+    pGVar14->color = GVar8;
+    fVar3 = (*pafVar15)[1];
+    pGVar14->normal = (PackedUnitVec)local_d0;
     fVar4 = param_1->thicknessOffset[2];
-    fVar5 = (*pafVar21)[2];
-    pGVar17->xyz[0] = fVar6 - fVar1;
-    pGVar17->tangent = PVar9;
-    pGVar17->xyz[1] = fVar3 - fVar2;
-    pGVar17->texCoord = (PackedTexCoords)PVar12;
-    pGVar17->xyz[2] = fVar5 - fVar4;
-    pGVar17->binormalSign = (float)dVar27;
-    pGVar17 = R_GlassMeshVertIter_Next(pGVar17);
-    uVar7 = *puVar24;
+    fVar5 = (*pafVar15)[2];
+    pGVar14->xyz[0] = fVar6 - fVar1;
+    pGVar14->tangent = PVar9;
+    pGVar14->xyz[1] = fVar3 - fVar2;
+    pGVar14->texCoord = PVar12;
+    pGVar14->xyz[2] = fVar5 - fVar4;
+    pGVar14->binormalSign = (float)dVar21;
+    pGVar14 = R_GlassMeshVertIter_Next(pGVar14);
+    uVar7 = *puVar18;
     PVar9 = param_1->packedTangent;
     uVar10 = param_1->totalVertCount;
     fVar1 = param_1->thicknessOffset[0];
     fVar2 = param_1->thicknessOffset[1];
     fVar3 = param_1->thicknessOffset[2];
-    pGVar17->color = GVar8;
-    fVar4 = (*pafVar21)[0];
-    pGVar17->normal = local_d0;
-    fVar5 = (*pafVar21)[1];
-    fVar6 = (*pafVar21)[2];
-    pGVar17->xyz[0] = fVar4 + fVar1;
-    pGVar17->xyz[1] = fVar5 + fVar2;
-    pGVar17->texCoord = (PackedTexCoords)PVar12;
-    pGVar17->xyz[2] = fVar6 + fVar3;
-    pGVar17->tangent = PVar9;
-    pGVar17->binormalSign = (float)dVar27;
+    pGVar14->color = GVar8;
+    fVar4 = (*pafVar15)[0];
+    pGVar14->normal = (PackedUnitVec)local_d0;
+    fVar5 = (*pafVar15)[1];
+    fVar6 = (*pafVar15)[2];
+    pGVar14->xyz[0] = fVar4 + fVar1;
+    pGVar14->xyz[1] = fVar5 + fVar2;
+    pGVar14->texCoord = PVar12;
+    pGVar14->xyz[2] = fVar6 + fVar3;
+    pGVar14->tangent = PVar9;
+    pGVar14->binormalSign = (float)dVar21;
     param_1->totalVertCount = uVar10 + 2;
-    *puVar24 = uVar7 + 2;
+    *puVar18 = uVar7 + 2;
     param_5 = uStack00000034;
     local_d0 = PVar12;
   }
-  pafVar22 = param_1->localVerts + iVar15;
-  pafVar21 = param_1->localVerts + param_5;
-  local_b8 = (*pafVar21)[0] - (*pafVar22)[0];
-  local_b4 = (*pafVar21)[1] - (*pafVar22)[1];
-  local_b0 = (*pafVar21)[2] - (*pafVar22)[2];
+  pafVar16 = param_1->localVerts + param_3;
+  pafVar15 = param_1->localVerts + param_5;
+  local_b8 = (*pafVar15)[0] - (*pafVar16)[0];
+  local_b4 = (*pafVar15)[1] - (*pafVar16)[1];
+  local_b0 = (*pafVar15)[2] - (*pafVar16)[2];
   Vec3Cross(param_1->axis[2],&local_b8,&local_c8);
-  dVar25 = (double)SQRT(local_c8 * local_c8 + local_c0 * local_c0 + local_c4 * local_c4);
-  dVar26 = dVar27;
-  if (-dVar25 < 0.0) {
-    dVar26 = dVar25;
+  dVar19 = (double)SQRT(local_c8 * local_c8 + local_c0 * local_c0 + local_c4 * local_c4);
+  dVar20 = dVar21;
+  if (-dVar19 < 0.0) {
+    dVar20 = dVar19;
   }
-  fVar1 = (float)(dVar27 / dVar26);
+  fVar1 = (float)(dVar21 / dVar20);
   local_c8 = fVar1 * local_c8;
   local_c4 = local_c4 * fVar1;
   local_c0 = local_c0 * fVar1;
-  auVar29 = loadVectorRightIndexed(uVar16 - 0xb8);
-  auVar28 = loadVectorLeftIndexed(uVar16 - 200);
-  auVar28 = (auVar28 | auVar29) & (undefined1  [16])g_keepXYZ.field0_0x0;
-  auVar29 = vectorMultiplyAddFloatingPoint
-                      (auVar28,(undefined1  [16])g_packMul101010.field0_0x0,
+  auVar23 = loadVectorRightIndexed(uVar13 - 0xb8);
+  auVar22 = loadVectorLeftIndexed(uVar13 - 200);
+  auVar22 = (auVar22 | auVar23) & (undefined1  [16])g_keepXYZ.field0_0x0;
+  auVar23 = vectorMultiplyAddFloatingPoint
+                      (auVar22,(undefined1  [16])g_packMul101010.field0_0x0,
                        (undefined1  [16])g_packAdd.field0_0x0);
-  auVar28 = vectorPackD3Dtype(auVar28,auVar29,9,3);
-  auVar28 = vectorSplatWord(auVar28,0);
-  storeVectorElementWordIndexed(auVar28,uVar16 - 0xd0);
-  if ((uVar20 & 0xff) == 0) {
-    pGVar17 = R_GlassMeshVertIter_Next(pGVar17);
+  auVar22 = vectorPackD3Dtype(auVar22,auVar23,9,3);
+  auVar22 = vectorSplatWord(auVar22,0);
+  storeVectorElementWordIndexed(auVar22,uVar13 - 0xd0);
+  if (!param_6) {
+    pGVar14 = R_GlassMeshVertIter_Next(pGVar14);
   }
   PVar9 = param_1->packedTangent;
   fVar1 = param_1->thicknessOffset[0];
   fVar2 = param_1->thicknessOffset[1];
-  pGVar17->color = GVar8;
+  pGVar14->color = GVar8;
   fVar3 = param_1->thicknessOffset[2];
-  pGVar17->binormalSign = (float)dVar27;
-  pGVar17->tangent = PVar9;
-  pafVar21 = param_1->localVerts + iVar14;
-  PVar13 = *(PackedTexCoords *)((int)param_1->texCoords + (int)((uVar19 & 0xffffffff) << 2));
-  pGVar17->normal = local_d0;
-  pGVar17->xyz[0] = param_1->localVerts[iVar14][0] - fVar1;
-  fVar1 = (*pafVar21)[1];
-  pGVar17->texCoord = PVar13;
-  fVar4 = (*pafVar21)[2];
-  pGVar17->xyz[1] = fVar1 - fVar2;
-  pGVar17->xyz[2] = fVar4 - fVar3;
-  pGVar17 = R_GlassMeshVertIter_Next(pGVar17);
+  pGVar14->binormalSign = (float)dVar21;
+  pGVar14->tangent = PVar9;
+  pafVar15 = param_1->localVerts + param_4;
+  PVar12 = param_1->texCoords[param_4];
+  pGVar14->normal = (PackedUnitVec)local_d0;
+  pGVar14->xyz[0] = param_1->localVerts[param_4][0] - fVar1;
+  fVar1 = (*pafVar15)[1];
+  pGVar14->texCoord = PVar12;
+  fVar4 = (*pafVar15)[2];
+  pGVar14->xyz[1] = fVar1 - fVar2;
+  pGVar14->xyz[2] = fVar4 - fVar3;
+  pGVar14 = R_GlassMeshVertIter_Next(pGVar14);
   PVar9 = param_1->packedTangent;
   fVar1 = param_1->thicknessOffset[0];
-  pGVar17->color = GVar8;
+  pGVar14->color = GVar8;
   fVar2 = param_1->thicknessOffset[1];
-  pGVar17->texCoord = PVar13;
+  pGVar14->texCoord = PVar12;
   fVar3 = param_1->thicknessOffset[2];
-  pGVar17->normal = local_d0;
-  fVar4 = (*pafVar21)[1];
-  fVar5 = (*pafVar21)[2];
-  pGVar17->xyz[0] = (*pafVar21)[0] + fVar1;
-  pGVar17->xyz[1] = fVar4 + fVar2;
-  pGVar17->tangent = PVar9;
-  pGVar17->xyz[2] = fVar5 + fVar3;
-  pGVar17->binormalSign = (float)dVar27;
-  R_GlassMeshVertIter_End(pGVar17);
-  uVar7 = *puVar24;
+  pGVar14->normal = (PackedUnitVec)local_d0;
+  fVar4 = (*pafVar15)[1];
+  fVar5 = (*pafVar15)[2];
+  pGVar14->xyz[0] = (*pafVar15)[0] + fVar1;
+  pGVar14->xyz[1] = fVar4 + fVar2;
+  pGVar14->tangent = PVar9;
+  pGVar14->xyz[2] = fVar5 + fVar3;
+  pGVar14->binormalSign = (float)dVar21;
+  R_GlassMeshVertIter_End(pGVar14);
+  uVar7 = *puVar18;
   uVar10 = param_1->totalIndexCount;
   uVar11 = param_1->totalVertCount;
-  *puVar24 = uVar7 + 2;
-  puVar23 = param_1->dstIndices->value + (uVar10 & 0x7ffffffe);
-  *puVar23 = uVar7 - 1;
+  *puVar18 = uVar7 + 2;
+  puVar17 = param_1->dstIndices->value + (uVar10 & 0x7ffffffe);
+  *puVar17 = uVar7 - 1;
   param_1->totalVertCount = uVar11 + 2;
-  puVar23[2] = uVar7 + 1;
-  puVar23[3] = uVar7 + 1;
-  uVar7 = *puVar24;
-  puVar23[1] = uVar7 - 4;
-  puVar23[4] = uVar7 - 4;
-  puVar23[5] = uVar7 - 2;
+  puVar17[2] = uVar7 + 1;
+  puVar17[3] = uVar7 + 1;
+  uVar7 = *puVar18;
+  puVar17[1] = uVar7 - 4;
+  puVar17[4] = uVar7 - 4;
+  puVar17[5] = uVar7 - 2;
   param_1->totalIndexCount = uVar10 + 6;
-  __restgprlr();
   return;
 }
 
 
 // 8242BEA0  Glass_DrawBorderSegmentIfVisible  (EffectsCore/fx_glass_draw.cpp:643)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 bool Glass_DrawBorderSegmentIfVisible
                (FxGlassDrawState *param_1,float *param_2,uint param_3,uint param_4,uint param_5,
                uint param_6,bool param_7)
 
 {
-  FxGlassDrawState *pFVar1;
-  undefined1 uVar2;
-  float fVar3;
+  float fVar1;
   
-  pFVar1 = (FxGlassDrawState *)__savegprlr_26(param_1);
-  fVar3 = Glass_TestCamAgainstBorderSegmentPlane(pFVar1,param_2,param_4,param_5);
-  if (fVar3 <= 0.0) {
-    uVar2 = __restgprlr_26(0);
-    return (bool)uVar2;
+  fVar1 = Glass_TestCamAgainstBorderSegmentPlane(param_1,param_2,param_4,param_5);
+  if (fVar1 <= 0.0) {
+    return false;
   }
-  Glass_DrawBorderSegment(pFVar1,param_3,param_4,param_5,param_6,param_7);
-  uVar2 = __restgprlr_26(1);
-  return (bool)uVar2;
+  Glass_DrawBorderSegment(param_1,param_3,param_4,param_5,param_6,param_7);
+  return true;
 }
 
 
 // 8242BF18  Glass_MakeBorderGeometry  (EffectsCore/fx_glass_draw.cpp:656)
 
+/* WARNING: Function: __savegprlr_18 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_18 replaced with injection: xenon_save_restore */
+
 void Glass_MakeBorderGeometry
                (FxGlassDrawState *param_1,float *param_2,uint param_3,uint param_4,uint param_5)
 
 {
-  ulonglong uVar1;
-  FxGlassDrawState *pFVar2;
-  ulonglong uVar3;
-  ulonglong uVar4;
+  uint uVar1;
+  uint uVar2;
+  bool bVar3;
+  uint uVar4;
   uint uVar5;
-  ulonglong uVar6;
-  bool bVar7;
-  ulonglong uVar8;
-  ulonglong uVar9;
-  ulonglong uVar10;
-  ulonglong uVar11;
-  ulonglong uVar12;
-  double dVar13;
-  float fVar14;
+  uint uVar6;
+  uint uVar7;
+  double dVar8;
+  float fVar9;
   
-  uVar6 = (ulonglong)(int)param_5;
-  uVar4 = (ulonglong)(int)param_4;
-  uVar3 = (ulonglong)(int)param_3;
-  pFVar2 = (FxGlassDrawState *)__savegprlr_18(param_1);
-  bVar7 = false;
-  if ((uVar6 & 0xffffffff) < 3) {
+  bVar3 = false;
+  if (param_5 < 3) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_glass_draw.cpp"
                     ,0x29a,0,"%s");
   }
-  uVar6 = uVar4 + uVar6;
-  dVar13 = 0.0;
-  uVar8 = uVar6 - 3;
-  uVar1 = uVar6 - 1;
-  uVar10 = uVar4;
-  uVar12 = uVar6 - 2;
+  uVar2 = param_4 + param_5;
+  dVar8 = 0.0;
+  uVar1 = param_4;
+  uVar6 = uVar2 - 1;
+  uVar4 = uVar2 - 3;
+  uVar7 = uVar2 - 2;
   do {
-    uVar9 = uVar1;
-    if (0x20 < (uVar12 - uVar4 & 0xffffffff)) {
+    uVar5 = uVar6;
+    uVar6 = uVar1;
+    if (0x20 < uVar7 - param_4) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_math.h",0x475,
                       0,"count doesn\'t index 33\n\t%i not in [0, %i)");
     }
-    if ((*(uint *)(&g_bitShift + (int)((uVar12 - uVar4 & 0xffffffff) << 2)) & uVar3) == 0) {
-      uVar5 = (uint)uVar9;
-      fVar14 = Glass_TestCamAgainstBorderSegmentPlane(pFVar2,param_2,(uint)uVar12,uVar5);
-      if (dVar13 < (double)fVar14) {
-        Glass_DrawBorderSegment(pFVar2,(uint)uVar8,(uint)uVar12,uVar5,(uint)uVar10,bVar7);
-        bVar7 = true;
+    if ((*(uint *)(&g_bitShift + (uVar7 - param_4) * 4) & param_3) == 0) {
+      fVar9 = Glass_TestCamAgainstBorderSegmentPlane(param_1,param_2,uVar7,uVar5);
+      if (dVar8 < (double)fVar9) {
+        Glass_DrawBorderSegment(param_1,uVar4,uVar7,uVar5,uVar6,bVar3);
+        bVar3 = true;
       }
       else {
-        bVar7 = false;
+        bVar3 = false;
       }
     }
     else {
-      bVar7 = false;
+      bVar3 = false;
     }
-    uVar11 = uVar10 + 1;
-    uVar8 = uVar12;
-    uVar1 = uVar10;
-    uVar10 = uVar11;
-    uVar12 = uVar9;
-  } while ((uVar11 & 0xffffffff) != (uVar6 & 0xffffffff));
-  __restgprlr_18();
+    uVar1 = uVar6 + 1;
+    uVar4 = uVar7;
+    uVar7 = uVar5;
+  } while (uVar6 + 1 != uVar2);
   return;
 }
 
 
 // 8242C050  Glass_MakeSingleHoleBorderGeometry  (EffectsCore/fx_glass_draw.cpp:688)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
+
 void Glass_MakeSingleHoleBorderGeometry
                (FxGlassDrawState *param_1,float *param_2,uint param_3,uint param_4,uint param_5)
 
 {
-  FxGlassDrawState *pFVar1;
-  ulonglong uVar2;
-  ulonglong uVar3;
-  longlong lVar4;
+  int iVar1;
+  bool bVar2;
+  uint uVar3;
+  uint uVar4;
   uint uVar5;
-  bool bVar6;
-  ulonglong uVar7;
-  ulonglong uVar8;
-  ulonglong uVar9;
-  ulonglong uVar10;
-  ulonglong uVar11;
-  ulonglong uVar12;
-  bool bVar13;
-  double dVar14;
-  float fVar15;
+  uint uVar6;
+  bool bVar7;
+  double dVar8;
+  float fVar9;
   
-  uVar3 = (ulonglong)(int)param_5;
-  uVar8 = (ulonglong)(int)param_4;
-  uVar2 = (ulonglong)(int)param_3;
-  pFVar1 = (FxGlassDrawState *)__savegprlr_24(param_1);
-  dVar14 = 0.0;
-  uVar11 = uVar2;
-  if ((uVar8 & 0xffffffff) == 0xff) {
-    if ((uVar3 & 0xffffffff) < 3) {
+  dVar8 = 0.0;
+  uVar5 = param_3;
+  if (param_4 == 0xff) {
+    if (param_5 < 3) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_glass_draw.cpp"
                       ,0x2ca,0,"%s");
     }
-    lVar4 = uVar2 + uVar3;
-    uVar7 = lVar4 - 3;
-    uVar10 = lVar4 - 2;
-    uVar8 = lVar4 - 1;
+    iVar1 = param_3 + param_5;
+    uVar3 = iVar1 - 3;
+    uVar4 = iVar1 - 2;
+    param_4 = iVar1 - 1;
   }
   else {
-    if ((uVar3 & 0xffffffff) < 2) {
+    if (param_5 < 2) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_glass_draw.cpp"
                       ,0x2ba,0,"%s");
     }
-    lVar4 = uVar2 + uVar3;
-    uVar5 = (uint)uVar8;
-    if ((uVar3 & 0xffffffff) != 2) {
-      uVar5 = (int)lVar4 - 3;
+    iVar1 = param_3 + param_5;
+    uVar6 = param_4;
+    if (param_5 != 2) {
+      uVar6 = iVar1 - 3;
     }
-    uVar7 = lVar4 - 2;
-    uVar10 = lVar4 - 1;
-    fVar15 = Glass_TestCamAgainstBorderSegmentPlane(pFVar1,param_2,(uint)uVar7,(uint)uVar10);
-    if (dVar14 < (double)fVar15) {
-      Glass_DrawBorderSegment(pFVar1,uVar5,(uint)uVar7,(uint)uVar10,(uint)uVar8,false);
-      bVar6 = true;
+    uVar3 = iVar1 - 2;
+    uVar4 = iVar1 - 1;
+    fVar9 = Glass_TestCamAgainstBorderSegmentPlane(param_1,param_2,uVar3,uVar4);
+    if (dVar8 < (double)fVar9) {
+      Glass_DrawBorderSegment(param_1,uVar6,uVar3,uVar4,param_4,false);
+      bVar2 = true;
       goto LAB_8242c14c;
     }
   }
-  bVar6 = false;
+  bVar2 = false;
 LAB_8242c14c:
   do {
-    uVar9 = uVar8;
-    uVar5 = (uint)uVar9;
-    fVar15 = Glass_TestCamAgainstBorderSegmentPlane(pFVar1,param_2,(uint)uVar10,uVar5);
-    bVar13 = dVar14 < (double)fVar15;
-    if (bVar13) {
-      Glass_DrawBorderSegment(pFVar1,(uint)uVar7,(uint)uVar10,uVar5,(uint)uVar11,bVar6);
+    fVar9 = Glass_TestCamAgainstBorderSegmentPlane(param_1,param_2,uVar4,param_4);
+    bVar7 = dVar8 < (double)fVar9;
+    if (bVar7) {
+      Glass_DrawBorderSegment(param_1,uVar3,uVar4,param_4,uVar5,bVar2);
     }
-    uVar12 = uVar11 + 1;
-    uVar7 = uVar10;
-    uVar8 = uVar11;
-    uVar10 = uVar9;
-    uVar11 = uVar12;
-    bVar6 = bVar13;
-  } while ((uVar12 & 0xffffffff) != (uVar2 + uVar3 & 0xffffffff));
-  __restgprlr_24();
+    uVar6 = uVar5 + 1;
+    uVar3 = uVar4;
+    uVar4 = param_4;
+    param_4 = uVar5;
+    uVar5 = uVar6;
+    bVar2 = bVar7;
+  } while (uVar6 != param_3 + param_5);
   return;
 }
 
 
 // 8242C1B8  Glass_MakeAllHoleBorderGeometry  (EffectsCore/fx_glass_draw.cpp:736)
+
+/* WARNING: Function: __savegprlr_16 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_16 replaced with injection: xenon_save_restore */
 
 void Glass_MakeAllHoleBorderGeometry
                (FxGlassDrawState *param_1,float *param_2,FxGlassGeometryData *param_3,uint param_4,
@@ -1028,85 +962,71 @@ void Glass_MakeAllHoleBorderGeometry
 
 {
   byte bVar1;
-  ushort *puVar2;
-  FxGlassDrawState *pFVar3;
-  ulonglong uVar4;
-  ulonglong uVar5;
-  ulonglong uVar6;
-  longlong lVar7;
-  bool bVar8;
-  ulonglong uVar9;
-  ulonglong uVar10;
-  ulonglong uVar11;
-  ulonglong uVar12;
-  ulonglong uVar13;
-  uint uVar16;
-  ulonglong uVar14;
-  ulonglong uVar15;
-  bool bVar17;
-  double dVar18;
-  float fVar19;
+  FxGlassGeometryData *pFVar2;
+  int iVar3;
+  bool bVar4;
+  uint uVar5;
+  uint uVar6;
+  uint uVar7;
+  uint uVar8;
+  uint uVar9;
+  uint uVar10;
+  bool bVar11;
+  double dVar12;
+  float fVar13;
   
-  uVar6 = (ulonglong)(int)param_5;
-  uVar5 = (ulonglong)(int)param_4;
-  uVar4 = (ulonglong)(int)param_3;
-  pFVar3 = (FxGlassDrawState *)__savegprlr_16(param_1);
-  uVar5 = (uVar5 & 0x3fffffff) * 4 + uVar4;
-  dVar18 = 0.0;
+  pFVar2 = param_3 + param_4;
+  dVar12 = 0.0;
   do {
-    puVar2 = (ushort *)uVar4;
-    bVar1 = *(byte *)(puVar2 + 1);
-    uVar10 = (ulonglong)bVar1;
-    uVar16 = (uint)bVar1;
-    uVar13 = (ulonglong)*puVar2;
-    if (uVar10 == 0xff) {
-      if (uVar13 < 3) {
+    bVar1 = (param_3->hole).touchVert;
+    uVar6 = (uint)bVar1;
+    uVar10 = (uint)bVar1;
+    uVar9 = (uint)(param_3->hole).uniqueVertCount;
+    if (uVar6 == 0xff) {
+      if (uVar9 < 3) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_glass_draw.cpp"
                         ,0x2ca,0,"%s");
       }
-      lVar7 = uVar13 + uVar6;
-      uVar9 = lVar7 - 3;
-      uVar12 = lVar7 - 2;
-      uVar10 = lVar7 - 1;
+      iVar3 = uVar9 + param_5;
+      uVar5 = iVar3 - 3;
+      uVar7 = iVar3 - 2;
+      uVar6 = iVar3 - 1;
 LAB_8242c2c8:
-      bVar8 = false;
+      bVar4 = false;
     }
     else {
-      if (uVar13 < 2) {
+      if (uVar9 < 2) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_glass_draw.cpp"
                         ,0x2ba,0,"%s");
       }
-      lVar7 = uVar13 + uVar6;
-      if (uVar13 != 2) {
-        uVar16 = (int)lVar7 - 3;
+      iVar3 = uVar9 + param_5;
+      if (uVar9 != 2) {
+        uVar10 = iVar3 - 3;
       }
-      uVar9 = lVar7 - 2;
-      uVar12 = lVar7 - 1;
-      fVar19 = Glass_TestCamAgainstBorderSegmentPlane(pFVar3,param_2,(uint)uVar9,(uint)uVar12);
-      if ((double)fVar19 <= dVar18) goto LAB_8242c2c8;
-      Glass_DrawBorderSegment(pFVar3,uVar16,(uint)uVar9,(uint)uVar12,(uint)bVar1,false);
-      bVar8 = true;
+      uVar5 = iVar3 - 2;
+      uVar7 = iVar3 - 1;
+      fVar13 = Glass_TestCamAgainstBorderSegmentPlane(param_1,param_2,uVar5,uVar7);
+      if ((double)fVar13 <= dVar12) goto LAB_8242c2c8;
+      Glass_DrawBorderSegment(param_1,uVar10,uVar5,uVar7,(uint)bVar1,false);
+      bVar4 = true;
     }
-    uVar14 = uVar6;
+    uVar10 = param_5;
     do {
-      uVar11 = uVar10;
-      uVar16 = (uint)uVar11;
-      fVar19 = Glass_TestCamAgainstBorderSegmentPlane(pFVar3,param_2,(uint)uVar12,uVar16);
-      bVar17 = dVar18 < (double)fVar19;
-      if (bVar17) {
-        Glass_DrawBorderSegment(pFVar3,(uint)uVar9,(uint)uVar12,uVar16,(uint)uVar14,bVar8);
+      uVar8 = uVar7;
+      uVar7 = uVar6;
+      uVar6 = uVar10;
+      fVar13 = Glass_TestCamAgainstBorderSegmentPlane(param_1,param_2,uVar8,uVar7);
+      bVar11 = dVar12 < (double)fVar13;
+      if (bVar11) {
+        Glass_DrawBorderSegment(param_1,uVar5,uVar8,uVar7,uVar6,bVar4);
       }
-      uVar15 = uVar14 + 1;
-      uVar9 = uVar12;
-      uVar10 = uVar14;
-      uVar12 = uVar11;
-      uVar14 = uVar15;
-      bVar8 = bVar17;
-    } while ((uVar15 & 0xffffffff) != (uVar13 + uVar6 & 0xffffffff));
-    uVar6 = *puVar2 + uVar6;
-    uVar4 = (ulonglong)*puVar2 * 4 + uVar4 + 4;
-    if ((uVar4 & 0xffffffff) == (uVar5 & 0xffffffff)) {
-      __restgprlr_16();
+      bVar4 = bVar11;
+      uVar10 = uVar6 + 1;
+      uVar5 = uVar8;
+    } while (uVar6 + 1 != uVar9 + param_5);
+    param_5 = (param_3->hole).uniqueVertCount + param_5;
+    param_3 = param_3 + (param_3->hole).uniqueVertCount + 1;
+    if (param_3 == pFVar2) {
       return;
     }
   } while( true );
@@ -1114,6 +1034,9 @@ LAB_8242c2c8:
 
 
 // 8242C350  Glass_MakeAllCrackBorderGeometry  (EffectsCore/fx_glass_draw.cpp:754)
+
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
 
 void Glass_MakeAllCrackBorderGeometry
                (FxGlassDrawState *param_1,float *param_2,FxGlassGeometryData *param_3,uint param_4)
@@ -1124,35 +1047,30 @@ void Glass_MakeAllCrackBorderGeometry
   uint uVar3;
   longlong lVar4;
   ulonglong uVar5;
-  ulonglong uVar6;
-  ulonglong uVar7;
-  int iVar8;
-  ulonglong uVar9;
-  ushort *puVar10;
-  uint uVar11;
-  bool bVar12;
-  ulonglong uVar13;
-  double dVar14;
-  float fVar15;
+  FxGlassGeometryData *pFVar6;
+  int iVar7;
+  FxGlassGeometryData *pFVar8;
+  uint uVar9;
+  bool bVar10;
+  ulonglong uVar11;
+  double dVar12;
+  float fVar13;
   byte abStack_d1 [209];
   
-  uVar6 = (ulonglong)(int)param_4;
-  uVar5 = (ulonglong)(int)param_3;
-  __savegprlr();
-  dVar14 = 0.0;
-  uVar7 = uVar5;
+  pFVar6 = param_3 + param_4;
+  dVar12 = 0.0;
   do {
-    uVar9 = uVar7 + 4;
-    puVar10 = (ushort *)uVar7;
-    if (*puVar10 == 0) {
-      if ((*(char *)(puVar10 + 1) == -1) || (*(char *)((int)puVar10 + 3) == -1)) {
+    pFVar8 = param_3 + 1;
+    if ((param_3->hole).uniqueVertCount == 0) {
+      if (((param_3->hole).touchVert == 0xff) || ((param_3->hole).pad[0] == 0xff)) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_glass_draw.cpp"
                         ,0x30b,0,"%s");
       }
-      bVar1 = *(byte *)(puVar10 + 1);
-      bVar2 = *(byte *)((int)puVar10 + 3);
-      fVar15 = Glass_TestCamAgainstBorderSegmentPlane(param_1,param_2,(uint)bVar1,(uint)bVar2);
-      if (dVar14 < (double)fVar15) {
+      bVar1 = (param_3->hole).touchVert;
+      bVar2 = (param_3->hole).pad[0];
+      fVar13 = Glass_TestCamAgainstBorderSegmentPlane(param_1,param_2,(uint)bVar1,(uint)bVar2);
+      param_3 = pFVar8;
+      if (dVar12 < (double)fVar13) {
         Glass_DrawBorderSegment(param_1,(uint)bVar1,(uint)bVar1,(uint)bVar2,(uint)bVar2,false);
       }
       else {
@@ -1160,80 +1078,80 @@ void Glass_MakeAllCrackBorderGeometry
       }
     }
     else {
-      uVar11 = param_1->vertCount;
-      Glass_TransformVertexArray(param_1,(FxGlassVertex *)uVar9,(uint)*puVar10);
-      bVar12 = *(char *)(puVar10 + 1) != -1;
-      if (bVar12) {
-        abStack_d1[2] = *(char *)(puVar10 + 1);
+      uVar9 = param_1->vertCount;
+      Glass_TransformVertexArray(param_1,&pFVar8->vert,(uint)(param_3->hole).uniqueVertCount);
+      bVar10 = (param_3->hole).touchVert != 0xff;
+      if (bVar10) {
+        abStack_d1[2] = (param_3->hole).touchVert;
       }
-      uVar7 = (ulonglong)*puVar10;
-      iVar8 = 0;
-      if (uVar7 != 0) {
-        uVar13 = uVar7;
+      uVar5 = (ulonglong)(param_3->hole).uniqueVertCount;
+      iVar7 = 0;
+      if (uVar5 != 0) {
+        uVar11 = uVar5;
         do {
-          abStack_d1[iVar8 + (uint)bVar12 + 2] = (char)iVar8 + (char)uVar11;
-          iVar8 = iVar8 + 1;
-          uVar13 = uVar13 - 1;
-        } while (uVar13 != 0);
+          abStack_d1[iVar7 + (uint)bVar10 + 2] = (char)iVar7 + (char)uVar9;
+          iVar7 = iVar7 + 1;
+          uVar11 = uVar11 - 1;
+        } while (uVar11 != 0);
       }
-      uVar7 = uVar7 + bVar12;
-      if (*(byte *)((int)puVar10 + 3) != 0xff) {
-        abStack_d1[(int)uVar7 + 2] = *(byte *)((int)puVar10 + 3);
-        uVar7 = uVar7 + 1;
+      uVar5 = uVar5 + bVar10;
+      if ((param_3->hole).pad[0] != 0xff) {
+        abStack_d1[(int)uVar5 + 2] = (param_3->hole).pad[0];
+        uVar5 = uVar5 + 1;
       }
-      uVar11 = 0;
-      bVar12 = false;
-      uVar13 = 1;
+      uVar9 = 0;
+      bVar10 = false;
+      uVar11 = 1;
       abStack_d1[1] = abStack_d1[2];
-      abStack_d1[(int)uVar7 + 2] = abStack_d1[(int)uVar7 + 1];
-      if (1 < uVar7) {
+      abStack_d1[(int)uVar5 + 2] = abStack_d1[(int)uVar5 + 1];
+      if (1 < uVar5) {
         do {
-          iVar8 = (int)uVar13;
-          bVar1 = abStack_d1[iVar8 + 1];
-          bVar2 = abStack_d1[iVar8 + 2];
-          fVar15 = Glass_TestCamAgainstBorderSegmentPlane(param_1,param_2,(uint)bVar1,(uint)bVar2);
-          if (dVar14 < (double)fVar15) {
+          iVar7 = (int)uVar11;
+          bVar1 = abStack_d1[iVar7 + 1];
+          bVar2 = abStack_d1[iVar7 + 2];
+          fVar13 = Glass_TestCamAgainstBorderSegmentPlane(param_1,param_2,(uint)bVar1,(uint)bVar2);
+          if (dVar12 < (double)fVar13) {
             Glass_DrawBorderSegment
-                      (param_1,(uint)abStack_d1[iVar8],(uint)bVar1,(uint)bVar2,
-                       (uint)abStack_d1[iVar8 + 3],bVar12);
-            bVar12 = true;
+                      (param_1,(uint)abStack_d1[iVar7],(uint)bVar1,(uint)bVar2,
+                       (uint)abStack_d1[iVar7 + 3],bVar10);
+            bVar10 = true;
           }
           else {
-            if (0x20 < (uVar7 - uVar13 & 0xffffffff)) {
+            if (0x20 < (uVar5 - uVar11 & 0xffffffff)) {
               MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_math.h"
                               ,0x475,0,"count doesn\'t index 33\n\t%i not in [0, %i)");
             }
-            bVar12 = false;
-            uVar11 = *(uint *)(&g_bitShift + (int)((uVar7 - uVar13 & 0xffffffff) << 2)) | uVar11;
+            bVar10 = false;
+            uVar9 = *(uint *)(&g_bitShift + (int)((uVar5 - uVar11 & 0xffffffff) << 2)) | uVar9;
           }
-          uVar13 = uVar13 + 1;
-        } while ((uVar13 & 0xffffffff) < uVar7);
+          uVar11 = uVar11 + 1;
+        } while ((uVar11 & 0xffffffff) < uVar5);
       }
       lVar4 = -1;
-      for (; uVar11 != 0; uVar11 = uVar11 & ~uVar3) {
-        uVar13 = LZCOUNT(uVar11);
-        if (0x20 < uVar13) {
+      for (; uVar9 != 0; uVar9 = uVar9 & ~uVar3) {
+        uVar11 = LZCOUNT(uVar9);
+        if (0x20 < uVar11) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_math.h",
                           0x475,0,"count doesn\'t index 33\n\t%i not in [0, %i)");
         }
-        iVar8 = (int)(uVar7 - uVar13);
-        uVar3 = *(uint *)(&g_bitShift + (int)(uVar13 << 2));
+        iVar7 = (int)(uVar5 - uVar11);
+        uVar3 = *(uint *)(&g_bitShift + (int)(uVar11 << 2));
         Glass_DrawBorderSegment
-                  (param_1,(uint)abStack_d1[iVar8 + 3],(uint)abStack_d1[iVar8 + 2],
-                   (uint)abStack_d1[iVar8 + 1],(uint)abStack_d1[iVar8],(int)lVar4 + -1 == iVar8);
-        lVar4 = uVar7 - uVar13;
+                  (param_1,(uint)abStack_d1[iVar7 + 3],(uint)abStack_d1[iVar7 + 2],
+                   (uint)abStack_d1[iVar7 + 1],(uint)abStack_d1[iVar7],(int)lVar4 + -1 == iVar7);
+        lVar4 = uVar5 - uVar11;
       }
-      uVar9 = (ulonglong)*puVar10 * 4 + uVar9;
+      param_3 = pFVar8 + (param_3->hole).uniqueVertCount;
     }
-    uVar7 = uVar9;
-  } while ((uVar9 & 0xffffffff) != (ulonglong)(uint)((int)((uVar6 & 0xffffffff) << 2) + (int)uVar5))
-  ;
-  __restgprlr();
+  } while (param_3 != pFVar6);
   return;
 }
 
 
 // 8242C648  Glass_MakeFaceGeometry  (EffectsCore/fx_glass_draw.cpp:851)
+
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 
 void Glass_MakeFaceGeometry
                (FxGlassDrawState *param_1,float *param_2,uint param_3,FxGlassGeometryData *param_4,
@@ -1243,98 +1161,98 @@ void Glass_MakeFaceGeometry
   double dVar1;
   FxGlassDef *pFVar2;
   float (*pafVar3) [2];
-  FxGlassDrawState *pFVar4;
-  ulonglong uVar5;
-  longlong lVar6;
-  uint uVar7;
+  ulonglong uVar4;
+  longlong lVar5;
+  uint uVar6;
+  float *pfVar7;
   float *pfVar8;
-  float *pfVar9;
-  longlong lVar10;
+  longlong lVar9;
+  double dVar10;
   double dVar11;
   double dVar12;
-  double dVar13;
+  undefined1 auVar13 [16];
   undefined1 auVar14 [16];
   undefined1 auVar15 [16];
-  undefined1 auVar16 [16];
   FxGlassFaceDef local_60 [3];
   
-  uVar5 = ZEXT48(&stack0x00000000);
-  lVar6 = __savegprlr_25(param_1);
-  pFVar4 = (FxGlassDrawState *)lVar6;
-  pFVar2 = pFVar4->def;
-  lVar10 = lVar6 + 0x824;
-  dVar13 = (double)pFVar2->halfThickness;
-  pfVar9 = pFVar4->axis[2] + 1;
-  pfVar8 = pFVar4->axis[2] + 2;
-  dVar12 = (double)(pFVar4->axis[2][2] * (pFVar4->origin[2] - param_2[2]) +
-                   pFVar4->axis[2][0] * (pFVar4->origin[0] - *param_2) +
-                   pFVar4->axis[2][1] * (pFVar4->origin[1] - param_2[1]));
-  if (dVar13 < ABS(dVar12)) {
-    pafVar3 = pFVar4->texVecs;
-    dVar11 = 1.0;
+  lVar5 = (longlong)(int)param_1;
+  uVar4 = ZEXT48(&stack0x00000000);
+  pFVar2 = param_1->def;
+  lVar9 = lVar5 + 0x824;
+  dVar12 = (double)pFVar2->halfThickness;
+  pfVar8 = param_1->axis[2] + 1;
+  pfVar7 = param_1->axis[2] + 2;
+  dVar11 = (double)(param_1->axis[2][2] * (param_1->origin[2] - param_2[2]) +
+                   param_1->axis[2][0] * (param_1->origin[0] - *param_2) +
+                   param_1->axis[2][1] * (param_1->origin[1] - param_2[1]));
+  if (dVar12 < ABS(dVar11)) {
+    pafVar3 = param_1->texVecs;
+    dVar10 = 1.0;
     if (pafVar3[1][1] * (*pafVar3)[0] - pafVar3[1][0] * (*pafVar3)[1] < 0.0) {
-      dVar11 = -1.0;
+      dVar10 = -1.0;
     }
-    if (dVar12 <= 0.0) {
-      uVar7 = Glass_MakeFaceIndices(pFVar4,param_3,param_4,param_5,1,2);
-      auVar15 = vectorSplatImmediateSignedWord(0xff);
-      dVar11 = -dVar11;
-      pFVar4->totalIndexCount = uVar7 + pFVar4->totalIndexCount;
-      auVar16 = loadVectorLeftIndexed(lVar10);
-      auVar15 = vectorShiftLeftWord128(auVar15,auVar15);
-      auVar14 = loadVectorRightIndexed(lVar6 + 0x834);
-      auVar15 = (auVar16 | auVar14) & (undefined1  [16])g_keepXYZ.field0_0x0 ^ auVar15;
-      auVar16 = vectorMultiplyAddFloatingPoint
-                          (auVar15,(undefined1  [16])g_packMul101010.field0_0x0,
+    if (dVar11 <= 0.0) {
+      uVar6 = Glass_MakeFaceIndices(param_1,param_3,param_4,param_5,1,2);
+      auVar14 = vectorSplatImmediateSignedWord(0xff);
+      dVar10 = -dVar10;
+      param_1->totalIndexCount = uVar6 + param_1->totalIndexCount;
+      auVar15 = loadVectorLeftIndexed(lVar9);
+      auVar14 = vectorShiftLeftWord128(auVar14,auVar14);
+      auVar13 = loadVectorRightIndexed(lVar5 + 0x834);
+      auVar14 = (auVar15 | auVar13) & (undefined1  [16])g_keepXYZ.field0_0x0 ^ auVar14;
+      auVar15 = vectorMultiplyAddFloatingPoint
+                          (auVar14,(undefined1  [16])g_packMul101010.field0_0x0,
                            (undefined1  [16])g_packAdd.field0_0x0);
-      auVar15 = vectorPackD3Dtype(auVar15,auVar16,9,3);
-      auVar15 = vectorSplatWord(auVar15,0);
-      storeVectorElementWordIndexed(auVar15,uVar5 - 0x80);
-      dVar1 = (double)*(float *)lVar10 * dVar13;
-      dVar12 = (double)*pfVar9 * dVar13;
-      dVar13 = (double)*pfVar8 * dVar13;
+      auVar14 = vectorPackD3Dtype(auVar14,auVar15,9,3);
+      auVar14 = vectorSplatWord(auVar14,0);
+      storeVectorElementWordIndexed(auVar14,uVar4 - 0x80);
+      dVar1 = (double)*(float *)lVar9 * dVar12;
+      dVar11 = (double)*pfVar8 * dVar12;
+      dVar12 = (double)*pfVar7 * dVar12;
     }
     else {
-      uVar7 = Glass_MakeFaceIndices(pFVar4,param_3,param_4,param_5,2,1);
-      dVar13 = -dVar13;
-      pFVar4->totalIndexCount = uVar7 + pFVar4->totalIndexCount;
-      auVar16 = loadVectorLeftIndexed(lVar10);
-      auVar15 = loadVectorRightIndexed(lVar6 + 0x834);
-      auVar15 = (auVar16 | auVar15) & (undefined1  [16])g_keepXYZ.field0_0x0;
-      auVar16 = vectorMultiplyAddFloatingPoint
-                          (auVar15,(undefined1  [16])g_packMul101010.field0_0x0,
+      uVar6 = Glass_MakeFaceIndices(param_1,param_3,param_4,param_5,2,1);
+      dVar12 = -dVar12;
+      param_1->totalIndexCount = uVar6 + param_1->totalIndexCount;
+      auVar15 = loadVectorLeftIndexed(lVar9);
+      auVar14 = loadVectorRightIndexed(lVar5 + 0x834);
+      auVar14 = (auVar15 | auVar14) & (undefined1  [16])g_keepXYZ.field0_0x0;
+      auVar15 = vectorMultiplyAddFloatingPoint
+                          (auVar14,(undefined1  [16])g_packMul101010.field0_0x0,
                            (undefined1  [16])g_packAdd.field0_0x0);
-      auVar15 = vectorPackD3Dtype(auVar15,auVar16,9,3);
-      auVar15 = vectorSplatWord(auVar15,0);
-      storeVectorElementWordIndexed(auVar15,uVar5 - 0x80);
-      dVar12 = (double)*pfVar9 * dVar13;
-      dVar1 = (double)*(float *)lVar10 * dVar13;
-      dVar13 = (double)*pfVar8 * dVar13;
+      auVar14 = vectorPackD3Dtype(auVar14,auVar15,9,3);
+      auVar14 = vectorSplatWord(auVar14,0);
+      storeVectorElementWordIndexed(auVar14,uVar4 - 0x80);
+      dVar11 = (double)*pfVar8 * dVar12;
+      dVar1 = (double)*(float *)lVar9 * dVar12;
+      dVar12 = (double)*pfVar7 * dVar12;
     }
-    local_60[0].binormalSign = (float)dVar11;
-    local_60[0].offset[1] = (float)dVar12;
+    local_60[0].binormalSign = (float)dVar10;
+    local_60[0].offset[1] = (float)dVar11;
     local_60[0].offset[0] = (float)dVar1;
-    local_60[0].offset[2] = (float)dVar13;
+    local_60[0].offset[2] = (float)dVar12;
     local_60[0].color = pFVar2->color;
-    auVar16 = loadVectorRightIndexed(uVar5 - 0x68);
-    auVar15 = loadVectorLeftIndexed(uVar5 - 0x78);
-    auVar15 = (auVar15 | auVar16) & (undefined1  [16])g_keepXYZ.field0_0x0;
-    auVar16 = vectorMultiplyAddFloatingPoint
-                        (auVar15,(undefined1  [16])g_packMul101010.field0_0x0,
+    auVar15 = loadVectorRightIndexed(uVar4 - 0x68);
+    auVar14 = loadVectorLeftIndexed(uVar4 - 0x78);
+    auVar14 = (auVar14 | auVar15) & (undefined1  [16])g_keepXYZ.field0_0x0;
+    auVar15 = vectorMultiplyAddFloatingPoint
+                        (auVar14,(undefined1  [16])g_packMul101010.field0_0x0,
                          (undefined1  [16])g_packAdd.field0_0x0);
-    auVar15 = vectorPackD3Dtype(auVar15,auVar16,9,3);
-    auVar15 = vectorSplatWord(auVar15,0);
-    storeVectorElementWordIndexed(auVar15,uVar5 - 0x80);
-    Glass_MakeFaceVerts(pFVar4,local_60,param_3);
-    pFVar4->baseVertex = pFVar4->baseVertex + (short)param_3;
-    pFVar4->totalVertCount = pFVar4->totalVertCount + param_3;
+    auVar14 = vectorPackD3Dtype(auVar14,auVar15,9,3);
+    auVar14 = vectorSplatWord(auVar14,0);
+    storeVectorElementWordIndexed(auVar14,uVar4 - 0x80);
+    Glass_MakeFaceVerts(param_1,local_60,param_3);
+    param_1->baseVertex = param_1->baseVertex + (short)param_3;
+    param_1->totalVertCount = param_1->totalVertCount + param_3;
   }
-  __restgprlr_25();
   return;
 }
 
 
 // 8242D080  Glass_MakePieceGeometry  (EffectsCore/fx_glass_draw.cpp:901)
+
+/* WARNING: Function: __savegprlr_20 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_20 replaced with injection: xenon_save_restore */
 
 void Glass_MakePieceGeometry
                (FxGlassDrawState *param_1,FxGlassPiecePlace *param_2,FxGlassPieceState *param_3,
@@ -1352,97 +1270,93 @@ void Glass_MakePieceGeometry
   ushort uVar9;
   uint uVar10;
   uint uVar11;
-  FxGlassDrawState *pFVar12;
-  longlong lVar13;
-  ulonglong uVar14;
-  undefined1 auVar15 [16];
-  undefined1 auVar16 [16];
+  undefined1 auVar12 [16];
+  undefined1 auVar13 [16];
   PackedUnitVec local_90;
   float local_80;
   float local_7c;
   undefined4 local_78;
   float local_74;
   
-  uVar14 = (ulonglong)(int)param_7;
-  lVar13 = __savegprlr_20(param_1);
   fVar4 = (param_2->_s_0).frame.origin[0];
   fVar5 = (param_2->_s_0).frame.origin[1];
   fVar6 = param_3->texCoordOrigin[0];
   fVar7 = param_3->texCoordOrigin[1];
-  pFVar12 = (FxGlassDrawState *)lVar13;
-  pFVar12->totalVertCount = 0;
-  pFVar12->totalIndexCount = 0;
+  param_1->totalVertCount = 0;
+  param_1->totalIndexCount = 0;
   fVar8 = (param_2->_s_0).frame.origin[2];
-  pFVar12->origin[0] = fVar4;
-  pFVar12->origin[1] = fVar5;
+  param_1->origin[0] = fVar4;
+  param_1->origin[1] = fVar5;
   bVar1 = param_3->vertCount;
-  pFVar12->origin[2] = fVar8;
+  param_1->origin[2] = fVar8;
   bVar2 = param_3->holeDataCount;
-  pFVar12->texCoordOrigin[0] = fVar6;
+  param_1->texCoordOrigin[0] = fVar6;
   bVar3 = param_3->crackDataCount;
-  pFVar12->texCoordOrigin[1] = fVar7;
-  UnitQuatToAxis((float *)&param_2->nextFree,pFVar12->axis);
+  param_1->texCoordOrigin[1] = fVar7;
+  UnitQuatToAxis((float *)&param_2->nextFree,param_1->axis);
   uVar9 = param_3->flags;
-  pFVar12->axis[0][0] = pFVar12->axis[0][0] * 0.03125;
-  pFVar12->axis[0][1] = pFVar12->axis[0][1] * 0.03125;
-  pFVar12->axis[0][2] = pFVar12->axis[0][2] * 0.03125;
-  pFVar12->axis[1][0] = pFVar12->axis[1][0] * 0.03125;
-  pFVar12->axis[1][1] = pFVar12->axis[1][1] * 0.03125;
-  pFVar12->axis[1][2] = pFVar12->axis[1][2] * 0.03125;
-  pFVar12->def = param_4;
+  param_1->axis[0][0] = param_1->axis[0][0] * 0.03125;
+  param_1->axis[0][1] = param_1->axis[0][1] * 0.03125;
+  param_1->axis[0][2] = param_1->axis[0][2] * 0.03125;
+  param_1->axis[1][0] = param_1->axis[1][0] * 0.03125;
+  param_1->axis[1][1] = param_1->axis[1][1] * 0.03125;
+  param_1->axis[1][2] = param_1->axis[1][2] * 0.03125;
+  param_1->def = param_4;
   if ((uVar9 & 1) == 0) {
-    pFVar12->texVecs = param_4->texVecs;
+    param_1->texVecs = param_4->texVecs;
   }
   else {
-    local_80 = 0.03125 / pFVar12->shatteredScale;
-    pFVar12->texVecs = (float (*) [2])&local_80;
+    local_80 = 0.03125 / param_1->shatteredScale;
+    param_1->texVecs = (float (*) [2])&local_80;
     local_7c = 0.0;
     local_78 = 0;
     local_74 = local_80;
   }
-  pFVar12->vertCount = 0;
-  Glass_TransformVertexArray(pFVar12,&param_5->vert,(uint)bVar1);
+  param_1->vertCount = 0;
+  Glass_TransformVertexArray(param_1,&param_5->vert,(uint)bVar1);
   if (bVar2 != 0) {
-    Glass_TransformHoleVertices(pFVar12,param_5 + bVar1,(uint)bVar2);
+    Glass_TransformHoleVertices(param_1,param_5 + bVar1,(uint)bVar2);
   }
-  uVar10 = pFVar12->vertCount;
-  if ((uVar14 & 2) != 0) {
+  uVar10 = param_1->vertCount;
+  if ((param_7 & 2) != 0) {
     fVar4 = param_4->halfThickness;
-    pFVar12->thicknessOffset[0] = pFVar12->axis[2][0] * fVar4;
-    pFVar12->thicknessOffset[1] = pFVar12->axis[2][1] * fVar4;
-    pFVar12->thicknessOffset[2] = pFVar12->axis[2][2] * fVar4;
-    auVar16 = loadVectorLeftIndexed(lVar13 + 0x824);
-    auVar15 = loadVectorRightIndexed(lVar13 + 0x834);
-    auVar15 = (auVar16 | auVar15) & (undefined1  [16])g_keepXYZ.field0_0x0;
-    auVar16 = vectorMultiplyAddFloatingPoint
-                        (auVar15,(undefined1  [16])g_packMul101010.field0_0x0,
+    param_1->thicknessOffset[0] = param_1->axis[2][0] * fVar4;
+    param_1->thicknessOffset[1] = param_1->axis[2][1] * fVar4;
+    param_1->thicknessOffset[2] = param_1->axis[2][2] * fVar4;
+    auVar13 = loadVectorLeftIndexed((longlong)(int)param_1 + 0x824);
+    auVar12 = loadVectorRightIndexed((longlong)(int)param_1 + 0x834);
+    auVar12 = (auVar13 | auVar12) & (undefined1  [16])g_keepXYZ.field0_0x0;
+    auVar13 = vectorMultiplyAddFloatingPoint
+                        (auVar12,(undefined1  [16])g_packMul101010.field0_0x0,
                          (undefined1  [16])g_packAdd.field0_0x0);
-    auVar15 = vectorPackD3Dtype(auVar15,auVar16,9,3);
-    auVar15 = vectorSplatWord(auVar15,0);
-    storeVectorElementWordIndexed(auVar15,ZEXT48(&stack0x00000000) - 0x90);
+    auVar12 = vectorPackD3Dtype(auVar12,auVar13,9,3);
+    auVar12 = vectorSplatWord(auVar12,0);
+    storeVectorElementWordIndexed(auVar12,ZEXT48(&stack0x00000000) - 0x90);
     uVar11 = param_3->supportMask;
-    pFVar12->packedTangent = local_90;
-    Glass_MakeBorderGeometry(pFVar12,param_6,uVar11,0,(uint)bVar1);
+    param_1->packedTangent = local_90;
+    Glass_MakeBorderGeometry(param_1,param_6,uVar11,0,(uint)bVar1);
     if (bVar2 != 0) {
-      Glass_MakeAllHoleBorderGeometry(pFVar12,param_6,param_5 + bVar1,(uint)bVar2,(uint)bVar1);
+      Glass_MakeAllHoleBorderGeometry(param_1,param_6,param_5 + bVar1,(uint)bVar2,(uint)bVar1);
     }
     if (bVar3 != 0) {
       Glass_MakeAllCrackBorderGeometry
-                (pFVar12,param_6,param_5 + (uint)bVar2 + (uint)bVar1,(uint)bVar3);
+                (param_1,param_6,param_5 + (uint)bVar2 + (uint)bVar1,(uint)bVar3);
     }
   }
-  if ((uVar14 & 1) != 0) {
+  if ((param_7 & 1) != 0) {
     Glass_MakeFaceGeometry
-              (pFVar12,param_6,uVar10,param_5 + (uint)bVar3 + (uint)bVar2 + (uint)bVar1,
+              (param_1,param_6,uVar10,param_5 + (uint)bVar3 + (uint)bVar2 + (uint)bVar1,
                (uint)param_3->fanDataCount);
   }
-  pFVar12->texVecs = (float (*) [2])0x0;
-  __restgprlr_20();
+  param_1->texVecs = (float (*) [2])0x0;
   return;
 }
 
 
 // 8242D2F8  Glass_DrawPiece  (EffectsCore/fx_glass_draw.cpp:971)
+
+/* WARNING: Function: __savegprlr_19 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_19 replaced with injection: xenon_save_restore */
 
 void Glass_DrawPiece(uint param_1,FxGlassPiecePlace *param_2,FxGlassPieceState *param_3,
                     FxGlassDef *param_4,FxGlassGeometryData *param_5,ushort param_6,
@@ -1456,28 +1370,24 @@ void Glass_DrawPiece(uint param_1,FxGlassPiecePlace *param_2,FxGlassPieceState *
   float fVar4;
   float fVar5;
   int iVar6;
-  uint uVar7;
-  bool bVar8;
-  ulonglong uVar9;
-  Material *pMVar10;
-  double dVar11;
-  double dVar12;
+  bool bVar7;
+  Material *pMVar8;
+  double dVar9;
+  double dVar10;
   uint in_stack_00000054;
   int in_stack_0000005c;
   uint local_900;
   uint local_8fc [3];
   FxGlassDrawState FStack_8f0;
   
-  uVar9 = (ulonglong)(short)param_6;
-  uVar7 = __savegprlr_19(param_1);
   FStack_8f0.shatteredScale = param_8[1].frame.quat[0];
   Glass_GetBufferReserveCounts(param_3,param_5,in_stack_00000054,&local_900,local_8fc);
   if (local_8fc[0] == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_glass_draw.cpp"
                     ,0x3dd,0,"%s");
   }
-  bVar8 = R_ReserveGlassMeshVerts(local_900,&FStack_8f0.baseVertex);
-  if ((bVar8) && (bVar8 = R_ReserveGlassMeshIndices(local_8fc[0],&FStack_8f0.dstIndices), bVar8)) {
+  bVar7 = R_ReserveGlassMeshVerts(local_900,&FStack_8f0.baseVertex);
+  if ((bVar7) && (bVar7 = R_ReserveGlassMeshIndices(local_8fc[0],&FStack_8f0.dstIndices), bVar7)) {
     Glass_MakePieceGeometry
               (&FStack_8f0,param_2,param_3,param_4,param_5,(float *)param_8,in_stack_00000054);
     if (FStack_8f0.totalIndexCount != 0) {
@@ -1489,12 +1399,16 @@ void Glass_DrawPiece(uint param_1,FxGlassPiecePlace *param_2,FxGlassPieceState *
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_glass_draw.cpp"
                         ,999,0,"drawState.totalVertCount <= reserveVertCount\n\t%i, %i");
       }
-      if ((uVar9 & 0xffff) != 0) {
-        pMVar10 = param_4->material;
-        if ((pMVar10 == (Material *)0x0) || (param_4->materialShattered == (Material *)0x0))
-        goto LAB_8242d588;
+      if (param_6 != 0) {
+        pMVar8 = param_4->material;
+        if (pMVar8 == (Material *)0x0) {
+          return;
+        }
+        if (param_4->materialShattered == (Material *)0x0) {
+          return;
+        }
         if (((param_3->flags & 1) != 0) && (*(char *)((param_8->frame).quat + 3) == '\0')) {
-          pMVar10 = param_4->materialShattered;
+          pMVar8 = param_4->materialShattered;
         }
         if (*(char *)(param_8->texCoordOrigin + 1) == '\0') {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_glass_draw.cpp"
@@ -1504,7 +1418,7 @@ void Glass_DrawPiece(uint param_1,FxGlassPiecePlace *param_2,FxGlassPieceState *
         fVar3 = (param_8->frame).origin[0] - (param_2->_s_0).frame.origin[0];
         fVar4 = (param_8->frame).origin[2] - (param_2->_s_0).frame.origin[2];
         fVar5 = (param_8->frame).origin[1] - (param_2->_s_0).frame.origin[1];
-        dVar12 = (double)((SQRT(fVar5 * fVar5 + fVar4 * fVar4 + fVar3 * fVar3) -
+        dVar10 = (double)((SQRT(fVar5 * fVar5 + fVar4 * fVar4 + fVar3 * fVar3) -
                           (param_2->_s_0).radius) * param_8->radius);
         if (0xff < bVar1) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_glass_draw.cpp"
@@ -1513,13 +1427,13 @@ void Glass_DrawPiece(uint param_1,FxGlassPiecePlace *param_2,FxGlassPieceState *
         }
         iVar6 = (uint)bVar1 * 4;
         uVar2 = param_3->flags;
-        dVar11 = (double)*(float *)(iVar6 + in_stack_0000005c);
-        if ((float)(dVar12 - dVar11) < 0.0) {
-          dVar11 = dVar12;
+        dVar9 = (double)*(float *)(iVar6 + in_stack_0000005c);
+        if ((float)(dVar10 - dVar9) < 0.0) {
+          dVar9 = dVar10;
         }
-        *(float *)(iVar6 + in_stack_0000005c) = (float)dVar11;
-        R_AddGlassSurf(pMVar10,param_7->primaryLightIndex,param_7->reflectionProbeIndex,
-                       (ushort)uVar9,FStack_8f0.dstIndices,FStack_8f0.totalIndexCount,uVar7,
+        *(float *)(iVar6 + in_stack_0000005c) = (float)dVar9;
+        R_AddGlassSurf(pMVar8,param_7->primaryLightIndex,param_7->reflectionProbeIndex,param_6,
+                       FStack_8f0.dstIndices,FStack_8f0.totalIndexCount,param_1,
                        (bool)(~(byte)(uVar2 >> 1) & 1));
       }
     }
@@ -1530,111 +1444,105 @@ void Glass_DrawPiece(uint param_1,FxGlassPiecePlace *param_2,FxGlassPieceState *
       R_ReturnGlassMeshIndices(local_8fc[0] - (FStack_8f0.totalIndexCount + 1 & 0xfffffffe));
     }
   }
-LAB_8242d588:
-  __restgprlr_19();
   return;
 }
 
 
 // 8242D598  Glass_GenerateVerts  (EffectsCore/fx_glass_draw.cpp:1031)
 
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
 /* WARNING: Enum "XAssetType": Some values do not have unique names */
 
 void Glass_GenerateVerts(FxGlassSystem *param_1,FxGlassVisInfo *param_2,
                         FxGenerateGlassVertsCmd *param_3)
 
 {
-  byte bVar1;
-  ushort uVar2;
-  ushort *puVar3;
-  int iVar4;
-  FxGlassPieceState *pFVar5;
-  longlong lVar6;
-  int iVar7;
-  ulonglong uVar8;
+  ushort uVar1;
+  ushort *puVar2;
+  uint uVar3;
+  FxGlassPieceState *pFVar4;
+  longlong lVar5;
+  int iVar6;
+  ulonglong uVar7;
+  longlong lVar8;
   longlong lVar9;
   longlong lVar10;
   longlong lVar11;
-  longlong lVar12;
-  longlong lVar13;
-  ulonglong uVar14;
-  uint uVar15;
+  ulonglong uVar12;
+  FxGlassPieceVisRef *pFVar13;
+  uint uVar14;
   FxGenerateGlassVertsCmd *in_stack_ffffff08;
   uint in_stack_ffffff0c;
   float *in_stack_ffffff10;
   
-  lVar11 = (longlong)(int)param_2;
-  __savegprlr();
   Profile_Begin(0x1bc);
-  iVar4 = (int)lVar11;
-  if (*(int *)(iVar4 + 0x4800) != 0) {
-    iVar7 = DB_AssetCount(ASSET_TYPE_FXWORLD);
-    if (iVar7 != 1) {
+  if ((param_2->field2_0x4800)._s_0.visCount != 0) {
+    iVar6 = DB_AssetCount(ASSET_TYPE_FXWORLD);
+    if (iVar6 != 1) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_glass_draw.cpp"
                       ,0x424,0,"%s");
     }
     g_stream.glassDistUpdated = 1;
     R_BeginGlassMeshVerts();
-    puVar3 = param_1->lightingHandles;
-    dataCacheBlockTouch(ZEXT48(puVar3));
-    uVar15 = 0;
-    if (0x300 < *(uint *)(iVar4 + 0x4800)) {
-      uVar15 = *(uint *)(iVar4 + 0x4800) - 0x300;
+    puVar2 = param_1->lightingHandles;
+    dataCacheBlockTouch(ZEXT48(puVar2));
+    uVar14 = 0;
+    uVar3 = (param_2->field2_0x4800)._s_0.visCount;
+    if (0x300 < uVar3) {
+      uVar14 = uVar3 - 0x300;
       R_WarnOncePerFrame(R_WARN_GFX_GLASS_SURF_LIMIT);
     }
-    lVar11 = ((ulonglong)uVar15 & 0x1fffffff) * 8 + lVar11;
-    lVar10 = (ulonglong)*(ushort *)lVar11 * 0x20;
-    lVar9 = lVar10 + ZEXT48(param_1->piecePlaces);
+    pFVar13 = param_2->visList + uVar14;
+    lVar9 = (ulonglong)pFVar13->pieceIndex * 0x20;
+    lVar8 = lVar9 + ZEXT48(param_1->piecePlaces);
+    dataCacheBlockTouch(lVar8);
+    lVar9 = lVar9 + ZEXT48(param_1->pieceStates);
     dataCacheBlockTouch(lVar9);
-    lVar10 = lVar10 + ZEXT48(param_1->pieceStates);
-    dataCacheBlockTouch(lVar10);
-    uVar14 = (ulonglong)*(ushort *)lVar11;
+    uVar12 = (ulonglong)pFVar13->pieceIndex;
     do {
-      bVar1 = *(byte *)((int)lVar11 + 2);
-      if (bVar1 == 0) {
-        iVar7 = 0x44d;
+      if (pFVar13->drawFlags == 0) {
+        iVar6 = 0x44d;
 LAB_8242d6c4:
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_glass_draw.cpp"
-                        ,iVar7,0,"%s\n\t(drawFlags) = %i");
+                        ,iVar6,0,"%s\n\t(drawFlags) = %i");
       }
-      else if (3 < bVar1) {
-        iVar7 = 0x44e;
+      else if (3 < pFVar13->drawFlags) {
+        iVar6 = 0x44e;
         goto LAB_8242d6c4;
       }
-      uVar15 = uVar15 + 1;
-      lVar11 = lVar11 + 8;
-      lVar13 = lVar10;
-      lVar12 = lVar9;
-      uVar8 = uVar14;
-      if (uVar15 != *(uint *)(iVar4 + 0x4800)) {
-        uVar8 = (ulonglong)*(ushort *)lVar11;
-        lVar6 = uVar8 * 0x20;
-        lVar12 = lVar6 + ZEXT48(param_1->piecePlaces);
-        dataCacheBlockTouch(lVar12);
-        lVar13 = lVar6 + ZEXT48(param_1->pieceStates);
-        dataCacheBlockTouch(lVar6 + ZEXT48(param_1->pieceStates));
+      uVar14 = uVar14 + 1;
+      pFVar13 = pFVar13 + 1;
+      lVar11 = lVar9;
+      lVar10 = lVar8;
+      uVar7 = uVar12;
+      if (uVar14 != (param_2->field2_0x4800)._s_0.visCount) {
+        uVar7 = (ulonglong)pFVar13->pieceIndex;
+        lVar5 = uVar7 * 0x20;
+        lVar10 = lVar5 + ZEXT48(param_1->piecePlaces);
+        dataCacheBlockTouch(lVar10);
+        lVar11 = lVar5 + ZEXT48(param_1->pieceStates);
+        dataCacheBlockTouch(lVar5 + ZEXT48(param_1->pieceStates));
       }
-      pFVar5 = (FxGlassPieceState *)lVar10;
-      lVar10 = (ulonglong)pFVar5->defIndex * 0x2c;
-      dataCacheBlockTouch(lVar10 + ZEXT48(param_1->defs));
-      dataCacheBlockTouch((ulonglong)pFVar5->geoDataStart * 4 + ZEXT48(param_1->geoData));
-      uVar2 = pFVar5->initIndex;
-      dataCacheBlockTouch((ulonglong)uVar2 * 0x34 + ZEXT48(param_1->initPieceStates));
-      Glass_DrawPiece((uint)uVar14,(FxGlassPiecePlace *)lVar9,pFVar5,
-                      (FxGlassDef *)((int)(param_1->defs->texVecs + -1) + 4 + (int)lVar10),
-                      param_1->geoData + pFVar5->geoDataStart,puVar3[uVar2],
-                      (GfxLightingInfo *)((uVar2 + 0x2000) * 2 + iVar4),
-                      (FxGlassInitPieceState *)param_3,in_stack_ffffff08,in_stack_ffffff0c,
-                      in_stack_ffffff10);
-      lVar10 = lVar13;
-      lVar9 = lVar12;
-      uVar14 = uVar8;
-    } while (uVar15 != *(uint *)(iVar4 + 0x4800));
+      pFVar4 = (FxGlassPieceState *)lVar9;
+      lVar9 = (ulonglong)pFVar4->defIndex * 0x2c;
+      dataCacheBlockTouch(lVar9 + ZEXT48(param_1->defs));
+      dataCacheBlockTouch((ulonglong)pFVar4->geoDataStart * 4 + ZEXT48(param_1->geoData));
+      uVar1 = pFVar4->initIndex;
+      dataCacheBlockTouch((ulonglong)uVar1 * 0x34 + ZEXT48(param_1->initPieceStates));
+      Glass_DrawPiece((uint)uVar12,(FxGlassPiecePlace *)lVar8,pFVar4,
+                      (FxGlassDef *)((int)(param_1->defs->texVecs + -1) + 4 + (int)lVar9),
+                      param_1->geoData + pFVar4->geoDataStart,puVar2[uVar1],
+                      param_2->lightingInfo + uVar1,(FxGlassInitPieceState *)param_3,
+                      in_stack_ffffff08,in_stack_ffffff0c,in_stack_ffffff10);
+      lVar9 = lVar11;
+      lVar8 = lVar10;
+      uVar12 = uVar7;
+    } while (uVar14 != (param_2->field2_0x4800)._s_0.visCount);
     R_EndGlassMeshVerts();
     (param_3->visInfo->field2_0x4800).packedSortedCount = 0;
   }
   Profile_EndInternal((double *)0x0);
-  __restgprlr();
   return;
 }
 
@@ -1649,6 +1557,9 @@ bool Glass_CompareVisRefs(FxGlassPieceVisRef *param_1,FxGlassPieceVisRef *param_
 
 
 // 8242DCD0  FX_GlassUpdatePieceLightingCmd  (EffectsCore/fx_glass_draw.cpp:1151)
+
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
 
 void FX_GlassUpdatePieceLightingCmd(FxGlassPieceLightingCmd *param_1)
 
@@ -1675,7 +1586,6 @@ void FX_GlassUpdatePieceLightingCmd(FxGlassPieceLightingCmd *param_1)
   ulonglong uVar20;
   double dVar21;
   
-  __savegprlr();
   puVar10 = fxWorld.glassSys.isInUse;
   uVar9 = fxWorld.glassSys.pieceWordCount;
   if (fxWorld.glassSys.pieceWordCount != 0) {
@@ -1684,7 +1594,9 @@ void FX_GlassUpdatePieceLightingCmd(FxGlassPieceLightingCmd *param_1)
     uVar18 = *fxWorld.glassSys.isInUse;
     puVar16 = fxWorld.glassSys.isInUse;
     while (uVar18 == 0) {
-      if (fxWorld.glassSys.pieceWordCount <= uVar19) goto LAB_8242dfe4;
+      if (fxWorld.glassSys.pieceWordCount <= uVar19) {
+        return;
+      }
       puVar16 = puVar16 + 1;
       uVar19 = uVar19 + 1;
       uVar18 = *puVar16;
@@ -1772,13 +1684,14 @@ LAB_8242de7c:
                  Glass_CompareVisRefs);
     }
   }
-LAB_8242dfe4:
-  __restgprlr();
   return;
 }
 
 
 // 8242C940  FX_GlassTris_AddGlassPieceVerts  (EffectsCore/fx_glass_draw.cpp:1247)
+
+/* WARNING: Function: __savegprlr_18 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_18 replaced with injection: xenon_save_restore */
 
 bool FX_GlassTris_AddGlassPieceVerts
                (FxGlassSystem *param_1,FxGlassDef *param_2,FxGlassPieceState *param_3,
@@ -1786,101 +1699,95 @@ bool FX_GlassTris_AddGlassPieceVerts
                float param_7,float (*param_8) [3],uint *param_9,uint param_10)
 
 {
-  int iVar1;
+  short *psVar1;
   float fVar2;
   float fVar3;
-  int iVar4;
-  undefined1 uVar5;
-  ulonglong uVar6;
-  ulonglong uVar7;
-  ulonglong uVar8;
-  FxGlassGeometryData *pFVar10;
-  ulonglong uVar9;
-  ulonglong uVar11;
-  ulonglong uVar12;
-  longlong lVar13;
-  longlong lVar14;
+  ushort *puVar4;
+  uint uVar5;
+  FxGlassGeometryData *pFVar6;
+  uint uVar7;
+  float *pfVar8;
+  float *pfVar9;
+  uint uVar10;
+  short *psVar11;
+  ushort *puVar12;
   
-  uVar6 = (ulonglong)(int)param_8;
-  lVar14 = (longlong)(int)param_3;
-  iVar4 = __savegprlr_18((double)param_7,param_1);
-  if ((uVar6 & 0xffffffff) <
-      ((ulonglong)*(byte *)(iVar4 + 0x16) + (ulonglong)(uint)(*param_6)[0] & 0xffffffff)) {
-LAB_8242c97c:
-    uVar5 = __restgprlr_18(0);
-    return (bool)uVar5;
-  }
-  uVar11 = 0;
-  uVar9 = 0;
-  if ((ulonglong)*(byte *)(iVar4 + 0x16) != 0) {
-    lVar13 = lVar14 + -2;
-    do {
-      if ((uVar6 & 0xffffffff) <= (ulonglong)(uint)(*param_6)[0]) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_glass_draw.cpp"
-                        ,0x4ea,0,"*vertIndex doesn\'t index maxVerts\n\t%i not in [0, %i)");
+  uVar5 = (uint)*(byte *)((int)&param_1->initPieceCount + 2);
+  if ((float (*) [3])(uVar5 + (int)(*param_6)[0]) <= param_8) {
+    uVar10 = 0;
+    uVar7 = 0;
+    if (uVar5 != 0) {
+      psVar11 = (short *)((int)&param_3[-1].areaX2 + 2);
+      do {
+        if (param_8 <= (float (*) [3])(*param_6)[0]) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_glass_draw.cpp"
+                          ,0x4ea,0,"*vertIndex doesn\'t index maxVerts\n\t%i not in [0, %i)");
+        }
+        psVar1 = psVar11 + 1;
+        psVar11 = psVar11 + 2;
+        fVar2 = (float)(longlong)(int)*psVar1;
+        fVar3 = (float)(longlong)(int)*psVar11;
+        uVar10 = uVar10 + 1;
+        pFVar6 = param_5 + (int)(*param_6)[0] * 3;
+        *pFVar6 = (FxGlassGeometryData)
+                  ((param_4->_s_0).frame.quat[3] * fVar3 + (param_4->_s_0).frame.quat[0] * fVar2 +
+                  param_2->texVecs[1][1]);
+        pFVar6[1] = (FxGlassGeometryData)
+                    ((param_4->_s_0).frame.origin[0] * fVar3 + fVar2 * (param_4->_s_0).frame.quat[1]
+                    + param_2->color);
+        pFVar6[2] = (FxGlassGeometryData)
+                    ((param_4->_s_0).frame.quat[2] * fVar2 + fVar3 * (param_4->_s_0).frame.origin[1]
+                    + (float)param_2->material);
+        (*param_6)[0] = (float)((int)(*param_6)[0] + 1);
+        uVar7 = (uint)*(byte *)((int)&param_1->initPieceCount + 2);
+      } while (uVar10 < uVar7);
+    }
+    pfVar8 = param_3->texCoordOrigin + uVar7;
+    pfVar9 = pfVar8 + (byte)param_1->initPieceCount;
+    while( true ) {
+      if (pfVar8 == pfVar9) {
+        return true;
       }
-      iVar1 = (int)lVar13;
-      lVar13 = lVar13 + 4;
-      fVar2 = (float)(longlong)(int)*(short *)(iVar1 + 2);
-      fVar3 = (float)(longlong)(int)*(short *)lVar13;
-      uVar11 = uVar11 + 1;
-      pFVar10 = param_5 + (int)(*param_6)[0] * 3;
-      *pFVar10 = (FxGlassGeometryData)
-                 ((param_4->_s_0).frame.quat[3] * fVar3 + (param_4->_s_0).frame.quat[0] * fVar2 +
-                 param_2->texVecs[1][1]);
-      pFVar10[1] = (FxGlassGeometryData)
-                   ((param_4->_s_0).frame.origin[0] * fVar3 + fVar2 * (param_4->_s_0).frame.quat[1]
-                   + param_2->color);
-      pFVar10[2] = (FxGlassGeometryData)
-                   ((param_4->_s_0).frame.quat[2] * fVar2 + fVar3 * (param_4->_s_0).frame.origin[1]
-                   + (float)param_2->material);
-      (*param_6)[0] = (float)((int)(*param_6)[0] + 1);
-      uVar9 = (ulonglong)*(byte *)(iVar4 + 0x16);
-    } while ((uVar11 & 0xffffffff) < uVar9);
-  }
-  uVar9 = uVar9 * 4 + lVar14;
-  uVar11 = (ulonglong)*(byte *)(iVar4 + 0x17) * 4 + uVar9;
-  if ((uVar9 & 0xffffffff) != (uVar11 & 0xffffffff)) {
-    do {
-      uVar7 = (ulonglong)*(ushort *)uVar9;
-      if ((uVar6 & 0xffffffff) < (uVar7 + (uint)(*param_6)[0] & 0xffffffff)) goto LAB_8242c97c;
-      uVar12 = 0;
-      uVar8 = 0;
-      if (uVar7 != 0) {
-        lVar14 = uVar9 + 2;
+      if (param_8 < (float (*) [3])((uint)*(ushort *)pfVar8 + (int)(*param_6)[0])) break;
+      uVar7 = 0;
+      uVar5 = 0;
+      if (*(ushort *)pfVar8 != 0) {
+        puVar12 = (ushort *)((int)pfVar8 + 2);
         do {
-          if ((uVar6 & 0xffffffff) <= (ulonglong)(uint)(*param_6)[0]) {
+          if (param_8 <= (float (*) [3])(*param_6)[0]) {
             MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_glass_draw.cpp"
                             ,0x504,0,"*vertIndex doesn\'t index maxVerts\n\t%i not in [0, %i)");
           }
-          iVar4 = (int)lVar14;
-          lVar14 = lVar14 + 4;
-          fVar3 = (float)(longlong)*(short *)(iVar4 + 2);
-          fVar2 = (float)(longlong)(int)*(short *)lVar14;
-          uVar8 = (ulonglong)*(ushort *)uVar9;
-          uVar12 = uVar12 + 1;
-          pFVar10 = param_5 + (int)(*param_6)[0] * 3;
-          *pFVar10 = (FxGlassGeometryData)
-                     ((param_4->_s_0).frame.quat[3] * fVar2 + (param_4->_s_0).frame.quat[0] * fVar3
-                     + param_2->texVecs[1][1]);
-          pFVar10[1] = (FxGlassGeometryData)
-                       ((param_4->_s_0).frame.origin[0] * fVar2 +
-                        fVar3 * (param_4->_s_0).frame.quat[1] + param_2->color);
-          pFVar10[2] = (FxGlassGeometryData)
-                       ((param_4->_s_0).frame.quat[2] * fVar3 +
-                        fVar2 * (param_4->_s_0).frame.origin[1] + (float)param_2->material);
+          puVar4 = puVar12 + 1;
+          puVar12 = puVar12 + 2;
+          fVar2 = (float)(longlong)(short)*puVar4;
+          fVar3 = (float)(longlong)(int)(short)*puVar12;
+          uVar5 = (uint)*(ushort *)pfVar8;
+          uVar7 = uVar7 + 1;
+          pFVar6 = param_5 + (int)(*param_6)[0] * 3;
+          *pFVar6 = (FxGlassGeometryData)
+                    ((param_4->_s_0).frame.quat[3] * fVar3 + (param_4->_s_0).frame.quat[0] * fVar2 +
+                    param_2->texVecs[1][1]);
+          pFVar6[1] = (FxGlassGeometryData)
+                      ((param_4->_s_0).frame.origin[0] * fVar3 +
+                       fVar2 * (param_4->_s_0).frame.quat[1] + param_2->color);
+          pFVar6[2] = (FxGlassGeometryData)
+                      ((param_4->_s_0).frame.quat[2] * fVar2 +
+                       fVar3 * (param_4->_s_0).frame.origin[1] + (float)param_2->material);
           (*param_6)[0] = (float)((int)(*param_6)[0] + 1);
-        } while ((uVar12 & 0xffffffff) < uVar8);
+        } while (uVar7 < uVar5);
       }
-      uVar9 = uVar8 * 4 + uVar9 + 4;
-    } while ((uVar9 & 0xffffffff) != (uVar11 & 0xffffffff));
+      pfVar8 = pfVar8 + uVar5 + 1;
+    }
   }
-  uVar5 = __restgprlr_18(1);
-  return (bool)uVar5;
+  return false;
 }
 
 
 // 8242CBD8  FX_GlassTris_AddGlassPieceTris  (EffectsCore/fx_glass_draw.cpp:1302)
+
+/* WARNING: Function: __savegprlr_20 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_20 replaced with injection: xenon_save_restore */
 
 bool FX_GlassTris_AddGlassPieceTris
                (FxGlassSystem *param_1,FxGlassDef *param_2,FxGlassPieceState *param_3,
@@ -1891,94 +1798,91 @@ bool FX_GlassTris_AddGlassPieceTris
   byte bVar1;
   byte bVar2;
   byte bVar3;
-  short sVar4;
-  int iVar5;
-  undefined1 uVar6;
-  short sVar7;
-  ulonglong uVar8;
-  longlong lVar9;
-  short *psVar10;
-  ulonglong uVar11;
+  byte *pbVar4;
+  short sVar5;
+  short sVar6;
+  int iVar7;
+  uint uVar8;
+  short *psVar9;
+  byte *pbVar10;
+  longlong lVar11;
   longlong lVar12;
-  longlong lVar13;
-  ulonglong uVar14;
-  byte *pbVar15;
-  uint uVar17;
-  longlong lVar16;
-  double extraout_f1;
+  byte *pbVar13;
+  uint uVar14;
+  int iVar15;
   
-  uVar8 = (ulonglong)(int)param_8;
-  sVar7 = (short)param_4;
-  lVar16 = (longlong)(int)param_2;
-  iVar5 = __savegprlr_20((double)param_7,param_1,lVar16,param_3);
-  if (extraout_f1 <= 0.0) {
-    lVar13 = 2;
-    lVar12 = 1;
+  if (param_7 <= 0.0) {
+    lVar12 = 2;
+    lVar11 = 1;
   }
   else {
-    lVar13 = 1;
-    lVar12 = 2;
+    lVar12 = 1;
+    lVar11 = 2;
   }
-  if ((ulonglong)*(byte *)(iVar5 + 0x19) == 0) {
-    if ((uVar8 & 0xffffffff) <
-        (((ulonglong)*(byte *)(iVar5 + 0x16) + (ulonglong)(uint)(*param_6)[0]) - 2 & 0xffffffff)) {
-LAB_8242cc40:
-      uVar6 = __restgprlr_20(0);
-      return (bool)uVar6;
+  uVar8 = (uint)*(byte *)((int)&param_1->cellCount + 1);
+  sVar6 = (short)param_4;
+  if (uVar8 == 0) {
+    uVar8 = (uint)*(byte *)((int)&param_1->initPieceCount + 2);
+    if (param_8 < (uVar8 + (int)(*param_6)[0]) - 2) {
+      return false;
     }
-    uVar17 = 2;
-    if (2 < (ulonglong)*(byte *)(iVar5 + 0x16)) {
+    uVar14 = 2;
+    if (2 < uVar8) {
       do {
-        if ((uVar8 & 0xffffffff) <= (ulonglong)(uint)(*param_6)[0]) {
+        if (param_8 <= (uint)(*param_6)[0]) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_glass_draw.cpp"
                           ,0x533,0,"*triIndex doesn\'t index maxTris\n\t%i not in [0, %i)");
         }
-        sVar4 = (short)uVar17;
-        uVar17 = uVar17 + 1;
-        psVar10 = (short *)((int)(*param_6)[0] * 6 + (int)param_5);
-        *psVar10 = sVar7;
-        *(short *)((int)(lVar13 << 1) + (int)psVar10) = sVar7 + -1 + sVar4;
-        *(short *)((int)(lVar12 << 1) + (int)psVar10) = sVar4 + sVar7;
+        sVar5 = (short)uVar14;
+        uVar14 = uVar14 + 1;
+        psVar9 = (short *)((int)(*param_6)[0] * 6 + (int)param_5);
+        *psVar9 = sVar6;
+        *(short *)((int)(lVar12 << 1) + (int)psVar9) = sVar6 + -1 + sVar5;
+        *(short *)((int)(lVar11 << 1) + (int)psVar9) = sVar5 + sVar6;
         (*param_6)[0] = (float)((int)(*param_6)[0] + 1);
-      } while (uVar17 < *(byte *)(iVar5 + 0x16));
-      uVar6 = __restgprlr_20(1);
-      return (bool)uVar6;
+      } while (uVar14 < *(byte *)((int)&param_1->initPieceCount + 2));
+      return true;
     }
   }
   else {
-    uVar14 = ((ulonglong)*(byte *)(iVar5 + 0x18) + (ulonglong)*(byte *)(iVar5 + 0x17) +
-             (ulonglong)*(byte *)(iVar5 + 0x16)) * 4 + lVar16;
-    uVar11 = (ulonglong)*(byte *)(iVar5 + 0x19) * 4 + uVar14;
+    pbVar13 = (byte *)((int)(param_2->texVecs + -1) + 4 +
+                      ((uint)*(byte *)&param_1->cellCount + (uint)(byte)param_1->initPieceCount +
+                      (uint)*(byte *)((int)&param_1->initPieceCount + 2)) * 4);
+    pbVar10 = pbVar13 + uVar8 * 4;
     do {
-      pbVar15 = (byte *)uVar14;
-      bVar1 = *pbVar15;
-      lVar16 = 2;
+      bVar1 = *pbVar13;
+      iVar7 = 2;
       do {
-        if ((uVar8 & 0xffffffff) < (ulonglong)((int)(*param_6)[0] + 1)) goto LAB_8242cc40;
-        if ((uVar8 & 0xffffffff) <= (ulonglong)(uint)(*param_6)[0]) {
+        iVar15 = iVar7;
+        if (param_8 < (int)(*param_6)[0] + 1U) {
+          return false;
+        }
+        if (param_8 <= (uint)(*param_6)[0]) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_glass_draw.cpp"
                           ,0x54c,0,"*triIndex doesn\'t index maxTris\n\t%i not in [0, %i)");
         }
-        bVar3 = pbVar15[(int)lVar16];
-        bVar2 = pbVar15[(int)lVar16 + -1];
-        psVar10 = (short *)((int)(*param_6)[0] * 6 + (int)param_5);
-        lVar16 = lVar16 + 1;
-        lVar9 = lVar16 + uVar14;
-        *psVar10 = (ushort)bVar1 + sVar7;
-        *(ushort *)((int)(lVar13 << 1) + (int)psVar10) = (ushort)bVar2 + sVar7;
-        *(ushort *)((int)(lVar12 << 1) + (int)psVar10) = (ushort)bVar3 + sVar7;
-        bVar2 = pbVar15[(int)lVar16];
+        bVar3 = pbVar13[iVar15];
+        bVar2 = pbVar13[iVar15 + -1];
+        psVar9 = (short *)((int)(*param_6)[0] * 6 + (int)param_5);
+        *psVar9 = (ushort)bVar1 + sVar6;
+        *(ushort *)((int)(lVar12 << 1) + (int)psVar9) = (ushort)bVar2 + sVar6;
+        *(ushort *)((int)(lVar11 << 1) + (int)psVar9) = (ushort)bVar3 + sVar6;
+        bVar2 = pbVar13[iVar15 + 1];
         (*param_6)[0] = (float)((int)(*param_6)[0] + 1);
+        iVar7 = iVar15 + 1;
       } while (bVar2 != 0xff);
-      uVar14 = lVar9 + 1;
-    } while ((*(char *)((int)lVar9 + 1) != -1) && ((uVar14 & 0xffffffff) != (uVar11 & 0xffffffff)));
+      pbVar4 = pbVar13 + iVar15 + 2;
+      pbVar13 = pbVar13 + iVar15 + 2;
+    } while ((*pbVar4 != 0xff) && (pbVar13 != pbVar10));
   }
-  uVar6 = __restgprlr_20(1);
-  return (bool)uVar6;
+  return true;
 }
 
 
 // 8242D7B0  FX_GlassTris_AddGlassPiece  (EffectsCore/fx_glass_draw.cpp:1376)
+
+/* WARNING: Function: __savegprlr_21 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_21 replaced with injection: xenon_save_restore */
 
 bool FX_GlassTris_AddGlassPiece
                (FxGlassSystem *param_1,uint param_2,float *param_3,GlassTri *param_4,uint *param_5,
@@ -1987,19 +1891,16 @@ bool FX_GlassTris_AddGlassPiece
 {
   float fVar1;
   ushort uVar2;
-  float fVar3;
+  uint uVar3;
   FxGlassPiecePlace *pFVar4;
   FxGlassSystem *pFVar5;
-  int iVar6;
-  FxGlassDef *pFVar7;
-  bool bVar8;
-  undefined1 uVar9;
-  ulonglong uVar10;
-  FxGlassDef *pFVar11;
-  GlassTri *pGVar12;
-  longlong lVar13;
-  FxGlassDef *pFVar14;
-  double dVar15;
+  FxGlassDef *pFVar6;
+  bool bVar7;
+  FxGlassGeometryData *pFVar8;
+  GlassTri *pGVar9;
+  longlong lVar10;
+  FxGlassGeometryData *pFVar11;
+  double dVar12;
   float (*in_stack_00000054) [3];
   float *in_stack_0000005c;
   uint *in_stack_ffffff28;
@@ -2007,23 +1908,20 @@ bool FX_GlassTris_AddGlassPiece
   FxGlassPiecePlace local_90;
   float local_70;
   
-  uVar10 = (ulonglong)(int)param_2;
-  iVar6 = __savegprlr_21(param_1);
-  lVar13 = (uVar10 & 0x7ffffff) * 0x20;
-  fVar3 = (*(float (*) [3])param_5)[0];
-  pFVar4 = (FxGlassPiecePlace *)(*(float (*) [3])param_8)[0];
-  pFVar5 = (FxGlassSystem *)(*(uint *)(iVar6 + 0x38) + (int)lVar13);
-  dataCacheBlockTouch((ulonglong)*(uint *)(iVar6 + 0x38) + lVar13);
-  pFVar7 = (FxGlassDef *)(*(uint *)(iVar6 + 0x34) + (int)lVar13);
-  dataCacheBlockTouch((ulonglong)*(uint *)(iVar6 + 0x34) + lVar13);
-  dataCacheBlockTouch((ulonglong)*(byte *)&pFVar5->pieceWordCount * 0x2c +
-                      (ulonglong)*(uint *)(iVar6 + 0x30));
+  lVar10 = ((ulonglong)param_2 & 0x7ffffff) * 0x20;
+  uVar3 = *param_5;
+  pFVar4 = (FxGlassPiecePlace *)*param_8;
+  pFVar5 = (FxGlassSystem *)((int)param_1->pieceStates->texCoordOrigin + (int)lVar10);
+  dataCacheBlockTouch(ZEXT48(param_1->pieceStates) + lVar10);
+  pFVar6 = (FxGlassDef *)((int)param_1->piecePlaces + (int)lVar10);
+  dataCacheBlockTouch(ZEXT48(param_1->piecePlaces) + lVar10);
+  dataCacheBlockTouch((ulonglong)*(byte *)&pFVar5->pieceWordCount * 0x2c + ZEXT48(param_1->defs));
   uVar2 = (ushort)pFVar5->pieceLimit;
-  lVar13 = (ulonglong)uVar2 * 4;
-  pFVar14 = (FxGlassDef *)((uint)uVar2 * 4 + *(uint *)(iVar6 + 0x40));
-  dataCacheBlockTouch(lVar13 + (ulonglong)*(uint *)(iVar6 + 0x40));
-  UnitQuatToAxis((float *)pFVar7,(float (*) [3])&local_90);
-  pGVar12 = (GlassTri *)lVar13;
+  lVar10 = (ulonglong)uVar2 * 4;
+  pFVar11 = param_1->geoData + uVar2;
+  dataCacheBlockTouch(lVar10 + ZEXT48(param_1->geoData));
+  UnitQuatToAxis((float *)pFVar6,(float (*) [3])&local_90);
+  pGVar9 = (GlassTri *)lVar10;
   *in_stack_0000005c = local_90._s_0.frame.origin[2];
   in_stack_0000005c[1] = local_90._s_0.radius;
   in_stack_0000005c[2] = local_70;
@@ -2040,144 +1938,137 @@ bool FX_GlassTris_AddGlassPiece
   else {
     fVar1 = 1.0;
   }
-  dVar15 = (double)fVar1;
-  pFVar11 = pFVar14;
-  bVar8 = FX_GlassTris_AddGlassPieceVerts
-                    (pFVar5,pFVar7,(FxGlassPieceState *)pFVar14,&local_90,
+  dVar12 = (double)fVar1;
+  pFVar8 = pFVar11;
+  bVar7 = FX_GlassTris_AddGlassPieceVerts
+                    (pFVar5,pFVar6,(FxGlassPieceState *)&pFVar11->vert,&local_90,
                      (FxGlassGeometryData *)param_7,(float (*) [3])param_8,
-                     local_90._s_0.frame.origin[1],in_stack_00000054,(uint *)pGVar12,
+                     local_90._s_0.frame.origin[1],in_stack_00000054,(uint *)pGVar9,
                      (uint)in_stack_ffffff28);
-  if ((bVar8) &&
-     (bVar8 = FX_GlassTris_AddGlassPieceTris
-                        (pFVar5,pFVar14,(FxGlassPieceState *)pFVar11,pFVar4,
-                         (FxGlassGeometryData *)param_4,(float (*) [3])param_5,(float)dVar15,param_6
-                         ,pGVar12,in_stack_ffffff28,in_stack_ffffff2c), bVar8)) {
-    uVar9 = __restgprlr_21(1);
-    return (bool)uVar9;
+  if ((bVar7) &&
+     (bVar7 = FX_GlassTris_AddGlassPieceTris
+                        (pFVar5,(FxGlassDef *)&pFVar11->vert,(FxGlassPieceState *)&pFVar8->vert,
+                         pFVar4,(FxGlassGeometryData *)param_4,(float (*) [3])param_5,(float)dVar12,
+                         param_6,pGVar9,in_stack_ffffff28,in_stack_ffffff2c), bVar7)) {
+    return true;
   }
-  (*(float (*) [3])param_8)[0] = (float)pFVar4;
-  (*(float (*) [3])param_5)[0] = fVar3;
-  uVar9 = __restgprlr_21(0);
-  return (bool)uVar9;
+  *param_8 = (uint)pFVar4;
+  *param_5 = uVar3;
+  return false;
 }
 
 
 // 8242D958  FX_GlassTrisInPiece  (EffectsCore/fx_glass_draw.cpp:1433)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
+
 bool FX_GlassTrisInPiece(uint param_1,float *param_2,GlassTri *param_3,uint param_4,
                         float (*param_5) [3],uint param_6,uint *param_7,float *param_8)
 
 {
-  uint uVar1;
-  bool bVar2;
-  undefined1 uVar3;
-  ulonglong uVar4;
+  bool bVar1;
   uint in_stack_ffffff58;
   float *in_stack_ffffff5c;
   uint local_50 [20];
   
-  uVar4 = (ulonglong)(int)param_6;
-  uVar1 = __savegprlr_24(param_1);
-  if (0xffff < (uVar4 & 0xffffffff)) {
+  if (0xffff < param_6) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_glass_draw.cpp"
                     ,0x59d,0,"%s");
   }
   dataCacheBlockTouch(0xffffffff8333cac4);
   local_50[0] = 0;
   *param_7 = 0;
-  bVar2 = FX_GlassTris_AddGlassPiece
-                    (&fxWorld.glassSys,uVar1,param_2,param_3,param_7,param_4,param_5,local_50,
+  bVar1 = FX_GlassTris_AddGlassPiece
+                    (&fxWorld.glassSys,param_1,param_2,param_3,param_7,param_4,param_5,local_50,
                      in_stack_ffffff58,in_stack_ffffff5c);
-  uVar3 = __restgprlr_24(bVar2);
-  return (bool)uVar3;
+  return bVar1;
 }
 
 
 // 8242DA00  FX_GlassPiecesInSphere  (EffectsCore/fx_glass_draw.cpp:1450)
 
+/* WARNING: Function: __savegprlr_15 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_15 replaced with injection: xenon_save_restore */
+
 bool FX_GlassPiecesInSphere(Sphere *param_1,ushort *param_2,uint param_3,uint *param_4)
 
 {
   float *pfVar1;
-  uint uVar2;
+  float fVar2;
   uint uVar3;
-  float *pfVar4;
-  undefined1 uVar5;
-  ulonglong uVar6;
-  longlong lVar7;
-  int iVar8;
-  ulonglong uVar9;
-  ulonglong uVar10;
-  uint uVar11;
-  float *pfVar12;
-  ulonglong uVar13;
+  uint uVar4;
+  longlong lVar5;
+  int iVar6;
+  ulonglong uVar7;
+  ulonglong uVar8;
+  uint uVar9;
+  float *pfVar10;
+  ulonglong uVar11;
+  double dVar12;
+  double dVar13;
   double dVar14;
-  double dVar15;
-  double dVar16;
   float local_c0;
   float local_bc;
   float local_b8;
   
-  uVar6 = (ulonglong)(int)param_3;
-  pfVar4 = (float *)__savegprlr_15(param_1);
   dataCacheBlockTouch(0xffffffff8333cac4);
-  iVar8 = 0;
+  iVar6 = 0;
   *param_4 = 0;
-  uVar3 = fxWorld.glassSys.pieceWordCount;
-  uVar9 = 0;
+  uVar4 = fxWorld.glassSys.pieceWordCount;
+  uVar7 = 0;
   if (fxWorld.glassSys.pieceWordCount != 0) {
     do {
-      uVar11 = *(uint *)(iVar8 + (int)fxWorld.glassSys.isInUse);
-      if (uVar11 != 0) {
-        uVar10 = (uVar9 & 0x7ffffff) << 5;
+      uVar9 = *(uint *)(iVar6 + (int)fxWorld.glassSys.isInUse);
+      if (uVar9 != 0) {
+        uVar8 = (uVar7 & 0x7ffffff) << 5;
         do {
-          uVar13 = LZCOUNT(uVar11);
-          if (0x20 < uVar13) {
+          uVar11 = LZCOUNT(uVar9);
+          if (0x20 < uVar11) {
             MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_math.h",
                             0x475,0,"count doesn\'t index 33\n\t%i not in [0, %i)");
           }
-          lVar7 = (uVar10 & 0x7ffffff | uVar13) * 0x20;
-          uVar11 = uVar11 & ~*(uint *)(&g_bitShift + (int)(uVar13 << 2));
-          dataCacheBlockTouch(lVar7 + ZEXT48(fxWorld.glassSys.pieceStates));
-          if ((*(ushort *)((fxWorld.glassSys.pieceStates)->pad + (int)lVar7 + 9) & 2) == 0) {
-            pfVar1 = (float *)((int)lVar7 + (int)fxWorld.glassSys.piecePlaces);
-            dataCacheBlockTouch(lVar7 + ZEXT48(fxWorld.glassSys.piecePlaces));
-            dVar16 = (double)(pfVar4[1] - pfVar1[5]);
-            dVar15 = (double)(pfVar4[2] - pfVar1[6]);
-            dVar14 = (double)(*pfVar4 - pfVar1[4]);
-            if ((float)(dVar14 * dVar14 +
-                       (double)(float)(dVar15 * dVar15 + (double)(float)(dVar16 * dVar16))) <=
-                (pfVar1[7] + pfVar4[3]) * (pfVar1[7] + pfVar4[3])) {
-              lVar7 = (uVar10 & 0x3fffffff | uVar13) * 4;
-              pfVar12 = (float *)((int)lVar7 + (int)fxWorld.glassSys.halfThickness);
-              dataCacheBlockTouch(lVar7 + ZEXT48(fxWorld.glassSys.halfThickness));
+          lVar5 = (uVar8 & 0x7ffffff | uVar11) * 0x20;
+          uVar9 = uVar9 & ~*(uint *)(&g_bitShift + (int)(uVar11 << 2));
+          dataCacheBlockTouch(lVar5 + ZEXT48(fxWorld.glassSys.pieceStates));
+          if ((*(ushort *)((fxWorld.glassSys.pieceStates)->pad + (int)lVar5 + 9) & 2) == 0) {
+            pfVar1 = (float *)((int)lVar5 + (int)fxWorld.glassSys.piecePlaces);
+            dataCacheBlockTouch(lVar5 + ZEXT48(fxWorld.glassSys.piecePlaces));
+            dVar14 = (double)(param_1->origin[1] - pfVar1[5]);
+            dVar13 = (double)(param_1->origin[2] - pfVar1[6]);
+            dVar12 = (double)(param_1->origin[0] - pfVar1[4]);
+            fVar2 = pfVar1[7] + param_1->radius;
+            if ((float)(dVar12 * dVar12 +
+                       (double)(float)(dVar13 * dVar13 + (double)(float)(dVar14 * dVar14))) <=
+                fVar2 * fVar2) {
+              lVar5 = (uVar8 & 0x3fffffff | uVar11) * 4;
+              pfVar10 = (float *)((int)lVar5 + (int)fxWorld.glassSys.halfThickness);
+              dataCacheBlockTouch(lVar5 + ZEXT48(fxWorld.glassSys.halfThickness));
               UnitQuatToNormal(pfVar1,&local_c0);
-              if (ABS((float)((double)local_b8 * dVar15 +
-                             (double)(float)((double)local_bc * dVar16 +
-                                            (double)(float)((double)local_c0 * dVar14)))) <=
-                  pfVar4[3] + *pfVar12) {
-                if ((uVar6 & 0xffffffff) <= (ulonglong)*param_4) {
-                  uVar5 = __restgprlr_15(0);
-                  return (bool)uVar5;
+              if (ABS((float)((double)local_b8 * dVar13 +
+                             (double)(float)((double)local_bc * dVar14 +
+                                            (double)(float)((double)local_c0 * dVar12)))) <=
+                  param_1->radius + *pfVar10) {
+                if (param_3 <= *param_4) {
+                  return false;
                 }
-                uVar2 = (uint)(uVar10 | uVar13);
-                if (uVar2 != (uVar2 & 0xffff)) {
+                uVar3 = (uint)(uVar8 | uVar11);
+                if (uVar3 != (uVar3 & 0xffff)) {
                   MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\../universal/assertive.h"
                                   ,0x1ce,0,"i == static_cast< Type >( i )\n\t%i, %i");
                 }
-                param_2[*param_4] = (ushort)(uVar10 | uVar13);
+                param_2[*param_4] = (ushort)(uVar8 | uVar11);
                 *param_4 = *param_4 + 1;
               }
             }
           }
-        } while (uVar11 != 0);
+        } while (uVar9 != 0);
       }
-      uVar9 = uVar9 + 1;
-      iVar8 = iVar8 + 4;
-    } while ((uVar9 & 0xffffffff) < (ulonglong)uVar3);
+      uVar7 = uVar7 + 1;
+      iVar6 = iVar6 + 4;
+    } while ((uVar7 & 0xffffffff) < (ulonglong)uVar4);
   }
-  uVar5 = __restgprlr_15(1);
-  return (bool)uVar5;
+  return true;
 }
 
 
@@ -2215,6 +2106,8 @@ void FX_GenerateGlassVertsCmd(FxGenerateGlassVertsCmd *param_1)
 
 // 8242DFF0  _Push_heap<FxGlassPieceVisRef_*,int,FxGlassPieceVisRef,bool_(__cdecl*)(FxGlassPieceVisRef_&,FxGlassPieceVisRef_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2455)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void std::
@@ -2224,42 +2117,39 @@ void std::
 
 {
   int iVar1;
-  int iVar2;
+  ulonglong uVar2;
   ulonglong uVar3;
   FxGlassPieceVisRef *pFVar4;
   ulonglong uVar5;
-  int iVar6;
-  bool bVar7;
-  ulonglong uVar8;
-  uint uVar9;
+  bool bVar6;
+  uint uVar7;
   
-  uVar8 = (ulonglong)param_2;
-  iVar6 = __savegprlr_25(param_1);
-  iVar1 = (int)uVar8;
-  uVar9 = iVar1 - 1;
-  uVar5 = (longlong)((int)uVar9 >> 1) + (ulonglong)((int)uVar9 < 0 && (uVar9 & 1) != 0);
-  while (uVar3 = uVar5, param_3 < iVar1) {
-    iVar1 = (int)uVar3;
-    pFVar4 = (FxGlassPieceVisRef *)(iVar1 * 8 + iVar6);
-    bVar7 = (*param_5)(pFVar4,param_4);
-    if (!bVar7) break;
-    iVar2 = (int)((uVar8 & 0xffffffff) << 3);
-    uVar9 = iVar1 - 1;
-    *(undefined4 *)(iVar2 + iVar6) = *(undefined4 *)pFVar4;
-    *(float *)(iVar2 + iVar6 + 4) = pFVar4->distSq;
-    uVar5 = (longlong)((int)uVar9 >> 1) + (ulonglong)((int)uVar9 < 0 && (uVar9 & 1) != 0);
-    uVar8 = uVar3;
+  uVar7 = param_2 - 1;
+  uVar5 = (longlong)((int)uVar7 >> 1) + (ulonglong)((int)uVar7 < 0 && (uVar7 & 1) != 0);
+  uVar3 = (longlong)param_2;
+  while (uVar2 = uVar5, param_3 < param_2) {
+    param_2 = (int)uVar2;
+    pFVar4 = param_1 + param_2;
+    bVar6 = (*param_5)(pFVar4,param_4);
+    if (!bVar6) break;
+    iVar1 = (int)((uVar3 & 0xffffffff) << 3);
+    uVar7 = param_2 - 1;
+    *(undefined4 *)((int)&param_1->pieceIndex + iVar1) = *(undefined4 *)pFVar4;
+    *(float *)((int)&param_1->distSq + iVar1) = pFVar4->distSq;
+    uVar5 = (longlong)((int)uVar7 >> 1) + (ulonglong)((int)uVar7 < 0 && (uVar7 & 1) != 0);
+    uVar3 = uVar2;
   }
-  iVar1 = (int)((uVar8 & 0x1fffffff) << 3);
-  *(undefined4 *)(iVar1 + iVar6) = *(undefined4 *)param_4;
-  *(float *)(iVar1 + iVar6 + 4) = param_4->distSq;
-  __restgprlr_25();
+  iVar1 = (int)((uVar3 & 0xffffffff) << 3);
+  *(undefined4 *)((int)&param_1->pieceIndex + iVar1) = *(undefined4 *)param_4;
+  *(float *)((int)&param_1->distSq + iVar1) = param_4->distSq;
   return;
 }
 
 
 // 8242E098  _Adjust_heap<FxGlassPieceVisRef_*,int,FxGlassPieceVisRef,bool_(__cdecl*)(FxGlassPieceVisRef_&,FxGlassPieceVisRef_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2565)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void std::
@@ -2270,68 +2160,62 @@ void std::
 {
   int iVar1;
   FxGlassPieceVisRef *pFVar2;
-  int iVar3;
-  bool bVar4;
+  bool bVar3;
+  uint uVar4;
   ulonglong uVar5;
   ulonglong uVar6;
-  uint uVar7;
-  ulonglong uVar8;
-  ulonglong uVar9;
-  int iVar11;
-  ulonglong uVar10;
+  int iVar8;
+  ulonglong uVar7;
   
-  uVar6 = (ulonglong)param_3;
-  uVar5 = (ulonglong)param_2;
-  iVar3 = __savegprlr_25(param_1);
-  uVar9 = (uVar5 + 1 & 0x7fffffff) << 1;
-  iVar11 = (int)uVar9;
-  uVar8 = uVar5;
-  while (uVar10 = uVar9, iVar11 < (int)uVar6) {
-    pFVar2 = (FxGlassPieceVisRef *)((int)uVar10 * 8 + iVar3);
-    bVar4 = (*param_5)(pFVar2,pFVar2 + -1);
-    if (bVar4) {
-      uVar10 = uVar10 - 1;
+  uVar6 = ((longlong)param_2 + 1U & 0x7fffffff) << 1;
+  iVar8 = (int)uVar6;
+  uVar5 = (longlong)param_2;
+  while (uVar7 = uVar6, iVar8 < param_3) {
+    bVar3 = (*param_5)(param_1 + (int)uVar7,param_1 + (int)uVar7 + -1);
+    if (bVar3) {
+      uVar7 = uVar7 - 1;
     }
-    iVar11 = (int)((uVar10 & 0xffffffff) << 3);
-    iVar1 = (int)((uVar8 & 0xffffffff) << 3);
-    uVar9 = (uVar10 + 1 & 0x7fffffff) << 1;
-    *(undefined4 *)(iVar1 + iVar3) = *(undefined4 *)(iVar11 + iVar3);
-    *(undefined4 *)(iVar1 + iVar3 + 4) = *(undefined4 *)(iVar11 + iVar3 + 4);
-    iVar11 = (int)uVar9;
-    uVar8 = uVar10;
+    iVar8 = (int)((uVar7 & 0xffffffff) << 3);
+    iVar1 = (int)((uVar5 & 0xffffffff) << 3);
+    uVar6 = (uVar7 + 1 & 0x7fffffff) << 1;
+    *(undefined4 *)((int)&param_1->pieceIndex + iVar1) =
+         *(undefined4 *)((int)&param_1->pieceIndex + iVar8);
+    *(undefined4 *)((int)&param_1->distSq + iVar1) = *(undefined4 *)((int)&param_1->distSq + iVar8);
+    iVar8 = (int)uVar6;
+    uVar5 = uVar7;
   }
-  if (iVar11 == (int)uVar6) {
-    iVar1 = (int)((uVar8 & 0xffffffff) << 3);
-    iVar11 = (int)((uVar6 & 0xffffffff) << 3) + iVar3;
-    uVar8 = uVar6 - 1;
-    *(undefined4 *)(iVar1 + iVar3) = *(undefined4 *)(iVar11 + -8);
-    *(undefined4 *)(iVar1 + iVar3 + 4) = *(undefined4 *)(iVar11 + -4);
+  if (iVar8 == param_3) {
+    iVar8 = (int)((uVar5 & 0xffffffff) << 3);
+    uVar5 = (longlong)param_3 - 1;
+    *(undefined4 *)((int)&param_1->pieceIndex + iVar8) = *(undefined4 *)(param_1 + param_3 + -1);
+    *(float *)((int)&param_1->distSq + iVar8) = param_1[param_3 + -1].distSq;
   }
-  iVar11 = (int)uVar8;
-  uVar7 = iVar11 - 1;
-  uVar9 = (longlong)((int)uVar7 >> 1) + (ulonglong)((int)uVar7 < 0 && (uVar7 & 1) != 0);
-  while (uVar6 = uVar9, (int)uVar5 < iVar11) {
-    iVar11 = (int)uVar6;
-    pFVar2 = (FxGlassPieceVisRef *)(iVar11 * 8 + iVar3);
-    bVar4 = (*param_5)(pFVar2,param_4);
-    if (!bVar4) break;
-    iVar1 = (int)((uVar8 & 0xffffffff) << 3);
-    uVar7 = iVar11 - 1;
-    *(undefined4 *)(iVar1 + iVar3) = *(undefined4 *)pFVar2;
-    *(float *)(iVar1 + iVar3 + 4) = pFVar2->distSq;
-    uVar9 = (longlong)((int)uVar7 >> 1) + (ulonglong)((int)uVar7 < 0 && (uVar7 & 1) != 0);
-    uVar8 = uVar6;
+  iVar8 = (int)uVar5;
+  uVar4 = iVar8 - 1;
+  uVar6 = (longlong)((int)uVar4 >> 1) + (ulonglong)((int)uVar4 < 0 && (uVar4 & 1) != 0);
+  while (uVar7 = uVar6, param_2 < iVar8) {
+    iVar8 = (int)uVar7;
+    pFVar2 = param_1 + iVar8;
+    bVar3 = (*param_5)(pFVar2,param_4);
+    if (!bVar3) break;
+    iVar1 = (int)((uVar5 & 0xffffffff) << 3);
+    uVar4 = iVar8 - 1;
+    *(undefined4 *)((int)&param_1->pieceIndex + iVar1) = *(undefined4 *)pFVar2;
+    *(float *)((int)&param_1->distSq + iVar1) = pFVar2->distSq;
+    uVar6 = (longlong)((int)uVar4 >> 1) + (ulonglong)((int)uVar4 < 0 && (uVar4 & 1) != 0);
+    uVar5 = uVar7;
   }
-  iVar11 = (int)((uVar8 & 0x1fffffff) << 3);
-  *(undefined4 *)(iVar11 + iVar3) = *(undefined4 *)param_4;
-  *(float *)(iVar11 + iVar3 + 4) = param_4->distSq;
-  __restgprlr_25();
+  iVar8 = (int)((uVar5 & 0xffffffff) << 3);
+  *(undefined4 *)((int)&param_1->pieceIndex + iVar8) = *(undefined4 *)param_4;
+  *(float *)((int)&param_1->distSq + iVar8) = param_4->distSq;
   return;
 }
 
 
 // 8242E1E0  _Make_heap<FxGlassPieceVisRef_*,int,FxGlassPieceVisRef,bool_(__cdecl*)(FxGlassPieceVisRef_&,FxGlassPieceVisRef_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2658)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void std::
@@ -2342,74 +2226,66 @@ void std::
 
 {
   uint uVar1;
-  FxGlassPieceVisRef *pFVar2;
-  int iVar3;
-  ulonglong uVar4;
+  int iVar2;
+  ulonglong uVar3;
+  bool bVar4;
   longlong lVar5;
-  bool bVar6;
-  longlong lVar7;
-  longlong lVar8;
-  int iVar9;
+  ulonglong uVar6;
+  ulonglong uVar7;
+  int iVar8;
+  ulonglong uVar9;
   ulonglong uVar10;
-  ulonglong uVar11;
-  ulonglong uVar12;
-  ulonglong uVar13;
-  uint uVar14;
+  uint uVar11;
   FxGlassPieceVisRef local_50 [10];
   
-  lVar8 = (longlong)(int)param_3;
-  lVar7 = (longlong)(int)param_2;
-  lVar5 = __savegprlr_24(param_1,lVar7,lVar8,param_4,param_5);
-  pFVar2 = (FxGlassPieceVisRef *)lVar5;
-  iVar9 = (int)lVar7 - (int)pFVar2;
-  uVar1 = iVar9 >> 3;
-  uVar11 = (longlong)(iVar9 >> 4) + (ulonglong)((int)uVar1 < 0 && (uVar1 & 1) != 0);
-  if (0 < (longlong)uVar11) {
-    uVar10 = (uVar11 + 1 & 0x7fffffff) << 1;
-    lVar5 = (uVar11 & 0x1fffffff) * 8 + lVar5;
+  uVar1 = (int)param_2 - (int)param_1 >> 3;
+  uVar7 = (longlong)((int)param_2 - (int)param_1 >> 4) +
+          (ulonglong)((int)uVar1 < 0 && (uVar1 & 1) != 0);
+  if (0 < (longlong)uVar7) {
+    uVar6 = (uVar7 + 1 & 0x7fffffff) << 1;
+    lVar5 = (uVar7 & 0x1fffffff) * 8 + (longlong)(int)param_1;
     do {
       lVar5 = lVar5 + -8;
       local_50[0] = *(FxGlassPieceVisRef *)lVar5;
-      uVar10 = uVar10 - 2;
-      uVar11 = uVar11 - 1;
-      uVar14 = (uint)uVar10;
-      uVar13 = uVar10;
-      uVar4 = uVar11;
-      while (uVar12 = uVar13, (int)uVar14 < (int)uVar1) {
-        bVar6 = (*(_func___cdecl_bool_FxGlassPieceVisRef_ptr_FxGlassPieceVisRef_ptr *)lVar8)
-                          (pFVar2 + (int)uVar12,pFVar2 + (int)uVar12 + -1);
-        if (bVar6) {
-          uVar12 = uVar12 - 1;
+      uVar6 = uVar6 - 2;
+      uVar7 = uVar7 - 1;
+      uVar11 = (uint)uVar6;
+      uVar10 = uVar6;
+      uVar3 = uVar7;
+      while (uVar9 = uVar10, (int)uVar11 < (int)uVar1) {
+        bVar4 = (*param_3)(param_1 + (int)uVar9,param_1 + (int)uVar9 + -1);
+        if (bVar4) {
+          uVar9 = uVar9 - 1;
         }
-        iVar9 = (int)((uVar12 & 0xffffffff) << 3);
-        iVar3 = (int)((uVar4 & 0xffffffff) << 3);
-        uVar13 = (uVar12 + 1 & 0x7fffffff) << 1;
-        *(undefined4 *)((int)&pFVar2->pieceIndex + iVar3) =
-             *(undefined4 *)((int)&pFVar2->pieceIndex + iVar9);
-        *(undefined4 *)((int)&pFVar2->distSq + iVar3) =
-             *(undefined4 *)((int)&pFVar2->distSq + iVar9);
-        uVar14 = (uint)uVar13;
-        uVar4 = uVar12;
+        iVar8 = (int)((uVar9 & 0xffffffff) << 3);
+        iVar2 = (int)((uVar3 & 0xffffffff) << 3);
+        uVar10 = (uVar9 + 1 & 0x7fffffff) << 1;
+        *(undefined4 *)((int)&param_1->pieceIndex + iVar2) =
+             *(undefined4 *)((int)&param_1->pieceIndex + iVar8);
+        *(undefined4 *)((int)&param_1->distSq + iVar2) =
+             *(undefined4 *)((int)&param_1->distSq + iVar8);
+        uVar11 = (uint)uVar10;
+        uVar3 = uVar9;
       }
-      iVar9 = (int)uVar4;
-      if (uVar14 == uVar1) {
-        iVar3 = (int)((uVar4 & 0xffffffff) << 3);
-        iVar9 = uVar1 - 1;
-        *(undefined4 *)((int)&pFVar2->pieceIndex + iVar3) = *(undefined4 *)(pFVar2 + (uVar1 - 1));
-        *(float *)((int)&pFVar2->distSq + iVar3) = pFVar2[uVar1 - 1].distSq;
+      iVar8 = (int)uVar3;
+      if (uVar11 == uVar1) {
+        iVar2 = (int)((uVar3 & 0xffffffff) << 3);
+        iVar8 = uVar1 - 1;
+        *(undefined4 *)((int)&param_1->pieceIndex + iVar2) = *(undefined4 *)(param_1 + (uVar1 - 1));
+        *(float *)((int)&param_1->distSq + iVar2) = param_1[uVar1 - 1].distSq;
       }
       _Push_heap<FxGlassPieceVisRef_*,int,FxGlassPieceVisRef,bool_(__cdecl*)(FxGlassPieceVisRef_&,FxGlassPieceVisRef_&)>
-                (pFVar2,iVar9,(int)uVar11,local_50,
-                 (_func___cdecl_bool_FxGlassPieceVisRef_ptr_FxGlassPieceVisRef_ptr *)lVar8);
-    } while (0 < (int)uVar11);
+                (param_1,iVar8,(int)uVar7,local_50,param_3);
+    } while (0 < (int)uVar7);
   }
-  __restgprlr_24();
   return;
 }
 
 
 // 8242E800  _Sort_heap<FxGlassPieceVisRef_*,bool_(__cdecl*)(FxGlassPieceVisRef_&,FxGlassPieceVisRef_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2700)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void std::
@@ -2420,41 +2296,35 @@ void std::
 {
   uchar uVar1;
   uchar uVar2;
-  longlong lVar3;
+  uint uVar3;
   FxGlassPieceVisRef *pFVar4;
-  longlong lVar5;
-  longlong lVar6;
-  FxGlassPieceVisRef *pFVar7;
   FxGlassPieceVisRef local_30 [6];
   
-  lVar6 = (longlong)(int)param_2;
-  lVar3 = __savegprlr_29(param_1);
-  lVar5 = lVar6 - lVar3;
-  if (8 < (int)((uint)lVar5 & 0xfffffff8)) {
-    lVar6 = lVar6 + -8;
+  uVar3 = (int)param_2 - (int)param_1;
+  if (8 < (int)(uVar3 & 0xfffffff8)) {
+    pFVar4 = param_2 + -1;
     do {
-      pFVar4 = (FxGlassPieceVisRef *)lVar3;
-      uVar1 = pFVar4->drawFlags;
-      uVar2 = pFVar4->pad;
-      pFVar7 = (FxGlassPieceVisRef *)lVar6;
-      local_30[0] = *pFVar7;
-      pFVar7->pieceIndex = pFVar4->pieceIndex;
-      pFVar7->drawFlags = uVar1;
-      pFVar7->pad = uVar2;
-      pFVar7->distSq = pFVar4->distSq;
+      uVar1 = param_1->drawFlags;
+      uVar2 = param_1->pad;
+      local_30[0] = *pFVar4;
+      pFVar4->pieceIndex = param_1->pieceIndex;
+      pFVar4->drawFlags = uVar1;
+      pFVar4->pad = uVar2;
+      pFVar4->distSq = param_1->distSq;
       _Adjust_heap<FxGlassPieceVisRef_*,int,FxGlassPieceVisRef,bool_(__cdecl*)(FxGlassPieceVisRef_&,FxGlassPieceVisRef_&)>
-                (pFVar4,0,(int)lVar5 + -8 >> 3,local_30,param_3);
-      lVar6 = lVar6 + -8;
-      lVar5 = (lVar6 - lVar3) + 8;
-    } while (8 < (int)((uint)lVar5 & 0xfffffff8));
+                (param_1,0,(int)(uVar3 - 8) >> 3,local_30,param_3);
+      pFVar4 = pFVar4 + -1;
+      uVar3 = (int)pFVar4 + (8 - (int)param_1);
+    } while (8 < (int)(uVar3 & 0xfffffff8));
   }
-  __restgprlr_29();
   return;
 }
 
 
 // 8242E450  _Insertion_sort1<FxGlassPieceVisRef_*,bool_(__cdecl*)(FxGlassPieceVisRef_&,FxGlassPieceVisRef_&),FxGlassPieceVisRef>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3650)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void std::
@@ -2464,66 +2334,62 @@ void std::
                FxGlassPieceVisRef *param_4)
 
 {
-  undefined4 *puVar1;
-  ulonglong uVar2;
-  ulonglong uVar3;
-  char cVar4;
-  ulonglong uVar5;
-  longlong lVar6;
-  code *pcVar7;
-  ulonglong uVar8;
-  ulonglong uVar10;
-  ulonglong uVar11;
-  undefined8 *puVar12;
-  undefined8 local_50 [10];
-  ulonglong uVar9;
+  FxGlassPieceVisRef *pFVar1;
+  FxGlassPieceVisRef *pFVar2;
+  FxGlassPieceVisRef *pFVar3;
+  uchar uVar4;
+  uchar uVar5;
+  bool bVar6;
+  FxGlassPieceVisRef *pFVar7;
+  FxGlassPieceVisRef local_50 [10];
   
-  lVar6 = (longlong)(int)param_3;
-  uVar5 = (ulonglong)(int)param_2;
-  uVar3 = __savegprlr_25(param_1,uVar5,lVar6,param_4);
-  if (((uVar3 & 0xffffffff) != (uVar5 & 0xffffffff)) &&
-     (uVar11 = uVar3 + 8, uVar10 = uVar3, (uVar11 & 0xffffffff) != (uVar5 & 0xffffffff))) {
-    do {
-      local_50[0] = *(undefined8 *)uVar11;
-      pcVar7 = (code *)lVar6;
-      cVar4 = (*pcVar7)(local_50,uVar3);
-      if (cVar4 == '\0') {
-        cVar4 = (*pcVar7)(local_50,uVar10);
-        uVar8 = uVar10;
-        uVar9 = uVar11;
-        while (uVar2 = uVar8, puVar12 = (undefined8 *)uVar9, cVar4 != '\0') {
-          *(undefined4 *)puVar12 = *(undefined4 *)uVar2;
-          *(undefined4 *)((int)puVar12 + 4) = ((undefined4 *)uVar2)[1];
-          cVar4 = (*pcVar7)(local_50,uVar2 - 8);
-          uVar8 = uVar2 - 8;
-          uVar9 = uVar2;
+  pFVar2 = param_1;
+  pFVar3 = param_1;
+  if (param_1 != param_2) {
+    while (pFVar3 = pFVar3 + 1, pFVar3 != param_2) {
+      local_50[0] = *pFVar3;
+      bVar6 = (*param_3)(local_50,param_1);
+      pFVar1 = pFVar3;
+      if (bVar6) {
+        while (param_1 != pFVar1) {
+          pFVar7 = pFVar1 + -1;
+          uVar4 = pFVar7->drawFlags;
+          uVar5 = pFVar7->pad;
+          pFVar1->pieceIndex = pFVar7->pieceIndex;
+          pFVar1->drawFlags = uVar4;
+          pFVar1->pad = uVar5;
+          pFVar1->distSq = pFVar1[-1].distSq;
+          pFVar1 = pFVar7;
         }
-        *puVar12 = local_50[0];
+        *param_1 = local_50[0];
       }
       else {
-        uVar9 = uVar11;
-        if ((uVar3 & 0xffffffff) != (uVar11 & 0xffffffff)) {
-          do {
-            uVar8 = uVar9 - 8;
-            puVar1 = (undefined4 *)uVar9;
-            *puVar1 = *(undefined4 *)uVar8;
-            puVar1[1] = puVar1[-1];
-            uVar9 = uVar8;
-          } while ((uVar8 & 0xffffffff) != (uVar3 & 0xffffffff));
+        bVar6 = (*param_3)(local_50,pFVar2);
+        pFVar7 = pFVar2;
+        while (bVar6 != false) {
+          uVar4 = pFVar7->drawFlags;
+          uVar5 = pFVar7->pad;
+          pFVar1->pieceIndex = pFVar7->pieceIndex;
+          pFVar1->drawFlags = uVar4;
+          pFVar1->pad = uVar5;
+          pFVar1->distSq = pFVar7->distSq;
+          bVar6 = (*param_3)(local_50,pFVar7 + -1);
+          pFVar1 = pFVar7;
+          pFVar7 = pFVar7 + -1;
         }
-        *(undefined8 *)uVar3 = local_50[0];
+        *pFVar1 = local_50[0];
       }
-      uVar11 = uVar11 + 8;
-      uVar10 = uVar10 + 8;
-    } while ((uVar11 & 0xffffffff) != (uVar5 & 0xffffffff));
+      pFVar2 = pFVar2 + 1;
+    }
   }
-  __restgprlr_25();
   return;
 }
 
 
 // 8242E2E8  _Med3<FxGlassPieceVisRef_*,bool_(__cdecl*)(FxGlassPieceVisRef_&,FxGlassPieceVisRef_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3683)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void std::_Med3<FxGlassPieceVisRef_*,bool_(__cdecl*)(FxGlassPieceVisRef_&,FxGlassPieceVisRef_&)>
@@ -2533,22 +2399,20 @@ void std::_Med3<FxGlassPieceVisRef_*,bool_(__cdecl*)(FxGlassPieceVisRef_&,FxGlas
 {
   uchar uVar1;
   uchar uVar2;
-  FxGlassPieceVisRef *pFVar3;
-  bool bVar4;
+  bool bVar3;
   
-  pFVar3 = (FxGlassPieceVisRef *)__savegprlr_28(param_1);
-  bVar4 = (*param_4)(param_2,pFVar3);
-  if (bVar4) {
-    uVar1 = pFVar3->drawFlags;
-    uVar2 = pFVar3->pad;
-    param_2->pieceIndex = pFVar3->pieceIndex;
+  bVar3 = (*param_4)(param_2,param_1);
+  if (bVar3) {
+    uVar1 = param_1->drawFlags;
+    uVar2 = param_1->pad;
+    param_2->pieceIndex = param_1->pieceIndex;
     param_2->drawFlags = uVar1;
     param_2->pad = uVar2;
-    param_2->distSq = pFVar3->distSq;
-    *pFVar3 = *param_2;
+    param_2->distSq = param_1->distSq;
+    *param_1 = *param_2;
   }
-  bVar4 = (*param_4)(param_3,param_2);
-  if (bVar4) {
+  bVar3 = (*param_4)(param_3,param_2);
+  if (bVar3) {
     uVar1 = param_2->drawFlags;
     uVar2 = param_2->pad;
     param_3->pieceIndex = param_2->pieceIndex;
@@ -2557,23 +2421,24 @@ void std::_Med3<FxGlassPieceVisRef_*,bool_(__cdecl*)(FxGlassPieceVisRef_&,FxGlas
     param_3->distSq = param_2->distSq;
     *param_2 = *param_3;
   }
-  bVar4 = (*param_4)(param_2,pFVar3);
-  if (bVar4) {
-    uVar1 = pFVar3->drawFlags;
-    uVar2 = pFVar3->pad;
-    param_2->pieceIndex = pFVar3->pieceIndex;
+  bVar3 = (*param_4)(param_2,param_1);
+  if (bVar3) {
+    uVar1 = param_1->drawFlags;
+    uVar2 = param_1->pad;
+    param_2->pieceIndex = param_1->pieceIndex;
     param_2->drawFlags = uVar1;
     param_2->pad = uVar2;
-    param_2->distSq = pFVar3->distSq;
-    *pFVar3 = *param_2;
+    param_2->distSq = param_1->distSq;
+    *param_1 = *param_2;
   }
-  __restgprlr_28();
   return;
 }
 
 
 // 8242E3A8  _Median<FxGlassPieceVisRef_*,bool_(__cdecl*)(FxGlassPieceVisRef_&,FxGlassPieceVisRef_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3695)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void std::_Median<FxGlassPieceVisRef_*,bool_(__cdecl*)(FxGlassPieceVisRef_&,FxGlassPieceVisRef_&)>
@@ -2584,20 +2449,18 @@ void std::_Median<FxGlassPieceVisRef_*,bool_(__cdecl*)(FxGlassPieceVisRef_&,FxGl
   int iVar1;
   int iVar2;
   FxGlassPieceVisRef *pFVar3;
-  FxGlassPieceVisRef *pFVar4;
-  uint uVar6;
-  ulonglong uVar5;
+  uint uVar5;
+  ulonglong uVar4;
   
-  pFVar3 = (FxGlassPieceVisRef *)__savegprlr_26(param_1);
-  iVar1 = (int)param_3 - (int)pFVar3 >> 3;
+  iVar1 = (int)param_3 - (int)param_1 >> 3;
   if (0x28 < iVar1) {
-    uVar6 = iVar1 + 1;
-    uVar5 = (longlong)((int)uVar6 >> 3) + (ulonglong)((int)uVar6 < 0 && (uVar6 & 7) != 0);
-    iVar2 = (int)((uVar5 & 0xffffffff) << 4);
-    iVar1 = (int)((uVar5 & 0x1fffffff) << 3);
-    pFVar4 = (FxGlassPieceVisRef *)((int)&pFVar3->pieceIndex + iVar1);
+    uVar5 = iVar1 + 1;
+    uVar4 = (longlong)((int)uVar5 >> 3) + (ulonglong)((int)uVar5 < 0 && (uVar5 & 7) != 0);
+    iVar2 = (int)((uVar4 & 0xffffffff) << 4);
+    iVar1 = (int)((uVar4 & 0x1fffffff) << 3);
+    pFVar3 = (FxGlassPieceVisRef *)((int)&param_1->pieceIndex + iVar1);
     _Med3<FxGlassPieceVisRef_*,bool_(__cdecl*)(FxGlassPieceVisRef_&,FxGlassPieceVisRef_&)>
-              (pFVar3,pFVar4,(FxGlassPieceVisRef *)((int)&pFVar3->pieceIndex + iVar2),param_4);
+              (param_1,pFVar3,(FxGlassPieceVisRef *)((int)&param_1->pieceIndex + iVar2),param_4);
     _Med3<FxGlassPieceVisRef_*,bool_(__cdecl*)(FxGlassPieceVisRef_&,FxGlassPieceVisRef_&)>
               ((FxGlassPieceVisRef *)((int)param_2 - iVar1),param_2,
                (FxGlassPieceVisRef *)((int)&param_2->pieceIndex + iVar1),param_4);
@@ -2605,19 +2468,19 @@ void std::_Median<FxGlassPieceVisRef_*,bool_(__cdecl*)(FxGlassPieceVisRef_&,FxGl
               ((FxGlassPieceVisRef *)((int)param_3 - iVar2),
                (FxGlassPieceVisRef *)((int)param_3 - iVar1),param_3,param_4);
     _Med3<FxGlassPieceVisRef_*,bool_(__cdecl*)(FxGlassPieceVisRef_&,FxGlassPieceVisRef_&)>
-              (pFVar4,param_2,(FxGlassPieceVisRef *)((int)param_3 - iVar1),param_4);
-    __restgprlr_26();
+              (pFVar3,param_2,(FxGlassPieceVisRef *)((int)param_3 - iVar1),param_4);
     return;
   }
   _Med3<FxGlassPieceVisRef_*,bool_(__cdecl*)(FxGlassPieceVisRef_&,FxGlassPieceVisRef_&)>
-            (pFVar3,param_2,param_3,param_4);
-  __restgprlr_26();
+            (param_1,param_2,param_3,param_4);
   return;
 }
 
 
 // 8242E550  _Unguarded_partition<FxGlassPieceVisRef_*,bool_(__cdecl*)(FxGlassPieceVisRef_&,FxGlassPieceVisRef_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3712)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 pair<FxGlassPieceVisRef_*,FxGlassPieceVisRef_*>
@@ -2627,169 +2490,153 @@ _Unguarded_partition<FxGlassPieceVisRef_*,bool_(__cdecl*)(FxGlassPieceVisRef_&,F
           _func___cdecl_bool_FxGlassPieceVisRef_ptr_FxGlassPieceVisRef_ptr *param_3)
 
 {
-  uint uVar1;
-  FxGlassPieceVisRef *pFVar2;
+  FxGlassPieceVisRef *pFVar1;
+  uint uVar2;
   uchar uVar3;
   uchar uVar4;
-  undefined4 *puVar6;
-  bool bVar7;
-  pair<FxGlassPieceVisRef_*,FxGlassPieceVisRef_*> pVar5;
-  ulonglong uVar8;
-  ulonglong uVar9;
+  bool bVar5;
   _func___cdecl_bool_FxGlassPieceVisRef_ptr_FxGlassPieceVisRef_ptr *in_r6;
-  undefined8 uVar10;
-  int iVar12;
-  ulonglong uVar11;
-  ulonglong uVar13;
-  FxGlassPieceVisRef *pFVar14;
-  undefined8 *puVar15;
-  ulonglong uVar16;
-  undefined8 *puVar17;
-  ulonglong uVar18;
-  ulonglong uVar19;
-  undefined8 *puVar20;
+  FxGlassPieceVisRef FVar6;
+  FxGlassPieceVisRef *pFVar7;
+  FxGlassPieceVisRef *pFVar8;
+  FxGlassPieceVisRef *pFVar9;
+  FxGlassPieceVisRef *pFVar10;
+  FxGlassPieceVisRef *pFVar11;
+  FxGlassPieceVisRef *pFVar12;
   
-  uVar9 = (ulonglong)(int)param_3;
-  uVar8 = (ulonglong)(int)param_2;
-  puVar6 = (undefined4 *)__savegprlr_23(param_1);
-  iVar12 = (int)uVar9 - (int)(FxGlassPieceVisRef *)uVar8;
-  uVar1 = iVar12 >> 3;
-  uVar19 = ((longlong)(iVar12 >> 4) + (ulonglong)((int)uVar1 < 0 && (uVar1 & 1) != 0) & 0x1fffffff)
-           * 8 + uVar8;
+  uVar2 = (int)param_3 - (int)param_2 >> 3;
+  pFVar10 = param_2 + ((int)param_3 - (int)param_2 >> 4) +
+                      (uint)((int)uVar2 < 0 && (uVar2 & 1) != 0);
   _Median<FxGlassPieceVisRef_*,bool_(__cdecl*)(FxGlassPieceVisRef_&,FxGlassPieceVisRef_&)>
-            ((FxGlassPieceVisRef *)uVar8,(FxGlassPieceVisRef *)uVar19,
-             (FxGlassPieceVisRef *)((int)uVar9 + -8),in_r6);
-  uVar13 = uVar19 + 8;
-  if ((uVar8 & 0xffffffff) < (uVar19 & 0xffffffff)) {
-    do {
-      uVar18 = uVar19 - 8;
-      bVar7 = (*in_r6)((FxGlassPieceVisRef *)uVar18,(FxGlassPieceVisRef *)uVar19);
-      if ((bVar7) ||
-         (bVar7 = (*in_r6)((FxGlassPieceVisRef *)uVar19,(FxGlassPieceVisRef *)uVar18), bVar7))
-      break;
-      uVar19 = uVar18;
-    } while ((uVar8 & 0xffffffff) < (uVar18 & 0xffffffff));
-  }
-  uVar16 = uVar13;
-  uVar18 = uVar19;
-  if ((uVar13 & 0xffffffff) < (uVar9 & 0xffffffff)) {
-    do {
-      bVar7 = (*in_r6)((FxGlassPieceVisRef *)uVar13,(FxGlassPieceVisRef *)uVar19);
-      uVar16 = uVar13;
-      if ((bVar7) ||
-         (bVar7 = (*in_r6)((FxGlassPieceVisRef *)uVar19,(FxGlassPieceVisRef *)uVar13), bVar7))
-      break;
-      uVar13 = uVar13 + 8;
-      uVar16 = uVar13;
-    } while ((uVar13 & 0xffffffff) < (uVar9 & 0xffffffff));
+            (param_2,pFVar10,(FxGlassPieceVisRef *)(param_3 + -8),in_r6);
+  pFVar8 = pFVar10;
+  while (pFVar11 = pFVar8, param_2 < pFVar11) {
+    pFVar8 = pFVar11 + -1;
+    bVar5 = (*in_r6)(pFVar8,pFVar11);
+    if ((bVar5) || (bVar5 = (*in_r6)(pFVar11,pFVar8), bVar5)) break;
   }
   do {
-    uVar11 = uVar13;
-    if ((uVar16 & 0xffffffff) < (uVar9 & 0xffffffff)) {
-      do {
-        pFVar2 = (FxGlassPieceVisRef *)uVar16;
-        bVar7 = (*in_r6)((FxGlassPieceVisRef *)uVar18,pFVar2);
-        uVar13 = uVar11;
-        if (!bVar7) {
-          bVar7 = (*in_r6)(pFVar2,(FxGlassPieceVisRef *)uVar18);
-          if (bVar7) break;
-          uVar3 = pFVar2->drawFlags;
-          uVar4 = pFVar2->pad;
-          uVar13 = uVar11 + 8;
-          pFVar14 = (FxGlassPieceVisRef *)uVar11;
-          pFVar14->pieceIndex = pFVar2->pieceIndex;
-          pFVar14->drawFlags = uVar3;
-          pFVar14->pad = uVar4;
-          pFVar14->distSq = pFVar2->distSq;
-          *pFVar2 = *pFVar14;
-        }
-        uVar16 = uVar16 + 8;
-        uVar11 = uVar13;
-      } while ((uVar16 & 0xffffffff) < (uVar9 & 0xffffffff));
-    }
-    bVar7 = (uVar19 & 0xffffffff) == (uVar8 & 0xffffffff);
-    uVar11 = uVar19;
-    if ((uVar8 & 0xffffffff) < (uVar19 & 0xffffffff)) {
-      do {
-        pFVar2 = (FxGlassPieceVisRef *)(uVar11 - 8);
-        bVar7 = (*in_r6)(pFVar2,(FxGlassPieceVisRef *)uVar18);
-        if (!bVar7) {
-          bVar7 = (*in_r6)((FxGlassPieceVisRef *)uVar18,pFVar2);
-          if (bVar7) break;
-          uVar3 = pFVar2->drawFlags;
-          uVar4 = pFVar2->pad;
-          uVar18 = uVar18 - 8;
-          pFVar14 = (FxGlassPieceVisRef *)uVar18;
-          pFVar14->pieceIndex = pFVar2->pieceIndex;
-          pFVar14->drawFlags = uVar3;
-          pFVar14->pad = uVar4;
-          pFVar14->distSq = *(float *)((int)uVar11 + -4);
-          *pFVar2 = *pFVar14;
-        }
-        uVar19 = uVar19 - 8;
-        uVar11 = uVar11 - 8;
-      } while ((uVar8 & 0xffffffff) < (uVar19 & 0xffffffff));
-      bVar7 = (uVar19 & 0xffffffff) == (uVar8 & 0xffffffff);
-    }
-    puVar17 = (undefined8 *)uVar16;
-    puVar20 = (undefined8 *)uVar18;
-    if (bVar7) {
-      puVar15 = (undefined8 *)uVar13;
-      if ((uVar16 & 0xffffffff) == (uVar9 & 0xffffffff)) {
-        *puVar6 = puVar20;
-        puVar6[1] = puVar15;
-        pVar5 = (pair<FxGlassPieceVisRef_*,FxGlassPieceVisRef_*>)__restgprlr_23(puVar6);
-        return pVar5;
+    pFVar10 = pFVar10 + 1;
+    pFVar8 = pFVar10;
+    pFVar7 = pFVar11;
+    if (param_3 <= pFVar10) break;
+    bVar5 = (*in_r6)(pFVar10,pFVar11);
+    if ((bVar5) || (bVar5 = (*in_r6)(pFVar11,pFVar10), bVar5)) break;
+  } while( true );
+joined_r0x8242e640:
+  pFVar1 = pFVar7;
+  if (param_3 <= pFVar8) {
+joined_r0x8242e6ac:
+    for (; param_2 < pFVar1; pFVar1 = pFVar1 + -1) {
+      pFVar9 = pFVar7 + -1;
+      bVar5 = (*in_r6)(pFVar9,pFVar11);
+      pFVar12 = pFVar11;
+      if (!bVar5) {
+        bVar5 = (*in_r6)(pFVar11,pFVar9);
+        if (bVar5) break;
+        uVar3 = pFVar9->drawFlags;
+        uVar4 = pFVar9->pad;
+        pFVar12 = pFVar11 + -1;
+        FVar6 = *pFVar12;
+        pFVar12->pieceIndex = pFVar9->pieceIndex;
+        pFVar12->drawFlags = uVar3;
+        pFVar12->pad = uVar4;
+        pFVar11[-1].distSq = pFVar7[-1].distSq;
+        *pFVar9 = FVar6;
       }
-      if ((uVar13 & 0xffffffff) != (uVar16 & 0xffffffff)) {
-        uVar10 = *puVar20;
-        *(undefined4 *)puVar20 = *(undefined4 *)puVar15;
-        *(undefined4 *)((int)puVar20 + 4) = *(undefined4 *)((int)puVar15 + 4);
-        *puVar15 = uVar10;
+      pFVar11 = pFVar12;
+      pFVar7 = pFVar9;
+    }
+    if (pFVar1 == param_2) {
+      if (pFVar8 == (FxGlassPieceVisRef *)param_3) {
+        *(FxGlassPieceVisRef **)param_1 = pFVar11;
+        param_1->distSq = (float)pFVar10;
+        return (pair<FxGlassPieceVisRef_*,FxGlassPieceVisRef_*>)(longlong)(int)param_1;
       }
-      uVar13 = uVar13 + 8;
-      uVar10 = *puVar20;
-      *(undefined4 *)puVar20 = *(undefined4 *)puVar17;
-      *(undefined4 *)((int)puVar20 + 4) = *(undefined4 *)((int)puVar17 + 4);
-      *puVar17 = uVar10;
-      uVar16 = uVar16 + 8;
-      uVar18 = uVar18 + 8;
+      if (pFVar10 != pFVar8) {
+        uVar3 = pFVar10->drawFlags;
+        uVar4 = pFVar10->pad;
+        pFVar11->pieceIndex = pFVar10->pieceIndex;
+        pFVar11->drawFlags = uVar3;
+        pFVar11->pad = uVar4;
+        pFVar11->distSq = pFVar10->distSq;
+        *pFVar10 = *pFVar11;
+      }
+      uVar3 = pFVar8->drawFlags;
+      uVar4 = pFVar8->pad;
+      pFVar11->pieceIndex = pFVar8->pieceIndex;
+      pFVar11->drawFlags = uVar3;
+      pFVar11->pad = uVar4;
+      pFVar11->distSq = pFVar8->distSq;
+      *pFVar8 = *pFVar11;
+      pFVar10 = pFVar10 + 1;
+      pFVar8 = pFVar8 + 1;
+      pFVar11 = pFVar11 + 1;
+      pFVar7 = pFVar1;
     }
     else {
-      uVar11 = uVar19 - 8;
-      puVar15 = (undefined8 *)uVar11;
-      if ((uVar16 & 0xffffffff) == (uVar9 & 0xffffffff)) {
-        uVar18 = uVar18 - 8;
-        puVar17 = (undefined8 *)uVar18;
-        if ((uVar11 & 0xffffffff) != (uVar18 & 0xffffffff)) {
-          uVar10 = *puVar15;
-          *(undefined4 *)puVar15 = *(undefined4 *)puVar17;
-          *(undefined4 *)((int)puVar15 + 4) = *(undefined4 *)((int)puVar20 + -4);
-          *puVar17 = uVar10;
+      pFVar7 = pFVar1 + -1;
+      if (pFVar8 == (FxGlassPieceVisRef *)param_3) {
+        pFVar12 = pFVar11 + -1;
+        if (pFVar7 != pFVar12) {
+          uVar3 = pFVar12->drawFlags;
+          uVar4 = pFVar12->pad;
+          FVar6 = *pFVar7;
+          pFVar7->pieceIndex = pFVar12->pieceIndex;
+          pFVar7->drawFlags = uVar3;
+          pFVar7->pad = uVar4;
+          pFVar1[-1].distSq = pFVar11[-1].distSq;
+          *pFVar12 = FVar6;
         }
-        uVar13 = uVar13 - 8;
-        puVar15 = (undefined8 *)uVar13;
-        uVar10 = *puVar17;
-        *(undefined4 *)puVar17 = *(undefined4 *)puVar15;
-        *(undefined4 *)((int)puVar20 + -4) = *(undefined4 *)((int)puVar15 + 4);
-        *puVar15 = uVar10;
-        uVar19 = uVar11;
+        pFVar1 = pFVar10 + -1;
+        uVar3 = pFVar1->drawFlags;
+        uVar4 = pFVar1->pad;
+        FVar6 = *pFVar12;
+        pFVar12->pieceIndex = pFVar1->pieceIndex;
+        pFVar12->drawFlags = uVar3;
+        pFVar12->pad = uVar4;
+        pFVar11[-1].distSq = pFVar10[-1].distSq;
+        *pFVar1 = FVar6;
+        pFVar10 = pFVar1;
+        pFVar11 = pFVar12;
       }
       else {
-        uVar10 = *puVar17;
-        *(undefined4 *)puVar17 = *(undefined4 *)puVar15;
-        *(undefined4 *)((int)puVar17 + 4) = *(undefined4 *)((int)uVar19 + -4);
-        *puVar15 = uVar10;
-        uVar19 = uVar11;
-        uVar16 = uVar16 + 8;
+        uVar3 = pFVar7->drawFlags;
+        uVar4 = pFVar7->pad;
+        pFVar8->pieceIndex = pFVar7->pieceIndex;
+        pFVar8->drawFlags = uVar3;
+        pFVar8->pad = uVar4;
+        pFVar8->distSq = pFVar1[-1].distSq;
+        *pFVar7 = *pFVar8;
+        pFVar8 = pFVar8 + 1;
       }
     }
-  } while( true );
+    goto joined_r0x8242e640;
+  }
+  bVar5 = (*in_r6)(pFVar11,pFVar8);
+  pFVar12 = pFVar10;
+  if (!bVar5) {
+    bVar5 = (*in_r6)(pFVar8,pFVar11);
+    if (bVar5) goto joined_r0x8242e6ac;
+    uVar3 = pFVar8->drawFlags;
+    uVar4 = pFVar8->pad;
+    pFVar12 = pFVar10 + 1;
+    pFVar10->pieceIndex = pFVar8->pieceIndex;
+    pFVar10->drawFlags = uVar3;
+    pFVar10->pad = uVar4;
+    pFVar10->distSq = pFVar8->distSq;
+    *pFVar8 = *pFVar10;
+  }
+  pFVar10 = pFVar12;
+  pFVar8 = pFVar8 + 1;
+  goto joined_r0x8242e640;
 }
 
 
 // 8242E880  _Sort<FxGlassPieceVisRef_*,int,bool_(__cdecl*)(FxGlassPieceVisRef_&,FxGlassPieceVisRef_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3771)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void std::_Sort<FxGlassPieceVisRef_*,int,bool_(__cdecl*)(FxGlassPieceVisRef_&,FxGlassPieceVisRef_&)>
@@ -2798,68 +2645,55 @@ void std::_Sort<FxGlassPieceVisRef_*,int,bool_(__cdecl*)(FxGlassPieceVisRef_&,Fx
 
 {
   FxGlassPieceVisRef *pFVar1;
-  FxGlassPieceVisRef *pFVar2;
-  ulonglong uVar3;
-  int iVar5;
-  ulonglong uVar4;
-  ulonglong uVar6;
-  int iVar7;
-  FxGlassPieceVisRef *pFVar8;
+  int iVar2;
+  uint uVar3;
+  FxGlassPieceVisRef *pFVar4;
   FxGlassPieceVisRef *local_40;
   FxGlassPieceVisRef *local_3c;
   
-  uVar4 = (ulonglong)param_3;
-  uVar3 = (ulonglong)(int)param_2;
-  pFVar2 = (FxGlassPieceVisRef *)__savegprlr_26(param_1);
-  pFVar8 = (FxGlassPieceVisRef *)uVar3;
-  iVar5 = (int)pFVar8 - (int)pFVar2;
+  iVar2 = (int)param_2 - (int)param_1;
   do {
-    iVar5 = iVar5 >> 3;
-    if (iVar5 < 0x21) {
+    iVar2 = iVar2 >> 3;
+    if (iVar2 < 0x21) {
 LAB_8242e938:
-      if (1 < iVar5) {
+      if (1 < iVar2) {
         _Insertion_sort1<FxGlassPieceVisRef_*,bool_(__cdecl*)(FxGlassPieceVisRef_&,FxGlassPieceVisRef_&),FxGlassPieceVisRef>
-                  (pFVar2,pFVar8,param_4,(FxGlassPieceVisRef *)0x0);
+                  (param_1,param_2,param_4,(FxGlassPieceVisRef *)0x0);
       }
-      __restgprlr_26();
       return;
     }
-    pFVar8 = (FxGlassPieceVisRef *)uVar3;
-    iVar7 = (int)uVar4;
-    if (iVar7 < 1) {
-      if (0x20 < iVar5) {
-        if (1 < iVar5) {
+    if (param_3 < 1) {
+      if (0x20 < iVar2) {
+        if (1 < iVar2) {
           _Make_heap<FxGlassPieceVisRef_*,int,FxGlassPieceVisRef,bool_(__cdecl*)(FxGlassPieceVisRef_&,FxGlassPieceVisRef_&)>
-                    (pFVar2,pFVar8,param_4,(int *)0x0,(FxGlassPieceVisRef *)0x0);
+                    (param_1,param_2,param_4,(int *)0x0,(FxGlassPieceVisRef *)0x0);
         }
         _Sort_heap<FxGlassPieceVisRef_*,bool_(__cdecl*)(FxGlassPieceVisRef_&,FxGlassPieceVisRef_&)>
-                  (pFVar2,pFVar8,param_4);
-        __restgprlr_26();
+                  (param_1,param_2,param_4);
         return;
       }
       goto LAB_8242e938;
     }
     _Unguarded_partition<FxGlassPieceVisRef_*,bool_(__cdecl*)(FxGlassPieceVisRef_&,FxGlassPieceVisRef_&)>
-              ((FxGlassPieceVisRef *)&local_40,pFVar2,
-               (_func___cdecl_bool_FxGlassPieceVisRef_ptr_FxGlassPieceVisRef_ptr *)pFVar8);
+              ((FxGlassPieceVisRef *)&local_40,param_1,
+               (_func___cdecl_bool_FxGlassPieceVisRef_ptr_FxGlassPieceVisRef_ptr *)param_2);
     pFVar1 = local_3c;
-    uVar4 = (longlong)(iVar7 >> 1) + (ulonglong)(iVar7 < 0 && (uVar4 & 1) != 0);
-    uVar4 = (longlong)((int)uVar4 >> 1) + (ulonglong)((int)uVar4 < 0 && (uVar4 & 1) != 0) + uVar4;
-    uVar6 = ZEXT48(local_40);
-    if ((int)((int)local_40 - (int)pFVar2 & 0xfffffff8U) <
-        (int)((int)pFVar8 - (int)local_3c & 0xfffffff8U)) {
+    pFVar4 = local_40;
+    uVar3 = (param_3 >> 1) + (uint)(param_3 < 0 && (param_3 & 1U) != 0);
+    param_3 = ((int)uVar3 >> 1) + (uint)((int)uVar3 < 0 && (uVar3 & 1) != 0) + uVar3;
+    if ((int)((int)local_40 - (int)param_1 & 0xfffffff8U) <
+        (int)((int)param_2 - (int)local_3c & 0xfffffff8U)) {
       _Sort<FxGlassPieceVisRef_*,int,bool_(__cdecl*)(FxGlassPieceVisRef_&,FxGlassPieceVisRef_&)>
-                (pFVar2,local_40,(int)uVar4,param_4);
-      uVar6 = uVar3;
-      pFVar2 = pFVar1;
+                (param_1,local_40,param_3,param_4);
+      pFVar4 = param_2;
+      param_1 = pFVar1;
     }
     else {
       _Sort<FxGlassPieceVisRef_*,int,bool_(__cdecl*)(FxGlassPieceVisRef_&,FxGlassPieceVisRef_&)>
-                (local_3c,pFVar8,(int)uVar4,param_4);
+                (local_3c,param_2,param_3,param_4);
     }
-    pFVar8 = (FxGlassPieceVisRef *)uVar6;
-    iVar5 = (int)pFVar8 - (int)pFVar2;
-    uVar3 = uVar6;
+    iVar2 = (int)pFVar4 - (int)param_1;
+    param_2 = pFVar4;
   } while( true );
 }
 

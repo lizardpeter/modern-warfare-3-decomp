@@ -2,75 +2,68 @@
 
 // 823EC698  DB_AllocXZoneMemoryInternal  (database/db_memory.cpp:77)
 
+/* WARNING: Function: __savegprlr_20 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_20 replaced with injection: xenon_save_restore */
+
 void DB_AllocXZoneMemoryInternal(uint *param_1,char *param_2,XZoneMemory *param_3,uint param_4)
 
 {
-  int iVar1;
-  int *piVar2;
-  void *pvVar3;
-  ulonglong uVar4;
-  uint uVar5;
-  longlong lVar6;
-  longlong lVar7;
-  longlong lVar8;
-  uint uVar9;
-  int *piVar10;
-  int *piVar11;
+  void *pvVar1;
+  int iVar2;
+  uint uVar3;
+  uint *puVar4;
+  longlong lVar5;
+  uint *puVar6;
+  uint uVar7;
+  uint *puVar8;
   
-  uVar4 = (ulonglong)(int)param_3;
-  lVar6 = (longlong)(int)param_2;
-  piVar2 = (int *)__savegprlr_20(param_1,lVar6,uVar4,param_4);
-  iVar1 = (int)uVar4;
-  lVar6 = lVar6 + 4;
-  uVar5 = g_memoryTypeInfo[iVar1].alignment - 1;
-  uVar9 = 0;
-  lVar7 = 7;
-  lVar8 = lVar6;
-  piVar10 = piVar2;
+  iVar2 = (int)g_block_mem_type - (int)param_1;
+  puVar4 = (uint *)(param_2 + 4);
+  uVar3 = g_memoryTypeInfo[(int)param_3].alignment - 1;
+  uVar7 = 0;
+  lVar5 = 7;
+  puVar6 = puVar4;
+  puVar8 = param_1;
   do {
-    if ((ulonglong)*(uint *)((int)g_block_mem_type + ((int)piVar10 - (int)piVar2)) ==
-        (uVar4 & 0xffffffff)) {
-      if (*(int *)lVar8 != 0) {
+    if (*(XZoneMemory **)(iVar2 + (int)puVar8) == param_3) {
+      if (*puVar6 != 0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_memory.cpp",
                         0x5e,0,"zoneMem->blocks[blockIndex].size == 0\n\t%i, %i");
       }
-      uVar9 = (uVar5 + *piVar10 & ~uVar5) + uVar9;
+      uVar7 = (uVar3 + *puVar8 & ~uVar3) + uVar7;
     }
-    lVar7 = lVar7 + -1;
-    lVar8 = lVar8 + 8;
-    piVar10 = piVar10 + 1;
-  } while (lVar7 != 0);
-  if (uVar9 != 0) {
-    pvVar3 = PMem_AllocFromSource_NoDebug
-                       (uVar9,g_memoryTypeInfo[iVar1].alignment,g_memoryTypeInfo[iVar1].physicalType
-                        ,g_memoryTypeInfo[iVar1].physicalSource);
-    if (pvVar3 == (void *)0x0) {
+    lVar5 = lVar5 + -1;
+    puVar6 = puVar6 + 2;
+    puVar8 = puVar8 + 1;
+  } while (lVar5 != 0);
+  if (uVar7 != 0) {
+    pvVar1 = PMem_AllocFromSource_NoDebug
+                       (uVar7,g_memoryTypeInfo[(int)param_3].alignment,
+                        g_memoryTypeInfo[(int)param_3].physicalType,
+                        g_memoryTypeInfo[(int)param_3].physicalSource);
+    if (pvVar1 == (void *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_memory.cpp",0x66
                       ,0,"%s");
     }
-    lVar8 = 7;
-    piVar10 = piVar2;
+    lVar5 = 7;
     do {
-      if ((ulonglong)*(uint *)((int)g_block_mem_type + ((int)piVar10 - (int)piVar2)) ==
-          (uVar4 & 0xffffffff)) {
-        piVar11 = (int *)lVar6;
-        if (*piVar11 != 0) {
+      if (*(XZoneMemory **)((int)param_1 + iVar2) == param_3) {
+        if (*puVar4 != 0) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_memory.cpp",
                           0x6c,0,"zoneMem->blocks[blockIndex].size == 0\n\t%i, %i");
         }
-        iVar1 = *piVar10;
-        if (iVar1 != 0) {
-          *piVar11 = iVar1;
-          piVar11[-1] = (int)pvVar3;
-          pvVar3 = (void *)((iVar1 + uVar5 & ~uVar5) + (int)pvVar3);
+        uVar7 = *param_1;
+        if (uVar7 != 0) {
+          *puVar4 = uVar7;
+          puVar4[-1] = (uint)pvVar1;
+          pvVar1 = (void *)((uVar7 + uVar3 & ~uVar3) + (int)pvVar1);
         }
       }
-      lVar8 = lVar8 + -1;
-      piVar10 = piVar10 + 1;
-      lVar6 = lVar6 + 8;
-    } while (lVar8 != 0);
+      lVar5 = lVar5 + -1;
+      param_1 = param_1 + 1;
+      puVar4 = puVar4 + 2;
+    } while (lVar5 != 0);
   }
-  __restgprlr_20();
   return;
 }
 
@@ -93,29 +86,26 @@ void DB_AllocXZoneMemory(uint *param_1,char *param_2,XZoneMemory *param_3)
 
 // 823EC870  DB_Alloc  (database/db_memory.cpp:159)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void * DB_Alloc(uint param_1,uint param_2)
 
 {
-  int iVar1;
+  uint uVar1;
   void *pvVar2;
-  longlong lVar3;
-  ulonglong uVar4;
-  ulonglong uVar5;
   
-  lVar3 = (longlong)(int)param_2;
-  iVar1 = __savegprlr_29(param_1);
-  if (iVar1 == 0) {
+  if (param_1 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_memory.cpp",0xa2,0
                     ,"%s");
   }
-  uVar4 = (ulonglong)DAT_82cc6d48;
-  uVar5 = (ulonglong)db_callbackMemoryPos + (lVar3 - 1U) & ~(lVar3 - 1U);
-  db_callbackMemoryPos = (int)uVar5 + iVar1;
+  uVar1 = db_callbackMemoryPos + (param_2 - 1) & ~(param_2 - 1);
+  db_callbackMemoryPos = uVar1 + param_1;
+  pvVar2 = (void *)(DAT_82cc6d48 + uVar1);
   if (db_callbackMemorySize < db_callbackMemoryPos) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_memory.cpp",0xa8,0
                     ,"%s\n\t(db_callbackMemoryPos) = %i");
   }
-  pvVar2 = (void *)__restgprlr_29(uVar4 + uVar5);
   return pvVar2;
 }
 

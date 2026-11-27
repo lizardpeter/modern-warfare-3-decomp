@@ -2,342 +2,301 @@
 
 // 826C56E8  VehField_ReadOnly  (vehicle/vehicle_script.cpp:43)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
 void VehField_ReadOnly(Vehicle *param_1,VehicleScriptField *param_2)
 
 {
-  int iVar1;
-  char *pcVar2;
-  ulonglong uVar3;
+  char *pcVar1;
   
-  uVar3 = (ulonglong)(int)param_2;
-  iVar1 = __savegprlr_29(param_1);
-  if (iVar1 == 0) {
+  if (param_1 == (Vehicle *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_script.cpp",
                     0x2c,0,"%s");
   }
-  if ((uVar3 & 0xffffffff) == 0) {
+  if (param_2 == (VehicleScriptField *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_script.cpp",
                     0x2d,0,"%s");
   }
-  SL_ConvertToString((uint)*(ushort *)*(undefined4 *)uVar3);
-  pcVar2 = va("Vehicle field %s is read-only");
-  Scr_Error(pcVar2);
-  __restgprlr_29();
+  SL_ConvertToString((uint)*param_2->name);
+  pcVar1 = va("Vehicle field %s is read-only");
+  Scr_Error(pcVar1);
   return;
 }
 
 
 // 826C5778  VehField_GetSpeed  (vehicle/vehicle_script.cpp:52)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
 void VehField_GetSpeed(Vehicle *param_1,VehicleScriptField *param_2)
 
 {
-  int iVar1;
-  ulonglong uVar2;
-  
-  uVar2 = (ulonglong)(int)param_2;
-  iVar1 = __savegprlr_28(param_1);
-  if (iVar1 == 0) {
+  if (param_1 == (Vehicle *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_script.cpp",
                     0x35,0,"%s");
   }
-  if ((uVar2 & 0xffffffff) == 0) {
+  if (param_2 == (VehicleScriptField *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_script.cpp",
                     0x36,0,"%s");
   }
-  Scr_AddFloat(*(float *)(iVar1 + 0x2f8) * 0.056818184);
-  __restgprlr_28();
+  Scr_AddFloat(param_1->speed * 0.056818184);
   return;
 }
 
 
 // 826C5800  VehField_GetPathSpeed  (vehicle/vehicle_script.cpp:61)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
 void VehField_GetPathSpeed(Vehicle *param_1,VehicleScriptField *param_2)
 
 {
-  int iVar1;
-  ulonglong uVar2;
-  
-  uVar2 = (ulonglong)(int)param_2;
-  iVar1 = __savegprlr_28(param_1);
-  if (iVar1 == 0) {
+  if (param_1 == (Vehicle *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_script.cpp",
                     0x3e,0,"%s");
   }
-  if ((uVar2 & 0xffffffff) == 0) {
+  if (param_2 == (VehicleScriptField *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_script.cpp",
                     0x3f,0,"%s");
   }
-  Scr_AddFloat(*(float *)(iVar1 + 0x2fc) * 0.056818184);
-  __restgprlr_28();
+  Scr_AddFloat(param_1->pathSpeed * 0.056818184);
   return;
 }
 
 
 // 826C5888  VehField_SetTransmission  (vehicle/vehicle_script.cpp:70)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
 void VehField_SetTransmission(Vehicle *param_1,VehicleScriptField *param_2)
 
 {
-  int iVar1;
-  uint uVar2;
-  char *pcVar3;
-  ulonglong uVar4;
+  uint uVar1;
+  char *pcVar2;
   
-  uVar4 = (ulonglong)(int)param_2;
-  iVar1 = __savegprlr_28(param_1);
-  if (iVar1 == 0) {
+  if (param_1 == (Vehicle *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_script.cpp",
                     0x49,0,"%s");
   }
-  if ((uVar4 & 0xffffffff) == 0) {
+  if (param_2 == (VehicleScriptField *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_script.cpp",
                     0x4a,0,"%s");
   }
-  uVar2 = Scr_GetConstString(0);
-  uVar2 = uVar2 & 0xffff;
-  if (uVar2 == scr_const.forward) {
-    *(undefined4 *)(iVar1 + 8) = 0;
-    __restgprlr_28();
+  uVar1 = Scr_GetConstString(0);
+  uVar1 = uVar1 & 0xffff;
+  if (uVar1 == scr_const.forward) {
+    param_1->transMode = VEH_TRANS_FORWARD;
     return;
   }
-  if (uVar2 == scr_const.reverse) {
-    *(undefined4 *)(iVar1 + 8) = 1;
-    __restgprlr_28();
+  if (uVar1 == scr_const.reverse) {
+    param_1->transMode = VEH_TRANS_REVERSE;
     return;
   }
-  SL_ConvertToString(uVar2);
-  pcVar3 = va("Trying to set vehicle transmission to \'%s\'.  Must be \'forward\' or \'reverse\'.\n"
+  SL_ConvertToString(uVar1);
+  pcVar2 = va("Trying to set vehicle transmission to \'%s\'.  Must be \'forward\' or \'reverse\'.\n"
              );
-  Scr_Error(pcVar3);
-  __restgprlr_28();
+  Scr_Error(pcVar2);
   return;
 }
 
 
 // 826C5968  VehField_GetTransmission  (vehicle/vehicle_script.cpp:95)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
 void VehField_GetTransmission(Vehicle *param_1,VehicleScriptField *param_2)
 
 {
-  int iVar1;
-  ulonglong uVar2;
-  
-  uVar2 = (ulonglong)(int)param_2;
-  iVar1 = __savegprlr_28(param_1);
-  if (iVar1 == 0) {
+  if (param_1 == (Vehicle *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_script.cpp",
                     0x60,0,"%s");
   }
-  if ((uVar2 & 0xffffffff) == 0) {
+  if (param_2 == (VehicleScriptField *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_script.cpp",
                     0x61,0,"%s");
   }
-  if (*(int *)(iVar1 + 8) == 0) {
+  if (param_1->transMode == VEH_TRANS_FORWARD) {
     Scr_AddConstString((uint)scr_const.forward);
-    __restgprlr_28();
     return;
   }
   Scr_AddConstString((uint)scr_const.reverse);
-  __restgprlr_28();
   return;
 }
 
 
 // 826C5A08  VehField_SetPathDir  (vehicle/vehicle_script.cpp:107)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
 void VehField_SetPathDir(Vehicle *param_1,VehicleScriptField *param_2)
 
 {
-  int iVar1;
-  uint uVar2;
-  char *pcVar3;
-  ulonglong uVar4;
+  uint uVar1;
+  char *pcVar2;
   
-  uVar4 = (ulonglong)(int)param_2;
-  iVar1 = __savegprlr_28(param_1);
-  if (iVar1 == 0) {
+  if (param_1 == (Vehicle *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_script.cpp",
                     0x6e,0,"%s");
   }
-  if ((uVar4 & 0xffffffff) == 0) {
+  if (param_2 == (VehicleScriptField *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_script.cpp",
                     0x6f,0,"%s");
   }
-  uVar2 = Scr_GetConstString(0);
-  uVar2 = uVar2 & 0xffff;
-  if (uVar2 == scr_const.forward) {
-    *(undefined4 *)(iVar1 + 200) = 0;
-    __restgprlr_28();
+  uVar1 = Scr_GetConstString(0);
+  uVar1 = uVar1 & 0xffff;
+  if (uVar1 == scr_const.forward) {
+    param_1->pathDir = VEH_PATH_FORWARD;
     return;
   }
-  if (uVar2 == scr_const.reverse) {
-    *(undefined4 *)(iVar1 + 200) = 1;
-    __restgprlr_28();
+  if (uVar1 == scr_const.reverse) {
+    param_1->pathDir = VEH_PATH_REVERSE;
     return;
   }
-  SL_ConvertToString(uVar2);
-  pcVar3 = va(
+  SL_ConvertToString(uVar1);
+  pcVar2 = va(
              "Trying to set vehicle path direction to \'%s\'.  Must be \'forward\' or \'reverse\'.\n"
              );
-  Scr_Error(pcVar3);
-  __restgprlr_28();
+  Scr_Error(pcVar2);
   return;
 }
 
 
 // 826C5AE8  VehField_GetPathDir  (vehicle/vehicle_script.cpp:132)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
 void VehField_GetPathDir(Vehicle *param_1,VehicleScriptField *param_2)
 
 {
-  int iVar1;
-  ulonglong uVar2;
-  
-  uVar2 = (ulonglong)(int)param_2;
-  iVar1 = __savegprlr_28(param_1);
-  if (iVar1 == 0) {
+  if (param_1 == (Vehicle *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_script.cpp",
                     0x85,0,"%s");
   }
-  if ((uVar2 & 0xffffffff) == 0) {
+  if (param_2 == (VehicleScriptField *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_script.cpp",
                     0x86,0,"%s");
   }
-  if (*(int *)(iVar1 + 200) == 0) {
+  if (param_1->pathDir == VEH_PATH_FORWARD) {
     Scr_AddConstString((uint)scr_const.forward);
-    __restgprlr_28();
     return;
   }
   Scr_AddConstString((uint)scr_const.reverse);
-  __restgprlr_28();
   return;
 }
 
 
 // 826C5B88  VehField_SetPathType  (vehicle/vehicle_script.cpp:144)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
 void VehField_SetPathType(Vehicle *param_1,VehicleScriptField *param_2)
 
 {
-  int iVar1;
-  uint uVar2;
-  char *pcVar3;
-  ulonglong uVar4;
+  uint uVar1;
+  char *pcVar2;
   
-  uVar4 = (ulonglong)(int)param_2;
-  iVar1 = __savegprlr_28(param_1);
-  if (iVar1 == 0) {
+  if (param_1 == (Vehicle *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_script.cpp",
                     0x93,0,"%s");
   }
-  if ((uVar4 & 0xffffffff) == 0) {
+  if (param_2 == (VehicleScriptField *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_script.cpp",
                     0x94,0,"%s");
   }
-  uVar2 = Scr_GetConstString(0);
-  if (uVar2 == scr_const.constrained) {
-    *(undefined4 *)(iVar1 + 0x434) = 1;
-    if (*(int *)(iVar1 + 4) == 2) {
-      *(undefined4 *)(iVar1 + 4) = 1;
-      __restgprlr_28();
+  uVar1 = Scr_GetConstString(0);
+  if (uVar1 == scr_const.constrained) {
+    param_1->pathType = VEH_PATH_CONSTRAINED;
+    if (param_1->drivingState == VEH_DRIVE_PATH_FOLLOW) {
+      param_1->drivingState = VEH_DRIVE_PATH_CONSTRAINED;
       return;
     }
   }
-  else if (uVar2 == scr_const.follow) {
-    if (*(int *)(iVar1 + 0x1f0) == 0) {
+  else if (uVar1 == scr_const.follow) {
+    if (param_1->physVeh == (PhysVehicle *)0x0) {
       SL_ConvertToString((uint)scr_const.follow);
-      pcVar3 = va(
+      pcVar2 = va(
                  "This vehicle does not use physics.  Path type \'%s\' is allowed only on vehicles that use physics"
                  );
-      Scr_Error(pcVar3);
+      Scr_Error(pcVar2);
     }
-    *(undefined4 *)(iVar1 + 0x434) = 0;
-    if (*(int *)(iVar1 + 4) == 1) {
-      *(undefined4 *)(iVar1 + 4) = 2;
-      *(undefined4 *)(iVar1 + 0x3d4) = 0x3f800000;
-      *(undefined4 *)(iVar1 + 0x3d8) = 0;
-      __restgprlr_28();
+    param_1->pathType = VEH_PATH_FOLLOW;
+    if (param_1->drivingState == VEH_DRIVE_PATH_CONSTRAINED) {
+      param_1->drivingState = VEH_DRIVE_PATH_FOLLOW;
+      param_1->throttle = 1.0;
+      param_1->brake = 0.0;
       return;
     }
   }
   else {
     SL_ConvertToString((uint)scr_const.follow);
     SL_ConvertToString((uint)scr_const.constrained);
-    SL_ConvertToString(uVar2);
-    pcVar3 = va("\'%s\' is an illegal path type.  Must be \'%s\' or \'%s\'");
-    Scr_Error(pcVar3);
+    SL_ConvertToString(uVar1);
+    pcVar2 = va("\'%s\' is an illegal path type.  Must be \'%s\' or \'%s\'");
+    Scr_Error(pcVar2);
   }
-  __restgprlr_28();
   return;
 }
 
 
 // 826C5CE8  VehField_GetPathType  (vehicle/vehicle_script.cpp:183)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
 void VehField_GetPathType(Vehicle *param_1,VehicleScriptField *param_2)
 
 {
-  int iVar1;
-  char *pcVar2;
-  ulonglong uVar3;
+  char *pcVar1;
   
-  uVar3 = (ulonglong)(int)param_2;
-  iVar1 = __savegprlr_28(param_1);
-  if (iVar1 == 0) {
+  if (param_1 == (Vehicle *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_script.cpp",
                     0xb8,0,"%s");
   }
-  if ((uVar3 & 0xffffffff) == 0) {
+  if (param_2 == (VehicleScriptField *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_script.cpp",
                     0xb9,0,"%s");
   }
-  if (*(int *)(iVar1 + 0x434) == 0) {
+  if (param_1->pathType == VEH_PATH_FOLLOW) {
     Scr_AddConstString((uint)scr_const.follow);
   }
   else {
-    if (*(int *)(iVar1 + 0x434) == 1) {
+    if (param_1->pathType == VEH_PATH_CONSTRAINED) {
       Scr_AddConstString((uint)scr_const.constrained);
-      __restgprlr_28();
       return;
     }
     if (alwaysfails == 0) {
-      pcVar2 = va("Unknown vehicle path type %i");
+      pcVar1 = va("Unknown vehicle path type %i");
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_script.cpp",
-                      0xc6,0,pcVar2);
-      __restgprlr_28();
+                      0xc6,0,pcVar1);
       return;
     }
   }
-  __restgprlr_28();
   return;
 }
 
@@ -398,83 +357,79 @@ void VehField_GetTopSpeed(Vehicle *param_1,VehicleScriptField *param_2)
 
 // 826C5F08  VehField_SetBrake  (vehicle/vehicle_script.cpp:233)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
 void VehField_SetBrake(Vehicle *param_1,VehicleScriptField *param_2)
 
 {
-  int iVar1;
-  ulonglong uVar2;
-  double dVar3;
-  float fVar4;
+  double dVar1;
+  float fVar2;
   
-  uVar2 = (ulonglong)(int)param_2;
-  iVar1 = __savegprlr_28(param_1);
-  if (iVar1 == 0) {
+  if (param_1 == (Vehicle *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_script.cpp",
                     0xec,0,"%s");
   }
-  if ((uVar2 & 0xffffffff) == 0) {
+  if (param_2 == (VehicleScriptField *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_script.cpp",
                     0xed,0,"%s");
   }
-  if (*(int *)(iVar1 + 0x1f0) == 0) {
+  if (param_1->physVeh == (PhysVehicle *)0x0) {
     Scr_Error("Braking can only be set on physics vehicles");
   }
-  fVar4 = Scr_GetFloat(0);
-  dVar3 = (double)fVar4;
-  if ((dVar3 < 0.0) || (1.0 < dVar3)) {
+  fVar2 = Scr_GetFloat(0);
+  dVar1 = (double)fVar2;
+  if ((dVar1 < 0.0) || (1.0 < dVar1)) {
     Scr_Error("Brake must be a value from 0 to 1");
   }
-  *(float *)(iVar1 + 0x3d8) = (float)dVar3;
-  __restgprlr_28();
+  param_1->brake = (float)dVar1;
   return;
 }
 
 
 // 826C5FD8  VehField_SetThrottle  (vehicle/vehicle_script.cpp:252)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
 void VehField_SetThrottle(Vehicle *param_1,VehicleScriptField *param_2)
 
 {
-  int iVar1;
-  ulonglong uVar2;
-  double dVar3;
-  float fVar4;
+  double dVar1;
+  float fVar2;
   
-  uVar2 = (ulonglong)(int)param_2;
-  iVar1 = __savegprlr_28(param_1);
-  if (iVar1 == 0) {
+  if (param_1 == (Vehicle *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_script.cpp",
                     0xff,0,"%s");
   }
-  if ((uVar2 & 0xffffffff) == 0) {
+  if (param_2 == (VehicleScriptField *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_script.cpp",
                     0x100,0,"%s");
   }
-  if (*(int *)(iVar1 + 0x1f0) == 0) {
+  if (param_1->physVeh == (PhysVehicle *)0x0) {
     Scr_Error("Throttle can be set only on physics vehicles");
   }
-  if (*(int *)(iVar1 + 4) != 2) {
+  if (param_1->drivingState != VEH_DRIVE_PATH_FOLLOW) {
     Scr_Error("Throttle can be set only on vehicles on a path in follow mode.");
   }
-  fVar4 = Scr_GetFloat(0);
-  dVar3 = (double)fVar4;
-  if (dVar3 < 0.0) {
+  fVar2 = Scr_GetFloat(0);
+  dVar1 = (double)fVar2;
+  if (dVar1 < 0.0) {
     Scr_Error("Throttle must be nonnegative");
   }
-  *(float *)(iVar1 + 0x3d4) = (float)dVar3;
-  __restgprlr_28();
+  param_1->throttle = (float)dVar1;
   return;
 }
 
 
 // 826C60B0  VehicleScript_AddFields  (vehicle/vehicle_script.cpp:379)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
@@ -486,7 +441,6 @@ void VehicleScript_AddFields(void)
   int iVar2;
   VehicleScriptField *pVVar3;
   
-  __savegprlr_23();
   pVVar3 = vehicleFields;
   iVar2 = 0;
   do {
@@ -503,101 +457,86 @@ void VehicleScript_AddFields(void)
     pVVar3 = pVVar3 + 1;
     iVar2 = iVar2 + 0x18;
   } while (pVVar3->name != (ushort *)0x0);
-  __restgprlr_23();
   return;
 }
 
 
 // 826C6178  VehicleScript_SetField  (vehicle/vehicle_script.cpp:393)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
 void VehicleScript_SetField(Vehicle *param_1,int param_2)
 
 {
-  int iVar1;
-  ulonglong uVar2;
-  ulonglong uVar3;
-  longlong lVar4;
-  
-  uVar3 = (ulonglong)param_2;
-  uVar2 = __savegprlr_28(param_1);
-  if ((uVar2 & 0xffffffff) == 0) {
+  if (param_1 == (Vehicle *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_script.cpp",
                     0x18c,0,"%s");
   }
-  if (7 < (uVar3 & 0xffffffff)) {
+  if (7 < (uint)param_2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_script.cpp",
                     0x18d,0,"%s");
   }
-  if ((int)uVar3 < 0) {
+  if (param_2 < 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_script.cpp",
                     0x18e,0,"%s");
   }
-  lVar4 = (uVar3 + (uVar3 & 0x7fffffff) * 2 & 0x1fffffff) * 8 + -0x7de5f550;
-  iVar1 = (int)lVar4;
-  if (*(code **)(iVar1 + 0x10) != (code *)0x0) {
-    (**(code **)(iVar1 + 0x10))(uVar2,lVar4);
-    __restgprlr_28();
+  if (vehicleFields[param_2].setter != (_func___cdecl_void_Vehicle_ptr_VehicleScriptField_ptr *)0x0)
+  {
+    (*vehicleFields[param_2].setter)(param_1,vehicleFields + param_2);
     return;
   }
-  if (*(int *)(iVar1 + 8) == 0) {
+  if (vehicleFields[param_2].ofs == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_script.cpp",
                     0x198,0,"%s");
   }
-  Scr_SetGenericField((uchar *)uVar2,*(fieldtype_t *)(iVar1 + 0xc),*(int *)(iVar1 + 8));
-  __restgprlr_28();
+  Scr_SetGenericField((uchar *)param_1,vehicleFields[param_2].type,vehicleFields[param_2].ofs);
   return;
 }
 
 
 // 826C6288  VehicleScript_GetField  (vehicle/vehicle_script.cpp:415)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
 void VehicleScript_GetField(Vehicle *param_1,int param_2)
 
 {
-  int iVar1;
-  ulonglong uVar2;
-  ulonglong uVar3;
-  longlong lVar4;
-  
-  uVar3 = (ulonglong)param_2;
-  uVar2 = __savegprlr_28(param_1);
-  if ((uVar2 & 0xffffffff) == 0) {
+  if (param_1 == (Vehicle *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_script.cpp",
                     0x1a2,0,"%s");
   }
-  if (7 < (uVar3 & 0xffffffff)) {
+  if (7 < (uint)param_2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_script.cpp",
                     0x1a3,0,"%s");
   }
-  if ((int)uVar3 < 0) {
+  if (param_2 < 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_script.cpp",
                     0x1a4,0,"%s");
   }
-  lVar4 = (uVar3 + (uVar3 & 0x7fffffff) * 2 & 0x1fffffff) * 8 + -0x7de5f550;
-  iVar1 = (int)lVar4;
-  if (*(code **)(iVar1 + 0x14) != (code *)0x0) {
-    (**(code **)(iVar1 + 0x14))(uVar2,lVar4);
-    __restgprlr_28();
+  if (vehicleFields[param_2].getter != (_func___cdecl_void_Vehicle_ptr_VehicleScriptField_ptr *)0x0)
+  {
+    (*vehicleFields[param_2].getter)(param_1,vehicleFields + param_2);
     return;
   }
-  if (*(int *)(iVar1 + 8) == 0) {
+  if (vehicleFields[param_2].ofs == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_script.cpp",
                     0x1ae,0,"%s");
   }
-  Scr_GetGenericField((uchar *)uVar2,*(fieldtype_t *)(iVar1 + 0xc),*(int *)(iVar1 + 8));
-  __restgprlr_28();
+  Scr_GetGenericField((uchar *)param_1,vehicleFields[param_2].type,vehicleFields[param_2].ofs);
   return;
 }
 
 
 // 826C6398  VehicleScript_GetVehicleEntity  (vehicle/vehicle_script.cpp:440)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
@@ -605,98 +544,99 @@ gentity_s * VehicleScript_GetVehicleEntity(scr_entref_t param_1)
 
 {
   bool bVar1;
-  gentity_s *pgVar2;
-  char *pcVar3;
-  uint uVar4;
+  char *pcVar2;
+  uint uVar3;
   ushort uStack00000014;
-  short sStack00000016;
+  ushort uStack00000016;
   
-  _uStack00000014 = __savegprlr_27(param_1);
-  if (sStack00000016 == 0) {
-    uStack00000014 = (ushort)((uint)_uStack00000014 >> 0x10);
-    uVar4 = (uint)uStack00000014;
+  uStack00000016 = param_1.classnum;
+  _uStack00000014 = param_1;
+  if (uStack00000016 == 0) {
+    uStack00000014 = param_1.entnum;
+    uVar3 = (uint)uStack00000014;
     bVar1 = 0x7ff < uStack00000014;
     if (bVar1) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_script.cpp",
                       0x1c3,0,"%s");
     }
-    if (g_entities[uVar4].s.eType == 0x11) {
-      if (g_entities[uVar4].targetname != 0) {
-        SL_ConvertToString((uint)g_entities[uVar4].targetname);
+    if (g_entities[uVar3].s.eType == 0x11) {
+      if (g_entities[uVar3].targetname != 0) {
+        SL_ConvertToString((uint)g_entities[uVar3].targetname);
       }
-      SL_ConvertToString((uint)g_entities[uVar4].classname);
-      pcVar3 = va(
+      SL_ConvertToString((uint)g_entities[uVar3].classname);
+      pcVar2 = va(
                  "Trying to call a vehicle command on a spawner.\nEntity \'%s\' at (%.0f %.0f %.0f)\n"
                  );
-      Scr_Error(pcVar3);
+      Scr_Error(pcVar2);
     }
-    if (g_entities[uVar4].classname != scr_const.script_vehicle) {
-      if (g_entities[uVar4].targetname != 0) {
-        SL_ConvertToString((uint)g_entities[uVar4].targetname);
+    if (g_entities[uVar3].classname != scr_const.script_vehicle) {
+      if (g_entities[uVar3].targetname != 0) {
+        SL_ConvertToString((uint)g_entities[uVar3].targetname);
       }
-      SL_ConvertToString((uint)g_entities[uVar4].classname);
-      pcVar3 = va(
+      SL_ConvertToString((uint)g_entities[uVar3].classname);
+      pcVar2 = va(
                  "Trying to call a vehicle command on a non-script_vehicle entity.\nEntity \'%s\' at (%.0f %.0f %.0f)\n"
                  );
-      Scr_Error(pcVar3);
+      Scr_Error(pcVar2);
     }
-    if (g_entities[uVar4].vehicle == (Vehicle *)0x0) {
+    if (g_entities[uVar3].vehicle == (Vehicle *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_script.cpp",
                       0x1cd,0,"%s");
     }
-    pgVar2 = (gentity_s *)__restgprlr_27(g_entities + uVar4);
-    return pgVar2;
+    return g_entities + uVar3;
   }
   Scr_ObjectError("not an entity");
-  pgVar2 = (gentity_s *)__restgprlr_27(0);
-  return pgVar2;
+  return (gentity_s *)0x0;
 }
 
 
 // 826C6570  VehicleScript_GetSpawnerEntity  (vehicle/vehicle_script.cpp:468)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
 gentity_s * VehicleScript_GetSpawnerEntity(scr_entref_t param_1)
 
 {
-  uint uVar1;
-  char *pcVar2;
-  gentity_s *pgVar3;
-  uint uStack00000014;
+  bool bVar1;
+  uint uVar2;
+  char *pcVar3;
+  scr_entref_t sStack00000014;
   
-  uStack00000014 = __savegprlr_29(param_1);
-  if (uStack00000014._2_2_ != 0) {
+  sStack00000014.classnum = param_1.classnum;
+  bVar1 = sStack00000014.classnum != 0;
+  sStack00000014 = param_1;
+  if (bVar1) {
     Scr_ObjectError("not an entity");
   }
-  uVar1 = uStack00000014 >> 0x10;
-  if (0x7ff < uVar1) {
+  uVar2 = (uint)sStack00000014 >> 0x10;
+  if (0x7ff < uVar2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_script.cpp",
                     0x1da,0,"%s");
   }
-  if (g_entities[uVar1].s.eType != 0x11) {
-    if (g_entities[uVar1].targetname != 0) {
-      SL_ConvertToString((uint)g_entities[uVar1].targetname);
+  if (g_entities[uVar2].s.eType != 0x11) {
+    if (g_entities[uVar2].targetname != 0) {
+      SL_ConvertToString((uint)g_entities[uVar2].targetname);
     }
-    SL_ConvertToString((uint)g_entities[uVar1].classname);
-    pcVar2 = va(
+    SL_ConvertToString((uint)g_entities[uVar2].classname);
+    pcVar3 = va(
                "Trying to call a vehicle spawner command on a vehicle.\nEntity \'%s\' at (%.0f %.0f %.0f)\n"
                );
-    Scr_Error(pcVar2);
+    Scr_Error(pcVar3);
   }
-  if (g_entities[uVar1].classname != scr_const.script_vehicle) {
-    if (g_entities[uVar1].targetname != 0) {
-      SL_ConvertToString((uint)g_entities[uVar1].targetname);
+  if (g_entities[uVar2].classname != scr_const.script_vehicle) {
+    if (g_entities[uVar2].targetname != 0) {
+      SL_ConvertToString((uint)g_entities[uVar2].targetname);
     }
-    SL_ConvertToString((uint)g_entities[uVar1].classname);
-    pcVar2 = va(
+    SL_ConvertToString((uint)g_entities[uVar2].classname);
+    pcVar3 = va(
                "Trying to call a vehicle spawner command on a non-script_vehicle entity.\nEntity \'%s\' at (%.0f %.0f %.0f)\n"
                );
-    Scr_Error(pcVar2);
+    Scr_Error(pcVar3);
   }
-  pgVar3 = (gentity_s *)__restgprlr_29(g_entities + uVar1);
-  return pgVar3;
+  return g_entities + uVar2;
 }
 
 
@@ -749,6 +689,8 @@ void VehicleScript_Precache(void)
 
 // 826C67A8  VehicleScript_Spawn  (vehicle/vehicle_script.cpp:552)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
@@ -769,7 +711,6 @@ void VehicleScript_Spawn(void)
   float local_4c;
   float local_48;
   
-  __savegprlr_26();
   pcVar1 = Scr_GetString(0);
   uVar2 = Scr_GetConstString(1);
   uVar3 = Scr_GetConstString(2);
@@ -794,7 +735,6 @@ void VehicleScript_Spawn(void)
   pcVar1 = SL_ConvertToString(uVar3);
   Vehicle_Create(pgVar6,pcVar1,pgVar5,0);
   Scr_AddEntity(pgVar6);
-  __restgprlr_26();
   return;
 }
 
@@ -834,6 +774,8 @@ void VehicleScript_GetArray(void)
 
 // 826C6940  VehicleScript_GetSpawnerArray  (vehicle/vehicle_script.cpp:645)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
@@ -847,7 +789,6 @@ void VehicleScript_GetSpawnerArray(void)
   int iVar4;
   int iVar5;
   
-  __savegprlr_29();
   uVar1 = Scr_GetNumParam();
   if (uVar1 != 0) {
     Scr_Error("Cannot call Vehicle_GetSpawnerArray() with parameters");
@@ -868,13 +809,14 @@ void VehicleScript_GetSpawnerArray(void)
       iVar5 = iVar5 + 0x280;
     } while (iVar4 < iVar3);
   }
-  __restgprlr_29();
   return;
 }
 
 
 // 826C69C8  Vehicle_Teleport  (vehicle/vehicle_script.cpp:677)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
@@ -883,53 +825,50 @@ void Vehicle_Teleport(Vehicle *param_1,float *param_2,float *param_3)
 
 {
   gentity_s *pgVar1;
-  undefined4 *puVar2;
-  VehicleDef *pVVar3;
-  float *pfVar4;
-  vehicle_physic_t *pvVar5;
+  VehicleDef *pVVar2;
+  float *pfVar3;
+  vehicle_physic_t *pvVar4;
   
-  puVar2 = (undefined4 *)__savegprlr_23(param_1);
-  if (puVar2 == (undefined4 *)0x0) {
+  if (param_1 == (Vehicle *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_script.cpp",
                     0x2aa,0,"%s");
   }
-  pVVar3 = Vehicle_GetServerDef(puVar2[0x84]);
-  pgVar1 = (gentity_s *)*puVar2;
-  pvVar5 = (vehicle_physic_t *)(puVar2 + 0x35);
+  pVVar2 = Vehicle_GetServerDef(param_1->defIndex);
+  pgVar1 = param_1->ent;
+  pvVar4 = &param_1->phys;
   if (pgVar1 == (gentity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_script.cpp",
                     0x2b0,0,"%s");
   }
   (pgVar1->s).lerp.eFlags = (pgVar1->s).lerp.eFlags ^ 2;
-  pvVar5->origin[0] = *param_2;
-  pfVar4 = (float *)(puVar2 + 0x3b);
-  puVar2[0x36] = param_2[1];
-  puVar2[0x37] = param_2[2];
-  puVar2[0x3b] = *param_3;
-  puVar2[0x3c] = param_3[1];
-  puVar2[0x3d] = param_3[2];
-  VEH_SetPosition(pgVar1,param_2,(float *)(puVar2 + 0x47),param_3);
-  puVar2[0x38] = *param_2;
-  puVar2[0x39] = param_2[1];
-  puVar2[0x3a] = param_2[2];
-  puVar2[0x3e] = *param_3;
-  puVar2[0x3f] = param_3[1];
-  puVar2[0x40] = param_3[2];
-  VEH_ResetWheels(pgVar1,pvVar5);
-  if ((pVVar3->type == VEH_WHEELS_4) || (pVVar3->type == VEH_TANK)) {
-    VEH_GroundPlant(pgVar1,pvVar5,0);
+  pvVar4->origin[0] = *param_2;
+  pfVar3 = (param_1->phys).angles;
+  (param_1->phys).origin[1] = param_2[1];
+  (param_1->phys).origin[2] = param_2[2];
+  (param_1->phys).angles[0] = *param_3;
+  (param_1->phys).angles[1] = param_3[1];
+  (param_1->phys).angles[2] = param_3[2];
+  VEH_SetPosition(pgVar1,param_2,(param_1->phys).vel,param_3);
+  (param_1->phys).prevOrigin[0] = *param_2;
+  (param_1->phys).prevOrigin[1] = param_2[1];
+  (param_1->phys).prevOrigin[2] = param_2[2];
+  (param_1->phys).prevAngles[0] = *param_3;
+  (param_1->phys).prevAngles[1] = param_3[1];
+  (param_1->phys).prevAngles[2] = param_3[2];
+  VEH_ResetWheels(pgVar1,pvVar4);
+  if ((pVVar2->type == VEH_WHEELS_4) || (pVVar2->type == VEH_TANK)) {
+    VEH_GroundPlant(pgVar1,pvVar4,0);
   }
-  VEH_SetPosition(pgVar1,(float *)pvVar5,vec3_origin,pfVar4);
-  puVar2[0x38] = pvVar5->origin[0];
-  puVar2[0x39] = puVar2[0x36];
-  puVar2[0x3a] = puVar2[0x37];
-  puVar2[0x3e] = *pfVar4;
-  puVar2[0x3f] = puVar2[0x3c];
-  puVar2[0x40] = puVar2[0x3d];
-  if ((PhysVehicle *)puVar2[0x7c] != (PhysVehicle *)0x0) {
-    PhysVeh_SetState((PhysVehicle *)puVar2[0x7c],(float *)pvVar5,pfVar4,vec3_origin,vec3_origin);
+  VEH_SetPosition(pgVar1,pvVar4->origin,vec3_origin,pfVar3);
+  (param_1->phys).prevOrigin[0] = pvVar4->origin[0];
+  (param_1->phys).prevOrigin[1] = (param_1->phys).origin[1];
+  (param_1->phys).prevOrigin[2] = (param_1->phys).origin[2];
+  (param_1->phys).prevAngles[0] = *pfVar3;
+  (param_1->phys).prevAngles[1] = (param_1->phys).angles[1];
+  (param_1->phys).prevAngles[2] = (param_1->phys).angles[2];
+  if (param_1->physVeh != (PhysVehicle *)0x0) {
+    PhysVeh_SetState(param_1->physVeh,pvVar4->origin,pfVar3,vec3_origin,vec3_origin);
   }
-  __restgprlr_23();
   return;
 }
 
@@ -1013,6 +952,8 @@ void VehCmd_AttachPath(scr_entref_t param_1)
 
 // 826C6D20  VehCmd_GetAttachPos  (vehicle/vehicle_script.cpp:796)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
@@ -1021,27 +962,25 @@ void VehCmd_GetAttachPos(scr_entref_t param_1)
 
 {
   Vehicle *pVVar1;
-  scr_entref_t sVar2;
-  gentity_s *pgVar3;
-  VehicleDef *pVVar4;
-  short sVar5;
-  bool bVar6;
+  gentity_s *pgVar2;
+  VehicleDef *pVVar3;
+  short sVar4;
+  bool bVar5;
+  double dVar6;
   double dVar7;
-  double dVar8;
   vehicle_physic_t local_210;
   VehiclePathPos VStack_f0;
   
-  sVar2 = (scr_entref_t)__savegprlr_29(param_1);
-  pgVar3 = VehicleScript_GetVehicleEntity(sVar2);
-  pVVar1 = pgVar3->vehicle;
+  pgVar2 = VehicleScript_GetVehicleEntity(param_1);
+  pVVar1 = pgVar2->vehicle;
   if (pVVar1 == (Vehicle *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_script.cpp",
                     0x327,0,"%s");
   }
-  pVVar4 = Vehicle_GetServerDef(pVVar1->defIndex);
-  sVar5 = VehPathScr_GetNodeIndex(0);
-  bVar6 = VehPath_AttachPathPos(&VStack_f0,sVar5);
-  if (!bVar6) {
+  pVVar3 = Vehicle_GetServerDef(pVVar1->defIndex);
+  sVar4 = VehPathScr_GetNodeIndex(0);
+  bVar5 = VehPath_AttachPathPos(&VStack_f0,sVar4);
+  if (!bVar5) {
     Scr_Error("GetAttachPos: Unable to attach to path node");
   }
   Com_Memcpy(&local_210,&pVVar1->phys,0x11c);
@@ -1052,26 +991,27 @@ void VehCmd_GetAttachPos(scr_entref_t param_1)
   local_210.angles[0] = VStack_f0.angles[0];
   local_210.angles[2] = VStack_f0.angles[2];
   if (pVVar1->transMode == VEH_TRANS_REVERSE) {
-    dVar8 = (double)((VStack_f0.angles[1] + 180.0) * 0.0027777778);
-    dVar7 = floor((double)(float)(dVar8 + 0.5));
-    local_210.angles[1] = (float)(dVar8 - (double)(float)dVar7) * 360.0;
+    dVar7 = (double)((VStack_f0.angles[1] + 180.0) * 0.0027777778);
+    dVar6 = floor((double)(float)(dVar7 + 0.5));
+    local_210.angles[1] = (float)(dVar7 - (double)(float)dVar6) * 360.0;
   }
-  VEH_ResetWheels(pgVar3,&local_210);
-  if ((pVVar4->type == VEH_WHEELS_4) || (pVVar4->type == VEH_TANK)) {
-    VEH_GroundPlant(pgVar3,&local_210,0);
+  VEH_ResetWheels(pgVar2,&local_210);
+  if ((pVVar3->type == VEH_WHEELS_4) || (pVVar3->type == VEH_TANK)) {
+    VEH_GroundPlant(pgVar2,&local_210,0);
   }
   Scr_MakeArray();
   Scr_AddVector(local_210.origin);
   Scr_AddArray();
   Scr_AddVector(local_210.angles);
   Scr_AddArray();
-  __restgprlr_29();
   return;
 }
 
 
 // 826C6E88  VehCmd_StartPath  (vehicle/vehicle_script.cpp:850)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
@@ -1079,21 +1019,19 @@ void VehCmd_StartPath(scr_entref_t param_1)
 
 {
   Vehicle *pVVar1;
-  scr_entref_t sVar2;
-  gentity_s *pgVar3;
-  uint uVar4;
-  short sVar5;
-  bool bVar6;
+  gentity_s *pgVar2;
+  uint uVar3;
+  short sVar4;
+  bool bVar5;
   
-  sVar2 = (scr_entref_t)__savegprlr_28(param_1);
-  pgVar3 = VehicleScript_GetVehicleEntity(sVar2);
-  pVVar1 = pgVar3->vehicle;
+  pgVar2 = VehicleScript_GetVehicleEntity(param_1);
+  pVVar1 = pgVar2->vehicle;
   if (pVVar1 == (Vehicle *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_script.cpp",
                     0x35c,0,"%s");
   }
-  uVar4 = Scr_GetNumParam();
-  if (uVar4 == 0) {
+  uVar3 = Scr_GetNumParam();
+  if (uVar3 == 0) {
     if (0x7fff < (ushort)(pVVar1->pathPos).nodeIdx) {
       Scr_Error(
                "StartPath: Can\'t start vehicle on path.  Vehicle must already be attached if no node is specified"
@@ -1101,9 +1039,9 @@ void VehCmd_StartPath(scr_entref_t param_1)
     }
   }
   else {
-    sVar5 = VehPathScr_GetNodeIndex(0);
-    bVar6 = VehPath_AttachPathPos(&pVVar1->pathPos,sVar5);
-    if (!bVar6) {
+    sVar4 = VehPathScr_GetNodeIndex(0);
+    bVar5 = VehPath_AttachPathPos(&pVVar1->pathPos,sVar4);
+    if (!bVar5) {
       Scr_Error("StartPath: Unable to attach to path node");
     }
     (pVVar1->pathPos).origin[0] = (pVVar1->phys).origin[0];
@@ -1127,11 +1065,9 @@ void VehCmd_StartPath(scr_entref_t param_1)
     pVVar1->drivingState = VEH_DRIVE_PATH_FOLLOW;
     pVVar1->throttle = 1.0;
     pVVar1->brake = 0.0;
-    __restgprlr_28();
     return;
   }
   pVVar1->drivingState = VEH_DRIVE_PATH_CONSTRAINED;
-  __restgprlr_28();
   return;
 }
 
@@ -1183,6 +1119,8 @@ void VehCmd_SetWaitSpeed(scr_entref_t param_1)
 
 // 826C70D0  VehCmd_FinishDamage  (vehicle/vehicle_script.cpp:1043)
 
+/* WARNING: Function: __savegprlr_19 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_19 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
@@ -1190,17 +1128,16 @@ void VehCmd_FinishDamage(scr_entref_t param_1)
 
 {
   bool bVar1;
-  scr_entref_t sVar2;
-  gentity_s *pgVar3;
-  int iVar4;
+  gentity_s *pgVar2;
+  int iVar3;
+  gentity_s *pgVar4;
   gentity_s *pgVar5;
-  gentity_s *pgVar6;
-  int iVar7;
-  meansOfDeath_t mVar8;
-  char *pcVar9;
-  uint uVar10;
-  int iVar11;
-  Weapon WVar12;
+  int iVar6;
+  meansOfDeath_t mVar7;
+  char *pcVar8;
+  uint uVar9;
+  int iVar10;
+  Weapon WVar11;
   Weapon in_stack_fffffef8;
   undefined1 in_stack_fffffeff;
   hitLocation_t in_stack_ffffff00;
@@ -1210,63 +1147,61 @@ void VehCmd_FinishDamage(scr_entref_t param_1)
   float afStack_90 [4];
   float afStack_80 [32];
   
-  sVar2 = (scr_entref_t)__savegprlr_19(param_1);
-  pgVar3 = VehicleScript_GetVehicleEntity(sVar2);
+  pgVar2 = VehicleScript_GetVehicleEntity(param_1);
+  pgVar4 = g_entities + 0x7fe;
   pgVar5 = g_entities + 0x7fe;
-  pgVar6 = g_entities + 0x7fe;
-  iVar4 = Scr_GetType(0);
-  if ((iVar4 != 0) && (iVar4 = Scr_GetPointerType(0), iVar4 == 0x16)) {
-    pgVar5 = Scr_GetEntity(0);
+  iVar3 = Scr_GetType(0);
+  if ((iVar3 != 0) && (iVar3 = Scr_GetPointerType(0), iVar3 == 0x16)) {
+    pgVar4 = Scr_GetEntity(0);
   }
-  iVar4 = Scr_GetType(1);
-  if ((iVar4 != 0) && (iVar4 = Scr_GetPointerType(1), iVar4 == 0x16)) {
-    pgVar6 = Scr_GetEntity(1);
+  iVar3 = Scr_GetType(1);
+  if ((iVar3 != 0) && (iVar3 = Scr_GetPointerType(1), iVar3 == 0x16)) {
+    pgVar5 = Scr_GetEntity(1);
   }
-  iVar4 = Scr_GetInt(2);
-  if (0 < iVar4) {
-    iVar7 = Scr_GetInt(3);
-    mVar8 = G_MeansOfDeathFromScriptParam(4);
-    pcVar9 = Scr_GetString(5);
-    if ((((*pcVar9 != 'a') || (pcVar9[1] != 'l')) || (pcVar9[2] != 't')) ||
-       (bVar1 = true, pcVar9[3] != '_')) {
+  iVar3 = Scr_GetInt(2);
+  if (0 < iVar3) {
+    iVar6 = Scr_GetInt(3);
+    mVar7 = G_MeansOfDeathFromScriptParam(4);
+    pcVar8 = Scr_GetString(5);
+    if ((((*pcVar8 != 'a') || (pcVar8[1] != 'l')) || (pcVar8[2] != 't')) ||
+       (bVar1 = true, pcVar8[3] != '_')) {
       bVar1 = false;
     }
     if (bVar1) {
-      pcVar9 = pcVar9 + 4;
+      pcVar8 = pcVar8 + 4;
     }
     Scr_GetVector(6,afStack_90);
     Scr_GetVector(7,afStack_80);
-    uVar10 = Scr_GetConstString(8);
-    G_GetHitLocationIndexFromString((ushort)uVar10);
+    uVar9 = Scr_GetConstString(8);
+    G_GetHitLocationIndexFromString((ushort)uVar9);
     Scr_GetInt(9);
-    iVar11 = Scr_GetInt(10);
+    iVar10 = Scr_GetInt(10);
     Scr_GetConstString(0xb);
-    WVar12 = G_GetWeaponForName(pcVar9);
-    if (((WVar12.data & 0xff) == 0) && (uVar10 = Scr_GetConstString(5), uVar10 != scr_const.none)) {
+    WVar11 = G_GetWeaponForName(pcVar8);
+    if (((WVar11.data & 0xff) == 0) && (uVar9 = Scr_GetConstString(5), uVar9 != scr_const.none)) {
       Scr_GetString(5);
-      pcVar9 = va("weapon [%s] has not been precached");
-      Scr_Error(pcVar9);
-      __restgprlr_19();
+      pcVar8 = va("weapon [%s] has not been precached");
+      Scr_Error(pcVar8);
       return;
     }
-    if (iVar11 < 0) {
-      pcVar9 = va("modelIndex [%d] must be greater than or equal to zero");
-      Scr_Error(pcVar9);
-      __restgprlr_19();
+    if (iVar10 < 0) {
+      pcVar8 = va("modelIndex [%d] must be greater than or equal to zero");
+      Scr_Error(pcVar8);
       return;
     }
     Vehicle_FinishDamage
-              (pgVar3,pgVar5,pgVar6,afStack_80,afStack_90,iVar4,iVar7,mVar8,in_stack_fffffef8,
+              (pgVar2,pgVar4,pgVar5,afStack_80,afStack_90,iVar3,iVar6,mVar7,in_stack_fffffef8,
                (bool)in_stack_fffffeff,in_stack_ffffff00,in_stack_ffffff04,in_stack_ffffff08,
                in_stack_ffffff0c);
   }
-  __restgprlr_19();
   return;
 }
 
 
 // 826C72F8  VehCmd_SetSpeedInternal  (vehicle/vehicle_script.cpp:1112)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
@@ -1274,66 +1209,63 @@ void VehCmd_FinishDamage(scr_entref_t param_1)
 void VehCmd_SetSpeedInternal(gentity_s *param_1)
 
 {
-  int iVar1;
+  Vehicle *pVVar1;
   VehicleDef *pVVar2;
   uint uVar3;
   double dVar4;
   double dVar5;
   float fVar6;
   
-  iVar1 = __savegprlr_28(param_1);
-  if (iVar1 == 0) {
+  if (param_1 == (gentity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_script.cpp",
                     0x45c,0,"%s");
   }
-  iVar1 = *(int *)(iVar1 + 0x160);
-  if (iVar1 == 0) {
+  pVVar1 = param_1->vehicle;
+  if (pVVar1 == (Vehicle *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_script.cpp",
                     0x45f,0,"%s");
   }
-  pVVar2 = Vehicle_GetServerDef(*(int *)(iVar1 + 0x210));
-  *(undefined4 *)(iVar1 + 0x36c) = 1;
+  pVVar2 = Vehicle_GetServerDef(pVVar1->defIndex);
+  pVVar1->manualMode = VEH_MANUAL_ON;
   fVar6 = Scr_GetFloat(0);
   dVar5 = 17.600000381469727;
   dVar4 = 0.0;
-  *(float *)(iVar1 + 0x370) = fVar6 * 17.6;
+  pVVar1->manualSpeed = fVar6 * 17.6;
   if (fVar6 * 17.6 < 0.0) {
     Scr_ParamError(0,"Cannot set negative speed on vehicle");
-    *(float *)(iVar1 + 0x370) = (float)dVar4;
+    pVVar1->manualSpeed = (float)dVar4;
   }
   uVar3 = Scr_GetNumParam();
   if (uVar3 < 2) {
-    if (dVar4 < (double)*(float *)(iVar1 + 0x374)) goto LAB_826c7410;
+    if (dVar4 < (double)pVVar1->manualAccel) goto LAB_826c7410;
     Scr_Error("Acceleration must be > 0 when setting speed");
   }
   else {
     fVar6 = Scr_GetFloat(1);
-    *(float *)(iVar1 + 0x374) = (float)((double)fVar6 * dVar5);
+    pVVar1->manualAccel = (float)((double)fVar6 * dVar5);
     if (dVar4 < (double)(float)((double)fVar6 * dVar5)) goto LAB_826c7410;
     Scr_ParamError(1,"Acceleration must be > 0");
   }
-  *(float *)(iVar1 + 0x374) = (float)dVar5;
+  pVVar1->manualAccel = (float)dVar5;
 LAB_826c7410:
-  if (((pVVar2->type == VEH_HELICOPTER) && (*(float *)(iVar1 + 0x2f8) < *(float *)(iVar1 + 0x370)))
-     && (*(float *)(iVar1 + 0x370) < *(float *)(iVar1 + 0x374))) {
+  if (((pVVar2->type == VEH_HELICOPTER) && (pVVar1->speed < pVVar1->manualSpeed)) &&
+     (pVVar1->manualSpeed < pVVar1->manualAccel)) {
     Com_PrintWarning(0xf,"WARNING: capping acceleration to speed / sec for vehicle \'%d\'\n");
-    *(undefined4 *)(iVar1 + 0x374) = *(undefined4 *)(iVar1 + 0x370);
+    pVVar1->manualAccel = pVVar1->manualSpeed;
   }
   uVar3 = Scr_GetNumParam();
   if (uVar3 < 3) {
-    *(float *)(iVar1 + 0x378) = *(float *)(iVar1 + 0x374) * 0.5;
+    pVVar1->manualDecel = pVVar1->manualAccel * 0.5;
   }
   else {
     fVar6 = Scr_GetFloat(2);
-    *(float *)(iVar1 + 0x378) = (float)((double)fVar6 * dVar5);
+    pVVar1->manualDecel = (float)((double)fVar6 * dVar5);
     if ((double)(float)((double)fVar6 * dVar5) <= dVar4) {
       Scr_ParamError(2,"Deceleration must be > 0");
-      *(float *)(iVar1 + 0x378) = (float)dVar5;
-      __restgprlr_28();
+      pVVar1->manualDecel = (float)dVar5;
       return;
     }
   }
-  __restgprlr_28();
   return;
 }
 
@@ -1356,6 +1288,8 @@ void VehCmd_SetSpeed(scr_entref_t param_1)
 
 // 826C74E8  VehCmd_SetSpeedImmediate  (vehicle/vehicle_script.cpp:1209)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
@@ -1367,31 +1301,29 @@ void VehCmd_SetSpeedImmediate(scr_entref_t param_1)
   float fVar2;
   Vehicle *pVVar3;
   float fVar4;
-  scr_entref_t sVar5;
-  gentity_s *pgVar6;
-  VehicleDef *pVVar7;
+  gentity_s *pgVar5;
+  VehicleDef *pVVar6;
   float local_30;
   float local_2c;
   float local_28;
   
-  sVar5 = (scr_entref_t)__savegprlr_29(param_1);
-  pgVar6 = VehicleScript_GetVehicleEntity(sVar5);
-  pVVar3 = pgVar6->vehicle;
+  pgVar5 = VehicleScript_GetVehicleEntity(param_1);
+  pVVar3 = pgVar5->vehicle;
   if (pVVar3 == (Vehicle *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_script.cpp",
                     0x4c2,0,"%s");
   }
-  pVVar7 = Vehicle_GetServerDef(pVVar3->defIndex);
-  VehCmd_SetSpeedInternal(pgVar6);
-  if ((pVVar7->type == VEH_HELICOPTER) && (pVVar3->drivingState == VEH_DRIVE_AI)) {
-    fVar1 = (pgVar6->r).currentOrigin[0];
+  pVVar6 = Vehicle_GetServerDef(pVVar3->defIndex);
+  VehCmd_SetSpeedInternal(pgVar5);
+  if ((pVVar6->type == VEH_HELICOPTER) && (pVVar3->drivingState == VEH_DRIVE_AI)) {
+    fVar1 = (pgVar5->r).currentOrigin[0];
     fVar2 = (pVVar3->heliPathPos).goalPosition[0];
     if ((fVar2 != fVar1) ||
-       (((pVVar3->heliPathPos).goalPosition[1] != (pgVar6->r).currentOrigin[1] ||
-        ((pVVar3->heliPathPos).goalPosition[2] != (pgVar6->r).currentOrigin[2])))) {
+       (((pVVar3->heliPathPos).goalPosition[1] != (pgVar5->r).currentOrigin[1] ||
+        ((pVVar3->heliPathPos).goalPosition[2] != (pgVar5->r).currentOrigin[2])))) {
       fVar2 = fVar2 - fVar1;
-      local_2c = (pVVar3->heliPathPos).goalPosition[1] - (pgVar6->r).currentOrigin[1];
-      local_28 = (pVVar3->heliPathPos).goalPosition[2] - (pgVar6->r).currentOrigin[2];
+      local_2c = (pVVar3->heliPathPos).goalPosition[1] - (pgVar5->r).currentOrigin[1];
+      local_28 = (pVVar3->heliPathPos).goalPosition[2] - (pgVar5->r).currentOrigin[2];
       fVar4 = SQRT(fVar2 * fVar2 + local_28 * local_28 + local_2c * local_2c);
       fVar1 = 1.0;
       if (-fVar4 < 0.0) {
@@ -1404,7 +1336,7 @@ void VehCmd_SetSpeedImmediate(scr_entref_t param_1)
       goto LAB_826c7600;
     }
   }
-  AngleVectors((pgVar6->r).currentAngles,&local_30,(float *)0x0,(float *)0x0);
+  AngleVectors((pgVar5->r).currentAngles,&local_30,(float *)0x0,(float *)0x0);
 LAB_826c7600:
   fVar1 = pVVar3->manualSpeed;
   pVVar3->speed = fVar1;
@@ -1415,7 +1347,6 @@ LAB_826c7600:
   if (pVVar3->physVeh != (PhysVehicle *)0x0) {
     PhysVeh_SetVelocity(pVVar3->physVeh,(pVVar3->phys).vel);
   }
-  __restgprlr_29();
   return;
 }
 
@@ -1625,6 +1556,8 @@ void VehCmd_GetGoalSpeedMPH(scr_entref_t param_1)
 
 // 826C7A00  VehCmd_SetAcceleration  (vehicle/vehicle_script.cpp:1485)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
@@ -1632,30 +1565,29 @@ void VehCmd_SetAcceleration(scr_entref_t param_1)
 
 {
   Vehicle *pVVar1;
-  scr_entref_t sVar2;
-  gentity_s *pgVar3;
-  float fVar4;
+  gentity_s *pgVar2;
+  float fVar3;
   
-  sVar2 = (scr_entref_t)__savegprlr_29(param_1);
-  pgVar3 = VehicleScript_GetVehicleEntity(sVar2);
-  if (pgVar3 == (gentity_s *)0x0) {
+  pgVar2 = VehicleScript_GetVehicleEntity(param_1);
+  if (pgVar2 == (gentity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_script.cpp",
                     0x5cf,0,"%s");
   }
-  pVVar1 = pgVar3->vehicle;
+  pVVar1 = pgVar2->vehicle;
   if (pVVar1 == (Vehicle *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_script.cpp",
                     0x5d2,0,"%s");
   }
-  fVar4 = Scr_GetFloat(0);
-  pVVar1->manualAccel = fVar4 * 17.6;
-  __restgprlr_29();
+  fVar3 = Scr_GetFloat(0);
+  pVVar1->manualAccel = fVar3 * 17.6;
   return;
 }
 
 
 // 826C7A90  VehCmd_SetDeceleration  (vehicle/vehicle_script.cpp:1508)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
@@ -1663,24 +1595,21 @@ void VehCmd_SetDeceleration(scr_entref_t param_1)
 
 {
   Vehicle *pVVar1;
-  scr_entref_t sVar2;
-  gentity_s *pgVar3;
-  float fVar4;
+  gentity_s *pgVar2;
+  float fVar3;
   
-  sVar2 = (scr_entref_t)__savegprlr_29(param_1);
-  pgVar3 = VehicleScript_GetVehicleEntity(sVar2);
-  if (pgVar3 == (gentity_s *)0x0) {
+  pgVar2 = VehicleScript_GetVehicleEntity(param_1);
+  if (pgVar2 == (gentity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_script.cpp",
                     0x5e6,0,"%s");
   }
-  pVVar1 = pgVar3->vehicle;
+  pVVar1 = pgVar2->vehicle;
   if (pVVar1 == (Vehicle *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_script.cpp",
                     0x5e9,0,"%s");
   }
-  fVar4 = Scr_GetFloat(0);
-  pVVar1->manualDecel = fVar4 * 17.6;
-  __restgprlr_29();
+  fVar3 = Scr_GetFloat(0);
+  pVVar1->manualDecel = fVar3 * 17.6;
   return;
 }
 
@@ -1711,6 +1640,8 @@ void VehCmd_ResumeSpeed(scr_entref_t param_1)
 
 // 826C7B90  VehCmd_SetYawSpeed  (vehicle/vehicle_script.cpp:1558)
 
+/* WARNING: Function: __savefpr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
@@ -1719,54 +1650,51 @@ void VehCmd_SetYawSpeed(scr_entref_t param_1)
 
 {
   Vehicle *pVVar1;
-  scr_entref_t sVar2;
-  gentity_s *pgVar3;
-  VehicleDef *pVVar4;
-  uint uVar5;
+  gentity_s *pgVar2;
+  VehicleDef *pVVar3;
+  uint uVar4;
+  double dVar5;
   double dVar6;
   double dVar7;
   double dVar8;
   double dVar9;
-  double dVar10;
-  float fVar11;
+  float fVar10;
   
-  sVar2 = (scr_entref_t)__savefpr_27(param_1);
-  pgVar3 = VehicleScript_GetVehicleEntity(sVar2);
-  pVVar1 = pgVar3->vehicle;
-  pVVar4 = Vehicle_GetServerDef(pVVar1->defIndex);
-  if (pVVar4->type != VEH_HELICOPTER) {
+  pgVar2 = VehicleScript_GetVehicleEntity(param_1);
+  pVVar1 = pgVar2->vehicle;
+  pVVar3 = Vehicle_GetServerDef(pVVar1->defIndex);
+  if (pVVar3->type != VEH_HELICOPTER) {
     Scr_ObjectError("Vehicle must be a helicopter.");
   }
-  fVar11 = Scr_GetFloat(0);
-  dVar6 = (double)fVar11;
-  fVar11 = Scr_GetFloat(1);
-  dVar7 = (double)fVar11;
-  uVar5 = Scr_GetNumParam();
-  dVar8 = dVar7;
-  if (2 < uVar5) {
-    fVar11 = Scr_GetFloat(2);
-    dVar7 = (double)fVar11;
+  fVar10 = Scr_GetFloat(0);
+  dVar5 = (double)fVar10;
+  fVar10 = Scr_GetFloat(1);
+  dVar6 = (double)fVar10;
+  uVar4 = Scr_GetNumParam();
+  dVar7 = dVar6;
+  if (2 < uVar4) {
+    fVar10 = Scr_GetFloat(2);
+    dVar6 = (double)fVar10;
   }
-  uVar5 = Scr_GetNumParam();
-  dVar9 = 0.0;
-  if (uVar5 < 4) {
-    dVar10 = 0.10000000149011612;
+  uVar4 = Scr_GetNumParam();
+  dVar8 = 0.0;
+  if (uVar4 < 4) {
+    dVar9 = 0.10000000149011612;
   }
   else {
-    fVar11 = Scr_GetFloat(3);
-    dVar10 = (double)fVar11;
-    if ((dVar10 < dVar9) || (1.0 < dVar10)) {
+    fVar10 = Scr_GetFloat(3);
+    dVar9 = (double)fVar10;
+    if ((dVar9 < dVar8) || (1.0 < dVar9)) {
       Scr_ParamError(3,"Overshoot must be in 0 to 1 range");
     }
   }
-  if (dVar6 < dVar9) {
+  if (dVar5 < dVar8) {
     Scr_ParamError(0,"Cannot set negative yaw speed on vehicle");
   }
-  if (dVar8 < dVar9) {
+  if (dVar7 < dVar8) {
     Scr_ParamError(1,"Cannot set negative yaw acceleration on vehicle");
   }
-  HeliPath_SetYawSpeed(&pVVar1->heliPathPos,(float)dVar6,(float)dVar8,(float)dVar7,(float)dVar10);
-  __restfpr_27();
+  HeliPath_SetYawSpeed(&pVVar1->heliPathPos,(float)dVar5,(float)dVar7,(float)dVar6,(float)dVar9);
   return;
 }
 
@@ -1949,22 +1877,23 @@ void VehCmd_SetHoverParams(scr_entref_t param_1)
 
 // 826C7FB8  VehCmd_JoltBody  (vehicle/vehicle_script.cpp:1797)
 
+/* WARNING: Function: __savefpr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
 void VehCmd_JoltBody(scr_entref_t param_1)
 
 {
-  scr_entref_t sVar1;
-  gentity_s *pgVar2;
-  uint uVar3;
+  gentity_s *pgVar1;
+  uint uVar2;
+  double dVar3;
   double dVar4;
   double dVar5;
   double dVar6;
   double dVar7;
   double dVar8;
-  double dVar9;
-  float fVar10;
+  float fVar9;
   float local_60;
   float local_5c;
   float local_58;
@@ -1972,44 +1901,42 @@ void VehCmd_JoltBody(scr_entref_t param_1)
   float local_4c;
   float local_48;
   
-  sVar1 = (scr_entref_t)__savefpr_27(param_1);
-  pgVar2 = VehicleScript_GetVehicleEntity(sVar1);
-  uVar3 = Scr_GetNumParam();
+  pgVar1 = VehicleScript_GetVehicleEntity(param_1);
+  uVar2 = Scr_GetNumParam();
   Scr_GetVector(0,&local_50);
-  fVar10 = Scr_GetFloat(1);
-  dVar4 = (double)fVar10;
-  dVar7 = 1.0;
-  if ((int)uVar3 < 3) {
-    dVar8 = 0.0;
-    dVar9 = dVar8;
+  fVar9 = Scr_GetFloat(1);
+  dVar3 = (double)fVar9;
+  dVar6 = 1.0;
+  if ((int)uVar2 < 3) {
+    dVar7 = 0.0;
+    dVar8 = dVar7;
   }
   else {
-    fVar10 = Scr_GetFloat(2);
-    dVar8 = (double)fVar10;
-    dVar6 = 0.0;
-    if ((dVar8 < 0.0) || (dVar7 < dVar8)) {
+    fVar9 = Scr_GetFloat(2);
+    dVar7 = (double)fVar9;
+    dVar5 = 0.0;
+    if ((dVar7 < 0.0) || (dVar6 < dVar7)) {
       Scr_ParamError(2,"Speed fraction must be between [0,1]");
     }
-    fVar10 = Scr_GetFloat(3);
-    dVar9 = (double)(fVar10 * 17.6);
-    if (dVar9 < dVar6) {
+    fVar9 = Scr_GetFloat(3);
+    dVar8 = (double)(fVar9 * 17.6);
+    if (dVar8 < dVar5) {
       Scr_ParamError(3,"Deceleration can\'t be negative");
     }
   }
-  local_50 = (pgVar2->r).currentOrigin[0] - local_50;
-  local_5c = (pgVar2->r).currentOrigin[1] - local_4c;
-  local_58 = (pgVar2->r).currentOrigin[2] - local_48;
-  dVar5 = (double)SQRT(local_50 * local_50 + local_58 * local_58 + local_5c * local_5c);
-  dVar6 = dVar7;
-  if (-dVar5 < 0.0) {
-    dVar6 = dVar5;
+  local_50 = (pgVar1->r).currentOrigin[0] - local_50;
+  local_5c = (pgVar1->r).currentOrigin[1] - local_4c;
+  local_58 = (pgVar1->r).currentOrigin[2] - local_48;
+  dVar4 = (double)SQRT(local_50 * local_50 + local_58 * local_58 + local_5c * local_5c);
+  dVar5 = dVar6;
+  if (-dVar4 < 0.0) {
+    dVar5 = dVar4;
   }
-  fVar10 = (float)(dVar7 / dVar6);
-  local_60 = fVar10 * local_50;
-  local_5c = local_5c * fVar10;
-  local_58 = local_58 * fVar10;
-  VEH_JoltBody(pgVar2,&local_60,(float)dVar4,(float)dVar8,(float)dVar9);
-  __restfpr_27();
+  fVar9 = (float)(dVar6 / dVar5);
+  local_60 = fVar9 * local_50;
+  local_5c = local_5c * fVar9;
+  local_58 = local_58 * fVar9;
+  VEH_JoltBody(pgVar1,&local_60,(float)dVar3,(float)dVar7,(float)dVar8);
   return;
 }
 
@@ -2039,6 +1966,8 @@ void VehCmd_FreeVehicle(scr_entref_t param_1)
 
 // 826C8170  VehCmd_GetWheelSurface  (vehicle/vehicle_script.cpp:1875)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
@@ -2049,63 +1978,59 @@ void VehCmd_GetWheelSurface(scr_entref_t param_1)
   Vehicle *pVVar1;
   VehicleType VVar2;
   int iVar3;
-  scr_entref_t sVar4;
-  gentity_s *pgVar5;
-  VehicleDef *pVVar6;
-  uint uVar7;
-  char *pcVar8;
-  uint uVar9;
+  gentity_s *pgVar4;
+  VehicleDef *pVVar5;
+  uint uVar6;
+  char *pcVar7;
+  uint uVar8;
   
-  sVar4 = (scr_entref_t)__savegprlr_28(param_1);
-  pgVar5 = VehicleScript_GetVehicleEntity(sVar4);
-  pVVar1 = pgVar5->vehicle;
+  pgVar4 = VehicleScript_GetVehicleEntity(param_1);
+  pVVar1 = pgVar4->vehicle;
   if (pVVar1 == (Vehicle *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_script.cpp",
                     0x75d,0,"%s");
   }
-  pVVar6 = Vehicle_GetServerDef(pVVar1->defIndex);
-  uVar7 = Scr_GetConstString(0);
-  VVar2 = pVVar6->type;
-  uVar9 = 0;
+  pVVar5 = Vehicle_GetServerDef(pVVar1->defIndex);
+  uVar6 = Scr_GetConstString(0);
+  VVar2 = pVVar5->type;
+  uVar8 = 0;
   if (((VVar2 == VEH_PLANE) || (VVar2 == VEH_ARTILLERY)) || (VVar2 == VEH_HELICOPTER)) {
-    pcVar8 = va("GetWheelSurface() is not set up to work with vehicle type [%s]\n");
-    Scr_Error(pcVar8);
+    pcVar7 = va("GetWheelSurface() is not set up to work with vehicle type [%s]\n");
+    Scr_Error(pcVar7);
   }
-  if (uVar7 == scr_const.front_left) {
-    uVar9 = 0;
+  if (uVar6 == scr_const.front_left) {
+    uVar8 = 0;
   }
-  else if (uVar7 == scr_const.front_right) {
-    uVar9 = 1;
+  else if (uVar6 == scr_const.front_right) {
+    uVar8 = 1;
   }
-  else if (uVar7 == scr_const.back_left) {
-    uVar9 = 2;
+  else if (uVar6 == scr_const.back_left) {
+    uVar8 = 2;
   }
-  else if (uVar7 == scr_const.back_right) {
-    uVar9 = 3;
+  else if (uVar6 == scr_const.back_right) {
+    uVar8 = 3;
   }
-  else if (uVar7 == scr_const.middle_left) {
-    uVar9 = 4;
+  else if (uVar6 == scr_const.middle_left) {
+    uVar8 = 4;
   }
-  else if (uVar7 == scr_const.middle_right) {
-    uVar9 = 5;
+  else if (uVar6 == scr_const.middle_right) {
+    uVar8 = 5;
   }
   else {
     Scr_ParamError(0,
                    "Valid wheel names are: [front_left, front_right, back_left, back_right, middle_left, middle_right]\n"
                   );
   }
-  if ((pVVar6->type == VEH_WHEELS_4) && (3 < uVar9)) {
+  if ((pVVar5->type == VEH_WHEELS_4) && (3 < uVar8)) {
     Scr_ParamError(0,"Vehicle has no middle wheels\n");
   }
-  iVar3 = (pVVar1->phys).wheelSurfType[uVar9];
+  iVar3 = (pVVar1->phys).wheelSurfType[uVar8];
   if (iVar3 != 0) {
-    pcVar8 = Com_SurfaceTypeToName(iVar3);
-    Scr_AddString(pcVar8);
-    __restgprlr_28();
+    pcVar7 = Com_SurfaceTypeToName(iVar3);
+    Scr_AddString(pcVar7);
     return;
   }
   Scr_AddString("none");
-  __restgprlr_28();
   return;
 }
 
@@ -2160,31 +2085,30 @@ void VehCmd_SetVehicleLookatText(scr_entref_t param_1)
 
 // 826C8398  VehCmd_SetVehicleTeam  (vehicle/vehicle_script.cpp:1977)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
 void VehCmd_SetVehicleTeam(scr_entref_t param_1)
 
 {
-  scr_entref_t sVar1;
-  gentity_s *pgVar2;
-  uint uVar3;
-  team_t tVar4;
+  gentity_s *pgVar1;
+  uint uVar2;
+  team_t tVar3;
   
-  sVar1 = (scr_entref_t)__savegprlr_29(param_1);
-  pgVar2 = VehicleScript_GetVehicleEntity(sVar1);
-  if (pgVar2 == (gentity_s *)0x0) {
+  pgVar1 = VehicleScript_GetVehicleEntity(param_1);
+  if (pgVar1 == (gentity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_script.cpp",
                     0x7c1,0,"%s");
   }
-  if (pgVar2->vehicle == (Vehicle *)0x0) {
+  if (pgVar1->vehicle == (Vehicle *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_script.cpp",
                     0x7c5,0,"%s");
   }
-  uVar3 = Scr_GetConstString(0);
-  tVar4 = Com_TeamFromString(uVar3);
-  pgVar2->vehicle->team = tVar4;
-  __restgprlr_29();
+  uVar2 = Scr_GetConstString(0);
+  tVar3 = Com_TeamFromString(uVar2);
+  pgVar1->vehicle->team = tVar3;
   return;
 }
 
@@ -2358,6 +2282,8 @@ void VehCmd_ClearTargetYaw(scr_entref_t param_1)
 
 // 826C86D8  VehCmd_HeliSetGoal  (vehicle/vehicle_script.cpp:2163)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
@@ -2368,66 +2294,64 @@ void VehCmd_HeliSetGoal(scr_entref_t param_1)
   float fVar1;
   float fVar2;
   Vehicle *pVVar3;
-  scr_entref_t sVar4;
-  gentity_s *pgVar5;
-  VehicleDef *pVVar6;
-  int iVar7;
+  gentity_s *pgVar4;
+  VehicleDef *pVVar5;
+  int iVar6;
   HeliPathNodeData local_60;
   
-  sVar4 = (scr_entref_t)__savegprlr_29(param_1);
-  pgVar5 = VehicleScript_GetVehicleEntity(sVar4);
-  pVVar3 = pgVar5->vehicle;
-  pVVar6 = Vehicle_GetServerDef(pVVar3->defIndex);
-  if (pVVar6->type != VEH_HELICOPTER) {
+  pgVar4 = VehicleScript_GetVehicleEntity(param_1);
+  pVVar3 = pgVar4->vehicle;
+  pVVar5 = Vehicle_GetServerDef(pVVar3->defIndex);
+  if (pVVar5->type != VEH_HELICOPTER) {
     Scr_ObjectError("Vehicle must be a helicopter.");
   }
   Scr_GetVector(0,local_60.origin);
   local_60.setSpeed = false;
-  iVar7 = Scr_GetType(1);
-  if (iVar7 != 0) {
+  iVar6 = Scr_GetType(1);
+  if (iVar6 != 0) {
     local_60.setSpeed = true;
     local_60.speed = Scr_GetFloat(1);
   }
   local_60.hasAccel = false;
-  iVar7 = Scr_GetType(2);
-  if (iVar7 != 0) {
+  iVar6 = Scr_GetType(2);
+  if (iVar6 != 0) {
     local_60.hasAccel = true;
     local_60.accel = Scr_GetFloat(2);
   }
   local_60.hasDecel = false;
-  iVar7 = Scr_GetType(3);
-  if (iVar7 != 0) {
+  iVar6 = Scr_GetType(3);
+  if (iVar6 != 0) {
     local_60.hasDecel = true;
     local_60.decel = Scr_GetFloat(3);
   }
-  iVar7 = Scr_GetType(4);
-  local_60.goalYawDefined = iVar7 != 0;
+  iVar6 = Scr_GetType(4);
+  local_60.goalYawDefined = iVar6 != 0;
   if (local_60.goalYawDefined) {
-    iVar7 = Scr_GetInt(4);
+    iVar6 = Scr_GetInt(4);
     local_60.setGoalYaw = true;
-    if (iVar7 != 0) goto LAB_826c87c4;
+    if (iVar6 != 0) goto LAB_826c87c4;
   }
   local_60.setGoalYaw = false;
 LAB_826c87c4:
-  iVar7 = Scr_GetType(5);
-  local_60.angleVehicleDefined = (bool)('\x01' - (iVar7 == 0));
+  iVar6 = Scr_GetType(5);
+  local_60.angleVehicleDefined = (bool)('\x01' - (iVar6 == 0));
   local_60.yaw = Scr_GetFloat(6);
   local_60.setAirResistance = false;
-  iVar7 = Scr_GetType(7);
-  if (iVar7 != 0) {
+  iVar6 = Scr_GetType(7);
+  if (iVar6 != 0) {
     local_60.setAirResistance = true;
     local_60.airResistance = Scr_GetFloat(7);
   }
-  iVar7 = Scr_GetInt(8);
-  local_60.hasDelay = (bool)('\x01' - (iVar7 == 0));
-  iVar7 = Scr_GetInt(9);
-  local_60.stopNode = (bool)('\x01' - (iVar7 == 0));
-  iVar7 = Scr_GetInt(10);
-  local_60.unload = (bool)('\x01' - (iVar7 == 0));
-  iVar7 = Scr_GetInt(0xb);
-  local_60.flagWait = (bool)('\x01' - (iVar7 == 0));
-  iVar7 = Scr_GetInt(0xc);
-  local_60.endOfPath = (bool)('\x01' - (iVar7 == 0));
+  iVar6 = Scr_GetInt(8);
+  local_60.hasDelay = (bool)('\x01' - (iVar6 == 0));
+  iVar6 = Scr_GetInt(9);
+  local_60.stopNode = (bool)('\x01' - (iVar6 == 0));
+  iVar6 = Scr_GetInt(10);
+  local_60.unload = (bool)('\x01' - (iVar6 == 0));
+  iVar6 = Scr_GetInt(0xb);
+  local_60.flagWait = (bool)('\x01' - (iVar6 == 0));
+  iVar6 = Scr_GetInt(0xc);
+  local_60.endOfPath = (bool)('\x01' - (iVar6 == 0));
   Heli_PathFromVeh(&pVVar3->heliPathPos,pVVar3);
   pVVar3->manualMode = VEH_MANUAL_ON;
   pVVar3->drivingState = VEH_DRIVE_AI;
@@ -2437,7 +2361,6 @@ LAB_826c87c4:
   pVVar3->manualAccel = (pVVar3->heliPathPos).manualAccel;
   pVVar3->manualDecel = fVar1;
   pVVar3->manualSpeed = fVar2;
-  __restgprlr_29();
   return;
 }
 
@@ -2569,6 +2492,10 @@ void VehCmd_ClearTurretTargetEnt(scr_entref_t param_1)
 
 // 826C8B48  VehCmd_CanTurretTargetPoint  (vehicle/vehicle_script.cpp:2342)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
@@ -2580,18 +2507,17 @@ void VehCmd_CanTurretTargetPoint(scr_entref_t param_1)
   int iVar2;
   float fVar3;
   float fVar4;
-  scr_entref_t sVar5;
-  gentity_s *pgVar6;
-  VehicleDef *pVVar7;
-  uint uVar8;
-  int iVar9;
-  gentity_s *pgVar10;
-  int iVar11;
+  gentity_s *pgVar5;
+  VehicleDef *pVVar6;
+  uint uVar7;
+  int iVar8;
+  gentity_s *pgVar9;
+  int iVar10;
+  double dVar11;
   double dVar12;
   double dVar13;
   double dVar14;
   double dVar15;
-  double dVar16;
   float local_150;
   float local_14c;
   int local_144;
@@ -2609,41 +2535,37 @@ void VehCmd_CanTurretTargetPoint(scr_entref_t param_1)
   float afStack_b0 [12];
   float afStack_80 [32];
   
-  __savegprlr_27(param_1);
-  sVar5 = (scr_entref_t)__savefpr_28();
-  pgVar6 = VehicleScript_GetVehicleEntity(sVar5);
-  pVVar1 = pgVar6->vehicle;
+  pgVar5 = VehicleScript_GetVehicleEntity(param_1);
+  pVVar1 = pgVar5->vehicle;
   if (pVVar1 == (Vehicle *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_script.cpp",
                     0x939,0,"%s");
   }
-  pVVar7 = Vehicle_GetServerDef(pVVar1->defIndex);
+  pVVar6 = Vehicle_GetServerDef(pVVar1->defIndex);
   Scr_GetVector(0,&local_140);
-  iVar9 = 0;
-  uVar8 = Scr_GetNumParam();
-  if (1 < uVar8) {
-    iVar9 = Scr_GetInt(1);
+  iVar8 = 0;
+  uVar7 = Scr_GetNumParam();
+  if (1 < uVar7) {
+    iVar8 = Scr_GetInt(1);
   }
-  iVar11 = 0x7ff;
-  uVar8 = Scr_GetNumParam();
-  if (2 < uVar8) {
-    pgVar10 = Scr_GetEntity(2);
-    iVar11 = (pgVar10->s).number;
+  iVar10 = 0x7ff;
+  uVar7 = Scr_GetNumParam();
+  if (2 < uVar7) {
+    pgVar9 = Scr_GetEntity(2);
+    iVar10 = (pgVar9->s).number;
   }
   iVar2 = (pVVar1->boneIndex).barrel;
   if (iVar2 < 0) {
     Scr_Error("Vehicle has no tag [tag_barrel]\n");
-    __restfpr_28();
-    __restgprlr_27();
     return;
   }
-  G_DObjGetWorldBoneIndexPos(pgVar6,iVar2,&local_130);
+  G_DObjGetWorldBoneIndexPos(pgVar5,iVar2,&local_130);
   iVar2 = (pVVar1->boneIndex).turret_base;
   if (iVar2 == -1) {
     AnglesToAxis((pVVar1->phys).angles,(float (*) [3])afStack_110);
   }
   else {
-    G_DObjGetWorldBoneIndexMatrix(pgVar6,iVar2,(float (*) [3])afStack_110);
+    G_DObjGetWorldBoneIndexMatrix(pgVar5,iVar2,(float (*) [3])afStack_110);
   }
   local_13c = local_13c - local_12c;
   local_118 = local_138 - local_128;
@@ -2662,32 +2584,26 @@ void VehCmd_CanTurretTargetPoint(scr_entref_t param_1)
   MatrixTranspose((float (*) [3])afStack_110,(float (*) [3])afStack_b0);
   MatrixMultiply((float (*) [3])afStack_80,(float (*) [3])afStack_b0,(float (*) [3])afStack_e0);
   AxisToAngles((float (*) [3])afStack_e0,&local_150);
-  dVar15 = 0.0027777778450399637;
-  dVar13 = (double)(local_150 * 0.0027777778);
-  dVar14 = 0.5;
-  dVar12 = floor((double)(float)(dVar13 + 0.5));
-  dVar15 = (double)(float)((double)local_14c * dVar15);
-  dVar16 = 360.0;
-  local_150 = (float)(dVar13 - (double)(float)dVar12) * 360.0;
-  dVar12 = floor((double)(float)(dVar15 + dVar14));
-  local_14c = (float)((double)(float)(dVar15 - (double)(float)dVar12) * dVar16);
-  if ((((-pVVar7->turretVertSpanUp <= local_150) && (local_150 <= pVVar7->turretVertSpanDown)) &&
-      (-pVVar7->turretHorizSpanRight <= local_14c)) && (local_14c <= pVVar7->turretHorizSpanLeft)) {
-    if (iVar9 == 0) {
+  dVar14 = 0.0027777778450399637;
+  dVar12 = (double)(local_150 * 0.0027777778);
+  dVar13 = 0.5;
+  dVar11 = floor((double)(float)(dVar12 + 0.5));
+  dVar14 = (double)(float)((double)local_14c * dVar14);
+  dVar15 = 360.0;
+  local_150 = (float)(dVar12 - (double)(float)dVar11) * 360.0;
+  dVar11 = floor((double)(float)(dVar14 + dVar13));
+  local_14c = (float)((double)(float)(dVar14 - (double)(float)dVar11) * dVar15);
+  if ((((-pVVar6->turretVertSpanUp <= local_150) && (local_150 <= pVVar6->turretVertSpanDown)) &&
+      (-pVVar6->turretHorizSpanRight <= local_14c)) && (local_14c <= pVVar6->turretHorizSpanLeft)) {
+    if (iVar8 == 0) {
       Scr_AddInt(1);
-      __restfpr_28();
-      __restgprlr_27();
       return;
     }
-    SV_SightTrace(&local_144,&local_130,&local_140,&bounds_origin,(pgVar6->s).number,iVar11,0x801);
+    SV_SightTrace(&local_144,&local_130,&local_140,&bounds_origin,(pgVar5->s).number,iVar10,0x801);
     Scr_AddInt((uint)LZCOUNT(local_144) >> 5);
-    __restfpr_28();
-    __restgprlr_27();
     return;
   }
   Scr_AddInt(0);
-  __restfpr_28();
-  __restgprlr_27();
   return;
 }
 
@@ -2766,6 +2682,8 @@ void VehCmd_SetWeapon(scr_entref_t param_1)
 
 // 826C8F48  VehCmd_FireWeapon  (vehicle/vehicle_script.cpp:2538)
 
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
@@ -2848,7 +2766,6 @@ void VehCmd_FireWeapon(scr_entref_t param_1)
   float local_4d8;
   char acStack_4b0 [1200];
   
-  __savegprlr();
   pgVar4 = VehicleScript_GetVehicleEntity(param_1);
   pVVar2 = pgVar4->vehicle;
   if (pVVar2 == (Vehicle *)0x0) {
@@ -3054,7 +2971,6 @@ void VehCmd_FireWeapon(scr_entref_t param_1)
   BG_GetFireTime(local_584,local_580,false,(int *)&local_564,aiStack_4f8);
   (pVVar2->turret).fireTime = (int)local_564;
   (pVVar2->turret).fireBarrel = (uint)LZCOUNT((pVVar2->turret).fireBarrel) >> 5;
-  __restgprlr();
   return;
 }
 
@@ -3156,36 +3072,35 @@ void VehCmd_VehicleDriveTo(scr_entref_t param_1)
 
 // 826C9848  VehCmd_DoSpawn  (vehicle/vehicle_script.cpp:2873)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
 void VehCmd_DoSpawn(scr_entref_t param_1)
 
 {
-  scr_entref_t sVar1;
-  gentity_s *pgVar2;
+  gentity_s *pgVar1;
+  uint uVar2;
   uint uVar3;
-  uint uVar4;
-  gentity_s *pgVar5;
+  gentity_s *pgVar4;
   
-  sVar1 = (scr_entref_t)__savegprlr_29(param_1);
-  pgVar2 = VehicleScript_GetSpawnerEntity(sVar1);
-  uVar4 = 0;
-  uVar3 = Scr_GetNumParam();
-  if (uVar3 != 0) {
-    uVar4 = Scr_GetConstString(0);
+  pgVar1 = VehicleScript_GetSpawnerEntity(param_1);
+  uVar3 = 0;
+  uVar2 = Scr_GetNumParam();
+  if (uVar2 != 0) {
+    uVar3 = Scr_GetConstString(0);
   }
-  pgVar5 = (gentity_s *)0x0;
-  uVar3 = Scr_GetNumParam();
-  if (((1 < uVar3) && (pgVar5 = Scr_GetEntity(1), pgVar5 != (gentity_s *)0x0)) &&
-     (pgVar5->client == (gclient_s *)0x0)) {
+  pgVar4 = (gentity_s *)0x0;
+  uVar2 = Scr_GetNumParam();
+  if (((1 < uVar2) && (pgVar4 = Scr_GetEntity(1), pgVar4 != (gentity_s *)0x0)) &&
+     (pgVar4->client == (gclient_s *)0x0)) {
     Scr_ParamError(1,"Parameter must be a valid client");
   }
-  pgVar2 = Vehicle_DoSpawn(pgVar2,uVar4,pgVar5);
-  if (pgVar2 != (gentity_s *)0x0) {
-    Scr_AddEntity(pgVar2);
+  pgVar1 = Vehicle_DoSpawn(pgVar1,uVar3,pgVar4);
+  if (pgVar1 != (gentity_s *)0x0) {
+    Scr_AddEntity(pgVar1);
   }
-  __restgprlr_29();
   return;
 }
 
@@ -3211,6 +3126,8 @@ void VehCmd_IsPhysVeh(scr_entref_t param_1)
 
 // 826C9918  VehPhysCmd_Crash  (vehicle/vehicle_script.cpp:2937)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
@@ -3218,45 +3135,40 @@ void VehPhysCmd_Crash(scr_entref_t param_1)
 
 {
   Vehicle *pVVar1;
-  scr_entref_t sVar2;
-  gentity_s *pgVar3;
-  uint uVar4;
-  int iVar5;
-  uint uVar6;
-  uint uVar7;
+  gentity_s *pgVar2;
+  uint uVar3;
+  int iVar4;
+  uint uVar5;
   
-  sVar2 = (scr_entref_t)__savegprlr_29(param_1);
-  pgVar3 = VehicleScript_GetVehicleEntity(sVar2);
-  if (pgVar3 == (gentity_s *)0x0) {
+  pgVar2 = VehicleScript_GetVehicleEntity(param_1);
+  if (pgVar2 == (gentity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_script.cpp",
                     0xb81,0,"%s");
   }
-  if (pgVar3->vehicle == (Vehicle *)0x0) {
+  if (pgVar2->vehicle == (Vehicle *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_script.cpp",
                     0xb82,0,"%s");
   }
-  pVVar1 = pgVar3->vehicle;
+  pVVar1 = pgVar2->vehicle;
   if (pVVar1->physVeh == (PhysVehicle *)0x0) {
     Scr_ObjectError("This vehicle is not a physics vehicle.");
   }
-  uVar4 = Scr_GetNumParam();
-  if ((uVar4 == 0) || (iVar5 = Scr_GetInt(0), iVar5 == 0)) {
+  uVar3 = Scr_GetNumParam();
+  if ((uVar3 == 0) || (iVar4 = Scr_GetInt(0), iVar4 == 0)) {
     PhysVeh_RemoveStability(pVVar1->physVeh);
   }
   else {
     PhysVeh_Crash(pVVar1->physVeh);
   }
-  uVar6 = G_rand();
-  uVar4 = (pgVar3->s).lerp.u.vehicle.flags;
-  uVar7 = uVar4 | 0x4000000;
-  if ((longlong)(int)uVar6 ==
-      ((longlong)((int)uVar6 >> 1) + (ulonglong)((int)uVar6 < 0 && (uVar6 & 1) != 0) & 0x7fffffff) *
-      2) {
-    uVar7 = uVar4 | 0x8000000;
+  uVar5 = G_rand();
+  uVar3 = 0x4000000;
+  if ((longlong)(int)uVar5 ==
+      ((longlong)((int)uVar5 >> 1) + (ulonglong)((int)uVar5 < 0 && (uVar5 & 1) != 0) & 0x7fffffff)
+      << 1) {
+    uVar3 = 0x8000000;
   }
-  (pgVar3->s).lerp.u.vehicle.flags = uVar7;
+  (pgVar2->s).lerp.u.vehicle.flags = (pgVar2->s).lerp.u.vehicle.flags | uVar3;
   pVVar1->drivingState = VEH_DRIVE_NONE;
-  __restgprlr_29();
   return;
 }
 
@@ -3424,6 +3336,8 @@ void VehPhysCmd_SetConveyorBelt(scr_entref_t param_1)
 
 // 826C9D28  VehicleScript_GetMethod  (vehicle/vehicle_script.cpp:3285)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
@@ -3433,52 +3347,47 @@ uint VehicleScript_GetMethod(char **param_1)
   char cVar1;
   char cVar2;
   uint *puVar3;
-  undefined4 *puVar4;
-  uint uVar5;
-  int iVar6;
-  BuiltinMethodDef *pBVar7;
+  uint uVar4;
+  int iVar5;
+  BuiltinMethodDef *pBVar6;
+  char *pcVar7;
   char *pcVar8;
-  char *pcVar9;
-  longlong lVar10;
-  fieldtype_t *pfVar11;
+  longlong lVar9;
+  fieldtype_t *pfVar10;
   
-  puVar4 = (undefined4 *)__savegprlr_29(param_1);
-  if (puVar4 == (undefined4 *)0x0) {
-    lVar10 = 0x3d;
-    pfVar11 = &vehicleFields[8].type;
+  if (param_1 == (char **)0x0) {
+    lVar9 = 0x3d;
+    pfVar10 = &vehicleFields[8].type;
     do {
-      puVar3 = pfVar11 + 4;
-      pfVar11 = pfVar11 + 3;
-      Scr_RegisterFunction(*puVar3,0,*pfVar11);
-      lVar10 = lVar10 + -1;
-    } while (lVar10 != 0);
-    uVar5 = __restgprlr_29(0);
-    return uVar5;
+      puVar3 = pfVar10 + 4;
+      pfVar10 = pfVar10 + 3;
+      Scr_RegisterFunction(*puVar3,0,*pfVar10);
+      lVar9 = lVar9 + -1;
+    } while (lVar9 != 0);
+    return 0;
   }
-  pBVar7 = s_methods;
-  iVar6 = 0;
-  uVar5 = 0;
+  pBVar6 = s_methods;
+  iVar5 = 0;
+  uVar4 = 0;
   do {
-    pcVar8 = *(char **)(&g_scr_meth_names + (pBVar7->name - 0x8000) * 4);
-    pcVar9 = (char *)*puVar4;
+    pcVar7 = *(char **)(&g_scr_meth_names + (pBVar6->name - 0x8000) * 4);
+    pcVar8 = *param_1;
     do {
-      cVar1 = *pcVar9;
-      cVar2 = *pcVar8;
+      cVar1 = *pcVar8;
+      cVar2 = *pcVar7;
       if (cVar1 == '\0') break;
-      pcVar9 = pcVar9 + 1;
       pcVar8 = pcVar8 + 1;
+      pcVar7 = pcVar7 + 1;
     } while (cVar1 == cVar2);
     if (cVar1 == cVar2) {
-      *puVar4 = *(undefined4 *)(&g_scr_meth_names + (s_methods[iVar6].name - 0x8000) * 4);
-      uVar5 = __restgprlr_29(s_methods[iVar6].name);
-      return uVar5;
+      *param_1 = *(char **)(&g_scr_meth_names + (s_methods[iVar5].name - 0x8000) * 4);
+      return s_methods[iVar5].name;
     }
-    uVar5 = uVar5 + 0xc;
-    iVar6 = iVar6 + 1;
-    pBVar7 = pBVar7 + 1;
-    if (0x2db < uVar5) {
-      uVar5 = __restgprlr_29(0);
-      return uVar5;
+    uVar4 = uVar4 + 0xc;
+    iVar5 = iVar5 + 1;
+    pBVar6 = pBVar6 + 1;
+    if (0x2db < uVar4) {
+      return 0;
     }
   } while( true );
 }

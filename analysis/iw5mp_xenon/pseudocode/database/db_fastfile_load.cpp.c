@@ -24,6 +24,8 @@ void Load_XAssetListCustom(void)
 
 // 823A3180  Load_XAssetArrayCustom  (database/db_fastfile_load.cpp:88)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "XAssetType": Some values do not have unique names */
 /* WARNING: Enum "nodeType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
@@ -33,27 +35,28 @@ void Load_XAssetListCustom(void)
 void Load_XAssetArrayCustom(int param_1)
 
 {
-  ulonglong uVar1;
-  XAsset *pXVar2;
+  XAsset *pXVar1;
+  longlong lVar2;
   
-  uVar1 = __savegprlr_29(param_1);
-  Load_Stream(true,varXAsset,(int)((uVar1 & 0xffffffff) << 3));
-  pXVar2 = varXAsset;
-  if (0 < (int)uVar1) {
+  lVar2 = (longlong)param_1;
+  Load_Stream(true,varXAsset,param_1 << 3);
+  pXVar1 = varXAsset;
+  if (0 < param_1) {
     do {
-      varXAsset = pXVar2;
+      varXAsset = pXVar1;
       Load_XAsset(false);
-      uVar1 = uVar1 - 1;
-      pXVar2 = pXVar2 + 1;
-    } while (uVar1 != 0);
+      lVar2 = lVar2 + -1;
+      pXVar1 = pXVar1 + 1;
+    } while (lVar2 != 0);
   }
-  __restgprlr_29();
   return;
 }
 
 
 // 823A31D0  DB_LoadXFile  (database/db_fastfile_load.cpp:106)
 
+/* WARNING: Function: __savegprlr_19 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_19 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "XAssetType": Some values do not have unique names */
 /* WARNING: Enum "nodeType": Some values do not have unique names */
@@ -66,20 +69,19 @@ void DB_LoadXFile(XZoneMemory *param_1,DBFile *param_2)
 {
   byte bVar1;
   byte bVar2;
-  XZoneMemory *pXVar3;
-  bool bVar6;
-  ClientDemoPlayingFlag CVar4;
-  XAsset *pXVar5;
-  char *pcVar7;
+  bool bVar5;
+  ClientDemoPlayingFlag CVar3;
+  XAsset *pXVar4;
+  char *pcVar6;
+  ulonglong uVar7;
   ulonglong uVar8;
-  ulonglong uVar9;
+  byte *pbVar9;
   byte *pbVar10;
   byte *pbVar11;
-  byte *pbVar12;
+  uint uVar12;
   uint uVar13;
-  uint uVar14;
-  XAssetStreamFile *pXVar15;
-  longlong lVar16;
+  XAssetStreamFile *pXVar14;
+  longlong lVar15;
   uchar local_d0 [4];
   uint local_cc;
   uint local_c8;
@@ -93,29 +95,28 @@ void DB_LoadXFile(XZoneMemory *param_1,DBFile *param_2)
   int local_9c;
   uint auStack_98 [38];
   
-  pXVar3 = (XZoneMemory *)__savegprlr_19(param_1);
   DB_InitLoadXFile(param_2,0);
   DB_ReadXFileUncompressed(local_b0,8);
-  pbVar11 = local_b0;
-  pbVar10 = &s_IWff0100;
+  pbVar10 = local_b0;
+  pbVar9 = &s_IWff0100;
   do {
-    bVar1 = *pbVar11;
-    bVar2 = *pbVar10;
+    bVar1 = *pbVar10;
+    bVar2 = *pbVar9;
     if ((ulonglong)bVar1 - (ulonglong)bVar2 != 0) break;
-    pbVar11 = pbVar11 + 1;
     pbVar10 = pbVar10 + 1;
-  } while (pbVar11 != abStack_a8);
-  pbVar10 = &s_IWffu100;
+    pbVar9 = pbVar9 + 1;
+  } while (pbVar10 != abStack_a8);
+  pbVar9 = &s_IWffu100;
   if ((int)((ulonglong)bVar1 - (ulonglong)bVar2) != 0) {
-    pbVar12 = local_b0;
-    pbVar11 = pbVar10;
+    pbVar11 = local_b0;
+    pbVar10 = pbVar9;
     do {
-      bVar1 = *pbVar12;
-      bVar2 = *pbVar11;
+      bVar1 = *pbVar11;
+      bVar2 = *pbVar10;
       if ((ulonglong)bVar1 - (ulonglong)bVar2 != 0) break;
-      pbVar12 = pbVar12 + 1;
       pbVar11 = pbVar11 + 1;
-    } while (pbVar12 != abStack_a8);
+      pbVar10 = pbVar10 + 1;
+    } while (pbVar11 != abStack_a8);
     if ((int)((ulonglong)bVar1 - (ulonglong)bVar2) != 0) {
       DB_DirtyDiscError();
     }
@@ -128,17 +129,16 @@ void DB_LoadXFile(XZoneMemory *param_1,DBFile *param_2)
                         ,0x8d,0,"%s");
       }
       DB_FinishLoadXFile();
-      __restgprlr_19();
       return;
     }
     if (local_c8 < 0x70) {
-      pcVar7 = "Fastfile for zone \'%s\' is out of date (version %d, expecting %d)";
+      pcVar6 = "Fastfile for zone \'%s\' is out of date (version %d, expecting %d)";
     }
     else {
-      pcVar7 = "Fastfile for zone \'%s\' is newer than client executable (version %d, expecting %d)"
+      pcVar6 = "Fastfile for zone \'%s\' is newer than client executable (version %d, expecting %d)"
       ;
     }
-    Com_Error(ERR_DROP,pcVar7);
+    Com_Error(ERR_DROP,pcVar6);
   }
   DB_ReadXFileUncompressed(local_d0,1);
   DB_ReadXFileUncompressed(auStack_c0,4);
@@ -147,102 +147,102 @@ void DB_LoadXFile(XZoneMemory *param_1,DBFile *param_2)
     LiveStorage_SetShouldDownloadFFotD(false);
   }
   DB_ReadXFileUncompressed((uchar *)&local_cc,4);
-  uVar9 = (ulonglong)local_cc;
-  if (uVar9 == 0) {
+  uVar8 = (ulonglong)local_cc;
+  if (uVar8 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_fastfile_load.cpp"
                     ,0xae,0,"%s");
-    uVar9 = (ulonglong)local_cc;
+    uVar8 = (ulonglong)local_cc;
   }
-  if ((DAT_82c07758 == 0) && (DAT_82c07758 = (uint)uVar9, (uVar9 - 1 & uVar9) != 0)) {
+  if ((DAT_82c07758 == 0) && (DAT_82c07758 = (uint)uVar8, (uVar8 - 1 & uVar8) != 0)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_fastfile_load.cpp"
                     ,0xb3,0,"%s\n\t(db_language) = %i");
-    uVar9 = (ulonglong)local_cc;
+    uVar8 = (ulonglong)local_cc;
   }
-  if ((DAT_82c07758 & uVar9) == 0) {
+  if ((DAT_82c07758 & uVar8) == 0) {
     Com_Error(ERR_DROP,"Language mismatch on download content.");
-    uVar9 = (ulonglong)local_cc;
+    uVar8 = (ulonglong)local_cc;
   }
   if (db_soundFileCount != 1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_fastfile_load.cpp"
                     ,0xbb,0,"%s\n\t(db_soundFileCount) = %i");
-    uVar9 = (ulonglong)local_cc;
+    uVar8 = (ulonglong)local_cc;
   }
-  uVar8 = 1;
+  uVar7 = 1;
   db_soundFileCount = 0;
   db_soundLanguage = 0;
-  lVar16 = 0xf;
+  lVar15 = 0xf;
   do {
-    if ((uVar8 & uVar9) != 0) {
-      if (uVar8 == DAT_82c07758) {
+    if ((uVar7 & uVar8) != 0) {
+      if (uVar7 == DAT_82c07758) {
         db_soundLanguage = db_soundFileCount;
       }
       db_soundFileCount = db_soundFileCount + 1;
     }
-    uVar8 = (uVar8 & 0x7fffffff) << 1 | uVar8 >> 0x1f;
-    lVar16 = lVar16 + -1;
-  } while (lVar16 != 0);
+    uVar7 = (uVar7 & 0x7fffffff) << 1 | uVar7 >> 0x1f;
+    lVar15 = lVar15 + -1;
+  } while (lVar15 != 0);
   DB_ReadXFileUncompressed((uchar *)&db_imageCount,4);
   if (0x5300 < db_imageCount) {
     DB_DirtyDiscError();
   }
   if (db_imageCount != 0) {
-    uVar9 = 1;
-    lVar16 = 0xf;
-    uVar13 = db_imageCount;
+    uVar8 = 1;
+    lVar15 = 0xf;
+    uVar12 = db_imageCount;
     do {
-      if ((uVar9 & local_cc) != 0) {
-        if (uVar9 == DAT_82c07758) {
-          uVar14 = 0;
-          pXVar15 = db_imageStreamFile;
-          if (uVar13 != 0) {
+      if ((uVar8 & local_cc) != 0) {
+        if (uVar8 == DAT_82c07758) {
+          uVar13 = 0;
+          pXVar14 = db_imageStreamFile;
+          if (uVar12 != 0) {
             do {
-              DB_ReadXFileUncompressed((uchar *)pXVar15,0xc);
-              uVar14 = uVar14 + 1;
-              pXVar15 = pXVar15 + 1;
-              uVar13 = db_imageCount;
-            } while (uVar14 < db_imageCount);
+              DB_ReadXFileUncompressed((uchar *)pXVar14,0xc);
+              uVar13 = uVar13 + 1;
+              pXVar14 = pXVar14 + 1;
+              uVar12 = db_imageCount;
+            } while (uVar13 < db_imageCount);
           }
         }
         else {
-          DB_ReadXFileUncompressed((uchar *)0x0,uVar13 * 0xc);
-          uVar13 = db_imageCount;
+          DB_ReadXFileUncompressed((uchar *)0x0,uVar12 * 0xc);
+          uVar12 = db_imageCount;
         }
       }
-      lVar16 = lVar16 + -1;
-      uVar9 = (uVar9 & 0x7fffffff) << 1 | uVar9 >> 0x1f;
-    } while (lVar16 != 0);
+      lVar15 = lVar15 + -1;
+      uVar8 = (uVar8 & 0x7fffffff) << 1 | uVar8 >> 0x1f;
+    } while (lVar15 != 0);
   }
   DB_ReadXFileUncompressed(auStack_b8,4);
   DB_ReadXFileUncompressed((uchar *)&local_c4,4);
-  pbVar11 = local_b0;
+  pbVar10 = local_b0;
   db_imageIndex = 0;
   do {
-    bVar1 = *pbVar11;
-    bVar2 = *pbVar10;
+    bVar1 = *pbVar10;
+    bVar2 = *pbVar9;
     if (bVar1 != bVar2) break;
-    pbVar11 = pbVar11 + 1;
     pbVar10 = pbVar10 + 1;
-  } while (pbVar11 != abStack_a8);
+    pbVar9 = pbVar9 + 1;
+  } while (pbVar10 != abStack_a8);
   DB_InflateInit((uint)(bVar1 != bVar2));
   DB_ReadXFile(auStack_a0,0x24,0);
   if ((DAT_82c07754 != 0) && (0xfffff < (uint)(local_9c + local_c4))) {
     g_totalSize = local_c4 - g_loadedSize;
-    bVar6 = CL_Demo_IsPlaying(LOCAL_CLIENT_0);
-    if ((bVar6) && (CVar4 = CL_Demo_GetPlayingFlag(), CVar4 == CLIENT_DEMO_PLAYING_FLAG_RENDER)) {
+    bVar5 = CL_Demo_IsPlaying(LOCAL_CLIENT_0);
+    if ((bVar5) && (CVar3 = CL_Demo_GetPlayingFlag(), CVar3 == CLIENT_DEMO_PLAYING_FLAG_RENDER)) {
       g_totalSize = (g_totalSize >> 1) + (uint)(g_totalSize < 0 && (g_totalSize & 1U) != 0) +
                     g_totalSize * 2;
     }
     else {
-      uVar13 = g_totalSize * 7;
-      g_totalSize = ((int)uVar13 >> 3) + (uint)((int)uVar13 < 0 && (uVar13 & 7) != 0) + g_totalSize;
+      uVar12 = g_totalSize * 7;
+      g_totalSize = ((int)uVar12 >> 3) + (uint)((int)uVar12 < 0 && (uVar12 & 7) != 0) + g_totalSize;
     }
     g_loadedSize = 0;
     g_totalExternalBytes = local_9c - g_loadedExternalBytes;
     g_loadedSizeInc = 0x40000;
     g_loadedExternalBytes = 0;
   }
-  DB_AllocXZoneMemory(auStack_98,param_2->name,pXVar3);
-  DB_InitStreams(pXVar3);
+  DB_AllocXZoneMemory(auStack_98,param_2->name,param_1);
+  DB_InitStreams(param_1);
   varXAssetList = &g_varXAssetList;
   DB_ReadXFile((uchar *)&g_varXAssetList,0x10,0);
   DB_PushStreamPos(3);
@@ -251,20 +251,20 @@ void DB_LoadXFile(XZoneMemory *param_1,DBFile *param_2)
   DB_PopStreamPos();
   DB_PushStreamPos(3);
   if (varXAssetList->assets != (XAsset *)0x0) {
-    pXVar5 = AllocLoad_XAsset();
-    varXAssetList->assets = pXVar5;
+    pXVar4 = AllocLoad_XAsset();
+    varXAssetList->assets = pXVar4;
     varXAsset = varXAssetList->assets;
-    uVar13 = varXAssetList->assetCount;
-    uVar9 = (ulonglong)uVar13;
-    Load_Stream(true,varXAsset,uVar13 << 3);
-    pXVar5 = varXAsset;
-    if (0 < (int)uVar13) {
+    uVar12 = varXAssetList->assetCount;
+    uVar8 = (ulonglong)uVar12;
+    Load_Stream(true,varXAsset,uVar12 << 3);
+    pXVar4 = varXAsset;
+    if (0 < (int)uVar12) {
       do {
-        varXAsset = pXVar5;
+        varXAsset = pXVar4;
         Load_XAsset(false);
-        uVar9 = uVar9 - 1;
-        pXVar5 = pXVar5 + 1;
-      } while (uVar9 != 0);
+        uVar8 = uVar8 - 1;
+        pXVar4 = pXVar4 + 1;
+      } while (uVar8 != 0);
     }
   }
   DB_PopStreamPos();
@@ -275,7 +275,6 @@ void DB_LoadXFile(XZoneMemory *param_1,DBFile *param_2)
   DB_InflateShutdown();
   DB_FinishLoadXFile();
   db_soundFileCount = 1;
-  __restgprlr_19();
   return;
 }
 
@@ -333,37 +332,36 @@ float DB_GetLoadedFraction(void)
 
 // 823A3860  DB_SetRemainingLoadAmount  (database/db_fastfile_load.cpp:387)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void DB_SetRemainingLoadAmount(int param_1)
 
 {
   long lVar1;
-  int iVar2;
-  long lVar3;
-  int iVar4;
+  long lVar2;
+  int iVar3;
   
-  iVar2 = __savegprlr_29(param_1);
-  iVar4 = g_loadedSize;
+  iVar3 = g_loadedSize;
   lVar1 = g_totalSize;
-  if (iVar2 == 0) {
+  if (param_1 == 0) {
     g_loadedSizeInc = 0x40000;
-    __restgprlr_29();
     return;
   }
   if (g_loadedSize < 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_fastfile_load.cpp"
                     ,0x193,0,"%s");
   }
-  if (lVar1 < iVar4) {
-    iVar4 = lVar1;
+  if (lVar1 < iVar3) {
+    iVar3 = lVar1;
   }
-  lVar3 = g_loadedExternalBytes;
+  lVar2 = g_loadedExternalBytes;
   if (g_totalExternalBytes < g_loadedExternalBytes) {
-    lVar3 = g_totalExternalBytes;
+    lVar2 = g_totalExternalBytes;
   }
   g_loadedSizeInc =
-       (int)(((double)(longlong)(((g_totalExternalBytes - lVar3) - iVar4) + lVar1) /
-             (double)(longlong)iVar2) * 60293.12109375);
-  __restgprlr_29();
+       (int)(((double)(longlong)(((g_totalExternalBytes - lVar2) - iVar3) + lVar1) /
+             (double)(longlong)param_1) * 60293.12109375);
   return;
 }
 

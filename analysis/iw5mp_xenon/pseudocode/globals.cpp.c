@@ -77,81 +77,73 @@ void XAudioSetDebugPrintLevel(int param_1)
 
 // 828CDF70  XAudioLock  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/globals.cpp:294)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 undefined4 XAudioLock(ulong param_1)
 
 {
   uchar uVar1;
-  ulonglong uVar2;
-  undefined4 uVar5;
-  undefined8 uVar3;
-  char cVar6;
-  longlong lVar4;
+  undefined8 uVar2;
+  char cVar4;
+  longlong lVar3;
+  ulonglong uVar5;
   void *in_r13;
   
-  uVar2 = __savegprlr_29(param_1);
   uVar1 = XAUDIO::g_XAudioSpinLock.m_PreviousIrql;
-  if (0x20001 < (uVar2 & 0xffffffff)) {
-    if (uVar2 - 0x20002 == 0) {
-      lVar4 = RtlTryEnterCriticalSection(0xffffffff829afeb4);
-      uVar5 = __restgprlr_29(-(ulonglong)(lVar4 == 0) & 0xffffffff80004004);
-      return uVar5;
+  if (0x20001 < param_1) {
+    uVar5 = (longlong)(int)param_1 - 0x20002;
+    if (uVar5 == 0) {
+      lVar3 = RtlTryEnterCriticalSection(0xffffffff829afeb4);
+      return -(uint)(lVar3 == 0) & 0x80004004;
     }
-    if ((uVar2 - 0x20002 & 0xffffffff) == 1) {
-      RtlLeaveCriticalSection(0xffffffff829afeb4);
-      uVar5 = __restgprlr_29(0);
-      return uVar5;
+    if ((uVar5 & 0xffffffff) != 1) {
+      return 0x80070057;
     }
-LAB_828ce0e4:
-    uVar5 = __restgprlr_29(0xffffffff80070057);
-    return uVar5;
+    RtlLeaveCriticalSection(0xffffffff829afeb4);
+    return 0;
   }
-  if ((uVar2 & 0xffffffff) == 0x20001) {
+  if (param_1 == 0x20001) {
     RtlEnterCriticalSection(0xffffffff829afeb4);
-    uVar5 = __restgprlr_29(0);
-    return uVar5;
+    return 0;
   }
-  uVar2 = uVar2 - 0x10001;
-  if (uVar2 == 0) {
-    uVar3 = KeRaiseIrqlToDpcLevel();
+  uVar5 = (longlong)(int)param_1 - 0x10001;
+  if (uVar5 == 0) {
+    uVar2 = KeRaiseIrqlToDpcLevel();
     if ((XAUDIO::g_XAudioSpinLock.m_LockCount != 0) &&
        (in_r13 == XAUDIO::g_XAudioSpinLock.m_pOwningThread)) goto LAB_828ce0a0;
     KeAcquireSpinLockAtRaisedIrql(0xffffffff848958d8);
   }
   else {
-    if ((uVar2 & 0xffffffff) != 1) {
-      if ((uVar2 & 0xffffffff) == 2) {
-        uVar2 = (ulonglong)(uint)XAUDIO::g_XAudioSpinLock.m_LockCount;
-        if ((XAUDIO::g_XAudioSpinLock.m_LockCount != 0) &&
-           (in_r13 == XAUDIO::g_XAudioSpinLock.m_pOwningThread)) {
-          XAUDIO::g_XAudioSpinLock.m_LockCount = (long)(uVar2 - 1);
-          if (uVar2 - 1 == 0) {
-            XAUDIO::g_XAudioSpinLock.m_pOwningThread = (void *)0x0;
-            XAUDIO::g_XAudioSpinLock.m_PreviousIrql = '\0';
-            KeReleaseSpinLockFromRaisedIrql();
-            KfLowerIrql(uVar1);
-          }
-        }
-        uVar5 = __restgprlr_29(0);
-        return uVar5;
+    if ((uVar5 & 0xffffffff) != 1) {
+      if ((uVar5 & 0xffffffff) != 2) {
+        return 0x80070057;
       }
-      goto LAB_828ce0e4;
+      uVar5 = (ulonglong)(uint)XAUDIO::g_XAudioSpinLock.m_LockCount;
+      if (((XAUDIO::g_XAudioSpinLock.m_LockCount != 0) &&
+          (in_r13 == XAUDIO::g_XAudioSpinLock.m_pOwningThread)) &&
+         (XAUDIO::g_XAudioSpinLock.m_LockCount = (long)(uVar5 - 1), uVar5 - 1 == 0)) {
+        XAUDIO::g_XAudioSpinLock.m_pOwningThread = (void *)0x0;
+        XAUDIO::g_XAudioSpinLock.m_PreviousIrql = '\0';
+        KeReleaseSpinLockFromRaisedIrql();
+        KfLowerIrql(uVar1);
+      }
+      return 0;
     }
-    uVar3 = KeRaiseIrqlToDpcLevel();
+    uVar2 = KeRaiseIrqlToDpcLevel();
     if ((XAUDIO::g_XAudioSpinLock.m_LockCount != 0) &&
        (in_r13 == XAUDIO::g_XAudioSpinLock.m_pOwningThread)) goto LAB_828ce0a0;
-    cVar6 = KeTryToAcquireSpinLockAtRaisedIrql(0xffffffff848958d8);
-    if (cVar6 == '\0') {
-      KfLowerIrql(uVar3);
-      uVar5 = __restgprlr_29(0xffffffff80004004);
-      return uVar5;
+    cVar4 = KeTryToAcquireSpinLockAtRaisedIrql(0xffffffff848958d8);
+    if (cVar4 == '\0') {
+      KfLowerIrql(uVar2);
+      return 0x80004004;
     }
   }
-  XAUDIO::g_XAudioSpinLock.m_PreviousIrql = (uchar)uVar3;
+  XAUDIO::g_XAudioSpinLock.m_PreviousIrql = (uchar)uVar2;
   XAUDIO::g_XAudioSpinLock.m_pOwningThread = in_r13;
 LAB_828ce0a0:
   XAUDIO::g_XAudioSpinLock.m_LockCount = XAUDIO::g_XAudioSpinLock.m_LockCount + 1;
-  uVar5 = __restgprlr_29(0);
-  return uVar5;
+  return 0;
 }
 
 

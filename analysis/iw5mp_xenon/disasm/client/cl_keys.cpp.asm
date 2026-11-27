@@ -3444,7 +3444,7 @@ LAB_82340314:
   82340364  7C0903A6             mtspr CTR,r0
 switchD:
   82340368  4E800420             bctr
-caseD_0:
+caseD_9a:
   82340398  2F1F0060             cmpwi cr6,r31,0x60
   8234039C  419A0058             beq cr6,0x823403f4
   823403A0  2F1F007E             cmpwi cr6,r31,0x7e
@@ -3470,7 +3470,7 @@ LAB_823403b0:
   823403EC  419A0038             beq cr6,0x82340424
 LAB_823403f0:
   823403F0  4BFF3D89             bl 0x82334178
-caseD_2:
+caseD_9c:
   823403F4  382104C0             addi r1,r1,0x4c0
   823403F8  485D62EC             b 0x829166e4
 LAB_823403fc:

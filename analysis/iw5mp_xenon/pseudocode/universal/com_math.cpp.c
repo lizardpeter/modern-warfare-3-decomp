@@ -71,46 +71,44 @@ float crandom(void)
 
 // 825D7AE8  GaussianRandom  (universal/com_math.cpp:204)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void GaussianRandom(float *param_1,float *param_2)
 
 {
-  float *pfVar1;
-  int iVar2;
-  ulonglong uVar3;
+  int iVar1;
+  double dVar2;
+  double dVar3;
   double dVar4;
   double dVar5;
   double dVar6;
   double dVar7;
-  double dVar8;
-  double dVar9;
   
-  uVar3 = (ulonglong)(int)param_2;
-  __savegprlr_28(param_1);
-  pfVar1 = (float *)__savefpr_26();
-  if (pfVar1 == (float *)0x0) {
+  if (param_1 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_math.cpp",0xd1,0
                     ,"%s");
   }
-  if ((uVar3 & 0xffffffff) == 0) {
+  if (param_2 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_math.cpp",0xd2,0
                     ,"%s");
   }
-  dVar7 = 1.0;
-  dVar4 = 2.0;
-  dVar5 = 3.0517578125e-05;
+  dVar5 = 1.0;
+  dVar2 = 2.0;
+  dVar3 = 3.0517578125e-05;
   do {
-    iVar2 = rand();
-    dVar9 = (double)(float)((double)(float)((double)(longlong)iVar2 * dVar5) * dVar4 - dVar7);
-    iVar2 = rand();
-    dVar8 = (double)(float)((double)(float)((double)(longlong)iVar2 * dVar5) * dVar4 - dVar7);
-    dVar6 = (double)(float)(dVar8 * dVar8 + (double)(float)(dVar9 * dVar9));
-  } while (dVar7 < dVar6);
-  dVar4 = log(dVar6);
-  dVar4 = (double)SQRT((float)((double)(float)dVar4 / dVar6) * -2.0);
-  *pfVar1 = (float)(dVar4 * dVar9);
-  *(float *)uVar3 = (float)(dVar4 * dVar8);
-  __restfpr_26();
-  __restgprlr_28();
+    iVar1 = rand();
+    dVar7 = (double)(float)((double)(float)((double)(longlong)iVar1 * dVar3) * dVar2 - dVar5);
+    iVar1 = rand();
+    dVar6 = (double)(float)((double)(float)((double)(longlong)iVar1 * dVar3) * dVar2 - dVar5);
+    dVar4 = (double)(float)(dVar6 * dVar6 + (double)(float)(dVar7 * dVar7));
+  } while (dVar5 < dVar4);
+  dVar2 = log(dVar4);
+  dVar2 = (double)SQRT((float)((double)(float)dVar2 / dVar4) * -2.0);
+  *param_1 = (float)(dVar2 * dVar7);
+  *param_2 = (float)(dVar2 * dVar6);
   return;
 }
 
@@ -152,6 +150,9 @@ void PointInCircleFromUniformDeviates(float param_1,float param_2,float *param_3
 
 // 825D7CA8  PointOnSphereFromUniformDeviates  (universal/com_math.cpp:252)
 
+/* WARNING: Function: __savefpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_28 replaced with injection: xenon_save_restore */
+
 void PointOnSphereFromUniformDeviates(float param_1,float param_2,float *param_3)
 
 {
@@ -162,10 +163,8 @@ void PointOnSphereFromUniformDeviates(float param_1,float param_2,float *param_3
   double dVar4;
   double dVar5;
   
-  dVar2 = (double)param_2;
-  dVar1 = (double)__savefpr_28((double)param_1,param_3);
-  dVar5 = (double)(float)(dVar1 * 2.0 - 1.0);
-  dVar4 = (double)(float)(dVar2 * 6.2831854820251465);
+  dVar5 = (double)(param_1 * 2.0 - 1.0);
+  dVar4 = (double)(param_2 * 6.2831855);
   dVar3 = (double)SQRT(-(float)(dVar5 * dVar5 - 1.0));
   dVar1 = sin(dVar4);
   dVar2 = (double)(float)dVar1;
@@ -173,12 +172,14 @@ void PointOnSphereFromUniformDeviates(float param_1,float param_2,float *param_3
   in_r5[2] = (float)dVar5;
   in_r5[1] = (float)(dVar2 * dVar3);
   *in_r5 = (float)((double)(float)dVar1 * dVar3);
-  __restfpr_28();
   return;
 }
 
 
 // 825D7D38  PointOnHemisphereFromUniformDeviates  (universal/com_math.cpp:270)
+
+/* WARNING: Function: __savefpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_28 replaced with injection: xenon_save_restore */
 
 void PointOnHemisphereFromUniformDeviates(float param_1,float param_2,float *param_3)
 
@@ -190,9 +191,8 @@ void PointOnHemisphereFromUniformDeviates(float param_1,float param_2,float *par
   double dVar4;
   double dVar5;
   
-  dVar2 = (double)param_2;
-  dVar1 = (double)__savefpr_28((double)param_1,param_3);
-  dVar5 = (double)(float)(dVar2 * 6.2831854820251465);
+  dVar1 = (double)param_1;
+  dVar5 = (double)(param_2 * 6.2831855);
   dVar4 = (double)SQRT(-(float)(dVar1 * dVar1 - 1.0));
   dVar2 = sin(dVar5);
   dVar3 = (double)(float)dVar2;
@@ -200,12 +200,14 @@ void PointOnHemisphereFromUniformDeviates(float param_1,float param_2,float *par
   in_r5[2] = (float)dVar1;
   in_r5[1] = (float)(dVar3 * dVar4);
   *in_r5 = (float)((double)(float)dVar2 * dVar4);
-  __restfpr_28();
   return;
 }
 
 
 // 825D7DC0  UniformPointsInCircle  (universal/com_math.cpp:288)
+
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 
 void UniformPointsInCircle(uint param_1,void *param_2,uint param_3)
 
@@ -214,45 +216,40 @@ void UniformPointsInCircle(uint param_1,void *param_2,uint param_3)
   float fVar2;
   float fVar3;
   float fVar4;
-  float fVar5;
-  ulonglong uVar6;
-  ulonglong uVar7;
-  ulonglong uVar8;
-  ulonglong uVar9;
+  longlong lVar5;
   
-  uVar8 = (ulonglong)(int)param_3;
-  uVar9 = (ulonglong)(int)param_2;
-  uVar7 = __savegprlr_27(param_1);
-  if ((uVar9 & 0xffffffff) == 0) {
+  lVar5 = (longlong)(int)param_1;
+  if (param_2 == (void *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_math.cpp",299,0,
                     "%s");
   }
-  if ((uVar8 & 0xffffffff) < 8) {
+  if (param_3 < 8) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_math.cpp",300,0,
                     "%s");
   }
   fVar1 = 0.32556814;
-  fVar5 = 0.94551855;
-  fVar2 = 1.0 / (float)(uVar7 & 0xffffffff);
-  fVar3 = fVar2 * 0.5;
-  uVar6 = uVar7 & 0xffffffff;
-  while (uVar6 != 0) {
-    fVar4 = fVar1 * -0.6754903;
-    *(float *)uVar9 = SQRT(fVar3) * fVar5;
-    ((float *)uVar9)[1] = SQRT(fVar3) * fVar1;
-    fVar3 = fVar3 + fVar2;
-    uVar9 = uVar9 + uVar8;
-    fVar1 = fVar1 * -0.7373689 - fVar5 * 0.6754903;
-    fVar5 = fVar5 * -0.7373689 - fVar4;
-    uVar7 = uVar7 - 1;
-    uVar6 = uVar7;
+  fVar2 = 0.94551855;
+  fVar3 = (1.0 / (float)param_1) * 0.5;
+  if (param_1 != 0) {
+    do {
+      fVar4 = fVar1 * -0.6754903;
+      *(float *)param_2 = SQRT(fVar3) * fVar2;
+      *(float *)((int)param_2 + 4) = SQRT(fVar3) * fVar1;
+      fVar3 = fVar3 + 1.0 / (float)param_1;
+      param_2 = (void *)((int)param_2 + param_3);
+      fVar1 = fVar1 * -0.7373689 - fVar2 * 0.6754903;
+      fVar2 = fVar2 * -0.7373689 - fVar4;
+      lVar5 = lVar5 + -1;
+    } while (lVar5 != 0);
   }
-  __restgprlr_27();
   return;
 }
 
 
 // 825D7EC8  UniformPointsOnHemisphere  (universal/com_math.cpp:325)
+
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 
 void UniformPointsOnHemisphere(uint param_1,void *param_2,uint param_3)
 
@@ -262,51 +259,45 @@ void UniformPointsOnHemisphere(uint param_1,void *param_2,uint param_3)
   float fVar3;
   float fVar4;
   float fVar5;
-  float fVar6;
-  ulonglong uVar7;
-  ulonglong uVar8;
-  ulonglong uVar9;
-  longlong lVar10;
-  float *pfVar11;
+  float *pfVar6;
+  longlong lVar7;
   
-  uVar9 = (ulonglong)(int)param_3;
-  uVar8 = (ulonglong)(int)param_2;
-  uVar7 = __savegprlr_27(param_1);
-  if ((uVar8 & 0xffffffff) == 0) {
+  lVar7 = (longlong)(int)param_1;
+  if (param_2 == (void *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_math.cpp",0x151,
                     0,"%s");
   }
-  if ((uVar9 & 0xffffffff) < 0xc) {
+  if (param_3 < 0xc) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_math.cpp",0x152,
                     0,"%s");
   }
-  fVar2 = 1.0;
-  fVar4 = 0.0;
-  fVar3 = 1.0 / (float)(uVar7 & 0xffffffff);
-  fVar6 = fVar3 * 0.5;
-  if ((uVar7 & 0xffffffff) != 0) {
-    lVar10 = uVar8 + 8;
+  fVar1 = 1.0;
+  fVar2 = 0.0;
+  fVar4 = (1.0 / (float)param_1) * 0.5;
+  if (param_1 != 0) {
+    pfVar6 = (float *)((int)param_2 + 8);
     do {
-      fVar1 = fVar6 * fVar6;
-      pfVar11 = (float *)lVar10;
-      *pfVar11 = fVar6;
-      fVar5 = fVar4 * -0.6754903;
-      fVar6 = fVar6 + fVar3;
-      fVar1 = SQRT(-(fVar1 - 1.0));
-      pfVar11[-2] = fVar1 * fVar2;
-      pfVar11[-1] = fVar1 * fVar4;
-      fVar4 = fVar4 * -0.7373689 - fVar2 * 0.6754903;
-      lVar10 = lVar10 + uVar9;
-      fVar2 = fVar2 * -0.7373689 - fVar5;
-      uVar7 = uVar7 - 1;
-    } while (uVar7 != 0);
+      fVar3 = fVar4 * fVar4;
+      *pfVar6 = fVar4;
+      fVar5 = fVar2 * -0.6754903;
+      fVar4 = fVar4 + 1.0 / (float)param_1;
+      fVar3 = SQRT(-(fVar3 - 1.0));
+      pfVar6[-2] = fVar3 * fVar1;
+      pfVar6[-1] = fVar3 * fVar2;
+      fVar2 = fVar2 * -0.7373689 - fVar1 * 0.6754903;
+      pfVar6 = (float *)((int)pfVar6 + param_3);
+      fVar1 = fVar1 * -0.7373689 - fVar5;
+      lVar7 = lVar7 + -1;
+    } while (lVar7 != 0);
   }
-  __restgprlr_27();
   return;
 }
 
 
 // 825D7FD8  UniformPointsOnSphere  (universal/com_math.cpp:365)
+
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 
 void UniformPointsOnSphere(uint param_1,void *param_2,uint param_3)
 
@@ -316,46 +307,37 @@ void UniformPointsOnSphere(uint param_1,void *param_2,uint param_3)
   float fVar3;
   float fVar4;
   float fVar5;
-  float fVar6;
-  ulonglong uVar7;
-  ulonglong uVar8;
-  ulonglong uVar9;
-  longlong lVar10;
-  float *pfVar11;
+  float *pfVar6;
+  longlong lVar7;
   
-  uVar9 = (ulonglong)(int)param_3;
-  uVar8 = (ulonglong)(int)param_2;
-  uVar7 = __savegprlr_27(param_1);
-  if ((uVar8 & 0xffffffff) == 0) {
+  lVar7 = (longlong)(int)param_1;
+  if (param_2 == (void *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_math.cpp",0x179,
                     0,"%s");
   }
-  if ((uVar9 & 0xffffffff) < 0xc) {
+  if (param_3 < 0xc) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_math.cpp",0x17a,
                     0,"%s");
   }
-  fVar3 = 1.0;
-  fVar1 = 0.0;
-  fVar4 = 1.0 / (float)(uVar7 & 0xffffffff);
-  fVar6 = fVar4 * 0.5;
-  if ((uVar7 & 0xffffffff) != 0) {
-    lVar10 = uVar8 + 8;
+  fVar1 = 1.0;
+  fVar2 = 0.0;
+  fVar4 = (1.0 / (float)param_1) * 0.5;
+  if (param_1 != 0) {
+    pfVar6 = (float *)((int)param_2 + 8);
     do {
-      fVar2 = fVar6 * 2.0 - 1.0;
-      pfVar11 = (float *)lVar10;
-      *pfVar11 = fVar2;
-      fVar5 = fVar1 * -0.6754903;
-      fVar6 = fVar6 + fVar4;
-      fVar2 = SQRT(-(fVar2 * fVar2 - 1.0));
-      pfVar11[-2] = fVar2 * fVar3;
-      pfVar11[-1] = fVar2 * fVar1;
-      fVar1 = fVar1 * -0.7373689 - fVar3 * 0.6754903;
-      lVar10 = lVar10 + uVar9;
-      fVar3 = fVar3 * -0.7373689 - fVar5;
-      uVar7 = uVar7 - 1;
-    } while (uVar7 != 0);
+      fVar3 = fVar4 * 2.0 - 1.0;
+      *pfVar6 = fVar3;
+      fVar5 = fVar2 * -0.6754903;
+      fVar4 = fVar4 + 1.0 / (float)param_1;
+      fVar3 = SQRT(-(fVar3 * fVar3 - 1.0));
+      pfVar6[-2] = fVar3 * fVar1;
+      pfVar6[-1] = fVar3 * fVar2;
+      fVar2 = fVar2 * -0.7373689 - fVar1 * 0.6754903;
+      pfVar6 = (float *)((int)pfVar6 + param_3);
+      fVar1 = fVar1 * -0.7373689 - fVar5;
+      lVar7 = lVar7 + -1;
+    } while (lVar7 != 0);
   }
-  __restgprlr_27();
   return;
 }
 
@@ -464,78 +446,73 @@ float DiffTrackAngle(float param_1,float param_2,float param_3,float param_4)
 
 // 825D8328  GraphGetValueFromFraction  (universal/com_math.cpp:497)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 float GraphGetValueFromFraction(int param_1,float (*param_2) [2],float param_3)
 
 {
-  int iVar1;
+  float (*pafVar1) [2];
   int iVar2;
-  ulonglong uVar3;
-  int iVar4;
-  double extraout_f1;
+  double dVar3;
+  double dVar4;
   double dVar5;
   double dVar6;
-  double dVar7;
-  double dVar8;
   
-  uVar3 = (ulonglong)(int)param_2;
-  __savegprlr_29((double)param_3,param_1);
-  iVar2 = __savefpr_28();
-  dVar8 = -1.0;
-  dVar5 = extraout_f1;
-  if ((uVar3 & 0xffffffff) == 0) {
+  dVar6 = (double)param_3;
+  dVar5 = -1.0;
+  if (param_2 == (float (*) [2])0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_math.cpp",0x1f6,
                     0,"%s");
   }
-  if (iVar2 < 2) {
+  if (param_1 < 2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_math.cpp",0x1f7,
                     0,"%s\n\t(knotCount) = %i");
   }
-  dVar7 = 0.0;
-  dVar6 = 1.0;
-  if ((dVar5 < 0.0) || (1.0 < dVar5)) {
+  dVar4 = 0.0;
+  dVar3 = 1.0;
+  if ((dVar6 < 0.0) || (1.0 < dVar6)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_math.cpp",0x1f8,
                     0,"%s\n\t(fraction) = %g");
   }
-  iVar1 = (int)uVar3;
-  if ((double)*(float *)(iVar2 * 8 + iVar1 + -8) != dVar6) {
+  if ((double)param_2[param_1 + -1][0] != dVar3) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_math.cpp",0x1f9,
                     0,"%s\n\t(knots[knotCount - 1][0]) = %g");
   }
-  iVar4 = 1;
-  if (1 < iVar2) {
+  iVar2 = 1;
+  pafVar1 = param_2;
+  if (1 < param_1) {
     do {
-      uVar3 = uVar3 + 8;
-      if (dVar5 <= (double)*(float *)uVar3) {
-        iVar2 = iVar4 * 8 + iVar1;
-        dVar5 = (double)((float)(dVar5 - (double)*(float *)(iVar2 + -8)) /
-                        (float)((double)*(float *)(iVar4 * 8 + iVar1) -
-                               (double)*(float *)(iVar2 + -8)));
-        if ((dVar5 < dVar7) || (dVar6 < dVar5)) {
+      if (dVar6 <= (double)pafVar1[1][0]) {
+        dVar6 = (double)((float)(dVar6 - (double)param_2[iVar2 + -1][0]) /
+                        (float)((double)param_2[iVar2][0] - (double)param_2[iVar2 + -1][0]));
+        if ((dVar6 < dVar4) || (dVar3 < dVar6)) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_math.cpp",
                           0x201,0,"%s\n\t(adjustedFrac) = %g");
         }
-        if (((double)*(float *)(iVar2 + -4) < dVar7) || (dVar6 < (double)*(float *)(iVar2 + -4))) {
+        if (((double)param_2[iVar2 + -1][1] < dVar4) || (dVar3 < (double)param_2[iVar2 + -1][1])) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_math.cpp",
                           0x202,0,"%s\n\t(knots[knotIndex - 1][1]) = %g");
         }
-        if (((double)*(float *)(iVar2 + 4) < dVar7) || (dVar6 < (double)*(float *)(iVar2 + 4))) {
+        if (((double)param_2[iVar2][1] < dVar4) || (dVar3 < (double)param_2[iVar2][1])) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_math.cpp",
                           0x203,0,"%s\n\t(knots[knotIndex][1]) = %g");
         }
-        dVar8 = (double)(float)((double)(float)((double)*(float *)(iVar2 + 4) -
-                                               (double)*(float *)(iVar2 + -4)) * dVar5 +
-                               (double)*(float *)(iVar2 + -4));
-        if ((dVar7 <= dVar8) && (dVar8 <= dVar6)) goto LAB_825d8580;
+        dVar5 = (double)(float)((double)(float)((double)param_2[iVar2][1] -
+                                               (double)param_2[iVar2 + -1][1]) * dVar6 +
+                               (double)param_2[iVar2 + -1][1]);
+        if ((dVar4 <= dVar5) && (dVar5 <= dVar3)) goto LAB_825d8580;
         break;
       }
-      iVar4 = iVar4 + 1;
-    } while (iVar4 < iVar2);
+      iVar2 = iVar2 + 1;
+      pafVar1 = pafVar1 + 1;
+    } while (iVar2 < param_1);
   }
   MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_math.cpp",0x20a,0,
                   "%s\n\t(result) = %g");
 LAB_825d8580:
-  __restfpr_28(dVar8);
-  dVar5 = (double)__restgprlr_29();
   return (float)dVar5;
 }
 
@@ -896,57 +873,46 @@ void Vec2Rotate(float *param_1,float param_2,float *param_3)
 
 // 825D8BC0  Vec3Rotate  (universal/com_math.cpp:864)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void Vec3Rotate(float *param_1,float (*param_2) [3],float *param_3)
 
 {
-  float *pfVar1;
-  ulonglong uVar2;
-  ulonglong uVar3;
-  float *pfVar4;
-  
-  uVar3 = (ulonglong)(int)param_3;
-  uVar2 = __savegprlr_29(param_1);
-  if ((uVar2 & 0xffffffff) == (uVar3 & 0xffffffff)) {
+  if (param_1 == param_3) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_math.cpp",0x361,
                     0,"%s");
   }
-  pfVar1 = (float *)uVar2;
-  pfVar4 = (float *)uVar3;
-  *pfVar4 = *pfVar1 * (*param_2)[0] + (*param_2)[2] * pfVar1[2] + (*param_2)[1] * pfVar1[1];
-  pfVar4[1] = param_2[1][1] * pfVar1[1] + param_2[1][0] * *pfVar1 + param_2[1][2] * pfVar1[2];
-  pfVar4[2] = param_2[2][1] * pfVar1[1] + param_2[2][0] * *pfVar1 + param_2[2][2] * pfVar1[2];
-  __restgprlr_29();
+  *param_3 = *param_1 * (*param_2)[0] + (*param_2)[2] * param_1[2] + (*param_2)[1] * param_1[1];
+  param_3[1] = param_2[1][1] * param_1[1] + param_2[1][0] * *param_1 + param_2[1][2] * param_1[2];
+  param_3[2] = param_2[2][1] * param_1[1] + param_2[2][0] * *param_1 + param_2[2][2] * param_1[2];
   return;
 }
 
 
 // 825D8C88  Vec3RotateTranspose  (universal/com_math.cpp:873)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void Vec3RotateTranspose(float *param_1,float (*param_2) [3],float *param_3)
 
 {
-  float *pfVar1;
-  ulonglong uVar2;
-  ulonglong uVar3;
-  float *pfVar4;
-  
-  uVar3 = (ulonglong)(int)param_3;
-  uVar2 = __savegprlr_29(param_1);
-  if ((uVar2 & 0xffffffff) == (uVar3 & 0xffffffff)) {
+  if (param_1 == param_3) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_math.cpp",0x36a,
                     0,"%s");
   }
-  pfVar1 = (float *)uVar2;
-  pfVar4 = (float *)uVar3;
-  *pfVar4 = *pfVar1 * (*param_2)[0] + param_2[2][0] * pfVar1[2] + param_2[1][0] * pfVar1[1];
-  pfVar4[1] = param_2[1][1] * pfVar1[1] + (*param_2)[1] * *pfVar1 + param_2[2][1] * pfVar1[2];
-  pfVar4[2] = param_2[1][2] * pfVar1[1] + (*param_2)[2] * *pfVar1 + param_2[2][2] * pfVar1[2];
-  __restgprlr_29();
+  *param_3 = *param_1 * (*param_2)[0] + param_2[2][0] * param_1[2] + param_2[1][0] * param_1[1];
+  param_3[1] = param_2[1][1] * param_1[1] + (*param_2)[1] * *param_1 + param_2[2][1] * param_1[2];
+  param_3[2] = param_2[1][2] * param_1[1] + (*param_2)[2] * *param_1 + param_2[2][2] * param_1[2];
   return;
 }
 
 
 // 825D8D50  RotationMatrix  (universal/com_math.cpp:882)
+
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 
 void RotationMatrix(float *param_1,float param_2,float (*param_3) [3])
 
@@ -954,47 +920,43 @@ void RotationMatrix(float *param_1,float param_2,float (*param_3) [3])
   float fVar1;
   float fVar2;
   float fVar3;
-  float *pfVar4;
   float *in_r5;
-  double extraout_f1;
+  double dVar4;
   double dVar5;
   double dVar6;
   double dVar7;
   double dVar8;
   double dVar9;
-  double dVar10;
   
-  pfVar4 = (float *)__savegprlr_28((double)param_2,param_1,param_3);
-  dVar6 = extraout_f1;
-  if (((*pfVar4 == 0.0) && (pfVar4[1] == 0.0)) && (pfVar4[2] == 0.0)) {
+  dVar5 = (double)param_2;
+  if (((*param_1 == 0.0) && (param_1[1] == 0.0)) && (param_1[2] == 0.0)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_math.cpp",0x37a,
                     0,"%s");
   }
-  if (((uint)(float)dVar6 & 0x7f800000) == 0x7f800000) {
+  if (((uint)(float)dVar5 & 0x7f800000) == 0x7f800000) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_math.cpp",0x37b,
                     0,"%s");
   }
-  dVar5 = sin(dVar6);
-  dVar10 = (double)(float)dVar5;
-  dVar6 = cos(dVar6);
-  dVar9 = (double)(float)dVar6;
-  dVar8 = (double)*pfVar4;
-  dVar7 = (double)pfVar4[1];
-  dVar5 = (double)pfVar4[2];
-  dVar6 = (double)(float)(1.0 - dVar9);
-  fVar1 = (float)(dVar5 * (double)(float)(dVar8 * dVar6));
-  fVar2 = (float)(dVar8 * (double)(float)(dVar7 * dVar6));
-  fVar3 = (float)(dVar7 * (double)(float)(dVar5 * dVar6));
-  *in_r5 = (float)(dVar8 * (double)(float)(dVar8 * dVar6) + dVar9);
-  in_r5[4] = (float)(dVar7 * (double)(float)(dVar7 * dVar6) + dVar9);
-  in_r5[8] = (float)(dVar5 * (double)(float)(dVar5 * dVar6) + dVar9);
-  in_r5[2] = (float)(dVar7 * dVar10) + fVar1;
-  in_r5[1] = fVar2 - (float)(dVar5 * dVar10);
-  in_r5[3] = (float)(dVar5 * dVar10) + fVar2;
-  in_r5[5] = fVar3 - (float)(dVar8 * dVar10);
-  in_r5[6] = fVar1 - (float)(dVar7 * dVar10);
-  in_r5[7] = (float)(dVar8 * dVar10) + fVar3;
-  __restgprlr_28();
+  dVar4 = sin(dVar5);
+  dVar9 = (double)(float)dVar4;
+  dVar5 = cos(dVar5);
+  dVar8 = (double)(float)dVar5;
+  dVar7 = (double)*param_1;
+  dVar6 = (double)param_1[1];
+  dVar4 = (double)param_1[2];
+  dVar5 = (double)(float)(1.0 - dVar8);
+  fVar1 = (float)(dVar4 * (double)(float)(dVar7 * dVar5));
+  fVar2 = (float)(dVar7 * (double)(float)(dVar6 * dVar5));
+  fVar3 = (float)(dVar6 * (double)(float)(dVar4 * dVar5));
+  *in_r5 = (float)(dVar7 * (double)(float)(dVar7 * dVar5) + dVar8);
+  in_r5[4] = (float)(dVar6 * (double)(float)(dVar6 * dVar5) + dVar8);
+  in_r5[8] = (float)(dVar4 * (double)(float)(dVar4 * dVar5) + dVar8);
+  in_r5[2] = (float)(dVar6 * dVar9) + fVar1;
+  in_r5[1] = fVar2 - (float)(dVar4 * dVar9);
+  in_r5[3] = (float)(dVar4 * dVar9) + fVar2;
+  in_r5[5] = fVar3 - (float)(dVar7 * dVar9);
+  in_r5[6] = fVar1 - (float)(dVar6 * dVar9);
+  in_r5[7] = (float)(dVar7 * dVar9) + fVar3;
   return;
 }
 
@@ -1014,30 +976,28 @@ void RotatePointAroundVector(float *param_1,float *param_2,float *param_3,float 
 
 // 825DFE00  Vec3Basis_LeftHanded  (universal/com_math.cpp:927)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void Vec3Basis_LeftHanded(float *param_1,float *param_2,float *param_3)
 
 {
-  float *pfVar1;
-  
-  pfVar1 = (float *)__savegprlr_29(param_1);
-  PerpendicularVector(pfVar1,param_3);
-  Vec3Cross(pfVar1,param_3,param_2);
-  __restgprlr_29();
+  PerpendicularVector(param_1,param_3);
+  Vec3Cross(param_1,param_3,param_2);
   return;
 }
 
 
 // 825DFE38  Vec3Basis_RightHanded  (universal/com_math.cpp:934)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void Vec3Basis_RightHanded(float *param_1,float *param_2,float *param_3)
 
 {
-  float *pfVar1;
-  
-  pfVar1 = (float *)__savegprlr_29(param_1);
-  PerpendicularVector(pfVar1,param_3);
-  Vec3Cross(param_3,pfVar1,param_2);
-  __restgprlr_29();
+  PerpendicularVector(param_1,param_3);
+  Vec3Cross(param_3,param_1,param_2);
   return;
 }
 
@@ -1417,32 +1377,35 @@ void ProjectPointOntoVector(float *param_1,float *param_2,float *param_3,float *
 
 // 825D9850  ProjectPointOntoVectorDir  (universal/com_math.cpp:1240)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void ProjectPointOntoVectorDir
                (float *param_1,float *param_2,float *param_3,float *param_4,float *param_5)
 
 {
   float fVar1;
-  float *pfVar2;
   
-  pfVar2 = (float *)__savegprlr_27(param_1);
   if (0.002 <= ABS((param_3[1] * param_3[1] + param_3[2] * param_3[2] + *param_3 * *param_3) - 1.0))
   {
     va("(%g %g %g) len %g");
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_math.cpp",0x4dc,
                     0,"%s\n\t%s");
   }
-  fVar1 = (pfVar2[2] - param_2[2]) * param_3[2] +
-          *param_3 * (*pfVar2 - *param_2) + (pfVar2[1] - param_2[1]) * param_3[1];
+  fVar1 = (param_1[2] - param_2[2]) * param_3[2] +
+          *param_3 * (*param_1 - *param_2) + (param_1[1] - param_2[1]) * param_3[1];
   *param_4 = *param_3 * fVar1 + *param_2;
   param_4[1] = fVar1 * param_3[1] + param_2[1];
   param_4[2] = fVar1 * param_3[2] + param_2[2];
   *param_5 = fVar1;
-  __restgprlr_27();
   return;
 }
 
 
 // 825D9998  PointToLineDistSq  (universal/com_math.cpp:1254)
+
+/* WARNING: Function: __savefpr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_24 replaced with injection: xenon_save_restore */
 
 float PointToLineDistSq(float *param_1,float *param_2,float *param_3)
 
@@ -1450,7 +1413,7 @@ float PointToLineDistSq(float *param_1,float *param_2,float *param_3)
   float fVar1;
   float fVar2;
   float fVar3;
-  float *pfVar4;
+  double dVar4;
   double dVar5;
   double dVar6;
   double dVar7;
@@ -1458,29 +1421,26 @@ float PointToLineDistSq(float *param_1,float *param_2,float *param_3)
   double dVar9;
   double dVar10;
   double dVar11;
-  double dVar12;
   
-  pfVar4 = (float *)__savefpr_24(param_1);
-  dVar12 = (double)(param_3[1] - param_2[1]);
-  dVar11 = (double)(*param_3 - *param_2);
-  dVar9 = (double)(pfVar4[1] - param_2[1]);
-  dVar10 = (double)(param_3[2] - param_2[2]);
-  dVar8 = (double)(*pfVar4 - *param_2);
-  dVar7 = (double)(pfVar4[2] - param_2[2]);
-  dVar6 = (double)(float)(dVar10 * dVar10 +
-                         (double)(float)(dVar11 * dVar11 + (double)(float)(dVar12 * dVar12)));
-  dVar5 = (double)(float)(dVar7 * dVar10 +
-                         (double)(float)(dVar8 * dVar11 + (double)(float)(dVar9 * dVar12)));
-  if (dVar6 == 0.0) {
+  dVar11 = (double)(param_3[1] - param_2[1]);
+  dVar10 = (double)(*param_3 - *param_2);
+  dVar8 = (double)(param_1[1] - param_2[1]);
+  dVar9 = (double)(param_3[2] - param_2[2]);
+  dVar7 = (double)(*param_1 - *param_2);
+  dVar6 = (double)(param_1[2] - param_2[2]);
+  dVar5 = (double)(float)(dVar9 * dVar9 +
+                         (double)(float)(dVar10 * dVar10 + (double)(float)(dVar11 * dVar11)));
+  dVar4 = (double)(float)(dVar6 * dVar9 +
+                         (double)(float)(dVar7 * dVar10 + (double)(float)(dVar8 * dVar11)));
+  if (dVar5 == 0.0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_math.cpp",0x4f4,
                     0,"%s");
   }
-  dVar5 = -(double)(float)(dVar5 / dVar6);
-  fVar1 = (float)(dVar11 * dVar5 + dVar8);
-  fVar2 = (float)(dVar5 * dVar12 + dVar9);
-  fVar3 = (float)(dVar5 * dVar10 + dVar7);
-  dVar5 = (double)__restfpr_24((double)(fVar3 * fVar3 + fVar2 * fVar2 + fVar1 * fVar1));
-  return (float)dVar5;
+  dVar4 = -(double)(float)(dVar4 / dVar5);
+  fVar1 = (float)(dVar10 * dVar4 + dVar7);
+  fVar2 = (float)(dVar4 * dVar11 + dVar8);
+  fVar3 = (float)(dVar4 * dVar9 + dVar6);
+  return fVar3 * fVar3 + fVar2 * fVar2 + fVar1 * fVar1;
 }
 
 
@@ -1511,84 +1471,87 @@ float PointToBoxDistSq(float *param_1,float *param_2,float *param_3)
 
 // 825D9AF8  PointToLineDistSq2D  (universal/com_math.cpp:1306)
 
+/* WARNING: Function: __savefpr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_26 replaced with injection: xenon_save_restore */
+
 float PointToLineDistSq2D(float *param_1,float *param_2,float *param_3)
 
 {
   float fVar1;
   float fVar2;
-  float *pfVar3;
+  double dVar3;
   double dVar4;
   double dVar5;
   double dVar6;
   double dVar7;
   double dVar8;
-  double dVar9;
   
-  pfVar3 = (float *)__savefpr_26(param_1);
-  dVar9 = (double)(param_3[1] - param_2[1]);
-  dVar8 = (double)(*param_3 - *param_2);
-  dVar7 = (double)(pfVar3[1] - param_2[1]);
-  dVar6 = (double)(*pfVar3 - *param_2);
-  dVar5 = (double)(float)(dVar8 * dVar8 + (double)(float)(dVar9 * dVar9));
-  dVar4 = (double)(float)(dVar6 * dVar8 + (double)(float)(dVar7 * dVar9));
-  if (dVar5 == 0.0) {
+  dVar8 = (double)(param_3[1] - param_2[1]);
+  dVar7 = (double)(*param_3 - *param_2);
+  dVar6 = (double)(param_1[1] - param_2[1]);
+  dVar5 = (double)(*param_1 - *param_2);
+  dVar4 = (double)(float)(dVar7 * dVar7 + (double)(float)(dVar8 * dVar8));
+  dVar3 = (double)(float)(dVar5 * dVar7 + (double)(float)(dVar6 * dVar8));
+  if (dVar4 == 0.0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_math.cpp",0x528,
                     0,"%s");
   }
-  fVar1 = (float)(-(double)(float)(dVar4 / dVar5) * dVar9 + dVar7);
-  fVar2 = (float)(dVar8 * -(double)(float)(dVar4 / dVar5) + dVar6);
-  dVar4 = (double)__restfpr_26((double)(fVar2 * fVar2 + fVar1 * fVar1));
-  return (float)dVar4;
+  fVar1 = (float)(-(double)(float)(dVar3 / dVar4) * dVar8 + dVar6);
+  fVar2 = (float)(dVar7 * -(double)(float)(dVar3 / dVar4) + dVar5);
+  return fVar2 * fVar2 + fVar1 * fVar1;
 }
 
 
 // 825D9BA8  PointToLineSegmentDistSq2D  (universal/com_math.cpp:1328)
+
+/* WARNING: Function: __savefpr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_26 replaced with injection: xenon_save_restore */
 
 float PointToLineSegmentDistSq2D(float *param_1,float *param_2,float *param_3)
 
 {
   float fVar1;
   float fVar2;
-  float *pfVar3;
+  double dVar3;
   double dVar4;
   double dVar5;
   double dVar6;
   double dVar7;
   double dVar8;
-  double dVar9;
   
-  pfVar3 = (float *)__savefpr_26(param_1);
-  dVar8 = (double)(param_3[1] - param_2[1]);
-  dVar4 = (double)(pfVar3[1] - param_2[1]);
-  dVar5 = (double)(*pfVar3 - *param_2);
-  dVar9 = (double)(*param_3 - *param_2);
-  dVar7 = (double)(float)(dVar5 * dVar9 + (double)(float)(dVar4 * dVar8));
-  if (0.0 <= dVar7) {
-    dVar6 = (double)(float)(dVar9 * dVar9 + (double)(float)(dVar8 * dVar8));
-    if (dVar6 == 0.0) {
+  dVar7 = (double)(param_3[1] - param_2[1]);
+  dVar3 = (double)(param_1[1] - param_2[1]);
+  dVar4 = (double)(*param_1 - *param_2);
+  dVar8 = (double)(*param_3 - *param_2);
+  dVar6 = (double)(float)(dVar4 * dVar8 + (double)(float)(dVar3 * dVar7));
+  if (0.0 <= dVar6) {
+    dVar5 = (double)(float)(dVar8 * dVar8 + (double)(float)(dVar7 * dVar7));
+    if (dVar5 == 0.0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_math.cpp",
                       0x542,0,"%s");
     }
-    if (dVar7 <= dVar6) {
-      fVar1 = (float)(-(double)(float)(dVar7 / dVar6) * dVar8 + dVar4);
-      fVar2 = (float)(-(double)(float)(dVar7 / dVar6) * dVar9 + dVar5);
-      dVar4 = (double)(fVar2 * fVar2 + fVar1 * fVar1);
+    if (dVar6 <= dVar5) {
+      fVar1 = (float)(-(double)(float)(dVar6 / dVar5) * dVar7 + dVar3);
+      fVar2 = (float)(-(double)(float)(dVar6 / dVar5) * dVar8 + dVar4);
+      fVar1 = fVar2 * fVar2 + fVar1 * fVar1;
     }
     else {
-      dVar4 = (double)((pfVar3[1] - param_3[1]) * (pfVar3[1] - param_3[1]) +
-                      (*pfVar3 - *param_3) * (*pfVar3 - *param_3));
+      fVar1 = (param_1[1] - param_3[1]) * (param_1[1] - param_3[1]) +
+              (*param_1 - *param_3) * (*param_1 - *param_3);
     }
   }
   else {
-    fVar1 = pfVar3[1] - param_2[1];
-    dVar4 = (double)(fVar1 * fVar1 + (float)(dVar5 * dVar5));
+    fVar1 = param_1[1] - param_2[1];
+    fVar1 = fVar1 * fVar1 + (float)(dVar4 * dVar4);
   }
-  dVar4 = (double)__restfpr_26(dVar4);
-  return (float)dVar4;
+  return fVar1;
 }
 
 
 // 825D9CB8  PointToLineSegmentDistSq  (universal/com_math.cpp:1357)
+
+/* WARNING: Function: __savefpr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_24 replaced with injection: xenon_save_restore */
 
 float PointToLineSegmentDistSq(float *param_1,float *param_2,float *param_3)
 
@@ -1596,7 +1559,7 @@ float PointToLineSegmentDistSq(float *param_1,float *param_2,float *param_3)
   float fVar1;
   float fVar2;
   float fVar3;
-  float *pfVar4;
+  double dVar4;
   double dVar5;
   double dVar6;
   double dVar7;
@@ -1604,49 +1567,49 @@ float PointToLineSegmentDistSq(float *param_1,float *param_2,float *param_3)
   double dVar9;
   double dVar10;
   double dVar11;
-  double dVar12;
   
-  pfVar4 = (float *)__savefpr_24(param_1);
-  dVar11 = (double)(param_3[1] - param_2[1]);
-  dVar7 = (double)(pfVar4[1] - param_2[1]);
-  dVar8 = (double)(*pfVar4 - *param_2);
-  dVar12 = (double)(*param_3 - *param_2);
+  dVar10 = (double)(param_3[1] - param_2[1]);
+  dVar6 = (double)(param_1[1] - param_2[1]);
+  dVar7 = (double)(*param_1 - *param_2);
+  dVar11 = (double)(*param_3 - *param_2);
   fVar3 = param_2[2];
-  dVar10 = (double)(param_3[2] - fVar3);
-  dVar6 = (double)(pfVar4[2] - fVar3);
-  dVar9 = (double)(float)(dVar6 * dVar10 +
-                         (double)(float)(dVar8 * dVar12 + (double)(float)(dVar7 * dVar11)));
-  if (0.0 <= dVar9) {
-    dVar5 = (double)(float)(dVar10 * dVar10 +
-                           (double)(float)(dVar12 * dVar12 + (double)(float)(dVar11 * dVar11)));
-    if (dVar5 == 0.0) {
+  dVar9 = (double)(param_3[2] - fVar3);
+  dVar5 = (double)(param_1[2] - fVar3);
+  dVar8 = (double)(float)(dVar5 * dVar9 +
+                         (double)(float)(dVar7 * dVar11 + (double)(float)(dVar6 * dVar10)));
+  if (0.0 <= dVar8) {
+    dVar4 = (double)(float)(dVar9 * dVar9 +
+                           (double)(float)(dVar11 * dVar11 + (double)(float)(dVar10 * dVar10)));
+    if (dVar4 == 0.0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_math.cpp",
                       0x55f,0,"%s");
     }
-    if (dVar9 <= dVar5) {
-      dVar9 = -(double)(float)(dVar9 / dVar5);
-      fVar3 = (float)(dVar9 * dVar12 + dVar8);
-      fVar1 = (float)(dVar9 * dVar11 + dVar7);
-      fVar2 = (float)(dVar9 * dVar10 + dVar6);
-      dVar6 = (double)(fVar2 * fVar2 + fVar1 * fVar1 + fVar3 * fVar3);
+    if (dVar8 <= dVar4) {
+      dVar8 = -(double)(float)(dVar8 / dVar4);
+      fVar3 = (float)(dVar8 * dVar11 + dVar7);
+      fVar1 = (float)(dVar8 * dVar10 + dVar6);
+      fVar2 = (float)(dVar8 * dVar9 + dVar5);
+      fVar3 = fVar2 * fVar2 + fVar1 * fVar1 + fVar3 * fVar3;
     }
     else {
-      dVar6 = (double)((*pfVar4 - *param_3) * (*pfVar4 - *param_3) +
-                      (pfVar4[2] - param_3[2]) * (pfVar4[2] - param_3[2]) +
-                      (pfVar4[1] - param_3[1]) * (pfVar4[1] - param_3[1]));
+      fVar3 = (*param_1 - *param_3) * (*param_1 - *param_3) +
+              (param_1[2] - param_3[2]) * (param_1[2] - param_3[2]) +
+              (param_1[1] - param_3[1]) * (param_1[1] - param_3[1]);
     }
   }
   else {
-    fVar3 = pfVar4[2] - fVar3;
-    fVar1 = pfVar4[1] - param_2[1];
-    dVar6 = (double)(float)(dVar8 * dVar8 + (double)(fVar3 * fVar3 + fVar1 * fVar1));
+    fVar3 = param_1[2] - fVar3;
+    fVar1 = param_1[1] - param_2[1];
+    fVar3 = (float)(dVar7 * dVar7 + (double)(fVar3 * fVar3 + fVar1 * fVar1));
   }
-  dVar6 = (double)__restfpr_24(dVar6);
-  return (float)dVar6;
+  return fVar3;
 }
 
 
 // 825D9E08  PointToLineDistSqUsingDir  (universal/com_math.cpp:1386)
+
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 
 float PointToLineDistSqUsingDir(float *param_1,float *param_2,float *param_3)
 
@@ -1654,45 +1617,41 @@ float PointToLineDistSqUsingDir(float *param_1,float *param_2,float *param_3)
   float fVar1;
   float fVar2;
   float fVar3;
-  float *pfVar4;
-  double dVar5;
   
-  pfVar4 = (float *)__savegprlr_29(param_1);
   if (0.002 <= ABS((param_3[2] * param_3[2] + *param_3 * *param_3 + param_3[1] * param_3[1]) - 1.0))
   {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_math.cpp",0x56d,
                     0,"%s");
   }
-  fVar2 = -(param_3[2] * (pfVar4[2] - param_2[2]) +
-           param_3[1] * (pfVar4[1] - param_2[1]) + *param_3 * (*pfVar4 - *param_2));
-  fVar3 = param_3[2] * fVar2 + (pfVar4[2] - param_2[2]);
-  fVar1 = *param_3 * fVar2 + (*pfVar4 - *param_2);
-  fVar2 = param_3[1] * fVar2 + (pfVar4[1] - param_2[1]);
-  dVar5 = (double)__restgprlr_29((double)(fVar2 * fVar2 + fVar1 * fVar1 + fVar3 * fVar3));
-  return (float)dVar5;
+  fVar2 = -(param_3[2] * (param_1[2] - param_2[2]) +
+           param_3[1] * (param_1[1] - param_2[1]) + *param_3 * (*param_1 - *param_2));
+  fVar3 = param_3[2] * fVar2 + (param_1[2] - param_2[2]);
+  fVar1 = *param_3 * fVar2 + (*param_1 - *param_2);
+  fVar2 = param_3[1] * fVar2 + (param_1[1] - param_2[1]);
+  return fVar2 * fVar2 + fVar1 * fVar1 + fVar3 * fVar3;
 }
 
 
 // 825D9ED8  PointOnLineClosestToPoint  (universal/com_math.cpp:1399)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void PointOnLineClosestToPoint(float *param_1,float *param_2,float *param_3,float *param_4)
 
 {
   float fVar1;
-  float *pfVar2;
   
-  pfVar2 = (float *)__savegprlr_28(param_1);
   if (0.002 <= ABS((param_3[2] * param_3[2] + *param_3 * *param_3 + param_3[1] * param_3[1]) - 1.0))
   {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_math.cpp",0x57a,
                     0,"%s");
   }
-  fVar1 = (pfVar2[2] - param_2[2]) * param_3[2] +
-          *param_3 * (*pfVar2 - *param_2) + (pfVar2[1] - param_2[1]) * param_3[1];
+  fVar1 = (param_1[2] - param_2[2]) * param_3[2] +
+          *param_3 * (*param_1 - *param_2) + (param_1[1] - param_2[1]) * param_3[1];
   *param_4 = *param_3 * fVar1 + *param_2;
   param_4[1] = fVar1 * param_3[1] + param_2[1];
   param_4[2] = fVar1 * param_3[2] + param_2[2];
-  __restgprlr_28();
   return;
 }
 
@@ -1818,45 +1777,55 @@ void MatrixSet44(float (*param_1) [4],float *param_2,float (*param_3) [3],float 
 
 // 825DA2B8  MatrixMultiply  (universal/com_math.cpp:1507)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void MatrixMultiply(float (*param_1) [3],float (*param_2) [3],float (*param_3) [3])
 
 {
-  float *pfVar1;
-  float *pfVar2;
-  ulonglong uVar3;
-  ulonglong uVar4;
-  ulonglong uVar5;
-  float *pfVar6;
-  
-  uVar5 = (ulonglong)(int)param_3;
-  uVar4 = (ulonglong)(int)param_2;
-  uVar3 = __savegprlr_27(param_1);
-  if ((uVar5 & 0xffffffff) == (uVar3 & 0xffffffff)) {
+  if (param_3 == param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_math.cpp",0x5e4,
                     0,"%s");
   }
-  if ((uVar5 & 0xffffffff) == (uVar4 & 0xffffffff)) {
+  if (param_3 == param_2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_math.cpp",0x5e5,
                     0,"%s");
   }
-  pfVar1 = (float *)uVar4;
-  pfVar2 = (float *)uVar3;
-  pfVar6 = (float *)uVar5;
-  *pfVar6 = pfVar1[3] * pfVar2[1] + *pfVar2 * *pfVar1 + pfVar1[6] * pfVar2[2];
-  pfVar6[1] = pfVar2[1] * pfVar1[4] + *pfVar2 * pfVar1[1] + pfVar2[2] * pfVar1[7];
-  pfVar6[2] = pfVar2[1] * pfVar1[5] + *pfVar2 * pfVar1[2] + pfVar2[2] * pfVar1[8];
-  pfVar6[3] = pfVar1[3] * pfVar2[4] + pfVar2[3] * *pfVar1 + pfVar1[6] * pfVar2[5];
-  pfVar6[4] = pfVar2[4] * pfVar1[4] + pfVar2[3] * pfVar1[1] + pfVar2[5] * pfVar1[7];
-  pfVar6[5] = pfVar2[4] * pfVar1[5] + pfVar2[3] * pfVar1[2] + pfVar2[5] * pfVar1[8];
-  pfVar6[6] = pfVar2[6] * *pfVar1 + pfVar1[6] * pfVar2[8] + pfVar2[7] * pfVar1[3];
-  pfVar6[7] = pfVar2[6] * pfVar1[1] + pfVar2[8] * pfVar1[7] + pfVar2[7] * pfVar1[4];
-  pfVar6[8] = pfVar2[6] * pfVar1[2] + pfVar2[8] * pfVar1[8] + pfVar2[7] * pfVar1[5];
-  __restgprlr_27();
+  (*param_3)[0] =
+       param_2[1][0] * (*param_1)[1] + (*param_1)[0] * (*param_2)[0] + param_2[2][0] * (*param_1)[2]
+  ;
+  (*param_3)[1] =
+       (*param_1)[1] * param_2[1][1] + (*param_1)[0] * (*param_2)[1] + (*param_1)[2] * param_2[2][1]
+  ;
+  (*param_3)[2] =
+       (*param_1)[1] * param_2[1][2] + (*param_1)[0] * (*param_2)[2] + (*param_1)[2] * param_2[2][2]
+  ;
+  param_3[1][0] =
+       param_2[1][0] * param_1[1][1] + param_1[1][0] * (*param_2)[0] + param_2[2][0] * param_1[1][2]
+  ;
+  param_3[1][1] =
+       param_1[1][1] * param_2[1][1] + param_1[1][0] * (*param_2)[1] + param_1[1][2] * param_2[2][1]
+  ;
+  param_3[1][2] =
+       param_1[1][1] * param_2[1][2] + param_1[1][0] * (*param_2)[2] + param_1[1][2] * param_2[2][2]
+  ;
+  param_3[2][0] =
+       param_1[2][0] * (*param_2)[0] + param_2[2][0] * param_1[2][2] + param_1[2][1] * param_2[1][0]
+  ;
+  param_3[2][1] =
+       param_1[2][0] * (*param_2)[1] + param_1[2][2] * param_2[2][1] + param_1[2][1] * param_2[1][1]
+  ;
+  param_3[2][2] =
+       param_1[2][0] * (*param_2)[2] + param_1[2][2] * param_2[2][2] + param_1[2][1] * param_2[1][2]
+  ;
   return;
 }
 
 
 // 825DA498  MatrixMultiplyEquals  (universal/com_math.cpp:1535)
+
+/* WARNING: Function: __savefpr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_26 replaced with injection: xenon_save_restore */
 
 void MatrixMultiplyEquals(float (*param_1) [3],float (*param_2) [3])
 
@@ -1879,29 +1848,27 @@ void MatrixMultiplyEquals(float (*param_1) [3],float (*param_2) [3])
   float fVar16;
   float fVar17;
   float fVar18;
-  float *pfVar19;
   
-  pfVar19 = (float *)__savefpr_26(param_1);
   fVar1 = param_2[2][0];
   fVar2 = param_2[1][0];
   fVar3 = (*param_2)[0];
-  fVar4 = pfVar19[1];
-  fVar5 = pfVar19[4];
-  fVar6 = pfVar19[2];
-  fVar7 = *pfVar19;
-  fVar8 = pfVar19[3];
-  fVar9 = pfVar19[5];
+  fVar4 = (*param_1)[1];
+  fVar5 = param_1[1][1];
+  fVar6 = (*param_1)[2];
+  fVar7 = (*param_1)[0];
+  fVar8 = param_1[1][0];
+  fVar9 = param_1[1][2];
   fVar10 = param_2[1][1];
   fVar11 = (*param_2)[1];
   fVar12 = param_2[2][1];
   fVar13 = param_2[1][2];
   fVar14 = (*param_2)[2];
   fVar15 = param_2[2][2];
-  param_2[2][0] = pfVar19[6] * fVar3 + fVar2 * pfVar19[7] + fVar1 * pfVar19[8];
-  param_2[2][1] = pfVar19[6] * fVar11 + fVar10 * pfVar19[7] + fVar12 * pfVar19[8];
-  fVar16 = pfVar19[7];
-  fVar17 = pfVar19[6];
-  fVar18 = pfVar19[8];
+  param_2[2][0] = param_1[2][0] * fVar3 + fVar2 * param_1[2][1] + fVar1 * param_1[2][2];
+  param_2[2][1] = param_1[2][0] * fVar11 + fVar10 * param_1[2][1] + fVar12 * param_1[2][2];
+  fVar16 = param_1[2][1];
+  fVar17 = param_1[2][0];
+  fVar18 = param_1[2][2];
   (*param_2)[0] = fVar1 * fVar6 + fVar3 * fVar7 + fVar2 * fVar4;
   (*param_2)[1] = fVar12 * fVar6 + fVar11 * fVar7 + fVar10 * fVar4;
   (*param_2)[2] = fVar15 * fVar6 + fVar14 * fVar7 + fVar13 * fVar4;
@@ -1909,109 +1876,134 @@ void MatrixMultiplyEquals(float (*param_1) [3],float (*param_2) [3])
   param_2[1][0] = fVar9 * fVar1 + fVar8 * fVar3 + fVar5 * fVar2;
   param_2[1][1] = fVar9 * fVar12 + fVar8 * fVar11 + fVar5 * fVar10;
   param_2[1][2] = fVar9 * fVar15 + fVar8 * fVar14 + fVar5 * fVar13;
-  __restfpr_26();
   return;
 }
 
 
 // 825DA5B0  MatrixMultiply34  (universal/com_math.cpp:1563)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void MatrixMultiply34(float (*param_1) [4],float (*param_2) [4],float (*param_3) [4])
 
 {
-  float *pfVar1;
-  float *pfVar2;
-  ulonglong uVar3;
-  ulonglong uVar4;
-  ulonglong uVar5;
-  float *pfVar6;
-  
-  uVar5 = (ulonglong)(int)param_3;
-  uVar4 = (ulonglong)(int)param_2;
-  uVar3 = __savegprlr_27(param_1);
-  if ((uVar3 & 0xffffffff) == (uVar5 & 0xffffffff)) {
+  if (param_1 == param_3) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_math.cpp",0x61c,
                     0,"%s");
   }
-  if ((uVar4 & 0xffffffff) == (uVar5 & 0xffffffff)) {
+  if (param_2 == param_3) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_math.cpp",0x61d,
                     0,"%s");
   }
-  pfVar1 = (float *)uVar3;
-  pfVar2 = (float *)uVar4;
-  pfVar6 = (float *)uVar5;
-  *pfVar6 = pfVar2[4] * pfVar1[1] + *pfVar1 * *pfVar2 + pfVar1[2] * pfVar2[8];
-  pfVar6[1] = pfVar1[1] * pfVar2[5] + *pfVar1 * pfVar2[1] + pfVar1[2] * pfVar2[9];
-  pfVar6[2] = pfVar1[1] * pfVar2[6] + *pfVar1 * pfVar2[2] + pfVar1[2] * pfVar2[10];
-  pfVar6[3] = pfVar1[1] * pfVar2[7] + *pfVar1 * pfVar2[3] + pfVar1[2] * pfVar2[0xb] + pfVar1[3];
-  pfVar6[4] = pfVar2[4] * pfVar1[5] + pfVar1[4] * *pfVar2 + pfVar2[8] * pfVar1[6];
-  pfVar6[5] = pfVar1[5] * pfVar2[5] + pfVar1[4] * pfVar2[1] + pfVar1[6] * pfVar2[9];
-  pfVar6[6] = pfVar1[5] * pfVar2[6] + pfVar1[4] * pfVar2[2] + pfVar1[6] * pfVar2[10];
-  pfVar6[7] = pfVar1[5] * pfVar2[7] + pfVar1[4] * pfVar2[3] + pfVar2[0xb] * pfVar1[6] + pfVar1[7];
-  pfVar6[8] = pfVar1[8] * *pfVar2 + pfVar2[8] * pfVar1[10] + pfVar2[4] * pfVar1[9];
-  pfVar6[9] = pfVar1[8] * pfVar2[1] + pfVar1[10] * pfVar2[9] + pfVar1[9] * pfVar2[5];
-  pfVar6[10] = pfVar1[8] * pfVar2[2] + pfVar1[10] * pfVar2[10] + pfVar1[9] * pfVar2[6];
-  pfVar6[0xb] = pfVar1[8] * pfVar2[3] + pfVar1[10] * pfVar2[0xb] + pfVar1[9] * pfVar2[7] +
-                pfVar1[0xb];
-  __restgprlr_27();
+  (*param_3)[0] =
+       param_2[1][0] * (*param_1)[1] + (*param_1)[0] * (*param_2)[0] + (*param_1)[2] * param_2[2][0]
+  ;
+  (*param_3)[1] =
+       (*param_1)[1] * param_2[1][1] + (*param_1)[0] * (*param_2)[1] + (*param_1)[2] * param_2[2][1]
+  ;
+  (*param_3)[2] =
+       (*param_1)[1] * param_2[1][2] + (*param_1)[0] * (*param_2)[2] + (*param_1)[2] * param_2[2][2]
+  ;
+  (*param_3)[3] =
+       (*param_1)[1] * param_2[1][3] + (*param_1)[0] * (*param_2)[3] + (*param_1)[2] * param_2[2][3]
+       + (*param_1)[3];
+  param_3[1][0] =
+       param_2[1][0] * param_1[1][1] + param_1[1][0] * (*param_2)[0] + param_2[2][0] * param_1[1][2]
+  ;
+  param_3[1][1] =
+       param_1[1][1] * param_2[1][1] + param_1[1][0] * (*param_2)[1] + param_1[1][2] * param_2[2][1]
+  ;
+  param_3[1][2] =
+       param_1[1][1] * param_2[1][2] + param_1[1][0] * (*param_2)[2] + param_1[1][2] * param_2[2][2]
+  ;
+  param_3[1][3] =
+       param_1[1][1] * param_2[1][3] + param_1[1][0] * (*param_2)[3] + param_2[2][3] * param_1[1][2]
+       + param_1[1][3];
+  param_3[2][0] =
+       param_1[2][0] * (*param_2)[0] + param_2[2][0] * param_1[2][2] + param_2[1][0] * param_1[2][1]
+  ;
+  param_3[2][1] =
+       param_1[2][0] * (*param_2)[1] + param_1[2][2] * param_2[2][1] + param_1[2][1] * param_2[1][1]
+  ;
+  param_3[2][2] =
+       param_1[2][0] * (*param_2)[2] + param_1[2][2] * param_2[2][2] + param_1[2][1] * param_2[1][2]
+  ;
+  param_3[2][3] =
+       param_1[2][0] * (*param_2)[3] + param_1[2][2] * param_2[2][3] + param_1[2][1] * param_2[1][3]
+       + param_1[2][3];
   return;
 }
 
 
 // 825DA820  MatrixMultiply43  (universal/com_math.cpp:1590)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void MatrixMultiply43(float (*param_1) [3],float (*param_2) [3],float (*param_3) [3])
 
 {
-  float *pfVar1;
-  float *pfVar2;
-  ulonglong uVar3;
-  ulonglong uVar4;
-  ulonglong uVar5;
-  float *pfVar6;
-  
-  uVar5 = (ulonglong)(int)param_3;
-  uVar4 = (ulonglong)(int)param_2;
-  uVar3 = __savegprlr_27(param_1);
-  if ((uVar3 & 0xffffffff) == (uVar5 & 0xffffffff)) {
+  if (param_1 == param_3) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_math.cpp",0x637,
                     0,"%s");
   }
-  if ((uVar4 & 0xffffffff) == (uVar5 & 0xffffffff)) {
+  if (param_2 == param_3) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_math.cpp",0x638,
                     0,"%s");
   }
-  pfVar1 = (float *)uVar4;
-  pfVar2 = (float *)uVar3;
-  pfVar6 = (float *)uVar5;
-  *pfVar6 = pfVar1[3] * pfVar2[1] + *pfVar2 * *pfVar1 + pfVar1[6] * pfVar2[2];
-  pfVar6[3] = pfVar1[3] * pfVar2[4] + pfVar2[3] * *pfVar1 + pfVar1[6] * pfVar2[5];
-  pfVar6[6] = pfVar1[3] * pfVar2[7] + pfVar2[6] * *pfVar1 + pfVar1[6] * pfVar2[8];
-  pfVar6[1] = pfVar2[1] * pfVar1[4] + *pfVar2 * pfVar1[1] + pfVar2[2] * pfVar1[7];
-  pfVar6[4] = pfVar2[4] * pfVar1[4] + pfVar2[3] * pfVar1[1] + pfVar2[5] * pfVar1[7];
-  pfVar6[7] = pfVar2[7] * pfVar1[4] + pfVar2[6] * pfVar1[1] + pfVar2[8] * pfVar1[7];
-  pfVar6[2] = pfVar1[5] * pfVar2[1] + pfVar1[8] * pfVar2[2] + pfVar1[2] * *pfVar2;
-  pfVar6[5] = pfVar1[2] * pfVar2[3] + pfVar1[8] * pfVar2[5] + pfVar1[5] * pfVar2[4];
-  pfVar6[8] = pfVar1[2] * pfVar2[6] + pfVar1[8] * pfVar2[8] + pfVar1[5] * pfVar2[7];
-  pfVar6[9] = pfVar1[3] * pfVar2[10] + pfVar2[9] * *pfVar1 + pfVar1[6] * pfVar2[0xb] + pfVar1[9];
-  pfVar6[10] = pfVar2[10] * pfVar1[4] + pfVar2[9] * pfVar1[1] + pfVar2[0xb] * pfVar1[7] + pfVar1[10]
+  (*param_3)[0] =
+       param_2[1][0] * (*param_1)[1] + (*param_1)[0] * (*param_2)[0] + param_2[2][0] * (*param_1)[2]
   ;
-  pfVar6[0xb] = pfVar1[2] * pfVar2[9] + pfVar1[8] * pfVar2[0xb] + pfVar1[5] * pfVar2[10] +
-                pfVar1[0xb];
-  __restgprlr_27();
+  param_3[1][0] =
+       param_2[1][0] * param_1[1][1] + param_1[1][0] * (*param_2)[0] + param_2[2][0] * param_1[1][2]
+  ;
+  param_3[2][0] =
+       param_2[1][0] * param_1[2][1] + param_1[2][0] * (*param_2)[0] + param_2[2][0] * param_1[2][2]
+  ;
+  (*param_3)[1] =
+       (*param_1)[1] * param_2[1][1] + (*param_1)[0] * (*param_2)[1] + (*param_1)[2] * param_2[2][1]
+  ;
+  param_3[1][1] =
+       param_1[1][1] * param_2[1][1] + param_1[1][0] * (*param_2)[1] + param_1[1][2] * param_2[2][1]
+  ;
+  param_3[2][1] =
+       param_1[2][1] * param_2[1][1] + param_1[2][0] * (*param_2)[1] + param_1[2][2] * param_2[2][1]
+  ;
+  (*param_3)[2] =
+       param_2[1][2] * (*param_1)[1] + param_2[2][2] * (*param_1)[2] + (*param_2)[2] * (*param_1)[0]
+  ;
+  param_3[1][2] =
+       (*param_2)[2] * param_1[1][0] + param_2[2][2] * param_1[1][2] + param_2[1][2] * param_1[1][1]
+  ;
+  param_3[2][2] =
+       (*param_2)[2] * param_1[2][0] + param_2[2][2] * param_1[2][2] + param_2[1][2] * param_1[2][1]
+  ;
+  param_3[3][0] =
+       param_2[1][0] * param_1[3][1] + param_1[3][0] * (*param_2)[0] + param_2[2][0] * param_1[3][2]
+       + param_2[3][0];
+  param_3[3][1] =
+       param_1[3][1] * param_2[1][1] + param_1[3][0] * (*param_2)[1] + param_1[3][2] * param_2[2][1]
+       + param_2[3][1];
+  param_3[3][2] =
+       (*param_2)[2] * param_1[3][0] + param_2[2][2] * param_1[3][2] + param_2[1][2] * param_1[3][1]
+       + param_2[3][2];
   return;
 }
 
 
 // 825DAA90  MatrixMultiply44  (universal/com_math.cpp:1614)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void MatrixMultiply44(float (*param_1) [4],float (*param_2) [4],float (*param_3) [4])
 
 {
-  uint uVar1;
-  uint uVar2;
-  ulonglong uVar3;
-  ulonglong uVar4;
+  undefined1 auVar1 [16];
+  undefined1 auVar2 [16];
+  undefined1 auVar3 [16];
+  undefined1 auVar4 [16];
   undefined1 auVar5 [16];
   undefined1 auVar6 [16];
   undefined1 auVar7 [16];
@@ -2027,73 +2019,63 @@ void MatrixMultiply44(float (*param_1) [4],float (*param_2) [4],float (*param_3)
   undefined1 auVar17 [16];
   undefined1 auVar18 [16];
   undefined1 auVar19 [16];
-  undefined1 auVar20 [16];
-  undefined1 auVar21 [16];
-  undefined1 auVar22 [16];
-  undefined1 auVar23 [16];
   
-  uVar4 = (ulonglong)(int)param_3;
-  uVar3 = (ulonglong)(int)param_2;
-  uVar2 = __savegprlr_27(param_1);
-  if ((uVar2 & 0xf) != 0) {
+  if (((uint)param_1 & 0xf) != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_math.cpp",0x653,
                     0,"%s");
   }
-  if ((uVar3 & 0xf) != 0) {
+  if (((uint)param_2 & 0xf) != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_math.cpp",0x654,
                     0,"%s");
   }
-  if ((uVar4 & 0xf) != 0) {
+  if (((uint)param_3 & 0xf) != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_math.cpp",0x655,
                     0,"%s");
   }
-  auVar23 = *(undefined1 (*) [16])(uVar2 & 0xfffffff0);
-  uVar1 = (uint)uVar3;
-  auVar22 = *(undefined1 (*) [16])(uVar1 & 0xfffffff0);
-  auVar21 = vectorSplatWord(auVar23,0);
-  auVar5 = vectorSplatWord(auVar23,1);
-  auVar6 = vectorSplatWord(auVar23,2);
-  auVar20 = *(undefined1 (*) [16])(uVar2 + 0x10 & 0xfffffff0);
-  auVar7 = vectorSplatWord(auVar23,3);
-  auVar19 = *(undefined1 (*) [16])(uVar2 + 0x20 & 0xfffffff0);
-  auVar23 = vectorMultiplyFloatingPoint(auVar21,auVar22);
-  auVar18 = *(undefined1 (*) [16])(uVar2 + 0x30 & 0xfffffff0);
-  auVar17 = vectorSplatWord(auVar20,0);
-  auVar16 = vectorSplatWord(auVar19,0);
-  auVar21 = *(undefined1 (*) [16])(uVar1 + 0x10 & 0xfffffff0);
-  auVar15 = vectorSplatWord(auVar18,0);
-  auVar9 = *(undefined1 (*) [16])(uVar1 + 0x20 & 0xfffffff0);
-  auVar14 = vectorSplatWord(auVar20,1);
-  auVar8 = *(undefined1 (*) [16])(uVar1 + 0x30 & 0xfffffff0);
-  auVar13 = vectorMultiplyFloatingPoint(auVar17,auVar22);
-  auVar12 = vectorSplatWord(auVar19,1);
-  auVar11 = vectorMultiplyFloatingPoint(auVar16,auVar22);
-  auVar10 = vectorSplatWord(auVar18,1);
-  auVar15 = vectorMultiplyFloatingPoint(auVar15,auVar22);
-  auVar16 = vectorSplatWord(auVar20,2);
-  auVar17 = vectorSplatWord(auVar19,2);
-  auVar22 = vectorSplatWord(auVar18,2);
-  auVar20 = vectorSplatWord(auVar20,3);
-  auVar19 = vectorSplatWord(auVar19,3);
-  auVar5 = vectorMultiplyAddFloatingPoint(auVar5,auVar21,auVar23);
-  auVar18 = vectorSplatWord(auVar18,3);
-  auVar23 = vectorMultiplyAddFloatingPoint(auVar14,auVar21,auVar13);
-  auVar11 = vectorMultiplyAddFloatingPoint(auVar12,auVar21,auVar11);
-  auVar21 = vectorMultiplyAddFloatingPoint(auVar10,auVar21,auVar15);
-  auVar5 = vectorMultiplyAddFloatingPoint(auVar6,auVar9,auVar5);
-  auVar23 = vectorMultiplyAddFloatingPoint(auVar16,auVar9,auVar23);
-  auVar15 = vectorMultiplyAddFloatingPoint(auVar17,auVar9,auVar11);
-  auVar21 = vectorMultiplyAddFloatingPoint(auVar22,auVar9,auVar21);
-  auVar5 = vectorMultiplyAddFloatingPoint(auVar7,auVar8,auVar5);
-  auVar23 = vectorMultiplyAddFloatingPoint(auVar20,auVar8,auVar23);
-  auVar15 = vectorMultiplyAddFloatingPoint(auVar19,auVar8,auVar15);
-  auVar21 = vectorMultiplyAddFloatingPoint(auVar18,auVar8,auVar21);
-  uVar2 = (uint)uVar4;
-  *(undefined1 (*) [16])(uVar2 & 0xfffffff0) = auVar5;
-  *(undefined1 (*) [16])(uVar2 + 0x10 & 0xfffffff0) = auVar23;
-  *(undefined1 (*) [16])(uVar2 + 0x20 & 0xfffffff0) = auVar15;
-  *(undefined1 (*) [16])(uVar2 + 0x30 & 0xfffffff0) = auVar21;
-  __restgprlr_27();
+  auVar19 = *(undefined1 (*) [16])((uint)param_1 & 0xfffffff0);
+  auVar18 = *(undefined1 (*) [16])((uint)param_2 & 0xfffffff0);
+  auVar17 = vectorSplatWord(auVar19,0);
+  auVar1 = vectorSplatWord(auVar19,1);
+  auVar2 = vectorSplatWord(auVar19,2);
+  auVar16 = *(undefined1 (*) [16])((uint)(param_1 + 1) & 0xfffffff0);
+  auVar3 = vectorSplatWord(auVar19,3);
+  auVar15 = *(undefined1 (*) [16])((uint)(param_1 + 2) & 0xfffffff0);
+  auVar19 = vectorMultiplyFloatingPoint(auVar17,auVar18);
+  auVar14 = *(undefined1 (*) [16])((uint)(param_1 + 3) & 0xfffffff0);
+  auVar13 = vectorSplatWord(auVar16,0);
+  auVar12 = vectorSplatWord(auVar15,0);
+  auVar17 = *(undefined1 (*) [16])((uint)(param_2 + 1) & 0xfffffff0);
+  auVar11 = vectorSplatWord(auVar14,0);
+  auVar5 = *(undefined1 (*) [16])((uint)(param_2 + 2) & 0xfffffff0);
+  auVar10 = vectorSplatWord(auVar16,1);
+  auVar4 = *(undefined1 (*) [16])((uint)(param_2 + 3) & 0xfffffff0);
+  auVar9 = vectorMultiplyFloatingPoint(auVar13,auVar18);
+  auVar8 = vectorSplatWord(auVar15,1);
+  auVar7 = vectorMultiplyFloatingPoint(auVar12,auVar18);
+  auVar6 = vectorSplatWord(auVar14,1);
+  auVar11 = vectorMultiplyFloatingPoint(auVar11,auVar18);
+  auVar12 = vectorSplatWord(auVar16,2);
+  auVar13 = vectorSplatWord(auVar15,2);
+  auVar18 = vectorSplatWord(auVar14,2);
+  auVar16 = vectorSplatWord(auVar16,3);
+  auVar15 = vectorSplatWord(auVar15,3);
+  auVar1 = vectorMultiplyAddFloatingPoint(auVar1,auVar17,auVar19);
+  auVar14 = vectorSplatWord(auVar14,3);
+  auVar19 = vectorMultiplyAddFloatingPoint(auVar10,auVar17,auVar9);
+  auVar7 = vectorMultiplyAddFloatingPoint(auVar8,auVar17,auVar7);
+  auVar17 = vectorMultiplyAddFloatingPoint(auVar6,auVar17,auVar11);
+  auVar1 = vectorMultiplyAddFloatingPoint(auVar2,auVar5,auVar1);
+  auVar19 = vectorMultiplyAddFloatingPoint(auVar12,auVar5,auVar19);
+  auVar11 = vectorMultiplyAddFloatingPoint(auVar13,auVar5,auVar7);
+  auVar17 = vectorMultiplyAddFloatingPoint(auVar18,auVar5,auVar17);
+  auVar1 = vectorMultiplyAddFloatingPoint(auVar3,auVar4,auVar1);
+  auVar19 = vectorMultiplyAddFloatingPoint(auVar16,auVar4,auVar19);
+  auVar11 = vectorMultiplyAddFloatingPoint(auVar15,auVar4,auVar11);
+  auVar17 = vectorMultiplyAddFloatingPoint(auVar14,auVar4,auVar17);
+  *(undefined1 (*) [16])((uint)param_3 & 0xfffffff0) = auVar1;
+  *(undefined1 (*) [16])((uint)(param_3 + 1) & 0xfffffff0) = auVar19;
+  *(undefined1 (*) [16])((uint)(param_3 + 2) & 0xfffffff0) = auVar11;
+  *(undefined1 (*) [16])((uint)(param_3 + 3) & 0xfffffff0) = auVar17;
   return;
 }
 
@@ -2122,87 +2104,82 @@ void MatrixTranspose(float (*param_1) [3],float (*param_2) [3])
 
 // 825DACA0  MatrixTranspose44  (universal/com_math.cpp:1685)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void MatrixTranspose44(float *param_1,float *param_2)
 
 {
-  uint uVar1;
-  ulonglong uVar2;
+  undefined1 auVar1 [16];
+  undefined1 auVar2 [16];
   undefined1 auVar3 [16];
   undefined1 auVar4 [16];
   undefined1 auVar5 [16];
-  undefined1 auVar6 [16];
-  undefined1 auVar7 [16];
-  undefined1 auVar8 [16];
   
-  uVar2 = (ulonglong)(int)param_2;
-  uVar1 = __savegprlr_28(param_1);
-  if ((uVar1 & 0xf) != 0) {
+  if (((uint)param_1 & 0xf) != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_math.cpp",0x698,
                     0,"%s");
   }
-  if ((uVar2 & 0xf) != 0) {
+  if (((uint)param_2 & 0xf) != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_math.cpp",0x699,
                     0,"%s");
   }
-  auVar8 = *(undefined1 (*) [16])(uVar1 + 0x10 & 0xfffffff0);
-  auVar7 = *(undefined1 (*) [16])(uVar1 + 0x20 & 0xfffffff0);
-  auVar6 = *(undefined1 (*) [16])(uVar1 + 0x30 & 0xfffffff0);
-  auVar5 = vectorMergeHighWord128(*(undefined1 (*) [16])(uVar1 & 0xfffffff0),auVar7);
-  auVar4 = vectorMergeHighWord128(auVar8,auVar6);
-  auVar3 = vectorMergeLowWord128(*(undefined1 (*) [16])(uVar1 & 0xfffffff0),auVar7);
-  auVar6 = vectorMergeLowWord128(auVar8,auVar6);
-  auVar7 = vectorMergeHighWord128(auVar5,auVar4);
+  auVar5 = vectorMergeHighWord128
+                     (*(undefined1 (*) [16])((uint)param_1 & 0xfffffff0),
+                      *(undefined1 (*) [16])((uint)(param_1 + 8) & 0xfffffff0));
+  auVar4 = vectorMergeHighWord128
+                     (*(undefined1 (*) [16])((uint)(param_1 + 4) & 0xfffffff0),
+                      *(undefined1 (*) [16])((uint)(param_1 + 0xc) & 0xfffffff0));
+  auVar3 = vectorMergeLowWord128
+                     (*(undefined1 (*) [16])((uint)param_1 & 0xfffffff0),
+                      *(undefined1 (*) [16])((uint)(param_1 + 8) & 0xfffffff0));
+  auVar2 = vectorMergeLowWord128
+                     (*(undefined1 (*) [16])((uint)(param_1 + 4) & 0xfffffff0),
+                      *(undefined1 (*) [16])((uint)(param_1 + 0xc) & 0xfffffff0));
+  auVar1 = vectorMergeHighWord128(auVar5,auVar4);
   auVar5 = vectorMergeLowWord128(auVar5,auVar4);
-  auVar4 = vectorMergeHighWord128(auVar3,auVar6);
-  auVar6 = vectorMergeLowWord128(auVar3,auVar6);
-  uVar1 = (uint)uVar2;
-  *(undefined1 (*) [16])(uVar1 & 0xfffffff0) = auVar7;
-  *(undefined1 (*) [16])(uVar1 + 0x10 & 0xfffffff0) = auVar5;
-  *(undefined1 (*) [16])(uVar1 + 0x20 & 0xfffffff0) = auVar4;
-  *(undefined1 (*) [16])(uVar1 + 0x30 & 0xfffffff0) = auVar6;
-  __restgprlr_28();
+  auVar4 = vectorMergeHighWord128(auVar3,auVar2);
+  auVar2 = vectorMergeLowWord128(auVar3,auVar2);
+  *(undefined1 (*) [16])((uint)param_2 & 0xfffffff0) = auVar1;
+  *(undefined1 (*) [16])((uint)(param_2 + 4) & 0xfffffff0) = auVar5;
+  *(undefined1 (*) [16])((uint)(param_2 + 8) & 0xfffffff0) = auVar4;
+  *(undefined1 (*) [16])((uint)(param_2 + 0xc) & 0xfffffff0) = auVar2;
   return;
 }
 
 
 // 825DAD68  MatrixInverse  (universal/com_math.cpp:1726)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void MatrixInverse(float (*param_1) [3],float (*param_2) [3])
 
 {
   float fVar1;
-  float *pfVar2;
-  ulonglong uVar3;
-  ulonglong uVar4;
-  float *pfVar5;
-  double dVar6;
+  double dVar2;
   
-  uVar4 = (ulonglong)(int)param_2;
-  uVar3 = __savegprlr_28(param_1);
-  if ((uVar3 & 0xffffffff) == (uVar4 & 0xffffffff)) {
+  if (param_1 == param_2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_math.cpp",0x6c1,
                     0,"%s");
   }
-  pfVar2 = (float *)uVar3;
-  dVar6 = (double)((pfVar2[1] * pfVar2[5] - pfVar2[2] * pfVar2[4]) * pfVar2[6] +
-                  ((pfVar2[4] * pfVar2[8] - pfVar2[5] * pfVar2[7]) * *pfVar2 -
-                  (pfVar2[1] * pfVar2[8] - pfVar2[2] * pfVar2[7]) * pfVar2[3]));
-  if (dVar6 == 0.0) {
+  dVar2 = (double)(((*param_1)[1] * param_1[1][2] - (*param_1)[2] * param_1[1][1]) * param_1[2][0] +
+                  ((param_1[1][1] * param_1[2][2] - param_1[1][2] * param_1[2][1]) * (*param_1)[0] -
+                  ((*param_1)[1] * param_1[2][2] - (*param_1)[2] * param_1[2][1]) * param_1[1][0]));
+  if (dVar2 == 0.0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_math.cpp",0x6c5,
                     0,"%s");
   }
-  fVar1 = (float)(1.0 / dVar6);
-  pfVar5 = (float *)uVar4;
-  *pfVar5 = (pfVar2[4] * pfVar2[8] - pfVar2[5] * pfVar2[7]) * fVar1;
-  pfVar5[1] = -((pfVar2[8] * pfVar2[1] - pfVar2[7] * pfVar2[2]) * fVar1);
-  pfVar5[2] = (pfVar2[5] * pfVar2[1] - pfVar2[4] * pfVar2[2]) * fVar1;
-  pfVar5[3] = -((pfVar2[3] * pfVar2[8] - pfVar2[6] * pfVar2[5]) * fVar1);
-  pfVar5[4] = (pfVar2[8] * *pfVar2 - pfVar2[6] * pfVar2[2]) * fVar1;
-  pfVar5[5] = -((pfVar2[5] * *pfVar2 - pfVar2[3] * pfVar2[2]) * fVar1);
-  pfVar5[6] = (pfVar2[3] * pfVar2[7] - pfVar2[6] * pfVar2[4]) * fVar1;
-  pfVar5[7] = -((*pfVar2 * pfVar2[7] - pfVar2[6] * pfVar2[1]) * fVar1);
-  pfVar5[8] = (pfVar2[4] * *pfVar2 - pfVar2[3] * pfVar2[1]) * fVar1;
-  __restgprlr_28();
+  fVar1 = (float)(1.0 / dVar2);
+  (*param_2)[0] = (param_1[1][1] * param_1[2][2] - param_1[1][2] * param_1[2][1]) * fVar1;
+  (*param_2)[1] = -((param_1[2][2] * (*param_1)[1] - param_1[2][1] * (*param_1)[2]) * fVar1);
+  (*param_2)[2] = (param_1[1][2] * (*param_1)[1] - param_1[1][1] * (*param_1)[2]) * fVar1;
+  param_2[1][0] = -((param_1[1][0] * param_1[2][2] - param_1[2][0] * param_1[1][2]) * fVar1);
+  param_2[1][1] = (param_1[2][2] * (*param_1)[0] - param_1[2][0] * (*param_1)[2]) * fVar1;
+  param_2[1][2] = -((param_1[1][2] * (*param_1)[0] - param_1[1][0] * (*param_1)[2]) * fVar1);
+  param_2[2][0] = (param_1[1][0] * param_1[2][1] - param_1[2][0] * param_1[1][1]) * fVar1;
+  param_2[2][1] = -(((*param_1)[0] * param_1[2][1] - param_1[2][0] * (*param_1)[1]) * fVar1);
+  param_2[2][2] = (param_1[1][1] * (*param_1)[0] - param_1[1][0] * (*param_1)[1]) * fVar1;
   return;
 }
 
@@ -2227,15 +2204,18 @@ void MatrixInverseOrthogonal43(float (*param_1) [3],float (*param_2) [3])
 
 // 825DAFF0  MatrixInverse44  (universal/com_math.cpp:1768)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void MatrixInverse44(float *param_1,float *param_2)
 
 {
   undefined4 *puVar1;
   undefined4 *puVar2;
-  uint uVar3;
-  ulonglong uVar4;
-  _XMMATRIX *p_Var5;
-  ulonglong uVar6;
+  _XMMATRIX *p_Var3;
+  undefined4 uVar4;
+  undefined4 uVar5;
+  undefined4 uVar6;
   undefined4 uVar7;
   undefined4 uVar8;
   undefined4 uVar9;
@@ -2248,184 +2228,164 @@ void MatrixInverse44(float *param_1,float *param_2)
   undefined4 uVar16;
   undefined4 uVar17;
   undefined4 uVar18;
-  undefined4 uVar19;
-  undefined4 uVar20;
-  undefined4 uVar21;
   _XMMATRIX_u_0 in_stack_fffffee8;
   __vector4 _Stack_80;
   _XMMATRIX _Stack_70;
   
-  uVar6 = (ulonglong)(int)param_2;
-  uVar4 = __savegprlr_27(param_1);
-  if ((uVar4 & 0xf) != 0) {
+  if (((uint)param_1 & 0xf) != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_math.cpp",0x6eb,
                     0,"%s");
   }
-  if ((uVar6 & 0xf) != 0) {
+  if (((uint)param_2 & 0xf) != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_math.cpp",0x6ec,
                     0,"%s");
   }
   memcpy();
-  p_Var5 = XMMatrixInverse(&_Stack_70,&_Stack_80,(_XMMATRIX)in_stack_fffffee8);
-  puVar1 = (undefined4 *)((uint)p_Var5 & 0xfffffff0);
-  uVar19 = puVar1[1];
-  uVar20 = puVar1[2];
-  uVar21 = puVar1[3];
-  puVar2 = (undefined4 *)((uint)((int)&p_Var5->field0_0x0 + 0x10U) & 0xfffffff0);
-  uVar15 = *puVar2;
-  uVar16 = puVar2[1];
-  uVar17 = puVar2[2];
-  uVar18 = puVar2[3];
-  puVar2 = (undefined4 *)((uint)((int)&p_Var5->field0_0x0 + 0x20U) & 0xfffffff0);
-  uVar11 = *puVar2;
-  uVar12 = puVar2[1];
-  uVar13 = puVar2[2];
-  uVar14 = puVar2[3];
-  puVar2 = (undefined4 *)((uint)((int)&p_Var5->field0_0x0 + 0x30U) & 0xfffffff0);
-  uVar7 = *puVar2;
-  uVar8 = puVar2[1];
-  uVar9 = puVar2[2];
-  uVar10 = puVar2[3];
-  uVar3 = (uint)uVar6;
-  puVar2 = (undefined4 *)(uVar3 & 0xfffffff0);
+  p_Var3 = XMMatrixInverse(&_Stack_70,&_Stack_80,(_XMMATRIX)in_stack_fffffee8);
+  puVar1 = (undefined4 *)((uint)p_Var3 & 0xfffffff0);
+  uVar16 = puVar1[1];
+  uVar17 = puVar1[2];
+  uVar18 = puVar1[3];
+  puVar2 = (undefined4 *)((uint)((int)&p_Var3->field0_0x0 + 0x10U) & 0xfffffff0);
+  uVar12 = *puVar2;
+  uVar13 = puVar2[1];
+  uVar14 = puVar2[2];
+  uVar15 = puVar2[3];
+  puVar2 = (undefined4 *)((uint)((int)&p_Var3->field0_0x0 + 0x20U) & 0xfffffff0);
+  uVar8 = *puVar2;
+  uVar9 = puVar2[1];
+  uVar10 = puVar2[2];
+  uVar11 = puVar2[3];
+  puVar2 = (undefined4 *)((uint)((int)&p_Var3->field0_0x0 + 0x30U) & 0xfffffff0);
+  uVar4 = *puVar2;
+  uVar5 = puVar2[1];
+  uVar6 = puVar2[2];
+  uVar7 = puVar2[3];
+  puVar2 = (undefined4 *)((uint)param_2 & 0xfffffff0);
   *puVar2 = *puVar1;
-  puVar2[1] = uVar19;
-  puVar2[2] = uVar20;
-  puVar2[3] = uVar21;
-  puVar1 = (undefined4 *)(uVar3 + 0x10 & 0xfffffff0);
-  *puVar1 = uVar15;
-  puVar1[1] = uVar16;
-  puVar1[2] = uVar17;
-  puVar1[3] = uVar18;
-  puVar1 = (undefined4 *)(uVar3 + 0x20 & 0xfffffff0);
-  *puVar1 = uVar11;
-  puVar1[1] = uVar12;
-  puVar1[2] = uVar13;
-  puVar1[3] = uVar14;
-  puVar1 = (undefined4 *)(uVar3 + 0x30 & 0xfffffff0);
-  *puVar1 = uVar7;
-  puVar1[1] = uVar8;
-  puVar1[2] = uVar9;
-  puVar1[3] = uVar10;
-  __restgprlr_27();
+  puVar2[1] = uVar16;
+  puVar2[2] = uVar17;
+  puVar2[3] = uVar18;
+  puVar1 = (undefined4 *)((uint)(param_2 + 4) & 0xfffffff0);
+  *puVar1 = uVar12;
+  puVar1[1] = uVar13;
+  puVar1[2] = uVar14;
+  puVar1[3] = uVar15;
+  puVar1 = (undefined4 *)((uint)(param_2 + 8) & 0xfffffff0);
+  *puVar1 = uVar8;
+  puVar1[1] = uVar9;
+  puVar1[2] = uVar10;
+  puVar1[3] = uVar11;
+  puVar1 = (undefined4 *)((uint)(param_2 + 0xc) & 0xfffffff0);
+  *puVar1 = uVar4;
+  puVar1[1] = uVar5;
+  puVar1[2] = uVar6;
+  puVar1[3] = uVar7;
   return;
 }
 
 
 // 825DB100  MatrixTransformVector44  (universal/com_math.cpp:1876)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void MatrixTransformVector44(float *param_1,float (*param_2) [4],float *param_3)
 
 {
-  uint uVar1;
-  uint uVar2;
-  ulonglong uVar3;
-  ulonglong uVar4;
+  undefined1 auVar1 [16];
+  undefined1 auVar2 [16];
+  undefined1 auVar3 [16];
+  undefined1 auVar4 [16];
   undefined1 auVar5 [16];
   undefined1 auVar6 [16];
-  undefined1 auVar7 [16];
-  undefined1 auVar8 [16];
-  undefined1 auVar9 [16];
-  undefined1 auVar10 [16];
-  undefined1 auVar11 [16];
   
-  uVar4 = (ulonglong)(int)param_3;
-  uVar3 = (ulonglong)(int)param_2;
-  uVar2 = __savegprlr_27(param_1);
-  if ((uVar2 & 0xf) != 0) {
+  if (((uint)param_1 & 0xf) != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_math.cpp",0x759,
                     0,"%s");
   }
-  if ((uVar3 & 0xf) != 0) {
+  if (((uint)param_2 & 0xf) != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_math.cpp",0x75a,
                     0,"%s");
   }
-  if ((uVar4 & 0xf) != 0) {
+  if (((uint)param_3 & 0xf) != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_math.cpp",0x75b,
                     0,"%s");
   }
-  uVar1 = (uint)uVar3;
-  auVar11 = *(undefined1 (*) [16])(uVar2 & 0xfffffff0);
-  auVar10 = *(undefined1 (*) [16])(uVar1 + 0x10 & 0xfffffff0);
-  auVar9 = *(undefined1 (*) [16])(uVar1 + 0x20 & 0xfffffff0);
-  auVar8 = *(undefined1 (*) [16])(uVar1 + 0x30 & 0xfffffff0);
-  auVar7 = vectorMergeHighWord128(*(undefined1 (*) [16])(uVar1 & 0xfffffff0),auVar9);
-  auVar6 = vectorMergeHighWord128(auVar10,auVar8);
-  auVar5 = vectorMergeLowWord128(*(undefined1 (*) [16])(uVar1 & 0xfffffff0),auVar9);
-  auVar8 = vectorMergeLowWord128(auVar10,auVar8);
-  auVar9 = vectorMergeHighWord128(auVar7,auVar6);
-  auVar7 = vectorMergeLowWord128(auVar7,auVar6);
-  auVar6 = vectorMergeHighWord128(auVar5,auVar8);
-  auVar8 = vectorMergeLowWord128(auVar5,auVar8);
-  auVar9 = vectorMultiplySum4FloatingPoint(auVar11,auVar9);
-  auVar7 = vectorMultiplySum4FloatingPoint(auVar11,auVar7);
-  auVar6 = vectorMultiplySum4FloatingPoint(auVar11,auVar6);
-  auVar8 = vectorMultiplySum4FloatingPoint(auVar11,auVar8);
-  auVar6 = vectorMergeHighWord128(auVar9,auVar6);
-  auVar8 = vectorMergeHighWord128(auVar7,auVar8);
-  auVar8 = vectorMergeHighWord128(auVar6,auVar8);
-  *(undefined1 (*) [16])((uint)uVar4 & 0xfffffff0) = auVar8;
-  __restgprlr_27();
+  auVar6 = *(undefined1 (*) [16])((uint)param_1 & 0xfffffff0);
+  auVar5 = vectorMergeHighWord128
+                     (*(undefined1 (*) [16])((uint)param_2 & 0xfffffff0),
+                      *(undefined1 (*) [16])((uint)(param_2 + 2) & 0xfffffff0));
+  auVar4 = vectorMergeHighWord128
+                     (*(undefined1 (*) [16])((uint)(param_2 + 1) & 0xfffffff0),
+                      *(undefined1 (*) [16])((uint)(param_2 + 3) & 0xfffffff0));
+  auVar3 = vectorMergeLowWord128
+                     (*(undefined1 (*) [16])((uint)param_2 & 0xfffffff0),
+                      *(undefined1 (*) [16])((uint)(param_2 + 2) & 0xfffffff0));
+  auVar2 = vectorMergeLowWord128
+                     (*(undefined1 (*) [16])((uint)(param_2 + 1) & 0xfffffff0),
+                      *(undefined1 (*) [16])((uint)(param_2 + 3) & 0xfffffff0));
+  auVar1 = vectorMergeHighWord128(auVar5,auVar4);
+  auVar5 = vectorMergeLowWord128(auVar5,auVar4);
+  auVar4 = vectorMergeHighWord128(auVar3,auVar2);
+  auVar2 = vectorMergeLowWord128(auVar3,auVar2);
+  auVar1 = vectorMultiplySum4FloatingPoint(auVar6,auVar1);
+  auVar5 = vectorMultiplySum4FloatingPoint(auVar6,auVar5);
+  auVar4 = vectorMultiplySum4FloatingPoint(auVar6,auVar4);
+  auVar2 = vectorMultiplySum4FloatingPoint(auVar6,auVar2);
+  auVar4 = vectorMergeHighWord128(auVar1,auVar4);
+  auVar2 = vectorMergeHighWord128(auVar5,auVar2);
+  auVar2 = vectorMergeHighWord128(auVar4,auVar2);
+  *(undefined1 (*) [16])((uint)param_3 & 0xfffffff0) = auVar2;
   return;
 }
 
 
 // 825DB208  MatrixTransposeTransformVector  (universal/com_math.cpp:1913)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void MatrixTransposeTransformVector(float *param_1,float (*param_2) [3],float *param_3)
 
 {
-  float *pfVar1;
-  ulonglong uVar2;
-  ulonglong uVar3;
-  float *pfVar4;
-  
-  uVar3 = (ulonglong)(int)param_3;
-  uVar2 = __savegprlr_29(param_1);
-  if ((uVar2 & 0xffffffff) == (uVar3 & 0xffffffff)) {
+  if (param_1 == param_3) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_math.cpp",0x77a,
                     0,"%s");
   }
-  pfVar1 = (float *)uVar2;
-  pfVar4 = (float *)uVar3;
-  *pfVar4 = *pfVar1 * (*param_2)[0] + (*param_2)[2] * pfVar1[2] + (*param_2)[1] * pfVar1[1];
-  pfVar4[1] = param_2[1][1] * pfVar1[1] + param_2[1][0] * *pfVar1 + param_2[1][2] * pfVar1[2];
-  pfVar4[2] = param_2[2][1] * pfVar1[1] + param_2[2][0] * *pfVar1 + param_2[2][2] * pfVar1[2];
-  __restgprlr_29();
+  *param_3 = *param_1 * (*param_2)[0] + (*param_2)[2] * param_1[2] + (*param_2)[1] * param_1[1];
+  param_3[1] = param_2[1][1] * param_1[1] + param_2[1][0] * *param_1 + param_2[1][2] * param_1[2];
+  param_3[2] = param_2[2][1] * param_1[1] + param_2[2][0] * *param_1 + param_2[2][2] * param_1[2];
   return;
 }
 
 
 // 825DB2D0  MatrixTransformVector43  (universal/com_math.cpp:1927)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void MatrixTransformVector43(float *param_1,float (*param_2) [3],float *param_3)
 
 {
-  float *pfVar1;
-  ulonglong uVar2;
-  ulonglong uVar3;
-  float *pfVar4;
-  
-  uVar3 = (ulonglong)(int)param_3;
-  uVar2 = __savegprlr_29(param_1);
-  if ((uVar2 & 0xffffffff) == (uVar3 & 0xffffffff)) {
+  if (param_1 == param_3) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_math.cpp",0x788,
                     0,"%s");
   }
-  pfVar1 = (float *)uVar2;
-  pfVar4 = (float *)uVar3;
-  *pfVar4 = *pfVar1 * (*param_2)[0] + param_2[2][0] * pfVar1[2] + param_2[1][0] * pfVar1[1] +
-            param_2[3][0];
-  pfVar4[1] = param_2[1][1] * pfVar1[1] + (*param_2)[1] * *pfVar1 + param_2[2][1] * pfVar1[2] +
-              param_2[3][1];
-  pfVar4[2] = param_2[1][2] * pfVar1[1] + (*param_2)[2] * *pfVar1 + param_2[2][2] * pfVar1[2] +
-              param_2[3][2];
-  __restgprlr_29();
+  *param_3 = *param_1 * (*param_2)[0] + param_2[2][0] * param_1[2] + param_2[1][0] * param_1[1] +
+             param_2[3][0];
+  param_3[1] = param_2[1][1] * param_1[1] + (*param_2)[1] * *param_1 + param_2[2][1] * param_1[2] +
+               param_2[3][1];
+  param_3[2] = param_2[1][2] * param_1[1] + (*param_2)[2] * *param_1 + param_2[2][2] * param_1[2] +
+               param_2[3][2];
   return;
 }
 
 
 // 825DB3B0  MatrixTransposeTransformVector43  (universal/com_math.cpp:1941)
+
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 
 void MatrixTransposeTransformVector43(float *param_1,float (*param_2) [3],float *param_3)
 
@@ -2433,25 +2393,17 @@ void MatrixTransposeTransformVector43(float *param_1,float (*param_2) [3],float 
   float fVar1;
   float fVar2;
   float fVar3;
-  ulonglong uVar4;
-  ulonglong uVar5;
-  float *pfVar6;
   
-  uVar5 = (ulonglong)(int)param_3;
-  uVar4 = __savegprlr_29(param_1);
-  if ((uVar4 & 0xffffffff) == (uVar5 & 0xffffffff)) {
+  if (param_1 == param_3) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_math.cpp",0x798,
                     0,"%s");
   }
-  pfVar6 = (float *)uVar4;
-  fVar1 = pfVar6[1] - param_2[3][1];
-  fVar2 = pfVar6[2] - param_2[3][2];
-  fVar3 = *pfVar6 - param_2[3][0];
-  pfVar6 = (float *)uVar5;
-  *pfVar6 = (*param_2)[0] * fVar3 + (*param_2)[2] * fVar2 + (*param_2)[1] * fVar1;
-  pfVar6[1] = param_2[1][0] * fVar3 + param_2[1][2] * fVar2 + param_2[1][1] * fVar1;
-  pfVar6[2] = param_2[2][0] * fVar3 + param_2[2][2] * fVar2 + param_2[2][1] * fVar1;
-  __restgprlr_29();
+  fVar1 = param_1[1] - param_2[3][1];
+  fVar2 = param_1[2] - param_2[3][2];
+  fVar3 = *param_1 - param_2[3][0];
+  *param_3 = (*param_2)[0] * fVar3 + (*param_2)[2] * fVar2 + (*param_2)[1] * fVar1;
+  param_3[1] = param_2[1][0] * fVar3 + param_2[1][2] * fVar2 + param_2[1][1] * fVar1;
+  param_3[2] = param_2[2][0] * fVar3 + param_2[2][2] * fVar2 + param_2[2][1] * fVar1;
   return;
 }
 
@@ -2529,6 +2481,9 @@ void QuatInverse(float *param_1,float *param_2)
 
 // 825DB5A8  QuatToAxis  (universal/com_math.cpp:2009)
 
+/* WARNING: Function: __savefpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_28 replaced with injection: xenon_save_restore */
+
 void QuatToAxis(float *param_1,float (*param_2) [3])
 
 {
@@ -2536,7 +2491,7 @@ void QuatToAxis(float *param_1,float (*param_2) [3])
   float fVar2;
   float fVar3;
   float fVar4;
-  float *pfVar5;
+  double dVar5;
   double dVar6;
   double dVar7;
   double dVar8;
@@ -2544,37 +2499,34 @@ void QuatToAxis(float *param_1,float (*param_2) [3])
   double dVar10;
   double dVar11;
   double dVar12;
-  double dVar13;
   
-  pfVar5 = (float *)__savefpr_28(param_1);
-  dVar12 = (double)(pfVar5[2] * pfVar5[2]);
-  dVar11 = (double)(pfVar5[1] * pfVar5[1]);
-  dVar13 = (double)(*pfVar5 * *pfVar5);
-  dVar10 = (double)(float)((double)(float)((double)(float)((double)pfVar5[3] * (double)pfVar5[3] +
-                                                          dVar12) + dVar11) + dVar13);
-  if (dVar10 <= 0.0) {
+  dVar11 = (double)(param_1[2] * param_1[2]);
+  dVar10 = (double)(param_1[1] * param_1[1]);
+  dVar12 = (double)(*param_1 * *param_1);
+  dVar9 = (double)(float)((double)(float)((double)(float)((double)param_1[3] * (double)param_1[3] +
+                                                         dVar11) + dVar10) + dVar12);
+  if (dVar9 <= 0.0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_math.cpp",0x7e4,
                     0,"%s");
   }
-  dVar9 = (double)pfVar5[2];
-  dVar8 = (double)pfVar5[3];
-  dVar7 = (double)(float)(2.0 / dVar10);
-  dVar6 = (double)(float)((double)*pfVar5 * dVar7);
-  dVar10 = (double)(float)((double)pfVar5[1] * dVar7);
-  fVar1 = (float)((double)(float)(dVar8 * dVar9) * dVar7);
-  fVar2 = (float)((double)pfVar5[1] * dVar6);
-  fVar3 = (float)(dVar9 * dVar10);
-  fVar4 = (float)(dVar8 * dVar10);
+  dVar8 = (double)param_1[2];
+  dVar7 = (double)param_1[3];
+  dVar6 = (double)(float)(2.0 / dVar9);
+  dVar5 = (double)(float)((double)*param_1 * dVar6);
+  dVar9 = (double)(float)((double)param_1[1] * dVar6);
+  fVar1 = (float)((double)(float)(dVar7 * dVar8) * dVar6);
+  fVar2 = (float)((double)param_1[1] * dVar5);
+  fVar3 = (float)(dVar8 * dVar9);
+  fVar4 = (float)(dVar7 * dVar9);
   (*param_2)[1] = fVar1 + fVar2;
   param_2[1][0] = fVar2 - fVar1;
-  (*param_2)[0] = 1.0 - ((float)(dVar7 * dVar12) + (float)(dVar7 * dVar11));
-  param_2[1][2] = fVar3 + (float)(dVar8 * dVar6);
-  (*param_2)[2] = (float)(dVar9 * dVar6) - fVar4;
-  param_2[1][1] = 1.0 - ((float)(dVar7 * dVar12) + (float)(dVar7 * dVar13));
-  param_2[2][0] = fVar4 + (float)(dVar9 * dVar6);
-  param_2[2][1] = fVar3 - (float)(dVar8 * dVar6);
-  param_2[2][2] = 1.0 - ((float)(dVar7 * dVar11) + (float)(dVar7 * dVar13));
-  __restfpr_28();
+  (*param_2)[0] = 1.0 - ((float)(dVar6 * dVar11) + (float)(dVar6 * dVar10));
+  param_2[1][2] = fVar3 + (float)(dVar7 * dVar5);
+  (*param_2)[2] = (float)(dVar8 * dVar5) - fVar4;
+  param_2[1][1] = 1.0 - ((float)(dVar6 * dVar11) + (float)(dVar6 * dVar12));
+  param_2[2][0] = fVar4 + (float)(dVar8 * dVar5);
+  param_2[2][1] = fVar3 - (float)(dVar7 * dVar5);
+  param_2[2][2] = 1.0 - ((float)(dVar6 * dVar10) + (float)(dVar6 * dVar12));
   return;
 }
 
@@ -2672,50 +2624,44 @@ void QuatNlerp(float *param_1,float *param_2,float param_3,float *param_4)
 
 // 825DBA50  QuatSlerp  (universal/com_math.cpp:2114)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void QuatSlerp(float *param_1,float *param_2,float param_3,float *param_4)
 
 {
-  float *pfVar1;
-  float *pfVar2;
-  longlong lVar3;
+  float fVar1;
   float *in_r6;
-  double extraout_f1;
+  double dVar2;
+  double dVar3;
   double dVar4;
   double dVar5;
-  double dVar6;
-  double dVar7;
-  float fVar8;
   
-  lVar3 = (longlong)(int)param_2;
-  pfVar2 = (float *)__savegprlr_29((double)param_3,param_1,lVar3,param_4);
-  pfVar1 = (float *)lVar3;
-  dVar4 = (double)(*pfVar2 * *pfVar1 +
-                  pfVar1[3] * pfVar2[3] + pfVar2[2] * pfVar1[2] + pfVar2[1] * pfVar1[1]);
-  dVar5 = 1.0;
-  if (dVar4 < 0.0) {
-    dVar5 = -1.0;
+  dVar2 = (double)param_3;
+  dVar3 = (double)(*param_1 * *param_2 +
+                  param_2[3] * param_1[3] + param_1[2] * param_2[2] + param_1[1] * param_2[1]);
+  dVar4 = 1.0;
+  if (dVar3 < 0.0) {
+    dVar4 = -1.0;
   }
-  dVar4 = (double)(float)(dVar5 * dVar4);
-  if (dVar4 <= 0.949999988079071) {
-    dVar6 = extraout_f1;
-    dVar4 = acos(dVar4);
-    dVar6 = (double)(float)((double)(float)dVar4 * dVar6);
-    dVar4 = sin((double)(float)((double)(float)dVar4 - dVar6));
-    dVar7 = (double)(float)dVar4;
-    dVar4 = sin(dVar6);
-    dVar4 = (double)(float)dVar4;
+  dVar3 = (double)(float)(dVar4 * dVar3);
+  if (dVar3 <= 0.949999988079071) {
+    dVar3 = acos(dVar3);
+    dVar5 = (double)(float)((double)(float)dVar3 * dVar2);
+    dVar2 = sin((double)(float)((double)(float)dVar3 - dVar5));
+    dVar3 = (double)(float)dVar2;
+    dVar2 = sin(dVar5);
+    dVar2 = (double)(float)dVar2;
   }
   else {
-    dVar7 = (double)(float)(1.0 - extraout_f1);
-    dVar4 = extraout_f1;
+    dVar3 = (double)(float)(1.0 - dVar2);
   }
-  fVar8 = (float)(dVar4 * dVar5);
-  *in_r6 = (float)((double)*pfVar2 * dVar7 + (double)(*pfVar1 * fVar8));
-  in_r6[1] = (float)((double)pfVar2[1] * dVar7 + (double)(fVar8 * pfVar1[1]));
-  in_r6[2] = (float)((double)pfVar2[2] * dVar7 + (double)(fVar8 * pfVar1[2]));
-  in_r6[3] = pfVar1[3] * fVar8 + (float)(dVar7 * (double)pfVar2[3]);
-  fVar8 = Vec4Normalize(in_r6);
-  __restgprlr_29((double)fVar8);
+  fVar1 = (float)(dVar2 * dVar4);
+  *in_r6 = (float)((double)*param_1 * dVar3 + (double)(*param_2 * fVar1));
+  in_r6[1] = (float)((double)param_1[1] * dVar3 + (double)(fVar1 * param_2[1]));
+  in_r6[2] = (float)((double)param_1[2] * dVar3 + (double)(fVar1 * param_2[2]));
+  in_r6[3] = param_2[3] * fVar1 + (float)(dVar3 * (double)param_1[3]);
+  Vec4Normalize(in_r6);
   return;
 }
 
@@ -2995,125 +2941,128 @@ void MatrixRotationZ(float (*param_1) [3],float param_2)
 
 // 825DC1D0  FinitePerspectiveMatrix  (universal/com_math.cpp:2392)
 
+/* WARNING: Function: __savefpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_28 replaced with injection: xenon_save_restore */
+
 void FinitePerspectiveMatrix
                (float param_1,float param_2,float param_3,float param_4,float (*param_5) [4])
 
 {
-  float *pfVar1;
-  ulonglong in_r7;
+  float *in_r7;
+  double dVar1;
   double dVar2;
   double dVar3;
   double dVar4;
-  double dVar5;
   
-  dVar5 = (double)param_4;
-  dVar3 = (double)param_2;
-  dVar4 = (double)param_3;
-  dVar2 = (double)__savefpr_28((double)param_1,param_5);
-  if ((in_r7 & 0xffffffff) == 0) {
+  dVar4 = (double)param_4;
+  dVar1 = (double)param_1;
+  dVar2 = (double)param_2;
+  dVar3 = (double)param_3;
+  if (in_r7 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_math.cpp",0x959,
                     0,"%s");
   }
-  if (dVar4 <= 0.0) {
+  if (dVar3 <= 0.0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_math.cpp",0x95a,
                     0,"zNear > 0.0f\n\t%g, %g");
   }
-  if (dVar5 <= dVar4) {
+  if (dVar4 <= dVar3) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_math.cpp",0x95b,
                     0,"zFar > zNear\n\t%g, %g");
   }
   memset();
-  pfVar1 = (float *)in_r7;
-  pfVar1[0xb] = 1.0;
-  *pfVar1 = (float)(1.0 / dVar2);
-  pfVar1[5] = (float)(1.0 / dVar3);
-  pfVar1[0xe] = (float)((double)(float)(dVar4 * dVar5) / (double)(float)(dVar5 - dVar4));
-  pfVar1[10] = -(float)(dVar4 / (double)(float)(dVar5 - dVar4));
-  __restfpr_28();
+  in_r7[0xb] = 1.0;
+  *in_r7 = (float)(1.0 / dVar1);
+  in_r7[5] = (float)(1.0 / dVar2);
+  in_r7[0xe] = (float)((double)(float)(dVar3 * dVar4) / (double)(float)(dVar4 - dVar3));
+  in_r7[10] = -(float)(dVar3 / (double)(float)(dVar4 - dVar3));
   return;
 }
 
 
 // 825DC318  InfinitePerspectiveMatrix  (universal/com_math.cpp:2422)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void InfinitePerspectiveMatrix(float param_1,float param_2,float param_3,float (*param_4) [4])
 
 {
-  float *pfVar1;
-  ulonglong in_r6;
+  float *in_r6;
+  double dVar1;
   double dVar2;
   double dVar3;
-  double dVar4;
   
-  dVar4 = (double)param_3;
-  dVar3 = (double)param_2;
-  dVar2 = (double)__savegprlr_29((double)param_1,param_4);
-  if ((in_r6 & 0xffffffff) == 0) {
+  dVar3 = (double)param_3;
+  dVar2 = (double)param_2;
+  dVar1 = (double)param_1;
+  if (in_r6 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_math.cpp",0x97b,
                     0,"%s");
   }
-  if (dVar4 <= 0.0) {
+  if (dVar3 <= 0.0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_math.cpp",0x97c,
                     0,"%s");
   }
   memset();
-  pfVar1 = (float *)in_r6;
-  pfVar1[0xe] = (float)dVar4;
-  *pfVar1 = (float)(1.0 / dVar2);
-  pfVar1[5] = (float)(1.0 / dVar3);
-  pfVar1[0xb] = 1.0;
-  __restgprlr_29();
+  in_r6[0xe] = (float)dVar3;
+  *in_r6 = (float)(1.0 / dVar1);
+  in_r6[5] = (float)(1.0 / dVar2);
+  in_r6[0xb] = 1.0;
   return;
 }
 
 
 // 825DC3E8  OrthographicMatrix  (universal/com_math.cpp:2456)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void OrthographicMatrix(float param_1,float param_2,float param_3,float (*param_4) [4])
 
 {
-  ulonglong in_r6;
-  float *pfVar1;
+  float *in_r6;
+  double dVar1;
   double dVar2;
   double dVar3;
   double dVar4;
-  double dVar5;
   
-  dVar4 = (double)param_3;
-  dVar3 = (double)param_2;
-  __savegprlr_29((double)param_1,param_4);
-  dVar2 = (double)__savefpr_28();
-  if ((in_r6 & 0xffffffff) == 0) {
+  dVar3 = (double)param_3;
+  dVar1 = (double)param_1;
+  dVar2 = (double)param_2;
+  if (in_r6 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_math.cpp",0x999,
                     0,"%s");
   }
-  dVar5 = 0.0;
-  if (dVar2 == 0.0) {
+  dVar4 = 0.0;
+  if (dVar1 == 0.0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_math.cpp",0x99a,
                     0,"%s");
   }
-  if (dVar3 == dVar5) {
+  if (dVar2 == dVar4) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_math.cpp",0x99b,
                     0,"%s");
   }
-  if (dVar4 == dVar5) {
+  if (dVar3 == dVar4) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_math.cpp",0x99c,
                     0,"%s");
   }
   memset();
-  pfVar1 = (float *)in_r6;
-  *pfVar1 = (float)(2.0 / dVar2);
-  pfVar1[5] = (float)(2.0 / dVar3);
-  pfVar1[10] = (float)(-0.5 / dVar4);
-  pfVar1[0xe] = 0.5;
-  pfVar1[0xf] = 1.0;
-  __restfpr_28();
-  __restgprlr_29();
+  *in_r6 = (float)(2.0 / dVar1);
+  in_r6[5] = (float)(2.0 / dVar2);
+  in_r6[10] = (float)(-0.5 / dVar3);
+  in_r6[0xe] = 0.5;
+  in_r6[0xf] = 1.0;
   return;
 }
 
 
 // 825DC518  MatrixForViewer  (universal/com_math.cpp:2477)
+
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 
 void MatrixForViewer(float *param_1,float (*param_2) [3],float (*param_3) [4])
 
@@ -3124,131 +3073,115 @@ void MatrixForViewer(float *param_1,float (*param_2) [3],float (*param_3) [4])
   float fVar4;
   float fVar5;
   float fVar6;
-  float *pfVar7;
-  float *pfVar8;
-  ulonglong uVar9;
-  ulonglong uVar10;
-  float *pfVar11;
   
-  uVar10 = (ulonglong)(int)param_3;
-  uVar9 = (ulonglong)(int)param_2;
-  pfVar8 = (float *)__savegprlr_27(param_1);
-  if ((uVar10 & 0xffffffff) == 0) {
+  if (param_3 == (float (*) [4])0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_math.cpp",0x9ae,
                     0,"%s");
   }
-  if (pfVar8 == (float *)0x0) {
+  if (param_1 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_math.cpp",0x9af,
                     0,"%s");
   }
-  if ((uVar9 & 0xffffffff) == 0) {
+  if (param_2 == (float (*) [3])0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_math.cpp",0x9b0,
                     0,"%s");
   }
-  pfVar7 = (float *)uVar9;
-  fVar1 = pfVar7[3];
-  pfVar11 = (float *)uVar10;
-  *pfVar11 = -fVar1;
-  fVar2 = pfVar7[4];
-  pfVar11[4] = -fVar2;
-  fVar3 = pfVar7[5];
-  pfVar11[8] = -fVar3;
-  pfVar11[0xc] = -(-fVar3 * pfVar8[2] + *pfVar8 * -fVar1 + pfVar8[1] * -fVar2);
-  fVar1 = pfVar7[6];
-  pfVar11[1] = fVar1;
-  fVar2 = pfVar7[7];
-  pfVar11[5] = fVar2;
-  fVar3 = pfVar7[8];
-  pfVar11[9] = fVar3;
-  pfVar11[0xd] = -(fVar2 * pfVar8[1] + *pfVar8 * fVar1 + fVar3 * pfVar8[2]);
-  fVar1 = *pfVar7;
-  pfVar11[2] = fVar1;
-  fVar2 = pfVar7[1];
-  pfVar11[6] = fVar2;
-  fVar3 = pfVar7[2];
-  pfVar11[10] = fVar3;
-  fVar4 = pfVar8[2];
-  fVar5 = *pfVar8;
-  fVar6 = pfVar8[1];
-  pfVar11[3] = 0.0;
-  pfVar11[7] = 0.0;
-  pfVar11[0xb] = 0.0;
-  pfVar11[0xf] = 1.0;
-  pfVar11[0xe] = -(fVar6 * fVar2 + fVar1 * fVar5 + fVar3 * fVar4);
-  __restgprlr_27();
+  fVar1 = param_2[1][0];
+  (*param_3)[0] = -fVar1;
+  fVar2 = param_2[1][1];
+  param_3[1][0] = -fVar2;
+  fVar3 = param_2[1][2];
+  param_3[2][0] = -fVar3;
+  param_3[3][0] = -(-fVar3 * param_1[2] + *param_1 * -fVar1 + param_1[1] * -fVar2);
+  fVar1 = param_2[2][0];
+  (*param_3)[1] = fVar1;
+  fVar2 = param_2[2][1];
+  param_3[1][1] = fVar2;
+  fVar3 = param_2[2][2];
+  param_3[2][1] = fVar3;
+  param_3[3][1] = -(fVar2 * param_1[1] + *param_1 * fVar1 + fVar3 * param_1[2]);
+  fVar1 = (*param_2)[0];
+  (*param_3)[2] = fVar1;
+  fVar2 = (*param_2)[1];
+  param_3[1][2] = fVar2;
+  fVar3 = (*param_2)[2];
+  param_3[2][2] = fVar3;
+  fVar4 = param_1[2];
+  fVar5 = *param_1;
+  fVar6 = param_1[1];
+  (*param_3)[3] = 0.0;
+  param_3[1][3] = 0.0;
+  param_3[2][3] = 0.0;
+  param_3[3][3] = 1.0;
+  param_3[3][2] = -(fVar6 * fVar2 + fVar1 * fVar5 + fVar3 * fVar4);
   return;
 }
 
 
 // 825DC698  MatrixForViewerNoOrigin  (universal/com_math.cpp:2505)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void MatrixForViewerNoOrigin(float (*param_1) [3],float (*param_2) [4])
 
 {
-  float *pfVar1;
-  ulonglong uVar2;
-  float *pfVar3;
-  
-  uVar2 = (ulonglong)(int)param_2;
-  pfVar1 = (float *)__savegprlr_28(param_1);
-  if ((uVar2 & 0xffffffff) == 0) {
+  if (param_2 == (float (*) [4])0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_math.cpp",0x9ca,
                     0,"%s");
   }
-  if (pfVar1 == (float *)0x0) {
+  if (param_1 == (float (*) [3])0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_math.cpp",0x9cb,
                     0,"%s");
   }
-  pfVar3 = (float *)uVar2;
-  *pfVar3 = -pfVar1[3];
-  pfVar3[4] = -pfVar1[4];
-  pfVar3[8] = -pfVar1[5];
-  pfVar3[0xc] = 0.0;
-  pfVar3[1] = pfVar1[6];
-  pfVar3[5] = pfVar1[7];
-  pfVar3[9] = pfVar1[8];
-  pfVar3[0xd] = 0.0;
-  pfVar3[2] = *pfVar1;
-  pfVar3[6] = pfVar1[1];
-  pfVar3[10] = pfVar1[2];
-  pfVar3[0xe] = 0.0;
-  pfVar3[3] = 0.0;
-  pfVar3[7] = 0.0;
-  pfVar3[0xb] = 0.0;
-  pfVar3[0xf] = 1.0;
-  __restgprlr_28();
+  (*param_2)[0] = -param_1[1][0];
+  param_2[1][0] = -param_1[1][1];
+  param_2[2][0] = -param_1[1][2];
+  param_2[3][0] = 0.0;
+  (*param_2)[1] = param_1[2][0];
+  param_2[1][1] = param_1[2][1];
+  param_2[2][1] = param_1[2][2];
+  param_2[3][1] = 0.0;
+  (*param_2)[2] = (*param_1)[0];
+  param_2[1][2] = (*param_1)[1];
+  param_2[2][2] = (*param_1)[2];
+  param_2[3][2] = 0.0;
+  (*param_2)[3] = 0.0;
+  param_2[1][3] = 0.0;
+  param_2[2][3] = 0.0;
+  param_2[3][3] = 1.0;
   return;
 }
 
 
 // 825DC790  AnglesSubtract  (universal/com_math.cpp:2540)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void AnglesSubtract(float *param_1,float *param_2,float *param_3)
 
 {
-  float *pfVar1;
+  double dVar1;
   double dVar2;
   double dVar3;
   double dVar4;
   double dVar5;
-  double dVar6;
   
-  __savegprlr_29(param_1);
-  pfVar1 = (float *)__savefpr_28();
-  dVar6 = 0.0027777778450399637;
-  dVar5 = 0.5;
-  dVar3 = (double)((*pfVar1 - *param_2) * 0.0027777778);
-  dVar2 = floor((double)(float)(dVar3 + 0.5));
-  dVar4 = 360.0;
-  *param_3 = (float)(dVar3 - (double)(float)dVar2) * 360.0;
-  dVar3 = (double)(float)((double)(pfVar1[1] - param_2[1]) * dVar6);
-  dVar2 = floor((double)(float)(dVar3 + dVar5));
-  param_3[1] = (float)((double)(float)(dVar3 - (double)(float)dVar2) * dVar4);
-  dVar3 = (double)(float)((double)(pfVar1[2] - param_2[2]) * dVar6);
-  dVar2 = floor((double)(float)(dVar3 + dVar5));
-  param_3[2] = (float)((double)(float)(dVar3 - (double)(float)dVar2) * dVar4);
-  __restfpr_28();
-  __restgprlr_29();
+  dVar5 = 0.0027777778450399637;
+  dVar4 = 0.5;
+  dVar2 = (double)((*param_1 - *param_2) * 0.0027777778);
+  dVar1 = floor((double)(float)(dVar2 + 0.5));
+  dVar3 = 360.0;
+  *param_3 = (float)(dVar2 - (double)(float)dVar1) * 360.0;
+  dVar2 = (double)(float)((double)(param_1[1] - param_2[1]) * dVar5);
+  dVar1 = floor((double)(float)(dVar2 + dVar4));
+  param_3[1] = (float)((double)(float)(dVar2 - (double)(float)dVar1) * dVar3);
+  dVar2 = (double)(float)((double)(param_1[2] - param_2[2]) * dVar5);
+  dVar1 = floor((double)(float)(dVar2 + dVar4));
+  param_3[2] = (float)((double)(float)(dVar2 - (double)(float)dVar1) * dVar3);
   return;
 }
 
@@ -3325,40 +3258,31 @@ void AddPointToBounds2D(float *param_1,float *param_2,float *param_3)
 
 // 825DC980  PointInBounds2D  (universal/com_math.cpp:2605)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 int PointInBounds2D(float *param_1,float *param_2,float *param_3)
 
 {
-  float *pfVar2;
-  undefined8 uVar1;
-  int iVar3;
-  ulonglong uVar4;
-  ulonglong uVar5;
+  int iVar1;
   
-  uVar5 = (ulonglong)(int)param_3;
-  uVar4 = (ulonglong)(int)param_2;
-  pfVar2 = (float *)__savegprlr_27(param_1);
-  if (pfVar2 == (float *)0x0) {
+  if (param_1 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_math.cpp",0xa2e,
                     0,"%s");
   }
-  if ((uVar4 & 0xffffffff) == 0) {
+  if (param_2 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_math.cpp",0xa2f,
                     0,"%s");
   }
-  if ((uVar5 & 0xffffffff) == 0) {
+  if (param_3 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_math.cpp",0xa30,
                     0,"%s");
   }
-  if ((*(float *)uVar4 <= *pfVar2) && (*pfVar2 <= *(float *)uVar5)) {
-    if (((float *)uVar4)[1] <= pfVar2[1]) {
-      uVar1 = 1;
-      if (pfVar2[1] <= ((float *)uVar5)[1]) goto LAB_825dca54;
-    }
+  if ((((*param_1 < *param_2) || (*param_3 < *param_1)) || (param_1[1] < param_2[1])) ||
+     (iVar1 = 1, param_3[1] < param_1[1])) {
+    iVar1 = 0;
   }
-  uVar1 = 0;
-LAB_825dca54:
-  iVar3 = __restgprlr_27(uVar1);
-  return iVar3;
+  return iVar1;
 }
 
 
@@ -3471,6 +3395,9 @@ void AxisTranspose(float (*param_1) [3],float (*param_2) [3])
 
 // 825DCC98  AxisRandomAroundForward  (universal/com_math.cpp:2703)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void AxisRandomAroundForward(float *param_1,float *param_2,float *param_3)
 
 {
@@ -3479,61 +3406,52 @@ void AxisRandomAroundForward(float *param_1,float *param_2,float *param_3)
   float fVar3;
   float fVar4;
   float fVar5;
-  float *pfVar6;
-  int iVar7;
-  ulonglong uVar8;
-  float (*pafVar9) [3];
-  float (*pafVar10) [3];
-  ulonglong uVar11;
+  int iVar6;
+  float (*pafVar7) [3];
   float local_78;
   float local_74;
   float local_70;
   float afStack_60 [24];
   
-  uVar11 = (ulonglong)(int)param_3;
-  uVar8 = (ulonglong)(int)param_2;
-  pfVar6 = (float *)__savegprlr_27(param_1);
-  pafVar9 = (float (*) [3])uVar8;
-  pafVar10 = pafVar9;
-  if (pfVar6 == (float *)0x0) {
-    pafVar10 = (float (*) [3])0xa93;
+  pafVar7 = (float (*) [3])param_2;
+  if (param_1 == (float *)0x0) {
+    pafVar7 = (float (*) [3])0xa93;
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_math.cpp",0xa93,
                     0,"%s");
   }
-  if ((uVar8 & 0xffffffff) == 0) {
-    pafVar10 = (float (*) [3])0xa94;
+  if (param_2 == (float *)0x0) {
+    pafVar7 = (float (*) [3])0xa94;
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_math.cpp",0xa94,
                     0,"%s");
   }
-  if ((uVar11 & 0xffffffff) == 0) {
-    pafVar10 = (float (*) [3])0xa95;
+  if (param_3 == (float *)0x0) {
+    pafVar7 = (float (*) [3])0xa95;
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_math.cpp",0xa95,
                     0,"%s");
   }
-  fVar1 = pfVar6[2];
-  local_74 = *pfVar6;
-  fVar2 = pfVar6[1];
+  fVar1 = param_1[2];
+  local_74 = *param_1;
+  fVar2 = param_1[1];
   fVar3 = -(fVar1 * -fVar2 + fVar2 * local_74 + local_74 * -fVar1);
   local_78 = local_74 * fVar3 + -fVar1;
   local_74 = fVar2 * fVar3 + local_74;
   local_70 = fVar1 * fVar3 + -fVar2;
-  iVar7 = rand();
-  RotationMatrix(pfVar6,(float)(longlong)iVar7 * 3.0517578e-05 * 360.0 * 0.017453292,pafVar10);
-  Vec3Rotate(&local_78,(float (*) [3])afStack_60,*pafVar9);
-  fVar1 = (*pafVar9)[1];
-  fVar2 = (*pafVar9)[0];
-  fVar3 = (*pafVar9)[2];
+  iVar6 = rand();
+  RotationMatrix(param_1,(float)(longlong)iVar6 * 3.0517578e-05 * 360.0 * 0.017453292,pafVar7);
+  Vec3Rotate(&local_78,(float (*) [3])afStack_60,param_2);
+  fVar1 = param_2[1];
+  fVar2 = *param_2;
+  fVar3 = param_2[2];
   fVar5 = SQRT(fVar3 * fVar3 + fVar2 * fVar2 + fVar1 * fVar1);
   fVar4 = 1.0;
   if (-fVar5 < 0.0) {
     fVar4 = fVar5;
   }
   fVar4 = 1.0 / fVar4;
-  (*pafVar9)[0] = fVar2 * fVar4;
-  (*pafVar9)[1] = fVar1 * fVar4;
-  (*pafVar9)[2] = fVar3 * fVar4;
-  Vec3Cross(pfVar6,*pafVar9,(float *)uVar11);
-  __restgprlr_27();
+  *param_2 = fVar2 * fVar4;
+  param_2[1] = fVar1 * fVar4;
+  param_2[2] = fVar3 * fVar4;
+  Vec3Cross(param_1,param_2,param_3);
   return;
 }
 
@@ -3588,108 +3506,108 @@ void YawToAxis(float param_1,float (*param_2) [3])
 
 // 825DCF80  AxisToAngles  (universal/com_math.cpp:2766)
 
+/* WARNING: Function: __savefpr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_26 replaced with injection: xenon_save_restore */
+
 void AxisToAngles(float (*param_1) [3],float *param_2)
 
 {
   float fVar1;
-  float *pfVar2;
+  double dVar2;
   double dVar3;
   double dVar4;
   double dVar5;
   double dVar6;
   double dVar7;
   double dVar8;
-  double dVar9;
-  float fVar10;
+  float fVar9;
   float local_60;
   float local_5c;
   float local_58;
   
-  pfVar2 = (float *)__savefpr_26(param_1);
-  vectoangles(pfVar2,param_2);
-  dVar9 = 0.01745329238474369;
-  dVar5 = (double)(-param_2[1] * 0.017453292);
-  dVar8 = (double)pfVar2[3];
-  dVar7 = (double)pfVar2[4];
-  dVar6 = (double)pfVar2[5];
-  dVar3 = sin(dVar5);
-  dVar4 = (double)(float)dVar3;
-  dVar5 = cos(dVar5);
-  dVar3 = (double)(float)(-(double)*param_2 * dVar9);
-  dVar9 = (double)(float)(dVar8 * (double)(float)dVar5 - (double)(float)(dVar7 * dVar4));
-  local_5c = (float)(dVar8 * dVar4 + (double)(float)(dVar7 * (double)(float)dVar5));
-  dVar4 = (double)local_5c;
-  dVar5 = sin(dVar3);
-  dVar5 = (double)(float)dVar5;
-  dVar3 = cos(dVar3);
-  local_58 = (float)(dVar6 * (double)(float)dVar3 - (double)(float)(dVar9 * dVar5));
-  local_60 = (float)(dVar6 * dVar5 + (double)(float)(dVar9 * (double)(float)dVar3));
-  fVar10 = vectosignedpitch(&local_60);
-  if (0.0 <= dVar4) {
-    param_2[2] = -fVar10;
+  vectoangles(*param_1,param_2);
+  dVar8 = 0.01745329238474369;
+  dVar4 = (double)(-param_2[1] * 0.017453292);
+  dVar7 = (double)param_1[1][0];
+  dVar6 = (double)param_1[1][1];
+  dVar5 = (double)param_1[1][2];
+  dVar2 = sin(dVar4);
+  dVar3 = (double)(float)dVar2;
+  dVar4 = cos(dVar4);
+  dVar2 = (double)(float)(-(double)*param_2 * dVar8);
+  dVar8 = (double)(float)(dVar7 * (double)(float)dVar4 - (double)(float)(dVar6 * dVar3));
+  local_5c = (float)(dVar7 * dVar3 + (double)(float)(dVar6 * (double)(float)dVar4));
+  dVar3 = (double)local_5c;
+  dVar4 = sin(dVar2);
+  dVar4 = (double)(float)dVar4;
+  dVar2 = cos(dVar2);
+  local_58 = (float)(dVar5 * (double)(float)dVar2 - (double)(float)(dVar8 * dVar4));
+  local_60 = (float)(dVar5 * dVar4 + (double)(float)(dVar8 * (double)(float)dVar2));
+  fVar9 = vectosignedpitch(&local_60);
+  if (0.0 <= dVar3) {
+    param_2[2] = -fVar9;
   }
   else {
     fVar1 = -180.0;
-    if (fVar10 < 0.0) {
+    if (fVar9 < 0.0) {
       fVar1 = 180.0;
     }
-    param_2[2] = fVar1 + fVar10;
+    param_2[2] = fVar1 + fVar9;
   }
-  __restfpr_26();
   return;
 }
 
 
 // 825DD098  AxisToSignedAngles  (universal/com_math.cpp:2810)
 
+/* WARNING: Function: __savefpr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_26 replaced with injection: xenon_save_restore */
+
 void AxisToSignedAngles(float (*param_1) [3],float *param_2)
 
 {
   float fVar1;
-  float *pfVar2;
+  double dVar2;
   double dVar3;
   double dVar4;
   double dVar5;
   double dVar6;
   double dVar7;
   double dVar8;
-  double dVar9;
-  float fVar10;
+  float fVar9;
   float local_60;
   float local_5c;
   float local_58;
   
-  pfVar2 = (float *)__savefpr_26(param_1);
-  vectosignedangles(pfVar2,param_2);
-  dVar9 = 0.01745329238474369;
-  dVar5 = (double)(-param_2[1] * 0.017453292);
-  dVar8 = (double)pfVar2[3];
-  dVar7 = (double)pfVar2[4];
-  dVar6 = (double)pfVar2[5];
-  dVar3 = sin(dVar5);
-  dVar4 = (double)(float)dVar3;
-  dVar5 = cos(dVar5);
-  dVar3 = (double)(float)(-(double)*param_2 * dVar9);
-  dVar9 = (double)(float)(dVar8 * (double)(float)dVar5 - (double)(float)(dVar7 * dVar4));
-  local_5c = (float)(dVar8 * dVar4 + (double)(float)(dVar7 * (double)(float)dVar5));
-  dVar4 = (double)local_5c;
-  dVar5 = sin(dVar3);
-  dVar5 = (double)(float)dVar5;
-  dVar3 = cos(dVar3);
-  local_58 = (float)(dVar6 * (double)(float)dVar3 - (double)(float)(dVar9 * dVar5));
-  local_60 = (float)(dVar6 * dVar5 + (double)(float)(dVar9 * (double)(float)dVar3));
-  fVar10 = vectosignedpitch(&local_60);
-  if (0.0 <= dVar4) {
-    param_2[2] = -fVar10;
+  vectosignedangles(*param_1,param_2);
+  dVar8 = 0.01745329238474369;
+  dVar4 = (double)(-param_2[1] * 0.017453292);
+  dVar7 = (double)param_1[1][0];
+  dVar6 = (double)param_1[1][1];
+  dVar5 = (double)param_1[1][2];
+  dVar2 = sin(dVar4);
+  dVar3 = (double)(float)dVar2;
+  dVar4 = cos(dVar4);
+  dVar2 = (double)(float)(-(double)*param_2 * dVar8);
+  dVar8 = (double)(float)(dVar7 * (double)(float)dVar4 - (double)(float)(dVar6 * dVar3));
+  local_5c = (float)(dVar7 * dVar3 + (double)(float)(dVar6 * (double)(float)dVar4));
+  dVar3 = (double)local_5c;
+  dVar4 = sin(dVar2);
+  dVar4 = (double)(float)dVar4;
+  dVar2 = cos(dVar2);
+  local_58 = (float)(dVar5 * (double)(float)dVar2 - (double)(float)(dVar8 * dVar4));
+  local_60 = (float)(dVar5 * dVar4 + (double)(float)(dVar8 * (double)(float)dVar2));
+  fVar9 = vectosignedpitch(&local_60);
+  if (0.0 <= dVar3) {
+    param_2[2] = -fVar9;
   }
   else {
     fVar1 = -180.0;
-    if (fVar10 < 0.0) {
+    if (fVar9 < 0.0) {
       fVar1 = 180.0;
     }
-    param_2[2] = fVar1 + fVar10;
+    param_2[2] = fVar1 + fVar9;
   }
-  __restfpr_26();
   return;
 }
 
@@ -3731,285 +3649,269 @@ int IntersectPlanes(float **param_1,float *param_2)
 
 // 825DD358  SnapPointToIntersectingPlanes  (universal/com_math.cpp:2888)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void SnapPointToIntersectingPlanes(float **param_1,float *param_2,float param_3,float param_4)
 
 {
   float fVar1;
   float fVar2;
   float fVar3;
-  float *pfVar4;
-  undefined4 *puVar5;
-  longlong lVar6;
-  float *pfVar8;
-  longlong lVar7;
-  double extraout_f1;
+  longlong lVar4;
+  float *pfVar5;
+  double dVar6;
+  double dVar7;
+  double dVar8;
   double dVar9;
   double dVar10;
-  double dVar11;
-  double dVar12;
-  double dVar13;
   float local_60 [24];
   
-  dVar10 = (double)param_4;
-  lVar7 = (longlong)(int)param_2;
-  __savegprlr_27((double)param_3,param_1);
-  puVar5 = (undefined4 *)__savefpr_28();
-  pfVar4 = (float *)lVar7;
-  dVar13 = (double)(float)(1.0 / extraout_f1);
-  lVar6 = 3;
-  dVar12 = 0.5;
-  dVar11 = extraout_f1;
+  dVar6 = (double)param_3;
+  dVar8 = (double)param_4;
+  dVar10 = (double)(float)(1.0 / dVar6);
+  lVar4 = 3;
+  dVar9 = 0.5;
+  pfVar5 = param_2;
   do {
-    pfVar8 = (float *)lVar7;
-    dVar9 = floor((double)(float)((double)(float)(dVar13 * (double)*pfVar8) + dVar12));
-    if (dVar10 <= ABS((double)((float)((double)(longlong)(int)dVar9 * dVar11) - *pfVar8))) {
-      *(float *)(((int)local_60 - (int)pfVar4) + (int)pfVar8) = *pfVar8;
+    dVar7 = floor((double)(float)((double)(float)(dVar10 * (double)*pfVar5) + dVar9));
+    if (dVar8 <= ABS((double)((float)((double)(longlong)(int)dVar7 * dVar6) - *pfVar5))) {
+      *(float *)(((int)local_60 - (int)param_2) + (int)pfVar5) = *pfVar5;
     }
     else {
-      *(float *)(((int)local_60 - (int)pfVar4) + (int)pfVar8) =
-           (float)((double)(longlong)(int)dVar9 * dVar11);
+      *(float *)(((int)local_60 - (int)param_2) + (int)pfVar5) =
+           (float)((double)(longlong)(int)dVar7 * dVar6);
     }
-    lVar6 = lVar6 + -1;
-    lVar7 = lVar7 + 4;
-  } while (lVar6 != 0);
-  if (((local_60[0] != *pfVar4) || (local_60[1] != pfVar4[1])) || (local_60[2] != pfVar4[2])) {
-    pfVar8 = (float *)*puVar5;
-    dVar12 = ABS((double)((pfVar8[2] * local_60[2] + pfVar8[1] * local_60[1] + local_60[0] * *pfVar8
-                          ) - pfVar8[3]));
-    dVar11 = 0.0;
-    if (0.0 < dVar12) {
-      dVar11 = dVar12;
+    lVar4 = lVar4 + -1;
+    pfVar5 = pfVar5 + 1;
+  } while (lVar4 != 0);
+  if (((local_60[0] != *param_2) || (local_60[1] != param_2[1])) || (local_60[2] != param_2[2])) {
+    pfVar5 = *param_1;
+    dVar9 = ABS((double)((pfVar5[2] * local_60[2] + pfVar5[1] * local_60[1] + local_60[0] * *pfVar5)
+                        - pfVar5[3]));
+    dVar6 = 0.0;
+    if (0.0 < dVar9) {
+      dVar6 = dVar9;
     }
-    pfVar8 = (float *)*puVar5;
-    fVar1 = *pfVar4;
-    fVar2 = pfVar4[1];
-    fVar3 = pfVar4[2];
-    dVar12 = ABS((double)((pfVar8[2] * fVar3 + pfVar8[1] * fVar2 + fVar1 * *pfVar8) - pfVar8[3]));
-    if (dVar10 < dVar12) {
-      dVar10 = dVar12;
+    pfVar5 = *param_1;
+    fVar1 = *param_2;
+    fVar2 = param_2[1];
+    fVar3 = param_2[2];
+    dVar9 = ABS((double)((pfVar5[2] * fVar3 + pfVar5[1] * fVar2 + fVar1 * *pfVar5) - pfVar5[3]));
+    if (dVar8 < dVar9) {
+      dVar8 = dVar9;
     }
-    pfVar8 = (float *)puVar5[1];
-    dVar12 = ABS((double)((pfVar8[2] * local_60[2] + pfVar8[1] * local_60[1] + local_60[0] * *pfVar8
-                          ) - pfVar8[3]));
-    if (dVar11 < dVar12) {
-      dVar11 = dVar12;
+    pfVar5 = param_1[1];
+    dVar9 = ABS((double)((pfVar5[2] * local_60[2] + pfVar5[1] * local_60[1] + local_60[0] * *pfVar5)
+                        - pfVar5[3]));
+    if (dVar6 < dVar9) {
+      dVar6 = dVar9;
     }
-    pfVar8 = (float *)puVar5[1];
-    dVar12 = ABS((double)((pfVar8[2] * fVar3 + pfVar8[1] * fVar2 + fVar1 * *pfVar8) - pfVar8[3]));
-    if (dVar10 < dVar12) {
-      dVar10 = dVar12;
+    pfVar5 = param_1[1];
+    dVar9 = ABS((double)((pfVar5[2] * fVar3 + pfVar5[1] * fVar2 + fVar1 * *pfVar5) - pfVar5[3]));
+    if (dVar8 < dVar9) {
+      dVar8 = dVar9;
     }
-    pfVar8 = (float *)puVar5[2];
-    dVar12 = ABS((double)((pfVar8[2] * local_60[2] + pfVar8[1] * local_60[1] + local_60[0] * *pfVar8
-                          ) - pfVar8[3]));
-    if (dVar11 < dVar12) {
-      dVar11 = dVar12;
+    pfVar5 = param_1[2];
+    dVar9 = ABS((double)((pfVar5[2] * local_60[2] + pfVar5[1] * local_60[1] + local_60[0] * *pfVar5)
+                        - pfVar5[3]));
+    if (dVar6 < dVar9) {
+      dVar6 = dVar9;
     }
-    pfVar8 = (float *)puVar5[2];
-    dVar12 = ABS((double)((pfVar8[2] * fVar3 + pfVar8[1] * fVar2 + fVar1 * *pfVar8) - pfVar8[3]));
-    if (dVar10 < dVar12) {
-      dVar10 = dVar12;
+    pfVar5 = param_1[2];
+    dVar9 = ABS((double)((pfVar5[2] * fVar3 + pfVar5[1] * fVar2 + fVar1 * *pfVar5) - pfVar5[3]));
+    if (dVar8 < dVar9) {
+      dVar8 = dVar9;
     }
-    if (dVar11 < dVar10) {
-      *pfVar4 = local_60[0];
-      pfVar4[1] = local_60[1];
-      pfVar4[2] = local_60[2];
+    if (dVar6 < dVar8) {
+      *param_2 = local_60[0];
+      param_2[1] = local_60[1];
+      param_2[2] = local_60[2];
     }
   }
-  __restfpr_28();
-  __restgprlr_27();
   return;
 }
 
 
 // 825DD5A8  SnapPointToPlanes  (universal/com_math.cpp:2927)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 void SnapPointToPlanes(float (*param_1) [4],int param_2,float *param_3,float param_4,float param_5)
 
 {
-  float *pfVar1;
-  float fVar2;
-  longlong lVar3;
-  int iVar4;
-  ulonglong uVar5;
-  longlong lVar6;
-  longlong lVar7;
-  longlong lVar8;
-  float *pfVar9;
-  longlong lVar10;
-  double dVar11;
-  double extraout_f1;
-  double dVar12;
-  double dVar13;
-  double dVar14;
-  double dVar15;
+  float fVar1;
+  int iVar2;
+  int iVar3;
+  longlong lVar4;
+  float *pfVar5;
+  double dVar6;
+  double dVar7;
+  double dVar8;
+  double dVar9;
+  double dVar10;
   float local_70 [28];
   
-  dVar13 = (double)param_5;
-  lVar10 = (longlong)(int)param_3;
-  lVar6 = (longlong)param_2;
-  __savegprlr_26((double)param_4,param_1);
-  lVar3 = __savefpr_28();
-  uVar5 = 0;
-  iVar4 = (int)lVar6;
-  pfVar1 = (float *)lVar10;
-  if (3 < iVar4) {
-    lVar7 = lVar3 + 0x18;
+  dVar8 = (double)param_5;
+  dVar9 = (double)param_4;
+  iVar2 = 0;
+  if (3 < param_2) {
+    pfVar5 = param_1[1] + 2;
     do {
-      pfVar9 = (float *)lVar7;
-      dVar11 = (double)((float)((double)pfVar1[2] * (double)pfVar9[-4] +
-                               (double)(float)((double)*pfVar1 * (double)pfVar9[-6] +
-                                              (double)(float)((double)pfVar1[1] * (double)pfVar9[-5]
-                                                             ))) - pfVar9[-3]);
-      if ((dVar11 <= dVar13) && (-dVar13 <= dVar11)) {
-        dVar11 = -dVar11;
-        *pfVar1 = (float)(dVar11 * (double)pfVar9[-6] + (double)*pfVar1);
-        pfVar1[1] = (float)(dVar11 * (double)pfVar9[-5] + (double)pfVar1[1]);
-        pfVar1[2] = (float)(dVar11 * (double)pfVar9[-4] + (double)pfVar1[2]);
+      dVar6 = (double)((float)((double)param_3[2] * (double)pfVar5[-4] +
+                              (double)(float)((double)*param_3 * (double)pfVar5[-6] +
+                                             (double)(float)((double)param_3[1] * (double)pfVar5[-5]
+                                                            ))) - pfVar5[-3]);
+      if ((dVar6 <= dVar8) && (-dVar8 <= dVar6)) {
+        dVar6 = -dVar6;
+        *param_3 = (float)(dVar6 * (double)pfVar5[-6] + (double)*param_3);
+        param_3[1] = (float)(dVar6 * (double)pfVar5[-5] + (double)param_3[1]);
+        param_3[2] = (float)(dVar6 * (double)pfVar5[-4] + (double)param_3[2]);
       }
-      dVar11 = (double)((float)((double)pfVar1[2] * (double)*pfVar9 +
-                               (double)(float)((double)*pfVar1 * (double)pfVar9[-2] +
-                                              (double)(float)((double)pfVar1[1] * (double)pfVar9[-1]
-                                                             ))) - pfVar9[1]);
-      if ((dVar11 <= dVar13) && (-dVar13 <= dVar11)) {
-        dVar11 = -dVar11;
-        *pfVar1 = (float)(dVar11 * (double)pfVar9[-2] + (double)*pfVar1);
-        pfVar1[1] = (float)(dVar11 * (double)pfVar9[-1] + (double)pfVar1[1]);
-        pfVar1[2] = (float)(dVar11 * (double)*pfVar9 + (double)pfVar1[2]);
+      dVar6 = (double)((float)((double)param_3[2] * (double)*pfVar5 +
+                              (double)(float)((double)*param_3 *
+                                              (double)(*(float (*) [4])(pfVar5 + -2))[0] +
+                                             (double)(float)((double)param_3[1] * (double)pfVar5[-1]
+                                                            ))) - pfVar5[1]);
+      if ((dVar6 <= dVar8) && (-dVar8 <= dVar6)) {
+        dVar6 = -dVar6;
+        *param_3 = (float)(dVar6 * (double)(*(float (*) [4])(pfVar5 + -2))[0] + (double)*param_3);
+        param_3[1] = (float)(dVar6 * (double)pfVar5[-1] + (double)param_3[1]);
+        param_3[2] = (float)(dVar6 * (double)*pfVar5 + (double)param_3[2]);
       }
-      dVar11 = (double)((float)((double)pfVar1[2] * (double)pfVar9[4] +
-                               (double)(float)((double)*pfVar1 * (double)pfVar9[2] +
-                                              (double)(float)((double)pfVar1[1] * (double)pfVar9[3])
-                                              )) - pfVar9[5]);
-      if ((dVar11 <= dVar13) && (-dVar13 <= dVar11)) {
-        dVar11 = -dVar11;
-        *pfVar1 = (float)(dVar11 * (double)pfVar9[2] + (double)*pfVar1);
-        pfVar1[1] = (float)(dVar11 * (double)pfVar9[3] + (double)pfVar1[1]);
-        pfVar1[2] = (float)(dVar11 * (double)pfVar9[4] + (double)pfVar1[2]);
+      dVar6 = (double)((float)((double)param_3[2] * (double)pfVar5[4] +
+                              (double)(float)((double)*param_3 * (double)pfVar5[2] +
+                                             (double)(float)((double)param_3[1] * (double)pfVar5[3])
+                                             )) - pfVar5[5]);
+      if ((dVar6 <= dVar8) && (-dVar8 <= dVar6)) {
+        dVar6 = -dVar6;
+        *param_3 = (float)(dVar6 * (double)pfVar5[2] + (double)*param_3);
+        param_3[1] = (float)(dVar6 * (double)pfVar5[3] + (double)param_3[1]);
+        param_3[2] = (float)(dVar6 * (double)pfVar5[4] + (double)param_3[2]);
       }
-      dVar11 = (double)((float)((double)pfVar1[2] * (double)pfVar9[8] +
-                               (double)(float)((double)*pfVar1 * (double)pfVar9[6] +
-                                              (double)(float)((double)pfVar1[1] * (double)pfVar9[7])
-                                              )) - pfVar9[9]);
-      if ((dVar11 <= dVar13) && (-dVar13 <= dVar11)) {
-        dVar11 = -dVar11;
-        *pfVar1 = (float)(dVar11 * (double)pfVar9[6] + (double)*pfVar1);
-        pfVar1[1] = (float)(dVar11 * (double)pfVar9[7] + (double)pfVar1[1]);
-        pfVar1[2] = (float)(dVar11 * (double)pfVar9[8] + (double)pfVar1[2]);
+      dVar6 = (double)((float)((double)param_3[2] * (double)pfVar5[8] +
+                              (double)(float)((double)*param_3 * (double)pfVar5[6] +
+                                             (double)(float)((double)param_3[1] * (double)pfVar5[7])
+                                             )) - pfVar5[9]);
+      if ((dVar6 <= dVar8) && (-dVar8 <= dVar6)) {
+        dVar6 = -dVar6;
+        *param_3 = (float)(dVar6 * (double)pfVar5[6] + (double)*param_3);
+        param_3[1] = (float)(dVar6 * (double)pfVar5[7] + (double)param_3[1]);
+        param_3[2] = (float)(dVar6 * (double)pfVar5[8] + (double)param_3[2]);
       }
-      uVar5 = uVar5 + 4;
-      lVar7 = lVar7 + 0x40;
-    } while ((int)uVar5 < iVar4 + -3);
+      iVar2 = iVar2 + 4;
+      pfVar5 = pfVar5 + 0x10;
+    } while (iVar2 < param_2 + -3);
   }
-  if ((int)uVar5 < iVar4) {
-    lVar7 = lVar6 - uVar5;
-    lVar8 = (uVar5 & 0xfffffff) * 0x10 + lVar3 + 4;
+  if (iVar2 < param_2) {
+    iVar3 = param_2 - iVar2;
+    pfVar5 = param_1[iVar2] + 1;
     do {
-      pfVar9 = (float *)lVar8;
-      dVar11 = (double)((float)((double)pfVar1[2] * (double)pfVar9[1] +
-                               (double)(float)((double)*pfVar1 * (double)pfVar9[-1] +
-                                              (double)(float)((double)pfVar1[1] * (double)*pfVar9)))
-                       - pfVar9[2]);
-      if ((dVar11 <= dVar13) && (-dVar13 <= dVar11)) {
-        dVar11 = -dVar11;
-        *pfVar1 = (float)(dVar11 * (double)pfVar9[-1] + (double)*pfVar1);
-        pfVar1[1] = (float)(dVar11 * (double)*pfVar9 + (double)pfVar1[1]);
-        pfVar1[2] = (float)(dVar11 * (double)pfVar9[1] + (double)pfVar1[2]);
+      dVar6 = (double)((float)((double)param_3[2] * (double)pfVar5[1] +
+                              (double)(float)((double)*param_3 *
+                                              (double)(*(float (*) [4])(pfVar5 + -1))[0] +
+                                             (double)(float)((double)param_3[1] * (double)*pfVar5)))
+                      - pfVar5[2]);
+      if ((dVar6 <= dVar8) && (-dVar8 <= dVar6)) {
+        dVar6 = -dVar6;
+        *param_3 = (float)(dVar6 * (double)(*(float (*) [4])(pfVar5 + -1))[0] + (double)*param_3);
+        param_3[1] = (float)(dVar6 * (double)*pfVar5 + (double)param_3[1]);
+        param_3[2] = (float)(dVar6 * (double)pfVar5[1] + (double)param_3[2]);
       }
-      lVar8 = lVar8 + 0x10;
-      lVar7 = lVar7 + -1;
-    } while (lVar7 != 0);
+      pfVar5 = pfVar5 + 4;
+      iVar3 = iVar3 + -1;
+    } while (iVar3 != 0);
   }
-  lVar7 = 3;
-  dVar15 = (double)(float)(1.0 / extraout_f1);
-  dVar14 = 0.5;
-  dVar11 = extraout_f1;
+  lVar4 = 3;
+  dVar10 = (double)(float)(1.0 / dVar9);
+  dVar6 = 0.5;
+  pfVar5 = param_3;
   do {
-    pfVar9 = (float *)lVar10;
-    dVar12 = floor((double)(float)((double)(float)(dVar15 * (double)*pfVar9) + dVar14));
-    if (dVar13 <= ABS((double)((float)((double)(longlong)(int)dVar12 * dVar11) - *pfVar9))) {
-      *(float *)(((int)local_70 - (int)pfVar1) + (int)pfVar9) = *pfVar9;
+    dVar7 = floor((double)(float)((double)(float)(dVar10 * (double)*pfVar5) + dVar6));
+    if (dVar8 <= ABS((double)((float)((double)(longlong)(int)dVar7 * dVar9) - *pfVar5))) {
+      *(float *)(((int)local_70 - (int)param_3) + (int)pfVar5) = *pfVar5;
     }
     else {
-      *(float *)(((int)local_70 - (int)pfVar1) + (int)pfVar9) =
-           (float)((double)(longlong)(int)dVar12 * dVar11);
+      *(float *)(((int)local_70 - (int)param_3) + (int)pfVar5) =
+           (float)((double)(longlong)(int)dVar7 * dVar9);
     }
-    lVar7 = lVar7 + -1;
-    lVar10 = lVar10 + 4;
-  } while (lVar7 != 0);
-  if (((local_70[0] != *pfVar1) || (local_70[1] != pfVar1[1])) || (local_70[2] != pfVar1[2])) {
-    uVar5 = 0;
-    dVar11 = 0.0;
-    if (3 < iVar4) {
-      lVar10 = lVar3 + 0x18;
+    lVar4 = lVar4 + -1;
+    pfVar5 = pfVar5 + 1;
+  } while (lVar4 != 0);
+  if (((local_70[0] != *param_3) || (local_70[1] != param_3[1])) || (local_70[2] != param_3[2])) {
+    iVar2 = 0;
+    dVar9 = 0.0;
+    if (3 < param_2) {
+      pfVar5 = param_1[1] + 2;
       do {
-        pfVar9 = (float *)lVar10;
-        fVar2 = pfVar9[-5] * local_70[1] + pfVar9[-6] * local_70[0];
-        dVar14 = ABS((double)((pfVar9[-4] * local_70[2] + fVar2) - pfVar9[-3]));
-        if (dVar11 < dVar14) {
-          dVar11 = dVar14;
+        fVar1 = pfVar5[-5] * local_70[1] + pfVar5[-6] * local_70[0];
+        dVar6 = ABS((double)((pfVar5[-4] * local_70[2] + fVar1) - pfVar5[-3]));
+        if (dVar9 < dVar6) {
+          dVar9 = dVar6;
         }
-        dVar14 = ABS((double)((pfVar9[-4] * local_70[2] + fVar2) - pfVar9[-3]));
-        if (dVar13 < dVar14) {
-          dVar13 = dVar14;
+        dVar6 = ABS((double)((pfVar5[-4] * local_70[2] + fVar1) - pfVar5[-3]));
+        if (dVar8 < dVar6) {
+          dVar8 = dVar6;
         }
-        fVar2 = pfVar9[-1] * local_70[1] + pfVar9[-2] * local_70[0];
-        dVar14 = ABS((double)((fVar2 + *pfVar9 * local_70[2]) - pfVar9[1]));
-        if (dVar11 < dVar14) {
-          dVar11 = dVar14;
+        fVar1 = pfVar5[-1] * local_70[1] + (*(float (*) [4])(pfVar5 + -2))[0] * local_70[0];
+        dVar6 = ABS((double)((fVar1 + *pfVar5 * local_70[2]) - pfVar5[1]));
+        if (dVar9 < dVar6) {
+          dVar9 = dVar6;
         }
-        dVar14 = ABS((double)((fVar2 + *pfVar9 * local_70[2]) - pfVar9[1]));
-        if (dVar13 < dVar14) {
-          dVar13 = dVar14;
+        dVar6 = ABS((double)((fVar1 + *pfVar5 * local_70[2]) - pfVar5[1]));
+        if (dVar8 < dVar6) {
+          dVar8 = dVar6;
         }
-        fVar2 = pfVar9[3] * local_70[1] + pfVar9[2] * local_70[0];
-        dVar14 = ABS((double)((pfVar9[4] * local_70[2] + fVar2) - pfVar9[5]));
-        if (dVar11 < dVar14) {
-          dVar11 = dVar14;
+        fVar1 = pfVar5[3] * local_70[1] + pfVar5[2] * local_70[0];
+        dVar6 = ABS((double)((pfVar5[4] * local_70[2] + fVar1) - pfVar5[5]));
+        if (dVar9 < dVar6) {
+          dVar9 = dVar6;
         }
-        dVar14 = ABS((double)((pfVar9[4] * local_70[2] + fVar2) - pfVar9[5]));
-        if (dVar13 < dVar14) {
-          dVar13 = dVar14;
+        dVar6 = ABS((double)((pfVar5[4] * local_70[2] + fVar1) - pfVar5[5]));
+        if (dVar8 < dVar6) {
+          dVar8 = dVar6;
         }
-        fVar2 = pfVar9[7] * local_70[1] + pfVar9[6] * local_70[0];
-        dVar14 = ABS((double)((pfVar9[8] * local_70[2] + fVar2) - pfVar9[9]));
-        if (dVar11 < dVar14) {
-          dVar11 = dVar14;
+        fVar1 = pfVar5[7] * local_70[1] + pfVar5[6] * local_70[0];
+        dVar6 = ABS((double)((pfVar5[8] * local_70[2] + fVar1) - pfVar5[9]));
+        if (dVar9 < dVar6) {
+          dVar9 = dVar6;
         }
-        dVar14 = ABS((double)((pfVar9[8] * local_70[2] + fVar2) - pfVar9[9]));
-        if (dVar13 < dVar14) {
-          dVar13 = dVar14;
+        dVar6 = ABS((double)((pfVar5[8] * local_70[2] + fVar1) - pfVar5[9]));
+        if (dVar8 < dVar6) {
+          dVar8 = dVar6;
         }
-        uVar5 = uVar5 + 4;
-        lVar10 = lVar10 + 0x40;
-      } while ((int)uVar5 < iVar4 + -3);
+        iVar2 = iVar2 + 4;
+        pfVar5 = pfVar5 + 0x10;
+      } while (iVar2 < param_2 + -3);
     }
-    if ((int)uVar5 < iVar4) {
-      lVar6 = lVar6 - uVar5;
-      lVar3 = (uVar5 & 0xfffffff) * 0x10 + lVar3 + 8;
+    if (iVar2 < param_2) {
+      iVar3 = param_2 - iVar2;
+      pfVar5 = param_1[iVar2] + 2;
       do {
-        pfVar9 = (float *)lVar3;
-        fVar2 = pfVar9[-1] * local_70[1] + pfVar9[-2] * local_70[0];
-        dVar14 = ABS((double)((fVar2 + *pfVar9 * local_70[2]) - pfVar9[1]));
-        if (dVar11 < dVar14) {
-          dVar11 = dVar14;
+        fVar1 = pfVar5[-1] * local_70[1] + (*(float (*) [4])(pfVar5 + -2))[0] * local_70[0];
+        dVar6 = ABS((double)((fVar1 + *pfVar5 * local_70[2]) - pfVar5[1]));
+        if (dVar9 < dVar6) {
+          dVar9 = dVar6;
         }
-        dVar14 = ABS((double)((fVar2 + *pfVar9 * local_70[2]) - pfVar9[1]));
-        if (dVar13 < dVar14) {
-          dVar13 = dVar14;
+        dVar6 = ABS((double)((fVar1 + *pfVar5 * local_70[2]) - pfVar5[1]));
+        if (dVar8 < dVar6) {
+          dVar8 = dVar6;
         }
-        lVar3 = lVar3 + 0x10;
-        lVar6 = lVar6 + -1;
-      } while (lVar6 != 0);
+        pfVar5 = pfVar5 + 4;
+        iVar3 = iVar3 + -1;
+      } while (iVar3 != 0);
     }
-    if (dVar11 < dVar13) {
-      *pfVar1 = local_70[0];
-      pfVar1[1] = local_70[1];
-      pfVar1[2] = local_70[2];
+    if (dVar9 < dVar8) {
+      *param_3 = local_70[0];
+      param_3[1] = local_70[1];
+      param_3[2] = local_70[2];
     }
   }
-  __restfpr_28();
-  __restgprlr_26();
   return;
 }
 
@@ -4093,6 +3995,9 @@ int ProjectedWindingContainsCoplanarPointEpsilon
 
 // 825DDC70  ProjectedWindingSegmentFractionToEdge  (universal/com_math.cpp:3023)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
+
 int ProjectedWindingSegmentFractionToEdge
               (float (*param_1) [3],int param_2,int param_3,int param_4,float *param_5,
               float *param_6,float *param_7)
@@ -4104,160 +4009,148 @@ int ProjectedWindingSegmentFractionToEdge
   float fVar4;
   float fVar5;
   float fVar6;
-  float fVar7;
-  float fVar8;
-  float *pfVar9;
-  float *pfVar10;
-  int iVar11;
-  int iVar12;
+  int iVar7;
+  int iVar8;
+  float fVar9;
+  float fVar10;
+  float *pfVar11;
+  float *pfVar12;
   int iVar13;
   float fVar14;
-  longlong lVar15;
-  undefined8 uVar16;
-  int iVar17;
-  int iVar18;
-  ulonglong uVar19;
+  int iVar15;
+  longlong lVar16;
+  longlong lVar17;
+  longlong lVar18;
+  longlong lVar19;
   ulonglong uVar20;
   longlong lVar21;
-  longlong lVar22;
-  longlong lVar23;
-  longlong lVar24;
-  longlong lVar25;
-  ulonglong uVar26;
-  ulonglong uVar27;
+  ulonglong uVar22;
   
-  uVar20 = (ulonglong)param_4;
-  uVar19 = (ulonglong)param_3;
-  lVar25 = (longlong)param_2;
-  lVar15 = __savegprlr_23(param_1);
-  uVar16 = 0;
-  uVar27 = lVar25 - 1;
-  fVar3 = 3.4028235e+38;
-  uVar26 = 0;
-  iVar18 = (int)lVar25;
-  iVar17 = (int)lVar15;
-  if (3 < iVar18) {
-    lVar23 = (uVar20 + 3 & 0x3fffffff) * 4 + lVar15;
-    lVar24 = (uVar19 + 3 & 0x3fffffff) * 4 + lVar15;
-    lVar21 = (uVar27 + (uVar27 & 0x7fffffff) * 2 & 0x3fffffff) << 2;
-    lVar22 = 0x24;
+  lVar21 = (longlong)(int)param_1;
+  iVar15 = 0;
+  uVar22 = (longlong)param_2 - 1;
+  fVar1 = 3.4028235e+38;
+  uVar20 = 0;
+  if (3 < param_2) {
+    iVar7 = param_3 * 4;
+    iVar8 = param_4 * 4;
+    lVar18 = ((longlong)param_4 + 3U & 0x3fffffff) * 4 + lVar21;
+    lVar19 = ((longlong)param_3 + 3U & 0x3fffffff) * 4 + lVar21;
+    lVar16 = (uVar22 + (uVar22 & 0x7fffffff) * 2 & 0x3fffffff) << 2;
+    lVar17 = 0x24;
     do {
-      iVar11 = (int)lVar21;
-      iVar12 = (int)((uVar19 & 0x3fffffff) << 2);
-      pfVar9 = (float *)lVar23;
-      fVar1 = pfVar9[-3];
-      iVar13 = (int)((uVar20 & 0x3fffffff) << 2);
-      fVar5 = *(float *)(iVar12 + (int)param_5);
-      pfVar10 = (float *)lVar24;
-      fVar2 = pfVar10[-3];
-      fVar6 = *(float *)(iVar13 + (int)param_5);
-      fVar8 = fVar1 - *(float *)(iVar11 + iVar13 + iVar17);
-      fVar4 = *(float *)(iVar11 + iVar12 + iVar17) - fVar2;
-      fVar14 = (fVar6 - *(float *)(iVar11 + iVar13 + iVar17)) * fVar4 +
-               (fVar5 - *(float *)(iVar11 + iVar12 + iVar17)) * fVar8;
-      fVar7 = fVar3;
-      if (fVar14 < 0.0) {
-        fVar4 = (*(float *)(iVar13 + (int)param_6) - *(float *)(iVar11 + iVar13 + iVar17)) * fVar4 +
-                (*(float *)(iVar12 + (int)param_6) - *(float *)(iVar11 + iVar12 + iVar17)) * fVar8;
-        if (0.0 <= fVar4) {
-          uVar16 = 1;
-          fVar7 = fVar4 / (fVar4 - fVar14);
-          if (fVar3 - fVar7 < 0.0) {
-            fVar7 = fVar3;
-          }
+      iVar13 = (int)lVar16;
+      pfVar11 = (float *)lVar18;
+      fVar2 = pfVar11[-3];
+      fVar5 = param_5[param_3];
+      pfVar12 = (float *)lVar19;
+      fVar3 = pfVar12[-3];
+      fVar6 = param_5[param_4];
+      fVar4 = fVar2 - *(float *)((int)*param_1 + iVar13 + iVar8);
+      fVar10 = *(float *)((int)*param_1 + iVar13 + iVar7) - fVar3;
+      fVar14 = (fVar6 - *(float *)((int)*param_1 + iVar13 + iVar8)) * fVar10 +
+               (fVar5 - *(float *)((int)*param_1 + iVar13 + iVar7)) * fVar4;
+      fVar9 = fVar1;
+      if ((fVar14 < 0.0) &&
+         (fVar4 = (param_6[param_4] - *(float *)((int)*param_1 + iVar13 + iVar8)) * fVar10 +
+                  (param_6[param_3] - *(float *)((int)*param_1 + iVar13 + iVar7)) * fVar4,
+         0.0 <= fVar4)) {
+        iVar15 = 1;
+        fVar9 = fVar4 / (fVar4 - fVar14);
+        if (fVar1 - fVar9 < 0.0) {
+          fVar9 = fVar1;
         }
       }
-      fVar3 = *pfVar9;
-      fVar4 = *pfVar10;
-      fVar14 = (fVar6 - fVar1) * (fVar2 - fVar4) + (fVar5 - fVar2) * (fVar3 - fVar1);
-      fVar8 = fVar7;
-      if (fVar14 < 0.0) {
-        fVar1 = (*(float *)(iVar13 + (int)param_6) - fVar1) * (fVar2 - fVar4) +
-                (*(float *)(iVar12 + (int)param_6) - fVar2) * (fVar3 - fVar1);
-        if (0.0 <= fVar1) {
-          uVar16 = 1;
-          fVar8 = fVar1 / (fVar1 - fVar14);
-          if (fVar7 - fVar8 < 0.0) {
-            fVar8 = fVar7;
-          }
+      fVar1 = *pfVar11;
+      fVar4 = *pfVar12;
+      fVar14 = (fVar6 - fVar2) * (fVar3 - fVar4) + (fVar5 - fVar3) * (fVar1 - fVar2);
+      fVar10 = fVar9;
+      if ((fVar14 < 0.0) &&
+         (fVar2 = (param_6[param_4] - fVar2) * (fVar3 - fVar4) +
+                  (param_6[param_3] - fVar3) * (fVar1 - fVar2), 0.0 <= fVar2)) {
+        iVar15 = 1;
+        fVar10 = fVar2 / (fVar2 - fVar14);
+        if (fVar9 - fVar10 < 0.0) {
+          fVar10 = fVar9;
         }
       }
-      fVar1 = pfVar9[3];
-      fVar2 = pfVar10[3];
-      fVar14 = (fVar6 - fVar3) * (fVar4 - fVar2) + (fVar5 - fVar4) * (fVar1 - fVar3);
-      fVar7 = fVar8;
-      if (fVar14 < 0.0) {
-        fVar3 = (*(float *)(iVar13 + (int)param_6) - fVar3) * (fVar4 - fVar2) +
-                (*(float *)(iVar12 + (int)param_6) - fVar4) * (fVar1 - fVar3);
-        if (0.0 <= fVar3) {
-          uVar16 = 1;
-          fVar7 = fVar3 / (fVar3 - fVar14);
-          if (fVar8 - fVar7 < 0.0) {
-            fVar7 = fVar8;
-          }
+      fVar2 = pfVar11[3];
+      fVar3 = pfVar12[3];
+      fVar14 = (fVar6 - fVar1) * (fVar4 - fVar3) + (fVar5 - fVar4) * (fVar2 - fVar1);
+      fVar9 = fVar10;
+      if ((fVar14 < 0.0) &&
+         (fVar1 = (param_6[param_4] - fVar1) * (fVar4 - fVar3) +
+                  (param_6[param_3] - fVar4) * (fVar2 - fVar1), 0.0 <= fVar1)) {
+        iVar15 = 1;
+        fVar9 = fVar1 / (fVar1 - fVar14);
+        if (fVar10 - fVar9 < 0.0) {
+          fVar9 = fVar10;
         }
       }
-      fVar5 = (fVar6 - fVar1) * (fVar2 - pfVar10[6]) + (fVar5 - fVar2) * (pfVar9[6] - fVar1);
-      fVar3 = fVar7;
+      fVar5 = (fVar6 - fVar2) * (fVar3 - pfVar12[6]) + (fVar5 - fVar3) * (pfVar11[6] - fVar2);
+      fVar1 = fVar9;
       if ((fVar5 < 0.0) &&
-         (fVar1 = (*(float *)(iVar13 + (int)param_6) - fVar1) * (fVar2 - pfVar10[6]) +
-                  (*(float *)(iVar12 + (int)param_6) - fVar2) * (pfVar9[6] - fVar1), 0.0 <= fVar1))
-      {
-        uVar16 = 1;
-        fVar3 = fVar1 / (fVar1 - fVar5);
-        if (fVar7 - fVar3 < 0.0) {
-          fVar3 = fVar7;
+         (fVar2 = (param_6[param_4] - fVar2) * (fVar3 - pfVar12[6]) +
+                  (param_6[param_3] - fVar3) * (pfVar11[6] - fVar2), 0.0 <= fVar2)) {
+        iVar15 = 1;
+        fVar1 = fVar2 / (fVar2 - fVar5);
+        if (fVar9 - fVar1 < 0.0) {
+          fVar1 = fVar9;
         }
       }
-      uVar27 = uVar26 + 3;
-      uVar26 = uVar26 + 4;
-      lVar24 = lVar24 + 0x30;
-      lVar23 = lVar23 + 0x30;
-      lVar21 = lVar22;
-      lVar22 = lVar22 + 0x30;
-    } while ((int)uVar26 < iVar18 + -3);
+      uVar22 = uVar20 + 3;
+      uVar20 = uVar20 + 4;
+      lVar19 = lVar19 + 0x30;
+      lVar18 = lVar18 + 0x30;
+      lVar16 = lVar17;
+      lVar17 = lVar17 + 0x30;
+    } while ((int)uVar20 < param_2 + -3);
   }
-  if ((int)uVar26 < iVar18) {
-    lVar21 = uVar26 + (uVar26 & 0x7fffffff) * 2;
-    lVar25 = lVar25 - uVar26;
-    iVar18 = (int)((uVar19 & 0xffffffff) << 2);
-    iVar11 = (int)((uVar20 & 0xffffffff) << 2);
-    lVar23 = (lVar21 + uVar19 & 0x3fffffff) * 4 + lVar15;
-    lVar15 = (lVar21 + uVar20 & 0x3fffffff) * 4 + lVar15;
-    lVar21 = (uVar27 + (uVar27 & 0x7fffffff) * 2 & 0x3fffffff) << 2;
-    lVar22 = (uVar26 + (uVar26 & 0x7fffffff) * 2 & 0x3fffffff) << 2;
+  if ((int)uVar20 < param_2) {
+    lVar16 = uVar20 + (uVar20 & 0x7fffffff) * 2;
+    lVar18 = (longlong)param_2 - uVar20;
+    iVar7 = param_3 * 4;
+    iVar8 = param_4 * 4;
+    lVar19 = (lVar16 + param_3 & 0x3fffffffU) * 4 + lVar21;
+    lVar21 = (lVar16 + param_4 & 0x3fffffffU) * 4 + lVar21;
+    lVar16 = (uVar22 + (uVar22 & 0x7fffffff) * 2 & 0x3fffffff) << 2;
+    lVar17 = (uVar20 + (uVar20 & 0x7fffffff) * 2 & 0x3fffffff) << 2;
     do {
-      iVar12 = (int)lVar21;
-      fVar2 = *(float *)lVar15 - *(float *)(iVar12 + iVar11 + iVar17);
-      fVar5 = *(float *)(iVar12 + iVar18 + iVar17) - *(float *)lVar23;
-      fVar6 = (*(float *)(iVar11 + (int)param_5) - *(float *)(iVar12 + iVar11 + iVar17)) * fVar5 +
-              (*(float *)(iVar18 + (int)param_5) - *(float *)(iVar12 + iVar18 + iVar17)) * fVar2;
-      fVar1 = fVar3;
+      iVar13 = (int)lVar16;
+      fVar3 = *(float *)lVar21 - *(float *)((int)*param_1 + iVar13 + iVar8);
+      fVar5 = *(float *)((int)*param_1 + iVar13 + iVar7) - *(float *)lVar19;
+      fVar6 = (param_5[param_4] - *(float *)((int)*param_1 + iVar13 + iVar8)) * fVar5 +
+              (param_5[param_3] - *(float *)((int)*param_1 + iVar13 + iVar7)) * fVar3;
+      fVar2 = fVar1;
       if ((fVar6 < 0.0) &&
-         (fVar2 = (*(float *)(iVar11 + (int)param_6) - *(float *)(iVar12 + iVar11 + iVar17)) * fVar5
-                  + (*(float *)(iVar18 + (int)param_6) - *(float *)(iVar12 + iVar18 + iVar17)) *
-                    fVar2, 0.0 <= fVar2)) {
-        uVar16 = 1;
-        fVar1 = fVar2 / (fVar2 - fVar6);
-        if (fVar3 - fVar1 < 0.0) {
-          fVar1 = fVar3;
+         (fVar3 = (param_6[param_4] - *(float *)((int)*param_1 + iVar13 + iVar8)) * fVar5 +
+                  (param_6[param_3] - *(float *)((int)*param_1 + iVar13 + iVar7)) * fVar3,
+         0.0 <= fVar3)) {
+        iVar15 = 1;
+        fVar2 = fVar3 / (fVar3 - fVar6);
+        if (fVar1 - fVar2 < 0.0) {
+          fVar2 = fVar1;
         }
       }
-      fVar3 = fVar1;
-      lVar15 = lVar15 + 0xc;
-      lVar23 = lVar23 + 0xc;
-      lVar25 = lVar25 + -1;
-      lVar21 = lVar22;
-      lVar22 = lVar22 + 0xc;
-    } while (lVar25 != 0);
+      fVar1 = fVar2;
+      lVar21 = lVar21 + 0xc;
+      lVar19 = lVar19 + 0xc;
+      lVar18 = lVar18 + -1;
+      lVar16 = lVar17;
+      lVar17 = lVar17 + 0xc;
+    } while (lVar18 != 0);
   }
-  *param_7 = fVar3;
-  iVar17 = __restgprlr_23(uVar16);
-  return iVar17;
+  *param_7 = fVar1;
+  return iVar15;
 }
 
 
 // 825DDFA0  PlaneFromPoints  (universal/com_math.cpp:3072)
+
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 
 int PlaneFromPoints(float *param_1,float *param_2,float *param_3,float *param_4)
 
@@ -4266,16 +4159,14 @@ int PlaneFromPoints(float *param_1,float *param_2,float *param_3,float *param_4)
   float fVar2;
   float fVar3;
   float fVar4;
-  float *pfVar5;
-  int iVar6;
+  double dVar5;
+  double dVar6;
   double dVar7;
   double dVar8;
   double dVar9;
   double dVar10;
   double dVar11;
   double dVar12;
-  double dVar13;
-  double dVar14;
   float local_90;
   float local_8c;
   float local_88;
@@ -4283,93 +4174,86 @@ int PlaneFromPoints(float *param_1,float *param_2,float *param_3,float *param_4)
   float local_7c;
   float local_78;
   
-  __savegprlr_28(param_1);
-  pfVar5 = (float *)__savefpr_24();
   local_80 = *param_4 - *param_2;
-  dVar12 = (double)local_80;
+  dVar10 = (double)local_80;
   local_7c = param_4[1] - param_2[1];
-  dVar9 = (double)local_7c;
+  dVar7 = (double)local_7c;
   local_90 = *param_3 - *param_2;
-  dVar13 = (double)local_90;
+  dVar11 = (double)local_90;
   local_78 = param_4[2] - param_2[2];
-  dVar8 = (double)local_78;
+  dVar6 = (double)local_78;
   local_8c = param_3[1] - param_2[1];
-  dVar11 = (double)local_8c;
+  dVar9 = (double)local_8c;
   local_88 = param_3[2] - param_2[2];
-  dVar10 = (double)local_88;
-  Vec3Cross(&local_80,&local_90,pfVar5);
-  dVar14 = (double)(pfVar5[2] * pfVar5[2] + *pfVar5 * *pfVar5 + pfVar5[1] * pfVar5[1]);
-  if (dVar14 < 2.0) {
-    if (dVar14 == 0.0) {
-LAB_825de060:
-      __restfpr_24(0);
-      iVar6 = __restgprlr_28();
-      return iVar6;
+  dVar8 = (double)local_88;
+  Vec3Cross(&local_80,&local_90,param_1);
+  dVar12 = (double)(param_1[2] * param_1[2] + *param_1 * *param_1 + param_1[1] * param_1[1]);
+  if (dVar12 < 2.0) {
+    if (dVar12 == 0.0) {
+      return 0;
     }
-    dVar7 = 1.0000001111620804e-06;
-    if (dVar14 <= (double)((float)(dVar9 * dVar9 +
-                                  (double)(float)(dVar8 * dVar8 + (double)(float)(dVar12 * dVar12)))
-                           * (float)(dVar11 * dVar11 +
-                                    (double)(float)(dVar13 * dVar13 +
-                                                   (double)(float)(dVar10 * dVar10))) *
-                          1.0000001e-06)) {
+    dVar5 = 1.0000001111620804e-06;
+    if (dVar12 <= (double)((float)(dVar7 * dVar7 +
+                                  (double)(float)(dVar6 * dVar6 + (double)(float)(dVar10 * dVar10)))
+                           * (float)(dVar9 * dVar9 +
+                                    (double)(float)(dVar11 * dVar11 + (double)(float)(dVar8 * dVar8)
+                                                   )) * 1.0000001e-06)) {
       local_90 = *param_4 - *param_3;
-      dVar13 = (double)local_90;
+      dVar11 = (double)local_90;
       local_8c = param_4[1] - param_3[1];
-      dVar12 = (double)local_8c;
+      dVar10 = (double)local_8c;
       local_88 = param_4[2] - param_3[2];
-      dVar11 = (double)local_88;
+      dVar9 = (double)local_88;
       local_80 = *param_2 - *param_3;
-      dVar10 = (double)local_80;
+      dVar8 = (double)local_80;
       local_7c = param_2[1] - param_3[1];
-      dVar9 = (double)local_7c;
+      dVar7 = (double)local_7c;
       local_78 = param_2[2] - param_3[2];
-      dVar8 = (double)local_78;
-      Vec3Cross(&local_80,&local_90,pfVar5);
-      if (dVar14 <= (double)(float)((double)((float)(dVar9 * dVar9 +
-                                                    (double)(float)(dVar8 * dVar8 +
-                                                                   (double)(float)(dVar10 * dVar10))
-                                                    ) *
-                                            (float)(dVar12 * dVar12 +
-                                                   (double)(float)(dVar13 * dVar13 +
-                                                                  (double)(float)(dVar11 * dVar11)))
-                                            ) * dVar7)) goto LAB_825de060;
+      dVar6 = (double)local_78;
+      Vec3Cross(&local_80,&local_90,param_1);
+      if (dVar12 <= (double)(float)((double)((float)(dVar7 * dVar7 +
+                                                    (double)(float)(dVar6 * dVar6 +
+                                                                   (double)(float)(dVar8 * dVar8)))
+                                            * (float)(dVar10 * dVar10 +
+                                                     (double)(float)(dVar11 * dVar11 +
+                                                                    (double)(float)(dVar9 * dVar9)))
+                                            ) * dVar5)) {
+        return 0;
+      }
     }
   }
-  fVar1 = *pfVar5;
-  fVar2 = pfVar5[1];
-  fVar3 = pfVar5[2];
-  fVar4 = 1.0 / (float)SQRT(dVar14);
-  *pfVar5 = fVar1 * fVar4;
-  pfVar5[1] = fVar2 * fVar4;
-  pfVar5[2] = fVar3 * fVar4;
-  pfVar5[3] = fVar3 * fVar4 * param_2[2] + param_2[1] * fVar2 * fVar4 + *param_2 * fVar1 * fVar4;
-  __restfpr_24(1);
-  iVar6 = __restgprlr_28();
-  return iVar6;
+  fVar1 = *param_1;
+  fVar2 = param_1[1];
+  fVar3 = param_1[2];
+  fVar4 = 1.0 / (float)SQRT(dVar12);
+  *param_1 = fVar1 * fVar4;
+  param_1[1] = fVar2 * fVar4;
+  param_1[2] = fVar3 * fVar4;
+  param_1[3] = fVar3 * fVar4 * param_2[2] + param_2[1] * fVar2 * fVar4 + *param_2 * fVar1 * fVar4;
+  return 1;
 }
 
 
 // 825DE198  ProjectPointOnPlane  (universal/com_math.cpp:3112)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void ProjectPointOnPlane(float *param_1,float *param_2,float *param_3)
 
 {
   float fVar1;
-  float *pfVar2;
   
-  pfVar2 = (float *)__savegprlr_29(param_1);
   if (0.002 <= ABS((param_2[1] * param_2[1] + param_2[2] * param_2[2] + *param_2 * *param_2) - 1.0))
   {
     va("(%g %g %g) len %g");
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_math.cpp",0xc2b,
                     0,"%s\n\t%s");
   }
-  fVar1 = -(pfVar2[2] * param_2[2] + pfVar2[1] * param_2[1] + *pfVar2 * *param_2);
-  *param_3 = *param_2 * fVar1 + *pfVar2;
-  param_3[1] = fVar1 * param_2[1] + pfVar2[1];
-  param_3[2] = fVar1 * param_2[2] + pfVar2[2];
-  __restgprlr_29();
+  fVar1 = -(param_1[2] * param_2[2] + param_1[1] * param_2[1] + *param_1 * *param_2);
+  *param_3 = *param_2 * fVar1 + *param_1;
+  param_3[1] = fVar1 * param_2[1] + param_1[1];
+  param_3[2] = fVar1 * param_2[2] + param_1[2];
   return;
 }
 
@@ -4404,78 +4288,70 @@ void SetPlaneSignbits(cplane_s *param_1)
 
 // 825DE338  IsPosInsideArc  (universal/com_math.cpp:3223)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 int IsPosInsideArc(float *param_1,float param_2,float *param_3,float param_4,float param_5,
                   float param_6,float param_7)
 
 {
-  float *pfVar1;
-  float *pfVar2;
-  int iVar3;
-  ulonglong in_r5;
+  float *in_r5;
+  double dVar1;
+  double dVar2;
+  double dVar3;
   double dVar4;
-  double extraout_f1;
   double dVar5;
   double dVar6;
   double dVar7;
   double dVar8;
   double dVar9;
-  double dVar10;
-  double dVar11;
-  double dVar12;
-  float fVar13;
+  float fVar10;
   float local_60;
   float local_5c;
   float local_58;
   
-  dVar9 = (double)param_6;
-  dVar10 = (double)param_7;
-  dVar7 = (double)param_5;
-  dVar6 = (double)param_4;
-  __savegprlr_28((double)param_2,param_1,param_3);
-  pfVar2 = (float *)__savefpr_27();
-  dVar5 = extraout_f1;
-  if (pfVar2 == (float *)0x0) {
+  dVar6 = (double)param_6;
+  dVar7 = (double)param_7;
+  dVar4 = (double)param_5;
+  dVar3 = (double)param_4;
+  dVar2 = (double)param_2;
+  if (param_1 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_math.cpp",0xc9d,
                     0,"%s");
   }
-  if ((in_r5 & 0xffffffff) == 0) {
+  if (in_r5 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_math.cpp",0xc9e,
                     0,"%s");
   }
-  pfVar1 = (float *)in_r5;
-  local_5c = pfVar2[1] - pfVar1[1];
-  local_60 = *pfVar2 - *pfVar1;
-  dVar4 = (double)pfVar2[2];
-  dVar12 = (double)pfVar1[2];
-  local_58 = (float)(dVar4 - dVar12);
-  dVar8 = (double)SQRT(local_60 * local_60 + local_5c * local_5c);
-  dVar11 = 1.0;
-  if (-dVar8 < 0.0) {
-    dVar11 = dVar8;
+  local_5c = param_1[1] - in_r5[1];
+  local_60 = *param_1 - *in_r5;
+  dVar1 = (double)param_1[2];
+  dVar9 = (double)in_r5[2];
+  local_58 = (float)(dVar1 - dVar9);
+  dVar5 = (double)SQRT(local_60 * local_60 + local_5c * local_5c);
+  dVar8 = 1.0;
+  if (-dVar5 < 0.0) {
+    dVar8 = dVar5;
   }
-  local_60 = (float)(1.0 / dVar11) * local_60;
-  local_5c = (float)(1.0 / dVar11) * local_5c;
-  if ((((float)(dVar8 - dVar5) * (float)(dVar8 - dVar5) <= (float)(dVar6 * dVar6)) &&
-      ((double)(float)(dVar12 - dVar10) <= dVar4)) && (dVar4 <= (double)(float)(dVar12 + dVar10))) {
-    fVar13 = vectoyaw(&local_60);
-    fVar13 = AngleNormalize360(fVar13);
-    dVar5 = (double)fVar13;
-    if (dVar9 <= dVar7) {
-      if ((dVar5 < dVar9) || (dVar7 < dVar5)) {
-        __restfpr_27(1);
-        iVar3 = __restgprlr_28();
-        return iVar3;
+  local_60 = (float)(1.0 / dVar8) * local_60;
+  local_5c = (float)(1.0 / dVar8) * local_5c;
+  if ((((float)(dVar5 - dVar2) * (float)(dVar5 - dVar2) <= (float)(dVar3 * dVar3)) &&
+      ((double)(float)(dVar9 - dVar7) <= dVar1)) && (dVar1 <= (double)(float)(dVar9 + dVar7))) {
+    fVar10 = vectoyaw(&local_60);
+    fVar10 = AngleNormalize360(fVar10);
+    dVar2 = (double)fVar10;
+    if (dVar6 <= dVar4) {
+      if ((dVar2 < dVar6) || (dVar4 < dVar2)) {
+        return 1;
       }
     }
-    else if ((dVar5 < dVar9) && (dVar7 < dVar5)) {
-      __restfpr_27(1);
-      iVar3 = __restgprlr_28();
-      return iVar3;
+    else if ((dVar2 < dVar6) && (dVar4 < dVar2)) {
+      return 1;
     }
   }
-  __restfpr_27(0);
-  iVar3 = __restgprlr_28();
-  return iVar3;
+  return 0;
 }
 
 
@@ -4524,69 +4400,66 @@ float ColorNormalize(float *param_1,float *param_2)
 
 // 825DE568  VectorRotateAngles  (universal/com_math.cpp:3318)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void VectorRotateAngles(float *param_1,float *param_2,float *param_3)
 
 {
   float fVar1;
   int iVar2;
   int iVar3;
-  float *pfVar4;
+  int *piVar4;
   longlong lVar5;
-  int *piVar6;
-  longlong lVar7;
+  double dVar6;
+  double dVar7;
   double dVar8;
   double dVar9;
   double dVar10;
-  double dVar11;
-  double dVar12;
   float local_90 [4];
   float local_80 [4];
-  undefined4 local_70;
-  int local_6c [27];
+  int local_70 [28];
   
-  lVar5 = (longlong)(int)param_2;
-  __savegprlr_28(param_1);
-  pfVar4 = (float *)__savefpr_27();
-  local_80[0] = *pfVar4;
-  local_80[1] = pfVar4[1];
-  local_70 = 1;
-  local_6c[0] = 2;
-  local_80[2] = pfVar4[2];
-  local_6c[1] = 2;
-  local_6c[2] = 0;
-  local_6c[3] = 0;
-  local_6c[4] = 1;
-  dVar12 = 3.1415927410125732;
-  dVar11 = 0.005555555555555556;
-  piVar6 = local_6c;
-  dVar10 = 0.0;
-  lVar7 = 3;
+  local_80[0] = *param_1;
+  local_80[1] = param_1[1];
+  local_70[0] = 1;
+  local_70[1] = 2;
+  local_80[2] = param_1[2];
+  local_70[2] = 2;
+  local_70[3] = 0;
+  local_70[4] = 0;
+  local_70[5] = 1;
+  dVar10 = 3.1415927410125732;
+  dVar9 = 0.005555555555555556;
+  piVar4 = local_70 + 1;
+  dVar8 = 0.0;
+  lVar5 = 3;
   local_90[0] = local_80[0];
   local_90[1] = local_80[1];
   local_90[2] = local_80[2];
   do {
-    if ((double)*(float *)lVar5 != dVar10) {
-      dVar9 = (double)(float)((double)*(float *)lVar5 * dVar12) * dVar11;
-      dVar8 = sin(dVar9);
-      dVar9 = cos(dVar9);
-      iVar2 = *piVar6;
-      iVar3 = piVar6[-1];
+    if ((double)*param_2 != dVar8) {
+      dVar7 = (double)(float)((double)*param_2 * dVar10) * dVar9;
+      dVar6 = sin(dVar7);
+      dVar7 = cos(dVar7);
+      iVar2 = *piVar4;
+      iVar3 = piVar4[-1];
       fVar1 = local_80[iVar2];
-      local_90[iVar3] = (float)((double)local_80[iVar3] * dVar9 - (double)fVar1 * dVar8);
-      local_90[iVar2] = (float)((double)local_80[iVar3] * dVar8 + (double)fVar1 * dVar9);
+      local_90[iVar3] = (float)((double)local_80[iVar3] * dVar7 - (double)fVar1 * dVar6);
+      local_90[iVar2] = (float)((double)local_80[iVar3] * dVar6 + (double)fVar1 * dVar7);
       local_80[0] = local_90[0];
       local_80[1] = local_90[1];
       local_80[2] = local_90[2];
     }
-    lVar7 = lVar7 + -1;
-    lVar5 = lVar5 + 4;
-    piVar6 = piVar6 + 2;
-  } while (lVar7 != 0);
+    lVar5 = lVar5 + -1;
+    param_2 = param_2 + 1;
+    piVar4 = piVar4 + 2;
+  } while (lVar5 != 0);
   *param_3 = local_80[0];
   param_3[1] = local_80[1];
   param_3[2] = local_80[2];
-  __restfpr_27();
-  __restgprlr_28();
   return;
 }
 
@@ -4639,21 +4512,21 @@ void VectorRotateQuatAroundPoint(float *param_1,float *param_2,float *param_3,fl
 
 // 825DE7F8  VectorPolar  (universal/com_math.cpp:3389)
 
+/* WARNING: Function: __savefpr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_27 replaced with injection: xenon_save_restore */
+
 void VectorPolar(float *param_1,float param_2,float param_3,float param_4)
 
 {
-  float *pfVar1;
-  double extraout_f1;
+  double dVar1;
   double dVar2;
   double dVar3;
   double dVar4;
   double dVar5;
   double dVar6;
-  double dVar7;
   
   dVar3 = (double)param_3;
-  pfVar1 = (float *)__savefpr_27((double)param_2,dVar3,(double)param_4,param_1);
-  dVar7 = extraout_f1;
+  dVar1 = (double)param_2;
   dVar2 = sin(dVar3);
   dVar6 = (double)(float)dVar2;
   dVar2 = cos(dVar3);
@@ -4661,10 +4534,9 @@ void VectorPolar(float *param_1,float param_2,float param_3,float param_4)
   dVar2 = sin(dVar3);
   dVar4 = (double)(float)dVar2;
   dVar2 = cos(dVar3);
-  pfVar1[2] = (float)(dVar4 * dVar7);
-  *pfVar1 = (float)((double)(float)((double)(float)dVar2 * dVar5) * dVar7);
-  pfVar1[1] = (float)((double)(float)((double)(float)dVar2 * dVar6) * dVar7);
-  __restfpr_27();
+  param_1[2] = (float)(dVar4 * dVar1);
+  *param_1 = (float)((double)(float)((double)(float)dVar2 * dVar5) * dVar1);
+  param_1[1] = (float)((double)(float)((double)(float)dVar2 * dVar6) * dVar1);
   return;
 }
 
@@ -4706,22 +4578,22 @@ float PitchForYawOnNormal(float param_1,float *param_2)
 
 // 825DE980  NearestPitchAndYawOnPlane  (universal/com_math.cpp:3441)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void NearestPitchAndYawOnPlane(float *param_1,float *param_2,float *param_3)
 
 {
-  float *pfVar1;
   float afStack_40 [4];
   float afStack_30 [12];
   
-  pfVar1 = (float *)__savegprlr_29(param_1);
   if (((*param_2 == 0.0) && (param_2[1] == 0.0)) && (param_2[2] == 0.0)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_math.cpp",0xd75,
                     0,"%s");
   }
-  AngleVectors(pfVar1,afStack_40,(float *)0x0,(float *)0x0);
+  AngleVectors(param_1,afStack_40,(float *)0x0,(float *)0x0);
   ProjectPointOnPlane(afStack_40,param_2,afStack_30);
   vectoangles(afStack_30,param_3);
-  __restgprlr_29();
   return;
 }
 
@@ -4763,6 +4635,9 @@ int irand(int param_1,int param_2)
 
 // 825DEAC0  MatrixTransformVectorQuatTrans  (universal/com_math.cpp:3500)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 void MatrixTransformVectorQuatTrans(float *param_1,DObjAnimMat *param_2,float *param_3)
 
 {
@@ -4774,9 +4649,7 @@ void MatrixTransformVectorQuatTrans(float *param_1,DObjAnimMat *param_2,float *p
   float fVar6;
   float fVar7;
   float fVar8;
-  float *pfVar9;
   
-  pfVar9 = (float *)__savegprlr_26(param_1);
   if ((((((uint)param_2->quat[0] & 0x7f800000) == 0x7f800000) ||
        (((uint)param_2->quat[1] & 0x7f800000) == 0x7f800000)) ||
       (((uint)param_2->quat[2] & 0x7f800000) == 0x7f800000)) ||
@@ -4797,21 +4670,25 @@ void MatrixTransformVectorQuatTrans(float *param_1,DObjAnimMat *param_2,float *p
   fVar5 = fVar1 * fVar1 * fVar2;
   fVar8 = fVar4 * fVar1 * fVar2;
   fVar2 = param_2->quat[0] * fVar7;
-  *param_3 = pfVar9[1] * (fVar3 * fVar7 - fVar8) +
-             *pfVar9 * (1.0 - (fVar5 + fVar3 * fVar6)) + pfVar9[2] * (fVar4 * fVar6 + fVar1 * fVar7)
-             + param_2->trans[0];
-  param_3[1] = pfVar9[1] * (1.0 - (fVar5 + fVar2)) +
-               *pfVar9 * (fVar8 + fVar3 * fVar7) + pfVar9[2] * (fVar1 * fVar6 - fVar4 * fVar7) +
+  *param_3 = param_1[1] * (fVar3 * fVar7 - fVar8) +
+             *param_1 * (1.0 - (fVar5 + fVar3 * fVar6)) +
+             param_1[2] * (fVar4 * fVar6 + fVar1 * fVar7) + param_2->trans[0];
+  param_3[1] = param_1[1] * (1.0 - (fVar5 + fVar2)) +
+               *param_1 * (fVar8 + fVar3 * fVar7) + param_1[2] * (fVar1 * fVar6 - fVar4 * fVar7) +
                param_2->trans[1];
-  param_3[2] = pfVar9[1] * (fVar1 * fVar6 + fVar4 * fVar7) +
-               *pfVar9 * (fVar1 * fVar7 - fVar4 * fVar6) +
-               pfVar9[2] * (1.0 - (fVar3 * fVar6 + fVar2)) + param_2->trans[2];
-  __restgprlr_26();
+  param_3[2] = param_1[1] * (fVar1 * fVar6 + fVar4 * fVar7) +
+               *param_1 * (fVar1 * fVar7 - fVar4 * fVar6) +
+               param_1[2] * (1.0 - (fVar3 * fVar6 + fVar2)) + param_2->trans[2];
   return;
 }
 
 
 // 825DECA0  AxisToQuat  (universal/com_math.cpp:3506)
+
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 
 void AxisToQuat(float (*param_1) [3],float *param_2)
 
@@ -4820,10 +4697,9 @@ void AxisToQuat(float (*param_1) [3],float *param_2)
   float fVar2;
   float fVar3;
   float fVar4;
-  float *pfVar5;
-  int iVar6;
+  int iVar5;
+  double dVar6;
   double dVar7;
-  double dVar8;
   float local_80 [4];
   float local_70;
   float local_6c;
@@ -4838,70 +4714,66 @@ void AxisToQuat(float (*param_1) [3],float *param_2)
   float local_48;
   float local_44;
   
-  __savegprlr_29(param_1);
-  pfVar5 = (float *)__savefpr_28();
-  fVar1 = pfVar5[4];
-  fVar2 = *pfVar5;
-  fVar3 = pfVar5[8];
-  local_80[0] = pfVar5[5] - pfVar5[7];
-  dVar8 = 1.0;
-  local_80[1] = pfVar5[6] - pfVar5[2];
-  local_80[2] = pfVar5[1] - pfVar5[3];
+  fVar1 = param_1[1][1];
+  fVar2 = (*param_1)[0];
+  fVar3 = param_1[2][2];
+  local_80[0] = param_1[1][2] - param_1[2][1];
+  dVar7 = 1.0;
+  local_80[1] = param_1[2][0] - (*param_1)[2];
+  local_80[2] = (*param_1)[1] - param_1[1][0];
   local_80[3] = fVar2 + fVar1 + fVar3 + 1.0;
-  dVar7 = (double)(local_80[3] * local_80[3] + local_80[0] * local_80[0] + local_80[1] * local_80[1]
+  dVar6 = (double)(local_80[3] * local_80[3] + local_80[0] * local_80[0] + local_80[1] * local_80[1]
                   + local_80[2] * local_80[2]);
-  if (dVar7 < 1.0) {
-    local_70 = pfVar5[2] + pfVar5[6];
-    local_6c = pfVar5[7] + pfVar5[5];
+  if (dVar6 < 1.0) {
+    local_70 = (*param_1)[2] + param_1[2][0];
+    local_6c = param_1[2][1] + param_1[1][2];
     local_68 = ((fVar3 - fVar1) - fVar2) + 1.0;
-    dVar7 = (double)(local_68 * local_68 + local_70 * local_70 + local_6c * local_6c +
+    dVar6 = (double)(local_68 * local_68 + local_70 * local_70 + local_6c * local_6c +
                     local_80[2] * local_80[2]);
     local_64 = local_80[2];
-    if (dVar7 < 1.0) {
-      local_5c = pfVar5[3] + pfVar5[1];
+    if (dVar6 < 1.0) {
+      local_5c = param_1[1][0] + (*param_1)[1];
       local_60 = ((fVar2 - fVar1) - fVar3) + 1.0;
-      dVar7 = (double)(local_60 * local_60 + local_5c * local_5c + local_70 * local_70 +
+      dVar6 = (double)(local_60 * local_60 + local_5c * local_5c + local_70 * local_70 +
                       local_80[0] * local_80[0]);
       local_58 = local_70;
       local_54 = local_80[0];
-      if (dVar7 < 1.0) {
+      if (dVar6 < 1.0) {
         local_4c = ((fVar1 - fVar2) - fVar3) + 1.0;
-        dVar7 = (double)(local_4c * local_4c + local_5c * local_5c + local_6c * local_6c +
+        dVar6 = (double)(local_4c * local_4c + local_5c * local_5c + local_6c * local_6c +
                         local_80[1] * local_80[1]);
         local_50 = local_5c;
         local_48 = local_6c;
         local_44 = local_80[1];
-        if (dVar7 < 1.0) {
+        if (dVar6 < 1.0) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_math.cpp",
                           0xde2,0,"%s\n\t(testSizeSq) = %g");
         }
-        iVar6 = 3;
+        iVar5 = 3;
       }
       else {
-        iVar6 = 2;
+        iVar5 = 2;
       }
     }
     else {
-      iVar6 = 1;
+      iVar5 = 1;
     }
   }
   else {
-    iVar6 = 0;
+    iVar5 = 0;
   }
-  if (dVar7 == 0.0) {
+  if (dVar6 == 0.0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_math.cpp",0xde7,
                     0,"%s");
   }
-  fVar2 = local_80[iVar6 * 4 + 1];
-  fVar3 = local_80[iVar6 * 4 + 2];
-  fVar4 = local_80[iVar6 * 4 + 3];
-  fVar1 = (float)(dVar8 / (double)(float)SQRT(dVar7));
-  *param_2 = local_80[iVar6 * 4] * fVar1;
+  fVar2 = local_80[iVar5 * 4 + 1];
+  fVar3 = local_80[iVar5 * 4 + 2];
+  fVar4 = local_80[iVar5 * 4 + 3];
+  fVar1 = (float)(dVar7 / (double)(float)SQRT(dVar6));
+  *param_2 = local_80[iVar5 * 4] * fVar1;
   param_2[1] = fVar2 * fVar1;
   param_2[2] = fVar3 * fVar1;
   param_2[3] = fVar4 * fVar1;
-  __restfpr_28();
-  __restgprlr_29();
   return;
 }
 
@@ -4944,61 +4816,50 @@ void QuatLerp(float *param_1,float *param_2,float param_3,float *param_4)
 
 // 825DEFB8  SinCosDeg  (universal/com_math.cpp:3585)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void SinCosDeg(float param_1,float *param_2,float *param_3)
 
 {
-  float *pfVar1;
-  ulonglong uVar2;
-  float *pfVar3;
-  ulonglong in_r5;
-  undefined4 *puVar4;
-  double extraout_f1;
-  double dVar5;
+  undefined4 *in_r5;
+  double dVar1;
   
-  uVar2 = (ulonglong)(int)param_3;
-  pfVar1 = (float *)__savegprlr_28((double)param_1,param_2);
-  dVar5 = extraout_f1;
-  if ((uVar2 & 0xffffffff) == 0) {
-    pfVar1 = (float *)"c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_math.cpp";
+  dVar1 = (double)param_1;
+  if (param_3 == (float *)0x0) {
+    param_2 = (float *)"c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_math.cpp";
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_math.cpp",0xe02,
                     0,"%s");
   }
-  if ((in_r5 & 0xffffffff) == 0) {
-    pfVar1 = (float *)"c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_math.cpp";
+  if (in_r5 == (undefined4 *)0x0) {
+    param_2 = (float *)"c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_math.cpp";
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_math.cpp",0xe03,
                     0,"%s");
   }
-  if (dVar5 < 0.0) {
-    dVar5 = (double)(float)(dVar5 + 360.0);
+  if (dVar1 < 0.0) {
+    dVar1 = (double)(float)(dVar1 + 360.0);
   }
-  puVar4 = (undefined4 *)in_r5;
-  pfVar3 = (float *)uVar2;
-  if (dVar5 == 0.0) {
-    *puVar4 = 0x3f800000;
-    *pfVar3 = 0.0;
-    __restgprlr_28();
+  if (dVar1 == 0.0) {
+    *in_r5 = 0x3f800000;
+    *param_3 = 0.0;
     return;
   }
-  if (dVar5 == 90.0) {
-    *puVar4 = 0;
-    *pfVar3 = 1.0;
-    __restgprlr_28();
+  if (dVar1 == 90.0) {
+    *in_r5 = 0;
+    *param_3 = 1.0;
     return;
   }
-  if (dVar5 == 180.0) {
-    *puVar4 = 0xbf800000;
-    *pfVar3 = 0.0;
-    __restgprlr_28();
+  if (dVar1 == 180.0) {
+    *in_r5 = 0xbf800000;
+    *param_3 = 0.0;
     return;
   }
-  if (dVar5 == 270.0) {
-    *puVar4 = 0;
-    *pfVar3 = -1.0;
-    __restgprlr_28();
+  if (dVar1 == 270.0) {
+    *in_r5 = 0;
+    *param_3 = -1.0;
     return;
   }
-  FastSinCos((float)(dVar5 * 0.01745329238474369),pfVar1,pfVar3);
-  __restgprlr_28();
+  FastSinCos((float)(dVar1 * 0.01745329238474369),param_2,param_3);
   return;
 }
 
@@ -5026,6 +4887,9 @@ float FudgeFloat(float param_1,int param_2,int param_3)
 
 // 825DF168  SnapFloat  (universal/com_math.cpp:3647)
 
+/* WARNING: Function: __savefpr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_27 replaced with injection: xenon_save_restore */
+
 float SnapFloat(float param_1,float param_2,float param_3)
 
 {
@@ -5037,26 +4901,26 @@ float SnapFloat(float param_1,float param_2,float param_3)
   double dVar6;
   double dVar7;
   
-  dVar5 = (double)param_3;
-  dVar4 = (double)param_2;
-  dVar3 = (double)__savefpr_27((double)param_1);
-  dVar6 = 0.0;
-  if (dVar4 <= 0.0) {
+  dVar4 = (double)param_3;
+  dVar7 = (double)param_1;
+  dVar3 = (double)param_2;
+  dVar5 = 0.0;
+  if (dVar3 <= 0.0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_math.cpp",0xe43,
                     0,"%s\n\t(granularity) = %g");
   }
-  if (dVar5 <= dVar6) {
+  if (dVar4 <= dVar5) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_math.cpp",0xe44,
                     0,"%s\n\t(epsilon) = %g");
   }
-  dVar7 = (double)(float)(1.0 / dVar4);
-  dVar6 = 0.5;
-  if ((double)(float)(dVar7 * 0.5) <= dVar5) {
+  dVar6 = (double)(float)(1.0 / dVar3);
+  dVar5 = 0.5;
+  if ((double)(float)(dVar6 * 0.5) <= dVar4) {
     va("%g, %g");
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_math.cpp",0xe45,
                     0,"%s\n\t%s");
   }
-  fVar2 = (float)dVar3;
+  fVar2 = (float)dVar7;
   uVar1 = (uint)fVar2 & 0xfff;
   if (uVar1 < 5) {
     fVar2 = (float)((int)fVar2 - uVar1);
@@ -5065,19 +4929,23 @@ float SnapFloat(float param_1,float param_2,float param_3)
     if (4 < (int)(0x1000 - uVar1)) goto LAB_825df2a4;
     fVar2 = (float)(((int)fVar2 - uVar1) + 0x1000);
   }
-  dVar3 = (double)fVar2;
+  dVar7 = (double)fVar2;
 LAB_825df2a4:
-  dVar6 = floor((double)(float)(dVar3 * dVar4 + dVar6));
-  dVar4 = (double)(float)((double)(longlong)(int)dVar6 * dVar7);
-  if (dVar5 < ABS((double)(float)((double)(float)((double)(longlong)(int)dVar6 * dVar7) - dVar3))) {
-    dVar4 = dVar3;
+  dVar5 = floor((double)(float)(dVar7 * dVar3 + dVar5));
+  dVar3 = (double)(float)((double)(longlong)(int)dVar5 * dVar6);
+  if (dVar4 < ABS((double)(float)((double)(float)((double)(longlong)(int)dVar5 * dVar6) - dVar7))) {
+    dVar3 = dVar7;
   }
-  dVar3 = (double)__restfpr_27(dVar4);
   return (float)dVar3;
 }
 
 
 // 825DF308  CullBoxFromCone  (universal/com_math.cpp:3670)
+
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 
 bool CullBoxFromCone(float *param_1,float *param_2,float param_3,Bounds *param_4)
 
@@ -5094,71 +4962,54 @@ bool CullBoxFromCone(float *param_1,float *param_2,float param_3,Bounds *param_4
   float fVar10;
   float fVar11;
   float fVar12;
-  float *pfVar14;
-  undefined1 uVar15;
-  undefined8 uVar13;
-  longlong lVar16;
-  float *pfVar17;
   float *in_r6;
-  double extraout_f1;
-  double dVar18;
-  double dVar19;
+  double dVar13;
+  double dVar14;
   
-  lVar16 = (longlong)(int)param_2;
-  __savegprlr_29((double)param_3,param_1,lVar16,param_4);
-  pfVar17 = (float *)lVar16;
-  pfVar14 = (float *)__savefpr_27();
-  dVar18 = 0.0;
-  dVar19 = extraout_f1;
-  if (extraout_f1 < 0.0) {
+  dVar13 = (double)param_3;
+  dVar14 = 0.0;
+  if (dVar13 < 0.0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_math.cpp",0xe63,
                     0,"%s");
   }
-  fVar5 = *in_r6 - *pfVar14;
-  fVar2 = *pfVar17;
-  fVar3 = pfVar17[1];
-  fVar10 = 1.0;
-  fVar6 = -1.0;
-  fVar8 = fVar10;
+  fVar6 = *in_r6 - *param_1;
+  fVar1 = *param_2;
+  fVar2 = param_2[1];
+  fVar3 = 1.0;
+  fVar4 = -1.0;
+  fVar7 = fVar3;
+  if (fVar1 < 0.0) {
+    fVar7 = fVar4;
+  }
+  fVar5 = param_2[2];
+  fVar8 = fVar3;
   if (fVar2 < 0.0) {
-    fVar8 = fVar6;
+    fVar8 = fVar4;
   }
-  fVar4 = pfVar17[2];
-  fVar9 = fVar10;
-  if (fVar3 < 0.0) {
-    fVar9 = fVar6;
+  if (fVar5 < 0.0) {
+    fVar3 = fVar4;
   }
-  if (fVar4 < 0.0) {
-    fVar10 = fVar6;
+  fVar11 = in_r6[1] - param_1[1];
+  fVar12 = in_r6[2] - param_1[2];
+  fVar4 = fVar5 * fVar12 + fVar2 * fVar11 + fVar1 * fVar6;
+  if (fVar4 < fVar5 * fVar3 * in_r6[5] + fVar2 * fVar8 * in_r6[4] + fVar1 * fVar7 * in_r6[3]) {
+    fVar3 = -fVar4;
+    fVar8 = fVar2 * fVar3 + fVar11;
+    fVar7 = fVar5 * fVar3 + fVar12;
+    fVar9 = 1.0 - (float)(dVar13 * dVar13);
+    fVar3 = fVar1 * fVar3 + fVar6;
+    fVar10 = fVar3 * fVar3 + fVar7 * fVar7 + fVar8 * fVar8;
+    if ((fVar4 * fVar4 * fVar9 < (float)(dVar13 * dVar13) * fVar10) &&
+       (fVar4 = (float)(dVar13 / (double)SQRT(fVar9 * fVar10)), fVar1 = fVar3 * fVar4 + fVar1,
+       fVar2 = fVar8 * fVar4 + fVar2, fVar5 = fVar7 * fVar4 + fVar5,
+       dVar14 <= (double)((((fVar12 * fVar5 + fVar11 * fVar2 + fVar6 * fVar1) -
+                           ABS(in_r6[3] * fVar1)) - ABS(in_r6[4] * fVar2)) - ABS(in_r6[5] * fVar5)))
+       ) {
+      return true;
+    }
+    return false;
   }
-  fVar6 = in_r6[1] - pfVar14[1];
-  fVar7 = in_r6[2] - pfVar14[2];
-  fVar1 = fVar4 * fVar7 + fVar3 * fVar6 + fVar2 * fVar5;
-  if (fVar4 * fVar10 * in_r6[5] + fVar3 * fVar9 * in_r6[4] + fVar2 * fVar8 * in_r6[3] <= fVar1) {
-    __restfpr_27(1);
-    uVar15 = __restgprlr_29();
-    return (bool)uVar15;
-  }
-  fVar8 = -fVar1;
-  fVar9 = fVar3 * fVar8 + fVar6;
-  fVar10 = fVar4 * fVar8 + fVar7;
-  fVar12 = 1.0 - (float)(dVar19 * dVar19);
-  fVar8 = fVar2 * fVar8 + fVar5;
-  fVar11 = fVar8 * fVar8 + fVar10 * fVar10 + fVar9 * fVar9;
-  if (fVar1 * fVar1 * fVar12 < (float)(dVar19 * dVar19) * fVar11) {
-    uVar13 = 1;
-    fVar1 = (float)(dVar19 / (double)SQRT(fVar12 * fVar11));
-    fVar2 = fVar8 * fVar1 + fVar2;
-    fVar3 = fVar9 * fVar1 + fVar3;
-    fVar4 = fVar10 * fVar1 + fVar4;
-    if (dVar18 <= (double)((((fVar7 * fVar4 + fVar6 * fVar3 + fVar5 * fVar2) - ABS(in_r6[3] * fVar2)
-                            ) - ABS(in_r6[4] * fVar3)) - ABS(in_r6[5] * fVar4))) goto LAB_825df490;
-  }
-  uVar13 = 0;
-LAB_825df490:
-  __restfpr_27(uVar13);
-  uVar15 = __restgprlr_29();
-  return (bool)uVar15;
+  return true;
 }
 
 
@@ -5195,48 +5046,46 @@ bool CullBoxFromSphere(float *param_1,float param_2,Bounds *param_3)
 
 // 825DF520  PointInsideCone  (universal/com_math.cpp:3744)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 bool PointInsideCone(float *param_1,float *param_2,float param_3,float param_4,float *param_5)
 
 {
-  float *pfVar1;
+  float fVar1;
   float fVar2;
   float fVar3;
-  float fVar4;
-  float *pfVar5;
-  undefined1 uVar6;
-  longlong lVar7;
   float *in_r7;
-  double extraout_f1;
-  double dVar8;
-  double dVar9;
-  double dVar10;
+  double dVar4;
+  double dVar5;
+  double dVar6;
   
-  dVar8 = (double)param_4;
-  lVar7 = (longlong)(int)param_2;
-  pfVar5 = (float *)__savegprlr_29((double)param_3,param_1,lVar7,param_5);
-  pfVar1 = (float *)lVar7;
-  dVar10 = extraout_f1;
-  if (0.002 <= ABS((pfVar1[1] * pfVar1[1] + pfVar1[2] * pfVar1[2] + *pfVar1 * *pfVar1) - 1.0)) {
+  dVar5 = (double)param_4;
+  dVar4 = (double)param_3;
+  if (0.002 <= ABS((param_2[1] * param_2[1] + param_2[2] * param_2[2] + *param_2 * *param_2) - 1.0))
+  {
     va("(%g %g %g) len %g");
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_math.cpp",0xea4,
                     0,"%s\n\t%s");
   }
-  fVar2 = in_r7[1] - pfVar5[1];
-  fVar3 = *in_r7 - *pfVar5;
-  fVar4 = in_r7[2] - pfVar5[2];
-  dVar9 = (double)(fVar4 * pfVar1[2] + *pfVar1 * fVar3 + fVar2 * pfVar1[1]);
-  if (dVar8 < dVar9) {
-    uVar6 = __restgprlr_29(0);
-    return (bool)uVar6;
+  fVar1 = in_r7[1] - param_1[1];
+  fVar2 = *in_r7 - *param_1;
+  fVar3 = in_r7[2] - param_1[2];
+  dVar6 = (double)(fVar3 * param_2[2] + *param_2 * fVar2 + fVar1 * param_2[1]);
+  if (dVar5 < dVar6) {
+    return false;
   }
-  uVar6 = __restgprlr_29((float)((double)(float)((double)(fVar2 * fVar2 +
-                                                         fVar3 * fVar3 + fVar4 * fVar4) * dVar10) *
-                                dVar10) < (float)(dVar9 * dVar9));
-  return (bool)uVar6;
+  return (float)((double)(float)((double)(fVar1 * fVar1 + fVar2 * fVar2 + fVar3 * fVar3) * dVar4) *
+                dVar4) < (float)(dVar6 * dVar6);
 }
 
 
 // 825DF690  CullBoxFromConicSectionOfSphere  (universal/com_math.cpp:3764)
+
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 
 bool CullBoxFromConicSectionOfSphere
                (float *param_1,float *param_2,float param_3,float param_4,Bounds *param_5)
@@ -5257,100 +5106,84 @@ bool CullBoxFromConicSectionOfSphere
   float fVar13;
   float fVar14;
   float fVar15;
-  float *pfVar17;
-  undefined1 uVar18;
-  undefined8 uVar16;
-  longlong lVar19;
-  float *pfVar20;
   float *in_r7;
-  double extraout_f1;
+  double dVar16;
+  double dVar17;
+  double dVar18;
+  double dVar19;
+  double dVar20;
   double dVar21;
-  double dVar22;
-  double dVar23;
-  double dVar24;
-  double dVar25;
-  double dVar26;
   
-  dVar21 = (double)param_4;
-  lVar19 = (longlong)(int)param_2;
-  __savegprlr_29((double)param_3,param_1,lVar19,param_5);
-  pfVar20 = (float *)lVar19;
-  pfVar17 = (float *)__savefpr_27();
-  dVar25 = 0.0;
-  dVar26 = extraout_f1;
-  if (extraout_f1 < 0.0) {
+  dVar16 = (double)param_3;
+  dVar17 = (double)param_4;
+  dVar21 = 0.0;
+  if (dVar16 < 0.0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_math.cpp",0xec2,
                     0,"%s");
   }
-  fVar8 = in_r7[1] - pfVar17[1];
-  fVar9 = in_r7[2] - pfVar17[2];
-  fVar2 = in_r7[4];
-  fVar10 = *in_r7 - *pfVar17;
-  fVar3 = in_r7[5];
-  fVar4 = in_r7[3];
-  dVar24 = (double)(ABS(fVar8) - fVar2);
-  if ((double)(ABS(fVar8) - fVar2) < 0.0) {
-    dVar24 = dVar25;
+  fVar9 = in_r7[1] - param_1[1];
+  fVar14 = in_r7[2] - param_1[2];
+  fVar1 = in_r7[4];
+  fVar15 = *in_r7 - *param_1;
+  fVar2 = in_r7[5];
+  fVar3 = in_r7[3];
+  dVar20 = (double)(ABS(fVar9) - fVar1);
+  if ((double)(ABS(fVar9) - fVar1) < 0.0) {
+    dVar20 = dVar21;
   }
-  dVar23 = (double)(ABS(fVar9) - fVar3);
-  if ((double)(ABS(fVar9) - fVar3) < 0.0) {
-    dVar23 = dVar25;
+  dVar19 = (double)(ABS(fVar14) - fVar2);
+  if ((double)(ABS(fVar14) - fVar2) < 0.0) {
+    dVar19 = dVar21;
   }
-  dVar22 = (double)(ABS(fVar10) - fVar4);
-  if ((double)(ABS(fVar10) - fVar4) < 0.0) {
-    dVar22 = dVar25;
+  dVar18 = (double)(ABS(fVar15) - fVar3);
+  if ((double)(ABS(fVar15) - fVar3) < 0.0) {
+    dVar18 = dVar21;
   }
-  if ((float)(dVar21 * dVar21) <
-      (float)(dVar22 * dVar22 + (double)(float)(dVar23 * dVar23 + (double)(float)(dVar24 * dVar24)))
-     ) {
-LAB_825df758:
-    __restfpr_27(1);
-    uVar18 = __restgprlr_29();
-    return (bool)uVar18;
+  if ((float)(dVar18 * dVar18 + (double)(float)(dVar19 * dVar19 + (double)(float)(dVar20 * dVar20)))
+      <= (float)(dVar17 * dVar17)) {
+    fVar4 = *param_2;
+    fVar5 = param_2[1];
+    fVar6 = param_2[2];
+    fVar7 = 1.0;
+    fVar8 = -1.0;
+    fVar11 = fVar7;
+    if (fVar4 < 0.0) {
+      fVar11 = fVar8;
+    }
+    fVar10 = fVar7;
+    if (fVar5 < 0.0) {
+      fVar10 = fVar8;
+    }
+    if (fVar6 < 0.0) {
+      fVar7 = fVar8;
+    }
+    fVar8 = fVar6 * fVar14 + fVar5 * fVar9 + fVar4 * fVar15;
+    if (fVar8 < fVar6 * fVar7 * fVar2 + fVar5 * fVar10 * fVar1 + fVar4 * fVar11 * fVar3) {
+      fVar10 = -fVar8;
+      fVar7 = fVar5 * fVar10 + fVar9;
+      fVar11 = fVar6 * fVar10 + fVar14;
+      fVar12 = 1.0 - (float)(dVar16 * dVar16);
+      fVar10 = fVar4 * fVar10 + fVar15;
+      fVar13 = fVar10 * fVar10 + fVar11 * fVar11 + fVar7 * fVar7;
+      if ((fVar8 * fVar8 * fVar12 < (float)(dVar16 * dVar16) * fVar13) &&
+         (fVar8 = (float)(dVar16 / (double)SQRT(fVar12 * fVar13)), fVar4 = fVar10 * fVar8 + fVar4,
+         fVar5 = fVar7 * fVar8 + fVar5, fVar6 = fVar11 * fVar8 + fVar6,
+         dVar21 <= (double)((((fVar6 * fVar14 + fVar5 * fVar9 + fVar4 * fVar15) - ABS(fVar3 * fVar4)
+                             ) - ABS(fVar1 * fVar5)) - ABS(fVar2 * fVar6)))) {
+        return true;
+      }
+      return false;
+    }
+    return true;
   }
-  fVar5 = *pfVar20;
-  fVar6 = pfVar20[1];
-  fVar7 = pfVar20[2];
-  fVar13 = 1.0;
-  fVar1 = -1.0;
-  fVar11 = fVar13;
-  if (fVar5 < 0.0) {
-    fVar11 = fVar1;
-  }
-  fVar12 = fVar13;
-  if (fVar6 < 0.0) {
-    fVar12 = fVar1;
-  }
-  if (fVar7 < 0.0) {
-    fVar13 = fVar1;
-  }
-  fVar1 = fVar7 * fVar9 + fVar6 * fVar8 + fVar5 * fVar10;
-  if (fVar7 * fVar13 * fVar3 + fVar6 * fVar12 * fVar2 + fVar5 * fVar11 * fVar4 <= fVar1)
-  goto LAB_825df758;
-  fVar12 = -fVar1;
-  fVar11 = fVar6 * fVar12 + fVar8;
-  fVar13 = fVar7 * fVar12 + fVar9;
-  fVar15 = 1.0 - (float)(dVar26 * dVar26);
-  fVar12 = fVar5 * fVar12 + fVar10;
-  fVar14 = fVar12 * fVar12 + fVar13 * fVar13 + fVar11 * fVar11;
-  if (fVar1 * fVar1 * fVar15 < (float)(dVar26 * dVar26) * fVar14) {
-    uVar16 = 1;
-    fVar1 = (float)(dVar26 / (double)SQRT(fVar15 * fVar14));
-    fVar5 = fVar12 * fVar1 + fVar5;
-    fVar6 = fVar11 * fVar1 + fVar6;
-    fVar7 = fVar13 * fVar1 + fVar7;
-    if (dVar25 <= (double)((((fVar7 * fVar9 + fVar6 * fVar8 + fVar5 * fVar10) - ABS(fVar4 * fVar5))
-                           - ABS(fVar2 * fVar6)) - ABS(fVar3 * fVar7))) goto LAB_825df858;
-  }
-  uVar16 = 0;
-LAB_825df858:
-  __restfpr_27(uVar16);
-  uVar18 = __restgprlr_29();
-  return (bool)uVar18;
+  return true;
 }
 
 
 // 825DF868  CullSphereFromCone  (universal/com_math.cpp:3833)
+
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 
 bool CullSphereFromCone(float *param_1,float *param_2,float param_3,float *param_4,float param_5)
 
@@ -5359,49 +5192,40 @@ bool CullSphereFromCone(float *param_1,float *param_2,float param_3,float *param
   float fVar2;
   float fVar3;
   float fVar4;
-  float *pfVar5;
-  float *pfVar7;
-  undefined8 uVar6;
-  undefined1 uVar8;
-  longlong lVar9;
+  bool bVar5;
   float *in_r6;
-  double dVar10;
-  double extraout_f1;
-  double dVar11;
-  double dVar12;
-  double dVar13;
+  double dVar6;
+  double dVar7;
+  double dVar8;
+  double dVar9;
   
-  dVar11 = (double)param_5;
-  lVar9 = (longlong)(int)param_2;
-  pfVar7 = (float *)__savegprlr_29((double)param_3,param_1,lVar9,param_4);
-  dVar13 = extraout_f1;
-  if (extraout_f1 < 0.0) {
+  dVar8 = (double)param_5;
+  dVar7 = (double)param_3;
+  if (dVar7 < 0.0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_math.cpp",0xf02,
                     0,"%s");
   }
-  uVar6 = 1;
-  pfVar5 = (float *)lVar9;
-  dVar10 = (double)(float)((double)pfVar5[2] * (double)(in_r6[2] - pfVar7[2]) +
-                          (double)(float)((double)*pfVar5 * (double)(*in_r6 - *pfVar7) +
-                                         (double)(float)((double)pfVar5[1] *
-                                                        (double)(in_r6[1] - pfVar7[1]))));
-  if (dVar10 < dVar11) {
-    dVar12 = -dVar10;
-    fVar1 = (float)((double)*pfVar5 * dVar12 + (double)(*in_r6 - *pfVar7));
-    fVar2 = (float)((double)pfVar5[1] * dVar12 + (double)(in_r6[1] - pfVar7[1]));
-    fVar3 = (float)((double)pfVar5[2] * dVar12 + (double)(in_r6[2] - pfVar7[2]));
-    fVar4 = (float)((double)SQRT(1.0 - (float)(dVar13 * dVar13)) * dVar10 - dVar11);
-    if ((fVar2 * fVar2 + fVar3 * fVar3 + fVar1 * fVar1) * (float)(dVar13 * dVar13) < fVar4 * fVar4)
-    {
-      uVar6 = 0;
-    }
+  bVar5 = true;
+  dVar6 = (double)(float)((double)param_2[2] * (double)(in_r6[2] - param_1[2]) +
+                         (double)(float)((double)*param_2 * (double)(*in_r6 - *param_1) +
+                                        (double)(float)((double)param_2[1] *
+                                                       (double)(in_r6[1] - param_1[1]))));
+  if ((dVar6 < dVar8) &&
+     (dVar9 = -dVar6, fVar1 = (float)((double)*param_2 * dVar9 + (double)(*in_r6 - *param_1)),
+     fVar2 = (float)((double)param_2[1] * dVar9 + (double)(in_r6[1] - param_1[1])),
+     fVar3 = (float)((double)param_2[2] * dVar9 + (double)(in_r6[2] - param_1[2])),
+     fVar4 = (float)((double)SQRT(1.0 - (float)(dVar7 * dVar7)) * dVar6 - dVar8),
+     (fVar2 * fVar2 + fVar3 * fVar3 + fVar1 * fVar1) * (float)(dVar7 * dVar7) < fVar4 * fVar4)) {
+    bVar5 = false;
   }
-  uVar8 = __restgprlr_29(uVar6);
-  return (bool)uVar8;
+  return bVar5;
 }
 
 
 // 825DF968  DistanceFromConeToPoint  (universal/com_math.cpp:3867)
+
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 
 float DistanceFromConeToPoint(float *param_1,float *param_2,float param_3,float *param_4)
 
@@ -5409,58 +5233,50 @@ float DistanceFromConeToPoint(float *param_1,float *param_2,float param_3,float 
   float fVar1;
   float fVar2;
   float fVar3;
-  float *pfVar4;
-  float *pfVar5;
-  longlong lVar6;
   float *in_r6;
+  double dVar4;
+  double dVar5;
+  double dVar6;
   double dVar7;
-  double extraout_f1;
   double dVar8;
   double dVar9;
   double dVar10;
   double dVar11;
-  double dVar12;
-  double dVar13;
-  double dVar14;
   
-  lVar6 = (longlong)(int)param_2;
-  pfVar5 = (float *)__savegprlr_29((double)param_3,param_1,lVar6,param_4);
-  dVar14 = 0.0;
-  dVar13 = extraout_f1;
-  if (extraout_f1 < 0.0) {
+  dVar10 = (double)param_3;
+  dVar11 = 0.0;
+  if (dVar10 < 0.0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_math.cpp",0xf23,
                     0,"%s");
   }
-  dVar7 = (double)(in_r6[1] - pfVar5[1]);
-  pfVar4 = (float *)lVar6;
-  dVar12 = (double)(*in_r6 - *pfVar5);
-  dVar11 = (double)(in_r6[2] - pfVar5[2]);
-  dVar9 = (double)SQRT(-(float)(dVar13 * dVar13 - 1.0));
-  dVar10 = (double)(float)((double)pfVar4[2] * dVar11 +
-                          (double)(float)((double)*pfVar4 * dVar12 +
-                                         (double)(float)((double)pfVar4[1] * dVar7)));
-  dVar8 = -dVar10;
-  fVar1 = (float)((double)pfVar4[1] * dVar8 + dVar7);
-  fVar2 = (float)((double)pfVar4[2] * dVar8 + dVar11);
-  fVar3 = (float)((double)*pfVar4 * dVar8 + dVar12);
-  dVar8 = (double)SQRT(fVar3 * fVar3 + fVar2 * fVar2 + fVar1 * fVar1);
-  if ((float)(dVar9 * dVar8) < (float)(dVar10 * dVar13)) {
-    dVar14 = (double)__restgprlr_29((double)SQRT((float)(dVar7 * dVar7 +
-                                                        (double)(float)(dVar11 * dVar11 +
-                                                                       (double)(float)(dVar12 * 
-                                                  dVar12)))));
-    return (float)dVar14;
+  dVar4 = (double)(in_r6[1] - param_1[1]);
+  dVar9 = (double)(*in_r6 - *param_1);
+  dVar8 = (double)(in_r6[2] - param_1[2]);
+  dVar6 = (double)SQRT(-(float)(dVar10 * dVar10 - 1.0));
+  dVar7 = (double)(float)((double)param_2[2] * dVar8 +
+                         (double)(float)((double)*param_2 * dVar9 +
+                                        (double)(float)((double)param_2[1] * dVar4)));
+  dVar5 = -dVar7;
+  fVar1 = (float)((double)param_2[1] * dVar5 + dVar4);
+  fVar2 = (float)((double)param_2[2] * dVar5 + dVar8);
+  fVar3 = (float)((double)*param_2 * dVar5 + dVar9);
+  dVar5 = (double)SQRT(fVar3 * fVar3 + fVar2 * fVar2 + fVar1 * fVar1);
+  if ((float)(dVar6 * dVar5) < (float)(dVar7 * dVar10)) {
+    return SQRT((float)(dVar4 * dVar4 +
+                       (double)(float)(dVar8 * dVar8 + (double)(float)(dVar9 * dVar9))));
   }
-  dVar13 = (double)(float)(dVar9 * dVar10 + (double)(float)(dVar8 * dVar13));
-  if (-dVar13 < 0.0) {
-    dVar14 = dVar13;
+  dVar10 = (double)(float)(dVar6 * dVar7 + (double)(float)(dVar5 * dVar10));
+  if (-dVar10 < 0.0) {
+    dVar11 = dVar10;
   }
-  dVar14 = (double)__restgprlr_29(dVar14);
-  return (float)dVar14;
+  return (float)dVar11;
 }
 
 
 // 825DFA80  DistanceFromConicSectionOfSphereToPoint  (universal/com_math.cpp:3898)
+
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 
 float DistanceFromConicSectionOfSphereToPoint
                 (float *param_1,float *param_2,float param_3,float param_4,float *param_5)
@@ -5471,68 +5287,59 @@ float DistanceFromConicSectionOfSphereToPoint
   float fVar3;
   float fVar4;
   float fVar5;
-  float *pfVar6;
-  float fVar7;
-  float *pfVar8;
-  longlong lVar9;
+  float fVar6;
   float *in_r7;
+  double dVar7;
+  double dVar8;
+  double dVar9;
   double dVar10;
-  double extraout_f1;
   double dVar11;
   double dVar12;
   double dVar13;
   double dVar14;
-  double dVar15;
-  double dVar16;
-  double dVar17;
   
-  dVar15 = (double)param_4;
-  lVar9 = (longlong)(int)param_2;
-  pfVar8 = (float *)__savegprlr_29((double)param_3,param_1,lVar9,param_5);
-  dVar17 = 0.0;
-  dVar11 = extraout_f1;
-  if (extraout_f1 < 0.0) {
+  dVar12 = (double)param_4;
+  dVar8 = (double)param_3;
+  dVar14 = 0.0;
+  if (dVar8 < 0.0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_math.cpp",0xf47,
                     0,"%s");
   }
-  fVar3 = in_r7[1] - pfVar8[1];
-  fVar4 = in_r7[2] - pfVar8[2];
-  pfVar6 = (float *)lVar9;
-  fVar5 = *in_r7 - *pfVar8;
-  dVar14 = (double)SQRT(-(float)(dVar11 * dVar11 - 1.0));
-  dVar10 = (double)(pfVar6[2] * fVar4 + *pfVar6 * fVar5 + pfVar6[1] * fVar3);
-  dVar12 = (double)(fVar3 * fVar3 + fVar5 * fVar5 + fVar4 * fVar4);
-  dVar13 = (double)SQRT(-(float)(dVar10 * dVar10 - dVar12));
-  if (dVar10 <= dVar17) {
-    if ((double)(float)(dVar14 * dVar10 + (double)(float)(dVar13 * dVar11)) <= dVar17) {
-      if (dVar12 < (double)(float)(dVar15 * dVar15)) {
-        dVar11 = (double)__restgprlr_29(dVar17);
-        return (float)dVar11;
-      }
-      dVar11 = (double)__restgprlr_29((double)(float)((double)(float)SQRT(dVar12) - dVar15));
-      return (float)dVar11;
+  fVar3 = in_r7[1] - param_1[1];
+  fVar4 = in_r7[2] - param_1[2];
+  fVar6 = *in_r7 - *param_1;
+  dVar11 = (double)SQRT(-(float)(dVar8 * dVar8 - 1.0));
+  dVar7 = (double)(param_2[2] * fVar4 + *param_2 * fVar6 + param_2[1] * fVar3);
+  dVar9 = (double)(fVar3 * fVar3 + fVar6 * fVar6 + fVar4 * fVar4);
+  dVar10 = (double)SQRT(-(float)(dVar7 * dVar7 - dVar9));
+  if ((dVar7 <= dVar14) &&
+     ((double)(float)(dVar11 * dVar7 + (double)(float)(dVar10 * dVar8)) <= dVar14)) {
+    if (dVar9 < (double)(float)(dVar12 * dVar12)) {
+      return (float)dVar14;
     }
+    return (float)((double)(float)SQRT(dVar9) - dVar12);
   }
-  dVar16 = (double)(float)(dVar14 * dVar13 - (double)(float)(dVar10 * dVar11));
-  if (dVar16 <= dVar17) {
-    dVar11 = (double)__restgprlr_29((double)(float)SQRT(dVar12));
-    return (float)dVar11;
+  dVar13 = (double)(float)(dVar11 * dVar10 - (double)(float)(dVar7 * dVar8));
+  if (dVar13 <= dVar14) {
+    return (float)SQRT(dVar9);
   }
-  if ((float)(dVar15 - dVar16) < 0.0) {
-    dVar16 = dVar15;
+  if ((float)(dVar12 - dVar13) < 0.0) {
+    dVar13 = dVar12;
   }
-  dVar15 = (double)(float)((double)(float)(dVar16 / dVar13) * dVar14);
-  fVar2 = (float)(1.0 - dVar15);
-  fVar1 = (float)(dVar15 * dVar10 + (double)(float)(dVar16 * dVar11));
-  fVar7 = pfVar6[2] * fVar1 + fVar4 * fVar2;
-  fVar4 = *pfVar6 * fVar1 + fVar5 * fVar2;
-  fVar3 = pfVar6[1] * fVar1 + fVar3 * fVar2;
-  dVar11 = (double)__restgprlr_29((double)SQRT(fVar3 * fVar3 + fVar4 * fVar4 + fVar7 * fVar7));
-  return (float)dVar11;
+  dVar12 = (double)(float)((double)(float)(dVar13 / dVar10) * dVar11);
+  fVar2 = (float)(1.0 - dVar12);
+  fVar1 = (float)(dVar12 * dVar7 + (double)(float)(dVar13 * dVar8));
+  fVar5 = param_2[2] * fVar1 + fVar4 * fVar2;
+  fVar4 = *param_2 * fVar1 + fVar6 * fVar2;
+  fVar3 = param_2[1] * fVar1 + fVar3 * fVar2;
+  return SQRT(fVar3 * fVar3 + fVar4 * fVar4 + fVar5 * fVar5);
 }
 
 
 // 825DFC18  ClosestPointOnConicSectionOfSphereToPoint  (universal/com_math.cpp:3958)
+
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 
 void ClosestPointOnConicSectionOfSphereToPoint
                (float *param_1,float *param_2,float param_3,float param_4,float *param_5,
@@ -5544,55 +5351,46 @@ void ClosestPointOnConicSectionOfSphereToPoint
   float fVar3;
   float fVar4;
   float fVar5;
-  float *pfVar6;
-  longlong lVar7;
-  float *pfVar8;
   float *in_r7;
   float *in_r8;
+  double dVar6;
+  double dVar7;
+  double dVar8;
   double dVar9;
-  double extraout_f1;
   double dVar10;
   double dVar11;
   double dVar12;
-  double dVar13;
-  double dVar14;
-  double dVar15;
   
-  dVar10 = (double)param_4;
-  lVar7 = (longlong)(int)param_2;
-  pfVar6 = (float *)__savegprlr_28((double)param_3,param_1,lVar7,param_5,param_6);
-  dVar14 = 0.0;
-  dVar15 = extraout_f1;
-  if (extraout_f1 < 0.0) {
+  dVar7 = (double)param_3;
+  dVar8 = (double)param_4;
+  dVar12 = 0.0;
+  if (dVar7 < 0.0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_math.cpp",0xf83,
                     0,"%s");
   }
-  fVar3 = in_r7[2] - pfVar6[2];
-  fVar2 = *pfVar6;
-  fVar5 = *in_r7 - fVar2;
-  pfVar8 = (float *)lVar7;
-  fVar4 = in_r7[1] - pfVar6[1];
-  dVar12 = (double)SQRT(-(float)(dVar15 * dVar15 - 1.0));
-  dVar13 = (double)(fVar4 * fVar4 + fVar5 * fVar5 + fVar3 * fVar3);
-  dVar9 = (double)(pfVar8[2] * fVar3 + pfVar8[1] * fVar4 + *pfVar8 * fVar5);
-  dVar11 = (double)SQRT(-(float)(dVar9 * dVar9 - dVar13));
-  if (dVar14 < dVar9) {
-LAB_825dfd50:
-    if (dVar14 < (double)(float)(dVar12 * dVar11 - (double)(float)(dVar9 * dVar15)))
-    goto LAB_825dfd74;
+  fVar3 = in_r7[2] - param_1[2];
+  fVar2 = *param_1;
+  fVar4 = *in_r7 - fVar2;
+  fVar5 = in_r7[1] - param_1[1];
+  dVar10 = (double)SQRT(-(float)(dVar7 * dVar7 - 1.0));
+  dVar11 = (double)(fVar5 * fVar5 + fVar4 * fVar4 + fVar3 * fVar3);
+  dVar6 = (double)(param_2[2] * fVar3 + param_2[1] * fVar5 + *param_2 * fVar4);
+  dVar9 = (double)SQRT(-(float)(dVar6 * dVar6 - dVar11));
+  if ((dVar12 < dVar6) ||
+     (dVar12 < (double)(float)(dVar10 * dVar6 + (double)(float)(dVar9 * dVar7)))) {
+    if (dVar12 < (double)(float)(dVar10 * dVar9 - (double)(float)(dVar6 * dVar7))) {
+      return;
+    }
     *in_r8 = fVar2;
-    in_r8[1] = pfVar6[1];
-    fVar2 = pfVar6[2];
+    in_r8[1] = param_1[1];
+    fVar2 = param_1[2];
   }
   else {
-    if (dVar14 < (double)(float)(dVar12 * dVar9 + (double)(float)(dVar11 * dVar15)))
-    goto LAB_825dfd50;
-    if ((double)(float)(dVar10 * dVar10) <= dVar13) {
-      fVar1 = (float)(dVar10 / (double)(float)SQRT(dVar13));
-      *in_r8 = fVar5 * fVar1 + fVar2;
-      in_r8[1] = fVar1 * fVar4 + pfVar6[1];
-      in_r8[2] = fVar1 * fVar3 + pfVar6[2];
-      __restgprlr_28();
+    if ((double)(float)(dVar8 * dVar8) <= dVar11) {
+      fVar1 = (float)(dVar8 / (double)(float)SQRT(dVar11));
+      *in_r8 = fVar4 * fVar1 + fVar2;
+      in_r8[1] = fVar1 * fVar5 + param_1[1];
+      in_r8[2] = fVar1 * fVar3 + param_1[2];
       return;
     }
     *in_r8 = *in_r7;
@@ -5600,8 +5398,6 @@ LAB_825dfd50:
     fVar2 = in_r7[2];
   }
   in_r8[2] = fVar2;
-LAB_825dfd74:
-  __restgprlr_28();
   return;
 }
 

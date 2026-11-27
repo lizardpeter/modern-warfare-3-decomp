@@ -2,125 +2,109 @@
 
 // 82722090  R_AddCloudSurf  (gfx_d3d/r_cloudsurf.cpp:12)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void R_AddCloudSurf(uint param_1,Material *param_2,uchar param_3)
 
 {
-  uint uVar1;
-  Material *pMVar2;
-  ulonglong uVar3;
+  Material *pMVar1;
+  ulonglong uVar2;
   uint local_30;
   
-  uVar1 = __savegprlr_29(param_1);
-  pMVar2 = Material_FromHandle(param_2);
-  uVar3 = (pMVar2->info).drawSurf.packed;
-  if (uVar1 != (uVar1 & 0xff)) {
+  pMVar1 = Material_FromHandle(param_2);
+  uVar2 = (pMVar1->info).drawSurf.packed;
+  if (param_1 != (param_1 & 0xff)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\../universal/assertive.h"
                     ,0x1ce,0,"i == static_cast< Type >( i )\n\t%i, %i");
   }
-  local_30 = CONCAT31(CONCAT21((short)(uVar3 >> 0x1d),(char)uVar1),param_3) & 0xfffffff;
-  scene.cloudSurfs[uVar1].packed = local_30;
-  __restgprlr_29();
+  local_30 = CONCAT31(CONCAT21((short)(uVar2 >> 0x1d),(char)param_1),param_3) & 0xfffffff;
+  scene.cloudSurfs[param_1].packed = local_30;
   return;
 }
 
 
 // 82722118  R_EmitCloudSurfs  (gfx_d3d/r_cloudsurf.cpp:52)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 
 void R_EmitCloudSurfs(GfxCloudSurfList *param_1,int param_2)
 
 {
-  int iVar1;
-  uint uVar2;
+  uint uVar1;
   
-  iVar1 = __savegprlr_28(param_1);
   if (param_2 < frontEndDataOut->cloudDataCount) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_cloudsurf.cpp",0x35,
                     0,"frontEndDataOut->cloudDataCount <= cloudSurfLimit\n\t%i, %i");
   }
-  if (*(int *)(iVar1 + 8) != 0) {
+  if (param_1->count != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_cloudsurf.cpp",0x36,
                     0,"%s");
   }
-  if (*(int *)(iVar1 + 4) == 0) {
+  if (param_1->surfs == (GfxCloudSurf *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_cloudsurf.cpp",0x37,
                     0,"%s");
   }
-  uVar2 = R_StableSortSurfs_ExcludeKey<GfxSortCloudSurfsInterface,GfxCloudSurf>
+  uVar1 = R_StableSortSurfs_ExcludeKey<GfxSortCloudSurfsInterface,GfxCloudSurf>
                     (scene.cloudSurfs,frontEndDataOut->cloudDataCount,(rgp.world)->sortKeyEffectAuto
-                     ,*(GfxCloudSurf **)(iVar1 + 4));
-  *(uint *)(iVar1 + 8) = uVar2;
-  if ((uint)frontEndDataOut->cloudDataCount < uVar2) {
+                     ,param_1->surfs);
+  param_1->count = uVar1;
+  if ((uint)frontEndDataOut->cloudDataCount < uVar1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_cloudsurf.cpp",0x3a,
                     0,
                     "cloudSurfList->count <= static_cast< uint >( frontEndDataOut->cloudDataCount )\n\t%i, %i"
                    );
   }
-  __restgprlr_28();
   return;
 }
 
 
 // 82721F88  R_InsertSortSurfsInRange<GfxSortCloudSurfsInterface,GfxCloudSurf>  (gfx_d3d/r_sortsurfs.h:101)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 uint R_InsertSortSurfsInRange<GfxSortCloudSurfsInterface,GfxCloudSurf>
                (GfxCloudSurf *param_1,uint param_2,uint param_3,uint param_4,GfxCloudSurf *param_5,
                uint param_6)
 
 {
-  int iVar1;
-  int iVar2;
+  GfxCloudSurf *pGVar1;
+  uint uVar2;
   uint uVar3;
-  ulonglong uVar4;
-  ulonglong uVar5;
-  ulonglong uVar6;
-  longlong lVar7;
-  ulonglong uVar8;
-  ulonglong uVar9;
-  ulonglong uVar10;
-  longlong lVar11;
-  longlong lVar12;
-  ulonglong uVar13;
-  undefined4 *puVar14;
+  GfxCloudSurf *pGVar4;
+  GfxCloudSurf *pGVar5;
+  uint uVar6;
   
-  uVar8 = (ulonglong)(int)param_6;
-  lVar7 = (longlong)(int)param_5;
-  uVar6 = (ulonglong)(int)param_4;
-  uVar5 = (ulonglong)(int)param_3;
-  uVar4 = (ulonglong)(int)param_2;
-  iVar2 = __savegprlr_28(param_1);
-  uVar13 = 0;
-  if ((uVar4 & 0xffffffff) != 0) {
-    lVar12 = (uVar8 & 0x3fffffff) * 4 + lVar7 + -4;
+  uVar6 = 0;
+  if (param_2 != 0) {
+    pGVar5 = param_5 + (param_6 - 1);
     do {
-      iVar1 = (int)uVar13 * 4;
-      puVar14 = (undefined4 *)(iVar1 + iVar2);
-      uVar9 = (ulonglong)*(ushort *)(iVar1 + iVar2);
-      if (((uVar5 & 0xffffffff) <= uVar9) && (uVar9 < (uVar6 & 0xffffffff))) {
-        uVar10 = uVar8;
-        if ((uVar8 & 0xffffffff) != 0) {
-          lVar11 = lVar12 + 8;
+      uVar2 = (uint)param_1[uVar6].fields.materialSortedIndex;
+      if ((param_3 <= uVar2) && (uVar2 < param_4)) {
+        uVar3 = param_6;
+        if (param_6 != 0) {
+          pGVar4 = pGVar5 + 2;
           do {
-            iVar1 = (int)lVar11;
-            if (*(ushort *)(iVar1 + -8) <= uVar9) break;
-            uVar10 = uVar10 - 1;
-            lVar11 = lVar11 + -4;
-            *(undefined4 *)lVar11 = *(undefined4 *)(iVar1 + -8);
-          } while (uVar10 != 0);
+            if (pGVar4[-2].fields.materialSortedIndex <= uVar2) break;
+            pGVar1 = pGVar4 + -2;
+            uVar3 = uVar3 - 1;
+            pGVar4 = pGVar4 + -1;
+            *pGVar4 = *pGVar1;
+          } while (uVar3 != 0);
         }
-        uVar8 = uVar8 + 1;
-        lVar12 = lVar12 + 4;
-        *(undefined4 *)((int)((uVar10 & 0xffffffff) << 2) + (int)lVar7) = *puVar14;
+        param_6 = param_6 + 1;
+        pGVar5 = pGVar5 + 1;
+        param_5[uVar3].fields = *(GfxCloudSurfFields *)(param_1 + uVar6);
       }
-      uVar13 = ((ulonglong)*(byte *)((int)puVar14 + 3) - 0xb & 0x7fffffff) * 2 + uVar13 + 1;
-    } while ((uVar13 & 0xffffffff) < (uVar4 & 0xffffffff));
+      uVar6 = (param_1[uVar6].fields.surfType - 0xb) * 2 + uVar6 + 1;
+    } while (uVar6 < param_2);
   }
-  uVar3 = __restgprlr_28(uVar8);
-  return uVar3;
+  return param_6;
 }
 
 
@@ -155,31 +139,27 @@ uint R_CopySortSurfsInRange<GfxSortCloudSurfsInterface,GfxCloudSurf>
 
 // 82722228  R_StableSortSurfs_ExcludeKey<GfxSortCloudSurfsInterface,GfxCloudSurf>  (gfx_d3d/r_sortsurfs.h:150)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 uint R_StableSortSurfs_ExcludeKey<GfxSortCloudSurfsInterface,GfxCloudSurf>
                (GfxCloudSurf *param_1,uint param_2,uint param_3,GfxCloudSurf *param_4)
 
 {
   ushort uVar1;
   ushort uVar2;
-  int iVar3;
+  uint uVar3;
   GfxCloudSurf *pGVar4;
-  uint uVar5;
-  ulonglong uVar6;
-  GfxCloudSurf *pGVar7;
   
-  uVar6 = (ulonglong)(int)param_3;
-  pGVar4 = (GfxCloudSurf *)__savegprlr_27(param_1);
-  iVar3 = (int)((uVar6 & 0xffffffff) << 1);
-  uVar1 = *(ushort *)((int)rgp.mtlSortIndexBeginKey + iVar3);
-  uVar2 = *(ushort *)((int)rgp.mtlSortIndexBeginKey + iVar3 + 2);
-  pGVar7 = param_4;
-  uVar5 = R_InsertSortSurfsInRange<GfxSortCloudSurfsInterface,GfxCloudSurf>
-                    (pGVar4,param_2,0,(uint)uVar1,param_4,0);
-  uVar5 = R_CopySortSurfsInRange<GfxSortCloudSurfsInterface,GfxCloudSurf>
-                    (pGVar4,param_2,(uint)uVar1,(uint)uVar2,pGVar7,uVar5);
-  uVar5 = R_InsertSortSurfsInRange<GfxSortCloudSurfsInterface,GfxCloudSurf>
-                    (pGVar4,param_2,(uint)uVar2,0x1660,param_4,uVar5);
-  uVar5 = __restgprlr_27(uVar5);
-  return uVar5;
+  uVar1 = rgp.mtlSortIndexBeginKey[param_3];
+  uVar2 = rgp.mtlSortIndexBeginKey[param_3 + 1];
+  pGVar4 = param_4;
+  uVar3 = R_InsertSortSurfsInRange<GfxSortCloudSurfsInterface,GfxCloudSurf>
+                    (param_1,param_2,0,(uint)uVar1,param_4,0);
+  uVar3 = R_CopySortSurfsInRange<GfxSortCloudSurfsInterface,GfxCloudSurf>
+                    (param_1,param_2,(uint)uVar1,(uint)uVar2,pGVar4,uVar3);
+  uVar3 = R_InsertSortSurfsInRange<GfxSortCloudSurfsInterface,GfxCloudSurf>
+                    (param_1,param_2,(uint)uVar2,0x1660,param_4,uVar3);
+  return uVar3;
 }
 

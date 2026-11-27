@@ -2,57 +2,52 @@
 
 // 824FFF50  FakeLag_DestroyPacket  (qcommon/fakelag.cpp:89)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 bool FakeLag_DestroyPacket(uint param_1)
 
 {
-  int iVar1;
-  undefined1 uVar2;
-  
-  iVar1 = __savegprlr_29(param_1);
   if (g_fakelagHeap == (void *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\fakelag.cpp",0x5b,0,
                     "%s");
   }
-  RtlFreeHeap(g_fakelagHeap,0,laggedPackets[iVar1].data);
-  laggedPackets[iVar1].data = (uchar *)0x0;
-  laggedPackets[iVar1].msg.data = (uchar *)0x0;
-  laggedPackets[iVar1].length = 0;
-  laggedPackets[iVar1].msg.cursize = 0;
-  uVar2 = __restgprlr_29(1);
-  return (bool)uVar2;
+  RtlFreeHeap(g_fakelagHeap,0,laggedPackets[param_1].data);
+  laggedPackets[param_1].data = (uchar *)0x0;
+  laggedPackets[param_1].msg.data = (uchar *)0x0;
+  laggedPackets[param_1].length = 0;
+  laggedPackets[param_1].msg.cursize = 0;
+  return true;
 }
 
 
 // 824FFFE8  FakeLag_SendPacket_Real  (qcommon/fakelag.cpp:112)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 void FakeLag_SendPacket_Real(uint param_1)
 
 {
-  uint uVar1;
-  bool bVar2;
   netadr_t in_stack_ffffff78;
   
-  uVar1 = __savegprlr_26(param_1);
-  if (0x1ff < uVar1) {
+  if (0x1ff < param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\fakelag.cpp",0x71,0,
                     "%s");
   }
-  if (laggedPackets[uVar1].outbound == false) {
+  if (laggedPackets[param_1].outbound == false) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\fakelag.cpp",0x72,0,
                     "%s");
   }
-  if (laggedPackets[uVar1].data == (uchar *)0x0) {
+  if (laggedPackets[param_1].data == (uchar *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\fakelag.cpp",0x73,0,
                     "%s");
   }
-  NET_SendPacket(laggedPackets[uVar1].sock,laggedPackets[uVar1].length,laggedPackets[uVar1].data,
-                 in_stack_ffffff78);
-  bVar2 = FakeLag_DestroyPacket(uVar1);
-  __restgprlr_26(bVar2);
+  NET_SendPacket(laggedPackets[param_1].sock,laggedPackets[param_1].length,
+                 laggedPackets[param_1].data,in_stack_ffffff78);
+  FakeLag_DestroyPacket(param_1);
   return;
 }
 
@@ -95,6 +90,8 @@ void FakeLag_Init(void)
 
 // 82500290  FakeLag_GetFreeSlot  (qcommon/fakelag.cpp:152)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
@@ -108,42 +105,35 @@ int FakeLag_GetFreeSlot(void)
   int iVar5;
   uint uVar6;
   
-  __savegprlr_27();
-  uVar6 = 0;
+  iVar1 = 0;
   puVar4 = &laggedPackets[0].length;
   do {
-    if (*puVar4 == 0) goto LAB_8250041c;
+    if (*puVar4 == 0) {
+      return iVar1;
+    }
     puVar4 = puVar4 + 0x14;
-    uVar6 = uVar6 + 1;
+    iVar1 = iVar1 + 1;
   } while ((int)puVar4 < -0x7c9855a0);
   uVar6 = 0;
   iVar1 = Sys_Milliseconds();
   piVar2 = &laggedPackets[0].startTime;
   uVar3 = 2;
   do {
-    if (((fakedLatencyPackets_t *)(piVar2 + -8))->outbound != false) {
-      if (*piVar2 < iVar1) {
-        uVar6 = uVar3 - 2;
-        iVar1 = *piVar2;
-      }
+    if ((((fakedLatencyPackets_t *)(piVar2 + -8))->outbound != false) && (*piVar2 < iVar1)) {
+      uVar6 = uVar3 - 2;
+      iVar1 = *piVar2;
     }
-    if (*(char *)(piVar2 + 0xc) != '\0') {
-      if (piVar2[0x14] < iVar1) {
-        uVar6 = uVar3 - 1;
-        iVar1 = piVar2[0x14];
-      }
+    if ((*(char *)(piVar2 + 0xc) != '\0') && (piVar2[0x14] < iVar1)) {
+      uVar6 = uVar3 - 1;
+      iVar1 = piVar2[0x14];
     }
-    if (*(char *)(piVar2 + 0x20) != '\0') {
-      if (piVar2[0x28] < iVar1) {
-        iVar1 = piVar2[0x28];
-        uVar6 = uVar3;
-      }
+    if ((*(char *)(piVar2 + 0x20) != '\0') && (piVar2[0x28] < iVar1)) {
+      iVar1 = piVar2[0x28];
+      uVar6 = uVar3;
     }
-    if (*(char *)(piVar2 + 0x34) != '\0') {
-      if (piVar2[0x3c] < iVar1) {
-        uVar6 = uVar3 + 1;
-        iVar1 = piVar2[0x3c];
-      }
+    if ((*(char *)(piVar2 + 0x34) != '\0') && (piVar2[0x3c] < iVar1)) {
+      uVar6 = uVar3 + 1;
+      iVar1 = piVar2[0x3c];
     }
     piVar2 = piVar2 + 0x50;
     iVar5 = uVar3 + 2;
@@ -152,23 +142,20 @@ int FakeLag_GetFreeSlot(void)
   Com_Printf(0x19,
              "fake lag buffer is full, you should increase FAKELATENCY_MAX_PACKETS_HELD or reduce your latency\n"
             );
-  if (laggedPackets[uVar6].outbound != false) {
-    FakeLag_SendPacket_Real(uVar6);
-    iVar1 = __restgprlr_27(uVar6);
-    return iVar1;
+  if (laggedPackets[uVar6].outbound == false) {
+    if (g_fakelagHeap == (void *)0x0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\fakelag.cpp",0x5b,0,
+                      "%s");
+    }
+    RtlFreeHeap(g_fakelagHeap,0,laggedPackets[uVar6].data);
+    laggedPackets[uVar6].data = (uchar *)0x0;
+    laggedPackets[uVar6].msg.data = (uchar *)0x0;
+    laggedPackets[uVar6].length = 0;
+    laggedPackets[uVar6].msg.cursize = 0;
+    return uVar6;
   }
-  if (g_fakelagHeap == (void *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\fakelag.cpp",0x5b,0,
-                    "%s");
-  }
-  RtlFreeHeap(g_fakelagHeap,0,laggedPackets[uVar6].data);
-  laggedPackets[uVar6].data = (uchar *)0x0;
-  laggedPackets[uVar6].msg.data = (uchar *)0x0;
-  laggedPackets[uVar6].length = 0;
-  laggedPackets[uVar6].msg.cursize = 0;
-LAB_8250041c:
-  iVar1 = __restgprlr_27(uVar6);
-  return iVar1;
+  FakeLag_SendPacket_Real(uVar6);
+  return uVar6;
 }
 
 
@@ -194,6 +181,8 @@ bool FakeLag_HostingGameOrParty(void)
 
 // 82500488  FakeLag_SendLaggedPackets  (qcommon/fakelag.cpp:204)
 
+/* WARNING: Function: __savegprlr_15 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_15 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
@@ -204,14 +193,12 @@ int FakeLag_SendLaggedPackets(void)
   int iVar2;
   bool bVar4;
   int iVar3;
-  longlong lVar5;
+  int iVar5;
   uint uVar6;
   bool *pbVar7;
   
-  __savegprlr_15();
-  if (fakelagInitialized == false) {
-    iVar2 = __restgprlr_15(0);
-    return iVar2;
+  if (!fakelagInitialized) {
+    return 0;
   }
   Sys_EnterCriticalSection(CRITSECT_FAKELAG);
   iVar2 = Sys_Milliseconds();
@@ -225,7 +212,7 @@ int FakeLag_SendLaggedPackets(void)
     uVar6 = (fakelag_current->current).integer;
     iVar3 = iVar3 - (((int)uVar6 >> 1) + (uint)((int)uVar6 < 0 && (uVar6 & 1) != 0));
   }
-  lVar5 = 0;
+  iVar5 = 0;
   uVar6 = 0;
   pbVar7 = &laggedPackets[0].loopback;
   do {
@@ -248,21 +235,23 @@ LAB_8250058c:
         Com_Printf(0x19,"[%i] delivering outbound %s packet for %s (from %i) (%ims delay)\n");
       }
       FakeLag_SendPacket_Real(uVar6);
-      lVar5 = lVar5 + 1;
+      iVar5 = iVar5 + 1;
     }
 LAB_82500624:
     pbVar7 = pbVar7 + 0x50;
     uVar6 = uVar6 + 1;
     if (-0x7c9855b8 < (int)pbVar7) {
       Sys_LeaveCriticalSection(CRITSECT_FAKELAG);
-      iVar2 = __restgprlr_15(lVar5);
-      return iVar2;
+      return iVar5;
     }
   } while( true );
 }
 
 
 // 82500650  FakeLag_UpdateCurrentValues  (qcommon/fakelag.cpp:250)
+
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 
 void FakeLag_UpdateCurrentValues(int param_1)
 
@@ -272,149 +261,142 @@ void FakeLag_UpdateCurrentValues(int param_1)
   uint uVar3;
   int iVar4;
   int iVar5;
-  int iVar6;
+  double dVar6;
   double dVar7;
-  double dVar8;
-  float fVar9;
+  float fVar8;
   
-  iVar4 = __savegprlr_27(param_1);
   pcVar1 = (fakelag_target->current).string;
   pcVar2 = (fakelag_current->current).string;
   if ((fakelag_jitter->current).string + (int)pcVar1 != pcVar2) {
     uVar3 = (int)(pcVar2 + (-(int)pcVar1 - (fakelag_currentjitter->current).integer)) >> 0x1f;
-    iVar5 = ((uint)(pcVar2 + (-(int)pcVar1 - (fakelag_currentjitter->current).integer)) ^ uVar3) -
+    iVar4 = ((uint)(pcVar2 + (-(int)pcVar1 - (fakelag_currentjitter->current).integer)) ^ uVar3) -
             uVar3;
-    iVar6 = iVar4 - lastCall;
-    if (iVar5 < iVar4 - lastCall) {
-      iVar6 = iVar5;
+    iVar5 = param_1 - lastCall;
+    if (iVar4 < param_1 - lastCall) {
+      iVar5 = iVar4;
     }
     if ((int)(pcVar1 + (fakelag_currentjitter->current).integer) < (int)pcVar2) {
-      iVar6 = -iVar6;
+      iVar5 = -iVar5;
     }
-    Dvar_SetInt(fakelag_current,(int)(pcVar2 + iVar6));
+    Dvar_SetInt(fakelag_current,(int)(pcVar2 + iVar5));
   }
   if (((0 < (fakelag_currentjitter->current).integer) || (0 < (fakelag_jitter->current).integer)) &&
-     (nextChangeTime < iVar4)) {
-    dVar8 = 1.0;
-    dVar7 = 0.0;
-    fVar9 = flrand(0.0,1.0);
+     (nextChangeTime < param_1)) {
+    dVar7 = 1.0;
+    dVar6 = 0.0;
+    fVar8 = flrand(0.0,1.0);
     Dvar_SetInt(fakelag_currentjitter,
-                (int)(fVar9 * (float)(longlong)(fakelag_jitter->current).integer));
+                (int)(fVar8 * (float)(longlong)(fakelag_jitter->current).integer));
     pcVar1 = (fakelag_jitterinterval->current).string;
-    fVar9 = flrand((float)dVar7,(float)dVar8);
-    nextChangeTime = (int)(pcVar1 + iVar4 + (int)(fVar9 * (float)(longlong)((int)pcVar1 << 1)));
+    fVar8 = flrand((float)dVar6,(float)dVar7);
+    nextChangeTime = (int)(pcVar1 + param_1 + (int)(fVar8 * (float)(longlong)((int)pcVar1 << 1)));
   }
-  lastCall = iVar4;
-  __restgprlr_27();
+  lastCall = param_1;
   return;
 }
 
 
 // 825007C8  FakeLag_SendPacket  (qcommon/fakelag.cpp:282)
 
+/* WARNING: Function: __savegprlr_21 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_21 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 int FakeLag_SendPacket(netsrc_t param_1,int param_2,void *param_3,netadr_t param_4)
 
 {
   dvar_t *pdVar1;
-  netsrc_t nVar2;
+  int iVar2;
+  bool bVar7;
   int iVar3;
-  bool bVar8;
-  int iVar4;
-  uchar *puVar5;
+  uchar *puVar4;
+  int iVar5;
   int iVar6;
-  int iVar7;
-  ulonglong uVar9;
   undefined8 in_r6;
   undefined8 in_r7;
-  float fVar10;
+  float fVar8;
   netadrtype_t nStack00000030;
   undefined4 uStack00000034;
   undefined4 uStack00000038;
   netsrc_t nStack0000003c;
   netadr_t in_stack_ffffff58;
   
-  uVar9 = (ulonglong)(int)param_3;
-  nVar2 = __savegprlr_21(param_1);
   _nStack00000030 = in_r6;
   _uStack00000038 = in_r7;
   if (param_2 < 1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\fakelag.cpp",0x11f,0,
                     "%s");
   }
-  if ((uVar9 & 0xffffffff) == 0) {
+  if (param_3 == (void *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\fakelag.cpp",0x120,0,
                     "%s");
   }
   Sys_EnterCriticalSection(CRITSECT_FAKELAG);
-  iVar3 = Sys_Milliseconds();
-  FakeLag_UpdateCurrentValues(iVar3);
+  iVar2 = Sys_Milliseconds();
+  FakeLag_UpdateCurrentValues(iVar2);
   pdVar1 = fakelag_packetloss;
   if ((0.0 < (fakelag_packetloss->current).value) &&
-     (fVar10 = flrand(0.0,1.0), fVar10 <= (pdVar1->current).value)) {
+     (fVar8 = flrand(0.0,1.0), fVar8 <= (pdVar1->current).value)) {
     Sys_LeaveCriticalSection(CRITSECT_FAKELAG);
-    iVar3 = __restgprlr_21(0xffffffffffffffff);
-    return iVar3;
+    return -1;
   }
   if ((fakelagInitialized != false) &&
      (((fakelag_current->current).integer != 0 || ((fakelag_currentjitter->current).integer != 0))))
   {
-    bVar8 = FakeLag_HostingGameOrParty();
-    iVar6 = nStack00000030;
-    if ((!bVar8) || (nStack00000030 != 4)) {
-      iVar4 = FakeLag_GetFreeSlot();
+    bVar7 = FakeLag_HostingGameOrParty();
+    iVar5 = nStack00000030;
+    if ((!bVar7) || (nStack00000030 != 4)) {
+      iVar3 = FakeLag_GetFreeSlot();
       if (g_fakelagHeap == (void *)0x0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\fakelag.cpp",0x141
                         ,0,"%s");
       }
-      puVar5 = RtlAllocateHeap(g_fakelagHeap,0,param_2);
-      laggedPackets[iVar4].data = puVar5;
-      if (puVar5 == (uchar *)0x0) {
+      puVar4 = RtlAllocateHeap(g_fakelagHeap,0,param_2);
+      laggedPackets[iVar3].data = puVar4;
+      if (puVar4 == (uchar *)0x0) {
         Sys_LeaveCriticalSection(CRITSECT_FAKELAG);
         Com_PrintWarning(0x19,"Your fakelag settings are too high - fakelag buffer is full!\n");
-        bVar8 = NET_SendPacket(nVar2,param_2,(void *)uVar9,in_stack_ffffff58);
-        iVar3 = __restgprlr_21(((ulonglong)!bVar8 ^ 1) - 2);
-        return iVar3;
+        bVar7 = NET_SendPacket(param_1,param_2,param_3,in_stack_ffffff58);
+        return ((uint)LZCOUNT((uint)bVar7) >> 5 ^ 1) - 2;
       }
-      laggedPackets[iVar4].msg.data = puVar5;
+      laggedPackets[iVar3].msg.data = puVar4;
       memcpy();
-      laggedPackets[iVar4].addr.type = nStack00000030;
-      laggedPackets[iVar4].length = param_2;
-      *(undefined4 *)laggedPackets[iVar4].addr.ip = uStack00000034;
-      laggedPackets[iVar4].outbound = true;
-      laggedPackets[iVar4].sock = nVar2;
-      *(bool *)(iVar4 * 0x50 + -0x7c98f5b7) = iVar6 == 2;
-      *(undefined4 *)&laggedPackets[iVar4].addr.port = uStack00000038;
-      laggedPackets[iVar4].addr.localNetID = nStack0000003c;
+      laggedPackets[iVar3].addr.type = nStack00000030;
+      laggedPackets[iVar3].length = param_2;
+      *(undefined4 *)laggedPackets[iVar3].addr.ip = uStack00000034;
+      laggedPackets[iVar3].outbound = true;
+      laggedPackets[iVar3].sock = param_1;
+      *(bool *)(iVar3 * 0x50 + -0x7c98f5b7) = iVar5 == 2;
+      *(undefined4 *)&laggedPackets[iVar3].addr.port = uStack00000038;
+      laggedPackets[iVar3].addr.localNetID = nStack0000003c;
       if ((fakelag_jitter->current).integer == 0) {
-        iVar6 = 0;
+        iVar5 = 0;
       }
       else {
-        iVar6 = irand(0,lastCall - iVar3);
+        iVar5 = irand(0,lastCall - iVar2);
       }
-      iVar7 = Sys_Milliseconds();
+      iVar6 = Sys_Milliseconds();
       pdVar1 = showpackets;
-      laggedPackets[iVar4].startTime = iVar7 + iVar6;
+      laggedPackets[iVar3].startTime = iVar6 + iVar5;
       if (((pdVar1->current).integer != 0) &&
-         ((1 < (pdVar1->current).integer || (laggedPackets[iVar4].loopback == false)))) {
+         ((1 < (pdVar1->current).integer || (laggedPackets[iVar3].loopback == false)))) {
         Com_Printf(0x19,"[%i] adding outbound %s packet for %s\n");
       }
-      lastCall = iVar3;
+      lastCall = iVar2;
       Sys_LeaveCriticalSection(CRITSECT_FAKELAG);
-      iVar3 = __restgprlr_21(iVar4);
       return iVar3;
     }
   }
   Sys_LeaveCriticalSection(CRITSECT_FAKELAG);
-  bVar8 = NET_SendPacket(nVar2,param_2,(void *)uVar9,in_stack_ffffff58);
-  iVar3 = __restgprlr_21(((ulonglong)!bVar8 ^ 1) - 2);
-  return iVar3;
+  bVar7 = NET_SendPacket(param_1,param_2,param_3,in_stack_ffffff58);
+  return ((uint)LZCOUNT((uint)bVar7) >> 5 ^ 1) - 2;
 }
 
 
 // 82500B38  FakeLag_QueueIncomingPacket  (qcommon/fakelag.cpp:376)
 
+/* WARNING: Function: __savegprlr_20 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_20 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 int FakeLag_QueueIncomingPacket(bool param_1,netsrc_t param_2,netadr_t *param_3,msg_t *param_4)
@@ -425,15 +407,13 @@ int FakeLag_QueueIncomingPacket(bool param_1,netsrc_t param_2,netadr_t *param_3,
   uint uVar3;
   undefined2 uVar4;
   dvar_t *pdVar5;
-  bool bVar11;
   int iVar6;
   int iVar7;
   uchar *puVar8;
   int iVar9;
   int iVar10;
-  float fVar12;
+  float fVar11;
   
-  bVar11 = (bool)__savegprlr_20(param_1);
   if (param_4->cursize < 1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\fakelag.cpp",0x180,0,
                     "%s");
@@ -461,10 +441,9 @@ int FakeLag_QueueIncomingPacket(bool param_1,netsrc_t param_2,netadr_t *param_3,
   }
   pdVar5 = fakelag_packetloss;
   if ((0.0 < (fakelag_packetloss->current).value) &&
-     (fVar12 = flrand(0.0,1.0), fVar12 <= (pdVar5->current).value)) {
+     (fVar11 = flrand(0.0,1.0), fVar11 <= (pdVar5->current).value)) {
     Sys_LeaveCriticalSection(CRITSECT_FAKELAG);
-    iVar6 = __restgprlr_20(0xffffffffffffffff);
-    return iVar6;
+    return -1;
   }
   iVar7 = FakeLag_GetFreeSlot();
   if (g_fakelagHeap == (void *)0x0) {
@@ -477,15 +456,14 @@ int FakeLag_QueueIncomingPacket(bool param_1,netsrc_t param_2,netadr_t *param_3,
     Com_PrintWarning(0x19,"Your fakelag settings are too high - fakelag buffer is full!\n");
     laggedPackets[iVar7].length = 0;
     Sys_LeaveCriticalSection(CRITSECT_FAKELAG);
-    iVar6 = __restgprlr_20(0xffffffffffffffff);
-    return iVar6;
+    return -1;
   }
   memcpy();
   memcpy();
   pdVar5 = fakelag_jitter;
   laggedPackets[iVar7].msg.data = laggedPackets[iVar7].data;
   laggedPackets[iVar7].outbound = false;
-  laggedPackets[iVar7].loopback = bVar11;
+  *(bool *)(iVar7 * 0x50 + -0x7c98f5b7) = param_1;
   laggedPackets[iVar7].sock = param_2;
   laggedPackets[iVar7].addr.type = param_3->type;
   *(undefined4 *)laggedPackets[iVar7].addr.ip = *(undefined4 *)param_3->ip;
@@ -509,13 +487,14 @@ int FakeLag_QueueIncomingPacket(bool param_1,netsrc_t param_2,netadr_t *param_3,
   }
   lastCall = iVar6;
   Sys_LeaveCriticalSection(CRITSECT_FAKELAG);
-  iVar6 = __restgprlr_20(iVar7);
-  return iVar6;
+  return iVar7;
 }
 
 
 // 82500E78  FakeLag_ReceivePackets  (qcommon/fakelag.cpp:476)
 
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
@@ -541,7 +520,6 @@ void FakeLag_ReceivePackets(void)
   netadr_t local_f0;
   msg_t amStack_e0 [5];
   
-  __savegprlr();
   LargeLocal::LargeLocal(&LStack_108,0x10000);
   puVar5 = LargeLocal::GetBuf(&LStack_108);
   if (((fakelag_current->current).integer != 0) || ((fakelag_currentjitter->current).integer != 0))
@@ -648,13 +626,14 @@ void FakeLag_ReceivePackets(void)
     }
   }
   LargeLocal::~LargeLocal(&LStack_108);
-  __restgprlr();
   return;
 }
 
 
 // 82501300  FakeLag_GetPacket  (qcommon/fakelag.cpp:518)
 
+/* WARNING: Function: __savegprlr_20 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_20 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 int FakeLag_GetPacket(bool param_1,netsrc_t param_2,netadr_t *param_3,msg_t *param_4)
@@ -662,52 +641,50 @@ int FakeLag_GetPacket(bool param_1,netsrc_t param_2,netadr_t *param_3,msg_t *par
 {
   uint uVar1;
   undefined2 uVar2;
-  char cVar4;
   int iVar3;
-  bool bVar5;
-  uint uVar6;
-  fakedLatencyPackets_t *pfVar7;
+  bool bVar4;
+  uint uVar5;
+  fakedLatencyPackets_t *pfVar6;
   
-  cVar4 = __savegprlr_20(param_1);
   Sys_EnterCriticalSection(CRITSECT_FAKELAG);
   iVar3 = Sys_Milliseconds();
-  pfVar7 = laggedPackets;
-  uVar6 = 0;
+  pfVar6 = laggedPackets;
+  uVar5 = 0;
   do {
-    if ((((pfVar7->length != 0) && (pfVar7->outbound == false)) && (pfVar7->sock == param_2)) &&
-       (pfVar7->loopback == (bool)cVar4)) {
-      if (pfVar7->data == (uchar *)0x0) {
+    if ((((pfVar6->length != 0) && (pfVar6->outbound == false)) && (pfVar6->sock == param_2)) &&
+       (pfVar6->loopback == param_1)) {
+      if (pfVar6->data == (uchar *)0x0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\fakelag.cpp",0x218
                         ,0,"%s");
       }
-      bVar5 = FakeLag_HostingGameOrParty();
-      if (((bVar5) && (pfVar7->loopback == false)) ||
+      bVar4 = FakeLag_HostingGameOrParty();
+      if (((bVar4) && (pfVar6->loopback == false)) ||
          (uVar1 = (fakelag_current->current).integer,
-         (int)(((int)uVar1 >> 1) + (uint)((int)uVar1 < 0 && (uVar1 & 1) != 0) + pfVar7->startTime)
+         (int)(((int)uVar1 >> 1) + (uint)((int)uVar1 < 0 && (uVar1 & 1) != 0) + pfVar6->startTime)
          <= iVar3)) {
         if (((showpackets->current).integer != 0) &&
-           ((1 < (showpackets->current).integer || (laggedPackets[uVar6].loopback == false)))) {
+           ((1 < (showpackets->current).integer || (laggedPackets[uVar5].loopback == false)))) {
           Com_Printf(0x19,"[%i] delivering incoming packet from %i (time: %i) (%ims latency)\n");
         }
-        param_3->type = laggedPackets[uVar6].addr.type;
-        *(undefined4 *)param_3->ip = *(undefined4 *)laggedPackets[uVar6].addr.ip;
-        uVar2 = *(undefined2 *)&laggedPackets[uVar6].addr.field_0xa;
-        param_3->port = laggedPackets[uVar6].addr.port;
+        param_3->type = laggedPackets[uVar5].addr.type;
+        *(undefined4 *)param_3->ip = *(undefined4 *)laggedPackets[uVar5].addr.ip;
+        uVar2 = *(undefined2 *)&laggedPackets[uVar5].addr.field_0xa;
+        param_3->port = laggedPackets[uVar5].addr.port;
         *(undefined2 *)&param_3->field_0xa = uVar2;
-        param_3->localNetID = laggedPackets[uVar6].addr.localNetID;
-        param_4->bit = laggedPackets[uVar6].msg.bit;
-        param_4->cursize = laggedPackets[uVar6].msg.cursize;
-        param_4->maxsize = laggedPackets[uVar6].msg.maxsize;
-        param_4->overflowed = laggedPackets[uVar6].msg.overflowed;
-        param_4->readcount = laggedPackets[uVar6].msg.readcount;
-        if (NS_PACKET < laggedPackets[uVar6].msg.targetLocalNetID) {
+        param_3->localNetID = laggedPackets[uVar5].addr.localNetID;
+        param_4->bit = laggedPackets[uVar5].msg.bit;
+        param_4->cursize = laggedPackets[uVar5].msg.cursize;
+        param_4->maxsize = laggedPackets[uVar5].msg.maxsize;
+        param_4->overflowed = laggedPackets[uVar5].msg.overflowed;
+        param_4->readcount = laggedPackets[uVar5].msg.readcount;
+        if (NS_PACKET < laggedPackets[uVar5].msg.targetLocalNetID) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\fakelag.cpp",
                           0x22b,0,
                           "laggedPackets[packet].msg.targetLocalNetID doesn\'t index NS_INVALID_NETSRC\n\t%i not in [0, %i)"
                          );
         }
-        param_4->targetLocalNetID = laggedPackets[uVar6].msg.targetLocalNetID;
-        if (laggedPackets[uVar6].data == (uchar *)0x0) {
+        param_4->targetLocalNetID = laggedPackets[uVar5].msg.targetLocalNetID;
+        if (laggedPackets[uVar5].data == (uchar *)0x0) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\fakelag.cpp",
                           0x22f,0,"%s");
         }
@@ -715,19 +692,17 @@ int FakeLag_GetPacket(bool param_1,netsrc_t param_2,netadr_t *param_3,msg_t *par
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\fakelag.cpp",
                           0x230,0,"%s");
         }
-        XMemCpy(param_4->data,laggedPackets[uVar6].data,laggedPackets[uVar6].length);
-        FakeLag_DestroyPacket(uVar6);
+        XMemCpy(param_4->data,laggedPackets[uVar5].data,laggedPackets[uVar5].length);
+        FakeLag_DestroyPacket(uVar5);
         Sys_LeaveCriticalSection(CRITSECT_FAKELAG);
-        iVar3 = __restgprlr_20(1);
-        return iVar3;
+        return 1;
       }
     }
-    pfVar7 = pfVar7 + 1;
-    uVar6 = uVar6 + 1;
-    if (-0x7c9855b9 < (int)pfVar7) {
+    pfVar6 = pfVar6 + 1;
+    uVar5 = uVar5 + 1;
+    if (-0x7c9855b9 < (int)pfVar6) {
       Sys_LeaveCriticalSection(CRITSECT_FAKELAG);
-      iVar3 = __restgprlr_20(0);
-      return iVar3;
+      return 0;
     }
   } while( true );
 }
@@ -754,40 +729,38 @@ void FakeLag_Frame(void)
 
 // 825015E8  FakeLag_Shutdown  (qcommon/fakelag.cpp:597)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 void FakeLag_Shutdown(void)
 
 {
-  int iVar1;
-  uint uVar2;
-  fakedLatencyPackets_t *pfVar3;
+  uint uVar1;
+  fakedLatencyPackets_t *pfVar2;
   
-  iVar1 = __savegprlr_28();
-  if (fakelagInitialized != false) {
-    uVar2 = 0;
-    pfVar3 = laggedPackets;
+  if (fakelagInitialized) {
+    uVar1 = 0;
+    pfVar2 = laggedPackets;
     do {
-      if (pfVar3->length != 0) {
-        if (pfVar3->outbound == false) {
-          FakeLag_DestroyPacket(uVar2);
+      if (pfVar2->length != 0) {
+        if (pfVar2->outbound == false) {
+          FakeLag_DestroyPacket(uVar1);
         }
         else {
-          FakeLag_SendPacket_Real(uVar2);
+          FakeLag_SendPacket_Real(uVar1);
         }
       }
-      pfVar3 = pfVar3 + 1;
-      uVar2 = uVar2 + 1;
-    } while ((int)pfVar3 < -0x7c9855b8);
-    iVar1 = 0;
+      pfVar2 = pfVar2 + 1;
+      uVar1 = uVar1 + 1;
+    } while ((int)pfVar2 < -0x7c9855b8);
     if (g_fakelagHeap != (void *)0x0) {
-      iVar1 = HeapDestroy(g_fakelagHeap);
+      HeapDestroy(g_fakelagHeap);
       g_fakelagHeap = (void *)0x0;
     }
     fakelagInitialized = false;
   }
-  __restgprlr_28(iVar1);
   return;
 }
 

@@ -40,6 +40,8 @@ void CG_ClearItemList(void)
 
 // 822F16A0  CG_BuildItemList  (cgame_mp/cg_predict_mp.cpp:76)
 
+/* WARNING: Function: __savegprlr_20 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_20 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -48,58 +50,53 @@ void CG_BuildItemList(LocalClientNum_t param_1,snapshot_s *param_2)
 
 {
   uint uVar1;
-  centity_s *pcVar2;
-  uint uVar3;
-  bool bVar4;
-  ulonglong uVar5;
+  bool bVar2;
+  int iVar3;
+  int iVar4;
+  centity_s *pcVar5;
   int iVar6;
-  int iVar7;
-  int iVar8;
-  longlong lVar9;
+  entityState_s *peVar7;
   
-  uVar5 = (ulonglong)(int)param_2;
-  uVar3 = __savegprlr_20(param_1);
-  if ((uVar5 & 0xffffffff) == 0) {
+  if (param_2 == (snapshot_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_predict_mp.cpp",
                     0x51,0,"%s");
   }
-  bVar4 = Sys_IsMainThread();
-  if (!bVar4) {
+  bVar2 = Sys_IsMainThread();
+  if (!bVar2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_predict_mp.cpp",
                     0x52,0,"%s");
   }
-  iVar7 = 0;
-  iVar8 = 0;
+  iVar3 = 0;
+  iVar6 = 0;
   cg_itemEntityCount = 0;
-  cg_itemLocalClientNum = uVar3;
-  if (0 < *(int *)((int)uVar5 + 0x330c)) {
-    lVar9 = uVar5 + 0x3314;
+  cg_itemLocalClientNum = param_1;
+  if (0 < param_2->numEntities) {
+    peVar7 = param_2->entities;
     do {
-      uVar1 = *(uint *)lVar9;
+      uVar1 = peVar7->number;
       if (0x7ff < uVar1) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_local_mp.h",
                         0x6b4,0,"entityIndex doesn\'t index MAX_GENTITIES\n\t%i not in [0, %i)");
-        iVar7 = cg_itemEntityCount;
+        iVar3 = cg_itemEntityCount;
       }
-      iVar6 = iVar7;
-      if ((uint)cg_maxLocalClients <= uVar3) {
+      iVar4 = iVar3;
+      if ((uint)cg_maxLocalClients <= param_1) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_local_mp.h",
                         0x6b9,0,
                         "localClientNum doesn\'t index cg_maxLocalClients\n\t%i not in [0, %i)");
-        iVar6 = cg_itemEntityCount;
+        iVar4 = cg_itemEntityCount;
       }
-      pcVar2 = cg_entitiesArray + uVar3 * 0x800 + uVar1;
-      iVar7 = iVar6;
-      if (((pcVar2->nextState).eType == 3) && ((pcVar2->nextState).weapon._s_0.weaponIdx != 0)) {
-        iVar7 = iVar6 + 1;
-        cg_itemEntityCount = iVar7;
-        cg_itemEntities[iVar6] = pcVar2;
+      pcVar5 = cg_entitiesArray + param_1 * 0x800 + uVar1;
+      iVar3 = iVar4;
+      if (((pcVar5->nextState).eType == 3) && ((pcVar5->nextState).weapon._s_0.weaponIdx != 0)) {
+        iVar3 = iVar4 + 1;
+        cg_itemEntityCount = iVar3;
+        cg_itemEntities[iVar4] = pcVar5;
       }
-      iVar8 = iVar8 + 1;
-      lVar9 = lVar9 + 0x100;
-    } while (iVar8 < *(int *)((int)uVar5 + 0x330c));
+      iVar6 = iVar6 + 1;
+      peVar7 = peVar7 + 1;
+    } while (iVar6 < param_2->numEntities);
   }
-  __restgprlr_20();
   return;
 }
 
@@ -134,6 +131,8 @@ int CG_IsItemPickupPredicted(LocalClientNum_t param_1,centity_s *param_2)
 
 // 822F18B0  CG_TouchItem  (cgame_mp/cg_predict_mp.cpp:123)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
@@ -143,52 +142,47 @@ void CG_TouchItem(LocalClientNum_t param_1,centity_s *param_2)
 {
   byte bVar1;
   Weapon WVar2;
-  centity_s *pcVar3;
-  LocalClientNum_t LVar4;
-  int iVar5;
-  cg_s *pcVar6;
-  ulonglong uVar7;
-  entityState_s *peVar8;
+  int iVar3;
+  cg_s *pcVar4;
+  entityState_s *peVar5;
   
-  uVar7 = (ulonglong)(int)param_2;
-  LVar4 = __savegprlr_27(param_1);
-  if ((uVar7 & 0xffffffff) == 0) {
+  if (param_2 == (centity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_predict_mp.cpp",
                     0x7e,0,"%s");
   }
-  pcVar3 = (centity_s *)uVar7;
-  bVar1 = (pcVar3->nextState).weapon._s_0.weaponIdx;
+  bVar1 = (param_2->nextState).weapon._s_0.weaponIdx;
   if ((bVar1 == 0) || (0xef < bVar1)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_predict_mp.cpp",
                     0x7f,0,
                     "cent->nextState.weapon.weaponIdx not in [1, (MAX_WEAPONS - 1)]\n\t%i not in [%i, %i]"
                    );
   }
-  iVar5 = CG_IsItemPickupPredicted(LVar4,pcVar3);
-  if (iVar5 == 0) {
-    pcVar6 = CG_GetLocalClientGlobals(LVar4);
-    peVar8 = &pcVar3->nextState;
-    iVar5 = BG_PlayerTouchesItem(&pcVar6->predictedPlayerState,peVar8,pcVar6->time);
-    if (((iVar5 != 0) &&
-        (iVar5 = BG_CanItemBeGrabbed(peVar8,&pcVar6->predictedPlayerState,1), iVar5 != 0)) &&
-       ((iVar5 = BG_IsScavengerPickup((pcVar3->nextState).weapon), iVar5 != 0 ||
-        ((iVar5 = BG_PlayerHasWeapon(&pcVar6->predictedPlayerState,(pcVar3->nextState).weapon),
-         iVar5 != 0 &&
-         (iVar5 = BG_PlayerHasRoomForEntAllAmmoTypes(peVar8,&pcVar6->predictedPlayerState),
-         iVar5 != 0)))))) {
-      WVar2 = (pcVar3->nextState).weapon;
-      iVar5 = peVar8->number;
-      pcVar3->pickupPredictionTime = pcVar6->time + 5000;
-      CG_GrabWeapon(LVar4,iVar5,10,WVar2,true);
+  iVar3 = CG_IsItemPickupPredicted(param_1,param_2);
+  if (iVar3 == 0) {
+    pcVar4 = CG_GetLocalClientGlobals(param_1);
+    peVar5 = &param_2->nextState;
+    iVar3 = BG_PlayerTouchesItem(&pcVar4->predictedPlayerState,peVar5,pcVar4->time);
+    if (((iVar3 != 0) &&
+        (iVar3 = BG_CanItemBeGrabbed(peVar5,&pcVar4->predictedPlayerState,1), iVar3 != 0)) &&
+       ((iVar3 = BG_IsScavengerPickup((param_2->nextState).weapon), iVar3 != 0 ||
+        ((iVar3 = BG_PlayerHasWeapon(&pcVar4->predictedPlayerState,(param_2->nextState).weapon),
+         iVar3 != 0 &&
+         (iVar3 = BG_PlayerHasRoomForEntAllAmmoTypes(peVar5,&pcVar4->predictedPlayerState),
+         iVar3 != 0)))))) {
+      WVar2 = (param_2->nextState).weapon;
+      iVar3 = peVar5->number;
+      param_2->pickupPredictionTime = pcVar4->time + 5000;
+      CG_GrabWeapon(param_1,iVar3,10,WVar2,true);
     }
   }
-  __restgprlr_27();
   return;
 }
 
 
 // 822F19E8  TouchItemPrediction  (cgame_mp/cg_predict_mp.cpp:160)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -197,37 +191,38 @@ void TouchItemPrediction(LocalClientNum_t param_1)
 
 {
   centity_s *pcVar1;
-  LocalClientNum_t LVar2;
-  cg_s *pcVar3;
-  centity_s **ppcVar4;
-  int iVar5;
+  cg_s *pcVar2;
+  centity_s **ppcVar3;
+  int iVar4;
   
-  LVar2 = __savegprlr_24(param_1);
-  pcVar3 = CG_GetLocalClientGlobals(LVar2);
-  iVar5 = (pcVar3->predictedPlayerState).pm_type;
-  if ((iVar5 == 0) || (iVar5 == 1)) {
-    iVar5 = 0;
-    ppcVar4 = cg_itemEntities;
+  pcVar2 = CG_GetLocalClientGlobals(param_1);
+  iVar4 = (pcVar2->predictedPlayerState).pm_type;
+  if ((iVar4 == 0) || (iVar4 == 1)) {
+    iVar4 = 0;
+    ppcVar3 = cg_itemEntities;
     if (0 < cg_itemEntityCount) {
       do {
-        pcVar1 = *ppcVar4;
+        pcVar1 = *ppcVar3;
         if ((pcVar1->nextState).eType != 3) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_predict_mp.cpp"
                           ,0xae,0,"%s");
         }
-        CG_TouchItem(LVar2,pcVar1);
-        iVar5 = iVar5 + 1;
-        ppcVar4 = ppcVar4 + 1;
-      } while (iVar5 < cg_itemEntityCount);
+        CG_TouchItem(param_1,pcVar1);
+        iVar4 = iVar4 + 1;
+        ppcVar3 = ppcVar3 + 1;
+      } while (iVar4 < cg_itemEntityCount);
     }
   }
-  __restgprlr_24();
   return;
 }
 
 
 // 822F1A98  InterpolatePlayerState  (cgame_mp/cg_predict_mp.cpp:188)
 
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -240,26 +235,23 @@ void InterpolatePlayerState(LocalClientNum_t param_1,int param_2)
   int iVar3;
   float *pfVar4;
   uint uVar5;
-  LocalClientNum_t LVar6;
-  cg_s *pcVar7;
-  centity_s *pcVar8;
-  int iVar9;
-  longlong lVar10;
+  cg_s *pcVar6;
+  centity_s *pcVar7;
+  int iVar8;
+  longlong lVar9;
+  float *pfVar10;
   float *pfVar11;
-  float *pfVar12;
+  double dVar12;
   double dVar13;
   double dVar14;
   double dVar15;
   double dVar16;
   double dVar17;
   double dVar18;
-  double dVar19;
   
-  __savegprlr_22(param_1);
-  LVar6 = __savefpr_26();
-  pcVar7 = CG_GetLocalClientGlobals(LVar6);
-  psVar1 = pcVar7->snap;
-  psVar2 = pcVar7->nextSnap;
+  pcVar6 = CG_GetLocalClientGlobals(param_1);
+  psVar1 = pcVar6->snap;
+  psVar2 = pcVar6->nextSnap;
   if (psVar1 == (snapshot_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_predict_mp.cpp",
                     0xc9,0,"%s");
@@ -270,234 +262,234 @@ void InterpolatePlayerState(LocalClientNum_t param_1,int param_2)
   }
   memcpy();
   if (psVar1->serverTime < psVar2->serverTime) {
-    dVar19 = (double)pcVar7->frameInterpolation;
+    dVar18 = (double)pcVar6->frameInterpolation;
     if (param_2 != 0) {
-      iVar9 = (psVar2->ps).bobCycle;
-      if (iVar9 < (psVar1->ps).bobCycle) {
-        iVar9 = iVar9 + 0x100;
+      iVar8 = (psVar2->ps).bobCycle;
+      if (iVar8 < (psVar1->ps).bobCycle) {
+        iVar8 = iVar8 + 0x100;
       }
       iVar3 = (psVar1->ps).bobCycle;
-      (pcVar7->predictedPlayerState).bobCycle =
-           (int)((double)(longlong)(iVar9 - iVar3) * dVar19) + iVar3;
-      dVar13 = (double)(psVar1->ps).weapCommon.aimSpreadScale;
-      (pcVar7->predictedPlayerState).weapCommon.aimSpreadScale =
-           (float)((double)(float)((double)(psVar2->ps).weapCommon.aimSpreadScale - dVar13) * dVar19
-                  + dVar13);
-      dVar13 = (double)(psVar1->ps).weapCommon.fWeaponPosFrac;
-      (pcVar7->predictedPlayerState).weapCommon.fWeaponPosFrac =
-           (float)((double)(float)((double)(psVar2->ps).weapCommon.fWeaponPosFrac - dVar13) * dVar19
-                  + dVar13);
-      dVar13 = (double)(psVar1->ps).viewHeightCurrent;
-      (pcVar7->predictedPlayerState).viewHeightCurrent =
-           (float)((double)(float)((double)(psVar2->ps).viewHeightCurrent - dVar13) * dVar19 +
-                  dVar13);
-      iVar9 = (psVar1->ps).weapCommon.weaponIdleTime;
-      (pcVar7->predictedPlayerState).weapCommon.weaponIdleTime =
-           (int)((double)(longlong)((psVar2->ps).weapCommon.weaponIdleTime - iVar9) * dVar19) +
-           iVar9;
+      (pcVar6->predictedPlayerState).bobCycle =
+           (int)((double)(longlong)(iVar8 - iVar3) * dVar18) + iVar3;
+      dVar12 = (double)(psVar1->ps).weapCommon.aimSpreadScale;
+      (pcVar6->predictedPlayerState).weapCommon.aimSpreadScale =
+           (float)((double)(float)((double)(psVar2->ps).weapCommon.aimSpreadScale - dVar12) * dVar18
+                  + dVar12);
+      dVar12 = (double)(psVar1->ps).weapCommon.fWeaponPosFrac;
+      (pcVar6->predictedPlayerState).weapCommon.fWeaponPosFrac =
+           (float)((double)(float)((double)(psVar2->ps).weapCommon.fWeaponPosFrac - dVar12) * dVar18
+                  + dVar12);
+      dVar12 = (double)(psVar1->ps).viewHeightCurrent;
+      (pcVar6->predictedPlayerState).viewHeightCurrent =
+           (float)((double)(float)((double)(psVar2->ps).viewHeightCurrent - dVar12) * dVar18 +
+                  dVar12);
+      iVar8 = (psVar1->ps).weapCommon.weaponIdleTime;
+      (pcVar6->predictedPlayerState).weapCommon.weaponIdleTime =
+           (int)((double)(longlong)((psVar2->ps).weapCommon.weaponIdleTime - iVar8) * dVar18) +
+           iVar8;
     }
-    dVar13 = (double)(psVar1->ps).origin[0];
-    dVar18 = 0.0027777778450399637;
-    dVar17 = 0.5;
-    (pcVar7->predictedPlayerState).origin[0] =
-         (float)((double)(float)((double)(psVar2->ps).origin[0] - dVar13) * dVar19 + dVar13);
-    dVar13 = (double)(psVar1->ps).origin[1];
-    (pcVar7->predictedPlayerState).origin[1] =
-         (float)((double)(float)((double)(psVar2->ps).origin[1] - dVar13) * dVar19 + dVar13);
-    dVar13 = (double)(psVar1->ps).origin[2];
-    (pcVar7->predictedPlayerState).origin[2] =
-         (float)((double)(float)((double)(psVar2->ps).origin[2] - dVar13) * dVar19 + dVar13);
-    dVar13 = (double)(psVar1->ps).velocity[0];
-    (pcVar7->predictedPlayerState).velocity[0] =
-         (float)((double)(float)((double)(psVar2->ps).velocity[0] - dVar13) * dVar19 + dVar13);
-    dVar13 = (double)(psVar1->ps).velocity[1];
-    (pcVar7->predictedPlayerState).velocity[1] =
-         (float)((double)(float)((double)(psVar2->ps).velocity[1] - dVar13) * dVar19 + dVar13);
-    dVar13 = (double)(psVar1->ps).velocity[2];
-    (pcVar7->predictedPlayerState).velocity[2] =
-         (float)((double)(float)((double)(psVar2->ps).velocity[2] - dVar13) * dVar19 + dVar13);
-    dVar15 = (double)(psVar1->ps).viewangles[0];
+    dVar12 = (double)(psVar1->ps).origin[0];
+    dVar17 = 0.0027777778450399637;
+    dVar16 = 0.5;
+    (pcVar6->predictedPlayerState).origin[0] =
+         (float)((double)(float)((double)(psVar2->ps).origin[0] - dVar12) * dVar18 + dVar12);
+    dVar12 = (double)(psVar1->ps).origin[1];
+    (pcVar6->predictedPlayerState).origin[1] =
+         (float)((double)(float)((double)(psVar2->ps).origin[1] - dVar12) * dVar18 + dVar12);
+    dVar12 = (double)(psVar1->ps).origin[2];
+    (pcVar6->predictedPlayerState).origin[2] =
+         (float)((double)(float)((double)(psVar2->ps).origin[2] - dVar12) * dVar18 + dVar12);
+    dVar12 = (double)(psVar1->ps).velocity[0];
+    (pcVar6->predictedPlayerState).velocity[0] =
+         (float)((double)(float)((double)(psVar2->ps).velocity[0] - dVar12) * dVar18 + dVar12);
+    dVar12 = (double)(psVar1->ps).velocity[1];
+    (pcVar6->predictedPlayerState).velocity[1] =
+         (float)((double)(float)((double)(psVar2->ps).velocity[1] - dVar12) * dVar18 + dVar12);
+    dVar12 = (double)(psVar1->ps).velocity[2];
+    (pcVar6->predictedPlayerState).velocity[2] =
+         (float)((double)(float)((double)(psVar2->ps).velocity[2] - dVar12) * dVar18 + dVar12);
+    dVar14 = (double)(psVar1->ps).viewangles[0];
     uVar5 = (uint)(psVar1->ps).linkFlags >> 2 & 1;
-    dVar14 = (double)((float)((double)(psVar2->ps).viewangles[0] - dVar15) * 0.0027777778);
-    dVar13 = floor((double)(float)(dVar14 + 0.5));
-    dVar16 = 360.0;
-    (pcVar7->predictedPlayerState).viewangles[0] =
-         (float)((double)(float)((double)(float)(dVar14 - (double)(float)dVar13) * dVar19) * 360.0 +
-                dVar15);
-    dVar15 = (double)(psVar1->ps).viewangles[1];
-    dVar14 = (double)(float)((double)(float)((double)(psVar2->ps).viewangles[1] - dVar15) * dVar18);
-    dVar13 = floor((double)(float)(dVar14 + dVar17));
-    (pcVar7->predictedPlayerState).viewangles[1] =
-         (float)((double)(float)((double)(float)(dVar14 - (double)(float)dVar13) * dVar19) * dVar16
-                + dVar15);
-    dVar15 = (double)(psVar1->ps).viewangles[2];
-    dVar14 = (double)(float)((double)(float)((double)(psVar2->ps).viewangles[2] - dVar15) * dVar18);
-    dVar13 = floor((double)(float)(dVar14 + dVar17));
-    (pcVar7->predictedPlayerState).viewangles[2] =
-         (float)((double)(float)((double)(float)(dVar14 - (double)(float)dVar13) * dVar19) * dVar16
-                + dVar15);
+    dVar13 = (double)((float)((double)(psVar2->ps).viewangles[0] - dVar14) * 0.0027777778);
+    dVar12 = floor((double)(float)(dVar13 + 0.5));
+    dVar15 = 360.0;
+    (pcVar6->predictedPlayerState).viewangles[0] =
+         (float)((double)(float)((double)(float)(dVar13 - (double)(float)dVar12) * dVar18) * 360.0 +
+                dVar14);
+    dVar14 = (double)(psVar1->ps).viewangles[1];
+    dVar13 = (double)(float)((double)(float)((double)(psVar2->ps).viewangles[1] - dVar14) * dVar17);
+    dVar12 = floor((double)(float)(dVar13 + dVar16));
+    (pcVar6->predictedPlayerState).viewangles[1] =
+         (float)((double)(float)((double)(float)(dVar13 - (double)(float)dVar12) * dVar18) * dVar15
+                + dVar14);
+    dVar14 = (double)(psVar1->ps).viewangles[2];
+    dVar13 = (double)(float)((double)(float)((double)(psVar2->ps).viewangles[2] - dVar14) * dVar17);
+    dVar12 = floor((double)(float)(dVar13 + dVar16));
+    (pcVar6->predictedPlayerState).viewangles[2] =
+         (float)((double)(float)((double)(float)(dVar13 - (double)(float)dVar12) * dVar18) * dVar15
+                + dVar14);
     if ((uVar5 != 0) || ((psVar1->ps).pm_type == 1)) {
-      dVar15 = (double)(psVar1->ps).linkAngles[0];
-      dVar14 = (double)(float)((double)(float)((double)(psVar2->ps).linkAngles[0] - dVar15) * dVar18
+      dVar14 = (double)(psVar1->ps).linkAngles[0];
+      dVar13 = (double)(float)((double)(float)((double)(psVar2->ps).linkAngles[0] - dVar14) * dVar17
                               );
-      dVar13 = floor((double)(float)(dVar14 + dVar17));
-      (pcVar7->predictedPlayerState).linkAngles[0] =
-           (float)((double)(float)((double)(float)(dVar14 - (double)(float)dVar13) * dVar19) *
-                   dVar16 + dVar15);
-      dVar15 = (double)(psVar1->ps).linkAngles[1];
-      dVar14 = (double)(float)((double)(float)((double)(psVar2->ps).linkAngles[1] - dVar15) * dVar18
+      dVar12 = floor((double)(float)(dVar13 + dVar16));
+      (pcVar6->predictedPlayerState).linkAngles[0] =
+           (float)((double)(float)((double)(float)(dVar13 - (double)(float)dVar12) * dVar18) *
+                   dVar15 + dVar14);
+      dVar14 = (double)(psVar1->ps).linkAngles[1];
+      dVar13 = (double)(float)((double)(float)((double)(psVar2->ps).linkAngles[1] - dVar14) * dVar17
                               );
-      dVar13 = floor((double)(float)(dVar14 + dVar17));
-      (pcVar7->predictedPlayerState).linkAngles[1] =
-           (float)((double)(float)((double)(float)(dVar14 - (double)(float)dVar13) * dVar19) *
-                   dVar16 + dVar15);
-      dVar15 = (double)(psVar1->ps).linkAngles[2];
-      dVar14 = (double)(float)((double)(float)((double)(psVar2->ps).linkAngles[2] - dVar15) * dVar18
+      dVar12 = floor((double)(float)(dVar13 + dVar16));
+      (pcVar6->predictedPlayerState).linkAngles[1] =
+           (float)((double)(float)((double)(float)(dVar13 - (double)(float)dVar12) * dVar18) *
+                   dVar15 + dVar14);
+      dVar14 = (double)(psVar1->ps).linkAngles[2];
+      dVar13 = (double)(float)((double)(float)((double)(psVar2->ps).linkAngles[2] - dVar14) * dVar17
                               );
-      dVar13 = floor((double)(float)(dVar14 + dVar17));
-      (pcVar7->predictedPlayerState).linkAngles[2] =
-           (float)((double)(float)((double)(float)(dVar14 - (double)(float)dVar13) * dVar19) *
-                   dVar16 + dVar15);
+      dVar12 = floor((double)(float)(dVar13 + dVar16));
+      (pcVar6->predictedPlayerState).linkAngles[2] =
+           (float)((double)(float)((double)(float)(dVar13 - (double)(float)dVar12) * dVar18) *
+                   dVar15 + dVar14);
     }
-    dVar15 = (double)(psVar1->ps).delta_angles[0];
-    dVar14 = (double)(float)((double)(float)((double)(psVar2->ps).delta_angles[0] - dVar15) * dVar18
+    dVar14 = (double)(psVar1->ps).delta_angles[0];
+    dVar13 = (double)(float)((double)(float)((double)(psVar2->ps).delta_angles[0] - dVar14) * dVar17
                             );
-    dVar13 = floor((double)(float)(dVar14 + dVar17));
-    (pcVar7->predictedPlayerState).delta_angles[0] =
-         (float)((double)(float)((double)(float)(dVar14 - (double)(float)dVar13) * dVar19) * dVar16
-                + dVar15);
-    dVar15 = (double)(psVar1->ps).delta_angles[1];
-    dVar14 = (double)(float)((double)(float)((double)(psVar2->ps).delta_angles[1] - dVar15) * dVar18
+    dVar12 = floor((double)(float)(dVar13 + dVar16));
+    (pcVar6->predictedPlayerState).delta_angles[0] =
+         (float)((double)(float)((double)(float)(dVar13 - (double)(float)dVar12) * dVar18) * dVar15
+                + dVar14);
+    dVar14 = (double)(psVar1->ps).delta_angles[1];
+    dVar13 = (double)(float)((double)(float)((double)(psVar2->ps).delta_angles[1] - dVar14) * dVar17
                             );
-    dVar13 = floor((double)(float)(dVar14 + dVar17));
-    (pcVar7->predictedPlayerState).delta_angles[1] =
-         (float)((double)(float)((double)(float)(dVar14 - (double)(float)dVar13) * dVar19) * dVar16
-                + dVar15);
-    dVar15 = (double)(psVar1->ps).delta_angles[2];
-    dVar14 = (double)(float)((double)(float)((double)(psVar2->ps).delta_angles[2] - dVar15) * dVar18
+    dVar12 = floor((double)(float)(dVar13 + dVar16));
+    (pcVar6->predictedPlayerState).delta_angles[1] =
+         (float)((double)(float)((double)(float)(dVar13 - (double)(float)dVar12) * dVar18) * dVar15
+                + dVar14);
+    dVar14 = (double)(psVar1->ps).delta_angles[2];
+    dVar13 = (double)(float)((double)(float)((double)(psVar2->ps).delta_angles[2] - dVar14) * dVar17
                             );
-    dVar13 = floor((double)(float)(dVar14 + dVar17));
-    (pcVar7->predictedPlayerState).delta_angles[2] =
-         (float)((double)(float)((double)(float)(dVar14 - (double)(float)dVar13) * dVar19) * dVar16
-                + dVar15);
+    dVar12 = floor((double)(float)(dVar13 + dVar16));
+    (pcVar6->predictedPlayerState).delta_angles[2] =
+         (float)((double)(float)((double)(float)(dVar13 - (double)(float)dVar12) * dVar18) * dVar15
+                + dVar14);
     if (((uVar5 != 0) || ((psVar1->ps).pm_type == 1)) || (((psVar1->ps).eFlags & 0x3800U) != 0)) {
-      pfVar11 = (psVar1->ps).viewAngleClampRange;
-      pfVar12 = (psVar2->ps).viewAngleClampBase;
-      lVar10 = 2;
+      pfVar10 = (psVar1->ps).viewAngleClampRange;
+      pfVar11 = (psVar2->ps).viewAngleClampBase;
+      lVar9 = 2;
       do {
-        dVar15 = (double)*(float *)(((int)psVar1 - (int)psVar2) + (int)pfVar12);
-        dVar14 = (double)(float)((double)(float)((double)*pfVar12 - dVar15) * dVar18);
-        dVar13 = floor((double)(float)(dVar14 + dVar17));
-        lVar10 = lVar10 + -1;
-        *(float *)(((int)pcVar7 - (int)psVar2) + (int)pfVar12) =
-             (float)((double)(float)((double)(float)(dVar14 - (double)(float)dVar13) * dVar19) *
-                     dVar16 + dVar15);
-        pfVar4 = pfVar12 + 2;
-        pfVar12 = pfVar12 + 1;
-        *(float *)(((int)pcVar7 - (int)psVar1) + (int)pfVar11) =
-             (float)((double)(float)((double)*pfVar4 - (double)*pfVar11) * dVar19 + (double)*pfVar11
-                    );
+        dVar14 = (double)*(float *)(((int)psVar1 - (int)psVar2) + (int)pfVar11);
+        dVar13 = (double)(float)((double)(float)((double)*pfVar11 - dVar14) * dVar17);
+        dVar12 = floor((double)(float)(dVar13 + dVar16));
+        lVar9 = lVar9 + -1;
+        *(float *)(((int)pcVar6 - (int)psVar2) + (int)pfVar11) =
+             (float)((double)(float)((double)(float)(dVar13 - (double)(float)dVar12) * dVar18) *
+                     dVar15 + dVar14);
+        pfVar4 = pfVar11 + 2;
         pfVar11 = pfVar11 + 1;
-      } while (lVar10 != 0);
+        *(float *)(((int)pcVar6 - (int)psVar1) + (int)pfVar10) =
+             (float)((double)(float)((double)*pfVar4 - (double)*pfVar10) * dVar18 + (double)*pfVar10
+                    );
+        pfVar10 = pfVar10 + 1;
+      } while (lVar9 != 0);
     }
     if ((psVar2->ps).cursorHint == 0) {
-      (pcVar7->predictedPlayerState).cursorHintString = -1;
-      (pcVar7->predictedPlayerState).cursorHintEntIndex = 0x7ff;
+      (pcVar6->predictedPlayerState).cursorHintString = -1;
+      (pcVar6->predictedPlayerState).cursorHintEntIndex = 0x7ff;
     }
-    iVar9 = (psVar2->ps).vehicleState.entity;
-    if (iVar9 != 0x7ff) {
-      if ((psVar1->ps).vehicleState.entity == iVar9) {
-        dVar13 = (double)(psVar1->ps).vehicleState.origin[0];
-        pfVar12 = (psVar2->ps).vehicleState.angles;
-        lVar10 = 3;
-        (pcVar7->predictedPlayerState).vehicleState.origin[0] =
-             (float)((double)(float)((double)(psVar2->ps).vehicleState.origin[0] - dVar13) * dVar19
-                    + dVar13);
-        dVar13 = (double)(psVar1->ps).vehicleState.origin[1];
-        (pcVar7->predictedPlayerState).vehicleState.origin[1] =
-             (float)((double)(float)((double)(psVar2->ps).vehicleState.origin[1] - dVar13) * dVar19
-                    + dVar13);
-        dVar13 = (double)(psVar1->ps).vehicleState.origin[2];
-        (pcVar7->predictedPlayerState).vehicleState.origin[2] =
-             (float)((double)(float)((double)(psVar2->ps).vehicleState.origin[2] - dVar13) * dVar19
-                    + dVar13);
-        dVar13 = (double)(psVar1->ps).vehicleState.angVelocity[0];
-        (pcVar7->predictedPlayerState).vehicleState.angVelocity[0] =
-             (float)((double)(float)((double)(psVar2->ps).vehicleState.angVelocity[0] - dVar13) *
-                     dVar19 + dVar13);
-        dVar13 = (double)(psVar1->ps).vehicleState.angVelocity[1];
-        (pcVar7->predictedPlayerState).vehicleState.angVelocity[1] =
-             (float)((double)(float)((double)(psVar2->ps).vehicleState.angVelocity[1] - dVar13) *
-                     dVar19 + dVar13);
-        dVar13 = (double)(psVar1->ps).vehicleState.angVelocity[2];
-        (pcVar7->predictedPlayerState).vehicleState.angVelocity[2] =
-             (float)((double)(float)((double)(psVar2->ps).vehicleState.angVelocity[2] - dVar13) *
-                     dVar19 + dVar13);
-        dVar13 = (double)(psVar1->ps).vehicleState.tiltVelocity[0];
-        (pcVar7->predictedPlayerState).vehicleState.tiltVelocity[0] =
-             (float)((double)(float)((double)(psVar2->ps).vehicleState.tiltVelocity[0] - dVar13) *
-                     dVar19 + dVar13);
-        dVar13 = (double)(psVar1->ps).vehicleState.tiltVelocity[1];
-        (pcVar7->predictedPlayerState).vehicleState.tiltVelocity[1] =
-             (float)((double)(float)((double)(psVar2->ps).vehicleState.tiltVelocity[1] - dVar13) *
-                     dVar19 + dVar13);
-        pfVar11 = pfVar12;
+    iVar8 = (psVar2->ps).vehicleState.entity;
+    if (iVar8 != 0x7ff) {
+      if ((psVar1->ps).vehicleState.entity == iVar8) {
+        dVar12 = (double)(psVar1->ps).vehicleState.origin[0];
+        pfVar11 = (psVar2->ps).vehicleState.angles;
+        lVar9 = 3;
+        (pcVar6->predictedPlayerState).vehicleState.origin[0] =
+             (float)((double)(float)((double)(psVar2->ps).vehicleState.origin[0] - dVar12) * dVar18
+                    + dVar12);
+        dVar12 = (double)(psVar1->ps).vehicleState.origin[1];
+        (pcVar6->predictedPlayerState).vehicleState.origin[1] =
+             (float)((double)(float)((double)(psVar2->ps).vehicleState.origin[1] - dVar12) * dVar18
+                    + dVar12);
+        dVar12 = (double)(psVar1->ps).vehicleState.origin[2];
+        (pcVar6->predictedPlayerState).vehicleState.origin[2] =
+             (float)((double)(float)((double)(psVar2->ps).vehicleState.origin[2] - dVar12) * dVar18
+                    + dVar12);
+        dVar12 = (double)(psVar1->ps).vehicleState.angVelocity[0];
+        (pcVar6->predictedPlayerState).vehicleState.angVelocity[0] =
+             (float)((double)(float)((double)(psVar2->ps).vehicleState.angVelocity[0] - dVar12) *
+                     dVar18 + dVar12);
+        dVar12 = (double)(psVar1->ps).vehicleState.angVelocity[1];
+        (pcVar6->predictedPlayerState).vehicleState.angVelocity[1] =
+             (float)((double)(float)((double)(psVar2->ps).vehicleState.angVelocity[1] - dVar12) *
+                     dVar18 + dVar12);
+        dVar12 = (double)(psVar1->ps).vehicleState.angVelocity[2];
+        (pcVar6->predictedPlayerState).vehicleState.angVelocity[2] =
+             (float)((double)(float)((double)(psVar2->ps).vehicleState.angVelocity[2] - dVar12) *
+                     dVar18 + dVar12);
+        dVar12 = (double)(psVar1->ps).vehicleState.tiltVelocity[0];
+        (pcVar6->predictedPlayerState).vehicleState.tiltVelocity[0] =
+             (float)((double)(float)((double)(psVar2->ps).vehicleState.tiltVelocity[0] - dVar12) *
+                     dVar18 + dVar12);
+        dVar12 = (double)(psVar1->ps).vehicleState.tiltVelocity[1];
+        (pcVar6->predictedPlayerState).vehicleState.tiltVelocity[1] =
+             (float)((double)(float)((double)(psVar2->ps).vehicleState.tiltVelocity[1] - dVar12) *
+                     dVar18 + dVar12);
+        pfVar10 = pfVar11;
         do {
-          dVar15 = (double)*(float *)((int)pfVar11 + ((int)psVar1 - (int)psVar2));
-          dVar14 = (double)(float)((double)(float)((double)*pfVar11 - dVar15) * dVar18);
-          dVar13 = floor((double)(float)(dVar14 + dVar17));
-          lVar10 = lVar10 + -1;
-          *(float *)((int)pfVar11 + ((int)pcVar7 - (int)psVar2)) =
-               (float)((double)(float)((double)(float)(dVar14 - (double)(float)dVar13) * dVar19) *
-                       dVar16 + dVar15);
-          pfVar11 = pfVar11 + 1;
-        } while (lVar10 != 0);
-        pfVar11 = (pcVar7->predictedPlayerState).vehicleState.angVelocity + 2;
-        lVar10 = 2;
+          dVar14 = (double)*(float *)((int)pfVar10 + ((int)psVar1 - (int)psVar2));
+          dVar13 = (double)(float)((double)(float)((double)*pfVar10 - dVar14) * dVar17);
+          dVar12 = floor((double)(float)(dVar13 + dVar16));
+          lVar9 = lVar9 + -1;
+          *(float *)((int)pfVar10 + ((int)pcVar6 - (int)psVar2)) =
+               (float)((double)(float)((double)(float)(dVar13 - (double)(float)dVar12) * dVar18) *
+                       dVar15 + dVar14);
+          pfVar10 = pfVar10 + 1;
+        } while (lVar9 != 0);
+        pfVar10 = (pcVar6->predictedPlayerState).vehicleState.angVelocity + 2;
+        lVar9 = 2;
         do {
-          dVar15 = (double)*(float *)(((int)psVar1 - (int)psVar2) + (int)pfVar12);
-          dVar14 = (double)(float)((double)(float)((double)*pfVar12 - dVar15) * dVar18);
-          dVar13 = floor((double)(float)(dVar14 + dVar17));
-          lVar10 = lVar10 + -1;
-          pfVar12 = pfVar12 + 1;
+          dVar14 = (double)*(float *)(((int)psVar1 - (int)psVar2) + (int)pfVar11);
+          dVar13 = (double)(float)((double)(float)((double)*pfVar11 - dVar14) * dVar17);
+          dVar12 = floor((double)(float)(dVar13 + dVar16));
+          lVar9 = lVar9 + -1;
           pfVar11 = pfVar11 + 1;
-          *pfVar11 = (float)((double)(float)((double)(float)(dVar14 - (double)(float)dVar13) *
-                                            dVar19) * dVar16 + dVar15);
-        } while (lVar10 != 0);
-        (pcVar7->predictedPlayerState).vehicleState.flags = (psVar2->ps).vehicleState.flags;
+          pfVar10 = pfVar10 + 1;
+          *pfVar10 = (float)((double)(float)((double)(float)(dVar13 - (double)(float)dVar12) *
+                                            dVar18) * dVar15 + dVar14);
+        } while (lVar9 != 0);
+        (pcVar6->predictedPlayerState).vehicleState.flags = (psVar2->ps).vehicleState.flags;
       }
       else {
-        pcVar8 = CG_GetEntity(LVar6,iVar9);
-        (pcVar7->predictedPlayerState).vehicleState.flags = 0;
-        (pcVar7->predictedPlayerState).vehicleState.origin[0] = (pcVar8->pose).origin[0];
-        (pcVar7->predictedPlayerState).vehicleState.origin[1] = (pcVar8->pose).origin[1];
-        (pcVar7->predictedPlayerState).vehicleState.origin[2] = (pcVar8->pose).origin[2];
-        (pcVar7->predictedPlayerState).vehicleState.angles[0] = (pcVar8->pose).angles[0];
-        (pcVar7->predictedPlayerState).vehicleState.angles[1] = (pcVar8->pose).angles[1];
-        (pcVar7->predictedPlayerState).vehicleState.angles[2] = (pcVar8->pose).angles[2];
-        (pcVar7->predictedPlayerState).vehicleState.velocity[0] = 0.0;
-        (pcVar7->predictedPlayerState).vehicleState.velocity[1] = 0.0;
-        (pcVar7->predictedPlayerState).vehicleState.velocity[2] = 0.0;
-        (pcVar7->predictedPlayerState).vehicleState.angVelocity[0] = 0.0;
-        (pcVar7->predictedPlayerState).vehicleState.angVelocity[1] = 0.0;
-        (pcVar7->predictedPlayerState).vehicleState.angVelocity[2] = 0.0;
-        (pcVar7->predictedPlayerState).vehicleState.tilt[0] = 0.0;
-        (pcVar7->predictedPlayerState).vehicleState.tilt[1] = 0.0;
-        (pcVar7->predictedPlayerState).vehicleState.tiltVelocity[0] = 0.0;
-        (pcVar7->predictedPlayerState).vehicleState.tiltVelocity[1] = 0.0;
+        pcVar7 = CG_GetEntity(param_1,iVar8);
+        (pcVar6->predictedPlayerState).vehicleState.flags = 0;
+        (pcVar6->predictedPlayerState).vehicleState.origin[0] = (pcVar7->pose).origin[0];
+        (pcVar6->predictedPlayerState).vehicleState.origin[1] = (pcVar7->pose).origin[1];
+        (pcVar6->predictedPlayerState).vehicleState.origin[2] = (pcVar7->pose).origin[2];
+        (pcVar6->predictedPlayerState).vehicleState.angles[0] = (pcVar7->pose).angles[0];
+        (pcVar6->predictedPlayerState).vehicleState.angles[1] = (pcVar7->pose).angles[1];
+        (pcVar6->predictedPlayerState).vehicleState.angles[2] = (pcVar7->pose).angles[2];
+        (pcVar6->predictedPlayerState).vehicleState.velocity[0] = 0.0;
+        (pcVar6->predictedPlayerState).vehicleState.velocity[1] = 0.0;
+        (pcVar6->predictedPlayerState).vehicleState.velocity[2] = 0.0;
+        (pcVar6->predictedPlayerState).vehicleState.angVelocity[0] = 0.0;
+        (pcVar6->predictedPlayerState).vehicleState.angVelocity[1] = 0.0;
+        (pcVar6->predictedPlayerState).vehicleState.angVelocity[2] = 0.0;
+        (pcVar6->predictedPlayerState).vehicleState.tilt[0] = 0.0;
+        (pcVar6->predictedPlayerState).vehicleState.tilt[1] = 0.0;
+        (pcVar6->predictedPlayerState).vehicleState.tiltVelocity[0] = 0.0;
+        (pcVar6->predictedPlayerState).vehicleState.tiltVelocity[1] = 0.0;
       }
     }
-    (pcVar7->predictedPlayerState).vehicleState.entity = (psVar2->ps).vehicleState.entity;
-    pcVar7->playerVehicleEntity = (psVar2->ps).vehicleState.entity;
+    (pcVar6->predictedPlayerState).vehicleState.entity = (psVar2->ps).vehicleState.entity;
+    pcVar6->playerVehicleEntity = (psVar2->ps).vehicleState.entity;
   }
-  __restfpr_26();
-  __restgprlr_22();
   return;
 }
 
 
 // 822F20D8  CG_ClearSavedPlayerState  (cgame_mp/cg_predict_mp.cpp:291)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -505,26 +497,23 @@ void InterpolatePlayerState(LocalClientNum_t param_1,int param_2)
 void CG_ClearSavedPlayerState(LocalClientNum_t param_1)
 
 {
-  LocalClientNum_t LVar1;
-  cg_s *pcVar2;
+  cg_s *pcVar1;
   
-  LVar1 = __savegprlr_29(param_1);
-  pcVar2 = CG_GetLocalClientGlobals(LVar1);
-  if (pcVar2 == (cg_s *)0x0) {
+  pcVar1 = CG_GetLocalClientGlobals(param_1);
+  if (pcVar1 == (cg_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_predict_mp.cpp",
                     0x127,1,"%s");
   }
-  pcVar2->oldCommandTime = 0;
-  pcVar2->oldOrigin[0] = 0.0;
-  pcVar2->oldOrigin[1] = 0.0;
-  pcVar2->oldOrigin[2] = 0.0;
-  pcVar2->oldViewangles[0] = 0.0;
-  pcVar2->oldViewangles[1] = 0.0;
-  pcVar2->oldViewangles[2] = 0.0;
-  CG_ClearTransPlayerState(&pcVar2->oldTransPlayerState);
-  cg_pmove[LVar1].remoteTurretFireTime = 0;
-  cg_pmove[LVar1].lastUpdateCMDServerTime = 0;
-  __restgprlr_29();
+  pcVar1->oldCommandTime = 0;
+  pcVar1->oldOrigin[0] = 0.0;
+  pcVar1->oldOrigin[1] = 0.0;
+  pcVar1->oldOrigin[2] = 0.0;
+  pcVar1->oldViewangles[0] = 0.0;
+  pcVar1->oldViewangles[1] = 0.0;
+  pcVar1->oldViewangles[2] = 0.0;
+  CG_ClearTransPlayerState(&pcVar1->oldTransPlayerState);
+  cg_pmove[param_1].remoteTurretFireTime = 0;
+  cg_pmove[param_1].lastUpdateCMDServerTime = 0;
   return;
 }
 
@@ -556,6 +545,8 @@ void CG_SavePlayerState(LocalClientNum_t param_1)
 
 // 822F2230  GetWeaponViewRoughOriginIfValid  (cgame_mp/cg_predict_mp.cpp:328)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -563,31 +554,20 @@ void CG_SavePlayerState(LocalClientNum_t param_1)
 bool GetWeaponViewRoughOriginIfValid(LocalClientNum_t param_1,playerState_s *param_2,float *param_3)
 
 {
-  int iVar1;
-  LocalClientNum_t LVar2;
-  undefined1 uVar4;
-  centity_s *pcVar3;
-  ulonglong uVar5;
+  centity_s *pcVar1;
   
-  uVar5 = (ulonglong)(int)param_2;
-  LVar2 = __savegprlr_29(param_1);
-  if ((uVar5 & 0xffffffff) == 0) {
+  if (param_2 == (playerState_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_predict_mp.cpp",
                     0x149,0,"%s");
   }
-  if (((*(uint *)((int)uVar5 + 0x14) & 4) != 0) &&
-     (iVar1 = *(int *)((int)uVar5 + 0x1d8), iVar1 != 0x7ff)) {
-    pcVar3 = CG_GetEntity(LVar2,iVar1);
-    if ((pcVar3->flags & 1U) != 0) {
-      *param_3 = (pcVar3->pose).origin[0];
-      param_3[1] = (pcVar3->pose).origin[1];
-      param_3[2] = (pcVar3->pose).origin[2];
-      uVar4 = __restgprlr_29(1);
-      return (bool)uVar4;
-    }
+  if ((((param_2->linkFlags & 4U) != 0) && (param_2->linkWeaponEnt != 0x7ff)) &&
+     (pcVar1 = CG_GetEntity(param_1,param_2->linkWeaponEnt), (pcVar1->flags & 1U) != 0)) {
+    *param_3 = (pcVar1->pose).origin[0];
+    param_3[1] = (pcVar1->pose).origin[1];
+    param_3[2] = (pcVar1->pose).origin[2];
+    return true;
   }
-  uVar4 = __restgprlr_29(0);
-  return (bool)uVar4;
+  return false;
 }
 
 
@@ -607,6 +587,8 @@ int CG_PlayerStateHasGroundEntity(playerState_s *param_1)
 
 // 822F2300  CG_SetupPlayerState  (cgame_mp/cg_predict_mp.cpp:354)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -621,89 +603,88 @@ void CG_SetupPlayerState(LocalClientNum_t param_1)
   snapshot_s *psVar5;
   snapshot_s *psVar6;
   int iVar7;
-  LocalClientNum_t LVar8;
-  cg_s *pcVar9;
-  bool bVar10;
+  cg_s *pcVar8;
+  bool bVar9;
+  float *pfVar10;
   float *pfVar11;
-  float *pfVar12;
   
-  LVar8 = __savegprlr_28(param_1);
-  pcVar9 = CG_GetLocalClientGlobals(LVar8);
-  if (pcVar9->nextSnap == (snapshot_s *)0x0) {
+  pcVar8 = CG_GetLocalClientGlobals(param_1);
+  if (pcVar8->nextSnap == (snapshot_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_predict_mp.cpp",
                     0x169,0,"%s");
   }
-  psVar4 = pcVar9->nextSnap;
-  pcVar9->physicsTime = psVar4->serverTime;
-  bVar10 = CG_KillCamEntityEnabled(LVar8);
-  if (bVar10) {
-    CG_UpdateKillCamEntityViewOffset(LVar8);
+  psVar4 = pcVar8->nextSnap;
+  pcVar8->physicsTime = psVar4->serverTime;
+  bVar9 = CG_KillCamEntityEnabled(param_1);
+  if (bVar9) {
+    CG_UpdateKillCamEntityViewOffset(param_1);
   }
   else {
-    bVar10 = CG_ModelPreviewerNeedsVieworgInterpSkipped(LVar8);
-    if (bVar10) {
-      (pcVar9->refdef).viewOffset[0] = (pcVar9->refdef).view.org[0];
-      (pcVar9->refdef).viewOffset[1] = (pcVar9->refdef).view.org[1];
-      (pcVar9->refdef).viewOffset[2] = (pcVar9->refdef).view.org[2];
+    bVar9 = CG_ModelPreviewerNeedsVieworgInterpSkipped(param_1);
+    if (bVar9) {
+      (pcVar8->refdef).viewOffset[0] = (pcVar8->refdef).view.org[0];
+      (pcVar8->refdef).viewOffset[1] = (pcVar8->refdef).view.org[1];
+      (pcVar8->refdef).viewOffset[2] = (pcVar8->refdef).view.org[2];
     }
     else {
-      pfVar12 = (pcVar9->refdef).viewOffset;
-      bVar10 = GetWeaponViewRoughOriginIfValid(LVar8,&psVar4->ps,pfVar12);
-      if (!bVar10) {
-        psVar5 = pcVar9->snap;
-        psVar6 = pcVar9->nextSnap;
-        fVar3 = pcVar9->frameInterpolation;
+      pfVar11 = (pcVar8->refdef).viewOffset;
+      bVar9 = GetWeaponViewRoughOriginIfValid(param_1,&psVar4->ps,pfVar11);
+      if (!bVar9) {
+        psVar5 = pcVar8->snap;
+        psVar6 = pcVar8->nextSnap;
+        fVar3 = pcVar8->frameInterpolation;
         if ((psVar4->ps).vehicleState.entity == 0x7ff) {
           fVar1 = (psVar5->ps).origin[0];
-          *pfVar12 = ((psVar6->ps).origin[0] - fVar1) * fVar3 + fVar1;
+          *pfVar11 = ((psVar6->ps).origin[0] - fVar1) * fVar3 + fVar1;
           fVar1 = (psVar5->ps).origin[1];
-          (pcVar9->refdef).viewOffset[1] = ((psVar6->ps).origin[1] - fVar1) * fVar3 + fVar1;
+          (pcVar8->refdef).viewOffset[1] = ((psVar6->ps).origin[1] - fVar1) * fVar3 + fVar1;
           fVar1 = (psVar5->ps).origin[2];
           fVar2 = (psVar6->ps).origin[2];
         }
         else {
           fVar1 = (psVar5->ps).vehicleState.origin[0];
-          *pfVar12 = ((psVar6->ps).vehicleState.origin[0] - fVar1) * fVar3 + fVar1;
+          *pfVar11 = ((psVar6->ps).vehicleState.origin[0] - fVar1) * fVar3 + fVar1;
           fVar1 = (psVar5->ps).vehicleState.origin[1];
-          (pcVar9->refdef).viewOffset[1] =
+          (pcVar8->refdef).viewOffset[1] =
                ((psVar6->ps).vehicleState.origin[1] - fVar1) * fVar3 + fVar1;
           fVar1 = (psVar5->ps).vehicleState.origin[2];
           fVar2 = (psVar6->ps).vehicleState.origin[2];
         }
-        pfVar11 = (pcVar9->refdef).viewOffset + 2;
-        (pcVar9->refdef).viewOffset[2] = (fVar2 - fVar1) * fVar3 + fVar1;
-        *pfVar11 = (pcVar9->nextSnap->ps).viewHeightCurrent + *pfVar11;
-        CG_GetCorpseViewPosition(LVar8,pfVar12,false);
+        pfVar10 = (pcVar8->refdef).viewOffset + 2;
+        (pcVar8->refdef).viewOffset[2] = (fVar2 - fVar1) * fVar3 + fVar1;
+        *pfVar10 = (pcVar8->nextSnap->ps).viewHeightCurrent + *pfVar10;
+        CG_GetCorpseViewPosition(param_1,pfVar11,false);
       }
     }
   }
-  if ((pcVar9->demoType == DEMO_TYPE_NONE) && (((psVar4->ps).otherFlags & 0x800U) == 0)) {
+  if ((pcVar8->demoType == DEMO_TYPE_NONE) && (((psVar4->ps).otherFlags & 0x800U) == 0)) {
     iVar7 = (psVar4->ps).pm_type;
     if (((iVar7 == 1) || (iVar7 == 9)) || (((psVar4->ps).linkFlags & 4U) != 0)) {
-      InterpolatePlayerState(LVar8,0);
-      __restgprlr_28();
+      InterpolatePlayerState(param_1,0);
       return;
     }
     iVar7 = (psVar4->ps).groundEntityNum;
     if ((0 < iVar7) && (iVar7 < 0x7fe)) {
-      pcVar9->groundEntityTime = pcVar9->time;
+      pcVar8->groundEntityTime = pcVar8->time;
     }
-    if ((uint)(pcVar9->time - pcVar9->groundEntityTime) < 1000) {
+    if ((uint)(pcVar8->time - pcVar8->groundEntityTime) < 1000) {
       memcpy();
-      __restgprlr_28();
       return;
     }
   }
   else {
-    InterpolatePlayerState(LVar8,1);
+    InterpolatePlayerState(param_1,1);
   }
-  __restgprlr_28();
   return;
 }
 
 
 // 822F2558  CG_PredictPlayerState_Internal  (cgame_mp/cg_predict_mp.cpp:449)
 
+/* WARNING: Function: __savegprlr_15 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_15 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -711,21 +692,20 @@ void CG_SetupPlayerState(LocalClientNum_t param_1)
 int CG_PredictPlayerState_Internal(LocalClientNum_t param_1,int param_2)
 
 {
-  LocalClientNum_t LVar1;
-  cg_s *pcVar2;
+  cg_s *pcVar1;
+  int iVar2;
+  bool bVar4;
   int iVar3;
-  bool bVar5;
-  int iVar4;
-  uint uVar6;
-  float *pfVar7;
-  int iVar8;
+  uint uVar5;
+  float *pfVar6;
+  int iVar7;
+  double dVar8;
   double dVar9;
   double dVar10;
   double dVar11;
   double dVar12;
   double dVar13;
   double dVar14;
-  double dVar15;
   float local_148;
   float local_144;
   float local_140;
@@ -734,150 +714,142 @@ int CG_PredictPlayerState_Internal(LocalClientNum_t param_1,int param_2)
   usercmd_s local_120;
   usercmd_s auStack_f0 [5];
   
-  __savegprlr_15(param_1);
-  LVar1 = __savefpr_26();
   Profile_Begin(0x13d);
-  pcVar2 = CG_GetLocalClientGlobals(LVar1);
-  if (pcVar2->nextSnap == (snapshot_s *)0x0) {
+  pcVar1 = CG_GetLocalClientGlobals(param_1);
+  if (pcVar1->nextSnap == (snapshot_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_predict_mp.cpp",
                     0x1cf,0,"%s");
   }
-  iVar3 = CL_GetCurrentCmdNumber(LVar1);
-  bVar5 = CL_Demo_IsFollowCamera(LVar1);
-  if ((bVar5) || (bVar5 = CL_Demo_IsFreeCamera(LVar1), bVar5)) {
-    CL_GetUserCmd(LVar1,iVar3,&local_120);
-    bVar5 = CL_Demo_IsFreeCamera(LVar1);
-    if (bVar5) {
-      CL_Demo_FreeCameraMove(LVar1,&local_120);
+  iVar2 = CL_GetCurrentCmdNumber(param_1);
+  bVar4 = CL_Demo_IsFollowCamera(param_1);
+  if ((bVar4) || (bVar4 = CL_Demo_IsFreeCamera(param_1), bVar4)) {
+    CL_GetUserCmd(param_1,iVar2,&local_120);
+    bVar4 = CL_Demo_IsFreeCamera(param_1);
+    if (bVar4) {
+      CL_Demo_FreeCameraMove(param_1,&local_120);
     }
     else {
-      CL_Demo_FollowCameraMove(LVar1,&local_120);
+      CL_Demo_FollowCameraMove(param_1,&local_120);
     }
   }
-  else if ((pcVar2->demoType == DEMO_TYPE_NONE) &&
-          (((pcVar2->predictedPlayerState).otherFlags & 0x800U) == 0)) {
+  else if ((pcVar1->demoType == DEMO_TYPE_NONE) &&
+          (((pcVar1->predictedPlayerState).otherFlags & 0x800U) == 0)) {
     if (param_2 != 0) {
-      pfVar7 = (pcVar2->predictedPlayerState).origin;
+      pfVar6 = (pcVar1->predictedPlayerState).origin;
       CG_AdjustPositionForMover
-                (LVar1,pfVar7,(pcVar2->predictedPlayerState).groundEntityNum,pcVar2->physicsTime,
-                 pcVar2->time,pfVar7,&fStack_138);
+                (param_1,pfVar6,(pcVar1->predictedPlayerState).groundEntityNum,pcVar1->physicsTime,
+                 pcVar1->time,pfVar6,&fStack_138);
       VehicleCl_PredictEntityPushing
-                (LVar1,(pcVar2->predictedPlayerState).groundEntityNum,pcVar2->physicsTime,
-                 pcVar2->time,pfVar7);
+                (param_1,(pcVar1->predictedPlayerState).groundEntityNum,pcVar1->physicsTime,
+                 pcVar1->time,pfVar6);
     }
-    bVar5 = false;
-    cg_pmove[LVar1].ps = &pcVar2->predictedPlayerState;
-    cg_pmove[LVar1].handler = '\0';
-    uVar6 = 0x810000;
-    if ((pcVar2->predictedPlayerState).pm_type < 8) {
-      uVar6 = 0x2810000;
+    bVar4 = false;
+    cg_pmove[param_1].ps = &pcVar1->predictedPlayerState;
+    cg_pmove[param_1].handler = '\0';
+    uVar5 = 0x810000;
+    if ((pcVar1->predictedPlayerState).pm_type < 8) {
+      uVar5 = 0x2810000;
     }
-    cg_pmove[LVar1].tracemask = uVar6 | 0x11;
-    if ((pcVar2->predictedPlayerState).pm_type == 5) {
-      cg_pmove[LVar1].tracemask = uVar6 & 0xfdfeffff | 0x11;
+    cg_pmove[param_1].tracemask = uVar5 | 0x11;
+    if ((pcVar1->predictedPlayerState).pm_type == 5) {
+      cg_pmove[param_1].tracemask = uVar5 & 0xfdfeffff | 0x11;
     }
-    iVar8 = iVar3 + -0x7f;
-    dVar11 = 0.0;
-    cg_pmove[LVar1].viewChange = 0.0;
-    cg_pmove[LVar1].viewChangeTime = pcVar2->stepViewStart;
-    iVar4 = CL_GetUserCmd(LVar1,iVar8,auStack_f0);
-    if (iVar4 != 0) {
-      CL_GetUserCmd(LVar1,iVar3,&local_120);
-      if ((pcVar2->predictedPlayerState).commandTime < local_120.serverTime) {
-        if (iVar8 <= iVar3) {
-          dVar10 = 0.10000000149011612;
-          bVar5 = false;
+    iVar7 = iVar2 + -0x7f;
+    dVar10 = 0.0;
+    cg_pmove[param_1].viewChange = 0.0;
+    cg_pmove[param_1].viewChangeTime = pcVar1->stepViewStart;
+    iVar3 = CL_GetUserCmd(param_1,iVar7,auStack_f0);
+    if (iVar3 != 0) {
+      CL_GetUserCmd(param_1,iVar2,&local_120);
+      if ((pcVar1->predictedPlayerState).commandTime < local_120.serverTime) {
+        if (iVar7 <= iVar2) {
+          dVar9 = 0.10000000149011612;
+          bVar4 = false;
           do {
-            CL_GetUserCmd(LVar1,iVar8,&cg_pmove[LVar1].cmd);
-            iVar4 = cg_pmove[LVar1].cmd.serverTime;
-            if ((((pcVar2->predictedPlayerState).commandTime <= iVar4) &&
-                (iVar4 <= local_120.serverTime)) &&
-               (iVar4 = CL_GetUserCmd(LVar1,iVar8 + -1,&cg_pmove[LVar1].oldcmd), iVar4 != 0)) {
-              if ((pcVar2->predictedPlayerState).commandTime == pcVar2->oldCommandTime) {
+            CL_GetUserCmd(param_1,iVar7,&cg_pmove[param_1].cmd);
+            iVar3 = cg_pmove[param_1].cmd.serverTime;
+            if ((((pcVar1->predictedPlayerState).commandTime <= iVar3) &&
+                (iVar3 <= local_120.serverTime)) &&
+               (iVar3 = CL_GetUserCmd(param_1,iVar7 + -1,&cg_pmove[param_1].oldcmd), iVar3 != 0)) {
+              if ((pcVar1->predictedPlayerState).commandTime == pcVar1->oldCommandTime) {
                 CG_AdjustPositionForMover
-                          (LVar1,(pcVar2->predictedPlayerState).origin,
-                           (pcVar2->predictedPlayerState).groundEntityNum,pcVar2->time,
-                           pcVar2->oldTime,&local_148,&fStack_138);
+                          (param_1,(pcVar1->predictedPlayerState).origin,
+                           (pcVar1->predictedPlayerState).groundEntityNum,pcVar1->time,
+                           pcVar1->oldTime,&local_148,&fStack_138);
                 VehicleCl_PredictEntityPushing
-                          (LVar1,(pcVar2->predictedPlayerState).groundEntityNum,pcVar2->time,
-                           pcVar2->oldTime,&local_148);
-                (pcVar2->predictedPlayerState).delta_angles[1] =
-                     local_134 + (pcVar2->predictedPlayerState).delta_angles[1];
-                dVar14 = (double)(pcVar2->oldOrigin[1] - local_144);
-                dVar13 = (double)(pcVar2->oldOrigin[2] - local_140);
-                dVar12 = (double)(pcVar2->oldOrigin[0] - local_148);
-                if (dVar10 < (double)SQRT((float)(dVar12 * dVar12 +
-                                                 (double)(float)(dVar13 * dVar13 +
-                                                                (double)(float)(dVar14 * dVar14)))))
+                          (param_1,(pcVar1->predictedPlayerState).groundEntityNum,pcVar1->time,
+                           pcVar1->oldTime,&local_148);
+                (pcVar1->predictedPlayerState).delta_angles[1] =
+                     local_134 + (pcVar1->predictedPlayerState).delta_angles[1];
+                dVar13 = (double)(pcVar1->oldOrigin[1] - local_144);
+                dVar12 = (double)(pcVar1->oldOrigin[2] - local_140);
+                dVar11 = (double)(pcVar1->oldOrigin[0] - local_148);
+                if (dVar9 < (double)SQRT((float)(dVar11 * dVar11 +
+                                                (double)(float)(dVar12 * dVar12 +
+                                                               (double)(float)(dVar13 * dVar13)))))
                 {
                   if ((cg_showmiss->current).integer != 0) {
                     Com_PrintError(0x11,"Prediction Error (%f)\n");
                   }
-                  dVar9 = (double)(cg_errorDecay->current).value;
-                  if (dVar9 == dVar11) {
-                    pcVar2->predictedError[0] = (float)dVar11;
-                    pcVar2->predictedError[1] = (float)dVar11;
-                    pcVar2->predictedError[2] = (float)dVar11;
+                  dVar8 = (double)(cg_errorDecay->current).value;
+                  if (dVar8 == dVar10) {
+                    pcVar1->predictedError[0] = (float)dVar10;
+                    pcVar1->predictedError[1] = (float)dVar10;
+                    pcVar1->predictedError[2] = (float)dVar10;
                   }
                   else {
-                    dVar15 = (double)(float)((double)(float)(dVar9 - (double)(longlong)
-                                                                             (pcVar2->time -
-                                                                             pcVar2->
-                                                  predictedErrorTime)) / dVar9);
-                    dVar9 = dVar11;
-                    if (((dVar11 <= dVar15) && (dVar9 = dVar15, dVar11 < dVar15)) &&
+                    dVar14 = (double)(float)((double)(float)(dVar8 - (double)(longlong)
+                                                                             (pcVar1->time -
+                                                                             pcVar1->
+                                                  predictedErrorTime)) / dVar8);
+                    dVar8 = dVar10;
+                    if (((dVar10 <= dVar14) && (dVar8 = dVar14, dVar10 < dVar14)) &&
                        ((cg_showmiss->current).integer != 0)) {
                       Com_Printf(0x11,"Double prediction decay: %f\n");
-                      dVar9 = dVar15;
+                      dVar8 = dVar14;
                     }
-                    pcVar2->predictedError[0] = (float)((double)pcVar2->predictedError[0] * dVar9);
-                    pcVar2->predictedError[1] = (float)((double)pcVar2->predictedError[1] * dVar9);
-                    pcVar2->predictedError[2] = (float)((double)pcVar2->predictedError[2] * dVar9);
+                    pcVar1->predictedError[0] = (float)((double)pcVar1->predictedError[0] * dVar8);
+                    pcVar1->predictedError[1] = (float)((double)pcVar1->predictedError[1] * dVar8);
+                    pcVar1->predictedError[2] = (float)((double)pcVar1->predictedError[2] * dVar8);
                   }
-                  pcVar2->predictedError[0] = (float)((double)pcVar2->predictedError[0] + dVar12);
-                  pcVar2->predictedError[1] = (float)((double)pcVar2->predictedError[1] + dVar14);
-                  pcVar2->predictedError[2] = (float)((double)pcVar2->predictedError[2] + dVar13);
-                  pcVar2->predictedErrorTime = pcVar2->oldTime;
+                  pcVar1->predictedError[0] = (float)((double)pcVar1->predictedError[0] + dVar11);
+                  pcVar1->predictedError[1] = (float)((double)pcVar1->predictedError[1] + dVar13);
+                  pcVar1->predictedError[2] = (float)((double)pcVar1->predictedError[2] + dVar12);
+                  pcVar1->predictedErrorTime = pcVar1->oldTime;
                 }
               }
               Profile_Begin(0x13);
-              Pmove(cg_pmove + LVar1);
+              Pmove(cg_pmove + param_1);
               Profile_EndInternal((double *)0x0);
-              TouchItemPrediction(LVar1);
-              bVar5 = true;
+              TouchItemPrediction(param_1);
+              bVar4 = true;
             }
-            iVar8 = iVar8 + 1;
-          } while (iVar8 <= iVar3);
+            iVar7 = iVar7 + 1;
+          } while (iVar7 <= iVar2);
         }
       }
-      else if (pcVar2->playerTeleported == false) {
-        (pcVar2->predictedPlayerState).viewangles[0] = pcVar2->oldViewangles[0];
-        (pcVar2->predictedPlayerState).viewangles[1] = pcVar2->oldViewangles[1];
-        (pcVar2->predictedPlayerState).viewangles[2] = pcVar2->oldViewangles[2];
+      else if (pcVar1->playerTeleported == false) {
+        (pcVar1->predictedPlayerState).viewangles[0] = pcVar1->oldViewangles[0];
+        (pcVar1->predictedPlayerState).viewangles[1] = pcVar1->oldViewangles[1];
+        (pcVar1->predictedPlayerState).viewangles[2] = pcVar1->oldViewangles[2];
       }
       if (1 < (cg_showmiss->current).integer) {
         Com_Printf(0x11,"[%i : %i]\n");
       }
-      if ((!bVar5) && ((cg_showmiss->current).integer != 0)) {
+      if ((!bVar4) && ((cg_showmiss->current).integer != 0)) {
         Com_Printf(0x11,"No prediction run\n");
       }
       Profile_EndInternal((double *)0x0);
-      __restfpr_26(1);
-      iVar3 = __restgprlr_15();
-      return iVar3;
+      return 1;
     }
     if ((cg_showmiss->current).integer != 0) {
       Com_Printf(0x11,"exceeded PACKET_BACKUP on commands\n");
     }
     Profile_EndInternal((double *)0x0);
-    __restfpr_26(1);
-    iVar3 = __restgprlr_15();
-    return iVar3;
+    return 1;
   }
   Profile_EndInternal((double *)0x0);
-  __restfpr_26(0);
-  iVar3 = __restgprlr_15();
-  return iVar3;
+  return 0;
 }
 
 
@@ -903,6 +875,8 @@ void CG_PrePredictPlayerState(LocalClientNum_t param_1)
 
 // 822F2B18  CG_PredictPlayerState  (cgame_mp/cg_predict_mp.cpp:653)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -914,141 +888,138 @@ void CG_PredictPlayerState(LocalClientNum_t param_1)
   float fVar2;
   uint uVar3;
   float fVar4;
-  LocalClientNum_t LVar5;
-  cg_s *pcVar6;
-  centity_s *pcVar7;
-  bool bVar10;
-  Weapon WVar8;
-  centity_s *pcVar9;
-  int iVar11;
-  longlong lVar12;
-  int iVar13;
-  PlayerVehicleState *pPVar14;
+  cg_s *pcVar5;
+  centity_s *pcVar6;
+  bool bVar9;
+  Weapon WVar7;
+  centity_s *pcVar8;
+  int iVar10;
+  longlong lVar11;
+  int iVar12;
+  PlayerVehicleState *pPVar13;
+  double dVar14;
   double dVar15;
   double dVar16;
-  double dVar17;
-  float fVar18;
+  float fVar17;
   float local_60;
   float local_5c;
   float local_58 [2];
   longlong local_50;
   
-  LVar5 = __savegprlr_25(param_1);
-  pcVar6 = CG_GetLocalClientGlobals(LVar5);
-  (pcVar6->lastFrame).aimSpreadScale = (pcVar6->predictedPlayerState).weapCommon.aimSpreadScale;
-  CG_PredictPlayerState_Internal(LVar5,0);
-  if (((pcVar6->predictedPlayerState).pm_flags & 0x400U) != 0) {
-    CL_SetStance(LVar5,CL_STANCE_STAND);
+  pcVar5 = CG_GetLocalClientGlobals(param_1);
+  (pcVar5->lastFrame).aimSpreadScale = (pcVar5->predictedPlayerState).weapCommon.aimSpreadScale;
+  CG_PredictPlayerState_Internal(param_1,0);
+  if (((pcVar5->predictedPlayerState).pm_flags & 0x400U) != 0) {
+    CL_SetStance(param_1,CL_STANCE_STAND);
   }
-  if ((pcVar6->predictedPlayerState).cursorHint == 0) {
-    (pcVar6->predictedPlayerState).cursorHintString = -1;
-    (pcVar6->predictedPlayerState).cursorHintEntIndex = 0x7ff;
+  if ((pcVar5->predictedPlayerState).cursorHint == 0) {
+    (pcVar5->predictedPlayerState).cursorHintString = -1;
+    (pcVar5->predictedPlayerState).cursorHintEntIndex = 0x7ff;
   }
-  dVar17 = 0.0;
-  dVar16 = (double)cg_pmove[LVar5].viewChange;
-  if (dVar16 == 0.0) {
+  dVar16 = 0.0;
+  dVar15 = (double)cg_pmove[param_1].viewChange;
+  if (dVar15 == 0.0) {
 LAB_822f2d38:
-    iVar11 = pcVar6->time - pcVar6->stepViewStart;
-    fVar18 = (cg_viewZSmoothingTime->current).value;
+    iVar10 = pcVar5->time - pcVar5->stepViewStart;
+    fVar17 = (cg_viewZSmoothingTime->current).value;
   }
   else {
-    uVar3 = pcVar6->stepViewStart;
-    if (((cg_pmove[LVar5].viewChangeTime == uVar3) || (pcVar6->playerTeleported != false)) ||
-       ((iVar11 = (pcVar6->predictedPlayerState).pm_type, iVar11 != 0 &&
-        ((iVar11 != 2 && (iVar11 != 3)))))) goto LAB_822f2d38;
-    if ((double)(cg_viewZSmoothingMin->current).value <= ABS(dVar16)) {
-      local_50 = (longlong)(int)(pcVar6->time - uVar3);
-      fVar18 = (cg_viewZSmoothingTime->current).value * 1000.0;
-      dVar15 = dVar17;
-      if ((float)local_50 < fVar18) {
-        iVar11 = (int)fVar18;
-        local_50 = (longlong)iVar11;
-        lVar12 = (ulonglong)(uint)cg_pmove[LVar5].viewChangeTime - (ulonglong)uVar3;
-        if ((-1 < lVar12) && (iVar13 = (int)lVar12, iVar13 < iVar11)) {
-          local_50 = (longlong)iVar11;
-          dVar15 = (double)((1.0 - (float)(longlong)iVar13 / (float)local_50) *
-                           pcVar6->stepViewChange);
+    uVar3 = pcVar5->stepViewStart;
+    if (((cg_pmove[param_1].viewChangeTime == uVar3) || (pcVar5->playerTeleported != false)) ||
+       ((iVar10 = (pcVar5->predictedPlayerState).pm_type, iVar10 != 0 &&
+        ((iVar10 != 2 && (iVar10 != 3)))))) goto LAB_822f2d38;
+    if ((double)(cg_viewZSmoothingMin->current).value <= ABS(dVar15)) {
+      local_50 = (longlong)(int)(pcVar5->time - uVar3);
+      fVar17 = (cg_viewZSmoothingTime->current).value * 1000.0;
+      dVar14 = dVar16;
+      if ((float)local_50 < fVar17) {
+        iVar10 = (int)fVar17;
+        local_50 = (longlong)iVar10;
+        lVar11 = (ulonglong)(uint)cg_pmove[param_1].viewChangeTime - (ulonglong)uVar3;
+        if ((-1 < lVar11) && (iVar12 = (int)lVar11, iVar12 < iVar10)) {
+          local_50 = (longlong)iVar10;
+          dVar14 = (double)((1.0 - (float)(longlong)iVar12 / (float)local_50) *
+                           pcVar5->stepViewChange);
         }
       }
-      fVar18 = (float)(dVar15 + dVar16);
+      fVar17 = (float)(dVar14 + dVar15);
       fVar2 = (cg_viewZSmoothingMax->current).value;
-      if (fVar18 <= 0.0) {
+      if (fVar17 <= 0.0) {
         fVar4 = -fVar2;
-        if (-fVar2 - fVar18 < 0.0) {
-          fVar4 = fVar18;
+        if (-fVar2 - fVar17 < 0.0) {
+          fVar4 = fVar17;
         }
-        pcVar6->stepViewChange = fVar4;
-        pcVar6->stepViewStart = cg_pmove[LVar5].viewChangeTime;
+        pcVar5->stepViewChange = fVar4;
+        pcVar5->stepViewStart = cg_pmove[param_1].viewChangeTime;
       }
       else {
-        if (fVar18 - fVar2 < 0.0) {
-          fVar2 = fVar18;
+        if (fVar17 - fVar2 < 0.0) {
+          fVar2 = fVar17;
         }
-        pcVar6->stepViewChange = fVar2;
-        pcVar6->stepViewStart = cg_pmove[LVar5].viewChangeTime;
+        pcVar5->stepViewChange = fVar2;
+        pcVar5->stepViewStart = cg_pmove[param_1].viewChangeTime;
       }
       goto LAB_822f2d8c;
     }
-    iVar11 = pcVar6->time - uVar3;
-    fVar18 = (cg_viewZSmoothingTime->current).value;
+    iVar10 = pcVar5->time - uVar3;
+    fVar17 = (cg_viewZSmoothingTime->current).value;
   }
-  local_50 = (longlong)iVar11;
-  if (fVar18 * 1000.0 < (float)local_50) {
-    pcVar6->stepViewChange = 0.0;
+  local_50 = (longlong)iVar10;
+  if (fVar17 * 1000.0 < (float)local_50) {
+    pcVar5->stepViewChange = 0.0;
   }
 LAB_822f2d8c:
-  pcVar7 = CG_GetEntity(LVar5,(pcVar6->predictedPlayerState).clientNum);
-  (pcVar7->pose).origin[0] = (pcVar6->predictedPlayerState).origin[0];
-  (pcVar7->pose).origin[1] = (pcVar6->predictedPlayerState).origin[1];
-  (pcVar7->pose).origin[2] = (pcVar6->predictedPlayerState).origin[2];
-  BG_EvaluateTrajectory(&(pcVar7->nextState).lerp.apos,pcVar6->time,(pcVar7->pose).angles);
-  if ((((pcVar6->predictedPlayerState).otherFlags & 0x1000U) == 0) ||
-     (bVar10 = CG_GetWeapReticleZoom(pcVar6,(float *)0x0), !bVar10)) {
-    pcVar6->adsViewErrorDone = 0;
+  pcVar6 = CG_GetEntity(param_1,(pcVar5->predictedPlayerState).clientNum);
+  (pcVar6->pose).origin[0] = (pcVar5->predictedPlayerState).origin[0];
+  (pcVar6->pose).origin[1] = (pcVar5->predictedPlayerState).origin[1];
+  (pcVar6->pose).origin[2] = (pcVar5->predictedPlayerState).origin[2];
+  BG_EvaluateTrajectory(&(pcVar6->nextState).lerp.apos,pcVar5->time,(pcVar6->pose).angles);
+  if ((((pcVar5->predictedPlayerState).otherFlags & 0x1000U) == 0) ||
+     (bVar9 = CG_GetWeapReticleZoom(pcVar5,(float *)0x0), !bVar9)) {
+    pcVar5->adsViewErrorDone = 0;
   }
   else {
-    WVar8 = (pcVar6->predictedPlayerState).weapCommon.weapon;
-    BG_GetADSViewError(WVar8,(bool)((byte)((uint)(pcVar6->predictedPlayerState).weapCommon.weapFlags
+    WVar7 = (pcVar5->predictedPlayerState).weapCommon.weapon;
+    BG_GetADSViewError(WVar7,(bool)((byte)((uint)(pcVar5->predictedPlayerState).weapCommon.weapFlags
                                           >> 0xf) & 1),&local_5c,&local_60);
-    if (((double)local_60 != dVar17) && (pcVar6->adsViewErrorDone == 0)) {
-      pcVar6->adsViewErrorDone = 1;
-      fVar18 = flrand(local_5c,local_60);
-      dVar16 = (double)fVar18;
-      fVar18 = random();
-      FastSinCos(fVar18 * 6.2831855,(float *)WVar8,local_58);
-      fVar18 = AngleNormalize360((float)((double)local_58[0] * dVar16 +
-                                        (double)pcVar6->offsetAngles[0]));
-      pcVar6->offsetAngles[0] = fVar18;
-      fVar18 = AngleNormalize360((float)((double)local_50._0_4_ * dVar16 +
-                                        (double)pcVar6->offsetAngles[1]));
-      pcVar6->offsetAngles[1] = fVar18;
+    if (((double)local_60 != dVar16) && (pcVar5->adsViewErrorDone == 0)) {
+      pcVar5->adsViewErrorDone = 1;
+      fVar17 = flrand(local_5c,local_60);
+      dVar15 = (double)fVar17;
+      fVar17 = random();
+      FastSinCos(fVar17 * 6.2831855,(float *)WVar7,local_58);
+      fVar17 = AngleNormalize360((float)((double)local_58[0] * dVar15 +
+                                        (double)pcVar5->offsetAngles[0]));
+      pcVar5->offsetAngles[0] = fVar17;
+      fVar17 = AngleNormalize360((float)((double)local_50._0_4_ * dVar15 +
+                                        (double)pcVar5->offsetAngles[1]));
+      pcVar5->offsetAngles[1] = fVar17;
     }
   }
-  iVar11 = (pcVar6->predictedPlayerState).vehicleState.entity;
-  pPVar14 = &(pcVar6->predictedPlayerState).vehicleState;
-  if ((((iVar11 != 0x7ff) && (((pcVar6->predictedPlayerState).otherFlags & 0x800U) == 0)) &&
-      (pcVar9 = CG_GetEntity(LVar5,iVar11), (pcVar9->flags & 1U) != 0)) &&
-     ((uVar1 = (pcVar9->pose).eType, uVar1 == '\x0e' || (uVar1 == '\f')))) {
-    BG_PlayerStateToVehicleState(&pcVar6->predictedPlayerState,&pcVar9->nextState,0,'\0');
+  iVar10 = (pcVar5->predictedPlayerState).vehicleState.entity;
+  pPVar13 = &(pcVar5->predictedPlayerState).vehicleState;
+  if ((((iVar10 != 0x7ff) && (((pcVar5->predictedPlayerState).otherFlags & 0x800U) == 0)) &&
+      (pcVar8 = CG_GetEntity(param_1,iVar10), (pcVar8->flags & 1U) != 0)) &&
+     ((uVar1 = (pcVar8->pose).eType, uVar1 == '\x0e' || (uVar1 == '\f')))) {
+    BG_PlayerStateToVehicleState(&pcVar5->predictedPlayerState,&pcVar8->nextState,0,'\0');
     memcpy();
-    (pcVar9->pose).eType = (uchar)(pcVar9->nextState).eType;
+    (pcVar8->pose).eType = (uchar)(pcVar8->nextState).eType;
   }
-  CL_SetUserCmdVehicle(LVar5,pPVar14);
-  uVar3 = (pcVar6->predictedPlayerState).clientNum;
-  pcVar6->playerVehicleEntity = pPVar14->entity;
-  (pcVar7->nextState).number = uVar3 & 0xffff;
-  BG_PlayerStateToEntityState(&pcVar6->predictedPlayerState,&pcVar7->nextState,0);
-  BG_PlayerToEntity_ProcessEvents(&pcVar6->predictedPlayerState,&pcVar7->nextState,'\0');
-  pcVar7->flags = pcVar7->flags | 1;
+  CL_SetUserCmdVehicle(param_1,pPVar13);
+  uVar3 = (pcVar5->predictedPlayerState).clientNum;
+  pcVar5->playerVehicleEntity = pPVar13->entity;
+  (pcVar6->nextState).number = uVar3 & 0xffff;
+  BG_PlayerStateToEntityState(&pcVar5->predictedPlayerState,&pcVar6->nextState,0);
+  BG_PlayerToEntity_ProcessEvents(&pcVar5->predictedPlayerState,&pcVar6->nextState,'\0');
+  pcVar6->flags = pcVar6->flags | 1;
   memcpy();
-  (pcVar7->pose).eType = (uchar)(pcVar7->nextState).eType;
-  (pcVar7->nextState).lerp.u.turret.gunAngles[1] = cg_pmove[LVar5].fTorsoPitch;
-  (pcVar7->nextState).lerp.u.turret.gunAngles[2] = cg_pmove[LVar5].fWaistPitch;
-  pcVar6->predictedPlayerEntity = pcVar7;
-  CL_SetUserCmdPlayer(LVar5,&pcVar6->predictedPlayerState,pcVar6->selectedLocation,
-                      pcVar6->selectedLocationAngle);
-  AimAssist_BackupPlayerState(LVar5,&pcVar6->predictedPlayerState);
-  __restgprlr_25();
+  (pcVar6->pose).eType = (uchar)(pcVar6->nextState).eType;
+  (pcVar6->nextState).lerp.u.turret.gunAngles[1] = cg_pmove[param_1].fTorsoPitch;
+  (pcVar6->nextState).lerp.u.turret.gunAngles[2] = cg_pmove[param_1].fWaistPitch;
+  pcVar5->predictedPlayerEntity = pcVar6;
+  CL_SetUserCmdPlayer(param_1,&pcVar5->predictedPlayerState,pcVar5->selectedLocation,
+                      pcVar5->selectedLocationAngle);
+  AimAssist_BackupPlayerState(param_1,&pcVar5->predictedPlayerState);
   return;
 }
 

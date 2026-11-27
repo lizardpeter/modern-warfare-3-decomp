@@ -444,6 +444,8 @@ char * SV_GetEntityTypeString(int param_1)
 
 // 82585AB8  SV_AnalyzePacketData  (server_mp/sv_snapshot_profile_mp.cpp:393)
 
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
@@ -452,21 +454,18 @@ void SV_AnalyzePacketData(int param_1,msg_t *param_2)
 
 {
   bool bVar1;
-  ulonglong uVar2;
-  int iVar3;
-  uint uVar4;
-  char **ppcVar5;
-  int iVar6;
+  int iVar2;
+  uint uVar3;
+  char **ppcVar4;
+  int iVar5;
   
-  uVar2 = (ulonglong)param_1;
-  __savegprlr();
-  if ((ulonglong)(uint)svs.clientCount <= (uVar2 & 0xffffffff)) {
+  if ((uint)svs.clientCount <= (uint)param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_snapshot_profile_mp.cpp"
                     ,0x193,0,"clientNum doesn\'t index svs.clientCount\n\t%i not in [0, %i)");
   }
   if ((1 < (sv_debugPacketContents->current).integer) ||
-     (((600 < param_2->cursize && (svs.clients[(int)uVar2].ping < 999)) &&
-      (svs.clients[(int)uVar2].header.state == 5)))) {
+     (((600 < param_2->cursize && (svs.clients[param_1].ping < 999)) &&
+      (svs.clients[param_1].header.state == 5)))) {
     Com_Printf(0xf,"Client %s\'s snapshot\n");
     MSG_GetUsedBitCount(param_2);
     Com_Printf(0xf,
@@ -474,10 +473,10 @@ void SV_AnalyzePacketData(int param_1,msg_t *param_2)
               );
     Sys_Milliseconds();
     Com_Printf(0xf,"%i] %i byte snapshot for %s (average snapshot size is %f)\n");
-    iVar3 = 0;
+    iVar2 = 0;
     do {
-      if (g_bitsSent[(int)uVar2][iVar3] != 0) {
-        switch(iVar3) {
+      if (g_bitsSent[param_1][iVar2] != 0) {
+        switch(iVar2) {
         case 0:
           break;
         case 1:
@@ -514,19 +513,19 @@ void SV_AnalyzePacketData(int param_1,msg_t *param_2)
         Com_Printf(0xf,"%s - %i bits (%i bytes)\n");
       }
 switchD_82585cb0_caseD_3:
-      iVar3 = iVar3 + 1;
-    } while (iVar3 < 0xe);
-    ppcVar5 = s_analyzeEntityTypeNames;
-    uVar4 = 0;
-    iVar3 = 0;
+      iVar2 = iVar2 + 1;
+    } while (iVar2 < 0xe);
+    ppcVar4 = s_analyzeEntityTypeNames;
+    uVar3 = 0;
+    iVar2 = 0;
     do {
       bVar1 = false;
       if ((sv_debugPacketContents->current).integer != 0) {
-        iVar6 = 0;
+        iVar5 = 0;
         do {
-          if (currentSnapshotNetworkEntityFieldsChanged[0][iVar3 + iVar6] != 0) {
+          if (currentSnapshotNetworkEntityFieldsChanged[0][iVar2 + iVar5] != 0) {
             if (!bVar1) {
-              if (0x16 < uVar4) {
+              if (0x16 < uVar3) {
                 MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_snapshot_profile_mp.cpp"
                                 ,0x183,0,
                                 "packetEntityType doesn\'t index ANALYZE_DATATYPE_ENTITYTYPE_COUNT\n\t%i not in [0, %i)"
@@ -537,24 +536,25 @@ switchD_82585cb0_caseD_3:
             }
             Com_Printf(0xf,"%i: %u\n");
           }
-          iVar6 = iVar6 + 1;
-        } while (iVar6 < 0x161);
+          iVar5 = iVar5 + 1;
+        } while (iVar5 < 0x161);
       }
-      ppcVar5 = ppcVar5 + 1;
-      uVar4 = uVar4 + 1;
-      iVar3 = iVar3 + 0x161;
-    } while ((int)ppcVar5 < -0x7d66f14c);
+      ppcVar4 = ppcVar4 + 1;
+      uVar3 = uVar3 + 1;
+      iVar2 = iVar2 + 0x161;
+    } while ((int)ppcVar4 < -0x7d66f14c);
     Com_Printf(0xf,
                "end-----------------------------------------------------------------------------------------------\n"
               );
   }
-  __restgprlr();
   return;
 }
 
 
 // 82585E88  SV_TrackPacketData  (server_mp/sv_snapshot_profile_mp.cpp:489)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 int SV_TrackPacketData(int param_1,PacketDataType param_2,int param_3,int param_4,int param_5,
@@ -562,39 +562,28 @@ int SV_TrackPacketData(int param_1,PacketDataType param_2,int param_3,int param_
 
 {
   int iVar1;
-  ulonglong uVar2;
-  int iVar3;
-  int iVar4;
-  longlong lVar5;
-  longlong lVar6;
+  int iVar2;
   
-  lVar6 = (longlong)param_4;
-  lVar5 = (longlong)(int)param_2;
-  uVar2 = __savegprlr_26(param_1,lVar5,param_3);
-  if (((int)uVar2 < 0) || (0x11 < (int)uVar2)) {
+  if ((param_1 < 0) || (0x11 < param_1)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_snapshot_profile_mp.cpp"
                     ,0x1ed,0,"%s\n\t(clientNum) = %i");
   }
-  iVar4 = (int)lVar5;
-  if ((iVar4 < 0) || (0xd < iVar4)) {
+  if (((int)param_2 < 0) || (0xd < (int)param_2)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_snapshot_profile_mp.cpp"
                     ,0x1ee,0,"%s\n\t(datatype) = %i");
   }
-  iVar3 = MSG_GetUsedBitCount(param_6);
-  iVar1 = (int)((uVar2 * 0xe + lVar5 & 0xffffffff) << 2);
-  iVar3 = iVar3 - param_5;
-  *(int *)((int)g_bitsSent[0] + iVar1) = iVar3 + *(int *)((int)g_bitsSent[0] + iVar1);
-  if (iVar4 == 0) {
-    iVar1 = (int)(((uVar2 & 0x1fffff) * 0x800 + lVar6 & 0xffffffff) << 2);
-    *(int *)((int)g_currentSnapshotPerEntity[0] + iVar1) =
-         iVar3 + *(int *)((int)g_currentSnapshotPerEntity[0] + iVar1);
+  iVar1 = MSG_GetUsedBitCount(param_6);
+  iVar2 = iVar1 - param_5;
+  g_bitsSent[param_1][param_2] = iVar2 + g_bitsSent[param_1][param_2];
+  if (param_2 == ANALYZE_SNAPSHOT_DELTAENTITY) {
+    g_currentSnapshotPerEntity[param_1][param_4] =
+         iVar2 + g_currentSnapshotPerEntity[param_1][param_4];
   }
   newDataReady = true;
-  if (iVar4 == 0xc) {
-    bitsUsedForServerCommands = bitsUsedForServerCommands + iVar3;
+  if (param_2 == ANALYZE_SNAPSHOT_SERVERCMDS) {
+    bitsUsedForServerCommands = bitsUsedForServerCommands + iVar2;
   }
-  iVar4 = __restgprlr_26();
-  return iVar4;
+  return iVar1;
 }
 
 
@@ -622,41 +611,35 @@ bool SV_NewPacketAnalysisReady(void)
 
 // 82585FC0  SV_TrackFieldChange  (server_mp/sv_snapshot_profile_mp.cpp:531)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void SV_TrackFieldChange(int param_1,int param_2,int param_3)
 
 {
-  int iVar1;
+  uint uVar1;
   char *pcVar2;
-  longlong lVar3;
-  longlong lVar4;
-  int iVar5;
   
-  lVar4 = (longlong)param_3;
-  lVar3 = (longlong)param_2;
-  iVar1 = __savegprlr_27(param_1);
-  if (((int)lVar4 < 0) || (0x160 < (int)lVar4)) {
+  if ((param_3 < 0) || (0x160 < param_3)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_snapshot_profile_mp.cpp"
                     ,0x216,0,"%s\n\t(field) = %i");
   }
-  iVar5 = (int)lVar3;
-  if ((iVar5 < 0) || (0x16 < iVar5)) {
+  if ((param_2 < 0) || (0x16 < param_2)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_snapshot_profile_mp.cpp"
                     ,0x217,0,"%s\n\t(entityType) = %i");
   }
   if (s_packetDataEnabled == false) {
     if (g_networkBoundData != false) {
-      iVar5 = (int)((lVar3 * 0x161 + lVar4 & 0x3fffffffU) << 2);
-      iVar1 = *(int *)((int)currentSnapshotNetworkEntityFieldsChanged[0] + iVar5);
-      *(int *)((int)networkEntityFieldsChanged[0] + iVar5) =
-           *(int *)((int)networkEntityFieldsChanged[0] + iVar5) + 1;
-      *(int *)((int)currentSnapshotNetworkEntityFieldsChanged[0] + iVar5) = iVar1 + 1;
-      __restgprlr_27();
+      uVar1 = currentSnapshotNetworkEntityFieldsChanged[param_2][param_3];
+      networkEntityFieldsChanged[param_2][param_3] =
+           networkEntityFieldsChanged[param_2][param_3] + 1;
+      currentSnapshotNetworkEntityFieldsChanged[param_2][param_3] = uVar1 + 1;
       return;
     }
   }
   else {
     Profile_Begin(0x123);
-    if (iVar5 < 0x13) {
+    if (param_2 < 0x13) {
       if (s_currentEntType < 0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_snapshot_profile_mp.cpp"
                         ,0x227,0,"%s\n\t(s_currentEntType) = %i");
@@ -665,20 +648,19 @@ void SV_TrackFieldChange(int param_1,int param_2,int param_3)
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_snapshot_profile_mp.cpp"
                         ,0x228,0,"%s\n\t(s_currentEntNum) = %i");
       }
-      g_currentSnapshotFieldsPerEntity[iVar1][s_currentEntNum] =
-           g_currentSnapshotFieldsPerEntity[iVar1][s_currentEntNum] + '\x01';
+      g_currentSnapshotFieldsPerEntity[param_1][s_currentEntNum] =
+           g_currentSnapshotFieldsPerEntity[param_1][s_currentEntNum] + '\x01';
     }
-    else if (iVar5 == 0x15) {
-      g_currentSnapshotPlayerStateFields[iVar1] = g_currentSnapshotPlayerStateFields[iVar1] + '\x01'
-      ;
+    else if (param_2 == 0x15) {
+      g_currentSnapshotPlayerStateFields[param_1] =
+           g_currentSnapshotPlayerStateFields[param_1] + '\x01';
     }
     if ((2 < (sv_debugPacketContents->current).integer) &&
-       (pcVar2 = SV_GetEntityTypeString(iVar5), *pcVar2 != '\0')) {
+       (pcVar2 = SV_GetEntityTypeString(param_2), *pcVar2 != '\0')) {
       Com_Printf(0xf,"%s - field %i changed\n");
     }
     Profile_EndInternal((double *)0x0);
   }
-  __restgprlr_27();
   return;
 }
 
@@ -740,53 +722,50 @@ int FindHowManyBlocksToJumpNSpaces(int param_1,int param_2)
 
 // 825862E8  TotalFieldJumpBitsUsedWithJumpSize  (server_mp/sv_snapshot_profile_mp.cpp:641)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 int TotalFieldJumpBitsUsedWithJumpSize(uint *param_1,int param_2,int param_3,bool param_4)
 
 {
   uint uVar1;
-  uint *puVar3;
-  longlong lVar2;
-  int iVar4;
-  ulonglong uVar5;
-  ulonglong uVar6;
-  ulonglong uVar7;
-  longlong lVar8;
-  longlong lVar9;
+  int iVar2;
+  uint uVar3;
+  ulonglong uVar4;
+  int iVar5;
+  longlong lVar6;
   
-  uVar6 = (ulonglong)param_4;
-  lVar9 = (longlong)param_2;
-  puVar3 = (uint *)__savegprlr_28(param_1);
+  lVar6 = (longlong)param_2;
   if (param_3 < 1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_snapshot_profile_mp.cpp"
                     ,0x285,0,"%s\n\t(bits) = %i");
   }
-  lVar2 = 0;
-  lVar8 = 0;
-  if (0 < (int)lVar9) {
+  iVar2 = 0;
+  iVar5 = 0;
+  if (0 < param_2) {
     do {
-      uVar1 = *puVar3;
-      if (((ulonglong)uVar1 != 0) &&
-         (((uVar6 & 0xff) == 0 || (lVar2 = (ulonglong)uVar1 + lVar2, (int)lVar8 != 0)))) {
-        uVar7 = (ulonglong)(uint)(1 << (param_3 & 0x3fU)) - 1;
-        uVar5 = lVar8 + 1;
-        trapWord(6,uVar7,0);
-        trapWord(5,uVar7 & ~(((uVar5 & 0x7fffffff) << 1 | (uVar5 & 0xffffffff) >> 0x1f) - 1),0xffff)
-        ;
-        lVar2 = (longlong)(int)(((int)uVar5 / (int)uVar7 + 1) * (uVar1 - 1)) * (longlong)param_3 +
-                lVar2;
+      uVar1 = *param_1;
+      if ((uVar1 != 0) && ((!param_4 || (iVar2 = uVar1 + iVar2, iVar5 != 0)))) {
+        uVar4 = (ulonglong)(uint)(1 << (param_3 & 0x3fU)) - 1;
+        uVar3 = iVar5 + 1;
+        trapWord(6,uVar4,0);
+        trapWord(5,uVar4 & ~((((ulonglong)uVar3 & 0x7fffffff) << 1 | (ulonglong)(uVar3 >> 0x1f)) - 1
+                            ),0xffff);
+        iVar2 = ((int)uVar3 / (int)uVar4 + 1) * (uVar1 - 1) * param_3 + iVar2;
       }
-      lVar8 = lVar8 + 1;
-      puVar3 = puVar3 + 1;
-      lVar9 = lVar9 + -1;
-    } while (lVar9 != 0);
+      iVar5 = iVar5 + 1;
+      param_1 = param_1 + 1;
+      lVar6 = lVar6 + -1;
+    } while (lVar6 != 0);
   }
-  iVar4 = __restgprlr_28(lVar2);
-  return iVar4;
+  return iVar2;
 }
 
 
 // 825863C0  SV_WriteEntityFieldNumbers  (server_mp/sv_snapshot_profile_mp.cpp:701)
 
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void SV_WriteEntityFieldNumbers(void)
@@ -820,7 +799,6 @@ void SV_WriteEntityFieldNumbers(void)
   ulonglong local_a8;
   ulonglong local_a0;
   
-  __savegprlr();
   pvVar3 = FS_FOpenFileWrite("mp_entityStats.txt");
   if (pvVar3 != (void *)0x0) {
     puVar13 = bitsUsedPerEType;
@@ -1139,13 +1117,14 @@ LAB_825867e8:
     } while (uVar12 < 0x100);
     FS_FCloseFile(pvVar3);
   }
-  __restgprlr();
   return;
 }
 
 
 // 825870C0  SV_GetClientSnapshotPing  (server_mp/sv_snapshot_profile_mp.cpp:1007)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
@@ -1153,37 +1132,31 @@ LAB_825867e8:
 int SV_GetClientSnapshotPing(int param_1,int param_2)
 
 {
-  uint uVar1;
+  int iVar1;
   uint uVar2;
-  uint uVar3;
-  int iVar4;
   
-  uVar3 = __savegprlr_29(param_1);
-  if ((uint)svs.clientCount <= uVar3) {
+  if ((uint)svs.clientCount <= (uint)param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_snapshot_profile_mp.cpp"
                     ,0x3f3,0,"clientNum doesn\'t index svs.clientCount\n\t%i not in [0, %i)");
   }
-  uVar2 = svs.clients[uVar3].header.netchan.outgoingSequence + param_2 & svs.packetBackupMask;
-  uVar1 = svs.clients[uVar3].frames[uVar2].messageAcked;
-  if (-1 < (int)uVar1) {
-    iVar4 = __restgprlr_29((ulonglong)uVar1 -
-                           (ulonglong)(uint)svs.clients[uVar3].frames[uVar2].messageSent);
-    return iVar4;
+  uVar2 = svs.clients[param_1].header.netchan.outgoingSequence + param_2 & svs.packetBackupMask;
+  iVar1 = svs.clients[param_1].frames[uVar2].messageAcked;
+  if (-1 < iVar1) {
+    return iVar1 - svs.clients[param_1].frames[uVar2].messageSent;
   }
-  iVar4 = __restgprlr_29(0xffffffffffffffff);
-  return iVar4;
+  return -1;
 }
 
 
 // 82587188  SV_GetRecentSnapshotData  (server_mp/sv_snapshot_profile_mp.cpp:1024)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void SV_GetRecentSnapshotData(int *param_1,int *param_2,int *param_3,int *param_4)
 
 {
-  int *piVar1;
-  
-  piVar1 = (int *)__savegprlr_29(param_1);
-  *piVar1 = s_numSnapshotsBuiltSinceLastPoll;
+  *param_1 = s_numSnapshotsBuiltSinceLastPoll;
   *param_2 = s_numSnapshotsSentSinceLastPoll;
   *param_3 = s_uncompressedDataSinceLastPoll;
   *param_4 = s_compressedDataSinceLastPoll;
@@ -1191,7 +1164,6 @@ void SV_GetRecentSnapshotData(int *param_1,int *param_2,int *param_3,int *param_
   s_numSnapshotsSentSinceLastPoll = 0;
   s_uncompressedDataSinceLastPoll = 0;
   s_compressedDataSinceLastPoll = 0;
-  __restgprlr_29();
   return;
 }
 
@@ -1221,88 +1193,83 @@ void SV_TrackSnapshotSize(int param_1)
 
 // 82587290  SV_TrackPacketCompression  (server_mp/sv_snapshot_profile_mp.cpp:1051)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void SV_TrackPacketCompression(int param_1,int param_2,int param_3)
 
 {
   uint uVar1;
-  int iVar2;
   
-  iVar2 = __savegprlr_29(param_1);
-  if ((iVar2 < 0) || (0x11 < iVar2)) {
+  if ((param_1 < 0) || (0x11 < param_1)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_snapshot_profile_mp.cpp"
                     ,0x41e,0,"%s\n\t(clientNum) = %i");
   }
-  uVar1 = s_clientSnapshotData[iVar2].index & 7;
+  uVar1 = s_clientSnapshotData[param_1].index & 7;
   s_numSnapshotsSentSinceLastPoll = s_numSnapshotsSentSinceLastPoll + 1;
   s_compressedDataSinceLastPoll = s_compressedDataSinceLastPoll + param_3;
-  s_clientSnapshotData[iVar2].compressedSize[uVar1] = param_3;
-  s_clientSnapshotData[iVar2].snapshotSize[uVar1] = param_2;
-  s_clientSnapshotData[iVar2].index = s_clientSnapshotData[iVar2].index + 1;
-  __restgprlr_29();
+  s_clientSnapshotData[param_1].compressedSize[uVar1] = param_3;
+  s_clientSnapshotData[param_1].snapshotSize[uVar1] = param_2;
+  s_clientSnapshotData[param_1].index = s_clientSnapshotData[param_1].index + 1;
   return;
 }
 
 
 // 82587348  SV_GetPacketCompressionForClient  (server_mp/sv_snapshot_profile_mp.cpp:1066)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 int SV_GetPacketCompressionForClient(int param_1)
 
 {
-  int iVar1;
+  uint uVar1;
   ulonglong uVar2;
-  ulonglong uVar3;
-  ulonglong uVar4;
   
-  iVar1 = __savegprlr_28(param_1);
-  uVar4 = (ulonglong)(uint)s_clientSnapshotData[iVar1].snapshotSize[7] +
-          (ulonglong)(uint)s_clientSnapshotData[iVar1].snapshotSize[6] +
-          (ulonglong)(uint)s_clientSnapshotData[iVar1].snapshotSize[5] +
-          (ulonglong)(uint)s_clientSnapshotData[iVar1].snapshotSize[4] +
-          (ulonglong)(uint)s_clientSnapshotData[iVar1].snapshotSize[3] +
-          (ulonglong)(uint)s_clientSnapshotData[iVar1].snapshotSize[2] +
-          (ulonglong)(uint)s_clientSnapshotData[iVar1].snapshotSize[1] +
-          (ulonglong)(uint)s_clientSnapshotData[iVar1].snapshotSize[0];
-  if (uVar4 == 0) {
-    iVar1 = __restgprlr_28(0);
-    return iVar1;
+  uVar2 = (ulonglong)(uint)s_clientSnapshotData[param_1].snapshotSize[7] +
+          (ulonglong)(uint)s_clientSnapshotData[param_1].snapshotSize[6] +
+          (ulonglong)(uint)s_clientSnapshotData[param_1].snapshotSize[5] +
+          (ulonglong)(uint)s_clientSnapshotData[param_1].snapshotSize[4] +
+          (ulonglong)(uint)s_clientSnapshotData[param_1].snapshotSize[3] +
+          (ulonglong)(uint)s_clientSnapshotData[param_1].snapshotSize[2] +
+          (ulonglong)(uint)s_clientSnapshotData[param_1].snapshotSize[1] +
+          (ulonglong)(uint)s_clientSnapshotData[param_1].snapshotSize[0];
+  if (uVar2 == 0) {
+    return 0;
   }
-  uVar3 = ((ulonglong)(uint)s_clientSnapshotData[iVar1].compressedSize[7] +
-           (ulonglong)(uint)s_clientSnapshotData[iVar1].compressedSize[6] +
-           (ulonglong)(uint)s_clientSnapshotData[iVar1].compressedSize[5] +
-           (ulonglong)(uint)s_clientSnapshotData[iVar1].compressedSize[4] +
-           (ulonglong)(uint)s_clientSnapshotData[iVar1].compressedSize[3] +
-           (ulonglong)(uint)s_clientSnapshotData[iVar1].compressedSize[2] +
-           (ulonglong)(uint)s_clientSnapshotData[iVar1].compressedSize[1] +
-          (ulonglong)(uint)s_clientSnapshotData[iVar1].compressedSize[0]) * 100;
-  trapWord(6,uVar4,0);
-  uVar2 = uVar4 & ~(((uVar3 & 0x7fffffff) << 1 | (uVar3 & 0xffffffff) >> 0x1f) - 1);
-  trapWord(5,uVar2,0xffff);
-  iVar1 = __restgprlr_28(100 - (longlong)((int)uVar3 / (int)uVar4),0xffffffff83f4ac74,
-                         0xffffffff83f4ac70,uVar2);
-  return iVar1;
+  uVar1 = (s_clientSnapshotData[param_1].compressedSize[7] +
+           s_clientSnapshotData[param_1].compressedSize[6] +
+           s_clientSnapshotData[param_1].compressedSize[5] +
+           s_clientSnapshotData[param_1].compressedSize[4] +
+           s_clientSnapshotData[param_1].compressedSize[3] +
+           s_clientSnapshotData[param_1].compressedSize[2] +
+           s_clientSnapshotData[param_1].compressedSize[1] +
+          s_clientSnapshotData[param_1].compressedSize[0]) * 100;
+  trapWord(6,uVar2,0);
+  trapWord(5,uVar2 & ~((((ulonglong)uVar1 & 0x7fffffff) << 1 | (ulonglong)(uVar1 >> 0x1f)) - 1),
+           0xffff);
+  return 100 - (int)uVar1 / (int)uVar2;
 }
 
 
 // 82587440  SV_ProfDraw  (server_mp/sv_snapshot_profile_mp.cpp:1102)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void SV_ProfDraw(int param_1,char *param_2,bool param_3)
 
 {
-  int iVar1;
-  ulonglong uVar2;
   float local_30 [12];
   
-  uVar2 = (ulonglong)param_3;
-  iVar1 = __savegprlr_29(param_1);
-  if ((uVar2 & 0xff) != 0) {
+  if (param_3) {
     local_30[0] = 1.0;
     local_30[1] = 1.0;
     local_30[2] = 1.0;
     local_30[3] = 0.2;
-    CL_DrawRect(0xc,iVar1,0x400,(cl_profileTextHeight->current).integer + -6,local_30);
+    CL_DrawRect(0xc,param_1,0x400,(cl_profileTextHeight->current).integer + -6,local_30);
   }
-  CL_DrawString(0xc,iVar1,param_2,0,(cl_profileTextHeight->current).integer);
-  __restgprlr_29();
+  CL_DrawString(0xc,param_1,param_2,0,(cl_profileTextHeight->current).integer);
   return;
 }
 
@@ -1392,6 +1359,8 @@ LAB_8258761c:
 
 // 825876D0  SV_Netchan_PrintProfileStats  (server_mp/sv_snapshot_profile_mp.cpp:1177)
 
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
@@ -1427,7 +1396,6 @@ void SV_Netchan_PrintProfileStats(int param_1)
   undefined1 local_4c0;
   char acStack_4b0 [1200];
   
-  __savegprlr();
   iVar8 = (cl_profileTextY->current).integer;
   iStack00000014 = param_1;
   if ((net_profile->current).integer == 0) {
@@ -1613,7 +1581,6 @@ void SV_Netchan_PrintProfileStats(int param_1)
       } while (iVar12 < svs.clientCount);
     }
   }
-  __restgprlr();
   return;
 }
 

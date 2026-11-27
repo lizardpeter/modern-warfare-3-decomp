@@ -21,6 +21,8 @@ clientState_s * G_GetClientStateLocal(int param_1)
 
 // 82566318  GetFollowPlayerStateLocal  (server_mp/sv_archive_mp.cpp:58)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -28,71 +30,69 @@ clientState_s * G_GetClientStateLocal(int param_1)
 int GetFollowPlayerStateLocal(int param_1,playerState_s *param_2)
 
 {
-  int iVar1;
-  void *pvVar2;
-  longlong lVar3;
+  void *pvVar1;
+  longlong lVar2;
+  hudelem_s *phVar3;
   hudelem_s *phVar4;
-  longlong lVar5;
-  longlong lVar6;
-  ulonglong uVar7;
-  longlong lVar8;
+  int iVar5;
+  <unnamed_type_hud> *p<Var6;
+  uint uVar7;
+  hudelem_s *phVar8;
   
-  lVar8 = (longlong)(int)param_2;
-  iVar1 = __savegprlr_26(param_1);
   if (svsHeaderValid == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_archive_mp.cpp",
                     0x3e,0,"%s");
   }
-  pvVar2 = (void *)((int)(svsHeader.firstPlayerState)->origin + svsHeader.clientSize * iVar1 + -0x1c
-                   );
-  if ((*(uint *)((int)pvVar2 + 0x10) & 0x1000) == 0) {
+  pvVar1 = (void *)((int)(svsHeader.firstPlayerState)->origin +
+                   svsHeader.clientSize * param_1 + -0x1c);
+  if ((*(uint *)((int)pvVar1 + 0x10) & 0x1000) == 0) {
     memset();
-    iVar1 = __restgprlr_26(0);
-    return iVar1;
+    return 0;
   }
-  Com_Memcpy128((void *)lVar8,pvVar2,0x3300);
+  Com_Memcpy128(param_2,pvVar1,0x3300);
   uVar7 = 0;
-  lVar6 = lVar8 + 0xa14;
-  while (*(int *)lVar6 != 0) {
+  p<Var6 = &param_2->hud;
+  while (p<Var6->current[0].type != HE_TYPE_FREE) {
     memset();
-    if (*(int *)lVar6 != 0) {
+    if (p<Var6->current[0].type != HE_TYPE_FREE) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_archive_mp.cpp"
                       ,0x4e,0,"%s");
     }
     uVar7 = uVar7 + 1;
-    lVar6 = lVar6 + 0xa8;
-    if (0x1e < (uVar7 & 0xffffffff)) {
-      iVar1 = __restgprlr_26(1);
-      return iVar1;
+    p<Var6 = (<unnamed_type_hud> *)(p<Var6->current + 1);
+    if (0x1e < uVar7) {
+      return 1;
     }
   }
-  if ((uVar7 & 0xffffffff) < 0x1f) {
-    lVar6 = 0x1f - uVar7;
-    lVar8 = uVar7 * 0xa8 + lVar8 + 0xa14;
+  if (uVar7 < 0x1f) {
+    iVar5 = 0x1f - uVar7;
+    phVar8 = (param_2->hud).current + uVar7;
     do {
-      lVar5 = lVar8;
-      phVar4 = &g_dummyHudCurrent;
+      phVar3 = &g_dummyHudCurrent;
+      phVar4 = phVar8;
       do {
-        lVar3 = (ulonglong)*(byte *)lVar5 - (ulonglong)(byte)*(undefined1 *)&phVar4->type;
-        if (lVar3 != 0) break;
-        lVar5 = lVar5 + 1;
+        lVar2 = (ulonglong)(byte)*(undefined1 *)&phVar4->type -
+                (ulonglong)(byte)*(undefined1 *)&phVar3->type;
+        if (lVar2 != 0) break;
         phVar4 = (hudelem_s *)((int)&phVar4->type + 1);
-      } while ((int)lVar5 != (int)lVar8 + 0xa8);
-      if ((int)lVar3 != 0) {
+        phVar3 = (hudelem_s *)((int)&phVar3->type + 1);
+      } while (phVar4 != phVar8 + 1);
+      if ((int)lVar2 != 0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_archive_mp.cpp"
                         ,0x55,0,"%s");
       }
-      lVar6 = lVar6 + -1;
-      lVar8 = lVar8 + 0xa8;
-    } while (lVar6 != 0);
+      iVar5 = iVar5 + -1;
+      phVar8 = phVar8 + 1;
+    } while (iVar5 != 0);
   }
-  iVar1 = __restgprlr_26(1);
-  return iVar1;
+  return 1;
 }
 
 
 // 825664A8  SV_ArchiveSnapshot  (server_mp/sv_archive_mp.cpp:101)
 
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -136,7 +136,6 @@ void SV_ArchiveSnapshot(msg_t *param_1)
   archivedEntity_s local_3540;
   playerState_s pStack_3420;
   
-  __savegprlr();
   uVar2 = -(int)&pStack_3420 & 0x7f;
   ppVar17 = (playerState_s *)((int)pStack_3420.origin + (uVar2 - 0x1c));
   pmStack00000014 = param_1;
@@ -537,7 +536,6 @@ LAB_825669a4:
   }
   MSG_WriteEntityIndex(&local_36e0,pmStack00000014,0x7ff,0xb);
   Profile_EndInternal((double *)0x0);
-  __restgprlr();
   return;
 }
 

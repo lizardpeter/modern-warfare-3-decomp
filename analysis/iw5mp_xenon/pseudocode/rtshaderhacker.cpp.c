@@ -2,42 +2,33 @@
 
 // 828947C8  SHADER_REGISTER  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtshaderhacker.cpp:115)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
+
 SHADER_REGISTER * __thiscall
 D3D::SHADER_REGISTER::SHADER_REGISTER
           (SHADER_REGISTER *this,EShaderRegisterType param_1,ulong param_2,ulong param_3,
           ulong param_4,ulong param_5,ulong param_6)
 
 {
-  SHADER_REGISTER *pSVar1;
-  ulonglong uVar2;
-  ulonglong uVar3;
-  ulonglong uVar4;
-  ulonglong uVar5;
-  ulonglong uVar6;
-  ulonglong uVar7;
-  SHADER_REGISTER SVar8;
+  SHADER_REGISTER SVar1;
   
-  uVar7 = (ulonglong)(int)param_6;
-  uVar6 = (ulonglong)(int)param_5;
-  uVar5 = (ulonglong)(int)param_4;
-  uVar4 = (ulonglong)(int)param_3;
-  uVar3 = (ulonglong)(int)param_2;
-  uVar2 = (ulonglong)(int)param_1;
-  pSVar1 = (SHADER_REGISTER *)__savegprlr_25(this);
-  SVar8 = InvalidRegister;
-  if ((uVar3 & 0xffffffff) < 0x100) {
-    pSVar1->dword = (uint)((uVar2 & 0xffffffff) << 0xc) & 0xf000 | pSVar1->dword & 0xffff0fff;
-    (pSVar1->_s_0).Register = (byte)uVar3;
-    SVar8.dword = (uint)(((((uVar4 & 3) << 2 | uVar5 & 3) << 2 | uVar6 & 3) << 2 | uVar7 & 3) <<
-                        0x10) | pSVar1->dword & 0xff00ffff;
+  SVar1 = InvalidRegister;
+  if (param_2 < 0x100) {
+    *(EShaderRegisterType *)this = (param_1 & 0xf) << 0xc | *(uint *)this & 0xffff0fff;
+    *this = SUB41(param_2,0);
+    SVar1.dword = ((((param_3 & 3) << 2 | param_4 & 3) << 2 | param_5 & 3) << 2 | param_6 & 3) <<
+                  0x10 | *(uint *)this & 0xff00ffff;
   }
-  pSVar1->dword = (ulong)SVar8;
-  pSVar1 = (SHADER_REGISTER *)__restgprlr_25(pSVar1);
-  return pSVar1;
+  *(SHADER_REGISTER *)this = SVar1;
+  return (SHADER_REGISTER *)this;
 }
 
 
 // 82894850  SHADER_REGISTER  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtshaderhacker.cpp:131)
+
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 
 SHADER_REGISTER * __thiscall
 D3D::SHADER_REGISTER::SHADER_REGISTER
@@ -46,83 +37,72 @@ D3D::SHADER_REGISTER::SHADER_REGISTER
 {
   uint uVar1;
   uint uVar2;
-  SHADER_REGISTER *pSVar3;
-  ulonglong uVar4;
-  ulonglong uVar5;
-  ulonglong uVar6;
+  uint uVar3;
   
-  uVar6 = (ulonglong)(int)param_3;
-  uVar5 = (ulonglong)(int)param_2;
-  uVar4 = (ulonglong)(int)param_1;
-  pSVar3 = (SHADER_REGISTER *)__savegprlr_28(this);
-  if ((uVar5 & 0xffffffff) < 0x100) {
-    pSVar3->dword = (uint)((uVar4 & 0xffffffff) << 0xc) & 0xf000 | pSVar3->dword & 0xffff0fff;
-    (pSVar3->_s_0).Register = (byte)uVar5;
-    uVar1 = pSVar3->dword;
-    uVar6 = uVar6 & 3;
-    uVar2 = (uint)(uVar6 << 0x10);
-    pSVar3->dword = uVar2 | uVar1 & 0xfffcffff;
-    pSVar3->dword = (uint)(uVar6 << 0x12) | uVar2 | uVar1 & 0xfff0ffff;
-    uVar6 = uVar6 << 0x14 | uVar6 << 0x12 | uVar6 << 0x10 | (ulonglong)uVar1 & 0xffc0ffff;
-    pSVar3->dword = (uint)(uVar6 << 2) & 0xc00000 | (uint)uVar6 & 0xff3fffff;
+  if (param_2 < 0x100) {
+    *(EShaderRegisterType *)this = (param_1 & 0xf) << 0xc | *(uint *)this & 0xffff0fff;
+    *this = SUB41(param_2,0);
+    uVar1 = *(uint *)this;
+    uVar3 = param_3 & 3;
+    uVar2 = uVar3 << 0x10;
+    *(uint *)this = uVar2 | uVar1 & 0xfffcffff;
+    *(uint *)this = uVar3 << 0x12 | uVar2 | uVar1 & 0xfff0ffff;
+    *(uint *)this = uVar3 << 0x16 | uVar3 << 0x14 | uVar3 << 0x12 | uVar2 | uVar1 & 0xff00ffff;
   }
   else {
-    *pSVar3 = InvalidRegister;
+    *(SHADER_REGISTER *)this = InvalidRegister;
   }
-  pSVar3 = (SHADER_REGISTER *)__restgprlr_28(pSVar3);
-  return pSVar3;
+  return (SHADER_REGISTER *)this;
 }
 
 
 // 828948D8  SHADER_REGISTER  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtshaderhacker.cpp:144)
+
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 
 SHADER_REGISTER * __thiscall
 D3D::SHADER_REGISTER::SHADER_REGISTER
           (SHADER_REGISTER *this,EShaderRegisterType param_1,ulong param_2)
 
 {
-  SHADER_REGISTER *pSVar1;
-  ulonglong uVar2;
-  ulonglong uVar3;
-  SHADER_REGISTER SVar4;
+  SHADER_REGISTER SVar1;
   
-  uVar3 = (ulonglong)(int)param_2;
-  uVar2 = (ulonglong)(int)param_1;
-  pSVar1 = (SHADER_REGISTER *)__savegprlr_29(this);
-  SVar4 = InvalidRegister;
-  if ((uVar3 & 0xffffffff) < 0x100) {
-    pSVar1->dword = (uint)((uVar2 & 0xffffffff) << 0xc) & 0xf000 | pSVar1->dword & 0xffff0fff;
-    (pSVar1->_s_0).Register = (byte)uVar3;
-    SVar4.dword = pSVar1->dword & 0xff00ffff | 0x1b0000;
+  SVar1 = InvalidRegister;
+  if (param_2 < 0x100) {
+    *(EShaderRegisterType *)this = (param_1 & 0xf) << 0xc | *(uint *)this & 0xffff0fff;
+    *this = SUB41(param_2,0);
+    SVar1.dword = *(uint *)this & 0xff00ffff | 0x1b0000;
   }
-  pSVar1->dword = (ulong)SVar4;
-  pSVar1 = (SHADER_REGISTER *)__restgprlr_29(pSVar1);
-  return pSVar1;
+  *(SHADER_REGISTER *)this = SVar1;
+  return (SHADER_REGISTER *)this;
 }
 
 
 // 82894938  Swizzle  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtshaderhacker.cpp:158)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 SHADER_REGISTER __thiscall D3D::SHADER_REGISTER::Swizzle(SHADER_REGISTER *this,ulong param_1)
 
 {
   uint uVar1;
-  undefined8 uVar2;
-  ulong uVar3;
-  ulonglong in_r5;
+  uint in_r5;
   
-  uVar2 = __savegprlr_29(this);
   uVar1 = *(uint *)param_1;
-  SHADER_REGISTER((SHADER_REGISTER *)uVar2,uVar1 >> 0xc & 0xf,(uint)*(byte *)param_1,
+  SHADER_REGISTER(this,uVar1 >> 0xc & 0xf,(uint)*(byte *)param_1,
                   (((uint)((((ulonglong)(uVar1 >> 4) & 0xc0000 | (ulonglong)uVar1 & 0x300000) >> 4 |
                            (ulonglong)uVar1 & 0xc0000) >> 4) | uVar1 & 0x30000) >> 10) >>
-                  ((uint)((in_r5 & 0xffffffff) << 1) & 0x3e) & 3);
-  uVar3 = __restgprlr_29(uVar2);
-  return (SHADER_REGISTER)uVar3;
+                  ((in_r5 & 0x1f) << 1) & 3);
+  return (SHADER_REGISTER)((SHADER_REGISTER)this).dword;
 }
 
 
 // 828949A8  Swizzle  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtshaderhacker.cpp:165)
+
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 
 SHADER_REGISTER __thiscall
 D3D::SHADER_REGISTER::Swizzle
@@ -131,27 +111,15 @@ D3D::SHADER_REGISTER::Swizzle
 {
   uint uVar1;
   uint uVar2;
-  undefined8 uVar3;
-  ulong uVar4;
-  ulonglong uVar5;
-  ulonglong uVar6;
-  ulonglong uVar7;
-  ulonglong in_r8;
+  uint in_r8;
   
-  uVar7 = (ulonglong)(int)param_4;
-  uVar6 = (ulonglong)(int)param_3;
-  uVar5 = (ulonglong)(int)param_2;
-  uVar3 = __savegprlr_26(this);
   uVar1 = *(uint *)param_1;
   uVar2 = ((uint)((((ulonglong)(uVar1 >> 4) & 0xc0000 | (ulonglong)uVar1 & 0x300000) >> 4 |
                   (ulonglong)uVar1 & 0xc0000) >> 4) | uVar1 & 0x30000) >> 10;
-  SHADER_REGISTER((SHADER_REGISTER *)uVar3,uVar1 >> 0xc & 0xf,(uint)*(byte *)param_1,
-                  uVar2 >> ((uint)((uVar5 & 0xffffffff) << 1) & 0x3e) & 3,
-                  uVar2 >> ((uint)((uVar6 & 0xffffffff) << 1) & 0x3e) & 3,
-                  uVar2 >> ((uint)((uVar7 & 0xffffffff) << 1) & 0x3e) & 3,
-                  uVar2 >> ((uint)((in_r8 & 0xffffffff) << 1) & 0x3e) & 3);
-  uVar4 = __restgprlr_26(uVar3);
-  return (SHADER_REGISTER)uVar4;
+  SHADER_REGISTER(this,uVar1 >> 0xc & 0xf,(uint)*(byte *)param_1,
+                  uVar2 >> ((param_2 & 0x1f) << 1) & 3,uVar2 >> ((param_3 & 0x1f) << 1) & 3,
+                  uVar2 >> ((param_4 & 0x1f) << 1) & 3,uVar2 >> ((in_r8 & 0x1f) << 1) & 3);
+  return (SHADER_REGISTER)((SHADER_REGISTER)this).dword;
 }
 
 
@@ -177,31 +145,30 @@ ulong __thiscall D3D::SHADER_REGISTER::GetWriteMask(SHADER_REGISTER *this)
 
 // 828972D8  FindOrAdd  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtcommon.hpp:195)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 CPixelShaderHashEntry * __thiscall
 D3D::
 CTSSortedList<D3D::CPixelShaderHashEntry,unsigned___int64,&D3D::RTDebugMemAlloc,&D3D::RTDebugMemFree>
 ::FindOrAdd(void *this,ulong64 param_1)
 
 {
-  undefined4 uVar1;
-  undefined4 *puVar2;
+  undefined4 *puVar1;
+  undefined4 uVar2;
   undefined4 *puVar3;
   char *pcVar4;
-  undefined4 *puVar5;
-  CPixelShaderHashEntry *pCVar6;
   
-  puVar2 = (undefined4 *)__savegprlr_29(this);
-  puVar3 = (undefined4 *)*puVar2;
-  while (puVar5 = puVar3, puVar5 != (undefined4 *)0x0) {
-    if (param_1 <= *(ulonglong *)(puVar5 + 2)) {
-      if (param_1 == *(ulonglong *)(puVar5 + 2)) {
-        puVar5 = puVar5 + 4;
-        goto LAB_82897398;
+  puVar3 = *(undefined4 **)this;
+  while (puVar1 = puVar3, puVar1 != (undefined4 *)0x0) {
+    if (param_1 <= *(ulonglong *)(puVar1 + 2)) {
+      if (param_1 == *(ulonglong *)(puVar1 + 2)) {
+        return (CPixelShaderHashEntry *)(puVar1 + 4);
       }
       break;
     }
-    puVar2 = puVar5;
-    puVar3 = (undefined4 *)*puVar5;
+    this = puVar1;
+    puVar3 = (undefined4 *)*puVar1;
   }
   if (g_AllocDebugHeap == 0) {
     puVar3 = XMemAlloc(0x18,0x64800000);
@@ -212,24 +179,23 @@ CTSSortedList<D3D::CPixelShaderHashEntry,unsigned___int64,&D3D::RTDebugMemAlloc,
     puVar3 = DmDebugAlloc(0x18);
     if (puVar3 != (undefined4 *)0x0) {
 LAB_8289737c:
-      uVar1 = *puVar2;
-      puVar5 = puVar3 + 4;
+      uVar2 = *(undefined4 *)this;
       *(ulong64 *)(puVar3 + 2) = param_1;
-      *puVar3 = uVar1;
-      *puVar2 = puVar3;
-      goto LAB_82897398;
+      *puVar3 = uVar2;
+      *(undefined4 **)this = puVar3;
+      return (CPixelShaderHashEntry *)(puVar3 + 4);
     }
     pcVar4 = "Out of Debug Memory";
   }
   DefaultTextureTrackerErrorCallback(pcVar4);
-  puVar5 = (undefined4 *)0x0;
-LAB_82897398:
-  pCVar6 = (CPixelShaderHashEntry *)__restgprlr_29(puVar5);
-  return pCVar6;
+  return (CPixelShaderHashEntry *)0x0;
 }
 
 
 // 828973A0  FindOrAdd  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtcommon.hpp:195)
+
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 
 CVertexShaderHashEntry * __thiscall
 D3D::
@@ -237,25 +203,21 @@ CTSSortedList<D3D::CVertexShaderHashEntry,unsigned___int64,&D3D::RTDebugMemAlloc
 ::FindOrAdd(void *this,ulong64 param_1)
 
 {
-  undefined4 uVar1;
-  undefined4 *puVar2;
+  undefined4 *puVar1;
+  undefined4 uVar2;
   undefined4 *puVar3;
   char *pcVar4;
-  undefined4 *puVar5;
-  CVertexShaderHashEntry *pCVar6;
   
-  puVar2 = (undefined4 *)__savegprlr_29(this);
-  puVar3 = (undefined4 *)*puVar2;
-  while (puVar5 = puVar3, puVar5 != (undefined4 *)0x0) {
-    if (param_1 <= *(ulonglong *)(puVar5 + 2)) {
-      if (param_1 == *(ulonglong *)(puVar5 + 2)) {
-        puVar5 = puVar5 + 4;
-        goto LAB_82897460;
+  puVar3 = *(undefined4 **)this;
+  while (puVar1 = puVar3, puVar1 != (undefined4 *)0x0) {
+    if (param_1 <= *(ulonglong *)(puVar1 + 2)) {
+      if (param_1 == *(ulonglong *)(puVar1 + 2)) {
+        return (CVertexShaderHashEntry *)(puVar1 + 4);
       }
       break;
     }
-    puVar2 = puVar5;
-    puVar3 = (undefined4 *)*puVar5;
+    this = puVar1;
+    puVar3 = (undefined4 *)*puVar1;
   }
   if (g_AllocDebugHeap == 0) {
     puVar3 = XMemAlloc(0x38,0x64800000);
@@ -266,20 +228,16 @@ CTSSortedList<D3D::CVertexShaderHashEntry,unsigned___int64,&D3D::RTDebugMemAlloc
     puVar3 = DmDebugAlloc(0x38);
     if (puVar3 != (undefined4 *)0x0) {
 LAB_82897444:
-      uVar1 = *puVar2;
-      puVar5 = puVar3 + 4;
+      uVar2 = *(undefined4 *)this;
       *(ulong64 *)(puVar3 + 2) = param_1;
-      *puVar3 = uVar1;
-      *puVar2 = puVar3;
-      goto LAB_82897460;
+      *puVar3 = uVar2;
+      *(undefined4 **)this = puVar3;
+      return (CVertexShaderHashEntry *)(puVar3 + 4);
     }
     pcVar4 = "Out of Debug Memory";
   }
   DefaultTextureTrackerErrorCallback(pcVar4);
-  puVar5 = (undefined4 *)0x0;
-LAB_82897460:
-  pCVar6 = (CVertexShaderHashEntry *)__restgprlr_29(puVar5);
-  return pCVar6;
+  return (CVertexShaderHashEntry *)0x0;
 }
 
 
@@ -295,55 +253,53 @@ void D3D::_dynamic_initializer_for__InvalidRegister__(void)
 
 // 82896528  Initialize  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtshaderhacker.cpp:222)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 HackFailureReason __thiscall
 D3D::CONSTANT_ALLOCATOR::Initialize
           (CONSTANT_ALLOCATOR *this,void *param_1,ulong param_2,void *param_3)
 
 {
-  CONSTANT_ALLOCATOR *this_00;
-  int iVar2;
-  undefined8 uVar1;
-  HackFailureReason HVar3;
-  longlong lVar4;
-  ulonglong uVar5;
+  int iVar1;
+  HackFailureReason HVar2;
   void *in_stack_ffffff88;
   
-  uVar5 = (ulonglong)(int)param_2;
-  lVar4 = (longlong)(int)param_1;
-  this_00 = (CONSTANT_ALLOCATOR *)__savegprlr_28(this,lVar4,uVar5,param_3);
-  this_00->CConstantsUsed[0] = 0;
-  this_00->CConstantsUsed[1] = 0;
-  this_00->CConstantsUsed[2] = 0;
-  this_00->CConstantsUsed[3] = 0;
-  this_00->RelativeCConstantsUsed[0] = 0;
-  this_00->RelativeCConstantsUsed[1] = 0;
-  this_00->RelativeCConstantsUsed[2] = 0;
-  this_00->RelativeCConstantsUsed[3] = 0;
-  this_00->CConstantBlocksUsed = 0;
-  this_00->bUsesRelativeIndexing = 0;
-  this_00->ConstantsAllocated[0] = 0;
-  this_00->ConstantsAllocated[1] = 0;
-  this_00->ConstantsAllocated[2] = 0;
-  this_00->ConstantsAllocated[3] = 0;
-  this_00->AllocationPhase = 0;
-  this_00->LastAllocated = 0x100;
-  iVar2 = XMicrocodeShaderForEachInstruction
-                    ((ulong *)lVar4,(uint)((uVar5 & 0xffffffff) << 2),(ulong *)0x0,0,(ulong *)0x0,
-                     (ulong *)0x0,0x24,GenerateShaderConstantInfoCB,in_stack_ffffff88);
-  if (iVar2 < 0) {
-    this_00->AllocationPhase = -1;
-    uVar1 = 10;
+  this->CConstantsUsed[0] = 0;
+  this->CConstantsUsed[1] = 0;
+  this->CConstantsUsed[2] = 0;
+  this->CConstantsUsed[3] = 0;
+  this->RelativeCConstantsUsed[0] = 0;
+  this->RelativeCConstantsUsed[1] = 0;
+  this->RelativeCConstantsUsed[2] = 0;
+  this->RelativeCConstantsUsed[3] = 0;
+  this->CConstantBlocksUsed = 0;
+  this->bUsesRelativeIndexing = 0;
+  this->ConstantsAllocated[0] = 0;
+  this->ConstantsAllocated[1] = 0;
+  this->ConstantsAllocated[2] = 0;
+  this->ConstantsAllocated[3] = 0;
+  this->AllocationPhase = 0;
+  this->LastAllocated = 0x100;
+  iVar1 = XMicrocodeShaderForEachInstruction
+                    (param_1,param_2 << 2,(ulong *)0x0,0,(ulong *)0x0,(ulong *)0x0,0x24,
+                     GenerateShaderConstantInfoCB,in_stack_ffffff88);
+  if (iVar1 < 0) {
+    this->AllocationPhase = -1;
+    HVar2 = eUnknownFailure;
   }
   else {
-    FixUpUsedConstants(this_00);
-    uVar1 = 0;
+    FixUpUsedConstants(this);
+    HVar2 = eSuccess;
   }
-  HVar3 = __restgprlr_28(uVar1);
-  return HVar3;
+  return HVar2;
 }
 
 
 // 82898F90  Destroy  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtcommon.hpp:226)
+
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 
 void __thiscall
 D3D::
@@ -353,10 +309,8 @@ CTSSortedList<D3D::CPixelShaderHashEntry,unsigned___int64,&D3D::RTDebugMemAlloc,
 {
   undefined4 *puVar1;
   undefined4 *puVar2;
-  undefined4 *puVar3;
   
-  puVar3 = (undefined4 *)__savegprlr_28(this);
-  puVar2 = (undefined4 *)*puVar3;
+  puVar2 = *(undefined4 **)this;
   while (puVar2 != (undefined4 *)0x0) {
     puVar1 = (undefined4 *)*puVar2;
     CPixelShaderHashEntry::Destroy((CPixelShaderHashEntry *)(puVar2 + 4));
@@ -369,71 +323,72 @@ CTSSortedList<D3D::CPixelShaderHashEntry,unsigned___int64,&D3D::RTDebugMemAlloc,
       puVar2 = puVar1;
     }
   }
-  *puVar3 = 0;
-  __restgprlr_28();
+  *(undefined4 *)this = 0;
   return;
 }
 
 
 // 828965F0  AllocateCConstant  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtshaderhacker.cpp:250)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 int __thiscall D3D::CONSTANT_ALLOCATOR::AllocateCConstant(CONSTANT_ALLOCATOR *this)
 
 {
   uint uVar1;
-  ulong64 *puVar2;
-  bool bVar4;
-  int iVar3;
-  ulonglong uVar5;
+  bool bVar2;
+  ulonglong uVar3;
+  int iVar4;
   
-  puVar2 = (ulong64 *)__savegprlr_26(this);
   do {
-    uVar1 = *(uint *)((int)puVar2 + 0x74);
+    uVar1 = this->AllocationPhase;
     if (uVar1 == 0) {
-      uVar5 = (ulonglong)*(uint *)(puVar2 + 0xe) - 1;
-      if (-1 < (longlong)uVar5) {
+      uVar3 = (ulonglong)(uint)this->LastAllocated - 1;
+      if (-1 < (longlong)uVar3) {
         do {
-          iVar3 = (int)uVar5;
-          if ((1L << ((longlong)iVar3 >> 2 & 0x7fU) & puVar2[8]) == 0) {
-            *(int *)(puVar2 + 0xe) = iVar3;
-            puVar2[(iVar3 >> 6) + 10] = 1L << ((longlong)iVar3 & 0x3fU) | puVar2[(iVar3 >> 6) + 10];
-            goto LAB_82896750;
+          iVar4 = (int)uVar3;
+          if ((1L << ((longlong)iVar4 >> 2 & 0x7fU) & this->CConstantBlocksUsed) == 0) {
+            this->LastAllocated = iVar4;
+            this->ConstantsAllocated[iVar4 >> 6] =
+                 1L << ((longlong)iVar4 & 0x3fU) | this->ConstantsAllocated[iVar4 >> 6];
+            return iVar4;
           }
-          uVar5 = (uVar5 & 0xfffffffc) - 1;
-        } while (-1 < (longlong)uVar5);
+          uVar3 = (uVar3 & 0xfffffffc) - 1;
+        } while (-1 < (longlong)uVar3);
       }
     }
     else if (uVar1 == 1) {
-      uVar5 = (ulonglong)*(uint *)(puVar2 + 0xe) - 1;
-      if (-1 < (longlong)uVar5) {
+      uVar3 = (ulonglong)(uint)this->LastAllocated - 1;
+      if (-1 < (longlong)uVar3) {
         do {
-          bVar4 = GetConstBit(puVar2 + 4,(int)uVar5);
-          if ((!bVar4) && (bVar4 = GetConstBit(puVar2 + 10,(int)uVar5), !bVar4)) goto LAB_82896700;
-          uVar5 = uVar5 - 1;
-        } while (-1 < (longlong)uVar5);
+          bVar2 = GetConstBit(this->RelativeCConstantsUsed,(int)uVar3);
+          if ((!bVar2) && (bVar2 = GetConstBit(this->ConstantsAllocated,(int)uVar3), !bVar2))
+          goto LAB_82896700;
+          uVar3 = uVar3 - 1;
+        } while (-1 < (longlong)uVar3);
       }
     }
     else {
       if (2 < uVar1) {
-        uVar5 = 0xffffffffffffffff;
-        goto LAB_82896750;
+        return -1;
       }
-      uVar5 = (ulonglong)*(uint *)(puVar2 + 0xe);
-      while (uVar5 = uVar5 - 1, -1 < (longlong)uVar5) {
-        bVar4 = GetConstBit(puVar2,(int)uVar5);
-        if ((!bVar4) && (bVar4 = GetConstBit(puVar2 + 10,(int)uVar5), !bVar4)) goto LAB_82896700;
+      uVar3 = (ulonglong)(uint)this->LastAllocated;
+      while (uVar3 = uVar3 - 1, -1 < (longlong)uVar3) {
+        bVar2 = GetConstBit(this->CConstantsUsed,(int)uVar3);
+        if ((!bVar2) && (bVar2 = GetConstBit(this->ConstantsAllocated,(int)uVar3), !bVar2)) {
+LAB_82896700:
+          iVar4 = (int)uVar3;
+          this->LastAllocated = iVar4;
+          this->ConstantsAllocated[iVar4 >> 6] =
+               1L << (uVar3 & 0x3f) | this->ConstantsAllocated[iVar4 >> 6];
+          return iVar4;
+        }
       }
     }
-    *(undefined4 *)(puVar2 + 0xe) = 0x100;
-    *(uint *)((int)puVar2 + 0x74) = uVar1 + 1;
+    this->LastAllocated = 0x100;
+    this->AllocationPhase = uVar1 + 1;
   } while( true );
-LAB_82896700:
-  *(int *)(puVar2 + 0xe) = (int)uVar5;
-  iVar3 = (int)uVar5 >> 6;
-  puVar2[iVar3 + 10] = 1L << (uVar5 & 0x3f) | puVar2[iVar3 + 10];
-LAB_82896750:
-  iVar3 = __restgprlr_26(uVar5);
-  return iVar3;
 }
 
 
@@ -460,22 +415,20 @@ CTSHashTable<D3D::CPixelShaderHashEntry,D3D::HashParams_DB,&D3D::RTDebugMemAlloc
 
 // 82894AC8  GetConstBit  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtshaderhacker.cpp:315)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 bool D3D::CONSTANT_ALLOCATOR::GetConstBit(ulong64 *param_1,int param_2)
 
 {
-  int iVar1;
-  undefined1 uVar2;
-  ulonglong uVar3;
-  
-  uVar3 = (ulonglong)param_2;
-  iVar1 = __savegprlr_29(param_1);
-  uVar2 = __restgprlr_29((1L << (uVar3 & 0x3f) & *(ulonglong *)(((int)uVar3 >> 6) * 8 + iVar1)) != 0
-                        );
-  return (bool)uVar2;
+  return (1L << ((longlong)param_2 & 0x3fU) & param_1[param_2 >> 6]) != 0;
 }
 
 
 // 82894B18  GenerateShaderConstantInfoCB  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtshaderhacker.cpp:326)
+
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 
 undefined4
 D3D::CONSTANT_ALLOCATOR::GenerateShaderConstantInfoCB
@@ -486,19 +439,16 @@ D3D::CONSTANT_ALLOCATOR::GenerateShaderConstantInfoCB
   int iVar2;
   bool bVar3;
   uint uVar4;
-  ulonglong uVar5;
-  undefined8 uVar6;
-  undefined4 uVar7;
-  uint uVar8;
-  uint uVar9;
-  int iVar10;
+  undefined4 uVar5;
+  uint uVar6;
+  uint uVar7;
+  int iVar8;
   byte local_30 [48];
   
-  uVar5 = __savegprlr_29(param_1,param_2);
-  if ((uVar5 & 0x40) == 0) {
-    if (((uVar5 & 1) == 0) && ((uVar5 & 4) != 0)) {
+  if ((param_1 & 0x40) == 0) {
+    if (((param_1 & 1) == 0) && ((param_1 & 4) != 0)) {
       uVar1 = (param_3->FlowPair).dword[2];
-      iVar10 = 0;
+      iVar8 = 0;
       bVar3 = (uVar1 & 0x80000000) == 0;
       local_30[0] = 0;
       local_30[1] = 0;
@@ -506,170 +456,167 @@ D3D::CONSTANT_ALLOCATOR::GenerateShaderConstantInfoCB
       if (bVar3) {
         local_30[0] = *(byte *)((int)(param_3->FlowPair).dword + 9);
       }
-      uVar8 = (uint)bVar3;
+      uVar6 = (uint)bVar3;
       if ((uVar1 & 0x40000000) == 0) {
         local_30[bVar3] = *(byte *)((int)(param_3->FlowPair).dword + 10);
-        uVar8 = uVar8 + 1;
+        uVar6 = uVar6 + 1;
       }
       if (((uVar1 & 0x20000000) == 0) ||
-         ((uVar4 = (param_3->FlowPair).dword[0] >> 0x1a, uVar9 = uVar8, 0x29 < uVar4 &&
+         ((uVar4 = (param_3->FlowPair).dword[0] >> 0x1a, uVar7 = uVar6, 0x29 < uVar4 &&
           (uVar4 < 0x30)))) {
-        local_30[uVar8] = (byte)uVar1;
-        uVar8 = uVar8 + 1;
-        uVar9 = uVar8;
+        local_30[uVar6] = (byte)uVar1;
+        uVar6 = uVar6 + 1;
+        uVar7 = uVar6;
       }
-      for (; uVar8 != 0; uVar8 = uVar8 - 1) {
-        if (uVar9 == 0) {
+      for (; uVar6 != 0; uVar6 = uVar6 - 1) {
+        if (uVar7 == 0) {
           uVar1 = (param_3->FlowPair).dword[1] >> 0x1f;
         }
         else {
           uVar1 = (param_3->FlowPair).dword[1] >> 0x1e;
         }
         if ((uVar1 & 1) == 0) {
-          iVar2 = ((int)(uint)local_30[iVar10] >> 6) * 8;
+          iVar2 = ((int)(uint)local_30[iVar8] >> 6) * 8;
           *(ulonglong *)(iVar2 + (int)param_4) =
-               1L << (local_30[iVar10] & 0x3f) | *(ulonglong *)(iVar2 + (int)param_4);
+               1L << (local_30[iVar8] & 0x3f) | *(ulonglong *)(iVar2 + (int)param_4);
         }
         else {
-          iVar2 = ((int)(uint)local_30[iVar10] >> 6) * 8;
+          iVar2 = ((int)(uint)local_30[iVar8] >> 6) * 8;
           *(ulonglong *)((int)param_4 + iVar2 + 0x20) =
-               1L << (local_30[iVar10] & 0x3f) | *(ulonglong *)((int)param_4 + iVar2 + 0x20);
+               1L << (local_30[iVar8] & 0x3f) | *(ulonglong *)((int)param_4 + iVar2 + 0x20);
           *(undefined4 *)((int)param_4 + 0x48) = 1;
         }
-        iVar10 = iVar10 + 1;
+        iVar8 = iVar8 + 1;
       }
     }
-    uVar6 = 0;
+    uVar5 = 0;
   }
   else {
-    uVar6 = 0xfffffffffffff002;
+    uVar5 = 0xfffff002;
   }
-  uVar7 = __restgprlr_29(uVar6);
-  return uVar7;
+  return uVar5;
 }
 
 
 // 82894C68  FixUpUsedConstants  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtshaderhacker.cpp:411)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
+
 void __thiscall D3D::CONSTANT_ALLOCATOR::FixUpUsedConstants(CONSTANT_ALLOCATOR *this)
 
 {
   int iVar1;
-  ulong64 *puVar2;
-  ulong64 *puVar3;
-  bool bVar4;
-  bool bVar5;
+  bool bVar2;
+  bool bVar3;
+  ulonglong uVar4;
+  uint uVar5;
   ulonglong uVar6;
-  ulonglong uVar7;
-  int iVar8;
-  ulonglong uVar9;
+  int iVar7;
+  ulonglong uVar8;
+  ulong64 *puVar9;
   int iVar10;
   longlong lVar11;
   
-  puVar2 = (ulong64 *)__savegprlr_25(this);
-  if (*(int *)(puVar2 + 9) != 0) {
-    iVar8 = -1;
+  if (this->bUsesRelativeIndexing != 0) {
+    iVar7 = -1;
     iVar10 = 0;
-    puVar3 = puVar2 + 4;
-    uVar9 = 0;
+    puVar9 = this->RelativeCConstantsUsed;
+    uVar8 = 0;
     do {
-      bVar4 = GetConstBit(puVar3,iVar10);
-      bVar5 = GetConstBit(puVar2,iVar10);
-      if (bVar4) {
-        iVar8 = iVar10;
+      bVar2 = GetConstBit(puVar9,iVar10);
+      bVar3 = GetConstBit(this->CConstantsUsed,iVar10);
+      if (bVar2) {
+        iVar7 = iVar10;
       }
-      if ((!bVar5) || (!bVar4)) {
-        if (bVar5) {
-          iVar8 = -1;
+      if ((!bVar3) || (!bVar2)) {
+        if (bVar3) {
+          iVar7 = -1;
         }
-        else if (iVar8 != -1) {
+        else if (iVar7 != -1) {
           iVar1 = iVar10 >> 6;
-          uVar6 = 1L << (uVar9 & 0x3f);
-          if (iVar10 - iVar8 < 4) {
-            uVar7 = puVar3[iVar1];
+          uVar6 = 1L << (uVar8 & 0x3f);
+          if (iVar10 - iVar7 < 4) {
+            uVar4 = puVar9[iVar1];
           }
           else {
-            puVar2[iVar1] = puVar2[iVar1] | uVar6;
-            uVar7 = puVar3[iVar1];
+            this->CConstantsUsed[iVar1] = this->CConstantsUsed[iVar1] | uVar6;
+            uVar4 = puVar9[iVar1];
           }
-          puVar3[iVar1] = uVar7 | uVar6;
+          puVar9[iVar1] = uVar4 | uVar6;
         }
       }
       iVar10 = iVar10 + 1;
-      uVar9 = uVar9 + 1;
+      uVar8 = uVar8 + 1;
     } while (iVar10 < 0x100);
   }
-  uVar6 = 0;
-  uVar9 = 0;
+  uVar5 = 0;
+  uVar8 = 0;
   lVar11 = 0x40;
   do {
-    iVar8 = (int)uVar6 >> 4;
-    uVar7 = 0xfL << ((uVar6 & 0xf) << 2);
-    if (((puVar2[iVar8] & uVar7) != 0) || ((puVar2[iVar8 + 4] & uVar7) != 0)) {
-      puVar2[8] = 1L << (uVar9 & 0x7f) | puVar2[8];
+    uVar6 = 0xfL << (((ulonglong)uVar5 & 0xf) << 2);
+    if (((this->CConstantsUsed[(int)uVar5 >> 4] & uVar6) != 0) ||
+       ((this->RelativeCConstantsUsed[(int)uVar5 >> 4] & uVar6) != 0)) {
+      this->CConstantBlocksUsed = 1L << (uVar8 & 0x7f) | this->CConstantBlocksUsed;
     }
-    uVar6 = uVar6 + 1;
-    uVar9 = uVar9 + 1;
+    uVar5 = uVar5 + 1;
+    uVar8 = uVar8 + 1;
     lVar11 = lVar11 + -1;
   } while (lVar11 != 0);
-  __restgprlr_25();
   return;
 }
 
 
 // 82894DB0  Allocate  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtshaderhacker.cpp:531)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 SHADER_REGISTER __thiscall D3D::GPR_ALLOCATOR::Allocate(GPR_ALLOCATOR *this,int param_1)
 
 {
-  SHADER_REGISTER *pSVar1;
-  ulong uVar2;
-  longlong in_r5;
-  ulonglong uVar3;
-  ulong uVar4;
-  uint uVar6;
-  ulonglong uVar5;
-  ulong uVar7;
-  SHADER_REGISTER SVar8;
+  ulong uVar1;
+  int in_r5;
+  uint uVar2;
+  uint uVar3;
+  uint uVar4;
+  SHADER_REGISTER SVar5;
   SHADER_REGISTER local_30 [12];
   
-  pSVar1 = (SHADER_REGISTER *)__savegprlr_29(this);
-  SVar8 = InvalidRegister;
-  if ((int)in_r5 < 5) {
-    if (4 < ((ulonglong)*(uint *)(param_1 + 8) + in_r5 & 0xffffffff)) {
-      uVar6 = *(int *)(param_1 + 4) + 1;
+  SVar5 = InvalidRegister;
+  if (in_r5 < 5) {
+    if (4 < (uint)(*(int *)(param_1 + 8) + in_r5)) {
+      uVar4 = *(int *)(param_1 + 4) + 1;
       *(undefined4 *)(param_1 + 8) = 0;
-      *(uint *)(param_1 + 4) = uVar6;
-      SVar8 = InvalidRegister;
-      if (0x3f < uVar6) goto LAB_82894e78;
+      *(uint *)(param_1 + 4) = uVar4;
+      SVar5 = InvalidRegister;
+      if (0x3f < uVar4) goto LAB_82894e78;
     }
-    uVar3 = (ulonglong)*(uint *)(param_1 + 8);
-    uVar5 = (uVar3 + in_r5) - 1;
-    if (3 < (uVar5 & 0xffffffff)) {
-      uVar5 = 3;
+    uVar1 = *(ulong *)(param_1 + 8);
+    uVar4 = (uVar1 + in_r5) - 1;
+    if (3 < uVar4) {
+      uVar4 = 3;
     }
-    uVar7 = (ulong)uVar5;
-    uVar2 = uVar7;
-    if ((uVar3 + 1 & 0xffffffff) <= (uVar5 & 0xffffffff)) {
-      uVar2 = (ulong)(uVar3 + 1);
+    uVar2 = uVar4;
+    if (uVar1 + 1 <= uVar4) {
+      uVar2 = uVar1 + 1;
     }
-    uVar4 = uVar7;
-    if ((uVar3 + 2 & 0xffffffff) <= (uVar5 & 0xffffffff)) {
-      uVar4 = (ulong)(uVar3 + 2);
+    uVar3 = uVar4;
+    if (uVar1 + 2 <= uVar4) {
+      uVar3 = uVar1 + 2;
     }
-    if ((uVar3 + 3 & 0xffffffff) <= (uVar5 & 0xffffffff)) {
-      uVar7 = (ulong)(uVar3 + 3);
+    if (uVar1 + 3 <= uVar4) {
+      uVar4 = uVar1 + 3;
     }
     SHADER_REGISTER::SHADER_REGISTER
-              ((SHADER_REGISTER *)&local_30[0]._s_0,RRegister,*(ulong *)(param_1 + 4),
-               *(uint *)(param_1 + 8),uVar2,uVar4,uVar7);
-    *(int *)(param_1 + 8) = (int)(uVar3 + in_r5);
-    SVar8 = local_30[0];
+              ((SHADER_REGISTER *)&local_30[0]._s_0,RRegister,*(ulong *)(param_1 + 4),uVar1,uVar2,
+               uVar3,uVar4);
+    *(ulong *)(param_1 + 8) = uVar1 + in_r5;
+    SVar5 = local_30[0];
   }
 LAB_82894e78:
-  *pSVar1 = SVar8;
-  uVar2 = __restgprlr_29(pSVar1);
-  return (SHADER_REGISTER)uVar2;
+  this->m_LastRegUsedByShader = (ulong)SVar5;
+  return (SHADER_REGISTER)((SHADER_REGISTER)this).dword;
 }
 
 
@@ -728,63 +675,64 @@ void D3D::_dynamic_initializer_for__Unconditional__(void)
 
 // 82894F98  GetFlowCond  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtshaderhacker.cpp:658)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 COND_TYPE __thiscall D3D::GetFlowCond(D3D *this,GPUFLOW_INSTRUCTION *param_1,COND_TYPE param_2)
 
 {
   uint uVar1;
-  COND_TYPE *pCVar2;
-  ulong uVar3;
-  uint uVar4;
-  COND_TYPE CVar5;
-  byte bVar6;
+  uint uVar2;
+  COND_TYPE CVar3;
+  D3D DVar4;
   
-  pCVar2 = (COND_TYPE *)__savegprlr_29(this);
   uVar1 = param_1->dword[1];
   switch(uVar1 >> 0xc & 0xf) {
   default:
-    *pCVar2 = param_2;
-    goto LAB_828950a0;
+    *(COND_TYPE *)this = param_2;
+    return (COND_TYPE)((COND_TYPE)this).Dword;
   case 3:
   case 4:
   case 0xd:
   case 0xe:
-    uVar4 = (uVar1 >> 10 & 1) << 0x16 | pCVar2->Dword & 0xffbfffff;
+    uVar2 = (uVar1 >> 10 & 1) << 0x16 | *(uint *)this & 0xffbfffff;
 LAB_8289500c:
-    uVar4 = uVar4 & 0xff7fffff;
-    bVar6 = (byte)(uVar1 >> 2);
+    uVar2 = uVar2 & 0xff7fffff;
+    DVar4 = SUB41(uVar1 >> 2,0);
 LAB_82895010:
-    pCVar2->Dword = uVar4;
-    (pCVar2->_s_0).BooleanAddress = bVar6;
+    *(uint *)this = uVar2;
+    *this = DVar4;
     goto LAB_82895018;
   case 5:
   case 6:
-    pCVar2->Dword = (uVar1 & 0x400) << 0xc | 0x800000 | pCVar2->Dword & 0xffbfffff;
-    (pCVar2->_s_0).BooleanAddress = 0;
+    *(uint *)this = (uVar1 & 0x400) << 0xc | 0x800000 | *(uint *)this & 0xffbfffff;
+    *this = (D3D)0x0;
 LAB_82895018:
-    CVar5.Dword = pCVar2->Dword & 0xffdfffff;
+    CVar3.Dword = *(uint *)this & 0xffdfffff;
     break;
   case 0xb:
     if ((param_1->dword[0] & 0x2000) == 0) {
       if ((param_1->dword[0] & 0x4000) == 0) {
-        uVar4 = (~(uVar1 >> 10) & 1) << 0x16 | pCVar2->Dword & 0xffbfffff;
+        uVar2 = (~(uVar1 >> 10) & 1) << 0x16 | *(uint *)this & 0xffbfffff;
         goto LAB_8289500c;
       }
-      bVar6 = 0;
-      uVar4 = (~(uVar1 >> 10) & 1) << 0x16 | 0x800000 | pCVar2->Dword & 0xffbfffff;
+      DVar4 = (D3D)0x0;
+      uVar2 = (~(uVar1 >> 10) & 1) << 0x16 | 0x800000 | *(uint *)this & 0xffbfffff;
       goto LAB_82895010;
     }
   case 1:
   case 2:
-    CVar5 = Unconditional;
+    CVar3 = Unconditional;
   }
-  pCVar2->Dword = (ulong)CVar5;
-LAB_828950a0:
-  uVar3 = __restgprlr_29(pCVar2);
-  return (COND_TYPE)uVar3;
+  *(COND_TYPE *)this = CVar3;
+  return (COND_TYPE)((COND_TYPE)this).Dword;
 }
 
 
 // 828950B0  AddTodoEntry  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtshaderhacker.cpp:759)
+
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 
 void __thiscall
 D3D::CShaderHacker::CClassForAnalyzingAllocAndP0Usage::TODO_LIST::AddTodoEntry
@@ -792,34 +740,26 @@ D3D::CShaderHacker::CClassForAnalyzingAllocAndP0Usage::TODO_LIST::AddTodoEntry
 
 {
   uint uVar1;
-  uint uVar2;
+  ulong uVar2;
   uint uVar3;
   uint uVar4;
-  int iVar5;
-  int iVar6;
-  uint uVar7;
-  int iVar8;
-  ulonglong uVar9;
+  uint uVar5;
+  uint uVar6;
   
-  uVar9 = (ulonglong)param_2;
-  iVar8 = __savegprlr_29(this);
-  uVar1 = *(uint *)(iVar8 + 0x1f44);
+  uVar1 = this->LastEntry;
   if (uVar1 < 1000) {
-    iVar5 = uVar1 * 8 + iVar8;
-    *(uint *)(iVar8 + 0x1f44) = uVar1 + 1;
-    iVar6 = *(int *)(iVar8 + 8000) * 8 + iVar8;
-    uVar2 = *(uint *)(iVar5 + 4);
-    uVar4 = *(uint *)(iVar6 + 4) & 0x80000000;
-    *(uint *)(iVar5 + 4) = uVar2 & 0x7fffffff | uVar4;
-    uVar7 = *(uint *)(iVar6 + 4) & 0x40000000;
-    *(uint *)(iVar5 + 4) = uVar7 | uVar2 & 0x3fffffff | uVar4;
-    uVar3 = *(uint *)(iVar6 + 4);
-    *(FlowNode **)(uVar1 * 8 + iVar8) = param_1;
-    *(uint *)(iVar5 + 4) =
-         uVar7 | uVar2 & 0x1fffffff | uVar4 |
-         ((uint)((uVar9 & 0xffffffff) << 0x1d) | uVar3) & 0x20000000;
+    uVar2 = this->FirstEntry;
+    this->LastEntry = uVar1 + 1;
+    uVar3 = *(uint *)&this->Entries[uVar1].field_0x4;
+    uVar5 = *(uint *)&this->Entries[uVar2].field_0x4 & 0x80000000;
+    *(uint *)&this->Entries[uVar1].field_0x4 = uVar3 & 0x7fffffff | uVar5;
+    uVar6 = *(uint *)&this->Entries[uVar2].field_0x4 & 0x40000000;
+    *(uint *)&this->Entries[uVar1].field_0x4 = uVar6 | uVar3 & 0x3fffffff | uVar5;
+    uVar4 = *(uint *)&this->Entries[uVar2].field_0x4;
+    this->Entries[uVar1].pStart = param_1;
+    *(uint *)&this->Entries[uVar1].field_0x4 =
+         uVar6 | uVar3 & 0x1fffffff | uVar5 | (int)param_2 << 0x1d | uVar4 & 0x20000000;
   }
-  __restgprlr_29();
   return;
 }
 
@@ -854,6 +794,9 @@ int D3D::CShaderHacker::CClassForAnalyzingAllocAndP0Usage::OpJumpsOrForcesEnd(ul
 
 // 828951B0  ProcessTodoEntryForDeepShaderAnalysis  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtshaderhacker.cpp:819)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 HackFailureReason
 D3D::CShaderHacker::CClassForAnalyzingAllocAndP0Usage::ProcessTodoEntryForDeepShaderAnalysis
           (TODO_LIST *param_1)
@@ -868,81 +811,72 @@ D3D::CShaderHacker::CClassForAnalyzingAllocAndP0Usage::ProcessTodoEntryForDeepSh
   uint uVar7;
   undefined1 *puVar8;
   byte bVar9;
-  TODO_LIST *this;
-  int iVar11;
-  undefined8 uVar10;
-  HackFailureReason HVar12;
+  int iVar10;
   
-  this = (TODO_LIST *)__savegprlr_27(param_1);
-  uVar1 = this->FirstEntry;
-  pFVar6 = this->Entries[uVar1].pStart;
-  do {
+  uVar1 = param_1->FirstEntry;
+  pFVar6 = param_1->Entries[uVar1].pStart;
+  while( true ) {
     uVar2 = *(uint *)&pFVar6->field_0x14;
-    uVar7 = 2 << this->Entries[uVar1].HasSeenAlloc;
+    uVar7 = 2 << param_1->Entries[uVar1].HasSeenAlloc;
     if (((uVar2 & uVar7 & 0x7ffff) != 0) &&
-       ((8 << this->Entries[uVar1].HasWrittenPred & uVar2 & 0x7ffff) != 0)) {
-LAB_828953d8:
-      uVar10 = 0;
-      goto LAB_828953d0;
+       ((8 << param_1->Entries[uVar1].HasWrittenPred & uVar2 & 0x7ffff) != 0)) {
+      return eSuccess;
     }
     uVar3 = (pFVar6->instruction).dword[1];
     *(uint *)&pFVar6->field_0x14 = uVar7 & 0x7ffff | uVar2;
-    pFVar6->m_Flags = 8 << this->Entries[uVar1].HasWrittenPred | pFVar6->m_Flags;
-    if (((uVar3 & 0xf000) == 0xc000) && ((uVar3 & 0x600) == 0x400)) {
-      uVar4 = *(undefined4 *)&this->Entries[uVar1].field_0x4;
-      *(uint *)&this->Entries[uVar1].field_0x4 = uVar4 | 0x80000000;
-      if (ZPULL(uVar4,0x1d,1) != 0) {
-        this->SawFetchAfterAlloc = true;
-      }
+    pFVar6->m_Flags = 8 << param_1->Entries[uVar1].HasWrittenPred | pFVar6->m_Flags;
+    if ((((uVar3 & 0xf000) == 0xc000) && ((uVar3 & 0x600) == 0x400)) &&
+       (uVar4 = *(undefined4 *)&param_1->Entries[uVar1].field_0x4,
+       *(uint *)&param_1->Entries[uVar1].field_0x4 = uVar4 | 0x80000000, ZPULL(uVar4,0x1d,1) != 0))
+    {
+      param_1->SawFetchAfterAlloc = true;
     }
     for (pAVar5 = pFVar6->m_Child; pAVar5 != (ALUNode *)0x0; pAVar5 = pAVar5->m_Next) {
-      if (pAVar5->isFetch != 0) {
-        if (pAVar5->isVertexFetch == 0) {
-          if ((((pAVar5->instruction).FlowPair.dword[0] & 0x1f) == 1) &&
-             (this->Entries[uVar1].HasSeenAlloc != 0)) {
-            this->SawFetchAfterAlloc = true;
-          }
-          if (this->Entries[uVar1].HasWrittenPred != 0) {
-            *(uint *)&pAVar5->field_0x10 = *(uint *)&pAVar5->field_0x10 | 2;
-          }
+      if ((pAVar5->isFetch != 0) && (pAVar5->isVertexFetch == 0)) {
+        if ((((pAVar5->instruction).FlowPair.dword[0] & 0x1f) == 1) &&
+           (param_1->Entries[uVar1].HasSeenAlloc != 0)) {
+          param_1->SawFetchAfterAlloc = true;
+        }
+        if (param_1->Entries[uVar1].HasWrittenPred != 0) {
+          *(uint *)&pAVar5->field_0x10 = *(uint *)&pAVar5->field_0x10 | 2;
         }
       }
-      uVar4 = *(undefined4 *)&this->Entries[uVar1].field_0x4;
-      if ((ZPULL(uVar4,0x1e,1) == 0) && (pAVar5->isFetch == 0)) {
-        uVar2 = (pAVar5->instruction).FlowPair.dword[0] >> 0x1a;
-        if (((0x1a < uVar2) && (uVar2 < 0x23)) ||
-           ((bVar9 = *(byte *)((int)&pAVar5->instruction + 8) & 0x1f, 0x13 < bVar9 && (bVar9 < 0x18)
-            ))) {
-          *(uint *)&this->Entries[uVar1].field_0x4 = uVar4 | 0x40000000;
-        }
+      uVar4 = *(undefined4 *)&param_1->Entries[uVar1].field_0x4;
+      if (((ZPULL(uVar4,0x1e,1) == 0) && (pAVar5->isFetch == 0)) &&
+         (((uVar2 = (pAVar5->instruction).FlowPair.dword[0] >> 0x1a, 0x1a < uVar2 && (uVar2 < 0x23))
+          || ((bVar9 = *(byte *)((int)&pAVar5->instruction + 8) & 0x1f, 0x13 < bVar9 &&
+              (bVar9 < 0x18)))))) {
+        *(uint *)&param_1->Entries[uVar1].field_0x4 = uVar4 | 0x40000000;
       }
     }
     if (pFVar6->m_Destination != (FlowNode *)0x0) {
       TODO_LIST::AddTodoEntry
-                (this,pFVar6->m_Destination,((pFVar6->instruction).dword[1] & 0xf000) == 0x9000);
+                (param_1,pFVar6->m_Destination,((pFVar6->instruction).dword[1] & 0xf000) == 0x9000);
       uVar2 = (pFVar6->instruction).dword[1] >> 0xc & 0xf;
       if ((((uVar2 == 0xb) && (((pFVar6->instruction).dword[0] & 0x2000) == 0)) || (uVar2 == 7)) ||
          ((uVar2 == 8 || (uVar2 == 9)))) {
-        TODO_LIST::AddTodoEntry(this,pFVar6->m_Next,false);
+        TODO_LIST::AddTodoEntry(param_1,pFVar6->m_Next,false);
       }
       if (((pFVar6->instruction).dword[1] & 0xf000) == 0x9000) {
-        *(uint *)&this->Entries[uVar1].field_0x4 =
-             *(uint *)&this->Entries[uVar1].field_0x4 | 0x40000000;
+        *(uint *)&param_1->Entries[uVar1].field_0x4 =
+             *(uint *)&param_1->Entries[uVar1].field_0x4 | 0x40000000;
       }
     }
-    iVar11 = OpJumpsOrForcesEnd((pFVar6->instruction).dword[1] >> 0xc & 0xf);
-    if (iVar11 != 0) goto LAB_828953d8;
+    iVar10 = OpJumpsOrForcesEnd((pFVar6->instruction).dword[1] >> 0xc & 0xf);
+    if (iVar10 != 0) break;
     pFVar6 = pFVar6->m_Next;
-  } while (pFVar6 != (FlowNode *)0x0);
-  uVar10 = 10;
-LAB_828953d0:
-  HVar12 = __restgprlr_27(uVar10);
-  return HVar12;
+    if (pFVar6 == (FlowNode *)0x0) {
+      return eUnknownFailure;
+    }
+  }
+  return eSuccess;
 }
 
 
 // 82896758  AnalyzeAllocAndP0Usage  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtshaderhacker.cpp:932)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "ERareInstruction": Some values do not have unique names */
 
 HackFailureReason
@@ -952,63 +886,55 @@ D3D::CShaderHacker::CClassForAnalyzingAllocAndP0Usage::AnalyzeAllocAndP0Usage
 {
   undefined1 *puVar1;
   undefined1 *puVar2;
-  int iVar4;
-  TODO_LIST *pTVar5;
-  char *pcVar6;
-  undefined8 uVar3;
-  HackFailureReason HVar7;
-  uint uVar8;
+  TODO_LIST *pTVar3;
+  char *pcVar4;
+  uint uVar5;
   
-  iVar4 = __savegprlr_27(param_1);
   if (g_AllocDebugHeap == 0) {
-    pTVar5 = XMemAlloc(0x1f50,0x64800000);
-    if (pTVar5 != (TODO_LIST *)0x0) goto LAB_828967c8;
-    pcVar6 = "Out of Title Memory";
+    pTVar3 = XMemAlloc(0x1f50,0x64800000);
+    if (pTVar3 != (TODO_LIST *)0x0) goto LAB_828967c8;
+    pcVar4 = "Out of Title Memory";
   }
   else {
-    pTVar5 = DmDebugAlloc(0x1f50);
-    if (pTVar5 != (TODO_LIST *)0x0) {
+    pTVar3 = DmDebugAlloc(0x1f50);
+    if (pTVar3 != (TODO_LIST *)0x0) {
 LAB_828967c8:
-      pTVar5->FirstEntry = 0;
-      pTVar5->LastEntry = 1;
-      pTVar5->Entries[0].pStart = *(FlowNode **)(iVar4 + 0xc);
-      puVar2 = &pTVar5->Entries[0].field_0x4;
-      pTVar5->Entries[0].InFunction = 0;
-      pTVar5->Entries[0].HasSeenAlloc = 0;
-      pTVar5->Entries[0].HasWrittenPred = 0;
-      pTVar5->pRehackingInfo = param_2;
-      do {
-        ProcessTodoEntryForDeepShaderAnalysis(pTVar5);
-        uVar8 = pTVar5->FirstEntry + 1;
-        pTVar5->FirstEntry = uVar8;
-        if ((999 < uVar8) || (999 < pTVar5->LastEntry)) {
+      pTVar3->FirstEntry = 0;
+      pTVar3->LastEntry = 1;
+      pTVar3->Entries[0].pStart = (FlowNode *)param_1->_padding_;
+      puVar2 = &pTVar3->Entries[0].field_0x4;
+      pTVar3->Entries[0].InFunction = 0;
+      pTVar3->Entries[0].HasSeenAlloc = 0;
+      pTVar3->Entries[0].HasWrittenPred = 0;
+      pTVar3->pRehackingInfo = param_2;
+      while( true ) {
+        ProcessTodoEntryForDeepShaderAnalysis(pTVar3);
+        uVar5 = pTVar3->FirstEntry + 1;
+        pTVar3->FirstEntry = uVar5;
+        if ((999 < uVar5) || (999 < pTVar3->LastEntry)) break;
+        if (pTVar3->LastEntry <= uVar5) {
+          *param_3 = pTVar3->SawFetchAfterAlloc;
           if (g_AllocDebugHeap == 0) {
-            XMemFree(pTVar5,0x24800000);
+            XMemFree(pTVar3,0x24800000);
           }
           else {
-            DmDebugFree(pTVar5);
+            DmDebugFree(pTVar3);
           }
-          uVar3 = 10;
-          goto LAB_8289687c;
+          return eSuccess;
         }
-      } while (uVar8 < pTVar5->LastEntry);
-      *param_3 = pTVar5->SawFetchAfterAlloc;
+      }
       if (g_AllocDebugHeap == 0) {
-        XMemFree(pTVar5,0x24800000);
+        XMemFree(pTVar3,0x24800000);
       }
       else {
-        DmDebugFree(pTVar5);
+        DmDebugFree(pTVar3);
       }
-      uVar3 = 0;
-      goto LAB_8289687c;
+      return eUnknownFailure;
     }
-    pcVar6 = "Out of Debug Memory";
+    pcVar4 = "Out of Debug Memory";
   }
-  DefaultTextureTrackerErrorCallback(pcVar6);
-  uVar3 = 9;
-LAB_8289687c:
-  HVar7 = __restgprlr_27(uVar3);
-  return HVar7;
+  DefaultTextureTrackerErrorCallback(pcVar4);
+  return eOutOfMemory;
 }
 
 
@@ -1037,6 +963,8 @@ D3D::CShaderHacker::CClassForInsertingPerFetchStuff::MarkJumpTargets
 
 // 82895448  MarkFetchClauseStarts  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtshaderhacker.cpp:1297)
 
+/* WARNING: Function: __savegprlr_21 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_21 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "ERareInstruction": Some values do not have unique names */
 
 HackFailureReason __thiscall
@@ -1047,102 +975,92 @@ D3D::CShaderHacker::CClassForInsertingPerFetchStuff::MarkFetchClauseStarts
   undefined4 *puVar1;
   undefined4 *puVar2;
   uint uVar3;
-  bool bVar4;
+  uint uVar4;
   bool bVar5;
   bool bVar6;
   bool bVar7;
-  CClassForInsertingPerFetchStuff *this_00;
-  COND_TYPE CVar8;
+  bool bVar8;
+  COND_TYPE CVar9;
   bool bVar10;
   bool bVar11;
-  undefined1 uVar12;
-  HackFailureReason HVar9;
-  ulonglong uVar13;
-  ulonglong uVar14;
-  ulonglong uVar15;
-  COND_TYPE CVar16;
-  COND_TYPE CVar17;
+  uint uVar12;
+  COND_TYPE CVar13;
+  COND_TYPE CVar14;
   COND_TYPE local_70;
   COND_TYPE local_6c;
   D3D aDStack_68 [104];
   
-  uVar13 = (ulonglong)(int)param_2;
-  this_00 = (CClassForInsertingPerFetchStuff *)__savegprlr_21(this);
-  bVar4 = false;
-  bVar6 = false;
-  bVar7 = false;
   bVar5 = false;
-  uVar15 = 0;
-  MarkJumpTargets(this_00,param_1);
+  bVar7 = false;
+  bVar8 = false;
+  bVar6 = false;
+  uVar12 = 0;
+  MarkJumpTargets(this,param_1);
   puVar1 = (undefined4 *)param_1->_padding_;
-  CVar16 = Unconditional;
-  CVar17 = Unconditional;
+  CVar13 = Unconditional;
+  CVar14 = Unconditional;
   do {
-    local_70 = CVar17;
     if (puVar1 == (undefined4 *)0x0) {
-      uVar12 = (int)uVar15 == 0;
-LAB_82895678:
-      HVar9 = __restgprlr_21(uVar12);
-      return HVar9;
+      return (uint)LZCOUNT(uVar12) >> 5;
     }
-    CVar8 = GetFlowCond(aDStack_68,(GPUFLOW_INSTRUCTION *)(puVar1 + 1),CVar17);
+    local_70 = CVar14;
+    CVar9 = GetFlowCond(aDStack_68,(GPUFLOW_INSTRUCTION *)(puVar1 + 1),CVar14);
                     /* WARNING: Load size is inaccurate */
-    CVar8._s_0 = *CVar8._s_0;
-    local_6c = CVar8;
-    bVar10 = COND_TYPE::operator==((COND_TYPE *)&local_6c._s_0,CVar17);
-    if ((!bVar10) && (bVar11 = COND_TYPE::operator==((COND_TYPE *)&local_70._s_0,CVar16), bVar11)) {
+    CVar9._s_0 = *CVar9._s_0;
+    local_6c = CVar9;
+    bVar10 = COND_TYPE::operator==((COND_TYPE *)&local_6c._s_0,CVar14);
+    if ((!bVar10) && (bVar11 = COND_TYPE::operator==((COND_TYPE *)&local_70._s_0,CVar13), bVar11)) {
       bVar10 = true;
     }
     if (((bVar10 == false) &&
-        (bVar11 = COND_TYPE::operator==((COND_TYPE *)&local_6c._s_0,CVar16), bVar11)) &&
+        (bVar11 = COND_TYPE::operator==((COND_TYPE *)&local_6c._s_0,CVar13), bVar11)) &&
        (bVar11 = COND_TYPE::IsPred((COND_TYPE *)&local_70._s_0), bVar11)) {
       bVar10 = true;
     }
     uVar3 = (uint)puVar1[2] >> 0xc & 0xf;
     if (((uVar3 == 0xc) || (uVar3 == 9)) || (((puVar1[5] & 1) != 0 || (bVar10 == false)))) {
-      bVar4 = false;
-      bVar6 = false;
-      bVar7 = false;
       bVar5 = false;
+      bVar7 = false;
+      bVar8 = false;
+      bVar6 = false;
     }
     for (puVar2 = (undefined4 *)puVar1[4]; puVar2 != (undefined4 *)0x0;
         puVar2 = (undefined4 *)*puVar2) {
       uVar3 = puVar2[4];
       if ((((uVar3 & 0x20000000) != 0) || ((uVar3 & 0x40000000) != 0)) ||
          ((uVar3 & 0x80000000) == 0)) {
-        bVar4 = false;
-        bVar6 = false;
-        bVar7 = false;
         bVar5 = false;
+        bVar7 = false;
+        bVar8 = false;
+        bVar6 = false;
       }
-      uVar14 = (ulonglong)(uint)(1 << ((uint)puVar2[1] >> 0x14 & 0x1f));
+      uVar4 = 1 << ((uint)puVar2[1] >> 0x14 & 0x1f);
       if (((((int)uVar3 < 0) && ((uVar3 & 0x40000000) == 0)) && ((puVar2[1] & 0x1f) == 1)) &&
-         ((uVar14 & uVar13) != 0)) {
-        uVar15 = uVar14 | uVar15;
+         ((uVar4 & param_2) != 0)) {
+        uVar12 = uVar4 | uVar12;
       }
-      if (((!bVar4) && ((int)uVar3 < 0)) && ((uVar3 & 0x40000000) == 0)) {
-        bVar4 = true;
+      if (((!bVar5) && ((int)uVar3 < 0)) && ((uVar3 & 0x40000000) == 0)) {
+        bVar5 = true;
         puVar2[4] = uVar3 | 1;
         uVar3 = puVar2[1] & 0x1f;
         if (uVar3 == 0x18) {
-          bVar5 = true;
-        }
-        else if (uVar3 == 0x19) {
           bVar6 = true;
         }
-        else if (uVar3 == 0x1a) {
+        else if (uVar3 == 0x19) {
           bVar7 = true;
         }
-        else if ((((puVar2[2] & 0x20000000) != 0) && (!bVar5)) ||
-                (((puVar2[3] & 1) != 0 && ((!bVar6 || (!bVar7)))))) {
-          uVar12 = 8;
-          goto LAB_82895678;
+        else if (uVar3 == 0x1a) {
+          bVar8 = true;
+        }
+        else if ((((puVar2[2] & 0x20000000) != 0) && (!bVar6)) ||
+                (((puVar2[3] & 1) != 0 && ((!bVar7 || (!bVar8)))))) {
+          return eFetchesTooComplex;
         }
       }
-      CVar16 = Unconditional;
+      CVar13 = Unconditional;
     }
     puVar1 = (undefined4 *)*puVar1;
-    CVar17 = CVar8;
+    CVar14 = CVar9;
   } while( true );
 }
 
@@ -1174,6 +1092,8 @@ D3D::CShaderHacker::CClassForInsertingPerFetchStuff::BackPatchDanglingJumps
 
 // 82895718  InsertJumpNode  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtshaderhacker.cpp:1436)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "ERareInstruction": Some values do not have unique names */
 
 FlowNode * __thiscall
@@ -1182,38 +1102,35 @@ D3D::CShaderHacker::CClassForInsertingPerFetchStuff::InsertJumpNode
           FlowNode *param_3)
 
 {
-  bool bVar2;
-  FlowNode *pFVar1;
-  ulonglong uVar3;
-  uint uVar4;
-  uint uVar5;
-  undefined4 uStack00000024;
+  bool bVar1;
+  uint uVar2;
+  uint uVar3;
+  COND_TYPE CStack00000024;
   FlowNode *local_40 [2];
   GPUFLOW_INSTRUCTION local_38 [7];
   
-  uVar3 = (ulonglong)(int)param_2.Dword;
-  __savegprlr_28(this);
-  uStack00000024 = (undefined4)uVar3;
-  uVar5 = 0xb000;
-  bVar2 = COND_TYPE::IsPred((COND_TYPE *)&stack0x00000024);
-  if (bVar2) {
-    uVar4 = local_38[0].dword[0] | 0x4000;
+  uVar3 = 0xb000;
+  CStack00000024 = param_2;
+  bVar1 = COND_TYPE::IsPred((COND_TYPE *)&stack0x00000024);
+  if (bVar1) {
+    uVar2 = local_38[0].dword[0] | 0x4000;
   }
   else {
-    uVar4 = local_38[0].dword[0] & 0xffffbfff;
-    uVar5 = (uint)((uVar3 & 0xffffffff) >> 0x16) & 0x3fc | 0xb000;
+    uVar2 = local_38[0].dword[0] & 0xffffbfff;
+    uVar3 = param_2.Dword >> 0x16 & 0x3fc | 0xb000;
   }
-  local_38[0]._0_4_ = uVar4 & 0xffffdfff;
-  local_38[0]._4_4_ = (uint)((~uVar3 & 0xffffffff) >> 0xc) & 0x400 | uVar5;
+  local_38[0]._0_4_ = uVar2 & 0xffffdfff;
+  local_38[0]._4_4_ = (uint)((~(longlong)(int)param_2.Dword & 0xffffffffU) >> 0xc) & 0x400 | uVar3;
   local_40[0] = (FlowNode *)0x0;
   GraphMicrocodeBuilder::AddFlowAfter((GraphMicrocodeBuilder *)param_1,param_3,local_38,local_40);
-  pFVar1 = (FlowNode *)__restgprlr_28(local_40[0]);
-  return pFVar1;
+  return local_40[0];
 }
 
 
 // 828957B0  AddRareFetchAfter  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtshaderhacker.cpp:1469)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "ERareInstruction": Some values do not have unique names */
 
 undefined4 __thiscall
@@ -1223,41 +1140,31 @@ D3D::CShaderHacker::CClassForInsertingPerFetchStuff::AddRareFetchAfter
 
 {
   uint uVar1;
-  int iVar2;
-  int iVar3;
-  T_HRESULT TVar4;
-  undefined4 uVar5;
-  ulonglong uVar6;
-  uint uVar7;
+  T_HRESULT TVar2;
   GPUSHADER_INSTRUCTION local_50 [6];
   
-  uVar6 = (ulonglong)(int)param_4;
-  iVar3 = __savegprlr_26(this);
-  iVar2 = (int)((uVar6 & 0xffffffff) << 4);
-  uVar7 = (uint)uVar6;
   local_50[0].FlowPair.dword[2] = 0;
-  uVar1 = *(uint *)(&g_RTRareInstructionInfo[0].field_0x0 + iVar2) >> 0x1b;
+  uVar1 = g_RTRareInstructionInfo[param_4].Op;
   local_50[0]._0_4_ = uVar1 | 0x80000;
   local_50[0].FlowPair.dword[1] = 0xfff;
-  if (uVar7 == 1) {
+  if (param_4 == eMysteryOp_4) {
     local_50[0]._0_4_ = uVar1 | 0x1a80000;
   }
-  else if (uVar7 == 2) {
+  else if (param_4 == eVfetchTcache) {
     local_50[0]._0_4_ = uVar1 | 0x5f80000;
   }
-  *(uint *)(iVar3 + 0x24) = 1 << (uVar7 & 0x3f) | *(uint *)(iVar3 + 0x24);
-  TVar4 = GraphMicrocodeBuilder::AddALUAfter
+  this->m_RareInstructionsInserted = 1 << (param_4 & 0x3f) | this->m_RareInstructionsInserted;
+  TVar2 = GraphMicrocodeBuilder::AddALUAfter
                     ((GraphMicrocodeBuilder *)param_1,*param_2,*param_3,true,
-                     (bool)((byte)((uint)*(undefined4 *)
-                                          (&g_RTRareInstructionInfo[0].field_0x0 + iVar2) >> 0x1a) &
-                           1),local_50,param_2,param_3);
-  uVar5 = __restgprlr_26(TVar4);
-  return uVar5;
+                     g_RTRareInstructionInfo[param_4].VCache,local_50,param_2,param_3);
+  return TVar2;
 }
 
 
 // 82897468  AddSavePredicate  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtshaderhacker.cpp:1622)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "ERareInstruction": Some values do not have unique names */
 
 HackFailureReason __thiscall
@@ -1269,10 +1176,8 @@ D3D::CShaderHacker::CClassForInsertingPerFetchStuff::AddSavePredicate
   FlowNode *this_00;
   COND_TYPE CVar1;
   COND_TYPE this_01;
-  bool bVar5;
-  int iVar3;
-  undefined8 uVar2;
-  HackFailureReason HVar4;
+  bool bVar3;
+  int iVar2;
   SHADER_REGISTER in_stack_ffffff58;
   SHADER_REGISTER in_stack_ffffff5c;
   FlowNode **in_stack_ffffff60;
@@ -1280,54 +1185,51 @@ D3D::CShaderHacker::CClassForInsertingPerFetchStuff::AddSavePredicate
   ALUNode *local_40;
   D3D aDStack_3c [60];
   
-  __savegprlr_26(this);
   CVar1 = Unconditional;
   this_00 = *param_2;
   local_40 = (ALUNode *)0x0;
-  if ((this_00 == (FlowNode *)0x0) ||
-     ((1 << ((this_00->instruction).dword[1] >> 0xc & 0xf) & 0x607eU) == 0)) {
-LAB_828975d8:
-    iVar3 = GraphMicrocodeBuilder::CreateExecAfter((GraphMicrocodeBuilder *)param_1,this_00,param_2)
-    ;
-    if (-1 < iVar3) goto LAB_828974e8;
-  }
-  else {
+  if ((this_00 != (FlowNode *)0x0) &&
+     ((1 << ((this_00->instruction).dword[1] >> 0xc & 0xf) & 0x607eU) != 0)) {
     this_01 = GetFlowCond(aDStack_3c,&this_00->instruction,Unconditional);
-    bVar5 = COND_TYPE::operator==((COND_TYPE *)this_01,CVar1);
-    if (!bVar5) goto LAB_828975d8;
-    local_40 = FlowNode::GetLastChild(this_00);
-LAB_828974e8:
-    AllocateFloatConstant((CShaderHacker *)aDStack_3c,1.0);
-    iVar3 = AddALUAfter2(param_1,*param_2,local_40,GPUALUVECTOROP_MAX,GPUALUSCALAROP_SGT,
-                         InvalidRegister,*param_3,InvalidRegister,in_stack_ffffff58,
-                         in_stack_ffffff5c,in_stack_ffffff60,in_stack_ffffff64);
-    if (-1 < iVar3) {
-      (local_40->instruction).FlowPair.dword[1] =
-           (local_40->instruction).FlowPair.dword[1] | 0x1000000;
-      iVar3 = AddALUAfter2(param_1,*param_2,local_40,GPUALUVECTOROP_MAX,GPUALUSCALAROP_SGE,
-                           InvalidRegister,*param_3,InvalidRegister,in_stack_ffffff58,
-                           in_stack_ffffff5c,in_stack_ffffff60,in_stack_ffffff64);
-      if (-1 < iVar3) {
-        *(byte *)((int)&local_40->instruction + 0xb) =
-             (byte)(local_40->instruction).FlowPair.dword[2] & 0x7f | 0x80;
-        (local_40->instruction).FlowPair.dword[1] =
-             (local_40->instruction).FlowPair.dword[1] | 0x10000000;
-        (local_40->instruction).FlowPair.dword[1] =
-             (local_40->instruction).FlowPair.dword[1] | 0x8000000;
-        uVar2 = 0;
-        goto LAB_828975d0;
-      }
+    bVar3 = COND_TYPE::operator==((COND_TYPE *)this_01,CVar1);
+    if (bVar3) {
+      local_40 = FlowNode::GetLastChild(this_00);
+      goto LAB_828974e8;
     }
   }
-  uVar2 = 9;
-LAB_828975d0:
-  HVar4 = __restgprlr_26(uVar2);
-  return HVar4;
+  iVar2 = GraphMicrocodeBuilder::CreateExecAfter((GraphMicrocodeBuilder *)param_1,this_00,param_2);
+  if (iVar2 < 0) {
+    return eOutOfMemory;
+  }
+LAB_828974e8:
+  AllocateFloatConstant((CShaderHacker *)aDStack_3c,1.0);
+  iVar2 = AddALUAfter2(param_1,*param_2,local_40,GPUALUVECTOROP_MAX,GPUALUSCALAROP_SGT,
+                       InvalidRegister,*param_3,InvalidRegister,in_stack_ffffff58,in_stack_ffffff5c,
+                       in_stack_ffffff60,in_stack_ffffff64);
+  if (-1 < iVar2) {
+    (local_40->instruction).FlowPair.dword[1] =
+         (local_40->instruction).FlowPair.dword[1] | 0x1000000;
+    iVar2 = AddALUAfter2(param_1,*param_2,local_40,GPUALUVECTOROP_MAX,GPUALUSCALAROP_SGE,
+                         InvalidRegister,*param_3,InvalidRegister,in_stack_ffffff58,
+                         in_stack_ffffff5c,in_stack_ffffff60,in_stack_ffffff64);
+    if (-1 < iVar2) {
+      *(byte *)((int)&local_40->instruction + 0xb) =
+           (byte)(local_40->instruction).FlowPair.dword[2] & 0x7f | 0x80;
+      (local_40->instruction).FlowPair.dword[1] =
+           (local_40->instruction).FlowPair.dword[1] | 0x10000000;
+      (local_40->instruction).FlowPair.dword[1] =
+           (local_40->instruction).FlowPair.dword[1] | 0x8000000;
+      return eSuccess;
+    }
+  }
+  return eOutOfMemory;
 }
 
 
 // 82896888  AddRestorePredicate  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtshaderhacker.cpp:1671)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "ERareInstruction": Some values do not have unique names */
 
 HackFailureReason __thiscall
@@ -1339,10 +1241,8 @@ D3D::CShaderHacker::CClassForInsertingPerFetchStuff::AddRestorePredicate
   FlowNode *this_00;
   COND_TYPE CVar1;
   COND_TYPE this_01;
-  bool bVar4;
+  bool bVar3;
   int iVar2;
-  HackFailureReason HVar3;
-  uint uVar5;
   SHADER_REGISTER in_stack_ffffff58;
   SHADER_REGISTER in_stack_ffffff5c;
   FlowNode **in_stack_ffffff60;
@@ -1350,38 +1250,34 @@ D3D::CShaderHacker::CClassForInsertingPerFetchStuff::AddRestorePredicate
   ALUNode *local_40;
   D3D aDStack_3c [60];
   
-  __savegprlr_27(this);
   CVar1 = Unconditional;
   this_00 = *param_2;
   local_40 = (ALUNode *)0x0;
-  if ((this_00 == (FlowNode *)0x0) ||
-     ((1 << ((this_00->instruction).dword[1] >> 0xc & 0xf) & 0x607eU) == 0)) {
-LAB_82896964:
-    iVar2 = GraphMicrocodeBuilder::CreateExecAfter((GraphMicrocodeBuilder *)param_1,this_00,param_2)
-    ;
-    if (iVar2 < 0) {
-      uVar5 = 9;
-      goto LAB_8289695c;
+  if ((this_00 != (FlowNode *)0x0) &&
+     ((1 << ((this_00->instruction).dword[1] >> 0xc & 0xf) & 0x607eU) != 0)) {
+    this_01 = GetFlowCond(aDStack_3c,&this_00->instruction,Unconditional);
+    bVar3 = COND_TYPE::operator==((COND_TYPE *)this_01,CVar1);
+    if (bVar3) {
+      local_40 = FlowNode::GetLastChild(this_00);
+      goto LAB_82896908;
     }
   }
-  else {
-    this_01 = GetFlowCond(aDStack_3c,&this_00->instruction,Unconditional);
-    bVar4 = COND_TYPE::operator==((COND_TYPE *)this_01,CVar1);
-    if (!bVar4) goto LAB_82896964;
-    local_40 = FlowNode::GetLastChild(this_00);
+  iVar2 = GraphMicrocodeBuilder::CreateExecAfter((GraphMicrocodeBuilder *)param_1,this_00,param_2);
+  if (iVar2 < 0) {
+    return eOutOfMemory;
   }
+LAB_82896908:
   iVar2 = AddALUAfter2(param_1,*param_2,local_40,GPUALUVECTOROP_MAX,GPUALUSCALAROP_SETPNE,
                        InvalidRegister,InvalidRegister,InvalidRegister,in_stack_ffffff58,
                        in_stack_ffffff5c,in_stack_ffffff60,in_stack_ffffff64);
-  uVar5 = iVar2 >> 0x1f & 9;
-LAB_8289695c:
-  HVar3 = __restgprlr_27(uVar5);
-  return HVar3;
+  return iVar2 >> 0x1f & eOutOfMemory;
 }
 
 
 // 82896988  AddPerTfetchPerfCounterStuff  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtshaderhacker.cpp:1708)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "ERareInstruction": Some values do not have unique names */
 
 HackFailureReason __thiscall
@@ -1393,83 +1289,77 @@ D3D::CShaderHacker::CClassForInsertingPerFetchStuff::AddPerTfetchPerfCounterStuf
 {
   ALUNode *pAVar1;
   FlowNode *pFVar2;
-  CClassForInsertingPerFetchStuff *this_00;
-  int iVar4;
-  undefined8 uVar3;
-  HackFailureReason HVar5;
-  uint uVar6;
+  int iVar3;
+  uint uVar4;
   uint in_stack_00000054;
   SHADER_REGISTER in_stack_ffffff58;
   SHADER_REGISTER in_stack_ffffff5c;
   FlowNode **in_stack_ffffff60;
   ALUNode **in_stack_ffffff64;
   
-  this_00 = (CClassForInsertingPerFetchStuff *)__savegprlr_25(this);
   pAVar1 = *param_3;
   pFVar2 = *param_2;
   if ((param_6->dword[1] & 0x80000000) == 0) {
-    iVar4 = AddALUAfter2(param_1,pFVar2,pAVar1,GPUALUVECTOROP_MAX,GPUALUSCALAROP_SETPEQ,
+    iVar3 = AddALUAfter2(param_1,pFVar2,pAVar1,GPUALUVECTOROP_MAX,GPUALUSCALAROP_SETPEQ,
                          InvalidRegister,InvalidRegister,InvalidRegister,in_stack_ffffff58,
                          in_stack_ffffff5c,in_stack_ffffff60,in_stack_ffffff64);
-    if (-1 < iVar4) {
-      *(byte *)((int)&(*param_3)->instruction + 0xb) =
-           (byte)((*param_3)->instruction).FlowPair.dword[2] & 0x7f | 0x80;
-      goto LAB_82896aac;
+    if (iVar3 < 0) {
+      return eOutOfMemory;
     }
+    *(byte *)((int)&(*param_3)->instruction + 0xb) =
+         (byte)((*param_3)->instruction).FlowPair.dword[2] & 0x7f | 0x80;
   }
   else {
     if ((param_6->dword[2] & 0x80000000) == 0) {
-      iVar4 = AddALUAfter2(param_1,pFVar2,pAVar1,GPUALUVECTOROP_SETPEQP,GPUALUSCALAROP_RETAINPREV,
+      iVar3 = AddALUAfter2(param_1,pFVar2,pAVar1,GPUALUVECTOROP_SETPEQP,GPUALUSCALAROP_RETAINPREV,
                            InvalidRegister,InvalidRegister,*param_4,in_stack_ffffff58,
                            in_stack_ffffff5c,in_stack_ffffff60,in_stack_ffffff64);
     }
     else {
-      iVar4 = AddALUAfter2(param_1,pFVar2,pAVar1,GPUALUVECTOROP_SETPGTP,GPUALUSCALAROP_RETAINPREV,
+      iVar3 = AddALUAfter2(param_1,pFVar2,pAVar1,GPUALUVECTOROP_SETPGTP,GPUALUSCALAROP_RETAINPREV,
                            InvalidRegister,InvalidRegister,*param_4,in_stack_ffffff58,
                            in_stack_ffffff5c,in_stack_ffffff60,in_stack_ffffff64);
     }
-    if (-1 < iVar4) {
-      *(byte *)((int)&(*param_3)->instruction + 10) =
-           *(byte *)((int)&(*param_3)->instruction + 10) | 0x80;
-LAB_82896aac:
-      iVar4 = CreateExecAfterEx(param_1,*param_2,false,true,false,'\0',true,param_2);
-      if (-1 < iVar4) {
-        *param_3 = (ALUNode *)0x0;
-        iVar4 = AddALUAfter2(param_1,*param_2,(ALUNode *)0x0,GPUALUVECTOROP_MAX,
-                             GPUALUSCALAROP_RETAINPREV,InvalidRegister,InvalidRegister,
-                             InvalidRegister,in_stack_ffffff58,in_stack_ffffff5c,in_stack_ffffff60,
-                             in_stack_ffffff64);
-        if (-1 < iVar4) {
-          uVar6 = 0;
-          if (in_stack_00000054 != 0) {
-            do {
-              iVar4 = AddRareFetchAfter(this_00,param_1,param_2,param_3,
-                                        *(ERareInstruction *)
-                                         ((param_6->dword[0] >> 0x12 & 0x7c) +
-                                         (int)param_1->m_pRareOpToUse));
-              if (iVar4 < 0) goto LAB_82896a14;
-              uVar6 = uVar6 + 1;
-            } while (uVar6 < in_stack_00000054);
+    if (iVar3 < 0) {
+      return eOutOfMemory;
+    }
+    *(byte *)((int)&(*param_3)->instruction + 10) =
+         *(byte *)((int)&(*param_3)->instruction + 10) | 0x80;
+  }
+  iVar3 = CreateExecAfterEx(param_1,*param_2,false,true,false,'\0',true,param_2);
+  if (-1 < iVar3) {
+    *param_3 = (ALUNode *)0x0;
+    iVar3 = AddALUAfter2(param_1,*param_2,(ALUNode *)0x0,GPUALUVECTOROP_MAX,
+                         GPUALUSCALAROP_RETAINPREV,InvalidRegister,InvalidRegister,InvalidRegister,
+                         in_stack_ffffff58,in_stack_ffffff5c,in_stack_ffffff60,in_stack_ffffff64);
+    if (-1 < iVar3) {
+      uVar4 = 0;
+      if (in_stack_00000054 != 0) {
+        do {
+          iVar3 = AddRareFetchAfter(this,param_1,param_2,param_3,
+                                    *(ERareInstruction *)
+                                     ((param_6->dword[0] >> 0x12 & 0x7c) +
+                                     (int)param_1->m_pRareOpToUse));
+          if (iVar3 < 0) {
+            return eOutOfMemory;
           }
-          uVar3 = 0;
-          goto LAB_82896b6c;
-        }
+          uVar4 = uVar4 + 1;
+        } while (uVar4 < in_stack_00000054);
       }
+      return eSuccess;
     }
   }
-LAB_82896a14:
-  uVar3 = 9;
-LAB_82896b6c:
-  HVar5 = __restgprlr_25(uVar3);
-  return HVar5;
+  return eOutOfMemory;
 }
 
 
 // 82896B78  AddGetCompTexLODAfter  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtshaderhacker.cpp:1786)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "ERareInstruction": Some values do not have unique names */
 
-undefined4 __thiscall
+int __thiscall
 D3D::CShaderHacker::CClassForInsertingPerFetchStuff::AddGetCompTexLODAfter
           (CClassForInsertingPerFetchStuff *this,CShaderHacker *param_1,FlowNode *param_2,
           ALUNode *param_3,ALUNode *param_4,SHADER_REGISTER *param_5,FlowNode **param_6,
@@ -1479,24 +1369,21 @@ D3D::CShaderHacker::CClassForInsertingPerFetchStuff::AddGetCompTexLODAfter
   ALUNode *pAVar1;
   uint uVar2;
   int iVar3;
-  undefined4 uVar4;
-  uint uVar5;
-  GPUSHADER_INSTRUCTION *pGVar6;
+  uint uVar4;
+  GPUSHADER_INSTRUCTION *pGVar5;
   
-  __savegprlr_25(this);
   iVar3 = CopyInstructionAfter(param_1,param_2,param_3,param_4,param_6,param_7);
   if (-1 < iVar3) {
     pAVar1 = *param_7;
-    pGVar6 = &pAVar1->instruction;
-    uVar5 = param_5->dword >> 0xc & 0x3f000 | 0x11;
-    uVar2 = (pGVar6->FlowPair).dword[0];
+    pGVar5 = &pAVar1->instruction;
+    uVar4 = param_5->dword >> 0xc & 0x3f000 | 0x11;
+    uVar2 = (pGVar5->FlowPair).dword[0];
     (pAVar1->instruction).FlowPair.dword[1] =
          (pAVar1->instruction).FlowPair.dword[1] & 0xfffff000 | 0xfe8;
-    (pGVar6->FlowPair).dword[0] = uVar5 | uVar2 & 0xfff80ff1;
-    (pGVar6->FlowPair).dword[0] = uVar5 | uVar2 & 0xfff00ff1;
+    (pGVar5->FlowPair).dword[0] = uVar4 | uVar2 & 0xfff80ff1;
+    (pGVar5->FlowPair).dword[0] = uVar4 | uVar2 & 0xfff00ff1;
   }
-  uVar4 = __restgprlr_25(iVar3);
-  return uVar4;
+  return iVar3;
 }
 
 
@@ -1538,6 +1425,9 @@ D3D::CShaderHacker::CClassForInsertingPerFetchStuff::IsTfetchSameLODSameConst
 
 // 828959F8  GetNumTfetchSameLODSameConst  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtshaderhacker.cpp:1884)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 ulong __thiscall
 D3D::CShaderHacker::CClassForInsertingPerFetchStuff::GetNumTfetchSameLODSameConst
           (CClassForInsertingPerFetchStuff *this,ALUNode **param_1,FlowNode **param_2)
@@ -1546,23 +1436,20 @@ D3D::CShaderHacker::CClassForInsertingPerFetchStuff::GetNumTfetchSameLODSameCons
   ALUNode *pAVar1;
   ALUNode *pAVar2;
   FlowNode *pFVar3;
-  CClassForInsertingPerFetchStuff *this_00;
-  bool bVar5;
-  ulong uVar4;
-  FlowNode *pFVar6;
-  longlong lVar7;
+  bool bVar4;
+  FlowNode *pFVar5;
+  ulong uVar6;
   
-  this_00 = (CClassForInsertingPerFetchStuff *)__savegprlr_26(this);
-  pFVar6 = *param_2;
-  lVar7 = 0;
+  pFVar5 = *param_2;
+  uVar6 = 0;
   do {
     pAVar1 = *param_1;
-    lVar7 = lVar7 + 1;
+    uVar6 = uVar6 + 1;
     pAVar2 = pAVar1->m_Next;
     *param_1 = pAVar2;
     if (pAVar2 == (ALUNode *)0x0) {
-      pFVar6 = *param_2;
-      pFVar3 = pFVar6->m_Next;
+      pFVar5 = *param_2;
+      pFVar3 = pFVar5->m_Next;
       *param_2 = pFVar3;
       if (pFVar3 != (FlowNode *)0x0) {
         *param_1 = pFVar3->m_Child;
@@ -1570,17 +1457,18 @@ D3D::CShaderHacker::CClassForInsertingPerFetchStuff::GetNumTfetchSameLODSameCons
     }
     pAVar2 = *param_1;
     if ((pAVar2 == (ALUNode *)0x0) || ((pAVar2->m_Flags & 1) != 0)) break;
-    bVar5 = IsTfetchSameLODSameConst(this_00,pAVar1,pAVar2);
-  } while (bVar5);
+    bVar4 = IsTfetchSameLODSameConst(this,pAVar1,pAVar2);
+  } while (bVar4);
   *param_1 = pAVar1;
-  *param_2 = pFVar6;
-  uVar4 = __restgprlr_26(lVar7);
-  return uVar4;
+  *param_2 = pFVar5;
+  return uVar6;
 }
 
 
 // 82897600  AddPerTfetchStuff  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtshaderhacker.cpp:1953)
 
+/* WARNING: Function: __savegprlr_21 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_21 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "ERareInstruction": Some values do not have unique names */
 
 HackFailureReason __thiscall
@@ -1594,7 +1482,6 @@ D3D::CShaderHacker::CClassForInsertingPerFetchStuff::AddPerTfetchStuff
   uint uVar3;
   ALUNode *pAVar4;
   bool bVar5;
-  CClassForInsertingPerFetchStuff *this_00;
   int iVar6;
   SHADER_REGISTER SVar7;
   SHADER_REGISTER SVar8;
@@ -1614,159 +1501,159 @@ D3D::CShaderHacker::CClassForInsertingPerFetchStuff::AddPerTfetchStuff
   SHADER_REGISTER aSStack_78 [8];
   longlong local_70 [14];
   
-  this_00 = (CClassForInsertingPerFetchStuff *)__savegprlr_21(this);
-  pFVar1 = this_00->m_pCFNodeToInsertAfter;
+  pFVar1 = this->m_pCFNodeToInsertAfter;
   local_8c = (ALUNode *)0x0;
   bVar5 = false;
   local_90 = (FlowNode *)0x0;
-  if ((((1 << ((pFVar1->instruction).dword[1] >> 0xc & 0xf) & 0x607eU) != 0) &&
-      (pFVar1->m_Child == (ALUNode *)0x0)) ||
+  if ((((1 << ((pFVar1->instruction).dword[1] >> 0xc & 0xf) & 0x607eU) == 0) ||
+      (pFVar1->m_Child != (ALUNode *)0x0)) &&
      (iVar6 = GraphMicrocodeBuilder::CreateExecAfter
                         ((GraphMicrocodeBuilder *)param_1,pFVar1,&local_90), pFVar1 = local_90,
-     -1 < iVar6)) {
-    local_90 = pFVar1;
-    GetCConstantPerTFConst((CShaderHacker *)&SStack_88._s_0,(int)param_1);
-    pSVar10 = &this_00->m_AllocatedGPR;
-    SHADER_REGISTER::Swizzle((SHADER_REGISTER *)&local_84._s_0,(ulong)pSVar10);
-    SHADER_REGISTER::Swizzle((SHADER_REGISTER *)&SStack_80._s_0,(ulong)pSVar10);
-    uVar2 = (param_2->instruction).FlowPair.dword[2];
-    uVar3 = (param_2->instruction).FlowPair.dword[1];
-    local_70[0] = (longlong)((int)(uVar2 << 0x17 | uVar2 >> 9) >> 0x19);
-    dVar11 = (double)((float)local_70[0] * 0.0625);
-    if ((uVar3 & 0x10000000) == 0) {
-      if ((uVar3 & 0x20000000) == 0) {
-        if (dVar11 == 0.0) {
-          SHADER_REGISTER::Swizzle((SHADER_REGISTER *)local_70,(ulong)&SStack_88);
-          SVar7 = SHADER_REGISTER::Swizzle(aSStack_78,(ulong)&SStack_88);
-                    /* WARNING: Load size is inaccurate */
-          iVar6 = AddALUAfter2(param_1,local_90,local_8c,GPUALUVECTOROP_MAX,
-                               GPUALUSCALAROP_RETAINPREV,local_84,InvalidRegister,
-                               (SHADER_REGISTER)*SVar7._s_0,in_stack_ffffff08,in_stack_ffffff0c,
-                               in_stack_ffffff10,in_stack_ffffff14);
-          if (-1 < iVar6) {
-            bVar5 = true;
-            SVar7 = local_84;
-            goto LAB_82897b40;
-          }
-          goto LAB_828978f4;
-        }
+     iVar6 < 0)) {
+    return eOutOfMemory;
+  }
+  local_90 = pFVar1;
+  GetCConstantPerTFConst((CShaderHacker *)&SStack_88._s_0,(int)param_1);
+  pSVar10 = &this->m_AllocatedGPR;
+  SHADER_REGISTER::Swizzle((SHADER_REGISTER *)&local_84._s_0,(ulong)pSVar10);
+  SHADER_REGISTER::Swizzle((SHADER_REGISTER *)&SStack_80._s_0,(ulong)pSVar10);
+  uVar2 = (param_2->instruction).FlowPair.dword[2];
+  uVar3 = (param_2->instruction).FlowPair.dword[1];
+  local_70[0] = (longlong)((int)(uVar2 << 0x17 | uVar2 >> 9) >> 0x19);
+  dVar11 = (double)((float)local_70[0] * 0.0625);
+  if ((uVar3 & 0x10000000) == 0) {
+    if ((uVar3 & 0x20000000) == 0) {
+      if (dVar11 == 0.0) {
         SHADER_REGISTER::Swizzle((SHADER_REGISTER *)local_70,(ulong)&SStack_88);
-        SVar7 = AllocateFloatConstant((CShaderHacker *)aSStack_78,(float)dVar11);
+        SVar7 = SHADER_REGISTER::Swizzle(aSStack_78,(ulong)&SStack_88);
                     /* WARNING: Load size is inaccurate */
-        iVar6 = AddALUAfter2(param_1,local_90,local_8c,GPUALUVECTOROP_ADD,GPUALUSCALAROP_RETAINPREV,
+        iVar6 = AddALUAfter2(param_1,local_90,local_8c,GPUALUVECTOROP_MAX,GPUALUSCALAROP_RETAINPREV,
                              local_84,InvalidRegister,(SHADER_REGISTER)*SVar7._s_0,in_stack_ffffff08
                              ,in_stack_ffffff0c,in_stack_ffffff10,in_stack_ffffff14);
+        if (iVar6 < 0) {
+          return eOutOfMemory;
+        }
+        bVar5 = true;
+        SVar7 = local_84;
+        goto LAB_82897b40;
       }
-      else {
-        SHADER_REGISTER::Swizzle((SHADER_REGISTER *)local_70,(ulong)&SStack_88,3,2,3);
-        SVar7 = AllocateFloatConstant((CShaderHacker *)aSStack_78,(float)dVar11,1.0);
+      SHADER_REGISTER::Swizzle((SHADER_REGISTER *)local_70,(ulong)&SStack_88);
+      SVar7 = AllocateFloatConstant((CShaderHacker *)aSStack_78,(float)dVar11);
                     /* WARNING: Load size is inaccurate */
-        iVar6 = AddALUAfter2(param_1,local_90,local_8c,GPUALUVECTOROP_DP2ADD,
-                             GPUALUSCALAROP_RETAINPREV,local_84,InvalidRegister,
-                             (SHADER_REGISTER)*SVar7._s_0,in_stack_ffffff08,in_stack_ffffff0c,
-                             in_stack_ffffff10,in_stack_ffffff14);
-      }
-LAB_828978d4:
-      SVar7 = local_84;
-      if (-1 < iVar6) goto LAB_82897b40;
+      iVar6 = AddALUAfter2(param_1,local_90,local_8c,GPUALUVECTOROP_ADD,GPUALUSCALAROP_RETAINPREV,
+                           local_84,InvalidRegister,(SHADER_REGISTER)*SVar7._s_0,in_stack_ffffff08,
+                           in_stack_ffffff0c,in_stack_ffffff10,in_stack_ffffff14);
     }
-    else if ((((uVar2 & 1) == 0) ||
-             ((((pAVar4 = this_00->m_pSetGradientH, pAVar4 == (ALUNode *)0x0 ||
-                (((int)(pAVar4->instruction).FlowPair.dword[1] < 0 &&
-                 ((pAVar4->instruction).FlowPair.dword[2] >> 0x1f !=
-                  (param_2->instruction).FlowPair.dword[2] >> 0x1f)))) ||
-               (iVar6 = GraphMicrocodeBuilder::AddALUAfter
-                                  ((GraphMicrocodeBuilder *)param_1,local_90,local_8c,true,false,
-                                   &pAVar4->instruction,&local_90,&local_8c), -1 < iVar6)) &&
-              (((pAVar4 = this_00->m_pSetGradientV, pAVar4 == (ALUNode *)0x0 ||
-                (((int)(pAVar4->instruction).FlowPair.dword[1] < 0 &&
-                 ((pAVar4->instruction).FlowPair.dword[2] >> 0x1f !=
-                  (param_2->instruction).FlowPair.dword[2] >> 0x1f)))) ||
-               (iVar6 = GraphMicrocodeBuilder::AddALUAfter
-                                  ((GraphMicrocodeBuilder *)param_1,local_90,local_8c,true,false,
-                                   &pAVar4->instruction,&local_90,&local_8c), -1 < iVar6)))))) &&
-            (iVar6 = AddGetCompTexLODAfter
-                               (this_00,param_1,local_90,local_8c,param_2,&local_84,&local_90,
-                                &local_8c), -1 < iVar6)) {
-      if (((param_2->instruction).FlowPair.dword[1] & 0x20000000) == 0) {
-        AllocateFloatConstant((CShaderHacker *)aSStack_78,(float)dVar11);
-        SHADER_REGISTER::Swizzle(aSStack_7c,(ulong)pSVar10,0,1,0);
-        SVar7 = SHADER_REGISTER::Swizzle((SHADER_REGISTER *)local_70,(ulong)&SStack_88,3,2,3);
+    else {
+      SHADER_REGISTER::Swizzle((SHADER_REGISTER *)local_70,(ulong)&SStack_88,3,2,3);
+      SVar7 = AllocateFloatConstant((CShaderHacker *)aSStack_78,(float)dVar11,1.0);
                     /* WARNING: Load size is inaccurate */
-        iVar6 = AddALUAfter2(param_1,local_90,local_8c,GPUALUVECTOROP_DP2ADD,
-                             GPUALUSCALAROP_RETAINPREV,local_84,InvalidRegister,
-                             (SHADER_REGISTER)*SVar7._s_0,in_stack_ffffff08,in_stack_ffffff0c,
-                             in_stack_ffffff10,in_stack_ffffff14);
-        if (-1 < iVar6) {
-          local_8c->serialize = -1;
-          SVar7 = local_84;
-          goto LAB_82897b40;
-        }
-      }
-      else {
-        SHADER_REGISTER::Swizzle(aSStack_7c,(ulong)pSVar10,0,1,0);
-        SVar7 = SHADER_REGISTER::Swizzle(aSStack_78,(ulong)&SStack_88,3,2,3);
-                    /* WARNING: Load size is inaccurate */
-        iVar6 = AddALUAfter2(param_1,local_90,local_8c,GPUALUVECTOROP_DP2ADD,
-                             GPUALUSCALAROP_RETAINPREV,local_84,InvalidRegister,
-                             (SHADER_REGISTER)*SVar7._s_0,in_stack_ffffff08,in_stack_ffffff0c,
-                             in_stack_ffffff10,in_stack_ffffff14);
-        if (-1 < iVar6) {
-          local_8c->serialize = -1;
-          SVar7 = local_84;
-          if (dVar11 != 0.0) {
-            AllocateFloatConstant((CShaderHacker *)aSStack_78,(float)dVar11);
-            iVar6 = AddALUAfter2(param_1,local_90,local_8c,GPUALUVECTOROP_ADD,
-                                 GPUALUSCALAROP_RETAINPREV,local_84,InvalidRegister,local_84,
-                                 in_stack_ffffff08,in_stack_ffffff0c,in_stack_ffffff10,
-                                 in_stack_ffffff14);
-            goto LAB_828978d4;
-          }
-LAB_82897b40:
-          if (!bVar5) {
-            SVar8 = SHADER_REGISTER::Swizzle((SHADER_REGISTER *)local_70,(ulong)&SStack_88);
-                    /* WARNING: Load size is inaccurate */
-            iVar6 = AddALUAfter2(param_1,local_90,local_8c,GPUALUVECTOROP_MAX,
-                                 GPUALUSCALAROP_RETAINPREV,SVar7,InvalidRegister,
-                                 (SHADER_REGISTER)*SVar8._s_0,in_stack_ffffff08,in_stack_ffffff0c,
-                                 in_stack_ffffff10,in_stack_ffffff14);
-            if (iVar6 < 0) goto LAB_828978f4;
-          }
-          SVar8 = SHADER_REGISTER::Swizzle((SHADER_REGISTER *)local_70,(ulong)&SStack_88);
-                    /* WARNING: Load size is inaccurate */
-          iVar6 = AddALUAfter2(param_1,local_90,local_8c,GPUALUVECTOROP_MIN,
-                               GPUALUSCALAROP_RETAINPREV,SVar7,InvalidRegister,
-                               (SHADER_REGISTER)*SVar8._s_0,in_stack_ffffff08,in_stack_ffffff0c,
-                               in_stack_ffffff10,in_stack_ffffff14);
-          if ((-1 < iVar6) &&
-             (iVar6 = AddALUAfter2(param_1,local_90,local_8c,GPUALUVECTOROP_FLOOR,
-                                   GPUALUSCALAROP_RETAINPREV,SVar7,InvalidRegister,SVar7,
-                                   in_stack_ffffff08,in_stack_ffffff0c,in_stack_ffffff10,
-                                   in_stack_ffffff14), -1 < iVar6)) {
-            HVar9 = AddPerTfetchPerfCounterStuff
-                              (this_00,param_1,&local_90,&local_8c,&local_84,&SStack_80,
-                               &(param_2->instruction).TextureFetch,&SStack_88,
-                               in_stack_ffffff08.dword);
-            if (HVar9 == eSuccess) {
-              this_00->m_pCFNodeToInsertAfter = local_90;
-              HVar9 = eSuccess;
-            }
-            goto LAB_82897c80;
-          }
-        }
-      }
+      iVar6 = AddALUAfter2(param_1,local_90,local_8c,GPUALUVECTOROP_DP2ADD,GPUALUSCALAROP_RETAINPREV
+                           ,local_84,InvalidRegister,(SHADER_REGISTER)*SVar7._s_0,in_stack_ffffff08,
+                           in_stack_ffffff0c,in_stack_ffffff10,in_stack_ffffff14);
     }
   }
-LAB_828978f4:
-  HVar9 = eOutOfMemory;
-LAB_82897c80:
-  HVar9 = __restgprlr_21(HVar9);
-  return HVar9;
+  else {
+    if ((uVar2 & 1) != 0) {
+      pAVar4 = this->m_pSetGradientH;
+      if (((pAVar4 != (ALUNode *)0x0) &&
+          ((-1 < (int)(pAVar4->instruction).FlowPair.dword[1] ||
+           ((pAVar4->instruction).FlowPair.dword[2] >> 0x1f ==
+            (param_2->instruction).FlowPair.dword[2] >> 0x1f)))) &&
+         (iVar6 = GraphMicrocodeBuilder::AddALUAfter
+                            ((GraphMicrocodeBuilder *)param_1,local_90,local_8c,true,false,
+                             &pAVar4->instruction,&local_90,&local_8c), iVar6 < 0)) {
+        return eOutOfMemory;
+      }
+      pAVar4 = this->m_pSetGradientV;
+      if (((pAVar4 != (ALUNode *)0x0) &&
+          ((-1 < (int)(pAVar4->instruction).FlowPair.dword[1] ||
+           ((pAVar4->instruction).FlowPair.dword[2] >> 0x1f ==
+            (param_2->instruction).FlowPair.dword[2] >> 0x1f)))) &&
+         (iVar6 = GraphMicrocodeBuilder::AddALUAfter
+                            ((GraphMicrocodeBuilder *)param_1,local_90,local_8c,true,false,
+                             &pAVar4->instruction,&local_90,&local_8c), iVar6 < 0)) {
+        return eOutOfMemory;
+      }
+    }
+    iVar6 = AddGetCompTexLODAfter
+                      (this,param_1,local_90,local_8c,param_2,&local_84,&local_90,&local_8c);
+    if (iVar6 < 0) {
+      return eOutOfMemory;
+    }
+    if (((param_2->instruction).FlowPair.dword[1] & 0x20000000) == 0) {
+      AllocateFloatConstant((CShaderHacker *)aSStack_78,(float)dVar11);
+      SHADER_REGISTER::Swizzle(aSStack_7c,(ulong)pSVar10,0,1,0);
+      SVar7 = SHADER_REGISTER::Swizzle((SHADER_REGISTER *)local_70,(ulong)&SStack_88,3,2,3);
+                    /* WARNING: Load size is inaccurate */
+      iVar6 = AddALUAfter2(param_1,local_90,local_8c,GPUALUVECTOROP_DP2ADD,GPUALUSCALAROP_RETAINPREV
+                           ,local_84,InvalidRegister,(SHADER_REGISTER)*SVar7._s_0,in_stack_ffffff08,
+                           in_stack_ffffff0c,in_stack_ffffff10,in_stack_ffffff14);
+      if (iVar6 < 0) {
+        return eOutOfMemory;
+      }
+      local_8c->serialize = -1;
+      SVar7 = local_84;
+      goto LAB_82897b40;
+    }
+    SHADER_REGISTER::Swizzle(aSStack_7c,(ulong)pSVar10,0,1,0);
+    SVar7 = SHADER_REGISTER::Swizzle(aSStack_78,(ulong)&SStack_88,3,2,3);
+                    /* WARNING: Load size is inaccurate */
+    iVar6 = AddALUAfter2(param_1,local_90,local_8c,GPUALUVECTOROP_DP2ADD,GPUALUSCALAROP_RETAINPREV,
+                         local_84,InvalidRegister,(SHADER_REGISTER)*SVar7._s_0,in_stack_ffffff08,
+                         in_stack_ffffff0c,in_stack_ffffff10,in_stack_ffffff14);
+    if (iVar6 < 0) {
+      return eOutOfMemory;
+    }
+    local_8c->serialize = -1;
+    SVar7 = local_84;
+    if (dVar11 == 0.0) goto LAB_82897b40;
+    AllocateFloatConstant((CShaderHacker *)aSStack_78,(float)dVar11);
+    iVar6 = AddALUAfter2(param_1,local_90,local_8c,GPUALUVECTOROP_ADD,GPUALUSCALAROP_RETAINPREV,
+                         local_84,InvalidRegister,local_84,in_stack_ffffff08,in_stack_ffffff0c,
+                         in_stack_ffffff10,in_stack_ffffff14);
+  }
+  SVar7 = local_84;
+  if (iVar6 < 0) {
+    return eOutOfMemory;
+  }
+LAB_82897b40:
+  if (!bVar5) {
+    SVar8 = SHADER_REGISTER::Swizzle((SHADER_REGISTER *)local_70,(ulong)&SStack_88);
+                    /* WARNING: Load size is inaccurate */
+    iVar6 = AddALUAfter2(param_1,local_90,local_8c,GPUALUVECTOROP_MAX,GPUALUSCALAROP_RETAINPREV,
+                         SVar7,InvalidRegister,(SHADER_REGISTER)*SVar8._s_0,in_stack_ffffff08,
+                         in_stack_ffffff0c,in_stack_ffffff10,in_stack_ffffff14);
+    if (iVar6 < 0) {
+      return eOutOfMemory;
+    }
+  }
+  SVar8 = SHADER_REGISTER::Swizzle((SHADER_REGISTER *)local_70,(ulong)&SStack_88);
+                    /* WARNING: Load size is inaccurate */
+  iVar6 = AddALUAfter2(param_1,local_90,local_8c,GPUALUVECTOROP_MIN,GPUALUSCALAROP_RETAINPREV,SVar7,
+                       InvalidRegister,(SHADER_REGISTER)*SVar8._s_0,in_stack_ffffff08,
+                       in_stack_ffffff0c,in_stack_ffffff10,in_stack_ffffff14);
+  if ((-1 < iVar6) &&
+     (iVar6 = AddALUAfter2(param_1,local_90,local_8c,GPUALUVECTOROP_FLOOR,GPUALUSCALAROP_RETAINPREV,
+                           SVar7,InvalidRegister,SVar7,in_stack_ffffff08,in_stack_ffffff0c,
+                           in_stack_ffffff10,in_stack_ffffff14), -1 < iVar6)) {
+    HVar9 = AddPerTfetchPerfCounterStuff
+                      (this,param_1,&local_90,&local_8c,&local_84,&SStack_80,
+                       &(param_2->instruction).TextureFetch,&SStack_88,in_stack_ffffff08.dword);
+    if (HVar9 == eSuccess) {
+      this->m_pCFNodeToInsertAfter = local_90;
+      return eSuccess;
+    }
+    return HVar9;
+  }
+  return eOutOfMemory;
 }
 
 
 // 82897C90  AddJumpsAndPerTfetchStuff  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtshaderhacker.cpp:2311)
 
+/* WARNING: Function: __savegprlr_15 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_15 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "ERareInstruction": Some values do not have unique names */
 
 HackFailureReason __thiscall
@@ -1779,7 +1666,6 @@ D3D::CShaderHacker::CClassForInsertingPerFetchStuff::AddJumpsAndPerTfetchStuff
   uint uVar2;
   FlowNode *pFVar3;
   undefined1 *puVar4;
-  CClassForInsertingPerFetchStuff *this_00;
   HackFailureReason HVar5;
   SHADER_REGISTER SVar6;
   COND_TYPE CVar7;
@@ -1788,16 +1674,15 @@ D3D::CShaderHacker::CClassForInsertingPerFetchStuff::AddJumpsAndPerTfetchStuff
   bool bVar12;
   FlowNode *pFVar10;
   SHADER_REGISTER *pSVar11;
-  ulonglong uVar13;
-  uint uVar14;
-  COND_TYPE *pCVar15;
+  uint uVar13;
+  COND_TYPE *pCVar14;
+  COND_TYPE *this_00;
+  ALUNode *pAVar15;
+  FlowNode **ppFVar16;
   COND_TYPE *this_01;
-  ALUNode *pAVar16;
-  FlowNode **ppFVar17;
-  COND_TYPE *this_02;
+  FlowNode *pFVar17;
   FlowNode *pFVar18;
-  FlowNode *pFVar19;
-  FlowNode **ppFVar20;
+  FlowNode **ppFVar19;
   SHADER_REGISTER SStack_b0;
   FlowNode *local_ac;
   ALUNode *local_a8;
@@ -1805,214 +1690,225 @@ D3D::CShaderHacker::CClassForInsertingPerFetchStuff::AddJumpsAndPerTfetchStuff
   COND_TYPE CStack_a0;
   SHADER_REGISTER aSStack_9c [156];
   
-  uVar13 = (ulonglong)(int)param_2;
-  this_00 = (CClassForInsertingPerFetchStuff *)__savegprlr_15(this);
   *param_3 = 0;
-  HVar5 = MarkFetchClauseStarts(this_00,param_1,(ulong)uVar13);
+  HVar5 = MarkFetchClauseStarts(this,param_1,param_2);
   if (HVar5 == eSuccess) {
     SVar6 = GPR_ALLOCATOR::Allocate
                       ((GPR_ALLOCATOR *)&local_a4._s_0,
                        (int)&param_1->m_pRehackingInfo->m_GprAllocator);
                     /* WARNING: Load size is inaccurate */
     SVar6._s_0 = *SVar6._s_0;
-    this_00->m_bNeedToRestorePred = false;
-    this_00->m_AllocatedGPR = SVar6;
-    SHADER_REGISTER::Swizzle((SHADER_REGISTER *)&SStack_b0._s_0,(ulong)&this_00->m_AllocatedGPR);
-    pFVar18 = (FlowNode *)param_1->_padding_;
-    local_ac = pFVar18;
-    if (pFVar18 != (FlowNode *)0x0) {
-      this_01 = &this_00->m_CurExecCond;
+    this->m_bNeedToRestorePred = false;
+    this->m_AllocatedGPR = SVar6;
+    SHADER_REGISTER::Swizzle((SHADER_REGISTER *)&SStack_b0._s_0,(ulong)&this->m_AllocatedGPR);
+    pFVar17 = (FlowNode *)param_1->_padding_;
+    local_ac = pFVar17;
+    if (pFVar17 != (FlowNode *)0x0) {
+      this_00 = &this->m_CurExecCond;
       pAVar1 = local_a8;
       do {
         local_a8 = pAVar1;
-        pAVar16 = (ALUNode *)0x0;
-        this_00->m_PrevExecCond = (COND_TYPE)*(COND_TYPE_s_0 *)this_01;
-        local_ac = pFVar18;
-        CVar7 = GetFlowCond((D3D *)&CStack_a0._s_0,&pFVar18->instruction,*(COND_TYPE_s_0 *)this_01);
+        pAVar15 = (ALUNode *)0x0;
+        this->m_PrevExecCond = (COND_TYPE)*(COND_TYPE_s_0 *)this_00;
+        local_ac = pFVar17;
+        CVar7 = GetFlowCond((D3D *)&CStack_a0._s_0,&pFVar17->instruction,*(COND_TYPE_s_0 *)this_00);
                     /* WARNING: Load size is inaccurate */
-        *this_01 = (COND_TYPE)*CVar7._s_0;
-        pAVar1 = pFVar18->m_Child;
-        while (local_a8 = pAVar1, pAVar1 != (ALUNode *)0x0) {
+        *this_00 = (COND_TYPE)*CVar7._s_0;
+        pAVar1 = pFVar17->m_Child;
+        while (pAVar1 != (ALUNode *)0x0) {
+          local_a8 = pAVar1;
           if ((pAVar1->m_Flags & 1) != 0) {
-            if ((this_00->m_bInFetchGroup != false) &&
-               (BackPatchDanglingJumps(this_00,param_1), this_00->m_bNeedToRestorePred != false)) {
-              HVar5 = AddRestorePredicate(this_00,param_1,&this_00->m_pCFNodeToInsertAfter,
-                                          &SStack_b0);
-              if (HVar5 != eSuccess) goto LAB_82898120;
-              this_00->m_bNeedToRestorePred = false;
+            if ((this->m_bInFetchGroup != false) &&
+               (BackPatchDanglingJumps(this,param_1), this->m_bNeedToRestorePred != false)) {
+              HVar5 = AddRestorePredicate(this,param_1,&this->m_pCFNodeToInsertAfter,&SStack_b0);
+              if (HVar5 != eSuccess) {
+                return HVar5;
+              }
+              this->m_bNeedToRestorePred = false;
             }
-            this_00->m_pSetGradientH = (ALUNode *)0x0;
-            this_00->m_pSetGradientV = (ALUNode *)0x0;
-            this_00->m_SetTexLODSrc = InvalidRegister;
+            this->m_pSetGradientH = (ALUNode *)0x0;
+            this->m_pSetGradientV = (ALUNode *)0x0;
+            this->m_SetTexLODSrc = InvalidRegister;
             iVar8 = GraphMicrocodeBuilder::SplitExecBlock
-                              ((GraphMicrocodeBuilder *)param_1,pFVar18,pAVar16,
-                               &this_00->m_pExecOfFirstTfetchInGroup);
-            if (-1 < iVar8) {
-              this_00->m_pCFNodeToInsertAfter = pFVar18;
-              pFVar18 = this_00->m_pExecOfFirstTfetchInGroup;
-              this_00->m_bInFetchGroup = true;
-              local_ac = pFVar18;
-              goto LAB_82897dec;
+                              ((GraphMicrocodeBuilder *)param_1,pFVar17,pAVar15,
+                               &this->m_pExecOfFirstTfetchInGroup);
+            if (iVar8 < 0) {
+              return eOutOfMemory;
             }
-LAB_828981c0:
-            HVar5 = eOutOfMemory;
-            goto LAB_82898120;
+            this->m_pCFNodeToInsertAfter = pFVar17;
+            pFVar17 = this->m_pExecOfFirstTfetchInGroup;
+            this->m_bInFetchGroup = true;
+            local_ac = pFVar17;
           }
-LAB_82897dec:
-          pAVar16 = pAVar1;
-          if (this_00->m_bInFetchGroup != false) {
+          pAVar15 = pAVar1;
+          if (this->m_bInFetchGroup != false) {
             if ((pAVar1->isFetch == 0) || (pAVar1->isVertexFetch != 0)) {
-              BackPatchDanglingJumps(this_00,param_1);
-              this_00->m_bInFetchGroup = false;
-              if (this_00->m_bNeedToRestorePred != false) {
-                HVar5 = AddRestorePredicate(this_00,param_1,&this_00->m_pCFNodeToInsertAfter,
-                                            &SStack_b0);
-                if (HVar5 != eSuccess) goto LAB_82898120;
-                this_00->m_bNeedToRestorePred = false;
+              BackPatchDanglingJumps(this,param_1);
+              this->m_bInFetchGroup = false;
+              if (this->m_bNeedToRestorePred != false) {
+                HVar5 = AddRestorePredicate(this,param_1,&this->m_pCFNodeToInsertAfter,&SStack_b0);
+                if (HVar5 != eSuccess) {
+                  return HVar5;
+                }
+                this->m_bNeedToRestorePred = false;
               }
             }
             else {
               uVar2 = (pAVar1->instruction).FlowPair.dword[0];
-              uVar14 = uVar2 & 0x1f;
-              if ((uVar14 == 1) && (((uint)(1 << (uVar2 >> 0x14 & 0x1f)) & uVar13) != 0)) {
-                if (((pAVar1->m_Flags & 2) != 0) && (this_00->m_bNeedToRestorePred == false)) {
-                  this_00->m_bNeedToRestorePred = true;
-                  HVar5 = AddSavePredicate(this_00,param_1,&this_00->m_pCFNodeToInsertAfter,
-                                           &SStack_b0);
-                  if (HVar5 != eSuccess) goto LAB_82898120;
+              uVar13 = uVar2 & 0x1f;
+              if ((uVar13 == 1) && ((1 << (uVar2 >> 0x14 & 0x1f) & param_2) != 0)) {
+                if (((pAVar1->m_Flags & 2) != 0) && (this->m_bNeedToRestorePred == false)) {
+                  this->m_bNeedToRestorePred = true;
+                  HVar5 = AddSavePredicate(this,param_1,&this->m_pCFNodeToInsertAfter,&SStack_b0);
+                  if (HVar5 != eSuccess) {
+                    return HVar5;
+                  }
                 }
-                uVar9 = GetNumTfetchSameLODSameConst(this_00,&local_a8,&local_ac);
-                pAVar16 = local_a8;
-                this_02 = &this_00->m_CurFetchCond;
-                this_00->m_PrevFetchCond = this_00->m_CurFetchCond;
-                pCVar15 = &Unconditional;
+                uVar9 = GetNumTfetchSameLODSameConst(this,&local_a8,&local_ac);
+                pAVar15 = local_a8;
+                this_01 = &this->m_CurFetchCond;
+                this->m_PrevFetchCond = this->m_CurFetchCond;
+                pCVar14 = &Unconditional;
                 if (((local_a8->instruction).FlowPair.dword[1] & 0x80000000) != 0) {
                   local_a4.Dword =
                        (local_a8->instruction).FlowPair.dword[2] >> 9 & 0x400000 | 0x800000 |
                        local_a4.Dword & 0x1fffff;
-                  pCVar15 = &local_a4;
+                  pCVar14 = &local_a4;
                 }
-                pFVar3 = this_00->m_pCFNodeToInsertAfter;
-                *this_02 = *pCVar15;
+                pFVar3 = this->m_pCFNodeToInsertAfter;
+                *this_01 = *pCVar14;
                 if (pFVar3 == (FlowNode *)0x0) {
-                  pFVar19 = (FlowNode *)param_1->_padding_;
+                  pFVar18 = (FlowNode *)param_1->_padding_;
                 }
                 else {
-                  pFVar19 = pFVar3->m_Next;
+                  pFVar18 = pFVar3->m_Next;
                 }
-                HVar5 = AddPerTfetchStuff(this_00,param_1,local_a8,uVar9);
-                if (HVar5 != eSuccess) goto LAB_82898120;
+                HVar5 = AddPerTfetchStuff(this,param_1,local_a8,uVar9);
+                if (HVar5 != eSuccess) {
+                  return HVar5;
+                }
                 if (pFVar3 == (FlowNode *)0x0) {
                   pFVar10 = (FlowNode *)param_1->_padding_;
                 }
                 else {
                   pFVar10 = pFVar3->m_Next;
                 }
-                pFVar18 = local_ac;
-                if (pFVar19 != pFVar10) {
-                  pFVar18 = this_00->m_pLastPerExecJmpNode;
-                  ppFVar20 = (FlowNode **)0x0;
-                  ppFVar17 = (FlowNode **)0x0;
-                  if ((pFVar18 != (FlowNode *)0x0) &&
+                pFVar17 = local_ac;
+                if (pFVar18 != pFVar10) {
+                  pFVar17 = this->m_pLastPerExecJmpNode;
+                  ppFVar19 = (FlowNode **)0x0;
+                  ppFVar16 = (FlowNode **)0x0;
+                  if ((pFVar17 != (FlowNode *)0x0) &&
                      (bVar12 = COND_TYPE::operator==
-                                         ((COND_TYPE *)&this_01->_s_0,this_00->m_PrevExecCond),
-                     !bVar12)) {
-                    ppFVar20 = &pFVar18->m_Destination;
-                    this_00->m_pLastPerExecJmpNode = (FlowNode *)0x0;
+                                         ((COND_TYPE *)&this_00->_s_0,this->m_PrevExecCond), !bVar12
+                     )) {
+                    ppFVar19 = &pFVar17->m_Destination;
+                    this->m_pLastPerExecJmpNode = (FlowNode *)0x0;
                   }
-                  pFVar18 = this_00->m_pLastPerFetchJmpNode;
-                  if ((pFVar18 != (FlowNode *)0x0) &&
+                  pFVar17 = this->m_pLastPerFetchJmpNode;
+                  if ((pFVar17 != (FlowNode *)0x0) &&
                      (((bVar12 = COND_TYPE::operator==
-                                           ((COND_TYPE *)&this_02->_s_0,this_00->m_PrevFetchCond),
-                       !bVar12 || (ppFVar20 != (FlowNode **)0x0)) ||
-                      ((this_00->m_pLastPerExecJmpNode == (FlowNode *)0x0 &&
-                       (bVar12 = COND_TYPE::operator==((COND_TYPE *)&this_01->_s_0,Unconditional),
+                                           ((COND_TYPE *)&this_01->_s_0,this->m_PrevFetchCond),
+                       !bVar12 || (ppFVar19 != (FlowNode **)0x0)) ||
+                      ((this->m_pLastPerExecJmpNode == (FlowNode *)0x0 &&
+                       (bVar12 = COND_TYPE::operator==((COND_TYPE *)&this_00->_s_0,Unconditional),
                        !bVar12)))))) {
-                    ppFVar17 = &pFVar18->m_Destination;
-                    this_00->m_pLastPerFetchJmpNode = (FlowNode *)0x0;
+                    ppFVar16 = &pFVar17->m_Destination;
+                    this->m_pLastPerFetchJmpNode = (FlowNode *)0x0;
                   }
-                  if (((this_00->m_pLastPerFetchJmpNode == (FlowNode *)0x0) &&
-                      (bVar12 = COND_TYPE::operator==((COND_TYPE *)&this_02->_s_0,Unconditional),
+                  if (((this->m_pLastPerFetchJmpNode == (FlowNode *)0x0) &&
+                      (bVar12 = COND_TYPE::operator==((COND_TYPE *)&this_01->_s_0,Unconditional),
                       !bVar12)) &&
                      (bVar12 = COND_TYPE::operator==
-                                         ((COND_TYPE *)&this_02->_s_0,
-                                          (COND_TYPE)*(COND_TYPE_s_0 *)this_01), !bVar12)) {
-                    if (this_00->m_bNeedToRestorePred != false) {
-                      HVar5 = AddRestorePredicate(this_00,param_1,&this_00->m_pCFNodeToInsertAfter,
+                                         ((COND_TYPE *)&this_01->_s_0,
+                                          (COND_TYPE)*(COND_TYPE_s_0 *)this_00), !bVar12)) {
+                    if (this->m_bNeedToRestorePred != false) {
+                      HVar5 = AddRestorePredicate(this,param_1,&this->m_pCFNodeToInsertAfter,
                                                   &SStack_b0);
-                      if (HVar5 != eSuccess) goto LAB_82898120;
-                      this_00->m_bNeedToRestorePred = false;
+                      if (HVar5 != eSuccess) {
+                        return HVar5;
+                      }
+                      this->m_bNeedToRestorePred = false;
                     }
-                    pFVar10 = InsertJumpNode(this_00,param_1,(COND_TYPE)*(COND_TYPE_s_0 *)this_02,
+                    pFVar10 = InsertJumpNode(this,param_1,(COND_TYPE)*(COND_TYPE_s_0 *)this_01,
                                              pFVar3);
-                    this_00->m_pLastPerFetchJmpNode = pFVar10;
-                    if (pFVar10 == (FlowNode *)0x0) goto LAB_828981c0;
+                    this->m_pLastPerFetchJmpNode = pFVar10;
+                    if (pFVar10 == (FlowNode *)0x0) {
+                      return eOutOfMemory;
+                    }
                   }
-                  if ((this_00->m_pLastPerExecJmpNode == (FlowNode *)0x0) &&
-                     (bVar12 = COND_TYPE::operator==((COND_TYPE *)&this_01->_s_0,Unconditional),
+                  if ((this->m_pLastPerExecJmpNode == (FlowNode *)0x0) &&
+                     (bVar12 = COND_TYPE::operator==((COND_TYPE *)&this_00->_s_0,Unconditional),
                      !bVar12)) {
-                    if ((this_00->m_bNeedToRestorePred != false) &&
-                       ((this_01->Dword & 0x800000) != 0)) {
-                      HVar5 = AddRestorePredicate(this_00,param_1,&this_00->m_pCFNodeToInsertAfter,
+                    if ((this->m_bNeedToRestorePred != false) && ((this_00->Dword & 0x800000) != 0))
+                    {
+                      HVar5 = AddRestorePredicate(this,param_1,&this->m_pCFNodeToInsertAfter,
                                                   &SStack_b0);
-                      if (HVar5 != eSuccess) goto LAB_82898120;
-                      this_00->m_bNeedToRestorePred = false;
+                      if (HVar5 != eSuccess) {
+                        return HVar5;
+                      }
+                      this->m_bNeedToRestorePred = false;
                     }
-                    pFVar10 = InsertJumpNode(this_00,param_1,(COND_TYPE)*(COND_TYPE_s_0 *)this_01,
+                    pFVar10 = InsertJumpNode(this,param_1,(COND_TYPE)*(COND_TYPE_s_0 *)this_00,
                                              pFVar3);
-                    this_00->m_pLastPerExecJmpNode = pFVar10;
-                    if (pFVar10 == (FlowNode *)0x0) goto LAB_828981c0;
-                    this_00->m_PrevExecCond = *this_01;
+                    this->m_pLastPerExecJmpNode = pFVar10;
+                    if (pFVar10 == (FlowNode *)0x0) {
+                      return eOutOfMemory;
+                    }
+                    this->m_PrevExecCond = *this_00;
                   }
-                  if (ppFVar20 != (FlowNode **)0x0) {
-                    *ppFVar20 = pFVar10;
+                  if (ppFVar19 != (FlowNode **)0x0) {
+                    *ppFVar19 = pFVar10;
                   }
-                  pFVar18 = local_ac;
-                  if (ppFVar17 != (FlowNode **)0x0) {
-                    *ppFVar17 = pFVar10;
+                  pFVar17 = local_ac;
+                  if (ppFVar16 != (FlowNode **)0x0) {
+                    *ppFVar16 = pFVar10;
                   }
                 }
               }
-              else if (uVar14 == 0x18) {
+              else if (uVar13 == 0x18) {
                 uVar2 = (pAVar1->instruction).FlowPair.dword[0];
-                uVar14 = uVar2 >> 0x1a & 3;
+                uVar13 = uVar2 >> 0x1a & 3;
                 pSVar11 = SHADER_REGISTER::SHADER_REGISTER
-                                    (aSStack_9c,RRegister,uVar2 >> 5 & 0x3f,uVar14,uVar14,uVar14,
-                                     uVar14);
-                this_00->m_SetTexLODSrc = *pSVar11;
+                                    (aSStack_9c,RRegister,uVar2 >> 5 & 0x3f,uVar13,uVar13,uVar13,
+                                     uVar13);
+                this->m_SetTexLODSrc = *pSVar11;
               }
-              else if (uVar14 == 0x19) {
-                this_00->m_pSetGradientH = pAVar1;
+              else if (uVar13 == 0x19) {
+                this->m_pSetGradientH = pAVar1;
               }
-              else if (uVar14 == 0x1a) {
-                this_00->m_pSetGradientV = pAVar1;
+              else if (uVar13 == 0x1a) {
+                this->m_pSetGradientV = pAVar1;
               }
             }
           }
-          pAVar1 = pAVar16->m_Next;
+          pAVar1 = pAVar15->m_Next;
         }
-        pFVar18 = pFVar18->m_Next;
-        local_ac = pFVar18;
+        pFVar17 = pFVar17->m_Next;
+        local_a8 = (ALUNode *)0x0;
+        local_ac = pFVar17;
         pAVar1 = (ALUNode *)0x0;
-      } while (pFVar18 != (FlowNode *)0x0);
+      } while (pFVar17 != (FlowNode *)0x0);
     }
-    BackPatchDanglingJumps(this_00,param_1);
-    if (this_00->m_bNeedToRestorePred != false) {
-      HVar5 = AddRestorePredicate(this_00,param_1,&this_00->m_pCFNodeToInsertAfter,&SStack_b0);
-      if (HVar5 != eSuccess) goto LAB_82898120;
-      this_00->m_bNeedToRestorePred = false;
+    BackPatchDanglingJumps(this,param_1);
+    if (this->m_bNeedToRestorePred != false) {
+      HVar5 = AddRestorePredicate(this,param_1,&this->m_pCFNodeToInsertAfter,&SStack_b0);
+      if (HVar5 != eSuccess) {
+        return HVar5;
+      }
+      this->m_bNeedToRestorePred = false;
     }
-    *param_3 = this_00->m_RareInstructionsInserted;
+    *param_3 = this->m_RareInstructionsInserted;
     HVar5 = eSuccess;
   }
-LAB_82898120:
-  HVar5 = __restgprlr_15(HVar5);
   return HVar5;
 }
 
 
 // 82896C20  GetCConstantPerTFConst  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtshaderhacker.cpp:2585)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "ERareInstruction": Some values do not have unique names */
 
 SHADER_REGISTER __thiscall
@@ -2020,21 +1916,17 @@ D3D::CShaderHacker::GetCConstantPerTFConst(CShaderHacker *this,int param_1)
 
 {
   int iVar1;
-  undefined8 uVar2;
-  int iVar3;
-  ulong uVar4;
-  longlong in_r5;
+  int in_r5;
+  int iVar2;
   
-  uVar2 = __savegprlr_29(this);
-  iVar1 = (int)((in_r5 + 0xcU & 0x3fffffff) << 2);
-  if (*(int *)(iVar1 + param_1) == -1) {
-    iVar3 = CONSTANT_ALLOCATOR::AllocateCConstant
+  iVar2 = (in_r5 + 0xc) * 4;
+  if (*(int *)(iVar2 + param_1) == -1) {
+    iVar1 = CONSTANT_ALLOCATOR::AllocateCConstant
                       ((CONSTANT_ALLOCATOR *)(*(int *)(param_1 + 0x20) + 8));
-    *(int *)(iVar1 + param_1) = iVar3;
+    *(int *)(iVar2 + param_1) = iVar1;
   }
-  SHADER_REGISTER::SHADER_REGISTER((SHADER_REGISTER *)uVar2,CRegister,*(ulong *)(iVar1 + param_1));
-  uVar4 = __restgprlr_29(uVar2);
-  return (SHADER_REGISTER)uVar4;
+  SHADER_REGISTER::SHADER_REGISTER((SHADER_REGISTER *)this,CRegister,*(ulong *)(iVar2 + param_1));
+  return (SHADER_REGISTER)((SHADER_REGISTER)this).dword;
 }
 
 
@@ -2084,6 +1976,10 @@ LAB_82895b5c:
 
 // 82896C80  AllocateFloatConstant  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtshaderhacker.cpp:2635)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "ERareInstruction": Some values do not have unique names */
 
 SHADER_REGISTER __thiscall
@@ -2091,23 +1987,20 @@ D3D::CShaderHacker::AllocateFloatConstant
           (CShaderHacker *this,float param_1,float param_2,float param_3,float param_4)
 
 {
-  SHADER_REGISTER *this_00;
   uint uVar1;
-  bool bVar3;
-  ulong uVar2;
+  bool bVar2;
   longlong in_r4;
+  longlong lVar3;
   longlong lVar4;
-  longlong lVar5;
-  ulong *puVar6;
-  ulonglong uVar7;
-  longlong lVar8;
-  uint *puVar9;
-  longlong lVar10;
-  double extraout_f1;
+  ulong *puVar5;
+  ulonglong uVar6;
+  longlong lVar7;
+  uint *puVar8;
+  longlong lVar9;
+  double dVar10;
   double dVar11;
   double dVar12;
   double dVar13;
-  double dVar14;
   ulong local_70;
   ulong local_6c;
   ulong local_68;
@@ -2117,67 +2010,56 @@ D3D::CShaderHacker::AllocateFloatConstant
   dVar13 = (double)param_4;
   dVar12 = (double)param_3;
   dVar11 = (double)param_2;
-  __savegprlr_28((double)param_1,this);
-  this_00 = (SHADER_REGISTER *)__savefpr_28();
-  uVar7 = 0;
-  lVar8 = in_r4 + 0x130;
-  lVar4 = in_r4;
-  dVar14 = extraout_f1;
+  dVar10 = (double)param_1;
+  uVar6 = 0;
+  lVar7 = in_r4 + 0x130;
+  lVar3 = in_r4;
   do {
-    puVar9 = (uint *)lVar8;
-    if ((*puVar9 & 0x780000) == 0) {
+    puVar8 = (uint *)lVar7;
+    if ((*puVar8 & 0x780000) == 0) {
       uVar1 = CONSTANT_ALLOCATOR::AllocateCConstant
                         ((CONSTANT_ALLOCATOR *)(*(int *)((int)in_r4 + 0x20) + 8));
-      *puVar9 = uVar1 << 0x17 | *puVar9 & 0x7fffff;
+      *puVar8 = uVar1 << 0x17 | *puVar8 & 0x7fffff;
       if ((uVar1 & 0x1ff) == 0xffffffff) break;
     }
-    puVar6 = &local_64;
-    lVar5 = lVar8 + -4;
-    lVar10 = 5;
+    puVar5 = &local_64;
+    lVar4 = lVar7 + -4;
+    lVar9 = 5;
     do {
-      lVar5 = lVar5 + 4;
-      puVar6 = puVar6 + 1;
-      *puVar6 = *(ulong *)lVar5;
-      lVar10 = lVar10 + -1;
-    } while (lVar10 != 0);
-    bVar3 = AddCConstant((CShaderHacker *)local_60,(LITERAL_CONSTANT *)lVar4,(float)dVar14,&local_64
+      lVar4 = lVar4 + 4;
+      puVar5 = puVar5 + 1;
+      *puVar5 = *(ulong *)lVar4;
+      lVar9 = lVar9 + -1;
+    } while (lVar9 != 0);
+    bVar2 = AddCConstant((CShaderHacker *)local_60,(LITERAL_CONSTANT *)lVar3,(float)dVar10,&local_64
                         );
-    if (bVar3) {
-      bVar3 = AddCConstant((CShaderHacker *)local_60,(LITERAL_CONSTANT *)lVar4,(float)dVar11,
-                           &local_68);
-      if (bVar3) {
-        bVar3 = AddCConstant((CShaderHacker *)local_60,(LITERAL_CONSTANT *)lVar4,(float)dVar12,
-                             &local_6c);
-        if (bVar3) {
-          bVar3 = AddCConstant((CShaderHacker *)local_60,(LITERAL_CONSTANT *)lVar4,(float)dVar13,
-                               &local_70);
-          if (bVar3) {
-            in_r4 = uVar7 * 0x14 + in_r4;
-            puVar6 = &local_64;
-            lVar4 = in_r4 + 300;
-            lVar8 = 5;
-            do {
-              puVar6 = puVar6 + 1;
-              lVar4 = lVar4 + 4;
-              *(ulong *)lVar4 = *puVar6;
-              lVar8 = lVar8 + -1;
-            } while (lVar8 != 0);
-            SHADER_REGISTER::SHADER_REGISTER
-                      ((SHADER_REGISTER *)&this_00->_s_0,CRegister,
-                       *(uint *)((int)in_r4 + 0x130) >> 0x17,local_64,local_68,local_6c,local_70);
-            goto LAB_82896d80;
-          }
-        }
-      }
+    if ((((bVar2) &&
+         (bVar2 = AddCConstant((CShaderHacker *)local_60,(LITERAL_CONSTANT *)lVar3,(float)dVar11,
+                               &local_68), bVar2)) &&
+        (bVar2 = AddCConstant((CShaderHacker *)local_60,(LITERAL_CONSTANT *)lVar3,(float)dVar12,
+                              &local_6c), bVar2)) &&
+       (bVar2 = AddCConstant((CShaderHacker *)local_60,(LITERAL_CONSTANT *)lVar3,(float)dVar13,
+                             &local_70), bVar2)) {
+      lVar7 = uVar6 * 0x14 + in_r4;
+      puVar5 = &local_64;
+      lVar3 = lVar7 + 300;
+      lVar4 = 5;
+      do {
+        puVar5 = puVar5 + 1;
+        lVar3 = lVar3 + 4;
+        *(ulong *)lVar3 = *puVar5;
+        lVar4 = lVar4 + -1;
+      } while (lVar4 != 0);
+      SHADER_REGISTER::SHADER_REGISTER
+                ((SHADER_REGISTER *)this,CRegister,*(uint *)((int)lVar7 + 0x130) >> 0x17,local_64,
+                 local_68,local_6c,local_70);
+      return (SHADER_REGISTER)((SHADER_REGISTER)this).dword;
     }
-    uVar7 = uVar7 + 1;
-    lVar8 = lVar8 + 0x14;
-  } while ((uVar7 & 0xffffffff) < 0x21);
-  *this_00 = InvalidRegister;
-LAB_82896d80:
-  __restfpr_28(this_00);
-  uVar2 = __restgprlr_28();
-  return (SHADER_REGISTER)uVar2;
+    uVar6 = uVar6 + 1;
+    lVar7 = lVar7 + 0x14;
+  } while ((uVar6 & 0xffffffff) < 0x21);
+  this->_padding_ = (int)InvalidRegister;
+  return (SHADER_REGISTER)((SHADER_REGISTER)this).dword;
 }
 
 
@@ -2209,6 +2091,8 @@ D3D::CShaderHacker::AllocateFloatConstant(CShaderHacker *this,float param_1,floa
 
 // 82895B80  CopyInstructionAfter  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtshaderhacker.cpp:2678)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "ERareInstruction": Some values do not have unique names */
 
 undefined4 __thiscall
@@ -2217,23 +2101,21 @@ D3D::CShaderHacker::CopyInstructionAfter
           FlowNode **param_4,ALUNode **param_5)
 
 {
-  GraphMicrocodeBuilder *this_00;
   T_HRESULT TVar1;
-  undefined4 uVar2;
   
-  this_00 = (GraphMicrocodeBuilder *)__savegprlr_26(this);
   TVar1 = GraphMicrocodeBuilder::AddALUAfter
-                    (this_00,param_1,param_2,
+                    ((GraphMicrocodeBuilder *)this,param_1,param_2,
                      (bool)('\x01' - (SPULL(*(undefined4 *)&param_3->field_0x10,0x1f,1) == 0)),
                      (bool)(SUB41(*(undefined4 *)&param_3->field_0x10,3) >> 6 & 1),
                      &param_3->instruction,param_4,param_5);
-  uVar2 = __restgprlr_26(TVar1);
-  return uVar2;
+  return TVar1;
 }
 
 
 // 82895BF0  AddALUAfter2  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtshaderhacker.cpp:2698)
 
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "ERareInstruction": Some values do not have unique names */
 
 undefined4 __thiscall
@@ -2244,80 +2126,67 @@ D3D::CShaderHacker::AddALUAfter2
           FlowNode **param_10,ALUNode **param_11)
 
 {
-  uint uVar1;
-  GraphMicrocodeBuilder *this_00;
+  ulong uVar1;
   ulong uVar2;
   ulong uVar3;
   ulong uVar4;
   ulong uVar5;
-  ulong uVar6;
-  T_HRESULT TVar7;
-  undefined4 uVar8;
-  ulonglong uVar9;
-  ulonglong uVar10;
-  ulonglong uVar11;
-  longlong lVar12;
-  ulonglong uVar13;
-  ulonglong uVar14;
-  longlong lVar15;
-  longlong lVar16;
-  ulonglong uVar17;
-  undefined4 uStack0000003c;
-  undefined4 uStack00000044;
+  T_HRESULT TVar6;
+  longlong lVar7;
+  longlong lVar8;
+  longlong lVar9;
+  uint uVar10;
+  SHADER_REGISTER SStack0000003c;
+  SHADER_REGISTER SStack00000044;
   uint in_stack_00000054;
   uint in_stack_0000005c;
   FlowNode **in_stack_00000064;
   ALUNode **in_stack_0000006c;
   GPUSHADER_INSTRUCTION local_70 [9];
   
-  uVar14 = (ulonglong)(int)param_7.dword;
-  uVar13 = (ulonglong)(int)param_6.dword;
-  uVar11 = (ulonglong)(int)param_5.dword;
-  uVar10 = (ulonglong)(int)param_4;
-  uVar9 = (ulonglong)(int)param_3;
-  this_00 = (GraphMicrocodeBuilder *)__savegprlr_22(this);
-  uStack0000003c = (undefined4)uVar11;
-  uStack00000044 = (undefined4)uVar13;
-  if (((uVar11 & 0xf000) == 0x3000) || (uVar17 = 0, (uVar13 & 0xf000) == 0x3000)) {
-    uVar17 = 1;
+  if (((param_5.dword & 0xf000) == 0x3000) || (uVar10 = 0, (param_6.dword & 0xf000) == 0x3000)) {
+    uVar10 = 1;
   }
-  uVar2 = SHADER_REGISTER::GetWriteMask((SHADER_REGISTER *)&stack0x0000003c);
-  uVar3 = SHADER_REGISTER::GetWriteMask((SHADER_REGISTER *)&stack0x00000044);
-  uVar4 = GraphMicrocodeBuilder::ComputeSwizzle
+  SStack0000003c = param_5;
+  SStack00000044 = param_6;
+  uVar1 = SHADER_REGISTER::GetWriteMask((SHADER_REGISTER *)&stack0x0000003c);
+  uVar2 = SHADER_REGISTER::GetWriteMask((SHADER_REGISTER *)&stack0x00000044);
+  uVar3 = GraphMicrocodeBuilder::ComputeSwizzle
                     (in_stack_0000005c >> 0x16 & 3,in_stack_0000005c >> 0x14 & 3,
                      in_stack_0000005c >> 0x12 & 3,in_stack_0000005c >> 0x10 & 3);
-  uVar5 = GraphMicrocodeBuilder::ComputeSwizzle
+  uVar4 = GraphMicrocodeBuilder::ComputeSwizzle
                     (in_stack_00000054 >> 0x16 & 3,in_stack_00000054 >> 0x14 & 3,
                      in_stack_00000054 >> 0x12 & 3,in_stack_00000054 >> 0x10 & 3);
-  uVar1 = (uint)uVar14;
-  uVar6 = GraphMicrocodeBuilder::ComputeSwizzle
-                    (uVar1 >> 0x16 & 3,uVar1 >> 0x14 & 3,uVar1 >> 0x12 & 3,
-                     (ushort)(uVar14 >> 0x10) & 3);
-  lVar15 = (uVar14 & 0xf000) - 0x1000;
-  lVar12 = ((ulonglong)in_stack_00000054 & 0xf000) - 0x1000;
-  lVar16 = ((ulonglong)in_stack_0000005c & 0xf000) - 0x1000;
-  local_70[0]._4_4_ = ((uVar6 & 0xff) << 8 | uVar5 & 0xff) << 8 | uVar4 & 0xff;
+  uVar5 = GraphMicrocodeBuilder::ComputeSwizzle
+                    (param_7.dword >> 0x16 & 3,param_7.dword >> 0x14 & 3,param_7.dword >> 0x12 & 3,
+                     param_7.dword >> 0x10 & 3);
+  lVar8 = ((ulonglong)param_7.dword & 0xf000) - 0x1000;
+  lVar7 = ((ulonglong)in_stack_00000054 & 0xf000) - 0x1000;
+  lVar9 = ((ulonglong)in_stack_0000005c & 0xf000) - 0x1000;
+  local_70[0]._4_4_ = ((uVar5 & 0xff) << 8 | uVar4 & 0xff) << 8 | uVar3 & 0xff;
   local_70[0]._8_4_ =
-       (uint)(((((lVar15 - (((uVar14 & 0xf000) - 0x1001) + (ulonglong)(lVar15 == 0)) & 0x1ffffff) <<
-                 1 | lVar12 - ((((ulonglong)in_stack_00000054 & 0xf000) - 0x1001) +
-                              (ulonglong)(lVar12 == 0)) & 1) << 1 |
-               lVar16 - ((((ulonglong)in_stack_0000005c & 0xf000) - 0x1001) +
-                        (ulonglong)(lVar16 == 0)) & 1) << 5 | uVar9 & 0x1f) << 0x18) |
-       (in_stack_00000054 >> 8 & 0xff00ff | in_stack_0000005c >> 0x10 | uVar1 & 0xff0000ff) >> 8;
+       (uint)(((((lVar8 - ((((ulonglong)param_7.dword & 0xf000) - 0x1001) + (ulonglong)(lVar8 == 0))
+                 & 0x1ffffff) << 1 |
+                lVar7 - ((((ulonglong)in_stack_00000054 & 0xf000) - 0x1001) +
+                        (ulonglong)(lVar7 == 0)) & 1) << 1 |
+               lVar9 - ((((ulonglong)in_stack_0000005c & 0xf000) - 0x1001) + (ulonglong)(lVar9 == 0)
+                       ) & 1) << 5 | (longlong)(int)param_3 & 0x1fU) << 0x18) |
+       (in_stack_00000054 >> 8 & 0xff00ff | in_stack_0000005c >> 0x10 | param_7.dword & 0xff0000ff)
+       >> 8;
   local_70[0]._0_4_ =
-       (uint)(((((ulonglong)uVar3 & 0xf | (uVar10 & 0x1fffff) << 6) << 4 |
-               (longlong)(int)uVar2 & 0xfU) << 1 | uVar17) << 0xf) |
-       (uint)(uVar11 >> 0x18) & 0x3f | (uint)(uVar13 >> 0x10) & 0x3f00;
-  TVar7 = GraphMicrocodeBuilder::AddALUAfter
-                    (this_00,param_1,param_2,false,false,local_70,in_stack_00000064,
-                     in_stack_0000006c);
-  uVar8 = __restgprlr_22(TVar7);
-  return uVar8;
+       (((uVar2 & 0xf | (param_4 & 0x1fffff) << 6) << 4 | uVar1 & 0xf) << 1 | uVar10) << 0xf |
+       param_5.dword >> 0x18 & 0x3f | (int)(short)((uint)param_6 >> 0x10) & 0x3f00U;
+  TVar6 = GraphMicrocodeBuilder::AddALUAfter
+                    ((GraphMicrocodeBuilder *)this,param_1,param_2,false,false,local_70,
+                     in_stack_00000064,in_stack_0000006c);
+  return TVar6;
 }
 
 
 // 82895D90  CreateExecAfterEx  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtshaderhacker.cpp:2742)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "ERareInstruction": Some values do not have unique names */
 
 undefined4 __thiscall
@@ -2326,44 +2195,32 @@ D3D::CShaderHacker::CreateExecAfterEx
           uchar param_5,bool param_6,FlowNode **param_7)
 
 {
-  GraphMicrocodeBuilder *this_00;
   T_HRESULT TVar1;
-  undefined4 uVar2;
-  ulonglong uVar3;
-  ulonglong uVar4;
-  ulonglong uVar5;
-  ulonglong uVar6;
-  ulonglong uVar7;
   GPUFLOW_INSTRUCTION aGStack_50 [10];
   
-  uVar6 = (ulonglong)param_6;
-  uVar5 = (ulonglong)(char)param_5;
-  uVar4 = (ulonglong)param_4;
-  uVar3 = (ulonglong)param_3;
-  uVar7 = (ulonglong)param_2;
-  this_00 = (GraphMicrocodeBuilder *)__savegprlr_24(this);
-  if ((uVar4 & 0xff) == 0) {
-    uVar7 = (ulonglong)((uVar7 & 0xff) == 0) ^ 1;
-    if ((uVar3 & 0xff) == 0) {
-      aGStack_50[0]._4_4_ = ((int)uVar7 + 1) * 0x1000;
-    }
-    else {
-      aGStack_50[0]._4_4_ = (uint)(((uVar7 + 5) * 4 | uVar6 & 0xffffffc3) << 10) & 0xf400;
-    }
-  }
-  else {
+  if (param_4) {
     aGStack_50[0]._4_4_ =
          (undefined4)
-         ((((((ulonglong)((uVar7 & 0xff) == 0) ^ 1) + 3) * 4 | uVar6 & 1) << 8 | uVar5 & 0xff) << 2)
-    ;
+         ((((((ulonglong)!param_2 ^ 1) + 3) * 4 | (longlong)param_6) << 8 | (ulonglong)param_5) << 2
+         );
   }
-  TVar1 = GraphMicrocodeBuilder::AddFlowAfter(this_00,param_1,aGStack_50,param_7);
-  uVar2 = __restgprlr_24(TVar1);
-  return uVar2;
+  else if (param_3) {
+    aGStack_50[0]._4_4_ =
+         (undefined4)(((((ulonglong)!param_2 ^ 1) + 5) * 4 | (longlong)param_6) << 10);
+  }
+  else {
+    aGStack_50[0]._4_4_ = ((int)((ulonglong)!param_2 ^ 1) + 1) * 0x1000;
+  }
+  TVar1 = GraphMicrocodeBuilder::AddFlowAfter
+                    ((GraphMicrocodeBuilder *)this,param_1,aGStack_50,param_7);
+  return TVar1;
 }
 
 
 // 82895E58  GetTfetchUsageInfoCB  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtshaderhacker.cpp:2832)
+
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 
 undefined4
 D3D::CShaderHacker::GetTfetchUsageInfoCB
@@ -2372,120 +2229,115 @@ D3D::CShaderHacker::GetTfetchUsageInfoCB
 {
   ushort uVar1;
   ulong uVar2;
-  ulonglong uVar3;
-  undefined4 uVar4;
-  byte bVar6;
+  byte bVar4;
+  uint uVar3;
   uint uVar5;
-  uint uVar7;
   
-  uVar3 = __savegprlr_29(param_1,param_2);
-  if ((uVar3 & 2) == 0) goto LAB_82896060;
-  uVar7 = (param_3->FlowPair).dword[0];
-  uVar5 = uVar7 & 0x1f;
-  if ((uVar7 & 0x1f) == 0) {
-    if ((uVar3 & 0x10) == 0) {
+  if ((param_1 & 2) == 0) {
+    return 0;
+  }
+  uVar5 = (param_3->FlowPair).dword[0];
+  uVar3 = uVar5 & 0x1f;
+  if ((uVar5 & 0x1f) == 0) {
+    if ((param_1 & 0x10) == 0) {
       *(byte *)((int)param_4 + 0x8c) = *(byte *)((int)param_4 + 0x8c) | 4;
     }
     if (((param_3->FlowPair).dword[0] & 0x1f00000) == 0x1a00000) {
       *(byte *)((int)param_4 + 0x8c) = *(byte *)((int)param_4 + 0x8c) | 2;
     }
-    uVar7 = 1 << ((param_3->FlowPair).dword[0] >> 0x14 & 0x1f);
+    uVar5 = 1 << ((param_3->FlowPair).dword[0] >> 0x14 & 0x1f);
+    goto LAB_8289605c;
+  }
+  uVar5 = 1 << (uVar5 >> 0x14 & 0x1f);
+  if (uVar3 == 1) {
+    uVar3 = (param_3->FlowPair).dword[1];
+    uVar3 = 1 << (uVar3 >> 9 & 7) | 1 << (uVar3 >> 6 & 7) | 1 << (uVar3 >> 3 & 7) | 1 << (uVar3 & 7)
+    ;
+    *(uint *)((int)param_4 + 0x98) =
+         *(uint *)((int)param_4 + 0x98) | -(uint)((uVar3 & 1) != 0) & uVar5;
+    *(uint *)((int)param_4 + 0x9c) =
+         *(uint *)((int)param_4 + 0x9c) | -(uint)((uVar3 & 2) != 0) & uVar5;
+    *(uint *)((int)param_4 + 0xa4) =
+         *(uint *)((int)param_4 + 0xa4) | -(uint)((uVar3 & 8) != 0) & uVar5;
+    *(uint *)((int)param_4 + 0xa0) =
+         *(uint *)((int)param_4 + 0xa0) | -(uint)((uVar3 & 4) != 0) & uVar5;
+    uVar1 = *(ushort *)((param_3->FlowPair).dword + 1) & 3;
+    if ((uVar1 == 2) || (uVar3 = uVar5, uVar1 == 3)) {
+      uVar3 = 0;
+    }
+    *(uint *)((int)param_4 + 0xac) = *(uint *)((int)param_4 + 0xac) | uVar3;
+    uVar2 = (param_3->FlowPair).dword[1];
+    *(uint *)((int)param_4 + 0x94) = *(uint *)((int)param_4 + 0x94) | uVar5;
+    *(uint *)((int)param_4 + 0xa8) =
+         *(uint *)((int)param_4 + 0xa8) | -(uint)((uVar2 & 0x30000) == 0x30000) & uVar5;
   }
   else {
-    uVar7 = 1 << (uVar7 >> 0x14 & 0x1f);
-    if (uVar5 == 1) {
-      uVar5 = (param_3->FlowPair).dword[1];
-      uVar5 = 1 << (uVar5 >> 9 & 7) | 1 << (uVar5 >> 6 & 7) | 1 << (uVar5 >> 3 & 7) |
-              1 << (uVar5 & 7);
-      *(uint *)((int)param_4 + 0x98) =
-           *(uint *)((int)param_4 + 0x98) | -(uint)((uVar5 & 1) != 0) & uVar7;
-      *(uint *)((int)param_4 + 0x9c) =
-           *(uint *)((int)param_4 + 0x9c) | -(uint)((uVar5 & 2) != 0) & uVar7;
-      *(uint *)((int)param_4 + 0xa4) =
-           *(uint *)((int)param_4 + 0xa4) | -(uint)((uVar5 & 8) != 0) & uVar7;
-      *(uint *)((int)param_4 + 0xa0) =
-           *(uint *)((int)param_4 + 0xa0) | -(uint)((uVar5 & 4) != 0) & uVar7;
-      uVar1 = *(ushort *)((param_3->FlowPair).dword + 1) & 3;
-      if ((uVar1 == 2) || (uVar5 = uVar7, uVar1 == 3)) {
-        uVar5 = 0;
-      }
-      *(uint *)((int)param_4 + 0xac) = *(uint *)((int)param_4 + 0xac) | uVar5;
-      uVar2 = (param_3->FlowPair).dword[1];
-      *(uint *)((int)param_4 + 0x94) = *(uint *)((int)param_4 + 0x94) | uVar7;
-      *(uint *)((int)param_4 + 0xa8) =
-           *(uint *)((int)param_4 + 0xa8) | -(uint)((uVar2 & 0x30000) == 0x30000) & uVar7;
+    if (uVar3 == 0x10) {
+      bVar4 = *(byte *)((int)param_4 + 0x8c) | 0x20;
+    }
+    else if (uVar3 == 0x13) {
+      bVar4 = *(byte *)((int)param_4 + 0x8c) | 0x40;
+    }
+    else if (uVar3 == 0x19) {
+      bVar4 = *(byte *)((int)param_4 + 0x8c) | 8;
     }
     else {
-      if (uVar5 == 0x10) {
-        bVar6 = *(byte *)((int)param_4 + 0x8c) | 0x20;
-      }
-      else if (uVar5 == 0x13) {
-        bVar6 = *(byte *)((int)param_4 + 0x8c) | 0x40;
-      }
-      else if (uVar5 == 0x19) {
-        bVar6 = *(byte *)((int)param_4 + 0x8c) | 8;
-      }
-      else {
-        if (uVar5 != 0x1a) goto LAB_82896034;
-        bVar6 = *(byte *)((int)param_4 + 0x8c) | 0x10;
-      }
-      *(byte *)((int)param_4 + 0x8c) = bVar6;
+      if (uVar3 != 0x1a) goto LAB_82896034;
+      bVar4 = *(byte *)((int)param_4 + 0x8c) | 0x10;
     }
-LAB_82896034:
-    if (((param_3->FlowPair).dword[0] & 0x1f00000) == 0x1a00000) {
-      *(byte *)((int)param_4 + 0x8c) = *(byte *)((int)param_4 + 0x8c) | 2;
-    }
-    uVar7 = *(uint *)((int)param_4 + 0x90) | uVar7;
+    *(byte *)((int)param_4 + 0x8c) = bVar4;
   }
-  *(uint *)((int)param_4 + 0x90) = uVar7;
-LAB_82896060:
-  uVar4 = __restgprlr_29(0);
-  return uVar4;
+LAB_82896034:
+  if (((param_3->FlowPair).dword[0] & 0x1f00000) == 0x1a00000) {
+    *(byte *)((int)param_4 + 0x8c) = *(byte *)((int)param_4 + 0x8c) | 2;
+  }
+  uVar5 = *(uint *)((int)param_4 + 0x90) | uVar5;
+LAB_8289605c:
+  *(uint *)((int)param_4 + 0x90) = uVar5;
+  return 0;
 }
 
 
 // 82896070  GetTfetchUsageInfo  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtshaderhacker.cpp:2893)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "ERareInstruction": Some values do not have unique names */
 
 HackFailureReason __thiscall
 D3D::CShaderHacker::GetTfetchUsageInfo(CShaderHacker *this,ulong *param_1,ulong param_2)
 
 {
-  int iVar2;
-  int iVar3;
-  undefined8 uVar1;
-  HackFailureReason HVar4;
-  ulonglong uVar5;
-  uint uVar6;
+  int iVar1;
+  HackFailureReason HVar2;
+  uint uVar3;
   void *in_stack_ffffff88;
   
-  uVar5 = (ulonglong)(int)param_2;
-  iVar2 = __savegprlr_29(this);
-  *(undefined4 *)(*(int *)(iVar2 + 0x20) + 0xb0) = 0;
-  iVar3 = XMicrocodeShaderForEachInstruction
-                    (param_1,(uint)((uVar5 & 0xffffffff) << 2),(ulong *)0x0,0,(ulong *)0x0,
-                     (ulong *)0x0,0x22,GetTfetchUsageInfoCB,in_stack_ffffff88);
-  if (iVar3 < 0) {
-    uVar1 = 10;
+  this->m_pRehackingInfo->m_TexConstsCount = 0;
+  iVar1 = XMicrocodeShaderForEachInstruction
+                    (param_1,param_2 << 2,(ulong *)0x0,0,(ulong *)0x0,(ulong *)0x0,0x22,
+                     GetTfetchUsageInfoCB,in_stack_ffffff88);
+  if (iVar1 < 0) {
+    HVar2 = eUnknownFailure;
   }
   else {
-    uVar6 = 1;
+    uVar3 = 1;
     do {
-      if ((*(uint *)(*(int *)(iVar2 + 0x20) + 0x94) & uVar6) != 0) {
-        *(int *)(*(int *)(iVar2 + 0x20) + 0xb0) = *(int *)(*(int *)(iVar2 + 0x20) + 0xb0) + 1;
+      if (((this->m_pRehackingInfo->m_TextureUsage).TexConstsUsed & uVar3) != 0) {
+        this->m_pRehackingInfo->m_TexConstsCount = this->m_pRehackingInfo->m_TexConstsCount + 1;
       }
-      uVar6 = uVar6 << 1;
-    } while (uVar6 != 0);
-    uVar1 = 0;
+      uVar3 = uVar3 << 1;
+    } while (uVar3 != 0);
+    HVar2 = eSuccess;
   }
-  HVar4 = __restgprlr_29(uVar1);
-  return HVar4;
+  return HVar2;
 }
 
 
 // 82896EC8  GenerateRehackingInfo  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtshaderhacker.cpp:2923)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "ERareInstruction": Some values do not have unique names */
 
 HackFailureReason __thiscall
@@ -2493,45 +2345,44 @@ D3D::CShaderHacker::GenerateRehackingInfo
           (CShaderHacker *this,ulong *param_1,ulong param_2,SHADER_REHACKING_INFO *param_3)
 
 {
-  CShaderHacker *this_00;
   HackFailureReason HVar1;
   uint uVar2;
   bool abStack_40 [64];
   
-  this_00 = (CShaderHacker *)__savegprlr_27(this);
-  this_00->m_pRehackingInfo = param_3;
+  this->m_pRehackingInfo = param_3;
   param_3->m_ExportSpreaderReg = InvalidRegister;
   HVar1 = CONSTANT_ALLOCATOR::Initialize(&param_3->m_ConstantAllocator,param_1,param_2,(void *)0x0);
   param_3->m_SuccessOrFailure = HVar1;
   if (HVar1 == eSuccess) {
-    uVar2 = (this_00->m_ProgramControl).dword >> 8 & 0x3f;
+    uVar2 = (this->m_ProgramControl).dword >> 8 & 0x3f;
     (param_3->m_GprAllocator).m_NumComponentsOfLastUsed = 4;
     (param_3->m_GprAllocator).m_LastRegUsedByShader = uVar2;
     (param_3->m_GprAllocator).m_LastRegUsedByHacker = uVar2;
-    HVar1 = GetTfetchUsageInfo(this_00,param_1,param_2);
+    HVar1 = GetTfetchUsageInfo(this,param_1,param_2);
     param_3->m_SuccessOrFailure = HVar1;
     if (HVar1 == eSuccess) {
-      HVar1 = CClassForAnalyzingAllocAndP0Usage::AnalyzeAllocAndP0Usage(this_00,param_3,abStack_40);
+      HVar1 = CClassForAnalyzingAllocAndP0Usage::AnalyzeAllocAndP0Usage(this,param_3,abStack_40);
       param_3->m_SuccessOrFailure = HVar1;
       if (HVar1 == eSuccess) {
         uVar2 = ((param_3->m_GprAllocator).m_LastRegUsedByHacker & 0x3f) << 8 |
-                (this_00->m_ProgramControl).dword & 0xffffc0ff;
-        (this_00->m_ProgramControl).dword = uVar2;
+                (this->m_ProgramControl).dword & 0xffffc0ff;
+        (this->m_ProgramControl).dword = uVar2;
         (param_3->m_ProgramControl).dword = uVar2;
-        param_3->m_ContextMisc = this_00->m_ContextMisc;
-        param_3->m_InterpCntl = this_00->m_InterpCntl;
+        param_3->m_ContextMisc = this->m_ContextMisc;
+        param_3->m_InterpCntl = this->m_InterpCntl;
         param_3->m_SuccessOrFailure = eSuccess;
         HVar1 = eSuccess;
       }
     }
   }
-  HVar1 = __restgprlr_27(HVar1);
   return HVar1;
 }
 
 
 // 828981D0  Initialize  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtshaderhacker.cpp:2975)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "ERareInstruction": Some values do not have unique names */
 
 CShaderHacker *
@@ -2540,56 +2391,53 @@ D3D::CShaderHacker::Initialize
           GPU_INTERPOLATORCONTROL param_5,SHADER_REHACKING_INFO *param_6)
 
 {
-  ulong *puVar1;
-  CShaderHacker *pCVar2;
-  char *pcVar3;
-  int iVar4;
-  HackFailureReason HVar5;
-  ulonglong uVar6;
+  CShaderHacker *this;
+  char *pcVar1;
+  int iVar2;
+  HackFailureReason HVar3;
   
-  uVar6 = (ulonglong)(int)param_2;
-  puVar1 = (ulong *)__savegprlr_25(param_1);
   memset();
   if (g_AllocDebugHeap == 0) {
-    pCVar2 = XMemAlloc(0x400,0x64800000);
-    if (pCVar2 == (CShaderHacker *)0x0) {
-      pcVar3 = "Out of Title Memory";
-      goto LAB_8289824c;
-    }
-LAB_82898258:
-    CShaderHacker(pCVar2);
-    iVar4 = GraphMicrocodeBuilder::ConvertShaderToGraph
-                      ((GraphMicrocodeBuilder *)pCVar2,puVar1,(ulong)((uVar6 & 0xffffffff) << 2));
-    if (iVar4 < 0) {
-      HVar5 = eUnknownFailure;
-    }
-    else {
-      pCVar2->m_ProgramControl = param_3;
-      pCVar2->m_ContextMisc = param_4;
-      pCVar2->m_InterpCntl = param_5;
-      HVar5 = GenerateRehackingInfo(pCVar2,puVar1,(ulong)uVar6,param_6);
-      if (HVar5 == eSuccess) goto LAB_828982c8;
-    }
-    Release(pCVar2);
+    this = XMemAlloc(0x400,0x64800000);
+    if (this != (CShaderHacker *)0x0) goto LAB_82898258;
+    pcVar1 = "Out of Title Memory";
   }
   else {
-    pCVar2 = DmDebugAlloc(0x400);
-    if (pCVar2 != (CShaderHacker *)0x0) goto LAB_82898258;
-    pcVar3 = "Out of Debug Memory";
-LAB_8289824c:
-    DefaultTextureTrackerErrorCallback(pcVar3);
-    HVar5 = eOutOfMemory;
+    this = DmDebugAlloc(0x400);
+    if (this != (CShaderHacker *)0x0) {
+LAB_82898258:
+      CShaderHacker(this);
+      iVar2 = GraphMicrocodeBuilder::ConvertShaderToGraph
+                        ((GraphMicrocodeBuilder *)this,param_1,param_2 << 2);
+      if (iVar2 < 0) {
+        HVar3 = eUnknownFailure;
+      }
+      else {
+        this->m_ProgramControl = param_3;
+        this->m_ContextMisc = param_4;
+        this->m_InterpCntl = param_5;
+        HVar3 = GenerateRehackingInfo(this,param_1,param_2,param_6);
+        if (HVar3 == eSuccess) {
+          return this;
+        }
+      }
+      Release(this);
+      goto LAB_828982b0;
+    }
+    pcVar1 = "Out of Debug Memory";
   }
-  param_6->m_SuccessOrFailure = HVar5;
-  pCVar2 = (CShaderHacker *)0x0;
-LAB_828982c8:
-  pCVar2 = (CShaderHacker *)__restgprlr_25(pCVar2);
-  return pCVar2;
+  DefaultTextureTrackerErrorCallback(pcVar1);
+  HVar3 = eOutOfMemory;
+LAB_828982b0:
+  param_6->m_SuccessOrFailure = HVar3;
+  return (CShaderHacker *)0x0;
 }
 
 
 // 828982D0  Initialize  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtshaderhacker.cpp:3024)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "ERareInstruction": Some values do not have unique names */
 
 HackFailureReason
@@ -2597,54 +2445,46 @@ D3D::CShaderHacker::Initialize
           (SHADER_REHACKING_INFO *param_1,ulong *param_2,ulong param_3,CShaderHacker **param_4)
 
 {
-  SHADER_REHACKING_INFO *pSVar1;
   CShaderHacker *this;
-  char *pcVar2;
-  int iVar3;
-  HackFailureReason HVar4;
-  ulonglong uVar5;
+  char *pcVar1;
+  int iVar2;
+  HackFailureReason HVar3;
   
-  uVar5 = (ulonglong)(int)param_3;
-  pSVar1 = (SHADER_REHACKING_INFO *)__savegprlr_27(param_1);
   *param_4 = (CShaderHacker *)0x0;
   if (g_AllocDebugHeap == 0) {
     this = XMemAlloc(0x400,0x64800000);
     if (this == (CShaderHacker *)0x0) {
-      pcVar2 = "Out of Title Memory";
+      pcVar1 = "Out of Title Memory";
       goto LAB_8289833c;
     }
   }
   else {
     this = DmDebugAlloc(0x400);
     if (this == (CShaderHacker *)0x0) {
-      pcVar2 = "Out of Debug Memory";
+      pcVar1 = "Out of Debug Memory";
 LAB_8289833c:
-      DefaultTextureTrackerErrorCallback(pcVar2);
-      HVar4 = eOutOfMemory;
-      goto LAB_828983c4;
+      DefaultTextureTrackerErrorCallback(pcVar1);
+      return eOutOfMemory;
     }
   }
   CShaderHacker(this);
-  iVar3 = GraphMicrocodeBuilder::ConvertShaderToGraph
-                    ((GraphMicrocodeBuilder *)this,param_2,(ulong)((uVar5 & 0xffffffff) << 2));
-  if (iVar3 < 0) {
-    HVar4 = eUnknownFailure;
+  iVar2 = GraphMicrocodeBuilder::ConvertShaderToGraph
+                    ((GraphMicrocodeBuilder *)this,param_2,param_3 << 2);
+  if (iVar2 < 0) {
+    HVar3 = eUnknownFailure;
   }
   else {
-    this->m_ProgramControl = pSVar1->m_ProgramControl;
-    this->m_ContextMisc = pSVar1->m_ContextMisc;
-    this->m_InterpCntl = pSVar1->m_InterpCntl;
-    HVar4 = GenerateRehackingInfo(this,param_2,(ulong)uVar5,pSVar1);
-    if (HVar4 == eSuccess) {
+    this->m_ProgramControl = param_1->m_ProgramControl;
+    this->m_ContextMisc = param_1->m_ContextMisc;
+    this->m_InterpCntl = param_1->m_InterpCntl;
+    HVar3 = GenerateRehackingInfo(this,param_2,param_3,param_1);
+    if (HVar3 == eSuccess) {
       *param_4 = this;
-      HVar4 = eSuccess;
-      goto LAB_828983c4;
+      return eSuccess;
     }
   }
   Release(this);
-LAB_828983c4:
-  HVar4 = __restgprlr_27(HVar4);
-  return HVar4;
+  return HVar3;
 }
 
 
@@ -2678,6 +2518,8 @@ int D3D::CShaderHacker::QsortConstantSorter(void *param_1,void *param_2)
 
 // 828983D0  GenerateHackedPixelShader  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtshaderhacker.cpp:3095)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "ERareInstruction": Some values do not have unique names */
 
 HackFailureReason __thiscall
@@ -2686,157 +2528,138 @@ D3D::CShaderHacker::GenerateHackedPixelShader
           ERareInstruction *param_3)
 
 {
-  int iVar1;
-  bool bVar2;
-  ushort uVar3;
-  CShaderHacker *this_00;
-  HackFailureReason HVar5;
-  ulong uVar6;
-  ulonglong uVar4;
-  void *pvVar7;
-  int iVar8;
-  int iVar9;
-  ushort *puVar10;
-  longlong lVar11;
-  LITERAL_CONSTANT *pLVar12;
-  uint uVar13;
-  int *piVar14;
-  int iVar15;
-  uint uVar16;
-  longlong lVar17;
-  ushort *puVar18;
-  longlong lVar19;
+  bool bVar1;
+  HackFailureReason HVar2;
+  ulong uVar3;
+  ulong *puVar4;
+  int iVar5;
+  HACKED_SHADER_CONSTANT_INFO *pHVar6;
+  LITERAL_CONSTANT *pLVar7;
+  uint uVar8;
+  int *piVar9;
+  uint uVar10;
+  uint uVar11;
+  HACKED_SHADER_CONSTANT_INFO *pHVar12;
+  longlong lVar13;
   
-  lVar11 = (longlong)(int)param_2;
-  this_00 = (CShaderHacker *)__savegprlr_27(this);
-  this_00->m_pRareOpToUse = param_3;
-  iVar1 = (int)lVar11;
-  HVar5 = CClassForInsertingPerFetchStuff::AddJumpsAndPerTfetchStuff
-                    (&this_00->m_PerTfetchCodeInserter,this_00,param_1,(ulong *)(iVar1 + 0xc));
-  uVar4 = (ulonglong)(int)HVar5;
-  *(HackFailureReason *)(iVar1 + 4) = HVar5;
-  if (uVar4 != 0) goto LAB_828986f4;
-  uVar6 = GraphMicrocodeBuilder::GetShaderSize((GraphMicrocodeBuilder *)this_00);
-  if (0xb3ff < uVar6) {
-    *(undefined4 *)(iVar1 + 4) = 7;
-    uVar4 = 7;
-    goto LAB_828986f4;
+  this->m_pRareOpToUse = param_3;
+  HVar2 = CClassForInsertingPerFetchStuff::AddJumpsAndPerTfetchStuff
+                    (&this->m_PerTfetchCodeInserter,this,param_1,
+                     &param_2->m_RareInstructionsInserted);
+  param_2->m_SuccessOrFailure = HVar2;
+  if (HVar2 != eSuccess) {
+    return HVar2;
   }
-  if (0x6fff < ((this_00->m_ProgramControl).dword & 0x3f00)) {
-    *(undefined4 *)(iVar1 + 4) = 2;
-    uVar4 = 2;
-    goto LAB_828986f4;
+  uVar3 = GraphMicrocodeBuilder::GetShaderSize((GraphMicrocodeBuilder *)this);
+  if (0xb3ff < uVar3) {
+    param_2->m_SuccessOrFailure = eTooManyInstructions;
+    return eTooManyInstructions;
   }
-  *(ulong *)(iVar1 + 0x28) = uVar6 >> 2;
-  uVar16 = ((this_00->m_pRehackingInfo->m_GprAllocator).m_LastRegUsedByHacker & 0x3f) << 8 |
-           (this_00->m_ProgramControl).dword & 0xffffc0ff;
-  (this_00->m_ProgramControl).dword = uVar16;
-  *(uint *)(iVar1 + 0x2c) = uVar16;
-  *(GPU_CONTEXTMISC *)(iVar1 + 0x30) = this_00->m_ContextMisc;
-  *(GPU_INTERPOLATORCONTROL *)(iVar1 + 0x34) = this_00->m_InterpCntl;
-  *(ulong *)(iVar1 + 8) = param_1;
+  if (0x6fff < ((this->m_ProgramControl).dword & 0x3f00)) {
+    param_2->m_SuccessOrFailure = eTooManyGPRs;
+    return eTooManyGPRs;
+  }
+  param_2->m_HackedMicrocodeSizeInDwords = uVar3 >> 2;
+  uVar10 = ((this->m_pRehackingInfo->m_GprAllocator).m_LastRegUsedByHacker & 0x3f) << 8 |
+           (this->m_ProgramControl).dword & 0xffffc0ff;
+  (this->m_ProgramControl).dword = uVar10;
+  (param_2->m_ProgramControl).dword = uVar10;
+  param_2->m_ContextMisc = this->m_ContextMisc;
+  param_2->m_InterpCntl = this->m_InterpCntl;
+  param_2->m_TexConstantsToAnalyze = param_1;
   if (g_AllocDebugHeap == 0) {
     g_DrPixMemAllocPhysicalCount = g_DrPixMemAllocPhysicalCount + 1;
-    pvVar7 = XMemAlloc(uVar6,0xb5800000);
+    puVar4 = XMemAlloc(uVar3,0xb5800000);
   }
   else {
-    pvVar7 = RTMemDebugAllocPhysical(uVar6,5,3);
+    puVar4 = RTMemDebugAllocPhysical(uVar3,5,3);
   }
-  if (pvVar7 == (void *)0x0) {
+  if (puVar4 == (ulong *)0x0) {
     DefaultTextureTrackerErrorCallback("Out of Physical Memory");
   }
-  *(void **)(iVar1 + 0x24) = pvVar7;
-  if (pvVar7 == (void *)0x0) {
-    *(undefined4 *)(iVar1 + 4) = 9;
-    uVar4 = 9;
-    goto LAB_828986f4;
+  param_2->m_pHackedMicrocode = puVar4;
+  if (puVar4 == (ulong *)0x0) {
+    param_2->m_SuccessOrFailure = eOutOfMemory;
+    return eOutOfMemory;
   }
-  iVar8 = GraphMicrocodeBuilder::ConvertGraphToShader((GraphMicrocodeBuilder *)this_00,pvVar7,uVar6)
-  ;
-  if (iVar8 < 0) {
-    *(undefined4 *)(iVar1 + 4) = 10;
+  iVar5 = GraphMicrocodeBuilder::ConvertGraphToShader((GraphMicrocodeBuilder *)this,puVar4,uVar3);
+  if (iVar5 < 0) {
+    param_2->m_SuccessOrFailure = eUnknownFailure;
   }
-  if (*(int *)(iVar1 + 4) == 0) {
-    puVar18 = (ushort *)(iVar1 + 0x38);
+  if (param_2->m_SuccessOrFailure == eSuccess) {
+    pHVar12 = param_2->m_Constants;
     memset();
-    uVar16 = 0;
-    bVar2 = ((this_00->m_MemexportConstant).dword & 0xf000) != 0;
-    if (bVar2) {
-      *(byte *)puVar18 = (this_00->m_MemexportConstant)._s_0.Register;
-      *puVar18 = *puVar18 & 0xff00 | 0xa0;
+    uVar10 = 0;
+    bVar1 = ((this->m_MemexportConstant).dword & 0xf000) != 0;
+    if (bVar1) {
+      pHVar12->Const = (this->m_MemexportConstant)._s_0.Register;
+      pHVar12->Usage = 0x20;
+      pHVar12->Valid = 1;
+      pHVar12->Literal = 0;
     }
-    uVar4 = (ulonglong)bVar2;
-    uVar13 = 0x4d;
-    pLVar12 = this_00->m_FloatConstants;
-    lVar17 = (uVar4 + 0x1c) * 2 + lVar11;
+    uVar11 = (uint)bVar1;
+    uVar8 = 0x4d;
+    pLVar7 = this->m_FloatConstants;
+    pHVar6 = param_2->m_Constants + uVar11;
     do {
-      lVar19 = lVar17;
-      if (pLVar12->AllocatedMask != 0) {
-        if ((0x23 < (uVar4 & 0xffffffff)) || (0x1f < uVar16)) {
-          *(undefined4 *)(iVar1 + 4) = 10;
+      if (pLVar7->AllocatedMask != 0) {
+        if ((0x23 < uVar11) || (0x1f < uVar10)) {
+          param_2->m_SuccessOrFailure = eUnknownFailure;
           break;
         }
-        iVar8 = 0;
-        lVar19 = 4;
+        lVar13 = 4;
+        iVar5 = 0;
         do {
-          iVar15 = uVar13 + iVar8;
-          iVar9 = uVar16 + 0x20 + iVar8;
-          iVar8 = iVar8 + 1;
-          *(int *)(iVar9 * 4 + iVar1) = this_00->m_CConstantPerTFConst[iVar15 + -0xc];
-          lVar19 = lVar19 + -1;
-        } while (lVar19 != 0);
-        uVar4 = uVar4 + 1;
-        lVar19 = lVar17 + 2;
-        puVar10 = (ushort *)lVar17;
-        *(char *)puVar10 = (char)pLVar12->CConst;
-        uVar3 = (ushort)uVar16;
-        uVar16 = uVar16 + 4;
-        *puVar10 = uVar3 & 0x3f | *puVar10 & 0xff00 | 0xc0;
+          param_2->m_ConstantValues[iVar5 + uVar10] =
+               (float)this->m_CConstantPerTFConst[uVar8 + iVar5 + -0xc];
+          lVar13 = lVar13 + -1;
+          iVar5 = iVar5 + 1;
+        } while (lVar13 != 0);
+        uVar11 = uVar11 + 1;
+        pHVar6->Const = (byte)pLVar7->CConst;
+        pHVar6->Usage = uVar10;
+        pHVar6->Valid = 1;
+        pHVar6->Literal = 1;
+        uVar10 = uVar10 + 4;
+        pHVar6 = pHVar6 + 1;
       }
-      uVar13 = uVar13 + 5;
-      pLVar12 = pLVar12 + 1;
-      lVar17 = lVar19;
-    } while (uVar13 < 0xf2);
-    uVar16 = 0;
-    piVar14 = this_00->m_CConstantPerTFConst;
-    lVar11 = (uVar4 + 0x1c & 0x7fffffff) * 2 + lVar11;
+      uVar8 = uVar8 + 5;
+      pLVar7 = pLVar7 + 1;
+    } while (uVar8 < 0xf2);
+    uVar10 = 0;
+    piVar9 = this->m_CConstantPerTFConst;
+    pHVar6 = param_2->m_Constants + uVar11;
     do {
-      lVar17 = lVar11;
-      if (*piVar14 != -1) {
-        if (0x23 < (uVar4 & 0xffffffff)) {
-          *(undefined4 *)(iVar1 + 4) = 10;
+      if (*piVar9 != -1) {
+        if (0x23 < uVar11) {
+          param_2->m_SuccessOrFailure = eUnknownFailure;
           break;
         }
-        uVar4 = uVar4 + 1;
-        lVar17 = lVar11 + 2;
-        puVar10 = (ushort *)lVar11;
-        *(char *)puVar10 = (char)*piVar14;
-        *puVar10 = (ushort)uVar16 & 0x3f | *puVar10 & 0xff00 | 0x80;
+        uVar11 = uVar11 + 1;
+        pHVar6->Const = (byte)*piVar9;
+        pHVar6->Usage = uVar10;
+        pHVar6->Valid = 1;
+        pHVar6->Literal = 0;
+        pHVar6 = pHVar6 + 1;
       }
-      uVar16 = uVar16 + 1;
-      piVar14 = piVar14 + 1;
-      lVar11 = lVar17;
-    } while (uVar16 < 0x20);
-    qsort(puVar18,0x24,2,QsortConstantSorter);
-    if (*(int *)(iVar1 + 4) != 0) goto LAB_828986b4;
+      uVar10 = uVar10 + 1;
+      piVar9 = piVar9 + 1;
+    } while (uVar10 < 0x20);
+    qsort(pHVar12,0x24,2,QsortConstantSorter);
+    if (param_2->m_SuccessOrFailure == eSuccess) goto LAB_828986ec;
   }
-  else {
-LAB_828986b4:
-    pvVar7 = *(void **)(iVar1 + 0x24);
-    if (pvVar7 != (void *)0x0) {
-      if (g_AllocDebugHeap == 0) {
-        XMemFree(pvVar7,0xb1800000);
-      }
-      else {
-        MmFreePhysicalMemory(3,pvVar7);
-      }
+  puVar4 = param_2->m_pHackedMicrocode;
+  if (puVar4 != (ulong *)0x0) {
+    if (g_AllocDebugHeap == 0) {
+      XMemFree(puVar4,0xb1800000);
     }
-    *(undefined4 *)(iVar1 + 0x24) = 0;
+    else {
+      MmFreePhysicalMemory(3,puVar4);
+    }
   }
-  uVar4 = (ulonglong)*(uint *)(iVar1 + 4);
-LAB_828986f4:
-  HVar5 = __restgprlr_27(uVar4);
-  return HVar5;
+  param_2->m_pHackedMicrocode = (ulong *)0x0;
+LAB_828986ec:
+  return param_2->m_SuccessOrFailure;
 }
 
 
@@ -2922,100 +2745,97 @@ ulong64 D3D::GetShaderHash(ulong *param_1,ulong param_2)
 
 // 828970B8  GetUsefulVariation  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtshaderhacker.cpp:3278)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
+
 HACKED_VARIATION_LIST2 *
 D3D::GetUsefulVariation
           (CPixelShaderHashEntry *param_1,ulong param_2,ulong param_3,ulong param_4,ulong param_5)
 
 {
-  int iVar1;
-  void *pvVar2;
-  char *pcVar3;
-  HACKED_VARIATION_LIST2 *pHVar4;
-  ulonglong uVar5;
-  ulonglong uVar6;
-  ulonglong uVar7;
-  int *piVar8;
-  int *piVar9;
+  HACKED_VARIATION_LIST *pHVar1;
+  char *pcVar2;
+  HACKED_VARIATION_LIST2 *pHVar3;
+  HACKED_VARIATION_LIST *pHVar4;
+  HACKED_VARIATION_LIST2 *pHVar5;
   
-  uVar7 = (ulonglong)(int)param_5;
-  uVar6 = (ulonglong)(int)param_4;
-  uVar5 = (ulonglong)(int)param_2;
-  iVar1 = __savegprlr_23(param_1);
-  piVar8 = (int *)(iVar1 + 4);
-  if (*piVar8 == 0) {
+  pHVar4 = (HACKED_VARIATION_LIST *)&param_1->m_pHackedVariations;
+  if (*(HACKED_VARIATION_LIST **)pHVar4 == (HACKED_VARIATION_LIST *)0x0) {
 LAB_8289712c:
     if (g_AllocDebugHeap == 0) {
-      pvVar2 = XMemAlloc(0x10,0x64800000);
-      if (pvVar2 == (void *)0x0) {
-        pcVar3 = "Out of Title Memory";
+      pHVar1 = XMemAlloc(0x10,0x64800000);
+      if (pHVar1 == (HACKED_VARIATION_LIST *)0x0) {
+        pcVar2 = "Out of Title Memory";
         goto LAB_82897164;
       }
     }
     else {
-      pvVar2 = DmDebugAlloc(0x10);
-      if (pvVar2 == (void *)0x0) {
-        pcVar3 = "Out of Debug Memory";
+      pHVar1 = DmDebugAlloc(0x10);
+      if (pHVar1 == (HACKED_VARIATION_LIST *)0x0) {
+        pcVar2 = "Out of Debug Memory";
 LAB_82897164:
-        DefaultTextureTrackerErrorCallback(pcVar3);
+        DefaultTextureTrackerErrorCallback(pcVar2);
       }
     }
-    *piVar8 = (int)pvVar2;
-    if (pvVar2 != (void *)0x0) {
-      *(int *)((int)pvVar2 + 4) = (int)uVar5;
-      *(ulong *)(*piVar8 + 8) = param_3;
+    pHVar4->pNext = pHVar1;
+    if (pHVar1 != (HACKED_VARIATION_LIST *)0x0) {
+      pHVar1->m_TexConstantsToAnalyze = param_2;
+      pHVar4->pNext->m_NumConstantsToAnalyze = param_3;
       goto LAB_8289718c;
     }
 LAB_82897174:
-    piVar9 = (int *)0x0;
+    pHVar5 = (HACKED_VARIATION_LIST2 *)0x0;
   }
   else {
     do {
-      piVar9 = (int *)*piVar8;
-      if ((uVar5 & 0xffffffff) == (ulonglong)(uint)piVar9[1]) break;
-      piVar8 = piVar9;
-    } while (*piVar9 != 0);
-    if (*piVar8 == 0) goto LAB_8289712c;
+      pHVar1 = pHVar4->pNext;
+      if (param_2 == pHVar1->m_TexConstantsToAnalyze) break;
+      pHVar4 = pHVar1;
+    } while (pHVar1->pNext != (HACKED_VARIATION_LIST *)0x0);
+    if (pHVar4->pNext == (HACKED_VARIATION_LIST *)0x0) goto LAB_8289712c;
 LAB_8289718c:
-    piVar9 = (int *)(*piVar8 + 0xc);
-    if (*(int *)(*piVar8 + 0xc) == 0) {
+    pHVar5 = (HACKED_VARIATION_LIST2 *)&pHVar4->pNext->pChild;
+    if (pHVar4->pNext->pChild == (HACKED_VARIATION_LIST2 *)0x0) {
 LAB_828971d4:
       if (g_AllocDebugHeap == 0) {
-        pvVar2 = XMemAlloc(0x10,0x64800000);
-        if (pvVar2 == (void *)0x0) {
-          pcVar3 = "Out of Title Memory";
+        pHVar3 = XMemAlloc(0x10,0x64800000);
+        if (pHVar3 == (HACKED_VARIATION_LIST2 *)0x0) {
+          pcVar2 = "Out of Title Memory";
           goto LAB_82897218;
         }
       }
       else {
-        pvVar2 = DmDebugAlloc(0x10);
-        if (pvVar2 == (void *)0x0) {
-          pcVar3 = "Out of Debug Memory";
+        pHVar3 = DmDebugAlloc(0x10);
+        if (pHVar3 == (HACKED_VARIATION_LIST2 *)0x0) {
+          pcVar2 = "Out of Debug Memory";
 LAB_82897218:
-          DefaultTextureTrackerErrorCallback(pcVar3);
+          DefaultTextureTrackerErrorCallback(pcVar2);
         }
       }
-      *piVar9 = (int)pvVar2;
-      if (pvVar2 == (void *)0x0) goto LAB_82897174;
-      *(int *)((int)pvVar2 + 8) = (int)uVar7;
+      pHVar5->pNext = pHVar3;
+      if (pHVar3 == (HACKED_VARIATION_LIST2 *)0x0) goto LAB_82897174;
+      pHVar3->m_NumVariationsRequired = param_5;
     }
     else {
       do {
-        piVar9 = (int *)*piVar9;
-        if (((ulonglong)(uint)piVar9[2] == (uVar7 & 0xffffffff)) && (((uint)piVar9[1] & uVar6) == 0)
-           ) goto LAB_82897234;
-      } while (*piVar9 != 0);
-      if (*piVar9 == 0) goto LAB_828971d4;
+        pHVar5 = pHVar5->pNext;
+        if ((pHVar5->m_NumVariationsRequired == param_5) &&
+           ((pHVar5->m_RareInstructionsInserted & param_4) == 0)) {
+          return pHVar5;
+        }
+      } while (pHVar5->pNext != (HACKED_VARIATION_LIST2 *)0x0);
+      if (pHVar5->pNext == (HACKED_VARIATION_LIST2 *)0x0) goto LAB_828971d4;
     }
-    piVar9 = (int *)*piVar9;
+    pHVar5 = pHVar5->pNext;
   }
-LAB_82897234:
-  pHVar4 = (HACKED_VARIATION_LIST2 *)__restgprlr_23(piVar9);
-  return pHVar4;
+  return pHVar5;
 }
 
 
 // 82898700  GenerateAllRequiredShaderFlavors  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtshaderhacker.cpp:3339)
 
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
 /* WARNING: Enum "ERareInstruction": Some values do not have unique names */
 
 HackFailureReason
@@ -3024,141 +2844,126 @@ D3D::GenerateAllRequiredShaderFlavors
           ulong param_5,ulong param_6,ulong param_7,HACKED_SHADER_VARIATION **param_8)
 
 {
-  HackFailureReason HVar1;
-  void *pvVar2;
-  char *pcVar3;
-  ulonglong uVar4;
-  ulonglong uVar5;
+  uint uVar1;
+  HackFailureReason HVar2;
+  HACKED_SHADER_VARIATION *pHVar3;
+  char *pcVar4;
+  undefined1 *puVar5;
+  uint uVar7;
   ulonglong uVar6;
-  undefined4 *puVar7;
-  undefined1 *puVar8;
-  uint uVar10;
-  ulonglong uVar9;
-  ulonglong uVar11;
+  ulong uVar8;
+  uint uVar9;
+  HACKED_SHADER_VARIATION *pHVar10;
+  ulong uVar11;
   uint uVar12;
-  uint *puVar14;
-  ulonglong uVar13;
-  ulonglong uVar15;
-  ulonglong uVar17;
-  longlong lVar18;
+  longlong lVar13;
   undefined1 uStack_131;
   byte local_130 [16];
   ERareInstruction aEStack_120 [72];
-  ulong uVar16;
   
-  uVar13 = (ulonglong)(int)param_8;
-  uVar6 = (ulonglong)(int)param_7;
-  uVar5 = (ulonglong)(int)param_6;
-  uVar17 = (ulonglong)(int)param_5;
-  __savegprlr();
-  puVar8 = &uStack_131;
-  puVar7 = (undefined4 *)uVar13;
-  *puVar7 = 0;
-  uVar12 = 0;
-  lVar18 = 7;
-  uVar10 = 0;
+  puVar5 = &uStack_131;
+  *param_8 = (HACKED_SHADER_VARIATION *)0x0;
+  uVar9 = 0;
+  lVar13 = 7;
+  uVar7 = 0;
   do {
-    if (((uint)(1 << (uVar10 & 0x3f)) & uVar6) == 0) {
-      puVar8[1] = (char)uVar10;
-      uVar12 = uVar12 + 1;
-      puVar8 = puVar8 + 2;
-      *puVar8 = 0xff;
+    if ((1 << (uVar7 & 0x3f) & param_7) == 0) {
+      puVar5[1] = (char)uVar7;
+      uVar9 = uVar9 + 1;
+      puVar5 = puVar5 + 2;
+      *puVar5 = 0xff;
     }
-    uVar10 = uVar10 + 1;
-    lVar18 = lVar18 + -1;
-  } while (lVar18 != 0);
-  uVar11 = 0;
-  if ((uVar5 & 0xffffffff) != 0) {
+    uVar7 = uVar7 + 1;
+    lVar13 = lVar13 + -1;
+  } while (lVar13 != 0);
+  uVar7 = 0;
+  pHVar10 = (HACKED_SHADER_VARIATION *)param_8;
+  if (param_6 != 0) {
     do {
       if (*param_4 == (CShaderHacker *)0x0) {
-        HVar1 = CShaderHacker::Initialize(param_1,param_2,param_3,param_4);
+        HVar2 = CShaderHacker::Initialize(param_1,param_2,param_3,param_4);
         if (*param_4 == (CShaderHacker *)0x0) {
-          if (HVar1 == eSuccess) {
-            HVar1 = eUnknownFailure;
+          if (HVar2 == eSuccess) {
+            HVar2 = eUnknownFailure;
           }
+          goto LAB_82898918;
         }
-        else {
-          if (HVar1 == eSuccess) goto LAB_828987d0;
+        if (HVar2 != eSuccess) {
           CShaderHacker::Release(*param_4);
+          goto LAB_82898918;
         }
-LAB_82898918:
-        if ((HACKED_SHADER_VARIATION *)*puVar7 != (HACKED_SHADER_VARIATION *)0x0) {
-          HACKED_SHADER_VARIATION::Destroy((HACKED_SHADER_VARIATION *)*puVar7);
-          *puVar7 = 0;
-        }
-        if (*param_4 != (CShaderHacker *)0x0) {
-          CShaderHacker::Release(*param_4);
-          *param_4 = (CShaderHacker *)0x0;
-        }
-        goto LAB_828988f0;
       }
-LAB_828987d0:
-      uVar15 = 0;
-      uVar16 = 0;
-      uVar10 = 0;
-      if (uVar12 != 0) {
-        puVar8 = &uStack_131;
+      uVar11 = 0;
+      uVar12 = 0;
+      if (uVar9 != 0) {
+        puVar5 = &uStack_131;
         do {
-          uVar16 = (ulong)uVar15;
-          uVar9 = 0x1f - LZCOUNT((int)uVar17);
-          if ((uint)uVar9 == 0xffffffff) break;
-          uVar4 = (ulonglong)(uint)(1 << ((uint)uVar9 & 0x3f));
-          *(uint *)((int)aEStack_120 + (int)((uVar9 & 0xffffffff) << 2)) = (uint)(byte)puVar8[1];
-          uVar10 = uVar10 + 1;
-          uVar15 = uVar4 | uVar15;
-          uVar16 = (ulong)uVar15;
-          puVar8 = puVar8 + 2;
-          *puVar8 = (char)uVar9;
-          uVar17 = uVar17 & ~uVar4;
-        } while (uVar10 < uVar12);
+          uVar6 = 0x1f - LZCOUNT(param_5);
+          if ((uint)uVar6 == 0xffffffff) break;
+          uVar1 = 1 << ((uint)uVar6 & 0x3f);
+          *(uint *)((int)aEStack_120 + (int)((uVar6 & 0xffffffff) << 2)) = (uint)(byte)puVar5[1];
+          uVar12 = uVar12 + 1;
+          uVar11 = uVar1 | uVar11;
+          puVar5 = puVar5 + 2;
+          *puVar5 = (char)uVar6;
+          param_5 = param_5 & ~uVar1;
+        } while (uVar12 < uVar9);
       }
       if (g_AllocDebugHeap == 0) {
-        pvVar2 = XMemAlloc(0x100,0x64800000);
-        if (pvVar2 == (void *)0x0) {
-          pcVar3 = "Out of Title Memory";
+        pHVar3 = XMemAlloc(0x100,0x64800000);
+        if (pHVar3 == (HACKED_SHADER_VARIATION *)0x0) {
+          pcVar4 = "Out of Title Memory";
           goto LAB_82898864;
         }
       }
       else {
-        pvVar2 = DmDebugAlloc(0x100);
-        if (pvVar2 == (void *)0x0) {
-          pcVar3 = "Out of Debug Memory";
+        pHVar3 = DmDebugAlloc(0x100);
+        if (pHVar3 == (HACKED_SHADER_VARIATION *)0x0) {
+          pcVar4 = "Out of Debug Memory";
 LAB_82898864:
-          DefaultTextureTrackerErrorCallback(pcVar3);
+          DefaultTextureTrackerErrorCallback(pcVar4);
         }
       }
-      puVar14 = (uint *)uVar13;
-      *puVar14 = (uint)pvVar2;
-      if (pvVar2 == (void *)0x0) {
-        HVar1 = eOutOfMemory;
-        goto LAB_82898918;
+      pHVar10->m_pNext = pHVar3;
+      if (pHVar3 == (HACKED_SHADER_VARIATION *)0x0) {
+        HVar2 = eOutOfMemory;
+LAB_82898918:
+        if (*param_8 != (HACKED_SHADER_VARIATION *)0x0) {
+          HACKED_SHADER_VARIATION::Destroy(*param_8);
+          *param_8 = (HACKED_SHADER_VARIATION *)0x0;
+        }
+        if (*param_4 == (CShaderHacker *)0x0) {
+          return HVar2;
+        }
+        CShaderHacker::Release(*param_4);
+        *param_4 = (CShaderHacker *)0x0;
+        return HVar2;
       }
       memcpy();
-      *(char *)(*puVar14 + 0x11) = (char)uVar10;
-      *(char *)(*puVar14 + 0x10) = (char)uVar6;
-      uVar13 = 4;
-      if ((uVar5 & 0xffffffff) != 3) {
-        uVar13 = uVar5;
+      pHVar10->m_pNext->m_NumRareOpTypesInserted = (byte)uVar12;
+      pHVar10->m_pNext->m_RareOpsUsedByShader = (byte)param_7;
+      uVar8 = 4;
+      if (param_6 != 3) {
+        uVar8 = param_6;
       }
-      *(char *)(*puVar14 + 0x12) = (char)uVar13;
-      HVar1 = CShaderHacker::GenerateHackedPixelShader
-                        (*param_4,uVar16,(HACKED_SHADER_VARIATION *)*puVar14,aEStack_120);
+      pHVar10->m_pNext->m_NumVariationsToAnalyzeEverything = (byte)uVar8;
+      HVar2 = CShaderHacker::GenerateHackedPixelShader(*param_4,uVar11,pHVar10->m_pNext,aEStack_120)
+      ;
       CShaderHacker::Release(*param_4);
       *param_4 = (CShaderHacker *)0x0;
-      if (HVar1 != eSuccess) goto LAB_82898918;
-      uVar11 = uVar11 + 1;
-      uVar13 = (ulonglong)*puVar14;
-    } while ((uVar11 & 0xffffffff) < (uVar5 & 0xffffffff));
+      if (HVar2 != eSuccess) goto LAB_82898918;
+      uVar7 = uVar7 + 1;
+      pHVar10 = pHVar10->m_pNext;
+    } while (uVar7 < param_6);
   }
-  HVar1 = eSuccess;
-LAB_828988f0:
-  __restgprlr();
-  return HVar1;
+  return eSuccess;
 }
 
 
 // 82898C78  FindOrGetTextureUsage  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtshaderhacker.cpp:3442)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "ERareInstruction": Some values do not have unique names */
 
 HackFailureReason __thiscall
@@ -3167,65 +2972,65 @@ D3D::CPixelShaderHashTable::FindOrGetTextureUsage
           GPU_CONTEXTMISC param_4,GPU_INTERPOLATORCONTROL param_5,SHADER_TEXTURE_USAGE **param_6)
 
 {
-  int iVar2;
   ulong64 uVar1;
-  CPixelShaderHashEntry *pCVar3;
-  void *pvVar4;
-  char *pcVar5;
-  CShaderHacker *pCVar6;
-  HackFailureReason HVar7;
-  undefined4 uVar8;
+  CPixelShaderHashEntry *pCVar2;
+  SHADER_REHACKING_INFO *pSVar3;
+  char *pcVar4;
+  CShaderHacker *pCVar5;
+  HackFailureReason HVar6;
   
-  iVar2 = __savegprlr_23(this);
-  uVar8 = 0;
-  if (*(CShaderHacker **)(iVar2 + 0x400) != (CShaderHacker *)0x0) {
-    CShaderHacker::Release(*(CShaderHacker **)(iVar2 + 0x400));
-    *(undefined4 *)(iVar2 + 0x400) = 0;
+  HVar6 = eSuccess;
+  if (this->m_pShaderHacker != (CShaderHacker *)0x0) {
+    CShaderHacker::Release(this->m_pShaderHacker);
+    this->m_pShaderHacker = (CShaderHacker *)0x0;
   }
   *param_6 = (SHADER_TEXTURE_USAGE *)0x0;
   uVar1 = GetShaderHash(param_1,param_2);
-  pCVar3 = CTSSortedList<D3D::CPixelShaderHashEntry,unsigned___int64,&D3D::RTDebugMemAlloc,&D3D::RTDebugMemFree>
-           ::FindOrAdd((void *)(((uint)((uVar1 & 0xffffffff) << 2) & 0x3fc) + iVar2),uVar1);
-  *(CPixelShaderHashEntry **)(iVar2 + 0x404) = pCVar3;
-  if (pCVar3->m_pRehackingInfo == (SHADER_REHACKING_INFO *)0x0) {
+  pCVar2 = CTSSortedList<D3D::CPixelShaderHashEntry,unsigned___int64,&D3D::RTDebugMemAlloc,&D3D::RTDebugMemFree>
+           ::FindOrAdd((void *)((int)&this->_padding_ + ((uint)((uVar1 & 0xffffffff) << 2) & 0x3fc))
+                       ,uVar1);
+  this->m_pEntryInHash = pCVar2;
+  if (pCVar2->m_pRehackingInfo == (SHADER_REHACKING_INFO *)0x0) {
     if (g_AllocDebugHeap == 0) {
-      pvVar4 = XMemAlloc(200,0x64800000);
-      if (pvVar4 == (void *)0x0) {
-        pcVar5 = "Out of Title Memory";
+      pSVar3 = XMemAlloc(200,0x64800000);
+      if (pSVar3 == (SHADER_REHACKING_INFO *)0x0) {
+        pcVar4 = "Out of Title Memory";
         goto LAB_82898d34;
       }
     }
     else {
-      pvVar4 = DmDebugAlloc(200);
-      if (pvVar4 == (void *)0x0) {
-        pcVar5 = "Out of Debug Memory";
+      pSVar3 = DmDebugAlloc(200);
+      if (pSVar3 == (SHADER_REHACKING_INFO *)0x0) {
+        pcVar4 = "Out of Debug Memory";
 LAB_82898d34:
-        DefaultTextureTrackerErrorCallback(pcVar5);
+        DefaultTextureTrackerErrorCallback(pcVar4);
       }
     }
-    **(undefined4 **)(iVar2 + 0x404) = pvVar4;
-    if (**(int **)(iVar2 + 0x404) == 0) {
-      uVar8 = 9;
+    this->m_pEntryInHash->m_pRehackingInfo = pSVar3;
+    if (this->m_pEntryInHash->m_pRehackingInfo == (SHADER_REHACKING_INFO *)0x0) {
+      HVar6 = eOutOfMemory;
       goto LAB_82898db4;
     }
-    pCVar6 = CShaderHacker::Initialize
+    pCVar5 = CShaderHacker::Initialize
                        (param_1,param_2,param_3,param_4,param_5,
-                        (SHADER_REHACKING_INFO *)**(int **)(iVar2 + 0x404));
-    *(CShaderHacker **)(iVar2 + 0x400) = pCVar6;
+                        this->m_pEntryInHash->m_pRehackingInfo);
+    this->m_pShaderHacker = pCVar5;
   }
-  *param_6 = (SHADER_TEXTURE_USAGE *)(**(int **)(iVar2 + 0x404) + 0x90);
-  if ((*(int *)(iVar2 + 0x400) == 0) || (*(int *)**(undefined4 **)(iVar2 + 0x404) != 0)) {
-    uVar8 = *(undefined4 *)**(undefined4 **)(iVar2 + 0x404);
+  *param_6 = &this->m_pEntryInHash->m_pRehackingInfo->m_TextureUsage;
+  if ((this->m_pShaderHacker == (CShaderHacker *)0x0) ||
+     (this->m_pEntryInHash->m_pRehackingInfo->m_SuccessOrFailure != eSuccess)) {
+    HVar6 = this->m_pEntryInHash->m_pRehackingInfo->m_SuccessOrFailure;
   }
 LAB_82898db4:
-  *(undefined4 *)(iVar2 + 0x408) = uVar8;
-  HVar7 = __restgprlr_23(uVar8);
-  return HVar7;
+  this->m_FindOrGetTextureUsageReason = HVar6;
+  return HVar6;
 }
 
 
 // 82898950  FindOrGetHackedShader  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtshaderhacker.cpp:3509)
 
+/* WARNING: Function: __savegprlr_19 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_19 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "ERareInstruction": Some values do not have unique names */
 
 HackFailureReason __thiscall
@@ -3238,133 +3043,121 @@ D3D::CPixelShaderHashTable::FindOrGetHackedShader
   ulong uVar1;
   SHADER_REHACKING_INFO *pSVar2;
   byte bVar3;
-  int iVar4;
-  HACKED_VARIATION_LIST2 *pHVar5;
-  HackFailureReason HVar6;
+  HACKED_VARIATION_LIST2 *pHVar4;
+  HackFailureReason HVar5;
+  ulonglong uVar6;
   ulonglong uVar7;
+  uint uVar9;
   ulonglong uVar8;
-  ulonglong uVar9;
-  uint uVar11;
-  ulonglong uVar10;
-  HACKED_SHADER_VARIATION *pHVar12;
-  ulonglong uVar13;
-  ulonglong uVar14;
-  ulonglong uVar15;
-  longlong lVar16;
+  HACKED_SHADER_VARIATION *pHVar10;
+  ulonglong uVar11;
+  uint uVar12;
+  longlong lVar13;
   HACKED_SHADER_VARIATION *local_80 [32];
   
-  uVar14 = (ulonglong)(int)param_5;
-  uVar8 = (ulonglong)(int)param_4.dword;
-  uVar7 = (ulonglong)(int)param_3.dword;
-  iVar4 = __savegprlr_19(this);
-  HVar6 = *(HackFailureReason *)(iVar4 + 0x408);
-  if (HVar6 == eSuccess) {
-    uVar10 = uVar8 & 0xffff;
-    uVar8 = (uVar8 & 0xffffffff) >> 0x10;
+  HVar5 = this->m_FindOrGetTextureUsageReason;
+  if (HVar5 == eSuccess) {
+    uVar6 = (ulonglong)param_4.dword & 0xffff;
     *param_7 = (HACKED_SHADER_VARIATION *)0x0;
-    uVar15 = 0;
     local_80[0] = (HACKED_SHADER_VARIATION *)0x0;
-    uVar13 = 0x1000 - uVar10;
-    if (uVar10 <= uVar8) {
-      uVar13 = uVar8 - uVar10;
+    uVar11 = 0x1000 - uVar6;
+    if (uVar6 <= param_4.dword >> 0x10) {
+      uVar11 = (param_4.dword >> 0x10) - uVar6;
     }
-    pSVar2 = (*(CPixelShaderHashEntry **)(iVar4 + 0x404))->m_pRehackingInfo;
-    uVar14 = (pSVar2->m_TextureUsage).TexConstsUsed & uVar14;
-    if (uVar14 == 0) {
-      uVar15 = 1;
-      goto LAB_82898bf0;
+    pSVar2 = this->m_pEntryInHash->m_pRehackingInfo;
+    uVar12 = (pSVar2->m_TextureUsage).TexConstsUsed & param_5;
+    if (uVar12 == 0) {
+      HVar5 = eNotNecessary;
     }
-    uVar8 = 7;
-    uVar11 = 0;
-    bVar3 = pSVar2->m_RareInstructionsUsed | param_6->RareInstructionsUsed;
-    lVar16 = 7;
-    do {
-      if (((uint)bVar3 & 1 << (uVar11 & 0x3f)) != 0) {
-        uVar8 = uVar8 + 0xff & 0xff;
-      }
-      uVar11 = uVar11 + 1;
-      lVar16 = lVar16 + -1;
-    } while (lVar16 != 0);
-    uVar10 = 0;
-    uVar11 = 0;
-    lVar16 = 0x20;
-    do {
-      if (((uint)(1 << (uVar11 & 0x3f)) & uVar14) != 0) {
-        uVar10 = uVar10 + 1 & 0xff;
-      }
-      uVar11 = uVar11 + 1;
-      lVar16 = lVar16 + -1;
-    } while (lVar16 != 0);
-    trapWord(6,uVar8,0);
-    uVar9 = (uVar10 + uVar8) - 1;
-    uVar1 = (int)uVar9 / (int)uVar8;
-    trapWord(5,uVar8 & ~(((uVar9 & 0x7fffffff) << 1 | (uVar9 & 0xffffffff) >> 0x1f) - 1),0xffff);
-    if (4 < (int)uVar1) {
-      uVar15 = 6;
-      goto LAB_82898bf0;
-    }
-    pHVar5 = GetUsefulVariation(*(CPixelShaderHashEntry **)(iVar4 + 0x404),(ulong)uVar14,
-                                (ulong)uVar10,(uint)bVar3,uVar1);
-    if (pHVar5 == (HACKED_VARIATION_LIST2 *)0x0) {
-      uVar15 = 9;
-      goto LAB_82898bf0;
-    }
-    if (pHVar5->pChild == (HACKED_SHADER_VARIATION *)0x0) {
-      HVar6 = GenerateAllRequiredShaderFlavors
-                        ((SHADER_REHACKING_INFO *)**(undefined4 **)(iVar4 + 0x404),param_1,param_2,
-                         (CShaderHacker **)(iVar4 + 0x400),(ulong)uVar14,uVar1,(uint)bVar3,local_80)
-      ;
-      uVar15 = (ulonglong)(int)HVar6;
-      *(undefined4 *)(iVar4 + 0x400) = 0;
-      pHVar5->pChild = local_80[0];
-      for (pHVar12 = local_80[0]; pHVar12 != (HACKED_SHADER_VARIATION *)0x0;
-          pHVar12 = pHVar12->m_pNext) {
-        pHVar5->m_RareInstructionsInserted =
-             pHVar12->m_RareInstructionsInserted | pHVar5->m_RareInstructionsInserted;
-      }
-      if (HVar6 != eSuccess) goto LAB_82898bf0;
-    }
-    pHVar12 = pHVar5->pChild;
-    HVar6 = pHVar12->m_SuccessOrFailure;
-    if (HVar6 == eSuccess) {
-      uVar8 = 0;
-      if ((((int)uVar1 < 2) ||
-          (uVar8 = (ulonglong)
-                   (byte)(&g_RTRareInstructionInfo[uVar1 + 7].field_0x0)
-                         [(g_RTGlobal.m_pCommandBufferHacker)->m_FrameCount >> 2 & 0xf],
-          (&g_RTRareInstructionInfo[uVar1 + 7].field_0x0)
-          [(g_RTGlobal.m_pCommandBufferHacker)->m_FrameCount >> 2 & 0xf] != 3)) || (uVar1 != 3)) {
-        if ((int)uVar8 != 0) {
-          do {
-            pHVar12 = pHVar12->m_pNext;
-            uVar8 = uVar8 - 1;
-          } while (uVar8 != 0);
+    else {
+      uVar6 = 7;
+      uVar9 = 0;
+      bVar3 = pSVar2->m_RareInstructionsUsed | param_6->RareInstructionsUsed;
+      lVar13 = 7;
+      do {
+        if (((uint)bVar3 & 1 << (uVar9 & 0x3f)) != 0) {
+          uVar6 = uVar6 + 0xff & 0xff;
         }
-        if ((int)uVar15 == 0) {
-          if (((ulonglong)((pHVar12->m_ProgramControl).dword >> 8) & 0x3f) <
-              ((uVar7 & 0xffffffff) >> 4 & 0x7f)) {
-            if ((ulonglong)pHVar12->m_HackedMicrocodeSizeInDwords / 3 < (uVar13 & 0xffffffff)) {
-              *param_7 = pHVar12;
+        uVar9 = uVar9 + 1;
+        lVar13 = lVar13 + -1;
+      } while (lVar13 != 0);
+      uVar8 = 0;
+      uVar9 = 0;
+      lVar13 = 0x20;
+      do {
+        if ((1 << (uVar9 & 0x3f) & uVar12) != 0) {
+          uVar8 = uVar8 + 1 & 0xff;
+        }
+        uVar9 = uVar9 + 1;
+        lVar13 = lVar13 + -1;
+      } while (lVar13 != 0);
+      trapWord(6,uVar6,0);
+      uVar7 = (uVar8 + uVar6) - 1;
+      uVar1 = (int)uVar7 / (int)uVar6;
+      trapWord(5,uVar6 & ~(((uVar7 & 0x7fffffff) << 1 | (uVar7 & 0xffffffff) >> 0x1f) - 1),0xffff);
+      if ((int)uVar1 < 5) {
+        pHVar4 = GetUsefulVariation(this->m_pEntryInHash,uVar12,(ulong)uVar8,(uint)bVar3,uVar1);
+        if (pHVar4 == (HACKED_VARIATION_LIST2 *)0x0) {
+          HVar5 = eOutOfMemory;
+        }
+        else {
+          if (pHVar4->pChild == (HACKED_SHADER_VARIATION *)0x0) {
+            HVar5 = GenerateAllRequiredShaderFlavors
+                              (this->m_pEntryInHash->m_pRehackingInfo,param_1,param_2,
+                               &this->m_pShaderHacker,uVar12,uVar1,(uint)bVar3,local_80);
+            this->m_pShaderHacker = (CShaderHacker *)0x0;
+            pHVar4->pChild = local_80[0];
+            for (; local_80[0] != (HACKED_SHADER_VARIATION *)0x0; local_80[0] = local_80[0]->m_pNext
+                ) {
+              pHVar4->m_RareInstructionsInserted =
+                   local_80[0]->m_RareInstructionsInserted | pHVar4->m_RareInstructionsInserted;
             }
-            else {
-              uVar15 = 7;
+            if (HVar5 != eSuccess) {
+              return HVar5;
             }
           }
-          else {
-            uVar15 = 2;
+          pHVar10 = pHVar4->pChild;
+          HVar5 = pHVar10->m_SuccessOrFailure;
+          if (HVar5 == eSuccess) {
+            uVar6 = 0;
+            if ((((int)uVar1 < 2) ||
+                (uVar6 = (ulonglong)
+                         (byte)(&g_RTRareInstructionInfo[uVar1 + 7].field_0x0)
+                               [(g_RTGlobal.m_pCommandBufferHacker)->m_FrameCount >> 2 & 0xf],
+                (&g_RTRareInstructionInfo[uVar1 + 7].field_0x0)
+                [(g_RTGlobal.m_pCommandBufferHacker)->m_FrameCount >> 2 & 0xf] != 3)) ||
+               (uVar1 != 3)) {
+              if ((int)uVar6 != 0) {
+                do {
+                  pHVar10 = pHVar10->m_pNext;
+                  uVar6 = uVar6 - 1;
+                } while (uVar6 != 0);
+              }
+              if (((pHVar10->m_ProgramControl).dword >> 8 & 0x3f) < (param_3.dword >> 4 & 0x7f)) {
+                if ((ulonglong)pHVar10->m_HackedMicrocodeSizeInDwords / 3 < (uVar11 & 0xffffffff)) {
+                  *param_7 = pHVar10;
+                  HVar5 = eSuccess;
+                }
+                else {
+                  HVar5 = eTooManyInstructions;
+                }
+              }
+              else {
+                HVar5 = eTooManyGPRs;
+              }
+            }
+            else {
+              HVar5 = eNotNecessary;
+            }
           }
         }
       }
       else {
-        uVar15 = 1;
+        HVar5 = eTooManyFetchConstants;
       }
-      goto LAB_82898bf0;
     }
   }
-  uVar15 = (ulonglong)HVar6;
-LAB_82898bf0:
-  HVar6 = __restgprlr_19(uVar15);
-  return HVar6;
+  return HVar5;
 }
 
 
@@ -3492,6 +3285,9 @@ void __thiscall D3D::HACKED_SHADER_VARIATION::Destroy(HACKED_SHADER_VARIATION *t
 
 // 82896308  GenerateVertexShaderInfoCB  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtshaderhacker.cpp:3749)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 undefined4
 D3D::CVertexShaderHashTable::GenerateVertexShaderInfoCB
           (ulong param_1,ulong param_2,GPUSHADER_INSTRUCTION *param_3,void *param_4)
@@ -3499,114 +3295,108 @@ D3D::CVertexShaderHashTable::GenerateVertexShaderInfoCB
 {
   ushort uVar1;
   ulong uVar2;
-  ulonglong uVar3;
-  undefined4 uVar4;
-  byte bVar6;
+  byte bVar4;
+  uint uVar3;
   uint uVar5;
-  uint uVar7;
   
-  uVar3 = __savegprlr_29(param_1,param_2);
-  if ((uVar3 & 2) == 0) goto LAB_82896518;
-  uVar7 = (param_3->FlowPair).dword[0];
-  uVar5 = uVar7 & 0x1f;
-  if ((uVar7 & 0x1f) == 0) {
-    if ((uVar3 & 0x10) == 0) {
+  if ((param_1 & 2) == 0) {
+    return 0;
+  }
+  uVar5 = (param_3->FlowPair).dword[0];
+  uVar3 = uVar5 & 0x1f;
+  if ((uVar5 & 0x1f) == 0) {
+    if ((param_1 & 0x10) == 0) {
       *(byte *)param_4 = *(byte *)param_4 | 4;
     }
     if (((param_3->FlowPair).dword[0] & 0x1f00000) == 0x1a00000) {
       *(byte *)param_4 = *(byte *)param_4 | 2;
     }
-    uVar7 = 1 << ((param_3->FlowPair).dword[0] >> 0x14 & 0x1f) | *(uint *)((int)param_4 + 4);
+    uVar5 = 1 << ((param_3->FlowPair).dword[0] >> 0x14 & 0x1f) | *(uint *)((int)param_4 + 4);
+    goto LAB_82896514;
+  }
+  uVar5 = 1 << (uVar5 >> 0x14 & 0x1f);
+  if (uVar3 == 1) {
+    uVar3 = (param_3->FlowPair).dword[1];
+    uVar3 = 1 << (uVar3 >> 9 & 7) | 1 << (uVar3 >> 6 & 7) | 1 << (uVar3 >> 3 & 7) | 1 << (uVar3 & 7)
+    ;
+    *(uint *)((int)param_4 + 0xc) =
+         *(uint *)((int)param_4 + 0xc) | -(uint)((uVar3 & 1) != 0) & uVar5;
+    *(uint *)((int)param_4 + 0x10) =
+         *(uint *)((int)param_4 + 0x10) | -(uint)((uVar3 & 2) != 0) & uVar5;
+    *(uint *)((int)param_4 + 0x18) =
+         *(uint *)((int)param_4 + 0x18) | -(uint)((uVar3 & 8) != 0) & uVar5;
+    *(uint *)((int)param_4 + 0x14) =
+         *(uint *)((int)param_4 + 0x14) | -(uint)((uVar3 & 4) != 0) & uVar5;
+    uVar1 = *(ushort *)((param_3->FlowPair).dword + 1) & 3;
+    if ((uVar1 == 2) || (uVar3 = uVar5, uVar1 == 3)) {
+      uVar3 = 0;
+    }
+    *(uint *)((int)param_4 + 0x20) = *(uint *)((int)param_4 + 0x20) | uVar3;
+    uVar2 = (param_3->FlowPair).dword[1];
+    *(uint *)((int)param_4 + 8) = *(uint *)((int)param_4 + 8) | uVar5;
+    *(uint *)((int)param_4 + 0x1c) =
+         *(uint *)((int)param_4 + 0x1c) | -(uint)((uVar2 & 0x30000) == 0x30000) & uVar5;
   }
   else {
-    uVar7 = 1 << (uVar7 >> 0x14 & 0x1f);
-    if (uVar5 == 1) {
-      uVar5 = (param_3->FlowPair).dword[1];
-      uVar5 = 1 << (uVar5 >> 9 & 7) | 1 << (uVar5 >> 6 & 7) | 1 << (uVar5 >> 3 & 7) |
-              1 << (uVar5 & 7);
-      *(uint *)((int)param_4 + 0xc) =
-           *(uint *)((int)param_4 + 0xc) | -(uint)((uVar5 & 1) != 0) & uVar7;
-      *(uint *)((int)param_4 + 0x10) =
-           *(uint *)((int)param_4 + 0x10) | -(uint)((uVar5 & 2) != 0) & uVar7;
-      *(uint *)((int)param_4 + 0x18) =
-           *(uint *)((int)param_4 + 0x18) | -(uint)((uVar5 & 8) != 0) & uVar7;
-      *(uint *)((int)param_4 + 0x14) =
-           *(uint *)((int)param_4 + 0x14) | -(uint)((uVar5 & 4) != 0) & uVar7;
-      uVar1 = *(ushort *)((param_3->FlowPair).dword + 1) & 3;
-      if ((uVar1 == 2) || (uVar5 = uVar7, uVar1 == 3)) {
-        uVar5 = 0;
-      }
-      *(uint *)((int)param_4 + 0x20) = *(uint *)((int)param_4 + 0x20) | uVar5;
-      uVar2 = (param_3->FlowPair).dword[1];
-      *(uint *)((int)param_4 + 8) = *(uint *)((int)param_4 + 8) | uVar7;
-      *(uint *)((int)param_4 + 0x1c) =
-           *(uint *)((int)param_4 + 0x1c) | -(uint)((uVar2 & 0x30000) == 0x30000) & uVar7;
+    if (uVar3 == 0x10) {
+      bVar4 = *(byte *)param_4 | 0x20;
+    }
+    else if (uVar3 == 0x13) {
+      bVar4 = *(byte *)param_4 | 0x40;
+    }
+    else if (uVar3 == 0x19) {
+      bVar4 = *(byte *)param_4 | 8;
     }
     else {
-      if (uVar5 == 0x10) {
-        bVar6 = *(byte *)param_4 | 0x20;
-      }
-      else if (uVar5 == 0x13) {
-        bVar6 = *(byte *)param_4 | 0x40;
-      }
-      else if (uVar5 == 0x19) {
-        bVar6 = *(byte *)param_4 | 8;
-      }
-      else {
-        if (uVar5 != 0x1a) goto LAB_828964ec;
-        bVar6 = *(byte *)param_4 | 0x10;
-      }
-      *(byte *)param_4 = bVar6;
+      if (uVar3 != 0x1a) goto LAB_828964ec;
+      bVar4 = *(byte *)param_4 | 0x10;
     }
-LAB_828964ec:
-    if (((param_3->FlowPair).dword[0] & 0x1f00000) == 0x1a00000) {
-      *(byte *)param_4 = *(byte *)param_4 | 2;
-    }
-    uVar7 = *(uint *)((int)param_4 + 4) | uVar7;
+    *(byte *)param_4 = bVar4;
   }
-  *(uint *)((int)param_4 + 4) = uVar7;
-LAB_82896518:
-  uVar4 = __restgprlr_29(0);
-  return uVar4;
+LAB_828964ec:
+  if (((param_3->FlowPair).dword[0] & 0x1f00000) == 0x1a00000) {
+    *(byte *)param_4 = *(byte *)param_4 | 2;
+  }
+  uVar5 = *(uint *)((int)param_4 + 4) | uVar5;
+LAB_82896514:
+  *(uint *)((int)param_4 + 4) = uVar5;
+  return 0;
 }
 
 
 // 82898E48  FindOrGetVertexShaderInfo  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtshaderhacker.cpp:3810)
+
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 
 HackFailureReason __thiscall
 D3D::CVertexShaderHashTable::FindOrGetVertexShaderInfo
           (CVertexShaderHashTable *this,ulong *param_1,ulong param_2,VERTEX_SHADER_INFO **param_3)
 
 {
-  int iVar3;
   ulong64 uVar1;
-  CVertexShaderHashEntry *pCVar4;
-  undefined8 uVar2;
-  HackFailureReason HVar5;
-  ulonglong uVar6;
+  CVertexShaderHashEntry *pCVar2;
+  HackFailureReason HVar3;
   void *in_stack_ffffff88;
   
-  uVar6 = (ulonglong)(int)param_2;
-  iVar3 = __savegprlr_28(this);
   *param_3 = (VERTEX_SHADER_INFO *)0x0;
-  uVar1 = GetShaderHash(param_1,(ulong)uVar6);
-  pCVar4 = CTSSortedList<D3D::CVertexShaderHashEntry,unsigned___int64,&D3D::RTDebugMemAlloc,&D3D::RTDebugMemFree>
-           ::FindOrAdd((void *)(((uint)((uVar1 & 0xffffffff) << 2) & 0x3fc) + iVar3),uVar1);
-  if (pCVar4 == (CVertexShaderHashEntry *)0x0) {
-    uVar2 = 9;
+  uVar1 = GetShaderHash(param_1,param_2);
+  pCVar2 = CTSSortedList<D3D::CVertexShaderHashEntry,unsigned___int64,&D3D::RTDebugMemAlloc,&D3D::RTDebugMemFree>
+           ::FindOrAdd(&this->field_0x0 + ((uint)((uVar1 & 0xffffffff) << 2) & 0x3fc),uVar1);
+  if (pCVar2 == (CVertexShaderHashEntry *)0x0) {
+    HVar3 = eOutOfMemory;
   }
   else {
-    if (pCVar4->m_bCachedEntry == false) {
+    if (pCVar2->m_bCachedEntry == false) {
       XMicrocodeShaderForEachInstruction
-                (param_1,(uint)((uVar6 & 0xffffffff) << 2),(ulong *)0x0,0,(ulong *)0x0,(ulong *)0x0,
-                 0x22,GenerateVertexShaderInfoCB,in_stack_ffffff88);
-      pCVar4->m_bCachedEntry = true;
+                (param_1,param_2 << 2,(ulong *)0x0,0,(ulong *)0x0,(ulong *)0x0,0x22,
+                 GenerateVertexShaderInfoCB,in_stack_ffffff88);
+      pCVar2->m_bCachedEntry = true;
     }
-    *param_3 = &pCVar4->m_VertexShaderInfo;
-    uVar2 = 0;
+    *param_3 = &pCVar2->m_VertexShaderInfo;
+    HVar3 = eSuccess;
   }
-  HVar5 = __restgprlr_28(uVar2);
-  return HVar5;
+  return HVar3;
 }
 
 

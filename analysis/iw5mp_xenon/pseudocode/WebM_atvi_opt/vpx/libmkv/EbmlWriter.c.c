@@ -56,43 +56,39 @@ void Ebml_WriteLen(EbmlGlobal *param_1,long64 param_2)
 
 // 8280ED78  Ebml_WriteString  (WebM_atvi_opt/vpx/libmkv/EbmlWriter.c:61)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void Ebml_WriteString(EbmlGlobal *param_1,char *param_2)
 
 {
-  EbmlGlobal *pEVar1;
-  longlong lVar2;
-  char *pcVar5;
-  longlong lVar3;
-  ulonglong uVar4;
+  char cVar1;
+  char *pcVar2;
   
-  lVar2 = (longlong)(int)param_2;
-  pEVar1 = (EbmlGlobal *)__savegprlr_29(param_1);
-  lVar3 = lVar2;
+  pcVar2 = param_2;
   do {
-    pcVar5 = (char *)lVar3;
-    lVar3 = lVar3 + 1;
-  } while (*pcVar5 != '\0');
-  uVar4 = (lVar3 - lVar2) - 1;
-  Ebml_WriteLen(pEVar1,uVar4 & 0xffffffff);
-  Ebml_Write(pEVar1,(void *)lVar2,(ulong)uVar4);
-  __restgprlr_29();
+    cVar1 = *pcVar2;
+    pcVar2 = pcVar2 + 1;
+  } while (cVar1 != '\0');
+  Ebml_WriteLen(param_1,ZEXT48(pcVar2 + (-1 - (int)param_2)));
+  Ebml_Write(param_1,param_2,(ulong)(pcVar2 + (-1 - (int)param_2)));
   return;
 }
 
 
 // 8280EDD0  Ebml_WriteUTF8  (WebM_atvi_opt/vpx/libmkv/EbmlWriter.c:71)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void Ebml_WriteUTF8(EbmlGlobal *param_1,wchar_t *param_2)
 
 {
-  EbmlGlobal *pEVar1;
-  uint uVar2;
+  uint uVar1;
   
-  pEVar1 = (EbmlGlobal *)__savegprlr_29(param_1);
-  uVar2 = wcslen(param_2);
-  Ebml_WriteLen(pEVar1,(ulonglong)uVar2);
-  Ebml_Write(pEVar1,param_2,uVar2);
-  __restgprlr_29();
+  uVar1 = wcslen(param_2);
+  Ebml_WriteLen(param_1,(ulonglong)uVar1);
+  Ebml_Write(param_1,param_2,uVar1);
   return;
 }
 
@@ -184,74 +180,66 @@ void Ebml_SerializeUnsigned(EbmlGlobal *param_1,ulong param_2,ulong param_3)
 
 // 8280F000  Ebml_SerializeBinary  (WebM_atvi_opt/vpx/libmkv/EbmlWriter.c:133)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void Ebml_SerializeBinary(EbmlGlobal *param_1,ulong param_2,ulong param_3)
 
 {
-  EbmlGlobal *pEVar1;
-  ulonglong uVar2;
-  ulonglong uVar3;
-  ulong uVar4;
-  longlong lVar5;
-  int iVar6;
-  undefined1 uStack0000001c;
-  undefined1 uStack0000001d;
-  undefined1 uStack0000001e;
-  undefined1 uStack0000001f;
-  uint uStack00000024;
+  ulong uVar1;
+  longlong lVar2;
+  int iVar3;
+  ulong uStack0000001c;
+  ulong uStack00000024;
   uint local_40 [16];
   
-  uVar3 = (ulonglong)(int)param_3;
-  uVar2 = (ulonglong)(int)param_2;
-  pEVar1 = (EbmlGlobal *)__savegprlr_27(param_1);
-  uStack00000024 = (uint)uVar3;
-  iVar6 = 4;
-  lVar5 = 0x18;
+  iVar3 = 4;
+  lVar2 = 0x18;
   do {
-    if (((uint)(0xff << ((uint)lVar5 & 0x3f)) & uVar3) != 0) break;
-    lVar5 = lVar5 + -8;
-    iVar6 = iVar6 + -1;
-  } while (0 < lVar5);
-  if ((uVar2 & 0xffffffff) < 0x1000000) {
-    if ((uVar2 & 0xffffffff) < 0x10000) {
-      uVar4 = 2;
-      if ((uVar2 & 0xffffffff) < 0x100) {
-        uVar4 = 1;
+    if ((0xff << ((uint)lVar2 & 0x3f) & param_3) != 0) break;
+    lVar2 = lVar2 + -8;
+    iVar3 = iVar3 + -1;
+  } while (0 < lVar2);
+  if (param_2 < 0x1000000) {
+    if (param_2 < 0x10000) {
+      uVar1 = 2;
+      if (param_2 < 0x100) {
+        uVar1 = 1;
       }
     }
     else {
-      uVar4 = 3;
+      uVar1 = 3;
     }
   }
   else {
-    uVar4 = 4;
+    uVar1 = 4;
   }
-  uStack0000001f = (undefined1)uVar2;
-  uStack0000001e = (undefined1)(uVar2 >> 8);
-  uStack0000001d = (undefined1)(uVar2 >> 0x10);
-  uStack0000001c = (undefined1)(uVar2 >> 0x18);
-  local_40[0] = CONCAT31(CONCAT21(CONCAT11(uStack0000001f,uStack0000001e),uStack0000001d),
-                         uStack0000001c);
-  _uStack0000001c = (int)uVar2;
-  Ebml_Serialize(pEVar1,local_40,uVar4);
-  Ebml_WriteLen(pEVar1,(longlong)iVar6);
-  if ((uVar3 & 0xffffffff) < 0x1000000) {
-    if ((uVar3 & 0xffffffff) < 0x10000) {
-      uVar4 = 2;
-      if ((uVar3 & 0xffffffff) < 0x100) {
-        uVar4 = 1;
+  uStack0000001c._3_1_ = (undefined1)param_2;
+  uStack0000001c._2_1_ = (undefined1)(param_2 >> 8);
+  uStack0000001c._1_1_ = (undefined1)(param_2 >> 0x10);
+  local_40[0] = (uint)CONCAT21(CONCAT11((undefined1)uStack0000001c,uStack0000001c._2_1_),
+                               uStack0000001c._1_1_) << 8 | param_2 >> 0x18;
+  uStack0000001c = param_2;
+  uStack00000024 = param_3;
+  Ebml_Serialize(param_1,local_40,uVar1);
+  Ebml_WriteLen(param_1,(longlong)iVar3);
+  if (param_3 < 0x1000000) {
+    if (param_3 < 0x10000) {
+      uVar1 = 2;
+      if (param_3 < 0x100) {
+        uVar1 = 1;
       }
     }
     else {
-      uVar4 = 3;
+      uVar1 = 3;
     }
   }
   else {
-    uVar4 = 4;
+    uVar1 = 4;
   }
   local_40[0] = (uint)CONCAT21(CONCAT11((undefined1)uStack00000024,uStack00000024._2_1_),
                                uStack00000024._1_1_) << 8 | uStack00000024 >> 0x18;
-  Ebml_Serialize(pEVar1,local_40,uVar4);
-  __restgprlr_27();
+  Ebml_Serialize(param_1,local_40,uVar1);
   return;
 }
 
@@ -299,63 +287,56 @@ void Ebml_WriteSigned16(EbmlGlobal *param_1,short param_2)
 
 // 8280F220  Ebml_SerializeString  (WebM_atvi_opt/vpx/libmkv/EbmlWriter.c:164)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void Ebml_SerializeString(EbmlGlobal *param_1,ulong param_2,char *param_3)
 
 {
-  EbmlGlobal *pEVar1;
-  longlong lVar2;
-  char *pcVar5;
-  longlong lVar3;
-  ulonglong uVar4;
+  char cVar1;
+  char *pcVar2;
   
-  lVar2 = (longlong)(int)param_3;
-  pEVar1 = (EbmlGlobal *)__savegprlr_29(param_1);
-  Ebml_WriteID(pEVar1,param_2);
-  lVar3 = lVar2;
+  Ebml_WriteID(param_1,param_2);
+  pcVar2 = param_3;
   do {
-    pcVar5 = (char *)lVar3;
-    lVar3 = lVar3 + 1;
-  } while (*pcVar5 != '\0');
-  uVar4 = (lVar3 - lVar2) - 1;
-  Ebml_WriteLen(pEVar1,uVar4 & 0xffffffff);
-  Ebml_Write(pEVar1,(void *)lVar2,(ulong)uVar4);
-  __restgprlr_29();
+    cVar1 = *pcVar2;
+    pcVar2 = pcVar2 + 1;
+  } while (cVar1 != '\0');
+  Ebml_WriteLen(param_1,ZEXT48(pcVar2 + (-1 - (int)param_3)));
+  Ebml_Write(param_1,param_3,(ulong)(pcVar2 + (-1 - (int)param_3)));
   return;
 }
 
 
 // 8280F280  Ebml_SerializeUTF8  (WebM_atvi_opt/vpx/libmkv/EbmlWriter.c:170)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void Ebml_SerializeUTF8(EbmlGlobal *param_1,ulong param_2,ushort *param_3)
 
 {
-  EbmlGlobal *pEVar1;
-  uint uVar2;
+  uint uVar1;
   
-  pEVar1 = (EbmlGlobal *)__savegprlr_29(param_1);
-  Ebml_WriteID(pEVar1,param_2);
-  uVar2 = wcslen((wchar_t *)param_3);
-  Ebml_WriteLen(pEVar1,(ulonglong)uVar2);
-  Ebml_Write(pEVar1,param_3,uVar2);
-  __restgprlr_29();
+  Ebml_WriteID(param_1,param_2);
+  uVar1 = wcslen((wchar_t *)param_3);
+  Ebml_WriteLen(param_1,(ulonglong)uVar1);
+  Ebml_Write(param_1,param_3,uVar1);
   return;
 }
 
 
 // 8280F2C8  Ebml_SerializeData  (WebM_atvi_opt/vpx/libmkv/EbmlWriter.c:176)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void Ebml_SerializeData(EbmlGlobal *param_1,ulong param_2,uchar *param_3,ulong param_4)
 
 {
-  EbmlGlobal *pEVar1;
-  ulonglong uVar2;
-  
-  uVar2 = (ulonglong)(int)param_4;
-  pEVar1 = (EbmlGlobal *)__savegprlr_29(param_1);
-  Ebml_WriteID(pEVar1,param_2);
-  Ebml_WriteLen(pEVar1,uVar2 & 0xffffffff);
-  Ebml_Write(pEVar1,param_3,(ulong)uVar2);
-  __restgprlr_29();
+  Ebml_WriteID(param_1,param_2);
+  Ebml_WriteLen(param_1,(ulonglong)param_4);
+  Ebml_Write(param_1,param_3,param_4);
   return;
 }
 

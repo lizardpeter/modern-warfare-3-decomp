@@ -2,23 +2,23 @@
 
 // 82259380  mp_mulmod  (line unknown)
 
-void mp_mulmod(undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4)
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
+undefined8 mp_mulmod(undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4)
 
 {
   undefined8 uVar1;
-  undefined8 uVar2;
   undefined1 auStack_40 [64];
   
-  uVar1 = __savegprlr_28();
-  uVar2 = mp_init(auStack_40);
-  if ((int)uVar2 == 0) {
-    uVar2 = mp_mul(uVar1,param_2,auStack_40);
-    if ((int)uVar2 == 0) {
-      uVar2 = mp_mod(auStack_40,param_3,param_4);
+  uVar1 = mp_init(auStack_40);
+  if ((int)uVar1 == 0) {
+    uVar1 = mp_mul(param_1,param_2,auStack_40);
+    if ((int)uVar1 == 0) {
+      uVar1 = mp_mod(auStack_40,param_3,param_4);
     }
     mp_clear(auStack_40);
   }
-  __restgprlr_28(uVar2);
-  return;
+  return uVar1;
 }
 

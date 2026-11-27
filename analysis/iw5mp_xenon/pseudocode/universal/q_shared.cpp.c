@@ -107,65 +107,60 @@ char * Com_GetFilenameSubString(char *param_1)
 
 // 8260B3F8  Com_AssembleFilepath  (universal/q_shared.cpp:233)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
+
 void Com_AssembleFilepath(char *param_1,char *param_2,char *param_3,char *param_4,int param_5)
 
 {
   char cVar1;
   char *pcVar2;
-  ulonglong uVar3;
-  ulonglong uVar4;
-  char *pcVar7;
-  char *pcVar8;
-  ulonglong uVar5;
-  ulonglong uVar6;
+  char *pcVar3;
+  char *pcVar4;
   
-  uVar5 = (ulonglong)(int)param_4;
-  uVar4 = (ulonglong)(int)param_3;
-  uVar3 = (ulonglong)(int)param_2;
-  pcVar2 = (char *)__savegprlr_24(param_1);
-  if (pcVar2 == (char *)0x0) {
+  if (param_1 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\q_shared.cpp",0xee,0
                     ,"%s");
   }
-  if ((uVar3 & 0xffffffff) == 0) {
+  if (param_2 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\q_shared.cpp",0xef,0
                     ,"%s");
   }
-  if ((uVar4 & 0xffffffff) == 0) {
+  if (param_3 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\q_shared.cpp",0xf0,0
                     ,"%s");
   }
-  if ((uVar5 & 0xffffffff) == 0) {
+  if (param_4 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\q_shared.cpp",0xf1,0
                     ,"%s");
   }
-  pcVar7 = pcVar2;
+  pcVar2 = param_1;
   if (param_5 < 1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\q_shared.cpp",0xf2,0
                     ,"%s");
   }
   do {
-    cVar1 = *pcVar7;
-    pcVar7 = pcVar7 + 1;
+    cVar1 = *pcVar2;
+    pcVar2 = pcVar2 + 1;
   } while (cVar1 != '\0');
-  uVar5 = uVar3;
+  pcVar3 = param_2;
   do {
-    pcVar8 = (char *)uVar5;
-    uVar5 = uVar5 + 1;
-  } while (*pcVar8 != '\0');
-  uVar6 = uVar4;
+    cVar1 = *pcVar3;
+    pcVar3 = pcVar3 + 1;
+  } while (cVar1 != '\0');
+  pcVar4 = param_3;
   do {
-    pcVar8 = (char *)uVar6;
-    uVar6 = uVar6 + 1;
-  } while (*pcVar8 != '\0');
+    cVar1 = *pcVar4;
+    pcVar4 = pcVar4 + 1;
+  } while (cVar1 != '\0');
   if (param_5 <=
-      (int)(pcVar7 + ((int)uVar6 - (int)uVar4) + ((int)uVar5 - (int)uVar3) + (-3 - (int)pcVar2))) {
+      (int)(pcVar2 + (int)(pcVar3 + (int)(pcVar4 + (-3 - (int)param_1) +
+                                                   (-(int)param_3 - (int)param_2))))) {
     Com_Error(ERR_DROP,"filepath \'%s%s%s\' is longer than %i characters");
   }
   memcpy();
   memcpy();
   memcpy();
-  __restgprlr_24();
   return;
 }
 
@@ -254,40 +249,39 @@ void Com_StripFilename(char *param_1,char *param_2)
 
 // 8260F028  Com_DefaultExtension  (universal/q_shared.cpp:327)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void Com_DefaultExtension(char *param_1,int param_2,char *param_3)
 
 {
   char cVar1;
   char *pcVar2;
   char *pcVar3;
-  longlong lVar4;
-  char *pcVar5;
   char acStack_60 [63];
   undefined1 local_21;
   
-  lVar4 = (longlong)param_2;
-  pcVar3 = (char *)__savegprlr_29(param_1,lVar4,param_3);
-  pcVar2 = pcVar3;
+  pcVar2 = param_1;
   do {
-    pcVar5 = pcVar2;
-    pcVar2 = pcVar5 + 1;
-  } while (*pcVar5 != '\0');
-  pcVar5 = pcVar5 + -1;
-  cVar1 = *pcVar5;
-  while ((cVar1 != '/' && (pcVar5 != pcVar3))) {
-    if (cVar1 == '.') goto LAB_8260f0f8;
-    pcVar5 = pcVar5 + -1;
-    cVar1 = *pcVar5;
+    pcVar3 = pcVar2;
+    pcVar2 = pcVar3 + 1;
+  } while (*pcVar3 != '\0');
+  pcVar3 = pcVar3 + -1;
+  cVar1 = *pcVar3;
+  while ((cVar1 != '/' && (pcVar3 != param_1))) {
+    if (cVar1 == '.') {
+      return;
+    }
+    pcVar3 = pcVar3 + -1;
+    cVar1 = *pcVar3;
   }
-  if (pcVar3 == (char *)0x0) {
+  if (param_1 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\q_shared.cpp",0x2c5,
                     0,"%s");
   }
-  strncpy(acStack_60,pcVar3,0x3f);
+  strncpy(acStack_60,param_1,0x3f);
   local_21 = 0;
-  pcVar3 = (char *)Com_sprintf(pcVar3,(int)lVar4,"%s%s");
-LAB_8260f0f8:
-  __restgprlr_29(pcVar3);
+  Com_sprintf(param_1,param_2,"%s%s");
   return;
 }
 
@@ -336,32 +330,30 @@ int BigLong(int param_1)
 
 // 8260B770  BigLongArray  (universal/q_shared.cpp:392)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void BigLongArray(int *param_1,int *param_2,uint param_3)
 
 {
   int iVar1;
-  int *piVar2;
-  int iVar3;
-  ulonglong uVar4;
-  ulonglong uVar5;
+  int iVar2;
+  longlong lVar3;
   
-  uVar5 = (ulonglong)(int)param_3;
-  uVar4 = (ulonglong)(int)param_2;
-  piVar2 = (int *)__savegprlr_29(param_1);
-  if ((piVar2 == (int *)0x0) || ((uVar4 & 0xffffffff) == 0)) {
+  lVar3 = (longlong)(int)param_3;
+  if ((param_1 == (int *)0x0) || (param_2 == (int *)0x0)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\q_shared.cpp",0x18b,
                     0,"%s");
   }
-  if ((uVar5 & 0xffffffff) != 0) {
-    iVar1 = (int)uVar4 - (int)piVar2;
+  if (param_3 != 0) {
+    iVar1 = (int)param_2 - (int)param_1;
     do {
-      iVar3 = (*_BigLong)(*(int *)(iVar1 + (int)piVar2));
-      *piVar2 = iVar3;
-      uVar5 = uVar5 - 1;
-      piVar2 = piVar2 + 1;
-    } while (uVar5 != 0);
+      iVar2 = (*_BigLong)(*(int *)(iVar1 + (int)param_1));
+      *param_1 = iVar2;
+      lVar3 = lVar3 + -1;
+      param_1 = param_1 + 1;
+    } while (lVar3 != 0);
   }
-  __restgprlr_29();
   return;
 }
 
@@ -741,20 +733,17 @@ LAB_8260bcd4:
 
 // 8260BD00  I_strncpyz  (universal/q_shared.cpp:708)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void I_strncpyz(char *param_1,char *param_2,int param_3)
 
 {
-  char *pcVar1;
-  char *pcVar2;
-  ulonglong uVar3;
-  
-  uVar3 = (ulonglong)(int)param_2;
-  pcVar1 = (char *)__savegprlr_27(param_1);
-  if ((uVar3 & 0xffffffff) == 0) {
+  if (param_2 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\q_shared.cpp",0x2c5,
                     0,"%s");
   }
-  if (pcVar1 == (char *)0x0) {
+  if (param_1 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\q_shared.cpp",0x2c6,
                     0,"%s");
   }
@@ -762,9 +751,8 @@ void I_strncpyz(char *param_1,char *param_2,int param_3)
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\q_shared.cpp",0x2c7,
                     0,"%s\n\t(destsize) = %i");
   }
-  pcVar2 = strncpy(pcVar1,(char *)uVar3,param_3 - 1);
-  (pcVar1 + param_3)[-1] = '\0';
-  __restgprlr_27(pcVar2);
+  strncpy(param_1,param_2,param_3 - 1);
+  param_1[param_3 + -1] = '\0';
   return;
 }
 
@@ -854,79 +842,77 @@ int I_strncmp(char *param_1,char *param_2,int param_3)
 
 // 8260BEB0  I_stristr  (universal/q_shared.cpp:770)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 char * I_stristr(char *param_1,char *param_2)
 
 {
   char *pcVar1;
   char cVar2;
-  char *pcVar3;
+  int iVar3;
   int iVar4;
   int iVar5;
-  ulonglong uVar6;
-  int iVar7;
-  int iVar8;
+  int iVar6;
   
-  uVar6 = (ulonglong)(int)param_2;
-  pcVar3 = (char *)__savegprlr_26(param_1);
-  if (pcVar3 == (char *)0x0) {
+  if (param_1 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\q_shared.cpp",0x306,
                     0,"%s");
   }
-  if ((uVar6 & 0xffffffff) == 0) {
+  if (param_2 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\q_shared.cpp",0x307,
                     0,"%s");
   }
-  cVar2 = *pcVar3;
-  iVar7 = 0;
-  pcVar1 = pcVar3;
+  cVar2 = *param_1;
+  iVar5 = 0;
+  pcVar1 = param_1;
   do {
     if (cVar2 == '\0') {
-      pcVar3 = (char *)__restgprlr_26(0);
-      return pcVar3;
+      return (char *)0x0;
     }
-    iVar8 = -1;
+    iVar6 = -1;
     do {
-      iVar8 = iVar8 + 1;
-      if (*(char *)(iVar8 + (int)uVar6) == '\0') {
-        pcVar3 = (char *)__restgprlr_26(pcVar3 + iVar7);
-        return pcVar3;
+      iVar6 = iVar6 + 1;
+      if (param_2[iVar6] == '\0') {
+        return param_1 + iVar5;
       }
-      iVar4 = tolower((int)pcVar1[iVar8]);
-      iVar5 = tolower((int)*(char *)(iVar8 + (int)uVar6));
-    } while (iVar4 == iVar5);
+      iVar3 = tolower((int)pcVar1[iVar6]);
+      iVar4 = tolower((int)param_2[iVar6]);
+    } while (iVar3 == iVar4);
     pcVar1 = pcVar1 + 1;
     cVar2 = *pcVar1;
-    iVar7 = iVar7 + 1;
+    iVar5 = iVar5 + 1;
   } while( true );
 }
 
 
 // 8260BF90  I_stricmp  (universal/q_shared.cpp:794)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 int I_stricmp(char *param_1,char *param_2)
 
 {
-  char *pcVar1;
-  int iVar2;
-  ulonglong uVar3;
+  int iVar1;
   
-  uVar3 = (ulonglong)(int)param_2;
-  pcVar1 = (char *)__savegprlr_28(param_1);
-  if (pcVar1 == (char *)0x0) {
+  if (param_1 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\q_shared.cpp",0x31b,
                     0,"%s");
   }
-  if ((uVar3 & 0xffffffff) == 0) {
+  if (param_2 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\q_shared.cpp",0x31c,
                     0,"%s");
   }
-  iVar2 = I_strnicmp(pcVar1,(char *)uVar3,0x7fffffff);
-  iVar2 = __restgprlr_28(iVar2);
-  return iVar2;
+  iVar1 = I_strnicmp(param_1,param_2,0x7fffffff);
+  return iVar1;
 }
 
 
 // 8260C018  I_strcmp  (universal/q_shared.cpp:803)
+
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 
 int I_strcmp(char *param_1,char *param_2)
 
@@ -936,96 +922,84 @@ int I_strcmp(char *param_1,char *param_2)
   char cVar3;
   int iVar4;
   int iVar5;
-  int iVar6;
-  ulonglong uVar7;
   
-  uVar7 = (ulonglong)(int)param_2;
-  iVar5 = __savegprlr_28(param_1);
-  if (iVar5 == 0) {
+  if (param_1 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\q_shared.cpp",0x324,
                     0,"%s");
   }
-  if ((uVar7 & 0xffffffff) == 0) {
+  if (param_2 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\q_shared.cpp",0x325,
                     0,"%s");
   }
-  iVar6 = 0x7fffffff;
-  iVar4 = (int)uVar7;
-  do {
-    cVar3 = ((char *)uVar7)[iVar5 - iVar4];
-    bVar1 = iVar6 == 0;
-    cVar2 = *(char *)uVar7;
-    uVar7 = uVar7 + 1;
-    iVar6 = iVar6 + -1;
-    if (bVar1) break;
-    if (cVar3 != cVar2) {
-      if (cVar3 < cVar2) {
-        iVar5 = __restgprlr_28(0xffffffffffffffff);
-        return iVar5;
-      }
-      iVar5 = __restgprlr_28(1);
-      return iVar5;
+  iVar5 = 0x7fffffff;
+  iVar4 = (int)param_1 - (int)param_2;
+  while( true ) {
+    cVar3 = param_2[iVar4];
+    bVar1 = iVar5 == 0;
+    cVar2 = *param_2;
+    param_2 = param_2 + 1;
+    iVar5 = iVar5 + -1;
+    if (bVar1) {
+      return 0;
     }
-  } while (cVar3 != '\0');
-  iVar5 = __restgprlr_28(0);
-  return iVar5;
+    if (cVar3 != cVar2) break;
+    if (cVar3 == '\0') {
+      return 0;
+    }
+  }
+  if (cVar2 <= cVar3) {
+    return 1;
+  }
+  return -1;
 }
 
 
 // 8260C0F0  I_stricmpwild  (universal/q_shared.cpp:811)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 int I_stricmpwild(char *param_1,char *param_2)
 
 {
   char cVar1;
-  char *pcVar3;
+  char cVar2;
+  int iVar3;
   int iVar4;
-  undefined8 uVar2;
-  int iVar5;
-  char *pcVar7;
-  ulonglong uVar6;
   
-  uVar6 = (ulonglong)(int)param_2;
-  pcVar3 = (char *)__savegprlr_28(param_1);
-  if (pcVar3 == (char *)0x0) {
+  if (param_1 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\q_shared.cpp",0x330,
                     0,"%s");
   }
-  if ((uVar6 & 0xffffffff) == 0) {
+  if (param_2 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\q_shared.cpp",0x331,
                     0,"%s");
   }
   do {
-    cVar1 = *pcVar3;
-    pcVar7 = (char *)uVar6;
+    cVar1 = *param_1;
     if (cVar1 == 0x2a) {
-      if ((pcVar3[1] == '\0') ||
-         ((*pcVar7 != '\0' && (iVar4 = I_stricmpwild(pcVar3,pcVar7 + 1), iVar4 == 0)))) {
-        uVar2 = 0;
-LAB_8260c1a0:
-        iVar4 = __restgprlr_28(uVar2);
-        return iVar4;
+      if ((param_1[1] == '\0') ||
+         ((*param_2 != '\0' && (iVar3 = I_stricmpwild(param_1,param_2 + 1), iVar3 == 0)))) {
+        return 0;
       }
     }
     else {
-      uVar6 = uVar6 + 1;
-      if (((int)cVar1 != (int)*pcVar7) && (cVar1 != '?')) {
-        iVar4 = tolower((int)*pcVar7);
-        iVar5 = tolower((int)cVar1);
-        if ((longlong)iVar5 - (longlong)iVar4 != 0) {
-          uVar2 = 0xffffffffffffffff;
-          if (-1 < (int)((longlong)iVar5 - (longlong)iVar4)) {
-            iVar4 = __restgprlr_28(1);
-            return iVar4;
+      cVar2 = *param_2;
+      param_2 = param_2 + 1;
+      if (((int)cVar1 != (int)cVar2) && (cVar1 != '?')) {
+        iVar3 = tolower((int)cVar2);
+        iVar4 = tolower((int)cVar1);
+        if ((longlong)iVar4 - (longlong)iVar3 != 0) {
+          if ((int)((longlong)iVar4 - (longlong)iVar3) < 0) {
+            return -1;
           }
-          goto LAB_8260c1a0;
+          return 1;
         }
       }
     }
-    pcVar3 = pcVar3 + 1;
+    param_1 = param_1 + 1;
     if (cVar1 == '\0') {
-      iVar4 = __restgprlr_28(0);
-      return iVar4;
+      return 0;
     }
   } while( true );
 }
@@ -1100,31 +1074,29 @@ int I_iscsym(int param_1)
 
 // 8260C300  I_strncat  (universal/q_shared.cpp:891)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void I_strncat(char *param_1,int param_2,char *param_3)
 
 {
   char cVar1;
   char *pcVar2;
-  ulonglong uVar3;
-  char *pcVar4;
   
-  uVar3 = (ulonglong)param_2;
-  pcVar2 = (char *)__savegprlr_28(param_1);
-  pcVar4 = pcVar2;
-  if ((uVar3 & 0xffffffff) == 4) {
+  pcVar2 = param_1;
+  if (param_2 == 4) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\q_shared.cpp",0x37e,
                     0,"%s");
   }
   do {
-    cVar1 = *pcVar4;
-    pcVar4 = pcVar4 + 1;
+    cVar1 = *pcVar2;
+    pcVar2 = pcVar2 + 1;
   } while (cVar1 != '\0');
-  pcVar4 = pcVar4 + (-1 - (int)pcVar2);
-  if ((int)uVar3 <= (int)pcVar4) {
+  pcVar2 = pcVar2 + (-1 - (int)param_1);
+  if (param_2 <= (int)pcVar2) {
     Com_Error(ERR_FATAL,"\x15I_strncat: already overflowed");
   }
-  I_strncpyz(pcVar2 + (int)pcVar4,param_3,(int)uVar3 - (int)pcVar4);
-  __restgprlr_28();
+  I_strncpyz(param_1 + (int)pcVar2,param_3,param_2 - (int)pcVar2);
   return;
 }
 
@@ -1230,33 +1202,31 @@ int Com_sprintf(char *param_1,int param_2,char *param_3)
 
 // 8260C550  Com_sprintfPos  (universal/q_shared.cpp:997)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 int Com_sprintfPos(char *param_1,int param_2,int *param_3,char *param_4)
 
 {
   int iVar1;
-  int iVar2;
+  uint uVar2;
   uint uVar3;
-  uint uVar4;
   char *pcStack0000002c;
   
-  pcStack0000002c = param_4;
-  iVar1 = __savegprlr_28(param_1);
-  iVar2 = *param_3;
-  if (param_2 + -1 <= iVar2) {
-    iVar2 = __restgprlr_28(0xffffffffffffffff);
-    return iVar2;
+  iVar1 = *param_3;
+  if (param_2 + -1 <= iVar1) {
+    return -1;
   }
-  uVar4 = param_2 - iVar2;
-  uVar3 = _vsnprintf((char *)(iVar2 + iVar1),uVar4,pcStack0000002c,&stack0x00000030);
-  ((char *)(iVar2 + iVar1))[uVar4 - 1] = '\0';
-  if ((uVar3 != uVar4) && (uVar3 != 0xffffffff)) {
-    *param_3 = *param_3 + uVar3;
-    iVar2 = __restgprlr_28();
-    return iVar2;
+  uVar3 = param_2 - iVar1;
+  pcStack0000002c = param_4;
+  uVar2 = _vsnprintf(param_1 + iVar1,uVar3,param_4,&stack0x00000030);
+  (param_1 + iVar1)[uVar3 - 1] = '\0';
+  if ((uVar2 != uVar3) && (uVar2 != 0xffffffff)) {
+    *param_3 = *param_3 + uVar2;
+    return uVar2;
   }
   *param_3 = param_2 + -1;
-  iVar2 = __restgprlr_28();
-  return iVar2;
+  return uVar2;
 }
 
 
@@ -1332,93 +1302,90 @@ char * vtos(float *param_1)
 
 // 8260C808  Info_ValueForKey  (universal/q_shared.cpp:1179)
 
+/* WARNING: Function: __savegprlr_20 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_20 replaced with injection: xenon_save_restore */
+
 char * Info_ValueForKey(char *param_1,char *param_2)
 
 {
-  char *pcVar1;
-  bool bVar3;
-  int iVar2;
-  ulonglong uVar4;
-  char cVar5;
-  char *pcVar6;
-  char (*pacVar7) [8192];
-  char (*pacVar8) [8192];
+  bool bVar2;
+  int iVar1;
+  char cVar3;
+  char *pcVar4;
+  char (*pacVar5) [8192];
+  char (*pacVar6) [8192];
   char local_2070 [8304];
   
-  uVar4 = (ulonglong)(int)param_2;
-  pcVar1 = (char *)__savegprlr_20(param_1);
-  if ((pcVar1 != (char *)0x0) && ((uVar4 & 0xffffffff) != 0)) {
+  if ((param_1 != (char *)0x0) && (param_2 != (char *)0x0)) {
     valueindex = valueindex ^ 1;
-    if (*pcVar1 == '\\') {
-      pcVar1 = pcVar1 + 1;
+    if (*param_1 == '\\') {
+      param_1 = param_1 + 1;
     }
     do {
-      cVar5 = *pcVar1;
-      pcVar6 = local_2070;
-      if (cVar5 != '\\') {
-        iVar2 = 0;
+      cVar3 = *param_1;
+      pcVar4 = local_2070;
+      if (cVar3 != '\\') {
+        iVar1 = 0;
         do {
-          if (cVar5 == '\0') goto LAB_8260c9e4;
-          iVar2 = iVar2 + 1;
-          *pcVar6 = cVar5;
-          pcVar6 = pcVar6 + 1;
-          pcVar1 = pcVar1 + 1;
-          if (0x1fff < iVar2) {
+          if (cVar3 == '\0') goto LAB_8260c9e4;
+          iVar1 = iVar1 + 1;
+          *pcVar4 = cVar3;
+          pcVar4 = pcVar4 + 1;
+          param_1 = param_1 + 1;
+          if (0x1fff < iVar1) {
             Com_Error(ERR_DROP,"\x15Info_ValueForKey: oversize key %d");
           }
-          cVar5 = *pcVar1;
-        } while (cVar5 != '\\');
+          cVar3 = *param_1;
+        } while (cVar3 != '\\');
       }
-      *pcVar6 = '\0';
-      pcVar1 = pcVar1 + 1;
-      bVar3 = Sys_IsMainThread();
-      if (bVar3) {
-        pacVar7 = value1[0] + valueindex;
+      *pcVar4 = '\0';
+      pcVar4 = param_1 + 1;
+      bVar2 = Sys_IsMainThread();
+      if (bVar2) {
+        pacVar5 = value1[0] + valueindex;
       }
       else {
-        bVar3 = Sys_IsServerThread();
-        if (bVar3) {
-          iVar2 = -0x7be637c0;
+        bVar2 = Sys_IsServerThread();
+        if (bVar2) {
+          iVar1 = -0x7be637c0;
         }
         else {
-          bVar3 = Sys_IsRenderThread();
-          if (!bVar3) {
+          bVar2 = Sys_IsRenderThread();
+          if (!bVar2) {
             MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\q_shared.cpp"
                             ,0x4ca,0,"%s");
           }
-          iVar2 = -0x7be677c0;
+          iVar1 = -0x7be677c0;
         }
-        pacVar7 = (char (*) [8192])(valueindex * 0x2000 + iVar2);
+        pacVar5 = (char (*) [8192])(valueindex * 0x2000 + iVar1);
       }
-      cVar5 = *pcVar1;
-      pacVar8 = pacVar7;
-      if (cVar5 != '\\') {
-        iVar2 = 0;
+      cVar3 = *pcVar4;
+      pacVar6 = pacVar5;
+      if (cVar3 != '\\') {
+        iVar1 = 0;
         do {
-          if (cVar5 == '\0') break;
-          iVar2 = iVar2 + 1;
-          (*pacVar8)[0] = cVar5;
-          pacVar8 = (char (*) [8192])(*pacVar8 + 1);
-          pcVar1 = pcVar1 + 1;
-          if (0x1fff < iVar2) {
+          if (cVar3 == '\0') break;
+          iVar1 = iVar1 + 1;
+          (*pacVar6)[0] = cVar3;
+          pacVar6 = (char (*) [8192])(*pacVar6 + 1);
+          pcVar4 = pcVar4 + 1;
+          if (0x1fff < iVar1) {
             Com_Error(ERR_DROP,"\x15Info_ValueForKey: oversize key %d");
           }
-          cVar5 = *pcVar1;
-        } while (cVar5 != '\\');
+          cVar3 = *pcVar4;
+        } while (cVar3 != '\\');
       }
-      (*pacVar8)[0] = '\0';
-      iVar2 = I_stricmp((char *)uVar4,local_2070);
-      if (iVar2 == 0) {
-        pcVar1 = (char *)__restgprlr_20(pacVar7);
-        return pcVar1;
+      (*pacVar6)[0] = '\0';
+      iVar1 = I_stricmp(param_2,local_2070);
+      if (iVar1 == 0) {
+        return *pacVar5;
       }
-      if (*pcVar1 == '\0') break;
-      pcVar1 = pcVar1 + 1;
+      if (*pcVar4 == '\0') break;
+      param_1 = pcVar4 + 1;
     } while( true );
   }
 LAB_8260c9e4:
-  pcVar1 = (char *)__restgprlr_20(0xffffffff820068af);
-  return pcVar1;
+  return "";
 }
 
 
@@ -1641,42 +1608,40 @@ int Info_Validate(char *param_1)
 
 // 8260CDE8  Info_SetValueForKey  (universal/q_shared.cpp:1446)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
+
 void Info_SetValueForKey(char *param_1,char *param_2,char *param_3)
 
 {
   char cVar1;
-  char *pcVar2;
+  ulonglong uVar2;
   int iVar3;
   ulonglong uVar4;
-  ulonglong uVar5;
+  char *pcVar5;
   char *pcVar6;
-  char *pcVar7;
-  char *pcVar8;
-  int iVar9;
+  int iVar7;
   char local_850 [1024];
   char local_450 [1104];
   
-  uVar5 = (ulonglong)(int)param_3;
   uVar4 = (ulonglong)(int)param_2;
-  pcVar2 = (char *)__savegprlr_23(param_1);
-  pcVar6 = pcVar2;
-  if ((uVar5 & 0xffffffff) == 0) {
+  pcVar5 = param_1;
+  if (param_3 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\q_shared.cpp",0x5ae,
                     0,"%s");
   }
   do {
-    cVar1 = *pcVar6;
-    pcVar6 = pcVar6 + 1;
+    cVar1 = *pcVar5;
+    pcVar5 = pcVar5 + 1;
   } while (cVar1 != '\0');
-  if ((char *)0x3ff < pcVar6 + (-1 - (int)pcVar2)) {
+  if ((char *)0x3ff < pcVar5 + (-1 - (int)param_1)) {
     Com_Printf(0x10,"\x15Info_SetValueForKey: oversize infostring");
-    __restgprlr_23();
     return;
   }
   iVar3 = 0;
-  iVar9 = 0;
+  iVar7 = 0;
   do {
-    cVar1 = *(char *)(iVar9 + (int)uVar5);
+    cVar1 = param_3[iVar7];
     if (cVar1 == '\0') break;
     if (((cVar1 != '\\') && (cVar1 != ';')) && (cVar1 != '\"')) {
       if (0x3ff < iVar3) {
@@ -1686,116 +1651,106 @@ void Info_SetValueForKey(char *param_1,char *param_2,char *param_3)
       local_850[iVar3] = cVar1;
       iVar3 = iVar3 + 1;
     }
-    iVar9 = iVar9 + 1;
-  } while (iVar9 < 0x3ff);
+    iVar7 = iVar7 + 1;
+  } while (iVar7 < 0x3ff);
   if (0x3ff < iVar3) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\q_shared.cpp",0x5c3,
                     0,"%s");
   }
   local_850[iVar3] = '\0';
-  uVar5 = uVar4;
+  uVar2 = uVar4;
   strchr();
-  if ((uVar5 & 0xffffffff) != 0) {
+  if ((uVar2 & 0xffffffff) != 0) {
     Com_Printf(0x10,"\x15Can\'t use keys with a \\\nkey: \'%s\'\nvalue: \'%s\'");
-    __restgprlr_23();
     return;
   }
-  uVar5 = uVar4;
+  uVar2 = uVar4;
   strchr();
-  if ((uVar5 & 0xffffffff) != 0) {
+  if ((uVar2 & 0xffffffff) != 0) {
     Com_Printf(0x10,"\x15Can\'t use keys with a semicolon\nkey: \'%s\'\nvalue: \'%s\'");
-    __restgprlr_23();
     return;
   }
-  uVar5 = uVar4;
   strchr();
-  if ((uVar5 & 0xffffffff) == 0) {
-    Info_RemoveKey(pcVar2,(char *)uVar4);
+  if ((uVar4 & 0xffffffff) == 0) {
+    Info_RemoveKey(param_1,param_2);
     if (local_850[0] != '\0') {
       iVar3 = Com_sprintf(local_450,0x400,"\\%s\\%s");
       if (iVar3 < 1) {
         Com_Printf(0x10,
                    "\x15Info buffer length exceeded, not including key/value pair in response\n");
-        __restgprlr_23();
         return;
       }
-      pcVar8 = &stack0x00000000 + -0x450;
-      pcVar6 = pcVar8;
+      pcVar5 = local_450;
+      do {
+        cVar1 = *pcVar5;
+        pcVar5 = pcVar5 + 1;
+      } while (cVar1 != '\0');
+      pcVar6 = param_1;
       do {
         cVar1 = *pcVar6;
         pcVar6 = pcVar6 + 1;
       } while (cVar1 != '\0');
-      pcVar7 = pcVar2;
-      do {
-        cVar1 = *pcVar7;
-        pcVar7 = pcVar7 + 1;
-      } while (cVar1 != '\0');
-      if ((char *)0x400 < pcVar6 + (int)(pcVar7 + ((-2 - (int)pcVar8) - (int)pcVar2))) {
+      if ((char *)0x400 < pcVar5 + (int)(pcVar6 + ((-2 - (int)local_450) - (int)param_1))) {
         Com_Printf(0x10,
                    "\x15Info string length exceeded\nkey: \'%s\'\nvalue: \'%s\'\nInfo string:\n%s\n"
                   );
-        __restgprlr_23();
         return;
       }
-      pcVar6 = &stack0x00000000 + -0x450;
+      pcVar5 = local_450;
       do {
-        pcVar8 = pcVar2;
-        pcVar2 = pcVar8 + 1;
-      } while (*pcVar8 != '\0');
+        pcVar6 = param_1;
+        param_1 = pcVar6 + 1;
+      } while (*pcVar6 != '\0');
       do {
-        cVar1 = *pcVar6;
+        cVar1 = *pcVar5;
+        pcVar5 = pcVar5 + 1;
+        *pcVar6 = cVar1;
         pcVar6 = pcVar6 + 1;
-        *pcVar8 = cVar1;
-        pcVar8 = pcVar8 + 1;
       } while (cVar1 != '\0');
     }
-    __restgprlr_23();
     return;
   }
   Com_Printf(0x10,"\x15Can\'t use keys with a \"\nkey: \'%s\'\nvalue: \'%s\'");
-  __restgprlr_23();
   return;
 }
 
 
 // 8260D0B0  Info_SetValueForKey_Big  (universal/q_shared.cpp:1526)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
+
 void Info_SetValueForKey_Big(char *param_1,char *param_2,char *param_3)
 
 {
   char cVar1;
-  char *pcVar2;
+  ulonglong uVar2;
   int iVar3;
   ulonglong uVar4;
-  ulonglong uVar5;
+  char *pcVar5;
   char *pcVar6;
-  char *pcVar7;
-  char *pcVar8;
-  int iVar9;
+  int iVar7;
   char local_4050 [8192];
   char local_2050 [8272];
   
-  uVar5 = (ulonglong)(int)param_3;
   uVar4 = (ulonglong)(int)param_2;
-  pcVar2 = (char *)__savegprlr_23(param_1);
-  pcVar6 = pcVar2;
-  if ((uVar5 & 0xffffffff) == 0) {
+  pcVar5 = param_1;
+  if (param_3 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\q_shared.cpp",0x5fe,
                     0,"%s");
   }
   do {
-    cVar1 = *pcVar6;
-    pcVar6 = pcVar6 + 1;
+    cVar1 = *pcVar5;
+    pcVar5 = pcVar5 + 1;
   } while (cVar1 != '\0');
-  if ((char *)0x1fff < pcVar6 + (-1 - (int)pcVar2)) {
+  if ((char *)0x1fff < pcVar5 + (-1 - (int)param_1)) {
     Com_Printf(0x10,"\x15Info_SetValueForKey: oversize infostring");
-    __restgprlr_23();
     return;
   }
   iVar3 = 0;
-  iVar9 = 0;
+  iVar7 = 0;
   do {
-    cVar1 = *(char *)(iVar9 + (int)uVar5);
+    cVar1 = param_3[iVar7];
     if (cVar1 == '\0') break;
     if (((cVar1 != '\\') && (cVar1 != ';')) && (cVar1 != '\"')) {
       if (0x1fff < iVar3) {
@@ -1805,79 +1760,74 @@ void Info_SetValueForKey_Big(char *param_1,char *param_2,char *param_3)
       local_4050[iVar3] = cVar1;
       iVar3 = iVar3 + 1;
     }
-    iVar9 = iVar9 + 1;
-  } while (iVar9 < 0x1fff);
+    iVar7 = iVar7 + 1;
+  } while (iVar7 < 0x1fff);
   if (0x1fff < iVar3) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\q_shared.cpp",0x613,
                     0,"%s");
   }
   local_4050[iVar3] = '\0';
-  uVar5 = uVar4;
+  uVar2 = uVar4;
   strchr();
-  if ((uVar5 & 0xffffffff) != 0) {
+  if ((uVar2 & 0xffffffff) != 0) {
     Com_Printf(0x10,"\x15Can\'t use keys with a \\\nkey: \'%s\'\nvalue: \'%s\'");
-    __restgprlr_23();
     return;
   }
-  uVar5 = uVar4;
+  uVar2 = uVar4;
   strchr();
-  if ((uVar5 & 0xffffffff) != 0) {
+  if ((uVar2 & 0xffffffff) != 0) {
     Com_Printf(0x10,"\x15Can\'t use keys with a semicolon\nkey: \'%s\'\nvalue: \'%s\'");
-    __restgprlr_23();
     return;
   }
-  uVar5 = uVar4;
   strchr();
-  if ((uVar5 & 0xffffffff) == 0) {
-    Info_RemoveKey_Big(pcVar2,(char *)uVar4);
+  if ((uVar4 & 0xffffffff) == 0) {
+    Info_RemoveKey_Big(param_1,param_2);
     if (local_4050[0] != '\0') {
       iVar3 = Com_sprintf(local_2050,0x2000,"\\%s\\%s");
       if (iVar3 < 1) {
         Com_Printf(0x10,
                    "\x15Info buffer length exceeded, not including key/value pair in response\n");
-        __restgprlr_23();
         return;
       }
-      pcVar8 = &stack0x00000000 + -0x2050;
-      pcVar6 = pcVar8;
+      pcVar5 = local_2050;
+      do {
+        cVar1 = *pcVar5;
+        pcVar5 = pcVar5 + 1;
+      } while (cVar1 != '\0');
+      pcVar6 = param_1;
       do {
         cVar1 = *pcVar6;
         pcVar6 = pcVar6 + 1;
       } while (cVar1 != '\0');
-      pcVar7 = pcVar2;
-      do {
-        cVar1 = *pcVar7;
-        pcVar7 = pcVar7 + 1;
-      } while (cVar1 != '\0');
-      if ((char *)0x2000 < pcVar6 + (int)(pcVar7 + ((-2 - (int)pcVar8) - (int)pcVar2))) {
+      if ((char *)0x2000 < pcVar5 + (int)(pcVar6 + ((-2 - (int)local_2050) - (int)param_1))) {
         Com_Printf(0x10,
                    "\x15Big info string length exceeded\nkey: \'%s\'\nvalue: \'%s\'\nInfo string:\n%s\n"
                   );
-        __restgprlr_23();
         return;
       }
-      pcVar6 = &stack0x00000000 + -0x2050;
+      pcVar5 = local_2050;
       do {
-        pcVar8 = pcVar2;
-        pcVar2 = pcVar8 + 1;
-      } while (*pcVar8 != '\0');
+        pcVar6 = param_1;
+        param_1 = pcVar6 + 1;
+      } while (*pcVar6 != '\0');
       do {
-        cVar1 = *pcVar6;
+        cVar1 = *pcVar5;
+        pcVar5 = pcVar5 + 1;
+        *pcVar6 = cVar1;
         pcVar6 = pcVar6 + 1;
-        *pcVar8 = cVar1;
-        pcVar8 = pcVar8 + 1;
       } while (cVar1 != '\0');
     }
-    __restgprlr_23();
     return;
   }
   Com_Printf(0x10,"\x15Can\'t use keys with a \"\nkey: \'%s\'\nvalue: \'%s\'");
-  __restgprlr_23();
   return;
 }
 
 
 // 8260D388  UpdateStandardFieldValue  (universal/q_shared.cpp:1599)
+
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 
 void UpdateStandardFieldValue
                (uchar *param_1,cspField_t *param_2,char *param_3,bool *param_4,
@@ -1885,110 +1835,96 @@ void UpdateStandardFieldValue
 
 {
   int iVar1;
-  int iVar2;
-  FxEffectDef *pFVar3;
-  XModel *pXVar4;
-  Material *pMVar5;
-  snd_alias_list_t *psVar6;
-  TracerDef *pTVar7;
-  char *pcVar8;
-  double dVar9;
+  FxEffectDef *pFVar2;
+  XModel *pXVar3;
+  Material *pMVar4;
+  snd_alias_list_t *psVar5;
+  TracerDef *pTVar6;
+  char *pcVar7;
+  double dVar8;
   char acStack_2020 [8224];
   
-  iVar1 = __savegprlr_29(param_1);
   switch(param_2->iFieldType) {
   case 0:
-    (*param_5)((uchar *)(param_2->iOffset + iVar1),param_3);
-    __restgprlr_29();
+    (*param_5)(param_1 + param_2->iOffset,param_3);
     return;
   case 1:
-    I_strncpyz((char *)(param_2->iOffset + iVar1),param_3,0x400);
-    __restgprlr_29();
+    I_strncpyz((char *)(param_1 + param_2->iOffset),param_3,0x400);
     return;
   case 2:
-    I_strncpyz((char *)(param_2->iOffset + iVar1),param_3,0x40);
-    __restgprlr_29();
+    I_strncpyz((char *)(param_1 + param_2->iOffset),param_3,0x40);
     return;
   case 3:
-    I_strncpyz((char *)(param_2->iOffset + iVar1),param_3,0x100);
-    __restgprlr_29();
+    I_strncpyz((char *)(param_1 + param_2->iOffset),param_3,0x100);
     return;
   case 4:
-    iVar2 = atoi(param_3);
-    *(int *)(param_2->iOffset + iVar1) = iVar2;
-    __restgprlr_29();
+    iVar1 = atoi(param_3);
+    *(int *)(param_1 + param_2->iOffset) = iVar1;
     return;
   case 5:
-    iVar2 = atoi(param_3);
-    *(uint *)(param_2->iOffset + iVar1) = (uint)(iVar2 != 0);
-    __restgprlr_29();
+    iVar1 = atoi(param_3);
+    *(uint *)(param_1 + param_2->iOffset) = (uint)(iVar1 != 0);
     return;
   case 6:
-    iVar2 = atoi(param_3);
-    *(char *)(param_2->iOffset + iVar1) = '\x01' - (iVar2 == 0);
-    __restgprlr_29();
+    iVar1 = atoi(param_3);
+    param_1[param_2->iOffset] = '\x01' - (iVar1 == 0);
     return;
   case 7:
-    dVar9 = atof(param_3);
-    *(float *)(param_2->iOffset + iVar1) = (float)dVar9;
-    __restgprlr_29();
+    dVar8 = atof(param_3);
+    *(float *)(param_1 + param_2->iOffset) = (float)dVar8;
     return;
   case 8:
-    dVar9 = atof(param_3);
-    *(float *)(param_2->iOffset + iVar1) = (float)dVar9 * 17.6;
-    __restgprlr_29();
+    dVar8 = atof(param_3);
+    *(float *)(param_1 + param_2->iOffset) = (float)dVar8 * 17.6;
     return;
   case 9:
-    dVar9 = atof(param_3);
-    *(int *)(param_2->iOffset + iVar1) = (int)((float)dVar9 * 1000.0);
-    __restgprlr_29();
+    dVar8 = atof(param_3);
+    *(int *)(param_1 + param_2->iOffset) = (int)((float)dVar8 * 1000.0);
     return;
   case 10:
-    pFVar3 = FX_Register(param_3);
-    *(FxEffectDef **)(param_2->iOffset + iVar1) = pFVar3;
-    __restgprlr_29();
+    pFVar2 = FX_Register(param_3);
+    *(FxEffectDef **)(param_1 + param_2->iOffset) = pFVar2;
     return;
   case 0xb:
     I_strncpyz(acStack_2020,param_3,0x2000);
-    pXVar4 = R_RegisterModel(acStack_2020);
-    *(XModel **)(param_2->iOffset + iVar1) = pXVar4;
-    if (pXVar4 == (XModel *)0x0) {
+    pXVar3 = R_RegisterModel(acStack_2020);
+    *(XModel **)(param_1 + param_2->iOffset) = pXVar3;
+    if (pXVar3 == (XModel *)0x0) {
       *param_4 = true;
-      __restgprlr_29();
       return;
     }
     break;
   case 0xc:
-    pMVar5 = Material_RegisterHandle(param_3,0);
-    *(Material **)(param_2->iOffset + iVar1) = pMVar5;
-    __restgprlr_29();
+    pMVar4 = Material_RegisterHandle(param_3,0);
+    *(Material **)(param_1 + param_2->iOffset) = pMVar4;
     return;
   case 0xd:
-    psVar6 = Com_FindSoundAlias(param_3);
-    *(snd_alias_list_t **)(param_2->iOffset + iVar1) = psVar6;
-    __restgprlr_29();
+    psVar5 = Com_FindSoundAlias(param_3);
+    *(snd_alias_list_t **)(param_1 + param_2->iOffset) = psVar5;
     return;
   case 0xe:
     I_strncpyz(acStack_2020,param_3,0x2000);
-    pTVar7 = Tracer_Register(acStack_2020);
-    *(TracerDef **)(param_2->iOffset + iVar1) = pTVar7;
-    __restgprlr_29();
+    pTVar6 = Tracer_Register(acStack_2020);
+    *(TracerDef **)(param_1 + param_2->iOffset) = pTVar6;
     return;
   default:
     if (param_2->iFieldType < 0) {
-      if (alwaysfails != 0) break;
-      pcVar8 = va("Negative field type %i given to ParseConfigStringToStruct\n");
+      if (alwaysfails != 0) {
+        return;
+      }
+      pcVar7 = va("Negative field type %i given to ParseConfigStringToStruct\n");
       iVar1 = 0x69e;
     }
     else {
-      if (alwaysfails != 0) break;
+      if (alwaysfails != 0) {
+        return;
+      }
       iVar1 = 0x6a0;
-      pcVar8 = "ParseConfigStringToStruct is out of sync with the csParseFieldType_t enum list\n";
+      pcVar7 = "ParseConfigStringToStruct is out of sync with the csParseFieldType_t enum list\n";
     }
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\q_shared.cpp",iVar1,
-                    0,pcVar8);
+                    0,pcVar7);
   }
-  __restgprlr_29();
   return;
 }
 
@@ -2128,88 +2064,61 @@ uint GetFieldIndex(cspField_t *param_1,int param_2,uint param_3)
 
 // 8260D810  GetToken  (universal/q_shared.cpp:1825)
 
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
+
 char * GetToken(char *param_1,uint param_2,uint param_3,uint *param_4,uint *param_5,uint *param_6,
                char *param_7,uint param_8)
 
 {
   char cVar1;
-  int iVar2;
-  int iVar3;
-  char *pcVar4;
-  int iVar5;
-  ulonglong uVar6;
-  ulonglong uVar7;
-  ulonglong uVar8;
-  int *piVar9;
-  ulonglong uVar10;
-  bool bVar11;
-  ulonglong uVar12;
-  ulonglong uVar13;
-  int iVar14;
-  ulonglong uVar15;
+  bool bVar2;
+  uint uVar3;
   
-  uVar12 = (ulonglong)(int)param_8;
-  uVar10 = (ulonglong)(int)param_7;
-  uVar13 = (ulonglong)(int)param_6;
-  uVar8 = (ulonglong)(int)param_5;
-  uVar7 = (ulonglong)(int)param_4;
-  uVar6 = (ulonglong)(int)param_3;
-  uVar15 = (ulonglong)(int)param_2;
-  iVar3 = __savegprlr_22(param_1);
-  iVar5 = (int)uVar15;
-  if ((uVar7 & 0xffffffff) == 0) {
+  if (param_4 == (uint *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\q_shared.cpp",0x725,
                     0,"%s");
   }
-  if ((uVar8 & 0xffffffff) == 0) {
+  if (param_5 == (uint *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\q_shared.cpp",0x726,
                     0,"%s");
   }
-  if ((uVar13 & 0xffffffff) == 0) {
+  if (param_6 == (uint *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\q_shared.cpp",0x727,
                     0,"%s");
   }
-  bVar11 = false;
-  piVar9 = (int *)uVar13;
-  *piVar9 = 0;
-  uVar13 = 0;
-  if ((uVar15 & 0xffffffff) == (uVar6 & 0xffffffff)) {
-    pcVar4 = (char *)__restgprlr_22(0);
-    return pcVar4;
+  bVar2 = false;
+  *param_6 = 0;
+  uVar3 = 0;
+  if (param_2 == param_3) {
+    return (char *)0x0;
   }
-  iVar2 = (int)uVar10;
-  if ((uVar15 & 0xffffffff) < (uVar6 & 0xffffffff)) {
-    do {
-      iVar5 = (int)uVar15;
-      if ((uVar12 & 0xffffffff) <= (uVar13 & 0xffffffff)) break;
-      cVar1 = *(char *)(iVar3 + iVar5);
-      iVar14 = (int)uVar13;
-      if (cVar1 == '\\') {
-        *(int *)uVar8 = iVar5 + 1;
-        *(undefined1 *)(iVar14 + iVar2) = 0;
-        *piVar9 = iVar14;
-        pcVar4 = (char *)__restgprlr_22(uVar10);
-        return pcVar4;
-      }
-      if (!bVar11) {
-        *(int *)uVar7 = iVar5;
-        bVar11 = true;
-      }
-      uVar15 = uVar15 + 1;
-      iVar5 = (int)uVar15;
-      *(char *)(iVar14 + iVar2) = cVar1;
-      uVar13 = uVar13 + 1;
-    } while ((uVar15 & 0xffffffff) < (uVar6 & 0xffffffff));
+  for (; (param_2 < param_3 && (uVar3 < param_8)); uVar3 = uVar3 + 1) {
+    cVar1 = param_1[param_2];
+    if (cVar1 == '\\') {
+      *param_5 = param_2 + 1;
+      param_7[uVar3] = '\0';
+      *param_6 = uVar3;
+      return param_7;
+    }
+    if (!bVar2) {
+      *param_4 = param_2;
+      bVar2 = true;
+    }
+    param_2 = param_2 + 1;
+    param_7[uVar3] = cVar1;
   }
-  *(int *)uVar8 = iVar5;
-  *(undefined1 *)((int)uVar13 + iVar2) = 0;
-  *piVar9 = (int)uVar13;
-  pcVar4 = (char *)__restgprlr_22(-(ulonglong)(uVar13 != 0) & uVar10);
-  return pcVar4;
+  *param_5 = param_2;
+  param_7[uVar3] = '\0';
+  *param_6 = uVar3;
+  return (char *)(-(uint)(uVar3 != 0) & (uint)param_7);
 }
 
 
 // 8260D958  ParseConfigStringNew  (universal/q_shared.cpp:1868)
+
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
 
 int ParseConfigStringNew
               (uchar *param_1,cspField_t *param_2,int param_3,char *param_4,int param_5,
@@ -2217,121 +2126,107 @@ int ParseConfigStringNew
               _func___cdecl_void_uchar_ptr_char_ptr *param_7)
 
 {
-  ulonglong uVar1;
-  cspField_t *pcVar2;
-  longlong lVar3;
-  char *pcVar4;
+  char cVar1;
+  char *pcVar2;
+  int iVar3;
+  int iVar4;
   int iVar5;
-  int iVar6;
-  uint uVar7;
-  longlong lVar8;
-  uint uVar9;
-  longlong lVar10;
-  ulonglong uVar11;
-  longlong lVar12;
-  longlong lVar13;
-  ulonglong uVar14;
-  ulonglong uVar15;
-  ulonglong uVar16;
+  char *pcVar8;
+  ulonglong uVar6;
+  ulonglong uVar7;
+  cspField_t *pcVar9;
   bool local_4b0 [4];
-  uint local_4ac;
+  char *local_4ac;
   uint local_4a8;
-  uint local_4a4;
+  char *local_4a4;
   char acStack_4a0 [1184];
   
-  uVar11 = (ulonglong)(int)param_6;
-  lVar10 = (longlong)(int)param_4;
-  lVar8 = (longlong)param_3;
-  lVar3 = (longlong)(int)param_1;
-  __savegprlr();
-  iVar6 = (int)lVar8;
-  BuildFieldCRCS(param_2,iVar6);
-  uVar7 = 0;
+  BuildFieldCRCS(param_2,param_3);
+  pcVar2 = (char *)0x0;
   local_4b0[0] = false;
-  lVar13 = lVar10;
+  pcVar8 = param_4;
   do {
-    pcVar4 = (char *)lVar13;
-    lVar13 = lVar13 + 1;
-  } while (*pcVar4 != '\0');
-  uVar14 = (lVar13 - lVar10) - 1;
-  uVar1 = uVar14 & 0xffffffff;
-  if (uVar1 != 0) {
+    cVar1 = *pcVar8;
+    pcVar8 = pcVar8 + 1;
+  } while (cVar1 != '\0');
+  pcVar8 = pcVar8 + (-1 - (int)param_4);
+  if (pcVar8 != (char *)0x0) {
     do {
-      uVar9 = (uint)uVar14;
-      pcVar4 = GetToken((char *)lVar10,uVar7,uVar9,&local_4a4,&local_4ac,&local_4a8,acStack_4a0,
-                        0x400);
-      if (pcVar4 == (char *)0x0) goto LAB_8260db18;
-      uVar15 = (ulonglong)local_4a8;
-      if (uVar15 != 0) {
-        pcVar4 = pcVar4 + -1;
-        uVar16 = 0xffffffffffffffff;
+      pcVar2 = GetToken(param_4,(uint)pcVar2,(uint)pcVar8,(uint *)&local_4a4,(uint *)&local_4ac,
+                        &local_4a8,acStack_4a0,0x400);
+      if (pcVar2 == (char *)0x0) {
+        return 0;
+      }
+      uVar6 = (ulonglong)local_4a8;
+      if (uVar6 != 0) {
+        pcVar2 = pcVar2 + -1;
+        uVar7 = 0xffffffffffffffff;
         do {
-          pcVar4 = pcVar4 + 1;
-          uVar16 = (ulonglong)
-                   *(uint *)((int)crc_table +
-                            ((uint)((((longlong)*pcVar4 ^ uVar16) & 0xffffffff) << 2) & 0x3fc)) ^
-                   (uVar16 & 0xffffffff) >> 8;
-          uVar15 = uVar15 - 1;
-        } while (uVar15 != 0);
-        lVar12 = 0;
-        lVar13 = lVar8;
-        iVar5 = iVar6;
-        if (-1 < iVar6) {
+          pcVar2 = pcVar2 + 1;
+          uVar7 = (ulonglong)
+                  *(uint *)((int)crc_table +
+                           ((uint)((((longlong)*pcVar2 ^ uVar7) & 0xffffffff) << 2) & 0x3fc)) ^
+                  (uVar7 & 0xffffffff) >> 8;
+          uVar6 = uVar6 - 1;
+        } while (uVar6 != 0);
+        iVar4 = 0;
+        iVar5 = param_3;
+        iVar3 = param_3;
+        if (-1 < param_3) {
           do {
-            iVar5 = (int)lVar13 + (int)lVar12 >> 1;
-            if ((ulonglong)param_2[iVar5].nameCRC < (~uVar16 & 0xffffffff)) {
-              lVar12 = (longlong)iVar5 + 1;
+            iVar3 = iVar5 + iVar4 >> 1;
+            if ((ulonglong)param_2[iVar3].nameCRC < (~uVar7 & 0xffffffff)) {
+              iVar4 = iVar3 + 1;
             }
             else {
-              if ((ulonglong)param_2[iVar5].nameCRC <= (~uVar16 & 0xffffffff)) break;
-              lVar13 = (longlong)iVar5 + -1;
+              if ((ulonglong)param_2[iVar3].nameCRC <= (~uVar7 & 0xffffffff)) break;
+              iVar5 = iVar3 + -1;
             }
-            iVar5 = iVar6;
-          } while ((int)lVar12 <= (int)lVar13);
+            iVar3 = param_3;
+          } while (iVar4 <= iVar5);
         }
         local_4a4 = local_4ac;
-        pcVar4 = GetToken((char *)lVar10,local_4ac,uVar9,&local_4a4,&local_4ac,&local_4a8,
-                          acStack_4a0,0x400);
-        if ((local_4a8 != 0) && (iVar5 < iVar6)) {
-          pcVar2 = param_2 + iVar5;
-          if (pcVar2->iFieldType < 0xf) {
-            UpdateStandardFieldValue((uchar *)lVar3,pcVar2,pcVar4,local_4b0,param_7);
+        pcVar2 = GetToken(param_4,(uint)local_4ac,(uint)pcVar8,(uint *)&local_4a4,(uint *)&local_4ac
+                          ,&local_4a8,acStack_4a0,0x400);
+        if ((local_4a8 != 0) && (iVar3 < param_3)) {
+          pcVar9 = param_2 + iVar3;
+          if (pcVar9->iFieldType < 0xf) {
+            UpdateStandardFieldValue(param_1,pcVar9,pcVar2,local_4b0,param_7);
             if (local_4b0[0] != false) {
-LAB_8260db18:
-              iVar6 = 0;
-              __restgprlr();
-              return iVar6;
+              return 0;
             }
           }
-          else if ((param_5 < 1) || (param_5 <= pcVar2->iFieldType)) {
+          else if ((param_5 < 1) || (param_5 <= pcVar9->iFieldType)) {
             if (alwaysfails == 0) {
-              pcVar4 = va("Bad field type %i\n");
+              pcVar2 = va("Bad field type %i\n");
               MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\q_shared.cpp"
-                              ,0x785,0,pcVar4);
+                              ,0x785,0,pcVar2);
             }
             Com_Error(ERR_DROP,"\x15Bad field type %i\n");
           }
           else {
-            if ((uVar11 & 0xffffffff) == 0) {
+            if (param_6 == (_func___cdecl_int_uchar_ptr_char_ptr_int_int *)0x0) {
               MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\q_shared.cpp"
                               ,0x77f,0,"%s");
             }
-            iVar5 = (*(code *)uVar11)(lVar3,pcVar4,pcVar2->iFieldType,pcVar2->iOffset);
-            if (iVar5 == 0) goto LAB_8260db18;
+            iVar3 = (*param_6)(param_1,pcVar2,pcVar9->iFieldType,pcVar9->iOffset);
+            if (iVar3 == 0) {
+              return 0;
+            }
           }
         }
       }
-      uVar7 = local_4ac;
-    } while (local_4ac < uVar1);
+      pcVar2 = local_4ac;
+    } while (local_4ac < pcVar8);
   }
-  iVar6 = 1;
-  __restgprlr();
-  return iVar6;
+  return 1;
 }
 
 
 // 8260DBD8  ParseConfigStringToStruct  (universal/q_shared.cpp:1938)
 
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
 /* int __cdecl ParseConfigStringToStruct(unsigned char *,struct cspField_t *,int,char const
    *,int,int (__cdecl*)(unsigned char *,char const *,int,int),void (__cdecl*)(unsigned char *,char
    const *)) */
@@ -2341,122 +2236,109 @@ int ParseConfigStringToStruct
               _func_int_uchar_ptr_char_ptr_int_int *param_6,_func_void_uchar_ptr_char_ptr *param_7)
 
 {
-  ulonglong uVar1;
-  cspField_t *pcVar2;
-  char *pcVar4;
+  char cVar1;
+  char *pcVar2;
+  int iVar3;
+  int iVar4;
   int iVar5;
-  longlong lVar3;
-  int iVar6;
-  uint uVar7;
-  uint uVar9;
-  longlong lVar8;
-  longlong lVar10;
-  longlong lVar11;
-  ulonglong uVar12;
-  longlong lVar13;
-  ulonglong uVar14;
-  ulonglong uVar15;
-  ulonglong uVar16;
+  char *pcVar8;
+  ulonglong uVar6;
+  ulonglong uVar7;
+  cspField_t *pcVar9;
   bool abStack_4b0 [4];
-  uint uStack_4ac;
+  char *pcStack_4ac;
   uint uStack_4a8;
-  uint uStack_4a4;
+  char *pcStack_4a4;
   char acStack_4a0 [1184];
   
-  uVar12 = (ulonglong)(int)param_6;
-  lVar10 = (longlong)(int)param_4;
-  lVar8 = (longlong)param_3;
-  lVar3 = (longlong)(int)param_1;
-  __savegprlr();
-  iVar6 = (int)lVar8;
-  BuildFieldCRCS(param_2,iVar6);
-  uVar7 = 0;
+  BuildFieldCRCS(param_2,param_3);
+  pcVar2 = (char *)0x0;
   abStack_4b0[0] = false;
-  lVar13 = lVar10;
+  pcVar8 = param_4;
   do {
-    pcVar4 = (char *)lVar13;
-    lVar13 = lVar13 + 1;
-  } while (*pcVar4 != '\0');
-  uVar14 = (lVar13 - lVar10) - 1;
-  uVar1 = uVar14 & 0xffffffff;
-  if (uVar1 != 0) {
+    cVar1 = *pcVar8;
+    pcVar8 = pcVar8 + 1;
+  } while (cVar1 != '\0');
+  pcVar8 = pcVar8 + (-1 - (int)param_4);
+  if (pcVar8 != (char *)0x0) {
     do {
-      uVar9 = (uint)uVar14;
-      pcVar4 = GetToken((char *)lVar10,uVar7,uVar9,&uStack_4a4,&uStack_4ac,&uStack_4a8,acStack_4a0,
-                        0x400);
-      if (pcVar4 == (char *)0x0) goto LAB_8260db18;
-      uVar15 = (ulonglong)uStack_4a8;
-      if (uVar15 != 0) {
-        pcVar4 = pcVar4 + -1;
-        uVar16 = 0xffffffffffffffff;
+      pcVar2 = GetToken(param_4,(uint)pcVar2,(uint)pcVar8,(uint *)&pcStack_4a4,(uint *)&pcStack_4ac,
+                        &uStack_4a8,acStack_4a0,0x400);
+      if (pcVar2 == (char *)0x0) {
+        return 0;
+      }
+      uVar6 = (ulonglong)uStack_4a8;
+      if (uVar6 != 0) {
+        pcVar2 = pcVar2 + -1;
+        uVar7 = 0xffffffffffffffff;
         do {
-          pcVar4 = pcVar4 + 1;
-          uVar16 = (ulonglong)
-                   *(uint *)((int)crc_table +
-                            ((uint)((((longlong)*pcVar4 ^ uVar16) & 0xffffffff) << 2) & 0x3fc)) ^
-                   (uVar16 & 0xffffffff) >> 8;
-          uVar15 = uVar15 - 1;
-        } while (uVar15 != 0);
-        lVar11 = 0;
-        lVar13 = lVar8;
-        iVar5 = iVar6;
-        if (-1 < iVar6) {
+          pcVar2 = pcVar2 + 1;
+          uVar7 = (ulonglong)
+                  *(uint *)((int)crc_table +
+                           ((uint)((((longlong)*pcVar2 ^ uVar7) & 0xffffffff) << 2) & 0x3fc)) ^
+                  (uVar7 & 0xffffffff) >> 8;
+          uVar6 = uVar6 - 1;
+        } while (uVar6 != 0);
+        iVar4 = 0;
+        iVar5 = param_3;
+        iVar3 = param_3;
+        if (-1 < param_3) {
           do {
-            iVar5 = (int)lVar13 + (int)lVar11 >> 1;
-            if ((ulonglong)param_2[iVar5].nameCRC < (~uVar16 & 0xffffffff)) {
-              lVar11 = (longlong)iVar5 + 1;
+            iVar3 = iVar5 + iVar4 >> 1;
+            if ((ulonglong)param_2[iVar3].nameCRC < (~uVar7 & 0xffffffff)) {
+              iVar4 = iVar3 + 1;
             }
             else {
-              if ((ulonglong)param_2[iVar5].nameCRC <= (~uVar16 & 0xffffffff)) break;
-              lVar13 = (longlong)iVar5 + -1;
+              if ((ulonglong)param_2[iVar3].nameCRC <= (~uVar7 & 0xffffffff)) break;
+              iVar5 = iVar3 + -1;
             }
-            iVar5 = iVar6;
-          } while ((int)lVar11 <= (int)lVar13);
+            iVar3 = param_3;
+          } while (iVar4 <= iVar5);
         }
-        uStack_4a4 = uStack_4ac;
-        pcVar4 = GetToken((char *)lVar10,uStack_4ac,uVar9,&uStack_4a4,&uStack_4ac,&uStack_4a8,
-                          acStack_4a0,0x400);
-        if ((uStack_4a8 != 0) && (iVar5 < iVar6)) {
-          pcVar2 = param_2 + iVar5;
-          if (pcVar2->iFieldType < 0xf) {
+        pcStack_4a4 = pcStack_4ac;
+        pcVar2 = GetToken(param_4,(uint)pcStack_4ac,(uint)pcVar8,(uint *)&pcStack_4a4,
+                          (uint *)&pcStack_4ac,&uStack_4a8,acStack_4a0,0x400);
+        if ((uStack_4a8 != 0) && (iVar3 < param_3)) {
+          pcVar9 = param_2 + iVar3;
+          if (pcVar9->iFieldType < 0xf) {
             UpdateStandardFieldValue
-                      ((uchar *)lVar3,pcVar2,pcVar4,abStack_4b0,
+                      (param_1,pcVar9,pcVar2,abStack_4b0,
                        (_func___cdecl_void_uchar_ptr_char_ptr *)param_7);
             if (abStack_4b0[0] != false) {
-LAB_8260db18:
-              iVar6 = 0;
-              __restgprlr();
-              return iVar6;
+              return 0;
             }
           }
-          else if ((param_5 < 1) || (param_5 <= pcVar2->iFieldType)) {
+          else if ((param_5 < 1) || (param_5 <= pcVar9->iFieldType)) {
             if (alwaysfails == 0) {
-              pcVar4 = va("Bad field type %i\n");
+              pcVar2 = va("Bad field type %i\n");
               MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\q_shared.cpp"
-                              ,0x785,0,pcVar4);
+                              ,0x785,0,pcVar2);
             }
             Com_Error(ERR_DROP,"\x15Bad field type %i\n");
           }
           else {
-            if ((uVar12 & 0xffffffff) == 0) {
+            if (param_6 == (_func_int_uchar_ptr_char_ptr_int_int *)0x0) {
               MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\q_shared.cpp"
                               ,0x77f,0,"%s");
             }
-            iVar5 = (*(code *)uVar12)(lVar3,pcVar4,pcVar2->iFieldType,pcVar2->iOffset);
-            if (iVar5 == 0) goto LAB_8260db18;
+            iVar3 = (*param_6)(param_1,pcVar2,pcVar9->iFieldType,pcVar9->iOffset);
+            if (iVar3 == 0) {
+              return 0;
+            }
           }
         }
       }
-      uVar7 = uStack_4ac;
-    } while (uStack_4ac < uVar1);
+      pcVar2 = pcStack_4ac;
+    } while (pcStack_4ac < pcVar8);
   }
-  iVar6 = 1;
-  __restgprlr();
-  return iVar6;
+  return 1;
 }
 
 
 // 8260DBE0  ParseConfigStringToStructCustomSizeThreeWayMergeNew  (universal/q_shared.cpp:1944)
+
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
 
 int ParseConfigStringToStructCustomSizeThreeWayMergeNew
               (uchar *param_1,cspField_t *param_2,int param_3,char *param_4,char *param_5,
@@ -2468,47 +2350,37 @@ int ParseConfigStringToStructCustomSizeThreeWayMergeNew
 {
   char cVar1;
   char cVar2;
-  cspField_t *pcVar3;
-  uint uVar4;
-  uint uVar5;
+  char *pcVar3;
+  char *pcVar4;
+  char *pcVar5;
   char *pcVar6;
   char *pcVar7;
   char *pcVar8;
   int iVar9;
+  int iVar10;
   int iVar11;
-  ulonglong uVar10;
-  ulonglong uVar12;
-  uint uVar13;
-  uint uVar14;
-  uint uVar15;
-  longlong lVar16;
-  longlong lVar17;
-  longlong lVar18;
-  ulonglong uVar19;
-  ulonglong uVar20;
-  char *pcVar21;
-  char *pcVar22;
-  longlong lVar23;
-  ulonglong uVar24;
-  char *pcVar25;
-  char *pcVar26;
-  ulonglong uVar27;
-  ulonglong uVar28;
-  char *pcVar29;
+  char *pcVar12;
+  char *pcVar14;
+  char *pcVar15;
+  char *pcVar16;
+  ulonglong uVar13;
+  char *pcVar17;
+  ulonglong uVar18;
+  cspField_t *pcVar19;
   int iStack00000044;
   _func___cdecl_int_uchar_ptr_char_ptr_int_int *p_Stack0000004c;
   _func___cdecl_void_uchar_ptr_char_ptr *in_stack_00000054;
   code *in_stack_0000005c;
   bool local_ce0 [4];
-  uint local_cdc;
-  uint local_cd8;
+  char *local_cdc;
+  char *local_cd8;
   uint local_cd4;
-  uint local_cd0;
+  char *local_cd0;
   uint local_ccc;
   uint local_cc8;
-  uint local_cc4;
-  uint local_cc0;
-  uint local_cbc;
+  char *local_cc4;
+  char *local_cc0;
+  char *local_cbc;
   char *local_cb8;
   char *local_cb4;
   char *local_cb0;
@@ -2519,237 +2391,229 @@ int ParseConfigStringToStructCustomSizeThreeWayMergeNew
   char acStack_8a0 [1024];
   char acStack_4a0 [1184];
   
-  lVar18 = (longlong)(int)param_6;
-  lVar17 = (longlong)(int)param_5;
-  lVar16 = (longlong)(int)param_4;
-  uVar12 = (ulonglong)param_3;
-  __savegprlr();
-  iVar11 = (int)uVar12;
   iStack00000044 = param_7;
   p_Stack0000004c = param_8;
-  BuildFieldCRCS(param_2,iVar11);
-  uVar27 = 0;
-  uVar10 = 0;
+  BuildFieldCRCS(param_2,param_3);
   local_ce0[0] = false;
-  uVar28 = 0;
-  lVar23 = lVar16;
+  pcVar14 = param_4;
   do {
-    pcVar6 = (char *)lVar23;
-    lVar23 = lVar23 + 1;
-  } while (*pcVar6 != '\0');
-  uVar19 = (lVar23 - lVar16) - 1;
-  lVar23 = lVar17;
+    cVar1 = *pcVar14;
+    pcVar14 = pcVar14 + 1;
+  } while (cVar1 != '\0');
+  pcVar14 = pcVar14 + (-1 - (int)param_4);
+  pcVar15 = param_5;
   do {
-    pcVar6 = (char *)lVar23;
-    lVar23 = lVar23 + 1;
-  } while (*pcVar6 != '\0');
-  uVar20 = (lVar23 - lVar17) - 1;
-  lVar23 = lVar18;
+    cVar1 = *pcVar15;
+    pcVar15 = pcVar15 + 1;
+  } while (cVar1 != '\0');
+  pcVar15 = pcVar15 + (-1 - (int)param_5);
+  pcVar16 = param_6;
   do {
-    pcVar6 = (char *)lVar23;
-    lVar23 = lVar23 + 1;
-  } while (*pcVar6 != '\0');
-  uVar24 = (lVar23 - lVar18) - 1;
+    cVar1 = *pcVar16;
+    pcVar16 = pcVar16 + 1;
+  } while (cVar1 != '\0');
+  pcVar16 = pcVar16 + (-1 - (int)param_6);
   local_cb4 = "\x15Bad field type %i\n";
   local_cac = "Bad field type %i\n";
   local_cb8 = "parseSpecialFieldType != NULL";
   local_cb0 = "tokenLength == tokenLengthChild1 && tokenLength == tokenLengthChild2";
   local_ca8 = "tokenLengthChild1 == 0 && tokenLengthChild2 == 0";
-LAB_8260dce8:
+  pcVar3 = (char *)0x0;
+  pcVar4 = (char *)0x0;
+  pcVar5 = (char *)0x0;
   do {
-    if ((((uVar19 & 0xffffffff) <= uVar10) && ((uVar20 & 0xffffffff) <= uVar28)) &&
-       ((uVar24 & 0xffffffff) <= uVar27)) {
-      iVar11 = 1;
-      __restgprlr();
-      return iVar11;
-    }
-    uVar13 = (uint)uVar19;
-    pcVar6 = GetToken((char *)lVar16,(uint)uVar10,uVar13,&local_cc0,&local_cdc,&local_cc8,local_ca0,
-                      0x400);
-    uVar14 = (uint)uVar20;
-    pcVar7 = GetToken((char *)lVar17,(uint)uVar28,uVar14,&local_cc4,&local_cd8,&local_ccc,
-                      acStack_8a0,0x400);
-    uVar15 = (uint)uVar24;
-    pcVar8 = GetToken((char *)lVar18,(uint)uVar27,uVar15,&local_cbc,&local_cd0,&local_cd4,
-                      acStack_4a0,0x400);
-    if (pcVar6 == (char *)0x0) {
-      if ((pcVar7 != (char *)0x0) || (pcVar8 != (char *)0x0)) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\q_shared.cpp",
-                        0x7c5,0,"%s");
+    do {
+      while( true ) {
+        if (((pcVar14 <= pcVar3) && (pcVar15 <= pcVar4)) && (pcVar16 <= pcVar5)) {
+          return 1;
+        }
+        pcVar3 = GetToken(param_4,(uint)pcVar3,(uint)pcVar14,(uint *)&local_cc0,(uint *)&local_cdc,
+                          &local_cc8,local_ca0,0x400);
+        pcVar4 = GetToken(param_5,(uint)pcVar4,(uint)pcVar15,(uint *)&local_cc4,(uint *)&local_cd8,
+                          &local_ccc,acStack_8a0,0x400);
+        pcVar5 = GetToken(param_6,(uint)pcVar5,(uint)pcVar16,(uint *)&local_cbc,(uint *)&local_cd0,
+                          &local_cd4,acStack_4a0,0x400);
+        if (pcVar3 == (char *)0x0) {
+          if ((pcVar4 == (char *)0x0) && (pcVar5 == (char *)0x0)) {
+            return 0;
+          }
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\q_shared.cpp",
+                          0x7c5,0,"%s");
+          return 0;
+        }
+        uVar18 = (ulonglong)local_cc8;
+        if (uVar18 != 0) break;
+        if ((local_ccc != 0) ||
+           (pcVar3 = local_cdc, pcVar4 = local_cd8, pcVar5 = local_cd0, local_cd4 != 0)) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\q_shared.cpp",
+                          0x7ca,0,"%s");
+          pcVar3 = local_cdc;
+          pcVar4 = local_cd8;
+          pcVar5 = local_cd0;
+        }
       }
-LAB_8260e20c:
-      iVar11 = 0;
-      __restgprlr();
-      return iVar11;
-    }
-    uVar10 = (ulonglong)local_cc8;
-    if (uVar10 != 0) {
-      if ((uVar10 != local_ccc) || (uVar10 != local_cd4)) {
+      if ((uVar18 != local_ccc) || (uVar18 != local_cd4)) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\q_shared.cpp",
                         2000,0,"%s");
       }
-      uVar5 = local_cd0;
-      uVar4 = local_cd8;
-      pcVar6 = &cStack_ca1;
-      uVar27 = 0xffffffffffffffff;
+      pcVar5 = local_cd0;
+      pcVar4 = local_cd8;
+      pcVar3 = &cStack_ca1;
+      uVar13 = 0xffffffffffffffff;
       do {
-        pcVar6 = pcVar6 + 1;
-        uVar27 = (ulonglong)
+        pcVar3 = pcVar3 + 1;
+        uVar13 = (ulonglong)
                  *(uint *)((int)crc_table +
-                          ((uint)((((longlong)*pcVar6 ^ uVar27) & 0xffffffff) << 2) & 0x3fc)) ^
-                 (uVar27 & 0xffffffff) >> 8;
-        uVar10 = uVar10 - 1;
-      } while (uVar10 != 0);
-      lVar23 = 0;
-      uVar10 = uVar12;
-      uVar28 = uVar12;
-      if (-1 < iVar11) {
+                          ((uint)((((longlong)*pcVar3 ^ uVar13) & 0xffffffff) << 2) & 0x3fc)) ^
+                 (uVar13 & 0xffffffff) >> 8;
+        uVar18 = uVar18 - 1;
+      } while (uVar18 != 0);
+      iVar11 = 0;
+      iVar9 = param_3;
+      iVar10 = param_3;
+      if (-1 < param_3) {
         do {
-          iVar9 = (int)uVar10 + (int)lVar23 >> 1;
-          uVar28 = (ulonglong)iVar9;
-          if ((ulonglong)param_2[iVar9].nameCRC < (~uVar27 & 0xffffffff)) {
-            lVar23 = uVar28 + 1;
+          iVar10 = iVar9 + iVar11 >> 1;
+          if ((ulonglong)param_2[iVar10].nameCRC < (~uVar13 & 0xffffffff)) {
+            iVar11 = iVar10 + 1;
           }
           else {
-            if ((ulonglong)param_2[iVar9].nameCRC <= (~uVar27 & 0xffffffff)) break;
-            uVar10 = uVar28 - 1;
+            if ((ulonglong)param_2[iVar10].nameCRC <= (~uVar13 & 0xffffffff)) break;
+            iVar9 = iVar10 + -1;
           }
-          uVar28 = uVar12;
-        } while ((int)lVar23 <= (int)uVar10);
+          iVar10 = param_3;
+        } while (iVar11 <= iVar9);
       }
       local_cc0 = local_cdc;
       local_cc4 = local_cd8;
       local_cbc = local_cd0;
-      pcVar6 = GetToken((char *)lVar16,local_cdc,uVar13,&local_cc0,&local_cdc,&local_cc8,local_ca0,
-                        0x400);
-      pcVar7 = GetToken((char *)lVar17,uVar4,uVar14,&local_cc4,&local_cd8,&local_ccc,acStack_8a0,
-                        0x400);
-      pcVar8 = GetToken((char *)lVar18,uVar5,uVar15,&local_cbc,&local_cd0,&local_cd4,acStack_4a0,
-                        0x400);
-      if (((int)uVar28 < iVar11) && (((local_cc8 != 0 || (local_ccc != 0)) || (local_cd4 != 0)))) {
-        if (pcVar7 != (char *)0x0) {
-          pcVar25 = pcVar7;
-          pcVar22 = pcVar7;
-          pcVar26 = pcVar6;
-          pcVar21 = pcVar8;
-          pcVar29 = pcVar7;
-          if (pcVar8 == (char *)0x0) {
+      pcVar6 = GetToken(param_4,(uint)local_cdc,(uint)pcVar14,(uint *)&local_cc0,(uint *)&local_cdc,
+                        &local_cc8,local_ca0,0x400);
+      pcVar7 = GetToken(param_5,(uint)pcVar4,(uint)pcVar15,(uint *)&local_cc4,(uint *)&local_cd8,
+                        &local_ccc,acStack_8a0,0x400);
+      pcVar8 = GetToken(param_6,(uint)pcVar5,(uint)pcVar16,(uint *)&local_cbc,(uint *)&local_cd0,
+                        &local_cd4,acStack_4a0,0x400);
+      pcVar3 = local_cdc;
+      pcVar4 = local_cd8;
+      pcVar5 = local_cd0;
+    } while ((param_3 <= iVar10) || (((local_cc8 == 0 && (local_ccc == 0)) && (local_cd4 == 0))));
+    if (pcVar7 != (char *)0x0) {
+      pcVar3 = pcVar7;
+      pcVar4 = pcVar7;
+      pcVar5 = pcVar6;
+      pcVar12 = pcVar8;
+      pcVar17 = pcVar7;
+      if (pcVar8 == (char *)0x0) {
 LAB_8260df7c:
-            do {
-              cVar1 = *pcVar26;
-              cVar2 = *pcVar22;
-              if (cVar1 == '\0') break;
-              pcVar22 = pcVar22 + 1;
-              pcVar26 = pcVar26 + 1;
-            } while (cVar1 == cVar2);
-            if (cVar1 == cVar2) goto LAB_8260dfec;
-            pcVar25 = pcVar6;
-            pcVar22 = pcVar8;
-            if (pcVar8 != (char *)0x0) {
-              do {
-                cVar1 = *pcVar25;
-                cVar2 = *pcVar22;
-                if (cVar1 == '\0') break;
-                pcVar25 = pcVar25 + 1;
-                pcVar22 = pcVar22 + 1;
-              } while (cVar1 == cVar2);
-              if (cVar1 != cVar2) goto LAB_8260dfec;
-            }
-          }
-          else {
-            do {
-              cVar1 = *pcVar25;
-              cVar2 = *pcVar21;
-              if (cVar1 == '\0') break;
-              pcVar25 = pcVar25 + 1;
-              pcVar21 = pcVar21 + 1;
-            } while (cVar1 == cVar2);
-            if (cVar1 != cVar2) goto LAB_8260df7c;
-          }
-          goto LAB_8260e0c8;
-        }
-LAB_8260dfec:
-        pcVar25 = pcVar6;
-        pcVar22 = pcVar8;
-        if (pcVar8 == (char *)0x0) {
-LAB_8260e064:
-          iVar9 = (*in_stack_0000005c)
-                            (*(undefined4 *)
-                              ((int)&param_2->szName + (int)((uVar28 & 0xffffffff) << 4)),pcVar6,
-                             pcVar7,pcVar8,0x400);
-          pcVar29 = pcVar6;
-          if (iVar9 == 0) {
-            Com_PrintError(1,
-                           "Can\'t generate \'%s\' because the values don\'t match for any of the component assets.\n\t%s.%s: \'%s\'\n\t%s.%s: \'%s\'\n\t%s.%s: \'%s\'\n"
-                          );
-          }
-        }
-        else {
+        do {
+          cVar1 = *pcVar5;
+          cVar2 = *pcVar4;
+          if (cVar1 == '\0') break;
+          pcVar4 = pcVar4 + 1;
+          pcVar5 = pcVar5 + 1;
+        } while (cVar1 == cVar2);
+        if (cVar1 == cVar2) goto LAB_8260dfec;
+        pcVar3 = pcVar6;
+        pcVar4 = pcVar8;
+        if (pcVar8 != (char *)0x0) {
           do {
-            cVar1 = *pcVar25;
-            cVar2 = *pcVar22;
+            cVar1 = *pcVar3;
+            cVar2 = *pcVar4;
             if (cVar1 == '\0') break;
-            pcVar25 = pcVar25 + 1;
-            pcVar22 = pcVar22 + 1;
+            pcVar3 = pcVar3 + 1;
+            pcVar4 = pcVar4 + 1;
           } while (cVar1 == cVar2);
-          if (cVar1 == cVar2) goto LAB_8260e064;
-          pcVar25 = pcVar7;
-          pcVar29 = pcVar8;
-          pcVar22 = pcVar6;
-          if (pcVar7 != (char *)0x0) {
-            do {
-              cVar1 = *pcVar22;
-              cVar2 = *pcVar25;
-              if (cVar1 == '\0') break;
-              pcVar25 = pcVar25 + 1;
-              pcVar22 = pcVar22 + 1;
-            } while (cVar1 == cVar2);
-            if (cVar1 != cVar2) goto LAB_8260e064;
-          }
-        }
-LAB_8260e0c8:
-        if (*pcVar29 != '\0') {
-          pcVar3 = param_2 + (int)uVar28;
-          if (pcVar3->iFieldType < 0xf) {
-            UpdateStandardFieldValue(param_1,pcVar3,pcVar29,local_ce0,in_stack_00000054);
-            if (local_ce0[0] != false) goto LAB_8260e20c;
-            uVar10 = (ulonglong)local_cdc;
-            uVar28 = (ulonglong)local_cd8;
-            uVar27 = (ulonglong)local_cd0;
-            goto LAB_8260dce8;
-          }
-          if ((0 < iStack00000044) && (pcVar3->iFieldType < iStack00000044)) {
-            if (p_Stack0000004c == (_func___cdecl_int_uchar_ptr_char_ptr_int_int *)0x0) {
-              MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\q_shared.cpp"
-                              ,0x7ff,0,"%s");
-            }
-            iVar9 = (*p_Stack0000004c)(param_1,pcVar29,pcVar3->iFieldType,pcVar3->iOffset);
-            if (iVar9 == 0) goto LAB_8260e20c;
-            uVar10 = (ulonglong)local_cdc;
-            uVar28 = (ulonglong)local_cd8;
-            uVar27 = (ulonglong)local_cd0;
-            goto LAB_8260dce8;
-          }
-          if (alwaysfails == 0) {
-            pcVar6 = va(local_cac);
-            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\q_shared.cpp"
-                            ,0x805,0,pcVar6);
-          }
-          Com_Error(ERR_DROP,local_cb4);
+          if (cVar1 != cVar2) goto LAB_8260dfec;
         }
       }
-      uVar10 = (ulonglong)local_cdc;
-      uVar28 = (ulonglong)local_cd8;
-      uVar27 = (ulonglong)local_cd0;
-      goto LAB_8260dce8;
+      else {
+        do {
+          cVar1 = *pcVar3;
+          cVar2 = *pcVar12;
+          if (cVar1 == '\0') break;
+          pcVar3 = pcVar3 + 1;
+          pcVar12 = pcVar12 + 1;
+        } while (cVar1 == cVar2);
+        if (cVar1 != cVar2) goto LAB_8260df7c;
+      }
+      goto LAB_8260e0c8;
     }
-    if ((local_ccc != 0) || (local_cd4 != 0)) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\q_shared.cpp",
-                      0x7ca,0,"%s");
+LAB_8260dfec:
+    pcVar3 = pcVar6;
+    pcVar4 = pcVar8;
+    if (pcVar8 == (char *)0x0) {
+LAB_8260e064:
+      iVar9 = (*in_stack_0000005c)(param_2[iVar10].szName,pcVar6,pcVar7,pcVar8,0x400);
+      pcVar17 = pcVar6;
+      if (iVar9 == 0) {
+        Com_PrintError(1,
+                       "Can\'t generate \'%s\' because the values don\'t match for any of the component assets.\n\t%s.%s: \'%s\'\n\t%s.%s: \'%s\'\n\t%s.%s: \'%s\'\n"
+                      );
+      }
     }
-    uVar10 = (ulonglong)local_cdc;
-    uVar28 = (ulonglong)local_cd8;
-    uVar27 = (ulonglong)local_cd0;
+    else {
+      do {
+        cVar1 = *pcVar3;
+        cVar2 = *pcVar4;
+        if (cVar1 == '\0') break;
+        pcVar3 = pcVar3 + 1;
+        pcVar4 = pcVar4 + 1;
+      } while (cVar1 == cVar2);
+      if (cVar1 == cVar2) goto LAB_8260e064;
+      pcVar3 = pcVar7;
+      pcVar17 = pcVar8;
+      pcVar4 = pcVar6;
+      if (pcVar7 != (char *)0x0) {
+        do {
+          cVar1 = *pcVar4;
+          cVar2 = *pcVar3;
+          if (cVar1 == '\0') break;
+          pcVar3 = pcVar3 + 1;
+          pcVar4 = pcVar4 + 1;
+        } while (cVar1 == cVar2);
+        if (cVar1 != cVar2) goto LAB_8260e064;
+      }
+    }
+LAB_8260e0c8:
+    pcVar3 = local_cdc;
+    pcVar4 = local_cd8;
+    pcVar5 = local_cd0;
+    if (*pcVar17 != '\0') {
+      pcVar19 = param_2 + iVar10;
+      if (pcVar19->iFieldType < 0xf) {
+        UpdateStandardFieldValue(param_1,pcVar19,pcVar17,local_ce0,in_stack_00000054);
+        pcVar3 = local_cdc;
+        pcVar4 = local_cd8;
+        pcVar5 = local_cd0;
+        if (local_ce0[0] != false) {
+          return 0;
+        }
+      }
+      else if ((iStack00000044 < 1) || (iStack00000044 <= pcVar19->iFieldType)) {
+        if (alwaysfails == 0) {
+          pcVar3 = va(local_cac);
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\q_shared.cpp",
+                          0x805,0,pcVar3);
+        }
+        Com_Error(ERR_DROP,local_cb4);
+        pcVar3 = local_cdc;
+        pcVar4 = local_cd8;
+        pcVar5 = local_cd0;
+      }
+      else {
+        if (p_Stack0000004c == (_func___cdecl_int_uchar_ptr_char_ptr_int_int *)0x0) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\q_shared.cpp",
+                          0x7ff,0,"%s");
+        }
+        iVar10 = (*p_Stack0000004c)(param_1,pcVar17,pcVar19->iFieldType,pcVar19->iOffset);
+        pcVar3 = local_cdc;
+        pcVar4 = local_cd8;
+        pcVar5 = local_cd0;
+        if (iVar10 == 0) {
+          return 0;
+        }
+      }
+    }
   } while( true );
 }
 
@@ -2818,122 +2682,99 @@ void AddLeanToPosition(float *param_1,float param_2,float param_3,float param_4,
 
 // 8260E3A0  OrientationPosToWorldPos  (universal/q_shared.cpp:2154)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void OrientationPosToWorldPos(orientation_t *param_1,float *param_2,float *param_3)
 
 {
-  float *pfVar1;
-  ulonglong uVar2;
-  float *pfVar3;
-  ulonglong uVar4;
-  float *pfVar5;
-  
-  uVar4 = (ulonglong)(int)param_3;
-  uVar2 = (ulonglong)(int)param_2;
-  pfVar1 = (float *)__savegprlr_29(param_1);
-  if ((uVar2 & 0xffffffff) == (uVar4 & 0xffffffff)) {
+  if (param_2 == param_3) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\q_shared.cpp",0x86b,
                     0,"%s");
   }
-  pfVar3 = (float *)uVar2;
-  pfVar5 = (float *)uVar4;
-  *pfVar5 = pfVar1[9] * pfVar3[2] + pfVar1[6] * pfVar3[1] + pfVar1[3] * *pfVar3 + *pfVar1;
-  pfVar5[1] = pfVar1[10] * pfVar3[2] + pfVar1[7] * pfVar3[1] + pfVar1[4] * *pfVar3 + pfVar1[1];
-  pfVar5[2] = pfVar1[0xb] * pfVar3[2] + pfVar1[8] * pfVar3[1] + pfVar1[5] * *pfVar3 + pfVar1[2];
-  __restgprlr_29();
+  *param_3 = param_1->axis[2][0] * param_2[2] +
+             param_1->axis[1][0] * param_2[1] + param_1->axis[0][0] * *param_2 + param_1->origin[0];
+  param_3[1] = param_1->axis[2][1] * param_2[2] +
+               param_1->axis[1][1] * param_2[1] + param_1->axis[0][1] * *param_2 +
+               param_1->origin[1];
+  param_3[2] = param_1->axis[2][2] * param_2[2] +
+               param_1->axis[1][2] * param_2[1] + param_1->axis[0][2] * *param_2 +
+               param_1->origin[2];
   return;
 }
 
 
 // 8260E480  OrientationDirToWorldDir  (universal/q_shared.cpp:2163)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void OrientationDirToWorldDir(orientation_t *param_1,float *param_2,float *param_3)
 
 {
-  int iVar1;
-  ulonglong uVar2;
-  float *pfVar3;
-  ulonglong uVar4;
-  float *pfVar5;
-  
-  uVar4 = (ulonglong)(int)param_3;
-  uVar2 = (ulonglong)(int)param_2;
-  iVar1 = __savegprlr_29(param_1);
-  if ((uVar2 & 0xffffffff) == (uVar4 & 0xffffffff)) {
+  if (param_2 == param_3) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\q_shared.cpp",0x874,
                     0,"%s");
   }
-  pfVar3 = (float *)uVar2;
-  pfVar5 = (float *)uVar4;
-  *pfVar5 = *(float *)(iVar1 + 0x24) * pfVar3[2] +
-            *(float *)(iVar1 + 0x18) * pfVar3[1] + *(float *)(iVar1 + 0xc) * *pfVar3;
-  pfVar5[1] = *(float *)(iVar1 + 0x28) * pfVar3[2] +
-              *(float *)(iVar1 + 0x1c) * pfVar3[1] + *(float *)(iVar1 + 0x10) * *pfVar3;
-  pfVar5[2] = *(float *)(iVar1 + 0x2c) * pfVar3[2] +
-              *(float *)(iVar1 + 0x20) * pfVar3[1] + *(float *)(iVar1 + 0x14) * *pfVar3;
-  __restgprlr_29();
+  *param_3 = param_1->axis[2][0] * param_2[2] +
+             param_1->axis[1][0] * param_2[1] + param_1->axis[0][0] * *param_2;
+  param_3[1] = param_1->axis[2][1] * param_2[2] +
+               param_1->axis[1][1] * param_2[1] + param_1->axis[0][1] * *param_2;
+  param_3[2] = param_1->axis[2][2] * param_2[2] +
+               param_1->axis[1][2] * param_2[1] + param_1->axis[0][2] * *param_2;
   return;
 }
 
 
 // 8260E548  OrientationHPosToWorldHPos  (universal/q_shared.cpp:2172)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void OrientationHPosToWorldHPos(orientation_t *param_1,float *param_2,float *param_3)
 
 {
-  float *pfVar1;
-  ulonglong uVar2;
-  float *pfVar3;
-  ulonglong uVar4;
-  float *pfVar5;
-  
-  uVar4 = (ulonglong)(int)param_3;
-  uVar2 = (ulonglong)(int)param_2;
-  pfVar1 = (float *)__savegprlr_29(param_1);
-  if ((uVar2 & 0xffffffff) == (uVar4 & 0xffffffff)) {
+  if (param_2 == param_3) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\q_shared.cpp",0x87d,
                     0,"%s");
   }
-  pfVar3 = (float *)uVar2;
-  pfVar5 = (float *)uVar4;
-  *pfVar5 = *pfVar1 * pfVar3[3] +
-            pfVar1[9] * pfVar3[2] + pfVar1[6] * pfVar3[1] + pfVar1[3] * *pfVar3;
-  pfVar5[1] = pfVar1[1] * pfVar3[3] +
-              pfVar1[10] * pfVar3[2] + pfVar1[7] * pfVar3[1] + pfVar1[4] * *pfVar3;
-  pfVar5[2] = pfVar1[2] * pfVar3[3] +
-              pfVar1[0xb] * pfVar3[2] + pfVar1[8] * pfVar3[1] + pfVar1[5] * *pfVar3;
-  pfVar5[3] = pfVar3[3];
-  __restgprlr_29();
+  *param_3 = param_1->origin[0] * param_2[3] +
+             param_1->axis[2][0] * param_2[2] +
+             param_1->axis[1][0] * param_2[1] + param_1->axis[0][0] * *param_2;
+  param_3[1] = param_1->origin[1] * param_2[3] +
+               param_1->axis[2][1] * param_2[2] +
+               param_1->axis[1][1] * param_2[1] + param_1->axis[0][1] * *param_2;
+  param_3[2] = param_1->origin[2] * param_2[3] +
+               param_1->axis[2][2] * param_2[2] +
+               param_1->axis[1][2] * param_2[1] + param_1->axis[0][2] * *param_2;
+  param_3[3] = param_2[3];
   return;
 }
 
 
 // 8260E638  OrientationPlaneToWorldPlane  (universal/q_shared.cpp:2182)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void OrientationPlaneToWorldPlane(orientation_t *param_1,float *param_2,float *param_3)
 
 {
-  orientation_t *poVar1;
-  ulonglong uVar2;
-  ulonglong uVar3;
-  float *pfVar4;
-  
-  uVar3 = (ulonglong)(int)param_3;
-  uVar2 = (ulonglong)(int)param_2;
-  poVar1 = (orientation_t *)__savegprlr_29(param_1);
-  if ((uVar2 & 0xffffffff) == (uVar3 & 0xffffffff)) {
+  if (param_2 == param_3) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\q_shared.cpp",0x887,
                     0,"%s");
   }
-  pfVar4 = (float *)uVar3;
-  OrientationDirToWorldDir(poVar1,(float *)uVar2,pfVar4);
-  pfVar4[3] = poVar1->origin[2] * pfVar4[2] +
-              poVar1->origin[1] * pfVar4[1] + poVar1->origin[0] * *pfVar4 + ((float *)uVar2)[3];
-  __restgprlr_29();
+  OrientationDirToWorldDir(param_1,param_2,param_3);
+  param_3[3] = param_1->origin[2] * param_3[2] +
+               param_1->origin[1] * param_3[1] + param_1->origin[0] * *param_3 + param_2[3];
   return;
 }
 
 
 // 8260E6C8  OrientationPosFromWorldPos  (universal/q_shared.cpp:2191)
+
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 
 void OrientationPosFromWorldPos(orientation_t *param_1,float *param_2,float *param_3)
 
@@ -2941,226 +2782,180 @@ void OrientationPosFromWorldPos(orientation_t *param_1,float *param_2,float *par
   float fVar1;
   float fVar2;
   float fVar3;
-  float *pfVar4;
-  ulonglong uVar5;
-  ulonglong uVar6;
-  float *pfVar7;
   
-  uVar6 = (ulonglong)(int)param_3;
-  uVar5 = (ulonglong)(int)param_2;
-  pfVar4 = (float *)__savegprlr_29(param_1);
-  if ((uVar5 & 0xffffffff) == (uVar6 & 0xffffffff)) {
+  if (param_2 == param_3) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\q_shared.cpp",0x892,
                     0,"%s");
   }
-  pfVar7 = (float *)uVar5;
-  fVar1 = pfVar7[1] - pfVar4[1];
-  fVar2 = pfVar7[2] - pfVar4[2];
-  fVar3 = *pfVar7 - *pfVar4;
-  pfVar7 = (float *)uVar6;
-  *pfVar7 = pfVar4[3] * fVar3 + pfVar4[5] * fVar2 + pfVar4[4] * fVar1;
-  pfVar7[1] = pfVar4[6] * fVar3 + pfVar4[8] * fVar2 + pfVar4[7] * fVar1;
-  pfVar7[2] = pfVar4[9] * fVar3 + pfVar4[0xb] * fVar2 + pfVar4[10] * fVar1;
-  __restgprlr_29();
+  fVar1 = param_2[1] - param_1->origin[1];
+  fVar2 = param_2[2] - param_1->origin[2];
+  fVar3 = *param_2 - param_1->origin[0];
+  *param_3 = param_1->axis[0][0] * fVar3 + param_1->axis[0][2] * fVar2 + param_1->axis[0][1] * fVar1
+  ;
+  param_3[1] = param_1->axis[1][0] * fVar3 +
+               param_1->axis[1][2] * fVar2 + param_1->axis[1][1] * fVar1;
+  param_3[2] = param_1->axis[2][0] * fVar3 +
+               param_1->axis[2][2] * fVar2 + param_1->axis[2][1] * fVar1;
   return;
 }
 
 
 // 8260E790  OrientationDirFromWorldDir  (universal/q_shared.cpp:2207)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void OrientationDirFromWorldDir(orientation_t *param_1,float *param_2,float *param_3)
 
 {
-  int iVar1;
-  ulonglong uVar2;
-  float *pfVar3;
-  ulonglong uVar4;
-  float *pfVar5;
-  
-  uVar4 = (ulonglong)(int)param_3;
-  uVar2 = (ulonglong)(int)param_2;
-  iVar1 = __savegprlr_29(param_1);
-  if ((uVar2 & 0xffffffff) == (uVar4 & 0xffffffff)) {
+  if (param_2 == param_3) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\q_shared.cpp",0x8a0,
                     0,"%s");
   }
-  pfVar3 = (float *)uVar2;
-  pfVar5 = (float *)uVar4;
-  *pfVar5 = *(float *)(iVar1 + 0x14) * pfVar3[2] +
-            *(float *)(iVar1 + 0x10) * pfVar3[1] + *(float *)(iVar1 + 0xc) * *pfVar3;
-  pfVar5[1] = *(float *)(iVar1 + 0x20) * pfVar3[2] +
-              *(float *)(iVar1 + 0x1c) * pfVar3[1] + *(float *)(iVar1 + 0x18) * *pfVar3;
-  pfVar5[2] = *(float *)(iVar1 + 0x2c) * pfVar3[2] +
-              *(float *)(iVar1 + 0x28) * pfVar3[1] + *(float *)(iVar1 + 0x24) * *pfVar3;
-  __restgprlr_29();
+  *param_3 = param_1->axis[0][2] * param_2[2] +
+             param_1->axis[0][1] * param_2[1] + param_1->axis[0][0] * *param_2;
+  param_3[1] = param_1->axis[1][2] * param_2[2] +
+               param_1->axis[1][1] * param_2[1] + param_1->axis[1][0] * *param_2;
+  param_3[2] = param_1->axis[2][2] * param_2[2] +
+               param_1->axis[2][1] * param_2[1] + param_1->axis[2][0] * *param_2;
   return;
 }
 
 
 // 8260E858  OrientationHPosFromWorldHPos  (universal/q_shared.cpp:2216)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void OrientationHPosFromWorldHPos(orientation_t *param_1,float *param_2,float *param_3)
 
 {
   float fVar1;
-  float *pfVar2;
+  float fVar2;
   float fVar3;
-  float fVar4;
-  float *pfVar5;
-  ulonglong uVar6;
-  ulonglong uVar7;
-  float *pfVar8;
   
-  uVar7 = (ulonglong)(int)param_3;
-  uVar6 = (ulonglong)(int)param_2;
-  pfVar5 = (float *)__savegprlr_29(param_1);
-  if ((uVar6 & 0xffffffff) == (uVar7 & 0xffffffff)) {
+  if (param_2 == param_3) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\q_shared.cpp",0x8ab,
                     0,"%s");
   }
-  pfVar2 = (float *)uVar6;
-  fVar1 = pfVar2[3];
-  fVar3 = -(pfVar5[1] * fVar1 - pfVar2[1]);
-  fVar4 = -(pfVar5[2] * fVar1 - pfVar2[2]);
-  fVar1 = -(*pfVar5 * fVar1 - *pfVar2);
-  pfVar8 = (float *)uVar7;
-  *pfVar8 = pfVar5[3] * fVar1 + pfVar5[5] * fVar4 + pfVar5[4] * fVar3;
-  pfVar8[1] = pfVar5[6] * fVar1 + pfVar5[8] * fVar4 + pfVar5[7] * fVar3;
-  pfVar8[2] = pfVar5[9] * fVar1 + pfVar5[0xb] * fVar4 + pfVar5[10] * fVar3;
-  pfVar8[3] = pfVar2[3];
-  __restgprlr_29();
+  fVar1 = param_2[3];
+  fVar2 = -(param_1->origin[1] * fVar1 - param_2[1]);
+  fVar3 = -(param_1->origin[2] * fVar1 - param_2[2]);
+  fVar1 = -(param_1->origin[0] * fVar1 - *param_2);
+  *param_3 = param_1->axis[0][0] * fVar1 + param_1->axis[0][2] * fVar3 + param_1->axis[0][1] * fVar2
+  ;
+  param_3[1] = param_1->axis[1][0] * fVar1 +
+               param_1->axis[1][2] * fVar3 + param_1->axis[1][1] * fVar2;
+  param_3[2] = param_1->axis[2][0] * fVar1 +
+               param_1->axis[2][2] * fVar3 + param_1->axis[2][1] * fVar2;
+  param_3[3] = param_2[3];
   return;
 }
 
 
 // 8260E928  OrientationConcatenate  (universal/q_shared.cpp:2233)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void OrientationConcatenate(orientation_t *param_1,orientation_t *param_2,orientation_t *param_3)
 
 {
-  float *pfVar1;
-  float *pfVar2;
-  ulonglong uVar3;
-  orientation_t *poVar4;
-  ulonglong uVar5;
-  ulonglong uVar6;
-  
-  uVar6 = (ulonglong)(int)param_3;
-  uVar5 = (ulonglong)(int)param_2;
-  uVar3 = __savegprlr_27(param_1);
-  if ((uVar6 & 0xffffffff) == (uVar3 & 0xffffffff)) {
+  if (param_3 == param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\q_shared.cpp",0x8ba,
                     0,"%s");
   }
-  if ((uVar6 & 0xffffffff) == (uVar5 & 0xffffffff)) {
+  if (param_3 == param_2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\q_shared.cpp",0x8bb,
                     0,"%s");
   }
-  pfVar2 = (float *)uVar6;
-  pfVar1 = (float *)uVar3;
-  poVar4 = (orientation_t *)uVar5;
-  OrientationDirToWorldDir(poVar4,pfVar1 + 3,pfVar2 + 3);
-  OrientationDirToWorldDir(poVar4,pfVar1 + 6,pfVar2 + 6);
-  OrientationDirToWorldDir(poVar4,pfVar1 + 9,pfVar2 + 9);
-  OrientationPosToWorldPos(poVar4,pfVar1,pfVar2);
-  __restgprlr_27();
+  OrientationDirToWorldDir(param_2,param_1->axis[0],param_3->axis[0]);
+  OrientationDirToWorldDir(param_2,param_1->axis[1],param_3->axis[1]);
+  OrientationDirToWorldDir(param_2,param_1->axis[2],param_3->axis[2]);
+  OrientationPosToWorldPos(param_2,param_1->origin,param_3->origin);
   return;
 }
 
 
 // 8260E9E0  OrientationPlaneFromWorldPlane  (universal/q_shared.cpp:2245)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void OrientationPlaneFromWorldPlane(orientation_t *param_1,float *param_2,float *param_3)
 
 {
-  orientation_t *poVar1;
-  ulonglong uVar2;
-  float *pfVar3;
-  ulonglong uVar4;
-  
-  uVar4 = (ulonglong)(int)param_3;
-  uVar2 = (ulonglong)(int)param_2;
-  poVar1 = (orientation_t *)__savegprlr_29(param_1);
-  if ((uVar2 & 0xffffffff) == (uVar4 & 0xffffffff)) {
+  if (param_2 == param_3) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\q_shared.cpp",0x8c6,
                     0,"%s");
   }
-  pfVar3 = (float *)uVar2;
-  OrientationDirFromWorldDir(poVar1,pfVar3,(float *)uVar4);
-  ((float *)uVar4)[3] =
-       pfVar3[3] -
-       (poVar1->origin[2] * pfVar3[2] + poVar1->origin[1] * pfVar3[1] + poVar1->origin[0] * *pfVar3)
-  ;
-  __restgprlr_29();
+  OrientationDirFromWorldDir(param_1,param_2,param_3);
+  param_3[3] = param_2[3] -
+               (param_1->origin[2] * param_2[2] +
+               param_1->origin[1] * param_2[1] + param_1->origin[0] * *param_2);
   return;
 }
 
 
 // 8260EA70  ScaledOrientationPosToWorldPos  (universal/q_shared.cpp:2254)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void ScaledOrientationPosToWorldPos
                (orientation_t *param_1,float param_2,float *param_3,float *param_4)
 
 {
-  float *pfVar1;
-  ulonglong uVar2;
-  float *pfVar3;
-  ulonglong in_r6;
-  float *pfVar4;
-  double extraout_f1;
-  double dVar5;
+  float *in_r6;
+  double dVar1;
   
-  uVar2 = (ulonglong)(int)param_4;
-  pfVar1 = (float *)__savegprlr_29((double)param_2,param_1,param_3);
-  dVar5 = extraout_f1;
-  if ((uVar2 & 0xffffffff) == (in_r6 & 0xffffffff)) {
+  dVar1 = (double)param_2;
+  if (param_4 == in_r6) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\q_shared.cpp",0x8cf,
                     0,"%s");
   }
-  pfVar3 = (float *)uVar2;
-  pfVar4 = (float *)in_r6;
-  *pfVar4 = (float)((double)(pfVar1[9] * pfVar3[2] + pfVar1[6] * pfVar3[1] + pfVar1[3] * *pfVar3) *
-                    dVar5 + (double)*pfVar1);
-  pfVar4[1] = (float)((double)(pfVar1[10] * pfVar3[2] + pfVar1[7] * pfVar3[1] + pfVar1[4] * *pfVar3)
-                      * dVar5 + (double)pfVar1[1]);
-  pfVar4[2] = (float)((double)(pfVar1[0xb] * pfVar3[2] + pfVar1[8] * pfVar3[1] + pfVar1[5] * *pfVar3
-                              ) * dVar5 + (double)pfVar1[2]);
-  __restgprlr_29();
+  *in_r6 = (float)((double)(param_1->axis[2][0] * param_4[2] +
+                           param_1->axis[1][0] * param_4[1] + param_1->axis[0][0] * *param_4) *
+                   dVar1 + (double)param_1->origin[0]);
+  in_r6[1] = (float)((double)(param_1->axis[2][1] * param_4[2] +
+                             param_1->axis[1][1] * param_4[1] + param_1->axis[0][1] * *param_4) *
+                     dVar1 + (double)param_1->origin[1]);
+  in_r6[2] = (float)((double)(param_1->axis[2][2] * param_4[2] +
+                             param_1->axis[1][2] * param_4[1] + param_1->axis[0][2] * *param_4) *
+                     dVar1 + (double)param_1->origin[2]);
   return;
 }
 
 
 // 8260EB58  ScaledOrientationPlaneToWorldPlane  (universal/q_shared.cpp:2263)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void ScaledOrientationPlaneToWorldPlane
                (orientation_t *param_1,float param_2,float *param_3,float *param_4)
 
 {
-  orientation_t *poVar1;
-  ulonglong uVar2;
-  float *pfVar3;
-  ulonglong in_r6;
-  double extraout_f1;
-  double dVar4;
+  float *in_r6;
+  double dVar1;
   
-  uVar2 = (ulonglong)(int)param_4;
-  poVar1 = (orientation_t *)__savegprlr_29((double)param_2,param_1,param_3);
-  dVar4 = extraout_f1;
-  if ((uVar2 & 0xffffffff) == (in_r6 & 0xffffffff)) {
+  dVar1 = (double)param_2;
+  if (param_4 == in_r6) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\q_shared.cpp",0x8d8,
                     0,"%s");
   }
-  pfVar3 = (float *)in_r6;
-  OrientationDirToWorldDir(poVar1,(float *)uVar2,pfVar3);
-  pfVar3[3] = (float)((double)((float *)uVar2)[3] * dVar4 +
-                     (double)(poVar1->origin[2] * pfVar3[2] +
-                             poVar1->origin[1] * pfVar3[1] + poVar1->origin[0] * *pfVar3));
-  __restgprlr_29();
+  OrientationDirToWorldDir(param_1,param_4,in_r6);
+  in_r6[3] = (float)((double)param_4[3] * dVar1 +
+                    (double)(param_1->origin[2] * in_r6[2] +
+                            param_1->origin[1] * in_r6[1] + param_1->origin[0] * *in_r6));
   return;
 }
 
 
 // 8260EBF0  ScaledOrientationPosFromWorldPos  (universal/q_shared.cpp:2272)
+
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 
 void ScaledOrientationPosFromWorldPos
                (orientation_t *param_1,float param_2,float *param_3,float *param_4)
@@ -3170,65 +2965,54 @@ void ScaledOrientationPosFromWorldPos
   float fVar2;
   float fVar3;
   float fVar4;
-  float *pfVar5;
-  ulonglong uVar6;
-  ulonglong in_r6;
-  float *pfVar7;
-  double extraout_f1;
-  double dVar8;
+  float *in_r6;
+  double dVar5;
   
-  uVar6 = (ulonglong)(int)param_4;
-  pfVar5 = (float *)__savegprlr_27((double)param_2,param_1,param_3);
-  dVar8 = extraout_f1;
-  if ((uVar6 & 0xffffffff) == (in_r6 & 0xffffffff)) {
+  dVar5 = (double)param_2;
+  if (param_4 == in_r6) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\q_shared.cpp",0x8e4,
                     0,"%s");
   }
-  if (dVar8 == 0.0) {
+  if (dVar5 == 0.0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\q_shared.cpp",0x8e5,
                     0,"%s");
   }
-  pfVar7 = (float *)uVar6;
-  fVar2 = pfVar7[1] - pfVar5[1];
-  fVar3 = pfVar7[2] - pfVar5[2];
-  fVar1 = (float)(1.0 / dVar8);
-  fVar4 = *pfVar7 - *pfVar5;
-  pfVar7 = (float *)in_r6;
-  *pfVar7 = (pfVar5[3] * fVar4 + pfVar5[5] * fVar3 + pfVar5[4] * fVar2) * fVar1;
-  pfVar7[1] = (pfVar5[6] * fVar4 + pfVar5[8] * fVar3 + pfVar5[7] * fVar2) * fVar1;
-  pfVar7[2] = (pfVar5[9] * fVar4 + pfVar5[0xb] * fVar3 + pfVar5[10] * fVar2) * fVar1;
-  __restgprlr_27();
+  fVar2 = param_4[1] - param_1->origin[1];
+  fVar3 = param_4[2] - param_1->origin[2];
+  fVar1 = (float)(1.0 / dVar5);
+  fVar4 = *param_4 - param_1->origin[0];
+  *in_r6 = (param_1->axis[0][0] * fVar4 + param_1->axis[0][2] * fVar3 + param_1->axis[0][1] * fVar2)
+           * fVar1;
+  in_r6[1] = (param_1->axis[1][0] * fVar4 +
+             param_1->axis[1][2] * fVar3 + param_1->axis[1][1] * fVar2) * fVar1;
+  in_r6[2] = (param_1->axis[2][0] * fVar4 +
+             param_1->axis[2][2] * fVar3 + param_1->axis[2][1] * fVar2) * fVar1;
   return;
 }
 
 
 // 8260ED10  ScaledOrientationPlaneFromWorldPlane  (universal/q_shared.cpp:2291)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void ScaledOrientationPlaneFromWorldPlane
                (orientation_t *param_1,float param_2,float *param_3,float *param_4)
 
 {
-  orientation_t *poVar1;
-  float *pfVar2;
-  ulonglong uVar3;
-  ulonglong in_r6;
-  double extraout_f1;
-  double dVar4;
+  float *in_r6;
+  double dVar1;
   
-  uVar3 = (ulonglong)(int)param_4;
-  poVar1 = (orientation_t *)__savegprlr_29((double)param_2,param_1,param_3);
-  dVar4 = extraout_f1;
-  if ((uVar3 & 0xffffffff) == (in_r6 & 0xffffffff)) {
+  dVar1 = (double)param_2;
+  if (param_4 == in_r6) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\q_shared.cpp",0x8f4,
                     0,"%s");
   }
-  pfVar2 = (float *)uVar3;
-  OrientationDirFromWorldDir(poVar1,pfVar2,(float *)in_r6);
-  ((float *)in_r6)[3] =
-       (float)((double)(pfVar2[3] -
-                       (poVar1->origin[2] * pfVar2[2] +
-                       poVar1->origin[1] * pfVar2[1] + poVar1->origin[0] * *pfVar2)) / dVar4);
-  __restgprlr_29();
+  OrientationDirFromWorldDir(param_1,param_4,in_r6);
+  in_r6[3] = (float)((double)(param_4[3] -
+                             (param_1->origin[2] * param_4[2] +
+                             param_1->origin[1] * param_4[1] + param_1->origin[0] * *param_4)) /
+                    dVar1);
   return;
 }
 

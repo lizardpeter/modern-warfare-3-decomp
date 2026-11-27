@@ -113,36 +113,35 @@ GfxFog * R_GetFogFromServer(int param_1)
 
 // 8273E968  R_SwitchFog  (gfx_d3d/r_fog.cpp:76)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
+
 void R_SwitchFog(int param_1,int param_2,int param_3,int param_4)
 
 {
-  int iVar1;
-  GfxFog *pGVar2;
+  GfxFog *pGVar1;
   
-  iVar1 = __savegprlr_25(param_1);
   if ((param_2 < 0) || (5 < param_2)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_fog.cpp",0x4f,0,
                     "%s\n\t(fogvar) = %i");
   }
-  rg.fogIndex[iVar1] = param_2;
-  if (rg.fogSettings[iVar1][2].density == 0.0) {
+  rg.fogIndex[param_1] = param_2;
+  if (rg.fogSettings[param_1][2].density == 0.0) {
     memcpy();
     param_4 = 0;
   }
   else {
     memcpy();
   }
-  pGVar2 = rg.fogSettings[iVar1] + 4;
+  pGVar1 = rg.fogSettings[param_1] + 4;
   memcpy();
   if (param_4 == 0) {
-    pGVar2->startTime = 0;
-    rg.fogSettings[iVar1][4].finishTime = 0;
-    __restgprlr_25();
+    pGVar1->startTime = 0;
+    rg.fogSettings[param_1][4].finishTime = 0;
     return;
   }
-  pGVar2->startTime = param_3;
-  rg.fogSettings[iVar1][4].finishTime = param_3 + param_4;
-  __restgprlr_25();
+  pGVar1->startTime = param_3;
+  rg.fogSettings[param_1][4].finishTime = param_3 + param_4;
   return;
 }
 

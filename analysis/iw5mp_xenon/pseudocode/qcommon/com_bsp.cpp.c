@@ -2,66 +2,57 @@
 
 // 824D67D8  Com_CanPrimaryLightAffectPoint  (qcommon/com_bsp.cpp:18)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 bool Com_CanPrimaryLightAffectPoint(ComPrimaryLight *param_1,float *param_2)
 
 {
   float fVar1;
   float fVar2;
   float fVar3;
-  float *pfVar4;
+  float fVar4;
   float fVar5;
   float fVar6;
-  float fVar7;
-  char *pcVar9;
-  undefined1 uVar10;
-  undefined8 uVar8;
-  ulonglong uVar11;
   
-  uVar11 = (ulonglong)(int)param_2;
-  pcVar9 = (char *)__savegprlr_28(param_1);
-  if (pcVar9 == (char *)0x0) {
+  if (param_1 == (ComPrimaryLight *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_bsp.cpp",0x18,0,
                     "%s");
   }
-  if ((*pcVar9 != '\x02') && (*pcVar9 != '\x03')) {
+  if ((param_1->type != '\x02') && (param_1->type != '\x03')) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_bsp.cpp",0x19,0,
                     "%s\n\t(light->type) = %i");
   }
-  if ((uVar11 & 0xffffffff) == 0) {
+  if (param_2 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_bsp.cpp",0x1a,0,
                     "%s");
   }
-  pfVar4 = (float *)uVar11;
-  fVar3 = *(float *)(pcVar9 + 0x2c) - pfVar4[1];
-  fVar5 = *(float *)(pcVar9 + 0x30) - pfVar4[2];
-  fVar6 = *(float *)(pcVar9 + 0x28) - *pfVar4;
-  fVar7 = fVar6 * fVar6 + fVar5 * fVar5 + fVar3 * fVar3;
-  if (*(float *)(pcVar9 + 0x34) * *(float *)(pcVar9 + 0x34) <= fVar7) {
-LAB_824d68b8:
-    uVar10 = __restgprlr_28(0);
-    return (bool)uVar10;
+  fVar3 = param_1->origin[1] - param_2[1];
+  fVar4 = param_1->origin[2] - param_2[2];
+  fVar5 = param_1->origin[0] - *param_2;
+  fVar6 = fVar5 * fVar5 + fVar4 * fVar4 + fVar3 * fVar3;
+  if (param_1->radius * param_1->radius <= fVar6) {
+    return false;
   }
-  if (*pcVar9 != '\x03') {
-    fVar1 = *(float *)(pcVar9 + 0x38);
-    fVar2 = *(float *)(pcVar9 + 0x44);
+  if (param_1->type != '\x03') {
+    fVar1 = param_1->cosHalfFovOuter;
+    fVar2 = param_1->rotationLimit;
     if (-fVar1 < fVar2) {
-      fVar3 = *(float *)(pcVar9 + 0x18) * fVar5 +
-              *(float *)(pcVar9 + 0x14) * fVar3 + *(float *)(pcVar9 + 0x10) * fVar6;
+      fVar3 = param_1->dir[2] * fVar4 + param_1->dir[1] * fVar3 + param_1->dir[0] * fVar5;
       if ((fVar2 != 1.0) &&
          (fVar1 = fVar1 * fVar2 - SQRT(-(fVar1 * fVar1 - 1.0) * -(fVar2 * fVar2 - 1.0)),
          fVar1 <= 0.0)) {
-        uVar10 = __restgprlr_28(fVar3 <= fVar1 * *(float *)(pcVar9 + 0x34));
-        return (bool)uVar10;
+        return fVar3 <= fVar1 * param_1->radius;
       }
-      if (fVar3 <= 0.0) goto LAB_824d68b8;
-      uVar8 = 0;
-      if (fVar3 * fVar3 < fVar1 * fVar1 * fVar7) goto LAB_824d693c;
+      if (fVar3 <= 0.0) {
+        return false;
+      }
+      if (fVar3 * fVar3 < fVar1 * fVar1 * fVar6) {
+        return false;
+      }
     }
   }
-  uVar8 = 1;
-LAB_824d693c:
-  uVar10 = __restgprlr_28(uVar8);
-  return (bool)uVar10;
+  return true;
 }
 
 

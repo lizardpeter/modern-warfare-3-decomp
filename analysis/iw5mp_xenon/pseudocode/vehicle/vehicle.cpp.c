@@ -48,49 +48,45 @@ VehicleHandler * Vehicle_GetHandler(Vehicle *param_1)
 
 // 826AA7E8  Vehicle_LoadServerDefAssets  (vehicle/vehicle.cpp:410)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 VehicleDef * Vehicle_LoadServerDefAssets(char *param_1,int param_2)
 
 {
-  char *pcVar1;
-  VehicleDef *pVVar2;
-  bool bVar3;
-  ulonglong uVar4;
+  VehicleDef *pVVar1;
+  bool bVar2;
   char acStack_130 [304];
   
-  uVar4 = (ulonglong)param_2;
-  pcVar1 = (char *)__savegprlr_28(param_1);
-  if (pcVar1 == (char *)0x0) {
+  if (param_1 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0x19d,0,
                     "%s");
   }
-  if (0x1f < (uVar4 & 0xffffffff)) {
+  if (0x1f < (uint)param_2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0x19e,0,
                     "vehDefIndex doesn\'t index MAX_VEHICLE_DEFS\n\t%i not in [0, %i)");
   }
-  pVVar2 = Vehicle_Register(pcVar1);
-  if (pVVar2->turretWeapon != (WeaponCompleteDef *)0x0) {
-    G_GetWeaponForName(pVVar2->turretWeapon->szInternalName);
+  pVVar1 = Vehicle_Register(param_1);
+  if (pVVar1->turretWeapon != (WeaponCompleteDef *)0x0) {
+    G_GetWeaponForName(pVVar1->turretWeapon->szInternalName);
   }
-  bVar3 = G_ExitAfterToolComplete();
-  if ((!bVar3) && ((pVVar2->vehPhysDef).physicsEnabled != 0)) {
+  bVar2 = G_ExitAfterToolComplete();
+  if ((!bVar2) && ((pVVar1->vehPhysDef).physicsEnabled != 0)) {
     sprintf(acStack_130,"vehicle/%s");
-    GraphFloat_Load(physAccelGraphs + (int)uVar4,acStack_130,80.0);
+    GraphFloat_Load(physAccelGraphs + param_2,acStack_130,80.0);
     sprintf(acStack_130,"Vehicles/Accel graph/%s");
-    GraphFloat_CreateDevGui
-              (physAccelGraphs + (int)uVar4,
-               (DevGraph *)((int)&physAccelDevGraphs[0].knots + (int)((uVar4 & 0xffffffff) << 5)),
-               acStack_130);
+    GraphFloat_CreateDevGui(physAccelGraphs + param_2,physAccelDevGraphs + param_2,acStack_130);
   }
-  pVVar2 = (VehicleDef *)__restgprlr_28(pVVar2);
-  return pVVar2;
+  return pVVar1;
 }
 
 
 // 826AA900  Vehicle_RegisterServerDef  (vehicle/vehicle.cpp:441)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "ConfigString": Some values do not have unique names */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
@@ -99,27 +95,23 @@ VehicleDef * Vehicle_LoadServerDefAssets(char *param_1,int param_2)
 int Vehicle_RegisterServerDef(char *param_1)
 
 {
-  char *pcVar1;
-  uint uVar2;
-  VehicleDef *pVVar3;
-  int iVar4;
+  uint uVar1;
+  VehicleDef *pVVar2;
   
-  pcVar1 = (char *)__savegprlr_28(param_1);
-  if (pcVar1 == (char *)0x0) {
+  if (param_1 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0x1bc,0,
                     "%s");
   }
-  uVar2 = G_FindConfigstringIndex(pcVar1,CS_VEHICLE_DEFS,0x20,level.initializing,"VehicleDef");
-  if (0x1f < uVar2) {
+  uVar1 = G_FindConfigstringIndex(param_1,CS_VEHICLE_DEFS,0x20,level.initializing,"VehicleDef");
+  if (0x1f < uVar1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0x1bf,0,
                     "vehDefIndex doesn\'t index MAX_VEHICLE_DEFS\n\t%i not in [0, %i)");
   }
-  if (vehicleServerDefs[uVar2] == (VehicleDef *)0x0) {
-    pVVar3 = Vehicle_LoadServerDefAssets(pcVar1,uVar2);
-    vehicleServerDefs[uVar2] = pVVar3;
+  if (vehicleServerDefs[uVar1] == (VehicleDef *)0x0) {
+    pVVar2 = Vehicle_LoadServerDefAssets(param_1,uVar1);
+    vehicleServerDefs[uVar1] = pVVar2;
   }
-  iVar4 = __restgprlr_28(uVar2);
-  return iVar4;
+  return uVar1;
 }
 
 
@@ -138,6 +130,8 @@ void Vehicle_ClearServerDefs(void)
 
 // 826AA9E0  Vehicle_LoadServerDefs  (vehicle/vehicle.cpp:465)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "ConfigString": Some values do not have unique names */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
@@ -151,7 +145,6 @@ void Vehicle_LoadServerDefs(void)
   VehicleDef **ppVVar4;
   char local_90 [144];
   
-  __savegprlr_23();
   iVar3 = 1;
   ppVVar4 = vehicleServerDefs + 1;
   do {
@@ -175,32 +168,28 @@ void Vehicle_LoadServerDefs(void)
     ppVVar4 = ppVVar4 + 1;
     iVar3 = iVar3 + 1;
   } while ((int)ppVVar4 < -0x7bbb5358);
-  __restgprlr_23();
   return;
 }
 
 
 // 826AAAE0  Vehicle_GetServerDef  (vehicle/vehicle.cpp:487)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
 
 VehicleDef * Vehicle_GetServerDef(int param_1)
 
 {
-  uint uVar1;
-  VehicleDef *pVVar2;
-  
-  uVar1 = __savegprlr_29(param_1);
-  if (0x1f < uVar1) {
+  if (0x1f < (uint)param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0x1e8,0,
                     "vehDefIndex doesn\'t index MAX_VEHICLE_DEFS\n\t%i not in [0, %i)");
   }
-  if (vehicleServerDefs[uVar1] == (VehicleDef *)0x0) {
+  if (vehicleServerDefs[param_1] == (VehicleDef *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0x1e9,0,
                     "%s");
   }
-  pVVar2 = (VehicleDef *)__restgprlr_29(vehicleServerDefs[uVar1]);
-  return pVVar2;
+  return vehicleServerDefs[param_1];
 }
 
 
@@ -229,6 +218,8 @@ GraphFloat * Vehicle_GetAccelGraph(int param_1)
 
 // 826AABA8  Vehicle_RegisterDvars  (vehicle/vehicle.cpp:514)
 
+/* WARNING: Function: __savefpr_21 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_21 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void Vehicle_RegisterDvars(void)
@@ -250,7 +241,6 @@ void Vehicle_RegisterDvars(void)
   double dVar14;
   double dVar15;
   
-  __savefpr_21();
   vehCam_mode = Dvar_RegisterEnum("vehCam_mode",vehicleCameraModeNames,1,4,
                                   "Camera modes: 1st person, 3rd person, or both");
   pIVar2 = &IMAGE_DOS_HEADER_82000000;
@@ -552,13 +542,14 @@ void Vehicle_RegisterDvars(void)
   vehUGVPitchTrack = Dvar_RegisterFloat("vehUGVPitchTrack",6.0,(float)dVar14,(float)dVar5,uVar1,"");
   vehUGVRollTrack =
        Dvar_RegisterFloat("vehUGVRollTrack",(float)dVar10,(float)dVar14,(float)dVar5,0,pcVar3);
-  __restfpr_21();
   return;
 }
 
 
 // 826ABA10  VEH_UpdateSounds  (vehicle/vehicle.cpp:634)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
@@ -568,59 +559,55 @@ void VEH_UpdateSounds(gentity_s *param_1)
 {
   Vehicle *pVVar1;
   bool bVar2;
-  gentity_s *pgVar3;
-  VehicleDef *pVVar4;
-  int *piVar5;
-  int iVar6;
-  float *pfVar7;
+  VehicleDef *pVVar3;
+  int *piVar4;
+  int iVar5;
+  float *pfVar6;
   
-  pgVar3 = (gentity_s *)__savegprlr_26(param_1);
-  if (pgVar3 == (gentity_s *)0x0) {
+  if (param_1 == (gentity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0x282,0,
                     "%s");
   }
-  pVVar1 = pgVar3->vehicle;
+  pVVar1 = param_1->vehicle;
   if (pVVar1 == (Vehicle *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0x285,0,
                     "%s");
   }
-  pVVar4 = Vehicle_GetServerDef(pVVar1->defIndex);
-  if ((pgVar3->r).isInUse == '\0') {
+  pVVar3 = Vehicle_GetServerDef(pVVar1->defIndex);
+  if ((param_1->r).isInUse == '\0') {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0x28a,0,
                     "%s");
   }
   bVar2 = false;
-  if (pVVar4->suspensionHardSnd != (snd_alias_list_t *)0x0) {
-    iVar6 = 0;
-    pfVar7 = (pVVar1->phys).wheelPrevCompression;
-    piVar5 = (pVVar1->boneIndex).wheel;
+  if (pVVar3->suspensionHardSnd != (snd_alias_list_t *)0x0) {
+    iVar5 = 0;
+    pfVar6 = (pVVar1->phys).wheelPrevCompression;
+    piVar4 = (pVVar1->boneIndex).wheel;
     do {
-      if ((-1 < *piVar5) && (pVVar4->suspensionHardCompression <= pfVar7[-6] - *pfVar7)) {
-        G_AddEvent(pgVar3,0x74,0);
+      if ((-1 < *piVar4) && (pVVar3->suspensionHardCompression <= pfVar6[-6] - *pfVar6)) {
+        G_AddEvent(param_1,0x74,0);
         bVar2 = true;
         break;
       }
-      iVar6 = iVar6 + 1;
-      piVar5 = piVar5 + 1;
-      pfVar7 = pfVar7 + 1;
-    } while (iVar6 < 6);
+      iVar5 = iVar5 + 1;
+      piVar4 = piVar4 + 1;
+      pfVar6 = pfVar6 + 1;
+    } while (iVar5 < 6);
   }
-  if ((pVVar4->suspensionSoftSnd != (snd_alias_list_t *)0x0) && (!bVar2)) {
-    iVar6 = 0;
-    pfVar7 = (pVVar1->phys).wheelPrevCompression;
-    piVar5 = (pVVar1->boneIndex).wheel;
-    while ((*piVar5 < 0 || (pfVar7[-6] - *pfVar7 < pVVar4->suspensionSoftCompression))) {
-      iVar6 = iVar6 + 1;
-      piVar5 = piVar5 + 1;
-      pfVar7 = pfVar7 + 1;
-      if (5 < iVar6) {
-        __restgprlr_26();
+  if ((pVVar3->suspensionSoftSnd != (snd_alias_list_t *)0x0) && (!bVar2)) {
+    iVar5 = 0;
+    pfVar6 = (pVVar1->phys).wheelPrevCompression;
+    piVar4 = (pVVar1->boneIndex).wheel;
+    while ((*piVar4 < 0 || (pfVar6[-6] - *pfVar6 < pVVar3->suspensionSoftCompression))) {
+      iVar5 = iVar5 + 1;
+      piVar4 = piVar4 + 1;
+      pfVar6 = pfVar6 + 1;
+      if (5 < iVar5) {
         return;
       }
     }
-    G_AddEvent(pgVar3,0x73,0);
+    G_AddEvent(param_1,0x73,0);
   }
-  __restgprlr_26();
   return;
 }
 
@@ -640,6 +627,8 @@ void Vehicle_PrecacheDefaultDef(void)
 
 // 826ABBE0  Vehicle_InitSystem  (vehicle/vehicle.cpp:693)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 
@@ -648,7 +637,6 @@ void Vehicle_InitSystem(int param_1)
 {
   Vehicle *pVVar1;
   
-  __savegprlr_29(param_1);
   Vehicle_RegisterServerDef("defaultvehicle");
   G_ModelIndex("defaultvehicle");
   pVVar1 = vehicleServers;
@@ -660,13 +648,14 @@ void Vehicle_InitSystem(int param_1)
   level.vehicles = vehicleServers;
   PhysVeh_Init();
   VehPath_Init();
-  __restgprlr_29();
   return;
 }
 
 
 // 826ABC50  Vehicle_GetCollMap  (vehicle/vehicle.cpp:715)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
@@ -674,44 +663,41 @@ gentity_s * Vehicle_GetCollMap(char *param_1)
 
 {
   char *pcVar1;
-  char *pcVar2;
+  int iVar2;
   int iVar3;
-  gentity_s *pgVar4;
-  int iVar5;
-  int iVar6;
-  ushort *puVar7;
+  int iVar4;
+  ushort *puVar5;
   
-  pcVar1 = (char *)__savegprlr_26(param_1);
-  if (pcVar1 == (char *)0x0) {
+  if (param_1 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0x2d0,0,
                     "%s");
   }
-  iVar6 = 0;
+  iVar4 = 0;
   if (0 < level.num_entities) {
-    puVar7 = &g_entities[0].classname;
-    iVar5 = level.num_entities;
+    puVar5 = &g_entities[0].classname;
+    iVar3 = level.num_entities;
     do {
-      if ((*(uchar *)((int)puVar7 + -0x6f) != '\0') && (*puVar7 == scr_const.script_vehicle_collmap)
+      if ((*(uchar *)((int)puVar5 + -0x6f) != '\0') && (*puVar5 == scr_const.script_vehicle_collmap)
          ) {
-        pcVar2 = SL_ConvertToString((uint)puVar7[4]);
-        iVar3 = I_stricmp(pcVar2,pcVar1);
-        iVar5 = level.num_entities;
-        if (iVar3 == 0) {
-          pgVar4 = (gentity_s *)__restgprlr_26((gentity_s *)(puVar7 + -0xb9));
-          return pgVar4;
+        pcVar1 = SL_ConvertToString((uint)puVar5[4]);
+        iVar2 = I_stricmp(pcVar1,param_1);
+        iVar3 = level.num_entities;
+        if (iVar2 == 0) {
+          return (gentity_s *)(puVar5 + -0xb9);
         }
       }
-      iVar6 = iVar6 + 1;
-      puVar7 = puVar7 + 0x140;
-    } while (iVar6 < iVar5);
+      iVar4 = iVar4 + 1;
+      puVar5 = puVar5 + 0x140;
+    } while (iVar4 < iVar3);
   }
-  pgVar4 = (gentity_s *)__restgprlr_26(0);
-  return pgVar4;
+  return (gentity_s *)0x0;
 }
 
 
 // 826ABD20  Vehicle_SetupCollmap  (vehicle/vehicle.cpp:750)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
@@ -719,52 +705,50 @@ void Vehicle_SetupCollmap(gentity_s *param_1)
 
 {
   uchar uVar1;
-  gentity_s *pgVar2;
-  uint uVar3;
-  char *pcVar4;
-  gentity_s *pgVar5;
+  uint uVar2;
+  char *pcVar3;
+  gentity_s *pgVar4;
   
-  pgVar2 = (gentity_s *)__savegprlr_29(param_1);
-  if (pgVar2 == (gentity_s *)0x0) {
+  if (param_1 == (gentity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0x2f1,0,
                     "%s");
   }
-  uVar3 = G_ModelName((uint)pgVar2->model);
-  pcVar4 = SL_ConvertToString(uVar3);
-  pgVar5 = Vehicle_GetCollMap(pcVar4);
-  if (pgVar5 != (gentity_s *)0x0) {
-    if ((pgVar5->s).index.brushModel == 0) {
-      uVar3 = G_ModelName((uint)pgVar2->model);
-      SL_ConvertToString(uVar3);
+  uVar2 = G_ModelName((uint)param_1->model);
+  pcVar3 = SL_ConvertToString(uVar2);
+  pgVar4 = Vehicle_GetCollMap(pcVar3);
+  if (pgVar4 != (gentity_s *)0x0) {
+    if ((pgVar4->s).index.brushModel == 0) {
+      uVar2 = G_ModelName((uint)param_1->model);
+      SL_ConvertToString(uVar2);
       Com_PrintWarning(0xf,
                        "WARNING: Cannot use empty vehicle collmap for [%s], will break MyMapEnts\n")
       ;
-      __restgprlr_29();
       return;
     }
-    SV_UnlinkEntity(pgVar2);
-    uVar1 = (pgVar2->r).modelType;
-    (pgVar2->s).index = (pgVar5->s).index;
+    SV_UnlinkEntity(param_1);
+    uVar1 = (param_1->r).modelType;
+    (param_1->s).index = (pgVar4->s).index;
     if (uVar1 != '\0') {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0x303,1
                       ,"ent->r.modelType == MODELTYPE_CAPSULE\n\t%i, %i");
     }
-    (pgVar2->r).modelType = '\x04';
-    SV_SetBrushModel(pgVar2);
-    uVar3 = pgVar2->spawnflags;
-    (pgVar2->r).contents = 0x800000;
-    if ((uVar3 & 1) != 0) {
-      (pgVar2->r).contents = 0xa00000;
+    (param_1->r).modelType = '\x04';
+    SV_SetBrushModel(param_1);
+    uVar2 = param_1->spawnflags;
+    (param_1->r).contents = 0x800000;
+    if ((uVar2 & 1) != 0) {
+      (param_1->r).contents = 0xa00000;
     }
-    SV_LinkEntity(pgVar2);
+    SV_LinkEntity(param_1);
   }
-  __restgprlr_29();
   return;
 }
 
 
 // 826ABE28  Vehicle_SetupSystem  (vehicle/vehicle.cpp:785)
 
+/* WARNING: Function: __savegprlr_17 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_17 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
@@ -780,7 +764,6 @@ void Vehicle_SetupSystem(void)
   int iVar6;
   short sVar7;
   
-  __savegprlr_17();
   VehPath_Setup();
   iVar6 = 0;
   do {
@@ -831,13 +814,14 @@ void Vehicle_SetupSystem(void)
     sVar7 = (short)iVar6 + 1;
     iVar6 = (int)sVar7;
   } while (sVar7 < 8);
-  __restgprlr_17();
   return;
 }
 
 
 // 826ABFD8  Vehicle_ShutdownDevgui  (vehicle/vehicle.cpp:810)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "ConfigString": Some values do not have unique names */
 
@@ -850,7 +834,6 @@ void Vehicle_ShutdownDevgui(void)
   char local_180 [64];
   char acStack_140 [320];
   
-  __savegprlr_26();
   bVar1 = G_ExitAfterToolComplete();
   if (!bVar1) {
     CVar3 = CS_VEHICLE_DEFS|CS_SYSTEMINFO;
@@ -869,7 +852,6 @@ void Vehicle_ShutdownDevgui(void)
       CVar3 = CVar3 + CS_SYSTEMINFO;
     } while (lVar2 != 0);
   }
-  __restgprlr_26();
   return;
 }
 
@@ -898,6 +880,8 @@ void Vehicle_ShutdownSystem(void)
 
 // 826AC0E0  Vehicle_WriteSaveGame  (vehicle/vehicle.cpp:847)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
@@ -906,25 +890,23 @@ void Vehicle_WriteSaveGame(MemoryFile *param_1)
 
 {
   uint uVar1;
-  MemoryFile *pMVar2;
-  Vehicle *pVVar3;
+  Vehicle *pVVar2;
   char local_4a0 [4];
   uint local_49c [3];
   uchar auStack_490 [1168];
   
-  pMVar2 = (MemoryFile *)__savegprlr_23(param_1);
-  if (pMVar2 == (MemoryFile *)0x0) {
+  if (param_1 == (MemoryFile *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0x359,0,
                     "%s");
   }
-  pVVar3 = vehicleServers;
+  pVVar2 = vehicleServers;
   do {
     memcpy();
-    local_49c[0] = (uint)(pVVar3->ent != (gentity_s *)0x0);
-    MemFile_WriteData(pMVar2,4,local_49c);
+    local_49c[0] = (uint)(pVVar2->ent != (gentity_s *)0x0);
+    MemFile_WriteData(param_1,4,local_49c);
     if (local_49c[0] != 0) {
-      G_WriteStruct(vehicleSaveFields,(uchar *)pVVar3,auStack_490,0x438,pMVar2);
-      uVar1 = pVVar3->defIndex;
+      G_WriteStruct(vehicleSaveFields,(uchar *)pVVar2,auStack_490,0x438,param_1);
+      uVar1 = pVVar2->defIndex;
       if (0x1f < uVar1) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0x1e8
                         ,0,"vehDefIndex doesn\'t index MAX_VEHICLE_DEFS\n\t%i not in [0, %i)");
@@ -933,22 +915,23 @@ void Vehicle_WriteSaveGame(MemoryFile *param_1)
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0x1e9
                         ,0,"%s");
       }
-      WriteCStyleString(vehicleServerDefs[uVar1]->name,0x100,pMVar2);
-      local_4a0[0] = '\x01' - (pVVar3->physVeh == (PhysVehicle *)0x0);
-      MemFile_WriteData(pMVar2,1,local_4a0);
+      WriteCStyleString(vehicleServerDefs[uVar1]->name,0x100,param_1);
+      local_4a0[0] = '\x01' - (pVVar2->physVeh == (PhysVehicle *)0x0);
+      MemFile_WriteData(param_1,1,local_4a0);
       if (local_4a0[0] != '\0') {
-        PhysVeh_Save(pVVar3->physVeh,pMVar2);
+        PhysVeh_Save(pVVar2->physVeh,param_1);
       }
     }
-    pVVar3 = pVVar3 + 1;
-  } while ((int)pVVar3 < -0x7bbb0570);
-  __restgprlr_23();
+    pVVar2 = pVVar2 + 1;
+  } while ((int)pVVar2 < -0x7bbb0570);
   return;
 }
 
 
 // 826B6248  Vehicle_ReadSaveGame  (vehicle/vehicle.cpp:885)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
 /* WARNING: Enum "PhysWorld": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -957,49 +940,48 @@ void Vehicle_WriteSaveGame(MemoryFile *param_1)
 void Vehicle_ReadSaveGame(SaveGame *param_1)
 
 {
-  SaveGame *pSVar1;
-  MemoryFile *pMVar2;
-  int iVar3;
-  VehicleDef *pVVar4;
-  PhysVehicle *pPVar5;
-  int *piVar6;
+  MemoryFile *pMVar1;
+  int iVar2;
+  VehicleDef *pVVar3;
+  PhysVehicle *pPVar4;
+  int *piVar5;
   char local_150 [4];
   int local_14c [3];
   char acStack_140 [320];
   
-  pSVar1 = (SaveGame *)__savegprlr_26(param_1);
-  if (pSVar1 == (SaveGame *)0x0) {
+  if (param_1 == (SaveGame *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0x37e,0,
                     "%s");
   }
-  piVar6 = &vehicleServers[0].defIndex;
+  piVar5 = &vehicleServers[0].defIndex;
   do {
     local_14c[0] = 0;
-    SaveMemory_LoadRead(local_14c,4,pSVar1);
+    SaveMemory_LoadRead(local_14c,4,param_1);
     if (local_14c[0] != 0) {
-      G_ReadStruct(vehicleSaveFields,(uchar *)(piVar6 + -0x84),0x438,pSVar1);
-      pMVar2 = SaveMemory_GetMemoryFile(pSVar1);
-      ReadCStyleString(acStack_140,0x100,pMVar2);
-      iVar3 = Vehicle_RegisterServerDef(acStack_140);
-      *piVar6 = iVar3;
-      SaveMemory_LoadRead(local_150,1,pSVar1);
+      G_ReadStruct(vehicleSaveFields,(uchar *)(piVar5 + -0x84),0x438,param_1);
+      pMVar1 = SaveMemory_GetMemoryFile(param_1);
+      ReadCStyleString(acStack_140,0x100,pMVar1);
+      iVar2 = Vehicle_RegisterServerDef(acStack_140);
+      *piVar5 = iVar2;
+      SaveMemory_LoadRead(local_150,1,param_1);
       if (local_150[0] != '\0') {
-        iVar3 = *piVar6;
-        pVVar4 = Vehicle_GetServerDef(iVar3);
-        pPVar5 = PhysVeh_Load(pSVar1,&pVVar4->vehPhysDef,physAccelGraphs + iVar3);
-        piVar6[-8] = (int)pPVar5;
+        iVar2 = *piVar5;
+        pVVar3 = Vehicle_GetServerDef(iVar2);
+        pPVar4 = PhysVeh_Load(param_1,&pVVar3->vehPhysDef,physAccelGraphs + iVar2);
+        piVar5[-8] = (int)pPVar4;
       }
       Phys_SetImpactCallback(PHYS_WORLD_FIRST_SERVER_WORLD,Vehicle_Impact);
     }
-    piVar6 = piVar6 + 0x10e;
-  } while ((int)piVar6 < -0x7bbb0360);
-  __restgprlr_26();
+    piVar5 = piVar5 + 0x10e;
+  } while ((int)piVar5 < -0x7bbb0360);
   return;
 }
 
 
 // 826AC258  Vehicle_FreeEntity  (vehicle/vehicle.cpp:922)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
@@ -1007,41 +989,38 @@ void Vehicle_FreeEntity(gentity_s *param_1)
 
 {
   Vehicle *pVVar1;
-  gentity_s *pgVar2;
   
-  pgVar2 = (gentity_s *)__savegprlr_28(param_1);
-  if (pgVar2 == (gentity_s *)0x0) {
+  if (param_1 == (gentity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0x39d,0,
                     "%s");
   }
-  if (pgVar2->vehicle == (Vehicle *)0x0) {
+  if (param_1->vehicle == (Vehicle *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0x39e,0,
                     "%s");
   }
-  pVVar1 = pgVar2->vehicle;
+  pVVar1 = param_1->vehicle;
   if (pVVar1->ent == (gentity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0x3a1,0,
                     "%s");
   }
-  pgVar2->health = 0;
-  VEH_UpdateSounds(pgVar2);
+  param_1->health = 0;
+  VEH_UpdateSounds(param_1);
   Scr_SetString(&pVVar1->lookAtText0,0);
   Scr_SetString(&pVVar1->lookAtText1,0);
   EntHandle::setEnt(&pVVar1->lookAtEnt,(gentity_s *)0x0);
-  pgVar2->nextthink = 0;
-  pgVar2->takedamage = '\0';
-  pgVar2->active = '\0';
-  (pgVar2->s).lerp.eFlags = 0;
-  (pgVar2->s).lerp.pos.trType = TR_STATIONARY;
-  (pgVar2->s).lerp.apos.trType = TR_STATIONARY;
+  param_1->nextthink = 0;
+  param_1->takedamage = '\0';
+  param_1->active = '\0';
+  (param_1->s).lerp.eFlags = 0;
+  (param_1->s).lerp.pos.trType = TR_STATIONARY;
+  (param_1->s).lerp.apos.trType = TR_STATIONARY;
   VehPath_FreePathPos(&pVVar1->pathPos);
   if (pVVar1->physVeh != (PhysVehicle *)0x0) {
     PhysVeh_Destroy(pVVar1->physVeh);
     pVVar1->physVeh = (PhysVehicle *)0x0;
   }
   pVVar1->ent = (gentity_s *)0x0;
-  pgVar2->vehicle = (Vehicle *)0x0;
-  __restgprlr_28();
+  param_1->vehicle = (Vehicle *)0x0;
   return;
 }
 
@@ -1198,6 +1177,8 @@ void VEH_DebugCapsule(float *param_1,float param_2,float param_3,float param_4,f
 
 // 826AC698  VEH_GetTagBoneIndex  (vehicle/vehicle.cpp:1037)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
@@ -1205,53 +1186,46 @@ int VEH_GetTagBoneIndex(gentity_s *param_1,int param_2)
 
 {
   Vehicle *pVVar1;
-  gentity_s *pgVar3;
-  uint uVar4;
-  char *pcVar5;
-  int iVar6;
-  ulonglong uVar2;
-  ulonglong uVar7;
-  ulonglong uVar8;
+  uint uVar2;
+  char *pcVar3;
+  int iVar4;
+  int iVar5;
   
-  uVar7 = (ulonglong)param_2;
-  pgVar3 = (gentity_s *)__savegprlr_27(param_1);
-  pVVar1 = pgVar3->vehicle;
-  uVar8 = 0xffffffffffffffff;
-  uVar4 = Scr_GetNumParam();
-  if (uVar4 != 0) {
-    pcVar5 = Scr_GetString(0);
-    if (*pcVar5 == '\0') {
-      uVar8 = 0xffffffffffffffff;
+  pVVar1 = param_1->vehicle;
+  iVar4 = -1;
+  uVar2 = Scr_GetNumParam();
+  if (uVar2 != 0) {
+    pcVar3 = Scr_GetString(0);
+    if (*pcVar3 == '\0') {
+      iVar4 = -1;
     }
     else {
-      uVar4 = Scr_GetConstLowercaseString(0);
-      iVar6 = SV_DObjGetBoneIndex(pgVar3,uVar4);
-      uVar8 = (ulonglong)iVar6;
-      if (iVar6 < 0) {
-        SL_ConvertToString((uint)pgVar3->targetname);
-        pcVar5 = va("No tag %s for [%s]\n");
-        Scr_Error(pcVar5);
+      uVar2 = Scr_GetConstLowercaseString(0);
+      iVar4 = SV_DObjGetBoneIndex(param_1,uVar2);
+      if (iVar4 < 0) {
+        SL_ConvertToString((uint)param_1->targetname);
+        pcVar3 = va("No tag %s for [%s]\n");
+        Scr_Error(pcVar3);
       }
     }
   }
-  uVar4 = Scr_GetNumParam();
-  if (((uVar4 == 0) || (uVar2 = uVar8, (int)uVar8 < 0)) &&
-     (uVar4 = *(uint *)((int)(pVVar1->pathPos).origin +
-                       (int)((uVar7 + 0xff & 0xffffffff) << 2) + -0x1c), uVar2 = (ulonglong)uVar4,
-     (int)uVar4 < 0)) {
-    SL_ConvertToString((uint)pgVar3->targetname);
-    SL_ConvertToString((uint)**(ushort **)((int)s_flashTags + (int)((uVar7 & 0xffffffff) << 2)));
-    pcVar5 = va("No %s for [%s]\n");
-    Scr_Error(pcVar5);
-    uVar2 = uVar8;
+  uVar2 = Scr_GetNumParam();
+  if (((uVar2 == 0) || (iVar5 = iVar4, iVar4 < 0)) &&
+     (iVar5 = (pVVar1->boneIndex).flash[param_2], iVar5 < 0)) {
+    SL_ConvertToString((uint)param_1->targetname);
+    SL_ConvertToString((uint)*s_flashTags[param_2]);
+    pcVar3 = va("No %s for [%s]\n");
+    Scr_Error(pcVar3);
+    iVar5 = iVar4;
   }
-  iVar6 = __restgprlr_27(uVar2);
-  return iVar6;
+  return iVar5;
 }
 
 
 // 826AC790  VEH_GetWheelOrigin  (vehicle/vehicle.cpp:1069)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
@@ -1259,77 +1233,66 @@ void VEH_GetWheelOrigin(gentity_s *param_1,int param_2,float *param_3)
 
 {
   Vehicle *pVVar1;
-  int iVar2;
-  gentity_s *pgVar3;
-  DObjAnimMat *pDVar4;
-  ulonglong uVar5;
+  DObjAnimMat *pDVar2;
   
-  uVar5 = (ulonglong)param_2;
-  pgVar3 = (gentity_s *)__savegprlr_27(param_1);
-  pVVar1 = pgVar3->vehicle;
-  iVar2 = (int)((uVar5 + 0x104 & 0xffffffff) << 2);
-  if (*(int *)((int)(pVVar1->pathPos).origin + iVar2 + -0x1c) < 0) {
-    SL_ConvertToString((uint)**(ushort **)((int)s_wheelTags + (int)((uVar5 & 0xffffffff) << 2)));
-    SL_ConvertToString((uint)pgVar3->targetname);
+  pVVar1 = param_1->vehicle;
+  if ((pVVar1->boneIndex).wheel[param_2] < 0) {
+    SL_ConvertToString((uint)*s_wheelTags[param_2]);
+    SL_ConvertToString((uint)param_1->targetname);
     Com_Error(ERR_DROP,"\x15Script vehicle [%s] needs [%s]\n");
   }
-  pDVar4 = G_DObjGetLocalBoneIndexMatrix
-                     (pgVar3,*(int *)((int)(pVVar1->pathPos).origin + iVar2 + -0x1c));
-  if (pDVar4 == (DObjAnimMat *)0x0) {
+  pDVar2 = G_DObjGetLocalBoneIndexMatrix(param_1,(pVVar1->boneIndex).wheel[param_2]);
+  if (pDVar2 == (DObjAnimMat *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0x437,0,
                     "%s");
   }
-  *param_3 = pDVar4->trans[0];
-  param_3[1] = pDVar4->trans[1];
-  param_3[2] = pDVar4->trans[2];
-  __restgprlr_27();
+  *param_3 = pDVar2->trans[0];
+  param_3[1] = pDVar2->trans[1];
+  param_3[2] = pDVar2->trans[2];
   return;
 }
 
 
 // 826AC858  VEH_ResetWheels  (vehicle/vehicle.cpp:1086)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
 void VEH_ResetWheels(gentity_s *param_1,vehicle_physic_t *param_2)
 
 {
-  gentity_s *pgVar1;
-  ulonglong uVar2;
-  longlong lVar3;
-  int *piVar4;
-  longlong lVar5;
+  longlong lVar1;
+  int *piVar2;
+  float *pfVar3;
   float afStack_40 [2];
-  undefined4 local_38;
+  float local_38;
   
-  uVar2 = (ulonglong)(int)param_2;
-  pgVar1 = (gentity_s *)__savegprlr_28(param_1);
-  if (pgVar1 == (gentity_s *)0x0) {
+  if (param_1 == (gentity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0x443,0,
                     "%s");
   }
-  if (pgVar1->vehicle == (Vehicle *)0x0) {
+  if (param_1->vehicle == (Vehicle *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0x444,0,
                     "%s");
   }
-  if ((uVar2 & 0xffffffff) == 0) {
+  if (param_2 == (vehicle_physic_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0x445,0,
                     "%s");
   }
-  lVar5 = uVar2 + 0xa4;
-  lVar3 = 6;
-  piVar4 = (pgVar1->vehicle->boneIndex).wheel;
+  pfVar3 = param_2->wheelZPos;
+  lVar1 = 6;
+  piVar2 = (param_1->vehicle->boneIndex).wheel;
   do {
-    if (-1 < *piVar4) {
-      G_DObjGetWorldBoneIndexPos(pgVar1,*piVar4,afStack_40);
-      *(undefined4 *)lVar5 = local_38;
+    if (-1 < *piVar2) {
+      G_DObjGetWorldBoneIndexPos(param_1,*piVar2,afStack_40);
+      *pfVar3 = local_38;
     }
-    lVar3 = lVar3 + -1;
-    piVar4 = piVar4 + 1;
-    lVar5 = lVar5 + 4;
-  } while (lVar3 != 0);
-  __restgprlr_28();
+    lVar1 = lVar1 + -1;
+    piVar2 = piVar2 + 1;
+    pfVar3 = pfVar3 + 1;
+  } while (lVar1 != 0);
   return;
 }
 
@@ -1366,27 +1329,28 @@ void VEH_SetPosition(gentity_s *param_1,float *param_2,float *param_3,float *par
 
 // 826ACA40  VEH_GetDObjValidWheelCount  (vehicle/vehicle.cpp:1126)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
 int VEH_GetDObjValidWheelCount(gentity_s *param_1)
 
 {
-  gentity_s *pgVar1;
+  int iVar1;
   int iVar2;
-  longlong lVar3;
-  ushort **ppuVar4;
+  ushort **ppuVar3;
   
-  pgVar1 = (gentity_s *)__savegprlr_28(param_1);
-  ppuVar4 = s_wheelTags;
-  lVar3 = 0;
+  ppuVar3 = s_wheelTags;
+  iVar2 = 0;
   do {
-    iVar2 = SV_DObjGetBoneIndex(pgVar1,(uint)**ppuVar4);
-    if (iVar2 < 0) break;
-    ppuVar4 = ppuVar4 + 1;
-    lVar3 = lVar3 + 1;
-  } while ((int)ppuVar4 < -0x7d6687ac);
-  iVar2 = __restgprlr_28(lVar3);
+    iVar1 = SV_DObjGetBoneIndex(param_1,(uint)**ppuVar3);
+    if (iVar1 < 0) {
+      return iVar2;
+    }
+    ppuVar3 = ppuVar3 + 1;
+    iVar2 = iVar2 + 1;
+  } while ((int)ppuVar3 < -0x7d6687ac);
   return iVar2;
 }
 
@@ -1424,55 +1388,56 @@ bool VEH_DObjHasRequiredTags(gentity_s *param_1,int param_2)
 
 // 826ACB40  VEH_InitModelAndValidateTags  (vehicle/vehicle.cpp:1161)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
 void VEH_InitModelAndValidateTags(gentity_s *param_1,int param_2)
 
 {
-  gentity_s *pgVar1;
+  int iVar1;
   int iVar2;
-  int iVar3;
+  bool bVar4;
+  uint uVar3;
   bool bVar5;
-  uint uVar4;
-  bool bVar6;
   
-  pgVar1 = (gentity_s *)__savegprlr_27(param_1);
-  iVar2 = Vehicle_RegisterServerDef("defaultvehicle");
-  bVar6 = false;
-  if (param_2 == iVar2) {
-    bVar6 = true;
-    G_SetModel(pgVar1,"defaultvehicle");
+  iVar1 = Vehicle_RegisterServerDef("defaultvehicle");
+  bVar5 = false;
+  if (param_2 == iVar1) {
+    bVar5 = true;
+    G_SetModel(param_1,"defaultvehicle");
   }
-  else if ((pgVar1->model != 0) && (iVar3 = G_XModelBad((uint)pgVar1->model), iVar3 != 0)) {
-    bVar6 = true;
-    G_OverrideModel((uint)pgVar1->model,"defaultvehicle");
+  else if ((param_1->model != 0) && (iVar2 = G_XModelBad((uint)param_1->model), iVar2 != 0)) {
+    bVar5 = true;
+    G_OverrideModel((uint)param_1->model,"defaultvehicle");
   }
-  G_DObjUpdate(pgVar1,1);
-  bVar5 = VEH_DObjHasRequiredTags(pgVar1,param_2);
-  if (!bVar5) {
-    if (bVar6) {
+  G_DObjUpdate(param_1,1);
+  bVar4 = VEH_DObjHasRequiredTags(param_1,param_2);
+  if (!bVar4) {
+    if (bVar5) {
       Com_Error(ERR_DROP,"ERROR: default vehicle is missing a required tag!");
     }
-    uVar4 = G_ModelName((uint)pgVar1->model);
-    SL_ConvertToString(uVar4);
+    uVar3 = G_ModelName((uint)param_1->model);
+    SL_ConvertToString(uVar3);
     Com_PrintWarning(0xf,
                      "WARNING: vehicle \'%s\' is missing a required tag! switching to default vehicle model.\n"
                     );
-    G_SetModel(pgVar1,"defaultvehicle");
-    G_DObjUpdate(pgVar1,1);
-    bVar6 = VEH_DObjHasRequiredTags(pgVar1,iVar2);
-    if (!bVar6) {
+    G_SetModel(param_1,"defaultvehicle");
+    G_DObjUpdate(param_1,1);
+    bVar5 = VEH_DObjHasRequiredTags(param_1,iVar1);
+    if (!bVar5) {
       Com_Error(ERR_DROP,"ERROR: default vehicle is missing a required tag!");
     }
   }
-  __restgprlr_27();
   return;
 }
 
 
 // 826ACC58  Vehicle_Impact  (vehicle/vehicle.cpp:1228)
 
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
@@ -1486,46 +1451,41 @@ void Vehicle_Impact(int param_1,float *param_2,float param_3,bool param_4)
   uint uVar4;
   VehicleDrivingState VVar5;
   VehicleDef *pVVar6;
-  int iVar7;
-  bool bVar8;
-  longlong lVar9;
-  ulonglong in_r6;
-  Vehicle *pVVar10;
-  Vehicle *pVVar11;
-  double extraout_f1;
-  double dVar12;
+  bool bVar7;
+  char in_r6;
+  Vehicle *pVVar8;
+  Vehicle *pVVar9;
+  double dVar10;
   
-  lVar9 = (longlong)(int)param_2;
-  iVar7 = __savegprlr_22((double)param_3,param_1,lVar9,param_4);
-  if ((double)((physVeh_minImpactMomentum->current).value * 17.6) <= extraout_f1) {
-    pVVar10 = (Vehicle *)0x0;
-    pVVar11 = vehicleServers;
-    dVar12 = extraout_f1;
+  dVar10 = (double)param_3;
+  if ((double)((physVeh_minImpactMomentum->current).value * 17.6) <= dVar10) {
+    pVVar8 = (Vehicle *)0x0;
+    pVVar9 = vehicleServers;
     do {
-      pgVar2 = pVVar11->ent;
+      pgVar2 = pVVar9->ent;
       if (pgVar2 != (gentity_s *)0x0) {
         if (pgVar2->vehicle == (Vehicle *)0x0) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",
                           0x4de,0,"%s");
         }
         pPVar3 = pgVar2->vehicle->physVeh;
-        if ((pPVar3 != (PhysVehicle *)0x0) && (bVar8 = PhysVeh_ComparePhysObj(pPVar3,iVar7), bVar8))
-        {
-          pVVar10 = pgVar2->vehicle;
+        if ((pPVar3 != (PhysVehicle *)0x0) &&
+           (bVar7 = PhysVeh_ComparePhysObj(pPVar3,param_1), bVar7)) {
+          pVVar8 = pgVar2->vehicle;
           break;
         }
       }
-      pVVar11 = pVVar11 + 1;
-    } while ((int)pVVar11 < -0x7bbb0570);
+      pVVar9 = pVVar9 + 1;
+    } while ((int)pVVar9 < -0x7bbb0570);
     if (pgVar2 == (gentity_s *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0x4e6,0
                       ,"%s");
     }
-    if (pVVar10 == (Vehicle *)0x0) {
+    if (pVVar8 == (Vehicle *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0x4e7,0
                       ,"%s");
     }
-    uVar4 = pVVar10->defIndex;
+    uVar4 = pVVar8->defIndex;
     if (0x1f < uVar4) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0x1e8,0
                       ,"vehDefIndex doesn\'t index MAX_VEHICLE_DEFS\n\t%i not in [0, %i)");
@@ -1539,25 +1499,26 @@ void Vehicle_Impact(int param_1,float *param_2,float param_3,bool param_4)
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0x4ec,0
                       ,"%s");
     }
-    fVar1 = (float)(dVar12 / (double)((pVVar6->vehPhysDef).physPreset)->mass);
-    if (pVVar10->impactSpeed < fVar1) {
-      pVVar10->impactSpeed = fVar1;
+    fVar1 = (float)(dVar10 / (double)((pVVar6->vehPhysDef).physPreset)->mass);
+    if (pVVar8->impactSpeed < fVar1) {
+      pVVar8->impactSpeed = fVar1;
     }
-    if ((((ABS(((float *)lVar9)[2]) <= 0.707) &&
-         (VVar5 = pVVar10->drivingState, VVar5 != VEH_DRIVE_PATH_CONSTRAINED)) &&
+    if ((((ABS(param_2[2]) <= 0.707) &&
+         (VVar5 = pVVar8->drivingState, VVar5 != VEH_DRIVE_PATH_CONSTRAINED)) &&
         (VVar5 != VEH_DRIVE_PATH_FOLLOW)) &&
-       ((((in_r6 & 0xff) == 0 || (VVar5 != VEH_DRIVE_PLAYER)) &&
-        ((double)(pVVar6->vehPhysDef).minimumMomentumForCollision <= dVar12)))) {
-      PhysVeh_Impact(pVVar10->physVeh,(float *)lVar9);
+       (((in_r6 == '\0' || (VVar5 != VEH_DRIVE_PLAYER)) &&
+        ((double)(pVVar6->vehPhysDef).minimumMomentumForCollision <= dVar10)))) {
+      PhysVeh_Impact(pVVar8->physVeh,param_2);
     }
   }
-  __restgprlr_22();
   return;
 }
 
 
 // 826ACE88  Vehicle_InitPhysVeh  (vehicle/vehicle.cpp:1288)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
@@ -1567,70 +1528,72 @@ void Vehicle_InitPhysVeh(Vehicle *param_1)
 
 {
   gentity_s *pgVar1;
-  int *piVar2;
-  VehicleDef *pVVar3;
-  PhysCollmap *pPVar4;
-  uint uVar5;
-  PhysVehicle *pPVar6;
-  bool bVar7;
-  int *piVar8;
+  VehicleDef *pVVar2;
+  PhysCollmap *pPVar3;
+  uint uVar4;
+  PhysVehicle *pPVar5;
+  bool bVar6;
+  int *piVar7;
   float afStack_40 [16];
   
-  piVar2 = (int *)__savegprlr_27(param_1);
-  if (piVar2 == (int *)0x0) {
+  if (param_1 == (Vehicle *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0x50e,0,
                     "%s");
   }
-  if (*piVar2 == 0) {
+  if (param_1->ent == (gentity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0x50f,0,
                     "%s");
   }
-  pgVar1 = (gentity_s *)*piVar2;
-  pVVar3 = Vehicle_GetServerDef(piVar2[0x84]);
-  if ((pVVar3->vehPhysDef).physPreset == (PhysPreset *)0x0) {
+  pgVar1 = param_1->ent;
+  pVVar2 = Vehicle_GetServerDef(param_1->defIndex);
+  if ((pVVar2->vehPhysDef).physPreset == (PhysPreset *)0x0) {
     Com_Error(ERR_DROP,
               "Cannot create a physics vehicle for a vehicle without a physPreset (vehicle: %s)");
   }
-  pPVar4 = G_GetModelCollmap((uint)pgVar1->model);
-  if (pPVar4 == (PhysCollmap *)0x0) {
-    uVar5 = G_ModelName((uint)pgVar1->model);
-    SL_ConvertToString(uVar5);
+  pPVar3 = G_GetModelCollmap((uint)pgVar1->model);
+  if (pPVar3 == (PhysCollmap *)0x0) {
+    uVar4 = G_ModelName((uint)pgVar1->model);
+    SL_ConvertToString(uVar4);
     Com_Error(ERR_DROP,
               "Cannot create a physics vehicle using a model without a phys collmap (model: %s)");
   }
-  pPVar6 = PhysVeh_Create((pgVar1->r).currentOrigin,(pgVar1->r).currentAngles,(uint)pgVar1->model,
-                          (pgVar1->s).number,&pVVar3->vehPhysDef,physAccelGraphs + piVar2[0x84]);
-  piVar2[0x7c] = (int)pPVar6;
-  if (pPVar6 == (PhysVehicle *)0x0) {
+  pPVar5 = PhysVeh_Create((pgVar1->r).currentOrigin,(pgVar1->r).currentAngles,(uint)pgVar1->model,
+                          (pgVar1->s).number,&pVVar2->vehPhysDef,physAccelGraphs + param_1->defIndex
+                         );
+  param_1->physVeh = pPVar5;
+  if (pPVar5 == (PhysVehicle *)0x0) {
     Com_Error(ERR_DROP,"Unable to create physics vehicle");
   }
-  uVar5 = 0;
-  piVar8 = piVar2 + 0x104;
+  uVar4 = 0;
+  piVar7 = (param_1->boneIndex).wheel;
   do {
-    if (-1 < *piVar8) {
-      VEH_GetWheelOrigin(pgVar1,uVar5,afStack_40);
-      PhysVeh_WheelEnable((PhysVehicle *)piVar2[0x7c],uVar5,afStack_40);
+    if (-1 < *piVar7) {
+      VEH_GetWheelOrigin(pgVar1,uVar4,afStack_40);
+      PhysVeh_WheelEnable(param_1->physVeh,uVar4,afStack_40);
     }
-    uVar5 = uVar5 + 1;
-    piVar8 = piVar8 + 1;
-  } while (uVar5 < 6);
-  if (pVVar3->type == VEH_TANK) {
-    PhysVeh_SetTankSteering((PhysVehicle *)piVar2[0x7c],pVVar3->rotRate,pVVar3->rotAccel);
+    uVar4 = uVar4 + 1;
+    piVar7 = piVar7 + 1;
+  } while (uVar4 < 6);
+  if (pVVar2->type == VEH_TANK) {
+    PhysVeh_SetTankSteering(param_1->physVeh,pVVar2->rotRate,pVVar2->rotAccel);
   }
-  bVar7 = PhysVeh_FinalizeWheels((PhysVehicle *)piVar2[0x7c]);
-  if (!bVar7) {
+  bVar6 = PhysVeh_FinalizeWheels(param_1->physVeh);
+  if (!bVar6) {
     Com_Error(ERR_DROP,
               "vehicle (entnum %i) (of type %s) has front wheels not sufficiently in front of back wheels"
              );
   }
   Phys_SetImpactCallback(PHYS_WORLD_FIRST_SERVER_WORLD,Vehicle_Impact);
-  __restgprlr_27();
   return;
 }
 
 
 // 826AD040  VEH_JoltBody  (vehicle/vehicle.cpp:1332)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
@@ -1641,9 +1604,8 @@ void VEH_JoltBody(gentity_s *param_1,float *param_2,float param_3,float param_4,
   float fVar1;
   float fVar2;
   float fVar3;
-  int iVar4;
+  Vehicle *pVVar4;
   VehicleDef *pVVar5;
-  double extraout_f1;
   double dVar6;
   double dVar7;
   double dVar8;
@@ -1658,54 +1620,52 @@ void VEH_JoltBody(gentity_s *param_1,float *param_2,float param_3,float param_4,
   float local_70;
   float local_6c;
   
-  dVar7 = (double)param_5;
-  dVar6 = (double)param_4;
-  __savegprlr_28((double)param_3,param_1);
-  iVar4 = __savefpr_27();
-  dVar10 = extraout_f1;
-  if (iVar4 == 0) {
+  dVar8 = (double)param_5;
+  dVar7 = (double)param_4;
+  dVar6 = (double)param_3;
+  if (param_1 == (gentity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0x53a,0,
                     "%s");
   }
-  iVar4 = *(int *)(iVar4 + 0x160);
-  if (iVar4 == 0) {
+  pVVar4 = param_1->vehicle;
+  if (pVVar4 == (Vehicle *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0x53d,0,
                     "%s");
   }
-  pVVar5 = Vehicle_GetServerDef(*(int *)(iVar4 + 0x210));
+  pVVar5 = Vehicle_GetServerDef(pVVar4->defIndex);
   dVar12 = 1.0;
-  dVar9 = 0.0;
-  dVar8 = dVar12;
-  if ((float)(dVar10 - 1.0) < 0.0) {
-    dVar8 = dVar10;
+  dVar10 = 0.0;
+  dVar9 = dVar12;
+  if ((float)(dVar6 - 1.0) < 0.0) {
+    dVar9 = dVar6;
   }
-  dVar11 = dVar9;
-  if (-dVar10 < 0.0) {
-    dVar11 = dVar8;
+  dVar11 = dVar10;
+  if (-dVar6 < 0.0) {
+    dVar11 = dVar9;
   }
-  AnglesToAxis((float *)(iVar4 + 0xec),(float (*) [3])&local_80);
-  *(float *)(iVar4 + 0x3bc) = param_2[2] * local_78 + *param_2 * local_80 + param_2[1] * local_7c;
+  AnglesToAxis((pVVar4->phys).angles,(float (*) [3])&local_80);
+  pVVar4->joltDir[0] = param_2[2] * local_78 + *param_2 * local_80 + param_2[1] * local_7c;
   fVar1 = *param_2;
   fVar2 = param_2[2];
   fVar3 = param_2[1];
-  *(float *)(iVar4 + 0x3c4) = (float)dVar12;
-  *(float *)(iVar4 + 0x3c8) = (float)dVar9;
-  *(float *)(iVar4 + 0x3c0) = -(fVar2 * local_6c + fVar1 * local_74 + fVar3 * local_70);
-  Vec2Normalize((float *)(iVar4 + 0x3bc));
-  *(float *)(iVar4 + 0x3bc) =
-       (float)((double)(pVVar5->maxBodyPitch * *(float *)(iVar4 + 0x3bc)) * dVar11);
-  *(float *)(iVar4 + 0x3c0) =
-       (float)((double)pVVar5->maxBodyRoll * dVar11) * *(float *)(iVar4 + 0x3c0);
-  *(float *)(iVar4 + 0x3cc) = (float)((double)*(float *)(iVar4 + 0x2f8) * dVar6);
-  *(float *)(iVar4 + 0x3d0) = (float)dVar7;
-  __restfpr_27();
-  __restgprlr_28();
+  pVVar4->joltTime = (float)dVar12;
+  pVVar4->joltWave = (float)dVar10;
+  pVVar4->joltDir[1] = -(fVar2 * local_6c + fVar1 * local_74 + fVar3 * local_70);
+  Vec2Normalize(pVVar4->joltDir);
+  fVar1 = pVVar4->joltDir[1];
+  fVar2 = pVVar4->speed;
+  pVVar4->joltDir[0] = (float)((double)(pVVar5->maxBodyPitch * pVVar4->joltDir[0]) * dVar11);
+  pVVar4->joltDir[1] = (float)((double)pVVar5->maxBodyRoll * dVar11) * fVar1;
+  pVVar4->joltSpeed = (float)((double)fVar2 * dVar7);
+  pVVar4->joltDecel = (float)dVar8;
   return;
 }
 
 
 // 826AD1A8  VEH_CalcAccel  (vehicle/vehicle.cpp:1366)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
@@ -1719,53 +1679,52 @@ void VEH_CalcAccel(gentity_s *param_1,char *param_2,float *param_3,float *param_
   float fVar4;
   float fVar5;
   float fVar6;
-  int iVar7;
+  Vehicle *pVVar7;
   float fVar8;
   float fVar9;
   float fVar10;
   float fVar11;
   float fVar12;
   float fVar13;
-  int iVar14;
-  VehicleDef *pVVar15;
-  int iVar16;
-  gentity_s *pgVar17;
+  VehicleDef *pVVar14;
+  EntHandle *this;
+  int iVar15;
+  gentity_s *pgVar16;
+  double dVar17;
   double dVar18;
   double dVar19;
-  double dVar20;
   
-  iVar14 = __savegprlr_24(param_1);
-  iVar7 = *(int *)(iVar14 + 0x160);
-  if (iVar7 == 0) {
+  pVVar7 = param_1->vehicle;
+  if (pVVar7 == (Vehicle *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0x563,0,
                     "%s");
   }
-  pVVar15 = Vehicle_GetServerDef(*(int *)(iVar7 + 0x210));
+  pVVar14 = Vehicle_GetServerDef(pVVar7->defIndex);
   fVar3 = 0.0;
-  if (*(float *)(iVar7 + 0x3c4) <= 0.0) {
-    fVar4 = pVVar15->topSpeed;
-    fVar5 = pVVar15->accel;
+  if (pVVar7->joltTime <= 0.0) {
+    fVar4 = pVVar14->topSpeed;
+    fVar5 = pVVar14->accel;
   }
   else {
-    fVar4 = *(float *)(iVar7 + 0x3cc);
-    fVar5 = *(float *)(iVar7 + 0x3d0);
+    fVar4 = pVVar7->joltSpeed;
+    fVar5 = pVVar7->joltDecel;
   }
   cVar1 = param_2[1];
   cVar2 = *param_2;
   if (cVar2 < '\x01') {
     fVar8 = fVar3;
     if (cVar2 < '\0') {
-      fVar8 = -(fVar5 * 0.05 - *(float *)(iVar7 + 0x128)) *
+      fVar8 = -(fVar5 * 0.05 - (pVVar7->phys).bodyVel[0]) *
               ABS((float)(longlong)cVar2) * 0.007874016;
     }
   }
   else {
-    fVar8 = (fVar5 * 0.05 + *(float *)(iVar7 + 0x128)) * ABS((float)(longlong)cVar2) * 0.007874016;
+    fVar8 = (fVar5 * 0.05 + (pVVar7->phys).bodyVel[0]) * ABS((float)(longlong)cVar2) * 0.007874016;
   }
   fVar10 = -fVar4;
-  fVar6 = *(float *)(iVar7 + 0x130);
+  fVar6 = (pVVar7->phys).bodyVel[2];
   fVar13 = -fVar5;
-  dVar20 = 20.0;
+  dVar19 = 20.0;
   fVar12 = fVar4;
   if (fVar8 - fVar4 < 0.0) {
     fVar12 = fVar8;
@@ -1788,7 +1747,7 @@ void VEH_CalcAccel(gentity_s *param_1,char *param_2,float *param_3,float *param_
   if (fVar10 - fVar6 < 0.0) {
     fVar10 = fVar4;
   }
-  fVar6 = (fVar11 - *(float *)(iVar7 + 0x128)) * 20.0;
+  fVar6 = (fVar11 - (pVVar7->phys).bodyVel[0]) * 20.0;
   fVar4 = fVar5;
   if (fVar6 - fVar5 < 0.0) {
     fVar4 = fVar6;
@@ -1798,7 +1757,7 @@ void VEH_CalcAccel(gentity_s *param_1,char *param_2,float *param_3,float *param_
     fVar12 = fVar4;
   }
   *param_3 = fVar12;
-  fVar8 = (fVar8 - *(float *)(iVar7 + 300)) * 20.0;
+  fVar8 = (fVar8 - (pVVar7->phys).bodyVel[1]) * 20.0;
   fVar4 = fVar5;
   if (fVar8 - fVar5 < 0.0) {
     fVar4 = fVar8;
@@ -1808,7 +1767,7 @@ void VEH_CalcAccel(gentity_s *param_1,char *param_2,float *param_3,float *param_
     fVar6 = fVar4;
   }
   param_3[1] = fVar6;
-  fVar4 = (fVar10 - *(float *)(iVar7 + 0x130)) * 20.0;
+  fVar4 = (fVar10 - (pVVar7->phys).bodyVel[2]) * 20.0;
   if (fVar4 - fVar5 < 0.0) {
     fVar5 = fVar4;
   }
@@ -1818,14 +1777,14 @@ void VEH_CalcAccel(gentity_s *param_1,char *param_2,float *param_3,float *param_
   param_3[2] = fVar13;
   if (param_2[2] < '\x01') {
     if (param_2[1] < '\0') {
-      fVar3 = (pVVar15->rotAccel * 0.05 + *(float *)(iVar7 + 0x150)) *
+      fVar3 = (pVVar14->rotAccel * 0.05 + (pVVar7->phys).rotVel[1]) *
               ABS((float)(longlong)cVar1) * 0.007874016;
     }
     else if ('\0' < param_2[1]) {
-      fVar3 = -(pVVar15->rotAccel * 0.05 - *(float *)(iVar7 + 0x150)) *
+      fVar3 = -(pVVar14->rotAccel * 0.05 - (pVVar7->phys).rotVel[1]) *
               ABS((float)(longlong)cVar1) * 0.007874016;
     }
-    fVar4 = pVVar15->rotRate;
+    fVar4 = pVVar14->rotRate;
     fVar5 = fVar4;
     if (fVar3 - fVar4 < 0.0) {
       fVar5 = fVar3;
@@ -1834,9 +1793,9 @@ void VEH_CalcAccel(gentity_s *param_1,char *param_2,float *param_3,float *param_
     if (-fVar4 - fVar3 < 0.0) {
       fVar8 = fVar5;
     }
-    fVar5 = (fVar8 - *(float *)(iVar7 + 0x150)) * 20.0;
+    fVar5 = (fVar8 - (pVVar7->phys).rotVel[1]) * 20.0;
     param_4[1] = fVar5;
-    fVar3 = pVVar15->rotAccel;
+    fVar3 = pVVar14->rotAccel;
     fVar4 = fVar3;
     if (fVar5 - fVar3 < 0.0) {
       fVar4 = fVar5;
@@ -1848,21 +1807,22 @@ void VEH_CalcAccel(gentity_s *param_1,char *param_2,float *param_3,float *param_
     param_4[1] = fVar8;
   }
   else {
-    iVar16 = EntHandle::isDefined((EntHandle *)(iVar14 + 0x150));
-    if (iVar16 == 0) {
+    this = &(param_1->r).ownerNum;
+    iVar15 = EntHandle::isDefined(this);
+    if (iVar15 == 0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0x58c,0
                       ,"%s");
     }
-    pgVar17 = EntHandle::ent((EntHandle *)(iVar14 + 0x150));
-    if (pgVar17->client == (gclient_s *)0x0) {
+    pgVar16 = EntHandle::ent(this);
+    if (pgVar16->client == (gclient_s *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0x590,0
                       ,"%s");
     }
-    dVar19 = (double)(((pgVar17->client->ps).viewangles[1] - *(float *)(iVar7 + 0xfc)) *
+    dVar18 = (double)(((pgVar16->client->ps).viewangles[1] - (pVVar7->phys).prevAngles[1]) *
                      0.0027777778);
-    dVar18 = floor((double)(float)(dVar19 + 0.5));
-    fVar3 = pVVar15->rotRate;
-    fVar5 = (float)(dVar19 - (double)(float)dVar18) * 7200.0;
+    dVar17 = floor((double)(float)(dVar18 + 0.5));
+    fVar3 = pVVar14->rotRate;
+    fVar5 = (float)(dVar18 - (double)(float)dVar17) * 7200.0;
     fVar4 = fVar3;
     if (fVar5 - fVar3 < 0.0) {
       fVar4 = fVar5;
@@ -1871,11 +1831,11 @@ void VEH_CalcAccel(gentity_s *param_1,char *param_2,float *param_3,float *param_
     if (-fVar3 - fVar5 < 0.0) {
       fVar8 = fVar4;
     }
-    param_4[1] = (float)((double)(fVar8 - *(float *)(iVar7 + 0x150)) * dVar20);
+    param_4[1] = (float)((double)(fVar8 - (pVVar7->phys).rotVel[1]) * dVar19);
   }
-  fVar3 = (float)(-(double)*(float *)(iVar7 + 0x14c) * dVar20);
+  fVar3 = (float)(-(double)(pVVar7->phys).rotVel[0] * dVar19);
   *param_4 = fVar3;
-  fVar4 = pVVar15->rotAccel;
+  fVar4 = pVVar14->rotAccel;
   fVar5 = fVar4;
   if (fVar3 - fVar4 < 0.0) {
     fVar5 = fVar3;
@@ -1885,9 +1845,9 @@ void VEH_CalcAccel(gentity_s *param_1,char *param_2,float *param_3,float *param_
     fVar8 = fVar5;
   }
   *param_4 = fVar8;
-  fVar3 = (float)(-(double)*(float *)(iVar7 + 0x154) * dVar20);
+  fVar3 = (float)(-(double)(pVVar7->phys).rotVel[2] * dVar19);
   param_4[2] = fVar3;
-  fVar4 = pVVar15->rotAccel;
+  fVar4 = pVVar14->rotAccel;
   fVar5 = fVar4;
   if (fVar3 - fVar4 < 0.0) {
     fVar5 = fVar3;
@@ -1897,7 +1857,6 @@ void VEH_CalcAccel(gentity_s *param_1,char *param_2,float *param_3,float *param_
     fVar8 = fVar5;
   }
   param_4[2] = fVar8;
-  __restgprlr_24();
   return;
 }
 
@@ -1934,6 +1893,8 @@ void VEH_ClipVelocity(float *param_1,float *param_2,float *param_3)
 
 // 826AD610  VEH_CorrectAllSolid  (vehicle/vehicle.cpp:1486)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
@@ -1941,47 +1902,47 @@ int VEH_CorrectAllSolid(gentity_s *param_1,trace_t *param_2)
 
 {
   float fVar1;
-  int *piVar2;
-  int iVar3;
-  ulonglong uVar4;
-  float *pfVar5;
-  float *pfVar6;
+  float fVar2;
+  float fVar3;
+  Vehicle *pVVar4;
+  ulonglong uVar5;
+  Bounds *pBVar6;
+  float *pfVar7;
+  vehicle_physic_t *pvVar8;
   float local_50;
   float local_4c;
   float local_48;
   
-  piVar2 = (int *)__savegprlr_26(param_1);
-  iVar3 = piVar2[0x58];
-  pfVar6 = (float *)(iVar3 + 0xd4);
-  uVar4 = 0;
-  pfVar5 = s_correctSolidDeltas[0] + 2;
+  pVVar4 = param_1->vehicle;
+  pvVar8 = &pVVar4->phys;
+  uVar5 = 0;
+  pBVar6 = &(pVVar4->phys).bounds;
+  pfVar7 = s_correctSolidDeltas[0] + 2;
   do {
-    local_50 = *pfVar6 + (*(float (*) [3])(pfVar5 + -2))[0];
-    local_4c = pfVar5[-1] + *(float *)(iVar3 + 0xd8);
-    local_48 = *pfVar5 + *(float *)(iVar3 + 0xdc);
-    G_TraceCapsule(param_2,&local_50,&local_50,(Bounds *)(iVar3 + 0x104),*piVar2,piVar2[99]);
+    local_50 = pvVar8->origin[0] + (*(float (*) [3])(pfVar7 + -2))[0];
+    local_4c = pfVar7[-1] + (pVVar4->phys).origin[1];
+    local_48 = *pfVar7 + (pVVar4->phys).origin[2];
+    G_TraceCapsule(param_2,&local_50,&local_50,pBVar6,(param_1->s).number,param_1->clipmask);
     if (param_2->startsolid == false) {
-      *pfVar6 = local_50;
-      *(float *)(iVar3 + 0xd8) = local_4c;
-      *(float *)(iVar3 + 0xdc) = local_48;
-      local_4c = *(float *)(iVar3 + 0xd8);
-      local_48 = *(float *)(iVar3 + 0xdc) - 1.0;
-      G_TraceCapsule(param_2,pfVar6,&local_50,(Bounds *)(iVar3 + 0x104),*piVar2,piVar2[99]);
+      pvVar8->origin[0] = local_50;
+      (pVVar4->phys).origin[1] = local_4c;
+      (pVVar4->phys).origin[2] = local_48;
+      local_4c = (pVVar4->phys).origin[1];
+      local_48 = (pVVar4->phys).origin[2] - 1.0;
+      G_TraceCapsule(param_2,pvVar8->origin,&local_50,pBVar6,(param_1->s).number,param_1->clipmask);
       memcpy();
       fVar1 = param_2->fraction;
-      *pfVar6 = (local_50 - *pfVar6) * fVar1 + *pfVar6;
-      *(float *)(iVar3 + 0xd8) =
-           (local_4c - *(float *)(iVar3 + 0xd8)) * fVar1 + *(float *)(iVar3 + 0xd8);
-      *(float *)(iVar3 + 0xdc) =
-           (local_48 - *(float *)(iVar3 + 0xdc)) * fVar1 + *(float *)(iVar3 + 0xdc);
-      iVar3 = __restgprlr_26(1);
-      return iVar3;
+      fVar2 = (pVVar4->phys).origin[1];
+      fVar3 = (pVVar4->phys).origin[2];
+      pvVar8->origin[0] = (local_50 - pvVar8->origin[0]) * fVar1 + pvVar8->origin[0];
+      (pVVar4->phys).origin[1] = (local_4c - fVar2) * fVar1 + fVar2;
+      (pVVar4->phys).origin[2] = (local_48 - fVar3) * fVar1 + fVar3;
+      return 1;
     }
-    uVar4 = uVar4 + 0xc;
-    pfVar5 = pfVar5 + 3;
-  } while ((uVar4 & 0xffffffff) < 0x138);
-  iVar3 = __restgprlr_26(0);
-  return iVar3;
+    uVar5 = uVar5 + 0xc;
+    pfVar7 = pfVar7 + 3;
+  } while ((uVar5 & 0xffffffff) < 0x138);
+  return 0;
 }
 
 
@@ -2000,6 +1961,8 @@ void VEH_ClearGround(gentity_s *param_1)
 
 // 826AD788  VEH_GroundTrace  (vehicle/vehicle.cpp:1528)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
@@ -2007,8 +1970,7 @@ void VEH_GroundTrace(gentity_s *param_1)
 
 {
   Vehicle *pVVar1;
-  gentity_s *pgVar2;
-  int iVar3;
+  int iVar2;
   float local_80;
   float local_7c;
   float local_78;
@@ -2017,34 +1979,34 @@ void VEH_GroundTrace(gentity_s *param_1)
   float local_68;
   trace_t local_60;
   
-  pgVar2 = (gentity_s *)__savegprlr_29(param_1);
-  pVVar1 = pgVar2->vehicle;
+  pVVar1 = param_1->vehicle;
   local_80 = (pVVar1->phys).origin[0];
   local_7c = (pVVar1->phys).origin[1];
   local_78 = (pVVar1->phys).origin[2] + 0.25;
   local_70 = (pVVar1->phys).origin[0];
   local_6c = (pVVar1->phys).origin[1];
   local_68 = (pVVar1->phys).origin[2] - 0.25;
-  G_TraceCapsule(&local_60,&local_80,&local_70,&(pVVar1->phys).bounds,(pgVar2->s).number,
-                 pgVar2->clipmask);
+  G_TraceCapsule(&local_60,&local_80,&local_70,&(pVVar1->phys).bounds,(param_1->s).number,
+                 param_1->clipmask);
   memcpy();
   s_phys.hasGround = 0;
   s_phys.onGround = 0;
-  if ((((local_60.allsolid == false) || (iVar3 = VEH_CorrectAllSolid(pgVar2,&local_60), iVar3 != 0))
-      && (local_60.fraction != 1.0)) &&
+  if ((((local_60.allsolid == false) || (iVar2 = VEH_CorrectAllSolid(param_1,&local_60), iVar2 != 0)
+       ) && (local_60.fraction != 1.0)) &&
      ((((pVVar1->phys).vel[2] <= 0.0 ||
        ((pVVar1->phys).vel[2] * local_60.normal[2] +
         (pVVar1->phys).vel[1] * local_60.normal[1] + (pVVar1->phys).vel[0] * local_60.normal[0] <=
         10.0)) && (s_phys.hasGround = 1, (float)0x3f333333 <= local_60.normal[2])))) {
     s_phys.onGround = 1;
   }
-  __restgprlr_29();
   return;
 }
 
 
 // 826AD8C8  VEH_MoveTrace  (vehicle/vehicle.cpp:1577)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
@@ -2055,74 +2017,71 @@ void VEH_MoveTrace(gentity_s *param_1)
   float fVar2;
   float fVar3;
   float fVar4;
-  gentity_s *pgVar5;
-  int iVar6;
-  ushort uVar7;
-  float *pfVar8;
-  entityShared_t *peVar9;
-  longlong lVar10;
+  int iVar5;
+  ushort uVar6;
+  float *pfVar7;
+  entityShared_t *peVar8;
+  longlong lVar9;
+  double dVar10;
   double dVar11;
   double dVar12;
   double dVar13;
-  double dVar14;
   float fStack_94;
   Bounds local_90;
   trace_t local_70 [2];
   
-  pgVar5 = (gentity_s *)__savegprlr_27(param_1);
-  iVar6 = Scr_IsSystemActive('\x01');
-  if (iVar6 != 0) {
-    pVVar1 = pgVar5->vehicle;
+  iVar5 = Scr_IsSystemActive('\x01');
+  if (iVar5 != 0) {
+    pVVar1 = param_1->vehicle;
     fVar2 = (pVVar1->phys).origin[0] - (pVVar1->phys).prevOrigin[0];
     fVar3 = (pVVar1->phys).origin[2] - (pVVar1->phys).prevOrigin[2];
     fVar4 = (pVVar1->phys).origin[1] - (pVVar1->phys).prevOrigin[1];
-    dVar14 = 0.0;
+    dVar13 = 0.0;
     if (fVar4 * fVar4 + fVar3 * fVar3 + fVar2 * fVar2 != 0.0) {
-      pfVar8 = &fStack_94;
-      peVar9 = &pgVar5->r;
-      lVar10 = 6;
+      pfVar7 = &fStack_94;
+      peVar8 = &param_1->r;
+      lVar9 = 6;
       do {
-        peVar9 = (entityShared_t *)&peVar9->box;
-        pfVar8 = pfVar8 + 1;
-        *pfVar8 = ((Bounds *)peVar9)->midPoint[0];
-        lVar10 = lVar10 + -1;
-      } while (lVar10 != 0);
+        peVar8 = (entityShared_t *)&peVar8->box;
+        pfVar7 = pfVar7 + 1;
+        *pfVar7 = ((Bounds *)peVar8)->midPoint[0];
+        lVar9 = lVar9 + -1;
+      } while (lVar9 != 0);
       if (local_90.halfSize[0] < 0.0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\../universal/bounds_inline.h"
                         ,0x363,0,"%s");
       }
-      if ((double)local_90.halfSize[1] < dVar14) {
+      if ((double)local_90.halfSize[1] < dVar13) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\../universal/bounds_inline.h"
                         ,0x364,0,"%s");
       }
-      dVar11 = (double)local_90.halfSize[2];
-      if (dVar11 < dVar14) {
+      dVar10 = (double)local_90.halfSize[2];
+      if (dVar10 < dVar13) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\../universal/bounds_inline.h"
                         ,0x365,0,"%s");
-        dVar11 = (double)local_90.halfSize[2];
+        dVar10 = (double)local_90.halfSize[2];
       }
-      dVar13 = (double)local_90.halfSize[0];
+      dVar12 = (double)local_90.halfSize[0];
       if ((float)((double)local_90.halfSize[0] - (double)local_90.halfSize[1]) < 0.0) {
-        dVar13 = (double)local_90.halfSize[1];
+        dVar12 = (double)local_90.halfSize[1];
       }
-      local_90.halfSize[0] = (float)dVar13;
-      local_90.halfSize[1] = (float)dVar13;
-      dVar12 = (double)(float)(dVar13 - dVar11);
-      if ((double)(float)(dVar13 - dVar11) < 0.0) {
-        dVar12 = dVar14;
+      local_90.halfSize[0] = (float)dVar12;
+      local_90.halfSize[1] = (float)dVar12;
+      dVar11 = (double)(float)(dVar12 - dVar10);
+      if ((double)(float)(dVar12 - dVar10) < 0.0) {
+        dVar11 = dVar13;
       }
-      local_90.halfSize[2] = (float)(dVar11 + dVar12);
-      local_90.midPoint[2] = (float)((double)local_90.midPoint[2] + dVar12);
+      local_90.halfSize[2] = (float)(dVar10 + dVar11);
+      local_90.midPoint[2] = (float)((double)local_90.midPoint[2] + dVar11);
       G_TraceCapsule(local_70,(pVVar1->phys).prevOrigin,(pVVar1->phys).origin,&local_90,
-                     (pgVar5->s).number,0x2081);
-      if ((local_70[0].fraction < 1.0) && (uVar7 = Trace_GetEntityHitId(local_70), uVar7 == 0x7fe))
+                     (param_1->s).number,0x2081);
+      if ((local_70[0].fraction < 1.0) && (uVar6 = Trace_GetEntityHitId(local_70), uVar6 == 0x7fe))
       {
         Scr_AddVector(local_70[0].normal);
-        Scr_Notify(pgVar5,scr_const.script_vehicle_collision,1);
+        Scr_Notify(param_1,scr_const.script_vehicle_collision,1);
       }
     }
   }
-  __restgprlr_27();
   return;
 }
 
@@ -2287,6 +2246,10 @@ void VEH_AirMove(gentity_s *param_1,int param_2,float param_3)
 
 // 826ADDD0  VEH_GroundPlant  (vehicle/vehicle.cpp:1706)
 
+/* WARNING: Function: __savegprlr_18 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_18 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
@@ -2299,29 +2262,25 @@ void VEH_GroundPlant(gentity_s *param_1,vehicle_physic_t *param_2,int param_3)
   float fVar3;
   float fVar4;
   dvar_t *pdVar5;
-  gentity_s *pgVar6;
-  VehicleDef *pVVar7;
-  int iVar8;
+  VehicleDef *pVVar6;
+  int iVar7;
+  float *pfVar8;
   float *pfVar9;
-  ulonglong uVar10;
-  float *pfVar11;
-  float *pfVar12;
+  float *pfVar10;
+  int iVar11;
+  int iVar12;
   float *pfVar13;
-  float *pfVar14;
-  int iVar15;
-  int iVar16;
-  longlong lVar17;
+  double dVar14;
+  double dVar15;
+  double dVar16;
+  double dVar17;
   double dVar18;
   double dVar19;
   double dVar20;
   double dVar21;
   double dVar22;
-  double dVar23;
-  double dVar24;
-  double dVar25;
-  double dVar26;
-  float fVar27;
-  float fVar28;
+  float fVar23;
+  float fVar24;
   float local_2d0;
   float local_2cc;
   float local_2c8;
@@ -2406,131 +2365,126 @@ void VEH_GroundPlant(gentity_s *param_1,vehicle_physic_t *param_2,int param_3)
   float afStack_108 [6];
   trace_t local_f0 [4];
   
-  uVar10 = (ulonglong)(int)param_2;
-  __savegprlr_18(param_1);
-  pgVar6 = (gentity_s *)__savefpr_24();
-  if (pgVar6 == (gentity_s *)0x0) {
+  if (param_1 == (gentity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0x6b7,0,
                     "%s");
   }
-  if ((uVar10 & 0xffffffff) == 0) {
+  if (param_2 == (vehicle_physic_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0x6b8,0,
                     "%s");
   }
-  pVVar2 = pgVar6->vehicle;
+  pVVar2 = param_1->vehicle;
   if (pVVar2 == (Vehicle *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0x6bb,0,
                     "%s");
   }
-  pVVar7 = Vehicle_GetServerDef(pVVar2->defIndex);
-  if ((pVVar7->type != VEH_WHEELS_4) && (pVVar7->type != VEH_TANK)) {
+  pVVar6 = Vehicle_GetServerDef(pVVar2->defIndex);
+  if ((pVVar6->type != VEH_WHEELS_4) && (pVVar6->type != VEH_TANK)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0x6bf,0,
                     "%s");
   }
-  iVar8 = VEH_GetDObjValidWheelCount(pgVar6);
-  iVar15 = 0x211;
+  iVar7 = VEH_GetDObjValidWheelCount(param_1);
+  iVar11 = 0x211;
   if (pVVar2->drivingState == VEH_DRIVE_PLAYER) {
-    iVar15 = 0x10211;
+    iVar11 = 0x10211;
   }
-  pfVar11 = (float *)uVar10;
-  local_26c = *pfVar11;
-  pfVar9 = pfVar11 + 6;
-  local_264 = pfVar11[5];
-  local_268 = pfVar11[1];
-  AnglesToAxis(pfVar9,(float (*) [3])&local_290);
-  dVar20 = 0.05000000074505806;
-  iVar16 = 0;
-  dVar21 = 0.0;
-  dVar25 = 1.0;
-  if (0 < iVar8) {
-    dVar22 = 40.0;
-    pfVar14 = &local_230;
-    dVar23 = 256.0;
-    lVar17 = uVar10 + 0x8c;
-    dVar24 = 64.0;
-    dVar26 = 2.0;
+  local_26c = param_2->origin[0];
+  pfVar10 = param_2->angles;
+  local_264 = param_2->prevOrigin[2];
+  local_268 = param_2->origin[1];
+  AnglesToAxis(pfVar10,(float (*) [3])&local_290);
+  dVar16 = 0.05000000074505806;
+  iVar12 = 0;
+  dVar17 = 0.0;
+  dVar21 = 1.0;
+  if (0 < iVar7) {
+    dVar18 = 40.0;
+    pfVar9 = &local_230;
+    dVar19 = 256.0;
+    pfVar13 = param_2->wheelZVel;
+    dVar20 = 64.0;
+    dVar22 = 2.0;
     do {
-      VEH_GetWheelOrigin(pgVar6,iVar16,afStack_108);
-      pfVar12 = &local_2c0;
-      MatrixTransformVector43(afStack_108,(float (*) [3])&local_290,pfVar12);
+      VEH_GetWheelOrigin(param_1,iVar12,afStack_108);
+      pfVar8 = &local_2c0;
+      MatrixTransformVector43(afStack_108,(float (*) [3])&local_290,pfVar8);
       if ((g_vehicleDebug->current).enabled != false) {
-        local_160 = (float)dVar25;
-        local_15c = (float)dVar21;
-        local_158 = (float)dVar21;
-        local_154 = (float)dVar25;
-        local_150.midPoint[0] = (float)dVar21;
-        local_150.midPoint[1] = (float)dVar21;
-        local_150.midPoint[2] = (float)dVar21;
-        local_150.halfSize[0] = (float)dVar26;
-        local_150.halfSize[1] = (float)dVar26;
-        local_150.halfSize[2] = (float)dVar26;
-        G_DebugBox(&local_2c0,&local_150,(float)dVar21,pfVar12,(int)&local_160,1);
+        local_160 = (float)dVar21;
+        local_15c = (float)dVar17;
+        local_158 = (float)dVar17;
+        local_154 = (float)dVar21;
+        local_150.midPoint[0] = (float)dVar17;
+        local_150.midPoint[1] = (float)dVar17;
+        local_150.midPoint[2] = (float)dVar17;
+        local_150.halfSize[0] = (float)dVar22;
+        local_150.halfSize[1] = (float)dVar22;
+        local_150.halfSize[2] = (float)dVar22;
+        G_DebugBox(&local_2c0,&local_150,(float)dVar17,pfVar8,(int)&local_160,1);
       }
-      local_2a8 = (float)((double)local_2b8 + dVar24);
-      local_2c8 = (float)((double)local_2b8 - dVar23);
+      local_2a8 = (float)((double)local_2b8 + dVar20);
+      local_2c8 = (float)((double)local_2b8 - dVar19);
       local_2b0 = local_2c0;
       local_2ac = local_2bc;
       local_2d0 = local_2c0;
       local_2cc = local_2bc;
       if ((g_vehicleDebug->current).enabled != false) {
-        local_170 = (float)dVar21;
-        local_16c = (float)dVar21;
-        local_168 = (float)dVar25;
-        local_164 = (float)dVar25;
+        local_170 = (float)dVar17;
+        local_16c = (float)dVar17;
+        local_168 = (float)dVar21;
+        local_164 = (float)dVar21;
         G_DebugLine(&local_2b0,&local_2d0,&local_170,1);
       }
-      pfVar13 = &local_2d0;
-      G_TraceCapsule(local_f0,&local_2b0,pfVar13,&bounds_origin,(pgVar6->s).number,iVar15);
-      dVar18 = (double)local_f0[0].fraction;
-      pfVar12 = (float *)lVar17;
-      if (dVar25 <= dVar18) {
-        pfVar12[0xc] = 0.0;
+      pfVar8 = &local_2d0;
+      G_TraceCapsule(local_f0,&local_2b0,pfVar8,&bounds_origin,(param_1->s).number,iVar11);
+      dVar14 = (double)local_f0[0].fraction;
+      if (dVar21 <= dVar14) {
+        pfVar13[0xc] = 0.0;
         local_2c0 = local_2d0;
         local_2bc = local_2cc;
         local_2b8 = local_2c8;
       }
       else {
-        pfVar12[0xc] = (float)(local_f0[0].surfaceFlags >> 0x14 & 0x1f);
-        local_2c0 = (float)((double)(float)((double)local_2d0 - (double)local_2b0) * dVar18 +
+        pfVar13[0xc] = (float)(local_f0[0].surfaceFlags >> 0x14 & 0x1f);
+        local_2c0 = (float)((double)(float)((double)local_2d0 - (double)local_2b0) * dVar14 +
                            (double)local_2b0);
-        local_2bc = (float)((double)(float)((double)local_2cc - (double)local_2ac) * dVar18 +
+        local_2bc = (float)((double)(float)((double)local_2cc - (double)local_2ac) * dVar14 +
                            (double)local_2ac);
-        local_2b8 = (float)((double)(float)((double)local_2c8 - (double)local_2a8) * dVar18 +
+        local_2b8 = (float)((double)(float)((double)local_2c8 - (double)local_2a8) * dVar14 +
                            (double)local_2a8);
       }
       if (param_3 == 0) {
 LAB_826ae0d8:
-        pfVar12[6] = local_2b8;
-        *pfVar12 = (float)dVar21;
+        pfVar13[6] = local_2b8;
+        *pfVar13 = (float)dVar17;
       }
       else {
-        fVar27 = *pfVar12;
-        *pfVar12 = (float)((double)fVar27 - dVar22);
-        fVar27 = (float)((double)(float)((double)fVar27 - dVar22) * dVar20 + (double)pfVar12[6]);
-        pfVar12[6] = fVar27;
-        if (fVar27 < local_2b8) goto LAB_826ae0d8;
+        fVar23 = *pfVar13;
+        *pfVar13 = (float)((double)fVar23 - dVar18);
+        fVar23 = (float)((double)(float)((double)fVar23 - dVar18) * dVar16 + (double)pfVar13[6]);
+        pfVar13[6] = fVar23;
+        if (fVar23 < local_2b8) goto LAB_826ae0d8;
       }
-      *pfVar14 = local_2c0;
+      *pfVar9 = local_2c0;
       pdVar5 = g_vehicleDebug;
-      pfVar14[1] = local_2bc;
-      pfVar14[2] = pfVar12[6];
+      pfVar9[1] = local_2bc;
+      pfVar9[2] = pfVar13[6];
       if ((pdVar5->current).enabled != false) {
-        local_1c0 = (float)dVar21;
-        local_1bc = (float)dVar25;
-        local_1b8 = (float)dVar21;
-        local_1b4 = (float)dVar25;
-        local_130.midPoint[0] = (float)dVar21;
-        local_130.midPoint[1] = (float)dVar21;
-        local_130.midPoint[2] = (float)dVar21;
-        local_130.halfSize[0] = (float)dVar26;
-        local_130.halfSize[1] = (float)dVar26;
-        local_130.halfSize[2] = (float)dVar26;
-        G_DebugBox(pfVar14,&local_130,(float)dVar21,pfVar13,(int)&local_1c0,1);
+        local_1c0 = (float)dVar17;
+        local_1bc = (float)dVar21;
+        local_1b8 = (float)dVar17;
+        local_1b4 = (float)dVar21;
+        local_130.midPoint[0] = (float)dVar17;
+        local_130.midPoint[1] = (float)dVar17;
+        local_130.midPoint[2] = (float)dVar17;
+        local_130.halfSize[0] = (float)dVar22;
+        local_130.halfSize[1] = (float)dVar22;
+        local_130.halfSize[2] = (float)dVar22;
+        G_DebugBox(pfVar9,&local_130,(float)dVar17,pfVar8,(int)&local_1c0,1);
       }
-      iVar16 = iVar16 + 1;
-      lVar17 = lVar17 + 4;
-      pfVar14 = pfVar14 + 3;
-    } while (iVar16 < iVar8);
+      iVar12 = iVar12 + 1;
+      pfVar13 = pfVar13 + 1;
+      pfVar9 = pfVar9 + 3;
+    } while (iVar12 < iVar7);
   }
   local_1d0 = (local_204 + local_228[3]) * 0.5 - (local_210 + local_228[0]) * 0.5;
   local_1e0 = (local_228[3] + local_228[0]) * 0.5 - (local_210 + local_204) * 0.5;
@@ -2538,134 +2492,134 @@ LAB_826ae0d8:
   local_1e8 = (local_228[1] + local_230) * 0.5 - (local_218 + local_20c) * 0.5;
   local_1d4 = (local_208 + local_228[2]) * 0.5 - (local_214 + local_22c) * 0.5;
   local_1e4 = (local_228[2] + local_22c) * 0.5 - (local_214 + local_208) * 0.5;
-  dVar24 = (double)SQRT(local_1d4 * local_1d4 + local_1d8 * local_1d8 + local_1d0 * local_1d0);
-  dVar23 = (double)SQRT(local_1e4 * local_1e4 + local_1e8 * local_1e8 + local_1e0 * local_1e0);
-  dVar22 = dVar25;
-  if (-dVar24 < 0.0) {
-    dVar22 = dVar24;
+  dVar20 = (double)SQRT(local_1d4 * local_1d4 + local_1d8 * local_1d8 + local_1d0 * local_1d0);
+  dVar19 = (double)SQRT(local_1e4 * local_1e4 + local_1e8 * local_1e8 + local_1e0 * local_1e0);
+  dVar18 = dVar21;
+  if (-dVar20 < 0.0) {
+    dVar18 = dVar20;
   }
-  dVar24 = dVar25;
-  if (-dVar23 < 0.0) {
-    dVar24 = dVar23;
+  dVar20 = dVar21;
+  if (-dVar19 < 0.0) {
+    dVar20 = dVar19;
   }
-  fVar27 = (float)(dVar25 / dVar22);
-  fVar1 = (float)(dVar25 / dVar24);
-  local_1d8 = fVar27 * local_1d8;
-  local_1d4 = local_1d4 * fVar27;
-  local_1d0 = local_1d0 * fVar27;
+  fVar23 = (float)(dVar21 / dVar18);
+  fVar1 = (float)(dVar21 / dVar20);
+  local_1d8 = fVar23 * local_1d8;
+  local_1d4 = local_1d4 * fVar23;
+  local_1d0 = local_1d0 * fVar23;
   local_1e8 = fVar1 * local_1e8;
   local_1e4 = local_1e4 * fVar1;
   local_1e0 = local_1e0 * fVar1;
   Vec3Cross(&local_1d8,&local_1e8,&local_2a0);
-  iVar15 = 1;
-  dVar24 = (double)local_2a0;
-  dVar23 = (double)local_29c;
-  dVar22 = (double)local_298;
-  local_294 = (float)((double)local_228[0] * dVar22 +
-                     (double)(float)((double)local_22c * dVar23 +
-                                    (double)(float)((double)local_230 * dVar24)));
-  dVar26 = (double)local_294;
-  if (1 < iVar8) {
-    if (3 < iVar8 + -1) {
-      fVar27 = pVVar7->suspensionTravel;
-      pfVar14 = local_228 + 3;
+  iVar11 = 1;
+  dVar20 = (double)local_2a0;
+  dVar19 = (double)local_29c;
+  dVar18 = (double)local_298;
+  local_294 = (float)((double)local_228[0] * dVar18 +
+                     (double)(float)((double)local_22c * dVar19 +
+                                    (double)(float)((double)local_230 * dVar20)));
+  dVar22 = (double)local_294;
+  if (1 < iVar7) {
+    if (3 < iVar7 + -1) {
+      fVar23 = pVVar6->suspensionTravel;
+      pfVar9 = local_228 + 3;
       do {
-        fVar1 = (float)((double)pfVar14[-1] * dVar23 + (double)(float)((double)pfVar14[-2] * dVar24)
-                       );
-        if (fVar27 < (float)((double)(fVar1 + (float)((double)*pfVar14 * dVar22)) - dVar26)) {
-          dVar26 = (double)((fVar1 + (float)((double)*pfVar14 * dVar22)) - fVar27);
+        fVar1 = (float)((double)pfVar9[-1] * dVar19 + (double)(float)((double)pfVar9[-2] * dVar20));
+        if (fVar23 < (float)((double)(fVar1 + (float)((double)*pfVar9 * dVar18)) - dVar22)) {
+          dVar22 = (double)((fVar1 + (float)((double)*pfVar9 * dVar18)) - fVar23);
         }
-        fVar1 = (float)((double)pfVar14[2] * dVar23 + (double)(float)((double)pfVar14[1] * dVar24));
-        if (fVar27 < (float)((double)((float)((double)pfVar14[3] * dVar22) + fVar1) - dVar26)) {
-          dVar26 = (double)(((float)((double)pfVar14[3] * dVar22) + fVar1) - fVar27);
+        fVar1 = (float)((double)pfVar9[2] * dVar19 + (double)(float)((double)pfVar9[1] * dVar20));
+        if (fVar23 < (float)((double)((float)((double)pfVar9[3] * dVar18) + fVar1) - dVar22)) {
+          dVar22 = (double)(((float)((double)pfVar9[3] * dVar18) + fVar1) - fVar23);
         }
-        fVar1 = (float)((double)pfVar14[5] * dVar23 + (double)(float)((double)pfVar14[4] * dVar24));
-        if (fVar27 < (float)((double)((float)((double)pfVar14[6] * dVar22) + fVar1) - dVar26)) {
-          dVar26 = (double)(((float)((double)pfVar14[6] * dVar22) + fVar1) - fVar27);
+        fVar1 = (float)((double)pfVar9[5] * dVar19 + (double)(float)((double)pfVar9[4] * dVar20));
+        if (fVar23 < (float)((double)((float)((double)pfVar9[6] * dVar18) + fVar1) - dVar22)) {
+          dVar22 = (double)(((float)((double)pfVar9[6] * dVar18) + fVar1) - fVar23);
         }
-        fVar1 = (float)((double)pfVar14[8] * dVar23 + (double)(float)((double)pfVar14[7] * dVar24));
-        if (fVar27 < (float)((double)((float)((double)pfVar14[9] * dVar22) + fVar1) - dVar26)) {
-          dVar26 = (double)(((float)((double)pfVar14[9] * dVar22) + fVar1) - fVar27);
+        fVar1 = (float)((double)pfVar9[8] * dVar19 + (double)(float)((double)pfVar9[7] * dVar20));
+        if (fVar23 < (float)((double)((float)((double)pfVar9[9] * dVar18) + fVar1) - dVar22)) {
+          dVar22 = (double)(((float)((double)pfVar9[9] * dVar18) + fVar1) - fVar23);
         }
-        iVar15 = iVar15 + 4;
-        pfVar14 = pfVar14 + 0xc;
-      } while (iVar15 < iVar8 + -3);
-      local_294 = (float)dVar26;
+        iVar11 = iVar11 + 4;
+        pfVar9 = pfVar9 + 0xc;
+      } while (iVar11 < iVar7 + -3);
+      local_294 = (float)dVar22;
     }
-    if (iVar15 < iVar8) {
-      iVar8 = iVar8 - iVar15;
-      pfVar14 = local_228 + iVar15 * 3;
+    if (iVar11 < iVar7) {
+      iVar7 = iVar7 - iVar11;
+      pfVar9 = local_228 + iVar11 * 3;
       do {
-        fVar27 = (float)((double)pfVar14[-1] * dVar23 +
-                        (double)(float)((double)pfVar14[-2] * dVar24));
-        if (pVVar7->suspensionTravel <
-            (float)((double)(fVar27 + (float)((double)*pfVar14 * dVar22)) - dVar26)) {
-          dVar26 = (double)((fVar27 + (float)((double)*pfVar14 * dVar22)) - pVVar7->suspensionTravel
-                           );
+        fVar23 = (float)((double)pfVar9[-1] * dVar19 + (double)(float)((double)pfVar9[-2] * dVar20))
+        ;
+        if (pVVar6->suspensionTravel <
+            (float)((double)(fVar23 + (float)((double)*pfVar9 * dVar18)) - dVar22)) {
+          dVar22 = (double)((fVar23 + (float)((double)*pfVar9 * dVar18)) - pVVar6->suspensionTravel)
+          ;
         }
-        pfVar14 = pfVar14 + 3;
-        iVar8 = iVar8 + -1;
-      } while (iVar8 != 0);
-      local_294 = (float)dVar26;
+        pfVar9 = pfVar9 + 3;
+        iVar7 = iVar7 + -1;
+      } while (iVar7 != 0);
+      local_294 = (float)dVar22;
     }
   }
   Vec3Cross(&local_2a0,&local_290,&local_284);
-  dVar19 = (double)SQRT(local_280 * local_280 + local_27c * local_27c + local_284 * local_284);
-  dVar18 = dVar25;
-  if (-dVar19 < 0.0) {
-    dVar18 = dVar19;
+  dVar15 = (double)SQRT(local_280 * local_280 + local_27c * local_27c + local_284 * local_284);
+  dVar14 = dVar21;
+  if (-dVar15 < 0.0) {
+    dVar14 = dVar15;
   }
-  fVar27 = (float)(dVar25 / dVar18);
-  local_284 = fVar27 * local_284;
-  local_280 = fVar27 * local_280;
-  local_27c = local_27c * fVar27;
+  fVar23 = (float)(dVar21 / dVar14);
+  local_284 = fVar23 * local_284;
+  local_280 = fVar23 * local_280;
+  local_27c = local_27c * fVar23;
   Vec3Cross(&local_284,&local_2a0,&local_290);
-  dVar19 = (double)SQRT(local_28c * local_28c + local_290 * local_290 + local_288 * local_288);
-  dVar18 = dVar25;
-  if (-dVar19 < 0.0) {
-    dVar18 = dVar19;
+  dVar15 = (double)SQRT(local_28c * local_28c + local_290 * local_290 + local_288 * local_288);
+  dVar14 = dVar21;
+  if (-dVar15 < 0.0) {
+    dVar14 = dVar15;
   }
-  fVar27 = (float)(dVar25 / dVar18);
-  local_290 = local_290 * fVar27;
-  local_28c = local_28c * fVar27;
-  local_288 = local_288 * fVar27;
+  fVar23 = (float)(dVar21 / dVar14);
+  local_290 = local_290 * fVar23;
+  local_28c = local_28c * fVar23;
+  local_288 = local_288 * fVar23;
   AxisToAngles((float (*) [3])&local_290,local_118);
-  dVar18 = 6.0;
-  fVar27 = DiffTrackAngle(local_118[0],pfVar11[9],6.0,(float)dVar20);
-  *pfVar9 = fVar27;
-  fVar28 = DiffTrackAngle(local_110,pfVar11[0xb],(float)dVar18,(float)dVar20);
-  fVar27 = *pfVar9;
-  dVar20 = -1.0;
+  dVar14 = 6.0;
+  fVar23 = DiffTrackAngle(local_118[0],param_2->prevAngles[0],6.0,(float)dVar16);
+  *pfVar10 = fVar23;
+  fVar24 = DiffTrackAngle(local_110,param_2->prevAngles[2],(float)dVar14,(float)dVar16);
+  fVar23 = *pfVar10;
+  dVar16 = -1.0;
   fVar1 = 60.0;
-  if (fVar27 - 60.0 < 0.0) {
-    fVar1 = fVar27;
+  if (fVar23 - 60.0 < 0.0) {
+    fVar1 = fVar23;
   }
   fVar3 = 60.0;
-  if (fVar28 - 60.0 < 0.0) {
-    fVar3 = fVar28;
+  if (fVar24 - 60.0 < 0.0) {
+    fVar3 = fVar24;
   }
   fVar4 = -60.0;
-  if (-60.0 - fVar27 < 0.0) {
+  if (-60.0 - fVar23 < 0.0) {
     fVar4 = fVar1;
   }
-  *pfVar9 = fVar4;
-  fVar27 = -60.0;
-  if (-60.0 - fVar28 < 0.0) {
-    fVar27 = fVar3;
+  *pfVar10 = fVar4;
+  fVar23 = -60.0;
+  if (-60.0 - fVar24 < 0.0) {
+    fVar23 = fVar3;
   }
-  pfVar11[8] = fVar27;
-  if ((pVVar2->drivingState != VEH_DRIVE_PLAYER) && (dVar22 != dVar21)) {
-    pfVar11[2] = (float)((double)(float)((double)pfVar11[1] * dVar23 +
-                                        (double)(float)((double)*pfVar11 * dVar24)) - dVar26) *
-                 (float)(-1.0 / dVar22);
+  param_2->angles[2] = fVar23;
+  if ((pVVar2->drivingState != VEH_DRIVE_PLAYER) && (dVar18 != dVar17)) {
+    param_2->origin[2] =
+         (float)((double)(float)((double)param_2->origin[1] * dVar19 +
+                                (double)(float)((double)param_2->origin[0] * dVar20)) - dVar22) *
+         (float)(-1.0 / dVar18);
   }
-  AnglesSubtract(pfVar9,pfVar11 + 9,pfVar11 + 0x1e);
+  AnglesSubtract(pfVar10,param_2->prevAngles,param_2->rotVel);
   pdVar5 = g_vehicleDebug;
-  pfVar11[0x1e] = pfVar11[0x1e] * 20.0;
-  pfVar11[0x1f] = pfVar11[0x1f] * 20.0;
-  pfVar11[0x20] = pfVar11[0x20] * 20.0;
+  param_2->rotVel[0] = param_2->rotVel[0] * 20.0;
+  param_2->rotVel[1] = param_2->rotVel[1] * 20.0;
+  param_2->rotVel[2] = param_2->rotVel[2] * 20.0;
   if ((pdVar5->current).enabled != false) {
-    local_234 = (float)(dVar20 / dVar22);
+    local_234 = (float)(dVar16 / dVar18);
     local_260 = local_230;
     local_254 = local_228[1];
     local_248 = local_218;
@@ -2674,81 +2628,80 @@ LAB_826ae0d8:
     local_244 = local_214;
     local_23c = local_20c;
     local_238 = local_208;
-    local_190 = (float)dVar25;
-    local_18c = (float)dVar25;
-    local_188 = (float)dVar21;
-    local_184 = (float)dVar25;
-    local_258 = (float)((double)(float)((double)local_22c * dVar23 +
-                                       (double)(float)((double)local_230 * dVar24)) - dVar26) *
+    local_190 = (float)dVar21;
+    local_18c = (float)dVar21;
+    local_188 = (float)dVar17;
+    local_184 = (float)dVar21;
+    local_258 = (float)((double)(float)((double)local_22c * dVar19 +
+                                       (double)(float)((double)local_230 * dVar20)) - dVar22) *
                 local_234;
-    local_24c = (float)((double)(float)((double)local_228[2] * dVar23 +
-                                       (double)(float)((double)local_228[1] * dVar24)) - dVar26) *
+    local_24c = (float)((double)(float)((double)local_228[2] * dVar19 +
+                                       (double)(float)((double)local_228[1] * dVar20)) - dVar22) *
                 local_234;
-    local_240 = (float)((double)(float)((double)local_214 * dVar23 +
-                                       (double)(float)((double)local_218 * dVar24)) - dVar26) *
+    local_240 = (float)((double)(float)((double)local_214 * dVar19 +
+                                       (double)(float)((double)local_218 * dVar20)) - dVar22) *
                 local_234;
-    local_234 = (float)((double)(float)((double)local_208 * dVar23 +
-                                       (double)(float)((double)local_20c * dVar24)) - dVar26) *
+    local_234 = (float)((double)(float)((double)local_208 * dVar19 +
+                                       (double)(float)((double)local_20c * dVar20)) - dVar22) *
                 local_234;
     G_DebugLine(&local_260,&local_254,&local_190,1);
-    local_1b0 = (float)dVar25;
-    local_1ac = (float)dVar25;
-    local_1a8 = (float)dVar21;
-    local_1a4 = (float)dVar25;
+    local_1b0 = (float)dVar21;
+    local_1ac = (float)dVar21;
+    local_1a8 = (float)dVar17;
+    local_1a4 = (float)dVar21;
     G_DebugLine(&local_254,&local_23c,&local_1b0,1);
-    local_1a0 = (float)dVar25;
-    local_19c = (float)dVar25;
-    local_198 = (float)dVar21;
-    local_194 = (float)dVar25;
+    local_1a0 = (float)dVar21;
+    local_19c = (float)dVar21;
+    local_198 = (float)dVar17;
+    local_194 = (float)dVar21;
     G_DebugLine(&local_23c,&local_248,&local_1a0,1);
-    local_180 = (float)dVar25;
-    local_17c = (float)dVar25;
-    local_178 = (float)dVar21;
-    local_174 = (float)dVar25;
+    local_180 = (float)dVar21;
+    local_17c = (float)dVar21;
+    local_178 = (float)dVar17;
+    local_174 = (float)dVar21;
     G_DebugLine(&local_248,&local_260,&local_180,1);
   }
-  __restfpr_24();
-  __restgprlr_18();
   return;
 }
 
 
 // 826AE6E0  VEH_BackupPosition  (vehicle/vehicle.cpp:1880)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
 void VEH_BackupPosition(gentity_s *param_1)
 
 {
-  int iVar1;
-  int iVar2;
+  Vehicle *pVVar1;
   
-  iVar2 = __savegprlr_29(param_1);
-  if (iVar2 == 0) {
+  if (param_1 == (gentity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0x75b,0,
                     "%s");
   }
-  if (*(int *)(iVar2 + 0x160) == 0) {
+  if (param_1->vehicle == (Vehicle *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0x75c,0,
                     "%s");
   }
-  iVar1 = *(int *)(iVar2 + 0x160);
-  *(undefined4 *)(iVar1 + 0xe0) = *(undefined4 *)(iVar2 + 0x138);
-  *(undefined4 *)(iVar1 + 0xe4) = *(undefined4 *)(iVar2 + 0x13c);
-  *(undefined4 *)(iVar1 + 0xe8) = *(undefined4 *)(iVar2 + 0x140);
-  *(undefined4 *)(iVar1 + 0xf8) = *(undefined4 *)(iVar2 + 0x144);
-  *(undefined4 *)(iVar1 + 0xfc) = *(undefined4 *)(iVar2 + 0x148);
-  *(undefined4 *)(iVar1 + 0x100) = *(undefined4 *)(iVar2 + 0x14c);
+  pVVar1 = param_1->vehicle;
+  (pVVar1->phys).prevOrigin[0] = (param_1->r).currentOrigin[0];
+  (pVVar1->phys).prevOrigin[1] = (param_1->r).currentOrigin[1];
+  (pVVar1->phys).prevOrigin[2] = (param_1->r).currentOrigin[2];
+  (pVVar1->phys).prevAngles[0] = (param_1->r).currentAngles[0];
+  (pVVar1->phys).prevAngles[1] = (param_1->r).currentAngles[1];
+  (pVVar1->phys).prevAngles[2] = (param_1->r).currentAngles[2];
   memcpy();
   memcpy();
-  __restgprlr_29();
   return;
 }
 
 
 // 826AE7B0  VEH_VerifyPosition  (vehicle/vehicle.cpp:1897)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
@@ -2758,98 +2711,97 @@ void VEH_VerifyPosition(gentity_s *param_1)
   uchar uVar1;
   Vehicle *pVVar2;
   gentity_s *pgVar3;
-  gentity_s *pgVar4;
-  int iVar5;
-  float *pfVar6;
-  Bounds *pBVar7;
-  Vehicle *pVVar8;
-  longlong lVar9;
+  int iVar4;
+  float *pfVar5;
+  Bounds *pBVar6;
+  Vehicle *pVVar7;
+  longlong lVar8;
+  double dVar9;
   double dVar10;
   double dVar11;
   double dVar12;
-  double dVar13;
   float fStack_84;
   Bounds local_80 [5];
   
-  pgVar4 = (gentity_s *)__savegprlr_23(param_1);
-  pVVar2 = pgVar4->vehicle;
+  pVVar2 = param_1->vehicle;
   if (pVVar2 == (Vehicle *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0x772,0,
                     "%s");
   }
   Profile_Begin(0x3b);
-  uVar1 = (pgVar4->r).modelType;
+  uVar1 = (param_1->r).modelType;
   if (uVar1 == '\x04') {
-    dVar12 = 0.0;
-    dVar13 = 64.0;
-    pVVar8 = vehicleServers;
+    dVar11 = 0.0;
+    dVar12 = 64.0;
+    pVVar7 = vehicleServers;
     do {
-      pgVar3 = pVVar8->ent;
-      if (((pgVar3 != (gentity_s *)0x0) && (pgVar3 != pgVar4)) &&
+      pgVar3 = pVVar7->ent;
+      if (((pgVar3 != (gentity_s *)0x0) && (pgVar3 != param_1)) &&
          (pVVar2->drivingState == VEH_DRIVE_PLAYER)) {
-        pfVar6 = &fStack_84;
-        pBVar7 = (Bounds *)((pVVar8->phys).prevAngles + 2);
-        lVar9 = 6;
+        pfVar5 = &fStack_84;
+        pBVar6 = (Bounds *)((pVVar7->phys).prevAngles + 2);
+        lVar8 = 6;
         do {
-          pBVar7 = (Bounds *)((int)pBVar7->midPoint + 4);
-          pfVar6 = pfVar6 + 1;
-          *pfVar6 = pBVar7->midPoint[0];
-          lVar9 = lVar9 + -1;
-        } while (lVar9 != 0);
-        local_80[0].halfSize[0] = (float)((double)local_80[0].halfSize[0] + dVar13);
-        local_80[0].halfSize[1] = (float)((double)local_80[0].halfSize[1] + dVar13);
+          pBVar6 = (Bounds *)((int)pBVar6->midPoint + 4);
+          pfVar5 = pfVar5 + 1;
+          *pfVar5 = pBVar6->midPoint[0];
+          lVar8 = lVar8 + -1;
+        } while (lVar8 != 0);
+        local_80[0].halfSize[0] = (float)((double)local_80[0].halfSize[0] + dVar12);
+        local_80[0].halfSize[1] = (float)((double)local_80[0].halfSize[1] + dVar12);
         local_80[0].midPoint[0] = (pgVar3->r).currentOrigin[0] + local_80[0].midPoint[0];
         local_80[0].midPoint[1] = (pgVar3->r).currentOrigin[1] + local_80[0].midPoint[1];
         local_80[0].midPoint[2] = (pgVar3->r).currentOrigin[2] + local_80[0].midPoint[2];
-        if ((double)local_80[0].halfSize[0] < dVar12) {
+        if ((double)local_80[0].halfSize[0] < dVar11) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\../universal/bounds_inline.h"
                           ,0x353,0,"%s");
         }
-        if ((double)local_80[0].halfSize[1] < dVar12) {
+        if ((double)local_80[0].halfSize[1] < dVar11) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\../universal/bounds_inline.h"
                           ,0x354,0,"%s");
         }
-        dVar10 = (double)local_80[0].halfSize[2];
-        if (dVar10 < dVar12) {
+        dVar9 = (double)local_80[0].halfSize[2];
+        if (dVar9 < dVar11) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\../universal/bounds_inline.h"
                           ,0x355,0,"%s");
-          dVar10 = (double)local_80[0].halfSize[2];
+          dVar9 = (double)local_80[0].halfSize[2];
         }
-        dVar11 = (double)local_80[0].halfSize[0];
+        dVar10 = (double)local_80[0].halfSize[0];
         if ((float)((double)local_80[0].halfSize[0] - (double)local_80[0].halfSize[1]) < 0.0) {
-          dVar11 = (double)local_80[0].halfSize[1];
+          dVar10 = (double)local_80[0].halfSize[1];
         }
-        local_80[0].halfSize[0] = (float)dVar11;
-        local_80[0].halfSize[1] = (float)dVar11;
-        if ((float)(dVar11 - dVar10) < 0.0) {
-          dVar11 = dVar10;
+        local_80[0].halfSize[0] = (float)dVar10;
+        local_80[0].halfSize[1] = (float)dVar10;
+        if ((float)(dVar10 - dVar9) < 0.0) {
+          dVar10 = dVar9;
         }
-        local_80[0].halfSize[2] = (float)dVar11;
-        iVar5 = SV_EntityContactBounds(local_80,pgVar4);
-        if (iVar5 != 0) {
+        local_80[0].halfSize[2] = (float)dVar10;
+        iVar4 = SV_EntityContactBounds(local_80,param_1);
+        if (iVar4 != 0) {
           memcpy();
           memcpy();
-          VEH_SetPosition(pgVar4,(pVVar2->phys).origin,(pVVar2->phys).vel,(pVVar2->phys).angles);
-          pVVar2->speed = (float)dVar12;
-          pVVar2->pathSpeed = (float)dVar12;
+          VEH_SetPosition(param_1,(pVVar2->phys).origin,(pVVar2->phys).vel,(pVVar2->phys).angles);
+          pVVar2->speed = (float)dVar11;
+          pVVar2->pathSpeed = (float)dVar11;
           break;
         }
       }
-      pVVar8 = pVVar8 + 1;
-    } while ((int)pVVar8 < -0x7bbb0570);
+      pVVar7 = pVVar7 + 1;
+    } while ((int)pVVar7 < -0x7bbb0570);
   }
   else if (uVar1 != '\0') {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0x778,0,
                     "%s");
   }
-  iVar5 = Profile_EndInternal((double *)0x0);
-  __restgprlr_23(iVar5);
+  Profile_EndInternal((double *)0x0);
   return;
 }
 
 
 // 826AEA10  Vehicle_AttachedStickyMissile  (vehicle/vehicle.cpp:1962)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
@@ -2859,46 +2811,39 @@ bool Vehicle_AttachedStickyMissile(gentity_s *param_1,gentity_s *param_2)
 {
   WeapStickinessType WVar1;
   WeaponDef *pWVar2;
-  int iVar3;
-  int *piVar5;
-  undefined1 uVar7;
-  Weapon WVar6;
-  undefined8 uVar4;
-  ulonglong uVar8;
+  Weapon WVar3;
+  bool bVar4;
   
-  uVar8 = (ulonglong)(int)param_2;
-  piVar5 = (int *)__savegprlr_28(param_1);
-  if (piVar5 == (int *)0x0) {
+  if (param_1 == (gentity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0x7ad,0,
                     "%s");
   }
-  if ((uVar8 & 0xffffffff) == 0) {
+  if (param_2 == (gentity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0x7ae,0,
                     "%s");
   }
-  iVar3 = (int)uVar8;
-  if ((*(int *)(iVar3 + 0x80) == *piVar5) && (*(int *)(iVar3 + 4) == 4)) {
-    WVar6 = BG_GetAlternateWeapon(*(Weapon *)(iVar3 + 200),false);
-    pWVar2 = bg_weaponDefs[WVar6.data & 0xff];
+  if (((param_2->s).groundEntityNum == (param_1->s).number) && ((param_2->s).eType == 4)) {
+    WVar3 = BG_GetAlternateWeapon((param_2->s).weapon,false);
+    pWVar2 = bg_weaponDefs[WVar3.data & 0xff];
     if (pWVar2 == (WeaponDef *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0x7b6,0
                       ,"%s");
     }
     WVar1 = pWVar2->stickiness;
     if (((WVar1 == WEAPSTICKINESS_ALL) || (WVar1 == WEAPSTICKINESS_KNIFE)) ||
-       (uVar4 = 0, WVar1 == WEAPSTICKINESS_ALL_ORIENT)) {
-      uVar4 = 1;
+       (bVar4 = false, WVar1 == WEAPSTICKINESS_ALL_ORIENT)) {
+      bVar4 = true;
     }
-    uVar7 = __restgprlr_28(uVar4);
-    return (bool)uVar7;
+    return bVar4;
   }
-  uVar7 = __restgprlr_28(0);
-  return (bool)uVar7;
+  return false;
 }
 
 
 // 826AEB10  Vehicle_PushAttachedStickyMissile  (vehicle/vehicle.cpp:1983)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
@@ -2906,9 +2851,8 @@ void Vehicle_PushAttachedStickyMissile
                (gentity_s *param_1,gentity_s *param_2,float *param_3,float *param_4)
 
 {
-  int iVar1;
-  int iVar2;
-  ulonglong uVar3;
+  Vehicle *pVVar1;
+  float *pfVar2;
   float local_160;
   float local_15c;
   float local_158;
@@ -2922,113 +2866,109 @@ void Vehicle_PushAttachedStickyMissile
   float afStack_80 [12];
   float afStack_50 [20];
   
-  uVar3 = (ulonglong)(int)param_2;
-  iVar2 = __savegprlr_28(param_1,uVar3,param_3,param_4);
-  if (iVar2 == 0) {
+  if (param_1 == (gentity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0x7ca,0,
                     "%s");
   }
-  if (*(int *)(iVar2 + 0x160) == 0) {
+  if (param_1->vehicle == (Vehicle *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0x7cb,0,
                     "%s");
   }
-  if ((uVar3 & 0xffffffff) == 0) {
+  if (param_2 == (gentity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0x7cc,0,
                     "%s");
   }
-  iVar2 = *(int *)(iVar2 + 0x160);
-  if ((float *)(iVar2 + 0xd4) == (float *)0x0) {
+  pVVar1 = param_1->vehicle;
+  if (&pVVar1->phys == (vehicle_physic_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",1999,0,
                     "%s");
   }
-  iVar1 = (int)uVar3;
-  local_150 = *(float *)(iVar1 + 0x138) - *(float *)(iVar2 + 0xe0);
-  local_14c = *(float *)(iVar1 + 0x13c) - *(float *)(iVar2 + 0xe4);
-  local_148 = *(float *)(iVar1 + 0x140) - *(float *)(iVar2 + 0xe8);
-  AnglesToAxis((float *)(iVar2 + 0xec),(float (*) [3])afStack_80);
-  AnglesToAxis((float *)(iVar2 + 0xf8),(float (*) [3])afStack_110);
+  local_150 = (param_2->r).currentOrigin[0] - (pVVar1->phys).prevOrigin[0];
+  local_14c = (param_2->r).currentOrigin[1] - (pVVar1->phys).prevOrigin[1];
+  local_148 = (param_2->r).currentOrigin[2] - (pVVar1->phys).prevOrigin[2];
+  AnglesToAxis((pVVar1->phys).angles,(float (*) [3])afStack_80);
+  AnglesToAxis((pVVar1->phys).prevAngles,(float (*) [3])afStack_110);
   MatrixTranspose((float (*) [3])afStack_110,(float (*) [3])afStack_e0);
   MatrixMultiply((float (*) [3])afStack_e0,(float (*) [3])afStack_80,(float (*) [3])afStack_140);
   MatrixTransformVector(&local_150,(float (*) [3])afStack_140,&local_160);
-  local_160 = *(float *)(iVar2 + 0xd4) + local_160;
-  local_15c = *(float *)(iVar2 + 0xd8) + local_15c;
-  local_158 = *(float *)(iVar2 + 0xdc) + local_158;
-  *(float *)(iVar1 + 0x138) = local_160;
-  *(float *)(iVar1 + 0x13c) = local_15c;
-  *(float *)(iVar1 + 0x140) = local_158;
-  *(float *)(iVar1 + 0x18) = local_160;
-  *(float *)(iVar1 + 0x1c) = local_15c;
-  *(float *)(iVar1 + 0x20) = local_158;
-  AnglesToAxis((float *)(iVar1 + 0x144),(float (*) [3])afStack_b0);
+  pfVar2 = (param_2->r).currentAngles;
+  local_160 = (pVVar1->phys).origin[0] + local_160;
+  local_15c = (pVVar1->phys).origin[1] + local_15c;
+  local_158 = (pVVar1->phys).origin[2] + local_158;
+  (param_2->r).currentOrigin[0] = local_160;
+  (param_2->r).currentOrigin[1] = local_15c;
+  (param_2->r).currentOrigin[2] = local_158;
+  (param_2->s).lerp.pos.trBase[0] = local_160;
+  (param_2->s).lerp.pos.trBase[1] = local_15c;
+  (param_2->s).lerp.pos.trBase[2] = local_158;
+  AnglesToAxis(pfVar2,(float (*) [3])afStack_b0);
   MatrixMultiply((float (*) [3])afStack_b0,(float (*) [3])afStack_140,(float (*) [3])afStack_50);
-  AxisToAngles((float (*) [3])afStack_50,(float *)(iVar1 + 0x144));
-  *(undefined4 *)(iVar1 + 0x3c) = *(undefined4 *)(iVar1 + 0x144);
-  *(undefined4 *)(iVar1 + 0x40) = *(undefined4 *)(iVar1 + 0x148);
-  *(undefined4 *)(iVar1 + 0x44) = *(undefined4 *)(iVar1 + 0x14c);
-  __restgprlr_28();
+  AxisToAngles((float (*) [3])afStack_50,pfVar2);
+  (param_2->s).lerp.apos.trBase[0] = (param_2->r).currentAngles[0];
+  (param_2->s).lerp.apos.trBase[1] = (param_2->r).currentAngles[1];
+  (param_2->s).lerp.apos.trBase[2] = (param_2->r).currentAngles[2];
   return;
 }
 
 
 // 826AECD0  Vehicle_IsPushedEntityInSolid  (vehicle/vehicle.cpp:2022)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
 bool Vehicle_IsPushedEntityInSolid(gentity_s *param_1,float *param_2)
 
 {
-  uint *puVar2;
-  undefined1 uVar5;
-  int iVar3;
-  uint uVar4;
-  undefined8 uVar1;
-  ulonglong uVar6;
-  uint uVar7;
+  EntHandle *this;
+  int iVar1;
+  uint uVar2;
+  bool bVar3;
+  int iVar4;
   trace_t tStack_60;
   
-  uVar6 = (ulonglong)(int)param_2;
-  puVar2 = (uint *)__savegprlr_28(param_1);
-  if (puVar2 == (uint *)0x0) {
+  if (param_1 == (gentity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0x7eb,0,
                     "%s");
   }
-  if ((uVar6 & 0xffffffff) == 0) {
+  if (param_2 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0x7ec,0,
                     "%s");
   }
-  uVar7 = puVar2[99];
-  if (uVar7 == 0) {
-    uVar7 = 0x811;
+  iVar4 = param_1->clipmask;
+  if (iVar4 == 0) {
+    iVar4 = 0x811;
   }
-  else if ((puVar2[0x47] & 0x4000000) != 0) {
-    uVar5 = __restgprlr_28(0);
-    return (bool)uVar5;
+  else if (((param_1->r).contents & 0x4000000U) != 0) {
+    return false;
   }
-  if (puVar2[1] == 4) {
-    iVar3 = EntHandle::isDefined((EntHandle *)(puVar2 + 0x54));
-    if (iVar3 == 0) {
-      uVar4 = 0x7ff;
+  if ((param_1->s).eType == 4) {
+    this = &(param_1->r).ownerNum;
+    iVar1 = EntHandle::isDefined(this);
+    if (iVar1 == 0) {
+      uVar2 = 0x7ff;
     }
     else {
-      uVar4 = EntHandle::entnum((EntHandle *)(puVar2 + 0x54));
+      uVar2 = EntHandle::entnum(this);
     }
   }
   else {
-    uVar4 = *puVar2;
+    uVar2 = (param_1->s).number;
   }
-  G_TraceCapsule(&tStack_60,(float *)uVar6,(float *)uVar6,(Bounds *)(puVar2 + 0x41),uVar4,uVar7);
+  G_TraceCapsule(&tStack_60,param_2,param_2,&(param_1->r).box,uVar2,iVar4);
   Trace_GetEntityHitId(&tStack_60);
-  if ((tStack_60.startsolid != false) || (uVar1 = 0, tStack_60.allsolid != false)) {
-    uVar1 = 1;
+  if ((tStack_60.startsolid != false) || (bVar3 = false, tStack_60.allsolid != false)) {
+    bVar3 = true;
   }
-  uVar5 = __restgprlr_28(uVar1);
-  return (bool)uVar5;
+  return bVar3;
 }
 
 
 // 826AEDF8  Vehicle_UpdatePushedEntityLocation  (vehicle/vehicle.cpp:2059)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
@@ -3037,93 +2977,81 @@ void Vehicle_UpdatePushedEntityLocation
                float (*param_5) [3])
 
 {
-  int iVar1;
-  entityState_s *peVar2;
-  float *pfVar3;
-  ulonglong uVar4;
-  float *pfVar5;
-  ulonglong uVar6;
-  float *pfVar7;
-  ulonglong uVar8;
-  ulonglong uVar9;
-  float local_60;
-  uint local_5c;
-  uint local_58;
+  gclient_s *pgVar1;
+  float *pfVar2;
+  Weapon local_60;
+  float local_5c;
+  int local_58;
   float afStack_50 [20];
   
-  uVar9 = (ulonglong)(int)param_5;
-  uVar8 = (ulonglong)(int)param_4;
-  uVar6 = (ulonglong)(int)param_3;
-  uVar4 = (ulonglong)(int)param_2;
-  peVar2 = (entityState_s *)__savegprlr_25(param_1);
-  if (peVar2 == (entityState_s *)0x0) {
+  if (param_1 == (gentity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0x80f,0,
                     "%s");
   }
-  if ((uVar4 & 0xffffffff) == 0) {
+  if (param_2 == (gentity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0x810,0,
                     "%s");
   }
-  if ((uVar6 & 0xffffffff) == 0) {
+  if (param_3 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0x811,0,
                     "%s");
   }
-  if ((uVar8 & 0xffffffff) == 0) {
+  if (param_4 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0x812,0,
                     "%s");
   }
-  if ((uVar9 & 0xffffffff) == 0) {
+  if (param_5 == (float (*) [3])0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0x813,0,
                     "%s");
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0x814,0,
                     "%s");
   }
-  if (uVar9 == 0xfffffffffffffff4) {
+  if (param_5 == (float (*) [3])0xfffffff4) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0x815,0,
                     "%s");
   }
-  if (uVar9 == 0xffffffffffffffe8) {
+  if (param_5 == (float (*) [3])0xffffffe8) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0x816,0,
                     "%s");
   }
-  pfVar5 = peVar2[1].lerp.apos.trBase + 2;
-  pfVar3 = (float *)uVar8;
-  AnglesSubtract(pfVar3,pfVar5,afStack_50);
-  pfVar7 = (float *)uVar6;
-  peVar2[1].lerp.apos.trDuration = (int)*pfVar7;
-  peVar2[1].lerp.apos.trBase[0] = pfVar7[1];
-  peVar2[1].lerp.apos.trBase[1] = pfVar7[2];
-  (peVar2->lerp).pos.trBase[0] = *pfVar7;
-  (peVar2->lerp).pos.trBase[1] = pfVar7[1];
-  (peVar2->lerp).pos.trBase[2] = pfVar7[2];
-  iVar1 = peVar2[1].lerp.u.loopFx.period;
-  if (iVar1 == 0) {
-    *pfVar5 = *pfVar3;
-    peVar2[1].lerp.apos.trDelta[0] = pfVar3[1];
-    peVar2[1].lerp.apos.trDelta[1] = pfVar3[2];
-    (peVar2->lerp).apos.trBase[0] = *pfVar3;
-    (peVar2->lerp).apos.trBase[1] = pfVar3[1];
-    (peVar2->lerp).apos.trBase[2] = pfVar3[2];
+  pfVar2 = (param_1->r).currentAngles;
+  AnglesSubtract(param_4,pfVar2,afStack_50);
+  (param_1->r).currentOrigin[0] = *param_3;
+  (param_1->r).currentOrigin[1] = param_3[1];
+  (param_1->r).currentOrigin[2] = param_3[2];
+  (param_1->s).lerp.pos.trBase[0] = *param_3;
+  (param_1->s).lerp.pos.trBase[1] = param_3[1];
+  (param_1->s).lerp.pos.trBase[2] = param_3[2];
+  pgVar1 = param_1->client;
+  if (pgVar1 == (gclient_s *)0x0) {
+    *pfVar2 = *param_4;
+    (param_1->r).currentAngles[1] = param_4[1];
+    (param_1->r).currentAngles[2] = param_4[2];
+    (param_1->s).lerp.apos.trBase[0] = *param_4;
+    (param_1->s).lerp.apos.trBase[1] = param_4[1];
+    (param_1->s).lerp.apos.trBase[2] = param_4[2];
   }
   else {
-    *(float *)(iVar1 + 0x1c) = *pfVar7;
-    *(float *)(iVar1 + 0x20) = pfVar7[1];
-    *(float *)(iVar1 + 0x24) = pfVar7[2];
-    BG_PlayerStateToEntityState((playerState_s *)peVar2[1].lerp.u.turret.gunAngles[1],peVar2,1);
+    (pgVar1->ps).origin[0] = *param_3;
+    (pgVar1->ps).origin[1] = param_3[1];
+    (pgVar1->ps).origin[2] = param_3[2];
+    BG_PlayerStateToEntityState(&param_1->client->ps,&param_1->s,1);
   }
-  if (peVar2->eType == 4) {
-    local_60 = (float)peVar2[1].eventParms[0];
-    local_5c = peVar2[1].eventParms[1];
-    local_58 = peVar2[1].eventParms[2];
-    MatrixTransformVector(&local_60,(float (*) [3])uVar9,(float *)peVar2[1].eventParms);
+  if ((param_1->s).eType == 4) {
+    local_60 = (param_1->field31_0x1ac).item[0].weapon;
+    local_5c = (param_1->field31_0x1ac).missile.surfaceNormal[1];
+    local_58 = (param_1->field31_0x1ac).item[1].ammoCount;
+    MatrixTransformVector((float *)&local_60,param_5,(param_1->field31_0x1ac).missile.surfaceNormal)
+    ;
   }
-  __restgprlr_25();
   return;
 }
 
 
 // 826AF030  Vehicle_TryPushingEntity  (vehicle/vehicle.cpp:2104)
 
+/* WARNING: Function: __savegprlr_21 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_21 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
@@ -3131,25 +3059,20 @@ bool Vehicle_TryPushingEntity(gentity_s *param_1,gentity_s *param_2,float *param
 
 {
   Vehicle *pVVar1;
-  gentity_s *pgVar2;
-  float fVar3;
-  gentity_s *pgVar4;
+  float fVar2;
+  bool bVar3;
+  int iVar4;
+  gentity_s *pgVar5;
+  int iVar6;
+  entityShared_t *peVar7;
+  float *pfVar8;
+  int iVar9;
   EntHandle *this;
-  int iVar5;
-  gentity_s *pgVar6;
-  int iVar7;
-  undefined1 uVar8;
-  ulonglong uVar9;
-  ulonglong uVar10;
-  ulonglong uVar11;
-  entityShared_t *peVar12;
-  float *pfVar13;
-  int iVar14;
-  longlong lVar15;
-  double dVar16;
-  double dVar17;
-  double dVar18;
-  double dVar19;
+  longlong lVar10;
+  double dVar11;
+  double dVar12;
+  double dVar13;
+  double dVar14;
   float local_260;
   float local_25c;
   float local_258;
@@ -3174,125 +3097,120 @@ bool Vehicle_TryPushingEntity(gentity_s *param_1,gentity_s *param_2,float *param
   float afStack_d0 [12];
   float afStack_a0 [40];
   
-  uVar11 = (ulonglong)(int)param_4;
-  uVar10 = (ulonglong)(int)param_3;
-  uVar9 = (ulonglong)(int)param_2;
-  pgVar4 = (gentity_s *)__savegprlr_21(param_1);
-  if (pgVar4 == (gentity_s *)0x0) {
+  if (param_1 == (gentity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0x84d,0,
                     "%s");
   }
-  if ((uVar9 & 0xffffffff) == 0) {
+  if (param_2 == (gentity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0x84e,0,
                     "%s");
   }
-  pgVar2 = (gentity_s *)uVar9;
-  if (pgVar2->vehicle == (Vehicle *)0x0) {
+  if (param_2->vehicle == (Vehicle *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0x84f,0,
                     "%s");
   }
-  if ((uVar10 & 0xffffffff) == 0) {
+  if (param_3 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0x850,0,
                     "%s");
   }
-  if ((uVar11 & 0xffffffff) == 0) {
+  if (param_4 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0x851,0,
                     "%s");
   }
-  pVVar1 = pgVar2->vehicle;
+  pVVar1 = param_2->vehicle;
   AnglesToAxis((pVVar1->phys).angles,(float (*) [3])afStack_160);
   AnglesToAxis((pVVar1->phys).prevAngles,(float (*) [3])afStack_a0);
   MatrixTranspose((float (*) [3])afStack_a0,(float (*) [3])afStack_d0);
   MatrixMultiply((float (*) [3])afStack_d0,(float (*) [3])afStack_160,(float (*) [3])afStack_1d0);
-  local_1f8 = (pgVar4->r).currentOrigin[0] - (pVVar1->phys).prevOrigin[0];
-  local_1f4 = (pgVar4->r).currentOrigin[1] - (pVVar1->phys).prevOrigin[1];
-  local_1f0 = (pgVar4->r).currentOrigin[2] - (pVVar1->phys).prevOrigin[2];
+  local_1f8 = (param_1->r).currentOrigin[0] - (pVVar1->phys).prevOrigin[0];
+  local_1f4 = (param_1->r).currentOrigin[1] - (pVVar1->phys).prevOrigin[1];
+  local_1f0 = (param_1->r).currentOrigin[2] - (pVVar1->phys).prevOrigin[2];
   MatrixTransformVector(&local_1f8,(float (*) [3])afStack_1d0,&local_250);
   local_250 = (pVVar1->phys).origin[0] + local_250;
   local_24c = (pVVar1->phys).origin[1] + local_24c;
   local_248 = (pVVar1->phys).origin[2] + local_248;
-  AnglesToAxis((pgVar4->r).currentAngles,(float (*) [3])afStack_130);
+  AnglesToAxis((param_1->r).currentAngles,(float (*) [3])afStack_130);
   MatrixMultiply((float (*) [3])afStack_130,(float (*) [3])afStack_1d0,(float (*) [3])afStack_100);
   AxisToAngles((float (*) [3])afStack_100,afStack_1e8);
-  pfVar13 = &fStack_234;
-  local_260 = (pgVar4->r).currentOrigin[0];
-  peVar12 = &pgVar4->r;
-  local_25c = (pgVar4->r).currentOrigin[1];
-  local_258 = (pgVar4->r).currentOrigin[2];
-  lVar15 = 6;
+  pfVar8 = &fStack_234;
+  local_260 = (param_1->r).currentOrigin[0];
+  peVar7 = &param_1->r;
+  local_25c = (param_1->r).currentOrigin[1];
+  local_258 = (param_1->r).currentOrigin[2];
+  lVar10 = 6;
   local_240 = local_250;
   local_23c = local_24c;
   local_238 = local_248;
   do {
-    peVar12 = (entityShared_t *)&peVar12->box;
-    pfVar13 = pfVar13 + 1;
-    *pfVar13 = ((Bounds *)peVar12)->midPoint[0];
-    lVar15 = lVar15 + -1;
-  } while (lVar15 != 0);
-  dVar19 = 0.0;
+    peVar7 = (entityShared_t *)&peVar7->box;
+    pfVar8 = pfVar8 + 1;
+    *pfVar8 = ((Bounds *)peVar7)->midPoint[0];
+    lVar10 = lVar10 + -1;
+  } while (lVar10 != 0);
+  dVar14 = 0.0;
   if (local_230.halfSize[0] < 0.0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\../universal/bounds_inline.h"
                     ,0x353,0,"%s");
   }
-  if ((double)local_230.halfSize[1] < dVar19) {
+  if ((double)local_230.halfSize[1] < dVar14) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\../universal/bounds_inline.h"
                     ,0x354,0,"%s");
   }
-  dVar16 = (double)local_230.halfSize[2];
-  if (dVar16 < dVar19) {
+  dVar11 = (double)local_230.halfSize[2];
+  if (dVar11 < dVar14) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\../universal/bounds_inline.h"
                     ,0x355,0,"%s");
-    dVar16 = (double)local_230.halfSize[2];
+    dVar11 = (double)local_230.halfSize[2];
   }
-  iVar14 = pgVar4->clipmask;
-  dVar18 = (double)local_230.halfSize[0];
+  iVar9 = param_1->clipmask;
+  dVar13 = (double)local_230.halfSize[0];
   if ((float)((double)local_230.halfSize[0] - (double)local_230.halfSize[1]) < 0.0) {
-    dVar18 = (double)local_230.halfSize[1];
+    dVar13 = (double)local_230.halfSize[1];
   }
-  local_230.halfSize[0] = (float)dVar18;
-  local_230.halfSize[1] = (float)dVar18;
-  if ((float)(dVar18 - dVar16) < 0.0) {
-    dVar18 = dVar16;
+  local_230.halfSize[0] = (float)dVar13;
+  local_230.halfSize[1] = (float)dVar13;
+  if ((float)(dVar13 - dVar11) < 0.0) {
+    dVar13 = dVar11;
   }
-  local_230.halfSize[2] = (float)dVar18;
-  if (iVar14 == 0) {
-    iVar14 = 0x811;
+  local_230.halfSize[2] = (float)dVar13;
+  if (iVar9 == 0) {
+    iVar9 = 0x811;
   }
-  pgVar6 = pgVar4;
-  if ((pgVar4->s).eType == 4) {
-    this = &(pgVar4->r).ownerNum;
-    iVar5 = EntHandle::isDefined(this);
-    if (iVar5 != 0) {
-      pgVar6 = EntHandle::ent(this);
+  pgVar5 = param_1;
+  if ((param_1->s).eType == 4) {
+    this = &(param_1->r).ownerNum;
+    iVar4 = EntHandle::isDefined(this);
+    if (iVar4 != 0) {
+      pgVar5 = EntHandle::ent(this);
       goto LAB_826af348;
     }
   }
   else {
 LAB_826af348:
-    if (pgVar6 == (gentity_s *)0x0) goto LAB_826af36c;
-    if ((pgVar6->r).isLinked != '\0') {
-      SV_UnlinkEntity(pgVar6);
+    if (pgVar5 == (gentity_s *)0x0) goto LAB_826af36c;
+    if ((pgVar5->r).isLinked != '\0') {
+      SV_UnlinkEntity(pgVar5);
       goto LAB_826af36c;
     }
   }
-  pgVar6 = (gentity_s *)0x0;
+  pgVar5 = (gentity_s *)0x0;
 LAB_826af36c:
-  lVar15 = 0;
-  iVar5 = 0;
-  dVar16 = 18.0;
-  dVar18 = 1.0;
+  bVar3 = false;
+  iVar4 = 0;
+  dVar11 = 18.0;
+  dVar13 = 1.0;
   do {
-    G_TraceCapsule(&local_1a0,&local_260,&local_250,&local_230,(pgVar2->s).number,iVar14);
-    dVar17 = (double)local_1a0.fraction;
-    local_260 = (float)((double)(float)((double)local_250 - (double)local_260) * dVar17 +
+    G_TraceCapsule(&local_1a0,&local_260,&local_250,&local_230,(param_2->s).number,iVar9);
+    dVar12 = (double)local_1a0.fraction;
+    local_260 = (float)((double)(float)((double)local_250 - (double)local_260) * dVar12 +
                        (double)local_260);
-    local_25c = (float)((double)(float)((double)local_24c - (double)local_25c) * dVar17 +
+    local_25c = (float)((double)(float)((double)local_24c - (double)local_25c) * dVar12 +
                        (double)local_25c);
-    local_258 = (float)((double)(float)((double)local_248 - (double)local_258) * dVar17 +
+    local_258 = (float)((double)(float)((double)local_248 - (double)local_258) * dVar12 +
                        (double)local_258);
-    if (dVar17 == dVar18) {
+    if (dVar12 == dVar13) {
 LAB_826af558:
-      lVar15 = 1;
+      bVar3 = true;
       break;
     }
     local_210.midPoint[0] = local_230.midPoint[0] + local_260;
@@ -3301,60 +3219,61 @@ LAB_826af558:
     local_210.halfSize[0] = local_230.halfSize[0];
     local_210.halfSize[1] = local_230.halfSize[1];
     local_210.halfSize[2] = local_230.halfSize[2];
-    if ((double)local_230.halfSize[0] < dVar19) {
+    if ((double)local_230.halfSize[0] < dVar14) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\../universal/bounds_inline.h"
                       ,0x353,0,"%s");
     }
-    if ((double)local_210.halfSize[1] < dVar19) {
+    if ((double)local_210.halfSize[1] < dVar14) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\../universal/bounds_inline.h"
                       ,0x354,0,"%s");
     }
-    if ((double)local_210.halfSize[2] < dVar19) {
+    if ((double)local_210.halfSize[2] < dVar14) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\../universal/bounds_inline.h"
                       ,0x355,0,"%s");
     }
     if (local_210.halfSize[0] - local_210.halfSize[1] < 0.0) {
       local_210.halfSize[0] = local_210.halfSize[1];
     }
-    fVar3 = local_210.halfSize[0];
+    fVar2 = local_210.halfSize[0];
     if (local_210.halfSize[0] - local_210.halfSize[2] < 0.0) {
-      fVar3 = local_210.halfSize[2];
+      fVar2 = local_210.halfSize[2];
     }
     local_210.halfSize[1] = local_210.halfSize[0];
-    local_210.halfSize[2] = fVar3;
-    iVar7 = SV_EntityContactBounds(&local_210,pgVar2);
-    if (iVar7 == 0) goto LAB_826af558;
-    local_238 = (float)((double)local_258 + dVar16);
+    local_210.halfSize[2] = fVar2;
+    iVar6 = SV_EntityContactBounds(&local_210,param_2);
+    if (iVar6 == 0) goto LAB_826af558;
+    local_238 = (float)((double)local_258 + dVar11);
     local_240 = local_260;
     local_23c = local_25c;
-    G_TraceCapsule(&local_1a0,&local_260,&local_240,&local_230,(pgVar2->s).number,iVar14);
-    dVar17 = (double)local_1a0.fraction;
-    if (dVar17 == dVar19) {
-      lVar15 = 0;
+    G_TraceCapsule(&local_1a0,&local_260,&local_240,&local_230,(param_2->s).number,iVar9);
+    dVar12 = (double)local_1a0.fraction;
+    if (dVar12 == dVar14) {
+      bVar3 = false;
       break;
     }
-    iVar5 = iVar5 + 1;
-    local_260 = (float)((double)(float)((double)local_240 - (double)local_260) * dVar17 +
+    iVar4 = iVar4 + 1;
+    local_260 = (float)((double)(float)((double)local_240 - (double)local_260) * dVar12 +
                        (double)local_260);
-    local_25c = (float)((double)(float)((double)local_23c - (double)local_25c) * dVar17 +
+    local_25c = (float)((double)(float)((double)local_23c - (double)local_25c) * dVar12 +
                        (double)local_25c);
-    local_258 = (float)((double)(float)((double)local_238 - (double)local_258) * dVar17 +
+    local_258 = (float)((double)(float)((double)local_238 - (double)local_258) * dVar12 +
                        (double)local_258);
-  } while (iVar5 < 10);
-  if (lVar15 != 0) {
+  } while (iVar4 < 10);
+  if (bVar3) {
     Vehicle_UpdatePushedEntityLocation
-              (pgVar4,pgVar2,&local_260,afStack_1e8,(float (*) [3])afStack_1d0);
+              (param_1,param_2,&local_260,afStack_1e8,(float (*) [3])afStack_1d0);
   }
-  if (pgVar6 != (gentity_s *)0x0) {
-    SV_LinkEntity(pgVar6);
+  if (pgVar5 != (gentity_s *)0x0) {
+    SV_LinkEntity(pgVar5);
   }
-  uVar8 = __restgprlr_21(lVar15);
-  return (bool)uVar8;
+  return bVar3;
 }
 
 
 // 826AF5B0  VEH_PushEntity  (vehicle/vehicle.cpp:2238)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
@@ -3362,12 +3281,9 @@ void VEH_PushEntity(gentity_s *param_1,gentity_s *param_2,float *param_3,float *
                    float *param_5)
 
 {
-  gentity_s *pgVar1;
-  gentity_s *pgVar2;
-  bool bVar3;
-  ulonglong uVar4;
-  float *pfVar5;
-  float *pfVar6;
+  bool bVar1;
+  float *pfVar2;
+  float *pfVar3;
   Weapon in_stack_ffffff38;
   undefined1 in_stack_ffffff3f;
   hitLocation_t in_stack_ffffff40;
@@ -3375,46 +3291,43 @@ void VEH_PushEntity(gentity_s *param_1,gentity_s *param_2,float *param_3,float *
   uint in_stack_ffffff48;
   int in_stack_ffffff4c;
   
-  uVar4 = (ulonglong)(int)param_2;
-  pgVar2 = (gentity_s *)__savegprlr_24(param_1);
-  pfVar5 = param_3;
-  pfVar6 = param_4;
-  if (pgVar2 == (gentity_s *)0x0) {
-    pfVar5 = (float *)0x0;
-    pfVar6 = (float *)"%s";
+  pfVar2 = param_3;
+  pfVar3 = param_4;
+  if (param_1 == (gentity_s *)0x0) {
+    pfVar2 = (float *)0x0;
+    pfVar3 = (float *)"%s";
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0x8c3,0,
                     "%s");
   }
-  if ((uVar4 & 0xffffffff) == 0) {
-    pfVar5 = (float *)0x0;
-    pfVar6 = (float *)"%s";
+  if (param_2 == (gentity_s *)0x0) {
+    pfVar2 = (float *)0x0;
+    pfVar3 = (float *)"%s";
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0x8c4,0,
                     "%s");
   }
-  pgVar1 = (gentity_s *)uVar4;
-  if ((pgVar1->tagInfo == (tagInfo_s *)0x0) &&
+  if ((param_2->tagInfo == (tagInfo_s *)0x0) &&
      ((0.001 <= param_4[2] * param_4[2] + *param_4 * *param_4 + param_4[1] * param_4[1] ||
       (0.001 <= param_5[2] * param_5[2] + *param_5 * *param_5 + param_5[1] * param_5[1])))) {
-    bVar3 = Vehicle_AttachedStickyMissile(pgVar2,pgVar1);
-    if (bVar3) {
-      Vehicle_PushAttachedStickyMissile(pgVar2,pgVar1,pfVar5,pfVar6);
-      __restgprlr_24();
+    bVar1 = Vehicle_AttachedStickyMissile(param_1,param_2);
+    if (bVar1) {
+      Vehicle_PushAttachedStickyMissile(param_1,param_2,pfVar2,pfVar3);
       return;
     }
-    bVar3 = Vehicle_TryPushingEntity(pgVar1,pgVar2,param_4,param_5);
-    if ((!bVar3) && (pgVar1->takedamage != '\0')) {
-      G_Damage(pgVar1,pgVar2,pgVar2,param_3,(pgVar1->r).currentOrigin,999999,0,10,in_stack_ffffff38,
-               (bool)in_stack_ffffff3f,in_stack_ffffff40,in_stack_ffffff44,in_stack_ffffff48,
-               in_stack_ffffff4c);
+    bVar1 = Vehicle_TryPushingEntity(param_2,param_1,param_4,param_5);
+    if ((!bVar1) && (param_2->takedamage != '\0')) {
+      G_Damage(param_2,param_1,param_1,param_3,(param_2->r).currentOrigin,999999,0,10,
+               in_stack_ffffff38,(bool)in_stack_ffffff3f,in_stack_ffffff40,in_stack_ffffff44,
+               in_stack_ffffff48,in_stack_ffffff4c);
     }
   }
-  __restgprlr_24();
   return;
 }
 
 
 // 826AF730  VEH_TouchEntities  (vehicle/vehicle.cpp:2278)
 
+/* WARNING: Function: __savegprlr_18 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_18 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
@@ -3430,19 +3343,18 @@ void VEH_TouchEntities(gentity_s *param_1)
   code *pcVar7;
   float fVar8;
   float fVar9;
-  gentity_s *pgVar10;
-  int iVar11;
-  DObj *pDVar12;
-  int iVar13;
-  float *pfVar14;
-  Bounds *pBVar15;
-  longlong lVar16;
-  int *piVar17;
-  gentity_s *pgVar18;
-  longlong lVar19;
+  int iVar10;
+  DObj *pDVar11;
+  int iVar12;
+  float *pfVar13;
+  Bounds *pBVar14;
+  longlong lVar15;
+  int *piVar16;
+  gentity_s *pgVar17;
+  longlong lVar18;
+  double dVar19;
   double dVar20;
   double dVar21;
-  double dVar22;
   float fStack_2104;
   Bounds local_2100;
   float local_20e8;
@@ -3455,33 +3367,32 @@ void VEH_TouchEntities(gentity_s *param_1)
   float afStack_20a8 [6];
   int local_2090 [2084];
   
-  pgVar10 = (gentity_s *)__savegprlr_18(param_1);
-  if (pgVar10 == (gentity_s *)0x0) {
+  if (param_1 == (gentity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0x8f8,0,
                     "%s");
   }
-  if (pgVar10->vehicle == (Vehicle *)0x0) {
+  if (param_1->vehicle == (Vehicle *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0x8f9,0,
                     "%s");
   }
-  uVar1 = (pgVar10->r).modelType;
+  uVar1 = (param_1->r).modelType;
   if (uVar1 == '\x04') {
-    pVVar4 = pgVar10->vehicle;
+    pVVar4 = param_1->vehicle;
     local_20d8 = (pVVar4->phys).origin[0] - (pVVar4->phys).prevOrigin[0];
-    dVar22 = (double)local_20d8;
+    dVar21 = (double)local_20d8;
     local_20d4 = (pVVar4->phys).origin[1] - (pVVar4->phys).prevOrigin[1];
-    dVar21 = (double)local_20d4;
+    dVar20 = (double)local_20d4;
     local_20d0 = (pVVar4->phys).origin[2] - (pVVar4->phys).prevOrigin[2];
-    dVar20 = (double)local_20d0;
-    pcVar6 = *(code **)(&DAT_8296984c + (uint)pgVar10->handler * 0x28);
+    dVar19 = (double)local_20d0;
+    pcVar6 = *(code **)(&DAT_8296984c + (uint)param_1->handler * 0x28);
     AnglesSubtract((pVVar4->phys).angles,(pVVar4->phys).prevAngles,afStack_20a8);
     fVar2 = (pVVar4->phys).vel[1];
     local_20e8 = (pVVar4->phys).vel[0];
     fVar3 = (pVVar4->phys).vel[2];
-    fVar8 = ABS((pgVar10->r).box.midPoint[1]) + (pgVar10->r).box.halfSize[1];
-    fVar9 = ABS((pgVar10->r).box.midPoint[2]) + (pgVar10->r).box.halfSize[2];
+    fVar8 = ABS((param_1->r).box.midPoint[1]) + (param_1->r).box.halfSize[1];
+    fVar9 = ABS((param_1->r).box.midPoint[2]) + (param_1->r).box.halfSize[2];
     fVar3 = SQRT(fVar3 * fVar3 + local_20e8 * local_20e8 + fVar2 * fVar2);
-    fVar2 = ABS((pgVar10->r).box.midPoint[0]) + (pgVar10->r).box.halfSize[0];
+    fVar2 = ABS((param_1->r).box.midPoint[0]) + (param_1->r).box.halfSize[0];
     local_20e0 = 1.0;
     if (-fVar3 < 0.0) {
       local_20e0 = fVar3;
@@ -3490,116 +3401,118 @@ void VEH_TouchEntities(gentity_s *param_1)
     local_20c0.halfSize[2] = SQRT(fVar2 * fVar2 + fVar9 * fVar9 + fVar8 * fVar8);
     local_20e8 = local_20e8 * local_20e0;
     local_20e4 = (pVVar4->phys).vel[1] * local_20e0;
-    local_20c0.halfSize[0] = ABS((float)(dVar22 * 0.5)) + local_20c0.halfSize[2];
+    local_20c0.halfSize[0] = ABS((float)(dVar21 * 0.5)) + local_20c0.halfSize[2];
     local_20e0 = (pVVar4->phys).vel[2] * local_20e0;
-    local_20c0.midPoint[0] = (pVVar4->phys).prevOrigin[0] + (float)(dVar22 * 0.5);
-    local_20c0.midPoint[1] = (pVVar4->phys).prevOrigin[1] + (float)(dVar21 * 0.5);
-    local_20c0.midPoint[2] = (pVVar4->phys).prevOrigin[2] + (float)(dVar20 * 0.5);
-    local_20c0.halfSize[1] = ABS((float)(dVar21 * 0.5)) + local_20c0.halfSize[2];
-    local_20c0.halfSize[2] = ABS((float)(dVar20 * 0.5)) + local_20c0.halfSize[2];
-    iVar11 = CM_AreaEntities(&local_20c0,local_2090,0x800,0x2002081);
-    lVar16 = (longlong)iVar11;
-    if (0 < iVar11) {
-      dVar20 = 0.0;
-      piVar17 = local_2090;
+    local_20c0.midPoint[0] = (pVVar4->phys).prevOrigin[0] + (float)(dVar21 * 0.5);
+    local_20c0.midPoint[1] = (pVVar4->phys).prevOrigin[1] + (float)(dVar20 * 0.5);
+    local_20c0.midPoint[2] = (pVVar4->phys).prevOrigin[2] + (float)(dVar19 * 0.5);
+    local_20c0.halfSize[1] = ABS((float)(dVar20 * 0.5)) + local_20c0.halfSize[2];
+    local_20c0.halfSize[2] = ABS((float)(dVar19 * 0.5)) + local_20c0.halfSize[2];
+    iVar10 = CM_AreaEntities(&local_20c0,local_2090,0x800,0x2002081);
+    lVar15 = (longlong)iVar10;
+    if (0 < iVar10) {
+      dVar19 = 0.0;
+      piVar16 = local_2090;
       do {
-        iVar11 = *piVar17;
-        iVar13 = (pgVar10->s).number;
-        pgVar18 = g_entities + iVar11;
-        pcVar7 = *(code **)(&DAT_8296984c + (uint)g_entities[iVar11].handler * 0x28);
-        if ((((pgVar18->s).number != iVar13) &&
-            ((g_entities[iVar11].tagInfo == (tagInfo_s *)0x0 ||
-             ((g_entities[iVar11].tagInfo)->parent != pgVar10)))) &&
-           ((iVar5 = g_entities[iVar11].s.eType, iVar5 == 1 || ((iVar5 == 6 || (iVar5 == 4)))))) {
-          if (g_entities[iVar11].s.groundEntityNum == iVar13) {
+        iVar10 = *piVar16;
+        iVar12 = (param_1->s).number;
+        pgVar17 = g_entities + iVar10;
+        pcVar7 = *(code **)(&DAT_8296984c + (uint)g_entities[iVar10].handler * 0x28);
+        if ((((pgVar17->s).number != iVar12) &&
+            ((g_entities[iVar10].tagInfo == (tagInfo_s *)0x0 ||
+             ((g_entities[iVar10].tagInfo)->parent != param_1)))) &&
+           ((iVar5 = g_entities[iVar10].s.eType, iVar5 == 1 || ((iVar5 == 6 || (iVar5 == 4)))))) {
+          if (g_entities[iVar10].s.groundEntityNum == iVar12) {
 LAB_826afbdc:
-            VEH_PushEntity(pgVar10,pgVar18,&local_20e8,&local_20d8,afStack_20a8);
+            VEH_PushEntity(param_1,pgVar17,&local_20e8,&local_20d8,afStack_20a8);
           }
           else {
-            if (g_entities[iVar11].classname == scr_const.script_model) {
-              if (g_entities[iVar11].model == 0) goto LAB_826afbf4;
-              pDVar12 = Com_GetServerDObjForEnt(pgVar18);
-              DObjPhysicsGetBounds(pDVar12,&local_2100);
+            if (g_entities[iVar10].classname == scr_const.script_model) {
+              if (g_entities[iVar10].model == 0) goto LAB_826afbf4;
+              pDVar11 = Com_GetServerDObjForEnt(pgVar17);
+              DObjPhysicsGetBounds(pDVar11,&local_2100);
               local_2100.midPoint[0] =
-                   g_entities[iVar11].r.currentOrigin[0] + local_2100.midPoint[0];
+                   g_entities[iVar10].r.currentOrigin[0] + local_2100.midPoint[0];
               local_2100.midPoint[1] =
-                   g_entities[iVar11].r.currentOrigin[1] + local_2100.midPoint[1];
+                   g_entities[iVar10].r.currentOrigin[1] + local_2100.midPoint[1];
               local_2100.midPoint[2] =
-                   g_entities[iVar11].r.currentOrigin[2] + local_2100.midPoint[2];
+                   g_entities[iVar10].r.currentOrigin[2] + local_2100.midPoint[2];
             }
             else {
-              pfVar14 = &fStack_2104;
-              pBVar15 = (Bounds *)&g_entities[iVar11].r.contents;
-              lVar19 = 6;
+              pfVar13 = &fStack_2104;
+              pBVar14 = (Bounds *)&g_entities[iVar10].r.contents;
+              lVar18 = 6;
               do {
-                pBVar15 = (Bounds *)(pBVar15->midPoint + 1);
-                pfVar14 = pfVar14 + 1;
-                *pfVar14 = pBVar15->midPoint[0];
-                lVar19 = lVar19 + -1;
-              } while (lVar19 != 0);
+                pBVar14 = (Bounds *)(pBVar14->midPoint + 1);
+                pfVar13 = pfVar13 + 1;
+                *pfVar13 = pBVar14->midPoint[0];
+                lVar18 = lVar18 + -1;
+              } while (lVar18 != 0);
             }
-            if ((double)local_2100.halfSize[0] < dVar20) {
+            if ((double)local_2100.halfSize[0] < dVar19) {
               MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\../universal/bounds_inline.h"
                               ,0x353,0,"%s");
             }
-            if ((double)local_2100.halfSize[1] < dVar20) {
+            if ((double)local_2100.halfSize[1] < dVar19) {
               MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\../universal/bounds_inline.h"
                               ,0x354,0,"%s");
             }
-            dVar21 = (double)local_2100.halfSize[2];
-            if (dVar21 < dVar20) {
+            dVar20 = (double)local_2100.halfSize[2];
+            if (dVar20 < dVar19) {
               MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\../universal/bounds_inline.h"
                               ,0x355,0,"%s");
-              dVar21 = (double)local_2100.halfSize[2];
+              dVar20 = (double)local_2100.halfSize[2];
             }
-            dVar22 = (double)local_2100.halfSize[0];
+            dVar21 = (double)local_2100.halfSize[0];
             if ((float)((double)local_2100.halfSize[0] - (double)local_2100.halfSize[1]) < 0.0) {
-              dVar22 = (double)local_2100.halfSize[1];
+              dVar21 = (double)local_2100.halfSize[1];
             }
-            local_2100.halfSize[0] = (float)dVar22;
-            local_2100.halfSize[1] = (float)dVar22;
-            if ((float)(dVar22 - dVar21) < 0.0) {
-              dVar22 = dVar21;
+            local_2100.halfSize[0] = (float)dVar21;
+            local_2100.halfSize[1] = (float)dVar21;
+            if ((float)(dVar21 - dVar20) < 0.0) {
+              dVar21 = dVar20;
             }
-            local_2100.halfSize[2] = (float)dVar22;
-            iVar13 = SV_EntityContactBounds(&local_2100,pgVar10);
-            if (iVar13 != 0) {
-              iVar13 = Scr_IsSystemActive('\x01');
-              if (iVar13 != 0) {
-                Scr_AddEntity(pgVar10);
-                Scr_Notify(pgVar18,scr_const.touch,1);
-                Scr_AddEntity(pgVar18);
-                Scr_Notify(pgVar10,scr_const.touch,1);
+            local_2100.halfSize[2] = (float)dVar21;
+            iVar12 = SV_EntityContactBounds(&local_2100,param_1);
+            if (iVar12 != 0) {
+              iVar12 = Scr_IsSystemActive('\x01');
+              if (iVar12 != 0) {
+                Scr_AddEntity(param_1);
+                Scr_Notify(pgVar17,scr_const.touch,1);
+                Scr_AddEntity(pgVar17);
+                Scr_Notify(param_1,scr_const.touch,1);
               }
               if (pcVar7 != (code *)0x0) {
-                (*pcVar7)(pgVar18,pgVar10,1);
+                (*pcVar7)(pgVar17,param_1,1);
               }
               if (pcVar6 != (code *)0x0) {
-                (*pcVar6)(pgVar10,pgVar18,1);
+                (*pcVar6)(param_1,pgVar17,1);
               }
-              if (g_entities[iVar11].s.eType == 1) goto LAB_826afbdc;
+              if (g_entities[iVar10].s.eType == 1) goto LAB_826afbdc;
             }
           }
         }
 LAB_826afbf4:
-        lVar16 = lVar16 + -1;
-        piVar17 = piVar17 + 1;
-      } while (lVar16 != 0);
+        lVar15 = lVar15 + -1;
+        piVar16 = piVar16 + 1;
+      } while (lVar15 != 0);
     }
   }
   else if (uVar1 != '\0') {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0x8fd,0,
                     "%s");
-    __restgprlr_18();
     return;
   }
-  __restgprlr_18();
   return;
 }
 
 
 // 826AFC18  VEH_UpdateAim  (vehicle/vehicle.cpp:2398)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
@@ -3609,19 +3522,18 @@ void VEH_UpdateAim(gentity_s *param_1)
 {
   float fVar1;
   Vehicle *pVVar2;
-  gentity_s *pgVar3;
-  VehicleDef *pVVar4;
+  VehicleDef *pVVar3;
   EntHandle *this;
-  int iVar5;
-  gentity_s *pgVar6;
-  bool bVar7;
-  gentity_s *pgVar8;
+  int iVar4;
+  gentity_s *pgVar5;
+  bool bVar6;
+  gentity_s *pgVar7;
+  double dVar8;
   double dVar9;
   double dVar10;
   double dVar11;
   double dVar12;
-  double dVar13;
-  float fVar14;
+  float fVar13;
   float local_1a0;
   float local_19c;
   float local_198;
@@ -3647,165 +3559,160 @@ void VEH_UpdateAim(gentity_s *param_1)
   float afStack_d0 [12];
   float afStack_a0 [40];
   
-  __savegprlr_24(param_1);
-  pgVar3 = (gentity_s *)__savefpr_28();
-  if (pgVar3 == (gentity_s *)0x0) {
+  if (param_1 == (gentity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0x969,0,
                     "%s");
   }
-  pVVar2 = pgVar3->vehicle;
+  pVVar2 = param_1->vehicle;
   if (pVVar2 == (Vehicle *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0x96c,0,
                     "%s");
   }
-  pVVar4 = Vehicle_GetServerDef(pVVar2->defIndex);
-  if ((pVVar2->hasTarget == 0) || (pgVar3->health < 1)) {
+  pVVar3 = Vehicle_GetServerDef(pVVar2->defIndex);
+  if ((pVVar2->hasTarget == 0) || (param_1->health < 1)) {
     (pVVar2->turret).turretMoving = false;
-LAB_826b0148:
-    __restfpr_28();
-    __restgprlr_24();
     return;
   }
-  iVar5 = pVVar2->targetEnt;
-  if (iVar5 == 0x7ff) {
+  iVar4 = pVVar2->targetEnt;
+  if (iVar4 == 0x7ff) {
     local_190 = pVVar2->targetOrigin[0];
-    pgVar8 = (gentity_s *)0x0;
+    pgVar7 = (gentity_s *)0x0;
     local_18c = pVVar2->targetOrigin[1];
     local_188 = pVVar2->targetOrigin[2];
   }
   else {
-    pgVar8 = g_entities + iVar5;
-    local_190 = g_entities[iVar5].r.currentOrigin[0] + pVVar2->targetOffset[0];
-    local_18c = g_entities[iVar5].r.currentOrigin[1] + pVVar2->targetOffset[1];
-    local_188 = g_entities[iVar5].r.currentOrigin[2] + pVVar2->targetOffset[2];
+    pgVar7 = g_entities + iVar4;
+    local_190 = g_entities[iVar4].r.currentOrigin[0] + pVVar2->targetOffset[0];
+    local_18c = g_entities[iVar4].r.currentOrigin[1] + pVVar2->targetOffset[1];
+    local_188 = g_entities[iVar4].r.currentOrigin[2] + pVVar2->targetOffset[2];
   }
-  iVar5 = (pVVar2->boneIndex).barrel;
-  if (iVar5 < 0) goto LAB_826b0148;
-  G_DObjGetWorldBoneIndexPos(pgVar3,iVar5,&local_160);
-  iVar5 = (pVVar2->boneIndex).turret_base;
-  if (iVar5 == -1) {
+  iVar4 = (pVVar2->boneIndex).barrel;
+  if (iVar4 < 0) {
+    return;
+  }
+  G_DObjGetWorldBoneIndexPos(param_1,iVar4,&local_160);
+  iVar4 = (pVVar2->boneIndex).turret_base;
+  if (iVar4 == -1) {
     local_140 = (pVVar2->phys).angles[0];
     local_13c = (pVVar2->phys).angles[1];
     local_138 = (pVVar2->phys).angles[2];
   }
   else {
-    G_DObjGetWorldBoneIndexMatrix(pgVar3,iVar5,(float (*) [3])afStack_a0);
+    G_DObjGetWorldBoneIndexMatrix(param_1,iVar4,(float (*) [3])afStack_a0);
     AxisToAngles((float (*) [3])afStack_a0,&local_140);
   }
-  this = &(pgVar3->r).ownerNum;
-  iVar5 = EntHandle::isDefined(this);
-  dVar11 = 0.0;
-  if ((iVar5 == 0) || (pVVar2->targetEnt != 0x7ff)) {
+  this = &(param_1->r).ownerNum;
+  iVar4 = EntHandle::isDefined(this);
+  dVar10 = 0.0;
+  if ((iVar4 == 0) || (pVVar2->targetEnt != 0x7ff)) {
     local_15c = local_18c - local_15c;
     local_198 = local_188 - local_158;
     local_1a0 = local_190 - local_160;
-    dVar10 = 1.0;
-    dVar9 = (double)SQRT(local_1a0 * local_1a0 + local_198 * local_198 + local_15c * local_15c);
-    dVar12 = dVar10;
-    if (-dVar9 < 0.0) {
-      dVar12 = dVar9;
+    dVar9 = 1.0;
+    dVar8 = (double)SQRT(local_1a0 * local_1a0 + local_198 * local_198 + local_15c * local_15c);
+    dVar11 = dVar9;
+    if (-dVar8 < 0.0) {
+      dVar11 = dVar8;
     }
-    fVar14 = (float)(1.0 / dVar12);
-    local_1a0 = fVar14 * local_1a0;
-    local_19c = local_15c * fVar14;
-    local_198 = local_198 * fVar14;
+    fVar13 = (float)(1.0 / dVar11);
+    local_1a0 = fVar13 * local_1a0;
+    local_19c = local_15c * fVar13;
+    local_198 = local_198 * fVar13;
     vectoangles(&local_1a0,&local_180);
   }
   else {
-    pgVar6 = EntHandle::ent(this);
-    if (pgVar6->client == (gclient_s *)0x0) {
+    pgVar5 = EntHandle::ent(this);
+    if (pgVar5->client == (gclient_s *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0x99a,0
                       ,"%s");
     }
     local_160 = pVVar2->targetOrigin[0] - local_160;
     local_19c = pVVar2->targetOrigin[1] - local_15c;
     local_198 = pVVar2->targetOrigin[2] - local_158;
-    dVar10 = 1.0;
-    dVar9 = (double)SQRT(local_160 * local_160 + local_198 * local_198 + local_19c * local_19c);
-    dVar12 = dVar10;
-    if (-dVar9 < 0.0) {
-      dVar12 = dVar9;
+    dVar9 = 1.0;
+    dVar8 = (double)SQRT(local_160 * local_160 + local_198 * local_198 + local_19c * local_19c);
+    dVar11 = dVar9;
+    if (-dVar8 < 0.0) {
+      dVar11 = dVar8;
     }
-    fVar14 = (float)(1.0 / dVar12);
-    local_1a0 = fVar14 * local_160;
-    local_19c = local_19c * fVar14;
-    local_198 = local_198 * fVar14;
+    fVar13 = (float)(1.0 / dVar11);
+    local_1a0 = fVar13 * local_160;
+    local_19c = local_19c * fVar13;
+    local_198 = local_198 * fVar13;
     vectoangles(&local_1a0,&local_180);
-    local_17c = (pgVar6->client->ps).viewangles[1];
-    local_178 = (float)dVar11;
+    local_17c = (pgVar5->client->ps).viewangles[1];
+    local_178 = (float)dVar10;
   }
   AnglesToAxis(&local_180,(float (*) [3])afStack_d0);
   AnglesToAxis(&local_140,(float (*) [3])afStack_130);
   MatrixTranspose((float (*) [3])afStack_130,(float (*) [3])afStack_100);
   MatrixMultiply((float (*) [3])afStack_d0,(float (*) [3])afStack_100,(float (*) [3])afStack_130);
   AxisToAngles((float (*) [3])afStack_130,&local_180);
-  local_150 = (pgVar3->s).lerp.u.vehicle.gunPitch;
-  local_14c = (pgVar3->s).lerp.u.vehicle.gunYaw;
-  local_148 = (float)dVar11;
+  local_150 = (param_1->s).lerp.u.vehicle.gunPitch;
+  local_14c = (param_1->s).lerp.u.vehicle.gunYaw;
+  local_148 = (float)dVar10;
   AnglesSubtract(&local_180,&local_150,&local_170);
   local_170 = ABS(local_170);
   local_16c = ABS(local_16c);
-  dVar12 = 0.05000000074505806;
-  fVar14 = LinearTrackAngle(local_180,local_150,pVVar4->turretRotRate,0.05);
-  (pgVar3->s).lerp.u.vehicle.gunPitch = fVar14;
-  fVar14 = LinearTrackAngle(local_17c,local_14c,pVVar4->turretRotRate,(float)dVar12);
-  dVar9 = (double)fVar14;
-  (pgVar3->s).lerp.u.vehicle.gunYaw = fVar14;
-  dVar12 = -(double)pVVar4->turretVertSpanUp;
-  dVar13 = (double)(pgVar3->s).lerp.u.vehicle.gunPitch;
-  if ((dVar13 < dVar12) || (dVar12 = (double)pVVar4->turretVertSpanDown, dVar12 < dVar13)) {
-    (pgVar3->s).lerp.u.vehicle.gunPitch = (float)dVar12;
-    Scr_Notify(pgVar3,scr_const.turret_pitch_clamped,0);
+  dVar11 = 0.05000000074505806;
+  fVar13 = LinearTrackAngle(local_180,local_150,pVVar3->turretRotRate,0.05);
+  (param_1->s).lerp.u.vehicle.gunPitch = fVar13;
+  fVar13 = LinearTrackAngle(local_17c,local_14c,pVVar3->turretRotRate,(float)dVar11);
+  dVar8 = (double)fVar13;
+  (param_1->s).lerp.u.vehicle.gunYaw = fVar13;
+  dVar11 = -(double)pVVar3->turretVertSpanUp;
+  dVar12 = (double)(param_1->s).lerp.u.vehicle.gunPitch;
+  if ((dVar12 < dVar11) || (dVar11 = (double)pVVar3->turretVertSpanDown, dVar11 < dVar12)) {
+    (param_1->s).lerp.u.vehicle.gunPitch = (float)dVar11;
+    Scr_Notify(param_1,scr_const.turret_pitch_clamped,0);
   }
-  fVar1 = -pVVar4->turretHorizSpanRight;
-  fVar14 = (pgVar3->s).lerp.u.vehicle.gunYaw;
-  if ((fVar14 < fVar1) || (fVar1 = pVVar4->turretHorizSpanLeft, fVar1 < fVar14)) {
-    (pgVar3->s).lerp.u.vehicle.gunYaw = fVar1;
-    Scr_Notify(pgVar3,scr_const.turret_yaw_clamped,0);
+  fVar1 = -pVVar3->turretHorizSpanRight;
+  fVar13 = (param_1->s).lerp.u.vehicle.gunYaw;
+  if ((fVar13 < fVar1) || (fVar1 = pVVar3->turretHorizSpanLeft, fVar1 < fVar13)) {
+    (param_1->s).lerp.u.vehicle.gunYaw = fVar1;
+    Scr_Notify(param_1,scr_const.turret_yaw_clamped,0);
   }
-  fVar14 = AngleSubtract((float)dVar13,(pgVar3->s).lerp.u.vehicle.gunPitch);
-  dVar12 = (double)fVar14;
-  fVar14 = AngleSubtract((float)dVar9,(pgVar3->s).lerp.u.vehicle.gunYaw);
-  if (((2.0 <= local_170) && (dVar12 == dVar11)) ||
-     ((2.0 <= local_16c && ((double)fVar14 == dVar11)))) {
-    bVar7 = true;
+  fVar13 = AngleSubtract((float)dVar12,(param_1->s).lerp.u.vehicle.gunPitch);
+  dVar11 = (double)fVar13;
+  fVar13 = AngleSubtract((float)dVar8,(param_1->s).lerp.u.vehicle.gunYaw);
+  if (((2.0 <= local_170) && (dVar11 == dVar10)) ||
+     ((2.0 <= local_16c && ((double)fVar13 == dVar10)))) {
+    bVar6 = true;
   }
   else {
     if ((pVVar2->turret).turretMoving == false) goto LAB_826b0078;
-    Scr_Notify(pgVar3,scr_const.turret_rotate_stopped,0);
-    bVar7 = false;
+    Scr_Notify(param_1,scr_const.turret_rotate_stopped,0);
+    bVar6 = false;
   }
-  (pVVar2->turret).turretMoving = bVar7;
+  (pVVar2->turret).turretMoving = bVar6;
 LAB_826b0078:
-  if ((dVar10 <= (double)local_170) || (dVar10 <= (double)local_16c)) {
-    Scr_Notify(pgVar3,scr_const.turret_not_on_target,0);
+  if ((dVar9 <= (double)local_170) || (dVar9 <= (double)local_16c)) {
+    Scr_Notify(param_1,scr_const.turret_not_on_target,0);
   }
   else {
-    Scr_Notify(pgVar3,scr_const.turret_on_target,0);
-    if (pgVar8 != (gentity_s *)0x0) {
-      SV_SightTrace(&pVVar2->turretHitNum,&local_160,&local_190,&bounds_origin,(pgVar3->s).number,
-                    (pgVar8->s).number,0x801);
-      if (pVVar2->turretHitNum == 0) {
-        Scr_Notify(pgVar3,scr_const.turret_on_vistarget,0);
-        __restfpr_28();
-        __restgprlr_24();
+    Scr_Notify(param_1,scr_const.turret_on_target,0);
+    if (pgVar7 != (gentity_s *)0x0) {
+      SV_SightTrace(&pVVar2->turretHitNum,&local_160,&local_190,&bounds_origin,(param_1->s).number,
+                    (pgVar7->s).number,0x801);
+      if (pVVar2->turretHitNum != 0) {
+        Scr_Notify(param_1,scr_const.turret_no_vis,0);
         return;
       }
-      Scr_Notify(pgVar3,scr_const.turret_no_vis,0);
-      __restfpr_28();
-      __restgprlr_24();
+      Scr_Notify(param_1,scr_const.turret_on_vistarget,0);
       return;
     }
   }
-  Scr_Notify(pgVar3,scr_const.turret_no_vis,0);
-  __restfpr_28();
-  __restgprlr_24();
+  Scr_Notify(param_1,scr_const.turret_no_vis,0);
   return;
 }
 
 
 // 826B0158  Veh_BoatGetRockingAngles  (vehicle/vehicle.cpp:2569)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
@@ -3814,19 +3721,15 @@ void Veh_BoatGetRockingAngles(Vehicle *param_1,float *param_2,float *param_3)
 
 {
   float fVar1;
-  int iVar2;
+  float fVar2;
   VehicleDef *pVVar3;
-  ulonglong uVar4;
-  float *pfVar5;
-  ulonglong uVar6;
-  float *pfVar7;
+  double dVar4;
+  double dVar5;
+  double dVar6;
+  double dVar7;
   double dVar8;
   double dVar9;
   double dVar10;
-  double dVar11;
-  double dVar12;
-  double dVar13;
-  double dVar14;
   undefined8 local_b0;
   float local_a8;
   float local_a0;
@@ -3834,106 +3737,101 @@ void Veh_BoatGetRockingAngles(Vehicle *param_1,float *param_2,float *param_3)
   float local_98;
   float afStack_90 [36];
   
-  uVar6 = (ulonglong)(int)param_3;
-  uVar4 = (ulonglong)(int)param_2;
-  __savegprlr_26(param_1);
-  iVar2 = __savefpr_26();
-  if (iVar2 == 0) {
+  if (param_1 == (Vehicle *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0xa18,0,
                     "%s");
   }
-  if ((uVar4 & 0xffffffff) == 0) {
+  if (param_2 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0xa19,0,
                     "%s");
   }
-  if ((uVar6 & 0xffffffff) == 0) {
+  if (param_3 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0xa1a,0,
                     "%s");
   }
-  pVVar3 = Vehicle_GetServerDef(*(int *)(iVar2 + 0x210));
+  pVVar3 = Vehicle_GetServerDef(param_1->defIndex);
   if (pVVar3->type != VEH_BOAT) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0xa1d,0,
                     "%s");
   }
-  pfVar5 = (float *)uVar4;
-  pfVar7 = (float *)uVar6;
-  if (pVVar3->fakeBodyBoatRockingFadeoutSpeed <= *(float *)(iVar2 + 0x2f8)) {
-    *pfVar5 = 0.0;
-    *pfVar7 = 0.0;
-    __restfpr_26();
-    __restgprlr_26();
+  if (pVVar3->fakeBodyBoatRockingFadeoutSpeed <= param_1->speed) {
+    *param_2 = 0.0;
+    *param_3 = 0.0;
     return;
   }
-  dVar11 = 0.0;
+  dVar7 = 0.0;
   if (pVVar3->fakeBodyBoatRockingFadeoutSpeed <= 0.0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0xa27,0,
                     "%s");
   }
-  dVar10 = (double)((1.0 - *(float *)(iVar2 + 0x2f8) / pVVar3->fakeBodyBoatRockingFadeoutSpeed) *
-                   pVVar3->fakeBodyBoatRockingAmplitude);
-  if ((double)pVVar3->fakeBodyBoatRockingRotationPeriod == dVar11) {
+  dVar6 = (double)((1.0 - param_1->speed / pVVar3->fakeBodyBoatRockingFadeoutSpeed) *
+                  pVVar3->fakeBodyBoatRockingAmplitude);
+  if ((double)pVVar3->fakeBodyBoatRockingRotationPeriod == dVar7) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0xa2d,0,
                     "%s");
   }
-  dVar14 = 0.0027777778450399637;
-  dVar13 = 0.5;
-  dVar9 = (double)((18.0 / pVVar3->fakeBodyBoatRockingRotationPeriod + *(float *)(iVar2 + 0x358)) *
-                  0.0027777778);
-  dVar8 = floor((double)(float)(dVar9 + 0.5));
-  dVar12 = 360.0;
-  fVar1 = (float)(dVar9 - (double)(float)dVar8) * 360.0;
-  *(float *)(iVar2 + 0x358) = fVar1;
-  dVar9 = (double)(float)((double)(fVar1 - *(float *)(iVar2 + 0xf0)) * dVar14);
-  dVar8 = floor((double)(float)(dVar9 + dVar13));
-  dVar12 = (double)((float)((double)(float)(dVar9 - (double)(float)dVar8) * dVar12) * 0.017453292);
-  dVar8 = sin(dVar12);
-  dVar9 = (double)(float)dVar8;
-  dVar8 = cos(dVar12);
-  dVar8 = (double)(float)dVar8;
-  dVar9 = -dVar9;
-  if ((double)pVVar3->fakeBodyBoatRockingPeriod == dVar11) {
+  dVar10 = 0.0027777778450399637;
+  dVar9 = 0.5;
+  dVar5 = (double)((18.0 / pVVar3->fakeBodyBoatRockingRotationPeriod + (param_1->boat).rockingDirYaw
+                   ) * 0.0027777778);
+  dVar4 = floor((double)(float)(dVar5 + 0.5));
+  fVar1 = (param_1->phys).angles[1];
+  dVar8 = 360.0;
+  fVar2 = (float)(dVar5 - (double)(float)dVar4) * 360.0;
+  (param_1->boat).rockingDirYaw = fVar2;
+  dVar5 = (double)(float)((double)(fVar2 - fVar1) * dVar10);
+  dVar4 = floor((double)(float)(dVar5 + dVar9));
+  dVar8 = (double)((float)((double)(float)(dVar5 - (double)(float)dVar4) * dVar8) * 0.017453292);
+  dVar4 = sin(dVar8);
+  dVar5 = (double)(float)dVar4;
+  dVar4 = cos(dVar8);
+  dVar4 = (double)(float)dVar4;
+  dVar5 = -dVar5;
+  if ((double)pVVar3->fakeBodyBoatRockingPeriod == dVar7) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0xa33,0,
                     "%s");
   }
   local_b0 = (longlong)level.time;
-  dVar14 = (double)(((float)local_b0 / pVVar3->fakeBodyBoatRockingPeriod) * 0.006283186);
-  dVar12 = sin(dVar14);
-  dVar13 = (double)(float)dVar12;
-  dVar12 = cos(dVar14);
+  dVar10 = (double)(((float)local_b0 / pVVar3->fakeBodyBoatRockingPeriod) * 0.006283186);
+  dVar8 = sin(dVar10);
+  dVar9 = (double)(float)dVar8;
+  dVar8 = cos(dVar10);
   fVar1 = ROLL_SCALE;
-  dVar13 = (double)(float)((double)(float)((double)SECONDARY_SCALE * dVar13) * dVar10);
-  *pfVar5 = (float)((double)(float)((double)(float)dVar12 * dVar10) * dVar8 -
-                   (double)(float)(dVar13 * dVar9));
-  *pfVar7 = (float)((double)(float)((double)(float)dVar12 * dVar10) * dVar9 +
-                   (double)(float)(dVar13 * dVar8)) * fVar1;
-  local_b0 = CONCAT44(*pfVar5,local_b0._4_4_);
-  if (((uint)*pfVar5 & 0x7f800000) == 0x7f800000) {
+  dVar9 = (double)(float)((double)(float)((double)SECONDARY_SCALE * dVar9) * dVar6);
+  *param_2 = (float)((double)(float)((double)(float)dVar8 * dVar6) * dVar4 -
+                    (double)(float)(dVar9 * dVar5));
+  *param_3 = (float)((double)(float)((double)(float)dVar8 * dVar6) * dVar5 +
+                    (double)(float)(dVar9 * dVar4)) * fVar1;
+  local_b0 = CONCAT44(*param_2,local_b0._4_4_);
+  if (((uint)*param_2 & 0x7f800000) == 0x7f800000) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0xa3d,0,
                     "%s");
   }
-  local_b0 = CONCAT44(*pfVar7,local_b0._4_4_);
-  if (((uint)*pfVar7 & 0x7f800000) == 0x7f800000) {
+  local_b0 = CONCAT44(*param_3,local_b0._4_4_);
+  if (((uint)*param_3 & 0x7f800000) == 0x7f800000) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0xa3e,0,
                     "%s");
   }
   if ((g_vehicleDebug->current).enabled != false) {
-    local_a8 = (float)dVar11;
-    local_b0 = CONCAT44(*pfVar5 * 10.0,-*pfVar7 * 10.0);
-    AnglesToAxis((float *)(iVar2 + 0xec),(float (*) [3])afStack_90);
+    local_a8 = (float)dVar7;
+    local_b0 = CONCAT44(*param_2 * 10.0,-*param_3 * 10.0);
+    AnglesToAxis((param_1->phys).angles,(float (*) [3])afStack_90);
     MatrixTransformVector((float *)&local_b0,(float (*) [3])afStack_90,&local_a0);
-    local_a0 = local_a0 + *(float *)(iVar2 + 0xd4);
-    local_9c = *(float *)(iVar2 + 0xd8) + local_9c;
-    local_98 = *(float *)(iVar2 + 0xdc) + local_98;
-    G_DebugLine((float *)(iVar2 + 0xd4),&local_a0,colorBlue,0);
+    local_a0 = local_a0 + (param_1->phys).origin[0];
+    local_9c = (param_1->phys).origin[1] + local_9c;
+    local_98 = (param_1->phys).origin[2] + local_98;
+    G_DebugLine((param_1->phys).origin,&local_a0,colorBlue,0);
   }
-  __restfpr_26();
-  __restgprlr_26();
   return;
 }
 
 
 // 826B0528  VEH_UpdateBody  (vehicle/vehicle.cpp:2643)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Type propagation algorithm not settling */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
@@ -3952,8 +3850,8 @@ void VEH_UpdateBody(Vehicle *param_1)
   float fVar8;
   gentity_s *pgVar9;
   VehicleType VVar10;
-  Vehicle *pVVar11;
-  VehicleDef *pVVar12;
+  VehicleDef *pVVar11;
+  double dVar12;
   double dVar13;
   double dVar14;
   double dVar15;
@@ -3962,95 +3860,92 @@ void VEH_UpdateBody(Vehicle *param_1)
   double dVar18;
   double dVar19;
   double dVar20;
-  double dVar21;
   float local_70;
   float local_6c [27];
   
-  __savegprlr_26(param_1);
-  pVVar11 = (Vehicle *)__savefpr_26();
-  if (pVVar11 == (Vehicle *)0x0) {
+  if (param_1 == (Vehicle *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0xa5e,0,
                     "%s");
   }
-  if (pVVar11->ent == (gentity_s *)0x0) {
+  if (param_1->ent == (gentity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0xa5f,0,
                     "%s");
   }
-  pgVar9 = pVVar11->ent;
-  pVVar12 = Vehicle_GetServerDef(pVVar11->defIndex);
-  dVar17 = 0.0;
-  dVar21 = 0.05000000074505806;
-  if (0.0 < pVVar11->joltTime) {
-    dVar14 = sin((double)(pVVar11->joltWave * 0.017453292));
-    fVar1 = pVVar11->joltTime * (float)dVar14;
-    (pgVar9->s).lerp.u.turret.gunAngles[2] = pVVar11->joltDir[0] * fVar1;
-    (pgVar9->s).lerp.u.primaryLight.cosHalfFovOuter = pVVar11->joltDir[1] * fVar1;
-    pVVar11->joltTime = (float)((double)pVVar11->joltTime - dVar21);
-    pVVar11->joltWave = pVVar11->joltWave + 36.0;
+  pgVar9 = param_1->ent;
+  pVVar11 = Vehicle_GetServerDef(param_1->defIndex);
+  dVar16 = 0.0;
+  dVar20 = 0.05000000074505806;
+  if (0.0 < param_1->joltTime) {
+    dVar13 = sin((double)(param_1->joltWave * 0.017453292));
+    fVar1 = param_1->joltTime * (float)dVar13;
+    (pgVar9->s).lerp.u.turret.gunAngles[2] = param_1->joltDir[0] * fVar1;
+    (pgVar9->s).lerp.u.primaryLight.cosHalfFovOuter = param_1->joltDir[1] * fVar1;
+    param_1->joltTime = (float)((double)param_1->joltTime - dVar20);
+    param_1->joltWave = param_1->joltWave + 36.0;
   }
-  dVar14 = dVar17;
-  dVar18 = dVar17;
-  if (pVVar12->type == VEH_BOAT) {
-    Veh_BoatGetRockingAngles(pVVar11,local_6c,&local_70);
-    dVar17 = (double)local_70;
-    dVar14 = (double)local_6c[0];
+  dVar13 = dVar16;
+  dVar17 = dVar16;
+  if (pVVar11->type == VEH_BOAT) {
+    Veh_BoatGetRockingAngles(param_1,local_6c,&local_70);
+    dVar16 = (double)local_70;
+    dVar13 = (double)local_6c[0];
   }
-  VVar10 = pVVar12->type;
+  VVar10 = pVVar11->type;
   if ((VVar10 != VEH_HELICOPTER) && (VVar10 != VEH_PLANE)) {
-    dVar16 = (double)(pVVar11->phys).bodyVel[0];
-    dVar13 = dVar18;
-    if (1.7599999904632568 < dVar16) {
-      if ((VVar10 != VEH_BOAT) || (dVar18 < (double)(pVVar11->phys).bodyAccel[0])) {
-        dVar13 = (double)((pVVar11->phys).bodyAccel[0] * pVVar12->fakeBodyAccelPitch);
+    dVar15 = (double)(param_1->phys).bodyVel[0];
+    dVar12 = dVar17;
+    if (1.7599999904632568 < dVar15) {
+      if ((VVar10 != VEH_BOAT) || (dVar17 < (double)(param_1->phys).bodyAccel[0])) {
+        dVar12 = (double)((param_1->phys).bodyAccel[0] * pVVar11->fakeBodyAccelPitch);
       }
-      dVar13 = (double)(ABS((pVVar11->phys).bodyVel[1]) * pVVar12->fakeBodySideVelPitch +
-                       (float)((double)pVVar12->fakeBodyVelPitch * dVar16 + dVar13));
+      dVar12 = (double)(ABS((param_1->phys).bodyVel[1]) * pVVar11->fakeBodySideVelPitch +
+                       (float)((double)pVVar11->fakeBodyVelPitch * dVar15 + dVar12));
     }
     fVar2 = (pgVar9->s).lerp.u.primaryLight.cosHalfFovOuter;
-    fVar3 = pVVar12->fakeBodyRollStrength;
-    fVar4 = pVVar12->fakeBodyVelRoll;
-    fVar5 = (pVVar11->phys).bodyVel[1];
-    dVar16 = (double)(pVVar11->phys).bodyPitchVel;
-    fVar6 = pVVar12->fakeBodyAccelRoll;
-    fVar7 = pVVar12->fakeBodyRollDampening;
-    dVar15 = (double)(pVVar11->phys).bodyRollVel;
-    fVar8 = (pVVar11->phys).bodyAccel[1];
-    dVar20 = 0.0027777778450399637;
-    dVar19 = 0.5;
-    fVar1 = (float)((double)(float)(-(double)(float)((double)pVVar12->fakeBodyPitchDampening *
-                                                     dVar16 - -(double)((float)((double)(pgVar9->s).
+    fVar3 = pVVar11->fakeBodyRollStrength;
+    fVar4 = pVVar11->fakeBodyVelRoll;
+    fVar5 = (param_1->phys).bodyVel[1];
+    dVar15 = (double)(param_1->phys).bodyPitchVel;
+    fVar6 = pVVar11->fakeBodyAccelRoll;
+    fVar7 = pVVar11->fakeBodyRollDampening;
+    dVar14 = (double)(param_1->phys).bodyRollVel;
+    fVar8 = (param_1->phys).bodyAccel[1];
+    dVar19 = 0.0027777778450399637;
+    dVar18 = 0.5;
+    fVar1 = (float)((double)(float)(-(double)(float)((double)pVVar11->fakeBodyPitchDampening *
+                                                     dVar15 - -(double)((float)((double)(pgVar9->s).
                                                                                         lerp.u.
-                                                  turret.gunAngles[2] - dVar14) *
-                                                  pVVar12->fakeBodyPitchStrength)) - dVar13) *
-                    dVar21 + dVar16);
-    (pVVar11->phys).bodyPitchVel = fVar1;
-    (pVVar11->phys).bodyRollVel =
+                                                  turret.gunAngles[2] - dVar13) *
+                                                  pVVar11->fakeBodyPitchStrength)) - dVar12) *
+                    dVar20 + dVar15);
+    (param_1->phys).bodyPitchVel = fVar1;
+    (param_1->phys).bodyRollVel =
          (float)((double)(fVar8 * fVar6 + fVar5 * fVar4 +
-                         -(float)((double)fVar7 * dVar15 -
-                                 -(double)((float)((double)fVar2 - dVar17) * fVar3))) * dVar21 +
-                dVar15);
-    dVar14 = (double)((float)((double)fVar1 * dVar21 +
+                         -(float)((double)fVar7 * dVar14 -
+                                 -(double)((float)((double)fVar2 - dVar16) * fVar3))) * dVar20 +
+                dVar14);
+    dVar13 = (double)((float)((double)fVar1 * dVar20 +
                              (double)(pgVar9->s).lerp.u.turret.gunAngles[2]) * 0.0027777778);
-    dVar17 = floor((double)(float)(dVar14 + 0.5));
+    dVar16 = floor((double)(float)(dVar13 + 0.5));
     fVar1 = (pgVar9->s).lerp.u.primaryLight.cosHalfFovOuter;
-    dVar13 = 360.0;
-    (pgVar9->s).lerp.u.turret.gunAngles[2] = (float)(dVar14 - (double)(float)dVar17) * 360.0;
-    dVar21 = (double)(float)((double)(float)((double)(pVVar11->phys).bodyRollVel * dVar21 +
-                                            (double)fVar1) * dVar20);
-    dVar17 = floor((double)(float)(dVar21 + dVar19));
+    dVar12 = 360.0;
+    (pgVar9->s).lerp.u.turret.gunAngles[2] = (float)(dVar13 - (double)(float)dVar16) * 360.0;
+    dVar20 = (double)(float)((double)(float)((double)(param_1->phys).bodyRollVel * dVar20 +
+                                            (double)fVar1) * dVar19);
+    dVar16 = floor((double)(float)(dVar20 + dVar18));
     fVar1 = (pgVar9->s).lerp.u.turret.gunAngles[2];
     (pgVar9->s).lerp.u.primaryLight.cosHalfFovOuter =
-         (float)((double)(float)(dVar21 - (double)(float)dVar17) * dVar13);
-    fVar2 = pVVar12->maxBodyPitch;
+         (float)((double)(float)(dVar20 - (double)(float)dVar16) * dVar12);
+    fVar2 = pVVar11->maxBodyPitch;
     if ((fVar2 < fVar1) || (fVar2 = -fVar2, fVar1 < fVar2)) {
       (pgVar9->s).lerp.u.turret.gunAngles[2] = fVar2;
-      (pVVar11->phys).bodyPitchVel = (float)dVar18;
+      (param_1->phys).bodyPitchVel = (float)dVar17;
     }
     fVar1 = (pgVar9->s).lerp.u.primaryLight.cosHalfFovOuter;
-    fVar2 = pVVar12->maxBodyRoll;
+    fVar2 = pVVar11->maxBodyRoll;
     if ((fVar2 < fVar1) || (fVar2 = -fVar2, fVar1 < fVar2)) {
       (pgVar9->s).lerp.u.primaryLight.cosHalfFovOuter = fVar2;
-      (pVVar11->phys).bodyRollVel = (float)dVar18;
+      (param_1->phys).bodyRollVel = (float)dVar17;
     }
   }
   local_6c[0] = (float)(pgVar9->s).lerp.u.plane.friendIcon;
@@ -4063,14 +3958,14 @@ void VEH_UpdateBody(Vehicle *param_1)
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0xaad,0,
                     "%s");
   }
-  __restfpr_26();
-  __restgprlr_26();
   return;
 }
 
 
 // 826B0858  VEH_UpdateSteering  (vehicle/vehicle.cpp:2738)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
@@ -4079,89 +3974,87 @@ void VEH_UpdateSteering(gentity_s *param_1)
 
 {
   float fVar1;
-  int iVar2;
-  float fVar3;
+  float fVar2;
+  Vehicle *pVVar3;
   float fVar4;
-  int iVar5;
-  VehicleDef *pVVar6;
-  bool bVar7;
-  double dVar8;
-  float fVar9;
+  VehicleDef *pVVar5;
+  bool bVar6;
+  double dVar7;
+  float fVar8;
   float local_50;
   float local_4c;
   float local_48;
   
-  iVar5 = __savegprlr_27(param_1);
-  if (iVar5 == 0) {
+  if (param_1 == (gentity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0xabd,0,
                     "%s");
   }
-  if (*(int *)(iVar5 + 0x160) == 0) {
+  if (param_1->vehicle == (Vehicle *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0xabe,0,
                     "%s");
   }
-  iVar2 = *(int *)(iVar5 + 0x160);
-  pVVar6 = Vehicle_GetServerDef(*(int *)(iVar2 + 0x210));
-  dVar8 = 0.0;
-  if (pVVar6->maxSteeringAngle != 0.0) {
-    if (*(int *)(iVar2 + 0x1f0) == 0) {
-      bVar7 = false;
-      if (*(float *)(iVar2 + 0x124) * *(float *)(iVar2 + 0x124) +
-          *(float *)(iVar2 + 0x11c) * *(float *)(iVar2 + 0x11c) +
-          *(float *)(iVar2 + 0x120) * *(float *)(iVar2 + 0x120) != 0.0) {
-        AngleVectors((float *)(iVar2 + 0xec),&local_50,(float *)0x0,(float *)0x0);
-        bVar7 = (double)(*(float *)(iVar2 + 0x124) * local_48 +
-                        local_4c * *(float *)(iVar2 + 0x120) + local_50 * *(float *)(iVar2 + 0x11c))
-                < dVar8;
+  pVVar3 = param_1->vehicle;
+  pVVar5 = Vehicle_GetServerDef(pVVar3->defIndex);
+  dVar7 = 0.0;
+  if (pVVar5->maxSteeringAngle != 0.0) {
+    if (pVVar3->physVeh == (PhysVehicle *)0x0) {
+      fVar8 = (pVVar3->phys).vel[1];
+      fVar1 = (pVVar3->phys).vel[0];
+      fVar2 = (pVVar3->phys).vel[2];
+      bVar6 = false;
+      if (fVar2 * fVar2 + fVar1 * fVar1 + fVar8 * fVar8 != 0.0) {
+        AngleVectors((pVVar3->phys).angles,&local_50,(float *)0x0,(float *)0x0);
+        bVar6 = (double)((pVVar3->phys).vel[2] * local_48 +
+                        local_4c * (pVVar3->phys).vel[1] + local_50 * (pVVar3->phys).vel[0]) < dVar7
+        ;
       }
-      fVar9 = AngleSubtract(*(float *)(iVar2 + 0xf0),*(float *)(iVar2 + 0xfc));
-      if (bVar7) {
+      fVar8 = AngleSubtract((pVVar3->phys).angles[1],(pVVar3->phys).prevAngles[1]);
+      if (bVar6) {
         fVar1 = -10.0;
       }
       else {
         fVar1 = 10.0;
       }
-      fVar1 = fVar1 * fVar9;
-      fVar9 = pVVar6->maxSteeringAngle;
-      fVar3 = fVar9;
-      if (fVar1 - fVar9 < 0.0) {
-        fVar3 = fVar1;
+      fVar1 = fVar1 * fVar8;
+      fVar8 = pVVar5->maxSteeringAngle;
+      fVar2 = fVar8;
+      if (fVar1 - fVar8 < 0.0) {
+        fVar2 = fVar1;
       }
-      fVar4 = -fVar9;
-      if (-fVar9 - fVar1 < 0.0) {
-        fVar4 = fVar3;
+      fVar4 = -fVar8;
+      if (-fVar8 - fVar1 < 0.0) {
+        fVar4 = fVar2;
       }
-      *(float *)(iVar5 + 100) = fVar4;
-      __restgprlr_27();
+      (param_1->s).lerp.u.primaryLight.cosHalfFovInner = fVar4;
       return;
     }
-    if (pVVar6->type != VEH_TANK) {
-      fVar9 = *(float *)(iVar5 + 100);
-      fVar1 = *(float *)(iVar2 + 500);
-      fVar3 = fVar9 + 5.0;
-      if (fVar1 - (fVar9 + 5.0) < 0.0) {
-        fVar3 = fVar1;
+    if (pVVar5->type != VEH_TANK) {
+      fVar8 = (param_1->s).lerp.u.primaryLight.cosHalfFovInner;
+      fVar1 = (pVVar3->physVehCtrl).steering;
+      fVar2 = fVar8 + 5.0;
+      if (fVar1 - (fVar8 + 5.0) < 0.0) {
+        fVar2 = fVar1;
       }
-      fVar4 = fVar9 - 5.0;
-      if ((fVar9 - 5.0) - fVar1 < 0.0) {
+      fVar4 = fVar8 - 5.0;
+      if ((fVar8 - 5.0) - fVar1 < 0.0) {
         fVar4 = fVar1;
       }
-      if (fVar9 - fVar1 < 0.0) {
-        fVar4 = fVar3;
+      if (fVar8 - fVar1 < 0.0) {
+        fVar4 = fVar2;
       }
-      *(float *)(iVar5 + 100) = fVar4;
-      __restgprlr_27();
+      (param_1->s).lerp.u.primaryLight.cosHalfFovInner = fVar4;
       return;
     }
   }
-  *(undefined4 *)(iVar5 + 100) = 0;
-  __restgprlr_27();
+  (param_1->s).lerp.u.primaryLight.cosHalfFovInner = 0.0;
   return;
 }
 
 
 // 826B0A28  VEH_UpdatePlayerControlledWeapon  (vehicle/vehicle.cpp:2799)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
@@ -4170,9 +4063,8 @@ void VEH_UpdatePlayerControlledWeapon(gentity_s *param_1)
 {
   Vehicle *pVVar1;
   gclient_s *pgVar2;
-  gentity_s *pgVar3;
-  int iVar4;
-  gentity_s *pgVar5;
+  int iVar3;
+  gentity_s *pgVar4;
   EntHandle *this;
   float local_d0;
   float local_cc;
@@ -4187,21 +4079,22 @@ void VEH_UpdatePlayerControlledWeapon(gentity_s *param_1)
   float afStack_90 [4];
   trace_t local_80 [2];
   
-  pgVar3 = (gentity_s *)__savegprlr_24(param_1);
-  if (pgVar3 == (gentity_s *)0x0) {
+  if (param_1 == (gentity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0xafd,0,
                     "%s");
   }
-  if ((pgVar3->s).weapon._s_0.weaponIdx != 0) {
-    this = &(pgVar3->r).ownerNum;
-    iVar4 = EntHandle::isDefined(this);
-    if (iVar4 == 0) {
-      this = &pgVar3->remoteControlledOwner;
-      iVar4 = EntHandle::isDefined(this);
-      if (iVar4 == 0) goto LAB_826b0d64;
+  if ((param_1->s).weapon._s_0.weaponIdx != 0) {
+    this = &(param_1->r).ownerNum;
+    iVar3 = EntHandle::isDefined(this);
+    if (iVar3 == 0) {
+      this = &param_1->remoteControlledOwner;
+      iVar3 = EntHandle::isDefined(this);
+      if (iVar3 == 0) {
+        return;
+      }
     }
-    pgVar5 = EntHandle::ent(this);
-    pVVar1 = pgVar3->vehicle;
+    pgVar4 = EntHandle::ent(this);
+    pVVar1 = param_1->vehicle;
     if (pVVar1 == (Vehicle *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0xb12,0
                       ,"%s");
@@ -4209,32 +4102,30 @@ void VEH_UpdatePlayerControlledWeapon(gentity_s *param_1)
     if ((pVVar1->boneIndex).flash[0] < 0) {
       Com_PrintWarning(0xf,"VEH_UpdatePlayerControlledWeapon: Warning - no [tag_flash] on vehicle\n"
                       );
-      __restgprlr_24();
       return;
     }
     if ((pVVar1->boneIndex).barrel < 0) {
       Com_PrintWarning(0xf,
                        "VEH_UpdatePlayerControlledWeapon: Warning - no [tag_barrel] on vehicle\n");
-      __restgprlr_24();
       return;
     }
-    pgVar2 = pgVar5->client;
+    pgVar2 = pgVar4->client;
     if (pgVar2 == (gclient_s *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0xb24,0
                       ,"%s");
     }
-    iVar4 = (pVVar1->turret).fireTime;
-    if (iVar4 < 1) {
+    iVar3 = (pVVar1->turret).fireTime;
+    if (iVar3 < 1) {
       if ((((pgVar2->sess).cmd.buttons & 1U) != 0) && (((pgVar2->ps).pm_flags & 0xc00U) == 0)) {
-        Scr_Notify(pgVar3,scr_const.turret_fire,0);
+        Scr_Notify(param_1,scr_const.turret_fire,0);
       }
     }
     else {
-      (pVVar1->turret).fireTime = iVar4 + -0x32;
+      (pVVar1->turret).fireTime = iVar3 + -0x32;
     }
-    iVar4 = (pVVar1->boneIndex).flash[0];
+    iVar3 = (pVVar1->boneIndex).flash[0];
     pVVar1->hasTarget = 1;
-    if (iVar4 < 0) {
+    if (iVar3 < 0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0xb3f,0
                       ,"%s");
     }
@@ -4242,23 +4133,23 @@ void VEH_UpdatePlayerControlledWeapon(gentity_s *param_1)
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0xb40,0
                       ,"%s");
     }
-    G_DObjGetWorldBoneIndexPos(pgVar3,(pVVar1->boneIndex).flash[0],afStack_a0);
-    G_DObjGetWorldBoneIndexPos(pgVar3,(pVVar1->boneIndex).barrel,afStack_90);
-    iVar4 = EntHandle::isDefined(&pgVar3->remoteControlledOwner);
-    if (iVar4 == 0) {
+    G_DObjGetWorldBoneIndexPos(param_1,(pVVar1->boneIndex).flash[0],afStack_a0);
+    G_DObjGetWorldBoneIndexPos(param_1,(pVVar1->boneIndex).barrel,afStack_90);
+    iVar3 = EntHandle::isDefined(&param_1->remoteControlledOwner);
+    if (iVar3 == 0) {
       G_GetPlayerViewOrigin(&pgVar2->ps,&local_d0);
     }
     else {
-      G_DObjGetWorldBoneIndexPos(pgVar3,(pVVar1->boneIndex).player,&local_d0);
+      G_DObjGetWorldBoneIndexPos(param_1,(pVVar1->boneIndex).player,&local_d0);
     }
-    iVar4 = EntHandle::isDefined(&pgVar3->remoteControlledOwner);
-    if (iVar4 == 0) {
-      G_GetPlayerViewDirection(pgVar5,&local_b0,(float *)0x0,(float *)0x0);
-      iVar4 = (pgVar5->s).number;
+    iVar3 = EntHandle::isDefined(&param_1->remoteControlledOwner);
+    if (iVar3 == 0) {
+      G_GetPlayerViewDirection(pgVar4,&local_b0,(float *)0x0,(float *)0x0);
+      iVar3 = (pgVar4->s).number;
     }
     else {
-      AngleVectors((pgVar3->r).currentAngles,&local_b0,(float *)0x0,(float *)0x0);
-      iVar4 = (pgVar3->s).number;
+      AngleVectors((param_1->r).currentAngles,&local_b0,(float *)0x0,(float *)0x0);
+      iVar3 = (param_1->s).number;
     }
     local_c0 = local_b0 * 10240.0 + local_d0;
     local_bc = local_ac * 10240.0 + local_cc;
@@ -4266,27 +4157,27 @@ void VEH_UpdatePlayerControlledWeapon(gentity_s *param_1)
     pVVar1->targetOrigin[0] = local_c0;
     pVVar1->targetOrigin[1] = local_bc;
     pVVar1->targetOrigin[2] = local_b8;
-    G_LocationalTrace(local_80,&local_d0,&local_c0,iVar4,0x2806091,(uchar *)0x0);
+    G_LocationalTrace(local_80,&local_d0,&local_c0,iVar3,0x2806091,(uchar *)0x0);
     if (local_80[0].fraction < 1.0) {
       pVVar1->targetOrigin[0] = (local_c0 - local_d0) * local_80[0].fraction + local_d0;
       pVVar1->targetOrigin[1] = (local_bc - local_cc) * local_80[0].fraction + local_cc;
       pVVar1->targetOrigin[2] = (local_b8 - local_c8) * local_80[0].fraction + local_c8;
     }
-    iVar4 = G_TraceCapsuleComplete
-                      (afStack_90,afStack_a0,&bounds_origin,(pgVar3->s).number,0x7ff,
-                       pgVar3->clipmask);
-    if (iVar4 == 0) {
+    iVar3 = G_TraceCapsuleComplete
+                      (afStack_90,afStack_a0,&bounds_origin,(param_1->s).number,0x7ff,
+                       param_1->clipmask);
+    if (iVar3 == 0) {
       (pVVar1->turret).barrelBlocked = 1;
     }
   }
-LAB_826b0d64:
-  __restgprlr_24();
   return;
 }
 
 
 // 826B0D70  Vehicle_UpdatePlayerMove_NonPhysics  (vehicle/vehicle.cpp:2933)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
@@ -4297,10 +4188,10 @@ void Vehicle_UpdatePlayerMove_NonPhysics(Vehicle *param_1)
   float fVar1;
   gentity_s *pgVar2;
   gclient_s *pgVar3;
-  undefined4 *puVar4;
-  VehicleDef *pVVar5;
-  int iVar6;
-  gentity_s *pgVar7;
+  VehicleDef *pVVar4;
+  int iVar5;
+  gentity_s *pgVar6;
+  float *pfVar7;
   EntHandle *this;
   double dVar8;
   double dVar9;
@@ -4317,58 +4208,59 @@ void Vehicle_UpdatePlayerMove_NonPhysics(Vehicle *param_1)
   float local_68;
   float local_64;
   
-  puVar4 = (undefined4 *)__savegprlr_25(param_1);
   local_b0 = '\0';
   local_af = '\0';
   local_ae = 0;
-  if (puVar4 == (undefined4 *)0x0) {
+  if (param_1 == (Vehicle *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0xb80,0,
                     "%s");
   }
-  pVVar5 = Vehicle_GetServerDef(puVar4[0x84]);
-  pgVar2 = (gentity_s *)*puVar4;
+  pVVar4 = Vehicle_GetServerDef(param_1->defIndex);
+  pgVar2 = param_1->ent;
   if (pgVar2 == (gentity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0xb86,0,
                     "%s");
   }
   this = &(pgVar2->r).ownerNum;
-  iVar6 = EntHandle::isDefined(this);
-  if (iVar6 != 0) {
-    pgVar7 = EntHandle::ent(this);
-    if (pgVar7->client == (gclient_s *)0x0) {
+  iVar5 = EntHandle::isDefined(this);
+  if (iVar5 != 0) {
+    pgVar6 = EntHandle::ent(this);
+    if (pgVar6->client == (gclient_s *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0xb8c,0
                       ,"%s");
     }
-    pgVar3 = pgVar7->client;
+    pgVar3 = pgVar6->client;
     if (((pgVar3->ps).pm_flags & 0xc00U) == 0) {
       local_b0 = (pgVar3->sess).cmd.forwardmove;
       local_af = (pgVar3->sess).cmd.rightmove;
       local_ae = -(((pgVar3->sess).cmd.buttons & 0x800U) != 0) & 0x7f;
     }
   }
-  VEH_CalcAccel(pgVar2,&local_b0,(float *)(puVar4 + 0x50),&local_a8);
+  pfVar7 = (param_1->phys).bodyAccel;
+  VEH_CalcAccel(pgVar2,&local_b0,pfVar7,&local_a8);
   dVar11 = 0.05000000074505806;
-  puVar4[0x53] = local_a8 * 0.05 + (float)puVar4[0x53];
-  fVar1 = local_a4 * 0.05 + (float)puVar4[0x54];
-  puVar4[0x54] = fVar1;
-  puVar4[0x55] = local_a0 * 0.05 + (float)puVar4[0x55];
-  dVar9 = (double)((fVar1 * 0.05 + (float)puVar4[0x3f]) * 0.0027777778);
+  (param_1->phys).rotVel[0] = local_a8 * 0.05 + (param_1->phys).rotVel[0];
+  fVar1 = local_a4 * 0.05 + (param_1->phys).rotVel[1];
+  (param_1->phys).rotVel[1] = fVar1;
+  (param_1->phys).rotVel[2] = local_a0 * 0.05 + (param_1->phys).rotVel[2];
+  dVar9 = (double)((fVar1 * 0.05 + (param_1->phys).prevAngles[1]) * 0.0027777778);
   dVar8 = floor((double)(float)(dVar9 + 0.5));
   dVar10 = 0.0;
-  puVar4[0x3b] = 0;
-  puVar4[0x3d] = 0;
-  puVar4[0x3c] = (float)(dVar9 - (double)(float)dVar8) * 360.0;
-  AnglesToAxis((float *)(puVar4 + 0x3b),(float (*) [3])afStack_90);
+  (param_1->phys).angles[0] = 0.0;
+  (param_1->phys).angles[2] = 0.0;
+  (param_1->phys).angles[1] = (float)(dVar9 - (double)(float)dVar8) * 360.0;
+  AnglesToAxis((param_1->phys).angles,(float (*) [3])afStack_90);
   local_6c = (float)dVar10;
   local_68 = (float)dVar10;
   local_64 = (float)dVar10;
-  MatrixTransformVector((float *)(puVar4 + 0x50),(float (*) [3])afStack_90,(float *)(puVar4 + 0x4d))
-  ;
-  fVar1 = (float)((double)(float)puVar4[0x4d] * dVar11 + (double)(float)puVar4[0x47]);
-  puVar4[0x47] = fVar1;
-  puVar4[0x48] = (float)((double)(float)puVar4[0x4e] * dVar11 + (double)(float)puVar4[0x48]);
-  puVar4[0x49] = (float)((double)(float)puVar4[0x4f] * dVar11 + (double)(float)puVar4[0x49]);
-  if (((fVar1 != 0.0) || ((float)puVar4[0x48] != 0.0)) || ((float)puVar4[0x49] != 0.0)) {
+  MatrixTransformVector(pfVar7,(float (*) [3])afStack_90,(param_1->phys).accel);
+  fVar1 = (float)((double)(param_1->phys).accel[0] * dVar11 + (double)(param_1->phys).vel[0]);
+  (param_1->phys).vel[0] = fVar1;
+  (param_1->phys).vel[1] =
+       (float)((double)(param_1->phys).accel[1] * dVar11 + (double)(param_1->phys).vel[1]);
+  (param_1->phys).vel[2] =
+       (float)((double)(param_1->phys).accel[2] * dVar11 + (double)(param_1->phys).vel[2]);
+  if (((fVar1 != 0.0) || ((param_1->phys).vel[1] != 0.0)) || ((param_1->phys).vel[2] != 0.0)) {
     VEH_GroundTrace(pgVar2);
     if (s_phys.onGround == 0) {
       VEH_AirMove(pgVar2,1,(float)dVar11);
@@ -4377,21 +4269,21 @@ void Vehicle_UpdatePlayerMove_NonPhysics(Vehicle *param_1)
       VEH_GroundMove(pgVar2,(float)dVar11);
     }
   }
-  if ((pVVar5->type == VEH_WHEELS_4) || (pVVar5->type == VEH_TANK)) {
-    VEH_GroundPlant(pgVar2,(vehicle_physic_t *)(puVar4 + 0x35),1);
+  if ((pVVar4->type == VEH_WHEELS_4) || (pVVar4->type == VEH_TANK)) {
+    VEH_GroundPlant(pgVar2,&param_1->phys,1);
   }
   MatrixTransposeTransformVector43
-            ((float *)(puVar4 + 0x47),(float (*) [3])afStack_90,(float *)(puVar4 + 0x4a));
-  puVar4[0xbe] = (float)ABS((double)(float)puVar4[0x4a]);
-  if (ABS((double)(float)puVar4[0x4a]) < dVar10) {
+            ((param_1->phys).vel,(float (*) [3])afStack_90,(param_1->phys).bodyVel);
+  dVar8 = ABS((double)(param_1->phys).bodyVel[0]);
+  param_1->speed = (float)dVar8;
+  if (dVar8 < dVar10) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0xbd5,0,
                     "%s");
   }
   if ((g_vehicleDebug->current).enabled != false) {
-    VEH_DebugCapsule((float *)(puVar4 + 0x35),(float)puVar4[0x44],(float)puVar4[0x46] * 2.0,1.0,1.0,
-                     (float)dVar10);
+    VEH_DebugCapsule((param_1->phys).origin,(param_1->phys).bounds.halfSize[0],
+                     (param_1->phys).bounds.halfSize[2] * 2.0,1.0,1.0,(float)dVar10);
   }
-  __restgprlr_25();
   return;
 }
 
@@ -4419,6 +4311,8 @@ void Vehicle_UpdatePlayerMove(Vehicle *param_1)
 
 // 826B1138  Vehicle_CalcPhysVelFromPrevState  (vehicle/vehicle.cpp:3056)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
@@ -4429,7 +4323,7 @@ void Vehicle_CalcPhysVelFromPrevState(Vehicle *param_1)
   float fVar2;
   float fVar3;
   float fVar4;
-  int iVar5;
+  float *pfVar5;
   double dVar6;
   float local_60;
   float local_5c;
@@ -4441,59 +4335,61 @@ void Vehicle_CalcPhysVelFromPrevState(Vehicle *param_1)
   float local_44;
   float local_40;
   
-  iVar5 = __savegprlr_29(param_1);
-  if (iVar5 == 0) {
+  if (param_1 == (Vehicle *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0xbf5,0,
                     "%s");
   }
-  AnglesToAxis((float *)(iVar5 + 0xec),(float (*) [3])&local_60);
-  fVar1 = *(float *)(iVar5 + 0x11c);
-  fVar2 = *(float *)(iVar5 + 0x120);
+  pfVar5 = (param_1->phys).angles;
+  AnglesToAxis(pfVar5,(float (*) [3])&local_60);
+  fVar1 = (param_1->phys).vel[0];
+  fVar2 = (param_1->phys).vel[1];
   dVar6 = 20.0;
-  fVar3 = *(float *)(iVar5 + 0x124);
-  *(float *)(iVar5 + 0x11c) = *(float *)(iVar5 + 0xd4) - *(float *)(iVar5 + 0xe0);
-  *(float *)(iVar5 + 0x120) = *(float *)(iVar5 + 0xd8) - *(float *)(iVar5 + 0xe4);
-  *(float *)(iVar5 + 0x124) = *(float *)(iVar5 + 0xdc) - *(float *)(iVar5 + 0xe8);
-  *(float *)(iVar5 + 0x11c) = *(float *)(iVar5 + 0x11c) * 20.0;
-  *(float *)(iVar5 + 0x120) = *(float *)(iVar5 + 0x120) * 20.0;
-  fVar4 = *(float *)(iVar5 + 0x124) * 20.0;
-  *(float *)(iVar5 + 0x124) = fVar4;
-  *(float *)(iVar5 + 0x128) =
-       fVar4 * local_58 +
-       *(float *)(iVar5 + 0x11c) * local_60 + local_5c * *(float *)(iVar5 + 0x120);
-  *(float *)(iVar5 + 300) =
-       *(float *)(iVar5 + 0x124) * local_4c +
-       local_50 * *(float *)(iVar5 + 0x120) + *(float *)(iVar5 + 0x11c) * local_54;
-  *(float *)(iVar5 + 0x130) =
-       *(float *)(iVar5 + 0x124) * local_40 +
-       local_44 * *(float *)(iVar5 + 0x120) + *(float *)(iVar5 + 0x11c) * local_48;
-  *(float *)(iVar5 + 0x134) = *(float *)(iVar5 + 0x11c) - fVar1;
-  *(float *)(iVar5 + 0x138) = *(float *)(iVar5 + 0x120) - fVar2;
-  *(float *)(iVar5 + 0x13c) = *(float *)(iVar5 + 0x124) - fVar3;
-  *(float *)(iVar5 + 0x134) = *(float *)(iVar5 + 0x134) * 20.0;
-  fVar1 = *(float *)(iVar5 + 0x138) * 20.0;
-  *(float *)(iVar5 + 0x138) = fVar1;
-  fVar2 = *(float *)(iVar5 + 0x13c) * 20.0;
-  *(float *)(iVar5 + 0x13c) = fVar2;
-  *(float *)(iVar5 + 0x140) =
-       fVar2 * local_58 + fVar1 * local_5c + *(float *)(iVar5 + 0x134) * local_60;
-  *(float *)(iVar5 + 0x144) =
-       *(float *)(iVar5 + 0x13c) * local_4c +
-       *(float *)(iVar5 + 0x134) * local_54 + *(float *)(iVar5 + 0x138) * local_50;
-  *(float *)(iVar5 + 0x148) =
-       *(float *)(iVar5 + 0x13c) * local_40 +
-       *(float *)(iVar5 + 0x134) * local_48 + *(float *)(iVar5 + 0x138) * local_44;
-  AnglesSubtract((float *)(iVar5 + 0xec),(float *)(iVar5 + 0xf8),(float *)(iVar5 + 0x14c));
-  *(float *)(iVar5 + 0x14c) = (float)((double)*(float *)(iVar5 + 0x14c) * dVar6);
-  *(float *)(iVar5 + 0x150) = (float)((double)*(float *)(iVar5 + 0x150) * dVar6);
-  *(float *)(iVar5 + 0x154) = (float)((double)*(float *)(iVar5 + 0x154) * dVar6);
-  __restgprlr_29();
+  fVar3 = (param_1->phys).vel[2];
+  (param_1->phys).vel[0] = (param_1->phys).origin[0] - (param_1->phys).prevOrigin[0];
+  (param_1->phys).vel[1] = (param_1->phys).origin[1] - (param_1->phys).prevOrigin[1];
+  (param_1->phys).vel[2] = (param_1->phys).origin[2] - (param_1->phys).prevOrigin[2];
+  (param_1->phys).vel[0] = (param_1->phys).vel[0] * 20.0;
+  (param_1->phys).vel[1] = (param_1->phys).vel[1] * 20.0;
+  fVar4 = (param_1->phys).vel[2] * 20.0;
+  (param_1->phys).vel[2] = fVar4;
+  (param_1->phys).bodyVel[0] =
+       fVar4 * local_58 + (param_1->phys).vel[0] * local_60 + local_5c * (param_1->phys).vel[1];
+  (param_1->phys).bodyVel[1] =
+       (param_1->phys).vel[2] * local_4c +
+       local_50 * (param_1->phys).vel[1] + (param_1->phys).vel[0] * local_54;
+  (param_1->phys).bodyVel[2] =
+       (param_1->phys).vel[2] * local_40 +
+       local_44 * (param_1->phys).vel[1] + (param_1->phys).vel[0] * local_48;
+  (param_1->phys).accel[0] = (param_1->phys).vel[0] - fVar1;
+  (param_1->phys).accel[1] = (param_1->phys).vel[1] - fVar2;
+  (param_1->phys).accel[2] = (param_1->phys).vel[2] - fVar3;
+  (param_1->phys).accel[0] = (param_1->phys).accel[0] * 20.0;
+  fVar1 = (param_1->phys).accel[1] * 20.0;
+  (param_1->phys).accel[1] = fVar1;
+  fVar2 = (param_1->phys).accel[2] * 20.0;
+  (param_1->phys).accel[2] = fVar2;
+  (param_1->phys).bodyAccel[0] =
+       fVar2 * local_58 + fVar1 * local_5c + (param_1->phys).accel[0] * local_60;
+  (param_1->phys).bodyAccel[1] =
+       (param_1->phys).accel[2] * local_4c +
+       (param_1->phys).accel[0] * local_54 + (param_1->phys).accel[1] * local_50;
+  (param_1->phys).bodyAccel[2] =
+       (param_1->phys).accel[2] * local_40 +
+       (param_1->phys).accel[0] * local_48 + (param_1->phys).accel[1] * local_44;
+  AnglesSubtract(pfVar5,(param_1->phys).prevAngles,(param_1->phys).rotVel);
+  (param_1->phys).rotVel[0] = (float)((double)(param_1->phys).rotVel[0] * dVar6);
+  (param_1->phys).rotVel[1] = (float)((double)(param_1->phys).rotVel[1] * dVar6);
+  (param_1->phys).rotVel[2] = (float)((double)(param_1->phys).rotVel[2] * dVar6);
   return;
 }
 
 
 // 826B1358  Vehicle_UpdateRotateToYaw  (vehicle/vehicle.cpp:3093)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
@@ -4501,105 +4397,100 @@ void Vehicle_CalcPhysVelFromPrevState(Vehicle *param_1)
 void Vehicle_UpdateRotateToYaw(Vehicle *param_1,VehicleDef *param_2)
 
 {
-  int iVar1;
-  undefined4 *puVar2;
-  ulonglong uVar3;
-  bool bVar4;
+  float fVar1;
+  bool bVar2;
+  double dVar3;
+  double dVar4;
   double dVar5;
   double dVar6;
   double dVar7;
   double dVar8;
   double dVar9;
-  double dVar10;
-  double dVar11;
-  float fVar12;
+  float fVar10;
   
-  uVar3 = (ulonglong)(int)param_2;
-  __savegprlr_27(param_1);
-  puVar2 = (undefined4 *)__savefpr_27();
-  if (puVar2 == (undefined4 *)0x0) {
+  if (param_1 == (Vehicle *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0xc1c,0,
                     "%s");
   }
-  if ((uVar3 & 0xffffffff) == 0) {
+  if (param_2 == (VehicleDef *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0xc1d,0,
                     "%s");
   }
-  if (puVar2[0xe0] == 0) {
+  if (param_1->rotateToYawMode == VEH_ROTATE_TO_OFF) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0xc1e,0,
                     "%s");
   }
-  iVar1 = (int)uVar3;
-  if (*(int *)(iVar1 + 4) != 1) {
+  if (param_2->type != VEH_TANK) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0xc1f,0,
                     "%s");
   }
-  dVar10 = 0.0;
-  if ((float)puVar2[0xe2] < 0.0) {
+  dVar8 = 0.0;
+  if (param_1->rotateToYawAccel < 0.0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0xc23,0,
                     "%s");
   }
-  dVar9 = 0.0027777778450399637;
-  dVar11 = 0.5;
-  dVar7 = (double)(((float)puVar2[0xe1] - (float)puVar2[0x3c]) * 0.0027777778);
-  dVar5 = floor((double)(float)(dVar7 + 0.5));
-  dVar8 = 360.0;
-  dVar5 = (double)((float)(dVar7 - (double)(float)dVar5) * 360.0);
-  if (dVar5 != dVar10) {
-    dVar7 = (double)(float)puVar2[0xe2];
-    if (dVar7 == dVar10) {
-      fVar12 = *(float *)(iVar1 + 0x20);
-      if (dVar5 < 0.0) {
-        fVar12 = -*(float *)(iVar1 + 0x20);
+  dVar7 = 0.0027777778450399637;
+  dVar9 = 0.5;
+  dVar5 = (double)((param_1->rotateToYaw - (param_1->phys).angles[1]) * 0.0027777778);
+  dVar3 = floor((double)(float)(dVar5 + 0.5));
+  dVar6 = 360.0;
+  dVar3 = (double)((float)(dVar5 - (double)(float)dVar3) * 360.0);
+  if (dVar3 != dVar8) {
+    dVar5 = (double)param_1->rotateToYawAccel;
+    if (dVar5 == dVar8) {
+      fVar10 = param_2->rotRate;
+      if (dVar3 < 0.0) {
+        fVar10 = -param_2->rotRate;
       }
-      puVar2[0x54] = fVar12;
-      fVar12 = LinearTrackAngle((float)puVar2[0xe1],(float)puVar2[0x3c],*(float *)(iVar1 + 0x20),
-                                0.05);
-      puVar2[0x3c] = fVar12;
-      bVar4 = fVar12 == (float)puVar2[0xe1];
+      (param_1->phys).rotVel[1] = fVar10;
+      fVar10 = LinearTrackAngle(param_1->rotateToYaw,(param_1->phys).angles[1],param_2->rotRate,0.05
+                               );
+      (param_1->phys).angles[1] = fVar10;
+      bVar2 = fVar10 == param_1->rotateToYaw;
     }
     else {
-      fVar12 = 1.0;
-      if (dVar5 < 0.0) {
-        fVar12 = -1.0;
+      fVar10 = (param_1->phys).rotVel[1];
+      fVar1 = 1.0;
+      if (dVar3 < 0.0) {
+        fVar1 = -1.0;
       }
-      dVar6 = (double)((float)puVar2[0x54] * (float)(1.0 / dVar7));
-      if ((double)(float)((double)(float)((double)(float)(dVar7 * dVar6) * dVar6) * dVar11) <
-          ABS(dVar5)) {
-        dVar10 = 0.05000000074505806;
-        fVar12 = LinearTrack(*(float *)(iVar1 + 0x20) * fVar12,(float)puVar2[0x54],
-                             (float)puVar2[0xe2],0.05);
-        puVar2[0x54] = fVar12;
-        dVar5 = (double)(float)((double)(float)((double)fVar12 * dVar10 +
-                                               (double)(float)puVar2[0x3c]) * dVar9);
-        dVar10 = floor((double)(float)(dVar5 + dVar11));
-        puVar2[0x3c] = (float)((double)(float)(dVar5 - (double)(float)dVar10) * dVar8);
-        __restfpr_27();
-        __restgprlr_27();
+      dVar4 = (double)(fVar10 * (float)(1.0 / dVar5));
+      if ((double)(float)((double)(float)((double)(float)(dVar5 * dVar4) * dVar4) * dVar9) <
+          ABS(dVar3)) {
+        dVar8 = 0.05000000074505806;
+        fVar10 = LinearTrack(param_2->rotRate * fVar1,fVar10,param_1->rotateToYawAccel,0.05);
+        (param_1->phys).rotVel[1] = fVar10;
+        dVar3 = (double)(float)((double)(float)((double)fVar10 * dVar8 +
+                                               (double)(param_1->phys).angles[1]) * dVar7);
+        dVar8 = floor((double)(float)(dVar3 + dVar9));
+        (param_1->phys).angles[1] = (float)((double)(float)(dVar3 - (double)(float)dVar8) * dVar6);
         return;
       }
-      fVar12 = (float)((double)SQRT((float)(ABS(dVar5) * 2.0) * (float)(1.0 / dVar7)) * dVar7) *
-               fVar12;
-      puVar2[0x54] = fVar12;
-      fVar12 = LinearTrackAngle((float)puVar2[0xe1],(float)puVar2[0x3c],ABS(fVar12),0.05);
-      puVar2[0x3c] = fVar12;
-      if (fVar12 == (float)puVar2[0xe1]) goto LAB_826b15b4;
-      bVar4 = (double)(float)puVar2[0x54] == dVar10;
+      fVar1 = (float)((double)SQRT((float)(ABS(dVar3) * 2.0) * (float)(1.0 / dVar5)) * dVar5) *
+              fVar1;
+      (param_1->phys).rotVel[1] = fVar1;
+      fVar10 = LinearTrackAngle(param_1->rotateToYaw,(param_1->phys).angles[1],ABS(fVar1),0.05);
+      (param_1->phys).angles[1] = fVar10;
+      if (fVar10 == param_1->rotateToYaw) goto LAB_826b15b4;
+      bVar2 = (double)(param_1->phys).rotVel[1] == dVar8;
     }
-    if (!bVar4) goto LAB_826b15d4;
+    if (!bVar2) {
+      return;
+    }
   }
 LAB_826b15b4:
-  puVar2[0xe0] = 0;
-  Scr_Notify((gentity_s *)*puVar2,scr_const.rotatedone,0);
-LAB_826b15d4:
-  __restfpr_27();
-  __restgprlr_27();
+  param_1->rotateToYawMode = VEH_ROTATE_TO_OFF;
+  Scr_Notify(param_1->ent,scr_const.rotatedone,0);
   return;
 }
 
 
 // 826B15E8  Vehicle_UpdatePathMove_NonPhysics  (vehicle/vehicle.cpp:3157)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
@@ -4608,11 +4499,11 @@ void Vehicle_UpdatePathMove_NonPhysics(Vehicle *param_1)
 
 {
   gentity_s *pgVar1;
-  Vehicle *pVVar2;
-  VehicleDef *pVVar3;
-  VehiclePathPos *pVVar4;
-  bool bVar5;
-  bool bVar6;
+  VehicleDef *pVVar2;
+  bool bVar3;
+  bool bVar4;
+  VehiclePathPos *pVVar5;
+  double dVar6;
   double dVar7;
   double dVar8;
   double dVar9;
@@ -4623,162 +4514,157 @@ void Vehicle_UpdatePathMove_NonPhysics(Vehicle *param_1)
   double dVar14;
   double dVar15;
   double dVar16;
-  double dVar17;
-  float fVar18;
+  float fVar17;
   VehiclePathPos local_160;
   
-  __savegprlr_24(param_1);
-  pVVar2 = (Vehicle *)__savefpr_22();
-  if (pVVar2 == (Vehicle *)0x0) {
+  if (param_1 == (Vehicle *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0xc5e,0,
                     "%s");
   }
-  pVVar3 = Vehicle_GetServerDef(pVVar2->defIndex);
-  pgVar1 = pVVar2->ent;
+  pVVar2 = Vehicle_GetServerDef(param_1->defIndex);
+  pgVar1 = param_1->ent;
   if (pgVar1 == (gentity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0xc64,0,
                     "%s");
   }
-  pVVar4 = &pVVar2->pathPos;
+  pVVar5 = &param_1->pathPos;
   memcpy();
-  dVar11 = (double)pVVar2->pathSpeed;
+  dVar10 = (double)param_1->pathSpeed;
   if (-1 < local_160.nodeIdx) {
-    dVar13 = 0.0;
-    if ((pVVar2->pathPos).speed < 0.0) {
+    dVar12 = 0.0;
+    if ((param_1->pathPos).speed < 0.0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0xc6d,0
                       ,"%s");
     }
-    if ((double)pVVar2->manualSpeed < dVar13) {
+    if ((double)param_1->manualSpeed < dVar12) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0xc6e,0
                       ,"%s");
     }
-    dVar12 = 0.05000000074505806;
-    if (pVVar2->manualMode == VEH_MANUAL_OFF) {
-      pVVar2->pathSpeed = (pVVar2->pathPos).speed;
+    dVar11 = 0.05000000074505806;
+    if (param_1->manualMode == VEH_MANUAL_OFF) {
+      param_1->pathSpeed = (param_1->pathPos).speed;
     }
     else {
-      if (pVVar2->manualMode == VEH_MANUAL_TRANS) {
-        fVar18 = (pVVar2->pathPos).speed;
+      if (param_1->manualMode == VEH_MANUAL_TRANS) {
+        fVar17 = (param_1->pathPos).speed;
       }
       else {
-        fVar18 = pVVar2->manualSpeed;
+        fVar17 = param_1->manualSpeed;
       }
-      dVar16 = (double)fVar18;
-      fVar18 = Vehicle_AccelerateSpeed(pVVar2->pathSpeed,fVar18,pVVar2->manualAccel,0.05);
-      pVVar2->pathSpeed = fVar18;
-      if ((pVVar2->manualMode == VEH_MANUAL_TRANS) && ((double)fVar18 == dVar16)) {
-        pVVar2->manualMode = VEH_MANUAL_OFF;
+      dVar15 = (double)fVar17;
+      fVar17 = Vehicle_AccelerateSpeed(param_1->pathSpeed,fVar17,param_1->manualAccel,0.05);
+      param_1->pathSpeed = fVar17;
+      if ((param_1->manualMode == VEH_MANUAL_TRANS) && ((double)fVar17 == dVar15)) {
+        param_1->manualMode = VEH_MANUAL_OFF;
       }
     }
-    if ((double)pVVar2->pathSpeed < dVar13) {
+    if ((double)param_1->pathSpeed < dVar12) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0xc80,0
                       ,"%s");
     }
-    dVar16 = (double)(pVVar2->pathPos).speed;
-    if (dVar16 <= dVar13) {
-      pVVar2->manualTime = (float)dVar13;
+    dVar15 = (double)(param_1->pathPos).speed;
+    if (dVar15 <= dVar12) {
+      param_1->manualTime = (float)dVar12;
     }
     else {
-      pVVar2->manualTime = (float)((double)pVVar2->pathSpeed / dVar16) + pVVar2->manualTime;
+      param_1->manualTime = (float)((double)param_1->pathSpeed / dVar15) + param_1->manualTime;
     }
-    dVar16 = 1.0;
-    if (1.0 <= pVVar2->manualTime) {
+    dVar15 = 1.0;
+    if (1.0 <= param_1->manualTime) {
       do {
-        VehPath_UpdatePathPos(&local_160,pVVar2->pathDir);
-        fVar18 = (float)((double)pVVar2->manualTime - dVar16);
-        pVVar2->manualTime = fVar18;
-      } while (dVar16 <= (double)fVar18);
+        VehPath_UpdatePathPos(&local_160,param_1->pathDir);
+        fVar17 = (float)((double)param_1->manualTime - dVar15);
+        param_1->manualTime = fVar17;
+      } while (dVar15 <= (double)fVar17);
     }
-    bVar5 = VehPath_UpdatePathPosNotifies
-                      (pVVar4,&local_160,(pgVar1->s).number,pVVar2->waitNode,VEH_PATH_NOTIFY_SCRIPT,
-                       pVVar2->pathDir);
+    bVar3 = VehPath_UpdatePathPosNotifies
+                      (pVVar5,&local_160,(pgVar1->s).number,param_1->waitNode,VEH_PATH_NOTIFY_SCRIPT
+                       ,param_1->pathDir);
     memcpy();
-    if (dVar13 < (double)pVVar2->manualTime) {
-      if (dVar16 <= (double)pVVar2->manualTime) {
+    if (dVar12 < (double)param_1->manualTime) {
+      if (dVar15 <= (double)param_1->manualTime) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0xca9
                         ,0,"%s");
       }
-      VehPath_UpdatePathPos(&local_160,pVVar2->pathDir);
+      VehPath_UpdatePathPos(&local_160,param_1->pathDir);
     }
-    bVar6 = VehPath_IsEndOfPath(pVVar4);
-    if (bVar6) {
-      pVVar2->pathSpeed = (float)dVar13;
+    bVar4 = VehPath_IsEndOfPath(pVVar5);
+    if (bVar4) {
+      param_1->pathSpeed = (float)dVar12;
     }
-    fVar18 = (pVVar2->pathPos).origin[0];
-    (pVVar2->phys).origin[0] = (local_160.origin[0] - fVar18) * pVVar2->manualTime + fVar18;
-    fVar18 = (pVVar2->pathPos).origin[1];
-    (pVVar2->phys).origin[1] = (local_160.origin[1] - fVar18) * pVVar2->manualTime + fVar18;
-    fVar18 = (pVVar2->pathPos).origin[2];
-    (pVVar2->phys).origin[2] = (local_160.origin[2] - fVar18) * pVVar2->manualTime + fVar18;
-    if ((pVVar3->type == VEH_TANK) && (pVVar2->rotateToYawMode != VEH_ROTATE_TO_OFF)) {
-      Vehicle_UpdateRotateToYaw(pVVar2,pVVar3);
+    fVar17 = (param_1->pathPos).origin[0];
+    (param_1->phys).origin[0] = (local_160.origin[0] - fVar17) * param_1->manualTime + fVar17;
+    fVar17 = (param_1->pathPos).origin[1];
+    (param_1->phys).origin[1] = (local_160.origin[1] - fVar17) * param_1->manualTime + fVar17;
+    fVar17 = (param_1->pathPos).origin[2];
+    (param_1->phys).origin[2] = (local_160.origin[2] - fVar17) * param_1->manualTime + fVar17;
+    if ((pVVar2->type == VEH_TANK) && (param_1->rotateToYawMode != VEH_ROTATE_TO_OFF)) {
+      Vehicle_UpdateRotateToYaw(param_1,pVVar2);
     }
     else {
-      dVar10 = (double)(pVVar2->pathPos).angles[0];
-      dVar9 = (double)pVVar2->manualTime;
-      dVar17 = 0.0027777778450399637;
-      dVar15 = 0.5;
-      dVar8 = (double)((float)((double)local_160.angles[0] - dVar10) * 0.0027777778);
-      dVar7 = floor((double)(float)(dVar8 + 0.5));
-      dVar14 = 360.0;
-      (pVVar2->phys).angles[0] =
-           (float)((double)(float)((double)(float)(dVar8 - (double)(float)dVar7) * dVar9) * 360.0 +
-                  dVar10);
-      dVar9 = (double)(pVVar2->pathPos).angles[1];
-      dVar8 = (double)(float)((double)(float)((double)local_160.angles[1] - dVar9) * dVar17);
-      dVar10 = (double)pVVar2->manualTime;
-      dVar7 = floor((double)(float)(dVar8 + dVar15));
-      (pVVar2->phys).angles[1] =
-           (float)((double)(float)((double)(float)(dVar8 - (double)(float)dVar7) * dVar10) * dVar14
-                  + dVar9);
-      dVar9 = (double)(pVVar2->pathPos).angles[2];
-      dVar10 = (double)(float)((double)(float)((double)local_160.angles[2] - dVar9) * dVar17);
-      dVar8 = (double)pVVar2->manualTime;
-      dVar7 = floor((double)(float)(dVar10 + dVar15));
-      (pVVar2->phys).angles[2] =
-           (float)((double)(float)((double)(float)(dVar10 - (double)(float)dVar7) * dVar8) * dVar14
-                  + dVar9);
-      if (pVVar2->transMode == VEH_TRANS_REVERSE) {
-        (pVVar2->phys).angles[1] = (pVVar2->phys).angles[1] + 180.0;
+      dVar9 = (double)(param_1->pathPos).angles[0];
+      dVar8 = (double)param_1->manualTime;
+      dVar16 = 0.0027777778450399637;
+      dVar14 = 0.5;
+      dVar7 = (double)((float)((double)local_160.angles[0] - dVar9) * 0.0027777778);
+      dVar6 = floor((double)(float)(dVar7 + 0.5));
+      dVar13 = 360.0;
+      (param_1->phys).angles[0] =
+           (float)((double)(float)((double)(float)(dVar7 - (double)(float)dVar6) * dVar8) * 360.0 +
+                  dVar9);
+      dVar8 = (double)(param_1->pathPos).angles[1];
+      dVar7 = (double)(float)((double)(float)((double)local_160.angles[1] - dVar8) * dVar16);
+      dVar9 = (double)param_1->manualTime;
+      dVar6 = floor((double)(float)(dVar7 + dVar14));
+      (param_1->phys).angles[1] =
+           (float)((double)(float)((double)(float)(dVar7 - (double)(float)dVar6) * dVar9) * dVar13 +
+                  dVar8);
+      dVar8 = (double)(param_1->pathPos).angles[2];
+      dVar9 = (double)(float)((double)(float)((double)local_160.angles[2] - dVar8) * dVar16);
+      dVar7 = (double)param_1->manualTime;
+      dVar6 = floor((double)(float)(dVar9 + dVar14));
+      (param_1->phys).angles[2] =
+           (float)((double)(float)((double)(float)(dVar9 - (double)(float)dVar6) * dVar7) * dVar13 +
+                  dVar8);
+      if (param_1->transMode == VEH_TRANS_REVERSE) {
+        (param_1->phys).angles[1] = (param_1->phys).angles[1] + 180.0;
       }
-      dVar7 = 6.0;
-      fVar18 = DiffTrackAngle((pVVar2->phys).angles[0],(pVVar2->phys).prevAngles[0],6.0,
-                              (float)dVar12);
-      (pVVar2->phys).angles[0] = fVar18;
-      fVar18 = DiffTrackAngle((pVVar2->phys).angles[1],(pVVar2->phys).prevAngles[1],4.0,
-                              (float)dVar12);
-      (pVVar2->phys).angles[1] = fVar18;
-      fVar18 = DiffTrackAngle((pVVar2->phys).angles[2],(pVVar2->phys).prevAngles[2],(float)dVar7,
-                              (float)dVar12);
-      (pVVar2->phys).angles[2] = fVar18;
+      dVar6 = 6.0;
+      fVar17 = DiffTrackAngle((param_1->phys).angles[0],(param_1->phys).prevAngles[0],6.0,
+                              (float)dVar11);
+      (param_1->phys).angles[0] = fVar17;
+      fVar17 = DiffTrackAngle((param_1->phys).angles[1],(param_1->phys).prevAngles[1],4.0,
+                              (float)dVar11);
+      (param_1->phys).angles[1] = fVar17;
+      fVar17 = DiffTrackAngle((param_1->phys).angles[2],(param_1->phys).prevAngles[2],(float)dVar6,
+                              (float)dVar11);
+      (param_1->phys).angles[2] = fVar17;
     }
-    if (((pVVar3->type == VEH_WHEELS_4) || (pVVar3->type == VEH_TANK)) &&
-       (pVVar2->physVeh == (PhysVehicle *)0x0)) {
-      VEH_GroundPlant(pgVar1,&pVVar2->phys,1);
+    if (((pVVar2->type == VEH_WHEELS_4) || (pVVar2->type == VEH_TANK)) &&
+       (param_1->physVeh == (PhysVehicle *)0x0)) {
+      VEH_GroundPlant(pgVar1,&param_1->phys,1);
     }
     if ((g_vehicleDebug->current).enabled != false) {
-      dVar12 = 8.0;
-      VEH_DebugBox((pVVar2->pathPos).lookPos,8.0,(float)dVar13,(float)dVar16,(float)dVar16);
-      VEH_DebugBox((pVVar2->pathPos).origin,(float)dVar12,(float)dVar16,(float)dVar13,(float)dVar16)
-      ;
+      dVar11 = 8.0;
+      VEH_DebugBox((param_1->pathPos).lookPos,8.0,(float)dVar12,(float)dVar15,(float)dVar15);
+      VEH_DebugBox((param_1->pathPos).origin,(float)dVar11,(float)dVar15,(float)dVar12,(float)dVar15
+                  );
     }
-    Vehicle_CalcPhysVelFromPrevState(pVVar2);
-    if ((bVar5) && (-1 < pVVar2->waitNode)) {
+    Vehicle_CalcPhysVelFromPrevState(param_1);
+    if ((bVar3) && (-1 < param_1->waitNode)) {
       Scr_Notify(pgVar1,scr_const.reached_wait_node,0);
     }
-    bVar5 = VehPath_IsEndOfPath(pVVar4);
-    if (bVar5) {
+    bVar3 = VehPath_IsEndOfPath(pVVar5);
+    if (bVar3) {
       Scr_Notify(pgVar1,scr_const.reached_end_node,0);
     }
-    dVar12 = (double)pVVar2->waitSpeed;
-    if ((dVar13 <= dVar12) &&
-       (((dVar11 <= dVar12 && (dVar12 <= (double)pVVar2->pathSpeed)) ||
-        ((dVar12 <= dVar11 && ((double)pVVar2->pathSpeed <= dVar12)))))) {
+    dVar11 = (double)param_1->waitSpeed;
+    if ((dVar12 <= dVar11) &&
+       (((dVar10 <= dVar11 && (dVar11 <= (double)param_1->pathSpeed)) ||
+        ((dVar11 <= dVar10 && ((double)param_1->pathSpeed <= dVar11)))))) {
       Scr_Notify(pgVar1,scr_const.reached_wait_speed,0);
     }
   }
-  __restfpr_22();
-  __restgprlr_24();
   return;
 }
 
@@ -4807,66 +4693,62 @@ void Vehicle_UpdatePathConstrainedMove(Vehicle *param_1)
 
 // 826B1BA0  Vehicle_UpdatePathFollowMove  (vehicle/vehicle.cpp:3323)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
 void Vehicle_UpdatePathFollowMove(Vehicle *param_1)
 
 {
-  Vehicle *pVVar1;
-  
-  pVVar1 = (Vehicle *)__savegprlr_29(param_1);
-  if (pVVar1 == (Vehicle *)0x0) {
+  if (param_1 == (Vehicle *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0xcfd,0,
                     "%s");
   }
-  if (pVVar1->physVeh == (PhysVehicle *)0x0) {
+  if (param_1->physVeh == (PhysVehicle *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0xcfe,0,
                     "%s");
   }
-  Vehicle_UpdatePathFollowMove_Physics(pVVar1);
-  __restgprlr_29();
+  Vehicle_UpdatePathFollowMove_Physics(param_1);
   return;
 }
 
 
 // 826B1C20  Vehicle_UpdateDefaultMove_NonPhysics  (vehicle/vehicle.cpp:3336)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
 void Vehicle_UpdateDefaultMove_NonPhysics(Vehicle *param_1)
 
 {
-  int *piVar1;
-  
-  piVar1 = (int *)__savegprlr_29(param_1);
-  if (piVar1 == (int *)0x0) {
+  if (param_1 == (Vehicle *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0xd0e,0,
                     "%s");
   }
-  if (*piVar1 == 0) {
+  if (param_1->ent == (gentity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0xd0f,0,
                     "%s");
   }
-  piVar1[0xbe] = 0;
-  piVar1[0xbf] = 0;
-  piVar1[0x47] = 0;
-  piVar1[0x48] = 0;
-  piVar1[0x49] = 0;
-  piVar1[0x4a] = 0;
-  piVar1[0x4b] = 0;
-  piVar1[0x4c] = 0;
-  piVar1[0x4d] = 0;
-  piVar1[0x4e] = 0;
-  piVar1[0x4f] = 0;
-  piVar1[0x50] = 0;
-  piVar1[0x51] = 0;
-  piVar1[0x52] = 0;
-  piVar1[0x53] = 0;
-  piVar1[0x54] = 0;
-  piVar1[0x55] = 0;
-  __restgprlr_29();
+  param_1->speed = 0.0;
+  param_1->pathSpeed = 0.0;
+  (param_1->phys).vel[0] = 0.0;
+  (param_1->phys).vel[1] = 0.0;
+  (param_1->phys).vel[2] = 0.0;
+  (param_1->phys).bodyVel[0] = 0.0;
+  (param_1->phys).bodyVel[1] = 0.0;
+  (param_1->phys).bodyVel[2] = 0.0;
+  (param_1->phys).accel[0] = 0.0;
+  (param_1->phys).accel[1] = 0.0;
+  (param_1->phys).accel[2] = 0.0;
+  (param_1->phys).bodyAccel[0] = 0.0;
+  (param_1->phys).bodyAccel[1] = 0.0;
+  (param_1->phys).bodyAccel[2] = 0.0;
+  (param_1->phys).rotVel[0] = 0.0;
+  (param_1->phys).rotVel[1] = 0.0;
+  (param_1->phys).rotVel[2] = 0.0;
   return;
 }
 
@@ -4894,58 +4776,55 @@ void Vehicle_UpdateDefaultMove(Vehicle *param_1)
 
 // 826B1D68  VEH_LinkCommonChecks  (vehicle/vehicle.cpp:3405)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
 void VEH_LinkCommonChecks(gentity_s *param_1,gentity_s *param_2)
 
 {
-  int iVar1;
-  int iVar2;
+  gclient_s *pgVar1;
+  Vehicle *pVVar2;
   int iVar3;
-  int iVar4;
-  ulonglong uVar5;
   
-  uVar5 = (ulonglong)(int)param_2;
-  iVar3 = __savegprlr_26(param_1);
-  if (iVar3 == 0) {
+  if (param_1 == (gentity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0xd51,0,
                     "%s");
   }
-  if ((uVar5 & 0xffffffff) == 0) {
+  if (param_2 == (gentity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0xd52,0,
                     "%s");
   }
-  iVar1 = *(int *)((int)uVar5 + 0x158);
-  iVar2 = *(int *)(iVar3 + 0x160);
-  if ((*(uint *)(iVar1 + 0xf8) & 0x200000) != 0) {
+  pgVar1 = param_2->client;
+  pVVar2 = param_1->vehicle;
+  if (((pgVar1->ps).eFlags & 0x200000U) != 0) {
     Com_Error(ERR_DROP,"\x15VEH_LinkCommonChecks: Player is already using a vehicle\n");
   }
-  iVar4 = EntHandle::isDefined((EntHandle *)((int)uVar5 + 0x150));
-  if (iVar4 != 0) {
+  iVar3 = EntHandle::isDefined(&(param_2->r).ownerNum);
+  if (iVar3 != 0) {
     Com_Error(ERR_DROP,"\x15VEH_LinkCommonChecks: Player already has an owner\n");
   }
-  iVar3 = EntHandle::isDefined((EntHandle *)(iVar3 + 0x150));
+  iVar3 = EntHandle::isDefined(&(param_1->r).ownerNum);
   if (iVar3 != 0) {
     Com_Error(ERR_DROP,"\x15VEH_LinkCommonChecks: Vehicle already has an owner\n");
   }
-  if (*(int *)(iVar2 + 0x3e0) < 0) {
+  if ((pVVar2->boneIndex).player < 0) {
     Com_Error(ERR_DROP,
               "\x15VEH_LinkCommonChecks: Trying to use vehicle without a bone [tag_player]\n");
   }
-  if ((*(uint *)(iVar1 + 0xf8) & 0x3800) != 0) {
-    if (*(int *)(iVar1 + 0x1bc) == 0x7ff) {
+  if (((pgVar1->ps).eFlags & 0x3800U) != 0) {
+    if ((pgVar1->ps).viewlocked_entNum == 0x7ff) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0xd65,0
                       ,"%s");
     }
-    iVar3 = EntHandle::isDefined(&level.gentities[*(int *)(iVar1 + 0x1bc)].r.ownerNum);
+    iVar3 = EntHandle::isDefined(&level.gentities[(pgVar1->ps).viewlocked_entNum].r.ownerNum);
     if (iVar3 == 0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0xd66,0
                       ,"%s");
     }
-    G_ClientStopUsingTurret(level.gentities + *(int *)(iVar1 + 0x1bc));
+    G_ClientStopUsingTurret(level.gentities + (pgVar1->ps).viewlocked_entNum);
   }
-  __restgprlr_26();
   return;
 }
 
@@ -4981,82 +4860,79 @@ void VEH_LinkPlayerTurretControlOnly(gentity_s *param_1,gentity_s *param_2)
 
 // 826B1FD0  VEH_PlayerRemoteControl  (vehicle/vehicle.cpp:3465)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
 void VEH_PlayerRemoteControl(gentity_s *param_1,gentity_s *param_2)
 
 {
-  int iVar1;
-  ulonglong uVar2;
-  
-  uVar2 = (ulonglong)(int)param_2;
-  iVar1 = __savegprlr_28(param_1);
-  if (iVar1 == 0) {
+  if (param_1 == (gentity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0xd8c,0,
                     "%s");
   }
-  if (*(int *)(iVar1 + 0x160) == 0) {
+  if (param_1->vehicle == (Vehicle *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0xd8d,0,
                     "%s");
   }
-  if ((uVar2 & 0xffffffff) == 0) {
+  if (param_2 == (gentity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0xd8e,0,
                     "%s");
   }
-  if (*(int *)((int)uVar2 + 0x158) == 0) {
+  if (param_2->client == (gclient_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0xd8f,0,
                     "%s");
   }
-  *(undefined4 *)(*(int *)(iVar1 + 0x160) + 4) = 5;
-  if ((*(uint *)(iVar1 + 0x18c) & 0x10000) == 0) {
+  param_1->vehicle->drivingState = VEH_DRIVE_PLAYER;
+  if ((param_1->clipmask & 0x10000U) == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0xd95,0,
                     "%s");
   }
-  *(uint *)(iVar1 + 0x18c) = *(uint *)(iVar1 + 0x18c) & 0xfffeffff;
-  __restgprlr_28();
+  param_1->clipmask = param_1->clipmask & 0xfffeffff;
   return;
 }
 
 
 // 826B20D8  VEH_PlayerRemoteControlOff  (vehicle/vehicle.cpp:3489)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
 void VEH_PlayerRemoteControlOff(gentity_s *param_1,gentity_s *param_2)
 
 {
-  int iVar1;
-  int iVar2;
+  Vehicle *pVVar1;
   
-  iVar2 = __savegprlr_27(param_1);
-  if (iVar2 == 0) {
+  if (param_1 == (gentity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0xda4,0,
                     "%s");
   }
-  iVar1 = *(int *)(iVar2 + 0x160);
-  if (*(int *)(iVar1 + 4) != 5) {
+  pVVar1 = param_1->vehicle;
+  if (pVVar1->drivingState != VEH_DRIVE_PLAYER) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0xda8,0,
                     "%s");
   }
-  *(undefined4 *)(iVar1 + 4) = 0;
+  pVVar1->drivingState = VEH_DRIVE_NONE;
   if (param_2->client == (gclient_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0xdab,0,
                     "%s");
   }
-  if ((*(uint *)(iVar2 + 0x18c) & 0x10000) != 0) {
+  if ((param_1->clipmask & 0x10000U) != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0xdad,0,
                     "%s");
   }
-  *(uint *)(iVar2 + 0x18c) = *(uint *)(iVar2 + 0x18c) | 0x10000;
-  __restgprlr_27();
+  param_1->clipmask = param_1->clipmask | 0x10000;
   return;
 }
 
 
 // 826B21C0  VEH_LinkPlayer  (vehicle/vehicle.cpp:3510)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
@@ -5067,60 +4943,54 @@ void VEH_LinkPlayer(gentity_s *param_1,gentity_s *param_2)
   Vehicle *pVVar1;
   gclient_s *pgVar2;
   VehicleType VVar3;
-  gentity_s *pgVar4;
-  gentity_s *pgVar5;
-  VehicleDef *pVVar6;
-  float (*pafVar7) [3];
-  int iVar8;
-  ulonglong uVar9;
+  VehicleDef *pVVar4;
+  float (*pafVar5) [3];
+  int iVar6;
   float afStack_b0 [2];
   undefined4 local_a8;
   float afStack_a0 [9];
   float afStack_7c [3];
   float afStack_70 [28];
   
-  uVar9 = (ulonglong)(int)param_2;
-  pgVar5 = (gentity_s *)__savegprlr_25(param_1);
-  if (pgVar5 == (gentity_s *)0x0) {
+  if (param_1 == (gentity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0xdbe,0,
                     "%s");
   }
-  if (pgVar5->vehicle == (Vehicle *)0x0) {
+  if (param_1->vehicle == (Vehicle *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0xdbf,0,
                     "%s");
   }
-  if ((uVar9 & 0xffffffff) == 0) {
+  if (param_2 == (gentity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0xdc0,0,
                     "%s");
   }
-  pVVar1 = pgVar5->vehicle;
-  pVVar6 = Vehicle_GetServerDef(pVVar1->defIndex);
-  pgVar4 = (gentity_s *)uVar9;
-  pgVar2 = pgVar4->client;
-  VEH_LinkCommonChecks(pgVar5,pgVar4);
-  G_DObjGetWorldBoneIndexMatrix(pgVar5,(pVVar1->boneIndex).player,(float (*) [3])afStack_a0);
-  iVar8 = (pVVar1->boneIndex).barrel;
-  if (iVar8 < 0) {
-    pafVar7 = (float (*) [3])afStack_a0;
+  pVVar1 = param_1->vehicle;
+  pVVar4 = Vehicle_GetServerDef(pVVar1->defIndex);
+  pgVar2 = param_2->client;
+  VEH_LinkCommonChecks(param_1,param_2);
+  G_DObjGetWorldBoneIndexMatrix(param_1,(pVVar1->boneIndex).player,(float (*) [3])afStack_a0);
+  iVar6 = (pVVar1->boneIndex).barrel;
+  if (iVar6 < 0) {
+    pafVar5 = (float (*) [3])afStack_a0;
   }
   else {
-    G_DObjGetWorldBoneIndexMatrix(pgVar5,iVar8,(float (*) [3])afStack_70);
-    pafVar7 = (float (*) [3])afStack_70;
+    G_DObjGetWorldBoneIndexMatrix(param_1,iVar6,(float (*) [3])afStack_70);
+    pafVar5 = (float (*) [3])afStack_70;
   }
-  AxisToAngles(pafVar7,afStack_b0);
+  AxisToAngles(pafVar5,afStack_b0);
   local_a8 = 0;
-  VVar3 = pVVar6->type;
+  VVar3 = pVVar4->type;
   if (((VVar3 == VEH_SNOWMOBILE) || (VVar3 == VEH_BOAT)) || (VVar3 == VEH_SUBMARINE)) {
-    SetClientViewAngle(pgVar4,vec3_origin);
+    SetClientViewAngle(param_2,vec3_origin);
   }
   else {
-    SetClientOrigin(pgVar4,afStack_7c);
+    SetClientOrigin(param_2,afStack_7c);
   }
-  iVar8 = G_EntLinkToWithOffset(pgVar4,pgVar5,(uint)scr_const.tag_player,vec3_origin,vec3_origin);
-  if (iVar8 == 0) {
+  iVar6 = G_EntLinkToWithOffset(param_2,param_1,(uint)scr_const.tag_player,vec3_origin,vec3_origin);
+  if (iVar6 == 0) {
     Com_Error(ERR_DROP,"\x15VEH_LinkPlayer: Cannot link to vehicle bone [tag_player]\n");
   }
-  if (pVVar1->targetEnt == (pgVar4->s).number) {
+  if (pVVar1->targetEnt == (param_2->s).number) {
     pVVar1->hasTarget = 0;
     pVVar1->targetEnt = 0x7ff;
     EntHandle::setEnt(&pVVar1->lookAtEnt,(gentity_s *)0x0);
@@ -5128,12 +4998,12 @@ void VEH_LinkPlayer(gentity_s *param_1,gentity_s *param_2)
   if (pVVar1->drivingState == VEH_DRIVE_NONE) {
     pVVar1->drivingState = VEH_DRIVE_PLAYER;
   }
-  (pgVar5->s).lerp.eFlags = (pgVar5->s).lerp.eFlags | 0x200000;
-  EntHandle::setEnt(&(pgVar5->r).ownerNum,pgVar4);
-  EntHandle::setEnt(&(pgVar4->r).ownerNum,pgVar5);
+  (param_1->s).lerp.eFlags = (param_1->s).lerp.eFlags | 0x200000;
+  EntHandle::setEnt(&(param_1->r).ownerNum,param_2);
+  EntHandle::setEnt(&(param_2->r).ownerNum,param_1);
   (pgVar2->ps).eFlags = (pgVar2->ps).eFlags | 0x200000;
-  (pgVar2->ps).viewlocked_entNum = (pgVar5->s).number;
-  if (pVVar6->type == VEH_UGV) {
+  (pgVar2->ps).viewlocked_entNum = (param_1->s).number;
+  if (pVVar4->type == VEH_UGV) {
     pgVar2->link_rotationMovesEyePos = false;
     pgVar2->link_useTagAnglesForViewAngles = true;
   }
@@ -5143,15 +5013,16 @@ void VEH_LinkPlayer(gentity_s *param_1,gentity_s *param_2)
   G_DefaultViewAngleClampGoal(&pgVar2->link_viewClamp);
   G_SnapToViewAngleClampGoal(&pgVar2->link_viewClamp);
   G_UpdateViewAngleClamp(pgVar2,afStack_b0);
-  Scr_AddEntity(pgVar4);
+  Scr_AddEntity(param_2);
   Scr_Notify(pVVar1->ent,scr_const.vehicle_mount,1);
-  __restgprlr_25();
   return;
 }
 
 
 // 826B2410  VEH_UnlinkPlayer  (vehicle/vehicle.cpp:3609)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
@@ -5161,13 +5032,10 @@ void VEH_UnlinkPlayer(gentity_s *param_1,gentity_s *param_2)
   gclient_s *pgVar1;
   Vehicle *pVVar2;
   uint uVar3;
-  gentity_s *pgVar4;
-  gentity_s *pgVar5;
   EntHandle *this;
-  int iVar6;
-  gentity_s *pgVar7;
-  ulonglong uVar8;
-  double dVar9;
+  int iVar4;
+  gentity_s *pgVar5;
+  double dVar6;
   float local_60;
   float local_5c;
   float local_58;
@@ -5175,85 +5043,79 @@ void VEH_UnlinkPlayer(gentity_s *param_1,gentity_s *param_2)
   float local_4c;
   undefined4 local_48;
   
-  uVar8 = (ulonglong)(int)param_2;
-  pgVar5 = (gentity_s *)__savegprlr_26(param_1);
-  if (pgVar5 == (gentity_s *)0x0) {
+  if (param_1 == (gentity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0xe21,0,
                     "%s");
   }
-  if ((uVar8 & 0xffffffff) == 0) {
+  if (param_2 == (gentity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0xe22,0,
                     "%s");
   }
-  pgVar4 = (gentity_s *)uVar8;
-  pgVar1 = pgVar4->client;
+  pgVar1 = param_2->client;
   if (pgVar1 == (gclient_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0xe25,0,
                     "%s");
   }
-  pVVar2 = pgVar5->vehicle;
+  pVVar2 = param_1->vehicle;
   if (pVVar2 == (Vehicle *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0xe27,0,
                     "%s");
   }
-  uVar3 = (pgVar5->s).lerp.u.vehicle.flags;
+  uVar3 = (param_1->s).lerp.u.vehicle.flags;
   if ((uVar3 & 0x2000000) != 0) {
-    (pgVar5->s).lerp.u.vehicle.flags = uVar3 & 0xfdffffff;
-    EntHandle::setEnt(&(pgVar5->r).ownerNum,(gentity_s *)0x0);
-    EntHandle::setEnt(&(pgVar4->r).ownerNum,(gentity_s *)0x0);
-    __restgprlr_26();
+    (param_1->s).lerp.u.vehicle.flags = uVar3 & 0xfdffffff;
+    EntHandle::setEnt(&(param_1->r).ownerNum,(gentity_s *)0x0);
+    EntHandle::setEnt(&(param_2->r).ownerNum,(gentity_s *)0x0);
     return;
   }
-  if ((pgVar1->ps).vehicleState.entity == (pgVar5->s).number) {
-    EntHandle::setEnt(&(pgVar5->r).ownerNum,(gentity_s *)0x0);
+  if ((pgVar1->ps).vehicleState.entity == (param_1->s).number) {
+    EntHandle::setEnt(&(param_1->r).ownerNum,(gentity_s *)0x0);
     (pgVar1->ps).vehicleState.entity = 0x7ff;
-    __restgprlr_26();
     return;
   }
-  this = &(pgVar4->r).ownerNum;
-  iVar6 = EntHandle::isDefined(this);
-  if (iVar6 == 0) {
+  this = &(param_2->r).ownerNum;
+  iVar4 = EntHandle::isDefined(this);
+  if (iVar4 == 0) {
     Com_Error(ERR_DROP,"\x15VEH_UnlinkPlayer: Player doesn\'t have an owner\n");
   }
-  pgVar7 = EntHandle::ent(this);
-  if (pgVar7 != pgVar5) {
+  pgVar5 = EntHandle::ent(this);
+  if (pgVar5 != param_1) {
     Com_Error(ERR_DROP,"\x15VEH_UnlinkPlayer: Vehicle is not player\'s owner\n");
   }
   if (((pgVar1->ps).eFlags & 0x200000U) == 0) {
     Com_Error(ERR_DROP,"\x15VEH_UnlinkPlayer: Player is not using a vehicle\n");
   }
-  G_EntUnlink(pgVar4);
-  iVar6 = (pVVar2->boneIndex).detach;
-  if (iVar6 < 0) {
+  G_EntUnlink(param_2);
+  iVar4 = (pVVar2->boneIndex).detach;
+  if (iVar4 < 0) {
     Com_PrintWarning(0xf,"VEH_UnlinkPlayer: Warning - no [tag_detach] on vehicle\n");
-    local_60 = (pgVar5->r).currentOrigin[0];
-    local_5c = (pgVar5->r).currentOrigin[1];
+    local_60 = (param_1->r).currentOrigin[0];
+    local_5c = (param_1->r).currentOrigin[1];
     local_58 = (pVVar2->phys).bounds.halfSize[2] + (pVVar2->phys).bounds.midPoint[2] +
-               (pgVar5->r).currentOrigin[2];
+               (param_1->r).currentOrigin[2];
   }
   else {
-    G_DObjGetWorldBoneIndexPos(pgVar5,iVar6,&local_60);
+    G_DObjGetWorldBoneIndexPos(param_1,iVar4,&local_60);
   }
   if (pVVar2->drivingState == VEH_DRIVE_PLAYER) {
     pVVar2->drivingState = VEH_DRIVE_NONE;
   }
   local_50 = (pgVar1->ps).viewangles[0];
   local_4c = (pgVar1->ps).viewangles[1];
-  dVar9 = 0.0;
+  dVar6 = 0.0;
   local_48 = 0;
-  SetClientOrigin(pgVar4,&local_60);
-  SetClientViewAngle(pgVar4,&local_50);
-  uVar3 = (pgVar5->s).lerp.eFlags;
-  (pgVar5->r).currentAngles[0] = (float)dVar9;
-  (pgVar5->s).lerp.eFlags = uVar3 & 0xffdfffff;
-  EntHandle::setEnt(&(pgVar5->r).ownerNum,(gentity_s *)0x0);
+  SetClientOrigin(param_2,&local_60);
+  SetClientViewAngle(param_2,&local_50);
+  uVar3 = (param_1->s).lerp.eFlags;
+  (param_1->r).currentAngles[0] = (float)dVar6;
+  (param_1->s).lerp.eFlags = uVar3 & 0xffdfffff;
+  EntHandle::setEnt(&(param_1->r).ownerNum,(gentity_s *)0x0);
   EntHandle::setEnt(this,(gentity_s *)0x0);
   (pgVar1->ps).eFlags = (pgVar1->ps).eFlags & 0xffdfffff;
-  pgVar4->client->linkAnglesFrac = (float)dVar9;
+  param_2->client->linkAnglesFrac = (float)dVar6;
   (pgVar1->ps).viewlocked_entNum = 0x7ff;
-  Scr_AddEntity(pgVar4);
+  Scr_AddEntity(param_2);
   Scr_Notify(pVVar2->ent,scr_const.vehicle_dismount,1);
-  __restgprlr_26();
   return;
 }
 
@@ -5284,115 +5146,113 @@ void Vehicle_MyChanges(void)
 
 // 826B2730  Vehicle_InitBoneTags  (vehicle/vehicle.cpp:3731)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
 void Vehicle_InitBoneTags(Vehicle *param_1)
 
 {
-  int *piVar1;
-  int iVar2;
-  int *piVar3;
-  ushort **ppuVar4;
+  int iVar1;
+  int *piVar2;
+  ushort **ppuVar3;
   
-  piVar1 = (int *)__savegprlr_28(param_1);
-  if (piVar1 == (int *)0x0) {
+  if (param_1 == (Vehicle *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0xe96,0,
                     "%s");
   }
-  if (*piVar1 == 0) {
+  if (param_1->ent == (gentity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0xe97,0,
                     "%s");
   }
-  iVar2 = SV_DObjGetBoneIndex((gentity_s *)*piVar1,(uint)scr_const.tag_player);
-  piVar1[0xf8] = iVar2;
-  iVar2 = SV_DObjGetBoneIndex((gentity_s *)*piVar1,(uint)scr_const.tag_detach);
-  piVar1[0xf9] = iVar2;
-  iVar2 = SV_DObjGetBoneIndex((gentity_s *)*piVar1,(uint)scr_const.tag_popout);
-  piVar1[0xfa] = iVar2;
-  iVar2 = SV_DObjGetBoneIndex((gentity_s *)*piVar1,(uint)scr_const.tag_body);
-  piVar1[0xfb] = iVar2;
-  iVar2 = SV_DObjGetBoneIndex((gentity_s *)*piVar1,(uint)scr_const.tag_turret);
-  piVar1[0xfc] = iVar2;
-  iVar2 = SV_DObjGetBoneIndex((gentity_s *)*piVar1,(uint)scr_const.tag_barrel);
-  piVar1[0xfe] = iVar2;
-  iVar2 = SV_DObjGetBoneIndex((gentity_s *)*piVar1,(uint)scr_const.tag_turret_base);
-  piVar1[0xfd] = iVar2;
-  piVar3 = piVar1 + 0xfe;
-  ppuVar4 = s_flashTags;
+  iVar1 = SV_DObjGetBoneIndex(param_1->ent,(uint)scr_const.tag_player);
+  (param_1->boneIndex).player = iVar1;
+  iVar1 = SV_DObjGetBoneIndex(param_1->ent,(uint)scr_const.tag_detach);
+  (param_1->boneIndex).detach = iVar1;
+  iVar1 = SV_DObjGetBoneIndex(param_1->ent,(uint)scr_const.tag_popout);
+  (param_1->boneIndex).popout = iVar1;
+  iVar1 = SV_DObjGetBoneIndex(param_1->ent,(uint)scr_const.tag_body);
+  (param_1->boneIndex).body = iVar1;
+  iVar1 = SV_DObjGetBoneIndex(param_1->ent,(uint)scr_const.tag_turret);
+  (param_1->boneIndex).turret = iVar1;
+  iVar1 = SV_DObjGetBoneIndex(param_1->ent,(uint)scr_const.tag_barrel);
+  (param_1->boneIndex).barrel = iVar1;
+  iVar1 = SV_DObjGetBoneIndex(param_1->ent,(uint)scr_const.tag_turret_base);
+  (param_1->boneIndex).turret_base = iVar1;
+  piVar2 = &(param_1->boneIndex).barrel;
+  ppuVar3 = s_flashTags;
   do {
-    iVar2 = SV_DObjGetBoneIndex((gentity_s *)*piVar1,(uint)**ppuVar4);
-    ppuVar4 = ppuVar4 + 1;
-    piVar3 = piVar3 + 1;
-    *piVar3 = iVar2;
-  } while ((int)ppuVar4 < -0x7d668798);
-  piVar3 = piVar1 + 0x103;
-  ppuVar4 = s_wheelTags;
+    iVar1 = SV_DObjGetBoneIndex(param_1->ent,(uint)**ppuVar3);
+    ppuVar3 = ppuVar3 + 1;
+    piVar2 = piVar2 + 1;
+    *piVar2 = iVar1;
+  } while ((int)ppuVar3 < -0x7d668798);
+  piVar2 = (param_1->boneIndex).flash + 4;
+  ppuVar3 = s_wheelTags;
   do {
-    iVar2 = SV_DObjGetBoneIndex((gentity_s *)*piVar1,(uint)**ppuVar4);
-    ppuVar4 = ppuVar4 + 1;
-    piVar3 = piVar3 + 1;
-    *piVar3 = iVar2;
-  } while ((int)ppuVar4 < -0x7d6687ac);
-  __restgprlr_28();
+    iVar1 = SV_DObjGetBoneIndex(param_1->ent,(uint)**ppuVar3);
+    ppuVar3 = ppuVar3 + 1;
+    piVar2 = piVar2 + 1;
+    *piVar2 = iVar1;
+  } while ((int)ppuVar3 < -0x7d6687ac);
   return;
 }
 
 
 // 826B2888  Vehicle_InitPhysics  (vehicle/vehicle.cpp:3754)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
 void Vehicle_InitPhysics(Vehicle *param_1)
 
 {
-  int iVar1;
-  int *piVar2;
-  int *piVar3;
-  longlong lVar4;
+  gentity_s *pgVar1;
+  float *pfVar2;
+  longlong lVar3;
   
-  piVar2 = (int *)__savegprlr_29(param_1);
-  if (piVar2 == (int *)0x0) {
+  if (param_1 == (Vehicle *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0xeae,0,
                     "%s");
   }
-  if (*piVar2 == 0) {
+  if (param_1->ent == (gentity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0xeaf,0,
                     "%s");
   }
-  Com_Memset(piVar2 + 0x35,0,0x11c);
-  lVar4 = 6;
-  piVar3 = piVar2 + 99;
-  iVar1 = *piVar2;
-  piVar2[0x35] = *(int *)(iVar1 + 0x138);
-  piVar2[0x36] = *(int *)(iVar1 + 0x13c);
-  piVar2[0x37] = *(int *)(iVar1 + 0x140);
-  iVar1 = *piVar2;
-  piVar2[0x38] = *(int *)(iVar1 + 0x138);
-  piVar2[0x39] = *(int *)(iVar1 + 0x13c);
-  piVar2[0x3a] = *(int *)(iVar1 + 0x140);
-  iVar1 = *piVar2;
-  piVar2[0x3b] = *(int *)(iVar1 + 0x144);
-  piVar2[0x3c] = *(int *)(iVar1 + 0x148);
-  piVar2[0x3d] = *(int *)(iVar1 + 0x14c);
-  iVar1 = *piVar2;
-  piVar2[0x3e] = *(int *)(iVar1 + 0x144);
-  piVar2[0x3f] = *(int *)(iVar1 + 0x148);
-  piVar2[0x40] = *(int *)(iVar1 + 0x14c);
-  piVar2[0xb6] = 0x42340000;
-  piVar2[0xb7] = 0x42b40000;
-  piVar2[0xb8] = 0x42340000;
-  piVar2[0xb9] = 0x41c80000;
-  piVar2[0xba] = 0x41700000;
-  piVar2[0xbb] = 0x41c80000;
-  piVar2[0xbc] = 0x41c80000;
+  Com_Memset(&param_1->phys,0,0x11c);
+  lVar3 = 6;
+  pfVar2 = (param_1->phys).wheelZPos + 5;
+  pgVar1 = param_1->ent;
+  (param_1->phys).origin[0] = (pgVar1->r).currentOrigin[0];
+  (param_1->phys).origin[1] = (pgVar1->r).currentOrigin[1];
+  (param_1->phys).origin[2] = (pgVar1->r).currentOrigin[2];
+  pgVar1 = param_1->ent;
+  (param_1->phys).prevOrigin[0] = (pgVar1->r).currentOrigin[0];
+  (param_1->phys).prevOrigin[1] = (pgVar1->r).currentOrigin[1];
+  (param_1->phys).prevOrigin[2] = (pgVar1->r).currentOrigin[2];
+  pgVar1 = param_1->ent;
+  (param_1->phys).angles[0] = (pgVar1->r).currentAngles[0];
+  (param_1->phys).angles[1] = (pgVar1->r).currentAngles[1];
+  (param_1->phys).angles[2] = (pgVar1->r).currentAngles[2];
+  pgVar1 = param_1->ent;
+  (param_1->phys).prevAngles[0] = (pgVar1->r).currentAngles[0];
+  (param_1->phys).prevAngles[1] = (pgVar1->r).currentAngles[1];
+  (param_1->phys).prevAngles[2] = (pgVar1->r).currentAngles[2];
+  (param_1->heliPathPos).maxAngleVel[0] = 45.0;
+  (param_1->heliPathPos).maxAngleVel[1] = 90.0;
+  (param_1->heliPathPos).maxAngleVel[2] = 45.0;
+  (param_1->heliPathPos).yawAccel = 25.0;
+  (param_1->heliPathPos).yawDecel = 15.0;
+  (param_1->heliPathPos).maxPitchAngle = 25.0;
+  (param_1->heliPathPos).maxRollAngle = 25.0;
   do {
-    piVar3 = piVar3 + 1;
-    *piVar3 = 0;
-    lVar4 = lVar4 + -1;
-  } while (lVar4 != 0);
-  __restgprlr_29();
+    pfVar2 = pfVar2 + 1;
+    *pfVar2 = 0.0;
+    lVar3 = lVar3 + -1;
+  } while (lVar3 != 0);
   return;
 }
 
@@ -5438,7 +5298,8 @@ Vehicle * Vehicle_Allocate(void)
 
 // 826B2AF0  Vehicle_Create  (vehicle/vehicle.cpp:3808)
 
-/* WARNING: Type propagation algorithm not settling */
+/* WARNING: Function: __savegprlr_20 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_20 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
@@ -5448,100 +5309,94 @@ void Vehicle_Create(gentity_s *param_1,char *param_2,gentity_s *param_3,int para
 {
   uint uVar1;
   char *pcVar2;
-  gentity_s *pgVar3;
-  int iVar4;
-  VehicleDef *pVVar5;
-  Vehicle *pVVar6;
-  Weapon WVar7;
-  bool bVar8;
-  ulonglong uVar9;
-  ulonglong uVar10;
-  uint uVar11;
-  int iVar12;
+  int iVar3;
+  VehicleDef *pVVar4;
+  Vehicle *pVVar5;
+  Weapon WVar6;
+  bool bVar7;
+  uint uVar8;
+  int iVar9;
   
-  uVar10 = (ulonglong)(int)param_3;
-  uVar9 = (ulonglong)(int)param_2;
-  pgVar3 = (gentity_s *)__savegprlr_20(param_1);
-  if (pgVar3 == (gentity_s *)0x0) {
+  if (param_1 == (gentity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0xee8,0,
                     "%s");
   }
-  if ((uVar9 & 0xffffffff) == 0) {
+  if (param_2 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0xee9,0,
                     "%s");
   }
-  if ((pgVar3->spawnflags & 2U) != 0) {
+  if ((param_1->spawnflags & 2U) != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0xeea,0,
                     "%s");
   }
-  iVar4 = Vehicle_RegisterServerDef((char *)uVar9);
-  pVVar5 = Vehicle_GetServerDef(iVar4);
-  iVar12 = 0xc;
-  if (pVVar5->type != VEH_HELICOPTER) {
-    iVar12 = 0xe;
+  iVar3 = Vehicle_RegisterServerDef(param_2);
+  pVVar4 = Vehicle_GetServerDef(iVar3);
+  iVar9 = 0xc;
+  if (pVVar4->type != VEH_HELICOPTER) {
+    iVar9 = 0xe;
   }
-  (pgVar3->s).eType = iVar12;
-  VEH_InitModelAndValidateTags(pgVar3,iVar4);
-  pVVar6 = Vehicle_Allocate();
-  uVar1 = (int)(pVVar6[0x1d542f].phys.prevOrigin + 2) / 0x438;
+  (param_1->s).eType = iVar9;
+  VEH_InitModelAndValidateTags(param_1,iVar3);
+  pVVar5 = Vehicle_Allocate();
+  uVar1 = (int)(pVVar5[0x1d542f].phys.prevOrigin + 2) / 0x438;
   if (7 < uVar1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0xeff,0,
                     "vehIndex doesn\'t index MAX_VEHICLES\n\t%i not in [0, %i)");
   }
-  pgVar3->vehicle = pVVar6;
-  pgVar3->health = pVVar5->health;
-  iVar12 = level.time;
-  pgVar3->takedamage = '\x01';
-  pgVar3->active = '\x01';
-  pgVar3->nextthink = iVar12 + 0x32;
-  (pgVar3->s).lerp.eFlags = 0;
-  pgVar3->clipmask = 0x810211;
-  pgVar3->handler = '\x15';
-  (pgVar3->s).lerp.pos.trType = TR_INTERPOLATE;
-  (pgVar3->s).lerp.apos.trType = TR_INTERPOLATE;
-  (pgVar3->s).time2 = 0;
-  (pgVar3->s).weapon.data = 0;
-  if (pVVar5->turretWeapon != (WeaponCompleteDef *)0x0) {
-    WVar7 = G_GetWeaponForName(pVVar5->turretWeapon->szInternalName);
-    (pgVar3->s).weapon = WVar7;
+  param_1->vehicle = pVVar5;
+  param_1->health = pVVar4->health;
+  iVar9 = level.time;
+  param_1->takedamage = '\x01';
+  param_1->active = '\x01';
+  param_1->nextthink = iVar9 + 0x32;
+  (param_1->s).lerp.eFlags = 0;
+  param_1->clipmask = 0x810211;
+  param_1->handler = '\x15';
+  (param_1->s).lerp.pos.trType = TR_INTERPOLATE;
+  (param_1->s).lerp.apos.trType = TR_INTERPOLATE;
+  (param_1->s).time2 = 0;
+  (param_1->s).weapon.data = 0;
+  if (pVVar4->turretWeapon != (WeaponCompleteDef *)0x0) {
+    WVar6 = G_GetWeaponForName(pVVar4->turretWeapon->szInternalName);
+    (param_1->s).weapon = WVar6;
   }
-  uVar11 = pgVar3->spawnflags;
-  (pgVar3->r).svFlags = '\x04';
-  (pgVar3->r).contents = 0x2080;
-  if ((uVar11 & 1) != 0) {
-    (pgVar3->r).contents = 0x202080;
+  uVar8 = param_1->spawnflags;
+  (param_1->r).svFlags = '\x04';
+  (param_1->r).contents = 0x2080;
+  if ((uVar8 & 1) != 0) {
+    (param_1->r).contents = 0x202080;
   }
-  SV_DObjGetBounds(pgVar3,&(pgVar3->r).box);
-  SV_LinkEntity(pgVar3);
-  pVVar6->ent = pgVar3;
-  pVVar6->defIndex = iVar4;
-  pVVar6->drivingState = VEH_DRIVE_NONE;
-  (pVVar6->heliPathPos).moveState = VEH_MOVESTATE_STOP;
-  pVVar6->waitNode = -1;
-  pVVar6->waitSpeed = -1.0;
-  pVVar6->targetEnt = 0x7ff;
-  (pVVar6->heliPathPos).maxDragSpeed = 1056.0;
-  (pVVar6->heliPathPos).turningAbility = 0.5;
-  (pVVar6->heliPathPos).hover.hoverRadius = 30.0;
-  (pVVar6->heliPathPos).hover.hoverSpeed = 14.08;
-  (pVVar6->heliPathPos).hover.hoverAccel = 8.8;
-  (pVVar6->heliPathPos).yawOverShoot = 0.1;
-  (pVVar6->heliPathPos).prevGoalYaw = -1.0;
-  (pgVar3->s).lerp.u.vehicle.indices = iVar4 << 3 | uVar1;
-  (pgVar3->s).lerp.u.turret.gunAngles[2] = 0.0;
-  (pgVar3->s).lerp.u.turret.gunAngles[1] = 0.0;
-  (pgVar3->s).lerp.u.turret.lastBarrelRotChangeTime = 0;
-  (pgVar3->s).lerp.u.primaryLight.cosHalfFovInner = 0.0;
-  (pgVar3->s).lerp.u.turret.lastHeatChangeTime = 0;
-  (pgVar3->s).lerp.u.vehicle.gunYaw = 0.0;
-  if ((uVar10 & 0xffffffff) == 0) {
-    uVar11 = 0;
+  SV_DObjGetBounds(param_1,&(param_1->r).box);
+  SV_LinkEntity(param_1);
+  pVVar5->ent = param_1;
+  pVVar5->defIndex = iVar3;
+  pVVar5->drivingState = VEH_DRIVE_NONE;
+  (pVVar5->heliPathPos).moveState = VEH_MOVESTATE_STOP;
+  pVVar5->waitNode = -1;
+  pVVar5->waitSpeed = -1.0;
+  pVVar5->targetEnt = 0x7ff;
+  (pVVar5->heliPathPos).maxDragSpeed = 1056.0;
+  (pVVar5->heliPathPos).turningAbility = 0.5;
+  (pVVar5->heliPathPos).hover.hoverRadius = 30.0;
+  (pVVar5->heliPathPos).hover.hoverSpeed = 14.08;
+  (pVVar5->heliPathPos).hover.hoverAccel = 8.8;
+  (pVVar5->heliPathPos).yawOverShoot = 0.1;
+  (pVVar5->heliPathPos).prevGoalYaw = -1.0;
+  (param_1->s).lerp.u.vehicle.indices = iVar3 << 3 | uVar1;
+  (param_1->s).lerp.u.turret.gunAngles[2] = 0.0;
+  (param_1->s).lerp.u.turret.gunAngles[1] = 0.0;
+  (param_1->s).lerp.u.turret.lastBarrelRotChangeTime = 0;
+  (param_1->s).lerp.u.primaryLight.cosHalfFovInner = 0.0;
+  (param_1->s).lerp.u.turret.lastHeatChangeTime = 0;
+  (param_1->s).lerp.u.vehicle.gunYaw = 0.0;
+  if (param_3 == (gentity_s *)0x0) {
+    uVar8 = 0;
   }
   else {
-    uVar11 = (*(int *)((int)uVar10 + 0x158) - (int)level.clients) / 0x3980;
+    uVar8 = ((int)param_3->client - (int)level.clients) / 0x3980;
   }
-  *(uint *)&(pgVar3->s).staticState.turret = uVar11;
-  if (0x11 < uVar11) {
+  *(uint *)&(param_1->s).staticState.turret = uVar8;
+  if (0x11 < uVar8) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0xf42,0,
                     "state->playerIndex doesn\'t index MAX_CLIENTS\n\t%i not in [0, %i)");
   }
@@ -5549,77 +5404,72 @@ void Vehicle_Create(gentity_s *param_1,char *param_2,gentity_s *param_3,int para
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0xf47,0,
                     "%s");
   }
-  if (0x1f < iVar4) {
+  if (0x1f < iVar3) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0xf48,0,
                     "%s");
   }
-  if (0xff < (pgVar3->s).lerp.u.vehicle.indices) {
+  if (0xff < (param_1->s).lerp.u.vehicle.indices) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0xf49,0,
                     "%s");
   }
-  pcVar2 = pVVar5->useHintString;
+  pcVar2 = pVVar4->useHintString;
   if ((pcVar2 == (char *)0x0) || (*pcVar2 == '\0')) {
-    pVVar6->useHintStringIndex = -1;
+    pVVar5->useHintStringIndex = -1;
   }
   else {
-    iVar4 = G_GetHintStringIndex(&pVVar6->useHintStringIndex,pcVar2);
-    if (iVar4 == 0) {
+    iVar3 = G_GetHintStringIndex(&pVVar5->useHintStringIndex,pcVar2);
+    if (iVar3 == 0) {
       Com_Error(ERR_DROP,
                 "\x15Can\'t allocate hint string [%s] for vehicle. Max different hint strings allowed is [%i]"
                );
     }
   }
-  pVVar6->trophyAmmo = pVVar5->trophyAmmoCount;
-  pVVar6->trophyReloadEndTime = level.time;
-  Vehicle_InitBoneTags(pVVar6);
-  Vehicle_InitPhysics(pVVar6);
-  VehPath_InitPathPos(&pVVar6->pathPos);
-  VEH_SetPosition(pgVar3,(pgVar3->r).currentOrigin,vec3_origin,(pgVar3->r).currentAngles);
-  if (((pVVar5->vehPhysDef).physicsEnabled != 0) && (bVar8 = G_ExitAfterToolComplete(), !bVar8)) {
-    Vehicle_InitPhysVeh(pVVar6);
+  pVVar5->trophyAmmo = pVVar4->trophyAmmoCount;
+  pVVar5->trophyReloadEndTime = level.time;
+  Vehicle_InitBoneTags(pVVar5);
+  Vehicle_InitPhysics(pVVar5);
+  VehPath_InitPathPos(&pVVar5->pathPos);
+  VEH_SetPosition(param_1,(param_1->r).currentOrigin,vec3_origin,(param_1->r).currentAngles);
+  if (((pVVar4->vehPhysDef).physicsEnabled != 0) && (bVar7 = G_ExitAfterToolComplete(), !bVar7)) {
+    Vehicle_InitPhysVeh(pVVar5);
   }
   if (param_4 == 0) {
-    Vehicle_SetupCollmap(pgVar3);
+    Vehicle_SetupCollmap(param_1);
   }
-  __restgprlr_20();
   return;
 }
 
 
 // 826B2EE0  G_IsVehicleUsable  (vehicle/vehicle.cpp:3945)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
 bool G_IsVehicleUsable(gentity_s *param_1,gentity_s *param_2)
 
 {
-  int iVar1;
+  gclient_s *pgVar1;
   int iVar2;
-  undefined1 uVar3;
-  ulonglong uVar4;
   
-  uVar4 = (ulonglong)(int)param_2;
-  iVar1 = __savegprlr_28(param_1);
-  if (iVar1 == 0) {
+  if (param_1 == (gentity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0xf6c,0,
                     "%s");
   }
-  if ((uVar4 & 0xffffffff) == 0) {
+  if (param_2 == (gentity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0xf6d,0,
                     "%s");
   }
-  iVar2 = *(int *)((int)uVar4 + 0x158);
-  if ((((iVar2 != 0) && ((*(uint *)(iVar2 + 0xf8) & 0x200000) == 0)) && (*(int *)(iVar2 + 4) != 7))
-     && (((iVar2 = EntHandle::isDefined((EntHandle *)((int)uVar4 + 0x150)), iVar2 == 0 &&
-          (iVar2 = EntHandle::isDefined((EntHandle *)(iVar1 + 0x150)), iVar2 == 0)) &&
-         ((*(float *)(*(int *)(iVar1 + 0x160) + 0x2f8) <= 1.0 && (0 < *(int *)(iVar1 + 0x19c)))))))
-  {
-    uVar3 = __restgprlr_28(*(uint *)(iVar1 + 0x11c) >> 0x15 & 1);
-    return (bool)uVar3;
+  pgVar1 = param_2->client;
+  if ((((pgVar1 != (gclient_s *)0x0) && (((pgVar1->ps).eFlags & 0x200000U) == 0)) &&
+      ((pgVar1->ps).pm_type != 7)) &&
+     (((iVar2 = EntHandle::isDefined(&(param_2->r).ownerNum), iVar2 == 0 &&
+       (iVar2 = EntHandle::isDefined(&(param_1->r).ownerNum), iVar2 == 0)) &&
+      ((param_1->vehicle->speed <= 1.0 && (0 < param_1->health)))))) {
+    return (bool)((byte)((uint)(param_1->r).contents >> 0x15) & 1);
   }
-  uVar3 = __restgprlr_28(0);
-  return (bool)uVar3;
+  return false;
 }
 
 
@@ -5649,52 +5499,55 @@ gentity_s * G_IsVehicleUnusable(gentity_s *param_1)
 
 // 826B3060  G_GetPlayerVehicle  (vehicle/vehicle.cpp:4003)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
 gentity_s * G_GetPlayerVehicle(gentity_s *param_1)
 
 {
-  int iVar1;
-  gentity_s *pgVar2;
-  int iVar3;
+  gclient_s *pgVar1;
+  EntHandle *this;
+  int iVar2;
+  gentity_s *pgVar3;
   
-  iVar1 = __savegprlr_28(param_1);
-  if (iVar1 == 0) {
+  if (param_1 == (gentity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0xfa7,0,
                     "%s");
   }
-  iVar3 = *(int *)(iVar1 + 0x158);
-  if (iVar3 == 0) {
+  pgVar1 = param_1->client;
+  if (pgVar1 == (gclient_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0xfaa,0,
                     "%s");
   }
-  if ((*(uint *)(iVar3 + 0xf8) & 0x200000) == 0) {
-    pgVar2 = (gentity_s *)__restgprlr_28(0);
-    return pgVar2;
+  if (((pgVar1->ps).eFlags & 0x200000U) == 0) {
+    return (gentity_s *)0x0;
   }
-  iVar3 = EntHandle::isDefined((EntHandle *)(iVar1 + 0x150));
-  if (iVar3 == 0) {
+  this = &(param_1->r).ownerNum;
+  iVar2 = EntHandle::isDefined(this);
+  if (iVar2 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0xfaf,0,
                     "%s");
   }
-  pgVar2 = EntHandle::ent((EntHandle *)(iVar1 + 0x150));
-  if (pgVar2->vehicle == (Vehicle *)0x0) {
+  pgVar3 = EntHandle::ent(this);
+  if (pgVar3->vehicle == (Vehicle *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0xfb3,0,
                     "%s");
   }
-  iVar1 = EntHandle::isDefined(&(pgVar2->r).ownerNum);
-  if (iVar1 == 0) {
+  iVar2 = EntHandle::isDefined(&(pgVar3->r).ownerNum);
+  if (iVar2 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0xfb4,0,
                     "%s");
   }
-  pgVar2 = (gentity_s *)__restgprlr_28(pgVar2);
-  return pgVar2;
+  return pgVar3;
 }
 
 
 // 826B3188  Vehicle_IsImmune  (vehicle/vehicle.cpp:4027)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
@@ -5702,55 +5555,48 @@ gentity_s * G_GetPlayerVehicle(gentity_s *param_1)
 bool Vehicle_IsImmune(gentity_s *param_1,int param_2,int param_3,Weapon param_4,bool param_5)
 
 {
-  int iVar1;
+  Vehicle *pVVar1;
   VehicleDef *pVVar2;
   weapProjExposion_t wVar3;
-  undefined1 uVar4;
-  ulonglong uVar5;
   
-  uVar5 = (ulonglong)param_3;
-  iVar1 = __savegprlr_25(param_1);
-  if (iVar1 == 0) {
+  if (param_1 == (gentity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0xfbf,0,
                     "%s");
   }
-  iVar1 = *(int *)(iVar1 + 0x160);
-  if (iVar1 == 0) {
+  pVVar1 = param_1->vehicle;
+  if (pVVar1 == (Vehicle *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0xfc2,0,
                     "%s");
   }
-  pVVar2 = Vehicle_GetServerDef(*(int *)(iVar1 + 0x210));
-  switch(param_2 + -1) {
-  case 0:
+  pVVar2 = Vehicle_GetServerDef(pVVar1->defIndex);
+  switch(param_2) {
   case 1:
-    if ((pVVar2->bulletDamage == 0) && (((uVar5 & 2) == 0 || (pVVar2->armorPiercingDamage == 0)))) {
-      uVar4 = __restgprlr_25(1);
-      return (bool)uVar4;
+  case 2:
+    if ((pVVar2->bulletDamage == 0) && (((param_3 & 2U) == 0 || (pVVar2->armorPiercingDamage == 0)))
+       ) {
+      return true;
     }
     break;
-  case 3:
   case 4:
+  case 5:
     wVar3 = BG_ProjExplosionType(param_4,param_5);
     if (wVar3 == WEAPPROJEXP_HEAVY) {
-      uVar4 = __restgprlr_25(pVVar2->heavyExplosiveDamage == 0);
-      return (bool)uVar4;
+      return pVVar2->heavyExplosiveDamage == 0;
     }
-    uVar4 = __restgprlr_25(pVVar2->grenadeDamage == 0);
-    return (bool)uVar4;
-  case 5:
-    uVar4 = __restgprlr_25(pVVar2->projectileDamage == 0);
-    return (bool)uVar4;
+    return pVVar2->grenadeDamage == 0;
   case 6:
-    uVar4 = __restgprlr_25(pVVar2->projectileSplashDamage == 0);
-    return (bool)uVar4;
+    return pVVar2->projectileDamage == 0;
+  case 7:
+    return pVVar2->projectileSplashDamage == 0;
   }
-  uVar4 = __restgprlr_25(0);
-  return (bool)uVar4;
+  return false;
 }
 
 
 // 826B3310  Vehicle_Damage  (vehicle/vehicle.cpp:4073)
 
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
@@ -5761,18 +5607,9 @@ bool Vehicle_Damage(gentity_s *param_1,gentity_s *param_2,gentity_s *param_3,flo
 {
   float fVar1;
   float fVar2;
-  gentity_s *pgVar3;
-  bool bVar6;
-  undefined1 uVar7;
-  ushort uVar5;
-  char *pcVar4;
-  ulonglong uVar8;
-  int iVar9;
-  ulonglong uVar10;
-  ulonglong uVar11;
-  ulonglong uVar12;
-  float *pfVar13;
-  ulonglong uVar14;
+  bool bVar5;
+  ushort uVar4;
+  char *pcVar3;
   Weapon in_stack_00000054;
   bool in_stack_0000005f;
   hitLocation_t in_stack_00000064;
@@ -5787,45 +5624,37 @@ bool Vehicle_Damage(gentity_s *param_1,gentity_s *param_2,gentity_s *param_3,flo
   float local_468;
   char local_460 [1120];
   
-  uVar14 = (ulonglong)param_8;
-  uVar12 = (ulonglong)(int)param_5;
-  uVar11 = (ulonglong)(int)param_4;
-  uVar10 = (ulonglong)(int)param_3;
-  uVar8 = (ulonglong)(int)param_2;
-  pgVar3 = (gentity_s *)__savegprlr_22(param_1);
-  if (pgVar3 == (gentity_s *)0x0) {
+  if (param_1 == (gentity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0xfed,0,
                     "%s");
   }
-  if (pgVar3->vehicle == (Vehicle *)0x0) {
+  if (param_1->vehicle == (Vehicle *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0xfee,0,
                     "%s");
   }
-  if (pgVar3->takedamage == '\0') {
+  if (param_1->takedamage == '\0') {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0xfef,0,
                     "%s");
   }
-  if ((pgVar3->r).isInUse == '\0') {
+  if ((param_1->r).isInUse == '\0') {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0xff0,0,
                     "%s\n\t(targ->s.number) = %i");
   }
-  if ((uVar8 & 0xffffffff) == 0) {
+  if (param_2 == (gentity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0xff1,0,
                     "%s");
   }
-  if ((uVar10 & 0xffffffff) == 0) {
+  if (param_3 == (gentity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0xff2,0,
                     "%s");
   }
-  if ((((gentity_s *)uVar10)->r).isInUse == '\0') {
+  if ((param_3->r).isInUse == '\0') {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0xff3,0,
                     "%s\n\t(attacker->s.number) = %i");
   }
-  iVar9 = (int)uVar14;
-  bVar6 = Vehicle_IsImmune(pgVar3,iVar9,param_7,in_stack_00000054,in_stack_0000005f);
-  if (bVar6) {
-    uVar7 = __restgprlr_22(0);
-    return (bool)uVar7;
+  bVar5 = Vehicle_IsImmune(param_1,param_8,param_7,in_stack_00000054,in_stack_0000005f);
+  if (bVar5) {
+    return false;
   }
   local_470 = 0.0;
   local_46c = 0.0;
@@ -5833,11 +5662,10 @@ bool Vehicle_Damage(gentity_s *param_1,gentity_s *param_2,gentity_s *param_3,flo
   local_480 = 0.0;
   local_47c = 0.0;
   local_478 = 0.0;
-  if ((uVar11 & 0xffffffff) != 0) {
-    pfVar13 = (float *)uVar11;
-    local_46c = pfVar13[1];
-    local_470 = *pfVar13;
-    local_468 = pfVar13[2];
+  if (param_4 != (float *)0x0) {
+    local_46c = param_4[1];
+    local_470 = *param_4;
+    local_468 = param_4[2];
     fVar2 = SQRT(local_468 * local_468 + local_470 * local_470 + local_46c * local_46c);
     fVar1 = 1.0;
     if (-fVar2 < 0.0) {
@@ -5848,11 +5676,10 @@ bool Vehicle_Damage(gentity_s *param_1,gentity_s *param_2,gentity_s *param_3,flo
     local_46c = local_46c * fVar1;
     local_468 = local_468 * fVar1;
   }
-  if ((uVar12 & 0xffffffff) != 0) {
-    pfVar13 = (float *)uVar12;
-    local_480 = *pfVar13;
-    local_47c = pfVar13[1];
-    local_478 = pfVar13[2];
+  if (param_5 != (float *)0x0) {
+    local_480 = *param_5;
+    local_47c = param_5[1];
+    local_478 = param_5[2];
   }
   if (param_6 < 1) {
     param_6 = 1;
@@ -5866,38 +5693,39 @@ bool Vehicle_Damage(gentity_s *param_1,gentity_s *param_2,gentity_s *param_3,flo
   Scr_AddConstString(in_stack_00000074);
   Scr_AddInt(in_stack_0000006c);
   Scr_AddInt(in_stack_0000007c);
-  uVar5 = G_GetHitLocationString(in_stack_00000064);
-  Scr_AddConstString((uint)uVar5);
+  uVar4 = G_GetHitLocationString(in_stack_00000064);
+  Scr_AddConstString((uint)uVar4);
   Scr_AddVector(&local_470);
   Scr_AddVector(&local_480);
   if (in_stack_0000005f == false) {
-    pcVar4 = BG_GetWeaponNameComplete(in_stack_00000054,false,local_460,0x400);
+    pcVar3 = BG_GetWeaponNameComplete(in_stack_00000054,false,local_460,0x400);
   }
   else {
     builtin_strncpy(local_460,"alt_",4);
     BG_GetWeaponNameComplete(in_stack_00000054,false,local_460 + 4,0x3fc);
-    pcVar4 = local_460;
+    pcVar3 = local_460;
   }
-  Scr_AddString(pcVar4);
-  if ((iVar9 < 0) || (0xf < iVar9)) {
+  Scr_AddString(pcVar3);
+  if ((param_8 < 0) || (0xf < param_8)) {
     Scr_AddString("badMOD");
   }
   else {
-    Scr_AddConstString((uint)**(ushort **)((int)modNames + (int)((uVar14 & 0xffffffff) << 2)));
+    Scr_AddConstString((uint)*modNames[param_8]);
   }
   Scr_AddInt(param_7);
   Scr_AddInt(param_6);
-  GScr_AddEntity((gentity_s *)uVar10);
-  GScr_AddEntity((gentity_s *)uVar8);
-  uVar5 = Scr_ExecEntThread(pgVar3,g_scr_data.gametype.vehicleDamage,0xc);
-  Scr_FreeThread(uVar5);
-  uVar7 = __restgprlr_22(1);
-  return (bool)uVar7;
+  GScr_AddEntity(param_3);
+  GScr_AddEntity(param_2);
+  uVar4 = Scr_ExecEntThread(param_1,g_scr_data.gametype.vehicleDamage,0xc);
+  Scr_FreeThread(uVar4);
+  return true;
 }
 
 
 // 826B3698  Vehicle_FinishDamage  (vehicle/vehicle.cpp:4156)
 
+/* WARNING: Function: __savegprlr_21 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_21 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
@@ -5907,14 +5735,7 @@ void Vehicle_FinishDamage
                hitLocation_t param_11,uint param_12,uint param_13,int param_14)
 
 {
-  gentity_s *pgVar1;
-  char *pcVar2;
-  ulonglong uVar3;
-  ulonglong uVar4;
-  ulonglong uVar5;
-  ulonglong uVar6;
-  longlong lVar7;
-  ulonglong uVar8;
+  char *pcVar1;
   Weapon in_stack_00000054;
   char in_stack_0000005f;
   undefined4 in_stack_00000064;
@@ -5924,80 +5745,74 @@ void Vehicle_FinishDamage
   undefined1 in_stack_fffffb47;
   char local_460 [1120];
   
-  uVar8 = (ulonglong)param_8;
-  lVar7 = (longlong)param_6;
-  uVar6 = (ulonglong)(int)param_5;
-  uVar5 = (ulonglong)(int)param_4;
-  uVar4 = (ulonglong)(int)param_3;
-  uVar3 = (ulonglong)(int)param_2;
-  pgVar1 = (gentity_s *)__savegprlr_21(param_1);
-  if (pgVar1 == (gentity_s *)0x0) {
+  if (param_1 == (gentity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0x1041,0,
                     "%s");
   }
-  if (pgVar1->vehicle == (Vehicle *)0x0) {
+  if (param_1->vehicle == (Vehicle *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0x1042,0,
                     "%s");
   }
-  if ((uVar3 & 0xffffffff) == 0) {
+  if (param_2 == (gentity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0x1043,0,
                     "%s");
   }
-  if ((uVar4 & 0xffffffff) == 0) {
+  if (param_3 == (gentity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0x1044,0,
                     "%s");
   }
-  if ((uVar5 & 0xffffffff) == 0) {
+  if (param_4 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0x1045,0,
                     "%s");
   }
-  if ((uVar6 & 0xffffffff) == 0) {
+  if (param_5 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0x1046,0,
                     "%s");
   }
-  pgVar1->health = pgVar1->health - (int)lVar7;
-  G_DamageNotify(scr_const.damage,pgVar1,(gentity_s *)uVar4,(float *)uVar5,(float *)uVar6,(int)lVar7
-                 ,(int)uVar8,param_7,in_stack_fffffb38,in_stack_fffffb3c,in_stack_fffffb40,
-                 (bool)in_stack_fffffb47);
-  if (pgVar1->health < 1) {
-    if (pgVar1->health < -999) {
-      pgVar1->health = -999;
+  param_1->health = param_1->health - param_6;
+  G_DamageNotify(scr_const.damage,param_1,param_3,param_4,param_5,param_6,param_8,param_7,
+                 in_stack_fffffb38,in_stack_fffffb3c,in_stack_fffffb40,(bool)in_stack_fffffb47);
+  if (param_1->health < 1) {
+    if (param_1->health < -999) {
+      param_1->health = -999;
     }
     if ((in_stack_00000054.data & 0xff) == 0) {
       Scr_AddUndefined();
     }
     else {
       if (in_stack_0000005f == '\0') {
-        pcVar2 = BG_GetWeaponNameComplete(in_stack_00000054,false,local_460,0x400);
+        pcVar1 = BG_GetWeaponNameComplete(in_stack_00000054,false,local_460,0x400);
       }
       else {
         builtin_strncpy(local_460,"alt_",4);
         BG_GetWeaponNameComplete(in_stack_00000054,false,local_460 + 4,0x3fc);
-        pcVar2 = local_460;
+        pcVar1 = local_460;
       }
-      Scr_AddString(pcVar2);
+      Scr_AddString(pcVar1);
     }
-    Scr_AddConstString((uint)**(ushort **)((int)modNames + (int)((uVar8 & 0xffffffff) << 2)));
-    Scr_AddEntity((gentity_s *)uVar4);
-    Scr_Notify(pgVar1,scr_const.death,3);
-    if (*(code **)(&DAT_82969858 + (uint)pgVar1->handler * 0x28) != (code *)0x0) {
-      (**(code **)(&DAT_82969858 + (uint)pgVar1->handler * 0x28))
-                (pgVar1,uVar3,uVar4,lVar7,uVar8,in_stack_00000054.data,in_stack_0000005f,uVar5);
-      __restgprlr_21();
+    Scr_AddConstString((uint)*modNames[param_8]);
+    Scr_AddEntity(param_3);
+    Scr_Notify(param_1,scr_const.death,3);
+    if (*(code **)(&DAT_82969858 + (uint)param_1->handler * 0x28) != (code *)0x0) {
+      (**(code **)(&DAT_82969858 + (uint)param_1->handler * 0x28))
+                (param_1,param_2,param_3,param_6,param_8,in_stack_00000054.data,in_stack_0000005f,
+                 param_4);
       return;
     }
   }
-  else if (*(code **)(&DAT_82969854 + (uint)pgVar1->handler * 0x28) != (code *)0x0) {
-    (**(code **)(&DAT_82969854 + (uint)pgVar1->handler * 0x28))
-              (pgVar1,uVar4,lVar7,uVar6,uVar8,uVar5,in_stack_00000064,in_stack_00000054.data);
+  else if (*(code **)(&DAT_82969854 + (uint)param_1->handler * 0x28) != (code *)0x0) {
+    (**(code **)(&DAT_82969854 + (uint)param_1->handler * 0x28))
+              (param_1,param_3,param_6,param_5,param_8,param_4,in_stack_00000064,
+               in_stack_00000054.data);
   }
-  __restgprlr_21();
   return;
 }
 
 
 // 826B3988  Vehicle_IsPlayerProtected  (vehicle/vehicle.cpp:4224)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
@@ -6005,48 +5820,48 @@ void Vehicle_FinishDamage
 bool Vehicle_IsPlayerProtected(gentity_s *param_1)
 
 {
-  Vehicle *pVVar1;
-  int iVar2;
-  undefined1 uVar6;
+  gclient_s *pgVar1;
+  Vehicle *pVVar2;
+  EntHandle *this;
   int iVar3;
   gentity_s *pgVar4;
   VehicleDef *pVVar5;
   
-  iVar2 = __savegprlr_28(param_1);
-  if (iVar2 == 0) {
+  if (param_1 == (gentity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0x1086,0,
                     "%s");
   }
-  iVar3 = *(int *)(iVar2 + 0x158);
-  if (iVar3 == 0) {
+  pgVar1 = param_1->client;
+  if (pgVar1 == (gclient_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0x1089,0,
                     "%s");
   }
-  if ((*(uint *)(iVar3 + 0xf8) & 0x200000) != 0) {
-    iVar3 = EntHandle::isDefined((EntHandle *)(iVar2 + 0x150));
+  if (((pgVar1->ps).eFlags & 0x200000U) != 0) {
+    this = &(param_1->r).ownerNum;
+    iVar3 = EntHandle::isDefined(this);
     if (iVar3 == 0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0x1094,
                       0,"%s");
     }
-    pgVar4 = EntHandle::ent((EntHandle *)(iVar2 + 0x150));
-    pVVar1 = pgVar4->vehicle;
-    if (pVVar1 == (Vehicle *)0x0) {
+    pgVar4 = EntHandle::ent(this);
+    pVVar2 = pgVar4->vehicle;
+    if (pVVar2 == (Vehicle *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0x1099,
                       0,"%s");
     }
-    if (pVVar1->drivingState == VEH_DRIVE_PLAYER) {
-      pVVar5 = Vehicle_GetServerDef(pVVar1->defIndex);
-      uVar6 = __restgprlr_28(pVVar5->playerProtected != 0);
-      return (bool)uVar6;
+    if (pVVar2->drivingState == VEH_DRIVE_PLAYER) {
+      pVVar5 = Vehicle_GetServerDef(pVVar2->defIndex);
+      return (bool)('\x01' - (pVVar5->playerProtected == 0));
     }
   }
-  uVar6 = __restgprlr_28(0);
-  return (bool)uVar6;
+  return false;
 }
 
 
 // 826B3A98  Vehicle_Controller  (vehicle/vehicle.cpp:4473)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Type propagation algorithm not settling */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
@@ -6057,9 +5872,8 @@ void Vehicle_Controller(gentity_s *param_1,int *param_2)
   Vehicle *pVVar1;
   gentity_s *pgVar2;
   int iVar3;
-  gentity_s *pgVar4;
-  DObj *pDVar5;
-  double dVar6;
+  DObj *pDVar4;
+  double dVar5;
   float local_70 [2];
   int local_68;
   float local_60;
@@ -6069,134 +5883,129 @@ void Vehicle_Controller(gentity_s *param_1,int *param_2)
   float local_4c;
   float local_48;
   
-  pgVar4 = (gentity_s *)__savegprlr_26(param_1);
-  if (pgVar4 == (gentity_s *)0x0) {
+  if (param_1 == (gentity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0x1182,0,
                     "%s");
   }
-  if (pgVar4->vehicle == (Vehicle *)0x0) {
+  if (param_1->vehicle == (Vehicle *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0x1183,0,
                     "%s");
   }
-  pVVar1 = pgVar4->vehicle;
+  pVVar1 = param_1->vehicle;
   pgVar2 = pVVar1->ent;
-  pDVar5 = Com_GetServerDObjForEnt(pgVar4);
-  if (pDVar5 == (DObj *)0x0) {
+  pDVar4 = Com_GetServerDObjForEnt(param_1);
+  if (pDVar4 == (DObj *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0x118a,0,
                     "%s");
   }
   local_70[0] = (pgVar2->s).lerp.u.turret.gunAngles[2];
-  dVar6 = 0.0;
+  dVar5 = 0.0;
   local_70[1] = 0.0;
   local_68 = (pgVar2->s).lerp.u.turret.lastBarrelRotChangeTime;
   iVar3 = (pVVar1->boneIndex).body;
   if (-1 < iVar3) {
-    DObjSetLocalBoneIndex(pDVar5,param_2,iVar3,vec3_origin,local_70);
+    DObjSetLocalBoneIndex(pDVar4,param_2,iVar3,vec3_origin,local_70);
   }
   local_5c = (pgVar2->s).lerp.u.vehicle.gunYaw;
-  local_60 = (float)dVar6;
-  local_58 = (float)dVar6;
+  local_60 = (float)dVar5;
+  local_58 = (float)dVar5;
   local_50 = (float)(pgVar2->s).lerp.u.turret.lastHeatChangeTime;
-  local_4c = (float)dVar6;
-  local_48 = (float)dVar6;
+  local_4c = (float)dVar5;
+  local_48 = (float)dVar5;
   iVar3 = (pVVar1->boneIndex).turret;
   if (-1 < iVar3) {
-    DObjSetLocalBoneIndex(pDVar5,param_2,iVar3,vec3_origin,&local_60);
+    DObjSetLocalBoneIndex(pDVar4,param_2,iVar3,vec3_origin,&local_60);
   }
   iVar3 = (pVVar1->boneIndex).barrel;
   if (-1 < iVar3) {
-    DObjSetLocalBoneIndex(pDVar5,param_2,iVar3,vec3_origin,&local_50);
+    DObjSetLocalBoneIndex(pDVar4,param_2,iVar3,vec3_origin,&local_50);
   }
-  __restgprlr_26();
   return;
 }
 
 
 // 826B3BF8  Vehicle_UpdateCameraState  (vehicle/vehicle.cpp:4594)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
 void Vehicle_UpdateCameraState(Vehicle *param_1)
 
 {
-  int iVar1;
+  gentity_s *pgVar1;
   gclient_s *pgVar2;
-  int *piVar3;
-  int iVar4;
+  int iVar3;
+  gentity_s *pgVar4;
   EntHandle *this;
-  gentity_s *pgVar5;
   
-  piVar3 = (int *)__savegprlr_27(param_1);
-  if (piVar3 == (int *)0x0) {
+  if (param_1 == (Vehicle *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0x11f8,0,
                     "%s");
   }
-  if (*piVar3 == 0) {
+  if (param_1->ent == (gentity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0x11f9,0,
                     "%s");
   }
-  iVar1 = *piVar3;
-  iVar4 = EntHandle::isDefined((EntHandle *)(iVar1 + 0x210));
-  if (iVar4 == 0) {
-    iVar4 = EntHandle::isDefined((EntHandle *)(*piVar3 + 0x150));
-    if (iVar4 == 0) {
+  pgVar1 = param_1->ent;
+  iVar3 = EntHandle::isDefined(&pgVar1->remoteControlledOwner);
+  if (iVar3 == 0) {
+    iVar3 = EntHandle::isDefined(&(param_1->ent->r).ownerNum);
+    if (iVar3 == 0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0x1206,
                       0,"%s");
     }
-    this = (EntHandle *)(*piVar3 + 0x150);
+    this = &(param_1->ent->r).ownerNum;
   }
   else {
-    this = (EntHandle *)(*piVar3 + 0x210);
+    this = &param_1->ent->remoteControlledOwner;
   }
-  pgVar5 = EntHandle::ent(this);
-  if (pgVar5->client == (gclient_s *)0x0) {
+  pgVar4 = EntHandle::ent(this);
+  if (pgVar4->client == (gclient_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0x1209,0,
                     "%s");
   }
-  iVar4 = (vehCam_mode->current).integer;
-  if (iVar4 == 0) {
-    *(uint *)(iVar1 + 0x58) = *(uint *)(iVar1 + 0x58) & 0xfffffffe;
-    piVar3[0xd9] = 0;
-    __restgprlr_27();
+  iVar3 = (vehCam_mode->current).integer;
+  if (iVar3 == 0) {
+    (pgVar1->s).lerp.u.vehicle.flags = (pgVar1->s).lerp.u.vehicle.flags & 0xfffffffe;
+    param_1->cameraState = VEH_CAMERA_DEFAULT;
     return;
   }
-  if (iVar4 == 1) {
-    *(uint *)(iVar1 + 0x58) = *(uint *)(iVar1 + 0x58) | 1;
-    piVar3[0xd9] = 0;
-    __restgprlr_27();
+  if (iVar3 == 1) {
+    (pgVar1->s).lerp.u.vehicle.flags = (pgVar1->s).lerp.u.vehicle.flags | 1;
+    param_1->cameraState = VEH_CAMERA_DEFAULT;
     return;
   }
-  if (iVar4 != 2) {
+  if (iVar3 != 2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0x1219,0,
                     "%s");
   }
-  pgVar2 = pgVar5->client;
-  if (piVar3[0xd9] == 1) {
-    *(uint *)(iVar1 + 0x58) = *(uint *)(iVar1 + 0x58) ^ 1;
-    piVar3[0xd9] = 2;
+  pgVar2 = pgVar4->client;
+  if (param_1->cameraState == VEH_CAMERA_DELAYED) {
+    (pgVar1->s).lerp.u.vehicle.flags = (pgVar1->s).lerp.u.vehicle.flags ^ 1;
+    param_1->cameraState = VEH_CAMERA_CHANGED;
   }
   if (((pgVar2->sess).cmd.buttons & 4U) == 0) {
-    piVar3[0xd9] = 0;
+    param_1->cameraState = VEH_CAMERA_DEFAULT;
   }
-  else if (piVar3[0xd9] == 0) {
-    piVar3[0xd9] = 1;
-    if ((*(uint *)(iVar1 + 0x58) & 1) == 0) {
-      Scr_Notify((gentity_s *)*piVar3,scr_const.third_person,0);
-      __restgprlr_27();
+  else if (param_1->cameraState == VEH_CAMERA_DEFAULT) {
+    param_1->cameraState = VEH_CAMERA_DELAYED;
+    if (((pgVar1->s).lerp.u.vehicle.flags & 1) == 0) {
+      Scr_Notify(param_1->ent,scr_const.third_person,0);
       return;
     }
-    Scr_Notify((gentity_s *)*piVar3,scr_const.first_person,0);
-    __restgprlr_27();
+    Scr_Notify(param_1->ent,scr_const.first_person,0);
     return;
   }
-  __restgprlr_27();
   return;
 }
 
 
 // 826B6360  Vehicle_PreThink  (vehicle/vehicle.cpp:4668)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
@@ -6207,91 +6016,90 @@ void Vehicle_PreThink(gentity_s *param_1)
   float fVar1;
   Vehicle *pVVar2;
   VehicleDrivingState VVar3;
-  gentity_s *pgVar4;
-  VehicleDef *pVVar5;
+  VehicleDef *pVVar4;
   EntHandle *this;
-  int iVar6;
-  gentity_s *pgVar7;
-  VehicleHandler *pVVar8;
-  bool bVar9;
-  _func___cdecl_void_Vehicle_ptr *p_Var10;
+  int iVar5;
+  gentity_s *pgVar6;
+  VehicleHandler *pVVar7;
+  bool bVar8;
+  _func___cdecl_void_Vehicle_ptr *p_Var9;
   
-  pgVar4 = (gentity_s *)__savegprlr_25(param_1);
-  if (pgVar4 == (gentity_s *)0x0) {
+  if (param_1 == (gentity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0x1243,0,
                     "%s");
   }
-  if (pgVar4->vehicle == (Vehicle *)0x0) {
+  if (param_1->vehicle == (Vehicle *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0x1244,0,
                     "%s");
   }
-  pVVar2 = pgVar4->vehicle;
-  pVVar5 = Vehicle_GetServerDef(pVVar2->defIndex);
-  (pgVar4->s).lerp.u.vehicle.flags = (pgVar4->s).lerp.u.vehicle.flags & 0xfffffff3;
-  VEH_BackupPosition(pgVar4);
+  pVVar2 = param_1->vehicle;
+  pVVar4 = Vehicle_GetServerDef(pVVar2->defIndex);
+  (param_1->s).lerp.u.vehicle.flags = (param_1->s).lerp.u.vehicle.flags & 0xfffffff3;
+  VEH_BackupPosition(param_1);
   memset();
-  this = &(pgVar4->r).ownerNum;
-  iVar6 = EntHandle::isDefined(this);
-  if ((iVar6 != 0) && (pgVar7 = EntHandle::ent(this), pgVar7->health < 1)) {
-    pgVar7 = EntHandle::ent(this);
-    VEH_UnlinkPlayer(pgVar4,pgVar7);
+  this = &(param_1->r).ownerNum;
+  iVar5 = EntHandle::isDefined(this);
+  if ((iVar5 != 0) && (pgVar6 = EntHandle::ent(this), pgVar6->health < 1)) {
+    pgVar6 = EntHandle::ent(this);
+    VEH_UnlinkPlayer(param_1,pgVar6);
   }
-  pVVar8 = Vehicle_GetHandler(pVVar2);
-  bVar9 = G_ExitAfterToolComplete();
-  if ((bVar9) && ((pVVar5->vehPhysDef).physicsEnabled != 0)) goto LAB_826b6574;
+  pVVar7 = Vehicle_GetHandler(pVVar2);
+  bVar8 = G_ExitAfterToolComplete();
+  if ((bVar8) && ((pVVar4->vehPhysDef).physicsEnabled != 0)) {
+    return;
+  }
   VVar3 = pVVar2->drivingState;
   if (VVar3 - VEH_DRIVE_PATH_CONSTRAINED < 5) {
     if (VVar3 == VEH_DRIVE_PATH_FOLLOW) {
-      p_Var10 = pVVar8->UpdatePathFollowMove;
-      goto LAB_826b6508;
+      p_Var9 = pVVar7->UpdatePathFollowMove;
     }
-    if (VVar3 == VEH_DRIVE_TRACK) {
-      p_Var10 = pVVar8->UpdateTrackMove;
-      goto LAB_826b6508;
+    else if (VVar3 == VEH_DRIVE_TRACK) {
+      p_Var9 = pVVar7->UpdateTrackMove;
     }
-    if (VVar3 == VEH_DRIVE_AI) {
-      p_Var10 = pVVar8->UpdateAiMove;
-      goto LAB_826b6508;
+    else if (VVar3 == VEH_DRIVE_AI) {
+      p_Var9 = pVVar7->UpdateAiMove;
     }
-    if (VVar3 == VEH_DRIVE_PATH_CONSTRAINED) {
-      p_Var10 = pVVar8->UpdatePathConstrainedMove;
-      goto LAB_826b6508;
+    else {
+      if (VVar3 != VEH_DRIVE_PATH_CONSTRAINED) {
+        if (pVVar7->UpdatePlayerMove != (_func___cdecl_void_Vehicle_ptr *)0x0) {
+          (*pVVar7->UpdatePlayerMove)(pVVar2);
+        }
+        Vehicle_UpdateCameraState(pVVar2);
+        goto LAB_826b651c;
+      }
+      p_Var9 = pVVar7->UpdatePathConstrainedMove;
     }
-    if (pVVar8->UpdatePlayerMove != (_func___cdecl_void_Vehicle_ptr *)0x0) {
-      (*pVVar8->UpdatePlayerMove)(pVVar2);
-    }
-    Vehicle_UpdateCameraState(pVVar2);
   }
   else {
     if (VVar3 != VEH_DRIVE_NONE) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0x1292,
                       0,"%s\n\t(veh->drivingState) = %i");
     }
-    p_Var10 = pVVar8->UpdateDefaultMove;
-LAB_826b6508:
-    if (p_Var10 != (_func___cdecl_void_Vehicle_ptr *)0x0) {
-      (*p_Var10)(pVVar2);
-    }
+    p_Var9 = pVVar7->UpdateDefaultMove;
   }
+  if (p_Var9 != (_func___cdecl_void_Vehicle_ptr *)0x0) {
+    (*p_Var9)(pVVar2);
+  }
+LAB_826b651c:
   if (pVVar2->physVeh != (PhysVehicle *)0x0) {
     Com_Memcpy((pVVar2->phys).wheelPrevCompression,(pVVar2->phys).wheelCompression,0x18);
     fVar1 = (pVVar2->physVehCtrl).desiredSpeed;
     pVVar2->impactSpeed = 0.0;
     if (fVar1 != 0.0) {
-      (pgVar4->s).lerp.u.vehicle.flags = (pgVar4->s).lerp.u.vehicle.flags | 4;
+      (param_1->s).lerp.u.vehicle.flags = (param_1->s).lerp.u.vehicle.flags | 4;
     }
     if ((pVVar2->physVehCtrl).brake != 0.0) {
-      (pgVar4->s).lerp.u.vehicle.flags = (pgVar4->s).lerp.u.vehicle.flags | 8;
+      (param_1->s).lerp.u.vehicle.flags = (param_1->s).lerp.u.vehicle.flags | 8;
     }
   }
-LAB_826b6574:
-  __restgprlr_25();
   return;
 }
 
 
 // 826B6580  Vehicle_RunPreThinkForAllVehicles  (vehicle/vehicle.cpp:4779)
 
+/* WARNING: Function: __savegprlr_16 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_16 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "PhysWorld": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -6317,7 +6125,6 @@ void Vehicle_RunPreThinkForAllVehicles(void)
   Vehicle *pVVar13;
   double dVar14;
   
-  __savegprlr_16();
   if ((physVeh_collideWithClipOnly->current).enabled == false) {
     iVar7 = 0x800211;
   }
@@ -6408,7 +6215,6 @@ LAB_826b67b4:
     lVar12 = lVar12 + -1;
     pVVar13 = pVVar13 + 1;
     if (lVar12 == 0) {
-      __restgprlr_16();
       return;
     }
   } while( true );
@@ -6417,6 +6223,10 @@ LAB_826b67b4:
 
 // 826B3E00  Vehicle_SpeedboatBouncing  (vehicle/vehicle.cpp:4798)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
@@ -6425,11 +6235,10 @@ void Vehicle_SpeedboatBouncing(Vehicle *param_1,float param_2)
 
 {
   float fVar1;
-  undefined4 *puVar2;
+  PhysVehicle *pPVar2;
   VehicleDef *pVVar3;
   bool bVar4;
   double dVar5;
-  double extraout_f1;
   double dVar6;
   double dVar7;
   double dVar8;
@@ -6445,114 +6254,113 @@ void Vehicle_SpeedboatBouncing(Vehicle *param_1,float param_2)
   float local_4c;
   float local_48;
   
-  __savegprlr_29((double)param_2,param_1);
-  puVar2 = (undefined4 *)__savefpr_28();
-  dVar9 = extraout_f1;
-  if (puVar2 == (undefined4 *)0x0) {
+  dVar6 = (double)param_2;
+  if (param_1 == (Vehicle *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0x12cb,0,
                     "%s");
   }
-  if (puVar2[0x7c] == 0) {
+  if (param_1->physVeh == (PhysVehicle *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0x12cc,0,
                     "%s");
   }
-  pVVar3 = Vehicle_GetServerDef(puVar2[0x84]);
+  pVVar3 = Vehicle_GetServerDef(param_1->defIndex);
   if (pVVar3->type == VEH_BOAT) {
-    dVar7 = 0.0;
-    dVar8 = 1.0;
-    dVar5 = dVar8;
+    dVar8 = 0.0;
+    dVar9 = 1.0;
+    dVar5 = dVar9;
     if ((pVVar3->boatBouncingFadeinSpeed != 0.0) &&
-       (dVar5 = (double)((float)puVar2[0xbe] / pVVar3->boatBouncingFadeinSpeed),
+       (dVar5 = (double)(param_1->speed / pVVar3->boatBouncingFadeinSpeed),
        (float)(1.0 - dVar5) < 0.0)) {
-      dVar5 = dVar8;
+      dVar5 = dVar9;
     }
     if (0.0 < pVVar3->boatBouncingFadeoutSteeringAngle) {
-      dVar6 = (double)(ABS((float)puVar2[0x7d]) / pVVar3->boatBouncingFadeoutSteeringAngle);
-      if ((float)(1.0 - dVar6) < 0.0) {
-        dVar6 = dVar8;
+      dVar7 = (double)(ABS((param_1->physVehCtrl).steering) /
+                      pVVar3->boatBouncingFadeoutSteeringAngle);
+      if ((float)(1.0 - dVar7) < 0.0) {
+        dVar7 = dVar9;
       }
-      dVar5 = (double)(float)((double)(float)(1.0 - dVar6) * dVar5);
+      dVar5 = (double)(float)((double)(float)(1.0 - dVar7) * dVar5);
     }
-    dVar5 = (double)(float)((double)(float)puVar2[0xd8] * dVar5);
-    if (((double)(float)puVar2[0xd7] < dVar5) &&
-       (((double)(float)puVar2[0xd7] != 0.0 ||
-        (bVar4 = PhysVeh_AreFrontWheelsOffGround((PhysVehicle *)puVar2[0x7c]), !bVar4)))) {
+    dVar7 = (double)(float)((double)(param_1->boat).bouncePeakForce * dVar5);
+    dVar5 = (double)(param_1->boat).bounceCurrentForce;
+    if ((dVar5 < dVar7) &&
+       ((dVar5 != 0.0 || (bVar4 = PhysVeh_AreFrontWheelsOffGround(param_1->physVeh), !bVar4)))) {
       fVar10 = G_crandom();
-      local_60 = (float)dVar7;
-      local_5c = (float)dVar7;
+      pPVar2 = param_1->physVeh;
+      local_60 = (float)dVar8;
+      local_5c = (float)dVar8;
       local_58 = (float)((double)(float)((double)(pVVar3->boatBouncingRate *
                                                  (float)((double)fVar10 * (double)RANDOM_RANGE +
-                                                        dVar8)) * dVar5) * dVar9 +
-                        (double)(float)puVar2[0xd7]);
-      puVar2[0xd7] = local_58;
-      PhysVeh_GetSteeringPoint((PhysVehicle *)puVar2[0x7c],&local_70);
-      PhysVeh_GetForwardDir((PhysVehicle *)puVar2[0x7c],&local_50);
-      fVar10 = PhysVeh_GetSteeringPointDist((PhysVehicle *)puVar2[0x7c]);
+                                                        dVar9)) * dVar7) * dVar6 +
+                        (double)(param_1->boat).bounceCurrentForce);
+      (param_1->boat).bounceCurrentForce = local_58;
+      PhysVeh_GetSteeringPoint(pPVar2,&local_70);
+      PhysVeh_GetForwardDir(param_1->physVeh,&local_50);
+      fVar10 = PhysVeh_GetSteeringPointDist(param_1->physVeh);
       fVar10 = fVar10 * FWD_FRAC;
       local_70 = local_50 * fVar10 + local_70;
       local_6c = local_4c * fVar10 + local_6c;
       local_68 = local_48 * fVar10 + local_68;
-      PhysVeh_AddForce((PhysVehicle *)puVar2[0x7c],&local_60,&local_70);
-      __restfpr_28();
-      __restgprlr_29();
+      PhysVeh_AddForce(param_1->physVeh,&local_60,&local_70);
       return;
     }
-    if ((double)(float)puVar2[0xd7] != dVar7) {
-      Scr_AddFloat((float)((double)(float)puVar2[0xd7] * 0.05681818351149559));
-      Scr_Notify((gentity_s *)*puVar2,scr_const.veh_boatbounce,1);
+    dVar6 = (double)(param_1->boat).bounceCurrentForce;
+    if (dVar6 != dVar8) {
+      Scr_AddFloat((float)(dVar6 * 0.05681818351149559));
+      Scr_Notify(param_1->ent,scr_const.veh_boatbounce,1);
     }
     fVar10 = pVVar3->boatBouncingMaxForce;
     fVar1 = pVVar3->boatBouncingMinForce;
-    puVar2[0xd7] = (float)dVar7;
-    dVar9 = (double)(fVar10 - fVar1);
+    (param_1->boat).bounceCurrentForce = (float)dVar8;
+    dVar6 = (double)(fVar10 - fVar1);
     fVar10 = G_random();
-    puVar2[0xd8] = (float)((double)fVar10 * dVar9 + (double)pVVar3->boatBouncingMinForce);
+    (param_1->boat).bouncePeakForce =
+         (float)((double)fVar10 * dVar6 + (double)pVVar3->boatBouncingMinForce);
   }
-  __restfpr_28();
-  __restgprlr_29();
   return;
 }
 
 
 // 826B4038  Vehicle_CollideWheels  (vehicle/vehicle.cpp:4866)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
 void Vehicle_CollideWheels(gentity_s *param_1,float param_2)
 
 {
-  int iVar1;
+  Vehicle *pVVar1;
   int *in_r4;
-  double extraout_f1;
   double dVar2;
   
-  iVar1 = __savegprlr_29((double)param_2,param_1);
-  dVar2 = extraout_f1;
-  if (iVar1 == 0) {
+  dVar2 = (double)param_2;
+  if (param_1 == (gentity_s *)0x0) {
     in_r4 = (int *)0x1306;
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0x1306,0,
                     "%s");
   }
-  iVar1 = *(int *)(iVar1 + 0x160);
-  if (iVar1 == 0) {
+  pVVar1 = param_1->vehicle;
+  if (pVVar1 == (Vehicle *)0x0) {
     in_r4 = (int *)0x1308;
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0x1308,0,
                     "%s");
   }
-  if (*(int *)(iVar1 + 0x1f0) == 0) {
+  if (pVVar1->physVeh == (PhysVehicle *)0x0) {
     in_r4 = (int *)0x1309;
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0x1309,0,
                     "%s");
   }
-  PhysVeh_CollideWheels(*(PhysVehicle **)(iVar1 + 0x1f0),(float)dVar2,in_r4,(float *)(iVar1 + 400));
-  __restgprlr_29();
+  PhysVeh_CollideWheels(pVVar1->physVeh,(float)dVar2,in_r4,(float *)(pVVar1->phys).wheelSurfType);
   return;
 }
 
 
 // 826B40F8  Vehicle_CollideVehicleWithVehicle  (vehicle/vehicle.cpp:4881)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
@@ -6561,47 +6369,42 @@ void Vehicle_CollideVehicleWithVehicle(gentity_s *param_1,gentity_s *param_2,flo
 {
   PhysVehicle *pPVar1;
   PhysVehicle *pPVar2;
-  ulonglong uVar3;
-  ulonglong uVar4;
-  double extraout_f1;
-  double dVar5;
+  double dVar3;
   
-  uVar4 = (ulonglong)(int)param_2;
-  uVar3 = __savegprlr_28((double)param_3,param_1);
-  dVar5 = extraout_f1;
-  if ((uVar3 & 0xffffffff) == 0) {
+  dVar3 = (double)param_3;
+  if (param_1 == (gentity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0x1315,0,
                     "%s");
   }
-  if ((uVar4 & 0xffffffff) == 0) {
+  if (param_2 == (gentity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0x1316,0,
                     "%s");
   }
-  if ((uVar3 & 0xffffffff) == (uVar4 & 0xffffffff)) {
+  if (param_1 == param_2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0x1317,0,
                     "%s");
   }
-  if (*(int *)((int)uVar3 + 0x160) == 0) {
+  if (param_1->vehicle == (Vehicle *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0x1318,0,
                     "%s");
   }
-  if (*(int *)((int)uVar4 + 0x160) == 0) {
+  if (param_2->vehicle == (Vehicle *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0x1319,0,
                     "%s");
   }
-  pPVar1 = *(PhysVehicle **)(*(int *)((int)uVar3 + 0x160) + 0x1f0);
+  pPVar1 = param_1->vehicle->physVeh;
   if ((pPVar1 != (PhysVehicle *)0x0) &&
-     (pPVar2 = *(PhysVehicle **)(*(int *)((int)uVar4 + 0x160) + 0x1f0), pPVar2 != (PhysVehicle *)0x0
-     )) {
-    PhysVeh_CollideVehicleWithVehicle(pPVar1,false,pPVar2,false,(float)dVar5);
+     (pPVar2 = param_2->vehicle->physVeh, pPVar2 != (PhysVehicle *)0x0)) {
+    PhysVeh_CollideVehicleWithVehicle(pPVar1,false,pPVar2,false,(float)dVar3);
   }
-  __restgprlr_28();
   return;
 }
 
 
 // 826B4220  Vehicle_CollideAllVehicles  (vehicle/vehicle.cpp:4906)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
@@ -6617,7 +6420,7 @@ void Vehicle_CollideAllVehicles(float param_1)
   Vehicle *pVVar7;
   double dVar8;
   
-  dVar8 = (double)__savegprlr_23((double)param_1);
+  dVar8 = (double)param_1;
   pVVar5 = vehicleServers;
   uVar4 = 1;
   lVar3 = 8;
@@ -6651,13 +6454,14 @@ void Vehicle_CollideAllVehicles(float param_1)
     pVVar5 = pVVar5 + 1;
     uVar4 = uVar4 + 1;
   } while (lVar3 != 0);
-  __restgprlr_23();
   return;
 }
 
 
 // 826B4318  Vehicle_Think  (vehicle/vehicle.cpp:4940)
 
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
@@ -6668,63 +6472,60 @@ void Vehicle_Think(gentity_s *param_1)
   Vehicle *pVVar1;
   gclient_s *pgVar2;
   float fVar3;
-  gentity_s *pgVar4;
-  VehicleDef *pVVar5;
+  VehicleDef *pVVar4;
   EntHandle *this;
-  int iVar6;
-  gentity_s *pgVar7;
-  VehiclePathPos *pVVar8;
-  bool bVar9;
-  float *pfVar10;
-  vehicle_physic_t *pvVar11;
-  float *pfVar12;
-  VehiclePathDir VVar13;
-  uint *puVar14;
-  vehicle_physic_t *pvVar15;
+  int iVar5;
+  gentity_s *pgVar6;
+  VehiclePathPos *pVVar7;
+  bool bVar8;
+  float *pfVar9;
+  vehicle_physic_t *pvVar10;
+  float *pfVar11;
+  VehiclePathDir VVar12;
+  uint *puVar13;
+  vehicle_physic_t *pvVar14;
+  double dVar15;
   double dVar16;
   double dVar17;
   double dVar18;
   double dVar19;
-  double dVar20;
   undefined1 local_140 [320];
   
-  pgVar4 = (gentity_s *)__savegprlr_22(param_1);
-  if (pgVar4 == (gentity_s *)0x0) {
+  if (param_1 == (gentity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0x1356,0,
                     "%s");
   }
-  if (pgVar4->vehicle == (Vehicle *)0x0) {
+  if (param_1->vehicle == (Vehicle *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0x1357,0,
                     "%s");
   }
-  pVVar1 = pgVar4->vehicle;
-  pVVar5 = Vehicle_GetServerDef(pVVar1->defIndex);
-  this = &(pgVar4->r).ownerNum;
-  pvVar15 = &pVVar1->phys;
-  iVar6 = EntHandle::isDefined(this);
-  if (iVar6 == 0) {
-    pgVar7 = (gentity_s *)0x0;
+  pVVar1 = param_1->vehicle;
+  pVVar4 = Vehicle_GetServerDef(pVVar1->defIndex);
+  this = &(param_1->r).ownerNum;
+  pvVar14 = &pVVar1->phys;
+  iVar5 = EntHandle::isDefined(this);
+  if (iVar5 == 0) {
+    pgVar6 = (gentity_s *)0x0;
   }
   else {
-    pgVar7 = EntHandle::ent(this);
-    if (pgVar7->client == (gclient_s *)0x0) {
+    pgVar6 = EntHandle::ent(this);
+    if (pgVar6->client == (gclient_s *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0x136a,
                       0,"%s");
     }
-    if ((pgVar7->client->ps).vehicleState.entity == (pgVar4->s).number) {
+    if ((pgVar6->client->ps).vehicleState.entity == (param_1->s).number) {
       Vehicle_UpdateCameraState(pVVar1);
-      __restgprlr_22();
       return;
     }
   }
-  dVar20 = 0.0;
+  dVar19 = 0.0;
   if (pVVar1->speed < 0.0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0x137d,0,
                     "%s\n\t(veh->speed) = %g");
   }
-  puVar14 = &(pgVar4->s).lerp.u.vehicle.flags;
-  (pgVar4->s).lerp.u.vehicle.flags = (pgVar4->s).lerp.u.vehicle.flags & 0xfffffffd;
-  dVar19 = 1.0;
+  puVar13 = &(param_1->s).lerp.u.vehicle.flags;
+  (param_1->s).lerp.u.vehicle.flags = (param_1->s).lerp.u.vehicle.flags & 0xfffffffd;
+  dVar18 = 1.0;
   if (pVVar1->physVeh == (PhysVehicle *)0x0) {
     if (pVVar1->drivingState == VEH_DRIVE_PATH_FOLLOW) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0x13d1,
@@ -6737,104 +6538,103 @@ void Vehicle_Think(gentity_s *param_1)
   else {
     PhysVeh_PostThink(pVVar1->physVeh,20.0);
     if ((pVVar1->drivingState == VEH_DRIVE_PATH_CONSTRAINED) ||
-       (bVar9 = true, pVVar1->drivingState == VEH_DRIVE_PATH_FOLLOW)) {
-      bVar9 = false;
+       (bVar8 = true, pVVar1->drivingState == VEH_DRIVE_PATH_FOLLOW)) {
+      bVar8 = false;
     }
-    pfVar12 = (pVVar1->phys).angles;
-    PhysVeh_GetState(pVVar1->physVeh,pvVar15->origin,pfVar12,(pVVar1->phys).vel,bVar9);
-    pfVar10 = (pVVar1->phys).bodyVel;
-    PhysVeh_GetLocalVelocity(pVVar1->physVeh,pfVar10);
+    pfVar11 = (pVVar1->phys).angles;
+    PhysVeh_GetState(pVVar1->physVeh,pvVar14->origin,pfVar11,(pVVar1->phys).vel,bVar8);
+    pfVar9 = (pVVar1->phys).bodyVel;
+    PhysVeh_GetLocalVelocity(pVVar1->physVeh,pfVar9);
     PhysVeh_GetLocalAcceleration(pVVar1->physVeh,(pVVar1->phys).bodyAccel);
-    if ((pVVar5->type == VEH_BOAT) && (pVVar1->drivingState == VEH_DRIVE_PATH_CONSTRAINED)) {
+    if ((pVVar4->type == VEH_BOAT) && (pVVar1->drivingState == VEH_DRIVE_PATH_CONSTRAINED)) {
       (pVVar1->phys).bodyVel[1] = -(pVVar1->phys).bodyVel[1];
     }
-    fVar3 = ABS(*pfVar10);
+    fVar3 = ABS(*pfVar9);
     pVVar1->speed = fVar3;
     if (fVar3 < 1.76) {
-      pVVar1->speed = (float)dVar20;
+      pVVar1->speed = (float)dVar19;
     }
-    if ((pVVar5->collisionSnd != (snd_alias_list_t *)0x0) && (dVar20 < (double)pVVar1->impactSpeed))
+    if ((pVVar4->collisionSnd != (snd_alias_list_t *)0x0) && (dVar19 < (double)pVVar1->impactSpeed))
     {
-      if ((double)pVVar5->collisionBlendSpeed <= dVar20) {
+      if ((double)pVVar4->collisionBlendSpeed <= dVar19) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",
                         0x139e,0,"%s");
       }
-      dVar18 = (double)(pVVar1->impactSpeed / pVVar5->collisionBlendSpeed);
-      dVar17 = dVar19;
-      if ((float)(dVar18 - dVar19) < 0.0) {
-        dVar17 = dVar18;
-      }
-      dVar16 = dVar20;
-      if (-dVar18 < 0.0) {
+      dVar17 = (double)(pVVar1->impactSpeed / pVVar4->collisionBlendSpeed);
+      dVar16 = dVar18;
+      if ((float)(dVar17 - dVar18) < 0.0) {
         dVar16 = dVar17;
       }
-      local_140._0_8_ = (undefined8)(dVar16 * 255.0);
-      G_AddEvent(pgVar4,0x72,local_140._4_4_);
+      dVar15 = dVar19;
+      if (-dVar17 < 0.0) {
+        dVar15 = dVar16;
+      }
+      local_140._0_8_ = (undefined8)(dVar15 * 255.0);
+      G_AddEvent(param_1,0x72,local_140._4_4_);
     }
-    iVar6 = PhysVeh_GetWheelsOnGround(pVVar1->physVeh);
-    if (iVar6 == 0) {
-      *puVar14 = *puVar14 | 2;
+    iVar5 = PhysVeh_GetWheelsOnGround(pVVar1->physVeh);
+    if (iVar5 == 0) {
+      *puVar13 = *puVar13 | 2;
     }
     if (pVVar1->drivingState == VEH_DRIVE_PATH_FOLLOW) {
-      pVVar8 = &pVVar1->pathPos;
+      pVVar7 = &pVVar1->pathPos;
       memcpy();
-      VVar13 = pVVar1->pathDir;
-      pvVar11 = pvVar15;
-      if ((VVar13 != VEH_PATH_REVERSE) && ((pVVar5->vehPhysDef).steeringAxle != VEH_AXLE_REAR)) {
+      VVar12 = pVVar1->pathDir;
+      pvVar10 = pvVar14;
+      if ((VVar12 != VEH_PATH_REVERSE) && ((pVVar4->vehPhysDef).steeringAxle != VEH_AXLE_REAR)) {
         PhysVeh_GetSteeringPoint(pVVar1->physVeh,(float *)local_140);
-        VVar13 = pVVar1->pathDir;
-        pvVar11 = (vehicle_physic_t *)local_140;
+        VVar12 = pVVar1->pathDir;
+        pvVar10 = (vehicle_physic_t *)local_140;
       }
-      VehPath_UpdatePathPosPhysics(pVVar8,pvVar11->origin,pfVar12,VVar13);
+      VehPath_UpdatePathPosPhysics(pVVar7,pvVar10->origin,pfVar11,VVar12);
       VehPath_UpdatePathPosNotifies
-                ((VehiclePathPos *)(local_140 + 0x10),pVVar8,(pgVar4->s).number,-1,
+                ((VehiclePathPos *)(local_140 + 0x10),pVVar7,(param_1->s).number,-1,
                  VEH_PATH_NOTIFY_SCRIPT,VEH_PATH_FORWARD);
-      bVar9 = VehPath_IsEndOfPath(pVVar8);
-      if (bVar9) {
-        Scr_Notify(pgVar4,scr_const.reached_end_node,0);
+      bVar8 = VehPath_IsEndOfPath(pVVar7);
+      if (bVar8) {
+        Scr_Notify(param_1,scr_const.reached_end_node,0);
       }
     }
     PhysVeh_DisablePathConstraint(pVVar1->physVeh);
-    if (pgVar7 == (gentity_s *)0x0) {
+    if (pgVar6 == (gentity_s *)0x0) {
       PhysVeh_DebugText(pVVar1->physVeh,(uint *)0x0);
     }
     else {
-      PhysVeh_DebugText(pVVar1->physVeh,puVar14);
+      PhysVeh_DebugText(pVVar1->physVeh,puVar13);
     }
   }
-  pfVar10 = (pVVar1->phys).vel;
-  pvVar11 = pvVar15;
-  VEH_SetPosition(pgVar4,pvVar15->origin,pfVar10,(pVVar1->phys).angles);
-  if ((pVVar5->type != VEH_ARTILLERY) &&
+  pfVar9 = (pVVar1->phys).vel;
+  pvVar10 = pvVar14;
+  VEH_SetPosition(param_1,pvVar14->origin,pfVar9,(pVVar1->phys).angles);
+  if ((pVVar4->type != VEH_ARTILLERY) &&
      (((pVVar1->drivingState == VEH_DRIVE_PATH_CONSTRAINED ||
        (pVVar1->drivingState == VEH_DRIVE_PATH_FOLLOW)) && (pVVar1->physVeh == (PhysVehicle *)0x0)))
      ) {
-    VEH_VerifyPosition(pgVar4);
+    VEH_VerifyPosition(param_1);
   }
-  if ((pVVar5->type == VEH_HELICOPTER) && (pVVar1->drivingState == VEH_DRIVE_AI)) {
-    VEH_MoveTrace(pgVar4);
+  if ((pVVar4->type == VEH_HELICOPTER) && (pVVar1->drivingState == VEH_DRIVE_AI)) {
+    VEH_MoveTrace(param_1);
   }
-  if ((pgVar7 != (gentity_s *)0x0) && (pgVar2 = pgVar7->client, ((pgVar2->ps).linkFlags & 4U) == 0))
+  if ((pgVar6 != (gentity_s *)0x0) && (pgVar2 = pgVar6->client, ((pgVar2->ps).linkFlags & 4U) == 0))
   {
-    (pgVar2->ps).velocity[0] = *pfVar10;
+    (pgVar2->ps).velocity[0] = *pfVar9;
     (pgVar2->ps).velocity[1] = (pVVar1->phys).vel[1];
     (pgVar2->ps).velocity[2] = (pVVar1->phys).vel[2];
   }
-  VEH_TouchEntities(pgVar4);
+  VEH_TouchEntities(param_1);
   if (((g_vehicleDebug->current).enabled != false) &&
-     (VEH_DebugBox(pvVar15->origin,4.0,(float)dVar19,(float)dVar19,(float)dVar20),
-     pVVar5->trophyEnabled != 0)) {
-    G_DebugCircle(pvVar15->origin,pVVar5->trophyRadius,pvVar11->origin,-0x7de7e808,1,0);
+     (VEH_DebugBox(pvVar14->origin,4.0,(float)dVar18,(float)dVar18,(float)dVar19),
+     pVVar4->trophyEnabled != 0)) {
+    G_DebugCircle(pvVar14->origin,pVVar4->trophyRadius,pvVar10->origin,-0x7de7e808,1,0);
   }
   (pVVar1->turret).barrelBlocked = 0;
-  VEH_UpdatePlayerControlledWeapon(pgVar4);
-  VEH_UpdateAim(pgVar4);
+  VEH_UpdatePlayerControlledWeapon(param_1);
+  VEH_UpdateAim(param_1);
   VEH_UpdateBody(pVVar1);
-  VEH_UpdateSteering(pgVar4);
-  VEH_UpdateSounds(pgVar4);
-  (pgVar4->s).time2 = (int)(pVVar5->suspensionTravel * 1000.0);
-  pgVar4->nextthink = level.time + 0x32;
-  __restgprlr_22();
+  VEH_UpdateSteering(param_1);
+  VEH_UpdateSounds(param_1);
+  (param_1->s).time2 = (int)(pVVar4->suspensionTravel * 1000.0);
+  param_1->nextthink = level.time + 0x32;
   return;
 }
 
@@ -6863,6 +6663,10 @@ void Vehicle_Pain(gentity_s *param_1,gentity_s *param_2,int param_3,float *param
 
 // 826B48D0  Vehicle_Touch  (vehicle/vehicle.cpp:5141)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
@@ -6874,14 +6678,11 @@ void Vehicle_Touch(gentity_s *param_1,gentity_s *param_2,int param_3)
   float fVar2;
   Vehicle *pVVar3;
   int iVar4;
-  gentity_s *pgVar5;
-  gentity_s *pgVar6;
-  VehicleDef *pVVar7;
-  ulonglong uVar8;
+  VehicleDef *pVVar5;
+  double dVar6;
+  double dVar7;
+  double dVar8;
   double dVar9;
-  double dVar10;
-  double dVar11;
-  double dVar12;
   Weapon in_stack_fffffef8;
   undefined1 in_stack_fffffeff;
   hitLocation_t in_stack_ffffff00;
@@ -6895,82 +6696,74 @@ void Vehicle_Touch(gentity_s *param_1,gentity_s *param_2,int param_3)
   float local_7c;
   float local_78;
   
-  uVar8 = (ulonglong)(int)param_2;
-  __savegprlr_24(param_1,uVar8,param_3);
-  pgVar6 = (gentity_s *)__savefpr_28();
-  if (pgVar6 == (gentity_s *)0x0) {
+  if (param_1 == (gentity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0x1423,0,
                     "%s");
   }
-  if (pgVar6->vehicle == (Vehicle *)0x0) {
+  if (param_1->vehicle == (Vehicle *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0x1424,0,
                     "%s");
   }
-  if ((uVar8 & 0xffffffff) == 0) {
+  if (param_2 == (gentity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0x1425,0,
                     "%s");
   }
-  pVVar3 = pgVar6->vehicle;
+  pVVar3 = param_1->vehicle;
   if (pVVar3 == (Vehicle *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0x1428,0,
                     "%s");
   }
-  pVVar7 = Vehicle_GetServerDef(pVVar3->defIndex);
-  pgVar5 = (gentity_s *)uVar8;
-  iVar4 = (pgVar5->s).eType;
-  if ((((iVar4 == 1) || (iVar4 == 6)) && (pgVar5->takedamage != '\0')) &&
-     ((pgVar5->tagInfo == (tagInfo_s *)0x0 && (dVar10 = 0.0, 0.0 < pVVar7->collisionDamage)))) {
+  pVVar5 = Vehicle_GetServerDef(pVVar3->defIndex);
+  iVar4 = (param_2->s).eType;
+  if ((((iVar4 == 1) || (iVar4 == 6)) && (param_2->takedamage != '\0')) &&
+     ((param_2->tagInfo == (tagInfo_s *)0x0 && (dVar7 = 0.0, 0.0 < pVVar5->collisionDamage)))) {
     fVar1 = (pVVar3->phys).vel[1];
     local_80 = (pVVar3->phys).vel[0];
     fVar2 = (pVVar3->phys).vel[2];
-    dVar12 = 1.0;
-    dVar9 = (double)SQRT(fVar2 * fVar2 + local_80 * local_80 + fVar1 * fVar1);
-    dVar11 = dVar12;
-    if (-dVar9 < 0.0) {
-      dVar11 = dVar9;
+    dVar9 = 1.0;
+    dVar6 = (double)SQRT(fVar2 * fVar2 + local_80 * local_80 + fVar1 * fVar1);
+    dVar8 = dVar9;
+    if (-dVar6 < 0.0) {
+      dVar8 = dVar6;
     }
-    local_78 = (float)(1.0 / dVar11);
+    local_78 = (float)(1.0 / dVar8);
     local_80 = local_80 * local_78;
     local_7c = (pVVar3->phys).vel[1] * local_78;
     local_78 = (pVVar3->phys).vel[2] * local_78;
-    if (0.0010000000474974513 <= dVar9) {
+    if (0.0010000000474974513 <= dVar6) {
       if (iVar4 == 6) {
-        G_Damage(pgVar5,pgVar6,pgVar6,&local_80,(pgVar5->r).currentOrigin,999999,0,10,
+        G_Damage(param_2,param_1,param_1,&local_80,(param_2->r).currentOrigin,999999,0,10,
                  in_stack_fffffef8,(bool)in_stack_fffffeff,in_stack_ffffff00,in_stack_ffffff04,
                  in_stack_ffffff08,in_stack_ffffff0c);
-        __restfpr_28();
-        __restgprlr_24();
         return;
       }
-      iVar4 = (pgVar5->s).groundEntityNum;
-      if ((iVar4 != (pgVar6->s).number) && (iVar4 != 0x7ff)) {
-        if ((pgVar5->client != (gclient_s *)0x0) && (((pgVar5->client->ps).pm_flags & 1U) != 0)) {
-          G_Damage(pgVar5,pgVar6,pgVar6,&local_80,(pgVar5->r).currentOrigin,999999,0,10,
+      iVar4 = (param_2->s).groundEntityNum;
+      if ((iVar4 != (param_1->s).number) && (iVar4 != 0x7ff)) {
+        if ((param_2->client != (gclient_s *)0x0) && (((param_2->client->ps).pm_flags & 1U) != 0)) {
+          G_Damage(param_2,param_1,param_1,&local_80,(param_2->r).currentOrigin,999999,0,10,
                    in_stack_fffffef8,(bool)in_stack_fffffeff,in_stack_ffffff00,in_stack_ffffff04,
                    in_stack_ffffff08,in_stack_ffffff0c);
-          __restfpr_28();
-          __restgprlr_24();
           return;
         }
-        local_90 = (pgVar5->r).currentOrigin[0] - (pgVar6->r).currentOrigin[0];
-        local_8c = (pgVar5->r).currentOrigin[1] - (pgVar6->r).currentOrigin[1];
+        local_90 = (param_2->r).currentOrigin[0] - (param_1->r).currentOrigin[0];
+        local_8c = (param_2->r).currentOrigin[1] - (param_1->r).currentOrigin[1];
         Vec2Normalize(&local_90);
-        dVar11 = 0.800000011920929;
-        dVar9 = (double)(local_90 * local_80 + local_8c * local_7c);
-        if (0.800000011920929 <= dVar9) {
-          if ((double)pVVar7->collisionSpeed == dVar10) {
+        dVar8 = 0.800000011920929;
+        dVar6 = (double)(local_90 * local_80 + local_8c * local_7c);
+        if (0.800000011920929 <= dVar6) {
+          if ((double)pVVar5->collisionSpeed == dVar7) {
             MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",
                             0x1461,0,"%s");
           }
-          dVar10 = (double)(pVVar3->speed / pVVar7->collisionSpeed);
-          if (dVar12 < dVar10) {
-            dVar10 = dVar12;
+          dVar7 = (double)(pVVar3->speed / pVVar5->collisionSpeed);
+          if (dVar9 < dVar7) {
+            dVar7 = dVar9;
           }
-          iVar4 = (int)((float)((double)(float)(dVar9 - dVar11) * dVar10) * 5.0000005 *
-                       pVVar7->collisionDamage);
+          iVar4 = (int)((float)((double)(float)(dVar6 - dVar8) * dVar7) * 5.0000005 *
+                       pVVar5->collisionDamage);
           local_88 = (longlong)iVar4;
           if (0 < iVar4) {
-            G_Damage(pgVar5,pgVar6,pgVar6,&local_80,(pgVar5->r).currentOrigin,iVar4,0,10,
+            G_Damage(param_2,param_1,param_1,&local_80,(param_2->r).currentOrigin,iVar4,0,10,
                      in_stack_fffffef8,(bool)in_stack_fffffeff,in_stack_ffffff00,in_stack_ffffff04,
                      in_stack_ffffff08,in_stack_ffffff0c);
           }
@@ -6978,8 +6771,6 @@ void Vehicle_Touch(gentity_s *param_1,gentity_s *param_2,int param_3)
       }
     }
   }
-  __restfpr_28();
-  __restgprlr_24();
   return;
 }
 
@@ -7006,6 +6797,8 @@ void Vehicle_Use(gentity_s *param_1,gentity_s *param_2,gentity_s *param_3)
 
 // 826B4C80  Vehicle_Die  (vehicle/vehicle.cpp:5254)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
@@ -7013,101 +6806,95 @@ void Vehicle_Die(gentity_s *param_1,gentity_s *param_2,gentity_s *param_3,int pa
                 Weapon param_6,bool param_7,float *param_8,hitLocation_t param_9,int param_10)
 
 {
-  gentity_s *pgVar1;
+  int iVar1;
+  gentity_s *pgVar2;
+  weapType_t wVar3;
   EntHandle *this;
-  int iVar2;
-  gentity_s *pgVar3;
-  weapType_t wVar4;
-  ulonglong uVar5;
   
-  uVar5 = (ulonglong)(int)param_3;
-  pgVar1 = (gentity_s *)__savegprlr_28(param_1,param_2,uVar5,param_4,param_5,param_6.data,param_7);
-  this = &(pgVar1->r).ownerNum;
-  iVar2 = EntHandle::isDefined(this);
-  if (iVar2 != 0) {
-    pgVar3 = EntHandle::ent(this);
-    VEH_UnlinkPlayer(pgVar1,pgVar3);
+  this = &(param_1->r).ownerNum;
+  iVar1 = EntHandle::isDefined(this);
+  if (iVar1 != 0) {
+    pgVar2 = EntHandle::ent(this);
+    VEH_UnlinkPlayer(param_1,pgVar2);
   }
-  if (((uVar5 & 0xffffffff) != 0) && (iVar2 = (int)uVar5, *(char *)(iVar2 + 0xcb) != '\0')) {
-    wVar4 = BG_GetWeaponType(*(Weapon *)(iVar2 + 200),(bool)('\x01' - (*(int *)(iVar2 + 0xcc) == 0))
-                            );
-    if ((wVar4 == WEAPTYPE_PROJECTILE) || (wVar4 == WEAPTYPE_GRENADE)) {
-      VEH_JoltBody(pgVar1,param_8,1.0,0.0,0.0);
+  if ((param_3 != (gentity_s *)0x0) && ((param_3->s).weapon._s_0.weaponIdx != 0)) {
+    wVar3 = BG_GetWeaponType((param_3->s).weapon,
+                             (bool)('\x01' - ((param_3->s).inAltWeaponMode == 0)));
+    if ((wVar3 == WEAPTYPE_PROJECTILE) || (wVar3 == WEAPTYPE_GRENADE)) {
+      VEH_JoltBody(param_1,param_8,1.0,0.0,0.0);
     }
   }
-  __restgprlr_28();
   return;
 }
 
 
 // 826B4D20  Vehicle_SpawnEntity  (vehicle/vehicle.cpp:5272)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
 void Vehicle_SpawnEntity(gentity_s *param_1)
 
 {
-  gentity_s *pgVar1;
-  char *pcVar2;
-  int iVar3;
+  char *pcVar1;
+  int iVar2;
   char *local_30 [12];
   
-  pgVar1 = (gentity_s *)__savegprlr_29(param_1);
-  if (pgVar1->classname == 0) {
+  if (param_1->classname == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0x149b,0,
                     "%s");
   }
-  pcVar2 = SL_ConvertToString((uint)pgVar1->classname);
-  iVar3 = I_strcmp(pcVar2,"script_vehicle");
-  if (iVar3 != 0) {
+  pcVar1 = SL_ConvertToString((uint)param_1->classname);
+  iVar2 = I_strcmp(pcVar1,"script_vehicle");
+  if (iVar2 != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0x149c,0,
                     "%s");
   }
   G_LevelSpawnString(0x325,(char *)0x0,local_30);
-  if ((pgVar1->spawnflags & 2U) != 0) {
-    Vehicle_CreateSpawner(pgVar1,local_30[0]);
-    __restgprlr_29();
+  if ((param_1->spawnflags & 2U) != 0) {
+    Vehicle_CreateSpawner(param_1,local_30[0]);
     return;
   }
-  Vehicle_Create(pgVar1,local_30[0],(gentity_s *)0x0,1);
-  __restgprlr_29();
+  Vehicle_Create(param_1,local_30[0],(gentity_s *)0x0,1);
   return;
 }
 
 
 // 826B4DE8  Vehicle_SpawnCollmapEntity  (vehicle/vehicle.cpp:5288)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
 void Vehicle_SpawnCollmapEntity(gentity_s *param_1)
 
 {
-  int iVar1;
-  char *pcVar2;
-  int iVar3;
+  char *pcVar1;
+  int iVar2;
   
-  iVar1 = __savegprlr_29(param_1);
-  if (*(short *)(iVar1 + 0x172) == 0) {
+  if (param_1->classname == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0x14a9,0,
                     "%s");
   }
-  pcVar2 = SL_ConvertToString((uint)*(ushort *)(iVar1 + 0x172));
-  iVar3 = I_strcmp(pcVar2,"script_vehicle_collmap");
-  if (iVar3 != 0) {
+  pcVar1 = SL_ConvertToString((uint)param_1->classname);
+  iVar2 = I_strcmp(pcVar1,"script_vehicle_collmap");
+  if (iVar2 != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0x14aa,0,
                     "%s");
   }
-  *(undefined4 *)(iVar1 + 0x11c) = 0;
-  *(undefined4 *)(iVar1 + 4) = 0xf;
-  __restgprlr_29();
+  (param_1->r).contents = 0;
+  (param_1->s).eType = 0xf;
   return;
 }
 
 
 // 826B4E80  Vehicle_TrophyTestMissile  (vehicle/vehicle.cpp:5298)
 
+/* WARNING: Function: __savegprlr_17 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_17 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
@@ -7115,109 +6902,103 @@ void Vehicle_SpawnCollmapEntity(gentity_s *param_1)
 void Vehicle_TrophyTestMissile(gentity_s *param_1,float *param_2,float *param_3)
 
 {
-  int iVar1;
+  float fVar1;
   float fVar2;
   float fVar3;
   float fVar4;
   float fVar5;
-  float fVar6;
-  gentity_s *pgVar7;
-  uint uVar8;
-  VehicleDef *pVVar9;
+  gentity_s *pgVar6;
+  uint uVar7;
+  VehicleDef *pVVar8;
+  float fVar9;
   float fVar10;
   float fVar11;
   float fVar12;
-  float fVar13;
-  int iVar14;
-  gentity_s *pgVar15;
-  bool bVar16;
-  ulonglong uVar17;
-  uint *puVar18;
-  undefined8 local_90;
+  int iVar13;
+  bool bVar14;
+  ulonglong uVar15;
+  uint *puVar16;
+  float local_90;
+  float fStack_8c;
   float local_88;
   
-  pgVar15 = (gentity_s *)__savegprlr_17(param_1);
-  bVar16 = Missile_IsGrenade(pgVar15);
-  if (bVar16) {
+  bVar14 = Missile_IsGrenade(param_1);
+  if (bVar14) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0x14bf,0,
                     "%s");
   }
-  uVar17 = 0;
-  puVar18 = &vehicleServers[0].trophyAmmo;
+  uVar15 = 0;
+  puVar16 = &vehicleServers[0].trophyAmmo;
   do {
-    pgVar7 = ((Vehicle *)(puVar18 + -0x10b))->ent;
-    if (pgVar7 != (gentity_s *)0x0) {
-      uVar8 = puVar18[-0x87];
-      if (0x1f < uVar8) {
+    pgVar6 = ((Vehicle *)(puVar16 + -0x10b))->ent;
+    if (pgVar6 != (gentity_s *)0x0) {
+      uVar7 = puVar16[-0x87];
+      if (0x1f < uVar7) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0x1e8
                         ,0,"vehDefIndex doesn\'t index MAX_VEHICLE_DEFS\n\t%i not in [0, %i)");
       }
-      if (vehicleServerDefs[uVar8] == (VehicleDef *)0x0) {
+      if (vehicleServerDefs[uVar7] == (VehicleDef *)0x0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0x1e9
                         ,0,"%s");
       }
-      pVVar9 = vehicleServerDefs[uVar8];
-      if (((pVVar9->trophyEnabled != 0) && (*puVar18 != 0)) && ((int)puVar18[1] <= level.time)) {
-        fVar2 = (pgVar7->r).currentOrigin[1];
-        fVar5 = fVar2 - (pgVar15->field31_0x1ac).mover.angle.pos2[1];
-        fVar3 = (pgVar7->r).currentOrigin[2];
-        fVar6 = fVar3 - (pgVar15->field31_0x1ac).mover.angle.pos2[2];
-        fVar4 = (pgVar7->r).currentOrigin[0];
-        fVar10 = fVar4 - (pgVar15->field31_0x1ac).mover.angle.pos2[0];
-        if (pVVar9->trophyInactiveRadius * pVVar9->trophyInactiveRadius <=
-            fVar10 * fVar10 + fVar6 * fVar6 + fVar5 * fVar5) {
-          fVar6 = fVar2 - param_3[1];
-          fVar10 = fVar3 - param_3[2];
-          fVar11 = fVar4 - *param_3;
-          fVar5 = pVVar9->trophyRadius;
-          if (fVar11 * fVar11 + fVar10 * fVar10 + fVar6 * fVar6 <= fVar5 * fVar5) {
-            fVar10 = param_3[1] - param_2[1];
-            fVar11 = param_3[2] - param_2[2];
-            fVar6 = *param_2;
-            fVar12 = *param_3 - fVar6;
-            fVar13 = fVar12 * fVar12 + fVar11 * fVar11 + fVar10 * fVar10;
-            if (0.01 < fVar13) {
-              fVar2 = param_2[1] - fVar2;
-              fVar4 = fVar6 - fVar4;
-              fVar3 = param_2[2] - fVar3;
-              fVar10 = fVar3 * fVar11 + fVar2 * fVar10 + fVar4 * fVar12;
-              fVar2 = fVar10 * fVar10 -
-                      -(fVar5 * fVar5 - (fVar4 * fVar4 + fVar3 * fVar3 + fVar2 * fVar2)) * fVar13;
-              if (0.0 <= fVar2) {
-                fVar13 = (-fVar10 - SQRT(fVar2)) / fVar13;
-                (pgVar15->r).currentOrigin[0] = fVar12 * fVar13 + fVar6;
-                (pgVar15->r).currentOrigin[1] = (param_3[1] - param_2[1]) * fVar13 + param_2[1];
-                (pgVar15->r).currentOrigin[2] = (param_3[2] - param_2[2]) * fVar13 + param_2[2];
+      pVVar8 = vehicleServerDefs[uVar7];
+      if (((pVVar8->trophyEnabled != 0) && (*puVar16 != 0)) && ((int)puVar16[1] <= level.time)) {
+        fVar1 = (pgVar6->r).currentOrigin[1];
+        fVar4 = fVar1 - (param_1->field31_0x1ac).mover.angle.pos2[1];
+        fVar2 = (pgVar6->r).currentOrigin[2];
+        fVar5 = fVar2 - (param_1->field31_0x1ac).mover.angle.pos2[2];
+        fVar3 = (pgVar6->r).currentOrigin[0];
+        fVar9 = fVar3 - (param_1->field31_0x1ac).mover.angle.pos2[0];
+        if (pVVar8->trophyInactiveRadius * pVVar8->trophyInactiveRadius <=
+            fVar9 * fVar9 + fVar5 * fVar5 + fVar4 * fVar4) {
+          fVar5 = fVar1 - param_3[1];
+          fVar9 = fVar2 - param_3[2];
+          fVar10 = fVar3 - *param_3;
+          fVar4 = pVVar8->trophyRadius;
+          if (fVar10 * fVar10 + fVar9 * fVar9 + fVar5 * fVar5 <= fVar4 * fVar4) {
+            fVar9 = param_3[1] - param_2[1];
+            fVar10 = param_3[2] - param_2[2];
+            fVar5 = *param_2;
+            fVar11 = *param_3 - fVar5;
+            fVar12 = fVar11 * fVar11 + fVar10 * fVar10 + fVar9 * fVar9;
+            if (0.01 < fVar12) {
+              fVar1 = param_2[1] - fVar1;
+              fVar3 = fVar5 - fVar3;
+              fVar2 = param_2[2] - fVar2;
+              fVar9 = fVar2 * fVar10 + fVar1 * fVar9 + fVar3 * fVar11;
+              fVar1 = fVar9 * fVar9 -
+                      -(fVar4 * fVar4 - (fVar3 * fVar3 + fVar2 * fVar2 + fVar1 * fVar1)) * fVar12;
+              if (0.0 <= fVar1) {
+                fVar12 = (-fVar9 - SQRT(fVar1)) / fVar12;
+                (param_1->r).currentOrigin[0] = fVar11 * fVar12 + fVar5;
+                (param_1->r).currentOrigin[1] = (param_3[1] - param_2[1]) * fVar12 + param_2[1];
+                (param_1->r).currentOrigin[2] = (param_3[2] - param_2[2]) * fVar12 + param_2[2];
               }
             }
-            G_SetOrigin(pgVar15,(pgVar15->r).currentOrigin);
-            fVar2 = (pgVar15->r).currentOrigin[0] - (pgVar7->r).currentOrigin[0];
-            fVar3 = (pgVar15->r).currentOrigin[1] - (pgVar7->r).currentOrigin[1];
-            local_88 = (pgVar15->r).currentOrigin[2] - (pgVar7->r).currentOrigin[2];
-            fVar5 = SQRT(fVar2 * fVar2 + local_88 * local_88 + fVar3 * fVar3);
-            fVar4 = 1.0;
-            if (-fVar5 < 0.0) {
-              fVar4 = fVar5;
+            G_SetOrigin(param_1,(param_1->r).currentOrigin);
+            fVar1 = (param_1->r).currentOrigin[0] - (pgVar6->r).currentOrigin[0];
+            fVar2 = (param_1->r).currentOrigin[1] - (pgVar6->r).currentOrigin[1];
+            local_88 = (param_1->r).currentOrigin[2] - (pgVar6->r).currentOrigin[2];
+            fVar4 = SQRT(fVar1 * fVar1 + local_88 * local_88 + fVar2 * fVar2);
+            fVar3 = 1.0;
+            if (-fVar4 < 0.0) {
+              fVar3 = fVar4;
             }
-            fVar4 = 1.0 / fVar4;
-            local_90 = CONCAT44(fVar4 * fVar2,fVar3 * fVar4);
-            local_88 = local_88 * fVar4;
-            G_ExplodeMissileInternal(pgVar15,EXPLOSION_TYPE_TROPHY,(float *)&local_90,pgVar7);
-            iVar14 = level.time;
-            *puVar18 = *puVar18 - 1;
-            iVar1 = (int)(pVVar9->trophyReloadTime * -1000.0);
-            local_90 = (longlong)iVar1;
-            puVar18[1] = iVar14 - iVar1;
-            __restgprlr_17();
+            fVar3 = 1.0 / fVar3;
+            _local_90 = CONCAT44(fVar3 * fVar1,fVar2 * fVar3);
+            local_88 = local_88 * fVar3;
+            G_ExplodeMissileInternal(param_1,EXPLOSION_TYPE_TROPHY,&local_90,pgVar6);
+            iVar13 = level.time;
+            *puVar16 = *puVar16 - 1;
+            puVar16[1] = iVar13 - (int)(pVVar8->trophyReloadTime * -1000.0);
             return;
           }
         }
       }
     }
-    uVar17 = uVar17 + 0x438;
-    puVar18 = puVar18 + 0x10e;
-  } while ((uVar17 & 0xffffffff) < 0x21c0);
-  __restgprlr_17();
+    uVar15 = uVar15 + 0x438;
+    puVar16 = puVar16 + 0x10e;
+  } while ((uVar15 & 0xffffffff) < 0x21c0);
   return;
 }
 
@@ -7241,38 +7022,38 @@ void Vehicle_UpdateAnimScriptedMove(Vehicle *param_1)
 
 // 826B51C8  Vehicle_UpdateAiMove  (vehicle/vehicle.cpp:5399)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
 void Vehicle_UpdateAiMove(Vehicle *param_1)
 
 {
-  Vehicle *pVVar1;
-  
-  pVVar1 = (Vehicle *)__savegprlr_29(param_1);
-  if (pVVar1 == (Vehicle *)0x0) {
+  if (param_1 == (Vehicle *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0x151d,0,
                     "%s");
   }
-  if (pVVar1->drivingState != VEH_DRIVE_AI) {
+  if (param_1->drivingState != VEH_DRIVE_AI) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0x151e,0,
                     "%s");
   }
-  if (pVVar1->physVeh != (PhysVehicle *)0x0) {
-    if (pVVar1->transMode == VEH_TRANS_REVERSE) {
-      Vehicle_MoveToLookAhead(pVVar1,pVVar1->goalPosition,0.0,0.0,pVVar1->manualSpeed,1.0);
-      __restgprlr_29();
+  if (param_1->physVeh != (PhysVehicle *)0x0) {
+    if (param_1->transMode == VEH_TRANS_REVERSE) {
+      Vehicle_MoveToLookAhead(param_1,param_1->goalPosition,0.0,0.0,param_1->manualSpeed,1.0);
       return;
     }
-    Vehicle_MoveToLookAhead(pVVar1,pVVar1->goalPosition,0.0,pVVar1->manualSpeed,0.0,pVVar1->brake);
+    Vehicle_MoveToLookAhead
+              (param_1,param_1->goalPosition,0.0,param_1->manualSpeed,0.0,param_1->brake);
   }
-  __restgprlr_29();
   return;
 }
 
 
 // 826B52A0  Vehicle_Knockback  (vehicle/vehicle.cpp:5430)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
@@ -7282,46 +7063,40 @@ void Vehicle_Knockback(Vehicle *param_1,float *param_2,meansOfDeath_t param_3,fl
 
 {
   int iVar1;
-  int iVar2;
-  bool bVar4;
-  VehicleDef *pVVar3;
-  longlong lVar5;
-  float *pfVar6;
-  longlong lVar7;
+  bool bVar3;
+  VehicleDef *pVVar2;
   float *in_r7;
-  double extraout_f1;
-  double dVar8;
+  double dVar4;
   float local_40;
   float local_3c;
   float local_38;
   
-  lVar7 = (longlong)(int)param_3;
-  lVar5 = (longlong)(int)param_2;
-  iVar1 = __savegprlr_28((double)param_4,param_1,lVar5,lVar7,param_5);
-  dVar8 = extraout_f1;
-  if (iVar1 == 0) {
+  dVar4 = (double)param_4;
+  if (param_1 == (Vehicle *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0x153c,0,
                     "%s");
   }
-  if (((*(PhysVehicle **)(iVar1 + 0x1f0) != (PhysVehicle *)0x0) &&
-      (iVar2 = PhysVeh_IsCrashingDisabled(*(PhysVehicle **)(iVar1 + 0x1f0)), iVar2 == 0)) &&
-     (bVar4 = BG_IsExplosionMOD((meansOfDeath_t)lVar7), bVar4)) {
-    pVVar3 = Vehicle_GetServerDef(*(int *)(iVar1 + 0x210));
-    pfVar6 = (float *)lVar5;
-    local_38 = (float)((double)(((pVVar3->vehPhysDef).physPreset)->explosiveForceScale *
-                               (physVeh_explodeForce->current).value) * dVar8);
-    local_40 = *pfVar6 * local_38;
-    local_3c = pfVar6[1] * local_38;
-    local_38 = pfVar6[2] * local_38;
-    PhysVeh_AddImpulse(*(PhysVehicle **)(iVar1 + 0x1f0),&local_40,in_r7);
+  if (((param_1->physVeh != (PhysVehicle *)0x0) &&
+      (iVar1 = PhysVeh_IsCrashingDisabled(param_1->physVeh), iVar1 == 0)) &&
+     (bVar3 = BG_IsExplosionMOD(param_3), bVar3)) {
+    pVVar2 = Vehicle_GetServerDef(param_1->defIndex);
+    local_38 = (float)((double)(((pVVar2->vehPhysDef).physPreset)->explosiveForceScale *
+                               (physVeh_explodeForce->current).value) * dVar4);
+    local_40 = *param_2 * local_38;
+    local_3c = param_2[1] * local_38;
+    local_38 = param_2[2] * local_38;
+    PhysVeh_AddImpulse(param_1->physVeh,&local_40,in_r7);
   }
-  __restgprlr_28();
   return;
 }
 
 
 // 826B5388  Vehicle_ExplosionEvent  (vehicle/vehicle.cpp:5457)
 
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_21 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_21 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
 /* WARNING: Type propagation algorithm not settling */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
@@ -7332,14 +7107,13 @@ void Vehicle_ExplosionEvent
 
 {
   gentity_s *pgVar1;
-  float *pfVar2;
-  ulonglong in_r6;
-  undefined8 uVar3;
-  ulonglong in_r8;
-  float *pfVar4;
-  longlong lVar5;
-  Vehicle *pVVar6;
-  double extraout_f1;
+  char in_r6;
+  undefined8 uVar2;
+  float *in_r8;
+  longlong lVar3;
+  Vehicle *pVVar4;
+  double dVar5;
+  double dVar6;
   double dVar7;
   double dVar8;
   double dVar9;
@@ -7353,128 +7127,120 @@ void Vehicle_ExplosionEvent
   double dVar17;
   double dVar18;
   double dVar19;
-  double dVar20;
-  double dVar21;
   float local_c0;
   float local_bc;
   float local_b8;
   
-  dVar8 = (double)param_5;
-  dVar7 = (double)param_3;
-  __savegprlr_22((double)param_2,param_1,param_4,param_6);
-  pfVar2 = (float *)__savefpr_21();
-  dVar16 = (double)(float)(extraout_f1 * extraout_f1);
-  dVar15 = (double)(float)(dVar7 * dVar7);
-  uVar3 = 0xffffffff82000000;
-  dVar18 = 0.009999999776482582;
-  dVar17 = 24.0;
-  pVVar6 = vehicleServers;
-  dVar21 = 0.0;
-  lVar5 = 8;
-  dVar19 = extraout_f1;
-  dVar12 = 1.0;
+  dVar7 = (double)param_5;
+  dVar6 = (double)param_3;
+  dVar5 = (double)param_2;
+  dVar15 = (double)(float)(dVar5 * dVar5);
+  dVar14 = (double)(float)(dVar6 * dVar6);
+  uVar2 = 0xffffffff82000000;
+  dVar17 = 0.009999999776482582;
+  dVar16 = 24.0;
+  pVVar4 = vehicleServers;
+  dVar19 = 0.0;
+  lVar3 = 8;
+  dVar11 = 1.0;
   do {
-    pgVar1 = pVVar6->ent;
-    dVar20 = dVar12;
+    pgVar1 = pVVar4->ent;
+    dVar18 = dVar11;
     if (pgVar1 != (gentity_s *)0x0) {
       if (pgVar1->vehicle == (Vehicle *)0x0) {
-        uVar3 = 0xffffffff82000f98;
+        uVar2 = 0xffffffff82000f98;
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",
                         0x1564,0,"%s");
       }
-      dVar20 = dVar12;
+      dVar18 = dVar11;
       if (pgVar1->vehicle->physVeh != (PhysVehicle *)0x0) {
-        dVar14 = (double)(ABS(*pfVar2 - (pgVar1->r).absBox.midPoint[0]) -
+        dVar13 = (double)(ABS(*param_1 - (pgVar1->r).absBox.midPoint[0]) -
                          (pgVar1->r).absBox.halfSize[0]);
-        dVar13 = (double)(ABS(pfVar2[1] - (pgVar1->r).absBox.midPoint[1]) -
+        dVar12 = (double)(ABS(param_1[1] - (pgVar1->r).absBox.midPoint[1]) -
                          (pgVar1->r).absBox.halfSize[1]);
-        dVar11 = (double)(ABS(pfVar2[2] - (pgVar1->r).absBox.midPoint[2]) -
+        dVar10 = (double)(ABS(param_1[2] - (pgVar1->r).absBox.midPoint[2]) -
                          (pgVar1->r).absBox.halfSize[2]);
-        if (dVar14 < 0.0) {
-          dVar14 = dVar21;
-        }
         if (dVar13 < 0.0) {
-          dVar13 = dVar21;
+          dVar13 = dVar19;
         }
-        if (dVar11 < 0.0) {
-          dVar11 = dVar21;
+        if (dVar12 < 0.0) {
+          dVar12 = dVar19;
         }
-        dVar11 = (double)(float)(dVar11 * dVar11 +
-                                (double)(float)(dVar13 * dVar13 + (double)(float)(dVar14 * dVar14)))
+        if (dVar10 < 0.0) {
+          dVar10 = dVar19;
+        }
+        dVar10 = (double)(float)(dVar10 * dVar10 +
+                                (double)(float)(dVar12 * dVar12 + (double)(float)(dVar13 * dVar13)))
         ;
-        if (dVar11 < dVar15) {
-          if ((in_r8 & 0xffffffff) == 0) {
-            dVar13 = (double)(float)SQRT(dVar11);
-            if (dVar16 < dVar11) {
-              dVar11 = (double)(float)(dVar7 - dVar19);
-              if (dVar11 <= dVar21) {
-                uVar3 = 0xffffffff82000f98;
+        if (dVar10 < dVar14) {
+          if (in_r8 == (float *)0x0) {
+            dVar12 = (double)(float)SQRT(dVar10);
+            if (dVar15 < dVar10) {
+              dVar10 = (double)(float)(dVar6 - dVar5);
+              if (dVar10 <= dVar19) {
+                uVar2 = 0xffffffff82000f98;
                 MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp"
                                 ,0x157b,0,"%s");
-                dVar20 = dVar12;
+                dVar18 = dVar11;
               }
-              dVar12 = (double)(float)((double)(float)(dVar7 - dVar13) / dVar11);
+              dVar11 = (double)(float)((double)(float)(dVar6 - dVar12) / dVar10);
             }
-            dVar14 = (double)((pgVar1->r).currentOrigin[0] - *pfVar2);
-            dVar13 = (double)((pgVar1->r).currentOrigin[1] - pfVar2[1]);
-            dVar11 = dVar21;
-            if ((in_r6 & 0xff) == 0) {
-              dVar11 = (double)(float)((double)((pgVar1->r).currentOrigin[2] - pfVar2[2]) + dVar17);
+            dVar13 = (double)((pgVar1->r).currentOrigin[0] - *param_1);
+            dVar12 = (double)((pgVar1->r).currentOrigin[1] - param_1[1]);
+            dVar10 = dVar19;
+            if (in_r6 == '\0') {
+              dVar10 = (double)(float)((double)((pgVar1->r).currentOrigin[2] - param_1[2]) + dVar16)
+              ;
             }
-            dVar10 = (double)SQRT((float)(dVar11 * dVar11 +
-                                         (double)(float)(dVar14 * dVar14 +
-                                                        (double)(float)(dVar13 * dVar13))));
-            dVar9 = dVar20;
-            if (-dVar10 < 0.0) {
-              dVar9 = dVar10;
+            dVar9 = (double)SQRT((float)(dVar10 * dVar10 +
+                                        (double)(float)(dVar13 * dVar13 +
+                                                       (double)(float)(dVar12 * dVar12))));
+            dVar8 = dVar18;
+            if (-dVar9 < 0.0) {
+              dVar8 = dVar9;
             }
-            dVar9 = (double)(float)(dVar20 / dVar9);
-            local_c0 = (float)(dVar9 * dVar14);
-            local_bc = (float)(dVar9 * dVar13);
-            local_b8 = (float)(dVar9 * dVar11);
-            if (dVar10 < dVar18) {
-              local_c0 = (float)dVar20;
-              local_bc = (float)dVar21;
-              local_b8 = (float)dVar21;
+            dVar8 = (double)(float)(dVar18 / dVar8);
+            local_c0 = (float)(dVar8 * dVar13);
+            local_bc = (float)(dVar8 * dVar12);
+            local_b8 = (float)(dVar8 * dVar10);
+            if (dVar9 < dVar17) {
+              local_c0 = (float)dVar18;
+              local_bc = (float)dVar19;
+              local_b8 = (float)dVar19;
             }
           }
           else {
-            pfVar4 = (float *)in_r8;
-            local_c0 = *pfVar4;
-            local_bc = pfVar4[1];
-            local_b8 = pfVar4[2];
+            local_c0 = *in_r8;
+            local_bc = in_r8[1];
+            local_b8 = in_r8[2];
           }
-          Vehicle_Knockback(pgVar1->vehicle,&local_c0,MOD_EXPLOSIVE,(float)(dVar12 * dVar8),
-                            (float *)uVar3);
+          Vehicle_Knockback(pgVar1->vehicle,&local_c0,MOD_EXPLOSIVE,(float)(dVar11 * dVar7),
+                            (float *)uVar2);
         }
       }
     }
-    lVar5 = lVar5 + -1;
-    pVVar6 = pVVar6 + 1;
-    dVar12 = dVar20;
-  } while (lVar5 != 0);
-  __restfpr_21();
-  __restgprlr_22();
+    lVar3 = lVar3 + -1;
+    pVVar4 = pVVar4 + 1;
+    dVar11 = dVar18;
+  } while (lVar3 != 0);
   return;
 }
 
 
 // 826B55D0  Vehicle_TransformInputCamRelative  (vehicle/vehicle.cpp:5519)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 void Vehicle_TransformInputCamRelative(float *param_1,float *param_2,float *param_3,float *param_4)
 
 {
-  int iVar1;
-  ulonglong uVar2;
-  ulonglong uVar3;
-  ulonglong uVar4;
-  float *pfVar5;
-  double dVar6;
+  double dVar1;
   float local_110;
-  undefined4 local_10c;
+  float local_10c;
   float local_108;
   float local_100;
-  undefined4 local_fc;
+  float local_fc;
   undefined4 local_f8;
   float local_f0;
   float local_ec;
@@ -7484,53 +7250,49 @@ void Vehicle_TransformInputCamRelative(float *param_1,float *param_2,float *para
   float afStack_a0 [12];
   float afStack_70 [28];
   
-  uVar4 = (ulonglong)(int)param_4;
-  uVar3 = (ulonglong)(int)param_3;
-  uVar2 = (ulonglong)(int)param_2;
-  iVar1 = __savegprlr_26(param_1);
-  if ((uVar3 & 0xffffffff) == 0) {
+  if (param_3 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0x1598,0,
                     "%s");
   }
-  if ((uVar4 & 0xffffffff) == 0) {
+  if (param_4 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0x1599,0,
                     "%s");
   }
-  if (iVar1 == 0) {
+  if (param_1 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0x159a,0,
                     "%s");
   }
-  if ((uVar2 & 0xffffffff) == 0) {
+  if (param_2 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0x159b,0,
                     "%s");
   }
-  if ((uVar3 & 0xffffffff) == (uVar4 & 0xffffffff)) {
+  if (param_3 == param_4) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0x159c,0,
                     "%s");
   }
-  local_fc = *(undefined4 *)(iVar1 + 4);
-  dVar6 = 0.0;
+  local_fc = param_1[1];
+  dVar1 = 0.0;
   local_100 = 0.0;
   local_f8 = 0;
   AnglesToAxis(&local_100,(float (*) [3])afStack_a0);
-  MatrixTransformVector((float *)uVar3,(float (*) [3])afStack_a0,afStack_e0);
-  local_10c = *(undefined4 *)((int)uVar2 + 4);
-  local_110 = (float)dVar6;
-  local_108 = (float)dVar6;
+  MatrixTransformVector(param_3,(float (*) [3])afStack_a0,afStack_e0);
+  local_10c = param_2[1];
+  local_110 = (float)dVar1;
+  local_108 = (float)dVar1;
   AnglesToAxis(&local_110,(float (*) [3])afStack_d0);
   MatrixInverse((float (*) [3])afStack_d0,(float (*) [3])afStack_70);
   MatrixTransformVector(afStack_e0,(float (*) [3])afStack_70,&local_f0);
-  pfVar5 = (float *)uVar4;
-  *pfVar5 = local_f0;
-  pfVar5[1] = local_ec;
-  pfVar5[2] = local_e8;
-  __restgprlr_26();
+  *param_4 = local_f0;
+  param_4[1] = local_ec;
+  param_4[2] = local_e8;
   return;
 }
 
 
 // 826B5748  Vehicle_GetWheelBone  (vehicle/vehicle.cpp:5554)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
@@ -7538,63 +7300,59 @@ int Vehicle_GetWheelBone(gentity_s *param_1,int param_2,int *param_3)
 
 {
   uint uVar1;
-  int iVar2;
-  ulonglong uVar3;
-  longlong lVar4;
   
-  uVar3 = (ulonglong)param_2;
-  iVar2 = __savegprlr_27(param_1);
-  if (iVar2 == 0) {
+  if (param_1 == (gentity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0x15b5,0,
                     "%s");
   }
-  if (*(int *)(iVar2 + 0x160) == 0) {
+  if (param_1->vehicle == (Vehicle *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0x15b6,0,
                     "%s");
   }
-  if (5 < (uVar3 & 0xffffffff)) {
+  if (5 < (uint)param_2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0x15b7,0,
                     "wheelIndex doesn\'t index NUM_VEHICLE_WHEELS\n\t%i not in [0, %i)");
   }
-  uVar1 = *(uint *)((int)((uVar3 + 0x104 & 0xffffffff) << 2) + *(int *)(iVar2 + 0x160));
-  lVar4 = (ulonglong)uVar1 + 1;
+  uVar1 = (param_1->vehicle->boneIndex).wheel[param_2];
   *param_3 = uVar1;
-  iVar2 = __restgprlr_27(lVar4 - ((ulonglong)uVar1 + (ulonglong)(lVar4 == 0)));
-  return iVar2;
+  return (int)((ulonglong)uVar1 + 1) - (uVar1 + ((ulonglong)uVar1 + 1 == 0));
 }
 
 
 // 826B5810  Vehicle_GetBoneOrigin  (vehicle/vehicle.cpp:5570)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
 void Vehicle_GetBoneOrigin(gentity_s *param_1,int param_2,float *param_3)
 
 {
-  gentity_s *pgVar1;
-  DObjAnimMat *pDVar2;
+  DObjAnimMat *pDVar1;
   
-  pgVar1 = (gentity_s *)__savegprlr_27(param_1);
-  if (pgVar1 == (gentity_s *)0x0) {
+  if (param_1 == (gentity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0x15c5,0,
                     "%s");
   }
-  pDVar2 = G_DObjGetLocalBoneIndexMatrix(pgVar1,param_2);
-  if (pDVar2 == (DObjAnimMat *)0x0) {
+  pDVar1 = G_DObjGetLocalBoneIndexMatrix(param_1,param_2);
+  if (pDVar1 == (DObjAnimMat *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0x15c8,0,
                     "%s");
   }
-  *param_3 = pDVar2->trans[0];
-  param_3[1] = pDVar2->trans[1];
-  param_3[2] = pDVar2->trans[2];
-  __restgprlr_27();
+  *param_3 = pDVar1->trans[0];
+  param_3[1] = pDVar1->trans[1];
+  param_3[2] = pDVar1->trans[2];
   return;
 }
 
 
 // 826B58B0  G_CanPlayerPlaceTank  (vehicle/vehicle.cpp:5582)
 
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_21 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_21 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
@@ -7604,19 +7362,18 @@ int G_CanPlayerPlaceTank
 
 {
   float fVar1;
-  int iVar2;
-  gclient_s *pgVar3;
-  float *pfVar4;
+  gclient_s *pgVar2;
+  int iVar3;
+  gclient_s *pgVar4;
   dvar_t *pdVar5;
   int iVar6;
-  int iVar7;
-  ushort uVar8;
-  float *pfVar9;
-  ulonglong in_r10;
-  int iVar10;
-  int *piVar11;
-  uint uVar12;
-  double extraout_f1;
+  ushort uVar7;
+  float *pfVar8;
+  float *in_r10;
+  int iVar9;
+  int *piVar10;
+  uint uVar11;
+  double dVar12;
   double dVar13;
   double dVar14;
   double dVar15;
@@ -7627,7 +7384,6 @@ int G_CanPlayerPlaceTank
   double dVar20;
   double dVar21;
   double dVar22;
-  double dVar23;
   float *in_stack_00000054;
   float local_2280;
   float local_227c;
@@ -7649,7 +7405,7 @@ int G_CanPlayerPlaceTank
   float local_2214;
   float local_2210;
   float local_2208;
-  undefined4 local_2204;
+  float local_2204;
   float local_2200;
   float local_21fc;
   float local_21f8;
@@ -7700,23 +7456,21 @@ int G_CanPlayerPlaceTank
   trace_t local_20f0;
   int local_20b0 [2092];
   
-  dVar14 = (double)param_6;
-  dVar15 = (double)param_7;
-  dVar18 = (double)param_5;
-  dVar13 = (double)param_4;
-  dVar21 = (double)param_3;
-  __savegprlr_22((double)param_2,param_1,param_8,param_9);
-  iVar6 = __savefpr_21();
-  dVar19 = extraout_f1;
-  if (iVar6 == 0) {
+  dVar13 = (double)param_6;
+  dVar14 = (double)param_7;
+  dVar17 = (double)param_5;
+  dVar12 = (double)param_4;
+  dVar20 = (double)param_3;
+  dVar18 = (double)param_2;
+  if (param_1 == (gentity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0x15f4,0,
                     "%s");
   }
-  if (*(int *)(iVar6 + 0x158) == 0) {
+  if (param_1->client == (gclient_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0x15f5,0,
                     "%s");
   }
-  if ((in_r10 & 0xffffffff) == 0) {
+  if (in_r10 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0x15f7,0,
                     "%s");
   }
@@ -7724,239 +7478,239 @@ int G_CanPlayerPlaceTank
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0x15f8,0,
                     "%s");
   }
-  iVar6 = *(int *)(iVar6 + 0x158);
-  if (0x11 < *(uint *)(iVar6 + 0x150)) {
+  pgVar2 = param_1->client;
+  if (0x11 < (uint)(pgVar2->ps).clientNum) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0x15fb,0,
                     "ps->clientNum doesn\'t index MAX_CLIENTS\n\t%i not in [0, %i)");
   }
-  local_2208 = *(float *)(iVar6 + 0x1c);
-  local_2204 = *(undefined4 *)(iVar6 + 0x20);
-  local_2200 = *(float *)(iVar6 + 0x168) + *(float *)(iVar6 + 0x24);
-  local_21cc = *(float *)(iVar6 + 0x15c);
-  dVar16 = (double)local_21cc;
-  dVar23 = 0.0;
+  local_2208 = (pgVar2->ps).origin[0];
+  local_2204 = (pgVar2->ps).origin[1];
+  local_2200 = (pgVar2->ps).viewHeightCurrent + (pgVar2->ps).origin[2];
+  local_21cc = (pgVar2->ps).viewangles[1];
+  dVar15 = (double)local_21cc;
+  dVar22 = 0.0;
   local_21d0 = 0.0;
   *in_stack_00000054 = 0.0;
   local_21c8 = 0;
   in_stack_00000054[2] = 0.0;
   in_stack_00000054[1] = local_21cc;
   AngleVectors(&local_21d0,&local_2258,(float *)0x0,(float *)0x0);
-  local_2278 = (float)((double)local_2250 * dVar13) +
-               (float)((double)*(float *)(iVar6 + 0x24) + dVar18);
-  local_2240 = (float)((double)local_2278 - dVar14);
-  local_2280 = (float)((double)local_2258 * dVar13) + *(float *)(iVar6 + 0x1c);
-  local_227c = (float)((double)local_2254 * dVar13) + *(float *)(iVar6 + 0x20);
-  local_2140.midPoint[0] = *(float *)(iVar6 + 0x1c);
-  dVar22 = (double)((float)((double)local_2258 * dVar13) + local_2140.midPoint[0]);
-  dVar20 = (double)((float)((double)local_2254 * dVar13) + *(float *)(iVar6 + 0x20));
-  dVar18 = (double)((float)((double)local_2250 * dVar13) + *(float *)(iVar6 + 0x24));
-  local_2140.midPoint[1] = *(float *)(iVar6 + 0x20);
-  local_2140.midPoint[2] = *(float *)(iVar6 + 0x24);
+  local_2278 = (float)((double)local_2250 * dVar12) +
+               (float)((double)(pgVar2->ps).origin[2] + dVar17);
+  local_2240 = (float)((double)local_2278 - dVar13);
+  local_2280 = (float)((double)local_2258 * dVar12) + (pgVar2->ps).origin[0];
+  local_227c = (float)((double)local_2254 * dVar12) + (pgVar2->ps).origin[1];
+  local_2140.midPoint[0] = (pgVar2->ps).origin[0];
+  dVar21 = (double)((float)((double)local_2258 * dVar12) + local_2140.midPoint[0]);
+  dVar19 = (double)((float)((double)local_2254 * dVar12) + (pgVar2->ps).origin[1]);
+  dVar17 = (double)((float)((double)local_2250 * dVar12) + (pgVar2->ps).origin[2]);
+  local_2140.midPoint[1] = (pgVar2->ps).origin[1];
+  local_2140.midPoint[2] = (pgVar2->ps).origin[2];
   local_2140.halfSize[0] = 128.0;
   local_2140.halfSize[1] = 128.0;
   local_2140.halfSize[2] = 128.0;
   local_2248 = local_2280;
   local_2244 = local_227c;
-  iVar7 = CM_AreaEntities(&local_2140,local_20b0,0x800,0x2000000);
-  iVar10 = 0;
-  pfVar4 = (float *)in_r10;
-  if (0 < iVar7) {
-    piVar11 = local_20b0;
-    dVar17 = 4.0;
+  iVar6 = CM_AreaEntities(&local_2140,local_20b0,0x800,0x2000000);
+  iVar9 = 0;
+  if (0 < iVar6) {
+    piVar10 = local_20b0;
+    dVar16 = 4.0;
     do {
-      iVar2 = *piVar11;
-      if ((g_entities[iVar2].s.number != *(int *)(iVar6 + 0x150)) &&
-         (g_entities[iVar2].client != (gclient_s *)0x0)) {
-        if (0x11 < (uint)((g_entities[iVar2].client)->ps).clientNum) {
+      iVar3 = *piVar10;
+      if ((g_entities[iVar3].s.number != (pgVar2->ps).clientNum) &&
+         (g_entities[iVar3].client != (gclient_s *)0x0)) {
+        if (0x11 < (uint)((g_entities[iVar3].client)->ps).clientNum) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",
                           0x1626,0,
                           "hit->client->ps.clientNum doesn\'t index MAX_CLIENTS\n\t%i not in [0, %i)"
                          );
         }
-        local_21e0 = (float)dVar23;
-        pfVar9 = (float *)0x0;
-        local_21dc = ((g_entities[iVar2].client)->ps).viewangles[1];
-        local_21d8 = (float)dVar23;
+        local_21e0 = (float)dVar22;
+        pfVar8 = (float *)0x0;
+        local_21dc = ((g_entities[iVar3].client)->ps).viewangles[1];
+        local_21d8 = (float)dVar22;
         AngleVectors(&local_21e0,&local_2168,(float *)0x0,(float *)0x0);
-        pgVar3 = g_entities[iVar2].client;
-        local_2158 = (float)((double)local_2168 * dVar13 + (double)(pgVar3->ps).origin[0]);
-        local_2154 = (float)((double)local_2164 * dVar13 + (double)(pgVar3->ps).origin[1]);
-        local_2150 = (float)((double)local_2160 * dVar13 + (double)(pgVar3->ps).origin[2]);
-        if ((float)(dVar20 - (double)local_2154) * (float)(dVar20 - (double)local_2154) +
-            (float)(dVar22 - (double)local_2158) * (float)(dVar22 - (double)local_2158) +
-            (float)(dVar18 - (double)local_2150) * (float)(dVar18 - (double)local_2150) <
-            (float)((double)(float)(dVar19 * dVar19) * dVar17)) {
+        pgVar4 = g_entities[iVar3].client;
+        local_2158 = (float)((double)local_2168 * dVar12 + (double)(pgVar4->ps).origin[0]);
+        local_2154 = (float)((double)local_2164 * dVar12 + (double)(pgVar4->ps).origin[1]);
+        local_2150 = (float)((double)local_2160 * dVar12 + (double)(pgVar4->ps).origin[2]);
+        if ((float)(dVar19 - (double)local_2154) * (float)(dVar19 - (double)local_2154) +
+            (float)(dVar21 - (double)local_2158) * (float)(dVar21 - (double)local_2158) +
+            (float)(dVar17 - (double)local_2150) * (float)(dVar17 - (double)local_2150) <
+            (float)((double)(float)(dVar18 * dVar18) * dVar16)) {
           if ((bg_vehicle_placement_debug != (dvar_t *)0x0) &&
              ((bg_vehicle_placement_debug->current).enabled != false)) {
-            G_DebugBox(&local_2158,&local_2270,local_21dc,pfVar9,-0x7de7e818,1);
+            G_DebugBox(&local_2158,&local_2270,local_21dc,pfVar8,-0x7de7e818,1);
           }
           goto LAB_826b5ebc;
         }
       }
-      iVar10 = iVar10 + 1;
-      piVar11 = piVar11 + 1;
-    } while (iVar10 < iVar7);
+      iVar9 = iVar9 + 1;
+      piVar10 = piVar10 + 1;
+    } while (iVar9 < iVar6);
   }
   pdVar5 = bg_vehicle_placement_debug;
-  local_21f0 = (float)((double)local_2258 * dVar19 + (double)local_2280);
-  local_21ec = (float)((double)local_2254 * dVar19 + (double)local_227c);
-  *in_stack_00000054 = (float)dVar23;
-  in_stack_00000054[1] = (float)dVar23;
-  in_stack_00000054[2] = (float)dVar23;
+  local_21f0 = (float)((double)local_2258 * dVar18 + (double)local_2280);
+  local_21ec = (float)((double)local_2254 * dVar18 + (double)local_227c);
+  *in_stack_00000054 = (float)dVar22;
+  in_stack_00000054[1] = (float)dVar22;
+  in_stack_00000054[2] = (float)dVar22;
   local_21e8 = local_2278;
-  local_2270.midPoint[0] = (float)dVar23;
-  local_2270.midPoint[1] = (float)dVar23;
-  local_2270.midPoint[2] = (float)dVar23;
-  local_2270.halfSize[0] = (float)dVar23;
-  local_2270.halfSize[1] = (float)dVar23;
-  local_2270.halfSize[2] = (float)dVar23;
+  local_2270.midPoint[0] = (float)dVar22;
+  local_2270.midPoint[1] = (float)dVar22;
+  local_2270.midPoint[2] = (float)dVar22;
+  local_2270.halfSize[0] = (float)dVar22;
+  local_2270.halfSize[1] = (float)dVar22;
+  local_2270.halfSize[2] = (float)dVar22;
   if ((pdVar5 != (dvar_t *)0x0) && ((pdVar5->current).enabled != false)) {
     G_DebugLineWithDuration(&local_2208,&local_21f0,colorLtBlue,1,0);
   }
-  BG_TraceCapsule('\x01',&local_20f0,&local_2208,&local_21f0,&bounds_origin,*(int *)(iVar6 + 0x150),
+  BG_TraceCapsule('\x01',&local_20f0,&local_2208,&local_21f0,&bounds_origin,(pgVar2->ps).clientNum,
                   0x2810011);
   if (((local_20f0.startsolid == false) && (local_20f0.allsolid == false)) &&
-     (uVar8 = Trace_GetEntityHitId(&local_20f0), uVar8 == 0x7ff)) {
-    local_2270.midPoint[0] = (float)dVar23;
-    local_2270.midPoint[1] = (float)dVar23;
-    local_2270.midPoint[2] = (float)dVar21;
-    local_2270.halfSize[0] = (float)dVar19;
-    local_2270.halfSize[1] = (float)dVar19;
-    local_2270.halfSize[2] = (float)dVar21;
+     (uVar7 = Trace_GetEntityHitId(&local_20f0), uVar7 == 0x7ff)) {
+    local_2270.midPoint[0] = (float)dVar22;
+    local_2270.midPoint[1] = (float)dVar22;
+    local_2270.midPoint[2] = (float)dVar20;
+    local_2270.halfSize[0] = (float)dVar18;
+    local_2270.halfSize[1] = (float)dVar18;
+    local_2270.halfSize[2] = (float)dVar20;
     if ((bg_vehicle_placement_debug != (dvar_t *)0x0) &&
        ((bg_vehicle_placement_debug->current).enabled != false)) {
-      pfVar9 = colorBlue;
+      pfVar8 = colorBlue;
       G_DebugLineWithDuration(&local_2280,&local_2248,colorBlue,1,0);
-      G_DebugBox(&local_2280,&local_2270,(float)dVar16,pfVar9,-0x7de7e7c8,1);
-      G_DebugBox(&local_2248,&local_2270,(float)dVar16,pfVar9,-0x7de7e818,1);
+      G_DebugBox(&local_2280,&local_2270,(float)dVar15,pfVar8,-0x7de7e7c8,1);
+      G_DebugBox(&local_2248,&local_2270,(float)dVar15,pfVar8,-0x7de7e818,1);
     }
-    BG_TraceCapsule('\x01',&local_20f0,&local_2280,&local_2248,&local_2270,*(int *)(iVar6 + 0x150),
+    BG_TraceCapsule('\x01',&local_20f0,&local_2280,&local_2248,&local_2270,(pgVar2->ps).clientNum,
                     0x2810211);
-    *pfVar4 = (local_2248 - local_2280) * local_20f0.fraction + local_2280;
-    pfVar4[1] = (local_2244 - local_227c) * local_20f0.fraction + local_227c;
-    pfVar4[2] = (local_2240 - local_2278) * local_20f0.fraction + local_2278;
+    *in_r10 = (local_2248 - local_2280) * local_20f0.fraction + local_2280;
+    in_r10[1] = (local_2244 - local_227c) * local_20f0.fraction + local_227c;
+    in_r10[2] = (local_2240 - local_2278) * local_20f0.fraction + local_2278;
     if ((local_20f0.startsolid == false) && (local_20f0.allsolid == false)) {
-      uVar8 = Trace_GetEntityHitId(&local_20f0);
-      pfVar9 = (float *)(int)(short)uVar8;
-      if (0x7ff < uVar8) {
-        pfVar9 = (float *)"c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp";
+      uVar7 = Trace_GetEntityHitId(&local_20f0);
+      pfVar8 = (float *)(int)(short)uVar7;
+      if (0x7ff < uVar7) {
+        pfVar8 = (float *)"c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp";
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",
                         0x1675,0,"hitEntId doesn\'t index MAX_GENTITIES\n\t%i not in [0, %i)");
       }
-      if ((dVar14 == dVar23) || (uVar8 == 0x7fe)) {
-        local_2218 = (float)dVar23;
-        local_2214 = (float)dVar23;
-        dVar18 = 1.0;
-        local_2210 = 1.0;
-        dVar19 = dVar23;
-        dVar21 = dVar23;
-        FastSinCos(local_21cc * 0.017453292,pfVar9,&local_21fc);
-        dVar13 = dVar21;
-        if (dVar14 != dVar21) {
-          dVar22 = (double)local_21f8;
-          dVar20 = (double)local_21fc;
-          uVar12 = 0;
-          pfVar9 = &local_2118;
-          dVar19 = -1.0;
-          do {
-            dVar23 = dVar19;
-            if ((uVar12 & 1) != 0) {
-              dVar23 = dVar18;
-            }
-            dVar17 = (double)(float)(dVar23 * (double)local_2270.halfSize[0] +
-                                    (double)local_2270.midPoint[0]);
-            dVar23 = dVar19;
-            if ((uVar12 & 2) != 0) {
-              dVar23 = dVar18;
-            }
-            dVar23 = (double)(float)(dVar23 * (double)local_2270.halfSize[1] +
-                                    (double)local_2270.midPoint[1]);
-            local_2220 = (float)((double)local_2278 - dVar14);
-            local_2230 = local_2278;
-            local_2238 = (float)(dVar17 * dVar22 - (double)(float)(dVar23 * dVar20)) + local_2280;
-            local_2234 = (float)(dVar17 * dVar20 + (double)(float)(dVar23 * dVar22)) + local_227c;
-            local_2228 = local_2238;
-            local_2224 = local_2234;
-            BG_TraceCapsule('\x01',&local_20f0,&local_2238,&local_2228,&bounds_origin,
-                            *(int *)(iVar6 + 0x150),0x2810211);
-            dVar23 = (double)local_20f0.fraction;
-            if (dVar23 == dVar18) goto LAB_826b5ed4;
-            fVar1 = pfVar4[2];
-            local_2170 = (float)((double)(float)((double)local_2220 - (double)local_2230) * dVar23 +
-                                (double)local_2230);
-            *pfVar9 = local_2170;
-            local_2178 = (float)((double)(float)((double)local_2228 - (double)local_2238) * dVar23 +
-                                (double)local_2238);
-            local_2174 = (float)((double)(float)((double)local_2224 - (double)local_2234) * dVar23 +
-                                (double)local_2234);
-            pfVar9[-2] = local_2178;
-            pfVar9[-1] = local_2174;
-            dVar23 = (double)(local_2170 - fVar1);
-            if (dVar21 < ABS(dVar23)) {
-              dVar21 = ABS(dVar23);
-            }
-            if (fVar1 < local_2170) {
-              pfVar4[2] = local_2170;
-            }
-            if ((bg_vehicle_placement_debug != (dvar_t *)0x0) &&
-               ((bg_vehicle_placement_debug->current).enabled != false)) {
-              G_DebugLineWithDuration(&local_2238,&local_2178,colorLtBlue,1,0);
-            }
-            uVar12 = uVar12 + 1;
-            pfVar9 = pfVar9 + 3;
-          } while (uVar12 < 4);
-          local_2190 = local_2120 - local_20fc;
-          local_218c = local_211c - local_20f8;
-          local_2188 = local_2118 - local_20f4;
-          local_2184 = local_2114 - local_2108;
-          local_2180 = local_2110 - local_2104;
-          local_217c = local_210c - local_2100;
-          Vec3Cross(&local_2190,&local_2184,&local_2218);
-          dVar20 = (double)SQRT(local_2214 * local_2214 +
-                                local_2218 * local_2218 + local_2210 * local_2210);
-          dVar19 = dVar18;
-          if (-dVar20 < 0.0) {
-            dVar19 = dVar20;
+      if ((dVar13 != dVar22) && (uVar7 != 0x7fe)) {
+        return 0;
+      }
+      local_2218 = (float)dVar22;
+      local_2214 = (float)dVar22;
+      dVar17 = 1.0;
+      local_2210 = 1.0;
+      dVar18 = dVar22;
+      dVar20 = dVar22;
+      FastSinCos(local_21cc * 0.017453292,pfVar8,&local_21fc);
+      dVar12 = dVar20;
+      if (dVar13 != dVar20) {
+        dVar21 = (double)local_21f8;
+        dVar19 = (double)local_21fc;
+        uVar11 = 0;
+        pfVar8 = &local_2118;
+        dVar18 = -1.0;
+        do {
+          dVar22 = dVar18;
+          if ((uVar11 & 1) != 0) {
+            dVar22 = dVar17;
           }
-          fVar1 = (float)(dVar18 / dVar19);
-          dVar19 = (double)(fVar1 * local_2218);
-          dVar23 = (double)(local_2214 * fVar1);
-          dVar18 = (double)(fVar1 * local_2210);
-        }
-        local_21c0 = local_2258;
-        local_21bc = local_2254;
-        local_21b8 = local_2250;
-        local_21a8 = (float)dVar19;
-        local_21a4 = (float)dVar23;
-        local_21a0 = (float)dVar18;
-        Vec3Cross(&local_21a8,&local_21c0,afStack_21b4);
-        pfVar9 = &local_21c0;
-        Vec3Cross(afStack_21b4,&local_21a8,pfVar9);
-        AxisToAngles((float (*) [3])&local_21c0,in_stack_00000054);
-        if ((dVar15 <= dVar18) && ((dVar14 == dVar13 || (dVar21 <= 20.0)))) {
+          dVar16 = (double)(float)(dVar22 * (double)local_2270.halfSize[0] +
+                                  (double)local_2270.midPoint[0]);
+          dVar22 = dVar18;
+          if ((uVar11 & 2) != 0) {
+            dVar22 = dVar17;
+          }
+          dVar22 = (double)(float)(dVar22 * (double)local_2270.halfSize[1] +
+                                  (double)local_2270.midPoint[1]);
+          local_2220 = (float)((double)local_2278 - dVar13);
+          local_2230 = local_2278;
+          local_2238 = (float)(dVar16 * dVar21 - (double)(float)(dVar22 * dVar19)) + local_2280;
+          local_2234 = (float)(dVar16 * dVar19 + (double)(float)(dVar22 * dVar21)) + local_227c;
+          local_2228 = local_2238;
+          local_2224 = local_2234;
+          BG_TraceCapsule('\x01',&local_20f0,&local_2238,&local_2228,&bounds_origin,
+                          (pgVar2->ps).clientNum,0x2810211);
+          dVar22 = (double)local_20f0.fraction;
+          if (dVar22 == dVar17) {
+            return 0;
+          }
+          fVar1 = in_r10[2];
+          local_2170 = (float)((double)(float)((double)local_2220 - (double)local_2230) * dVar22 +
+                              (double)local_2230);
+          *pfVar8 = local_2170;
+          local_2178 = (float)((double)(float)((double)local_2228 - (double)local_2238) * dVar22 +
+                              (double)local_2238);
+          local_2174 = (float)((double)(float)((double)local_2224 - (double)local_2234) * dVar22 +
+                              (double)local_2234);
+          pfVar8[-2] = local_2178;
+          pfVar8[-1] = local_2174;
+          dVar22 = (double)(local_2170 - fVar1);
+          if (dVar20 < ABS(dVar22)) {
+            dVar20 = ABS(dVar22);
+          }
+          if (fVar1 < local_2170) {
+            in_r10[2] = local_2170;
+          }
           if ((bg_vehicle_placement_debug != (dvar_t *)0x0) &&
              ((bg_vehicle_placement_debug->current).enabled != false)) {
-            G_DebugBox(pfVar4,&local_2270,(float)dVar16,pfVar9,-0x7de7e808,1);
+            G_DebugLineWithDuration(&local_2238,&local_2178,colorLtBlue,1,0);
           }
-          __restfpr_21(1);
-          iVar6 = __restgprlr_22();
-          return iVar6;
+          uVar11 = uVar11 + 1;
+          pfVar8 = pfVar8 + 3;
+        } while (uVar11 < 4);
+        local_2190 = local_2120 - local_20fc;
+        local_218c = local_211c - local_20f8;
+        local_2188 = local_2118 - local_20f4;
+        local_2184 = local_2114 - local_2108;
+        local_2180 = local_2110 - local_2104;
+        local_217c = local_210c - local_2100;
+        Vec3Cross(&local_2190,&local_2184,&local_2218);
+        dVar19 = (double)SQRT(local_2214 * local_2214 +
+                              local_2218 * local_2218 + local_2210 * local_2210);
+        dVar18 = dVar17;
+        if (-dVar19 < 0.0) {
+          dVar18 = dVar19;
         }
+        fVar1 = (float)(dVar17 / dVar18);
+        dVar18 = (double)(fVar1 * local_2218);
+        dVar22 = (double)(local_2214 * fVar1);
+        dVar17 = (double)(fVar1 * local_2210);
       }
-      goto LAB_826b5ed4;
+      local_21c0 = local_2258;
+      local_21bc = local_2254;
+      local_21b8 = local_2250;
+      local_21a8 = (float)dVar18;
+      local_21a4 = (float)dVar22;
+      local_21a0 = (float)dVar17;
+      Vec3Cross(&local_21a8,&local_21c0,afStack_21b4);
+      pfVar8 = &local_21c0;
+      Vec3Cross(afStack_21b4,&local_21a8,pfVar8);
+      AxisToAngles((float (*) [3])&local_21c0,in_stack_00000054);
+      if (dVar17 < dVar14) {
+        return 0;
+      }
+      if ((dVar13 != dVar12) && (20.0 < dVar20)) {
+        return 0;
+      }
+      if ((bg_vehicle_placement_debug != (dvar_t *)0x0) &&
+         ((bg_vehicle_placement_debug->current).enabled != false)) {
+        G_DebugBox(in_r10,&local_2270,(float)dVar15,pfVar8,-0x7de7e808,1);
+      }
+      return 1;
     }
-    fVar1 = *(float *)(iVar6 + 0x24);
+    fVar1 = (pgVar2->ps).origin[2];
   }
   else {
 LAB_826b5ebc:
-    fVar1 = *(float *)(iVar6 + 0x24);
-    pfVar4[1] = local_227c;
-    *pfVar4 = local_2280;
+    fVar1 = (pgVar2->ps).origin[2];
+    in_r10[1] = local_227c;
+    *in_r10 = local_2280;
   }
-  pfVar4[2] = fVar1;
-LAB_826b5ed4:
-  __restfpr_21(0);
-  iVar6 = __restgprlr_22();
-  return iVar6;
+  in_r10[2] = fVar1;
+  return 0;
 }
 

@@ -2,63 +2,59 @@
 
 // 827578C8  Material_NextTechniqueSetNameToken  (gfx_d3d/r_material_override.cpp:86)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 uint Material_NextTechniqueSetNameToken(char **param_1,char *param_2)
 
 {
   char cVar1;
-  int *piVar2;
+  char *pcVar2;
   int iVar3;
   uint uVar4;
-  int iVar5;
   
-  piVar2 = (int *)__savegprlr_29(param_1);
-  iVar5 = 0;
-  if (*(char *)*piVar2 != '\0') {
-    while (cVar1 = *(char *)*piVar2, param_2[iVar5] = cVar1, cVar1 != '_') {
-      if (((iVar5 != 0) && (iVar3 = isdigit((int)param_2[iVar5 + -1]), iVar3 != 0)) &&
-         (iVar3 = isdigit((int)param_2[iVar5]), iVar3 == 0)) goto LAB_82757978;
-      iVar3 = *piVar2;
-      iVar5 = iVar5 + 1;
-      *piVar2 = iVar3 + 1;
-      if (*(char *)(iVar3 + 1) == '\0') {
-        param_2[iVar5] = '\0';
-        uVar4 = __restgprlr_29(iVar5);
+  uVar4 = 0;
+  if (**param_1 != '\0') {
+    while (cVar1 = **param_1, param_2[uVar4] = cVar1, cVar1 != '_') {
+      if (((uVar4 != 0) && (iVar3 = isdigit((int)param_2[uVar4 - 1]), iVar3 != 0)) &&
+         (iVar3 = isdigit((int)param_2[uVar4]), iVar3 == 0)) goto LAB_82757978;
+      pcVar2 = *param_1;
+      uVar4 = uVar4 + 1;
+      *param_1 = pcVar2 + 1;
+      if (pcVar2[1] == '\0') {
+        param_2[uVar4] = '\0';
         return uVar4;
       }
     }
-    *piVar2 = *piVar2 + 1;
+    *param_1 = *param_1 + 1;
   }
 LAB_82757978:
-  param_2[iVar5] = '\0';
-  uVar4 = __restgprlr_29(iVar5);
+  param_2[uVar4] = '\0';
   return uVar4;
 }
 
 
 // 82757990  Material_GetRemappedFeatures_RunTime  (gfx_d3d/r_material_override.cpp:107)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void Material_GetRemappedFeatures_RunTime(uint *param_1,uint *param_2)
 
 {
-  uint *puVar1;
-  ulonglong uVar2;
-  
-  uVar2 = (ulonglong)(int)param_2;
-  puVar1 = (uint *)__savegprlr_28(param_1);
-  if (puVar1 == (uint *)0x0) {
+  if (param_1 == (uint *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_material_override.cpp"
                     ,0x6c,0,"%s");
   }
-  if ((uVar2 & 0xffffffff) == 0) {
+  if (param_2 == (uint *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_material_override.cpp"
                     ,0x6d,0,"%s");
   }
-  *puVar1 = 0;
-  *(undefined4 *)uVar2 = 0;
+  *param_1 = 0;
+  *param_2 = 0;
   if ((r_envMapOverride->current).enabled != false) {
-    *puVar1 = *puVar1 | 0x20;
+    *param_1 = *param_1 | 0x20;
   }
-  __restgprlr_28();
   return;
 }
 
@@ -101,36 +97,32 @@ GfxMtlFeatureMap * Material_FindFeature(char *param_1,GfxMtlFeatureMap *param_2,
 
 // 82757A98  Material_ExtendTechniqueSetName  (gfx_d3d/r_material_override.cpp:157)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 uint Material_ExtendTechniqueSetName
                (char *param_1,uint param_2,char *param_3,uint param_4,bool param_5)
 
 {
-  int iVar1;
-  uint uVar2;
-  longlong lVar3;
-  longlong lVar4;
-  ulonglong uVar5;
-  longlong lVar6;
+  uint uVar1;
   
-  uVar5 = (ulonglong)param_5;
-  lVar4 = (longlong)(int)param_4;
-  lVar3 = (longlong)(int)param_2;
-  iVar1 = __savegprlr_27(param_1,lVar3,param_3);
-  lVar6 = lVar3;
-  if ((uVar5 & 0xff) != 0) {
-    lVar6 = lVar3 + 1;
-    *(undefined1 *)(iVar1 + (int)lVar3) = 0x5f;
+  uVar1 = param_2;
+  if (param_5) {
+    uVar1 = param_2 + 1;
+    param_1[param_2] = '_';
   }
-  if (0x3f < (lVar6 + lVar4 & 0xffffffffU)) {
+  if (0x3f < uVar1 + param_4) {
     Com_Error(ERR_DROP,"Can\'t extend techset name \'%s\' with \'%s\'; would exceed %i chars");
   }
   memcpy();
-  uVar2 = __restgprlr_27(lVar6 + lVar4);
-  return uVar2;
+  return uVar1 + param_4;
 }
 
 
 // 82757B10  Material_RemapTechniqueSetName  (gfx_d3d/r_material_override.cpp:262)
+
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
 
 void Material_RemapTechniqueSetName
                (char *param_1,char *param_2,uint param_3,uint param_4,GfxMtlFeatureMap *param_5,
@@ -139,120 +131,102 @@ void Material_RemapTechniqueSetName
 {
   char cVar1;
   char cVar2;
-  int iVar3;
-  uint *puVar4;
-  bool bVar5;
-  uint uVar6;
-  ulonglong uVar7;
-  ulonglong uVar8;
-  longlong lVar9;
-  ulonglong uVar10;
-  ulonglong uVar11;
-  char *pcVar12;
-  char *pcVar13;
-  char *pcVar14;
-  ulonglong uVar15;
-  longlong lVar16;
-  char *pcVar17;
+  bool bVar3;
+  uint uVar4;
+  uint uVar5;
+  GfxMtlFeatureMap *pGVar6;
+  char *pcVar7;
+  char *pcVar8;
+  char *pcVar9;
+  uint *puVar10;
+  char *pcVar11;
   char *local_f0 [4];
   char local_e0 [224];
   
-  uVar11 = (ulonglong)(int)param_6;
-  lVar9 = (longlong)(int)param_5;
-  uVar8 = (ulonglong)(int)param_4;
-  uVar7 = (ulonglong)(int)param_3;
-  uVar10 = (ulonglong)(int)param_1;
-  __savegprlr();
-  if ((uVar10 & 0xffffffff) == 0) {
+  if (param_1 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_material_override.cpp"
                     ,0x111,0,"%s");
   }
-  pcVar14 = (char *)0x0;
-  local_f0[0] = (char *)uVar10;
+  pcVar9 = (char *)0x0;
   *param_2 = '\0';
+  local_f0[0] = param_1;
 LAB_82757b98:
   do {
-    if ((pcVar14 == (char *)0x0) || (bVar5 = true, local_f0[0][-1] != '_')) {
-      bVar5 = false;
+    if ((pcVar9 == (char *)0x0) || (bVar3 = true, local_f0[0][-1] != '_')) {
+      bVar3 = false;
     }
-    uVar6 = Material_NextTechniqueSetNameToken(local_f0,local_e0);
-    if (uVar6 == 0) {
-      __restgprlr();
+    uVar4 = Material_NextTechniqueSetNameToken(local_f0,local_e0);
+    if (uVar4 == 0) {
       return;
     }
-    uVar10 = 0;
-    lVar16 = lVar9;
-    if ((uVar11 & 0xffffffff) != 0) {
+    uVar5 = 0;
+    pGVar6 = param_5;
+    if (param_6 != 0) {
       do {
-        pcVar12 = (char *)*(undefined4 *)lVar16;
-        pcVar13 = local_e0;
+        pcVar7 = pGVar6->name;
+        pcVar8 = local_e0;
         do {
-          cVar1 = *pcVar13;
-          cVar2 = *pcVar12;
+          cVar1 = *pcVar8;
+          cVar2 = *pcVar7;
           if (cVar1 == '\0') break;
-          pcVar13 = pcVar13 + 1;
-          pcVar12 = pcVar12 + 1;
+          pcVar8 = pcVar8 + 1;
+          pcVar7 = pcVar7 + 1;
         } while (cVar1 == cVar2);
         if (cVar1 == cVar2) {
-          uVar10 = (uVar10 & 0xfffffff) * 0x10 + lVar9;
-          if ((uVar10 & 0xffffffff) != 0) {
-            iVar3 = (int)uVar10;
-            uVar10 = (ulonglong)*(uint *)(iVar3 + 4);
-            if ((uVar10 & uVar7) != 0) {
-              if (*(int *)(iVar3 + 8) == 0) {
-                if ((uVar10 & uVar8) != 0) {
-                  MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_material_override.cpp"
-                                  ,0x133,0,"%s\n\t(feature->name) = %s");
-                }
+          pGVar6 = param_5 + uVar5;
+          if ((pGVar6 != (GfxMtlFeatureMap *)0x0) && (uVar5 = pGVar6->mask, (uVar5 & param_3) != 0))
+          {
+            if (pGVar6->value == 0) {
+              if ((uVar5 & param_4) != 0) {
+                MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_material_override.cpp"
+                                ,0x133,0,"%s\n\t(feature->name) = %s");
               }
-              else if ((uVar10 & uVar8) != 0) {
-                uVar15 = 0;
-                lVar16 = lVar9 + 8;
-                while( true ) {
-                  if ((uVar15 & 0xffffffff) == (uVar11 & 0xffffffff)) {
-                    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_material_override.cpp"
-                                    ,0x13d,0,"%s");
-                  }
-                  puVar4 = (uint *)lVar16;
-                  if ((puVar4[-1] == *(uint *)(iVar3 + 4)) &&
-                     ((ulonglong)*puVar4 == (uVar10 & uVar8))) break;
-                  uVar15 = uVar15 + 1;
-                  lVar16 = lVar16 + 0x10;
-                }
-                pcVar12 = (char *)puVar4[-2];
-                pcVar13 = pcVar12;
-                do {
-                  cVar1 = *pcVar13;
-                  pcVar13 = pcVar13 + 1;
-                } while (cVar1 != '\0');
-                pcVar17 = pcVar14;
-                if (bVar5) {
-                  pcVar17 = pcVar14 + 1;
-                  param_2[(int)pcVar14] = '_';
-                }
-                pcVar14 = pcVar13 + (int)(pcVar17 + (-1 - (int)pcVar12));
-                if ((char *)0x3f < pcVar14) {
-                  Com_Error(ERR_DROP,
-                            "Can\'t extend techset name \'%s\' with \'%s\'; would exceed %i chars");
-                }
-                memcpy();
-              }
-              goto LAB_82757b98;
             }
+            else if ((uVar5 & param_4) != 0) {
+              uVar4 = 0;
+              puVar10 = &param_5->value;
+              while( true ) {
+                if (uVar4 == param_6) {
+                  MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_material_override.cpp"
+                                  ,0x13d,0,"%s");
+                }
+                if ((puVar10[-1] == pGVar6->mask) && (*puVar10 == (uVar5 & param_4))) break;
+                uVar4 = uVar4 + 1;
+                puVar10 = puVar10 + 4;
+              }
+              pcVar7 = ((GfxMtlFeatureMap *)(puVar10 + -2))->name;
+              pcVar8 = pcVar7;
+              do {
+                cVar1 = *pcVar8;
+                pcVar8 = pcVar8 + 1;
+              } while (cVar1 != '\0');
+              pcVar11 = pcVar9;
+              if (bVar3) {
+                pcVar11 = pcVar9 + 1;
+                param_2[(int)pcVar9] = '_';
+              }
+              pcVar9 = pcVar8 + (int)(pcVar11 + (-1 - (int)pcVar7));
+              if ((char *)0x3f < pcVar9) {
+                Com_Error(ERR_DROP,
+                          "Can\'t extend techset name \'%s\' with \'%s\'; would exceed %i chars");
+              }
+              memcpy();
+            }
+            goto LAB_82757b98;
           }
           break;
         }
-        uVar10 = uVar10 + 1;
-        lVar16 = lVar16 + 0x10;
-      } while ((uVar10 & 0xffffffff) < (uVar11 & 0xffffffff));
+        uVar5 = uVar5 + 1;
+        pGVar6 = pGVar6 + 1;
+      } while (uVar5 < param_6);
     }
-    pcVar12 = pcVar14;
-    if (bVar5) {
-      pcVar12 = pcVar14 + 1;
-      param_2[(int)pcVar14] = '_';
+    pcVar7 = pcVar9;
+    if (bVar3) {
+      pcVar7 = pcVar9 + 1;
+      param_2[(int)pcVar9] = '_';
     }
-    pcVar14 = pcVar12 + uVar6;
-    if ((char *)0x3f < pcVar14) {
+    pcVar9 = pcVar7 + uVar4;
+    if ((char *)0x3f < pcVar9) {
       Com_Error(ERR_DROP,"Can\'t extend techset name \'%s\' with \'%s\'; would exceed %i chars");
     }
     memcpy();
@@ -262,33 +236,34 @@ LAB_82757b98:
 
 // 82757DB0  AssertValidRemappedTechniqueSet  (gfx_d3d/r_material_override.cpp:337)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
+
 void AssertValidRemappedTechniqueSet(MaterialTechniqueSet *param_1)
 
 {
-  int iVar1;
-  uint uVar2;
+  uint uVar1;
   
-  iVar1 = __savegprlr_24(param_1);
-  if (iVar1 == 0) {
+  if (param_1 == (MaterialTechniqueSet *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_material_override.cpp"
                     ,0x154,0,"%s");
   }
-  if (*(int *)(iVar1 + 8) == 0) {
+  if (param_1->remappedTechniqueSet == (MaterialTechniqueSet *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_material_override.cpp"
                     ,0x155,0,"%s");
   }
-  if (*(int *)(iVar1 + 8) != iVar1) {
-    uVar2 = 0xc;
+  if (param_1->remappedTechniqueSet != param_1) {
+    uVar1 = 0xc;
     do {
-      if ((*(int *)(uVar2 + iVar1) == 0) && (*(int *)(uVar2 + *(int *)(iVar1 + 8)) != 0)) {
+      if ((*(int *)(param_1->unused + (uVar1 - 5)) == 0) &&
+         (*(int *)(param_1->remappedTechniqueSet->unused + (uVar1 - 5)) != 0)) {
         va("%i: %s:%s -> %s:%s");
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_material_override.cpp"
                         ,0x15a,0,"%s\n\t%s");
       }
-      uVar2 = uVar2 + 4;
-    } while (uVar2 < 0xa0);
+      uVar1 = uVar1 + 4;
+    } while (uVar1 < 0xa0);
   }
-  __restgprlr_24();
   return;
 }
 

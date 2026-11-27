@@ -71,21 +71,22 @@ void R_UpdateBaseLightingCoords(float param_1,float param_2,float param_3,float 
 
 // 8275A470  R_SetModelLightingCoords  (gfx_d3d/r_model_lighting.cpp:222)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void R_SetModelLightingCoords(uint param_1,float *param_2)
 
 {
   float fVar1;
   float fVar2;
-  ulonglong uVar3;
   
-  uVar3 = __savegprlr_28(param_1);
-  if ((uVar3 & 0xffffffff) == 1) {
+  if (param_1 == 1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_model_lighting.cpp",
                     0xe6,0,"%s");
 LAB_8275a4c4:
-    if ((uVar3 & 0xffffffff) <= (ulonglong)modelLightGlob.totalEntryLimit) goto LAB_8275a4f8;
+    if (param_1 <= modelLightGlob.totalEntryLimit) goto LAB_8275a4f8;
   }
-  else if ((uVar3 & 0xffffffff) != 0) goto LAB_8275a4c4;
+  else if (param_1 != 0) goto LAB_8275a4c4;
   MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_model_lighting.cpp",
                   0xc2,0,"handle not in [1, modelLightGlob.totalEntryLimit]\n\t%i not in [%i, %i]");
 LAB_8275a4f8:
@@ -93,44 +94,46 @@ LAB_8275a4f8:
   fVar1 = modelLightGlob.invImageHeight * 0.0078125;
   param_2[2] = 0.5019531;
   param_2[3] = 1.0;
-  *param_2 = ((float)((uVar3 - 1 & 0x7f) << 2) + 2.0) * 0.001953125 + 1.5258789e-05;
-  param_2[1] = ((float)((uVar3 - 1 & 0xffffffff) >> 5 & 0x7fffffc) + 2.0) * fVar2 + fVar1;
-  __restgprlr_28();
+  *param_2 = ((float)(((longlong)(int)param_1 - 1U & 0x7f) << 2) + 2.0) * 0.001953125 +
+             1.5258789e-05;
+  param_2[1] = ((float)(((longlong)(int)param_1 - 1U & 0xffffffff) >> 5 & 0x7fffffc) + 2.0) * fVar2
+               + fVar1;
   return;
 }
 
 
 // 8275A588  R_GetModelGroundLighting  (gfx_d3d/r_model_lighting.cpp:251)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 GfxColor R_GetModelGroundLighting(uint param_1)
 
 {
   uint uVar1;
   
-  uVar1 = __savegprlr_28(param_1);
-  if (uVar1 == 1) {
+  if (param_1 == 1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_model_lighting.cpp",
                     0xff,0,"%s");
 LAB_8275a5dc:
-    if (uVar1 <= modelLightGlob.totalEntryLimit) goto LAB_8275a610;
+    if (param_1 <= modelLightGlob.totalEntryLimit) goto LAB_8275a610;
   }
-  else if (uVar1 != 0) goto LAB_8275a5dc;
+  else if (param_1 != 0) goto LAB_8275a5dc;
   MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_model_lighting.cpp",
                   0xc2,0,"handle not in [1, modelLightGlob.totalEntryLimit]\n\t%i not in [%i, %i]");
 LAB_8275a610:
-  if (uVar1 - 1 < modelLightGlob.xmodel.baseIndex) {
+  if (param_1 - 1 < modelLightGlob.xmodel.baseIndex) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_model_lighting.cpp",
                     0x101,0,"%s");
   }
-  uVar1 = (uVar1 - 1) - modelLightGlob.xmodel.baseIndex;
+  uVar1 = (param_1 - 1) - modelLightGlob.xmodel.baseIndex;
   if (modelLightGlob.xmodelEntryLimit <= uVar1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_model_lighting.cpp",
                     0x103,0,
                     "usedIndex doesn\'t index modelLightGlob.xmodelEntryLimit\n\t%i not in [0, %i)")
     ;
   }
-  uVar1 = __restgprlr_28(modelLightGlob.ambientColor[uVar1].packed);
-  return (GfxColor)uVar1;
+  return (GfxColor)modelLightGlob.ambientColor[uVar1].packed;
 }
 
 
@@ -145,101 +148,96 @@ uint R_ModelLightingIndexToHandle(uint param_1)
 
 // 8275BA80  R_AllocStaticModelLighting  (gfx_d3d/r_model_lighting.cpp:273)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
+
 bool R_AllocStaticModelLighting(GfxStaticModelDrawInst *param_1,uint param_2)
 
 {
   ushort uVar1;
   GfxStaticModelDrawInst *pGVar2;
-  int iVar3;
-  uint uVar4;
-  undefined1 uVar5;
-  ulonglong uVar6;
-  uint uVar7;
-  uint uVar9;
-  ulonglong uVar8;
+  uint uVar3;
+  int iVar4;
+  uint uVar5;
+  uint uVar6;
   
-  uVar6 = (ulonglong)(int)param_2;
-  iVar3 = __savegprlr_23(param_1);
   if (rgp.world == (GfxWorld *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_model_lighting.cpp",
                     0x118,0,"%s");
   }
-  if (*(ushort *)(iVar3 + 0x22) == 0) {
-    uVar7 = modelLightGlob.totalEntryLimit;
+  if (param_1->lightingHandle == 0) {
+    uVar5 = modelLightGlob.totalEntryLimit;
     if (smodelLightGlob.local.assignedCount < smodelLightGlob.local.entryLimit) {
-      uVar9 = smodelLightGlob.local.assignedCount + 1;
-      uVar4 = smodelLightGlob.local.assignedCount;
-      smodelLightGlob.local.assignedCount = uVar9;
+      uVar6 = smodelLightGlob.local.assignedCount + 1;
+      uVar3 = smodelLightGlob.local.assignedCount;
+      smodelLightGlob.local.assignedCount = uVar6;
     }
     else {
       do {
         if (smodelLightGlob.local.freeableCount == 0) {
-          uVar5 = __restgprlr_23(0);
-          return (bool)uVar5;
+          return false;
         }
-        uVar4 = smodelLightGlob.local.freeableCount - 1;
-        uVar9 = (uint)smodelLightGlob.freeableHandles[smodelLightGlob.local.freeableCount - 1];
-        smodelLightGlob.local.freeableCount = uVar4;
-        if ((uVar9 == 0) || (uVar7 < uVar9)) {
+        uVar3 = smodelLightGlob.local.freeableCount - 1;
+        uVar6 = (uint)smodelLightGlob.freeableHandles[smodelLightGlob.local.freeableCount - 1];
+        smodelLightGlob.local.freeableCount = uVar3;
+        if ((uVar6 == 0) || (uVar5 < uVar6)) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_model_lighting.cpp"
                           ,0xc2,0,
                           "handle not in [1, modelLightGlob.totalEntryLimit]\n\t%i not in [%i, %i]")
           ;
-          uVar7 = modelLightGlob.totalEntryLimit;
+          uVar5 = modelLightGlob.totalEntryLimit;
         }
-        uVar4 = uVar9 - 1;
-      } while (smodelLightGlob.local.frameCount == smodelLightGlob.local.usedFrameCount[uVar9 - 1]);
-      uVar1 = smodelLightGlob.local.smodelIndex[uVar9 - 1];
+        uVar3 = uVar6 - 1;
+      } while (smodelLightGlob.local.frameCount == smodelLightGlob.local.usedFrameCount[uVar6 - 1]);
+      uVar1 = smodelLightGlob.local.smodelIndex[uVar6 - 1];
       pGVar2 = g_worldDpvs->smodelDrawInsts;
-      if (uVar9 != pGVar2[uVar1].lightingHandle) {
+      if (uVar6 != pGVar2[uVar1].lightingHandle) {
         va("smodelDrawInst[%d]->lightingHandle == %d,  smodelIndexForHandle[%d] == %d");
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_model_lighting.cpp"
                         ,0x149,0,"%s\n\t%s");
       }
       pGVar2[uVar1].lightingHandle = 0;
     }
-    if (uVar9 == 0) {
+    if (uVar6 == 0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_model_lighting.cpp"
                       ,0x153,0,"%s");
     }
-    *(short *)(iVar3 + 0x22) = (short)uVar9;
-    if ((uint)uVar6 != ((uint)uVar6 & 0xffff)) {
+    param_1->lightingHandle = (ushort)uVar6;
+    if (param_2 != (param_2 & 0xffff)) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\../universal/assertive.h"
                       ,0x1ce,0,"i == static_cast< Type >( i )\n\t%i, %i");
     }
-    uVar8 = (uVar6 & 0xffffffff) >> 5;
-    smodelLightGlob.local.smodelIndex[uVar4] = (ushort)uVar6;
-    if (0x7ff < uVar8) {
-      iVar3 = 0x15c;
+    smodelLightGlob.local.smodelIndex[uVar3] = (ushort)param_2;
+    if (0x7ff < param_2 >> 5) {
+      iVar4 = 0x15c;
 LAB_8275bccc:
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_model_lighting.cpp"
-                      ,iVar3,0,
+                      ,iVar4,0,
                       "smodelIndex >> 5 doesn\'t index ARRAY_COUNT( smodelLightGlob.lightingBits )\n\t%i not in [0, %i)"
                      );
     }
   }
   else {
-    uVar4 = R_ModelLightingIndexFromHandle((uint)*(ushort *)(iVar3 + 0x22));
+    uVar3 = R_ModelLightingIndexFromHandle((uint)param_1->lightingHandle);
     if ((r_cacheSModelLighting->current).enabled != false) goto LAB_8275bd1c;
-    uVar8 = (uVar6 & 0xffffffff) >> 5;
-    if (0x7ff < uVar8) {
-      iVar3 = 0x128;
+    if (0x7ff < param_2 >> 5) {
+      iVar4 = 0x128;
       goto LAB_8275bccc;
     }
   }
-  iVar3 = (int)(uVar8 << 2);
-  *(uint *)((int)smodelLightGlob.lightingBits + iVar3) =
-       *(uint *)(&g_bitShift + ((uint)((uVar6 & 0xffffffff) << 2) & 0x7c)) |
-       *(uint *)((int)smodelLightGlob.lightingBits + iVar3);
+  smodelLightGlob.lightingBits[param_2 >> 5] =
+       *(uint *)(&g_bitShift + (param_2 & 0x1f) * 4) | smodelLightGlob.lightingBits[param_2 >> 5];
   smodelLightGlob.local.anyNewLighting = 1;
 LAB_8275bd1c:
-  smodelLightGlob.local.usedFrameCount[uVar4] = smodelLightGlob.local.frameCount;
-  uVar5 = __restgprlr_23(1);
-  return (bool)uVar5;
+  smodelLightGlob.local.usedFrameCount[uVar3] = smodelLightGlob.local.frameCount;
+  return true;
 }
 
 
 // 8275BD50  R_AllocModelLighting  (gfx_d3d/r_model_lighting.cpp:365)
+
+/* WARNING: Function: __savegprlr_19 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_19 replaced with injection: xenon_save_restore */
 
 uint R_AllocModelLighting
                (float *param_1,ushort *param_2,_func___cdecl_uint_void_ptr *param_3,void *param_4,
@@ -256,70 +254,57 @@ uint R_AllocModelLighting
   bool bVar8;
   ulonglong uVar9;
   GfxLightingInfo *pGVar10;
-  float *pfVar11;
+  uint uVar11;
   uint uVar12;
-  ulonglong uVar13;
-  ulonglong uVar14;
-  longlong lVar15;
-  longlong lVar16;
-  uint uVar17;
+  longlong lVar13;
+  float (*pafVar15) [3];
+  ulonglong uVar16;
+  uint *puVar17;
   ulonglong uVar18;
-  longlong lVar19;
-  ulonglong uVar21;
-  float (*pafVar22) [3];
-  ulonglong uVar23;
-  uint *puVar24;
-  int iVar20;
+  int iVar14;
   
-  uVar14 = (ulonglong)param_8;
-  uVar21 = (ulonglong)(int)param_7;
-  uVar18 = (ulonglong)(int)param_6;
-  lVar16 = (longlong)(int)param_4;
-  lVar15 = (longlong)(int)param_3;
-  uVar13 = (ulonglong)(int)param_2;
-  pfVar11 = (float *)__savegprlr_19(param_1,uVar13,lVar15,lVar16);
-  if ((uVar13 & 0xffffffff) == 0) {
+  if (param_2 == (ushort *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_model_lighting.cpp",
                     0x176,0,"%s");
   }
-  uVar2 = *(ushort *)uVar13;
+  uVar2 = *param_2;
   if (uVar2 == 0) goto LAB_8275bf80;
-  uVar12 = R_ModelLightingIndexFromHandle((uint)uVar2);
-  uVar23 = (longlong)(int)uVar12 - (ulonglong)modelLightGlob.xmodel.baseIndex;
+  uVar11 = R_ModelLightingIndexFromHandle((uint)uVar2);
+  uVar16 = (longlong)(int)uVar11 - (ulonglong)modelLightGlob.xmodel.baseIndex;
   bVar8 = true;
-  if ((uVar14 & 0xff) == 0) {
-    pafVar22 = modelLightGlob.lightingOrigins + (int)uVar23;
-    if ((*pfVar11 != (*pafVar22)[0]) ||
-       ((pfVar11[1] != (*pafVar22)[1] || (pfVar11[2] != (*pafVar22)[2])))) {
+  if (param_8) {
+    pafVar15 = modelLightGlob.lightingOrigins + (int)uVar16;
+    fVar3 = (*pafVar15)[1] - param_1[1];
+    fVar4 = (*pafVar15)[2] - param_1[2];
+    fVar5 = (*pafVar15)[0] - *param_1;
+    fVar3 = fVar5 * fVar5 + fVar4 * fVar4 + fVar3 * fVar3;
+    if ((0.0001 <= fVar3) &&
+       ((uVar11 = (r_lightCacheLessFrequentPeriod->current).integer, trapWord(6,(ulonglong)uVar11,0)
+        , smodelLightGlob.local.frameCount + uVar16 ==
+          (longlong)
+          (int)((smodelLightGlob.local.frameCount + uVar16 & 0xffffffff) / (ulonglong)uVar11) *
+          (longlong)(int)uVar11 ||
+        ((r_lightCacheLessFrequentMaxDistance->current).value *
+         (r_lightCacheLessFrequentMaxDistance->current).value <= fVar3)))) goto LAB_8275bec4;
+  }
+  else {
+    pafVar15 = modelLightGlob.lightingOrigins + (int)uVar16;
+    if ((*param_1 != (*pafVar15)[0]) ||
+       ((param_1[1] != (*pafVar15)[1] || (param_1[2] != (*pafVar15)[2])))) {
 LAB_8275bec4:
       bVar8 = false;
     }
   }
-  else {
-    pafVar22 = modelLightGlob.lightingOrigins + (int)uVar23;
-    fVar3 = (*pafVar22)[1] - pfVar11[1];
-    fVar4 = (*pafVar22)[2] - pfVar11[2];
-    fVar5 = (*pafVar22)[0] - *pfVar11;
-    fVar3 = fVar5 * fVar5 + fVar4 * fVar4 + fVar3 * fVar3;
-    if ((0.0001 <= fVar3) &&
-       ((uVar12 = (r_lightCacheLessFrequentPeriod->current).integer, trapWord(6,(ulonglong)uVar12,0)
-        , smodelLightGlob.local.frameCount + uVar23 ==
-          (longlong)
-          (int)((smodelLightGlob.local.frameCount + uVar23 & 0xffffffff) / (ulonglong)uVar12) *
-          (longlong)(int)uVar12 ||
-        ((r_lightCacheLessFrequentMaxDistance->current).value *
-         (r_lightCacheLessFrequentMaxDistance->current).value <= fVar3)))) goto LAB_8275bec4;
-  }
   if (bVar8) {
-    uVar12 = (uint)((uVar23 & 0xffffffff) >> 3) & 0x1ffffffc;
-    iVar20 = (int)((uVar23 & 0xffffffff) << 1);
-    *(uint *)(uVar12 + (int)modelLightGlob.currPixelFreeBits) =
-         *(uint *)(uVar12 + (int)modelLightGlob.currPixelFreeBits) &
-         ~*(uint *)(&g_bitShift + ((uint)((uVar23 & 0xffffffff) << 2) & 0x7c));
+    uVar11 = (uint)((uVar16 & 0xffffffff) >> 3) & 0x1ffffffc;
+    iVar14 = (int)((uVar16 & 0xffffffff) << 1);
+    *(uint *)(uVar11 + (int)modelLightGlob.currPixelFreeBits) =
+         *(uint *)(uVar11 + (int)modelLightGlob.currPixelFreeBits) &
+         ~*(uint *)(&g_bitShift + ((uint)((uVar16 & 0xffffffff) << 2) & 0x7c));
     pGVar10 = modelLightGlob.lightingInfo;
-    bVar1 = (&(modelLightGlob.lightingInfo)->primaryLightIndex)[iVar20];
+    bVar1 = (&(modelLightGlob.lightingInfo)->primaryLightIndex)[iVar14];
     param_5->primaryLightIndex = bVar1;
-    param_5->reflectionProbeIndex = (&pGVar10->reflectionProbeIndex)[iVar20];
+    param_5->reflectionProbeIndex = (&pGVar10->reflectionProbeIndex)[iVar14];
     if ((rgp.world)->primaryLightCount <= (uint)bVar1) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_model_lighting.cpp"
                       ,0x1a4,0,
@@ -332,85 +317,83 @@ LAB_8275bec4:
                       "lightingInfoOut->reflectionProbeIndex doesn\'t index rgp.world->draw.reflectionProbeCount\n\t%i not in [0, %i)"
                      );
     }
-    uVar12 = __restgprlr_19(uVar2);
-    return uVar12;
+    return (uint)uVar2;
   }
 LAB_8275bf80:
   if (modelLightGlob.allocModelFail == 0) {
-    uVar14 = (ulonglong)modelLightGlob.pixelFreeBitsWordCount;
+    uVar16 = (ulonglong)modelLightGlob.pixelFreeBitsWordCount;
     if ((r_showModelLightingLowWaterMark->current).enabled != false) {
-      lVar19 = 0;
-      iVar20 = 0;
-      if (uVar14 != 0) {
-        uVar23 = uVar14;
-        puVar24 = modelLightGlob.prevPixelFreeBits;
+      lVar13 = 0;
+      iVar14 = 0;
+      if (uVar16 != 0) {
+        uVar18 = uVar16;
+        puVar17 = modelLightGlob.prevPixelFreeBits;
         do {
           puVar6 = (uint *)(((int)modelLightGlob.currPixelFreeBits -
-                            (int)modelLightGlob.prevPixelFreeBits) + (int)puVar24);
+                            (int)modelLightGlob.prevPixelFreeBits) + (int)puVar17);
           puVar7 = (uint *)(((int)modelLightGlob.prevPrevPixelFreeBits -
-                            (int)modelLightGlob.prevPixelFreeBits) + (int)puVar24);
-          uVar12 = *puVar24;
-          puVar24 = puVar24 + 1;
-          lVar19 = (lVar19 - LZCOUNT(*puVar6 & *puVar7 & uVar12)) + 0x20;
-          iVar20 = (int)lVar19;
-          uVar23 = uVar23 - 1;
-        } while (uVar23 != 0);
+                            (int)modelLightGlob.prevPixelFreeBits) + (int)puVar17);
+          uVar11 = *puVar17;
+          puVar17 = puVar17 + 1;
+          lVar13 = (lVar13 - LZCOUNT(*puVar6 & *puVar7 & uVar11)) + 0x20;
+          iVar14 = (int)lVar13;
+          uVar18 = uVar18 - 1;
+        } while (uVar18 != 0);
       }
-      if (iVar20 < modelLightGlob.minFreeLightingCache) {
-        modelLightGlob.minFreeLightingCache = iVar20;
+      if (iVar14 < modelLightGlob.minFreeLightingCache) {
+        modelLightGlob.minFreeLightingCache = iVar14;
       }
     }
-    iVar20 = modelLightGlob.pixelFreeRover * 4;
-    uVar12 = modelLightGlob.prevPrevPixelFreeBits[modelLightGlob.pixelFreeRover] &
+    iVar14 = modelLightGlob.pixelFreeRover * 4;
+    uVar11 = modelLightGlob.prevPrevPixelFreeBits[modelLightGlob.pixelFreeRover] &
              modelLightGlob.prevPixelFreeBits[modelLightGlob.pixelFreeRover] &
              modelLightGlob.currPixelFreeBits[modelLightGlob.pixelFreeRover];
-    uVar23 = (ulonglong)modelLightGlob.pixelFreeRover;
+    uVar18 = (ulonglong)modelLightGlob.pixelFreeRover;
     while( true ) {
-      uVar9 = LZCOUNT(uVar12);
+      uVar9 = LZCOUNT(uVar11);
       if (uVar9 < 0x20) {
-        modelLightGlob.pixelFreeRover = (uint)uVar23;
+        modelLightGlob.pixelFreeRover = (uint)uVar18;
         if (0x20 < uVar9) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_math.h",
                           0x475,0,"count doesn\'t index 33\n\t%i not in [0, %i)");
         }
-        uVar14 = (uVar23 & 0x7ffffff) * 0x20 + uVar9;
-        *(uint *)(iVar20 + (int)modelLightGlob.currPixelFreeBits) =
-             *(uint *)(iVar20 + (int)modelLightGlob.currPixelFreeBits) &
+        uVar16 = (uVar18 & 0x7ffffff) * 0x20 + uVar9;
+        *(uint *)(iVar14 + (int)modelLightGlob.currPixelFreeBits) =
+             *(uint *)(iVar14 + (int)modelLightGlob.currPixelFreeBits) &
              ~*(uint *)(&g_bitShift + (int)(uVar9 << 2));
-        if ((ulonglong)modelLightGlob.xmodelEntryLimit <= (uVar14 & 0xffffffff)) {
+        if ((ulonglong)modelLightGlob.xmodelEntryLimit <= (uVar16 & 0xffffffff)) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_model_lighting.cpp"
                           ,0x1d1,0,
                           "usedIndex doesn\'t index modelLightGlob.xmodelEntryLimit\n\t%i not in [0, %i)"
                          );
         }
-        uVar23 = (ulonglong)modelLightGlob.xmodel.baseIndex;
-        lVar19 = uVar23 + uVar14 + 1;
-        pafVar22 = modelLightGlob.lightingOrigins + (int)uVar14;
-        (*pafVar22)[0] = *pfVar11;
-        (*pafVar22)[1] = pfVar11[1];
-        (*pafVar22)[2] = pfVar11[2];
-        *(ushort *)uVar13 = (ushort)lVar19;
-        uVar12 = R_CalcReflectionProbeIndex(pfVar11);
-        param_5->reflectionProbeIndex = (uchar)uVar12;
-        uVar12 = (*(code *)lVar15)(lVar16);
-        uVar12 = R_CalcModelLighting((uint)(uVar23 + uVar14),pfVar11,uVar12,
-                                     GFX_MODELLIGHT_SHOW_MISSING,(float (*) [3])uVar18,
-                                     (float (*) [3])uVar21,
+        uVar18 = (ulonglong)modelLightGlob.xmodel.baseIndex;
+        lVar13 = uVar18 + uVar16 + 1;
+        pafVar15 = modelLightGlob.lightingOrigins + (int)uVar16;
+        (*pafVar15)[0] = *param_1;
+        (*pafVar15)[1] = param_1[1];
+        (*pafVar15)[2] = param_1[2];
+        *param_2 = (ushort)lVar13;
+        uVar11 = R_CalcReflectionProbeIndex(param_1);
+        param_5->reflectionProbeIndex = (uchar)uVar11;
+        uVar11 = (*param_3)(param_4);
+        uVar11 = R_CalcModelLighting((uint)(uVar18 + uVar16),param_1,uVar11,
+                                     GFX_MODELLIGHT_SHOW_MISSING,param_6,param_7,
                                      (GfxColor *)
-                                     ((int)((uVar14 & 0xffffffff) << 2) +
+                                     ((int)((uVar16 & 0xffffffff) << 2) +
                                      (int)modelLightGlob.ambientColor),(float *)0x0);
-        param_5->primaryLightIndex = (uchar)uVar12;
-        if (((uVar18 & 0xffffffff) == 0) && ((uVar21 & 0xffffffff) == 0)) {
-          uVar12 = (uint)((uVar14 & 0xffffffff) >> 3) & 0x1ffffffc;
-          uVar17 = *(uint *)(uVar12 + (int)modelLightGlob.dynamicAmbientBits) &
-                   ~*(uint *)(&g_bitShift + ((uint)((uVar14 & 0xffffffff) << 2) & 0x7c));
+        param_5->primaryLightIndex = (uchar)uVar11;
+        if ((param_6 == (float (*) [3])0x0) && (param_7 == (float (*) [3])0x0)) {
+          uVar11 = (uint)((uVar16 & 0xffffffff) >> 3) & 0x1ffffffc;
+          uVar12 = *(uint *)(uVar11 + (int)modelLightGlob.dynamicAmbientBits) &
+                   ~*(uint *)(&g_bitShift + ((uint)((uVar16 & 0xffffffff) << 2) & 0x7c));
         }
         else {
-          uVar12 = (uint)((uVar14 & 0xffffffff) >> 3) & 0x1ffffffc;
-          uVar17 = *(uint *)(&g_bitShift + ((uint)((uVar14 & 0xffffffff) << 2) & 0x7c)) |
-                   *(uint *)(uVar12 + (int)modelLightGlob.dynamicAmbientBits);
+          uVar11 = (uint)((uVar16 & 0xffffffff) >> 3) & 0x1ffffffc;
+          uVar12 = *(uint *)(&g_bitShift + ((uint)((uVar16 & 0xffffffff) << 2) & 0x7c)) |
+                   *(uint *)(uVar11 + (int)modelLightGlob.dynamicAmbientBits);
         }
-        *(uint *)(uVar12 + (int)modelLightGlob.dynamicAmbientBits) = uVar17;
+        *(uint *)(uVar11 + (int)modelLightGlob.dynamicAmbientBits) = uVar12;
         if ((rgp.world)->primaryLightCount <= (uint)param_5->primaryLightIndex) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_model_lighting.cpp"
                           ,0x1e9,0,
@@ -424,27 +407,25 @@ LAB_8275bf80:
                          );
         }
         pGVar10 = modelLightGlob.lightingInfo;
-        iVar20 = (int)((uVar14 & 0x7fffffff) << 1);
-        (&(modelLightGlob.lightingInfo)->primaryLightIndex)[iVar20] = param_5->primaryLightIndex;
-        (&pGVar10->reflectionProbeIndex)[iVar20] = param_5->reflectionProbeIndex;
-        uVar12 = __restgprlr_19(lVar19);
-        return uVar12;
+        iVar14 = (int)((uVar16 & 0xffffffff) << 1);
+        (&(modelLightGlob.lightingInfo)->primaryLightIndex)[iVar14] = param_5->primaryLightIndex;
+        (&pGVar10->reflectionProbeIndex)[iVar14] = param_5->reflectionProbeIndex;
+        return (uint)lVar13;
       }
-      trapWord(6,uVar14,0);
-      uVar23 = (uVar23 + 1) -
-               (longlong)(int)((uVar23 + 1 & 0xffffffff) / uVar14) *
+      trapWord(6,uVar16,0);
+      uVar18 = (uVar18 + 1) -
+               (longlong)(int)((uVar18 + 1 & 0xffffffff) / uVar16) *
                (longlong)(int)modelLightGlob.pixelFreeBitsWordCount;
-      if ((uVar23 & 0xffffffff) == (ulonglong)modelLightGlob.pixelFreeRover) break;
-      iVar20 = (int)((uVar23 & 0x3fffffff) << 2);
-      uVar12 = *(uint *)(iVar20 + (int)modelLightGlob.prevPrevPixelFreeBits) &
-               *(uint *)(iVar20 + (int)modelLightGlob.prevPixelFreeBits) &
-               *(uint *)(iVar20 + (int)modelLightGlob.currPixelFreeBits);
+      if ((uVar18 & 0xffffffff) == (ulonglong)modelLightGlob.pixelFreeRover) break;
+      iVar14 = (int)((uVar18 & 0x3fffffff) << 2);
+      uVar11 = *(uint *)(iVar14 + (int)modelLightGlob.prevPrevPixelFreeBits) &
+               *(uint *)(iVar14 + (int)modelLightGlob.prevPixelFreeBits) &
+               *(uint *)(iVar14 + (int)modelLightGlob.currPixelFreeBits);
     }
     modelLightGlob.allocModelFail = 1;
     R_WarnOncePerFrame(R_WARN_MODEL_LIGHT_CACHE);
   }
-  uVar12 = __restgprlr_19(0);
-  return uVar12;
+  return 0;
 }
 
 
@@ -594,6 +575,8 @@ uint XGAddress3DTiledOffset
 
 // 8275C478  R_ClearCharacterAndViewModelLightingOrigins  (gfx_d3d/r_model_lighting.cpp:591)
 
+/* WARNING: Function: __savegprlr_19 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_19 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void R_ClearCharacterAndViewModelLightingOrigins(void)
@@ -608,7 +591,6 @@ void R_ClearCharacterAndViewModelLightingOrigins(void)
   ulonglong uVar7;
   double dVar8;
   
-  __savegprlr_19();
   uVar4 = 0;
   if (modelLightGlob.pixelFreeBitsWordCount != 0) {
     dVar8 = 3.4028234663852886e+38;
@@ -642,13 +624,14 @@ void R_ClearCharacterAndViewModelLightingOrigins(void)
       iVar5 = iVar5 + 4;
     } while (uVar4 < uVar2);
   }
-  __restgprlr_19();
   return;
 }
 
 
 // 8275A708  R_ToggleModelLightingFrame  (gfx_d3d/r_model_lighting.cpp:618)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void R_ToggleModelLightingFrame(void)
@@ -660,7 +643,6 @@ void R_ToggleModelLightingFrame(void)
   uint uVar4;
   uint uVar5;
   
-  __savegprlr_28();
   modelLightGlob.allocModelFail = 0;
   uVar1 = (ulonglong)modelLightGlob.modFrameCount + 1 & 3;
   modelLightGlob.modFrameCount = (uint)uVar1;
@@ -693,13 +675,12 @@ void R_ToggleModelLightingFrame(void)
       if (3 < smodelLightGlob.local.frameCount - *puVar2) {
         smodelLightGlob.freeableHandles[uVar5] = (short)uVar4 + 1;
         uVar5 = smodelLightGlob.local.freeableCount + 1;
-        smodelLightGlob.local.freeableCount = uVar5;
         uVar3 = smodelLightGlob.local.assignedCount;
+        smodelLightGlob.local.freeableCount = uVar5;
       }
       uVar4 = uVar4 + 1;
     } while (uVar4 < uVar3);
   }
-  __restgprlr_28();
   return;
 }
 
@@ -727,33 +708,27 @@ uint R_GetModelLightingTextureOffset(uint param_1,uint param_2)
 
 // 8275A910  R_GetTextureOffset  (gfx_d3d/r_model_lighting.cpp:774)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 uint R_GetTextureOffset(uint param_1,uint param_2,uint param_3)
 
 {
-  ulonglong uVar1;
-  uint uVar2;
-  ulonglong uVar3;
-  ulonglong uVar4;
-  
-  uVar4 = (ulonglong)(int)param_3;
-  uVar3 = (ulonglong)(int)param_2;
-  uVar1 = __savegprlr_29(param_1,uVar3);
-  if (3 < (uVar4 & 0xffffffff)) {
+  if (3 < param_3) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_model_lighting.cpp",
                     0x312,0,"%s");
   }
-  uVar2 = __restgprlr_29((((((((((((((uVar3 & 0x3ffffff0) * 4 + (uVar4 & 2)) * 2 & 0xfffffffe) +
-                                  (uVar4 & 1)) * 4 & 0xfffffffc) + (uVar1 & 0xffffffe0) +
-                                 (uVar3 & 8) & 0x7fffffff) * 2 + (uVar3 & 6)) * 8 & 0xfffffff8) +
-                             (uVar3 & 1)) * 2 & 0xfffffffe) +
-                            (((uVar3 & 0x7ffffffb) << 1 ^ uVar1) & 0x18) + (uVar1 & 4)) * 2 &
-                          0xfffffffe) + (uVar1 & 3)) * 4 & 0xfffffffc);
-  return uVar2;
+  return ((((((((param_2 & 0x3ffffff0) * 4 + (param_3 & 2)) * 2 + (param_3 & 1)) * 4 +
+              (param_1 & 0xffffffe0) + (param_2 & 8)) * 2 + (param_2 & 6)) * 8 + (param_2 & 1)) * 2
+           + (((param_2 & 0x7ffffffb) << 1 ^ param_1) & 0x18) + (param_1 & 4)) * 2 + (param_1 & 3))
+         * 4;
 }
 
 
 // 8275A9D0  R_VerifyModelLightingImageOffsets  (gfx_d3d/r_model_lighting.cpp:805)
 
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void R_VerifyModelLightingImageOffsets(void)
@@ -769,7 +744,6 @@ void R_VerifyModelLightingImageOffsets(void)
   uint uVar8;
   uint uVar9;
   
-  __savegprlr();
   uVar4 = 0;
   uVar2 = modelLightGlob.imageHeight;
   if (modelLightGlob.imageHeight != 0) {
@@ -817,48 +791,43 @@ void R_VerifyModelLightingImageOffsets(void)
       uVar4 = uVar4 + 4;
     } while (uVar4 < uVar2);
   }
-  __restgprlr();
   return;
 }
 
 
 // 8275ABB8  R_CalcModelLighting  (gfx_d3d/r_model_lighting.cpp:847)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
+
 uint R_CalcModelLighting(uint param_1,float *param_2,uint param_3,GfxModelLightExtrapolation param_4
                         ,float (*param_5) [3],float (*param_6) [3],GfxColor *param_7,float *param_8)
 
 {
   uchar *puVar1;
-  ulonglong uVar2;
-  uint uVar3;
-  ulonglong uVar4;
+  uint uVar2;
   float *in_stack_ffffff58;
   
-  uVar4 = (ulonglong)(int)param_3;
-  uVar2 = __savegprlr_23(param_1);
   PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffff,"model lighting");
-  uVar3 = (uint)uVar2;
   puVar1 = (modelLightGlob.image)->pixels;
-  if ((ulonglong)(rgp.world)->primaryLightCount <= (uVar4 & 0xffffffff)) {
+  if ((rgp.world)->primaryLightCount <= param_3) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_model_lighting.cpp",
                     0x365,0,
                     "nonSunPrimaryLightIndex doesn\'t index rgp.world->primaryLightCount\n\t%i not in [0, %i)"
                    );
   }
-  uVar3 = R_GetLightingAtPoint
-                    (&(rgp.world)->lightGrid,param_2,(uint)uVar4,
-                     puVar1 + ((((uVar3 & 0xfffffe00) + (uVar3 & 0x78) * 4 +
-                                ((uint)((uVar2 & 0xffffffff) >> 5) & 8)) * 2 +
-                               ((uint)((uVar2 & 0xffffffff) >> 5) & 4)) * 0x10 +
-                               (((uint)((uVar2 & 0xffffffff) >> 4) & 0xffffff0 ^
-                                (uint)((uVar2 & 0x7f) << 2)) & 0x18) + (uVar3 & 1) * 4) * 8,param_4,
-                     param_5,param_6,param_7,in_stack_ffffff58);
+  uVar2 = R_GetLightingAtPoint
+                    (&(rgp.world)->lightGrid,param_2,param_3,
+                     puVar1 + ((((param_1 & 0xfffffe00) + (param_1 & 0x78) * 4 + (param_1 >> 5 & 8))
+                                * 2 + (param_1 >> 5 & 4)) * 0x10 +
+                               ((param_1 >> 4 & 0xffffff0 ^ (param_1 & 0x7f) << 2) & 0x18) +
+                              (param_1 & 1) * 4) * 8,param_4,param_5,param_6,param_7,
+                     in_stack_ffffff58);
   if (1 < (r_showLightGrid->current).integer) {
-    R_ShowSamplePosPrimaryLightLine(param_2,uVar3);
+    R_ShowSamplePosPrimaryLightLine(param_2,uVar2);
   }
   PIXEndNamedEvent();
-  uVar3 = __restgprlr_23(uVar3);
-  return uVar3;
+  return uVar2;
 }
 
 
@@ -899,43 +868,44 @@ void R_SetModelGroundLighting(uint param_1,uchar *param_2)
 
 // 8275ADC8  R_SetStaticModelLighting  (gfx_d3d/r_model_lighting.cpp:920)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void R_SetStaticModelLighting(uint param_1)
 
 {
   ushort uVar1;
   GfxStaticModelDrawInst *pGVar2;
   GfxStaticModelInst *pGVar3;
-  uint uVar4;
   
-  uVar4 = __savegprlr_28(param_1);
-  if (((rgp.world)->dpvs).smodelCount <= uVar4) {
+  if (((rgp.world)->dpvs).smodelCount <= param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_model_lighting.cpp",
                     0x39d,0,
                     "smodelIndex doesn\'t index rgp.world->dpvs.smodelCount\n\t%i not in [0, %i)");
   }
   pGVar2 = ((rgp.world)->dpvs).smodelDrawInsts;
-  uVar1 = pGVar2[uVar4].lightingHandle;
-  pGVar3 = ((rgp.world)->dpvs).smodelInsts + uVar4;
+  uVar1 = pGVar2[param_1].lightingHandle;
+  pGVar3 = ((rgp.world)->dpvs).smodelInsts + param_1;
   if ((uVar1 == 0) || (modelLightGlob.totalEntryLimit < uVar1)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_model_lighting.cpp",
                     0xc2,0,"handle not in [1, modelLightGlob.totalEntryLimit]\n\t%i not in [%i, %i]"
                    );
   }
-  if ((pGVar2[uVar4].flags & 0x20) != 0) {
-    R_SetModelGroundLighting(uVar1 - 1,pGVar2[uVar4].groundLighting.array);
-    __restgprlr_28();
+  if ((pGVar2[param_1].flags & 0x20) != 0) {
+    R_SetModelGroundLighting(uVar1 - 1,pGVar2[param_1].groundLighting.array);
     return;
   }
-  uVar4 = R_CalcModelLighting(uVar1 - 1,pGVar3->lightingOrigin,(uint)pGVar2[uVar4].primaryLightIndex
-                              ,GFX_MODELLIGHT_EXTRAPOLATE,(float (*) [3])0x0,(float (*) [3])0x0,
-                              &pGVar2[uVar4].groundLighting,(float *)pGVar3);
-  __restgprlr_28(uVar4);
+  R_CalcModelLighting(uVar1 - 1,pGVar3->lightingOrigin,(uint)pGVar2[param_1].primaryLightIndex,
+                      GFX_MODELLIGHT_EXTRAPOLATE,(float (*) [3])0x0,(float (*) [3])0x0,
+                      &pGVar2[param_1].groundLighting,(float *)pGVar3);
   return;
 }
 
 
 // 8275AEC8  R_BeginAllStaticModelLighting  (gfx_d3d/r_model_lighting.cpp:946)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void R_BeginAllStaticModelLighting(void)
@@ -943,7 +913,6 @@ void R_BeginAllStaticModelLighting(void)
 {
   ulonglong uVar1;
   
-  __savegprlr_28();
   if (smodelLightGlob.local.anyNewLighting != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_model_lighting.cpp",
                     0x3b5,0,"%s");
@@ -954,13 +923,14 @@ void R_BeginAllStaticModelLighting(void)
                     0x3b9,0,"%s");
   }
   Com_Memset(smodelLightGlob.lightingBits,0,(int)uVar1);
-  __restgprlr_28();
   return;
 }
 
 
 // 8275AF70  R_SetAllStaticModelLighting  (gfx_d3d/r_model_lighting.cpp:959)
 
+/* WARNING: Function: __savegprlr_19 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_19 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void R_SetAllStaticModelLighting(void)
@@ -969,12 +939,10 @@ void R_SetAllStaticModelLighting(void)
   uint uVar1;
   ulonglong uVar2;
   ulonglong uVar3;
-  int iVar4;
-  uint *puVar5;
+  uint *puVar4;
+  uint uVar5;
   uint uVar6;
-  uint uVar7;
   
-  iVar4 = __savegprlr_19();
   if (smodelLightGlob.local.anyNewLighting != 0) {
     smodelLightGlob.local.anyNewLighting = 0;
     Profile_Begin(0x1a4);
@@ -983,32 +951,31 @@ void R_SetAllStaticModelLighting(void)
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_model_lighting.cpp"
                       ,0x3d0,0,"%s");
     }
-    uVar6 = 0;
+    uVar5 = 0;
     if (uVar2 != 0) {
-      puVar5 = smodelLightGlob.lightingBits;
+      puVar4 = smodelLightGlob.lightingBits;
       do {
-        uVar7 = *puVar5;
-        if (uVar7 != 0) {
-          for (; uVar3 = LZCOUNT(uVar7), uVar3 < 0x20; uVar7 = uVar7 & ~uVar1) {
+        uVar6 = *puVar4;
+        if (uVar6 != 0) {
+          for (; uVar3 = LZCOUNT(uVar6), uVar3 < 0x20; uVar6 = uVar6 & ~uVar1) {
             if (0x20 < uVar3) {
               MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_math.h"
                               ,0x475,0,"count doesn\'t index 33\n\t%i not in [0, %i)");
             }
             uVar1 = *(uint *)(&g_bitShift + (int)(uVar3 << 2));
-            if ((uVar1 & uVar7) == 0) {
+            if ((uVar1 & uVar6) == 0) {
               MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_model_lighting.cpp"
                               ,0x3e1,0,"%s");
             }
-            R_SetStaticModelLighting((int)uVar3 + uVar6 * 0x20);
+            R_SetStaticModelLighting((int)uVar3 + uVar5 * 0x20);
           }
         }
-        uVar6 = uVar6 + 1;
-        puVar5 = puVar5 + 1;
-      } while (uVar6 < uVar2);
+        uVar5 = uVar5 + 1;
+        puVar4 = puVar4 + 1;
+      } while (uVar5 < uVar2);
     }
-    iVar4 = Profile_EndInternal((double *)0x0);
+    Profile_EndInternal((double *)0x0);
   }
-  __restgprlr_19(iVar4);
   return;
 }
 
@@ -1153,6 +1120,9 @@ void * R_AllocModelLightingGlobal(uint param_1,char *param_2)
 
 // 8275B378  R_SetupModelLightingGlobals  (gfx_d3d/r_model_lighting.cpp:1233)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void R_SetupModelLightingGlobals(uint param_1)
 
 {
@@ -1162,11 +1132,10 @@ void R_SetupModelLightingGlobals(uint param_1)
   ulonglong uVar4;
   uint uVar5;
   
-  uVar1 = __savegprlr_27(param_1);
-  modelLightGlob.xmodelEntryLimit = (int)(uVar1 & 0x3fffff) * 0x400;
+  modelLightGlob.xmodelEntryLimit = (int)((ulonglong)param_1 & 0x3fffff) * 0x400;
   uVar4 = 0x20 - LZCOUNT(modelLightGlob.xmodelEntryLimit);
   uVar5 = (uint)uVar4;
-  uVar2 = (ulonglong)(uint)(1 << (uVar5 & 0x3f)) + (uVar1 & 0x3fffff) * -0x400;
+  uVar2 = (ulonglong)(uint)(1 << (uVar5 & 0x3f)) + ((ulonglong)param_1 & 0x3fffff) * -0x400;
   uVar1 = 0x100000001 << (uVar4 & 0x1f) | 0x100000001U >> 0x40 - (uVar4 & 0x1f);
   smodelLightGlob.local.entryLimit = (uint)uVar2;
   if ((uVar2 & 0xffffffff) < 0x1000) {
@@ -1203,13 +1172,14 @@ void R_SetupModelLightingGlobals(uint param_1)
   modelLightGlob.pixelFreeBitsSize = modelLightGlob.xmodelEntryLimit >> 3;
   modelLightGlob.pixelFreeBitsWordCount = modelLightGlob.xmodelEntryLimit >> 5;
   modelLightGlob.minFreeLightingCache = 0x7fffffff;
-  __restgprlr_27();
   return;
 }
 
 
 // 8275B4F8  R_InitModelLightingGlobals  (gfx_d3d/r_model_lighting.cpp:1285)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void R_InitModelLightingGlobals(void)
@@ -1223,7 +1193,6 @@ void R_InitModelLightingGlobals(void)
   uint **ppuVar6;
   longlong lVar7;
   
-  __savegprlr_26();
   R_SetupModelLightingGlobals(gfxCfg.maxClientRenderViews);
   R_SetModelLightingSampleDeltas();
   uVar1 = modelLightGlob.xmodelEntryLimit * 0xc;
@@ -1253,13 +1222,14 @@ void R_InitModelLightingGlobals(void)
   track_static_alloc_internal(puVar3,uVar1,"R_AllocModelLightingGlobal",0x12);
   modelLightGlob.dynamicAmbientBits = puVar3;
   Com_Memset(puVar3,0,modelLightGlob.pixelFreeBitsSize);
-  __restgprlr_26();
   return;
 }
 
 
 // 8275B640  R_ResetModelLighting  (gfx_d3d/r_model_lighting.cpp:1336)
 
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void R_ResetModelLighting(void)
@@ -1288,7 +1258,6 @@ void R_ResetModelLighting(void)
   uint uVar21;
   MaterialShaderArgument *pMVar22;
   
-  __savegprlr();
   Sys_EnterCriticalSection(CRITSECT_RESET_MODEL_LIGHTING);
   if (g_resettingLighting != false) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_model_lighting.cpp",
@@ -1399,7 +1368,6 @@ LAB_8275b888:
   }
   g_resettingLighting = false;
   Sys_LeaveCriticalSection(CRITSECT_RESET_MODEL_LIGHTING);
-  __restgprlr();
   return;
 }
 

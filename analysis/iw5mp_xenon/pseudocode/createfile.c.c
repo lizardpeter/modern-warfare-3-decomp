@@ -2,94 +2,76 @@
 
 // 828A2F18  CreateFileA  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/xrtl/createfile.c:198)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 void * CreateFileA(char *param_1,ulong param_2,ulong param_3,void *param_4,ulong param_5,
                   ulong param_6,void *param_7)
 
 {
   bool bVar1;
-  int iVar3;
-  ulonglong uVar2;
-  long lVar4;
-  void *pvVar5;
-  longlong lVar6;
-  ulonglong uVar7;
-  ulonglong uVar8;
-  uint uVar9;
-  ulong uVar10;
+  long lVar2;
+  ulong uVar3;
   ulong in_stack_ffffff48;
   void *local_60 [2];
   _STRING local_58;
   _IO_STATUS_BLOCK _Stack_50;
   _OBJECT_ATTRIBUTES local_48 [6];
   
-  uVar8 = (ulonglong)(int)param_6;
-  uVar7 = (ulonglong)(int)param_5;
-  lVar6 = (longlong)(int)param_3;
-  uVar2 = (ulonglong)(int)param_2;
-  iVar3 = __savegprlr_26(param_1,uVar2,lVar6,param_4,uVar7,uVar8,param_7);
-  uVar9 = (uint)uVar2;
-  if ((uVar7 & 0xffffffff) == 1) {
-    uVar10 = 2;
-LAB_828a2fa4:
-    RtlInitAnsiString(&local_58,iVar3);
-    if ((local_58.Length < 2) ||
-       (bVar1 = true, *(char *)((uint)local_58.Length + iVar3 + -1) != '\\')) {
-      bVar1 = false;
-    }
-    local_48[0].RootDirectory = (void *)0xfffffffd;
-    local_48[0].ObjectName = &local_58;
-    local_48[0].Attributes = 0x40;
-    if ((uVar8 & 0x4000000) != 0) {
-      uVar9 = uVar9 | 0x10000;
-    }
-    lVar4 = (*_fileIoHooks->NtCreateFile)
-                      (local_60,uVar9 | 0x100080,local_48,&_Stack_50,(_LARGE_INTEGER *)0x0,
-                       (uint)uVar8 & 0x7fa7,(ulong)lVar6,uVar10,in_stack_ffffff48);
-    if (-1 < lVar4) {
-      if ((((uVar7 & 0xffffffff) == 2) && (_Stack_50.Information == 3)) ||
-         (((uVar7 & 0xffffffff) == 4 && (_Stack_50.Information == 1)))) {
-        uVar10 = 0xb7;
-      }
-      else {
-        uVar10 = 0;
-      }
-      SetLastError(uVar10);
-      uVar2 = ZEXT48(local_60[0]);
-      goto LAB_828a3110;
-    }
-    RtlSetLastNTError(lVar4);
-    if (lVar4 == -0x3fffffcb) {
-      uVar10 = 0x50;
+  if (param_5 == 1) {
+    uVar3 = 2;
+  }
+  else if (param_5 == 2) {
+    uVar3 = 5;
+  }
+  else if (param_5 == 3) {
+    uVar3 = 1;
+  }
+  else if (param_5 == 4) {
+    uVar3 = 3;
+  }
+  else if ((param_5 != 5) || (uVar3 = 4, (param_2 & 0x40000000) == 0)) {
+    RtlSetLastNTError(-0x3ffffff3);
+    return (void *)0xffffffff;
+  }
+  RtlInitAnsiString(&local_58,param_1,param_3,param_4,param_5,param_6,param_7);
+  if ((local_58.Length < 2) || (bVar1 = true, param_1[local_58.Length - 1] != '\\')) {
+    bVar1 = false;
+  }
+  local_48[0].RootDirectory = (void *)0xfffffffd;
+  local_48[0].ObjectName = &local_58;
+  local_48[0].Attributes = 0x40;
+  if ((param_6 & 0x4000000) != 0) {
+    param_2 = param_2 | 0x10000;
+  }
+  lVar2 = (*_fileIoHooks->NtCreateFile)
+                    (local_60,param_2 | 0x100080,local_48,&_Stack_50,(_LARGE_INTEGER *)0x0,
+                     param_6 & 0x7fa7,param_3,uVar3,in_stack_ffffff48);
+  if (lVar2 < 0) {
+    RtlSetLastNTError(lVar2);
+    if (lVar2 == -0x3fffffcb) {
+      uVar3 = 0x50;
     }
     else {
-      if (lVar4 != -0x3fffff46) goto LAB_828a2f7c;
-      uVar10 = 3;
+      if (lVar2 != -0x3fffff46) {
+        return (void *)0xffffffff;
+      }
+      uVar3 = 3;
       if (!bVar1) {
-        uVar10 = 5;
+        uVar3 = 5;
       }
     }
-    SetLastError(uVar10);
+    SetLastError(uVar3);
+    return (void *)0xffffffff;
+  }
+  if (((param_5 == 2) && (_Stack_50.Information == 3)) ||
+     ((param_5 == 4 && (_Stack_50.Information == 1)))) {
+    uVar3 = 0xb7;
   }
   else {
-    if ((uVar7 & 0xffffffff) == 2) {
-      uVar10 = 5;
-      goto LAB_828a2fa4;
-    }
-    if ((uVar7 & 0xffffffff) == 3) {
-      uVar10 = 1;
-      goto LAB_828a2fa4;
-    }
-    if ((uVar7 & 0xffffffff) == 4) {
-      uVar10 = 3;
-      goto LAB_828a2fa4;
-    }
-    if (((uVar7 & 0xffffffff) == 5) && (uVar10 = 4, (uVar2 & 0x40000000) != 0)) goto LAB_828a2fa4;
-    RtlSetLastNTError(-0x3ffffff3);
+    uVar3 = 0;
   }
-LAB_828a2f7c:
-  uVar2 = 0xffffffffffffffff;
-LAB_828a3110:
-  pvVar5 = (void *)__restgprlr_26(uVar2);
-  return pvVar5;
+  SetLastError(uVar3);
+  return local_60[0];
 }
 

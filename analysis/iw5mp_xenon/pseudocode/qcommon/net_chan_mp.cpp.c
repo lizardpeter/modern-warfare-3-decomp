@@ -2,13 +2,15 @@
 
 // 82509F30  NET_AdrToString  (qcommon/net_chan_mp.cpp:210)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 char * NET_AdrToString(netadr_t param_1)
 
 {
   int iVar1;
-  int extraout_var;
+  undefined8 in_r3;
   char *pcVar2;
   undefined8 in_r4;
   ulonglong uVar3;
@@ -17,8 +19,8 @@ char * NET_AdrToString(netadr_t param_1)
   short sStack00000018;
   
   sStack00000018 = (short)((ulonglong)in_r4 >> 0x30);
-  __savegprlr_29();
   iVar1 = *in_r13;
+  param_1._8_4_ = SUB84((ulonglong)in_r3 >> 0x20,0);
   if (2 < *(uint *)(iVar1 + 0xd8)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\net_chan_mp.cpp",0xd3,
                     0,
@@ -31,35 +33,39 @@ char * NET_AdrToString(netadr_t param_1)
   pcVar2 = (char *)(*(int *)(iVar1 + 0xd8) * 0x40 + iVar1 + 0x18);
   *(int *)(iVar1 + 0xd8) = iVar4 - ((int)uVar3 + (int)((uVar3 & 0xffffffff) << 1));
   Com_sprintf(pcVar2,0x40,"unknown");
-  if (extraout_var == 2) {
+  if (param_1._8_4_ == 2) {
     Com_sprintf(pcVar2,0x40,"loopback");
-    pcVar2 = (char *)__restgprlr_29(pcVar2);
     return pcVar2;
   }
-  if (extraout_var == 4) {
+  if (param_1._8_4_ == 4) {
     BigShort(sStack00000018);
     Com_sprintf(pcVar2,0x40,"%u.%u.%u.%u:%u (%d)");
   }
-  pcVar2 = (char *)__restgprlr_29(pcVar2);
   return pcVar2;
 }
 
 
 // 8250A050  NetProf_PrepProfiling  (qcommon/net_chan_mp.cpp:258)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void NetProf_PrepProfiling(netProfileInfo_t *param_1)
 
 {
   bool bVar1;
   
-  __savegprlr_29(param_1);
   if ((net_profile->current).integer == 0) {
-    if (net_iProfilingOn == 0) goto LAB_8250a128;
+    if (net_iProfilingOn == 0) {
+      return;
+    }
     net_iProfilingOn = 0;
     Com_Printf(0x19,"Net Profiling turned off\n");
   }
   else {
-    if (net_iProfilingOn != 0) goto LAB_8250a128;
+    if (net_iProfilingOn != 0) {
+      return;
+    }
     if (((com_sv_running->current).enabled == false) ||
        ((bVar1 = CL_AnyLocalClientsRunning(), bVar1 && ((net_profile->current).integer == 2)))) {
       net_iProfilingOn = 1;
@@ -70,79 +76,76 @@ void NetProf_PrepProfiling(netProfileInfo_t *param_1)
     Com_Printf(0x19,"Net Profiling turned on: %s\n");
   }
   memset();
-LAB_8250a128:
-  __restgprlr_29();
   return;
 }
 
 
 // 8250A130  NetProf_AddPacket  (qcommon/net_chan_mp.cpp:293)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void NetProf_AddPacket(netProfileStream_t *param_1,int param_2,int param_3)
 
 {
   int iVar1;
-  int iVar2;
-  int *piVar3;
+  netProfilePacket_t *pnVar2;
   
-  iVar1 = __savegprlr_29(param_1);
   if (net_iProfilingOn == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\net_chan_mp.cpp",0x128
                     ,0,"%s");
   }
-  iVar2 = (*(int *)(iVar1 + 0x2d0) + 1) % 0x3c;
-  *(int *)(iVar1 + 0x2d0) = iVar2;
-  piVar3 = (int *)(iVar2 * 0xc + iVar1);
+  iVar1 = (param_1->iCurrPacket + 1) % 0x3c;
+  param_1->iCurrPacket = iVar1;
+  pnVar2 = param_1->packets + iVar1;
   iVar1 = Sys_Milliseconds();
-  *piVar3 = iVar1;
-  piVar3[1] = param_2;
-  piVar3[2] = param_3;
-  __restgprlr_29();
+  pnVar2->iTime = iVar1;
+  pnVar2->iSize = param_2;
+  pnVar2->bFragment = param_3;
   return;
 }
 
 
 // 8250A1D8  NetProf_NewSendPacket  (qcommon/net_chan_mp.cpp:315)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 void NetProf_NewSendPacket(netchan_t *param_1,int param_2,int param_3)
 
 {
-  int iVar1;
-  
-  iVar1 = __savegprlr_29(param_1);
   if ((net_iProfilingOn != 0) &&
-     (NetProf_AddPacket((netProfileStream_t *)(iVar1 + 0x44),param_2,param_3),
+     (NetProf_AddPacket(&(param_1->prof).send,param_2,param_3),
      ((net_showprofile->current).unsignedInt & 2) != 0)) {
     Com_Printf(0x19,"[%s] send%s: %i\n");
   }
-  __restgprlr_29();
   return;
 }
 
 
 // 8250A270  NetProf_NewRecievePacket  (qcommon/net_chan_mp.cpp:334)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 void NetProf_NewRecievePacket(netchan_t *param_1,int param_2,int param_3)
 
 {
-  int iVar1;
-  
-  iVar1 = __savegprlr_29(param_1);
   if ((net_iProfilingOn != 0) &&
-     (NetProf_AddPacket((netProfileStream_t *)(iVar1 + 0x334),param_2,param_3),
+     (NetProf_AddPacket(&(param_1->prof).recieve,param_2,param_3),
      ((net_showprofile->current).unsignedInt & 2) != 0)) {
     Com_Printf(0x19,"[%s] recieve%s: %i\n");
   }
-  __restgprlr_29();
   return;
 }
 
 
 // 8250A308  NetProf_UpdateStatistics  (qcommon/net_chan_mp.cpp:357)
+
+/* WARNING: Function: __savegprlr_20 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_20 replaced with injection: xenon_save_restore */
 
 void NetProf_UpdateStatistics(netProfileStream_t *param_1)
 
@@ -151,18 +154,16 @@ void NetProf_UpdateStatistics(netProfileStream_t *param_1)
   int iVar2;
   int iVar3;
   int iVar4;
-  int iVar5;
-  uint uVar6;
-  int iVar7;
-  ulonglong uVar8;
+  uint uVar5;
+  int iVar6;
+  ulonglong uVar7;
+  int iVar8;
   int iVar9;
   int iVar10;
   int iVar11;
-  int iVar12;
-  int *piVar13;
+  int *piVar12;
   
-  iVar2 = __savegprlr_20(param_1);
-  if (iVar2 == 0) {
+  if (param_1 == (netProfileStream_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\net_chan_mp.cpp",0x174
                     ,0,"%s");
   }
@@ -170,99 +171,94 @@ void NetProf_UpdateStatistics(netProfileStream_t *param_1)
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\net_chan_mp.cpp",0x175
                     ,0,"%s");
   }
-  iVar10 = -1;
-  uVar8 = 0;
-  iVar7 = 0;
-  iVar3 = Sys_Milliseconds();
+  iVar9 = -1;
+  uVar7 = 0;
+  iVar6 = 0;
+  iVar2 = Sys_Milliseconds();
+  iVar10 = 0;
+  iVar4 = 0;
+  iVar8 = 9999;
   iVar11 = 0;
-  iVar5 = 0;
-  iVar9 = 9999;
-  iVar12 = 0;
-  piVar13 = (int *)(iVar2 + 4);
+  piVar12 = &param_1->packets[0].iSize;
   do {
-    iVar1 = piVar13[-1];
+    iVar1 = ((netProfilePacket_t *)(piVar12 + -1))->iTime;
     if (iVar1 != 0) {
-      iVar4 = Sys_Milliseconds();
-      if (iVar4 <= iVar1 + 1000) {
-        uVar8 = uVar8 + 1;
-        if (piVar13[1] != 0) {
-          iVar7 = iVar7 + 1;
+      iVar3 = Sys_Milliseconds();
+      if (iVar3 <= iVar1 + 1000) {
+        uVar7 = uVar7 + 1;
+        if (piVar12[1] != 0) {
+          iVar6 = iVar6 + 1;
         }
-        if (iVar1 < iVar3) {
-          iVar3 = iVar1;
-          iVar10 = iVar12;
+        if (iVar1 < iVar2) {
+          iVar2 = iVar1;
+          iVar9 = iVar11;
         }
-        iVar1 = *piVar13;
-        iVar11 = iVar1 + iVar11;
-        if (iVar1 < iVar9) {
-          iVar9 = iVar1;
+        iVar1 = *piVar12;
+        iVar10 = iVar1 + iVar10;
+        if (iVar1 < iVar8) {
+          iVar8 = iVar1;
         }
-        if (iVar5 < *piVar13) {
-          iVar5 = *piVar13;
+        if (iVar4 < *piVar12) {
+          iVar4 = *piVar12;
         }
       }
     }
-    iVar12 = iVar12 + 1;
-    piVar13 = piVar13 + 3;
-  } while (iVar12 < 0x3c);
-  if ((int)uVar8 == 0) {
-    *(undefined4 *)(iVar2 + 0x2d4) = 0;
-    *(undefined4 *)(iVar2 + 0x2d8) = 0;
-    *(undefined4 *)(iVar2 + 0x2dc) = 0;
-    *(undefined4 *)(iVar2 + 0x2e0) = 0;
-    *(undefined4 *)(iVar2 + 0x2e4) = 0;
-    *(undefined4 *)(iVar2 + 0x2e8) = 0;
-    *(undefined4 *)(iVar2 + 0x2ec) = 0;
-    __restgprlr_20();
+    iVar11 = iVar11 + 1;
+    piVar12 = piVar12 + 3;
+  } while (iVar11 < 0x3c);
+  if ((int)uVar7 == 0) {
+    param_1->iBytesPerSecond = 0;
+    param_1->iLastBPSCalcTime = 0;
+    param_1->iCountedPackets = 0;
+    param_1->iCountedFragments = 0;
+    param_1->iFragmentPercentage = 0;
+    param_1->iLargestPacket = 0;
+    param_1->iSmallestPacket = 0;
     return;
   }
-  if (iVar7 == 0) {
-    *(undefined4 *)(iVar2 + 0x2e4) = 0;
+  if (iVar6 == 0) {
+    param_1->iFragmentPercentage = 0;
   }
   else {
-    uVar6 = iVar7 * 100;
-    trapWord(6,uVar8,0);
-    *(int *)(iVar2 + 0x2e4) = (int)uVar6 / (int)uVar8;
-    trapWord(5,uVar8 & ~((((ulonglong)uVar6 & 0x7fffffff) << 1 | (ulonglong)(uVar6 >> 0x1f)) - 1),
+    uVar5 = iVar6 * 100;
+    trapWord(6,uVar7,0);
+    param_1->iFragmentPercentage = (int)uVar5 / (int)uVar7;
+    trapWord(5,uVar7 & ~((((ulonglong)uVar5 & 0x7fffffff) << 1 | (ulonglong)(uVar5 >> 0x1f)) - 1),
              0xffff);
   }
-  *(int *)(iVar2 + 0x2e8) = iVar5;
-  *(int *)(iVar2 + 0x2ec) = iVar9;
-  iVar5 = Sys_Milliseconds();
-  if (*(int *)(iVar2 + 0x2d8) + 100 < iVar5) {
-    iVar5 = Sys_Milliseconds();
-    if (iVar10 != -1) {
-      uVar8 = uVar8 - 1;
-      iVar9 = iVar10 * 0xc + iVar2;
-      iVar11 = iVar11 - *(int *)(iVar9 + 4);
-      if (*(int *)(iVar9 + 8) != 0) {
-        iVar7 = iVar7 + -1;
+  param_1->iLargestPacket = iVar4;
+  param_1->iSmallestPacket = iVar8;
+  iVar4 = Sys_Milliseconds();
+  if (param_1->iLastBPSCalcTime + 100 < iVar4) {
+    iVar4 = Sys_Milliseconds();
+    if (iVar9 != -1) {
+      uVar7 = uVar7 - 1;
+      iVar10 = iVar10 - param_1->packets[iVar9].iSize;
+      if (param_1->packets[iVar9].bFragment != 0) {
+        iVar6 = iVar6 + -1;
       }
     }
-    if ((0 < iVar5 - iVar3) && (iVar9 = (int)uVar8, iVar9 != 0)) {
-      if (iVar11 == 0) {
-        *(undefined4 *)(iVar2 + 0x2d4) = 0;
-        iVar5 = Sys_Milliseconds();
-        *(int *)(iVar2 + 0x2d8) = iVar5;
-        *(int *)(iVar2 + 0x2dc) = iVar9;
-        *(int *)(iVar2 + 0x2e0) = iVar7;
-        __restgprlr_20();
+    if ((0 < iVar4 - iVar2) && (iVar8 = (int)uVar7, iVar8 != 0)) {
+      if (iVar10 == 0) {
+        param_1->iBytesPerSecond = 0;
+        iVar4 = Sys_Milliseconds();
+        param_1->iLastBPSCalcTime = iVar4;
+        param_1->iCountedPackets = iVar8;
+        param_1->iCountedFragments = iVar6;
         return;
       }
-      *(int *)(iVar2 + 0x2d4) =
-           (int)((float)(longlong)iVar11 / ((float)(longlong)(iVar5 - iVar3) * 0.001));
-      iVar5 = Sys_Milliseconds();
-      *(int *)(iVar2 + 0x2d8) = iVar5;
-      *(int *)(iVar2 + 0x2dc) = iVar9;
-      *(int *)(iVar2 + 0x2e0) = iVar7;
-      __restgprlr_20();
+      param_1->iBytesPerSecond =
+           (int)((float)(longlong)iVar10 / ((float)(longlong)(iVar4 - iVar2) * 0.001));
+      iVar4 = Sys_Milliseconds();
+      param_1->iLastBPSCalcTime = iVar4;
+      param_1->iCountedPackets = iVar8;
+      param_1->iCountedFragments = iVar6;
       return;
     }
-    *(undefined4 *)(iVar2 + 0x2d4) = 0;
+    param_1->iBytesPerSecond = 0;
   }
-  *(int *)(iVar2 + 0x2dc) = (int)uVar8;
-  *(int *)(iVar2 + 0x2e0) = iVar7;
-  __restgprlr_20();
+  param_1->iCountedPackets = (int)uVar7;
+  param_1->iCountedFragments = iVar6;
   return;
 }
 
@@ -381,15 +377,14 @@ void Netchan_SetUpBuffers(netchan_t *param_1,uchar *param_2,int param_3,uchar *p
 
 // 8250A908  Netchan_Setup  (qcommon/net_chan_mp.cpp:674)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 void Netchan_Setup(netsrc_t param_1,netchan_t *param_2,netadr_t param_3,int param_4,char *param_5,
                   int param_6,char *param_7,int param_8)
 
 {
-  netsrc_t nVar1;
-  longlong lVar2;
-  longlong lVar3;
   uchar *in_r10;
   netadrtype_t nStack00000020;
   undefined4 uStack00000024;
@@ -397,13 +392,10 @@ void Netchan_Setup(netsrc_t param_1,netchan_t *param_2,netadr_t param_3,int para
   netsrc_t nStack0000002c;
   int in_stack_00000054;
   
-  lVar3 = (longlong)(int)param_5;
-  lVar2 = (longlong)param_4;
-  nVar1 = __savegprlr_27(param_1);
-  _nStack00000020 = lVar2;
-  _uStack00000028 = lVar3;
+  _uStack00000028 = (longlong)(int)param_5;
+  _nStack00000020 = (longlong)param_4;
   memset();
-  param_2->sock = nVar1;
+  param_2->sock = param_1;
   param_2->unsentBuffer = (uchar *)param_7;
   param_2->unsentBufferSize = param_8;
   param_2->incomingSequence = 0;
@@ -415,100 +407,97 @@ void Netchan_Setup(netsrc_t param_1,netchan_t *param_2,netadr_t param_3,int para
   param_2->fragmentBuffer = in_r10;
   param_2->fragmentBufferSize = in_stack_00000054;
   NetProf_PrepProfiling(&param_2->prof);
-  __restgprlr_27();
   return;
 }
 
 
 // 8250A9A0  Netchan_TransmitNextFragment  (qcommon/net_chan_mp.cpp:700)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 bool Netchan_TransmitNextFragment(netchan_t *param_1)
 
 {
-  uint *puVar1;
-  uint uVar2;
-  undefined1 uVar3;
-  ulonglong uVar4;
-  int iVar5;
+  uint uVar1;
+  int iVar2;
+  longlong lVar3;
+  int iVar4;
   netadr_t in_stack_fffffa58;
   msg_t local_560;
   uchar auStack_530 [1328];
   
-  puVar1 = (uint *)__savegprlr_26(param_1);
   Profile_Begin(0x126);
-  NetProf_PrepProfiling((netProfileInfo_t *)(puVar1 + 0x11));
+  NetProf_PrepProfiling(&param_1->prof);
   MSG_Init(&local_560,auStack_530,0x4f0);
-  MSG_WriteLong(&local_560,*puVar1 | 0x80000000);
-  uVar2 = puVar1[0xd];
-  iVar5 = 0x4e1;
-  if ((int)puVar1[0xe] < (int)(uVar2 + 0x4e1)) {
-    iVar5 = puVar1[0xe] - uVar2;
+  MSG_WriteLong(&local_560,param_1->outgoingSequence | 0x80000000);
+  iVar2 = param_1->unsentFragmentStart;
+  iVar4 = 0x4e1;
+  if (param_1->unsentLength < iVar2 + 0x4e1) {
+    iVar4 = param_1->unsentLength - iVar2;
   }
-  MSG_WriteLong(&local_560,uVar2);
-  MSG_WriteShort(&local_560,iVar5);
-  MSG_WriteData(&local_560,(void *)(puVar1[0xf] + puVar1[0xd]),iVar5);
+  MSG_WriteLong(&local_560,iVar2);
+  MSG_WriteShort(&local_560,iVar4);
+  MSG_WriteData(&local_560,param_1->unsentBuffer + param_1->unsentFragmentStart,iVar4);
   if (local_560.overflowed != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\net_chan_mp.cpp",0x2e3
                     ,0,"%s");
   }
-  uVar2 = FakeLag_SendPacket(puVar1[1],local_560.cursize,local_560.data,in_stack_fffffa58);
-  uVar4 = (longlong)((int)uVar2 >> 0x1f) + 1 + (ulonglong)(0xfffffffe < uVar2);
+  uVar1 = FakeLag_SendPacket(param_1->sock,local_560.cursize,local_560.data,in_stack_fffffa58);
+  lVar3 = (longlong)((int)uVar1 >> 0x1f) + 1 + (ulonglong)(0xfffffffe < uVar1);
   if ((net_iProfilingOn != 0) &&
-     (NetProf_AddPacket((netProfileStream_t *)(puVar1 + 0x11),local_560.cursize,1),
+     (NetProf_AddPacket(&(param_1->prof).send,local_560.cursize,1),
      ((net_showprofile->current).unsignedInt & 2) != 0)) {
     Com_Printf(0x19,"[%s] send%s: %i\n");
   }
   if (((showpackets->current).integer != 0) &&
-     ((1 < (showpackets->current).integer || (puVar1[4] != 2)))) {
+     ((1 < (showpackets->current).integer || ((param_1->remoteAddress).type != NA_LOOPBACK)))) {
     Com_Printf(0x19,"[%s] send %4i : s=%i fragment=%i,%i\n");
   }
-  uVar2 = puVar1[0xd];
-  puVar1[0xd] = iVar5 + uVar2;
-  if ((iVar5 + uVar2 == puVar1[0xe]) && (iVar5 != 0x4e1)) {
-    puVar1[0xc] = 0;
-    *puVar1 = *puVar1 + 1;
+  iVar2 = iVar4 + param_1->unsentFragmentStart;
+  param_1->unsentFragmentStart = iVar2;
+  if ((iVar2 == param_1->unsentLength) && (iVar4 != 0x4e1)) {
+    param_1->unsentFragments = 0;
+    param_1->outgoingSequence = param_1->outgoingSequence + 1;
   }
   Profile_EndInternal((double *)0x0);
-  uVar3 = __restgprlr_26((-uVar4 & ~uVar4 & 0xffffffff) >> 0x1f);
-  return (bool)uVar3;
+  return (bool)((byte)((byte)((ulonglong)-lVar3 >> 0x18) & ~(byte)((ulonglong)lVar3 >> 0x18)) >> 7);
 }
 
 
 // 8250ABA0  Netchan_Transmit  (qcommon/net_chan_mp.cpp:786)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 bool Netchan_Transmit(netchan_t *param_1,int param_2,uchar *param_3)
 
 {
-  netchan_t *pnVar1;
-  void *pvVar2;
-  undefined1 uVar4;
-  bool bVar5;
-  uint uVar3;
-  ulonglong uVar6;
+  void *pvVar1;
+  bool bVar3;
+  uint uVar2;
+  longlong lVar4;
   netadr_t in_stack_fffffa58;
   msg_t local_550;
   uchar auStack_520 [1312];
   
-  pnVar1 = (netchan_t *)__savegprlr_27(param_1);
   Profile_Begin(0x126);
   if (0x10000 < param_2) {
-    pvVar2 = FS_FOpenFileWrite("badpacket.dat");
-    if (pvVar2 != (void *)0x0) {
-      FS_Write(param_3,param_2,pvVar2);
-      FS_FCloseFile(pvVar2);
+    pvVar1 = FS_FOpenFileWrite("badpacket.dat");
+    if (pvVar1 != (void *)0x0) {
+      FS_Write(param_3,param_2,pvVar1);
+      FS_FCloseFile(pvVar1);
     }
     Com_Error(ERR_DROP,"\x15Netchan_Transmit: length = %i");
   }
-  pnVar1->unsentFragmentStart = 0;
+  param_1->unsentFragmentStart = 0;
   if (param_2 < 0x4e1) {
-    NetProf_PrepProfiling(&pnVar1->prof);
+    NetProf_PrepProfiling(&param_1->prof);
     MSG_Init(&local_550,auStack_520,0x4f0);
-    MSG_WriteLong(&local_550,pnVar1->outgoingSequence);
-    pnVar1->outgoingSequence = pnVar1->outgoingSequence + 1;
+    MSG_WriteLong(&local_550,param_1->outgoingSequence);
+    param_1->outgoingSequence = param_1->outgoingSequence + 1;
     if ((packetDebug->current).enabled != false) {
       Com_Printf(0x19,"Adding %i byte payload to packet\n");
     }
@@ -520,20 +509,20 @@ bool Netchan_Transmit(netchan_t *param_1,int param_2,uchar *param_3)
     if ((packetDebug->current).enabled != false) {
       Com_Printf(0x19,"Sending %i byte packet\n");
     }
-    uVar3 = FakeLag_SendPacket(pnVar1->sock,local_550.cursize,local_550.data,in_stack_fffffa58);
-    uVar6 = (longlong)((int)uVar3 >> 0x1f) + 1 + (ulonglong)(0xfffffffe < uVar3);
+    uVar2 = FakeLag_SendPacket(param_1->sock,local_550.cursize,local_550.data,in_stack_fffffa58);
+    lVar4 = (longlong)((int)uVar2 >> 0x1f) + 1 + (ulonglong)(0xfffffffe < uVar2);
     if ((net_iProfilingOn != 0) &&
-       (NetProf_AddPacket(&(pnVar1->prof).send,local_550.cursize,0),
+       (NetProf_AddPacket(&(param_1->prof).send,local_550.cursize,0),
        ((net_showprofile->current).unsignedInt & 2) != 0)) {
       Com_Printf(0x19,"[%s] send%s: %i\n");
     }
     if (((showpackets->current).integer != 0) &&
-       ((1 < (showpackets->current).integer || ((pnVar1->remoteAddress).type != NA_LOOPBACK)))) {
+       ((1 < (showpackets->current).integer || ((param_1->remoteAddress).type != NA_LOOPBACK)))) {
       Com_Printf(0x19,"[%s] send->%u.%u.%u.%u (%4i bytes) : s=%i ack=%i\n");
     }
     Profile_EndInternal((double *)0x0);
-    uVar4 = __restgprlr_27((-uVar6 & ~uVar6 & 0xffffffff) >> 0x1f);
-    return (bool)uVar4;
+    return (bool)((byte)((byte)((ulonglong)-lVar4 >> 0x18) & ~(byte)((ulonglong)lVar4 >> 0x18)) >> 7
+                 );
   }
   if (((packetDebug->current).enabled != false) || ((packetFragmentDebug->current).enabled != false)
      ) {
@@ -542,30 +531,30 @@ bool Netchan_Transmit(netchan_t *param_1,int param_2,uchar *param_3)
                      "Netchan_Transmit - Fragmenting packet of size %i, max length is %i. Destination is %s\n"
                     );
   }
-  if (pnVar1->unsentFragments != 0) {
+  if (param_1->unsentFragments != 0) {
     Com_PrintError(0x19,
                    "Netchan_Transmit - Overwriting unsent fragment information: %i / %i. Previous large packet will be lost.\n"
                   );
   }
-  pnVar1->unsentLength = param_2;
-  pnVar1->unsentFragments = 1;
-  if (pnVar1->unsentBufferSize < param_2) {
+  param_1->unsentLength = param_2;
+  param_1->unsentFragments = 1;
+  if (param_1->unsentBufferSize < param_2) {
     Com_PrintError(0x19,
                    "Trying to send a %i byte packet but the unsentBufferSize is only %i bytes\n");
     Profile_EndInternal((double *)0x0);
-    uVar4 = __restgprlr_27(0);
-    return (bool)uVar4;
+    return false;
   }
-  Com_Memcpy(pnVar1->unsentBuffer,param_3,param_2);
-  bVar5 = Netchan_TransmitNextFragment(pnVar1);
+  Com_Memcpy(param_1->unsentBuffer,param_3,param_2);
+  bVar3 = Netchan_TransmitNextFragment(param_1);
   Profile_EndInternal((double *)0x0);
-  uVar4 = __restgprlr_27(bVar5);
-  return (bool)uVar4;
+  return bVar3;
 }
 
 
 // 8250AEE0  Netchan_Process  (qcommon/net_chan_mp.cpp:921)
 
+/* WARNING: Function: __savegprlr_21 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_21 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 int Netchan_Process(netchan_t *param_1,msg_t *param_2)
@@ -573,34 +562,32 @@ int Netchan_Process(netchan_t *param_1,msg_t *param_2)
 {
   bool bVar1;
   netadrtype_t nVar2;
-  netchan_t *pnVar4;
   ulonglong uVar3;
+  int iVar5;
   int iVar6;
   int iVar7;
-  int iVar8;
-  longlong lVar9;
+  longlong lVar8;
   netadr_t in_stack_ffffff58;
-  uint uVar5;
+  uint uVar4;
   
-  pnVar4 = (netchan_t *)__savegprlr_21(param_1);
-  NetProf_PrepProfiling(&pnVar4->prof);
+  NetProf_PrepProfiling(&param_1->prof);
   MSG_BeginReading(param_2);
-  uVar5 = MSG_ReadLong(param_2);
-  uVar3 = (ulonglong)(int)uVar5;
-  bVar1 = (uVar5 & 0x80000000) == 0;
+  uVar4 = MSG_ReadLong(param_2);
+  uVar3 = (ulonglong)(int)uVar4;
+  bVar1 = (uVar4 & 0x80000000) == 0;
   if (bVar1) {
+    iVar5 = 0;
     iVar6 = 0;
-    iVar7 = 0;
   }
   else {
-    uVar3 = (ulonglong)uVar5 & 0x7fffffff;
-    iVar6 = MSG_ReadLong(param_2);
-    iVar7 = MSG_ReadShort(param_2);
+    uVar3 = (ulonglong)uVar4 & 0x7fffffff;
+    iVar5 = MSG_ReadLong(param_2);
+    iVar6 = MSG_ReadShort(param_2);
   }
   bVar1 = !bVar1;
-  NetProf_NewRecievePacket(pnVar4,param_2->cursize,(uint)bVar1);
+  NetProf_NewRecievePacket(param_1,param_2->cursize,(uint)bVar1);
   if (((showpackets->current).integer != 0) &&
-     ((1 < (showpackets->current).integer || ((pnVar4->remoteAddress).type != NA_LOOPBACK)))) {
+     ((1 < (showpackets->current).integer || ((param_1->remoteAddress).type != NA_LOOPBACK)))) {
     if (bVar1) {
       Com_Printf(0x19,"[%s] recv %4i : s=%i fragment=%i,%i\n");
     }
@@ -608,93 +595,88 @@ int Netchan_Process(netchan_t *param_1,msg_t *param_2)
       Com_Printf(0x19,"[%s] recv %4i : s=%i\n");
     }
   }
-  iVar8 = (int)uVar3;
-  if (iVar8 <= pnVar4->incomingSequence) {
+  iVar7 = (int)uVar3;
+  if (iVar7 <= param_1->incomingSequence) {
     if (((showdrop->current).enabled != false) ||
        (((showpackets->current).integer != 0 &&
-        ((1 < (showpackets->current).integer || ((pnVar4->remoteAddress).type != NA_LOOPBACK)))))) {
+        ((1 < (showpackets->current).integer || ((param_1->remoteAddress).type != NA_LOOPBACK))))))
+    {
       NET_AdrToString(in_stack_ffffff58);
       Com_Printf(0x19,"[%s] %s: Out of order packet %i at %i\n");
     }
-    iVar6 = __restgprlr_21(0);
-    return iVar6;
+    return 0;
   }
-  lVar9 = (uVar3 - (uint)pnVar4->incomingSequence) + -1;
-  pnVar4->dropped = (int)lVar9;
-  if ((0 < lVar9) &&
+  lVar8 = (uVar3 - (uint)param_1->incomingSequence) + -1;
+  param_1->dropped = (int)lVar8;
+  if ((0 < lVar8) &&
      (((showdrop->current).enabled != false ||
       (((showpackets->current).integer != 0 &&
-       ((1 < (showpackets->current).integer || ((pnVar4->remoteAddress).type != NA_LOOPBACK))))))))
+       ((1 < (showpackets->current).integer || ((param_1->remoteAddress).type != NA_LOOPBACK))))))))
   {
     NET_AdrToString(in_stack_ffffff58);
     Com_Printf(0x19,"[%s] %s: Dropped %i packets at %i\n");
   }
   if (bVar1) {
-    if (iVar8 != pnVar4->fragmentSequence) {
-      pnVar4->fragmentSequence = iVar8;
-      pnVar4->fragmentLength = 0;
+    if (iVar7 != param_1->fragmentSequence) {
+      param_1->fragmentSequence = iVar7;
+      param_1->fragmentLength = 0;
     }
-    if (iVar6 != pnVar4->fragmentLength) {
+    if (iVar5 != param_1->fragmentLength) {
       if (((showdrop->current).enabled != false) ||
          (((showpackets->current).integer != 0 &&
-          ((1 < (showpackets->current).integer || ((pnVar4->remoteAddress).type != NA_LOOPBACK))))))
-      {
+          ((1 < (showpackets->current).integer || ((param_1->remoteAddress).type != NA_LOOPBACK)))))
+         ) {
         NET_AdrToString(in_stack_ffffff58);
         Com_Printf(0x19,"%s:Dropped a message fragment\n");
       }
-      iVar6 = __restgprlr_21(0);
-      return iVar6;
+      return 0;
     }
-    if (((iVar7 < 0) || (param_2->cursize < param_2->readcount + iVar7)) ||
-       (pnVar4->fragmentBufferSize < pnVar4->fragmentLength + iVar7)) {
+    if (((iVar6 < 0) || (param_2->cursize < param_2->readcount + iVar6)) ||
+       (param_1->fragmentBufferSize < param_1->fragmentLength + iVar6)) {
       if (((showdrop->current).enabled != false) ||
          (((showpackets->current).integer != 0 &&
-          ((1 < (showpackets->current).integer || ((pnVar4->remoteAddress).type != NA_LOOPBACK))))))
-      {
+          ((1 < (showpackets->current).integer || ((param_1->remoteAddress).type != NA_LOOPBACK)))))
+         ) {
         NET_AdrToString(in_stack_ffffff58);
         Com_Printf(0x19,"%s:illegal fragment length %i (readcount is %i, cursize is %i)\n");
       }
-      iVar6 = __restgprlr_21(0);
-      return iVar6;
+      return 0;
     }
     memcpy();
-    nVar2 = (pnVar4->remoteAddress).type;
-    iVar6 = iVar7 + pnVar4->fragmentLength;
-    pnVar4->fragmentLength = iVar6;
-    if (iVar7 == 0x4e1) {
+    nVar2 = (param_1->remoteAddress).type;
+    iVar5 = iVar6 + param_1->fragmentLength;
+    param_1->fragmentLength = iVar5;
+    if (iVar6 == 0x4e1) {
       if (((showdrop->current).enabled != false) ||
          (((showpackets->current).integer != 0 &&
           ((1 < (showpackets->current).integer || (nVar2 != NA_LOOPBACK)))))) {
         NET_AdrToString(in_stack_ffffff58);
         Com_Printf(0x19,"%s:fragmentLength == maxFragmentLength (%i)\n");
       }
-      iVar6 = __restgprlr_21(0);
-      return iVar6;
+      return 0;
     }
-    if (param_2->maxsize < iVar6) {
+    if (param_2->maxsize < iVar5) {
       NET_AdrToString(in_stack_ffffff58);
       Com_Printf(0x19,"%s:fragmentLength %i > msg->maxsize\n");
-      iVar6 = __restgprlr_21(0);
-      return iVar6;
+      return 0;
     }
     MSG_Init(param_2,param_2->data,param_2->maxsize);
-    MSG_WriteLong(param_2,iVar8);
-    MSG_WriteData(param_2,pnVar4->fragmentBuffer,pnVar4->fragmentLength);
+    MSG_WriteLong(param_2,iVar7);
+    MSG_WriteData(param_2,param_1->fragmentBuffer,param_1->fragmentLength);
     if (param_2->overflowed != 0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\net_chan_mp.cpp",
                       0x42c,0,"%s");
     }
-    pnVar4->fragmentLength = 0;
+    param_1->fragmentLength = 0;
     MSG_BeginReading(param_2);
-    iVar6 = MSG_ReadLong(param_2);
-    if (iVar6 != iVar8) {
+    iVar5 = MSG_ReadLong(param_2);
+    if (iVar5 != iVar7) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\net_chan_mp.cpp",
                       0x431,0,"%s == %s");
     }
   }
-  pnVar4->incomingSequence = iVar8;
-  iVar6 = __restgprlr_21(1);
-  return iVar6;
+  param_1->incomingSequence = iVar7;
+  return 1;
 }
 
 
@@ -932,41 +914,37 @@ int NET_GetClientPacket(netadr_t *param_1,msg_t *param_2)
 
 // 8250B780  NET_GetServerPacket  (qcommon/net_chan_mp.cpp:1273)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* int __cdecl NET_GetServerPacket(struct netadr_t *,struct msg_t *) */
 
 int NET_GetServerPacket(netadr_t *param_1,msg_t *param_2)
 
 {
-  netadr_t *pnVar1;
-  int iVar2;
-  int iVar3;
-  ulonglong uVar4;
+  int iVar1;
   netsrc_t nStack_50;
   netsrc_t anStack_4c [3];
   sockaddr_in asStack_40 [4];
   
-  uVar4 = (ulonglong)(int)param_2;
-  pnVar1 = (netadr_t *)__savegprlr_27(param_1);
-  if (pnVar1 == (netadr_t *)0x0) {
+  if (param_1 == (netadr_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_net.cpp",0x1ec,0,
                     "%s");
   }
-  if ((uVar4 & 0xffffffff) == 0) {
+  if (param_2 == (msg_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_net.cpp",0x1ed,0,
                     "%s");
   }
   if (xnetInitialized != 0) {
-    iVar2 = (int)uVar4;
-    if (*(int *)(iVar2 + 8) == 0) {
+    if (param_2->data == (uchar *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_net.cpp",0x1f2,0
                       ,"%s");
     }
-    iVar3 = Xenon_GetPacket(*(char **)(iVar2 + 8),*(int *)(iVar2 + 0x10),asStack_40,&nStack_50,
-                            anStack_4c);
-    if (0 < iVar3) {
-      *(int *)(iVar2 + 0x14) = iVar3;
-      SockadrToNetadr((sockaddr *)asStack_40,pnVar1);
+    iVar1 = Xenon_GetPacket((char *)param_2->data,param_2->maxsize,asStack_40,&nStack_50,anStack_4c)
+    ;
+    if (0 < iVar1) {
+      param_2->cursize = iVar1;
+      SockadrToNetadr((sockaddr *)asStack_40,param_1);
       if (NS_PACKET < nStack_50) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_net.cpp",0x200
                         ,0,"to_client doesn\'t index NS_INVALID_NETSRC\n\t%i not in [0, %i)");
@@ -975,31 +953,28 @@ int NET_GetServerPacket(netadr_t *param_1,msg_t *param_2)
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_net.cpp",0x201
                         ,0,"from_client doesn\'t index NS_INVALID_NETSRC\n\t%i not in [0, %i)");
       }
-      *(netsrc_t *)(iVar2 + 0x28) = nStack_50;
-      pnVar1->localNetID = anStack_4c[0];
-      iVar2 = __restgprlr_27(1);
-      return iVar2;
+      param_2->targetLocalNetID = nStack_50;
+      param_1->localNetID = anStack_4c[0];
+      return 1;
     }
   }
-  iVar2 = __restgprlr_27(0);
-  return iVar2;
+  return 0;
 }
 
 
 // 8250B788  NET_GetServerLoopPacket_Real  (qcommon/net_chan_mp.cpp:1279)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 int NET_GetServerLoopPacket_Real(netadr_t *param_1,msg_t *param_2)
 
 {
   uint uVar1;
-  netadr_t *pnVar2;
-  int iVar3;
   char in_RESERVE;
   byte in_cr0;
   
-  pnVar2 = (netadr_t *)__savegprlr_27(param_1);
   if (0x40 < sv_loopback.send - sv_loopback.get) {
     Com_PrintWarning(0x19,
                      "Tried to store more than MAX_SV_LOOPBACK_PACKETS = %i client loopback packets at once; some will be dropped.\n"
@@ -1007,8 +982,7 @@ int NET_GetServerLoopPacket_Real(netadr_t *param_1,msg_t *param_2)
     sv_loopback.get = sv_loopback.send + -0x40;
   }
   if (sv_loopback.send <= sv_loopback.get) {
-    iVar3 = __restgprlr_27(0);
-    return iVar3;
+    return 0;
   }
   uVar1 = sv_loopback.get & 0x3f;
   do {
@@ -1031,29 +1005,30 @@ int NET_GetServerLoopPacket_Real(netadr_t *param_1,msg_t *param_2)
   }
   memcpy();
   param_2->cursize = sv_loopback.msgs[uVar1].datalen;
-  pnVar2->type = NA_BOT;
-  pnVar2->ip[0] = '\0';
-  pnVar2->ip[1] = '\0';
-  pnVar2->ip[2] = '\0';
-  pnVar2->ip[3] = '\0';
-  *(undefined4 *)&pnVar2->port = 0;
-  pnVar2->localNetID = NS_CLIENT1;
-  NetAdr_SetType(pnVar2,NA_LOOPBACK);
+  param_1->type = NA_BOT;
+  param_1->ip[0] = '\0';
+  param_1->ip[1] = '\0';
+  param_1->ip[2] = '\0';
+  param_1->ip[3] = '\0';
+  *(undefined4 *)&param_1->port = 0;
+  param_1->localNetID = NS_CLIENT1;
+  NetAdr_SetType(param_1,NA_LOOPBACK);
   uVar1 = sv_loopback.msgs[uVar1].port;
-  pnVar2->port = (ushort)uVar1;
+  param_1->port = (ushort)uVar1;
   if (3 < (uVar1 & 0xffff)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\net_chan_mp.cpp",0x51f
                     ,0,"net_from->port doesn\'t index NS_MAXCLIENTS\n\t%i not in [0, %i)");
   }
-  pnVar2->localNetID = (uint)pnVar2->port;
+  param_1->localNetID = (uint)param_1->port;
   param_2->targetLocalNetID = NS_MAXCLIENTS;
-  iVar3 = __restgprlr_27(1);
-  return iVar3;
+  return 1;
 }
 
 
 // 8250B928  NET_GetClientLoopPacket_Real  (qcommon/net_chan_mp.cpp:1321)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 int NET_GetClientLoopPacket_Real(netsrc_t param_1,netadr_t *param_2,msg_t *param_3)
@@ -1062,50 +1037,48 @@ int NET_GetClientLoopPacket_Real(netsrc_t param_1,netadr_t *param_2,msg_t *param
   uint uVar1;
   int iVar2;
   uint uVar3;
-  longlong lVar4;
-  int iVar5;
+  int iVar4;
+  longlong lVar5;
   uint *puVar6;
   char in_RESERVE;
   byte in_cr0;
   
-  lVar4 = __savegprlr_28(param_1);
-  iVar5 = (int)(lVar4 * 0x3ba8);
-  lVar4 = lVar4 * 0x3ba8 + -0x7c96adf8;
-  puVar6 = (uint *)lVar4;
-  if (0xc < *(int *)((int)(cl_loopbacks[0].msgs + 0xc) + iVar5 + 4) -
-            *(int *)((int)(cl_loopbacks[0].msgs + 0xc) + iVar5)) {
+  iVar4 = (int)((longlong)(int)param_1 * 0x3ba8);
+  lVar5 = (longlong)(int)param_1 * 0x3ba8 + -0x7c96adf8;
+  puVar6 = (uint *)lVar5;
+  if (0xc < *(int *)((int)(cl_loopbacks[0].msgs + 0xc) + iVar4 + 4) -
+            *(int *)((int)(cl_loopbacks[0].msgs + 0xc) + iVar4)) {
     Com_PrintWarning(0x19,
                      "Tried to store more than MAX_CL_LOOPBACK_PACKETS (%i) client loopback packets at once; %i packets will be dropped.\n"
                     );
-    *puVar6 = *(int *)((int)(cl_loopbacks[0].msgs + 0xc) + iVar5 + 4) - 0xc;
+    *puVar6 = *(int *)((int)(cl_loopbacks[0].msgs + 0xc) + iVar4 + 4) - 0xc;
   }
-  if (*(int *)((int)(cl_loopbacks[0].msgs + 0xc) + iVar5 + 4) <= (int)*puVar6) {
-    iVar5 = __restgprlr_28(0);
-    return iVar5;
+  if (*(int *)((int)(cl_loopbacks[0].msgs + 0xc) + iVar4 + 4) <= (int)*puVar6) {
+    return 0;
   }
   uVar1 = *puVar6;
   iVar2 = (int)uVar1 / 0xc + ((int)uVar1 >> 0x1f);
   do {
     if (in_RESERVE != '\0') {
-      uVar3 = storeWordConditionalIndexed((ulonglong)*puVar6 + 1,0,lVar4);
+      uVar3 = storeWordConditionalIndexed((ulonglong)*puVar6 + 1,0,lVar5);
       *puVar6 = uVar3;
       in_cr0 = 2;
     }
   } while (!(bool)(in_cr0 >> 1 & 1));
   sync(1);
-  iVar5 = (uVar1 + ((iVar2 - (iVar2 >> 0x1f)) * 3 & 0x3fffffffU) * -4) * 0x4f8 + iVar5;
-  if (0x4ef < *(uint *)((int)cl_loopbacks + iVar5 + 0x4f0)) {
+  iVar4 = (uVar1 + ((iVar2 - (iVar2 >> 0x1f)) * 3 & 0x3fffffffU) * -4) * 0x4f8 + iVar4;
+  if (0x4ef < *(uint *)((int)cl_loopbacks + iVar4 + 0x4f0)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\net_chan_mp.cpp",0x53f
                     ,0,
                     "loop->msgs[i].datalen doesn\'t index MAX_LOOPBACK_PACKETLEN\n\t%i not in [0, %i)"
                    );
   }
-  if (param_3->maxsize < *(int *)((int)cl_loopbacks + iVar5 + 0x4f0)) {
+  if (param_3->maxsize < *(int *)((int)cl_loopbacks + iVar4 + 0x4f0)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\net_chan_mp.cpp",0x540
                     ,0,"%s");
   }
   memcpy();
-  param_3->cursize = *(int *)((int)cl_loopbacks + iVar5 + 0x4f0);
+  param_3->cursize = *(int *)((int)cl_loopbacks + iVar4 + 0x4f0);
   param_2->type = NA_BOT;
   param_2->ip[0] = '\0';
   param_2->ip[1] = '\0';
@@ -1114,7 +1087,7 @@ int NET_GetClientLoopPacket_Real(netsrc_t param_1,netadr_t *param_2,msg_t *param
   *(undefined4 *)&param_2->port = 0;
   param_2->localNetID = NS_CLIENT1;
   NetAdr_SetType(param_2,NA_LOOPBACK);
-  uVar1 = *(uint *)((int)cl_loopbacks + iVar5 + 0x4f4);
+  uVar1 = *(uint *)((int)cl_loopbacks + iVar4 + 0x4f4);
   param_2->port = (ushort)uVar1;
   if (3 < (uVar1 & 0xffff)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\net_chan_mp.cpp",0x549
@@ -1122,8 +1095,7 @@ int NET_GetClientLoopPacket_Real(netsrc_t param_1,netadr_t *param_2,msg_t *param
   }
   param_2->localNetID = NS_MAXCLIENTS;
   param_3->targetLocalNetID = (uint)param_2->port;
-  iVar5 = __restgprlr_28(1);
-  return iVar5;
+  return 1;
 }
 
 
@@ -1147,63 +1119,57 @@ int NET_GetLoopPacket_Real(netsrc_t param_1,netadr_t *param_2,msg_t *param_3)
 
 // 8250BB10  NET_GetLoopPacket  (qcommon/net_chan_mp.cpp:1372)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 int NET_GetLoopPacket(netsrc_t param_1,netadr_t *param_2,msg_t *param_3)
 
 {
-  netsrc_t nVar1;
-  int iVar2;
+  int iVar1;
   
-  nVar1 = __savegprlr_29(param_1);
-  if (fakelagInitialized != false) {
-    iVar2 = FakeLag_GetPacket(true,nVar1,param_2,param_3);
-    if (iVar2 != 0) {
-      iVar2 = __restgprlr_29(1);
-      return iVar2;
+  if (fakelagInitialized) {
+    iVar1 = FakeLag_GetPacket(true,param_1,param_2,param_3);
+    if (iVar1 != 0) {
+      return 1;
     }
     if ((fakelag_current->current).integer != 0) {
-      iVar2 = __restgprlr_29(0);
-      return iVar2;
+      return 0;
     }
   }
-  if (nVar1 == NS_MAXCLIENTS) {
-    iVar2 = NET_GetServerLoopPacket_Real(param_2,param_3);
-    iVar2 = __restgprlr_29(iVar2);
-    return iVar2;
+  if (param_1 == NS_MAXCLIENTS) {
+    iVar1 = NET_GetServerLoopPacket_Real(param_2,param_3);
+    return iVar1;
   }
-  iVar2 = NET_GetClientLoopPacket_Real(nVar1,param_2,param_3);
-  iVar2 = __restgprlr_29(iVar2);
-  return iVar2;
+  iVar1 = NET_GetClientLoopPacket_Real(param_1,param_2,param_3);
+  return iVar1;
 }
 
 
 // 8250BBB8  NET_SendServerLoopPacket  (qcommon/net_chan_mp.cpp:1389)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 void NET_SendServerLoopPacket(int param_1,int param_2,void *param_3,netadr_t param_4)
 
 {
   uint uVar1;
-  uint uVar2;
-  longlong lVar3;
   int in_r7;
   char in_RESERVE;
   byte in_cr0;
   int iStack0000003c;
   
-  lVar3 = (longlong)param_2;
   iStack0000003c = in_r7;
-  uVar2 = __savegprlr_27(param_1,lVar3,param_3);
-  if (3 < uVar2) {
+  if (3 < (uint)param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\net_chan_mp.cpp",0x573
                     ,0,"port doesn\'t index NS_MAXCLIENTS\n\t%i not in [0, %i)");
   }
   uVar1 = sv_loopback.send & 0x3f;
   memcpy();
-  sv_loopback.msgs[uVar1].datalen = (int)lVar3;
-  sv_loopback.msgs[uVar1].port = uVar2;
+  sv_loopback.msgs[uVar1].datalen = param_2;
+  sv_loopback.msgs[uVar1].port = param_1;
   if (iStack0000003c != 4) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\net_chan_mp.cpp",0x57e
                     ,0,"to.localNetID == NS_SERVER\n\t%i, %i");
@@ -1216,13 +1182,14 @@ void NET_SendServerLoopPacket(int param_1,int param_2,void *param_3,netadr_t par
       in_cr0 = 2;
     }
   } while (!(bool)(in_cr0 >> 1 & 1));
-  __restgprlr_27();
   return;
 }
 
 
 // 8250BC98  NET_SendClientLoopPacket  (qcommon/net_chan_mp.cpp:1418)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 void NET_SendClientLoopPacket(netsrc_t param_1,int param_2,void *param_3,netadr_t param_4)
@@ -1232,103 +1199,96 @@ void NET_SendClientLoopPacket(netsrc_t param_1,int param_2,void *param_3,netadr_
   int iVar2;
   uint uVar3;
   int iVar4;
-  ulonglong uVar5;
-  longlong lVar6;
   int in_r7;
-  longlong lVar7;
-  uint *puVar8;
+  longlong lVar5;
+  uint *puVar6;
   char in_RESERVE;
   byte in_cr0;
   int iStack0000003c;
   
-  lVar6 = (longlong)param_2;
   iStack0000003c = in_r7;
-  uVar5 = __savegprlr_27(param_1,lVar6,param_3);
-  if (3 < (uVar5 & 0xffffffff)) {
+  if (NS_CLIENT4 < param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\net_chan_mp.cpp",0x58f
                     ,0,"sock doesn\'t index NS_MAXCLIENTS\n\t%i not in [0, %i)");
   }
-  iVar4 = (int)(uVar5 * 0x3ba8);
-  lVar7 = uVar5 * 0x3ba8 + -0x7c96adf4;
+  iVar4 = (int)((longlong)(int)param_1 * 0x3ba8);
+  lVar5 = (longlong)(int)param_1 * 0x3ba8 + -0x7c96adf4;
   iVar1 = *(int *)((int)(cl_loopbacks[0].msgs + 0xc) + iVar4 + 4);
   iVar2 = iVar1 / 0xc + (iVar1 >> 0x1f);
   iVar4 = (iVar1 + (iVar2 - (iVar2 >> 0x1f)) * -0xc) * 0x4f8 + iVar4;
   memcpy();
-  *(int *)((int)cl_loopbacks + iVar4 + 0x4f0) = (int)lVar6;
-  *(int *)((int)cl_loopbacks + iVar4 + 0x4f4) = (int)uVar5;
-  puVar8 = (uint *)lVar7;
+  *(int *)((int)cl_loopbacks + iVar4 + 0x4f0) = param_2;
+  *(netsrc_t *)((int)cl_loopbacks + iVar4 + 0x4f4) = param_1;
+  puVar6 = (uint *)lVar5;
   if (iStack0000003c == 4) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\net_chan_mp.cpp",0x59a
                     ,0,"to.localNetID != NS_SERVER\n\t%i, %i");
     sync(1);
     do {
       if (in_RESERVE != '\0') {
-        uVar3 = storeWordConditionalIndexed((ulonglong)*puVar8 + 1,0,lVar7);
-        *puVar8 = uVar3;
+        uVar3 = storeWordConditionalIndexed((ulonglong)*puVar6 + 1,0,lVar5);
+        *puVar6 = uVar3;
         in_cr0 = 2;
       }
     } while (!(bool)(in_cr0 >> 1 & 1));
-    __restgprlr_27();
     return;
   }
   sync(1);
   do {
     if (in_RESERVE != '\0') {
-      uVar3 = storeWordConditionalIndexed((ulonglong)*puVar8 + 1,0,lVar7);
-      *puVar8 = uVar3;
+      uVar3 = storeWordConditionalIndexed((ulonglong)*puVar6 + 1,0,lVar5);
+      *puVar6 = uVar3;
       in_cr0 = 2;
     }
   } while (!(bool)(in_cr0 >> 1 & 1));
-  __restgprlr_27();
   return;
 }
 
 
 // 8250BDC0  NET_SendLoopPacket  (qcommon/net_chan_mp.cpp:1446)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 void NET_SendLoopPacket(netsrc_t param_1,int param_2,void *param_3,netadr_t param_4)
 
 {
-  int iVar1;
   undefined8 in_r7;
   ushort uStack00000038;
   int iStack0000003c;
   netadr_t in_stack_ffffff88;
   
-  iVar1 = __savegprlr_28(param_1);
   iStack0000003c = (int)in_r7;
-  if ((iStack0000003c == 4) && (iVar1 < 4)) {
-    NET_SendServerLoopPacket(iVar1,param_2,param_3,in_stack_ffffff88);
-    __restgprlr_28();
+  if ((iStack0000003c == 4) && ((int)param_1 < 4)) {
+    NET_SendServerLoopPacket(param_1,param_2,param_3,in_stack_ffffff88);
     return;
   }
   _uStack00000038 = in_r7;
-  if (iVar1 != 4) {
+  if (param_1 != NS_MAXCLIENTS) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\net_chan_mp.cpp",0x5b3
                     ,0,"%s\n\t(sock) = %i");
   }
   NET_SendClientLoopPacket((uint)uStack00000038,param_2,param_3,in_stack_ffffff88);
-  __restgprlr_28();
   return;
 }
 
 
 // 8250BE50  NET_DeferPacketToClient  (qcommon/net_chan_mp.cpp:1467)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 void NET_DeferPacketToClient(netadr_t *param_1,msg_t *param_2)
 
 {
   uint uVar1;
-  netadrtype_t *pnVar2;
+  undefined2 uVar2;
   bool bVar3;
   char in_RESERVE;
   byte in_cr0;
   
-  pnVar2 = (netadrtype_t *)__savegprlr_27(param_1);
   bVar3 = Sys_IsServerThread();
   if (!bVar3) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\net_chan_mp.cpp",0x5c0
@@ -1344,10 +1304,12 @@ void NET_DeferPacketToClient(netadr_t *param_1,msg_t *param_2)
                    );
   }
   deferredQueue.msgs[uVar1].targetLocalNetID = param_2->targetLocalNetID;
-  deferredQueue.msgs[uVar1].addr.type = *pnVar2;
-  *(netadrtype_t *)deferredQueue.msgs[uVar1].addr.ip = pnVar2[1];
-  *(netadrtype_t *)&deferredQueue.msgs[uVar1].addr.port = pnVar2[2];
-  deferredQueue.msgs[uVar1].addr.localNetID = pnVar2[3];
+  deferredQueue.msgs[uVar1].addr.type = param_1->type;
+  *(undefined4 *)deferredQueue.msgs[uVar1].addr.ip = *(undefined4 *)param_1->ip;
+  uVar2 = *(undefined2 *)&param_1->field_0xa;
+  deferredQueue.msgs[uVar1].addr.port = param_1->port;
+  *(undefined2 *)&deferredQueue.msgs[uVar1].addr.field_0xa = uVar2;
+  deferredQueue.msgs[uVar1].addr.localNetID = param_1->localNetID;
   sync(1);
   do {
     if (in_RESERVE != '\0') {
@@ -1357,38 +1319,35 @@ void NET_DeferPacketToClient(netadr_t *param_1,msg_t *param_2)
       in_cr0 = 2;
     }
   } while (!(bool)(in_cr0 >> 1 & 1));
-  __restgprlr_27();
   return;
 }
 
 
 // 8250BF48  NET_GetDeferredClientPacket  (qcommon/net_chan_mp.cpp:1495)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 bool NET_GetDeferredClientPacket(netadr_t *param_1,msg_t *param_2)
 
 {
   uint uVar1;
-  netadrtype_t *pnVar2;
+  undefined2 uVar2;
   bool bVar3;
-  undefined1 uVar4;
-  ulonglong uVar5;
   char in_RESERVE;
   byte in_cr0;
   
-  uVar5 = (ulonglong)(int)param_2;
-  pnVar2 = (netadrtype_t *)__savegprlr_27(param_1);
   bVar3 = Sys_IsMainThread();
   if (!bVar3) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\net_chan_mp.cpp",0x5db
                     ,0,"%s");
   }
-  if (pnVar2 == (netadrtype_t *)0x0) {
+  if (param_1 == (netadr_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\net_chan_mp.cpp",0x5dc
                     ,0,"%s");
   }
-  if ((uVar5 & 0xffffffff) == 0) {
+  if (param_2 == (msg_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\net_chan_mp.cpp",0x5dd
                     ,0,"%s");
   }
@@ -1396,23 +1355,24 @@ bool NET_GetDeferredClientPacket(netadr_t *param_1,msg_t *param_2)
     deferredQueue.get = deferredQueue.send + -0x10;
   }
   if (deferredQueue.send <= deferredQueue.get) {
-    uVar4 = __restgprlr_27(0);
-    return (bool)uVar4;
+    return false;
   }
   uVar1 = deferredQueue.get & 0xf;
   sync(1);
   memcpy();
-  *(int *)((int)uVar5 + 0x14) = deferredQueue.msgs[uVar1].datalen;
+  param_2->cursize = deferredQueue.msgs[uVar1].datalen;
   if (NS_PACKET < deferredQueue.msgs[uVar1].targetLocalNetID) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\net_chan_mp.cpp",0x5ef
                     ,0,"msg->targetLocalNetID doesn\'t index NS_INVALID_NETSRC\n\t%i not in [0, %i)"
                    );
   }
-  *(netsrc_t *)((int)uVar5 + 0x28) = deferredQueue.msgs[uVar1].targetLocalNetID;
-  *pnVar2 = deferredQueue.msgs[uVar1].addr.type;
-  pnVar2[1] = *(netadrtype_t *)deferredQueue.msgs[uVar1].addr.ip;
-  pnVar2[2] = *(netadrtype_t *)&deferredQueue.msgs[uVar1].addr.port;
-  pnVar2[3] = deferredQueue.msgs[uVar1].addr.localNetID;
+  param_2->targetLocalNetID = deferredQueue.msgs[uVar1].targetLocalNetID;
+  param_1->type = deferredQueue.msgs[uVar1].addr.type;
+  *(undefined4 *)param_1->ip = *(undefined4 *)deferredQueue.msgs[uVar1].addr.ip;
+  uVar2 = *(undefined2 *)&deferredQueue.msgs[uVar1].addr.field_0xa;
+  param_1->port = deferredQueue.msgs[uVar1].addr.port;
+  *(undefined2 *)&param_1->field_0xa = uVar2;
+  param_1->localNetID = deferredQueue.msgs[uVar1].addr.localNetID;
   do {
     if (in_RESERVE != '\0') {
       deferredQueue.get =
@@ -1420,47 +1380,44 @@ bool NET_GetDeferredClientPacket(netadr_t *param_1,msg_t *param_2)
       in_cr0 = 2;
     }
   } while (!(bool)(in_cr0 >> 1 & 1));
-  uVar4 = __restgprlr_27(1);
-  return (bool)uVar4;
+  return true;
 }
 
 
 // 8250C0D0  NET_SendPacket  (qcommon/net_chan_mp.cpp:1537)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 bool NET_SendPacket(netsrc_t param_1,int param_2,void *param_3,netadr_t param_4)
 
 {
-  netsrc_t nVar1;
-  undefined1 uVar2;
-  bool bVar3;
+  bool bVar1;
   undefined8 in_r6;
   int iStack00000030;
   netadr_t in_stack_ffffff88;
   
   iStack00000030 = (int)((ulonglong)in_r6 >> 0x20);
-  nVar1 = __savegprlr_27(param_1);
   if (((showpackets->current).integer != 0) && (*(int *)param_3 == -1)) {
     Com_Printf(0x19,"[%s] send packet %4i\n");
   }
   if ((iStack00000030 != 0) && (iStack00000030 != 1)) {
     if (iStack00000030 == 2) {
-      NET_SendLoopPacket(nVar1,param_2,param_3,in_stack_ffffff88);
-      uVar2 = __restgprlr_27(1);
-      return (bool)uVar2;
+      NET_SendLoopPacket(param_1,param_2,param_3,in_stack_ffffff88);
+      return true;
     }
-    bVar3 = Sys_SendPacket(nVar1,param_2,param_3,in_stack_ffffff88);
-    uVar2 = __restgprlr_27(bVar3);
-    return (bool)uVar2;
+    bVar1 = Sys_SendPacket(param_1,param_2,param_3,in_stack_ffffff88);
+    return bVar1;
   }
-  uVar2 = __restgprlr_27(0);
-  return (bool)uVar2;
+  return false;
 }
 
 
 // 8250C190  NET_SendVoiceDataPackets  (qcommon/net_chan_mp.cpp:1574)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 bool NET_SendVoiceDataPackets
@@ -1469,37 +1426,28 @@ bool NET_SendVoiceDataPackets
 
 {
   undefined8 in_r0;
-  netsrc_t nVar1;
-  undefined1 uVar3;
-  uint uVar2;
-  char *pcVar4;
-  ulonglong uVar5;
-  int *piVar6;
-  ulonglong uVar7;
-  int iVar8;
+  int iVar1;
+  char *pcVar2;
   undefined8 in_r8;
+  int iStack00000040;
   netadr_t in_stack_ffffff68;
   
-  iVar8 = (int)((ulonglong)in_r8 >> 0x20);
-  uVar7 = (ulonglong)(int)param_5;
-  uVar5 = (ulonglong)(int)param_3;
-  nVar1 = __savegprlr_24(param_1);
-  piVar6 = (int *)uVar5;
+  iStack00000040 = (int)((ulonglong)in_r8 >> 0x20);
   if ((showpackets->current).integer != 0) {
-    if (((showpackets->current).integer < 2) && (iVar8 == 2)) goto LAB_8250c23c;
-    if (((uVar5 & 0xffffffff) == 0) || (*piVar6 != -1)) {
-      if ((uVar7 & 0xffffffff) == 0) goto LAB_8250c234;
-      pcVar4 = "[%s] send voice packet %4i\n";
+    if (((showpackets->current).integer < 2) && (iStack00000040 == 2)) goto LAB_8250c23c;
+    if ((param_3 == (void *)0x0) || (*(int *)param_3 != -1)) {
+      if (param_5 == (void *)0x0) goto LAB_8250c234;
+      pcVar2 = "[%s] send voice packet %4i\n";
     }
     else {
-      pcVar4 = "[%s] send packet %4i\n";
+      pcVar2 = "[%s] send packet %4i\n";
     }
-    Com_Printf(0x19,pcVar4);
+    Com_Printf(0x19,pcVar2);
   }
 LAB_8250c234:
-  if (iVar8 != 2) {
-    if ((iVar8 != 1) && (iVar8 != 0)) {
-      uVar2 = Sys_SendVoiceDataPacket(nVar1,param_2,piVar6,param_4,(void *)uVar7,in_stack_ffffff68);
+  if (iStack00000040 != 2) {
+    if ((iStack00000040 != 1) && (iStack00000040 != 0)) {
+      iVar1 = Sys_SendVoiceDataPacket(param_1,param_2,param_3,param_4,param_5,in_stack_ffffff68);
       if (xenonCompilerWorkaround != 0) {
         if (alwaysfails == 0) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\net_chan_mp.cpp"
@@ -1507,147 +1455,138 @@ LAB_8250c234:
         }
         trapWord(0x1f,in_r0,0x16);
       }
-      uVar3 = __restgprlr_24(uVar2 >> 0x1f ^ 1);
-      return (bool)uVar3;
+      return (bool)((byte)((uint)iVar1 >> 0x1f) ^ 1);
     }
-    uVar3 = __restgprlr_24(0);
-    return (bool)uVar3;
+    return false;
   }
 LAB_8250c23c:
   if (param_2 != 0) {
-    NET_SendLoopPacket(nVar1,param_2,piVar6,in_stack_ffffff68);
+    NET_SendLoopPacket(param_1,param_2,param_3,in_stack_ffffff68);
   }
   if (param_4 != 0) {
-    NET_SendLoopPacket(nVar1,param_4,(void *)uVar7,in_stack_ffffff68);
+    NET_SendLoopPacket(param_1,param_4,param_5,in_stack_ffffff68);
   }
-  uVar3 = __restgprlr_24(1);
-  return (bool)uVar3;
+  return true;
 }
 
 
 // 8250C318  NET_OutOfBandPrint  (qcommon/net_chan_mp.cpp:1622)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 bool NET_OutOfBandPrint(netsrc_t param_1,netadr_t param_2,char *param_3)
 
 {
-  LocalClientNum_t LVar1;
+  char cVar1;
   undefined1 *puVar2;
-  char *pcVar3;
-  undefined1 uVar5;
-  uint uVar4;
-  longlong in_r6;
-  longlong lVar6;
-  int iVar7;
-  ulonglong uVar8;
+  uint uVar3;
+  char *in_r6;
+  char *pcVar4;
+  longlong lVar5;
   int iStack00000020;
   netadr_t in_stack_ffffff68;
   LargeLocal aLStack_50 [10];
   
-  lVar6 = (longlong)(int)param_3;
-  LVar1 = __savegprlr_25(param_1);
-  _iStack00000020 = lVar6;
+  _iStack00000020 = (longlong)(int)param_3;
   LargeLocal::LargeLocal(aLStack_50,0x800);
   puVar2 = LargeLocal::GetBuf(aLStack_50);
   *puVar2 = 0xff;
   puVar2[1] = 0xff;
   puVar2[2] = 0xff;
   puVar2[3] = 0xff;
-  lVar6 = in_r6;
+  pcVar4 = in_r6;
   if (((showpackets->current).integer != 0) &&
      ((1 < (showpackets->current).integer || (iStack00000020 != 2)))) {
     NET_AdrToString(in_stack_ffffff68);
     Com_DPrintf(0x19,"OOB Print->%s: %s\n");
   }
   do {
-    pcVar3 = (char *)lVar6;
-    lVar6 = lVar6 + 1;
-  } while (*pcVar3 != '\0');
-  iVar7 = ((int)lVar6 - (int)in_r6) + 4;
-  if (iVar7 < 0x801) {
+    cVar1 = *pcVar4;
+    pcVar4 = pcVar4 + 1;
+  } while (cVar1 != '\0');
+  pcVar4 = pcVar4 + (4 - (int)in_r6);
+  if ((int)pcVar4 < 0x801) {
     memcpy();
-    uVar4 = FakeLag_SendPacket(LVar1,iVar7,puVar2,in_stack_ffffff68);
-    uVar8 = (longlong)((int)uVar4 >> 0x1f) + 1 + (ulonglong)(0xfffffffe < uVar4);
-    if (LVar1 == LOCAL_CLIENT_COUNT) {
-      SV_Netchan_AddOOBProfilePacket(iVar7);
+    uVar3 = FakeLag_SendPacket(param_1,(int)pcVar4,puVar2,in_stack_ffffff68);
+    lVar5 = (longlong)((int)uVar3 >> 0x1f) + 1 + (ulonglong)(0xfffffffe < uVar3);
+    if (param_1 == NS_MAXCLIENTS) {
+      SV_Netchan_AddOOBProfilePacket((int)pcVar4);
     }
     else {
-      CL_Netchan_AddOOBProfilePacket(LVar1,iVar7);
+      CL_Netchan_AddOOBProfilePacket(param_1,(int)pcVar4);
     }
     LargeLocal::~LargeLocal(aLStack_50);
-    uVar5 = __restgprlr_25((-uVar8 & ~uVar8 & 0xffffffff) >> 0x1f);
-    return (bool)uVar5;
+    return (bool)((byte)((byte)((ulonglong)-lVar5 >> 0x18) & ~(byte)((ulonglong)lVar5 >> 0x18)) >> 7
+                 );
   }
   Com_DPrintf(0x19,"OOB Packet is %i bytes - too large to send\n");
   if (alwaysfails == 0) {
-    pcVar3 = va("OOB Packet is %i bytes - too large to send\n");
+    pcVar4 = va("OOB Packet is %i bytes - too large to send\n");
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\net_chan_mp.cpp",0x66c
-                    ,0,pcVar3);
+                    ,0,pcVar4);
   }
   LargeLocal::~LargeLocal(aLStack_50);
-  uVar5 = __restgprlr_25(0);
-  return (bool)uVar5;
+  return false;
 }
 
 
 // 8250C4B8  NET_OutOfBandData  (qcommon/net_chan_mp.cpp:1679)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 bool NET_OutOfBandData(netsrc_t param_1,netadr_t param_2,uchar *param_3,int param_4)
 
 {
-  LocalClientNum_t LVar1;
-  undefined1 *puVar2;
-  undefined1 uVar4;
-  uint uVar3;
-  longlong lVar5;
+  undefined1 *puVar1;
+  uint uVar2;
   int in_r7;
-  ulonglong uVar6;
+  int iVar3;
+  longlong lVar4;
   int iStack00000020;
   netadr_t in_stack_ffffff68;
   LargeLocal aLStack_50 [10];
   
-  lVar5 = (longlong)(int)param_3;
-  LVar1 = __savegprlr_25(param_1,lVar5,param_4);
-  _iStack00000020 = lVar5;
+  _iStack00000020 = (longlong)(int)param_3;
   LargeLocal::LargeLocal(aLStack_50,0x800);
-  puVar2 = LargeLocal::GetBuf(aLStack_50);
+  puVar1 = LargeLocal::GetBuf(aLStack_50);
   if (((showpackets->current).integer != 0) &&
      ((1 < (showpackets->current).integer || (iStack00000020 != 2)))) {
     Com_DPrintf(0x19,"OOB Data->%u.%u.%u.%u: %i bytes\n");
   }
-  in_r7 = in_r7 + 4;
-  if (0x800 < in_r7) {
+  iVar3 = in_r7 + 4;
+  if (0x800 < iVar3) {
     Com_PrintError(0x19,"Invalid network packet of size %i - max size allowed is %i bytes\n");
     LargeLocal::~LargeLocal(aLStack_50);
-    uVar4 = __restgprlr_25(0);
-    return (bool)uVar4;
+    return false;
   }
-  *puVar2 = 0xff;
-  puVar2[1] = 0xff;
-  puVar2[2] = 0xff;
-  puVar2[3] = 0xff;
+  *puVar1 = 0xff;
+  puVar1[1] = 0xff;
+  puVar1[2] = 0xff;
+  puVar1[3] = 0xff;
   memcpy();
-  uVar3 = FakeLag_SendPacket(LVar1,in_r7,puVar2,in_stack_ffffff68);
-  uVar6 = (longlong)((int)uVar3 >> 0x1f) + 1 + (ulonglong)(0xfffffffe < uVar3);
-  if (LVar1 == LOCAL_CLIENT_COUNT) {
-    SV_Netchan_AddOOBProfilePacket(in_r7);
+  uVar2 = FakeLag_SendPacket(param_1,iVar3,puVar1,in_stack_ffffff68);
+  lVar4 = (longlong)((int)uVar2 >> 0x1f) + 1 + (ulonglong)(0xfffffffe < uVar2);
+  if (param_1 == NS_MAXCLIENTS) {
+    SV_Netchan_AddOOBProfilePacket(iVar3);
   }
   else {
-    CL_Netchan_AddOOBProfilePacket(LVar1,in_r7);
+    CL_Netchan_AddOOBProfilePacket(param_1,iVar3);
   }
   LargeLocal::~LargeLocal(aLStack_50);
-  uVar4 = __restgprlr_25((-uVar6 & ~uVar6 & 0xffffffff) >> 0x1f);
-  return (bool)uVar4;
+  return (bool)((byte)((byte)((ulonglong)-lVar4 >> 0x18) & ~(byte)((ulonglong)lVar4 >> 0x18)) >> 7);
 }
 
 
 // 8250C608  NET_OutOfBandVoiceData  (qcommon/net_chan_mp.cpp:1739)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
@@ -1655,58 +1594,58 @@ int NET_OutOfBandVoiceData
               (netsrc_t param_1,netadr_t param_2,uchar *param_3,int param_4,bool param_5)
 
 {
-  LocalClientNum_t LVar1;
-  undefined1 *puVar2;
-  bool bVar4;
+  undefined1 *puVar1;
+  bool bVar2;
   int iVar3;
-  undefined1 *puVar5;
-  int iVar6;
+  undefined1 *puVar4;
+  int iVar5;
   int in_r7;
-  undefined1 *puVar7;
-  ulonglong in_r8;
+  undefined1 *puVar6;
+  char in_r8;
+  int iVar7;
   netadr_t in_stack_ffffff68;
   LargeLocal aLStack_50 [10];
   
-  LVar1 = __savegprlr_24(param_1,param_3,param_4,param_5);
   LargeLocal::LargeLocal(aLStack_50,0x10000);
-  puVar2 = LargeLocal::GetBuf(aLStack_50);
-  in_r7 = in_r7 + 4;
-  *puVar2 = 0xff;
-  puVar2[1] = 0xff;
-  puVar2[2] = 0xff;
-  puVar2[3] = 0xff;
-  if (0xffff < in_r7) {
+  puVar1 = LargeLocal::GetBuf(aLStack_50);
+  iVar7 = in_r7 + 4;
+  *puVar1 = 0xff;
+  puVar1[1] = 0xff;
+  puVar1[2] = 0xff;
+  puVar1[3] = 0xff;
+  if (0xffff < iVar7) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\net_chan_mp.cpp",0x6d7
                     ,0,"%s");
   }
   memcpy();
-  if ((in_r8 & 0xff) == 0) {
-    puVar7 = (undefined1 *)0x0;
-    iVar6 = 0;
-    iVar3 = in_r7;
-    puVar5 = puVar2;
+  if (in_r8 == '\0') {
+    puVar6 = (undefined1 *)0x0;
+    iVar5 = 0;
+    iVar3 = iVar7;
+    puVar4 = puVar1;
   }
   else {
+    iVar5 = iVar7;
     iVar3 = 0;
-    puVar5 = (undefined1 *)0x0;
-    iVar6 = in_r7;
-    puVar7 = puVar2;
+    puVar4 = (undefined1 *)0x0;
+    puVar6 = puVar1;
   }
-  bVar4 = NET_SendVoiceDataPackets(LVar1,iVar3,puVar5,iVar6,puVar7,in_stack_ffffff68);
-  if (LVar1 == LOCAL_CLIENT_COUNT) {
-    SV_Netchan_AddOOBProfilePacket(in_r7);
+  bVar2 = NET_SendVoiceDataPackets(param_1,iVar3,puVar4,iVar5,puVar6,in_stack_ffffff68);
+  if (param_1 == NS_MAXCLIENTS) {
+    SV_Netchan_AddOOBProfilePacket(iVar7);
   }
   else {
-    CL_Netchan_AddOOBProfilePacket(LVar1,in_r7);
+    CL_Netchan_AddOOBProfilePacket(param_1,iVar7);
   }
   LargeLocal::~LargeLocal(aLStack_50);
-  iVar3 = __restgprlr_24((-(longlong)bVar4 & ~(longlong)bVar4 & 0xffffffffU) >> 0x1f);
-  return iVar3;
+  return (uint)(-(int)bVar2 & ~(int)bVar2) >> 0x1f;
 }
 
 
 // 8250C720  NET_StringToAdr  (qcommon/net_chan_mp.cpp:1797)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 int NET_StringToAdr(char *param_1,netadr_t *param_2)
@@ -1715,72 +1654,62 @@ int NET_StringToAdr(char *param_1,netadr_t *param_2)
   char cVar1;
   char cVar2;
   char *pcVar3;
-  netadr_t *pnVar4;
-  int iVar5;
+  int iVar4;
+  ushort uVar5;
   char *pcVar6;
-  ushort uVar7;
-  ulonglong uVar8;
-  char *pcVar9;
   char acStack_430 [1072];
   
-  uVar8 = (ulonglong)(int)param_2;
-  pcVar3 = (char *)__savegprlr_28(param_1);
-  if (pcVar3 == (char *)0x0) {
+  if (param_1 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\net_chan_mp.cpp",0x70a
                     ,0,"%s");
   }
-  if ((uVar8 & 0xffffffff) == 0) {
+  if (param_2 == (netadr_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\net_chan_mp.cpp",0x70b
                     ,0,"%s");
   }
-  pcVar9 = "localhost";
-  pcVar6 = pcVar3;
+  pcVar3 = "localhost";
+  pcVar6 = param_1;
   do {
     cVar1 = *pcVar6;
-    cVar2 = *pcVar9;
+    cVar2 = *pcVar3;
     if (cVar1 == '\0') break;
     pcVar6 = pcVar6 + 1;
-    pcVar9 = pcVar9 + 1;
+    pcVar3 = pcVar3 + 1;
   } while (cVar1 == cVar2);
-  pnVar4 = (netadr_t *)uVar8;
   if (cVar1 == cVar2) {
-    pnVar4->type = NA_BOT;
-    pnVar4->ip[0] = '\0';
-    pnVar4->ip[1] = '\0';
-    pnVar4->ip[2] = '\0';
-    pnVar4->ip[3] = '\0';
-    *(undefined4 *)&pnVar4->port = 0;
-    pnVar4->localNetID = NS_CLIENT1;
-    NetAdr_SetType(pnVar4,NA_LOOPBACK);
-    iVar5 = __restgprlr_28(1);
-    return iVar5;
+    param_2->type = NA_BOT;
+    param_2->ip[0] = '\0';
+    param_2->ip[1] = '\0';
+    param_2->ip[2] = '\0';
+    param_2->ip[3] = '\0';
+    *(undefined4 *)&param_2->port = 0;
+    param_2->localNetID = NS_CLIENT1;
+    NetAdr_SetType(param_2,NA_LOOPBACK);
+    return 1;
   }
-  I_strncpyz(acStack_430,pcVar3,0x400);
-  pcVar6 = strstr(acStack_430,":");
-  pcVar3 = pcVar6;
-  if (pcVar6 != (char *)0x0) {
-    pcVar3 = pcVar6 + 1;
-    *pcVar6 = '\0';
+  I_strncpyz(acStack_430,param_1,0x400);
+  pcVar3 = strstr(acStack_430,":");
+  pcVar6 = pcVar3;
+  if (pcVar3 != (char *)0x0) {
+    pcVar6 = pcVar3 + 1;
+    *pcVar3 = '\0';
   }
-  iVar5 = Sys_StringToAdr(acStack_430,pnVar4);
-  if ((iVar5 != 0) &&
-     ((((pnVar4->ip[0] != 0xff || (pnVar4->ip[1] != 0xff)) || (pnVar4->ip[2] != 0xff)) ||
-      (pnVar4->ip[3] != 0xff)))) {
-    if (pcVar3 != (char *)0x0) {
-      iVar5 = atoi(pcVar3);
-      uVar7 = BigShort((short)iVar5);
-      pnVar4->port = uVar7;
-      iVar5 = __restgprlr_28(1);
-      return iVar5;
+  iVar4 = Sys_StringToAdr(acStack_430,param_2);
+  if ((iVar4 != 0) &&
+     ((((param_2->ip[0] != 0xff || (param_2->ip[1] != 0xff)) || (param_2->ip[2] != 0xff)) ||
+      (param_2->ip[3] != 0xff)))) {
+    if (pcVar6 != (char *)0x0) {
+      iVar4 = atoi(pcVar6);
+      uVar5 = BigShort((short)iVar4);
+      param_2->port = uVar5;
+      return 1;
     }
-    uVar7 = BigShort(1000);
-    pnVar4->port = uVar7;
-    iVar5 = __restgprlr_28(1);
-    return iVar5;
+    uVar5 = BigShort(1000);
+    param_2->port = uVar5;
+    return 1;
   }
-  pnVar4->type = NA_BAD;
-  iVar5 = __restgprlr_28(0);
-  return iVar5;
+  param_2->type = NA_BAD;
+  return 0;
 }
 
 
@@ -1803,157 +1732,138 @@ void Int64ToString(long64 param_1,char *param_2)
 
 // 8250C938  Int128ToString  (qcommon/net_chan_mp.cpp:1860)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void Int128ToString(uchar *param_1,char *param_2)
 
 {
-  int iVar1;
-  ulonglong uVar2;
-  
-  uVar2 = (ulonglong)(int)param_2;
-  iVar1 = __savegprlr_28(param_1);
-  if (iVar1 == 0) {
+  if (param_1 == (uchar *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\net_chan_mp.cpp",0x747
                     ,0,"%s");
   }
-  if ((uVar2 & 0xffffffff) == 0) {
+  if (param_2 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\net_chan_mp.cpp",0x748
                     ,0,"%s");
   }
-  iVar1 = _snprintf((char *)uVar2,0x21,"%08x%08x%08x%08x");
-  __restgprlr_28(iVar1);
+  _snprintf(param_2,0x21,"%08x%08x%08x%08x");
   return;
 }
 
 
 // 8250C9D0  StringToInt64  (qcommon/net_chan_mp.cpp:1871)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 long64 StringToInt64(char *param_1)
 
 {
   char cVar1;
-  char *pcVar3;
-  long64 lVar2;
-  char *pcVar4;
-  undefined8 local_30;
+  char *pcVar2;
+  long64 local_30;
   
-  pcVar3 = (char *)__savegprlr_29(param_1);
-  if (pcVar3 == (char *)0x0) {
+  if (param_1 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\net_chan_mp.cpp",0x753
                     ,0,"%s");
   }
-  pcVar4 = pcVar3;
-  if (*pcVar3 != '\0') {
+  pcVar2 = param_1;
+  if (*param_1 != '\0') {
     do {
-      cVar1 = *pcVar4;
-      pcVar4 = pcVar4 + 1;
+      cVar1 = *pcVar2;
+      pcVar2 = pcVar2 + 1;
     } while (cVar1 != '\0');
-    if ((int)pcVar4 - (int)pcVar3 != 0x11) {
+    if ((int)pcVar2 - (int)param_1 != 0x11) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\net_chan_mp.cpp",
                       0x759,0,"%s");
     }
-    sscanf(pcVar3,"%8x%8x");
-    lVar2 = __restgprlr_29(local_30);
-    return lVar2;
+    sscanf(param_1,"%8x%8x");
+    return local_30;
   }
-  lVar2 = __restgprlr_29(0);
-  return lVar2;
+  return 0;
 }
 
 
 // 8250CA98  StringToInt128  (qcommon/net_chan_mp.cpp:1889)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void StringToInt128(char *param_1,uchar *param_2)
 
 {
-  char *pcVar1;
-  int iVar2;
-  ulonglong uVar3;
-  
-  uVar3 = (ulonglong)(int)param_2;
-  pcVar1 = (char *)__savegprlr_28(param_1);
-  if ((uVar3 & 0xffffffff) == 0) {
+  if (param_2 == (uchar *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\net_chan_mp.cpp",0x764
                     ,0,"%s");
   }
-  if (pcVar1 == (char *)0x0) {
+  if (param_1 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\net_chan_mp.cpp",0x765
                     ,0,"%s");
   }
-  iVar2 = sscanf(pcVar1,"%8x%8x%8x%8x");
-  __restgprlr_28(iVar2);
+  sscanf(param_1,"%8x%8x%8x%8x");
   return;
 }
 
 
 // 8250CB30  XUIDToString  (qcommon/net_chan_mp.cpp:1901)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void XUIDToString(ulong64 *param_1,char *param_2)
 
 {
-  int iVar1;
-  ulonglong uVar2;
-  
-  uVar2 = (ulonglong)(int)param_2;
-  iVar1 = __savegprlr_28(param_1);
-  if (iVar1 == 0) {
+  if (param_1 == (ulong64 *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\net_chan_mp.cpp",0x770
                     ,0,"%s");
   }
-  if ((uVar2 & 0xffffffff) == 0) {
+  if (param_2 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\net_chan_mp.cpp",0x771
                     ,0,"%s");
   }
-  iVar1 = _snprintf((char *)uVar2,0x11,"%08x%08x");
-  __restgprlr_28(iVar1);
+  _snprintf(param_2,0x11,"%08x%08x");
   return;
 }
 
 
 // 8250CBC0  StringToXUID  (qcommon/net_chan_mp.cpp:1918)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void StringToXUID(char *param_1,ulong64 *param_2)
 
 {
-  char *pcVar1;
-  int iVar2;
-  ulonglong uVar3;
-  
-  uVar3 = (ulonglong)(int)param_2;
-  pcVar1 = (char *)__savegprlr_28(param_1);
-  if ((uVar3 & 0xffffffff) == 0) {
+  if (param_2 == (ulong64 *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\net_chan_mp.cpp",0x783
                     ,0,"%s");
   }
-  if (pcVar1 == (char *)0x0) {
+  if (param_1 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\net_chan_mp.cpp",0x784
                     ,0,"%s");
   }
-  if (*pcVar1 == '\0') {
-    *(undefined8 *)uVar3 = 0;
-    __restgprlr_28();
+  if (*param_1 == '\0') {
+    *param_2 = 0;
     return;
   }
-  iVar2 = sscanf(pcVar1,"%8x%8x");
-  __restgprlr_28(iVar2);
+  sscanf(param_1,"%8x%8x");
   return;
 }
 
 
 // 8250CC68  XNKIDToString  (qcommon/net_chan_mp.cpp:1943)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void XNKIDToString(XNKID *param_1,char *param_2,int param_3)
 
 {
-  int iVar1;
-  ulonglong uVar2;
-  
-  uVar2 = (ulonglong)(int)param_2;
-  iVar1 = __savegprlr_27(param_1);
-  if (iVar1 == 0) {
+  if (param_1 == (XNKID *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\net_chan_mp.cpp",0x79a
                     ,0,"%s");
   }
-  if ((uVar2 & 0xffffffff) == 0) {
+  if (param_2 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\net_chan_mp.cpp",0x79b
                     ,0,"%s");
   }
@@ -1961,95 +1871,83 @@ void XNKIDToString(XNKID *param_1,char *param_2,int param_3)
     Com_PrintWarning(0x10,
                      "XNKIDToString: buffer passed is not big enough. Was %i bytes, require %i.\n");
   }
-  iVar1 = Com_sprintf((char *)uVar2,param_3,"%08x%08x");
-  __restgprlr_27(iVar1);
+  Com_sprintf(param_2,param_3,"%08x%08x");
   return;
 }
 
 
 // 8250CD20  StringToXNKID  (qcommon/net_chan_mp.cpp:1964)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void StringToXNKID(char *param_1,XNKID *param_2)
 
 {
-  char *pcVar1;
-  int iVar2;
-  ulonglong uVar3;
-  longlong lVar4;
-  longlong lVar5;
+  uchar *puVar1;
+  longlong lVar2;
   
-  uVar3 = (ulonglong)(int)param_2;
-  pcVar1 = (char *)__savegprlr_28(param_1);
-  if ((uVar3 & 0xffffffff) == 0) {
+  if (param_2 == (XNKID *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\net_chan_mp.cpp",0x7b1
                     ,0,"%s");
   }
-  if (pcVar1 == (char *)0x0) {
+  if (param_1 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\net_chan_mp.cpp",0x7b2
                     ,0,"%s");
   }
-  if (*pcVar1 == '\0') {
-    lVar4 = uVar3 - 1;
-    lVar5 = 8;
+  if (*param_1 == '\0') {
+    puVar1 = param_2[-1].ab + 7;
+    lVar2 = 8;
     do {
-      lVar4 = lVar4 + 1;
-      *(undefined1 *)lVar4 = 0;
-      lVar5 = lVar5 + -1;
-    } while (lVar5 != 0);
-    __restgprlr_28();
+      puVar1 = puVar1 + 1;
+      *puVar1 = '\0';
+      lVar2 = lVar2 + -1;
+    } while (lVar2 != 0);
     return;
   }
-  iVar2 = sscanf(pcVar1,"%8x%8x");
-  __restgprlr_28(iVar2);
+  sscanf(param_1,"%8x%8x");
   return;
 }
 
 
 // 8250CDD8  XNAddrToString  (qcommon/net_chan_mp.cpp:1990)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void XNAddrToString(XNADDR *param_1,char *param_2)
 
 {
-  int iVar1;
-  ulonglong uVar2;
-  
-  uVar2 = (ulonglong)(int)param_2;
-  iVar1 = __savegprlr_27(param_1);
-  if (iVar1 == 0) {
+  if (param_1 == (XNADDR *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\net_chan_mp.cpp",0x7cb
                     ,0,"%s");
   }
-  if ((uVar2 & 0xffffffff) == 0) {
+  if (param_2 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\net_chan_mp.cpp",0x7cc
                     ,0,"%s");
   }
-  iVar1 = _snprintf((char *)uVar2,0x49,"%08x%08x%08x%08x%08x%08x%08x%08x%08x");
-  __restgprlr_27(iVar1);
+  _snprintf(param_2,0x49,"%08x%08x%08x%08x%08x%08x%08x%08x%08x");
   return;
 }
 
 
 // 8250CE98  StringToXNAddr  (qcommon/net_chan_mp.cpp:2003)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void StringToXNAddr(char *param_1,XNADDR *param_2)
 
 {
-  char *pcVar1;
-  int iVar2;
-  ulonglong uVar3;
-  
-  uVar3 = (ulonglong)(int)param_2;
-  pcVar1 = (char *)__savegprlr_28(param_1);
-  if ((uVar3 & 0xffffffff) == 0) {
+  if (param_2 == (XNADDR *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\net_chan_mp.cpp",0x7d8
                     ,0,"%s");
   }
-  if (pcVar1 == (char *)0x0) {
+  if (param_1 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\net_chan_mp.cpp",0x7d9
                     ,0,"%s");
   }
-  iVar2 = sscanf(pcVar1,"%8x%8x%8x%8x%8x%8x%8x%8x%8x");
-  __restgprlr_28(iVar2);
+  sscanf(param_1,"%8x%8x%8x%8x%8x%8x%8x%8x%8x");
   return;
 }
 

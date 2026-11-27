@@ -2,6 +2,9 @@
 
 // 827BEB28  start_pass_huff_decoder  (jpeg-6/jdhuff.c:87)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
+
 void start_pass_huff_decoder(jpeg_decompress_struct *param_1)
 
 {
@@ -9,69 +12,69 @@ void start_pass_huff_decoder(jpeg_decompress_struct *param_1)
   int iVar2;
   int iVar3;
   jpeg_component_info *pjVar4;
-  jpeg_decompress_struct *pjVar5;
-  int *piVar6;
-  _func___cdecl_uchar_jpeg_decompress_struct_ptr_short_64__ptr_ptr **pp_Var7;
-  jpeg_component_info **ppjVar8;
-  int iVar9;
+  int *piVar5;
+  _func___cdecl_uchar_jpeg_decompress_struct_ptr_short_64__ptr_ptr **pp_Var6;
+  jpeg_component_info **ppjVar7;
+  int iVar8;
   
-  pjVar5 = (jpeg_decompress_struct *)__savegprlr_25(param_1);
-  pjVar1 = pjVar5->entropy;
-  if ((((pjVar5->Ss != 0) || (pjVar5->Se != 0x3f)) || (pjVar5->Ah != 0)) || (pjVar5->Al != 0)) {
-    pjVar5->err->msg_code = 0x7a;
-    (*pjVar5->err->emit_message)((jpeg_common_struct *)pjVar5,-1);
+  pjVar1 = param_1->entropy;
+  if ((((param_1->Ss != 0) || (param_1->Se != 0x3f)) || (param_1->Ah != 0)) || (param_1->Al != 0)) {
+    param_1->err->msg_code = 0x7a;
+    (*param_1->err->emit_message)((jpeg_common_struct *)param_1,-1);
   }
-  iVar9 = 0;
-  if (0 < pjVar5->comps_in_scan) {
-    pp_Var7 = &pjVar1[1].decode_mcu;
-    ppjVar8 = (jpeg_component_info **)&pjVar5->comps_in_scan;
+  iVar8 = 0;
+  if (0 < param_1->comps_in_scan) {
+    pp_Var6 = &pjVar1[1].decode_mcu;
+    ppjVar7 = (jpeg_component_info **)&param_1->comps_in_scan;
     do {
-      ppjVar8 = ppjVar8 + 1;
-      iVar2 = (*ppjVar8)->dc_tbl_no;
-      iVar3 = (*ppjVar8)->ac_tbl_no;
-      jpeg_make_d_derived_tbl(pjVar5,'\x01',iVar2,(d_derived_tbl **)(&pjVar1[3].decode_mcu + iVar2))
-      ;
+      ppjVar7 = ppjVar7 + 1;
+      iVar2 = (*ppjVar7)->dc_tbl_no;
+      iVar3 = (*ppjVar7)->ac_tbl_no;
       jpeg_make_d_derived_tbl
-                (pjVar5,'\0',iVar3,(d_derived_tbl **)(&pjVar1[4].insufficient_data + iVar3 * 4));
-      iVar9 = iVar9 + 1;
-      pp_Var7 = pp_Var7 + 1;
-      *pp_Var7 = (_func___cdecl_uchar_jpeg_decompress_struct_ptr_short_64__ptr_ptr *)0x0;
-    } while (iVar9 < pjVar5->comps_in_scan);
+                (param_1,'\x01',iVar2,(d_derived_tbl **)(&pjVar1[3].decode_mcu + iVar2));
+      jpeg_make_d_derived_tbl
+                (param_1,'\0',iVar3,(d_derived_tbl **)(&pjVar1[4].insufficient_data + iVar3 * 4));
+      iVar8 = iVar8 + 1;
+      pp_Var6 = pp_Var6 + 1;
+      *pp_Var6 = (_func___cdecl_uchar_jpeg_decompress_struct_ptr_short_64__ptr_ptr *)0x0;
+    } while (iVar8 < param_1->comps_in_scan);
   }
-  iVar9 = 0;
-  if (0 < pjVar5->blocks_in_MCU) {
-    pp_Var7 = &pjVar1[9].decode_mcu;
-    piVar6 = pjVar5->MCU_membership;
+  iVar8 = 0;
+  if (0 < param_1->blocks_in_MCU) {
+    pp_Var6 = &pjVar1[9].decode_mcu;
+    piVar5 = param_1->MCU_membership;
     do {
-      pjVar4 = pjVar5->cur_comp_info[*piVar6];
-      pp_Var7[-10] = (&pjVar1[3].decode_mcu)[pjVar4->dc_tbl_no];
-      *pp_Var7 = *(_func___cdecl_uchar_jpeg_decompress_struct_ptr_short_64__ptr_ptr **)
+      pjVar4 = param_1->cur_comp_info[*piVar5];
+      pp_Var6[-10] = (&pjVar1[3].decode_mcu)[pjVar4->dc_tbl_no];
+      *pp_Var6 = *(_func___cdecl_uchar_jpeg_decompress_struct_ptr_short_64__ptr_ptr **)
                   (&pjVar1[4].insufficient_data + pjVar4->ac_tbl_no * 4);
       if (pjVar4->component_needed == '\0') {
-        *(undefined1 *)((int)&pjVar1[0xd].decode_mcu + iVar9 + 2) = 0;
-        (&pjVar1[0xc].insufficient_data)[iVar9] = '\0';
+        *(undefined1 *)((int)&pjVar1[0xd].decode_mcu + iVar8 + 2) = 0;
+        (&pjVar1[0xc].insufficient_data)[iVar8] = '\0';
       }
       else {
-        (&pjVar1[0xc].insufficient_data)[iVar9] = '\x01';
-        *(byte *)((int)&pjVar1[0xd].decode_mcu + iVar9 + 2) =
+        (&pjVar1[0xc].insufficient_data)[iVar8] = '\x01';
+        *(byte *)((int)&pjVar1[0xd].decode_mcu + iVar8 + 2) =
              (char)((~(ulonglong)(uint)pjVar4->DCT_scaled_size & 0xffffffff) >> 0x1f) +
              ((ulonglong)(uint)pjVar4->DCT_scaled_size < 2) & 1;
       }
-      iVar9 = iVar9 + 1;
-      piVar6 = piVar6 + 1;
-      pp_Var7 = pp_Var7 + 1;
-    } while (iVar9 < pjVar5->blocks_in_MCU);
+      iVar8 = iVar8 + 1;
+      piVar5 = piVar5 + 1;
+      pp_Var6 = pp_Var6 + 1;
+    } while (iVar8 < param_1->blocks_in_MCU);
   }
   pjVar1[1].decode_mcu = (_func___cdecl_uchar_jpeg_decompress_struct_ptr_short_64__ptr_ptr *)0x0;
   pjVar1[1].start_pass = (_func___cdecl_void_jpeg_decompress_struct_ptr *)0x0;
   pjVar1->insufficient_data = '\0';
-  pjVar1[3].start_pass = (_func___cdecl_void_jpeg_decompress_struct_ptr *)pjVar5->restart_interval;
-  __restgprlr_25();
+  pjVar1[3].start_pass = (_func___cdecl_void_jpeg_decompress_struct_ptr *)param_1->restart_interval;
   return;
 }
 
 
 // 827BDFD8  jpeg_make_d_derived_tbl  (jpeg-6/jdhuff.c:151)
+
+/* WARNING: Function: __savegprlr_21 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_21 replaced with injection: xenon_save_restore */
 
 void jpeg_make_d_derived_tbl
                (jpeg_decompress_struct *param_1,uchar param_2,int param_3,d_derived_tbl **param_4)
@@ -81,594 +84,566 @@ void jpeg_make_d_derived_tbl
   byte bVar2;
   JHUFF_TBL *pJVar3;
   d_derived_tbl *pdVar4;
-  int *piVar5;
-  d_derived_tbl *pdVar6;
-  ulonglong uVar7;
-  int iVar8;
-  int iVar9;
-  int *piVar10;
-  uchar *puVar11;
-  long *plVar12;
-  d_derived_tbl *pdVar13;
-  int *piVar14;
-  ulonglong uVar15;
-  char *pcVar16;
+  d_derived_tbl *pdVar5;
+  int iVar6;
+  int *piVar7;
+  uchar *puVar8;
+  long *plVar9;
+  d_derived_tbl *pdVar10;
+  int *piVar11;
+  int iVar12;
+  char *pcVar13;
+  int iVar14;
+  int iVar15;
   int iVar17;
-  int iVar18;
-  int iVar20;
-  ulonglong uVar19;
-  uint uVar22;
+  ulonglong uVar16;
+  uint uVar19;
+  ulonglong uVar18;
+  longlong lVar20;
   ulonglong uVar21;
-  longlong lVar23;
   char acStack_581 [269];
   long lStack_474;
   int local_470 [284];
   
-  lVar23 = (longlong)param_3;
-  uVar7 = (ulonglong)(char)param_2;
-  piVar5 = (int *)__savegprlr_21(param_1);
-  iVar8 = (int)lVar23;
-  if ((iVar8 < 0) || (3 < iVar8)) {
-    *(undefined4 *)(*piVar5 + 0x14) = 0x32;
-    *(int *)(*piVar5 + 0x18) = iVar8;
-    (**(code **)*piVar5)(piVar5);
+  if ((param_3 < 0) || (3 < param_3)) {
+    param_1->err->msg_code = 0x32;
+    (param_1->err->msg_parm).i[0] = param_3;
+    (*param_1->err->error_exit)((jpeg_common_struct *)param_1);
   }
-  uVar15 = lVar23 + 0x2a;
-  if ((uVar7 & 0xff) == 0) {
-    uVar15 = lVar23 + 0x2e;
+  iVar12 = param_3 + 0x2a;
+  if (param_2 == '\0') {
+    iVar12 = param_3 + 0x2e;
   }
-  pJVar3 = *(JHUFF_TBL **)((int)((uVar15 & 0xffffffff) << 2) + (int)piVar5);
+  pJVar3 = (JHUFF_TBL *)(&param_1->err)[iVar12];
   if (pJVar3 == (JHUFF_TBL *)0x0) {
-    *(undefined4 *)(*piVar5 + 0x14) = 0x32;
-    *(int *)(*piVar5 + 0x18) = iVar8;
-    (**(code **)*piVar5)(piVar5);
+    param_1->err->msg_code = 0x32;
+    (param_1->err->msg_parm).i[0] = param_3;
+    (*param_1->err->error_exit)((jpeg_common_struct *)param_1);
   }
   if (*param_4 == (d_derived_tbl *)0x0) {
-    pdVar6 = (d_derived_tbl *)(**(code **)piVar5[1])(piVar5,1,0x590);
-    *param_4 = pdVar6;
+    pdVar5 = (*param_1->mem->alloc_small)((jpeg_common_struct *)param_1,1,0x590);
+    *param_4 = pdVar5;
   }
-  pdVar6 = *param_4;
-  iVar8 = 0;
-  iVar20 = 1;
-  pdVar6->pub = pJVar3;
+  pdVar5 = *param_4;
+  iVar12 = 0;
+  iVar17 = 1;
+  pdVar5->pub = pJVar3;
   do {
-    bVar2 = pJVar3->bits[iVar20];
-    uVar22 = (uint)bVar2;
-    if (0x100 < (int)((uint)bVar2 + iVar8)) {
-      *(undefined4 *)(*piVar5 + 0x14) = 8;
-      (**(code **)*piVar5)(piVar5);
+    bVar2 = *(byte *)((int)pJVar3->bits + iVar17);
+    uVar19 = (uint)bVar2;
+    if (0x100 < (int)((uint)bVar2 + iVar12)) {
+      param_1->err->msg_code = 8;
+      (*param_1->err->error_exit)((jpeg_common_struct *)param_1);
     }
     if (bVar2 != 0) {
-      iVar17 = uVar22 + iVar8;
-      pcVar16 = acStack_581 + iVar8;
+      iVar14 = uVar19 + iVar12;
+      pcVar13 = acStack_581 + iVar12;
       do {
-        pcVar16 = pcVar16 + 1;
-        *pcVar16 = (char)iVar20;
-        uVar22 = uVar22 - 1;
-        iVar8 = iVar17;
-      } while (uVar22 != 0);
+        pcVar13 = pcVar13 + 1;
+        *pcVar13 = (char)iVar17;
+        uVar19 = uVar19 - 1;
+        iVar12 = iVar14;
+      } while (uVar19 != 0);
     }
-    iVar20 = iVar20 + 1;
-  } while (iVar20 < 0x11);
-  uVar21 = 0;
-  acStack_581[iVar8 + 1] = '\0';
-  iVar20 = 0;
-  uVar19 = (ulonglong)acStack_581[1];
-  uVar15 = 0x100000001 << (uVar19 & 0x1f) | 0x100000001U >> 0x40 - (uVar19 & 0x1f);
-  while (acStack_581[1] != '\0') {
-    pcVar16 = acStack_581 + iVar20 + 1;
-    if ((int)*pcVar16 == (int)uVar19) {
-      plVar12 = &lStack_474 + iVar20;
-      do {
-        pcVar16 = pcVar16 + 1;
-        cVar1 = *pcVar16;
-        iVar20 = iVar20 + 1;
-        plVar12 = plVar12 + 1;
-        *plVar12 = (long)uVar21;
-        uVar21 = uVar21 + 1;
-      } while ((int)cVar1 == (int)uVar19);
-    }
-    if ((int)uVar15 <= (int)uVar21) {
-      *(undefined4 *)(*piVar5 + 0x14) = 8;
-      (**(code **)*piVar5)(piVar5);
-    }
-    uVar21 = (uVar21 & 0x7fffffff) << 1;
-    uVar19 = uVar19 + 1;
-    uVar15 = (uVar15 & 0xffffffff) << 1 | (uVar15 & 0xffffffff) >> 0x1f;
-    acStack_581[1] = acStack_581[iVar20 + 1];
-  }
+    iVar17 = iVar17 + 1;
+  } while (iVar17 < 0x11);
+  uVar18 = 0;
+  acStack_581[iVar12 + 1] = '\0';
   iVar17 = 0;
-  iVar20 = 1;
-  lVar23 = 0x10;
-  pdVar4 = pdVar6;
+  uVar16 = (ulonglong)acStack_581[1];
+  uVar21 = 0x100000001 << (uVar16 & 0x1f) | 0x100000001U >> 0x40 - (uVar16 & 0x1f);
+  while (acStack_581[1] != '\0') {
+    pcVar13 = acStack_581 + iVar17 + 1;
+    if ((int)*pcVar13 == (int)uVar16) {
+      plVar9 = &lStack_474 + iVar17;
+      do {
+        pcVar13 = pcVar13 + 1;
+        cVar1 = *pcVar13;
+        iVar17 = iVar17 + 1;
+        plVar9 = plVar9 + 1;
+        *plVar9 = (long)uVar18;
+        uVar18 = uVar18 + 1;
+      } while ((int)cVar1 == (int)uVar16);
+    }
+    if ((int)uVar21 <= (int)uVar18) {
+      param_1->err->msg_code = 8;
+      (*param_1->err->error_exit)((jpeg_common_struct *)param_1);
+    }
+    uVar18 = (uVar18 & 0x7fffffff) << 1;
+    uVar16 = uVar16 + 1;
+    uVar21 = (uVar21 & 0xffffffff) << 1 | (uVar21 & 0xffffffff) >> 0x1f;
+    acStack_581[1] = acStack_581[iVar17 + 1];
+  }
+  iVar14 = 0;
+  iVar17 = 1;
+  lVar20 = 0x10;
+  pdVar4 = pdVar5;
   do {
-    pdVar13 = (d_derived_tbl *)(pdVar4->maxcode + 1);
-    if (pJVar3->bits[iVar20] == '\0') {
-      pdVar13->maxcode[0] = -1;
+    pdVar10 = (d_derived_tbl *)(pdVar4->maxcode + 1);
+    if (*(char *)((int)pJVar3->bits + iVar17) == '\0') {
+      pdVar10->maxcode[0] = -1;
     }
     else {
-      pdVar4->valoffset[1] = iVar17 - local_470[iVar17];
-      iVar17 = (uint)pJVar3->bits[iVar20] + iVar17;
-      pdVar13->maxcode[0] = (&lStack_474)[iVar17];
+      pdVar4->valoffset[1] = iVar14 - local_470[iVar14];
+      iVar14 = (uint)*(byte *)((int)pJVar3->bits + iVar17) + iVar14;
+      pdVar10->maxcode[0] = (&lStack_474)[iVar14];
     }
-    iVar20 = iVar20 + 1;
-    lVar23 = lVar23 + -1;
-    pdVar4 = pdVar13;
-  } while (lVar23 != 0);
-  pdVar6->maxcode[0x11] = 0xfffff;
-  memset();
-  iVar20 = 0;
-  iVar17 = 1;
-  lVar23 = 7;
-  do {
-    if (pJVar3->bits[iVar17] != '\0') {
-      uVar22 = 1 << ((uint)lVar23 & 0x3f);
-      iVar9 = 1;
-      puVar11 = pJVar3->huffval + iVar20;
-      piVar10 = local_470 + iVar20;
-      do {
-        iVar18 = *piVar10 << ((uint)lVar23 & 0x3f);
-        if (0 < (int)uVar22) {
-          piVar14 = pdVar6->look_nbits + iVar18 + -1;
-          uVar15 = (ulonglong)uVar22;
-          do {
-            piVar14 = piVar14 + 1;
-            *piVar14 = iVar17;
-            pdVar6->look_sym[iVar18] = *puVar11;
-            iVar18 = iVar18 + 1;
-            uVar15 = uVar15 - 1;
-          } while (uVar15 != 0);
-        }
-        iVar9 = iVar9 + 1;
-        iVar20 = iVar20 + 1;
-        piVar10 = piVar10 + 1;
-        puVar11 = puVar11 + 1;
-      } while (iVar9 <= (int)(uint)pJVar3->bits[iVar17]);
-    }
-    lVar23 = lVar23 + -1;
     iVar17 = iVar17 + 1;
-  } while (-1 < lVar23);
-  if (((uVar7 & 0xff) != 0) && (iVar20 = 0, 0 < iVar8)) {
+    lVar20 = lVar20 + -1;
+    pdVar4 = pdVar10;
+  } while (lVar20 != 0);
+  pdVar5->maxcode[0x11] = 0xfffff;
+  memset();
+  iVar17 = 0;
+  iVar14 = 1;
+  lVar20 = 7;
+  do {
+    if (*(char *)((int)pJVar3->bits + iVar14) != '\0') {
+      uVar19 = 1 << ((uint)lVar20 & 0x3f);
+      iVar6 = 1;
+      puVar8 = pJVar3->huffval + iVar17;
+      piVar7 = local_470 + iVar17;
+      do {
+        iVar15 = *piVar7 << ((uint)lVar20 & 0x3f);
+        if (0 < (int)uVar19) {
+          piVar11 = pdVar5->look_nbits + iVar15 + -1;
+          uVar21 = (ulonglong)uVar19;
+          do {
+            piVar11 = piVar11 + 1;
+            *piVar11 = iVar14;
+            pdVar5->look_sym[iVar15] = *puVar8;
+            iVar15 = iVar15 + 1;
+            uVar21 = uVar21 - 1;
+          } while (uVar21 != 0);
+        }
+        iVar6 = iVar6 + 1;
+        iVar17 = iVar17 + 1;
+        piVar7 = piVar7 + 1;
+        puVar8 = puVar8 + 1;
+      } while (iVar6 <= (int)(uint)*(byte *)((int)pJVar3->bits + iVar14));
+    }
+    lVar20 = lVar20 + -1;
+    iVar14 = iVar14 + 1;
+  } while (-1 < lVar20);
+  if ((param_2 != '\0') && (iVar17 = 0, 0 < iVar12)) {
     do {
-      if (0xf < pJVar3->huffval[iVar20]) {
-        *(undefined4 *)(*piVar5 + 0x14) = 8;
-        (**(code **)*piVar5)(piVar5);
+      if (0xf < pJVar3->huffval[iVar17]) {
+        param_1->err->msg_code = 8;
+        (*param_1->err->error_exit)((jpeg_common_struct *)param_1);
       }
-      iVar20 = iVar20 + 1;
-    } while (iVar20 < iVar8);
+      iVar17 = iVar17 + 1;
+    } while (iVar17 < iVar12);
   }
-  __restgprlr_21();
   return;
 }
 
 
 // 827BE348  jpeg_fill_bit_buffer  (jpeg-6/jdhuff.c:296)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
+
 uchar jpeg_fill_bit_buffer(bitread_working_state *param_1,long param_2,int param_3,int param_4)
 
 {
   byte bVar1;
-  int *piVar2;
-  undefined4 *puVar3;
-  char cVar4;
-  uchar uVar5;
-  int iVar6;
-  ulonglong uVar7;
-  uint uVar8;
-  ulonglong uVar9;
-  longlong lVar10;
-  int iVar11;
-  int iVar12;
-  byte *pbVar13;
+  jpeg_decompress_struct *pjVar2;
+  uchar uVar3;
+  uint uVar4;
+  uint uVar5;
+  byte *pbVar6;
   
-  lVar10 = (longlong)param_3;
-  uVar9 = (ulonglong)param_2;
-  puVar3 = (undefined4 *)__savegprlr_25(param_1);
-  iVar11 = (int)lVar10;
-  iVar6 = (int)uVar9;
-  piVar2 = (int *)puVar3[4];
-  pbVar13 = (byte *)*puVar3;
-  iVar12 = puVar3[1];
-  if (piVar2[0x61] == 0) {
-    while (iVar11 < 0x19) {
-      iVar6 = (int)uVar9;
-      iVar11 = (int)lVar10;
-      if (iVar12 == 0) {
-        cVar4 = (**(code **)(piVar2[8] + 0xc))(piVar2);
-        if (cVar4 == '\0') {
-LAB_827be438:
-          uVar5 = __restgprlr_25(0);
-          return uVar5;
+  pjVar2 = param_1->cinfo;
+  pbVar6 = param_1->next_input_byte;
+  uVar5 = param_1->bytes_in_buffer;
+  if (pjVar2->unread_marker == 0) {
+    for (; param_3 < 0x19; param_3 = param_3 + 8) {
+      if (uVar5 == 0) {
+        uVar3 = (*pjVar2->src->fill_input_buffer)(pjVar2);
+        if (uVar3 == '\0') {
+          return '\0';
         }
-        pbVar13 = *(byte **)piVar2[8];
-        iVar12 = ((undefined4 *)piVar2[8])[1];
+        pbVar6 = pjVar2->src->next_input_byte;
+        uVar5 = pjVar2->src->bytes_in_buffer;
       }
-      bVar1 = *pbVar13;
-      uVar7 = (ulonglong)bVar1;
-      iVar12 = iVar12 + -1;
-      pbVar13 = pbVar13 + 1;
+      bVar1 = *pbVar6;
+      uVar4 = (uint)bVar1;
+      uVar5 = uVar5 - 1;
+      pbVar6 = pbVar6 + 1;
       if (bVar1 == 0xff) {
         do {
-          if (iVar12 == 0) {
-            cVar4 = (**(code **)(piVar2[8] + 0xc))(piVar2);
-            if (cVar4 == '\0') goto LAB_827be438;
-            pbVar13 = *(byte **)piVar2[8];
-            iVar12 = ((undefined4 *)piVar2[8])[1];
+          if (uVar5 == 0) {
+            uVar3 = (*pjVar2->src->fill_input_buffer)(pjVar2);
+            if (uVar3 == '\0') {
+              return '\0';
+            }
+            pbVar6 = pjVar2->src->next_input_byte;
+            uVar5 = pjVar2->src->bytes_in_buffer;
           }
-          bVar1 = *pbVar13;
-          iVar12 = iVar12 + -1;
-          pbVar13 = pbVar13 + 1;
+          bVar1 = *pbVar6;
+          uVar5 = uVar5 - 1;
+          pbVar6 = pbVar6 + 1;
         } while (bVar1 == 0xff);
         if (bVar1 != 0) {
-          piVar2[0x61] = (uint)bVar1;
+          pjVar2->unread_marker = (uint)bVar1;
           goto LAB_827be448;
         }
-        uVar7 = 0xff;
+        uVar4 = 0xff;
       }
-      lVar10 = lVar10 + 8;
-      uVar9 = (uVar9 & 0xffffff) << 8 | uVar7;
-      iVar6 = (int)uVar9;
-      iVar11 = (int)lVar10;
+      param_2 = param_2 << 8 | uVar4;
     }
   }
   else {
 LAB_827be448:
-    if (iVar11 < param_4) {
-      if (*(char *)(piVar2[0x68] + 8) == '\0') {
-        *(undefined4 *)(*piVar2 + 0x14) = 0x75;
-        (**(code **)(*piVar2 + 4))(piVar2,0xffffffffffffffff);
-        *(undefined1 *)(piVar2[0x68] + 8) = 1;
+    if (param_3 < param_4) {
+      if (pjVar2->entropy->insufficient_data == '\0') {
+        pjVar2->err->msg_code = 0x75;
+        (*pjVar2->err->emit_message)((jpeg_common_struct *)pjVar2,-1);
+        pjVar2->entropy->insufficient_data = '\x01';
       }
-      uVar8 = 0x19 - iVar11;
-      iVar11 = 0x19;
-      iVar6 = iVar6 << (uVar8 & 0x3f);
+      uVar4 = 0x19 - param_3;
+      param_3 = 0x19;
+      param_2 = param_2 << (uVar4 & 0x3f);
     }
   }
-  *puVar3 = pbVar13;
-  puVar3[1] = iVar12;
-  puVar3[2] = iVar6;
-  puVar3[3] = iVar11;
-  uVar5 = __restgprlr_25(1);
-  return uVar5;
+  param_1->next_input_byte = pbVar6;
+  param_1->bytes_in_buffer = uVar5;
+  param_1->get_buffer = param_2;
+  param_1->bits_left = param_3;
+  return '\x01';
 }
 
 
 // 827BE4B8  jpeg_huff_decode  (jpeg-6/jdhuff.c:401)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 int jpeg_huff_decode(bitread_working_state *param_1,long param_2,int param_3,d_derived_tbl *param_4,
                     int param_5)
 
 {
-  bitread_working_state *pbVar1;
-  uchar uVar3;
-  int iVar2;
-  ulonglong uVar4;
-  long lVar5;
-  ulonglong uVar6;
-  uint uVar7;
-  longlong lVar8;
-  uint uVar9;
-  longlong lVar10;
-  ulonglong uVar11;
+  uchar uVar1;
+  uint uVar2;
+  uint uVar3;
+  long *plVar4;
   
-  uVar11 = (ulonglong)param_5;
-  lVar8 = (longlong)(int)param_4;
-  uVar6 = (ulonglong)param_3;
-  uVar4 = (ulonglong)param_2;
-  pbVar1 = (bitread_working_state *)__savegprlr_27(param_1);
-  uVar9 = (uint)uVar11;
-  if ((int)uVar6 < (int)uVar9) {
-    uVar3 = jpeg_fill_bit_buffer(pbVar1,(long)uVar4,(int)uVar6,uVar9);
-    if (uVar3 == '\0') {
-LAB_827be4ec:
-      iVar2 = __restgprlr_27(0xffffffffffffffff);
-      return iVar2;
+  if (param_3 < param_5) {
+    uVar1 = jpeg_fill_bit_buffer(param_1,param_2,param_3,param_5);
+    if (uVar1 == '\0') {
+      return -1;
     }
-    uVar4 = (ulonglong)(uint)pbVar1->get_buffer;
-    uVar6 = (ulonglong)(uint)pbVar1->bits_left;
+    param_2 = param_1->get_buffer;
+    param_3 = param_1->bits_left;
   }
-  uVar6 = uVar6 - uVar11;
-  lVar10 = (uVar11 & 0x3fffffff) * 4 + lVar8;
-  uVar7 = (uint)uVar6;
-  lVar5 = (long)uVar4;
-  uVar9 = lVar5 >> (uVar7 & 0x3f) & (1 << (uVar9 & 0x3f)) - 1U;
-  if (*(int *)lVar10 < (int)uVar9) {
+  uVar2 = param_3 - param_5;
+  plVar4 = param_4->maxcode + param_5;
+  uVar3 = param_2 >> (uVar2 & 0x3f) & (1 << (param_5 & 0x3fU)) - 1U;
+  if (*plVar4 < (int)uVar3) {
     do {
-      if ((int)uVar6 < 1) {
-        uVar3 = jpeg_fill_bit_buffer(pbVar1,(long)uVar4,(int)uVar6,1);
-        if (uVar3 == '\0') goto LAB_827be4ec;
-        uVar4 = (ulonglong)(uint)pbVar1->get_buffer;
-        uVar6 = (ulonglong)(uint)pbVar1->bits_left;
+      if ((int)uVar2 < 1) {
+        uVar1 = jpeg_fill_bit_buffer(param_1,param_2,uVar2,1);
+        if (uVar1 == '\0') {
+          return -1;
+        }
+        param_2 = param_1->get_buffer;
+        uVar2 = param_1->bits_left;
       }
-      uVar6 = uVar6 - 1;
-      lVar10 = lVar10 + 4;
-      uVar11 = uVar11 + 1;
-      uVar7 = (uint)uVar6;
-      lVar5 = (long)uVar4;
-      uVar9 = lVar5 >> (uVar7 & 0x3f) & 1U | uVar9 << 1;
-    } while (*(int *)lVar10 < (int)uVar9);
+      uVar2 = uVar2 - 1;
+      plVar4 = plVar4 + 1;
+      param_5 = param_5 + 1;
+      uVar3 = param_2 >> (uVar2 & 0x3f) & 1U | uVar3 << 1;
+    } while (*plVar4 < (int)uVar3);
   }
-  pbVar1->get_buffer = lVar5;
-  pbVar1->bits_left = uVar7;
-  if ((int)uVar11 < 0x11) {
-    iVar2 = __restgprlr_27(*(undefined1 *)
-                            (*(int *)((int)((uVar11 + 0x12 & 0xffffffff) << 2) + (int)lVar8) +
-                             *(int *)((int)lVar8 + 0x8c) + uVar9 + 0x11));
-    return iVar2;
+  param_1->get_buffer = param_2;
+  param_1->bits_left = uVar2;
+  if (0x10 < param_5) {
+    param_1->cinfo->err->msg_code = 0x76;
+    (*param_1->cinfo->err->emit_message)((jpeg_common_struct *)param_1->cinfo,-1);
+    return 0;
   }
-  pbVar1->cinfo->err->msg_code = 0x76;
-  (*pbVar1->cinfo->err->emit_message)((jpeg_common_struct *)pbVar1->cinfo,-1);
-  iVar2 = __restgprlr_27(0);
-  return iVar2;
+  return (int)param_4->pub->huffval[uVar3 + param_4->valoffset[param_5]];
 }
 
 
 // 827BE5E8  process_restart  (jpeg-6/jdhuff.c:469)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 uchar process_restart(jpeg_decompress_struct *param_1)
 
 {
-  int iVar1;
-  uint uVar2;
-  int iVar3;
-  char cVar4;
-  uchar uVar5;
-  undefined4 *puVar6;
-  int iVar7;
+  jpeg_entropy_decoder *pjVar1;
+  _func___cdecl_uchar_jpeg_decompress_struct_ptr_short_64__ptr_ptr *p_Var2;
+  uchar uVar3;
+  _func___cdecl_uchar_jpeg_decompress_struct_ptr_short_64__ptr_ptr **pp_Var4;
+  int iVar5;
   
-  iVar3 = __savegprlr_29(param_1);
-  iVar1 = *(int *)(iVar3 + 0x1a0);
-  uVar2 = *(uint *)(iVar1 + 0x10);
-  *(uint *)(*(int *)(iVar3 + 0x19c) + 0x14) =
-       ((int)uVar2 >> 3) + (uint)((int)uVar2 < 0 && (uVar2 & 7) != 0) +
-       *(int *)(*(int *)(iVar3 + 0x19c) + 0x14);
-  *(undefined4 *)(iVar1 + 0x10) = 0;
-  cVar4 = (**(code **)(*(int *)(iVar3 + 0x19c) + 8))();
-  if (cVar4 == '\0') {
-    uVar5 = __restgprlr_29(0);
-    return uVar5;
+  pjVar1 = param_1->entropy;
+  p_Var2 = pjVar1[1].decode_mcu;
+  param_1->marker->discarded_bytes =
+       ((int)p_Var2 >> 3) + (uint)((int)p_Var2 < 0 && ((uint)p_Var2 & 7) != 0) +
+       param_1->marker->discarded_bytes;
+  pjVar1[1].decode_mcu = (_func___cdecl_uchar_jpeg_decompress_struct_ptr_short_64__ptr_ptr *)0x0;
+  uVar3 = (*param_1->marker->read_restart_marker)(param_1);
+  if (uVar3 == '\0') {
+    return '\0';
   }
-  iVar7 = 0;
-  if (0 < *(int *)(iVar3 + 300)) {
-    puVar6 = (undefined4 *)(iVar1 + 0x10);
+  iVar5 = 0;
+  if (0 < param_1->comps_in_scan) {
+    pp_Var4 = &pjVar1[1].decode_mcu;
     do {
-      iVar7 = iVar7 + 1;
-      puVar6 = puVar6 + 1;
-      *puVar6 = 0;
-    } while (iVar7 < *(int *)(iVar3 + 300));
+      iVar5 = iVar5 + 1;
+      pp_Var4 = pp_Var4 + 1;
+      *pp_Var4 = (_func___cdecl_uchar_jpeg_decompress_struct_ptr_short_64__ptr_ptr *)0x0;
+    } while (iVar5 < param_1->comps_in_scan);
   }
-  *(undefined4 *)(iVar1 + 0x24) = *(undefined4 *)(iVar3 + 0x104);
-  if (*(int *)(iVar3 + 0x184) == 0) {
-    *(undefined1 *)(iVar1 + 8) = 0;
+  pjVar1[3].start_pass = (_func___cdecl_void_jpeg_decompress_struct_ptr *)param_1->restart_interval;
+  if (param_1->unread_marker == 0) {
+    pjVar1->insufficient_data = '\0';
   }
-  uVar5 = __restgprlr_29(1);
-  return uVar5;
+  return '\x01';
 }
 
 
 // 827BE698  decode_mcu  (jpeg-6/jdhuff.c:518)
 
+/* WARNING: Function: __savegprlr_18 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_18 replaced with injection: xenon_save_restore */
+
 uchar decode_mcu(jpeg_decompress_struct *param_1,short (**param_2) [64])
 
 {
   jpeg_entropy_decoder *pjVar1;
-  undefined2 *puVar2;
+  short (*pasVar2) [64];
   d_derived_tbl *pdVar3;
   d_derived_tbl *pdVar4;
   int iVar5;
   uint uVar6;
-  jpeg_decompress_struct *pjVar7;
-  uchar uVar10;
-  int iVar8;
-  uint uVar9;
-  _func___cdecl_void_jpeg_decompress_struct_ptr *p_Var11;
-  ulonglong uVar12;
-  _func___cdecl_uchar_jpeg_decompress_struct_ptr_short_64__ptr_ptr *p_Var13;
-  int iVar14;
-  longlong lVar15;
-  int *piVar16;
-  _func___cdecl_uchar_jpeg_decompress_struct_ptr_short_64__ptr_ptr **pp_Var17;
-  ulonglong uVar18;
-  int iVar19;
+  uchar uVar9;
+  int iVar7;
+  uint uVar8;
+  _func___cdecl_void_jpeg_decompress_struct_ptr *p_Var10;
+  ulonglong uVar11;
+  _func___cdecl_uchar_jpeg_decompress_struct_ptr_short_64__ptr_ptr *p_Var12;
+  int iVar13;
+  int *piVar14;
+  _func___cdecl_uchar_jpeg_decompress_struct_ptr_short_64__ptr_ptr **pp_Var15;
+  ulonglong uVar16;
+  int iVar17;
   uint local_a0;
   _func___cdecl_void_jpeg_decompress_struct_ptr *local_9c;
   _func___cdecl_uchar_jpeg_decompress_struct_ptr_short_64__ptr_ptr *local_98;
   undefined4 local_94;
   bitread_working_state local_90 [7];
   
-  lVar15 = (longlong)(int)param_2;
-  pjVar7 = (jpeg_decompress_struct *)__savegprlr_18(param_1);
-  pjVar1 = pjVar7->entropy;
-  if (((pjVar7->restart_interval != 0) &&
+  pjVar1 = param_1->entropy;
+  if (((param_1->restart_interval != 0) &&
       (pjVar1[3].start_pass == (_func___cdecl_void_jpeg_decompress_struct_ptr *)0x0)) &&
-     (uVar10 = process_restart(pjVar7), uVar10 == '\0')) {
-LAB_827be6d8:
-    uVar10 = __restgprlr_18(0);
-    return uVar10;
+     (uVar9 = process_restart(param_1), uVar9 == '\0')) {
+    return '\0';
   }
   if (pjVar1->insufficient_data == '\0') {
-    iVar14 = 0;
+    iVar13 = 0;
     local_a0 = *(uint *)&pjVar1[1].insufficient_data;
     local_9c = pjVar1[2].start_pass;
     local_98 = pjVar1[2].decode_mcu;
-    p_Var11 = pjVar1[1].start_pass;
-    p_Var13 = pjVar1[1].decode_mcu;
-    uVar12 = ZEXT48(p_Var13);
-    local_90[0].cinfo = pjVar7;
-    local_90[0].next_input_byte = pjVar7->src->next_input_byte;
-    local_90[0].bytes_in_buffer = pjVar7->src->bytes_in_buffer;
+    p_Var10 = pjVar1[1].start_pass;
+    p_Var12 = pjVar1[1].decode_mcu;
+    uVar11 = ZEXT48(p_Var12);
+    local_90[0].cinfo = param_1;
+    local_90[0].next_input_byte = param_1->src->next_input_byte;
+    local_90[0].bytes_in_buffer = param_1->src->bytes_in_buffer;
     local_94 = *(undefined4 *)&pjVar1[2].insufficient_data;
-    if (0 < pjVar7->blocks_in_MCU) {
-      piVar16 = pjVar7->MCU_membership;
-      pp_Var17 = &pjVar1[9].decode_mcu;
+    if (0 < param_1->blocks_in_MCU) {
+      piVar14 = param_1->MCU_membership;
+      pp_Var15 = &pjVar1[9].decode_mcu;
       do {
-        puVar2 = (undefined2 *)*(int *)lVar15;
-        pdVar3 = (d_derived_tbl *)pp_Var17[-10];
-        pdVar4 = (d_derived_tbl *)*pp_Var17;
-        if ((int)uVar12 < 8) {
-          uVar10 = jpeg_fill_bit_buffer(local_90,(long)p_Var11,(int)uVar12,0);
-          if (uVar10 == '\0') goto LAB_827be6d8;
-          uVar12 = (ulonglong)(uint)local_90[0].bits_left;
-          p_Var11 = (_func___cdecl_void_jpeg_decompress_struct_ptr *)local_90[0].get_buffer;
+        pasVar2 = *param_2;
+        pdVar3 = (d_derived_tbl *)pp_Var15[-10];
+        pdVar4 = (d_derived_tbl *)*pp_Var15;
+        if ((int)uVar11 < 8) {
+          uVar9 = jpeg_fill_bit_buffer(local_90,(long)p_Var10,(int)uVar11,0);
+          if (uVar9 == '\0') {
+            return '\0';
+          }
+          uVar11 = (ulonglong)(uint)local_90[0].bits_left;
+          p_Var10 = (_func___cdecl_void_jpeg_decompress_struct_ptr *)local_90[0].get_buffer;
           if (7 < local_90[0].bits_left) goto LAB_827be7ac;
-          iVar8 = 1;
-          uVar9 = local_90[0].bits_left;
+          iVar7 = 1;
+          uVar8 = local_90[0].bits_left;
 LAB_827be7e0:
-          iVar8 = jpeg_huff_decode(local_90,(long)p_Var11,uVar9,pdVar3,iVar8);
-          uVar18 = (ulonglong)iVar8;
-          if (iVar8 < 0) goto LAB_827be6d8;
-          uVar12 = (ulonglong)(uint)local_90[0].bits_left;
-          p_Var11 = (_func___cdecl_void_jpeg_decompress_struct_ptr *)local_90[0].get_buffer;
+          iVar7 = jpeg_huff_decode(local_90,(long)p_Var10,uVar8,pdVar3,iVar7);
+          uVar16 = (ulonglong)iVar7;
+          if (iVar7 < 0) {
+            return '\0';
+          }
+          uVar11 = (ulonglong)(uint)local_90[0].bits_left;
+          p_Var10 = (_func___cdecl_void_jpeg_decompress_struct_ptr *)local_90[0].get_buffer;
         }
         else {
 LAB_827be7ac:
-          uVar9 = (uint)uVar12;
-          uVar6 = (int)p_Var11 >> (uVar9 - 8 & 0x3f) & 0xff;
+          uVar8 = (uint)uVar11;
+          uVar6 = (int)p_Var10 >> (uVar8 - 8 & 0x3f) & 0xff;
           if (pdVar3->look_nbits[uVar6] == 0) {
-            iVar8 = 9;
+            iVar7 = 9;
             goto LAB_827be7e0;
           }
-          uVar12 = uVar12 - (uint)pdVar3->look_nbits[uVar6];
-          uVar18 = (ulonglong)pdVar3->look_sym[uVar6];
+          uVar11 = uVar11 - (uint)pdVar3->look_nbits[uVar6];
+          uVar16 = (ulonglong)pdVar3->look_sym[uVar6];
         }
-        uVar9 = (uint)uVar18;
-        if (uVar9 != 0) {
-          if ((int)uVar12 < (int)uVar9) {
-            uVar10 = jpeg_fill_bit_buffer(local_90,(long)p_Var11,(int)uVar12,uVar9);
-            if (uVar10 == '\0') goto LAB_827be6d8;
-            uVar12 = (ulonglong)(uint)local_90[0].bits_left;
-            p_Var11 = (_func___cdecl_void_jpeg_decompress_struct_ptr *)local_90[0].get_buffer;
+        uVar8 = (uint)uVar16;
+        if (uVar8 != 0) {
+          if ((int)uVar11 < (int)uVar8) {
+            uVar9 = jpeg_fill_bit_buffer(local_90,(long)p_Var10,(int)uVar11,uVar8);
+            if (uVar9 == '\0') {
+              return '\0';
+            }
+            uVar11 = (ulonglong)(uint)local_90[0].bits_left;
+            p_Var10 = (_func___cdecl_void_jpeg_decompress_struct_ptr *)local_90[0].get_buffer;
           }
-          uVar12 = uVar12 - uVar18;
-          iVar8 = (int)((uVar18 & 0xffffffff) << 2);
-          uVar18 = (ulonglong)(uint)(1 << (uVar9 & 0x3f)) - 1 &
-                   (longlong)((int)p_Var11 >> ((uint)uVar12 & 0x3f));
-          if ((int)uVar18 < *(int *)((int)extend_test + iVar8)) {
-            uVar18 = *(uint *)((int)extend_offset + iVar8) + uVar18;
+          uVar11 = uVar11 - uVar16;
+          iVar7 = (int)((uVar16 & 0xffffffff) << 2);
+          uVar16 = (ulonglong)(uint)(1 << (uVar8 & 0x3f)) - 1 &
+                   (longlong)((int)p_Var10 >> ((uint)uVar11 & 0x3f));
+          if ((int)uVar16 < *(int *)((int)extend_test + iVar7)) {
+            uVar16 = *(uint *)((int)extend_offset + iVar7) + uVar16;
           }
         }
-        if ((&pjVar1[0xc].insufficient_data)[iVar14] != '\0') {
-          uVar9 = (&local_a0)[*piVar16];
-          (&local_a0)[*piVar16] = (uint)(uVar9 + uVar18);
-          *puVar2 = (short)(uVar9 + uVar18);
+        if ((&pjVar1[0xc].insufficient_data)[iVar13] != '\0') {
+          uVar8 = (&local_a0)[*piVar14];
+          (&local_a0)[*piVar14] = (uint)(uVar8 + uVar16);
+          (*pasVar2)[0] = (short)(uVar8 + uVar16);
         }
-        iVar8 = 1;
-        if (*(char *)((int)&pjVar1[0xd].decode_mcu + iVar14 + 2) == '\0') {
+        iVar7 = 1;
+        if (*(char *)((int)&pjVar1[0xd].decode_mcu + iVar13 + 2) == '\0') {
           do {
-            if ((int)uVar12 < 8) {
-              uVar10 = jpeg_fill_bit_buffer(local_90,(long)p_Var11,(int)uVar12,0);
-              if (uVar10 == '\0') goto LAB_827be6d8;
-              uVar12 = (ulonglong)(uint)local_90[0].bits_left;
-              p_Var11 = (_func___cdecl_void_jpeg_decompress_struct_ptr *)local_90[0].get_buffer;
+            if ((int)uVar11 < 8) {
+              uVar9 = jpeg_fill_bit_buffer(local_90,(long)p_Var10,(int)uVar11,0);
+              if (uVar9 == '\0') {
+                return '\0';
+              }
+              uVar11 = (ulonglong)(uint)local_90[0].bits_left;
+              p_Var10 = (_func___cdecl_void_jpeg_decompress_struct_ptr *)local_90[0].get_buffer;
               if (7 < local_90[0].bits_left) goto LAB_827bea00;
-              iVar19 = 1;
-              uVar9 = local_90[0].bits_left;
+              iVar17 = 1;
+              uVar8 = local_90[0].bits_left;
 LAB_827bea34:
-              uVar9 = jpeg_huff_decode(local_90,(long)p_Var11,uVar9,pdVar4,iVar19);
-              if ((int)uVar9 < 0) goto LAB_827be6d8;
-              uVar12 = (ulonglong)(uint)local_90[0].bits_left;
-              p_Var11 = (_func___cdecl_void_jpeg_decompress_struct_ptr *)local_90[0].get_buffer;
+              uVar8 = jpeg_huff_decode(local_90,(long)p_Var10,uVar8,pdVar4,iVar17);
+              if ((int)uVar8 < 0) {
+                return '\0';
+              }
+              uVar11 = (ulonglong)(uint)local_90[0].bits_left;
+              p_Var10 = (_func___cdecl_void_jpeg_decompress_struct_ptr *)local_90[0].get_buffer;
             }
             else {
 LAB_827bea00:
-              uVar9 = (uint)uVar12;
-              uVar6 = (int)p_Var11 >> (uVar9 - 8 & 0x3f) & 0xff;
+              uVar8 = (uint)uVar11;
+              uVar6 = (int)p_Var10 >> (uVar8 - 8 & 0x3f) & 0xff;
               if (pdVar4->look_nbits[uVar6] == 0) {
-                iVar19 = 9;
+                iVar17 = 9;
                 goto LAB_827bea34;
               }
-              uVar12 = uVar12 - (uint)pdVar4->look_nbits[uVar6];
-              uVar9 = (uint)pdVar4->look_sym[uVar6];
+              uVar11 = uVar11 - (uint)pdVar4->look_nbits[uVar6];
+              uVar8 = (uint)pdVar4->look_sym[uVar6];
             }
-            iVar19 = (int)((ulonglong)uVar9 & 0xf);
-            if (iVar19 == 0) {
-              if ((int)uVar9 >> 4 != 0xf) break;
-              iVar8 = iVar8 + 0xf;
+            iVar17 = (int)((ulonglong)uVar8 & 0xf);
+            if (iVar17 == 0) {
+              if ((int)uVar8 >> 4 != 0xf) break;
+              iVar7 = iVar7 + 0xf;
             }
             else {
-              iVar8 = iVar8 + ((int)uVar9 >> 4);
-              if ((int)uVar12 < iVar19) {
-                uVar10 = jpeg_fill_bit_buffer(local_90,(long)p_Var11,(int)uVar12,iVar19);
-                if (uVar10 == '\0') goto LAB_827be6d8;
-                uVar12 = (ulonglong)(uint)local_90[0].bits_left;
-                p_Var11 = (_func___cdecl_void_jpeg_decompress_struct_ptr *)local_90[0].get_buffer;
+              iVar7 = iVar7 + ((int)uVar8 >> 4);
+              if ((int)uVar11 < iVar17) {
+                uVar9 = jpeg_fill_bit_buffer(local_90,(long)p_Var10,(int)uVar11,iVar17);
+                if (uVar9 == '\0') {
+                  return '\0';
+                }
+                uVar11 = (ulonglong)(uint)local_90[0].bits_left;
+                p_Var10 = (_func___cdecl_void_jpeg_decompress_struct_ptr *)local_90[0].get_buffer;
               }
-              uVar12 = uVar12 - ((ulonglong)uVar9 & 0xf);
+              uVar11 = uVar11 - ((ulonglong)uVar8 & 0xf);
             }
-            iVar8 = iVar8 + 1;
-          } while (iVar8 < 0x40);
+            iVar7 = iVar7 + 1;
+          } while (iVar7 < 0x40);
         }
         else {
           do {
-            if ((int)uVar12 < 8) {
-              uVar10 = jpeg_fill_bit_buffer(local_90,(long)p_Var11,(int)uVar12,0);
-              if (uVar10 == '\0') goto LAB_827be6d8;
-              uVar12 = (ulonglong)(uint)local_90[0].bits_left;
-              p_Var11 = (_func___cdecl_void_jpeg_decompress_struct_ptr *)local_90[0].get_buffer;
+            if ((int)uVar11 < 8) {
+              uVar9 = jpeg_fill_bit_buffer(local_90,(long)p_Var10,(int)uVar11,0);
+              if (uVar9 == '\0') {
+                return '\0';
+              }
+              uVar11 = (ulonglong)(uint)local_90[0].bits_left;
+              p_Var10 = (_func___cdecl_void_jpeg_decompress_struct_ptr *)local_90[0].get_buffer;
               if (7 < local_90[0].bits_left) goto LAB_827be8d8;
-              iVar19 = 1;
-              uVar9 = local_90[0].bits_left;
+              iVar17 = 1;
+              uVar8 = local_90[0].bits_left;
 LAB_827be90c:
-              uVar9 = jpeg_huff_decode(local_90,(long)p_Var11,uVar9,pdVar4,iVar19);
-              if ((int)uVar9 < 0) goto LAB_827be6d8;
-              uVar12 = (ulonglong)(uint)local_90[0].bits_left;
-              p_Var11 = (_func___cdecl_void_jpeg_decompress_struct_ptr *)local_90[0].get_buffer;
+              uVar8 = jpeg_huff_decode(local_90,(long)p_Var10,uVar8,pdVar4,iVar17);
+              if ((int)uVar8 < 0) {
+                return '\0';
+              }
+              uVar11 = (ulonglong)(uint)local_90[0].bits_left;
+              p_Var10 = (_func___cdecl_void_jpeg_decompress_struct_ptr *)local_90[0].get_buffer;
             }
             else {
 LAB_827be8d8:
-              uVar9 = (uint)uVar12;
-              uVar6 = (int)p_Var11 >> (uVar9 - 8 & 0x3f) & 0xff;
+              uVar8 = (uint)uVar11;
+              uVar6 = (int)p_Var10 >> (uVar8 - 8 & 0x3f) & 0xff;
               if (pdVar4->look_nbits[uVar6] == 0) {
-                iVar19 = 9;
+                iVar17 = 9;
                 goto LAB_827be90c;
               }
-              uVar12 = uVar12 - (uint)pdVar4->look_nbits[uVar6];
-              uVar9 = (uint)pdVar4->look_sym[uVar6];
+              uVar11 = uVar11 - (uint)pdVar4->look_nbits[uVar6];
+              uVar8 = (uint)pdVar4->look_sym[uVar6];
             }
-            uVar18 = (ulonglong)uVar9 & 0xf;
-            iVar19 = (int)uVar18;
-            if (iVar19 == 0) {
-              if ((int)uVar9 >> 4 != 0xf) break;
-              iVar8 = iVar8 + 0xf;
+            uVar16 = (ulonglong)uVar8 & 0xf;
+            iVar17 = (int)uVar16;
+            if (iVar17 == 0) {
+              if ((int)uVar8 >> 4 != 0xf) break;
+              iVar7 = iVar7 + 0xf;
             }
             else {
-              iVar8 = iVar8 + ((int)uVar9 >> 4);
-              if ((int)uVar12 < iVar19) {
-                uVar10 = jpeg_fill_bit_buffer(local_90,(long)p_Var11,(int)uVar12,iVar19);
-                if (uVar10 == '\0') goto LAB_827be6d8;
-                uVar12 = (ulonglong)(uint)local_90[0].bits_left;
-                p_Var11 = (_func___cdecl_void_jpeg_decompress_struct_ptr *)local_90[0].get_buffer;
+              iVar7 = iVar7 + ((int)uVar8 >> 4);
+              if ((int)uVar11 < iVar17) {
+                uVar9 = jpeg_fill_bit_buffer(local_90,(long)p_Var10,(int)uVar11,iVar17);
+                if (uVar9 == '\0') {
+                  return '\0';
+                }
+                uVar11 = (ulonglong)(uint)local_90[0].bits_left;
+                p_Var10 = (_func___cdecl_void_jpeg_decompress_struct_ptr *)local_90[0].get_buffer;
               }
-              uVar12 = uVar12 - uVar18;
-              iVar5 = (int)(((ulonglong)uVar9 & 0xf) << 2);
-              uVar9 = (1 << iVar19) - 1U & (int)p_Var11 >> ((uint)uVar12 & 0x3f);
-              if ((int)uVar9 < *(int *)((int)extend_test + iVar5)) {
-                uVar9 = *(int *)((int)extend_offset + iVar5) + uVar9;
+              uVar11 = uVar11 - uVar16;
+              iVar5 = (int)(((ulonglong)uVar8 & 0xf) << 2);
+              uVar8 = (1 << iVar17) - 1U & (int)p_Var10 >> ((uint)uVar11 & 0x3f);
+              if ((int)uVar8 < *(int *)((int)extend_test + iVar5)) {
+                uVar8 = *(int *)((int)extend_offset + iVar5) + uVar8;
               }
-              puVar2[jpeg_natural_order[iVar8]] = (short)uVar9;
+              (*pasVar2)[jpeg_natural_order[iVar7]] = (short)uVar8;
             }
-            iVar8 = iVar8 + 1;
-          } while (iVar8 < 0x40);
+            iVar7 = iVar7 + 1;
+          } while (iVar7 < 0x40);
         }
-        p_Var13 = (_func___cdecl_uchar_jpeg_decompress_struct_ptr_short_64__ptr_ptr *)uVar12;
-        iVar14 = iVar14 + 1;
-        lVar15 = lVar15 + 4;
-        pp_Var17 = pp_Var17 + 1;
-        piVar16 = piVar16 + 1;
-      } while (iVar14 < pjVar7->blocks_in_MCU);
+        p_Var12 = (_func___cdecl_uchar_jpeg_decompress_struct_ptr_short_64__ptr_ptr *)uVar11;
+        iVar13 = iVar13 + 1;
+        param_2 = param_2 + 1;
+        pp_Var15 = pp_Var15 + 1;
+        piVar14 = piVar14 + 1;
+      } while (iVar13 < param_1->blocks_in_MCU);
     }
-    pjVar7->src->next_input_byte = local_90[0].next_input_byte;
-    pjVar7->src->bytes_in_buffer = local_90[0].bytes_in_buffer;
-    pjVar1[1].start_pass = p_Var11;
-    pjVar1[1].decode_mcu = p_Var13;
+    param_1->src->next_input_byte = local_90[0].next_input_byte;
+    param_1->src->bytes_in_buffer = local_90[0].bytes_in_buffer;
+    pjVar1[1].start_pass = p_Var10;
+    pjVar1[1].decode_mcu = p_Var12;
     *(uint *)&pjVar1[1].insufficient_data = local_a0;
     pjVar1[2].start_pass = local_9c;
     pjVar1[2].decode_mcu = local_98;
     *(undefined4 *)&pjVar1[2].insufficient_data = local_94;
   }
   pjVar1[3].start_pass = pjVar1[3].start_pass + -1;
-  uVar10 = __restgprlr_18(1);
-  return uVar10;
+  return '\x01';
 }
 
 

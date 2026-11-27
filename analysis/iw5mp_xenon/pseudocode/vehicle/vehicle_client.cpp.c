@@ -35,6 +35,8 @@ void VehicleCl_RegisterDvars(void)
 
 // 826BA1A0  VehicleCl_InitGlobals  (vehicle/vehicle_client.cpp:82)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
 
@@ -46,7 +48,6 @@ void VehicleCl_InitGlobals(void)
   int iVar3;
   VehicleDef **ppVVar4;
   
-  __savegprlr_29();
   Com_Memset(vehicleClientDefs,0,0x80);
   iVar3 = 1;
   ppVVar4 = vehicleClientDefs + 1;
@@ -63,7 +64,6 @@ void VehicleCl_InitGlobals(void)
     iVar3 = iVar3 + 1;
   } while ((int)ppVVar4 < -0x7bbaeef0);
   VehicleCam_InitGlobals();
-  __restgprlr_29();
   return;
 }
 
@@ -106,69 +106,63 @@ ushort CompressUnit(float param_1)
 
 // 826BA288  VehicleCl_Archive  (vehicle/vehicle_client.cpp:161)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void VehicleCl_Archive(LocalClientNum_t param_1,MemoryFile *param_2)
 
 {
-  uint uVar1;
-  ulonglong uVar2;
-  
-  uVar2 = (ulonglong)(int)param_2;
-  uVar1 = __savegprlr_29(param_1);
-  if ((uVar2 & 0xffffffff) == 0) {
+  if (param_2 == (MemoryFile *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_client.cpp",
                     0xa2,0,"%s");
   }
-  if (3 < uVar1) {
+  if (LOCAL_CLIENT_3 < param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_client.cpp",
                     0xa5,0,
                     "localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)");
   }
-  MemFile_ArchiveData((MemoryFile *)uVar2,0x420,vehicleClients + uVar1);
-  VehicleCam_Archive((MemoryFile *)uVar2);
-  __restgprlr_29();
+  MemFile_ArchiveData(param_2,0x420,vehicleClients + param_1);
+  VehicleCam_Archive(param_2);
   return;
 }
 
 
 // 826BB7F0  VehicleCl_Delete  (vehicle/vehicle_client.cpp:176)
 
+/* WARNING: Function: __savegprlr_21 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_21 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void VehicleCl_Delete(LocalClientNum_t param_1,int param_2)
 
 {
   uint uVar1;
-  uint uVar2;
   
-  uVar1 = __savegprlr_21(param_1);
-  uVar2 = 0;
+  uVar1 = 0;
   while( true ) {
-    if (7 < uVar2) {
+    if (7 < uVar1) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_client.cpp",
                       0x119,0,"vehIndex doesn\'t index MAX_VEHICLES\n\t%i not in [0, %i)");
     }
-    if (3 < uVar1) {
+    if (LOCAL_CLIENT_3 < param_1) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_client.cpp",
                       0x11c,0,
                       "localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)")
       ;
     }
-    if (vehicleClients[uVar1] + uVar2 == (VehicleClient *)0x0) {
+    if (vehicleClients[param_1] + uVar1 == (VehicleClient *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_client.cpp",
                       0xb7,0,"%s");
     }
-    if (vehicleClients[uVar1][uVar2].entIndex == param_2) break;
-    uVar2 = uVar2 + 1;
-    if (7 < (int)uVar2) {
-      __restgprlr_21();
+    if (vehicleClients[param_1][uVar1].entIndex == param_2) break;
+    uVar1 = uVar1 + 1;
+    if (7 < (int)uVar1) {
       return;
     }
   }
   Com_Printf(6,"VehicleCl_Delete %d: (defIndex = %d), (entIndex = %d), (localClientNum = %d)\n");
-  Com_Memset(vehicleClients[uVar1] + uVar2,0,0x84);
-  __restgprlr_21();
+  Com_Memset(vehicleClients[param_1] + uVar1,0,0x84);
   return;
 }
 
@@ -199,169 +193,154 @@ bool VehicleCl_IsCorpse(centity_s *param_1)
 
 // 826BA3C8  VehicleCl_GetClientDefIndex  (vehicle/vehicle_client.cpp:217)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
 
 int VehicleCl_GetClientDefIndex(centity_s *param_1)
 
 {
-  centity_s *pcVar1;
-  bool bVar3;
-  int iVar2;
-  uint uVar4;
+  bool bVar1;
+  uint uVar2;
   
-  pcVar1 = (centity_s *)__savegprlr_29(param_1);
-  if (pcVar1 == (centity_s *)0x0) {
+  if (param_1 == (centity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_client.cpp",
                     0xdc,0,"%s");
   }
-  bVar3 = VehicleCl_IsCorpse(pcVar1);
-  if (bVar3) {
+  bVar1 = VehicleCl_IsCorpse(param_1);
+  if (bVar1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_client.cpp",
                     0xdd,0,"%s");
   }
-  uVar4 = (pcVar1->nextState).lerp.u.vehicle.indices >> 3 & 0x1f;
-  if (0x1f < uVar4) {
+  uVar2 = (param_1->nextState).lerp.u.vehicle.indices >> 3 & 0x1f;
+  if (0x1f < uVar2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_client.cpp",
                     0xe0,0,"defIndex doesn\'t index MAX_VEHICLE_DEFS\n\t%i not in [0, %i)");
   }
-  if (vehicleClientDefs[uVar4] == (VehicleDef *)0x0) {
+  if (vehicleClientDefs[uVar2] == (VehicleDef *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_client.cpp",
                     0xe1,0,"%s");
   }
-  iVar2 = __restgprlr_29(uVar4);
-  return iVar2;
+  return uVar2;
 }
 
 
 // 826BA4B0  VehicleCl_GetFlags  (vehicle/vehicle_client.cpp:232)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 
 uint VehicleCl_GetFlags(centity_s *param_1)
 
 {
-  centity_s *pcVar1;
-  bool bVar3;
-  uint uVar2;
+  bool bVar1;
   
-  pcVar1 = (centity_s *)__savegprlr_29(param_1);
-  if (pcVar1 == (centity_s *)0x0) {
+  if (param_1 == (centity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_client.cpp",
                     0xeb,0,"%s");
   }
-  bVar3 = VehicleCl_IsCorpse(pcVar1);
-  if (bVar3) {
+  bVar1 = VehicleCl_IsCorpse(param_1);
+  if (bVar1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_client.cpp",
                     0xec,0,"%s");
-    uVar2 = __restgprlr_29((pcVar1->nextState).lerp.u.vehicle.flags & 0x7ff);
-    return uVar2;
+    return (param_1->nextState).lerp.u.vehicle.flags & 0x7ff;
   }
-  uVar2 = __restgprlr_29((pcVar1->nextState).lerp.u.vehicle.flags & 0x7ff);
-  return uVar2;
+  return (param_1->nextState).lerp.u.vehicle.flags & 0x7ff;
 }
 
 
 // 826BA548  VehicleCl_GetClientIndex  (vehicle/vehicle_client.cpp:245)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 
 int VehicleCl_GetClientIndex(centity_s *param_1)
 
 {
   uint uVar1;
-  centity_s *pcVar2;
-  bool bVar4;
-  int iVar3;
+  bool bVar2;
   
-  pcVar2 = (centity_s *)__savegprlr_29(param_1);
-  if (pcVar2 == (centity_s *)0x0) {
+  if (param_1 == (centity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_client.cpp",
                     0xf8,0,"%s");
   }
-  bVar4 = VehicleCl_IsCorpse(pcVar2);
-  if (bVar4) {
+  bVar2 = VehicleCl_IsCorpse(param_1);
+  if (bVar2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_client.cpp",
                     0xf9,0,"%s");
   }
-  uVar1 = (pcVar2->nextState).lerp.u.vehicle.indices & 7;
+  uVar1 = (param_1->nextState).lerp.u.vehicle.indices & 7;
   if (7 < uVar1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_client.cpp",
                     0xfc,0,"vehIndex doesn\'t index MAX_VEHICLES\n\t%i not in [0, %i)");
   }
-  iVar3 = __restgprlr_29(uVar1);
-  return iVar3;
+  return uVar1;
 }
 
 
 // 826BB900  VehicleCl_GetClient  (vehicle/vehicle_client.cpp:259)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 
 VehicleClient * VehicleCl_GetClient(LocalClientNum_t param_1,centity_s *param_2)
 
 {
-  LocalClientNum_t LVar1;
-  bool bVar4;
-  uint uVar2;
-  VehicleClient *pVVar3;
-  ulonglong uVar5;
+  bool bVar3;
+  uint uVar1;
+  VehicleClient *pVVar2;
   
-  uVar5 = (ulonglong)(int)param_2;
-  LVar1 = __savegprlr_27(param_1);
-  if ((uVar5 & 0xffffffff) == 0) {
+  if (param_2 == (centity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_client.cpp",
                     0x107,0,"%s");
   }
-  bVar4 = VehicleCl_IsCorpse((centity_s *)uVar5);
-  if (bVar4) {
+  bVar3 = VehicleCl_IsCorpse(param_2);
+  if (bVar3) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_client.cpp",
                     0x108,0,"%s");
   }
-  uVar2 = VehicleCl_GetClientIndex((centity_s *)uVar5);
-  if (7 < uVar2) {
+  uVar1 = VehicleCl_GetClientIndex(param_2);
+  if (7 < uVar1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_client.cpp",
                     0x10c,0,"vehIndex doesn\'t index MAX_VEHICLES\n\t%i not in [0, %i)");
   }
-  pVVar3 = VehicleCl_GetClientFromIndex(LVar1,uVar2);
-  if (pVVar3 == (VehicleClient *)0x0) {
+  pVVar2 = VehicleCl_GetClientFromIndex(param_1,uVar1);
+  if (pVVar2 == (VehicleClient *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_client.cpp",
                     0x10e,0,"%s");
   }
-  if (uVar2 != pVVar3->index) {
+  if (uVar1 != pVVar2->index) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_client.cpp",
                     0x110,0,"%s");
   }
-  pVVar3 = (VehicleClient *)__restgprlr_27(pVVar3);
-  return pVVar3;
+  return pVVar2;
 }
 
 
 // 826BA5F8  VehicleCl_GetClientFromIndex  (vehicle/vehicle_client.cpp:278)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 VehicleClient * VehicleCl_GetClientFromIndex(LocalClientNum_t param_1,int param_2)
 
 {
-  ulonglong uVar1;
-  VehicleClient *pVVar2;
-  ulonglong uVar3;
-  
-  uVar3 = (ulonglong)param_2;
-  uVar1 = __savegprlr_29(param_1);
-  if (7 < (uVar3 & 0xffffffff)) {
+  if (7 < (uint)param_2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_client.cpp",
                     0x119,0,"vehIndex doesn\'t index MAX_VEHICLES\n\t%i not in [0, %i)");
   }
-  if (3 < (uVar1 & 0xffffffff)) {
+  if (LOCAL_CLIENT_3 < param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_client.cpp",
                     0x11c,0,
                     "localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)");
   }
-  pVVar2 = (VehicleClient *)__restgprlr_29(((uVar1 & 0x1fffffff) * 8 + uVar3) * 0x84 + -0x7bbafff8);
-  return pVVar2;
+  return vehicleClients[param_1] + param_2;
 }
 
 
@@ -397,63 +376,59 @@ bool VehicleCl_IsClientValid(LocalClientNum_t param_1,VehicleClient *param_2)
 
 // 826BA728  VehicleCl_RegisterClientDef  (vehicle/vehicle_client.cpp:318)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
 
 void VehicleCl_RegisterClientDef(char *param_1,int param_2)
 
 {
-  char *pcVar1;
-  VehicleDef *pVVar2;
-  ulonglong uVar3;
+  VehicleDef *pVVar1;
   
-  uVar3 = (ulonglong)param_2;
-  pcVar1 = (char *)__savegprlr_29(param_1);
-  if (pcVar1 == (char *)0x0) {
+  if (param_1 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_client.cpp",
                     0x13f,0,"%s");
   }
-  if (0x1f < (uVar3 & 0xffffffff)) {
+  if (0x1f < (uint)param_2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_client.cpp",
                     0x140,0,"vehDefIndex doesn\'t index MAX_VEHICLE_DEFS\n\t%i not in [0, %i)");
   }
-  pVVar2 = Vehicle_Register(pcVar1);
-  *(VehicleDef **)((int)vehicleClientDefs + (int)((uVar3 & 0xffffffff) << 2)) = pVVar2;
-  __restgprlr_29();
+  pVVar1 = Vehicle_Register(param_1);
+  vehicleClientDefs[param_2] = pVVar1;
   return;
 }
 
 
 // 826BA7B8  VehicleCl_GetClientDef  (vehicle/vehicle_client.cpp:327)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
 
 VehicleDef * VehicleCl_GetClientDef(VehicleClient *param_1)
 
 {
-  int iVar1;
-  VehicleDef *pVVar2;
-  
-  iVar1 = __savegprlr_28(param_1);
-  if (iVar1 == 0) {
+  if (param_1 == (VehicleClient *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_client.cpp",
                     0x148,0,"%s");
   }
-  if (0x1f < *(uint *)(iVar1 + 4)) {
+  if (0x1f < (uint)param_1->defIndex) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_client.cpp",
                     0x14a,0,"veh->defIndex doesn\'t index MAX_VEHICLE_DEFS\n\t%i not in [0, %i)");
   }
-  if (vehicleClientDefs[*(int *)(iVar1 + 4)] == (VehicleDef *)0x0) {
+  if (vehicleClientDefs[param_1->defIndex] == (VehicleDef *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_client.cpp",
                     0x14b,0,"%s");
   }
-  pVVar2 = (VehicleDef *)__restgprlr_28(vehicleClientDefs[*(int *)(iVar1 + 4)]);
-  return pVVar2;
+  return vehicleClientDefs[param_1->defIndex];
 }
 
 
 // 826BBA18  VehicleCl_ResetEntity  (vehicle/vehicle_client.cpp:338)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
@@ -462,62 +437,59 @@ void VehicleCl_ResetEntity(LocalClientNum_t param_1,centity_s *param_2)
 
 {
   StaticEntityStateTypeUnion SVar1;
-  LocalClientNum_t LVar2;
-  centity_s *pcVar3;
-  cg_s *pcVar4;
-  uint uVar5;
-  VehicleClient *pVVar6;
-  int iVar7;
-  ulonglong uVar9;
-  bool bVar8;
+  bool bVar6;
+  cg_s *pcVar2;
+  uint uVar3;
+  VehicleClient *pVVar4;
+  int iVar5;
   
-  uVar9 = (ulonglong)(int)param_2;
-  LVar2 = __savegprlr_25(param_1);
-  if ((uVar9 & 0xffffffff) == 0) {
+  if (param_2 == (centity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_client.cpp",
                     0x157,0,"%s");
   }
-  pcVar3 = (centity_s *)uVar9;
-  bVar8 = VehicleCl_IsCorpse(pcVar3);
-  if (bVar8) {
+  bVar6 = VehicleCl_IsCorpse(param_2);
+  if (bVar6) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_client.cpp",
                     0x158,0,"%s");
   }
-  pcVar4 = CG_GetLocalClientGlobals(LVar2);
-  uVar5 = VehicleCl_GetClientIndex(pcVar3);
-  if (7 < uVar5) {
+  pcVar2 = CG_GetLocalClientGlobals(param_1);
+  uVar3 = VehicleCl_GetClientIndex(param_2);
+  if (7 < uVar3) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_client.cpp",
                     0x15d,0,"index doesn\'t index MAX_VEHICLES\n\t%i not in [0, %i)");
   }
-  pVVar6 = VehicleCl_GetClientFromIndex(LVar2,uVar5);
-  if (pVVar6 == (VehicleClient *)0x0) {
+  pVVar4 = VehicleCl_GetClientFromIndex(param_1,uVar3);
+  if (pVVar4 == (VehicleClient *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_client.cpp",
                     0x160,0,"%s");
   }
-  Com_Memset(pVVar6,0,0x84);
-  pVVar6->index = uVar5;
-  iVar7 = VehicleCl_GetClientDefIndex(pcVar3);
-  pVVar6->defIndex = iVar7;
-  pVVar6->entIndex = (pcVar3->nextState).number;
-  pVVar6->localClientNum = LVar2;
-  pVVar6->time = pcVar4->time;
-  SVar1 = (pcVar3->nextState).staticState;
-  pVVar6->playerIndex = (int)SVar1;
+  Com_Memset(pVVar4,0,0x84);
+  pVVar4->index = uVar3;
+  iVar5 = VehicleCl_GetClientDefIndex(param_2);
+  pVVar4->defIndex = iVar5;
+  pVVar4->entIndex = (param_2->nextState).number;
+  pVVar4->localClientNum = param_1;
+  pVVar4->time = pcVar2->time;
+  SVar1 = (param_2->nextState).staticState;
+  pVVar4->playerIndex = (int)SVar1;
   if (0x11 < (uint)SVar1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_client.cpp",
                     0x16c,0,"veh->playerIndex doesn\'t index MAX_CLIENTS\n\t%i not in [0, %i)");
   }
   Com_Printf(6,"VehicleCl_ResetEntity %d: (defIndex = %d), (entIndex = %d), (localClientNum = %d)\n"
             );
-  VehicleCl_ClearBoneControllers(pcVar3);
-  VehicleAudio_ResetSounds(pVVar6);
-  __restgprlr_25();
+  VehicleCl_ClearBoneControllers(param_2);
+  VehicleAudio_ResetSounds(pVVar4);
   return;
 }
 
 
 // 826BA870  VehicleCl_CalcLocalSpeed  (vehicle/vehicle_client.cpp:375)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
@@ -532,18 +504,14 @@ void VehicleCl_CalcLocalSpeed(LocalClientNum_t param_1,centity_s *param_2,float 
   int iVar5;
   int iVar6;
   int iVar7;
-  LocalClientNum_t LVar8;
-  centity_s *pcVar9;
-  cg_s *pcVar10;
-  ulonglong uVar12;
-  undefined4 *puVar13;
-  ulonglong uVar14;
-  float *pfVar15;
-  longlong lVar16;
-  double dVar17;
-  double dVar18;
-  double dVar19;
-  double dVar20;
+  bool bVar9;
+  cg_s *pcVar8;
+  float *pfVar10;
+  longlong lVar11;
+  double dVar12;
+  double dVar13;
+  double dVar14;
+  double dVar15;
   float local_a8;
   float local_a4;
   float local_a0;
@@ -552,83 +520,74 @@ void VehicleCl_CalcLocalSpeed(LocalClientNum_t param_1,centity_s *param_2,float 
   float local_90;
   float local_80 [2];
   float local_78 [30];
-  bool bVar11;
   
-  uVar14 = (ulonglong)(int)param_3;
-  uVar12 = (ulonglong)(int)param_2;
-  __savegprlr_27(param_1);
-  LVar8 = __savefpr_28();
-  if ((uVar12 & 0xffffffff) == 0) {
+  if (param_2 == (centity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_client.cpp",
                     0x181,0,"%s");
   }
-  pcVar9 = (centity_s *)uVar12;
-  bVar11 = VehicleCl_IsCorpse(pcVar9);
-  if (bVar11) {
+  bVar9 = VehicleCl_IsCorpse(param_2);
+  if (bVar9) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_client.cpp",
                     0x182,0,"%s");
   }
-  if ((uVar14 & 0xffffffff) == 0) {
+  if (param_3 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_client.cpp",
                     0x183,0,"%s");
   }
-  pcVar10 = CG_GetLocalClientGlobals(LVar8);
-  psVar4 = pcVar10->nextSnap;
-  iVar5 = pcVar10->snap->serverTime;
-  dVar17 = 0.0;
-  iVar6 = (pcVar10->predictedPlayerState).vehicleState.entity;
-  iVar7 = (pcVar9->nextState).number;
-  dVar19 = (double)((float)(longlong)(psVar4->serverTime - iVar5) * 0.001);
-  if (0.0 < dVar19) {
+  pcVar8 = CG_GetLocalClientGlobals(param_1);
+  psVar4 = pcVar8->nextSnap;
+  iVar5 = pcVar8->snap->serverTime;
+  dVar12 = 0.0;
+  iVar6 = (pcVar8->predictedPlayerState).vehicleState.entity;
+  iVar7 = (param_2->nextState).number;
+  dVar14 = (double)((float)(longlong)(psVar4->serverTime - iVar5) * 0.001);
+  if (0.0 < dVar14) {
     if (iVar6 == iVar7) {
-      fVar1 = (pcVar10->predictedPlayerState).vehicleState.velocity[0];
-      fVar2 = (pcVar10->predictedPlayerState).vehicleState.velocity[1];
-      fVar3 = (pcVar10->predictedPlayerState).vehicleState.velocity[2];
+      fVar1 = (pcVar8->predictedPlayerState).vehicleState.velocity[0];
+      fVar2 = (pcVar8->predictedPlayerState).vehicleState.velocity[1];
+      fVar3 = (pcVar8->predictedPlayerState).vehicleState.velocity[2];
     }
     else {
-      BG_EvaluateTrajectory(&(pcVar9->prevState).pos,iVar5,&local_a8);
-      BG_EvaluateTrajectory(&(pcVar9->nextState).lerp.pos,psVar4->serverTime,&local_98);
-      fVar3 = (float)(1.0 / dVar19);
+      BG_EvaluateTrajectory(&(param_2->prevState).pos,iVar5,&local_a8);
+      BG_EvaluateTrajectory(&(param_2->nextState).lerp.pos,psVar4->serverTime,&local_98);
+      fVar3 = (float)(1.0 / dVar14);
       fVar1 = fVar3 * (local_98 - local_a8);
       fVar2 = (local_94 - local_a4) * fVar3;
       fVar3 = (local_90 - local_a0) * fVar3;
     }
-    dVar20 = (double)fVar1;
-    dVar18 = (double)fVar2;
-    dVar19 = (double)fVar3;
-    AnglesToAxis((pcVar9->nextState).lerp.apos.trBase,(float (*) [3])local_80);
-    pfVar15 = local_78;
-    lVar16 = 3;
+    dVar15 = (double)fVar1;
+    dVar13 = (double)fVar2;
+    dVar14 = (double)fVar3;
+    AnglesToAxis((param_2->nextState).lerp.apos.trBase,(float (*) [3])local_80);
+    pfVar10 = local_78;
+    lVar11 = 3;
     do {
-      fVar3 = (float)((double)*pfVar15 * dVar19 +
-                     (double)(float)((double)pfVar15[-1] * dVar18 +
-                                    (double)(float)((double)pfVar15[-2] * dVar20)));
-      *(float *)uVar14 = fVar3;
+      fVar3 = (float)((double)*pfVar10 * dVar14 +
+                     (double)(float)((double)pfVar10[-1] * dVar13 +
+                                    (double)(float)((double)pfVar10[-2] * dVar15)));
+      *param_3 = fVar3;
       if (ABS(fVar3) < 1.76) {
-        *(float *)uVar14 = (float)dVar17;
+        *param_3 = (float)dVar12;
       }
-      pfVar15 = pfVar15 + 3;
-      uVar14 = uVar14 + 4;
-      lVar16 = lVar16 + -1;
-    } while (lVar16 != 0);
-    __restfpr_28();
-    __restgprlr_27();
+      pfVar10 = pfVar10 + 3;
+      param_3 = param_3 + 1;
+      lVar11 = lVar11 + -1;
+    } while (lVar11 != 0);
     return;
   }
   if (iVar6 != iVar7) {
-    puVar13 = (undefined4 *)uVar14;
-    *puVar13 = 0;
-    puVar13[1] = 0;
-    puVar13[2] = 0;
+    *param_3 = 0.0;
+    param_3[1] = 0.0;
+    param_3[2] = 0.0;
   }
-  __restfpr_28();
-  __restgprlr_27();
   return;
 }
 
 
 // 826BAA70  VehicleCl_CalcRotationalSpeed  (vehicle/vehicle_client.cpp:434)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
@@ -639,64 +598,51 @@ void VehicleCl_CalcRotationalSpeed(LocalClientNum_t param_1,centity_s *param_2,f
   float fVar1;
   snapshot_s *psVar2;
   int iVar3;
-  LocalClientNum_t LVar4;
-  centity_s *pcVar5;
-  cg_s *pcVar6;
-  ulonglong uVar8;
-  ulonglong uVar9;
-  float *pfVar10;
-  double dVar11;
+  bool bVar5;
+  cg_s *pcVar4;
+  double dVar6;
   float local_58;
   float local_54;
   float local_50;
   float local_48;
   float local_44;
   float local_40;
-  bool bVar7;
   
-  uVar9 = (ulonglong)(int)param_3;
-  uVar8 = (ulonglong)(int)param_2;
-  LVar4 = __savegprlr_27(param_1);
-  if ((uVar8 & 0xffffffff) == 0) {
+  if (param_2 == (centity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_client.cpp",
                     0x1ba,0,"%s");
   }
-  pcVar5 = (centity_s *)uVar8;
-  bVar7 = VehicleCl_IsCorpse(pcVar5);
-  if (bVar7) {
+  bVar5 = VehicleCl_IsCorpse(param_2);
+  if (bVar5) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_client.cpp",
                     0x1bb,0,"%s");
   }
-  if ((uVar9 & 0xffffffff) == 0) {
+  if (param_3 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_client.cpp",
                     0x1bc,0,"%s");
   }
-  pcVar6 = CG_GetLocalClientGlobals(LVar4);
-  psVar2 = pcVar6->nextSnap;
-  iVar3 = pcVar6->snap->serverTime;
-  dVar11 = (double)((float)(longlong)(psVar2->serverTime - iVar3) * 0.001);
-  pfVar10 = (float *)uVar9;
-  if (0.0 < dVar11) {
-    if ((pcVar6->predictedPlayerState).vehicleState.entity == (pcVar5->nextState).number) {
-      *pfVar10 = (pcVar6->predictedPlayerState).vehicleState.angVelocity[0];
-      pfVar10[1] = (pcVar6->predictedPlayerState).vehicleState.angVelocity[1];
-      pfVar10[2] = (pcVar6->predictedPlayerState).vehicleState.angVelocity[2];
-      __restgprlr_27();
+  pcVar4 = CG_GetLocalClientGlobals(param_1);
+  psVar2 = pcVar4->nextSnap;
+  iVar3 = pcVar4->snap->serverTime;
+  dVar6 = (double)((float)(longlong)(psVar2->serverTime - iVar3) * 0.001);
+  if (0.0 < dVar6) {
+    if ((pcVar4->predictedPlayerState).vehicleState.entity == (param_2->nextState).number) {
+      *param_3 = (pcVar4->predictedPlayerState).vehicleState.angVelocity[0];
+      param_3[1] = (pcVar4->predictedPlayerState).vehicleState.angVelocity[1];
+      param_3[2] = (pcVar4->predictedPlayerState).vehicleState.angVelocity[2];
       return;
     }
-    BG_EvaluateTrajectory(&(pcVar5->prevState).apos,iVar3,&local_58);
-    BG_EvaluateTrajectory(&(pcVar5->nextState).lerp.apos,psVar2->serverTime,&local_48);
-    fVar1 = (float)(1.0 / dVar11);
-    *pfVar10 = (local_48 - local_58) * fVar1;
-    pfVar10[1] = (local_44 - local_54) * fVar1;
-    pfVar10[2] = (local_40 - local_50) * fVar1;
-    __restgprlr_27();
+    BG_EvaluateTrajectory(&(param_2->prevState).apos,iVar3,&local_58);
+    BG_EvaluateTrajectory(&(param_2->nextState).lerp.apos,psVar2->serverTime,&local_48);
+    fVar1 = (float)(1.0 / dVar6);
+    *param_3 = (local_48 - local_58) * fVar1;
+    param_3[1] = (local_44 - local_54) * fVar1;
+    param_3[2] = (local_40 - local_50) * fVar1;
     return;
   }
-  *pfVar10 = 0.0;
-  pfVar10[1] = 0.0;
-  pfVar10[2] = 0.0;
-  __restgprlr_27();
+  *param_3 = 0.0;
+  param_3[1] = 0.0;
+  param_3[2] = 0.0;
   return;
 }
 
@@ -722,6 +668,8 @@ bool VehicleCL_ShouldApplyMaterialTime(VehicleClient *param_1)
 
 // 826BACA0  VehicleCl_UpdateMaterialTime  (vehicle/vehicle_client.cpp:489)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
 
@@ -730,37 +678,35 @@ void VehicleCl_UpdateMaterialTime(VehicleClient *param_1)
 {
   float fVar1;
   float fVar2;
-  VehicleClient *pVVar3;
-  VehicleDef *pVVar4;
-  bool bVar5;
+  VehicleDef *pVVar3;
+  bool bVar4;
   
-  pVVar3 = (VehicleClient *)__savegprlr_28(param_1);
-  if (pVVar3 == (VehicleClient *)0x0) {
+  if (param_1 == (VehicleClient *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_client.cpp",
                     0x1ee,0,"%s");
   }
-  pVVar4 = VehicleCl_GetClientDef(pVVar3);
-  bVar5 = VehicleCL_ShouldApplyMaterialTime(pVVar3);
-  if (!bVar5) {
+  pVVar3 = VehicleCl_GetClientDef(param_1);
+  bVar4 = VehicleCL_ShouldApplyMaterialTime(param_1);
+  if (!bVar4) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_client.cpp",
                     0x1f1,0,"%s");
   }
-  fVar1 = (float)(longlong)pVVar3->frameTime * 0.001;
-  fVar2 = pVVar3->localSpeed[0] * 0.0056818184 * pVVar4->texScrollScale * fVar1;
-  if (pVVar4->type == VEH_TANK) {
-    fVar1 = pVVar3->rotateSpeed[1] * 0.0056818184 * pVVar4->texScrollScale * fVar1;
-    if (ABS(fVar2) < ABS(fVar1)) {
-      fVar2 = fVar1;
-    }
+  fVar1 = (float)(longlong)param_1->frameTime * 0.001;
+  fVar2 = param_1->localSpeed[0] * 0.0056818184 * pVVar3->texScrollScale * fVar1;
+  if ((pVVar3->type == VEH_TANK) &&
+     (fVar1 = param_1->rotateSpeed[1] * 0.0056818184 * pVVar3->texScrollScale * fVar1,
+     ABS(fVar2) < ABS(fVar1))) {
+    fVar2 = fVar1;
   }
-  pVVar3->materialTime = pVVar3->materialTime + fVar2;
-  __restgprlr_28();
+  param_1->materialTime = param_1->materialTime + fVar2;
   return;
 }
 
 
 // 826BBBA8  VehicleCl_UpdateEntity  (vehicle/vehicle_client.cpp:514)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
@@ -769,105 +715,102 @@ void VehicleCl_UpdateEntity(LocalClientNum_t param_1,centity_s *param_2)
 
 {
   StaticEntityStateTypeUnion SVar1;
-  LocalClientNum_t LVar2;
-  centity_s *pcVar3;
-  cg_s *pcVar4;
-  VehicleClient *pVVar5;
-  int iVar6;
-  uint uVar7;
-  ulonglong uVar9;
-  bool bVar8;
+  bool bVar6;
+  cg_s *pcVar2;
+  VehicleClient *pVVar3;
+  int iVar4;
+  uint uVar5;
   
-  uVar9 = (ulonglong)(int)param_2;
-  LVar2 = __savegprlr_26(param_1);
-  if ((uVar9 & 0xffffffff) == 0) {
+  if (param_2 == (centity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_client.cpp",
                     0x206,0,"%s");
   }
-  pcVar3 = (centity_s *)uVar9;
-  bVar8 = VehicleCl_IsCorpse(pcVar3);
-  if (bVar8) {
+  bVar6 = VehicleCl_IsCorpse(param_2);
+  if (bVar6) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_client.cpp",
                     0x207,0,"%s");
   }
-  pcVar4 = CG_GetLocalClientGlobals(LVar2);
-  pVVar5 = VehicleCl_GetClient(LVar2,pcVar3);
-  if (pVVar5 == (VehicleClient *)0x0) {
+  pcVar2 = CG_GetLocalClientGlobals(param_1);
+  pVVar3 = VehicleCl_GetClient(param_1,param_2);
+  if (pVVar3 == (VehicleClient *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_client.cpp",
                     0x20c,0,"%s");
   }
-  iVar6 = VehicleCl_GetClientIndex(pcVar3);
-  if (pVVar5->index != iVar6) {
-    VehicleCl_GetClientIndex(pcVar3);
+  iVar4 = VehicleCl_GetClientIndex(param_2);
+  if (pVVar3->index != iVar4) {
+    VehicleCl_GetClientIndex(param_2);
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_client.cpp",
                     0x20d,0,"veh->index == VehicleCl_GetClientIndex( cent )\n\t%i, %i");
   }
-  iVar6 = VehicleCl_GetClientDefIndex(pcVar3);
-  if (pVVar5->defIndex != iVar6) {
-    VehicleCl_GetClientDefIndex(pcVar3);
+  iVar4 = VehicleCl_GetClientDefIndex(param_2);
+  if (pVVar3->defIndex != iVar4) {
+    VehicleCl_GetClientDefIndex(param_2);
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_client.cpp",
                     0x20e,0,"veh->defIndex == VehicleCl_GetClientDefIndex( cent )\n\t%i, %i");
   }
-  if (pVVar5->entIndex != (pcVar3->nextState).number) {
+  if (pVVar3->entIndex != (param_2->nextState).number) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_client.cpp",
                     0x20f,0,"veh->entIndex == cent->nextState.number\n\t%i, %i");
   }
-  pVVar5->localClientNum = LVar2;
-  pVVar5->frameTime = pcVar4->time - pVVar5->time;
-  pVVar5->time = pcVar4->time;
-  uVar7 = VehicleCl_GetFlags(pcVar3);
-  pVVar5->flags = uVar7;
-  SVar1 = (pcVar3->nextState).staticState;
-  pVVar5->playerIndex = (int)SVar1;
+  pVVar3->localClientNum = param_1;
+  pVVar3->frameTime = pcVar2->time - pVVar3->time;
+  pVVar3->time = pcVar2->time;
+  uVar5 = VehicleCl_GetFlags(param_2);
+  pVVar3->flags = uVar5;
+  SVar1 = (param_2->nextState).staticState;
+  pVVar3->playerIndex = (int)SVar1;
   if (0x11 < (uint)SVar1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_client.cpp",
                     0x218,0,"veh->playerIndex doesn\'t index MAX_CLIENTS\n\t%i not in [0, %i)");
   }
-  VehicleCl_CalcLocalSpeed(LVar2,pcVar3,pVVar5->localSpeed);
-  VehicleCl_CalcRotationalSpeed(LVar2,pcVar3,pVVar5->rotateSpeed);
-  VehicleAudio_UpdateSounds(LVar2,pcVar3,pVVar5);
-  __restgprlr_26();
+  VehicleCl_CalcLocalSpeed(param_1,param_2,pVVar3->localSpeed);
+  VehicleCl_CalcRotationalSpeed(param_1,param_2,pVVar3->rotateSpeed);
+  VehicleAudio_UpdateSounds(param_1,param_2,pVVar3);
   return;
 }
 
 
 // 826BADA8  VehicleCl_ClearBoneControllers  (vehicle/vehicle_client.cpp:547)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 
 void VehicleCl_ClearBoneControllers(centity_s *param_1)
 
 {
   int iVar1;
-  int iVar2;
-  longlong lVar3;
+  longlong lVar2;
   
-  iVar1 = __savegprlr_29(param_1);
-  if (iVar1 == 0) {
+  if (param_1 == (centity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_client.cpp",
                     0x226,0,"%s");
   }
-  if ((*(int *)(iVar1 + 200) != 0xe) && (*(int *)(iVar1 + 200) != 0xc)) {
+  iVar1 = (param_1->nextState).eType;
+  if ((iVar1 != 0xe) && (iVar1 != 0xc)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_client.cpp",
                     0x228,0,"%s");
   }
-  iVar2 = 0;
-  *(undefined1 *)(iVar1 + 0x58) = 0xfe;
-  *(undefined1 *)(iVar1 + 0x59) = 0xfe;
-  *(undefined1 *)(iVar1 + 0x5a) = 0xfe;
-  lVar3 = 6;
+  iVar1 = 0;
+  (param_1->pose).field9_0x2c.vehicle.tag_body = 0xfe;
+  (param_1->pose).field9_0x2c.vehicle.tag_turret = 0xfe;
+  (param_1->pose).field9_0x2c.vehicle.tag_barrel = 0xfe;
+  lVar2 = 6;
   do {
-    *(undefined1 *)(iVar1 + 0x4c + iVar2) = 0xfe;
-    iVar2 = iVar2 + 1;
-    lVar3 = lVar3 + -1;
-  } while (lVar3 != 0);
-  __restgprlr_29();
+    *(undefined1 *)((int)(param_1->pose).angles + iVar1 + 0x2c) = 0xfe;
+    iVar1 = iVar1 + 1;
+    lVar2 = lVar2 + -1;
+  } while (lVar2 != 0);
   return;
 }
 
 
 // 826BAE50  VehicleCl_UpdateBoneControllers  (vehicle/vehicle_client.cpp:571)
 
+/* WARNING: Function: __savegprlr_21 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_21 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
@@ -877,31 +820,27 @@ void VehicleCl_UpdateBoneControllers(LocalClientNum_t param_1,DObj *param_2,cent
 {
   float fVar1;
   float fVar2;
-  centity_s *pcVar3;
-  LocalClientNum_t LVar4;
-  cg_s *pcVar5;
-  void *pvVar6;
-  DObj *pDVar7;
-  XModel *pXVar8;
-  DObjAnimMat *pDVar9;
-  int iVar10;
-  ushort uVar12;
-  int iVar11;
-  ulonglong uVar13;
-  ulonglong uVar14;
-  byte *pbVar15;
-  ushort **ppuVar16;
-  float *pfVar17;
-  longlong lVar18;
+  cg_s *pcVar3;
+  XModel *pXVar4;
+  DObjAnimMat *pDVar5;
+  int iVar6;
+  ushort uVar7;
+  void *pvVar8;
+  ushort **ppuVar9;
+  ushort *puVar10;
+  byte *pbVar11;
+  float *pfVar12;
+  int iVar13;
+  longlong lVar14;
+  double dVar15;
+  double dVar16;
+  double dVar17;
+  double dVar18;
   double dVar19;
   double dVar20;
   double dVar21;
   double dVar22;
-  double dVar23;
-  double dVar24;
-  double dVar25;
-  double dVar26;
-  float fVar27;
+  float fVar23;
   short sStack_13a;
   float local_138;
   float local_134;
@@ -921,196 +860,185 @@ void VehicleCl_UpdateBoneControllers(LocalClientNum_t param_1,DObj *param_2,cent
   float local_d4;
   trace_t local_d0 [4];
   
-  uVar14 = (ulonglong)(int)param_3;
-  uVar13 = (ulonglong)(int)param_2;
-  __savegprlr_21(param_1);
-  LVar4 = __savefpr_25();
-  if ((uVar13 & 0xffffffff) == 0) {
+  if (param_2 == (DObj *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_client.cpp",
                     0x24b,0,"%s");
   }
-  if ((uVar14 & 0xffffffff) == 0) {
+  if (param_3 == (centity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_client.cpp",
                     0x24c,0,"%s");
   }
   Profile_Begin(0x3a);
-  pcVar3 = (centity_s *)uVar14;
-  iVar11 = (pcVar3->nextState).eType;
-  if ((iVar11 != 0xe) && (iVar11 != 0xc)) {
+  iVar13 = (param_3->nextState).eType;
+  if ((iVar13 != 0xe) && (iVar13 != 0xc)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_client.cpp",
                     0x251,0,"%s");
   }
-  pcVar5 = CG_GetLocalClientGlobals(LVar4);
-  dVar22 = (double)(pcVar3->prevState).u.turret.gunAngles[2];
-  pfVar17 = &pcVar5->frameInterpolation;
-  dVar25 = 0.0027777778450399637;
-  dVar26 = 0.5;
-  dVar21 = (double)*pfVar17;
-  dVar20 = (double)((float)((double)(pcVar3->nextState).lerp.u.turret.gunAngles[2] - dVar22) *
+  pcVar3 = CG_GetLocalClientGlobals(param_1);
+  dVar18 = (double)(param_3->prevState).u.turret.gunAngles[2];
+  pfVar12 = &pcVar3->frameInterpolation;
+  dVar21 = 0.0027777778450399637;
+  dVar22 = 0.5;
+  dVar17 = (double)*pfVar12;
+  dVar16 = (double)((float)((double)(param_3->nextState).lerp.u.turret.gunAngles[2] - dVar18) *
                    0.0027777778);
-  dVar19 = floor((double)(float)(dVar20 + 0.5));
-  dVar24 = 360.0;
-  dVar23 = 182.04444885253906;
-  dVar19 = floor((double)(float)((double)(float)((double)(float)((double)(float)(dVar20 - (double)(
-                                                  float)dVar19) * dVar21) * 360.0 + dVar22) *
-                                 182.04444885253906 + dVar26));
-  sStack_13a = (short)(int)dVar19;
-  (pcVar3->pose).field9_0x2c.vehicle.pitch = sStack_13a;
-  dVar22 = (double)(pcVar3->prevState).u.vehicle.gunYaw;
-  dVar21 = (double)*pfVar17;
-  dVar20 = (double)(float)((double)(float)((double)(pcVar3->nextState).lerp.u.vehicle.gunYaw -
-                                          dVar22) * dVar25);
-  dVar19 = floor((double)(float)(dVar20 + dVar26));
-  dVar19 = floor((double)(float)((double)(float)((double)(float)((double)(float)(dVar20 - (double)(
-                                                  float)dVar19) * dVar21) * dVar24 + dVar22) *
-                                 dVar23 + dVar26));
-  sStack_13a = (short)(int)dVar19;
-  (pcVar3->pose).field9_0x2c.vehicle.yaw = sStack_13a;
-  dVar22 = (double)(pcVar3->prevState).u.primaryLight.cosHalfFovOuter;
-  dVar21 = (double)*pfVar17;
-  dVar20 = (double)(float)((double)(float)((double)(pcVar3->nextState).lerp.u.primaryLight.
-                                                   cosHalfFovOuter - dVar22) * dVar25);
-  dVar19 = floor((double)(float)(dVar20 + dVar26));
-  dVar19 = floor((double)(float)((double)(float)((double)(float)((double)(float)(dVar20 - (double)(
-                                                  float)dVar19) * dVar21) * dVar24 + dVar22) *
-                                 dVar23 + dVar26));
-  sStack_13a = (short)(int)dVar19;
-  (pcVar3->pose).field9_0x2c.vehicle.roll = sStack_13a;
-  dVar22 = (double)(pcVar3->prevState).u.vehicle.gunPitch;
-  dVar21 = (double)*pfVar17;
-  dVar20 = (double)(float)((double)(float)((double)(pcVar3->nextState).lerp.u.vehicle.gunPitch -
-                                          dVar22) * dVar25);
-  dVar19 = floor((double)(float)(dVar20 + dVar26));
-  dVar19 = floor((double)(float)((double)(float)((double)(float)((double)(float)(dVar20 - (double)(
-                                                  float)dVar19) * dVar21) * dVar24 + dVar22) *
-                                 dVar23 + dVar26));
-  sStack_13a = (short)(int)dVar19;
-  (pcVar3->pose).field9_0x2c.vehicle.barrelPitch = sStack_13a;
-  fVar27 = Veh_GetTurretBarrelRoll(LVar4,pcVar3);
-  (pcVar3->pose).field9_0x2c.turret.barrelPitch = fVar27;
-  dVar21 = (double)(pcVar3->prevState).u.primaryLight.cosHalfFovInner;
-  dVar22 = (double)(float)((double)(float)((double)(pcVar3->nextState).lerp.u.primaryLight.
-                                                   cosHalfFovInner - dVar21) * dVar25);
-  dVar20 = (double)*pfVar17;
-  dVar19 = floor((double)(float)(dVar22 + dVar26));
-  dVar19 = floor((double)(float)((double)(float)((double)(float)((double)(float)(dVar22 - (double)(
-                                                  float)dVar19) * dVar20) * dVar24 + dVar21) *
-                                 dVar23 + dVar26));
-  sStack_13a = (short)(int)dVar19;
-  (pcVar3->pose).field9_0x2c.vehicle.steerYaw = sStack_13a;
-  pvVar6 = (void *)((int)&(pcVar3->pose).field9_0x2c + 0x26);
-  (pcVar3->pose).field9_0x2c.vehicle.time = (float)(longlong)(pcVar3->nextState).time2 * 0.001;
-  Com_Memset(pvVar6,0,6);
-  pDVar7 = (DObj *)uVar13;
-  DObjGetBoneIndex(pDVar7,(uint)scr_const.tag_body,&(pcVar3->pose).field9_0x2c.vehicle.tag_body);
-  DObjGetBoneIndex(pDVar7,(uint)scr_const.tag_turret,&(pcVar3->pose).field9_0x2c.vehicle.tag_turret)
-  ;
-  DObjGetBoneIndex(pDVar7,(uint)scr_const.tag_barrel,&(pcVar3->pose).field9_0x2c.vehicle.tag_barrel)
-  ;
-  if ((uint)LZCOUNT((pcVar3->pose).cullIn - 2) >> 5 != 0) {
-    if ((pcVar5->predictedPlayerState).vehicleState.entity == 0x7ff) {
-      fVar27 = (pcVar5->predictedPlayerState).origin[1];
-      fVar1 = (pcVar5->predictedPlayerState).origin[2];
-      fVar2 = (pcVar5->predictedPlayerState).origin[0];
+  dVar15 = floor((double)(float)(dVar16 + 0.5));
+  dVar20 = 360.0;
+  dVar19 = 182.04444885253906;
+  dVar15 = floor((double)(float)((double)(float)((double)(float)((double)(float)(dVar16 - (double)(
+                                                  float)dVar15) * dVar17) * 360.0 + dVar18) *
+                                 182.04444885253906 + dVar22));
+  sStack_13a = (short)(int)dVar15;
+  (param_3->pose).field9_0x2c.vehicle.pitch = sStack_13a;
+  dVar18 = (double)(param_3->prevState).u.vehicle.gunYaw;
+  dVar17 = (double)*pfVar12;
+  dVar16 = (double)(float)((double)(float)((double)(param_3->nextState).lerp.u.vehicle.gunYaw -
+                                          dVar18) * dVar21);
+  dVar15 = floor((double)(float)(dVar16 + dVar22));
+  dVar15 = floor((double)(float)((double)(float)((double)(float)((double)(float)(dVar16 - (double)(
+                                                  float)dVar15) * dVar17) * dVar20 + dVar18) *
+                                 dVar19 + dVar22));
+  sStack_13a = (short)(int)dVar15;
+  (param_3->pose).field9_0x2c.vehicle.yaw = sStack_13a;
+  dVar18 = (double)(param_3->prevState).u.primaryLight.cosHalfFovOuter;
+  dVar17 = (double)*pfVar12;
+  dVar16 = (double)(float)((double)(float)((double)(param_3->nextState).lerp.u.primaryLight.
+                                                   cosHalfFovOuter - dVar18) * dVar21);
+  dVar15 = floor((double)(float)(dVar16 + dVar22));
+  dVar15 = floor((double)(float)((double)(float)((double)(float)((double)(float)(dVar16 - (double)(
+                                                  float)dVar15) * dVar17) * dVar20 + dVar18) *
+                                 dVar19 + dVar22));
+  sStack_13a = (short)(int)dVar15;
+  (param_3->pose).field9_0x2c.vehicle.roll = sStack_13a;
+  dVar18 = (double)(param_3->prevState).u.vehicle.gunPitch;
+  dVar17 = (double)*pfVar12;
+  dVar16 = (double)(float)((double)(float)((double)(param_3->nextState).lerp.u.vehicle.gunPitch -
+                                          dVar18) * dVar21);
+  dVar15 = floor((double)(float)(dVar16 + dVar22));
+  dVar15 = floor((double)(float)((double)(float)((double)(float)((double)(float)(dVar16 - (double)(
+                                                  float)dVar15) * dVar17) * dVar20 + dVar18) *
+                                 dVar19 + dVar22));
+  sStack_13a = (short)(int)dVar15;
+  (param_3->pose).field9_0x2c.vehicle.barrelPitch = sStack_13a;
+  fVar23 = Veh_GetTurretBarrelRoll(param_1,param_3);
+  (param_3->pose).field9_0x2c.turret.barrelPitch = fVar23;
+  dVar17 = (double)(param_3->prevState).u.primaryLight.cosHalfFovInner;
+  dVar18 = (double)(float)((double)(float)((double)(param_3->nextState).lerp.u.primaryLight.
+                                                   cosHalfFovInner - dVar17) * dVar21);
+  dVar16 = (double)*pfVar12;
+  dVar15 = floor((double)(float)(dVar18 + dVar22));
+  dVar15 = floor((double)(float)((double)(float)((double)(float)((double)(float)(dVar18 - (double)(
+                                                  float)dVar15) * dVar16) * dVar20 + dVar17) *
+                                 dVar19 + dVar22));
+  sStack_13a = (short)(int)dVar15;
+  (param_3->pose).field9_0x2c.vehicle.steerYaw = sStack_13a;
+  pvVar8 = (void *)((int)&(param_3->pose).field9_0x2c + 0x26);
+  (param_3->pose).field9_0x2c.vehicle.time = (float)(longlong)(param_3->nextState).time2 * 0.001;
+  Com_Memset(pvVar8,0,6);
+  DObjGetBoneIndex(param_2,(uint)scr_const.tag_body,&(param_3->pose).field9_0x2c.vehicle.tag_body);
+  DObjGetBoneIndex(param_2,(uint)scr_const.tag_turret,
+                   &(param_3->pose).field9_0x2c.vehicle.tag_turret);
+  DObjGetBoneIndex(param_2,(uint)scr_const.tag_barrel,
+                   &(param_3->pose).field9_0x2c.vehicle.tag_barrel);
+  if ((uint)LZCOUNT((param_3->pose).cullIn - 2) >> 5 != 0) {
+    if ((pcVar3->predictedPlayerState).vehicleState.entity == 0x7ff) {
+      fVar23 = (pcVar3->predictedPlayerState).origin[1];
+      fVar1 = (pcVar3->predictedPlayerState).origin[2];
+      fVar2 = (pcVar3->predictedPlayerState).origin[0];
     }
     else {
-      fVar27 = (pcVar5->predictedPlayerState).vehicleState.origin[1];
-      fVar1 = (pcVar5->predictedPlayerState).vehicleState.origin[2];
-      fVar2 = (pcVar5->predictedPlayerState).vehicleState.origin[0];
+      fVar23 = (pcVar3->predictedPlayerState).vehicleState.origin[1];
+      fVar1 = (pcVar3->predictedPlayerState).vehicleState.origin[2];
+      fVar2 = (pcVar3->predictedPlayerState).vehicleState.origin[0];
     }
-    fVar27 = fVar27 - (pcVar3->pose).origin[1];
-    fVar1 = fVar1 - (pcVar3->pose).origin[2];
-    fVar2 = fVar2 - (pcVar3->pose).origin[0];
-    dVar19 = (double)SQRT(fVar2 * fVar2 + fVar1 * fVar1 + fVar27 * fVar27);
-    fVar27 = CG_GetViewZoomScale(LVar4);
-    if ((float)((double)fVar27 * dVar19) <= (veh_boneControllerLodDist->current).value) {
-      dVar19 = (double)(pcVar3->pose).field9_0x2c.vehicle.time;
-      AnglesToAxis((pcVar3->pose).angles,(float (*) [3])afStack_100);
-      local_dc = (pcVar3->pose).origin[0];
-      local_d8 = (pcVar3->pose).origin[1];
-      local_d4 = (pcVar3->pose).origin[2];
-      pXVar8 = DObjGetModel(pDVar7,0);
-      pDVar9 = XModelGetBasePose(pXVar8);
-      ppuVar16 = g_wheelTags;
-      iVar11 = 0;
-      dVar20 = 40.0;
-      lVar18 = uVar14 + 0x40;
+    fVar23 = fVar23 - (param_3->pose).origin[1];
+    fVar1 = fVar1 - (param_3->pose).origin[2];
+    fVar2 = fVar2 - (param_3->pose).origin[0];
+    dVar15 = (double)SQRT(fVar2 * fVar2 + fVar1 * fVar1 + fVar23 * fVar23);
+    fVar23 = CG_GetViewZoomScale(param_1);
+    if ((float)((double)fVar23 * dVar15) <= (veh_boneControllerLodDist->current).value) {
+      dVar15 = (double)(param_3->pose).field9_0x2c.vehicle.time;
+      AnglesToAxis((param_3->pose).angles,(float (*) [3])afStack_100);
+      local_dc = (param_3->pose).origin[0];
+      local_d8 = (param_3->pose).origin[1];
+      local_d4 = (param_3->pose).origin[2];
+      pXVar4 = DObjGetModel(param_2,0);
+      pDVar5 = XModelGetBasePose(pXVar4);
+      ppuVar9 = g_wheelTags;
+      iVar13 = 0;
+      dVar16 = 40.0;
+      puVar10 = (param_3->pose).field9_0x2c.vehicle.wheelFraction;
       do {
-        pbVar15 = (byte *)((int)(pcVar3->pose).angles + iVar11 + 0x2c);
-        iVar10 = DObjGetBoneIndex(pDVar7,(uint)**ppuVar16,pbVar15);
-        if (iVar10 != 0) {
-          MatrixTransformVector43(pDVar9[*pbVar15].trans,(float (*) [3])afStack_100,&local_118);
-          dVar21 = -dVar19;
-          local_138 = (float)((double)local_e8 * dVar20 + (double)local_118);
-          local_134 = (float)((double)local_e4 * dVar20 + (double)local_114);
-          local_130 = (float)((double)local_e0 * dVar20 + (double)local_110);
-          local_128 = (float)((double)local_e8 * dVar21 + (double)local_118);
-          local_124 = (float)((double)local_e4 * dVar21 + (double)local_114);
-          local_120 = (float)((double)local_e0 * dVar21 + (double)local_110);
-          CG_TraceCapsule(local_d0,&local_138,&local_128,&bounds_origin,(pcVar3->nextState).number,
+        pbVar11 = (byte *)((int)(param_3->pose).angles + iVar13 + 0x2c);
+        iVar6 = DObjGetBoneIndex(param_2,(uint)**ppuVar9,pbVar11);
+        if (iVar6 != 0) {
+          MatrixTransformVector43(pDVar5[*pbVar11].trans,(float (*) [3])afStack_100,&local_118);
+          dVar17 = -dVar15;
+          local_138 = (float)((double)local_e8 * dVar16 + (double)local_118);
+          local_134 = (float)((double)local_e4 * dVar16 + (double)local_114);
+          local_130 = (float)((double)local_e0 * dVar16 + (double)local_110);
+          local_128 = (float)((double)local_e8 * dVar17 + (double)local_118);
+          local_124 = (float)((double)local_e4 * dVar17 + (double)local_114);
+          local_120 = (float)((double)local_e0 * dVar17 + (double)local_110);
+          CG_TraceCapsule(local_d0,&local_138,&local_128,&bounds_origin,(param_3->nextState).number,
                           0x211);
-          uVar12 = CompressUnit(local_d0[0].fraction);
-          *(ushort *)lVar18 = uVar12;
-          *(byte *)((int)pvVar6 + iVar11) = (byte)(local_d0[0].surfaceFlags >> 0x14) & 0x1f;
+          uVar7 = CompressUnit(local_d0[0].fraction);
+          *puVar10 = uVar7;
+          *(byte *)((int)pvVar8 + iVar13) = (byte)(local_d0[0].surfaceFlags >> 0x14) & 0x1f;
         }
-        ppuVar16 = ppuVar16 + 1;
-        iVar11 = iVar11 + 1;
-        lVar18 = lVar18 + 2;
-      } while ((int)ppuVar16 < -0x7d668468);
+        ppuVar9 = ppuVar9 + 1;
+        iVar13 = iVar13 + 1;
+        puVar10 = puVar10 + 1;
+      } while ((int)ppuVar9 < -0x7d668468);
       goto LAB_826bb2f8;
     }
   }
-  iVar11 = 0;
-  lVar18 = 6;
+  iVar13 = 0;
+  lVar14 = 6;
   do {
-    *(undefined1 *)((int)(pcVar3->pose).angles + iVar11 + 0x2c) = 0xfe;
-    iVar11 = iVar11 + 1;
-    lVar18 = lVar18 + -1;
-  } while (lVar18 != 0);
+    *(undefined1 *)((int)(param_3->pose).angles + iVar13 + 0x2c) = 0xfe;
+    iVar13 = iVar13 + 1;
+    lVar14 = lVar14 + -1;
+  } while (lVar14 != 0);
 LAB_826bb2f8:
-  iVar11 = Profile_EndInternal((double *)0x0);
-  __restfpr_25(iVar11);
-  __restgprlr_21();
+  Profile_EndInternal((double *)0x0);
   return;
 }
 
 
 // 826BB310  VehicleCl_GetEntDObj  (vehicle/vehicle_client.cpp:709)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 DObj * VehicleCl_GetEntDObj(LocalClientNum_t param_1,centity_s *param_2)
 
 {
-  int iVar1;
-  LocalClientNum_t LVar2;
-  cgs_t *pcVar3;
-  DObj *pDVar4;
-  ulonglong uVar5;
+  cgs_t *pcVar1;
+  DObj *pDVar2;
   
-  uVar5 = (ulonglong)(int)param_2;
-  LVar2 = __savegprlr_28(param_1);
-  if ((uVar5 & 0xffffffff) == 0) {
+  if (param_2 == (centity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_client.cpp",
                     0x2c9,0,"%s");
   }
-  iVar1 = (int)uVar5;
-  if ((*(uint *)(iVar1 + 0x1c4) & 1) == 0) {
+  if ((param_2->flags & 1U) == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_client.cpp",
                     0x2ca,0,"%s");
   }
-  pcVar3 = CG_GetLocalClientStaticGlobals(LVar2);
-  pDVar4 = CG_PreProcess_GetDObj
-                     (LVar2,*(int *)(iVar1 + 0xc4),*(int *)(iVar1 + 200),
-                      pcVar3->gameModels[*(ushort *)(iVar1 + 0x1a0)],(bool *)0x0);
-  pDVar4 = (DObj *)__restgprlr_28(pDVar4);
-  return pDVar4;
+  pcVar1 = CG_GetLocalClientStaticGlobals(param_1);
+  pDVar2 = CG_PreProcess_GetDObj
+                     (param_1,(param_2->nextState).number,(param_2->nextState).eType,
+                      pcVar1->gameModels[(param_2->nextState).un2.vehicleXModel],(bool *)0x0);
+  return pDVar2;
 }
 
 
 // 826BBD98  VehicleCl_ProcessEntity  (vehicle/vehicle_client.cpp:734)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
@@ -1119,63 +1047,56 @@ void VehicleCl_ProcessEntity(LocalClientNum_t param_1,centity_s *param_2)
 
 {
   int iVar1;
-  centity_s *pcVar2;
-  LocalClientNum_t LVar3;
-  DObj *pDVar4;
-  cg_s *pcVar5;
-  bool bVar7;
-  VehicleClient *pVVar6;
-  ulonglong uVar8;
-  double dVar9;
+  DObj *pDVar2;
+  cg_s *pcVar3;
+  bool bVar5;
+  VehicleClient *pVVar4;
+  double dVar6;
   float local_48;
   float local_44;
   float local_40;
   
-  uVar8 = (ulonglong)(int)param_2;
-  LVar3 = __savegprlr_27(param_1);
-  if ((uVar8 & 0xffffffff) == 0) {
+  if (param_2 == (centity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_client.cpp",
                     0x2e5,0,"%s");
   }
-  pcVar2 = (centity_s *)uVar8;
-  iVar1 = (pcVar2->nextState).eType;
+  iVar1 = (param_2->nextState).eType;
   if ((iVar1 != 0xe) && (iVar1 != 0xc)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_client.cpp",
                     0x2e8,0,"%s");
   }
-  if ((pcVar2->flags & 1U) != 0) {
-    pDVar4 = VehicleCl_GetEntDObj(LVar3,pcVar2);
-    if (pDVar4 != (DObj *)0x0) {
-      pcVar5 = CG_GetLocalClientGlobals(LVar3);
-      PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffff,"vehicle controllers");
-      VehicleCl_UpdateBoneControllers(LVar3,pDVar4,pcVar2);
-      PIXEndNamedEvent();
-      dVar9 = 0.0;
-      bVar7 = VehicleCl_IsCorpse(pcVar2);
-      if (!bVar7) {
-        VehicleCl_UpdateEntity(LVar3,pcVar2);
-        pVVar6 = VehicleCl_GetClient(LVar3,pcVar2);
-        bVar7 = VehicleCL_ShouldApplyMaterialTime(pVVar6);
-        if (bVar7) {
-          VehicleCl_UpdateMaterialTime(pVVar6);
-          dVar9 = (double)((float)(longlong)pcVar5->time * 0.001 - pVVar6->materialTime);
-        }
+  if (((param_2->flags & 1U) != 0) &&
+     (pDVar2 = VehicleCl_GetEntDObj(param_1,param_2), pDVar2 != (DObj *)0x0)) {
+    pcVar3 = CG_GetLocalClientGlobals(param_1);
+    PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffff,"vehicle controllers");
+    VehicleCl_UpdateBoneControllers(param_1,pDVar2,param_2);
+    PIXEndNamedEvent();
+    dVar6 = 0.0;
+    bVar5 = VehicleCl_IsCorpse(param_2);
+    if (!bVar5) {
+      VehicleCl_UpdateEntity(param_1,param_2);
+      pVVar4 = VehicleCl_GetClient(param_1,param_2);
+      bVar5 = VehicleCL_ShouldApplyMaterialTime(pVVar4);
+      if (bVar5) {
+        VehicleCl_UpdateMaterialTime(pVVar4);
+        dVar6 = (double)((float)(longlong)pcVar3->time * 0.001 - pVVar4->materialTime);
       }
-      VehicleFXTest(LVar3,pDVar4,pcVar2);
-      local_48 = (pcVar2->pose).origin[0];
-      local_44 = (pcVar2->pose).origin[1];
-      local_40 = (pcVar2->pose).origin[2] + 32.0;
-      R_AddDObjToScene(pDVar4,&pcVar2->pose,(pcVar2->nextState).number,
-                       (pcVar2->nextState).lerp.eFlags & 0x400U | 4,&local_48,(float)dVar9);
     }
+    VehicleFXTest(param_1,pDVar2,param_2);
+    local_48 = (param_2->pose).origin[0];
+    local_44 = (param_2->pose).origin[1];
+    local_40 = (param_2->pose).origin[2] + 32.0;
+    R_AddDObjToScene(pDVar2,&param_2->pose,(param_2->nextState).number,
+                     (param_2->nextState).lerp.eFlags & 0x400U | 4,&local_48,(float)dVar6);
   }
-  __restgprlr_27();
   return;
 }
 
 
 // 826BB3C0  VehicleCl_PredictEntityPushing  (vehicle/vehicle_client.cpp:798)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 
@@ -1183,11 +1104,8 @@ void VehicleCl_PredictEntityPushing
                (LocalClientNum_t param_1,int param_2,int param_3,int param_4,float *param_5)
 
 {
-  LocalClientNum_t LVar1;
-  centity_s *pcVar2;
-  trajectory_t *ptVar3;
-  ulonglong uVar4;
-  float *pfVar5;
+  centity_s *pcVar1;
+  trajectory_t *ptVar2;
   float local_140;
   float local_13c;
   float local_138;
@@ -1204,84 +1122,71 @@ void VehicleCl_PredictEntityPushing
   float afStack_90 [12];
   float afStack_60 [24];
   
-  uVar4 = (ulonglong)(int)param_5;
-  LVar1 = __savegprlr_27(param_1);
-  if ((uVar4 & 0xffffffff) == 0) {
+  if (param_5 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_client.cpp",
                     0x32a,0,"%s");
   }
   if (((0 < param_2) && (param_2 < 0x7fe)) &&
-     (pcVar2 = CG_GetEntity(LVar1,param_2), (pcVar2->nextState).eType == 0xe)) {
-    ptVar3 = &(pcVar2->prevState).apos;
-    BG_EvaluateTrajectory(ptVar3,param_3,afStack_110);
-    BG_EvaluateTrajectory(ptVar3,param_4,afStack_100);
-    ptVar3 = &(pcVar2->prevState).pos;
-    BG_EvaluateTrajectory(ptVar3,param_3,&local_130);
-    BG_EvaluateTrajectory(ptVar3,param_4,&local_120);
+     (pcVar1 = CG_GetEntity(param_1,param_2), (pcVar1->nextState).eType == 0xe)) {
+    ptVar2 = &(pcVar1->prevState).apos;
+    BG_EvaluateTrajectory(ptVar2,param_3,afStack_110);
+    BG_EvaluateTrajectory(ptVar2,param_4,afStack_100);
+    ptVar2 = &(pcVar1->prevState).pos;
+    BG_EvaluateTrajectory(ptVar2,param_3,&local_130);
+    BG_EvaluateTrajectory(ptVar2,param_4,&local_120);
     AnglesToAxis(afStack_100,(float (*) [3])afStack_f0);
     AnglesToAxis(afStack_110,(float (*) [3])afStack_90);
     MatrixTranspose((float (*) [3])afStack_90,(float (*) [3])afStack_c0);
     MatrixMultiply((float (*) [3])afStack_c0,(float (*) [3])afStack_f0,(float (*) [3])afStack_60);
-    pfVar5 = (float *)uVar4;
-    local_140 = *pfVar5 - local_130;
-    local_13c = pfVar5[1] - local_12c;
-    local_138 = pfVar5[2] - local_128;
-    MatrixTransformVector(&local_140,(float (*) [3])afStack_60,pfVar5);
-    *pfVar5 = *pfVar5 + local_120;
-    pfVar5[1] = local_11c + pfVar5[1];
-    pfVar5[2] = local_118 + pfVar5[2];
+    local_140 = *param_5 - local_130;
+    local_13c = param_5[1] - local_12c;
+    local_138 = param_5[2] - local_128;
+    MatrixTransformVector(&local_140,(float (*) [3])afStack_60,param_5);
+    *param_5 = *param_5 + local_120;
+    param_5[1] = local_11c + param_5[1];
+    param_5[2] = local_118 + param_5[2];
   }
-  __restgprlr_27();
   return;
 }
 
 
 // 826BB530  VehicleCl_EntityEvent  (vehicle/vehicle_client.cpp:839)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 
 void VehicleCl_EntityEvent(LocalClientNum_t param_1,centity_s *param_2,int param_3,uint param_4)
 
 {
-  LocalClientNum_t LVar1;
-  centity_s *pcVar2;
-  char *pcVar3;
-  ulonglong uVar5;
-  ulonglong uVar6;
-  bool bVar4;
+  bool bVar2;
+  char *pcVar1;
   
-  uVar6 = (ulonglong)(int)param_4;
-  uVar5 = (ulonglong)(int)param_2;
-  LVar1 = __savegprlr_26(param_1);
-  if ((uVar5 & 0xffffffff) == 0) {
+  if (param_2 == (centity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_client.cpp",
                     0x34a,0,"%s");
   }
-  pcVar2 = (centity_s *)uVar5;
-  bVar4 = VehicleCl_IsCorpse(pcVar2);
-  if (bVar4) {
+  bVar2 = VehicleCl_IsCorpse(param_2);
+  if (bVar2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_client.cpp",
                     0x34b,0,"%s");
   }
   if (param_3 == 0x72) {
-    VehicleAudio_CollisionEvent(LVar1,pcVar2,(float)(uVar6 & 0xffffffff) * 0.003921569);
+    VehicleAudio_CollisionEvent(param_1,param_2,(float)param_4 * 0.003921569);
   }
   else {
     if ((0x72 < param_3) && (param_3 < 0x75)) {
-      VehicleAudio_SuspensionEvent(LVar1,pcVar2,param_3);
-      __restgprlr_26();
+      VehicleAudio_SuspensionEvent(param_1,param_2,param_3);
       return;
     }
     if (alwaysfails == 0) {
-      pcVar3 = va("VehicleCl_EntityEvent: Unknown vehicle event %d");
+      pcVar1 = va("VehicleCl_EntityEvent: Unknown vehicle event %d");
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_client.cpp",
-                      0x35a,0,pcVar3);
-      __restgprlr_26();
+                      0x35a,0,pcVar1);
       return;
     }
   }
-  __restgprlr_26();
   return;
 }
 
@@ -1304,56 +1209,48 @@ bool VehicleCl_UsingVehicle(LocalClientNum_t param_1)
 
 // 826BB678  VehicleCl_GetWheelBone  (vehicle/vehicle_client.cpp:880)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 int VehicleCl_GetWheelBone(LocalClientNum_t param_1,centity_s *param_2,int param_3,int *param_4)
 
 {
-  LocalClientNum_t LVar1;
-  DObj *pDVar2;
-  int iVar3;
-  ulonglong uVar4;
+  DObj *pDVar1;
+  int iVar2;
   byte local_30 [48];
   
-  uVar4 = (ulonglong)param_3;
-  LVar1 = __savegprlr_28(param_1);
-  if (5 < (uVar4 & 0xffffffff)) {
+  if (5 < (uint)param_3) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_client.cpp",
                     0x375,0,"wheelIndex doesn\'t index NUM_VEHICLE_WHEELS\n\t%i not in [0, %i)");
   }
-  pDVar2 = VehicleCl_GetEntDObj(LVar1,param_2);
-  if (pDVar2 != (DObj *)0x0) {
-    local_30[0] = *(byte *)((int)(param_2->pose).angles + (int)uVar4 + 0x2c);
-    iVar3 = DObjGetBoneIndex(pDVar2,(uint)**(ushort **)
-                                            ((int)g_wheelTags + (int)((uVar4 & 0xffffffff) << 2)),
-                             local_30);
+  pDVar1 = VehicleCl_GetEntDObj(param_1,param_2);
+  if (pDVar1 != (DObj *)0x0) {
+    local_30[0] = *(byte *)((int)(param_2->pose).angles + param_3 + 0x2c);
+    iVar2 = DObjGetBoneIndex(pDVar1,(uint)*g_wheelTags[param_3],local_30);
     *param_4 = (uint)local_30[0];
-    iVar3 = __restgprlr_28(iVar3);
-    return iVar3;
+    return iVar2;
   }
-  iVar3 = __restgprlr_28(0);
-  return iVar3;
+  return 0;
 }
 
 
 // 826BB718  VehicleCl_GetBoneOrigin  (vehicle/vehicle_client.cpp:904)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 
 void VehicleCl_GetBoneOrigin(LocalClientNum_t param_1,centity_s *param_2,int param_3,float *param_4)
 
 {
-  LocalClientNum_t LVar1;
-  DObj *pDVar2;
-  XModel *pXVar3;
-  DObjAnimMat *pDVar4;
-  ulonglong uVar5;
+  DObj *pDVar1;
+  XModel *pXVar2;
+  DObjAnimMat *pDVar3;
   
-  uVar5 = (ulonglong)(int)param_2;
-  LVar1 = __savegprlr_26(param_1);
-  if ((uVar5 & 0xffffffff) == 0) {
+  if (param_2 == (centity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_client.cpp",
                     0x38d,0,"%s");
   }
@@ -1361,20 +1258,18 @@ void VehicleCl_GetBoneOrigin(LocalClientNum_t param_1,centity_s *param_2,int par
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_client.cpp",
                     0x38e,0,"%s");
   }
-  pDVar2 = VehicleCl_GetEntDObj(LVar1,(centity_s *)uVar5);
-  if (pDVar2 != (DObj *)0x0) {
-    pXVar3 = DObjGetModel(pDVar2,0);
-    pDVar4 = XModelGetBasePose(pXVar3);
-    *param_4 = pDVar4[param_3].trans[0];
-    param_4[1] = pDVar4[param_3].trans[1];
-    param_4[2] = pDVar4[param_3].trans[2];
-    __restgprlr_26();
+  pDVar1 = VehicleCl_GetEntDObj(param_1,param_2);
+  if (pDVar1 != (DObj *)0x0) {
+    pXVar2 = DObjGetModel(pDVar1,0);
+    pDVar3 = XModelGetBasePose(pXVar2);
+    *param_4 = pDVar3[param_3].trans[0];
+    param_4[1] = pDVar3[param_3].trans[1];
+    param_4[2] = pDVar3[param_3].trans[2];
     return;
   }
   *param_4 = 0.0;
   param_4[1] = 0.0;
   param_4[2] = 0.0;
-  __restgprlr_26();
   return;
 }
 

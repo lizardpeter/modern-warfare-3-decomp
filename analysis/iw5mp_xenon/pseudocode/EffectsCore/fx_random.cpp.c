@@ -25,47 +25,47 @@ void FX_InitRandom(void)
 
 // 8243A188  FX_RandomDir  (EffectsCore/fx_random.cpp:183)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void FX_RandomDir(int param_1,float *param_2)
 
 {
   float fVar1;
   float fVar2;
-  int iVar3;
+  double dVar3;
   double dVar4;
   double dVar5;
   double dVar6;
   double dVar7;
   double dVar8;
   double dVar9;
-  double dVar10;
   
-  __savegprlr_28(param_1);
-  iVar3 = __savefpr_26();
-  dVar9 = 1.0;
-  dVar10 = (double)(*(float *)(&DAT_82066af0 + iVar3 * 4) * 2.0 - 1.0);
-  if ((dVar10 < -1.0) || (1.0 < dVar10)) {
+  dVar8 = 1.0;
+  dVar9 = (double)(*(float *)(&DAT_82066af0 + param_1 * 4) * 2.0 - 1.0);
+  if ((dVar9 < -1.0) || (1.0 < dVar9)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_random.cpp",
                     0xbf,0,"%s\n\t(height) = %g");
   }
-  dVar8 = (double)(float)(dVar10 * dVar10);
-  dVar7 = (double)(*(float *)(&DAT_82066aec + iVar3 * 4) * 6.2831855);
-  dVar6 = (double)SQRT((float)(dVar9 - dVar8));
-  dVar4 = sin(dVar7);
-  dVar5 = (double)(float)dVar4;
-  dVar4 = cos(dVar7);
-  fVar1 = (float)(dVar5 * dVar6);
-  param_2[2] = (float)dVar10;
+  dVar7 = (double)(float)(dVar9 * dVar9);
+  dVar6 = (double)(*(float *)(&DAT_82066aec + param_1 * 4) * 6.2831855);
+  dVar5 = (double)SQRT((float)(dVar8 - dVar7));
+  dVar3 = sin(dVar6);
+  dVar4 = (double)(float)dVar3;
+  dVar3 = cos(dVar6);
+  fVar1 = (float)(dVar4 * dVar5);
+  param_2[2] = (float)dVar9;
   param_2[1] = fVar1;
-  fVar2 = (float)((double)(float)dVar4 * dVar6);
+  fVar2 = (float)((double)(float)dVar3 * dVar5);
   *param_2 = fVar2;
-  if (0.002 <= ABS((float)((double)(float)((double)(fVar1 * fVar1 + fVar2 * fVar2) + dVar8) - dVar9)
+  if (0.002 <= ABS((float)((double)(float)((double)(fVar1 * fVar1 + fVar2 * fVar2) + dVar7) - dVar8)
                   )) {
     va("(%g %g %g) len %g");
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_random.cpp",
                     0xc9,0,"%s\n\t%s");
   }
-  __restfpr_26();
-  __restgprlr_28();
   return;
 }
 

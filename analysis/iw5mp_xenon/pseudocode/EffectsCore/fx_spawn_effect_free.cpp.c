@@ -2,6 +2,8 @@
 
 // 8243F5D8  FXW_KillEffect  (EffectsCore/fx_spawn_effect_free.cpp:9)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void FXW_KillEffect(FxSystem *param_1,FxEffect *param_2,ushort param_3,int param_4)
@@ -9,147 +11,127 @@ void FXW_KillEffect(FxSystem *param_1,FxEffect *param_2,ushort param_3,int param
 {
   ushort uVar1;
   FxEffect *pFVar2;
-  FxSystem *pFVar3;
-  FxEffect *pFVar4;
-  ulonglong uVar5;
-  ulonglong uVar6;
-  uint uVar7;
+  uint uVar3;
   
-  uVar6 = (ulonglong)(short)param_3;
-  uVar5 = (ulonglong)(int)param_2;
-  pFVar3 = (FxSystem *)__savegprlr_24(param_1);
-  if (pFVar3 == (FxSystem *)0x0) {
+  if (param_1 == (FxSystem *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_spawn_effect_free.cpp"
                     ,0xe,0,"%s");
   }
-  if ((uVar5 & 0xffffffff) == 0) {
+  if (param_2 == (FxEffect *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_spawn_effect_free.cpp"
                     ,0xf,0,"%s");
   }
-  pFVar2 = (FxEffect *)uVar5;
-  if ((pFVar2->status & 0x1fffU) != 0) {
-    FX_AddRefToEffect(pFVar3,pFVar2);
-    FXW_RemoveAllEffectElems(pFVar3,pFVar2,(ushort)uVar6);
+  if ((param_2->status & 0x1fffU) != 0) {
+    FX_AddRefToEffect(param_1,param_2);
+    FXW_RemoveAllEffectElems(param_1,param_2,param_3);
     if (param_4 != 0) {
-      FXW_RunGarbageCollection_FreeTrails(pFVar3,pFVar2);
-      FXW_RunGarbageCollection_FreeSparkFountains(pFVar3,pFVar2);
+      FXW_RunGarbageCollection_FreeTrails(param_1,param_2);
+      FXW_RunGarbageCollection_FreeSparkFountains(param_1,param_2);
     }
-    if ((pFVar2->status & 0x1ff8000U) != 0) {
-      uVar7 = pFVar3->firstActiveEffect;
+    if ((param_2->status & 0x1ff8000U) != 0) {
+      uVar3 = param_1->firstActiveEffect;
       do {
-        if (uVar7 == pFVar3->firstNewEffect) {
+        if (uVar3 == param_1->firstNewEffect) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_spawn_effect_free.cpp"
                           ,0x21,1,"otherActiveIndex != system->firstNewEffect\n\t%i, %i");
         }
-        uVar1 = pFVar3->allEffectHandles[uVar7 & 0x3ff];
-        if (((ulonglong)uVar1 != (uVar6 & 0xffff)) &&
-           (pFVar4 = FX_EffectFromHandle(pFVar3,uVar1), (ulonglong)pFVar4->owner == (uVar6 & 0xffff)
-           )) {
-          FXW_KillEffect(pFVar3,pFVar4,uVar1,param_4);
+        uVar1 = param_1->allEffectHandles[uVar3 & 0x3ff];
+        if ((uVar1 != param_3) &&
+           (pFVar2 = FX_EffectFromHandle(param_1,uVar1), pFVar2->owner == param_3)) {
+          FXW_KillEffect(param_1,pFVar2,uVar1,param_4);
         }
-        uVar7 = uVar7 + 1;
-      } while ((pFVar2->status & 0x1ff8000U) != 0);
+        uVar3 = uVar3 + 1;
+      } while ((param_2->status & 0x1ff8000U) != 0);
     }
-    FXW_DelRefToEffect(pFVar3,pFVar2);
+    FXW_DelRefToEffect(param_1,param_2);
   }
-  __restgprlr_24();
   return;
 }
 
 
 // 8243F318  FXIW_EffectNoLongerReferenced  (EffectsCore/fx_spawn_effect_free.cpp:55)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void FXIW_EffectNoLongerReferenced(FxSystem *param_1,FxEffect *param_2)
 
 {
-  FxSystem *pFVar1;
-  FxEffect *pFVar2;
+  FxEffect *pFVar1;
+  uint uVar2;
   uint uVar3;
   uint uVar4;
-  ulonglong uVar5;
-  uint uVar6;
   
-  uVar5 = (ulonglong)(int)param_2;
-  pFVar1 = (FxSystem *)__savegprlr_25(param_1);
-  if ((uVar5 & 0xffffffff) == 0) {
+  if (param_2 == (FxEffect *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_spawn_effect_free.cpp"
                     ,0x3c,0,"%s");
   }
-  pFVar2 = FX_EffectFromHandle(pFVar1,*(ushort *)((int)uVar5 + 0x18));
-  uVar3 = FXW_GetEffectStatus(pFVar1,pFVar2);
-  if ((uVar3 & 0x1ff8000) == 0) {
+  pFVar1 = FX_EffectFromHandle(param_1,param_2->owner);
+  uVar2 = FXW_GetEffectStatus(param_1,pFVar1);
+  if ((uVar2 & 0x1ff8000) == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_spawn_effect_free.cpp"
                     ,0x4a,0,"%s\n\t(status) = %i");
   }
-  uVar6 = uVar3 - 0x8000;
-  if ((uVar6 & 0x1fff) == 1) {
-    if ((uVar6 & 0x1ff8000) != 0) {
+  uVar4 = uVar2 - 0x8000;
+  if ((uVar4 & 0x1fff) == 1) {
+    if ((uVar4 & 0x1ff8000) != 0) {
       va("%s, %i");
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_spawn_effect_free.cpp"
                       ,0x4f,0,"%s\n\t%s");
     }
-    pFVar1->systemFlags = pFVar1->systemFlags | 8;
-    if ((uVar6 & 0x4000000) == 0) {
-      FXIW_EffectNoLongerReferenced(pFVar1,pFVar2);
+    param_1->systemFlags = param_1->systemFlags | 8;
+    if ((uVar4 & 0x4000000) == 0) {
+      FXIW_EffectNoLongerReferenced(param_1,pFVar1);
     }
   }
-  uVar4 = FXW_GetEffectStatus(pFVar1,pFVar2);
-  if (uVar4 != uVar3) {
+  uVar3 = FXW_GetEffectStatus(param_1,pFVar1);
+  if (uVar3 != uVar2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_spawn_effect_free.cpp"
                     ,0x55,0,"%s");
   }
-  if ((uVar6 & 0x1fff) == 0) {
+  if ((uVar4 & 0x1fff) == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_spawn_effect_free.cpp"
                     ,0x56,0,"%s\n\t(status & FX_STATUS_REF_COUNT_MASK) = %i");
   }
-  FXW_PutEffectStatus(pFVar1,pFVar2,uVar3 - 0x8001);
-  __restgprlr_25();
+  FXW_PutEffectStatus(param_1,pFVar1,uVar2 - 0x8001);
   return;
 }
 
 
 // 8243F4B0  FXW_DelRefToEffect  (EffectsCore/fx_spawn_effect_free.cpp:94)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 uint FXW_DelRefToEffect(FxSystem *param_1,FxEffect *param_2)
 
 {
-  FxSystem *pFVar1;
-  uint uVar2;
-  ulonglong uVar3;
-  FxEffect *pFVar4;
+  uint uVar1;
   
-  uVar3 = (ulonglong)(int)param_2;
-  pFVar1 = (FxSystem *)__savegprlr_28(param_1);
-  if ((uVar3 & 0xffffffff) == 0) {
+  if (param_2 == (FxEffect *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_spawn_effect_free.cpp"
                     ,0x61,0,"%s");
   }
-  pFVar4 = (FxEffect *)uVar3;
-  uVar2 = FXW_GetEffectStatus(pFVar1,pFVar4);
-  uVar3 = (ulonglong)(int)uVar2;
-  if ((uVar2 & 0x1fff) == 1) {
-    if ((uVar2 & 0x1ff8000) != 0) {
+  uVar1 = FXW_GetEffectStatus(param_1,param_2);
+  if ((uVar1 & 0x1fff) == 1) {
+    if ((uVar1 & 0x1ff8000) != 0) {
       va("%s, %i");
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_spawn_effect_free.cpp"
                       ,0x68,0,"%s\n\t%s");
     }
-    pFVar1->systemFlags = pFVar1->systemFlags | 8;
-    if ((uVar2 & 0x4000000) == 0) {
-      FXIW_EffectNoLongerReferenced(pFVar1,pFVar4);
-      uVar2 = FXW_GetEffectStatus(pFVar1,pFVar4);
-      uVar3 = (ulonglong)(int)uVar2;
+    param_1->systemFlags = param_1->systemFlags | 8;
+    if ((uVar1 & 0x4000000) == 0) {
+      FXIW_EffectNoLongerReferenced(param_1,param_2);
+      uVar1 = FXW_GetEffectStatus(param_1,param_2);
     }
   }
-  if ((uVar3 & 0x1fff) == 0) {
+  if ((uVar1 & 0x1fff) == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_spawn_effect_free.cpp"
                     ,0x71,0,"%s\n\t(status & FX_STATUS_REF_COUNT_MASK) = %i");
   }
-  FXW_PutEffectStatus(pFVar1,pFVar4,(uint)(uVar3 - 1));
-  uVar2 = __restgprlr_28(uVar3 - 1);
-  return uVar2;
+  FXW_PutEffectStatus(param_1,param_2,uVar1 - 1);
+  return uVar1 - 1;
 }
 

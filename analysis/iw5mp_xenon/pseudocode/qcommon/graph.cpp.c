@@ -2,24 +2,23 @@
 
 // 82501680  GraphFloat_ParseBuffer  (qcommon/graph.cpp:24)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
+
 void GraphFloat_ParseBuffer(GraphFloat *param_1,char *param_2,char *param_3)
 
 {
   char *pcVar1;
-  char *pcVar2;
-  uint uVar3;
-  ulonglong uVar4;
-  char cVar5;
-  float *pfVar6;
-  uint uVar7;
-  double dVar8;
-  double dVar9;
+  uint uVar2;
+  char cVar3;
+  float *pfVar4;
+  uint uVar5;
+  double dVar6;
+  double dVar7;
   char *pcStack0000001c;
   
-  uVar4 = (ulonglong)(int)param_3;
   pcStack0000001c = param_2;
-  pcVar1 = (char *)__savegprlr_24(param_1);
-  if (pcVar1 == (char *)0x0) {
+  if (param_1 == (GraphFloat *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\graph.cpp",0x1e,0,"%s"
                    );
   }
@@ -27,81 +26,77 @@ void GraphFloat_ParseBuffer(GraphFloat *param_1,char *param_2,char *param_3)
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\graph.cpp",0x1f,0,"%s"
                    );
   }
-  if ((uVar4 & 0xffffffff) == 0) {
+  if (param_3 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\graph.cpp",0x20,0,"%s"
                    );
   }
-  I_strncpyz(pcVar1,(char *)uVar4,0x40);
-  Com_BeginParseSession((char *)uVar4);
-  pcVar2 = Com_Parse(&stack0x0000001c);
-  uVar3 = atoi(pcVar2);
-  uVar7 = 0;
-  pcVar2 = Com_Parse(&stack0x0000001c);
-  cVar5 = *pcVar2;
-  if (cVar5 != '\0') {
-    pfVar6 = (float *)(pcVar1 + 0x3c);
-    while (cVar5 != '}') {
-      dVar8 = atof(pcVar2);
-      dVar8 = (double)(float)dVar8;
-      pcVar2 = Com_Parse(&stack0x0000001c);
-      if ((*pcVar2 == '\0') || (*pcVar2 == '}')) break;
-      dVar9 = atof(pcVar2);
-      dVar9 = (double)(float)dVar9;
-      if (0x1f < (int)uVar7) {
+  I_strncpyz(param_1->name,param_3,0x40);
+  Com_BeginParseSession(param_3);
+  pcVar1 = Com_Parse(&stack0x0000001c);
+  uVar2 = atoi(pcVar1);
+  uVar5 = 0;
+  pcVar1 = Com_Parse(&stack0x0000001c);
+  cVar3 = *pcVar1;
+  if (cVar3 != '\0') {
+    pfVar4 = (float *)(param_1->name + 0x3c);
+    while (cVar3 != '}') {
+      dVar6 = atof(pcVar1);
+      dVar6 = (double)(float)dVar6;
+      pcVar1 = Com_Parse(&stack0x0000001c);
+      if ((*pcVar1 == '\0') || (*pcVar1 == '}')) break;
+      dVar7 = atof(pcVar1);
+      dVar7 = (double)(float)dVar7;
+      if (0x1f < (int)uVar5) {
         Com_Error(ERR_DROP,
                   "\x15GraphFloat_ParseBuffer: File [%s] has too many knots.  Max is [%d]\n");
       }
-      pfVar6[1] = (float)dVar8;
-      pfVar6 = pfVar6 + 2;
-      *pfVar6 = (float)dVar9;
-      uVar7 = uVar7 + 1;
-      pcVar2 = Com_Parse(&stack0x0000001c);
-      cVar5 = *pcVar2;
-      if (cVar5 == '\0') break;
+      (*(float (*) [2])(pfVar4 + 1))[0] = (float)dVar6;
+      pfVar4 = pfVar4 + 2;
+      *pfVar4 = (float)dVar7;
+      uVar5 = uVar5 + 1;
+      pcVar1 = Com_Parse(&stack0x0000001c);
+      cVar3 = *pcVar1;
+      if (cVar3 == '\0') break;
     }
   }
   Com_EndParseSession();
-  if (uVar7 != uVar3) {
+  if (uVar5 != uVar2) {
     Com_Error(ERR_DROP,"\x15GraphFloat_ParseBuffer: Error parsing graph file [%s]");
   }
-  *(short *)(pcVar1 + 0x140) = (short)uVar3;
-  if ((uVar3 & 0xffff) != uVar3) {
+  param_1->knotCount = (ushort)uVar2;
+  if ((uVar2 & 0xffff) != uVar2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\graph.cpp",0x47,0,"%s"
                    );
   }
-  __restgprlr_24();
   return;
 }
 
 
 // 82501848  GraphFloat_Load  (qcommon/graph.cpp:79)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void GraphFloat_Load(GraphFloat *param_1,char *param_2,float param_3)
 
 {
-  GraphFloat *pGVar1;
-  char *pcVar2;
-  ulonglong uVar3;
-  double extraout_f1;
-  double dVar4;
+  char *pcVar1;
+  double dVar2;
   char acStack_2040 [8256];
   
-  uVar3 = (ulonglong)(int)param_2;
-  pGVar1 = (GraphFloat *)__savegprlr_27((double)param_3,param_1);
-  dVar4 = extraout_f1;
-  if (pGVar1 == (GraphFloat *)0x0) {
+  dVar2 = (double)param_3;
+  if (param_1 == (GraphFloat *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\graph.cpp",0x53,0,"%s"
                    );
   }
-  if ((uVar3 & 0xffffffff) == 0) {
+  if (param_2 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\graph.cpp",0x54,0,"%s"
                    );
   }
-  Com_Memset(pGVar1,0,0x148);
-  pcVar2 = Com_LoadInfoString((char *)uVar3,"graph","GRAPH_FLOAT_FILE",acStack_2040);
-  GraphFloat_ParseBuffer(pGVar1,pcVar2,(char *)uVar3);
-  pGVar1->scale = (float)dVar4;
-  __restgprlr_27();
+  Com_Memset(param_1,0,0x148);
+  pcVar1 = Com_LoadInfoString(param_2,"graph","GRAPH_FLOAT_FILE",acStack_2040);
+  GraphFloat_ParseBuffer(param_1,pcVar1,param_2);
+  param_1->scale = (float)dVar2;
   return;
 }
 
@@ -130,91 +125,87 @@ float GraphFloat_GetValue(GraphFloat *param_1,float param_2)
 
 // 825019F8  GraphFloat_SaveToFile  (qcommon/graph.cpp:118)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void GraphFloat_SaveToFile(GraphFloat *param_1)
 
 {
   char cVar1;
   ushort uVar2;
-  char *pcVar3;
-  void *pvVar4;
-  bool bVar5;
+  void *pvVar3;
+  bool bVar4;
+  char *pcVar5;
   ulonglong uVar6;
   char local_430 [1072];
   
-  pcVar3 = (char *)__savegprlr_27(param_1);
-  if (pcVar3 == (char *)0x0) {
+  if (param_1 == (GraphFloat *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\graph.cpp",0x7d,0,"%s"
                    );
   }
-  pvVar4 = FS_FOpenTextFileWrite(pcVar3);
-  if (pvVar4 != (void *)0x0) {
-    if (*(short *)(pcVar3 + 0x140) == 0) {
+  pvVar3 = FS_FOpenTextFileWrite(param_1->name);
+  if (pvVar3 != (void *)0x0) {
+    if (param_1->knotCount == 0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\graph.cpp",0x8b,0,
                       "%s");
     }
-    uVar2 = *(ushort *)(pcVar3 + 0x140);
+    uVar2 = param_1->knotCount;
     uVar6 = (ulonglong)uVar2;
     Com_sprintf(local_430,0x400,"%s\n\n%d\n");
-    pcVar3 = local_430;
+    pcVar5 = local_430;
     do {
-      cVar1 = *pcVar3;
-      pcVar3 = pcVar3 + 1;
+      cVar1 = *pcVar5;
+      pcVar5 = pcVar5 + 1;
     } while (cVar1 != '\0');
-    FS_Write(local_430,(int)(pcVar3 + (-1 - (int)local_430)),pvVar4);
+    FS_Write(local_430,(int)(pcVar5 + (-1 - (int)local_430)),pvVar3);
     if (uVar2 != 0) {
       do {
         Com_sprintf(local_430,0x400,"%.4f %.4f\n");
-        pcVar3 = local_430;
+        pcVar5 = local_430;
         do {
-          cVar1 = *pcVar3;
-          pcVar3 = pcVar3 + 1;
+          cVar1 = *pcVar5;
+          pcVar5 = pcVar5 + 1;
         } while (cVar1 != '\0');
-        FS_Write(local_430,(int)(pcVar3 + (-1 - (int)local_430)),pvVar4);
+        FS_Write(local_430,(int)(pcVar5 + (-1 - (int)local_430)),pvVar3);
         uVar6 = uVar6 - 1;
       } while (uVar6 != 0);
     }
-    FS_FCloseFile(pvVar4);
-    bVar5 = FS_IsUsingRemotePCSharing();
-    if (bVar5) {
+    FS_FCloseFile(pvVar3);
+    bVar4 = FS_IsUsingRemotePCSharing();
+    if (bVar4) {
       FS_GetRemotePCPath((char *)0x0);
     }
     else {
       Sys_DefaultInstallPath();
     }
     Com_Printf(0x12,"^7GraphFloat_SaveToFile: Successfully saved file [%s\\%s].\n");
-    __restgprlr_27();
     return;
   }
   Com_PrintError(0,"GraphFloat_SaveToFile: Could not save file [%s].\n");
-  __restgprlr_27();
   return;
 }
 
 
 // 82501BA0  GraphFloat_DevGuiCB_Event  (qcommon/graph.cpp:167)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void GraphFloat_DevGuiCB_Event(DevGraph *param_1,DevEventType param_2,LocalClientNum_t param_3)
 
 {
-  int iVar1;
-  longlong lVar2;
-  
-  lVar2 = (longlong)(int)param_2;
-  iVar1 = __savegprlr_28(param_1,lVar2,param_3);
-  if (iVar1 == 0) {
+  if (param_1 == (DevGraph *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\graph.cpp",0xaa,0,"%s"
                    );
   }
-  if (*(int *)(iVar1 + 0x18) == 0) {
+  if (param_1->data == (void *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\graph.cpp",0xab,0,"%s"
                    );
   }
-  if ((int)lVar2 == 5) {
-    GraphFloat_SaveToFile(*(GraphFloat **)(iVar1 + 0x18));
+  if (param_2 == EVENT_SAVE) {
+    GraphFloat_SaveToFile(param_1->data);
   }
-  __restgprlr_28();
   return;
 }
 
@@ -236,40 +227,32 @@ void GraphFloat_DevGuiCB_Text
 
 // 82501C70  GraphFloat_CreateDevGui  (qcommon/graph.cpp:205)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void GraphFloat_CreateDevGui(GraphFloat *param_1,DevGraph *param_2,char *param_3)
 
 {
-  DevGraph *pDVar1;
-  void *pvVar2;
-  ulonglong uVar3;
-  ulonglong uVar4;
-  
-  uVar4 = (ulonglong)(int)param_3;
-  uVar3 = (ulonglong)(int)param_2;
-  pvVar2 = (void *)__savegprlr_27(param_1);
-  if (pvVar2 == (void *)0x0) {
+  if (param_1 == (GraphFloat *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\graph.cpp",0xce,0,"%s"
                    );
   }
-  if ((uVar3 & 0xffffffff) == 0) {
+  if (param_2 == (DevGraph *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\graph.cpp",0xcf,0,"%s"
                    );
   }
-  if ((uVar4 & 0xffffffff) == 0) {
+  if (param_3 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\graph.cpp",0xd0,0,"%s"
                    );
   }
-  pDVar1 = (DevGraph *)uVar3;
-  pDVar1->data = pvVar2;
-  pDVar1->knotCountMax = 0x20;
-  pDVar1->knots = (float (*) [2])((int)pvVar2 + 0x40);
-  pDVar1->knotCount = (ushort *)((int)pvVar2 + 0x140);
-  pDVar1->eventCallback = GraphFloat_DevGuiCB_Event;
-  pDVar1->textCallback = GraphFloat_DevGuiCB_Text;
-  DevGui_AddGraph((char *)uVar4,pDVar1);
-  __restgprlr_27();
+  param_2->data = param_1;
+  param_2->knotCountMax = 0x20;
+  param_2->knots = param_1->knots;
+  param_2->knotCount = &param_1->knotCount;
+  param_2->eventCallback = GraphFloat_DevGuiCB_Event;
+  param_2->textCallback = GraphFloat_DevGuiCB_Text;
+  DevGui_AddGraph(param_3,param_2);
   return;
 }
 

@@ -212,6 +212,9 @@ float D3D::Clamp(float param_1,float param_2,float param_3)
 
 // 8288E188  coef_f2c  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/scaler.cpp:132)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 void D3D::coef_f2c(float *param_1,uint *param_2,int param_3,int param_4)
 
 {
@@ -221,22 +224,20 @@ void D3D::coef_f2c(float *param_1,uint *param_2,int param_3,int param_4)
   float fVar4;
   int *piVar5;
   int *piVar6;
-  ulonglong uVar7;
-  int iVar8;
-  ulonglong uVar9;
-  longlong lVar10;
-  ulonglong uVar11;
-  longlong lVar12;
-  longlong lVar13;
-  int iVar15;
-  uint uVar16;
-  longlong lVar14;
+  longlong lVar7;
+  uint *puVar8;
+  int iVar9;
+  undefined4 *puVar10;
+  int iVar11;
+  uint *puVar12;
+  uint uVar13;
+  undefined4 *puVar14;
+  uint uVar15;
+  int iVar16;
   longlong lVar17;
-  uint uVar18;
-  int iVar19;
-  int iVar20;
-  ulonglong uVar21;
-  ulonglong uVar22;
+  longlong lVar18;
+  longlong lVar19;
+  undefined4 uStack_384;
   uint local_380 [10];
   longlong local_358;
   longlong local_350;
@@ -244,190 +245,179 @@ void D3D::coef_f2c(float *param_1,uint *param_2,int param_3,int param_4)
   longlong local_340;
   longlong local_338;
   longlong local_330;
-  int local_320 [12];
+  int local_320 [11];
+  undefined4 uStack_2f4;
   float local_2f0 [12];
-  undefined1 local_2c0 [704];
+  undefined4 local_2c0 [176];
   
-  uVar11 = (ulonglong)param_4;
-  uVar9 = (ulonglong)param_3;
-  lVar10 = (longlong)(int)param_2;
-  uVar7 = ZEXT48(&stack0x00000000);
-  iVar8 = __savegprlr_26(param_1);
-  iVar20 = (int)uVar9;
-  lVar13 = (longlong)iVar20 * (longlong)(int)uVar11;
-  iVar15 = 0;
-  if (0 < lVar13) {
-    lVar17 = uVar7 - 0x2c0;
+  lVar17 = (longlong)param_4;
+  lVar7 = (longlong)param_3;
+  iVar9 = 0;
+  if (0 < (longlong)param_3 * (longlong)param_4) {
+    puVar10 = local_2c0;
     do {
-      iVar15 = iVar15 + 1;
-      *(undefined4 *)lVar17 = *(undefined4 *)((iVar8 - (int)local_2c0) + (int)(undefined4 *)lVar17);
-      lVar17 = lVar17 + 4;
-    } while (iVar15 < (int)lVar13);
+      iVar9 = iVar9 + 1;
+      *puVar10 = *(undefined4 *)(((int)param_1 - (int)local_2c0) + (int)puVar10);
+      puVar10 = puVar10 + 1;
+    } while (iVar9 < (int)((longlong)param_3 * (longlong)param_4));
   }
-  if (0 < iVar20) {
-    lVar13 = uVar7 - 900;
-    uVar21 = uVar9;
-    uVar22 = uVar9 & 0xffffffff;
-    while (uVar22 != 0) {
-      lVar13 = lVar13 + 4;
-      *(undefined4 *)lVar13 = 0xffffffff;
-      uVar21 = uVar21 - 1;
-      uVar22 = uVar21;
-    }
-  }
-  uVar16 = iVar20 - 1;
-  local_380[(iVar20 >> 1) + (uint)(iVar20 < 0 && (uVar9 & 1) != 0)] = 0;
-  local_380[((int)uVar16 >> 1) + (uint)((int)uVar16 < 0 && (uVar16 & 1) != 0)] = 0;
-  if (iVar20 != 2) {
-    uVar18 = iVar20 + 2;
-    uVar16 = iVar20 - 3;
-    local_380[((int)uVar18 >> 1) + (uint)((int)uVar18 < 0 && (uVar18 & 1) != 0)] = 1;
-    local_380[((int)uVar16 >> 1) + (uint)((int)uVar16 < 0 && (uVar16 & 1) != 0)] = 1;
-  }
-  if (0 < iVar20) {
-    lVar13 = uVar7 - 0x380;
-    uVar21 = uVar9;
+  if ((0 < param_3) && (puVar10 = &uStack_384, lVar18 = lVar7, param_3 != 0)) {
     do {
-      if (*(int *)lVar13 == -1) {
-        *(int *)lVar13 = 2;
+      puVar10 = puVar10 + 1;
+      *puVar10 = 0xffffffff;
+      lVar18 = lVar18 + -1;
+    } while (lVar18 != 0);
+  }
+  uVar13 = param_3 - 1;
+  local_380[(param_3 >> 1) + (uint)(param_3 < 0 && (param_3 & 1U) != 0)] = 0;
+  local_380[((int)uVar13 >> 1) + (uint)((int)uVar13 < 0 && (uVar13 & 1) != 0)] = 0;
+  if (param_3 != 2) {
+    uVar15 = param_3 + 2;
+    uVar13 = param_3 - 3;
+    local_380[((int)uVar15 >> 1) + (uint)((int)uVar15 < 0 && (uVar15 & 1) != 0)] = 1;
+    local_380[((int)uVar13 >> 1) + (uint)((int)uVar13 < 0 && (uVar13 & 1) != 0)] = 1;
+  }
+  if (0 < param_3) {
+    puVar8 = local_380;
+    lVar18 = lVar7;
+    do {
+      if (*puVar8 == 0xffffffff) {
+        *puVar8 = 2;
       }
-      lVar13 = lVar13 + 4;
-      uVar21 = uVar21 - 1;
-    } while (uVar21 != 0);
+      puVar8 = puVar8 + 1;
+      lVar18 = lVar18 + -1;
+    } while (lVar18 != 0);
   }
-  if (0 < (int)uVar11) {
-    lVar13 = (uVar7 - 0x2c0) - lVar10;
+  if (0 < param_4) {
     fVar2 = 1000.0;
-    uVar21 = uVar11;
+    puVar8 = param_2;
     do {
-      lVar17 = 0x200;
-      if (iVar20 < 1) {
+      lVar18 = 0x200;
+      if (param_3 < 1) {
 LAB_8288e394:
         do {
-          iVar8 = 0;
-          iVar15 = 0;
-          if (0 < iVar20) {
-            iVar19 = 0;
-            uVar22 = uVar9;
+          iVar9 = 0;
+          iVar11 = 0;
+          if (0 < param_3) {
+            iVar16 = 0;
+            lVar19 = lVar7;
             fVar3 = fVar2;
             do {
               fVar4 = fVar2;
-              if (0.0 < ABS(*(float *)((int)local_2f0 + iVar19))) {
-                local_338 = (longlong)*(int *)((int)local_320 + iVar19);
-                local_340 = (longlong)(1 << (*(int *)((int)local_380 + iVar19) + 7U & 0x3f));
-                fVar4 = (float)local_340 * *(float *)((int)local_2f0 + iVar19);
-                fVar4 = ABS(((float)local_338 - fVar4) / fVar4);
+              if (0.0 < ABS(*(float *)((int)local_2f0 + iVar16))) {
+                local_338 = (longlong)*(int *)((int)local_320 + iVar16);
+                local_340 = (longlong)(1 << (*(int *)((int)local_380 + iVar16) + 7U & 0x3f));
+                fVar4 = (float)local_340 * *(float *)((int)local_2f0 + iVar16);
+                fVar4 = ABS(((float)(longlong)*(int *)((int)local_320 + iVar16) - fVar4) / fVar4);
               }
-              if (((*(int *)((int)local_320 + iVar19) < 0xff) &&
-                  (4 >> (*(uint *)((int)local_380 + iVar19) & 0x3f) <= (int)lVar17)) &&
+              if (((*(int *)((int)local_320 + iVar16) < 0xff) &&
+                  (4 >> (*(uint *)((int)local_380 + iVar16) & 0x3f) <= (int)lVar18)) &&
                  (fVar4 < fVar3)) {
                 fVar3 = fVar4;
-                iVar8 = iVar15;
+                iVar9 = iVar11;
               }
-              iVar15 = iVar15 + 1;
-              iVar19 = iVar19 + 4;
-              uVar22 = uVar22 - 1;
-            } while (uVar22 != 0);
+              iVar11 = iVar11 + 1;
+              iVar16 = iVar16 + 4;
+              lVar19 = lVar19 + -1;
+            } while (lVar19 != 0);
           }
-          lVar17 = lVar17 - (4 >> (local_380[iVar8] & 0x3f));
-          local_320[iVar8] = local_320[iVar8] + 1;
-        } while (0 < lVar17);
-        iVar8 = (int)lVar17;
+          lVar18 = lVar18 - (4 >> (local_380[iVar9] & 0x3f));
+          local_320[iVar9] = local_320[iVar9] + 1;
+        } while (0 < lVar18);
+        iVar9 = (int)lVar18;
       }
       else {
-        lVar12 = uVar7 - 0x2f4;
-        lVar14 = lVar13 + (uVar11 & 0x3fffffff) * -4 + lVar10;
-        uVar22 = uVar9;
+        puVar10 = &uStack_2f4;
+        puVar14 = (undefined4 *)((int)local_2c0 + (param_4 * -4 - (int)param_2) + (int)puVar8);
+        lVar19 = lVar7;
         do {
-          lVar14 = lVar14 + (uVar11 & 0x3fffffff) * 4;
-          lVar12 = lVar12 + 4;
-          *(undefined4 *)lVar12 = *(undefined4 *)lVar14;
-          uVar22 = uVar22 - 1;
-        } while (uVar22 != 0);
-        iVar8 = 0;
-        uVar22 = uVar9;
+          puVar14 = puVar14 + param_4;
+          puVar10 = puVar10 + 1;
+          *puVar10 = *puVar14;
+          lVar19 = lVar19 + -1;
+        } while (lVar19 != 0);
+        iVar9 = 0;
+        lVar19 = lVar7;
         do {
-          fVar3 = *(float *)((int)local_2f0 + iVar8);
-          lVar12 = (longlong)(1 << (*(int *)((int)local_380 + iVar8) + 7U & 0x3f));
+          fVar3 = *(float *)((int)local_2f0 + iVar9);
+          local_348 = (longlong)(1 << (*(int *)((int)local_380 + iVar9) + 7U & 0x3f));
           if (fVar3 <= 0.0) {
-            fVar3 = (float)lVar12 * fVar3 - 0.5;
-            local_348 = lVar12;
+            fVar3 = (float)local_348 * fVar3 - 0.5;
           }
           else {
-            fVar3 = (float)lVar12 * fVar3 + 0.5;
-            local_330 = lVar12;
+            local_330 = local_348;
+            fVar3 = (float)local_348 * fVar3 + 0.5;
           }
-          *(int *)((int)local_320 + iVar8) = (int)fVar3;
-          lVar17 = lVar17 - (ulonglong)
-                            (uint)((int)fVar3 << (2U - *(int *)((int)local_380 + iVar8) & 0x3f));
-          iVar8 = iVar8 + 4;
-          uVar22 = uVar22 - 1;
-        } while (uVar22 != 0);
-        iVar8 = (int)lVar17;
-        if (0 < iVar8) goto LAB_8288e394;
+          *(int *)((int)local_320 + iVar9) = (int)fVar3;
+          lVar18 = lVar18 - (ulonglong)
+                            (uint)((int)fVar3 << (2U - *(int *)((int)local_380 + iVar9) & 0x3f));
+          iVar9 = iVar9 + 4;
+          lVar19 = lVar19 + -1;
+        } while (lVar19 != 0);
+        iVar9 = (int)lVar18;
+        if (0 < iVar9) goto LAB_8288e394;
       }
-      if (iVar8 < 0) {
+      if (iVar9 < 0) {
         do {
-          iVar8 = 0;
-          iVar15 = 0;
-          if (0 < iVar20) {
-            iVar19 = 0;
-            uVar22 = uVar9;
+          iVar9 = 0;
+          iVar11 = 0;
+          if (0 < param_3) {
+            iVar16 = 0;
+            lVar19 = lVar7;
             fVar3 = fVar2;
             do {
               fVar4 = fVar2;
-              if (0.0 < ABS(*(float *)((int)local_2f0 + iVar19))) {
-                local_350 = (longlong)(*(int *)((int)local_320 + iVar19) + -1);
-                local_358 = (longlong)(1 << (*(int *)((int)local_380 + iVar19) + 7U & 0x3f));
-                fVar4 = (float)local_358 * *(float *)((int)local_2f0 + iVar19);
+              if (0.0 < ABS(*(float *)((int)local_2f0 + iVar16))) {
+                local_350 = (longlong)(*(int *)((int)local_320 + iVar16) + -1);
+                local_358 = (longlong)(1 << (*(int *)((int)local_380 + iVar16) + 7U & 0x3f));
+                fVar4 = (float)local_358 * *(float *)((int)local_2f0 + iVar16);
                 fVar4 = ABS(((float)local_350 - fVar4) / fVar4);
               }
-              uVar16 = *(uint *)((int)local_380 + iVar19);
-              if ((int)lVar17 <= -(4 >> (uVar16 & 0x3f))) {
-                bVar1 = 0 < (int)uVar16;
-                if (uVar16 == 0) {
-                  if (*(int *)((int)local_320 + iVar19) < 1) {
+              uVar13 = *(uint *)((int)local_380 + iVar16);
+              if ((int)lVar18 <= -(4 >> (uVar13 & 0x3f))) {
+                bVar1 = 0 < (int)uVar13;
+                if (uVar13 == 0) {
+                  if (*(int *)((int)local_320 + iVar16) < 1) {
                     bVar1 = false;
                     goto LAB_8288e548;
                   }
                 }
                 else {
 LAB_8288e548:
-                  if ((!bVar1) || (*(int *)((int)local_320 + iVar19) < -0xff)) goto LAB_8288e56c;
+                  if ((!bVar1) || (*(int *)((int)local_320 + iVar16) < -0xff)) goto LAB_8288e56c;
                 }
                 if (fVar4 < fVar3) {
                   fVar3 = fVar4;
-                  iVar8 = iVar15;
+                  iVar9 = iVar11;
                 }
               }
 LAB_8288e56c:
-              iVar15 = iVar15 + 1;
-              iVar19 = iVar19 + 4;
-              uVar22 = uVar22 - 1;
-            } while (uVar22 != 0);
+              iVar11 = iVar11 + 1;
+              iVar16 = iVar16 + 4;
+              lVar19 = lVar19 + -1;
+            } while (lVar19 != 0);
           }
-          lVar17 = (4 >> (local_380[iVar8] & 0x3f)) + lVar17;
-          local_320[iVar8] = local_320[iVar8] + -1;
-        } while (lVar17 < 0);
+          lVar18 = (4 >> (local_380[iVar9] & 0x3f)) + lVar18;
+          local_320[iVar9] = local_320[iVar9] + -1;
+        } while (lVar18 < 0);
       }
-      if (0 < iVar20) {
-        iVar8 = 0;
-        lVar17 = lVar10 + (uVar11 & 0x3fffffff) * -4;
-        uVar22 = uVar9;
+      if (0 < param_3) {
+        iVar9 = 0;
+        puVar12 = puVar8 + -param_4;
+        lVar18 = lVar7;
         do {
-          piVar5 = (int *)((int)local_380 + iVar8);
-          piVar6 = (int *)((int)local_320 + iVar8);
-          iVar8 = iVar8 + 4;
-          lVar17 = lVar17 + (uVar11 & 0x3fffffff) * 4;
-          *(int *)lVar17 = *piVar6 << (2U - *piVar5 & 0x3f);
-          uVar22 = uVar22 - 1;
-        } while (uVar22 != 0);
+          piVar5 = (int *)((int)local_380 + iVar9);
+          piVar6 = (int *)((int)local_320 + iVar9);
+          iVar9 = iVar9 + 4;
+          puVar12 = puVar12 + param_4;
+          *puVar12 = *piVar6 << (2U - *piVar5 & 0x3f);
+          lVar18 = lVar18 + -1;
+        } while (lVar18 != 0);
       }
-      uVar21 = uVar21 - 1;
-      lVar10 = lVar10 + 4;
-    } while (uVar21 != 0);
+      lVar17 = lVar17 + -1;
+      puVar8 = puVar8 + 1;
+    } while (lVar17 != 0);
   }
-  __restgprlr_26();
   return;
 }
 
@@ -581,6 +571,11 @@ float D3D::catmull(float param_1)
 
 // 8288EA70  GenerateFilterCoefficients  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/scaler.cpp:413)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
+
 void D3D::GenerateFilterCoefficients
                (_D3DFILTER_TYPE param_1,ulong param_2,ulong param_3,int param_4,float param_5,
                float param_6,float *param_7)
@@ -588,16 +583,15 @@ void D3D::GenerateFilterCoefficients
 {
   ulonglong uVar1;
   undefined8 uVar2;
-  ulonglong uVar3;
-  ulonglong uVar4;
+  longlong lVar3;
   longlong in_r9;
+  longlong lVar4;
   longlong lVar5;
-  longlong lVar6;
-  int iVar7;
-  ulonglong uVar8;
-  ulonglong uVar9;
+  ulonglong uVar6;
+  ulonglong uVar7;
+  longlong lVar8;
+  double dVar9;
   double dVar10;
-  double extraout_f1;
   double dVar11;
   double dVar12;
   double dVar13;
@@ -605,314 +599,301 @@ void D3D::GenerateFilterCoefficients
   double dVar15;
   double dVar16;
   double dVar17;
-  double dVar18;
-  float fVar19;
+  float fVar18;
   
-  dVar11 = (double)param_6;
-  uVar4 = (ulonglong)(int)param_3;
-  uVar3 = (ulonglong)(int)param_2;
-  __savegprlr_25((double)param_5,param_1);
-  uVar2 = __savefpr_23();
-  uVar8 = (longlong)(int)uVar3 * (longlong)(int)uVar4;
-  dVar13 = 0.0;
-  dVar10 = 0.5;
+  dVar15 = (double)param_6;
+  dVar10 = (double)param_5;
+  lVar3 = (longlong)(int)param_2;
+  uVar6 = (longlong)(int)param_2 * (longlong)(int)param_3;
+  dVar12 = 0.0;
+  dVar9 = 0.5;
   if (param_4 != 0) {
-    dVar10 = dVar13;
+    dVar9 = dVar12;
   }
-  iVar7 = (int)uVar2;
-  dVar14 = 1.0;
-  if (iVar7 == 1) {
-    uVar9 = 0;
-    if ((uVar8 & 0xffffffff) != 0) {
-      lVar6 = in_r9 + -4;
-      dVar16 = (double)(float)((double)(uVar8 & 0xffffffff) * 0.5);
-      dVar11 = extraout_f1;
+  dVar13 = 1.0;
+  if (param_1 == D3DFILTER_CATMULL) {
+    uVar7 = 0;
+    if ((uVar6 & 0xffffffff) != 0) {
+      lVar5 = in_r9 + -4;
+      dVar15 = (double)(float)((double)(uVar6 & 0xffffffff) * 0.5);
       do {
-        fVar19 = catmull((float)((double)(float)((double)(float)((double)(uVar9 & 0xffffffff) -
-                                                                dVar16) + dVar10) * dVar11));
-        uVar9 = uVar9 + 1;
-        lVar6 = lVar6 + 4;
-        *(float *)lVar6 = fVar19;
-      } while ((uVar9 & 0xffffffff) < (uVar8 & 0xffffffff));
+        fVar18 = catmull((float)((double)(float)((double)(float)((double)(uVar7 & 0xffffffff) -
+                                                                dVar15) + dVar9) * dVar10));
+        uVar7 = uVar7 + 1;
+        lVar5 = lVar5 + 4;
+        *(float *)lVar5 = fVar18;
+      } while ((uVar7 & 0xffffffff) < (uVar6 & 0xffffffff));
     }
   }
-  else if (iVar7 == 2) {
-    uVar9 = 0;
-    dVar17 = (double)(float)((double)(uVar8 & 0xffffffff) * 0.5);
-    dVar16 = (double)(float)(dVar17 - dVar10);
-    if ((uVar8 & 0xffffffff) != 0) {
-      lVar6 = in_r9 + -4;
-      dVar18 = extraout_f1;
+  else if (param_1 == D3DFILTER_KAISER) {
+    uVar7 = 0;
+    dVar17 = (double)(float)((double)(uVar6 & 0xffffffff) * 0.5);
+    dVar16 = (double)(float)(dVar17 - dVar9);
+    if ((uVar6 & 0xffffffff) != 0) {
+      lVar5 = in_r9 + -4;
+      uVar2 = 2;
       do {
-        dVar12 = (double)(uVar9 & 0xffffffff);
-        fVar19 = sinc((float)((double)(float)((double)(float)(dVar12 - dVar17) + dVar10) * dVar18));
-        dVar15 = (double)fVar19;
-        fVar19 = KaiserWindow((D3D *)uVar2,(float)dVar12,(float)dVar16,(float)dVar11);
-        uVar9 = uVar9 + 1;
-        lVar6 = lVar6 + 4;
-        *(float *)lVar6 = (float)(dVar15 * (double)fVar19);
-      } while ((uVar9 & 0xffffffff) < (uVar8 & 0xffffffff));
+        dVar11 = (double)(uVar7 & 0xffffffff);
+        fVar18 = sinc((float)((double)(float)((double)(float)(dVar11 - dVar17) + dVar9) * dVar10));
+        dVar14 = (double)fVar18;
+        fVar18 = KaiserWindow((D3D *)uVar2,(float)dVar11,(float)dVar16,(float)dVar15);
+        uVar7 = uVar7 + 1;
+        lVar5 = lVar5 + 4;
+        *(float *)lVar5 = (float)(dVar14 * (double)fVar18);
+      } while ((uVar7 & 0xffffffff) < (uVar6 & 0xffffffff));
     }
   }
-  else if (iVar7 == 3) {
-    uVar9 = 0;
-    if ((uVar8 & 0xffffffff) != 0) {
-      dVar18 = (double)(float)(1.0 / dVar11);
-      lVar6 = in_r9 + -4;
-      dVar16 = 2.0;
-      dVar17 = (double)(float)((double)(uVar8 & 0xffffffff) * 0.5);
-      dVar11 = extraout_f1;
+  else if (param_1 == D3DFILTER_GAUSSIAN) {
+    uVar7 = 0;
+    if ((uVar6 & 0xffffffff) != 0) {
+      dVar17 = (double)(float)(1.0 / dVar15);
+      lVar5 = in_r9 + -4;
+      dVar15 = 2.0;
+      dVar16 = (double)(float)((double)(uVar6 & 0xffffffff) * 0.5);
       do {
-        fVar19 = (float)((double)(float)((double)(float)((double)(float)((double)(uVar9 & 0xffffffff
-                                                                                 ) - dVar17) +
-                                                        dVar10) * dVar18) * dVar11);
-        fVar19 = _pow((float)dVar16,-(fVar19 * fVar19));
-        uVar9 = uVar9 + 1;
-        lVar6 = lVar6 + 4;
-        *(float *)lVar6 = fVar19;
-      } while ((uVar9 & 0xffffffff) < (uVar8 & 0xffffffff));
+        fVar18 = (float)((double)(float)((double)(float)((double)(float)((double)(uVar7 & 0xffffffff
+                                                                                 ) - dVar16) + dVar9
+                                                        ) * dVar17) * dVar10);
+        fVar18 = _pow((float)dVar15,-(fVar18 * fVar18));
+        uVar7 = uVar7 + 1;
+        lVar5 = lVar5 + 4;
+        *(float *)lVar5 = fVar18;
+      } while ((uVar7 & 0xffffffff) < (uVar6 & 0xffffffff));
     }
   }
-  else if (iVar7 == 4) {
-    uVar9 = 0;
-    if ((uVar8 & 0xffffffff) != 0) {
-      lVar6 = in_r9 + -4;
-      dVar16 = (double)(float)((double)(uVar8 & 0xffffffff) * 0.5);
-      dVar11 = extraout_f1;
+  else if (param_1 == D3DFILTER_MITCHELL) {
+    uVar7 = 0;
+    if ((uVar6 & 0xffffffff) != 0) {
+      lVar5 = in_r9 + -4;
+      dVar15 = (double)(float)((double)(uVar6 & 0xffffffff) * 0.5);
       do {
-        fVar19 = mitchell((float)((double)(float)((double)(float)((double)(uVar9 & 0xffffffff) -
-                                                                 dVar16) + dVar10) * dVar11));
-        uVar9 = uVar9 + 1;
-        lVar6 = lVar6 + 4;
-        *(float *)lVar6 = fVar19;
-      } while ((uVar9 & 0xffffffff) < (uVar8 & 0xffffffff));
+        fVar18 = mitchell((float)((double)(float)((double)(float)((double)(uVar7 & 0xffffffff) -
+                                                                 dVar15) + dVar9) * dVar10));
+        uVar7 = uVar7 + 1;
+        lVar5 = lVar5 + 4;
+        *(float *)lVar5 = fVar18;
+      } while ((uVar7 & 0xffffffff) < (uVar6 & 0xffffffff));
     }
   }
-  else if (iVar7 == 5) {
-    uVar9 = 0;
-    if ((uVar8 & 0xffffffff) != 0) {
-      dVar17 = (double)(float)(1.0 / dVar11);
-      lVar6 = in_r9 + -4;
-      dVar16 = (double)(float)((double)(uVar8 & 0xffffffff) * 0.5);
-      dVar11 = extraout_f1;
+  else if (param_1 == D3DFILTER_LANCZOS) {
+    uVar7 = 0;
+    if ((uVar6 & 0xffffffff) != 0) {
+      dVar16 = (double)(float)(1.0 / dVar15);
+      lVar5 = in_r9 + -4;
+      dVar15 = (double)(float)((double)(uVar6 & 0xffffffff) * 0.5);
       do {
-        dVar15 = (double)(float)((double)(float)((double)(float)((double)(uVar9 & 0xffffffff) -
-                                                                dVar16) + dVar10) * dVar11);
-        fVar19 = sinc((float)(dVar17 * dVar15));
-        dVar18 = (double)fVar19;
-        fVar19 = sinc((float)dVar15);
-        uVar9 = uVar9 + 1;
-        lVar6 = lVar6 + 4;
-        *(float *)lVar6 = (float)(dVar18 * (double)fVar19);
-      } while ((uVar9 & 0xffffffff) < (uVar8 & 0xffffffff));
+        dVar14 = (double)(float)((double)(float)((double)(float)((double)(uVar7 & 0xffffffff) -
+                                                                dVar15) + dVar9) * dVar10);
+        fVar18 = sinc((float)(dVar16 * dVar14));
+        dVar17 = (double)fVar18;
+        fVar18 = sinc((float)dVar14);
+        uVar7 = uVar7 + 1;
+        lVar5 = lVar5 + 4;
+        *(float *)lVar5 = (float)(dVar17 * (double)fVar18);
+      } while ((uVar7 & 0xffffffff) < (uVar6 & 0xffffffff));
     }
   }
-  else if ((iVar7 == 6) || (iVar7 != 7)) {
-    uVar9 = 0;
-    if ((uVar8 & 0xffffffff) != 0) {
-      uVar1 = (uVar8 & 0xffffffff) >> 1;
-      lVar6 = in_r9;
+  else if ((param_1 == D3DFILTER_BILINEAR) || (param_1 != D3DFILTER_POINT)) {
+    uVar7 = 0;
+    if ((uVar6 & 0xffffffff) != 0) {
+      uVar1 = (uVar6 & 0xffffffff) >> 1;
+      lVar5 = in_r9;
       do {
-        if (((uVar9 & 0xffffffff) < (uVar1 - uVar3 & 0xffffffff)) || (uVar1 <= (uVar9 & 0xffffffff))
+        if (((uVar7 & 0xffffffff) < (uVar1 - lVar3 & 0xffffffff)) || (uVar1 <= (uVar7 & 0xffffffff))
            ) {
-          if (((uVar9 & 0xffffffff) < (uVar1 + uVar3 & 0xffffffff)) &&
-             (uVar1 <= (uVar9 & 0xffffffff))) {
-            dVar11 = (double)((uVar1 - uVar9) + uVar3 & 0xffffffff) - dVar10;
+          if (((uVar7 & 0xffffffff) < (uVar1 + lVar3 & 0xffffffff)) &&
+             (uVar1 <= (uVar7 & 0xffffffff))) {
+            dVar10 = (double)((uVar1 - uVar7) + lVar3 & 0xffffffff) - dVar9;
             goto LAB_8288ebec;
           }
-          *(float *)lVar6 = 0.0;
+          *(float *)lVar5 = 0.0;
         }
         else {
-          dVar11 = (double)((uVar9 - uVar1) + uVar3 & 0xffffffff) + dVar10;
+          dVar10 = (double)((uVar7 - uVar1) + lVar3 & 0xffffffff) + dVar9;
 LAB_8288ebec:
-          *(float *)lVar6 = (float)dVar11;
+          *(float *)lVar5 = (float)dVar10;
         }
-        uVar9 = uVar9 + 1;
-        lVar6 = lVar6 + 4;
-        uVar8 = uVar8 - 1;
-      } while (uVar8 != 0);
+        uVar7 = uVar7 + 1;
+        lVar5 = lVar5 + 4;
+        uVar6 = uVar6 - 1;
+      } while (uVar6 != 0);
     }
   }
   else {
-    if ((uVar8 & 0xffffffff) != 0) {
-      lVar6 = in_r9 + -4;
-      uVar9 = uVar8;
-      uVar1 = uVar8 & 0xffffffff;
+    if ((uVar6 & 0xffffffff) != 0) {
+      lVar5 = in_r9 + -4;
+      uVar7 = uVar6;
+      uVar1 = uVar6 & 0xffffffff;
       while (uVar1 != 0) {
-        lVar6 = lVar6 + 4;
-        *(undefined4 *)lVar6 = 0;
-        uVar9 = uVar9 - 1;
-        uVar1 = uVar9;
+        lVar5 = lVar5 + 4;
+        *(undefined4 *)lVar5 = 0;
+        uVar7 = uVar7 - 1;
+        uVar1 = uVar7;
       }
     }
-    uVar9 = (uVar8 - uVar3 & 0xffffffff) >> 1;
-    uVar8 = (uVar8 + uVar3 & 0xffffffff) >> 1;
-    if (uVar9 < uVar8) {
-      lVar6 = (uVar9 & 0x3fffffff) * 4 + in_r9 + -4;
+    uVar7 = (uVar6 - lVar3 & 0xffffffff) >> 1;
+    uVar6 = (uVar6 + lVar3 & 0xffffffff) >> 1;
+    if (uVar7 < uVar6) {
+      lVar5 = (uVar7 & 0x3fffffff) * 4 + in_r9 + -4;
       do {
-        uVar9 = uVar9 + 1;
-        lVar6 = lVar6 + 4;
-        *(undefined4 *)lVar6 = 0x3f800000;
-      } while ((uVar9 & 0xffffffff) < uVar8);
+        uVar7 = uVar7 + 1;
+        lVar5 = lVar5 + 4;
+        *(undefined4 *)lVar5 = 0x3f800000;
+      } while ((uVar7 & 0xffffffff) < uVar6);
     }
   }
   if (param_4 != 0) {
-    *(float *)in_r9 = (float)dVar13;
+    *(float *)in_r9 = (float)dVar12;
   }
-  uVar8 = uVar3;
-  uVar9 = uVar3 & 0xffffffff;
-  while (uVar9 != 0) {
-    if ((uVar4 & 0xffffffff) != 0) {
-      lVar5 = (uVar3 & 0x3fffffff) * 4;
-      lVar6 = in_r9 + (uVar3 & 0x3fffffff) * -4;
-      uVar9 = uVar4;
-      dVar10 = dVar13;
-      do {
-        lVar6 = lVar6 + lVar5;
-        dVar10 = (double)(float)((double)*(float *)lVar6 + dVar10);
-        uVar9 = uVar9 - 1;
-      } while (uVar9 != 0);
-      lVar6 = in_r9;
-      uVar9 = uVar4;
-      do {
-        *(float *)lVar6 = (float)(dVar14 / dVar10) * *(float *)lVar6;
-        lVar6 = lVar6 + lVar5;
-        uVar9 = uVar9 - 1;
-      } while (uVar9 != 0);
-    }
-    in_r9 = in_r9 + 4;
-    uVar8 = uVar8 - 1;
-    uVar9 = uVar8;
+  if (param_2 != 0) {
+    do {
+      if (param_3 != 0) {
+        lVar4 = ((ulonglong)param_2 & 0x3fffffff) * 4;
+        lVar5 = in_r9 + ((ulonglong)param_2 & 0x3fffffff) * -4;
+        lVar8 = (longlong)(int)param_3;
+        dVar9 = dVar12;
+        do {
+          lVar5 = lVar5 + lVar4;
+          dVar9 = (double)(float)((double)*(float *)lVar5 + dVar9);
+          lVar8 = lVar8 + -1;
+        } while (lVar8 != 0);
+        lVar5 = in_r9;
+        lVar8 = (longlong)(int)param_3;
+        do {
+          *(float *)lVar5 = (float)(dVar13 / dVar9) * *(float *)lVar5;
+          lVar5 = lVar5 + lVar4;
+          lVar8 = lVar8 + -1;
+        } while (lVar8 != 0);
+      }
+      lVar3 = lVar3 + -1;
+      in_r9 = in_r9 + 4;
+    } while (lVar3 != 0);
   }
-  __restfpr_23();
-  __restgprlr_25();
   return;
 }
 
 
 // 8288EEB8  BuildFilter  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/scaler.cpp:556)
 
-void D3D::BuildFilter(_FILTER *param_1,int param_2,_D3DFILTER_TYPE param_3,
-                     _D3DFILTER_PARAMETERS *param_4,float param_5,uint param_6,int param_7)
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
+
+void __thiscall
+D3D::BuildFilter(D3D *this,_FILTER *param_1,int param_2,_D3DFILTER_TYPE param_3,
+                _D3DFILTER_PARAMETERS *param_4,float param_5,uint param_6,int param_7)
 
 {
   float fVar1;
   float fVar2;
   bool bVar3;
-  ulong *puVar4;
-  _D3DFILTER_TYPE _Var5;
-  ulonglong uVar6;
-  float *pfVar7;
-  int in_r9;
+  _D3DFILTER_TYPE _Var4;
+  double dVar5;
+  double dVar6;
+  double dVar7;
   double dVar8;
-  double extraout_f1;
   double dVar9;
   double dVar10;
-  double dVar11;
-  double dVar12;
-  double dVar13;
-  float fVar14;
-  float fVar15;
+  float fVar11;
+  float fVar12;
   uint uStack_30c;
-  float local_308 [2];
-  undefined4 local_300;
+  float local_308 [6];
   float afStack_2f0 [188];
   
-  uVar6 = (ulonglong)(int)param_4;
-  __savegprlr_24((double)param_5,param_1);
-  puVar4 = (ulong *)__savefpr_27();
-  pfVar7 = (float *)uVar6;
+  dVar8 = (double)param_5;
   bVar3 = true;
-  if ((uVar6 & 0xffffffff) == 0) {
-    pfVar7 = local_308;
-    local_300 = 0;
+  if (param_3 == D3DFILTER_DEFAULT) {
+    param_3 = (_D3DFILTER_TYPE)local_308;
+    local_308[0] = 0.0;
+    local_308[1] = 0.0;
+    local_308[2] = 0.0;
   }
-  dVar13 = 1.0;
-  dVar10 = -1.0;
-  dVar11 = extraout_f1;
-  fVar14 = Clamp(*pfVar7,-1.0,1.0);
-  dVar12 = 0.09999999403953552;
-  dVar9 = (double)(float)(-(double)(float)((double)fVar14 * 0.09999999403953552 - 0.6000000238418579
-                                          ) * (double)fVar14 + dVar13);
-  if ((in_r9 == 0) || (param_2 == 0)) {
-    if ((dVar11 <= 0.999999) || (1.000001 <= dVar11)) {
+  dVar10 = 1.0;
+  dVar7 = -1.0;
+  fVar11 = Clamp(*(float *)param_3,-1.0,1.0);
+  dVar9 = 0.09999999403953552;
+  dVar6 = (double)(float)(-(double)(float)((double)fVar11 * 0.09999999403953552 - 0.6000000238418579
+                                          ) * (double)fVar11 + dVar10);
+  if ((param_7 == 0) || (param_1 == (_FILTER *)0x0)) {
+    if ((dVar8 <= 0.999999) || (1.000001 <= dVar8)) {
       bVar3 = false;
     }
-    if (dVar9 < dVar13) {
+    if (dVar6 < dVar10) {
       bVar3 = false;
     }
-    dVar12 = (double)(float)(dVar13 / dVar11);
-    if (dVar13 <= (double)(float)(dVar13 / dVar11)) {
-      dVar12 = dVar13;
+    dVar9 = (double)(float)(dVar10 / dVar8);
+    if (dVar10 <= (double)(float)(dVar10 / dVar8)) {
+      dVar9 = dVar10;
     }
-    dVar9 = dVar12 * dVar9;
+    dVar6 = dVar9 * dVar6;
   }
   else {
-    fVar14 = Clamp(pfVar7[1],(float)dVar10,(float)dVar13);
-    dVar12 = -(double)(float)((double)(float)((double)fVar14 * dVar12 + 0.3499999940395355) *
-                              (double)fVar14 - 0.75);
-    if ((dVar11 <= 1.99999) || (2.00001 <= dVar11)) {
+    fVar11 = Clamp(*(float *)(param_3 + 4),(float)dVar7,(float)dVar10);
+    dVar9 = -(double)(float)((double)(float)((double)fVar11 * dVar9 + 0.3499999940395355) *
+                             (double)fVar11 - 0.75);
+    if ((dVar8 <= 1.99999) || (2.00001 <= dVar8)) {
       bVar3 = false;
     }
-    if (dVar9 < dVar13) {
+    if (dVar6 < dVar10) {
       bVar3 = false;
     }
-    if (dVar12 < dVar13) {
+    if (dVar9 < dVar10) {
       bVar3 = false;
     }
-    dVar8 = (double)(float)(2.0 / dVar11);
-    if (dVar13 <= (double)(float)(2.0 / dVar11)) {
-      dVar8 = dVar13;
+    dVar5 = (double)(float)(2.0 / dVar8);
+    if (dVar10 <= (double)(float)(2.0 / dVar8)) {
+      dVar5 = dVar10;
     }
-    dVar9 = (double)(float)(dVar8 * dVar12) * dVar9;
+    dVar6 = (double)(float)(dVar5 * dVar9) * dVar6;
   }
-  puVar4[1] = (ulong)((float)dVar9 * 0.0625);
-  dVar9 = 0.5;
-  uStack_30c = (uint)(longlong)(dVar11 * 524288.0 + 0.5);
-  puVar4[0xa2] = uStack_30c;
+  *(float *)(this + 4) = (float)dVar6 * 0.0625;
+  dVar6 = 0.5;
+  uStack_30c = (uint)(longlong)(dVar8 * 524288.0 + 0.5);
+  *(uint *)(this + 0x288) = uStack_30c;
   if (0x1fffff < uStack_30c) {
-    puVar4[0xa2] = 0x1fffff;
+    *(undefined4 *)(this + 0x288) = 0x1fffff;
   }
-  dVar11 = (double)(float)puVar4[1];
-  *puVar4 = param_7;
-  if (param_3 == D3DFILTER_KAISER) {
-    fVar15 = Clamp(pfVar7[2],(float)dVar10,(float)dVar13);
+  dVar8 = (double)*(float *)(this + 4);
+  *(uint *)this = param_6;
+  if (param_2 == 2) {
+    fVar12 = Clamp(*(float *)(param_3 + 8),(float)dVar7,(float)dVar10);
     fVar1 = 3.0;
     fVar2 = 8.0;
-    fVar14 = 5.0;
+    fVar11 = 5.0;
   }
   else {
-    if (param_3 == D3DFILTER_GAUSSIAN) {
-      fVar14 = Clamp(pfVar7[2],(float)dVar10,(float)dVar13);
-      fVar14 = (float)((double)(float)((double)fVar14 * 0.05000000074505806 + 0.44999998807907104) *
-                       (double)fVar14 + dVar9);
+    if (param_2 == 3) {
+      fVar11 = Clamp(*(float *)(param_3 + 8),(float)dVar7,(float)dVar10);
+      fVar11 = (float)((double)(float)((double)fVar11 * 0.05000000074505806 + 0.44999998807907104) *
+                       (double)fVar11 + dVar6);
       goto LAB_8288f11c;
     }
-    if (param_3 != D3DFILTER_LANCZOS) {
-      fVar14 = 0.0;
+    if (param_2 != 5) {
+      fVar11 = 0.0;
       goto LAB_8288f11c;
     }
-    fVar15 = Clamp(pfVar7[2],(float)dVar10,(float)dVar13);
+    fVar12 = Clamp(*(float *)(param_3 + 8),(float)dVar7,(float)dVar10);
     fVar1 = 1.5;
     fVar2 = 4.5;
-    fVar14 = 4.0;
+    fVar11 = 4.0;
   }
-  fVar14 = (fVar15 * fVar1 + fVar2) * fVar15 + fVar14;
+  fVar11 = (fVar12 * fVar1 + fVar2) * fVar12 + fVar11;
 LAB_8288f11c:
-  _Var5 = D3DFILTER_POINT;
+  _Var4 = D3DFILTER_POINT;
   if (!bVar3) {
-    _Var5 = param_3;
+    _Var4 = param_2;
   }
-  GenerateFilterCoefficients(_Var5,0x10,param_7,1,(float)dVar11,fVar14,(float *)param_6);
-  coef_f2c(afStack_2f0,puVar4 + 2,param_7,0x10);
-  __restfpr_27();
-  __restgprlr_24();
+  GenerateFilterCoefficients(_Var4,0x10,param_6,1,(float)dVar8,fVar11,&param_4->Nyquist);
+  coef_f2c(afStack_2f0,(uint *)(this + 8),param_6,0x10);
   return;
 }
 
 
 // 8288F170  InternalScalerSetup  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/scaler.cpp:672)
 
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
 /* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 
@@ -926,170 +907,158 @@ int D3D::InternalScalerSetup
   ulong uVar1;
   ulong uVar2;
   uint uVar3;
-  ulong uVar4;
-  uint uVar5;
+  ulonglong uVar4;
+  float fVar5;
   ulonglong uVar6;
-  float fVar7;
-  ulonglong uVar8;
-  uint uVar9;
+  uint uVar7;
+  _D3DFILTER_PARAMETERS *p_Var8;
+  ulonglong uVar9;
   int iVar10;
-  ulonglong uVar11;
-  ulonglong uVar12;
-  longlong lVar13;
+  _D3DFILTER_TYPE _Var11;
+  uint uVar12;
+  ulonglong uVar13;
   ulonglong uVar14;
-  uint uVar15;
-  ulonglong uVar16;
-  ulonglong uVar17;
-  _D3DFILTER_TYPE _Var18;
-  ulonglong uVar19;
-  double dVar20;
-  double dVar21;
-  double dVar22;
-  double dVar23;
+  double dVar15;
+  double dVar16;
+  double dVar17;
+  double dVar18;
   _D3DFILTER_PARAMETERS *p_Stack0000004c;
-  _D3DFILTER_TYPE *in_stack_00000054;
-  _D3DFILTER_PARAMETERS *in_stack_0000005c;
-  _FILTER *in_stack_00000064;
+  int *in_stack_00000054;
+  _D3DFILTER_TYPE in_stack_0000005c;
+  D3D *in_stack_00000064;
   int iStack_ec;
   uint uStack_e4;
   undefined1 auStack_e0 [8];
-  int local_d8;
+  _FILTER *local_d8;
   uint local_c4;
   
-  uVar16 = (ulonglong)(int)param_6;
-  uVar14 = (ulonglong)(int)param_5;
-  lVar13 = (longlong)(int)param_4;
-  uVar12 = (ulonglong)(int)param_3;
-  uVar11 = (ulonglong)(int)param_2;
-  __savegprlr();
-  uVar15 = (uint)uVar14;
+  p_Var8 = (_D3DFILTER_PARAMETERS *)param_5;
   p_Stack0000004c = param_8;
   VdQueryVideoMode(auStack_e0);
-  uVar17 = ((ulonglong)(local_d8 == 0) ^ 1) + 1;
-  if (((uVar11 & 0xffffffff) == 0) && ((uVar12 & 0xffffffff) == 0)) {
-    uVar12 = uVar16;
+  uVar9 = ((ulonglong)(local_d8 == (_FILTER *)0x0) ^ 1) + 1;
+  uVar13 = (longlong)(int)param_3;
+  if ((param_2 == 0) && (param_3 == 0)) {
+    uVar13 = (longlong)(int)param_6;
   }
-  uVar5 = (uint)((ulonglong)lVar13 >> 0x10);
   uVar1 = param_1->m_ActualDisplayWidth;
   uVar2 = param_1->m_DisplayHeight;
-  uVar6 = (uVar12 & 0xffffffff) >> 0x10;
-  uVar12 = uVar12 & 0xffff;
-  uVar19 = (uVar14 & 0xffffffff) >> 0x10;
-  uVar8 = uVar14 & 0xffff;
-  if (*in_stack_00000054 == D3DFILTER_DEFAULT) {
-    if (uVar6 == uVar19) {
-      _Var18 = D3DFILTER_POINT;
+  uVar4 = (uVar13 & 0xffffffff) >> 0x10;
+  uVar13 = uVar13 & 0xffff;
+  uVar14 = (ulonglong)(param_5 >> 0x10);
+  uVar6 = (ulonglong)param_5 & 0xffff;
+  if (*in_stack_00000054 == 0) {
+    if (uVar4 == uVar14) {
+      iVar10 = 7;
     }
     else {
-      _Var18 = (-(uint)(uVar6 < uVar19) & 0xfffffffc) + D3DFILTER_LANCZOS;
+      iVar10 = (-(uint)(uVar4 < uVar14) & 0xfffffffc) + 5;
     }
-    *in_stack_00000054 = _Var18;
+    *in_stack_00000054 = iVar10;
   }
   if (*param_7 == D3DFILTER_DEFAULT) {
-    trapWord(6,uVar17,0);
-    if (uVar12 == uVar8 / uVar17) {
-      _Var18 = (-(uint)(local_d8 != 0) & 0xfffffffe) + D3DFILTER_POINT;
+    trapWord(6,uVar9,0);
+    if (uVar13 == uVar6 / uVar9) {
+      _Var11 = (-(uint)(local_d8 != (_FILTER *)0x0) & 0xfffffffe) + D3DFILTER_POINT;
     }
     else {
-      _Var18 = (-(uint)(uVar12 < uVar8 / uVar17) & 0xfffffffc) + D3DFILTER_LANCZOS;
+      _Var11 = (-(uint)(uVar13 < uVar6 / uVar9) & 0xfffffffc) + D3DFILTER_LANCZOS;
     }
-    *param_7 = _Var18;
+    *param_7 = _Var11;
   }
-  dVar20 = 4.0;
-  dVar21 = (double)((float)uVar6 / (float)uVar19);
-  if ((4.0 <= dVar21) && (dVar21 <= 4.00001)) {
-    dVar21 = dVar20;
+  dVar15 = 4.0;
+  dVar16 = (double)((float)uVar4 / (float)uVar14);
+  if ((4.0 <= dVar16) && (dVar16 <= 4.00001)) {
+    dVar16 = dVar15;
   }
-  dVar22 = 0.5;
-  fVar7 = (float)((double)uVar17 * (double)uVar12) / (float)uVar8;
+  dVar17 = 0.5;
+  fVar5 = (float)((double)uVar9 * (double)uVar13) / (float)uVar6;
   if (((param_1->m_PresentParameters).Flags & 0x10) != 0) {
-    iStack_ec = (int)(longlong)((float)((double)uVar12 * 0.010204081423580647 + 0.5) * 2.0);
-    fVar7 = (float)((((uint)uVar12 - iStack_ec >> 1) + iStack_ec) * (int)uVar17) * 0.0013333333;
+    iStack_ec = (int)(longlong)((float)((double)uVar13 * 0.010204081423580647 + 0.5) * 2.0);
+    fVar5 = (float)((((uint)uVar13 - iStack_ec >> 1) + iStack_ec) * (int)uVar9) * 0.0013333333;
   }
-  dVar23 = (double)fVar7;
-  if ((((dVar23 < 4.0) || (4.00001 < dVar23)) &&
-      ((dVar20 = 3.0, dVar23 < 3.0 || (3.00001 < dVar23)))) &&
-     ((dVar20 = dVar23, 2.0 <= dVar23 && (dVar23 <= 2.00001)))) {
-    dVar20 = 2.0;
+  dVar18 = (double)fVar5;
+  if ((((dVar18 < 4.0) || (4.00001 < dVar18)) &&
+      ((dVar15 = 3.0, dVar18 < 3.0 || (3.00001 < dVar18)))) &&
+     ((dVar15 = dVar18, 2.0 <= dVar18 && (dVar18 <= 2.00001)))) {
+    dVar15 = 2.0;
   }
   trapWord(6,(ulonglong)local_c4,0);
-  uVar17 = ((ulonglong)_DAT_000001c0 / (ulonglong)local_c4 & 0x7fffffff) << 1;
-  iVar10 = (int)uVar17;
-  if (10 < uVar17) {
-    iVar10 = 10;
+  uVar9 = ((ulonglong)_DAT_000001c0 / (ulonglong)local_c4 & 0x7fffffff) << 1;
+  uVar12 = (uint)uVar9;
+  if (10 < uVar9) {
+    uVar12 = 10;
   }
-  trapWord(6,uVar6,0);
-  uVar19 = 0x1e00 / uVar6 - 1;
-  uStack_e4 = (uint)uVar19;
-  uVar17 = 6;
-  if ((uVar19 & 0xffffffff) < 7) {
-    uVar17 = uVar19;
+  trapWord(6,uVar4,0);
+  uVar14 = 0x1e00 / uVar4 - 1;
+  uStack_e4 = (uint)uVar14;
+  uVar9 = 6;
+  if ((uVar14 & 0xffffffff) < 7) {
+    uVar9 = uVar14;
   }
-  if ((uVar17 & 0xffffffff) <
-      ((longlong)((float)_DAT_000001c0 / (float)((double)local_c4 * dVar21)) & 0xffffffffU)) {
-    if (6 < (uVar19 & 0xffffffff)) {
+  if ((uVar9 & 0xffffffff) <
+      ((longlong)((float)_DAT_000001c0 / (float)((double)local_c4 * dVar16)) & 0xffffffffU)) {
+    if (6 < (uVar14 & 0xffffffff)) {
       uStack_e4 = 6;
     }
   }
   else {
-    uStack_e4 = (uint)(longlong)((float)_DAT_000001c0 / (float)((double)local_c4 * dVar21));
+    uStack_e4 = (uint)(longlong)((float)_DAT_000001c0 / (float)((double)local_c4 * dVar16));
   }
   memset();
-  BuildFilter(in_stack_00000064,local_d8,*param_7,p_Stack0000004c,(float)dVar20,uVar15,uStack_e4);
-  BuildFilter(in_stack_00000064 + 1,local_d8,*in_stack_00000054,in_stack_0000005c,(float)dVar21,
-              uVar15,iVar10);
-  in_stack_00000064[2].Taps[9] = 0;
-  in_stack_00000064[2].Taps[0xc] = 1;
-  uVar15 = in_stack_00000064->NumberOfTaps;
-  uVar9 = ((uint)(uVar16 >> 0x10) & 0xffff) + 0x1f & 0xffffffe0;
-  uVar3 = in_stack_00000064->Scale;
-  uVar4 = in_stack_00000064[1].NumberOfTaps;
-  in_stack_00000064[2].Taps[0xb] = (uint)(uVar6 << 0x10) & 0xfff0000 | (uint)uVar12 & 0xfff;
-  in_stack_00000064[2].Taps[0x17] = (int)(uVar6 + 3 >> 2) - 1U & 0x3ff;
-  in_stack_00000064[2].Taps[10] = (uint)uVar11 & 0xfff0fff;
-  in_stack_00000064[2].Taps[5] = 0;
-  in_stack_00000064[2].Taps[6] = 0;
-  in_stack_00000064[2].Taps[7] = uVar9;
-  in_stack_00000064[2].Taps[0xd] = (uVar4 - 1 & 0xf) << 8 | uVar15 - 1 & 7;
-  in_stack_00000064[2].Taps[8] = ((uint)uVar16 & 0xffff) + 1 & 0xfffffffe;
-  in_stack_00000064[2].Taps[2] = uVar9;
-  in_stack_00000064[2].NumberOfTaps = (uint)lVar13 & 0xfff;
-  in_stack_00000064[2].CutOff = (float)((uVar2 - (int)uVar8) - ((uint)lVar13 & 0xffff) & 0xfff);
-  in_stack_00000064[2].Taps[0] = uVar5 & 0xfff;
-  in_stack_00000064[2].Taps[1] =
-       (uVar1 - (int)((uVar14 & 0xffffffff) >> 0x10)) - (uVar5 & 0xffff) & 0xfff;
-  uVar5 = in_stack_00000064[1].Scale;
-  in_stack_00000064[2].Taps[0x14] = uVar3 << ((uint)LZCOUNT(local_d8) >> 5) + 4 & 0x3ffffff;
-  in_stack_00000064[2].Taps[0x13] = 0x1000000;
-  in_stack_00000064[2].Taps[0x10] = (uVar5 & 0x1fffff) << 5;
-  in_stack_00000064[2].Taps[0xf] = 0;
+  BuildFilter(in_stack_00000064,local_d8,*param_7,(_D3DFILTER_TYPE)p_Stack0000004c,p_Var8,
+              (float)dVar15,uStack_e4,1);
+  BuildFilter(in_stack_00000064 + 0x28c,local_d8,*in_stack_00000054,in_stack_0000005c,p_Var8,
+              (float)dVar16,uVar12,0);
+  *(undefined4 *)(in_stack_00000064 + 0x544) = 0;
+  *(undefined4 *)(in_stack_00000064 + 0x550) = 1;
+  uVar12 = *(uint *)in_stack_00000064;
+  uVar7 = (param_6 >> 0x10) + 0x1f & 0xffffffe0;
+  uVar3 = *(uint *)(in_stack_00000064 + 0x288);
+  *(uint *)(in_stack_00000064 + 0x54c) = (uint)(uVar4 << 0x10) & 0xfff0000 | (uint)uVar13 & 0xfff;
+  *(uint *)(in_stack_00000064 + 0x57c) = (int)(uVar4 + 3 >> 2) - 1U & 0x3ff;
+  *(ulong *)(in_stack_00000064 + 0x548) = (param_2 >> 0x10 & 0xfff) << 0x10 | param_2 & 0xfff;
+  *(undefined4 *)(in_stack_00000064 + 0x534) = 0;
+  *(undefined4 *)(in_stack_00000064 + 0x538) = 0;
+  *(uint *)(in_stack_00000064 + 0x53c) = uVar7;
+  *(uint *)(in_stack_00000064 + 0x554) =
+       (*(int *)(in_stack_00000064 + 0x28c) - 1U & 0xf) << 8 | uVar12 - 1 & 7;
+  *(ulong *)(in_stack_00000064 + 0x540) = (param_6 & 0xffff) + 1 & 0xfffffffe;
+  *(uint *)(in_stack_00000064 + 0x528) = uVar7;
+  *(ulong *)(in_stack_00000064 + 0x518) = param_4 & 0xfff;
+  *(ulong *)(in_stack_00000064 + 0x51c) = (uVar2 - (int)uVar6) - (param_4 & 0xffff) & 0xfff;
+  *(ulong *)(in_stack_00000064 + 0x520) = param_4 >> 0x10 & 0xfff;
+  *(ulong *)(in_stack_00000064 + 0x524) = (uVar1 - (param_5 >> 0x10)) - (param_4 >> 0x10) & 0xfff;
+  *(uint *)(in_stack_00000064 + 0x570) = uVar3 << ((uint)LZCOUNT(local_d8) >> 5) + 4 & 0x3ffffff;
+  *(undefined4 *)(in_stack_00000064 + 0x56c) = 0x1000000;
+  *(uint *)(in_stack_00000064 + 0x560) = (*(uint *)(in_stack_00000064 + 0x514) & 0x1fffff) << 5;
+  *(undefined4 *)(in_stack_00000064 + 0x55c) = 0;
   uStack_e4 = (uint)(longlong)
-                    ((double)((float)in_stack_00000064[1].Scale * 1.9073486e-06 +
-                              (float)in_stack_00000064[1].NumberOfTaps + 1.0) * 64.0 + dVar22);
-  in_stack_00000064[2].Taps[0x11] = (uStack_e4 & 0x7ff) << 9;
-  if (local_d8 == 0) {
+                    ((double)((float)*(uint *)(in_stack_00000064 + 0x514) * 1.9073486e-06 +
+                              (float)*(uint *)(in_stack_00000064 + 0x28c) + 1.0) * 64.0 + dVar17);
+  *(uint *)(in_stack_00000064 + 0x564) = (uStack_e4 & 0x7ff) << 9;
+  if (local_d8 == (_FILTER *)0x0) {
     uStack_e4 = (uint)(longlong)
-                      ((double)((float)uVar3 * 1.9073486e-06 + (float)uVar15 + 1.0) * 64.0 + dVar22)
+                      ((double)((float)uVar3 * 1.9073486e-06 + (float)uVar12 + 1.0) * 64.0 + dVar17)
     ;
-    in_stack_00000064[2].Taps[0x15] = (uStack_e4 & 0x3ff) << 9;
+    *(uint *)(in_stack_00000064 + 0x574) = (uStack_e4 & 0x3ff) << 9;
   }
   else {
     uStack_e4 = (uint)(longlong)
-                      ((double)((float)uVar3 * 2.861023e-06 + (float)uVar15 + 1.0) * 64.0 + dVar22);
-    uVar5 = uStack_e4;
+                      ((double)((float)uVar3 * 2.861023e-06 + (float)uVar12 + 1.0) * 64.0 + dVar17);
+    uVar7 = uStack_e4;
     uStack_e4 = (uint)(longlong)
-                      ((double)((float)uVar3 * 9.536743e-07 + (float)uVar15 + 1.0) * 64.0 + dVar22);
-    in_stack_00000064[2].Taps[0x16] = (uVar5 & 0x3ff) << 9;
-    in_stack_00000064[2].Taps[0x15] = (uStack_e4 & 0x3ff) << 9;
+                      ((double)((float)uVar3 * 9.536743e-07 + (float)uVar12 + 1.0) * 64.0 + dVar17);
+    *(uint *)(in_stack_00000064 + 0x578) = (uVar7 & 0x3ff) << 9;
+    *(uint *)(in_stack_00000064 + 0x574) = (uStack_e4 & 0x3ff) << 9;
   }
-  iVar10 = 1;
-  __restgprlr();
-  return iVar10;
+  return 1;
 }
 
 
 // 8288DA88  InitializeDefaultScalerParameters  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/scaler.cpp:1039)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 
 void D3D::InitializeDefaultScalerParameters
@@ -1099,15 +1068,13 @@ void D3D::InitializeDefaultScalerParameters
 {
   int iVar1;
   uint uVar2;
-  int iVar4;
   ulonglong uVar3;
-  ulong uVar5;
-  ulonglong uVar6;
+  ulong uVar4;
+  ulonglong uVar5;
   uint local_48;
   ulong local_44;
-  ulong uVar7;
+  ulong uVar6;
   
-  iVar4 = __savegprlr_26(param_1);
   iVar1 = (param_4->ScalerSourceRect).y1;
   uVar2 = (param_4->ScalerSourceRect).x1;
   local_48 = (param_4->ScalerSourceRect).x2;
@@ -1116,42 +1083,43 @@ void D3D::InitializeDefaultScalerParameters
     local_48 = param_2;
     local_44 = param_3;
   }
-  uVar5 = param_4->ScaledOutputWidth;
-  if (uVar5 == 0) {
-    uVar5 = *(ulong *)(iVar4 + 0x5554);
+  uVar4 = param_4->ScaledOutputWidth;
+  if (uVar4 == 0) {
+    uVar4 = param_1->m_DisplayWidth;
   }
-  uVar7 = param_4->ScaledOutputHeight;
-  if (uVar7 == 0) {
-    uVar6 = ((longlong)(int)uVar5 * (longlong)(int)(local_44 - iVar1) & 0xffffffffU) /
+  uVar6 = param_4->ScaledOutputHeight;
+  if (uVar6 == 0) {
+    uVar5 = ((longlong)(int)uVar4 * (longlong)(int)(local_44 - iVar1) & 0xffffffffU) /
             ((ulonglong)local_48 - (ulonglong)uVar2 & 0xffffffff);
-    uVar7 = (ulong)uVar6;
+    uVar6 = (ulong)uVar5;
     trapWord(6,(ulonglong)local_48 - (ulonglong)uVar2,0);
-    if ((((*(uint *)(iVar4 + 0x363c) & 1) != 0) || (uVar3 = VdQueryVideoFlags(), (uVar3 & 1) != 0))
-       || ((local_44 - iVar1 < uVar6 || (*(uint *)(iVar4 + 0x5558) < uVar6)))) {
-      uVar7 = *(ulong *)(iVar4 + 0x5558);
+    if (((((param_1->m_PresentParameters).Flags & 1) != 0) ||
+        (uVar3 = VdQueryVideoFlags(), (uVar3 & 1) != 0)) ||
+       ((local_44 - iVar1 < uVar5 || (param_1->m_DisplayHeight < uVar5)))) {
+      uVar6 = param_1->m_DisplayHeight;
     }
   }
   memcpy();
-  param_5->ScaledOutputWidth = uVar5;
-  param_5->ScaledOutputHeight = uVar7;
+  param_5->ScaledOutputWidth = uVar4;
+  param_5->ScaledOutputHeight = uVar6;
   (param_5->ScalerSourceRect).x1 = uVar2;
   (param_5->ScalerSourceRect).y1 = iVar1;
   (param_5->ScalerSourceRect).x2 = local_48;
   (param_5->ScalerSourceRect).y2 = local_44;
-  __restgprlr_26();
   return;
 }
 
 
 // 8288F708  SetupScaler  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/scaler.cpp:1110)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 
 void D3D::SetupScaler(CDevice *param_1,ulong param_2,ulong param_3,
                      _D3DPRIVATE_SCALER_PARAMETERS *param_4,int param_5)
 
 {
-  CDevice *this;
   ulong *puVar1;
   int iVar2;
   ulonglong uVar3;
@@ -1160,7 +1128,6 @@ void D3D::SetupScaler(CDevice *param_1,ulong param_2,ulong param_3,
   ulonglong uVar6;
   ulonglong uVar7;
   ulonglong uVar8;
-  ulonglong uVar9;
   _D3DFILTER_TYPE *in_stack_fffff668;
   _D3DFILTER_PARAMETERS *in_stack_fffff66c;
   _HARDWARE_SCALER_PARAMETERS *in_stack_fffff670;
@@ -1168,13 +1135,10 @@ void D3D::SetupScaler(CDevice *param_1,ulong param_2,ulong param_3,
   _D3DPRIVATE_SCALER_PARAMETERS local_920;
   undefined1 auStack_8e0 [2272];
   
-  uVar9 = (ulonglong)(int)param_3;
-  uVar8 = (ulonglong)(int)param_2;
-  this = (CDevice *)__savegprlr_25(param_1);
-  InitializeDefaultScalerParameters(this,(ulong)uVar8,(ulong)uVar9,param_4,&local_920,param_5);
+  InitializeDefaultScalerParameters(param_1,param_2,param_3,param_4,&local_920,param_5);
   uVar4 = (ulonglong)(uint)local_920.ScalerSourceRect.x1;
-  uVar7 = (ulonglong)this->m_ActualDisplayWidth;
-  uVar3 = (ulonglong)this->m_DisplayWidth;
+  uVar7 = (ulonglong)param_1->m_ActualDisplayWidth;
+  uVar3 = (ulonglong)param_1->m_DisplayWidth;
   uVar6 = (ulonglong)local_920.ScaledOutputWidth;
   uVar5 = (uint)local_920.ScalerSourceRect.x2 - uVar4;
   if (uVar7 != uVar3) {
@@ -1186,21 +1150,21 @@ void D3D::SetupScaler(CDevice *param_1,ulong param_2,ulong param_3,
       uVar5 = uVar7;
     }
   }
-  uVar9 = (uVar8 & 0xffff) << 0x10 | uVar9 & 0xffffffff0000ffff;
-  uVar8 = (uVar6 & 0xffff) << 0x10;
+  uVar8 = ((ulonglong)param_2 & 0xffff) << 0x10 | (longlong)(int)param_3 & 0xffffffff0000ffffU;
+  uVar3 = (uVar6 & 0xffff) << 0x10;
   local_92c[0] = local_920.VerticalFilterType;
   uVar6 = ((uVar7 - uVar6 & 0xffffffff) >> 1 & 0xffff) << 0x10 |
-          ((ulonglong)this->m_DisplayHeight - (ulonglong)local_920.ScaledOutputHeight & 0xffffffff)
-          >> 1 & 0xffff;
-  InternalScalerSetup(this,(uint)(uVar4 << 0x10) | local_920.ScalerSourceRect.y1 & 0xffffU,
+          ((ulonglong)param_1->m_DisplayHeight - (ulonglong)local_920.ScaledOutputHeight &
+          0xffffffff) >> 1 & 0xffff;
+  InternalScalerSetup(param_1,(uint)(uVar4 << 0x10) | local_920.ScalerSourceRect.y1 & 0xffffU,
                       (uint)((uVar5 & 0xffffffff) << 0x10) |
                       local_920.ScalerSourceRect.y2 - local_920.ScalerSourceRect.y1 & 0xffffU,
                       (ulong)uVar6,
-                      (uint)((ulonglong)local_920.ScaledOutputHeight & 0xffff) | (uint)uVar8,
-                      (ulong)uVar9,local_92c,&local_920.VerticalFilterParameters,in_stack_fffff668,
+                      (uint)((ulonglong)local_920.ScaledOutputHeight & 0xffff) | (uint)uVar3,
+                      (ulong)uVar8,local_92c,&local_920.VerticalFilterParameters,in_stack_fffff668,
                       in_stack_fffff66c,in_stack_fffff670);
   RtlFillMemoryUlong(auStack_8e0,800,0xffffffff80000000);
-  puVar1 = CDevice::BeginRingBig(this,0xdc);
+  puVar1 = CDevice::BeginRingBig(param_1,0xdc);
   iVar2 = VdInitializeScalerCommandBuffer
                     (((ulonglong)(uint)local_920.ScalerSourceRect.x1 & 0xffff) << 0x10 |
                      (ulonglong)(uint)local_920.ScalerSourceRect.y1 & 0xffffffff0000ffff,
@@ -1208,12 +1172,11 @@ void D3D::SetupScaler(CDevice *param_1,ulong param_2,ulong param_3,
                       (ulonglong)(uint)local_920.ScalerSourceRect.x1 & 0xffff) << 0x10 |
                      (ulonglong)(uint)local_920.ScalerSourceRect.y2 -
                      (ulonglong)(uint)local_920.ScalerSourceRect.y1 & 0xffffffff0000ffff,uVar6,
-                     (ulonglong)local_920.ScaledOutputHeight & 0xffff | uVar8,uVar9,local_92c[0],
+                     (ulonglong)local_920.ScaledOutputHeight & 0xffff | uVar3,uVar8,local_92c[0],
                      &local_920.VerticalFilterParameters,local_920.HorizontalFilterType);
   memcpy();
-  *(ulong **)&this->field_0x30 = puVar1 + iVar2;
-  puVar1 = CDevice::KickOff(this);
-  __restgprlr_25(puVar1);
+  *(ulong **)&param_1->field_0x30 = puVar1 + iVar2;
+  CDevice::KickOff(param_1);
   return;
 }
 
@@ -1253,61 +1216,63 @@ void D3D::ConvertScalerParametersInternal
 
 // 8288DC70  SendScalerNotification  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/scaler.cpp:1242)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 
 void D3D::SendScalerNotification
                (CDevice *param_1,ulong param_2,ulong param_3,_D3DPRIVATE_SCALER_PARAMETERS *param_4)
 
 {
-  CDevice *pCVar1;
   _D3DPRIVATE_SCALER_PARAMETERS _Stack_b0;
   undefined2 local_70;
   undefined2 local_6e;
   undefined2 local_6c;
   undefined2 local_6a;
   
-  pCVar1 = (CDevice *)__savegprlr_28(param_1);
-  InitializeDefaultScalerParameters(pCVar1,param_2,param_3,param_4,&_Stack_b0,0);
+  InitializeDefaultScalerParameters(param_1,param_2,param_3,param_4,&_Stack_b0,0);
   local_70 = (undefined2)param_2;
   local_6e = (undefined2)param_3;
-  local_6c = (undefined2)pCVar1->m_DisplayWidth;
-  local_6a = (undefined2)pCVar1->m_DisplayHeight;
+  local_6c = (undefined2)param_1->m_DisplayWidth;
+  local_6a = (undefined2)param_1->m_DisplayHeight;
   memcpy();
   VdCallGraphicsNotificationRoutines(1,&local_70);
-  __restgprlr_28();
   return;
 }
 
 
 // 8288F8D8  D3DDevice_SetScalerParametersInternal  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/scaler.cpp:1276)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 
 void D3DDevice_SetScalerParametersInternal
                (D3DDevice *param_1,_D3DPRIVATE_SCALER_PARAMETERS *param_2)
 
 {
-  D3DBaseTexture *pDVar1;
-  CDevice *pCVar2;
-  int iVar3;
-  uint uVar4;
-  uint uVar5;
+  int iVar1;
+  int iVar2;
+  ulong uVar3;
+  ulong uVar4;
   
-  pCVar2 = (CDevice *)__savegprlr_27(param_1,param_2);
-  pDVar1 = pCVar2->m_pAutoFrontBuffer;
-  if (pDVar1 == (D3DBaseTexture *)0x0) {
-    uVar5 = (pCVar2->m_PresentParameters).BackBufferWidth;
-    uVar4 = (pCVar2->m_PresentParameters).BackBufferHeight;
+  iVar1 = *(int *)((int)&param_1[1].m_Constants.field1_0x300 + 0x894);
+  if (iVar1 == 0) {
+    uVar4 = *(ulong *)((int)&param_1[1].m_Constants.field1_0x300 + 0x390);
+    uVar3 = *(ulong *)((int)&param_1[1].m_Constants.field1_0x300 + 0x394);
   }
   else {
-    iVar3 = ((pDVar1->Format).dword[3] >> 0x1e & 2) + 1;
-    uVar5 = ((pDVar1->Format).dword[2] & 0x1fff) + iVar3;
-    uVar4 = ((pDVar1->Format).dword[2] >> 0xd & 0x1fff) + iVar3;
+    iVar2 = (*(uint *)(iVar1 + 0x28) >> 0x1e & 2) + 1;
+    uVar4 = (*(uint *)(iVar1 + 0x24) & 0x1fff) + iVar2;
+    uVar3 = (*(uint *)(iVar1 + 0x24) >> 0xd & 0x1fff) + iVar2;
   }
   memcpy();
-  pCVar2->m_ScalerUpdatePending = true;
-  D3D::SendScalerNotification(pCVar2,uVar5,uVar4,&pCVar2->m_TitleScalerParameters);
-  __restgprlr_27();
+  *(byte *)((int)&param_1[1].m_ReferenceCount + 2) =
+       *(byte *)((int)&param_1[1].m_ReferenceCount + 2) | 0x10;
+  D3D::SendScalerNotification
+            ((CDevice *)param_1,uVar4,uVar3,
+             (_D3DPRIVATE_SCALER_PARAMETERS *)
+             ((int)&param_1[1].m_Constants.field1_0x300._s_1.VertexShaderF[0x44].field0_0x0 + 4));
   return;
 }
 

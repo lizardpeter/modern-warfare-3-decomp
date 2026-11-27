@@ -29,59 +29,57 @@ bdUnreliableReceiveWindow::~bdUnreliableReceiveWindow(bdUnreliableReceiveWindow 
 
 // 82938538  add  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdconnection/bdwindow/bdunreliablereceivewindow.cpp:24)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 bool __thiscall
 bdUnreliableReceiveWindow::add(bdUnreliableReceiveWindow *this,bdReference<bdDataChunk> param_1)
 
 {
-  int iVar1;
-  ushort uVar2;
-  bool bVar3;
-  undefined1 uVar4;
-  bdSequenceNumber *pbVar5;
-  bdDataChunk *pbStack0000001c;
+  ushort uVar1;
+  bool bVar2;
+  bdSequenceNumber *pbVar3;
+  bdReference<bdDataChunk> bStack0000001c;
   bdSequenceNumber local_30 [12];
   
-  iVar1 = __savegprlr_28(this);
-  pbVar5 = (bdSequenceNumber *)(iVar1 + 4);
-  pbStack0000001c = param_1.m_ptr;
-  uVar2 = bdDataChunk::getSequenceNumber((bdDataChunk *)(param_1.m_ptr)->_padding_);
-  bdSequenceNumber::bdSequenceNumber(local_30,pbVar5,(uint)uVar2,0x10);
-  bVar3 = bdSequenceNumber::operator>(local_30,pbVar5);
-  if (bVar3) {
+  pbVar3 = &this->m_seqNumber;
+  bStack0000001c.m_ptr = param_1.m_ptr;
+  uVar1 = bdDataChunk::getSequenceNumber((bdDataChunk *)(param_1.m_ptr)->_padding_);
+  bdSequenceNumber::bdSequenceNumber(local_30,pbVar3,(uint)uVar1,0x10);
+  bVar2 = bdSequenceNumber::operator>(local_30,pbVar3);
+  if (bVar2) {
     bdLinkedList<bdReference<bdDataChunk>_>::insertAfter
-              ((bdLinkedList<bdReference<bdDataChunk>_> *)(iVar1 + 8),*(void **)(iVar1 + 0xc),
+              (&(this->m_recvQueue).m_list,(this->m_recvQueue).m_list.m_tail,
                (bdReference<bdDataChunk> *)param_1.m_ptr);
-    pbVar5->m_seqNum = local_30[0].m_seqNum;
+    pbVar3->m_seqNum = local_30[0].m_seqNum;
   }
   bdReference<bdDataChunk>::~bdReference<bdDataChunk>((bdReference<bdDataChunk> *)param_1.m_ptr);
-  uVar4 = __restgprlr_28(1);
-  return (bool)uVar4;
+  return true;
 }
 
 
 // 82938368  getNextToRead  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdconnection/bdwindow/bdunreliablereceivewindow.cpp:38)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 bdReference<bdDataChunk> __thiscall
 bdUnreliableReceiveWindow::getNextToRead(bdUnreliableReceiveWindow *this)
 
 {
-  bdReference<bdDataChunk> *this_00;
   bdReference<bdDataChunk> *pbVar1;
-  bdDataChunk *pbVar2;
   int in_r4;
-  bdReference<bdDataChunk> *pbStack00000014;
+  bdUnreliableReceiveWindow *pbStack00000014;
   
-  this_00 = (bdReference<bdDataChunk> *)__savegprlr_29(this);
-  this_00->m_ptr = (bdDataChunk *)0x0;
-  pbStack00000014 = this_00;
+  this->_padding_ = 0;
   if (*(int *)(in_r4 + 0x10) != 0) {
+    pbStack00000014 = this;
     pbVar1 = bdQueue<bdReference<bdDataChunk>_>::peek
                        ((bdQueue<bdReference<bdDataChunk>_> *)(in_r4 + 8));
-    bdReference<bdDataChunk>::operator=(this_00,pbVar1);
+    bdReference<bdDataChunk>::operator=((bdReference<bdDataChunk> *)this,pbVar1);
     bdQueue<bdReference<bdDataChunk>_>::dequeue((bdQueue<bdReference<bdDataChunk>_> *)(in_r4 + 8));
   }
-  pbVar2 = (bdDataChunk *)__restgprlr_29(this_00);
-  return (bdReference<bdDataChunk>)pbVar2;
+  return (bdReference<bdDataChunk>)(bdDataChunk *)this;
 }
 
 

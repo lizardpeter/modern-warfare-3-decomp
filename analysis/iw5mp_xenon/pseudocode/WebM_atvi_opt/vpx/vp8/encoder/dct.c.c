@@ -104,15 +104,14 @@ void vp8_short_fdct4x4_c(short *param_1,short *param_2,int param_3)
 
 // 8281EC60  vp8_short_fdct8x4_c  (WebM_atvi_opt/vpx/vp8/encoder/dct.c:64)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void vp8_short_fdct8x4_c(short *param_1,short *param_2,int param_3)
 
 {
-  short *psVar1;
-  
-  psVar1 = (short *)__savegprlr_29(param_1);
-  vp8_short_fdct4x4_c(psVar1,param_2,param_3);
-  vp8_short_fdct4x4_c(psVar1 + 4,param_2 + 0x10,param_3);
-  __restgprlr_29();
+  vp8_short_fdct4x4_c(param_1,param_2,param_3);
+  vp8_short_fdct4x4_c(param_1 + 4,param_2 + 0x10,param_3);
   return;
 }
 

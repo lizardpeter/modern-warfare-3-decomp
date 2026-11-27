@@ -2,6 +2,10 @@
 
 // 82417A10  FX_DrawDebug3D  (EffectsCore/fx_debug3D.cpp:19)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_19 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_19 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -13,18 +17,17 @@ void FX_DrawDebug3D(LocalClientNum_t param_1,float param_2)
   float fVar2;
   float fVar3;
   float fVar4;
-  LocalClientNum_t LVar5;
-  FxSystem *pFVar6;
-  cg_s *pcVar7;
-  FxEffect *pFVar8;
-  FxBolt *pFVar9;
-  DObj *pDVar10;
-  longlong lVar11;
-  char *pcVar12;
-  undefined8 uVar13;
+  FxSystem *pFVar5;
+  cg_s *pcVar6;
+  FxEffect *pFVar7;
+  FxBolt *pFVar8;
+  DObj *pDVar9;
+  longlong lVar10;
+  char *pcVar11;
+  undefined8 uVar12;
+  uint uVar13;
   uint uVar14;
-  uint uVar15;
-  double extraout_f1;
+  double dVar15;
   double dVar16;
   double dVar17;
   double dVar18;
@@ -38,7 +41,6 @@ void FX_DrawDebug3D(LocalClientNum_t param_1,float param_2)
   double dVar26;
   double dVar27;
   double dVar28;
-  double dVar29;
   float local_140;
   float local_13c;
   float local_138;
@@ -52,155 +54,148 @@ void FX_DrawDebug3D(LocalClientNum_t param_1,float param_2)
   char acStack_100 [64];
   float afStack_c0 [48];
   
-  __savegprlr_27((double)param_2,param_1);
-  LVar5 = __savefpr_19();
-  dVar28 = extraout_f1;
-  pFVar6 = FX_GetSystemConst(LVar5);
-  if (pFVar6 == (FxSystem *)0x0) {
+  dVar27 = (double)param_2;
+  pFVar5 = FX_GetSystemConst(param_1);
+  if (pFVar5 == (FxSystem *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_debug3D.cpp",
                     0x25,0,"%s");
   }
-  dVar27 = 1.0;
+  dVar26 = 1.0;
   local_120[0] = 1.0;
   local_120[1] = 1.0;
   local_120[2] = 1.0;
   local_120[3] = 0.75;
-  pcVar7 = CG_GetLocalClientGlobals(LVar5);
-  if (pcVar7 == (cg_s *)0x0) {
+  pcVar6 = CG_GetLocalClientGlobals(param_1);
+  if (pcVar6 == (cg_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_debug3D.cpp",
                     0x29,0,"%s");
   }
-  uVar13 = 0;
-  lVar11 = 0;
-  dVar23 = (double)(pcVar7->refdef).view.org[0];
-  dVar22 = (double)(pcVar7->refdef).view.org[1];
-  dVar21 = (double)(pcVar7->refdef).view.org[2];
-  local_120[4] = pcVar7->refdefViewAngles[0];
-  local_10c = pcVar7->refdefViewAngles[1];
-  local_108 = pcVar7->refdefViewAngles[2];
+  uVar12 = 0;
+  lVar10 = 0;
+  dVar22 = (double)(pcVar6->refdef).view.org[0];
+  dVar21 = (double)(pcVar6->refdef).view.org[1];
+  dVar20 = (double)(pcVar6->refdef).view.org[2];
+  local_120[4] = pcVar6->refdefViewAngles[0];
+  local_10c = pcVar6->refdefViewAngles[1];
+  local_108 = pcVar6->refdefViewAngles[2];
   AngleVectors(local_120 + 4,&local_130,(float *)0x0,(float *)0x0);
-  uVar14 = 0xffffffff;
-  dVar20 = 0.8191519975662231;
-  dVar17 = (double)SQRT(local_130 * local_130 + local_128 * local_128 + local_12c * local_12c);
-  dVar18 = dVar27;
-  if (-dVar17 < 0.0) {
-    dVar18 = dVar17;
+  uVar13 = 0xffffffff;
+  dVar19 = 0.8191519975662231;
+  dVar16 = (double)SQRT(local_130 * local_130 + local_128 * local_128 + local_12c * local_12c);
+  dVar17 = dVar26;
+  if (-dVar16 < 0.0) {
+    dVar17 = dVar16;
   }
-  fVar1 = (float)(dVar27 / dVar18);
+  fVar1 = (float)(dVar26 / dVar17);
   local_130 = local_130 * fVar1;
   local_12c = local_12c * fVar1;
   local_128 = local_128 * fVar1;
-  FX_WaitEnterReadSystemLock(pFVar6->lock);
-  uVar15 = pFVar6->firstActiveEffect;
-  if (uVar15 != pFVar6->firstNewEffect) {
-    dVar17 = 0.0017500000540167093;
-    dVar18 = 0.05000000074505806;
-    dVar19 = 10.0;
+  FX_WaitEnterReadSystemLock(pFVar5->lock);
+  uVar14 = pFVar5->firstActiveEffect;
+  if (uVar14 != pFVar5->firstNewEffect) {
+    dVar16 = 0.0017500000540167093;
+    dVar17 = 0.05000000074505806;
+    dVar18 = 10.0;
     do {
-      local_134 = uVar15;
-      pFVar8 = FX_EffectFromHandleConst(pFVar6,pFVar6->allEffectHandles[uVar15 & 0x3ff]);
-      local_140 = (pFVar8->frameNow).origin[0];
-      fVar1 = (float)((double)local_140 - dVar23);
-      local_13c = (pFVar8->frameNow).origin[1];
-      fVar3 = (float)((double)local_13c - dVar22);
-      local_138 = (pFVar8->frameNow).origin[2];
-      fVar4 = (float)((double)local_138 - dVar21);
-      dVar29 = (double)SQRT(fVar1 * fVar1 + fVar4 * fVar4 + fVar3 * fVar3);
-      dVar24 = dVar27;
-      if (-dVar29 < 0.0) {
-        dVar24 = dVar29;
-      }
-      fVar2 = (float)(dVar27 / dVar24);
-      dVar26 = (double)(fVar2 * fVar1);
-      dVar25 = (double)(fVar3 * fVar2);
-      dVar24 = (double)(fVar4 * fVar2);
-      if (dVar29 <= dVar28) {
-        QuatToAxis((pFVar8->frameNow).quat,(float (*) [3])afStack_c0);
-        dVar16 = dVar18;
-        if (dVar19 <= dVar29) {
-          dVar16 = (double)(float)(dVar29 * dVar17);
-        }
-        lVar11 = ZEXT48(&stack0x00000000) - 0x120;
-        CL_AddOrientedDebugStar
-                  (&local_140,(float (*) [3])afStack_c0,(float *)lVar11,(float)dVar16,(int)uVar13,1)
-        ;
-        dVar24 = (double)(float)(dVar24 * (double)local_128 +
-                                (double)(float)(dVar25 * (double)local_12c +
-                                               (double)(float)(dVar26 * (double)local_130)));
-        if (dVar20 < dVar24) {
-          dVar20 = dVar24;
-          uVar14 = uVar15;
-        }
-      }
-      pcVar12 = (char *)lVar11;
-      uVar15 = uVar15 + 1;
-    } while (uVar15 != pFVar6->firstNewEffect);
-    if (uVar14 != 0xffffffff) {
       local_134 = uVar14;
-      pFVar8 = FX_EffectFromHandleConst(pFVar6,pFVar6->allEffectHandles[uVar14 & 0x3ff]);
-      local_140 = (pFVar8->frameNow).origin[0];
-      local_13c = (pFVar8->frameNow).origin[1];
-      local_138 = (pFVar8->frameNow).origin[2];
-      dVar28 = (double)SQRT((float)(dVar23 - (double)local_140) *
-                            (float)(dVar23 - (double)local_140) +
-                            (float)(dVar21 - (double)local_138) *
-                            (float)(dVar21 - (double)local_138) +
-                            (float)(dVar22 - (double)local_13c) *
-                            (float)(dVar22 - (double)local_13c));
-      if (dVar19 <= dVar28) {
-        dVar18 = (double)(float)(dVar28 * dVar17);
+      pFVar7 = FX_EffectFromHandleConst(pFVar5,pFVar5->allEffectHandles[uVar14 & 0x3ff]);
+      local_140 = (pFVar7->frameNow).origin[0];
+      fVar1 = (float)((double)local_140 - dVar22);
+      local_13c = (pFVar7->frameNow).origin[1];
+      fVar3 = (float)((double)local_13c - dVar21);
+      local_138 = (pFVar7->frameNow).origin[2];
+      fVar4 = (float)((double)local_138 - dVar20);
+      dVar28 = (double)SQRT(fVar1 * fVar1 + fVar4 * fVar4 + fVar3 * fVar3);
+      dVar23 = dVar26;
+      if (-dVar28 < 0.0) {
+        dVar23 = dVar28;
       }
-      CL_AddDebugString(&local_140,local_120,(float)dVar18,pcVar12,(int)pFVar8->def->name,0);
-      dVar28 = 12.0;
-      if (pFVar8->bolt != 0xff) {
-        pFVar9 = FX_PoolFromHandle_Generic<FxBolt>(pFVar6->bolts,pFVar8->bolt);
-        uVar14 = pFVar9->dobjHandle;
-        if (uVar14 != 0xfff) {
-          pDVar10 = Com_GetClientDObj(uVar14,LVar5);
-          DObjGetBoneName(pDVar10,pFVar9->boneIndex);
-          dVar27 = (double)(float)(dVar18 * dVar28);
-          local_138 = (float)((double)local_138 - dVar27);
-          pcVar12 = "Tag: %s";
-          Com_sprintf(acStack_100,0x40,"Tag: %s");
-          CL_AddDebugString(&local_140,local_120,(float)dVar18,pcVar12,(int)acStack_100,0);
-          local_138 = (float)((double)local_138 - dVar27);
-          pcVar12 = "Ent# %i";
-          Com_sprintf(acStack_100,0x40,"Ent# %i");
-          CL_AddDebugString(&local_140,local_120,(float)dVar18,pcVar12,(int)acStack_100,0);
+      fVar2 = (float)(dVar26 / dVar23);
+      dVar25 = (double)(fVar2 * fVar1);
+      dVar24 = (double)(fVar3 * fVar2);
+      dVar23 = (double)(fVar4 * fVar2);
+      if (dVar28 <= dVar27) {
+        QuatToAxis((pFVar7->frameNow).quat,(float (*) [3])afStack_c0);
+        dVar15 = dVar17;
+        if (dVar18 <= dVar28) {
+          dVar15 = (double)(float)(dVar28 * dVar16);
+        }
+        lVar10 = ZEXT48(&stack0x00000000) - 0x120;
+        CL_AddOrientedDebugStar
+                  (&local_140,(float (*) [3])afStack_c0,(float *)lVar10,(float)dVar15,(int)uVar12,1)
+        ;
+        dVar23 = (double)(float)(dVar23 * (double)local_128 +
+                                (double)(float)(dVar24 * (double)local_12c +
+                                               (double)(float)(dVar25 * (double)local_130)));
+        if (dVar19 < dVar23) {
+          dVar19 = dVar23;
+          uVar13 = uVar14;
         }
       }
-      local_138 = -(float)(dVar18 * dVar28 - (double)local_138);
-      pcVar12 = "Distance: %.2f";
+      pcVar11 = (char *)lVar10;
+      uVar14 = uVar14 + 1;
+    } while (uVar14 != pFVar5->firstNewEffect);
+    if (uVar13 != 0xffffffff) {
+      local_134 = uVar13;
+      pFVar7 = FX_EffectFromHandleConst(pFVar5,pFVar5->allEffectHandles[uVar13 & 0x3ff]);
+      local_140 = (pFVar7->frameNow).origin[0];
+      local_13c = (pFVar7->frameNow).origin[1];
+      local_138 = (pFVar7->frameNow).origin[2];
+      dVar27 = (double)SQRT((float)(dVar22 - (double)local_140) *
+                            (float)(dVar22 - (double)local_140) +
+                            (float)(dVar20 - (double)local_138) *
+                            (float)(dVar20 - (double)local_138) +
+                            (float)(dVar21 - (double)local_13c) *
+                            (float)(dVar21 - (double)local_13c));
+      if (dVar18 <= dVar27) {
+        dVar17 = (double)(float)(dVar27 * dVar16);
+      }
+      CL_AddDebugString(&local_140,local_120,(float)dVar17,pcVar11,(int)pFVar7->def->name,0);
+      dVar27 = 12.0;
+      if (pFVar7->bolt != 0xff) {
+        pFVar8 = FX_PoolFromHandle_Generic<FxBolt>(pFVar5->bolts,pFVar7->bolt);
+        uVar13 = pFVar8->dobjHandle;
+        if (uVar13 != 0xfff) {
+          pDVar9 = Com_GetClientDObj(uVar13,param_1);
+          DObjGetBoneName(pDVar9,pFVar8->boneIndex);
+          dVar26 = (double)(float)(dVar17 * dVar27);
+          local_138 = (float)((double)local_138 - dVar26);
+          pcVar11 = "Tag: %s";
+          Com_sprintf(acStack_100,0x40,"Tag: %s");
+          CL_AddDebugString(&local_140,local_120,(float)dVar17,pcVar11,(int)acStack_100,0);
+          local_138 = (float)((double)local_138 - dVar26);
+          pcVar11 = "Ent# %i";
+          Com_sprintf(acStack_100,0x40,"Ent# %i");
+          CL_AddDebugString(&local_140,local_120,(float)dVar17,pcVar11,(int)acStack_100,0);
+        }
+      }
+      local_138 = -(float)(dVar17 * dVar27 - (double)local_138);
+      pcVar11 = "Distance: %.2f";
       Com_sprintf(acStack_100,0x40,"Distance: %.2f");
-      CL_AddDebugString(&local_140,local_120,(float)dVar18,pcVar12,(int)acStack_100,0);
+      CL_AddDebugString(&local_140,local_120,(float)dVar17,pcVar11,(int)acStack_100,0);
     }
   }
-  FX_ExitReadSystemLock(pFVar6->lock);
-  __restfpr_19();
-  __restgprlr_27();
+  FX_ExitReadSystemLock(pFVar5->lock);
   return;
 }
 
 
 // 824178C8  FX_EffectFromHandleConst  (EffectsCore/fx_system_handle.h:26)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 FxEffect * FX_EffectFromHandleConst(FxSystem *param_1,ushort param_2)
 
 {
   ulonglong uVar1;
-  int iVar2;
-  FxEffect *pFVar3;
-  ulonglong uVar4;
   
-  uVar4 = (ulonglong)(short)param_2;
-  iVar2 = __savegprlr_29(param_1);
-  if (iVar2 == 0) {
+  if (param_1 == (FxSystem *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\fx_system_handle.h"
                     ,0x1b,0,"%s");
   }
-  uVar1 = uVar4 & 0xffff;
+  uVar1 = (ulonglong)param_2;
   if (uVar1 < 0x9000) {
     if (uVar1 == (uVar1 / 0x24) * 0x24) goto LAB_82417974;
   }
@@ -208,8 +203,7 @@ FxEffect * FX_EffectFromHandleConst(FxSystem *param_1,ushort param_2)
   MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\fx_system_handle.h",
                   0x1c,0,"%s\n\t%s");
 LAB_82417974:
-  pFVar3 = (FxEffect *)__restgprlr_29((uVar4 & 0xffff) * 4 + (ulonglong)*(uint *)(iVar2 + 0x10));
-  return pFVar3;
+  return (FxEffect *)(param_1->effects->firstElemHandle + (uint)param_2 * 2 + -4);
 }
 
 

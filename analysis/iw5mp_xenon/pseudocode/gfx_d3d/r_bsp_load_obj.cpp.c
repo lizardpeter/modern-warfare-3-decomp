@@ -67,175 +67,175 @@ bool R_CullBoxFromLightRegionHull(GfxLightRegionHull *param_1,float *param_2,flo
 
 // 8271D8B8  R_CullBoxFromLightRegion  (gfx_d3d/r_primarylights_cull.h:123)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 bool R_CullBoxFromLightRegion(GfxLightRegion *param_1,float *param_2,Bounds *param_3)
 
 {
   uint uVar1;
-  uint uVar2;
-  uint *puVar3;
-  undefined1 uVar4;
-  bool bVar5;
-  uint uVar6;
-  int iVar7;
+  GfxLightRegionHull *pGVar2;
+  bool bVar3;
+  uint uVar4;
+  int iVar5;
   float local_40;
   float local_3c;
   float local_38;
   
-  puVar3 = (uint *)__savegprlr_27(param_1);
-  uVar1 = *puVar3;
+  uVar1 = param_1->hullCount;
   if (uVar1 == 0) {
-LAB_8271d8d0:
-    uVar4 = __restgprlr_27(0);
-    return (bool)uVar4;
+    return false;
   }
-  uVar6 = 0;
+  uVar4 = 0;
   local_40 = param_3->midPoint[0] - *param_2;
   local_3c = param_3->midPoint[1] - param_2[1];
   local_38 = param_3->midPoint[2] - param_2[2];
   if (uVar1 != 0) {
-    uVar2 = puVar3[1];
-    iVar7 = 0;
+    pGVar2 = param_1->hulls;
+    iVar5 = 0;
     do {
-      bVar5 = R_CullBoxFromLightRegionHull
-                        ((GfxLightRegionHull *)(iVar7 + uVar2),&local_40,param_3->halfSize);
-      if (!bVar5) goto LAB_8271d8d0;
-      uVar6 = uVar6 + 1;
-      iVar7 = iVar7 + 0x50;
-    } while (uVar6 < uVar1);
+      bVar3 = R_CullBoxFromLightRegionHull
+                        ((GfxLightRegionHull *)((int)pGVar2->kdopMidPoint + iVar5),&local_40,
+                         param_3->halfSize);
+      if (!bVar3) {
+        return false;
+      }
+      uVar4 = uVar4 + 1;
+      iVar5 = iVar5 + 0x50;
+    } while (uVar4 < uVar1);
   }
-  uVar4 = __restgprlr_27(1);
-  return (bool)uVar4;
+  return true;
 }
 
 
 // 8271D960  R_ApproximateSunLightParseParamsShadowedColor  (gfx_d3d/r_bsp_load_obj.cpp:5951)
+
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 
 void R_ApproximateSunLightParseParamsShadowedColor(SunLightParseParams *param_1,float *param_2)
 
 {
   float fVar1;
   float fVar2;
-  int iVar3;
-  float *pfVar4;
+  float *pfVar3;
+  double dVar4;
   double dVar5;
   double dVar6;
   double dVar7;
-  double dVar8;
-  float fVar9;
+  float fVar8;
   
-  iVar3 = __savegprlr_29(param_1);
-  dVar7 = 0.0;
-  dVar6 = dVar7;
-  dVar8 = dVar7;
-  if (*(float *)(iVar3 + 0x40) != 0.0) {
-    pfVar4 = (float *)(iVar3 + 0x44);
-    fVar9 = ColorNormalize(pfVar4,pfVar4);
-    dVar6 = dVar7;
-    dVar8 = dVar7;
-    if ((double)fVar9 != dVar7) {
-      fVar9 = *(float *)(iVar3 + 0x40);
-      dVar7 = (double)(*(float *)(iVar3 + 0x48) * fVar9);
-      dVar6 = (double)(fVar9 * *pfVar4);
-      dVar8 = (double)(*(float *)(iVar3 + 0x4c) * fVar9);
+  dVar6 = 0.0;
+  dVar5 = dVar6;
+  dVar7 = dVar6;
+  if (param_1->ambientScale != 0.0) {
+    pfVar3 = param_1->ambientColor;
+    fVar8 = ColorNormalize(pfVar3,pfVar3);
+    dVar5 = dVar6;
+    dVar7 = dVar6;
+    if ((double)fVar8 != dVar6) {
+      fVar8 = param_1->ambientScale;
+      dVar6 = (double)(param_1->ambientColor[1] * fVar8);
+      dVar5 = (double)(fVar8 * *pfVar3);
+      dVar7 = (double)(param_1->ambientColor[2] * fVar8);
     }
   }
-  if (*(char *)(iVar3 + 0x70) == '\0') {
-    fVar9 = *(float *)(iVar3 + 0x58);
-    fVar1 = *(float *)(iVar3 + 0x5c);
-    fVar2 = *(float *)(iVar3 + 0x60);
+  if (param_1->skyColorHasBeenSet == false) {
+    fVar8 = param_1->sunColor[0];
+    fVar1 = param_1->sunColor[1];
+    fVar2 = param_1->sunColor[2];
   }
   else {
-    fVar9 = *(float *)(iVar3 + 100);
-    fVar1 = *(float *)(iVar3 + 0x68);
-    fVar2 = *(float *)(iVar3 + 0x6c);
+    fVar8 = param_1->skyColor[0];
+    fVar1 = param_1->skyColor[1];
+    fVar2 = param_1->skyColor[2];
   }
-  dVar5 = (double)*(float *)(iVar3 + 0x50);
-  *param_2 = (float)(dVar5 * (double)fVar9 + dVar6);
-  param_2[1] = (float)((double)fVar1 * dVar5 + dVar7);
-  param_2[2] = (float)((double)fVar2 * dVar5 + dVar8);
-  __restgprlr_29();
+  dVar4 = (double)param_1->skyLight;
+  *param_2 = (float)(dVar4 * (double)fVar8 + dVar5);
+  param_2[1] = (float)((double)fVar1 * dVar4 + dVar6);
+  param_2[2] = (float)((double)fVar2 * dVar4 + dVar7);
   return;
 }
 
 
 // 8271DA20  R_InitPrimaryLights  (gfx_d3d/r_bsp_load_obj.cpp:5970)
 
+/* WARNING: Function: __savegprlr_18 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_18 replaced with injection: xenon_save_restore */
+
 void R_InitPrimaryLights(GfxLight *param_1)
 
 {
   char *pcVar1;
   ComPrimaryLight *pCVar2;
-  int iVar3;
-  GfxLightDef *pGVar4;
-  int iVar5;
-  uint uVar6;
-  undefined4 *puVar7;
+  GfxLightDef *pGVar3;
+  int iVar4;
+  uint uVar5;
+  float *pfVar6;
+  double dVar7;
   double dVar8;
   double dVar9;
-  double dVar10;
   
-  iVar3 = __savegprlr_18(param_1);
   if (rgp.world == (GfxWorld *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_bsp_load_obj.cpp",
                     0x1757,0,"%s");
   }
-  uVar6 = 0;
+  uVar5 = 0;
   if ((rgp.world)->primaryLightCount != 0) {
-    dVar9 = 1.0;
-    dVar10 = 0.0;
-    iVar5 = 0;
-    puVar7 = (undefined4 *)(iVar3 + 0xc);
+    dVar8 = 1.0;
+    dVar9 = 0.0;
+    iVar4 = 0;
+    pfVar6 = param_1->color + 2;
     do {
       if (comWorld.isInUse == 0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\../qcommon/com_bsp_api.h"
                         ,0x1f,0,"%s");
       }
-      if (comWorld.primaryLightCount <= uVar6) {
+      if (comWorld.primaryLightCount <= uVar5) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\../qcommon/com_bsp_api.h"
                         ,0x20,0,
                         "primaryLightIndex doesn\'t index comWorld.primaryLightCount\n\t%i not in [0, %i)"
                        );
       }
       pCVar2 = comWorld.primaryLights;
-      *(undefined1 *)(puVar7 + -3) =
-           *(undefined1 *)((int)(comWorld.primaryLights)->color + iVar5 + -4);
-      *(undefined1 *)((int)puVar7 + -0xb) = *(undefined1 *)((int)pCVar2->color + iVar5 + -3);
-      puVar7[-2] = *(undefined4 *)((int)pCVar2->color + iVar5);
-      puVar7[-1] = *(undefined4 *)((int)pCVar2->color + iVar5 + 4);
-      *puVar7 = *(undefined4 *)((int)pCVar2->color + iVar5 + 8);
-      puVar7[1] = *(undefined4 *)((int)pCVar2->dir + iVar5);
-      puVar7[2] = *(undefined4 *)((int)pCVar2->dir + iVar5 + 4);
-      puVar7[3] = *(undefined4 *)((int)pCVar2->dir + iVar5 + 8);
-      puVar7[4] = *(undefined4 *)((int)pCVar2->up + iVar5);
-      puVar7[5] = *(undefined4 *)((int)pCVar2->up + iVar5 + 4);
-      puVar7[6] = *(undefined4 *)((int)pCVar2->up + iVar5 + 8);
-      puVar7[7] = *(undefined4 *)((int)pCVar2->origin + iVar5);
-      puVar7[8] = *(undefined4 *)((int)pCVar2->origin + iVar5 + 4);
-      puVar7[9] = *(undefined4 *)((int)pCVar2->origin + iVar5 + 8);
-      puVar7[10] = *(undefined4 *)((int)pCVar2->origin + iVar5 + 0xc);
-      if ((*(char *)((int)pCVar2->color + iVar5 + -3) != '\0') &&
-         ((dVar8 = (double)*(float *)((int)pCVar2->origin + iVar5 + 0x10), dVar8 <= dVar10 ||
-          (dVar9 <= dVar8)))) {
+      ((GfxLight *)(pfVar6 + -3))->type =
+           *(uchar *)((int)(comWorld.primaryLights)->color + iVar4 + -4);
+      *(uchar *)((int)pfVar6 + -0xb) = *(uchar *)((int)pCVar2->color + iVar4 + -3);
+      pfVar6[-2] = *(float *)((int)pCVar2->color + iVar4);
+      pfVar6[-1] = *(float *)((int)pCVar2->color + iVar4 + 4);
+      *pfVar6 = *(float *)((int)pCVar2->color + iVar4 + 8);
+      pfVar6[1] = *(float *)((int)pCVar2->dir + iVar4);
+      pfVar6[2] = *(float *)((int)pCVar2->dir + iVar4 + 4);
+      pfVar6[3] = *(float *)((int)pCVar2->dir + iVar4 + 8);
+      pfVar6[4] = *(float *)((int)pCVar2->up + iVar4);
+      pfVar6[5] = *(float *)((int)pCVar2->up + iVar4 + 4);
+      pfVar6[6] = *(float *)((int)pCVar2->up + iVar4 + 8);
+      pfVar6[7] = *(float *)((int)pCVar2->origin + iVar4);
+      pfVar6[8] = *(float *)((int)pCVar2->origin + iVar4 + 4);
+      pfVar6[9] = *(float *)((int)pCVar2->origin + iVar4 + 8);
+      pfVar6[10] = *(float *)((int)pCVar2->origin + iVar4 + 0xc);
+      if ((*(char *)((int)pCVar2->color + iVar4 + -3) != '\0') &&
+         ((dVar7 = (double)*(float *)((int)pCVar2->origin + iVar4 + 0x10), dVar7 <= dVar9 ||
+          (dVar8 <= dVar7)))) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_bsp_load_obj.cpp"
                         ,0x1766,0,"%s\n\t(in->cosHalfFovOuter) = %g");
       }
-      puVar7[0xb] = *(undefined4 *)((int)pCVar2->origin + iVar5 + 0x10);
-      puVar7[0xc] = *(undefined4 *)((int)pCVar2->origin + iVar5 + 0x14);
-      puVar7[0xd] = (uint)*(byte *)((int)pCVar2->color + iVar5 + -2);
-      pcVar1 = *(char **)((int)pCVar2->origin + iVar5 + 0x24);
+      pfVar6[0xb] = *(float *)((int)pCVar2->origin + iVar4 + 0x10);
+      pfVar6[0xc] = *(float *)((int)pCVar2->origin + iVar4 + 0x14);
+      pfVar6[0xd] = (float)(uint)*(byte *)((int)pCVar2->color + iVar4 + -2);
+      pcVar1 = *(char **)((int)pCVar2->origin + iVar4 + 0x24);
       if (pcVar1 == (char *)0x0) {
-        puVar7[0xf] = 0;
+        pfVar6[0xf] = 0.0;
       }
       else {
-        pGVar4 = R_RegisterLightDef(pcVar1);
-        puVar7[0xf] = pGVar4;
+        pGVar3 = R_RegisterLightDef(pcVar1);
+        pfVar6[0xf] = (float)pGVar3;
       }
-      uVar6 = uVar6 + 1;
-      iVar5 = iVar5 + 0x50;
-      puVar7 = puVar7 + 0x13;
-    } while (uVar6 < (rgp.world)->primaryLightCount);
+      uVar5 = uVar5 + 1;
+      iVar4 = iVar4 + 0x50;
+      pfVar6 = pfVar6 + 0x13;
+    } while (uVar5 < (rgp.world)->primaryLightCount);
   }
-  __restgprlr_18();
   return;
 }
 
@@ -262,78 +262,75 @@ void R_AddShadowSurfaceToPrimaryLight(GfxWorld *param_1,uint param_2,uint param_
 
 // 8271DC40  R_ForEachPrimaryLightAffectingSurface  (gfx_d3d/r_bsp_load_obj.cpp:6017)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
+
 void R_ForEachPrimaryLightAffectingSurface
                (GfxWorld *param_1,GfxSurface *param_2,GfxSurfaceBounds *param_3,uint param_4,
                _func___cdecl_void_GfxWorld_ptr_uint_uint *param_5)
 
 {
   ulonglong uVar1;
-  GfxWorld *pGVar2;
-  ComPrimaryLight *pCVar3;
-  bool bVar4;
+  ComPrimaryLight *pCVar2;
+  bool bVar3;
+  ulonglong uVar4;
   ulonglong uVar5;
-  ulonglong uVar6;
+  longlong lVar6;
   longlong lVar7;
   longlong lVar8;
-  longlong lVar9;
+  ulonglong uVar9;
   longlong lVar10;
-  ulonglong uVar11;
-  longlong lVar12;
-  double dVar13;
+  double dVar11;
   
-  lVar8 = (longlong)(int)param_4;
-  lVar7 = (longlong)(int)param_3;
-  uVar5 = (ulonglong)(int)param_2;
+  lVar6 = (longlong)(int)param_3;
+  uVar4 = (ulonglong)(int)param_2;
   uVar1 = ZEXT48(&stack0x00000000);
-  pGVar2 = (GfxWorld *)__savegprlr_25(param_1);
-  if ((*(byte *)(*(int *)((int)uVar5 + 0x10) + 4) & 2) != 0) {
-    (*param_5)(pGVar2,(uint)*(byte *)((int)uVar5 + 0x16),(uint)lVar8);
-    __restgprlr_25();
+  if (((param_2->material->info).gameFlags & 2) != 0) {
+    (*param_5)(param_1,(uint)(param_2->laf).fields.primaryLightIndex,param_4);
     return;
   }
-  lVar9 = uVar1 - 100;
-  lVar10 = lVar7 + -4;
-  lVar12 = 6;
+  lVar7 = uVar1 - 100;
+  lVar8 = lVar6 + -4;
+  lVar10 = 6;
   do {
-    lVar10 = lVar10 + 4;
-    lVar9 = lVar9 + 4;
-    *(undefined4 *)lVar9 = *(undefined4 *)lVar10;
-    lVar12 = lVar12 + -1;
-  } while (lVar12 != 0);
-  uVar11 = (ulonglong)pGVar2->lastSunPrimaryLightIndex + 1;
-  if ((uVar11 & 0xffffffff) < (ulonglong)pGVar2->primaryLightCount) {
-    lVar10 = (uVar11 & 0x1fffffff) << 3;
-    dVar13 = 0.0;
+    lVar8 = lVar8 + 4;
+    lVar7 = lVar7 + 4;
+    *(undefined4 *)lVar7 = *(undefined4 *)lVar8;
+    lVar10 = lVar10 + -1;
+  } while (lVar10 != 0);
+  uVar9 = (ulonglong)param_1->lastSunPrimaryLightIndex + 1;
+  if ((uVar9 & 0xffffffff) < (ulonglong)param_1->primaryLightCount) {
+    lVar8 = (uVar9 & 0x1fffffff) << 3;
+    dVar11 = 0.0;
     do {
-      pCVar3 = Com_GetPrimaryLight((uint)uVar11);
-      if ((pCVar3->type != '\x02') || ((double)pCVar3->cosHalfFovExpanded < dVar13)) {
-        lVar7 = uVar1 - 0x60;
-        bVar4 = CullBoxFromSphere(pCVar3->origin,pCVar3->radius,(Bounds *)uVar5);
+      pCVar2 = Com_GetPrimaryLight((uint)uVar9);
+      if ((pCVar2->type != '\x02') || ((double)pCVar2->cosHalfFovExpanded < dVar11)) {
+        lVar6 = uVar1 - 0x60;
+        bVar3 = CullBoxFromSphere(pCVar2->origin,pCVar2->radius,(Bounds *)uVar4);
       }
       else {
-        uVar5 = (longlong)(int)pCVar3 + 0x10;
-        bVar4 = CullBoxFromConicSectionOfSphere
-                          (pCVar3->origin,(float *)uVar5,pCVar3->cosHalfFovExpanded,pCVar3->radius,
-                           (Bounds *)lVar7);
+        uVar4 = (longlong)(int)pCVar2 + 0x10;
+        bVar3 = CullBoxFromConicSectionOfSphere
+                          (pCVar2->origin,(float *)uVar4,pCVar2->cosHalfFovExpanded,pCVar2->radius,
+                           (Bounds *)lVar6);
       }
-      uVar6 = (longlong)(int)pCVar3 + 0x28;
-      if (bVar4 == false) {
-        lVar7 = uVar1 - 0x60;
-        bVar4 = R_CullBoxFromLightRegion
-                          ((GfxLightRegion *)((int)&(s_world.lightRegion)->hullCount + (int)lVar10),
-                           (float *)uVar6,(Bounds *)lVar7);
-        uVar5 = uVar6;
-        if (!bVar4) {
-          uVar5 = uVar11;
-          lVar7 = lVar8;
-          (*param_5)(pGVar2,(uint)uVar11,(uint)lVar8);
+      uVar5 = (longlong)(int)pCVar2 + 0x28;
+      if (bVar3 == false) {
+        lVar6 = uVar1 - 0x60;
+        bVar3 = R_CullBoxFromLightRegion
+                          ((GfxLightRegion *)((int)&(s_world.lightRegion)->hullCount + (int)lVar8),
+                           (float *)uVar5,(Bounds *)lVar6);
+        uVar4 = uVar5;
+        if (!bVar3) {
+          uVar4 = uVar9;
+          lVar6 = (longlong)(int)param_4;
+          (*param_5)(param_1,(uint)uVar9,param_4);
         }
       }
-      uVar11 = uVar11 + 1;
-      lVar10 = lVar10 + 8;
-    } while ((uVar11 & 0xffffffff) < (ulonglong)pGVar2->primaryLightCount);
+      uVar9 = uVar9 + 1;
+      lVar8 = lVar8 + 8;
+    } while ((uVar9 & 0xffffffff) < (ulonglong)param_1->primaryLightCount);
   }
-  __restgprlr_25();
   return;
 }
 

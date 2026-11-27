@@ -2,26 +2,24 @@
 
 // 827481F8  Image_GetSize  (gfx_d3d/r_image_load_obj.cpp:1902)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 bool Image_GetSize(GfxImage *param_1,int *param_2,int *param_3)
 
 {
-  int iVar1;
-  undefined1 uVar2;
-  
-  iVar1 = __savegprlr_27(param_1);
-  if (*(char *)(iVar1 + 0x47) != '\0') {
-    if (*(char *)(iVar1 + 0x39) != '\0') {
+  if (param_1->cached != '\0') {
+    if (param_1->semantic != '\0') {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image_load_obj.cpp"
                       ,0x77f,0,"%s\n\t(image->name) = %s");
     }
-    if (*(char *)(iVar1 + 0x46) != '\x01') {
+    if (param_1->levelCount != '\x01') {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image_load_obj.cpp"
                       ,0x780,0,"%s\n\t(image->name) = %s");
     }
   }
-  *param_2 = (uint)*(ushort *)(iVar1 + 0x40);
-  *param_3 = (uint)*(ushort *)(iVar1 + 0x42);
-  uVar2 = __restgprlr_27(1);
-  return (bool)uVar2;
+  *param_2 = (uint)param_1->width;
+  *param_3 = (uint)param_1->height;
+  return true;
 }
 

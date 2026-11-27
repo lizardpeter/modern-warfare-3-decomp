@@ -2,6 +2,8 @@
 
 // 825BB3B8  Item_GetTextRect  (ui/ui_utils.h:52)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
@@ -9,24 +11,16 @@
 rectDef_s * Item_GetTextRect(LocalClientNum_t param_1,itemDef_t *param_2)
 
 {
-  ulonglong uVar1;
-  rectDef_s *prVar2;
-  ulonglong uVar3;
-  
-  uVar3 = (ulonglong)(int)param_2;
-  uVar1 = __savegprlr_29(param_1);
-  if (3 < (uVar1 & 0xffffffff)) {
+  if (LOCAL_CLIENT_3 < param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\../ui/ui_utils.h",0x35,0,
                     "localClientNum doesn\'t index MAX_POSSIBLE_LOCAL_CLIENTS\n\t%i not in [0, %i)")
     ;
   }
-  if ((uVar3 & 0xffffffff) == 0) {
+  if (param_2 == (itemDef_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\../ui/ui_utils.h",0x36,0,
                     "%s");
   }
-  prVar2 = (rectDef_s *)
-           __restgprlr_29((uVar1 + (uVar1 & 0x3fffffff) * 4 & 0x3fffffff) * 4 + uVar3 + 0xb0);
-  return prVar2;
+  return param_2->textRect + param_1;
 }
 
 
@@ -46,28 +40,23 @@ int Window_IsHorizontal(windowDef_t *param_1)
 
 // 825BB4B8  Window_IsClosing  (ui/ui_utils.h:90)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 int Window_IsClosing(LocalClientNum_t param_1,windowDef_t *param_2)
 
 {
-  uint uVar1;
-  int iVar2;
-  ulonglong uVar3;
-  
-  uVar3 = (ulonglong)(int)param_2;
-  uVar1 = __savegprlr_29(param_1);
-  if ((uVar3 & 0xffffffff) == 0) {
+  if (param_2 == (windowDef_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\../ui/ui_utils.h",0x5b,0,
                     "%s");
   }
-  if (3 < uVar1) {
+  if (LOCAL_CLIENT_3 < param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\../ui/ui_utils.h",0x21,0,
                     "localClientNum doesn\'t index MAX_POSSIBLE_LOCAL_CLIENTS\n\t%i not in [0, %i)")
     ;
   }
-  iVar2 = __restgprlr_29(*(uint *)((uVar1 + 0x12) * 4 + (int)uVar3) >> 7 & 1);
-  return iVar2;
+  return (uint)param_2->dynamicFlags[param_1] >> 7 & 1;
 }
 
 
@@ -241,57 +230,54 @@ void UI_LerpColor(float *param_1,float *param_2,float *param_3,float param_4)
 
 // 825BB878  Color_Parse  (ui/ui_shared.cpp:381)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 int Color_Parse(char **param_1,float (*param_2) [4])
 
 {
-  char **ppcVar1;
-  int iVar2;
+  int iVar1;
+  float *pfVar2;
   int iVar3;
-  longlong lVar4;
   float local_30 [12];
   
-  lVar4 = (longlong)(int)param_2;
-  ppcVar1 = (char **)__savegprlr_29(param_1);
   iVar3 = 0;
-  lVar4 = lVar4 + -4;
+  pfVar2 = param_2[-1] + 3;
   do {
-    iVar2 = Float_Parse(ppcVar1,local_30);
-    if (iVar2 == 0) {
-      iVar3 = __restgprlr_29(0);
-      return iVar3;
+    iVar1 = Float_Parse(param_1,local_30);
+    if (iVar1 == 0) {
+      return 0;
     }
     iVar3 = iVar3 + 1;
-    lVar4 = lVar4 + 4;
-    *(float *)lVar4 = local_30[0];
+    pfVar2 = pfVar2 + 1;
+    *pfVar2 = local_30[0];
   } while (iVar3 < 4);
-  iVar3 = __restgprlr_29(1);
-  return iVar3;
+  return 1;
 }
 
 
 // 825BB8D0  String_Parse  (ui/ui_shared.cpp:398)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 int String_Parse(char **param_1,char *param_2,int param_3)
 
 {
-  char **ppcVar1;
+  char *pcVar1;
   char *pcVar2;
-  char *pcVar3;
-  int iVar4;
   
-  ppcVar1 = (char **)__savegprlr_28(param_1);
-  pcVar2 = Com_ParseOnLine(ppcVar1);
-  if (pcVar2 == (char *)0x0) {
+  pcVar1 = Com_ParseOnLine(param_1);
+  if (pcVar1 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x192,0,"%s"
                    );
   }
-  if (*ppcVar1 != (char *)0x0) {
-    if (*pcVar2 == '@') {
-      pcVar3 = SEH_StringEd_GetString(pcVar2 + 1);
-      if (pcVar3 != (char *)0x0) {
-        I_strncpyz(param_2,pcVar3,param_3);
-        iVar4 = __restgprlr_28(1);
-        return iVar4;
+  if (*param_1 != (char *)0x0) {
+    if (*pcVar1 == '@') {
+      pcVar2 = SEH_StringEd_GetString(pcVar1 + 1);
+      if (pcVar2 != (char *)0x0) {
+        I_strncpyz(param_2,pcVar2,param_3);
+        return 1;
       }
       if ((loc_warnings->current).enabled != false) {
         if ((loc_warningsAsErrors->current).enabled == false) {
@@ -302,12 +288,10 @@ int String_Parse(char **param_1,char *param_2,int param_3)
         }
       }
     }
-    I_strncpyz(param_2,pcVar2,param_3);
-    iVar4 = __restgprlr_28(1);
-    return iVar4;
+    I_strncpyz(param_2,pcVar1,param_3);
+    return 1;
   }
-  iVar4 = __restgprlr_28(0);
-  return iVar4;
+  return 0;
 }
 
 
@@ -368,6 +352,10 @@ void Fade(int *param_1,float *param_2,float param_3,int *param_4,int param_5,int
 
 // 825BBA80  Window_Paint  (ui/ui_shared.cpp:477)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
@@ -378,207 +366,189 @@ void Window_Paint(UiContext *param_1,windowDef_t *param_2,ScreenPlacement *param
 {
   float fVar1;
   int iVar2;
-  LocalClientNum_t *pLVar3;
-  ScreenPlacement *pSVar4;
-  ulonglong uVar5;
-  windowDef_t *pwVar6;
-  windowDef_t *pwVar7;
+  ScreenPlacement *pSVar3;
+  windowDef_t *pwVar4;
   char *in_r6;
   char *in_r7;
-  float *pfVar8;
-  ulonglong uVar9;
-  rectDef_s *prVar10;
-  longlong lVar11;
-  double extraout_f1;
+  float *pfVar5;
+  windowDef_t *pwVar6;
+  rectDef_s *prVar7;
+  longlong lVar8;
+  double dVar9;
+  double dVar10;
+  double dVar11;
   double dVar12;
   double dVar13;
   double dVar14;
   double dVar15;
   double dVar16;
   double dVar17;
-  double dVar18;
-  double dVar19;
-  double dVar20;
   float local_a0;
   float local_9c;
   float local_98;
   float local_94;
   float local_90 [36];
   
-  dVar14 = (double)param_8;
-  dVar15 = (double)param_9;
-  dVar13 = (double)param_7;
-  dVar12 = (double)param_6;
-  uVar5 = (ulonglong)(int)param_2;
-  __savegprlr_27((double)param_4,param_1);
-  pLVar3 = (LocalClientNum_t *)__savefpr_23();
-  pwVar6 = (windowDef_t *)uVar5;
-  dVar17 = extraout_f1;
-  pSVar4 = param_3;
-  pwVar7 = pwVar6;
-  if ((uVar5 & 0xffffffff) == 0) {
+  dVar11 = (double)param_8;
+  dVar12 = (double)param_9;
+  dVar10 = (double)param_7;
+  dVar14 = (double)param_4;
+  dVar9 = (double)param_6;
+  pwVar4 = param_2;
+  pSVar3 = param_3;
+  if (param_2 == (windowDef_t *)0x0) {
     in_r7 = "w";
     in_r6 = "%s";
-    pSVar4 = (ScreenPlacement *)0x0;
-    pwVar7 = (windowDef_t *)0x24;
+    pSVar3 = (ScreenPlacement *)0x0;
+    pwVar4 = (windowDef_t *)0x24;
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_utils_api.h",0x24,0,"%s"
                    );
   }
-  prVar10 = &pwVar6->rect;
-  pfVar8 = &local_94;
-  lVar11 = 5;
-  uVar9 = uVar5;
+  prVar7 = &param_2->rect;
+  pfVar5 = &local_94;
+  lVar8 = 5;
+  pwVar6 = param_2;
   do {
-    uVar9 = uVar9 + 4;
-    pfVar8 = pfVar8 + 1;
-    *pfVar8 = *(float *)uVar9;
-    lVar11 = lVar11 + -1;
-  } while (lVar11 != 0);
-  dVar18 = 1.0;
+    pwVar6 = (windowDef_t *)&pwVar6->rect;
+    pfVar5 = pfVar5 + 1;
+    *pfVar5 = ((rectDef_s *)pwVar6)->x;
+    lVar8 = lVar8 + -1;
+  } while (lVar8 != 0);
+  dVar15 = 1.0;
   if ((ui_debugMode->current).enabled != false) {
-    UI_DrawRect(param_3,prVar10->x,(pwVar6->rect).y,(pwVar6->rect).w,(pwVar6->rect).h,(int)pwVar7,
-                (int)pSVar4,1.0,(float *)in_r6);
+    UI_DrawRect(param_3,prVar7->x,(param_2->rect).y,(param_2->rect).w,(param_2->rect).h,(int)pwVar4,
+                (int)pSVar3,1.0,(float *)in_r6);
   }
-  if (((uVar5 & 0xffffffff) != 0) && ((pwVar6->style != 0 || (pwVar6->border != 0)))) {
-    dVar16 = (double)local_90[2];
-    if (pwVar6->border != 0) {
-      fVar1 = pwVar6->borderSize;
+  if ((param_2 != (windowDef_t *)0x0) && ((param_2->style != 0 || (param_2->border != 0)))) {
+    dVar13 = (double)local_90[2];
+    if (param_2->border != 0) {
+      fVar1 = param_2->borderSize;
       local_90[0] = fVar1 + local_90[0];
       local_90[1] = fVar1 + local_90[1];
-      dVar16 = (double)(float)((double)(float)(dVar16 - (double)(fVar1 * 2.0)) * dVar17);
-      local_90[3] = (float)((double)(float)((double)local_90[3] - (double)(fVar1 * 2.0)) * dVar17);
+      dVar13 = (double)(float)((double)(float)(dVar13 - (double)(fVar1 * 2.0)) * dVar14);
+      local_90[3] = (float)((double)(float)((double)local_90[3] - (double)(fVar1 * 2.0)) * dVar14);
     }
-    dVar19 = (double)(float)(dVar16 * dVar17);
-    dVar20 = (double)(float)((double)local_90[3] * dVar17);
-    dVar16 = -(double)((float)((double)(float)(dVar17 - dVar18) * dVar16) * 0.5 - local_90[0]);
-    dVar17 = -(double)((float)((double)(float)(dVar17 - dVar18) * (double)local_90[3]) * 0.5 -
+    dVar16 = (double)(float)(dVar13 * dVar14);
+    dVar17 = (double)(float)((double)local_90[3] * dVar14);
+    dVar13 = -(double)((float)((double)(float)(dVar14 - dVar15) * dVar13) * 0.5 - local_90[0]);
+    dVar14 = -(double)((float)((double)(float)(dVar14 - dVar15) * (double)local_90[3]) * 0.5 -
                       local_90[1]);
-    pwVar7 = pwVar6;
-    Window_GetDynamicFlags(*pLVar3,pwVar6);
-    iVar2 = pwVar6->style;
+    pwVar4 = param_2;
+    Window_GetDynamicFlags(param_1->localClientNum,param_2);
+    iVar2 = param_2->style;
     if ((iVar2 - 1U < 6) && (iVar2 != 2)) {
       if (iVar2 == 3) {
-        UI_DrawHandlePic(param_3,(float)dVar16,(float)dVar17,(float)dVar19,(float)dVar20,(int)pwVar7
-                         ,(int)pSVar4,(float *)in_r6,(Material *)in_r7);
+        UI_DrawHandlePic(param_3,(float)dVar13,(float)dVar14,(float)dVar16,(float)dVar17,(int)pwVar4
+                         ,(int)pSVar3,(float *)in_r6,(Material *)in_r7);
       }
       else if (iVar2 != 4) {
         if (iVar2 == 5) {
-          if (pwVar6->background != (Material *)0x0) {
-            UI_DrawHandlePic(param_3,(float)dVar16,(float)dVar17,(float)dVar19,(float)dVar20,
-                             (int)pwVar7,(int)pSVar4,(float *)in_r6,(Material *)in_r7);
+          if (param_2->background != (Material *)0x0) {
+            UI_DrawHandlePic(param_3,(float)dVar13,(float)dVar14,(float)dVar16,(float)dVar17,
+                             (int)pwVar4,(int)pSVar3,(float *)in_r6,(Material *)in_r7);
           }
         }
         else if (iVar2 == 1) {
-          if (pwVar6->background == (Material *)0x0) {
-            UI_FillRect(param_3,(float)dVar16,(float)dVar17,(float)dVar19,(float)dVar20,(int)pwVar7,
-                        (int)pSVar4,(float *)in_r6);
+          if (param_2->background == (Material *)0x0) {
+            UI_FillRect(param_3,(float)dVar13,(float)dVar14,(float)dVar16,(float)dVar17,(int)pwVar4,
+                        (int)pSVar3,(float *)in_r6);
           }
           else {
-            pSVar4 = (ScreenPlacement *)Window_GetDynamicFlags(*pLVar3,pwVar6);
-            if ((((uint)pSVar4 & 0x30) != 0) && (pwVar6->nextTime < (int)pLVar3[2])) {
-              pwVar6->nextTime = (int)dVar15 + pLVar3[2];
-              if (((uint)pSVar4 & 0x10) == 0) {
-                fVar1 = (float)((double)pwVar6->backColor[3] + dVar13);
-                pwVar6->backColor[3] = fVar1;
-                if (dVar14 <= (double)fVar1) {
-                  pwVar6->backColor[3] = (float)dVar14;
-                  pSVar4 = (ScreenPlacement *)((uint)pSVar4 & 0xffffffdf);
+            pSVar3 = (ScreenPlacement *)Window_GetDynamicFlags(param_1->localClientNum,param_2);
+            if ((((uint)pSVar3 & 0x30) != 0) && (param_2->nextTime < param_1->realTime)) {
+              param_2->nextTime = (int)dVar12 + param_1->realTime;
+              if (((uint)pSVar3 & 0x10) == 0) {
+                fVar1 = (float)((double)param_2->backColor[3] + dVar10);
+                param_2->backColor[3] = fVar1;
+                if (dVar11 <= (double)fVar1) {
+                  param_2->backColor[3] = (float)dVar11;
+                  pSVar3 = (ScreenPlacement *)((uint)pSVar3 & 0xffffffdf);
                 }
               }
               else {
-                fVar1 = (float)((double)pwVar6->backColor[3] - dVar12);
-                pwVar6->backColor[3] = fVar1;
+                fVar1 = (float)((double)param_2->backColor[3] - dVar9);
+                param_2->backColor[3] = fVar1;
                 if (fVar1 <= 0.0) {
-                  pSVar4 = (ScreenPlacement *)((uint)pSVar4 & 0xffffffeb);
+                  pSVar3 = (ScreenPlacement *)((uint)pSVar3 & 0xffffffeb);
                 }
               }
             }
-            pwVar7 = pwVar6;
-            Window_SetDynamicFlags(*pLVar3,pwVar6,(int)pSVar4);
-            UI_DrawHandlePic(param_3,(float)dVar16,(float)dVar17,(float)dVar19,(float)dVar20,
-                             (int)pwVar7,(int)pSVar4,(float *)in_r6,(Material *)in_r7);
+            pwVar4 = param_2;
+            Window_SetDynamicFlags(param_1->localClientNum,param_2,(int)pSVar3);
+            UI_DrawHandlePic(param_3,(float)dVar13,(float)dVar14,(float)dVar16,(float)dVar17,
+                             (int)pwVar4,(int)pSVar3,(float *)in_r6,(Material *)in_r7);
           }
         }
         else {
-          UI_DrawLoadBar(param_3,(float)dVar16,(float)dVar17,(float)dVar19,(float)dVar20,(int)pwVar7
-                         ,(int)pSVar4,(float *)in_r6,(Material *)in_r7);
+          UI_DrawLoadBar(param_3,(float)dVar13,(float)dVar14,(float)dVar16,(float)dVar17,(int)pwVar4
+                         ,(int)pSVar3,(float *)in_r6,(Material *)in_r7);
         }
       }
     }
-    iVar2 = pwVar6->border;
+    iVar2 = param_2->border;
     if (iVar2 == 1) {
-      UI_DrawRect(param_3,prVar10->x,(pwVar6->rect).y,(pwVar6->rect).w,(pwVar6->rect).h,(int)pwVar7,
-                  (int)pSVar4,pwVar6->borderSize,(float *)in_r6);
-      __restfpr_23();
-      __restgprlr_27();
+      UI_DrawRect(param_3,prVar7->x,(param_2->rect).y,(param_2->rect).w,(param_2->rect).h,
+                  (int)pwVar4,(int)pSVar3,param_2->borderSize,(float *)in_r6);
       return;
     }
     if (iVar2 == 2) {
-      UI_DrawTopBottom(param_3,prVar10->x,(pwVar6->rect).y,(pwVar6->rect).w,(pwVar6->rect).h,
-                       (int)pwVar7,(int)pSVar4,pwVar6->borderSize,(float *)in_r6);
-      __restfpr_23();
-      __restgprlr_27();
+      UI_DrawTopBottom(param_3,prVar7->x,(param_2->rect).y,(param_2->rect).w,(param_2->rect).h,
+                       (int)pwVar4,(int)pSVar3,param_2->borderSize,(float *)in_r6);
       return;
     }
     if (iVar2 == 3) {
-      UI_DrawSides(param_3,prVar10->x,(pwVar6->rect).y,(pwVar6->rect).w,(pwVar6->rect).h,(int)pwVar7
-                   ,(int)pSVar4,pwVar6->borderSize,(float *)in_r6);
-      __restfpr_23();
-      __restgprlr_27();
+      UI_DrawSides(param_3,prVar7->x,(param_2->rect).y,(param_2->rect).w,(param_2->rect).h,
+                   (int)pwVar4,(int)pSVar3,param_2->borderSize,(float *)in_r6);
       return;
     }
     if (iVar2 != 4) {
       if (iVar2 == 5) {
-        local_94 = pwVar6->borderColor[3];
+        local_94 = param_2->borderColor[3];
         local_98 = (ui_borderLowLightScale->current).value;
-        local_a0 = local_98 * pwVar6->borderColor[0];
-        local_9c = pwVar6->borderColor[1] * local_98;
-        local_98 = pwVar6->borderColor[2] * local_98;
+        local_a0 = local_98 * param_2->borderColor[0];
+        local_9c = param_2->borderColor[1] * local_98;
+        local_98 = param_2->borderColor[2] * local_98;
         UI_DrawHighlightRect
-                  (param_3,prVar10->x,(pwVar6->rect).y,(pwVar6->rect).w,(pwVar6->rect).h,(int)pwVar7
-                   ,(int)pSVar4,pwVar6->borderSize,(float *)in_r6,&local_a0);
-        __restfpr_23();
-        __restgprlr_27();
+                  (param_3,prVar7->x,(param_2->rect).y,(param_2->rect).w,(param_2->rect).h,
+                   (int)pwVar4,(int)pSVar3,param_2->borderSize,(float *)in_r6,&local_a0);
         return;
       }
       if (iVar2 == 6) {
-        local_94 = pwVar6->borderColor[3];
+        local_94 = param_2->borderColor[3];
         local_9c = (ui_borderLowLightScale->current).value;
-        local_98 = pwVar6->borderColor[2] * local_9c;
-        local_a0 = local_9c * pwVar6->borderColor[0];
-        local_9c = pwVar6->borderColor[1] * local_9c;
+        local_98 = param_2->borderColor[2] * local_9c;
+        local_a0 = local_9c * param_2->borderColor[0];
+        local_9c = param_2->borderColor[1] * local_9c;
         UI_DrawHighlightRect
-                  (param_3,prVar10->x,(pwVar6->rect).y,(pwVar6->rect).w,(pwVar6->rect).h,(int)pwVar7
-                   ,(int)pSVar4,pwVar6->borderSize,(float *)in_r6,(float *)in_r7);
+                  (param_3,prVar7->x,(param_2->rect).y,(param_2->rect).w,(param_2->rect).h,
+                   (int)pwVar4,(int)pSVar3,param_2->borderSize,(float *)in_r6,(float *)in_r7);
       }
     }
   }
-  __restfpr_23();
-  __restgprlr_27();
   return;
 }
 
 
 // 825BBFE0  Window_RemoveDynamicFlags_CritSect  (ui/ui_shared.cpp:595)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void Window_RemoveDynamicFlags_CritSect(LocalClientNum_t param_1,windowDef_t *param_2,int param_3)
 
 {
-  LocalClientNum_t LVar1;
-  
-  LVar1 = __savegprlr_29(param_1);
   Sys_EnterUIOwnership();
-  Window_RemoveDynamicFlags(LVar1,param_2,param_3);
+  Window_RemoveDynamicFlags(param_1,param_2,param_3);
   Sys_LeaveUIOwnership();
-  __restgprlr_29();
   return;
 }
 
 
 // 825C8ED0  Item_ClearFocus  (ui/ui_shared.cpp:607)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
@@ -587,16 +557,14 @@ void Item_ClearFocus(UiContext *param_1,itemDef_t *param_2)
 
 {
   LocalClientNum_t LVar1;
-  UiContext *pUVar2;
-  bool bVar3;
+  bool bVar2;
   
-  pUVar2 = (UiContext *)__savegprlr_29(param_1);
-  bVar3 = Window_HasFocus(pUVar2->localClientNum,&param_2->window);
-  if (!bVar3) {
+  bVar2 = Window_HasFocus(param_1->localClientNum,&param_2->window);
+  if (!bVar2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x260,0,"%s"
                    );
   }
-  LVar1 = pUVar2->localClientNum;
+  LVar1 = param_1->localClientNum;
   Sys_EnterUIOwnership();
   Window_RemoveDynamicFlags(LVar1,&param_2->window,2);
   Sys_LeaveUIOwnership();
@@ -604,15 +572,16 @@ void Item_ClearFocus(UiContext *param_1,itemDef_t *param_2)
     if ((uiscript_verbose->current).enabled != false) {
       Com_Printf(0xd,"UISCRIPT - Calling leaveFocus() - Item is \'%s\', parent menu is \'%s\'\n");
     }
-    Item_HandleEvent(pUVar2,param_2,param_2->leaveFocus);
+    Item_HandleEvent(param_1,param_2,param_2->leaveFocus);
   }
-  __restgprlr_29();
   return;
 }
 
 
 // 825C8FB0  Menu_ClearFocus  (ui/ui_shared.cpp:623)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
@@ -620,47 +589,42 @@ void Item_ClearFocus(UiContext *param_1,itemDef_t *param_2)
 itemDef_t * Menu_ClearFocus(UiContext *param_1,menuDef_t *param_2)
 
 {
-  int iVar1;
-  UiContext *pUVar2;
+  bool bVar1;
+  int iVar2;
   itemDef_t *piVar3;
-  bool bVar4;
-  ulonglong uVar5;
-  int iVar6;
-  int iVar7;
+  int iVar4;
   
-  uVar5 = (ulonglong)(int)param_2;
-  pUVar2 = (UiContext *)__savegprlr_24(param_1);
-  if ((uVar5 & 0xffffffff) == 0) {
-    piVar3 = (itemDef_t *)__restgprlr_24(0);
-    return piVar3;
+  if (param_2 == (menuDef_t *)0x0) {
+    return (itemDef_t *)0x0;
   }
-  iVar1 = (int)uVar5;
   piVar3 = (itemDef_t *)0x0;
-  iVar6 = 0;
-  if (0 < *(int *)(iVar1 + 0xb4)) {
-    iVar7 = 0;
+  iVar2 = 0;
+  if (0 < param_2->itemCount) {
+    iVar4 = 0;
+    piVar3 = (itemDef_t *)0x0;
     do {
-      bVar4 = Window_HasFocus(pUVar2->localClientNum,
-                              *(windowDef_t **)(*(int *)(iVar1 + 0xb8) + iVar7));
-      if (bVar4) {
+      bVar1 = Window_HasFocus(param_1->localClientNum,*(windowDef_t **)((int)param_2->items + iVar4)
+                             );
+      if (bVar1) {
         if (piVar3 != (itemDef_t *)0x0) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x27c,
                           0,"%s");
         }
-        piVar3 = *(itemDef_t **)(*(int *)(iVar1 + 0xb8) + iVar7);
-        Item_ClearFocus(pUVar2,piVar3);
+        piVar3 = *(itemDef_t **)((int)param_2->items + iVar4);
+        Item_ClearFocus(param_1,piVar3);
       }
-      iVar6 = iVar6 + 1;
-      iVar7 = iVar7 + 4;
-    } while (iVar6 < *(int *)(iVar1 + 0xb4));
+      iVar2 = iVar2 + 1;
+      iVar4 = iVar4 + 4;
+    } while (iVar2 < param_2->itemCount);
   }
-  piVar3 = (itemDef_t *)__restgprlr_24(piVar3);
   return piVar3;
 }
 
 
 // 825BC018  Menu_ItemsMatchingGroup  (ui/ui_shared.cpp:677)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 
@@ -669,65 +633,63 @@ int Menu_ItemsMatchingGroup(menuDef_t *param_1,char *param_2)
 {
   undefined4 *puVar1;
   int iVar2;
-  int iVar3;
-  char *pcVar4;
+  char *pcVar3;
+  int iVar4;
   int iVar5;
-  longlong lVar6;
+  int iVar6;
   int iVar7;
-  int iVar8;
   
-  iVar2 = __savegprlr_26(param_1);
-  lVar6 = 0;
-  iVar7 = -1;
-  iVar3 = I_stricmp(param_2,"self");
-  if (iVar3 == 0) {
-    iVar2 = __restgprlr_26(1);
-    return iVar2;
+  iVar5 = 0;
+  iVar6 = -1;
+  iVar2 = I_stricmp(param_2,"self");
+  if (iVar2 == 0) {
+    return 1;
   }
-  pcVar4 = strstr(param_2,"*");
-  if (pcVar4 != (char *)0x0) {
-    iVar7 = (int)pcVar4 - (int)param_2;
+  pcVar3 = strstr(param_2,"*");
+  if (pcVar3 != (char *)0x0) {
+    iVar6 = (int)pcVar3 - (int)param_2;
   }
-  iVar3 = 0;
-  if (0 < *(int *)(iVar2 + 0xb4)) {
-    iVar8 = 0;
+  iVar2 = 0;
+  if (0 < param_1->itemCount) {
+    iVar7 = 0;
     do {
-      puVar1 = *(undefined4 **)(iVar8 + *(int *)(iVar2 + 0xb8));
-      pcVar4 = (char *)*puVar1;
-      if (iVar7 == -1) {
-        if ((pcVar4 == (char *)0x0) || (iVar5 = I_stricmp((char *)*puVar1,param_2), iVar5 != 0)) {
-          pcVar4 = *(char **)(*(int *)(iVar8 + *(int *)(iVar2 + 0xb8)) + 0x2c);
-          if (pcVar4 != (char *)0x0) {
-            iVar5 = I_stricmp(pcVar4,param_2);
+      puVar1 = *(undefined4 **)(iVar7 + (int)param_1->items);
+      pcVar3 = (char *)*puVar1;
+      if (iVar6 == -1) {
+        if ((pcVar3 == (char *)0x0) || (iVar4 = I_stricmp((char *)*puVar1,param_2), iVar4 != 0)) {
+          pcVar3 = *(char **)(*(int *)(iVar7 + (int)param_1->items) + 0x2c);
+          if (pcVar3 != (char *)0x0) {
+            iVar4 = I_stricmp(pcVar3,param_2);
             goto LAB_825bc118;
           }
           goto LAB_825bc124;
         }
 LAB_825bc120:
-        lVar6 = lVar6 + 1;
+        iVar5 = iVar5 + 1;
       }
       else {
-        if ((pcVar4 != (char *)0x0) && (iVar5 = I_strncmp(pcVar4,param_2,iVar7), iVar5 == 0))
+        if ((pcVar3 != (char *)0x0) && (iVar4 = I_strncmp(pcVar3,param_2,iVar6), iVar4 == 0))
         goto LAB_825bc120;
-        pcVar4 = *(char **)(*(int *)(iVar8 + *(int *)(iVar2 + 0xb8)) + 0x2c);
-        if (pcVar4 != (char *)0x0) {
-          iVar5 = I_strncmp(pcVar4,param_2,iVar7);
+        pcVar3 = *(char **)(*(int *)(iVar7 + (int)param_1->items) + 0x2c);
+        if (pcVar3 != (char *)0x0) {
+          iVar4 = I_strncmp(pcVar3,param_2,iVar6);
 LAB_825bc118:
-          if (iVar5 == 0) goto LAB_825bc120;
+          if (iVar4 == 0) goto LAB_825bc120;
         }
       }
 LAB_825bc124:
-      iVar3 = iVar3 + 1;
-      iVar8 = iVar8 + 4;
-    } while (iVar3 < *(int *)(iVar2 + 0xb4));
+      iVar2 = iVar2 + 1;
+      iVar7 = iVar7 + 4;
+    } while (iVar2 < param_1->itemCount);
   }
-  iVar2 = __restgprlr_26(lVar6);
-  return iVar2;
+  return iVar5;
 }
 
 
 // 825BC148  Menu_GetMatchingItemByNumber  (ui/ui_shared.cpp:713)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 
@@ -736,70 +698,66 @@ Menu_GetMatchingItemByNumber(itemDef_t *param_1,menuDef_t *param_2,int param_3,c
 
 {
   undefined4 *puVar1;
-  ulonglong uVar2;
-  int iVar3;
-  itemDef_t *piVar4;
-  char *pcVar5;
+  int iVar2;
+  char *pcVar3;
+  int iVar4;
+  int iVar5;
   int iVar6;
   int iVar7;
-  int iVar8;
-  int iVar9;
   
-  uVar2 = __savegprlr_25(param_1);
-  iVar7 = 0;
-  iVar8 = -1;
-  if (((uVar2 & 0xffffffff) != 0) && (iVar3 = I_stricmp(param_4,"self"), iVar3 == 0)) {
-    piVar4 = (itemDef_t *)__restgprlr_25(uVar2);
-    return piVar4;
+  iVar5 = 0;
+  iVar6 = -1;
+  if ((param_1 != (itemDef_t *)0x0) && (iVar2 = I_stricmp(param_4,"self"), iVar2 == 0)) {
+    return param_1;
   }
-  pcVar5 = strstr(param_4,"*");
-  if (pcVar5 != (char *)0x0) {
-    iVar8 = (int)pcVar5 - (int)param_4;
+  pcVar3 = strstr(param_4,"*");
+  if (pcVar3 != (char *)0x0) {
+    iVar6 = (int)pcVar3 - (int)param_4;
   }
-  iVar3 = 0;
+  iVar2 = 0;
   if (0 < param_2->itemCount) {
-    iVar9 = 0;
+    iVar7 = 0;
     do {
-      puVar1 = *(undefined4 **)((int)param_2->items + iVar9);
-      pcVar5 = (char *)*puVar1;
-      if (iVar8 == -1) {
-        if ((pcVar5 == (char *)0x0) || (iVar6 = I_stricmp((char *)*puVar1,param_4), iVar6 != 0)) {
-          pcVar5 = *(char **)(*(int *)((int)param_2->items + iVar9) + 0x2c);
-          if (pcVar5 != (char *)0x0) {
-            iVar6 = I_stricmp(pcVar5,param_4);
+      puVar1 = *(undefined4 **)((int)param_2->items + iVar7);
+      pcVar3 = (char *)*puVar1;
+      if (iVar6 == -1) {
+        if ((pcVar3 == (char *)0x0) || (iVar4 = I_stricmp((char *)*puVar1,param_4), iVar4 != 0)) {
+          pcVar3 = *(char **)(*(int *)((int)param_2->items + iVar7) + 0x2c);
+          if (pcVar3 != (char *)0x0) {
+            iVar4 = I_stricmp(pcVar3,param_4);
             goto LAB_825bc258;
           }
           goto LAB_825bc26c;
         }
 LAB_825bc260:
-        if (iVar7 == param_3) {
-          piVar4 = (itemDef_t *)__restgprlr_25(param_2->items[iVar3]);
-          return piVar4;
+        if (iVar5 == param_3) {
+          return param_2->items[iVar2];
         }
-        iVar7 = iVar7 + 1;
+        iVar5 = iVar5 + 1;
       }
       else {
-        if ((pcVar5 != (char *)0x0) && (iVar6 = I_strncmp(pcVar5,param_4,iVar8), iVar6 == 0))
+        if ((pcVar3 != (char *)0x0) && (iVar4 = I_strncmp(pcVar3,param_4,iVar6), iVar4 == 0))
         goto LAB_825bc260;
-        pcVar5 = *(char **)(*(int *)((int)param_2->items + iVar9) + 0x2c);
-        if (pcVar5 != (char *)0x0) {
-          iVar6 = I_strncmp(pcVar5,param_4,iVar8);
+        pcVar3 = *(char **)(*(int *)((int)param_2->items + iVar7) + 0x2c);
+        if (pcVar3 != (char *)0x0) {
+          iVar4 = I_strncmp(pcVar3,param_4,iVar6);
 LAB_825bc258:
-          if (iVar6 == 0) goto LAB_825bc260;
+          if (iVar4 == 0) goto LAB_825bc260;
         }
       }
 LAB_825bc26c:
-      iVar3 = iVar3 + 1;
-      iVar9 = iVar9 + 4;
-    } while (iVar3 < param_2->itemCount);
+      iVar2 = iVar2 + 1;
+      iVar7 = iVar7 + 4;
+    } while (iVar2 < param_2->itemCount);
   }
-  piVar4 = (itemDef_t *)__restgprlr_25(0);
-  return piVar4;
+  return (itemDef_t *)0x0;
 }
 
 
 // 825BC2A0  Script_SetColor  (ui/ui_shared.cpp:755)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
@@ -807,49 +765,47 @@ LAB_825bc26c:
 void Script_SetColor(UiContext *param_1,itemDef_t *param_2,char **param_3)
 
 {
-  LocalClientNum_t *pLVar1;
+  int iVar1;
   int iVar2;
-  int iVar3;
-  ulonglong uVar4;
-  longlong lVar5;
+  float *pfVar3;
   float local_430 [4];
   char acStack_420 [1056];
   
-  lVar5 = (longlong)(int)param_2;
-  pLVar1 = (LocalClientNum_t *)__savegprlr_29(param_1);
-  iVar2 = String_Parse(param_3,acStack_420,0x400);
-  if (iVar2 != 0) {
-    iVar2 = I_stricmp(acStack_420,"backcolor");
-    if (iVar2 == 0) {
-      uVar4 = lVar5 + 0x6c;
-      Window_AddDynamicFlags(*pLVar1,(windowDef_t *)lVar5,0x8000);
+  iVar1 = String_Parse(param_3,acStack_420,0x400);
+  if (iVar1 != 0) {
+    iVar1 = I_stricmp(acStack_420,"backcolor");
+    if (iVar1 == 0) {
+      pfVar3 = (param_2->window).backColor;
+      Window_AddDynamicFlags(param_1->localClientNum,&param_2->window,0x8000);
     }
     else {
-      iVar2 = I_stricmp(acStack_420,"forecolor");
-      if (iVar2 == 0) {
-        uVar4 = lVar5 + 0x5c;
-        Window_AddDynamicFlags(*pLVar1,(windowDef_t *)lVar5,0x10000);
+      iVar1 = I_stricmp(acStack_420,"forecolor");
+      if (iVar1 == 0) {
+        pfVar3 = (param_2->window).foreColor;
+        Window_AddDynamicFlags(param_1->localClientNum,&param_2->window,0x10000);
       }
       else {
-        iVar2 = I_stricmp(acStack_420,"bordercolor");
-        if (iVar2 != 0) goto LAB_825bc388;
-        uVar4 = lVar5 + 0x7c;
+        iVar1 = I_stricmp(acStack_420,"bordercolor");
+        if (iVar1 != 0) {
+          return;
+        }
+        pfVar3 = (param_2->window).borderColor;
       }
     }
-    if ((uVar4 & 0xffffffff) != 0) {
-      iVar2 = 0;
-      lVar5 = uVar4 - 4;
+    if (pfVar3 != (float *)0x0) {
+      iVar1 = 0;
+      pfVar3 = pfVar3 + -1;
       do {
-        iVar3 = Float_Parse(param_3,local_430);
-        if (iVar3 == 0) break;
-        iVar2 = iVar2 + 1;
-        lVar5 = lVar5 + 4;
-        *(float *)lVar5 = local_430[0];
-      } while (iVar2 < 4);
+        iVar2 = Float_Parse(param_3,local_430);
+        if (iVar2 == 0) {
+          return;
+        }
+        iVar1 = iVar1 + 1;
+        pfVar3 = pfVar3 + 1;
+        *pfVar3 = local_430[0];
+      } while (iVar1 < 4);
     }
   }
-LAB_825bc388:
-  __restgprlr_29();
   return;
 }
 
@@ -878,6 +834,8 @@ void Script_SetBackground(UiContext *param_1,itemDef_t *param_2,char **param_3)
 
 // 825BC3E0  Menu_FindItemByName  (ui/ui_shared.cpp:808)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 
@@ -887,35 +845,30 @@ itemDef_t * Menu_FindItemByName(menuDef_t *param_1,char *param_2)
   char *pcVar1;
   int iVar2;
   int iVar3;
-  itemDef_t *piVar4;
-  ulonglong uVar5;
-  int iVar6;
-  int iVar7;
+  int iVar4;
   
-  uVar5 = (ulonglong)(int)param_2;
-  iVar2 = __savegprlr_28(param_1);
-  if ((iVar2 != 0) && ((uVar5 & 0xffffffff) != 0)) {
-    iVar6 = 0;
-    if (0 < *(int *)(iVar2 + 0xb4)) {
-      iVar7 = 0;
+  if ((param_1 != (menuDef_t *)0x0) && (param_2 != (char *)0x0)) {
+    iVar3 = 0;
+    if (0 < param_1->itemCount) {
+      iVar4 = 0;
       do {
-        pcVar1 = (char *)**(undefined4 **)(*(int *)(iVar2 + 0xb8) + iVar7);
-        if ((pcVar1 != (char *)0x0) && (iVar3 = I_stricmp((char *)uVar5,pcVar1), iVar3 == 0)) {
-          piVar4 = (itemDef_t *)__restgprlr_28(*(undefined4 *)(iVar6 * 4 + *(int *)(iVar2 + 0xb8)));
-          return piVar4;
+        pcVar1 = (char *)**(undefined4 **)((int)param_1->items + iVar4);
+        if ((pcVar1 != (char *)0x0) && (iVar2 = I_stricmp(param_2,pcVar1), iVar2 == 0)) {
+          return param_1->items[iVar3];
         }
-        iVar6 = iVar6 + 1;
-        iVar7 = iVar7 + 4;
-      } while (iVar6 < *(int *)(iVar2 + 0xb4));
+        iVar3 = iVar3 + 1;
+        iVar4 = iVar4 + 4;
+      } while (iVar3 < param_1->itemCount);
     }
   }
-  piVar4 = (itemDef_t *)__restgprlr_28(0);
-  return piVar4;
+  return (itemDef_t *)0x0;
 }
 
 
 // 825BC478  UI_GetItemByName  (ui/ui_shared.cpp:825)
 
+/* WARNING: Function: __savegprlr_18 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_18 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
@@ -928,38 +881,34 @@ itemDef_t * UI_GetItemByName(LocalClientNum_t param_1,char *param_2)
   char *pcVar3;
   itemDef_t *piVar4;
   menuDef_t *pmVar5;
-  LocalClientNum_t LVar6;
-  UiContext *pUVar7;
-  int iVar8;
-  itemDef_t *piVar9;
-  ulonglong uVar10;
-  menuDef_t **ppmVar11;
+  UiContext *pUVar6;
+  int iVar7;
+  menuDef_t **ppmVar8;
+  int iVar9;
+  menuDef_t *pmVar10;
+  itemDef_t *piVar11;
   int iVar12;
-  menuDef_t *pmVar13;
-  int iVar14;
-  int iVar15;
+  int iVar13;
   
-  uVar10 = (ulonglong)(int)param_2;
-  LVar6 = __savegprlr_18(param_1);
-  pUVar7 = UI_GetClientDC(LVar6);
-  piVar9 = (itemDef_t *)0x0;
-  pmVar13 = (menuDef_t *)0x0;
-  iVar12 = 0;
-  if (0 < pUVar7->menuCount) {
-    ppmVar11 = pUVar7->Menus;
+  pUVar6 = UI_GetClientDC(param_1);
+  piVar11 = (itemDef_t *)0x0;
+  pmVar10 = (menuDef_t *)0x0;
+  iVar9 = 0;
+  if (0 < pUVar6->menuCount) {
+    ppmVar8 = pUVar6->Menus;
     do {
-      pmVar2 = *ppmVar11;
-      pmVar5 = pmVar13;
-      if (((pmVar2 != (menuDef_t *)0x0) && ((uVar10 & 0xffffffff) != 0)) &&
-         (iVar14 = 0, 0 < pmVar2->itemCount)) {
-        iVar15 = 0;
+      pmVar2 = *ppmVar8;
+      pmVar5 = pmVar10;
+      if (((pmVar2 != (menuDef_t *)0x0) && (param_2 != (char *)0x0)) &&
+         (iVar12 = 0, 0 < pmVar2->itemCount)) {
+        iVar13 = 0;
         do {
-          pcVar3 = (char *)**(undefined4 **)((int)pmVar2->items + iVar15);
-          if ((pcVar3 != (char *)0x0) && (iVar8 = I_stricmp((char *)uVar10,pcVar3), iVar8 == 0)) {
-            piVar4 = pmVar2->items[iVar14];
+          pcVar3 = (char *)**(undefined4 **)((int)pmVar2->items + iVar13);
+          if ((pcVar3 != (char *)0x0) && (iVar7 = I_stricmp(param_2,pcVar3), iVar7 == 0)) {
+            piVar4 = pmVar2->items[iVar12];
             if ((piVar4 != (itemDef_t *)0x0) &&
-               (bVar1 = piVar9 != (itemDef_t *)0x0, pmVar5 = pmVar2, piVar9 = piVar4, bVar1)) {
-              if (pmVar13 == (menuDef_t *)0x0) {
+               (bVar1 = piVar11 != (itemDef_t *)0x0, piVar11 = piVar4, pmVar5 = pmVar2, bVar1)) {
+              if (pmVar10 == (menuDef_t *)0x0) {
                 MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",
                                 0x353,0,"%s");
               }
@@ -969,17 +918,16 @@ itemDef_t * UI_GetItemByName(LocalClientNum_t param_1,char *param_2)
             }
             break;
           }
-          iVar14 = iVar14 + 1;
-          iVar15 = iVar15 + 4;
-        } while (iVar14 < pmVar2->itemCount);
+          iVar12 = iVar12 + 1;
+          iVar13 = iVar13 + 4;
+        } while (iVar12 < pmVar2->itemCount);
       }
-      pmVar13 = pmVar5;
-      iVar12 = iVar12 + 1;
-      ppmVar11 = ppmVar11 + 1;
-    } while (iVar12 < pUVar7->menuCount);
+      pmVar10 = pmVar5;
+      iVar9 = iVar9 + 1;
+      ppmVar8 = ppmVar8 + 1;
+    } while (iVar9 < pUVar6->menuCount);
   }
-  piVar9 = (itemDef_t *)__restgprlr_18(piVar9);
-  return piVar9;
+  return piVar11;
 }
 
 
@@ -1110,6 +1058,8 @@ void UI_ClearCompletionResolve(void)
 
 // 825BC5F0  Script_SetItemColor  (ui/ui_shared.cpp:977)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
@@ -1117,12 +1067,11 @@ void UI_ClearCompletionResolve(void)
 void Script_SetItemColor(UiContext *param_1,itemDef_t *param_2,char **param_3)
 
 {
-  LocalClientNum_t *pLVar1;
+  int iVar1;
   int iVar2;
-  int iVar3;
-  itemDef_t *piVar4;
-  int iVar5;
-  float *pfVar6;
+  itemDef_t *piVar3;
+  int iVar4;
+  float *pfVar5;
   float local_860;
   float local_85c;
   float local_858;
@@ -1130,50 +1079,50 @@ void Script_SetItemColor(UiContext *param_1,itemDef_t *param_2,char **param_3)
   char acStack_850 [1024];
   char acStack_450 [1104];
   
-  pLVar1 = (LocalClientNum_t *)__savegprlr_24(param_1);
-  iVar2 = String_Parse(param_3,acStack_450,0x400);
-  if ((iVar2 != 0) && (iVar2 = String_Parse(param_3,acStack_850,0x400), iVar2 != 0)) {
-    iVar2 = Menu_ItemsMatchingGroup(param_2->parent,acStack_450);
-    iVar3 = Color_Parse(param_3,(float (*) [4])&local_860);
-    if ((iVar3 != 0) && (iVar3 = 0, 0 < iVar2)) {
+  iVar1 = String_Parse(param_3,acStack_450,0x400);
+  if ((iVar1 != 0) && (iVar1 = String_Parse(param_3,acStack_850,0x400), iVar1 != 0)) {
+    iVar1 = Menu_ItemsMatchingGroup(param_2->parent,acStack_450);
+    iVar2 = Color_Parse(param_3,(float (*) [4])&local_860);
+    if ((iVar2 != 0) && (iVar2 = 0, 0 < iVar1)) {
       do {
-        piVar4 = Menu_GetMatchingItemByNumber(param_2,param_2->parent,iVar3,acStack_450);
-        if (piVar4 != (itemDef_t *)0x0) {
-          iVar5 = I_stricmp(acStack_850,"backcolor");
-          if (iVar5 == 0) {
-            pfVar6 = (piVar4->window).backColor;
+        piVar3 = Menu_GetMatchingItemByNumber(param_2,param_2->parent,iVar2,acStack_450);
+        if (piVar3 != (itemDef_t *)0x0) {
+          iVar4 = I_stricmp(acStack_850,"backcolor");
+          if (iVar4 == 0) {
+            pfVar5 = (piVar3->window).backColor;
           }
           else {
-            iVar5 = I_stricmp(acStack_850,"forecolor");
-            if (iVar5 == 0) {
-              pfVar6 = (piVar4->window).foreColor;
-              Window_AddDynamicFlags(*pLVar1,&piVar4->window,0x10000);
+            iVar4 = I_stricmp(acStack_850,"forecolor");
+            if (iVar4 == 0) {
+              pfVar5 = (piVar3->window).foreColor;
+              Window_AddDynamicFlags(param_1->localClientNum,&piVar3->window,0x10000);
             }
             else {
-              iVar5 = I_stricmp(acStack_850,"bordercolor");
-              if (iVar5 != 0) goto LAB_825bc72c;
-              pfVar6 = (piVar4->window).borderColor;
+              iVar4 = I_stricmp(acStack_850,"bordercolor");
+              if (iVar4 != 0) goto LAB_825bc72c;
+              pfVar5 = (piVar3->window).borderColor;
             }
           }
-          if (pfVar6 != (float *)0x0) {
-            *pfVar6 = local_860;
-            pfVar6[1] = local_85c;
-            pfVar6[2] = local_858;
-            pfVar6[3] = local_854;
+          if (pfVar5 != (float *)0x0) {
+            *pfVar5 = local_860;
+            pfVar5[1] = local_85c;
+            pfVar5[2] = local_858;
+            pfVar5[3] = local_854;
           }
         }
 LAB_825bc72c:
-        iVar3 = iVar3 + 1;
-      } while (iVar3 < iVar2);
+        iVar2 = iVar2 + 1;
+      } while (iVar2 < iVar1);
     }
   }
-  __restgprlr_24();
   return;
 }
 
 
 // 825C9370  Menu_ShowItemByName  (ui/ui_shared.cpp:1030)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
@@ -1181,44 +1130,43 @@ LAB_825bc72c:
 void Menu_ShowItemByName(LocalClientNum_t param_1,menuDef_t *param_2,char *param_3,int param_4)
 
 {
-  LocalClientNum_t LVar1;
-  int iVar2;
-  itemDef_t *piVar3;
-  bool bVar5;
-  UiContext *pUVar4;
-  int iVar6;
+  int iVar1;
+  itemDef_t *piVar2;
+  bool bVar4;
+  UiContext *pUVar3;
+  int iVar5;
   
-  LVar1 = __savegprlr_25(param_1);
-  iVar2 = Menu_ItemsMatchingGroup(param_2,param_3);
-  iVar6 = 0;
-  if (0 < iVar2) {
+  iVar1 = Menu_ItemsMatchingGroup(param_2,param_3);
+  iVar5 = 0;
+  if (0 < iVar1) {
     do {
-      piVar3 = Menu_GetMatchingItemByNumber((itemDef_t *)0x0,param_2,iVar6,param_3);
-      if (piVar3 != (itemDef_t *)0x0) {
+      piVar2 = Menu_GetMatchingItemByNumber((itemDef_t *)0x0,param_2,iVar5,param_3);
+      if (piVar2 != (itemDef_t *)0x0) {
         if (param_4 == 0) {
-          bVar5 = Window_HasFocus(LVar1,&piVar3->window);
-          if (bVar5) {
-            pUVar4 = UI_GetClientDC(LVar1);
-            Item_ClearFocus(pUVar4,piVar3);
+          bVar4 = Window_HasFocus(param_1,&piVar2->window);
+          if (bVar4) {
+            pUVar3 = UI_GetClientDC(param_1);
+            Item_ClearFocus(pUVar3,piVar2);
           }
           Sys_EnterUIOwnership();
-          Window_RemoveDynamicFlags(LVar1,&piVar3->window,4);
+          Window_RemoveDynamicFlags(param_1,&piVar2->window,4);
           Sys_LeaveUIOwnership();
         }
         else {
-          Window_AddDynamicFlags(LVar1,&piVar3->window,4);
+          Window_AddDynamicFlags(param_1,&piVar2->window,4);
         }
       }
-      iVar6 = iVar6 + 1;
-    } while (iVar6 < iVar2);
+      iVar5 = iVar5 + 1;
+    } while (iVar5 < iVar1);
   }
-  __restgprlr_25();
   return;
 }
 
 
 // 825BC740  Menu_FadeItemByName  (ui/ui_shared.cpp:1057)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
@@ -1226,36 +1174,33 @@ void Menu_ShowItemByName(LocalClientNum_t param_1,menuDef_t *param_2,char *param
 void Menu_FadeItemByName(LocalClientNum_t param_1,menuDef_t *param_2,char *param_3,int param_4)
 
 {
-  LocalClientNum_t LVar1;
-  int iVar2;
-  itemDef_t *piVar3;
+  int iVar1;
+  itemDef_t *piVar2;
+  int iVar3;
   int iVar4;
-  int iVar5;
   
-  LVar1 = __savegprlr_25(param_1);
-  iVar2 = Menu_ItemsMatchingGroup(param_2,param_3);
-  iVar5 = 0;
-  if (0 < iVar2) {
+  iVar1 = Menu_ItemsMatchingGroup(param_2,param_3);
+  iVar4 = 0;
+  if (0 < iVar1) {
     do {
-      piVar3 = Menu_GetMatchingItemByNumber((itemDef_t *)0x0,param_2,iVar5,param_3);
-      if (piVar3 != (itemDef_t *)0x0) {
+      piVar2 = Menu_GetMatchingItemByNumber((itemDef_t *)0x0,param_2,iVar4,param_3);
+      if (piVar2 != (itemDef_t *)0x0) {
         if (param_4 == 0) {
-          Window_AddDynamicFlags(LVar1,&piVar3->window,0x24);
+          Window_AddDynamicFlags(param_1,&piVar2->window,0x24);
           Sys_EnterUIOwnership();
-          iVar4 = 0x10;
+          iVar3 = 0x10;
         }
         else {
-          Window_AddDynamicFlags(LVar1,&piVar3->window,0x14);
+          Window_AddDynamicFlags(param_1,&piVar2->window,0x14);
           Sys_EnterUIOwnership();
-          iVar4 = 0x20;
+          iVar3 = 0x20;
         }
-        Window_RemoveDynamicFlags(LVar1,&piVar3->window,iVar4);
+        Window_RemoveDynamicFlags(param_1,&piVar2->window,iVar3);
         Sys_LeaveUIOwnership();
       }
-      iVar5 = iVar5 + 1;
-    } while (iVar5 < iVar2);
+      iVar4 = iVar4 + 1;
+    } while (iVar4 < iVar1);
   }
-  __restgprlr_25();
   return;
 }
 
@@ -1351,6 +1296,8 @@ void Menus_AddToOpenStack(UiContext *param_1,menuDef_t *param_2)
 
 // 825BC9B8  Menus_MenuIsInStack  (ui/ui_shared.cpp:1145)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
@@ -1358,43 +1305,37 @@ void Menus_AddToOpenStack(UiContext *param_1,menuDef_t *param_2)
 int Menus_MenuIsInStack(UiContext *param_1,menuDef_t *param_2)
 
 {
-  ulonglong uVar1;
-  int iVar2;
-  ulonglong uVar3;
-  longlong lVar4;
-  ulonglong uVar5;
-  longlong lVar6;
+  longlong lVar1;
+  longlong lVar2;
   
-  uVar3 = (ulonglong)(int)param_2;
-  uVar1 = __savegprlr_28(param_1);
-  if ((uVar1 & 0xffffffff) == 0) {
+  if (param_1 == (UiContext *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x47c,0,"%s"
                    );
   }
-  if ((uVar3 & 0xffffffff) == 0) {
+  if (param_2 == (menuDef_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x47d,0,"%s"
                    );
   }
-  uVar5 = (ulonglong)*(uint *)((int)uVar1 + 0xa78);
-  lVar6 = uVar5 - 1;
-  if (-1 < lVar6) {
-    lVar4 = (uVar5 + 0x28d & 0x3fffffff) * 4 + uVar1;
+  lVar2 = (ulonglong)(uint)param_1->openMenuCount - 1;
+  if (-1 < lVar2) {
+    lVar1 = ((ulonglong)(uint)param_1->openMenuCount + 0x28d & 0x3fffffff) * 4 +
+            (longlong)(int)param_1;
     do {
-      if ((ulonglong)*(uint *)lVar4 == (uVar3 & 0xffffffff)) {
-        iVar2 = __restgprlr_28(1);
-        return iVar2;
+      if ((menuDef_t *)*(int *)lVar1 == param_2) {
+        return 1;
       }
-      lVar6 = lVar6 + -1;
-      lVar4 = lVar4 + -4;
-    } while (-1 < lVar6);
+      lVar2 = lVar2 + -1;
+      lVar1 = lVar1 + -4;
+    } while (-1 < lVar2);
   }
-  iVar2 = __restgprlr_28(0);
-  return iVar2;
+  return 0;
 }
 
 
 // 825BCA70  Menus_FindByName  (ui/ui_shared.cpp:1162)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
@@ -1404,31 +1345,28 @@ menuDef_t * Menus_FindByName(UiContext *param_1,char *param_2)
 {
   int iVar1;
   int iVar2;
-  menuDef_t *pmVar3;
-  int iVar4;
-  int *piVar5;
+  menuDef_t **ppmVar3;
   
-  iVar1 = __savegprlr_28(param_1);
-  iVar4 = 0;
-  if (0 < *(int *)(iVar1 + 0xa34)) {
-    piVar5 = (int *)(iVar1 + 0x34);
+  iVar2 = 0;
+  if (0 < param_1->menuCount) {
+    ppmVar3 = param_1->Menus;
     do {
-      iVar2 = I_stricmp(*(char **)(*piVar5 + 4),param_2);
-      if (iVar2 == 0) {
-        pmVar3 = (menuDef_t *)__restgprlr_28(*(undefined4 *)((iVar4 + 0xd) * 4 + iVar1));
-        return pmVar3;
+      iVar1 = I_stricmp(((*ppmVar3)->window).name,param_2);
+      if (iVar1 == 0) {
+        return param_1->Menus[iVar2];
       }
-      iVar4 = iVar4 + 1;
-      piVar5 = piVar5 + 1;
-    } while (iVar4 < *(int *)(iVar1 + 0xa34));
+      iVar2 = iVar2 + 1;
+      ppmVar3 = ppmVar3 + 1;
+    } while (iVar2 < param_1->menuCount);
   }
-  pmVar3 = (menuDef_t *)__restgprlr_28(0);
-  return pmVar3;
+  return (menuDef_t *)0x0;
 }
 
 
 // 825BCAE8  Menus_HideByName  (ui/ui_shared.cpp:1175)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
@@ -1437,34 +1375,31 @@ void Menus_HideByName(UiContext *param_1,char *param_2)
 
 {
   LocalClientNum_t LVar1;
-  UiContext *pUVar2;
-  menuDef_t *pmVar3;
-  ulonglong uVar4;
+  menuDef_t *pmVar2;
   
-  uVar4 = (ulonglong)(int)param_2;
-  pUVar2 = (UiContext *)__savegprlr_28(param_1);
-  if (pUVar2 == (UiContext *)0x0) {
+  if (param_1 == (UiContext *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x49a,0,"%s"
                    );
   }
-  if ((uVar4 & 0xffffffff) == 0) {
+  if (param_2 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x49b,0,"%s"
                    );
   }
-  pmVar3 = Menus_FindByName(pUVar2,(char *)uVar4);
-  if (pmVar3 != (menuDef_t *)0x0) {
-    LVar1 = pUVar2->localClientNum;
+  pmVar2 = Menus_FindByName(param_1,param_2);
+  if (pmVar2 != (menuDef_t *)0x0) {
+    LVar1 = param_1->localClientNum;
     Sys_EnterUIOwnership();
-    Window_RemoveDynamicFlags(LVar1,&pmVar3->window,4);
+    Window_RemoveDynamicFlags(LVar1,&pmVar2->window,4);
     Sys_LeaveUIOwnership();
   }
-  __restgprlr_28();
   return;
 }
 
 
 // 825BCB90  Menus_ShowByName  (ui/ui_shared.cpp:1188)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
@@ -1472,31 +1407,28 @@ void Menus_HideByName(UiContext *param_1,char *param_2)
 void Menus_ShowByName(UiContext *param_1,char *param_2)
 
 {
-  UiContext *pUVar1;
-  menuDef_t *pmVar2;
-  ulonglong uVar3;
+  menuDef_t *pmVar1;
   
-  uVar3 = (ulonglong)(int)param_2;
-  pUVar1 = (UiContext *)__savegprlr_28(param_1);
-  if (pUVar1 == (UiContext *)0x0) {
+  if (param_1 == (UiContext *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x4a7,0,"%s"
                    );
   }
-  if ((uVar3 & 0xffffffff) == 0) {
+  if (param_2 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x4a8,0,"%s"
                    );
   }
-  pmVar2 = Menus_FindByName(pUVar1,(char *)uVar3);
-  if (pmVar2 != (menuDef_t *)0x0) {
-    Window_AddDynamicFlags(pUVar1->localClientNum,&pmVar2->window,4);
+  pmVar1 = Menus_FindByName(param_1,param_2);
+  if (pmVar1 != (menuDef_t *)0x0) {
+    Window_AddDynamicFlags(param_1->localClientNum,&pmVar1->window,4);
   }
-  __restgprlr_28();
   return;
 }
 
 
 // 825BCC30  Item_NewsTicker_Init  (ui/ui_shared.cpp:1201)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
@@ -1504,42 +1436,34 @@ void Menus_ShowByName(UiContext *param_1,char *param_2)
 void Item_NewsTicker_Init(UiContext *param_1,itemDef_t *param_2)
 
 {
-  uint uVar1;
-  uint *puVar2;
-  newsTickerDef_s *pnVar3;
-  int iVar5;
-  char *pcVar6;
-  ulonglong uVar7;
-  itemDef_t *piVar4;
+  LocalClientNum_t LVar1;
+  newsTickerDef_s *pnVar2;
+  int iVar3;
+  char *pcVar4;
   
-  uVar7 = (ulonglong)(int)param_2;
-  puVar2 = (uint *)__savegprlr_29(param_1);
-  if (3 < *puVar2) {
+  if (LOCAL_CLIENT_3 < param_1->localClientNum) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x4ba,0,
                     "dc->localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)"
                    );
   }
-  if ((uVar7 & 0xffffffff) == 0) {
+  if (param_2 == (itemDef_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_utils_api.h",0x24,0,"%s"
                    );
   }
-  piVar4 = (itemDef_t *)uVar7;
-  pnVar3 = Item_GetNewsTickerDef(piVar4);
-  uVar1 = *puVar2;
-  iVar5 = Sys_Milliseconds();
-  g_tickerInfo[uVar1].lastTime = iVar5;
-  g_tickerInfo[uVar1].x = 0.0;
-  g_tickerInfo[uVar1].y = (piVar4->window).rect.h;
-  pcVar6 = NewsFeed_Get(pnVar3->feedId);
-  if (pcVar6 != (char *)0x0) {
-    g_tickerInfo[uVar1].state = TICKER_MOVE_IN;
-    __restgprlr_29();
+  pnVar2 = Item_GetNewsTickerDef(param_2);
+  LVar1 = param_1->localClientNum;
+  iVar3 = Sys_Milliseconds();
+  g_tickerInfo[LVar1].lastTime = iVar3;
+  g_tickerInfo[LVar1].x = 0.0;
+  g_tickerInfo[LVar1].y = (param_2->window).rect.h;
+  pcVar4 = NewsFeed_Get(pnVar2->feedId);
+  if (pcVar4 != (char *)0x0) {
+    g_tickerInfo[LVar1].state = TICKER_MOVE_IN;
     return;
   }
-  if (piVar4->text == (char *)0x0) {
-    g_tickerInfo[uVar1].state = TICKER_STOPPED;
+  if (param_2->text == (char *)0x0) {
+    g_tickerInfo[LVar1].state = TICKER_STOPPED;
   }
-  __restgprlr_29();
   return;
 }
 
@@ -1563,6 +1487,8 @@ void Item_TextVScroll_Init(UiContext *param_1,itemDef_t *param_2)
 
 // 825BCD50  Menu_InitItems  (ui/ui_shared.cpp:1250)
 
+/* WARNING: Function: __savegprlr_20 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_20 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
@@ -1570,62 +1496,61 @@ void Item_TextVScroll_Init(UiContext *param_1,itemDef_t *param_2)
 void Menu_InitItems(UiContext *param_1,menuDef_t *param_2)
 
 {
-  uint uVar1;
+  LocalClientNum_t LVar1;
   itemDef_t *piVar2;
-  uint *puVar3;
-  textScrollDef_s *ptVar4;
-  newsTickerDef_s *pnVar5;
-  int iVar6;
-  char *pcVar7;
+  textScrollDef_s *ptVar3;
+  newsTickerDef_s *pnVar4;
+  int iVar5;
+  char *pcVar6;
+  int iVar7;
   int iVar8;
-  int iVar9;
-  double dVar10;
+  double dVar9;
   
-  puVar3 = (uint *)__savegprlr_20(param_1);
-  iVar8 = 0;
+  iVar7 = 0;
   if (0 < param_2->itemCount) {
-    iVar9 = 0;
-    dVar10 = 0.0;
+    iVar8 = 0;
+    dVar9 = 0.0;
     do {
-      piVar2 = *(itemDef_t **)(iVar9 + (int)param_2->items);
+      piVar2 = *(itemDef_t **)(iVar8 + (int)param_2->items);
       if (piVar2->type == 0x14) {
-        if (3 < *puVar3) {
+        if (LOCAL_CLIENT_3 < param_1->localClientNum) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x4ba,
                           0,
                           "dc->localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)"
                          );
         }
-        pnVar5 = Item_GetNewsTickerDef(piVar2);
-        uVar1 = *puVar3;
-        iVar6 = Sys_Milliseconds();
-        g_tickerInfo[uVar1].x = (float)dVar10;
-        g_tickerInfo[uVar1].lastTime = iVar6;
-        g_tickerInfo[uVar1].y = (piVar2->window).rect.h;
-        pcVar7 = NewsFeed_Get(pnVar5->feedId);
-        if (pcVar7 == (char *)0x0) {
+        pnVar4 = Item_GetNewsTickerDef(piVar2);
+        LVar1 = param_1->localClientNum;
+        iVar5 = Sys_Milliseconds();
+        g_tickerInfo[LVar1].x = (float)dVar9;
+        g_tickerInfo[LVar1].lastTime = iVar5;
+        g_tickerInfo[LVar1].y = (piVar2->window).rect.h;
+        pcVar6 = NewsFeed_Get(pnVar4->feedId);
+        if (pcVar6 == (char *)0x0) {
           if (piVar2->text == (char *)0x0) {
-            g_tickerInfo[uVar1].state = TICKER_STOPPED;
+            g_tickerInfo[LVar1].state = TICKER_STOPPED;
           }
         }
         else {
-          g_tickerInfo[uVar1].state = TICKER_MOVE_IN;
+          g_tickerInfo[LVar1].state = TICKER_MOVE_IN;
         }
       }
       else if (piVar2->type == 0x15) {
-        ptVar4 = Item_GetTextScrollDef(piVar2);
-        ptVar4->startTime = puVar3[2];
+        ptVar3 = Item_GetTextScrollDef(piVar2);
+        ptVar3->startTime = param_1->realTime;
       }
-      iVar8 = iVar8 + 1;
-      iVar9 = iVar9 + 4;
-    } while (iVar8 < param_2->itemCount);
+      iVar7 = iVar7 + 1;
+      iVar8 = iVar8 + 4;
+    } while (iVar7 < param_2->itemCount);
   }
-  __restgprlr_20();
   return;
 }
 
 
 // 825C9430  Menu_LoseFocusDueToOpen  (ui/ui_shared.cpp:1272)
 
+/* WARNING: Function: __savegprlr_19 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_19 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
@@ -1635,66 +1560,61 @@ void Menu_LoseFocusDueToOpen(UiContext *param_1,menuDef_t *param_2)
 {
   LocalClientNum_t LVar1;
   itemDef_t *piVar2;
-  int iVar3;
-  UiContext *pUVar4;
-  bool bVar5;
-  bool bVar6;
-  ulonglong uVar7;
-  int iVar8;
-  int iVar9;
+  bool bVar3;
+  bool bVar4;
+  int iVar5;
+  int iVar6;
   
-  uVar7 = (ulonglong)(int)param_2;
-  pUVar4 = (UiContext *)__savegprlr_19(param_1);
-  if (pUVar4 == (UiContext *)0x0) {
+  if (param_1 == (UiContext *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x4fe,0,"%s"
                    );
   }
-  if ((uVar7 & 0xffffffff) == 0) {
+  if (param_2 == (menuDef_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x4ff,0,"%s"
                    );
   }
-  iVar3 = (int)uVar7;
-  bVar5 = Window_HasFocus(pUVar4->localClientNum,(windowDef_t *)(iVar3 + 4));
-  if (bVar5) {
-    LVar1 = pUVar4->localClientNum;
+  bVar3 = Window_HasFocus(param_1->localClientNum,&param_2->window);
+  if (bVar3) {
+    LVar1 = param_1->localClientNum;
     Sys_EnterUIOwnership();
-    Window_RemoveDynamicFlags(LVar1,(windowDef_t *)(iVar3 + 4),2);
+    Window_RemoveDynamicFlags(LVar1,&param_2->window,2);
     Sys_LeaveUIOwnership();
-    bVar5 = false;
-    iVar8 = 0;
-    if (0 < *(int *)(iVar3 + 0xb4)) {
-      iVar9 = 0;
+    bVar3 = false;
+    iVar5 = 0;
+    if (0 < param_2->itemCount) {
+      iVar6 = 0;
       do {
-        bVar6 = Window_HasFocus(pUVar4->localClientNum,
-                                *(windowDef_t **)(*(int *)(iVar3 + 0xb8) + iVar9));
-        if (bVar6) {
-          if (*(int *)(*(int *)(*(int *)(iVar3 + 0xb8) + iVar9) + 0x158) != 0) {
+        bVar4 = Window_HasFocus(param_1->localClientNum,
+                                *(windowDef_t **)((int)param_2->items + iVar6));
+        if (bVar4) {
+          if (*(int *)(*(int *)((int)param_2->items + iVar6) + 0x158) != 0) {
             if ((uiscript_verbose->current).enabled != false) {
               Com_Printf(0xd,
                          "UISCRIPT - LoseFocusDueToOpen - Calling leaveFocus() - Item is \'%s\', parent menu is \'%s\'\n"
                         );
             }
-            piVar2 = *(itemDef_t **)(*(int *)(iVar3 + 0xb8) + iVar9);
-            Item_HandleEvent(pUVar4,piVar2,piVar2->leaveFocus);
+            piVar2 = *(itemDef_t **)((int)param_2->items + iVar6);
+            Item_HandleEvent(param_1,piVar2,piVar2->leaveFocus);
           }
-          if (bVar5) {
+          if (bVar3) {
             MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",
                             0x517,0,"%s");
           }
-          bVar5 = true;
+          bVar3 = true;
         }
-        iVar8 = iVar8 + 1;
-        iVar9 = iVar9 + 4;
-      } while (iVar8 < *(int *)(iVar3 + 0xb4));
+        iVar5 = iVar5 + 1;
+        iVar6 = iVar6 + 4;
+      } while (iVar5 < param_2->itemCount);
     }
   }
-  __restgprlr_19();
   return;
 }
 
 
 // 825C95F0  Menu_CallOnFocusDueToOpen  (ui/ui_shared.cpp:1313)
 
+/* WARNING: Function: __savegprlr_20 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_20 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
@@ -1704,28 +1624,26 @@ void Menu_CallOnFocusDueToOpen(UiContext *param_1,menuDef_t *param_2)
 {
   itemDef_t *piVar1;
   bool bVar2;
-  UiContext *pUVar3;
-  bool bVar4;
+  bool bVar3;
+  int iVar4;
   int iVar5;
-  int iVar6;
   
-  pUVar3 = (UiContext *)__savegprlr_20(param_1);
   bVar2 = false;
-  iVar5 = 0;
+  iVar4 = 0;
   if (0 < param_2->itemCount) {
-    iVar6 = 0;
+    iVar5 = 0;
     do {
-      bVar4 = Window_HasFocus(pUVar3->localClientNum,*(windowDef_t **)(iVar6 + (int)param_2->items))
-      ;
-      if (bVar4) {
-        if (*(int *)(*(int *)(iVar6 + (int)param_2->items) + 0x150) != 0) {
+      bVar3 = Window_HasFocus(param_1->localClientNum,*(windowDef_t **)(iVar5 + (int)param_2->items)
+                             );
+      if (bVar3) {
+        if (*(int *)(*(int *)(iVar5 + (int)param_2->items) + 0x150) != 0) {
           if ((uiscript_verbose->current).enabled != false) {
             Com_Printf(0xd,
                        "UISCRIPT - OnFocusDueToOpen - Calling onFocus() - Item is \'%s\', parent menu is \'%s\'\n"
                       );
           }
-          piVar1 = *(itemDef_t **)(iVar6 + (int)param_2->items);
-          Item_HandleEvent(pUVar3,piVar1,piVar1->onFocus);
+          piVar1 = *(itemDef_t **)(iVar5 + (int)param_2->items);
+          Item_HandleEvent(param_1,piVar1,piVar1->onFocus);
         }
         if (bVar2) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x536,
@@ -1733,17 +1651,18 @@ void Menu_CallOnFocusDueToOpen(UiContext *param_1,menuDef_t *param_2)
         }
         bVar2 = true;
       }
-      iVar5 = iVar5 + 1;
-      iVar6 = iVar6 + 4;
-    } while (iVar5 < param_2->itemCount);
+      iVar4 = iVar4 + 1;
+      iVar5 = iVar5 + 4;
+    } while (iVar4 < param_2->itemCount);
   }
-  __restgprlr_20();
   return;
 }
 
 
 // 825C9730  Menu_CallOnFocusDueToClose  (ui/ui_shared.cpp:1344)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
@@ -1751,37 +1670,32 @@ void Menu_CallOnFocusDueToOpen(UiContext *param_1,menuDef_t *param_2)
 void Menu_CallOnFocusDueToClose(UiContext *param_1,menuDef_t *param_2)
 
 {
-  UiContext *pUVar1;
-  ulonglong uVar2;
-  menuDef_t *pmVar3;
   itemDef_t iStack_200;
   
-  uVar2 = (ulonglong)(int)param_2;
-  pUVar1 = (UiContext *)__savegprlr_28(param_1);
-  if (pUVar1 == (UiContext *)0x0) {
+  if (param_1 == (UiContext *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x543,0,"%s"
                    );
   }
-  if ((uVar2 & 0xffffffff) == 0) {
+  if (param_2 == (menuDef_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x544,0,"%s"
                    );
   }
-  pmVar3 = (menuDef_t *)uVar2;
-  if (pmVar3->data->onFocusDueToClose != (MenuEventHandlerSet *)0x0) {
+  if (param_2->data->onFocusDueToClose != (MenuEventHandlerSet *)0x0) {
     memset();
-    iStack_200.parent = pmVar3;
+    iStack_200.parent = param_2;
     if ((uiscript_verbose->current).enabled != false) {
       Com_Printf(0xd,"UISCRIPT - Calling onFocusDueToClose() - Menu is \'%s\'\n");
     }
-    Item_HandleEvent(pUVar1,&iStack_200,pmVar3->data->onFocusDueToClose);
+    Item_HandleEvent(param_1,&iStack_200,param_2->data->onFocusDueToClose);
   }
-  __restgprlr_28();
   return;
 }
 
 
 // 825C9818  Menu_GainFocusDueToClose  (ui/ui_shared.cpp:1365)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
@@ -1789,46 +1703,41 @@ void Menu_CallOnFocusDueToClose(UiContext *param_1,menuDef_t *param_2)
 void Menu_GainFocusDueToClose(UiContext *param_1,menuDef_t *param_2,int param_3)
 
 {
-  UiContext *pUVar1;
-  int iVar2;
-  bool bVar4;
-  ulonglong uVar5;
-  menuDef_t *pmVar3;
+  int iVar1;
+  bool bVar2;
   
-  uVar5 = (ulonglong)(int)param_2;
-  pUVar1 = (UiContext *)__savegprlr_26(param_1);
-  if (pUVar1 == (UiContext *)0x0) {
+  if (param_1 == (UiContext *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x556,0,"%s"
                    );
   }
-  if ((uVar5 & 0xffffffff) == 0) {
+  if (param_2 == (menuDef_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x557,0,"%s"
                    );
   }
-  pmVar3 = (menuDef_t *)uVar5;
-  iVar2 = Menu_CanHaveFocus(pmVar3);
-  if (iVar2 == 0) {
+  iVar1 = Menu_CanHaveFocus(param_2);
+  if (iVar1 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x559,0,"%s"
                    );
   }
-  bVar4 = Window_HasFocus(pUVar1->localClientNum,&pmVar3->window);
-  if (bVar4) {
+  bVar2 = Window_HasFocus(param_1->localClientNum,&param_2->window);
+  if (bVar2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x55a,0,"%s"
                    );
   }
-  Window_AddDynamicFlags(pUVar1->localClientNum,&pmVar3->window,2);
+  Window_AddDynamicFlags(param_1->localClientNum,&param_2->window,2);
   if (param_3 != 0) {
-    Menu_InitItems(pUVar1,pmVar3);
+    Menu_InitItems(param_1,param_2);
   }
-  Menu_CallOnFocusDueToClose(pUVar1,pmVar3);
-  Menu_CallOnFocusDueToOpen(pUVar1,pmVar3);
-  __restgprlr_26();
+  Menu_CallOnFocusDueToClose(param_1,param_2);
+  Menu_CallOnFocusDueToOpen(param_1,param_2);
   return;
 }
 
 
 // 825C9930  Menu_RunCloseScript  (ui/ui_shared.cpp:1382)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
@@ -1836,35 +1745,30 @@ void Menu_GainFocusDueToClose(UiContext *param_1,menuDef_t *param_2,int param_3)
 void Menu_RunCloseScript(UiContext *param_1,menuDef_t *param_2)
 
 {
-  menuDef_t *pmVar1;
-  UiContext *pUVar2;
-  int iVar3;
-  ulonglong uVar4;
+  int iVar1;
   itemDef_t iStack_200;
   
-  uVar4 = (ulonglong)(int)param_2;
-  pUVar2 = (UiContext *)__savegprlr_29(param_1);
-  if ((uVar4 & 0xffffffff) == 0) {
+  if (param_2 == (menuDef_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x567,0,"%s"
                    );
   }
-  pmVar1 = (menuDef_t *)uVar4;
-  iVar3 = Window_IsVisible(pUVar2->localClientNum,&pmVar1->window);
-  if ((iVar3 != 0) && (pmVar1->data->onClose != (MenuEventHandlerSet *)0x0)) {
+  iVar1 = Window_IsVisible(param_1->localClientNum,&param_2->window);
+  if ((iVar1 != 0) && (param_2->data->onClose != (MenuEventHandlerSet *)0x0)) {
     memset();
-    iStack_200.parent = pmVar1;
+    iStack_200.parent = param_2;
     if ((uiscript_verbose->current).enabled != false) {
       Com_Printf(0xd,"UISCRIPT - Calling onClose() - Menu is \'%s\'\n");
     }
-    Item_HandleEvent(pUVar2,&iStack_200,pmVar1->data->onClose);
+    Item_HandleEvent(param_1,&iStack_200,param_2->data->onClose);
   }
-  __restgprlr_29();
   return;
 }
 
 
 // 825C9A08  Menu_FocusNext  (ui/ui_shared.cpp:1402)
 
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
@@ -1874,30 +1778,25 @@ void Menu_FocusNext(UiContext *param_1)
 {
   menuDef_t *pmVar1;
   LocalClientNum_t LVar2;
-  UiContext *pUVar3;
-  ulonglong uVar4;
-  int iVar5;
-  longlong lVar6;
-  longlong lVar7;
+  int iVar3;
+  longlong lVar4;
+  longlong lVar5;
   
-  uVar4 = __savegprlr_22(param_1);
-  if ((uVar4 & 0xffffffff) == 0) {
+  if (param_1 == (UiContext *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x57e,0,"%s"
                    );
   }
-  pUVar3 = (UiContext *)uVar4;
-  lVar7 = (ulonglong)(uint)pUVar3->openMenuCount - 1;
-  if (lVar7 < 0) {
-LAB_825c9b14:
-    __restgprlr_22();
+  lVar5 = (ulonglong)(uint)param_1->openMenuCount - 1;
+  if (lVar5 < 0) {
     return;
   }
-  lVar6 = ((ulonglong)(uint)pUVar3->openMenuCount + 0x28d & 0x3fffffff) * 4 + uVar4;
+  lVar4 = ((ulonglong)(uint)param_1->openMenuCount + 0x28d & 0x3fffffff) * 4 +
+          (longlong)(int)param_1;
   do {
-    pmVar1 = (menuDef_t *)*(undefined4 *)lVar6;
-    iVar5 = Menu_CanHaveFocus(pmVar1);
-    if (iVar5 != 0) {
-      LVar2 = pUVar3->localClientNum;
+    pmVar1 = (menuDef_t *)*(undefined4 *)lVar4;
+    iVar3 = Menu_CanHaveFocus(pmVar1);
+    if (iVar3 != 0) {
+      LVar2 = param_1->localClientNum;
       if (&pmVar1->window == (windowDef_t *)0x0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\../ui/ui_utils.h",0x54,
                         0,"%s");
@@ -1909,14 +1808,13 @@ LAB_825c9b14:
                        );
       }
       if (((pmVar1->window).dynamicFlags[LVar2] & 4U) != 0) {
-        Menu_GainFocusDueToClose(pUVar3,pmVar1,pmVar1->data->fullScreen);
-        goto LAB_825c9b14;
+        Menu_GainFocusDueToClose(param_1,pmVar1,pmVar1->data->fullScreen);
+        return;
       }
     }
-    lVar7 = lVar7 + -1;
-    lVar6 = lVar6 + -4;
-    if (lVar7 < 0) {
-      __restgprlr_22();
+    lVar5 = lVar5 + -1;
+    lVar4 = lVar4 + -4;
+    if (lVar5 < 0) {
       return;
     }
   } while( true );
@@ -1925,16 +1823,15 @@ LAB_825c9b14:
 
 // 825BCE78  Menus_EndEdit  (ui/ui_shared.cpp:1421)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 
 void Menus_EndEdit(menuDef_t *param_1)
 
 {
-  menuDef_t *pmVar1;
-  
-  pmVar1 = (menuDef_t *)__savegprlr_27(param_1);
-  if (pmVar1 == (menuDef_t *)0x0) {
+  if (param_1 == (menuDef_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x58e,0,"%s"
                    );
   }
@@ -1943,17 +1840,18 @@ void Menus_EndEdit(menuDef_t *param_1)
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x592,0,
                       "%s");
     }
-    if (g_editItem->parent == pmVar1) {
+    if (g_editItem->parent == param_1) {
       g_editingField = 0;
     }
   }
-  __restgprlr_27();
   return;
 }
 
 
 // 825C9B20  Menus_ErrorCleanup  (ui/ui_shared.cpp:1434)
 
+/* WARNING: Function: __savegprlr_21 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_21 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
@@ -1964,26 +1862,24 @@ void Menus_ErrorCleanup(UiContext *param_1)
   menuDef_t *pmVar1;
   LocalClientNum_t LVar2;
   bool bVar3;
-  UiContext *pUVar4;
-  bool bVar5;
-  int iVar6;
-  menuDef_t **ppmVar7;
-  windowDef_t *pwVar8;
+  bool bVar4;
+  int iVar5;
+  menuDef_t **ppmVar6;
+  windowDef_t *pwVar7;
   
-  pUVar4 = (UiContext *)__savegprlr_21(param_1);
-  if (pUVar4 == (UiContext *)0x0) {
+  if (param_1 == (UiContext *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x59f,0,"%s"
                    );
   }
   bVar3 = false;
-  iVar6 = 0;
-  if (0 < pUVar4->openMenuCount) {
-    ppmVar7 = pUVar4->menuStack;
+  iVar5 = 0;
+  if (0 < param_1->openMenuCount) {
+    ppmVar6 = param_1->menuStack;
     do {
-      pmVar1 = *ppmVar7;
-      LVar2 = pUVar4->localClientNum;
-      pwVar8 = &pmVar1->window;
-      if (pwVar8 == (windowDef_t *)0x0) {
+      pmVar1 = *ppmVar6;
+      LVar2 = param_1->localClientNum;
+      pwVar7 = &pmVar1->window;
+      if (pwVar7 == (windowDef_t *)0x0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\../ui/ui_utils.h",0x5b,
                         0,"%s");
       }
@@ -1993,37 +1889,38 @@ void Menus_ErrorCleanup(UiContext *param_1)
                         "localClientNum doesn\'t index MAX_POSSIBLE_LOCAL_CLIENTS\n\t%i not in [0, %i)"
                        );
       }
-      if ((pwVar8->dynamicFlags[LVar2] & 0x80U) != 0) {
+      if ((pwVar7->dynamicFlags[LVar2] & 0x80U) != 0) {
         if (bVar3) {
 LAB_825c9c1c:
           bVar3 = true;
         }
         else {
-          bVar5 = Window_HasFocus(pUVar4->localClientNum,pwVar8);
+          bVar4 = Window_HasFocus(param_1->localClientNum,pwVar7);
           bVar3 = false;
-          if (bVar5) goto LAB_825c9c1c;
+          if (bVar4) goto LAB_825c9c1c;
         }
-        LVar2 = pUVar4->localClientNum;
+        LVar2 = param_1->localClientNum;
         Sys_EnterUIOwnership();
-        Window_RemoveDynamicFlags(LVar2,pwVar8,0x86);
+        Window_RemoveDynamicFlags(LVar2,pwVar7,0x86);
         Sys_LeaveUIOwnership();
-        Menus_RemoveFromOpenStack(pUVar4,pmVar1);
+        Menus_RemoveFromOpenStack(param_1,pmVar1);
         Menus_EndEdit(pmVar1);
       }
-      iVar6 = iVar6 + 1;
-      ppmVar7 = ppmVar7 + 1;
-    } while (iVar6 < pUVar4->openMenuCount);
+      iVar5 = iVar5 + 1;
+      ppmVar6 = ppmVar6 + 1;
+    } while (iVar5 < param_1->openMenuCount);
   }
   if (bVar3) {
-    Menu_FocusNext(pUVar4);
+    Menu_FocusNext(param_1);
   }
-  __restgprlr_21();
   return;
 }
 
 
 // 825C9C88  Menus_ForceClose  (ui/ui_shared.cpp:1463)
 
+/* WARNING: Function: __savegprlr_19 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_19 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
@@ -2034,98 +1931,92 @@ void Menus_ForceClose(UiContext *param_1,menuDef_t *param_2)
   Statement_s *pSVar1;
   LocalClientNum_t LVar2;
   menuDef_t *pmVar3;
-  UiContext *pUVar4;
-  bool bVar9;
+  bool bVar8;
+  int iVar4;
   int iVar5;
-  int iVar6;
-  char *pcVar7;
-  int iVar8;
-  ulonglong uVar10;
-  menuDef_t *pmVar11;
+  char *pcVar6;
+  int iVar7;
+  windowDef_t *pwVar9;
+  int iVar10;
+  menuDef_t **ppmVar11;
   windowDef_t *pwVar12;
-  int iVar13;
-  menuDef_t **ppmVar14;
-  windowDef_t *pwVar15;
   
-  uVar10 = (ulonglong)(int)param_2;
-  pUVar4 = (UiContext *)__savegprlr_19(param_1);
-  if (pUVar4 == (UiContext *)0x0) {
+  if (param_1 == (UiContext *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x5c1,0,"%s"
                    );
   }
-  if ((uVar10 & 0xffffffff) == 0) {
+  if (param_2 == (menuDef_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x5c2,0,"%s"
                    );
   }
-  iVar5 = 0;
-  bVar9 = Sys_IsMainThread();
-  if (bVar9) {
-    iVar5 = R_PopRemoteScreenUpdate();
+  iVar4 = 0;
+  bVar8 = Sys_IsMainThread();
+  if (bVar8) {
+    iVar4 = R_PopRemoteScreenUpdate();
   }
-  pmVar11 = (menuDef_t *)uVar10;
-  iVar6 = Menus_MenuIsInStack(pUVar4,pmVar11);
-  if (iVar6 != 0) {
-    pwVar12 = &pmVar11->window;
-    iVar6 = Window_IsClosing(pUVar4->localClientNum,pwVar12);
-    if (iVar6 == 0) {
-      Window_AddDynamicFlags(pUVar4->localClientNum,pwVar12,0x80);
-      Menu_RunCloseScript(pUVar4,pmVar11);
-      pSVar1 = pmVar11->data->closeSoundExp;
+  iVar5 = Menus_MenuIsInStack(param_1,param_2);
+  if (iVar5 != 0) {
+    pwVar9 = &param_2->window;
+    iVar5 = Window_IsClosing(param_1->localClientNum,pwVar9);
+    if (iVar5 == 0) {
+      Window_AddDynamicFlags(param_1->localClientNum,pwVar9,0x80);
+      Menu_RunCloseScript(param_1,param_2);
+      pSVar1 = param_2->data->closeSoundExp;
       if (pSVar1 != (Statement_s *)0x0) {
-        pcVar7 = GetExpressionResultString(pUVar4->localClientNum,pSVar1);
-        SND_PlayLocalSoundAliasByName(pUVar4->localClientNum,pcVar7,SASYS_UI);
+        pcVar6 = GetExpressionResultString(param_1->localClientNum,pSVar1);
+        SND_PlayLocalSoundAliasByName(param_1->localClientNum,pcVar6,SASYS_UI);
       }
-      bVar9 = Window_HasFocus(pUVar4->localClientNum,pwVar12);
-      LVar2 = pUVar4->localClientNum;
+      bVar8 = Window_HasFocus(param_1->localClientNum,pwVar9);
+      LVar2 = param_1->localClientNum;
       Sys_EnterUIOwnership();
-      Window_RemoveDynamicFlags(LVar2,pwVar12,0x82);
+      Window_RemoveDynamicFlags(LVar2,pwVar9,0x82);
       Sys_LeaveUIOwnership();
-      Menus_RemoveFromOpenStack(pUVar4,pmVar11);
-      if (bVar9) {
-        Menu_FocusNext(pUVar4);
+      Menus_RemoveFromOpenStack(param_1,param_2);
+      if (bVar8) {
+        Menu_FocusNext(param_1);
       }
-      Menus_EndEdit(pmVar11);
-      if ((bVar9) && (0 < pUVar4->openMenuCount)) {
-        ppmVar14 = pUVar4->menuStack;
-        iVar6 = 0;
-        iVar13 = 0;
+      Menus_EndEdit(param_2);
+      if ((bVar8) && (0 < param_1->openMenuCount)) {
+        ppmVar11 = param_1->menuStack;
+        iVar5 = 0;
+        iVar10 = 0;
         do {
-          pmVar3 = *ppmVar14;
-          pwVar15 = &pmVar3->window;
-          iVar8 = Window_IsVisible(pUVar4->localClientNum,pwVar15);
-          if ((iVar8 != 0) && (bVar9 = Window_HasFocus(pUVar4->localClientNum,pwVar15), bVar9))
+          pmVar3 = *ppmVar11;
+          pwVar12 = &pmVar3->window;
+          iVar7 = Window_IsVisible(param_1->localClientNum,pwVar12);
+          if ((iVar7 != 0) && (bVar8 = Window_HasFocus(param_1->localClientNum,pwVar12), bVar8))
           goto LAB_825c9ee4;
-          iVar8 = Menu_CanHaveFocus(pmVar3);
-          if (iVar8 != 0) {
-            iVar6 = iVar6 + 1;
+          iVar7 = Menu_CanHaveFocus(pmVar3);
+          if (iVar7 != 0) {
+            iVar5 = iVar5 + 1;
           }
-          iVar13 = iVar13 + 1;
-          ppmVar14 = ppmVar14 + 1;
-        } while (iVar13 < pUVar4->openMenuCount);
-        if (0 < iVar6) {
-          if (pwVar12->name == (char *)0x0) {
+          iVar10 = iVar10 + 1;
+          ppmVar11 = ppmVar11 + 1;
+        } while (iVar10 < param_1->openMenuCount);
+        if (0 < iVar5) {
+          if (pwVar9->name == (char *)0x0) {
             MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",
                             0x5fc,0,"%s");
           }
           Com_PrintWarning(0xd,
                            "WARNING: No menu has focus after closing %s. There are %d candidates.\n Active menus: \n"
                           );
-          iVar6 = 0;
-          if (0 < pUVar4->openMenuCount) {
+          iVar5 = 0;
+          if (0 < param_1->openMenuCount) {
             do {
               Com_PrintWarning(0xd,"  %d:  %s\n");
-              iVar6 = iVar6 + 1;
-            } while (iVar6 < pUVar4->openMenuCount);
+              iVar5 = iVar5 + 1;
+            } while (iVar5 < param_1->openMenuCount);
           }
         }
       }
     }
   }
 LAB_825c9ee4:
-  pwVar12 = &pmVar11->window;
-  iVar6 = Window_IsClosing(pUVar4->localClientNum,pwVar12);
-  if (iVar6 != 0) {
-    if (pwVar12->name == (char *)0x0) {
+  pwVar9 = &param_2->window;
+  iVar5 = Window_IsClosing(param_1->localClientNum,pwVar9);
+  if (iVar5 != 0) {
+    if (pwVar9->name == (char *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x609,0,
                       "%s");
     }
@@ -2133,21 +2024,22 @@ LAB_825c9ee4:
                      "WARNING: ForceClose/onClose infinite loop detected for menu %s. Please check menu script to make sure there is no loop in the close logic.\n"
                     );
   }
-  LVar2 = pUVar4->localClientNum;
+  LVar2 = param_1->localClientNum;
   Sys_EnterUIOwnership();
-  Window_RemoveDynamicFlags(LVar2,pwVar12,6);
+  Window_RemoveDynamicFlags(LVar2,pwVar9,6);
   Sys_LeaveUIOwnership();
-  bVar9 = Sys_IsMainThread();
-  if (bVar9) {
-    R_PushRemoteScreenUpdate(iVar5);
+  bVar8 = Sys_IsMainThread();
+  if (bVar8) {
+    R_PushRemoteScreenUpdate(iVar4);
   }
-  __restgprlr_19();
   return;
 }
 
 
 // 825C9F70  Menus_CloseRequest  (ui/ui_shared.cpp:1562)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
@@ -2156,42 +2048,38 @@ void Menus_CloseRequest(UiContext *param_1,menuDef_t *param_2)
 
 {
   LocalClientNum_t LVar1;
-  UiContext *pUVar2;
-  int iVar3;
-  bool bVar4;
+  int iVar2;
+  bool bVar3;
   itemDef_t iStack_200;
   
-  pUVar2 = (UiContext *)__savegprlr_28(param_1);
-  iVar3 = Window_IsVisible(pUVar2->localClientNum,&param_2->window);
-  if ((iVar3 == 0) || (param_2->data->onCloseRequest == (MenuEventHandlerSet *)0x0)) {
-    Menus_ForceClose(pUVar2,param_2);
+  iVar2 = Window_IsVisible(param_1->localClientNum,&param_2->window);
+  if ((iVar2 == 0) || (param_2->data->onCloseRequest == (MenuEventHandlerSet *)0x0)) {
+    Menus_ForceClose(param_1,param_2);
   }
   else {
-    iVar3 = 0;
-    bVar4 = Sys_IsMainThread();
-    if (bVar4) {
-      iVar3 = R_PopRemoteScreenUpdate();
+    iVar2 = 0;
+    bVar3 = Sys_IsMainThread();
+    if (bVar3) {
+      iVar2 = R_PopRemoteScreenUpdate();
     }
     memset();
     iStack_200.parent = param_2;
-    Transition_ClearTransitions(pUVar2->localClientNum,param_2);
+    Transition_ClearTransitions(param_1->localClientNum,param_2);
     if ((uiscript_verbose->current).enabled != false) {
       Com_Printf(0xd,"UISCRIPT - Calling onCloseRequest() - Menu is \'%s\'\n");
     }
-    Item_HandleEvent(pUVar2,&iStack_200,param_2->data->onCloseRequest);
-    Transition_CloseWhenDone(pUVar2->localClientNum,param_2);
-    LVar1 = pUVar2->localClientNum;
+    Item_HandleEvent(param_1,&iStack_200,param_2->data->onCloseRequest);
+    Transition_CloseWhenDone(param_1->localClientNum,param_2);
+    LVar1 = param_1->localClientNum;
     Sys_EnterUIOwnership();
     Window_RemoveDynamicFlags(LVar1,&param_2->window,2);
     Sys_LeaveUIOwnership();
-    bVar4 = Sys_IsMainThread();
-    if (bVar4) {
-      R_PushRemoteScreenUpdate(iVar3);
-      __restgprlr_28();
+    bVar3 = Sys_IsMainThread();
+    if (bVar3) {
+      R_PushRemoteScreenUpdate(iVar2);
       return;
     }
   }
-  __restgprlr_28();
   return;
 }
 
@@ -2236,6 +2124,8 @@ void Menus_CloseByName(UiContext *param_1,char *param_2)
 
 // 825CA118  Menus_Escape  (ui/ui_shared.cpp:1618)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
@@ -2243,29 +2133,22 @@ void Menus_CloseByName(UiContext *param_1,char *param_2)
 void Menus_Escape(UiContext *param_1,menuDef_t *param_2)
 
 {
-  menuDef_t *pmVar1;
-  UiContext *pUVar2;
-  int iVar3;
-  ulonglong uVar4;
+  int iVar1;
   itemDef_t iStack_200;
   
-  uVar4 = (ulonglong)(int)param_2;
-  pUVar2 = (UiContext *)__savegprlr_29(param_1);
-  if ((uVar4 & 0xffffffff) == 0) {
+  if (param_2 == (menuDef_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x653,0,"%s"
                    );
   }
-  pmVar1 = (menuDef_t *)uVar4;
-  iVar3 = Window_IsVisible(pUVar2->localClientNum,&pmVar1->window);
-  if ((iVar3 != 0) && (pmVar1->data->onESC != (MenuEventHandlerSet *)0x0)) {
+  iVar1 = Window_IsVisible(param_1->localClientNum,&param_2->window);
+  if ((iVar1 != 0) && (param_2->data->onESC != (MenuEventHandlerSet *)0x0)) {
     memset();
-    iStack_200.parent = pmVar1;
+    iStack_200.parent = param_2;
     if ((uiscript_verbose->current).enabled != false) {
       Com_Printf(0xd,"UISCRIPT - Calling onESC() - Menu is \'%s\'\n");
     }
-    Item_HandleEvent(pUVar2,&iStack_200,pmVar1->data->onESC);
+    Item_HandleEvent(param_1,&iStack_200,param_2->data->onESC);
   }
-  __restgprlr_29();
   return;
 }
 
@@ -2291,6 +2174,8 @@ void Menus_EscByName(UiContext *param_1,char *param_2)
 
 // 825CEFF0  Menus_SetFocusToItem  (ui/ui_shared.cpp:1646)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
@@ -2298,44 +2183,39 @@ void Menus_EscByName(UiContext *param_1,char *param_2)
 void Menus_SetFocusToItem(UiContext *param_1,char *param_2,char *param_3)
 
 {
-  UiContext *pUVar1;
-  menuDef_t *pmVar2;
-  itemDef_t *piVar3;
-  int iVar4;
-  char *pcVar5;
-  double extraout_f1;
-  double dVar6;
+  menuDef_t *pmVar1;
+  itemDef_t *piVar2;
+  int iVar3;
+  char *pcVar4;
+  double in_f1;
   double in_f2;
   
-  pUVar1 = (UiContext *)__savegprlr_28(param_1);
-  dVar6 = extraout_f1;
-  pcVar5 = param_3;
-  pmVar2 = Menus_FindByName(pUVar1,param_2);
-  if (pmVar2 == (menuDef_t *)0x0) {
+  pcVar4 = param_3;
+  pmVar1 = Menus_FindByName(param_1,param_2);
+  if (pmVar1 == (menuDef_t *)0x0) {
     Com_Printf(0xd,"setFocusToItem: could not find menu named \'%s\'\n");
-    __restgprlr_28();
     return;
   }
-  piVar3 = Menu_FindItemByName(pmVar2,param_3);
-  if (piVar3 == (itemDef_t *)0x0) {
+  piVar2 = Menu_FindItemByName(pmVar1,param_3);
+  if (piVar2 == (itemDef_t *)0x0) {
     Com_Printf(0xd,"setFocusToItem: could not find widget named \'%s\' in menu \'%s\'\n");
-    __restgprlr_28();
     return;
   }
-  Window_GetRect(&piVar3->window);
-  iVar4 = Item_SetFocus(pUVar1,piVar3,(float)dVar6,(float)in_f2,(ItemFocusReason)pcVar5);
-  if (iVar4 == 0) {
+  Window_GetRect(&piVar2->window);
+  iVar3 = Item_SetFocus(param_1,piVar2,(float)in_f1,(float)in_f2,(ItemFocusReason)pcVar4);
+  if (iVar3 == 0) {
     Com_PrintError(0xd,
                    "setFocus: error focusing widget \'%s\' (widget was found but could not accept focus)\n"
                   );
   }
-  __restgprlr_28();
   return;
 }
 
 
 // 825CA230  Menus_CloseAll  (ui/ui_shared.cpp:1677)
 
+/* WARNING: Function: __savegprlr_18 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_18 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
@@ -2345,29 +2225,27 @@ void Menus_CloseAll(UiContext *param_1)
 {
   menuDef_t *pmVar1;
   LocalClientNum_t LVar2;
-  UiContext *pUVar3;
-  bool bVar6;
+  bool bVar5;
+  int iVar3;
   int iVar4;
-  int iVar5;
-  int iVar7;
-  menuDef_t **ppmVar8;
-  windowDef_t *pwVar9;
+  int iVar6;
+  menuDef_t **ppmVar7;
+  windowDef_t *pwVar8;
   itemDef_t iStack_250;
   
-  pUVar3 = (UiContext *)__savegprlr_18(param_1);
-  iVar4 = 0;
-  bVar6 = Sys_IsMainThread();
-  if (bVar6) {
-    iVar4 = R_PopRemoteScreenUpdate();
+  iVar3 = 0;
+  bVar5 = Sys_IsMainThread();
+  if (bVar5) {
+    iVar3 = R_PopRemoteScreenUpdate();
   }
-  iVar7 = 0;
-  if (0 < pUVar3->menuCount) {
-    ppmVar8 = pUVar3->Menus;
+  iVar6 = 0;
+  if (0 < param_1->menuCount) {
+    ppmVar7 = param_1->Menus;
     do {
-      pmVar1 = *ppmVar8;
-      LVar2 = pUVar3->localClientNum;
-      pwVar9 = &pmVar1->window;
-      if (pwVar9 == (windowDef_t *)0x0) {
+      pmVar1 = *ppmVar7;
+      LVar2 = param_1->localClientNum;
+      pwVar8 = &pmVar1->window;
+      if (pwVar8 == (windowDef_t *)0x0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\../ui/ui_utils.h",0x54,
                         0,"%s");
       }
@@ -2377,42 +2255,41 @@ void Menus_CloseAll(UiContext *param_1)
                         "localClientNum doesn\'t index MAX_POSSIBLE_LOCAL_CLIENTS\n\t%i not in [0, %i)"
                        );
       }
-      if (((pwVar9->dynamicFlags[LVar2] & 4U) == 0) ||
+      if (((pwVar8->dynamicFlags[LVar2] & 4U) == 0) ||
          (pmVar1->data->onCloseRequest == (MenuEventHandlerSet *)0x0)) {
-        Menus_ForceClose(pUVar3,pmVar1);
+        Menus_ForceClose(param_1,pmVar1);
       }
       else {
-        iVar5 = 0;
-        bVar6 = Sys_IsMainThread();
-        if (bVar6) {
-          iVar5 = R_PopRemoteScreenUpdate();
+        iVar4 = 0;
+        bVar5 = Sys_IsMainThread();
+        if (bVar5) {
+          iVar4 = R_PopRemoteScreenUpdate();
         }
         memset();
         iStack_250.parent = pmVar1;
-        Transition_ClearTransitions(pUVar3->localClientNum,pmVar1);
+        Transition_ClearTransitions(param_1->localClientNum,pmVar1);
         if ((uiscript_verbose->current).enabled != false) {
           Com_Printf(0xd,"UISCRIPT - Calling onCloseRequest() - Menu is \'%s\'\n");
         }
-        Item_HandleEvent(pUVar3,&iStack_250,pmVar1->data->onCloseRequest);
-        Transition_CloseWhenDone(pUVar3->localClientNum,pmVar1);
-        LVar2 = pUVar3->localClientNum;
+        Item_HandleEvent(param_1,&iStack_250,pmVar1->data->onCloseRequest);
+        Transition_CloseWhenDone(param_1->localClientNum,pmVar1);
+        LVar2 = param_1->localClientNum;
         Sys_EnterUIOwnership();
-        Window_RemoveDynamicFlags(LVar2,pwVar9,2);
+        Window_RemoveDynamicFlags(LVar2,pwVar8,2);
         Sys_LeaveUIOwnership();
-        bVar6 = Sys_IsMainThread();
-        if (bVar6) {
-          R_PushRemoteScreenUpdate(iVar5);
+        bVar5 = Sys_IsMainThread();
+        if (bVar5) {
+          R_PushRemoteScreenUpdate(iVar4);
         }
       }
-      iVar7 = iVar7 + 1;
-      ppmVar8 = ppmVar8 + 1;
-    } while (iVar7 < pUVar3->menuCount);
+      iVar6 = iVar6 + 1;
+      ppmVar7 = ppmVar7 + 1;
+    } while (iVar6 < param_1->menuCount);
   }
-  bVar6 = Sys_IsMainThread();
-  if (bVar6) {
-    R_PushRemoteScreenUpdate(iVar4);
+  bVar5 = Sys_IsMainThread();
+  if (bVar5) {
+    R_PushRemoteScreenUpdate(iVar3);
   }
-  __restgprlr_18();
   return;
 }
 
@@ -2443,6 +2320,8 @@ void Menus_CloseAllBehindMain(UiContext *param_1)
 
 // 825CA4A0  Script_Show  (ui/ui_shared.cpp:1719)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
@@ -2452,30 +2331,27 @@ void Script_Show(UiContext *param_1,itemDef_t *param_2,char **param_3)
 {
   menuDef_t *pmVar1;
   LocalClientNum_t LVar2;
-  LocalClientNum_t *pLVar3;
-  int iVar4;
-  itemDef_t *piVar5;
-  int iVar6;
+  int iVar3;
+  itemDef_t *piVar4;
+  int iVar5;
   char acStack_430 [1072];
   
-  pLVar3 = (LocalClientNum_t *)__savegprlr_28(param_1);
-  iVar4 = String_Parse(param_3,acStack_430,0x400);
-  if (iVar4 != 0) {
+  iVar3 = String_Parse(param_3,acStack_430,0x400);
+  if (iVar3 != 0) {
     pmVar1 = param_2->parent;
-    LVar2 = *pLVar3;
-    iVar4 = Menu_ItemsMatchingGroup(pmVar1,acStack_430);
-    iVar6 = 0;
-    if (0 < iVar4) {
+    LVar2 = param_1->localClientNum;
+    iVar3 = Menu_ItemsMatchingGroup(pmVar1,acStack_430);
+    iVar5 = 0;
+    if (0 < iVar3) {
       do {
-        piVar5 = Menu_GetMatchingItemByNumber((itemDef_t *)0x0,pmVar1,iVar6,acStack_430);
-        if (piVar5 != (itemDef_t *)0x0) {
-          Window_AddDynamicFlags(LVar2,&piVar5->window,4);
+        piVar4 = Menu_GetMatchingItemByNumber((itemDef_t *)0x0,pmVar1,iVar5,acStack_430);
+        if (piVar4 != (itemDef_t *)0x0) {
+          Window_AddDynamicFlags(LVar2,&piVar4->window,4);
         }
-        iVar6 = iVar6 + 1;
-      } while (iVar6 < iVar4);
+        iVar5 = iVar5 + 1;
+      } while (iVar5 < iVar3);
     }
   }
-  __restgprlr_28();
   return;
 }
 
@@ -2854,6 +2730,8 @@ void Script_InGameClose(UiContext *param_1,itemDef_t *param_2,char **param_3)
 
 // 825CF1C0  Menu_FocusFirstSelectableItem  (ui/ui_shared.cpp:1918)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
@@ -2861,48 +2739,39 @@ void Script_InGameClose(UiContext *param_1,itemDef_t *param_2,char **param_3)
 itemDef_t * Menu_FocusFirstSelectableItem(UiContext *param_1,menuDef_t *param_2)
 
 {
-  UiContext *pUVar1;
-  int iVar2;
-  itemDef_t *piVar3;
+  int iVar1;
+  ulonglong uVar2;
+  int iVar3;
   ulonglong uVar4;
-  int iVar5;
-  ulonglong uVar6;
-  double extraout_f1;
-  double dVar7;
+  double in_f1;
   double in_f2;
-  float fVar8;
-  float fVar9;
+  float fVar5;
+  float fVar6;
   
-  pUVar1 = (UiContext *)__savegprlr_28(param_1);
-  dVar7 = extraout_f1;
-  Menu_ClearFocus(pUVar1,param_2);
+  Menu_ClearFocus(param_1,param_2);
+  uVar2 = 0;
   uVar4 = 0;
-  uVar6 = 0;
-  Menu_SetCursorItem(pUVar1->localClientNum,param_2,0);
+  Menu_SetCursorItem(param_1->localClientNum,param_2,0);
   if (0 < param_2->itemCount) {
-    iVar5 = 0;
+    iVar3 = 0;
     do {
-      fVar8 = (float)in_f2;
-      in_f2 = (double)fVar8;
-      fVar9 = (float)dVar7;
-      dVar7 = (double)fVar9;
-      iVar2 = Item_SetFocus(pUVar1,*(itemDef_t **)((int)param_2->items + iVar5),fVar9,fVar8,
-                            (ItemFocusReason)uVar4);
-      if (iVar2 != 0) {
-        piVar3 = (itemDef_t *)
-                 __restgprlr_28(*(undefined4 *)
-                                 ((int)((uVar6 & 0xffffffff) << 2) + (int)param_2->items));
-        return piVar3;
+      fVar5 = (float)in_f2;
+      in_f2 = (double)fVar5;
+      fVar6 = (float)in_f1;
+      in_f1 = (double)fVar6;
+      iVar1 = Item_SetFocus(param_1,*(itemDef_t **)((int)param_2->items + iVar3),fVar6,fVar5,
+                            (ItemFocusReason)uVar2);
+      if (iVar1 != 0) {
+        return *(itemDef_t **)((int)((uVar4 & 0xffffffff) << 2) + (int)param_2->items);
       }
-      uVar6 = uVar6 + 1;
-      iVar5 = iVar5 + 4;
-      uVar4 = uVar6;
-      Menu_SetCursorItem(pUVar1->localClientNum,param_2,(int)uVar6);
-    } while ((int)uVar6 < param_2->itemCount);
+      uVar4 = uVar4 + 1;
+      iVar3 = iVar3 + 4;
+      uVar2 = uVar4;
+      Menu_SetCursorItem(param_1->localClientNum,param_2,(int)uVar4);
+    } while ((int)uVar4 < param_2->itemCount);
   }
-  Menu_SetCursorItem(pUVar1->localClientNum,param_2,0);
-  piVar3 = (itemDef_t *)__restgprlr_28(0);
-  return piVar3;
+  Menu_SetCursorItem(param_1->localClientNum,param_2,0);
+  return (itemDef_t *)0x0;
 }
 
 
@@ -2934,6 +2803,8 @@ void Script_FocusFirstInMenu(UiContext *param_1,itemDef_t *param_2,char **param_
 
 // 825CF308  Script_SetFocusByDvar  (ui/ui_shared.cpp:1967)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
@@ -2943,55 +2814,52 @@ void Script_SetFocusByDvar(UiContext *param_1,itemDef_t *param_2,char **param_3)
 {
   menuDef_t *pmVar1;
   itemDef_t *piVar2;
-  UiContext *pUVar3;
+  int iVar3;
   int iVar4;
-  int iVar5;
-  undefined8 uVar6;
-  int iVar7;
-  double extraout_f1;
-  double dVar8;
+  undefined8 uVar5;
+  int iVar6;
+  double in_f1;
   double in_f2;
-  float fVar9;
-  float fVar10;
+  float fVar7;
+  float fVar8;
   char acStack_440 [1088];
   
-  pUVar3 = (UiContext *)__savegprlr_26(param_1);
-  uVar6 = 0x400;
-  dVar8 = extraout_f1;
-  iVar4 = String_Parse(param_3,acStack_440,0x400);
-  if (iVar4 != 0) {
+  uVar5 = 0x400;
+  iVar3 = String_Parse(param_3,acStack_440,0x400);
+  if (iVar3 != 0) {
     pmVar1 = param_2->parent;
     if (pmVar1 == (menuDef_t *)0x0) {
-      uVar6 = 0;
+      uVar5 = 0;
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x7b9,0,
                       "%s");
     }
-    iVar4 = 0;
+    iVar3 = 0;
     if (0 < pmVar1->itemCount) {
-      iVar7 = 0;
+      iVar6 = 0;
       do {
-        piVar2 = *(itemDef_t **)((int)pmVar1->items + iVar7);
+        piVar2 = *(itemDef_t **)((int)pmVar1->items + iVar6);
         if ((piVar2->dvarFlags & 0x10U) != 0) {
           if (piVar2->dvarTest == (char *)0x0) {
             Com_Error(ERR_DROP,"\x15Script_SetFocusByDvar: Item\'s dvarTest field is empty.");
           }
-          iVar5 = I_stricmp(piVar2->dvarTest,acStack_440);
-          if ((iVar5 == 0) && (iVar5 = Item_EnableShowViaDvar(piVar2,0x10), iVar5 != 0)) {
+          iVar4 = I_stricmp(piVar2->dvarTest,acStack_440);
+          if ((iVar4 == 0) && (iVar4 = Item_EnableShowViaDvar(piVar2,0x10), iVar4 != 0)) {
             Window_GetRect(&piVar2->window);
-            fVar9 = (float)in_f2;
-            in_f2 = (double)fVar9;
-            fVar10 = (float)dVar8;
-            dVar8 = (double)fVar10;
-            iVar5 = Item_SetFocus(pUVar3,piVar2,fVar10,fVar9,(ItemFocusReason)uVar6);
-            if (iVar5 != 0) break;
+            fVar7 = (float)in_f2;
+            in_f2 = (double)fVar7;
+            fVar8 = (float)in_f1;
+            in_f1 = (double)fVar8;
+            iVar4 = Item_SetFocus(param_1,piVar2,fVar8,fVar7,(ItemFocusReason)uVar5);
+            if (iVar4 != 0) {
+              return;
+            }
           }
         }
-        iVar4 = iVar4 + 1;
-        iVar7 = iVar7 + 4;
-      } while (iVar4 < pmVar1->itemCount);
+        iVar3 = iVar3 + 1;
+        iVar6 = iVar6 + 4;
+      } while (iVar3 < pmVar1->itemCount);
     }
   }
-  __restgprlr_26();
   return;
 }
 
@@ -3020,6 +2888,8 @@ void Script_SetGameMode(UiContext *param_1,itemDef_t *param_2,char **param_3)
 
 // 825BD0D0  Script_ExecHandler  (ui/ui_shared.cpp:2014)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
@@ -3028,23 +2898,18 @@ void Script_ExecHandler(LocalClientNum_t param_1,int param_2,itemDef_t *param_3,
                        _func___cdecl_void_LocalClientNum_t_int_char_ptr *param_5)
 
 {
-  LocalClientNum_t LVar1;
-  int iVar2;
-  longlong lVar3;
+  int iVar1;
   char acStack_430 [1072];
   
-  lVar3 = (longlong)param_2;
-  LVar1 = __savegprlr_28(param_1,lVar3);
-  iVar2 = String_Parse(param_4,acStack_430,0x3ff);
-  if (iVar2 != 0) {
+  iVar1 = String_Parse(param_4,acStack_430,0x3ff);
+  if (iVar1 != 0) {
     if ((uiscript_verbose->current).enabled != false) {
       Com_Printf(0xd,"UISCRIPT - Executing command \'%s\' - Item is \'%s\', parent menu is \'%s\'\n"
                 );
     }
     I_strncat(acStack_430,0x400,"\n");
-    (*param_5)(LVar1,(int)lVar3,acStack_430);
+    (*param_5)(param_1,param_2,acStack_430);
   }
-  __restgprlr_28();
   return;
 }
 
@@ -3063,6 +2928,8 @@ void Script_AddTextWrapper(LocalClientNum_t param_1,int param_2,char *param_3)
 
 // 825BD1A8  Script_Exec  (ui/ui_shared.cpp:2039)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
@@ -3070,19 +2937,18 @@ void Script_AddTextWrapper(LocalClientNum_t param_1,int param_2,char *param_3)
 void Script_Exec(UiContext *param_1,itemDef_t *param_2,char **param_3)
 
 {
-  LocalClientNum_t *pLVar1;
-  int iVar2;
+  int iVar1;
   
-  pLVar1 = (LocalClientNum_t *)__savegprlr_29(param_1);
-  iVar2 = CL_ControllerIndexFromClientNum(*pLVar1);
-  Script_ExecHandler(*pLVar1,iVar2,param_2,param_3,Script_AddTextWrapper);
-  __restgprlr_29();
+  iVar1 = CL_ControllerIndexFromClientNum(param_1->localClientNum);
+  Script_ExecHandler(param_1->localClientNum,iVar1,param_2,param_3,Script_AddTextWrapper);
   return;
 }
 
 
 // 825BD1F0  Script_ExecFirstActiveClient  (ui/ui_shared.cpp:2045)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
@@ -3090,27 +2956,26 @@ void Script_Exec(UiContext *param_1,itemDef_t *param_2,char **param_3)
 void Script_ExecFirstActiveClient(UiContext *param_1,itemDef_t *param_2,char **param_3)
 
 {
-  LocalClientNum_t *pLVar1;
-  int iVar2;
-  LocalClientNum_t LVar3;
+  int iVar1;
+  LocalClientNum_t LVar2;
   
-  pLVar1 = (LocalClientNum_t *)__savegprlr_29(param_1);
-  iVar2 = CL_GetLocalClientActiveCount();
-  if (iVar2 < 2) {
-    LVar3 = *pLVar1;
+  iVar1 = CL_GetLocalClientActiveCount();
+  if (iVar1 < 2) {
+    LVar2 = param_1->localClientNum;
   }
   else {
-    LVar3 = CL_GetFirstActiveLocalClient();
+    LVar2 = CL_GetFirstActiveLocalClient();
   }
-  iVar2 = CL_ControllerIndexFromClientNum(LVar3);
-  Script_ExecHandler(LVar3,iVar2,param_2,param_3,Script_AddTextWrapper);
-  __restgprlr_29();
+  iVar1 = CL_ControllerIndexFromClientNum(LVar2);
+  Script_ExecHandler(LVar2,iVar1,param_2,param_3,Script_AddTextWrapper);
   return;
 }
 
 
 // 825BD250  Script_ExecNow  (ui/ui_shared.cpp:2058)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
@@ -3118,23 +2983,20 @@ void Script_ExecFirstActiveClient(UiContext *param_1,itemDef_t *param_2,char **p
 void Script_ExecNow(UiContext *param_1,itemDef_t *param_2,char **param_3)
 
 {
-  LocalClientNum_t *pLVar1;
-  bool bVar3;
-  int iVar2;
-  code *pcVar4;
+  bool bVar2;
+  int iVar1;
+  code *pcVar3;
   
-  pLVar1 = (LocalClientNum_t *)__savegprlr_29(param_1);
-  bVar3 = Sys_IsMainThread();
-  if (bVar3) {
-    iVar2 = CL_ControllerIndexFromClientNum(*pLVar1);
-    pcVar4 = Cbuf_ExecuteBuffer;
+  bVar2 = Sys_IsMainThread();
+  if (bVar2) {
+    iVar1 = CL_ControllerIndexFromClientNum(param_1->localClientNum);
+    pcVar3 = Cbuf_ExecuteBuffer;
   }
   else {
-    iVar2 = CL_ControllerIndexFromClientNum(*pLVar1);
-    pcVar4 = Script_AddTextWrapper;
+    iVar1 = CL_ControllerIndexFromClientNum(param_1->localClientNum);
+    pcVar3 = Script_AddTextWrapper;
   }
-  Script_ExecHandler(*pLVar1,iVar2,param_2,param_3,pcVar4);
-  __restgprlr_29();
+  Script_ExecHandler(param_1->localClientNum,iVar1,param_2,param_3,pcVar3);
   return;
 }
 
@@ -3164,6 +3026,8 @@ void Script_ExecKeyPress(UiContext *param_1,itemDef_t *param_2,char **param_3)
 
 // 825BD2B8  Script_ConditionalExecHandler  (ui/ui_shared.cpp:2079)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
@@ -3174,38 +3038,34 @@ void Script_ConditionalExecHandler
                _func___cdecl_void_LocalClientNum_t_int_char_ptr *param_5)
 
 {
-  char *pcVar1;
-  int iVar2;
-  char *pcVar3;
-  char cVar4;
+  int iVar1;
+  char *pcVar2;
+  char cVar3;
   char acStack_c30 [1024];
   char acStack_830 [1024];
   char acStack_430 [1072];
   
-  pcVar1 = (char *)__savegprlr_28(param_1);
-  iVar2 = String_Parse((char **)param_2,acStack_830,0x400);
-  if (iVar2 != 0) {
-    iVar2 = String_Parse((char **)param_2,acStack_430,0x400);
-    if (iVar2 != 0) {
-      iVar2 = String_Parse((char **)param_2,acStack_c30,0x3ff);
-      if (iVar2 != 0) {
-        pcVar3 = Dvar_GetVariantString(acStack_830);
-        cVar4 = (*(code *)param_3)(pcVar3,acStack_430);
-        if (cVar4 != '\0') {
-          I_strncat(acStack_c30,0x400,"\n");
-          pcVar3 = (char *)CL_ControllerIndexFromClientNum((LocalClientNum_t)pcVar1);
-          (*param_4)(pcVar1,pcVar3);
-        }
+  iVar1 = String_Parse((char **)param_2,acStack_830,0x400);
+  if ((iVar1 != 0) && (iVar1 = String_Parse((char **)param_2,acStack_430,0x400), iVar1 != 0)) {
+    iVar1 = String_Parse((char **)param_2,acStack_c30,0x3ff);
+    if (iVar1 != 0) {
+      pcVar2 = Dvar_GetVariantString(acStack_830);
+      cVar3 = (*(code *)param_3)(pcVar2,acStack_430);
+      if (cVar3 != '\0') {
+        I_strncat(acStack_c30,0x400,"\n");
+        pcVar2 = (char *)CL_ControllerIndexFromClientNum(param_1);
+        (*param_4)((char *)param_1,pcVar2);
       }
     }
   }
-  __restgprlr_28();
   return;
 }
 
 
 // 825BD378  Script_ConditionalResponseHandler  (ui/ui_shared.cpp:2098)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
@@ -3217,34 +3077,31 @@ void Script_ConditionalResponseHandler
                _func___cdecl_bool_char_ptr_char_ptr *param_4)
 
 {
-  LocalClientNum_t LVar1;
-  int iVar2;
-  char *pcVar3;
-  bool bVar5;
-  int iVar4;
+  int iVar1;
+  char *pcVar2;
+  bool bVar4;
+  int iVar3;
   char acStack_c30 [1024];
   char acStack_830 [1024];
   char acStack_430 [1072];
   
-  LVar1 = __savegprlr_28(param_1);
-  iVar2 = String_Parse(param_3,acStack_830,0x400);
-  if (((iVar2 != 0) && (iVar2 = String_Parse(param_3,acStack_c30,0x400), iVar2 != 0)) &&
-     (iVar2 = String_Parse(param_3,acStack_430,0x400), iVar2 != 0)) {
-    pcVar3 = Dvar_GetVariantString(acStack_830);
-    bVar5 = (*param_4)(pcVar3,acStack_c30);
-    if (bVar5) {
-      iVar2 = 0;
+  iVar1 = String_Parse(param_3,acStack_830,0x400);
+  if (((iVar1 != 0) && (iVar1 = String_Parse(param_3,acStack_c30,0x400), iVar1 != 0)) &&
+     (iVar1 = String_Parse(param_3,acStack_430,0x400), iVar1 != 0)) {
+    pcVar2 = Dvar_GetVariantString(acStack_830);
+    bVar4 = (*param_4)(pcVar2,acStack_c30);
+    if (bVar4) {
+      iVar1 = 0;
       do {
-        pcVar3 = CL_GetConfigString(iVar2 + 0xbb4);
-        if ((*pcVar3 != '\0') &&
-           (iVar4 = I_stricmp((param_2->parent->window).name,pcVar3), iVar4 == 0)) break;
-        iVar2 = iVar2 + 1;
-      } while (iVar2 < 0x20);
-      pcVar3 = va("cmd mr %i %i %s\n");
-      Cbuf_AddText(LVar1,pcVar3);
+        pcVar2 = CL_GetConfigString(iVar1 + 0xbb4);
+        if ((*pcVar2 != '\0') &&
+           (iVar3 = I_stricmp((param_2->parent->window).name,pcVar2), iVar3 == 0)) break;
+        iVar1 = iVar1 + 1;
+      } while (iVar1 < 0x20);
+      pcVar2 = va("cmd mr %i %i %s\n");
+      Cbuf_AddText(param_1,pcVar2);
     }
   }
-  __restgprlr_28();
   return;
 }
 
@@ -3443,6 +3300,8 @@ void Script_RespondOnDvarFloatValue(UiContext *param_1,itemDef_t *param_2,char *
 
 // 825BD650  Script_ParseLocalVarInParens  (ui/ui_shared.cpp:2211)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
@@ -3452,59 +3311,54 @@ UILocalVar * Script_ParseLocalVarInParens(UiContext *param_1,char **param_2,int 
 {
   char cVar1;
   char cVar2;
-  int iVar3;
-  char **ppcVar4;
-  UILocalVar *pUVar5;
-  longlong lVar6;
-  char *pcVar7;
-  char *pcVar8;
+  UILocalVar *pUVar3;
+  char *pcVar4;
+  char *pcVar5;
   char local_420 [1056];
   
-  lVar6 = (longlong)(int)param_2;
-  iVar3 = __savegprlr_29(param_1,lVar6,param_3);
-  ppcVar4 = (char **)lVar6;
-  String_Parse(ppcVar4,local_420,0x400);
-  pcVar8 = local_420;
-  pcVar7 = "(";
+  String_Parse(param_2,local_420,0x400);
+  pcVar5 = local_420;
+  pcVar4 = "(";
   do {
-    cVar1 = *pcVar8;
-    cVar2 = *pcVar7;
+    cVar1 = *pcVar5;
+    cVar2 = *pcVar4;
     if (cVar1 == '\0') break;
-    pcVar8 = pcVar8 + 1;
-    pcVar7 = pcVar7 + 1;
+    pcVar5 = pcVar5 + 1;
+    pcVar4 = pcVar4 + 1;
   } while (cVar1 == cVar2);
   if (cVar1 != cVar2) {
     Com_Error(ERR_DROP,
               "SetPlayerData: Error at argument %d: no opening parenthesis found after \"localvar\"\n"
              );
   }
-  String_Parse(ppcVar4,local_420,0x400);
-  pUVar5 = UILocalVar_Find((UILocalVarContext *)(iVar3 + 0xa7c),local_420);
-  if (pUVar5 == (UILocalVar *)0x0) {
+  String_Parse(param_2,local_420,0x400);
+  pUVar3 = UILocalVar_Find(&param_1->localVars,local_420);
+  if (pUVar3 == (UILocalVar *)0x0) {
     Com_Error(ERR_DROP,"SetPlayerData: Error at argument %d: \"%s\" is not the name of a localvar\n"
              );
   }
-  String_Parse(ppcVar4,local_420,0x400);
-  pcVar8 = local_420;
-  pcVar7 = ")";
+  String_Parse(param_2,local_420,0x400);
+  pcVar5 = local_420;
+  pcVar4 = ")";
   do {
-    cVar1 = *pcVar8;
-    cVar2 = *pcVar7;
+    cVar1 = *pcVar5;
+    cVar2 = *pcVar4;
     if (cVar1 == '\0') break;
-    pcVar8 = pcVar8 + 1;
-    pcVar7 = pcVar7 + 1;
+    pcVar5 = pcVar5 + 1;
+    pcVar4 = pcVar4 + 1;
   } while (cVar1 == cVar2);
   if (cVar1 != cVar2) {
     Com_Error(ERR_DROP,
               "SetPlayerData: Error at argument %d: no closing parenthesis found after localvar\n");
   }
-  pUVar5 = (UILocalVar *)__restgprlr_29(pUVar5);
-  return pUVar5;
+  return pUVar3;
 }
 
 
 // 825BD770  Script_ParseLocalVarInt  (ui/ui_shared.cpp:2234)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
@@ -3513,34 +3367,29 @@ bool Script_ParseLocalVarInt
                (UiContext *param_1,char *param_2,char **param_3,int param_4,int *param_5)
 
 {
-  UiContext *pUVar1;
-  int iVar2;
-  undefined1 uVar4;
-  UILocalVar *pUVar3;
-  ulonglong uVar5;
+  int iVar1;
+  UILocalVar *pUVar2;
   
-  uVar5 = (ulonglong)(int)param_5;
-  pUVar1 = (UiContext *)__savegprlr_27(param_1);
-  if ((uVar5 & 0xffffffff) == 0) {
+  if (param_5 == (int *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x8bd,0,"%s"
                    );
   }
-  iVar2 = I_stricmp(param_2,"localvarint");
-  if (iVar2 != 0) {
-    *(int *)uVar5 = 0;
-    uVar4 = __restgprlr_27(0);
-    return (bool)uVar4;
+  iVar1 = I_stricmp(param_2,"localvarint");
+  if (iVar1 != 0) {
+    *param_5 = 0;
+    return false;
   }
-  pUVar3 = Script_ParseLocalVarInParens(pUVar1,param_3,param_4);
-  iVar2 = UILocalVar_GetInt(pUVar3);
-  *(int *)uVar5 = iVar2;
-  uVar4 = __restgprlr_27(1);
-  return (bool)uVar4;
+  pUVar2 = Script_ParseLocalVarInParens(param_1,param_3,param_4);
+  iVar1 = UILocalVar_GetInt(pUVar2);
+  *param_5 = iVar1;
+  return true;
 }
 
 
 // 825BD810  Script_ParseLocalVarFloat  (ui/ui_shared.cpp:2254)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
@@ -3549,35 +3398,30 @@ bool Script_ParseLocalVarFloat
                (UiContext *param_1,char *param_2,char **param_3,int param_4,float *param_5)
 
 {
-  UiContext *pUVar1;
-  int iVar2;
-  undefined1 uVar4;
-  UILocalVar *pUVar3;
-  ulonglong uVar5;
-  float fVar6;
+  int iVar1;
+  UILocalVar *pUVar2;
+  float fVar3;
   
-  uVar5 = (ulonglong)(int)param_5;
-  pUVar1 = (UiContext *)__savegprlr_27(param_1);
-  if ((uVar5 & 0xffffffff) == 0) {
+  if (param_5 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x8d1,0,"%s"
                    );
   }
-  iVar2 = I_stricmp(param_2,"localvarfloat");
-  if (iVar2 != 0) {
-    *(float *)uVar5 = 0.0;
-    uVar4 = __restgprlr_27(0);
-    return (bool)uVar4;
+  iVar1 = I_stricmp(param_2,"localvarfloat");
+  if (iVar1 != 0) {
+    *param_5 = 0.0;
+    return false;
   }
-  pUVar3 = Script_ParseLocalVarInParens(pUVar1,param_3,param_4);
-  fVar6 = UILocalVar_GetFloat(pUVar3);
-  *(float *)uVar5 = fVar6;
-  uVar4 = __restgprlr_27(1);
-  return (bool)uVar4;
+  pUVar2 = Script_ParseLocalVarInParens(param_1,param_3,param_4);
+  fVar3 = UILocalVar_GetFloat(pUVar2);
+  *param_5 = fVar3;
+  return true;
 }
 
 
 // 825BD8B0  Script_ParseLocalVarString  (ui/ui_shared.cpp:2274)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
@@ -3587,41 +3431,34 @@ bool Script_ParseLocalVarString
                char *param_6,int param_7)
 
 {
-  UiContext *pUVar1;
-  int iVar2;
-  undefined1 uVar5;
-  UILocalVar *pUVar3;
-  char *pcVar4;
-  ulonglong uVar6;
-  ulonglong uVar7;
+  int iVar1;
+  UILocalVar *pUVar2;
+  char *pcVar3;
   
-  uVar7 = (ulonglong)(int)param_6;
-  uVar6 = (ulonglong)(int)param_5;
-  pUVar1 = (UiContext *)__savegprlr_23(param_1);
-  if ((uVar6 & 0xffffffff) == 0) {
+  if (param_5 == (char **)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x8e5,0,"%s"
                    );
   }
-  if ((uVar7 & 0xffffffff) == 0) {
+  if (param_6 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x8e6,0,"%s"
                    );
   }
-  iVar2 = I_stricmp(param_2,"localvarstring");
-  if (iVar2 != 0) {
-    *(undefined4 *)uVar6 = 0;
-    uVar5 = __restgprlr_23(0);
-    return (bool)uVar5;
+  iVar1 = I_stricmp(param_2,"localvarstring");
+  if (iVar1 != 0) {
+    *param_5 = (char *)0x0;
+    return false;
   }
-  pUVar3 = Script_ParseLocalVarInParens(pUVar1,param_3,param_4);
-  pcVar4 = UILocalVar_GetString(pUVar3,(char *)uVar7,param_7);
-  *(undefined4 *)uVar6 = pcVar4;
-  uVar5 = __restgprlr_23(1);
-  return (bool)uVar5;
+  pUVar2 = Script_ParseLocalVarInParens(param_1,param_3,param_4);
+  pcVar3 = UILocalVar_GetString(pUVar2,param_6,param_7);
+  *param_5 = pcVar3;
+  return true;
 }
 
 
 // 825BD988  Script_ParseTableLookup  (ui/ui_shared.cpp:2296)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
@@ -3633,15 +3470,11 @@ bool Script_ParseTableLookup
 {
   char cVar1;
   char cVar2;
-  UiContext *pUVar3;
-  int iVar4;
-  undefined1 uVar6;
-  bool bVar7;
-  char *pcVar5;
-  ulonglong uVar8;
-  ulonglong uVar9;
-  char *pcVar10;
-  char *pcVar11;
+  int iVar3;
+  bool bVar5;
+  char *pcVar4;
+  char *pcVar6;
+  char *pcVar7;
   int local_1050;
   char *local_104c;
   int local_1048 [2];
@@ -3650,116 +3483,112 @@ bool Script_ParseTableLookup
   char acStack_840 [1024];
   char acStack_440 [1088];
   
-  uVar9 = (ulonglong)(int)param_5;
-  uVar8 = (ulonglong)param_4;
-  pUVar3 = (UiContext *)__savegprlr_25(param_1);
-  if ((uVar8 & 0xffffffff) == 0) {
+  if (param_4 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x903,0,"%s"
                    );
   }
-  if ((uVar9 & 0xffffffff) == 0) {
+  if (param_5 == (char **)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x904,0,"%s"
                    );
   }
-  iVar4 = I_stricmp(param_2,"tablelookup");
-  if (iVar4 != 0) {
-    *(undefined4 *)uVar8 = 0;
-    uVar6 = __restgprlr_25(0);
-    return (bool)uVar6;
+  iVar3 = I_stricmp(param_2,"tablelookup");
+  if (iVar3 != 0) {
+    *(undefined4 *)param_4 = 0;
+    return false;
   }
   String_Parse(param_3,local_1040,0x400);
-  pcVar10 = local_1040;
-  pcVar5 = "(";
+  pcVar6 = local_1040;
+  pcVar4 = "(";
   do {
-    cVar1 = *pcVar10;
-    cVar2 = *pcVar5;
+    cVar1 = *pcVar6;
+    cVar2 = *pcVar4;
     if (cVar1 == '\0') break;
-    pcVar10 = pcVar10 + 1;
-    pcVar5 = pcVar5 + 1;
+    pcVar6 = pcVar6 + 1;
+    pcVar4 = pcVar4 + 1;
   } while (cVar1 == cVar2);
   if (cVar1 != cVar2) {
     Com_Error(ERR_DROP,"Script_ParseTableLookup: no closing parenthesi found\n");
   }
-  iVar4 = String_Parse(param_3,acStack_840,0x400);
-  if (iVar4 != 0) {
+  iVar3 = String_Parse(param_3,acStack_840,0x400);
+  if (iVar3 != 0) {
     String_Parse(param_3,local_1040,0x400);
-    pcVar11 = local_1040;
-    pcVar10 = ",";
-    pcVar5 = pcVar10;
+    pcVar7 = local_1040;
+    pcVar6 = ",";
+    pcVar4 = pcVar6;
     do {
-      cVar1 = *pcVar11;
-      cVar2 = *pcVar5;
+      cVar1 = *pcVar7;
+      cVar2 = *pcVar4;
       if (cVar1 == '\0') break;
-      pcVar11 = pcVar11 + 1;
-      pcVar5 = pcVar5 + 1;
+      pcVar7 = pcVar7 + 1;
+      pcVar4 = pcVar4 + 1;
     } while (cVar1 == cVar2);
     if (cVar1 != cVar2) {
       Com_Error(ERR_DROP,"Script_ParseTableLookup: no separating comma found\n");
     }
-    iVar4 = Int_Parse(param_3,local_1048);
-    if (iVar4 != 0) {
+    iVar3 = Int_Parse(param_3,local_1048);
+    if (iVar3 != 0) {
       String_Parse(param_3,local_1040,0x400);
-      pcVar11 = local_1040;
-      pcVar5 = pcVar10;
+      pcVar7 = local_1040;
+      pcVar4 = pcVar6;
       do {
-        cVar1 = *pcVar11;
-        cVar2 = *pcVar5;
+        cVar1 = *pcVar7;
+        cVar2 = *pcVar4;
         if (cVar1 == '\0') break;
-        pcVar11 = pcVar11 + 1;
-        pcVar5 = pcVar5 + 1;
+        pcVar7 = pcVar7 + 1;
+        pcVar4 = pcVar4 + 1;
       } while (cVar1 == cVar2);
       if (cVar1 != cVar2) {
         Com_Error(ERR_DROP,"Script_ParseTableLookup: no separating comma found\n");
       }
-      iVar4 = String_Parse(param_3,acStack_c40,0x400);
-      if (iVar4 != 0) {
-        bVar7 = Script_ParseLocalVarString
-                          (pUVar3,acStack_c40,param_3,0,&local_104c,acStack_440,0x400);
-        if (bVar7) {
+      iVar3 = String_Parse(param_3,acStack_c40,0x400);
+      if (iVar3 != 0) {
+        bVar5 = Script_ParseLocalVarString
+                          (param_1,acStack_c40,param_3,0,&local_104c,acStack_440,0x400);
+        if (bVar5) {
           I_strncpyz(acStack_c40,local_104c,0x400);
         }
         String_Parse(param_3,local_1040,0x400);
-        pcVar5 = local_1040;
+        pcVar4 = local_1040;
         do {
-          cVar1 = *pcVar5;
-          cVar2 = *pcVar10;
+          cVar1 = *pcVar4;
+          cVar2 = *pcVar6;
           if (cVar1 == '\0') break;
-          pcVar5 = pcVar5 + 1;
-          pcVar10 = pcVar10 + 1;
+          pcVar4 = pcVar4 + 1;
+          pcVar6 = pcVar6 + 1;
         } while (cVar1 == cVar2);
         if (cVar1 != cVar2) {
           Com_Error(ERR_DROP,"Script_ParseTableLookup: no separating comma found\n");
         }
-        iVar4 = Int_Parse(param_3,&local_1050);
-        if (iVar4 != 0) {
+        iVar3 = Int_Parse(param_3,&local_1050);
+        if (iVar3 != 0) {
           String_Parse(param_3,local_1040,0x400);
-          pcVar10 = local_1040;
-          pcVar5 = ")";
+          pcVar6 = local_1040;
+          pcVar4 = ")";
           do {
-            cVar1 = *pcVar10;
-            cVar2 = *pcVar5;
+            cVar1 = *pcVar6;
+            cVar2 = *pcVar4;
             if (cVar1 == '\0') break;
-            pcVar10 = pcVar10 + 1;
-            pcVar5 = pcVar5 + 1;
+            pcVar6 = pcVar6 + 1;
+            pcVar4 = pcVar4 + 1;
           } while (cVar1 == cVar2);
           if (cVar1 != cVar2) {
             Com_Error(ERR_DROP,"Script_ParseTableLookup: no closing parenthesi found\n");
           }
-          pcVar5 = Scr_TableLookupInternal(acStack_840,local_1048[0],acStack_c40,local_1050);
-          *(undefined4 *)uVar8 = pcVar5;
-          uVar6 = __restgprlr_25(1);
-          return (bool)uVar6;
+          pcVar4 = Scr_TableLookupInternal(acStack_840,local_1048[0],acStack_c40,local_1050);
+          *(char **)param_4 = pcVar4;
+          return true;
         }
       }
     }
   }
-  uVar6 = __restgprlr_25(0);
-  return (bool)uVar6;
+  return false;
 }
 
 
 // 825BDCA8  Script_ParseLocalVarBool  (ui/ui_shared.cpp:2364)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
@@ -3768,35 +3597,30 @@ bool Script_ParseLocalVarBool
                (UiContext *param_1,char *param_2,char **param_3,int param_4,bool *param_5)
 
 {
-  UiContext *pUVar1;
-  int iVar2;
-  undefined1 uVar4;
-  UILocalVar *pUVar3;
-  bool bVar5;
-  ulonglong uVar6;
+  int iVar1;
+  UILocalVar *pUVar2;
+  bool bVar3;
   
-  uVar6 = (ulonglong)(int)param_5;
-  pUVar1 = (UiContext *)__savegprlr_27(param_1);
-  if ((uVar6 & 0xffffffff) == 0) {
+  if (param_5 == (bool *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x93f,0,"%s"
                    );
   }
-  iVar2 = I_stricmp(param_2,"localvarbool");
-  if (iVar2 != 0) {
-    *(undefined1 *)uVar6 = 0;
-    uVar4 = __restgprlr_27(0);
-    return (bool)uVar4;
+  iVar1 = I_stricmp(param_2,"localvarbool");
+  if (iVar1 != 0) {
+    *param_5 = false;
+    return false;
   }
-  pUVar3 = Script_ParseLocalVarInParens(pUVar1,param_3,param_4);
-  bVar5 = UILocalVar_GetBool(pUVar3);
-  *(undefined1 *)uVar6 = bVar5;
-  uVar4 = __restgprlr_27(1);
-  return (bool)uVar4;
+  pUVar2 = Script_ParseLocalVarInParens(param_1,param_3,param_4);
+  bVar3 = UILocalVar_GetBool(pUVar2);
+  *param_5 = bVar3;
+  return true;
 }
 
 
 // 825CF410  Script_SetFocus  (ui/ui_shared.cpp:2383)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
@@ -3804,51 +3628,47 @@ bool Script_ParseLocalVarBool
 void Script_SetFocus(UiContext *param_1,itemDef_t *param_2,char **param_3)
 
 {
-  UiContext *pUVar1;
-  int iVar2;
-  bool bVar4;
-  itemDef_t *piVar3;
-  double extraout_f1;
-  double dVar5;
+  int iVar1;
+  bool bVar3;
+  itemDef_t *piVar2;
+  double in_f1;
   double in_f2;
   char *local_830 [4];
   char acStack_820 [1024];
   char acStack_420 [1056];
   
-  pUVar1 = (UiContext *)__savegprlr_29(param_1);
-  dVar5 = extraout_f1;
-  iVar2 = String_Parse(param_3,acStack_820,0x400);
-  if (iVar2 != 0) {
-    bVar4 = Script_ParseLocalVarString(pUVar1,acStack_820,param_3,0,local_830,acStack_420,0x400);
-    if (!bVar4) {
+  iVar1 = String_Parse(param_3,acStack_820,0x400);
+  if (iVar1 != 0) {
+    bVar3 = Script_ParseLocalVarString(param_1,acStack_820,param_3,0,local_830,acStack_420,0x400);
+    if (!bVar3) {
       local_830[0] = acStack_820;
     }
-    piVar3 = Menu_FindItemByName(param_2->parent,local_830[0]);
-    if (piVar3 == (itemDef_t *)0x0) {
+    piVar2 = Menu_FindItemByName(param_2->parent,local_830[0]);
+    if (piVar2 == (itemDef_t *)0x0) {
       Com_Printf(0xd,"setFocus: could not find widget named \'%s\'\n");
-      __restgprlr_29();
       return;
     }
-    Window_GetRect(&piVar3->window);
-    iVar2 = Item_SetFocus(pUVar1,piVar3,(float)dVar5,(float)in_f2,(ItemFocusReason)param_3);
-    if (iVar2 == 0) {
+    Window_GetRect(&piVar2->window);
+    iVar1 = Item_SetFocus(param_1,piVar2,(float)in_f1,(float)in_f2,(ItemFocusReason)param_3);
+    if (iVar1 == 0) {
       Com_PrintError(0xd,
                      "setFocus: error focusing widget \'%s\' (widget was found but could not accept focus)\n"
                     );
-      __restgprlr_29();
       return;
     }
-    bVar4 = Item_IsTextField(piVar3);
-    if (bVar4) {
-      Item_TextField_BeginEdit(pUVar1,piVar3);
+    bVar3 = Item_IsTextField(piVar2);
+    if (bVar3) {
+      Item_TextField_BeginEdit(param_1,piVar2);
     }
   }
-  __restgprlr_29();
   return;
 }
 
 
 // 825BDD48  Script_ParseKeyboard  (ui/ui_shared.cpp:2419)
+
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 
 bool Script_ParseKeyboard
                (char *param_1,char **param_2,int param_3,char *param_4,int param_5,char *param_6)
@@ -3856,177 +3676,155 @@ bool Script_ParseKeyboard
 {
   char cVar1;
   char cVar2;
-  char *pcVar3;
-  int iVar4;
-  undefined1 uVar6;
-  char **ppcVar5;
-  longlong lVar7;
-  longlong lVar8;
-  longlong lVar9;
-  char *pcVar10;
+  int iVar3;
+  char *pcVar4;
+  char *pcVar5;
   char local_430 [1072];
   
-  lVar9 = (longlong)param_5;
-  lVar8 = (longlong)(int)param_4;
-  lVar7 = (longlong)(int)param_2;
-  pcVar3 = (char *)__savegprlr_27(param_1,lVar7,param_3,lVar8,lVar9,param_6);
-  iVar4 = I_stricmp(pcVar3,"keyboard");
-  if (iVar4 != 0) {
-    uVar6 = __restgprlr_27(0);
-    return (bool)uVar6;
+  iVar3 = I_stricmp(param_1,"keyboard");
+  if (iVar3 != 0) {
+    return false;
   }
-  ppcVar5 = (char **)lVar7;
-  String_Parse(ppcVar5,local_430,0x400);
-  pcVar10 = local_430;
-  pcVar3 = "(";
+  String_Parse(param_2,local_430,0x400);
+  pcVar5 = local_430;
+  pcVar4 = "(";
   do {
-    cVar1 = *pcVar10;
-    cVar2 = *pcVar3;
+    cVar1 = *pcVar5;
+    cVar2 = *pcVar4;
     if (cVar1 == '\0') break;
-    pcVar10 = pcVar10 + 1;
-    pcVar3 = pcVar3 + 1;
+    pcVar5 = pcVar5 + 1;
+    pcVar4 = pcVar4 + 1;
   } while (cVar1 == cVar2);
   if (cVar1 != cVar2) {
     Com_Error(ERR_DROP,"%s: Error at argument %d: no opening parenthesi found after \"localvar\"\n")
     ;
   }
-  String_Parse(ppcVar5,local_430,0x400);
-  I_strncpyz((char *)lVar8,local_430,(int)lVar9);
-  String_Parse(ppcVar5,local_430,0x400);
-  pcVar10 = local_430;
-  pcVar3 = ")";
+  String_Parse(param_2,local_430,0x400);
+  I_strncpyz(param_4,local_430,param_5);
+  String_Parse(param_2,local_430,0x400);
+  pcVar5 = local_430;
+  pcVar4 = ")";
   do {
-    cVar1 = *pcVar10;
-    cVar2 = *pcVar3;
+    cVar1 = *pcVar5;
+    cVar2 = *pcVar4;
     if (cVar1 == '\0') break;
-    pcVar10 = pcVar10 + 1;
-    pcVar3 = pcVar3 + 1;
+    pcVar5 = pcVar5 + 1;
+    pcVar4 = pcVar4 + 1;
   } while (cVar1 == cVar2);
   if (cVar1 != cVar2) {
     Com_Error(ERR_DROP,"%s: Error at argument %d: no closing parenthesi found after \"localvar\"\n")
     ;
   }
-  uVar6 = __restgprlr_27(1);
-  return (bool)uVar6;
+  return true;
 }
 
 
 // 825BDE78  Script_SetMatchRulesDataKeyboardFinished  (ui/ui_shared.cpp:2444)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void Script_SetMatchRulesDataKeyboardFinished(LocalClientNum_t param_1,bool param_2,char *param_3)
 
 {
-  LocalClientNum_t LVar1;
-  GameStateInfoIndex GVar2;
-  GameStateInfo *pGVar3;
-  LookupResultDataType LVar4;
-  char *pcVar5;
-  int iVar6;
-  bool bVar8;
-  StructuredData_SetResult SVar7;
-  ulonglong uVar9;
-  ulonglong uVar10;
-  char *pcVar11;
+  GameStateInfoIndex GVar1;
+  GameStateInfo *pGVar2;
+  LookupResultDataType LVar3;
+  char *pcVar4;
+  int iVar5;
+  bool bVar7;
+  StructuredData_SetResult SVar6;
   StructuredDataBuffer aSStack_30 [6];
   
-  uVar10 = (ulonglong)(int)param_3;
-  uVar9 = (ulonglong)param_2;
-  LVar1 = __savegprlr_28(param_1);
-  if ((((uVar9 & 0xff) != 0) && ((uVar10 & 0xffffffff) != 0)) &&
-     (pcVar11 = (char *)uVar10, *pcVar11 != '\0')) {
-    GVar2 = GameStateInfo_GetIndexForGamemode();
-    if (GVar2 != GAMESTATEINFO_HOST) {
+  if (((param_2) && (param_3 != (char *)0x0)) && (*param_3 != '\0')) {
+    GVar1 = GameStateInfo_GetIndexForGamemode();
+    if (GVar1 != GAMESTATEINFO_HOST) {
       Com_Error(ERR_DROP,"SetMatchRulesData called when not game host.");
     }
-    pGVar3 = GameStateInfo_Get();
-    if (pGVar3->usingRecipe == 0) {
+    pGVar2 = GameStateInfo_Get();
+    if (pGVar2->usingRecipe == 0) {
       Com_Error(ERR_DROP,"SetMatchRulesData called when not using recipe!");
     }
-    LVar4 = StructuredData_GetLookupResultType(&s_keyboardLookup);
-    if (LVar4 != LOOKUP_RESULT_STRING) {
+    LVar3 = StructuredData_GetLookupResultType(&s_keyboardLookup);
+    if (LVar3 != LOOKUP_RESULT_STRING) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x99f,0,
                       "valueType == LOOKUP_RESULT_STRING\n\t%i, %i");
     }
-    StructuredData_MakeBuffer(aSStack_30,pGVar3->matchRules->data,0xc00);
-    pcVar5 = StructuredData_GetString(&s_keyboardLookup,aSStack_30);
-    iVar6 = I_stricmp(pcVar5,pcVar11);
-    if (iVar6 != 0) {
-      iVar6 = CL_ControllerIndexFromClientNum(LVar1);
-      bVar8 = ProfanityFilter_IsBadWord(iVar6,pcVar11);
-      if (bVar8) {
+    StructuredData_MakeBuffer(aSStack_30,pGVar2->matchRules->data,0xc00);
+    pcVar4 = StructuredData_GetString(&s_keyboardLookup,aSStack_30);
+    iVar5 = I_stricmp(pcVar4,param_3);
+    if (iVar5 != 0) {
+      iVar5 = CL_ControllerIndexFromClientNum(param_1);
+      bVar7 = ProfanityFilter_IsBadWord(iVar5,param_3);
+      if (bVar7) {
         Party_OpenPartyUIErrorBox("MENU_OFFENSIVETEXT");
-        __restgprlr_28();
         return;
       }
-      SVar7 = StructuredData_SetString(&s_keyboardLookup,aSStack_30,pcVar11);
-      if ((SVar7 == SETRESULT_SUCCESS_CHANGED) ||
-         (bVar8 = false, SVar7 == SETRESULT_SUCCESS_NOCHANGE)) {
-        bVar8 = true;
+      SVar6 = StructuredData_SetString(&s_keyboardLookup,aSStack_30,param_3);
+      if ((SVar6 == SETRESULT_SUCCESS_CHANGED) ||
+         (bVar7 = false, SVar6 == SETRESULT_SUCCESS_NOCHANGE)) {
+        bVar7 = true;
       }
-      if (!bVar8) {
+      if (!bVar7) {
         Com_Error(ERR_DROP,"SetMatchRulesData: Error setting string from keyboard: %s\n");
       }
-      if (SVar7 == SETRESULT_SUCCESS_CHANGED) {
-        MatchRulesChanged(pGVar3->matchRules);
+      if (SVar6 == SETRESULT_SUCCESS_CHANGED) {
+        MatchRulesChanged(pGVar2->matchRules);
       }
     }
   }
-  __restgprlr_28();
   return;
 }
 
 
 // 825BDFF8  Script_SetPlayerDataKeyboardFinished  (ui/ui_shared.cpp:2493)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void Script_SetPlayerDataKeyboardFinished(LocalClientNum_t param_1,bool param_2,char *param_3)
 
 {
-  LocalClientNum_t LVar1;
-  int iVar2;
-  bool bVar5;
-  LookupResultDataType LVar3;
-  StructuredData_SetResult SVar4;
-  ulonglong uVar6;
+  int iVar1;
+  bool bVar4;
+  LookupResultDataType LVar2;
+  StructuredData_SetResult SVar3;
   StructuredDataBuffer aSStack_30 [6];
   
-  uVar6 = (ulonglong)param_2;
-  LVar1 = __savegprlr_29(param_1);
-  if ((uVar6 & 0xff) != 0) {
-    iVar2 = CL_ControllerIndexFromClientNum(LVar1);
-    bVar5 = LiveStorage_GetPlayerUnlockDataBuffer(aSStack_30,iVar2);
-    if (!bVar5) {
+  if (param_2) {
+    iVar1 = CL_ControllerIndexFromClientNum(param_1);
+    bVar4 = LiveStorage_GetPlayerUnlockDataBuffer(aSStack_30,iVar1);
+    if (!bVar4) {
       Com_Printf(0xe,"Lost player stats before setPlayerData keyboard finished\n");
-      __restgprlr_29();
       return;
     }
-    LVar3 = StructuredData_GetLookupResultType(&s_keyboardLookup);
-    if (LVar3 != LOOKUP_RESULT_STRING) {
+    LVar2 = StructuredData_GetLookupResultType(&s_keyboardLookup);
+    if (LVar2 != LOOKUP_RESULT_STRING) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x9d3,0,
                       "valueType == LOOKUP_RESULT_STRING\n\t%i, %i");
     }
-    SVar4 = StructuredData_SetString(&s_keyboardLookup,aSStack_30,param_3);
-    if ((SVar4 == SETRESULT_SUCCESS_CHANGED) || (bVar5 = false, SVar4 == SETRESULT_SUCCESS_NOCHANGE)
+    SVar3 = StructuredData_SetString(&s_keyboardLookup,aSStack_30,param_3);
+    if ((SVar3 == SETRESULT_SUCCESS_CHANGED) || (bVar4 = false, SVar3 == SETRESULT_SUCCESS_NOCHANGE)
        ) {
-      bVar5 = true;
+      bVar4 = true;
     }
-    if (!bVar5) {
+    if (!bVar4) {
       Com_Error(ERR_DROP,"SetPlayerData: Error setting string from keyboard: %s\n");
     }
-    if (SVar4 == SETRESULT_SUCCESS_CHANGED) {
-      LiveStorage_StatsWriteNeeded(iVar2);
+    if (SVar3 == SETRESULT_SUCCESS_CHANGED) {
+      LiveStorage_StatsWriteNeeded(iVar1);
     }
   }
-  __restgprlr_29();
   return;
 }
 
 
 // 825CA910  Script_OpenKeyboardForSetStructuredDataDef  (ui/ui_shared.cpp:2528)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
@@ -4036,19 +3834,16 @@ void Script_OpenKeyboardForSetStructuredDataDef
                char *param_5,_func___cdecl_void_LocalClientNum_t_bool_char_ptr *param_6)
 
 {
-  LocalClientNum_t *pLVar1;
-  char *pcVar2;
-  int iVar3;
+  char *pcVar1;
+  int iVar2;
   
-  pLVar1 = (LocalClientNum_t *)__savegprlr_26(param_1);
-  pcVar2 = SEH_LocalizeTextMessage(param_5,"menu prompt",LOCMSG_SAFE);
+  pcVar1 = SEH_LocalizeTextMessage(param_5,"menu prompt",LOCMSG_SAFE);
   s_keyboardLookup.def = param_2->def;
   s_keyboardLookup.type = param_2->type;
   s_keyboardLookup.offset = param_2->offset;
   s_keyboardLookup.error = param_2->error;
-  iVar3 = CL_ControllerIndexFromClientNum(*pLVar1);
-  UI_ShowKeyboard(iVar3,pcVar2,param_3,param_4,true,param_6);
-  __restgprlr_26();
+  iVar2 = CL_ControllerIndexFromClientNum(param_1->localClientNum);
+  UI_ShowKeyboard(iVar2,pcVar1,param_3,param_4,true,param_6);
   return;
 }
 
@@ -4068,28 +3863,31 @@ void Script_SetStructuredDataDef_FoundArg(char *param_1,char (*param_2) [32],int
 
 // 825BE120  Script_SetStructuredDataDef_PrintArgs  (ui/ui_shared.cpp:2553)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void Script_SetStructuredDataDef_PrintArgs(char (*param_1) [32],int param_2,char *param_3)
 
 {
   longlong lVar1;
   
   lVar1 = (longlong)param_2;
-  __savegprlr_29(param_1,lVar1,param_3);
   Com_Printf(0x17,"In call to %s( ");
-  if (0 < (int)lVar1) {
+  if (0 < param_2) {
     do {
       Com_Printf(0x17,"\"%s\", ");
       lVar1 = lVar1 + -1;
     } while (lVar1 != 0);
   }
   Com_Printf(0x17," ... )\n");
-  __restgprlr_29();
   return;
 }
 
 
 // 825CA998  Script_SetStructuredDataDef  (ui/ui_shared.cpp:2573)
 
+/* WARNING: Function: __savegprlr_17 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_17 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
@@ -4104,22 +3902,18 @@ Script_SetStructuredDataDef
   char cVar1;
   char cVar2;
   float fVar3;
-  StructuredDataDef *pSVar4;
-  LookupState LVar5;
-  int iVar6;
-  bool bVar13;
-  char *pcVar7;
-  LookupResultDataType LVar8;
-  int iVar9;
-  char *pcVar10;
-  int iVar11;
-  StructuredData_SetResult SVar12;
-  ulonglong uVar14;
-  char **ppcVar15;
-  ulonglong uVar16;
-  ulonglong uVar17;
-  bool *pbVar18;
-  double dVar19;
+  LookupState LVar4;
+  int iVar5;
+  bool bVar12;
+  char *pcVar6;
+  LookupResultDataType LVar7;
+  int iVar8;
+  char *pcVar9;
+  int iVar10;
+  StructuredData_SetResult SVar11;
+  char **ppcVar13;
+  bool *pbVar14;
+  double dVar15;
   bool local_9b0 [4];
   char *local_9ac;
   float local_9a8 [2];
@@ -4128,318 +3922,313 @@ Script_SetStructuredDataDef
   char local_890 [1024];
   char *apcStack_490 [292];
   
-  uVar17 = (ulonglong)(int)param_8;
-  uVar16 = (ulonglong)param_7;
-  uVar14 = (ulonglong)param_6;
-  pSVar4 = (StructuredDataDef *)__savegprlr_17(param_1);
-  if ((uVar14 & 0xff) == 0) {
+  if (!param_6) {
     String_Parse(param_4,local_890,0x400);
-    pcVar10 = local_890;
-    pcVar7 = "(";
+    pcVar9 = local_890;
+    pcVar6 = "(";
     do {
-      cVar1 = *pcVar10;
-      cVar2 = *pcVar7;
+      cVar1 = *pcVar9;
+      cVar2 = *pcVar6;
       if (cVar1 == '\0') break;
-      pcVar10 = pcVar10 + 1;
-      pcVar7 = pcVar7 + 1;
+      pcVar9 = pcVar9 + 1;
+      pcVar6 = pcVar6 + 1;
     } while (cVar1 == cVar2);
     if (cVar1 != cVar2) {
       Com_Error(ERR_DROP,"%s: no opening parenthesi found\n");
     }
   }
-  StructuredData_InitializeLookup(pSVar4,&local_9a0);
-  pbVar18 = local_9b0;
-  iVar9 = -1;
+  StructuredData_InitializeLookup(param_1,&local_9a0);
+  pbVar14 = local_9b0;
+  iVar8 = -1;
   while( true ) {
-    iVar11 = iVar9;
-    LVar5 = StructuredData_GetLookupState(&local_9a0);
-    if (LVar5 == LOOKUP_ERROR) {
-      Script_SetStructuredDataDef_PrintArgs((char (*) [32])acStack_990,iVar11 + 1,param_5);
+    iVar10 = iVar8;
+    LVar4 = StructuredData_GetLookupState(&local_9a0);
+    if (LVar4 == LOOKUP_ERROR) {
+      Script_SetStructuredDataDef_PrintArgs((char (*) [32])acStack_990,iVar10 + 1,param_5);
       StructuredData_GetLookupError(&local_9a0);
       Com_Error(ERR_DROP,"SetPlayerData: Error at argument %d: %s\n");
     }
-    iVar9 = iVar11 + 1;
-    pbVar18 = pbVar18 + 0x20;
+    iVar8 = iVar10 + 1;
+    pbVar14 = pbVar14 + 0x20;
     String_Parse(param_4,local_890,0x400);
-    if (iVar9 < 8) {
-      I_strncpyz(pbVar18,local_890,0x20);
+    if (iVar8 < 8) {
+      I_strncpyz(pbVar14,local_890,0x20);
     }
-    if (LVar5 != LOOKUP_IN_PROGRESS) break;
+    if (LVar4 != LOOKUP_IN_PROGRESS) break;
     if ((local_890[0] < '0') || ('9' < local_890[0])) {
-      bVar13 = Script_ParseLocalVarInt(param_3,local_890,param_4,iVar9,(int *)local_9a8);
+      bVar12 = Script_ParseLocalVarInt(param_3,local_890,param_4,iVar8,(int *)local_9a8);
       fVar3 = local_9a8[0];
-      if (bVar13) {
-        pcVar7 = va("%i");
-        if (iVar9 < 8) {
-          I_strncpyz(pbVar18,pcVar7,0x20);
+      if (bVar12) {
+        pcVar6 = va("%i");
+        if (iVar8 < 8) {
+          I_strncpyz(pbVar14,pcVar6,0x20);
         }
         StructuredData_LookupWithInt(&local_9a0,(int)fVar3);
       }
       else {
-        iVar6 = 0x400;
-        ppcVar15 = apcStack_490;
-        bVar13 = Script_ParseLocalVarString
-                           (param_3,local_890,param_4,iVar9,&local_9ac,(char *)ppcVar15,0x400);
-        pcVar7 = local_9ac;
-        if (bVar13) {
-          if (iVar9 < 8) {
-            I_strncpyz(pbVar18,local_9ac,0x20);
+        iVar5 = 0x400;
+        ppcVar13 = apcStack_490;
+        bVar12 = Script_ParseLocalVarString
+                           (param_3,local_890,param_4,iVar8,&local_9ac,(char *)ppcVar13,0x400);
+        pcVar6 = local_9ac;
+        if (bVar12) {
+          if (iVar8 < 8) {
+            I_strncpyz(pbVar14,local_9ac,0x20);
           }
         }
         else {
-          bVar13 = Script_ParseTableLookup
+          bVar12 = Script_ParseTableLookup
                              (param_3,local_890,param_4,(int)&local_9ac,apcStack_490,
-                              (char *)ppcVar15,iVar6);
-          pcVar7 = local_9ac;
-          if (bVar13) {
-            if (iVar9 < 8) {
-              I_strncpyz(pbVar18,local_9ac,0x20);
+                              (char *)ppcVar13,iVar5);
+          pcVar6 = local_9ac;
+          if (bVar12) {
+            if (iVar8 < 8) {
+              I_strncpyz(pbVar14,local_9ac,0x20);
             }
           }
           else {
-            pcVar7 = local_890;
+            pcVar6 = local_890;
           }
         }
-        StructuredData_LookupWithString(&local_9a0,pcVar7);
+        StructuredData_LookupWithString(&local_9a0,pcVar6);
       }
     }
     else {
-      iVar6 = atoi(local_890);
-      StructuredData_LookupWithInt(&local_9a0,iVar6);
+      iVar5 = atoi(local_890);
+      StructuredData_LookupWithInt(&local_9a0,iVar5);
     }
     String_Parse(param_4,local_890,0x400);
-    pcVar10 = local_890;
-    pcVar7 = ",";
+    pcVar9 = local_890;
+    pcVar6 = ",";
     do {
-      cVar1 = *pcVar10;
-      cVar2 = *pcVar7;
+      cVar1 = *pcVar9;
+      cVar2 = *pcVar6;
       if (cVar1 == '\0') break;
-      pcVar10 = pcVar10 + 1;
-      pcVar7 = pcVar7 + 1;
+      pcVar9 = pcVar9 + 1;
+      pcVar6 = pcVar6 + 1;
     } while (cVar1 == cVar2);
     if (cVar1 != cVar2) {
-      Script_SetStructuredDataDef_PrintArgs((char (*) [32])acStack_990,iVar11 + 2,param_5);
+      Script_SetStructuredDataDef_PrintArgs((char (*) [32])acStack_990,iVar10 + 2,param_5);
       Com_Error(ERR_DROP,"%s: no comma found after argument %d\n");
     }
   }
-  if (LVar5 != LOOKUP_FINISHED) {
+  if (LVar4 != LOOKUP_FINISHED) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0xa5a,0,"%s"
                    );
   }
-  LVar8 = StructuredData_GetLookupResultType(&local_9a0);
-  if (((uVar17 & 0xffffffff) != 0) &&
-     (bVar13 = Script_ParseKeyboard(local_890,param_4,iVar9,(char *)apcStack_490,0x400,param_5),
-     bVar13)) {
+  LVar7 = StructuredData_GetLookupResultType(&local_9a0);
+  if ((param_8 != (_func___cdecl_void_LocalClientNum_t_bool_char_ptr *)0x0) &&
+     (bVar12 = Script_ParseKeyboard(local_890,param_4,iVar8,(char *)apcStack_490,0x400,param_5),
+     bVar12)) {
     String_Parse(param_4,local_890,0x400);
-    pcVar10 = local_890;
-    pcVar7 = ")";
+    pcVar9 = local_890;
+    pcVar6 = ")";
     do {
-      cVar1 = *pcVar10;
-      cVar2 = *pcVar7;
+      cVar1 = *pcVar9;
+      cVar2 = *pcVar6;
       if (cVar1 == '\0') break;
-      pcVar10 = pcVar10 + 1;
-      pcVar7 = pcVar7 + 1;
+      pcVar9 = pcVar9 + 1;
+      pcVar6 = pcVar6 + 1;
     } while (cVar1 == cVar2);
     if (cVar1 != cVar2) {
-      Script_SetStructuredDataDef_PrintArgs((char (*) [32])acStack_990,iVar11 + 2,param_5);
+      Script_SetStructuredDataDef_PrintArgs((char (*) [32])acStack_990,iVar10 + 2,param_5);
       Com_Error(ERR_DROP,"SetPlayerData: no closing paren found\n");
     }
-    if ((LVar8 != LOOKUP_RESULT_STRING) ||
-       (iVar9 = StructuredData_GetMaxStringSize(&local_9a0), iVar9 == 0)) {
-      Script_SetStructuredDataDef_PrintArgs((char (*) [32])acStack_990,iVar11 + 2,param_5);
+    if ((LVar7 != LOOKUP_RESULT_STRING) ||
+       (iVar8 = StructuredData_GetMaxStringSize(&local_9a0), iVar8 == 0)) {
+      Script_SetStructuredDataDef_PrintArgs((char (*) [32])acStack_990,iVar10 + 2,param_5);
       Com_Error(ERR_DROP,
                 "SetPlayerData: Error at argument %d: may only use keyboard() to set strings\n");
     }
-    if ((uVar16 & 0xff) == 0) {
-      pcVar7 = StructuredData_GetString(&local_9a0,param_2);
+    if (param_7) {
+      pcVar6 = "";
     }
     else {
-      pcVar7 = "";
+      pcVar6 = StructuredData_GetString(&local_9a0,param_2);
     }
-    iVar9 = StructuredData_GetMaxStringSize(&local_9a0);
-    pcVar10 = SEH_LocalizeTextMessage((char *)apcStack_490,"menu prompt",LOCMSG_SAFE);
+    iVar8 = StructuredData_GetMaxStringSize(&local_9a0);
+    pcVar9 = SEH_LocalizeTextMessage((char *)apcStack_490,"menu prompt",LOCMSG_SAFE);
     s_keyboardLookup.def = local_9a0.def;
     s_keyboardLookup.type = local_9a0.type;
     s_keyboardLookup.offset = local_9a0.offset;
     s_keyboardLookup.error = local_9a0.error;
-    iVar11 = CL_ControllerIndexFromClientNum(param_3->localClientNum);
-    UI_ShowKeyboard(iVar11,pcVar10,pcVar7,iVar9,true,
-                    (_func___cdecl_void_LocalClientNum_t_bool_char_ptr *)uVar17);
-    SVar12 = __restgprlr_17(1);
-    return SVar12;
+    iVar10 = CL_ControllerIndexFromClientNum(param_3->localClientNum);
+    UI_ShowKeyboard(iVar10,pcVar9,pcVar6,iVar8,true,param_8);
+    return SETRESULT_SUCCESS_NOCHANGE;
   }
-  bVar13 = Script_ParseLocalVarInt(param_3,local_890,param_4,iVar9,(int *)local_9a8);
-  if (bVar13) {
-    pcVar7 = va("%i");
-    if (iVar9 < 8) {
-      I_strncpyz(acStack_990 + iVar9 * 0x20,pcVar7,0x20);
+  bVar12 = Script_ParseLocalVarInt(param_3,local_890,param_4,iVar8,(int *)local_9a8);
+  if (bVar12) {
+    pcVar6 = va("%i");
+    if (iVar8 < 8) {
+      I_strncpyz(acStack_990 + iVar8 * 0x20,pcVar6,0x20);
     }
-    SVar12 = StructuredData_SetInt(&local_9a0,param_2,(int)local_9a8[0]);
+    SVar11 = StructuredData_SetInt(&local_9a0,param_2,(int)local_9a8[0]);
   }
   else {
-    bVar13 = Script_ParseLocalVarFloat(param_3,local_890,param_4,iVar9,local_9a8);
-    if (bVar13) {
-      dVar19 = (double)local_9a8[0];
-      pcVar7 = va("%f");
-      if (iVar9 < 8) {
-        I_strncpyz(acStack_990 + iVar9 * 0x20,pcVar7,0x20);
+    bVar12 = Script_ParseLocalVarFloat(param_3,local_890,param_4,iVar8,local_9a8);
+    if (bVar12) {
+      dVar15 = (double)local_9a8[0];
+      pcVar6 = va("%f");
+      if (iVar8 < 8) {
+        I_strncpyz(acStack_990 + iVar8 * 0x20,pcVar6,0x20);
       }
-      SVar12 = StructuredData_SetFloat(&local_9a0,param_2,(float)dVar19);
+      SVar11 = StructuredData_SetFloat(&local_9a0,param_2,(float)dVar15);
     }
     else {
-      bVar13 = Script_ParseLocalVarString
-                         (param_3,local_890,param_4,iVar9,&local_9ac,(char *)apcStack_490,0x400);
-      if (bVar13) {
-        if (iVar9 < 8) {
-          I_strncpyz(acStack_990 + iVar9 * 0x20,local_9ac,0x20);
+      bVar12 = Script_ParseLocalVarString
+                         (param_3,local_890,param_4,iVar8,&local_9ac,(char *)apcStack_490,0x400);
+      if (bVar12) {
+        if (iVar8 < 8) {
+          I_strncpyz(acStack_990 + iVar8 * 0x20,local_9ac,0x20);
         }
       }
       else {
-        bVar13 = Script_ParseLocalVarBool(param_3,local_890,param_4,iVar9,local_9b0);
-        if (bVar13) {
+        bVar12 = Script_ParseLocalVarBool(param_3,local_890,param_4,iVar8,local_9b0);
+        if (bVar12) {
           if (local_9b0[0] == false) {
-            pcVar7 = "false";
+            pcVar6 = "false";
           }
           else {
-            pcVar7 = "true";
+            pcVar6 = "true";
           }
-          if (iVar9 < 8) {
-            I_strncpyz(acStack_990 + iVar9 * 0x20,pcVar7,0x20);
+          if (iVar8 < 8) {
+            I_strncpyz(acStack_990 + iVar8 * 0x20,pcVar6,0x20);
           }
-          SVar12 = StructuredData_SetBool(&local_9a0,param_2,local_9b0[0]);
+          SVar11 = StructuredData_SetBool(&local_9a0,param_2,local_9b0[0]);
           goto LAB_825cb31c;
         }
-        if (LVar8 == LOOKUP_RESULT_BOOL) {
-          pcVar7 = "true";
-          pcVar10 = local_890;
+        if (LVar7 == LOOKUP_RESULT_BOOL) {
+          pcVar6 = "true";
+          pcVar9 = local_890;
           do {
-            cVar1 = *pcVar10;
-            cVar2 = *pcVar7;
+            cVar1 = *pcVar9;
+            cVar2 = *pcVar6;
             if (cVar1 == '\0') break;
-            pcVar10 = pcVar10 + 1;
-            pcVar7 = pcVar7 + 1;
+            pcVar9 = pcVar9 + 1;
+            pcVar6 = pcVar6 + 1;
           } while (cVar1 == cVar2);
           if (cVar1 == cVar2) {
-            SVar12 = StructuredData_SetBool(&local_9a0,param_2,true);
+            SVar11 = StructuredData_SetBool(&local_9a0,param_2,true);
           }
           else {
-            pcVar10 = local_890;
-            pcVar7 = "false";
+            pcVar9 = local_890;
+            pcVar6 = "false";
             do {
-              cVar1 = *pcVar10;
-              cVar2 = *pcVar7;
+              cVar1 = *pcVar9;
+              cVar2 = *pcVar6;
               if (cVar1 == '\0') break;
-              pcVar10 = pcVar10 + 1;
-              pcVar7 = pcVar7 + 1;
+              pcVar9 = pcVar9 + 1;
+              pcVar6 = pcVar6 + 1;
             } while (cVar1 == cVar2);
             if (cVar1 == cVar2) {
-              SVar12 = StructuredData_SetBool(&local_9a0,param_2,false);
+              SVar11 = StructuredData_SetBool(&local_9a0,param_2,false);
             }
             else {
-              pcVar10 = local_890;
-              pcVar7 = "0";
+              pcVar9 = local_890;
+              pcVar6 = "0";
               do {
-                cVar1 = *pcVar10;
-                cVar2 = *pcVar7;
+                cVar1 = *pcVar9;
+                cVar2 = *pcVar6;
                 if (cVar1 == '\0') break;
-                pcVar10 = pcVar10 + 1;
-                pcVar7 = pcVar7 + 1;
+                pcVar9 = pcVar9 + 1;
+                pcVar6 = pcVar6 + 1;
               } while (cVar1 == cVar2);
               if (cVar1 == cVar2) {
-                SVar12 = StructuredData_SetBool(&local_9a0,param_2,false);
+                SVar11 = StructuredData_SetBool(&local_9a0,param_2,false);
               }
               else {
-                pcVar10 = local_890;
-                pcVar7 = "1";
+                pcVar9 = local_890;
+                pcVar6 = "1";
                 do {
-                  cVar1 = *pcVar10;
-                  cVar2 = *pcVar7;
+                  cVar1 = *pcVar9;
+                  cVar2 = *pcVar6;
                   if (cVar1 == '\0') break;
-                  pcVar10 = pcVar10 + 1;
-                  pcVar7 = pcVar7 + 1;
+                  pcVar9 = pcVar9 + 1;
+                  pcVar6 = pcVar6 + 1;
                 } while (cVar1 == cVar2);
                 if (cVar1 == cVar2) {
-                  SVar12 = StructuredData_SetBool(&local_9a0,param_2,true);
+                  SVar11 = StructuredData_SetBool(&local_9a0,param_2,true);
                 }
                 else {
                   Script_SetStructuredDataDef_PrintArgs
-                            ((char (*) [32])acStack_990,iVar11 + 2,param_5);
+                            ((char (*) [32])acStack_990,iVar10 + 2,param_5);
                   Com_Error(ERR_DROP,"%s: Error at argument %d: expected bool, found \"%s\"\n");
-                  SVar12 = StructuredData_SetBool(&local_9a0,param_2,false);
+                  SVar11 = StructuredData_SetBool(&local_9a0,param_2,false);
                 }
               }
             }
           }
           goto LAB_825cb31c;
         }
-        if (LVar8 == LOOKUP_RESULT_INT) {
+        if (LVar7 == LOOKUP_RESULT_INT) {
           if (((local_890[0] < '0') || ('9' < local_890[0])) && (local_890[0] != '-')) {
-            Script_SetStructuredDataDef_PrintArgs((char (*) [32])acStack_990,iVar11 + 2,param_5);
+            Script_SetStructuredDataDef_PrintArgs((char (*) [32])acStack_990,iVar10 + 2,param_5);
             Com_Error(ERR_DROP,"%s: Error at argument %d: expected int, found \"%s\"\n");
           }
-          iVar9 = atoi(local_890);
-          SVar12 = StructuredData_SetInt(&local_9a0,param_2,iVar9);
+          iVar8 = atoi(local_890);
+          SVar11 = StructuredData_SetInt(&local_9a0,param_2,iVar8);
           goto LAB_825cb31c;
         }
-        if (LVar8 == LOOKUP_RESULT_FLOAT) {
+        if (LVar7 == LOOKUP_RESULT_FLOAT) {
           if (((local_890[0] < '0') || ('9' < local_890[0])) &&
              ((local_890[0] != '-' && (local_890[0] != '.')))) {
-            Script_SetStructuredDataDef_PrintArgs((char (*) [32])acStack_990,iVar11 + 2,param_5);
+            Script_SetStructuredDataDef_PrintArgs((char (*) [32])acStack_990,iVar10 + 2,param_5);
             Com_Error(ERR_DROP,"%s: Error at argument %d: expected float, found \"%s\"\n");
           }
-          dVar19 = atof(local_890);
-          SVar12 = StructuredData_SetFloat(&local_9a0,param_2,(float)dVar19);
+          dVar15 = atof(local_890);
+          SVar11 = StructuredData_SetFloat(&local_9a0,param_2,(float)dVar15);
           goto LAB_825cb31c;
         }
-        if (LVar8 == LOOKUP_RESULT_SHORT) {
+        if (LVar7 == LOOKUP_RESULT_SHORT) {
           if (((local_890[0] < '0') || ('9' < local_890[0])) && (local_890[0] != '-')) {
-            Script_SetStructuredDataDef_PrintArgs((char (*) [32])acStack_990,iVar11 + 2,param_5);
+            Script_SetStructuredDataDef_PrintArgs((char (*) [32])acStack_990,iVar10 + 2,param_5);
             Com_Error(ERR_DROP,"%s: Error at argument %d: expected int, found \"%s\"\n");
           }
-          iVar9 = atoi(local_890);
-          SVar12 = StructuredData_SetShort(&local_9a0,param_2,(short)iVar9);
+          iVar8 = atoi(local_890);
+          SVar11 = StructuredData_SetShort(&local_9a0,param_2,(short)iVar8);
           goto LAB_825cb31c;
         }
-        if (LVar8 != LOOKUP_RESULT_STRING) {
+        if (LVar7 != LOOKUP_RESULT_STRING) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0xabc,
                           0,"valueType == LOOKUP_RESULT_STRING\n\t%i, %i");
         }
         local_9ac = local_890;
       }
-      SVar12 = StructuredData_SetString(&local_9a0,param_2,local_9ac);
+      SVar11 = StructuredData_SetString(&local_9a0,param_2,local_9ac);
     }
   }
 LAB_825cb31c:
-  if ((SVar12 == SETRESULT_SUCCESS_CHANGED) ||
-     (bVar13 = false, SVar12 == SETRESULT_SUCCESS_NOCHANGE)) {
-    bVar13 = true;
+  if ((SVar11 == SETRESULT_SUCCESS_CHANGED) ||
+     (bVar12 = false, SVar11 == SETRESULT_SUCCESS_NOCHANGE)) {
+    bVar12 = true;
   }
-  if (!bVar13) {
-    Script_SetStructuredDataDef_PrintArgs((char (*) [32])acStack_990,iVar11 + 2,param_5);
+  if (!bVar12) {
+    Script_SetStructuredDataDef_PrintArgs((char (*) [32])acStack_990,iVar10 + 2,param_5);
     Com_Error(ERR_DROP,"%s: Error at argument %d: %s\n");
   }
   String_Parse(param_4,local_890,0x400);
-  pcVar10 = local_890;
-  pcVar7 = ")";
+  pcVar9 = local_890;
+  pcVar6 = ")";
   do {
-    cVar1 = *pcVar10;
-    cVar2 = *pcVar7;
+    cVar1 = *pcVar9;
+    cVar2 = *pcVar6;
     if (cVar1 == '\0') break;
-    pcVar10 = pcVar10 + 1;
-    pcVar7 = pcVar7 + 1;
+    pcVar9 = pcVar9 + 1;
+    pcVar6 = pcVar6 + 1;
   } while (cVar1 == cVar2);
   if (cVar1 != cVar2) {
-    Script_SetStructuredDataDef_PrintArgs((char (*) [32])acStack_990,iVar11 + 2,param_5);
+    Script_SetStructuredDataDef_PrintArgs((char (*) [32])acStack_990,iVar10 + 2,param_5);
     Com_Error(ERR_DROP,"%s: no closing paren found\n");
   }
   UI_ExpressionState_PlayerDataModified();
-  SVar12 = __restgprlr_17(SVar12);
-  return SVar12;
+  return SVar11;
 }
 
 
 // 825CB400  Script_SetPlayerData_Internal  (ui/ui_shared.cpp:2779)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
@@ -4448,80 +4237,70 @@ void Script_SetPlayerData_Internal
                (LocalClientNum_t param_1,UiContext *param_2,itemDef_t *param_3,char **param_4)
 
 {
-  byte bVar1;
-  byte bVar2;
-  LocalClientNum_t LVar3;
-  bool bVar8;
+  char cVar1;
+  char cVar2;
+  bool bVar6;
+  StructuredDataDef *pSVar3;
   int iVar4;
-  StructuredDataDef *pSVar5;
-  int iVar6;
-  StructuredData_SetResult SVar7;
-  longlong lVar9;
-  longlong lVar10;
-  byte *pbVar11;
-  byte *pbVar12;
+  StructuredData_SetResult SVar5;
+  char *pcVar7;
+  char *pcVar8;
   StructuredDataBuffer aSStack_440 [2];
-  byte local_430 [1072];
+  char local_430 [1072];
   
-  lVar10 = (longlong)(int)param_3;
-  lVar9 = (longlong)(int)param_2;
-  LVar3 = __savegprlr_28(param_1,lVar9,lVar10,param_4);
-  bVar8 = LiveStorage_MaySetPersistentData(LVar3);
-  if (!bVar8) {
+  bVar6 = LiveStorage_MaySetPersistentData(param_1);
+  if (!bVar6) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0xae0,0,"%s"
                    );
   }
-  bVar8 = LiveStorage_MaySetPersistentData(LVar3);
-  if (bVar8) {
-    pSVar5 = StructuredDataDef_GetAsset("mp/playerdata.def",0x2ffc);
-    iVar6 = CL_ControllerIndexFromClientNum(LVar3);
-    bVar8 = LiveStorage_GetPlayerUnlockDataBuffer(aSStack_440,iVar6);
-    if (!bVar8) {
+  bVar6 = LiveStorage_MaySetPersistentData(param_1);
+  if (bVar6) {
+    pSVar3 = StructuredDataDef_GetAsset("mp/playerdata.def",0x2ffc);
+    iVar4 = CL_ControllerIndexFromClientNum(param_1);
+    bVar6 = LiveStorage_GetPlayerUnlockDataBuffer(aSStack_440,iVar4);
+    if (!bVar6) {
       Com_Printf(0xe,"Tried to setPlayerData before we have downloaded player stats\n");
-      __restgprlr_28();
       return;
     }
-    SVar7 = Script_SetStructuredDataDef
-                      (pSVar5,aSStack_440,(UiContext *)lVar9,(char **)lVar10,"SetPlayerData",true,
-                       false,Script_SetPlayerDataKeyboardFinished);
-    if (SVar7 == SETRESULT_SUCCESS_CHANGED) {
-      iVar6 = CL_ControllerIndexFromClientNum(LVar3);
-      LiveStorage_StatsWriteNeeded(iVar6);
+    SVar5 = Script_SetStructuredDataDef
+                      (pSVar3,aSStack_440,param_2,(char **)param_3,"SetPlayerData",true,false,
+                       Script_SetPlayerDataKeyboardFinished);
+    if (SVar5 == SETRESULT_SUCCESS_CHANGED) {
+      iVar4 = CL_ControllerIndexFromClientNum(param_1);
+      LiveStorage_StatsWriteNeeded(iVar4);
     }
-    __restgprlr_28();
     return;
   }
-  iVar6 = 1;
+  iVar4 = 1;
   do {
-    iVar4 = String_Parse((char **)lVar10,(char *)local_430,0x400);
-    pbVar12 = local_430;
-    pbVar11 = &s__;
+    String_Parse((char **)param_3,local_430,0x400);
+    pcVar8 = local_430;
+    pcVar7 = "(";
     do {
-      bVar1 = *pbVar12;
-      bVar2 = *pbVar11;
-      if (bVar1 == 0) break;
-      pbVar12 = pbVar12 + 1;
-      pbVar11 = pbVar11 + 1;
-    } while (bVar1 == bVar2);
-    if (bVar1 == bVar2) {
-      iVar6 = iVar6 + 1;
+      cVar1 = *pcVar8;
+      cVar2 = *pcVar7;
+      if (cVar1 == '\0') break;
+      pcVar8 = pcVar8 + 1;
+      pcVar7 = pcVar7 + 1;
+    } while (cVar1 == cVar2);
+    if (cVar1 == cVar2) {
+      iVar4 = iVar4 + 1;
     }
     else {
-      pbVar12 = local_430;
-      pbVar11 = &s__;
+      pcVar8 = local_430;
+      pcVar7 = ")";
       do {
-        bVar1 = *pbVar12;
-        bVar2 = *pbVar11;
-        if (bVar1 == 0) break;
-        pbVar12 = pbVar12 + 1;
-        pbVar11 = pbVar11 + 1;
-      } while (bVar1 == bVar2);
-      if (bVar1 == bVar2) {
-        iVar6 = iVar6 + -1;
+        cVar1 = *pcVar8;
+        cVar2 = *pcVar7;
+        if (cVar1 == '\0') break;
+        pcVar8 = pcVar8 + 1;
+        pcVar7 = pcVar7 + 1;
+      } while (cVar1 == cVar2);
+      if (cVar1 == cVar2) {
+        iVar4 = iVar4 + -1;
       }
     }
-    if (iVar6 < 1) {
-      __restgprlr_28(iVar4);
+    if (iVar4 < 1) {
       return;
     }
   } while( true );
@@ -4564,6 +4343,8 @@ void Script_SetPlayerData(UiContext *param_1,itemDef_t *param_2,char **param_3)
 
 // 825CB640  Script_SetPlayerDataSplitScreen  (ui/ui_shared.cpp:2835)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
@@ -4573,64 +4354,63 @@ void Script_SetPlayerDataSplitScreen(UiContext *param_1,itemDef_t *param_2,char 
 {
   char cVar1;
   char cVar2;
-  UiContext *pUVar3;
-  bool bVar5;
-  LocalClientNum_t LVar4;
-  char **ppcVar6;
+  bool bVar4;
+  LocalClientNum_t LVar3;
+  char **ppcVar5;
+  char *pcVar6;
   char *pcVar7;
-  char *pcVar8;
   LocalClientNum_t local_430;
   LocalClientNum_t local_42c [3];
   char local_420 [1056];
   
-  pUVar3 = (UiContext *)__savegprlr_29(param_1,param_2);
   String_Parse(param_3,local_420,0x400);
-  pcVar8 = local_420;
-  pcVar7 = "(";
+  pcVar7 = local_420;
+  pcVar6 = "(";
   do {
-    cVar1 = *pcVar8;
-    cVar2 = *pcVar7;
+    cVar1 = *pcVar7;
+    cVar2 = *pcVar6;
     if (cVar1 == '\0') break;
-    pcVar8 = pcVar8 + 1;
     pcVar7 = pcVar7 + 1;
+    pcVar6 = pcVar6 + 1;
   } while (cVar1 == cVar2);
   if (cVar1 != cVar2) {
     Com_Error(ERR_DROP,"SetPlayerDataSplitScreen: no opening parenthesi found\n");
   }
   String_Parse(param_3,local_420,0x400);
-  ppcVar6 = (char **)0x0;
+  ppcVar5 = (char **)0x0;
   local_430 = LOCAL_CLIENT_0;
-  bVar5 = Script_ParseLocalVarInt(pUVar3,local_420,param_3,0,(int *)&local_430);
-  LVar4 = local_430;
-  if (!bVar5) {
-    LVar4 = atoi(local_420);
+  bVar4 = Script_ParseLocalVarInt(param_1,local_420,param_3,0,(int *)&local_430);
+  LVar3 = local_430;
+  if (!bVar4) {
+    LVar3 = atoi(local_420);
   }
   String_Parse(param_3,local_420,0x400);
-  pcVar8 = local_420;
-  pcVar7 = ",";
+  pcVar7 = local_420;
+  pcVar6 = ",";
   do {
-    cVar1 = *pcVar8;
-    cVar2 = *pcVar7;
+    cVar1 = *pcVar7;
+    cVar2 = *pcVar6;
     if (cVar1 == '\0') break;
-    pcVar8 = pcVar8 + 1;
     pcVar7 = pcVar7 + 1;
+    pcVar6 = pcVar6 + 1;
   } while (cVar1 == cVar2);
   if (cVar1 != cVar2) {
     Com_Error(ERR_DROP,
               "\x15SetPlayerDataSplitScreen: no comma found after split screen player index\n");
   }
-  bVar5 = GetSplitScreenLocalClientNumForMenuScript(LVar4,local_42c,"SetPlayerDataSplitScreen");
-  if (!bVar5) {
+  bVar4 = GetSplitScreenLocalClientNumForMenuScript(LVar3,local_42c,"SetPlayerDataSplitScreen");
+  if (!bVar4) {
     Com_Error(ERR_DROP,"\x15SetPlayerDataSplitScreen: %i is not a valid split screen player index");
   }
-  Script_SetPlayerData_Internal(local_42c[0],pUVar3,(itemDef_t *)param_3,ppcVar6);
-  __restgprlr_29();
+  Script_SetPlayerData_Internal(local_42c[0],param_1,(itemDef_t *)param_3,ppcVar5);
   return;
 }
 
 
 // 825CB7A0  Script_SetMatchRulesData  (ui/ui_shared.cpp:2870)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
@@ -4638,46 +4418,45 @@ void Script_SetPlayerDataSplitScreen(UiContext *param_1,itemDef_t *param_2,char 
 void Script_SetMatchRulesData(UiContext *param_1,itemDef_t *param_2,char **param_3)
 
 {
-  UiContext *pUVar1;
-  GameStateInfo *pGVar2;
-  GameStateInfoIndex GVar3;
-  StructuredDataDef *pSVar4;
-  StructuredData_SetResult SVar5;
+  GameStateInfo *pGVar1;
+  GameStateInfoIndex GVar2;
+  StructuredDataDef *pSVar3;
+  StructuredData_SetResult SVar4;
   StructuredDataBuffer local_40 [8];
   
-  pUVar1 = (UiContext *)__savegprlr_26(param_1,param_2);
-  pGVar2 = GameStateInfo_Get();
-  GVar3 = GameStateInfo_GetIndexForGamemode();
-  if (GVar3 != GAMESTATEINFO_HOST) {
+  pGVar1 = GameStateInfo_Get();
+  GVar2 = GameStateInfo_GetIndexForGamemode();
+  if (GVar2 != GAMESTATEINFO_HOST) {
     Com_Error(ERR_DROP,"SetMatchRulesData called when not game host.");
   }
-  if (pGVar2->usingRecipe == 0) {
+  if (pGVar1->usingRecipe == 0) {
     Com_Error(ERR_DROP,"SetMatchRulesData called when not using recipe!");
   }
-  if (pGVar2->matchRules == (MatchRules *)0x0) {
+  if (pGVar1->matchRules == (MatchRules *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0xb44,0,"%s"
                    );
   }
-  pSVar4 = StructuredDataDef_GetAsset("mp/recipes.def",0xc00);
-  local_40[0].data = pGVar2->matchRules->data;
+  pSVar3 = StructuredDataDef_GetAsset("mp/recipes.def",0xc00);
+  local_40[0].data = pGVar1->matchRules->data;
   if ((MatchRules *)local_40[0].data == (MatchRules *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\../universal/com_structureddatadef.h"
                     ,0x54,0,"%s");
   }
   local_40[0].size = 0xc00;
-  SVar5 = Script_SetStructuredDataDef
-                    (pSVar4,local_40,pUVar1,param_3,"SetMatchRulesData",false,true,
+  SVar4 = Script_SetStructuredDataDef
+                    (pSVar3,local_40,param_1,param_3,"SetMatchRulesData",false,true,
                      Script_SetMatchRulesDataKeyboardFinished);
-  if (SVar5 == SETRESULT_SUCCESS_CHANGED) {
-    MatchRulesChanged(pGVar2->matchRules);
+  if (SVar4 == SETRESULT_SUCCESS_CHANGED) {
+    MatchRulesChanged(pGVar1->matchRules);
   }
-  __restgprlr_26();
   return;
 }
 
 
 // 825BE188  Script_LoadOrSaveMatchRulesXX_GetRequired  (ui/ui_shared.cpp:2900)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
@@ -4689,57 +4468,49 @@ void Script_LoadOrSaveMatchRulesXX_GetRequired
 {
   char cVar1;
   char cVar2;
-  UiContext *pUVar3;
   bool bVar5;
-  int iVar4;
-  ulonglong uVar6;
-  ulonglong uVar7;
-  int *piVar8;
-  char *pcVar9;
-  char *pcVar10;
+  int iVar3;
+  char *pcVar4;
+  char *pcVar6;
   char local_430 [1072];
   
-  uVar7 = (ulonglong)(int)param_4;
-  uVar6 = (ulonglong)(int)param_3;
-  pUVar3 = (UiContext *)__savegprlr_27(param_1);
-  if ((uVar6 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0xb57,
-                    (int)(int *)uVar6,"%s");
+  if (param_3 == (char **)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0xb57,0,"%s"
+                   );
   }
   String_Parse((char **)param_2,local_430,0x400);
-  pcVar10 = local_430;
-  pcVar9 = "(";
+  pcVar6 = local_430;
+  pcVar4 = "(";
   do {
-    cVar1 = *pcVar10;
-    cVar2 = *pcVar9;
+    cVar1 = *pcVar6;
+    cVar2 = *pcVar4;
     if (cVar1 == '\0') break;
-    pcVar10 = pcVar10 + 1;
-    pcVar9 = pcVar9 + 1;
+    pcVar6 = pcVar6 + 1;
+    pcVar4 = pcVar4 + 1;
   } while (cVar1 == cVar2);
   if (cVar1 != cVar2) {
     Com_Error(ERR_DROP,"\x15%s: no opening parenthesis found\n");
   }
-  if ((uVar7 & 0xffffffff) != 0) {
+  if (param_4 != (int *)0x0) {
     String_Parse((char **)param_2,local_430,0x400);
-    piVar8 = (int *)uVar7;
-    bVar5 = Script_ParseLocalVarInt(pUVar3,local_430,(char **)param_2,0,piVar8);
+    bVar5 = Script_ParseLocalVarInt(param_1,local_430,(char **)param_2,0,param_4);
     if (!bVar5) {
-      iVar4 = atoi(local_430);
-      *piVar8 = iVar4;
+      iVar3 = atoi(local_430);
+      *param_4 = iVar3;
     }
-    if ((*piVar8 < 0) || (10 < *piVar8)) {
+    if ((*param_4 < 0) || (10 < *param_4)) {
       Com_Error(ERR_DROP,"\x15Slot index is not within bounds.");
     }
   }
   String_Parse((char **)param_2,local_430,0x400);
-  pcVar10 = local_430;
-  pcVar9 = ")";
+  pcVar6 = local_430;
+  pcVar4 = ")";
   do {
-    cVar1 = *pcVar10;
-    cVar2 = *pcVar9;
+    cVar1 = *pcVar6;
+    cVar2 = *pcVar4;
     if (cVar1 == '\0') break;
-    pcVar10 = pcVar10 + 1;
-    pcVar9 = pcVar9 + 1;
+    pcVar6 = pcVar6 + 1;
+    pcVar4 = pcVar4 + 1;
   } while (cVar1 == cVar2);
   if (cVar1 != cVar2) {
     Com_Error(ERR_DROP,"\x15%s: no closing parenthesis found\n");
@@ -4747,9 +4518,8 @@ void Script_LoadOrSaveMatchRulesXX_GetRequired
   if (((onlinegame->current).enabled != false) && (bVar5 = Lobby_IsInLobby(), !bVar5)) {
     Com_Error(ERR_DROP,"\x15%s called while not in lobby");
   }
-  iVar4 = CL_ControllerIndexFromClientNum(pUVar3->localClientNum);
-  *(int *)uVar6 = iVar4;
-  __restgprlr_27();
+  pcVar4 = (char *)CL_ControllerIndexFromClientNum(param_1->localClientNum);
+  *param_3 = pcVar4;
   return;
 }
 
@@ -5052,6 +4822,8 @@ void Script_OnlineVaultEditMetaData(UiContext *param_1,itemDef_t *param_2,char *
 
 // 825BE8D8  Script_IncludeInMapRotation  (ui/ui_shared.cpp:3069)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
@@ -5062,152 +4834,148 @@ void Script_IncludeInMapRotation(UiContext *param_1,itemDef_t *param_2,char **pa
   char cVar1;
   char cVar2;
   LobbyMapRotation *pLVar3;
-  UiContext *pUVar4;
-  bool bVar7;
-  GameStateInfo *pGVar5;
-  uint uVar6;
+  bool bVar6;
+  GameStateInfo *pGVar4;
+  uint uVar5;
+  char *pcVar7;
   char *pcVar8;
-  char *pcVar9;
-  char cVar10;
+  char cVar9;
   bool local_440 [4];
   char *local_43c [3];
   char acStack_430 [16];
   char local_420 [1056];
   
-  pUVar4 = (UiContext *)__savegprlr_29(param_1,param_2);
   local_43c[0] = acStack_430;
   String_Parse(param_3,local_420,0x400);
-  pcVar9 = local_420;
-  pcVar8 = "(";
+  pcVar8 = local_420;
+  pcVar7 = "(";
   do {
-    cVar10 = *pcVar9;
-    cVar1 = *pcVar8;
-    if (cVar10 == '\0') break;
-    pcVar9 = pcVar9 + 1;
+    cVar9 = *pcVar8;
+    cVar1 = *pcVar7;
+    if (cVar9 == '\0') break;
     pcVar8 = pcVar8 + 1;
-  } while (cVar10 == cVar1);
-  if (cVar10 != cVar1) {
+    pcVar7 = pcVar7 + 1;
+  } while (cVar9 == cVar1);
+  if (cVar9 != cVar1) {
     Com_Error(ERR_DROP,"\x15IncludeInMapRotation: no opening parenthesis found\n");
   }
   String_Parse(param_3,local_420,0x400);
-  bVar7 = Script_ParseLocalVarString(pUVar4,local_420,param_3,0,local_43c,acStack_430,0x10);
-  if (!bVar7) {
+  bVar6 = Script_ParseLocalVarString(param_1,local_420,param_3,0,local_43c,acStack_430,0x10);
+  if (!bVar6) {
     I_strncpyz(acStack_430,local_420,0x10);
   }
   String_Parse(param_3,local_420,0x400);
-  pcVar9 = local_420;
-  pcVar8 = ",";
+  pcVar8 = local_420;
+  pcVar7 = ",";
   do {
-    cVar10 = *pcVar9;
-    cVar1 = *pcVar8;
-    if (cVar10 == '\0') break;
-    pcVar9 = pcVar9 + 1;
+    cVar9 = *pcVar8;
+    cVar1 = *pcVar7;
+    if (cVar9 == '\0') break;
     pcVar8 = pcVar8 + 1;
-  } while (cVar10 == cVar1);
-  if (cVar10 != cVar1) {
+    pcVar7 = pcVar7 + 1;
+  } while (cVar9 == cVar1);
+  if (cVar9 != cVar1) {
     Com_Error(ERR_DROP,"\x15IncludeInMapRotation: no \',\' preceding second argument\n");
   }
   String_Parse(param_3,local_420,0x400);
-  bVar7 = Script_ParseLocalVarBool(pUVar4,local_420,param_3,1,local_440);
-  cVar10 = local_440[0];
-  if (!bVar7) {
-    pcVar9 = local_420;
-    pcVar8 = "true";
+  bVar6 = Script_ParseLocalVarBool(param_1,local_420,param_3,1,local_440);
+  cVar9 = local_440[0];
+  if (!bVar6) {
+    pcVar8 = local_420;
+    pcVar7 = "true";
     do {
-      cVar10 = *pcVar9;
-      cVar1 = *pcVar8;
-      if (cVar10 == '\0') break;
-      pcVar9 = pcVar9 + 1;
+      cVar9 = *pcVar8;
+      cVar1 = *pcVar7;
+      if (cVar9 == '\0') break;
       pcVar8 = pcVar8 + 1;
-    } while (cVar10 == cVar1);
-    if (cVar10 != cVar1) {
-      pcVar9 = local_420;
-      pcVar8 = "1";
+      pcVar7 = pcVar7 + 1;
+    } while (cVar9 == cVar1);
+    if (cVar9 != cVar1) {
+      pcVar8 = local_420;
+      pcVar7 = "1";
       do {
-        cVar10 = *pcVar9;
-        cVar1 = *pcVar8;
-        if (cVar10 == '\0') break;
-        pcVar9 = pcVar9 + 1;
+        cVar9 = *pcVar8;
+        cVar1 = *pcVar7;
+        if (cVar9 == '\0') break;
         pcVar8 = pcVar8 + 1;
-      } while (cVar10 == cVar1);
-      if (cVar10 != cVar1) {
-        pcVar9 = local_420;
-        pcVar8 = "false";
+        pcVar7 = pcVar7 + 1;
+      } while (cVar9 == cVar1);
+      if (cVar9 != cVar1) {
+        pcVar8 = local_420;
+        pcVar7 = "false";
         do {
-          cVar10 = *pcVar9;
-          cVar1 = *pcVar8;
-          if (cVar10 == '\0') break;
-          pcVar9 = pcVar9 + 1;
+          cVar9 = *pcVar8;
+          cVar1 = *pcVar7;
+          if (cVar9 == '\0') break;
           pcVar8 = pcVar8 + 1;
-        } while (cVar10 == cVar1);
-        if (cVar10 != cVar1) {
-          pcVar9 = local_420;
-          pcVar8 = "0";
+          pcVar7 = pcVar7 + 1;
+        } while (cVar9 == cVar1);
+        if (cVar9 != cVar1) {
+          pcVar8 = local_420;
+          pcVar7 = "0";
           do {
-            cVar10 = *pcVar9;
-            cVar1 = *pcVar8;
-            if (cVar10 == '\0') break;
-            pcVar9 = pcVar9 + 1;
+            cVar9 = *pcVar8;
+            cVar1 = *pcVar7;
+            if (cVar9 == '\0') break;
             pcVar8 = pcVar8 + 1;
-          } while (cVar10 == cVar1);
-          if (cVar10 != cVar1) {
+            pcVar7 = pcVar7 + 1;
+          } while (cVar9 == cVar1);
+          if (cVar9 != cVar1) {
             Com_Error(ERR_DROP,"\x15");
-            cVar10 = local_440[0];
+            cVar9 = local_440[0];
             goto LAB_825beb20;
           }
         }
-        cVar10 = '\0';
+        cVar9 = '\0';
         goto LAB_825beb20;
       }
     }
-    cVar10 = '\x01';
+    cVar9 = '\x01';
   }
 LAB_825beb20:
   String_Parse(param_3,local_420,0x400);
-  pcVar9 = local_420;
-  pcVar8 = ")";
+  pcVar8 = local_420;
+  pcVar7 = ")";
   do {
-    cVar1 = *pcVar9;
-    cVar2 = *pcVar8;
+    cVar1 = *pcVar8;
+    cVar2 = *pcVar7;
     if (cVar1 == '\0') break;
-    pcVar9 = pcVar9 + 1;
     pcVar8 = pcVar8 + 1;
+    pcVar7 = pcVar7 + 1;
   } while (cVar1 == cVar2);
   if (cVar1 != cVar2) {
     Com_Error(ERR_DROP,"\x15IncludeInMapRotation: no closing parenthesis found\n");
   }
-  bVar7 = Lobby_IsInLobby();
-  if (!bVar7) {
+  bVar6 = Lobby_IsInLobby();
+  if (!bVar6) {
     Com_Error(ERR_DROP,"IncludeInMapRotation called while not in lobby");
   }
-  bVar7 = Lobby_AreWeHost();
-  if (!bVar7) {
+  bVar6 = Lobby_AreWeHost();
+  if (!bVar6) {
     Com_Error(ERR_DROP,"IncludeInMapRotation called while not lobby host");
   }
   if ((xblive_privatematch->current).enabled == false) {
     Com_Error(ERR_DROP,"IncludeInMapRotation called while not in private match");
   }
-  pGVar5 = GameStateInfo_Get();
-  if (pGVar5->mapRotation == (LobbyMapRotation *)0x0) {
+  pGVar4 = GameStateInfo_Get();
+  if (pGVar4->mapRotation == (LobbyMapRotation *)0x0) {
     Com_Error(ERR_DROP,"IncludeInMapRotation called while not using map rotation\n");
   }
-  if (pGVar5->mapRotation == (LobbyMapRotation *)0x0) {
+  if (pGVar4->mapRotation == (LobbyMapRotation *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0xc2e,0,"%s"
                    );
   }
-  pLVar3 = pGVar5->mapRotation;
-  if (cVar10 == '\0') {
+  pLVar3 = pGVar4->mapRotation;
+  if (cVar9 == '\0') {
     PrivateMapRotation_RemoveEntry(pLVar3,local_43c[0]);
   }
   else {
-    uVar6 = PrivateMapRotation_AddNewEntry(pLVar3,local_43c[0]);
-    if (uVar6 != 0xffff) {
-      PrivateMapRotation_SetInitialMapSelection(pLVar3,uVar6);
-      __restgprlr_29();
+    uVar5 = PrivateMapRotation_AddNewEntry(pLVar3,local_43c[0]);
+    if (uVar5 != 0xffff) {
+      PrivateMapRotation_SetInitialMapSelection(pLVar3,uVar5);
       return;
     }
   }
-  __restgprlr_29();
   return;
 }
 
@@ -5536,16 +5304,18 @@ void Script_ResetStatsCancel(UiContext *param_1,itemDef_t *param_2,char **param_
 
 // 825BF2C0  Script_SetCardItem_Internal  (ui/ui_shared.cpp:3248)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void Script_SetCardItem_Internal(int param_1,char *param_2,int param_3)
 
 {
-  int iVar1;
-  StatsSource SVar2;
-  int iVar3;
-  bool bVar7;
-  uchar *puVar4;
-  StructuredDataDef *pSVar5;
-  LookupState LVar6;
+  StatsSource SVar1;
+  int iVar2;
+  bool bVar6;
+  uchar *puVar3;
+  StructuredDataDef *pSVar4;
+  LookupState LVar5;
   char *pcStack0000001c;
   StructuredDataBuffer SStack_60;
   GamerProfileData GStack_58;
@@ -5553,10 +5323,9 @@ void Script_SetCardItem_Internal(int param_1,char *param_2,int param_3)
   StructuredDataLookup aSStack_40 [4];
   
   pcStack0000001c = param_2;
-  iVar1 = __savegprlr_28(param_1);
-  SVar2 = LiveStorage_GetActiveStatsSource(iVar1);
-  if (SVar2 == STATS_ONLINE) {
-    GStack_58 = GamerProfile_GetDataByName(iVar1,pcStack0000001c);
+  SVar1 = LiveStorage_GetActiveStatsSource(param_1);
+  if (SVar1 == STATS_ONLINE) {
+    GStack_58 = GamerProfile_GetDataByName(param_1,pcStack0000001c);
     GStack_50 = GStack_58;
     if (GStack_58.type != TYPE_SHORT) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage.cpp",
@@ -5568,63 +5337,8 @@ void Script_SetCardItem_Internal(int param_1,char *param_2,int param_3)
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage.cpp",
                         0x1703,0,"%s");
       }
-      iVar3 = GamerProfile_GetDataIndexByName(pcStack0000001c);
-      GamerProfile_SetData(iVar1,iVar3,GStack_50);
-    }
-  }
-  bVar7 = CL_Demo_IsPlaybackMemoryAllocated();
-  if (bVar7) {
-    puVar4 = CL_Demo_GetPersistentDataBufferForDemo();
-  }
-  else {
-    SVar2 = LiveStorage_GetActiveStatsSource(iVar1);
-    puVar4 = LiveStorage_GetPersistentDataBufferForSource(iVar1,SVar2);
-  }
-  if (puVar4 != (uchar *)0x0) {
-    pSVar5 = StructuredDataDef_GetAsset("mp/playerdata.def",0x2ffc);
-    SStack_60.size = 0x2ffc;
-    SStack_60.data = puVar4;
-    StructuredData_InitializeLookup(pSVar5,aSStack_40);
-    StructuredData_LookupWithString(aSStack_40,pcStack0000001c);
-    LVar6 = StructuredData_GetLookupState(aSStack_40);
-    if ((LVar6 == LOOKUP_FINISHED) &&
-       (iVar3 = LiveStorage_DataGetInternalInt(&stack0x0000001c,1,&SStack_60), iVar3 != param_3)) {
-      LiveStorage_DataSetInternalIntByName(pcStack0000001c,param_3,&SStack_60,(uchar *)0x0);
-      LiveStorage_StatsWriteNeeded(iVar1);
-    }
-  }
-  __restgprlr_28();
-  return;
-}
-
-
-// 825BF2C8  Script_SetCardItemNew_Internal  (ui/ui_shared.cpp:3256)
-
-void Script_SetCardItemNew_Internal(int param_1,char *param_2,int param_3,bool param_4)
-
-{
-  int iVar1;
-  StatsSource SVar2;
-  bool bVar6;
-  uchar *puVar3;
-  StructuredDataDef *pSVar4;
-  LookupState LVar5;
-  ulonglong uVar7;
-  StructuredDataBuffer aSStack_50 [2];
-  StructuredDataLookup aSStack_40 [4];
-  
-  uVar7 = (ulonglong)param_4;
-  iVar1 = __savegprlr_27(param_1);
-  SVar2 = LiveStorage_GetActiveStatsSource(iVar1);
-  if (SVar2 == STATS_ONLINE) {
-    bVar6 = GamerProfile_GetBit(iVar1,param_3,param_2);
-    if ((uVar7 & 0xff) != (longlong)bVar6) {
-      if ((uVar7 & 0xff) == 0) {
-        GamerProfile_ClearBit(iVar1,param_3,param_2);
-      }
-      else {
-        GamerProfile_SetBit(iVar1,param_3,param_2);
-      }
+      iVar2 = GamerProfile_GetDataIndexByName(pcStack0000001c);
+      GamerProfile_SetData(param_1,iVar2,GStack_50);
     }
   }
   bVar6 = CL_Demo_IsPlaybackMemoryAllocated();
@@ -5632,24 +5346,74 @@ void Script_SetCardItemNew_Internal(int param_1,char *param_2,int param_3,bool p
     puVar3 = CL_Demo_GetPersistentDataBufferForDemo();
   }
   else {
-    SVar2 = LiveStorage_GetActiveStatsSource(iVar1);
-    puVar3 = LiveStorage_GetPersistentDataBufferForSource(iVar1,SVar2);
+    SVar1 = LiveStorage_GetActiveStatsSource(param_1);
+    puVar3 = LiveStorage_GetPersistentDataBufferForSource(param_1,SVar1);
   }
   if (puVar3 != (uchar *)0x0) {
     pSVar4 = StructuredDataDef_GetAsset("mp/playerdata.def",0x2ffc);
-    aSStack_50[0].size = 0x2ffc;
-    aSStack_50[0].data = puVar3;
+    SStack_60.size = 0x2ffc;
+    SStack_60.data = puVar3;
     StructuredData_InitializeLookup(pSVar4,aSStack_40);
-    StructuredData_LookupWithString(aSStack_40,param_2);
+    StructuredData_LookupWithString(aSStack_40,pcStack0000001c);
     LVar5 = StructuredData_GetLookupState(aSStack_40);
-    if (((LVar5 != LOOKUP_ERROR) && ((aSStack_40[0].type)->type == DATA_INDEXED_ARRAY)) &&
-       (bVar6 = LiveStorage_PlayerDataGetArrayBoolByIndex(aSStack_50,param_2,param_3),
-       (longlong)bVar6 != (uVar7 & 0xff))) {
-      LiveStorage_PlayerDataSetArrayBoolByIndex(aSStack_50,param_2,param_3,SUB81(uVar7,0));
-      LiveStorage_StatsWriteNeeded(iVar1);
+    if ((LVar5 == LOOKUP_FINISHED) &&
+       (iVar2 = LiveStorage_DataGetInternalInt(&stack0x0000001c,1,&SStack_60), iVar2 != param_3)) {
+      LiveStorage_DataSetInternalIntByName(pcStack0000001c,param_3,&SStack_60,(uchar *)0x0);
+      LiveStorage_StatsWriteNeeded(param_1);
     }
   }
-  __restgprlr_27();
+  return;
+}
+
+
+// 825BF2C8  Script_SetCardItemNew_Internal  (ui/ui_shared.cpp:3256)
+
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
+void Script_SetCardItemNew_Internal(int param_1,char *param_2,int param_3,bool param_4)
+
+{
+  StatsSource SVar1;
+  bool bVar5;
+  uchar *puVar2;
+  StructuredDataDef *pSVar3;
+  LookupState LVar4;
+  StructuredDataBuffer aSStack_50 [2];
+  StructuredDataLookup aSStack_40 [4];
+  
+  SVar1 = LiveStorage_GetActiveStatsSource(param_1);
+  if ((SVar1 == STATS_ONLINE) &&
+     (bVar5 = GamerProfile_GetBit(param_1,param_3,param_2), param_4 != bVar5)) {
+    if (param_4) {
+      GamerProfile_SetBit(param_1,param_3,param_2);
+    }
+    else {
+      GamerProfile_ClearBit(param_1,param_3,param_2);
+    }
+  }
+  bVar5 = CL_Demo_IsPlaybackMemoryAllocated();
+  if (bVar5) {
+    puVar2 = CL_Demo_GetPersistentDataBufferForDemo();
+  }
+  else {
+    SVar1 = LiveStorage_GetActiveStatsSource(param_1);
+    puVar2 = LiveStorage_GetPersistentDataBufferForSource(param_1,SVar1);
+  }
+  if (puVar2 != (uchar *)0x0) {
+    pSVar3 = StructuredDataDef_GetAsset("mp/playerdata.def",0x2ffc);
+    aSStack_50[0].size = 0x2ffc;
+    aSStack_50[0].data = puVar2;
+    StructuredData_InitializeLookup(pSVar3,aSStack_40);
+    StructuredData_LookupWithString(aSStack_40,param_2);
+    LVar4 = StructuredData_GetLookupState(aSStack_40);
+    if (((LVar4 != LOOKUP_ERROR) && ((aSStack_40[0].type)->type == DATA_INDEXED_ARRAY)) &&
+       (bVar5 = LiveStorage_PlayerDataGetArrayBoolByIndex(aSStack_50,param_2,param_3),
+       bVar5 != param_4)) {
+      LiveStorage_PlayerDataSetArrayBoolByIndex(aSStack_50,param_2,param_3,param_4);
+      LiveStorage_StatsWriteNeeded(param_1);
+    }
+  }
   return;
 }
 
@@ -5693,6 +5457,8 @@ void Script_DeleteEliteCacFile(UiContext *param_1,itemDef_t *param_2,char **para
 
 // 825BF2D8  Script_IntegrateEliteCacFile  (ui/ui_shared.cpp:3269)
 
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
@@ -5716,7 +5482,6 @@ void Script_IntegrateEliteCacFile(UiContext *param_1,itemDef_t *param_2,char **p
   char acStack_a0 [32];
   char acStack_80 [128];
   
-  __savegprlr_22(param_1,param_2,param_3);
   pcStack_c8 = acStack_a0;
   pcStack_c4 = acStack_80;
   I_strncpyz(acStack_a0,"customClasses",0x20);
@@ -5800,13 +5565,14 @@ void Script_IntegrateEliteCacFile(UiContext *param_1,itemDef_t *param_2,char **p
     } while (iVar8 < 4);
     s_eliteCACData.disabledControllersForPopup = false;
   }
-  __restgprlr_22();
   return;
 }
 
 
 // 825BF2E0  Script_SetCardIcon_Internal  (ui/ui_shared.cpp:3276)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
@@ -5817,51 +5583,44 @@ void Script_SetCardIcon_Internal
 {
   char cVar1;
   char cVar2;
-  LocalClientNum_t LVar3;
-  char **ppcVar4;
-  bool bVar7;
-  int iVar5;
-  int iVar6;
-  longlong lVar8;
-  longlong lVar9;
-  char *pcVar10;
-  char *pcVar11;
+  bool bVar5;
+  int iVar3;
+  int iVar4;
+  char *pcVar6;
+  char *pcVar7;
   int local_430 [4];
   char local_420 [1056];
   
-  lVar9 = (longlong)(int)param_3;
-  lVar8 = (longlong)(int)param_2;
-  LVar3 = __savegprlr_29(param_1,lVar8,lVar9,param_4);
   local_430[0] = 0;
-  ppcVar4 = (char **)lVar9;
-  String_Parse(ppcVar4,local_420,0x400);
-  bVar7 = Script_ParseLocalVarInt((UiContext *)lVar8,local_420,ppcVar4,0,local_430);
-  iVar5 = local_430[0];
-  if (!bVar7) {
-    iVar5 = atoi(local_420);
+  String_Parse((char **)param_3,local_420,0x400);
+  bVar5 = Script_ParseLocalVarInt(param_2,local_420,(char **)param_3,0,local_430);
+  iVar3 = local_430[0];
+  if (!bVar5) {
+    iVar3 = atoi(local_420);
   }
-  String_Parse(ppcVar4,local_420,0x400);
-  pcVar11 = local_420;
-  pcVar10 = ")";
+  String_Parse((char **)param_3,local_420,0x400);
+  pcVar7 = local_420;
+  pcVar6 = ")";
   do {
-    cVar1 = *pcVar11;
-    cVar2 = *pcVar10;
+    cVar1 = *pcVar7;
+    cVar2 = *pcVar6;
     if (cVar1 == '\0') break;
-    pcVar11 = pcVar11 + 1;
-    pcVar10 = pcVar10 + 1;
+    pcVar7 = pcVar7 + 1;
+    pcVar6 = pcVar6 + 1;
   } while (cVar1 == cVar2);
   if (cVar1 != cVar2) {
     Com_Error(ERR_DROP,"SetCardIcon: no closing parenthesis found\n");
   }
-  iVar6 = CL_ControllerIndexFromClientNum(LVar3);
-  LiveStorage_SetPlayerCardItem(iVar6,"cardIcon",iVar5);
-  __restgprlr_29();
+  iVar4 = CL_ControllerIndexFromClientNum(param_1);
+  LiveStorage_SetPlayerCardItem(iVar4,"cardIcon",iVar3);
   return;
 }
 
 
 // 825BF3C0  Script_SetCardTitle_Internal  (ui/ui_shared.cpp:3296)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
@@ -5872,49 +5631,44 @@ void Script_SetCardTitle_Internal
 {
   char cVar1;
   char cVar2;
-  UiContext *pUVar3;
-  char **ppcVar4;
-  bool bVar7;
-  int iVar5;
-  int iVar6;
-  longlong lVar8;
-  char *pcVar9;
-  char *pcVar10;
+  bool bVar5;
+  int iVar3;
+  int iVar4;
+  char *pcVar6;
+  char *pcVar7;
   int local_430 [4];
   char local_420 [1056];
   
-  lVar8 = (longlong)(int)param_2;
-  pUVar3 = (UiContext *)__savegprlr_29(param_1,lVar8,param_3,param_4);
   local_430[0] = 0;
-  ppcVar4 = (char **)lVar8;
-  String_Parse(ppcVar4,local_420,0x400);
-  bVar7 = Script_ParseLocalVarInt(pUVar3,local_420,ppcVar4,0,local_430);
-  iVar5 = local_430[0];
-  if (!bVar7) {
-    iVar5 = atoi(local_420);
+  String_Parse((char **)param_2,local_420,0x400);
+  bVar5 = Script_ParseLocalVarInt((UiContext *)param_1,local_420,(char **)param_2,0,local_430);
+  iVar3 = local_430[0];
+  if (!bVar5) {
+    iVar3 = atoi(local_420);
   }
-  String_Parse(ppcVar4,local_420,0x400);
-  pcVar10 = local_420;
-  pcVar9 = ")";
+  String_Parse((char **)param_2,local_420,0x400);
+  pcVar7 = local_420;
+  pcVar6 = ")";
   do {
-    cVar1 = *pcVar10;
-    cVar2 = *pcVar9;
+    cVar1 = *pcVar7;
+    cVar2 = *pcVar6;
     if (cVar1 == '\0') break;
-    pcVar10 = pcVar10 + 1;
-    pcVar9 = pcVar9 + 1;
+    pcVar7 = pcVar7 + 1;
+    pcVar6 = pcVar6 + 1;
   } while (cVar1 == cVar2);
   if (cVar1 != cVar2) {
     Com_Error(ERR_DROP,"SetCardTitle: no closing parenthesis found\n");
   }
-  iVar6 = CL_ControllerIndexFromClientNum(pUVar3->localClientNum);
-  LiveStorage_SetPlayerCardItem(iVar6,"cardTitle",iVar5);
-  __restgprlr_29();
+  iVar4 = CL_ControllerIndexFromClientNum(*(LocalClientNum_t *)param_1);
+  LiveStorage_SetPlayerCardItem(iVar4,"cardTitle",iVar3);
   return;
 }
 
 
 // 825BF4A0  Script_SetCardTitleNew_Internal  (ui/ui_shared.cpp:3316)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
@@ -5925,75 +5679,68 @@ void Script_SetCardTitleNew_Internal
 {
   char cVar1;
   char cVar2;
-  LocalClientNum_t LVar3;
-  char **ppcVar4;
-  bool bVar7;
-  uint uVar5;
-  int iVar6;
-  longlong lVar8;
-  longlong lVar9;
-  char *pcVar10;
-  char *pcVar11;
-  ulonglong uVar12;
+  bool bVar5;
+  uint uVar3;
+  int iVar4;
+  char *pcVar6;
+  char *pcVar7;
+  ulonglong uVar8;
   uint local_440 [4];
   char local_430 [1072];
   
-  lVar9 = (longlong)(int)param_3;
-  lVar8 = (longlong)(int)param_2;
-  LVar3 = __savegprlr_27(param_1,lVar8,lVar9,param_4);
   local_440[0] = 0;
-  ppcVar4 = (char **)lVar9;
-  String_Parse(ppcVar4,local_430,0x400);
-  bVar7 = Script_ParseLocalVarInt((UiContext *)lVar8,local_430,ppcVar4,0,(int *)local_440);
-  uVar5 = local_440[0];
-  if (!bVar7) {
-    uVar5 = atoi(local_430);
+  String_Parse((char **)param_3,local_430,0x400);
+  bVar5 = Script_ParseLocalVarInt(param_2,local_430,(char **)param_3,0,(int *)local_440);
+  uVar3 = local_440[0];
+  if (!bVar5) {
+    uVar3 = atoi(local_430);
   }
-  String_Parse(ppcVar4,local_430,0x400);
-  pcVar11 = local_430;
-  pcVar10 = ",";
+  String_Parse((char **)param_3,local_430,0x400);
+  pcVar7 = local_430;
+  pcVar6 = ",";
   do {
-    cVar1 = *pcVar11;
-    cVar2 = *pcVar10;
+    cVar1 = *pcVar7;
+    cVar2 = *pcVar6;
     if (cVar1 == '\0') break;
-    pcVar11 = pcVar11 + 1;
-    pcVar10 = pcVar10 + 1;
+    pcVar7 = pcVar7 + 1;
+    pcVar6 = pcVar6 + 1;
   } while (cVar1 == cVar2);
   if (cVar1 != cVar2) {
     Com_Error(ERR_DROP,"SetCardTitleNew: no comma found after title index\n");
   }
   local_440[0] = 0;
-  String_Parse(ppcVar4,local_430,0x400);
-  bVar7 = Script_ParseLocalVarInt((UiContext *)lVar8,local_430,ppcVar4,0,(int *)local_440);
-  if (bVar7) {
-    uVar12 = (ulonglong)local_440[0];
+  String_Parse((char **)param_3,local_430,0x400);
+  bVar5 = Script_ParseLocalVarInt(param_2,local_430,(char **)param_3,0,(int *)local_440);
+  if (bVar5) {
+    uVar8 = (ulonglong)local_440[0];
   }
   else {
-    iVar6 = atoi(local_430);
-    uVar12 = (ulonglong)iVar6;
+    iVar4 = atoi(local_430);
+    uVar8 = (ulonglong)iVar4;
   }
-  String_Parse(ppcVar4,local_430,0x400);
-  pcVar11 = local_430;
-  pcVar10 = ")";
+  String_Parse((char **)param_3,local_430,0x400);
+  pcVar7 = local_430;
+  pcVar6 = ")";
   do {
-    cVar1 = *pcVar11;
-    cVar2 = *pcVar10;
+    cVar1 = *pcVar7;
+    cVar2 = *pcVar6;
     if (cVar1 == '\0') break;
-    pcVar11 = pcVar11 + 1;
-    pcVar10 = pcVar10 + 1;
+    pcVar7 = pcVar7 + 1;
+    pcVar6 = pcVar6 + 1;
   } while (cVar1 == cVar2);
   if (cVar1 != cVar2) {
     Com_Error(ERR_DROP,"SetCardTitleNew: no closing parenthesis found\n");
   }
-  iVar6 = CL_ControllerIndexFromClientNum(LVar3);
-  LiveStorage_SetPlayerCardItemField(iVar6,"titleNew",uVar5,(bool)('\x01' - (uVar12 == 0)));
-  __restgprlr_27();
+  iVar4 = CL_ControllerIndexFromClientNum(param_1);
+  LiveStorage_SetPlayerCardItemField(iVar4,"titleNew",uVar3,(bool)('\x01' - (uVar8 == 0)));
   return;
 }
 
 
 // 825BF630  Script_SetCardIconNew_Internal  (ui/ui_shared.cpp:3346)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
@@ -6004,75 +5751,68 @@ void Script_SetCardIconNew_Internal
 {
   char cVar1;
   char cVar2;
-  LocalClientNum_t LVar3;
-  char **ppcVar4;
-  bool bVar7;
-  uint uVar5;
-  int iVar6;
-  longlong lVar8;
-  longlong lVar9;
-  char *pcVar10;
-  char *pcVar11;
-  ulonglong uVar12;
+  bool bVar5;
+  uint uVar3;
+  int iVar4;
+  char *pcVar6;
+  char *pcVar7;
+  ulonglong uVar8;
   uint local_440 [4];
   char local_430 [1072];
   
-  lVar9 = (longlong)(int)param_3;
-  lVar8 = (longlong)(int)param_2;
-  LVar3 = __savegprlr_27(param_1,lVar8,lVar9,param_4);
   local_440[0] = 0;
-  ppcVar4 = (char **)lVar9;
-  String_Parse(ppcVar4,local_430,0x400);
-  bVar7 = Script_ParseLocalVarInt((UiContext *)lVar8,local_430,ppcVar4,0,(int *)local_440);
-  uVar5 = local_440[0];
-  if (!bVar7) {
-    uVar5 = atoi(local_430);
+  String_Parse((char **)param_3,local_430,0x400);
+  bVar5 = Script_ParseLocalVarInt(param_2,local_430,(char **)param_3,0,(int *)local_440);
+  uVar3 = local_440[0];
+  if (!bVar5) {
+    uVar3 = atoi(local_430);
   }
-  String_Parse(ppcVar4,local_430,0x400);
-  pcVar11 = local_430;
-  pcVar10 = ",";
+  String_Parse((char **)param_3,local_430,0x400);
+  pcVar7 = local_430;
+  pcVar6 = ",";
   do {
-    cVar1 = *pcVar11;
-    cVar2 = *pcVar10;
+    cVar1 = *pcVar7;
+    cVar2 = *pcVar6;
     if (cVar1 == '\0') break;
-    pcVar11 = pcVar11 + 1;
-    pcVar10 = pcVar10 + 1;
+    pcVar7 = pcVar7 + 1;
+    pcVar6 = pcVar6 + 1;
   } while (cVar1 == cVar2);
   if (cVar1 != cVar2) {
     Com_Error(ERR_DROP,"SetCardIconNew: no comma found after title index\n");
   }
   local_440[0] = 0;
-  String_Parse(ppcVar4,local_430,0x400);
-  bVar7 = Script_ParseLocalVarInt((UiContext *)lVar8,local_430,ppcVar4,0,(int *)local_440);
-  if (bVar7) {
-    uVar12 = (ulonglong)local_440[0];
+  String_Parse((char **)param_3,local_430,0x400);
+  bVar5 = Script_ParseLocalVarInt(param_2,local_430,(char **)param_3,0,(int *)local_440);
+  if (bVar5) {
+    uVar8 = (ulonglong)local_440[0];
   }
   else {
-    iVar6 = atoi(local_430);
-    uVar12 = (ulonglong)iVar6;
+    iVar4 = atoi(local_430);
+    uVar8 = (ulonglong)iVar4;
   }
-  String_Parse(ppcVar4,local_430,0x400);
-  pcVar11 = local_430;
-  pcVar10 = ")";
+  String_Parse((char **)param_3,local_430,0x400);
+  pcVar7 = local_430;
+  pcVar6 = ")";
   do {
-    cVar1 = *pcVar11;
-    cVar2 = *pcVar10;
+    cVar1 = *pcVar7;
+    cVar2 = *pcVar6;
     if (cVar1 == '\0') break;
-    pcVar11 = pcVar11 + 1;
-    pcVar10 = pcVar10 + 1;
+    pcVar7 = pcVar7 + 1;
+    pcVar6 = pcVar6 + 1;
   } while (cVar1 == cVar2);
   if (cVar1 != cVar2) {
     Com_Error(ERR_DROP,"SetCardIconNew: no closing parenthesis found\n");
   }
-  iVar6 = CL_ControllerIndexFromClientNum(LVar3);
-  LiveStorage_SetPlayerCardItemField(iVar6,"iconNew",uVar5,(bool)('\x01' - (uVar12 == 0)));
-  __restgprlr_27();
+  iVar4 = CL_ControllerIndexFromClientNum(param_1);
+  LiveStorage_SetPlayerCardItemField(iVar4,"iconNew",uVar3,(bool)('\x01' - (uVar8 == 0)));
   return;
 }
 
 
 // 825BF7C0  Script_SetProfileItemNew_Internal  (ui/ui_shared.cpp:3376)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
@@ -6083,96 +5823,85 @@ void Script_SetProfileItemNew_Internal
 {
   char cVar1;
   char cVar2;
-  LocalClientNum_t LVar3;
+  int iVar3;
+  bool bVar7;
   int iVar4;
-  char **ppcVar5;
-  bool bVar9;
-  int iVar6;
-  StatsSource SVar7;
-  uint uVar8;
-  longlong lVar10;
-  longlong lVar11;
-  char *pcVar12;
-  char *pcVar13;
-  ulonglong uVar14;
+  StatsSource SVar5;
+  uint uVar6;
+  char *pcVar8;
+  char *pcVar9;
+  ulonglong uVar10;
   StringTable *local_460 [2];
   StructuredDataBuffer local_458;
   char acStack_450 [32];
   char local_430 [1072];
   
-  lVar11 = (longlong)(int)param_3;
-  lVar10 = (longlong)(int)param_2;
-  LVar3 = __savegprlr_28(param_1,lVar10,lVar11,param_4);
-  iVar4 = CL_ControllerIndexFromClientNum(LVar3);
-  ppcVar5 = (char **)lVar11;
-  String_Parse(ppcVar5,acStack_450,0x20);
-  String_Parse(ppcVar5,local_430,0x400);
-  pcVar13 = local_430;
-  pcVar12 = ",";
+  iVar3 = CL_ControllerIndexFromClientNum(param_1);
+  String_Parse((char **)param_3,acStack_450,0x20);
+  String_Parse((char **)param_3,local_430,0x400);
+  pcVar9 = local_430;
+  pcVar8 = ",";
   do {
-    cVar1 = *pcVar13;
-    cVar2 = *pcVar12;
+    cVar1 = *pcVar9;
+    cVar2 = *pcVar8;
     if (cVar1 == '\0') break;
-    pcVar13 = pcVar13 + 1;
-    pcVar12 = pcVar12 + 1;
+    pcVar9 = pcVar9 + 1;
+    pcVar8 = pcVar8 + 1;
   } while (cVar1 == cVar2);
   if (cVar1 != cVar2) {
     Com_Error(ERR_DROP,"SetCardIconNew: no comma found after title index\n");
   }
   local_458.data = (uchar *)0x0;
-  String_Parse(ppcVar5,local_430,0x400);
-  bVar9 = Script_ParseLocalVarInt((UiContext *)lVar10,local_430,ppcVar5,0,(int *)&local_458);
-  if (bVar9) {
-    uVar14 = ZEXT48(local_458.data);
+  String_Parse((char **)param_3,local_430,0x400);
+  bVar7 = Script_ParseLocalVarInt(param_2,local_430,(char **)param_3,0,(int *)&local_458);
+  if (bVar7) {
+    uVar10 = ZEXT48(local_458.data);
   }
   else {
-    iVar6 = atoi(local_430);
-    uVar14 = (ulonglong)iVar6;
+    iVar4 = atoi(local_430);
+    uVar10 = (ulonglong)iVar4;
   }
-  String_Parse(ppcVar5,local_430,0x400);
-  pcVar13 = local_430;
-  pcVar12 = ")";
+  String_Parse((char **)param_3,local_430,0x400);
+  pcVar9 = local_430;
+  pcVar8 = ")";
   do {
-    cVar1 = *pcVar13;
-    cVar2 = *pcVar12;
+    cVar1 = *pcVar9;
+    cVar2 = *pcVar8;
     if (cVar1 == '\0') break;
-    pcVar13 = pcVar13 + 1;
-    pcVar12 = pcVar12 + 1;
+    pcVar9 = pcVar9 + 1;
+    pcVar8 = pcVar8 + 1;
   } while (cVar1 == cVar2);
   if (cVar1 != cVar2) {
     Com_Error(ERR_DROP,"SetCardIconNew: no closing parenthesis found\n");
   }
-  SVar7 = LiveStorage_GetActiveStatsSource(iVar4);
-  if (SVar7 == STATS_ONLINE) {
+  SVar5 = LiveStorage_GetActiveStatsSource(iVar3);
+  if (SVar5 == STATS_ONLINE) {
     StringTable_GetAsset("mp/profileUnlockTable.csv",local_460);
     if (local_460[0] == (StringTable *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0xd59,0,
                       "%s");
     }
-    uVar8 = StringTable_LookupRowNumForValue(local_460[0],0,acStack_450);
-    if (7 < uVar8) {
+    uVar6 = StringTable_LookupRowNumForValue(local_460[0],0,acStack_450);
+    if (7 < uVar6) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0xd5c,0,
                       "itemIndex doesn\'t index PROFILE_UNLOCKS_MAX\n\t%i not in [0, %i)");
     }
-    if (-1 < (int)uVar8) {
-      if ((int)uVar14 != 0) {
-        GamerProfile_SetBit(iVar4,uVar8,"unlockNew");
-        __restgprlr_28();
+    if (-1 < (int)uVar6) {
+      if ((int)uVar10 != 0) {
+        GamerProfile_SetBit(iVar3,uVar6,"unlockNew");
         return;
       }
-      GamerProfile_ClearBit(iVar4,uVar8,"unlockNew");
+      GamerProfile_ClearBit(iVar3,uVar6,"unlockNew");
     }
   }
   else {
-    bVar9 = LiveStorage_GetPlayerUnlockDataBuffer(&local_458,iVar4);
-    if (bVar9) {
+    bVar7 = LiveStorage_GetPlayerUnlockDataBuffer(&local_458,iVar3);
+    if (bVar7) {
       LiveStorage_PlayerDataSetArrayBoolByName
-                (&local_458,"featureNew",acStack_450,(bool)('\x01' - (uVar14 == 0)));
-      __restgprlr_28();
+                (&local_458,"featureNew",acStack_450,(bool)('\x01' - (uVar10 == 0)));
       return;
     }
   }
-  __restgprlr_28();
   return;
 }
 
@@ -6351,6 +6080,8 @@ void Script_SetProfileItemNew(UiContext *param_1,itemDef_t *param_2,char **param
 
 // 825BFD08  Script_SetCardIconSplitScreen  (ui/ui_shared.cpp:3502)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
@@ -6360,64 +6091,63 @@ void Script_SetCardIconSplitScreen(UiContext *param_1,itemDef_t *param_2,char **
 {
   char cVar1;
   char cVar2;
-  UiContext *pUVar3;
-  bool bVar5;
-  LocalClientNum_t LVar4;
-  char **ppcVar6;
+  bool bVar4;
+  LocalClientNum_t LVar3;
+  char **ppcVar5;
+  char *pcVar6;
   char *pcVar7;
-  char *pcVar8;
   LocalClientNum_t local_430;
   LocalClientNum_t local_42c [3];
   char local_420 [1056];
   
-  pUVar3 = (UiContext *)__savegprlr_29(param_1,param_2);
   String_Parse(param_3,local_420,0x400);
-  pcVar8 = local_420;
-  pcVar7 = "(";
+  pcVar7 = local_420;
+  pcVar6 = "(";
   do {
-    cVar1 = *pcVar8;
-    cVar2 = *pcVar7;
+    cVar1 = *pcVar7;
+    cVar2 = *pcVar6;
     if (cVar1 == '\0') break;
-    pcVar8 = pcVar8 + 1;
     pcVar7 = pcVar7 + 1;
+    pcVar6 = pcVar6 + 1;
   } while (cVar1 == cVar2);
   if (cVar1 != cVar2) {
     Com_Error(ERR_DROP,"SetCardIconSplitScreen: no opening parenthesis found\n");
   }
   local_430 = LOCAL_CLIENT_0;
   String_Parse(param_3,local_420,0x400);
-  ppcVar6 = (char **)0x0;
-  bVar5 = Script_ParseLocalVarInt(pUVar3,local_420,param_3,0,(int *)&local_430);
-  LVar4 = local_430;
-  if (!bVar5) {
-    LVar4 = atoi(local_420);
+  ppcVar5 = (char **)0x0;
+  bVar4 = Script_ParseLocalVarInt(param_1,local_420,param_3,0,(int *)&local_430);
+  LVar3 = local_430;
+  if (!bVar4) {
+    LVar3 = atoi(local_420);
   }
   String_Parse(param_3,local_420,0x400);
-  pcVar8 = local_420;
-  pcVar7 = ",";
+  pcVar7 = local_420;
+  pcVar6 = ",";
   do {
-    cVar1 = *pcVar8;
-    cVar2 = *pcVar7;
+    cVar1 = *pcVar7;
+    cVar2 = *pcVar6;
     if (cVar1 == '\0') break;
-    pcVar8 = pcVar8 + 1;
     pcVar7 = pcVar7 + 1;
+    pcVar6 = pcVar6 + 1;
   } while (cVar1 == cVar2);
   if (cVar1 != cVar2) {
     Com_Error(ERR_DROP,
               "\x15SetCardIconSplitScreen: no comma found after split screen player index\n");
   }
-  bVar5 = GetSplitScreenLocalClientNumForMenuScript(LVar4,local_42c,"SetCardIconSplitScreen");
-  if (!bVar5) {
+  bVar4 = GetSplitScreenLocalClientNumForMenuScript(LVar3,local_42c,"SetCardIconSplitScreen");
+  if (!bVar4) {
     Com_Error(ERR_DROP,"\x15SetCardIconSplitScreen: %i is not a valid split screen player index");
   }
-  Script_SetCardIcon_Internal(local_42c[0],pUVar3,(itemDef_t *)param_3,ppcVar6);
-  __restgprlr_29();
+  Script_SetCardIcon_Internal(local_42c[0],param_1,(itemDef_t *)param_3,ppcVar5);
   return;
 }
 
 
 // 825BFE68  Script_SetCardTitleSplitScreen  (ui/ui_shared.cpp:3530)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
@@ -6427,68 +6157,67 @@ void Script_SetCardTitleSplitScreen(UiContext *param_1,itemDef_t *param_2,char *
 {
   char cVar1;
   char cVar2;
-  UiContext *pUVar3;
-  bool bVar5;
-  itemDef_t *piVar4;
-  char **ppcVar6;
+  bool bVar4;
+  itemDef_t *piVar3;
+  char **ppcVar5;
+  char *pcVar6;
   char *pcVar7;
-  char *pcVar8;
   itemDef_t *local_430;
   LocalClientNum_t aLStack_42c [3];
   char local_420 [1056];
   
-  pUVar3 = (UiContext *)__savegprlr_29(param_1,param_2);
   String_Parse(param_3,local_420,0x400);
-  pcVar8 = local_420;
-  pcVar7 = "(";
+  pcVar7 = local_420;
+  pcVar6 = "(";
   do {
-    cVar1 = *pcVar8;
-    cVar2 = *pcVar7;
+    cVar1 = *pcVar7;
+    cVar2 = *pcVar6;
     if (cVar1 == '\0') break;
-    pcVar8 = pcVar8 + 1;
     pcVar7 = pcVar7 + 1;
+    pcVar6 = pcVar6 + 1;
   } while (cVar1 == cVar2);
   if (cVar1 != cVar2) {
     Com_Error(ERR_DROP,"SetCardTitleSplitScreen: no opening parenthesis found\n");
   }
   local_430 = (itemDef_t *)0x0;
   String_Parse(param_3,local_420,0x400);
-  ppcVar6 = (char **)0x0;
-  bVar5 = Script_ParseLocalVarInt(pUVar3,local_420,param_3,0,(int *)&local_430);
-  piVar4 = local_430;
-  if (!bVar5) {
-    piVar4 = (itemDef_t *)atoi(local_420);
+  ppcVar5 = (char **)0x0;
+  bVar4 = Script_ParseLocalVarInt(param_1,local_420,param_3,0,(int *)&local_430);
+  piVar3 = local_430;
+  if (!bVar4) {
+    piVar3 = (itemDef_t *)atoi(local_420);
   }
   String_Parse(param_3,local_420,0x400);
-  pcVar8 = local_420;
-  pcVar7 = ",";
+  pcVar7 = local_420;
+  pcVar6 = ",";
   do {
-    cVar1 = *pcVar8;
-    cVar2 = *pcVar7;
+    cVar1 = *pcVar7;
+    cVar2 = *pcVar6;
     if (cVar1 == '\0') break;
-    pcVar8 = pcVar8 + 1;
     pcVar7 = pcVar7 + 1;
+    pcVar6 = pcVar6 + 1;
   } while (cVar1 == cVar2);
   if (cVar1 != cVar2) {
     Com_Error(ERR_DROP,
               "\x15SetCardTitleSplitScreen: no comma found after split screen player index\n");
   }
-  pcVar7 = "SetCardTitleSplitScreen";
-  bVar5 = GetSplitScreenLocalClientNumForMenuScript
-                    ((LocalClientNum_t)piVar4,aLStack_42c,"SetCardTitleSplitScreen");
-  if (!bVar5) {
-    pcVar7 = (char *)piVar4;
+  pcVar6 = "SetCardTitleSplitScreen";
+  bVar4 = GetSplitScreenLocalClientNumForMenuScript
+                    ((LocalClientNum_t)piVar3,aLStack_42c,"SetCardTitleSplitScreen");
+  if (!bVar4) {
+    pcVar6 = (char *)piVar3;
     Com_Error(ERR_DROP,"\x15SetCardTitleSplitScreen: %i is not a valid split screen player index");
   }
   Script_SetCardTitle_Internal
-            ((LocalClientNum_t)pUVar3,(UiContext *)param_3,(itemDef_t *)pcVar7,ppcVar6);
-  __restgprlr_29();
+            ((LocalClientNum_t)param_1,(UiContext *)param_3,(itemDef_t *)pcVar6,ppcVar5);
   return;
 }
 
 
 // 825BFFC8  Script_SetCardIconNewSplitScreen  (ui/ui_shared.cpp:3558)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
@@ -6498,65 +6227,64 @@ void Script_SetCardIconNewSplitScreen(UiContext *param_1,itemDef_t *param_2,char
 {
   char cVar1;
   char cVar2;
-  UiContext *pUVar3;
-  bool bVar5;
-  LocalClientNum_t LVar4;
-  char **ppcVar6;
+  bool bVar4;
+  LocalClientNum_t LVar3;
+  char **ppcVar5;
+  char *pcVar6;
   char *pcVar7;
-  char *pcVar8;
   LocalClientNum_t local_430;
   LocalClientNum_t local_42c [3];
   char local_420 [1056];
   
-  pUVar3 = (UiContext *)__savegprlr_29(param_1,param_2);
   String_Parse(param_3,local_420,0x400);
-  pcVar8 = local_420;
-  pcVar7 = "(";
+  pcVar7 = local_420;
+  pcVar6 = "(";
   do {
-    cVar1 = *pcVar8;
-    cVar2 = *pcVar7;
+    cVar1 = *pcVar7;
+    cVar2 = *pcVar6;
     if (cVar1 == '\0') break;
-    pcVar8 = pcVar8 + 1;
     pcVar7 = pcVar7 + 1;
+    pcVar6 = pcVar6 + 1;
   } while (cVar1 == cVar2);
   if (cVar1 != cVar2) {
     Com_Error(ERR_DROP,"SetCardIconNewSplitScreen: no opening parenthesis found\n");
   }
   local_430 = LOCAL_CLIENT_0;
   String_Parse(param_3,local_420,0x400);
-  ppcVar6 = (char **)0x0;
-  bVar5 = Script_ParseLocalVarInt(pUVar3,local_420,param_3,0,(int *)&local_430);
-  LVar4 = local_430;
-  if (!bVar5) {
-    LVar4 = atoi(local_420);
+  ppcVar5 = (char **)0x0;
+  bVar4 = Script_ParseLocalVarInt(param_1,local_420,param_3,0,(int *)&local_430);
+  LVar3 = local_430;
+  if (!bVar4) {
+    LVar3 = atoi(local_420);
   }
   String_Parse(param_3,local_420,0x400);
-  pcVar8 = local_420;
-  pcVar7 = ",";
+  pcVar7 = local_420;
+  pcVar6 = ",";
   do {
-    cVar1 = *pcVar8;
-    cVar2 = *pcVar7;
+    cVar1 = *pcVar7;
+    cVar2 = *pcVar6;
     if (cVar1 == '\0') break;
-    pcVar8 = pcVar8 + 1;
     pcVar7 = pcVar7 + 1;
+    pcVar6 = pcVar6 + 1;
   } while (cVar1 == cVar2);
   if (cVar1 != cVar2) {
     Com_Error(ERR_DROP,
               "\x15SetCardIconNewSplitScreen: no comma found after split screen player index\n");
   }
-  bVar5 = GetSplitScreenLocalClientNumForMenuScript(LVar4,local_42c,"SetCardIconNewSplitScreen");
-  if (!bVar5) {
+  bVar4 = GetSplitScreenLocalClientNumForMenuScript(LVar3,local_42c,"SetCardIconNewSplitScreen");
+  if (!bVar4) {
     Com_Error(ERR_DROP,"\x15SetCardIconNewSplitScreen: %i is not a valid split screen player index")
     ;
   }
-  Script_SetCardIconNew_Internal(local_42c[0],pUVar3,(itemDef_t *)param_3,ppcVar6);
-  __restgprlr_29();
+  Script_SetCardIconNew_Internal(local_42c[0],param_1,(itemDef_t *)param_3,ppcVar5);
   return;
 }
 
 
 // 825C0128  Script_SetCardTitleNewSplitScreen  (ui/ui_shared.cpp:3587)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
@@ -6566,65 +6294,64 @@ void Script_SetCardTitleNewSplitScreen(UiContext *param_1,itemDef_t *param_2,cha
 {
   char cVar1;
   char cVar2;
-  UiContext *pUVar3;
-  bool bVar5;
-  LocalClientNum_t LVar4;
-  char **ppcVar6;
+  bool bVar4;
+  LocalClientNum_t LVar3;
+  char **ppcVar5;
+  char *pcVar6;
   char *pcVar7;
-  char *pcVar8;
   LocalClientNum_t local_430;
   LocalClientNum_t local_42c [3];
   char local_420 [1056];
   
-  pUVar3 = (UiContext *)__savegprlr_29(param_1,param_2);
   String_Parse(param_3,local_420,0x400);
-  pcVar8 = local_420;
-  pcVar7 = "(";
+  pcVar7 = local_420;
+  pcVar6 = "(";
   do {
-    cVar1 = *pcVar8;
-    cVar2 = *pcVar7;
+    cVar1 = *pcVar7;
+    cVar2 = *pcVar6;
     if (cVar1 == '\0') break;
-    pcVar8 = pcVar8 + 1;
     pcVar7 = pcVar7 + 1;
+    pcVar6 = pcVar6 + 1;
   } while (cVar1 == cVar2);
   if (cVar1 != cVar2) {
     Com_Error(ERR_DROP,"SetCardTitleNewSplitScreen: no opening parenthesis found\n");
   }
   local_430 = LOCAL_CLIENT_0;
   String_Parse(param_3,local_420,0x400);
-  ppcVar6 = (char **)0x0;
-  bVar5 = Script_ParseLocalVarInt(pUVar3,local_420,param_3,0,(int *)&local_430);
-  LVar4 = local_430;
-  if (!bVar5) {
-    LVar4 = atoi(local_420);
+  ppcVar5 = (char **)0x0;
+  bVar4 = Script_ParseLocalVarInt(param_1,local_420,param_3,0,(int *)&local_430);
+  LVar3 = local_430;
+  if (!bVar4) {
+    LVar3 = atoi(local_420);
   }
   String_Parse(param_3,local_420,0x400);
-  pcVar8 = local_420;
-  pcVar7 = ",";
+  pcVar7 = local_420;
+  pcVar6 = ",";
   do {
-    cVar1 = *pcVar8;
-    cVar2 = *pcVar7;
+    cVar1 = *pcVar7;
+    cVar2 = *pcVar6;
     if (cVar1 == '\0') break;
-    pcVar8 = pcVar8 + 1;
     pcVar7 = pcVar7 + 1;
+    pcVar6 = pcVar6 + 1;
   } while (cVar1 == cVar2);
   if (cVar1 != cVar2) {
     Com_Error(ERR_DROP,
               "\x15SetCardTitleNewSplitScreen: no comma found after split screen player index\n");
   }
-  bVar5 = GetSplitScreenLocalClientNumForMenuScript(LVar4,local_42c,"SetCardTitleNewSplitScreen");
-  if (!bVar5) {
+  bVar4 = GetSplitScreenLocalClientNumForMenuScript(LVar3,local_42c,"SetCardTitleNewSplitScreen");
+  if (!bVar4) {
     Com_Error(ERR_DROP,"\x15SetCardTitleNewSplitScreen: %i is not a valid split screen player index"
              );
   }
-  Script_SetCardTitleNew_Internal(local_42c[0],pUVar3,(itemDef_t *)param_3,ppcVar6);
-  __restgprlr_29();
+  Script_SetCardTitleNew_Internal(local_42c[0],param_1,(itemDef_t *)param_3,ppcVar5);
   return;
 }
 
 
 // 825C0288  Script_PurchasePrestigeTitle  (ui/ui_shared.cpp:3615)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
@@ -6634,71 +6361,69 @@ void Script_PurchasePrestigeTitle(UiContext *param_1,itemDef_t *param_2,char **p
 {
   char cVar1;
   char cVar2;
-  LocalClientNum_t *pLVar3;
-  int iVar4;
-  StructuredDataDef *pSVar5;
-  StatsSource SVar6;
+  int iVar3;
+  StructuredDataDef *pSVar4;
+  StatsSource SVar5;
+  char *pcVar6;
   char *pcVar7;
-  char *pcVar8;
   StructuredDataBuffer aSStack_840 [2];
   StructuredDataLookup SStack_830;
   char local_820 [1024];
   char local_420 [1056];
   
-  pLVar3 = (LocalClientNum_t *)__savegprlr_29(param_1,param_2);
   String_Parse(param_3,local_820,0x400);
-  pcVar8 = local_820;
-  pcVar7 = "(";
+  pcVar7 = local_820;
+  pcVar6 = "(";
   do {
-    cVar1 = *pcVar8;
-    cVar2 = *pcVar7;
+    cVar1 = *pcVar7;
+    cVar2 = *pcVar6;
     if (cVar1 == '\0') break;
-    pcVar8 = pcVar8 + 1;
     pcVar7 = pcVar7 + 1;
+    pcVar6 = pcVar6 + 1;
   } while (cVar1 == cVar2);
   if (cVar1 != cVar2) {
     Com_Error(ERR_DROP,"PurchasePrestigeTitle: no opening parenthesis found.\n");
   }
-  iVar4 = CL_ControllerIndexFromClientNum(*pLVar3);
+  iVar3 = CL_ControllerIndexFromClientNum(param_1->localClientNum);
   String_Parse(param_3,local_420,0x400);
   if (local_420[0] == '\0') {
     Com_Error(ERR_DROP,"PurchasePrestigeTitle: unable to parse arg1 (string)\n");
   }
   String_Parse(param_3,local_820,0x400);
-  pcVar8 = local_820;
-  pcVar7 = ")";
+  pcVar7 = local_820;
+  pcVar6 = ")";
   do {
-    cVar1 = *pcVar8;
-    cVar2 = *pcVar7;
+    cVar1 = *pcVar7;
+    cVar2 = *pcVar6;
     if (cVar1 == '\0') break;
-    pcVar8 = pcVar8 + 1;
     pcVar7 = pcVar7 + 1;
+    pcVar6 = pcVar6 + 1;
   } while (cVar1 == cVar2);
   if (cVar1 != cVar2) {
     Com_Error(ERR_DROP,"PurchasePrestigeTitle: no closing parenthesis found\n");
   }
-  pSVar5 = StructuredDataDef_GetAsset("mp/playerdata.def",0x2ffc);
-  if (pSVar5 == (StructuredDataDef *)0x0) {
+  pSVar4 = StructuredDataDef_GetAsset("mp/playerdata.def",0x2ffc);
+  if (pSVar4 == (StructuredDataDef *)0x0) {
     Com_PrintError(0xd,"Unable to access player data.\n");
-    __restgprlr_29();
     return;
   }
-  StructuredData_InitializeLookup(pSVar5,&SStack_830);
-  LiveStorage_GetPlayerUnlockDataBuffer(aSStack_840,iVar4);
-  CG_InitItemsUnlocked(*pLVar3);
+  StructuredData_InitializeLookup(pSVar4,&SStack_830);
+  LiveStorage_GetPlayerUnlockDataBuffer(aSStack_840,iVar3);
+  CG_InitItemsUnlocked(param_1->localClientNum);
   LiveStorage_PlayerDataSetArrayIntByName(aSStack_840,"challengeState",local_420,2);
   LiveStorage_PlayerDataSetArrayIntByName(aSStack_840,"challengeProgress",local_420,1);
-  SVar6 = LiveStorage_GetActiveStatsSource(iVar4);
-  GamerProfile_UpdateProfileFromStats(iVar4,SVar6);
-  GamerProfile_UpdateProfileAndSaveIfNeeded(iVar4);
-  CG_MarkUnlockedItemsNew(*pLVar3);
-  __restgprlr_29();
+  SVar5 = LiveStorage_GetActiveStatsSource(iVar3);
+  GamerProfile_UpdateProfileFromStats(iVar3,SVar5);
+  GamerProfile_UpdateProfileAndSaveIfNeeded(iVar3);
+  CG_MarkUnlockedItemsNew(param_1->localClientNum);
   return;
 }
 
 
 // 825C0430  Script_SetProfileItemNewSplitScreen  (ui/ui_shared.cpp:3663)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
@@ -6708,59 +6433,56 @@ void Script_SetProfileItemNewSplitScreen(UiContext *param_1,itemDef_t *param_2,c
 {
   char cVar1;
   char cVar2;
-  UiContext *pUVar3;
-  bool bVar5;
-  LocalClientNum_t LVar4;
-  char **ppcVar6;
+  bool bVar4;
+  LocalClientNum_t LVar3;
+  char **ppcVar5;
+  char *pcVar6;
   char *pcVar7;
-  char *pcVar8;
   LocalClientNum_t local_430;
   LocalClientNum_t local_42c [3];
   char local_420 [1056];
   
-  pUVar3 = (UiContext *)__savegprlr_29(param_1,param_2);
   String_Parse(param_3,local_420,0x400);
-  pcVar8 = local_420;
-  pcVar7 = "(";
+  pcVar7 = local_420;
+  pcVar6 = "(";
   do {
-    cVar1 = *pcVar8;
-    cVar2 = *pcVar7;
+    cVar1 = *pcVar7;
+    cVar2 = *pcVar6;
     if (cVar1 == '\0') break;
-    pcVar8 = pcVar8 + 1;
     pcVar7 = pcVar7 + 1;
+    pcVar6 = pcVar6 + 1;
   } while (cVar1 == cVar2);
   if (cVar1 != cVar2) {
     Com_Error(ERR_DROP,"SetProfileItemNewSplitScreen: no opening parenthesis found\n");
   }
   local_430 = LOCAL_CLIENT_0;
   String_Parse(param_3,local_420,0x400);
-  ppcVar6 = (char **)0x0;
-  bVar5 = Script_ParseLocalVarInt(pUVar3,local_420,param_3,0,(int *)&local_430);
-  LVar4 = local_430;
-  if (!bVar5) {
-    LVar4 = atoi(local_420);
+  ppcVar5 = (char **)0x0;
+  bVar4 = Script_ParseLocalVarInt(param_1,local_420,param_3,0,(int *)&local_430);
+  LVar3 = local_430;
+  if (!bVar4) {
+    LVar3 = atoi(local_420);
   }
   String_Parse(param_3,local_420,0x400);
-  pcVar8 = local_420;
-  pcVar7 = ",";
+  pcVar7 = local_420;
+  pcVar6 = ",";
   do {
-    cVar1 = *pcVar8;
-    cVar2 = *pcVar7;
+    cVar1 = *pcVar7;
+    cVar2 = *pcVar6;
     if (cVar1 == '\0') break;
-    pcVar8 = pcVar8 + 1;
     pcVar7 = pcVar7 + 1;
+    pcVar6 = pcVar6 + 1;
   } while (cVar1 == cVar2);
   if (cVar1 != cVar2) {
     Com_Error(ERR_DROP,
               "\x15SetProfileItemNewSplitScreen: no comma found after split screen player index\n");
   }
-  bVar5 = GetSplitScreenLocalClientNumForMenuScript(LVar4,local_42c,"SetCardTitleNewSplitScreen");
-  if (!bVar5) {
+  bVar4 = GetSplitScreenLocalClientNumForMenuScript(LVar3,local_42c,"SetCardTitleNewSplitScreen");
+  if (!bVar4) {
     Com_Error(ERR_DROP,
               "\x15SetProfileItemNewSplitScreen: %i is not a valid split screen player index");
   }
-  Script_SetProfileItemNew_Internal(local_42c[0],pUVar3,(itemDef_t *)param_3,ppcVar6);
-  __restgprlr_29();
+  Script_SetProfileItemNew_Internal(local_42c[0],param_1,(itemDef_t *)param_3,ppcVar5);
   return;
 }
 
@@ -6937,6 +6659,8 @@ void Script_FeederTop(UiContext *param_1,itemDef_t *param_2,char **param_3)
 
 // 825CF508  Script_FeederBottom  (ui/ui_shared.cpp:3775)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
@@ -6946,37 +6670,28 @@ void Script_FeederBottom(UiContext *param_1,itemDef_t *param_2,char **param_3)
 {
   LocalClientNum_t LVar1;
   uint uVar2;
-  LocalClientNum_t *pLVar3;
-  listBoxDef_s *plVar4;
-  int iVar6;
-  int iVar7;
-  longlong lVar8;
-  ulonglong uVar9;
-  itemDef_t *piVar5;
+  listBoxDef_s *plVar3;
+  int iVar4;
+  int iVar5;
   
-  lVar8 = (longlong)(int)param_2;
-  pLVar3 = (LocalClientNum_t *)__savegprlr_27(param_1,lVar8,param_3);
-  piVar5 = (itemDef_t *)lVar8;
-  plVar4 = Item_GetListBoxDef(piVar5);
-  if (plVar4 != (listBoxDef_s *)0x0) {
-    if (plVar4->notselectable == 0) {
-      iVar6 = Item_ListBox_Viewmax(*pLVar3,piVar5);
-      iVar7 = UI_FeederCount(*pLVar3,piVar5->special);
-      uVar2 = (uint)((longlong)iVar7 + -1);
+  plVar3 = Item_GetListBoxDef(param_2);
+  if (plVar3 != (listBoxDef_s *)0x0) {
+    if (plVar3->notselectable == 0) {
+      iVar4 = Item_ListBox_Viewmax(param_1->localClientNum,param_2);
+      iVar5 = UI_FeederCount(param_1->localClientNum,param_2->special);
+      uVar2 = (uint)((longlong)iVar5 + -1);
       Item_ListBox_SetCursorPos
-                (*pLVar3,piVar5,iVar6,
-                 -((int)uVar2 >> 0x1f) - (uint)((longlong)iVar7 + -1 != 0) & uVar2);
-      __restgprlr_27();
+                (param_1->localClientNum,param_2,iVar4,
+                 -((int)uVar2 >> 0x1f) - (uint)((longlong)iVar5 + -1 != 0) & uVar2);
       return;
     }
-    LVar1 = *pLVar3;
-    iVar6 = UI_FeederCount(LVar1,piVar5->special);
-    iVar7 = Item_ListBox_Viewmax(LVar1,piVar5);
-    uVar9 = (longlong)iVar6 - (longlong)iVar7;
-    plVar4->startPos[*pLVar3] =
-         (int)((uVar9 & 0xffffffff) >> 0x1f) - (uint)(uVar9 != 0) & (uint)uVar9;
+    LVar1 = param_1->localClientNum;
+    iVar4 = UI_FeederCount(LVar1,param_2->special);
+    iVar5 = Item_ListBox_Viewmax(LVar1,param_2);
+    uVar2 = (uint)((longlong)iVar4 - (longlong)iVar5);
+    plVar3->startPos[param_1->localClientNum] =
+         -((int)uVar2 >> 0x1f) - (uint)((longlong)iVar4 - (longlong)iVar5 != 0) & uVar2;
   }
-  __restgprlr_27();
   return;
 }
 
@@ -7277,6 +6992,8 @@ void Script_KickPlayer(UiContext *param_1,itemDef_t *param_2,char **param_3)
 
 // 825CF5E0  Script_GetKickPlayerQuestionString  (ui/ui_shared.cpp:4171)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
@@ -7285,58 +7002,52 @@ void Script_KickPlayer(UiContext *param_1,itemDef_t *param_2,char **param_3)
 void Script_GetKickPlayerQuestionString(UiContext *param_1,itemDef_t *param_2,char **param_3)
 
 {
-  UiContext *pUVar1;
-  int iVar2;
-  PartyData *pPVar3;
-  bool bVar6;
+  int iVar1;
+  PartyData *pPVar2;
+  bool bVar5;
+  char *pcVar3;
   char *pcVar4;
-  char *pcVar5;
   
-  pUVar1 = (UiContext *)__savegprlr_28(param_1,param_2,param_3);
-  pPVar3 = &g_partyData;
-  iVar2 = Party_InParty(&g_partyData);
-  if (iVar2 == 0) {
-    bVar6 = Lobby_IsInRunningLobby();
-    if ((!bVar6) || ((xblive_privatematch->current).enabled == false)) {
+  pPVar2 = &g_partyData;
+  iVar1 = Party_InParty(&g_partyData);
+  if (iVar1 == 0) {
+    bVar5 = Lobby_IsInRunningLobby();
+    if ((!bVar5) || ((xblive_privatematch->current).enabled == false)) {
       Com_PrintError(0xf,"Attempt to kick a player from a public lobby.\n");
-      goto LAB_825cf75c;
+      return;
     }
-    pPVar3 = Lobby_GetPartyData();
+    pPVar2 = Lobby_GetPartyData();
   }
-  if ((sharedUiInfo.partyMemberXuid != 0) && (iVar2 = Party_AreWeHost(pPVar3), iVar2 != 0)) {
+  if ((sharedUiInfo.partyMemberXuid != 0) && (iVar1 = Party_AreWeHost(pPVar2), iVar1 != 0)) {
     if (sharedUiInfo.savedPartyMemberXuid != sharedUiInfo.partyMemberXuid) {
       Com_Printf(0xe,"Attempted to kick a player but the selection changed.\n");
-      __restgprlr_28();
       return;
     }
-    bVar6 = Live_XUIDIsLocalPlayer(sharedUiInfo.partyMemberXuid);
-    if (!bVar6) {
-      pcVar4 = UI_SafeTranslateString("XBOXLIVE_KICKPLAYER");
-      iVar2 = Party_FindMemberByXUID_AllowNotPresent(pPVar3,sharedUiInfo.partyMemberXuid);
-      if (-1 < iVar2) {
-        pcVar5 = Party_GetMemberName(pPVar3,iVar2);
-        pcVar4 = UI_ReplaceConversionString(pcVar4,pcVar5);
-        Dvar_SetStringByName("party_kickplayerquestion",pcVar4);
-        iVar2 = Menus_OpenByName(pUVar1,"kickwarning");
-        __restgprlr_28(iVar2);
-        return;
-      }
+    bVar5 = Live_XUIDIsLocalPlayer(sharedUiInfo.partyMemberXuid);
+    if (bVar5) {
+      Com_Printf(0xe,"Attempted to kick a local player.\n");
+      return;
+    }
+    pcVar3 = UI_SafeTranslateString("XBOXLIVE_KICKPLAYER");
+    iVar1 = Party_FindMemberByXUID_AllowNotPresent(pPVar2,sharedUiInfo.partyMemberXuid);
+    if (iVar1 < 0) {
       Com_Printf(0xe,"Attempted to kick an unknown player.\n");
-      __restgprlr_28();
       return;
     }
-    Com_Printf(0xe,"Attempted to kick a local player.\n");
-    __restgprlr_28();
+    pcVar4 = Party_GetMemberName(pPVar2,iVar1);
+    pcVar3 = UI_ReplaceConversionString(pcVar3,pcVar4);
+    Dvar_SetStringByName("party_kickplayerquestion",pcVar3);
+    Menus_OpenByName(param_1,"kickwarning");
     return;
   }
-LAB_825cf75c:
-  __restgprlr_28();
   return;
 }
 
 
 // 825C0DE0  Script_MakeHost  (ui/ui_shared.cpp:4219)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
@@ -7350,53 +7061,47 @@ void Script_MakeHost(UiContext *param_1,itemDef_t *param_2,char **param_3)
   bool bVar4;
   int iVar3;
   
-  __savegprlr_29(param_1,param_2,param_3);
   pPVar1 = Party_GetActiveParty();
   iVar2 = Party_AreWeHost(pPVar1);
   if (iVar2 == 0) {
     Com_PrintError(0xf,"Makehost - We aren\'t host of this party/lobby, so we can\'t change hosts\n"
                   );
-    __restgprlr_29();
     return;
   }
   bVar4 = Party_IsGameLobby(pPVar1);
   if (bVar4) {
     Com_PrintError(0xf,"Makehost - Attempt to change hosts in a lobby.\n");
-    __restgprlr_29();
     return;
   }
   if (sharedUiInfo.savedPartyMemberXuid == 0) {
     Com_PrintError(0xf,"Makehost - No select party member xuid for change host.\n");
-    __restgprlr_29();
     return;
   }
   bVar4 = Live_XUIDIsLocalPlayer(sharedUiInfo.savedPartyMemberXuid);
   if (bVar4) {
     Com_PrintError(0xf,"Makehost - Can\'t make us the host.\n");
-    __restgprlr_29();
     return;
   }
   iVar2 = Party_FindMemberByXUID(pPVar1,sharedUiInfo.savedPartyMemberXuid);
   if (iVar2 < 0) {
     Com_PrintError(0xf,"Makehost - Can\'t find the client num with xuid %llx.\n");
-    __restgprlr_29();
     return;
   }
   iVar3 = PartyMigrate_MigrateActive(pPVar1);
   if (iVar3 != 0) {
     Com_PrintError(0xf,"Makehost - Migration already active.\n");
-    __restgprlr_29();
     return;
   }
   Com_Printf(0xe,"Makehost - Requesting host change to client %i in Script_MakeHost()\n");
   PartyMigrate_AskArbitratorToChangeHost(pPVar1,iVar2,sharedUiInfo.savedPartyMemberXuid);
-  __restgprlr_29();
   return;
 }
 
 
 // 825CF768  Script_GetHostMigrateQuestionString  (ui/ui_shared.cpp:4270)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
@@ -7405,50 +7110,42 @@ void Script_MakeHost(UiContext *param_1,itemDef_t *param_2,char **param_3)
 void Script_GetHostMigrateQuestionString(UiContext *param_1,itemDef_t *param_2,char **param_3)
 
 {
-  UiContext *pUVar1;
-  PartyData *pPVar2;
-  int iVar3;
-  bool bVar6;
+  PartyData *pPVar1;
+  int iVar2;
+  bool bVar5;
+  char *pcVar3;
   char *pcVar4;
-  char *pcVar5;
   
-  pUVar1 = (UiContext *)__savegprlr_28(param_1,param_2,param_3);
-  pPVar2 = Party_GetActiveParty();
-  iVar3 = Party_AreWeHost(pPVar2);
-  if (iVar3 == 0) {
+  pPVar1 = Party_GetActiveParty();
+  iVar2 = Party_AreWeHost(pPVar1);
+  if (iVar2 == 0) {
     Com_PrintError(0xf,"We aren\'t host of this party, so we can\'t change hosts\n");
-    __restgprlr_28();
     return;
   }
-  bVar6 = Party_IsGameLobby(pPVar2);
-  if (bVar6) {
+  bVar5 = Party_IsGameLobby(pPVar1);
+  if (bVar5) {
     Com_PrintError(0xf,"Attempt to change hosts in a lobby.\n");
-    __restgprlr_28();
     return;
   }
   if (sharedUiInfo.savedPartyMemberXuid == 0) {
     Com_PrintError(0xf,"Makehost - No select party member xuid for change host.\n");
-    __restgprlr_28();
     return;
   }
-  bVar6 = Live_XUIDIsLocalPlayer(sharedUiInfo.savedPartyMemberXuid);
-  if (bVar6) {
+  bVar5 = Live_XUIDIsLocalPlayer(sharedUiInfo.savedPartyMemberXuid);
+  if (bVar5) {
     Com_PrintError(0xf,"Makehost - Can\'t make us the host.\n");
-    __restgprlr_28();
     return;
   }
-  iVar3 = Party_FindMemberByXUID(pPVar2,sharedUiInfo.savedPartyMemberXuid);
-  if (iVar3 < 0) {
+  iVar2 = Party_FindMemberByXUID(pPVar1,sharedUiInfo.savedPartyMemberXuid);
+  if (iVar2 < 0) {
     Com_PrintError(0xf,"Makehost - Can\'t find the client num with xuid %llx.\n");
-    __restgprlr_28();
     return;
   }
-  pcVar4 = UI_SafeTranslateString("MPUI_MAKEHOSTQUESTION");
-  pcVar5 = Party_GetMemberName(pPVar2,iVar3);
-  pcVar4 = UI_ReplaceConversionString(pcVar4,pcVar5);
-  Dvar_SetStringByName("party_makehostquestion",pcVar4);
-  iVar3 = Menus_OpenByName(pUVar1,"hostchangewarning");
-  __restgprlr_28(iVar3);
+  pcVar3 = UI_SafeTranslateString("MPUI_MAKEHOSTQUESTION");
+  pcVar4 = Party_GetMemberName(pPVar1,iVar2);
+  pcVar3 = UI_ReplaceConversionString(pcVar3,pcVar4);
+  Dvar_SetStringByName("party_makehostquestion",pcVar3);
+  Menus_OpenByName(param_1,"hostchangewarning");
   return;
 }
 
@@ -7475,6 +7172,8 @@ void Script_PartyUpdateMissingMapPackDvar(UiContext *param_1,itemDef_t *param_2,
 
 // 825CF8C0  Script_TogglePlayerMute  (ui/ui_shared.cpp:4324)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
@@ -7484,59 +7183,50 @@ void Script_TogglePlayerMute(UiContext *param_1,itemDef_t *param_2,char **param_
 
 {
   SessionData *pSVar1;
-  UiContext *pUVar2;
-  int iVar3;
-  bool bVar7;
-  PartyData *pPVar4;
+  int iVar2;
+  bool bVar6;
+  PartyData *pPVar3;
+  uint uVar4;
   uint uVar5;
-  uint uVar6;
   
-  pUVar2 = (UiContext *)__savegprlr_28(param_1,param_2,param_3);
-  pPVar4 = &g_partyData;
-  iVar3 = Party_InParty(&g_partyData);
-  if (iVar3 == 0) {
-    bVar7 = Lobby_IsInRunningLobby();
-    if (!bVar7) {
+  pPVar3 = &g_partyData;
+  iVar2 = Party_InParty(&g_partyData);
+  if (iVar2 == 0) {
+    bVar6 = Lobby_IsInRunningLobby();
+    if (!bVar6) {
       Com_PrintError(0xf,"Attempt to mute a player while not in a party/lobby.\n");
-      goto LAB_825cfa28;
+      return;
     }
-    pPVar4 = Lobby_GetPartyData();
+    pPVar3 = Lobby_GetPartyData();
   }
-  if (sharedUiInfo.partyMemberXuid != 0) {
-    uVar5 = Party_FindMemberByXUID(pPVar4,sharedUiInfo.partyMemberXuid);
-    if (-1 < (int)uVar5) {
-      pSVar1 = pPVar4->session;
-      iVar3 = CL_ControllerIndexFromClientNum(pUVar2->localClientNum);
-      uVar6 = Live_GetOurClientNum(iVar3,pSVar1);
-      if (uVar5 != uVar6) {
-        iVar3 = Party_IsMemberLocalPlayer(pPVar4,uVar5);
-        if (iVar3 != 0) {
-          Com_Printf(0xe,"Attempted to toggle mute on a local player.\n");
-          __restgprlr_28();
-          return;
-        }
-        if (pPVar4->partyMembers[uVar5].status == '\x06') {
-          Com_Printf(0xe,"Attempted to toggle mute on a test client.\n");
-          __restgprlr_28();
-          return;
-        }
-        bVar7 = CL_IsPlayerMuted(pPVar4->session,uVar5);
-        if ((bVar7) && (bVar7 = CL_IsPlayerUnmutable(pPVar4->session,uVar5), !bVar7)) {
-          iVar3 = Menus_OpenByName(pUVar2,"playerUnmutable");
-          __restgprlr_28(iVar3);
-          return;
-        }
-        CL_TogglePlayerMute(pPVar4->session,uVar5);
-        __restgprlr_28();
-        return;
-      }
-    }
-    Com_Printf(0xe,"Attempted to toggle mute on ourself or an unknown client.\n");
-    __restgprlr_28();
+  if (sharedUiInfo.partyMemberXuid == 0) {
     return;
   }
-LAB_825cfa28:
-  __restgprlr_28();
+  uVar4 = Party_FindMemberByXUID(pPVar3,sharedUiInfo.partyMemberXuid);
+  if (-1 < (int)uVar4) {
+    pSVar1 = pPVar3->session;
+    iVar2 = CL_ControllerIndexFromClientNum(param_1->localClientNum);
+    uVar5 = Live_GetOurClientNum(iVar2,pSVar1);
+    if (uVar4 != uVar5) {
+      iVar2 = Party_IsMemberLocalPlayer(pPVar3,uVar4);
+      if (iVar2 != 0) {
+        Com_Printf(0xe,"Attempted to toggle mute on a local player.\n");
+        return;
+      }
+      if (pPVar3->partyMembers[uVar4].status != '\x06') {
+        bVar6 = CL_IsPlayerMuted(pPVar3->session,uVar4);
+        if ((bVar6) && (bVar6 = CL_IsPlayerUnmutable(pPVar3->session,uVar4), !bVar6)) {
+          Menus_OpenByName(param_1,"playerUnmutable");
+          return;
+        }
+        CL_TogglePlayerMute(pPVar3->session,uVar4);
+        return;
+      }
+      Com_Printf(0xe,"Attempted to toggle mute on a test client.\n");
+      return;
+    }
+  }
+  Com_Printf(0xe,"Attempted to toggle mute on ourself or an unknown client.\n");
   return;
 }
 
@@ -7613,6 +7303,8 @@ void Script_HandleTransition(UiContext *param_1,itemDef_t *param_2,char **param_
 
 // 825C1058  Script_PlayMenuVideo  (ui/ui_shared.cpp:4470)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
@@ -7622,107 +7314,103 @@ void Script_PlayMenuVideo(UiContext *param_1,itemDef_t *param_2,char **param_3)
 {
   char cVar1;
   char cVar2;
-  UiContext *pUVar3;
-  bool bVar6;
+  bool bVar5;
+  int iVar3;
   int iVar4;
-  int iVar5;
+  char *pcVar6;
   char *pcVar7;
   char *pcVar8;
-  char *pcVar9;
-  int iVar10;
+  int iVar9;
   bool local_480 [4];
   int local_47c [3];
   char local_470 [64];
   char local_430 [1072];
   
-  pUVar3 = (UiContext *)__savegprlr_27(param_1,param_2);
-  iVar10 = 0;
+  iVar9 = 0;
   local_47c[0] = 0;
   String_Parse(param_3,local_430,0x400);
-  pcVar8 = local_430;
-  pcVar7 = "(";
+  pcVar7 = local_430;
+  pcVar6 = "(";
   do {
-    cVar1 = *pcVar8;
-    cVar2 = *pcVar7;
+    cVar1 = *pcVar7;
+    cVar2 = *pcVar6;
     if (cVar1 == '\0') break;
-    pcVar8 = pcVar8 + 1;
     pcVar7 = pcVar7 + 1;
+    pcVar6 = pcVar6 + 1;
   } while (cVar1 == cVar2);
   if (cVar1 != cVar2) {
     Com_Error(ERR_DROP,"playVideoMenu: no opening parenthesis found\n");
   }
   String_Parse(param_3,local_470,0x40);
   String_Parse(param_3,local_430,0x400);
-  pcVar9 = local_430;
-  pcVar8 = ",";
-  pcVar7 = pcVar8;
+  pcVar8 = local_430;
+  pcVar7 = ",";
+  pcVar6 = pcVar7;
   do {
-    cVar1 = *pcVar9;
-    cVar2 = *pcVar7;
+    cVar1 = *pcVar8;
+    cVar2 = *pcVar6;
     if (cVar1 == '\0') break;
-    pcVar9 = pcVar9 + 1;
-    pcVar7 = pcVar7 + 1;
+    pcVar8 = pcVar8 + 1;
+    pcVar6 = pcVar6 + 1;
   } while (cVar1 == cVar2);
   if (cVar1 != cVar2) {
     Com_Error(ERR_DROP,"playVideoMenu: no comma found after video name\n");
   }
   String_Parse(param_3,local_430,0x400);
-  bVar6 = Script_ParseLocalVarInt(pUVar3,local_430,param_3,0,local_47c);
-  iVar4 = local_47c[0];
-  if (!bVar6) {
-    iVar4 = atoi(local_430);
+  bVar5 = Script_ParseLocalVarInt(param_1,local_430,param_3,0,local_47c);
+  iVar3 = local_47c[0];
+  if (!bVar5) {
+    iVar3 = atoi(local_430);
   }
-  if (iVar4 < 0) {
+  if (iVar3 < 0) {
     Com_Error(ERR_DROP,"playVideoMenu: negative start offset is not allowed\n");
   }
   String_Parse(param_3,local_430,0x400);
-  pcVar7 = local_430;
+  pcVar6 = local_430;
   do {
-    cVar1 = *pcVar7;
-    cVar2 = *pcVar8;
+    cVar1 = *pcVar6;
+    cVar2 = *pcVar7;
     if (cVar1 == '\0') break;
+    pcVar6 = pcVar6 + 1;
     pcVar7 = pcVar7 + 1;
-    pcVar8 = pcVar8 + 1;
   } while (cVar1 == cVar2);
   if (cVar1 != cVar2) {
     Com_Error(ERR_DROP,"playVideoMenu: no comma found after start offset\n");
   }
   local_480[0] = false;
   String_Parse(param_3,local_430,0x400);
-  bVar6 = Script_ParseLocalVarBool(pUVar3,local_430,param_3,0,local_480);
+  bVar5 = Script_ParseLocalVarBool(param_1,local_430,param_3,0,local_480);
   cVar1 = local_480[0];
-  if (!bVar6) {
-    iVar5 = atoi(local_430);
-    cVar1 = iVar5 != 0;
+  if (!bVar5) {
+    iVar4 = atoi(local_430);
+    cVar1 = iVar4 != 0;
   }
   if (cVar1 != '\0') {
-    iVar10 = 2;
+    iVar9 = 2;
   }
   String_Parse(param_3,local_430,0x400);
-  pcVar8 = local_430;
-  pcVar7 = ")";
+  pcVar7 = local_430;
+  pcVar6 = ")";
   do {
-    cVar1 = *pcVar8;
-    cVar2 = *pcVar7;
+    cVar1 = *pcVar7;
+    cVar2 = *pcVar6;
     if (cVar1 == '\0') break;
-    pcVar8 = pcVar8 + 1;
     pcVar7 = pcVar7 + 1;
+    pcVar6 = pcVar6 + 1;
   } while (cVar1 == cVar2);
   if (cVar1 != cVar2) {
     Com_Error(ERR_DROP,"playVideoMenu: no closing parenthesis found\n");
   }
-  pcVar7 = local_470;
+  pcVar6 = local_470;
   do {
-    cVar1 = *pcVar7;
-    pcVar7 = pcVar7 + 1;
+    cVar1 = *pcVar6;
+    pcVar6 = pcVar6 + 1;
   } while (cVar1 != '\0');
-  if ((int)pcVar7 - (int)local_470 == 1) {
+  if ((int)pcVar6 - (int)local_470 == 1) {
     R_Cinematic_StopPlayback();
-    __restgprlr_27();
     return;
   }
-  CIN_PlayMenuVideo(pUVar3->localClientNum,local_470,iVar4,iVar10);
-  __restgprlr_27();
+  CIN_PlayMenuVideo(param_1->localClientNum,local_470,iVar3,iVar9);
   return;
 }
 
@@ -7815,6 +7503,8 @@ void Script_PartyAbortWaiting(UiContext *param_1,itemDef_t *param_2,char **param
 
 // 825C14B0  Script_ParseLocalVar  (ui/ui_shared.cpp:4560)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
@@ -7822,29 +7512,21 @@ void Script_PartyAbortWaiting(UiContext *param_1,itemDef_t *param_2,char **param
 int Script_ParseLocalVar(UiContext *param_1,char **param_2,char *param_3,int param_4)
 
 {
-  UiContext *pUVar1;
-  int iVar2;
-  bool bVar5;
-  char *pcVar4;
-  ulonglong uVar6;
-  ulonglong uVar7;
+  int iVar1;
+  bool bVar2;
   bool local_450 [4];
   char *local_44c [3];
   char acStack_440 [1088];
-  char **ppcVar3;
   
-  uVar7 = (ulonglong)(int)param_3;
-  uVar6 = (ulonglong)(int)param_2;
-  pUVar1 = (UiContext *)__savegprlr_26(param_1);
-  if (pUVar1 == (UiContext *)0x0) {
+  if (param_1 == (UiContext *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x11d7,0,
                     "%s");
   }
-  if ((uVar6 & 0xffffffff) == 0) {
+  if (param_2 == (char **)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x11d8,0,
                     "%s");
   }
-  if ((uVar7 & 0xffffffff) == 0) {
+  if (param_3 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x11d9,0,
                     "%s");
   }
@@ -7852,47 +7534,43 @@ int Script_ParseLocalVar(UiContext *param_1,char **param_2,char *param_3,int par
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x11da,0,
                     "%s");
   }
-  ppcVar3 = (char **)uVar6;
-  iVar2 = String_Parse(ppcVar3,acStack_440,0x400);
-  if (iVar2 == 0) {
-    iVar2 = __restgprlr_26();
-    return iVar2;
+  iVar1 = String_Parse(param_2,acStack_440,0x400);
+  if (iVar1 == 0) {
+    return 0;
   }
-  bVar5 = Script_ParseLocalVarInt(pUVar1,acStack_440,ppcVar3,0,(int *)local_44c);
-  pcVar4 = (char *)uVar7;
-  if (bVar5) {
-    Com_sprintf(pcVar4,param_4,"%i");
-    iVar2 = __restgprlr_26(1);
-    return iVar2;
+  bVar2 = Script_ParseLocalVarInt(param_1,acStack_440,param_2,0,(int *)local_44c);
+  if (bVar2) {
+    Com_sprintf(param_3,param_4,"%i");
+    return 1;
   }
-  bVar5 = Script_ParseLocalVarFloat(pUVar1,acStack_440,ppcVar3,0,(float *)local_44c);
-  if (bVar5) {
-    Com_sprintf(pcVar4,param_4,"%.4f");
-    iVar2 = __restgprlr_26(1);
-    return iVar2;
+  bVar2 = Script_ParseLocalVarFloat(param_1,acStack_440,param_2,0,(float *)local_44c);
+  if (!bVar2) {
+    bVar2 = Script_ParseLocalVarBool(param_1,acStack_440,param_2,0,local_450);
+    if (bVar2) {
+      Com_sprintf(param_3,param_4,"%i");
+      return 1;
+    }
+    bVar2 = Script_ParseLocalVarString(param_1,acStack_440,param_2,0,local_44c,param_3,param_4);
+    if (bVar2) {
+      if (local_44c[0] == param_3) {
+        return 1;
+      }
+    }
+    else {
+      local_44c[0] = acStack_440;
+    }
+    I_strncpyz(param_3,local_44c[0],param_4);
+    return 1;
   }
-  bVar5 = Script_ParseLocalVarBool(pUVar1,acStack_440,ppcVar3,0,local_450);
-  if (bVar5) {
-    Com_sprintf(pcVar4,param_4,"%i");
-    iVar2 = __restgprlr_26(1);
-    return iVar2;
-  }
-  bVar5 = Script_ParseLocalVarString(pUVar1,acStack_440,ppcVar3,0,local_44c,pcVar4,param_4);
-  if (bVar5) {
-    if (ZEXT48(local_44c[0]) == (uVar7 & 0xffffffff)) goto LAB_825c16b8;
-  }
-  else {
-    local_44c[0] = acStack_440;
-  }
-  I_strncpyz(pcVar4,local_44c[0],param_4);
-LAB_825c16b8:
-  iVar2 = __restgprlr_26(1);
-  return iVar2;
+  Com_sprintf(param_3,param_4,"%.4f");
+  return 1;
 }
 
 
 // 825C16C8  Script_ScriptMenuResponse  (ui/ui_shared.cpp:4605)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
@@ -7902,44 +7580,45 @@ LAB_825c16b8:
 void Script_ScriptMenuResponse(UiContext *param_1,itemDef_t *param_2,char **param_3)
 
 {
-  UiContext *pUVar1;
-  bool bVar6;
-  int iVar2;
+  bool bVar5;
+  int iVar1;
+  char *pcVar2;
   char *pcVar3;
-  char *pcVar4;
-  int iVar5;
+  int iVar4;
   char local_460 [64];
   char acStack_420 [1056];
   
-  pUVar1 = (UiContext *)__savegprlr_29(param_1);
-  bVar6 = UI_AllowScriptMenuResponse(pUVar1->localClientNum);
-  if ((!bVar6) || (iVar2 = Script_ParseLocalVar(pUVar1,param_3,acStack_420,0x400), iVar2 == 0))
-  goto LAB_825c181c;
+  bVar5 = UI_AllowScriptMenuResponse(param_1->localClientNum);
+  if (!bVar5) {
+    return;
+  }
+  iVar1 = Script_ParseLocalVar(param_1,param_3,acStack_420,0x400);
+  if (iVar1 == 0) {
+    return;
+  }
   local_460[0] = '\0';
   memset();
-  bVar6 = Dvar_GetBool("splitscreen");
-  if ((bVar6) && (bVar6 = Dvar_GetBool("onlinegame"), bVar6)) {
-    pcVar3 = I_stristr((param_2->parent->window).name,"_splitscreen");
-    pcVar4 = (param_2->parent->window).name;
-    if ((pcVar3 == (char *)0x0) || (pcVar3 = pcVar3 + (1 - (int)pcVar4), (char *)0x40 < pcVar3))
-    goto LAB_825c1798;
+  bVar5 = Dvar_GetBool("splitscreen");
+  if ((bVar5) && (bVar5 = Dvar_GetBool("onlinegame"), bVar5)) {
+    pcVar2 = I_stristr((param_2->parent->window).name,"_splitscreen");
+    pcVar3 = (param_2->parent->window).name;
+    if ((pcVar2 != (char *)0x0) && (pcVar2 = pcVar2 + (1 - (int)pcVar3), pcVar2 < (char *)0x41))
+    goto LAB_825c179c;
   }
   else {
-    pcVar4 = (param_2->parent->window).name;
-LAB_825c1798:
-    pcVar3 = (char *)0x40;
+    pcVar3 = (param_2->parent->window).name;
   }
-  I_strncpyz(local_460,pcVar4,(int)pcVar3);
-  iVar2 = 0;
+  pcVar2 = (char *)0x40;
+LAB_825c179c:
+  I_strncpyz(local_460,pcVar3,(int)pcVar2);
+  iVar1 = 0;
   do {
-    pcVar4 = CL_GetConfigString(iVar2 + 0xbb4);
-    if ((*pcVar4 != '\0') && (iVar5 = I_stricmp(local_460,pcVar4), iVar5 == 0)) break;
-    iVar2 = iVar2 + 1;
-  } while (iVar2 < 0x20);
-  pcVar4 = va("cmd mr %i %i %s\n");
-  Cbuf_AddText(pUVar1->localClientNum,pcVar4);
-LAB_825c181c:
-  __restgprlr_29();
+    pcVar3 = CL_GetConfigString(iVar1 + 0xbb4);
+    if ((*pcVar3 != '\0') && (iVar4 = I_stricmp(local_460,pcVar3), iVar4 == 0)) break;
+    iVar1 = iVar1 + 1;
+  } while (iVar1 < 0x20);
+  pcVar3 = va("cmd mr %i %i %s\n");
+  Cbuf_AddText(param_1->localClientNum,pcVar3);
   return;
 }
 
@@ -7974,6 +7653,8 @@ void Script_ClearEntitlementNew(UiContext *param_1,itemDef_t *param_2,char **par
 
 // 825C18C0  Script_SetPastTitleRank  (ui/ui_shared.cpp:4806)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
@@ -7983,70 +7664,69 @@ void Script_SetPastTitleRank(UiContext *param_1,itemDef_t *param_2,char **param_
 {
   char cVar1;
   char cVar2;
-  UiContext *pUVar3;
-  bool bVar5;
-  int iVar4;
+  bool bVar4;
+  int iVar3;
+  char *pcVar5;
   char *pcVar6;
-  char *pcVar7;
   int local_440 [4];
   char acStack_430 [16];
   char local_420 [1056];
   
-  pUVar3 = (UiContext *)__savegprlr_29(param_1,param_2);
   String_Parse(param_3,local_420,0x400);
-  pcVar7 = local_420;
-  pcVar6 = "(";
+  pcVar6 = local_420;
+  pcVar5 = "(";
   do {
-    cVar1 = *pcVar7;
-    cVar2 = *pcVar6;
+    cVar1 = *pcVar6;
+    cVar2 = *pcVar5;
     if (cVar1 == '\0') break;
-    pcVar7 = pcVar7 + 1;
     pcVar6 = pcVar6 + 1;
+    pcVar5 = pcVar5 + 1;
   } while (cVar1 == cVar2);
   if (cVar1 != cVar2) {
     Com_Error(ERR_DROP,"setPastTitleRank: no opening parenthesis found\n");
   }
   String_Parse(param_3,acStack_430,0x10);
   String_Parse(param_3,local_420,0x400);
-  pcVar7 = local_420;
-  pcVar6 = ",";
+  pcVar6 = local_420;
+  pcVar5 = ",";
   do {
-    cVar1 = *pcVar7;
-    cVar2 = *pcVar6;
+    cVar1 = *pcVar6;
+    cVar2 = *pcVar5;
     if (cVar1 == '\0') break;
-    pcVar7 = pcVar7 + 1;
     pcVar6 = pcVar6 + 1;
+    pcVar5 = pcVar5 + 1;
   } while (cVar1 == cVar2);
   if (cVar1 != cVar2) {
     Com_Error(ERR_DROP,"setPastTitleRank: no comma found after title name\n");
   }
   String_Parse(param_3,local_420,0x400);
-  bVar5 = Script_ParseLocalVarInt(pUVar3,local_420,param_3,0,local_440);
-  iVar4 = local_440[0];
-  if (!bVar5) {
-    iVar4 = atoi(local_420);
+  bVar4 = Script_ParseLocalVarInt(param_1,local_420,param_3,0,local_440);
+  iVar3 = local_440[0];
+  if (!bVar4) {
+    iVar3 = atoi(local_420);
   }
   String_Parse(param_3,local_420,0x400);
-  pcVar7 = local_420;
-  pcVar6 = ")";
+  pcVar6 = local_420;
+  pcVar5 = ")";
   do {
-    cVar1 = *pcVar7;
-    cVar2 = *pcVar6;
+    cVar1 = *pcVar6;
+    cVar2 = *pcVar5;
     if (cVar1 == '\0') break;
-    pcVar7 = pcVar7 + 1;
     pcVar6 = pcVar6 + 1;
+    pcVar5 = pcVar5 + 1;
   } while (cVar1 == cVar2);
   if (cVar1 != cVar2) {
     Com_Error(ERR_DROP,"setPastTitleRank: no closing parenthesis found\n");
   }
-  CL_SetPastTitleRank(pUVar3->localClientNum,acStack_430,iVar4);
-  __restgprlr_29();
+  CL_SetPastTitleRank(param_1->localClientNum,acStack_430,iVar3);
   return;
 }
 
 
 // 825C1A50  Script_SetPastTitlePrestige  (ui/ui_shared.cpp:4837)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
@@ -8056,16 +7736,128 @@ void Script_SetPastTitlePrestige(UiContext *param_1,itemDef_t *param_2,char **pa
 {
   char cVar1;
   char cVar2;
-  UiContext *pUVar3;
-  bool bVar5;
-  int iVar4;
+  bool bVar4;
+  int iVar3;
+  char *pcVar5;
   char *pcVar6;
-  char *pcVar7;
   int local_440 [4];
   char acStack_430 [16];
   char local_420 [1056];
   
-  pUVar3 = (UiContext *)__savegprlr_29(param_1,param_2);
+  String_Parse(param_3,local_420,0x400);
+  pcVar6 = local_420;
+  pcVar5 = "(";
+  do {
+    cVar1 = *pcVar6;
+    cVar2 = *pcVar5;
+    if (cVar1 == '\0') break;
+    pcVar6 = pcVar6 + 1;
+    pcVar5 = pcVar5 + 1;
+  } while (cVar1 == cVar2);
+  if (cVar1 != cVar2) {
+    Com_Error(ERR_DROP,"setPastTitlePrestige: no opening parenthesis found\n");
+  }
+  String_Parse(param_3,acStack_430,0x10);
+  String_Parse(param_3,local_420,0x400);
+  pcVar6 = local_420;
+  pcVar5 = ",";
+  do {
+    cVar1 = *pcVar6;
+    cVar2 = *pcVar5;
+    if (cVar1 == '\0') break;
+    pcVar6 = pcVar6 + 1;
+    pcVar5 = pcVar5 + 1;
+  } while (cVar1 == cVar2);
+  if (cVar1 != cVar2) {
+    Com_Error(ERR_DROP,"setPastTitlePrestige: no comma found after title name\n");
+  }
+  String_Parse(param_3,local_420,0x400);
+  bVar4 = Script_ParseLocalVarInt(param_1,local_420,param_3,0,local_440);
+  iVar3 = local_440[0];
+  if (!bVar4) {
+    iVar3 = atoi(local_420);
+  }
+  String_Parse(param_3,local_420,0x400);
+  pcVar6 = local_420;
+  pcVar5 = ")";
+  do {
+    cVar1 = *pcVar6;
+    cVar2 = *pcVar5;
+    if (cVar1 == '\0') break;
+    pcVar6 = pcVar6 + 1;
+    pcVar5 = pcVar5 + 1;
+  } while (cVar1 == cVar2);
+  if (cVar1 != cVar2) {
+    Com_Error(ERR_DROP,"setPastTitlePrestige: no closing parenthesis found\n");
+  }
+  CL_SetPastTitlePrestige(param_1->localClientNum,acStack_430,iVar3);
+  return;
+}
+
+
+// 825C1BE0  Script_ExecWithResolve  (ui/ui_shared.cpp:4868)
+
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+
+void Script_ExecWithResolve(UiContext *param_1,itemDef_t *param_2,char **param_3)
+
+{
+  char *pcVar1;
+  int iVar2;
+  char acStack_430 [1072];
+  
+  if (param_2 == (itemDef_t *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x1307,0,
+                    "%s");
+  }
+  if (param_2->parent == (menuDef_t *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x1308,0,
+                    "%s");
+  }
+  I_strncpyz(acStack_430,"resolveItemDefAction ",0x400);
+  pcVar1 = (param_2->window).name;
+  if ((((pcVar1 == (char *)0x0) || (*pcVar1 == '\0')) ||
+      (pcVar1 = (param_2->parent->window).name, pcVar1 == (char *)0x0)) || (*pcVar1 == '\0')) {
+    pcVar1 = va("execWithResolve called, but missing name for either itemDef: %s or menuDef: %s\n");
+    Com_Error(ERR_DROP,pcVar1);
+  }
+  else {
+    I_strncat(acStack_430,0x400,pcVar1);
+    I_strncat(acStack_430,0x400," ");
+    I_strncat(acStack_430,0x400,(param_2->window).name);
+  }
+  Dvar_SetString(com_completionResolveCommand,acStack_430);
+  iVar2 = CL_ControllerIndexFromClientNum(param_1->localClientNum);
+  Script_ExecHandler(param_1->localClientNum,iVar2,param_2,param_3,Script_AddTextWrapper);
+  return;
+}
+
+
+// 825C1D30  Script_SetInitialGameMode  (ui/ui_shared.cpp:4896)
+
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
+
+void Script_SetInitialGameMode(UiContext *param_1,itemDef_t *param_2,char **param_3)
+
+{
+  char cVar1;
+  char cVar2;
+  bool bVar5;
+  initialGameMode_t iVar3;
+  uint uVar4;
+  char *pcVar6;
+  char *pcVar7;
+  initialGameMode_t local_430 [4];
+  char local_420 [1056];
+  
   String_Parse(param_3,local_420,0x400);
   pcVar7 = local_420;
   pcVar6 = "(";
@@ -8077,27 +7869,13 @@ void Script_SetPastTitlePrestige(UiContext *param_1,itemDef_t *param_2,char **pa
     pcVar6 = pcVar6 + 1;
   } while (cVar1 == cVar2);
   if (cVar1 != cVar2) {
-    Com_Error(ERR_DROP,"setPastTitlePrestige: no opening parenthesis found\n");
-  }
-  String_Parse(param_3,acStack_430,0x10);
-  String_Parse(param_3,local_420,0x400);
-  pcVar7 = local_420;
-  pcVar6 = ",";
-  do {
-    cVar1 = *pcVar7;
-    cVar2 = *pcVar6;
-    if (cVar1 == '\0') break;
-    pcVar7 = pcVar7 + 1;
-    pcVar6 = pcVar6 + 1;
-  } while (cVar1 == cVar2);
-  if (cVar1 != cVar2) {
-    Com_Error(ERR_DROP,"setPastTitlePrestige: no comma found after title name\n");
+    Com_Error(ERR_DROP,"setInitialGameMode: no opening parenthesis found\n");
   }
   String_Parse(param_3,local_420,0x400);
-  bVar5 = Script_ParseLocalVarInt(pUVar3,local_420,param_3,0,local_440);
-  iVar4 = local_440[0];
+  bVar5 = Script_ParseLocalVarInt(param_1,local_420,param_3,0,(int *)local_430);
+  iVar3 = local_430[0];
   if (!bVar5) {
-    iVar4 = atoi(local_420);
+    iVar3 = atoi(local_420);
   }
   String_Parse(param_3,local_420,0x400);
   pcVar7 = local_420;
@@ -8110,121 +7888,14 @@ void Script_SetPastTitlePrestige(UiContext *param_1,itemDef_t *param_2,char **pa
     pcVar6 = pcVar6 + 1;
   } while (cVar1 == cVar2);
   if (cVar1 != cVar2) {
-    Com_Error(ERR_DROP,"setPastTitlePrestige: no closing parenthesis found\n");
-  }
-  CL_SetPastTitlePrestige(pUVar3->localClientNum,acStack_430,iVar4);
-  __restgprlr_29();
-  return;
-}
-
-
-// 825C1BE0  Script_ExecWithResolve  (ui/ui_shared.cpp:4868)
-
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-
-void Script_ExecWithResolve(UiContext *param_1,itemDef_t *param_2,char **param_3)
-
-{
-  itemDef_t *piVar1;
-  LocalClientNum_t *pLVar2;
-  char *pcVar3;
-  int iVar4;
-  ulonglong uVar5;
-  char acStack_430 [1072];
-  
-  uVar5 = (ulonglong)(int)param_2;
-  pLVar2 = (LocalClientNum_t *)__savegprlr_27(param_1);
-  if ((uVar5 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x1307,0,
-                    "%s");
-  }
-  piVar1 = (itemDef_t *)uVar5;
-  if (piVar1->parent == (menuDef_t *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x1308,0,
-                    "%s");
-  }
-  I_strncpyz(acStack_430,"resolveItemDefAction ",0x400);
-  pcVar3 = (piVar1->window).name;
-  if ((((pcVar3 == (char *)0x0) || (*pcVar3 == '\0')) ||
-      (pcVar3 = (piVar1->parent->window).name, pcVar3 == (char *)0x0)) || (*pcVar3 == '\0')) {
-    pcVar3 = va("execWithResolve called, but missing name for either itemDef: %s or menuDef: %s\n");
-    Com_Error(ERR_DROP,pcVar3);
-  }
-  else {
-    I_strncat(acStack_430,0x400,pcVar3);
-    I_strncat(acStack_430,0x400," ");
-    I_strncat(acStack_430,0x400,(piVar1->window).name);
-  }
-  Dvar_SetString(com_completionResolveCommand,acStack_430);
-  iVar4 = CL_ControllerIndexFromClientNum(*pLVar2);
-  Script_ExecHandler(*pLVar2,iVar4,piVar1,param_3,Script_AddTextWrapper);
-  __restgprlr_27();
-  return;
-}
-
-
-// 825C1D30  Script_SetInitialGameMode  (ui/ui_shared.cpp:4896)
-
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
-
-void Script_SetInitialGameMode(UiContext *param_1,itemDef_t *param_2,char **param_3)
-
-{
-  char cVar1;
-  char cVar2;
-  UiContext *pUVar3;
-  bool bVar6;
-  initialGameMode_t iVar4;
-  uint uVar5;
-  char *pcVar7;
-  char *pcVar8;
-  initialGameMode_t local_430 [4];
-  char local_420 [1056];
-  
-  pUVar3 = (UiContext *)__savegprlr_29(param_1,param_2);
-  String_Parse(param_3,local_420,0x400);
-  pcVar8 = local_420;
-  pcVar7 = "(";
-  do {
-    cVar1 = *pcVar8;
-    cVar2 = *pcVar7;
-    if (cVar1 == '\0') break;
-    pcVar8 = pcVar8 + 1;
-    pcVar7 = pcVar7 + 1;
-  } while (cVar1 == cVar2);
-  if (cVar1 != cVar2) {
-    Com_Error(ERR_DROP,"setInitialGameMode: no opening parenthesis found\n");
-  }
-  String_Parse(param_3,local_420,0x400);
-  bVar6 = Script_ParseLocalVarInt(pUVar3,local_420,param_3,0,(int *)local_430);
-  iVar4 = local_430[0];
-  if (!bVar6) {
-    iVar4 = atoi(local_420);
-  }
-  String_Parse(param_3,local_420,0x400);
-  pcVar8 = local_420;
-  pcVar7 = ")";
-  do {
-    cVar1 = *pcVar8;
-    cVar2 = *pcVar7;
-    if (cVar1 == '\0') break;
-    pcVar8 = pcVar8 + 1;
-    pcVar7 = pcVar7 + 1;
-  } while (cVar1 == cVar2);
-  if (cVar1 != cVar2) {
     Com_Error(ERR_DROP,"setInitialGameMode: no closing parenthesis found\n");
   }
-  uVar5 = CL_ControllerIndexFromClientNum(pUVar3->localClientNum);
-  if (3 < uVar5) {
+  uVar4 = CL_ControllerIndexFromClientNum(param_1->localClientNum);
+  if (3 < uVar4) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x1332,0,
                     "controllerIndex doesn\'t index MAX_GPAD_COUNT\n\t%i not in [0, %i)");
   }
-  GamerProfile_SetInitialGameMode(uVar5,iVar4);
-  __restgprlr_29();
+  GamerProfile_SetInitialGameMode(uVar4,iVar3);
   return;
 }
 
@@ -8288,6 +7959,8 @@ void Script_AntiCheatBanCheck(UiContext *param_1,itemDef_t *param_2,char **param
 
 // 825C1FB0  Item_RunScript  (ui/ui_shared.cpp:5136)
 
+/* WARNING: Function: __savegprlr_20 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_20 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
@@ -8296,67 +7969,61 @@ void Item_RunScript(UiContext *param_1,itemDef_t *param_2,char *param_3)
 
 {
   bool bVar1;
-  UiContext *pUVar2;
-  int iVar3;
-  ulonglong uVar4;
-  ulonglong uVar5;
-  char *pcVar6;
-  commandDef_t *pcVar7;
-  uint uVar8;
+  int iVar2;
+  commandDef_t *pcVar3;
+  uint uVar4;
   char *local_480 [4];
   char local_470;
   char local_46f;
   
-  uVar5 = (ulonglong)(int)param_3;
-  uVar4 = (ulonglong)(int)param_2;
-  pUVar2 = (UiContext *)__savegprlr_20(param_1);
-  if (pUVar2 == (UiContext *)0x0) {
+  if (param_1 == (UiContext *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x1416,0,
                     "%s");
   }
-  if ((uVar4 & 0xffffffff) == 0) {
+  if (param_2 == (itemDef_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x1417,0,
                     "%s");
   }
-  if ((((uVar5 & 0xffffffff) != 0) && (pcVar6 = (char *)uVar5, *pcVar6 != '\0')) &&
-     (local_480[0] = pcVar6, iVar3 = String_Parse(local_480,&local_470,0x400), iVar3 != 0)) {
+  if (((param_3 != (char *)0x0) && (*param_3 != '\0')) &&
+     (local_480[0] = param_3, iVar2 = String_Parse(local_480,&local_470,0x400), iVar2 != 0)) {
     do {
       if ((local_470 != ';') || (local_46f != '\0')) {
         bVar1 = false;
-        uVar8 = 0;
-        pcVar7 = commandList;
+        uVar4 = 0;
+        pcVar3 = commandList;
         do {
-          iVar3 = I_stricmp(&local_470,pcVar7->name);
-          if (iVar3 == 0) {
-            (*commandList[uVar8].handler)(pUVar2,(itemDef_t *)uVar4,local_480);
+          iVar2 = I_stricmp(&local_470,pcVar3->name);
+          if (iVar2 == 0) {
+            (*commandList[uVar4].handler)(param_1,param_2,local_480);
             bVar1 = true;
             break;
           }
-          uVar8 = uVar8 + 1;
-          pcVar7 = pcVar7 + 1;
-        } while (uVar8 < 0x65);
-        iVar3 = I_stricmp(&local_470,"uiscript");
-        if (iVar3 == 0) {
-          UI_RunMenuScript(pUVar2->localClientNum,local_480,pcVar6);
+          uVar4 = uVar4 + 1;
+          pcVar3 = pcVar3 + 1;
+        } while (uVar4 < 0x65);
+        iVar2 = I_stricmp(&local_470,"uiscript");
+        if (iVar2 == 0) {
+          UI_RunMenuScript(param_1->localClientNum,local_480,param_3);
         }
         else if (!bVar1) {
-          if (((itemDef_t *)uVar4)->parent == (menuDef_t *)0x0) {
+          if (param_2->parent == (menuDef_t *)0x0) {
             MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",
                             0x1439,0,"%s");
           }
           Com_PrintError(0xd,"Unknown menu command \'%s\' in %s::%s\n");
         }
       }
-      iVar3 = String_Parse(local_480,&local_470,0x400);
-    } while (iVar3 != 0);
+      iVar2 = String_Parse(local_480,&local_470,0x400);
+    } while (iVar2 != 0);
   }
-  __restgprlr_20();
   return;
 }
 
 
 // 825C2170  Item_HandleEvent  (ui/ui_shared.cpp:5188)
 
+/* WARNING: Function: __savegprlr_16 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_16 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
@@ -8366,140 +8033,145 @@ void Item_HandleEvent(UiContext *param_1,itemDef_t *param_2,MenuEventHandlerSet 
 {
   byte bVar1;
   int iVar2;
-  int *piVar3;
-  UiContext *pUVar4;
+  MenuEventHandler *pMVar3;
+  bool bVar7;
   bool bVar8;
-  bool bVar9;
-  int iVar5;
-  UILocalVar *pUVar6;
-  char *pcVar7;
-  ulonglong uVar10;
-  itemDef_t *piVar11;
-  ulonglong uVar12;
-  int iVar13;
-  int *piVar14;
-  float fVar15;
+  int iVar4;
+  UILocalVar *pUVar5;
+  char *pcVar6;
+  int iVar9;
+  MenuEventHandler **ppMVar10;
+  float fVar11;
   
-  uVar12 = (ulonglong)(int)param_3;
-  uVar10 = (ulonglong)(int)param_2;
-  pUVar4 = (UiContext *)__savegprlr_16(param_1);
-  if ((uVar10 & 0xffffffff) == 0) {
+  if (param_2 == (itemDef_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x1449,0,
                     "%s");
   }
-  if ((uVar12 & 0xffffffff) != 0) {
-    iVar2 = *(int *)uVar12;
-    bVar8 = false;
-    piVar14 = (int *)((int *)uVar12)[1];
-    iVar13 = 0;
+  if (param_3 != (MenuEventHandlerSet *)0x0) {
+    iVar2 = param_3->eventHandlerCount;
+    bVar7 = false;
+    ppMVar10 = param_3->eventHandlers;
+    iVar9 = 0;
     if (0 < iVar2) {
       do {
-        piVar3 = (int *)*piVar14;
-        bVar1 = *(byte *)(piVar3 + 1);
+        pMVar3 = *ppMVar10;
+        bVar1 = pMVar3->eventType;
         if (bVar1 < 7) {
-          piVar11 = (itemDef_t *)uVar10;
           if (bVar1 == 1) {
-            if (*(int *)(*piVar3 + 4) == 0) {
+            if (((pMVar3->eventData).conditionalScript)->eventExpression == (Statement_s *)0x0) {
               MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",
                               0x145b,0,"%s");
             }
-            bVar8 = IsExpressionTrue(pUVar4->localClientNum,*(Statement_s **)(*piVar3 + 4));
-            if (bVar8) {
-              Item_HandleEvent(pUVar4,piVar11,*(MenuEventHandlerSet **)*piVar3);
-              bVar8 = false;
+            bVar7 = IsExpressionTrue(param_1->localClientNum,
+                                     ((pMVar3->eventData).conditionalScript)->eventExpression);
+            if (bVar7) {
+              Item_HandleEvent(param_1,param_2,
+                               ((pMVar3->eventData).conditionalScript)->eventHandlerSet);
+              bVar7 = false;
             }
             else {
-              bVar8 = true;
+              bVar7 = true;
             }
           }
           else if (bVar1 == 2) {
-            if (bVar8) {
-              if (iVar13 < 1) {
+            if (bVar7) {
+              if (iVar9 < 1) {
                 MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",
                                 0x1469,0,"%s");
               }
-              if (*(char *)(piVar14[-1] + 4) != '\x01') {
+              if (ppMVar10[-1]->eventType != '\x01') {
                 MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",
                                 0x146a,0,"%s");
               }
-              Item_HandleEvent(pUVar4,piVar11,(MenuEventHandlerSet *)*piVar3);
-              bVar8 = false;
+              Item_HandleEvent(param_1,param_2,(pMVar3->eventData).elseScript);
+              bVar7 = false;
             }
           }
           else if (bVar1 == 3) {
-            pUVar6 = UILocalVar_FindOrCreate(&pUVar4->localVars,*(char **)*piVar3);
-            if (pUVar6 == (UILocalVar *)0x0) {
-              pcVar7 = va("Couldn\'t create local var for %s.");
-              Com_Error(ERR_DROP,pcVar7);
+            pUVar5 = UILocalVar_FindOrCreate
+                               (&param_1->localVars,
+                                ((pMVar3->eventData).setLocalVarData)->localVarName);
+            if (pUVar5 == (UILocalVar *)0x0) {
+              pcVar6 = va("Couldn\'t create local var for %s.");
+              Com_Error(ERR_DROP,pcVar6);
             }
             else {
-              if (*(int *)(*piVar3 + 4) == 0) {
+              if (((pMVar3->eventData).conditionalScript)->eventExpression == (Statement_s *)0x0) {
                 MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",
                                 0x1476,0,"%s");
               }
-              bVar9 = IsExpressionTrue(pUVar4->localClientNum,*(Statement_s **)(*piVar3 + 4));
-              UILocalVar_SetBool(pUVar6,bVar9);
+              bVar8 = IsExpressionTrue(param_1->localClientNum,
+                                       ((pMVar3->eventData).conditionalScript)->eventExpression);
+              UILocalVar_SetBool(pUVar5,bVar8);
             }
           }
           else if (bVar1 == 4) {
-            pUVar6 = UILocalVar_FindOrCreate(&pUVar4->localVars,*(char **)*piVar3);
-            if (pUVar6 == (UILocalVar *)0x0) {
-              pcVar7 = va("Couldn\'t create local var for %s.");
-              Com_Error(ERR_DROP,pcVar7);
+            pUVar5 = UILocalVar_FindOrCreate
+                               (&param_1->localVars,
+                                ((pMVar3->eventData).setLocalVarData)->localVarName);
+            if (pUVar5 == (UILocalVar *)0x0) {
+              pcVar6 = va("Couldn\'t create local var for %s.");
+              Com_Error(ERR_DROP,pcVar6);
             }
             else {
-              if (*(int *)(*piVar3 + 4) == 0) {
+              if (((pMVar3->eventData).conditionalScript)->eventExpression == (Statement_s *)0x0) {
                 MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",
                                 0x1480,0,"%s");
               }
-              iVar5 = GetExpressionInt(pUVar4->localClientNum,*(Statement_s **)(*piVar3 + 4));
-              UILocalVar_SetInt(pUVar6,iVar5);
+              iVar4 = GetExpressionInt(param_1->localClientNum,
+                                       ((pMVar3->eventData).conditionalScript)->eventExpression);
+              UILocalVar_SetInt(pUVar5,iVar4);
             }
           }
           else if (bVar1 == 5) {
-            pUVar6 = UILocalVar_FindOrCreate(&pUVar4->localVars,*(char **)*piVar3);
-            if (pUVar6 == (UILocalVar *)0x0) {
-              pcVar7 = va("Couldn\'t create local var for %s.");
-              Com_Error(ERR_DROP,pcVar7);
+            pUVar5 = UILocalVar_FindOrCreate
+                               (&param_1->localVars,
+                                ((pMVar3->eventData).setLocalVarData)->localVarName);
+            if (pUVar5 == (UILocalVar *)0x0) {
+              pcVar6 = va("Couldn\'t create local var for %s.");
+              Com_Error(ERR_DROP,pcVar6);
             }
             else {
-              if (*(int *)(*piVar3 + 4) == 0) {
+              if (((pMVar3->eventData).conditionalScript)->eventExpression == (Statement_s *)0x0) {
                 MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",
                                 0x148a,0,"%s");
               }
-              fVar15 = GetExpressionFloat(pUVar4->localClientNum,*(Statement_s **)(*piVar3 + 4));
-              UILocalVar_SetFloat(pUVar6,fVar15);
+              fVar11 = GetExpressionFloat(param_1->localClientNum,
+                                          ((pMVar3->eventData).conditionalScript)->eventExpression);
+              UILocalVar_SetFloat(pUVar5,fVar11);
             }
           }
           else if (bVar1 == 0) {
-            Item_RunScript(pUVar4,piVar11,(char *)*piVar3);
+            Item_RunScript(param_1,param_2,(pMVar3->eventData).unconditionalScript);
           }
           else {
-            pUVar6 = UILocalVar_FindOrCreate(&pUVar4->localVars,*(char **)*piVar3);
-            if (pUVar6 == (UILocalVar *)0x0) {
-              pcVar7 = va("Couldn\'t create local var for %s.");
-              Com_Error(ERR_DROP,pcVar7);
+            pUVar5 = UILocalVar_FindOrCreate
+                               (&param_1->localVars,
+                                ((pMVar3->eventData).setLocalVarData)->localVarName);
+            if (pUVar5 == (UILocalVar *)0x0) {
+              pcVar6 = va("Couldn\'t create local var for %s.");
+              Com_Error(ERR_DROP,pcVar6);
             }
             else {
-              if (*(int *)(*piVar3 + 4) == 0) {
+              if (((pMVar3->eventData).conditionalScript)->eventExpression == (Statement_s *)0x0) {
                 MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",
                                 0x1494,0,"%s");
               }
-              pcVar7 = GetExpressionResultString
-                                 (pUVar4->localClientNum,*(Statement_s **)(*piVar3 + 4));
-              UILocalVar_SetString(pUVar6,pcVar7);
+              pcVar6 = GetExpressionResultString
+                                 (param_1->localClientNum,
+                                  ((pMVar3->eventData).conditionalScript)->eventExpression);
+              UILocalVar_SetString(pUVar5,pcVar6);
             }
           }
         }
         else {
           Com_Error(ERR_DROP,"Unexpected event handler type %d");
         }
-        iVar13 = iVar13 + 1;
-        piVar14 = piVar14 + 1;
-      } while (iVar13 < iVar2);
+        iVar9 = iVar9 + 1;
+        ppMVar10 = ppMVar10 + 1;
+      } while (iVar9 < iVar2);
     }
   }
-  __restgprlr_16();
   return;
 }
 
@@ -8529,6 +8201,8 @@ bool Item_IsDisabled(LocalClientNum_t param_1,itemDef_t *param_2)
 
 // 825CB948  Item_SetFocus  (ui/ui_shared.cpp:5289)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
@@ -8538,83 +8212,75 @@ int Item_SetFocus(UiContext *param_1,itemDef_t *param_2,float param_3,float para
 
 {
   menuDef_t *pmVar1;
-  UiContext *pUVar2;
-  int iVar3;
-  bool bVar4;
+  int iVar2;
+  bool bVar3;
+  longlong lVar4;
   ulonglong uVar5;
-  itemDef_t *piVar6;
+  ulonglong uVar6;
   longlong lVar7;
-  ulonglong uVar8;
-  ulonglong uVar9;
-  longlong lVar10;
   
-  uVar5 = (ulonglong)(int)param_2;
-  pUVar2 = (UiContext *)__savegprlr_28((double)param_3,(double)param_4,param_1,uVar5,param_5);
-  if ((uVar5 & 0xffffffff) == 0) {
+  if (param_2 == (itemDef_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x14b2,0,
                     "%s");
   }
-  piVar6 = (itemDef_t *)uVar5;
-  iVar3 = Item_CanHaveFocus(pUVar2->localClientNum,piVar6);
-  if (iVar3 == 0) {
-    bVar4 = Window_HasFocus(pUVar2->localClientNum,&piVar6->window);
-    if (bVar4) {
+  iVar2 = Item_CanHaveFocus(param_1->localClientNum,param_2);
+  if (iVar2 == 0) {
+    bVar3 = Window_HasFocus(param_1->localClientNum,&param_2->window);
+    if (bVar3) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x14b5,0,
                       "%s");
     }
-    iVar3 = __restgprlr_28(0);
-    return iVar3;
+    return 0;
   }
-  bVar4 = Window_HasFocus(pUVar2->localClientNum,&piVar6->window);
-  if ((bVar4) && (iVar3 = Item_IsVisible(pUVar2->localClientNum,piVar6), iVar3 != 0)) {
-    if (piVar6->onFocus != (MenuEventHandlerSet *)0x0) {
+  bVar3 = Window_HasFocus(param_1->localClientNum,&param_2->window);
+  if ((bVar3) && (iVar2 = Item_IsVisible(param_1->localClientNum,param_2), iVar2 != 0)) {
+    if (param_2->onFocus != (MenuEventHandlerSet *)0x0) {
       if ((uiscript_verbose->current).enabled != false) {
         Com_Printf(0xd,"UISCRIPT - Calling onFocus() - Item is \'%s\', parent menu is \'%s\'\n");
       }
-      Item_HandleEvent(pUVar2,piVar6,piVar6->onFocus);
-      iVar3 = __restgprlr_28(1);
-      return iVar3;
+      Item_HandleEvent(param_1,param_2,param_2->onFocus);
+      return 1;
     }
   }
   else {
-    pmVar1 = piVar6->parent;
-    Menu_ClearFocus(pUVar2,pmVar1);
-    if (piVar6->type == 0) {
-      Window_AddDynamicFlags(pUVar2->localClientNum,&piVar6->window,2);
+    pmVar1 = param_2->parent;
+    Menu_ClearFocus(param_1,pmVar1);
+    if (param_2->type == 0) {
+      Window_AddDynamicFlags(param_1->localClientNum,&param_2->window,2);
     }
     else {
-      Window_AddDynamicFlags(pUVar2->localClientNum,&piVar6->window,2);
-      if (piVar6->onFocus != (MenuEventHandlerSet *)0x0) {
+      Window_AddDynamicFlags(param_1->localClientNum,&param_2->window,2);
+      if (param_2->onFocus != (MenuEventHandlerSet *)0x0) {
         if ((uiscript_verbose->current).enabled != false) {
           Com_Printf(0xd,"UISCRIPT - Calling onFocus() - Item is \'%s\', parent menu is \'%s\'\n");
         }
-        Item_HandleEvent(pUVar2,piVar6,piVar6->onFocus);
+        Item_HandleEvent(param_1,param_2,param_2->onFocus);
       }
     }
-    uVar8 = (ulonglong)(uint)pmVar1->itemCount;
-    lVar7 = 0;
+    uVar5 = (ulonglong)(uint)pmVar1->itemCount;
+    lVar4 = 0;
     if (0 < pmVar1->itemCount) {
-      uVar9 = ZEXT48(pmVar1->items);
-      lVar10 = 0;
-      while (((ulonglong)*(uint *)((int)lVar10 + (int)uVar9) != (uVar5 & 0xffffffff) ||
-             (bVar4 = Item_IsTextField(piVar6), bVar4))) {
-        lVar7 = lVar7 + 1;
-        lVar10 = lVar10 + 4;
-        if ((int)uVar8 <= (int)lVar7) {
-          iVar3 = __restgprlr_28(1);
-          return iVar3;
+      uVar6 = ZEXT48(pmVar1->items);
+      lVar7 = 0;
+      while ((*(itemDef_t **)((int)lVar7 + (int)uVar6) != param_2 ||
+             (bVar3 = Item_IsTextField(param_2), bVar3))) {
+        lVar4 = lVar4 + 1;
+        lVar7 = lVar7 + 4;
+        if ((int)uVar5 <= (int)lVar4) {
+          return 1;
         }
       }
-      Menu_SetCursorItem(pUVar2->localClientNum,pmVar1,(int)lVar7);
+      Menu_SetCursorItem(param_1->localClientNum,pmVar1,(int)lVar4);
     }
   }
-  iVar3 = __restgprlr_28(1);
-  return iVar3;
+  return 1;
 }
 
 
 // 825CBB98  Item_ListBox_MaxScroll  (ui/ui_shared.cpp:5418)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
@@ -8622,22 +8288,21 @@ int Item_SetFocus(UiContext *param_1,itemDef_t *param_2,float param_3,float para
 int Item_ListBox_MaxScroll(LocalClientNum_t param_1,itemDef_t *param_2)
 
 {
-  LocalClientNum_t LVar1;
+  uint uVar1;
   int iVar2;
   int iVar3;
-  ulonglong uVar4;
   
-  LVar1 = __savegprlr_29(param_1);
-  iVar2 = UI_FeederCount(LVar1,param_2->special);
-  iVar3 = Item_ListBox_Viewmax(LVar1,param_2);
-  uVar4 = (longlong)iVar2 - (longlong)iVar3;
-  iVar2 = __restgprlr_29(((uVar4 & 0xffffffff) >> 0x1f) - (ulonglong)(uVar4 != 0) & uVar4);
-  return iVar2;
+  iVar2 = UI_FeederCount(param_1,param_2->special);
+  iVar3 = Item_ListBox_Viewmax(param_1,param_2);
+  uVar1 = (uint)((longlong)iVar2 - (longlong)iVar3);
+  return -((int)uVar1 >> 0x1f) - (uint)((longlong)iVar2 - (longlong)iVar3 != 0) & uVar1;
 }
 
 
 // 825C25D8  Item_ListBox_Viewmax  (ui/ui_shared.cpp:5433)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
@@ -8645,63 +8310,58 @@ int Item_ListBox_MaxScroll(LocalClientNum_t param_1,itemDef_t *param_2)
 int Item_ListBox_Viewmax(LocalClientNum_t param_1,itemDef_t *param_2)
 
 {
-  LocalClientNum_t LVar1;
-  listBoxDef_s *plVar2;
-  int iVar4;
-  ulonglong uVar5;
-  double dVar6;
-  double dVar7;
-  double dVar8;
-  float fVar9;
-  itemDef_t *piVar3;
+  listBoxDef_s *plVar1;
+  int iVar2;
+  double dVar3;
+  double dVar4;
+  double dVar5;
+  float fVar6;
   
-  uVar5 = (ulonglong)(int)param_2;
-  LVar1 = __savegprlr_27(param_1);
-  if ((uVar5 & 0xffffffff) == 0) {
+  if (param_2 == (itemDef_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x1540,0,
                     "%s");
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_utils_api.h",0x24,0,"%s"
                    );
   }
-  piVar3 = (itemDef_t *)uVar5;
-  plVar2 = Item_GetListBoxDef(piVar3);
-  if (plVar2 == (listBoxDef_s *)0x0) {
+  plVar1 = Item_GetListBoxDef(param_2);
+  if (plVar1 == (listBoxDef_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x1544,0,
                     "%s");
   }
-  fVar9 = plVar2->elementHeight;
-  if (plVar2->elementHeightExp != (Statement_s *)0x0) {
-    fVar9 = GetExpressionFloat(LVar1,plVar2->elementHeightExp);
+  fVar6 = plVar1->elementHeight;
+  if (plVar1->elementHeightExp != (Statement_s *)0x0) {
+    fVar6 = GetExpressionFloat(param_1,plVar1->elementHeightExp);
   }
-  dVar7 = (double)fVar9;
-  iVar4 = Window_IsHorizontal(&piVar3->window);
-  dVar8 = 0.0;
-  if (iVar4 == 0) {
-    fVar9 = (piVar3->window).rect.h;
+  dVar4 = (double)fVar6;
+  iVar2 = Window_IsHorizontal(&param_2->window);
+  dVar5 = 0.0;
+  if (iVar2 == 0) {
+    fVar6 = (param_2->window).rect.h;
   }
   else {
-    fVar9 = (piVar3->window).rect.w;
-    dVar7 = (double)plVar2->elementWidth;
+    fVar6 = (param_2->window).rect.w;
+    dVar4 = (double)plVar1->elementWidth;
   }
-  dVar6 = dVar8;
-  if (-(double)(fVar9 - 2.0) < 0.0) {
-    dVar6 = (double)(fVar9 - 2.0);
+  dVar3 = dVar5;
+  if (-(double)(fVar6 - 2.0) < 0.0) {
+    dVar3 = (double)(fVar6 - 2.0);
   }
-  if (dVar6 < 0.0) {
+  if (dVar3 < 0.0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x1558,0,
                     "%s\n\t(totalSize) = %g");
   }
-  if (dVar7 < dVar8) {
+  if (dVar4 < dVar5) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x1559,0,
                     "%s\n\t(unitSize) = %g");
   }
-  iVar4 = __restgprlr_27((int)(dVar6 / dVar7));
-  return iVar4;
+  return (int)(dVar3 / dVar4);
 }
 
 
 // 825CBBE8  GetListBoxThumbPositionForIndex  (ui/ui_shared.cpp:5471)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
@@ -8712,40 +8372,36 @@ float GetListBoxThumbPositionForIndex(LocalClientNum_t param_1,itemDef_t *param_
   float fVar1;
   float fVar2;
   float fVar3;
-  LocalClientNum_t LVar4;
+  int iVar4;
   int iVar5;
-  int iVar6;
-  uint uVar7;
-  double dVar8;
+  uint uVar6;
   
-  LVar4 = __savegprlr_28(param_1);
-  iVar5 = UI_FeederCount(LVar4,param_2->special);
-  iVar6 = Item_ListBox_Viewmax(LVar4,param_2);
-  uVar7 = (uint)((longlong)iVar5 - (longlong)iVar6);
-  uVar7 = -((int)uVar7 >> 0x1f) - (uint)((longlong)iVar5 - (longlong)iVar6 != 0) & uVar7;
-  iVar5 = Window_IsHorizontal(&param_2->window);
-  if (iVar5 == 0) {
-    if ((int)uVar7 < 1) {
+  iVar4 = UI_FeederCount(param_1,param_2->special);
+  iVar5 = Item_ListBox_Viewmax(param_1,param_2);
+  uVar6 = (uint)((longlong)iVar4 - (longlong)iVar5);
+  uVar6 = -((int)uVar6 >> 0x1f) - (uint)((longlong)iVar4 - (longlong)iVar5 != 0) & uVar6;
+  iVar4 = Window_IsHorizontal(&param_2->window);
+  if (iVar4 == 0) {
+    if ((int)uVar6 < 1) {
       fVar1 = 0.0;
     }
     else {
-      fVar1 = (((param_2->window).rect.h - 16.0) - 4.0) / (float)(longlong)(int)uVar7;
+      fVar1 = (((param_2->window).rect.h - 16.0) - 4.0) / (float)(longlong)(int)uVar6;
     }
     fVar2 = (param_2->window).rect.y;
     fVar3 = 2.0;
   }
   else {
-    if ((int)uVar7 < 1) {
+    if ((int)uVar6 < 1) {
       fVar1 = 0.0;
     }
     else {
-      fVar1 = ((((param_2->window).rect.w - 16.0) - 2.0) - 8.0) / (float)(longlong)(int)uVar7;
+      fVar1 = ((((param_2->window).rect.w - 16.0) - 2.0) - 8.0) / (float)(longlong)(int)uVar6;
     }
     fVar2 = (param_2->window).rect.x;
     fVar3 = 9.0;
   }
-  dVar8 = (double)__restgprlr_28((double)((float)(longlong)param_3 * fVar1 + fVar2 + fVar3));
-  return (float)dVar8;
+  return (float)(longlong)param_3 * fVar1 + fVar2 + fVar3;
 }
 
 
@@ -8864,6 +8520,8 @@ int Item_OwnerDraw_HandleKey(itemDef_t *param_1,int param_2)
 
 // 825CBE08  Item_ListBox_SetCursorPos  (ui/ui_shared.cpp:6035)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
@@ -8872,36 +8530,31 @@ void Item_ListBox_SetCursorPos(LocalClientNum_t param_1,itemDef_t *param_2,int p
 
 {
   int iVar1;
-  int iVar2;
-  int iVar3;
-  ulonglong uVar4;
-  listBoxDef_s *plVar5;
-  itemDef_t *piVar6;
+  listBoxDef_s *plVar2;
+  itemDef_t *piVar3;
   
-  uVar4 = __savegprlr_26(param_1);
-  piVar6 = param_2;
-  plVar5 = Item_GetListBoxDef(param_2);
-  iVar2 = (int)((uVar4 + 0x5f & 0x3fffffff) << 2);
-  iVar1 = *(int *)((int)(param_2->window).dynamicFlags + iVar2 + -0x48);
-  *(int *)((int)(param_2->window).dynamicFlags + iVar2 + -0x48) = param_4;
-  iVar3 = (int)((uVar4 & 0x3fffffff) << 2);
-  if (param_4 < *(int *)((int)plVar5->startPos + iVar3)) {
-    *(int *)((int)plVar5->startPos + iVar3) = param_4;
+  piVar3 = param_2;
+  plVar2 = Item_GetListBoxDef(param_2);
+  iVar1 = param_2->cursorPos[param_1];
+  param_2->cursorPos[param_1] = param_4;
+  if (param_4 < plVar2->startPos[param_1]) {
+    plVar2->startPos[param_1] = param_4;
   }
-  if (*(int *)((int)plVar5->startPos + iVar3) <= param_4 - param_3) {
-    *(int *)((int)plVar5->startPos + iVar3) = (param_4 - param_3) + 1;
+  if (plVar2->startPos[param_1] <= param_4 - param_3) {
+    plVar2->startPos[param_1] = (param_4 - param_3) + 1;
   }
-  UI_FeederSelection((LocalClientNum_t)uVar4,param_2->special,(int)piVar6);
-  if (iVar1 != *(int *)((int)(param_2->window).dynamicFlags + iVar2 + -0x48)) {
-    SND_PlayLocalSoundAliasByName((LocalClientNum_t)uVar4,"mouse_over",SASYS_UI);
+  UI_FeederSelection(param_1,param_2->special,(int)piVar3);
+  if (iVar1 != param_2->cursorPos[param_1]) {
+    SND_PlayLocalSoundAliasByName(param_1,"mouse_over",SASYS_UI);
   }
-  __restgprlr_26();
   return;
 }
 
 
 // 825CBEA0  Item_ListBox_Page  (ui/ui_shared.cpp:6056)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
@@ -8910,48 +8563,36 @@ void Item_ListBox_Page(LocalClientNum_t param_1,itemDef_t *param_2,int param_3,i
                       int param_5,int param_6)
 
 {
-  int iVar1;
-  ulonglong uVar2;
-  listBoxDef_s *plVar3;
-  longlong lVar4;
-  longlong lVar5;
-  longlong lVar6;
-  longlong lVar7;
+  listBoxDef_s *plVar1;
+  longlong lVar2;
   
-  lVar7 = (longlong)param_6;
-  lVar5 = (longlong)param_4;
-  lVar4 = (longlong)param_3;
-  uVar2 = __savegprlr_25(param_1);
-  plVar3 = Item_GetListBoxDef(param_2);
-  if (plVar3 == (listBoxDef_s *)0x0) {
+  plVar1 = Item_GetListBoxDef(param_2);
+  if (plVar1 == (listBoxDef_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x17ac,0,
                     "%s");
   }
-  iVar1 = (int)((uVar2 & 0xffffffff) << 2);
-  lVar6 = (ulonglong)*(uint *)((int)plVar3->startPos + iVar1) + lVar7;
-  if ((int)lVar5 <= (int)lVar6) {
-    lVar6 = lVar5;
+  lVar2 = (ulonglong)(uint)plVar1->startPos[param_1] + (longlong)param_6;
+  if (param_4 <= (int)lVar2) {
+    lVar2 = (longlong)param_4;
   }
-  *(uint *)((int)plVar3->startPos + iVar1) =
-       -((int)(uint)lVar6 >> 0x1f) - (uint)(lVar6 != 0) & (uint)lVar6;
-  if (plVar3->notselectable == 0) {
-    lVar7 = (ulonglong)
-            *(uint *)((int)(param_2->window).dynamicFlags +
-                     (int)((uVar2 + 0x5f & 0xffffffff) << 2) + -0x48) + lVar7;
-    if ((int)lVar4 <= (int)lVar7) {
-      lVar7 = lVar4;
+  plVar1->startPos[param_1] = -((int)(uint)lVar2 >> 0x1f) - (uint)(lVar2 != 0) & (uint)lVar2;
+  if (plVar1->notselectable == 0) {
+    lVar2 = (ulonglong)(uint)param_2->cursorPos[param_1] + (longlong)param_6;
+    if (param_3 <= (int)lVar2) {
+      lVar2 = (longlong)param_3;
     }
     Item_ListBox_SetCursorPos
-              ((LocalClientNum_t)uVar2,param_2,param_5,
-               -((int)(uint)lVar7 >> 0x1f) - (uint)(lVar7 != 0) & (uint)lVar7);
+              (param_1,param_2,param_5,
+               -((int)(uint)lVar2 >> 0x1f) - (uint)(lVar2 != 0) & (uint)lVar2);
   }
-  __restgprlr_25();
   return;
 }
 
 
 // 825CBF88  Item_ListBox_Scroll  (ui/ui_shared.cpp:6069)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
@@ -8960,44 +8601,31 @@ void Item_ListBox_Scroll(LocalClientNum_t param_1,itemDef_t *param_2,int param_3
                         int param_5,int param_6)
 
 {
-  int iVar1;
+  listBoxDef_s *plVar1;
   ulonglong uVar2;
-  listBoxDef_s *plVar3;
+  ulonglong uVar3;
   longlong lVar4;
-  longlong lVar5;
-  ulonglong uVar6;
-  ulonglong uVar7;
   
-  lVar5 = (longlong)param_6;
-  uVar6 = (ulonglong)param_4;
-  lVar4 = (longlong)param_3;
-  uVar2 = __savegprlr_25(param_1);
-  plVar3 = Item_GetListBoxDef(param_2);
-  if (plVar3 == (listBoxDef_s *)0x0) {
+  plVar1 = Item_GetListBoxDef(param_2);
+  if (plVar1 == (listBoxDef_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x17b9,0,
                     "%s");
   }
-  if (plVar3->notselectable == 0) {
-    uVar7 = lVar4 + 1;
-    trapWord(6,uVar7,0);
-    uVar6 = (ulonglong)
-            *(uint *)((int)(param_2->window).dynamicFlags +
-                     (int)((uVar2 + 0x5f & 0xffffffff) << 2) + -0x48) + lVar4 + lVar5 + 1;
-    trapWord(5,uVar7 & ~(((uVar6 & 0x7fffffff) << 1 | (uVar6 & 0xffffffff) >> 0x1f) - 1),0xffff);
+  if (plVar1->notselectable == 0) {
+    uVar3 = (longlong)param_3 + 1;
+    trapWord(6,uVar3,0);
+    uVar2 = (ulonglong)(uint)param_2->cursorPos[param_1] + (longlong)param_3 + (longlong)param_6 + 1
+    ;
+    trapWord(5,uVar3 & ~(((uVar2 & 0x7fffffff) << 1 | (uVar2 & 0xffffffff) >> 0x1f) - 1),0xffff);
     Item_ListBox_SetCursorPos
-              ((LocalClientNum_t)uVar2,param_2,param_5,
-               (int)uVar6 - ((int)uVar6 / (int)uVar7) * (int)uVar7);
-    __restgprlr_25();
+              (param_1,param_2,param_5,(int)uVar2 - ((int)uVar2 / (int)uVar3) * (int)uVar3);
     return;
   }
-  iVar1 = (int)((uVar2 & 0xffffffff) << 2);
-  uVar2 = lVar5 + (ulonglong)*(uint *)((int)plVar3->startPos + iVar1);
-  if ((int)uVar6 <= (int)uVar2) {
-    uVar2 = uVar6;
+  lVar4 = (longlong)param_6 + (ulonglong)(uint)plVar1->startPos[param_1];
+  if (param_4 <= (int)lVar4) {
+    lVar4 = (longlong)param_4;
   }
-  *(uint *)((int)plVar3->startPos + iVar1) =
-       (int)((uVar2 & 0xffffffff) >> 0x1f) - (uint)(uVar2 != 0) & (uint)uVar2;
-  __restgprlr_25();
+  plVar1->startPos[param_1] = -((int)(uint)lVar4 >> 0x1f) - (uint)(lVar4 != 0) & (uint)lVar4;
   return;
 }
 
@@ -9013,6 +8641,8 @@ bool Item_ListBox_IsActionKey(int param_1)
 
 // 825CFA30  Item_ListBox_HandleKey  (ui/ui_shared.cpp:6097)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
@@ -9022,204 +8652,192 @@ int Item_ListBox_HandleKey
 
 {
   LocalClientNum_t LVar1;
-  UiContext *pUVar2;
-  listBoxDef_s *plVar3;
-  int iVar4;
-  uint uVar5;
-  int iVar6;
+  listBoxDef_s *plVar2;
+  int iVar3;
+  uint uVar4;
+  int iVar5;
+  itemDef_t *piVar6;
   longlong lVar7;
-  itemDef_t *piVar8;
-  ulonglong uVar9;
-  ulonglong uVar10;
-  uint uVar11;
-  uint uVar12;
-  ItemKeyHandler *pIVar13;
+  uint uVar8;
+  uint uVar9;
+  ItemKeyHandler *pIVar10;
   
-  pUVar2 = (UiContext *)__savegprlr_24(param_1);
-  plVar3 = Item_GetListBoxDef(param_2);
-  if (plVar3 == (listBoxDef_s *)0x0) goto LAB_825cfa60;
-  iVar4 = UI_FeederCount(pUVar2->localClientNum,param_2->special);
-  uVar11 = (uint)((longlong)iVar4 + -1);
-  uVar11 = -((int)uVar11 >> 0x1f) - (uint)((longlong)iVar4 + -1 != 0) & uVar11;
-  uVar5 = Window_GetDynamicFlags(pUVar2->localClientNum,&param_2->window);
-  if ((param_4 == 0) && ((uVar5 & 2) == 0)) goto LAB_825cfa60;
-  UI_OverrideCursorPos(pUVar2->localClientNum,param_2);
-  LVar1 = pUVar2->localClientNum;
-  iVar4 = Item_ListBox_Viewmax(LVar1,param_2);
-  iVar6 = UI_FeederCount(LVar1,param_2->special);
-  uVar12 = (uint)((longlong)iVar6 - (longlong)iVar4);
-  uVar12 = -((int)uVar12 >> 0x1f) - (uint)((longlong)iVar6 - (longlong)iVar4 != 0) & uVar12;
-  piVar8 = param_2;
-  iVar4 = Item_ListBox_Viewmax(pUVar2->localClientNum,param_2);
-  lVar7 = (longlong)iVar4;
-  iVar6 = Window_IsHorizontal(&param_2->window);
-  if (iVar6 != 0) {
+  plVar2 = Item_GetListBoxDef(param_2);
+  if (plVar2 == (listBoxDef_s *)0x0) {
+    return 0;
+  }
+  iVar3 = UI_FeederCount(param_1->localClientNum,param_2->special);
+  uVar8 = (uint)((longlong)iVar3 + -1);
+  uVar8 = -((int)uVar8 >> 0x1f) - (uint)((longlong)iVar3 + -1 != 0) & uVar8;
+  uVar4 = Window_GetDynamicFlags(param_1->localClientNum,&param_2->window);
+  if ((param_4 == 0) && ((uVar4 & 2) == 0)) {
+    return 0;
+  }
+  UI_OverrideCursorPos(param_1->localClientNum,param_2);
+  LVar1 = param_1->localClientNum;
+  iVar3 = Item_ListBox_Viewmax(LVar1,param_2);
+  iVar5 = UI_FeederCount(LVar1,param_2->special);
+  uVar9 = (uint)((longlong)iVar5 - (longlong)iVar3);
+  uVar9 = -((int)uVar9 >> 0x1f) - (uint)((longlong)iVar5 - (longlong)iVar3 != 0) & uVar9;
+  piVar6 = param_2;
+  iVar3 = Item_ListBox_Viewmax(param_1->localClientNum,param_2);
+  lVar7 = (longlong)iVar3;
+  iVar5 = Window_IsHorizontal(&param_2->window);
+  if (iVar5 != 0) {
     if ((((param_3 == 0x1e) || (param_3 == 0x16)) || (param_3 == 0x9c)) || (param_3 == 0xb9)) {
-      if ((plVar3->usePaging == 0) || (param_3 != 0x16)) {
+      if ((plVar2->usePaging == 0) || (param_3 != 0x16)) {
         lVar7 = 1;
       }
-      if (plVar3->notselectable == 0) {
-        lVar7 = (ulonglong)(uint)param_2->cursorPos[pUVar2->localClientNum] - lVar7;
-        uVar11 = (uint)lVar7;
-        Item_ListBox_SetCursorPos
-                  (pUVar2->localClientNum,param_2,iVar4,
-                   -((int)uVar11 >> 0x1f) - (uint)(lVar7 != 0) & uVar11);
-        iVar4 = __restgprlr_24(1);
-        return iVar4;
+      if (plVar2->notselectable != 0) {
+        lVar7 = (ulonglong)(uint)plVar2->startPos[param_1->localClientNum] - lVar7;
+        uVar8 = (uint)lVar7;
+        plVar2->startPos[param_1->localClientNum] =
+             -((int)uVar8 >> 0x1f) - (uint)(lVar7 != 0) & uVar8;
+        return 1;
       }
-      uVar9 = (ulonglong)(uint)plVar3->startPos[pUVar2->localClientNum] - lVar7;
-      uVar10 = (uVar9 & 0xffffffff) >> 0x1f;
-      plVar3->startPos[pUVar2->localClientNum] = (int)uVar10 - (uint)(uVar9 != 0) & (uint)uVar9;
-      iVar4 = __restgprlr_24(1,uVar10,-uVar9);
-      return iVar4;
+      lVar7 = (ulonglong)(uint)param_2->cursorPos[param_1->localClientNum] - lVar7;
+      uVar8 = (uint)lVar7;
+      Item_ListBox_SetCursorPos
+                (param_1->localClientNum,param_2,iVar3,
+                 -((int)uVar8 >> 0x1f) - (uint)(lVar7 != 0) & uVar8);
+      return 1;
     }
     if (((param_3 == 0x1f) || (param_3 == 0x17)) || ((param_3 == 0x9d || (param_3 == 0xbb)))) {
-      if ((plVar3->usePaging == 0) || (iVar6 = iVar4, param_3 != 0x17)) {
-        iVar6 = 1;
+      if ((plVar2->usePaging == 0) || (iVar5 = iVar3, param_3 != 0x17)) {
+        iVar5 = 1;
       }
-      if (plVar3->notselectable == 0) {
-        uVar5 = param_2->cursorPos[pUVar2->localClientNum] + iVar6;
-        if ((int)uVar11 <= (int)uVar5) {
-          uVar5 = uVar11;
+      if (plVar2->notselectable != 0) {
+        uVar8 = iVar5 + plVar2->startPos[param_1->localClientNum];
+        if ((int)uVar9 <= (int)uVar8) {
+          uVar8 = uVar9;
         }
-        Item_ListBox_SetCursorPos(pUVar2->localClientNum,param_2,iVar4,uVar5);
-        iVar4 = __restgprlr_24(1);
-        return iVar4;
+        plVar2->startPos[param_1->localClientNum] = uVar8;
+        return 1;
       }
-      uVar11 = iVar6 + plVar3->startPos[pUVar2->localClientNum];
-      if ((int)uVar12 <= (int)uVar11) {
-        uVar11 = uVar12;
+      uVar4 = param_2->cursorPos[param_1->localClientNum] + iVar5;
+      if ((int)uVar8 <= (int)uVar4) {
+        uVar4 = uVar8;
       }
-      plVar3->startPos[pUVar2->localClientNum] = uVar11;
-      iVar4 = __restgprlr_24(1);
-      return iVar4;
+      Item_ListBox_SetCursorPos(param_1->localClientNum,param_2,iVar3,uVar4);
+      return 1;
     }
-switchD_825cfcb8_caseD_2:
-    if (param_3 != 1) {
-      if ((param_3 == 0xa5) || (param_3 == 0xb6)) {
-        Script_FeederTop(pUVar2,param_2,(char **)0x0);
-        iVar4 = __restgprlr_24(1);
-        return iVar4;
+switchD_825cfcb8_caseD_16:
+    if (param_3 == 1) {
+      if ((uVar4 & 0x100) != 0) {
+        lVar7 = (ulonglong)(uint)plVar2->startPos[param_1->localClientNum] - 1;
+        uVar8 = (uint)lVar7;
+        plVar2->startPos[param_1->localClientNum] =
+             -((int)uVar8 >> 0x1f) - (uint)(lVar7 != 0) & uVar8;
+        return 1;
       }
-      if ((param_3 == 0xa6) || (param_3 == 0xbc)) {
-        Script_FeederBottom(pUVar2,param_2,(char **)0x0);
-        iVar4 = __restgprlr_24(1);
-        return iVar4;
+      if ((uVar4 & 0x200) == 0) {
+        if ((uVar4 & 0x800) != 0) {
+          lVar7 = (ulonglong)(uint)plVar2->startPos[param_1->localClientNum] - lVar7;
+          uVar8 = (uint)lVar7;
+          plVar2->startPos[param_1->localClientNum] =
+               -((int)uVar8 >> 0x1f) - (uint)(lVar7 != 0) & uVar8;
+          return 1;
+        }
+        if ((uVar4 & 0x1000) == 0) {
+          if ((uVar4 & 0x400) != 0) {
+            return 1;
+          }
+          iVar3 = UI_FeederItemEnabled(param_1->localClientNum,param_2->special,(int)piVar6);
+          if (iVar3 == 0) {
+            return 1;
+          }
+          iVar3 = UI_FeederDoubleClick(param_1->localClientNum,param_2->special,(int)piVar6);
+          if (iVar3 != 0) {
+            return 1;
+          }
+          if ((uiscript_verbose->current).enabled != false) {
+            Com_Printf(0xd,
+                       "UISCRIPT - Calling onDoubleClick() - Item is \'%s\', parent menu is \'%s\'\n"
+                      );
+          }
+          Item_HandleEvent(param_1,param_2,plVar2->onDoubleClick);
+          return 1;
+        }
+        iVar5 = param_1->localClientNum * 4;
+        uVar8 = iVar3 + plVar2->startPos[param_1->localClientNum];
+        if ((int)uVar9 <= (int)uVar8) {
+          uVar8 = uVar9;
+        }
       }
-      if ((param_3 == 0xa4) || (param_3 == 0xb8)) {
-LAB_825cfcf0:
-        Item_ListBox_Page(pUVar2->localClientNum,param_2,uVar11,uVar12,iVar4,-iVar4);
-        iVar4 = __restgprlr_24(1);
-        return iVar4;
+      else {
+        LVar1 = param_1->localClientNum;
+        iVar5 = LVar1 * 4;
+        uVar8 = plVar2->startPos[LVar1] + 1;
+        if ((int)uVar9 <= (int)uVar8) {
+          plVar2->startPos[LVar1] = uVar9;
+          return 1;
+        }
       }
-      if ((param_3 == 0xa3) || (param_3 == 0xbe)) {
-LAB_825cfd24:
-        Item_ListBox_Page(pUVar2->localClientNum,param_2,uVar11,uVar12,iVar4,iVar4);
-        iVar4 = __restgprlr_24(1);
-        return iVar4;
-      }
-      pIVar13 = param_2->onKey;
-      if (pIVar13 != (ItemKeyHandler *)0x0) {
+      *(uint *)((int)plVar2->startPos + iVar5) = uVar8;
+      return 1;
+    }
+    if ((param_3 == 0xa5) || (param_3 == 0xb6)) {
+      Script_FeederTop(param_1,param_2,(char **)0x0);
+      return 1;
+    }
+    if ((param_3 == 0xa6) || (param_3 == 0xbc)) {
+      Script_FeederBottom(param_1,param_2,(char **)0x0);
+      return 1;
+    }
+    if ((param_3 != 0xa4) && (param_3 != 0xb8)) {
+      if ((param_3 != 0xa3) && (param_3 != 0xbe)) {
+        pIVar10 = param_2->onKey;
+        if (pIVar10 == (ItemKeyHandler *)0x0) {
+          return 0;
+        }
         do {
-          if (pIVar13->key == param_3) {
+          if (pIVar10->key == param_3) {
             if ((uiscript_verbose->current).enabled != false) {
               Com_Printf(0xd,
                          "UISCRIPT - Calling action() for key %i - Item is \'%s\', parent menu is \'%s\'\n"
                         );
             }
-            Item_HandleEvent(pUVar2,param_2,pIVar13->action);
-            iVar4 = __restgprlr_24(1);
-            return iVar4;
+            Item_HandleEvent(param_1,param_2,pIVar10->action);
+            return 1;
           }
-          pIVar13 = pIVar13->next;
-        } while (pIVar13 != (ItemKeyHandler *)0x0);
-        iVar4 = __restgprlr_24(0);
-        return iVar4;
+          pIVar10 = pIVar10->next;
+        } while (pIVar10 != (ItemKeyHandler *)0x0);
+        return 0;
       }
-LAB_825cfa60:
-      iVar4 = __restgprlr_24(0);
-      return iVar4;
+LAB_825cfd24:
+      Item_ListBox_Page(param_1->localClientNum,param_2,uVar8,uVar9,iVar3,iVar3);
+      return 1;
     }
-    if ((uVar5 & 0x100) != 0) {
-      uVar10 = (ulonglong)(uint)plVar3->startPos[pUVar2->localClientNum] - 1;
-      plVar3->startPos[pUVar2->localClientNum] =
-           (int)((uVar10 & 0xffffffff) >> 0x1f) - (uint)(uVar10 != 0) & (uint)uVar10;
-      iVar4 = __restgprlr_24(1);
-      return iVar4;
-    }
-    if ((uVar5 & 0x200) != 0) {
-      LVar1 = pUVar2->localClientNum;
-      iVar6 = LVar1 * 4;
-      uVar11 = plVar3->startPos[LVar1] + 1;
-      if ((int)uVar12 <= (int)uVar11) {
-        plVar3->startPos[LVar1] = uVar12;
-        iVar4 = __restgprlr_24(1);
-        return iVar4;
-      }
-LAB_825cfe60:
-      *(uint *)((int)plVar3->startPos + iVar6) = uVar11;
-      iVar4 = __restgprlr_24(1);
-      return iVar4;
-    }
-    if ((uVar5 & 0x800) != 0) {
-      uVar9 = (ulonglong)(uint)plVar3->startPos[pUVar2->localClientNum] - lVar7;
-      uVar10 = (uVar9 & 0xffffffff) >> 0x1f;
-      lVar7 = uVar10 - (uVar9 != 0);
-      plVar3->startPos[pUVar2->localClientNum] = (uint)lVar7 & (uint)uVar9;
-      iVar4 = __restgprlr_24(1,lVar7,uVar10,-uVar9);
-      return iVar4;
-    }
-    if ((uVar5 & 0x1000) != 0) {
-      iVar6 = pUVar2->localClientNum * 4;
-      uVar11 = iVar4 + plVar3->startPos[pUVar2->localClientNum];
-      if ((int)uVar12 <= (int)uVar11) {
-        uVar11 = uVar12;
-      }
-      goto LAB_825cfe60;
-    }
-    if ((((uVar5 & 0x400) == 0) &&
-        (iVar4 = UI_FeederItemEnabled(pUVar2->localClientNum,param_2->special,(int)piVar8),
-        iVar4 != 0)) &&
-       (iVar4 = UI_FeederDoubleClick(pUVar2->localClientNum,param_2->special,(int)piVar8),
-       iVar4 == 0)) {
-      if ((uiscript_verbose->current).enabled != false) {
-        Com_Printf(0xd,
-                   "UISCRIPT - Calling onDoubleClick() - Item is \'%s\', parent menu is \'%s\'\n");
-      }
-      Item_HandleEvent(pUVar2,param_2,plVar3->onDoubleClick);
-      iVar4 = __restgprlr_24(1);
-      return iVar4;
-    }
-    goto LAB_825d006c;
+LAB_825cfcf0:
+    Item_ListBox_Page(param_1->localClientNum,param_2,uVar8,uVar9,iVar3,-iVar3);
+    return 1;
   }
   if (0x9a < param_3) {
     if (param_3 != 0x9b) {
-      if (param_3 == 0xb7) goto switchD_825cfcb8_caseD_8;
-      if (param_3 != 0xbd) goto switchD_825cfcb8_caseD_2;
+      if (param_3 == 0xb7) goto switchD_825cfcb8_caseD_1c;
+      if (param_3 != 0xbd) goto switchD_825cfcb8_caseD_16;
     }
-    goto switchD_825cfcb8_caseD_9;
+    goto switchD_825cfcb8_caseD_1d;
   }
-  if (param_3 == 0x9a) goto switchD_825cfcb8_caseD_8;
-  switch(param_3 + -0x14) {
-  case 0:
-    if (plVar3->usePaging != 0) goto LAB_825cfcf0;
-  case 8:
-switchD_825cfcb8_caseD_8:
-    iVar6 = -1;
+  if (param_3 == 0x9a) goto switchD_825cfcb8_caseD_1c;
+  switch(param_3) {
+  case 0x14:
+    if (plVar2->usePaging != 0) goto LAB_825cfcf0;
+  case 0x1c:
+switchD_825cfcb8_caseD_1c:
+    iVar5 = -1;
     break;
-  case 1:
-    if (plVar3->usePaging != 0) goto LAB_825cfd24;
-  case 9:
-switchD_825cfcb8_caseD_9:
-    iVar6 = 1;
+  case 0x15:
+    if (plVar2->usePaging != 0) goto LAB_825cfd24;
+  case 0x1d:
+switchD_825cfcb8_caseD_1d:
+    iVar5 = 1;
     break;
   default:
-    goto switchD_825cfcb8_caseD_2;
+    goto switchD_825cfcb8_caseD_16;
   }
-  Item_ListBox_Scroll(pUVar2->localClientNum,param_2,uVar11,uVar12,iVar4,iVar6);
-LAB_825d006c:
-  iVar4 = __restgprlr_24(1);
-  return iVar4;
+  Item_ListBox_Scroll(param_1->localClientNum,param_2,uVar8,uVar9,iVar3,iVar5);
+  return 1;
 }
 
 
@@ -9306,243 +8924,227 @@ int Item_Multi_CountSettings(itemDef_t *param_1)
 
 // 825C2A28  Item_DvarEnum_CountSettings  (ui/ui_shared.cpp:6375)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 
 int Item_DvarEnum_CountSettings(itemDef_t *param_1)
 
 {
-  int iVar1;
-  dvar_t *pdVar2;
+  dvar_t *pdVar1;
   
-  iVar1 = __savegprlr_29(param_1);
-  if (iVar1 == 0) {
+  if (param_1 == (itemDef_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x18ea,0,
                     "%s");
   }
-  if (*(int *)(iVar1 + 0x100) != 0xd) {
+  if (param_1->type != 0xd) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x18eb,0,
                     "%s\n\t(item->type) = %i");
   }
-  if (*(int *)(iVar1 + 0x18c) == 0) {
+  if ((param_1->typeData).listBox == (listBoxDef_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x18ec,0,
                     "%s");
   }
-  pdVar2 = Dvar_FindVar(*(char **)(iVar1 + 0x18c));
-  if (pdVar2->type != '\x06') {
-    iVar1 = __restgprlr_29(0);
-    return iVar1;
+  pdVar1 = Dvar_FindVar((param_1->typeData).enumDvarName);
+  if (pdVar1->type != '\x06') {
+    return 0;
   }
-  iVar1 = __restgprlr_29((pdVar2->domain).enumeration.stringCount);
-  return iVar1;
+  return (pdVar1->domain).enumeration.stringCount;
 }
 
 
 // 825C2AF0  Item_Multi_FindDvarByValue  (ui/ui_shared.cpp:6390)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 
 int Item_Multi_FindDvarByValue(itemDef_t *param_1)
 
 {
-  itemDef_t *piVar1;
-  multiDef_s *pmVar2;
-  char *pcVar3;
-  int iVar4;
-  float *pfVar5;
-  longlong lVar6;
-  char **ppcVar7;
-  double dVar8;
+  multiDef_s *pmVar1;
+  char *pcVar2;
+  int iVar3;
+  float *pfVar4;
+  int iVar5;
+  char **ppcVar6;
+  double dVar7;
   
-  piVar1 = (itemDef_t *)__savegprlr_28(param_1);
-  pmVar2 = Item_GetMultiDef(piVar1);
-  if (pmVar2 != (multiDef_s *)0x0) {
-    if (pmVar2->strDef == 0) {
-      pcVar3 = Dvar_GetVariantString(piVar1->dvar);
-      dVar8 = atof(pcVar3);
-      lVar6 = 0;
-      if (0 < pmVar2->count) {
-        pfVar5 = pmVar2->dvarValue;
+  pmVar1 = Item_GetMultiDef(param_1);
+  if (pmVar1 != (multiDef_s *)0x0) {
+    if (pmVar1->strDef == 0) {
+      pcVar2 = Dvar_GetVariantString(param_1->dvar);
+      dVar7 = atof(pcVar2);
+      iVar5 = 0;
+      if (0 < pmVar1->count) {
+        pfVar4 = pmVar1->dvarValue;
         do {
-          if (*pfVar5 == (float)dVar8) goto LAB_825c2bbc;
-          lVar6 = lVar6 + 1;
-          pfVar5 = pfVar5 + 1;
-        } while ((int)lVar6 < pmVar2->count);
+          if (*pfVar4 == (float)dVar7) {
+            return iVar5;
+          }
+          iVar5 = iVar5 + 1;
+          pfVar4 = pfVar4 + 1;
+        } while (iVar5 < pmVar1->count);
       }
     }
     else {
-      pcVar3 = Dvar_GetVariantString(piVar1->dvar);
-      lVar6 = 0;
-      if (0 < pmVar2->count) {
-        ppcVar7 = pmVar2->dvarStr;
+      pcVar2 = Dvar_GetVariantString(param_1->dvar);
+      iVar5 = 0;
+      if (0 < pmVar1->count) {
+        ppcVar6 = pmVar1->dvarStr;
         do {
-          iVar4 = I_stricmp(pcVar3,*ppcVar7);
-          if (iVar4 == 0) {
-            iVar4 = __restgprlr_28(lVar6);
-            return iVar4;
+          iVar3 = I_stricmp(pcVar2,*ppcVar6);
+          if (iVar3 == 0) {
+            return iVar5;
           }
-          lVar6 = lVar6 + 1;
-          ppcVar7 = ppcVar7 + 1;
-        } while ((int)lVar6 < pmVar2->count);
-        iVar4 = __restgprlr_28(0);
-        return iVar4;
+          iVar5 = iVar5 + 1;
+          ppcVar6 = ppcVar6 + 1;
+        } while (iVar5 < pmVar1->count);
+        return 0;
       }
     }
   }
-  lVar6 = 0;
-LAB_825c2bbc:
-  iVar4 = __restgprlr_28(lVar6);
-  return iVar4;
+  return 0;
 }
 
 
 // 825C2BC8  Item_Multi_Setting  (ui/ui_shared.cpp:6423)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 
 char * Item_Multi_Setting(itemDef_t *param_1)
 
 {
-  itemDef_t *piVar1;
-  multiDef_s *pmVar2;
-  char *pcVar3;
-  int iVar4;
-  float *pfVar5;
-  char **ppcVar6;
-  int iVar7;
-  double dVar8;
+  multiDef_s *pmVar1;
+  char *pcVar2;
+  int iVar3;
+  float *pfVar4;
+  char **ppcVar5;
+  int iVar6;
+  double dVar7;
   
-  piVar1 = (itemDef_t *)__savegprlr_28(param_1);
-  pmVar2 = Item_GetMultiDef(piVar1);
-  if (pmVar2 == (multiDef_s *)0x0) {
-    pcVar3 = (char *)__restgprlr_28(0xffffffff821723d4);
-    return pcVar3;
+  pmVar1 = Item_GetMultiDef(param_1);
+  if (pmVar1 == (multiDef_s *)0x0) {
+    return "<dvarStrList or dvarFloatList not set>";
   }
-  if (pmVar2->strDef == 0) {
-    pcVar3 = Dvar_GetVariantString(piVar1->dvar);
-    dVar8 = atof(pcVar3);
-    iVar7 = 0;
-    if (0 < pmVar2->count) {
-      pfVar5 = pmVar2->dvarValue;
+  if (pmVar1->strDef == 0) {
+    pcVar2 = Dvar_GetVariantString(param_1->dvar);
+    dVar7 = atof(pcVar2);
+    iVar6 = 0;
+    if (0 < pmVar1->count) {
+      pfVar4 = pmVar1->dvarValue;
       do {
-        if (*pfVar5 == (float)dVar8) {
-          pcVar3 = (char *)__restgprlr_28(pmVar2->dvarList[iVar7]);
-          return pcVar3;
+        if (*pfVar4 == (float)dVar7) {
+          return pmVar1->dvarList[iVar6];
         }
-        iVar7 = iVar7 + 1;
-        pfVar5 = pfVar5 + 1;
-      } while (iVar7 < pmVar2->count);
-      pcVar3 = (char *)__restgprlr_28(0xffffffff820068af);
-      return pcVar3;
+        iVar6 = iVar6 + 1;
+        pfVar4 = pfVar4 + 1;
+      } while (iVar6 < pmVar1->count);
+      return "";
     }
   }
   else {
-    pcVar3 = Dvar_GetVariantString(piVar1->dvar);
-    iVar7 = 0;
-    if (0 < pmVar2->count) {
-      ppcVar6 = pmVar2->dvarStr;
+    pcVar2 = Dvar_GetVariantString(param_1->dvar);
+    iVar6 = 0;
+    if (0 < pmVar1->count) {
+      ppcVar5 = pmVar1->dvarStr;
       do {
-        iVar4 = I_stricmp(pcVar3,*ppcVar6);
-        if (iVar4 == 0) {
-          pcVar3 = (char *)__restgprlr_28(pmVar2->dvarList[iVar7]);
-          return pcVar3;
+        iVar3 = I_stricmp(pcVar2,*ppcVar5);
+        if (iVar3 == 0) {
+          return pmVar1->dvarList[iVar6];
         }
-        iVar7 = iVar7 + 1;
-        ppcVar6 = ppcVar6 + 1;
-      } while (iVar7 < pmVar2->count);
+        iVar6 = iVar6 + 1;
+        ppcVar5 = ppcVar5 + 1;
+      } while (iVar6 < pmVar1->count);
     }
   }
-  pcVar3 = (char *)__restgprlr_28(0xffffffff820068af);
-  return pcVar3;
+  return "";
 }
 
 
 // 825C2CC8  Item_DvarEnum_EnumIndex  (ui/ui_shared.cpp:6456)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 
 int Item_DvarEnum_EnumIndex(itemDef_t *param_1)
 
 {
-  int iVar1;
-  dvar_t *pdVar2;
-  char *pcVar3;
+  dvar_t *pdVar1;
+  char *pcVar2;
+  int iVar3;
   int iVar4;
-  longlong lVar5;
+  int iVar5;
   
-  iVar1 = __savegprlr_28(param_1);
-  pdVar2 = Dvar_FindVar(*(char **)(iVar1 + 0x18c));
-  if (pdVar2->type == '\x06') {
-    pcVar3 = Dvar_GetVariantString(*(char **)(iVar1 + 0x15c));
-    iVar1 = atoi(pcVar3);
-    if ((-1 < iVar1) && (iVar1 < (pdVar2->domain).enumeration.stringCount)) goto LAB_825c2d58;
-    lVar5 = 0;
-    if (0 < (pdVar2->domain).enumeration.stringCount) {
-      iVar1 = 0;
+  pdVar1 = Dvar_FindVar((param_1->typeData).enumDvarName);
+  if (pdVar1->type == '\x06') {
+    pcVar2 = Dvar_GetVariantString(param_1->dvar);
+    iVar3 = atoi(pcVar2);
+    if ((-1 < iVar3) && (iVar3 < (pdVar1->domain).enumeration.stringCount)) {
+      return iVar3;
+    }
+    iVar3 = 0;
+    if (0 < (pdVar1->domain).enumeration.stringCount) {
+      iVar5 = 0;
       do {
-        iVar4 = I_stricmp(pcVar3,*(char **)(iVar1 + (int)(pdVar2->domain).enumeration.strings));
+        iVar4 = I_stricmp(pcVar2,*(char **)(iVar5 + (int)(pdVar1->domain).enumeration.strings));
         if (iVar4 == 0) {
-          iVar1 = __restgprlr_28(lVar5);
-          return iVar1;
+          return iVar3;
         }
-        lVar5 = lVar5 + 1;
-        iVar1 = iVar1 + 4;
-      } while ((int)lVar5 < (pdVar2->domain).enumeration.stringCount);
+        iVar3 = iVar3 + 1;
+        iVar5 = iVar5 + 4;
+      } while (iVar3 < (pdVar1->domain).enumeration.stringCount);
     }
   }
-  iVar1 = 0;
-LAB_825c2d58:
-  iVar1 = __restgprlr_28(iVar1);
-  return iVar1;
+  return 0;
 }
 
 
 // 825C2D70  Item_DvarEnum_Setting  (ui/ui_shared.cpp:6481)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 
 char * Item_DvarEnum_Setting(itemDef_t *param_1)
 
 {
-  itemDef_t *piVar1;
-  char *pcVar2;
-  dvar_t *pdVar3;
-  int iVar4;
+  dvar_t *pdVar1;
+  int iVar2;
   
-  piVar1 = (itemDef_t *)__savegprlr_28(param_1);
-  if (piVar1 == (itemDef_t *)0x0) {
+  if (param_1 == (itemDef_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x1955,0,
                     "%s");
   }
-  if (piVar1->type != 0xd) {
+  if (param_1->type != 0xd) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x1956,0,
                     "%s\n\t(item->type) = %i");
   }
-  if ((piVar1->typeData).enumDvarName == (char *)0x0) {
-    pcVar2 = (char *)__restgprlr_28(0xffffffff82172468);
-    return pcVar2;
+  if ((param_1->typeData).enumDvarName == (char *)0x0) {
+    return "<dvarEnumList not set>";
   }
-  pdVar3 = Dvar_FindVar((piVar1->typeData).enumDvarName);
-  if (pdVar3->type != '\x06') {
-    pcVar2 = (char *)__restgprlr_28(0xffffffff82172454);
-    return pcVar2;
+  pdVar1 = Dvar_FindVar((param_1->typeData).enumDvarName);
+  if (pdVar1->type != '\x06') {
+    return "<not an enum dvar>";
   }
-  if ((pdVar3->domain).enumeration.stringCount == 0) {
-    pcVar2 = (char *)__restgprlr_28(0xffffffff820068af);
-    return pcVar2;
+  if ((pdVar1->domain).enumeration.stringCount == 0) {
+    return "";
   }
-  iVar4 = Item_DvarEnum_EnumIndex(piVar1);
-  if ((iVar4 < 0) || ((pdVar3->domain).enumeration.stringCount <= iVar4)) {
+  iVar2 = Item_DvarEnum_EnumIndex(param_1);
+  if ((iVar2 < 0) || ((pdVar1->domain).enumeration.stringCount <= iVar2)) {
     va("%s %i:%i");
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x1962,0,
                     "%s\n\t%s");
   }
-  pcVar2 = (char *)__restgprlr_28((pdVar3->domain).enumeration.strings[iVar4]);
-  return pcVar2;
+  return (pdVar1->domain).enumeration.strings[iVar2];
 }
 
 
@@ -9576,65 +9178,59 @@ bool Item_List_IsCountDownKey(int param_1)
 
 // 825C2EF0  Item_List_NextEntryForKey  (ui/ui_shared.cpp:6524)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 int Item_List_NextEntryForKey(int param_1,int param_2,int param_3)
 
 {
   bool bVar1;
-  int iVar2;
-  longlong lVar3;
-  ulonglong uVar4;
-  int iVar5;
-  ulonglong uVar6;
+  ulonglong uVar2;
+  ulonglong uVar3;
   
-  uVar4 = (ulonglong)param_3;
-  lVar3 = (longlong)param_2;
-  iVar2 = __savegprlr_28(param_1);
-  iVar5 = (int)uVar4;
-  if (iVar5 < 0) {
+  uVar2 = (ulonglong)param_3;
+  if (param_3 < 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x197d,0,
                     "%s\n\t(count) = %i");
   }
-  if ((int)lVar3 < 0) {
-LAB_825c2f54:
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x197e,0,
-                    "%s\n\t(current) = %i");
+  if (-1 < param_2) {
+    if (param_2 < param_3) goto LAB_825c2f78;
+    if (param_3 == 0) {
+      return 0;
+    }
   }
-  else if (iVar5 <= (int)lVar3) {
-    if (iVar5 == 0) goto LAB_825c2f80;
-    goto LAB_825c2f54;
+  MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x197e,0,
+                  "%s\n\t(current) = %i");
+LAB_825c2f78:
+  if (param_3 == 0) {
+    return 0;
   }
-  if (iVar5 != 0) {
-    if (((iVar2 == 0xd) || (iVar2 == 0xa3)) || (bVar1 = false, iVar2 == 0x9d)) {
+  if (((param_1 == 0xd) || (param_1 == 0xa3)) || (bVar1 = false, param_1 == 0x9d)) {
+    bVar1 = true;
+  }
+  if (!bVar1) {
+    if ((param_1 == 0xa4) || (bVar1 = false, param_1 == 0x9c)) {
       bVar1 = true;
     }
-    if (bVar1) {
-      uVar6 = lVar3 + 1;
-      trapWord(6,uVar4,0);
-      trapWord(5,uVar4 & ~(((uVar6 & 0x7fffffff) << 1 | (uVar6 & 0xffffffff) >> 0x1f) - 1),0xffff);
-      iVar2 = __restgprlr_28(uVar6 - (longlong)((int)uVar6 / iVar5) * (longlong)iVar5);
-      return iVar2;
+    if (!bVar1) {
+      return param_2;
     }
-    if ((iVar2 == 0xa4) || (bVar1 = false, iVar2 == 0x9c)) {
-      bVar1 = true;
-    }
-    if (bVar1) {
-      trapWord(6,uVar4,0);
-      uVar6 = (lVar3 + uVar4) - 1;
-      trapWord(5,uVar4 & ~(((uVar6 & 0x7fffffff) << 1 | (uVar6 & 0xffffffff) >> 0x1f) - 1),0xffff);
-      iVar2 = __restgprlr_28(uVar6 - (longlong)((int)uVar6 / iVar5) * (longlong)iVar5);
-      return iVar2;
-    }
-    iVar2 = __restgprlr_28(lVar3);
-    return iVar2;
+    trapWord(6,uVar2,0);
+    uVar3 = ((longlong)param_2 + uVar2) - 1;
+    trapWord(5,uVar2 & ~(((uVar3 & 0x7fffffff) << 1 | (uVar3 & 0xffffffff) >> 0x1f) - 1),0xffff);
+    return (int)uVar3 - ((int)uVar3 / param_3) * param_3;
   }
-LAB_825c2f80:
-  iVar2 = __restgprlr_28(0);
-  return iVar2;
+  uVar3 = (longlong)param_2 + 1;
+  trapWord(6,uVar2,0);
+  trapWord(5,uVar2 & ~(((uVar3 & 0x7fffffff) << 1 | (uVar3 & 0xffffffff) >> 0x1f) - 1),0xffff);
+  return (int)uVar3 - ((int)uVar3 / param_3) * param_3;
 }
 
 
 // 825C3048  Item_Multi_HandleKey  (ui/ui_shared.cpp:6539)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
@@ -9642,59 +9238,53 @@ LAB_825c2f80:
 int Item_Multi_HandleKey(UiContext *param_1,itemDef_t *param_2,int param_3)
 
 {
-  itemDef_t *piVar1;
-  LocalClientNum_t *pLVar2;
+  multiDef_s *pmVar1;
+  bool bVar6;
+  int iVar2;
   multiDef_s *pmVar3;
   int iVar4;
-  bool bVar8;
-  int iVar5;
-  multiDef_s *pmVar6;
-  char *pcVar7;
-  ulonglong uVar9;
+  char *pcVar5;
   
-  uVar9 = (ulonglong)(int)param_2;
-  pLVar2 = (LocalClientNum_t *)__savegprlr_27(param_1);
-  if (pLVar2 == (LocalClientNum_t *)0x0) {
+  if (param_1 == (UiContext *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x1991,0,
                     "%s");
   }
-  if ((uVar9 & 0xffffffff) == 0) {
+  if (param_2 == (itemDef_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x1992,0,
                     "%s");
   }
-  piVar1 = (itemDef_t *)uVar9;
-  if (piVar1->dvar == (char *)0x0) {
+  if (param_2->dvar == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x1993,0,
                     "%s");
   }
-  pmVar3 = Item_GetMultiDef(piVar1);
-  if ((pmVar3 != (multiDef_s *)0x0) && (bVar8 = Window_HasFocus(*pLVar2,&piVar1->window), bVar8)) {
-    iVar5 = Item_Multi_FindDvarByValue(piVar1);
-    pmVar6 = Item_GetMultiDef(piVar1);
+  pmVar1 = Item_GetMultiDef(param_2);
+  if ((pmVar1 != (multiDef_s *)0x0) &&
+     (bVar6 = Window_HasFocus(param_1->localClientNum,&param_2->window), bVar6)) {
+    iVar2 = Item_Multi_FindDvarByValue(param_2);
+    pmVar3 = Item_GetMultiDef(param_2);
     iVar4 = 0;
-    if (pmVar6 != (multiDef_s *)0x0) {
-      iVar4 = pmVar6->count;
+    if (pmVar3 != (multiDef_s *)0x0) {
+      iVar4 = pmVar3->count;
     }
-    iVar4 = Item_List_NextEntryForKey(param_3,iVar5,iVar4);
-    if (iVar4 != iVar5) {
-      if (pmVar3->strDef != 0) {
-        Dvar_SetFromStringByName(piVar1->dvar,pmVar3->dvarStr[iVar4]);
-        iVar4 = __restgprlr_27(1);
-        return iVar4;
+    iVar4 = Item_List_NextEntryForKey(param_3,iVar2,iVar4);
+    if (iVar4 != iVar2) {
+      if (pmVar1->strDef != 0) {
+        Dvar_SetFromStringByName(param_2->dvar,pmVar1->dvarStr[iVar4]);
+        return 1;
       }
-      pcVar7 = va("%g");
-      Dvar_SetFromStringByName(piVar1->dvar,pcVar7);
-      iVar4 = __restgprlr_27(1);
-      return iVar4;
+      pcVar5 = va("%g");
+      Dvar_SetFromStringByName(param_2->dvar,pcVar5);
+      return 1;
     }
   }
-  iVar4 = __restgprlr_27(0);
-  return iVar4;
+  return 0;
 }
 
 
 // 825C31C0  Item_DvarEnum_HandleKey  (ui/ui_shared.cpp:6571)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
@@ -9702,43 +9292,35 @@ int Item_Multi_HandleKey(UiContext *param_1,itemDef_t *param_2,int param_3)
 int Item_DvarEnum_HandleKey(UiContext *param_1,itemDef_t *param_2,int param_3)
 
 {
-  itemDef_t *piVar1;
-  LocalClientNum_t *pLVar2;
-  bool bVar6;
-  int iVar3;
-  int iVar4;
-  char *pcVar5;
-  ulonglong uVar7;
+  bool bVar4;
+  int iVar1;
+  int iVar2;
+  char *pcVar3;
   
-  uVar7 = (ulonglong)(int)param_2;
-  pLVar2 = (LocalClientNum_t *)__savegprlr_27(param_1);
-  if (pLVar2 == (LocalClientNum_t *)0x0) {
+  if (param_1 == (UiContext *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x19b0,0,
                     "%s");
   }
-  if ((uVar7 & 0xffffffff) == 0) {
+  if (param_2 == (itemDef_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x19b1,0,
                     "%s");
   }
-  piVar1 = (itemDef_t *)uVar7;
-  if (piVar1->dvar == (char *)0x0) {
+  if (param_2->dvar == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x19b2,0,
                     "%s");
   }
-  bVar6 = Window_HasFocus(*pLVar2,&piVar1->window);
-  if (bVar6) {
-    iVar3 = Item_DvarEnum_EnumIndex(piVar1);
-    iVar4 = Item_DvarEnum_CountSettings(piVar1);
-    iVar4 = Item_List_NextEntryForKey(param_3,iVar3,iVar4);
-    if (iVar4 != iVar3) {
-      pcVar5 = va("%i");
-      Dvar_SetFromStringByName(piVar1->dvar,pcVar5);
-      iVar3 = __restgprlr_27(1);
-      return iVar3;
+  bVar4 = Window_HasFocus(param_1->localClientNum,&param_2->window);
+  if (bVar4) {
+    iVar1 = Item_DvarEnum_EnumIndex(param_2);
+    iVar2 = Item_DvarEnum_CountSettings(param_2);
+    iVar2 = Item_List_NextEntryForKey(param_3,iVar1,iVar2);
+    if (iVar2 != iVar1) {
+      pcVar3 = va("%i");
+      Dvar_SetFromStringByName(param_2->dvar,pcVar3);
+      return 1;
     }
   }
-  iVar3 = __restgprlr_27(0);
-  return iVar3;
+  return 0;
 }
 
 
@@ -9767,6 +9349,8 @@ bool Item_IsTextField(itemDef_t *param_1)
 
 // 825C3368  Item_TextField_BeginEdit  (ui/ui_shared.cpp:6614)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
@@ -9776,82 +9360,75 @@ void Item_TextField_BeginEdit(UiContext *param_1,itemDef_t *param_2)
 {
   char cVar1;
   menuDef_t *pmVar2;
-  LocalClientNum_t *pLVar3;
-  editFieldDef_s *peVar4;
+  editFieldDef_s *peVar3;
+  char *pcVar4;
+  int iVar5;
   char *pcVar6;
-  ulonglong uVar7;
-  int iVar8;
-  char *pcVar9;
-  int iVar10;
+  int iVar7;
   char acStack_430 [1072];
-  itemDef_t *piVar5;
   
-  uVar7 = (ulonglong)(int)param_2;
-  pLVar3 = (LocalClientNum_t *)__savegprlr_28(param_1);
-  if (pLVar3 == (LocalClientNum_t *)0x0) {
+  if (param_1 == (UiContext *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x19db,0,
                     "%s");
   }
-  if ((uVar7 & 0xffffffff) == 0) {
+  if (param_2 == (itemDef_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x19dc,0,
                     "%s");
   }
-  piVar5 = (itemDef_t *)uVar7;
-  peVar4 = Item_GetEditFieldDef(piVar5);
-  if (peVar4 != (editFieldDef_s *)0x0) {
-    peVar4->paintOffset = 0;
+  peVar3 = Item_GetEditFieldDef(param_2);
+  if (peVar3 != (editFieldDef_s *)0x0) {
+    peVar3->paintOffset = 0;
   }
-  if (piVar5->localVar == (char *)0x0) {
-    if (piVar5->dvar == (char *)0x0) {
-      piVar5->cursorPos[*pLVar3] = 0;
+  if (param_2->localVar == (char *)0x0) {
+    if (param_2->dvar == (char *)0x0) {
+      param_2->cursorPos[param_1->localClientNum] = 0;
       Com_PrintWarning(0xd,
                        "WARNING: No variable is specified for TextField \'%s\', it will not function properly.\n"
                       );
     }
     else {
-      pcVar6 = Dvar_GetVariantString(piVar5->dvar);
-      pcVar9 = pcVar6;
+      pcVar4 = Dvar_GetVariantString(param_2->dvar);
+      pcVar6 = pcVar4;
       do {
-        cVar1 = *pcVar9;
-        pcVar9 = pcVar9 + 1;
+        cVar1 = *pcVar6;
+        pcVar6 = pcVar6 + 1;
       } while (cVar1 != '\0');
-      piVar5->cursorPos[*pLVar3] = (int)(pcVar9 + (-1 - (int)pcVar6));
+      param_2->cursorPos[param_1->localClientNum] = (int)(pcVar6 + (-1 - (int)pcVar4));
     }
   }
   else {
-    pcVar6 = UILocalVar_GetStringByName
-                       ((UILocalVarContext *)(pLVar3 + 0x29f),piVar5->localVar,acStack_430,0x400);
-    pcVar9 = pcVar6;
+    pcVar4 = UILocalVar_GetStringByName(&param_1->localVars,param_2->localVar,acStack_430,0x400);
+    pcVar6 = pcVar4;
     do {
-      cVar1 = *pcVar9;
-      pcVar9 = pcVar9 + 1;
+      cVar1 = *pcVar6;
+      pcVar6 = pcVar6 + 1;
     } while (cVar1 != '\0');
-    piVar5->cursorPos[*pLVar3] = (int)(pcVar9 + (-1 - (int)pcVar6));
+    param_2->cursorPos[param_1->localClientNum] = (int)(pcVar6 + (-1 - (int)pcVar4));
   }
   g_editingField = 1;
-  g_editItem = piVar5;
-  Key_SetOverstrikeMode(*pLVar3,1);
-  pmVar2 = piVar5->parent;
-  iVar8 = 0;
+  g_editItem = param_2;
+  Key_SetOverstrikeMode(param_1->localClientNum,1);
+  pmVar2 = param_2->parent;
+  iVar5 = 0;
   if (0 < pmVar2->itemCount) {
-    iVar10 = 0;
-    while ((ulonglong)*(uint *)(iVar10 + (int)pmVar2->items) != (uVar7 & 0xffffffff)) {
-      iVar8 = iVar8 + 1;
-      iVar10 = iVar10 + 4;
-      if (pmVar2->itemCount <= iVar8) {
-        __restgprlr_28();
+    iVar7 = 0;
+    while (*(itemDef_t **)(iVar7 + (int)pmVar2->items) != param_2) {
+      iVar5 = iVar5 + 1;
+      iVar7 = iVar7 + 4;
+      if (pmVar2->itemCount <= iVar5) {
         return;
       }
     }
-    Menu_SetCursorItem(*pLVar3,pmVar2,iVar8);
+    Menu_SetCursorItem(param_1->localClientNum,pmVar2,iVar5);
   }
-  __restgprlr_28();
   return;
 }
 
 
 // 825C3510  Item_TextField_EnsureCursorVisible  (ui/ui_shared.cpp:6657)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
@@ -9859,30 +9436,27 @@ void Item_TextField_BeginEdit(UiContext *param_1,itemDef_t *param_2)
 void Item_TextField_EnsureCursorVisible(LocalClientNum_t param_1,itemDef_t *param_2,char *param_3)
 
 {
-  LocalClientNum_t LVar1;
-  editFieldDef_s *peVar2;
-  int iVar3;
+  editFieldDef_s *peVar1;
+  int iVar2;
   
-  LVar1 = __savegprlr_28(param_1);
-  peVar2 = Item_GetEditFieldDef(param_2);
-  if (param_2->cursorPos[LVar1] < peVar2->paintOffset) {
-    peVar2->paintOffset = param_2->cursorPos[LVar1];
-    __restgprlr_28();
+  peVar1 = Item_GetEditFieldDef(param_2);
+  if (param_2->cursorPos[param_1] < peVar1->paintOffset) {
+    peVar1->paintOffset = param_2->cursorPos[param_1];
     return;
   }
-  if (peVar2->maxPaintChars != 0) {
-    iVar3 = Item_GetCursorPosOffset(LVar1,param_2,param_3,-peVar2->maxPaintChars);
-    if (peVar2->paintOffset < iVar3) {
-      peVar2->paintOffset = iVar3;
-    }
+  if ((peVar1->maxPaintChars != 0) &&
+     (iVar2 = Item_GetCursorPosOffset(param_1,param_2,param_3,-peVar1->maxPaintChars),
+     peVar1->paintOffset < iVar2)) {
+    peVar1->paintOffset = iVar2;
   }
-  __restgprlr_28();
   return;
 }
 
 
 // 825D0078  Item_TextField_HandleKey  (ui/ui_shared.cpp:6684)
 
+/* WARNING: Function: __savegprlr_20 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_20 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
@@ -9892,122 +9466,116 @@ int Item_TextField_HandleKey(UiContext *param_1,itemDef_t *param_2,int param_3)
 {
   uint uVar1;
   LocalClientNum_t LVar2;
-  UiContext *pUVar3;
-  editFieldDef_s *peVar4;
-  UILocalVar *pUVar5;
+  editFieldDef_s *peVar3;
+  UILocalVar *pUVar4;
+  char *pcVar5;
   int iVar6;
-  char *pcVar7;
-  bool bVar11;
-  char cVar12;
-  uint uVar8;
-  int iVar9;
-  itemDef_t *piVar10;
-  ulonglong uVar13;
-  char *pcVar14;
-  ulonglong uVar15;
-  longlong lVar16;
+  bool bVar9;
+  char cVar10;
+  int iVar7;
+  itemDef_t *piVar8;
+  char *pcVar11;
+  ulonglong uVar12;
+  longlong lVar13;
   char local_870 [1024];
   char acStack_470 [1136];
   
-  uVar13 = (ulonglong)param_3;
-  pUVar3 = (UiContext *)__savegprlr_20(param_1);
-  uVar8 = (uint)uVar13;
-  peVar4 = Item_GetEditFieldDef(param_2);
-  if ((peVar4 == (editFieldDef_s *)0x0) ||
-     ((pcVar7 = param_2->dvar, pcVar7 == (char *)0x0 && (param_2->localVar == (char *)0x0))))
-  goto LAB_825d0114;
+  peVar3 = Item_GetEditFieldDef(param_2);
+  if (peVar3 == (editFieldDef_s *)0x0) {
+    return 0;
+  }
+  pcVar5 = param_2->dvar;
+  if ((pcVar5 == (char *)0x0) && (param_2->localVar == (char *)0x0)) {
+    return 0;
+  }
   memset();
   if (param_2->localVar == (char *)0x0) {
-    if (pcVar7 == (char *)0x0) {
+    if (pcVar5 == (char *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x1a3b,0,
                       "%s");
     }
-    pUVar5 = (UILocalVar *)0x0;
-    pcVar7 = Dvar_GetVariantString(param_2->dvar);
+    pUVar4 = (UILocalVar *)0x0;
+    pcVar5 = Dvar_GetVariantString(param_2->dvar);
   }
   else {
-    pUVar5 = UILocalVar_Find(&pUVar3->localVars,param_2->localVar);
-    if (pUVar5 == (UILocalVar *)0x0) {
+    pUVar4 = UILocalVar_Find(&param_1->localVars,param_2->localVar);
+    if (pUVar4 == (UILocalVar *)0x0) {
       Com_PrintWarning(0xd,
                        "WARNING: Could not find LocalVar \'%s\' in Item_TextField_HandleKey().\n");
-      goto LAB_825d0114;
+      return 0;
     }
-    pcVar7 = UILocalVar_GetString(pUVar5,acStack_470,0x400);
+    pcVar5 = UILocalVar_GetString(pUVar4,acStack_470,0x400);
   }
-  pcVar14 = (char *)0x400;
-  I_strncpyz(local_870,pcVar7,0x400);
-  pcVar7 = local_870;
+  pcVar11 = (char *)0x400;
+  I_strncpyz(local_870,pcVar5,0x400);
+  pcVar5 = local_870;
   do {
-    cVar12 = *pcVar7;
-    pcVar7 = pcVar7 + 1;
-  } while (cVar12 != '\0');
-  pcVar7 = pcVar7 + (-1 - (int)local_870);
-  uVar1 = peVar4->maxChars;
-  uVar15 = ZEXT48(pcVar7);
-  if ((uVar1 != 0) && ((int)uVar1 < (int)pcVar7)) {
-    LVar2 = pUVar3->localClientNum;
+    cVar10 = *pcVar5;
+    pcVar5 = pcVar5 + 1;
+  } while (cVar10 != '\0');
+  pcVar5 = pcVar5 + (-1 - (int)local_870);
+  uVar1 = peVar3->maxChars;
+  uVar12 = ZEXT48(pcVar5);
+  if ((uVar1 != 0) && ((int)uVar1 < (int)pcVar5)) {
+    LVar2 = param_1->localClientNum;
     local_870[uVar1] = '\0';
-    uVar15 = (ulonglong)uVar1;
-    if (peVar4->maxChars < param_2->cursorPos[LVar2]) {
-      param_2->cursorPos[LVar2] = peVar4->maxChars;
+    uVar12 = (ulonglong)uVar1;
+    if (peVar3->maxChars < param_2->cursorPos[LVar2]) {
+      param_2->cursorPos[LVar2] = peVar3->maxChars;
     }
   }
-  iVar6 = (int)uVar15;
-  if ((uVar13 & 0x400) == 0) {
-    if ((uVar8 == 0xa2) || (uVar8 == 0xc1)) {
-      if (param_2->cursorPos[pUVar3->localClientNum] < iVar6) {
-        lVar16 = uVar15 - (uint)param_2->cursorPos[pUVar3->localClientNum];
-        if ((lVar16 < 1) || (iVar6 < (int)lVar16)) {
-          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x1ad7
-                          ,0,"%s\n\t(memMoveCount) = %i");
-        }
-        memmove();
-        if (param_2->localVar != (char *)0x0) {
-          if (pUVar5 == (UILocalVar *)0x0) {
-            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",
-                            0x1adc,0,"%s");
-          }
-          UILocalVar_SetString(pUVar5,local_870);
-          iVar6 = __restgprlr_20(1);
-          return iVar6;
-        }
-        Dvar_SetFromStringByName(param_2->dvar,local_870);
+  iVar6 = (int)uVar12;
+  if ((param_3 & 0x400U) == 0) {
+    if ((param_3 == 0xa2) || (param_3 == 0xc1)) {
+      if (iVar6 <= param_2->cursorPos[param_1->localClientNum]) {
+        return 1;
       }
-      goto LAB_825d08c8;
+      lVar13 = uVar12 - (uint)param_2->cursorPos[param_1->localClientNum];
+      if ((lVar13 < 1) || (iVar6 < (int)lVar13)) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x1ad7,0
+                        ,"%s\n\t(memMoveCount) = %i");
+      }
+      memmove();
+      if (param_2->localVar == (char *)0x0) {
+        Dvar_SetFromStringByName(param_2->dvar,local_870);
+        return 1;
+      }
+      if (pUVar4 == (UILocalVar *)0x0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x1adc,0
+                        ,"%s");
+      }
+      UILocalVar_SetString(pUVar4,local_870);
+      return 1;
     }
-    if ((uVar8 == 0x9d) || (uVar8 == 0xbb)) {
-      iVar6 = Item_GetCursorPosOffset(pUVar3->localClientNum,param_2,local_870,1);
-      param_2->cursorPos[pUVar3->localClientNum] = iVar6;
-      Item_TextField_EnsureCursorVisible(pUVar3->localClientNum,param_2,local_870);
-      iVar6 = __restgprlr_20(1);
-      return iVar6;
+    if ((param_3 == 0x9d) || (param_3 == 0xbb)) {
+      iVar6 = Item_GetCursorPosOffset(param_1->localClientNum,param_2,local_870,1);
+      param_2->cursorPos[param_1->localClientNum] = iVar6;
+      Item_TextField_EnsureCursorVisible(param_1->localClientNum,param_2,local_870);
+      return 1;
     }
-    if ((uVar8 == 0x9c) || (uVar8 == 0xb9)) goto LAB_825d02bc;
-    if ((uVar8 == 0xa5) || (uVar8 == 0xb6)) {
-      param_2->cursorPos[pUVar3->localClientNum] = 0;
-      peVar4->paintOffset = 0;
-      iVar6 = __restgprlr_20(1);
-      return iVar6;
+    if ((param_3 == 0x9c) || (param_3 == 0xb9)) goto LAB_825d02bc;
+    if ((param_3 == 0xa5) || (param_3 == 0xb6)) {
+      param_2->cursorPos[param_1->localClientNum] = 0;
+      peVar3->paintOffset = 0;
+      return 1;
     }
-    if ((uVar8 == 0xa6) || (uVar8 == 0xbc)) {
-      param_2->cursorPos[pUVar3->localClientNum] = iVar6;
-      Item_TextField_EnsureCursorVisible(pUVar3->localClientNum,param_2,local_870);
-      iVar6 = __restgprlr_20(1);
-      return iVar6;
+    if ((param_3 == 0xa6) || (param_3 == 0xbc)) {
+      param_2->cursorPos[param_1->localClientNum] = iVar6;
+      Item_TextField_EnsureCursorVisible(param_1->localClientNum,param_2,local_870);
+      return 1;
     }
-    if ((uVar8 == 0xa1) || (uVar8 == 0xc0)) {
-      iVar6 = Key_GetOverstrikeMode(pUVar3->localClientNum);
-      Key_SetOverstrikeMode(pUVar3->localClientNum,(uint)LZCOUNT(iVar6) >> 5);
-      iVar6 = __restgprlr_20(1);
-      return iVar6;
+    if ((param_3 == 0xa1) || (param_3 == 0xc0)) {
+      iVar6 = Key_GetOverstrikeMode(param_1->localClientNum);
+      Key_SetOverstrikeMode(param_1->localClientNum,(uint)LZCOUNT(iVar6) >> 5);
+      return 1;
     }
   }
   else {
-    uVar8 = uVar8 & 0xfffffbff;
-    if (uVar8 == 8) {
-      if (0 < param_2->cursorPos[pUVar3->localClientNum]) {
-        lVar16 = (uVar15 - (uint)param_2->cursorPos[pUVar3->localClientNum]) + 1;
-        if ((lVar16 < 1) || (iVar6 < (int)lVar16)) {
+    param_3 = param_3 & 0xfffffbff;
+    if (param_3 == 8) {
+      if (0 < param_2->cursorPos[param_1->localClientNum]) {
+        lVar13 = (uVar12 - (uint)param_2->cursorPos[param_1->localClientNum]) + 1;
+        if ((lVar13 < 1) || (iVar6 < (int)lVar13)) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x1a52
                           ,0,"%s\n\t(memMoveCount) = %i");
         }
@@ -10015,130 +9583,143 @@ int Item_TextField_HandleKey(UiContext *param_1,itemDef_t *param_2,int param_3)
       }
       if (param_2->localVar == (char *)0x0) {
         Dvar_SetFromStringByName(param_2->dvar,local_870);
-        pcVar7 = Dvar_GetVariantString(param_2->dvar);
-        I_strncpyz(local_870,pcVar7,0x400);
+        pcVar5 = Dvar_GetVariantString(param_2->dvar);
+        I_strncpyz(local_870,pcVar5,0x400);
       }
       else {
-        if (pUVar5 == (UILocalVar *)0x0) {
+        if (pUVar4 == (UILocalVar *)0x0) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x1a58
                           ,0,"%s");
         }
-        UILocalVar_SetString(pUVar5,local_870);
+        UILocalVar_SetString(pUVar4,local_870);
       }
 LAB_825d02bc:
-      iVar6 = Item_GetCursorPosOffset(pUVar3->localClientNum,param_2,local_870,-1);
-      param_2->cursorPos[pUVar3->localClientNum] = iVar6;
-      Item_TextField_EnsureCursorVisible(pUVar3->localClientNum,param_2,local_870);
-      iVar6 = __restgprlr_20(1);
-      return iVar6;
+      iVar6 = Item_GetCursorPosOffset(param_1->localClientNum,param_2,local_870,-1);
+      param_2->cursorPos[param_1->localClientNum] = iVar6;
+      Item_TextField_EnsureCursorVisible(param_1->localClientNum,param_2,local_870);
+      return 1;
     }
-    if ((((param_2->type == 0x10) && (bVar11 = I_isforfilename(uVar8), !bVar11)) ||
-        ((int)uVar8 < 0x20)) || ((uVar8 == 0x40 && (param_2->type != 0x16)))) goto LAB_825d08c8;
-    if ((param_2->type == 9) && (bVar11 = I_isdigit(uVar8), !bVar11)) goto LAB_825d0114;
+    if ((param_2->type == 0x10) && (bVar9 = I_isforfilename(param_3), !bVar9)) {
+      return 1;
+    }
+    if (param_3 < 0x20) {
+      return 1;
+    }
+    if ((param_3 == 0x40) && (param_2->type != 0x16)) {
+      return 1;
+    }
+    if ((param_2->type == 9) && (bVar9 = I_isdigit(param_3), !bVar9)) {
+      return 0;
+    }
     if (param_2->type == 0x11) {
-      bVar11 = I_isdigit(uVar8);
-      if (bVar11) {
+      bVar9 = I_isdigit(param_3);
+      if (bVar9) {
 LAB_825d038c:
-        bVar11 = true;
+        bVar9 = true;
       }
       else {
-        cVar12 = Com_GetDecimalDelimiter();
-        bVar11 = false;
-        if (uVar8 == (int)cVar12) goto LAB_825d038c;
+        cVar10 = Com_GetDecimalDelimiter();
+        bVar9 = false;
+        if (param_3 == cVar10) goto LAB_825d038c;
       }
-      if (!bVar11) {
-LAB_825d0114:
-        iVar6 = __restgprlr_20(0);
-        return iVar6;
+      if (!bVar9) {
+        return 0;
       }
-      cVar12 = Com_GetDecimalDelimiter();
-      if (uVar8 == (int)cVar12) {
-        uVar8 = 0x2e;
+      cVar10 = Com_GetDecimalDelimiter();
+      if (param_3 == cVar10) {
+        param_3 = 0x2e;
       }
     }
     if (param_2->type == 0x12) {
-      uVar8 = toupper(uVar8);
+      param_3 = toupper(param_3);
     }
-    iVar9 = Key_GetOverstrikeMode(pUVar3->localClientNum);
-    if (iVar9 == 0) {
-      if ((iVar6 == 0xff) || ((peVar4->maxChars != 0 && (peVar4->maxChars <= iVar6))))
-      goto LAB_825d08c8;
-      lVar16 = (uVar15 - (uint)param_2->cursorPos[pUVar3->localClientNum]) + 1;
-      if ((lVar16 < 1) || (iVar6 + 1 < (int)lVar16)) {
+    iVar7 = Key_GetOverstrikeMode(param_1->localClientNum);
+    if (iVar7 == 0) {
+      if (iVar6 == 0xff) {
+        return 1;
+      }
+      if ((peVar3->maxChars != 0) && (peVar3->maxChars <= iVar6)) {
+        return 1;
+      }
+      lVar13 = (uVar12 - (uint)param_2->cursorPos[param_1->localClientNum]) + 1;
+      if ((lVar13 < 1) || (iVar6 + 1 < (int)lVar13)) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x1a9b,0
                         ,"%s\n\t(memMoveCount) = %i");
       }
       memmove();
     }
-    else if ((peVar4->maxChars != 0) &&
-            (peVar4->maxChars <= param_2->cursorPos[pUVar3->localClientNum])) {
-      if ((peVar4->maxCharsGotoNext != 0) &&
-         ((piVar10 = Menu_SetNextCursorItem(pUVar3,param_2->parent,(ItemFocusReason)pcVar14),
-          piVar10 != (itemDef_t *)0x0 && (bVar11 = Item_IsTextField(piVar10), bVar11)))) {
-        g_editItem = piVar10;
-        iVar6 = __restgprlr_20(1);
-        return iVar6;
+    else if ((peVar3->maxChars != 0) &&
+            (peVar3->maxChars <= param_2->cursorPos[param_1->localClientNum])) {
+      if (peVar3->maxCharsGotoNext == 0) {
+        return 1;
       }
-      goto LAB_825d08c8;
+      piVar8 = Menu_SetNextCursorItem(param_1,param_2->parent,(ItemFocusReason)pcVar11);
+      if (piVar8 == (itemDef_t *)0x0) {
+        return 1;
+      }
+      bVar9 = Item_IsTextField(piVar8);
+      if (!bVar9) {
+        return 1;
+      }
+      g_editItem = piVar8;
+      return 1;
     }
-    pcVar7 = param_2->localVar;
-    local_870[param_2->cursorPos[pUVar3->localClientNum]] = (char)uVar8;
-    if (pcVar7 == (char *)0x0) {
+    pcVar5 = param_2->localVar;
+    local_870[param_2->cursorPos[param_1->localClientNum]] = (char)param_3;
+    if (pcVar5 == (char *)0x0) {
       Dvar_SetFromStringByName(param_2->dvar,local_870);
-      pcVar7 = Dvar_GetVariantString(param_2->dvar);
-      I_strncpyz(local_870,pcVar7,0x400);
+      pcVar5 = Dvar_GetVariantString(param_2->dvar);
+      I_strncpyz(local_870,pcVar5,0x400);
     }
     else {
-      if (pUVar5 == (UILocalVar *)0x0) {
+      if (pUVar4 == (UILocalVar *)0x0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x1ab1,0
                         ,"%s");
       }
-      UILocalVar_SetString(pUVar5,local_870);
+      UILocalVar_SetString(pUVar4,local_870);
     }
-    iVar6 = Item_GetCursorPosOffset(pUVar3->localClientNum,param_2,local_870,1);
-    pcVar14 = local_870;
-    param_2->cursorPos[pUVar3->localClientNum] = iVar6;
-    Item_TextField_EnsureCursorVisible(pUVar3->localClientNum,param_2,pcVar14);
-    if (((peVar4->maxChars != 0) && (peVar4->maxChars <= param_2->cursorPos[pUVar3->localClientNum])
-        ) && (peVar4->maxCharsGotoNext != 0)) {
-      piVar10 = Menu_SetNextCursorItem(pUVar3,param_2->parent,(ItemFocusReason)pcVar14);
-      piVar10->cursorPos[pUVar3->localClientNum] = 0;
-      if ((piVar10 != (itemDef_t *)0x0) && (bVar11 = Item_IsTextField(piVar10), bVar11)) {
-        g_editItem = piVar10;
+    iVar6 = Item_GetCursorPosOffset(param_1->localClientNum,param_2,local_870,1);
+    pcVar11 = local_870;
+    param_2->cursorPos[param_1->localClientNum] = iVar6;
+    Item_TextField_EnsureCursorVisible(param_1->localClientNum,param_2,pcVar11);
+    if (((peVar3->maxChars != 0) &&
+        (peVar3->maxChars <= param_2->cursorPos[param_1->localClientNum])) &&
+       (peVar3->maxCharsGotoNext != 0)) {
+      piVar8 = Menu_SetNextCursorItem(param_1,param_2->parent,(ItemFocusReason)pcVar11);
+      piVar8->cursorPos[param_1->localClientNum] = 0;
+      if ((piVar8 != (itemDef_t *)0x0) && (bVar9 = Item_IsTextField(piVar8), bVar9)) {
+        g_editItem = piVar8;
       }
     }
   }
-  if (uVar8 == 9) {
+  if (param_3 == 9) {
     iVar6 = Key_IsDown(LOCAL_CLIENT_0,0xa0);
-    if (iVar6 == 0) {
+    if (iVar6 != 0) goto LAB_825d0660;
 LAB_825d06f0:
-      piVar10 = Menu_SetNextCursorItem(pUVar3,param_2->parent,(ItemFocusReason)pcVar14);
-    }
-    else {
-LAB_825d0660:
-      piVar10 = Menu_SetPrevCursorItem(pUVar3,param_2->parent,(ItemFocusReason)pcVar14);
-    }
-    if ((piVar10 != (itemDef_t *)0x0) && (bVar11 = Item_IsTextField(piVar10), bVar11)) {
-      g_editItem = piVar10;
-    }
+    piVar8 = Menu_SetNextCursorItem(param_1,param_2->parent,(ItemFocusReason)pcVar11);
   }
   else {
-    if ((uVar8 == 0x9a) || (uVar8 == 0xb7)) goto LAB_825d0660;
-    if ((uVar8 == 0x9b) || (uVar8 == 0xbd)) goto LAB_825d06f0;
+    if ((param_3 != 0x9a) && (param_3 != 0xb7)) {
+      if ((param_3 != 0x9b) && (param_3 != 0xbd)) goto LAB_825d068c;
+      goto LAB_825d06f0;
+    }
+LAB_825d0660:
+    piVar8 = Menu_SetPrevCursorItem(param_1,param_2->parent,(ItemFocusReason)pcVar11);
   }
-  if (((uVar8 == 0xd) || (uVar8 == 0xbf)) && (param_2->accept != (MenuEventHandlerSet *)0x0)) {
+  if ((piVar8 != (itemDef_t *)0x0) && (bVar9 = Item_IsTextField(piVar8), bVar9)) {
+    g_editItem = piVar8;
+  }
+LAB_825d068c:
+  if (((param_3 == 0xd) || (param_3 == 0xbf)) && (param_2->accept != (MenuEventHandlerSet *)0x0)) {
     if ((uiscript_verbose->current).enabled != false) {
       Com_Printf(0xd,"UISCRIPT - Calling accept() - Item is \'%s\', parent menu is \'%s\'\n");
     }
-    Item_HandleEvent(pUVar3,param_2,param_2->accept);
+    Item_HandleEvent(param_1,param_2,param_2->accept);
   }
-  if (((uVar8 == 0xd) || (uVar8 == 0xbf)) || (uVar8 == 0x1b)) {
-    iVar6 = __restgprlr_20(0);
-    return iVar6;
+  if (((param_3 != 0xd) && (param_3 != 0xbf)) && (param_3 != 0x1b)) {
+    return 1;
   }
-LAB_825d08c8:
-  iVar6 = __restgprlr_20(1);
-  return iVar6;
+  return 0;
 }
 
 
@@ -10178,6 +9759,8 @@ bool Item_Slider_IsRightKey(int param_1)
 
 // 825C3600  Item_Slider_HandleKey  (ui/ui_shared.cpp:7219)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
@@ -10185,63 +9768,51 @@ bool Item_Slider_IsRightKey(int param_1)
 int Item_Slider_HandleKey(UiContext *param_1,itemDef_t *param_2,int param_3,int param_4)
 
 {
-  itemDef_t *piVar1;
-  LocalClientNum_t *pLVar2;
-  bool bVar6;
-  editFieldDef_s *peVar3;
-  char *pcVar4;
-  int iVar5;
-  longlong lVar7;
-  longlong lVar8;
-  double dVar9;
+  bool bVar3;
+  editFieldDef_s *peVar1;
+  char *pcVar2;
+  double dVar4;
   
-  lVar8 = (longlong)param_3;
-  lVar7 = (longlong)(int)param_2;
-  pLVar2 = (LocalClientNum_t *)__savegprlr_26(param_1,lVar7,lVar8,param_4);
-  piVar1 = (itemDef_t *)lVar7;
-  if (((piVar1->dvar != (char *)0x0) && (bVar6 = Window_HasFocus(*pLVar2,&piVar1->window), bVar6))
-     && (peVar3 = Item_GetEditFieldDef(piVar1), peVar3 != (editFieldDef_s *)0x0)) {
-    dVar9 = 0.0;
-    if (peVar3->stepVal <= 0.0) {
+  if (((param_2->dvar != (char *)0x0) &&
+      (bVar3 = Window_HasFocus(param_1->localClientNum,&param_2->window), bVar3)) &&
+     (peVar1 = Item_GetEditFieldDef(param_2), peVar1 != (editFieldDef_s *)0x0)) {
+    dVar4 = 0.0;
+    if (peVar1->stepVal <= 0.0) {
       if (ui_sliderSteps == (dvar_t *)0x0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x1c50,0
                         ,"%s");
       }
-      if ((double)(ui_sliderSteps->current).value <= dVar9) {
+      if ((double)(ui_sliderSteps->current).value <= dVar4) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x1c51,0
                         ,"%s");
       }
     }
-    pcVar4 = Dvar_GetVariantString(piVar1->dvar);
-    atof(pcVar4);
-    iVar5 = (int)lVar8;
-    if ((iVar5 == 0x16) || (iVar5 == 0x1e)) {
-      bVar6 = true;
+    pcVar2 = Dvar_GetVariantString(param_2->dvar);
+    atof(pcVar2);
+    if ((param_3 == 0x16) || (param_3 == 0x1e)) {
+      bVar3 = true;
     }
-    else if ((iVar5 == 0x9c) || (bVar6 = false, iVar5 == 0xa4)) {
-      bVar6 = true;
+    else if ((param_3 == 0x9c) || (bVar3 = false, param_3 == 0xa4)) {
+      bVar3 = true;
     }
-    if (bVar6) {
-      pcVar4 = va("%g");
-      Dvar_SetFromStringByName(piVar1->dvar,pcVar4);
-      iVar5 = __restgprlr_26(1);
-      return iVar5;
+    if (bVar3) {
+      pcVar2 = va("%g");
+      Dvar_SetFromStringByName(param_2->dvar,pcVar2);
+      return 1;
     }
-    if ((iVar5 == 0x17) || (iVar5 == 0x1f)) {
-      bVar6 = true;
+    if ((param_3 == 0x17) || (param_3 == 0x1f)) {
+      bVar3 = true;
     }
-    else if ((iVar5 == 0x9d) || (bVar6 = false, iVar5 == 0xa3)) {
-      bVar6 = true;
+    else if ((param_3 == 0x9d) || (bVar3 = false, param_3 == 0xa3)) {
+      bVar3 = true;
     }
-    if (bVar6) {
-      pcVar4 = va("%g");
-      Dvar_SetFromStringByName(piVar1->dvar,pcVar4);
-      iVar5 = __restgprlr_26(1);
-      return iVar5;
+    if (bVar3) {
+      pcVar2 = va("%g");
+      Dvar_SetFromStringByName(param_2->dvar,pcVar2);
+      return 1;
     }
   }
-  iVar5 = __restgprlr_26(0);
-  return iVar5;
+  return 0;
 }
 
 
@@ -10309,6 +9880,8 @@ void Item_Action(UiContext *param_1,itemDef_t *param_2)
 
 // 825C38F0  Item_RunHasFocus  (ui/ui_shared.cpp:7350)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
@@ -10316,35 +9889,28 @@ void Item_Action(UiContext *param_1,itemDef_t *param_2)
 void Item_RunHasFocus(UiContext *param_1,itemDef_t *param_2)
 
 {
-  itemDef_t *piVar1;
-  UiContext *pUVar2;
-  bool bVar3;
-  ulonglong uVar4;
+  bool bVar1;
   
-  uVar4 = (ulonglong)(int)param_2;
-  pUVar2 = (UiContext *)__savegprlr_28(param_1);
-  if ((uVar4 & 0xffffffff) == 0) {
+  if (param_2 == (itemDef_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x1cb7,0,
                     "%s");
   }
-  if (pUVar2 == (UiContext *)0x0) {
+  if (param_1 == (UiContext *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x1cb8,0,
                     "%s");
   }
-  piVar1 = (itemDef_t *)uVar4;
-  if (piVar1->hasFocus != (MenuEventHandlerSet *)0x0) {
-    bVar3 = Window_HasFocus(pUVar2->localClientNum,&piVar1->window);
-    if (bVar3) {
-      Item_HandleEvent(pUVar2,piVar1,piVar1->hasFocus);
-    }
+  if ((param_2->hasFocus != (MenuEventHandlerSet *)0x0) &&
+     (bVar1 = Window_HasFocus(param_1->localClientNum,&param_2->window), bVar1)) {
+    Item_HandleEvent(param_1,param_2,param_2->hasFocus);
   }
-  __restgprlr_28();
   return;
 }
 
 
 // 825CC080  Menu_SetPrevCursorItem  (ui/ui_shared.cpp:7362)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
@@ -10355,81 +9921,71 @@ itemDef_t * Menu_SetPrevCursorItem(UiContext *param_1,menuDef_t *param_2,ItemFoc
   LocalClientNum_t LVar1;
   uint uVar2;
   int iVar3;
-  UiContext *pUVar4;
-  int iVar5;
-  itemDef_t *piVar6;
-  longlong lVar7;
-  menuDef_t *pmVar8;
-  ulonglong uVar9;
-  ulonglong uVar11;
-  double extraout_f1;
-  double dVar12;
+  int iVar4;
+  ulonglong uVar5;
+  ulonglong uVar7;
+  double in_f1;
   double in_f2;
-  float fVar13;
-  float fVar14;
-  uint uVar10;
+  float fVar8;
+  float fVar9;
+  uint uVar6;
   
-  lVar7 = (longlong)(int)param_2;
-  pUVar4 = (UiContext *)__savegprlr_25(param_1,lVar7,param_3);
-  LVar1 = pUVar4->localClientNum;
-  dVar12 = extraout_f1;
+  LVar1 = param_1->localClientNum;
   if (LOCAL_CLIENT_3 < LVar1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\../ui/ui_utils.h",0x2e,0,
                     "localClientNum doesn\'t index MAX_POSSIBLE_LOCAL_CLIENTS\n\t%i not in [0, %i)")
     ;
   }
-  pmVar8 = (menuDef_t *)lVar7;
-  uVar2 = pmVar8->data->cursorItem[LVar1];
-  uVar10 = uVar2;
+  uVar2 = param_2->data->cursorItem[LVar1];
+  uVar6 = uVar2;
   if (uVar2 == 0xffffffff) {
-    uVar10 = pmVar8->itemCount;
+    uVar6 = param_2->itemCount;
   }
-  uVar11 = (ulonglong)uVar10;
-  while (-1 < (int)uVar10) {
-    uVar11 = uVar11 - 1;
-    if ((longlong)uVar11 < 0) {
+  uVar7 = (ulonglong)uVar6;
+  while (-1 < (int)uVar6) {
+    uVar7 = uVar7 - 1;
+    if ((longlong)uVar7 < 0) {
       if ((int)uVar2 < 0) break;
-      uVar11 = (ulonglong)(uint)pmVar8->itemCount - 1;
+      uVar7 = (ulonglong)(uint)param_2->itemCount - 1;
     }
-    if ((ulonglong)(uint)pmVar8->itemCount <= (uVar11 & 0xffffffff)) {
+    if ((ulonglong)(uint)param_2->itemCount <= (uVar7 & 0xffffffff)) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x1cda,0,
                       "currentCursor doesn\'t index menu->itemCount\n\t%i not in [0, %i)");
     }
-    uVar10 = (uint)uVar11;
-    uVar9 = uVar11;
-    Menu_SetCursorItem(pUVar4->localClientNum,pmVar8,uVar10);
-    if (uVar10 == uVar2) {
+    uVar6 = (uint)uVar7;
+    uVar5 = uVar7;
+    Menu_SetCursorItem(param_1->localClientNum,param_2,uVar6);
+    if (uVar6 == uVar2) {
       if ((int)uVar2 < 0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x1ce0,0
                         ,"%s");
       }
-      piVar6 = (itemDef_t *)__restgprlr_25(pmVar8->items[uVar2]);
-      return piVar6;
+      return param_2->items[uVar2];
     }
-    iVar3 = (int)((uVar11 & 0xffffffff) << 2);
-    fVar13 = (float)in_f2;
-    in_f2 = (double)fVar13;
-    fVar14 = (float)dVar12;
-    dVar12 = (double)fVar14;
-    iVar5 = Item_SetFocus(pUVar4,*(itemDef_t **)((int)pmVar8->items + iVar3),fVar14,fVar13,
-                          (ItemFocusReason)uVar9);
-    if (iVar5 != 0) {
-      piVar6 = (itemDef_t *)__restgprlr_25(*(undefined4 *)((int)pmVar8->items + iVar3));
-      return piVar6;
+    iVar3 = (int)((uVar7 & 0xffffffff) << 2);
+    fVar8 = (float)in_f2;
+    in_f2 = (double)fVar8;
+    fVar9 = (float)in_f1;
+    in_f1 = (double)fVar9;
+    iVar4 = Item_SetFocus(param_1,*(itemDef_t **)((int)param_2->items + iVar3),fVar9,fVar8,
+                          (ItemFocusReason)uVar5);
+    if (iVar4 != 0) {
+      return *(itemDef_t **)((int)param_2->items + iVar3);
     }
   }
   if (uVar2 != 0xffffffff) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x1ce8,0,
                     "%s");
   }
-  Menu_SetCursorItem(pUVar4->localClientNum,pmVar8,uVar2);
-  piVar6 = (itemDef_t *)__restgprlr_25(0);
-  return piVar6;
+  Menu_SetCursorItem(param_1->localClientNum,param_2,uVar2);
+  return (itemDef_t *)0x0;
 }
 
 
 // 825CC208  Menu_SetNextCursorItem  (ui/ui_shared.cpp:7408)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
@@ -10439,72 +9995,60 @@ itemDef_t * Menu_SetNextCursorItem(UiContext *param_1,menuDef_t *param_2,ItemFoc
 {
   LocalClientNum_t LVar1;
   ItemFocusReason IVar2;
-  UiContext *pUVar3;
-  int iVar4;
-  itemDef_t *piVar5;
-  longlong lVar6;
-  menuDef_t *pmVar7;
-  ItemFocusReason IVar8;
-  ItemFocusReason IVar9;
-  double extraout_f1;
-  double dVar10;
+  int iVar3;
+  ItemFocusReason IVar4;
+  ItemFocusReason IVar5;
+  double in_f1;
   double in_f2;
-  float fVar11;
-  float fVar12;
+  float fVar6;
+  float fVar7;
   
-  lVar6 = (longlong)(int)param_2;
-  pUVar3 = (UiContext *)__savegprlr_25(param_1,lVar6,param_3);
-  LVar1 = pUVar3->localClientNum;
-  dVar10 = extraout_f1;
+  LVar1 = param_1->localClientNum;
   if (LOCAL_CLIENT_3 < LVar1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\../ui/ui_utils.h",0x2e,0,
                     "localClientNum doesn\'t index MAX_POSSIBLE_LOCAL_CLIENTS\n\t%i not in [0, %i)")
     ;
   }
-  pmVar7 = (menuDef_t *)lVar6;
-  IVar8 = pmVar7->itemCount;
-  IVar2 = pmVar7->data->cursorItem[LVar1];
-  IVar9 = IVar2;
-  if ((int)IVar2 < (int)IVar8) {
+  IVar4 = param_2->itemCount;
+  IVar2 = param_2->data->cursorItem[LVar1];
+  IVar5 = IVar2;
+  if ((int)IVar2 < (int)IVar4) {
     do {
-      IVar9 = IVar9 + FOCUS_KEYBOARD;
-      if ((int)IVar8 <= (int)IVar9) {
+      IVar5 = IVar5 + FOCUS_KEYBOARD;
+      if ((int)IVar4 <= (int)IVar5) {
         if ((int)IVar2 < 0) break;
-        IVar9 = FOCUS_OTHER;
+        IVar5 = FOCUS_OTHER;
       }
-      if (IVar8 <= IVar9) {
+      if (IVar4 <= IVar5) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x1d04,0
                         ,"currentCursor doesn\'t index menu->itemCount\n\t%i not in [0, %i)");
       }
-      IVar8 = IVar9;
-      Menu_SetCursorItem(pUVar3->localClientNum,pmVar7,IVar9);
-      if (IVar9 == IVar2) {
+      IVar4 = IVar5;
+      Menu_SetCursorItem(param_1->localClientNum,param_2,IVar5);
+      if (IVar5 == IVar2) {
         if ((int)IVar2 < 0) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x1d0a
                           ,0,"%s");
         }
-        piVar5 = (itemDef_t *)__restgprlr_25(pmVar7->items[IVar2]);
-        return piVar5;
+        return param_2->items[IVar2];
       }
-      fVar11 = (float)dVar10;
-      dVar10 = (double)fVar11;
-      fVar12 = (float)in_f2;
-      in_f2 = (double)fVar12;
-      iVar4 = Item_SetFocus(pUVar3,pmVar7->items[IVar9],fVar11,fVar12,IVar8);
-      if (iVar4 != 0) {
-        piVar5 = (itemDef_t *)__restgprlr_25(pmVar7->items[IVar9]);
-        return piVar5;
+      fVar6 = (float)in_f1;
+      in_f1 = (double)fVar6;
+      fVar7 = (float)in_f2;
+      in_f2 = (double)fVar7;
+      iVar3 = Item_SetFocus(param_1,param_2->items[IVar5],fVar6,fVar7,IVar4);
+      if (iVar3 != 0) {
+        return param_2->items[IVar5];
       }
-      IVar8 = pmVar7->itemCount;
-    } while ((int)IVar9 < (int)IVar8);
+      IVar4 = param_2->itemCount;
+    } while ((int)IVar5 < (int)IVar4);
   }
   if (IVar2 != ~FOCUS_OTHER) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x1d12,0,
                     "%s");
   }
-  Menu_SetCursorItem(pUVar3->localClientNum,pmVar7,IVar2);
-  piVar5 = (itemDef_t *)__restgprlr_25(0);
-  return piVar5;
+  Menu_SetCursorItem(param_1->localClientNum,param_2,IVar2);
+  return (itemDef_t *)0x0;
 }
 
 
@@ -10573,6 +10117,8 @@ void Menus_ResetFxBirthTimeOnItems(UiContext *param_1,menuDef_t *param_2)
 
 // 825CC490  Menus_Open  (ui/ui_shared.cpp:7482)
 
+/* WARNING: Function: __savegprlr_17 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_17 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
@@ -10583,45 +10129,42 @@ void Menus_Open(UiContext *param_1,menuDef_t *param_2)
   int iVar1;
   LocalClientNum_t LVar2;
   Statement_s *pSVar3;
-  UiContext *pUVar4;
-  int *piVar5;
-  longlong lVar6;
-  bool bVar10;
-  int iVar7;
-  int iVar8;
-  char *pcVar9;
-  ItemFocusReason IVar11;
-  int iVar12;
-  longlong lVar13;
-  longlong lVar14;
+  int *piVar4;
+  bool bVar8;
+  int iVar5;
+  int iVar6;
+  char *pcVar7;
+  ItemFocusReason IVar9;
+  int iVar10;
+  longlong lVar11;
+  longlong lVar12;
   
-  lVar6 = __savegprlr_17(param_1);
-  iVar7 = 0;
-  bVar10 = Sys_IsMainThread();
-  if (bVar10) {
-    iVar7 = R_PopRemoteScreenUpdate();
+  iVar5 = 0;
+  bVar8 = Sys_IsMainThread();
+  if (bVar8) {
+    iVar5 = R_PopRemoteScreenUpdate();
   }
-  iVar8 = Menu_CanHaveFocus(param_2);
-  pUVar4 = (UiContext *)lVar6;
-  if (iVar8 == 0) {
-    IVar11 = 4;
+  iVar6 = Menu_CanHaveFocus(param_2);
+  if (iVar6 == 0) {
+    IVar9 = 4;
   }
   else {
-    lVar14 = (ulonglong)(uint)pUVar4->openMenuCount - 1;
-    if (-1 < lVar14) {
-      lVar13 = ((ulonglong)(uint)pUVar4->openMenuCount + 0x28e & 0x3fffffff) * 4 + lVar6;
+    lVar12 = (ulonglong)(uint)param_1->openMenuCount - 1;
+    if (-1 < lVar12) {
+      lVar11 = ((ulonglong)(uint)param_1->openMenuCount + 0x28e & 0x3fffffff) * 4 +
+               (longlong)(int)param_1;
       do {
-        lVar13 = lVar13 + -4;
-        Menu_LoseFocusDueToOpen(pUVar4,(menuDef_t *)*(undefined4 *)lVar13);
-        lVar14 = lVar14 + -1;
-      } while (-1 < lVar14);
+        lVar11 = lVar11 + -4;
+        Menu_LoseFocusDueToOpen(param_1,(menuDef_t *)*(undefined4 *)lVar11);
+        lVar12 = lVar12 + -1;
+      } while (-1 < lVar12);
     }
-    iVar12 = 0;
-    if (0 < pUVar4->menuCount) {
-      lVar6 = lVar6 + 0x34;
+    iVar10 = 0;
+    if (0 < param_1->menuCount) {
+      lVar12 = (longlong)(int)param_1 + 0x34;
       do {
-        iVar1 = *(int *)lVar6;
-        LVar2 = pUVar4->localClientNum;
+        iVar1 = *(int *)lVar12;
+        LVar2 = param_1->localClientNum;
         if (LOCAL_CLIENT_3 < LVar2) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\../ui/ui_utils.h",
                           0x21,0,
@@ -10631,8 +10174,8 @@ void Menus_Open(UiContext *param_1,menuDef_t *param_2)
         if ((*(uint *)((LVar2 + 0x12) * 4 + iVar1 + 4) & 2) != 0) {
           Com_PrintError(0xd,"window \'%s\' has focus when it shouldn\'t\n");
         }
-        iVar1 = *(int *)lVar6;
-        LVar2 = pUVar4->localClientNum;
+        iVar1 = *(int *)lVar12;
+        LVar2 = param_1->localClientNum;
         if (LOCAL_CLIENT_3 < LVar2) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\../ui/ui_utils.h",
                           0x21,0,
@@ -10643,54 +10186,53 @@ void Menus_Open(UiContext *param_1,menuDef_t *param_2)
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x1d50
                           ,0,"%s");
         }
-        iVar12 = iVar12 + 1;
-        lVar6 = lVar6 + 4;
-      } while (iVar12 < pUVar4->menuCount);
+        iVar10 = iVar10 + 1;
+        lVar12 = lVar12 + 4;
+      } while (iVar10 < param_1->menuCount);
     }
-    IVar11 = 6;
+    IVar9 = 6;
   }
-  Window_AddDynamicFlags(pUVar4->localClientNum,&param_2->window,IVar11);
-  Menus_AddToOpenStack(pUVar4,param_2);
-  if (iVar8 != 0) {
-    Menu_CallOnFocusDueToOpen(pUVar4,param_2);
+  Window_AddDynamicFlags(param_1->localClientNum,&param_2->window,IVar9);
+  Menus_AddToOpenStack(param_1,param_2);
+  if (iVar6 != 0) {
+    Menu_CallOnFocusDueToOpen(param_1,param_2);
   }
-  iVar8 = 0;
+  iVar6 = 0;
   if (0 < param_2->itemCount) {
-    iVar12 = 0;
+    iVar10 = 0;
     do {
-      iVar8 = iVar8 + 1;
-      piVar5 = (int *)(iVar12 + (int)param_2->items);
-      iVar12 = iVar12 + 4;
-      *(undefined4 *)(*piVar5 + 0x1bc) = 0;
-    } while (iVar8 < param_2->itemCount);
+      iVar6 = iVar6 + 1;
+      piVar4 = (int *)(iVar10 + (int)param_2->items);
+      iVar10 = iVar10 + 4;
+      *(undefined4 *)(*piVar4 + 0x1bc) = 0;
+    } while (iVar6 < param_2->itemCount);
   }
-  LVar2 = pUVar4->localClientNum;
+  LVar2 = param_1->localClientNum;
   if (LOCAL_CLIENT_3 < LVar2) {
-    IVar11 = FOCUS_OTHER;
+    IVar9 = FOCUS_OTHER;
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\../ui/ui_utils.h",0x2e,0,
                     "localClientNum doesn\'t index MAX_POSSIBLE_LOCAL_CLIENTS\n\t%i not in [0, %i)")
     ;
   }
   if (param_2->data->cursorItem[LVar2] == -1) {
-    Menu_SetNextCursorItem(pUVar4,param_2,IVar11);
+    Menu_SetNextCursorItem(param_1,param_2,IVar9);
   }
-  Menu_InitItems(pUVar4,param_2);
-  Menus_RunOnOpenScript(pUVar4,param_2);
+  Menu_InitItems(param_1,param_2);
+  Menus_RunOnOpenScript(param_1,param_2);
   pSVar3 = param_2->data->soundLoopExp;
   if (pSVar3 == (Statement_s *)0x0) {
-    pcVar9 = param_2->data->soundName;
-    if (pcVar9 == (char *)0x0) goto LAB_825cc720;
+    pcVar7 = param_2->data->soundName;
+    if (pcVar7 == (char *)0x0) goto LAB_825cc720;
   }
   else {
-    pcVar9 = GetExpressionResultString(pUVar4->localClientNum,pSVar3);
+    pcVar7 = GetExpressionResultString(param_1->localClientNum,pSVar3);
   }
-  SND_PlayLocalSoundAliasByName(pUVar4->localClientNum,pcVar9,SASYS_UI);
+  SND_PlayLocalSoundAliasByName(param_1->localClientNum,pcVar7,SASYS_UI);
 LAB_825cc720:
-  bVar10 = Sys_IsMainThread();
-  if (bVar10) {
-    R_PushRemoteScreenUpdate(iVar7);
+  bVar8 = Sys_IsMainThread();
+  if (bVar8) {
+    R_PushRemoteScreenUpdate(iVar5);
   }
-  __restgprlr_17();
   return;
 }
 
@@ -10719,6 +10261,8 @@ int Menus_OpenByName(UiContext *param_1,char *param_2)
 
 // 825C39D8  Menus_PrintAllLoadedMenus  (ui/ui_shared.cpp:7565)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
@@ -10727,19 +10271,16 @@ void Menus_PrintAllLoadedMenus(UiContext *param_1)
 
 {
   int iVar1;
-  int iVar2;
   
-  iVar1 = __savegprlr_28(param_1);
   Com_Printf(0x10,"Currently loaded UI menus (CG menus not included):\n");
-  iVar2 = 0;
-  if (0 < *(int *)(iVar1 + 0xa34)) {
+  iVar1 = 0;
+  if (0 < param_1->menuCount) {
     do {
       Com_Printf(0x10,"%i. %s\n");
-      iVar2 = iVar2 + 1;
-    } while (iVar2 < *(int *)(iVar1 + 0xa34));
+      iVar1 = iVar1 + 1;
+    } while (iVar1 < param_1->menuCount);
   }
   Com_Printf(0x10,"\n%i menus total\n");
-  __restgprlr_28();
   return;
 }
 
@@ -10787,6 +10328,8 @@ rectDef_s * Item_CorrectedTextRect(LocalClientNum_t param_1,itemDef_t *param_2)
 
 // 825C3B08  Menu_CheckOnKey  (ui/ui_shared.cpp:7679)
 
+/* WARNING: Function: __savegprlr_21 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_21 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
@@ -10796,31 +10339,28 @@ int Menu_CheckOnKey(UiContext *param_1,menuDef_t *param_2,int param_3)
 {
   LocalClientNum_t LVar1;
   itemDef_t *piVar2;
-  UiContext *pUVar3;
-  bool bVar6;
-  int iVar4;
-  int iVar5;
-  ItemKeyHandler *pIVar7;
-  int iVar8;
+  bool bVar4;
+  int iVar3;
+  ItemKeyHandler *pIVar5;
+  int iVar6;
+  int iVar7;
   itemDef_t iStack_240;
   
-  pUVar3 = (UiContext *)__savegprlr_21(param_1);
   memset();
-  for (pIVar7 = param_2->data->onKey; pIVar7 != (ItemKeyHandler *)0x0; pIVar7 = pIVar7->next) {
-    if (pIVar7->key == param_3) {
+  for (pIVar5 = param_2->data->onKey; pIVar5 != (ItemKeyHandler *)0x0; pIVar5 = pIVar5->next) {
+    if (pIVar5->key == param_3) {
 LAB_825c3c58:
       iStack_240.parent = param_2;
-      Item_HandleEvent(pUVar3,&iStack_240,pIVar7->action);
-      iVar5 = __restgprlr_21(1);
-      return iVar5;
+      Item_HandleEvent(param_1,&iStack_240,pIVar5->action);
+      return 1;
     }
   }
-  iVar5 = 0;
+  iVar6 = 0;
   if (0 < param_2->itemCount) {
-    iVar8 = 0;
+    iVar7 = 0;
     do {
-      LVar1 = pUVar3->localClientNum;
-      piVar2 = *(itemDef_t **)(iVar8 + (int)param_2->items);
+      LVar1 = param_1->localClientNum;
+      piVar2 = *(itemDef_t **)(iVar7 + (int)param_2->items);
       if (piVar2 == (itemDef_t *)0x0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\../ui/ui_utils.h",0x54,
                         0,"%s");
@@ -10832,39 +10372,40 @@ LAB_825c3c58:
                        );
       }
       if ((((piVar2->window).dynamicFlags[LVar1] & 4U) != 0) &&
-         (((bVar6 = Window_HasFocus(pUVar3->localClientNum,&piVar2->window), bVar6 ||
+         (((bVar4 = Window_HasFocus(param_1->localClientNum,&piVar2->window), bVar4 ||
            (((piVar2->window).staticFlags & 0x100000U) != 0)) &&
-          (iVar4 = Item_IsVisible(pUVar3->localClientNum,piVar2), iVar4 != 0)))) {
+          (iVar3 = Item_IsVisible(param_1->localClientNum,piVar2), iVar3 != 0)))) {
         if ((piVar2->disabledExp == (Statement_s *)0x0) ||
-           (bVar6 = IsExpressionTrue(pUVar3->localClientNum,piVar2->disabledExp), !bVar6)) {
+           (bVar4 = IsExpressionTrue(param_1->localClientNum,piVar2->disabledExp), !bVar4)) {
           if ((piVar2->dvarFlags & 3U) != 0) {
-            iVar4 = Item_EnableShowViaDvar(piVar2,1);
-            bVar6 = true;
-            if (iVar4 == 0) goto LAB_825c3ca8;
+            iVar3 = Item_EnableShowViaDvar(piVar2,1);
+            bVar4 = true;
+            if (iVar3 == 0) goto LAB_825c3ca8;
           }
-          bVar6 = false;
+          bVar4 = false;
         }
         else {
-          bVar6 = true;
+          bVar4 = true;
         }
 LAB_825c3ca8:
-        if (!bVar6) {
-          for (pIVar7 = piVar2->onKey; pIVar7 != (ItemKeyHandler *)0x0; pIVar7 = pIVar7->next) {
-            if (pIVar7->key == param_3) goto LAB_825c3c58;
+        if (!bVar4) {
+          for (pIVar5 = piVar2->onKey; pIVar5 != (ItemKeyHandler *)0x0; pIVar5 = pIVar5->next) {
+            if (pIVar5->key == param_3) goto LAB_825c3c58;
           }
         }
       }
-      iVar5 = iVar5 + 1;
-      iVar8 = iVar8 + 4;
-    } while (iVar5 < param_2->itemCount);
+      iVar6 = iVar6 + 1;
+      iVar7 = iVar7 + 4;
+    } while (iVar6 < param_2->itemCount);
   }
-  iVar5 = __restgprlr_21(0);
-  return iVar5;
+  return 0;
 }
 
 
 // 825CC7B0  UI_FindFocusedItem  (ui/ui_shared.cpp:7725)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
@@ -10872,41 +10413,38 @@ LAB_825c3ca8:
 itemDef_t * UI_FindFocusedItem(UiContext *param_1)
 
 {
-  UiContext *pUVar1;
-  menuDef_t *pmVar2;
-  bool bVar5;
-  int iVar3;
-  itemDef_t *piVar4;
-  int iVar6;
-  int iVar7;
+  menuDef_t *pmVar1;
+  bool bVar3;
+  int iVar2;
+  int iVar4;
+  int iVar5;
   
-  pUVar1 = (UiContext *)__savegprlr_28(param_1);
-  pmVar2 = Menu_GetFocused(pUVar1);
-  if (pmVar2 != (menuDef_t *)0x0) {
-    iVar6 = 0;
-    if (0 < pmVar2->itemCount) {
-      iVar7 = 0;
+  pmVar1 = Menu_GetFocused(param_1);
+  if (pmVar1 != (menuDef_t *)0x0) {
+    iVar4 = 0;
+    if (0 < pmVar1->itemCount) {
+      iVar5 = 0;
       do {
-        bVar5 = Window_HasFocus(pUVar1->localClientNum,*(windowDef_t **)((int)pmVar2->items + iVar7)
-                               );
-        if ((bVar5) &&
-           (iVar3 = Item_IsVisible(pUVar1->localClientNum,
-                                   *(itemDef_t **)((int)pmVar2->items + iVar7)), iVar3 != 0)) {
-          piVar4 = (itemDef_t *)__restgprlr_28(pmVar2->items[iVar6]);
-          return piVar4;
+        bVar3 = Window_HasFocus(param_1->localClientNum,
+                                *(windowDef_t **)((int)pmVar1->items + iVar5));
+        if ((bVar3) &&
+           (iVar2 = Item_IsVisible(param_1->localClientNum,
+                                   *(itemDef_t **)((int)pmVar1->items + iVar5)), iVar2 != 0)) {
+          return pmVar1->items[iVar4];
         }
-        iVar6 = iVar6 + 1;
-        iVar7 = iVar7 + 4;
-      } while (iVar6 < pmVar2->itemCount);
+        iVar4 = iVar4 + 1;
+        iVar5 = iVar5 + 4;
+      } while (iVar4 < pmVar1->itemCount);
     }
   }
-  piVar4 = (itemDef_t *)__restgprlr_28(0);
-  return piVar4;
+  return (itemDef_t *)0x0;
 }
 
 
 // 825D09B8  Menu_HandleKey  (ui/ui_shared.cpp:7747)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
@@ -10915,138 +10453,127 @@ void Menu_HandleKey(UiContext *param_1,menuDef_t *param_2,int param_3,int param_
 
 {
   LocalClientNum_t LVar1;
-  UiContext *pUVar3;
+  int iVar2;
+  int iVar3;
   int iVar4;
-  int iVar5;
-  int iVar6;
-  bool bVar9;
-  longlong lVar2;
+  bool bVar5;
+  longlong lVar6;
+  ItemFocusReason IVar7;
   itemDef_t *piVar8;
-  ulonglong uVar10;
-  ItemFocusReason IVar12;
-  ulonglong uVar11;
-  ItemFocusReason IVar13;
   itemDef_t iStack_230;
-  itemDef_t *piVar7;
   
-  uVar10 = (ulonglong)param_3;
-  pUVar3 = (UiContext *)__savegprlr_23(param_1);
-  IVar12 = (ItemFocusReason)uVar10;
-  LVar1 = pUVar3->localClientNum;
+  lVar6 = (longlong)param_3;
+  LVar1 = param_1->localClientNum;
   piVar8 = (itemDef_t *)0x0;
-  uVar11 = uVar10;
   if (LOCAL_CLIENT_3 < LVar1) {
-    uVar11 = 0;
+    lVar6 = 0;
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\../ui/ui_utils.h",0x2e,0,
                     "localClientNum doesn\'t index MAX_POSSIBLE_LOCAL_CLIENTS\n\t%i not in [0, %i)")
     ;
   }
   if (param_2->data->cursorItem[LVar1] == -1) {
-    Menu_SetNextCursorItem(pUVar3,param_2,(ItemFocusReason)uVar11);
+    Menu_SetNextCursorItem(param_1,param_2,(ItemFocusReason)lVar6);
   }
   if ((g_waitingForKey != 0) && (param_4 != 0)) {
-    iVar4 = Item_Bind_HandleKey(pUVar3,g_bindItem,IVar12,param_4);
-    __restgprlr_23(iVar4);
+    Item_Bind_HandleKey(param_1,g_bindItem,param_3,param_4);
     return;
   }
   if (g_editingField == 0) {
-    if ((((param_4 != 0) && ((uVar10 & 0x400) == 0)) &&
+    if ((((param_4 != 0) && ((param_3 & 0x400U) == 0)) &&
         (param_2->data->allowedBinding != (char *)0x0)) &&
-       ((iVar4 = Key_GetBinding(pUVar3->localClientNum,IVar12), iVar4 != 0 &&
-        (iVar5 = Key_GetBindingForCmd(param_2->data->allowedBinding), iVar4 == iVar5)))) {
-      CL_ExecBinding(pUVar3->localClientNum,iVar4,IVar12);
-      __restgprlr_23();
+       ((iVar2 = Key_GetBinding(param_1->localClientNum,param_3), iVar2 != 0 &&
+        (iVar3 = Key_GetBindingForCmd(param_2->data->allowedBinding), iVar2 == iVar3)))) {
+      CL_ExecBinding(param_1->localClientNum,iVar2,param_3);
       return;
     }
   }
   else if (param_4 != 0) {
-    iVar4 = Item_TextField_HandleKey(pUVar3,g_editItem,IVar12);
-    if (iVar4 == 0) {
-      g_editingField = 0;
-      g_editItem = (itemDef_t *)0x0;
-      __restgprlr_23();
+    iVar2 = Item_TextField_HandleKey(param_1,g_editItem,param_3);
+    if (iVar2 != 0) {
       return;
     }
-    goto switchD_825d0c94_caseD_2;
+    g_editingField = 0;
+    g_editItem = (itemDef_t *)0x0;
+    return;
   }
-  iVar4 = 0;
-  if (0 < param_2->itemCount) {
-    iVar5 = 0;
+  iVar2 = 0;
+  if (param_2->itemCount < 1) {
+LAB_825d0b84:
+    Menu_SetNextCursorItem(param_1,param_2,(ItemFocusReason)lVar6);
+    IVar7 = (ItemFocusReason)lVar6;
+    iVar2 = 0;
+    if (0 < param_2->itemCount) {
+      iVar3 = 0;
+      do {
+        iVar4 = Item_IsVisible(param_1->localClientNum,*(itemDef_t **)(iVar3 + (int)param_2->items))
+        ;
+        if ((iVar4 != 0) &&
+           (bVar5 = Window_HasFocus(param_1->localClientNum,
+                                    *(windowDef_t **)(iVar3 + (int)param_2->items)), bVar5)) {
+          piVar8 = *(itemDef_t **)(iVar3 + (int)param_2->items);
+        }
+        IVar7 = (ItemFocusReason)lVar6;
+        iVar2 = iVar2 + 1;
+        iVar3 = iVar3 + 4;
+      } while (iVar2 < param_2->itemCount);
+      if (piVar8 != (itemDef_t *)0x0) goto LAB_825d0bfc;
+    }
+  }
+  else {
+    iVar3 = 0;
     do {
-      iVar6 = Item_IsVisible(pUVar3->localClientNum,*(itemDef_t **)(iVar5 + (int)param_2->items));
-      if ((iVar6 != 0) &&
-         (bVar9 = Window_HasFocus(pUVar3->localClientNum,
-                                  *(windowDef_t **)(iVar5 + (int)param_2->items)), bVar9)) {
-        piVar8 = *(itemDef_t **)(iVar5 + (int)param_2->items);
+      iVar4 = Item_IsVisible(param_1->localClientNum,*(itemDef_t **)(iVar3 + (int)param_2->items));
+      if ((iVar4 != 0) &&
+         (bVar5 = Window_HasFocus(param_1->localClientNum,
+                                  *(windowDef_t **)(iVar3 + (int)param_2->items)), bVar5)) {
+        piVar8 = *(itemDef_t **)(iVar3 + (int)param_2->items);
       }
-      iVar4 = iVar4 + 1;
-      iVar5 = iVar5 + 4;
-    } while (iVar4 < param_2->itemCount);
+      iVar2 = iVar2 + 1;
+      iVar3 = iVar3 + 4;
+    } while (iVar2 < param_2->itemCount);
     if (piVar8 == (itemDef_t *)0x0) goto LAB_825d0b84;
 LAB_825d0bfc:
-    IVar13 = IVar12;
-    iVar4 = Item_HandleKey(pUVar3,piVar8,IVar12,param_4);
-    lVar2 = (longlong)iVar4;
-    if (iVar4 == 0) goto LAB_825d0c18;
-LAB_825d0fb4:
-    Item_Action(pUVar3,piVar8);
-    goto switchD_825d0c94_caseD_2;
+    IVar7 = param_3;
+    iVar2 = Item_HandleKey(param_1,piVar8,param_3,param_4);
+    if (iVar2 != 0) goto LAB_825d0fb4;
   }
-LAB_825d0b84:
-  piVar7 = Menu_SetNextCursorItem(pUVar3,param_2,(ItemFocusReason)uVar11);
-  IVar13 = (ItemFocusReason)uVar11;
-  lVar2 = (longlong)(int)piVar7;
-  iVar4 = 0;
-  if (0 < param_2->itemCount) {
-    iVar5 = 0;
-    do {
-      iVar6 = Item_IsVisible(pUVar3->localClientNum,*(itemDef_t **)(iVar5 + (int)param_2->items));
-      lVar2 = (longlong)iVar6;
-      if (iVar6 != 0) {
-        bVar9 = Window_HasFocus(pUVar3->localClientNum,
-                                *(windowDef_t **)(iVar5 + (int)param_2->items));
-        lVar2 = (longlong)bVar9;
-        if (lVar2 != 0) {
-          piVar8 = *(itemDef_t **)(iVar5 + (int)param_2->items);
-        }
-      }
-      IVar13 = (ItemFocusReason)uVar11;
-      iVar4 = iVar4 + 1;
-      iVar5 = iVar5 + 4;
-    } while (iVar4 < param_2->itemCount);
-    if (piVar8 != (itemDef_t *)0x0) goto LAB_825d0bfc;
+  if (param_4 == 0) {
+    return;
   }
-LAB_825d0c18:
-  if (param_4 == 0) goto switchD_825d0c94_caseD_2;
-  if ((0 < (int)IVar12) && ((int)IVar12 < 0x100)) {
-    IVar13 = IVar12;
-    iVar4 = Menu_CheckOnKey(pUVar3,param_2,IVar12);
-    lVar2 = (longlong)iVar4;
-    if (iVar4 != 0) goto switchD_825d0c94_caseD_2;
+  if (((0 < param_3) && (param_3 < 0x100)) &&
+     (IVar7 = param_3, iVar2 = Menu_CheckOnKey(param_1,param_2,param_3), iVar2 != 0)) {
+    return;
   }
-  if (IVar12 == 9) {
-    iVar4 = Key_IsDown(LOCAL_CLIENT_0,0xa0);
-    if (iVar4 != 0) goto switchD_825d0c94_caseD_2;
+  if (param_3 == 9) {
+    iVar2 = Key_IsDown(LOCAL_CLIENT_0,0xa0);
+    if (iVar2 != 0) {
+      return;
+    }
 LAB_825d0c74:
-    switch(IVar12 - FOCUS_KEYBOARD) {
-    case FOCUS_OTHER:
+    switch(param_3 + -1) {
+    case 0:
     case 0xc:
     case 0xd:
 switchD_825d0c94_caseD_0:
-      if (piVar8 == (itemDef_t *)0x0) break;
-      bVar9 = Item_IsTextField(piVar8);
-      if (bVar9) {
-        piVar8->cursorPos[pUVar3->localClientNum] = 0;
-        g_editingField = 1;
-        g_editItem = piVar8;
-        Key_SetOverstrikeMode(pUVar3->localClientNum,1);
-        __restgprlr_23();
+      if (piVar8 == (itemDef_t *)0x0) {
         return;
       }
-      bVar9 = Item_IsDisabled(pUVar3->localClientNum,piVar8);
-      if (bVar9) break;
-      goto LAB_825d0fb4;
-    case FOCUS_KEYBOARD:
+      bVar5 = Item_IsTextField(piVar8);
+      if (bVar5) {
+        piVar8->cursorPos[param_1->localClientNum] = 0;
+        g_editingField = 1;
+        g_editItem = piVar8;
+        Key_SetOverstrikeMode(param_1->localClientNum,1);
+        return;
+      }
+      bVar5 = Item_IsDisabled(param_1->localClientNum,piVar8);
+      if (bVar5) {
+        return;
+      }
+LAB_825d0fb4:
+      Item_Action(param_1,piVar8);
+      return;
+    case 1:
     case 0x1a:
       if ((g_waitingForKey == 0) && (param_2->data->onESC != (MenuEventHandlerSet *)0x0)) {
         memset();
@@ -11054,105 +10581,92 @@ switchD_825d0c94_caseD_0:
         if ((uiscript_verbose->current).enabled != false) {
           Com_Printf(0xd,"UISCRIPT - Calling onESC() - Menu is \'%s\'\n");
         }
-        Item_HandleEvent(pUVar3,&iStack_230,param_2->data->onESC);
-        __restgprlr_23();
+        Item_HandleEvent(param_1,&iStack_230,param_2->data->onESC);
         return;
       }
       break;
     case 8:
 switchD_825d0c94_caseD_8:
-      piVar8 = Menu_SetNextCursorItem(pUVar3,param_2,IVar13);
-      __restgprlr_23(piVar8);
+      Menu_SetNextCursorItem(param_1,param_2,IVar7);
       return;
     case 0x13:
     case 0x1b:
-      bVar9 = Menu_IsPrevCursorItemLeft(pUVar3->localClientNum,param_2);
-      if (!bVar9) {
+      bVar5 = Menu_IsPrevCursorItemLeft(param_1->localClientNum,param_2);
+      if (!bVar5) {
 switchD_825d0ee0_caseD_5:
-        piVar8 = Menu_SetPrevCursorItem(pUVar3,param_2,IVar13);
-        __restgprlr_23(piVar8);
+        Menu_SetPrevCursorItem(param_1,param_2,IVar7);
         return;
       }
       break;
     case 0x14:
     case 0x1c:
-      bVar9 = Menu_IsNextCursorItemRight(pUVar3->localClientNum,param_2);
-      if (!bVar9) goto switchD_825d0c94_caseD_8;
+      bVar5 = Menu_IsNextCursorItemRight(param_1->localClientNum,param_2);
+      if (!bVar5) goto switchD_825d0c94_caseD_8;
       break;
     case 0x15:
-      goto switchD_825d0c94_caseD_15;
+switchD_825d0c94_caseD_15:
+      bVar5 = Menu_IsPrevCursorItemLeft(param_1->localClientNum,param_2);
+      if (bVar5) {
+        Menu_SetPrevCursorItem(param_1,param_2,IVar7);
+        return;
+      }
+      break;
     case 0x16:
 switchD_825d0c94_caseD_16:
-      bVar9 = Menu_IsNextCursorItemRight(pUVar3->localClientNum,param_2);
-      if (bVar9) {
-        piVar8 = Menu_SetNextCursorItem(pUVar3,param_2,IVar13);
-        __restgprlr_23(piVar8);
+      bVar5 = Menu_IsNextCursorItemRight(param_1->localClientNum,param_2);
+      if (bVar5) {
+        Menu_SetNextCursorItem(param_1,param_2,IVar7);
         return;
       }
     }
+    return;
   }
-  else {
-    if (0x1e < (int)IVar12) {
-      if (0xb1 < (int)IVar12) {
-        switch(IVar12 - 0xb2) {
-        case FOCUS_OTHER:
-          iVar4 = Dvar_GetInt("developer");
-          if (iVar4 != 0) {
-            Cbuf_AddText(pUVar3->localClientNum,"screenshot\n");
-            __restgprlr_23();
-            return;
-          }
-          break;
-        case 5:
-          goto switchD_825d0ee0_caseD_5;
-        case 0xb:
-          goto switchD_825d0c94_caseD_8;
-        case 0xd:
-          goto switchD_825d0c94_caseD_0;
-        }
-        goto switchD_825d0c94_caseD_2;
-      }
-      if (IVar12 == 0xb1) {
-        iVar4 = Dvar_GetInt("developer");
-        if (iVar4 != 0) {
-          Dvar_SetBool(ui_debugMode,(ui_debugMode->current).enabled == false);
-          __restgprlr_23();
+  if (0x1e < param_3) {
+    if (0xb1 < param_3) {
+      switch(param_3 + -0xb2) {
+      case 0:
+        iVar2 = Dvar_GetInt("developer");
+        if (iVar2 == 0) {
           return;
         }
-        goto switchD_825d0c94_caseD_2;
-      }
-      if (0x9b < (int)IVar12) {
-        if (IVar12 != 0x9c) {
-          if (IVar12 != 0x9d) {
-            __restgprlr_23(lVar2);
-            return;
-          }
-          goto switchD_825d0c94_caseD_8;
-        }
+        Cbuf_AddText(param_1->localClientNum,"screenshot\n");
+        return;
+      default:
+        return;
+      case 5:
         goto switchD_825d0ee0_caseD_5;
+      case 0xb:
+        goto switchD_825d0c94_caseD_8;
+      case 0xd:
+        goto switchD_825d0c94_caseD_0;
       }
-      if (IVar12 == 0x9b) goto switchD_825d0c94_caseD_8;
-      if (IVar12 != 0x1f) {
-        if (IVar12 != 0x9a) {
-          __restgprlr_23(lVar2);
-          return;
-        }
-        goto switchD_825d0ee0_caseD_5;
-      }
-      goto switchD_825d0c94_caseD_16;
     }
-    if (IVar12 != 0x1e) goto LAB_825d0c74;
-switchD_825d0c94_caseD_15:
-    bVar9 = Menu_IsPrevCursorItemLeft(pUVar3->localClientNum,param_2);
-    if (bVar9) {
-      piVar8 = Menu_SetPrevCursorItem(pUVar3,param_2,IVar13);
-      __restgprlr_23(piVar8);
+    if (param_3 == 0xb1) {
+      iVar2 = Dvar_GetInt("developer");
+      if (iVar2 == 0) {
+        return;
+      }
+      Dvar_SetBool(ui_debugMode,(ui_debugMode->current).enabled == false);
       return;
     }
+    if (0x9b < param_3) {
+      if (param_3 == 0x9c) goto switchD_825d0ee0_caseD_5;
+      if (param_3 != 0x9d) {
+        return;
+      }
+      goto switchD_825d0c94_caseD_8;
+    }
+    if (param_3 == 0x9b) goto switchD_825d0c94_caseD_8;
+    if (param_3 != 0x1f) {
+      if (param_3 != 0x9a) {
+        return;
+      }
+      goto switchD_825d0ee0_caseD_5;
+    }
+    goto switchD_825d0c94_caseD_16;
   }
-switchD_825d0c94_caseD_2:
-  __restgprlr_23();
-  return;
+  if (param_3 != 0x1e) goto LAB_825d0c74;
+  goto switchD_825d0c94_caseD_15;
 }
 
 
@@ -11195,6 +10709,8 @@ Font_s * Item_GetFont(LocalClientNum_t param_1,itemDef_t *param_2)
 
 // 825C3D90  Item_SetTextExtents  (ui/ui_shared.cpp:8079)
 
+/* WARNING: Function: __savegprlr_21 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_21 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
@@ -11204,124 +10720,119 @@ void Item_SetTextExtents(UiContext *param_1,itemDef_t *param_2,char *param_3)
 {
   uint uVar1;
   bool bVar2;
-  LocalClientNum_t *pLVar3;
-  rectDef_s *prVar4;
-  ScreenPlacement *pSVar5;
-  Font_s *pFVar6;
+  rectDef_s *prVar3;
+  ScreenPlacement *pSVar4;
+  Font_s *pFVar5;
+  bool bVar8;
+  int iVar6;
   bool bVar9;
-  int iVar7;
-  bool bVar10;
-  char *pcVar8;
-  ulonglong uVar11;
+  char *pcVar7;
   char *in_r6;
-  ulonglong uVar12;
-  longlong lVar13;
-  double dVar14;
-  double dVar15;
-  float fVar16;
+  ulonglong uVar10;
+  longlong lVar11;
+  double dVar12;
+  double dVar13;
+  float fVar14;
   rectDef_s local_490;
   char acStack_470 [1136];
   
-  uVar11 = (ulonglong)(int)param_3;
-  pLVar3 = (LocalClientNum_t *)__savegprlr_21(param_1);
-  if ((uVar11 & 0xffffffff) == 0) {
+  if (param_3 == (char *)0x0) {
     in_r6 = "%s";
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x1fa6,0,
                     "%s");
   }
   uVar1 = param_2->textAlignMode & 3;
-  bVar10 = param_2->type == 8;
-  if ((bVar10) || (uVar12 = 1, param_2->dvar == (char *)0x0)) {
-    uVar12 = 0;
+  bVar9 = param_2->type == 8;
+  if ((bVar9) || (uVar10 = 1, param_2->dvar == (char *)0x0)) {
+    uVar10 = 0;
   }
-  if ((bVar10) || (bVar2 = true, param_2->localVar == (char *)0x0)) {
+  if ((bVar9) || (bVar2 = true, param_2->localVar == (char *)0x0)) {
     bVar2 = false;
   }
   if ((uVar1 == 0) ||
-     ((((!bVar10 && (uVar12 == 0)) && (!bVar2)) && (param_2->textExp == (Statement_s *)0x0)))) {
-    bVar9 = false;
+     ((((!bVar9 && (uVar10 == 0)) && (!bVar2)) && (param_2->textExp == (Statement_s *)0x0)))) {
+    bVar8 = false;
   }
   else {
-    bVar9 = true;
+    bVar8 = true;
   }
-  if ((!bVar9) && (prVar4 = Item_GetTextRect(*pLVar3,param_2), prVar4->w != 0.0)) goto LAB_825c41b4;
-  dVar14 = (double)param_2->textscale;
-  iVar7 = param_2->fontEnum;
-  pSVar5 = ScrPlace_GetActivePlacement(*pLVar3);
-  pFVar6 = UI_GetFontHandle(pSVar5,iVar7,(float)dVar14);
-  dVar14 = 1.0;
-  bVar9 = Menu_HasScaleTransition(*pLVar3,param_2->parent);
-  if (bVar9) {
-    fVar16 = Menu_GetTransitionValue
-                       (*pLVar3,param_2->parent,param_2->parent->data->scaleTransition + *pLVar3);
-    dVar14 = (double)fVar16;
+  if ((!bVar8) && (prVar3 = Item_GetTextRect(param_1->localClientNum,param_2), prVar3->w != 0.0)) {
+    return;
+  }
+  dVar12 = (double)param_2->textscale;
+  iVar6 = param_2->fontEnum;
+  pSVar4 = ScrPlace_GetActivePlacement(param_1->localClientNum);
+  pFVar5 = UI_GetFontHandle(pSVar4,iVar6,(float)dVar12);
+  dVar12 = 1.0;
+  bVar8 = Menu_HasScaleTransition(param_1->localClientNum,param_2->parent);
+  if (bVar8) {
+    fVar14 = Menu_GetTransitionValue
+                       (param_1->localClientNum,param_2->parent,
+                        param_2->parent->data->scaleTransition + param_1->localClientNum);
+    dVar12 = (double)fVar14;
   }
   local_490.x = param_2->textalignx;
   local_490.y = param_2->textaligny;
-  fVar16 = (float)(dVar14 * (double)param_2->textscale);
-  dVar14 = (double)fVar16;
-  iVar7 = UI_TextWidthModCase((char *)uVar11,0,pFVar6,fVar16,(int)in_r6);
-  local_490.w = (float)(longlong)iVar7;
-  iVar7 = UI_TextHeight(pFVar6,(float)dVar14);
+  fVar14 = (float)(dVar12 * (double)param_2->textscale);
+  dVar12 = (double)fVar14;
+  iVar6 = UI_TextWidthModCase(param_3,0,pFVar5,fVar14,(int)in_r6);
+  local_490.w = (float)(longlong)iVar6;
+  iVar6 = UI_TextHeight(pFVar5,(float)dVar12);
   local_490.horzAlign = (param_2->window).rect.horzAlign;
-  local_490.h = (float)(longlong)iVar7;
+  local_490.h = (float)(longlong)iVar6;
   local_490.vertAlign = (param_2->window).rect.vertAlign;
   if (param_2->textAlignYExp != (Statement_s *)0x0) {
-    local_490.y = GetExpressionFloat(*pLVar3,param_2->textAlignYExp);
+    local_490.y = GetExpressionFloat(param_1->localClientNum,param_2->textAlignYExp);
   }
-  if (uVar1 != 0) {
-    if ((uVar1 != 2) && (uVar1 != 1)) {
-      in_r6 = "%s\n\t(xAlignMode) = %i";
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x1fcb,0,
-                      "%s\n\t(xAlignMode) = %i");
-    }
-    iVar7 = UI_TextWidthModCase((char *)uVar11,0,pFVar6,(float)dVar14,(int)in_r6);
-    dVar15 = (double)((param_2->window).rect.w - (float)(longlong)iVar7);
-    if (bVar10) {
-      iVar7 = UI_OwnerDrawWidth((param_2->window).ownerDraw,pFVar6,(float)dVar14);
-      lVar13 = (longlong)iVar7;
+  if (uVar1 == 0) goto LAB_825c4150;
+  if ((uVar1 != 2) && (uVar1 != 1)) {
+    in_r6 = "%s\n\t(xAlignMode) = %i";
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x1fcb,0,
+                    "%s\n\t(xAlignMode) = %i");
+  }
+  iVar6 = UI_TextWidthModCase(param_3,0,pFVar5,(float)dVar12,(int)in_r6);
+  dVar13 = (double)((param_2->window).rect.w - (float)(longlong)iVar6);
+  if (bVar9) {
+    iVar6 = UI_OwnerDrawWidth((param_2->window).ownerDraw,pFVar5,(float)dVar12);
+    lVar11 = (longlong)iVar6;
 LAB_825c4124:
-      dVar15 = (double)(float)(dVar15 - (double)lVar13);
-    }
-    else if (((uVar12 != 0) || (bVar2)) && (bVar10 = Item_IsTextField(param_2), bVar10)) {
-      if (bVar2) {
-        iVar7 = 0x400;
-        pcVar8 = UILocalVar_GetStringByName
-                           ((UILocalVarContext *)(pLVar3 + 0x29f),param_2->localVar,acStack_470,
-                            0x400);
-        iVar7 = UI_TextWidthModCase(pcVar8,0,pFVar6,(float)dVar14,iVar7);
-        lVar13 = (longlong)iVar7;
-      }
-      else {
-        if ((uVar12 & 0xffffffff) == 0) {
-          in_r6 = "%s";
-          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x1fda
-                          ,0,"%s");
-        }
-        pcVar8 = Dvar_GetVariantString(param_2->dvar);
-        iVar7 = UI_TextWidthModCase(pcVar8,0,pFVar6,(float)dVar14,(int)in_r6);
-        lVar13 = (longlong)iVar7;
-      }
-      goto LAB_825c4124;
-    }
-    if (uVar1 == 1) {
-      dVar15 = (double)(float)(dVar15 * 0.5);
-    }
-    local_490.x = (float)(dVar15 + (double)local_490.x);
+    dVar13 = (double)(float)(dVar13 - (double)lVar11);
   }
+  else if (((uVar10 != 0) || (bVar2)) && (bVar9 = Item_IsTextField(param_2), bVar9)) {
+    if (bVar2) {
+      iVar6 = 0x400;
+      pcVar7 = UILocalVar_GetStringByName(&param_1->localVars,param_2->localVar,acStack_470,0x400);
+      iVar6 = UI_TextWidthModCase(pcVar7,0,pFVar5,(float)dVar12,iVar6);
+      lVar11 = (longlong)iVar6;
+    }
+    else {
+      if ((uVar10 & 0xffffffff) == 0) {
+        in_r6 = "%s";
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x1fda,0
+                        ,"%s");
+      }
+      pcVar7 = Dvar_GetVariantString(param_2->dvar);
+      iVar6 = UI_TextWidthModCase(pcVar7,0,pFVar5,(float)dVar12,(int)in_r6);
+      lVar11 = (longlong)iVar6;
+    }
+    goto LAB_825c4124;
+  }
+  if (uVar1 == 1) {
+    dVar13 = (double)(float)(dVar13 * 0.5);
+  }
+  local_490.x = (float)(dVar13 + (double)local_490.x);
+LAB_825c4150:
   local_490.y = Item_GetTextPlacementY
                           (param_2->textAlignMode & 0xc,local_490.y,(param_2->window).rect.h,
                            local_490.h);
   if ((param_2->window).border != 0) {
-    fVar16 = (param_2->window).borderSize;
-    local_490.y = fVar16 + local_490.y;
-    local_490.x = fVar16 + local_490.x;
+    fVar14 = (param_2->window).borderSize;
+    local_490.y = fVar14 + local_490.y;
+    local_490.x = fVar14 + local_490.x;
   }
   local_490.x = (param_2->window).rect.x + local_490.x;
   local_490.y = (param_2->window).rect.y + local_490.y;
-  Item_SetTextRect(*pLVar3,param_2,&local_490);
-LAB_825c41b4:
-  __restgprlr_21();
+  Item_SetTextRect(param_1->localClientNum,param_2,&local_490);
   return;
 }
 
@@ -11352,6 +10863,8 @@ void GetBlinkColor(UiContext *param_1,float *param_2,float *param_3)
 
 // 825C4288  Item_TextColor  (ui/ui_shared.cpp:8184)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
@@ -11364,13 +10877,11 @@ void Item_TextColor(UiContext *param_1,itemDef_t *param_2,float (*param_3) [4])
   LocalClientNum_t LVar3;
   menuDef_t *pmVar4;
   menuData_t *pmVar5;
-  UiContext *pUVar6;
-  bool bVar7;
-  uint uVar8;
-  float fVar9;
+  bool bVar6;
+  uint uVar7;
+  float fVar8;
   
-  pUVar6 = (UiContext *)__savegprlr_27(param_1);
-  LVar3 = pUVar6->localClientNum;
+  LVar3 = param_1->localClientNum;
   pmVar4 = param_2->parent;
   if (LOCAL_CLIENT_3 < LVar3) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\../ui/ui_utils.h",0x21,0,
@@ -11378,37 +10889,37 @@ void Item_TextColor(UiContext *param_1,itemDef_t *param_2,float (*param_3) [4])
     ;
   }
   pmVar5 = pmVar4->data;
-  fVar9 = pmVar5->fadeInAmount;
+  fVar8 = pmVar5->fadeInAmount;
   fVar1 = pmVar5->fadeAmount;
-  uVar8 = (param_2->window).dynamicFlags[LVar3];
+  uVar7 = (param_2->window).dynamicFlags[LVar3];
   fVar2 = pmVar5->fadeClamp;
-  if (((uVar8 & 0x30) != 0) && ((param_2->window).nextTime < pUVar6->realTime)) {
-    (param_2->window).nextTime = pmVar5->fadeCycle + pUVar6->realTime;
-    if ((uVar8 & 0x10) == 0) {
-      fVar9 = (param_2->window).foreColor[3] + fVar9;
-      (param_2->window).foreColor[3] = fVar9;
-      if (fVar2 <= fVar9) {
+  if (((uVar7 & 0x30) != 0) && ((param_2->window).nextTime < param_1->realTime)) {
+    (param_2->window).nextTime = pmVar5->fadeCycle + param_1->realTime;
+    if ((uVar7 & 0x10) == 0) {
+      fVar8 = (param_2->window).foreColor[3] + fVar8;
+      (param_2->window).foreColor[3] = fVar8;
+      if (fVar2 <= fVar8) {
         (param_2->window).foreColor[3] = fVar2;
-        uVar8 = uVar8 & 0xffffffdf;
+        uVar7 = uVar7 & 0xffffffdf;
       }
     }
     else {
       fVar1 = (param_2->window).foreColor[3] - fVar1;
       (param_2->window).foreColor[3] = fVar1;
       if (fVar1 <= 0.0) {
-        uVar8 = uVar8 & 0xffffffeb;
+        uVar7 = uVar7 & 0xffffffeb;
       }
     }
   }
-  Window_SetDynamicFlags(pUVar6->localClientNum,&param_2->window,uVar8);
-  bVar7 = Window_HasFocus(pUVar6->localClientNum,&param_2->window);
-  if (bVar7) {
-    GetBlinkColor(pUVar6,pmVar4->data->focusColor,*param_3);
+  Window_SetDynamicFlags(param_1->localClientNum,&param_2->window,uVar7);
+  bVar6 = Window_HasFocus(param_1->localClientNum,&param_2->window);
+  if (bVar6) {
+    GetBlinkColor(param_1,pmVar4->data->focusColor,*param_3);
   }
   else if ((param_2->textStyle == 1) &&
-          (uVar8 = pUVar6->realTime,
-          (((int)uVar8 >> 8) + (uint)((int)uVar8 < 0 && (uVar8 & 0xff) != 0) & 1) == 0)) {
-    GetBlinkColor(pUVar6,(param_2->window).foreColor,*param_3);
+          (uVar7 = param_1->realTime,
+          (((int)uVar7 >> 8) + (uint)((int)uVar7 < 0 && (uVar7 & 0xff) != 0) & 1) == 0)) {
+    GetBlinkColor(param_1,(param_2->window).foreColor,*param_3);
   }
   else {
     (*param_3)[0] = (param_2->window).foreColor[0];
@@ -11416,26 +10927,28 @@ void Item_TextColor(UiContext *param_1,itemDef_t *param_2,float (*param_3) [4])
     (*param_3)[2] = (param_2->window).foreColor[2];
     (*param_3)[3] = (param_2->window).foreColor[3];
   }
-  bVar7 = Menu_HasAlphaTransition(pUVar6->localClientNum,param_2->parent);
-  if (bVar7) {
-    fVar9 = Menu_GetTransitionValue
-                      (pUVar6->localClientNum,param_2->parent,
-                       param_2->parent->data->alphaTransition + pUVar6->localClientNum);
-    (*param_3)[3] = fVar9 * (*param_3)[3];
+  bVar6 = Menu_HasAlphaTransition(param_1->localClientNum,param_2->parent);
+  if (bVar6) {
+    fVar8 = Menu_GetTransitionValue
+                      (param_1->localClientNum,param_2->parent,
+                       param_2->parent->data->alphaTransition + param_1->localClientNum);
+    (*param_3)[3] = fVar8 * (*param_3)[3];
   }
-  bVar7 = Item_IsDisabled(pUVar6->localClientNum,param_2);
-  if (bVar7) {
+  bVar6 = Item_IsDisabled(param_1->localClientNum,param_2);
+  if (bVar6) {
     (*param_3)[0] = (param_2->window).disableColor[0];
     (*param_3)[1] = (param_2->window).disableColor[1];
     (*param_3)[2] = (param_2->window).disableColor[2];
     (*param_3)[3] = (param_2->window).disableColor[3];
   }
-  __restgprlr_27();
   return;
 }
 
 
 // 825C4490  UI_PickWordWrapLineWidth  (ui/ui_shared.cpp:8209)
+
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
 
 int UI_PickWordWrapLineWidth
               (char *param_1,int param_2,Font_s *param_3,float param_4,int param_5,int param_6,
@@ -11444,95 +10957,77 @@ int UI_PickWordWrapLineWidth
 {
   byte bVar1;
   byte *pbVar2;
-  byte *pbVar3;
-  int iVar4;
+  int iVar3;
+  longlong lVar4;
   int iVar5;
-  longlong lVar6;
-  longlong lVar7;
-  longlong lVar8;
-  longlong lVar9;
-  longlong lVar10;
-  longlong lVar11;
-  double extraout_f1;
-  double dVar12;
+  double dVar6;
   
-  lVar10 = (longlong)param_8;
-  lVar11 = (longlong)param_7;
-  lVar8 = (longlong)param_6;
-  lVar7 = (longlong)(int)param_3;
-  lVar6 = (longlong)param_2;
-  pbVar2 = (byte *)__savegprlr_23((double)param_4,param_1,lVar6,lVar7,param_5);
-  iVar5 = (int)lVar11;
-  lVar9 = lVar8;
-  dVar12 = extraout_f1;
+  dVar6 = (double)param_4;
+  lVar4 = (longlong)param_6;
   while( true ) {
-    if ((int)lVar10 <= iVar5) {
-      iVar5 = __restgprlr_23(lVar10);
-      return iVar5;
+    if (param_8 <= param_7) {
+      return param_8;
     }
     iVar5 = 0;
-    bVar1 = *pbVar2;
-    pbVar3 = pbVar2;
+    bVar1 = *param_1;
+    pbVar2 = (byte *)param_1;
     while (bVar1 != 0) {
-      pbVar3 = (byte *)R_TextLineWrapPositionModCase
-                                 ((char *)pbVar3,(int)lVar6,(int)lVar11,(Font_s *)lVar7,
-                                  (float)dVar12,(int)lVar9);
-      iVar4 = isspace((uint)*pbVar3);
-      while (iVar4 != 0) {
-        pbVar3 = pbVar3 + 1;
-        iVar4 = isspace((uint)*pbVar3);
+      pbVar2 = (byte *)R_TextLineWrapPositionModCase
+                                 ((char *)pbVar2,param_2,param_7,param_3,(float)dVar6,(int)lVar4);
+      iVar3 = isspace((uint)*pbVar2);
+      while (iVar3 != 0) {
+        pbVar2 = pbVar2 + 1;
+        iVar3 = isspace((uint)*pbVar2);
       }
       iVar5 = iVar5 + 1;
-      bVar1 = *pbVar3;
+      bVar1 = *pbVar2;
     }
-    if (iVar5 == (int)lVar8) break;
-    lVar11 = lVar11 + 8;
-    iVar5 = (int)lVar11;
+    if (iVar5 == param_6) break;
+    param_7 = param_7 + 8;
   }
-  iVar5 = __restgprlr_23(lVar11);
-  return iVar5;
+  return param_7;
 }
 
 
 // 825C4560  ComputeTargetLineWidth  (ui/ui_shared.cpp:8233)
+
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 
 int ComputeTargetLineWidth
               (char *param_1,rectDef_s *param_2,Font_s *param_3,float param_4,float param_5,
               int param_6,int param_7,int param_8)
 
 {
-  char *pcVar1;
-  int iVar2;
+  int iVar1;
   uint in_r9;
+  double dVar2;
   double dVar3;
-  double extraout_f1;
   double dVar4;
-  double dVar5;
   
-  dVar4 = (double)param_5;
-  pcVar1 = (char *)__savegprlr_26((double)param_4,param_1);
-  iVar2 = UI_TextWidthModCase(pcVar1,0,param_3,(float)extraout_f1,param_6);
-  dVar3 = (double)param_2->w;
-  dVar5 = (double)(longlong)iVar2;
-  if (((dVar3 != 0.0) && (dVar3 < dVar5)) && ((in_r9 & 3) == 1)) {
-    dVar3 = ceil((double)(float)(dVar5 / dVar3));
-    dVar5 = ceil((double)(float)(dVar5 / (double)(longlong)(int)dVar3));
-    iVar2 = UI_PickWordWrapLineWidth
-                      (pcVar1,param_8,param_3,(float)dVar4,param_6,(int)dVar3,(int)dVar5,
+  dVar3 = (double)param_5;
+  iVar1 = UI_TextWidthModCase(param_1,0,param_3,param_4,param_6);
+  dVar2 = (double)param_2->w;
+  dVar4 = (double)(longlong)iVar1;
+  if (((dVar2 != 0.0) && (dVar2 < dVar4)) && ((in_r9 & 3) == 1)) {
+    dVar2 = ceil((double)(float)(dVar4 / dVar2));
+    dVar4 = ceil((double)(float)(dVar4 / (double)(longlong)(int)dVar2));
+    iVar1 = UI_PickWordWrapLineWidth
+                      (param_1,param_8,param_3,(float)dVar3,param_6,(int)dVar2,(int)dVar4,
                        (int)param_2->w);
-    iVar2 = __restgprlr_26(iVar2);
-    return iVar2;
+    return iVar1;
   }
-  if (dVar3 != 0.0) {
-    iVar2 = __restgprlr_26((int)param_2->w);
-    return iVar2;
+  if (dVar2 != 0.0) {
+    return (int)param_2->w;
   }
-  iVar2 = __restgprlr_26((int)dVar5);
-  return iVar2;
+  return (int)dVar4;
 }
 
 
 // 825C4698  GetWrappedTextHeight  (ui/ui_shared.cpp:8263)
+
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 
 float GetWrappedTextHeight
                 (char *param_1,rectDef_s *param_2,Font_s *param_3,float param_4,int param_5,
@@ -11540,45 +11035,44 @@ float GetWrappedTextHeight
 
 {
   byte bVar1;
-  byte *pbVar2;
+  int iVar2;
   int iVar3;
-  int iVar4;
-  longlong lVar5;
-  double extraout_f1;
+  longlong lVar4;
+  double dVar5;
   double dVar6;
   double dVar7;
-  double dVar8;
-  float fVar9;
+  float fVar8;
   
-  lVar5 = (longlong)param_6;
-  pbVar2 = (byte *)__savegprlr_27((double)param_4,param_1);
-  dVar8 = extraout_f1;
-  fVar9 = R_NormalizedTextScale(param_3,(float)extraout_f1);
-  dVar6 = (double)fVar9;
-  iVar3 = UI_TextHeight(param_3,(float)dVar8);
-  dVar7 = (double)(longlong)iVar3;
-  iVar3 = ComputeTargetLineWidth
-                    ((char *)pbVar2,param_2,param_3,(float)dVar8,(float)dVar6,param_5,(int)lVar5,
-                     0x400);
-  dVar8 = 0.0;
-  bVar1 = *pbVar2;
+  dVar7 = (double)param_4;
+  lVar4 = (longlong)param_6;
+  fVar8 = R_NormalizedTextScale(param_3,param_4);
+  dVar5 = (double)fVar8;
+  iVar2 = UI_TextHeight(param_3,(float)dVar7);
+  dVar6 = (double)(longlong)iVar2;
+  iVar2 = ComputeTargetLineWidth
+                    (param_1,param_2,param_3,(float)dVar7,(float)dVar5,param_5,(int)lVar4,0x400);
+  dVar7 = 0.0;
+  bVar1 = *param_1;
   while (bVar1 != 0) {
-    dVar8 = (double)(float)(dVar8 + dVar7);
-    pbVar2 = (byte *)R_TextLineWrapPositionModCase
-                               ((char *)pbVar2,0x400,iVar3,param_3,(float)dVar6,(int)lVar5);
-    iVar4 = isspace((uint)*pbVar2);
-    while ((iVar4 != 0 && (*pbVar2 != 10))) {
-      pbVar2 = pbVar2 + 1;
-      iVar4 = isspace((uint)*pbVar2);
+    dVar7 = (double)(float)(dVar7 + dVar6);
+    param_1 = R_TextLineWrapPositionModCase(param_1,0x400,iVar2,param_3,(float)dVar5,(int)lVar4);
+    iVar3 = isspace((uint)(byte)*param_1);
+    while ((iVar3 != 0 && (*param_1 != 10))) {
+      param_1 = param_1 + 1;
+      iVar3 = isspace((uint)(byte)*param_1);
     }
-    bVar1 = *pbVar2;
+    bVar1 = *param_1;
   }
-  dVar8 = (double)__restgprlr_27(dVar8);
-  return (float)dVar8;
+  return (float)dVar7;
 }
 
 
 // 825C47A8  _DrawWrappedText  (ui/ui_shared.cpp:8294)
+
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
 
 void _DrawWrappedText(ScreenPlacement *param_1,char *param_2,rectDef_s *param_3,Font_s *param_4,
                      float param_5,float param_6,float param_7,float *param_8,int param_9,
@@ -11589,22 +11083,21 @@ void _DrawWrappedText(ScreenPlacement *param_1,char *param_2,rectDef_s *param_3,
 {
   char cVar1;
   uint uVar2;
-  ScreenPlacement *pSVar3;
-  int iVar4;
-  char *pcVar5;
-  byte *pbVar6;
-  int iVar7;
-  rectDef_s *prVar8;
-  rectDef_s *prVar9;
-  Font_s *pFVar10;
-  char *pcVar11;
-  char *pcVar13;
-  double dVar12;
-  uint uVar14;
-  longlong lVar15;
-  ulonglong uVar16;
-  longlong lVar17;
-  double extraout_f1;
+  int iVar3;
+  byte *pbVar4;
+  int iVar5;
+  rectDef_s *prVar6;
+  Font_s *pFVar7;
+  char *pcVar8;
+  char *pcVar10;
+  double dVar9;
+  uint uVar11;
+  longlong lVar12;
+  ulonglong uVar13;
+  longlong lVar14;
+  double dVar15;
+  double dVar16;
+  double dVar17;
   double dVar18;
   double dVar19;
   double dVar20;
@@ -11613,13 +11106,10 @@ void _DrawWrappedText(ScreenPlacement *param_1,char *param_2,rectDef_s *param_3,
   double dVar23;
   double dVar24;
   double dVar25;
-  double dVar26;
-  double dVar27;
-  double dVar28;
-  float fVar29;
+  float fVar26;
   int in_stack_00000054;
   uint in_stack_0000005c;
-  float *in_stack_00000064;
+  rectDef_s *in_stack_00000064;
   char in_stack_00000077;
   int in_stack_0000007c;
   char in_stack_0000008f;
@@ -11636,70 +11126,65 @@ void _DrawWrappedText(ScreenPlacement *param_1,char *param_2,rectDef_s *param_3,
   uint local_51c;
   char local_4f0 [1264];
   
-  dVar21 = (double)param_7;
-  dVar25 = (double)param_6;
-  uVar16 = (ulonglong)(int)param_3;
-  lVar17 = (longlong)(int)param_2;
-  pcVar13 = (char *)param_8;
-  __savegprlr();
-  pSVar3 = (ScreenPlacement *)__savefpr_22();
-  prVar9 = (rectDef_s *)uVar16;
+  dVar18 = (double)param_7;
+  dVar22 = (double)param_6;
+  dVar15 = (double)param_5;
+  lVar14 = (longlong)(int)param_2;
   local_520 = '7';
   if (in_stack_00000054 == 9) {
     local_51c = 1;
+    pcVar10 = (char *)param_8;
   }
   else {
-    pcVar13 = (char *)-(uint)(in_stack_00000054 == 10);
-    local_51c = (uint)pcVar13 & 2;
+    pcVar10 = (char *)-(uint)(in_stack_00000054 == 10);
+    local_51c = (uint)pcVar10 & 2;
   }
-  pcVar11 = "%s";
-  dVar19 = extraout_f1;
-  if ((uVar16 & 0xffffffff) == ZEXT48(in_stack_00000064)) {
-    pcVar13 = "rect != textRect";
-    pcVar11 = "%s";
+  pcVar8 = "%s";
+  if (param_3 == in_stack_00000064) {
+    pcVar10 = "rect != textRect";
+    pcVar8 = "%s";
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x2080,0,
                     "%s");
   }
-  *in_stack_00000064 = (float)((double)prVar9->w + dVar19);
-  in_stack_00000064[1] = (float)dVar25;
-  dVar27 = 0.0;
-  in_stack_00000064[2] = 0.0;
-  in_stack_00000064[3] = 0.0;
-  fVar29 = R_NormalizedTextScale(param_4,(float)dVar21);
-  dVar18 = (double)fVar29;
-  iVar4 = UI_TextHeight(param_4,(float)dVar21);
+  in_stack_00000064->x = (float)((double)param_3->w + dVar15);
+  in_stack_00000064->y = (float)dVar22;
+  dVar24 = 0.0;
+  in_stack_00000064->w = 0.0;
+  in_stack_00000064->h = 0.0;
+  fVar26 = R_NormalizedTextScale(param_4,(float)dVar18);
+  dVar16 = (double)fVar26;
+  iVar3 = UI_TextHeight(param_4,(float)dVar18);
   uVar2 = in_stack_0000005c & 3;
-  dVar24 = (double)(longlong)iVar4;
-  fVar29 = Item_GetTextPlacementX(uVar2,(float)dVar19,prVar9->w,(float)dVar27);
-  dVar19 = (double)fVar29;
-  fVar29 = Item_GetTextPlacementY(in_stack_0000005c & 0xc,(float)dVar25,prVar9->h,(float)dVar24);
-  dVar25 = (double)fVar29;
-  pcVar5 = (char *)lVar17;
+  dVar21 = (double)(longlong)iVar3;
+  fVar26 = Item_GetTextPlacementX(uVar2,(float)dVar15,param_3->w,(float)dVar24);
+  dVar15 = (double)fVar26;
+  fVar26 = Item_GetTextPlacementY(in_stack_0000005c & 0xc,(float)dVar22,param_3->h,(float)dVar21);
+  dVar22 = (double)fVar26;
   if ((in_stack_0000005c & 0xc) == 0xc) {
-    pcVar13 = &DAT_0000000c;
-    fVar29 = GetWrappedTextHeight(pcVar5,prVar9,param_4,(float)dVar21,(int)pcVar11,0xc);
-    dVar25 = (double)(float)(dVar25 - (double)(float)((double)fVar29 - dVar24));
+    pcVar10 = &DAT_0000000c;
+    fVar26 = GetWrappedTextHeight(param_2,param_3,param_4,(float)dVar18,(int)pcVar8,0xc);
+    dVar22 = (double)(float)(dVar22 - (double)(float)((double)fVar26 - dVar21));
   }
-  pFVar10 = param_4;
-  prVar8 = prVar9;
-  iVar4 = ComputeTargetLineWidth
-                    (pcVar5,prVar9,param_4,(float)dVar21,(float)dVar18,(int)pcVar11,(int)pcVar13,
+  pFVar7 = param_4;
+  prVar6 = param_3;
+  iVar3 = ComputeTargetLineWidth
+                    (param_2,param_3,param_4,(float)dVar18,(float)dVar16,(int)pcVar8,(int)pcVar10,
                      0x402);
-  dVar23 = (double)prVar9->y;
-  dVar27 = (double)(float)((double)(float)(dVar23 + (double)prVar9->h) + dVar24);
+  dVar20 = (double)param_3->y;
+  dVar24 = (double)(float)((double)(float)(dVar20 + (double)param_3->h) + dVar21);
   if (in_stack_0000008f != '\0') {
-    UI_SetScissorRect(pSVar3,prVar9->x,prVar9->y,prVar9->w,prVar9->h,(int)prVar8,(int)pFVar10);
+    UI_SetScissorRect(param_1,param_3->x,param_3->y,param_3->w,param_3->h,(int)prVar6,(int)pFVar7);
   }
-  if (*pcVar5 != '\0') {
-    dVar12 = -NAN;
-    dVar22 = 0.5;
+  if (*param_2 != '\0') {
+    dVar9 = -NAN;
+    dVar19 = 0.5;
     do {
-      pFVar10 = param_4;
-      uVar14 = local_51c;
-      pbVar6 = (byte *)R_TextLineWrapPositionModCase
-                                 ((char *)lVar17,0x400,iVar4,param_4,(float)dVar18,SUB84(dVar12,0));
-      if ((in_stack_0000008f == '\0') || ((dVar23 <= dVar25 && (dVar25 <= dVar27)))) {
-        lVar17 = (int)pbVar6 - lVar17;
+      pFVar7 = param_4;
+      uVar11 = local_51c;
+      pbVar4 = (byte *)R_TextLineWrapPositionModCase
+                                 ((char *)lVar14,0x400,iVar3,param_4,(float)dVar16,SUB84(dVar9,0));
+      if ((in_stack_0000008f == '\0') || ((dVar20 <= dVar22 && (dVar22 <= dVar24)))) {
+        lVar14 = (int)pbVar4 - lVar14;
         if (local_520 == '7') {
           memcpy();
         }
@@ -11707,78 +11192,76 @@ void _DrawWrappedText(ScreenPlacement *param_1,char *param_2,rectDef_s *param_3,
           local_4f0[1] = local_520;
           local_4f0[0] = '^';
           memcpy();
-          lVar17 = lVar17 + 2;
+          lVar14 = lVar14 + 2;
         }
-        lVar15 = lVar17 + -1;
-        local_4f0[(int)lVar17] = '\0';
-        if (-1 < lVar15) {
-          uVar16 = lVar15 + (ZEXT48(&stack0x00000000) - 0x4ef);
+        lVar12 = lVar14 + -1;
+        local_4f0[(int)lVar14] = '\0';
+        if (-1 < lVar12) {
+          uVar13 = lVar12 + (ZEXT48(&stack0x00000000) - 0x4ef);
           do {
-            if ((((((char *)uVar16)[-1] == '^') && ((uVar16 & 0xffffffff) != 0)) &&
-                (cVar1 = *(char *)uVar16, cVar1 != '^')) && (('/' < cVar1 && (cVar1 < '<')))) {
-              local_520 = local_4f0[(int)lVar15 + 1];
+            if ((((((char *)uVar13)[-1] == '^') && ((uVar13 & 0xffffffff) != 0)) &&
+                (cVar1 = *(char *)uVar13, cVar1 != '^')) && (('/' < cVar1 && (cVar1 < '<')))) {
+              local_520 = local_4f0[(int)lVar12 + 1];
               break;
             }
-            lVar15 = lVar15 + -1;
-            uVar16 = uVar16 - 1;
-          } while (-1 < lVar15);
+            lVar12 = lVar12 + -1;
+            uVar13 = uVar13 - 1;
+          } while (-1 < lVar12);
         }
-        dVar12 = (double)(ulonglong)local_51c;
-        iVar7 = UI_TextWidthModCase(local_4f0,0,param_4,(float)dVar21,(int)pFVar10);
-        dVar26 = (double)(longlong)iVar7;
+        dVar9 = (double)(ulonglong)local_51c;
+        iVar5 = UI_TextWidthModCase(local_4f0,0,param_4,(float)dVar18,(int)pFVar7);
+        dVar23 = (double)(longlong)iVar5;
         if (uVar2 == 1) {
-          dVar28 = -(double)(float)(dVar26 * dVar22 - dVar19);
+          dVar25 = -(double)(float)(dVar23 * dVar19 - dVar15);
         }
         else {
-          dVar28 = dVar19;
+          dVar25 = dVar15;
           if (uVar2 == 2) {
-            dVar28 = (double)(float)(dVar19 - dVar26);
+            dVar25 = (double)(float)(dVar15 - dVar23);
           }
         }
         if (in_stack_00000077 == '\0') {
-          UI_DrawText(pSVar3,local_4f0,0x7fffffff,param_4,(float)dVar28,(float)dVar25,
-                      SUB84(dVar12,0),uVar14,(float)dVar21,(float *)(uint)prVar9->horzAlign,
-                      (uint)prVar9->vertAlign);
+          UI_DrawText(param_1,local_4f0,0x7fffffff,param_4,(float)dVar25,(float)dVar22,
+                      SUB84(dVar9,0),uVar11,(float)dVar18,(float *)(uint)param_3->horzAlign,
+                      (uint)param_3->vertAlign);
         }
         else {
           if (in_stack_0000007c == 0) {
-            dVar12 = (double)ZEXT48("glowColor");
+            dVar9 = (double)ZEXT48("glowColor");
             MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",
                             0x20c3,0,"%s");
           }
-          UI_DrawTextWithGlow(pSVar3,local_4f0,0x7fffffff,param_4,(float)dVar28,(float)dVar25,
-                              SUB84(dVar12,0),uVar14,(float)dVar21,(float *)(uint)prVar9->horzAlign,
-                              (uint)prVar9->vertAlign,in_stack_fffffa38,(bool)in_stack_fffffa3f,
+          UI_DrawTextWithGlow(param_1,local_4f0,0x7fffffff,param_4,(float)dVar25,(float)dVar22,
+                              SUB84(dVar9,0),uVar11,(float)dVar18,(float *)(uint)param_3->horzAlign,
+                              (uint)param_3->vertAlign,in_stack_fffffa38,(bool)in_stack_fffffa3f,
                               (bool)in_stack_fffffa43,in_stack_fffffa44,in_stack_fffffa48,
                               in_stack_fffffa4c,in_stack_fffffa50,in_stack_fffffa54,
                               in_stack_fffffa58);
         }
-        if ((double)in_stack_00000064[2] < dVar26) {
-          dVar20 = (double)*in_stack_00000064;
-          if (dVar20 < dVar28) {
+        if ((double)in_stack_00000064->w < dVar23) {
+          dVar17 = (double)in_stack_00000064->x;
+          if (dVar17 < dVar25) {
             MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",
                             0x20cd,0,"textRect->x >= lineX\n\t%g, %g");
-            dVar12 = dVar20;
+            dVar9 = dVar17;
           }
-          *in_stack_00000064 = (float)dVar28;
-          in_stack_00000064[2] = (float)dVar26;
+          in_stack_00000064->x = (float)dVar25;
+          in_stack_00000064->w = (float)dVar23;
         }
       }
-      dVar25 = (double)(float)(dVar24 + dVar25);
-      iVar7 = isspace((uint)*pbVar6);
-      lVar17 = (longlong)(int)pbVar6;
-      while ((iVar7 != 0 && (*(char *)lVar17 != '\n'))) {
-        lVar17 = lVar17 + 1;
-        iVar7 = isspace((uint)*(byte *)lVar17);
+      dVar22 = (double)(float)(dVar21 + dVar22);
+      iVar5 = isspace((uint)*pbVar4);
+      lVar14 = (longlong)(int)pbVar4;
+      while ((iVar5 != 0 && (*(char *)lVar14 != '\n'))) {
+        lVar14 = lVar14 + 1;
+        iVar5 = isspace((uint)*(byte *)lVar14);
       }
-    } while (*(char *)lVar17 != '\0');
+    } while (*(char *)lVar14 != '\0');
   }
   if (in_stack_0000008f != '\0') {
     UI_ClearScissorRect();
   }
-  in_stack_00000064[3] = (float)(dVar25 - (double)in_stack_00000064[1]);
-  __restfpr_22();
-  __restgprlr();
+  in_stack_00000064->h = (float)(dVar22 - (double)in_stack_00000064->y);
   return;
 }
 
@@ -11816,23 +11299,22 @@ void UI_DrawWrappedText(ScreenPlacement *param_1,char *param_2,rectDef_s *param_
 
 // 825C4CE8  UI_DrawWrappedTextSubtitled  (ui/ui_shared.cpp:8423)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void UI_DrawWrappedTextSubtitled
                (ScreenPlacement *param_1,char *param_2,rectDef_s *param_3,Font_s *param_4,
                float param_5,float param_6,float param_7,float *param_8,int param_9,int param_10,
                rectDef_s *param_11,float *param_12,bool param_13,bool param_14)
 
 {
-  ScreenPlacement *pSVar1;
-  double extraout_f1;
-  double dVar2;
-  double dVar3;
   byte in_stack_00000077;
   byte in_stack_0000007f;
-  undefined1 in_stack_ffffff1b;
-  undefined1 in_stack_ffffff1f;
+  bool in_stack_ffffff1b;
+  bool in_stack_ffffff1f;
   float *in_stack_ffffff20;
-  undefined1 in_stack_ffffff27;
-  undefined1 in_stack_ffffff2b;
+  bool in_stack_ffffff27;
+  bool in_stack_ffffff2b;
   Material *in_stack_ffffff2c;
   Material *in_stack_ffffff30;
   int in_stack_ffffff34;
@@ -11840,21 +11322,19 @@ void UI_DrawWrappedTextSubtitled
   int in_stack_ffffff3c;
   int in_stack_ffffff40;
   
-  dVar3 = (double)param_7;
-  dVar2 = (double)param_6;
-  pSVar1 = (ScreenPlacement *)__savegprlr_28((double)param_5,param_1);
-  _DrawWrappedText(pSVar1,param_2,param_3,param_4,(float)extraout_f1,(float)dVar2,(float)dVar3,
+  _DrawWrappedText(param_1,param_2,param_3,param_4,param_5,param_6,param_7,
                    (float *)(uint)in_stack_00000077,(uint)in_stack_0000007f,1,param_11,
-                   (bool)in_stack_ffffff1b,(bool)in_stack_ffffff1f,in_stack_ffffff20,
-                   (bool)in_stack_ffffff27,(bool)in_stack_ffffff2b,in_stack_ffffff2c,
-                   in_stack_ffffff30,in_stack_ffffff34,in_stack_ffffff38,in_stack_ffffff3c,
-                   in_stack_ffffff40);
-  __restgprlr_28();
+                   in_stack_ffffff1b,in_stack_ffffff1f,in_stack_ffffff20,in_stack_ffffff27,
+                   in_stack_ffffff2b,in_stack_ffffff2c,in_stack_ffffff30,in_stack_ffffff34,
+                   in_stack_ffffff38,in_stack_ffffff3c,in_stack_ffffff40);
   return;
 }
 
 
 // 825C4D58  UI_DrawWrappedTextWithEffects  (ui/ui_shared.cpp:8429)
+
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
 
 void UI_DrawWrappedTextWithEffects
                (ScreenPlacement *param_1,char *param_2,rectDef_s *param_3,Font_s *param_4,
@@ -11863,16 +11343,12 @@ void UI_DrawWrappedTextWithEffects
                Material *param_16,int param_17,int param_18,int param_19,int param_20)
 
 {
-  ScreenPlacement *pSVar1;
-  double extraout_f1;
-  double dVar2;
-  double dVar3;
   int in_stack_000000a4;
-  undefined1 in_stack_fffffeeb;
-  undefined1 in_stack_fffffeef;
+  bool in_stack_fffffeeb;
+  bool in_stack_fffffeef;
   float *in_stack_fffffef0;
-  undefined1 in_stack_fffffef7;
-  undefined1 in_stack_fffffefb;
+  bool in_stack_fffffef7;
+  bool in_stack_fffffefb;
   Material *in_stack_fffffefc;
   Material *in_stack_ffffff00;
   int in_stack_ffffff04;
@@ -11880,15 +11356,11 @@ void UI_DrawWrappedTextWithEffects
   int in_stack_ffffff0c;
   int in_stack_ffffff10;
   
-  dVar3 = (double)param_7;
-  dVar2 = (double)param_6;
-  pSVar1 = (ScreenPlacement *)__savegprlr_22((double)param_5,param_1);
-  _DrawWrappedText(pSVar1,param_2,param_3,param_4,(float)extraout_f1,(float)dVar2,(float)dVar3,
-                   (float *)0x0,in_stack_000000a4,1,param_11,(bool)in_stack_fffffeeb,
-                   (bool)in_stack_fffffeef,in_stack_fffffef0,(bool)in_stack_fffffef7,
-                   (bool)in_stack_fffffefb,in_stack_fffffefc,in_stack_ffffff00,in_stack_ffffff04,
-                   in_stack_ffffff08,in_stack_ffffff0c,in_stack_ffffff10);
-  __restgprlr_22();
+  _DrawWrappedText(param_1,param_2,param_3,param_4,param_5,param_6,param_7,(float *)0x0,
+                   in_stack_000000a4,1,param_11,in_stack_fffffeeb,in_stack_fffffeef,
+                   in_stack_fffffef0,in_stack_fffffef7,in_stack_fffffefb,in_stack_fffffefc,
+                   in_stack_ffffff00,in_stack_ffffff04,in_stack_ffffff08,in_stack_ffffff0c,
+                   in_stack_ffffff10);
   return;
 }
 
@@ -11916,6 +11388,8 @@ float UI_WrappedTextHeight
 
 // 825C4E30  Item_VScrollTextAdjust  (ui/ui_shared.cpp:8449)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
@@ -11925,84 +11399,75 @@ float Item_VScrollTextAdjust
                 char *param_5,Font_s *param_6,float *param_7)
 
 {
-  itemDef_t *piVar1;
-  LocalClientNum_t *pLVar2;
-  bool bVar5;
-  int iVar3;
-  textScrollDef_s *ptVar4;
-  longlong lVar6;
-  rectDef_s *prVar7;
+  bool bVar3;
+  int iVar1;
+  textScrollDef_s *ptVar2;
+  char *pcVar4;
   int in_r9;
-  double extraout_f1;
+  double dVar5;
+  double dVar6;
+  double dVar7;
   double dVar8;
-  double dVar9;
-  double dVar10;
-  double dVar11;
-  float fVar12;
+  float fVar9;
   
-  lVar6 = (longlong)(int)param_2;
-  pLVar2 = (LocalClientNum_t *)__savegprlr_25((double)param_3,param_1,lVar6,param_4);
-  piVar1 = (itemDef_t *)lVar6;
-  dVar11 = (double)piVar1->textscale;
-  dVar10 = extraout_f1;
-  prVar7 = (rectDef_s *)param_5;
-  bVar5 = Menu_HasScaleTransition(*pLVar2,piVar1->parent);
-  if (bVar5) {
-    fVar12 = Menu_GetTransitionValue
-                       (*pLVar2,piVar1->parent,piVar1->parent->data->scaleTransition + *pLVar2);
-    dVar11 = (double)(float)((double)fVar12 * dVar11);
+  dVar7 = (double)param_3;
+  dVar8 = (double)param_2->textscale;
+  pcVar4 = param_5;
+  bVar3 = Menu_HasScaleTransition(param_1->localClientNum,param_2->parent);
+  if (bVar3) {
+    fVar9 = Menu_GetTransitionValue
+                      (param_1->localClientNum,param_2->parent,
+                       param_2->parent->data->scaleTransition + param_1->localClientNum);
+    dVar8 = (double)(float)((double)fVar9 * dVar8);
   }
-  iVar3 = UI_TextHeight((Font_s *)param_7,(float)dVar11);
-  dVar9 = (double)(longlong)iVar3;
-  fVar12 = Item_GetTextPlacementY
-                     (piVar1->textAlignMode & 0xc,(float)dVar10,((rectDef_s *)param_5)->h,
-                      (float)(longlong)iVar3);
-  dVar10 = (double)fVar12;
-  fVar12 = GetWrappedTextHeight
-                     ((char *)param_6,(rectDef_s *)param_5,(Font_s *)param_7,(float)dVar11,
-                      (int)prVar7,piVar1->textAlignMode);
-  dVar11 = 0.0;
-  dVar10 = (double)(((float)(dVar10 - dVar9) + fVar12) - ((rectDef_s *)param_5)->h);
-  if (0.0 < dVar10) {
-    ptVar4 = Item_GetTextScrollDef(piVar1);
-    dVar9 = (double)((float)(longlong)(int)(pLVar2[2] - ptVar4->startTime) * 0.001 -
+  iVar1 = UI_TextHeight((Font_s *)param_7,(float)dVar8);
+  dVar6 = (double)(longlong)iVar1;
+  fVar9 = Item_GetTextPlacementY
+                    (param_2->textAlignMode & 0xc,(float)dVar7,*(float *)(param_5 + 0xc),
+                     (float)(longlong)iVar1);
+  dVar7 = (double)fVar9;
+  fVar9 = GetWrappedTextHeight
+                    ((char *)param_6,(rectDef_s *)param_5,(Font_s *)param_7,(float)dVar8,(int)pcVar4
+                     ,param_2->textAlignMode);
+  dVar8 = 0.0;
+  dVar7 = (double)(((float)(dVar7 - dVar6) + fVar9) - *(float *)(param_5 + 0xc));
+  if (0.0 < dVar7) {
+    ptVar2 = Item_GetTextScrollDef(param_2);
+    dVar6 = (double)((float)(longlong)(param_1->realTime - ptVar2->startTime) * 0.001 -
                     (ui_textScrollPauseStart->current).value);
-    if (dVar11 < dVar9) {
-      dVar8 = (double)(float)(dVar10 / (double)(ui_textScrollSpeed->current).value);
-      if (dVar9 < dVar8) {
-        dVar10 = (double)__restgprlr_25((double)(float)((double)(ui_textScrollSpeed->current).value
-                                                       * dVar9));
-        return (float)dVar10;
+    if (dVar8 < dVar6) {
+      dVar5 = (double)(float)(dVar7 / (double)(ui_textScrollSpeed->current).value);
+      if (dVar6 < dVar5) {
+        return (float)((double)(ui_textScrollSpeed->current).value * dVar6);
       }
-      dVar9 = (double)((float)(dVar9 - dVar8) - (ui_textScrollPauseEnd->current).value);
-      if (dVar9 <= dVar11) {
-        dVar10 = (double)__restgprlr_25(dVar10);
-        return (float)dVar10;
+      dVar6 = (double)((float)(dVar6 - dVar5) - (ui_textScrollPauseEnd->current).value);
+      if (dVar6 <= dVar8) {
+        return (float)dVar7;
       }
-      dVar8 = (double)(ui_textScrollFadeTime->current).value;
-      if (dVar9 < dVar8) {
-        *(float *)(in_r9 + 0xc) = (1.0 - (float)(dVar9 / dVar8)) * *(float *)(in_r9 + 0xc);
-        dVar10 = (double)__restgprlr_25(dVar10);
-        return (float)dVar10;
+      dVar5 = (double)(ui_textScrollFadeTime->current).value;
+      if (dVar6 < dVar5) {
+        *(float *)(in_r9 + 0xc) = (1.0 - (float)(dVar6 / dVar5)) * *(float *)(in_r9 + 0xc);
+        return (float)dVar7;
       }
-      dVar10 = (double)(float)(dVar9 - (double)(ui_textScrollFadeTime->current).value);
-      if ((double)(ui_textScrollFadeTime->current).value <= dVar10) {
-        ptVar4 = Item_GetTextScrollDef(piVar1);
-        ptVar4->startTime = pLVar2[2];
+      dVar7 = (double)(float)(dVar6 - (double)(ui_textScrollFadeTime->current).value);
+      if ((double)(ui_textScrollFadeTime->current).value <= dVar7) {
+        ptVar2 = Item_GetTextScrollDef(param_2);
+        ptVar2->startTime = param_1->realTime;
       }
       else {
         *(float *)(in_r9 + 0xc) =
-             (float)((double)(float)((double)*(float *)(in_r9 + 0xc) / dVar8) * dVar10);
+             (float)((double)(float)((double)*(float *)(in_r9 + 0xc) / dVar5) * dVar7);
       }
     }
   }
-  dVar10 = (double)__restgprlr_25(dVar11);
-  return (float)dVar10;
+  return (float)dVar8;
 }
 
 
 // 825C5088  Item_Text_AutoWrapped_Paint  (ui/ui_shared.cpp:8517)
 
+/* WARNING: Function: __savegprlr_18 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_18 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
@@ -12014,26 +11479,22 @@ void Item_Text_AutoWrapped_Paint
 {
   float fVar1;
   LocalClientNum_t LVar2;
-  itemDef_t *piVar3;
-  UiContext *pUVar4;
-  ScreenPlacement *pSVar5;
-  Font_s *pFVar6;
-  bool bVar7;
-  ulonglong uVar8;
-  Font_s *pFVar9;
-  ulonglong uVar10;
-  char *pcVar11;
-  ulonglong uVar12;
-  int iVar13;
-  sharedUiInfo_t *psVar14;
-  int iVar15;
-  undefined4 *puVar16;
-  longlong lVar17;
-  double dVar18;
-  double dVar19;
-  double dVar20;
-  double dVar21;
-  float fVar22;
+  ScreenPlacement *pSVar3;
+  Font_s *pFVar4;
+  bool bVar5;
+  menuTransition *pmVar6;
+  char *pcVar7;
+  int iVar8;
+  sharedUiInfo_t *psVar9;
+  int iVar10;
+  float *pfVar11;
+  itemDef_t *piVar12;
+  longlong lVar13;
+  double dVar14;
+  double dVar15;
+  double dVar16;
+  double dVar17;
+  float fVar18;
   undefined1 in_stack_fffffe8b;
   undefined1 in_stack_fffffe8f;
   float *in_stack_fffffe90;
@@ -12048,46 +11509,41 @@ void Item_Text_AutoWrapped_Paint
   undefined1 local_c0 [16];
   rectDef_s local_b0 [8];
   
-  uVar12 = (ulonglong)(int)param_6;
-  uVar10 = (ulonglong)param_5;
-  uVar8 = (ulonglong)(int)param_2;
-  pUVar4 = (UiContext *)__savegprlr_18(param_1);
-  pcVar11 = (char *)uVar10;
-  pFVar9 = (Font_s *)param_3;
-  if ((uVar8 & 0xffffffff) == 0) {
-    pcVar11 = "w";
-    pFVar9 = (Font_s *)0x0;
+  pcVar7 = (char *)(int)param_5;
+  pmVar6 = (menuTransition *)param_3;
+  if (param_2 == (itemDef_t *)0x0) {
+    pcVar7 = "w";
+    pmVar6 = (menuTransition *)0x0;
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_utils_api.h",0x24,0,"%s"
                    );
   }
-  piVar3 = (itemDef_t *)uVar8;
-  dVar20 = (double)piVar3->textscale;
-  iVar13 = piVar3->fontEnum;
-  pSVar5 = ScrPlace_GetActivePlacement(pUVar4->localClientNum);
-  pFVar6 = UI_GetFontHandle(pSVar5,iVar13,(float)dVar20);
-  dVar20 = (double)piVar3->textscale;
-  bVar7 = Menu_HasScaleTransition(pUVar4->localClientNum,piVar3->parent);
-  if (bVar7) {
-    pFVar9 = (Font_s *)(piVar3->parent->data->scaleTransition + pUVar4->localClientNum);
-    fVar22 = Menu_GetTransitionValue(pUVar4->localClientNum,piVar3->parent,(menuTransition *)pFVar9)
-    ;
-    dVar20 = (double)(float)((double)fVar22 * dVar20);
+  dVar16 = (double)param_2->textscale;
+  iVar8 = param_2->fontEnum;
+  pSVar3 = ScrPlace_GetActivePlacement(param_1->localClientNum);
+  pFVar4 = UI_GetFontHandle(pSVar3,iVar8,(float)dVar16);
+  dVar16 = (double)param_2->textscale;
+  bVar5 = Menu_HasScaleTransition(param_1->localClientNum,param_2->parent);
+  if (bVar5) {
+    pmVar6 = param_2->parent->data->scaleTransition + param_1->localClientNum;
+    fVar18 = Menu_GetTransitionValue(param_1->localClientNum,param_2->parent,pmVar6);
+    dVar16 = (double)(float)((double)fVar18 * dVar16);
   }
-  dVar21 = (double)piVar3->textalignx;
-  fVar22 = piVar3->textaligny;
-  if (piVar3->textAlignYExp != (Statement_s *)0x0) {
-    fVar22 = GetExpressionFloat(pUVar4->localClientNum,piVar3->textAlignYExp);
+  dVar17 = (double)param_2->textalignx;
+  fVar18 = param_2->textaligny;
+  if (param_2->textAlignYExp != (Statement_s *)0x0) {
+    fVar18 = GetExpressionFloat(param_1->localClientNum,param_2->textAlignYExp);
   }
-  dVar19 = (double)fVar22;
-  puVar16 = (undefined4 *)(local_c0 + 0xc);
-  lVar17 = 5;
+  dVar15 = (double)fVar18;
+  pfVar11 = (float *)(local_c0 + 0xc);
+  lVar13 = 5;
+  piVar12 = param_2;
   do {
-    uVar8 = uVar8 + 4;
-    puVar16 = puVar16 + 1;
-    *puVar16 = *(undefined4 *)uVar8;
-    lVar17 = lVar17 + -1;
-  } while (lVar17 != 0);
-  fVar1 = (piVar3->window).borderSize;
+    piVar12 = (itemDef_t *)&(piVar12->window).rect;
+    pfVar11 = pfVar11 + 1;
+    *pfVar11 = ((rectDef_s *)piVar12)->x;
+    lVar13 = lVar13 + -1;
+  } while (lVar13 != 0);
+  fVar1 = (param_2->window).borderSize;
   local_b0[0].x = fVar1 + local_b0[0].x;
   local_b0[0].y = fVar1 + local_b0[0].y;
   local_c0._0_4_ = *param_4;
@@ -12096,63 +11552,62 @@ void Item_Text_AutoWrapped_Paint
   local_c0._12_4_ = param_4[3];
   local_b0[0].h = local_b0[0].h - fVar1 * 2.0;
   local_b0[0].w = local_b0[0].w - fVar1 * 2.0;
-  if (piVar3->type == 0x15) {
-    pcVar11 = param_3;
-    fVar22 = Item_VScrollTextAdjust
-                       (pUVar4,piVar3,fVar22,(rectDef_s *)pFVar9,(char *)local_b0,(Font_s *)param_3,
-                        (float *)pFVar6);
-    dVar19 = (double)(float)(dVar19 - (double)fVar22);
+  if (param_2->type == 0x15) {
+    pcVar7 = param_3;
+    fVar18 = Item_VScrollTextAdjust
+                       (param_1,param_2,fVar18,(rectDef_s *)pmVar6,(char *)local_b0,
+                        (Font_s *)param_3,(float *)pFVar4);
+    dVar15 = (double)(float)(dVar15 - (double)fVar18);
   }
-  if ((piVar3->window).border != 0) {
-    dVar18 = (double)(piVar3->window).borderSize;
-    dVar21 = (double)(float)(dVar18 + dVar21);
-    dVar19 = (double)(float)(dVar18 + dVar19);
+  if ((param_2->window).border != 0) {
+    dVar14 = (double)(param_2->window).borderSize;
+    dVar17 = (double)(float)(dVar14 + dVar17);
+    dVar15 = (double)(float)(dVar14 + dVar15);
   }
-  iVar15 = piVar3->type + -0x15;
-  dVar18 = (double)(float)((double)(piVar3->window).rect.x + dVar21);
-  iVar13 = (int)LZCOUNT(iVar15);
-  dVar21 = (double)(float)((double)(piVar3->window).rect.y + dVar19);
-  if ((uVar10 & 0xff) != 0) {
-    if ((uVar12 & 0xffffffff) == 0) {
-      pcVar11 = "subtitleGlowColor";
+  iVar10 = param_2->type + -0x15;
+  dVar14 = (double)(float)((double)(param_2->window).rect.x + dVar17);
+  iVar8 = (int)LZCOUNT(iVar10);
+  dVar17 = (double)(float)((double)(param_2->window).rect.y + dVar15);
+  if (param_5) {
+    if (param_6 == (float *)0x0) {
+      pcVar7 = "subtitleGlowColor";
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x216d,0,
                       "%s");
     }
-    pSVar5 = ScrPlace_GetActivePlacement(pUVar4->localClientNum);
-    _DrawWrappedText(pSVar5,param_3,local_b0,pFVar6,(float)dVar18,(float)dVar21,(float)dVar20,
-                     (float *)pcVar11,iVar13,1,(rectDef_s *)local_c0,(bool)in_stack_fffffe8b,
+    pSVar3 = ScrPlace_GetActivePlacement(param_1->localClientNum);
+    _DrawWrappedText(pSVar3,param_3,local_b0,pFVar4,(float)dVar14,(float)dVar17,(float)dVar16,
+                     (float *)pcVar7,iVar8,1,(rectDef_s *)local_c0,(bool)in_stack_fffffe8b,
                      (bool)in_stack_fffffe8f,in_stack_fffffe90,(bool)in_stack_fffffe97,
                      (bool)in_stack_fffffe9b,in_stack_fffffe9c,in_stack_fffffea0,in_stack_fffffea4,
                      in_stack_fffffea8,in_stack_fffffeac,in_stack_fffffeb0);
-    __restgprlr_18();
     return;
   }
-  LVar2 = pUVar4->localClientNum;
-  if (piVar3->glowColor[3] != 0.0) {
-    iVar13 = LVar2 * 5;
-    psVar14 = &sharedUiInfo;
-    pSVar5 = ScrPlace_GetActivePlacement(LVar2);
-    _DrawWrappedText(pSVar5,param_3,local_b0,pFVar6,(float)dVar18,(float)dVar21,(float)dVar20,
-                     (float *)0x1,iVar13,(int)psVar14,(rectDef_s *)local_c0,(bool)in_stack_fffffe8b,
+  LVar2 = param_1->localClientNum;
+  if (param_2->glowColor[3] != 0.0) {
+    iVar8 = LVar2 * 5;
+    psVar9 = &sharedUiInfo;
+    pSVar3 = ScrPlace_GetActivePlacement(LVar2);
+    _DrawWrappedText(pSVar3,param_3,local_b0,pFVar4,(float)dVar14,(float)dVar17,(float)dVar16,
+                     (float *)0x1,iVar8,(int)psVar9,(rectDef_s *)local_c0,(bool)in_stack_fffffe8b,
                      (bool)in_stack_fffffe8f,in_stack_fffffe90,(bool)in_stack_fffffe97,
                      (bool)in_stack_fffffe9b,in_stack_fffffe9c,in_stack_fffffea0,in_stack_fffffea4,
                      in_stack_fffffea8,in_stack_fffffeac,in_stack_fffffeb0);
-    __restgprlr_18();
     return;
   }
-  pSVar5 = ScrPlace_GetActivePlacement(LVar2);
-  _DrawWrappedText(pSVar5,param_3,local_b0,pFVar6,(float)dVar18,(float)dVar21,(float)dVar20,
-                   (float *)pcVar11,iVar13,iVar15,(rectDef_s *)local_c0,(bool)in_stack_fffffe8b,
+  pSVar3 = ScrPlace_GetActivePlacement(LVar2);
+  _DrawWrappedText(pSVar3,param_3,local_b0,pFVar4,(float)dVar14,(float)dVar17,(float)dVar16,
+                   (float *)pcVar7,iVar8,iVar10,(rectDef_s *)local_c0,(bool)in_stack_fffffe8b,
                    (bool)in_stack_fffffe8f,in_stack_fffffe90,(bool)in_stack_fffffe97,
                    (bool)in_stack_fffffe9b,in_stack_fffffe9c,in_stack_fffffea0,in_stack_fffffea4,
                    in_stack_fffffea8,in_stack_fffffeac,in_stack_fffffeb0);
-  __restgprlr_18();
   return;
 }
 
 
 // 825C5480  DirectiveFakeIntroSeconds  (ui/ui_shared.cpp:8652)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Removing unreachable block (ram,0x825c54cc) */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
@@ -12161,23 +11616,22 @@ void Item_Text_AutoWrapped_Paint
 void DirectiveFakeIntroSeconds(LocalClientNum_t param_1,char *param_2,char *param_3,int param_4)
 
 {
-  LocalClientNum_t LVar1;
-  int iVar2;
+  int iVar1;
   
-  LVar1 = __savegprlr_27(param_1);
   sscanf(param_2,"%d");
-  iVar2 = CL_IsCgameInitialized(LVar1);
-  if (iVar2 != 0) {
-    CG_GetLocalClientGlobals(LVar1);
+  iVar1 = CL_IsCgameInitialized(param_1);
+  if (iVar1 != 0) {
+    CG_GetLocalClientGlobals(param_1);
   }
-  iVar2 = Com_sprintf(param_3,param_4,"%02d");
-  __restgprlr_27(iVar2);
+  Com_sprintf(param_3,param_4,"%02d");
   return;
 }
 
 
 // 825C5548  DirectiveFakeIntroTime  (ui/ui_shared.cpp:8681)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Removing unreachable block (ram,0x825c55e8) */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
@@ -12186,12 +11640,10 @@ void DirectiveFakeIntroSeconds(LocalClientNum_t param_1,char *param_2,char *para
 void DirectiveFakeIntroTime(LocalClientNum_t param_1,char *param_2,char *param_3,int param_4)
 
 {
-  LocalClientNum_t LVar1;
-  int iVar2;
+  int iVar1;
   int local_3c;
   int local_38;
   
-  LVar1 = __savegprlr_28(param_1);
   sscanf(param_2,"%d:%d:%d");
   if (local_3c < 0) {
     Com_PrintWarning(1,"Argument \"%d\" hours for FAKE_INTRO_TIME is invalid.\n");
@@ -12199,176 +11651,159 @@ void DirectiveFakeIntroTime(LocalClientNum_t param_1,char *param_2,char *param_3
   if ((local_38 < 0) || (0x3b < local_38)) {
     Com_PrintWarning(1,"Argument \"%d\" minutes for FAKE_INTRO_TIME is invalid.\n");
   }
-  iVar2 = CL_IsCgameInitialized(LVar1);
-  if (iVar2 != 0) {
-    CG_GetLocalClientGlobals(LVar1);
+  iVar1 = CL_IsCgameInitialized(param_1);
+  if (iVar1 != 0) {
+    CG_GetLocalClientGlobals(param_1);
   }
-  iVar2 = Com_sprintf(param_3,param_4,"%02d:%02d:%02d");
-  __restgprlr_28(iVar2);
+  Com_sprintf(param_3,param_4,"%02d:%02d:%02d");
   return;
 }
 
 
 // 825C56C8  ParseDirective  (ui/ui_shared.cpp:8727)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 void ParseDirective(char *param_1,char *param_2,int param_3,char *param_4,int param_5)
 
 {
   char *pcVar1;
-  char *pcVar2;
   
-  pcVar1 = (char *)__savegprlr_26(param_1);
-  if (pcVar1 == (char *)0x0) {
+  if (param_1 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x221a,0,
                     "%s");
   }
-  pcVar2 = strstr(pcVar1,":");
-  if (pcVar2 == (char *)0x0) {
-    I_strncpyz(param_2,pcVar1,param_3);
+  pcVar1 = strstr(param_1,":");
+  if (pcVar1 == (char *)0x0) {
+    I_strncpyz(param_2,param_1,param_3);
     *param_4 = '\0';
-    __restgprlr_26();
     return;
   }
   memcpy();
-  param_2[(int)pcVar2 - (int)pcVar1] = '\0';
-  I_strncpyz(param_4,pcVar2 + 1,param_5);
-  __restgprlr_26();
+  param_2[(int)pcVar1 - (int)param_1] = '\0';
+  I_strncpyz(param_4,pcVar1 + 1,param_5);
   return;
 }
 
 
 // 825CC850  ProcessStringDirective  (ui/ui_shared.cpp:8752)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void ProcessStringDirective(LocalClientNum_t param_1,char *param_2,char *param_3,int param_4)
 
 {
-  LocalClientNum_t LVar1;
-  int iVar2;
+  int iVar1;
   char acStack_230 [256];
   char acStack_130 [304];
   
-  LVar1 = __savegprlr_28(param_1);
-  iVar2 = GetKeyBindingLocalizedString(LVar1,param_2,param_3,param_4,false);
-  if (iVar2 != 0) {
+  iVar1 = GetKeyBindingLocalizedString(param_1,param_2,param_3,param_4,false);
+  if (iVar1 != 0) {
     UI_FilterStringForButtonAnimation(param_3,param_4);
-    __restgprlr_28();
     return;
   }
   ParseDirective(param_2,acStack_230,0x100,acStack_130,0x100);
-  iVar2 = I_stricmp(acStack_230,"FAKE_INTRO_SECONDS");
-  if (iVar2 == 0) {
-    DirectiveFakeIntroSeconds(LVar1,acStack_130,param_3,param_4);
-    __restgprlr_28();
+  iVar1 = I_stricmp(acStack_230,"FAKE_INTRO_SECONDS");
+  if (iVar1 == 0) {
+    DirectiveFakeIntroSeconds(param_1,acStack_130,param_3,param_4);
     return;
   }
-  iVar2 = I_stricmp(acStack_230,"FAKE_INTRO_TIME");
-  if (iVar2 == 0) {
-    DirectiveFakeIntroTime(LVar1,acStack_130,param_3,param_4);
-    __restgprlr_28();
+  iVar1 = I_stricmp(acStack_230,"FAKE_INTRO_TIME");
+  if (iVar1 == 0) {
+    DirectiveFakeIntroTime(param_1,acStack_130,param_3,param_4);
     return;
   }
   UI_SafeTranslateString("KEY_UNBOUND");
-  iVar2 = Com_sprintf(param_3,param_4,"%s(%s)");
-  __restgprlr_28(iVar2);
+  Com_sprintf(param_3,param_4,"%s(%s)");
   return;
 }
 
 
 // 825CC940  UI_ReplaceDirective  (ui/ui_shared.cpp:8783)
 
+/* WARNING: Function: __savegprlr_21 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_21 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void UI_ReplaceDirective(LocalClientNum_t param_1,char *param_2,char *param_3,int param_4)
 
 {
   bool bVar1;
-  LocalClientNum_t LVar2;
-  ulonglong uVar3;
-  longlong lVar4;
-  char cVar5;
-  ulonglong uVar6;
-  char *pcVar7;
-  char *pcVar9;
-  ulonglong uVar8;
-  ulonglong uVar10;
+  char cVar2;
+  char *pcVar3;
+  char *pcVar4;
+  char *pcVar5;
   char local_260 [256];
   char acStack_160 [352];
   
-  lVar4 = (longlong)param_4;
-  uVar3 = (ulonglong)(int)param_3;
-  uVar10 = (ulonglong)(int)param_2;
-  LVar2 = __savegprlr_21(param_1);
-  if ((uVar10 & 0xffffffff) == 0) {
+  if (param_2 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x2256,0,
                     "%s");
   }
-  if ((uVar3 & 0xffffffff) == 0) {
+  if (param_3 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x2257,0,
                     "%s");
   }
-  if ((uVar10 & 0xffffffff) == (uVar3 & 0xffffffff)) {
+  if (param_2 == param_3) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x2258,0,
                     "%s");
   }
-  if ((int)lVar4 < 1) {
+  if (param_4 < 1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x2259,0,
                     "%s");
   }
-  uVar6 = uVar3 + lVar4;
-  pcVar7 = local_260;
+  pcVar3 = param_3 + param_4;
+  pcVar4 = local_260;
   bVar1 = false;
-  *(undefined1 *)((int)uVar6 + -1) = 0;
-  cVar5 = *(char *)uVar10;
-  uVar8 = uVar3;
-  if (cVar5 != '\0') {
+  pcVar3[-1] = '\0';
+  cVar2 = *param_2;
+  pcVar5 = param_3;
+  if (cVar2 != '\0') {
     do {
-      if ((uVar6 - 1 & 0xffffffff) <= (uVar8 & 0xffffffff)) break;
-      if ((cVar5 == '[') && (*(char *)((int)uVar10 + 1) == '{')) {
-        uVar10 = uVar10 + 1;
+      if (pcVar3 + -1 <= pcVar5) break;
+      if ((cVar2 == '[') && (param_2[1] == '{')) {
+        param_2 = param_2 + 1;
         bVar1 = true;
-        pcVar7 = local_260;
+        pcVar4 = local_260;
         memset();
       }
-      else {
-        pcVar9 = (char *)uVar8;
-        if ((cVar5 == '}') && (*(char *)((int)uVar10 + 1) == ']')) {
-          uVar10 = uVar10 + 1;
-          bVar1 = false;
-          if (pcVar7 == local_260) {
-            Com_PrintError(0xd,"Directive empty in string \'%s\'");
-          }
-          else {
-            ProcessStringDirective(LVar2,local_260,acStack_160,0x100);
-            I_strncpyz(pcVar9,acStack_160,((int)uVar3 - (int)pcVar9) + (int)lVar4);
-            cVar5 = *pcVar9;
-            while (cVar5 != '\0') {
-              uVar8 = uVar8 + 1;
-              cVar5 = *(char *)uVar8;
-            }
-          }
-        }
-        else if (bVar1) {
-          *pcVar7 = cVar5;
-          pcVar7 = pcVar7 + 1;
+      else if ((cVar2 == '}') && (param_2[1] == ']')) {
+        param_2 = param_2 + 1;
+        bVar1 = false;
+        if (pcVar4 == local_260) {
+          Com_PrintError(0xd,"Directive empty in string \'%s\'");
         }
         else {
-          *pcVar9 = cVar5;
-          uVar8 = uVar8 + 1;
+          ProcessStringDirective(param_1,local_260,acStack_160,0x100);
+          I_strncpyz(pcVar5,acStack_160,(int)(param_3 + (param_4 - (int)pcVar5)));
+          cVar2 = *pcVar5;
+          while (cVar2 != '\0') {
+            pcVar5 = pcVar5 + 1;
+            cVar2 = *pcVar5;
+          }
         }
       }
-      uVar10 = uVar10 + 1;
-      cVar5 = *(char *)uVar10;
-    } while (cVar5 != '\0');
+      else if (bVar1) {
+        *pcVar4 = cVar2;
+        pcVar4 = pcVar4 + 1;
+      }
+      else {
+        *pcVar5 = cVar2;
+        pcVar5 = pcVar5 + 1;
+      }
+      param_2 = param_2 + 1;
+      cVar2 = *param_2;
+    } while (cVar2 != '\0');
   }
-  if ((uVar8 & 0xffffffff) < (uVar6 & 0xffffffff)) {
-    *(undefined1 *)uVar8 = 0;
+  if (pcVar5 < pcVar3) {
+    *pcVar5 = '\0';
   }
   if (bVar1) {
     Com_PrintError(0xd,"No end token to match begin token in string \'%s\'");
   }
-  __restgprlr_21();
   return;
 }
 
@@ -12395,124 +11830,117 @@ void UI_LocalizationError(char *param_1)
 
 // 825C5838  UI_ValidateNonLocalizedString  (ui/ui_shared.cpp:8863)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 bool UI_ValidateNonLocalizedString(char *param_1,uint param_2)
 
 {
   char cVar1;
   int iVar2;
-  int iVar3;
-  undefined1 uVar5;
-  char *pcVar4;
-  ulonglong uVar6;
-  ulonglong uVar7;
+  char *pcVar3;
+  uint uVar4;
   
-  uVar6 = (ulonglong)(int)param_2;
-  iVar2 = __savegprlr_28(param_1);
-  uVar7 = 0;
-  if ((uVar6 & 0xffffffff) != 0) {
+  uVar4 = 0;
+  if (param_2 != 0) {
     do {
-      cVar1 = *(char *)((int)uVar7 + iVar2);
+      cVar1 = param_1[uVar4];
       if (((cVar1 == '\x14') || (cVar1 == '\x15')) || (cVar1 == '\x16')) {
         Com_PrintError(0xd,"Error: bad escape character (%i) present in string");
       }
-      iVar3 = isalpha((int)*(char *)((int)uVar7 + iVar2));
-      if (iVar3 != 0) {
-        pcVar4 = va("Non-localized UI strings are not allowed to have letters in them: \"%s\"");
+      iVar2 = isalpha((int)param_1[uVar4]);
+      if (iVar2 != 0) {
+        pcVar3 = va("Non-localized UI strings are not allowed to have letters in them: \"%s\"");
         if ((loc_warningsUI->current).enabled != false) {
-          if (pcVar4 == (char *)0x0) {
+          if (pcVar3 == (char *)0x0) {
             MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",
                             0x2294,0,"%s");
           }
           if ((loc_warningsAsErrors->current).enabled != false) {
             Com_Error(ERR_LOCALIZATION,"Error: %s");
-            uVar5 = __restgprlr_28(0);
-            return (bool)uVar5;
+            return false;
           }
           Com_PrintWarning(0xd,"WARNING: %s\n");
         }
-        uVar5 = __restgprlr_28(0);
-        return (bool)uVar5;
+        return false;
       }
-      uVar7 = uVar7 + 1;
-    } while ((uVar7 & 0xffffffff) < (uVar6 & 0xffffffff));
+      uVar4 = uVar4 + 1;
+    } while (uVar4 < param_2);
   }
-  uVar5 = __restgprlr_28(1);
-  return (bool)uVar5;
+  return true;
 }
 
 
 // 825C5960  UI_ValidateAndStripTranslatedString  (ui/ui_shared.cpp:8884)
+
+/* WARNING: Function: __savegprlr_17 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_17 replaced with injection: xenon_save_restore */
 
 bool UI_ValidateAndStripTranslatedString(char *param_1,char *param_2,uint param_3)
 
 {
   char cVar1;
   bool bVar2;
-  char *pcVar3;
-  int iVar4;
-  char *pcVar5;
-  undefined1 uVar6;
-  ulonglong uVar7;
-  int iVar8;
-  ulonglong uVar9;
+  int iVar3;
+  char *pcVar4;
+  int iVar5;
+  uint uVar6;
   
-  uVar7 = (ulonglong)(int)param_3;
-  pcVar3 = (char *)__savegprlr_17(param_1);
   bVar2 = false;
-  iVar8 = 0;
-  uVar9 = 0;
-  cVar1 = *pcVar3;
+  iVar5 = 0;
+  uVar6 = 0;
+  cVar1 = *param_1;
   while (cVar1 != '\0') {
-    cVar1 = *pcVar3;
+    cVar1 = *param_1;
     if (cVar1 == '\x15') {
-      if (iVar8 != 0) {
+      if (iVar5 != 0) {
         va("multiple loc_off\'s: \"%s\"");
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x22c1,0
                         ,"%s\n\t%s");
       }
-      iVar8 = iVar8 + 1;
+      iVar5 = iVar5 + 1;
     }
     else if (cVar1 == '\x14') {
-      if (iVar8 != 1) {
+      if (iVar5 != 1) {
         va("loc_on without loc_off: \"%s\"");
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x22c7,0
                         ,"%s\n\t%s");
       }
-      iVar8 = iVar8 + -1;
+      iVar5 = iVar5 + -1;
     }
     else {
-      if ((((loc_warningsUI->current).enabled != false) && (iVar8 == 0)) &&
-         (iVar4 = isalpha((int)cVar1), iVar4 != 0)) {
-        pcVar5 = va("Non-localized UI strings are not allowed to have letters in them: \"%s\"");
-        UI_LocalizationError(pcVar5);
+      if ((((loc_warningsUI->current).enabled != false) && (iVar5 == 0)) &&
+         (iVar3 = isalpha((int)cVar1), iVar3 != 0)) {
+        pcVar4 = va("Non-localized UI strings are not allowed to have letters in them: \"%s\"");
+        UI_LocalizationError(pcVar4);
         bVar2 = true;
       }
-      if ((uVar7 & 0xffffffff) <= (uVar9 & 0xffffffff)) goto LAB_825c5b08;
-      param_2[(int)uVar9] = *pcVar3;
-      uVar9 = uVar9 + 1;
+      if (param_3 <= uVar6) goto LAB_825c5b08;
+      param_2[uVar6] = *param_1;
+      uVar6 = uVar6 + 1;
     }
-    pcVar3 = pcVar3 + 1;
-    cVar1 = *pcVar3;
+    param_1 = param_1 + 1;
+    cVar1 = *param_1;
   }
-  if ((uVar9 & 0xffffffff) < (uVar7 & 0xffffffff)) {
-    param_2[(int)uVar9] = '\0';
-    if (iVar8 != 0) {
+  if (uVar6 < param_3) {
+    param_2[uVar6] = '\0';
+    if (iVar5 != 0) {
       va("missing a matching loc_on: \"%s\"");
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x22e7,0,
                       "%s\n\t%s");
     }
-    uVar6 = __restgprlr_17(!bVar2);
-    return (bool)uVar6;
+    return !bVar2;
   }
 LAB_825c5b08:
   Com_Error(ERR_LOCALIZATION,"Error: %s is too long. Max length is %i\n");
-  uVar6 = __restgprlr_17(0);
-  return (bool)uVar6;
+  return false;
 }
 
 
 // 825CCB50  Item_Text_Paint  (ui/ui_shared.cpp:8942)
 
+/* WARNING: Function: __savegprlr_19 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_19 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
@@ -12525,24 +11953,20 @@ void Item_Text_Paint(UiContext *param_1,itemDef_t *param_2)
   byte bVar3;
   LocalClientNum_t LVar4;
   uint uVar5;
-  UiContext *pUVar6;
-  bool bVar13;
-  char *pcVar7;
-  int iVar8;
+  bool bVar12;
+  char *pcVar6;
+  int iVar7;
+  rectDef_s *prVar8;
   rectDef_s *prVar9;
-  rectDef_s *prVar10;
-  ScreenPlacement *pSVar11;
-  Font_s *pFVar12;
+  ScreenPlacement *pSVar10;
+  Font_s *pFVar11;
   int in_r7;
   int in_r8;
-  char *pcVar14;
-  undefined8 in_f29;
-  undefined8 in_f30;
+  char *pcVar13;
+  double dVar14;
   double dVar15;
   double dVar16;
-  undefined8 in_f31;
-  double dVar17;
-  float fVar18;
+  float fVar17;
   float *in_stack_fffff2b8;
   undefined1 in_stack_fffff2bf;
   undefined1 in_stack_fffff2c3;
@@ -12555,148 +11979,135 @@ void Item_Text_Paint(UiContext *param_1,itemDef_t *param_2)
   float afStack_ca0 [4];
   char local_c90 [1024];
   char acStack_890 [1024];
-  char acStack_490 [1032];
-  undefined8 local_88;
-  undefined8 local_80;
-  undefined8 local_78;
+  char acStack_490 [1168];
   
-  pUVar6 = (UiContext *)__savegprlr_19(param_1);
-  local_88 = in_f29;
-  local_80 = in_f30;
-  local_78 = in_f31;
   uVar5 = (uint)param_2->itemFlags >> 1 & 1;
   if (uVar5 != 0) {
     param_2->text = "NOT USING CINEMATIC_SUBTITLES";
   }
-  pcVar7 = param_2->text;
-  if (pcVar7 == (char *)0x0) {
+  pcVar6 = param_2->text;
+  if (pcVar6 == (char *)0x0) {
     if (param_2->textExp == (Statement_s *)0x0) {
       if (param_2->localVar == (char *)0x0) {
-        if (param_2->dvar == (char *)0x0) goto LAB_825cd014;
+        if (param_2->dvar == (char *)0x0) {
+          return;
+        }
         Dvar_GetVariantStringToBuffer(param_2->dvar,local_c90,0x400);
       }
       else {
-        pcVar7 = UILocalVar_GetStringByName(&pUVar6->localVars,param_2->localVar,acStack_490,0x400);
-        I_strncpyz(local_c90,pcVar7,0x400);
+        pcVar6 = UILocalVar_GetStringByName(&param_1->localVars,param_2->localVar,acStack_490,0x400)
+        ;
+        I_strncpyz(local_c90,pcVar6,0x400);
       }
-LAB_825ccd00:
-      pcVar7 = local_c90;
     }
     else {
-      pcVar7 = GetExpressionResultString(pUVar6->localClientNum,param_2->textExp);
-      if ((loc_warningsUI->current).enabled != false) {
-        bVar13 = UI_ValidateAndStripTranslatedString(pcVar7,local_c90,0x400);
-        if (bVar13) goto LAB_825ccd00;
-        pcVar14 = pcVar7;
-        if (*pcVar7 != '@') {
-          do {
-            cVar1 = *pcVar14;
-            pcVar14 = pcVar14 + 1;
-          } while (cVar1 != '\0');
-          bVar13 = UI_ValidateNonLocalizedString(pcVar7,(uint)(pcVar14 + (-1 - (int)pcVar7)));
-          if ((!bVar13) && ((loc_warningsUI->current).enabled != false)) {
-            Com_sprintf(local_c90,0x400,"^1UNLOCALIZED(^7%s^1)^7");
-            goto LAB_825ccd00;
-          }
-        }
+      pcVar6 = GetExpressionResultString(param_1->localClientNum,param_2->textExp);
+      if ((loc_warningsUI->current).enabled == false) goto LAB_825ccd04;
+      bVar12 = UI_ValidateAndStripTranslatedString(pcVar6,local_c90,0x400);
+      if (!bVar12) {
+        pcVar13 = pcVar6;
+        if (*pcVar6 == '@') goto LAB_825ccd04;
+        do {
+          cVar1 = *pcVar13;
+          pcVar13 = pcVar13 + 1;
+        } while (cVar1 != '\0');
+        bVar12 = UI_ValidateNonLocalizedString(pcVar6,(uint)(pcVar13 + (-1 - (int)pcVar6)));
+        if ((bVar12) || ((loc_warningsUI->current).enabled == false)) goto LAB_825ccd04;
+        Com_sprintf(local_c90,0x400,"^1UNLOCALIZED(^7%s^1)^7");
       }
     }
   }
   else {
-    pcVar14 = pcVar7;
-    if (*pcVar7 != '@') {
-      do {
-        cVar1 = *pcVar14;
-        pcVar14 = pcVar14 + 1;
-      } while (cVar1 != '\0');
-      bVar13 = UI_ValidateNonLocalizedString(pcVar7,(uint)(pcVar14 + (-1 - (int)pcVar7)));
-      if ((!bVar13) && ((loc_warningsUI->current).enabled != false)) {
-        Com_sprintf(local_c90,0x400,"^1UNLOCALIZED(^7%s^1)^7");
-        goto LAB_825ccd00;
-      }
-    }
+    pcVar13 = pcVar6;
+    if (*pcVar6 == '@') goto LAB_825ccd04;
+    do {
+      cVar1 = *pcVar13;
+      pcVar13 = pcVar13 + 1;
+    } while (cVar1 != '\0');
+    bVar12 = UI_ValidateNonLocalizedString(pcVar6,(uint)(pcVar13 + (-1 - (int)pcVar6)));
+    if ((bVar12) || ((loc_warningsUI->current).enabled == false)) goto LAB_825ccd04;
+    Com_sprintf(local_c90,0x400,"^1UNLOCALIZED(^7%s^1)^7");
   }
-  if (*pcVar7 == '@') {
-    pcVar7 = UI_SafeTranslateString(pcVar7 + 1);
+  pcVar6 = local_c90;
+LAB_825ccd04:
+  if (*pcVar6 == '@') {
+    pcVar6 = UI_SafeTranslateString(pcVar6 + 1);
   }
-  if (*pcVar7 != '\0') {
-    UI_ReplaceDirective(pUVar6->localClientNum,pcVar7,acStack_890,0x400);
-    Item_TextColor(pUVar6,param_2,&afStack_ca0);
-    dVar17 = (double)param_2->textscale;
-    bVar13 = Menu_HasScaleTransition(pUVar6->localClientNum,param_2->parent);
-    if (bVar13) {
-      fVar18 = Menu_GetTransitionValue
-                         (pUVar6->localClientNum,param_2->parent,
-                          param_2->parent->data->scaleTransition + pUVar6->localClientNum);
-      dVar17 = (double)(float)((double)fVar18 * dVar17);
+  if (*pcVar6 != '\0') {
+    UI_ReplaceDirective(param_1->localClientNum,pcVar6,acStack_890,0x400);
+    Item_TextColor(param_1,param_2,&afStack_ca0);
+    dVar16 = (double)param_2->textscale;
+    bVar12 = Menu_HasScaleTransition(param_1->localClientNum,param_2->parent);
+    if (bVar12) {
+      fVar17 = Menu_GetTransitionValue
+                         (param_1->localClientNum,param_2->parent,
+                          param_2->parent->data->scaleTransition + param_1->localClientNum);
+      dVar16 = (double)(float)((double)fVar17 * dVar16);
     }
-    Item_SetTextExtents(pUVar6,param_2,acStack_890);
+    Item_SetTextExtents(param_1,param_2,acStack_890);
     if (param_2->decayActive != false) {
-      iVar8 = CG_GetGameTime(pUVar6->localClientNum);
-      if ((param_2->fxBirthTime == 0) || (iVar8 < param_2->fxBirthTime)) {
-        param_2->fxBirthTime = iVar8;
+      iVar7 = CG_GetGameTime(param_1->localClientNum);
+      if ((param_2->fxBirthTime == 0) || (iVar7 < param_2->fxBirthTime)) {
+        param_2->fxBirthTime = iVar7;
       }
-      iVar8 = SEH_PrintStrlen(acStack_890);
+      iVar7 = SEH_PrintStrlen(acStack_890);
       in_r8 = param_2->fxDecayStartTime;
       in_r7 = param_2->fxLetterTime;
       CL_PlayTextFXPulseSounds
-                (pUVar6->localClientNum,pUVar6->realTime,iVar8,param_2->fxBirthTime,in_r7,in_r8,
+                (param_1->localClientNum,param_1->realTime,iVar7,param_2->fxBirthTime,in_r7,in_r8,
                  &param_2->lastSoundPlayedTime);
     }
     if (((param_2->window).staticFlags & 0x800000U) != 0) {
       Item_Text_AutoWrapped_Paint
-                (pUVar6,param_2,acStack_890,afStack_ca0,SUB41(uVar5,0),MY_SUBTITLE_GLOWCOLOR,
+                (param_1,param_2,acStack_890,afStack_ca0,SUB41(uVar5,0),MY_SUBTITLE_GLOWCOLOR,
                  SUB41(uVar5,0));
-      __restgprlr_19();
       return;
     }
-    prVar9 = Item_GetTextRect(pUVar6->localClientNum,param_2);
-    prVar10 = Window_GetRect(&param_2->window);
-    dVar15 = (double)param_2->textscale;
-    iVar8 = param_2->fontEnum;
-    pSVar11 = ScrPlace_GetActivePlacement(pUVar6->localClientNum);
-    pFVar12 = UI_GetFontHandle(pSVar11,iVar8,(float)dVar15);
-    dVar16 = (double)prVar9->y;
-    LVar4 = pUVar6->localClientNum;
-    dVar15 = (double)prVar9->x;
+    prVar8 = Item_GetTextRect(param_1->localClientNum,param_2);
+    prVar9 = Window_GetRect(&param_2->window);
+    dVar14 = (double)param_2->textscale;
+    iVar7 = param_2->fontEnum;
+    pSVar10 = ScrPlace_GetActivePlacement(param_1->localClientNum);
+    pFVar11 = UI_GetFontHandle(pSVar10,iVar7,(float)dVar14);
+    dVar15 = (double)prVar8->y;
+    LVar4 = param_1->localClientNum;
+    dVar14 = (double)prVar8->x;
     if (uVar5 != 0) {
-      bVar2 = prVar10->vertAlign;
-      bVar3 = prVar10->horzAlign;
-      pSVar11 = ScrPlace_GetActivePlacement(LVar4);
-      UI_DrawTextWithGlow(pSVar11,acStack_890,0x7fffffff,pFVar12,(float)dVar15,(float)dVar16,1,
-                          -0x7d66dce0,(float)dVar17,(float *)(uint)bVar3,(uint)bVar2,
+      bVar2 = prVar9->vertAlign;
+      bVar3 = prVar9->horzAlign;
+      pSVar10 = ScrPlace_GetActivePlacement(LVar4);
+      UI_DrawTextWithGlow(pSVar10,acStack_890,0x7fffffff,pFVar11,(float)dVar14,(float)dVar15,1,
+                          -0x7d66dce0,(float)dVar16,(float *)(uint)bVar3,(uint)bVar2,
                           in_stack_fffff2b8,(bool)in_stack_fffff2bf,(bool)in_stack_fffff2c3,
                           in_stack_fffff2c4,in_stack_fffff2c8,in_stack_fffff2cc,in_stack_fffff2d0,
                           in_stack_fffff2d4,in_stack_fffff2d8);
-      __restgprlr_19();
       return;
     }
     if (param_2->glowColor[3] != 0.0) {
-      bVar2 = prVar10->vertAlign;
-      bVar3 = prVar10->horzAlign;
-      pSVar11 = ScrPlace_GetActivePlacement(LVar4);
-      UI_DrawTextWithGlow(pSVar11,acStack_890,0x7fffffff,pFVar12,(float)dVar15,(float)dVar16,in_r7,0
-                          ,(float)dVar17,(float *)(uint)bVar3,(uint)bVar2,in_stack_fffff2b8,
+      bVar2 = prVar9->vertAlign;
+      bVar3 = prVar9->horzAlign;
+      pSVar10 = ScrPlace_GetActivePlacement(LVar4);
+      UI_DrawTextWithGlow(pSVar10,acStack_890,0x7fffffff,pFVar11,(float)dVar14,(float)dVar15,in_r7,0
+                          ,(float)dVar16,(float *)(uint)bVar3,(uint)bVar2,in_stack_fffff2b8,
                           (bool)in_stack_fffff2bf,(bool)in_stack_fffff2c3,in_stack_fffff2c4,
                           in_stack_fffff2c8,in_stack_fffff2cc,in_stack_fffff2d0,in_stack_fffff2d4,
                           in_stack_fffff2d8);
-      __restgprlr_19();
       return;
     }
-    bVar2 = prVar10->vertAlign;
-    bVar3 = prVar10->horzAlign;
-    pSVar11 = ScrPlace_GetActivePlacement(LVar4);
-    UI_DrawText(pSVar11,acStack_890,0x7fffffff,pFVar12,(float)dVar15,(float)dVar16,in_r7,in_r8,
-                (float)dVar17,(float *)(uint)bVar3,(uint)bVar2);
+    bVar2 = prVar9->vertAlign;
+    bVar3 = prVar9->horzAlign;
+    pSVar10 = ScrPlace_GetActivePlacement(LVar4);
+    UI_DrawText(pSVar10,acStack_890,0x7fffffff,pFVar11,(float)dVar14,(float)dVar15,in_r7,in_r8,
+                (float)dVar16,(float *)(uint)bVar3,(uint)bVar2);
   }
-LAB_825cd014:
-  __restgprlr_19();
   return;
 }
 
 
 // 825CD028  Item_TextField_Paint  (ui/ui_shared.cpp:9087)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
@@ -12709,27 +12120,25 @@ void Item_TextField_Paint(UiContext *param_1,itemDef_t *param_2)
   byte bVar3;
   menuDef_t *pmVar4;
   int iVar5;
-  UiContext *pUVar6;
-  editFieldDef_s *peVar7;
-  UILocalVar *pUVar9;
-  char *pcVar10;
-  char *pcVar11;
-  dvar_t *pdVar12;
-  bool bVar17;
-  rectDef_s *prVar13;
-  ScreenPlacement *pSVar14;
-  Font_s *pFVar15;
-  rectDef_s *prVar16;
-  ulonglong uVar18;
+  editFieldDef_s *peVar6;
+  UILocalVar *pUVar7;
+  char *pcVar8;
+  char *pcVar9;
+  dvar_t *pdVar10;
+  bool bVar15;
+  rectDef_s *prVar11;
+  ScreenPlacement *pSVar12;
+  Font_s *pFVar13;
+  rectDef_s *prVar14;
   char *in_r7;
-  int iVar19;
+  int iVar16;
   float *in_r8;
-  int iVar20;
-  int iVar21;
-  double dVar22;
-  double dVar23;
-  double dVar24;
-  float fVar25;
+  int iVar17;
+  int iVar18;
+  double dVar19;
+  double dVar20;
+  double dVar21;
+  float fVar22;
   int in_stack_fffff6f8;
   char in_stack_fffff6ff;
   float local_890;
@@ -12739,140 +12148,133 @@ void Item_TextField_Paint(UiContext *param_1,itemDef_t *param_2)
   longlong local_880;
   char local_870 [1024];
   char acStack_470 [1136];
-  itemDef_t *piVar8;
   
-  uVar18 = (ulonglong)(int)param_2;
-  pUVar6 = (UiContext *)__savegprlr_23(param_1);
-  piVar8 = (itemDef_t *)uVar18;
-  peVar7 = Item_GetEditFieldDef(piVar8);
-  if (peVar7 == (editFieldDef_s *)0x0) goto LAB_825cd46c;
-  Item_Text_Paint(pUVar6,piVar8);
+  peVar6 = Item_GetEditFieldDef(param_2);
+  if (peVar6 == (editFieldDef_s *)0x0) {
+    return;
+  }
+  Item_Text_Paint(param_1,param_2);
   local_870[0] = '\0';
-  if (piVar8->localVar == (char *)0x0) {
-    pcVar11 = piVar8->dvar;
-    if (pcVar11 != (char *)0x0) {
-      if (piVar8->type == 0x11) {
-        pdVar12 = Dvar_FindVar(pcVar11);
-        if ((pdVar12 != (dvar_t *)0x0) && (pdVar12->type == '\x01')) {
-          Com_LocalizedFloatToString((pdVar12->current).value,(char *)pdVar12,(uint)local_870,0x400)
-          ;
-        }
+  if (param_2->localVar == (char *)0x0) {
+    pcVar9 = param_2->dvar;
+    if (pcVar9 == (char *)0x0) goto LAB_825cd218;
+    if (param_2->type == 0x11) {
+      pdVar10 = Dvar_FindVar(pcVar9);
+      if ((pdVar10 != (dvar_t *)0x0) && (pdVar10->type == '\x01')) {
+        Com_LocalizedFloatToString((pdVar10->current).value,(char *)pdVar10,(uint)local_870,0x400);
       }
-      else {
-        if (piVar8->type != 0x17) {
-          pcVar11 = Dvar_GetVariantString(pcVar11);
-          goto LAB_825cd208;
-        }
-        pcVar10 = Dvar_GetVariantString(pcVar11);
-        pcVar11 = pcVar10;
-        do {
-          cVar1 = *pcVar11;
-          pcVar11 = pcVar11 + 1;
-        } while (cVar1 != '\0');
-        pcVar11 = pcVar11 + (-1 - (int)pcVar10);
-        if ((char *)0x3fe < pcVar11) {
-          pcVar11 = (char *)0x3fe;
-        }
-        memset();
-        local_870[(int)pcVar11] = '\0';
-      }
+      goto LAB_825cd218;
     }
+    if (param_2->type == 0x17) {
+      pcVar8 = Dvar_GetVariantString(pcVar9);
+      pcVar9 = pcVar8;
+      do {
+        cVar1 = *pcVar9;
+        pcVar9 = pcVar9 + 1;
+      } while (cVar1 != '\0');
+      pcVar9 = pcVar9 + (-1 - (int)pcVar8);
+      if ((char *)0x3fe < pcVar9) {
+        pcVar9 = (char *)0x3fe;
+      }
+      memset();
+      local_870[(int)pcVar9] = '\0';
+      goto LAB_825cd218;
+    }
+    pcVar9 = Dvar_GetVariantString(pcVar9);
   }
   else {
-    pUVar9 = UILocalVar_Find(&pUVar6->localVars,piVar8->localVar);
-    if (pUVar9 == (UILocalVar *)0x0) {
+    pUVar7 = UILocalVar_Find(&param_1->localVars,param_2->localVar);
+    if (pUVar7 == (UILocalVar *)0x0) {
       if (local_870[0] != '\0') {
         in_r7 = "buff[0] == \'\\0\'";
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x23b3,0
                         ,"%s");
       }
       Com_PrintWarning(0xd,"WARNING: Could not find LocalVar \'%s\' in Item_TextField_Paint().\n");
+      goto LAB_825cd218;
     }
-    else if (piVar8->type == 0x11) {
-      if (pUVar9->type == UILOCALVAR_FLOAT) {
-        Com_LocalizedFloatToString((pUVar9->u).value,(char *)pUVar9,(uint)local_870,0x400);
+    if (param_2->type == 0x11) {
+      if (pUVar7->type == UILOCALVAR_FLOAT) {
+        Com_LocalizedFloatToString((pUVar7->u).value,(char *)pUVar7,(uint)local_870,0x400);
       }
+      goto LAB_825cd218;
     }
-    else if (piVar8->type == 0x17) {
-      pcVar10 = UILocalVar_GetString(pUVar9,acStack_470,0x400);
-      pcVar11 = pcVar10;
+    if (param_2->type == 0x17) {
+      pcVar8 = UILocalVar_GetString(pUVar7,acStack_470,0x400);
+      pcVar9 = pcVar8;
       do {
-        cVar1 = *pcVar11;
-        pcVar11 = pcVar11 + 1;
+        cVar1 = *pcVar9;
+        pcVar9 = pcVar9 + 1;
       } while (cVar1 != '\0');
-      pcVar11 = pcVar11 + (-1 - (int)pcVar10);
-      if ((char *)0x3fe < pcVar11) {
-        pcVar11 = (char *)0x3fe;
+      pcVar9 = pcVar9 + (-1 - (int)pcVar8);
+      if ((char *)0x3fe < pcVar9) {
+        pcVar9 = (char *)0x3fe;
       }
       memset();
-      local_870[(int)pcVar11] = '\0';
+      local_870[(int)pcVar9] = '\0';
+      goto LAB_825cd218;
     }
-    else {
-      pcVar11 = UILocalVar_GetString(pUVar9,acStack_470,0x400);
-LAB_825cd208:
-      I_strncpyz(local_870,pcVar11,0x400);
-    }
+    pcVar9 = UILocalVar_GetString(pUVar7,acStack_470,0x400);
   }
-  Item_SetTextExtents(pUVar6,piVar8,local_870);
-  pmVar4 = piVar8->parent;
-  bVar17 = Window_HasFocus(pUVar6->localClientNum,&piVar8->window);
-  if (bVar17) {
-    GetBlinkColor(pUVar6,pmVar4->data->focusColor,&local_890);
+  I_strncpyz(local_870,pcVar9,0x400);
+LAB_825cd218:
+  Item_SetTextExtents(param_1,param_2,local_870);
+  pmVar4 = param_2->parent;
+  bVar15 = Window_HasFocus(param_1->localClientNum,&param_2->window);
+  if (bVar15) {
+    GetBlinkColor(param_1,pmVar4->data->focusColor,&local_890);
   }
   else {
-    local_890 = (piVar8->window).foreColor[0];
-    local_88c = (piVar8->window).foreColor[1];
-    in_r8 = (piVar8->window).foreColor;
-    in_r7 = (char *)(piVar8->window).foreColor[2];
-    local_884 = (piVar8->window).foreColor[3];
+    local_890 = (param_2->window).foreColor[0];
+    local_88c = (param_2->window).foreColor[1];
+    in_r8 = (param_2->window).foreColor;
+    in_r7 = (char *)(param_2->window).foreColor[2];
+    local_884 = (param_2->window).foreColor[3];
     local_888 = in_r7;
   }
-  dVar24 = (double)piVar8->textscale;
-  bVar17 = Menu_HasScaleTransition(pUVar6->localClientNum,piVar8->parent);
-  if (bVar17) {
-    fVar25 = Menu_GetTransitionValue
-                       (pUVar6->localClientNum,piVar8->parent,
-                        piVar8->parent->data->scaleTransition + pUVar6->localClientNum);
-    dVar24 = (double)(float)((double)fVar25 * dVar24);
+  dVar21 = (double)param_2->textscale;
+  bVar15 = Menu_HasScaleTransition(param_1->localClientNum,param_2->parent);
+  if (bVar15) {
+    fVar22 = Menu_GetTransitionValue
+                       (param_1->localClientNum,param_2->parent,
+                        param_2->parent->data->scaleTransition + param_1->localClientNum);
+    dVar21 = (double)(float)((double)fVar22 * dVar21);
   }
-  if ((piVar8->text == (char *)0x0) || (iVar21 = 8, *piVar8->text == '\0')) {
-    iVar21 = 0;
+  if ((param_2->text == (char *)0x0) || (iVar18 = 8, *param_2->text == '\0')) {
+    iVar18 = 0;
   }
-  prVar13 = Item_GetTextRect(pUVar6->localClientNum,piVar8);
-  local_880 = (longlong)iVar21;
-  iVar21 = peVar7->maxPaintChars;
-  iVar5 = peVar7->paintOffset;
-  dVar23 = (double)(prVar13->w + (float)local_880 + prVar13->x);
-  if (iVar21 == 0) {
-    iVar21 = 0x7fffffff;
+  prVar11 = Item_GetTextRect(param_1->localClientNum,param_2);
+  local_880 = (longlong)iVar18;
+  iVar18 = peVar6->maxPaintChars;
+  iVar5 = peVar6->paintOffset;
+  dVar20 = (double)(prVar11->w + (float)local_880 + prVar11->x);
+  if (iVar18 == 0) {
+    iVar18 = 0x7fffffff;
   }
-  dVar22 = (double)piVar8->textscale;
-  iVar19 = piVar8->fontEnum;
-  pSVar14 = ScrPlace_GetActivePlacement(pUVar6->localClientNum);
-  pFVar15 = UI_GetFontHandle(pSVar14,iVar19,(float)dVar22);
-  if (((uVar18 & 0xffffffff) == ZEXT48(g_editItem)) && (g_editingField != 0)) {
-    Key_GetOverstrikeMode(pUVar6->localClientNum);
-    prVar16 = Window_GetRect(&piVar8->window);
-    dVar22 = (double)prVar13->y;
-    iVar20 = pUVar6->localClientNum + 0x5f;
-    iVar19 = iVar20 * 4;
-    bVar2 = prVar16->vertAlign;
-    bVar3 = prVar16->horzAlign;
-    pSVar14 = ScrPlace_GetActivePlacement(pUVar6->localClientNum);
+  dVar19 = (double)param_2->textscale;
+  iVar16 = param_2->fontEnum;
+  pSVar12 = ScrPlace_GetActivePlacement(param_1->localClientNum);
+  pFVar13 = UI_GetFontHandle(pSVar12,iVar16,(float)dVar19);
+  if ((param_2 == g_editItem) && (g_editingField != 0)) {
+    Key_GetOverstrikeMode(param_1->localClientNum);
+    prVar14 = Window_GetRect(&param_2->window);
+    dVar19 = (double)prVar11->y;
+    iVar17 = param_1->localClientNum + 0x5f;
+    iVar16 = iVar17 * 4;
+    bVar2 = prVar14->vertAlign;
+    bVar3 = prVar14->horzAlign;
+    pSVar12 = ScrPlace_GetActivePlacement(param_1->localClientNum);
     UI_DrawTextWithCursor
-              (pSVar14,local_870 + iVar5,iVar21,pFVar15,(float)dVar23,(float)dVar22,iVar19,iVar20,
-               (float)dVar24,(float *)(uint)bVar3,(uint)bVar2,in_stack_fffff6f8,in_stack_fffff6ff);
-    __restgprlr_23();
+              (pSVar12,local_870 + iVar5,iVar18,pFVar13,(float)dVar20,(float)dVar19,iVar16,iVar17,
+               (float)dVar21,(float *)(uint)bVar3,(uint)bVar2,in_stack_fffff6f8,in_stack_fffff6ff);
     return;
   }
-  dVar22 = (double)prVar13->y;
-  bVar2 = prVar13->vertAlign;
-  bVar3 = prVar13->horzAlign;
-  pSVar14 = ScrPlace_GetActivePlacement(pUVar6->localClientNum);
-  UI_DrawText(pSVar14,local_870 + iVar5,iVar21,pFVar15,(float)dVar23,(float)dVar22,(int)in_r7,
-              (int)in_r8,(float)dVar24,(float *)(uint)bVar3,(uint)bVar2);
-LAB_825cd46c:
-  __restgprlr_23();
+  dVar19 = (double)prVar11->y;
+  bVar2 = prVar11->vertAlign;
+  bVar3 = prVar11->horzAlign;
+  pSVar12 = ScrPlace_GetActivePlacement(param_1->localClientNum);
+  UI_DrawText(pSVar12,local_870 + iVar5,iVar18,pFVar13,(float)dVar20,(float)dVar19,(int)in_r7,
+              (int)in_r8,(float)dVar21,(float *)(uint)bVar3,(uint)bVar2);
   return;
 }
 
@@ -12986,6 +12388,8 @@ void GetPlatformCommand(char *param_1,char **param_2)
 
 // 825C5BB8  GetAlternateBinding  (ui/ui_shared.cpp:9246)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 int GetAlternateBinding(LocalClientNum_t param_1,char *param_2,char (*param_3) [128])
@@ -12993,12 +12397,10 @@ int GetAlternateBinding(LocalClientNum_t param_1,char *param_2,char (*param_3) [
 {
   char cVar1;
   char cVar2;
-  LocalClientNum_t LVar3;
-  int iVar4;
+  int iVar3;
+  char *pcVar4;
   char *pcVar5;
-  longlong lVar6;
-  longlong lVar7;
-  char **ppcVar8;
+  char **ppcVar6;
   char *local_70;
   undefined4 local_6c;
   char *local_68;
@@ -13016,14 +12418,12 @@ int GetAlternateBinding(LocalClientNum_t param_1,char *param_2,char (*param_3) [
   char *local_2c;
   undefined4 local_28;
   
-  lVar7 = (longlong)(int)param_2;
-  LVar3 = __savegprlr_29(param_1);
   local_58 = 0;
   local_60 = "+melee_breath";
   local_5c = "+melee_zoom";
   local_50 = "+breath_sprint";
   local_4c = "+sprint_zoom";
-  pcVar5 = "+melee";
+  pcVar4 = "+melee";
   local_40 = "+melee_breath";
   local_3c = "+breath_sprint";
   local_30 = "+melee_zoom";
@@ -13035,134 +12435,130 @@ int GetAlternateBinding(LocalClientNum_t param_1,char *param_2,char (*param_3) [
   local_6c = 0;
   local_68 = "+ads_akimbo_accessible";
   local_64 = 0;
-  lVar6 = lVar7;
+  pcVar5 = param_2;
   do {
-    cVar1 = *(char *)lVar6;
-    cVar2 = *pcVar5;
+    cVar1 = *pcVar5;
+    cVar2 = *pcVar4;
     if (cVar1 == '\0') break;
-    lVar6 = lVar6 + 1;
     pcVar5 = pcVar5 + 1;
+    pcVar4 = pcVar4 + 1;
   } while (cVar1 == cVar2);
   if (cVar1 == cVar2) {
-    ppcVar8 = &local_60;
+    ppcVar6 = &local_60;
   }
   else {
-    pcVar5 = "+sprint";
-    lVar6 = lVar7;
+    pcVar4 = "+sprint";
+    pcVar5 = param_2;
     do {
-      cVar1 = *(char *)lVar6;
-      cVar2 = *pcVar5;
+      cVar1 = *pcVar5;
+      cVar2 = *pcVar4;
       if (cVar1 == '\0') break;
-      lVar6 = lVar6 + 1;
       pcVar5 = pcVar5 + 1;
+      pcVar4 = pcVar4 + 1;
     } while (cVar1 == cVar2);
     if (cVar1 == cVar2) {
-      ppcVar8 = &local_50;
+      ppcVar6 = &local_50;
     }
     else {
-      pcVar5 = "+holdbreath";
-      lVar6 = lVar7;
+      pcVar4 = "+holdbreath";
+      pcVar5 = param_2;
       do {
-        cVar1 = *(char *)lVar6;
-        cVar2 = *pcVar5;
+        cVar1 = *pcVar5;
+        cVar2 = *pcVar4;
         if (cVar1 == '\0') break;
-        lVar6 = lVar6 + 1;
         pcVar5 = pcVar5 + 1;
+        pcVar4 = pcVar4 + 1;
       } while (cVar1 == cVar2);
       if (cVar1 == cVar2) {
-        ppcVar8 = &local_40;
+        ppcVar6 = &local_40;
       }
       else {
-        pcVar5 = "+changezoom";
-        lVar6 = lVar7;
+        pcVar4 = "+changezoom";
+        pcVar5 = param_2;
         do {
-          cVar1 = *(char *)lVar6;
-          cVar2 = *pcVar5;
+          cVar1 = *pcVar5;
+          cVar2 = *pcVar4;
           if (cVar1 == '\0') break;
-          lVar6 = lVar6 + 1;
           pcVar5 = pcVar5 + 1;
+          pcVar4 = pcVar4 + 1;
         } while (cVar1 == cVar2);
         if (cVar1 == cVar2) {
-          ppcVar8 = &local_30;
+          ppcVar6 = &local_30;
         }
         else {
-          pcVar5 = "+attack";
-          lVar6 = lVar7;
+          pcVar4 = "+attack";
+          pcVar5 = param_2;
           do {
-            cVar1 = *(char *)lVar6;
-            cVar2 = *pcVar5;
+            cVar1 = *pcVar5;
+            cVar2 = *pcVar4;
             if (cVar1 == '\0') break;
-            lVar6 = lVar6 + 1;
             pcVar5 = pcVar5 + 1;
+            pcVar4 = pcVar4 + 1;
           } while (cVar1 == cVar2);
           if (cVar1 == cVar2) {
-            ppcVar8 = &local_70;
+            ppcVar6 = &local_70;
           }
           else {
             pcVar5 = "+speed_throw";
             do {
-              cVar1 = *(char *)lVar7;
+              cVar1 = *param_2;
               cVar2 = *pcVar5;
               if (cVar1 == '\0') break;
-              lVar7 = lVar7 + 1;
+              param_2 = param_2 + 1;
               pcVar5 = pcVar5 + 1;
             } while (cVar1 == cVar2);
-            if (cVar1 != cVar2) goto LAB_825c5de0;
-            ppcVar8 = &local_68;
+            if (cVar1 != cVar2) {
+              return 0;
+            }
+            ppcVar6 = &local_68;
           }
         }
       }
     }
   }
-  pcVar5 = *ppcVar8;
+  pcVar5 = *ppcVar6;
   do {
-    iVar4 = CL_GetGamePadBinding(LVar3,pcVar5,param_3);
-    if (iVar4 != 0) goto LAB_825c5de4;
-    ppcVar8 = ppcVar8 + 1;
-    pcVar5 = *ppcVar8;
+    iVar3 = CL_GetGamePadBinding(param_1,pcVar5,param_3);
+    if (iVar3 != 0) {
+      return iVar3;
+    }
+    ppcVar6 = ppcVar6 + 1;
+    pcVar5 = *ppcVar6;
   } while (pcVar5 != (char *)0x0);
-LAB_825c5de0:
-  iVar4 = 0;
-LAB_825c5de4:
-  iVar4 = __restgprlr_29(iVar4);
-  return iVar4;
+  return 0;
 }
 
 
 // 825C5DF0  GetKeyBindingLocalizedString  (ui/ui_shared.cpp:9298)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 int GetKeyBindingLocalizedString
               (LocalClientNum_t param_1,char *param_2,char *param_3,int param_4,bool param_5)
 
 {
-  LocalClientNum_t LVar1;
-  int iVar2;
-  char *pcVar3;
-  ulonglong uVar4;
-  ulonglong uVar5;
+  int iVar1;
+  char *pcVar2;
   char *local_150 [4];
   char acStack_140 [128];
   char acStack_c0 [192];
   
-  uVar4 = (ulonglong)param_5;
-  LVar1 = __savegprlr_26(param_1);
   GetPlatformCommand(param_2,local_150);
-  iVar2 = CL_GetGamePadBinding(LVar1,local_150[0],&acStack_140);
-  if (iVar2 == 0) {
-    iVar2 = GetAlternateBinding(LVar1,local_150[0],&acStack_140);
+  iVar1 = CL_GetGamePadBinding(param_1,local_150[0],&acStack_140);
+  if (iVar1 == 0) {
+    iVar1 = GetAlternateBinding(param_1,local_150[0],&acStack_140);
   }
-  uVar5 = (ulonglong)iVar2;
-  if (((uVar4 & 0xff) != 0) && (1 < iVar2)) {
-    uVar5 = 1;
+  if ((param_5) && (1 < iVar1)) {
+    iVar1 = 1;
   }
-  if ((uVar5 & 0xffffffff) == 0) {
-    pcVar3 = UI_SafeTranslateString("KEY_UNBOUND");
+  if (iVar1 == 0) {
+    pcVar2 = UI_SafeTranslateString("KEY_UNBOUND");
   }
   else {
-    if ((uVar5 & 0xffffffff) != 1) {
-      if ((int)uVar5 != 2) {
+    if (iVar1 != 1) {
+      if (iVar1 != 2) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x2473,0
                         ,"%s\n\t(bindCount) = %i");
       }
@@ -13170,17 +12566,15 @@ int GetKeyBindingLocalizedString
       SEH_StringEd_GetString(acStack_c0);
       UI_SafeTranslateString("KEY_OR");
       Com_sprintf(param_3,param_4,"%s %s %s");
-      iVar2 = __restgprlr_26(uVar5);
-      return iVar2;
+      return iVar1;
     }
-    pcVar3 = SEH_StringEd_GetString(acStack_140);
-    if (pcVar3 == (char *)0x0) {
-      pcVar3 = acStack_140;
+    pcVar2 = SEH_StringEd_GetString(acStack_140);
+    if (pcVar2 == (char *)0x0) {
+      pcVar2 = acStack_140;
     }
   }
-  I_strncpyz(param_3,pcVar3,param_4);
-  iVar2 = __restgprlr_26(uVar5);
-  return iVar2;
+  I_strncpyz(param_3,pcVar2,param_4);
+  return iVar1;
 }
 
 
@@ -13216,6 +12610,10 @@ int UI_GetKeyBindingLocalizedStringSingle
 
 // 825C5F60  Item_Slider_Paint  (ui/ui_shared.cpp:9356)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
@@ -13224,29 +12622,26 @@ void Item_Slider_Paint(UiContext *param_1,itemDef_t *param_2)
 
 {
   menuDef_t *pmVar1;
-  UiContext *pUVar2;
-  bool bVar4;
-  ScreenPlacement *pSVar3;
-  itemDef_t *piVar5;
+  bool bVar3;
+  ScreenPlacement *pSVar2;
+  itemDef_t *piVar4;
   float *in_r5;
   float *in_r6;
+  double dVar5;
   double dVar6;
   double dVar7;
   double dVar8;
-  double dVar9;
-  float fVar10;
+  float fVar9;
   float local_50;
   float local_4c;
   float local_48;
   float *local_44;
   
-  __savegprlr_29(param_1);
-  pUVar2 = (UiContext *)__savefpr_28();
   pmVar1 = param_2->parent;
-  bVar4 = Window_HasFocus(pUVar2->localClientNum,&param_2->window);
-  if (bVar4) {
+  bVar3 = Window_HasFocus(param_1->localClientNum,&param_2->window);
+  if (bVar3) {
     in_r5 = &local_50;
-    GetBlinkColor(pUVar2,pmVar1->data->focusColor,in_r5);
+    GetBlinkColor(param_1,pmVar1->data->focusColor,in_r5);
   }
   else {
     local_50 = (param_2->window).foreColor[0];
@@ -13255,30 +12650,28 @@ void Item_Slider_Paint(UiContext *param_1,itemDef_t *param_2)
     in_r6 = (float *)(param_2->window).foreColor[3];
     local_44 = in_r6;
   }
-  piVar5 = (itemDef_t *)param_2->textAlignYExp;
-  fVar10 = param_2->textaligny;
-  if (piVar5 != (itemDef_t *)0x0) {
-    fVar10 = GetExpressionFloat(pUVar2->localClientNum,(Statement_s *)piVar5);
+  piVar4 = (itemDef_t *)param_2->textAlignYExp;
+  fVar9 = param_2->textaligny;
+  if (piVar4 != (itemDef_t *)0x0) {
+    fVar9 = GetExpressionFloat(param_1->localClientNum,(Statement_s *)piVar4);
   }
-  dVar8 = (double)fVar10;
-  dVar7 = 96.0;
-  fVar10 = Item_GetRectPlacementX
-                     (param_2->textAlignMode & 3,param_2->textalignx + (param_2->window).rect.x,
-                      (param_2->window).rect.w,96.0);
-  dVar6 = (double)fVar10;
-  dVar9 = 4.0;
-  fVar10 = Item_GetRectPlacementY
-                     (param_2->textAlignMode & 0xc,(float)((double)(param_2->window).rect.y + dVar8)
-                      ,(param_2->window).rect.h,4.0);
-  dVar8 = (double)fVar10;
-  pSVar3 = ScrPlace_GetActivePlacement(pUVar2->localClientNum);
-  UI_FillRect(pSVar3,(float)dVar6,(float)dVar8,(float)dVar7,(float)dVar9,(int)piVar5,(int)in_r5,
+  dVar7 = (double)fVar9;
+  dVar6 = 96.0;
+  fVar9 = Item_GetRectPlacementX
+                    (param_2->textAlignMode & 3,param_2->textalignx + (param_2->window).rect.x,
+                     (param_2->window).rect.w,96.0);
+  dVar5 = (double)fVar9;
+  dVar8 = 4.0;
+  fVar9 = Item_GetRectPlacementY
+                    (param_2->textAlignMode & 0xc,(float)((double)(param_2->window).rect.y + dVar7),
+                     (param_2->window).rect.h,4.0);
+  dVar7 = (double)fVar9;
+  pSVar2 = ScrPlace_GetActivePlacement(param_1->localClientNum);
+  UI_FillRect(pSVar2,(float)dVar5,(float)dVar7,(float)dVar6,(float)dVar8,(int)piVar4,(int)in_r5,
               in_r6);
-  fVar10 = Item_Slider_ThumbPosition((LocalClientNum_t)param_2,piVar5);
-  UI_FillRect(pSVar3,(float)dVar6,(float)dVar8,(float)((double)fVar10 - dVar6),(float)dVar9,
-              (int)piVar5,(int)in_r5,in_r6);
-  __restfpr_28();
-  __restgprlr_29();
+  fVar9 = Item_Slider_ThumbPosition((LocalClientNum_t)param_2,piVar4);
+  UI_FillRect(pSVar2,(float)dVar5,(float)dVar7,(float)((double)fVar9 - dVar5),(float)dVar8,
+              (int)piVar4,(int)in_r5,in_r6);
   return;
 }
 
@@ -13333,6 +12726,8 @@ bool Item_Bind_IsActionKey(UiContext *param_1,itemDef_t *param_2,int param_3)
 
 // 825C60E0  Item_Bind_HandleKey  (ui/ui_shared.cpp:9420)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
@@ -13340,48 +12735,40 @@ bool Item_Bind_IsActionKey(UiContext *param_1,itemDef_t *param_2,int param_3)
 int Item_Bind_HandleKey(UiContext *param_1,itemDef_t *param_2,int param_3,int param_4)
 
 {
-  LocalClientNum_t *pLVar1;
-  int iVar2;
-  int iVar3;
-  ulonglong uVar4;
+  int iVar1;
   int local_30;
   int local_2c;
   
-  uVar4 = (ulonglong)param_3;
-  pLVar1 = (LocalClientNum_t *)__savegprlr_28(param_1);
-  iVar2 = (int)uVar4;
   if (g_waitingForKey == 0) {
-    if ((param_4 != 0) && (iVar2 == 0xd)) {
+    if ((param_4 != 0) && (param_3 == 0xd)) {
       g_waitingForKey = 1;
       g_bindItem = param_2;
-      iVar2 = __restgprlr_28(1);
-      return iVar2;
+      return 1;
     }
   }
   else if (g_bindItem != (itemDef_t *)0x0) {
-    if ((uVar4 & 0x400) == 0) {
-      if (iVar2 != 0x1b) {
-        if (iVar2 == 0x60) goto LAB_825c61e4;
-        Sys_EnterCriticalSection(CRITSECT_KEY_BINDINGS);
-        iVar3 = Key_GetCommandAssignment(*pLVar1,param_2->dvar,&local_30);
-        if ((iVar2 == 0x7f) || (iVar3 == 2)) {
-          Key_SetBinding(*pLVar1,local_30,0);
-          Key_SetBinding(*pLVar1,local_2c,0);
+    if ((param_3 & 0x400U) == 0) {
+      if (param_3 != 0x1b) {
+        if (param_3 == 0x60) {
+          return 1;
         }
-        if (iVar2 != 0x7f) {
-          iVar3 = Key_GetBindingForCmd(param_2->dvar);
-          Key_SetBinding(*pLVar1,iVar2,iVar3);
+        Sys_EnterCriticalSection(CRITSECT_KEY_BINDINGS);
+        iVar1 = Key_GetCommandAssignment(param_1->localClientNum,param_2->dvar,&local_30);
+        if ((param_3 == 0x7f) || (iVar1 == 2)) {
+          Key_SetBinding(param_1->localClientNum,local_30,0);
+          Key_SetBinding(param_1->localClientNum,local_2c,0);
+        }
+        if (param_3 != 0x7f) {
+          iVar1 = Key_GetBindingForCmd(param_2->dvar);
+          Key_SetBinding(param_1->localClientNum,param_3,iVar1);
         }
         Sys_LeaveCriticalSection(CRITSECT_KEY_BINDINGS);
       }
       g_waitingForKey = 0;
     }
-LAB_825c61e4:
-    iVar2 = __restgprlr_28(1);
-    return iVar2;
+    return 1;
   }
-  iVar2 = __restgprlr_28(0);
-  return iVar2;
+  return 0;
 }
 
 
@@ -13418,6 +12805,10 @@ float Item_GetTextAlignAdj(int param_1,float param_2,float param_3)
 
 // 825C62A8  Item_ListBox_PaintTextElem  (ui/ui_shared.cpp:9492)
 
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
@@ -13428,25 +12819,23 @@ void Item_ListBox_PaintTextElem
 
 {
   LocalClientNum_t LVar1;
-  LocalClientNum_t *pLVar2;
-  ScreenPlacement *pSVar3;
-  char *pcVar4;
-  bool bVar8;
-  ScreenPlacement *pSVar5;
-  Font_s *pFVar6;
-  int iVar7;
-  menuDef_t *pmVar9;
-  menuTransition *pmVar10;
-  ulonglong uVar11;
-  uint uVar12;
-  double extraout_f1;
+  ScreenPlacement *pSVar2;
+  char *pcVar3;
+  bool bVar7;
+  ScreenPlacement *pSVar4;
+  Font_s *pFVar5;
+  int iVar6;
+  menuDef_t *pmVar8;
+  menuTransition *pmVar9;
+  ulonglong uVar10;
+  uint uVar11;
+  double dVar12;
   double dVar13;
   double dVar14;
   double dVar15;
   double dVar16;
   double dVar17;
-  double dVar18;
-  float fVar19;
+  float fVar18;
   undefined1 *local_150 [2];
   Material **in_stack_fffffeb8;
   float local_d0;
@@ -13460,119 +12849,115 @@ void Item_ListBox_PaintTextElem
   undefined1 auStack_a0 [12];
   float local_94;
   
-  dVar15 = (double)param_10;
+  dVar14 = (double)param_10;
+  dVar12 = (double)param_7;
   dVar13 = (double)param_8;
-  dVar16 = (double)param_9;
-  __savegprlr_22((double)param_7,param_1);
-  pLVar2 = (LocalClientNum_t *)__savefpr_26();
+  dVar15 = (double)param_9;
   if (param_2->textStyle == 9) {
-    uVar12 = 1;
+    uVar11 = 1;
   }
   else {
-    uVar12 = -(uint)(param_2->textStyle == 10) & 2;
+    uVar11 = -(uint)(param_2->textStyle == 10) & 2;
   }
-  LVar1 = *pLVar2;
-  dVar18 = 0.0;
+  LVar1 = param_1->localClientNum;
+  dVar17 = 0.0;
   local_c4 = 0.0;
   local_cc = 0.0;
   local_c8 = 0.0;
   local_d0 = 0.0;
-  dVar14 = extraout_f1;
-  pmVar10 = (menuTransition *)param_3;
+  pmVar9 = (menuTransition *)param_3;
   local_150[0] = (undefined1 *)register0x0000000c;
-  pSVar3 = ScrPlace_GetActivePlacement(LVar1);
-  pcVar4 = UI_FeederItemText(LVar1,param_2,param_2->special,(int)pmVar10,param_3,(float *)param_4,
-                             &local_c4,&local_c8,&local_cc,in_stack_fffffeb8,(float)dVar16);
-  UI_FeederItemColor(LVar1,param_2,param_2->special,(int)pmVar10,param_3,(float *)param_4,
+  pSVar2 = ScrPlace_GetActivePlacement(LVar1);
+  pcVar3 = UI_FeederItemText(LVar1,param_2,param_2->special,(int)pmVar9,param_3,(float *)param_4,
+                             &local_c4,&local_c8,&local_cc,in_stack_fffffeb8,(float)dVar15);
+  UI_FeederItemColor(LVar1,param_2,param_2->special,(int)pmVar9,param_3,(float *)param_4,
                      (bool)((char)local_150 + -0x50));
-  dVar17 = (double)param_2->textscale;
-  bVar8 = Menu_HasScaleTransition(LVar1,param_2->parent);
-  if (bVar8) {
-    uVar11 = (ulonglong)LVar1 + 5;
-    pmVar10 = (menuTransition *)
-              ((int)param_2->parent->data->focusColor +
-              (int)((uVar11 + (uVar11 & 0x7fffffff) * 2 & 0xffffffff) << 3) + -0x3c);
-    fVar19 = Menu_GetTransitionValue(LVar1,param_2->parent,pmVar10);
-    dVar17 = (double)(float)((double)fVar19 * dVar17);
+  dVar16 = (double)param_2->textscale;
+  bVar7 = Menu_HasScaleTransition(LVar1,param_2->parent);
+  if (bVar7) {
+    uVar10 = (ulonglong)LVar1 + 5;
+    pmVar9 = (menuTransition *)
+             ((int)param_2->parent->data->focusColor +
+             (int)((uVar10 + (uVar10 & 0x7fffffff) * 2 & 0xffffffff) << 3) + -0x3c);
+    fVar18 = Menu_GetTransitionValue(LVar1,param_2->parent,pmVar9);
+    dVar16 = (double)(float)((double)fVar18 * dVar16);
   }
-  pmVar9 = param_2->parent;
-  bVar8 = Menu_HasAlphaTransition(LVar1,pmVar9);
-  if (bVar8) {
-    uVar11 = (ulonglong)LVar1 + 9;
-    pmVar9 = param_2->parent;
-    pmVar10 = (menuTransition *)
-              ((int)pmVar9->data->focusColor +
-              (int)((uVar11 + (uVar11 & 0x7fffffff) * 2 & 0xffffffff) << 3) + -0x3c);
-    fVar19 = Menu_GetTransitionValue(LVar1,pmVar9,pmVar10);
-    local_94 = fVar19 * local_94;
+  pmVar8 = param_2->parent;
+  bVar7 = Menu_HasAlphaTransition(LVar1,pmVar8);
+  if (bVar7) {
+    uVar10 = (ulonglong)LVar1 + 9;
+    pmVar8 = param_2->parent;
+    pmVar9 = (menuTransition *)
+             ((int)pmVar8->data->focusColor +
+             (int)((uVar10 + (uVar10 & 0x7fffffff) * 2 & 0xffffffff) << 3) + -0x3c);
+    fVar18 = Menu_GetTransitionValue(LVar1,pmVar8,pmVar9);
+    local_94 = fVar18 * local_94;
   }
   if (local_c0 != 0) {
-    dVar17 = (double)local_c4;
-    if ((((dVar17 == dVar18) && ((double)local_c8 == dVar18)) && (dVar18 == 0.0)) &&
-       ((double)local_cc == dVar18)) {
-      if (dVar18 <= dVar16) {
+    dVar16 = (double)local_c4;
+    if ((((dVar16 == dVar17) && ((double)local_c8 == dVar17)) && (dVar17 == 0.0)) &&
+       ((double)local_cc == dVar17)) {
+      if (dVar17 <= dVar15) {
         local_cc = 1.0;
-        dVar17 = dVar18;
+        dVar16 = dVar17;
       }
       else {
-        local_cc = (float)dVar18;
-        dVar16 = -dVar16;
-        dVar17 = 1.0;
+        local_cc = (float)dVar17;
+        dVar15 = -dVar15;
+        dVar16 = 1.0;
       }
-      local_c4 = (float)dVar17;
-      if (dVar18 <= dVar15) {
-        local_c8 = (float)dVar18;
+      local_c4 = (float)dVar16;
+      if (dVar17 <= dVar14) {
+        local_c8 = (float)dVar17;
         local_d0 = 1.0;
       }
       else {
         local_c8 = 1.0;
-        dVar15 = -dVar15;
-        local_d0 = (float)dVar18;
+        dVar14 = -dVar14;
+        local_d0 = (float)dVar17;
       }
     }
     local_b0._0_4_ = 1.0;
     local_a8.packed._0_4_ = 1.0;
     local_a8.packed._4_4_ = local_94;
     local_b0._4_4_ = 1.0;
-    CL_DrawStretchPic(pSVar3,(float)dVar14,(float)dVar13,(float)dVar16,(float)dVar15,(int)pmVar9,
-                      (int)pmVar10,(float)dVar17,local_c8,local_cc,local_d0,colorWhite,
+    CL_DrawStretchPic(pSVar2,(float)dVar12,(float)dVar13,(float)dVar15,(float)dVar14,(int)pmVar8,
+                      (int)pmVar9,(float)dVar16,local_c8,local_cc,local_d0,colorWhite,
                       (Material *)local_b0);
-    __restfpr_26();
-    __restgprlr_22();
     return;
   }
-  if (pcVar4 != (char *)0x0) {
-    dVar18 = (double)param_2->textscale;
-    iVar7 = param_2->fontEnum;
-    pSVar5 = ScrPlace_GetActivePlacement(LVar1);
-    pFVar6 = UI_GetFontHandle(pSVar5,iVar7,(float)dVar18);
+  if (pcVar3 != (char *)0x0) {
+    dVar17 = (double)param_2->textscale;
+    iVar6 = param_2->fontEnum;
+    pSVar4 = ScrPlace_GetActivePlacement(LVar1);
+    pFVar5 = UI_GetFontHandle(pSVar4,iVar6,(float)dVar17);
     if ((param_2->special == 26.0) || (param_2->special == 35.0)) {
-      param_3 = (int)dVar16;
+      param_3 = (int)dVar15;
       local_b8 = (longlong)param_3;
-      pcVar4 = UI_TruncateEscapeCharacterTextWithEllipsis(pcVar4,pFVar6,(float)dVar17,(int)pmVar10);
+      pcVar3 = UI_TruncateEscapeCharacterTextWithEllipsis(pcVar3,pFVar5,(float)dVar16,(int)pmVar9);
     }
-    iVar7 = UI_TextWidthModCase(pcVar4,param_5,pFVar6,(float)dVar17,param_3);
-    local_b8 = (longlong)iVar7;
-    fVar19 = Item_GetTextAlignAdj(param_6,(float)dVar16,(float)local_b8);
-    dVar16 = (double)fVar19;
-    fVar19 = param_2->textaligny;
+    iVar6 = UI_TextWidthModCase(pcVar3,param_5,pFVar5,(float)dVar16,param_3);
+    local_b8 = (longlong)iVar6;
+    fVar18 = Item_GetTextAlignAdj(param_6,(float)dVar15,(float)local_b8);
+    dVar15 = (double)fVar18;
+    fVar18 = param_2->textaligny;
     if (param_2->textAlignYExp != (Statement_s *)0x0) {
-      fVar19 = GetExpressionFloat(*pLVar2,param_2->textAlignYExp);
+      fVar18 = GetExpressionFloat(param_1->localClientNum,param_2->textAlignYExp);
     }
-    UI_DrawText(pSVar3,pcVar4,param_5,pFVar6,
-                (float)((double)(float)((double)param_2->textalignx + dVar16) + dVar14),
-                (float)((double)(float)((double)fVar19 + dVar13) + dVar15),uVar12,(int)auStack_a0,
-                (float)dVar17,(float *)(uint)(param_2->window).rect.horzAlign,
+    UI_DrawText(pSVar2,pcVar3,param_5,pFVar5,
+                (float)((double)(float)((double)param_2->textalignx + dVar15) + dVar12),
+                (float)((double)(float)((double)fVar18 + dVar13) + dVar14),uVar11,(int)auStack_a0,
+                (float)dVar16,(float *)(uint)(param_2->window).rect.horzAlign,
                 (uint)(param_2->window).rect.vertAlign);
   }
-  __restfpr_26();
-  __restgprlr_22();
   return;
 }
 
 
 // 825C6630  Item_ListBox_PaintBackground  (ui/ui_shared.cpp:9604)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
@@ -13581,46 +12966,46 @@ void Item_ListBox_PaintBackground
                (LocalClientNum_t param_1,itemDef_t *param_2,float param_3,float param_4,int param_5)
 
 {
-  LocalClientNum_t LVar1;
-  listBoxDef_s *plVar2;
-  ScreenPlacement *pSVar3;
-  itemDef_t *piVar4;
+  listBoxDef_s *plVar1;
+  ScreenPlacement *pSVar2;
+  itemDef_t *piVar3;
   float *in_r7;
-  double extraout_f1;
+  double dVar4;
   double dVar5;
   double dVar6;
-  double dVar7;
-  float fVar8;
+  float fVar7;
   
   dVar5 = (double)param_4;
-  LVar1 = __savegprlr_28((double)param_3,param_1);
+  dVar4 = (double)param_3;
   if ((param_2->window).style == 0) {
-    dVar6 = extraout_f1;
-    plVar2 = Item_GetListBoxDef(param_2);
-    if (plVar2 == (listBoxDef_s *)0x0) {
+    plVar1 = Item_GetListBoxDef(param_2);
+    if (plVar1 == (listBoxDef_s *)0x0) {
       param_5 = 0;
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x258f,0,
                       "%s");
     }
-    pSVar3 = ScrPlace_GetActivePlacement(LVar1);
-    fVar8 = plVar2->elementHeight;
-    if (plVar2->elementHeightExp != (Statement_s *)0x0) {
-      fVar8 = GetExpressionFloat(LVar1,plVar2->elementHeightExp);
+    pSVar2 = ScrPlace_GetActivePlacement(param_1);
+    fVar7 = plVar1->elementHeight;
+    if (plVar1->elementHeightExp != (Statement_s *)0x0) {
+      fVar7 = GetExpressionFloat(param_1,plVar1->elementHeightExp);
     }
-    dVar7 = (double)fVar8;
-    piVar4 = param_2;
-    UI_FeederBackColor(LVar1,param_2,param_2->special,param_5,in_r7);
-    UI_FillRect(pSVar3,(float)(dVar6 + 2.0),(float)(dVar5 + 2.0),
-                ((param_2->window).rect.w - 8.0) - 4.0,(float)dVar7,(int)piVar4,param_5,
+    dVar6 = (double)fVar7;
+    piVar3 = param_2;
+    UI_FeederBackColor(param_1,param_2,param_2->special,param_5,in_r7);
+    UI_FillRect(pSVar2,(float)(dVar4 + 2.0),(float)(dVar5 + 2.0),
+                ((param_2->window).rect.w - 8.0) - 4.0,(float)dVar6,(int)piVar3,param_5,
                 (float *)&IMAGE_DOS_HEADER_82000000);
   }
-  __restgprlr_28();
   return;
 }
 
 
 // 825CD660  Item_ListBox_PaintHighlight  (ui/ui_shared.cpp:9633)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
@@ -13629,84 +13014,76 @@ void Item_ListBox_PaintHighlight
                (LocalClientNum_t param_1,itemDef_t *param_2,float param_3,float param_4)
 
 {
-  LocalClientNum_t LVar1;
-  listBoxDef_s *plVar2;
-  ScreenPlacement *pSVar4;
-  int iVar5;
-  int iVar6;
-  ulonglong uVar7;
-  itemDef_t *piVar8;
+  listBoxDef_s *plVar1;
+  ScreenPlacement *pSVar2;
+  int iVar3;
+  int iVar4;
+  itemDef_t *piVar5;
   int in_r5;
-  float *pfVar9;
+  float *pfVar6;
   float *in_r6;
-  IMAGE_DOS_HEADER *pIVar10;
-  IMAGE_DOS_HEADER *pIVar11;
-  int iVar12;
-  double extraout_f1;
+  IMAGE_DOS_HEADER *pIVar7;
+  IMAGE_DOS_HEADER *pIVar8;
+  int iVar9;
+  double dVar10;
+  double dVar11;
+  double dVar12;
   double dVar13;
   double dVar14;
-  double dVar15;
-  double dVar16;
-  double dVar17;
-  float fVar18;
-  itemDef_t *piVar3;
+  float fVar15;
   
-  dVar13 = (double)param_4;
-  uVar7 = (ulonglong)(int)param_2;
-  __savegprlr_25((double)param_3,param_1);
-  LVar1 = __savefpr_27();
-  piVar3 = (itemDef_t *)uVar7;
-  dVar15 = extraout_f1;
-  plVar2 = Item_GetListBoxDef(piVar3);
-  if (plVar2 == (listBoxDef_s *)0x0) {
+  dVar10 = (double)param_3;
+  dVar11 = (double)param_4;
+  plVar1 = Item_GetListBoxDef(param_2);
+  if (plVar1 == (listBoxDef_s *)0x0) {
     in_r5 = 0;
     in_r6 = (float *)"%s";
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x25a9,0,
                     "%s");
   }
-  if ((uVar7 & 0xffffffff) == 0) {
+  if (param_2 == (itemDef_t *)0x0) {
     in_r5 = 0;
     in_r6 = (float *)"%s";
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_utils_api.h",0x24,0,"%s"
                    );
   }
-  pSVar4 = ScrPlace_GetActivePlacement(LVar1);
-  fVar18 = plVar2->elementHeight;
-  if (plVar2->elementHeightExp != (Statement_s *)0x0) {
-    fVar18 = GetExpressionFloat(LVar1,plVar2->elementHeightExp);
+  pSVar2 = ScrPlace_GetActivePlacement(param_1);
+  fVar15 = plVar1->elementHeight;
+  if (plVar1->elementHeightExp != (Statement_s *)0x0) {
+    fVar15 = GetExpressionFloat(param_1,plVar1->elementHeightExp);
   }
-  dVar16 = (double)fVar18;
-  iVar12 = 8;
-  iVar5 = UI_FeederCount(LVar1,piVar3->special);
-  piVar8 = piVar3;
-  iVar6 = Item_ListBox_Viewmax(LVar1,piVar3);
-  if (((longlong)iVar5 - (longlong)iVar6 < 1) || ((int)((longlong)iVar5 - (longlong)iVar6) == 0)) {
-    iVar12 = 0;
+  dVar13 = (double)fVar15;
+  iVar9 = 8;
+  iVar3 = UI_FeederCount(param_1,param_2->special);
+  piVar5 = param_2;
+  iVar4 = Item_ListBox_Viewmax(param_1,param_2);
+  if (((longlong)iVar3 - (longlong)iVar4 < 1) || ((int)((longlong)iVar3 - (longlong)iVar4) == 0)) {
+    iVar9 = 0;
   }
-  dVar14 = (double)(longlong)iVar12;
-  dVar17 = 4.0;
-  UI_FillRect(pSVar4,(float)(dVar15 + 2.0),(float)(dVar13 + 2.0),
-              (float)((double)(piVar3->window).rect.w - dVar14) - 4.0,(float)dVar16,(int)piVar8,
+  dVar12 = (double)(longlong)iVar9;
+  dVar14 = 4.0;
+  UI_FillRect(pSVar2,(float)(dVar10 + 2.0),(float)(dVar11 + 2.0),
+              (float)((double)(param_2->window).rect.w - dVar12) - 4.0,(float)dVar13,(int)piVar5,
               in_r5,in_r6);
-  pIVar11 = &IMAGE_DOS_HEADER_82000000;
-  pIVar10 = &IMAGE_DOS_HEADER_82000000;
-  pfVar9 = plVar2->selectBorder;
-  UI_DrawRect(pSVar4,(float)(dVar15 + 1.0),(float)(dVar13 + 1.0),
-              (float)((double)(piVar3->window).rect.w - dVar14) - 3.0,(float)(dVar16 + 1.0),
-              (int)piVar8,(int)pfVar9,1.0,(float *)&IMAGE_DOS_HEADER_82000000);
-  if ((plVar2->selectIcon != (Material *)0x0) && (plVar2->notselectable == 0)) {
-    UI_DrawHandlePic(pSVar4,(float)(dVar15 + dVar17),(float)(dVar13 + dVar17),
-                     (float)(dVar16 - dVar17),(float)(dVar16 - dVar17),(int)piVar8,(int)pfVar9,
-                     (float *)pIVar10,(Material *)pIVar11);
+  pIVar8 = &IMAGE_DOS_HEADER_82000000;
+  pIVar7 = &IMAGE_DOS_HEADER_82000000;
+  pfVar6 = plVar1->selectBorder;
+  UI_DrawRect(pSVar2,(float)(dVar10 + 1.0),(float)(dVar11 + 1.0),
+              (float)((double)(param_2->window).rect.w - dVar12) - 3.0,(float)(dVar13 + 1.0),
+              (int)piVar5,(int)pfVar6,1.0,(float *)&IMAGE_DOS_HEADER_82000000);
+  if ((plVar1->selectIcon != (Material *)0x0) && (plVar1->notselectable == 0)) {
+    UI_DrawHandlePic(pSVar2,(float)(dVar10 + dVar14),(float)(dVar11 + dVar14),
+                     (float)(dVar13 - dVar14),(float)(dVar13 - dVar14),(int)piVar5,(int)pfVar6,
+                     (float *)pIVar7,(Material *)pIVar8);
   }
-  __restfpr_27();
-  __restgprlr_25();
   return;
 }
 
 
 // 825C6738  Item_ListBox_GetVisibleElementCount  (ui/ui_shared.cpp:9667)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
@@ -13714,41 +13091,37 @@ void Item_ListBox_PaintHighlight
 int Item_ListBox_GetVisibleElementCount(LocalClientNum_t param_1,itemDef_t *param_2)
 
 {
-  LocalClientNum_t LVar1;
-  int iVar2;
-  listBoxDef_s *plVar4;
-  ulonglong uVar5;
-  double dVar6;
-  float fVar7;
-  itemDef_t *piVar3;
+  int iVar1;
+  listBoxDef_s *plVar2;
+  double dVar3;
+  float fVar4;
   
-  uVar5 = (ulonglong)(int)param_2;
-  LVar1 = __savegprlr_29(param_1);
-  piVar3 = (itemDef_t *)uVar5;
-  iVar2 = Window_IsHorizontal(&piVar3->window);
-  if (iVar2 == 0) {
-    plVar4 = Item_GetListBoxDef(piVar3);
-    if ((uVar5 & 0xffffffff) == 0) {
+  iVar1 = Window_IsHorizontal(&param_2->window);
+  if (iVar1 == 0) {
+    plVar2 = Item_GetListBoxDef(param_2);
+    if (param_2 == (itemDef_t *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_utils_api.h",0x24,0,
                       "%s");
     }
-    fVar7 = plVar4->elementHeight;
-    if (plVar4->elementHeightExp != (Statement_s *)0x0) {
-      fVar7 = GetExpressionFloat(LVar1,plVar4->elementHeightExp);
+    fVar4 = plVar2->elementHeight;
+    if (plVar2->elementHeightExp != (Statement_s *)0x0) {
+      fVar4 = GetExpressionFloat(param_1,plVar2->elementHeightExp);
     }
-    dVar6 = floor((double)(((piVar3->window).rect.h - 2.0) / fVar7));
-    iVar2 = (int)dVar6;
-    if (0 < iVar2) goto LAB_825c67e0;
+    dVar3 = floor((double)(((param_2->window).rect.h - 2.0) / fVar4));
+    if (0 < (int)dVar3) {
+      return (int)dVar3;
+    }
   }
-  iVar2 = 1;
-LAB_825c67e0:
-  iVar2 = __restgprlr_29(iVar2);
-  return iVar2;
+  return 1;
 }
 
 
 // 825CD828  Item_ListBox_Paint  (ui/ui_shared.cpp:9699)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
@@ -13763,265 +13136,255 @@ void Item_ListBox_Paint(UiContext *param_1,itemDef_t *param_2)
   columnInfo_s *pcVar5;
   int *piVar6;
   int *piVar7;
-  UiContext *pUVar8;
-  listBoxDef_s *plVar9;
-  ScreenPlacement *pSVar11;
-  int iVar12;
-  int iVar13;
-  Material *pMVar14;
-  Statement_s *pSVar15;
-  itemDef_t *piVar16;
+  listBoxDef_s *plVar8;
+  ScreenPlacement *pSVar9;
+  int iVar10;
+  int iVar11;
+  Material *pMVar12;
+  Statement_s *pSVar14;
+  itemDef_t *piVar15;
+  longlong lVar13;
   int in_r5;
-  IMAGE_DOS_HEADER *pIVar18;
-  int iVar19;
-  ulonglong uVar17;
+  IMAGE_DOS_HEADER *pIVar16;
+  int iVar17;
   char *in_r6;
-  float *pfVar21;
-  ulonglong uVar20;
-  IMAGE_DOS_HEADER *pIVar24;
-  longlong lVar22;
-  longlong lVar23;
-  undefined1 uVar25;
-  rectDef_s *prVar26;
+  float *pfVar20;
+  ulonglong uVar18;
+  ulonglong uVar19;
+  IMAGE_DOS_HEADER *pIVar22;
+  longlong lVar21;
+  undefined1 uVar23;
+  rectDef_s *prVar24;
+  double dVar25;
+  double dVar26;
   double dVar27;
   double dVar28;
   double dVar29;
   double dVar30;
   double dVar31;
-  double dVar32;
-  double dVar33;
-  float fVar34;
-  float fVar35;
-  itemDef_t *piVar10;
+  float fVar32;
+  float fVar33;
   
-  uVar17 = (ulonglong)(int)param_2;
-  __savegprlr_24(param_1);
-  pUVar8 = (UiContext *)__savefpr_26();
-  piVar10 = (itemDef_t *)uVar17;
-  plVar9 = Item_GetListBoxDef(piVar10);
-  if (plVar9 != (listBoxDef_s *)0x0) {
-    if ((uVar17 & 0xffffffff) == 0) {
+  lVar13 = (longlong)(int)param_2;
+  plVar8 = Item_GetListBoxDef(param_2);
+  if (plVar8 != (listBoxDef_s *)0x0) {
+    if (param_2 == (itemDef_t *)0x0) {
       in_r6 = "%s";
       in_r5 = 0;
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_utils_api.h",0x24,0,
                       "%s");
     }
-    prVar26 = &(piVar10->window).rect;
-    pSVar11 = ScrPlace_GetActivePlacement(pUVar8->localClientNum);
-    pSVar15 = plVar9->elementHeightExp;
-    fVar34 = plVar9->elementHeight;
-    if (pSVar15 != (Statement_s *)0x0) {
-      fVar34 = GetExpressionFloat(pUVar8->localClientNum,pSVar15);
+    prVar24 = &(param_2->window).rect;
+    pSVar9 = ScrPlace_GetActivePlacement(param_1->localClientNum);
+    pSVar14 = plVar8->elementHeightExp;
+    fVar32 = plVar8->elementHeight;
+    if (pSVar14 != (Statement_s *)0x0) {
+      fVar32 = GetExpressionFloat(param_1->localClientNum,pSVar14);
     }
-    dVar30 = (double)fVar34;
-    iVar12 = UI_FeederCount(pUVar8->localClientNum,piVar10->special);
-    iVar13 = Window_IsHorizontal(&piVar10->window);
-    if (iVar13 == 0) {
-      UI_OverrideCursorPos(pUVar8->localClientNum,piVar10);
-      dVar27 = 2.0;
-      if ((plVar9->noScrollBars == 0) &&
-         (iVar13 = Item_ListBox_MaxScroll(pUVar8->localClientNum,piVar10), 0 < iVar13)) {
-        fVar34 = (piVar10->window).rect.w;
-        fVar35 = prVar26->x;
-        fVar2 = (piVar10->window).rect.y;
-        pfVar21 = (float *)((pUVar8->localClientNum + LOCAL_CLIENT_COUNT) * 4);
-        dVar29 = 8.0;
-        iVar13 = plVar9->startPos[pUVar8->localClientNum];
-        *(int *)((int)pfVar21 + (int)plVar9) = iVar13;
-        fVar34 = (float)((double)((fVar34 + fVar35) - 8.0) - dVar27);
-        dVar28 = (double)fVar34;
-        UI_DrawHandlePic(pSVar11,fVar34,(float)((double)fVar2 + dVar27),8.0,
-                         (float)((double)(piVar10->window).rect.h - dVar27),-0x7de90000,iVar13,
-                         pfVar21,(Material *)(sharedUiInfo.mapList[3].mapCustomKey + 0xc));
-        piVar16 = piVar10;
-        fVar34 = Item_ListBox_ThumbDrawPosition(pUVar8,piVar10);
-        UI_DrawHandlePic(pSVar11,(float)dVar28,fVar34,(float)dVar29,18.0,(int)piVar16,iVar13,pfVar21
-                         ,(Material *)&IMAGE_DOS_HEADER_82000000);
+    dVar28 = (double)fVar32;
+    iVar10 = UI_FeederCount(param_1->localClientNum,param_2->special);
+    iVar11 = Window_IsHorizontal(&param_2->window);
+    if (iVar11 == 0) {
+      UI_OverrideCursorPos(param_1->localClientNum,param_2);
+      dVar25 = 2.0;
+      if ((plVar8->noScrollBars == 0) &&
+         (iVar11 = Item_ListBox_MaxScroll(param_1->localClientNum,param_2), 0 < iVar11)) {
+        fVar32 = (param_2->window).rect.w;
+        fVar33 = prVar24->x;
+        fVar2 = (param_2->window).rect.y;
+        pfVar20 = (float *)((param_1->localClientNum + LOCAL_CLIENT_COUNT) * 4);
+        dVar27 = 8.0;
+        iVar11 = plVar8->startPos[param_1->localClientNum];
+        *(int *)((int)pfVar20 + (int)plVar8) = iVar11;
+        fVar32 = (float)((double)((fVar32 + fVar33) - 8.0) - dVar25);
+        dVar26 = (double)fVar32;
+        UI_DrawHandlePic(pSVar9,fVar32,(float)((double)fVar2 + dVar25),8.0,
+                         (float)((double)(param_2->window).rect.h - dVar25),-0x7de90000,iVar11,
+                         pfVar20,(Material *)(sharedUiInfo.mapList[3].mapCustomKey + 0xc));
+        piVar15 = param_2;
+        fVar32 = Item_ListBox_ThumbDrawPosition(param_1,param_2);
+        UI_DrawHandlePic(pSVar9,(float)dVar26,fVar32,(float)dVar27,18.0,(int)piVar15,iVar11,pfVar20,
+                         (Material *)&IMAGE_DOS_HEADER_82000000);
       }
-      iVar13 = plVar9->elementStyle;
-      dVar29 = (double)(float)((double)(piVar10->window).rect.h - dVar27);
-      fVar34 = prVar26->x;
-      dVar28 = (double)(piVar10->window).rect.y;
-      lVar23 = ((ulonglong)pUVar8->localClientNum + 4 & 0x3fffffff) << 2;
-      uVar20 = (ulonglong)(uint)plVar9->startPos[pUVar8->localClientNum];
-      *(int *)((int)plVar9->startPos + (int)lVar23) = plVar9->startPos[pUVar8->localClientNum];
-      uVar17 = (ulonglong)pUVar8->localClientNum;
-      lVar22 = ((ulonglong)pUVar8->localClientNum & 0x3fffffff) << 2;
-      if (iVar13 == 1) {
-        iVar13 = *(int *)((int)plVar9->startPos + (int)lVar22);
-        dVar32 = 1.0;
-        dVar31 = (double)(fVar34 + 1.0);
-        dVar28 = dVar28 + 1.0;
-        if (iVar12 <= iVar13) goto LAB_825cdef8;
+      iVar11 = plVar8->elementStyle;
+      dVar27 = (double)(float)((double)(param_2->window).rect.h - dVar25);
+      fVar32 = prVar24->x;
+      dVar26 = (double)(param_2->window).rect.y;
+      lVar21 = ((ulonglong)param_1->localClientNum + 4 & 0x3fffffff) << 2;
+      uVar19 = (ulonglong)(uint)plVar8->startPos[param_1->localClientNum];
+      *(int *)((int)plVar8->startPos + (int)lVar21) = plVar8->startPos[param_1->localClientNum];
+      uVar18 = (ulonglong)param_1->localClientNum;
+      lVar13 = ((ulonglong)param_1->localClientNum & 0x3fffffff) << 2;
+      if (iVar11 == 1) {
+        iVar11 = *(int *)((int)plVar8->startPos + (int)lVar13);
+        dVar30 = 1.0;
+        dVar29 = (double)(fVar32 + 1.0);
+        dVar26 = dVar26 + 1.0;
+        if (iVar10 <= iVar11) {
+          return;
+        }
         while( true ) {
-          dVar28 = (double)(float)dVar28;
-          iVar19 = iVar13;
-          pMVar14 = UI_FeederItemImage(pUVar8->localClientNum,piVar10->special,(int)lVar22);
-          if (pMVar14 != (Material *)0x0) {
-            UI_DrawHandlePic(pSVar11,(float)(dVar31 + dVar32),(float)(dVar28 + dVar32),
-                             (float)((double)plVar9->elementWidth - dVar27),(float)(dVar30 - dVar27)
-                             ,(int)lVar22,iVar19,(float *)uVar20,(Material *)lVar23);
+          dVar26 = (double)(float)dVar26;
+          iVar17 = iVar11;
+          pMVar12 = UI_FeederItemImage(param_1->localClientNum,param_2->special,(int)lVar13);
+          if (pMVar12 != (Material *)0x0) {
+            UI_DrawHandlePic(pSVar9,(float)(dVar29 + dVar30),(float)(dVar26 + dVar30),
+                             (float)((double)plVar8->elementWidth - dVar25),(float)(dVar28 - dVar25)
+                             ,(int)lVar13,iVar17,(float *)uVar19,(Material *)lVar21);
           }
-          if (iVar13 == piVar10->cursorPos[pUVar8->localClientNum]) {
-            UI_DrawRect(pSVar11,(float)dVar31,(float)dVar28,
-                        (float)((double)plVar9->elementWidth - dVar32),(float)(dVar30 - dVar32),
-                        (int)lVar22,iVar19,(piVar10->window).borderSize,(float *)uVar20);
+          if (iVar11 == param_2->cursorPos[param_1->localClientNum]) {
+            UI_DrawRect(pSVar9,(float)dVar29,(float)dVar26,
+                        (float)((double)plVar8->elementWidth - dVar30),(float)(dVar28 - dVar30),
+                        (int)lVar13,iVar17,(param_2->window).borderSize,(float *)uVar19);
           }
-          dVar29 = (double)(float)(dVar29 - dVar30);
-          plVar9->endPos[pUVar8->localClientNum] = plVar9->endPos[pUVar8->localClientNum] + 1;
-          if (dVar29 < dVar30) break;
-          iVar13 = iVar13 + 1;
-          dVar28 = dVar28 + dVar30;
-          if (iVar12 <= iVar13) {
-            __restfpr_26();
-            __restgprlr_24();
+          dVar27 = (double)(float)(dVar27 - dVar28);
+          plVar8->endPos[param_1->localClientNum] = plVar8->endPos[param_1->localClientNum] + 1;
+          if (dVar27 < dVar28) break;
+          iVar11 = iVar11 + 1;
+          dVar26 = dVar26 + dVar28;
+          if (iVar10 <= iVar11) {
             return;
           }
         }
       }
       else {
-        uVar3 = *(uint *)((int)plVar9->startPos + (int)lVar22);
-        uVar20 = (ulonglong)uVar3;
-        dVar27 = 1.0;
-        dVar31 = (double)(fVar34 + 1.0);
-        dVar28 = dVar28 + 1.0;
-        if (iVar12 <= (int)uVar3) goto LAB_825cdef8;
+        uVar3 = *(uint *)((int)plVar8->startPos + (int)lVar13);
+        uVar19 = (ulonglong)uVar3;
+        dVar25 = 1.0;
+        dVar29 = (double)(fVar32 + 1.0);
+        dVar26 = dVar26 + 1.0;
+        if (iVar10 <= (int)uVar3) {
+          return;
+        }
         while( true ) {
-          dVar32 = (double)(float)dVar28;
+          dVar30 = (double)(float)dVar26;
           Item_ListBox_PaintBackground
-                    (pUVar8->localClientNum,piVar10,(float)dVar31,(float)dVar28,(int)uVar17);
-          uVar25 = (undefined1)piVar10->cursorPos[pUVar8->localClientNum];
-          iVar13 = (int)uVar20;
-          if (piVar10->cursorPos[pUVar8->localClientNum] == iVar13) {
+                    (param_1->localClientNum,param_2,(float)dVar29,(float)dVar26,(int)uVar18);
+          uVar23 = (undefined1)param_2->cursorPos[param_1->localClientNum];
+          iVar11 = (int)uVar19;
+          if (param_2->cursorPos[param_1->localClientNum] == iVar11) {
             Item_ListBox_PaintHighlight
-                      (pUVar8->localClientNum,piVar10,(float)(dVar31 - dVar27),
-                       (float)(dVar32 - dVar27));
+                      (param_1->localClientNum,param_2,(float)(dVar29 - dVar25),
+                       (float)(dVar30 - dVar25));
           }
-          if (plVar9->numColumns < 1) {
-            uVar17 = uVar20;
+          if (plVar8->numColumns < 1) {
+            uVar18 = uVar19;
             Item_ListBox_PaintTextElem
-                      (pUVar8,piVar10,iVar13,0,0x7fffffff,0,(float)dVar31,(float)dVar32,
-                       plVar9->elementWidth,(float)dVar30,(bool)uVar25);
+                      (param_1,param_2,iVar11,0,0x7fffffff,0,(float)dVar29,(float)dVar30,
+                       plVar8->elementWidth,(float)dVar28,(bool)uVar23);
           }
           else {
-            iVar19 = 0;
-            pfVar21 = &plVar9->elementWidth;
+            iVar17 = 0;
+            pfVar20 = &plVar8->elementWidth;
             do {
-              dVar28 = dVar30;
-              if (0 < (int)pfVar21[7]) {
-                dVar28 = (double)(longlong)(int)pfVar21[7];
+              dVar26 = dVar28;
+              if (0 < (int)pfVar20[7]) {
+                dVar26 = (double)(longlong)(int)pfVar20[7];
               }
-              piVar4 = (int *)(pfVar21 + 5);
-              pcVar5 = (columnInfo_s *)(pfVar21 + 4);
-              piVar6 = (int *)(pfVar21 + 8);
-              piVar7 = (int *)(pfVar21 + 9);
-              pfVar21 = pfVar21 + 6;
-              uVar17 = uVar20;
+              piVar4 = (int *)(pfVar20 + 5);
+              pcVar5 = (columnInfo_s *)(pfVar20 + 4);
+              piVar6 = (int *)(pfVar20 + 8);
+              piVar7 = (int *)(pfVar20 + 9);
+              pfVar20 = pfVar20 + 6;
+              uVar18 = uVar19;
               Item_ListBox_PaintTextElem
-                        (pUVar8,piVar10,iVar13,iVar19,*piVar6,*piVar7,
-                         (float)((double)(longlong)pcVar5->xpos + dVar31),
-                         (float)((double)(longlong)*piVar4 + dVar32),(float)(longlong)(int)*pfVar21,
-                         (float)dVar28,SUB41(*pfVar21,0));
-              iVar19 = iVar19 + 1;
-            } while (iVar19 < plVar9->numColumns);
+                        (param_1,param_2,iVar11,iVar17,*piVar6,*piVar7,
+                         (float)((double)(longlong)pcVar5->xpos + dVar29),
+                         (float)((double)(longlong)*piVar4 + dVar30),(float)(longlong)(int)*pfVar20,
+                         (float)dVar26,SUB41(*pfVar20,0));
+              iVar17 = iVar17 + 1;
+            } while (iVar17 < plVar8->numColumns);
           }
-          dVar29 = (double)(float)(dVar29 - dVar30);
-          if (dVar29 < dVar30) break;
-          uVar20 = uVar20 + 1;
-          dVar28 = dVar32 + dVar30;
-          plVar9->endPos[pUVar8->localClientNum] = plVar9->endPos[pUVar8->localClientNum] + 1;
-          if (iVar12 <= (int)uVar20) {
-            __restfpr_26();
-            __restgprlr_24();
+          dVar27 = (double)(float)(dVar27 - dVar28);
+          if (dVar27 < dVar28) break;
+          uVar19 = uVar19 + 1;
+          dVar26 = dVar30 + dVar28;
+          plVar8->endPos[param_1->localClientNum] = plVar8->endPos[param_1->localClientNum] + 1;
+          if (iVar10 <= (int)uVar19) {
             return;
           }
         }
       }
-      plVar9->drawPadding = (int)(dVar30 - dVar29);
+      plVar8->drawPadding = (int)(dVar28 - dVar27);
     }
     else {
-      pIVar24 = &IMAGE_DOS_HEADER_82000000;
-      dVar32 = 8.0;
-      dVar33 = 1.0;
-      fVar34 = prVar26->x + 1.0;
-      dVar28 = (double)fVar34;
-      fVar35 = (((piVar10->window).rect.h + (piVar10->window).rect.y) - 8.0) - 1.0;
-      dVar31 = (double)fVar35;
-      UI_DrawHandlePic(pSVar11,fVar34,fVar35,8.0,8.0,(int)pSVar15,in_r5,(float *)in_r6,
+      pIVar22 = &IMAGE_DOS_HEADER_82000000;
+      dVar30 = 8.0;
+      dVar31 = 1.0;
+      fVar32 = prVar24->x + 1.0;
+      dVar26 = (double)fVar32;
+      fVar33 = (((param_2->window).rect.h + (param_2->window).rect.y) - 8.0) - 1.0;
+      dVar29 = (double)fVar33;
+      UI_DrawHandlePic(pSVar9,fVar32,fVar33,8.0,8.0,(int)pSVar14,in_r5,(float *)in_r6,
                        (Material *)&IMAGE_DOS_HEADER_82000000);
-      pfVar21 = (float *)0x82010000;
-      pIVar18 = &IMAGE_DOS_HEADER_82000000;
-      dVar29 = (double)(float)(dVar28 + 7.0);
-      dVar27 = (double)((piVar10->window).rect.w - 16.0);
-      UI_DrawHandlePic(pSVar11,(float)(dVar28 + 7.0),(float)dVar31,(float)(dVar27 + dVar33),
-                       (float)dVar32,(int)pSVar15,-0x7e000000,(float *)0x82010000,
-                       (Material *)pIVar24);
-      fVar34 = (float)((double)(float)(dVar27 - dVar33) + dVar29);
-      dVar27 = (double)fVar34;
-      UI_DrawHandlePic(pSVar11,fVar34,(float)dVar31,(float)dVar32,(float)dVar32,(int)pSVar15,
-                       (int)pIVar18,pfVar21,(Material *)pIVar24);
-      fVar35 = Item_ListBox_ThumbDrawPosition(pUVar8,piVar10);
-      fVar34 = (float)((double)(float)(dVar27 - dVar32) - dVar33);
-      if (fVar34 < fVar35) {
-        fVar35 = fVar34;
+      pfVar20 = (float *)0x82010000;
+      pIVar16 = &IMAGE_DOS_HEADER_82000000;
+      dVar27 = (double)(float)(dVar26 + 7.0);
+      dVar25 = (double)((param_2->window).rect.w - 16.0);
+      UI_DrawHandlePic(pSVar9,(float)(dVar26 + 7.0),(float)dVar29,(float)(dVar25 + dVar31),
+                       (float)dVar30,(int)pSVar14,-0x7e000000,(float *)0x82010000,
+                       (Material *)pIVar22);
+      fVar32 = (float)((double)(float)(dVar25 - dVar31) + dVar27);
+      dVar25 = (double)fVar32;
+      UI_DrawHandlePic(pSVar9,fVar32,(float)dVar29,(float)dVar30,(float)dVar30,(int)pSVar14,
+                       (int)pIVar16,pfVar20,(Material *)pIVar22);
+      fVar33 = Item_ListBox_ThumbDrawPosition(param_1,param_2);
+      fVar32 = (float)((double)(float)(dVar25 - dVar30) - dVar31);
+      if (fVar32 < fVar33) {
+        fVar33 = fVar32;
       }
-      UI_DrawHandlePic(pSVar11,fVar35,(float)dVar31,(float)dVar32,(float)dVar32,(int)uVar17,
-                       (int)pIVar18,pfVar21,(Material *)pIVar24);
-      uVar20 = (ulonglong)(uint)plVar9->startPos[pUVar8->localClientNum];
-      dVar28 = 2.0;
-      lVar22 = ((ulonglong)pUVar8->localClientNum + 4 & 0x3fffffff) << 2;
-      *(int *)((int)plVar9->startPos + (int)lVar22) = plVar9->startPos[pUVar8->localClientNum];
-      dVar27 = (double)((piVar10->window).rect.w - 2.0);
-      if (plVar9->elementStyle == 1) {
-        dVar29 = (double)prVar26->x + dVar33;
-        dVar31 = (double)(float)((double)(piVar10->window).rect.y + dVar33);
-        iVar13 = plVar9->startPos[pUVar8->localClientNum];
-        if (iVar13 < iVar12) {
+      UI_DrawHandlePic(pSVar9,fVar33,(float)dVar29,(float)dVar30,(float)dVar30,(int)lVar13,
+                       (int)pIVar16,pfVar20,(Material *)pIVar22);
+      uVar18 = (ulonglong)(uint)plVar8->startPos[param_1->localClientNum];
+      dVar26 = 2.0;
+      lVar21 = ((ulonglong)param_1->localClientNum + 4 & 0x3fffffff) << 2;
+      *(int *)((int)plVar8->startPos + (int)lVar21) = plVar8->startPos[param_1->localClientNum];
+      dVar25 = (double)((param_2->window).rect.w - 2.0);
+      if (plVar8->elementStyle == 1) {
+        dVar27 = (double)prVar24->x + dVar31;
+        dVar29 = (double)(float)((double)(param_2->window).rect.y + dVar31);
+        iVar11 = plVar8->startPos[param_1->localClientNum];
+        if (iVar11 < iVar10) {
           while( true ) {
-            dVar32 = (double)(float)dVar29;
-            iVar19 = iVar13;
-            pMVar14 = UI_FeederItemImage(pUVar8->localClientNum,piVar10->special,(int)uVar17);
-            if (pMVar14 != (Material *)0x0) {
-              UI_DrawHandlePic(pSVar11,(float)(dVar32 + dVar33),(float)(dVar31 + dVar33),
-                               (float)((double)plVar9->elementWidth - dVar28),
-                               (float)(dVar30 - dVar28),(int)uVar17,iVar19,(float *)uVar20,
-                               (Material *)lVar22);
+            dVar30 = (double)(float)dVar27;
+            iVar17 = iVar11;
+            pMVar12 = UI_FeederItemImage(param_1->localClientNum,param_2->special,(int)lVar13);
+            if (pMVar12 != (Material *)0x0) {
+              UI_DrawHandlePic(pSVar9,(float)(dVar30 + dVar31),(float)(dVar29 + dVar31),
+                               (float)((double)plVar8->elementWidth - dVar26),
+                               (float)(dVar28 - dVar26),(int)lVar13,iVar17,(float *)uVar18,
+                               (Material *)lVar21);
             }
-            if (iVar13 == piVar10->cursorPos[pUVar8->localClientNum]) {
-              UI_DrawRect(pSVar11,(float)dVar32,(float)dVar31,
-                          (float)((double)plVar9->elementWidth - dVar33),(float)(dVar30 - dVar33),
-                          (int)uVar17,iVar19,(piVar10->window).borderSize,(float *)uVar20);
+            if (iVar11 == param_2->cursorPos[param_1->localClientNum]) {
+              UI_DrawRect(pSVar9,(float)dVar30,(float)dVar29,
+                          (float)((double)plVar8->elementWidth - dVar31),(float)(dVar28 - dVar31),
+                          (int)lVar13,iVar17,(param_2->window).borderSize,(float *)uVar18);
             }
-            dVar29 = (double)plVar9->elementWidth;
-            dVar1 = dVar27 - dVar29;
-            dVar27 = (double)(float)dVar1;
-            if (dVar27 < dVar29) break;
-            iVar13 = iVar13 + 1;
-            dVar29 = dVar29 + dVar32;
-            plVar9->endPos[pUVar8->localClientNum] = plVar9->endPos[pUVar8->localClientNum] + 1;
-            if (iVar12 <= iVar13) {
-              __restfpr_26();
-              __restgprlr_24();
+            dVar27 = (double)plVar8->elementWidth;
+            dVar1 = dVar25 - dVar27;
+            dVar25 = (double)(float)dVar1;
+            if (dVar25 < dVar27) break;
+            iVar11 = iVar11 + 1;
+            dVar27 = dVar27 + dVar30;
+            plVar8->endPos[param_1->localClientNum] = plVar8->endPos[param_1->localClientNum] + 1;
+            if (iVar10 <= iVar11) {
               return;
             }
           }
-          plVar9->drawPadding = (int)dVar1;
-          __restfpr_26();
-          __restgprlr_24();
+          plVar8->drawPadding = (int)dVar1;
           return;
         }
       }
     }
   }
-LAB_825cdef8:
-  __restfpr_26();
-  __restgprlr_24();
   return;
 }
 
 
 // 825CDF08  Item_OwnerDraw_Paint  (ui/ui_shared.cpp:9913)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
@@ -14035,17 +13398,14 @@ void Item_OwnerDraw_Paint(UiContext *param_1,itemDef_t *param_2)
   menuDef_t *pmVar4;
   menuData_t *pmVar5;
   int iVar6;
-  itemDef_t *piVar7;
-  UiContext *pUVar8;
-  bool bVar11;
-  ScreenPlacement *pSVar9;
-  rectDef_s *prVar10;
-  ulonglong uVar12;
-  float *pfVar13;
-  uint uVar14;
-  double dVar15;
-  double dVar16;
-  float fVar17;
+  bool bVar9;
+  ScreenPlacement *pSVar7;
+  rectDef_s *prVar8;
+  float *pfVar10;
+  uint uVar11;
+  double dVar12;
+  double dVar13;
+  float fVar14;
   Material *in_stack_fffffee8;
   int in_stack_fffffeec;
   rectDef_s in_stack_fffffef0;
@@ -14056,119 +13416,116 @@ void Item_OwnerDraw_Paint(UiContext *param_1,itemDef_t *param_2)
   float local_48;
   float local_44;
   
-  uVar12 = (ulonglong)(int)param_2;
-  pUVar8 = (UiContext *)__savegprlr_28(param_1);
-  if ((uVar12 & 0xffffffff) == 0) {
+  if (param_2 == (itemDef_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x26c2,0,
                     "%s");
   }
-  LVar3 = pUVar8->localClientNum;
-  piVar7 = (itemDef_t *)uVar12;
-  pmVar4 = piVar7->parent;
+  LVar3 = param_1->localClientNum;
+  pmVar4 = param_2->parent;
   if (LOCAL_CLIENT_3 < LVar3) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\../ui/ui_utils.h",0x21,0,
                     "localClientNum doesn\'t index MAX_POSSIBLE_LOCAL_CLIENTS\n\t%i not in [0, %i)")
     ;
   }
   pmVar5 = pmVar4->data;
-  fVar17 = pmVar5->fadeInAmount;
+  fVar14 = pmVar5->fadeInAmount;
   fVar1 = pmVar5->fadeAmount;
-  uVar14 = (piVar7->window).dynamicFlags[LVar3];
+  uVar11 = (param_2->window).dynamicFlags[LVar3];
   fVar2 = pmVar5->fadeClamp;
-  dVar15 = 0.0;
-  if (((uVar14 & 0x30) != 0) && ((piVar7->window).nextTime < pUVar8->realTime)) {
-    (piVar7->window).nextTime = pmVar5->fadeCycle + pUVar8->realTime;
-    if ((uVar14 & 0x10) == 0) {
-      fVar17 = (piVar7->window).foreColor[3] + fVar17;
-      (piVar7->window).foreColor[3] = fVar17;
-      if (fVar2 <= fVar17) {
-        (piVar7->window).foreColor[3] = fVar2;
-        uVar14 = uVar14 & 0xffffffdf;
+  dVar12 = 0.0;
+  if (((uVar11 & 0x30) != 0) && ((param_2->window).nextTime < param_1->realTime)) {
+    (param_2->window).nextTime = pmVar5->fadeCycle + param_1->realTime;
+    if ((uVar11 & 0x10) == 0) {
+      fVar14 = (param_2->window).foreColor[3] + fVar14;
+      (param_2->window).foreColor[3] = fVar14;
+      if (fVar2 <= fVar14) {
+        (param_2->window).foreColor[3] = fVar2;
+        uVar11 = uVar11 & 0xffffffdf;
       }
     }
     else {
-      fVar1 = (piVar7->window).foreColor[3] - fVar1;
-      (piVar7->window).foreColor[3] = fVar1;
+      fVar1 = (param_2->window).foreColor[3] - fVar1;
+      (param_2->window).foreColor[3] = fVar1;
       if (fVar1 <= 0.0) {
-        uVar14 = uVar14 & 0xffffffeb;
+        uVar11 = uVar11 & 0xffffffeb;
       }
     }
   }
-  Window_SetDynamicFlags(pUVar8->localClientNum,&piVar7->window,uVar14);
-  local_50 = (piVar7->window).foreColor[0];
-  local_4c = (piVar7->window).foreColor[1];
-  local_48 = (piVar7->window).foreColor[2];
-  local_44 = (piVar7->window).foreColor[3];
-  pfVar13 = (piVar7->window).foreColor;
-  bVar11 = Window_HasFocus(pUVar8->localClientNum,&piVar7->window);
-  if (bVar11) {
-    pfVar13 = pmVar4->data->focusColor;
+  Window_SetDynamicFlags(param_1->localClientNum,&param_2->window,uVar11);
+  local_50 = (param_2->window).foreColor[0];
+  local_4c = (param_2->window).foreColor[1];
+  local_48 = (param_2->window).foreColor[2];
+  local_44 = (param_2->window).foreColor[3];
+  pfVar10 = (param_2->window).foreColor;
+  bVar9 = Window_HasFocus(param_1->localClientNum,&param_2->window);
+  if (bVar9) {
+    pfVar10 = pmVar4->data->focusColor;
   }
-  else if ((piVar7->textStyle != 1) ||
-          (uVar14 = pUVar8->realTime,
-          (((int)uVar14 >> 8) + (uint)((int)uVar14 < 0 && (uVar14 & 0xff) != 0) & 1) != 0))
+  else if ((param_2->textStyle != 1) ||
+          (uVar11 = param_1->realTime,
+          (((int)uVar11 >> 8) + (uint)((int)uVar11 < 0 && (uVar11 & 0xff) != 0) & 1) != 0))
   goto LAB_825ce0a4;
-  GetBlinkColor(pUVar8,pfVar13,&local_50);
+  GetBlinkColor(param_1,pfVar10,&local_50);
 LAB_825ce0a4:
-  bVar11 = Item_IsDisabled(pUVar8->localClientNum,piVar7);
-  if (bVar11) {
-    local_50 = (piVar7->window).disableColor[0];
-    local_4c = (piVar7->window).disableColor[1];
-    local_48 = (piVar7->window).disableColor[2];
-    local_44 = (piVar7->window).disableColor[3];
+  bVar9 = Item_IsDisabled(param_1->localClientNum,param_2);
+  if (bVar9) {
+    local_50 = (param_2->window).disableColor[0];
+    local_4c = (param_2->window).disableColor[1];
+    local_48 = (param_2->window).disableColor[2];
+    local_44 = (param_2->window).disableColor[3];
   }
-  dVar16 = (double)piVar7->textscale;
-  iVar6 = piVar7->fontEnum;
-  pSVar9 = ScrPlace_GetActivePlacement(pUVar8->localClientNum);
-  UI_GetFontHandle(pSVar9,iVar6,(float)dVar16);
-  fVar17 = piVar7->textaligny;
-  if (piVar7->textAlignYExp != (Statement_s *)0x0) {
-    fVar17 = GetExpressionFloat(pUVar8->localClientNum,piVar7->textAlignYExp);
+  dVar13 = (double)param_2->textscale;
+  iVar6 = param_2->fontEnum;
+  pSVar7 = ScrPlace_GetActivePlacement(param_1->localClientNum);
+  UI_GetFontHandle(pSVar7,iVar6,(float)dVar13);
+  fVar14 = param_2->textaligny;
+  if (param_2->textAlignYExp != (Statement_s *)0x0) {
+    fVar14 = GetExpressionFloat(param_1->localClientNum,param_2->textAlignYExp);
   }
-  dVar16 = (double)fVar17;
-  if (piVar7->text == (char *)0x0) {
-    pfVar13 = (float *)(piVar7->window).name;
+  dVar13 = (double)fVar14;
+  if (param_2->text == (char *)0x0) {
+    pfVar10 = (float *)(param_2->window).name;
     memcpy();
-    UI_OwnerDraw(pUVar8->localClientNum,(piVar7->window).rect.x,(piVar7->window).rect.y,
-                 (piVar7->window).rect.w,(piVar7->window).rect.h,(piVar7->window).ownerDraw,
-                 piVar7->alignment,piVar7->textalignx,(float)dVar16,(piVar7->window).ownerDrawFlags,
-                 (int)&local_50,(uint)(piVar7->window).rect.horzAlign,piVar7->special,
-                 (Font_s *)(uint)(piVar7->window).rect.vertAlign,piVar7->textscale,pfVar13,
+    UI_OwnerDraw(param_1->localClientNum,(param_2->window).rect.x,(param_2->window).rect.y,
+                 (param_2->window).rect.w,(param_2->window).rect.h,(param_2->window).ownerDraw,
+                 param_2->alignment,param_2->textalignx,(float)dVar13,
+                 (param_2->window).ownerDrawFlags,(int)&local_50,
+                 (uint)(param_2->window).rect.horzAlign,param_2->special,
+                 (Font_s *)(uint)(param_2->window).rect.vertAlign,param_2->textscale,pfVar10,
                  in_stack_fffffee8,in_stack_fffffeec,in_stack_fffffef0,in_stack_ffffff04,
                  in_stack_ffffff08);
-    __restgprlr_28();
     return;
   }
-  Item_Text_Paint(pUVar8,piVar7);
-  prVar10 = Item_GetTextRect(pUVar8->localClientNum,piVar7);
-  pfVar13 = (float *)(piVar7->window).name;
-  if (*piVar7->text == '\0') {
+  Item_Text_Paint(param_1,param_2);
+  prVar8 = Item_GetTextRect(param_1->localClientNum,param_2);
+  pfVar10 = (float *)(param_2->window).name;
+  if (*param_2->text == '\0') {
     memcpy();
-    UI_OwnerDraw(pUVar8->localClientNum,prVar10->w + prVar10->x,(piVar7->window).rect.y,
-                 (piVar7->window).rect.w,(piVar7->window).rect.h,(piVar7->window).ownerDrawFlags,
-                 piVar7->alignment,(float)dVar15,(float)dVar16,piVar7->textStyle,(int)&local_50,
-                 (uint)(piVar7->window).rect.horzAlign,piVar7->special,
-                 (Font_s *)(uint)(piVar7->window).rect.vertAlign,piVar7->textscale,pfVar13,
+    UI_OwnerDraw(param_1->localClientNum,prVar8->w + prVar8->x,(param_2->window).rect.y,
+                 (param_2->window).rect.w,(param_2->window).rect.h,(param_2->window).ownerDrawFlags,
+                 param_2->alignment,(float)dVar12,(float)dVar13,param_2->textStyle,(int)&local_50,
+                 (uint)(param_2->window).rect.horzAlign,param_2->special,
+                 (Font_s *)(uint)(param_2->window).rect.vertAlign,param_2->textscale,pfVar10,
                  in_stack_fffffee8,in_stack_fffffeec,in_stack_fffffef0,in_stack_ffffff04,
                  in_stack_ffffff08);
-    __restgprlr_28();
     return;
   }
   memcpy();
-  UI_OwnerDraw(pUVar8->localClientNum,prVar10->w + prVar10->x + 8.0,(piVar7->window).rect.y,
-               (piVar7->window).rect.w,(piVar7->window).rect.h,(int)&local_50,piVar7->alignment,
-               (float)dVar15,(float)dVar16,(int)(piVar7->window).background,piVar7->textStyle,
-               (uint)(piVar7->window).rect.horzAlign,piVar7->special,
-               (Font_s *)(uint)(piVar7->window).rect.vertAlign,piVar7->textscale,
-               (float *)(piVar7->window).ownerDraw,in_stack_fffffee8,in_stack_fffffeec,
+  UI_OwnerDraw(param_1->localClientNum,prVar8->w + prVar8->x + 8.0,(param_2->window).rect.y,
+               (param_2->window).rect.w,(param_2->window).rect.h,(int)&local_50,param_2->alignment,
+               (float)dVar12,(float)dVar13,(int)(param_2->window).background,param_2->textStyle,
+               (uint)(param_2->window).rect.horzAlign,param_2->special,
+               (Font_s *)(uint)(param_2->window).rect.vertAlign,param_2->textscale,
+               (float *)(param_2->window).ownerDraw,in_stack_fffffee8,in_stack_fffffeec,
                in_stack_fffffef0,in_stack_ffffff04,in_stack_ffffff08);
-  __restgprlr_28();
   return;
 }
 
 
 // 825C67E8  Item_GameMsgWindow_Paint  (ui/ui_shared.cpp:9967)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
@@ -14177,50 +13534,44 @@ void Item_GameMsgWindow_Paint(UiContext *param_1,itemDef_t *param_2)
 
 {
   int iVar1;
-  LocalClientNum_t *pLVar2;
-  int iVar3;
-  char *pcVar4;
-  ScreenPlacement *pSVar5;
-  Font_s *pFVar6;
-  ulonglong uVar7;
-  double dVar8;
+  char *pcVar2;
+  ScreenPlacement *pSVar3;
+  Font_s *pFVar4;
+  double dVar5;
   int in_stack_ffffff48;
   int in_stack_ffffff4c;
   msgwnd_mode_t in_stack_ffffff50;
   
-  uVar7 = (ulonglong)(int)param_2;
-  pLVar2 = (LocalClientNum_t *)__savegprlr_28(param_1);
-  if (pLVar2 == (LocalClientNum_t *)0x0) {
+  if (param_1 == (UiContext *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x26f4,0,
                     "%s");
   }
-  if ((uVar7 & 0xffffffff) == 0) {
+  if (param_2 == (itemDef_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x26f5,0,
                     "%s");
   }
-  iVar3 = CL_IsCgameInitialized(*pLVar2);
-  if (iVar3 != 0) {
-    iVar3 = (int)uVar7;
-    if ((*(int *)(iVar3 + 0x124) < 0) || (3 < *(int *)(iVar3 + 0x124))) {
-      pcVar4 = va("Game message window index %d is not valid. Must be in [0, %d).");
-      Com_Error(ERR_DROP,pcVar4);
+  iVar1 = CL_IsCgameInitialized(param_1->localClientNum);
+  if (iVar1 != 0) {
+    if ((param_2->gameMsgWindowIndex < 0) || (3 < param_2->gameMsgWindowIndex)) {
+      pcVar2 = va("Game message window index %d is not valid. Must be in [0, %d).");
+      Com_Error(ERR_DROP,pcVar2);
     }
-    iVar1 = *(int *)(iVar3 + 0x128);
+    iVar1 = param_2->gameMsgWindowMode;
     if ((((iVar1 != 1) && (iVar1 != 0)) && (iVar1 != 3)) && (iVar1 != 2)) {
-      pcVar4 = va("Game message window mode %d is not valid.");
-      Com_Error(ERR_DROP,pcVar4);
+      pcVar2 = va("Game message window mode %d is not valid.");
+      Com_Error(ERR_DROP,pcVar2);
     }
-    iVar1 = *(int *)(iVar3 + 0x10c);
-    dVar8 = (double)*(float *)(iVar3 + 0x11c);
-    pSVar5 = ScrPlace_GetActivePlacement(*pLVar2);
-    pFVar6 = UI_GetFontHandle(pSVar5,iVar1,(float)dVar8);
+    iVar1 = param_2->fontEnum;
+    dVar5 = (double)param_2->textscale;
+    pSVar3 = ScrPlace_GetActivePlacement(param_1->localClientNum);
+    pFVar4 = UI_GetFontHandle(pSVar3,iVar1,(float)dVar5);
     Con_DrawGameMessageWindow
-              (*pLVar2,*(int *)(iVar3 + 0x124),(int)*(float *)(iVar3 + 4),(int)*(float *)(iVar3 + 8)
-               ,(uint)*(byte *)(iVar3 + 0x14),(uint)*(byte *)(iVar3 + 0x15),pFVar6,
-               *(float *)(iVar3 + 0x11c),*(float **)(iVar3 + 0x128),in_stack_ffffff48,
-               in_stack_ffffff4c,in_stack_ffffff50);
+              (param_1->localClientNum,param_2->gameMsgWindowIndex,(int)(param_2->window).rect.x,
+               (int)(param_2->window).rect.y,(uint)(param_2->window).rect.horzAlign,
+               (uint)(param_2->window).rect.vertAlign,pFVar4,param_2->textscale,
+               (float *)param_2->gameMsgWindowMode,in_stack_ffffff48,in_stack_ffffff4c,
+               in_stack_ffffff50);
   }
-  __restgprlr_28();
   return;
 }
 
@@ -14271,6 +13622,8 @@ void Item_NewsTicker_Reset(UiContext *param_1,itemDef_t *param_2)
 
 // 825C6A00  Item_NewsTicker_Paint  (ui/ui_shared.cpp:10027)
 
+/* WARNING: Function: __savegprlr_21 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_21 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
@@ -14282,197 +13635,199 @@ void Item_NewsTicker_Paint(UiContext *param_1,itemDef_t *param_2)
   char cVar2;
   LocalClientNum_t LVar3;
   float fVar4;
-  UiContext *pUVar5;
-  newsTickerDef_s *pnVar6;
-  ScreenPlacement *pSVar8;
-  Font_s *pFVar9;
-  char *pcVar10;
-  int iVar11;
-  int iVar12;
-  ulonglong uVar13;
-  float *pfVar14;
-  Font_s *pFVar15;
-  undefined4 *puVar16;
-  uint uVar17;
-  TickerState TVar18;
+  newsTickerDef_s *pnVar5;
+  ScreenPlacement *pSVar6;
+  Font_s *pFVar7;
+  char *pcVar8;
+  int iVar9;
+  int iVar10;
+  longlong lVar11;
+  float *pfVar12;
+  Font_s *pFVar13;
+  undefined4 *puVar14;
+  uint uVar15;
+  TickerState TVar16;
+  longlong lVar17;
+  ulonglong uVar18;
   longlong lVar19;
-  ulonglong uVar20;
+  float *pfVar20;
   longlong lVar21;
-  float *pfVar22;
-  int iVar23;
-  newsTickerInfo_s *pnVar24;
-  longlong lVar25;
-  double dVar26;
+  int iVar22;
+  newsTickerInfo_s *pnVar23;
+  longlong lVar24;
+  double dVar25;
   float afStack_90 [3];
   undefined4 uStack_84;
   float local_80;
   Font_s aFStack_7c [5];
-  itemDef_t *piVar7;
   
-  uVar13 = (ulonglong)(int)param_2;
-  pUVar5 = (UiContext *)__savegprlr_21(param_1);
-  if (LOCAL_CLIENT_3 < pUVar5->localClientNum) {
+  lVar11 = (longlong)(int)param_2;
+  if (LOCAL_CLIENT_3 < param_1->localClientNum) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x273a,0,
                     "dc->localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)"
                    );
   }
-  piVar7 = (itemDef_t *)uVar13;
-  pnVar6 = Item_GetNewsTickerDef(piVar7);
-  if (pnVar6 == (newsTickerDef_s *)0x0) {
+  pnVar5 = Item_GetNewsTickerDef(param_2);
+  if (pnVar5 == (newsTickerDef_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x273d,0,
                     "%s");
   }
-  LVar3 = pUVar5->localClientNum;
-  pnVar24 = g_tickerInfo + LVar3;
-  if (pnVar24 == (newsTickerInfo_s *)0x0) {
+  LVar3 = param_1->localClientNum;
+  pnVar23 = g_tickerInfo + LVar3;
+  if (pnVar23 == (newsTickerInfo_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x2740,0,
                     "%s");
   }
-  if ((uVar13 & 0xffffffff) == 0) {
+  if (param_2 == (itemDef_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_utils_api.h",0x24,0,"%s"
                    );
   }
-  lVar21 = uVar13 + 4;
-  if (lVar21 == 0) {
+  lVar19 = lVar11 + 4;
+  if (lVar19 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x2743,0,
                     "%s");
   }
-  dVar26 = (double)piVar7->textscale;
-  iVar11 = piVar7->fontEnum;
-  pSVar8 = ScrPlace_GetActivePlacement(pUVar5->localClientNum);
-  pFVar9 = UI_GetFontHandle(pSVar8,iVar11,(float)dVar26);
-  Item_TextColor(pUVar5,piVar7,(float (*) [4])afStack_90);
-  pcVar10 = NewsFeed_Get(pnVar6->feedId);
-  uVar20 = (ulonglong)(int)pcVar10;
-  if (pcVar10 == (char *)0x0) {
-    pcVar10 = piVar7->text;
-    uVar20 = ZEXT48(pcVar10);
-    if (uVar20 == 0) goto LAB_825c6f20;
-    if (*pcVar10 == '@') {
-      pcVar10 = UI_SafeTranslateString(pcVar10 + 1);
-      uVar20 = (ulonglong)(int)pcVar10;
+  dVar25 = (double)param_2->textscale;
+  iVar9 = param_2->fontEnum;
+  pSVar6 = ScrPlace_GetActivePlacement(param_1->localClientNum);
+  pFVar7 = UI_GetFontHandle(pSVar6,iVar9,(float)dVar25);
+  Item_TextColor(param_1,param_2,(float (*) [4])afStack_90);
+  pcVar8 = NewsFeed_Get(pnVar5->feedId);
+  uVar18 = (ulonglong)(int)pcVar8;
+  if (pcVar8 == (char *)0x0) {
+    pcVar8 = param_2->text;
+    uVar18 = ZEXT48(pcVar8);
+    if (uVar18 == 0) {
+      return;
+    }
+    if (*pcVar8 == '@') {
+      pcVar8 = UI_SafeTranslateString(pcVar8 + 1);
+      uVar18 = (ulonglong)(int)pcVar8;
     }
   }
-  pcVar10 = (char *)uVar20;
-  cVar2 = *pcVar10;
-  uVar1 = uVar20;
+  pcVar8 = (char *)uVar18;
+  cVar2 = *pcVar8;
+  uVar1 = uVar18;
   while (((cVar2 != '\0' && (cVar2 != '\n')) && (cVar2 != '\r'))) {
     uVar1 = uVar1 + 1;
     cVar2 = *(char *)uVar1;
   }
-  lVar19 = uVar1 - uVar20;
-  if (lVar19 == 0) {
-    pnVar6 = Item_GetNewsTickerDef(piVar7);
-    NewsFeed_Swap(pnVar6->feedId);
-    Item_NewsTicker_Init(pUVar5,piVar7);
-    __restgprlr_21();
-    return;
-  }
-  pSVar8 = ScrPlace_GetActivePlacement(pUVar5->localClientNum);
-  if (pSVar8 == (ScreenPlacement *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x275f,0,
-                    "%s");
-  }
-  puVar16 = &uStack_84;
-  lVar25 = 5;
-  uVar20 = uVar13;
-  do {
-    uVar20 = uVar20 + 4;
-    puVar16 = puVar16 + 1;
-    *puVar16 = *(undefined4 *)uVar20;
-    lVar25 = lVar25 + -1;
-  } while (lVar25 != 0);
-  ScrPlace_ApplyRectClamped
-            (pSVar8,&local_80,(float *)aFStack_7c,(float *)&aFStack_7c[0].pixelHeight,
-             (float *)&aFStack_7c[0].glyphCount,(uint)aFStack_7c[0].material._0_1_,
-             (uint)aFStack_7c[0].material._1_1_);
-  pFVar15 = aFStack_7c;
-  pfVar14 = &local_80;
-  ScrPlace_ApplyRect(pSVar8,pfVar14,(float *)pFVar15,(float *)&aFStack_7c[0].pixelHeight,
-                     (float *)&aFStack_7c[0].glyphCount,6,6);
-  iVar11 = Sys_Milliseconds();
-  lVar25 = (longlong)iVar11 - (ulonglong)(uint)pnVar24->lastTime;
-  iVar11 = (int)lVar19;
-  if (0 < lVar25) {
-    iVar12 = Sys_Milliseconds();
-    TVar18 = g_tickerInfo[LVar3].state;
-    pnVar24->lastTime = iVar12;
-    if (TVar18 < (TICKER_PAUSE_AFTER_SCROLL|TICKER_SHOW)) {
-      if (TVar18 == TICKER_STOPPED) goto LAB_825c6f20;
-      iVar23 = (int)lVar25;
-      if (TVar18 == TICKER_MOVE_IN) {
-        fVar4 = -((float)(longlong)pnVar6->speed * (float)(longlong)iVar23 * 0.001 -
-                 g_tickerInfo[LVar3].y);
-        g_tickerInfo[LVar3].y = fVar4;
-        if (fVar4 <= 0.0) {
-          g_tickerInfo[LVar3].y = 0.0;
-          g_tickerInfo[LVar3].state = TICKER_SHOW;
-          g_tickerInfo[LVar3].nextStateTime = iVar12 + 5000;
+  lVar17 = uVar1 - uVar18;
+  if (lVar17 != 0) {
+    pSVar6 = ScrPlace_GetActivePlacement(param_1->localClientNum);
+    if (pSVar6 == (ScreenPlacement *)0x0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x275f,0,
+                      "%s");
+    }
+    puVar14 = &uStack_84;
+    lVar24 = 5;
+    lVar21 = lVar11;
+    do {
+      lVar21 = lVar21 + 4;
+      puVar14 = puVar14 + 1;
+      *puVar14 = *(undefined4 *)lVar21;
+      lVar24 = lVar24 + -1;
+    } while (lVar24 != 0);
+    ScrPlace_ApplyRectClamped
+              (pSVar6,&local_80,(float *)aFStack_7c,(float *)&aFStack_7c[0].pixelHeight,
+               (float *)&aFStack_7c[0].glyphCount,(uint)aFStack_7c[0].material._0_1_,
+               (uint)aFStack_7c[0].material._1_1_);
+    pFVar13 = aFStack_7c;
+    pfVar12 = &local_80;
+    ScrPlace_ApplyRect(pSVar6,pfVar12,(float *)pFVar13,(float *)&aFStack_7c[0].pixelHeight,
+                       (float *)&aFStack_7c[0].glyphCount,6,6);
+    iVar9 = Sys_Milliseconds();
+    lVar21 = (longlong)iVar9 - (ulonglong)(uint)pnVar23->lastTime;
+    iVar9 = (int)lVar17;
+    if (0 < lVar21) {
+      iVar10 = Sys_Milliseconds();
+      TVar16 = g_tickerInfo[LVar3].state;
+      pnVar23->lastTime = iVar10;
+      if (TVar16 < (TICKER_PAUSE_AFTER_SCROLL|TICKER_SHOW)) {
+        if (TVar16 == TICKER_STOPPED) {
+          return;
         }
-      }
-      else if (TVar18 == TICKER_SHOW) {
-        if (g_tickerInfo[LVar3].nextStateTime <= iVar12) {
-          pFVar15 = pFVar9;
-          iVar12 = UI_TextWidth(pcVar10,iVar11,pFVar9,piVar7->textscale);
-          pfVar14 = (float *)lVar19;
-          TVar18 = TICKER_LEFT_SCROLL;
-          if ((float)(longlong)iVar12 <= (float)aFStack_7c[0].pixelHeight) {
-            TVar18 = TICKER_MOVE_OUT;
+        iVar22 = (int)lVar21;
+        if (TVar16 == TICKER_MOVE_IN) {
+          fVar4 = -((float)(longlong)pnVar5->speed * (float)(longlong)iVar22 * 0.001 -
+                   g_tickerInfo[LVar3].y);
+          g_tickerInfo[LVar3].y = fVar4;
+          if (fVar4 <= 0.0) {
+            g_tickerInfo[LVar3].y = 0.0;
+            g_tickerInfo[LVar3].state = TICKER_SHOW;
+            g_tickerInfo[LVar3].nextStateTime = iVar10 + 5000;
           }
-          g_tickerInfo[LVar3].state = TVar18;
         }
-      }
-      else if (TVar18 == TICKER_LEFT_SCROLL) {
-        pFVar15 = pFVar9;
-        iVar12 = UI_TextWidth(pcVar10,iVar11,pFVar9,piVar7->textscale);
-        pfVar14 = (float *)lVar19;
-        fVar4 = -((float)(longlong)pnVar6->speed * (float)(longlong)iVar23 * 0.001 -
-                 g_tickerInfo[LVar3].x);
-        g_tickerInfo[LVar3].x = fVar4;
-        if (fVar4 <= (float)aFStack_7c[0].pixelHeight - (float)(longlong)iVar12) {
-          iVar12 = pnVar24->lastTime;
-          g_tickerInfo[LVar3].state = TICKER_PAUSE_AFTER_SCROLL;
-          g_tickerInfo[LVar3].nextStateTime = iVar12 + 3000;
+        else if (TVar16 == TICKER_SHOW) {
+          if (g_tickerInfo[LVar3].nextStateTime <= iVar10) {
+            pFVar13 = pFVar7;
+            iVar10 = UI_TextWidth(pcVar8,iVar9,pFVar7,param_2->textscale);
+            pfVar12 = (float *)lVar17;
+            TVar16 = TICKER_LEFT_SCROLL;
+            if ((float)(longlong)iVar10 <= (float)aFStack_7c[0].pixelHeight) {
+              TVar16 = TICKER_MOVE_OUT;
+            }
+            g_tickerInfo[LVar3].state = TVar16;
+          }
         }
-      }
-      else if (TVar18 == TICKER_PAUSE_AFTER_SCROLL) {
-        if (g_tickerInfo[LVar3].nextStateTime <= iVar12) {
-          g_tickerInfo[LVar3].state = TICKER_MOVE_OUT;
+        else if (TVar16 == TICKER_LEFT_SCROLL) {
+          pFVar13 = pFVar7;
+          iVar10 = UI_TextWidth(pcVar8,iVar9,pFVar7,param_2->textscale);
+          pfVar12 = (float *)lVar17;
+          fVar4 = -((float)(longlong)pnVar5->speed * (float)(longlong)iVar22 * 0.001 -
+                   g_tickerInfo[LVar3].x);
+          g_tickerInfo[LVar3].x = fVar4;
+          if (fVar4 <= (float)aFStack_7c[0].pixelHeight - (float)(longlong)iVar10) {
+            iVar10 = pnVar23->lastTime;
+            g_tickerInfo[LVar3].state = TICKER_PAUSE_AFTER_SCROLL;
+            g_tickerInfo[LVar3].nextStateTime = iVar10 + 3000;
+          }
         }
-      }
-      else {
-        fVar4 = -((float)(longlong)pnVar6->speed * (float)(longlong)iVar23 * 0.001 -
-                 g_tickerInfo[LVar3].y);
-        g_tickerInfo[LVar3].y = fVar4;
-        if (fVar4 <= (piVar7->window).rect.h * -1.0) {
-          Item_NewsTicker_Reset(pUVar5,piVar7);
-          pfVar14 = (float *)uVar13;
+        else if (TVar16 == TICKER_PAUSE_AFTER_SCROLL) {
+          if (g_tickerInfo[LVar3].nextStateTime <= iVar10) {
+            g_tickerInfo[LVar3].state = TICKER_MOVE_OUT;
+          }
+        }
+        else {
+          fVar4 = -((float)(longlong)pnVar5->speed * (float)(longlong)iVar22 * 0.001 -
+                   g_tickerInfo[LVar3].y);
+          g_tickerInfo[LVar3].y = fVar4;
+          if (fVar4 <= (param_2->window).rect.h * -1.0) {
+            Item_NewsTicker_Reset(param_1,param_2);
+            pfVar12 = (float *)lVar11;
+          }
         }
       }
     }
+    dVar25 = (double)(param_2->window).rect.h;
+    iVar10 = UI_TextHeight(pFVar7,param_2->textscale);
+    uVar15 = iVar10 + (int)dVar25;
+    iVar10 = (int)uVar15 >> 1;
+    pfVar20 = (float *)lVar19;
+    iVar22 = iVar10 + (uint)((int)uVar15 < 0 && (uVar15 & 1) != 0);
+    UI_SetScissorRect(pSVar6,*pfVar20,(param_2->window).rect.y,(param_2->window).rect.w,
+                      (float)dVar25,(int)pfVar12,(int)pFVar13);
+    UI_DrawTextNoSnap(pSVar6,pcVar8,iVar9,pFVar7,g_tickerInfo[LVar3].x + *pfVar20,
+                      g_tickerInfo[LVar3].y + (float)(longlong)iVar22 + (param_2->window).rect.y,
+                      iVar10,param_2->textStyle,param_2->textscale,
+                      (float *)(uint)(param_2->window).rect.horzAlign,
+                      (uint)(param_2->window).rect.vertAlign);
+    UI_ClearScissorRect();
+    return;
   }
-  dVar26 = (double)(piVar7->window).rect.h;
-  iVar12 = UI_TextHeight(pFVar9,piVar7->textscale);
-  uVar17 = iVar12 + (int)dVar26;
-  iVar12 = (int)uVar17 >> 1;
-  pfVar22 = (float *)lVar21;
-  iVar23 = iVar12 + (uint)((int)uVar17 < 0 && (uVar17 & 1) != 0);
-  UI_SetScissorRect(pSVar8,*pfVar22,(piVar7->window).rect.y,(piVar7->window).rect.w,(float)dVar26,
-                    (int)pfVar14,(int)pFVar15);
-  UI_DrawTextNoSnap(pSVar8,pcVar10,iVar11,pFVar9,g_tickerInfo[LVar3].x + *pfVar22,
-                    g_tickerInfo[LVar3].y + (float)(longlong)iVar23 + (piVar7->window).rect.y,iVar12
-                    ,piVar7->textStyle,piVar7->textscale,
-                    (float *)(uint)(piVar7->window).rect.horzAlign,
-                    (uint)(piVar7->window).rect.vertAlign);
-  UI_ClearScissorRect();
-LAB_825c6f20:
-  __restgprlr_21();
+  pnVar5 = Item_GetNewsTickerDef(param_2);
+  NewsFeed_Swap(pnVar5->feedId);
+  Item_NewsTicker_Init(param_1,param_2);
   return;
 }
 
 
 // 825CE328  Item_Paint  (ui/ui_shared.cpp:10161)
 
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
@@ -14484,123 +13839,118 @@ void Item_Paint(UiContext *param_1,ScreenPlacement *param_2,itemDef_t *param_3)
   LocalClientNum_t LVar2;
   undefined4 uVar3;
   menuData_t *pmVar4;
-  UiContext *pUVar5;
-  int iVar6;
-  bool bVar12;
-  itemDef_t *piVar7;
-  char *pcVar8;
-  Material *pMVar9;
-  rectDef_s *prVar10;
-  ScreenPlacement *pSVar11;
+  int iVar5;
+  bool bVar10;
+  char *pcVar6;
+  Material *pMVar7;
+  rectDef_s *prVar8;
+  ScreenPlacement *pSVar9;
+  itemDef_t *piVar11;
   undefined8 in_r6;
-  float *pfVar13;
-  undefined4 *puVar14;
-  int iVar15;
+  float *pfVar12;
+  undefined4 *puVar13;
+  int iVar14;
+  double dVar15;
   double dVar16;
   double dVar17;
   double dVar18;
   double dVar19;
-  double dVar20;
-  float fVar21;
+  float fVar20;
   char acStack_c0 [192];
   
-  __savegprlr_22(param_1);
-  pUVar5 = (UiContext *)__savefpr_27();
-  iVar6 = (param_3->window).ownerDrawFlags;
+  iVar5 = (param_3->window).ownerDrawFlags;
   pmVar1 = param_3->parent;
-  piVar7 = param_3;
-  if (iVar6 != 0) {
-    iVar6 = UI_OwnerDrawVisible(iVar6);
-    if (iVar6 == 0) {
-      LVar2 = pUVar5->localClientNum;
+  piVar11 = param_3;
+  if (iVar5 != 0) {
+    iVar5 = UI_OwnerDrawVisible(iVar5);
+    if (iVar5 == 0) {
+      LVar2 = param_1->localClientNum;
       Sys_EnterUIOwnership();
-      piVar7 = (itemDef_t *)&DAT_00000004;
+      piVar11 = (itemDef_t *)&DAT_00000004;
       Window_RemoveDynamicFlags(LVar2,&param_3->window,4);
       Sys_LeaveUIOwnership();
     }
     else {
-      piVar7 = (itemDef_t *)&DAT_00000004;
-      Window_AddDynamicFlags(pUVar5->localClientNum,&param_3->window,4);
+      piVar11 = (itemDef_t *)&DAT_00000004;
+      Window_AddDynamicFlags(param_1->localClientNum,&param_3->window,4);
     }
   }
-  iVar6 = Item_IsVisible(pUVar5->localClientNum,param_3);
-  if (iVar6 == 0) {
-    bVar12 = Window_HasFocus(pUVar5->localClientNum,&param_3->window);
-    if (bVar12) {
-      Menu_ClearFocus(pUVar5,pmVar1);
-      piVar7 = Menu_SetNextCursorItem(pUVar5,pmVar1,(ItemFocusReason)piVar7);
-      __restfpr_27(piVar7);
-      __restgprlr_22();
+  iVar5 = Item_IsVisible(param_1->localClientNum,param_3);
+  if (iVar5 == 0) {
+    bVar10 = Window_HasFocus(param_1->localClientNum,&param_3->window);
+    if (!bVar10) {
       return;
     }
-    goto switchD_825ce740_caseD_2;
+    Menu_ClearFocus(param_1,pmVar1);
+    Menu_SetNextCursorItem(param_1,pmVar1,(ItemFocusReason)piVar11);
+    return;
   }
-  Item_RunHasFocus(pUVar5,param_3);
-  pfVar13 = (float *)in_r6;
-  iVar6 = 0;
+  Item_RunHasFocus(param_1,param_3);
+  pfVar12 = (float *)in_r6;
+  iVar5 = 0;
   if (param_3->floatExpressionCount != 0) {
-    iVar15 = 0;
+    iVar14 = 0;
     do {
-      puVar14 = (undefined4 *)((int)&param_3->floatExpressions->target + iVar15);
-      uVar3 = *puVar14;
-      fVar21 = GetExpressionFloat(pUVar5->localClientNum,(Statement_s *)puVar14[1]);
+      puVar13 = (undefined4 *)((int)&param_3->floatExpressions->target + iVar14);
+      uVar3 = *puVar13;
+      fVar20 = GetExpressionFloat(param_1->localClientNum,(Statement_s *)puVar13[1]);
       switch(uVar3) {
       case 0:
-        (param_3->window).rect.x = (param_3->parent->window).rect.x + fVar21;
+        (param_3->window).rect.x = (param_3->parent->window).rect.x + fVar20;
         break;
       case 1:
-        (param_3->window).rect.y = (param_3->parent->window).rect.y + fVar21;
+        (param_3->window).rect.y = (param_3->parent->window).rect.y + fVar20;
         break;
       case 2:
-        (param_3->window).rect.w = fVar21;
+        (param_3->window).rect.w = fVar20;
         break;
       case 3:
-        (param_3->window).rect.h = fVar21;
+        (param_3->window).rect.h = fVar20;
         break;
       case 4:
-        (param_3->window).foreColor[0] = fVar21;
+        (param_3->window).foreColor[0] = fVar20;
         break;
       case 5:
-        (param_3->window).foreColor[1] = fVar21;
+        (param_3->window).foreColor[1] = fVar20;
         break;
       case 7:
-        (param_3->window).foreColor[0] = fVar21;
-        (param_3->window).foreColor[1] = fVar21;
+        (param_3->window).foreColor[0] = fVar20;
+        (param_3->window).foreColor[1] = fVar20;
       case 6:
-        (param_3->window).foreColor[2] = fVar21;
+        (param_3->window).foreColor[2] = fVar20;
         break;
       case 8:
-        (param_3->window).foreColor[3] = fVar21;
+        (param_3->window).foreColor[3] = fVar20;
         break;
       case 9:
-        param_3->glowColor[0] = fVar21;
+        param_3->glowColor[0] = fVar20;
         break;
       case 10:
-        param_3->glowColor[1] = fVar21;
+        param_3->glowColor[1] = fVar20;
         break;
       case 0xc:
-        param_3->glowColor[0] = fVar21;
-        param_3->glowColor[1] = fVar21;
+        param_3->glowColor[0] = fVar20;
+        param_3->glowColor[1] = fVar20;
       case 0xb:
-        param_3->glowColor[2] = fVar21;
+        param_3->glowColor[2] = fVar20;
         break;
       case 0xd:
-        param_3->glowColor[3] = fVar21;
+        param_3->glowColor[3] = fVar20;
         break;
       case 0xe:
-        (param_3->window).backColor[0] = fVar21;
+        (param_3->window).backColor[0] = fVar20;
         break;
       case 0xf:
-        (param_3->window).backColor[1] = fVar21;
+        (param_3->window).backColor[1] = fVar20;
         break;
       case 0x11:
-        (param_3->window).backColor[0] = fVar21;
-        (param_3->window).backColor[1] = fVar21;
+        (param_3->window).backColor[0] = fVar20;
+        (param_3->window).backColor[1] = fVar20;
       case 0x10:
-        (param_3->window).backColor[2] = fVar21;
+        (param_3->window).backColor[2] = fVar20;
         break;
       case 0x12:
-        (param_3->window).backColor[3] = fVar21;
+        (param_3->window).backColor[3] = fVar20;
         break;
       default:
         if (alwaysfails == 0) {
@@ -14609,60 +13959,60 @@ void Item_Paint(UiContext *param_1,ScreenPlacement *param_2,itemDef_t *param_3)
                           ,0,"UNKNOWN FLOAT EXPR TARGET");
         }
       }
-      pfVar13 = (float *)in_r6;
-      iVar6 = iVar6 + 1;
-      iVar15 = iVar15 + 8;
-    } while (iVar6 != param_3->floatExpressionCount);
+      pfVar12 = (float *)in_r6;
+      iVar5 = iVar5 + 1;
+      iVar14 = iVar14 + 8;
+    } while (iVar5 != param_3->floatExpressionCount);
   }
-  dVar18 = 1.0;
-  dVar19 = dVar18;
-  bVar12 = Menu_HasScaleTransition(pUVar5->localClientNum,param_3->parent);
-  if (bVar12) {
-    fVar21 = Menu_GetTransitionValue
-                       (pUVar5->localClientNum,param_3->parent,
-                        param_3->parent->data->scaleTransition + pUVar5->localClientNum);
-    dVar18 = (double)fVar21;
+  dVar17 = 1.0;
+  dVar18 = dVar17;
+  bVar10 = Menu_HasScaleTransition(param_1->localClientNum,param_3->parent);
+  if (bVar10) {
+    fVar20 = Menu_GetTransitionValue
+                       (param_1->localClientNum,param_3->parent,
+                        param_3->parent->data->scaleTransition + param_1->localClientNum);
+    dVar17 = (double)fVar20;
   }
-  dVar16 = dVar19;
-  bVar12 = Menu_HasAlphaTransition(pUVar5->localClientNum,param_3->parent);
-  if (bVar12) {
-    fVar21 = Menu_GetTransitionValue
-                       (pUVar5->localClientNum,param_3->parent,
-                        param_3->parent->data->alphaTransition + pUVar5->localClientNum);
-    dVar16 = (double)fVar21;
+  dVar15 = dVar18;
+  bVar10 = Menu_HasAlphaTransition(param_1->localClientNum,param_3->parent);
+  if (bVar10) {
+    fVar20 = Menu_GetTransitionValue
+                       (param_1->localClientNum,param_3->parent,
+                        param_3->parent->data->alphaTransition + param_1->localClientNum);
+    dVar15 = (double)fVar20;
   }
   if ((param_3->window).style == 5) {
-    pcVar8 = Dvar_GetString(param_3->dvar);
-LAB_825ce63c:
-    I_strncpyz(acStack_c0,pcVar8,0x40);
-    I_strlwr(acStack_c0);
-    pMVar9 = Material_RegisterHandle(acStack_c0,3);
-    (param_3->window).background = pMVar9;
+    pcVar6 = Dvar_GetString(param_3->dvar);
   }
-  else if (param_3->materialExp != (Statement_s *)0x0) {
-    pcVar8 = GetExpressionResultString(pUVar5->localClientNum,param_3->materialExp);
-    goto LAB_825ce63c;
+  else {
+    if (param_3->materialExp == (Statement_s *)0x0) goto LAB_825ce664;
+    pcVar6 = GetExpressionResultString(param_1->localClientNum,param_3->materialExp);
   }
+  I_strncpyz(acStack_c0,pcVar6,0x40);
+  I_strlwr(acStack_c0);
+  pMVar7 = Material_RegisterHandle(acStack_c0,3);
+  (param_3->window).background = pMVar7;
+LAB_825ce664:
   pmVar4 = pmVar1->data;
-  Window_Paint(pUVar5,&param_3->window,param_2,(float)dVar18,(float)dVar16,pmVar4->fadeAmount,
+  Window_Paint(param_1,&param_3->window,param_2,(float)dVar17,(float)dVar15,pmVar4->fadeAmount,
                pmVar4->fadeInAmount,pmVar4->fadeClamp,(float)(longlong)pmVar4->fadeCycle);
   if ((ui_debugMode->current).enabled != false) {
-    piVar7 = param_3;
-    prVar10 = Item_CorrectedTextRect(pUVar5->localClientNum,param_3);
-    dVar20 = (double)prVar10->h;
-    dVar17 = (double)prVar10->w;
-    dVar16 = (double)prVar10->y;
-    dVar18 = (double)prVar10->x;
-    pSVar11 = ScrPlace_GetActivePlacement(pUVar5->localClientNum);
-    UI_DrawRect(pSVar11,(float)dVar18,(float)dVar16,(float)dVar17,(float)dVar20,(int)piVar7,
-                (int)param_2,(float)dVar19,pfVar13);
+    piVar11 = param_3;
+    prVar8 = Item_CorrectedTextRect(param_1->localClientNum,param_3);
+    dVar19 = (double)prVar8->h;
+    dVar16 = (double)prVar8->w;
+    dVar15 = (double)prVar8->y;
+    dVar17 = (double)prVar8->x;
+    pSVar9 = ScrPlace_GetActivePlacement(param_1->localClientNum);
+    UI_DrawRect(pSVar9,(float)dVar17,(float)dVar15,(float)dVar16,(float)dVar19,(int)piVar11,
+                (int)param_2,(float)dVar18,pfVar12);
   }
   if ((param_3->window).style != 5) {
     switch(param_3->type) {
     case 0:
     case 1:
     case 0x15:
-      Item_Text_Paint(pUVar5,param_3);
+      Item_Text_Paint(param_1,param_3);
       break;
     case 4:
     case 9:
@@ -14671,66 +14021,45 @@ LAB_825ce63c:
     case 0x12:
     case 0x16:
     case 0x17:
-      Item_TextField_Paint(pUVar5,param_3);
-      __restfpr_27();
-      __restgprlr_22();
+      Item_TextField_Paint(param_1,param_3);
       return;
     case 6:
-      Item_ListBox_Paint(pUVar5,param_3);
-      __restfpr_27();
-      __restgprlr_22();
+      Item_ListBox_Paint(param_1,param_3);
       return;
     case 8:
-      Item_OwnerDraw_Paint(pUVar5,param_3);
-      __restfpr_27();
-      __restgprlr_22();
+      Item_OwnerDraw_Paint(param_1,param_3);
       return;
     case 10:
-      Item_Slider_Paint(pUVar5,param_3);
-      __restfpr_27();
-      __restgprlr_22();
+      Item_Slider_Paint(param_1,param_3);
       return;
     case 0xb:
-      Item_YesNo_Paint(pUVar5,param_3);
-      __restfpr_27();
-      __restgprlr_22();
+      Item_YesNo_Paint(param_1,param_3);
       return;
     case 0xc:
-      Item_Multi_Paint(pUVar5,param_3);
-      __restfpr_27();
-      __restgprlr_22();
+      Item_Multi_Paint(param_1,param_3);
       return;
     case 0xd:
-      Item_DvarEnum_Paint(pUVar5,param_3);
-      __restfpr_27();
-      __restgprlr_22();
+      Item_DvarEnum_Paint(param_1,param_3);
       return;
     case 0xe:
-      Item_Bind_Paint(pUVar5,param_3);
-      __restfpr_27();
-      __restgprlr_22();
+      Item_Bind_Paint(param_1,param_3);
       return;
     case 0x13:
-      Item_GameMsgWindow_Paint(pUVar5,param_3);
-      __restfpr_27();
-      __restgprlr_22();
+      Item_GameMsgWindow_Paint(param_1,param_3);
       return;
     case 0x14:
-      Item_NewsTicker_Paint(pUVar5,param_3);
-      __restfpr_27();
-      __restgprlr_22();
+      Item_NewsTicker_Paint(param_1,param_3);
       return;
     }
   }
-switchD_825ce740_caseD_2:
-  __restfpr_27();
-  __restgprlr_22();
   return;
 }
 
 
 // 825C6F30  Menu_GetFocused  (ui/ui_shared.cpp:10366)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
@@ -14739,24 +14068,21 @@ menuDef_t * Menu_GetFocused(UiContext *param_1)
 
 {
   LocalClientNum_t LVar1;
-  LocalClientNum_t *pLVar2;
+  bool bVar2;
   longlong lVar3;
-  bool bVar5;
-  menuDef_t *pmVar4;
-  longlong lVar6;
-  int iVar7;
+  longlong lVar4;
+  int iVar5;
   
-  lVar3 = __savegprlr_23(param_1);
-  pLVar2 = (LocalClientNum_t *)lVar3;
-  lVar6 = (ulonglong)pLVar2[0x29e] - 1;
-  if (-1 < lVar6) {
-    lVar3 = ((ulonglong)pLVar2[0x29e] + 0x28d & 0x3fffffff) * 4 + lVar3;
+  lVar3 = (ulonglong)(uint)param_1->openMenuCount - 1;
+  if (-1 < lVar3) {
+    lVar4 = ((ulonglong)(uint)param_1->openMenuCount + 0x28d & 0x3fffffff) * 4 +
+            (longlong)(int)param_1;
     do {
-      bVar5 = Window_HasFocus(*pLVar2,(windowDef_t *)(*(int *)lVar3 + 4));
-      if (bVar5) {
-        LVar1 = *pLVar2;
-        iVar7 = *(int *)lVar3 + 4;
-        if (iVar7 == 0) {
+      bVar2 = Window_HasFocus(param_1->localClientNum,(windowDef_t *)(*(int *)lVar4 + 4));
+      if (bVar2) {
+        LVar1 = param_1->localClientNum;
+        iVar5 = *(int *)lVar4 + 4;
+        if (iVar5 == 0) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\../ui/ui_utils.h",
                           0x54,0,"%s");
         }
@@ -14766,19 +14092,16 @@ menuDef_t * Menu_GetFocused(UiContext *param_1)
                           "localClientNum doesn\'t index MAX_POSSIBLE_LOCAL_CLIENTS\n\t%i not in [0, %i)"
                          );
         }
-        if ((*(uint *)((LVar1 + 0x12) * 4 + iVar7) & 4) != 0) {
-          pmVar4 = (menuDef_t *)
-                   __restgprlr_23(*(undefined4 *)
-                                   ((int)((lVar6 + 0x28eU & 0xffffffff) << 2) + (int)pLVar2));
-          return pmVar4;
+        if ((*(uint *)((LVar1 + 0x12) * 4 + iVar5) & 4) != 0) {
+          return *(menuDef_t **)
+                  ((int)param_1->Menus + (int)((lVar3 + 0x28eU & 0xffffffff) << 2) + -0x34);
         }
       }
-      lVar6 = lVar6 + -1;
-      lVar3 = lVar3 + -4;
-    } while (-1 < lVar6);
+      lVar3 = lVar3 + -1;
+      lVar4 = lVar4 + -4;
+    } while (-1 < lVar3);
   }
-  pmVar4 = (menuDef_t *)__restgprlr_23(0);
-  return pmVar4;
+  return (menuDef_t *)0x0;
 }
 
 
@@ -14803,6 +14126,8 @@ menuDef_t * Menu_GetTopOfStack(UiContext *param_1,int param_2)
 
 // 825C7050  Menu_SetFeederSelection  (ui/ui_shared.cpp:10392)
 
+/* WARNING: Function: __savegprlr_20 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_20 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
@@ -14812,79 +14137,77 @@ void Menu_SetFeederSelection
 
 {
   itemDef_t *piVar1;
-  UiContext *pUVar2;
-  menuDef_t *pmVar3;
-  listBoxDef_s *plVar4;
-  int iVar5;
-  int iVar6;
-  ulonglong uVar7;
-  uint uVar8;
-  int iVar9;
-  int iVar10;
-  ulonglong uVar11;
-  double dVar12;
+  listBoxDef_s *plVar2;
+  int iVar3;
+  int iVar4;
+  ulonglong uVar5;
+  uint uVar6;
+  int iVar7;
+  int iVar8;
+  ulonglong uVar9;
+  double dVar10;
   
-  uVar11 = (ulonglong)(int)param_5;
-  uVar7 = (ulonglong)(int)param_2;
-  pUVar2 = (UiContext *)__savegprlr_20(param_1);
-  pmVar3 = (menuDef_t *)uVar7;
-  if ((uVar7 & 0xffffffff) == 0) {
-    if ((uVar11 & 0xffffffff) == 0) {
-      pmVar3 = Menu_GetFocused(pUVar2);
-      uVar11 = uVar7;
+  uVar9 = (ulonglong)(int)param_5;
+  uVar5 = (ulonglong)(int)param_2;
+  if (param_2 == (menuDef_t *)0x0) {
+    if (param_5 == (char *)0x0) {
+      param_2 = Menu_GetFocused(param_1);
+      uVar9 = uVar5;
     }
     else {
-      pmVar3 = Menus_FindByName(pUVar2,(char *)uVar11);
+      param_2 = Menus_FindByName(param_1,param_5);
     }
-    uVar7 = uVar11;
-    if (pmVar3 == (menuDef_t *)0x0) goto LAB_825c71e8;
+    uVar5 = uVar9;
+    if (param_2 == (menuDef_t *)0x0) {
+      return;
+    }
   }
-  iVar9 = 0;
-  if (0 < pmVar3->itemCount) {
-    dVar12 = (double)(longlong)param_3;
-    iVar10 = 0;
+  iVar7 = 0;
+  if (0 < param_2->itemCount) {
+    dVar10 = (double)(longlong)param_3;
+    iVar8 = 0;
     do {
-      piVar1 = *(itemDef_t **)((int)pmVar3->items + iVar10);
-      uVar11 = ZEXT48(piVar1);
-      if ((double)piVar1->special == dVar12) {
-        piVar1->cursorPos[pUVar2->localClientNum] = param_4;
-        UI_FeederSelection(pUVar2->localClientNum,piVar1->special,(int)uVar7);
-        plVar4 = Item_GetListBoxDef(piVar1);
-        if (plVar4 != (listBoxDef_s *)0x0) {
-          iVar5 = Item_ListBox_GetVisibleElementCount(pUVar2->localClientNum,piVar1);
-          uVar7 = uVar11;
-          if (iVar5 < 1) {
-            uVar7 = 0x28be;
+      piVar1 = *(itemDef_t **)((int)param_2->items + iVar8);
+      uVar9 = ZEXT48(piVar1);
+      if ((double)piVar1->special == dVar10) {
+        piVar1->cursorPos[param_1->localClientNum] = param_4;
+        UI_FeederSelection(param_1->localClientNum,piVar1->special,(int)uVar5);
+        plVar2 = Item_GetListBoxDef(piVar1);
+        if (plVar2 != (listBoxDef_s *)0x0) {
+          iVar3 = Item_ListBox_GetVisibleElementCount(param_1->localClientNum,piVar1);
+          uVar5 = uVar9;
+          if (iVar3 < 1) {
+            uVar5 = 0x28be;
             MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",
                             0x28be,0,"%s\n\t(visibleElementCount) = %i");
           }
-          if ((param_4 < plVar4->startPos[pUVar2->localClientNum]) ||
-             (plVar4->startPos[pUVar2->localClientNum] + iVar5 <= param_4)) {
-            uVar8 = iVar5 - 1;
-            plVar4->startPos[pUVar2->localClientNum] =
-                 param_4 - (((int)uVar8 >> 1) + (uint)((int)uVar8 < 0 && (uVar8 & 1) != 0));
-            iVar6 = UI_FeederCount(pUVar2->localClientNum,piVar1->special);
-            if (iVar6 < iVar5 + plVar4->startPos[pUVar2->localClientNum]) {
-              plVar4->startPos[pUVar2->localClientNum] = iVar6 - iVar5;
+          if ((param_4 < plVar2->startPos[param_1->localClientNum]) ||
+             (plVar2->startPos[param_1->localClientNum] + iVar3 <= param_4)) {
+            uVar6 = iVar3 - 1;
+            plVar2->startPos[param_1->localClientNum] =
+                 param_4 - (((int)uVar6 >> 1) + (uint)((int)uVar6 < 0 && (uVar6 & 1) != 0));
+            iVar4 = UI_FeederCount(param_1->localClientNum,piVar1->special);
+            if (iVar4 < iVar3 + plVar2->startPos[param_1->localClientNum]) {
+              plVar2->startPos[param_1->localClientNum] = iVar4 - iVar3;
             }
-            if (plVar4->startPos[pUVar2->localClientNum] < 0) {
-              plVar4->startPos[pUVar2->localClientNum] = 0;
+            if (plVar2->startPos[param_1->localClientNum] < 0) {
+              plVar2->startPos[param_1->localClientNum] = 0;
             }
           }
         }
       }
-      iVar9 = iVar9 + 1;
-      iVar10 = iVar10 + 4;
-    } while (iVar9 < pmVar3->itemCount);
+      iVar7 = iVar7 + 1;
+      iVar8 = iVar8 + 4;
+    } while (iVar7 < param_2->itemCount);
   }
-LAB_825c71e8:
-  __restgprlr_20();
   return;
 }
 
 
 // 825C71F8  Menus_AnyFullScreenVisible  (ui/ui_shared.cpp:10452)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
@@ -14892,48 +14215,43 @@ LAB_825c71e8:
 int Menus_AnyFullScreenVisible(UiContext *param_1)
 
 {
-  uint uVar1;
+  LocalClientNum_t LVar1;
   longlong lVar2;
-  int iVar3;
-  ulonglong uVar4;
-  longlong lVar5;
-  longlong lVar6;
+  longlong lVar3;
+  int iVar4;
   
-  lVar2 = __savegprlr_23(param_1);
-  uVar4 = (ulonglong)((uint *)lVar2)[0x29e];
-  lVar5 = uVar4 - 1;
-  if (-1 < lVar5) {
-    lVar6 = (uVar4 + 0x28d & 0x3fffffff) * 4 + lVar2;
+  lVar2 = (ulonglong)(uint)param_1->openMenuCount - 1;
+  if (-1 < lVar2) {
+    lVar3 = ((ulonglong)(uint)param_1->openMenuCount + 0x28d & 0x3fffffff) * 4 +
+            (longlong)(int)param_1;
     do {
-      uVar1 = *(uint *)lVar2;
-      iVar3 = *(int *)lVar6 + 4;
-      if (iVar3 == 0) {
+      LVar1 = param_1->localClientNum;
+      iVar4 = *(int *)lVar3 + 4;
+      if (iVar4 == 0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\../ui/ui_utils.h",0x54,
                         0,"%s");
       }
-      if (3 < uVar1) {
+      if (LOCAL_CLIENT_3 < LVar1) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\../ui/ui_utils.h",0x21,
                         0,
                         "localClientNum doesn\'t index MAX_POSSIBLE_LOCAL_CLIENTS\n\t%i not in [0, %i)"
                        );
       }
-      if ((*(uint *)((uVar1 + 0x12) * 4 + iVar3) & 4) != 0) {
-        if (**(int **)*(int *)lVar6 != 0) {
-          iVar3 = __restgprlr_23(1);
-          return iVar3;
-        }
+      if (((*(uint *)((LVar1 + 0x12) * 4 + iVar4) & 4) != 0) && (**(int **)*(int *)lVar3 != 0)) {
+        return 1;
       }
-      lVar5 = lVar5 + -1;
-      lVar6 = lVar6 + -4;
-    } while (-1 < lVar5);
+      lVar2 = lVar2 + -1;
+      lVar3 = lVar3 + -4;
+    } while (-1 < lVar2);
   }
-  iVar3 = __restgprlr_23(0);
-  return iVar3;
+  return 0;
 }
 
 
 // 825C72E0  Menu_IsVisible  (ui/ui_shared.cpp:10576)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
@@ -14943,43 +14261,42 @@ bool Menu_IsVisible(UiContext *param_1,menuDef_t *param_2)
 {
   char *pcVar1;
   Statement_s *pSVar2;
-  LocalClientNum_t *pLVar3;
-  int iVar4;
-  bool bVar6;
-  clientUIActive_t *pcVar5;
-  undefined1 uVar7;
+  int iVar3;
+  bool bVar5;
+  clientUIActive_t *pcVar4;
   
-  pLVar3 = (LocalClientNum_t *)__savegprlr_29(param_1);
   if (((((((*(ui_showMenuOnly->current).string == '\0') ||
           (pcVar1 = (param_2->window).name, pcVar1 == (char *)0x0)) ||
-         (iVar4 = I_stricmp(pcVar1,(ui_showMenuOnly->current).string), iVar4 == 0)) &&
-        (iVar4 = Window_IsVisible(*pLVar3,&param_2->window), iVar4 != 0)) &&
-       (((iVar4 = (param_2->window).ownerDrawFlags, iVar4 == 0 ||
-         (iVar4 = UI_OwnerDrawVisible(iVar4), iVar4 != 0)) &&
+         (iVar3 = I_stricmp(pcVar1,(ui_showMenuOnly->current).string), iVar3 == 0)) &&
+        (iVar3 = Window_IsVisible(param_1->localClientNum,&param_2->window), iVar3 != 0)) &&
+       (((iVar3 = (param_2->window).ownerDrawFlags, iVar3 == 0 ||
+         (iVar3 = UI_OwnerDrawVisible(iVar3), iVar3 != 0)) &&
         ((((param_2->window).staticFlags & 0x20000000U) == 0 ||
-         ((iVar4 = CL_IsCgameInitialized(*pLVar3), iVar4 == 0 ||
-          (bVar6 = CG_ScopeIsOverlayed(*pLVar3), !bVar6)))))))) &&
+         ((iVar3 = CL_IsCgameInitialized(param_1->localClientNum), iVar3 == 0 ||
+          (bVar5 = CG_ScopeIsOverlayed(param_1->localClientNum), !bVar5)))))))) &&
       ((((param_2->window).staticFlags & 0x10000000U) == 0 ||
-       ((iVar4 = CL_IsCgameInitialized(*pLVar3), iVar4 == 0 ||
-        (iVar4 = CG_GetFlashbangedRemainingTime(*pLVar3), iVar4 == 0)))))) &&
+       ((iVar3 = CL_IsCgameInitialized(param_1->localClientNum), iVar3 == 0 ||
+        (iVar3 = CG_GetFlashbangedRemainingTime(param_1->localClientNum), iVar3 == 0)))))) &&
      ((((param_2->window).staticFlags & 0x40000000U) == 0 ||
-      (pcVar5 = CL_GetLocalClientUIGlobals(*pLVar3), (pcVar5->keyCatchers & 0x10U) == 0)))) {
+      (pcVar4 = CL_GetLocalClientUIGlobals(param_1->localClientNum),
+      (pcVar4->keyCatchers & 0x10U) == 0)))) {
     pSVar2 = param_2->data->visibleExp;
-    if ((pSVar2 == (Statement_s *)0x0) || (bVar6 = IsExpressionTrue(*pLVar3,pSVar2), bVar6)) {
-      uVar7 = __restgprlr_29(1);
-      return (bool)uVar7;
+    if ((pSVar2 == (Statement_s *)0x0) ||
+       (bVar5 = IsExpressionTrue(param_1->localClientNum,pSVar2), bVar5)) {
+      return true;
     }
     if ((uiscript_debug->current).integer != 0) {
       Com_Printf(0xd,"hiding the %s menu because the \'visible when\' expression was false\n");
     }
   }
-  uVar7 = __restgprlr_29(0);
-  return (bool)uVar7;
+  return false;
 }
 
 
 // 825C7458  Menus_ActiveMenuAllowSignin  (ui/ui_shared.cpp:10622)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
@@ -14987,42 +14304,39 @@ bool Menu_IsVisible(UiContext *param_1,menuDef_t *param_2)
 bool Menus_ActiveMenuAllowSignin(UiContext *param_1)
 
 {
-  uint uVar1;
-  uint *puVar2;
+  LocalClientNum_t LVar1;
+  longlong lVar2;
   longlong lVar3;
-  undefined1 uVar4;
-  longlong lVar5;
-  int iVar6;
+  int iVar4;
   
-  lVar3 = __savegprlr_23(param_1);
-  puVar2 = (uint *)lVar3;
-  lVar5 = (ulonglong)puVar2[0x29e] - 1;
-  if (-1 < lVar5) {
-    lVar3 = ((ulonglong)puVar2[0x29e] + 0x28d & 0x3fffffff) * 4 + lVar3;
+  lVar2 = (ulonglong)(uint)param_1->openMenuCount - 1;
+  if (-1 < lVar2) {
+    lVar3 = ((ulonglong)(uint)param_1->openMenuCount + 0x28d & 0x3fffffff) * 4 +
+            (longlong)(int)param_1;
     do {
-      uVar1 = *puVar2;
-      iVar6 = *(int *)lVar3 + 4;
-      if (iVar6 == 0) {
+      LVar1 = param_1->localClientNum;
+      iVar4 = *(int *)lVar3 + 4;
+      if (iVar4 == 0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\../ui/ui_utils.h",0x54,
                         0,"%s");
       }
-      if (3 < uVar1) {
+      if (LOCAL_CLIENT_3 < LVar1) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\../ui/ui_utils.h",0x21,
                         0,
                         "localClientNum doesn\'t index MAX_POSSIBLE_LOCAL_CLIENTS\n\t%i not in [0, %i)"
                        );
       }
-      if ((*(uint *)((uVar1 + 0x12) * 4 + iVar6) & 4) != 0) {
-        uVar4 = __restgprlr_23(*(uint *)(*(int *)((int)((lVar5 + 0x28eU & 0xffffffff) << 2) +
-                                                 (int)puVar2) + 0x48) >> 0x1b & 1);
-        return (bool)uVar4;
+      if ((*(uint *)((LVar1 + 0x12) * 4 + iVar4) & 4) != 0) {
+        return (bool)((byte)((uint)*(undefined4 *)
+                                    (*(int *)((int)param_1->Menus +
+                                             (int)((lVar2 + 0x28eU & 0xffffffff) << 2) + -0x34) +
+                                    0x48) >> 0x1b) & 1);
       }
-      lVar5 = lVar5 + -1;
+      lVar2 = lVar2 + -1;
       lVar3 = lVar3 + -4;
-    } while (-1 < lVar5);
+    } while (-1 < lVar2);
   }
-  uVar4 = __restgprlr_23(0);
-  return (bool)uVar4;
+  return false;
 }
 
 
@@ -15064,6 +14378,8 @@ void SetCurrentItemDef(UiContext *param_1,itemDef_t *param_2)
 
 // 825CE8D8  Menu_Paint  (ui/ui_shared.cpp:10658)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
@@ -15073,170 +14389,161 @@ bool Menu_Paint(UiContext *param_1,menuDef_t *param_2)
 {
   Statement_s *pSVar1;
   menuData_t *pmVar2;
-  UiContext *pUVar3;
+  bool bVar6;
+  char *pcVar3;
   bool bVar7;
-  undefined1 uVar8;
-  char *pcVar4;
-  bool bVar9;
-  itemDef_t *piVar5;
-  rectDef_s *prVar6;
-  ulonglong uVar10;
-  menuDef_t *pmVar11;
-  menuDef_t *pmVar12;
-  itemDef_t *piVar13;
-  itemDef_t *piVar14;
+  itemDef_t *piVar4;
+  rectDef_s *prVar5;
+  menuDef_t *pmVar8;
+  itemDef_t *piVar9;
+  itemDef_t *piVar10;
   undefined8 in_r6;
-  float *pfVar15;
-  undefined4 *puVar16;
-  undefined8 uVar17;
-  int iVar18;
-  int iVar19;
-  double dVar20;
-  double dVar21;
-  double dVar22;
-  float fVar23;
+  float *pfVar11;
+  undefined4 *puVar12;
+  undefined8 uVar13;
+  int iVar14;
+  int iVar15;
+  double dVar16;
+  double dVar17;
+  double dVar18;
+  float fVar19;
   
-  uVar10 = (ulonglong)(int)param_2;
-  pUVar3 = (UiContext *)__savegprlr_24(param_1);
-  pmVar11 = (menuDef_t *)uVar10;
-  uVar17 = 0xffffffff82000f98;
-  if ((uVar10 & 0xffffffff) == 0) {
+  uVar13 = 0xffffffff82000f98;
+  if (param_2 == (menuDef_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x29af,0,
                     "%s");
-    in_r6 = uVar17;
+    in_r6 = uVar13;
   }
   Sys_EnterUIOwnership();
-  bVar7 = Menu_IsVisible(pUVar3,pmVar11);
-  if (!bVar7) {
+  bVar6 = Menu_IsVisible(param_1,param_2);
+  if (!bVar6) {
     Sys_LeaveUIOwnership();
-    uVar8 = __restgprlr_24(0);
-    return (bool)uVar8;
+    return false;
   }
-  pSVar1 = pmVar11->data->soundLoopExp;
+  pSVar1 = param_2->data->soundLoopExp;
   if (pSVar1 == (Statement_s *)0x0) {
-    pcVar4 = pmVar11->data->soundName;
-    if (pcVar4 != (char *)0x0) goto LAB_825ce990;
+    pcVar3 = param_2->data->soundName;
+    if (pcVar3 != (char *)0x0) goto LAB_825ce990;
   }
   else {
-    pcVar4 = GetExpressionResultString(pUVar3->localClientNum,pSVar1);
+    pcVar3 = GetExpressionResultString(param_1->localClientNum,pSVar1);
 LAB_825ce990:
-    SND_PlayLocalSoundAliasByName(pUVar3->localClientNum,pcVar4,SASYS_UI);
+    SND_PlayLocalSoundAliasByName(param_1->localClientNum,pcVar3,SASYS_UI);
   }
-  bVar7 = ((pmVar11->window).staticFlags & 0x4000000U) != 0;
-  if (bVar7) {
+  bVar6 = ((param_2->window).staticFlags & 0x4000000U) != 0;
+  if (bVar6) {
     ScrPlace_SetLegacySplitscreenScaling();
   }
-  pSVar1 = pmVar11->data->rectXExp;
+  pSVar1 = param_2->data->rectXExp;
   if (pSVar1 == (Statement_s *)0x0) {
-    bVar9 = Menu_HasXTransition(pUVar3->localClientNum,pmVar11);
-    if (bVar9) {
-      fVar23 = Menu_GetTransitionValue
-                         (pUVar3->localClientNum,pmVar11,
-                          pmVar11->data->xTransition + pUVar3->localClientNum);
+    bVar7 = Menu_HasXTransition(param_1->localClientNum,param_2);
+    if (bVar7) {
+      fVar19 = Menu_GetTransitionValue
+                         (param_1->localClientNum,param_2,
+                          param_2->data->xTransition + param_1->localClientNum);
       goto LAB_825cea08;
     }
   }
   else {
-    fVar23 = GetExpressionFloat(pUVar3->localClientNum,pSVar1);
+    fVar19 = GetExpressionFloat(param_1->localClientNum,pSVar1);
 LAB_825cea08:
-    (pmVar11->window).rect.x = fVar23;
+    (param_2->window).rect.x = fVar19;
   }
-  pSVar1 = pmVar11->data->rectYExp;
+  pSVar1 = param_2->data->rectYExp;
   if (pSVar1 == (Statement_s *)0x0) {
-    bVar9 = Menu_HasYTransition(pUVar3->localClientNum,pmVar11);
-    if (!bVar9) goto LAB_825cea64;
-    fVar23 = Menu_GetTransitionValue
-                       (pUVar3->localClientNum,pmVar11,
-                        pmVar11->data->yTransition + pUVar3->localClientNum);
+    bVar7 = Menu_HasYTransition(param_1->localClientNum,param_2);
+    if (!bVar7) goto LAB_825cea64;
+    fVar19 = Menu_GetTransitionValue
+                       (param_1->localClientNum,param_2,
+                        param_2->data->yTransition + param_1->localClientNum);
   }
   else {
-    fVar23 = GetExpressionFloat(pUVar3->localClientNum,pSVar1);
+    fVar19 = GetExpressionFloat(param_1->localClientNum,pSVar1);
   }
-  (pmVar11->window).rect.y = fVar23;
+  (param_2->window).rect.y = fVar19;
 LAB_825cea64:
-  pSVar1 = pmVar11->data->rectWExp;
+  pSVar1 = param_2->data->rectWExp;
   if (pSVar1 != (Statement_s *)0x0) {
-    fVar23 = GetExpressionFloat(pUVar3->localClientNum,pSVar1);
-    (pmVar11->window).rect.w = fVar23;
+    fVar19 = GetExpressionFloat(param_1->localClientNum,pSVar1);
+    (param_2->window).rect.w = fVar19;
   }
-  pSVar1 = pmVar11->data->rectHExp;
+  pSVar1 = param_2->data->rectHExp;
   if (pSVar1 != (Statement_s *)0x0) {
-    fVar23 = GetExpressionFloat(pUVar3->localClientNum,pSVar1);
-    (pmVar11->window).rect.h = fVar23;
+    fVar19 = GetExpressionFloat(param_1->localClientNum,pSVar1);
+    (param_2->window).rect.h = fVar19;
   }
-  Menu_UpdatePosition(pUVar3->localClientNum,pmVar11);
-  dVar21 = 1.0;
-  dVar22 = dVar21;
-  bVar9 = Menu_HasScaleTransition(pUVar3->localClientNum,pmVar11);
-  if (bVar9) {
-    fVar23 = Menu_GetTransitionValue
-                       (pUVar3->localClientNum,pmVar11,
-                        pmVar11->data->scaleTransition + pUVar3->localClientNum);
-    dVar21 = (double)fVar23;
+  Menu_UpdatePosition(param_1->localClientNum,param_2);
+  dVar17 = 1.0;
+  dVar18 = dVar17;
+  bVar7 = Menu_HasScaleTransition(param_1->localClientNum,param_2);
+  if (bVar7) {
+    fVar19 = Menu_GetTransitionValue
+                       (param_1->localClientNum,param_2,
+                        param_2->data->scaleTransition + param_1->localClientNum);
+    dVar17 = (double)fVar19;
   }
-  dVar20 = dVar22;
-  pmVar12 = pmVar11;
-  bVar9 = Menu_HasAlphaTransition(pUVar3->localClientNum,pmVar11);
-  if (bVar9) {
-    pmVar12 = pmVar11;
-    fVar23 = Menu_GetTransitionValue
-                       (pUVar3->localClientNum,pmVar11,
-                        pmVar11->data->alphaTransition + pUVar3->localClientNum);
-    dVar20 = (double)fVar23;
+  dVar16 = dVar18;
+  pmVar8 = param_2;
+  bVar7 = Menu_HasAlphaTransition(param_1->localClientNum,param_2);
+  if (bVar7) {
+    pmVar8 = param_2;
+    fVar19 = Menu_GetTransitionValue
+                       (param_1->localClientNum,param_2,
+                        param_2->data->alphaTransition + param_1->localClientNum);
+    dVar16 = (double)fVar19;
   }
-  piVar5 = (itemDef_t *)ScrPlace_GetActivePlacement(pUVar3->localClientNum);
-  if ((pmVar11->data->fullScreen != 0) && ((pmVar11->window).background != (Material *)0x0)) {
-    prVar6 = Window_GetRect(&pmVar11->window);
+  piVar4 = (itemDef_t *)ScrPlace_GetActivePlacement(param_1->localClientNum);
+  if ((param_2->data->fullScreen != 0) && ((param_2->window).background != (Material *)0x0)) {
+    prVar5 = Window_GetRect(&param_2->window);
     in_r6 = 0xffffffff82000000;
-    UI_DrawHandlePic((ScreenPlacement *)piVar5,0.0,0.0,640.0,480.0,(int)pmVar12,(int)prVar6,
-                     (float *)&IMAGE_DOS_HEADER_82000000,(pmVar11->window).background);
+    UI_DrawHandlePic((ScreenPlacement *)piVar4,0.0,0.0,640.0,480.0,(int)pmVar8,(int)prVar5,
+                     (float *)&IMAGE_DOS_HEADER_82000000,(param_2->window).background);
   }
-  pmVar2 = pmVar11->data;
-  piVar13 = (itemDef_t *)(uVar10 + 4);
-  piVar14 = piVar5;
-  Window_Paint(pUVar3,&piVar13->window,(ScreenPlacement *)piVar5,(float)dVar21,(float)dVar20,
+  pmVar2 = param_2->data;
+  piVar9 = (itemDef_t *)&param_2->window;
+  piVar10 = piVar4;
+  Window_Paint(param_1,(windowDef_t *)piVar9,(ScreenPlacement *)piVar4,(float)dVar17,(float)dVar16,
                pmVar2->fadeAmount,pmVar2->fadeInAmount,pmVar2->fadeClamp,
                (float)(longlong)pmVar2->fadeCycle);
-  pfVar15 = (float *)in_r6;
-  if (pmVar11->itemCount != 0) {
-    dataCacheBlockTouch(ZEXT48(*pmVar11->items));
-    iVar18 = 0;
-    if (0 < (longlong)((ulonglong)(uint)pmVar11->itemCount - 1)) {
-      iVar19 = 0;
+  pfVar11 = (float *)in_r6;
+  if (param_2->itemCount != 0) {
+    dataCacheBlockTouch(ZEXT48(*param_2->items));
+    iVar14 = 0;
+    if (0 < (longlong)((ulonglong)(uint)param_2->itemCount - 1)) {
+      iVar15 = 0;
       do {
-        puVar16 = (undefined4 *)(iVar19 + (int)pmVar11->items);
-        dataCacheBlockTouch((ulonglong)(uint)puVar16[1]);
-        pUVar3->currentItemDef = (itemDef_t *)*puVar16;
-        Item_Paint(pUVar3,(ScreenPlacement *)piVar5,*(itemDef_t **)(iVar19 + (int)pmVar11->items));
-        pfVar15 = (float *)in_r6;
-        iVar18 = iVar18 + 1;
-        iVar19 = iVar19 + 4;
-      } while (iVar18 < pmVar11->itemCount + -1);
+        puVar12 = (undefined4 *)(iVar15 + (int)param_2->items);
+        dataCacheBlockTouch((ulonglong)(uint)puVar12[1]);
+        param_1->currentItemDef = (itemDef_t *)*puVar12;
+        Item_Paint(param_1,(ScreenPlacement *)piVar4,*(itemDef_t **)(iVar15 + (int)param_2->items));
+        pfVar11 = (float *)in_r6;
+        iVar14 = iVar14 + 1;
+        iVar15 = iVar15 + 4;
+      } while (iVar14 < param_2->itemCount + -1);
     }
-    pUVar3->currentItemDef = pmVar11->items[iVar18];
-    piVar14 = pmVar11->items[iVar18];
-    piVar13 = piVar5;
-    Item_Paint(pUVar3,(ScreenPlacement *)piVar5,piVar14);
+    param_1->currentItemDef = param_2->items[iVar14];
+    piVar10 = param_2->items[iVar14];
+    piVar9 = piVar4;
+    Item_Paint(param_1,(ScreenPlacement *)piVar4,piVar10);
   }
-  pUVar3->currentItemDef = (itemDef_t *)0x0;
+  param_1->currentItemDef = (itemDef_t *)0x0;
   if ((ui_debugMode->current).enabled != false) {
-    if ((uVar10 + 4 & 0xffffffff) == 0) {
-      piVar14 = (itemDef_t *)0x0;
-      piVar13 = (itemDef_t *)0x24;
-      pfVar15 = (float *)"%s";
+    if (param_2 == (menuDef_t *)0xfffffffc) {
+      piVar10 = (itemDef_t *)0x0;
+      piVar9 = (itemDef_t *)0x24;
+      pfVar11 = (float *)"%s";
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_utils_api.h",0x24,0,
                       "%s");
     }
-    UI_DrawRect((ScreenPlacement *)piVar5,(pmVar11->window).rect.x,(pmVar11->window).rect.y,
-                (pmVar11->window).rect.w,(pmVar11->window).rect.h,(int)piVar13,(int)piVar14,
-                (float)dVar22,pfVar15);
+    UI_DrawRect((ScreenPlacement *)piVar4,(param_2->window).rect.x,(param_2->window).rect.y,
+                (param_2->window).rect.w,(param_2->window).rect.h,(int)piVar9,(int)piVar10,
+                (float)dVar18,pfVar11);
   }
-  if (bVar7) {
+  if (bVar6) {
     ScrPlace_SetNormalSplitscreenScaling();
   }
   Sys_LeaveUIOwnership();
-  uVar8 = __restgprlr_24(1);
-  return (bool)uVar8;
+  return true;
 }
 
 
@@ -15259,6 +14566,8 @@ int Menu_Count(UiContext *param_1)
 
 // 825C7660  Menu_PaintViewport_ComputeBlur  (ui/ui_shared.cpp:10794)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
@@ -15268,31 +14577,28 @@ void Menu_PaintViewport_ComputeBlur(UiContext *param_1)
 {
   float fVar1;
   menuDef_t *pmVar2;
-  UiContext *pUVar3;
-  bool bVar4;
-  menuDef_t **ppmVar5;
-  int iVar6;
+  bool bVar3;
+  menuDef_t **ppmVar4;
+  int iVar5;
   
-  pUVar3 = (UiContext *)__savegprlr_25(param_1);
-  if (pUVar3 == (UiContext *)0x0) {
+  if (param_1 == (UiContext *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x2a2e,0,
                     "%s");
   }
-  ppmVar5 = pUVar3->Menus;
-  pUVar3->blurRadiusOut = 0.0;
-  for (iVar6 = 0; iVar6 < pUVar3->menuCount; iVar6 = iVar6 + 1) {
-    pmVar2 = *ppmVar5;
+  ppmVar4 = param_1->Menus;
+  param_1->blurRadiusOut = 0.0;
+  for (iVar5 = 0; iVar5 < param_1->menuCount; iVar5 = iVar5 + 1) {
+    pmVar2 = *ppmVar4;
     if (pmVar2 == (menuDef_t *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x2a35,0,
                       "%s");
     }
-    bVar4 = Menu_IsVisible(pUVar3,pmVar2);
-    if ((bVar4) && (fVar1 = pmVar2->data->blurRadius, pUVar3->blurRadiusOut < fVar1)) {
-      pUVar3->blurRadiusOut = fVar1;
+    bVar3 = Menu_IsVisible(param_1,pmVar2);
+    if ((bVar3) && (fVar1 = pmVar2->data->blurRadius, param_1->blurRadiusOut < fVar1)) {
+      param_1->blurRadiusOut = fVar1;
     }
-    ppmVar5 = ppmVar5 + 1;
+    ppmVar4 = ppmVar4 + 1;
   }
-  __restgprlr_25();
   return;
 }
 
@@ -15314,34 +14620,33 @@ void Menu_PaintAll_BeginVisibleList(char *param_1,uint param_2)
 
 // 825D1050  Menu_PaintAll_AppendToVisibleList  (ui/ui_shared.cpp:10829)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void Menu_PaintAll_AppendToVisibleList(char *param_1,uint param_2,char *param_3)
 
 {
   char *pcVar1;
   char *pcVar2;
   char *pcVar3;
-  char *pcVar4;
   
-  pcVar3 = (char *)__savegprlr_29(param_1);
+  pcVar2 = param_1;
+  do {
+    pcVar3 = pcVar2;
+    pcVar2 = pcVar3 + 1;
+  } while (*pcVar3 != '\0');
+  I_strncat(param_1,param_2,param_3);
   pcVar2 = pcVar3;
   do {
-    pcVar4 = pcVar2;
-    pcVar2 = pcVar4 + 1;
-  } while (*pcVar4 != '\0');
-  I_strncat(pcVar3,param_2,param_3);
-  pcVar2 = pcVar4;
-  do {
     pcVar1 = pcVar2;
-    if (pcVar1 == pcVar3) break;
+    if (pcVar1 == param_1) break;
     pcVar2 = pcVar1 + -1;
   } while (pcVar1[-1] != '\n');
-  if (0x50 < (int)(pcVar4 + (1 - (int)pcVar1))) {
-    I_strncat(pcVar3,param_2,",\n  ");
-    __restgprlr_29();
+  if (0x50 < (int)(pcVar3 + (1 - (int)pcVar1))) {
+    I_strncat(param_1,param_2,",\n  ");
     return;
   }
-  I_strncat(pcVar3,param_2,", ");
-  __restgprlr_29();
+  I_strncat(param_1,param_2,", ");
   return;
 }
 
@@ -15385,6 +14690,8 @@ void Menu_PaintAll_DrawVisibleList(char *param_1,UiContext *param_2)
 
 // 825D1108  Menu_PaintAll_Internal  (ui/ui_shared.cpp:10873)
 
+/* WARNING: Function: __savegprlr_16 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_16 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
@@ -15393,31 +14700,29 @@ void Menu_PaintAll_Internal(UiContext *param_1,int param_2)
 
 {
   menuDef_t *pmVar1;
-  UiContext *pUVar2;
-  longlong lVar3;
-  int iVar4;
-  bool bVar6;
-  int iVar5;
-  bool bVar7;
-  ulonglong uVar8;
-  longlong lVar9;
-  ulonglong uVar10;
+  int iVar2;
+  bool bVar4;
+  int iVar3;
+  bool bVar5;
+  ulonglong uVar6;
+  longlong lVar7;
+  longlong lVar8;
+  ulonglong uVar9;
   char acStack_490 [1168];
   
-  lVar3 = __savegprlr_16(param_1);
+  lVar8 = (longlong)(int)param_1;
   PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffff,"menu paint internal");
   if ((ui_showList->current).enabled != false) {
     memcpy();
   }
   UI_IncExpressionExecuteTime();
-  bVar7 = false;
-  uVar8 = 0;
-  pUVar2 = (UiContext *)lVar3;
-  uVar10 = (ulonglong)(uint)pUVar2->openMenuCount - 1;
-  if (-1 < (longlong)uVar10) {
-    lVar9 = ((ulonglong)(uint)pUVar2->openMenuCount + 0x28d & 0x3fffffff) * 4 + lVar3;
+  bVar5 = false;
+  uVar6 = 0;
+  uVar9 = (ulonglong)(uint)param_1->openMenuCount - 1;
+  if (-1 < (longlong)uVar9) {
+    lVar7 = ((ulonglong)(uint)param_1->openMenuCount + 0x28d & 0x3fffffff) * 4 + lVar8;
     do {
-      pmVar1 = (menuDef_t *)*(undefined4 *)lVar9;
+      pmVar1 = (menuDef_t *)*(undefined4 *)lVar7;
       if (ZEXT48(pmVar1) == 0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x2a95,0
                         ,"%s");
@@ -15427,30 +14732,30 @@ void Menu_PaintAll_Internal(UiContext *param_1,int param_2)
                         0,"%s");
       }
       if (((uint)(pmVar1->window).staticFlags >> 0x16 & 1) == param_2) {
-        iVar4 = Menu_RunTransitionTriggers(pUVar2,pmVar1);
-        if (iVar4 == 0) {
+        iVar2 = Menu_RunTransitionTriggers(param_1,pmVar1);
+        if (iVar2 == 0) {
           if (pmVar1->data->fullScreen != 0) {
-            bVar7 = true;
-            uVar8 = uVar10;
+            bVar5 = true;
+            uVar6 = uVar9;
             break;
           }
         }
         else {
-          bVar6 = Menu_IsVisible(pUVar2,pmVar1);
-          if (bVar6) {
+          bVar4 = Menu_IsVisible(param_1,pmVar1);
+          if (bVar4) {
             MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",
                             0x2a9c,0,"%s");
           }
         }
       }
-      uVar10 = uVar10 - 1;
-      lVar9 = lVar9 + -4;
-    } while (-1 < (longlong)uVar10);
+      uVar9 = uVar9 - 1;
+      lVar7 = lVar7 + -4;
+    } while (-1 < (longlong)uVar9);
   }
-  if (!bVar7) {
-    lVar9 = lVar3 + 0x34;
-    for (iVar4 = 0; iVar4 < pUVar2->menuCount; iVar4 = iVar4 + 1) {
-      pmVar1 = (menuDef_t *)*(undefined4 *)lVar9;
+  if (!bVar5) {
+    lVar7 = lVar8 + 0x34;
+    for (iVar2 = 0; iVar2 < param_1->menuCount; iVar2 = iVar2 + 1) {
+      pmVar1 = (menuDef_t *)*(undefined4 *)lVar7;
       if (pmVar1 == (menuDef_t *)0x0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x2aae,0
                         ,"%s");
@@ -15460,29 +14765,29 @@ void Menu_PaintAll_Internal(UiContext *param_1,int param_2)
                         0,"%s");
       }
       if ((((uint)(pmVar1->window).staticFlags >> 0x16 & 1) == param_2) &&
-         (iVar5 = Menus_MenuIsInStack(pUVar2,pmVar1), iVar5 == 0)) {
-        pUVar2->currentMenuDef = pmVar1;
-        bVar7 = Menu_Paint(pUVar2,pmVar1);
-        if ((bVar7) && ((ui_showList->current).enabled != false)) {
+         (iVar3 = Menus_MenuIsInStack(param_1,pmVar1), iVar3 == 0)) {
+        param_1->currentMenuDef = pmVar1;
+        bVar5 = Menu_Paint(param_1,pmVar1);
+        if ((bVar5) && ((ui_showList->current).enabled != false)) {
           Menu_PaintAll_AppendToVisibleList(acStack_490,0x400,(pmVar1->window).name);
         }
       }
-      lVar9 = lVar9 + 4;
+      lVar7 = lVar7 + 4;
     }
-    pUVar2->currentMenuDef = (menuDef_t *)0x0;
+    param_1->currentMenuDef = (menuDef_t *)0x0;
   }
-  if (0xf < (uint)pUVar2->openMenuCount) {
+  if (0xf < (uint)param_1->openMenuCount) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x2ac0,0,
                     "dc->openMenuCount doesn\'t index MAX_OPEN_MENUS\n\t%i not in [0, %i)");
   }
-  if ((int)uVar8 < pUVar2->openMenuCount) {
-    lVar3 = (uVar8 + 0x28e & 0x3fffffff) * 4 + lVar3;
+  if ((int)uVar6 < param_1->openMenuCount) {
+    lVar8 = (uVar6 + 0x28e & 0x3fffffff) * 4 + lVar8;
     do {
-      if (0xf < (uVar8 & 0xffffffff)) {
+      if (0xf < (uVar6 & 0xffffffff)) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x2ac5,0
                         ,"menuIndex doesn\'t index MAX_OPEN_MENUS\n\t%i not in [0, %i)");
       }
-      pmVar1 = (menuDef_t *)*(undefined4 *)lVar3;
+      pmVar1 = (menuDef_t *)*(undefined4 *)lVar8;
       if (pmVar1 == (menuDef_t *)0x0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x2ac7,0
                         ,"%s");
@@ -15492,22 +14797,21 @@ void Menu_PaintAll_Internal(UiContext *param_1,int param_2)
                         0,"%s");
       }
       if (((uint)(pmVar1->window).staticFlags >> 0x16 & 1) == param_2) {
-        pUVar2->currentMenuDef = pmVar1;
-        bVar7 = Menu_Paint(pUVar2,pmVar1);
-        if ((bVar7) && ((ui_showList->current).enabled != false)) {
+        param_1->currentMenuDef = pmVar1;
+        bVar5 = Menu_Paint(param_1,pmVar1);
+        if ((bVar5) && ((ui_showList->current).enabled != false)) {
           Menu_PaintAll_AppendToVisibleList(acStack_490,0x400,(pmVar1->window).name);
         }
       }
-      uVar8 = uVar8 + 1;
-      lVar3 = lVar3 + 4;
-    } while ((int)uVar8 < pUVar2->openMenuCount);
+      uVar6 = uVar6 + 1;
+      lVar8 = lVar8 + 4;
+    } while ((int)uVar6 < param_1->openMenuCount);
   }
-  pUVar2->currentMenuDef = (menuDef_t *)0x0;
+  param_1->currentMenuDef = (menuDef_t *)0x0;
   if ((ui_showList->current).enabled != false) {
-    Menu_PaintAll_DrawVisibleList(acStack_490,pUVar2);
+    Menu_PaintAll_DrawVisibleList(acStack_490,param_1);
   }
   PIXEndNamedEvent();
-  __restgprlr_16();
   return;
 }
 
@@ -15596,6 +14900,8 @@ void TRACK_ui_shared(void)
 
 // 825CED20  UI_AddMenu  (ui/ui_shared.cpp:11139)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
@@ -15606,46 +14912,41 @@ void TRACK_ui_shared(void)
 void UI_AddMenu(UiContext *param_1,menuDef_t *param_2,int param_3)
 
 {
-  menuDef_t *pmVar1;
-  UiContext *pUVar2;
-  XAssetHeader XVar3;
-  menuDef_t *pmVar4;
-  ulonglong uVar5;
+  XAssetHeader XVar1;
+  menuDef_t *pmVar2;
   
-  uVar5 = (ulonglong)(int)param_2;
-  pUVar2 = (UiContext *)__savegprlr_27(param_1);
-  if (0x27f < pUVar2->menuCount) {
+  if (0x27f < param_1->menuCount) {
     Com_Error(ERR_DROP,"\x15UI_AddMenu: MAX_MENUS exceeded");
   }
-  if ((uVar5 & 0xffffffff) == 0) {
+  if (param_2 == (menuDef_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x2b8b,0,
                     "%s");
   }
-  if (0x27f < (uint)pUVar2->menuCount) {
+  if (0x27f < (uint)param_1->menuCount) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x2b8c,0,
                     "dc->menuCount doesn\'t index ARRAY_COUNT( dc->Menus )\n\t%i not in [0, %i)");
   }
-  pmVar1 = (menuDef_t *)uVar5;
-  XVar3 = DB_FindXAssetHeader(ASSET_TYPE_MENU,(pmVar1->window).name,1);
-  if ((ulonglong)(uint)XVar3 != (uVar5 & 0xffffffff)) {
+  XVar1 = DB_FindXAssetHeader(ASSET_TYPE_MENU,(param_2->window).name,1);
+  if ((menuDef_t *)XVar1.physPreset != param_2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x2b95,0,
                     "%s");
   }
-  pmVar4 = Menus_FindByName(pUVar2,(pmVar1->window).name);
-  if (pmVar4 == (menuDef_t *)0x0) {
-    pUVar2->Menus[pUVar2->menuCount] = pmVar1;
-    pUVar2->menuCount = pUVar2->menuCount + 1;
+  pmVar2 = Menus_FindByName(param_1,(param_2->window).name);
+  if (pmVar2 == (menuDef_t *)0x0) {
+    param_1->Menus[param_1->menuCount] = param_2;
+    param_1->menuCount = param_1->menuCount + 1;
     if (param_3 != 0) {
-      Menus_ForceClose(pUVar2,pmVar1);
+      Menus_ForceClose(param_1,param_2);
     }
   }
-  __restgprlr_27();
   return;
 }
 
 
 // 825CEE30  UI_AddMenuList  (ui/ui_shared.cpp:11175)
 
+/* WARNING: Function: __savegprlr_19 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_19 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
@@ -15658,57 +14959,50 @@ void UI_AddMenuList(UiContext *param_1,MenuList *param_2,int param_3)
 {
   menuDef_t *pmVar1;
   int iVar2;
-  UiContext *pUVar3;
-  int iVar4;
-  XAssetHeader XVar5;
-  menuDef_t *pmVar6;
-  ulonglong uVar7;
-  int iVar8;
-  int iVar9;
+  XAssetHeader XVar3;
+  menuDef_t *pmVar4;
+  int iVar5;
+  int iVar6;
   
-  uVar7 = (ulonglong)(int)param_2;
-  pUVar3 = (UiContext *)__savegprlr_19(param_1);
-  if ((uVar7 & 0xffffffff) != 0) {
-    iVar4 = R_PopRemoteScreenUpdate();
-    iVar2 = (int)uVar7;
-    iVar8 = 0;
-    if (0 < *(int *)(iVar2 + 4)) {
-      iVar9 = 0;
+  if (param_2 != (MenuList *)0x0) {
+    iVar2 = R_PopRemoteScreenUpdate();
+    iVar5 = 0;
+    if (0 < param_2->menuCount) {
+      iVar6 = 0;
       do {
-        pmVar1 = *(menuDef_t **)(*(int *)(iVar2 + 8) + iVar9);
-        if (0x27f < pUVar3->menuCount) {
+        pmVar1 = *(menuDef_t **)((int)param_2->menus + iVar6);
+        if (0x27f < param_1->menuCount) {
           Com_Error(ERR_DROP,"\x15UI_AddMenu: MAX_MENUS exceeded");
         }
         if (pmVar1 == (menuDef_t *)0x0) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x2b8b
                           ,0,"%s");
         }
-        if (0x27f < (uint)pUVar3->menuCount) {
+        if (0x27f < (uint)param_1->menuCount) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x2b8c
                           ,0,
                           "dc->menuCount doesn\'t index ARRAY_COUNT( dc->Menus )\n\t%i not in [0, %i)"
                          );
         }
-        XVar5 = DB_FindXAssetHeader(ASSET_TYPE_MENU,(pmVar1->window).name,1);
-        if ((menuDef_t *)XVar5.physPreset != pmVar1) {
+        XVar3 = DB_FindXAssetHeader(ASSET_TYPE_MENU,(pmVar1->window).name,1);
+        if ((menuDef_t *)XVar3.physPreset != pmVar1) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x2b95
                           ,0,"%s");
         }
-        pmVar6 = Menus_FindByName(pUVar3,(pmVar1->window).name);
-        if (pmVar6 == (menuDef_t *)0x0) {
-          pUVar3->Menus[pUVar3->menuCount] = pmVar1;
-          pUVar3->menuCount = pUVar3->menuCount + 1;
+        pmVar4 = Menus_FindByName(param_1,(pmVar1->window).name);
+        if (pmVar4 == (menuDef_t *)0x0) {
+          param_1->Menus[param_1->menuCount] = pmVar1;
+          param_1->menuCount = param_1->menuCount + 1;
           if (param_3 != 0) {
-            Menus_ForceClose(pUVar3,pmVar1);
+            Menus_ForceClose(param_1,pmVar1);
           }
         }
-        iVar8 = iVar8 + 1;
-        iVar9 = iVar9 + 4;
-      } while (iVar8 < *(int *)(iVar2 + 4));
+        iVar5 = iVar5 + 1;
+        iVar6 = iVar6 + 4;
+      } while (iVar5 < param_2->menuCount);
     }
-    R_PushRemoteScreenUpdate(iVar4);
+    R_PushRemoteScreenUpdate(iVar2);
   }
-  __restgprlr_19();
   return;
 }
 
@@ -15857,6 +15151,8 @@ void UIScript_ClearError(LocalClientNum_t param_1)
 
 // 825C7C30  UI_MyChangesSaveDynamicFlagsForClient  (ui/ui_shared.cpp:11366)
 
+/* WARNING: Function: __savegprlr_21 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_21 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
@@ -15866,49 +15162,41 @@ void UI_MyChangesSaveDynamicFlagsForClient(UiContext *param_1,LocalClientNum_t p
 {
   int iVar1;
   int iVar2;
-  ulonglong uVar3;
-  ulonglong uVar4;
-  longlong lVar5;
-  int *piVar6;
+  menuDef_t **ppmVar3;
   
-  uVar3 = (ulonglong)(int)param_2;
-  iVar2 = __savegprlr_21(param_1);
-  lVar5 = 0;
-  if (0 < *(int *)(iVar2 + 0xa78)) {
-    piVar6 = (int *)(iVar2 + 0xa34);
+  if (0 < param_1->openMenuCount) {
+    ppmVar3 = (menuDef_t **)&param_1->menuCount;
+    iVar1 = 0;
     do {
-      if (piVar6[1] == 0) {
+      if (ppmVar3[1] == (menuDef_t *)0x0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x2c6c,0
                         ,"%s");
       }
-      if (3 < (int)uVar3) {
+      if (3 < (int)param_2) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x2c6d,0
                         ,"%s");
       }
-      if (0xf < (int)lVar5) {
+      if (0xf < iVar1) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x2c6e,0
                         ,"%s");
       }
-      uVar4 = (uVar3 & 0xfffffff) * 0x10 + lVar5;
-      lVar5 = lVar5 + 1;
-      iVar1 = (int)((uVar4 & 0xfffffff) << 4);
-      *(undefined4 *)((int)g_savedDynamicFlags[0][0] + iVar1) = *(undefined4 *)(piVar6[1] + 0x4c);
-      *(undefined4 *)((int)g_savedDynamicFlags[0][0] + iVar1 + 4) =
-           *(undefined4 *)(piVar6[1] + 0x50);
-      *(undefined4 *)((int)g_savedDynamicFlags[0][0] + iVar1 + 8) =
-           *(undefined4 *)(piVar6[1] + 0x54);
-      piVar6 = piVar6 + 1;
-      *(undefined4 *)((int)g_savedDynamicFlags[0][0] + iVar1 + 0xc) =
-           *(undefined4 *)(*piVar6 + 0x58);
-    } while ((int)lVar5 < *(int *)(iVar2 + 0xa78));
+      iVar2 = iVar1 + 1;
+      g_savedDynamicFlags[param_2][iVar1][0] = (ppmVar3[1]->window).dynamicFlags[0];
+      g_savedDynamicFlags[param_2][iVar1][1] = (ppmVar3[1]->window).dynamicFlags[1];
+      g_savedDynamicFlags[param_2][iVar1][2] = (ppmVar3[1]->window).dynamicFlags[2];
+      ppmVar3 = ppmVar3 + 1;
+      g_savedDynamicFlags[param_2][iVar1][3] = ((*ppmVar3)->window).dynamicFlags[3];
+      iVar1 = iVar2;
+    } while (iVar2 < param_1->openMenuCount);
   }
-  __restgprlr_21();
   return;
 }
 
 
 // 825C7D50  UI_MyChangesRestoreDynamicFlagsForClient  (ui/ui_shared.cpp:11383)
 
+/* WARNING: Function: __savegprlr_21 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_21 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
@@ -15918,147 +15206,128 @@ void UI_MyChangesRestoreDynamicFlagsForClient(UiContext *param_1,LocalClientNum_
 {
   int iVar1;
   int iVar2;
-  ulonglong uVar3;
-  ulonglong uVar4;
-  longlong lVar5;
-  int *piVar6;
+  menuDef_t **ppmVar3;
   
-  uVar3 = (ulonglong)(int)param_2;
-  iVar2 = __savegprlr_21(param_1);
-  lVar5 = 0;
-  if (0 < *(int *)(iVar2 + 0xa78)) {
-    piVar6 = (int *)(iVar2 + 0xa34);
+  if (0 < param_1->openMenuCount) {
+    ppmVar3 = (menuDef_t **)&param_1->menuCount;
+    iVar1 = 0;
     do {
-      if (piVar6[1] == 0) {
+      if (ppmVar3[1] == (menuDef_t *)0x0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x2c7d,0
                         ,"%s");
       }
-      if (3 < (int)uVar3) {
+      if (3 < (int)param_2) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x2c7e,0
                         ,"%s");
       }
-      if (0xf < (int)lVar5) {
+      if (0xf < iVar1) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x2c7f,0
                         ,"%s");
       }
-      uVar4 = (uVar3 & 0xfffffff) * 0x10 + lVar5;
-      lVar5 = lVar5 + 1;
-      iVar1 = (int)((uVar4 & 0xfffffff) << 4);
-      *(undefined4 *)(piVar6[1] + 0x4c) = *(undefined4 *)((int)g_savedDynamicFlags[0][0] + iVar1);
-      *(undefined4 *)(piVar6[1] + 0x50) =
-           *(undefined4 *)((int)g_savedDynamicFlags[0][0] + iVar1 + 4);
-      *(undefined4 *)(piVar6[1] + 0x54) =
-           *(undefined4 *)((int)g_savedDynamicFlags[0][0] + iVar1 + 8);
-      piVar6 = piVar6 + 1;
-      *(undefined4 *)(*piVar6 + 0x58) =
-           *(undefined4 *)((int)g_savedDynamicFlags[0][0] + iVar1 + 0xc);
-    } while ((int)lVar5 < *(int *)(iVar2 + 0xa78));
+      iVar2 = iVar1 + 1;
+      (ppmVar3[1]->window).dynamicFlags[0] = g_savedDynamicFlags[param_2][iVar1][0];
+      (ppmVar3[1]->window).dynamicFlags[1] = g_savedDynamicFlags[param_2][iVar1][1];
+      (ppmVar3[1]->window).dynamicFlags[2] = g_savedDynamicFlags[param_2][iVar1][2];
+      ppmVar3 = ppmVar3 + 1;
+      ((*ppmVar3)->window).dynamicFlags[3] = g_savedDynamicFlags[param_2][iVar1][3];
+      iVar1 = iVar2;
+    } while (iVar2 < param_1->openMenuCount);
   }
-  __restgprlr_21();
   return;
 }
 
 
 // 825C7E70  UI_VerifyString  (ui/ui_shared.cpp:11410)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 bool UI_VerifyString(char *param_1,wchar_t *param_2)
 
 {
   char cVar1;
-  char *pcVar2;
+  bool bVar2;
   uint uVar3;
-  undefined1 uVar4;
-  ulonglong uVar5;
-  ulonglong uVar6;
-  char *pcVar7;
-  int iVar8;
-  uint uVar9;
-  longlong lVar10;
+  wchar_t *pwVar4;
+  char *pcVar5;
+  int iVar6;
+  uint uVar7;
   
-  uVar5 = (ulonglong)(int)param_2;
-  pcVar2 = (char *)__savegprlr_26(param_1);
-  pcVar7 = pcVar2;
-  if (pcVar2 == (char *)0x0) {
+  pcVar5 = param_1;
+  if (param_1 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x2c97,0,
                     "%s");
   }
   do {
-    cVar1 = *pcVar7;
-    pcVar7 = pcVar7 + 1;
+    cVar1 = *pcVar5;
+    pcVar5 = pcVar5 + 1;
   } while (cVar1 != '\0');
-  iVar8 = (int)pcVar7 - (int)pcVar2;
-  lVar10 = 0;
-  uVar9 = iVar8 - 1;
-  if (((uVar5 & 0xffffffff) != 0) && (uVar3 = wcslen((wchar_t *)uVar5), uVar9 != uVar3)) {
+  iVar6 = (int)pcVar5 - (int)param_1;
+  bVar2 = false;
+  uVar7 = iVar6 - 1;
+  if ((param_2 != (wchar_t *)0x0) && (uVar3 = wcslen(param_2), uVar7 != uVar3)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x2ca0,0,
                     "%s");
   }
   uVar3 = 0;
-  uVar6 = uVar5;
-  if (iVar8 != 1) {
+  pwVar4 = param_2;
+  if (iVar6 != 1) {
     do {
-      cVar1 = pcVar2[uVar3];
+      cVar1 = param_1[uVar3];
       if (((((cVar1 == '^') || (cVar1 == -0x5c)) || (cVar1 == '{')) ||
           ((cVar1 == '}' || (cVar1 == '@')))) ||
-         (((uVar5 & 0xffffffff) != 0 && ((cVar1 == '?' && (*(short *)uVar6 != 0x3f)))))) {
-        uVar4 = __restgprlr_26(0);
-        return (bool)uVar4;
+         ((param_2 != (wchar_t *)0x0 && ((cVar1 == '?' && (*pwVar4 != L'?')))))) {
+        return false;
       }
-      if ((lVar10 != 0) || (lVar10 = 0, cVar1 != ' ')) {
-        lVar10 = 1;
+      if ((bVar2) || (bVar2 = false, cVar1 != ' ')) {
+        bVar2 = true;
       }
       uVar3 = uVar3 + 1;
-      uVar6 = uVar6 + 2;
-    } while (uVar3 < uVar9);
+      pwVar4 = pwVar4 + 1;
+    } while (uVar3 < uVar7);
   }
-  uVar4 = __restgprlr_26(lVar10);
-  return (bool)uVar4;
+  return bVar2;
 }
 
 
 // 825C7FB8  UI_ShowKeyboard  (ui/ui_shared.cpp:11452)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void UI_ShowKeyboard(int param_1,char *param_2,char *param_3,int param_4,bool param_5,
                     _func___cdecl_void_LocalClientNum_t_bool_char_ptr *param_6)
 
 {
-  ulong uVar1;
-  int iVar2;
-  ulonglong uVar3;
-  int iVar4;
+  int iVar1;
+  ulong uVar2;
   char acStack_c0 [192];
   
-  uVar3 = (ulonglong)param_4;
-  uVar1 = __savegprlr_25(param_1);
-  iVar4 = (int)uVar3;
   MultiByteToWideChar(0xfde9,0,param_2,-1,(ushort *)guideKeyboardTitle,0x40);
   guideKeyboardTitle[0x3f] = L'\0';
   I_strncpyz(guideKeyboardDefault,param_3,0x80);
   I_strncpyz(acStack_c0,param_3,0x80);
   MultiByteToWideChar(0xfde9,0,acStack_c0,-1,(ushort *)defaultStr,0x80);
   defaultStr[0x7f] = L'\0';
-  iVar2 = Language_IsAsian();
+  iVar1 = Language_IsAsian();
   if (keyboardCallback != (_func___cdecl_void_LocalClientNum_t_bool_char_ptr *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x2cd6,0,
                     "%s");
   }
-  if (0x7f < (uVar3 & 0xffffffff)) {
-    iVar4 = 0x7f;
+  if (0x7f < (uint)param_4) {
+    param_4 = 0x7f;
   }
   keyboardCallback = param_6;
-  uVar1 = XShowKeyboardUI(uVar1,(-(uint)(iVar2 != 0) & 0x3f) + 1,defaultStr,guideKeyboardTitle,
-                          (wchar_t *)0x0,(ushort *)guideKeyboard_Buffer,iVar4 + 1,
+  uVar2 = XShowKeyboardUI(param_1,(-(uint)(iVar1 != 0) & 0x3f) + 1,defaultStr,guideKeyboardTitle,
+                          (wchar_t *)0x0,(ushort *)guideKeyboard_Buffer,param_4 + 1,
                           &guideKeyboard_pOverlapped);
-  if (uVar1 != 0x3e5) {
+  if (uVar2 != 0x3e5) {
     Com_PrintError(0x10,"Error %i Bringing up Guide Keyboard\n");
     keyboardCallback = (_func___cdecl_void_LocalClientNum_t_bool_char_ptr *)0x0;
-    __restgprlr_25();
     return;
   }
   isGuideKeyboardActive = true;
-  __restgprlr_25();
   return;
 }
 
@@ -16143,19 +15412,20 @@ bool UI_IWClanTagAllowed(int param_1)
 
 // 825C8378  UI_ClanKeyboardComplete  (ui/ui_shared.cpp:11573)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void UI_ClanKeyboardComplete(int param_1)
 
 {
-  int iVar1;
-  bool bVar6;
-  ulong uVar2;
-  int iVar3;
-  LocalClientNum_t LVar4;
-  char *pcVar5;
-  _STRING_DATA *p_Var7;
-  _STRING_VERIFY_RESPONSE *p_Var8;
+  bool bVar5;
+  ulong uVar1;
+  int iVar2;
+  LocalClientNum_t LVar3;
+  char *pcVar4;
+  _STRING_DATA *p_Var6;
+  _STRING_VERIFY_RESPONSE *p_Var7;
   _STRING_DATA local_2d0;
   undefined2 local_2ca;
   ushort *local_2c8;
@@ -16167,48 +15437,44 @@ void UI_ClanKeyboardComplete(int param_1)
   ushort auStack_130 [127];
   undefined2 local_32;
   
-  iVar1 = __savegprlr_27(param_1);
-  bVar6 = Live_IsUserSignedInToLive(iVar1);
-  if (!bVar6) {
+  bVar5 = Live_IsUserSignedInToLive(param_1);
+  if (!bVar5) {
     Com_Error(ERR_FATAL,"Clan tags may not be changed when not online.");
   }
-  uVar2 = XGetOverlappedResult(&guideKeyboard_pOverlapped,&uStack_2c4,0);
-  if ((uVar2 != 0x3e4) &&
-     (uVar2 = XGetOverlappedResult(&guideKeyboard_pOverlapped,(ulong *)0x0,1), uVar2 != 0x3e4)) {
-    if (uVar2 == 0) {
-      iVar3 = WideCharToMultiByte(0,0,guideKeyboard_Buffer,-1,acStack_2b0,0x100,(char *)0x0,
+  uVar1 = XGetOverlappedResult(&guideKeyboard_pOverlapped,&uStack_2c4,0);
+  if ((uVar1 != 0x3e4) &&
+     (uVar1 = XGetOverlappedResult(&guideKeyboard_pOverlapped,(ulong *)0x0,1), uVar1 != 0x3e4)) {
+    if (uVar1 == 0) {
+      iVar2 = WideCharToMultiByte(0,0,guideKeyboard_Buffer,-1,acStack_2b0,0x100,(char *)0x0,
                                   (int *)0x0);
-      if ((longlong)iVar3 + -1 < 0) {
+      if ((longlong)iVar2 + -1 < 0) {
         Com_PrintError(0xd,"UI_ClanKeyboardComplete: Unable to convert wide char to multi byte\n");
         g_clanKeyboardActive = false;
-        __restgprlr_27();
         return;
       }
       Com_Printf(0x10,"%s\n");
-      if (((int)((longlong)iVar3 + -1) != 0) &&
-         (bVar6 = UI_VerifyString(acStack_2b0,guideKeyboard_Buffer), !bVar6)) {
+      if (((int)((longlong)iVar2 + -1) != 0) &&
+         (bVar5 = UI_VerifyString(acStack_2b0,guideKeyboard_Buffer), !bVar5)) {
         Com_SetErrorMessage("MENU_INVALIDCHARS");
-        LVar4 = CL_LocalClientNumFromControllerIndex(iVar1);
-        UI_OpenMenu(LVar4,"error_popmenu_party");
+        LVar3 = CL_LocalClientNumFromControllerIndex(param_1);
+        UI_OpenMenu(LVar3,"error_popmenu_party");
         g_clanKeyboardActive = false;
-        __restgprlr_27();
         return;
       }
-      pcVar5 = stripSpaces(acStack_2b0);
-      iVar3 = I_stricmp(pcVar5,"IW");
-      if (((iVar3 == 0) ||
-          (((iVar3 = I_stricmp(pcVar5,"1W"), iVar3 == 0 ||
-            (iVar3 = I_strcmp(pcVar5,"lW"), iVar3 == 0)) ||
-           (iVar3 = I_strcmp(pcVar5,"lw"), iVar3 == 0)))) &&
-         (bVar6 = UI_IWClanTagAllowed(iVar1), !bVar6)) {
+      pcVar4 = stripSpaces(acStack_2b0);
+      iVar2 = I_stricmp(pcVar4,"IW");
+      if (((iVar2 == 0) ||
+          (((iVar2 = I_stricmp(pcVar4,"1W"), iVar2 == 0 ||
+            (iVar2 = I_strcmp(pcVar4,"lW"), iVar2 == 0)) ||
+           (iVar2 = I_strcmp(pcVar4,"lw"), iVar2 == 0)))) &&
+         (bVar5 = UI_IWClanTagAllowed(param_1), !bVar5)) {
         Com_SetErrorMessage("MP_IWNOTALLOWED");
-        LVar4 = CL_LocalClientNumFromControllerIndex(iVar1);
-        UI_OpenMenu(LVar4,"error_popmenu_party");
+        LVar3 = CL_LocalClientNumFromControllerIndex(param_1);
+        UI_OpenMenu(LVar3,"error_popmenu_party");
         g_clanKeyboardActive = false;
-        __restgprlr_27();
         return;
       }
-      Live_GetLocalClientName(iVar1);
+      Live_GetLocalClientName(param_1);
       _snprintf(acStack_1b0,0x80,"[%s]%s");
       local_131 = 0;
       MultiByteToWideChar(0xfde9,0,acStack_1b0,-1,auStack_130,0x80);
@@ -16217,18 +15483,17 @@ void UI_ClanKeyboardComplete(int param_1)
       local_2d0.wStringSize = 0x100;
       local_2ca = 0x100;
       local_32 = 0;
-      iVar3 = (playlist->current).integer;
-      uVar2 = XGetLocale();
-      p_Var8 = local_2c0;
-      p_Var7 = &local_2d0;
-      pcVar5 = GetLocaleString(uVar2);
-      uVar2 = XStringVerify(0,pcVar5,2,p_Var7,0xe,p_Var8,(_XOVERLAPPED *)0x0);
-      if (uVar2 != 0) {
+      iVar2 = (playlist->current).integer;
+      uVar1 = XGetLocale();
+      p_Var7 = local_2c0;
+      p_Var6 = &local_2d0;
+      pcVar4 = GetLocaleString(uVar1);
+      uVar1 = XStringVerify(0,pcVar4,2,p_Var6,0xe,p_Var7,(_XOVERLAPPED *)0x0);
+      if (uVar1 != 0) {
         Com_PrintError(0xe,
                        "Unable to check for offensive text (curse words, etc) in user input - could not set clan name\n"
                       );
         g_clanKeyboardActive = false;
-        __restgprlr_27();
         return;
       }
       if (local_2c0[0].wNumStrings != 2) {
@@ -16236,36 +15501,37 @@ void UI_ClanKeyboardComplete(int param_1)
                         ,"stringVerifyResponse->wNumStrings == 2\n\t%i, %i");
       }
       if ((*local_2c0[0].pStringResult == 0) && (local_2c0[0].pStringResult[1] == 0)) {
-        GamerProfile_SetUsingEliteClanTag(iVar1,false);
-        GamerProfile_UpdateSystemVarsFromProfile(iVar1);
-        GamerProfile_SetClanName(iVar1,acStack_2b0);
-        GamerProfile_UpdateProfileAndSaveIfNeeded(iVar1);
+        GamerProfile_SetUsingEliteClanTag(param_1,false);
+        GamerProfile_UpdateSystemVarsFromProfile(param_1);
+        GamerProfile_SetClanName(param_1,acStack_2b0);
+        GamerProfile_UpdateProfileAndSaveIfNeeded(param_1);
       }
       else {
         Com_PrintError(0xe,"Offensive text (curse words, etc) detected in user input.\n");
-        GamerProfile_UpdateSystemVarsFromProfile(iVar1);
-        GamerProfile_SetClanName(iVar1,"");
-        GamerProfile_UpdateProfileAndSaveIfNeeded(iVar1);
+        GamerProfile_UpdateSystemVarsFromProfile(param_1);
+        GamerProfile_SetClanName(param_1,"");
+        GamerProfile_UpdateProfileAndSaveIfNeeded(param_1);
         Com_SetErrorMessage("CLANS_OFFENSIVENAME");
-        LVar4 = CL_LocalClientNumFromControllerIndex(iVar1);
-        UI_OpenMenu(LVar4,"error_popmenu_party");
+        LVar3 = CL_LocalClientNumFromControllerIndex(param_1);
+        UI_OpenMenu(LVar3,"error_popmenu_party");
       }
-      Dvar_SetInt(playlist,iVar3);
-      iVar1 = Playlist_CountEntries(iVar1,(playlist->current).integer);
-      if (iVar1 < 1) {
+      Dvar_SetInt(playlist,iVar2);
+      iVar2 = Playlist_CountEntries(param_1,(playlist->current).integer);
+      if (iVar2 < 1) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x2da5,0
                         ,"%s");
       }
     }
     g_clanKeyboardActive = false;
   }
-  __restgprlr_27();
   return;
 }
 
 
 // 825C8740  UI_ClanKeyboard_f  (ui/ui_shared.cpp:11697)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
@@ -16278,7 +15544,6 @@ void UI_ClanKeyboard_f(void)
   int iVar4;
   char acStack_a0 [160];
   
-  __savegprlr_29();
   LVar1 = Cmd_LocalClientNum();
   uVar2 = CL_ControllerIndexFromClientNum(LVar1);
   pcVar3 = SEH_LocalizeTextMessage("CLANS_CLANNAME","menu prompt",LOCMSG_SAFE);
@@ -16296,11 +15561,9 @@ void UI_ClanKeyboard_f(void)
                          );
   if (uVar2 != 0x3e5) {
     Com_Printf(0x10,"Error Bringing up Guide Keyboard\n");
-    __restgprlr_29();
     return;
   }
   g_clanKeyboardActive = true;
-  __restgprlr_29();
   return;
 }
 
@@ -16338,23 +15601,19 @@ void UI_KeyboardUpdate(LocalClientNum_t param_1)
 
 // 825C8958  UI_CallKeyboardCallback  (ui/ui_shared.cpp:11902)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void UI_CallKeyboardCallback(LocalClientNum_t param_1,char *param_2)
 
 {
-  LocalClientNum_t LVar1;
-  longlong lVar2;
-  
-  lVar2 = (longlong)(int)param_2;
-  LVar1 = __savegprlr_29(param_1,lVar2);
   if (keyboardCallback == (_func___cdecl_void_LocalClientNum_t_bool_char_ptr *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_shared.cpp",0x2e7f,0,
                     "%s");
   }
-  (*keyboardCallback)(LVar1,true,(char *)lVar2);
+  (*keyboardCallback)(param_1,true,param_2);
   keyboardCallback = (_func___cdecl_void_LocalClientNum_t_bool_char_ptr *)0x0;
-  __restgprlr_29();
   return;
 }
 
@@ -16423,200 +15682,194 @@ int UI_GetMapCount(void)
 
 // 825C8A90  UI_GetAvailableDlcMapCount  (ui/ui_shared.cpp:11956)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 int UI_GetAvailableDlcMapCount(void)
 
 {
-  bool bVar2;
-  int iVar1;
-  longlong lVar3;
+  bool bVar1;
+  int iVar2;
+  int iVar3;
   int *piVar4;
   
-  __savegprlr_26();
-  lVar3 = 0;
-  iVar1 = 0;
+  iVar2 = 0;
+  iVar3 = 0;
   if (0 < sharedUiInfo.mapCount) {
     piVar4 = &sharedUiInfo.mapList[0].mapPack;
     do {
       if ((0 < *piVar4) &&
          (((accessToSubscriberContent->current).enabled != false ||
-          (bVar2 = Content_DoWeHaveContentPack(2 << (*piVar4 & 0x3fU)), bVar2)))) {
-        lVar3 = lVar3 + 1;
+          (bVar1 = Content_DoWeHaveContentPack(2 << (*piVar4 & 0x3fU)), bVar1)))) {
+        iVar2 = iVar2 + 1;
       }
-      iVar1 = iVar1 + 1;
+      iVar3 = iVar3 + 1;
       piVar4 = piVar4 + 0x29e;
-    } while (iVar1 < sharedUiInfo.mapCount);
+    } while (iVar3 < sharedUiInfo.mapCount);
   }
-  iVar1 = __restgprlr_26(lVar3);
-  return iVar1;
+  return iVar2;
 }
 
 
 // 825C8B18  UI_GetMapIdForNum  (ui/ui_shared.cpp:11971)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
+
 int UI_GetMapIdForNum(int param_1)
 
 {
-  int iVar1;
-  bool bVar2;
-  int *piVar3;
+  bool bVar1;
+  int *piVar2;
+  int iVar3;
   int iVar4;
-  longlong lVar5;
   
-  iVar1 = __savegprlr_25(param_1);
-  iVar4 = 0;
+  iVar3 = 0;
   if ((ui_showDLCMaps->current).enabled == false) {
-    lVar5 = 0;
+    iVar4 = 0;
     if (0 < sharedUiInfo.mapCount) {
-      piVar3 = &sharedUiInfo.mapList[0].mapPack;
+      piVar2 = &sharedUiInfo.mapList[0].mapPack;
       do {
-        if (*piVar3 == 0) {
-          if (iVar4 == iVar1) goto LAB_825c8c10;
-          iVar4 = iVar4 + 1;
+        if (*piVar2 == 0) {
+          if (iVar3 == param_1) {
+            return iVar4;
+          }
+          iVar3 = iVar3 + 1;
         }
-        lVar5 = lVar5 + 1;
-        piVar3 = piVar3 + 0x29e;
-      } while ((int)lVar5 < sharedUiInfo.mapCount);
+        iVar4 = iVar4 + 1;
+        piVar2 = piVar2 + 0x29e;
+      } while (iVar4 < sharedUiInfo.mapCount);
     }
   }
   else {
-    lVar5 = 0;
+    iVar4 = 0;
     if (0 < sharedUiInfo.mapCount) {
-      piVar3 = &sharedUiInfo.mapList[0].mapPack;
+      piVar2 = &sharedUiInfo.mapList[0].mapPack;
       do {
-        if ((0 < *piVar3) &&
+        if ((0 < *piVar2) &&
            (((accessToSubscriberContent->current).enabled != false ||
-            (bVar2 = Content_DoWeHaveContentPack(2 << (*piVar3 & 0x3fU)), bVar2)))) {
-          if (iVar4 == iVar1) {
-            iVar1 = __restgprlr_25(lVar5);
-            return iVar1;
+            (bVar1 = Content_DoWeHaveContentPack(2 << (*piVar2 & 0x3fU)), bVar1)))) {
+          if (iVar3 == param_1) {
+            return iVar4;
           }
-          iVar4 = iVar4 + 1;
+          iVar3 = iVar3 + 1;
         }
-        lVar5 = lVar5 + 1;
-        piVar3 = piVar3 + 0x29e;
-      } while ((int)lVar5 < sharedUiInfo.mapCount);
-      iVar1 = __restgprlr_25(0);
-      return iVar1;
+        iVar4 = iVar4 + 1;
+        piVar2 = piVar2 + 0x29e;
+      } while (iVar4 < sharedUiInfo.mapCount);
+      return 0;
     }
   }
-  lVar5 = 0;
-LAB_825c8c10:
-  iVar1 = __restgprlr_25(lVar5);
-  return iVar1;
+  return 0;
 }
 
 
 // 825C8C18  UI_GetMapLoadNameForCurrentIndex  (ui/ui_shared.cpp:12007)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
+
 char * UI_GetMapLoadNameForCurrentIndex(int param_1)
 
 {
-  int iVar1;
-  bool bVar3;
-  char *pcVar2;
+  bool bVar1;
+  int *piVar2;
+  int iVar3;
   int iVar4;
-  int *piVar5;
-  longlong lVar6;
   
-  iVar1 = __savegprlr_25(param_1);
-  iVar4 = 0;
+  iVar3 = 0;
   if ((ui_showDLCMaps->current).enabled == false) {
-    lVar6 = 0;
+    iVar4 = 0;
     if (0 < sharedUiInfo.mapCount) {
-      piVar5 = &sharedUiInfo.mapList[0].mapPack;
+      piVar2 = &sharedUiInfo.mapList[0].mapPack;
       do {
-        if (*piVar5 == 0) {
-          if (iVar1 == iVar4) {
-            pcVar2 = (char *)__restgprlr_25(lVar6 * 0xa78 + -0x7c082078);
-            return pcVar2;
+        if (*piVar2 == 0) {
+          if (param_1 == iVar3) {
+            return sharedUiInfo.mapList[iVar4].mapLoadName;
           }
-          iVar4 = iVar4 + 1;
+          iVar3 = iVar3 + 1;
         }
-        lVar6 = lVar6 + 1;
-        piVar5 = piVar5 + 0x29e;
-      } while ((int)lVar6 < sharedUiInfo.mapCount);
+        iVar4 = iVar4 + 1;
+        piVar2 = piVar2 + 0x29e;
+      } while (iVar4 < sharedUiInfo.mapCount);
     }
   }
   else {
-    lVar6 = 0;
+    iVar4 = 0;
     if (0 < sharedUiInfo.mapCount) {
-      piVar5 = &sharedUiInfo.mapList[0].mapPack;
+      piVar2 = &sharedUiInfo.mapList[0].mapPack;
       do {
-        if ((0 < *piVar5) &&
+        if ((0 < *piVar2) &&
            (((accessToSubscriberContent->current).enabled != false ||
-            (bVar3 = Content_DoWeHaveContentPack(2 << (*piVar5 & 0x3fU)), bVar3)))) {
-          if (iVar1 == iVar4) {
-            pcVar2 = (char *)__restgprlr_25(lVar6 * 0xa78 + -0x7c082078);
-            return pcVar2;
+            (bVar1 = Content_DoWeHaveContentPack(2 << (*piVar2 & 0x3fU)), bVar1)))) {
+          if (param_1 == iVar3) {
+            return sharedUiInfo.mapList[iVar4].mapLoadName;
           }
-          iVar4 = iVar4 + 1;
+          iVar3 = iVar3 + 1;
         }
-        lVar6 = lVar6 + 1;
-        piVar5 = piVar5 + 0x29e;
-      } while ((int)lVar6 < sharedUiInfo.mapCount);
+        iVar4 = iVar4 + 1;
+        piVar2 = piVar2 + 0x29e;
+      } while (iVar4 < sharedUiInfo.mapCount);
     }
   }
   Com_Printf(0x10,
              "Warning: Invalid Map load name Index found. Setting it to the first map of the current selected map pack type\n"
             );
-  pcVar2 = (char *)__restgprlr_25(0xffffffff83f7df88);
-  return pcVar2;
+  return sharedUiInfo.mapList[0].mapLoadName;
 }
 
 
 // 825C8D40  UI_GetIndexForMapLoadName  (ui/ui_shared.cpp:12046)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 int UI_GetIndexForMapLoadName(char *param_1)
 
 {
-  char *pcVar1;
-  bool bVar4;
-  int iVar2;
+  bool bVar2;
+  int iVar1;
   int iVar3;
-  longlong lVar5;
-  int *piVar6;
-  char *pcVar7;
+  int iVar4;
+  int *piVar5;
+  char *pcVar6;
   
-  pcVar1 = (char *)__savegprlr_26(param_1);
-  lVar5 = 0;
+  iVar4 = 0;
   if ((ui_showDLCMaps->current).enabled == false) {
     if (0 < sharedUiInfo.mapCount) {
-      pcVar7 = sharedUiInfo.mapList[0].mapLoadName;
+      pcVar6 = sharedUiInfo.mapList[0].mapLoadName;
       iVar3 = sharedUiInfo.mapCount;
       do {
-        if ((*(int *)(pcVar7 + 0xa54) == 0) &&
-           (iVar2 = I_strcmp(pcVar1,pcVar7), iVar3 = sharedUiInfo.mapCount, iVar2 == 0))
-        goto LAB_825c8de4;
-        lVar5 = lVar5 + 1;
-        pcVar7 = pcVar7 + 0xa78;
-      } while ((int)lVar5 < iVar3);
+        if ((*(int *)(pcVar6 + 0xa54) == 0) &&
+           (iVar1 = I_strcmp(param_1,pcVar6), iVar3 = sharedUiInfo.mapCount, iVar1 == 0)) {
+          return iVar4;
+        }
+        iVar4 = iVar4 + 1;
+        pcVar6 = pcVar6 + 0xa78;
+      } while (iVar4 < iVar3);
     }
   }
   else if (0 < sharedUiInfo.mapCount) {
-    piVar6 = &sharedUiInfo.mapList[0].mapPack;
+    piVar5 = &sharedUiInfo.mapList[0].mapPack;
     iVar3 = sharedUiInfo.mapCount;
     do {
-      if ((0 < *piVar6) &&
+      if ((0 < *piVar5) &&
          ((((accessToSubscriberContent->current).enabled != false ||
-           (bVar4 = Content_DoWeHaveContentPack(2 << (*piVar6 & 0x3fU)),
-           iVar3 = sharedUiInfo.mapCount, bVar4)) &&
-          (iVar2 = I_strcmp(pcVar1,(char *)(piVar6 + -0x295)), iVar3 = sharedUiInfo.mapCount,
-          iVar2 == 0)))) {
-LAB_825c8de4:
-        iVar3 = __restgprlr_26(lVar5);
-        return iVar3;
+           (bVar2 = Content_DoWeHaveContentPack(2 << (*piVar5 & 0x3fU)),
+           iVar3 = sharedUiInfo.mapCount, bVar2)) &&
+          (iVar1 = I_strcmp(param_1,(char *)(piVar5 + -0x295)), iVar3 = sharedUiInfo.mapCount,
+          iVar1 == 0)))) {
+        return iVar4;
       }
-      lVar5 = lVar5 + 1;
-      piVar6 = piVar6 + 0x29e;
-    } while ((int)lVar5 < iVar3);
+      iVar4 = iVar4 + 1;
+      piVar5 = piVar5 + 0x29e;
+    } while (iVar4 < iVar3);
   }
   Com_Printf(0x10,
              "Warning: Invalid Map load name Index found. Setting it to the first map of the current selected map pack type\n"
             );
-  iVar3 = __restgprlr_26(0);
-  return iVar3;
+  return 0;
 }
 
 

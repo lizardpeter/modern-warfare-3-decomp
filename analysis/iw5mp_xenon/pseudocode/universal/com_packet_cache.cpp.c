@@ -73,6 +73,8 @@ void Com_PacketCacheLock(void)
 
 // 825E57D8  Com_PacketCacheUnlock  (universal/com_packet_cache.cpp:68)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void Com_PacketCacheUnlock(void)
@@ -88,7 +90,6 @@ void Com_PacketCacheUnlock(void)
   char in_RESERVE;
   byte in_cr0;
   
-  __savegprlr_29();
   uVar1 = *in_r13;
   do {
     puVar4 = (uint *)((ulonglong)uVar1 + 0xec);
@@ -117,7 +118,6 @@ void Com_PacketCacheUnlock(void)
                       ,0x50,0,"%s");
     }
   }
-  __restgprlr_29();
   return;
 }
 
@@ -141,6 +141,8 @@ void Com_PacketCacheInitMemory(void)
 
 // 825E5938  Com_PacketCacheInit  (universal/com_packet_cache.cpp:211)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void Com_PacketCacheInit(void)
@@ -150,7 +152,6 @@ void Com_PacketCacheInit(void)
   char (*pacVar2) [64];
   longlong lVar3;
   
-  __savegprlr_28();
   lVar3 = 0x800;
   pacVar2 = pktCacheGlob.cacheEntryNames;
   pPVar1 = &pktCacheGlob;
@@ -168,7 +169,6 @@ void Com_PacketCacheInit(void)
   pktCacheGlob.freeCacheEntry.prev = pktCacheGlob.cacheEntryData + 0x7ff;
   pktCacheGlob.semiFreeCacheEntry.next = &pktCacheGlob.semiFreeCacheEntry;
   pktCacheGlob.semiFreeCacheEntry.prev = &pktCacheGlob.semiFreeCacheEntry;
-  __restgprlr_28();
   return;
 }
 
@@ -231,122 +231,115 @@ void Com_AddCacheEntry(PktCacheEntry *param_1)
 
 // 825E5AC0  Com_GetCacheEntryBuffer  (universal/com_packet_cache.cpp:297)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 uchar * Com_GetCacheEntryBuffer(PktCacheEntry *param_1)
 
 {
-  uint uVar1;
-  int iVar2;
-  uchar *puVar3;
-  ulonglong uVar4;
+  int iVar1;
   
-  iVar2 = __savegprlr_29(param_1);
-  uVar4 = ZEXT48(pktCacheGlob.packetCache);
-  if (uVar4 == 0) {
+  if (pktCacheGlob.packetCache == (uchar *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_packet_cache.cpp"
                     ,300,0,"%s");
-    uVar4 = ZEXT48(pktCacheGlob.packetCache);
   }
-  uVar1 = (iVar2 + 0x7bfe9270) / 0x28;
-  if (((int)uVar1 < 0) || (0x7ff < (int)uVar1)) {
+  iVar1 = (int)(param_1 + 0x3199076) / 0x28;
+  if ((iVar1 < 0) || (0x7ff < iVar1)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_packet_cache.cpp"
                     ,0x12f,0,"%s\n\t(index) = %i");
-    uVar4 = ZEXT48(pktCacheGlob.packetCache);
   }
-  puVar3 = (uchar *)__restgprlr_29(((ulonglong)uVar1 & 0x1fffff) * 0x800 + uVar4);
-  return puVar3;
+  return pktCacheGlob.packetCache + iVar1 * 0x800;
 }
 
 
 // 825E5B78  Com_MoveToFreeTail  (universal/com_packet_cache.cpp:310)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void Com_MoveToFreeTail(PktCacheEntry *param_1,PktCacheEntry *param_2)
 
 {
   PktCacheEntry *pPVar1;
-  PktCacheEntry *pPVar2;
   
-  pPVar2 = (PktCacheEntry *)__savegprlr_28(param_1);
-  if (pPVar2->next != (PktCacheEntry *)0x0) {
+  if (param_1->next != (PktCacheEntry *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_packet_cache.cpp"
                     ,0x137,0,"%s");
   }
-  if (pPVar2->prev != (PktCacheEntry *)0x0) {
+  if (param_1->prev != (PktCacheEntry *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_packet_cache.cpp"
                     ,0x138,0,"%s");
   }
   pPVar1 = param_2->prev;
-  pPVar2->next = param_2;
-  pPVar2->prev = pPVar1;
-  param_2->prev->next = pPVar2;
-  param_2->prev = pPVar2;
-  __restgprlr_28();
+  param_1->next = param_2;
+  param_1->prev = pPVar1;
+  param_2->prev->next = param_1;
+  param_2->prev = param_1;
   return;
 }
 
 
 // 825E5C10  Com_RemoveFromFreeList  (universal/com_packet_cache.cpp:326)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void Com_RemoveFromFreeList(PktCacheEntry *param_1)
 
 {
-  int iVar1;
-  
-  iVar1 = __savegprlr_29(param_1);
   Com_PacketCacheLock();
-  if (*(int *)(iVar1 + 0x1c) == 0) {
+  if (param_1->next == (PktCacheEntry *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_packet_cache.cpp"
                     ,0x148,0,"%s");
   }
-  if (*(int *)(iVar1 + 0x18) == 0) {
+  if (param_1->prev == (PktCacheEntry *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_packet_cache.cpp"
                     ,0x149,0,"%s");
   }
-  *(undefined4 *)(*(int *)(iVar1 + 0x18) + 0x1c) = *(undefined4 *)(iVar1 + 0x1c);
-  *(undefined4 *)(*(int *)(iVar1 + 0x1c) + 0x18) = *(undefined4 *)(iVar1 + 0x18);
-  *(undefined4 *)(iVar1 + 0x18) = 0;
-  *(undefined4 *)(iVar1 + 0x1c) = 0;
+  param_1->prev->next = param_1->next;
+  param_1->next->prev = param_1->prev;
+  param_1->prev = (PktCacheEntry *)0x0;
+  param_1->next = (PktCacheEntry *)0x0;
   Com_PacketCacheUnlock();
-  __restgprlr_29();
   return;
 }
 
 
 // 825E5CB8  Com_TouchEntryWithTime  (universal/com_packet_cache.cpp:340)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void Com_TouchEntryWithTime(PktCacheEntry *param_1,int param_2)
 
 {
-  PktCacheEntry *pPVar1;
-  int iVar2;
-  PktCacheEntry *pPVar3;
+  int iVar1;
+  PktCacheEntry *pPVar2;
   
-  pPVar1 = (PktCacheEntry *)__savegprlr_27(param_1);
   Com_PacketCacheLock();
-  if (pPVar1 == (PktCacheEntry *)0x0) {
+  if (param_1 == (PktCacheEntry *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_packet_cache.cpp"
                     ,0x156,0,"%s");
   }
-  pktCacheGlob.timeTouched[(int)(pPVar1 + 0x3199076) / 0x28] = param_2;
-  if (pPVar1->next == (PktCacheEntry *)0x0) {
-    if (pPVar1->prev != (PktCacheEntry *)0x0) {
+  pktCacheGlob.timeTouched[(int)(param_1 + 0x3199076) / 0x28] = param_2;
+  if (param_1->next == (PktCacheEntry *)0x0) {
+    if (param_1->prev != (PktCacheEntry *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_packet_cache.cpp"
                       ,0x15e,0,"%s");
       Com_PacketCacheUnlock();
-      __restgprlr_27();
       return;
     }
   }
   else {
-    Com_RemoveFromFreeList(pPVar1);
-    iVar2 = CacheFileNameDefined2((CacheFileName2 *)pPVar1);
-    pPVar3 = &pktCacheGlob.semiFreeCacheEntry;
-    if (iVar2 == 0) {
-      pPVar3 = &pktCacheGlob.freeCacheEntry;
+    Com_RemoveFromFreeList(param_1);
+    iVar1 = CacheFileNameDefined2(&param_1->filename);
+    pPVar2 = &pktCacheGlob.semiFreeCacheEntry;
+    if (iVar1 == 0) {
+      pPVar2 = &pktCacheGlob.freeCacheEntry;
     }
-    Com_MoveToFreeTail(pPVar1,pPVar3);
+    Com_MoveToFreeTail(param_1,pPVar2);
   }
   Com_PacketCacheUnlock();
-  __restgprlr_27();
   return;
 }
 
@@ -382,70 +375,69 @@ void Com_TouchEntry(PktCacheEntry *param_1)
 
 // 825E5E48  Com_FreeEntry  (universal/com_packet_cache.cpp:378)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void Com_FreeEntry(PktCacheEntry *param_1)
 
 {
   PktCacheEntry *pPVar1;
   uint uVar2;
-  PktCacheEntry *pPVar3;
-  int iVar4;
-  PktCacheEntry **ppPVar5;
+  int iVar3;
+  PktCacheEntry **ppPVar4;
   
-  pPVar3 = (PktCacheEntry *)__savegprlr_27(param_1);
   Com_PacketCacheLock();
-  iVar4 = CacheFileNameDefined2((CacheFileName2 *)pPVar3);
-  if (iVar4 == 0) {
+  iVar3 = CacheFileNameDefined2(&param_1->filename);
+  if (iVar3 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_packet_cache.cpp"
                     ,0x17e,0,"%s");
   }
-  CacheFileNameClear2((CacheFileName2 *)pPVar3,
-                      pktCacheGlob.cacheEntryNames[(int)(pPVar3 + 0x3199076) / 0x28]);
-  pktCacheGlob.timeTouched[(int)(pPVar3 + 0x3199076) / 0x28] = -1;
-  uVar2 = ((uint)pPVar3->offset >> 0xb) + pPVar3->hashCode & 0x7ff;
-  ppPVar5 = pktCacheGlob.cacheEntry + uVar2;
-  for (pPVar1 = pktCacheGlob.cacheEntry[uVar2]; pPVar3 != pPVar1; pPVar1 = pPVar1->nextHash) {
-    if (*ppPVar5 == (PktCacheEntry *)0x0) {
+  CacheFileNameClear2(&param_1->filename,
+                      pktCacheGlob.cacheEntryNames[(int)(param_1 + 0x3199076) / 0x28]);
+  pktCacheGlob.timeTouched[(int)(param_1 + 0x3199076) / 0x28] = -1;
+  uVar2 = ((uint)param_1->offset >> 0xb) + param_1->hashCode & 0x7ff;
+  ppPVar4 = pktCacheGlob.cacheEntry + uVar2;
+  for (pPVar1 = pktCacheGlob.cacheEntry[uVar2]; param_1 != pPVar1; pPVar1 = pPVar1->nextHash) {
+    if (*ppPVar4 == (PktCacheEntry *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_packet_cache.cpp"
                       ,0x189,0,"%s");
     }
-    pPVar1 = *ppPVar5;
-    ppPVar5 = &pPVar1->nextHash;
+    pPVar1 = *ppPVar4;
+    ppPVar4 = &pPVar1->nextHash;
   }
-  *ppPVar5 = pPVar3->nextHash;
+  *ppPVar4 = param_1->nextHash;
   Com_PacketCacheUnlock();
-  __restgprlr_27();
   return;
 }
 
 
 // 825E5F58  Com_ReleaseEntry  (universal/com_packet_cache.cpp:403)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void Com_ReleaseEntry(PktCacheEntry *param_1)
 
 {
-  PktCacheEntry *pPVar1;
-  int iVar2;
+  int iVar1;
   
-  pPVar1 = (PktCacheEntry *)__savegprlr_29(param_1);
   Com_PacketCacheLock();
-  if (pPVar1->next != (PktCacheEntry *)0x0) {
+  if (param_1->next != (PktCacheEntry *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_packet_cache.cpp"
                     ,0x197,0,"%s");
   }
-  if (pPVar1->prev != (PktCacheEntry *)0x0) {
+  if (param_1->prev != (PktCacheEntry *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_packet_cache.cpp"
                     ,0x198,0,"%s");
   }
-  if ((pPVar1->offset < 0x64000) &&
-     (iVar2 = CacheFileNameDefined2((CacheFileName2 *)pPVar1), iVar2 != 0)) {
-    Com_MoveToFreeTail(pPVar1,&pktCacheGlob.semiFreeCacheEntry);
+  if ((param_1->offset < 0x64000) && (iVar1 = CacheFileNameDefined2(&param_1->filename), iVar1 != 0)
+     ) {
+    Com_MoveToFreeTail(param_1,&pktCacheGlob.semiFreeCacheEntry);
     Com_PacketCacheUnlock();
-    __restgprlr_29();
     return;
   }
-  Com_MoveToFreeTail(pPVar1,&pktCacheGlob.freeCacheEntry);
+  Com_MoveToFreeTail(param_1,&pktCacheGlob.freeCacheEntry);
   Com_PacketCacheUnlock();
-  __restgprlr_29();
   return;
 }
 

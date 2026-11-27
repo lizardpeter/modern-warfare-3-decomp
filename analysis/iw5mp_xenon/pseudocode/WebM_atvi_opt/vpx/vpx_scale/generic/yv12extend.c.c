@@ -2,305 +2,296 @@
 
 // 82841860  vp8_yv12_extend_frame_borders  (WebM_atvi_opt/vpx/vpx_scale/generic/yv12extend.c:29)
 
+/* WARNING: Function: __savegprlr_20 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_20 replaced with injection: xenon_save_restore */
+
 void vp8_yv12_extend_frame_borders(YV12_BUFFER_CONFIG *param_1)
 
 {
   uint uVar1;
-  int iVar2;
+  uint uVar2;
   int iVar3;
-  int *piVar4;
-  int *piVar5;
-  int iVar6;
-  ulonglong uVar7;
+  int iVar4;
+  int iVar5;
+  ulonglong uVar6;
+  byte *pbVar7;
   byte *pbVar8;
-  byte *pbVar9;
-  void *pvVar10;
-  uint uVar11;
-  void *pvVar13;
+  uchar *puVar9;
+  uchar *puVar10;
+  uchar *puVar12;
+  uint uVar13;
+  ulonglong uVar11;
   uint uVar14;
-  ulonglong uVar12;
-  void *pvVar15;
-  uint uVar16;
   
-  piVar4 = (int *)__savegprlr_20(param_1);
-  iVar6 = piVar4[6];
-  uVar16 = piVar4[10];
-  pvVar10 = (void *)(*piVar4 + iVar6);
-  uVar14 = piVar4[1];
-  uVar7 = (ulonglong)uVar14;
-  uVar1 = piVar4[2];
-  pvVar13 = (void *)(iVar6 - uVar16);
-  piVar5 = piVar4;
+  puVar10 = param_1->y_buffer;
+  uVar14 = param_1->border;
+  puVar9 = puVar10 + param_1->y_width;
+  uVar1 = param_1->y_height;
+  uVar6 = (ulonglong)uVar1;
+  uVar2 = param_1->y_stride;
+  puVar12 = puVar10 + -uVar14;
+  if (0 < (int)uVar1) {
+    pbVar7 = puVar9 + (-1 - uVar2);
+    pbVar8 = puVar10 + -uVar2;
+    do {
+      pbVar8 = pbVar8 + uVar2;
+      vpx_memset(puVar12,(uint)*pbVar8,uVar14);
+      pbVar7 = pbVar7 + uVar2;
+      vpx_memset(puVar9,(uint)*pbVar7,uVar14);
+      uVar6 = uVar6 - 1;
+      puVar12 = puVar12 + uVar2;
+      puVar9 = puVar9 + uVar2;
+    } while (uVar6 != 0);
+  }
+  puVar10 = param_1->y_buffer + -uVar14;
+  puVar9 = puVar10 + -(uVar2 * uVar14);
   if (0 < (int)uVar14) {
-    pbVar8 = (byte *)((int)pvVar10 + (-1 - uVar1));
-    pbVar9 = (byte *)(iVar6 - uVar1);
+    iVar3 = uVar2 - (int)puVar9;
+    uVar13 = uVar14;
     do {
-      pbVar9 = pbVar9 + uVar1;
-      vpx_memset(pvVar13,(uint)*pbVar9,uVar16);
-      pbVar8 = pbVar8 + uVar1;
-      piVar5 = vpx_memset(pvVar10,(uint)*pbVar8,uVar16);
-      uVar7 = uVar7 - 1;
-      pvVar13 = (void *)((int)pvVar13 + uVar1);
-      pvVar10 = (void *)((int)pvVar10 + uVar1);
-    } while (uVar7 != 0);
+      vpx_memcpy(puVar9,puVar10,uVar2);
+      vpx_memcpy(puVar10 + (uVar1 - 1) * uVar2 + iVar3 + (int)puVar9,puVar10 + (uVar1 - 1) * uVar2,
+                 uVar2);
+      uVar13 = uVar13 - 1;
+      puVar9 = puVar9 + uVar2;
+    } while (uVar13 != 0);
   }
-  pvVar13 = (void *)(piVar4[6] - uVar16);
-  pvVar10 = (void *)((uVar14 - 1) * uVar1 + (int)pvVar13);
-  pvVar15 = (void *)((int)pvVar13 - uVar1 * uVar16);
-  if (0 < (int)uVar16) {
-    iVar6 = uVar1 - (int)pvVar15;
-    uVar14 = uVar16;
+  puVar10 = param_1->u_buffer;
+  uVar14 = uVar14 >> 1;
+  iVar3 = param_1->uv_width;
+  uVar1 = param_1->uv_height;
+  uVar6 = (ulonglong)uVar1;
+  puVar12 = puVar10 + -uVar14;
+  puVar9 = puVar10 + iVar3;
+  uVar2 = param_1->uv_stride;
+  if (0 < (int)uVar1) {
+    pbVar7 = puVar9 + (-1 - uVar2);
+    pbVar8 = puVar10 + -uVar2;
+    uVar11 = uVar6;
     do {
-      vpx_memcpy(pvVar15,pvVar13,uVar1);
-      piVar5 = vpx_memcpy((void *)((int)pvVar10 + iVar6 + (int)pvVar15),pvVar10,uVar1);
-      uVar14 = uVar14 - 1;
-      pvVar15 = (void *)((int)pvVar15 + uVar1);
-    } while (uVar14 != 0);
-  }
-  iVar6 = piVar4[7];
-  uVar16 = uVar16 >> 1;
-  iVar2 = piVar4[3];
-  uVar14 = piVar4[4];
-  uVar7 = (ulonglong)uVar14;
-  pvVar13 = (void *)(iVar6 - uVar16);
-  pvVar10 = (void *)(iVar6 + iVar2);
-  uVar1 = piVar4[5];
-  if (0 < (int)uVar14) {
-    pbVar8 = (byte *)((int)pvVar10 + (-1 - uVar1));
-    pbVar9 = (byte *)(iVar6 - uVar1);
-    uVar12 = uVar7;
-    do {
-      pbVar9 = pbVar9 + uVar1;
-      vpx_memset(pvVar13,(uint)*pbVar9,uVar16);
-      pbVar8 = pbVar8 + uVar1;
-      piVar5 = vpx_memset(pvVar10,(uint)*pbVar8,uVar16);
-      uVar12 = uVar12 - 1;
-      pvVar13 = (void *)((int)pvVar13 + uVar1);
-      pvVar10 = (void *)((int)pvVar10 + uVar1);
-    } while (uVar12 != 0);
-  }
-  pvVar13 = (void *)(piVar4[7] - uVar16);
-  iVar6 = (uVar14 - 1) * uVar1;
-  pvVar10 = (void *)(iVar6 + (int)pvVar13);
-  pvVar15 = (void *)((int)pvVar13 - uVar1 * uVar16);
-  if (uVar16 != 0) {
-    iVar3 = uVar1 - (int)pvVar15;
-    uVar11 = uVar16;
-    do {
-      vpx_memcpy(pvVar15,pvVar13,uVar1);
-      piVar5 = vpx_memcpy((void *)((int)pvVar10 + iVar3 + (int)pvVar15),pvVar10,uVar1);
+      pbVar8 = pbVar8 + uVar2;
+      vpx_memset(puVar12,(uint)*pbVar8,uVar14);
+      pbVar7 = pbVar7 + uVar2;
+      vpx_memset(puVar9,(uint)*pbVar7,uVar14);
       uVar11 = uVar11 - 1;
-      pvVar15 = (void *)((int)pvVar15 + uVar1);
+      puVar12 = puVar12 + uVar2;
+      puVar9 = puVar9 + uVar2;
     } while (uVar11 != 0);
   }
-  iVar3 = piVar4[8];
-  pvVar10 = (void *)(iVar3 + iVar2);
-  pvVar13 = (void *)(iVar3 - uVar16);
-  if (0 < (int)uVar14) {
-    pbVar8 = (byte *)((int)pvVar10 + (-1 - uVar1));
-    pbVar9 = (byte *)(iVar3 - uVar1);
+  puVar10 = param_1->u_buffer + -uVar14;
+  iVar5 = (uVar1 - 1) * uVar2;
+  puVar9 = puVar10 + -(uVar2 * uVar14);
+  if (uVar14 != 0) {
+    iVar4 = uVar2 - (int)puVar9;
+    uVar13 = uVar14;
     do {
-      pbVar9 = pbVar9 + uVar1;
-      vpx_memset(pvVar13,(uint)*pbVar9,uVar16);
-      pbVar8 = pbVar8 + uVar1;
-      piVar5 = vpx_memset(pvVar10,(uint)*pbVar8,uVar16);
-      uVar7 = uVar7 - 1;
-      pvVar13 = (void *)((int)pvVar13 + uVar1);
-      pvVar10 = (void *)((int)pvVar10 + uVar1);
-    } while (uVar7 != 0);
+      vpx_memcpy(puVar9,puVar10,uVar2);
+      vpx_memcpy(puVar10 + iVar5 + iVar4 + (int)puVar9,puVar10 + iVar5,uVar2);
+      uVar13 = uVar13 - 1;
+      puVar9 = puVar9 + uVar2;
+    } while (uVar13 != 0);
   }
-  pvVar13 = (void *)(piVar4[8] - uVar16);
-  pvVar10 = (void *)(iVar6 + (int)pvVar13);
-  pvVar15 = (void *)((int)pvVar13 - uVar1 * uVar16);
-  if (uVar16 != 0) {
-    iVar6 = uVar1 - (int)pvVar15;
+  puVar10 = param_1->v_buffer;
+  puVar9 = puVar10 + iVar3;
+  puVar12 = puVar10 + -uVar14;
+  if (0 < (int)uVar1) {
+    pbVar7 = puVar9 + (-1 - uVar2);
+    pbVar8 = puVar10 + -uVar2;
     do {
-      vpx_memcpy(pvVar15,pvVar13,uVar1);
-      piVar5 = vpx_memcpy((void *)((int)pvVar10 + iVar6 + (int)pvVar15),pvVar10,uVar1);
-      uVar16 = uVar16 - 1;
-      pvVar15 = (void *)((int)pvVar15 + uVar1);
-    } while (uVar16 != 0);
+      pbVar8 = pbVar8 + uVar2;
+      vpx_memset(puVar12,(uint)*pbVar8,uVar14);
+      pbVar7 = pbVar7 + uVar2;
+      vpx_memset(puVar9,(uint)*pbVar7,uVar14);
+      uVar6 = uVar6 - 1;
+      puVar12 = puVar12 + uVar2;
+      puVar9 = puVar9 + uVar2;
+    } while (uVar6 != 0);
   }
-  __restgprlr_20(piVar5);
+  puVar10 = param_1->v_buffer + -uVar14;
+  puVar9 = puVar10 + -(uVar2 * uVar14);
+  if (uVar14 != 0) {
+    iVar3 = uVar2 - (int)puVar9;
+    do {
+      vpx_memcpy(puVar9,puVar10,uVar2);
+      vpx_memcpy(puVar10 + iVar5 + iVar3 + (int)puVar9,puVar10 + iVar5,uVar2);
+      uVar14 = uVar14 - 1;
+      puVar9 = puVar9 + uVar2;
+    } while (uVar14 != 0);
+  }
   return;
 }
 
 
 // 82841AA0  vp8_yv12_extend_frame_borders_yonly  (WebM_atvi_opt/vpx/vpx_scale/generic/yv12extend.c:154)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
+
 void vp8_yv12_extend_frame_borders_yonly(YV12_BUFFER_CONFIG *param_1)
 
 {
-  int iVar1;
+  uint uVar1;
   uint uVar2;
-  uint uVar3;
-  int *piVar4;
-  int *piVar5;
-  ulonglong uVar6;
-  byte *pbVar7;
-  byte *pbVar8;
-  void *pvVar9;
-  void *pvVar10;
-  void *pvVar11;
-  uint uVar12;
+  int iVar3;
+  ulonglong uVar4;
+  byte *pbVar5;
+  byte *pbVar6;
+  uchar *puVar7;
+  uchar *puVar8;
+  uchar *puVar9;
+  uint uVar10;
   
-  piVar4 = (int *)__savegprlr_23(param_1);
-  iVar1 = piVar4[6];
-  uVar12 = piVar4[10];
-  pvVar9 = (void *)(*piVar4 + iVar1);
-  uVar2 = piVar4[1];
-  uVar6 = (ulonglong)uVar2;
-  uVar3 = piVar4[2];
-  pvVar10 = (void *)(iVar1 - uVar12);
-  piVar5 = piVar4;
-  if (0 < (int)uVar2) {
-    pbVar7 = (byte *)((int)pvVar9 + (-1 - uVar3));
-    pbVar8 = (byte *)(iVar1 - uVar3);
+  puVar9 = param_1->y_buffer;
+  uVar10 = param_1->border;
+  puVar7 = puVar9 + param_1->y_width;
+  uVar1 = param_1->y_height;
+  uVar4 = (ulonglong)uVar1;
+  uVar2 = param_1->y_stride;
+  puVar8 = puVar9 + -uVar10;
+  if (0 < (int)uVar1) {
+    pbVar5 = puVar7 + (-1 - uVar2);
+    pbVar6 = puVar9 + -uVar2;
     do {
-      pbVar8 = pbVar8 + uVar3;
-      vpx_memset(pvVar10,(uint)*pbVar8,uVar12);
-      pbVar7 = pbVar7 + uVar3;
-      piVar5 = vpx_memset(pvVar9,(uint)*pbVar7,uVar12);
-      uVar6 = uVar6 - 1;
-      pvVar10 = (void *)((int)pvVar10 + uVar3);
-      pvVar9 = (void *)((int)pvVar9 + uVar3);
-    } while (uVar6 != 0);
+      pbVar6 = pbVar6 + uVar2;
+      vpx_memset(puVar8,(uint)*pbVar6,uVar10);
+      pbVar5 = pbVar5 + uVar2;
+      vpx_memset(puVar7,(uint)*pbVar5,uVar10);
+      uVar4 = uVar4 - 1;
+      puVar8 = puVar8 + uVar2;
+      puVar7 = puVar7 + uVar2;
+    } while (uVar4 != 0);
   }
-  pvVar10 = (void *)(piVar4[6] - uVar12);
-  pvVar9 = (void *)((uVar2 - 1) * uVar3 + (int)pvVar10);
-  pvVar11 = (void *)((int)pvVar10 - uVar3 * uVar12);
-  if (0 < (int)uVar12) {
-    iVar1 = uVar3 - (int)pvVar11;
+  puVar9 = param_1->y_buffer + -uVar10;
+  puVar7 = puVar9 + -(uVar2 * uVar10);
+  if (0 < (int)uVar10) {
+    iVar3 = uVar2 - (int)puVar7;
     do {
-      vpx_memcpy(pvVar11,pvVar10,uVar3);
-      piVar5 = vpx_memcpy((void *)((int)pvVar9 + iVar1 + (int)pvVar11),pvVar9,uVar3);
-      uVar12 = uVar12 - 1;
-      pvVar11 = (void *)((int)pvVar11 + uVar3);
-    } while (uVar12 != 0);
+      vpx_memcpy(puVar7,puVar9,uVar2);
+      vpx_memcpy(puVar9 + (uVar1 - 1) * uVar2 + iVar3 + (int)puVar7,puVar9 + (uVar1 - 1) * uVar2,
+                 uVar2);
+      uVar10 = uVar10 - 1;
+      puVar7 = puVar7 + uVar2;
+    } while (uVar10 != 0);
   }
-  __restgprlr_23(piVar5);
   return;
 }
 
 
 // 82841B78  vp8_yv12_copy_frame  (WebM_atvi_opt/vpx/vpx_scale/generic/yv12extend.c:229)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void vp8_yv12_copy_frame(YV12_BUFFER_CONFIG *param_1,YV12_BUFFER_CONFIG *param_2)
 
 {
-  uint *puVar1;
-  uint uVar2;
-  uchar *puVar3;
-  void *pvVar4;
-  int iVar5;
+  uchar *puVar1;
+  uchar *puVar2;
+  int iVar3;
+  int iVar4;
   
-  puVar1 = (uint *)__savegprlr_27(param_1);
-  pvVar4 = (void *)puVar1[6];
-  puVar3 = param_2->y_buffer;
-  iVar5 = 0;
-  if (0 < (int)puVar1[1]) {
+  puVar2 = param_1->y_buffer;
+  puVar1 = param_2->y_buffer;
+  iVar3 = 0;
+  if (0 < param_1->y_height) {
     do {
-      vpx_memcpy(puVar3,pvVar4,*puVar1);
-      iVar5 = iVar5 + 1;
-      puVar3 = puVar3 + param_2->y_stride;
-      pvVar4 = (void *)((int)pvVar4 + puVar1[2]);
-    } while (iVar5 < (int)puVar1[1]);
+      vpx_memcpy(puVar1,puVar2,param_1->y_width);
+      iVar3 = iVar3 + 1;
+      puVar1 = puVar1 + param_2->y_stride;
+      puVar2 = puVar2 + param_1->y_stride;
+    } while (iVar3 < param_1->y_height);
   }
-  uVar2 = puVar1[4];
-  iVar5 = 0;
-  pvVar4 = (void *)puVar1[7];
-  puVar3 = param_2->u_buffer;
-  if (0 < (int)uVar2) {
+  iVar3 = param_1->uv_height;
+  iVar4 = 0;
+  puVar2 = param_1->u_buffer;
+  puVar1 = param_2->u_buffer;
+  if (0 < iVar3) {
     do {
-      vpx_memcpy(puVar3,pvVar4,puVar1[3]);
-      iVar5 = iVar5 + 1;
-      uVar2 = puVar1[4];
-      pvVar4 = (void *)(puVar1[5] + (int)pvVar4);
-      puVar3 = puVar3 + param_2->uv_stride;
-    } while (iVar5 < (int)uVar2);
+      vpx_memcpy(puVar1,puVar2,param_1->uv_width);
+      iVar4 = iVar4 + 1;
+      iVar3 = param_1->uv_height;
+      puVar2 = puVar2 + param_1->uv_stride;
+      puVar1 = puVar1 + param_2->uv_stride;
+    } while (iVar4 < iVar3);
   }
-  pvVar4 = (void *)puVar1[8];
-  iVar5 = 0;
-  puVar3 = param_2->v_buffer;
-  if (0 < (int)uVar2) {
+  puVar2 = param_1->v_buffer;
+  iVar4 = 0;
+  puVar1 = param_2->v_buffer;
+  if (0 < iVar3) {
     do {
-      vpx_memcpy(puVar3,pvVar4,puVar1[3]);
-      iVar5 = iVar5 + 1;
-      puVar3 = puVar3 + param_2->uv_stride;
-      pvVar4 = (void *)(puVar1[5] + (int)pvVar4);
-    } while (iVar5 < (int)puVar1[4]);
+      vpx_memcpy(puVar1,puVar2,param_1->uv_width);
+      iVar4 = iVar4 + 1;
+      puVar1 = puVar1 + param_2->uv_stride;
+      puVar2 = puVar2 + param_1->uv_stride;
+    } while (iVar4 < param_1->uv_height);
   }
   (*vp8_yv12_extend_frame_borders_ptr)(param_2);
-  __restgprlr_27();
   return;
 }
 
 
 // 82841C80  vp8_yv12_copy_frame_yonly  (WebM_atvi_opt/vpx/vpx_scale/generic/yv12extend.c:268)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
+
 void vp8_yv12_copy_frame_yonly(YV12_BUFFER_CONFIG *param_1,YV12_BUFFER_CONFIG *param_2)
 
 {
   uint uVar1;
   uint uVar2;
-  uint *puVar3;
-  uint *puVar4;
-  ulonglong uVar5;
-  byte *pbVar6;
-  byte *pbVar7;
+  ulonglong uVar3;
+  byte *pbVar4;
+  byte *pbVar5;
+  uchar *puVar6;
+  uchar *puVar7;
   uchar *puVar8;
-  uchar *puVar9;
-  uchar *puVar10;
-  void *pvVar11;
-  int iVar12;
-  uint uVar13;
+  int iVar9;
+  uint uVar10;
   
-  puVar3 = (uint *)__savegprlr_23(param_1);
-  pvVar11 = (void *)puVar3[6];
-  puVar9 = param_2->y_buffer;
-  iVar12 = 0;
-  puVar4 = puVar3;
-  if (0 < (int)puVar3[1]) {
+  puVar8 = param_1->y_buffer;
+  puVar6 = param_2->y_buffer;
+  iVar9 = 0;
+  if (0 < param_1->y_height) {
     do {
-      puVar4 = vpx_memcpy(puVar9,pvVar11,*puVar3);
-      iVar12 = iVar12 + 1;
-      puVar9 = puVar9 + param_2->y_stride;
-      pvVar11 = (void *)((int)pvVar11 + puVar3[2]);
-    } while (iVar12 < (int)puVar3[1]);
+      vpx_memcpy(puVar6,puVar8,param_1->y_width);
+      iVar9 = iVar9 + 1;
+      puVar6 = puVar6 + param_2->y_stride;
+      puVar8 = puVar8 + param_1->y_stride;
+    } while (iVar9 < param_1->y_height);
   }
-  puVar9 = param_2->y_buffer;
-  uVar13 = param_2->border;
-  puVar8 = puVar9 + param_2->y_width;
+  puVar8 = param_2->y_buffer;
+  uVar10 = param_2->border;
+  puVar6 = puVar8 + param_2->y_width;
   uVar1 = param_2->y_height;
-  uVar5 = (ulonglong)uVar1;
+  uVar3 = (ulonglong)uVar1;
   uVar2 = param_2->y_stride;
-  puVar10 = puVar9 + -uVar13;
+  puVar7 = puVar8 + -uVar10;
   if (0 < (int)uVar1) {
-    pbVar6 = puVar8 + (-1 - uVar2);
-    pbVar7 = puVar9 + -uVar2;
+    pbVar4 = puVar6 + (-1 - uVar2);
+    pbVar5 = puVar8 + -uVar2;
     do {
-      pbVar7 = pbVar7 + uVar2;
-      vpx_memset(puVar10,(uint)*pbVar7,uVar13);
-      pbVar6 = pbVar6 + uVar2;
-      puVar4 = vpx_memset(puVar8,(uint)*pbVar6,uVar13);
-      uVar5 = uVar5 - 1;
-      puVar10 = puVar10 + uVar2;
-      puVar8 = puVar8 + uVar2;
-    } while (uVar5 != 0);
+      pbVar5 = pbVar5 + uVar2;
+      vpx_memset(puVar7,(uint)*pbVar5,uVar10);
+      pbVar4 = pbVar4 + uVar2;
+      vpx_memset(puVar6,(uint)*pbVar4,uVar10);
+      uVar3 = uVar3 - 1;
+      puVar7 = puVar7 + uVar2;
+      puVar6 = puVar6 + uVar2;
+    } while (uVar3 != 0);
   }
-  puVar9 = param_2->y_buffer + -uVar13;
-  puVar8 = puVar9 + -(uVar2 * uVar13);
-  if (0 < (int)uVar13) {
-    iVar12 = uVar2 - (int)puVar8;
+  puVar8 = param_2->y_buffer + -uVar10;
+  puVar6 = puVar8 + -(uVar2 * uVar10);
+  if (0 < (int)uVar10) {
+    iVar9 = uVar2 - (int)puVar6;
     do {
-      vpx_memcpy(puVar8,puVar9,uVar2);
-      puVar4 = vpx_memcpy(puVar9 + (uVar1 - 1) * uVar2 + iVar12 + (int)puVar8,
-                          puVar9 + (uVar1 - 1) * uVar2,uVar2);
-      uVar13 = uVar13 - 1;
-      puVar8 = puVar8 + uVar2;
-    } while (uVar13 != 0);
+      vpx_memcpy(puVar6,puVar8,uVar2);
+      vpx_memcpy(puVar8 + (uVar1 - 1) * uVar2 + iVar9 + (int)puVar6,puVar8 + (uVar1 - 1) * uVar2,
+                 uVar2);
+      uVar10 = uVar10 - 1;
+      puVar6 = puVar6 + uVar2;
+    } while (uVar10 != 0);
   }
-  __restgprlr_23(puVar4);
   return;
 }
 

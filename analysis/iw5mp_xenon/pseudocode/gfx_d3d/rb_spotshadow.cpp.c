@@ -2,6 +2,8 @@
 
 // 827AC100  R_DrawSpotShadowMapCallback  (gfx_d3d/rb_spotshadow.cpp:39)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 /* WARNING: Enum "GPUTimerId": Some values do not have unique names */
@@ -17,17 +19,15 @@ void R_DrawSpotShadowMapCallback(void *param_1,GfxCmdBufContext param_2)
   D3DDevice *pDVar5;
   GfxCmdBufSourceState *pGVar6;
   GfxCmdBufState *pGVar7;
-  int *piVar8;
   uchar in_r6;
   GfxCmdBufSourceState *pGStack00000018;
   GfxCmdBufState *pGStack0000001c;
   GfxViewport local_60 [6];
   
-  piVar8 = (int *)__savegprlr_23(param_1);
-  iVar1 = *piVar8;
-  pGVar2 = (GfxDrawList *)piVar8[1];
-  pGVar3 = (GfxBackEndData *)piVar8[2];
-  iVar4 = piVar8[3];
+  iVar1 = *(int *)param_1;
+  pGVar2 = *(GfxDrawList **)((int)param_1 + 4);
+  pGVar3 = *(GfxBackEndData **)((int)param_1 + 8);
+  iVar4 = *(int *)((int)param_1 + 0xc);
   _pGStack00000018 = param_2;
   R_SetRenderTarget(param_2,*(GfxRenderTargetId *)(iVar1 + 0x1b8));
   pGVar7 = pGStack0000001c;
@@ -61,13 +61,14 @@ void R_DrawSpotShadowMapCallback(void *param_1,GfxCmdBufContext param_2)
     R_ResolveShadowmap(pGVar7,local_60,*(uint *)(iVar1 + 0x50),*(uint *)(iVar1 + 0x54));
     R_GPU_EndTimer();
   }
-  __restgprlr_23();
   return;
 }
 
 
 // 827AC270  R_DrawSpotShadowMap  (gfx_d3d/rb_spotshadow.cpp:153)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
@@ -75,30 +76,26 @@ void R_DrawSpotShadowMap(GfxViewInfo *param_1,GfxDrawList *param_2,uint param_3,
                         GfxDrawCallOutput *param_4)
 
 {
-  int iVar1;
-  int iVar2;
-  int iVar3;
-  int local_17b0;
+  GfxBackEndData *pGVar1;
+  GfxSpotShadow *local_17b0;
   GfxDrawList *local_17ac;
-  int local_17a8;
+  GfxBackEndData *local_17a8;
   uint local_17a4;
   GfxCmdBufSourceState GStack_17a0;
   
-  iVar3 = __savegprlr_25(param_1);
   PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffff,"Spot Shadow Maps");
-  R_InitCmdBufSourceState(&GStack_17a0,(GfxCmdBufInput *)(iVar3 + 0x330),0);
-  iVar1 = *(int *)(iVar3 + 0x91c);
-  iVar2 = param_3 * 0x1d0 + iVar1;
-  R_SetRenderTargetSize(&GStack_17a0,*(GfxRenderTargetId *)(iVar2 + 0x29c8));
-  R_SetViewportValues(&GStack_17a0,0,0,*(int *)(iVar2 + 0x2868),*(int *)(iVar2 + 0x286c));
-  local_17b0 = iVar2 + 0x2810;
+  R_InitCmdBufSourceState(&GStack_17a0,&param_1->input,0);
+  pGVar1 = (param_1->input).data;
+  R_SetRenderTargetSize(&GStack_17a0,pGVar1->spotShadows[param_3].renderTargetId);
+  R_SetViewportValues(&GStack_17a0,0,0,pGVar1->spotShadows[param_3].viewportParms.viewport.width,
+                      pGVar1->spotShadows[param_3].viewportParms.viewport.height);
+  local_17b0 = pGVar1->spotShadows + param_3;
   local_17ac = param_2;
-  local_17a8 = iVar1;
+  local_17a8 = pGVar1;
   local_17a4 = param_3;
-  R_DrawCall(R_DrawSpotShadowMapCallback,&local_17b0,&GStack_17a0,(GfxSceneDef *)(iVar3 + 0x180),
-             (GfxViewParms *)(iVar2 + 0x2870),param_4);
+  R_DrawCall(R_DrawSpotShadowMapCallback,&local_17b0,&GStack_17a0,&param_1->sceneDef,
+             &pGVar1->spotShadows[param_3].viewportParms.viewParms,param_4);
   PIXEndNamedEvent();
-  __restgprlr_25();
   return;
 }
 
@@ -121,35 +118,32 @@ void RB_SpotShadowMap(GfxBackEndData *param_1,GfxViewInfo *param_2,uint param_3)
 
 // 827AC378  RB_SpotShadowMaps  (gfx_d3d/rb_spotshadow.cpp:237)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void RB_SpotShadowMaps(GfxBackEndData *param_1,GfxViewInfo *param_2)
 
 {
-  GfxBackEndData *pGVar1;
-  longlong lVar2;
-  longlong lVar3;
-  uint uVar4;
+  GfxDrawList *pGVar1;
+  uint uVar2;
   GfxDrawCallOutput aGStack_40 [4];
   
-  lVar2 = (longlong)(int)param_2;
-  pGVar1 = (GfxBackEndData *)__savegprlr_28(param_1);
-  if (pGVar1 == (GfxBackEndData *)0x0) {
+  if (param_1 == (GfxBackEndData *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_spotshadow.cpp",
                     0xf5,0,"%s");
   }
-  uVar4 = 0;
-  if (pGVar1->spotShadowCount != 0) {
-    lVar3 = lVar2 + 0x30b8;
+  uVar2 = 0;
+  if (param_1->spotShadowCount != 0) {
+    pGVar1 = param_2->drawList + 0x14;
     do {
-      R_InitDrawCallOutput(pGVar1,aGStack_40);
-      R_DrawSpotShadowMap((GfxViewInfo *)lVar2,(GfxDrawList *)lVar3,uVar4,aGStack_40);
-      uVar4 = uVar4 + 1;
-      lVar3 = lVar3 + 0x1f8;
-    } while (uVar4 < pGVar1->spotShadowCount);
+      R_InitDrawCallOutput(param_1,aGStack_40);
+      R_DrawSpotShadowMap(param_2,pGVar1,uVar2,aGStack_40);
+      uVar2 = uVar2 + 1;
+      pGVar1 = pGVar1 + 1;
+    } while (uVar2 < param_1->spotShadowCount);
   }
-  __restgprlr_28();
   return;
 }
 
@@ -190,6 +184,10 @@ void RB_SetSpotShadowOverlayScaleAndBias(GfxSpotShadow *param_1)
 
 // 827AC4C8  RB_DrawSpotShadowOverlay  (gfx_d3d/rb_spotshadow.cpp:342)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "GfxPrimStatsTarget": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
@@ -214,8 +212,6 @@ void RB_DrawSpotShadowOverlay(void)
   double dVar12;
   double dVar13;
   
-  __savegprlr_23();
-  __savefpr_23();
   if (backEndData->spotShadowCount != 0) {
     gfxCmdBufSourceState.input.codeImageSamplerStates[8] = 'a';
     dVar7 = 32.0;
@@ -258,8 +254,6 @@ void RB_DrawSpotShadowOverlay(void)
     }
     gfxCmdBufSourceState.input.codeImageSamplerStates[8] = 'b';
   }
-  __restfpr_23();
-  __restgprlr_23();
   return;
 }
 

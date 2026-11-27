@@ -24,70 +24,66 @@ void _dynamic_initializer_for__s_performanceValue__(void)
 
 // 826EDA18  dwWriteStats  (DW/dwStats.cpp:24)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void dwWriteStats(overlappedTask *param_1,bdStatsInfo **param_2,uint param_3)
 
 {
   bdRemoteTask *pbVar1;
-  overlappedTask *poVar2;
-  bdStats *pbVar3;
-  bdReference<bdRemoteTask> bVar4;
-  longlong lVar5;
+  bdStats *pbVar2;
+  bdReference<bdRemoteTask> bVar3;
   bdReference<bdRemoteTask> abStack_30 [12];
   
-  lVar5 = (longlong)(int)param_2;
-  poVar2 = (overlappedTask *)__savegprlr_29(param_1,lVar5,param_3);
-  if ((poVar2 != (overlappedTask *)0x0) &&
-     (pbVar3 = dwGetStats((uint)poVar2->controllerIndex), pbVar3 != (bdStats *)0x0)) {
-    pbVar3 = dwGetStats((uint)poVar2->controllerIndex);
-    bVar4 = bdStats::writeStats((bdStats *)abStack_30,(bdStatsInfo **)pbVar3,(uint)lVar5);
-    pbVar1 = (bdRemoteTask *)(bVar4.m_ptr)->_padding_;
+  if ((param_1 != (overlappedTask *)0x0) &&
+     (pbVar2 = dwGetStats((uint)param_1->controllerIndex), pbVar2 != (bdStats *)0x0)) {
+    pbVar2 = dwGetStats((uint)param_1->controllerIndex);
+    bVar3 = bdStats::writeStats((bdStats *)abStack_30,(bdStatsInfo **)pbVar2,(uint)param_2);
+    pbVar1 = (bdRemoteTask *)(bVar3.m_ptr)->_padding_;
     bdReference<bdRemoteTask>::~bdReference<bdRemoteTask>(abStack_30);
     if (pbVar1 != (bdRemoteTask *)0x0) {
-      bdReference<bdRemoteTask>::operator=(&(poVar2->u).remoteTask,pbVar1);
-      __restgprlr_29();
+      bdReference<bdRemoteTask>::operator=(&(param_1->u).remoteTask,pbVar1);
       return;
     }
-    TaskManager_ClearTask(poVar2);
+    TaskManager_ClearTask(param_1);
     dwConnectionErrorHandler(6);
   }
-  __restgprlr_29();
   return;
 }
 
 
 // 826EDAA8  dwWriteStatsComplete  (DW/dwStats.cpp:49)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 taskCompleteResults dwWriteStatsComplete(overlappedTask *param_1)
 
 {
-  overlappedTask *poVar1;
-  bdStats *pbVar2;
-  bdStatus bVar3;
-  bdLobbyErrorCode bVar4;
-  taskCompleteResults tVar5;
+  bdStats *pbVar1;
+  bdStatus bVar2;
+  bdLobbyErrorCode bVar3;
+  taskCompleteResults tVar4;
   char acStack_60 [96];
   
-  poVar1 = (overlappedTask *)__savegprlr_29(param_1);
-  if (((poVar1 != (overlappedTask *)0x0) && ((poVar1->u).remoteTask.m_ptr != (bdRemoteTask *)0x0))
-     && (pbVar2 = dwGetStats((uint)poVar1->controllerIndex), pbVar2 != (bdStats *)0x0)) {
-    dwLobbyPump((uint)poVar1->controllerIndex);
-    bVar3 = (**(code **)(((poVar1->u).remoteTask.m_ptr)->_padding_ + 4))();
-    bVar4 = bdRemoteTask::getErrorCode((poVar1->u).remoteTask.m_ptr);
-    if (bVar4 != BD_NO_ERROR) {
-      TaskManager_ClearTask(poVar1);
-      if (bVar4 == BD_TOO_MANY_TASKS) {
+  if (((param_1 != (overlappedTask *)0x0) && ((param_1->u).remoteTask.m_ptr != (bdRemoteTask *)0x0))
+     && (pbVar1 = dwGetStats((uint)param_1->controllerIndex), pbVar1 != (bdStats *)0x0)) {
+    dwLobbyPump((uint)param_1->controllerIndex);
+    bVar2 = (**(code **)(((param_1->u).remoteTask.m_ptr)->_padding_ + 4))();
+    bVar3 = bdRemoteTask::getErrorCode((param_1->u).remoteTask.m_ptr);
+    if (bVar3 != BD_NO_ERROR) {
+      TaskManager_ClearTask(param_1);
+      if (bVar3 == BD_TOO_MANY_TASKS) {
         Live_ThrowError(ERR_DROP,"XBOXLIVE_TOOMANYTASKS");
       }
-      dwLobbyErrorCodeToString(bVar4,acStack_60,0x40);
+      dwLobbyErrorCodeToString(bVar3,acStack_60,0x40);
       Com_PrintError(0x10,"DW write stats error %i - \'%s\'\n");
     }
-    tVar5 = dwTaskStatusConvert(bVar3,bVar4);
-    tVar5 = __restgprlr_29(tVar5);
-    return tVar5;
+    tVar4 = dwTaskStatusConvert(bVar2,bVar3);
+    return tVar4;
   }
   Com_Printf(0x10,"Failed to retrieve stats write status\n");
-  tVar5 = __restgprlr_29(2);
-  return tVar5;
+  return TASK_ERROR;
 }
 
 
@@ -155,108 +151,102 @@ void dwReadStatsByLeaderboardIDs(overlappedTask *param_1,ulong64 param_2)
 
 // 826EDCF0  dwReadStatsByRank  (DW/dwStats.cpp:136)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void dwReadStatsByRank(overlappedTask *param_1,uint param_2,uint param_3,uint param_4)
 
 {
   bdRemoteTask *pbVar1;
-  int iVar2;
-  bdStats *pbVar3;
-  bdReference<bdRemoteTask> bVar4;
-  ulong64 uVar5;
-  longlong lVar6;
+  bdStats *pbVar2;
+  bdReference<bdRemoteTask> bVar3;
   bdReference<bdRemoteTask> abStack_30 [12];
   
-  lVar6 = (longlong)(int)param_3;
-  uVar5 = (ulong64)(int)param_2;
-  iVar2 = __savegprlr_28(param_1,uVar5,lVar6,param_4);
-  if ((iVar2 != 0) && (pbVar3 = dwGetStats((uint)*(byte *)(iVar2 + 0x95)), pbVar3 != (bdStats *)0x0)
-     ) {
-    pbVar3 = dwGetStats((uint)*(byte *)(iVar2 + 0x95));
-    bVar4 = bdStats::readStatsByRank
-                      ((bdStats *)abStack_30,(uint)pbVar3,uVar5,(bdStatsInfo *)lVar6,
-                       *(uint *)(iVar2 + 0x98));
-    pbVar1 = (bdRemoteTask *)(bVar4.m_ptr)->_padding_;
+  if ((param_1 != (overlappedTask *)0x0) &&
+     (pbVar2 = dwGetStats((uint)param_1->controllerIndex), pbVar2 != (bdStats *)0x0)) {
+    pbVar2 = dwGetStats((uint)param_1->controllerIndex);
+    bVar3 = bdStats::readStatsByRank
+                      ((bdStats *)abStack_30,(uint)pbVar2,(longlong)(int)param_2,
+                       (bdStatsInfo *)param_3,(uint)param_1->data);
+    pbVar1 = (bdRemoteTask *)(bVar3.m_ptr)->_padding_;
     bdReference<bdRemoteTask>::~bdReference<bdRemoteTask>(abStack_30);
     if (pbVar1 != (bdRemoteTask *)0x0) {
-      bdReference<bdRemoteTask>::operator=((bdReference<bdRemoteTask> *)(iVar2 + 8),pbVar1);
+      bdReference<bdRemoteTask>::operator=(&(param_1->u).remoteTask,pbVar1);
     }
   }
-  __restgprlr_28();
   return;
 }
 
 
 // 826EDD78  dwReadStatsForUsers  (DW/dwStats.cpp:154)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void dwReadStatsForUsers(overlappedTask *param_1,uint param_2,ulong64 *param_3,uint param_4)
 
 {
   bdRemoteTask *pbVar1;
-  overlappedTask *poVar2;
-  bdStats *pbVar3;
-  bdReference<bdRemoteTask> bVar4;
+  bdStats *pbVar2;
+  bdReference<bdRemoteTask> bVar3;
   bdReference<bdRemoteTask> abStack_30 [12];
   
-  poVar2 = (overlappedTask *)__savegprlr_28(param_1);
-  if ((poVar2 != (overlappedTask *)0x0) &&
-     (pbVar3 = dwGetStats((uint)poVar2->controllerIndex), pbVar3 != (bdStats *)0x0)) {
-    pbVar3 = dwGetStats((uint)poVar2->controllerIndex);
-    bVar4 = bdStats::readStatsByEntityID
-                      ((bdStats *)abStack_30,(uint)pbVar3,(ulong64 *)param_2,(uint)param_3,
+  if ((param_1 != (overlappedTask *)0x0) &&
+     (pbVar2 = dwGetStats((uint)param_1->controllerIndex), pbVar2 != (bdStats *)0x0)) {
+    pbVar2 = dwGetStats((uint)param_1->controllerIndex);
+    bVar3 = bdStats::readStatsByEntityID
+                      ((bdStats *)abStack_30,(uint)pbVar2,(ulong64 *)param_2,(uint)param_3,
                        (bdStatsInfo *)param_4);
-    pbVar1 = (bdRemoteTask *)(bVar4.m_ptr)->_padding_;
+    pbVar1 = (bdRemoteTask *)(bVar3.m_ptr)->_padding_;
     bdReference<bdRemoteTask>::~bdReference<bdRemoteTask>(abStack_30);
     if (pbVar1 != (bdRemoteTask *)0x0) {
-      bdReference<bdRemoteTask>::operator=(&(poVar2->u).remoteTask,pbVar1);
-      __restgprlr_28();
+      bdReference<bdRemoteTask>::operator=(&(param_1->u).remoteTask,pbVar1);
       return;
     }
-    TaskManager_ClearTask(poVar2);
+    TaskManager_ClearTask(param_1);
     dwConnectionErrorHandler(8);
   }
-  __restgprlr_28();
   return;
 }
 
 
 // 826EDE18  dwReadStatsComplete  (DW/dwStats.cpp:177)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 taskCompleteResults dwReadStatsComplete(overlappedTask *param_1)
 
 {
-  int iVar1;
-  int iVar2;
-  bdStats *pbVar3;
-  bdStatus bVar4;
-  bdLobbyErrorCode bVar5;
-  uint uVar6;
-  taskCompleteResults tVar7;
+  void *pvVar1;
+  bdStats *pbVar2;
+  bdStatus bVar3;
+  bdLobbyErrorCode bVar4;
+  uint uVar5;
+  taskCompleteResults tVar6;
   char acStack_70 [112];
   
-  iVar2 = __savegprlr_28(param_1);
-  if (((iVar2 != 0) && (*(int *)(iVar2 + 8) != 0)) &&
-     (pbVar3 = dwGetStats((uint)*(byte *)(iVar2 + 0x95)), pbVar3 != (bdStats *)0x0)) {
-    dwLobbyPump((uint)*(byte *)(iVar2 + 0x95));
-    bVar4 = (**(code **)(**(int **)(iVar2 + 8) + 4))();
-    bVar5 = bdRemoteTask::getErrorCode(*(bdRemoteTask **)(iVar2 + 8));
-    if (bVar4 == BD_DONE) {
-      iVar1 = *(int *)(iVar2 + 0x98);
-      uVar6 = bdRemoteTask::getNumResults(*(bdRemoteTask **)(iVar2 + 8));
-      *(uint *)(iVar1 + 0x3b60) = uVar6;
-      uVar6 = bdRemoteTask::getTotalNumResults(*(bdRemoteTask **)(iVar2 + 8));
-      *(uint *)(iVar1 + 0x3b64) = uVar6;
+  if (((param_1 != (overlappedTask *)0x0) && ((param_1->u).remoteTask.m_ptr != (bdRemoteTask *)0x0))
+     && (pbVar2 = dwGetStats((uint)param_1->controllerIndex), pbVar2 != (bdStats *)0x0)) {
+    dwLobbyPump((uint)param_1->controllerIndex);
+    bVar3 = (**(code **)(((param_1->u).remoteTask.m_ptr)->_padding_ + 4))();
+    bVar4 = bdRemoteTask::getErrorCode((param_1->u).remoteTask.m_ptr);
+    if (bVar3 == BD_DONE) {
+      pvVar1 = param_1->data;
+      uVar5 = bdRemoteTask::getNumResults((param_1->u).remoteTask.m_ptr);
+      *(uint *)((int)pvVar1 + 0x3b60) = uVar5;
+      uVar5 = bdRemoteTask::getTotalNumResults((param_1->u).remoteTask.m_ptr);
+      *(uint *)((int)pvVar1 + 0x3b64) = uVar5;
     }
-    if (bVar5 != BD_NO_ERROR) {
-      dwLobbyErrorCodeToString(bVar5,acStack_70,0x40);
+    if (bVar4 != BD_NO_ERROR) {
+      dwLobbyErrorCodeToString(bVar4,acStack_70,0x40);
       Com_PrintError(0x19,"DW read stats error %i - \'%s\'\n");
     }
-    tVar7 = dwTaskStatusConvert(bVar4,bVar5);
-    tVar7 = __restgprlr_28(tVar7);
-    return tVar7;
+    tVar6 = dwTaskStatusConvert(bVar3,bVar4);
+    return tVar6;
   }
   Com_Printf(0x10,"Failed to retrieve stats read status\n");
-  tVar7 = __restgprlr_28(2);
-  return tVar7;
+  return TASK_ERROR;
 }
 
 
@@ -320,198 +310,193 @@ void dwDeleteStats(overlappedTask *param_1,uint param_2)
 
 // 826EE080  dwDeleteStatsComplete  (DW/dwStats.cpp:263)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 taskCompleteResults dwDeleteStatsComplete(overlappedTask *param_1)
 
 {
-  overlappedTask *poVar1;
-  bdStats *pbVar2;
-  bdStatus bVar3;
-  bdLobbyErrorCode bVar4;
-  taskCompleteResults tVar5;
+  bdStats *pbVar1;
+  bdStatus bVar2;
+  bdLobbyErrorCode bVar3;
+  taskCompleteResults tVar4;
   char acStack_60 [96];
   
-  poVar1 = (overlappedTask *)__savegprlr_29(param_1);
-  if (((poVar1 != (overlappedTask *)0x0) && ((poVar1->u).remoteTask.m_ptr != (bdRemoteTask *)0x0))
-     && (pbVar2 = dwGetStats((uint)poVar1->controllerIndex), pbVar2 != (bdStats *)0x0)) {
-    dwLobbyPump((uint)poVar1->controllerIndex);
-    bVar3 = (**(code **)(((poVar1->u).remoteTask.m_ptr)->_padding_ + 4))();
-    bVar4 = bdRemoteTask::getErrorCode((poVar1->u).remoteTask.m_ptr);
-    if (bVar4 != BD_NO_ERROR) {
-      TaskManager_ClearTask(poVar1);
-      if (bVar4 == BD_TOO_MANY_TASKS) {
+  if (((param_1 != (overlappedTask *)0x0) && ((param_1->u).remoteTask.m_ptr != (bdRemoteTask *)0x0))
+     && (pbVar1 = dwGetStats((uint)param_1->controllerIndex), pbVar1 != (bdStats *)0x0)) {
+    dwLobbyPump((uint)param_1->controllerIndex);
+    bVar2 = (**(code **)(((param_1->u).remoteTask.m_ptr)->_padding_ + 4))();
+    bVar3 = bdRemoteTask::getErrorCode((param_1->u).remoteTask.m_ptr);
+    if (bVar3 != BD_NO_ERROR) {
+      TaskManager_ClearTask(param_1);
+      if (bVar3 == BD_TOO_MANY_TASKS) {
         Live_ThrowError(ERR_DROP,"XBOXLIVE_TOOMANYTASKS");
       }
-      dwLobbyErrorCodeToString(bVar4,acStack_60,0x40);
+      dwLobbyErrorCodeToString(bVar3,acStack_60,0x40);
       Com_PrintError(0x19,"DW delete stats error %i - \'%s\'\n");
       Live_ThrowError(ERR_DROP,"XBOXLIVE_LIVEERROR");
     }
-    tVar5 = dwTaskStatusConvert(bVar3,bVar4);
-    tVar5 = __restgprlr_29(tVar5);
-    return tVar5;
+    tVar4 = dwTaskStatusConvert(bVar2,bVar3);
+    return tVar4;
   }
   Com_Printf(0x10,"Failed to retreive stats delete status\n");
-  tVar5 = __restgprlr_29(2);
-  return tVar5;
+  return TASK_ERROR;
 }
 
 
 // 826EE178  dwFetchPerformanceValues  (DW/dwStats.cpp:303)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void dwFetchPerformanceValues(overlappedTask *param_1,ulong64 *param_2,int param_3,int param_4)
 
 {
   bdRemoteTask *pbVar1;
-  overlappedTask *poVar2;
-  bdMatchMaking *pbVar3;
-  bdReference<bdRemoteTask> bVar4;
+  bdMatchMaking *pbVar2;
+  bdReference<bdRemoteTask> bVar3;
   bdReference<bdRemoteTask> abStack_40 [16];
   
-  poVar2 = (overlappedTask *)__savegprlr_27(param_1);
-  if ((poVar2 != (overlappedTask *)0x0) &&
-     (pbVar3 = dwGetMatchmaking((uint)poVar2->controllerIndex), pbVar3 != (bdMatchMaking *)0x0)) {
-    pbVar3 = dwGetMatchmaking((uint)poVar2->controllerIndex);
+  if ((param_1 != (overlappedTask *)0x0) &&
+     (pbVar2 = dwGetMatchmaking((uint)param_1->controllerIndex), pbVar2 != (bdMatchMaking *)0x0)) {
+    pbVar2 = dwGetMatchmaking((uint)param_1->controllerIndex);
     if (0x12 < param_3) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DW\\dwStats.cpp",0x133,0,"%s"
                      );
     }
-    bVar4 = bdMatchMaking::getPerformanceValues
-                      ((bdMatchMaking *)abStack_40,(ulong64 *)pbVar3,(uint)param_2,param_3,
+    bVar3 = bdMatchMaking::getPerformanceValues
+                      ((bdMatchMaking *)abStack_40,(ulong64 *)pbVar2,(uint)param_2,param_3,
                        (bdPerformanceValue *)param_4);
-    pbVar1 = (bdRemoteTask *)(bVar4.m_ptr)->_padding_;
+    pbVar1 = (bdRemoteTask *)(bVar3.m_ptr)->_padding_;
     bdReference<bdRemoteTask>::~bdReference<bdRemoteTask>(abStack_40);
     if (pbVar1 != (bdRemoteTask *)0x0) {
-      bdReference<bdRemoteTask>::operator=(&(poVar2->u).remoteTask,pbVar1);
-      __restgprlr_27();
+      bdReference<bdRemoteTask>::operator=(&(param_1->u).remoteTask,pbVar1);
       return;
     }
-    TaskManager_ClearTask(poVar2);
+    TaskManager_ClearTask(param_1);
     dwConnectionErrorHandler(0xb);
   }
-  __restgprlr_27();
   return;
 }
 
 
 // 826EE248  dwFetchPerformanceValuesComplete  (DW/dwStats.cpp:324)
 
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
+
 taskCompleteResults
 dwFetchPerformanceValuesComplete(overlappedTask *param_1,PlayerRank *param_2,int *param_3)
 
 {
   int iVar1;
-  overlappedTask *poVar2;
-  bdMatchMaking *pbVar3;
-  bdStatus bVar4;
-  bdLobbyErrorCode bVar5;
-  uint uVar6;
-  taskCompleteResults tVar7;
+  bdMatchMaking *pbVar2;
+  bdStatus bVar3;
+  bdLobbyErrorCode bVar4;
+  uint uVar5;
+  taskCompleteResults tVar6;
+  int iVar7;
   int iVar8;
-  longlong lVar9;
-  int iVar10;
   char acStack_a0 [160];
   
-  lVar9 = (longlong)(int)param_2;
-  poVar2 = (overlappedTask *)__savegprlr_22(param_1);
-  if (((poVar2 != (overlappedTask *)0x0) && ((poVar2->u).remoteTask.m_ptr != (bdRemoteTask *)0x0))
-     && (pbVar3 = dwGetMatchmaking((uint)poVar2->controllerIndex), pbVar3 != (bdMatchMaking *)0x0))
+  if (((param_1 != (overlappedTask *)0x0) && ((param_1->u).remoteTask.m_ptr != (bdRemoteTask *)0x0))
+     && (pbVar2 = dwGetMatchmaking((uint)param_1->controllerIndex), pbVar2 != (bdMatchMaking *)0x0))
   {
-    dwLobbyPump((uint)poVar2->controllerIndex);
-    bVar4 = (**(code **)(((poVar2->u).remoteTask.m_ptr)->_padding_ + 4))();
-    bVar5 = bdRemoteTask::getErrorCode((poVar2->u).remoteTask.m_ptr);
-    if (bVar4 == BD_DONE) {
+    dwLobbyPump((uint)param_1->controllerIndex);
+    bVar3 = (**(code **)(((param_1->u).remoteTask.m_ptr)->_padding_ + 4))();
+    bVar4 = bdRemoteTask::getErrorCode((param_1->u).remoteTask.m_ptr);
+    if (bVar3 == BD_DONE) {
       iVar1 = *param_3;
-      uVar6 = bdRemoteTask::getNumResults((poVar2->u).remoteTask.m_ptr);
-      if (iVar1 < (int)uVar6) {
+      uVar5 = bdRemoteTask::getNumResults((param_1->u).remoteTask.m_ptr);
+      if (iVar1 < (int)uVar5) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DW\\dwStats.cpp",0x153,0,
                         "%s");
       }
       memset();
-      iVar8 = 0;
+      iVar7 = 0;
       *param_3 = 0;
-      if (0 < (int)uVar6) {
-        iVar10 = -0x7bb09870;
+      if (0 < (int)uVar5) {
+        iVar8 = -0x7bb09870;
         do {
-          if (iVar8 < iVar1) {
-            ((undefined8 *)lVar9)[1] = *(undefined8 *)(iVar10 + 0x20);
-            *(undefined8 *)lVar9 = *(undefined8 *)(iVar10 + 0x18);
+          if (iVar7 < iVar1) {
+            param_2->rank = *(ulong64 *)(iVar8 + 0x20);
+            param_2->xuid = *(ulong64 *)(iVar8 + 0x18);
             *param_3 = *param_3 + 1;
           }
-          iVar10 = iVar10 + 0x18;
+          iVar8 = iVar8 + 0x18;
           Com_Printf(0x10,"Fetched performance value %llx for %llx \n");
-          iVar8 = iVar8 + 1;
-          lVar9 = lVar9 + 0x10;
-        } while (iVar8 < (int)uVar6);
+          iVar7 = iVar7 + 1;
+          param_2 = param_2 + 1;
+        } while (iVar7 < (int)uVar5);
       }
     }
-    if (bVar5 != BD_NO_ERROR) {
-      TaskManager_ClearTask(poVar2);
-      if (bVar5 == BD_TOO_MANY_TASKS) {
+    if (bVar4 != BD_NO_ERROR) {
+      TaskManager_ClearTask(param_1);
+      if (bVar4 == BD_TOO_MANY_TASKS) {
         Live_ThrowError(ERR_DROP,"XBOXLIVE_TOOMANYTASKS");
       }
-      dwLobbyErrorCodeToString(bVar5,acStack_a0,0x40);
-      Live_ShutdownDueToTerminalError((uint)poVar2->controllerIndex);
+      dwLobbyErrorCodeToString(bVar4,acStack_a0,0x40);
+      Live_ShutdownDueToTerminalError((uint)param_1->controllerIndex);
       Com_PrintError(0x19,"DW fetch performance values error %i - \'%s\'\n");
       Live_ThrowError(ERR_DROP,"XBOXLIVE_LIVEERROR");
     }
-    tVar7 = dwTaskStatusConvert(bVar4,bVar5);
-    tVar7 = __restgprlr_22(tVar7);
-    return tVar7;
+    tVar6 = dwTaskStatusConvert(bVar3,bVar4);
+    return tVar6;
   }
   Com_Printf(0x10,"Failed to retrieve performance values fetch status\n");
-  tVar7 = __restgprlr_22(2);
-  return tVar7;
+  return TASK_ERROR;
 }
 
 
 // 826EE410  dwWritePerformanceStats  (DW/dwStats.cpp:388)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
+
 void dwWritePerformanceStats(overlappedTask *param_1,PlayerRank *param_2,int param_3,int param_4)
 
 {
   bdRemoteTask *pbVar1;
-  overlappedTask *poVar2;
+  PlayerRank *pPVar2;
   bdMatchMaking *pbVar3;
   bdReference<bdRemoteTask> bVar4;
-  int iVar5;
-  undefined8 uVar6;
-  bdReference<bdRemoteTask> *pbVar7;
-  longlong lVar8;
-  bdPerformanceValue *pbVar9;
+  ulong64 uVar5;
+  bdReference<bdRemoteTask> *pbVar6;
+  PlayerRank *pPVar7;
+  bdPerformanceValue *pbVar8;
+  longlong lVar9;
   longlong lVar10;
-  longlong lVar11;
   bdReference<bdRemoteTask> abStack_560 [4];
   bdPerformanceValue abStack_550 [54];
   bdPerformanceValue abStack_40 [2];
   
-  lVar11 = (longlong)param_3;
-  lVar8 = (longlong)(int)param_2;
-  poVar2 = (overlappedTask *)__savegprlr_25(param_1);
-  if (((poVar2 != (overlappedTask *)0x0) && (iVar5 = (int)lVar11, 0 < iVar5)) &&
-     (pbVar3 = dwGetMatchmaking((uint)poVar2->controllerIndex), pbVar3 != (bdMatchMaking *)0x0)) {
-    pbVar3 = dwGetMatchmaking((uint)poVar2->controllerIndex);
-    pbVar9 = abStack_550;
-    lVar10 = 0x35;
+  lVar10 = (longlong)param_3;
+  if (((param_1 != (overlappedTask *)0x0) && (0 < param_3)) &&
+     (pbVar3 = dwGetMatchmaking((uint)param_1->controllerIndex), pbVar3 != (bdMatchMaking *)0x0)) {
+    pbVar3 = dwGetMatchmaking((uint)param_1->controllerIndex);
+    pbVar8 = abStack_550;
+    lVar9 = 0x35;
     do {
-      bdPerformanceValue::bdPerformanceValue(pbVar9);
-      lVar10 = lVar10 + -1;
-      pbVar9 = pbVar9 + 1;
-    } while (-1 < lVar10);
-    if (0x36 < iVar5) {
+      bdPerformanceValue::bdPerformanceValue(pbVar8);
+      lVar9 = lVar9 + -1;
+      pbVar8 = pbVar8 + 1;
+    } while (-1 < lVar9);
+    if (0x36 < param_3) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DW\\dwStats.cpp",0x18a,0,"%s"
                      );
     }
-    if (0 < iVar5) {
-      pbVar7 = abStack_560;
-      lVar8 = lVar8 + -0x10;
+    if (0 < param_3) {
+      pbVar6 = abStack_560;
+      pPVar7 = param_2 + -1;
       do {
-        iVar5 = (int)lVar8;
-        lVar8 = lVar8 + 0x10;
-        uVar6 = *(undefined8 *)lVar8;
-        *(undefined8 *)(pbVar7 + 8) = *(undefined8 *)(iVar5 + 0x18);
-        pbVar7 = pbVar7 + 6;
-        *(undefined8 *)pbVar7 = uVar6;
-        lVar11 = lVar11 + -1;
-      } while (lVar11 != 0);
+        pPVar2 = pPVar7 + 1;
+        pPVar7 = pPVar7 + 1;
+        uVar5 = pPVar7->xuid;
+        *(ulong64 *)(pbVar6 + 8) = pPVar2->rank;
+        pbVar6 = pbVar6 + 6;
+        *(ulong64 *)pbVar6 = uVar5;
+        lVar10 = lVar10 + -1;
+      } while (lVar10 != 0);
     }
     bVar4 = bdMatchMaking::submitPerformance
                       ((bdMatchMaking *)abStack_560,(uint)pbVar3,(bdPerformanceValue *)param_4,
@@ -519,60 +504,58 @@ void dwWritePerformanceStats(overlappedTask *param_1,PlayerRank *param_2,int par
     pbVar1 = (bdRemoteTask *)(bVar4.m_ptr)->_padding_;
     bdReference<bdRemoteTask>::~bdReference<bdRemoteTask>(abStack_560);
     if (pbVar1 == (bdRemoteTask *)0x0) {
-      TaskManager_ClearTask(poVar2);
+      TaskManager_ClearTask(param_1);
       dwConnectionErrorHandler(0xc);
     }
     else {
-      bdReference<bdRemoteTask>::operator=(&(poVar2->u).remoteTask,pbVar1);
+      bdReference<bdRemoteTask>::operator=(&(param_1->u).remoteTask,pbVar1);
     }
-    pbVar9 = abStack_40;
-    lVar8 = 0x35;
+    pbVar8 = abStack_40;
+    lVar10 = 0x35;
     do {
-      pbVar9 = pbVar9 + -1;
-      bdPerformanceValue::~bdPerformanceValue(pbVar9);
-      lVar8 = lVar8 + -1;
-    } while (-1 < lVar8);
+      pbVar8 = pbVar8 + -1;
+      bdPerformanceValue::~bdPerformanceValue(pbVar8);
+      lVar10 = lVar10 + -1;
+    } while (-1 < lVar10);
   }
-  __restgprlr_25();
   return;
 }
 
 
 // 826EE540  dwWritePerformanceStatsComplete  (DW/dwStats.cpp:417)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 taskCompleteResults dwWritePerformanceStatsComplete(overlappedTask *param_1)
 
 {
-  overlappedTask *poVar1;
-  bdMatchMaking *pbVar2;
-  bdStatus bVar3;
-  bdLobbyErrorCode bVar4;
-  taskCompleteResults tVar5;
+  bdMatchMaking *pbVar1;
+  bdStatus bVar2;
+  bdLobbyErrorCode bVar3;
+  taskCompleteResults tVar4;
   char acStack_60 [96];
   
-  poVar1 = (overlappedTask *)__savegprlr_29(param_1);
-  if (((poVar1 != (overlappedTask *)0x0) && ((poVar1->u).remoteTask.m_ptr != (bdRemoteTask *)0x0))
-     && (pbVar2 = dwGetMatchmaking((uint)poVar1->controllerIndex), pbVar2 != (bdMatchMaking *)0x0))
+  if (((param_1 != (overlappedTask *)0x0) && ((param_1->u).remoteTask.m_ptr != (bdRemoteTask *)0x0))
+     && (pbVar1 = dwGetMatchmaking((uint)param_1->controllerIndex), pbVar1 != (bdMatchMaking *)0x0))
   {
-    bVar3 = (**(code **)(((poVar1->u).remoteTask.m_ptr)->_padding_ + 4))();
-    bVar4 = bdRemoteTask::getErrorCode((poVar1->u).remoteTask.m_ptr);
-    if (bVar4 != BD_NO_ERROR) {
-      TaskManager_ClearTask(poVar1);
-      if (bVar4 == BD_TOO_MANY_TASKS) {
+    bVar2 = (**(code **)(((param_1->u).remoteTask.m_ptr)->_padding_ + 4))();
+    bVar3 = bdRemoteTask::getErrorCode((param_1->u).remoteTask.m_ptr);
+    if (bVar3 != BD_NO_ERROR) {
+      TaskManager_ClearTask(param_1);
+      if (bVar3 == BD_TOO_MANY_TASKS) {
         Live_ThrowError(ERR_DROP,"XBOXLIVE_TOOMANYTASKS");
       }
-      dwLobbyErrorCodeToString(bVar4,acStack_60,0x40);
-      Live_ShutdownDueToTerminalError((uint)poVar1->controllerIndex);
+      dwLobbyErrorCodeToString(bVar3,acStack_60,0x40);
+      Live_ShutdownDueToTerminalError((uint)param_1->controllerIndex);
       Com_PrintError(0x19,"DW write performance values error %i - \'%s\'\n");
       Live_ThrowError(ERR_DROP,"XBOXLIVE_LIVEERROR");
     }
-    tVar5 = dwTaskStatusConvert(bVar3,bVar4);
-    tVar5 = __restgprlr_29(tVar5);
-    return tVar5;
+    tVar4 = dwTaskStatusConvert(bVar2,bVar3);
+    return tVar4;
   }
   Com_Printf(0x10,"Failed to retreive performance value write status\n");
-  tVar5 = __restgprlr_29(2);
-  return tVar5;
+  return TASK_ERROR;
 }
 
 
@@ -655,95 +638,91 @@ uint __thiscall NamedStatsResult::sizeOf(NamedStatsResult *this)
 
 // 826EE6E0  dwReadExternalTitleStats  (DW/dwStats.cpp:486)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 void dwReadExternalTitleStats
                (overlappedTask *param_1,uint param_2,uint param_3,bdStatsInfo *param_4)
 
 {
   bdRemoteTask *pbVar1;
-  overlappedTask *poVar2;
-  bdStats *pbVar3;
-  bdReference<bdRemoteTask> bVar4;
-  ulonglong uVar5;
+  bdStats *pbVar2;
+  bdReference<bdRemoteTask> bVar3;
   bdReference<bdRemoteTask> abStack_40 [16];
   
-  uVar5 = (ulonglong)(int)param_4;
-  poVar2 = (overlappedTask *)__savegprlr_26(param_1);
-  if ((uVar5 & 0xffffffff) == 0) {
+  if (param_4 == (bdStatsInfo *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DW\\dwStats.cpp",0x1e7,0,"%s");
   }
-  if (poVar2 == (overlappedTask *)0x0) {
+  if (param_1 == (overlappedTask *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DW\\dwStats.cpp",0x1e8,0,"%s");
   }
-  if ((uVar5 & 0xffffffff) == 0) {
+  if (param_4 == (bdStatsInfo *)0x0) {
     Com_Printf(0x10,"dwReadExternalTitleStats: NULL statsInfo pointer\n");
-    __restgprlr_26();
     return;
   }
-  if (poVar2 == (overlappedTask *)0x0) {
+  if (param_1 == (overlappedTask *)0x0) {
     Com_Printf(0x10,"dwReadExternalTitleStats: NULL task\n");
-    __restgprlr_26();
     return;
   }
-  pbVar3 = dwGetStats((uint)poVar2->controllerIndex);
-  if (pbVar3 == (bdStats *)0x0) {
+  pbVar2 = dwGetStats((uint)param_1->controllerIndex);
+  if (pbVar2 == (bdStats *)0x0) {
     Com_Printf(0x10,"dwReadExternalTitleStats: Unable to get pointer to dwStats\n");
-    __restgprlr_26();
     return;
   }
-  bVar4 = bdStats::readExternalTitleStats
-                    ((bdStats *)abStack_40,(uint)pbVar3,param_2,(bdStatsInfo *)param_3);
-  pbVar1 = (bdRemoteTask *)(bVar4.m_ptr)->_padding_;
+  bVar3 = bdStats::readExternalTitleStats
+                    ((bdStats *)abStack_40,(uint)pbVar2,param_2,(bdStatsInfo *)param_3);
+  pbVar1 = (bdRemoteTask *)(bVar3.m_ptr)->_padding_;
   bdReference<bdRemoteTask>::~bdReference<bdRemoteTask>(abStack_40);
   if (pbVar1 != (bdRemoteTask *)0x0) {
-    bdReference<bdRemoteTask>::operator=(&(poVar2->u).remoteTask,pbVar1);
-    __restgprlr_26();
+    bdReference<bdRemoteTask>::operator=(&(param_1->u).remoteTask,pbVar1);
     return;
   }
-  TaskManager_ClearTask(poVar2);
+  TaskManager_ClearTask(param_1);
   dwConnectionErrorHandler(0x14);
-  __restgprlr_26();
   return;
 }
 
 
 // 826EE818  dwReadExternalTitleStatsComplete  (DW/dwStats.cpp:524)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 taskCompleteResults dwReadExternalTitleStatsComplete(overlappedTask *param_1)
 
 {
   bdRemoteTask *pbVar1;
-  overlappedTask *poVar2;
-  bdStatus bVar3;
-  bdLobbyErrorCode bVar4;
-  taskCompleteResults tVar5;
+  bdStatus bVar2;
+  bdLobbyErrorCode bVar3;
+  taskCompleteResults tVar4;
   char acStack_60 [96];
   
-  poVar2 = (overlappedTask *)__savegprlr_29(param_1);
-  if (poVar2 != (overlappedTask *)0x0) {
-    pbVar1 = (poVar2->u).remoteTask.m_ptr;
+  if (param_1 != (overlappedTask *)0x0) {
+    pbVar1 = (param_1->u).remoteTask.m_ptr;
     if (pbVar1 != (bdRemoteTask *)0x0) {
-      bVar3 = (**(code **)(pbVar1->_padding_ + 4))();
-      bVar4 = bdRemoteTask::getErrorCode((poVar2->u).remoteTask.m_ptr);
-      if (bVar4 != BD_NO_ERROR) {
-        TaskManager_ClearTask(poVar2);
-        if (bVar4 == BD_TOO_MANY_TASKS) {
+      bVar2 = (**(code **)(pbVar1->_padding_ + 4))();
+      bVar3 = bdRemoteTask::getErrorCode((param_1->u).remoteTask.m_ptr);
+      if (bVar3 != BD_NO_ERROR) {
+        TaskManager_ClearTask(param_1);
+        if (bVar3 == BD_TOO_MANY_TASKS) {
           Live_ThrowError(ERR_DROP,"XBOXLIVE_TOOMANYTASKS");
         }
-        dwLobbyErrorCodeToString(bVar4,acStack_60,0x40);
+        dwLobbyErrorCodeToString(bVar3,acStack_60,0x40);
         Com_Printf(0x10,"dwReadExternalTitleStatsComplete %i - \'%s\'\n");
       }
-      tVar5 = dwTaskStatusConvert(bVar3,bVar4);
-      tVar5 = __restgprlr_29(tVar5);
-      return tVar5;
+      tVar4 = dwTaskStatusConvert(bVar2,bVar3);
+      return tVar4;
     }
   }
   Com_Printf(0x10,"dwReadExternalTitleStatsComplete: NULL task or remoteTask\n");
-  tVar5 = __restgprlr_29(2);
-  return tVar5;
+  return TASK_ERROR;
 }
 
 
 // 826EE8E8  dwReadExternalTitleNamedStats  (DW/dwStats.cpp:562)
+
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 
 void dwReadExternalTitleNamedStats
                (overlappedTask *param_1,uint param_2,char *param_3,char **param_4,uint param_5,
@@ -751,87 +730,77 @@ void dwReadExternalTitleNamedStats
 
 {
   bdRemoteTask *pbVar1;
-  overlappedTask *poVar2;
-  bdStats *pbVar3;
-  bdReference<bdRemoteTask> bVar4;
-  ulonglong uVar5;
+  bdStats *pbVar2;
+  bdReference<bdRemoteTask> bVar3;
   bdReference<bdRemoteTask> abStack_50 [20];
   
-  uVar5 = (ulonglong)(int)param_6;
-  poVar2 = (overlappedTask *)__savegprlr_24(param_1);
-  if ((uVar5 & 0xffffffff) == 0) {
+  if (param_6 == (bdTaskResult *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DW\\dwStats.cpp",0x233,0,"%s");
   }
-  if (poVar2 == (overlappedTask *)0x0) {
+  if (param_1 == (overlappedTask *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DW\\dwStats.cpp",0x234,0,"%s");
   }
-  if ((uVar5 & 0xffffffff) == 0) {
+  if (param_6 == (bdTaskResult *)0x0) {
     Com_Printf(0x10,"dwReadExternalTitleNamedStats: NULL stats pointer\n");
-    __restgprlr_24();
     return;
   }
-  if (poVar2 == (overlappedTask *)0x0) {
+  if (param_1 == (overlappedTask *)0x0) {
     Com_Printf(0x10,"dwReadExternalTitleNamedStats: NULL task\n");
-    __restgprlr_24();
     return;
   }
-  pbVar3 = dwGetStats((uint)poVar2->controllerIndex);
-  if (pbVar3 == (bdStats *)0x0) {
+  pbVar2 = dwGetStats((uint)param_1->controllerIndex);
+  if (pbVar2 == (bdStats *)0x0) {
     Com_Printf(0x10,"dwReadExternalTitleNamedStats: Unable to get pointer to dwStats\n");
-    __restgprlr_24();
     return;
   }
-  bVar4 = bdStats::readExternalTitleNamedStats
-                    ((bdStats *)abStack_50,(uint)pbVar3,(char *)param_2,(char **)param_3,
+  bVar3 = bdStats::readExternalTitleNamedStats
+                    ((bdStats *)abStack_50,(uint)pbVar2,(char *)param_2,(char **)param_3,
                      (uint)param_4,(bdTaskResult *)param_5);
-  pbVar1 = (bdRemoteTask *)(bVar4.m_ptr)->_padding_;
+  pbVar1 = (bdRemoteTask *)(bVar3.m_ptr)->_padding_;
   bdReference<bdRemoteTask>::~bdReference<bdRemoteTask>(abStack_50);
   if (pbVar1 != (bdRemoteTask *)0x0) {
-    bdReference<bdRemoteTask>::operator=(&(poVar2->u).remoteTask,pbVar1);
-    __restgprlr_24();
+    bdReference<bdRemoteTask>::operator=(&(param_1->u).remoteTask,pbVar1);
     return;
   }
-  TaskManager_ClearTask(poVar2);
+  TaskManager_ClearTask(param_1);
   dwConnectionErrorHandler(0x15);
-  __restgprlr_24();
   return;
 }
 
 
 // 826EEA30  dwReadExternalTitleNamedStatsComplete  (DW/dwStats.cpp:600)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 taskCompleteResults dwReadExternalTitleNamedStatsComplete(overlappedTask *param_1)
 
 {
   bdRemoteTask *pbVar1;
-  overlappedTask *poVar2;
-  bdStatus bVar3;
-  bdLobbyErrorCode bVar4;
-  taskCompleteResults tVar5;
+  bdStatus bVar2;
+  bdLobbyErrorCode bVar3;
+  taskCompleteResults tVar4;
   char acStack_60 [96];
   
-  poVar2 = (overlappedTask *)__savegprlr_29(param_1);
-  if (poVar2 != (overlappedTask *)0x0) {
-    pbVar1 = (poVar2->u).remoteTask.m_ptr;
+  if (param_1 != (overlappedTask *)0x0) {
+    pbVar1 = (param_1->u).remoteTask.m_ptr;
     if (pbVar1 != (bdRemoteTask *)0x0) {
-      bVar3 = (**(code **)(pbVar1->_padding_ + 4))();
-      bVar4 = bdRemoteTask::getErrorCode((poVar2->u).remoteTask.m_ptr);
-      if (bVar4 != BD_NO_ERROR) {
-        TaskManager_ClearTask(poVar2);
-        if (bVar4 == BD_TOO_MANY_TASKS) {
+      bVar2 = (**(code **)(pbVar1->_padding_ + 4))();
+      bVar3 = bdRemoteTask::getErrorCode((param_1->u).remoteTask.m_ptr);
+      if (bVar3 != BD_NO_ERROR) {
+        TaskManager_ClearTask(param_1);
+        if (bVar3 == BD_TOO_MANY_TASKS) {
           Live_ThrowError(ERR_DROP,"XBOXLIVE_TOOMANYTASKS");
         }
-        dwLobbyErrorCodeToString(bVar4,acStack_60,0x40);
+        dwLobbyErrorCodeToString(bVar3,acStack_60,0x40);
         Com_Printf(0x10,"dwReadExternalTitleNamedStatsComplete %i - \'%s\'\n");
       }
-      tVar5 = dwTaskStatusConvert(bVar3,bVar4);
-      tVar5 = __restgprlr_29(tVar5);
-      return tVar5;
+      tVar4 = dwTaskStatusConvert(bVar2,bVar3);
+      return tVar4;
     }
   }
   Com_Printf(0x10,"dwReadExternalTitleNamedStatsComplete: NULL task or remoteTask\n");
-  tVar5 = __restgprlr_29(2);
-  return tVar5;
+  return TASK_ERROR;
 }
 
 

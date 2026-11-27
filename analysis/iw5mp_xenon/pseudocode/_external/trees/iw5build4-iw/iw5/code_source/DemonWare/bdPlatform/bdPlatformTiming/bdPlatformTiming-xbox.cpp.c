@@ -14,18 +14,19 @@ ulong64 bdPlatformTiming::getHiResTimeStamp(void)
 
 // 828F4CC0  getElapsedTime  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdplatform/bdplatformtiming/bdplatformtiming-xbox.cpp:21)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 float bdPlatformTiming::getElapsedTime(ulong64 param_1,ulong64 param_2)
 
 {
-  double dVar1;
+  double in_f1;
   
-  dVar1 = (double)__savegprlr_28();
-  if (gotFreq == false) {
+  if (!gotFreq) {
     QueryPerformanceFrequency(&frequency);
     gotFreq = true;
   }
   __u64tod();
-  dVar1 = (double)__restgprlr_28((double)((float)dVar1 / (float)frequency.QuadPart));
-  return (float)dVar1;
+  return (float)in_f1 / (float)frequency.QuadPart;
 }
 

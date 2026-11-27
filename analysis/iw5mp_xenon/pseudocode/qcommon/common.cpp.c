@@ -115,6 +115,8 @@ bool Com_IsRunningMenuLevel(void)
 
 // 824F63A0  Com_OpenLogFile  (qcommon/common.cpp:737)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void Com_OpenLogFile(void)
@@ -124,7 +126,6 @@ void Com_OpenLogFile(void)
   tm *ptVar1;
   long64 alStack_30 [6];
   
-  __savegprlr_29();
   bVar2 = Sys_IsMainThread();
   if ((bVar2) && (opening_qconsole == 0)) {
     opening_qconsole = 1;
@@ -147,12 +148,14 @@ void Com_OpenLogFile(void)
     }
     opening_qconsole = 0;
   }
-  __restgprlr_29();
   return;
 }
 
 
 // 824F6498  Com_LogPrintMessage  (qcommon/common.cpp:794)
+
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 
 void Com_LogPrintMessage(int param_1,char *param_2)
 
@@ -163,7 +166,7 @@ void Com_LogPrintMessage(int param_1,char *param_2)
   longlong lVar3;
   char local_30 [48];
   
-  lVar2 = __savegprlr_29(param_1,param_2);
+  lVar3 = (longlong)param_1;
   Sys_EnterCriticalSection(CRITSECT_CONSOLE);
   if ((logfile != (void *)0x0) || (Com_OpenLogFile(), logfile != (void *)0x0)) {
     if (logNextTimeStamp != false) {
@@ -176,90 +179,83 @@ void Com_LogPrintMessage(int param_1,char *param_2)
       } while (cVar1 != '\0');
       FS_WriteLog(local_30,(int)(pcVar4 + (-1 - (int)local_30)),logfile);
     }
-    lVar3 = lVar2;
+    lVar2 = lVar3;
     strchr();
-    logNextTimeStamp = (bool)('\x01' - (lVar3 == 0));
-    lVar3 = lVar2;
+    logNextTimeStamp = (bool)('\x01' - (lVar2 == 0));
     do {
       pcVar4 = (char *)lVar3;
       lVar3 = lVar3 + 1;
     } while (*pcVar4 != '\0');
-    FS_WriteLog((void *)lVar2,((int)lVar3 - (int)(void *)lVar2) + -1,logfile);
+    FS_WriteLog((void *)param_1,((int)lVar3 - param_1) + -1,logfile);
     if (1 < (com_logfile->current).integer) {
       FS_Flush(logfile);
     }
   }
   Sys_LeaveCriticalSection(CRITSECT_CONSOLE);
-  __restgprlr_29();
   return;
 }
 
 
 // 824F65A0  Com_PrintMessage  (qcommon/common.cpp:857)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "print_msg_dest_t": Some values do not have unique names */
 
 void Com_PrintMessage(int param_1,char *param_2,int param_3)
 
 {
-  char *pcVar1;
-  int iVar2;
-  bool bVar3;
-  char *pcVar4;
-  ulonglong uVar5;
+  int iVar1;
+  bool bVar2;
+  char *pcVar3;
   
-  uVar5 = (ulonglong)param_3;
-  pcVar1 = (char *)__savegprlr_26(param_1);
-  pcVar4 = param_2;
-  if (pcVar1 != (char *)0x6) {
-    iVar2 = Sys_IsRemoteDebugServer();
-    if (iVar2 != 0) {
-      if (((pcVar1 == (char *)0x2) || (pcVar1 == (char *)0x3)) ||
-         (bVar3 = false, pcVar1 == &DAT_00000004)) {
-        bVar3 = true;
+  pcVar3 = param_2;
+  if (param_1 != 6) {
+    iVar1 = Sys_IsRemoteDebugServer();
+    if (iVar1 != 0) {
+      if (((param_1 == 2) || (param_1 == 3)) || (bVar2 = false, param_1 == 4)) {
+        bVar2 = true;
       }
-      if (bVar3) {
+      if (bVar2) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\common.cpp",0x377,
                         0,"%s");
       }
-      iVar2 = Sys_DebugSocketReady(0);
-      if (iVar2 != 0) {
+      iVar1 = Sys_DebugSocketReady(0);
+      if (iVar1 != 0) {
         Sys_WriteDebugSocketMessageType('+');
         Sys_WriteDebugSocketString(param_2);
         Sys_EndWriteDebugSocket();
       }
     }
-    if (((pcVar1 == (char *)0x2) || (pcVar1 == (char *)0x3)) ||
-       (bVar3 = false, pcVar1 == &DAT_00000004)) {
-      bVar3 = true;
+    if (((param_1 == 2) || (param_1 == 3)) || (bVar2 = false, param_1 == 4)) {
+      bVar2 = true;
     }
-    if (bVar3) {
+    if (bVar2) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\common.cpp",0x38b,0,
                       "%s");
     }
-    iVar2 = (int)((uVar5 & 0xffffffff) << 5);
-    CL_ConsolePrint(LOCAL_CLIENT_0,(int)pcVar1,param_2,0,0,iVar2);
-    pcVar4 = pcVar1;
-    bVar3 = Con_IsChannelVisible(CON_DEST_CONSOLE,(int)pcVar1,iVar2);
-    if (bVar3) {
-      pcVar4 = param_2;
-      NET_RemoteDbgHostWriteToLog((int)pcVar1,param_2);
+    CL_ConsolePrint(LOCAL_CLIENT_0,param_1,param_2,0,0,param_3 << 5);
+    pcVar3 = (char *)param_1;
+    bVar2 = Con_IsChannelVisible(CON_DEST_CONSOLE,param_1,param_3 << 5);
+    if (bVar2) {
+      pcVar3 = param_2;
+      NET_RemoteDbgHostWriteToLog(param_1,param_2);
     }
   }
   if ((*param_2 == '^') && (param_2[1] != '\0')) {
     param_2 = param_2 + 2;
   }
-  if ((pcVar1 != (char *)0x6) &&
+  if ((param_1 != 6) &&
      (((com_filter_output == (dvar_t *)0x0 || ((com_filter_output->current).enabled == false)) ||
-      (pcVar4 = pcVar1, bVar3 = Con_IsChannelVisible(CON_DEST_CONSOLE,(int)pcVar1,3), bVar3)))) {
+      (pcVar3 = (char *)param_1, bVar2 = Con_IsChannelVisible(CON_DEST_CONSOLE,param_1,3), bVar2))))
+  {
     Sys_Print(param_2);
   }
-  if (((pcVar1 != (char *)0x7) && (com_logfile != (dvar_t *)0x0)) &&
+  if (((param_1 != 7) && (com_logfile != (dvar_t *)0x0)) &&
      (((com_logfile->current).integer != 0 && (g_dontLogToFile == false)))) {
-    Com_LogPrintMessage((int)param_2,pcVar4);
+    Com_LogPrintMessage((int)param_2,pcVar3);
   }
-  __restgprlr_26();
   return;
 }
 
@@ -283,63 +279,61 @@ void Com_Printf(int param_1,char *param_2)
 
 // 824F6800  Com_PrintHexDump  (qcommon/common.cpp:965)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
+
 void Com_PrintHexDump(int param_1,void *param_2,uint param_3)
 
 {
   char cVar1;
-  int iVar2;
-  int iVar3;
-  ulonglong uVar4;
-  ulonglong uVar5;
-  char *pcVar6;
+  byte *pbVar2;
+  uint uVar3;
+  char *pcVar4;
   char acStack_470 [32];
   char local_450;
   char local_44f;
   char local_44e [1102];
   
-  uVar4 = (ulonglong)(int)param_3;
-  iVar3 = __savegprlr_23(param_1);
   memcpy();
-  pcVar6 = local_44e;
-  uVar5 = 1;
+  pcVar4 = local_44e;
+  uVar3 = 1;
   local_450 = acStack_470[*(byte *)param_2 >> 4];
   local_44f = acStack_470[*(byte *)param_2 & 0xf];
-  if ((uVar4 & 0xffffffff) != 1) {
+  if (param_3 != 1) {
     do {
-      if ((uVar5 & 0x1f) == 0) {
-        *pcVar6 = '\n';
-        pcVar6[1] = '\0';
-        Com_Printf(iVar3,&local_450);
-        pcVar6 = &local_450;
-        if ((uVar5 & 0xff) == 0) {
-          Com_Printf(iVar3,"\n");
+      if ((uVar3 & 0x1f) == 0) {
+        *pcVar4 = '\n';
+        pcVar4[1] = '\0';
+        Com_Printf(param_1,&local_450);
+        pcVar4 = &local_450;
+        if ((uVar3 & 0xff) == 0) {
+          Com_Printf(param_1,"\n");
         }
-        if ((uVar5 & 0x3ff) == 0) {
-          Com_Printf(iVar3,"\n");
+        if ((uVar3 & 0x3ff) == 0) {
+          Com_Printf(param_1,"\n");
         }
       }
       else {
-        if ((uVar5 & 0xf) == 0) {
-          *pcVar6 = ' ';
-          pcVar6 = pcVar6 + 1;
+        if ((uVar3 & 0xf) == 0) {
+          *pcVar4 = ' ';
+          pcVar4 = pcVar4 + 1;
         }
-        if ((uVar5 & 3) == 0) {
-          *pcVar6 = ' ';
-          pcVar6 = pcVar6 + 1;
+        if ((uVar3 & 3) == 0) {
+          *pcVar4 = ' ';
+          pcVar4 = pcVar4 + 1;
         }
       }
-      iVar2 = (int)uVar5;
-      uVar5 = uVar5 + 1;
-      cVar1 = acStack_470[*(byte *)((int)param_2 + iVar2) & 0xf];
-      *pcVar6 = acStack_470[*(byte *)((int)param_2 + iVar2) >> 4];
-      pcVar6[1] = cVar1;
-      pcVar6 = pcVar6 + 2;
-    } while ((uVar5 & 0xffffffff) != (uVar4 & 0xffffffff));
+      pbVar2 = (byte *)(uVar3 + (int)param_2);
+      uVar3 = uVar3 + 1;
+      cVar1 = acStack_470[*pbVar2 & 0xf];
+      *pcVar4 = acStack_470[*pbVar2 >> 4];
+      pcVar4[1] = cVar1;
+      pcVar4 = pcVar4 + 2;
+    } while (uVar3 != param_3);
   }
-  *pcVar6 = '\n';
-  pcVar6[1] = '\0';
-  Com_Printf(iVar3,&local_450);
-  __restgprlr_23();
+  *pcVar4 = '\n';
+  pcVar4[1] = '\0';
+  Com_Printf(param_1,&local_450);
   return;
 }
 
@@ -486,36 +480,36 @@ void Com_PrintWarning(int param_1,char *param_2)
 
 // 824FA168  Com_ShutdownInternal  (qcommon/common.cpp:1163)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void Com_ShutdownInternal(char *param_1)
 
 {
-  char *pcVar1;
-  int iVar2;
-  ulonglong uVar3;
-  LocalClientNum_t LVar4;
+  int iVar1;
+  ulonglong uVar2;
+  LocalClientNum_t LVar3;
   char in_RESERVE;
   byte in_cr0;
   
-  pcVar1 = (char *)__savegprlr_29(param_1);
-  LVar4 = LOCAL_CLIENT_0;
+  LVar3 = LOCAL_CLIENT_0;
   do {
-    CL_Disconnect(LVar4);
-    LVar4 = LVar4 + LOCAL_CLIENT_1;
-  } while ((int)LVar4 < 4);
+    CL_Disconnect(LVar3);
+    LVar3 = LVar3 + LOCAL_CLIENT_1;
+  } while ((int)LVar3 < 4);
   SV_AllowPackets(false);
   CL_ShutdownAll();
   FakeLag_Shutdown();
-  SV_Shutdown(pcVar1);
+  SV_Shutdown(param_1);
   do {
-    uVar3 = (ulonglong)(uint)g_serverThreadOwnership;
+    uVar2 = (ulonglong)(uint)g_serverThreadOwnership;
     if (in_RESERVE != '\0') {
-      g_serverThreadOwnership = storeWordConditionalIndexed(uVar3 + 1,0,0xffffffff83f1e19c);
+      g_serverThreadOwnership = storeWordConditionalIndexed(uVar2 + 1,0,0xffffffff83f1e19c);
       in_cr0 = 2;
     }
   } while (!(bool)(in_cr0 >> 1 & 1));
-  if ((int)(uVar3 + 1) != 1) {
+  if ((int)(uVar2 + 1) != 1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\common.cpp",0x190d,0,
                     "%s\n\t(g_serverThreadOwnership) = %i");
   }
@@ -529,10 +523,10 @@ void Com_ShutdownInternal(char *param_1)
   LargeLocalReset();
   Hunk_ResetDebugMem();
   DB_ReleaseXAssets();
-  if (((com_developer->current).integer != 0) || (iVar2 = 0, (com_logfile->current).integer != 0)) {
-    iVar2 = 1;
+  if (((com_developer->current).integer != 0) || (iVar1 = 0, (com_logfile->current).integer != 0)) {
+    iVar1 = 1;
   }
-  Scr_Settings(iVar2,(uint)(com_developer_script->current).color[0],(com_developer->current).integer
+  Scr_Settings(iVar1,(uint)(com_developer_script->current).color[0],(com_developer->current).integer
               );
   com_fixedConsolePosition = 0;
   FakeLag_Init();
@@ -544,17 +538,16 @@ void Com_ShutdownInternal(char *param_1)
   g_slowmoCommon.viewEnable = false;
   com_codeTimeScale = 1.0;
   do {
-    uVar3 = (ulonglong)(uint)g_serverThreadOwnership;
+    uVar2 = (ulonglong)(uint)g_serverThreadOwnership;
     if (in_RESERVE != '\0') {
-      g_serverThreadOwnership = storeWordConditionalIndexed(uVar3 - 1,0,0xffffffff83f1e19c);
+      g_serverThreadOwnership = storeWordConditionalIndexed(uVar2 - 1,0,0xffffffff83f1e19c);
       in_cr0 = 2;
     }
   } while (!(bool)(in_cr0 >> 1 & 1));
-  if ((int)(uVar3 - 1) != 0) {
+  if ((int)(uVar2 - 1) != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\common.cpp",0x1943,0,
                     "%s\n\t(g_serverThreadOwnership) = %i");
   }
-  __restgprlr_29();
   return;
 }
 
@@ -610,100 +603,98 @@ void Com_SetTimeScale(float param_1)
 
 // 824F6DF0  Com_ErrorIsNotice  (qcommon/common.cpp:1286)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 bool Com_ErrorIsNotice(char *param_1)
 
 {
   char cVar1;
-  char *pcVar2;
-  int iVar3;
-  undefined1 uVar4;
-  char **ppcVar5;
-  int iVar6;
+  int iVar2;
+  char **ppcVar3;
+  int iVar4;
   
-  pcVar2 = (char *)__savegprlr_29(param_1);
-  ppcVar5 = noticeErrors;
-  iVar6 = 0;
+  ppcVar3 = noticeErrors;
+  iVar4 = 0;
   cVar1 = *noticeErrors[0];
   while( true ) {
     if (cVar1 == '\0') {
-      uVar4 = __restgprlr_29(0);
-      return (bool)uVar4;
+      return false;
     }
-    iVar3 = I_stricmp(*ppcVar5,pcVar2);
-    if (iVar3 == 0) break;
-    iVar6 = iVar6 + 1;
-    ppcVar5 = noticeErrors + iVar6;
-    cVar1 = **ppcVar5;
+    iVar2 = I_stricmp(*ppcVar3,param_1);
+    if (iVar2 == 0) break;
+    iVar4 = iVar4 + 1;
+    ppcVar3 = noticeErrors + iVar4;
+    cVar1 = **ppcVar3;
   }
-  uVar4 = __restgprlr_29(1);
-  return (bool)uVar4;
+  return true;
 }
 
 
 // 824F6E68  Com_SetLocalizedErrorMessage  (qcommon/common.cpp:1306)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void Com_SetLocalizedErrorMessage(char *param_1,char *param_2)
 
 {
   char *pcVar1;
-  char *pcVar2;
   
-  pcVar1 = (char *)__savegprlr_27(param_1);
   ui_errorMessage = Dvar_RegisterString("com_errorMessage","",0x2000,"Most recent error message");
   ui_errorTitle =
        Dvar_RegisterString("com_errorTitle","",0x2000,"Title of the most recent error message");
   ui_errorRemoveKeyCatcher =
        Dvar_RegisterBool("com_errorRemoveKeyCatcher",true,0x2000,
                          "True if clearing the error message should also remove the ui focus");
-  pcVar2 = SEH_LocalizeTextMessage(param_2,"error message",LOCMSG_NOERR);
-  if (pcVar2 == (char *)0x0) {
-    pcVar2 = "";
+  pcVar1 = SEH_LocalizeTextMessage(param_2,"error message",LOCMSG_NOERR);
+  if (pcVar1 == (char *)0x0) {
+    pcVar1 = "";
   }
-  Dvar_SetString(ui_errorTitle,pcVar2);
-  Dvar_SetString(ui_errorMessage,pcVar1);
-  I_strncpyz(com_errorMessage,pcVar1,0x1000);
-  __restgprlr_27();
+  Dvar_SetString(ui_errorTitle,pcVar1);
+  Dvar_SetString(ui_errorMessage,param_1);
+  I_strncpyz(com_errorMessage,param_1,0x1000);
   return;
 }
 
 
 // 824F6F48  Com_SetErrorMessage  (qcommon/common.cpp:1332)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void Com_SetErrorMessage(char *param_1)
 
 {
-  char *pcVar1;
-  int iVar2;
-  bool bVar4;
-  char *pcVar3;
-  char *pcVar5;
+  int iVar1;
+  bool bVar3;
+  char *pcVar2;
+  char *pcVar4;
   
-  pcVar1 = (char *)__savegprlr_29(param_1);
   Sys_EnterCriticalSection(CRITSECT_COM_SET_ERROR_MSG);
-  if (pcVar1 == (char *)0x0) {
+  if (param_1 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\common.cpp",0x53d,0,
                     "%s");
   }
-  if (*pcVar1 == '\0') {
+  if (*param_1 == '\0') {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\common.cpp",0x53e,0,
                     "%s");
   }
-  iVar2 = I_stricmp(pcVar1,noNoticeError);
-  if (iVar2 != 0) {
-    if ((errorcode == ERR_SERVERDISCONNECT) || (bVar4 = Com_ErrorIsNotice(pcVar1), bVar4)) {
-      pcVar5 = "MENU_NOTICE";
+  iVar1 = I_stricmp(param_1,noNoticeError);
+  if (iVar1 != 0) {
+    if ((errorcode == ERR_SERVERDISCONNECT) || (bVar3 = Com_ErrorIsNotice(param_1), bVar3)) {
+      pcVar4 = "MENU_NOTICE";
     }
     else {
-      pcVar5 = "MENU_ERROR";
+      pcVar4 = "MENU_ERROR";
     }
-    pcVar3 = SEH_LocalizeTextMessage(pcVar1,"error message",LOCMSG_NOERR);
-    if (pcVar3 == (char *)0x0) {
-      pcVar3 = pcVar1;
+    pcVar2 = SEH_LocalizeTextMessage(param_1,"error message",LOCMSG_NOERR);
+    if (pcVar2 == (char *)0x0) {
+      pcVar2 = param_1;
     }
-    Com_SetLocalizedErrorMessage(pcVar3,pcVar5);
+    Com_SetLocalizedErrorMessage(pcVar2,pcVar4);
   }
   Sys_LeaveCriticalSection(CRITSECT_COM_SET_ERROR_MSG);
-  __restgprlr_29();
   return;
 }
 
@@ -722,6 +713,8 @@ bool Com_ErrorEntered(void)
 
 // 824FBC78  Com_ErrorCleanup  (qcommon/common.cpp:1387)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
@@ -743,7 +736,6 @@ void Com_ErrorCleanup(void)
   PartyActiveClient local_1060 [2];
   char local_1050 [4176];
   
-  __savegprlr_23();
   bVar7 = Sys_IsMainThread();
   if (!bVar7) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\common.cpp",0x571,0,
@@ -929,7 +921,6 @@ LAB_824fc128:
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\common.cpp",0x6d6,0,
                     "%s");
   }
-  __restgprlr_23();
   return;
 }
 
@@ -970,6 +961,10 @@ void Com_ErrorAbort(void)
 
 // 824FA368  Com_Error  (qcommon/common.cpp:1812)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -977,16 +972,14 @@ void Com_ErrorAbort(void)
 void Com_Error(errorParm_t param_1,char *param_2)
 
 {
-  errorParm_t eVar1;
-  bool bVar3;
-  int iVar2;
-  ulonglong uVar4;
+  bool bVar2;
+  int iVar1;
+  ulonglong uVar3;
   char *pcStack0000001c;
   
   pcStack0000001c = param_2;
-  eVar1 = __savegprlr_26(param_1);
   Com_EnterError();
-  if ((eVar1 == ERR_DROP) || (eVar1 == ERR_FATAL)) {
+  if ((param_1 == ERR_DROP) || (param_1 == ERR_FATAL)) {
     Com_PrintStackTrace();
   }
   if (0 < com_errorEnteredCount) {
@@ -1002,25 +995,24 @@ void Com_Error(errorParm_t param_1,char *param_2)
                     /* WARNING: Subroutine does not return */
     Sys_Error("\x15too many recursive errors at error: %s");
   }
-  if ((eVar1 == ERR_MAPLOADERRORSUMMARY) && (com_errorMessage[0] != '\0')) {
+  if ((param_1 == ERR_MAPLOADERRORSUMMARY) && (com_errorMessage[0] != '\0')) {
 LAB_824fa578:
     Com_LeaveError();
-    __restgprlr_26();
     return;
   }
   _vsnprintf(com_errorMessage,0x1000,pcStack0000001c,&stack0x00000020);
   com_errorMessage[0xfff] = '\0';
-  if ((eVar1 == ERR_DROP) || ((eVar1 == ERR_FATAL || (eVar1 == ERR_SCRIPT)))) {
+  if ((param_1 == ERR_DROP) || ((param_1 == ERR_FATAL || (param_1 == ERR_SCRIPT)))) {
     LSP_LogStringEvenIfControllerIsInactive("error start: ---\n");
     LSP_LogStringEvenIfControllerIsInactive(com_errorMessage);
     LSP_LogStringEvenIfControllerIsInactive("--- error end\n");
     LSP_ForceSendPacket();
-    if (eVar1 == ERR_SCRIPT) {
+    if (param_1 == ERR_SCRIPT) {
       StatMon_Warning(7,3000,"code_warning_scripterrors");
     }
   }
-  bVar3 = Sys_IsDatabaseThread();
-  if (bVar3) {
+  bVar2 = Sys_IsDatabaseThread();
+  if (bVar2) {
                     /* WARNING: Subroutine does not return */
     Sys_Error("%s");
   }
@@ -1028,26 +1020,26 @@ LAB_824fa578:
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\common.cpp",0x74c,0,
                     "%s");
   }
-  if ((eVar1 == ERR_SCRIPT) || (eVar1 == ERR_LOCALIZATION)) {
+  if ((param_1 == ERR_SCRIPT) || (param_1 == ERR_LOCALIZATION)) {
     if (com_fixedConsolePosition == 0) {
       CL_ConsoleFixPosition();
     }
-    eVar1 = ERR_DROP;
+    param_1 = ERR_DROP;
     if (cls.uiStarted != 0) {
       Com_SetErrorMessage(com_errorMessage);
       cls.scriptError = 1;
       if (cls.uiStarted != 0) goto LAB_824fa578;
     }
-    iVar2 = Sys_IsRemoteDebugServer();
-    if (iVar2 != 0) goto LAB_824fa578;
+    iVar1 = Sys_IsRemoteDebugServer();
+    if (iVar1 != 0) goto LAB_824fa578;
   }
-  else if (eVar1 == ERR_SCRIPT_DROP) {
+  else if (param_1 == ERR_SCRIPT_DROP) {
     CL_ConsoleFixPosition();
-    eVar1 = ERR_DROP;
+    param_1 = ERR_DROP;
   }
-  else if (eVar1 == ERR_MAPLOADERRORSUMMARY) {
+  else if (param_1 == ERR_MAPLOADERRORSUMMARY) {
     com_fixedConsolePosition = 1;
-    if ((cls.uiStarted != 0) && (bVar3 = Sys_IsMainThread(), bVar3)) {
+    if ((cls.uiStarted != 0) && (bVar2 = Sys_IsMainThread(), bVar2)) {
       Com_SetErrorMessage(com_errorMessage);
       UI_SetActiveMenu(LOCAL_CLIENT_0,3);
       goto LAB_824fa578;
@@ -1056,23 +1048,22 @@ LAB_824fa578:
   else {
     com_fixedConsolePosition = 0;
   }
-  bVar3 = Live_HasAcceptedInvitation();
-  if (bVar3) {
+  bVar2 = Live_HasAcceptedInvitation();
+  if (bVar2) {
     Live_ConfirmAcceptInvitation_ReinitNeeded();
   }
-  uVar4 = (ulonglong)(uint)com_errorEnteredCount;
-  com_errorEnteredCount = (int)(uVar4 + 1);
-  if (uVar4 + 1 == 0) {
+  uVar3 = (ulonglong)(uint)com_errorEnteredCount;
+  com_errorEnteredCount = (int)(uVar3 + 1);
+  if (uVar3 + 1 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\common.cpp",0x7b1,0,
                     "%s");
   }
-  errorcode = eVar1;
+  errorcode = param_1;
   Com_LeaveError();
   Sys_GetValue(2);
   longjmp();
-  __savegprlr_29();
-  bVar3 = Sys_IsMainThread();
-  if (!bVar3) {
+  bVar2 = Sys_IsMainThread();
+  if (!bVar2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\common.cpp",0x7c6,0,
                     "%s");
   }
@@ -1086,13 +1077,14 @@ LAB_824fa578:
     Sys_GetValue(2);
     longjmp();
   }
-  __restgprlr_29();
   return;
 }
 
 
 // 824FA638  Com_CheckError  (qcommon/common.cpp:1989)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void Com_CheckError(void)
@@ -1100,7 +1092,6 @@ void Com_CheckError(void)
 {
   bool bVar1;
   
-  __savegprlr_29();
   bVar1 = Sys_IsMainThread();
   if (!bVar1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\common.cpp",0x7c6,0,
@@ -1116,7 +1107,6 @@ void Com_CheckError(void)
     Sys_GetValue(2);
     longjmp();
   }
-  __restgprlr_29();
   return;
 }
 
@@ -1225,6 +1215,8 @@ void Com_ClearGamePadCheat(GamePadCheat *param_1)
 
 // 824F7188  Com_UpdateGamePadCheat  (qcommon/common.cpp:2232)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -1232,86 +1224,77 @@ void Com_ClearGamePadCheat(GamePadCheat *param_1)
 void Com_UpdateGamePadCheat(LocalClientNum_t param_1,GamePadCheat *param_2)
 
 {
-  GamePadCheat *pGVar1;
-  LocalClientNum_t LVar2;
-  char *pcVar3;
+  char *pcVar1;
+  int iVar2;
+  bool bVar3;
   int iVar4;
-  bool bVar5;
-  ulonglong uVar6;
-  int iVar7;
-  longlong lVar8;
-  double dVar9;
-  float fVar10;
+  GamePadButton *pGVar5;
+  double dVar6;
+  float fVar7;
   
-  uVar6 = (ulonglong)(int)param_2;
-  LVar2 = __savegprlr_26(param_1);
-  if ((uVar6 & 0xffffffff) == 0) {
+  if (param_2 == (GamePadCheat *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\common.cpp",0x8bd,0,
                     "%s");
   }
-  pGVar1 = (GamePadCheat *)uVar6;
-  if ((pGVar1->unlockFunc != (_func___cdecl_void *)0x0) || (pGVar1->unlockCmd != (char *)0x0)) {
-    if (((pGVar1->menu != (char *)0x0) && (*pGVar1->menu != '\0')) &&
-       ((pcVar3 = UI_GetTopActiveMenuName(LVar2), pcVar3 == (char *)0x0 ||
-        (iVar4 = I_strcmp(pGVar1->menu,pcVar3), iVar4 != 0)))) {
-      Com_ClearGamePadCheat(pGVar1);
-      __restgprlr_26();
+  if ((param_2->unlockFunc != (_func___cdecl_void *)0x0) || (param_2->unlockCmd != (char *)0x0)) {
+    if (((param_2->menu != (char *)0x0) && (*param_2->menu != '\0')) &&
+       ((pcVar1 = UI_GetTopActiveMenuName(param_1), pcVar1 == (char *)0x0 ||
+        (iVar2 = I_strcmp(param_2->menu,pcVar1), iVar2 != 0)))) {
+      Com_ClearGamePadCheat(param_2);
       return;
     }
     if (cl_multi_gamepads_enabled != 0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\common.cpp",0x8cc,0,
                       "%s");
     }
-    iVar4 = CL_ControllerIndexFromClientNum(LVar2);
-    iVar7 = 0;
-    lVar8 = uVar6 + 0x28;
-    dVar9 = 0.0;
+    iVar2 = CL_ControllerIndexFromClientNum(param_1);
+    iVar4 = 0;
+    pGVar5 = param_2->holdButtons;
+    dVar6 = 0.0;
     do {
-      if ((*(GamePadButton *)lVar8 != GPAD_NONE) &&
-         (fVar10 = GPad_GetButton(iVar4,*(GamePadButton *)lVar8), (double)fVar10 == dVar9))
+      if ((*pGVar5 != GPAD_NONE) && (fVar7 = GPad_GetButton(iVar2,*pGVar5), (double)fVar7 == dVar6))
       goto LAB_824f7370;
-      iVar7 = iVar7 + 1;
-      lVar8 = lVar8 + 4;
-    } while (iVar7 < 2);
-    bVar5 = GPad_IsButtonPressed(iVar4,pGVar1->codeButtons[pGVar1->codeIndex]);
-    if (bVar5) {
-      iVar4 = pGVar1->codeIndex;
-      pGVar1->buttonTimer = 0;
-      iVar7 = iVar4 + 1;
-      pGVar1->codeIndex = iVar7;
-      if ((9 < iVar7) || (pGVar1->codeButtons[iVar4 + 1] == GPAD_NONE)) {
-        pGVar1->buttonTimer = 0;
-        pGVar1->codeIndex = 0;
-        if (pGVar1->unlockFunc != (_func___cdecl_void *)0x0) {
-          (*pGVar1->unlockFunc)();
+      iVar4 = iVar4 + 1;
+      pGVar5 = pGVar5 + 1;
+    } while (iVar4 < 2);
+    bVar3 = GPad_IsButtonPressed(iVar2,param_2->codeButtons[param_2->codeIndex]);
+    if (bVar3) {
+      iVar2 = param_2->codeIndex;
+      param_2->buttonTimer = 0;
+      iVar4 = iVar2 + 1;
+      param_2->codeIndex = iVar4;
+      if ((9 < iVar4) || (param_2->codeButtons[iVar2 + 1] == GPAD_NONE)) {
+        param_2->buttonTimer = 0;
+        param_2->codeIndex = 0;
+        if (param_2->unlockFunc != (_func___cdecl_void *)0x0) {
+          (*param_2->unlockFunc)();
         }
-        if (pGVar1->unlockCmd != (char *)0x0) {
-          Cbuf_InsertText(LVar2,pGVar1->unlockCmd);
+        if (param_2->unlockCmd != (char *)0x0) {
+          Cbuf_InsertText(param_1,param_2->unlockCmd);
         }
-        if (pGVar1->sound != (char *)0x0) {
-          iVar4 = SND_PlayLocalSoundAliasByName(LVar2,pGVar1->sound,SASYS_UI);
-          __restgprlr_26(iVar4);
+        if (param_2->sound == (char *)0x0) {
           return;
         }
-        goto LAB_824f7378;
+        SND_PlayLocalSoundAliasByName(param_1,param_2->sound,SASYS_UI);
+        return;
       }
     }
-    iVar4 = pGVar1->buttonTimer + cls.frametime;
-    pGVar1->buttonTimer = iVar4;
-    if (400 < iVar4) {
+    iVar2 = param_2->buttonTimer + cls.frametime;
+    param_2->buttonTimer = iVar2;
+    if (400 < iVar2) {
 LAB_824f7370:
-      pGVar1->codeIndex = 0;
-      pGVar1->buttonTimer = 0;
+      param_2->codeIndex = 0;
+      param_2->buttonTimer = 0;
     }
   }
-LAB_824f7378:
-  __restgprlr_26();
   return;
 }
 
 
 // 824F7388  Com_UpdateAllGamePadCheats  (qcommon/common.cpp:2296)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -1319,25 +1302,22 @@ LAB_824f7378:
 void Com_UpdateAllGamePadCheats(LocalClientNum_t param_1)
 
 {
-  LocalClientNum_t LVar1;
-  char *pcVar2;
-  int iVar3;
-  bool bVar4;
-  int iVar5;
-  GamePadButton *pGVar6;
-  double dVar7;
-  float fVar8;
+  char *pcVar1;
+  int iVar2;
+  bool bVar3;
+  int iVar4;
+  GamePadButton *pGVar5;
+  double dVar6;
+  float fVar7;
   
-  LVar1 = __savegprlr_27(param_1);
   if (((cl_multi_gamepads_enabled == 0) && (com_gamePadCheats[0].codeButtons[0] != GPAD_NONE)) &&
      ((com_gamePadCheats[0].unlockFunc != (_func___cdecl_void *)0x0 ||
       (com_gamePadCheats[0].unlockCmd != (char *)0x0)))) {
     if ((com_gamePadCheats[0].menu != (char *)0x0) && (*com_gamePadCheats[0].menu != '\0')) {
-      pcVar2 = UI_GetTopActiveMenuName(LVar1);
-      if ((pcVar2 == (char *)0x0) ||
-         (iVar3 = I_strcmp(com_gamePadCheats[0].menu,pcVar2), iVar3 != 0)) {
+      pcVar1 = UI_GetTopActiveMenuName(param_1);
+      if ((pcVar1 == (char *)0x0) ||
+         (iVar2 = I_strcmp(com_gamePadCheats[0].menu,pcVar1), iVar2 != 0)) {
         Com_ClearGamePadCheat(com_gamePadCheats);
-        __restgprlr_27();
         return;
       }
       if (cl_multi_gamepads_enabled != 0) {
@@ -1345,38 +1325,37 @@ void Com_UpdateAllGamePadCheats(LocalClientNum_t param_1)
                         0,"%s");
       }
     }
-    iVar3 = CL_ControllerIndexFromClientNum(LVar1);
-    iVar5 = 0;
-    pGVar6 = com_gamePadCheats[0].holdButtons;
-    dVar7 = 0.0;
+    iVar2 = CL_ControllerIndexFromClientNum(param_1);
+    iVar4 = 0;
+    pGVar5 = com_gamePadCheats[0].holdButtons;
+    dVar6 = 0.0;
     do {
-      if ((*pGVar6 != GPAD_NONE) && (fVar8 = GPad_GetButton(iVar3,*pGVar6), (double)fVar8 == dVar7))
+      if ((*pGVar5 != GPAD_NONE) && (fVar7 = GPad_GetButton(iVar2,*pGVar5), (double)fVar7 == dVar6))
       goto LAB_824f7568;
-      iVar5 = iVar5 + 1;
-      pGVar6 = pGVar6 + 1;
-    } while (iVar5 < 2);
-    bVar4 = GPad_IsButtonPressed
-                      (iVar3,com_gamePadCheats[0].codeButtons[com_gamePadCheats[0].codeIndex]);
-    if (bVar4) {
+      iVar4 = iVar4 + 1;
+      pGVar5 = pGVar5 + 1;
+    } while (iVar4 < 2);
+    bVar3 = GPad_IsButtonPressed
+                      (iVar2,com_gamePadCheats[0].codeButtons[com_gamePadCheats[0].codeIndex]);
+    if (bVar3) {
       com_gamePadCheats[0].buttonTimer = 0;
       if ((9 < com_gamePadCheats[0].codeIndex + 1) ||
-         (iVar3 = com_gamePadCheats[0].codeIndex + 1,
+         (iVar2 = com_gamePadCheats[0].codeIndex + 1,
          com_gamePadCheats[0].codeIndex = com_gamePadCheats[0].codeIndex + 1,
-         com_gamePadCheats[0].codeButtons[iVar3] == GPAD_NONE)) {
+         com_gamePadCheats[0].codeButtons[iVar2] == GPAD_NONE)) {
         com_gamePadCheats[0].buttonTimer = 0;
         com_gamePadCheats[0].codeIndex = 0;
         if (com_gamePadCheats[0].unlockFunc != (_func___cdecl_void *)0x0) {
           (*com_gamePadCheats[0].unlockFunc)();
         }
         if (com_gamePadCheats[0].unlockCmd != (char *)0x0) {
-          Cbuf_InsertText(LVar1,com_gamePadCheats[0].unlockCmd);
+          Cbuf_InsertText(param_1,com_gamePadCheats[0].unlockCmd);
         }
-        if (com_gamePadCheats[0].sound != (char *)0x0) {
-          iVar3 = SND_PlayLocalSoundAliasByName(LVar1,com_gamePadCheats[0].sound,SASYS_UI);
-          __restgprlr_27(iVar3);
+        if (com_gamePadCheats[0].sound == (char *)0x0) {
           return;
         }
-        goto LAB_824f7578;
+        SND_PlayLocalSoundAliasByName(param_1,com_gamePadCheats[0].sound,SASYS_UI);
+        return;
       }
     }
     com_gamePadCheats[0].buttonTimer = com_gamePadCheats[0].buttonTimer + cls.frametime;
@@ -1386,8 +1365,6 @@ LAB_824f7568:
       com_gamePadCheats[0].buttonTimer = 0;
     }
   }
-LAB_824f7578:
-  __restgprlr_27();
   return;
 }
 
@@ -1430,6 +1407,8 @@ void Com_ParseCommandLine(char *param_1)
 
 // 824F7658  Com_StartupVariable  (qcommon/common.cpp:2450)
 
+/* WARNING: Function: __savegprlr_19 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_19 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void Com_StartupVariable(char *param_1)
@@ -1437,36 +1416,34 @@ void Com_StartupVariable(char *param_1)
 {
   char cVar1;
   char cVar2;
+  bool bVar5;
   char *pcVar3;
-  bool bVar6;
-  char *pcVar4;
-  int iVar5;
-  char *pcVar7;
-  int iVar8;
-  char **ppcVar9;
+  int iVar4;
+  char *pcVar6;
+  int iVar7;
+  char **ppcVar8;
   
-  pcVar3 = (char *)__savegprlr_19(param_1);
-  ppcVar9 = com_consoleLines;
-  iVar8 = 0;
+  ppcVar8 = com_consoleLines;
+  iVar7 = 0;
   if (0 < com_numConsoleLines) {
     do {
-      Cmd_TokenizeString(*ppcVar9);
-      if (pcVar3 == (char *)0x0) {
+      Cmd_TokenizeString(*ppcVar8);
+      if (param_1 == (char *)0x0) {
 LAB_824f7784:
-        pcVar4 = Cmd_Argv(0);
-        iVar5 = I_stricmp(pcVar4,"set");
-        if (iVar5 != 0) {
-          pcVar4 = Cmd_Argv(0);
-          iVar5 = I_stricmp(pcVar4,"seta");
-          if (iVar5 != 0) goto LAB_824f77c8;
+        pcVar3 = Cmd_Argv(0);
+        iVar4 = I_stricmp(pcVar3,"set");
+        if (iVar4 != 0) {
+          pcVar3 = Cmd_Argv(0);
+          iVar4 = I_stricmp(pcVar3,"seta");
+          if (iVar4 != 0) goto LAB_824f77c8;
           Com_Printf(0x10,
                      "\"SetA\" is deprecated.  Forcing \"%s\" to be a \"Set\" command, instead.\n");
         }
         Dvar_Set_f();
       }
       else {
-        bVar6 = Sys_IsMainThread();
-        if (!bVar6) {
+        bVar5 = Sys_IsMainThread();
+        if (!bVar5) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cmd.h",0xca,0,
                           "%s");
         }
@@ -1474,33 +1451,34 @@ LAB_824f7784:
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cmd.h",0xcb,0,
                           "cmd_args.nesting doesn\'t index CMD_MAX_NESTING\n\t%i not in [0, %i)");
         }
-        pcVar4 = "";
-        pcVar7 = pcVar3;
+        pcVar3 = "";
+        pcVar6 = param_1;
         if (1 < cmd_args.argc[cmd_args.nesting]) {
-          pcVar4 = cmd_args.argv[cmd_args.nesting][1];
+          pcVar3 = cmd_args.argv[cmd_args.nesting][1];
         }
         do {
-          cVar1 = *pcVar4;
-          cVar2 = *pcVar7;
+          cVar1 = *pcVar3;
+          cVar2 = *pcVar6;
           if (cVar1 == '\0') break;
-          pcVar4 = pcVar4 + 1;
-          pcVar7 = pcVar7 + 1;
+          pcVar3 = pcVar3 + 1;
+          pcVar6 = pcVar6 + 1;
         } while (cVar1 == cVar2);
         if (cVar1 == cVar2) goto LAB_824f7784;
       }
 LAB_824f77c8:
       Cmd_EndTokenizedString();
-      iVar8 = iVar8 + 1;
-      ppcVar9 = ppcVar9 + 1;
-    } while (iVar8 < com_numConsoleLines);
+      iVar7 = iVar7 + 1;
+      ppcVar8 = ppcVar8 + 1;
+    } while (iVar7 < com_numConsoleLines);
   }
-  __restgprlr_19();
   return;
 }
 
 
 // 824FC198  Com_AddStartupCommands  (qcommon/common.cpp:2488)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
@@ -1514,7 +1492,6 @@ void Com_AddStartupCommands(void)
   char **ppcVar5;
   char acStack_450 [1104];
   
-  __savegprlr_25();
   pvVar1 = Sys_GetValue(2);
   setjmp();
   if (pvVar1 != (void *)0x0) {
@@ -1524,7 +1501,6 @@ void Com_AddStartupCommands(void)
     }
     Com_ErrorCleanup();
     Com_StartHunkUsers();
-    __restgprlr_25();
     return;
   }
   iVar2 = Sys_Milliseconds();
@@ -1551,69 +1527,67 @@ void Com_AddStartupCommands(void)
       ppcVar5 = ppcVar5 + 1;
     } while (iVar2 < com_numConsoleLines);
   }
-  __restgprlr_25();
   return;
 }
 
 
 // 824F77E8  Info_Print  (qcommon/common.cpp:2536)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void Info_Print(char *param_1)
 
 {
   char cVar1;
   char *pcVar2;
-  char *pcVar3;
   char local_430 [20];
   undefined1 local_41c;
   char local_230 [560];
   
-  pcVar2 = (char *)__savegprlr_28(param_1);
-  if (*pcVar2 == '\\') {
-    pcVar2 = pcVar2 + 1;
+  if (*param_1 == '\\') {
+    param_1 = param_1 + 1;
   }
-  cVar1 = *pcVar2;
+  cVar1 = *param_1;
   if (cVar1 != '\0') {
     while( true ) {
-      pcVar3 = local_430;
+      pcVar2 = local_430;
       while ((cVar1 != '\0' && (cVar1 != '\\'))) {
-        *pcVar3 = cVar1;
-        pcVar3 = pcVar3 + 1;
+        *pcVar2 = cVar1;
         pcVar2 = pcVar2 + 1;
-        cVar1 = *pcVar2;
+        param_1 = param_1 + 1;
+        cVar1 = *param_1;
       }
-      if ((int)pcVar3 - (int)local_430 < 0x14) {
+      if ((int)pcVar2 - (int)local_430 < 0x14) {
         memset();
         local_41c = 0;
       }
       else {
-        *pcVar3 = '\0';
+        *pcVar2 = '\0';
       }
       Com_Printf(0,"%s");
-      if (*pcVar2 == '\0') break;
-      pcVar2 = pcVar2 + 1;
-      pcVar3 = local_230;
-      cVar1 = *pcVar2;
+      if (*param_1 == '\0') break;
+      param_1 = param_1 + 1;
+      pcVar2 = local_230;
+      cVar1 = *param_1;
       while ((cVar1 != '\0' && (cVar1 != '\\'))) {
-        *pcVar3 = cVar1;
-        pcVar3 = pcVar3 + 1;
+        *pcVar2 = cVar1;
         pcVar2 = pcVar2 + 1;
-        cVar1 = *pcVar2;
+        param_1 = param_1 + 1;
+        cVar1 = *param_1;
       }
-      *pcVar3 = '\0';
+      *pcVar2 = '\0';
       if (cVar1 != '\0') {
-        pcVar2 = pcVar2 + 1;
+        param_1 = param_1 + 1;
       }
       Com_Printf(0,"%s\n");
-      cVar1 = *pcVar2;
+      cVar1 = *param_1;
       if (cVar1 == '\0') {
-        __restgprlr_28();
         return;
       }
     }
     Com_Printf(0x10,"MISSING VALUE\n");
   }
-  __restgprlr_28();
   return;
 }
 
@@ -1680,66 +1654,59 @@ void Com_PacketEventLoop(LocalClientNum_t param_1,msg_t *param_2)
 
 // 824F7A28  Com_DispatchClientPacketEvent  (qcommon/common.cpp:2646)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void Com_DispatchClientPacketEvent(netadr_t param_1,msg_t *param_2)
 
 {
-  int iVar1;
-  msg_t *pmVar2;
-  bool bVar4;
-  bool bVar5;
-  LocalClientNum_t LVar3;
+  bool bVar2;
+  LocalClientNum_t LVar1;
   int in_r4;
-  ulonglong in_r5;
+  int in_r5;
   netadr_t in_stack_ffffff88;
   
-  pmVar2 = (msg_t *)__savegprlr_27(param_2);
-  if ((in_r5 & 0xffffffff) == 0) {
+  if (in_r5 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\common.cpp",0xa5b,0,
                     "%s");
   }
-  iVar1 = (int)in_r5;
-  if ((*(int *)(iVar1 + 0x28) == 4) || (bVar4 = CL_AllLocalClientsDisconnected(), !bVar4)) {
+  if ((*(int *)(in_r5 + 0x28) == 4) || (bVar2 = CL_AllLocalClientsDisconnected(), !bVar2)) {
     if (cl_multi_gamepads_enabled != 0) {
-      LVar3 = LOCAL_CLIENT_0;
+      LVar1 = LOCAL_CLIENT_0;
       do {
-        if (((*(LocalClientNum_t *)(iVar1 + 0x28) == LVar3) ||
-            (*(LocalClientNum_t *)(iVar1 + 0x28) == LOCAL_CLIENT_COUNT)) &&
-           ((bVar4 = CL_AllLocalClientsInactive(), bVar4 ||
-            (bVar4 = CL_IsLocalClientActive(LVar3), bVar4)))) {
+        if (((*(LocalClientNum_t *)(in_r5 + 0x28) == LVar1) ||
+            (*(LocalClientNum_t *)(in_r5 + 0x28) == LOCAL_CLIENT_COUNT)) &&
+           ((bVar2 = CL_AllLocalClientsInactive(), bVar2 ||
+            (bVar2 = CL_IsLocalClientActive(LVar1), bVar2)))) {
           Sys_Milliseconds();
-          bVar5 = CL_PacketEvent(LVar3,in_stack_ffffff88,pmVar2,in_r4);
-          bVar4 = true;
-          if (bVar5) goto LAB_824f7b94;
+          bVar2 = CL_PacketEvent(LVar1,in_stack_ffffff88,param_2,in_r4);
+          if (bVar2) {
+            return;
+          }
         }
-        LVar3 = LVar3 + LOCAL_CLIENT_1;
-        if (3 < (int)LVar3) {
-          __restgprlr_27();
-          return;
-        }
-      } while( true );
+        LVar1 = LVar1 + LOCAL_CLIENT_1;
+      } while ((int)LVar1 < 4);
+      return;
     }
     Sys_Milliseconds();
-    LVar3 = LOCAL_CLIENT_0;
+    LVar1 = LOCAL_CLIENT_0;
   }
   else {
-    if (3 < *(uint *)(iVar1 + 0x28)) {
+    if (3 < *(uint *)(in_r5 + 0x28)) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\common.cpp",0xa62,0,
                       "netmsg->targetLocalNetID doesn\'t index NS_MAXCLIENTS\n\t%i not in [0, %i)");
     }
-    LVar3 = *(LocalClientNum_t *)(iVar1 + 0x28);
-    if (LOCAL_CLIENT_3 < LVar3) {
+    LVar1 = *(LocalClientNum_t *)(in_r5 + 0x28);
+    if (LOCAL_CLIENT_3 < LVar1) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\common.cpp",0xa64,0,
                       "localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)")
       ;
     }
     Sys_Milliseconds();
   }
-  bVar4 = CL_PacketEvent(LVar3,in_stack_ffffff88,pmVar2,in_r4);
-LAB_824f7b94:
-  __restgprlr_27(bVar4);
+  CL_PacketEvent(LVar1,in_stack_ffffff88,param_2,in_r4);
   return;
 }
 
@@ -1801,6 +1768,8 @@ void Com_ClientPacketEvent(void)
 
 // 824F7CF8  Com_ServerPacketEvent  (qcommon/common.cpp:2774)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -1818,7 +1787,6 @@ void Com_ServerPacketEvent(void)
   netadr_t local_60;
   msg_t mStack_50;
   
-  __savegprlr_29();
   LargeLocal::LargeLocal(aLStack_70,0x10000);
   puVar1 = LargeLocal::GetBuf(aLStack_70);
   Profile_Begin(0x17);
@@ -1859,7 +1827,6 @@ LAB_824f7e24:
   }
   Profile_EndInternal((double *)0x0);
   LargeLocal::~LargeLocal(aLStack_70);
-  __restgprlr_29();
   return;
 }
 
@@ -1885,6 +1852,8 @@ LocalClientNum_t Com_GetLocalClientNumForEventOnPort(int param_1)
 
 // 824FA878  Com_EventLoop  (qcommon/common.cpp:2921)
 
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
@@ -1903,7 +1872,6 @@ void Com_EventLoop(void)
   char *local_88;
   sysEvent_t asStack_80 [4];
   
-  __savegprlr_22();
   PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffff,"Com_EventLoop");
   while( true ) {
     psVar2 = Sys_GetEvent(asStack_80);
@@ -1969,7 +1937,6 @@ void Com_EventLoop(void)
   }
   Com_ClientPacketEvent();
   PIXEndNamedEvent();
-  __restgprlr_22();
   return;
 }
 
@@ -2051,6 +2018,8 @@ void Com_Assert_f(void)
 
 // 824FAAC8  Com_Bug_f  (qcommon/common.cpp:3127)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void Com_Bug_f(void)
@@ -2063,7 +2032,6 @@ void Com_Bug_f(void)
   char acStack_220 [256];
   char acStack_120 [288];
   
-  __savegprlr_29();
   if (logfile == (void *)0x0) {
     Com_PrintError(1,"CopyFile failed: logfile wasn\'t opened\n");
   }
@@ -2098,7 +2066,6 @@ void Com_Bug_f(void)
     GetLastError();
     Com_PrintError(1,"CopyFile failed(%d) %s %s\n");
   }
-  __restgprlr_29();
   return;
 }
 
@@ -2398,12 +2365,14 @@ void Com_StartupConfigs(LocalClientNum_t param_1)
 
 // 824F88F8  Com_LoadUiFastFileInternal  (qcommon/common.cpp:4078)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void Com_LoadUiFastFileInternal(int param_1)
 
 {
-  int iVar1;
-  bool bVar2;
-  uint uVar3;
+  bool bVar1;
+  uint uVar2;
   XZoneInfo local_70;
   char *local_64;
   undefined4 local_60;
@@ -2418,14 +2387,13 @@ void Com_LoadUiFastFileInternal(int param_1)
   undefined4 local_3c;
   undefined4 local_38;
   
-  iVar1 = __savegprlr_29(param_1);
   R_UpdateDynamicMemory(1);
   local_70.allocFlags = 2;
   local_70.freeFlags = 0;
   local_70.name = "patch_ui_mp";
   local_64 = "dlc2_ui_mp";
   local_58 = "dlc1_ui_mp";
-  uVar3 = 4;
+  uVar2 = 4;
   local_4c = "ui_mp";
   local_60 = 2;
   local_5c = 0;
@@ -2433,19 +2401,18 @@ void Com_LoadUiFastFileInternal(int param_1)
   local_50 = 0;
   local_48 = 2;
   local_44 = 0;
-  if (iVar1 != 0) {
+  if (param_1 != 0) {
     local_38 = 0;
     local_3c = 1;
-    uVar3 = 5;
+    uVar2 = 5;
     local_40 = "common_mp";
   }
-  bVar2 = Live_IsDCacheInitialized();
-  DB_LoadXAssets(&local_70,uVar3,-(uint)bVar2 & 2);
-  if (bVar2) {
+  bVar1 = Live_IsDCacheInitialized();
+  DB_LoadXAssets(&local_70,uVar2,-(uint)bVar1 & 2);
+  if (bVar1) {
     Live_DCacheFlush();
   }
   DB_UpdateDebugZone();
-  __restgprlr_29();
   return;
 }
 
@@ -2485,6 +2452,8 @@ void Com_InitXAssets(void)
 
 // 824FAE60  Com_Init_Try_Block_Function  (qcommon/common.cpp:4328)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
@@ -2494,15 +2463,14 @@ void Com_Init_Try_Block_Function(char *param_1)
 
 {
   undefined8 uVar1;
-  char *pcVar2;
-  int iVar3;
+  int iVar2;
+  char *pcVar3;
   LocalClientNum_t LVar4;
   double dVar5;
   
-  pcVar2 = (char *)__savegprlr_26(param_1);
   NET_RemoteDbgHostInitLogBuffer();
   Com_Printf(0x10,"%s %s build %s %s\n");
-  Com_ParseCommandLine(pcVar2);
+  Com_ParseCommandLine(param_1);
   SL_Init();
   Swap_Init();
   Cbuf_Init();
@@ -2547,8 +2515,8 @@ void Com_Init_Try_Block_Function(char *param_1)
   dwMail_Init();
   RemoteConsole_Init();
   dwMail_RegisterHandler(1,RemoteConsole_HandlerInspect,RemoteConsole_HandlerPump);
-  iVar3 = dwMail_GetHandlerCount();
-  if (0 < iVar3) {
+  iVar2 = dwMail_GetHandlerCount();
+  if (0 < iVar2) {
     dwMail_Enable(1);
   }
   Memcard_InitializeSystem();
@@ -2558,8 +2526,8 @@ void Com_Init_Try_Block_Function(char *param_1)
     Com_ExecStartupConfigs(LVar4,(char *)0x0);
     LVar4 = LVar4 + LOCAL_CLIENT_1;
   } while ((int)LVar4 < 4);
-  iVar3 = CL_ControllerIndexFromClientNum(LOCAL_CLIENT_0);
-  Cbuf_Execute(LOCAL_CLIENT_0,iVar3);
+  iVar2 = CL_ControllerIndexFromClientNum(LOCAL_CLIENT_0);
+  Cbuf_Execute(LOCAL_CLIENT_0,iVar2);
   FS_InitFilesystem();
   Com_StartupVariable((char *)0x0);
   dVar5 = 1.0;
@@ -2587,9 +2555,9 @@ void Com_Init_Try_Block_Function(char *param_1)
   Cmd_AddCommandInternal("remote_logfileclose",Remote_LogFileClose,&Remote_LogFileClose_VAR);
   Cmd_AddCommandInternal("remote_logfilereopen",Remote_LogFileReopen,&Remote_LogFileReopen_VAR);
   getBuildNumber();
-  pcVar2 = va("%s %s build %s %s");
+  pcVar3 = va("%s %s build %s %s");
   version = Dvar_RegisterString("version","",0x2000,"Game version");
-  Dvar_SetString(version,pcVar2);
+  Dvar_SetString(version,pcVar3);
   shortversion = Dvar_RegisterString("shortversion","1.1",0x2400,"Short game version");
   migration_dvarErrors =
        Dvar_RegisterBool("migration_dvarErrors",true,4,
@@ -2599,10 +2567,10 @@ void Com_Init_Try_Block_Function(char *param_1)
   Netchan_Init((uint)uVar1);
   Scr_InitVariables();
   Scr_Init();
-  if (((com_developer->current).integer != 0) || (iVar3 = 0, (com_logfile->current).integer != 0)) {
-    iVar3 = 1;
+  if (((com_developer->current).integer != 0) || (iVar2 = 0, (com_logfile->current).integer != 0)) {
+    iVar2 = 1;
   }
-  Scr_Settings(iVar3,(uint)(com_developer_script->current).color[0],(com_developer->current).integer
+  Scr_Settings(iVar2,(uint)(com_developer_script->current).color[0],(com_developer->current).integer
               );
   XAnimInit();
   DObjInit();
@@ -2628,8 +2596,8 @@ void Com_Init_Try_Block_Function(char *param_1)
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\common.cpp",0x12a6,0,
                     "%s");
   }
-  iVar3 = R_IsHiDef();
-  Dvar_SetBool(com_hiDef,(bool)('\x01' - (iVar3 == 0)));
+  iVar2 = R_IsHiDef();
+  Dvar_SetBool(com_hiDef,(bool)('\x01' - (iVar2 == 0)));
   if (cls.soundStarted != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\common.cpp",0x12aa,0,
                     "%s");
@@ -2653,7 +2621,6 @@ void Com_Init_Try_Block_Function(char *param_1)
   }
   sync(1);
   Com_Printf(0x10,"--- Common Initialization Complete ---\n");
-  __restgprlr_26();
   return;
 }
 
@@ -2741,29 +2708,27 @@ void Com_Init(char *param_1)
 
 // 824F8A80  Com_WriteConfigToFile  (qcommon/common.cpp:4956)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void Com_WriteConfigToFile(LocalClientNum_t param_1,char *param_2)
 
 {
-  LocalClientNum_t LVar1;
-  void *pvVar2;
+  void *pvVar1;
   
-  LVar1 = __savegprlr_29(param_1);
-  pvVar2 = FS_FOpenFileWrite(param_2);
-  if (pvVar2 == (void *)0x0) {
+  pvVar1 = FS_FOpenFileWrite(param_2);
+  if (pvVar1 == (void *)0x0) {
     Com_Printf(0x10,"Couldn\'t write %s.\n");
-    __restgprlr_29();
     return;
   }
-  FS_Printf(pvVar2,"// generated by Infinity Ward, do not modify\n");
-  FS_Printf(pvVar2,"unbindall\n");
-  Key_WriteBindings(LVar1,pvVar2);
-  Gamepad_WriteBindings(LVar1,pvVar2);
-  Dvar_WriteVariables(pvVar2);
-  Con_WriteFilterConfigString(pvVar2);
-  FS_FCloseFile(pvVar2);
-  __restgprlr_29();
+  FS_Printf(pvVar1,"// generated by Infinity Ward, do not modify\n");
+  FS_Printf(pvVar1,"unbindall\n");
+  Key_WriteBindings(param_1,pvVar1);
+  Gamepad_WriteBindings(param_1,pvVar1);
+  Dvar_WriteVariables(pvVar1);
+  Con_WriteFilterConfigString(pvVar1);
+  FS_FCloseFile(pvVar1);
   return;
 }
 
@@ -2941,15 +2906,16 @@ void Com_ResetSlowMotion(void)
 
 // 824F8F10  Com_UpdateSlowMotion  (qcommon/common.cpp:5244)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void Com_UpdateSlowMotion(int param_1)
 
 {
-  int iVar1;
-  double dVar2;
+  double dVar1;
   
-  iVar1 = __savegprlr_29(param_1);
-  dVar2 = (double)com_codeTimeScale;
-  if (g_slowmoCommon.enable != false) {
+  dVar1 = (double)com_codeTimeScale;
+  if (g_slowmoCommon.enable) {
     if (g_slowmoCommon.type != 0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\common.cpp",0x1488,0
                       ,"%s");
@@ -2957,9 +2923,9 @@ void Com_UpdateSlowMotion(int param_1)
     if ((((g_slowmoCommon.endMsec == g_slowmoCommon.startMsec) ||
          ((com_codeTimeScale =
                 (float)((double)(((g_slowmoCommon.endTimescale - g_slowmoCommon.startTimescale) *
-                                 (float)(longlong)iVar1) /
+                                 (float)(longlong)param_1) /
                                 (float)(longlong)(g_slowmoCommon.endMsec - g_slowmoCommon.startMsec)
-                                ) + dVar2),
+                                ) + dVar1),
           g_slowmoCommon.startTimescale < g_slowmoCommon.endTimescale &&
           (g_slowmoCommon.endTimescale <= com_codeTimeScale)))) ||
         ((g_slowmoCommon.endTimescale < g_slowmoCommon.startTimescale &&
@@ -2969,7 +2935,6 @@ void Com_UpdateSlowMotion(int param_1)
       com_codeTimeScale = g_slowmoCommon.endTimescale;
     }
   }
-  __restgprlr_29();
   return;
 }
 
@@ -3149,6 +3114,8 @@ LAB_824f9484:
 
 // 824F94A0  Com_Statmon  (qcommon/common.cpp:5509)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
@@ -3158,7 +3125,6 @@ void Com_Statmon(void)
 {
   int iVar1;
   
-  __savegprlr_29();
   if ((com_statmon->current).enabled != false) {
     if (com_fileAccessed != 0) {
       StatMon_Warning(1,3000,"code_warning_file");
@@ -3175,7 +3141,6 @@ void Com_Statmon(void)
       }
     }
   }
-  __restgprlr_29();
   return;
 }
 
@@ -3291,6 +3256,8 @@ void Com_UpdateMenu(void)
 
 // 824FB5C8  Com_Frame_Try_Block_Function  (qcommon/common.cpp:5654)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
@@ -3321,7 +3288,6 @@ void Com_Frame_Try_Block_Function(void)
   double dVar19;
   longlong local_70 [14];
   
-  __savegprlr_23();
   if (cmd_args.nesting != -1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\common.cpp",0x1625,0,
                     "cmd_args.nesting == -1\n\t%i, %i");
@@ -3531,7 +3497,6 @@ void Com_Frame_Try_Block_Function(void)
   NET_RemoteDbgHostFrame();
   Com_Statmon();
   PIXEndNamedEvent();
-  __restgprlr_23();
   return;
 }
 
@@ -3699,6 +3664,8 @@ void Com_LeaveError(void)
 
 // 824FC350  Com_Frame  (qcommon/common.cpp:6154)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -3709,7 +3676,6 @@ void Com_Frame(void)
   bool bVar2;
   void *pvVar1;
   
-  __savegprlr_27();
   bVar2 = Sys_IsMainThread();
   if (!bVar2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\common.cpp",0x180b,0,
@@ -3761,7 +3727,6 @@ void Com_Frame(void)
     }
     Com_StartHunkUsers();
   }
-  __restgprlr_27();
   return;
 }
 
@@ -3834,6 +3799,8 @@ void Field_Clear(field_t *param_1)
 
 // 824F9C08  Com_Restart  (qcommon/common.cpp:6412)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void Com_Restart(void)
@@ -3845,7 +3812,6 @@ void Com_Restart(void)
   byte in_cr0;
   double dVar3;
   
-  __savegprlr_29();
   do {
     uVar2 = (ulonglong)(uint)g_serverThreadOwnership;
     if (in_RESERVE != '\0') {
@@ -3893,7 +3859,6 @@ void Com_Restart(void)
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\common.cpp",0x1943,0,
                     "%s\n\t(g_serverThreadOwnership) = %i");
   }
-  __restgprlr_29();
   return;
 }
 
@@ -3934,13 +3899,13 @@ void Com_XAnimFreeSmallTree(XAnimTree *param_1)
 
 // 824F9DB0  Com_SetWeaponInfoMemory  (qcommon/common.cpp:6510)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void Com_SetWeaponInfoMemory(int param_1)
 
 {
-  int iVar1;
-  
-  iVar1 = __savegprlr_28(param_1);
-  if ((iVar1 != 1) && (iVar1 != 2)) {
+  if ((param_1 != 1) && (param_1 != 2)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\common.cpp",0x196f,0,
                     "%s");
   }
@@ -3948,8 +3913,7 @@ void Com_SetWeaponInfoMemory(int param_1)
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\common.cpp",0x1970,0,
                     "%s");
   }
-  weaponInfoSource = iVar1;
-  __restgprlr_28();
+  weaponInfoSource = param_1;
   return;
 }
 

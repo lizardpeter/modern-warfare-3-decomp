@@ -232,32 +232,31 @@ void Live_SetCountryCodeAndRegion(int param_1)
 
 // 82653258  Live_LookupContextFromGametypeNoModifier  (xenon/xenon_presence.cpp:295)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 int Live_LookupContextFromGametypeNoModifier(char *param_1)
 
 {
-  char *pcVar1;
-  int iVar2;
+  int iVar1;
+  char *pcVar2;
   int iVar3;
-  char *pcVar4;
-  int iVar5;
+  int iVar4;
   
-  pcVar1 = (char *)__savegprlr_28(param_1);
-  pcVar4 = "conf";
-  iVar5 = 0;
+  pcVar2 = "conf";
+  iVar4 = 0;
   iVar3 = 0;
   do {
-    iVar2 = I_strcmp(pcVar1,pcVar4);
-    if (iVar2 == 0) {
-      iVar3 = __restgprlr_28(*(undefined4 *)((int)&DAT_82176918 + iVar3));
-      return iVar3;
+    iVar1 = I_strcmp(param_1,pcVar2);
+    if (iVar1 == 0) {
+      return *(int *)((int)&DAT_82176918 + iVar3);
     }
-    iVar5 = iVar5 + 1;
-    iVar3 = iVar5 * 0x24;
-    pcVar4 = &gametypeRichPresenceInfo + iVar3;
+    iVar4 = iVar4 + 1;
+    iVar3 = iVar4 * 0x24;
+    pcVar2 = &gametypeRichPresenceInfo + iVar3;
   } while ((&gametypeRichPresenceInfo)[iVar3] != '\0');
   Com_PrintWarning(0x10,"Unknown gametype \'%s\', must add it to xlast\n");
-  iVar3 = __restgprlr_28(0);
-  return iVar3;
+  return 0;
 }
 
 
@@ -303,6 +302,8 @@ char * Live_LookupGametypeFromStatsView(int param_1)
 
 // 826533D8  Live_SetTheatreContext  (xenon/xenon_presence.cpp:342)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
@@ -315,7 +316,6 @@ void Live_SetTheatreContext(void)
   ulong uVar3;
   LocalClientNum_t LVar5;
   
-  __savegprlr_26();
   if ((xblive_loggedin->current).enabled != false) {
     if (cl_multi_gamepads_enabled != 0) {
       LVar5 = LOCAL_CLIENT_0;
@@ -340,7 +340,6 @@ void Live_SetTheatreContext(void)
         }
         LVar5 = LVar5 + LOCAL_CLIENT_1;
       } while ((int)LVar5 < 4);
-      __restgprlr_26();
       return;
     }
     uVar1 = CL_ControllerIndexFromClientNum(LOCAL_CLIENT_0);
@@ -363,39 +362,39 @@ void Live_SetTheatreContext(void)
       uVar2 = uVar2 + 1;
     } while ((int)uVar2 < 4);
   }
-  __restgprlr_26();
   return;
 }
 
 
 // 826535A0  Live_SetMapContext  (xenon/xenon_presence.cpp:405)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void Live_SetMapContext(int param_1)
 
 {
-  ulong uVar1;
   bool bVar4;
+  ulong uVar1;
   ulong uVar2;
   ulong uVar3;
   LocalClientNum_t LVar5;
   
-  uVar1 = __savegprlr_25(param_1);
   if ((xblive_loggedin->current).enabled != false) {
     if (cl_multi_gamepads_enabled != 0) {
       LVar5 = LOCAL_CLIENT_0;
       do {
         bVar4 = CL_IsLocalClientActive(LVar5);
         if (bVar4) {
-          uVar2 = CL_ControllerIndexFromClientNum(LVar5);
-          XUserSetContext(uVar2,0,uVar1);
-          uVar3 = XUserSetContextEx(uVar2,0x8001,1,(_XOVERLAPPED *)0x0);
-          if (uVar3 != 0) {
+          uVar1 = CL_ControllerIndexFromClientNum(LVar5);
+          XUserSetContext(uVar1,0,param_1);
+          uVar2 = XUserSetContextEx(uVar1,0x8001,1,(_XOVERLAPPED *)0x0);
+          if (uVar2 != 0) {
             MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_presence.cpp"
                             ,0x1c5,0,"%s\n\t(res) = %i");
           }
-          Social_SetMapPresence(uVar2,1,uVar1);
+          Social_SetMapPresence(uVar1,1,param_1);
         }
         LVar5 = LVar5 + LOCAL_CLIENT_1;
       } while ((int)LVar5 < 4);
@@ -412,72 +411,71 @@ void Live_SetMapContext(int param_1)
         }
         uVar1 = uVar1 + 1;
       } while ((int)uVar1 < 4);
-      __restgprlr_25();
       return;
     }
-    uVar2 = CL_ControllerIndexFromClientNum(LOCAL_CLIENT_0);
-    XUserSetContext(uVar2,0,uVar1);
-    uVar3 = XUserSetContextEx(uVar2,0x8001,1,(_XOVERLAPPED *)0x0);
-    if (uVar3 != 0) {
+    uVar1 = CL_ControllerIndexFromClientNum(LOCAL_CLIENT_0);
+    XUserSetContext(uVar1,0,param_1);
+    uVar2 = XUserSetContextEx(uVar1,0x8001,1,(_XOVERLAPPED *)0x0);
+    if (uVar2 != 0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_presence.cpp",
                       0x1e0,0,"%s\n\t(res) = %i");
     }
-    Social_SetMapPresence(uVar2,1,uVar1);
-    uVar1 = 0;
+    Social_SetMapPresence(uVar1,1,param_1);
+    uVar2 = 0;
     do {
-      if (uVar2 != uVar1) {
-        uVar3 = XUserSetContextEx(uVar1,0x8001,5,(_XOVERLAPPED *)0x0);
+      if (uVar1 != uVar2) {
+        uVar3 = XUserSetContextEx(uVar2,0x8001,5,(_XOVERLAPPED *)0x0);
         if (uVar3 != 0) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_presence.cpp"
                           ,0x1eb,0,"%s\n\t(res) = %i");
         }
-        Social_SetNotPlayingPresence(uVar1);
+        Social_SetNotPlayingPresence(uVar2);
       }
-      uVar1 = uVar1 + 1;
-    } while ((int)uVar1 < 4);
+      uVar2 = uVar2 + 1;
+    } while ((int)uVar2 < 4);
   }
-  __restgprlr_25();
   return;
 }
 
 
 // 826537C8  Live_SetCurrentMapname  (xenon/xenon_presence.cpp:503)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void Live_SetCurrentMapname(char *param_1)
 
 {
-  char *pcVar1;
-  int iVar2;
-  char *pcVar3;
+  int iVar1;
+  char *pcVar2;
+  int iVar3;
   int iVar4;
-  int iVar5;
   
-  pcVar1 = (char *)__savegprlr_28(param_1);
   if ((xblive_loggedin->current).enabled != false) {
-    iVar5 = 0;
-    pcVar3 = "mp_alpha";
     iVar4 = 0;
+    pcVar2 = "mp_alpha";
+    iVar3 = 0;
     do {
-      iVar2 = I_stricmp(pcVar1,pcVar3);
-      if (iVar2 == 0) {
-        Live_SetMapContext(*(int *)((int)&DAT_82176670 + iVar4));
-        __restgprlr_28();
+      iVar1 = I_stricmp(param_1,pcVar2);
+      if (iVar1 == 0) {
+        Live_SetMapContext(*(int *)((int)&DAT_82176670 + iVar3));
         return;
       }
-      iVar5 = iVar5 + 1;
-      iVar4 = iVar5 * 0x28;
-      pcVar3 = &mapRichPresenceInfo + iVar4;
-    } while ((&mapRichPresenceInfo)[iVar4] != '\0');
+      iVar4 = iVar4 + 1;
+      iVar3 = iVar4 * 0x28;
+      pcVar2 = &mapRichPresenceInfo + iVar3;
+    } while ((&mapRichPresenceInfo)[iVar3] != '\0');
     Com_Printf(0x10,"Unknown map!  We must add %s to XLAST and xenon_live.cpp!\n");
     Live_SetMapContext(0);
   }
-  __restgprlr_28();
   return;
 }
 
 
 // 82653878  Live_SetGameJoinable  (xenon/xenon_presence.cpp:544)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
@@ -485,22 +483,20 @@ void Live_SetGameJoinable(int param_1,int param_2)
 
 {
   int iVar1;
-  int iVar2;
-  bool bVar3;
+  bool bVar2;
   
-  iVar1 = __savegprlr_27(param_1);
-  iVar2 = Party_IsRunning(&g_partyData);
-  if (iVar2 != 0) {
+  iVar1 = Party_IsRunning(&g_partyData);
+  if (iVar1 != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_presence.cpp",
                     0x225,0,"%s\n\t%s");
   }
   if (g_serverSession.dyn.allowJoining == false) {
     if (param_2 != 0) {
       g_serverSession.dyn.allowJoining = true;
-      iVar2 = g_serverSession.dyn.privateSlots + g_serverSession.dyn.publicSlots;
-      bVar3 = Session_NeedToSyncParams(&g_serverSession,iVar2,0,g_serverSession.dyn.flags);
-      if (bVar3) {
-        Session_SyncParams(iVar1,&g_serverSession,iVar2,0,g_serverSession.dyn.flags);
+      iVar1 = g_serverSession.dyn.privateSlots + g_serverSession.dyn.publicSlots;
+      bVar2 = Session_NeedToSyncParams(&g_serverSession,iVar1,0,g_serverSession.dyn.flags);
+      if (bVar2) {
+        Session_SyncParams(param_1,&g_serverSession,iVar1,0,g_serverSession.dyn.flags);
         Dvar_SetInt(sv_privateClients,0);
       }
       if (g_serverSession.dyn.allowJoining == false) {
@@ -512,37 +508,34 @@ void Live_SetGameJoinable(int param_1,int param_2)
   else if (g_serverSession.dyn.publicSlots < 1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_presence.cpp",
                     0x22a,0,"%s\n\t%s");
-    __restgprlr_27();
     return;
   }
-  __restgprlr_27();
   return;
 }
 
 
 // 826539B8  Live_UpdateMatchMaking  (xenon/xenon_presence.cpp:578)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 void Live_UpdateMatchMaking(int param_1)
 
 {
+  bool bVar3;
   int iVar1;
-  bool bVar4;
   int iVar2;
-  int iVar3;
   
-  iVar1 = __savegprlr_29(param_1);
   if ((((g_serverSession.dyn.sessionHandle != (void *)0x0) &&
        ((xblive_privatematch->current).enabled == false)) &&
-      (bVar4 = Live_IsUserSignedIn(iVar1), bVar4)) &&
-     (((iVar2 = Live_GetOurClientNum(iVar1,&g_serverSession), -1 < iVar2 &&
-       (iVar3 = Session_HostNum(&g_serverSession), iVar2 == iVar3)) &&
-      (iVar2 = Session_SessionTasksInProgress(&g_serverSession), iVar2 == 0)))) {
-    bVar4 = Session_ShouldAdvertise(iVar1);
-    Live_SetGameJoinable(iVar1,(uint)bVar4);
+      (bVar3 = Live_IsUserSignedIn(param_1), bVar3)) &&
+     (((iVar1 = Live_GetOurClientNum(param_1,&g_serverSession), -1 < iVar1 &&
+       (iVar2 = Session_HostNum(&g_serverSession), iVar1 == iVar2)) &&
+      (iVar1 = Session_SessionTasksInProgress(&g_serverSession), iVar1 == 0)))) {
+    bVar3 = Session_ShouldAdvertise(param_1);
+    Live_SetGameJoinable(param_1,(uint)bVar3);
   }
-  __restgprlr_29();
   return;
 }
 
@@ -572,6 +565,8 @@ void Live_SetMaxFreeSlots(int param_1)
 
 // 82653AE0  Live_SetPartyState  (xenon/xenon_presence.cpp:625)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void Live_SetPartyState(int param_1)
@@ -582,9 +577,9 @@ void Live_SetPartyState(int param_1)
   ulong uVar2;
   LocalClientNum_t LVar4;
   ulong uVar5;
-  undefined4 uStack00000014;
+  int iStack00000014;
   
-  uStack00000014 = __savegprlr_27(param_1);
+  iStack00000014 = param_1;
   Com_Printf(0x10,"Setting party state to %s\n");
   if (cl_multi_gamepads_enabled != 0) {
     LVar4 = LOCAL_CLIENT_0;
@@ -604,7 +599,6 @@ void Live_SetPartyState(int param_1)
       }
       LVar4 = LVar4 + LOCAL_CLIENT_1;
     } while ((int)LVar4 < 4);
-    __restgprlr_27();
     return;
   }
   uVar1 = CL_ControllerIndexFromClientNum(LOCAL_CLIENT_0);
@@ -618,7 +612,6 @@ void Live_SetPartyState(int param_1)
     }
     uVar5 = uVar5 + 1;
   } while ((int)uVar5 < 4);
-  __restgprlr_27();
   return;
 }
 
@@ -641,6 +634,8 @@ uint GetDLCPropertyValue(int param_1)
 
 // 82653CF8  Live_SetMapPacks  (xenon/xenon_presence.cpp:697)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void Live_SetMapPacks(int param_1)
@@ -659,8 +654,8 @@ void Live_SetMapPacks(int param_1)
   float local_6c;
   longlong local_68;
   
-  uStack00000014 = __savegprlr_23(param_1);
-  if ((int)uStack00000014 < 1) {
+  uStack00000014 = param_1;
+  if (param_1 < 1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_presence.cpp",
                     0x2c1,0,"%s");
   }
@@ -705,7 +700,6 @@ void Live_SetMapPacks(int param_1)
     }
     LVar3 = LVar3 + LOCAL_CLIENT_1;
   } while ((int)LVar3 < 4);
-  __restgprlr_23();
   return;
 }
 
@@ -822,65 +816,68 @@ bool Xenon_PresenceIsSubscribed(int param_1,ulong64 param_2)
 
 // 826540C0  Xenon_PresenceGatherCurrentUsers  (xenon/xenon_presence.cpp:839)
 
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
+
 void Xenon_PresenceGatherCurrentUsers(int param_1,ulong64 *param_2,int *param_3)
 
 {
   int iVar1;
   int iVar2;
-  int iVar3;
-  bool bVar4;
-  ulong64 uVar5;
+  bool bVar3;
+  ulong64 uVar4;
+  int iVar5;
   int iVar6;
-  int iVar7;
   
-  iVar1 = __savegprlr_22(param_1);
   *param_3 = 0;
-  iVar6 = 0;
-  iVar2 = MeetPlayer_GetCount(iVar1);
-  if (0 < iVar2) {
-    iVar7 = 0;
-    iVar2 = iVar1 * 0x2bd0;
+  iVar5 = 0;
+  iVar1 = MeetPlayer_GetCount(param_1);
+  if (0 < iVar1) {
+    iVar6 = 0;
+    iVar1 = param_1 * 0x2bd0;
     do {
-      uVar5 = *(ulong64 *)(g_metPlayerInfo[0].playersXuidInfo[0].gamertag + iVar2 + -8);
+      uVar4 = *(ulong64 *)(g_metPlayerInfo[0].playersXuidInfo[0].gamertag + iVar1 + -8);
       if (0x51 < (uint)*param_3) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_presence.cpp",
                         0x352,0,
                         "(*currentCount) doesn\'t index MAX_SUBSCRIBED_USERS\n\t%i not in [0, %i)");
       }
-      iVar6 = iVar6 + 1;
-      iVar7 = iVar7 + 0xe0;
-      param_2[*param_3] = uVar5;
+      iVar5 = iVar5 + 1;
+      iVar6 = iVar6 + 0xe0;
+      param_2[*param_3] = uVar4;
       *param_3 = *param_3 + 1;
-      iVar3 = MeetPlayer_GetCount(iVar1);
-      iVar2 = iVar7 + iVar1 * 0x2bd0;
-    } while (iVar6 < iVar3);
+      iVar2 = MeetPlayer_GetCount(param_1);
+      iVar1 = iVar6 + param_1 * 0x2bd0;
+    } while (iVar5 < iVar2);
   }
-  iVar6 = 0;
-  iVar2 = LiveParty_GetCount();
-  if (0 < iVar2) {
+  iVar5 = 0;
+  iVar1 = LiveParty_GetCount();
+  if (0 < iVar1) {
     do {
-      uVar5 = LiveParty_GetPlayer(iVar6);
-      bVar4 = Live_XUIDIsLocalPlayer(uVar5);
-      if ((!bVar4) && (iVar2 = MeetPlayer_GetPositionByXuid(iVar1,uVar5), iVar2 < 0)) {
+      uVar4 = LiveParty_GetPlayer(iVar5);
+      bVar3 = Live_XUIDIsLocalPlayer(uVar4);
+      if ((!bVar3) && (iVar1 = MeetPlayer_GetPositionByXuid(param_1,uVar4), iVar1 < 0)) {
         if (0x51 < (uint)*param_3) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_presence.cpp"
                           ,0x360,0,
                           "(*currentCount) doesn\'t index MAX_SUBSCRIBED_USERS\n\t%i not in [0, %i)"
                          );
         }
-        param_2[*param_3] = uVar5;
+        param_2[*param_3] = uVar4;
         *param_3 = *param_3 + 1;
       }
-      iVar6 = iVar6 + 1;
-      iVar2 = LiveParty_GetCount();
-    } while (iVar6 < iVar2);
+      iVar5 = iVar5 + 1;
+      iVar1 = LiveParty_GetCount();
+    } while (iVar5 < iVar1);
   }
-  __restgprlr_22();
   return;
 }
 
 
 // 82654208  Xenon_PresenceGatherOldUsers  (xenon/xenon_presence.cpp:874)
+
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
 
 void Xenon_PresenceGatherOldUsers
                (int param_1,ulong64 *param_2,int param_3,ulong64 *param_4,int *param_5)
@@ -888,154 +885,126 @@ void Xenon_PresenceGatherOldUsers
 {
   bool bVar1;
   int iVar2;
-  ulonglong uVar3;
-  ulonglong uVar4;
-  ulonglong uVar5;
-  uint *puVar6;
-  int iVar7;
-  ulonglong uVar8;
-  longlong lVar9;
+  ulong64 *puVar3;
+  int iVar4;
   
-  uVar8 = (ulonglong)(int)param_5;
-  uVar5 = (ulonglong)(int)param_4;
-  uVar4 = (ulonglong)(int)param_2;
-  uVar3 = __savegprlr_22(param_1);
-  if ((uVar5 & 0xffffffff) == 0) {
+  if (param_4 == (ulong64 *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_presence.cpp",
                     0x36f,0,"%s");
   }
-  if ((uVar8 & 0xffffffff) == 0) {
+  if (param_5 == (int *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_presence.cpp",
                     0x370,0,"%s");
   }
-  if ((param_3 != 0) && ((uVar4 & 0xffffffff) == 0)) {
+  if ((param_3 != 0) && (param_2 == (ulong64 *)0x0)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_presence.cpp",
                     0x371,0,"%s");
   }
-  iVar2 = (int)((uVar3 & 0xffffffff) << 2);
-  lVar9 = 0;
-  puVar6 = (uint *)uVar8;
-  *puVar6 = 0;
-  if (0 < *(int *)((int)s_subscribedUserCount + iVar2)) {
+  iVar4 = 0;
+  *param_5 = 0;
+  if (0 < s_subscribedUserCount[param_1]) {
     do {
       bVar1 = true;
-      iVar7 = 0;
+      iVar2 = 0;
       if (0 < param_3) {
-        uVar8 = uVar4;
+        puVar3 = param_2;
         do {
-          if (*(longlong *)(&DAT_8425e8c8 + (int)((uVar3 * 0x52 + lVar9 & 0xffffffff) << 3)) ==
-              *(longlong *)uVar8) {
+          if (*(ulong64 *)(&DAT_8425e8c8 + (param_1 * 0x52 + iVar4) * 8) == *puVar3) {
             bVar1 = false;
             break;
           }
-          iVar7 = iVar7 + 1;
-          uVar8 = uVar8 + 8;
-        } while (iVar7 < param_3);
+          iVar2 = iVar2 + 1;
+          puVar3 = puVar3 + 1;
+        } while (iVar2 < param_3);
       }
       if (bVar1) {
-        if (0x51 < *puVar6) {
+        if (0x51 < (uint)*param_5) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_presence.cpp"
                           ,900,0,
                           "(*oldUserCount) doesn\'t index MAX_SUBSCRIBED_USERS\n\t%i not in [0, %i)"
                          );
         }
-        *(undefined8 *)(*puVar6 * 8 + (int)uVar5) =
-             *(undefined8 *)(&DAT_8425e8c8 + (int)((uVar3 * 0x52 + lVar9 & 0xffffffff) << 3));
-        *puVar6 = *puVar6 + 1;
+        param_4[*param_5] = *(ulong64 *)(&DAT_8425e8c8 + (param_1 * 0x52 + iVar4) * 8);
+        *param_5 = *param_5 + 1;
       }
-      lVar9 = lVar9 + 1;
-    } while ((int)lVar9 < *(int *)((int)s_subscribedUserCount + iVar2));
+      iVar4 = iVar4 + 1;
+    } while (iVar4 < s_subscribedUserCount[param_1]);
   }
-  __restgprlr_22();
   return;
 }
 
 
 // 82654398  Xenon_PresenceGatherNewUsers  (xenon/xenon_presence.cpp:908)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
+
 void Xenon_PresenceGatherNewUsers
                (int param_1,ulong64 *param_2,int param_3,ulong64 *param_4,int *param_5)
 
 {
-  int iVar1;
-  bool bVar2;
-  ulonglong uVar3;
-  ulonglong uVar4;
-  ulonglong uVar5;
-  uint *puVar6;
-  longlong lVar7;
-  ulonglong uVar8;
-  longlong lVar9;
+  bool bVar1;
+  int iVar2;
+  longlong lVar3;
   
-  uVar5 = (ulonglong)(int)param_5;
-  uVar4 = (ulonglong)(int)param_4;
-  lVar9 = (longlong)param_3;
-  uVar8 = (ulonglong)(int)param_2;
-  uVar3 = __savegprlr_23(param_1);
-  if ((uVar4 & 0xffffffff) == 0) {
+  lVar3 = (longlong)param_3;
+  if (param_4 == (ulong64 *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_presence.cpp",
                     0x391,0,"%s");
   }
-  if ((uVar5 & 0xffffffff) == 0) {
+  if (param_5 == (int *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_presence.cpp",
                     0x392,0,"%s");
   }
-  if (((int)lVar9 != 0) && ((uVar8 & 0xffffffff) == 0)) {
+  if ((param_3 != 0) && (param_2 == (ulong64 *)0x0)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_presence.cpp",
                     0x393,0,"%s");
   }
-  puVar6 = (uint *)uVar5;
-  *puVar6 = 0;
-  if (0 < (int)lVar9) {
+  *param_5 = 0;
+  if (0 < param_3) {
     do {
-      iVar1 = *(int *)((int)s_subscribedUserCount + (int)((uVar3 & 0xffffffff) << 2));
-      bVar2 = true;
-      lVar7 = 0;
-      if (0 < iVar1) {
+      bVar1 = true;
+      iVar2 = 0;
+      if (0 < s_subscribedUserCount[param_1]) {
         do {
-          if (*(longlong *)(&DAT_8425e8c8 + (int)((uVar3 * 0x52 + lVar7 & 0xffffffff) << 3)) ==
-              *(longlong *)uVar8) {
-            bVar2 = false;
+          if (*(ulong64 *)(&DAT_8425e8c8 + (param_1 * 0x52 + iVar2) * 8) == *param_2) {
+            bVar1 = false;
             break;
           }
-          lVar7 = lVar7 + 1;
-        } while ((int)lVar7 < iVar1);
+          iVar2 = iVar2 + 1;
+        } while (iVar2 < s_subscribedUserCount[param_1]);
       }
-      if (bVar2) {
-        if (0x51 < *puVar6) {
+      if (bVar1) {
+        if (0x51 < (uint)*param_5) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_presence.cpp"
                           ,0x3a6,0,
                           "(*newUserCount) doesn\'t index MAX_SUBSCRIBED_USERS\n\t%i not in [0, %i)"
                          );
         }
-        *(longlong *)(*puVar6 * 8 + (int)uVar4) = *(longlong *)uVar8;
-        *puVar6 = *puVar6 + 1;
+        param_4[*param_5] = *param_2;
+        *param_5 = *param_5 + 1;
       }
-      lVar9 = lVar9 + -1;
-      uVar8 = uVar8 + 8;
-    } while (lVar9 != 0);
+      lVar3 = lVar3 + -1;
+      param_2 = param_2 + 1;
+    } while (lVar3 != 0);
   }
-  __restgprlr_23();
   return;
 }
 
 
 // 82654508  Xenon_PresenceNeeded  (xenon/xenon_presence.cpp:942)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 bool Xenon_PresenceNeeded(int param_1)
 
 {
   int iVar1;
-  ulonglong uVar2;
-  int iVar4;
-  bool bVar5;
-  undefined1 uVar6;
-  undefined8 uVar3;
+  bool bVar2;
   LocalClientNum_t local_40 [16];
   
-  uVar2 = __savegprlr_27(param_1);
   if (xenon_presence_cooloff_timer == (dvar_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_presence.cpp",
                     0x3b2,0,"%s");
@@ -1044,148 +1013,130 @@ bool Xenon_PresenceNeeded(int param_1)
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_presence.cpp",
                     0x3b3,0,"%s");
   }
-  iVar4 = Sys_Milliseconds();
-  bVar5 = CL_DoesControllerIndexHaveALocalClientNum((int)uVar2,local_40);
-  if ((bVar5) && (bVar5 = Menu_IsMenuOpenAndVisible(local_40[0],"popup_friends"), bVar5)) {
-    iVar1 = (int)((uVar2 & 0xffffffff) << 2);
-    if ((*(int *)((int)s_presenceLastNeeded + iVar1) != 0) ||
-       ((xenon_presence_initial_timer->current).integer <= iVar4)) {
-      *(int *)((int)s_presenceLastNeeded + iVar1) = iVar4;
-      uVar6 = __restgprlr_27(1);
-      return (bool)uVar6;
+  iVar1 = Sys_Milliseconds();
+  bVar2 = CL_DoesControllerIndexHaveALocalClientNum(param_1,local_40);
+  if ((bVar2) && (bVar2 = Menu_IsMenuOpenAndVisible(local_40[0],"popup_friends"), bVar2)) {
+    if ((s_presenceLastNeeded[param_1] != 0) ||
+       ((xenon_presence_initial_timer->current).integer <= iVar1)) {
+      s_presenceLastNeeded[param_1] = iVar1;
+      return true;
     }
   }
-  else {
-    iVar1 = *(int *)((int)s_presenceLastNeeded + (int)((uVar2 & 0xffffffff) << 2));
-    if (iVar1 != 0) {
-      uVar3 = 1;
-      if (iVar4 - iVar1 < (xenon_presence_cooloff_timer->current).integer) goto LAB_82654628;
-    }
+  else if ((s_presenceLastNeeded[param_1] != 0) &&
+          (iVar1 - s_presenceLastNeeded[param_1] < (xenon_presence_cooloff_timer->current).integer))
+  {
+    return true;
   }
-  uVar3 = 0;
-LAB_82654628:
-  uVar6 = __restgprlr_27(uVar3);
-  return (bool)uVar6;
+  return false;
 }
 
 
 // 82654630  Xenon_PresenceUpdate  (xenon/xenon_presence.cpp:973)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
+
 void Xenon_PresenceUpdate(int param_1)
 
 {
+  bool bVar3;
   ulong uVar1;
-  ulonglong uVar2;
-  bool bVar5;
-  ulong uVar3;
-  ulong uVar4;
-  int iVar6;
+  ulong uVar2;
+  int iVar4;
   ulong local_800 [4];
   ulong64 auStack_7f0 [82];
   ulong64 auStack_560 [82];
   ulong64 auStack_2d0 [90];
   
-  uVar2 = __savegprlr_25(param_1);
-  bVar5 = LiveParty_PresenceBusy();
-  if ((!bVar5) && (bVar5 = MeetPlayer_PresenceBusy(), !bVar5)) {
-    uVar4 = (ulong)uVar2;
-    bVar5 = Xenon_PresenceNeeded(uVar4);
-    if (bVar5) {
-      bVar5 = false;
-      Xenon_PresenceGatherCurrentUsers(uVar4,auStack_7f0,(int *)local_800);
-      uVar1 = local_800[0];
+  bVar3 = LiveParty_PresenceBusy();
+  if ((!bVar3) && (bVar3 = MeetPlayer_PresenceBusy(), !bVar3)) {
+    bVar3 = Xenon_PresenceNeeded(param_1);
+    if (bVar3) {
+      bVar3 = false;
+      Xenon_PresenceGatherCurrentUsers(param_1,auStack_7f0,(int *)local_800);
+      uVar2 = local_800[0];
       if (((int)local_800[0] < 0) || (0x52 < (int)local_800[0])) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_presence.cpp",
                         0x3e9,0,
                         "currentCount not in [0, MAX_SUBSCRIBED_USERS]\n\t%i not in [%i, %i]");
       }
-      Xenon_PresenceGatherOldUsers(uVar4,auStack_7f0,uVar1,auStack_560,(int *)local_800);
-      uVar3 = local_800[0];
+      Xenon_PresenceGatherOldUsers(param_1,auStack_7f0,uVar2,auStack_560,(int *)local_800);
+      uVar1 = local_800[0];
       if (((int)local_800[0] < 0) ||
-         (iVar6 = (int)((uVar2 & 0x3fffffff) << 2),
-         *(int *)((int)s_subscribedUserCount + iVar6) < (int)local_800[0])) {
-        iVar6 = (int)((uVar2 & 0x3fffffff) << 2);
+         (iVar4 = param_1 * 4, s_subscribedUserCount[param_1] < (int)local_800[0])) {
+        iVar4 = param_1 << 2;
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_presence.cpp",
                         0x3ec,0,
                         "removeCount not in [0, s_subscribedUserCount[controllerIndex]]\n\t%i not in [%i, %i]"
                        );
       }
-      if (uVar3 != 0) {
-        uVar3 = XPresenceUnsubscribe(uVar4,uVar3,auStack_560);
-        if (uVar3 != 0) {
+      if (uVar1 != 0) {
+        uVar1 = XPresenceUnsubscribe(param_1,uVar1,auStack_560);
+        if (uVar1 != 0) {
           Com_PrintError(0x10,
                          "Error %d in XPresenceUnsubscribe() for Xenon_PresenceUpdate removing old users.\n"
                         );
-          __restgprlr_25();
           return;
         }
-        bVar5 = true;
+        bVar3 = true;
       }
-      Xenon_PresenceGatherNewUsers(uVar4,auStack_7f0,uVar1,auStack_2d0,(int *)local_800);
-      if (((int)local_800[0] < 0) || ((int)uVar1 < (int)local_800[0])) {
+      Xenon_PresenceGatherNewUsers(param_1,auStack_7f0,uVar2,auStack_2d0,(int *)local_800);
+      if (((int)local_800[0] < 0) || ((int)uVar2 < (int)local_800[0])) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_presence.cpp",
                         0x3f9,0,"newCount not in [0, currentCount]\n\t%i not in [%i, %i]");
       }
       if (local_800[0] != 0) {
-        uVar3 = XPresenceSubscribe(uVar4,local_800[0],auStack_2d0);
-        if (uVar3 != 0) {
+        uVar1 = XPresenceSubscribe(param_1,local_800[0],auStack_2d0);
+        if (uVar1 != 0) {
           Com_PrintError(0x10,"Error %d in XPresenceSubscribe() for Xenon_PresenceUpdate.\n");
-          __restgprlr_25();
           return;
         }
-        bVar5 = true;
+        bVar3 = true;
       }
-      *(ulong *)((int)s_subscribedUserCount + iVar6) = uVar1;
-      if (uVar1 != 0) {
-        Com_Memcpy(&DAT_8425e8c8 + uVar4 * 0x290,auStack_7f0,uVar1 << 3);
+      *(ulong *)((int)s_subscribedUserCount + iVar4) = uVar2;
+      if (uVar2 != 0) {
+        Com_Memcpy(&DAT_8425e8c8 + param_1 * 0x290,auStack_7f0,uVar2 << 3);
       }
-      if (bVar5) {
+      if (bVar3) {
         LiveParty_MarkPresenceForUpdate();
-        MeetPlayer_MarkPresenceForUpdate(uVar4);
-        __restgprlr_25();
+        MeetPlayer_MarkPresenceForUpdate(param_1);
         return;
       }
     }
-    else {
-      iVar6 = (int)((uVar2 & 0xffffffff) << 2);
-      uVar1 = *(ulong *)((int)s_subscribedUserCount + iVar6);
-      if (uVar1 != 0) {
-        uVar4 = XPresenceUnsubscribe(uVar4,uVar1,(ulong64 *)(&DAT_8425e8c8 + uVar4 * 0x290));
-        if (uVar4 != 0) {
-          Com_PrintError(0x10,
-                         "Error %d in XPresenceUnsubscribe() for Xenon_PresenceUpdate removing all users.\n"
-                        );
-          __restgprlr_25();
-          return;
-        }
-        *(undefined4 *)((int)s_subscribedUserCount + iVar6) = 0;
+    else if (s_subscribedUserCount[param_1] != 0) {
+      uVar2 = XPresenceUnsubscribe
+                        (param_1,s_subscribedUserCount[param_1],
+                         (ulong64 *)(&DAT_8425e8c8 + param_1 * 0x290));
+      if (uVar2 != 0) {
+        Com_PrintError(0x10,
+                       "Error %d in XPresenceUnsubscribe() for Xenon_PresenceUpdate removing all users.\n"
+                      );
+        return;
       }
+      s_subscribedUserCount[param_1] = 0;
     }
   }
-  __restgprlr_25();
   return;
 }
 
 
 // 826548A8  Xenon_GetPresenceString  (xenon/xenon_presence.cpp:1059)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void Xenon_GetPresenceString(_XONLINE_PRESENCE *param_1,char *param_2,int param_3)
 
 {
   uint uVar1;
-  int iVar2;
-  char *pcVar3;
-  char *pcVar4;
-  bool bVar5;
-  ulonglong uVar6;
+  char *pcVar2;
+  bool bVar3;
   
-  uVar6 = (ulonglong)(int)param_2;
-  iVar2 = __savegprlr_27(param_1);
-  if (iVar2 == 0) {
+  if (param_1 == (_XONLINE_PRESENCE *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_presence.cpp",
                     0x424,0,"%s");
   }
-  if ((uVar6 & 0xffffffff) == 0) {
+  if (param_2 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_presence.cpp",
                     0x425,0,"%s");
   }
@@ -1193,48 +1144,46 @@ void Xenon_GetPresenceString(_XONLINE_PRESENCE *param_1,char *param_2,int param_
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_presence.cpp",
                     0x426,0,"%s");
   }
-  pcVar3 = (char *)uVar6;
-  if ((*(uint *)(iVar2 + 8) & 0x40000000) == 0) {
-    if ((*(uint *)(iVar2 + 8) & 0x80000000) != 0) {
-      pcVar4 = "XBOXLIVE_FRIEND_REQUEST_RECEIVED";
+  if ((param_1->dwState & 0x40000000) == 0) {
+    if ((param_1->dwState & 0x80000000) != 0) {
+      pcVar2 = "XBOXLIVE_FRIEND_REQUEST_RECEIVED";
       goto LAB_826549b8;
     }
-    if ((*(int *)(iVar2 + 0x14) == 0x415608cb) &&
-       ((*(int *)(iVar2 + 0x20) == 0 ||
-        (bVar5 = MakeWideCharNameSafeForAllLanguages(pcVar3,(wchar_t *)(iVar2 + 0x24),param_3),
-        !bVar5)))) {
-      pcVar4 = "XBOXLIVE_ONLINE";
+    if ((param_1->dwTitleID == 0x415608cb) &&
+       ((param_1->cchRichPresence == 0 ||
+        (bVar3 = MakeWideCharNameSafeForAllLanguages(param_2,param_1->wszRichPresence,param_3),
+        !bVar3)))) {
+      pcVar2 = "XBOXLIVE_ONLINE";
       goto LAB_826549b8;
     }
   }
   else {
-    pcVar4 = "XBOXLIVE_FRIEND_REQUEST_PENDING";
+    pcVar2 = "XBOXLIVE_FRIEND_REQUEST_PENDING";
 LAB_826549b8:
-    SEH_SafeTranslateString(pcVar4);
-    Com_sprintf(pcVar3,param_3,"%s");
+    SEH_SafeTranslateString(pcVar2);
+    Com_sprintf(param_2,param_3,"%s");
   }
-  uVar1 = *(uint *)(iVar2 + 8);
+  uVar1 = param_1->dwState;
   if ((uVar1 & 1) != 0) {
     if ((uVar1 & 0xf0000) == 0x10000) {
-      pcVar4 = "XBOXLIVE_AWAY";
+      pcVar2 = "XBOXLIVE_AWAY";
       goto LAB_82654a38;
     }
     if ((uVar1 & 1) != 0) {
       if ((uVar1 & 0xf0000) == 0x20000) {
-        pcVar4 = "XBOXLIVE_BUSY";
+        pcVar2 = "XBOXLIVE_BUSY";
         goto LAB_82654a38;
       }
       if ((uVar1 & 1) != 0) {
-        pcVar4 = "XBOXLIVE_ONLINE";
+        pcVar2 = "XBOXLIVE_ONLINE";
         goto LAB_82654a38;
       }
     }
   }
-  pcVar4 = "XBOXLIVE_OFFLINE";
+  pcVar2 = "XBOXLIVE_OFFLINE";
 LAB_82654a38:
-  SEH_SafeTranslateString(pcVar4);
-  iVar2 = Com_sprintf(pcVar3,param_3,"%s");
-  __restgprlr_27(iVar2);
+  SEH_SafeTranslateString(pcVar2);
+  Com_sprintf(param_2,param_3,"%s");
   return;
 }
 

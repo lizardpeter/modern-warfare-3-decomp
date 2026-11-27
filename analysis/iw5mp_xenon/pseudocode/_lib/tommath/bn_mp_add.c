@@ -2,33 +2,31 @@
 
 // 82257540  mp_add  (line unknown)
 
-void mp_add(undefined8 param_1,undefined8 param_2,int param_3)
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
+void mp_add(int param_1,int param_2,int param_3)
 
 {
   int iVar1;
   int iVar2;
   int iVar3;
-  int iVar4;
   
-  iVar3 = __savegprlr_28();
-  iVar1 = *(int *)(iVar3 + 8);
-  iVar2 = *(int *)((int)param_2 + 8);
+  iVar1 = *(int *)(param_1 + 8);
+  iVar2 = *(int *)(param_2 + 8);
   if (iVar1 == iVar2) {
     *(int *)(param_3 + 8) = iVar1;
     s_mp_add();
-    __restgprlr_28();
     return;
   }
-  iVar4 = mp_cmp_mag();
-  if (iVar4 == -1) {
+  iVar3 = mp_cmp_mag();
+  if (iVar3 == -1) {
     *(int *)(param_3 + 8) = iVar2;
-    s_mp_sub(param_2,iVar3);
-    __restgprlr_28();
+    s_mp_sub(param_2,param_1);
     return;
   }
   *(int *)(param_3 + 8) = iVar1;
-  s_mp_sub(iVar3,param_2);
-  __restgprlr_28();
+  s_mp_sub(param_1,param_2);
   return;
 }
 

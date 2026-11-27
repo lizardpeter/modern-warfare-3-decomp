@@ -2,26 +2,24 @@
 
 // 82605128  SegmentSentinelWrite  (universal/memfile.cpp:64)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void SegmentSentinelWrite(MemoryFile *param_1,int param_2)
 
 {
-  MemoryFile *pMVar1;
-  undefined1 uVar2;
   undefined1 local_30 [48];
   
-  uVar2 = (undefined1)param_2;
-  pMVar1 = (MemoryFile *)__savegprlr_29(param_1);
   local_30[0] = 0x58;
-  MemFile_WriteData(pMVar1,1,local_30);
+  MemFile_WriteData(param_1,1,local_30);
   local_30[0] = 0x58;
-  MemFile_WriteData(pMVar1,1,local_30);
-  local_30[0] = uVar2;
-  MemFile_WriteData(pMVar1,1,local_30);
+  MemFile_WriteData(param_1,1,local_30);
+  local_30[0] = (undefined1)param_2;
+  MemFile_WriteData(param_1,1,local_30);
   local_30[0] = 0x58;
-  MemFile_WriteData(pMVar1,1,local_30);
+  MemFile_WriteData(param_1,1,local_30);
   local_30[0] = 0x58;
-  MemFile_WriteData(pMVar1,1,local_30);
-  __restgprlr_29();
+  MemFile_WriteData(param_1,1,local_30);
   return;
 }
 
@@ -66,44 +64,39 @@ void MemFile_ResetSaveStrings(void)
 
 // 82603338  MemFile_WriteDataForArchive  (universal/memfile.cpp:95)
 
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
+
 void MemFile_WriteDataForArchive(MemoryFile *param_1,int param_2,void *param_3)
 
 {
   byte bVar1;
-  MemoryFile *pMVar2;
-  int iVar3;
-  ulonglong uVar4;
+  int iVar2;
+  uint uVar3;
+  int iVar4;
   int iVar5;
-  ulonglong uVar6;
-  uint uVar7;
-  int iVar8;
-  int iVar9;
-  int iVar10;
-  int iVar11;
+  int iVar6;
+  int iVar7;
   int iStack0000001c;
-  int iStack00000024;
+  void *pvStack00000024;
   
-  uVar6 = (ulonglong)(int)param_3;
-  uVar4 = (ulonglong)(int)param_1;
-  __savegprlr();
-  iStack00000024 = (int)uVar6;
   iStack0000001c = param_2;
-  if ((uVar4 & 0xffffffff) == 0) {
+  pvStack00000024 = param_3;
+  if (param_1 == (MemoryFile *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\memfile.cpp",0x30c,0
                     ,"%s");
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\memfile.cpp",0x285,0
                     ,"%s");
   }
-  pMVar2 = (MemoryFile *)uVar4;
-  if (pMVar2->archiveProc != MemFile_WriteDataForArchive) {
+  if (param_1->archiveProc != MemFile_WriteDataForArchive) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\memfile.cpp",0x30d,0
                     ,"%s");
   }
-  if (pMVar2->buffer == (uchar *)0x0) {
+  if (param_1->buffer == (uchar *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\memfile.cpp",0x30e,0
                     ,"%s");
   }
-  if ((pMVar2->bytesUsed < 0) || (pMVar2->bufferSize < pMVar2->bytesUsed)) {
+  if ((param_1->bytesUsed < 0) || (param_1->bufferSize < param_1->bytesUsed)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\memfile.cpp",0x30f,0
                     ,"memFile->bytesUsed not in [0, memFile->bufferSize]\n\t%i not in [%i, %i]");
   }
@@ -111,191 +104,195 @@ void MemFile_WriteDataForArchive(MemoryFile *param_1,int param_2,void *param_3)
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\memfile.cpp",0x310,0
                     ,"%s\n\t(byteCount) = %i");
   }
-  iVar8 = g_cacheBufferLen;
-  uVar7 = g_zeroCount;
-  iVar5 = DAT_840c3198;
-  iVar10 = g_cacheSize;
-  if (pMVar2->memoryOverflow == false) {
-    if ((uVar6 & 0xffffffff) == 0) {
+  if (param_1->memoryOverflow == false) {
+    if (param_3 == (void *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\memfile.cpp",0x315
                       ,0,"%s");
     }
-    iVar9 = 0;
-    iVar5 = DAT_840c3198;
-    iVar8 = g_cacheBufferLen;
-    iVar10 = g_cacheSize;
-    uVar7 = g_zeroCount;
+    iVar5 = 0;
+    iVar2 = DAT_840c3198;
+    iVar4 = g_cacheBufferLen;
+    iVar6 = g_cacheSize;
+    uVar3 = g_zeroCount;
     if (0 < param_2) {
 LAB_826049c8:
-      iVar11 = iStack0000001c;
-      if (iVar5 == 0) {
-        if (iStack0000001c <= iVar9) {
+      iVar7 = iStack0000001c;
+      if (iVar2 == 0) {
+        if (iStack0000001c <= iVar5) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\memfile.cpp",
                           0x346,0,"%s");
         }
         do {
-          bVar1 = *(byte *)(iVar9 + iStack00000024);
-          if (iVar8 == 0x3f) {
-            iVar5 = MemFile_WriteDataInternal(pMVar2,iVar10,0,0x3f,(uint)bVar1);
-            if (iVar5 == 0) goto LAB_82604d7c;
-            iVar8 = 0;
-            iVar5 = 0;
-            iVar10 = 2;
-            uVar7 = (uint)(bVar1 == 0);
+          bVar1 = *(byte *)(iVar5 + (int)pvStack00000024);
+          if (iVar4 == 0x3f) {
+            iVar2 = MemFile_WriteDataInternal(param_1,iVar6,0,0x3f,(uint)bVar1);
+            if (iVar2 == 0) goto LAB_82604d7c;
+            iVar4 = 0;
+            iVar6 = 2;
+            uVar3 = (uint)(bVar1 == 0);
           }
           else {
             if (bVar1 == 0) {
-              uVar7 = uVar7 + 1;
-              if (iVar8 < 3) {
-                if (-1 < iVar8) goto code_r0x82604ba0;
+              uVar3 = uVar3 + 1;
+              if (iVar4 < 3) {
+                if (-1 < iVar4) goto code_r0x82604ba0;
               }
               else {
-                if (iVar10 < 3) {
+                if (iVar6 < 3) {
                   MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\memfile.cpp"
                                   ,0x361,0,"%s");
                 }
-                if (2 < (int)uVar7) {
-                  if (uVar7 != 3) {
+                if (2 < (int)uVar3) {
+                  if (uVar3 != 3) {
                     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\memfile.cpp"
                                     ,0x364,0,"%s");
                   }
-                  if (iVar10 < 5) {
+                  if (iVar6 < 5) {
                     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\memfile.cpp"
                                     ,0x365,0,"%s\n\t(cacheSize) = %i");
                   }
-                  iVar5 = iVar10 + -3;
-                  if (pMVar2->compress == false) {
-                    iVar10 = pMVar2->bytesUsed + iVar5;
-                    if ((pMVar2->buffer[iVar10 + 1] != '\0') || (pMVar2->buffer[iVar10 + 2] != '\0')
+                  iVar2 = iVar6 + -3;
+                  if (param_1->compress == false) {
+                    iVar6 = param_1->bytesUsed + iVar2;
+                    if ((param_1->buffer[iVar6 + 1] != '\0') || (param_1->buffer[iVar6 + 2] != '\0')
                        ) {
                       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\memfile.cpp"
                                       ,0x372,0,"%s");
                     }
-                    bVar1 = pMVar2->buffer[pMVar2->bytesUsed + iVar5];
+                    bVar1 = param_1->buffer[param_1->bytesUsed + iVar2];
                   }
                   else {
-                    if ((*(char *)(iVar10 + -0x7bedcdfa) != '\0') ||
-                       ((&DAT_84123207)[iVar10] != '\0')) {
+                    if ((*(char *)(iVar6 + -0x7bedcdfa) != '\0') || ((&DAT_84123207)[iVar6] != '\0')
+                       ) {
                       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\memfile.cpp"
                                       ,0x36c,0,"%s");
                     }
-                    bVar1 = *(byte *)(iVar10 + -0x7bedcdfb);
+                    bVar1 = *(byte *)(iVar6 + -0x7bedcdfb);
                   }
                   if (bVar1 == 0) {
                     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\memfile.cpp"
                                     ,0x376,0,"%s");
                   }
-                  iVar5 = MemFile_WriteDataInternal(pMVar2,iVar5,0,iVar8 + -3,(uint)bVar1);
-                  if (iVar5 == 0) goto LAB_82604d7c;
-                  iVar8 = 2;
-                  iVar5 = 1;
-                  iVar10 = 2;
-                  uVar7 = 0;
-                  iVar11 = iStack0000001c;
+                  iVar2 = MemFile_WriteDataInternal(param_1,iVar2,0,iVar4 + -3,(uint)bVar1);
+                  if (iVar2 == 0) goto LAB_82604d7c;
+                  iVar4 = 2;
+                  iVar2 = 1;
+                  iVar6 = 2;
+                  uVar3 = 0;
+                  iVar7 = iStack0000001c;
                   goto LAB_82604bac;
                 }
-                if (pMVar2->compress == false) {
-                  iVar3 = pMVar2->bytesUsed + iVar10;
-                  if ((pMVar2->buffer[iVar3 + -2] == '\0') && (pMVar2->buffer[iVar3 + -1] == '\0'))
-                  {
+                if (param_1->compress == false) {
+                  iVar2 = param_1->bytesUsed + iVar6;
+                  if ((param_1->buffer[iVar2 + -2] == '\0') && (param_1->buffer[iVar2 + -1] == '\0')
+                     ) {
                     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\memfile.cpp"
                                     ,0x389,0,"%s");
                   }
                 }
-                else if ((*(char *)(iVar10 + -0x7bedcdfa) == '\0') &&
-                        ((&DAT_84123207)[iVar10] == '\0')) {
+                else if ((*(char *)(iVar6 + -0x7bedcdfa) == '\0') &&
+                        ((&DAT_84123207)[iVar6] == '\0')) {
                   MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\memfile.cpp"
                                   ,0x386,0,"%s");
                 }
               }
             }
             else {
-              uVar7 = 0;
+              uVar3 = 0;
             }
-            iVar8 = iVar8 + 1;
-            if (0x40 < iVar10) {
+            iVar4 = iVar4 + 1;
+            if (0x40 < iVar6) {
               MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\memfile.cpp"
                               ,0x39b,0,"%s\n\t(cacheSize) = %i");
             }
-            if (iVar10 < 1) {
+            if (iVar6 < 1) {
               MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\memfile.cpp"
                               ,0x39c,0,"%s\n\t(cacheSize) = %i");
             }
-            if (pMVar2->compress == false) {
-              pMVar2->buffer[pMVar2->bytesUsed + iVar10] = bVar1;
+            if (param_1->compress == false) {
+              param_1->buffer[param_1->bytesUsed + iVar6] = bVar1;
             }
             else {
-              g_cacheBuffer[iVar10] = bVar1;
+              g_cacheBuffer[iVar6] = bVar1;
             }
-            iVar10 = iVar10 + 1;
+            iVar6 = iVar6 + 1;
           }
-          iVar9 = iVar9 + 1;
-          if (iVar11 <= iVar9) goto LAB_82604a2c;
+          iVar5 = iVar5 + 1;
+          if (iVar7 <= iVar5) {
+            g_cacheBufferLen = iVar4;
+            g_zeroCount = uVar3;
+            DAT_840c3198 = 0;
+            g_cacheSize = iVar6;
+            return;
+          }
         } while( true );
       }
-      if (iStack0000001c <= iVar9) {
+      if (iStack0000001c <= iVar5) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\memfile.cpp",
                         0x323,0,"%s");
       }
-      while (*(byte *)(iVar9 + iStack00000024) == 0) {
-        uVar7 = uVar7 + 1;
-        if (iVar8 == 0x3f) {
-          uVar7 = 1;
+      while (*(byte *)(iVar5 + (int)pvStack00000024) == 0) {
+        uVar3 = uVar3 + 1;
+        if (iVar4 == 0x3f) {
+          uVar3 = 1;
           goto LAB_82604a40;
         }
-        iVar9 = iVar9 + 1;
-        iVar8 = iVar8 + 1;
-        if (iVar11 <= iVar9) goto LAB_82604a2c;
+        iVar5 = iVar5 + 1;
+        iVar4 = iVar4 + 1;
+        if (iVar7 <= iVar5) {
+          g_cacheBufferLen = iVar4;
+          g_zeroCount = uVar3;
+          DAT_840c3198 = iVar2;
+          g_cacheSize = iVar6;
+          return;
+        }
       }
-      uVar7 = 0;
+      uVar3 = 0;
 LAB_82604a40:
-      iVar5 = MemFile_WriteDataInternal
-                        (pMVar2,iVar10,iVar5,iVar8,(uint)*(byte *)(iVar9 + iStack00000024));
-      if (iVar5 == 0) {
+      iVar2 = MemFile_WriteDataInternal
+                        (param_1,iVar6,iVar2,iVar4,(uint)*(byte *)(iVar5 + (int)pvStack00000024));
+      if (iVar2 == 0) {
 LAB_82604d7c:
-        MemFile_WriteError(pMVar2);
-        __restgprlr();
+        MemFile_WriteError(param_1);
         return;
       }
-      iVar5 = 0;
-      iVar10 = 2;
+      iVar2 = 0;
+      iVar6 = 2;
       goto LAB_82604ba8;
     }
   }
-LAB_82604a2c:
-  g_cacheSize = iVar10;
-  DAT_840c3198 = iVar5;
-  g_zeroCount = uVar7;
-  g_cacheBufferLen = iVar8;
-  __restgprlr();
   return;
 code_r0x82604ba0:
-  iVar5 = iVar8 + 1;
-  iVar11 = iStack0000001c;
+  iVar2 = iVar4 + 1;
+  iVar7 = iStack0000001c;
 LAB_82604ba8:
-  iVar8 = 0;
+  iVar4 = 0;
 LAB_82604bac:
-  iVar9 = iVar9 + 1;
-  if (iVar11 <= iVar9) goto LAB_82604a2c;
+  iVar5 = iVar5 + 1;
+  if (iVar7 <= iVar5) {
+    g_cacheBufferLen = iVar4;
+    g_zeroCount = uVar3;
+    DAT_840c3198 = iVar2;
+    g_cacheSize = iVar6;
+    return;
+  }
   goto LAB_826049c8;
 }
 
 
 // 82603340  MemFile_CommonInit  (universal/memfile.cpp:101)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
+
 void MemFile_CommonInit(MemoryFile *param_1,int param_2,void *param_3,bool param_4,bool param_5)
 
 {
-  undefined4 *puVar1;
-  ulonglong uVar2;
-  
-  uVar2 = (ulonglong)(int)param_3;
-  puVar1 = (undefined4 *)__savegprlr_25(param_1);
-  if (puVar1 == (undefined4 *)0x0) {
+  if (param_1 == (MemoryFile *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\memfile.cpp",0x66,0,
                     "%s");
   }
-  if ((uVar2 & 0xffffffff) == 0) {
+  if (param_3 == (void *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\memfile.cpp",0x67,0,
                     "%s");
   }
@@ -303,17 +300,16 @@ void MemFile_CommonInit(MemoryFile *param_1,int param_2,void *param_3,bool param
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\memfile.cpp",0x68,0,
                     "%s\n\t(size) = %i");
   }
-  *puVar1 = (int)uVar2;
-  puVar1[1] = param_2;
-  puVar1[2] = param_2;
-  puVar1[3] = 0;
-  *(bool *)(puVar1 + 7) = param_4;
-  *(undefined1 *)((int)puVar1 + 0x1d) = 0;
-  puVar1[4] = 0xffffffff;
-  puVar1[5] = 0;
-  puVar1[6] = 0;
-  *(bool *)((int)puVar1 + 0x1e) = param_5;
-  __restgprlr_25();
+  param_1->buffer = param_3;
+  param_1->bufferSize = param_2;
+  param_1->bufferSizeOriginal = param_2;
+  param_1->bytesUsed = 0;
+  param_1->errorOnOverflow = param_4;
+  param_1->memoryOverflow = false;
+  param_1->segmentIndex = -1;
+  param_1->segmentStart = 0;
+  param_1->segmentFullLen = 0;
+  param_1->compress = param_5;
   return;
 }
 
@@ -432,31 +428,29 @@ void MemFile_Shutdown(MemoryFile *param_1)
 
 // 82603698  MemFile_deflateInit  (universal/memfile.cpp:283)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void MemFile_deflateInit(void *param_1,int param_2,bool param_3)
 
 {
-  uchar *puVar1;
-  int iVar2;
-  ulonglong uVar3;
+  int iVar1;
   
-  uVar3 = (ulonglong)param_3;
-  puVar1 = (uchar *)__savegprlr_28(param_1);
   AssertStreamMode(MEM_FILE_MODE_DEFAULT);
-  if ((uVar3 & 0xff) != 0) {
+  if (param_3) {
     memset();
     Zip_InitThreadMemory(&stream,g_zipMemory,0x60000);
-    stream.next_out = puVar1;
+    stream.next_out = param_1;
     stream.avail_out = param_2;
-    iVar2 = deflateInit_(&stream,1,"1.1.4",0x34);
-    if (iVar2 != 0) {
+    iVar1 = deflateInit_(&stream,1,"1.1.4",0x34);
+    if (iVar1 != 0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\memfile.cpp",0x133
                       ,0,"%s");
     }
   }
   streamMode = MEM_FILE_MODE_DEFLATE;
   streamModeThread = GetThreadID();
-  g_compress = SUB81(uVar3,0);
-  __restgprlr_28();
+  g_compress = param_3;
   return;
 }
 
@@ -484,32 +478,32 @@ int MemFile_deflateEnd(bool param_1)
 
 // 82605490  MemFile_StartSegment  (universal/memfile.cpp:342)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void MemFile_StartSegment(MemoryFile *param_1,int param_2)
 
 {
   int iVar1;
-  MemoryFile *pMVar2;
   
-  pMVar2 = (MemoryFile *)__savegprlr_27(param_1);
   if ((param_2 != -1) && ((param_2 < 0 || (5 < param_2)))) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\memfile.cpp",0x159,0
                     ,"%s\n\t(index) = %i");
   }
-  if (pMVar2 == (MemoryFile *)0x0) {
+  if (param_1 == (MemoryFile *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\memfile.cpp",0x285,0
                     ,"%s");
   }
-  if (pMVar2->archiveProc != MemFile_WriteDataForArchive) {
+  if (param_1->archiveProc != MemFile_WriteDataForArchive) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\memfile.cpp",0x15a,0
                     ,"%s");
   }
-  if ((pMVar2->memoryOverflow == false) &&
-     ((iVar1 = pMVar2->segmentIndex, iVar1 == -1 ||
-      (MemFile_EndSegment(pMVar2), pMVar2->memoryOverflow == false)))) {
-    pMVar2->segmentIndex = param_2;
+  if ((param_1->memoryOverflow == false) &&
+     ((iVar1 = param_1->segmentIndex, iVar1 == -1 ||
+      (MemFile_EndSegment(param_1), param_1->memoryOverflow == false)))) {
+    param_1->segmentIndex = param_2;
     if (param_2 == -1) {
-      pMVar2->bufferSize = pMVar2->bytesUsed;
-      __restgprlr_27();
+      param_1->bufferSize = param_1->bytesUsed;
       return;
     }
     if (iVar1 + 1 != param_2) {
@@ -518,51 +512,50 @@ void MemFile_StartSegment(MemoryFile *param_1,int param_2)
     }
     memset();
     g_saveStringsIndex = 4;
-    iVar1 = pMVar2->bytesUsed;
-    pMVar2->segmentStart = iVar1;
-    if (pMVar2->bufferSize < iVar1 + 0x45) {
-      if (pMVar2->errorOnOverflow != false) {
+    iVar1 = param_1->bytesUsed;
+    param_1->segmentStart = iVar1;
+    if (param_1->bufferSize < iVar1 + 0x45) {
+      if (param_1->errorOnOverflow != false) {
         Com_Error(ERR_DROP,"MemFile_StartSegment: Out of memory");
       }
       Com_Printf(10,"MemFile_StartSegment: Out of memory\n");
-      pMVar2->memoryOverflow = true;
-      __restgprlr_27();
+      param_1->memoryOverflow = true;
       return;
     }
-    pMVar2->bytesUsed = iVar1 + 4;
-    if (pMVar2->memoryOverflow != false) {
+    param_1->bytesUsed = iVar1 + 4;
+    if (param_1->memoryOverflow != false) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\memfile.cpp",0x17f
                       ,0,"%s");
     }
-    MemFile_deflateInit(pMVar2->buffer + pMVar2->bytesUsed,pMVar2->bufferSize - pMVar2->bytesUsed,
-                        pMVar2->compress);
+    MemFile_deflateInit(param_1->buffer + param_1->bytesUsed,
+                        param_1->bufferSize - param_1->bytesUsed,param_1->compress);
     g_cacheSize = 1;
     DAT_840c3198 = 0;
     g_zeroCount = 0;
     g_cacheBufferLen = -1;
-    SegmentSentinelWrite(pMVar2,param_2);
+    SegmentSentinelWrite(param_1,param_2);
   }
-  __restgprlr_27();
   return;
 }
 
 
 // 826051F8  MemFile_EndSegment  (universal/memfile.cpp:396)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void MemFile_EndSegment(MemoryFile *param_1)
 
 {
-  MemoryFile *pMVar1;
+  int iVar1;
   int iVar2;
-  int iVar3;
   
-  pMVar1 = (MemoryFile *)__savegprlr_27(param_1);
-  if (pMVar1->memoryOverflow != false) {
+  if (param_1->memoryOverflow != false) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\memfile.cpp",0x195,0
                     ,"%s");
   }
-  if (pMVar1->memoryOverflow == false) {
-    if ((pMVar1->segmentIndex < 0) || (5 < pMVar1->segmentIndex)) {
+  if (param_1->memoryOverflow == false) {
+    if ((param_1->segmentIndex < 0) || (5 < param_1->segmentIndex)) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\memfile.cpp",0x19c
                       ,0,"%s\n\t(index) = %i");
     }
@@ -571,87 +564,82 @@ void MemFile_EndSegment(MemoryFile *param_1)
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\memfile.cpp",
                         0x1a1,0,"%s");
       }
-      iVar2 = MemFile_WriteDataInternal(pMVar1,g_cacheSize,DAT_840c3198,g_cacheBufferLen,0);
-      if (iVar2 == 0) {
-        MemFile_WriteError(pMVar1);
-        __restgprlr_27();
+      iVar1 = MemFile_WriteDataInternal(param_1,g_cacheSize,DAT_840c3198,g_cacheBufferLen,0);
+      if (iVar1 == 0) {
+        MemFile_WriteError(param_1);
         return;
       }
       g_cacheSize = 0;
     }
     AssertStreamMode(MEM_FILE_MODE_DEFLATE);
-    if (pMVar1->compress != false) {
+    if (param_1->compress != false) {
       stream.next_in = g_saveBuffer;
-      if (pMVar1->buffer + pMVar1->bytesUsed != stream.next_out) {
+      if (param_1->buffer + param_1->bytesUsed != stream.next_out) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\memfile.cpp",
                         0x1b1,0,"%s");
       }
-      iVar2 = deflate(&stream,4);
-      if ((iVar2 != 0) && (iVar2 != 1)) {
+      iVar1 = deflate(&stream,4);
+      if ((iVar1 != 0) && (iVar1 != 1)) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\memfile.cpp",
                         0x1b4,0,"%s\n\t(err) = %i");
       }
-      iVar3 = (int)stream.next_out - (int)pMVar1->buffer;
-      pMVar1->bytesUsed = iVar3;
-      if (pMVar1->bufferSize < iVar3) {
+      iVar2 = (int)stream.next_out - (int)param_1->buffer;
+      param_1->bytesUsed = iVar2;
+      if (param_1->bufferSize < iVar2) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\memfile.cpp",
                         0x1b7,0,"%s");
       }
-      if (iVar2 != 1) {
+      if (iVar1 != 1) {
         if (stream.avail_out != 0) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\memfile.cpp",
                           0x1bb,0,"%s\n\t(stream.avail_out) = %i");
         }
-        MemFile_deflateEnd(pMVar1->compress);
-        if (pMVar1->errorOnOverflow != false) {
+        MemFile_deflateEnd(param_1->compress);
+        if (param_1->errorOnOverflow != false) {
           Com_Error(ERR_DROP,"MemFile_EndSegment: Out of memory");
         }
         Com_Printf(10,"MemFile_EndSegment: Out of memory");
-        pMVar1->memoryOverflow = true;
-        __restgprlr_27();
+        param_1->memoryOverflow = true;
         return;
       }
     }
-    iVar2 = MemFile_deflateEnd(pMVar1->compress);
-    if (iVar2 != 0) {
+    iVar1 = MemFile_deflateEnd(param_1->compress);
+    if (iVar1 != 0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\memfile.cpp",0x1cd
                       ,0,"%s");
     }
-    pMVar1->segmentIndex = -1;
-    *(int *)(pMVar1->buffer + pMVar1->segmentStart) = pMVar1->bytesUsed - pMVar1->segmentStart;
+    param_1->segmentIndex = -1;
+    *(int *)(param_1->buffer + param_1->segmentStart) = param_1->bytesUsed - param_1->segmentStart;
   }
-  __restgprlr_27();
   return;
 }
 
 
 // 826037F0  MemFile_inflateInit  (universal/memfile.cpp:470)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void MemFile_inflateInit(void *param_1,int param_2,bool param_3)
 
 {
-  uchar *puVar1;
-  int iVar2;
-  ulonglong uVar3;
+  int iVar1;
   
-  uVar3 = (ulonglong)param_3;
-  puVar1 = (uchar *)__savegprlr_27(param_1);
   AssertStreamMode(MEM_FILE_MODE_DEFAULT);
-  if ((uVar3 & 0xff) != 0) {
+  if (param_3) {
     memset();
     Zip_InitThreadMemory(&stream,g_zipMemory,0x60000);
-    stream.next_in = puVar1;
+    stream.next_in = param_1;
     stream.avail_in = param_2;
-    iVar2 = inflateInit_(&stream,"1.1.4",0x34);
-    if (iVar2 != 0) {
+    iVar1 = inflateInit_(&stream,"1.1.4",0x34);
+    if (iVar1 != 0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\memfile.cpp",0x1ed
                       ,0,"%s");
     }
   }
   streamMode = MEM_FILE_MODE_INFLATE;
   streamModeThread = GetThreadID();
-  g_compress = SUB81(uVar3,0);
-  __restgprlr_27();
+  g_compress = param_3;
   return;
 }
 
@@ -679,43 +667,40 @@ int MemFile_inflateEnd(bool param_1)
 
 // 82603940  MemFile_GetSegmentAddress  (universal/memfile.cpp:528)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 uchar * MemFile_GetSegmentAddress(MemoryFile *param_1,int param_2)
 
 {
-  int *piVar1;
-  uchar *puVar2;
-  int iVar3;
-  longlong lVar4;
-  int iVar5;
+  longlong lVar1;
+  int iVar2;
   
-  lVar4 = (longlong)param_2;
-  piVar1 = (int *)__savegprlr_26(param_1);
-  iVar3 = (int)lVar4;
-  if ((iVar3 < 0) || (5 < iVar3)) {
+  lVar1 = (longlong)param_2;
+  if ((param_2 < 0) || (5 < param_2)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\memfile.cpp",0x213,0
                     ,"%s\n\t(index) = %i");
   }
-  if (*(char *)((int)piVar1 + 0x1d) != '\0') {
+  if (param_1->memoryOverflow != false) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\memfile.cpp",0x214,0
                     ,"%s");
   }
-  iVar5 = 0;
-  if (iVar3 != 0) {
+  iVar2 = 0;
+  if (param_2 != 0) {
     do {
-      if (piVar1[1] < iVar5 + 4) {
+      if (param_1->bufferSize < iVar2 + 4) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\memfile.cpp",
                         0x219,0,"%s");
       }
-      lVar4 = lVar4 + -1;
-      iVar5 = *(int *)(*piVar1 + iVar5) + iVar5;
-    } while (lVar4 != 0);
+      lVar1 = lVar1 + -1;
+      iVar2 = *(int *)(param_1->buffer + iVar2) + iVar2;
+    } while (lVar1 != 0);
   }
-  if (piVar1[1] < iVar5 + 4) {
+  if (param_1->bufferSize < iVar2 + 4) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\memfile.cpp",0x21e,0
                     ,"%s");
   }
-  puVar2 = (uchar *)__restgprlr_26(*piVar1 + iVar5);
-  return puVar2;
+  return param_1->buffer + iVar2;
 }
 
 
@@ -730,20 +715,21 @@ int MemFile_AtEnd(MemoryFile *param_1)
 
 // 82604580  MemFile_MoveToSegment  (universal/memfile.cpp:554)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void MemFile_MoveToSegment(MemoryFile *param_1,int param_2)
 
 {
-  MemoryFile *pMVar1;
-  int iVar2;
-  int *piVar3;
-  int iVar4;
+  int iVar1;
+  int *piVar2;
+  int iVar3;
   
-  pMVar1 = (MemoryFile *)__savegprlr_28(param_1);
-  if (pMVar1 == (MemoryFile *)0x0) {
+  if (param_1 == (MemoryFile *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\memfile.cpp",0x27e,0
                     ,"%s");
   }
-  if (pMVar1->archiveProc != MemFile_ReadData) {
+  if (param_1->archiveProc != MemFile_ReadData) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\memfile.cpp",0x231,0
                     ,"%s");
   }
@@ -751,62 +737,58 @@ void MemFile_MoveToSegment(MemoryFile *param_1,int param_2)
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\memfile.cpp",0x232,0
                     ,"%s\n\t(index) = %i");
   }
-  if (pMVar1->memoryOverflow == false) {
-    if ((-1 < pMVar1->segmentIndex) && (iVar2 = MemFile_inflateEnd(pMVar1->compress), iVar2 != 0)) {
+  if (param_1->memoryOverflow == false) {
+    if ((-1 < param_1->segmentIndex) && (iVar1 = MemFile_inflateEnd(param_1->compress), iVar1 != 0))
+    {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\memfile.cpp",0x23d
                       ,0,"%s");
     }
-    pMVar1->segmentIndex = param_2;
+    param_1->segmentIndex = param_2;
     if (param_2 < 0) {
       SL_ShutdownSystem(0x10);
-      __restgprlr_28();
       return;
     }
     memset();
     g_saveStringsIndex = 4;
-    piVar3 = (int *)MemFile_GetSegmentAddress(pMVar1,param_2);
-    iVar4 = (int)piVar3 - (int)pMVar1->buffer;
-    pMVar1->segmentStart = iVar4;
-    iVar4 = iVar4 + 4;
-    iVar2 = *piVar3;
-    pMVar1->bytesUsed = iVar4;
-    pMVar1->segmentFullLen = iVar2;
-    MemFile_inflateInit(pMVar1->buffer + iVar4,iVar2 + -4,pMVar1->compress);
+    piVar2 = (int *)MemFile_GetSegmentAddress(param_1,param_2);
+    iVar3 = (int)piVar2 - (int)param_1->buffer;
+    param_1->segmentStart = iVar3;
+    iVar3 = iVar3 + 4;
+    iVar1 = *piVar2;
+    param_1->bytesUsed = iVar3;
+    param_1->segmentFullLen = iVar1;
+    MemFile_inflateInit(param_1->buffer + iVar3,iVar1 + -4,param_1->compress);
     g_zeroCount = 0;
     DAT_840c3198 = 0;
-    SegmentSentinelReadAndVerify(pMVar1);
+    SegmentSentinelReadAndVerify(param_1);
   }
-  __restgprlr_28();
   return;
 }
 
 
 // 82603A60  MemFile_CopySegments  (universal/memfile.cpp:604)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 int MemFile_CopySegments(MemoryFile *param_1,int param_2,void *param_3)
 
 {
-  uint uVar1;
+  int iVar1;
   uchar *puVar2;
-  MemoryFile *pMVar3;
-  uchar *puVar4;
-  int iVar5;
-  ulonglong uVar6;
+  uchar *puVar3;
   
-  uVar6 = (ulonglong)(int)param_3;
-  pMVar3 = (MemoryFile *)__savegprlr_29(param_1);
-  if (pMVar3->memoryOverflow != false) {
+  if (param_1->memoryOverflow != false) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\memfile.cpp",0x260,0
                     ,"%s");
   }
-  puVar4 = MemFile_GetSegmentAddress(pMVar3,param_2);
-  uVar1 = pMVar3->bufferSize;
-  puVar2 = pMVar3->buffer;
-  if ((uVar6 & 0xffffffff) != 0) {
+  puVar3 = MemFile_GetSegmentAddress(param_1,param_2);
+  iVar1 = param_1->bufferSize;
+  puVar2 = param_1->buffer;
+  if (param_3 != (void *)0x0) {
     memcpy();
   }
-  iVar5 = __restgprlr_29(((ulonglong)uVar1 - (longlong)(int)puVar4) + ZEXT48(puVar2));
-  return iVar5;
+  return (iVar1 - (int)puVar3) + (int)puVar2;
 }
 
 
@@ -878,105 +860,102 @@ void MemFile_WriteError(MemoryFile *param_1)
 
 // 82603C30  MemFile_WriteDataInternal  (universal/memfile.cpp:668)
 
+/* WARNING: Function: __savegprlr_18 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_18 replaced with injection: xenon_save_restore */
+
 int MemFile_WriteDataInternal(MemoryFile *param_1,int param_2,int param_3,int param_4,uint param_5)
 
 {
-  int *piVar1;
-  int iVar2;
-  char cVar3;
-  uchar uVar4;
-  ulonglong uVar5;
-  longlong lVar6;
+  int iVar1;
+  ulonglong uVar2;
+  uchar uVar3;
+  longlong lVar4;
   
-  uVar4 = (uchar)param_5;
-  cVar3 = (char)param_4;
-  uVar5 = (ulonglong)param_3;
-  lVar6 = (longlong)param_2;
-  piVar1 = (int *)__savegprlr_18(param_1);
-  if (piVar1 == (int *)0x0) {
+  if (param_1 == (MemoryFile *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\memfile.cpp",0x2a6,0
                     ,"%s");
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\memfile.cpp",0x285,0
                     ,"%s");
   }
-  if ((code *)piVar1[8] != MemFile_WriteDataForArchive) {
+  if (param_1->archiveProc != MemFile_WriteDataForArchive) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\memfile.cpp",0x2a7,0
                     ,"%s");
   }
-  if (*piVar1 == 0) {
+  if (param_1->buffer == (uchar *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\memfile.cpp",0x2a8,0
                     ,"%s");
   }
-  if ((piVar1[3] < 0) || (piVar1[1] < piVar1[3])) {
+  if ((param_1->bytesUsed < 0) || (param_1->bufferSize < param_1->bytesUsed)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\memfile.cpp",0x2a9,0
                     ,"memFile->bytesUsed not in [0, memFile->bufferSize]\n\t%i not in [%i, %i]");
   }
-  if ((int)lVar6 < 1) {
+  if (param_2 < 1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\memfile.cpp",0x2aa,0
                     ,"%s\n\t(bytes) = %i");
   }
   AssertStreamMode(MEM_FILE_MODE_DEFLATE);
-  if (*(char *)((int)piVar1 + 0x1d) != '\0') {
+  if (param_1->memoryOverflow != false) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\memfile.cpp",0x2ac,0
                     ,"%s");
   }
-  if (*(char *)((int)piVar1 + 0x1e) != '\0') {
-    g_cacheBuffer[0] = (char)((uVar5 & 0xffffffff) << 6) + cVar3;
-    uVar5 = (ulonglong)stream.avail_in;
-    lVar6 = uVar5 + lVar6;
-    if (lVar6 == 0) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\memfile.cpp",0x2b5
-                      ,0,"%s");
+  uVar3 = (uchar)param_5;
+  if (param_1->compress == false) {
+    param_1->buffer[param_1->bytesUsed] = (char)param_3 * '@' + (char)param_4;
+    iVar1 = param_2 + param_1->bytesUsed;
+    param_1->bytesUsed = iVar1;
+    if (param_1->bufferSize < iVar1 + 0x41) {
+      return 0;
     }
-    else if (0x1fff < (int)lVar6) {
-      while( true ) {
-        if (0x1fff < uVar5) {
-          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\memfile.cpp",
-                          0x2bf,0,"%s");
-        }
-        memcpy();
-        stream.next_in = g_saveBuffer;
-        lVar6 = lVar6 + -0x2000;
-        stream.avail_in = 0x2000;
-        if ((uchar *)(*piVar1 + piVar1[3]) != stream.next_out) {
-          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\memfile.cpp",
-                          0x2c8,0,"%s");
-        }
-        iVar2 = deflate(&stream,2);
-        if (iVar2 != 0) {
-          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\memfile.cpp",
-                          0x2ce,0,"%s");
-        }
-        iVar2 = (int)stream.next_out - *piVar1;
-        piVar1[3] = iVar2;
-        if (piVar1[1] < iVar2) {
-          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\memfile.cpp",
-                          0x2d1,0,"%s");
-        }
-        if (stream.avail_out == 0) goto LAB_82603f84;
-        if ((int)lVar6 == 0) goto LAB_82603f2c;
-        if ((int)lVar6 < 0x2000) break;
-        uVar5 = (ulonglong)stream.avail_in;
+    param_1->buffer[iVar1 + 1] = uVar3;
+    return 1;
+  }
+  g_cacheBuffer[0] = (char)param_3 * '@' + (char)param_4;
+  uVar2 = (ulonglong)stream.avail_in;
+  lVar4 = uVar2 + (longlong)param_2;
+  if (lVar4 == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\memfile.cpp",0x2b5,0
+                    ,"%s");
+  }
+  else if (0x1fff < (int)lVar4) {
+    while( true ) {
+      if (0x1fff < uVar2) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\memfile.cpp",
+                        0x2bf,0,"%s");
       }
+      memcpy();
+      stream.next_in = g_saveBuffer;
+      lVar4 = lVar4 + -0x2000;
+      stream.avail_in = 0x2000;
+      if (param_1->buffer + param_1->bytesUsed != stream.next_out) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\memfile.cpp",
+                        0x2c8,0,"%s");
+      }
+      iVar1 = deflate(&stream,2);
+      if (iVar1 != 0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\memfile.cpp",
+                        0x2ce,0,"%s");
+      }
+      iVar1 = (int)stream.next_out - (int)param_1->buffer;
+      param_1->bytesUsed = iVar1;
+      if (param_1->bufferSize < iVar1) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\memfile.cpp",
+                        0x2d1,0,"%s");
+      }
+      if (stream.avail_out == 0) {
+        return 0;
+      }
+      if ((int)lVar4 == 0) {
+        g_cacheBuffer[1] = uVar3;
+        return 1;
+      }
+      if ((int)lVar4 < 0x2000) break;
+      uVar2 = (ulonglong)stream.avail_in;
     }
-    memcpy();
-    stream.avail_in = (uint)lVar6;
-LAB_82603f2c:
-    g_cacheBuffer[1] = uVar4;
-    iVar2 = __restgprlr_18(1);
-    return iVar2;
   }
-  *(char *)(*piVar1 + piVar1[3]) = (char)((uVar5 & 0xffffffff) << 6) + cVar3;
-  iVar2 = (int)lVar6 + piVar1[3];
-  piVar1[3] = iVar2;
-  if (iVar2 + 0x41 <= piVar1[1]) {
-    *(uchar *)(*piVar1 + iVar2 + 1) = uVar4;
-    iVar2 = __restgprlr_18(1);
-    return iVar2;
-  }
-LAB_82603f84:
-  iVar2 = __restgprlr_18(0);
-  return iVar2;
+  memcpy();
+  stream.avail_in = (uint)lVar4;
+  g_cacheBuffer[1] = uVar3;
+  return 1;
 }
 
 
@@ -995,44 +974,39 @@ int MemFile_GetUsedSize(MemoryFile *param_1)
 
 // 826047C0  MemFile_WriteData  (universal/memfile.cpp:770)
 
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
+
 void MemFile_WriteData(MemoryFile *param_1,int param_2,void *param_3)
 
 {
   byte bVar1;
-  MemoryFile *pMVar2;
-  int iVar3;
-  ulonglong uVar4;
+  int iVar2;
+  uint uVar3;
+  int iVar4;
   int iVar5;
-  ulonglong uVar6;
-  uint uVar7;
-  int iVar8;
-  int iVar9;
-  int iVar10;
-  int iVar11;
+  int iVar6;
+  int iVar7;
   int iStack0000001c;
-  int iStack00000024;
+  void *pvStack00000024;
   
-  uVar6 = (ulonglong)(int)param_3;
-  uVar4 = (ulonglong)(int)param_1;
-  __savegprlr();
-  iStack00000024 = (int)uVar6;
   iStack0000001c = param_2;
-  if ((uVar4 & 0xffffffff) == 0) {
+  pvStack00000024 = param_3;
+  if (param_1 == (MemoryFile *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\memfile.cpp",0x30c,0
                     ,"%s");
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\memfile.cpp",0x285,0
                     ,"%s");
   }
-  pMVar2 = (MemoryFile *)uVar4;
-  if (pMVar2->archiveProc != MemFile_WriteDataForArchive) {
+  if (param_1->archiveProc != MemFile_WriteDataForArchive) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\memfile.cpp",0x30d,0
                     ,"%s");
   }
-  if (pMVar2->buffer == (uchar *)0x0) {
+  if (param_1->buffer == (uchar *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\memfile.cpp",0x30e,0
                     ,"%s");
   }
-  if ((pMVar2->bytesUsed < 0) || (pMVar2->bufferSize < pMVar2->bytesUsed)) {
+  if ((param_1->bytesUsed < 0) || (param_1->bufferSize < param_1->bytesUsed)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\memfile.cpp",0x30f,0
                     ,"memFile->bytesUsed not in [0, memFile->bufferSize]\n\t%i not in [%i, %i]");
   }
@@ -1040,210 +1014,212 @@ void MemFile_WriteData(MemoryFile *param_1,int param_2,void *param_3)
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\memfile.cpp",0x310,0
                     ,"%s\n\t(byteCount) = %i");
   }
-  iVar8 = g_cacheBufferLen;
-  uVar7 = g_zeroCount;
-  iVar5 = DAT_840c3198;
-  iVar10 = g_cacheSize;
-  if (pMVar2->memoryOverflow == false) {
-    if ((uVar6 & 0xffffffff) == 0) {
+  if (param_1->memoryOverflow == false) {
+    if (param_3 == (void *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\memfile.cpp",0x315
                       ,0,"%s");
     }
-    iVar9 = 0;
-    iVar5 = DAT_840c3198;
-    iVar8 = g_cacheBufferLen;
-    iVar10 = g_cacheSize;
-    uVar7 = g_zeroCount;
+    iVar5 = 0;
+    iVar2 = DAT_840c3198;
+    iVar4 = g_cacheBufferLen;
+    iVar6 = g_cacheSize;
+    uVar3 = g_zeroCount;
     if (0 < param_2) {
 LAB_826049c8:
-      iVar11 = iStack0000001c;
-      if (iVar5 == 0) {
-        if (iStack0000001c <= iVar9) {
+      iVar7 = iStack0000001c;
+      if (iVar2 == 0) {
+        if (iStack0000001c <= iVar5) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\memfile.cpp",
                           0x346,0,"%s");
         }
         do {
-          bVar1 = *(byte *)(iVar9 + iStack00000024);
-          if (iVar8 == 0x3f) {
-            iVar5 = MemFile_WriteDataInternal(pMVar2,iVar10,0,0x3f,(uint)bVar1);
-            if (iVar5 == 0) goto LAB_82604d7c;
-            iVar8 = 0;
-            iVar5 = 0;
-            iVar10 = 2;
-            uVar7 = (uint)(bVar1 == 0);
+          bVar1 = *(byte *)(iVar5 + (int)pvStack00000024);
+          if (iVar4 == 0x3f) {
+            iVar2 = MemFile_WriteDataInternal(param_1,iVar6,0,0x3f,(uint)bVar1);
+            if (iVar2 == 0) goto LAB_82604d7c;
+            iVar4 = 0;
+            iVar6 = 2;
+            uVar3 = (uint)(bVar1 == 0);
           }
           else {
             if (bVar1 == 0) {
-              uVar7 = uVar7 + 1;
-              if (iVar8 < 3) {
-                if (-1 < iVar8) goto code_r0x82604ba0;
+              uVar3 = uVar3 + 1;
+              if (iVar4 < 3) {
+                if (-1 < iVar4) goto code_r0x82604ba0;
               }
               else {
-                if (iVar10 < 3) {
+                if (iVar6 < 3) {
                   MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\memfile.cpp"
                                   ,0x361,0,"%s");
                 }
-                if (2 < (int)uVar7) {
-                  if (uVar7 != 3) {
+                if (2 < (int)uVar3) {
+                  if (uVar3 != 3) {
                     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\memfile.cpp"
                                     ,0x364,0,"%s");
                   }
-                  if (iVar10 < 5) {
+                  if (iVar6 < 5) {
                     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\memfile.cpp"
                                     ,0x365,0,"%s\n\t(cacheSize) = %i");
                   }
-                  iVar5 = iVar10 + -3;
-                  if (pMVar2->compress == false) {
-                    iVar10 = pMVar2->bytesUsed + iVar5;
-                    if ((pMVar2->buffer[iVar10 + 1] != '\0') || (pMVar2->buffer[iVar10 + 2] != '\0')
+                  iVar2 = iVar6 + -3;
+                  if (param_1->compress == false) {
+                    iVar6 = param_1->bytesUsed + iVar2;
+                    if ((param_1->buffer[iVar6 + 1] != '\0') || (param_1->buffer[iVar6 + 2] != '\0')
                        ) {
                       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\memfile.cpp"
                                       ,0x372,0,"%s");
                     }
-                    bVar1 = pMVar2->buffer[pMVar2->bytesUsed + iVar5];
+                    bVar1 = param_1->buffer[param_1->bytesUsed + iVar2];
                   }
                   else {
-                    if ((*(char *)(iVar10 + -0x7bedcdfa) != '\0') ||
-                       ((&DAT_84123207)[iVar10] != '\0')) {
+                    if ((*(char *)(iVar6 + -0x7bedcdfa) != '\0') || ((&DAT_84123207)[iVar6] != '\0')
+                       ) {
                       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\memfile.cpp"
                                       ,0x36c,0,"%s");
                     }
-                    bVar1 = *(byte *)(iVar10 + -0x7bedcdfb);
+                    bVar1 = *(byte *)(iVar6 + -0x7bedcdfb);
                   }
                   if (bVar1 == 0) {
                     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\memfile.cpp"
                                     ,0x376,0,"%s");
                   }
-                  iVar5 = MemFile_WriteDataInternal(pMVar2,iVar5,0,iVar8 + -3,(uint)bVar1);
-                  if (iVar5 == 0) goto LAB_82604d7c;
-                  iVar8 = 2;
-                  iVar5 = 1;
-                  iVar10 = 2;
-                  uVar7 = 0;
-                  iVar11 = iStack0000001c;
+                  iVar2 = MemFile_WriteDataInternal(param_1,iVar2,0,iVar4 + -3,(uint)bVar1);
+                  if (iVar2 == 0) goto LAB_82604d7c;
+                  iVar4 = 2;
+                  iVar2 = 1;
+                  iVar6 = 2;
+                  uVar3 = 0;
+                  iVar7 = iStack0000001c;
                   goto LAB_82604bac;
                 }
-                if (pMVar2->compress == false) {
-                  iVar3 = pMVar2->bytesUsed + iVar10;
-                  if ((pMVar2->buffer[iVar3 + -2] == '\0') && (pMVar2->buffer[iVar3 + -1] == '\0'))
-                  {
+                if (param_1->compress == false) {
+                  iVar2 = param_1->bytesUsed + iVar6;
+                  if ((param_1->buffer[iVar2 + -2] == '\0') && (param_1->buffer[iVar2 + -1] == '\0')
+                     ) {
                     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\memfile.cpp"
                                     ,0x389,0,"%s");
                   }
                 }
-                else if ((*(char *)(iVar10 + -0x7bedcdfa) == '\0') &&
-                        ((&DAT_84123207)[iVar10] == '\0')) {
+                else if ((*(char *)(iVar6 + -0x7bedcdfa) == '\0') &&
+                        ((&DAT_84123207)[iVar6] == '\0')) {
                   MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\memfile.cpp"
                                   ,0x386,0,"%s");
                 }
               }
             }
             else {
-              uVar7 = 0;
+              uVar3 = 0;
             }
-            iVar8 = iVar8 + 1;
-            if (0x40 < iVar10) {
+            iVar4 = iVar4 + 1;
+            if (0x40 < iVar6) {
               MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\memfile.cpp"
                               ,0x39b,0,"%s\n\t(cacheSize) = %i");
             }
-            if (iVar10 < 1) {
+            if (iVar6 < 1) {
               MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\memfile.cpp"
                               ,0x39c,0,"%s\n\t(cacheSize) = %i");
             }
-            if (pMVar2->compress == false) {
-              pMVar2->buffer[pMVar2->bytesUsed + iVar10] = bVar1;
+            if (param_1->compress == false) {
+              param_1->buffer[param_1->bytesUsed + iVar6] = bVar1;
             }
             else {
-              g_cacheBuffer[iVar10] = bVar1;
+              g_cacheBuffer[iVar6] = bVar1;
             }
-            iVar10 = iVar10 + 1;
+            iVar6 = iVar6 + 1;
           }
-          iVar9 = iVar9 + 1;
-          if (iVar11 <= iVar9) goto LAB_82604a2c;
+          iVar5 = iVar5 + 1;
+          if (iVar7 <= iVar5) {
+            g_cacheBufferLen = iVar4;
+            g_zeroCount = uVar3;
+            DAT_840c3198 = 0;
+            g_cacheSize = iVar6;
+            return;
+          }
         } while( true );
       }
-      if (iStack0000001c <= iVar9) {
+      if (iStack0000001c <= iVar5) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\memfile.cpp",
                         0x323,0,"%s");
       }
-      while (*(byte *)(iVar9 + iStack00000024) == 0) {
-        uVar7 = uVar7 + 1;
-        if (iVar8 == 0x3f) {
-          uVar7 = 1;
+      while (*(byte *)(iVar5 + (int)pvStack00000024) == 0) {
+        uVar3 = uVar3 + 1;
+        if (iVar4 == 0x3f) {
+          uVar3 = 1;
           goto LAB_82604a40;
         }
-        iVar9 = iVar9 + 1;
-        iVar8 = iVar8 + 1;
-        if (iVar11 <= iVar9) goto LAB_82604a2c;
+        iVar5 = iVar5 + 1;
+        iVar4 = iVar4 + 1;
+        if (iVar7 <= iVar5) {
+          g_cacheBufferLen = iVar4;
+          g_zeroCount = uVar3;
+          DAT_840c3198 = iVar2;
+          g_cacheSize = iVar6;
+          return;
+        }
       }
-      uVar7 = 0;
+      uVar3 = 0;
 LAB_82604a40:
-      iVar5 = MemFile_WriteDataInternal
-                        (pMVar2,iVar10,iVar5,iVar8,(uint)*(byte *)(iVar9 + iStack00000024));
-      if (iVar5 == 0) {
+      iVar2 = MemFile_WriteDataInternal
+                        (param_1,iVar6,iVar2,iVar4,(uint)*(byte *)(iVar5 + (int)pvStack00000024));
+      if (iVar2 == 0) {
 LAB_82604d7c:
-        MemFile_WriteError(pMVar2);
-        __restgprlr();
+        MemFile_WriteError(param_1);
         return;
       }
-      iVar5 = 0;
-      iVar10 = 2;
+      iVar2 = 0;
+      iVar6 = 2;
       goto LAB_82604ba8;
     }
   }
-LAB_82604a2c:
-  g_cacheSize = iVar10;
-  DAT_840c3198 = iVar5;
-  g_zeroCount = uVar7;
-  g_cacheBufferLen = iVar8;
-  __restgprlr();
   return;
 code_r0x82604ba0:
-  iVar5 = iVar8 + 1;
-  iVar11 = iStack0000001c;
+  iVar2 = iVar4 + 1;
+  iVar7 = iStack0000001c;
 LAB_82604ba8:
-  iVar8 = 0;
+  iVar4 = 0;
 LAB_82604bac:
-  iVar9 = iVar9 + 1;
-  if (iVar11 <= iVar9) goto LAB_82604a2c;
+  iVar5 = iVar5 + 1;
+  if (iVar7 <= iVar5) {
+    g_cacheBufferLen = iVar4;
+    g_zeroCount = uVar3;
+    DAT_840c3198 = iVar2;
+    g_cacheSize = iVar6;
+    return;
+  }
   goto LAB_826049c8;
 }
 
 
 // 82604D90  MemFile_WriteCString  (universal/memfile.cpp:947)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
+
 void MemFile_WriteCString(MemoryFile *param_1,char *param_2)
 
 {
-  MemoryFile *pMVar1;
+  char cVar1;
   int iVar2;
   uint uVar3;
   char *pcVar4;
-  char *pcVar6;
-  ulonglong uVar5;
   ushort local_50 [40];
   
-  uVar5 = (ulonglong)(int)param_2;
-  pMVar1 = (MemoryFile *)__savegprlr_25(param_1);
-  if ((uVar5 & 0xffffffff) == 0) {
+  if (param_2 == (char *)0x0) {
     local_50[0] = 0;
-    MemFile_WriteData(pMVar1,2,local_50);
-    __restgprlr_25();
+    MemFile_WriteData(param_1,2,local_50);
     return;
   }
-  pcVar4 = (char *)uVar5;
-  if (*pcVar4 == '\0') {
+  if (*param_2 == '\0') {
     local_50[0] = 1;
-    MemFile_WriteData(pMVar1,2,local_50);
-    __restgprlr_25();
+    MemFile_WriteData(param_1,2,local_50);
     return;
   }
-  iVar2 = SL_IsString(pcVar4);
+  iVar2 = SL_IsString(param_2);
   if (iVar2 == 0) {
     local_50[0] = 3;
   }
   else {
-    uVar3 = SL_ConvertFromString(pcVar4);
+    uVar3 = SL_ConvertFromString(param_2);
     if (0xffff < uVar3) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\memfile.cpp",0x3c9
                       ,0,
@@ -1252,8 +1228,7 @@ void MemFile_WriteCString(MemoryFile *param_1,char *param_2)
     }
     local_50[0] = g_saveStrings[uVar3];
     if (local_50[0] != 0) {
-      MemFile_WriteData(pMVar1,2,local_50);
-      __restgprlr_25();
+      MemFile_WriteData(param_1,2,local_50);
       return;
     }
     if (0xffff < g_saveStringsIndex) {
@@ -1264,70 +1239,68 @@ void MemFile_WriteCString(MemoryFile *param_1,char *param_2)
     local_50[0] = 2;
     g_saveStringsIndex = g_saveStringsIndex + 1;
   }
-  MemFile_WriteData(pMVar1,2,local_50);
+  MemFile_WriteData(param_1,2,local_50);
+  pcVar4 = param_2;
   do {
-    pcVar6 = (char *)uVar5;
-    uVar5 = uVar5 + 1;
-  } while (*pcVar6 != '\0');
-  MemFile_WriteData(pMVar1,(int)uVar5 - (int)pcVar4,pcVar4);
-  __restgprlr_25();
+    cVar1 = *pcVar4;
+    pcVar4 = pcVar4 + 1;
+  } while (cVar1 != '\0');
+  MemFile_WriteData(param_1,(int)pcVar4 - (int)param_2,param_2);
   return;
 }
 
 
 // 82604F10  MemFile_ReadCString  (universal/memfile.cpp:997)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
+
 char * MemFile_ReadCString(MemoryFile *param_1)
 
 {
   ushort *puVar1;
-  MemoryFile *pMVar2;
+  uint uVar2;
   char *pcVar3;
-  uint uVar4;
-  uchar *puVar5;
+  uchar *puVar4;
   ushort local_50 [40];
   
-  pMVar2 = (MemoryFile *)__savegprlr_24(param_1);
-  if (pMVar2 == (MemoryFile *)0x0) {
+  if (param_1 == (MemoryFile *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\memfile.cpp",0x3e9,0
                     ,"%s");
   }
-  if (pMVar2->buffer == (uchar *)0x0) {
+  if (param_1->buffer == (uchar *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\memfile.cpp",0x3ea,0
                     ,"%s");
   }
-  if ((pMVar2->bytesUsed < 0) || (pMVar2->bufferSize < pMVar2->bytesUsed)) {
+  if ((param_1->bytesUsed < 0) || (param_1->bufferSize < param_1->bytesUsed)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\memfile.cpp",0x3eb,0
                     ,"memFile->bytesUsed not in [0, memFile->bufferSize]\n\t%i not in [%i, %i]");
   }
-  MemFile_ReadData(pMVar2,2,local_50);
-  if (pMVar2->memoryOverflow != false) {
+  MemFile_ReadData(param_1,2,local_50);
+  if (param_1->memoryOverflow != false) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\memfile.cpp",0x3ee,0
                     ,"%s");
   }
   if (3 < local_50[0]) {
     pcVar3 = SL_ConvertToString((uint)g_saveStrings[local_50[0]]);
-    pcVar3 = (char *)__restgprlr_24(pcVar3);
     return pcVar3;
   }
   if (local_50[0] == 1) {
-    pcVar3 = (char *)__restgprlr_24(0xffffffff820068af);
-    return pcVar3;
+    return "";
   }
   if ((local_50[0] != 2) && (local_50[0] == 0)) {
-    pcVar3 = (char *)__restgprlr_24(0);
-    return pcVar3;
+    return (char *)0x0;
   }
-  puVar5 = g_saveBuffer;
+  puVar4 = g_saveBuffer;
   while( true ) {
-    MemFile_ReadData(pMVar2,1,puVar5);
-    if (pMVar2->memoryOverflow != false) {
+    MemFile_ReadData(param_1,1,puVar4);
+    if (param_1->memoryOverflow != false) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\memfile.cpp",0x405
                       ,0,"%s");
     }
-    if (*puVar5 == '\0') break;
-    puVar5 = puVar5 + 1;
-    if (g_saveBuffer + 0x1fff < puVar5) {
+    if (*puVar4 == '\0') break;
+    puVar4 = puVar4 + 1;
+    if (g_saveBuffer + 0x1fff < puVar4) {
       Com_Error(ERR_DROP,"Trying to read corrupted file");
     }
   }
@@ -1336,170 +1309,165 @@ char * MemFile_ReadCString(MemoryFile *param_1)
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\memfile.cpp",0x410
                       ,0,"g_saveStringsIndex doesn\'t index 65536\n\t%i not in [0, %i)");
     }
-    uVar4 = SL_GetString((char *)g_saveBuffer,0x10);
+    uVar2 = SL_GetString((char *)g_saveBuffer,0x10);
     puVar1 = g_saveStrings + g_saveStringsIndex;
     g_saveStringsIndex = g_saveStringsIndex + 1;
-    *puVar1 = (ushort)uVar4;
+    *puVar1 = (ushort)uVar2;
   }
-  pcVar3 = (char *)__restgprlr_24(0xffffffff840c1198);
-  return pcVar3;
+  return (char *)g_saveBuffer;
 }
 
 
 // 82603FE8  MemFile_ReadByteInternal  (universal/memfile.cpp:1050)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 uchar MemFile_ReadByteInternal(MemoryFile *param_1)
 
 {
-  undefined1 uVar1;
-  int *piVar2;
-  int iVar3;
-  uchar uVar4;
+  uchar uVar1;
+  int iVar2;
   uchar local_30 [48];
   
-  piVar2 = (int *)__savegprlr_28(param_1);
-  if (piVar2 == (int *)0x0) {
+  if (param_1 == (MemoryFile *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\memfile.cpp",0x420,0
                     ,"%s");
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\memfile.cpp",0x27e,0
                     ,"%s");
   }
-  if ((code *)piVar2[8] != MemFile_ReadData) {
+  if (param_1->archiveProc != MemFile_ReadData) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\memfile.cpp",0x421,0
                     ,"%s");
   }
-  if (*piVar2 == 0) {
+  if (param_1->buffer == (uchar *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\memfile.cpp",0x422,0
                     ,"%s");
   }
-  if ((piVar2[3] < 0) || (piVar2[1] < piVar2[3])) {
+  if ((param_1->bytesUsed < 0) || (param_1->bufferSize < param_1->bytesUsed)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\memfile.cpp",0x423,0
                     ,"memFile->bytesUsed not in [0, memFile->bufferSize]\n\t%i not in [%i, %i]");
   }
-  if (*(char *)((int)piVar2 + 0x1d) != '\0') {
+  if (param_1->memoryOverflow != false) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\memfile.cpp",0x424,0
                     ,"%s");
   }
-  if (*(char *)(piVar2 + 7) == '\0') {
+  if (param_1->errorOnOverflow == false) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\memfile.cpp",0x425,0
                     ,"%s");
   }
   AssertStreamMode(MEM_FILE_MODE_INFLATE);
-  if (*(char *)((int)piVar2 + 0x1e) == '\0') {
-    iVar3 = piVar2[3];
-    if (iVar3 < piVar2[1]) {
-      uVar1 = *(undefined1 *)(iVar3 + *piVar2);
-      piVar2[3] = iVar3 + 1;
-      uVar4 = __restgprlr_28(uVar1);
-      return uVar4;
+  if (param_1->compress == false) {
+    iVar2 = param_1->bytesUsed;
+    if (iVar2 < param_1->bufferSize) {
+      uVar1 = param_1->buffer[iVar2];
+      param_1->bytesUsed = iVar2 + 1;
+      return uVar1;
     }
   }
   else {
     stream.next_out = local_30;
     stream.avail_out = 1;
-    if ((uchar *)(*piVar2 + piVar2[3]) != stream.next_in) {
+    if (param_1->buffer + param_1->bytesUsed != stream.next_in) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\memfile.cpp",0x42f
                       ,0,"%s");
     }
-    iVar3 = inflate(&stream,2);
-    if ((iVar3 != 0) && (iVar3 != 1)) {
+    iVar2 = inflate(&stream,2);
+    if ((iVar2 != 0) && (iVar2 != 1)) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\memfile.cpp",0x435
                       ,0,"%s\n\t(err) = %i");
     }
-    piVar2[3] = (int)stream.next_in - *piVar2;
+    param_1->bytesUsed = (int)stream.next_in - (int)param_1->buffer;
     if (stream.avail_out == 0) {
-      uVar4 = __restgprlr_28(local_30[0]);
-      return uVar4;
+      return local_30[0];
     }
   }
   Com_Error(ERR_DROP,"Trying to read corrupted file");
-  uVar4 = __restgprlr_28(0);
-  return uVar4;
+  return '\0';
 }
 
 
 // 82604238  MemFile_ReadData  (universal/memfile.cpp:1101)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
+
 void MemFile_ReadData(MemoryFile *param_1,int param_2,void *param_3)
 
 {
   uint uVar1;
-  MemoryFile *pMVar2;
-  uchar uVar3;
-  byte bVar4;
-  ulonglong uVar5;
-  longlong lVar6;
-  longlong lVar7;
+  uchar uVar2;
+  byte bVar3;
+  longlong lVar4;
+  undefined1 *puVar5;
   
-  uVar5 = (ulonglong)(int)param_3;
-  lVar6 = (longlong)param_2;
-  pMVar2 = (MemoryFile *)__savegprlr_23(param_1);
-  if (pMVar2 == (MemoryFile *)0x0) {
+  lVar4 = (longlong)param_2;
+  if (param_1 == (MemoryFile *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\memfile.cpp",0x451,0
                     ,"%s");
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\memfile.cpp",0x27e,0
                     ,"%s");
   }
-  if (pMVar2->archiveProc != MemFile_ReadData) {
+  if (param_1->archiveProc != MemFile_ReadData) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\memfile.cpp",0x452,0
                     ,"%s");
   }
-  if (pMVar2->buffer == (uchar *)0x0) {
+  if (param_1->buffer == (uchar *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\memfile.cpp",0x453,0
                     ,"%s");
   }
-  if ((pMVar2->bytesUsed < 0) || (pMVar2->bufferSize < pMVar2->bytesUsed)) {
+  if ((param_1->bytesUsed < 0) || (param_1->bufferSize < param_1->bytesUsed)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\memfile.cpp",0x454,0
                     ,"memFile->bytesUsed not in [0, memFile->bufferSize]\n\t%i not in [%i, %i]");
   }
-  if ((int)lVar6 < 0) {
+  if (param_2 < 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\memfile.cpp",0x455,0
                     ,"%s\n\t(byteCount) = %i");
   }
-  if (((int)lVar6 != 0) && (pMVar2->memoryOverflow == false)) {
-    if ((uVar5 & 0xffffffff) == 0) {
+  if ((param_2 != 0) && (param_1->memoryOverflow == false)) {
+    if (param_3 == (void *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\memfile.cpp",0x45d
                       ,0,"%s");
     }
-    lVar7 = uVar5 - 1;
+    puVar5 = (undefined1 *)((int)param_3 + -1);
     uVar1 = DAT_840c3198;
     do {
       while (DAT_840c3198 = 0, uVar1 == 0) {
         while (g_zeroCount != 0) {
           g_zeroCount = g_zeroCount + -1;
-          lVar7 = lVar7 + 1;
-          *(undefined1 *)lVar7 = 0;
-          lVar6 = lVar6 + -1;
-          if (lVar6 == 0) goto LAB_826044a8;
+          puVar5 = puVar5 + 1;
+          *puVar5 = 0;
+          lVar4 = lVar4 + -1;
+          if (lVar4 == 0) {
+            return;
+          }
         }
-        bVar4 = MemFile_ReadByteInternal(pMVar2);
-        if (pMVar2->memoryOverflow != false) {
+        bVar3 = MemFile_ReadByteInternal(param_1);
+        if (param_1->memoryOverflow != false) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\memfile.cpp",
                           0x476,0,"%s");
         }
-        if (((longlong)(char)bVar4 & 0xc0U) == 0) {
+        if (((longlong)(char)bVar3 & 0xc0U) == 0) {
           g_zeroCount = 0;
-          uVar1 = (bVar4 & 0x3f) + 1;
+          uVar1 = (bVar3 & 0x3f) + 1;
         }
         else {
-          g_zeroCount = (bVar4 & 0x3f) + 1;
-          uVar1 = (uint)(bVar4 >> 6);
+          g_zeroCount = (bVar3 & 0x3f) + 1;
+          uVar1 = (uint)(bVar3 >> 6);
         }
       }
       DAT_840c3198 = uVar1 - 1;
-      lVar6 = lVar6 + -1;
-      uVar3 = MemFile_ReadByteInternal(pMVar2);
-      *(uchar *)((int)lVar7 + 1) = uVar3;
-      lVar7 = lVar7 + 1;
-      if (pMVar2->memoryOverflow != false) {
+      lVar4 = lVar4 + -1;
+      uVar2 = MemFile_ReadByteInternal(param_1);
+      puVar5[1] = uVar2;
+      puVar5 = puVar5 + 1;
+      if (param_1->memoryOverflow != false) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\memfile.cpp",
                         0x467,0,"%s");
       }
       uVar1 = DAT_840c3198;
-    } while ((int)lVar6 != 0);
+    } while ((int)lVar4 != 0);
   }
-LAB_826044a8:
-  __restgprlr_23();
   return;
 }
 

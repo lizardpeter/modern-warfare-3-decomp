@@ -2,64 +2,55 @@
 
 // 82924C88  _commit  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/commit.c:39)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 int _commit(int param_1)
 
 {
-  int iVar1;
-  uint uVar3;
-  int *piVar4;
-  ulonglong uVar2;
-  void *pvVar5;
-  ulong *puVar6;
-  int iVar7;
-  uint uStack00000014;
-  uint local_40;
+  int *piVar1;
+  void *pvVar2;
+  int iVar3;
+  ulong *puVar4;
+  int iVar5;
+  int iStack00000014;
+  ulong local_40;
   
-  uVar3 = __savegprlr_27(param_1);
-  uStack00000014 = uVar3;
-  if (uVar3 == 0xfffffffe) {
-    piVar4 = _errno();
-    uVar2 = 0xffffffffffffffff;
-    *piVar4 = 9;
-    goto LAB_82924d98;
+  iStack00000014 = param_1;
+  if (param_1 == -2) {
+    piVar1 = _errno();
+    *piVar1 = 9;
+    return -1;
   }
-  if ((-1 < (int)uVar3) && (uVar3 < (uint)_nhandle)) {
-    iVar7 = ((int)uVar3 >> 5) * 4;
-    iVar1 = (uVar3 & 0x1f) * 0x48;
-    if ((*(byte *)(iVar1 + *(int *)(&__pioinfo + iVar7) + 4) & 1) != 0) {
-      __lock_fhandle(uVar3);
-      if ((*(byte *)(iVar1 + *(int *)(&__pioinfo + iVar7) + 4) & 1) == 0) {
-LAB_82924d74:
-        piVar4 = _errno();
-        *piVar4 = 9;
-        local_40 = 0xffffffff;
-      }
-      else {
-        pvVar5 = (void *)_get_osfhandle(uVar3);
-        iVar7 = FlushFileBuffers(pvVar5);
-        if (iVar7 == 0) {
-          local_40 = GetLastError();
-        }
-        else {
-          local_40 = 0;
-        }
-        if (local_40 != 0) {
-          puVar6 = __doserrno();
-          *puVar6 = local_40;
-          goto LAB_82924d74;
-        }
-      }
-      FUN_82924dc0();
-      uVar2 = (ulonglong)local_40;
-      goto LAB_82924d98;
+  if ((param_1 < 0) || ((uint)_nhandle <= (uint)param_1)) {
+LAB_82924cd8:
+    piVar1 = _errno();
+    *piVar1 = 9;
+    _invalid_parameter_noinfo();
+    return -1;
+  }
+  iVar3 = (param_1 >> 5) * 4;
+  iVar5 = (param_1 & 0x1fU) * 0x48;
+  if ((*(byte *)(iVar5 + *(int *)(&__pioinfo + iVar3) + 4) & 1) == 0) goto LAB_82924cd8;
+  __lock_fhandle(param_1);
+  if ((*(byte *)(iVar5 + *(int *)(&__pioinfo + iVar3) + 4) & 1) != 0) {
+    pvVar2 = (void *)_get_osfhandle(param_1);
+    iVar3 = FlushFileBuffers(pvVar2);
+    if (iVar3 == 0) {
+      local_40 = GetLastError();
     }
+    else {
+      local_40 = 0;
+    }
+    if (local_40 == 0) goto LAB_82924d88;
+    puVar4 = __doserrno();
+    *puVar4 = local_40;
   }
-  piVar4 = _errno();
-  *piVar4 = 9;
-  _invalid_parameter_noinfo();
-  uVar2 = 0xffffffffffffffff;
-LAB_82924d98:
-  iVar7 = __restgprlr_27(uVar2);
-  return iVar7;
+  piVar1 = _errno();
+  *piVar1 = 9;
+  local_40 = 0xffffffff;
+LAB_82924d88:
+  FUN_82924dc0();
+  return local_40;
 }
 

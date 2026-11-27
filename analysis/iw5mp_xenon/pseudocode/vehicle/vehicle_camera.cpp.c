@@ -95,6 +95,8 @@ void VehicleCam_Archive(MemoryFile *param_1)
 
 // 826B9F58  VehicleCam_IsDriveCam  (vehicle/vehicle_camera.cpp:192)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -106,43 +108,37 @@ bool VehicleCam_IsDriveCam(LocalClientNum_t param_1)
   bool bVar1;
   int iVar2;
   VehicleType VVar3;
-  LocalClientNum_t LVar4;
-  cg_s *pcVar5;
-  bool bVar9;
-  undefined1 uVar10;
-  centity_s *pcVar6;
-  VehicleClient *pVVar7;
-  VehicleDef *pVVar8;
+  cg_s *pcVar4;
+  bool bVar8;
+  centity_s *pcVar5;
+  VehicleClient *pVVar6;
+  VehicleDef *pVVar7;
   
-  LVar4 = __savegprlr_28(param_1);
-  pcVar5 = CG_GetLocalClientGlobals(LVar4);
-  if (LOCAL_CLIENT_3 < LVar4) {
+  pcVar4 = CG_GetLocalClientGlobals(param_1);
+  if (LOCAL_CLIENT_3 < param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_camera.cpp",
                     0x97,0,
                     "localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)");
   }
-  bVar1 = vehicleCameras[LVar4].initialized;
-  vehicleCameras[LVar4].initialized = false;
-  bVar9 = VehicleCam_IsPlayerControlCam(LVar4);
-  if (bVar9) {
-    vehicleCameras[LVar4].initialized = bVar1;
-    uVar10 = __restgprlr_28(0);
-    return (bool)uVar10;
+  bVar1 = vehicleCameras[param_1].initialized;
+  vehicleCameras[param_1].initialized = false;
+  bVar8 = VehicleCam_IsPlayerControlCam(param_1);
+  if (bVar8) {
+    vehicleCameras[param_1].initialized = bVar1;
+    return false;
   }
-  if ((((pcVar5->predictedPlayerState).eFlags & 0x200000U) != 0) &&
-     (iVar2 = (pcVar5->predictedPlayerState).viewlocked_entNum, iVar2 != 0x7ff)) {
-    pcVar6 = CG_GetEntity(pcVar5->localClientNum,iVar2);
-    pVVar7 = VehicleCl_GetClient(LVar4,pcVar6);
-    pVVar8 = VehicleCl_GetClientDef(pVVar7);
-    VVar3 = pVVar8->type;
+  if ((((pcVar4->predictedPlayerState).eFlags & 0x200000U) != 0) &&
+     (iVar2 = (pcVar4->predictedPlayerState).viewlocked_entNum, iVar2 != 0x7ff)) {
+    pcVar5 = CG_GetEntity(pcVar4->localClientNum,iVar2);
+    pVVar6 = VehicleCl_GetClient(param_1,pcVar5);
+    pVVar7 = VehicleCl_GetClientDef(pVVar6);
+    VVar3 = pVVar7->type;
     if ((VVar3 == VEH_SNOWMOBILE) || ((VVar3 == VEH_BOAT || (VVar3 == VEH_SUBMARINE)))) {
-      vehicleCameras[LVar4].initialized = bVar1;
-      uVar10 = __restgprlr_28(1);
-      return (bool)uVar10;
+      vehicleCameras[param_1].initialized = bVar1;
+      return true;
     }
   }
-  uVar10 = __restgprlr_28(0);
-  return (bool)uVar10;
+  return false;
 }
 
 
@@ -178,6 +174,8 @@ void VehicleCam_SetClientViewAngles(cg_s *param_1,float *param_2)
 
 // 826B8950  VehicleCam_UpdateModeParams  (vehicle/vehicle_camera.cpp:249)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
@@ -185,60 +183,57 @@ void VehicleCam_SetClientViewAngles(cg_s *param_1,float *param_2)
 void VehicleCam_UpdateModeParams(LocalClientNum_t param_1,centity_s *param_2)
 
 {
-  LocalClientNum_t LVar1;
-  VehicleClient *pVVar2;
-  VehicleDef *pVVar3;
-  ulonglong uVar4;
+  VehicleClient *pVVar1;
+  VehicleDef *pVVar2;
   
-  uVar4 = (ulonglong)(int)param_2;
-  LVar1 = __savegprlr_28(param_1);
-  if ((uVar4 & 0xffffffff) == 0) {
+  if (param_2 == (centity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_camera.cpp",
                     0xfe,0,"%s");
   }
-  pVVar2 = VehicleCl_GetClient(LVar1,(centity_s *)uVar4);
-  pVVar3 = VehicleCl_GetClientDef(pVVar2);
-  if (pVVar2 == (VehicleClient *)0x0) {
+  pVVar1 = VehicleCl_GetClient(param_1,param_2);
+  pVVar2 = VehicleCl_GetClientDef(pVVar1);
+  if (pVVar1 == (VehicleClient *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_camera.cpp",
                     0x103,0,"%s");
   }
-  if (pVVar3 == (VehicleDef *)0x0) {
+  if (pVVar2 == (VehicleDef *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_camera.cpp",
                     0x104,0,"%s");
   }
-  vehicleCameraModes[0].angles[2] = pVVar3->vehCam_anglesRoll;
-  vehicleCameraModes[0].angles[1] = pVVar3->vehCam_anglesYaw;
-  vehicleCameraModes[0].angles[0] = pVVar3->vehCam_anglesPitch;
-  vehicleCameraModes[0].offset[2] = pVVar3->vehCam_offsetZ;
-  vehicleCameraModes[0].offset[1] = pVVar3->vehCam_offsetY;
-  vehicleCameraModes[0].offset[0] = pVVar3->vehCam_offsetX;
-  vehicleCameraModes[0].radius = pVVar3->vehCam_radius;
-  vehicleCameraModes[0].speedInfluence = pVVar3->vehCam_speedInfluence;
-  vehicleCameraModes[0].pitchTurnRate = pVVar3->vehCam_pitchTurnRate;
-  vehicleCameraModes[0].pitchClamp = pVVar3->vehCam_pitchClamp;
-  vehicleCameraModes[0].yawTurnRate = pVVar3->vehCam_yawTurnRate;
-  vehicleCameraModes[0].yawClamp = pVVar3->vehCam_yawClamp;
-  vehicleCameraModes[0].zOffsetMode = pVVar3->vehCam_zOffsetMode;
-  vehicleCameraModes[1].angles[2] = pVVar3->vehCam_anglesRoll3P;
-  vehicleCameraModes[1].angles[1] = pVVar3->vehCam_anglesYaw3P;
-  vehicleCameraModes[1].angles[0] = pVVar3->vehCam_anglesPitch3P;
-  vehicleCameraModes[1].offset[2] = pVVar3->vehCam_offsetZ3P;
-  vehicleCameraModes[1].offset[1] = pVVar3->vehCam_offsetY3P;
-  vehicleCameraModes[1].offset[0] = pVVar3->vehCam_offsetX3P;
-  vehicleCameraModes[1].radius = pVVar3->vehCam_radius3P;
-  vehicleCameraModes[1].speedInfluence = pVVar3->vehCam_speedInfluence3P;
-  vehicleCameraModes[1].pitchTurnRate = pVVar3->vehCam_pitchTurnRate3P;
-  vehicleCameraModes[1].pitchClamp = pVVar3->vehCam_pitchClamp3P;
-  vehicleCameraModes[1].yawTurnRate = pVVar3->vehCam_yawTurnRate3P;
-  vehicleCameraModes[1].yawClamp = pVVar3->vehCam_yawClamp3P;
-  vehicleCameraModes[1].zOffsetMode = pVVar3->vehCam_zOffsetMode3P;
-  __restgprlr_28();
+  vehicleCameraModes[0].angles[0] = pVVar2->vehCam_anglesPitch;
+  vehicleCameraModes[0].angles[1] = pVVar2->vehCam_anglesYaw;
+  vehicleCameraModes[0].angles[2] = pVVar2->vehCam_anglesRoll;
+  vehicleCameraModes[0].offset[0] = pVVar2->vehCam_offsetX;
+  vehicleCameraModes[0].offset[1] = pVVar2->vehCam_offsetY;
+  vehicleCameraModes[0].offset[2] = pVVar2->vehCam_offsetZ;
+  vehicleCameraModes[0].radius = pVVar2->vehCam_radius;
+  vehicleCameraModes[0].speedInfluence = pVVar2->vehCam_speedInfluence;
+  vehicleCameraModes[0].pitchTurnRate = pVVar2->vehCam_pitchTurnRate;
+  vehicleCameraModes[0].pitchClamp = pVVar2->vehCam_pitchClamp;
+  vehicleCameraModes[0].yawTurnRate = pVVar2->vehCam_yawTurnRate;
+  vehicleCameraModes[0].yawClamp = pVVar2->vehCam_yawClamp;
+  vehicleCameraModes[0].zOffsetMode = pVVar2->vehCam_zOffsetMode;
+  vehicleCameraModes[1].angles[0] = pVVar2->vehCam_anglesPitch3P;
+  vehicleCameraModes[1].angles[1] = pVVar2->vehCam_anglesYaw3P;
+  vehicleCameraModes[1].angles[2] = pVVar2->vehCam_anglesRoll3P;
+  vehicleCameraModes[1].offset[0] = pVVar2->vehCam_offsetX3P;
+  vehicleCameraModes[1].offset[1] = pVVar2->vehCam_offsetY3P;
+  vehicleCameraModes[1].offset[2] = pVVar2->vehCam_offsetZ3P;
+  vehicleCameraModes[1].radius = pVVar2->vehCam_radius3P;
+  vehicleCameraModes[1].speedInfluence = pVVar2->vehCam_speedInfluence3P;
+  vehicleCameraModes[1].pitchTurnRate = pVVar2->vehCam_pitchTurnRate3P;
+  vehicleCameraModes[1].pitchClamp = pVVar2->vehCam_pitchClamp3P;
+  vehicleCameraModes[1].yawTurnRate = pVVar2->vehCam_yawTurnRate3P;
+  vehicleCameraModes[1].yawClamp = pVVar2->vehCam_yawClamp3P;
+  vehicleCameraModes[1].zOffsetMode = pVVar2->vehCam_zOffsetMode3P;
   return;
 }
 
 
 // 826B8AD8  VehicleCam_UpdateMode  (vehicle/vehicle_camera.cpp:331)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
@@ -247,65 +242,54 @@ void VehicleCam_UpdateMode
                (LocalClientNum_t param_1,cg_s *param_2,centity_s *param_3,VehicleCamera *param_4)
 
 {
-  int iVar1;
-  bool bVar2;
-  LocalClientNum_t LVar3;
-  int iVar4;
-  VehicleClient *pVVar5;
-  ulonglong uVar6;
-  ulonglong uVar7;
-  ulonglong uVar8;
-  int *piVar9;
+  bool bVar1;
+  int iVar2;
+  VehicleClient *pVVar3;
   usercmd_s uStack_b0;
   usercmd_s auStack_80 [2];
   
-  uVar8 = (ulonglong)(int)param_4;
-  uVar7 = (ulonglong)(int)param_3;
-  uVar6 = (ulonglong)(int)param_2;
-  LVar3 = __savegprlr_24(param_1);
-  if ((uVar6 & 0xffffffff) == 0) {
+  if (param_2 == (cg_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_camera.cpp",
                     0x153,0,"%s");
   }
-  if ((uVar7 & 0xffffffff) == 0) {
+  if (param_3 == (centity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_camera.cpp",
                     0x154,0,"%s");
   }
-  if ((uVar8 & 0xffffffff) == 0) {
+  if (param_4 == (VehicleCamera *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_camera.cpp",
                     0x155,0,"%s");
   }
-  iVar1 = (int)uVar6;
-  iVar4 = CL_GetCurrentCmdNumber(*(LocalClientNum_t *)(iVar1 + 0x3338));
-  if (1 < iVar4) {
-    pVVar5 = VehicleCl_GetClient(LVar3,(centity_s *)uVar7);
-    bVar2 = false;
-    CL_GetUserCmd(*(LocalClientNum_t *)(iVar1 + 0x3338),iVar4 + -1,&uStack_b0);
-    CL_GetUserCmd(*(LocalClientNum_t *)(iVar1 + 0x3338),iVar4,auStack_80);
-    VehicleCam_UpdateModeParams(LVar3,(centity_s *)uVar7);
-    piVar9 = (int *)uVar8;
-    if ((*piVar9 == 0) && ((pVVar5->flags & 1) != 0)) {
-      bVar2 = true;
-      *piVar9 = 1;
+  iVar2 = CL_GetCurrentCmdNumber(param_2->localClientNum);
+  if (1 < iVar2) {
+    pVVar3 = VehicleCl_GetClient(param_1,param_3);
+    bVar1 = false;
+    CL_GetUserCmd(param_2->localClientNum,iVar2 + -1,&uStack_b0);
+    CL_GetUserCmd(param_2->localClientNum,iVar2,auStack_80);
+    VehicleCam_UpdateModeParams(param_1,param_3);
+    if ((param_4->mode == VEHCAM_MODE_1ST_PERSON) && ((pVVar3->flags & 1) != 0)) {
+      bVar1 = true;
+      param_4->mode = VEHCAM_MODE_3RD_PERSON;
     }
-    else if ((*piVar9 == 1) && ((pVVar5->flags & 1) == 0)) {
-      bVar2 = true;
-      *piVar9 = 0;
+    else if ((param_4->mode == VEHCAM_MODE_3RD_PERSON) && ((pVVar3->flags & 1) == 0)) {
+      bVar1 = true;
+      param_4->mode = VEHCAM_MODE_1ST_PERSON;
     }
-    if (bVar2) {
-      piVar9[7] = 0;
-      piVar9[8] = 0;
-      piVar9[9] = 0;
-      *(undefined1 *)(piVar9 + 0xd) = 0;
+    if (bVar1) {
+      param_4->userAngles[0] = 0.0;
+      param_4->userAngles[1] = 0.0;
+      param_4->userAngles[2] = 0.0;
+      param_4->initialized = false;
     }
   }
-  __restgprlr_24();
   return;
 }
 
 
 // 826B8C40  VehicleCam_GetVehiclePosition  (vehicle/vehicle_camera.cpp:376)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 
@@ -313,86 +297,69 @@ void VehicleCam_GetVehiclePosition
                (LocalClientNum_t param_1,centity_s *param_2,float *param_3,float *param_4)
 
 {
-  centity_s *pcVar1;
-  LocalClientNum_t LVar2;
-  DObj *pDVar3;
-  VehicleClient *pVVar4;
-  int iVar5;
-  ulonglong uVar6;
-  float *pfVar7;
-  ulonglong uVar8;
-  ulonglong uVar9;
-  float *pfVar10;
+  DObj *pDVar1;
+  VehicleClient *pVVar2;
+  int iVar3;
   float afStack_60 [6];
   float local_48;
   float local_44;
   float local_40;
   
-  uVar9 = (ulonglong)(int)param_4;
-  uVar8 = (ulonglong)(int)param_3;
-  uVar6 = (ulonglong)(int)param_2;
-  LVar2 = __savegprlr_26(param_1);
-  if ((uVar6 & 0xffffffff) == 0) {
+  if (param_2 == (centity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_camera.cpp",
                     0x17d,0,"%s");
   }
-  if ((uVar8 & 0xffffffff) == 0) {
+  if (param_3 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_camera.cpp",
                     0x17e,0,"%s");
   }
-  if ((uVar9 & 0xffffffff) == 0) {
+  if (param_4 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_camera.cpp",
                     0x17f,0,"%s");
   }
-  pcVar1 = (centity_s *)uVar6;
-  pDVar3 = Com_GetClientDObj((pcVar1->nextState).number,LVar2);
-  pVVar4 = VehicleCl_GetClient(LVar2,pcVar1);
-  pfVar10 = (float *)uVar8;
-  pfVar7 = (float *)uVar9;
-  if ((pVVar4->flags & 1) == 0) {
-    iVar5 = CG_DObjGetWorldTagMatrix
-                      (&pcVar1->pose,pDVar3,(uint)scr_const.tag_camera,(float (*) [3])afStack_60,
-                       pfVar10);
-    if (iVar5 == 0) {
-      iVar5 = CG_DObjGetWorldTagMatrix
-                        (&pcVar1->pose,pDVar3,(uint)scr_const.tag_player,(float (*) [3])afStack_60,
-                         pfVar10);
-      if (iVar5 == 0) {
-        *pfVar10 = (pcVar1->pose).origin[0];
-        pfVar10[1] = (pcVar1->pose).origin[1];
-        pfVar10[2] = (pcVar1->pose).origin[2];
-        *pfVar7 = (pcVar1->pose).angles[0];
-        pfVar7[1] = (pcVar1->pose).angles[1];
-        pfVar7[2] = (pcVar1->pose).angles[2];
-        AnglesToAxis(pfVar7,(float (*) [3])afStack_60);
+  pDVar1 = Com_GetClientDObj((param_2->nextState).number,param_1);
+  pVVar2 = VehicleCl_GetClient(param_1,param_2);
+  if ((pVVar2->flags & 1) == 0) {
+    iVar3 = CG_DObjGetWorldTagMatrix
+                      (&param_2->pose,pDVar1,(uint)scr_const.tag_camera,(float (*) [3])afStack_60,
+                       param_3);
+    if (iVar3 == 0) {
+      iVar3 = CG_DObjGetWorldTagMatrix
+                        (&param_2->pose,pDVar1,(uint)scr_const.tag_player,(float (*) [3])afStack_60,
+                         param_3);
+      if (iVar3 == 0) {
+        *param_3 = (param_2->pose).origin[0];
+        param_3[1] = (param_2->pose).origin[1];
+        param_3[2] = (param_2->pose).origin[2];
+        *param_4 = (param_2->pose).angles[0];
+        param_4[1] = (param_2->pose).angles[1];
+        param_4[2] = (param_2->pose).angles[2];
+        AnglesToAxis(param_4,(float (*) [3])afStack_60);
       }
       else {
-        AxisToAngles((float (*) [3])afStack_60,pfVar7);
+        AxisToAngles((float (*) [3])afStack_60,param_4);
       }
-      *pfVar10 = local_48 * 60.0 + *pfVar10;
-      pfVar10[1] = local_44 * 60.0 + pfVar10[1];
-      pfVar10[2] = local_40 * 60.0 + pfVar10[2];
-      __restgprlr_26();
+      *param_3 = local_48 * 60.0 + *param_3;
+      param_3[1] = local_44 * 60.0 + param_3[1];
+      param_3[2] = local_40 * 60.0 + param_3[2];
       return;
     }
   }
   else {
-    iVar5 = CG_DObjGetWorldTagMatrix
-                      (&pcVar1->pose,pDVar3,(uint)scr_const.tag_player,(float (*) [3])afStack_60,
-                       pfVar10);
-    if (iVar5 == 0) {
-      *pfVar10 = (pcVar1->pose).origin[0];
-      pfVar10[1] = (pcVar1->pose).origin[1];
-      pfVar10[2] = (pcVar1->pose).origin[2];
-      *pfVar7 = (pcVar1->pose).angles[0];
-      pfVar7[1] = (pcVar1->pose).angles[1];
-      pfVar7[2] = (pcVar1->pose).angles[2];
-      __restgprlr_26();
+    iVar3 = CG_DObjGetWorldTagMatrix
+                      (&param_2->pose,pDVar1,(uint)scr_const.tag_player,(float (*) [3])afStack_60,
+                       param_3);
+    if (iVar3 == 0) {
+      *param_3 = (param_2->pose).origin[0];
+      param_3[1] = (param_2->pose).origin[1];
+      param_3[2] = (param_2->pose).origin[2];
+      *param_4 = (param_2->pose).angles[0];
+      param_4[1] = (param_2->pose).angles[1];
+      param_4[2] = (param_2->pose).angles[2];
       return;
     }
   }
-  AxisToAngles((float (*) [3])afStack_60,pfVar7);
-  __restgprlr_26();
+  AxisToAngles((float (*) [3])afStack_60,param_4);
   return;
 }
 
@@ -430,6 +397,8 @@ void ApplyDeadzone(float param_1,float param_2,float *param_3,float *param_4)
 
 // 826B8EE0  VehicleCam_GetControllerAxis  (vehicle/vehicle_camera.cpp:450)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -437,86 +406,73 @@ void ApplyDeadzone(float param_1,float param_2,float *param_3,float *param_4)
 void VehicleCam_GetControllerAxis(LocalClientNum_t param_1,float *param_2,float *param_3)
 
 {
-  float *pfVar1;
-  cg_s *pcVar2;
-  bool bVar3;
-  ulonglong uVar4;
-  float *pfVar5;
-  float *pfVar6;
-  ulonglong uVar7;
-  float *pfVar8;
-  double dVar9;
-  double dVar10;
-  double dVar11;
-  float fVar12;
+  cg_s *pcVar1;
+  bool bVar2;
+  float *pfVar3;
+  double dVar4;
+  double dVar5;
+  double dVar6;
+  float fVar7;
   
-  uVar7 = (ulonglong)(int)param_3;
-  uVar4 = (ulonglong)(int)param_2;
-  pfVar1 = (float *)__savegprlr_26(param_1);
-  if ((uVar4 & 0xffffffff) == 0) {
+  if (param_2 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_camera.cpp",
                     0x1c7,0,"%s");
   }
-  if ((uVar7 & 0xffffffff) == 0) {
+  if (param_3 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_camera.cpp",
                     0x1c8,0,"%s");
   }
-  pcVar2 = CG_GetLocalClientGlobals((LocalClientNum_t)pfVar1);
-  if (pcVar2 == (cg_s *)0x0) {
+  pcVar1 = CG_GetLocalClientGlobals(param_1);
+  if (pcVar1 == (cg_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_camera.cpp",
                     0x1cb,0,"%s");
   }
-  pfVar5 = (float *)uVar4;
-  pfVar8 = (float *)uVar7;
-  if (((pcVar2->predictedPlayerState).pm_flags & 0x800U) != 0) {
-    bVar3 = CL_Demo_IsPlaying((LocalClientNum_t)pfVar1);
-    if (!bVar3) goto LAB_826b8fb0;
-  }
-  bVar3 = CG_ShouldUpdateViewAngles((LocalClientNum_t)pfVar1);
-  if (bVar3) {
-    fVar12 = CL_GamepadAxisValue((LocalClientNum_t)pfVar1,4);
-    *pfVar5 = fVar12;
-    fVar12 = CL_GetClientLookInversion((LocalClientNum_t)pfVar1);
-    *pfVar5 = fVar12 * *pfVar5;
-    pfVar6 = (float *)0x3;
-    fVar12 = CL_GamepadAxisValue((LocalClientNum_t)pfVar1,3);
-    *pfVar8 = (float)-(double)fVar12;
-    dVar10 = ABS((double)*pfVar5);
-    dVar9 = 1.0;
-    dVar11 = ABS(-(double)fVar12);
-    if (1.0 < dVar10) {
-      pfVar6 = (float *)0x1e8;
-      pfVar1 = (float *)
-               "c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_camera.cpp";
+  if (((((pcVar1->predictedPlayerState).pm_flags & 0x800U) == 0) ||
+      (bVar2 = CL_Demo_IsPlaying(param_1), bVar2)) &&
+     (bVar2 = CG_ShouldUpdateViewAngles(param_1), bVar2)) {
+    fVar7 = CL_GamepadAxisValue(param_1,4);
+    *param_2 = fVar7;
+    fVar7 = CL_GetClientLookInversion(param_1);
+    *param_2 = fVar7 * *param_2;
+    pfVar3 = (float *)0x3;
+    fVar7 = CL_GamepadAxisValue(param_1,3);
+    *param_3 = (float)-(double)fVar7;
+    dVar5 = ABS((double)*param_2);
+    dVar4 = 1.0;
+    dVar6 = ABS(-(double)fVar7);
+    if (1.0 < dVar5) {
+      pfVar3 = (float *)0x1e8;
+      param_1 = (LocalClientNum_t)
+                "c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_camera.cpp";
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_camera.cpp",
                       0x1e8,0,"%s");
     }
-    if (dVar9 < dVar11) {
-      pfVar6 = (float *)0x1e9;
-      pfVar1 = (float *)
-               "c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_camera.cpp";
+    if (dVar4 < dVar6) {
+      pfVar3 = (float *)0x1e9;
+      param_1 = (LocalClientNum_t)
+                "c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_camera.cpp";
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_camera.cpp",
                       0x1e9,0,"%s");
     }
-    if (dVar10 <= dVar11) {
-      *pfVar5 = (float)(dVar9 - (double)(float)(dVar11 - dVar10)) * *pfVar5;
+    if (dVar5 <= dVar6) {
+      *param_2 = (float)(dVar4 - (double)(float)(dVar6 - dVar5)) * *param_2;
     }
     else {
-      *pfVar8 = (float)(dVar9 - (double)(float)(dVar10 - dVar11)) * *pfVar8;
+      *param_3 = (float)(dVar4 - (double)(float)(dVar5 - dVar6)) * *param_3;
     }
-    ApplyDeadzone(*pfVar8,*pfVar5,pfVar1,pfVar6);
-    __restgprlr_26();
+    ApplyDeadzone(*param_3,*param_2,(float *)param_1,pfVar3);
     return;
   }
-LAB_826b8fb0:
-  *pfVar5 = 0.0;
-  *pfVar8 = 0.0;
-  __restgprlr_26();
+  *param_2 = 0.0;
+  *param_3 = 0.0;
   return;
 }
 
 
 // 826B90D8  VehicleCam_ClampAngle  (vehicle/vehicle_camera.cpp:534)
+
+/* WARNING: Function: __savefpr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_27 replaced with injection: xenon_save_restore */
 
 float VehicleCam_ClampAngle(float param_1,float param_2)
 
@@ -529,9 +485,8 @@ float VehicleCam_ClampAngle(float param_1,float param_2)
   double dVar6;
   
   dVar2 = (double)param_2;
-  dVar1 = (double)__savefpr_27((double)param_1);
   dVar6 = 0.0027777778450399637;
-  dVar3 = (double)(float)(dVar1 * 0.0027777778450399637);
+  dVar3 = (double)(param_1 * 0.0027777778);
   dVar5 = 0.5;
   dVar1 = floor((double)(float)(dVar3 + 0.5));
   dVar4 = 360.0;
@@ -546,13 +501,16 @@ float VehicleCam_ClampAngle(float param_1,float param_2)
   if ((float)(-dVar2 - dVar3) < 0.0) {
     dVar4 = dVar1;
   }
-  dVar1 = (double)__restfpr_27(dVar4);
-  return (float)dVar1;
+  return (float)dVar4;
 }
 
 
 // 826B9168  VehicleCam_UpdateCamInternal  (vehicle/vehicle_camera.cpp:543)
 
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
@@ -565,32 +523,23 @@ void VehicleCam_UpdateCamInternal
 {
   float fVar1;
   VehCamZOffsetMode VVar2;
-  cg_s *pcVar3;
-  float *pfVar4;
-  LocalClientNum_t LVar5;
-  bool bVar10;
-  VehicleClient *pVVar6;
-  VehicleDef *pVVar7;
-  VehicleCamera *pVVar8;
-  VehicleCameraParams *pVVar9;
-  ulonglong uVar11;
-  centity_s *pcVar12;
-  ulonglong uVar13;
-  ulonglong uVar14;
-  float *pfVar15;
-  ulonglong uVar16;
-  float *pfVar17;
+  bool bVar7;
+  VehicleClient *pVVar3;
+  VehicleDef *pVVar4;
+  VehicleCamera *pVVar5;
+  VehicleCameraParams *pVVar6;
+  float *pfVar8;
+  double dVar9;
+  double dVar10;
+  double dVar11;
+  double dVar12;
+  double dVar13;
+  double dVar14;
+  double dVar15;
+  double dVar16;
+  double dVar17;
   double dVar18;
-  double dVar19;
-  double dVar20;
-  double dVar21;
-  double dVar22;
-  double dVar23;
-  double dVar24;
-  double dVar25;
-  double dVar26;
-  double dVar27;
-  float fVar28;
+  float fVar19;
   float local_1d0;
   float local_1cc;
   float local_1c8;
@@ -621,255 +570,245 @@ void VehicleCam_UpdateCamInternal
   float afStack_100 [12];
   float afStack_d0 [52];
   
-  uVar16 = (ulonglong)(int)param_5;
-  uVar14 = (ulonglong)(int)param_4;
-  uVar13 = (ulonglong)(int)param_3;
-  uVar11 = (ulonglong)(int)param_2;
-  __savegprlr_22(param_1);
-  LVar5 = __savefpr_23();
-  if ((uVar11 & 0xffffffff) == 0) {
+  if (param_2 == (cg_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_camera.cpp",
                     0x237,0,"%s");
   }
-  if ((uVar13 & 0xffffffff) == 0) {
+  if (param_3 == (centity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_camera.cpp",
                     0x238,0,"%s");
   }
-  if ((uVar14 & 0xffffffff) == 0) {
+  if (param_4 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_camera.cpp",
                     0x239,0,"%s");
   }
-  if ((uVar16 & 0xffffffff) == 0) {
+  if (param_5 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_camera.cpp",
                     0x23a,0,"%s");
   }
-  bVar10 = CL_Demo_IsFollowCamera(LVar5);
-  if ((!bVar10) && (bVar10 = CL_Demo_IsFreeCamera(LVar5), !bVar10)) {
-    pcVar3 = (cg_s *)uVar11;
-    local_1c0 = (longlong)pcVar3->frametime;
-    dVar21 = (double)((float)local_1c0 * 0.001);
-    pcVar12 = (centity_s *)uVar13;
-    pVVar6 = VehicleCl_GetClient(LVar5,pcVar12);
-    if (pVVar6 == (VehicleClient *)0x0) {
+  bVar7 = CL_Demo_IsFollowCamera(param_1);
+  if ((!bVar7) && (bVar7 = CL_Demo_IsFreeCamera(param_1), !bVar7)) {
+    local_1c0 = (longlong)param_2->frametime;
+    dVar12 = (double)((float)local_1c0 * 0.001);
+    pVVar3 = VehicleCl_GetClient(param_1,param_3);
+    if (pVVar3 == (VehicleClient *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_camera.cpp",
                       0x244,0,"%s");
     }
-    pVVar7 = VehicleCl_GetClientDef(pVVar6);
-    if (pVVar7 == (VehicleDef *)0x0) {
+    pVVar4 = VehicleCl_GetClientDef(pVVar3);
+    if (pVVar4 == (VehicleDef *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_camera.cpp",
                       0x247,0,"%s");
     }
-    pVVar8 = VehicleCam_GetCamera(pcVar3->localClientNum);
-    if (pVVar8 == (VehicleCamera *)0x0) {
+    pVVar5 = VehicleCam_GetCamera(param_2->localClientNum);
+    if (pVVar5 == (VehicleCamera *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_camera.cpp",
                       0x24a,0,"%s");
     }
-    VehicleCam_GetVehiclePosition(pcVar3->localClientNum,pcVar12,&local_1b0,&local_1a0);
+    VehicleCam_GetVehiclePosition(param_2->localClientNum,param_3,&local_1b0,&local_1a0);
     AnglesToAxis(&local_1a0,(float (*) [3])&local_190);
-    VehicleCam_UpdateMode(LVar5,pcVar3,pcVar12,pVVar8);
-    pVVar9 = VehicleCam_GetParams(pVVar8->mode);
-    dVar20 = ABS((double)pVVar6->localSpeed[0]);
-    dVar19 = 1.0;
-    if (pVVar7->camLookEnabled == 0) {
-      dVar22 = 0.0;
-      pVVar8->userAngles[0] = 0.0;
-      pVVar8->userAngles[1] = 0.0;
-      pVVar8->userAngles[2] = 0.0;
+    VehicleCam_UpdateMode(param_1,param_2,param_3,pVVar5);
+    pVVar6 = VehicleCam_GetParams(pVVar5->mode);
+    dVar11 = ABS((double)pVVar3->localSpeed[0]);
+    dVar10 = 1.0;
+    if (pVVar4->camLookEnabled == 0) {
+      dVar13 = 0.0;
+      pVVar5->userAngles[0] = 0.0;
+      pVVar5->userAngles[1] = 0.0;
+      pVVar5->userAngles[2] = 0.0;
     }
     else {
-      VehicleCam_GetControllerAxis(pcVar3->localClientNum,local_1b8,(float *)&local_1c0);
-      fVar1 = pVVar8->userAngles[1];
-      dVar22 = 0.0;
-      dVar26 = (double)local_1b8[0];
-      dVar24 = (double)local_1c0._0_4_;
-      fVar28 = (float)((double)(float)((double)pVVar9->pitchTurnRate * dVar26) * dVar21 +
-                      (double)pVVar8->userAngles[0]);
-      pVVar8->userAngles[0] = fVar28;
-      pVVar8->userAngles[1] =
-           (float)((double)(float)((double)pVVar9->yawTurnRate * dVar24) * dVar21 + (double)fVar1);
-      pVVar8->userAngles[2] = 0.0;
+      VehicleCam_GetControllerAxis(param_2->localClientNum,local_1b8,(float *)&local_1c0);
+      fVar1 = pVVar5->userAngles[1];
+      dVar13 = 0.0;
+      dVar17 = (double)local_1b8[0];
+      dVar15 = (double)local_1c0._0_4_;
+      fVar19 = (float)((double)(float)((double)pVVar6->pitchTurnRate * dVar17) * dVar12 +
+                      (double)pVVar5->userAngles[0]);
+      pVVar5->userAngles[0] = fVar19;
+      pVVar5->userAngles[1] =
+           (float)((double)(float)((double)pVVar6->yawTurnRate * dVar15) * dVar12 + (double)fVar1);
+      pVVar5->userAngles[2] = 0.0;
       if ((vehCam_freeLook->current).enabled == false) {
-        fVar28 = VehicleCam_ClampAngle(fVar28,pVVar9->pitchClamp);
-        pVVar8->userAngles[0] = fVar28;
-        fVar28 = VehicleCam_ClampAngle(pVVar8->userAngles[1],pVVar9->yawClamp);
-        pVVar8->userAngles[1] = fVar28;
-        if ((dVar26 == dVar22) && (dVar24 == dVar22)) {
-          if ((double)pVVar7->camReturnSpeed == dVar22) {
+        fVar19 = VehicleCam_ClampAngle(fVar19,pVVar6->pitchClamp);
+        pVVar5->userAngles[0] = fVar19;
+        fVar19 = VehicleCam_ClampAngle(pVVar5->userAngles[1],pVVar6->yawClamp);
+        pVVar5->userAngles[1] = fVar19;
+        if ((dVar17 == dVar13) && (dVar15 == dVar13)) {
+          if ((double)pVVar4->camReturnSpeed == dVar13) {
             MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_camera.cpp"
                             ,0x269,0,"%s");
           }
-          dVar26 = (double)(float)(dVar20 / (double)pVVar7->camReturnSpeed);
-          dVar24 = dVar19;
-          if ((float)(dVar26 - dVar19) < 0.0) {
-            dVar24 = dVar26;
+          dVar17 = (double)(float)(dVar11 / (double)pVVar4->camReturnSpeed);
+          dVar15 = dVar10;
+          if ((float)(dVar17 - dVar10) < 0.0) {
+            dVar15 = dVar17;
           }
-          dVar18 = dVar22;
-          if (-dVar26 < 0.0) {
-            dVar18 = dVar24;
+          dVar9 = dVar13;
+          if (-dVar17 < 0.0) {
+            dVar9 = dVar15;
           }
-          fVar28 = (float)(dVar18 * (double)pVVar7->camReturnLerp);
-          dVar24 = (double)fVar28;
-          fVar28 = DiffTrackAngle((float)dVar22,pVVar8->userAngles[0],fVar28,(float)dVar21);
-          pVVar8->userAngles[0] = fVar28;
-          fVar28 = DiffTrackAngle((float)dVar22,pVVar8->userAngles[1],(float)dVar24,(float)dVar21);
-          pVVar8->userAngles[1] = fVar28;
+          fVar19 = (float)(dVar9 * (double)pVVar4->camReturnLerp);
+          dVar15 = (double)fVar19;
+          fVar19 = DiffTrackAngle((float)dVar13,pVVar5->userAngles[0],fVar19,(float)dVar12);
+          pVVar5->userAngles[0] = fVar19;
+          fVar19 = DiffTrackAngle((float)dVar13,pVVar5->userAngles[1],(float)dVar15,(float)dVar12);
+          pVVar5->userAngles[1] = fVar19;
         }
       }
     }
-    dVar27 = 0.0027777778450399637;
-    dVar18 = (double)(local_1a0 * 0.0027777778);
-    dVar25 = 0.5;
-    dVar24 = floor((double)(float)(dVar18 + 0.5));
-    dVar26 = (double)(float)((double)local_19c * dVar27);
-    dVar23 = 360.0;
-    local_1d0 = pVVar7->camPitchInfluence * (float)(dVar18 - (double)(float)dVar24) * 360.0;
-    dVar24 = floor((double)(float)(dVar26 + dVar25));
-    dVar18 = (double)(float)((double)local_198 * dVar27);
-    local_1cc = pVVar7->camYawInfluence *
-                (float)((double)(float)(dVar26 - (double)(float)dVar24) * dVar23);
-    dVar24 = floor((double)(float)(dVar18 + dVar25));
-    local_1c8 = pVVar7->camRollInfluence *
-                (float)((double)(float)(dVar18 - (double)(float)dVar24) * dVar23);
+    dVar18 = 0.0027777778450399637;
+    dVar9 = (double)(local_1a0 * 0.0027777778);
+    dVar16 = 0.5;
+    dVar15 = floor((double)(float)(dVar9 + 0.5));
+    dVar17 = (double)(float)((double)local_19c * dVar18);
+    dVar14 = 360.0;
+    local_1d0 = pVVar4->camPitchInfluence * (float)(dVar9 - (double)(float)dVar15) * 360.0;
+    dVar15 = floor((double)(float)(dVar17 + dVar16));
+    dVar9 = (double)(float)((double)local_198 * dVar18);
+    local_1cc = pVVar4->camYawInfluence *
+                (float)((double)(float)(dVar17 - (double)(float)dVar15) * dVar14);
+    dVar15 = floor((double)(float)(dVar9 + dVar16));
+    local_1c8 = pVVar4->camRollInfluence *
+                (float)((double)(float)(dVar9 - (double)(float)dVar15) * dVar14);
     AnglesToAxis(&local_1d0,(float (*) [3])afStack_100);
-    dVar26 = (double)(float)((double)(pVVar9->angles[0] + pVVar8->userAngles[0]) * dVar27);
-    dVar24 = floor((double)(float)(dVar26 + dVar25));
-    local_1d0 = (float)((double)(float)(dVar26 - (double)(float)dVar24) * dVar23);
-    dVar26 = (double)(float)((double)(pVVar9->angles[1] + pVVar8->userAngles[1]) * dVar27);
-    dVar24 = floor((double)(float)(dVar26 + dVar25));
-    local_1cc = (float)((double)(float)(dVar26 - (double)(float)dVar24) * dVar23);
-    dVar26 = (double)(float)((double)(pVVar9->angles[2] + pVVar8->userAngles[2]) * dVar27);
-    dVar24 = floor((double)(float)(dVar26 + dVar25));
-    local_1c8 = (float)((double)(float)(dVar26 - (double)(float)dVar24) * dVar23);
+    dVar17 = (double)(float)((double)(pVVar6->angles[0] + pVVar5->userAngles[0]) * dVar18);
+    dVar15 = floor((double)(float)(dVar17 + dVar16));
+    local_1d0 = (float)((double)(float)(dVar17 - (double)(float)dVar15) * dVar14);
+    dVar17 = (double)(float)((double)(pVVar6->angles[1] + pVVar5->userAngles[1]) * dVar18);
+    dVar15 = floor((double)(float)(dVar17 + dVar16));
+    local_1cc = (float)((double)(float)(dVar17 - (double)(float)dVar15) * dVar14);
+    dVar17 = (double)(float)((double)(pVVar6->angles[2] + pVVar5->userAngles[2]) * dVar18);
+    dVar15 = floor((double)(float)(dVar17 + dVar16));
+    local_1c8 = (float)((double)(float)(dVar17 - (double)(float)dVar15) * dVar14);
     AnglesToAxis(&local_1d0,(float (*) [3])afStack_130);
     MatrixMultiply((float (*) [3])afStack_130,(float (*) [3])afStack_100,(float (*) [3])afStack_d0);
     AxisToAngles((float (*) [3])afStack_d0,&local_1d0);
-    dVar24 = (double)(float)((double)pVVar9->speedInfluence * dVar20 + (double)pVVar9->radius);
-    if ((double)pVVar7->camFovSpeed <= dVar22) {
-      fVar28 = pVVar7->camFovIncrease;
-      fVar1 = pVVar7->camFovOffset;
+    dVar15 = (double)(float)((double)pVVar6->speedInfluence * dVar11 + (double)pVVar6->radius);
+    if ((double)pVVar4->camFovSpeed <= dVar13) {
+      fVar19 = pVVar4->camFovIncrease;
+      fVar1 = pVVar4->camFovOffset;
     }
     else {
-      dVar20 = (double)(float)(dVar20 / (double)(float)((double)pVVar7->camFovSpeed *
+      dVar11 = (double)(float)(dVar11 / (double)(float)((double)pVVar4->camFovSpeed *
                                                        17.600000381469727));
-      if ((float)(dVar20 - dVar19) < 0.0) {
-        dVar19 = dVar20;
+      if ((float)(dVar11 - dVar10) < 0.0) {
+        dVar10 = dVar11;
       }
-      dVar26 = dVar22;
-      if (-dVar20 < 0.0) {
-        dVar26 = dVar19;
+      dVar17 = dVar13;
+      if (-dVar11 < 0.0) {
+        dVar17 = dVar10;
       }
-      fVar28 = (float)((double)pVVar7->camFovIncrease * dVar26);
-      fVar1 = (float)((double)pVVar7->camFovOffset * dVar26);
+      fVar19 = (float)((double)pVVar4->camFovIncrease * dVar17);
+      fVar1 = (float)((double)pVVar4->camFovOffset * dVar17);
     }
-    dVar20 = (double)fVar28;
-    dVar19 = (double)fVar1;
-    pfVar4 = (float *)uVar16;
-    if (((double)pVVar7->camLerp <= dVar22) || (pVVar8->initialized == false)) {
-      pVVar8->angles[0] = local_1d0;
-      pVVar8->angles[1] = local_1cc;
-      pVVar8->angles[2] = local_1c8;
-      if (pVVar7->camLookEnabled != 0) {
-        dVar22 = (double)(float)((double)*pfVar4 * dVar27);
-        dVar21 = floor((double)(float)(dVar22 + dVar25));
-        pVVar8->userAngles[0] = (float)((double)(float)(dVar22 - (double)(float)dVar21) * dVar23);
-        dVar22 = (double)(float)((double)pfVar4[1] * dVar27);
-        dVar21 = floor((double)(float)(dVar22 + dVar25));
-        pVVar8->userAngles[1] = (float)((double)(float)(dVar22 - (double)(float)dVar21) * dVar23);
-        dVar22 = (double)(float)((double)pfVar4[2] * dVar27);
-        dVar21 = floor((double)(float)(dVar22 + dVar25));
-        pVVar8->userAngles[2] = (float)((double)(float)(dVar22 - (double)(float)dVar21) * dVar23);
+    dVar11 = (double)fVar19;
+    dVar10 = (double)fVar1;
+    if (((double)pVVar4->camLerp <= dVar13) || (pVVar5->initialized == false)) {
+      pVVar5->angles[0] = local_1d0;
+      pVVar5->angles[1] = local_1cc;
+      pVVar5->angles[2] = local_1c8;
+      if (pVVar4->camLookEnabled != 0) {
+        dVar13 = (double)(float)((double)*param_5 * dVar18);
+        dVar12 = floor((double)(float)(dVar13 + dVar16));
+        pVVar5->userAngles[0] = (float)((double)(float)(dVar13 - (double)(float)dVar12) * dVar14);
+        dVar13 = (double)(float)((double)param_5[1] * dVar18);
+        dVar12 = floor((double)(float)(dVar13 + dVar16));
+        pVVar5->userAngles[1] = (float)((double)(float)(dVar13 - (double)(float)dVar12) * dVar14);
+        dVar13 = (double)(float)((double)param_5[2] * dVar18);
+        dVar12 = floor((double)(float)(dVar13 + dVar16));
+        pVVar5->userAngles[2] = (float)((double)(float)(dVar13 - (double)(float)dVar12) * dVar14);
       }
-      pVVar8->offset[0] = pVVar9->offset[0];
-      pVVar8->offset[1] = pVVar9->offset[1];
-      pVVar8->offset[2] = pVVar9->offset[2];
-      pVVar8->initialized = true;
-      pVVar8->radius = (float)dVar24;
-      pVVar8->fov = (float)dVar20;
-      pVVar8->fovOffset = (float)dVar19;
+      pVVar5->offset[0] = pVVar6->offset[0];
+      pVVar5->offset[1] = pVVar6->offset[1];
+      pVVar5->offset[2] = pVVar6->offset[2];
+      pVVar5->initialized = true;
+      pVVar5->radius = (float)dVar15;
+      pVVar5->fov = (float)dVar11;
+      pVVar5->fovOffset = (float)dVar10;
     }
     else {
-      fVar28 = DiffTrackAngle(local_1d0,pVVar8->angles[0],pVVar7->camLerp,(float)dVar21);
-      pVVar8->angles[0] = fVar28;
-      fVar28 = DiffTrackAngle(local_1cc,pVVar8->angles[1],pVVar7->camLerp,(float)dVar21);
-      pVVar8->angles[1] = fVar28;
-      fVar28 = DiffTrackAngle(local_1c8,pVVar8->angles[2],pVVar7->camLerp,(float)dVar21);
-      pVVar8->angles[2] = fVar28;
-      fVar28 = DiffTrack(pVVar9->offset[0],pVVar8->offset[0],pVVar7->camLerp,(float)dVar21);
-      pVVar8->offset[0] = fVar28;
-      fVar28 = DiffTrack(pVVar9->offset[1],pVVar8->offset[1],pVVar7->camLerp,(float)dVar21);
-      pVVar8->offset[1] = fVar28;
-      fVar28 = DiffTrack(pVVar9->offset[2],pVVar8->offset[2],pVVar7->camLerp,(float)dVar21);
-      pVVar8->offset[2] = fVar28;
-      fVar28 = DiffTrack((float)dVar24,pVVar8->radius,pVVar7->camLerp,(float)dVar21);
-      pVVar8->radius = fVar28;
-      fVar28 = DiffTrack((float)dVar20,pVVar8->fov,pVVar7->camLerp,(float)dVar21);
-      pVVar8->fov = fVar28;
-      fVar28 = DiffTrack((float)dVar19,pVVar8->fovOffset,pVVar7->camLerp,(float)dVar21);
-      pVVar8->fovOffset = fVar28;
+      fVar19 = DiffTrackAngle(local_1d0,pVVar5->angles[0],pVVar4->camLerp,(float)dVar12);
+      pVVar5->angles[0] = fVar19;
+      fVar19 = DiffTrackAngle(local_1cc,pVVar5->angles[1],pVVar4->camLerp,(float)dVar12);
+      pVVar5->angles[1] = fVar19;
+      fVar19 = DiffTrackAngle(local_1c8,pVVar5->angles[2],pVVar4->camLerp,(float)dVar12);
+      pVVar5->angles[2] = fVar19;
+      fVar19 = DiffTrack(pVVar6->offset[0],pVVar5->offset[0],pVVar4->camLerp,(float)dVar12);
+      pVVar5->offset[0] = fVar19;
+      fVar19 = DiffTrack(pVVar6->offset[1],pVVar5->offset[1],pVVar4->camLerp,(float)dVar12);
+      pVVar5->offset[1] = fVar19;
+      fVar19 = DiffTrack(pVVar6->offset[2],pVVar5->offset[2],pVVar4->camLerp,(float)dVar12);
+      pVVar5->offset[2] = fVar19;
+      fVar19 = DiffTrack((float)dVar15,pVVar5->radius,pVVar4->camLerp,(float)dVar12);
+      pVVar5->radius = fVar19;
+      fVar19 = DiffTrack((float)dVar11,pVVar5->fov,pVVar4->camLerp,(float)dVar12);
+      pVVar5->fov = fVar19;
+      fVar19 = DiffTrack((float)dVar10,pVVar5->fovOffset,pVVar4->camLerp,(float)dVar12);
+      pVVar5->fovOffset = fVar19;
     }
-    pfVar17 = pVVar8->angles;
-    bVar10 = CL_Demo_IsPlaying(LVar5);
-    if (bVar10) {
-      *pfVar17 = (pcVar3->predictedPlayerState).viewangles[0];
-      pVVar8->angles[1] = (pcVar3->predictedPlayerState).viewangles[1];
-      pVVar8->angles[2] = (pcVar3->predictedPlayerState).viewangles[2];
+    pfVar8 = pVVar5->angles;
+    bVar7 = CL_Demo_IsPlaying(param_1);
+    if (bVar7) {
+      *pfVar8 = (param_2->predictedPlayerState).viewangles[0];
+      pVVar5->angles[1] = (param_2->predictedPlayerState).viewangles[1];
+      pVVar5->angles[2] = (param_2->predictedPlayerState).viewangles[2];
     }
-    AnglesToAxis(pfVar17,(float (*) [3])&local_160);
-    fVar28 = pVVar8->fovOffset + pVVar8->offset[0];
-    local_1b0 = local_190 * fVar28 + local_1b0;
-    pfVar15 = (float *)uVar14;
-    *pfVar15 = local_1b0;
-    local_1ac = local_18c * fVar28 + local_1ac;
-    pfVar15[1] = local_1ac;
-    local_1a8 = local_188 * fVar28 + local_1a8;
-    pfVar15[2] = local_1a8;
-    fVar28 = pVVar8->offset[1];
-    local_1b0 = local_184 * fVar28 + local_1b0;
-    *pfVar15 = local_1b0;
-    local_1ac = local_180 * fVar28 + local_1ac;
-    pfVar15[1] = local_1ac;
-    local_1a8 = local_17c * fVar28 + local_1a8;
-    pfVar15[2] = local_1a8;
-    VVar2 = pVVar9->zOffsetMode;
+    AnglesToAxis(pfVar8,(float (*) [3])&local_160);
+    fVar19 = pVVar5->fovOffset + pVVar5->offset[0];
+    local_1b0 = local_190 * fVar19 + local_1b0;
+    *param_4 = local_1b0;
+    local_1ac = local_18c * fVar19 + local_1ac;
+    param_4[1] = local_1ac;
+    local_1a8 = local_188 * fVar19 + local_1a8;
+    param_4[2] = local_1a8;
+    fVar19 = pVVar5->offset[1];
+    local_1b0 = local_184 * fVar19 + local_1b0;
+    *param_4 = local_1b0;
+    local_1ac = local_180 * fVar19 + local_1ac;
+    param_4[1] = local_1ac;
+    local_1a8 = local_17c * fVar19 + local_1a8;
+    param_4[2] = local_1a8;
+    VVar2 = pVVar6->zOffsetMode;
     if (VVar2 == VEHCAM_ZMODE_WORLD) {
-      pfVar15[2] = pVVar8->offset[2] + local_1a8;
+      param_4[2] = pVVar5->offset[2] + local_1a8;
     }
     else if (VVar2 == VEHCAM_ZMODE_VEHICLE) {
-      fVar28 = pVVar8->offset[2];
-      *pfVar15 = local_178 * fVar28 + local_1b0;
-      pfVar15[1] = local_174 * fVar28 + local_1ac;
-      pfVar15[2] = local_170 * fVar28 + local_1a8;
+      fVar19 = pVVar5->offset[2];
+      *param_4 = local_178 * fVar19 + local_1b0;
+      param_4[1] = local_174 * fVar19 + local_1ac;
+      param_4[2] = local_170 * fVar19 + local_1a8;
     }
     else if (VVar2 < VEHCAM_ZMODE_COUNT) {
-      fVar28 = pVVar8->offset[2];
-      *pfVar15 = local_148 * fVar28 + local_1b0;
-      pfVar15[1] = local_144 * fVar28 + local_1ac;
-      pfVar15[2] = local_140 * fVar28 + local_1a8;
+      fVar19 = pVVar5->offset[2];
+      *param_4 = local_148 * fVar19 + local_1b0;
+      param_4[1] = local_144 * fVar19 + local_1ac;
+      param_4[2] = local_140 * fVar19 + local_1a8;
     }
     else if (alwaysfails == 0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_camera.cpp",
                       0x2cf,0,"VehicleCam_UpdateDriveCam: Unknown z offset mode");
     }
-    *pfVar4 = *pfVar17;
-    pfVar4[1] = pVVar8->angles[1];
-    pfVar4[2] = pVVar8->angles[2];
-    fVar28 = -pVVar8->radius;
-    pfVar15[2] = local_158 * fVar28 + pfVar15[2];
-    *pfVar15 = local_160 * fVar28 + *pfVar15;
-    pfVar15[1] = local_15c * fVar28 + pfVar15[1];
-    if (pVVar8->mode == VEHCAM_MODE_3RD_PERSON) {
-      ThirdPersonViewTrace(pcVar3,&local_1b0,pfVar15,0x2800211,pfVar15);
+    *param_5 = *pfVar8;
+    param_5[1] = pVVar5->angles[1];
+    param_5[2] = pVVar5->angles[2];
+    fVar19 = -pVVar5->radius;
+    param_4[2] = local_158 * fVar19 + param_4[2];
+    *param_4 = local_160 * fVar19 + *param_4;
+    param_4[1] = local_15c * fVar19 + param_4[1];
+    if (pVVar5->mode == VEHCAM_MODE_3RD_PERSON) {
+      ThirdPersonViewTrace(param_2,&local_1b0,param_4,0x2800211,param_4);
     }
-    VehicleCam_SetClientViewAngles(pcVar3,pfVar4);
+    VehicleCam_SetClientViewAngles(param_2,param_5);
   }
-  __restfpr_23();
-  __restgprlr_22();
   return;
 }
 
 
 // 826B99B0  VehicleCam_UpdateDriveCam  (vehicle/vehicle_camera.cpp:737)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -877,41 +816,30 @@ void VehicleCam_UpdateCamInternal
 void VehicleCam_UpdateDriveCam(LocalClientNum_t param_1,cg_s *param_2,float *param_3,float *param_4)
 
 {
-  cg_s *pcVar1;
-  LocalClientNum_t LVar2;
-  centity_s *pcVar3;
-  ulonglong uVar4;
-  ulonglong uVar5;
-  ulonglong uVar6;
+  centity_s *pcVar1;
   
-  uVar6 = (ulonglong)(int)param_4;
-  uVar5 = (ulonglong)(int)param_3;
-  uVar4 = (ulonglong)(int)param_2;
-  LVar2 = __savegprlr_26(param_1);
-  if ((uVar4 & 0xffffffff) == 0) {
+  if (param_2 == (cg_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_camera.cpp",
                     0x2e5,0,"%s");
   }
-  if ((uVar5 & 0xffffffff) == 0) {
+  if (param_3 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_camera.cpp",
                     0x2e6,0,"%s");
   }
-  if ((uVar6 & 0xffffffff) == 0) {
+  if (param_4 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_camera.cpp",
                     0x2e7,0,"%s");
   }
-  pcVar1 = (cg_s *)uVar4;
-  if (((pcVar1->predictedPlayerState).eFlags & 0x200000U) == 0) {
+  if (((param_2->predictedPlayerState).eFlags & 0x200000U) == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_camera.cpp",
                     0x2ea,0,"%s");
   }
-  if ((pcVar1->predictedPlayerState).viewlocked_entNum == 0x7ff) {
+  if ((param_2->predictedPlayerState).viewlocked_entNum == 0x7ff) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_camera.cpp",
                     0x2eb,0,"%s");
   }
-  pcVar3 = CG_GetEntity(pcVar1->localClientNum,(pcVar1->predictedPlayerState).viewlocked_entNum);
-  VehicleCam_UpdateCamInternal(LVar2,pcVar1,pcVar3,(float *)uVar5,(float *)uVar6);
-  __restgprlr_26();
+  pcVar1 = CG_GetEntity(param_2->localClientNum,(param_2->predictedPlayerState).viewlocked_entNum);
+  VehicleCam_UpdateCamInternal(param_1,param_2,pcVar1,param_3,param_4);
   return;
 }
 
@@ -947,6 +875,8 @@ bool VehicleCam_IsRemoteControlCam(LocalClientNum_t param_1)
 
 // 826B9B60  VehicleCam_UpdateRemoteControlCam  (vehicle/vehicle_camera.cpp:780)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
@@ -955,45 +885,34 @@ void VehicleCam_UpdateRemoteControlCam
                (LocalClientNum_t param_1,cg_s *param_2,float *param_3,float *param_4)
 
 {
-  cg_s *pcVar1;
-  LocalClientNum_t LVar2;
-  centity_s *pcVar3;
-  ulonglong uVar4;
-  ulonglong uVar5;
-  ulonglong uVar6;
+  centity_s *pcVar1;
   
-  uVar6 = (ulonglong)(int)param_4;
-  uVar5 = (ulonglong)(int)param_3;
-  uVar4 = (ulonglong)(int)param_2;
-  LVar2 = __savegprlr_26(param_1);
-  if ((uVar4 & 0xffffffff) == 0) {
+  if (param_2 == (cg_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_camera.cpp",
                     0x310,0,"%s");
   }
-  if ((uVar5 & 0xffffffff) == 0) {
+  if (param_3 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_camera.cpp",
                     0x311,0,"%s");
   }
-  if ((uVar6 & 0xffffffff) == 0) {
+  if (param_4 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_camera.cpp",
                     0x312,0,"%s");
   }
-  pcVar1 = (cg_s *)uVar4;
-  if (((pcVar1->predictedPlayerState).pm_flags & 0x80000U) == 0) {
+  if (((param_2->predictedPlayerState).pm_flags & 0x80000U) == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_camera.cpp",
                     0x315,0,"%s");
   }
-  if (((pcVar1->predictedPlayerState).otherFlags & 2U) == 0) {
+  if (((param_2->predictedPlayerState).otherFlags & 2U) == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_camera.cpp",
                     0x316,0,"%s");
   }
-  if ((pcVar1->predictedPlayerState).remoteControlEnt == 0x7ff) {
+  if ((param_2->predictedPlayerState).remoteControlEnt == 0x7ff) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_camera.cpp",
                     0x317,0,"%s");
   }
-  pcVar3 = CG_GetEntity(pcVar1->localClientNum,(pcVar1->predictedPlayerState).remoteControlEnt);
-  VehicleCam_UpdateCamInternal(LVar2,pcVar1,pcVar3,(float *)uVar5,(float *)uVar6);
-  __restgprlr_26();
+  pcVar1 = CG_GetEntity(param_2->localClientNum,(param_2->predictedPlayerState).remoteControlEnt);
+  VehicleCam_UpdateCamInternal(param_1,param_2,pcVar1,param_3,param_4);
   return;
 }
 
@@ -1033,6 +952,8 @@ bool VehicleCam_IsPlayerControlCam(LocalClientNum_t param_1)
 
 // 826B9D50  VehicleCam_UpdatePlayerControlCam  (vehicle/vehicle_camera.cpp:828)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -1041,47 +962,39 @@ void VehicleCam_UpdatePlayerControlCam
                (LocalClientNum_t param_1,cg_s *param_2,float *param_3,float *param_4)
 
 {
-  cg_s *pcVar1;
-  LocalClientNum_t LVar2;
-  centity_s *pcVar3;
-  ulonglong uVar4;
-  ulonglong uVar5;
-  ulonglong uVar6;
+  centity_s *pcVar1;
   
-  uVar6 = (ulonglong)(int)param_4;
-  uVar5 = (ulonglong)(int)param_3;
-  uVar4 = (ulonglong)(int)param_2;
-  LVar2 = __savegprlr_26(param_1);
-  if ((uVar4 & 0xffffffff) == 0) {
+  if (param_2 == (cg_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_camera.cpp",
                     0x340,0,"%s");
   }
-  if ((uVar5 & 0xffffffff) == 0) {
+  if (param_3 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_camera.cpp",
                     0x341,0,"%s");
   }
-  if ((uVar6 & 0xffffffff) == 0) {
+  if (param_4 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_camera.cpp",
                     0x342,0,"%s");
   }
-  pcVar1 = (cg_s *)uVar4;
-  if (((pcVar1->predictedPlayerState).otherFlags & 2U) == 0) {
+  if (((param_2->predictedPlayerState).otherFlags & 2U) == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_camera.cpp",
                     0x345,0,"%s");
   }
-  if ((pcVar1->predictedPlayerState).vehicleState.entity == 0x7ff) {
+  if ((param_2->predictedPlayerState).vehicleState.entity == 0x7ff) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_camera.cpp",
                     0x346,0,"%s");
   }
-  pcVar3 = CG_GetEntity(pcVar1->localClientNum,(pcVar1->predictedPlayerState).vehicleState.entity);
-  VehicleCam_UpdateCamInternal(LVar2,pcVar1,pcVar3,(float *)uVar5,(float *)uVar6);
-  __restgprlr_26();
+  pcVar1 = CG_GetEntity(param_2->localClientNum,(param_2->predictedPlayerState).vehicleState.entity)
+  ;
+  VehicleCam_UpdateCamInternal(param_1,param_2,pcVar1,param_3,param_4);
   return;
 }
 
 
 // 826B9E68  VehicleCam_ScaleFov  (vehicle/vehicle_camera.cpp:847)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
@@ -1089,32 +1002,28 @@ void VehicleCam_UpdatePlayerControlCam
 float VehicleCam_ScaleFov(cg_s *param_1,float param_2)
 
 {
-  uint uVar1;
-  int iVar2;
-  double extraout_f1;
-  double dVar3;
+  LocalClientNum_t LVar1;
+  double dVar2;
   
-  iVar2 = __savegprlr_29((double)param_2,param_1);
-  dVar3 = extraout_f1;
-  if (iVar2 == 0) {
+  dVar2 = (double)param_2;
+  if (param_1 == (cg_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_camera.cpp",
                     0x355,0,"%s");
   }
-  if ((*(uint *)(iVar2 + 0xf8) & 0x200000) == 0) {
+  if (((param_1->predictedPlayerState).eFlags & 0x200000U) == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_camera.cpp",
                     0x359,0,"%s");
   }
-  if (*(int *)(iVar2 + 0x1bc) == 0x7ff) {
+  if ((param_1->predictedPlayerState).viewlocked_entNum == 0x7ff) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_camera.cpp",
                     0x35a,0,"%s");
   }
-  uVar1 = *(uint *)(iVar2 + 0x3338);
-  if (3 < uVar1) {
+  LVar1 = param_1->localClientNum;
+  if (LOCAL_CLIENT_3 < LVar1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_camera.cpp",
                     0x97,0,
                     "localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)");
   }
-  dVar3 = (double)__restgprlr_29((double)(float)((double)vehicleCameras[uVar1].fov + dVar3));
-  return (float)dVar3;
+  return (float)((double)vehicleCameras[LVar1].fov + dVar2);
 }
 

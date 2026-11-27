@@ -2,28 +2,24 @@
 
 // 8281B538  vp8_blit_text  (WebM_atvi_opt/vpx/vp8/common/textblit.c:19)
 
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
+
 void vp8_blit_text(char *param_1,uchar *param_2,int param_3)
 
 {
   char cVar1;
   uint uVar2;
-  int iVar3;
-  longlong lVar4;
-  ulonglong uVar5;
+  uint uVar3;
+  int iVar4;
+  int iVar5;
   longlong lVar6;
-  uint uVar7;
-  int iVar8;
-  int iVar9;
-  longlong lVar10;
   int local_1b0 [66];
   longlong local_a8;
-  ulonglong local_a0;
+  longlong local_a0;
   
-  uVar5 = (ulonglong)param_3;
-  lVar6 = (longlong)(int)param_2;
-  lVar4 = (longlong)(int)param_1;
-  __savegprlr();
-  local_a0 = uVar5;
+  local_a8 = (longlong)(int)param_1;
+  local_a0 = (longlong)param_3;
   local_1b0[2] = 0x8020;
   local_1b0[3] = 0xafabea;
   local_1b0[4] = 0xd7ec0;
@@ -52,7 +48,6 @@ void vp8_blit_text(char *param_1,uchar *param_2,int param_3)
   local_1b0[0x19] = 0xaad6a2;
   local_1b0[0x1a] = 0x2800;
   local_1b0[0x1b] = 0x2a00;
-  local_a8 = lVar4;
   local_1b0[0x1c] = 0x8a880;
   local_1b0[0x1d] = 0x52940;
   local_1b0[0x1e] = 0x22a20;
@@ -90,39 +85,36 @@ void vp8_blit_text(char *param_1,uchar *param_2,int param_3)
   local_1b0[0x3e] = 0x10440;
   local_1b0[0x3f] = 0x1084210;
   local_1b0[0x40] = 0x820;
-  if (*(char *)lVar4 != '\0') {
+  if (*param_1 != '\0') {
     do {
-      cVar1 = *(char *)lVar4;
+      cVar1 = *(char *)local_a8;
       if ((cVar1 < '[') && ('\x1f' < cVar1)) {
-        iVar9 = local_1b0[cVar1 + -0x20];
+        iVar5 = local_1b0[cVar1 + -0x20];
       }
       else if ((cVar1 < '{') && ('`' < cVar1)) {
-        iVar9 = local_1b0[cVar1 + -0x40];
+        iVar5 = local_1b0[cVar1 + -0x40];
       }
       else {
-        iVar9 = 0;
+        iVar5 = 0;
       }
-      iVar8 = 6;
-      iVar3 = (int)lVar6;
-      lVar10 = 7;
-      uVar7 = 0x1e;
+      iVar4 = 6;
+      lVar6 = 7;
+      uVar3 = 0x1e;
       do {
-        uVar2 = iVar9 >> (uVar7 & 0x3f);
-        *(char *)(iVar8 + iVar3) = -((uVar2 & 1) != 0);
-        *(char *)(iVar3 + (int)uVar5 + iVar8) = -((uVar2 & 2) != 0);
-        *(char *)((int)((uVar5 & 0xffffffff) << 1) + iVar3 + iVar8) = -((uVar2 & 4) != 0);
-        *(char *)((int)uVar5 + (int)((uVar5 & 0xffffffff) << 1) + iVar3 + iVar8) =
-             -((uVar2 & 8) != 0);
-        uVar7 = uVar7 - 5;
-        *(char *)((int)((uVar5 & 0xffffffff) << 2) + iVar3 + iVar8) = -((uVar2 & 0x10) != 0);
-        iVar8 = iVar8 + -1;
-        lVar10 = lVar10 + -1;
-      } while (lVar10 != 0);
-      lVar4 = lVar4 + 1;
-      lVar6 = lVar6 + 7;
-    } while (*(char *)lVar4 != '\0');
+        uVar2 = iVar5 >> (uVar3 & 0x3f);
+        param_2[iVar4] = -((uVar2 & 1) != 0);
+        param_2[iVar4 + param_3] = -((uVar2 & 2) != 0);
+        param_2[iVar4 + param_3 * 2] = -((uVar2 & 4) != 0);
+        param_2[iVar4 + param_3 * 3] = -((uVar2 & 8) != 0);
+        uVar3 = uVar3 - 5;
+        param_2[iVar4 + param_3 * 4] = -((uVar2 & 0x10) != 0);
+        iVar4 = iVar4 + -1;
+        lVar6 = lVar6 + -1;
+      } while (lVar6 != 0);
+      local_a8 = local_a8 + 1;
+      param_2 = param_2 + 7;
+    } while (*(char *)local_a8 != '\0');
   }
-  __restgprlr();
   return;
 }
 
@@ -142,6 +134,9 @@ void plot(int param_1,int param_2,uchar *param_3,int param_4)
 
 // 8281B978  vp8_blit_line  (WebM_atvi_opt/vpx/vp8/common/textblit.c:66)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void vp8_blit_line(int param_1,int param_2,int param_3,int param_4,uchar *param_5,int param_6)
 
 {
@@ -149,92 +144,80 @@ void vp8_blit_line(int param_1,int param_2,int param_3,int param_4,uchar *param_
   uint uVar2;
   uint uVar3;
   int iVar4;
-  longlong lVar5;
-  int iVar6;
+  int iVar5;
+  longlong lVar6;
   longlong lVar7;
-  longlong lVar8;
-  int iVar9;
-  ulonglong uVar10;
+  ulonglong uVar8;
+  longlong lVar9;
+  longlong lVar10;
   longlong lVar11;
-  uint uVar13;
   longlong lVar12;
-  uint uVar15;
-  longlong lVar14;
-  longlong lVar16;
-  longlong lVar17;
-  ulonglong uVar18;
+  longlong lVar13;
+  ulonglong uVar14;
   
-  lVar8 = (longlong)param_6;
-  lVar12 = (longlong)param_4;
-  lVar16 = (longlong)param_3;
-  lVar11 = (longlong)param_2;
-  lVar5 = __savegprlr_29(param_1);
-  uVar15 = (int)lVar11 - (int)lVar5;
-  uVar13 = (int)lVar12 - (int)lVar16;
-  uVar2 = (int)uVar15 >> 0x1f;
-  uVar3 = (int)uVar13 >> 0x1f;
-  bVar1 = (int)((uVar13 ^ uVar3) - uVar3) <= (int)((uVar15 ^ uVar2) - uVar2);
-  lVar14 = lVar5;
-  lVar7 = lVar11;
+  lVar6 = (longlong)param_4;
+  lVar12 = (longlong)param_3;
+  uVar2 = param_2 - param_1 >> 0x1f;
+  uVar3 = param_4 - param_3 >> 0x1f;
+  bVar1 = (int)((param_4 - param_3 ^ uVar3) - uVar3) <= (int)((param_2 - param_1 ^ uVar2) - uVar2);
+  lVar11 = (longlong)param_1;
+  lVar10 = (longlong)param_2;
   if (!bVar1) {
-    lVar14 = lVar16;
-    lVar7 = lVar12;
-    lVar16 = lVar5;
-    lVar12 = lVar11;
-  }
-  lVar5 = lVar14;
-  lVar11 = lVar16;
-  if ((int)lVar7 < (int)lVar14) {
-    lVar5 = lVar7;
-    lVar7 = lVar14;
     lVar11 = lVar12;
-    lVar12 = lVar16;
+    lVar10 = lVar6;
+    lVar12 = (longlong)param_1;
+    lVar6 = (longlong)param_2;
   }
-  uVar18 = lVar7 - lVar5;
-  uVar10 = (ulonglong)((int)(lVar12 - lVar11) >> 0x1f);
-  lVar14 = (longlong)((int)uVar18 >> 1) + (ulonglong)((int)uVar18 < 0 && (uVar18 & 1) != 0);
-  lVar16 = (lVar12 - lVar11 ^ uVar10) - uVar10;
-  lVar17 = 1;
-  if ((int)lVar12 <= (int)lVar11) {
-    lVar17 = -1;
+  lVar7 = lVar11;
+  lVar9 = lVar12;
+  if ((int)lVar10 < (int)lVar11) {
+    lVar7 = lVar10;
+    lVar10 = lVar11;
+    lVar9 = lVar6;
+    lVar6 = lVar12;
   }
-  iVar6 = (int)lVar5;
-  iVar9 = (int)lVar8;
+  uVar14 = lVar10 - lVar7;
+  uVar8 = (ulonglong)((int)(lVar6 - lVar9) >> 0x1f);
+  lVar11 = (longlong)((int)uVar14 >> 1) + (ulonglong)((int)uVar14 < 0 && (uVar14 & 1) != 0);
+  lVar12 = (lVar6 - lVar9 ^ uVar8) - uVar8;
+  lVar13 = 1;
+  if ((int)lVar6 <= (int)lVar9) {
+    lVar13 = -1;
+  }
+  iVar5 = (int)lVar7;
   if (bVar1) {
-    if (iVar6 <= (int)lVar7) {
-      lVar7 = uVar18 + 1;
-      iVar6 = (int)lVar11 * iVar9;
+    if (iVar5 <= (int)lVar10) {
+      lVar10 = uVar14 + 1;
+      iVar5 = (int)lVar9 * param_6;
       do {
-        iVar4 = iVar6 + (int)lVar5;
-        lVar14 = lVar14 - lVar16;
+        iVar4 = iVar5 + (int)lVar7;
+        lVar11 = lVar11 - lVar12;
         param_5[iVar4] = ~param_5[iVar4];
-        if (lVar14 < 0) {
-          iVar6 = (int)lVar17 * iVar9 + iVar6;
-          lVar14 = lVar14 + uVar18;
+        if (lVar11 < 0) {
+          iVar5 = (int)lVar13 * param_6 + iVar5;
+          lVar11 = lVar11 + uVar14;
         }
-        lVar5 = lVar5 + 1;
-        lVar7 = lVar7 + -1;
-      } while (lVar7 != 0);
+        lVar7 = lVar7 + 1;
+        lVar10 = lVar10 + -1;
+      } while (lVar10 != 0);
     }
   }
-  else if (iVar6 <= (int)lVar7) {
-    lVar12 = uVar18 + 1;
-    lVar7 = (longlong)iVar6 * (longlong)iVar9;
+  else if (iVar5 <= (int)lVar10) {
+    lVar10 = uVar14 + 1;
+    iVar5 = iVar5 * param_6;
     do {
-      iVar6 = (int)lVar7 + (int)lVar11;
-      lVar14 = lVar14 - lVar16;
-      param_5[iVar6] = ~param_5[iVar6];
-      if (lVar14 < 0) {
-        lVar11 = lVar17 + lVar11;
-        lVar14 = lVar14 + uVar18;
+      iVar4 = iVar5 + (int)lVar9;
+      lVar11 = lVar11 - lVar12;
+      param_5[iVar4] = ~param_5[iVar4];
+      if (lVar11 < 0) {
+        lVar9 = lVar13 + lVar9;
+        lVar11 = lVar11 + uVar14;
       }
-      lVar7 = lVar7 + lVar8;
-      lVar12 = lVar12 + -1;
-    } while (lVar12 != 0);
-    __restgprlr_29();
+      iVar5 = iVar5 + param_6;
+      lVar10 = lVar10 + -1;
+    } while (lVar10 != 0);
     return;
   }
-  __restgprlr_29();
   return;
 }
 

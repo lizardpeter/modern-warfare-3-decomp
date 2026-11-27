@@ -2,66 +2,64 @@
 
 // 82602D88  FFT_Init  (universal/fft.cpp:7)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void FFT_Init(int *param_1,complex_s *param_2)
 
 {
-  uint *puVar1;
-  ulonglong uVar2;
-  longlong lVar3;
-  uint uVar4;
+  complex_s *pcVar1;
+  uint uVar2;
+  double dVar3;
+  double dVar4;
   double dVar5;
-  double dVar6;
-  double dVar7;
   
-  uVar2 = (ulonglong)(int)param_2;
-  puVar1 = (uint *)__savegprlr_28(param_1);
-  if (puVar1 == (uint *)0x0) {
+  if (param_1 == (int *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\fft.cpp",0xb,0,"%s")
     ;
   }
-  if ((uVar2 & 0xffffffff) == 0) {
+  if (param_2 == (complex_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\fft.cpp",0xc,0,"%s")
     ;
   }
-  lVar3 = uVar2 - 8;
-  uVar4 = 0;
-  dVar7 = 0.02454369328916073;
+  pcVar1 = param_2 + -1;
+  uVar2 = 0;
+  dVar5 = 0.02454369328916073;
   do {
-    *puVar1 = 0;
-    if ((uVar4 & 1) != 0) {
-      *puVar1 = 0x80;
+    *param_1 = 0;
+    if ((uVar2 & 1) != 0) {
+      *param_1 = 0x80;
     }
-    if ((uVar4 & 2) != 0) {
-      *puVar1 = *puVar1 | 0x40;
+    if ((uVar2 & 2) != 0) {
+      *param_1 = *param_1 | 0x40;
     }
-    if ((uVar4 & 4) != 0) {
-      *puVar1 = *puVar1 | 0x20;
+    if ((uVar2 & 4) != 0) {
+      *param_1 = *param_1 | 0x20;
     }
-    if ((uVar4 & 8) != 0) {
-      *puVar1 = *puVar1 | 0x10;
+    if ((uVar2 & 8) != 0) {
+      *param_1 = *param_1 | 0x10;
     }
-    if ((uVar4 & 0x10) != 0) {
-      *puVar1 = *puVar1 | 8;
+    if ((uVar2 & 0x10) != 0) {
+      *param_1 = *param_1 | 8;
     }
-    if ((uVar4 & 0x20) != 0) {
-      *puVar1 = *puVar1 | 4;
+    if ((uVar2 & 0x20) != 0) {
+      *param_1 = *param_1 | 4;
     }
-    if ((uVar4 & 0x40) != 0) {
-      *puVar1 = *puVar1 | 2;
+    if ((uVar2 & 0x40) != 0) {
+      *param_1 = *param_1 | 2;
     }
-    if ((uVar4 & 0x80) != 0) {
-      *puVar1 = *puVar1 | 1;
+    if ((uVar2 & 0x80) != 0) {
+      *param_1 = *param_1 | 1;
     }
-    dVar6 = (double)(float)((double)(longlong)(int)uVar4 * dVar7);
-    dVar5 = sin(dVar6);
-    *(float *)((int)lVar3 + 0xc) = (float)dVar5;
-    dVar5 = cos(dVar6);
-    uVar4 = uVar4 + 1;
-    lVar3 = lVar3 + 8;
-    *(float *)lVar3 = (float)dVar5;
-    puVar1 = puVar1 + 1;
-  } while ((int)uVar4 < 0x100);
-  __restgprlr_28();
+    dVar4 = (double)(float)((double)(longlong)(int)uVar2 * dVar5);
+    dVar3 = sin(dVar4);
+    pcVar1[1].imag = (float)dVar3;
+    dVar3 = cos(dVar4);
+    uVar2 = uVar2 + 1;
+    pcVar1 = pcVar1 + 1;
+    pcVar1->real = (float)dVar3;
+    param_1 = param_1 + 1;
+  } while ((int)uVar2 < 0x100);
   return;
 }
 
@@ -97,6 +95,9 @@ void __stvx(__vector4 param_1,void *param_2,int param_3)
 
 // 82602F30  FFT  (universal/fft.cpp:276)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
+
 void FFT(float *param_1,float *param_2,ulong param_3,int *param_4,complex_s *param_5)
 
 {
@@ -111,46 +112,34 @@ void FFT(float *param_1,float *param_2,ulong param_3,int *param_4,complex_s *par
   int iVar9;
   int iVar10;
   int iVar11;
-  int *piVar12;
-  int iVar13;
-  float fVar14;
-  float *pfVar15;
-  float *pfVar16;
-  uint uVar17;
+  float fVar12;
+  undefined1 auVar13 [16];
+  undefined1 auVar14 [16];
+  uint uVar15;
+  uint uVar16;
+  longlong lVar17;
   uint uVar18;
-  undefined1 auVar19 [16];
-  undefined1 auVar20 [16];
-  uint uVar22;
-  ulonglong uVar21;
-  ulonglong uVar23;
-  ulonglong uVar24;
-  longlong lVar25;
-  ulonglong uVar26;
-  longlong lVar27;
-  uint uVar29;
-  longlong lVar28;
-  float *pfVar30;
-  int iVar31;
-  longlong lVar32;
-  ulonglong uVar33;
-  ulonglong uVar34;
-  undefined1 auVar35 [16];
-  undefined1 auVar36 [16];
-  undefined1 auVar37 [16];
-  undefined1 auVar38 [16];
-  undefined1 auVar39 [16];
-  undefined1 auVar40 [16];
+  float *pfVar19;
+  uint uVar20;
+  float *pfVar21;
+  int iVar22;
+  float *pfVar23;
+  int *piVar24;
+  float *pfVar25;
+  undefined1 auVar26 [16];
+  undefined1 auVar27 [16];
+  undefined1 auVar28 [16];
+  undefined1 auVar29 [16];
+  undefined1 auVar30 [16];
+  undefined1 auVar31 [16];
   float local_850 [256];
   float local_450 [276];
   
-  lVar28 = (longlong)(int)param_4;
-  uVar23 = (ulonglong)(int)param_2;
-  uVar22 = __savegprlr_23(param_1);
-  if ((uVar22 & 0xf) != 0) {
+  if (((uint)param_1 & 0xf) != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\fft.cpp",0x128,0,
                     "%s");
   }
-  if ((uVar23 & 0xf) != 0) {
+  if (((uint)param_2 & 0xf) != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\fft.cpp",0x129,0,
                     "%s");
   }
@@ -159,140 +148,134 @@ void FFT(float *param_1,float *param_2,ulong param_3,int *param_4,complex_s *par
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\fft.cpp",0x12d,0,
                     "%s\n\t(count) = %i");
   }
-  uVar29 = 8 - param_3;
-  iVar13 = (int)uVar23;
+  uVar20 = 8 - param_3;
   if (uVar8 != 0) {
-    lVar25 = (ulonglong)(uVar8 - 1 >> 2) + 1;
-    lVar32 = lVar28 + 8;
-    lVar27 = uVar23 - 0xc;
-    pfVar30 = (float *)(uVar22 + 0xc);
+    lVar17 = (ulonglong)(uVar8 - 1 >> 2) + 1;
+    piVar24 = param_4 + 2;
+    pfVar19 = param_2 + -3;
+    pfVar21 = param_1 + 3;
     do {
-      piVar12 = (int *)lVar32;
-      iVar9 = piVar12[-2] >> (uVar29 & 0x3f);
-      iVar31 = piVar12[1];
-      iVar10 = piVar12[-1] >> (uVar29 & 0x3f);
-      fVar1 = *(float *)((int)lVar27 + 0xc);
-      iVar11 = *piVar12 >> (uVar29 & 0x3f);
-      local_450[iVar9] = pfVar30[-3];
-      iVar31 = iVar31 >> (uVar29 & 0x3f);
-      fVar2 = pfVar30[-2];
-      lVar27 = lVar27 + 0x10;
-      fVar4 = *(float *)lVar27;
-      fVar5 = *(float *)((uVar22 - (int)lVar28) + (int)piVar12);
-      fVar6 = *(float *)((iVar13 - (int)lVar28) + (int)piVar12);
-      fVar3 = *pfVar30;
-      fVar7 = *(float *)((iVar13 - uVar22) + (int)pfVar30);
+      iVar9 = piVar24[-2] >> (uVar20 & 0x3f);
+      iVar22 = piVar24[1];
+      iVar10 = piVar24[-1] >> (uVar20 & 0x3f);
+      fVar1 = pfVar19[3];
+      iVar11 = *piVar24 >> (uVar20 & 0x3f);
+      local_450[iVar9] = pfVar21[-3];
+      iVar22 = iVar22 >> (uVar20 & 0x3f);
+      fVar2 = pfVar21[-2];
+      pfVar19 = pfVar19 + 4;
+      fVar4 = *pfVar19;
+      fVar5 = *(float *)(((int)param_1 - (int)param_4) + (int)piVar24);
+      fVar6 = *(float *)(((int)param_2 - (int)param_4) + (int)piVar24);
+      fVar3 = *pfVar21;
+      fVar7 = *(float *)(((int)param_2 - (int)param_1) + (int)pfVar21);
       local_850[iVar9] = fVar1;
       local_450[iVar10] = fVar2;
       local_850[iVar10] = fVar4;
       local_450[iVar11] = fVar5;
-      lVar32 = lVar32 + 0x10;
+      piVar24 = piVar24 + 4;
       local_850[iVar11] = fVar6;
-      pfVar30 = pfVar30 + 4;
-      local_450[iVar31] = fVar3;
-      local_850[iVar31] = fVar7;
-      lVar25 = lVar25 + -1;
-    } while (lVar25 != 0);
+      pfVar21 = pfVar21 + 4;
+      local_450[iVar22] = fVar3;
+      local_850[iVar22] = fVar7;
+      lVar17 = lVar17 + -1;
+    } while (lVar17 != 0);
     if (uVar8 != 0) {
-      lVar27 = (ulonglong)(uVar8 - 1 >> 2) + 1;
-      lVar28 = uVar23 - 4;
-      pfVar30 = (float *)(uVar22 + 8);
-      iVar31 = 0;
+      lVar17 = (ulonglong)(uVar8 - 1 >> 2) + 1;
+      pfVar19 = param_2 + -1;
+      pfVar21 = param_1 + 2;
+      iVar22 = 0;
       do {
-        fVar1 = *(float *)((int)pfVar30 + (int)local_450 + (4 - uVar22));
-        fVar2 = *(float *)((int)pfVar30 + ((int)local_450 - uVar22));
-        fVar3 = *(float *)((int)pfVar30 + (int)local_850 + (4 - uVar22));
-        fVar4 = *(float *)((int)pfVar30 + ((int)local_850 - uVar22));
+        fVar1 = *(float *)((int)local_450 + (4 - (int)param_1) + (int)pfVar21);
+        fVar2 = *(float *)(((int)local_450 - (int)param_1) + (int)pfVar21);
+        fVar3 = *(float *)((int)local_850 + (4 - (int)param_1) + (int)pfVar21);
+        fVar4 = *(float *)(((int)local_850 - (int)param_1) + (int)pfVar21);
         fVar6 = fVar1 + fVar2;
         fVar2 = fVar2 - fVar1;
-        fVar5 = *(float *)((int)local_850 + iVar31 + 4);
+        fVar5 = *(float *)((int)local_850 + iVar22 + 4);
         fVar7 = fVar4 - fVar3;
-        fVar1 = *(float *)((int)local_450 + iVar31 + 4);
+        fVar1 = *(float *)((int)local_450 + iVar22 + 4);
         fVar3 = fVar3 + fVar4;
-        pfVar15 = (float *)((int)local_450 + iVar31);
-        pfVar16 = (float *)((int)local_850 + iVar31);
-        fVar14 = *pfVar15 - fVar1;
-        fVar4 = *pfVar16 + fVar5;
-        iVar31 = iVar31 + 0x10;
-        fVar1 = *pfVar15 + fVar1;
-        fVar5 = *pfVar16 - fVar5;
-        pfVar30[-1] = fVar14 - fVar7;
-        *(float *)((int)lVar28 + 4) = fVar3 + fVar4;
-        *(float *)((int)pfVar30 + (iVar13 - uVar22)) = fVar4 - fVar3;
-        pfVar30[-2] = fVar6 + fVar1;
-        *pfVar30 = fVar1 - fVar6;
-        pfVar30[1] = fVar7 + fVar14;
-        *(float *)((int)lVar28 + 8) = fVar5 + fVar2;
-        lVar28 = lVar28 + 0x10;
-        *(float *)lVar28 = fVar5 - fVar2;
-        pfVar30 = pfVar30 + 4;
-        lVar27 = lVar27 + -1;
-      } while (lVar27 != 0);
+        pfVar25 = (float *)((int)local_450 + iVar22);
+        pfVar23 = (float *)((int)local_850 + iVar22);
+        fVar12 = *pfVar25 - fVar1;
+        fVar4 = *pfVar23 + fVar5;
+        iVar22 = iVar22 + 0x10;
+        fVar1 = *pfVar25 + fVar1;
+        fVar5 = *pfVar23 - fVar5;
+        pfVar21[-1] = fVar12 - fVar7;
+        pfVar19[1] = fVar3 + fVar4;
+        *(float *)((int)pfVar21 + ((int)param_2 - (int)param_1)) = fVar4 - fVar3;
+        pfVar21[-2] = fVar6 + fVar1;
+        *pfVar21 = fVar1 - fVar6;
+        pfVar21[1] = fVar7 + fVar12;
+        pfVar19[2] = fVar5 + fVar2;
+        pfVar19 = pfVar19 + 4;
+        *pfVar19 = fVar5 - fVar2;
+        pfVar21 = pfVar21 + 4;
+        lVar17 = lVar17 + -1;
+      } while (lVar17 != 0);
     }
   }
-  uVar29 = 5;
-  uVar34 = 4;
+  uVar16 = 5;
+  uVar20 = 4;
   if (4 < uVar8) {
     do {
-      uVar24 = (uVar34 & 0x7fffffff) * 2;
-      if (uVar34 != 0) {
-        lVar27 = (uVar34 & 0x3fffffff) * 4 + uVar23;
-        uVar21 = uVar23;
-        lVar28 = 2;
+      uVar15 = uVar20 * 2;
+      if (uVar20 != 0) {
+        pfVar21 = param_2 + uVar20;
+        pfVar19 = param_2;
+        iVar22 = 2;
         do {
-          iVar31 = (int)lVar28;
-          uVar26 = lVar28 - 2;
-          if ((uVar26 & 0xffffffff) < (ulonglong)uVar8) {
-            lVar32 = (uVar24 & 0x3fffffff) * 4;
-            auVar20._0_4_ = param_5[iVar31 + -2 << (uVar29 & 0x3f)].imag;
-            auVar20._4_4_ = param_5[iVar31 + -1 << (uVar29 & 0x3f)].imag;
-            auVar20._8_4_ = param_5[iVar31 << (uVar29 & 0x3f)].imag;
-            auVar20._12_4_ = param_5[iVar31 + 1 << (uVar29 & 0x3f)].imag;
-            iVar9 = uVar22 - iVar13;
-            auVar19._0_4_ = param_5[iVar31 + -2 << (uVar29 & 0x3f)].real;
-            auVar19._4_4_ = param_5[iVar31 + -1 << (uVar29 & 0x3f)].real;
-            auVar19._8_4_ = param_5[iVar31 << (uVar29 & 0x3f)].real;
-            auVar19._12_4_ = param_5[iVar31 + 1 << (uVar29 & 0x3f)].real;
-            lVar25 = lVar27;
-            uVar33 = uVar21;
+          uVar18 = iVar22 - 2;
+          if (uVar18 < uVar8) {
+            auVar14._0_4_ = param_5[iVar22 + -2 << (uVar16 & 0x3f)].imag;
+            auVar14._4_4_ = param_5[iVar22 + -1 << (uVar16 & 0x3f)].imag;
+            auVar14._8_4_ = param_5[iVar22 << (uVar16 & 0x3f)].imag;
+            auVar14._12_4_ = param_5[iVar22 + 1 << (uVar16 & 0x3f)].imag;
+            iVar9 = (int)param_1 - (int)param_2;
+            auVar13._0_4_ = param_5[iVar22 + -2 << (uVar16 & 0x3f)].real;
+            auVar13._4_4_ = param_5[iVar22 + -1 << (uVar16 & 0x3f)].real;
+            auVar13._8_4_ = param_5[iVar22 << (uVar16 & 0x3f)].real;
+            auVar13._12_4_ = param_5[iVar22 + 1 << (uVar16 & 0x3f)].real;
+            pfVar25 = pfVar19;
+            pfVar23 = pfVar21;
             do {
-              uVar17 = (uint)lVar25;
-              uVar26 = uVar24 + uVar26;
-              auVar40 = *(undefined1 (*) [16])(iVar9 + uVar17 & 0xfffffff0);
-              auVar39 = vectorMultiplyFloatingPoint
-                                  (auVar20,*(undefined1 (*) [16])(uVar17 & 0xfffffff0));
-              auVar35 = vectorMultiplyFloatingPoint(auVar20,auVar40);
-              uVar18 = (uint)uVar33;
-              auVar38 = *(undefined1 (*) [16])(iVar9 + uVar18 & 0xfffffff0);
-              auVar40 = vectorMultiplyFloatingPoint(auVar19,auVar40);
-              auVar35 = vectorMultiplyAddFloatingPoint
-                                  (auVar19,*(undefined1 (*) [16])(uVar17 & 0xfffffff0),auVar35);
-              auVar37 = vectorSubtractFloatingPoint128(auVar40,auVar39);
-              auVar36 = vectorSubtractFloatingPoint128
-                                  (*(undefined1 (*) [16])(uVar18 & 0xfffffff0),auVar35);
-              auVar39 = vectorSubtractFloatingPoint128(auVar38,auVar37);
-              auVar40 = vectorAddFloatingPoint128
-                                  (*(undefined1 (*) [16])(uVar18 & 0xfffffff0),auVar35);
-              auVar35 = vectorAddFloatingPoint128(auVar38,auVar37);
-              *(undefined1 (*) [16])(uVar17 & 0xfffffff0) = auVar36;
-              *(undefined1 (*) [16])(iVar9 + uVar17 & 0xfffffff0) = auVar39;
-              lVar25 = lVar32 + lVar25;
-              *(undefined1 (*) [16])(uVar18 & 0xfffffff0) = auVar40;
-              *(undefined1 (*) [16])(iVar9 + uVar18 & 0xfffffff0) = auVar35;
-              uVar33 = lVar32 + uVar33;
-            } while ((uVar26 & 0xffffffff) < (ulonglong)uVar8);
+              uVar18 = uVar15 + uVar18;
+              auVar31 = *(undefined1 (*) [16])(iVar9 + (int)pfVar23 & 0xfffffff0);
+              auVar30 = vectorMultiplyFloatingPoint
+                                  (auVar14,*(undefined1 (*) [16])((uint)pfVar23 & 0xfffffff0));
+              auVar26 = vectorMultiplyFloatingPoint(auVar14,auVar31);
+              auVar29 = *(undefined1 (*) [16])(iVar9 + (int)pfVar25 & 0xfffffff0);
+              auVar31 = vectorMultiplyFloatingPoint(auVar13,auVar31);
+              auVar26 = vectorMultiplyAddFloatingPoint
+                                  (auVar13,*(undefined1 (*) [16])((uint)pfVar23 & 0xfffffff0),
+                                   auVar26);
+              auVar28 = vectorSubtractFloatingPoint128(auVar31,auVar30);
+              auVar27 = vectorSubtractFloatingPoint128
+                                  (*(undefined1 (*) [16])((uint)pfVar25 & 0xfffffff0),auVar26);
+              auVar30 = vectorSubtractFloatingPoint128(auVar29,auVar28);
+              auVar31 = vectorAddFloatingPoint128
+                                  (*(undefined1 (*) [16])((uint)pfVar25 & 0xfffffff0),auVar26);
+              auVar26 = vectorAddFloatingPoint128(auVar29,auVar28);
+              *(undefined1 (*) [16])((uint)pfVar23 & 0xfffffff0) = auVar27;
+              *(undefined1 (*) [16])(iVar9 + (int)pfVar23 & 0xfffffff0) = auVar30;
+              pfVar23 = pfVar23 + uVar20 * 2;
+              *(undefined1 (*) [16])((uint)pfVar25 & 0xfffffff0) = auVar31;
+              *(undefined1 (*) [16])(iVar9 + (int)pfVar25 & 0xfffffff0) = auVar26;
+              pfVar25 = pfVar25 + uVar20 * 2;
+            } while (uVar18 < uVar8);
           }
-          uVar21 = uVar21 + 0x10;
-          uVar26 = lVar28 + 2;
-          lVar27 = lVar27 + 0x10;
-          lVar28 = lVar28 + 4;
-        } while ((uVar26 & 0xffffffff) < uVar34);
+          pfVar19 = pfVar19 + 4;
+          uVar18 = iVar22 + 2;
+          pfVar21 = pfVar21 + 4;
+          iVar22 = iVar22 + 4;
+        } while (uVar18 < uVar20);
       }
-      uVar29 = uVar29 - 1;
-      uVar34 = uVar24;
-    } while (uVar24 < uVar8);
+      uVar16 = uVar16 - 1;
+      uVar20 = uVar15;
+    } while (uVar15 < uVar8);
   }
-  __restgprlr_23();
   return;
 }
 

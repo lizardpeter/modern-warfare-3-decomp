@@ -2,43 +2,40 @@
 
 // 8292D818  bdCommonAddr  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdsocket/bdcommonaddr-xbox.cpp:39)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 bdCommonAddr * __thiscall
 bdCommonAddr::bdCommonAddr
           (bdCommonAddr *this,bdReference<bdCommonAddr> param_1,XNADDR *param_2,ushort param_3)
 
 {
-  int iVar1;
-  undefined4 *puVar2;
-  bdCommonAddr *pbVar3;
+  uchar *puVar1;
+  uint uVar2;
+  int iVar3;
   longlong lVar4;
-  uint uVar5;
-  int iVar6;
-  longlong lVar7;
   
-  lVar4 = (longlong)(int)param_1.m_ptr;
-  puVar2 = (undefined4 *)__savegprlr_28(this,lVar4,param_2);
-  puVar2[1] = 0;
-  *puVar2 = &_vftable_;
+  this->_padding_ = 0;
+  this->_padding_ = (int)&_vftable_;
   memcpy();
-  *(ushort *)(puVar2 + 0xb) = param_3;
-  iVar6 = 0;
-  puVar2[0xc] = 0;
-  *(undefined1 *)(puVar2 + 0xe) = 0;
-  puVar2[0xd] = 0;
-  lVar7 = 6;
+  this->m_port = param_3;
+  iVar3 = 0;
+  this->m_titleId = 0;
+  this->m_isLoopback = false;
+  this->m_hash = 0;
+  lVar4 = 6;
   do {
-    iVar1 = iVar6 + 0x12;
-    iVar6 = iVar6 + 1;
-    uVar5 = (uint)*(byte *)((int)puVar2 + iVar1) + puVar2[0xd] * 0x1f;
-    puVar2[0xd] = uVar5;
-    lVar7 = lVar7 + -1;
-  } while (lVar7 != 0);
-  if (((bdReference<bdCommonAddr> *)lVar4)->m_ptr->m_hash == uVar5) {
-    *(undefined1 *)(puVar2 + 0xe) = 1;
+    puVar1 = (this->m_addr).abEnet + iVar3;
+    iVar3 = iVar3 + 1;
+    uVar2 = (uint)*puVar1 + this->m_hash * 0x1f;
+    this->m_hash = uVar2;
+    lVar4 = lVar4 + -1;
+  } while (lVar4 != 0);
+  if (*(uint *)((param_1.m_ptr)->_padding_ + 0x34) == uVar2) {
+    this->m_isLoopback = true;
   }
-  bdReference<bdCommonAddr>::~bdReference<bdCommonAddr>((bdReference<bdCommonAddr> *)lVar4);
-  pbVar3 = (bdCommonAddr *)__restgprlr_28(puVar2);
-  return pbVar3;
+  bdReference<bdCommonAddr>::~bdReference<bdCommonAddr>((bdReference<bdCommonAddr> *)param_1.m_ptr);
+  return this;
 }
 
 

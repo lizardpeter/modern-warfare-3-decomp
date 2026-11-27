@@ -2,26 +2,25 @@
 
 // 828F8290  bdAlignedOffsetMalloc  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdmemory/bdalignedoffsetmemory.cpp:126)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
+
 void * bdAlignedOffsetMalloc(uint param_1,uint param_2,uint param_3)
 
 {
-  int iVar1;
+  void *pvVar1;
   void *pvVar2;
-  ulonglong uVar3;
-  ulonglong uVar4;
-  longlong lVar5;
-  longlong lVar6;
+  uint uVar3;
+  uint uVar4;
+  int iVar5;
   
-  lVar6 = (longlong)(int)param_3;
-  uVar3 = (ulonglong)(int)param_2;
-  iVar1 = __savegprlr_25(param_1);
-  uVar4 = uVar3 - 1;
-  if ((uVar4 & uVar3) != 0) {
+  uVar4 = param_2 - 1;
+  if ((uVar4 & param_2) != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdCore\\bdMemory\\bdAlignedOffsetMemory.cpp"
                     ,0x7f,0,"%s\n\t%s");
   }
-  lVar5 = uVar3 + lVar6 + 4;
-  pvVar2 = bdHeap::DW_Malloc((int)lVar5 + iVar1);
+  iVar5 = param_2 + param_3 + 4;
+  pvVar2 = bdHeap::DW_Malloc(iVar5 + param_1);
   memset();
   if (pvVar2 == (void *)0x0) {
                     /* WARNING: Subroutine does not return */
@@ -30,15 +29,14 @@ void * bdAlignedOffsetMalloc(uint param_1,uint param_2,uint param_3)
                "c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdCore\\bdMemory\\bdAlignedOffsetMemory.cpp"
                ,0x8b);
   }
-  uVar3 = (int)pvVar2 + lVar5 & ~uVar4;
-  lVar6 = uVar3 - lVar6;
-  *(void **)((int)lVar6 + -4) = pvVar2;
+  uVar3 = (int)pvVar2 + iVar5 & ~uVar4;
+  pvVar1 = (void *)(uVar3 - param_3);
+  *(void **)((int)pvVar1 + -4) = pvVar2;
   if ((uVar4 & uVar3) != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdCore\\bdMemory\\bdAlignedOffsetMemory.cpp"
                     ,0x95,0,"%s\n\t%s");
   }
-  pvVar2 = (void *)__restgprlr_25(lVar6);
-  return pvVar2;
+  return pvVar1;
 }
 
 
@@ -54,17 +52,17 @@ void bdAlignedOffsetFree(void *param_1)
 
 // 828F8378  bdAlignedOffsetRealloc  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdmemory/bdalignedoffsetmemory.cpp:170)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void * bdAlignedOffsetRealloc(void *param_1,uint param_2,uint param_3,uint param_4,uint param_5)
 
 {
-  int iVar1;
-  void *pvVar2;
+  void *pvVar1;
   
-  iVar1 = __savegprlr_28(param_1);
-  pvVar2 = bdAlignedOffsetMalloc(param_3,param_4,param_5);
+  pvVar1 = bdAlignedOffsetMalloc(param_3,param_4,param_5);
   memcpy();
-  bdHeap::DW_Free(*(void **)(iVar1 + -4));
-  pvVar2 = (void *)__restgprlr_28(pvVar2);
-  return pvVar2;
+  bdHeap::DW_Free(*(void **)((int)param_1 + -4));
+  return pvVar1;
 }
 

@@ -31,23 +31,22 @@ void Rumble_Strcpy(uchar *param_1,char *param_2)
 
 // 822F30B0  ParseRumbleGraph  (cgame/cg_rumble.cpp:162)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 bool ParseRumbleGraph(RumbleGraph *param_1,char *param_2,char *param_3)
 
 {
-  int iVar1;
-  char *pcVar2;
-  uint uVar3;
-  undefined1 uVar4;
-  float *pfVar5;
-  double dVar6;
-  double dVar7;
+  char *pcVar1;
+  uint uVar2;
+  float *pfVar3;
+  double dVar4;
+  double dVar5;
   char *pcStack0000001c;
   
   pcStack0000001c = param_2;
-  iVar1 = __savegprlr_27(param_1);
-  if (iVar1 == 0) {
+  if (param_1 == (RumbleGraph *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_rumble.cpp",0xa8,0,
                     "%s");
   }
@@ -56,275 +55,260 @@ bool ParseRumbleGraph(RumbleGraph *param_1,char *param_2,char *param_3)
                     "%s");
   }
   Com_BeginParseSession(param_3);
-  pcVar2 = Com_Parse(&stack0x0000001c);
-  uVar3 = atoi(pcVar2);
-  if (0x10 < (int)uVar3) {
+  pcVar1 = Com_Parse(&stack0x0000001c);
+  uVar2 = atoi(pcVar1);
+  if (0x10 < (int)uVar2) {
     Com_EndParseSession();
     Com_Error(ERR_DROP,"\x15\"%s\" has too many graph knots");
-    uVar4 = __restgprlr_27(0);
-    return (bool)uVar4;
+    return false;
   }
-  if ((int)uVar3 < 0) {
+  if ((int)uVar2 < 0) {
     Com_EndParseSession();
     Com_Error(ERR_DROP,"\x15\"%s\" has negative graph knots");
-    uVar4 = __restgprlr_27(0);
-    return (bool)uVar4;
+    return false;
   }
-  *(short *)(iVar1 + 0xc0) = (short)uVar3;
-  if ((uVar3 & 0xffff) != uVar3) {
+  param_1->knotCount = (ushort)uVar2;
+  if ((uVar2 & 0xffff) != uVar2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_rumble.cpp",0xc0,0,
                     "%s");
   }
-  uVar3 = 0;
-  if (*(short *)(iVar1 + 0xc0) != 0) {
-    pfVar5 = (float *)(iVar1 + 0x3c);
+  uVar2 = 0;
+  if (param_1->knotCount != 0) {
+    pfVar3 = (float *)(param_1->graphName + 0x3c);
+    uVar2 = 0;
     while( true ) {
-      pcVar2 = Com_Parse(&stack0x0000001c);
-      if ((*pcVar2 == '\0') || (*pcVar2 == '}')) break;
-      dVar6 = atof(pcVar2);
-      dVar6 = (double)(float)dVar6;
-      pcVar2 = Com_Parse(&stack0x0000001c);
-      if ((*pcVar2 == '\0') || (*pcVar2 == '}')) break;
-      dVar7 = atof(pcVar2);
-      dVar7 = (double)(float)dVar7;
-      if (0xf < uVar3) {
+      pcVar1 = Com_Parse(&stack0x0000001c);
+      if ((*pcVar1 == '\0') || (*pcVar1 == '}')) break;
+      dVar4 = atof(pcVar1);
+      dVar4 = (double)(float)dVar4;
+      pcVar1 = Com_Parse(&stack0x0000001c);
+      if ((*pcVar1 == '\0') || (*pcVar1 == '}')) break;
+      dVar5 = atof(pcVar1);
+      dVar5 = (double)(float)dVar5;
+      if (0xf < uVar2) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_rumble.cpp",0xd0,
                         0,
                         "knotCountIndex doesn\'t index MAX_RUMBLE_GRAPH_KNOTS\n\t%i not in [0, %i)")
         ;
       }
-      pfVar5[1] = (float)dVar6;
-      uVar3 = uVar3 + 1;
-      pfVar5 = pfVar5 + 2;
-      *pfVar5 = (float)dVar7;
-      if ((int)(uint)*(ushort *)(iVar1 + 0xc0) <= (int)uVar3) break;
+      (*(float (*) [2])(pfVar3 + 1))[0] = (float)dVar4;
+      uVar2 = uVar2 + 1;
+      pfVar3 = pfVar3 + 2;
+      *pfVar3 = (float)dVar5;
+      if ((int)(uint)param_1->knotCount <= (int)uVar2) break;
     }
   }
   Com_EndParseSession();
-  uVar4 = __restgprlr_27(*(ushort *)(iVar1 + 0xc0) == uVar3);
-  return (bool)uVar4;
+  return param_1->knotCount == uVar2;
 }
 
 
 // 822F32A0  ReadRumbleGraph  (cgame/cg_rumble.cpp:218)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 bool ReadRumbleGraph(RumbleGraph *param_1,char *param_2)
 
 {
-  RumbleGraph *pRVar1;
-  char *pcVar2;
-  bool bVar3;
-  undefined1 uVar4;
-  ulonglong uVar5;
+  char *pcVar1;
+  bool bVar2;
   char acStack_2070 [64];
   char acStack_2030 [8240];
   
-  uVar5 = (ulonglong)(int)param_2;
-  pRVar1 = (RumbleGraph *)__savegprlr_28(param_1);
-  if (pRVar1 == (RumbleGraph *)0x0) {
+  if (param_1 == (RumbleGraph *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_rumble.cpp",0xdf,0,
                     "%s");
   }
-  if ((uVar5 & 0xffffffff) == 0) {
+  if (param_2 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_rumble.cpp",0xe0,0,
                     "%s");
   }
   sprintf(acStack_2070,"rumble/%s");
-  pcVar2 = Com_LoadInfoString(acStack_2070,"rumble graph file","RUMBLEGRAPHFILE",acStack_2030);
-  pRVar1->knotCount = 0;
-  bVar3 = ParseRumbleGraph(pRVar1,pcVar2,(char *)uVar5);
-  if (!bVar3) {
+  pcVar1 = Com_LoadInfoString(acStack_2070,"rumble graph file","RUMBLEGRAPHFILE",acStack_2030);
+  param_1->knotCount = 0;
+  bVar2 = ParseRumbleGraph(param_1,pcVar1,param_2);
+  if (!bVar2) {
     Com_Error(ERR_DROP,"\x15\"%s\" Error in parsing a rumble graph file");
   }
-  I_strncpyz((char *)pRVar1,(char *)uVar5,0x40);
-  uVar4 = __restgprlr_28(1);
-  return (bool)uVar4;
+  I_strncpyz(param_1->graphName,param_2,0x40);
+  return true;
 }
 
 
 // 822F3398  LoadRumbleGraph  (cgame/cg_rumble.cpp:241)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 bool LoadRumbleGraph(RumbleGraph *param_1,RumbleInfo *param_2,char *param_3,char *param_4)
 
 {
-  RumbleGraph *pRVar1;
-  int iVar2;
-  undefined1 uVar3;
-  ushort *puVar4;
-  RumbleGraph *pRVar5;
-  int iVar6;
+  int iVar1;
+  ushort *puVar2;
+  RumbleGraph *pRVar3;
+  int iVar4;
   
-  pRVar1 = (RumbleGraph *)__savegprlr_24(param_1);
   param_2->highRumbleGraph = (RumbleGraph *)0x0;
   param_2->lowRumbleGraph = (RumbleGraph *)0x0;
-  iVar6 = 0;
-  pRVar5 = pRVar1;
+  iVar4 = 0;
+  pRVar3 = param_1;
   do {
-    if (pRVar5->knotCount == 0) break;
-    iVar2 = I_stricmp(pRVar5->graphName,param_3);
-    if (iVar2 == 0) {
-      param_2->highRumbleGraph = pRVar5;
+    if (pRVar3->knotCount == 0) break;
+    iVar1 = I_stricmp(pRVar3->graphName,param_3);
+    if (iVar1 == 0) {
+      param_2->highRumbleGraph = pRVar3;
     }
-    iVar2 = I_stricmp(pRVar5->graphName,param_4);
-    if (iVar2 == 0) {
-      param_2->lowRumbleGraph = pRVar5;
+    iVar1 = I_stricmp(pRVar3->graphName,param_4);
+    if (iVar1 == 0) {
+      param_2->lowRumbleGraph = pRVar3;
     }
-    iVar6 = iVar6 + 1;
-    pRVar5 = pRVar5 + 1;
-  } while (iVar6 < 0x40);
+    iVar4 = iVar4 + 1;
+    pRVar3 = pRVar3 + 1;
+  } while (iVar4 < 0x40);
   if ((param_2->highRumbleGraph == (RumbleGraph *)0x0) ||
      (param_2->lowRumbleGraph == (RumbleGraph *)0x0)) {
-    if (iVar6 == 0x40) {
+    if (iVar4 == 0x40) {
       Com_Error(ERR_DROP,"\x15No more room to allocate anymore rumble graphs");
     }
-    pRVar5 = pRVar1 + iVar6;
+    pRVar3 = param_1 + iVar4;
     if (param_2->highRumbleGraph == (RumbleGraph *)0x0) {
-      ReadRumbleGraph(pRVar5,param_3);
-      param_2->highRumbleGraph = pRVar5;
+      ReadRumbleGraph(pRVar3,param_3);
+      param_2->highRumbleGraph = pRVar3;
     }
     else {
-      ReadRumbleGraph(pRVar5,param_4);
-      param_2->lowRumbleGraph = pRVar5;
+      ReadRumbleGraph(pRVar3,param_4);
+      param_2->lowRumbleGraph = pRVar3;
     }
     if ((param_2->highRumbleGraph == (RumbleGraph *)0x0) ||
        (param_2->lowRumbleGraph == (RumbleGraph *)0x0)) {
-      iVar6 = 0;
-      puVar4 = &pRVar1[1].knotCount;
+      iVar4 = 0;
+      puVar2 = &param_1[1].knotCount;
       do {
-        if (puVar4[-0x76] == 0) break;
-        if (*puVar4 == 0) {
-          iVar6 = iVar6 + 1;
+        if (puVar2[-0x76] == 0) break;
+        if (*puVar2 == 0) {
+          iVar4 = iVar4 + 1;
           break;
         }
-        if (puVar4[0x76] == 0) {
-          iVar6 = iVar6 + 2;
+        if (puVar2[0x76] == 0) {
+          iVar4 = iVar4 + 2;
           break;
         }
-        if (puVar4[0xec] == 0) {
-          iVar6 = iVar6 + 3;
+        if (puVar2[0xec] == 0) {
+          iVar4 = iVar4 + 3;
           break;
         }
-        iVar6 = iVar6 + 4;
-        puVar4 = puVar4 + 0x1d8;
-      } while (iVar6 < 0x40);
-      if (iVar6 == 0x40) {
+        iVar4 = iVar4 + 4;
+        puVar2 = puVar2 + 0x1d8;
+      } while (iVar4 < 0x40);
+      if (iVar4 == 0x40) {
         Com_Error(ERR_DROP,"\x15No more room to allocate anymore rumble graphs");
       }
-      ReadRumbleGraph(pRVar1 + iVar6,param_4);
-      param_2->lowRumbleGraph = pRVar1 + iVar6;
+      ReadRumbleGraph(param_1 + iVar4,param_4);
+      param_2->lowRumbleGraph = param_1 + iVar4;
     }
   }
-  uVar3 = __restgprlr_24(1);
-  return (bool)uVar3;
+  return true;
 }
 
 
 // 822F3530  CG_LoadRumble  (cgame/cg_rumble.cpp:299)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 bool CG_LoadRumble(RumbleGraph *param_1,RumbleInfo *param_2,char *param_3,int param_4)
 
 {
-  RumbleGraph *pRVar1;
+  char *pcVar1;
   char *pcVar2;
-  char *pcVar3;
-  int iVar4;
-  undefined1 uVar6;
-  bool bVar7;
-  ulonglong uVar8;
-  ulonglong uVar9;
+  int iVar3;
+  bool bVar4;
   char acStack_20c0 [64];
   char acStack_2080 [64];
   char acStack_2040 [8256];
-  RumbleInfo *pRVar5;
   
-  uVar9 = (ulonglong)(int)param_3;
-  uVar8 = (ulonglong)(int)param_2;
-  pRVar1 = (RumbleGraph *)__savegprlr_26(param_1);
-  if ((uVar8 & 0xffffffff) == 0) {
+  if (param_2 == (RumbleInfo *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_rumble.cpp",0x133,0,
                     "%s");
   }
-  if ((uVar9 & 0xffffffff) == 0) {
+  if (param_3 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_rumble.cpp",0x134,0,
                     "%s");
   }
-  pcVar2 = va("rumble/%s");
-  pcVar2 = Com_LoadInfoString(pcVar2,"rumble info file","RUMBLE",acStack_2040);
-  pcVar3 = Info_ValueForKey(pcVar2,"highRumbleFile");
-  I_strncpyz(acStack_20c0,pcVar3,0x40);
-  pcVar3 = Info_ValueForKey(pcVar2,"lowRumbleFile");
-  I_strncpyz(acStack_2080,pcVar3,0x40);
-  pRVar5 = (RumbleInfo *)uVar8;
-  iVar4 = ParseConfigStringToStruct
-                    ((uchar *)pRVar5,rumbleFields,4,pcVar2,0,
+  pcVar1 = va("rumble/%s");
+  pcVar1 = Com_LoadInfoString(pcVar1,"rumble info file","RUMBLE",acStack_2040);
+  pcVar2 = Info_ValueForKey(pcVar1,"highRumbleFile");
+  I_strncpyz(acStack_20c0,pcVar2,0x40);
+  pcVar2 = Info_ValueForKey(pcVar1,"lowRumbleFile");
+  I_strncpyz(acStack_2080,pcVar2,0x40);
+  iVar3 = ParseConfigStringToStruct
+                    ((uchar *)param_2,rumbleFields,4,pcVar1,0,
                      (_func_int_uchar_ptr_char_ptr_int_int *)0x0,Rumble_Strcpy);
-  if (iVar4 != 0) {
-    if ((pRVar5->broadcast != 0) && (pRVar5->range == 0.0)) {
+  if (iVar3 != 0) {
+    if ((param_2->broadcast != 0) && (param_2->range == 0.0)) {
       Com_Error(ERR_DROP,
                 "\x15Rumble info file [%s] cannot have broadcast set to true and range set to 0\n");
     }
-    bVar7 = LoadRumbleGraph(pRVar1,pRVar5,acStack_20c0,acStack_2080);
-    if (bVar7) {
-      pRVar5->rumbleNameIndex = param_4;
-      pRVar5->duration = pRVar5->duration * 1000.0;
+    bVar4 = LoadRumbleGraph(param_1,param_2,acStack_20c0,acStack_2080);
+    if (bVar4) {
+      param_2->rumbleNameIndex = param_4;
+      param_2->duration = param_2->duration * 1000.0;
       updateRumbleDevGuiGlobal = true;
-      uVar6 = __restgprlr_26(1);
-      return (bool)uVar6;
+      return true;
     }
   }
-  uVar6 = __restgprlr_26(0);
-  return (bool)uVar6;
+  return false;
 }
 
 
 // 822F36D8  CG_RegisterRumbles  (cgame/cg_rumble.cpp:339)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void CG_RegisterRumbles(LocalClientNum_t param_1)
 
 {
-  longlong lVar1;
-  RumbleGraph *pRVar2;
-  char *pcVar3;
-  bool bVar4;
+  RumbleGraph *pRVar1;
+  char *pcVar2;
+  bool bVar3;
+  longlong lVar4;
   longlong lVar5;
   int iVar6;
   
-  lVar1 = __savegprlr_26(param_1);
-  lVar5 = lVar1 * 0x4390 + -0x7d5b18d0;
-  if (lVar5 == 0) {
+  lVar4 = (longlong)(int)param_1 * 0x4390 + -0x7d5b18d0;
+  if (lVar4 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_rumble.cpp",0x158,0,
                     "%s");
   }
-  pRVar2 = (RumbleGraph *)lVar5;
-  Com_Memset(pRVar2,0,0x4390);
+  pRVar1 = (RumbleGraph *)lVar4;
+  Com_Memset(pRVar1,0,0x4390);
   iVar6 = 0x3da;
-  lVar5 = lVar1 * 0x4390 + -0x7d5addac;
-  lVar1 = 0x1f;
+  lVar5 = (longlong)(int)param_1 * 0x4390 + -0x7d5addac;
+  lVar4 = 0x1f;
   do {
-    pcVar3 = CL_GetConfigString(iVar6);
-    if ((*pcVar3 != '\0') &&
-       (bVar4 = CG_LoadRumble(pRVar2,(RumbleInfo *)lVar5,pcVar3,iVar6), !bVar4)) {
+    pcVar2 = CL_GetConfigString(iVar6);
+    if ((*pcVar2 != '\0') &&
+       (bVar3 = CG_LoadRumble(pRVar1,(RumbleInfo *)lVar5,pcVar2,iVar6), !bVar3)) {
       Com_Error(ERR_DROP,"\x15couldn\'t register rumble \'%s\' -- see console\n");
     }
-    lVar1 = lVar1 + -1;
+    lVar4 = lVar4 + -1;
     iVar6 = iVar6 + 1;
     lVar5 = lVar5 + 0x24;
-  } while (lVar1 != 0);
-  __restgprlr_26();
+  } while (lVar4 != 0);
   return;
 }
 
 
 // 822F37A0  DrawActiveRumbles  (cgame/cg_rumble.cpp:367)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -334,58 +318,55 @@ void DrawActiveRumbles(LocalClientNum_t param_1,ActiveRumble *param_2)
 {
   float fVar1;
   float *pfVar2;
-  LocalClientNum_t LVar3;
-  cg_s *pcVar4;
-  centity_s *pcVar5;
-  ulonglong uVar6;
+  cg_s *pcVar3;
+  centity_s *pcVar4;
+  ulonglong uVar5;
+  longlong lVar6;
   longlong lVar7;
-  longlong lVar8;
+  double dVar8;
   double dVar9;
   double dVar10;
-  double dVar11;
   float local_78;
   float local_74;
   float local_70;
   float local_68 [26];
   
-  uVar6 = (ulonglong)(int)param_2;
-  LVar3 = __savegprlr_25(param_1);
-  lVar8 = uVar6 + 0x1c;
-  dVar9 = 0.0;
-  dVar10 = 1.0;
+  uVar5 = (ulonglong)(int)param_2;
+  lVar7 = uVar5 + 0x1c;
+  dVar8 = 0.0;
+  dVar9 = 1.0;
   local_68[0] = 0.0;
-  lVar7 = 0x20;
+  lVar6 = 0x20;
   local_68[1] = 0.0;
   local_68[2] = 1.0;
   do {
-    pfVar2 = (float *)lVar8;
+    pfVar2 = (float *)lVar7;
     fVar1 = pfVar2[-7];
     if (fVar1 != 0.0) {
-      pcVar4 = CG_GetLocalClientGlobals(LVar3);
-      dVar11 = (double)((float)(longlong)(pcVar4->time - (int)pfVar2[-6]) /
+      pcVar3 = CG_GetLocalClientGlobals(param_1);
+      dVar10 = (double)((float)(longlong)(pcVar3->time - (int)pfVar2[-6]) /
                        *(float *)((int)fVar1 + 4));
       if (pfVar2[-4] == 1.4013e-45) {
-        uVar6 = (ulonglong)(uint)pfVar2[-2];
-        pcVar5 = CG_GetEntity(LVar3,(int)pfVar2[-2]);
-        local_78 = (pcVar5->pose).origin[0];
-        local_74 = (pcVar5->pose).origin[1];
-        local_70 = (pcVar5->pose).origin[2];
+        uVar5 = (ulonglong)(uint)pfVar2[-2];
+        pcVar4 = CG_GetEntity(param_1,(int)pfVar2[-2]);
+        local_78 = (pcVar4->pose).origin[0];
+        local_74 = (pcVar4->pose).origin[1];
+        local_70 = (pcVar4->pose).origin[2];
       }
       else {
         local_78 = pfVar2[-2];
         local_74 = pfVar2[-1];
         local_70 = *pfVar2;
       }
-      if (dVar9 < (double)*(float *)((int)fVar1 + 8)) {
-        CG_DebugCircle(&local_78,*(float *)((int)fVar1 + 8),(float *)uVar6,local_68,-0x7de7e818,0);
-        CG_DebugCircle(&local_78,(float)(dVar10 - dVar11) * *(float *)((int)fVar1 + 8),
-                       (float *)uVar6,local_68,-0x7de7e7c8,0);
+      if (dVar8 < (double)*(float *)((int)fVar1 + 8)) {
+        CG_DebugCircle(&local_78,*(float *)((int)fVar1 + 8),(float *)uVar5,local_68,-0x7de7e818,0);
+        CG_DebugCircle(&local_78,(float)(dVar9 - dVar10) * *(float *)((int)fVar1 + 8),(float *)uVar5
+                       ,local_68,-0x7de7e7c8,0);
       }
     }
-    lVar7 = lVar7 + -1;
-    lVar8 = lVar8 + 0x20;
-  } while (lVar7 != 0);
-  __restgprlr_25();
+    lVar6 = lVar6 + -1;
+    lVar7 = lVar7 + 0x20;
+  } while (lVar6 != 0);
   return;
 }
 
@@ -406,6 +387,8 @@ void InvalidateActiveRumble(ActiveRumble *param_1)
 
 // 822F3900  RemoveInactiveRumbles  (cgame/cg_rumble.cpp:478)
 
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -414,52 +397,47 @@ void RemoveInactiveRumbles(LocalClientNum_t param_1,ActiveRumble *param_2)
 
 {
   uint uVar1;
-  int *piVar2;
-  LocalClientNum_t LVar3;
-  cg_s *pcVar4;
-  centity_s *pcVar5;
-  longlong lVar6;
-  longlong lVar7;
+  cg_s *pcVar2;
+  centity_s *pcVar3;
+  longlong lVar4;
+  int *piVar5;
   
-  lVar7 = (longlong)(int)param_2;
-  LVar3 = __savegprlr_22(param_1);
-  pcVar4 = CG_GetLocalClientGlobals(LVar3);
-  lVar7 = lVar7 + 4;
-  lVar6 = 0x20;
+  pcVar2 = CG_GetLocalClientGlobals(param_1);
+  piVar5 = &param_2->startTime;
+  lVar4 = 0x20;
   do {
-    piVar2 = (int *)lVar7;
-    if (piVar2[-1] != 0) {
-      if (piVar2[2] == 0) {
+    if (((ActiveRumble *)(piVar5 + -1))->rumbleInfo != (RumbleInfo *)0x0) {
+      if (piVar5[2] == RUMBLESOURCE_INVALID) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_rumble.cpp",0x1ef
                         ,0,"%s");
       }
-      if ((piVar2[2] == 1) && (*(char *)(piVar2 + 1) != '\0')) {
-        pcVar5 = CG_GetEntity(LVar3,piVar2[4]);
-        if (piVar2[4] == (pcVar4->predictedPlayerState).clientNum) {
-          uVar1 = (pcVar4->predictedPlayerState).eFlags;
+      if ((piVar5[2] == RUMBLESOURCE_ENTITY) && (*(bool *)(piVar5 + 1) != false)) {
+        pcVar3 = CG_GetEntity(param_1,((<unnamed_type_source> *)(piVar5 + 4))->entityNum);
+        if (((<unnamed_type_source> *)(piVar5 + 4))->entityNum ==
+            (pcVar2->predictedPlayerState).clientNum) {
+          uVar1 = (pcVar2->predictedPlayerState).eFlags;
         }
         else {
-          uVar1 = (pcVar5->nextState).lerp.eFlags;
+          uVar1 = (pcVar3->nextState).lerp.eFlags;
         }
-        if (((pcVar5->flags & 1U) != 0) && ((uVar1 & 0x8000) != 0)) goto LAB_822f39d8;
+        if (((pcVar3->flags & 1U) != 0) && ((uVar1 & 0x8000) != 0)) goto LAB_822f39d8;
 LAB_822f3a30:
-        piVar2[2] = 0;
-        piVar2[-1] = 0;
-        *piVar2 = -1;
+        piVar5[2] = RUMBLESOURCE_INVALID;
+        ((ActiveRumble *)(piVar5 + -1))->rumbleInfo = (RumbleInfo *)0x0;
+        *piVar5 = -1;
       }
       else {
 LAB_822f39d8:
-        if (*(float *)(piVar2[-1] + 4) + (float)(longlong)*piVar2 <= (float)(longlong)pcVar4->time)
-        {
-          if (*(char *)(piVar2 + 1) == '\0') goto LAB_822f3a30;
-          *piVar2 = pcVar4->time;
+        if (((ActiveRumble *)(piVar5 + -1))->rumbleInfo->duration + (float)(longlong)*piVar5 <=
+            (float)(longlong)pcVar2->time) {
+          if (*(bool *)(piVar5 + 1) == false) goto LAB_822f3a30;
+          *piVar5 = pcVar2->time;
         }
       }
     }
-    lVar6 = lVar6 + -1;
-    lVar7 = lVar7 + 0x20;
-    if (lVar6 == 0) {
-      __restgprlr_22();
+    lVar4 = lVar4 + -1;
+    piVar5 = piVar5 + 8;
+    if (lVar4 == 0) {
       return;
     }
   } while( true );
@@ -496,6 +474,10 @@ int ShouldNotRumble(LocalClientNum_t param_1)
 
 // 822F3AD0  CalcActiveRumbles  (cgame/cg_rumble.cpp:561)
 
+/* WARNING: Function: __savegprlr_18 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_18 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -503,17 +485,17 @@ int ShouldNotRumble(LocalClientNum_t param_1)
 void CalcActiveRumbles(LocalClientNum_t param_1,ActiveRumble *param_2,float *param_3)
 
 {
-  int iVar1;
-  int iVar2;
-  int *piVar3;
+  RumbleInfo *pRVar1;
+  RumbleSourceType RVar2;
+  float fVar3;
   float fVar4;
-  float fVar5;
-  LocalClientNum_t LVar6;
-  cg_s *pcVar7;
-  centity_s *pcVar8;
-  int iVar9;
-  longlong lVar10;
-  longlong lVar11;
+  cg_s *pcVar5;
+  centity_s *pcVar6;
+  int iVar7;
+  longlong lVar8;
+  RumbleSourceType *pRVar9;
+  double dVar10;
+  double dVar11;
   double dVar12;
   double dVar13;
   double dVar14;
@@ -521,123 +503,115 @@ void CalcActiveRumbles(LocalClientNum_t param_1,ActiveRumble *param_2,float *par
   double dVar16;
   double dVar17;
   double dVar18;
-  double dVar19;
-  double dVar20;
-  float fVar21;
+  float fVar19;
   
-  lVar11 = (longlong)(int)param_2;
-  __savegprlr_18(param_1);
-  LVar6 = __savefpr_22();
-  pcVar7 = CG_GetLocalClientGlobals(LVar6);
-  dVar15 = -1.0;
-  dVar14 = 0.003921568859368563;
-  dVar17 = 0.0;
-  dVar18 = 1.0;
-  iVar9 = 0;
-  lVar11 = lVar11 + 0xc;
-  lVar10 = 0x20;
-  dVar16 = dVar15;
+  pcVar5 = CG_GetLocalClientGlobals(param_1);
+  dVar13 = -1.0;
+  dVar12 = 0.003921568859368563;
+  dVar15 = 0.0;
+  dVar16 = 1.0;
+  iVar7 = 0;
+  pRVar9 = &param_2->sourceType;
+  lVar8 = 0x20;
+  dVar14 = dVar13;
   do {
-    piVar3 = (int *)lVar11;
-    iVar1 = piVar3[-3];
-    if (iVar1 != 0) {
-      if (*piVar3 == 0) {
+    pRVar1 = ((ActiveRumble *)(pRVar9 + -3))->rumbleInfo;
+    if (pRVar1 != (RumbleInfo *)0x0) {
+      if (*pRVar9 == RUMBLESOURCE_INVALID) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_rumble.cpp",0x24d
                         ,0,"%s");
       }
-      iVar2 = *piVar3;
-      dVar13 = (double)((float)(longlong)(pcVar7->time - piVar3[-2]) / *(float *)(iVar1 + 4));
-      dVar12 = dVar18;
-      if ((float)(dVar13 - dVar18) < 0.0) {
-        dVar12 = dVar13;
+      RVar2 = *pRVar9;
+      dVar11 = (double)((float)(longlong)(int)(pcVar5->time - pRVar9[-2]) / pRVar1->duration);
+      dVar10 = dVar16;
+      if ((float)(dVar11 - dVar16) < 0.0) {
+        dVar10 = dVar11;
       }
-      dVar19 = dVar17;
-      if (-dVar13 < 0.0) {
-        dVar19 = dVar12;
+      dVar17 = dVar15;
+      if (-dVar11 < 0.0) {
+        dVar17 = dVar10;
       }
-      if (*(int *)(iVar1 + 0x18) == 0) {
-        dVar12 = dVar18;
-        if ((iVar2 != 1) || (piVar3[2] == (pcVar7->predictedPlayerState).clientNum))
-        goto LAB_822f3cf8;
+      if (pRVar1->broadcast == 0) {
+        dVar10 = dVar16;
+        if ((RVar2 != RUMBLESOURCE_ENTITY) ||
+           (((<unnamed_type_source> *)(pRVar9 + 2))->entityNum ==
+            (pcVar5->predictedPlayerState).clientNum)) goto LAB_822f3cf8;
       }
       else {
-        if (iVar2 == 1) {
-          pcVar8 = CG_GetEntity(LVar6,piVar3[2]);
-          fVar4 = *param_3 - (pcVar8->pose).origin[0];
-          fVar5 = param_3[2] - (pcVar8->pose).origin[2];
-          fVar21 = param_3[1] - (pcVar8->pose).origin[1];
-          fVar4 = fVar5 * fVar5 + fVar4 * fVar4;
+        if (RVar2 == RUMBLESOURCE_ENTITY) {
+          pcVar6 = CG_GetEntity(param_1,((<unnamed_type_source> *)(pRVar9 + 2))->entityNum);
+          fVar3 = *param_3 - (pcVar6->pose).origin[0];
+          fVar4 = param_3[2] - (pcVar6->pose).origin[2];
+          fVar19 = param_3[1] - (pcVar6->pose).origin[1];
+          fVar3 = fVar4 * fVar4 + fVar3 * fVar3;
         }
         else {
-          if (iVar2 != 2) {
+          if (RVar2 != RUMBLESOURCE_POS) {
             MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_rumble.cpp",
                             0x25f,0,"%s");
           }
-          fVar21 = param_3[1] - (float)piVar3[3];
-          fVar4 = (param_3[2] - (float)piVar3[4]) * (param_3[2] - (float)piVar3[4]) +
-                  (*param_3 - (float)piVar3[2]) * (*param_3 - (float)piVar3[2]);
+          fVar19 = param_3[1] - (float)pRVar9[3];
+          fVar3 = (param_3[2] - (float)pRVar9[4]) * (param_3[2] - (float)pRVar9[4]) +
+                  (*param_3 - ((<unnamed_type_source> *)(pRVar9 + 2))->pos[0]) *
+                  (*param_3 - ((<unnamed_type_source> *)(pRVar9 + 2))->pos[0]);
         }
-        dVar13 = (double)SQRT(fVar21 * fVar21 + fVar4);
-        if (dVar13 <= (double)*(float *)(iVar1 + 8)) {
-          dVar12 = dVar18;
-          if (*(int *)(iVar1 + 0x14) != 0) {
-            if ((double)*(float *)(iVar1 + 8) == dVar17) {
+        dVar11 = (double)SQRT(fVar19 * fVar19 + fVar3);
+        if (dVar11 <= (double)pRVar1->range) {
+          dVar10 = dVar16;
+          if (pRVar1->fadeWithDistance != 0) {
+            if ((double)pRVar1->range == dVar15) {
               MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_rumble.cpp"
                               ,0x268,0,"%s");
             }
-            dVar13 = (double)(float)(dVar13 / (double)*(float *)(iVar1 + 8));
-            dVar12 = dVar18;
-            if ((float)(dVar13 - dVar18) < 0.0) {
-              dVar12 = dVar13;
+            dVar11 = (double)(float)(dVar11 / (double)pRVar1->range);
+            dVar10 = dVar16;
+            if ((float)(dVar11 - dVar16) < 0.0) {
+              dVar10 = dVar11;
             }
-            dVar20 = dVar17;
-            if (-dVar13 < 0.0) {
-              dVar20 = dVar12;
+            dVar18 = dVar15;
+            if (-dVar11 < 0.0) {
+              dVar18 = dVar10;
             }
-            dVar12 = (double)(float)(dVar18 - dVar20);
+            dVar10 = (double)(float)(dVar16 - dVar18);
           }
 LAB_822f3cf8:
-          dVar13 = (double)(float)((double)*(byte *)(piVar3 + 1) * dVar14);
-          if ((dVar13 < dVar17) || (dVar18 < dVar13)) {
+          dVar11 = (double)(float)((double)*(byte *)(pRVar9 + 1) * dVar12);
+          if ((dVar11 < dVar15) || (dVar16 < dVar11)) {
             MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_rumble.cpp",
                             0x27a,1,"scale not in [0.0f, 1.0f]\n\t%g not in [%g, %g]");
           }
-          fVar21 = GraphGetValueFromFraction
-                             ((uint)*(ushort *)(*(int *)(iVar1 + 0x10) + 0xc0),
-                              (float (*) [2])(*(int *)(iVar1 + 0x10) + 0x40),(float)dVar19);
-          dVar20 = (double)(float)((double)(float)((double)fVar21 * dVar13) * dVar12);
-          fVar21 = GraphGetValueFromFraction
-                             ((uint)*(ushort *)(*(int *)(iVar1 + 0xc) + 0xc0),
-                              (float (*) [2])(*(int *)(iVar1 + 0xc) + 0x40),(float)dVar19);
-          dVar12 = (double)(float)((double)(float)((double)fVar21 * dVar13) * dVar12);
-          if (dVar16 < dVar20) {
-            dVar16 = dVar20;
+          fVar19 = GraphGetValueFromFraction
+                             ((uint)pRVar1->lowRumbleGraph->knotCount,pRVar1->lowRumbleGraph->knots,
+                              (float)dVar17);
+          dVar18 = (double)(float)((double)(float)((double)fVar19 * dVar11) * dVar10);
+          fVar19 = GraphGetValueFromFraction
+                             ((uint)pRVar1->highRumbleGraph->knotCount,
+                              pRVar1->highRumbleGraph->knots,(float)dVar17);
+          dVar10 = (double)(float)((double)(float)((double)fVar19 * dVar11) * dVar10);
+          if (dVar14 < dVar18) {
+            dVar14 = dVar18;
           }
-          if (dVar15 < dVar12) {
-            dVar15 = dVar12;
+          if (dVar13 < dVar10) {
+            dVar13 = dVar10;
           }
-          iVar9 = iVar9 + 1;
+          iVar7 = iVar7 + 1;
         }
       }
     }
-    lVar10 = lVar10 + -1;
-    lVar11 = lVar11 + 0x20;
-    if (lVar10 == 0) {
-      if (iVar9 != 0) {
-        iVar9 = CL_ControllerIndexFromClientNum(LVar6);
-        GPad_SetLowRumble(iVar9,(float)dVar16);
-        GPad_SetHighRumble(iVar9,(float)dVar15);
-        highRumbleDebugGlobal = (float)dVar15;
-        lowRumbleDebugGlobal = (float)dVar16;
-        __restfpr_22();
-        __restgprlr_18();
+    lVar8 = lVar8 + -1;
+    pRVar9 = pRVar9 + 8;
+    if (lVar8 == 0) {
+      if (iVar7 != 0) {
+        iVar7 = CL_ControllerIndexFromClientNum(param_1);
+        GPad_SetLowRumble(iVar7,(float)dVar14);
+        GPad_SetHighRumble(iVar7,(float)dVar13);
+        highRumbleDebugGlobal = (float)dVar13;
+        lowRumbleDebugGlobal = (float)dVar14;
         return;
       }
-      iVar9 = CL_ControllerIndexFromClientNum(LVar6);
-      GPad_SetLowRumble(iVar9,(float)dVar17);
-      GPad_SetHighRumble(iVar9,(float)dVar17);
-      __restfpr_22();
-      __restgprlr_18();
+      iVar7 = CL_ControllerIndexFromClientNum(param_1);
+      GPad_SetLowRumble(iVar7,(float)dVar15);
+      GPad_SetHighRumble(iVar7,(float)dVar15);
       return;
     }
   } while( true );
@@ -646,61 +620,59 @@ LAB_822f3cf8:
 
 // 822F5218  CG_UpdateRumble  (cgame/cg_rumble.cpp:670)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void CG_UpdateRumble(LocalClientNum_t param_1)
 
 {
-  LocalClientNum_t LVar1;
-  int iVar2;
+  int iVar1;
+  RumbleGraph **ppRVar2;
   ActiveRumble *pAVar3;
-  undefined4 *puVar4;
-  double dVar5;
+  double dVar4;
   
-  LVar1 = __savegprlr_29(param_1);
-  if (updateRumbleDevGuiGlobal != false) {
-    CG_InitDevguiRumbleGraph(LVar1);
+  if (updateRumbleDevGuiGlobal) {
+    CG_InitDevguiRumbleGraph(param_1);
   }
-  pAVar3 = rumbleGlobArray[LVar1].activeRumbles;
-  iVar2 = ShouldNotRumble(LVar1);
-  if (iVar2 == 0) {
-    RemoveInactiveRumbles(LVar1,pAVar3);
-    CalcActiveRumbles(LVar1,pAVar3,rumbleGlobArray[LVar1].receiverPos);
+  pAVar3 = rumbleGlobArray[param_1].activeRumbles;
+  iVar1 = ShouldNotRumble(param_1);
+  if (iVar1 == 0) {
+    RemoveInactiveRumbles(param_1,pAVar3);
+    CalcActiveRumbles(param_1,pAVar3,rumbleGlobArray[param_1].receiverPos);
     if ((cg_drawRumbleDebug->current).enabled != false) {
-      DrawActiveRumbles(LVar1,pAVar3);
+      DrawActiveRumbles(param_1,pAVar3);
     }
-    __restgprlr_29();
     return;
   }
-  puVar4 = (undefined4 *)(LVar1 * 0x4390 + -0x7d5ad964);
-  iVar2 = 0;
+  ppRVar2 = &rumbleGlobArray[param_1].infos[0x1f].lowRumbleGraph;
+  iVar1 = 0;
   do {
-    if ((int)puVar4[6] < 1) break;
-    puVar4[6] = 0xffffffff;
-    puVar4[5] = 0;
-    puVar4[8] = 0;
-    if ((int)puVar4[0xe] < 1) break;
-    puVar4[0xe] = 0xffffffff;
-    puVar4[0xd] = 0;
-    puVar4[0x10] = 0;
-    if ((int)puVar4[0x16] < 1) break;
-    puVar4[0x16] = 0xffffffff;
-    puVar4[0x15] = 0;
-    puVar4[0x18] = 0;
-    if ((int)puVar4[0x1e] < 1) break;
-    iVar2 = iVar2 + 4;
-    puVar4[0x1e] = 0xffffffff;
-    puVar4[0x1d] = 0;
-    puVar4 = puVar4 + 0x20;
-    *puVar4 = 0;
-  } while (iVar2 < 0x20);
+    if ((int)ppRVar2[6] < 1) break;
+    ppRVar2[6] = (RumbleGraph *)0xffffffff;
+    ppRVar2[5] = (RumbleGraph *)0x0;
+    ppRVar2[8] = (RumbleGraph *)0x0;
+    if ((int)ppRVar2[0xe] < 1) break;
+    ppRVar2[0xe] = (RumbleGraph *)0xffffffff;
+    ppRVar2[0xd] = (RumbleGraph *)0x0;
+    ppRVar2[0x10] = (RumbleGraph *)0x0;
+    if ((int)ppRVar2[0x16] < 1) break;
+    ppRVar2[0x16] = (RumbleGraph *)0xffffffff;
+    ppRVar2[0x15] = (RumbleGraph *)0x0;
+    ppRVar2[0x18] = (RumbleGraph *)0x0;
+    if ((int)ppRVar2[0x1e] < 1) break;
+    iVar1 = iVar1 + 4;
+    ppRVar2[0x1e] = (RumbleGraph *)0xffffffff;
+    ppRVar2[0x1d] = (RumbleGraph *)0x0;
+    ppRVar2 = ppRVar2 + 0x20;
+    *ppRVar2 = (RumbleGraph *)0x0;
+  } while (iVar1 < 0x20);
   if (cl_multi_gamepads_enabled == 0) {
-    LVar1 = cl_controller_in_use;
+    param_1 = cl_controller_in_use;
   }
-  dVar5 = 0.0;
-  GPad_SetLowRumble(LVar1,0.0);
-  GPad_SetHighRumble(LVar1,(float)dVar5);
-  __restgprlr_29();
+  dVar4 = 0.0;
+  GPad_SetLowRumble(param_1,0.0);
+  GPad_SetHighRumble(param_1,(float)dVar4);
   return;
 }
 
@@ -746,6 +718,8 @@ int GetRumbleInfoIndexFromName(LocalClientNum_t param_1,char *param_2)
 
 // 822F3EE8  FindClosestToDyingActiveRumble  (cgame/cg_rumble.cpp:739)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -753,56 +727,53 @@ int GetRumbleInfoIndexFromName(LocalClientNum_t param_1,char *param_2)
 int FindClosestToDyingActiveRumble(cg_s *param_1,ActiveRumble *param_2)
 
 {
-  int *piVar1;
+  int iVar1;
   int iVar2;
-  longlong lVar3;
-  longlong lVar4;
-  longlong lVar5;
-  double dVar6;
-  double dVar7;
+  RumbleSourceType *pRVar3;
+  double dVar4;
+  double dVar5;
   
-  lVar5 = (longlong)(int)param_2;
-  iVar2 = __savegprlr_23(param_1);
-  dVar7 = 0.0;
-  lVar3 = 0x20;
-  lVar4 = 0;
-  lVar5 = lVar5 + 0xc;
+  dVar5 = 0.0;
+  iVar1 = 0x20;
+  iVar2 = 0;
+  pRVar3 = &param_2->sourceType;
   do {
-    piVar1 = (int *)lVar5;
-    if (piVar1[-3] == 0) {
+    if (((ActiveRumble *)(pRVar3 + -3))->rumbleInfo == (RumbleInfo *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_rumble.cpp",0x2f1,0
                       ,"%s");
     }
-    if (*piVar1 == 0) {
+    if (*pRVar3 == RUMBLESOURCE_INVALID) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_rumble.cpp",0x2f2,0
                       ,"%s");
     }
-    if ((*(char *)(piVar1 + -1) == '\0') &&
-       ((*piVar1 != 1 || (piVar1[2] != *(int *)(iVar2 + 0x150))))) {
-      dVar6 = (double)((float)(longlong)(*(int *)(iVar2 + 0x6b98c) - piVar1[-2]) /
-                      *(float *)(piVar1[-3] + 4));
-      if (dVar7 < dVar6) {
-        lVar3 = lVar4;
-        dVar7 = dVar6;
+    if ((*(bool *)(pRVar3 + -1) == false) &&
+       ((*pRVar3 != RUMBLESOURCE_ENTITY ||
+        (((<unnamed_type_source> *)(pRVar3 + 2))->entityNum !=
+         (param_1->predictedPlayerState).clientNum)))) {
+      dVar4 = (double)((float)(longlong)(int)(param_1->time - pRVar3[-2]) /
+                      ((ActiveRumble *)(pRVar3 + -3))->rumbleInfo->duration);
+      if (dVar5 < dVar4) {
+        dVar5 = dVar4;
+        iVar1 = iVar2;
       }
     }
-    lVar4 = lVar4 + 1;
-    lVar5 = lVar5 + 0x20;
-  } while ((int)lVar4 < 0x20);
-  if ((int)lVar3 == 0x20) {
+    iVar2 = iVar2 + 1;
+    pRVar3 = pRVar3 + 8;
+  } while (iVar2 < 0x20);
+  if (iVar1 == 0x20) {
     Com_PrintWarning(0x10,
                      "FindClosestToDyingActiveRumble(): Couldn\'t find a suitable rumble to stop, defaulting to index zero.\n"
                     );
-    iVar2 = __restgprlr_23(0);
-    return iVar2;
+    return 0;
   }
-  iVar2 = __restgprlr_23(lVar3);
-  return iVar2;
+  return iVar1;
 }
 
 
 // 822F4030  GetDuplicateRumbleIfExists  (cgame/cg_rumble.cpp:792)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -813,62 +784,55 @@ GetDuplicateRumbleIfExists
           RumbleSourceType param_5,int param_6,float *param_7)
 
 {
-  float *pfVar1;
-  int iVar3;
-  longlong lVar2;
-  ActiveRumble *pAVar4;
-  ulonglong uVar5;
-  ulonglong uVar6;
-  ulonglong uVar7;
-  longlong lVar8;
-  bool bVar9;
+  int iVar1;
+  float *pfVar2;
+  bool bVar3;
   
-  uVar7 = (ulonglong)param_4;
-  uVar6 = (ulonglong)(int)param_3;
-  uVar5 = (ulonglong)(int)param_2;
-  iVar3 = __savegprlr_24(param_1);
-  if (iVar3 == 0) {
+  if (param_1 == (cg_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_rumble.cpp",0x31c,0,
                     "%s");
   }
-  if ((uVar5 & 0xffffffff) == 0) {
+  if (param_2 == (ActiveRumble *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_rumble.cpp",0x31d,0,
                     "%s");
   }
-  if ((float)param_5 == 0.0) {
+  if (param_5 == RUMBLESOURCE_INVALID) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_rumble.cpp",0x31e,0,
                     "%s");
   }
-  iVar3 = 0;
-  lVar8 = uVar5 + 0x1c;
+  iVar1 = 0;
+  pfVar2 = (param_2->source).pos + 2;
   do {
-    pfVar1 = (float *)lVar8;
-    lVar2 = lVar8 + -0x1c;
-    if ((((ulonglong)(uint)pfVar1[-7] == (uVar6 & 0xffffffff)) &&
-        ((ulonglong)*(byte *)(pfVar1 + -5) == (uVar7 & 0xff))) && (pfVar1[-4] == (float)param_5)) {
-      if ((float)param_5 == 1.4013e-45) {
-        bVar9 = pfVar1[-2] == (float)param_6;
+    if ((((RumbleInfo *)pfVar2[-7] == param_3) && ((bool)*(char *)(pfVar2 + -5) == param_4)) &&
+       (pfVar2[-4] == (float)param_5)) {
+      if (param_5 == RUMBLESOURCE_ENTITY) {
+        bVar3 = pfVar2[-2] == (float)param_6;
       }
       else {
-        if ((float)param_5 != 2.8026e-45) goto LAB_822f4164;
-        if ((pfVar1[-2] != *param_7) || (pfVar1[-1] != param_7[1])) goto LAB_822f4150;
-        bVar9 = *pfVar1 == param_7[2];
+        if (param_5 != RUMBLESOURCE_POS) {
+          return (ActiveRumble *)(pfVar2 + -7);
+        }
+        if ((pfVar2[-2] != *param_7) || (pfVar2[-1] != param_7[1])) goto LAB_822f4150;
+        bVar3 = *pfVar2 == param_7[2];
       }
-      if (bVar9) goto LAB_822f4164;
+      if (bVar3) {
+        return (ActiveRumble *)(pfVar2 + -7);
+      }
     }
 LAB_822f4150:
-    iVar3 = iVar3 + 1;
-    lVar8 = lVar8 + 0x20;
-  } while (iVar3 < 0x20);
-  lVar2 = 0;
-LAB_822f4164:
-  pAVar4 = (ActiveRumble *)__restgprlr_24(lVar2);
-  return pAVar4;
+    iVar1 = iVar1 + 1;
+    pfVar2 = pfVar2 + 8;
+    if (0x1f < iVar1) {
+      return (ActiveRumble *)0x0;
+    }
+  } while( true );
 }
 
 
 // 822F4170  NextAvailableRumble  (cgame/cg_rumble.cpp:824)
 
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -876,84 +840,80 @@ LAB_822f4164:
 ActiveRumble * NextAvailableRumble(cg_s *param_1,ActiveRumble *param_2)
 
 {
-  int *piVar1;
-  int iVar3;
-  longlong lVar2;
-  ActiveRumble *pAVar4;
-  longlong lVar5;
-  int iVar6;
-  longlong lVar7;
-  uint uVar8;
-  uint uVar9;
-  double dVar10;
-  double dVar11;
+  ActiveRumble *pAVar1;
+  int iVar2;
+  int *piVar3;
+  int iVar4;
+  RumbleSourceType *pRVar5;
+  double dVar6;
+  double dVar7;
   
-  lVar5 = (longlong)(int)param_2;
-  iVar3 = __savegprlr_22(param_1);
-  iVar6 = 0;
-  lVar7 = lVar5 + 0x44;
+  iVar2 = 0;
+  piVar3 = &param_2[2].startTime;
   do {
-    piVar1 = (int *)lVar7;
-    lVar2 = lVar7 + -0x44;
-    if (piVar1[-0x10] < 1) break;
-    lVar2 = lVar7 + -0x24;
-    if (piVar1[-8] < 1) {
-      iVar6 = iVar6 + 1;
+    pAVar1 = (ActiveRumble *)(piVar3 + -0x11);
+    if (piVar3[-0x10] < 1) break;
+    pAVar1 = (ActiveRumble *)(piVar3 + -9);
+    if (piVar3[-8] < 1) {
+      iVar2 = iVar2 + 1;
       break;
     }
-    lVar2 = lVar7 + -4;
-    if (*piVar1 < 1) {
-      iVar6 = iVar6 + 2;
+    pAVar1 = (ActiveRumble *)(piVar3 + -1);
+    if (*piVar3 < 1) {
+      iVar2 = iVar2 + 2;
       break;
     }
-    lVar2 = lVar7 + 0x1c;
-    if (piVar1[8] < 1) {
-      iVar6 = iVar6 + 3;
+    pAVar1 = (ActiveRumble *)(piVar3 + 7);
+    if (piVar3[8] < 1) {
+      iVar2 = iVar2 + 3;
       break;
     }
-    iVar6 = iVar6 + 4;
-    lVar7 = lVar7 + 0x80;
-  } while (iVar6 < 0x20);
-  if (iVar6 == 0x20) {
-    dVar11 = 0.0;
-    uVar8 = 0x20;
-    uVar9 = 0;
-    lVar7 = lVar5 + 0xc;
+    iVar2 = iVar2 + 4;
+    piVar3 = piVar3 + 0x20;
+  } while (iVar2 < 0x20);
+  if (iVar2 == 0x20) {
+    dVar7 = 0.0;
+    iVar2 = 0x20;
+    iVar4 = 0;
+    pRVar5 = &param_2->sourceType;
     do {
-      piVar1 = (int *)lVar7;
-      if (piVar1[-3] == 0) {
+      if (((ActiveRumble *)(pRVar5 + -3))->rumbleInfo == (RumbleInfo *)0x0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_rumble.cpp",0x2f1
                         ,0,"%s");
       }
-      if (*piVar1 == 0) {
+      if (*pRVar5 == RUMBLESOURCE_INVALID) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_rumble.cpp",0x2f2
                         ,0,"%s");
       }
-      if ((*(char *)(piVar1 + -1) == '\0') &&
-         (((*piVar1 != 1 || (piVar1[2] != *(int *)(iVar3 + 0x150))) &&
-          (dVar10 = (double)((float)(longlong)(*(int *)(iVar3 + 0x6b98c) - piVar1[-2]) /
-                            *(float *)(piVar1[-3] + 4)), dVar11 < dVar10)))) {
-        dVar11 = dVar10;
-        uVar8 = uVar9;
+      if ((*(bool *)(pRVar5 + -1) == false) &&
+         (((*pRVar5 != RUMBLESOURCE_ENTITY ||
+           (((<unnamed_type_source> *)(pRVar5 + 2))->entityNum !=
+            (param_1->predictedPlayerState).clientNum)) &&
+          (dVar6 = (double)((float)(longlong)(int)(param_1->time - pRVar5[-2]) /
+                           ((ActiveRumble *)(pRVar5 + -3))->rumbleInfo->duration), dVar7 < dVar6))))
+      {
+        dVar7 = dVar6;
+        iVar2 = iVar4;
       }
-      uVar9 = uVar9 + 1;
-      lVar7 = lVar7 + 0x20;
-    } while ((int)uVar9 < 0x20);
-    if (uVar8 == 0x20) {
+      iVar4 = iVar4 + 1;
+      pRVar5 = pRVar5 + 8;
+    } while (iVar4 < 0x20);
+    if (iVar2 == 0x20) {
       Com_PrintWarning(0x10,
                        "FindClosestToDyingActiveRumble(): Couldn\'t find a suitable rumble to stop, defaulting to index zero.\n"
                       );
-      uVar8 = 0;
+      iVar2 = 0;
     }
-    lVar2 = ((ulonglong)uVar8 & 0x7ffffff) * 0x20 + lVar5;
+    pAVar1 = param_2 + iVar2;
   }
-  pAVar4 = (ActiveRumble *)__restgprlr_22(lVar2);
-  return pAVar4;
+  return pAVar1;
 }
 
 
 // 822F4328  PlayRumbleInternal  (cgame/cg_rumble.cpp:849)
 
+/* WARNING: Function: __savegprlr_18 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_18 replaced with injection: xenon_save_restore */
 /* WARNING: Removing unreachable block (ram,0x822f4680) */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
@@ -963,120 +923,109 @@ void PlayRumbleInternal(LocalClientNum_t param_1,char *param_2,bool param_3,Rumb
                        ,int param_5,float *param_6,float param_7,bool param_8)
 
 {
-  LocalClientNum_t LVar1;
-  bool bVar6;
-  cg_s *pcVar2;
-  int iVar3;
-  ActiveRumble *pAVar4;
-  centity_s *pcVar5;
-  ulonglong uVar7;
-  char *pcVar8;
-  char *pcVar9;
-  ActiveRumble *pAVar10;
-  RumbleInfo *pRVar11;
-  ulonglong uVar12;
-  float *pfVar13;
-  ulonglong in_r10;
-  double extraout_f1;
-  double dVar14;
-  double dVar15;
+  bool bVar5;
+  cg_s *pcVar1;
+  int iVar2;
+  ActiveRumble *pAVar3;
+  centity_s *pcVar4;
+  char *pcVar6;
+  ActiveRumble *pAVar7;
+  RumbleInfo *pRVar8;
+  char in_r10;
+  double dVar9;
+  double dVar10;
   uchar uStack_89;
   
-  uVar12 = (ulonglong)(int)param_6;
-  uVar7 = (ulonglong)(int)param_2;
-  LVar1 = __savegprlr_18((double)param_7,param_1);
-  pcVar8 = (char *)uVar7;
-  dVar15 = extraout_f1;
-  pcVar9 = pcVar8;
-  bVar6 = CL_Demo_IsPlaying(LVar1);
-  if (bVar6) goto LAB_822f46c0;
-  pcVar2 = CG_GetLocalClientGlobals(LVar1);
+  dVar9 = (double)param_7;
+  pcVar6 = param_2;
+  bVar5 = CL_Demo_IsPlaying(param_1);
+  if (bVar5) {
+    return;
+  }
+  pcVar1 = CG_GetLocalClientGlobals(param_1);
   if (param_4 == RUMBLESOURCE_INVALID) {
-    pcVar9 = (char *)0x360;
+    pcVar6 = (char *)0x360;
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_rumble.cpp",0x360,0,
                     "%s");
   }
-  if ((uVar7 & 0xffffffff) == 0) {
-    pcVar9 = (char *)0x361;
+  if (param_2 == (char *)0x0) {
+    pcVar6 = (char *)0x361;
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_rumble.cpp",0x361,0,
                     "%s");
   }
-  if (*pcVar8 == '\0') {
-    pcVar9 = (char *)0x362;
+  if (*param_2 == '\0') {
+    pcVar6 = (char *)0x362;
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_rumble.cpp",0x362,0,
                     "%s");
   }
-  iVar3 = GetRumbleInfoIndexFromName((LocalClientNum_t)pcVar8,pcVar9);
-  if (iVar3 < 0) {
+  iVar2 = GetRumbleInfoIndexFromName((LocalClientNum_t)param_2,pcVar6);
+  if (iVar2 < 0) {
     Com_Error(ERR_DROP,
               "\x15Could not play rumble asset \'%s\' because it was not registered and loaded.");
   }
-  pAVar10 = rumbleGlobArray[LVar1].activeRumbles;
-  pRVar11 = rumbleGlobArray[LVar1].infos + iVar3;
-  if (rumbleGlobArray[LVar1].infos[iVar3].rumbleNameIndex == 0) {
+  pAVar7 = rumbleGlobArray[param_1].activeRumbles;
+  pRVar8 = rumbleGlobArray[param_1].infos + iVar2;
+  if (rumbleGlobArray[param_1].infos[iVar2].rumbleNameIndex == 0) {
     Com_Error(ERR_DROP,
               "\x15Could not play rumble \'%s\' because it was not registered and loaded.  Make sure to \"precacheRumble\" before playing from script."
              );
   }
-  pfVar13 = (float *)uVar12;
-  pAVar4 = GetDuplicateRumbleIfExists(pcVar2,pAVar10,pRVar11,param_3,param_4,param_5,pfVar13);
-  if (pAVar4 == (ActiveRumble *)0x0) {
-    pAVar4 = NextAvailableRumble(pcVar2,pAVar10);
-LAB_822f44b4:
-    if (param_4 == RUMBLESOURCE_ENTITY) {
-      pcVar5 = CG_GetEntity(LVar1,param_5);
-      if (rumbleGlobArray[LVar1].infos[iVar3].broadcast == 0) {
-        if ((pcVar5->flags & 1U) == 0) goto LAB_822f46c0;
-        if ((pcVar5->nextState).eType != 1) {
-          Com_PrintError(0x10,
-                         "Non-player entity #%i of type %i at (%.0f, %.0f, %.0f) is trying to play non-broadcasting rumble \"%s\" on themselves.\n"
-                        );
-          __restgprlr_18();
-          return;
-        }
-      }
-      (pAVar4->source).entityNum = param_5;
-    }
-    else {
-      if (param_4 != RUMBLESOURCE_POS) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_rumble.cpp",0x393
-                        ,0,"%s");
-      }
-      if ((uVar12 & 0xffffffff) == 0) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_rumble.cpp",0x394
-                        ,0,"%s");
-      }
-      if (rumbleGlobArray[LVar1].infos[iVar3].broadcast == 0) {
-        Com_PrintError(0x10,
-                       "Rumble \"%s\" is being played on position (%.0f, %.0f, %.0f), but is not a broadcast type.\n"
-                      );
-        __restgprlr_18();
+  pAVar3 = GetDuplicateRumbleIfExists(pcVar1,pAVar7,pRVar8,param_3,param_4,param_5,param_6);
+  if (pAVar3 == (ActiveRumble *)0x0) {
+    pAVar3 = NextAvailableRumble(pcVar1,pAVar7);
+  }
+  else if (in_r10 != '\0') goto LAB_822f4614;
+  if (param_4 == RUMBLESOURCE_ENTITY) {
+    pcVar4 = CG_GetEntity(param_1,param_5);
+    if (rumbleGlobArray[param_1].infos[iVar2].broadcast == 0) {
+      if ((pcVar4->flags & 1U) == 0) {
         return;
       }
-      (pAVar4->source).pos[0] = *pfVar13;
-      (pAVar4->source).pos[1] = pfVar13[1];
-      (pAVar4->source).pos[2] = pfVar13[2];
+      if ((pcVar4->nextState).eType != 1) {
+        Com_PrintError(0x10,
+                       "Non-player entity #%i of type %i at (%.0f, %.0f, %.0f) is trying to play non-broadcasting rumble \"%s\" on themselves.\n"
+                      );
+        return;
+      }
     }
-    pAVar4->sourceType = param_4;
-    iVar3 = pcVar2->time;
-    pAVar4->rumbleInfo = pRVar11;
-    pAVar4->loop = param_3;
-    pAVar4->startTime = iVar3;
+    (pAVar3->source).entityNum = param_5;
   }
-  else if ((in_r10 & 0xff) == 0) goto LAB_822f44b4;
-  dVar14 = 1.0;
-  if ((dVar15 < 0.0) || (1.0 < dVar15)) {
+  else {
+    if (param_4 != RUMBLESOURCE_POS) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_rumble.cpp",0x393,0
+                      ,"%s");
+    }
+    if (param_6 == (float *)0x0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_rumble.cpp",0x394,0
+                      ,"%s");
+    }
+    if (rumbleGlobArray[param_1].infos[iVar2].broadcast == 0) {
+      Com_PrintError(0x10,
+                     "Rumble \"%s\" is being played on position (%.0f, %.0f, %.0f), but is not a broadcast type.\n"
+                    );
+      return;
+    }
+    (pAVar3->source).pos[0] = *param_6;
+    (pAVar3->source).pos[1] = param_6[1];
+    (pAVar3->source).pos[2] = param_6[2];
+  }
+  pAVar3->sourceType = param_4;
+  iVar2 = pcVar1->time;
+  pAVar3->rumbleInfo = pRVar8;
+  pAVar3->loop = param_3;
+  pAVar3->startTime = iVar2;
+LAB_822f4614:
+  dVar10 = 1.0;
+  if ((dVar9 < 0.0) || (1.0 < dVar9)) {
     Com_PrintWarning(0x10,"Rumble \"%s\" has invalid scale value of %f.\n");
-    dVar15 = dVar14;
+    dVar9 = dVar10;
   }
-  uStack_89 = (uchar)(longlong)(dVar15 * 255.0);
-  pAVar4->scale = uStack_89;
-  iVar3 = ShouldNotRumble(LVar1);
-  if (iVar3 == 0) {
-    CalcActiveRumbles(LVar1,pAVar10,rumbleGlobArray[LVar1].receiverPos);
+  uStack_89 = (uchar)(longlong)(dVar9 * 255.0);
+  pAVar3->scale = uStack_89;
+  iVar2 = ShouldNotRumble(param_1);
+  if (iVar2 == 0) {
+    CalcActiveRumbles(param_1,pAVar7,rumbleGlobArray[param_1].receiverPos);
   }
-LAB_822f46c0:
-  __restgprlr_18();
   return;
 }
 
@@ -1139,6 +1088,8 @@ void CG_PlayRumbleLoopOnPosition(LocalClientNum_t param_1,char *param_2,float *p
 
 // 822F4750  CG_PlayRumbleOnClient  (cgame/cg_rumble.cpp:978)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -1146,26 +1097,25 @@ void CG_PlayRumbleLoopOnPosition(LocalClientNum_t param_1,char *param_2,float *p
 void CG_PlayRumbleOnClient(LocalClientNum_t param_1,char *param_2)
 
 {
-  LocalClientNum_t LVar1;
-  cg_s *pcVar2;
+  cg_s *pcVar1;
   undefined1 in_r9;
   
-  LVar1 = __savegprlr_29(param_1);
-  pcVar2 = CG_GetLocalClientGlobals(LVar1);
-  if (pcVar2->nextSnap == (snapshot_s *)0x0) {
+  pcVar1 = CG_GetLocalClientGlobals(param_1);
+  if (pcVar1->nextSnap == (snapshot_s *)0x0) {
     in_r9 = 0;
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_rumble.cpp",0x3d6,0,
                     "%s");
   }
-  PlayRumbleInternal(LVar1,param_2,false,RUMBLESOURCE_ENTITY,
-                     (pcVar2->predictedPlayerState).clientNum,(float *)0x0,1.0,(bool)in_r9);
-  __restgprlr_29();
+  PlayRumbleInternal(param_1,param_2,false,RUMBLESOURCE_ENTITY,
+                     (pcVar1->predictedPlayerState).clientNum,(float *)0x0,1.0,(bool)in_r9);
   return;
 }
 
 
 // 822F47D0  CG_PlayRumbleOnClientSafe  (cgame/cg_rumble.cpp:988)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -1173,33 +1123,31 @@ void CG_PlayRumbleOnClient(LocalClientNum_t param_1,char *param_2)
 void CG_PlayRumbleOnClientSafe(LocalClientNum_t param_1,char *param_2)
 
 {
-  LocalClientNum_t LVar1;
-  int iVar2;
-  cg_s *pcVar3;
+  int iVar1;
+  cg_s *pcVar2;
   undefined1 in_r9;
   
-  LVar1 = __savegprlr_29(param_1);
-  iVar2 = GetRumbleInfoIndexFromName((LocalClientNum_t)param_2,param_2);
-  if (iVar2 < 0) {
+  iVar1 = GetRumbleInfoIndexFromName((LocalClientNum_t)param_2,param_2);
+  if (iVar1 < 0) {
     Com_PrintWarning(0xe,"\x15Can\'t play rumble asset \'%s\' because it is not registered.");
-    __restgprlr_29();
     return;
   }
-  pcVar3 = CG_GetLocalClientGlobals(LVar1);
-  if (pcVar3->nextSnap == (snapshot_s *)0x0) {
+  pcVar2 = CG_GetLocalClientGlobals(param_1);
+  if (pcVar2->nextSnap == (snapshot_s *)0x0) {
     in_r9 = 0;
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_rumble.cpp",1000,0,
                     "%s");
   }
-  PlayRumbleInternal(LVar1,param_2,false,RUMBLESOURCE_ENTITY,
-                     (pcVar3->predictedPlayerState).clientNum,(float *)0x0,1.0,(bool)in_r9);
-  __restgprlr_29();
+  PlayRumbleInternal(param_1,param_2,false,RUMBLESOURCE_ENTITY,
+                     (pcVar2->predictedPlayerState).clientNum,(float *)0x0,1.0,(bool)in_r9);
   return;
 }
 
 
 // 822F4880  CG_PlayRumbleOnClientScaledWithUpdate  (cgame/cg_rumble.cpp:1006)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -1207,30 +1155,28 @@ void CG_PlayRumbleOnClientSafe(LocalClientNum_t param_1,char *param_2)
 void CG_PlayRumbleOnClientScaledWithUpdate(LocalClientNum_t param_1,char *param_2,float param_3)
 
 {
-  LocalClientNum_t LVar1;
-  cg_s *pcVar2;
+  cg_s *pcVar1;
   undefined1 in_r9;
-  double extraout_f1;
-  double dVar3;
+  double dVar2;
   
-  LVar1 = __savegprlr_29((double)param_3,param_1);
-  dVar3 = extraout_f1;
-  pcVar2 = CG_GetLocalClientGlobals(LVar1);
-  if (pcVar2->nextSnap == (snapshot_s *)0x0) {
+  dVar2 = (double)param_3;
+  pcVar1 = CG_GetLocalClientGlobals(param_1);
+  if (pcVar1->nextSnap == (snapshot_s *)0x0) {
     in_r9 = 0;
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_rumble.cpp",0x3f2,0,
                     "%s");
   }
-  PlayRumbleInternal(LVar1,param_2,false,RUMBLESOURCE_ENTITY,
-                     (pcVar2->predictedPlayerState).clientNum,(float *)0x0,(float)dVar3,(bool)in_r9)
+  PlayRumbleInternal(param_1,param_2,false,RUMBLESOURCE_ENTITY,
+                     (pcVar1->predictedPlayerState).clientNum,(float *)0x0,(float)dVar2,(bool)in_r9)
   ;
-  __restgprlr_29();
   return;
 }
 
 
 // 822F4908  CG_PlayLoopRumbleOnClient  (cgame/cg_rumble.cpp:1016)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -1238,72 +1184,66 @@ void CG_PlayRumbleOnClientScaledWithUpdate(LocalClientNum_t param_1,char *param_
 void CG_PlayLoopRumbleOnClient(LocalClientNum_t param_1,char *param_2)
 
 {
-  LocalClientNum_t LVar1;
-  cg_s *pcVar2;
+  cg_s *pcVar1;
   undefined1 in_r9;
   
-  LVar1 = __savegprlr_29(param_1);
-  pcVar2 = CG_GetLocalClientGlobals(LVar1);
-  if (pcVar2->nextSnap == (snapshot_s *)0x0) {
+  pcVar1 = CG_GetLocalClientGlobals(param_1);
+  if (pcVar1->nextSnap == (snapshot_s *)0x0) {
     in_r9 = 0;
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_rumble.cpp",0x3fc,0,
                     "%s");
   }
-  PlayRumbleInternal(LVar1,param_2,true,RUMBLESOURCE_ENTITY,(pcVar2->predictedPlayerState).clientNum
-                     ,(float *)0x0,1.0,(bool)in_r9);
-  __restgprlr_29();
+  PlayRumbleInternal(param_1,param_2,true,RUMBLESOURCE_ENTITY,
+                     (pcVar1->predictedPlayerState).clientNum,(float *)0x0,1.0,(bool)in_r9);
   return;
 }
 
 
 // 822F4988  CG_StopRumble  (cgame/cg_rumble.cpp:1026)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void CG_StopRumble(LocalClientNum_t param_1,int param_2,char *param_3)
 
 {
   char cVar1;
-  int iVar2;
+  char cVar2;
   char *pcVar3;
-  longlong lVar4;
-  longlong lVar5;
-  char *pcVar6;
-  int *piVar7;
+  char *pcVar4;
+  int iVar5;
+  ActiveRumble *pAVar6;
   
-  lVar4 = (longlong)(int)param_3;
-  iVar2 = __savegprlr_24(param_1);
-  piVar7 = (int *)(iVar2 * 0x4390 + -0x7d5ad950);
-  iVar2 = 0;
+  pAVar6 = rumbleGlobArray[param_1].activeRumbles;
+  iVar5 = 0;
   do {
-    if ((0 < piVar7[1]) && (piVar7[3] == 1)) {
-      if (*piVar7 == 0) {
+    if ((0 < pAVar6->startTime) && (pAVar6->sourceType == RUMBLESOURCE_ENTITY)) {
+      if (pAVar6->rumbleInfo == (RumbleInfo *)0x0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_rumble.cpp",0x414
                         ,0,"%s");
       }
-      pcVar3 = CL_GetConfigString(*(int *)*piVar7);
-      lVar5 = lVar4;
-      if (piVar7[5] == param_2) {
+      pcVar3 = CL_GetConfigString(pAVar6->rumbleInfo->rumbleNameIndex);
+      pcVar4 = param_3;
+      if ((pAVar6->source).entityNum == param_2) {
         do {
           cVar1 = *pcVar3;
-          pcVar6 = (char *)lVar5;
+          cVar2 = *pcVar4;
           if (cVar1 == '\0') break;
           pcVar3 = pcVar3 + 1;
-          lVar5 = lVar5 + 1;
-        } while (cVar1 == *pcVar6);
-        if (cVar1 == *pcVar6) {
-          *piVar7 = 0;
-          piVar7[3] = 0;
-          piVar7[1] = -1;
-          __restgprlr_24();
+          pcVar4 = pcVar4 + 1;
+        } while (cVar1 == cVar2);
+        if (cVar1 == cVar2) {
+          pAVar6->rumbleInfo = (RumbleInfo *)0x0;
+          pAVar6->sourceType = RUMBLESOURCE_INVALID;
+          pAVar6->startTime = -1;
           return;
         }
       }
     }
-    iVar2 = iVar2 + 1;
-    piVar7 = piVar7 + 8;
-    if (0x1f < iVar2) {
-      __restgprlr_24();
+    iVar5 = iVar5 + 1;
+    pAVar6 = pAVar6 + 1;
+    if (0x1f < iVar5) {
       return;
     }
   } while( true );
@@ -1379,6 +1319,8 @@ void CG_DrawRumbleDebug(LocalClientNum_t param_1)
 
 // 822F4BF0  RumbleGraphEventSaveToFile  (cgame/cg_rumble.cpp:1183)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void RumbleGraphEventSaveToFile(RumbleDevguiGraphInfo *param_1)
@@ -1386,26 +1328,24 @@ void RumbleGraphEventSaveToFile(RumbleDevguiGraphInfo *param_1)
 {
   char cVar1;
   ushort uVar2;
-  int iVar3;
-  void *pvVar4;
-  char *pcVar5;
-  ulonglong uVar6;
+  void *pvVar3;
+  char *pcVar4;
+  ulonglong uVar5;
   char acStack_530 [256];
   char local_430 [1072];
   
-  iVar3 = __savegprlr_27(param_1);
   sprintf(acStack_530,"rumble\\%s");
-  pvVar4 = FS_FOpenTextFileWrite(acStack_530);
-  if (pvVar4 != (void *)0x0) {
-    uVar2 = **(ushort **)(*(int *)(iVar3 + 4) + 200);
-    uVar6 = (ulonglong)uVar2;
+  pvVar3 = FS_FOpenTextFileWrite(acStack_530);
+  if (pvVar3 != (void *)0x0) {
+    uVar2 = *(param_1->rumbleGraph->devguiGraph).knotCount;
+    uVar5 = (ulonglong)uVar2;
     Com_sprintf(local_430,0x400,"RUMBLEGRAPHFILE\n\n%d\n");
-    pcVar5 = local_430;
+    pcVar4 = local_430;
     do {
-      cVar1 = *pcVar5;
-      pcVar5 = pcVar5 + 1;
+      cVar1 = *pcVar4;
+      pcVar4 = pcVar4 + 1;
     } while (cVar1 != '\0');
-    FS_Write(local_430,(int)(pcVar5 + (-1 - (int)local_430)),pvVar4);
+    FS_Write(local_430,(int)(pcVar4 + (-1 - (int)local_430)),pvVar3);
     if (0x10 < uVar2) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_rumble.cpp",0x4b1,0
                       ,"knotCount <= MAX_RUMBLE_GRAPH_KNOTS\n\t%i, %i");
@@ -1413,187 +1353,175 @@ void RumbleGraphEventSaveToFile(RumbleDevguiGraphInfo *param_1)
     if (uVar2 != 0) {
       do {
         Com_sprintf(local_430,0x400,"%.4f %.4f\n");
-        pcVar5 = local_430;
+        pcVar4 = local_430;
         do {
-          cVar1 = *pcVar5;
-          pcVar5 = pcVar5 + 1;
+          cVar1 = *pcVar4;
+          pcVar4 = pcVar4 + 1;
         } while (cVar1 != '\0');
-        FS_Write(local_430,(int)(pcVar5 + (-1 - (int)local_430)),pvVar4);
-        uVar6 = uVar6 - 1;
-      } while (uVar6 != 0);
+        FS_Write(local_430,(int)(pcVar4 + (-1 - (int)local_430)),pvVar3);
+        uVar5 = uVar5 - 1;
+      } while (uVar5 != 0);
     }
-    FS_FCloseFile(pvVar4);
+    FS_FCloseFile(pvVar3);
   }
-  __restgprlr_27();
   return;
 }
 
 
 // 822F4D40  RumbleGraphEventCallback  (cgame/cg_rumble.cpp:1214)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void RumbleGraphEventCallback(DevGraph *param_1,DevEventType param_2,LocalClientNum_t param_3)
 
 {
-  bool bVar1;
-  RumbleDevguiGraphInfo *pRVar2;
-  dvar_t *pdVar3;
-  int iVar4;
-  char *pcVar5;
-  ulonglong uVar6;
+  RumbleDevguiGraphInfo *pRVar1;
+  dvar_t *pdVar2;
+  char *pcVar3;
   
-  uVar6 = (ulonglong)(int)param_2;
-  iVar4 = __savegprlr_27(param_1);
-  if (iVar4 == 0) {
+  if (param_1 == (DevGraph *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_rumble.cpp",0x4c2,0,
                     "%s");
   }
-  if (*(int *)(iVar4 + 0x18) == 0) {
+  if (param_1->data == (void *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_rumble.cpp",0x4c3,0,
                     "%s");
   }
-  pRVar2 = *(RumbleDevguiGraphInfo **)(iVar4 + 0x18);
-  if (pRVar2->rumbleGraph == (RumbleGraph *)0x0) {
+  pRVar1 = param_1->data;
+  if (pRVar1->rumbleGraph == (RumbleGraph *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_rumble.cpp",0x4c6,0,
                     "%s");
   }
-  if (((uVar6 & 0xffffffff) < 6) && (bVar1 = (int)uVar6 != 0, uVar6 != 1 || !bVar1)) {
-    if (uVar6 == 2 && bVar1) {
+  if ((param_2 < (EVENT_DRAW|EVENT_ACCEPT)) && (param_2 != EVENT_DEACTIVATE)) {
+    if (param_2 == EVENT_ACCEPT) {
       CG_StopAllRumbles(param_3);
-      pcVar5 = CL_GetConfigString(pRVar2->rumbleInfo->rumbleNameIndex);
+      pcVar3 = CL_GetConfigString(pRVar1->rumbleInfo->rumbleNameIndex);
       if ((cg_rumble_devgui_loop->current).enabled != false) {
-        CG_PlayLoopRumbleOnClient(param_3,pcVar5);
-        __restgprlr_27();
+        CG_PlayLoopRumbleOnClient(param_3,pcVar3);
         return;
       }
-      CG_PlayRumbleOnClient(param_3,pcVar5);
-      __restgprlr_27();
+      CG_PlayRumbleOnClient(param_3,pcVar3);
       return;
     }
-    if (uVar6 != 3 || !bVar1) {
-      if (uVar6 != 4 || !bVar1) {
-        if (!bVar1) {
+    if (param_2 != EVENT_UPDATE) {
+      if (param_2 != EVENT_DRAW) {
+        if (param_2 == EVENT_ACTIVATE) {
           Dvar_SetBool(cg_rumble_devgui_loop,false);
-          Dvar_SetFloat(cg_rumble_devgui_duration,pRVar2->rumbleInfo->duration * 0.001);
-          __restgprlr_27();
+          Dvar_SetFloat(cg_rumble_devgui_duration,pRVar1->rumbleInfo->duration * 0.001);
           return;
         }
-        RumbleGraphEventSaveToFile(pRVar2);
-        __restgprlr_27();
+        RumbleGraphEventSaveToFile(pRVar1);
         return;
       }
-      pdVar3 = pRVar2->rumbleInfo->durationDvar;
-      if (pdVar3->modified != false) {
-        pRVar2->rumbleInfo->duration = (pdVar3->current).value * 1000.0;
+      pdVar2 = pRVar1->rumbleInfo->durationDvar;
+      if (pdVar2->modified != false) {
+        pRVar1->rumbleInfo->duration = (pdVar2->current).value * 1000.0;
       }
     }
   }
-  __restgprlr_27();
   return;
 }
 
 
 // 822F4EC8  RumbleGraphTextCallback  (cgame/cg_rumble.cpp:1261)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void RumbleGraphTextCallback
                (DevGraph *param_1,float param_2,float param_3,char *param_4,int param_5)
 
 {
-  int iVar1;
   char *in_r6;
   
-  iVar1 = __savegprlr_28((double)param_2,param_1,param_4,param_5);
-  if (iVar1 == 0) {
+  if (param_1 == (DevGraph *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_rumble.cpp",0x4f0,0,
                     "%s");
   }
-  if (*(int *)(iVar1 + 0x18) == 0) {
+  if (param_1->data == (void *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_rumble.cpp",0x4f1,0,
                     "%s");
   }
-  if (*(int *)(*(int *)(iVar1 + 0x18) + 4) == 0) {
+  if (*(int *)((int)param_1->data + 4) == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_rumble.cpp",0x4f4,0,
                     "%s");
   }
-  iVar1 = sprintf(in_r6,"Time: %.3f sec, Rumble Value: %.3f");
-  __restgprlr_28(iVar1);
+  sprintf(in_r6,"Time: %.3f sec, Rumble Value: %.3f");
   return;
 }
 
 
 // 822F4FC0  InitDevguiRumbleGraphInteral  (cgame/cg_rumble.cpp:1275)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void InitDevguiRumbleGraphInteral(char *param_1,RumbleGraph *param_2,RumbleInfo *param_3)
 
 {
-  int iVar1;
-  ulonglong uVar2;
   char acStack_130 [304];
   
-  uVar2 = (ulonglong)(int)param_2;
-  iVar1 = __savegprlr_27(param_1);
-  if (iVar1 == 0) {
+  if (param_1 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_rumble.cpp",0x4ff,0,
                     "%s");
   }
-  if ((uVar2 & 0xffffffff) == 0) {
+  if (param_2 == (RumbleGraph *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_rumble.cpp",0x500,0,
                     "%s");
   }
-  iVar1 = (int)uVar2;
-  *(code **)(iVar1 + 0xd4) = RumbleGraphEventCallback;
-  *(int *)(iVar1 + 0xc4) = iVar1 + 0x40;
-  *(int *)(iVar1 + 200) = iVar1 + 0xc0;
-  *(code **)(iVar1 + 0xd8) = RumbleGraphTextCallback;
-  *(undefined2 *)(iVar1 + 0xcc) = 0x10;
-  *(int *)(iVar1 + 0xe8) = iVar1;
-  *(RumbleInfo **)(iVar1 + 0xe4) = param_3;
-  *(int *)(iVar1 + 0xdc) = iVar1 + 0xe4;
+  (param_2->devguiGraph).eventCallback = RumbleGraphEventCallback;
+  (param_2->devguiGraph).knots = param_2->knots;
+  (param_2->devguiGraph).knotCount = &param_2->knotCount;
+  (param_2->devguiGraph).textCallback = RumbleGraphTextCallback;
+  (param_2->devguiGraph).knotCountMax = 0x10;
+  (param_2->devguiGraphInfo).rumbleGraph = param_2;
+  (param_2->devguiGraphInfo).rumbleInfo = param_3;
+  (param_2->devguiGraph).data = &param_2->devguiGraphInfo;
   sprintf(acStack_130,"Rumble/%s/%s");
-  DevGui_AddGraph(acStack_130,(DevGraph *)(iVar1 + 0xc4));
-  __restgprlr_27();
+  DevGui_AddGraph(acStack_130,&param_2->devguiGraph);
   return;
 }
 
 
 // 822F50A0  CG_InitDevguiRumbleGraph  (cgame/cg_rumble.cpp:1299)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void CG_InitDevguiRumbleGraph(LocalClientNum_t param_1)
 
 {
-  int iVar1;
-  char *pcVar2;
-  bool bVar3;
+  char *pcVar1;
+  bool bVar2;
   ushort in_r4;
   char *in_r5;
+  int iVar3;
   RumbleInfo *pRVar4;
   char acStack_150 [336];
   
-  iVar1 = __savegprlr_23(param_1);
   cg_rumble_devgui_duration =
        Dvar_RegisterFloat("cg_rumble_devgui_duration",1.0,0.01,10.0,in_r4,in_r5);
   cg_rumble_devgui_loop =
        Dvar_RegisterBool("cg_rumble_devgui_loop",false,0,"Enable a looping rumble");
-  pRVar4 = (RumbleInfo *)(iVar1 * 0x4390 + -0x7d5addac);
-  iVar1 = 1;
+  pRVar4 = rumbleGlobArray[param_1].infos;
+  iVar3 = 1;
   do {
-    pcVar2 = CL_GetConfigString(iVar1 + 0x3d9);
-    if (*pcVar2 != '\0') {
+    pRVar4 = pRVar4 + 1;
+    pcVar1 = CL_GetConfigString(iVar3 + 0x3d9);
+    if (*pcVar1 != '\0') {
       sprintf(acStack_150,"Rumble/%s");
-      bVar3 = DevGui_DoesMenuExist(acStack_150);
-      if (!bVar3) {
+      bVar2 = DevGui_DoesMenuExist(acStack_150);
+      if (!bVar2) {
         if (pRVar4->highRumbleGraph != (RumbleGraph *)0x0) {
-          InitDevguiRumbleGraphInteral(pcVar2,pRVar4->highRumbleGraph,pRVar4);
+          InitDevguiRumbleGraphInteral(pcVar1,pRVar4->highRumbleGraph,pRVar4);
         }
         if (pRVar4->lowRumbleGraph != (RumbleGraph *)0x0) {
-          InitDevguiRumbleGraphInteral(pcVar2,pRVar4->lowRumbleGraph,pRVar4);
+          InitDevguiRumbleGraphInteral(pcVar1,pRVar4->lowRumbleGraph,pRVar4);
         }
         pRVar4->durationDvar = cg_rumble_devgui_duration;
         sprintf(acStack_150,"Rumble/%s/Duration");
@@ -1604,10 +1532,8 @@ void CG_InitDevguiRumbleGraph(LocalClientNum_t param_1)
         updateRumbleDevGuiGlobal = false;
       }
     }
-    iVar1 = iVar1 + 1;
-    pRVar4 = pRVar4 + 1;
-  } while (iVar1 < 0x20);
-  __restgprlr_23();
+    iVar3 = iVar3 + 1;
+  } while (iVar3 < 0x20);
   return;
 }
 

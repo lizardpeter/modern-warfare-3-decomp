@@ -2,6 +2,8 @@
 
 // 823524B0  CL_AllocSkelMemory  (client_mp/cl_pose_mp.cpp:26)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 
@@ -9,18 +11,16 @@ char * CL_AllocSkelMemory(uint param_1)
 
 {
   ulonglong uVar1;
-  char *pcVar2;
+  ulonglong uVar2;
   ulonglong uVar3;
-  ulonglong uVar4;
   char in_RESERVE;
   byte in_cr0;
   
-  uVar1 = __savegprlr_27(param_1);
-  if ((uVar1 & 0xffffffff) == 0) {
+  if (param_1 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_pose_mp.cpp",0x1e
                     ,0,"%s");
   }
-  uVar1 = uVar1 + 0xf & 0xfffffff0;
+  uVar1 = (longlong)(int)param_1 + 0xfU & 0xfffffff0;
   if (0x3fff0 < uVar1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_pose_mp.cpp",0x21
                     ,0,"%s");
@@ -30,23 +30,21 @@ char * CL_AllocSkelMemory(uint param_1)
                     ,0,"%s");
   }
   do {
-    uVar4 = (ulonglong)(uint)cls.skelMemPos;
+    uVar3 = (ulonglong)(uint)cls.skelMemPos;
     if (in_RESERVE != '\0') {
-      cls.skelMemPos = storeWordConditionalIndexed(uVar1 + uVar4,0,0xffffffff82aa30e8);
+      cls.skelMemPos = storeWordConditionalIndexed(uVar1 + uVar3,0,0xffffffff82aa30e8);
       in_cr0 = 2;
     }
   } while (!(bool)(in_cr0 >> 1 & 1));
-  uVar3 = ZEXT48(cls.skelMemoryStart);
-  if (0x3fff0 < (uVar4 + uVar1 & 0xffffffff)) {
-    pcVar2 = (char *)__restgprlr_27(0);
-    return pcVar2;
+  uVar2 = ZEXT48(cls.skelMemoryStart);
+  if (0x3fff0 < (uVar3 + uVar1 & 0xffffffff)) {
+    return (char *)0x0;
   }
-  if ((uVar3 + uVar4 & 0xffffffff) == 0) {
+  if ((uVar2 + uVar3 & 0xffffffff) == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_pose_mp.cpp",0x2e
                     ,0,"%s");
   }
-  pcVar2 = (char *)__restgprlr_27(uVar3 + uVar4);
-  return pcVar2;
+  return (char *)(uVar2 + uVar3);
 }
 
 
@@ -69,25 +67,25 @@ int CL_GetSkelTimeStamp(void)
 
 // 82352640  CL_DObjCreateSkelForBones  (client_mp/cl_pose_mp.cpp:68)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 
 int CL_DObjCreateSkelForBones(DObj *param_1,int *param_2,DObjAnimMat **param_3)
 
 {
-  DObj *pDVar1;
+  int iVar1;
   int iVar2;
-  int iVar3;
-  DObjAnimMat *pDVar4;
-  uint uVar5;
+  DObjAnimMat *pDVar3;
+  uint uVar4;
   
-  pDVar1 = (DObj *)__savegprlr_26(param_1);
-  if (pDVar1 == (DObj *)0x0) {
+  if (param_1 == (DObj *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_pose_mp.cpp",0x49
                     ,0,"%s");
   }
-  iVar2 = DObjNumBones(pDVar1);
-  if (iVar2 < 1) {
+  iVar1 = DObjNumBones(param_1);
+  if (iVar1 < 1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_pose_mp.cpp",0x4a
                     ,0,"%s");
   }
@@ -95,26 +93,24 @@ int CL_DObjCreateSkelForBones(DObj *param_1,int *param_2,DObjAnimMat **param_3)
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_pose_mp.cpp",0x37
                     ,0,"%s");
   }
-  iVar2 = cls.skelTimeStamp;
-  iVar3 = DObjSkelExists(pDVar1,cls.skelTimeStamp);
-  if (iVar3 != 0) {
-    pDVar4 = I_dmaGetDObjSkel(pDVar1);
-    *param_3 = pDVar4;
-    if (pDVar4 == (DObjAnimMat *)0x0) {
+  iVar1 = cls.skelTimeStamp;
+  iVar2 = DObjSkelExists(param_1,cls.skelTimeStamp);
+  if (iVar2 != 0) {
+    pDVar3 = I_dmaGetDObjSkel(param_1);
+    *param_3 = pDVar3;
+    if (pDVar3 == (DObjAnimMat *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_pose_mp.cpp",
                       0x51,0,"%s");
     }
-    iVar2 = DObjSkelAreBonesUpToDate(pDVar1,param_2);
-    iVar2 = __restgprlr_26(iVar2);
-    return iVar2;
+    iVar1 = DObjSkelAreBonesUpToDate(param_1,param_2);
+    return iVar1;
   }
-  uVar5 = DObjGetAllocSkelSize(pDVar1);
-  pDVar4 = (DObjAnimMat *)CL_AllocSkelMemory(uVar5);
-  if (pDVar4 != (DObjAnimMat *)0x0) {
-    *param_3 = pDVar4;
-    DObjCreateSkel(pDVar1,(char *)pDVar4,iVar2);
-    iVar2 = __restgprlr_26(0);
-    return iVar2;
+  uVar4 = DObjGetAllocSkelSize(param_1);
+  pDVar3 = (DObjAnimMat *)CL_AllocSkelMemory(uVar4);
+  if (pDVar3 != (DObjAnimMat *)0x0) {
+    *param_3 = pDVar3;
+    DObjCreateSkel(param_1,(char *)pDVar3,iVar1);
+    return 0;
   }
   *param_3 = (DObjAnimMat *)0x0;
                     /* WARNING: Subroutine does not return */

@@ -2,48 +2,41 @@
 
 // 82925770  memcpy_s  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/memcpy_s.c:47)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 int memcpy_s(void *param_1,uint param_2,void *param_3,uint param_4)
 
 {
-  int iVar1;
-  int *piVar2;
-  ulonglong uVar3;
-  ulonglong uVar4;
-  ulonglong uVar5;
+  int *piVar1;
+  int iVar2;
   
-  uVar5 = (ulonglong)(int)param_4;
-  uVar4 = (ulonglong)(int)param_3;
-  uVar3 = (ulonglong)(int)param_2;
-  iVar1 = __savegprlr_29(param_1);
-  if ((uVar5 & 0xffffffff) != 0) {
-    if (iVar1 == 0) {
-      piVar2 = _errno();
-      *piVar2 = 0x16;
+  if (param_4 != 0) {
+    if (param_1 == (void *)0x0) {
+      piVar1 = _errno();
+      *piVar1 = 0x16;
       _invalid_parameter_noinfo();
-LAB_829257b0:
-      iVar1 = 0x16;
-      goto LAB_829257b4;
+      return 0x16;
     }
-    if (((uVar4 & 0xffffffff) == 0) || ((uVar3 & 0xffffffff) < (uVar5 & 0xffffffff))) {
+    if ((param_3 == (void *)0x0) || (param_2 < param_4)) {
       memset();
-      if ((uVar4 & 0xffffffff) == 0) {
-        piVar2 = _errno();
-        iVar1 = 0x16;
+      if (param_3 == (void *)0x0) {
+        piVar1 = _errno();
+        iVar2 = 0x16;
       }
       else {
-        if ((uVar5 & 0xffffffff) <= (uVar3 & 0xffffffff)) goto LAB_829257b0;
-        piVar2 = _errno();
-        iVar1 = 0x22;
+        if (param_4 <= param_2) {
+          return 0x16;
+        }
+        piVar1 = _errno();
+        iVar2 = 0x22;
       }
-      *piVar2 = iVar1;
+      *piVar1 = iVar2;
       _invalid_parameter_noinfo();
-      goto LAB_829257b4;
+      return iVar2;
     }
     memcpy();
   }
-  iVar1 = 0;
-LAB_829257b4:
-  iVar1 = __restgprlr_29(iVar1);
-  return iVar1;
+  return 0;
 }
 

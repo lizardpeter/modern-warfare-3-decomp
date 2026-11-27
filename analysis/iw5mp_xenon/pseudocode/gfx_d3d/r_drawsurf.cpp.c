@@ -55,115 +55,107 @@ void ShortSortArray<GfxSortDrawSurfsInterface,GfxDrawSurf>
 
 // 8273B718  qsortArray<GfxSortDrawSurfsInterface,GfxDrawSurf>  (gfx_d3d/r_drawsurf.cpp:85)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void qsortArray<GfxSortDrawSurfsInterface,GfxDrawSurf>(GfxDrawSurf *param_1,int param_2)
 
 {
   GfxDrawSurf *pGVar1;
-  GfxDrawSurf *pGVar2;
-  ulonglong uVar3;
+  int iVar2;
+  GfxDrawSurf GVar3;
   ulonglong uVar4;
-  int iVar5;
-  GfxDrawSurf GVar6;
-  ulonglong uVar7;
-  ulonglong uVar8;
-  GfxDrawSurf *pGVar9;
-  ulonglong uVar10;
-  uint uVar12;
-  ulonglong uVar11;
-  GfxDrawSurf *pGVar13;
-  longlong lVar14;
-  uint *puVar15;
-  uint *puVar16;
-  uint *puVar17;
-  uint *puVar18;
-  uint local_124 [32];
-  uint local_a4 [41];
+  GfxDrawSurf *pGVar5;
+  GfxDrawSurf *pGVar6;
+  uint uVar7;
+  GfxDrawSurf *pGVar8;
+  longlong lVar9;
+  undefined4 *puVar10;
+  undefined4 *puVar11;
+  undefined4 *puVar12;
+  undefined4 *puVar13;
+  undefined4 local_124 [32];
+  undefined4 local_a4 [41];
   
-  uVar10 = (ulonglong)param_2;
-  uVar3 = __savegprlr_29(param_1);
-  if ((int)uVar10 < 2) {
-LAB_8273b870:
-    __restgprlr_29();
+  if (param_2 < 2) {
     return;
   }
-  uVar10 = (uVar10 & 0x1fffffff) * 8 + uVar3;
-  lVar14 = 0;
-  puVar15 = local_124;
-  puVar17 = local_a4;
+  pGVar6 = param_1 + param_2;
+  lVar9 = 0;
+  puVar10 = local_124;
+  puVar12 = local_a4;
 LAB_8273b748:
-  uVar4 = uVar10 - 8;
+  pGVar1 = pGVar6 + -1;
 LAB_8273b74c:
-  pGVar2 = (GfxDrawSurf *)uVar3;
-  pGVar1 = (GfxDrawSurf *)uVar4;
-  uVar12 = ((int)pGVar1 - (int)pGVar2 >> 3) + 1;
-  if (8 < (int)uVar12) {
-    iVar5 = ((int)uVar12 >> 1) + (uint)((int)uVar12 < 0 && (uVar12 & 1) != 0);
-    uVar10 = uVar4 + 8;
-    uVar7 = pGVar2[iVar5].packed;
-    pGVar2[iVar5].packed = *(ulong64 *)pGVar2;
-    pGVar2->packed = uVar7;
-    uVar8 = uVar3;
+  uVar7 = ((int)pGVar1 - (int)param_1 >> 3) + 1;
+  if (8 < (int)uVar7) {
+    iVar2 = ((int)uVar7 >> 1) + (uint)((int)uVar7 < 0 && (uVar7 & 1) != 0);
+    pGVar6 = pGVar1 + 1;
+    uVar4 = param_1[iVar2].packed;
+    param_1[iVar2] = *param_1;
+    param_1->packed = uVar4;
+    pGVar5 = param_1;
 LAB_8273b78c:
-    uVar8 = uVar8 + 8;
-    pGVar9 = (GfxDrawSurf *)uVar8;
-    if ((uVar8 & 0xffffffff) <= (uVar4 & 0xffffffff)) goto code_r0x8273b798;
+    pGVar5 = pGVar5 + 1;
+    if (pGVar5 <= pGVar1) goto code_r0x8273b798;
     goto LAB_8273b7a4;
   }
-  ShortSortArray<GfxSortDrawSurfsInterface,GfxDrawSurf>(pGVar2,pGVar1);
-  puVar18 = puVar17;
-  puVar16 = puVar15;
+  ShortSortArray<GfxSortDrawSurfsInterface,GfxDrawSurf>(param_1,pGVar1);
+  puVar13 = puVar12;
+  puVar11 = puVar10;
   goto LAB_8273b854;
 code_r0x8273b798:
-  if (pGVar9->packed <= uVar7) goto LAB_8273b78c;
+  if (pGVar5->packed <= uVar4) goto LAB_8273b78c;
 LAB_8273b7a4:
   do {
-    uVar11 = uVar10;
-    uVar10 = uVar11 - 8;
-    pGVar13 = (GfxDrawSurf *)uVar10;
-    if ((uVar10 & 0xffffffff) <= (uVar3 & 0xffffffff)) break;
-  } while (uVar7 <= pGVar13->packed);
-  if ((uVar8 & 0xffffffff) <= (uVar10 & 0xffffffff)) {
-    GVar6 = *pGVar9;
-    pGVar9->packed = *(ulong64 *)pGVar13;
-    pGVar13->packed = (ulong64)GVar6;
+    pGVar8 = pGVar6;
+    pGVar6 = pGVar8 + -1;
+    if (pGVar6 <= param_1) break;
+  } while (uVar4 <= pGVar6->packed);
+  if (pGVar5 <= pGVar6) {
+    GVar3.packed = *(ulong64 *)pGVar5;
+    pGVar5->packed = (ulong64)*pGVar6;
+    pGVar6->packed = (ulong64)GVar3;
     goto LAB_8273b78c;
   }
-  GVar6.packed = *(ulong64 *)pGVar2;
-  pGVar2->packed = *(ulong64 *)pGVar13;
-  *pGVar13 = GVar6;
-  if ((int)((int)pGVar13 + (-8 - (int)pGVar2) & 0xfffffff8U) <
-      (int)((int)pGVar1 - (int)pGVar9 & 0xfffffff8U)) {
-    if ((uVar8 & 0xffffffff) < (uVar4 & 0xffffffff)) {
-      puVar17 = puVar17 + 1;
-      *puVar17 = (uint)pGVar9;
-      lVar14 = lVar14 + 1;
-      puVar15 = puVar15 + 1;
-      *puVar15 = (uint)pGVar1;
+  GVar3 = *param_1;
+  param_1->packed = (ulong64)*pGVar6;
+  *pGVar6 = GVar3;
+  if ((int)((int)pGVar6 + (-8 - (int)param_1) & 0xfffffff8U) <
+      (int)((int)pGVar1 - (int)pGVar5 & 0xfffffff8U)) {
+    if (pGVar5 < pGVar1) {
+      puVar12 = puVar12 + 1;
+      *puVar12 = pGVar5;
+      lVar9 = lVar9 + 1;
+      puVar10 = puVar10 + 1;
+      *puVar10 = pGVar1;
     }
-    puVar18 = puVar17;
-    puVar16 = puVar15;
-    if ((uVar3 & 0xffffffff) < (uVar11 - 0x10 & 0xffffffff)) goto LAB_8273b748;
+    puVar13 = puVar12;
+    puVar11 = puVar10;
+    if (param_1 < pGVar8 + -2) goto LAB_8273b748;
   }
   else {
-    if ((uVar3 & 0xffffffff) <= (uVar10 & 0xffffffff)) {
-      puVar17[1] = (uint)pGVar2;
-      lVar14 = lVar14 + 1;
-      puVar15[1] = (int)uVar11 - 0x10;
-      puVar17 = puVar17 + 1;
-      puVar15 = puVar15 + 1;
+    if (param_1 <= pGVar6) {
+      puVar12[1] = param_1;
+      lVar9 = lVar9 + 1;
+      puVar10[1] = pGVar8 + -2;
+      puVar12 = puVar12 + 1;
+      puVar10 = puVar10 + 1;
     }
-    uVar3 = uVar8;
-    puVar18 = puVar17;
-    puVar16 = puVar15;
-    if ((uVar8 & 0xffffffff) < (uVar4 & 0xffffffff)) goto LAB_8273b74c;
+    puVar13 = puVar12;
+    puVar11 = puVar10;
+    param_1 = pGVar5;
+    if (pGVar5 < pGVar1) goto LAB_8273b74c;
   }
 LAB_8273b854:
-  lVar14 = lVar14 + -1;
-  puVar17 = puVar18 + -1;
-  puVar15 = puVar16 + -1;
-  if (lVar14 < 0) goto LAB_8273b870;
-  uVar4 = (ulonglong)*puVar16;
-  uVar3 = (ulonglong)*puVar18;
+  lVar9 = lVar9 + -1;
+  puVar12 = puVar13 + -1;
+  puVar10 = puVar11 + -1;
+  if (lVar9 < 0) {
+    return;
+  }
+  pGVar1 = (GfxDrawSurf *)*puVar11;
+  param_1 = (GfxDrawSurf *)*puVar13;
   goto LAB_8273b74c;
 }
 
@@ -182,6 +174,8 @@ void R_SortDrawSurfs(GfxDrawSurf *param_1,int param_2)
 
 // 8273A0F0  R_SetPrimaryLightShadowSurfaces  (gfx_d3d/r_drawsurf.cpp:243)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void R_SetPrimaryLightShadowSurfaces(void)
@@ -194,7 +188,6 @@ void R_SetPrimaryLightShadowSurfaces(void)
   int iVar5;
   uint uVar6;
   
-  __savegprlr_27();
   uVar6 = 0;
   uVar3 = 0;
   if ((rgp.world)->primaryLightCount != 0) {
@@ -226,45 +219,42 @@ void R_SetPrimaryLightShadowSurfaces(void)
       iVar4 = iVar4 + 0x18;
     } while (uVar6 < pGVar1->models->surfaceCount);
   }
-  __restgprlr_27();
   return;
 }
 
 
 // 8273A1C0  R_GetWorldDrawSurf  (gfx_d3d/r_drawsurf.cpp:261)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Removing unreachable block (ram,0x8273a2c0) */
 
 GfxDrawSurf R_GetWorldDrawSurf(GfxSurface *param_1)
 
 {
-  int iVar2;
-  GfxDrawSurf GVar1;
-  ulonglong uVar3;
-  ulonglong uVar4;
+  ulonglong uVar1;
+  ulonglong uVar2;
   
-  iVar2 = __savegprlr_28(param_1);
-  uVar4 = *(ulonglong *)(*(int *)(iVar2 + 0x10) + 8);
-  uVar3 = uVar4 >> 0x35 & 0xf;
-  if ((uVar3 != 0) && (uVar3 != 1)) {
+  uVar2 = (param_1->material->info).drawSurf.packed;
+  uVar1 = uVar2 >> 0x35 & 0xf;
+  if ((uVar1 != 0) && (uVar1 != 1)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_drawsurf.cpp",0x10b,
                     1,"%s");
   }
-  if ((uVar4 & 0x7f8000) != 0) {
+  if ((uVar2 & 0x7f8000) != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_drawsurf.cpp",0x10f,
                     1,"%s");
   }
-  if ((uVar4 & 0x7fff) != 0) {
+  if ((uVar2 & 0x7fff) != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_drawsurf.cpp",0x110,
                     1,"%s");
   }
-  if ((uVar4 & 0xff00000000000) != 0) {
+  if ((uVar2 & 0xff00000000000) != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_drawsurf.cpp",0x112,
                     1,"%s");
   }
-  GVar1.packed = __restgprlr_28(uVar4 & 0xfff00fffffffffff |
-                                (ulonglong)*(byte *)(iVar2 + 0x16) << 0x2c);
-  return (GfxDrawSurf)GVar1.packed;
+  return (GfxDrawSurf)
+         (uVar2 & 0xfff00fffffffffff | (ulonglong)(param_1->laf).fields.primaryLightIndex << 0x2c);
 }
 
 
@@ -349,187 +339,182 @@ int GCD(int param_1,int param_2)
 
 // 8273A3F0  R_SwapAdjacentWorldSurfaceRanges  (gfx_d3d/r_drawsurf.cpp:331)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 void R_SwapAdjacentWorldSurfaceRanges(uint param_1,uint param_2,uint param_3)
 
 {
-  ulonglong uVar1;
-  int iVar3;
-  longlong lVar2;
-  ulonglong uVar4;
-  longlong lVar5;
-  longlong lVar6;
-  ulonglong uVar7;
-  undefined4 *puVar8;
-  longlong lVar9;
-  ulonglong uVar10;
-  longlong lVar11;
-  longlong lVar12;
-  ulonglong uVar13;
-  ulonglong uVar14;
-  longlong lVar15;
+  GfxSurface *pGVar1;
+  GfxSurfaceBounds *pGVar2;
+  int iVar4;
+  longlong lVar3;
+  GfxSurfaceBounds *pGVar5;
+  GfxSurface *pGVar6;
+  GfxSurfaceLightingAndFlags *pGVar7;
+  uchar *puVar8;
+  GfxSurfaceLightingAndFlags *pGVar9;
+  uchar *puVar10;
+  uint uVar11;
+  undefined4 *puVar12;
+  uint uVar13;
+  int iVar14;
+  int iVar15;
   longlong lVar16;
-  undefined4 uStack_84;
-  undefined4 local_80 [7];
+  GfxSurfaceLightingAndFlags GStack_84;
+  GfxSurfaceLightingAndFlags local_80 [7];
   undefined4 uStack_64;
   undefined4 local_60 [24];
   
-  uVar4 = (ulonglong)(int)param_3;
-  lVar2 = (longlong)(int)param_2;
-  uVar1 = __savegprlr_26(param_1);
-  lVar12 = lVar2 - uVar1;
-  lVar11 = uVar4 - uVar1;
-  uVar14 = ZEXT48(((rgp.world)->dpvs).surfaces);
-  uVar13 = ZEXT48(((rgp.world)->dpvs).surfacesBounds);
-  iVar3 = GCD((int)lVar12,(int)uVar4 - (int)lVar2);
-  lVar2 = (longlong)iVar3;
-  if (iVar3 != 0) {
-    lVar5 = (uVar1 & 0x7ffffff) * 0x20 + uVar13;
-    lVar6 = (uVar1 + (uVar1 & 0x7fffffff) * 2 & 0x1fffffff) * 8 + uVar14;
+  iVar15 = param_2 - param_1;
+  iVar14 = param_3 - param_1;
+  pGVar1 = ((rgp.world)->dpvs).surfaces;
+  pGVar2 = ((rgp.world)->dpvs).surfacesBounds;
+  iVar4 = GCD(iVar15,param_3 - param_2);
+  lVar3 = (longlong)iVar4;
+  if (iVar4 != 0) {
+    pGVar5 = pGVar2 + param_1;
+    pGVar6 = pGVar1 + param_1;
     do {
-      puVar8 = &uStack_84;
-      lVar9 = lVar6 + -4;
-      lVar15 = 6;
+      pGVar9 = &GStack_84;
+      pGVar7 = &pGVar6[-1].laf;
+      lVar16 = 6;
       do {
-        lVar9 = lVar9 + 4;
-        puVar8 = puVar8 + 1;
-        *puVar8 = *(undefined4 *)lVar9;
-        lVar15 = lVar15 + -1;
-      } while (lVar15 != 0);
-      puVar8 = &uStack_64;
-      lVar9 = lVar5 + -4;
-      lVar15 = 8;
+        pGVar7 = pGVar7 + 1;
+        pGVar9 = pGVar9 + 1;
+        *pGVar9 = *pGVar7;
+        lVar16 = lVar16 + -1;
+      } while (lVar16 != 0);
+      puVar12 = &uStack_64;
+      puVar8 = pGVar5[-1].invHighMipRadius + 2;
+      lVar16 = 8;
       do {
-        lVar9 = lVar9 + 4;
-        puVar8 = puVar8 + 1;
-        *puVar8 = *(undefined4 *)lVar9;
-        lVar15 = lVar15 + -1;
-        uVar7 = uVar1;
-      } while (lVar15 != 0);
-      while ((uVar10 = uVar7 + lVar12, (uVar10 & 0xffffffff) < (uVar4 & 0xffffffff) ||
-             (uVar10 = uVar10 - lVar11, (uVar10 & 0xffffffff) != (uVar1 & 0xffffffff)))) {
-        lVar9 = (uVar10 + (uVar10 & 0x7fffffff) * 2 & 0x1fffffff) * 8 + uVar14 + -4;
-        lVar15 = (uVar7 + (uVar7 & 0x7fffffff) * 2 & 0x1fffffff) * 8 + uVar14 + -4;
+        puVar8 = puVar8 + 4;
+        puVar12 = puVar12 + 1;
+        *puVar12 = *(undefined4 *)puVar8;
+        lVar16 = lVar16 + -1;
+        uVar11 = param_1;
+      } while (lVar16 != 0);
+      while ((uVar13 = uVar11 + iVar15, uVar13 < param_3 ||
+             (uVar13 = uVar13 - iVar14, uVar13 != param_1))) {
+        pGVar7 = &pGVar1[uVar13 - 1].laf;
+        pGVar9 = &pGVar1[uVar11 - 1].laf;
         lVar16 = 6;
         do {
-          lVar9 = lVar9 + 4;
-          lVar15 = lVar15 + 4;
-          *(undefined4 *)lVar15 = *(undefined4 *)lVar9;
+          pGVar7 = pGVar7 + 1;
+          pGVar9 = pGVar9 + 1;
+          *pGVar9 = *pGVar7;
           lVar16 = lVar16 + -1;
         } while (lVar16 != 0);
-        lVar9 = (uVar10 & 0x7ffffff) * 0x20 + uVar13 + -4;
-        lVar15 = (uVar7 & 0x7ffffff) * 0x20 + uVar13 + -4;
+        puVar8 = pGVar2[uVar13 - 1].invHighMipRadius + 2;
+        puVar10 = pGVar2[uVar11 - 1].invHighMipRadius + 2;
         lVar16 = 8;
         do {
-          lVar9 = lVar9 + 4;
-          lVar15 = lVar15 + 4;
-          *(undefined4 *)lVar15 = *(undefined4 *)lVar9;
+          puVar8 = puVar8 + 4;
+          puVar10 = puVar10 + 4;
+          *(undefined4 *)puVar10 = *(undefined4 *)puVar8;
           lVar16 = lVar16 + -1;
-          uVar7 = uVar10;
+          uVar11 = uVar13;
         } while (lVar16 != 0);
       }
-      puVar8 = &uStack_84;
-      lVar15 = 6;
-      lVar9 = (uVar7 + (uVar7 & 0x7fffffff) * 2 & 0x1fffffff) * 8 + uVar14 + -4;
+      pGVar7 = &GStack_84;
+      lVar16 = 6;
+      pGVar9 = &pGVar1[uVar11 - 1].laf;
       do {
-        puVar8 = puVar8 + 1;
-        lVar9 = lVar9 + 4;
-        *(undefined4 *)lVar9 = *puVar8;
-        lVar15 = lVar15 + -1;
-      } while (lVar15 != 0);
-      puVar8 = &uStack_64;
-      lVar9 = (uVar7 & 0x7ffffff) * 0x20 + uVar13 + -4;
-      lVar15 = 8;
+        pGVar7 = pGVar7 + 1;
+        pGVar9 = pGVar9 + 1;
+        *pGVar9 = *pGVar7;
+        lVar16 = lVar16 + -1;
+      } while (lVar16 != 0);
+      puVar12 = &uStack_64;
+      puVar8 = pGVar2[uVar11 - 1].invHighMipRadius + 2;
+      lVar16 = 8;
       do {
-        puVar8 = puVar8 + 1;
-        lVar9 = lVar9 + 4;
-        *(undefined4 *)lVar9 = *puVar8;
-        lVar15 = lVar15 + -1;
-      } while (lVar15 != 0);
-      lVar2 = lVar2 + -1;
-      uVar1 = uVar1 + 1;
-      lVar6 = lVar6 + 0x18;
-      lVar5 = lVar5 + 0x20;
-    } while (lVar2 != 0);
+        puVar12 = puVar12 + 1;
+        puVar8 = puVar8 + 4;
+        *(undefined4 *)puVar8 = *puVar12;
+        lVar16 = lVar16 + -1;
+      } while (lVar16 != 0);
+      lVar3 = lVar3 + -1;
+      param_1 = param_1 + 1;
+      pGVar6 = pGVar6 + 1;
+      pGVar5 = pGVar5 + 1;
+    } while (lVar3 != 0);
   }
-  __restgprlr_26();
   return;
 }
 
 
 // 8273A588  R_SwapAdjacentStaticModelRanges  (gfx_d3d/r_drawsurf.cpp:383)
 
+/* WARNING: Function: __savegprlr_21 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_21 replaced with injection: xenon_save_restore */
+
 void R_SwapAdjacentStaticModelRanges(uint param_1,uint param_2,uint param_3)
 
 {
-  ulonglong uVar1;
+  GfxStaticModelInst *pGVar1;
   int iVar2;
-  ulonglong uVar3;
-  undefined4 *puVar4;
-  longlong lVar5;
-  longlong lVar6;
+  float *pfVar3;
+  float *pfVar4;
+  int iVar5;
+  int iVar6;
   longlong lVar7;
-  longlong lVar8;
-  longlong lVar9;
-  ulonglong uVar10;
-  ulonglong uVar11;
-  ulonglong uVar12;
-  longlong lVar13;
-  longlong lVar14;
-  undefined4 uStack_c4;
-  undefined4 local_c0 [48];
+  GfxStaticModelInst *pGVar8;
+  uint uVar9;
+  uint uVar10;
+  longlong lVar11;
+  float fStack_c4;
+  float local_c0 [48];
   
-  uVar3 = (ulonglong)(int)param_3;
-  lVar8 = (longlong)(int)param_2;
-  uVar1 = __savegprlr_21(param_1);
-  lVar7 = lVar8 - uVar1;
-  lVar6 = uVar3 - uVar1;
-  uVar10 = ZEXT48(((rgp.world)->dpvs).smodelInsts);
-  iVar2 = GCD((int)lVar7,(int)uVar3 - (int)lVar8);
-  lVar8 = (longlong)iVar2;
+  iVar6 = param_2 - param_1;
+  iVar5 = param_3 - param_1;
+  pGVar1 = ((rgp.world)->dpvs).smodelInsts;
+  iVar2 = GCD(iVar6,param_3 - param_2);
+  lVar7 = (longlong)iVar2;
   if (iVar2 != 0) {
-    lVar9 = (uVar1 + (uVar1 & 0x1fffffff) * 8 & 0x3fffffff) * 4 + uVar10;
+    pGVar8 = pGVar1 + param_1;
     do {
-      puVar4 = &uStack_c4;
-      lVar5 = lVar9 + -4;
-      lVar13 = 9;
+      pfVar4 = &fStack_c4;
+      pfVar3 = pGVar8[-1].lightingOrigin + 2;
+      lVar11 = 9;
       do {
-        lVar5 = lVar5 + 4;
-        puVar4 = puVar4 + 1;
-        *puVar4 = *(undefined4 *)lVar5;
-        lVar13 = lVar13 + -1;
-      } while (lVar13 != 0);
+        pfVar3 = pfVar3 + 1;
+        pfVar4 = pfVar4 + 1;
+        *pfVar4 = *pfVar3;
+        lVar11 = lVar11 + -1;
+      } while (lVar11 != 0);
       memcpy();
-      uVar11 = uVar1;
-      while ((uVar12 = uVar11 + lVar7, (uVar12 & 0xffffffff) < (uVar3 & 0xffffffff) ||
-             (uVar12 = uVar12 - lVar6, (uVar12 & 0xffffffff) != (uVar1 & 0xffffffff)))) {
-        lVar5 = (uVar12 + (uVar12 & 0x1fffffff) * 8 & 0x3fffffff) * 4 + uVar10 + -4;
-        lVar13 = (uVar11 + (uVar11 & 0x1fffffff) * 8 & 0x3fffffff) * 4 + uVar10 + -4;
-        lVar14 = 9;
+      uVar9 = param_1;
+      while ((uVar10 = uVar9 + iVar6, uVar10 < param_3 ||
+             (uVar10 = uVar10 - iVar5, uVar10 != param_1))) {
+        pfVar3 = pGVar1[uVar10 - 1].lightingOrigin + 2;
+        pfVar4 = pGVar1[uVar9 - 1].lightingOrigin + 2;
+        lVar11 = 9;
         do {
-          lVar5 = lVar5 + 4;
-          lVar13 = lVar13 + 4;
-          *(undefined4 *)lVar13 = *(undefined4 *)lVar5;
-          lVar14 = lVar14 + -1;
-        } while (lVar14 != 0);
+          pfVar3 = pfVar3 + 1;
+          pfVar4 = pfVar4 + 1;
+          *pfVar4 = *pfVar3;
+          lVar11 = lVar11 + -1;
+        } while (lVar11 != 0);
         memcpy();
-        uVar11 = uVar12;
+        uVar9 = uVar10;
       }
-      puVar4 = &uStack_c4;
-      lVar13 = 9;
-      lVar5 = (uVar11 + (uVar11 & 0x1fffffff) * 8 & 0x3fffffff) * 4 + uVar10 + -4;
+      pfVar3 = &fStack_c4;
+      lVar11 = 9;
+      pfVar4 = pGVar1[uVar9 - 1].lightingOrigin + 2;
       do {
-        puVar4 = puVar4 + 1;
-        lVar5 = lVar5 + 4;
-        *(undefined4 *)lVar5 = *puVar4;
-        lVar13 = lVar13 + -1;
-      } while (lVar13 != 0);
+        pfVar3 = pfVar3 + 1;
+        pfVar4 = pfVar4 + 1;
+        *pfVar4 = *pfVar3;
+        lVar11 = lVar11 + -1;
+      } while (lVar11 != 0);
       memcpy();
-      lVar8 = lVar8 + -1;
-      uVar1 = uVar1 + 1;
-      lVar9 = lVar9 + 0x24;
-    } while (lVar8 != 0);
+      lVar7 = lVar7 + -1;
+      param_1 = param_1 + 1;
+      pGVar8 = pGVar8 + 1;
+    } while (lVar7 != 0);
   }
-  __restgprlr_21();
   return;
 }
 
@@ -558,6 +543,8 @@ int R_CompareWorldSurfs(GfxSurface *param_1,GfxSurface *param_2)
 
 // 8273A748  R_SortWorldModelSurfaces  (gfx_d3d/r_drawsurf.cpp:451)
 
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void R_SortWorldModelSurfaces(void)
@@ -581,7 +568,6 @@ void R_SortWorldModelSurfaces(void)
   uint uVar16;
   uint uVar17;
   
-  __savegprlr_22();
   uVar15 = 1;
   puVar1 = ((rgp.world)->dpvs).sortedSurfIndex;
   pGVar2 = ((rgp.world)->dpvs).surfaces;
@@ -691,75 +677,74 @@ void R_SortWorldModelSurfaces(void)
       }
     } while (uVar15 < uVar12);
   }
-  __restgprlr_22();
   return;
 }
 
 
 // 8273AB78  R_UpdateStaticModelFirstMaterialSkinIndex  (gfx_d3d/r_drawsurf.cpp:540)
 
+/* WARNING: Function: __savegprlr_17 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_17 replaced with injection: xenon_save_restore */
+
 void R_UpdateStaticModelFirstMaterialSkinIndex(GfxStaticModelDrawInst *param_1)
 
 {
   XModel *pXVar1;
   ulonglong uVar2;
-  int iVar3;
-  Material **ppMVar4;
-  uint uVar5;
-  Material **ppMVar6;
-  uint uVar7;
-  Material *pMVar8;
-  uint uVar9;
-  ulonglong uVar10;
-  uint uVar11;
-  int iVar12;
-  uint uVar13;
+  Material **ppMVar3;
+  uint uVar4;
+  Material **ppMVar5;
+  uint uVar6;
+  Material *pMVar7;
+  uint uVar8;
+  ulonglong uVar9;
+  uint uVar10;
+  int iVar11;
+  uint uVar12;
   
-  iVar3 = __savegprlr_17(param_1);
-  pXVar1 = *(XModel **)(iVar3 + 0x1c);
-  ppMVar4 = XModelGetSkins(pXVar1,0);
-  iVar12 = 0;
-  uVar9 = 0;
-  uVar10 = 0xffffffffffffffff;
-  uVar5 = XModelGetNumLods(pXVar1);
-  uVar11 = 0;
-  if (uVar5 != 0) {
+  pXVar1 = param_1->model;
+  ppMVar3 = XModelGetSkins(pXVar1,0);
+  iVar11 = 0;
+  uVar8 = 0;
+  uVar9 = 0xffffffffffffffff;
+  uVar4 = XModelGetNumLods(pXVar1);
+  uVar10 = 0;
+  if (uVar4 != 0) {
     do {
-      ppMVar6 = XModelGetSkins(pXVar1,uVar11);
-      if (ppMVar4 != ppMVar6) {
+      ppMVar5 = XModelGetSkins(pXVar1,uVar10);
+      if (ppMVar3 != ppMVar5) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_drawsurf.cpp",
                         0x230,0,"%s");
       }
-      uVar7 = XModelGetSurfCount(pXVar1,uVar11);
-      if (0x10 < uVar7) {
+      uVar6 = XModelGetSurfCount(pXVar1,uVar10);
+      if (0x10 < uVar6) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_drawsurf.cpp",
                         0x233,0,"surfCount <= R_SMODEL_MAX_SURFS_PER_LOD\n\t%i, %i");
       }
-      uVar13 = 0;
-      ppMVar6 = ppMVar4;
-      if (uVar7 != 0) {
+      uVar12 = 0;
+      ppMVar5 = ppMVar3;
+      if (uVar6 != 0) {
         do {
-          pMVar8 = Material_FromHandle(*ppMVar6);
-          uVar2 = (pMVar8->info).drawSurf.packed >> 0x1d;
-          if ((uVar2 & 0xfff) < (uVar10 & 0xffffffff)) {
-            uVar10 = uVar2 & 0xfff;
-            uVar9 = uVar13 + iVar12;
+          pMVar7 = Material_FromHandle(*ppMVar5);
+          uVar2 = (pMVar7->info).drawSurf.packed >> 0x1d;
+          if ((uVar2 & 0xfff) < (uVar9 & 0xffffffff)) {
+            uVar9 = uVar2 & 0xfff;
+            uVar8 = uVar12 + iVar11;
           }
-          uVar13 = uVar13 + 1;
-          ppMVar6 = ppMVar6 + 1;
-        } while (uVar13 < uVar7);
+          uVar12 = uVar12 + 1;
+          ppMVar5 = ppMVar5 + 1;
+        } while (uVar12 < uVar6);
       }
-      uVar11 = uVar11 + 1;
-      ppMVar4 = ppMVar4 + uVar7;
-      iVar12 = uVar7 + iVar12;
-    } while (uVar11 < uVar5);
+      uVar10 = uVar10 + 1;
+      ppMVar3 = ppMVar3 + uVar6;
+      iVar11 = uVar6 + iVar11;
+    } while (uVar10 < uVar4);
   }
-  if (uVar9 != (uVar9 & 0xff)) {
+  if (uVar8 != (uVar8 & 0xff)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\../universal/assertive.h"
                     ,0x1ce,0,"i == static_cast< Type >( i )\n\t%i, %i");
   }
-  *(char *)(iVar3 + 0x27) = (char)uVar9;
-  __restgprlr_17();
+  param_1->firstMtlSkinIndex = (uchar)uVar8;
   return;
 }
 
@@ -798,6 +783,8 @@ int R_CompareStaticModels(GfxStaticModelDrawInst *param_1,GfxStaticModelDrawInst
 
 // 8273ACE0  R_SortStaticModels  (gfx_d3d/r_drawsurf.cpp:602)
 
+/* WARNING: Function: __savegprlr_20 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_20 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 bool R_SortStaticModels(void)
@@ -810,200 +797,198 @@ bool R_SortStaticModels(void)
   GfxShadowGeometry *pGVar5;
   int iVar6;
   short sVar7;
-  undefined1 uVar10;
   Material **ppMVar8;
   Material *pMVar9;
-  int iVar11;
-  uint uVar12;
-  int iVar13;
-  ulonglong uVar14;
-  int iVar15;
-  GfxWorld *pGVar16;
+  int iVar10;
+  uint uVar11;
+  int iVar12;
+  ulonglong uVar13;
+  int iVar14;
+  GfxWorld *pGVar15;
+  uint uVar16;
   uint uVar17;
-  uint uVar18;
-  undefined8 uVar19;
+  bool bVar18;
+  uint uVar19;
   uint uVar20;
   uint uVar21;
   uint uVar22;
-  uint uVar23;
-  GfxStaticModelDrawInst *pGVar24;
-  uint uVar25;
-  uchar *puVar26;
+  GfxStaticModelDrawInst *pGVar23;
+  uint uVar24;
+  uchar *puVar25;
   
-  __savegprlr_20();
   uVar2 = ((rgp.world)->dpvs).smodelCount;
   if (uVar2 == 0) {
-    uVar10 = __restgprlr_20(0);
-    return (bool)uVar10;
+    return false;
   }
   pGVar3 = ((rgp.world)->dpvs).smodelDrawInsts;
-  pGVar24 = pGVar3;
-  for (uVar25 = uVar2; uVar25 != 0; uVar25 = uVar25 - 1) {
-    R_UpdateStaticModelFirstMaterialSkinIndex(pGVar24);
-    pGVar24 = pGVar24 + 1;
+  pGVar23 = pGVar3;
+  for (uVar24 = uVar2; uVar24 != 0; uVar24 = uVar24 - 1) {
+    R_UpdateStaticModelFirstMaterialSkinIndex(pGVar23);
+    pGVar23 = pGVar23 + 1;
   }
-  uVar19 = 0;
-  uVar25 = 1;
+  bVar18 = false;
+  uVar24 = 1;
   if (1 < uVar2) {
     do {
-      ppMVar8 = XModelGetSkins(pGVar3[uVar25 - 1].model,0);
-      pMVar9 = Material_FromHandle(ppMVar8[pGVar3[uVar25 - 1].firstMtlSkinIndex]);
-      uVar14 = (pMVar9->info).drawSurf.packed;
-      ppMVar8 = XModelGetSkins(pGVar3[uVar25].model,0);
-      pMVar9 = Material_FromHandle(ppMVar8[pGVar3[uVar25].firstMtlSkinIndex]);
-      if ((longlong)((uVar14 >> 0x1d & 0xfff) - ((pMVar9->info).drawSurf.packed >> 0x1d & 0xfff)) <
+      ppMVar8 = XModelGetSkins(pGVar3[uVar24 - 1].model,0);
+      pMVar9 = Material_FromHandle(ppMVar8[pGVar3[uVar24 - 1].firstMtlSkinIndex]);
+      uVar13 = (pMVar9->info).drawSurf.packed;
+      ppMVar8 = XModelGetSkins(pGVar3[uVar24].model,0);
+      pMVar9 = Material_FromHandle(ppMVar8[pGVar3[uVar24].firstMtlSkinIndex]);
+      if ((longlong)((uVar13 >> 0x1d & 0xfff) - ((pMVar9->info).drawSurf.packed >> 0x1d & 0xfff)) <
           1) {
-        uVar25 = uVar25 + 1;
+        uVar24 = uVar24 + 1;
       }
       else {
-        uVar20 = uVar25 - 1;
-        uVar19 = 1;
-        if (uVar20 != 0) {
-          puVar26 = &pGVar3[uVar25 - 2].firstMtlSkinIndex;
+        uVar19 = uVar24 - 1;
+        bVar18 = true;
+        if (uVar19 != 0) {
+          puVar25 = &pGVar3[uVar24 - 2].firstMtlSkinIndex;
           do {
-            ppMVar8 = XModelGetSkins(*(XModel **)(puVar26 + -0xb),0);
-            pMVar9 = Material_FromHandle(ppMVar8[*puVar26]);
-            uVar14 = (pMVar9->info).drawSurf.packed;
-            ppMVar8 = XModelGetSkins(*(XModel **)(puVar26 + 0x21),0);
-            pMVar9 = Material_FromHandle(ppMVar8[puVar26[0x2c]]);
-            if ((uVar14 >> 0x1d & 0xfff) != ((pMVar9->info).drawSurf.packed >> 0x1d & 0xfff)) break;
+            ppMVar8 = XModelGetSkins(*(XModel **)(puVar25 + -0xb),0);
+            pMVar9 = Material_FromHandle(ppMVar8[*puVar25]);
+            uVar13 = (pMVar9->info).drawSurf.packed;
+            ppMVar8 = XModelGetSkins(*(XModel **)(puVar25 + 0x21),0);
+            pMVar9 = Material_FromHandle(ppMVar8[puVar25[0x2c]]);
+            if ((uVar13 >> 0x1d & 0xfff) != ((pMVar9->info).drawSurf.packed >> 0x1d & 0xfff)) break;
+            uVar19 = uVar19 - 1;
+            puVar25 = puVar25 + -0x2c;
+          } while (uVar19 != 0);
+        }
+        uVar20 = uVar19;
+        if (uVar19 != 0) {
+          puVar25 = &pGVar3[uVar19 - 1].firstMtlSkinIndex;
+          do {
+            ppMVar8 = XModelGetSkins(*(XModel **)(puVar25 + -0xb),0);
+            pMVar9 = Material_FromHandle(ppMVar8[*puVar25]);
+            uVar13 = (pMVar9->info).drawSurf.packed;
+            ppMVar8 = XModelGetSkins(pGVar3[uVar24].model,0);
+            pMVar9 = Material_FromHandle(ppMVar8[pGVar3[uVar24].firstMtlSkinIndex]);
+            if ((longlong)
+                ((uVar13 >> 0x1d & 0xfff) - ((pMVar9->info).drawSurf.packed >> 0x1d & 0xfff)) < 1)
+            break;
             uVar20 = uVar20 - 1;
-            puVar26 = puVar26 + -0x2c;
+            puVar25 = puVar25 + -0x2c;
           } while (uVar20 != 0);
         }
-        uVar21 = uVar20;
-        if (uVar20 != 0) {
-          puVar26 = &pGVar3[uVar20 - 1].firstMtlSkinIndex;
+        uVar22 = uVar24 + 1;
+        if (uVar22 < uVar2) {
+          puVar25 = &pGVar3[uVar22].firstMtlSkinIndex;
           do {
-            ppMVar8 = XModelGetSkins(*(XModel **)(puVar26 + -0xb),0);
-            pMVar9 = Material_FromHandle(ppMVar8[*puVar26]);
-            uVar14 = (pMVar9->info).drawSurf.packed;
-            ppMVar8 = XModelGetSkins(pGVar3[uVar25].model,0);
-            pMVar9 = Material_FromHandle(ppMVar8[pGVar3[uVar25].firstMtlSkinIndex]);
-            if ((longlong)
-                ((uVar14 >> 0x1d & 0xfff) - ((pMVar9->info).drawSurf.packed >> 0x1d & 0xfff)) < 1)
-            break;
-            uVar21 = uVar21 - 1;
-            puVar26 = puVar26 + -0x2c;
-          } while (uVar21 != 0);
-        }
-        uVar23 = uVar25 + 1;
-        if (uVar23 < uVar2) {
-          puVar26 = &pGVar3[uVar23].firstMtlSkinIndex;
-          do {
-            ppMVar8 = XModelGetSkins(pGVar3[uVar25].model,0);
-            pMVar9 = Material_FromHandle(ppMVar8[pGVar3[uVar25].firstMtlSkinIndex]);
-            uVar14 = (pMVar9->info).drawSurf.packed;
-            ppMVar8 = XModelGetSkins(*(XModel **)(puVar26 + -0xb),0);
-            pMVar9 = Material_FromHandle(ppMVar8[*puVar26]);
-            if ((uVar14 >> 0x1d & 0xfff) != ((pMVar9->info).drawSurf.packed >> 0x1d & 0xfff)) break;
-            uVar23 = uVar23 + 1;
-            puVar26 = puVar26 + 0x2c;
-          } while (uVar23 < uVar2);
-        }
-        uVar22 = uVar23;
-        if (uVar23 < uVar2) {
-          puVar26 = &pGVar3[uVar23].firstMtlSkinIndex;
-          do {
-            ppMVar8 = XModelGetSkins(pGVar3[uVar25].model,0);
-            pMVar9 = Material_FromHandle(ppMVar8[pGVar3[uVar25].firstMtlSkinIndex]);
-            uVar14 = (pMVar9->info).drawSurf.packed;
-            ppMVar8 = XModelGetSkins(*(XModel **)(puVar26 + -0xb),0);
-            pMVar9 = Material_FromHandle(ppMVar8[*puVar26]);
-            if ((longlong)
-                ((uVar14 >> 0x1d & 0xfff) - ((pMVar9->info).drawSurf.packed >> 0x1d & 0xfff)) < 1)
-            break;
+            ppMVar8 = XModelGetSkins(pGVar3[uVar24].model,0);
+            pMVar9 = Material_FromHandle(ppMVar8[pGVar3[uVar24].firstMtlSkinIndex]);
+            uVar13 = (pMVar9->info).drawSurf.packed;
+            ppMVar8 = XModelGetSkins(*(XModel **)(puVar25 + -0xb),0);
+            pMVar9 = Material_FromHandle(ppMVar8[*puVar25]);
+            if ((uVar13 >> 0x1d & 0xfff) != ((pMVar9->info).drawSurf.packed >> 0x1d & 0xfff)) break;
             uVar22 = uVar22 + 1;
-            puVar26 = puVar26 + 0x2c;
+            puVar25 = puVar25 + 0x2c;
           } while (uVar22 < uVar2);
         }
-        iVar11 = 0;
-        sVar7 = (short)uVar25;
-        pGVar16 = rgp.world;
-        if (0 < ((rgp.world)->dpvsPlanes).cellCount) {
-          iVar13 = 0;
+        uVar21 = uVar22;
+        if (uVar22 < uVar2) {
+          puVar25 = &pGVar3[uVar22].firstMtlSkinIndex;
           do {
-            uVar12 = 0;
-            iVar6 = *(int *)((int)&pGVar16->aabbTrees->aabbTree + iVar13);
+            ppMVar8 = XModelGetSkins(pGVar3[uVar24].model,0);
+            pMVar9 = Material_FromHandle(ppMVar8[pGVar3[uVar24].firstMtlSkinIndex]);
+            uVar13 = (pMVar9->info).drawSurf.packed;
+            ppMVar8 = XModelGetSkins(*(XModel **)(puVar25 + -0xb),0);
+            pMVar9 = Material_FromHandle(ppMVar8[*puVar25]);
+            if ((longlong)
+                ((uVar13 >> 0x1d & 0xfff) - ((pMVar9->info).drawSurf.packed >> 0x1d & 0xfff)) < 1)
+            break;
+            uVar21 = uVar21 + 1;
+            puVar25 = puVar25 + 0x2c;
+          } while (uVar21 < uVar2);
+        }
+        iVar10 = 0;
+        sVar7 = (short)uVar24;
+        pGVar15 = rgp.world;
+        if (0 < ((rgp.world)->dpvsPlanes).cellCount) {
+          iVar12 = 0;
+          do {
+            uVar11 = 0;
+            iVar6 = *(int *)((int)&pGVar15->aabbTrees->aabbTree + iVar12);
             if (*(short *)(iVar6 + 0x1e) != 0) {
-              iVar15 = 0;
+              iVar14 = 0;
               do {
                 iVar4 = *(int *)(iVar6 + 0x20);
-                uVar1 = *(ushort *)(iVar15 + iVar4);
-                uVar17 = (uint)uVar1;
-                if ((uVar21 <= uVar17) && (uVar17 < uVar22)) {
-                  if (uVar17 < uVar20) {
-                    *(ushort *)(iVar15 + iVar4) = (uVar1 - sVar7) + (short)uVar23;
+                uVar1 = *(ushort *)(iVar14 + iVar4);
+                uVar16 = (uint)uVar1;
+                if ((uVar20 <= uVar16) && (uVar16 < uVar21)) {
+                  if (uVar16 < uVar19) {
+                    *(ushort *)(iVar14 + iVar4) = (uVar1 - sVar7) + (short)uVar22;
                   }
-                  else if (uVar17 < uVar25) {
-                    *(ushort *)(iVar15 + iVar4) = (uVar1 - sVar7) + (short)uVar22;
+                  else if (uVar16 < uVar24) {
+                    *(ushort *)(iVar14 + iVar4) = (uVar1 - sVar7) + (short)uVar21;
                   }
-                  else if (uVar17 < uVar23) {
-                    *(ushort *)(iVar15 + iVar4) = (uVar1 - sVar7) + (short)uVar21;
+                  else if (uVar16 < uVar22) {
+                    *(ushort *)(iVar14 + iVar4) = (uVar1 - sVar7) + (short)uVar20;
                   }
                   else {
-                    *(ushort *)(iVar15 + iVar4) = (uVar1 - sVar7) + (short)uVar20;
+                    *(ushort *)(iVar14 + iVar4) = (uVar1 - sVar7) + (short)uVar19;
                   }
                 }
-                uVar12 = uVar12 + 1;
-                iVar15 = iVar15 + 2;
-                pGVar16 = rgp.world;
-              } while (uVar12 < *(ushort *)(iVar6 + 0x1e));
+                uVar11 = uVar11 + 1;
+                iVar14 = iVar14 + 2;
+                pGVar15 = rgp.world;
+              } while (uVar11 < *(ushort *)(iVar6 + 0x1e));
             }
-            iVar11 = iVar11 + 1;
-            iVar13 = iVar13 + 4;
-          } while (iVar11 < (pGVar16->dpvsPlanes).cellCount);
+            iVar10 = iVar10 + 1;
+            iVar12 = iVar12 + 4;
+          } while (iVar10 < (pGVar15->dpvsPlanes).cellCount);
         }
-        uVar12 = 0;
-        if (pGVar16->primaryLightCount != 0) {
-          iVar11 = 0;
+        uVar11 = 0;
+        if (pGVar15->primaryLightCount != 0) {
+          iVar10 = 0;
           do {
-            pGVar5 = pGVar16->shadowGeom;
-            uVar17 = 0;
-            if (*(short *)((int)&pGVar5->smodelCount + iVar11) != 0) {
-              iVar13 = 0;
+            pGVar5 = pGVar15->shadowGeom;
+            uVar16 = 0;
+            if (*(short *)((int)&pGVar5->smodelCount + iVar10) != 0) {
+              iVar12 = 0;
               do {
-                iVar6 = *(int *)((int)&pGVar5->smodelIndex + iVar11);
-                uVar1 = *(ushort *)(iVar6 + iVar13);
-                uVar18 = (uint)uVar1;
-                if ((uVar21 <= uVar18) && (uVar18 < uVar22)) {
-                  if (uVar18 < uVar20) {
-                    *(ushort *)(iVar6 + iVar13) = (uVar1 - sVar7) + (short)uVar23;
+                iVar6 = *(int *)((int)&pGVar5->smodelIndex + iVar10);
+                uVar1 = *(ushort *)(iVar6 + iVar12);
+                uVar17 = (uint)uVar1;
+                if ((uVar20 <= uVar17) && (uVar17 < uVar21)) {
+                  if (uVar17 < uVar19) {
+                    *(ushort *)(iVar6 + iVar12) = (uVar1 - sVar7) + (short)uVar22;
                   }
-                  else if (uVar18 < uVar25) {
-                    *(ushort *)(iVar6 + iVar13) = (uVar1 - sVar7) + (short)uVar22;
+                  else if (uVar17 < uVar24) {
+                    *(ushort *)(iVar6 + iVar12) = (uVar1 - sVar7) + (short)uVar21;
                   }
-                  else if (uVar18 < uVar23) {
-                    *(ushort *)(iVar6 + iVar13) = (uVar1 - sVar7) + (short)uVar21;
+                  else if (uVar17 < uVar22) {
+                    *(ushort *)(iVar6 + iVar12) = (uVar1 - sVar7) + (short)uVar20;
                   }
                   else {
-                    *(ushort *)(iVar6 + iVar13) = (uVar1 - sVar7) + (short)uVar20;
+                    *(ushort *)(iVar6 + iVar12) = (uVar1 - sVar7) + (short)uVar19;
                   }
                 }
-                uVar17 = uVar17 + 1;
-                iVar13 = iVar13 + 2;
-                pGVar16 = rgp.world;
-              } while (uVar17 < *(ushort *)((int)&pGVar5->smodelCount + iVar11));
+                uVar16 = uVar16 + 1;
+                iVar12 = iVar12 + 2;
+                pGVar15 = rgp.world;
+              } while (uVar16 < *(ushort *)((int)&pGVar5->smodelCount + iVar10));
             }
-            uVar12 = uVar12 + 1;
-            iVar11 = iVar11 + 0xc;
-          } while (uVar12 < pGVar16->primaryLightCount);
+            uVar11 = uVar11 + 1;
+            iVar10 = iVar10 + 0xc;
+          } while (uVar11 < pGVar15->primaryLightCount);
         }
-        R_SwapAdjacentStaticModelRanges(uVar20,uVar25,uVar23);
-        uVar12 = (uVar23 - uVar25) + uVar20;
-        R_SwapAdjacentStaticModelRanges(uVar21,uVar20,uVar12);
-        R_SwapAdjacentStaticModelRanges(uVar12,(uVar23 - uVar25) + uVar25,uVar22);
-        uVar25 = uVar22;
+        R_SwapAdjacentStaticModelRanges(uVar19,uVar24,uVar22);
+        uVar11 = (uVar22 - uVar24) + uVar19;
+        R_SwapAdjacentStaticModelRanges(uVar20,uVar19,uVar11);
+        R_SwapAdjacentStaticModelRanges(uVar11,(uVar22 - uVar24) + uVar24,uVar21);
+        uVar24 = uVar21;
       }
-    } while (uVar25 < uVar2);
+    } while (uVar24 < uVar2);
   }
-  uVar10 = __restgprlr_20(uVar19);
-  return (bool)uVar10;
+  return bVar18;
 }
 
 
 // 8273B250  R_SortWorldSurfaces  (gfx_d3d/r_drawsurf.cpp:728)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void R_SortWorldSurfaces(void)
@@ -1022,7 +1007,6 @@ void R_SortWorldSurfaces(void)
   int iVar12;
   ulonglong uVar11;
   
-  __savegprlr_24();
   if (rgp.world == (GfxWorld *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_drawsurf.cpp",0x2e3,
                     0,"%s");
@@ -1075,13 +1059,14 @@ void R_SortWorldSurfaces(void)
   }
   R_SetPrimaryLightShadowSurfaces();
   R_GenerateSunLitSurfCells();
-  __restgprlr_24();
   return;
 }
 
 
 // 8273B418  _Push_heap<GfxSurface_*,int,GfxSurface,bool_(__cdecl*)(GfxSurface_const_&,GfxSurface_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2455)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void std::
@@ -1091,57 +1076,47 @@ void std::
 
 {
   int iVar1;
-  ulonglong uVar2;
-  ulonglong uVar3;
-  longlong lVar4;
-  bool bVar5;
-  ulonglong uVar6;
-  longlong lVar7;
-  uint uVar9;
-  longlong lVar8;
-  longlong lVar10;
-  longlong lVar11;
+  bool bVar2;
+  GfxSurfaceLightingAndFlags *pGVar3;
+  uint uVar4;
+  GfxSurfaceLightingAndFlags *pGVar5;
+  longlong lVar6;
   
-  lVar7 = (longlong)(int)param_4;
-  uVar6 = (ulonglong)param_2;
-  lVar4 = __savegprlr_25(param_1);
-  iVar1 = (int)uVar6;
-  uVar9 = iVar1 - 1;
-  uVar3 = (longlong)((int)uVar9 >> 1) + (ulonglong)((int)uVar9 < 0 && (uVar9 & 1) != 0);
-  while (uVar2 = uVar3, param_3 < iVar1) {
-    lVar10 = (uVar2 + (uVar2 & 0x7fffffff) * 2 & 0x1fffffff) * 8 + lVar4;
-    bVar5 = (*param_5)((GfxSurface *)lVar10,(GfxSurface *)lVar7);
-    if (!bVar5) break;
-    lVar10 = lVar10 + -4;
-    lVar11 = 6;
-    lVar8 = (uVar6 + (uVar6 & 0x7fffffff) * 2 & 0x1fffffff) * 8 + lVar4 + -4;
+  uVar4 = param_2 - 1;
+  iVar1 = ((int)uVar4 >> 1) + (uint)((int)uVar4 < 0 && (uVar4 & 1) != 0);
+  while (param_3 < param_2) {
+    bVar2 = (*param_5)(param_1 + iVar1,param_4);
+    if (!bVar2) break;
+    pGVar3 = &(param_1 + iVar1)[-1].laf;
+    lVar6 = 6;
+    pGVar5 = &param_1[param_2 + -1].laf;
     do {
-      lVar10 = lVar10 + 4;
-      lVar8 = lVar8 + 4;
-      *(undefined4 *)lVar8 = *(undefined4 *)lVar10;
-      lVar11 = lVar11 + -1;
-    } while (lVar11 != 0);
-    iVar1 = (int)uVar2;
-    uVar9 = iVar1 - 1;
-    uVar3 = (longlong)((int)uVar9 >> 1) + (ulonglong)((int)uVar9 < 0 && (uVar9 & 1) != 0);
-    uVar6 = uVar2;
+      pGVar3 = pGVar3 + 1;
+      pGVar5 = pGVar5 + 1;
+      *pGVar5 = *pGVar3;
+      lVar6 = lVar6 + -1;
+    } while (lVar6 != 0);
+    uVar4 = iVar1 - 1;
+    param_2 = iVar1;
+    iVar1 = ((int)uVar4 >> 1) + (uint)((int)uVar4 < 0 && (uVar4 & 1) != 0);
   }
-  lVar7 = lVar7 + -4;
-  lVar10 = 6;
-  lVar4 = (uVar6 + (uVar6 & 0x7fffffff) * 2 & 0x1fffffff) * 8 + lVar4 + -4;
+  pGVar3 = &param_4[-1].laf;
+  lVar6 = 6;
+  pGVar5 = &param_1[param_2 + -1].laf;
   do {
-    lVar7 = lVar7 + 4;
-    lVar4 = lVar4 + 4;
-    *(undefined4 *)lVar4 = *(undefined4 *)lVar7;
-    lVar10 = lVar10 + -1;
-  } while (lVar10 != 0);
-  __restgprlr_25();
+    pGVar3 = pGVar3 + 1;
+    pGVar5 = pGVar5 + 1;
+    *pGVar5 = *pGVar3;
+    lVar6 = lVar6 + -1;
+  } while (lVar6 != 0);
   return;
 }
 
 
 // 8273B560  _Adjust_heap<GfxSurface_*,int,GfxSurface,bool_(__cdecl*)(GfxSurface_const_&,GfxSurface_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2565)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void std::
@@ -1150,96 +1125,80 @@ void std::
                _func___cdecl_bool_GfxSurface_ptr_GfxSurface_ptr *param_5)
 
 {
-  GfxSurface *pGVar1;
-  longlong lVar2;
-  bool bVar3;
-  ulonglong uVar4;
-  ulonglong uVar5;
-  longlong lVar6;
+  bool bVar1;
+  GfxSurfaceLightingAndFlags *pGVar2;
+  GfxSurfaceLightingAndFlags *pGVar3;
+  uint uVar4;
+  int iVar5;
+  int iVar6;
   longlong lVar7;
-  longlong lVar8;
-  uint uVar9;
-  ulonglong uVar10;
-  ulonglong uVar11;
-  int iVar13;
-  ulonglong uVar12;
-  longlong lVar14;
   
-  lVar7 = (longlong)(int)param_4;
-  uVar5 = (ulonglong)param_3;
-  uVar4 = (ulonglong)param_2;
-  lVar2 = __savegprlr_25(param_1);
-  uVar11 = (uVar4 + 1 & 0x7fffffff) << 1;
-  iVar13 = (int)uVar11;
-  uVar10 = uVar4;
-  while (uVar12 = uVar11, iVar13 < (int)uVar5) {
-    pGVar1 = (GfxSurface *)((int)uVar12 * 0x18 + (int)lVar2);
-    bVar3 = (*param_5)(pGVar1,pGVar1 + -1);
-    if (bVar3) {
-      uVar12 = uVar12 - 1;
+  iVar5 = param_2;
+  while( true ) {
+    iVar6 = (iVar5 + 1) * 2;
+    if (param_3 <= iVar6) break;
+    bVar1 = (*param_5)(param_1 + (iVar5 + 1) * 2,param_1 + (iVar5 + 1) * 2 + -1);
+    if (bVar1) {
+      iVar6 = iVar6 + -1;
     }
-    lVar6 = (uVar12 + (uVar12 & 0x7fffffff) * 2 & 0x1fffffff) * 8 + lVar2 + -4;
-    lVar8 = (uVar10 + (uVar10 & 0x7fffffff) * 2 & 0x1fffffff) * 8 + lVar2 + -4;
-    lVar14 = 6;
+    pGVar2 = &param_1[iVar6 + -1].laf;
+    pGVar3 = &param_1[iVar5 + -1].laf;
+    lVar7 = 6;
     do {
-      lVar6 = lVar6 + 4;
-      lVar8 = lVar8 + 4;
-      *(undefined4 *)lVar8 = *(undefined4 *)lVar6;
-      lVar14 = lVar14 + -1;
-    } while (lVar14 != 0);
-    uVar11 = (uVar12 + 1 & 0x7fffffff) << 1;
-    iVar13 = (int)uVar11;
-    uVar10 = uVar12;
+      pGVar2 = pGVar2 + 1;
+      pGVar3 = pGVar3 + 1;
+      *pGVar3 = *pGVar2;
+      lVar7 = lVar7 + -1;
+      iVar5 = iVar6;
+    } while (lVar7 != 0);
   }
-  if (iVar13 == (int)uVar5) {
-    lVar6 = (uVar5 + (uVar5 & 0x7fffffff) * 2 & 0x1fffffff) * 8 + lVar2 + -0x1c;
-    lVar8 = (uVar10 + (uVar10 & 0x7fffffff) * 2 & 0x1fffffff) * 8 + lVar2 + -4;
-    lVar14 = 6;
+  if (iVar6 == param_3) {
+    pGVar2 = &param_1[param_3 + -2].laf;
+    pGVar3 = &param_1[iVar5 + -1].laf;
+    lVar7 = 6;
     do {
-      lVar6 = lVar6 + 4;
-      lVar8 = lVar8 + 4;
-      *(undefined4 *)lVar8 = *(undefined4 *)lVar6;
-      lVar14 = lVar14 + -1;
-    } while (lVar14 != 0);
-    uVar10 = uVar5 - 1;
+      pGVar2 = pGVar2 + 1;
+      pGVar3 = pGVar3 + 1;
+      *pGVar3 = *pGVar2;
+      lVar7 = lVar7 + -1;
+    } while (lVar7 != 0);
+    iVar5 = param_3 + -1;
   }
-  iVar13 = (int)uVar10;
-  uVar9 = iVar13 - 1;
-  uVar11 = (longlong)((int)uVar9 >> 1) + (ulonglong)((int)uVar9 < 0 && (uVar9 & 1) != 0);
-  while (uVar5 = uVar11, (int)uVar4 < iVar13) {
-    lVar6 = (uVar5 + (uVar5 & 0x7fffffff) * 2 & 0x1fffffff) * 8 + lVar2;
-    bVar3 = (*param_5)((GfxSurface *)lVar6,(GfxSurface *)lVar7);
-    if (!bVar3) break;
-    lVar6 = lVar6 + -4;
-    lVar14 = 6;
-    lVar8 = (uVar10 + (uVar10 & 0x7fffffff) * 2 & 0x1fffffff) * 8 + lVar2 + -4;
+  uVar4 = iVar5 - 1;
+  iVar6 = ((int)uVar4 >> 1) + (uint)((int)uVar4 < 0 && (uVar4 & 1) != 0);
+  while (param_2 < iVar5) {
+    bVar1 = (*param_5)(param_1 + iVar6,param_4);
+    if (!bVar1) break;
+    pGVar2 = &(param_1 + iVar6)[-1].laf;
+    lVar7 = 6;
+    pGVar3 = &param_1[iVar5 + -1].laf;
     do {
-      lVar6 = lVar6 + 4;
-      lVar8 = lVar8 + 4;
-      *(undefined4 *)lVar8 = *(undefined4 *)lVar6;
-      lVar14 = lVar14 + -1;
-    } while (lVar14 != 0);
-    iVar13 = (int)uVar5;
-    uVar9 = iVar13 - 1;
-    uVar11 = (longlong)((int)uVar9 >> 1) + (ulonglong)((int)uVar9 < 0 && (uVar9 & 1) != 0);
-    uVar10 = uVar5;
+      pGVar2 = pGVar2 + 1;
+      pGVar3 = pGVar3 + 1;
+      *pGVar3 = *pGVar2;
+      lVar7 = lVar7 + -1;
+    } while (lVar7 != 0);
+    uVar4 = iVar6 - 1;
+    iVar5 = iVar6;
+    iVar6 = ((int)uVar4 >> 1) + (uint)((int)uVar4 < 0 && (uVar4 & 1) != 0);
   }
-  lVar7 = lVar7 + -4;
-  lVar6 = 6;
-  lVar2 = (uVar10 + (uVar10 & 0x7fffffff) * 2 & 0x1fffffff) * 8 + lVar2 + -4;
+  pGVar2 = &param_4[-1].laf;
+  lVar7 = 6;
+  pGVar3 = &param_1[iVar5 + -1].laf;
   do {
-    lVar7 = lVar7 + 4;
-    lVar2 = lVar2 + 4;
-    *(undefined4 *)lVar2 = *(undefined4 *)lVar7;
-    lVar6 = lVar6 + -1;
-  } while (lVar6 != 0);
-  __restgprlr_25();
+    pGVar2 = pGVar2 + 1;
+    pGVar3 = pGVar3 + 1;
+    *pGVar3 = *pGVar2;
+    lVar7 = lVar7 + -1;
+  } while (lVar7 != 0);
   return;
 }
 
 
 // 8273B878  _Make_heap<GfxSurface_*,int,GfxSurface,bool_(__cdecl*)(GfxSurface_const_&,GfxSurface_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2658)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void std::
@@ -1250,96 +1209,90 @@ void std::
 
 {
   uint uVar1;
-  GfxSurface *pGVar2;
-  ulonglong uVar3;
-  longlong lVar4;
-  bool bVar5;
+  ulonglong uVar2;
+  longlong lVar3;
+  bool bVar4;
+  undefined4 *puVar5;
   longlong lVar6;
   longlong lVar7;
-  undefined4 *puVar8;
-  longlong lVar9;
-  ulonglong uVar10;
+  ulonglong uVar8;
+  ulonglong uVar9;
+  int iVar10;
   ulonglong uVar11;
-  int iVar12;
-  ulonglong uVar13;
-  ulonglong uVar14;
-  uint uVar15;
-  longlong lVar16;
-  longlong lVar17;
+  ulonglong uVar12;
+  uint uVar13;
+  longlong lVar14;
+  longlong lVar15;
   undefined4 uStack_64;
   GfxSurface local_60 [4];
   
-  lVar7 = (longlong)(int)param_3;
-  lVar6 = (longlong)(int)param_2;
-  lVar4 = __savegprlr_24(param_1,lVar6,lVar7,param_4,param_5);
-  pGVar2 = (GfxSurface *)lVar4;
-  uVar1 = ((int)lVar6 - (int)pGVar2) / 0x18;
-  uVar11 = (longlong)((int)uVar1 >> 1) + (ulonglong)((int)uVar1 < 0 && (uVar1 & 1) != 0);
-  if (0 < (longlong)uVar11) {
-    uVar10 = (uVar11 + 1 & 0x7fffffff) << 1;
-    lVar6 = (uVar11 + (uVar11 & 0x7fffffff) * 2 & 0x1fffffff) * 8 + lVar4;
+  lVar3 = (longlong)(int)param_1;
+  uVar1 = ((int)param_2 - (int)param_1) / 0x18;
+  uVar9 = (longlong)((int)uVar1 >> 1) + (ulonglong)((int)uVar1 < 0 && (uVar1 & 1) != 0);
+  if (0 < (longlong)uVar9) {
+    uVar8 = (uVar9 + 1 & 0x7fffffff) << 1;
+    lVar7 = (uVar9 + (uVar9 & 0x7fffffff) * 2 & 0x1fffffff) * 8 + lVar3;
     do {
-      puVar8 = &uStack_64;
-      uVar11 = uVar11 - 1;
-      uVar10 = uVar10 - 2;
-      lVar16 = 6;
-      lVar9 = lVar6 + -0x1c;
+      puVar5 = &uStack_64;
+      uVar9 = uVar9 - 1;
+      uVar8 = uVar8 - 2;
+      lVar14 = 6;
+      lVar6 = lVar7 + -0x1c;
       do {
-        lVar9 = lVar9 + 4;
-        puVar8 = puVar8 + 1;
-        *puVar8 = *(undefined4 *)lVar9;
-        lVar16 = lVar16 + -1;
-      } while (lVar16 != 0);
-      uVar15 = (uint)uVar10;
-      uVar3 = uVar11;
-      uVar13 = uVar10;
-      while ((int)uVar15 < (int)uVar1) {
-        bVar5 = (*(_func___cdecl_bool_GfxSurface_ptr_GfxSurface_ptr *)lVar7)
-                          (pGVar2 + (int)uVar13,pGVar2 + (int)uVar13 + -1);
-        if (bVar5) {
-          uVar13 = uVar13 - 1;
+        lVar6 = lVar6 + 4;
+        puVar5 = puVar5 + 1;
+        *puVar5 = *(undefined4 *)lVar6;
+        lVar14 = lVar14 + -1;
+      } while (lVar14 != 0);
+      uVar13 = (uint)uVar8;
+      uVar2 = uVar9;
+      uVar11 = uVar8;
+      while ((int)uVar13 < (int)uVar1) {
+        bVar4 = (*param_3)(param_1 + (int)uVar11,param_1 + (int)uVar11 + -1);
+        if (bVar4) {
+          uVar11 = uVar11 - 1;
         }
-        lVar9 = (uVar13 + (uVar13 & 0x7fffffff) * 2 & 0x1fffffff) * 8 + lVar4 + -4;
-        lVar16 = (uVar3 + (uVar3 & 0x7fffffff) * 2 & 0x1fffffff) * 8 + lVar4 + -4;
-        lVar17 = 6;
+        lVar6 = (uVar11 + (uVar11 & 0x7fffffff) * 2 & 0x1fffffff) * 8 + lVar3 + -4;
+        lVar14 = (uVar2 + (uVar2 & 0x7fffffff) * 2 & 0x1fffffff) * 8 + lVar3 + -4;
+        lVar15 = 6;
         do {
-          lVar9 = lVar9 + 4;
-          lVar16 = lVar16 + 4;
-          *(undefined4 *)lVar16 = *(undefined4 *)lVar9;
-          lVar17 = lVar17 + -1;
-        } while (lVar17 != 0);
-        uVar14 = (uVar13 + 1 & 0x7fffffff) << 1;
-        uVar3 = uVar13;
-        uVar13 = uVar14;
-        uVar15 = (uint)uVar14;
+          lVar6 = lVar6 + 4;
+          lVar14 = lVar14 + 4;
+          *(undefined4 *)lVar14 = *(undefined4 *)lVar6;
+          lVar15 = lVar15 + -1;
+        } while (lVar15 != 0);
+        uVar12 = (uVar11 + 1 & 0x7fffffff) << 1;
+        uVar2 = uVar11;
+        uVar11 = uVar12;
+        uVar13 = (uint)uVar12;
       }
-      iVar12 = (int)uVar3;
-      if (uVar15 == uVar1) {
-        lVar9 = ((longlong)(int)uVar1 + ((ulonglong)uVar1 & 0x7fffffff) * 2 & 0x1fffffff) * 8 +
-                lVar4 + -0x1c;
-        lVar16 = (uVar3 + (uVar3 & 0x7fffffff) * 2 & 0x1fffffff) * 8 + lVar4 + -4;
-        lVar17 = 6;
+      iVar10 = (int)uVar2;
+      if (uVar13 == uVar1) {
+        lVar6 = ((longlong)(int)uVar1 + ((ulonglong)uVar1 & 0x7fffffff) * 2 & 0x1fffffff) * 8 +
+                lVar3 + -0x1c;
+        lVar14 = (uVar2 + (uVar2 & 0x7fffffff) * 2 & 0x1fffffff) * 8 + lVar3 + -4;
+        lVar15 = 6;
         do {
-          lVar9 = lVar9 + 4;
-          lVar16 = lVar16 + 4;
-          *(undefined4 *)lVar16 = *(undefined4 *)lVar9;
-          lVar17 = lVar17 + -1;
-        } while (lVar17 != 0);
-        iVar12 = uVar1 - 1;
+          lVar6 = lVar6 + 4;
+          lVar14 = lVar14 + 4;
+          *(undefined4 *)lVar14 = *(undefined4 *)lVar6;
+          lVar15 = lVar15 + -1;
+        } while (lVar15 != 0);
+        iVar10 = uVar1 - 1;
       }
       _Push_heap<GfxSurface_*,int,GfxSurface,bool_(__cdecl*)(GfxSurface_const_&,GfxSurface_const_&)>
-                (pGVar2,iVar12,(int)uVar11,local_60,
-                 (_func___cdecl_bool_GfxSurface_ptr_GfxSurface_ptr *)lVar7);
-      lVar6 = lVar6 + -0x18;
-    } while (0 < (int)uVar11);
+                (param_1,iVar10,(int)uVar9,local_60,param_3);
+      lVar7 = lVar7 + -0x18;
+    } while (0 < (int)uVar9);
   }
-  __restgprlr_24();
   return;
 }
 
 
 // 8273C1E8  _Sort_heap<GfxSurface_*,bool_(__cdecl*)(GfxSurface_const_&,GfxSurface_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2700)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void std::_Sort_heap<GfxSurface_*,bool_(__cdecl*)(GfxSurface_const_&,GfxSurface_const_&)>
@@ -1347,53 +1300,50 @@ void std::_Sort_heap<GfxSurface_*,bool_(__cdecl*)(GfxSurface_const_&,GfxSurface_
                _func___cdecl_bool_GfxSurface_ptr_GfxSurface_ptr *param_3)
 
 {
-  longlong lVar1;
-  undefined4 *puVar2;
-  longlong lVar3;
-  longlong lVar4;
+  GfxSurfaceLightingAndFlags *pGVar1;
+  GfxSurfaceLightingAndFlags *pGVar2;
+  int iVar3;
+  GfxSurface *pGVar4;
   longlong lVar5;
-  longlong lVar6;
-  longlong lVar7;
-  undefined4 uStack_44;
-  GfxSurface local_40 [2];
+  GfxSurfaceLightingAndFlags GStack_44;
+  GfxSurfaceLightingAndFlags local_40 [16];
   
-  lVar5 = (longlong)(int)param_2;
-  lVar1 = __savegprlr_28(param_1);
-  lVar4 = lVar5 - lVar1;
-  if (1 < (int)lVar4 / 0x18) {
-    lVar5 = lVar5 + -0x18;
+  iVar3 = (int)param_2 - (int)param_1;
+  if (1 < iVar3 / 0x18) {
+    pGVar4 = param_2 + -1;
     do {
-      puVar2 = &uStack_44;
-      lVar3 = lVar5 + -4;
-      lVar6 = 6;
+      pGVar1 = &GStack_44;
+      pGVar2 = &pGVar4[-1].laf;
+      lVar5 = 6;
       do {
-        lVar3 = lVar3 + 4;
-        puVar2 = puVar2 + 1;
-        *puVar2 = *(undefined4 *)lVar3;
-        lVar6 = lVar6 + -1;
-      } while (lVar6 != 0);
-      lVar3 = lVar1 + -4;
-      lVar6 = lVar5 + -4;
-      lVar7 = 6;
+        pGVar2 = pGVar2 + 1;
+        pGVar1 = pGVar1 + 1;
+        *pGVar1 = *pGVar2;
+        lVar5 = lVar5 + -1;
+      } while (lVar5 != 0);
+      pGVar2 = &param_1[-1].laf;
+      pGVar1 = &pGVar4[-1].laf;
+      lVar5 = 6;
       do {
-        lVar3 = lVar3 + 4;
-        lVar6 = lVar6 + 4;
-        *(undefined4 *)lVar6 = *(undefined4 *)lVar3;
-        lVar7 = lVar7 + -1;
-      } while (lVar7 != 0);
+        pGVar2 = pGVar2 + 1;
+        pGVar1 = pGVar1 + 1;
+        *pGVar1 = *pGVar2;
+        lVar5 = lVar5 + -1;
+      } while (lVar5 != 0);
       _Adjust_heap<GfxSurface_*,int,GfxSurface,bool_(__cdecl*)(GfxSurface_const_&,GfxSurface_const_&)>
-                ((GfxSurface *)lVar1,0,((int)lVar4 + -0x18) / 0x18,local_40,param_3);
-      lVar5 = lVar5 + -0x18;
-      lVar4 = (lVar5 - lVar1) + 0x18;
-    } while (1 < (int)lVar4 / 0x18);
+                (param_1,0,(iVar3 + -0x18) / 0x18,(GfxSurface *)&local_40[0].fields,param_3);
+      pGVar4 = pGVar4 + -1;
+      iVar3 = (int)pGVar4 + (0x18 - (int)param_1);
+    } while (1 < iVar3 / 0x18);
   }
-  __restgprlr_28();
   return;
 }
 
 
 // 8273BC18  _Insertion_sort1<GfxSurface_*,bool_(__cdecl*)(GfxSurface_const_&,GfxSurface_const_&),GfxSurface>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3650)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void std::
@@ -1402,106 +1352,95 @@ void std::
                _func___cdecl_bool_GfxSurface_ptr_GfxSurface_ptr *param_3,GfxSurface *param_4)
 
 {
-  ulonglong uVar1;
-  ulonglong uVar2;
-  char cVar3;
-  ulonglong uVar4;
-  longlong lVar5;
-  code *pcVar6;
-  longlong lVar7;
-  ulonglong uVar8;
-  ulonglong uVar9;
-  undefined4 *puVar10;
-  ulonglong uVar11;
-  ulonglong uVar12;
-  longlong lVar13;
-  longlong lVar14;
-  undefined4 uStack_64;
-  undefined1 local_60 [96];
+  GfxSurface *pGVar1;
+  GfxSurface *pGVar2;
+  GfxSurface *pGVar3;
+  bool bVar4;
+  GfxSurfaceLightingAndFlags *pGVar5;
+  GfxSurface *pGVar6;
+  GfxSurfaceLightingAndFlags *pGVar7;
+  longlong lVar8;
+  GfxSurfaceLightingAndFlags GStack_64;
+  GfxSurface local_60 [4];
   
-  lVar5 = (longlong)(int)param_3;
-  uVar4 = (ulonglong)(int)param_2;
-  uVar2 = __savegprlr_25(param_1,uVar4,lVar5,param_4);
-  if (((uVar2 & 0xffffffff) != (uVar4 & 0xffffffff)) &&
-     (uVar12 = uVar2 + 0x18, uVar11 = uVar2, (uVar12 & 0xffffffff) != (uVar4 & 0xffffffff))) {
-    do {
-      puVar10 = &uStack_64;
-      lVar7 = uVar12 - 4;
-      lVar13 = 6;
+  pGVar2 = param_1;
+  pGVar1 = param_1;
+  if (param_1 != param_2) {
+    while (pGVar3 = pGVar1 + 1, pGVar3 != param_2) {
+      pGVar5 = &GStack_64;
+      pGVar7 = &pGVar1->laf;
+      lVar8 = 6;
       do {
-        lVar7 = lVar7 + 4;
-        puVar10 = puVar10 + 1;
-        *puVar10 = *(undefined4 *)lVar7;
-        lVar13 = lVar13 + -1;
-      } while (lVar13 != 0);
-      pcVar6 = (code *)lVar5;
-      cVar3 = (*pcVar6)(local_60,uVar2);
-      if (cVar3 == '\0') {
-        cVar3 = (*pcVar6)(local_60,uVar11);
-        uVar9 = uVar11;
-        uVar8 = uVar12;
-        while (uVar1 = uVar9, cVar3 != '\0') {
-          lVar7 = uVar1 - 4;
-          lVar13 = uVar8 - 4;
-          lVar14 = 6;
+        pGVar7 = pGVar7 + 1;
+        pGVar5 = pGVar5 + 1;
+        *pGVar5 = *pGVar7;
+        lVar8 = lVar8 + -1;
+      } while (lVar8 != 0);
+      bVar4 = (*param_3)(local_60,param_1);
+      pGVar1 = pGVar3;
+      if (bVar4) {
+        while (param_1 != pGVar1) {
+          pGVar6 = pGVar1 + -1;
+          pGVar5 = &pGVar1[-1].laf;
+          pGVar7 = &pGVar1[-2].laf;
+          lVar8 = 6;
           do {
-            lVar7 = lVar7 + 4;
-            lVar13 = lVar13 + 4;
-            *(undefined4 *)lVar13 = *(undefined4 *)lVar7;
-            lVar14 = lVar14 + -1;
-          } while (lVar14 != 0);
-          cVar3 = (*pcVar6)(local_60,uVar1 - 0x18);
-          uVar9 = uVar1 - 0x18;
-          uVar8 = uVar1;
+            pGVar7 = pGVar7 + 1;
+            pGVar5 = pGVar5 + 1;
+            *pGVar5 = *pGVar7;
+            lVar8 = lVar8 + -1;
+            pGVar1 = pGVar6;
+          } while (lVar8 != 0);
         }
-        puVar10 = &uStack_64;
-        lVar7 = uVar8 - 4;
-        lVar13 = 6;
+        pGVar7 = &GStack_64;
+        pGVar5 = &param_1[-1].laf;
+        lVar8 = 6;
         do {
-          puVar10 = puVar10 + 1;
-          lVar7 = lVar7 + 4;
-          *(undefined4 *)lVar7 = *puVar10;
-          lVar13 = lVar13 + -1;
-        } while (lVar13 != 0);
+          pGVar7 = pGVar7 + 1;
+          pGVar5 = pGVar5 + 1;
+          *pGVar5 = *pGVar7;
+          lVar8 = lVar8 + -1;
+        } while (lVar8 != 0);
       }
       else {
-        uVar8 = uVar12;
-        if ((uVar2 & 0xffffffff) != (uVar12 & 0xffffffff)) {
+        bVar4 = (*param_3)(local_60,pGVar2);
+        pGVar6 = pGVar2;
+        while (bVar4 != false) {
+          pGVar7 = &pGVar6[-1].laf;
+          pGVar5 = &pGVar1[-1].laf;
+          lVar8 = 6;
           do {
-            uVar9 = uVar8 - 0x18;
-            lVar13 = uVar8 - 4;
-            lVar7 = uVar8 - 0x1c;
-            lVar14 = 6;
-            do {
-              lVar7 = lVar7 + 4;
-              lVar13 = lVar13 + 4;
-              *(undefined4 *)lVar13 = *(undefined4 *)lVar7;
-              lVar14 = lVar14 + -1;
-            } while (lVar14 != 0);
-            uVar8 = uVar9;
-          } while ((uVar9 & 0xffffffff) != (uVar2 & 0xffffffff));
+            pGVar7 = pGVar7 + 1;
+            pGVar5 = pGVar5 + 1;
+            *pGVar5 = *pGVar7;
+            lVar8 = lVar8 + -1;
+          } while (lVar8 != 0);
+          bVar4 = (*param_3)(local_60,pGVar6 + -1);
+          pGVar1 = pGVar6;
+          pGVar6 = pGVar6 + -1;
         }
-        puVar10 = &uStack_64;
-        lVar7 = uVar2 - 4;
-        lVar13 = 6;
+        pGVar7 = &GStack_64;
+        pGVar5 = &pGVar1[-1].laf;
+        lVar8 = 6;
         do {
-          puVar10 = puVar10 + 1;
-          lVar7 = lVar7 + 4;
-          *(undefined4 *)lVar7 = *puVar10;
-          lVar13 = lVar13 + -1;
-        } while (lVar13 != 0);
+          pGVar7 = pGVar7 + 1;
+          pGVar5 = pGVar5 + 1;
+          *pGVar5 = *pGVar7;
+          lVar8 = lVar8 + -1;
+        } while (lVar8 != 0);
       }
-      uVar12 = uVar12 + 0x18;
-      uVar11 = uVar11 + 0x18;
-    } while ((uVar12 & 0xffffffff) != (uVar4 & 0xffffffff));
+      pGVar2 = pGVar2 + 1;
+      pGVar1 = pGVar3;
+    }
   }
-  __restgprlr_25();
   return;
 }
 
 
 // 8273B9E0  _Med3<GfxSurface_*,bool_(__cdecl*)(GfxSurface_const_&,GfxSurface_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3683)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void std::_Med3<GfxSurface_*,bool_(__cdecl*)(GfxSurface_const_&,GfxSurface_const_&)>
@@ -1509,119 +1448,111 @@ void std::_Med3<GfxSurface_*,bool_(__cdecl*)(GfxSurface_const_&,GfxSurface_const
                _func___cdecl_bool_GfxSurface_ptr_GfxSurface_ptr *param_4)
 
 {
-  GfxSurface *pGVar1;
-  GfxSurface *pGVar2;
-  bool bVar3;
+  bool bVar1;
+  GfxSurfaceLightingAndFlags *pGVar2;
+  GfxSurfaceLightingAndFlags *pGVar3;
   longlong lVar4;
-  longlong lVar5;
-  GfxSurfaceLightingAndFlags *pGVar6;
-  longlong lVar7;
-  GfxSurfaceLightingAndFlags *pGVar8;
-  longlong lVar9;
   GfxSurfaceLightingAndFlags GStack_44;
   GfxSurfaceLightingAndFlags local_40 [16];
   
-  lVar4 = (longlong)(int)param_3;
-  lVar5 = (longlong)(int)param_2;
-  pGVar2 = (GfxSurface *)__savegprlr_28(param_1);
-  pGVar1 = (GfxSurface *)lVar5;
-  bVar3 = (*param_4)(pGVar1,pGVar2);
-  if (bVar3) {
-    pGVar8 = &GStack_44;
-    lVar7 = lVar5 + -4;
-    lVar9 = 6;
-    do {
-      lVar7 = lVar7 + 4;
-      pGVar8 = pGVar8 + 1;
-      *pGVar8 = *(GfxSurfaceLightingAndFlags *)lVar7;
-      lVar9 = lVar9 + -1;
-    } while (lVar9 != 0);
-    pGVar8 = &pGVar2[-1].laf;
-    lVar7 = lVar5 + -4;
-    lVar9 = 6;
-    do {
-      pGVar8 = pGVar8 + 1;
-      lVar7 = lVar7 + 4;
-      *(GfxSurfaceLightingAndFlags *)lVar7 = *pGVar8;
-      lVar9 = lVar9 + -1;
-    } while (lVar9 != 0);
-    pGVar8 = &GStack_44;
-    pGVar6 = &pGVar2[-1].laf;
-    lVar7 = 6;
-    do {
-      pGVar8 = pGVar8 + 1;
-      pGVar6 = pGVar6 + 1;
-      *pGVar6 = *pGVar8;
-      lVar7 = lVar7 + -1;
-    } while (lVar7 != 0);
-  }
-  bVar3 = (*param_4)((GfxSurface *)lVar4,pGVar1);
-  if (bVar3) {
-    pGVar8 = &GStack_44;
-    lVar7 = lVar4 + -4;
-    lVar9 = 6;
-    do {
-      lVar7 = lVar7 + 4;
-      pGVar8 = pGVar8 + 1;
-      *pGVar8 = *(GfxSurfaceLightingAndFlags *)lVar7;
-      lVar9 = lVar9 + -1;
-    } while (lVar9 != 0);
-    lVar7 = lVar5 + -4;
-    lVar4 = lVar4 + -4;
-    lVar9 = 6;
-    do {
-      lVar7 = lVar7 + 4;
-      lVar4 = lVar4 + 4;
-      *(undefined4 *)lVar4 = *(undefined4 *)lVar7;
-      lVar9 = lVar9 + -1;
-    } while (lVar9 != 0);
-    pGVar8 = &GStack_44;
-    lVar4 = lVar5 + -4;
-    lVar7 = 6;
-    do {
-      pGVar8 = pGVar8 + 1;
-      lVar4 = lVar4 + 4;
-      *(GfxSurfaceLightingAndFlags *)lVar4 = *pGVar8;
-      lVar7 = lVar7 + -1;
-    } while (lVar7 != 0);
-  }
-  bVar3 = (*param_4)(pGVar1,pGVar2);
-  if (bVar3) {
-    pGVar8 = &GStack_44;
-    lVar4 = lVar5 + -4;
-    lVar7 = 6;
-    do {
-      lVar4 = lVar4 + 4;
-      pGVar8 = pGVar8 + 1;
-      *pGVar8 = *(GfxSurfaceLightingAndFlags *)lVar4;
-      lVar7 = lVar7 + -1;
-    } while (lVar7 != 0);
-    pGVar8 = &pGVar2[-1].laf;
-    lVar5 = lVar5 + -4;
+  bVar1 = (*param_4)(param_2,param_1);
+  if (bVar1) {
+    pGVar2 = &GStack_44;
+    pGVar3 = &param_2[-1].laf;
     lVar4 = 6;
     do {
-      pGVar8 = pGVar8 + 1;
-      lVar5 = lVar5 + 4;
-      *(GfxSurfaceLightingAndFlags *)lVar5 = *pGVar8;
+      pGVar3 = pGVar3 + 1;
+      pGVar2 = pGVar2 + 1;
+      *pGVar2 = *pGVar3;
       lVar4 = lVar4 + -1;
     } while (lVar4 != 0);
-    pGVar8 = &GStack_44;
-    pGVar6 = &pGVar2[-1].laf;
+    pGVar3 = &param_1[-1].laf;
+    pGVar2 = &param_2[-1].laf;
     lVar4 = 6;
     do {
-      pGVar8 = pGVar8 + 1;
-      pGVar6 = pGVar6 + 1;
-      *pGVar6 = *pGVar8;
+      pGVar3 = pGVar3 + 1;
+      pGVar2 = pGVar2 + 1;
+      *pGVar2 = *pGVar3;
+      lVar4 = lVar4 + -1;
+    } while (lVar4 != 0);
+    pGVar3 = &GStack_44;
+    pGVar2 = &param_1[-1].laf;
+    lVar4 = 6;
+    do {
+      pGVar3 = pGVar3 + 1;
+      pGVar2 = pGVar2 + 1;
+      *pGVar2 = *pGVar3;
       lVar4 = lVar4 + -1;
     } while (lVar4 != 0);
   }
-  __restgprlr_28();
+  bVar1 = (*param_4)(param_3,param_2);
+  if (bVar1) {
+    pGVar2 = &GStack_44;
+    pGVar3 = &param_3[-1].laf;
+    lVar4 = 6;
+    do {
+      pGVar3 = pGVar3 + 1;
+      pGVar2 = pGVar2 + 1;
+      *pGVar2 = *pGVar3;
+      lVar4 = lVar4 + -1;
+    } while (lVar4 != 0);
+    pGVar3 = &param_2[-1].laf;
+    pGVar2 = &param_3[-1].laf;
+    lVar4 = 6;
+    do {
+      pGVar3 = pGVar3 + 1;
+      pGVar2 = pGVar2 + 1;
+      *pGVar2 = *pGVar3;
+      lVar4 = lVar4 + -1;
+    } while (lVar4 != 0);
+    pGVar3 = &GStack_44;
+    pGVar2 = &param_2[-1].laf;
+    lVar4 = 6;
+    do {
+      pGVar3 = pGVar3 + 1;
+      pGVar2 = pGVar2 + 1;
+      *pGVar2 = *pGVar3;
+      lVar4 = lVar4 + -1;
+    } while (lVar4 != 0);
+  }
+  bVar1 = (*param_4)(param_2,param_1);
+  if (bVar1) {
+    pGVar2 = &GStack_44;
+    pGVar3 = &param_2[-1].laf;
+    lVar4 = 6;
+    do {
+      pGVar3 = pGVar3 + 1;
+      pGVar2 = pGVar2 + 1;
+      *pGVar2 = *pGVar3;
+      lVar4 = lVar4 + -1;
+    } while (lVar4 != 0);
+    pGVar3 = &param_1[-1].laf;
+    pGVar2 = &param_2[-1].laf;
+    lVar4 = 6;
+    do {
+      pGVar3 = pGVar3 + 1;
+      pGVar2 = pGVar2 + 1;
+      *pGVar2 = *pGVar3;
+      lVar4 = lVar4 + -1;
+    } while (lVar4 != 0);
+    pGVar3 = &GStack_44;
+    pGVar2 = &param_1[-1].laf;
+    lVar4 = 6;
+    do {
+      pGVar3 = pGVar3 + 1;
+      pGVar2 = pGVar2 + 1;
+      *pGVar2 = *pGVar3;
+      lVar4 = lVar4 + -1;
+    } while (lVar4 != 0);
+  }
   return;
 }
 
 
 // 8273BB58  _Median<GfxSurface_*,bool_(__cdecl*)(GfxSurface_const_&,GfxSurface_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3695)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void std::_Median<GfxSurface_*,bool_(__cdecl*)(GfxSurface_const_&,GfxSurface_const_&)>
@@ -1632,20 +1563,19 @@ void std::_Median<GfxSurface_*,bool_(__cdecl*)(GfxSurface_const_&,GfxSurface_con
   int iVar1;
   int iVar2;
   GfxSurface *pGVar3;
-  GfxSurface *pGVar4;
-  uint uVar6;
-  ulonglong uVar5;
+  uint uVar5;
+  ulonglong uVar4;
   
-  pGVar3 = (GfxSurface *)__savegprlr_26(param_1);
-  iVar1 = ((int)param_3 - (int)pGVar3) / 0x18;
+  iVar1 = ((int)param_3 - (int)param_1) / 0x18;
   if (0x28 < iVar1) {
-    uVar6 = iVar1 + 1;
-    uVar5 = (longlong)((int)uVar6 >> 3) + (ulonglong)((int)uVar6 < 0 && (uVar6 & 7) != 0);
-    iVar2 = (int)((uVar5 + (uVar5 & 0x7fffffff) * 2 & 0xffffffff) << 4);
-    iVar1 = (int)((uVar5 + (uVar5 & 0x7fffffff) * 2 & 0x1fffffff) << 3);
-    pGVar4 = (GfxSurface *)((int)&(pGVar3->tris).vertexLayerData + iVar1);
+    uVar5 = iVar1 + 1;
+    uVar4 = (longlong)((int)uVar5 >> 3) + (ulonglong)((int)uVar5 < 0 && (uVar5 & 7) != 0);
+    iVar2 = (int)((uVar4 + (uVar4 & 0x7fffffff) * 2 & 0xffffffff) << 4);
+    iVar1 = (int)((uVar4 + (uVar4 & 0x7fffffff) * 2 & 0x1fffffff) << 3);
+    pGVar3 = (GfxSurface *)((int)&(param_1->tris).vertexLayerData + iVar1);
     _Med3<GfxSurface_*,bool_(__cdecl*)(GfxSurface_const_&,GfxSurface_const_&)>
-              (pGVar3,pGVar4,(GfxSurface *)((int)&(pGVar3->tris).vertexLayerData + iVar2),param_4);
+              (param_1,pGVar3,(GfxSurface *)((int)&(param_1->tris).vertexLayerData + iVar2),param_4)
+    ;
     _Med3<GfxSurface_*,bool_(__cdecl*)(GfxSurface_const_&,GfxSurface_const_&)>
               ((GfxSurface *)((int)param_2 - iVar1),param_2,
                (GfxSurface *)((int)&(param_2->tris).vertexLayerData + iVar1),param_4);
@@ -1653,19 +1583,19 @@ void std::_Median<GfxSurface_*,bool_(__cdecl*)(GfxSurface_const_&,GfxSurface_con
               ((GfxSurface *)((int)param_3 - iVar2),(GfxSurface *)((int)param_3 - iVar1),param_3,
                param_4);
     _Med3<GfxSurface_*,bool_(__cdecl*)(GfxSurface_const_&,GfxSurface_const_&)>
-              (pGVar4,param_2,(GfxSurface *)((int)param_3 - iVar1),param_4);
-    __restgprlr_26();
+              (pGVar3,param_2,(GfxSurface *)((int)param_3 - iVar1),param_4);
     return;
   }
   _Med3<GfxSurface_*,bool_(__cdecl*)(GfxSurface_const_&,GfxSurface_const_&)>
-            (pGVar3,param_2,param_3,param_4);
-  __restgprlr_26();
+            (param_1,param_2,param_3,param_4);
   return;
 }
 
 
 // 8273BD70  _Unguarded_partition<GfxSurface_*,bool_(__cdecl*)(GfxSurface_const_&,GfxSurface_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3712)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 pair<GfxSurface_*,GfxSurface_*>
@@ -1676,327 +1606,302 @@ std::_Unguarded_partition<GfxSurface_*,bool_(__cdecl*)(GfxSurface_const_&,GfxSur
 {
   uint uVar1;
   GfxSurface *pGVar2;
-  undefined4 *puVar4;
-  bool bVar5;
-  pair<GfxSurface_*,GfxSurface_*> pVar3;
-  ulonglong uVar6;
-  ulonglong uVar7;
+  bool bVar3;
   _func___cdecl_bool_GfxSurface_ptr_GfxSurface_ptr *in_r6;
-  longlong lVar8;
-  ulonglong uVar9;
-  ulonglong uVar10;
-  undefined4 *puVar11;
-  ulonglong uVar12;
-  ulonglong uVar13;
-  ulonglong uVar14;
-  ulonglong uVar15;
-  ulonglong uVar16;
-  ulonglong uVar17;
-  longlong lVar18;
-  longlong lVar19;
-  undefined4 uStack_134;
-  undefined4 local_130 [7];
-  undefined4 uStack_114;
-  undefined4 local_110 [7];
-  undefined4 uStack_f4;
-  undefined4 local_f0 [7];
-  undefined4 uStack_d4;
-  undefined4 local_d0 [7];
-  undefined4 uStack_b4;
-  undefined4 local_b0 [7];
-  undefined4 uStack_94;
-  undefined4 local_90 [7];
-  undefined4 uStack_74;
-  undefined4 local_70 [28];
+  GfxSurfaceLightingAndFlags *pGVar4;
+  GfxSurfaceLightingAndFlags *pGVar5;
+  GfxSurface *pGVar6;
+  GfxSurface *pGVar7;
+  GfxSurface *pGVar8;
+  GfxSurface *pGVar9;
+  GfxSurface *pGVar10;
+  GfxSurface *pGVar11;
+  longlong lVar12;
+  GfxSurfaceLightingAndFlags GStack_134;
+  GfxSurfaceLightingAndFlags local_130 [7];
+  GfxSurfaceLightingAndFlags GStack_114;
+  GfxSurfaceLightingAndFlags local_110 [7];
+  GfxSurfaceLightingAndFlags GStack_f4;
+  GfxSurfaceLightingAndFlags local_f0 [7];
+  GfxSurfaceLightingAndFlags GStack_d4;
+  GfxSurfaceLightingAndFlags local_d0 [7];
+  GfxSurfaceLightingAndFlags GStack_b4;
+  GfxSurfaceLightingAndFlags local_b0 [7];
+  GfxSurfaceLightingAndFlags GStack_94;
+  GfxSurfaceLightingAndFlags local_90 [7];
+  GfxSurfaceLightingAndFlags GStack_74;
+  GfxSurfaceLightingAndFlags local_70 [28];
   
-  uVar7 = (ulonglong)(int)param_3;
-  uVar6 = (ulonglong)(int)param_2;
-  puVar4 = (undefined4 *)__savegprlr_23(param_1);
-  uVar1 = ((int)uVar7 - (int)(GfxSurface *)uVar6) / 0x18;
-  uVar9 = (longlong)((int)uVar1 >> 1) + (ulonglong)((int)uVar1 < 0 && (uVar1 & 1) != 0);
-  uVar16 = (uVar9 + (uVar9 & 0x7fffffff) * 2 & 0x1fffffff) * 8 + uVar6;
+  uVar1 = ((int)param_3 - (int)param_2) / 0x18;
+  pGVar10 = param_2 + ((int)uVar1 >> 1) + (uint)((int)uVar1 < 0 && (uVar1 & 1) != 0);
   _Median<GfxSurface_*,bool_(__cdecl*)(GfxSurface_const_&,GfxSurface_const_&)>
-            ((GfxSurface *)uVar6,(GfxSurface *)uVar16,(GfxSurface *)((int)uVar7 + -0x18),in_r6);
-  uVar9 = uVar16 + 0x18;
-  if ((uVar6 & 0xffffffff) < (uVar16 & 0xffffffff)) {
-    do {
-      uVar17 = uVar16 - 0x18;
-      bVar5 = (*in_r6)((GfxSurface *)uVar17,(GfxSurface *)uVar16);
-      if ((bVar5) || (bVar5 = (*in_r6)((GfxSurface *)uVar16,(GfxSurface *)uVar17), bVar5)) break;
-      uVar16 = uVar17;
-    } while ((uVar6 & 0xffffffff) < (uVar17 & 0xffffffff));
-  }
-  uVar17 = uVar16;
-  uVar13 = uVar9;
-  if ((uVar9 & 0xffffffff) < (uVar7 & 0xffffffff)) {
-    do {
-      bVar5 = (*in_r6)((GfxSurface *)uVar9,(GfxSurface *)uVar16);
-      uVar13 = uVar9;
-      if ((bVar5) || (bVar5 = (*in_r6)((GfxSurface *)uVar16,(GfxSurface *)uVar9), bVar5)) break;
-      uVar9 = uVar9 + 0x18;
-      uVar13 = uVar9;
-    } while ((uVar9 & 0xffffffff) < (uVar7 & 0xffffffff));
+            (param_2,pGVar10,(GfxSurface *)(param_3 + -0x18),in_r6);
+  pGVar11 = pGVar10;
+  while (pGVar9 = pGVar11, param_2 < pGVar9) {
+    pGVar11 = pGVar9 + -1;
+    bVar3 = (*in_r6)(pGVar11,pGVar9);
+    if ((bVar3) || (bVar3 = (*in_r6)(pGVar9,pGVar11), bVar3)) break;
   }
   do {
-    uVar12 = uVar9;
-    uVar14 = uVar13;
-    if ((uVar13 & 0xffffffff) < (uVar7 & 0xffffffff)) {
-      do {
-        bVar5 = (*in_r6)((GfxSurface *)uVar16,(GfxSurface *)uVar13);
-        uVar12 = uVar9;
-        if (!bVar5) {
-          bVar5 = (*in_r6)((GfxSurface *)uVar13,(GfxSurface *)uVar16);
-          uVar14 = uVar13;
-          if (bVar5) break;
-          puVar11 = &uStack_114;
-          uVar12 = uVar9 + 0x18;
-          lVar8 = uVar9 - 4;
-          lVar18 = 6;
-          do {
-            lVar8 = lVar8 + 4;
-            puVar11 = puVar11 + 1;
-            *puVar11 = *(undefined4 *)lVar8;
-            lVar18 = lVar18 + -1;
-          } while (lVar18 != 0);
-          lVar8 = uVar13 - 4;
-          lVar18 = uVar9 - 4;
-          lVar19 = 6;
-          do {
-            lVar8 = lVar8 + 4;
-            lVar18 = lVar18 + 4;
-            *(undefined4 *)lVar18 = *(undefined4 *)lVar8;
-            lVar19 = lVar19 + -1;
-          } while (lVar19 != 0);
-          puVar11 = &uStack_114;
-          lVar8 = uVar13 - 4;
-          lVar18 = 6;
-          do {
-            puVar11 = puVar11 + 1;
-            lVar8 = lVar8 + 4;
-            *(undefined4 *)lVar8 = *puVar11;
-            lVar18 = lVar18 + -1;
-          } while (lVar18 != 0);
-        }
-        uVar13 = uVar13 + 0x18;
-        uVar9 = uVar12;
-        uVar14 = uVar13;
-      } while ((uVar13 & 0xffffffff) < (uVar7 & 0xffffffff));
-    }
-    bVar5 = (uVar17 & 0xffffffff) == (uVar6 & 0xffffffff);
-    uVar15 = uVar16;
-    uVar9 = uVar17;
-    if ((uVar6 & 0xffffffff) < (uVar17 & 0xffffffff)) {
-      do {
-        pGVar2 = (GfxSurface *)(uVar9 - 0x18);
-        bVar5 = (*in_r6)(pGVar2,(GfxSurface *)uVar16);
-        uVar15 = uVar16;
-        if (!bVar5) {
-          bVar5 = (*in_r6)((GfxSurface *)uVar16,pGVar2);
-          if (bVar5) break;
-          uVar15 = uVar16 - 0x18;
-          puVar11 = &uStack_94;
-          lVar8 = uVar16 - 0x1c;
-          lVar18 = 6;
-          do {
-            lVar8 = lVar8 + 4;
-            puVar11 = puVar11 + 1;
-            *puVar11 = *(undefined4 *)lVar8;
-            lVar18 = lVar18 + -1;
-          } while (lVar18 != 0);
-          lVar8 = uVar9 - 0x1c;
-          lVar18 = uVar16 - 0x1c;
-          lVar19 = 6;
-          do {
-            lVar8 = lVar8 + 4;
-            lVar18 = lVar18 + 4;
-            *(undefined4 *)lVar18 = *(undefined4 *)lVar8;
-            lVar19 = lVar19 + -1;
-          } while (lVar19 != 0);
-          puVar11 = &uStack_94;
-          lVar8 = uVar9 - 0x1c;
-          lVar18 = 6;
-          do {
-            puVar11 = puVar11 + 1;
-            lVar8 = lVar8 + 4;
-            *(undefined4 *)lVar8 = *puVar11;
-            lVar18 = lVar18 + -1;
-          } while (lVar18 != 0);
-        }
-        uVar17 = uVar17 - 0x18;
-        uVar16 = uVar15;
-        uVar9 = uVar9 - 0x18;
-      } while ((uVar6 & 0xffffffff) < (uVar17 & 0xffffffff));
-      bVar5 = (uVar17 & 0xffffffff) == (uVar6 & 0xffffffff);
-    }
-    if (bVar5) {
-      if ((uVar14 & 0xffffffff) == (uVar7 & 0xffffffff)) {
-        *puVar4 = (int)uVar15;
-        puVar4[1] = (int)uVar12;
-        pVar3 = (pair<GfxSurface_*,GfxSurface_*>)__restgprlr_23(puVar4);
-        return pVar3;
+    pGVar10 = pGVar10 + 1;
+    pGVar11 = pGVar10;
+    pGVar6 = pGVar9;
+    if (param_3 <= pGVar10) break;
+    bVar3 = (*in_r6)(pGVar10,pGVar9);
+    if ((bVar3) || (bVar3 = (*in_r6)(pGVar9,pGVar10), bVar3)) break;
+  } while( true );
+joined_r0x8273be70:
+  pGVar2 = pGVar9;
+  pGVar8 = pGVar6;
+  if (param_3 <= pGVar11) {
+joined_r0x8273bf1c:
+    for (; param_2 < pGVar6; pGVar6 = pGVar6 + -1) {
+      pGVar7 = pGVar8 + -1;
+      bVar3 = (*in_r6)(pGVar7,pGVar2);
+      pGVar9 = pGVar2;
+      if (!bVar3) {
+        bVar3 = (*in_r6)(pGVar2,pGVar7);
+        if (bVar3) break;
+        pGVar9 = pGVar2 + -1;
+        pGVar4 = &GStack_94;
+        pGVar5 = &pGVar2[-2].laf;
+        lVar12 = 6;
+        do {
+          pGVar5 = pGVar5 + 1;
+          pGVar4 = pGVar4 + 1;
+          *pGVar4 = *pGVar5;
+          lVar12 = lVar12 + -1;
+        } while (lVar12 != 0);
+        pGVar5 = &pGVar8[-2].laf;
+        pGVar4 = &pGVar2[-2].laf;
+        lVar12 = 6;
+        do {
+          pGVar5 = pGVar5 + 1;
+          pGVar4 = pGVar4 + 1;
+          *pGVar4 = *pGVar5;
+          lVar12 = lVar12 + -1;
+        } while (lVar12 != 0);
+        pGVar5 = &GStack_94;
+        pGVar4 = &pGVar8[-2].laf;
+        lVar12 = 6;
+        do {
+          pGVar5 = pGVar5 + 1;
+          pGVar4 = pGVar4 + 1;
+          *pGVar4 = *pGVar5;
+          lVar12 = lVar12 + -1;
+        } while (lVar12 != 0);
       }
-      if ((uVar12 & 0xffffffff) != (uVar14 & 0xffffffff)) {
-        puVar11 = &uStack_d4;
-        lVar8 = uVar15 - 4;
-        lVar18 = 6;
-        do {
-          lVar8 = lVar8 + 4;
-          puVar11 = puVar11 + 1;
-          *puVar11 = *(undefined4 *)lVar8;
-          lVar18 = lVar18 + -1;
-        } while (lVar18 != 0);
-        lVar8 = uVar12 - 4;
-        lVar18 = uVar15 - 4;
-        lVar19 = 6;
-        do {
-          lVar8 = lVar8 + 4;
-          lVar18 = lVar18 + 4;
-          *(undefined4 *)lVar18 = *(undefined4 *)lVar8;
-          lVar19 = lVar19 + -1;
-        } while (lVar19 != 0);
-        puVar11 = &uStack_d4;
-        lVar8 = uVar12 - 4;
-        lVar18 = 6;
-        do {
-          puVar11 = puVar11 + 1;
-          lVar8 = lVar8 + 4;
-          *(undefined4 *)lVar8 = *puVar11;
-          lVar18 = lVar18 + -1;
-        } while (lVar18 != 0);
-      }
-      puVar11 = &uStack_134;
-      uVar9 = uVar12 + 0x18;
-      lVar18 = 6;
-      uVar16 = uVar15 + 0x18;
-      uVar13 = uVar14 + 0x18;
-      lVar8 = uVar15 - 4;
-      do {
-        lVar8 = lVar8 + 4;
-        puVar11 = puVar11 + 1;
-        *puVar11 = *(undefined4 *)lVar8;
-        lVar18 = lVar18 + -1;
-      } while (lVar18 != 0);
-      lVar8 = uVar14 - 4;
-      lVar18 = uVar15 - 4;
-      lVar19 = 6;
-      do {
-        lVar8 = lVar8 + 4;
-        lVar18 = lVar18 + 4;
-        *(undefined4 *)lVar18 = *(undefined4 *)lVar8;
-        lVar19 = lVar19 + -1;
-      } while (lVar19 != 0);
-      puVar11 = &uStack_134;
-      lVar8 = uVar14 - 4;
-      lVar18 = 6;
-      do {
-        puVar11 = puVar11 + 1;
-        lVar8 = lVar8 + 4;
-        *(undefined4 *)lVar8 = *puVar11;
-        lVar18 = lVar18 + -1;
-      } while (lVar18 != 0);
+      pGVar2 = pGVar9;
+      pGVar8 = pGVar7;
     }
-    else if ((uVar14 & 0xffffffff) == (uVar7 & 0xffffffff)) {
-      uVar10 = uVar17 - 0x18;
-      uVar16 = uVar15 - 0x18;
-      if ((uVar10 & 0xffffffff) != (uVar16 & 0xffffffff)) {
-        puVar11 = &uStack_f4;
-        lVar8 = uVar17 - 0x1c;
-        lVar18 = 6;
-        do {
-          lVar8 = lVar8 + 4;
-          puVar11 = puVar11 + 1;
-          *puVar11 = *(undefined4 *)lVar8;
-          lVar18 = lVar18 + -1;
-        } while (lVar18 != 0);
-        lVar8 = uVar15 - 0x1c;
-        lVar18 = uVar17 - 0x1c;
-        lVar19 = 6;
-        do {
-          lVar8 = lVar8 + 4;
-          lVar18 = lVar18 + 4;
-          *(undefined4 *)lVar18 = *(undefined4 *)lVar8;
-          lVar19 = lVar19 + -1;
-        } while (lVar19 != 0);
-        puVar11 = &uStack_f4;
-        lVar8 = uVar15 - 0x1c;
-        lVar18 = 6;
-        do {
-          puVar11 = puVar11 + 1;
-          lVar8 = lVar8 + 4;
-          *(undefined4 *)lVar8 = *puVar11;
-          lVar18 = lVar18 + -1;
-        } while (lVar18 != 0);
+    if (pGVar6 == param_2) {
+      if (pGVar11 == (GfxSurface *)param_3) {
+        (param_1->tris).vertexLayerData = (uint)pGVar2;
+        (param_1->tris).firstVertex = (uint)pGVar10;
+        return (pair<GfxSurface_*,GfxSurface_*>)(longlong)(int)param_1;
       }
-      uVar9 = uVar12 - 0x18;
-      puVar11 = &uStack_b4;
-      lVar8 = uVar15 - 0x1c;
-      lVar18 = 6;
+      if (pGVar10 != pGVar11) {
+        pGVar4 = &GStack_d4;
+        pGVar5 = &pGVar2[-1].laf;
+        lVar12 = 6;
+        do {
+          pGVar5 = pGVar5 + 1;
+          pGVar4 = pGVar4 + 1;
+          *pGVar4 = *pGVar5;
+          lVar12 = lVar12 + -1;
+        } while (lVar12 != 0);
+        pGVar5 = &pGVar10[-1].laf;
+        pGVar4 = &pGVar2[-1].laf;
+        lVar12 = 6;
+        do {
+          pGVar5 = pGVar5 + 1;
+          pGVar4 = pGVar4 + 1;
+          *pGVar4 = *pGVar5;
+          lVar12 = lVar12 + -1;
+        } while (lVar12 != 0);
+        pGVar5 = &GStack_d4;
+        pGVar4 = &pGVar10[-1].laf;
+        lVar12 = 6;
+        do {
+          pGVar5 = pGVar5 + 1;
+          pGVar4 = pGVar4 + 1;
+          *pGVar4 = *pGVar5;
+          lVar12 = lVar12 + -1;
+        } while (lVar12 != 0);
+      }
+      pGVar4 = &GStack_134;
+      pGVar10 = pGVar10 + 1;
+      lVar12 = 6;
+      pGVar9 = pGVar2 + 1;
+      pGVar8 = pGVar11 + 1;
+      pGVar5 = &pGVar2[-1].laf;
       do {
-        lVar8 = lVar8 + 4;
-        puVar11 = puVar11 + 1;
-        *puVar11 = *(undefined4 *)lVar8;
-        lVar18 = lVar18 + -1;
-      } while (lVar18 != 0);
-      lVar8 = uVar12 - 0x1c;
-      lVar18 = uVar15 - 0x1c;
-      lVar19 = 6;
+        pGVar5 = pGVar5 + 1;
+        pGVar4 = pGVar4 + 1;
+        *pGVar4 = *pGVar5;
+        lVar12 = lVar12 + -1;
+      } while (lVar12 != 0);
+      pGVar5 = &pGVar11[-1].laf;
+      pGVar4 = &pGVar2[-1].laf;
+      lVar12 = 6;
       do {
-        lVar8 = lVar8 + 4;
-        lVar18 = lVar18 + 4;
-        *(undefined4 *)lVar18 = *(undefined4 *)lVar8;
-        lVar19 = lVar19 + -1;
-      } while (lVar19 != 0);
-      puVar11 = &uStack_b4;
-      lVar8 = uVar12 - 0x1c;
-      lVar18 = 6;
+        pGVar5 = pGVar5 + 1;
+        pGVar4 = pGVar4 + 1;
+        *pGVar4 = *pGVar5;
+        lVar12 = lVar12 + -1;
+      } while (lVar12 != 0);
+      pGVar5 = &GStack_134;
+      pGVar4 = &pGVar11[-1].laf;
+      lVar12 = 6;
       do {
-        puVar11 = puVar11 + 1;
-        lVar8 = lVar8 + 4;
-        *(undefined4 *)lVar8 = *puVar11;
-        lVar18 = lVar18 + -1;
-        uVar17 = uVar10;
-        uVar13 = uVar14;
-      } while (lVar18 != 0);
+        pGVar5 = pGVar5 + 1;
+        pGVar4 = pGVar4 + 1;
+        *pGVar4 = *pGVar5;
+        lVar12 = lVar12 + -1;
+        pGVar11 = pGVar8;
+      } while (lVar12 != 0);
+    }
+    else if (pGVar11 == (GfxSurface *)param_3) {
+      pGVar8 = pGVar6 + -1;
+      pGVar9 = pGVar2 + -1;
+      if (pGVar8 != pGVar9) {
+        pGVar4 = &GStack_f4;
+        pGVar5 = &pGVar6[-2].laf;
+        lVar12 = 6;
+        do {
+          pGVar5 = pGVar5 + 1;
+          pGVar4 = pGVar4 + 1;
+          *pGVar4 = *pGVar5;
+          lVar12 = lVar12 + -1;
+        } while (lVar12 != 0);
+        pGVar5 = &pGVar2[-2].laf;
+        pGVar4 = &pGVar6[-2].laf;
+        lVar12 = 6;
+        do {
+          pGVar5 = pGVar5 + 1;
+          pGVar4 = pGVar4 + 1;
+          *pGVar4 = *pGVar5;
+          lVar12 = lVar12 + -1;
+        } while (lVar12 != 0);
+        pGVar5 = &GStack_f4;
+        pGVar4 = &pGVar2[-2].laf;
+        lVar12 = 6;
+        do {
+          pGVar5 = pGVar5 + 1;
+          pGVar4 = pGVar4 + 1;
+          *pGVar4 = *pGVar5;
+          lVar12 = lVar12 + -1;
+        } while (lVar12 != 0);
+      }
+      pGVar7 = pGVar10 + -1;
+      pGVar4 = &GStack_b4;
+      pGVar5 = &pGVar2[-2].laf;
+      lVar12 = 6;
+      do {
+        pGVar5 = pGVar5 + 1;
+        pGVar4 = pGVar4 + 1;
+        *pGVar4 = *pGVar5;
+        lVar12 = lVar12 + -1;
+      } while (lVar12 != 0);
+      pGVar5 = &pGVar10[-2].laf;
+      pGVar4 = &pGVar2[-2].laf;
+      lVar12 = 6;
+      do {
+        pGVar5 = pGVar5 + 1;
+        pGVar4 = pGVar4 + 1;
+        *pGVar4 = *pGVar5;
+        lVar12 = lVar12 + -1;
+      } while (lVar12 != 0);
+      pGVar5 = &GStack_b4;
+      pGVar4 = &pGVar10[-2].laf;
+      lVar12 = 6;
+      do {
+        pGVar5 = pGVar5 + 1;
+        pGVar4 = pGVar4 + 1;
+        *pGVar4 = *pGVar5;
+        lVar12 = lVar12 + -1;
+        pGVar10 = pGVar7;
+        pGVar6 = pGVar8;
+      } while (lVar12 != 0);
     }
     else {
-      puVar11 = &uStack_74;
-      lVar8 = uVar14 - 4;
-      lVar18 = 6;
+      pGVar4 = &GStack_74;
+      pGVar5 = &pGVar11[-1].laf;
+      lVar12 = 6;
       do {
-        lVar8 = lVar8 + 4;
-        puVar11 = puVar11 + 1;
-        *puVar11 = *(undefined4 *)lVar8;
-        lVar18 = lVar18 + -1;
-      } while (lVar18 != 0);
-      lVar8 = uVar17 - 0x1c;
-      lVar18 = uVar14 - 4;
-      lVar19 = 6;
+        pGVar5 = pGVar5 + 1;
+        pGVar4 = pGVar4 + 1;
+        *pGVar4 = *pGVar5;
+        lVar12 = lVar12 + -1;
+      } while (lVar12 != 0);
+      pGVar5 = &pGVar6[-2].laf;
+      pGVar4 = &pGVar11[-1].laf;
+      lVar12 = 6;
       do {
-        lVar8 = lVar8 + 4;
-        lVar18 = lVar18 + 4;
-        *(undefined4 *)lVar18 = *(undefined4 *)lVar8;
-        lVar19 = lVar19 + -1;
-      } while (lVar19 != 0);
-      puVar11 = &uStack_74;
-      lVar8 = uVar17 - 0x1c;
-      lVar18 = 6;
+        pGVar5 = pGVar5 + 1;
+        pGVar4 = pGVar4 + 1;
+        *pGVar4 = *pGVar5;
+        lVar12 = lVar12 + -1;
+      } while (lVar12 != 0);
+      pGVar5 = &GStack_74;
+      pGVar4 = &pGVar6[-2].laf;
+      lVar12 = 6;
       do {
-        puVar11 = puVar11 + 1;
-        lVar8 = lVar8 + 4;
-        *(undefined4 *)lVar8 = *puVar11;
-        lVar18 = lVar18 + -1;
-      } while (lVar18 != 0);
-      uVar17 = uVar17 - 0x18;
-      uVar9 = uVar12;
-      uVar13 = uVar14 + 0x18;
-      uVar16 = uVar15;
+        pGVar5 = pGVar5 + 1;
+        pGVar4 = pGVar4 + 1;
+        *pGVar4 = *pGVar5;
+        lVar12 = lVar12 + -1;
+      } while (lVar12 != 0);
+      pGVar11 = pGVar11 + 1;
+      pGVar9 = pGVar2;
+      pGVar6 = pGVar6 + -1;
     }
-  } while( true );
+    goto joined_r0x8273be70;
+  }
+  bVar3 = (*in_r6)(pGVar9,pGVar11);
+  pGVar7 = pGVar10;
+  if (!bVar3) {
+    bVar3 = (*in_r6)(pGVar11,pGVar9);
+    if (bVar3) goto joined_r0x8273bf1c;
+    pGVar4 = &GStack_114;
+    pGVar7 = pGVar10 + 1;
+    pGVar5 = &pGVar10[-1].laf;
+    lVar12 = 6;
+    do {
+      pGVar5 = pGVar5 + 1;
+      pGVar4 = pGVar4 + 1;
+      *pGVar4 = *pGVar5;
+      lVar12 = lVar12 + -1;
+    } while (lVar12 != 0);
+    pGVar5 = &pGVar11[-1].laf;
+    pGVar4 = &pGVar10[-1].laf;
+    lVar12 = 6;
+    do {
+      pGVar5 = pGVar5 + 1;
+      pGVar4 = pGVar4 + 1;
+      *pGVar4 = *pGVar5;
+      lVar12 = lVar12 + -1;
+    } while (lVar12 != 0);
+    pGVar5 = &GStack_114;
+    pGVar4 = &pGVar11[-1].laf;
+    lVar12 = 6;
+    do {
+      pGVar5 = pGVar5 + 1;
+      pGVar4 = pGVar4 + 1;
+      *pGVar4 = *pGVar5;
+      lVar12 = lVar12 + -1;
+    } while (lVar12 != 0);
+  }
+  pGVar10 = pGVar7;
+  pGVar11 = pGVar11 + 1;
+  goto joined_r0x8273be70;
 }
 
 
 // 8273C288  _Sort<GfxSurface_*,int,bool_(__cdecl*)(GfxSurface_const_&,GfxSurface_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3771)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void std::_Sort<GfxSurface_*,int,bool_(__cdecl*)(GfxSurface_const_&,GfxSurface_const_&)>
@@ -2005,66 +1910,53 @@ void std::_Sort<GfxSurface_*,int,bool_(__cdecl*)(GfxSurface_const_&,GfxSurface_c
 
 {
   uint uVar1;
-  GfxSurface *pGVar2;
-  ulonglong uVar3;
+  int iVar2;
+  uint uVar3;
   GfxSurface *pGVar4;
-  int iVar6;
-  ulonglong uVar5;
-  ulonglong uVar7;
-  int iVar8;
   GfxSurface local_50 [3];
   
-  uVar5 = (ulonglong)param_3;
-  uVar3 = (ulonglong)(int)param_2;
-  pGVar2 = (GfxSurface *)__savegprlr_25(param_1);
-  pGVar4 = (GfxSurface *)uVar3;
-  iVar6 = (int)pGVar4 - (int)pGVar2;
+  iVar2 = (int)param_2 - (int)param_1;
   do {
-    iVar6 = iVar6 / 0x18;
-    if (iVar6 < 0x21) {
+    iVar2 = iVar2 / 0x18;
+    if (iVar2 < 0x21) {
 LAB_8273c344:
-      if (1 < iVar6) {
+      if (1 < iVar2) {
         _Insertion_sort1<GfxSurface_*,bool_(__cdecl*)(GfxSurface_const_&,GfxSurface_const_&),GfxSurface>
-                  (pGVar2,pGVar4,param_4,(GfxSurface *)0x0);
+                  (param_1,param_2,param_4,(GfxSurface *)0x0);
       }
-      __restgprlr_25();
       return;
     }
-    iVar8 = (int)uVar5;
-    pGVar4 = (GfxSurface *)uVar3;
-    if (iVar8 < 1) {
-      if (0x20 < iVar6) {
-        if (1 < iVar6) {
+    if (param_3 < 1) {
+      if (0x20 < iVar2) {
+        if (1 < iVar2) {
           _Make_heap<GfxSurface_*,int,GfxSurface,bool_(__cdecl*)(GfxSurface_const_&,GfxSurface_const_&)>
-                    (pGVar2,pGVar4,param_4,(int *)0x0,(GfxSurface *)0x0);
+                    (param_1,param_2,param_4,(int *)0x0,(GfxSurface *)0x0);
         }
         _Sort_heap<GfxSurface_*,bool_(__cdecl*)(GfxSurface_const_&,GfxSurface_const_&)>
-                  (pGVar2,pGVar4,param_4);
-        __restgprlr_25();
+                  (param_1,param_2,param_4);
         return;
       }
       goto LAB_8273c344;
     }
     _Unguarded_partition<GfxSurface_*,bool_(__cdecl*)(GfxSurface_const_&,GfxSurface_const_&)>
-              (local_50,pGVar2,(_func___cdecl_bool_GfxSurface_ptr_GfxSurface_ptr *)pGVar4);
+              (local_50,param_1,(_func___cdecl_bool_GfxSurface_ptr_GfxSurface_ptr *)param_2);
     uVar1 = local_50[0].tris.firstVertex;
-    uVar5 = (longlong)(iVar8 >> 1) + (ulonglong)(iVar8 < 0 && (uVar5 & 1) != 0);
-    uVar5 = (longlong)((int)uVar5 >> 1) + (ulonglong)((int)uVar5 < 0 && (uVar5 & 1) != 0) + uVar5;
-    uVar7 = (ulonglong)local_50[0].tris.vertexLayerData;
-    if ((int)(local_50[0].tris.vertexLayerData - (int)pGVar2) / 0x18 <
-        (int)((int)pGVar4 - local_50[0].tris.firstVertex) / 0x18) {
+    pGVar4 = (GfxSurface *)local_50[0].tris.vertexLayerData;
+    uVar3 = (param_3 >> 1) + (uint)(param_3 < 0 && (param_3 & 1U) != 0);
+    param_3 = ((int)uVar3 >> 1) + (uint)((int)uVar3 < 0 && (uVar3 & 1) != 0) + uVar3;
+    if ((int)(local_50[0].tris.vertexLayerData - (int)param_1) / 0x18 <
+        (int)((int)param_2 - local_50[0].tris.firstVertex) / 0x18) {
       _Sort<GfxSurface_*,int,bool_(__cdecl*)(GfxSurface_const_&,GfxSurface_const_&)>
-                (pGVar2,(GfxSurface *)local_50[0].tris.vertexLayerData,(int)uVar5,param_4);
-      uVar7 = uVar3;
-      pGVar2 = (GfxSurface *)uVar1;
+                (param_1,(GfxSurface *)local_50[0].tris.vertexLayerData,param_3,param_4);
+      pGVar4 = param_2;
+      param_1 = (GfxSurface *)uVar1;
     }
     else {
       _Sort<GfxSurface_*,int,bool_(__cdecl*)(GfxSurface_const_&,GfxSurface_const_&)>
-                ((GfxSurface *)local_50[0].tris.firstVertex,pGVar4,(int)uVar5,param_4);
+                ((GfxSurface *)local_50[0].tris.firstVertex,param_2,param_3,param_4);
     }
-    pGVar4 = (GfxSurface *)uVar7;
-    iVar6 = (int)pGVar4 - (int)pGVar2;
-    uVar3 = uVar7;
+    iVar2 = (int)pGVar4 - (int)param_1;
+    param_2 = pGVar4;
   } while( true );
 }
 

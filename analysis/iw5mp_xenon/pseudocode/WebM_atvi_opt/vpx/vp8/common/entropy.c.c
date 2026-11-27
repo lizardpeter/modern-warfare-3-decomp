@@ -80,33 +80,33 @@ void init_bit_trees(void)
 
 // 82811A28  vp8_default_coef_probs  (WebM_atvi_opt/vpx/vp8/common/entropy.c:134)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
+
 void vp8_default_coef_probs(VP8Common *param_1)
 
 {
-  int iVar1;
-  longlong lVar2;
+  longlong lVar1;
+  int iVar2;
   int iVar3;
-  int iVar4;
   uint auStack_a0 [40];
   
-  iVar1 = __savegprlr_25(param_1);
-  iVar3 = 0;
+  iVar2 = 0;
   do {
-    lVar2 = 8;
+    lVar1 = 8;
     do {
-      iVar4 = 0;
+      iVar3 = 0;
       do {
         vp8_tree_probs_from_distribution
                   (0xc,vp8_coef_encodings,&vp8_coef_tree,
-                   (uchar *)((iVar3 + iVar4) * 0xb + iVar1 + 0x67ee),(uint (*) [2])auStack_a0,
-                   default_coef_counts[0][0][iVar3 + iVar4],0x100,1);
-        iVar4 = iVar4 + 1;
-      } while (iVar4 < 3);
-      lVar2 = lVar2 + -1;
-      iVar3 = iVar3 + 3;
-    } while (lVar2 != 0);
-  } while (iVar3 < 0x60);
-  __restgprlr_25();
+                   (param_1->fc).coef_probs[0][0][iVar2 + iVar3],(uint (*) [2])auStack_a0,
+                   default_coef_counts[0][0][iVar2 + iVar3],0x100,1);
+        iVar3 = iVar3 + 1;
+      } while (iVar3 < 3);
+      lVar1 = lVar1 + -1;
+      iVar2 = iVar2 + 3;
+    } while (lVar1 != 0);
+  } while (iVar2 < 0x60);
   return;
 }
 

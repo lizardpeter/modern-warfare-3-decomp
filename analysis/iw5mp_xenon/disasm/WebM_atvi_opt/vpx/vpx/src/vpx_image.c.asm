@@ -31,10 +31,10 @@ LAB_8283e7a0:
   8283E7D8  7C0903A6             mtspr CTR,r0
 switchD:
   8283E7DC  4E800420             bctr
-caseD_1:
+caseD_2:
   8283E814  3AC00020             li r22,0x20
   8283E818  48000030             b 0x8283e848
-caseD_0:
+caseD_1:
   8283E81C  3AC00018             li r22,0x18
   8283E820  48000028             b 0x8283e848
 LAB_8283e824:
@@ -44,7 +44,7 @@ LAB_8283e824:
   8283E830  419A0014             beq cr6,0x8283e844
   8283E834  2F1A0303             cmpwi cr6,r26,0x303
   8283E838  419A000C             beq cr6,0x8283e844
-caseD_2:
+caseD_3:
   8283E83C  3AC00010             li r22,0x10
   8283E840  48000008             b 0x8283e848
 LAB_8283e844:

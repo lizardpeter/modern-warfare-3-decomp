@@ -2,6 +2,8 @@
 
 // 82725CD8  R_AllocSkinnedCachedVerts  (gfx_d3d/r_dobj_skin.cpp:23)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 
@@ -10,18 +12,16 @@ int R_AllocSkinnedCachedVerts(int param_1)
 {
   GfxVertexBufferState *pGVar1;
   long lVar2;
-  ulonglong uVar3;
-  int iVar4;
-  longlong lVar5;
+  uint uVar3;
+  longlong lVar4;
   char in_RESERVE;
   byte in_cr0;
   
-  uVar3 = __savegprlr_28(param_1);
-  if ((int)uVar3 < 1) {
+  if (param_1 < 1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dobj_skin.cpp",0x1b,
                     0,"%s");
   }
-  lVar5 = (uVar3 & 0x7ffffff) * 0x20;
+  lVar4 = ((ulonglong)(uint)param_1 & 0x7ffffff) * 0x20;
   if (frontEndDataOut == (GfxBackEndData *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dobj_skin.cpp",0x23,
                     0,"%s");
@@ -32,19 +32,18 @@ int R_AllocSkinnedCachedVerts(int param_1)
   }
   pGVar1 = frontEndDataOut->skinnedCacheVb;
   do {
-    uVar3 = (ulonglong)(uint)pGVar1->used;
+    uVar3 = pGVar1->used;
     if (in_RESERVE != '\0') {
-      lVar2 = storeWordConditionalIndexed(lVar5 + uVar3,0,ZEXT48(pGVar1));
+      lVar2 = storeWordConditionalIndexed(lVar4 + (ulonglong)uVar3,0,ZEXT48(pGVar1));
       pGVar1->used = lVar2;
       in_cr0 = 2;
     }
   } while (!(bool)(in_cr0 >> 1 & 1));
-  if (0x370000 < (uVar3 + lVar5 & 0xffffffff)) {
+  if (0x370000 < ((ulonglong)uVar3 + lVar4 & 0xffffffff)) {
     R_WarnOncePerFrame(R_WARN_MAX_SKINNED_CACHE_VERTICES);
-    uVar3 = 0xffffffffffffffff;
+    uVar3 = 0xffffffff;
   }
-  iVar4 = __restgprlr_28(uVar3);
-  return iVar4;
+  return uVar3;
 }
 
 
@@ -68,6 +67,10 @@ void R_TransformSkelMat(float *param_1,DObjSkelMat *param_2,float *param_3)
 
 // 82725E60  R_PreSkinXSurface  (gfx_d3d/r_dobj_skin.cpp:63)
 
+/* WARNING: Function: __savegprlr_17 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_16 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_16 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_17 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 int R_PreSkinXSurface(DObj *param_1,XSurface *param_2,GfxModelSurfaceInfo *param_3,uint *param_4,
@@ -82,24 +85,24 @@ int R_PreSkinXSurface(DObj *param_1,XSurface *param_2,GfxModelSurfaceInfo *param
   float fVar6;
   ushort uVar7;
   uint uVar8;
-  uint uVar9;
-  uint uVar10;
-  uint uVar11;
-  uint uVar12;
+  undefined4 uVar9;
+  undefined4 uVar10;
+  GfxColor GVar11;
+  DObjAnimMat *pDVar12;
   int iVar13;
-  DObj *pDVar14;
-  int iVar15;
-  uint uVar16;
-  DObjAnimMat *pDVar17;
-  ulonglong uVar18;
-  uint *puVar19;
-  uint *puVar20;
-  ushort *puVar21;
-  ulonglong uVar22;
-  longlong lVar23;
-  ulonglong uVar24;
-  float *pfVar25;
-  int iVar26;
+  DObjAnimMat *pDVar14;
+  ushort *puVar15;
+  ulonglong uVar16;
+  ulonglong uVar17;
+  float *pfVar18;
+  ulonglong uVar19;
+  float *pfVar20;
+  double dVar21;
+  double dVar22;
+  double dVar23;
+  double dVar24;
+  double dVar25;
+  double dVar26;
   double dVar27;
   double dVar28;
   double dVar29;
@@ -115,228 +118,208 @@ int R_PreSkinXSurface(DObj *param_1,XSurface *param_2,GfxModelSurfaceInfo *param
   double dVar39;
   double dVar40;
   double dVar41;
-  double dVar42;
-  double dVar43;
-  double dVar44;
-  double dVar45;
-  double dVar46;
-  double dVar47;
   float local_110;
   float local_10c;
   float local_108;
   float local_104;
   
-  lVar23 = (longlong)(int)param_5;
-  uVar18 = (ulonglong)(int)param_3;
-  uVar24 = (ulonglong)(int)param_2;
-  __savegprlr_17(param_1);
-  pDVar14 = (DObj *)__savefpr_16();
-  if (pDVar14 == (DObj *)0x0) {
+  if (param_1 == (DObj *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dobj_skin.cpp",0x51,
                     0,"%s");
   }
-  if ((uVar24 & 0xffffffff) == 0) {
+  if (param_2 == (XSurface *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dobj_skin.cpp",0x52,
                     0,"%s");
   }
-  if ((uVar18 & 0xffffffff) == 0) {
+  if (param_3 == (GfxModelSurfaceInfo *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dobj_skin.cpp",0x53,
                     0,"%s");
   }
-  uVar12 = (uint)uVar24;
-  bVar2 = *(byte *)(uVar12 + 1);
-  puVar20 = (uint *)lVar23;
-  puVar19 = (uint *)uVar18;
+  bVar2 = param_2->flags;
   if ((bVar2 & 0x40) == 0) {
     if (rg.drawRigidModels != false) {
-      uVar8 = *(uint *)(uVar12 + 0x40);
-      uVar24 = (ulonglong)uVar8;
-      if (uVar24 == 0) {
+      uVar8 = param_2->vertListCount;
+      uVar19 = (ulonglong)uVar8;
+      if (uVar19 == 0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dobj_skin.cpp",
                         99,0,"%s");
       }
-      else if (0x80 < uVar24) {
+      else if (0x80 < uVar19) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dobj_skin.cpp",
                         100,0,"%s\n\t(childCount) = %i");
       }
-      if (*(int *)(uVar12 + 0x44) == 0) {
+      if (param_2->vertList == (XRigidVertList *)0x0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dobj_skin.cpp",
                         0x67,0,"%s");
       }
-      uVar16 = R_GetRigidSurfaceTypeForChildCount(uVar8);
-      uVar8 = *puVar19;
-      uVar9 = puVar19[1];
-      uVar10 = puVar19[2];
-      uVar11 = puVar19[3];
-      *puVar20 = uVar16;
-      dVar38 = 1.0;
-      puVar20[5] = uVar12;
-      puVar20[6] = 0x3f800000;
-      puVar20[1] = uVar8;
-      puVar20[2] = uVar9;
-      puVar20[3] = uVar10;
-      puVar20[4] = uVar11;
-      pDVar17 = DObjGetRotTransArray(pDVar14);
-      bVar2 = *(byte *)(puVar19 + 1);
-      uVar18 = 0;
-      if (uVar24 != 0) {
-        iVar15 = 0;
-        lVar23 = lVar23 + 0x14;
-        uVar22 = uVar24;
+      iVar13 = R_GetRigidSurfaceTypeForChildCount(uVar8);
+      pDVar14 = param_3->modelBasePoseMat;
+      uVar9 = *(undefined4 *)&param_3->modelBoneIndex;
+      uVar10 = *(undefined4 *)&param_3->lightingHandle;
+      GVar11 = param_3->ambientColor;
+      *(int *)param_5 = iVar13;
+      dVar32 = 1.0;
+      *(XSurface **)(param_5 + 0x14) = param_2;
+      param_5[0x18] = '?';
+      param_5[0x19] = 0x80;
+      param_5[0x1a] = '\0';
+      param_5[0x1b] = '\0';
+      *(DObjAnimMat **)(param_5 + 4) = pDVar14;
+      *(undefined4 *)(param_5 + 8) = uVar9;
+      *(undefined4 *)(param_5 + 0xc) = uVar10;
+      *(GfxColor *)(param_5 + 0x10) = GVar11;
+      pDVar14 = DObjGetRotTransArray(param_1);
+      bVar2 = param_3->modelBoneIndex;
+      uVar16 = 0;
+      if (uVar19 != 0) {
+        iVar13 = 0;
+        pfVar18 = (float *)(param_5 + 0x14);
+        uVar17 = uVar19;
         do {
-          uVar8 = *puVar19;
-          puVar21 = (ushort *)(iVar15 + *(int *)(uVar12 + 0x44));
-          uVar9 = *puVar21 >> 1 & 0x7fffffe0;
-          uVar7 = puVar21[2];
-          iVar26 = uVar9 + uVar8;
-          iVar13 = (int)lVar23;
-          *(ushort *)(iVar13 + 0x26) = puVar21[3];
-          fVar6 = *(float *)(uVar9 + uVar8);
-          dVar39 = (double)fVar6;
-          *(ushort *)(iVar13 + 0x24) = uVar7;
+          pDVar12 = param_3->modelBasePoseMat;
+          puVar15 = (ushort *)((int)&param_2->vertList->boneOffset + iVar13);
+          uVar8 = *puVar15 >> 1 & 0x7fffffe0;
+          uVar7 = puVar15[2];
+          *(ushort *)((int)pfVar18 + 0x26) = puVar15[3];
+          fVar6 = *(float *)((int)pDVar12->quat + uVar8);
+          dVar33 = (double)fVar6;
+          *(ushort *)(pfVar18 + 9) = uVar7;
           if ((((((uint)fVar6 & 0x7f800000) == 0x7f800000) ||
-               ((*(uint *)(iVar26 + 4) & 0x7f800000) == 0x7f800000)) ||
-              ((*(uint *)(iVar26 + 8) & 0x7f800000) == 0x7f800000)) ||
-             ((*(uint *)(iVar26 + 0xc) & 0x7f800000) == 0x7f800000)) {
+               ((*(uint *)((int)pDVar12->quat + uVar8 + 4) & 0x7f800000) == 0x7f800000)) ||
+              ((*(uint *)((int)pDVar12->quat + uVar8 + 8) & 0x7f800000) == 0x7f800000)) ||
+             ((*(uint *)((int)pDVar12->quat + uVar8 + 0xc) & 0x7f800000) == 0x7f800000)) {
             MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\renderer\\../xanim/xanim_public.h"
                             ,0x29a,0,"%s");
           }
-          dVar44 = (double)*(float *)(iVar26 + 0x1c);
-          if (((uint)*(float *)(iVar26 + 0x1c) & 0x7f800000) == 0x7f800000) {
+          fVar6 = *(float *)((int)pDVar12->trans + uVar8 + 0xc);
+          dVar38 = (double)fVar6;
+          if (((uint)fVar6 & 0x7f800000) == 0x7f800000) {
             MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\renderer\\../xanim/xanim_public.h"
                             ,0x29b,0,"%s");
           }
-          dVar42 = (double)*(float *)(iVar26 + 4);
-          dVar27 = (double)(float)(dVar39 * dVar44);
-          dVar47 = (double)*(float *)(iVar26 + 8);
-          dVar32 = (double)(float)(dVar42 * dVar44);
-          dVar40 = (double)*(float *)(iVar26 + 0xc);
-          fVar3 = *(float *)(iVar26 + 0x14);
-          pfVar25 = (float *)((int)pDVar17[bVar2].quat + uVar9);
-          fVar4 = *(float *)(iVar26 + 0x18);
-          fVar5 = *(float *)(iVar26 + 0x10);
-          dVar45 = (double)*pfVar25;
-          fVar6 = (float)(dVar40 * (double)(float)(dVar47 * dVar44));
-          fVar1 = (float)(dVar47 * (double)(float)(dVar47 * dVar44));
-          dVar37 = -(double)(fVar5 * ((float)(dVar40 * dVar32) + (float)(dVar47 * dVar27)) +
-                            fVar4 * (float)(dVar38 - (double)((float)(dVar42 * dVar32) +
-                                                             (float)(dVar39 * dVar27))) +
-                            fVar3 * ((float)(dVar47 * dVar32) - (float)(dVar40 * dVar27)));
-          dVar44 = -(double)(fVar3 * (float)(dVar38 - (double)(fVar1 + (float)(dVar39 * dVar27))) +
-                            fVar5 * ((float)(dVar42 * dVar27) - fVar6) +
-                            fVar4 * ((float)(dVar47 * dVar32) + (float)(dVar40 * dVar27)));
-          dVar27 = -(double)(fVar5 * (float)(dVar38 - (double)(fVar1 + (float)(dVar42 * dVar32))) +
-                            fVar4 * ((float)(dVar47 * dVar27) - (float)(dVar40 * dVar32)) +
-                            fVar3 * (fVar6 + (float)(dVar42 * dVar27)));
-          if (((((uint)*pfVar25 & 0x7f800000) == 0x7f800000) ||
-              (((uint)pfVar25[1] & 0x7f800000) == 0x7f800000)) ||
-             ((((uint)pfVar25[2] & 0x7f800000) == 0x7f800000 ||
-              (((uint)pfVar25[3] & 0x7f800000) == 0x7f800000)))) {
+          dVar36 = (double)*(float *)((int)pDVar12->quat + uVar8 + 4);
+          dVar21 = (double)(float)(dVar33 * dVar38);
+          dVar41 = (double)*(float *)((int)pDVar12->quat + uVar8 + 8);
+          dVar26 = (double)(float)(dVar36 * dVar38);
+          dVar34 = (double)*(float *)((int)pDVar12->quat + uVar8 + 0xc);
+          fVar3 = *(float *)((int)pDVar12->trans + uVar8 + 4);
+          pfVar20 = (float *)((int)pDVar14[bVar2].quat + uVar8);
+          fVar4 = *(float *)((int)pDVar12->trans + uVar8 + 8);
+          fVar5 = *(float *)((int)pDVar12->trans + uVar8);
+          dVar39 = (double)*pfVar20;
+          fVar6 = (float)(dVar34 * (double)(float)(dVar41 * dVar38));
+          fVar1 = (float)(dVar41 * (double)(float)(dVar41 * dVar38));
+          dVar31 = -(double)(fVar5 * ((float)(dVar34 * dVar26) + (float)(dVar41 * dVar21)) +
+                            fVar4 * (float)(dVar32 - (double)((float)(dVar36 * dVar26) +
+                                                             (float)(dVar33 * dVar21))) +
+                            fVar3 * ((float)(dVar41 * dVar26) - (float)(dVar34 * dVar21)));
+          dVar38 = -(double)(fVar3 * (float)(dVar32 - (double)(fVar1 + (float)(dVar33 * dVar21))) +
+                            fVar5 * ((float)(dVar36 * dVar21) - fVar6) +
+                            fVar4 * ((float)(dVar41 * dVar26) + (float)(dVar34 * dVar21)));
+          dVar21 = -(double)(fVar5 * (float)(dVar32 - (double)(fVar1 + (float)(dVar36 * dVar26))) +
+                            fVar4 * ((float)(dVar41 * dVar21) - (float)(dVar34 * dVar26)) +
+                            fVar3 * (fVar6 + (float)(dVar36 * dVar21)));
+          if (((((uint)*pfVar20 & 0x7f800000) == 0x7f800000) ||
+              (((uint)pfVar20[1] & 0x7f800000) == 0x7f800000)) ||
+             ((((uint)pfVar20[2] & 0x7f800000) == 0x7f800000 ||
+              (((uint)pfVar20[3] & 0x7f800000) == 0x7f800000)))) {
             MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\renderer\\../xanim/xanim_public.h"
                             ,0x22e,0,"%s");
           }
-          dVar32 = (double)pfVar25[7];
-          if (((uint)pfVar25[7] & 0x7f800000) == 0x7f800000) {
+          dVar26 = (double)pfVar20[7];
+          if (((uint)pfVar20[7] & 0x7f800000) == 0x7f800000) {
             MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\renderer\\../xanim/xanim_public.h"
                             ,0x22f,0,"%s");
           }
-          dVar28 = (double)pfVar25[2];
-          dVar33 = (double)pfVar25[3];
-          dVar31 = (double)pfVar25[1];
-          dVar29 = (double)(float)(dVar31 * dVar32);
-          dVar35 = (double)pfVar25[4];
-          dVar34 = (double)pfVar25[5];
-          dVar30 = (double)(float)(dVar45 * dVar32);
-          dVar36 = (double)pfVar25[6];
-          fVar6 = (float)(dVar28 * (double)(float)(dVar28 * dVar32));
-          fVar1 = (float)(dVar33 * (double)(float)(dVar28 * dVar32));
-          local_108 = (float)(dVar31 * dVar39 +
-                             (double)(float)(dVar28 * dVar40 -
-                                            (double)(float)(dVar33 * dVar47 +
-                                                           (double)(float)(dVar45 * dVar42))));
-          local_104 = (float)(dVar45 * dVar39 +
-                             (double)(float)(dVar31 * dVar42 +
-                                            (double)(float)(dVar33 * dVar40 +
-                                                           (double)(float)(dVar28 * dVar47))));
-          local_110 = (float)(dVar28 * dVar42 +
-                             -(double)(float)(dVar31 * dVar47 -
-                                             (double)(float)(dVar45 * dVar40 -
-                                                            (double)(float)(dVar33 * dVar39))));
-          local_10c = -(float)(dVar28 * dVar39 -
-                              (double)(float)(dVar45 * dVar47 +
-                                             (double)(float)(dVar31 * dVar40 -
-                                                            (double)(float)(dVar33 * dVar42))));
-          dVar46 = (double)((float)(dVar28 * dVar29) + (float)(dVar33 * dVar30));
-          dVar43 = (double)((float)(dVar28 * dVar30) - (float)(dVar33 * dVar29));
-          dVar41 = (double)(fVar1 + (float)(dVar31 * dVar30));
-          dVar47 = (double)(float)(dVar38 - (double)(fVar6 + (float)(dVar31 * dVar29)));
-          dVar40 = (double)((float)(dVar31 * dVar30) - fVar1);
-          dVar32 = (double)(float)(dVar38 - (double)(fVar6 + (float)(dVar45 * dVar30)));
-          dVar42 = (double)((float)(dVar33 * dVar29) + (float)(dVar28 * dVar30));
-          dVar28 = (double)((float)(dVar28 * dVar29) - (float)(dVar33 * dVar30));
-          dVar39 = (double)(float)(dVar38 - (double)((float)(dVar31 * dVar29) +
-                                                    (float)(dVar45 * dVar30)));
+          dVar22 = (double)pfVar20[2];
+          dVar27 = (double)pfVar20[3];
+          dVar25 = (double)pfVar20[1];
+          dVar23 = (double)(float)(dVar25 * dVar26);
+          dVar29 = (double)pfVar20[4];
+          dVar28 = (double)pfVar20[5];
+          dVar24 = (double)(float)(dVar39 * dVar26);
+          dVar30 = (double)pfVar20[6];
+          fVar6 = (float)(dVar22 * (double)(float)(dVar22 * dVar26));
+          fVar1 = (float)(dVar27 * (double)(float)(dVar22 * dVar26));
+          local_108 = (float)(dVar25 * dVar33 +
+                             (double)(float)(dVar22 * dVar34 -
+                                            (double)(float)(dVar27 * dVar41 +
+                                                           (double)(float)(dVar39 * dVar36))));
+          local_104 = (float)(dVar39 * dVar33 +
+                             (double)(float)(dVar25 * dVar36 +
+                                            (double)(float)(dVar27 * dVar34 +
+                                                           (double)(float)(dVar22 * dVar41))));
+          local_110 = (float)(dVar22 * dVar36 +
+                             -(double)(float)(dVar25 * dVar41 -
+                                             (double)(float)(dVar39 * dVar34 -
+                                                            (double)(float)(dVar27 * dVar33))));
+          local_10c = -(float)(dVar22 * dVar33 -
+                              (double)(float)(dVar39 * dVar41 +
+                                             (double)(float)(dVar25 * dVar34 -
+                                                            (double)(float)(dVar27 * dVar36))));
+          dVar40 = (double)((float)(dVar22 * dVar23) + (float)(dVar27 * dVar24));
+          dVar37 = (double)((float)(dVar22 * dVar24) - (float)(dVar27 * dVar23));
+          dVar35 = (double)(fVar1 + (float)(dVar25 * dVar24));
+          dVar41 = (double)(float)(dVar32 - (double)(fVar6 + (float)(dVar25 * dVar23)));
+          dVar34 = (double)((float)(dVar25 * dVar24) - fVar1);
+          dVar26 = (double)(float)(dVar32 - (double)(fVar6 + (float)(dVar39 * dVar24)));
+          dVar36 = (double)((float)(dVar27 * dVar23) + (float)(dVar22 * dVar24));
+          dVar22 = (double)((float)(dVar22 * dVar23) - (float)(dVar27 * dVar24));
+          dVar33 = (double)(float)(dVar32 - (double)((float)(dVar25 * dVar23) +
+                                                    (float)(dVar39 * dVar24)));
           Vec4Normalize(&local_110);
-          uVar22 = uVar22 - 1;
-          iVar15 = iVar15 + 0xc;
-          *(float *)(iVar13 + 8) = local_110;
-          *(float *)(iVar13 + 0xc) = local_10c;
+          uVar17 = uVar17 - 1;
+          iVar13 = iVar13 + 0xc;
+          pfVar18[2] = local_110;
+          pfVar18[3] = local_10c;
           fVar6 = scene.def.viewOffset[0];
-          *(float *)(iVar13 + 0x10) = local_108;
-          *(float *)(iVar13 + 0x14) = local_104;
-          *(float *)(iVar13 + 0x18) =
-               (float)((double)(float)(dVar27 * dVar47 +
-                                      (double)(float)(dVar42 * dVar37 +
-                                                     (double)(float)(dVar40 * dVar44))) + dVar35) +
-               fVar6;
+          pfVar18[4] = local_108;
+          pfVar18[5] = local_104;
+          pfVar18[6] = (float)((double)(float)(dVar21 * dVar41 +
+                                              (double)(float)(dVar36 * dVar31 +
+                                                             (double)(float)(dVar34 * dVar38))) +
+                              dVar29) + fVar6;
           fVar6 = scene.def.viewOffset[2];
-          *(float *)(iVar13 + 0x1c) =
-               (float)((double)(float)(dVar41 * dVar27 +
-                                      (double)(float)(dVar28 * dVar37 +
-                                                     (double)(float)(dVar32 * dVar44))) + dVar34) +
-               scene.def.viewOffset[1];
-          lVar23 = lVar23 + 0x20;
-          *(float *)lVar23 =
-               (float)((double)(float)(dVar43 * dVar27 +
-                                      (double)(float)(dVar39 * dVar37 +
-                                                     (double)(float)(dVar46 * dVar44))) + dVar36) +
-               fVar6;
-          uVar18 = uVar24;
-        } while (uVar22 != 0);
+          pfVar18[7] = (float)((double)(float)(dVar35 * dVar21 +
+                                              (double)(float)(dVar22 * dVar31 +
+                                                             (double)(float)(dVar26 * dVar38))) +
+                              dVar28) + scene.def.viewOffset[1];
+          pfVar18 = pfVar18 + 8;
+          *pfVar18 = (float)((double)(float)(dVar37 * dVar21 +
+                                            (double)(float)(dVar33 * dVar31 +
+                                                           (double)(float)(dVar40 * dVar38))) +
+                            dVar30) + fVar6;
+          uVar16 = uVar19;
+        } while (uVar17 != 0);
       }
-      __restfpr_16((uVar18 & 0x7ffffff) * 0x20 + 0x1c);
-      iVar15 = __restgprlr_17();
-      return iVar15;
+      return (int)(uVar16 << 5) + 0x1c;
     }
   }
   else if (rg.drawSkinnedModels != false) {
     uVar8 = *param_4;
-    uVar9 = *puVar19;
-    uVar10 = puVar19[1];
-    uVar11 = puVar19[2];
-    uVar16 = puVar19[3];
-    uVar7 = *(ushort *)(uVar12 + 2);
-    *puVar20 = uVar8;
-    puVar20[1] = uVar9;
-    puVar20[2] = uVar10;
-    puVar20[3] = uVar11;
-    puVar20[4] = uVar16;
-    puVar20[5] = uVar12;
+    pDVar14 = param_3->modelBasePoseMat;
+    uVar9 = *(undefined4 *)&param_3->modelBoneIndex;
+    uVar10 = *(undefined4 *)&param_3->lightingHandle;
+    GVar11 = param_3->ambientColor;
+    uVar7 = param_2->vertCount;
+    *(uint *)param_5 = uVar8;
+    *(DObjAnimMat **)(param_5 + 4) = pDVar14;
+    *(undefined4 *)(param_5 + 8) = uVar9;
+    *(undefined4 *)(param_5 + 0xc) = uVar10;
+    *(GfxColor *)(param_5 + 0x10) = GVar11;
+    *(XSurface **)(param_5 + 0x14) = param_2;
     if ((bVar2 & 0x20) != 0) {
       *param_4 = ((int)(uVar7 + 3) >> 2) * 3 + uVar8;
-      __restfpr_16(0x18);
-      iVar15 = __restgprlr_17();
-      return iVar15;
+      return 0x18;
     }
     *param_4 = uVar7 + uVar8;
-    __restfpr_16(0x18);
-    iVar15 = __restgprlr_17();
-    return iVar15;
+    return 0x18;
   }
-  *puVar20 = 0xfffffffd;
-  __restfpr_16(4);
-  iVar15 = __restgprlr_17();
-  return iVar15;
+  param_5[0] = 0xff;
+  param_5[1] = 0xff;
+  param_5[2] = 0xff;
+  param_5[3] = 0xfd;
+  return 4;
 }
 
 
@@ -355,6 +338,8 @@ int R_GetRigidSurfaceTypeForChildCount(int param_1)
 
 // 82726490  R_SkinSceneDObjModels  (gfx_d3d/r_dobj_skin.cpp:181)
 
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
 /* WARNING: Enum "WorkerCmdType": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
@@ -369,32 +354,32 @@ uint R_SkinSceneDObjModels(GfxSceneEntity *param_1,DObj *param_2,DObjAnimMat *pa
   uint uVar5;
   undefined4 *puVar6;
   uint uVar7;
+  uint uVar8;
   XModel *pXVar9;
   int iVar10;
   uint uVar11;
   int iVar12;
   ulonglong uVar13;
-  ulonglong uVar14;
-  char *pcVar15;
+  char *pcVar14;
+  uint uVar15;
   uint uVar16;
-  uint uVar17;
-  longlong lVar18;
-  ulonglong uVar19;
-  uchar *puVar20;
+  longlong lVar17;
+  ulonglong uVar18;
+  uchar *puVar19;
+  ulonglong uVar20;
   uint uVar21;
   ulonglong uVar22;
-  uint uVar23;
-  uint *puVar24;
+  uint *puVar23;
   char in_RESERVE;
   byte in_cr0;
-  uint uStack00000014;
-  undefined4 uStack00000024;
+  GfxSceneEntity *pGStack00000014;
+  DObjAnimMat *pDStack00000024;
   uint local_4980;
   uint local_497c;
   XSurface *local_4978 [2];
   ulonglong local_4970;
   uchar *local_4960;
-  undefined4 local_495c;
+  DObjAnimMat *local_495c;
   uint local_4958;
   uint local_4954;
   uint local_4950;
@@ -426,42 +411,35 @@ uint R_SkinSceneDObjModels(GfxSceneEntity *param_1,DObj *param_2,DObjAnimMat *pa
   uint local_48b4;
   uint local_48b0;
   uint local_48ac;
-  DObj *pDVar8;
   
-  uVar19 = (ulonglong)(int)param_3;
-  uVar22 = (ulonglong)(int)param_2;
-  uVar13 = (ulonglong)(int)param_1;
-  uVar14 = ZEXT48(&stack0x00000000);
-  __savegprlr();
-  uVar11 = (uint)uVar13;
-  pcVar15 = "%s";
-  uStack00000024 = (undefined4)uVar19;
+  uVar13 = ZEXT48(&stack0x00000000);
+  pcVar14 = "%s";
   local_4904 = "%s";
-  uStack00000014 = uVar11;
-  if (*(int *)(uVar11 + 0x44) != 0) {
+  pGStack00000014 = param_1;
+  pDStack00000024 = param_3;
+  if ((param_1->cull).skinnedSurfs.firstSurf != (void *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dobj_skin.cpp",0xe8,
                     0,"%s");
   }
-  if ((uVar22 & 0xffffffff) == 0) {
+  if (param_2 == (DObj *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dobj_skin.cpp",0xe9,
                     0,"%s");
   }
-  if ((uVar19 & 0xffffffff) == 0) {
+  if (param_3 == (DObjAnimMat *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dobj_skin.cpp",0xea,
                     0,"%s");
   }
   Profile_Begin(0x55);
-  uVar19 = uVar14 - 0x48a0;
+  uVar18 = uVar13 - 0x48a0;
   local_497c = 0;
-  uVar17 = 0;
-  pDVar8 = (DObj *)uVar22;
-  uVar7 = DObjGetNumModels(pDVar8);
+  uVar16 = 0;
+  uVar8 = DObjGetNumModels(param_2);
   local_4930 = 0;
-  uVar22 = 0;
+  uVar20 = 0;
   local_492c = 0;
   local_4928 = 0;
   local_4924 = 0;
-  uVar16 = 0;
+  uVar15 = 0;
   local_4920 = 0;
   local_4958 = 0;
   local_4954 = 0;
@@ -470,9 +448,9 @@ uint R_SkinSceneDObjModels(GfxSceneEntity *param_1,DObj *param_2,DObjAnimMat *pa
   local_4948 = 0;
   local_4944 = 0;
   local_4980 = 0;
-  uVar21 = 0;
-  local_4900 = uVar7;
-  if (uVar7 != 0) {
+  uVar11 = 0;
+  local_4900 = uVar8;
+  if (uVar8 != 0) {
     local_48e8 = "surfBufSize";
     local_48f0 = "%s\n\t(surfaceCount) = %i";
     local_48fc = "(surfaceCount <= DOBJ_MAX_SURFS)";
@@ -481,56 +459,56 @@ uint R_SkinSceneDObjModels(GfxSceneEntity *param_1,DObj *param_2,DObjAnimMat *pa
     local_48f8 = "surfaces";
     local_48f4 = "model";
     do {
-      pXVar9 = DObjGetModel(pDVar8,uVar16);
+      pXVar9 = DObjGetModel(param_2,uVar15);
       if (pXVar9 == (XModel *)0x0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dobj_skin.cpp",
-                        0x10f,0,pcVar15);
+                        0x10f,0,pcVar14);
       }
       iVar10 = XModelNumBones(pXVar9);
-      cVar1 = *(char *)((int)uVar13 + 0x48 + uVar16);
+      cVar1 = param_1->lods[uVar15];
       if (-1 < cVar1) {
-        local_48d0.modelBoneIndex = (uchar)uVar17;
+        local_48d0.modelBoneIndex = (uchar)uVar16;
         local_48d0.modelBasePoseMat = XModelGetBasePose(pXVar9);
-        local_48d0.gfxEntIndex = (ushort)((uint)*(undefined4 *)((int)uVar13 + 0x68) >> 0x19);
+        local_48d0.gfxEntIndex = param_1->gfxEntIndex;
         local_48d0.lightingHandle = 0;
         local_48d0.modelBoneCount = (uchar)iVar10;
         local_48d0.ambientColor.packed = 0;
         uVar11 = XModelGetSurfaces(pXVar9,local_4978,(int)cVar1);
-        lVar18 = (longlong)(int)uVar11;
+        lVar17 = (longlong)(int)uVar11;
         if (local_4978[0] == (XSurface *)0x0) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dobj_skin.cpp"
-                          ,0x11f,0,pcVar15);
+                          ,0x11f,0,pcVar14);
         }
         if (uVar11 == 0) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dobj_skin.cpp"
-                          ,0x120,0,pcVar15);
+                          ,0x120,0,pcVar14);
         }
-        local_4980 = uVar11 + (int)uVar22;
-        uVar21 = uVar17 & 0x1f;
-        uVar23 = 0x20 - uVar21;
-        DObjGetHidePartBits(pDVar8,&local_48c0);
-        uVar13 = ZEXT48(local_4978[0]);
-        if (uVar13 == 0) {
+        local_4980 = uVar11 + (int)uVar20;
+        uVar7 = uVar16 & 0x1f;
+        uVar21 = 0x20 - uVar7;
+        DObjGetHidePartBits(param_2,&local_48c0);
+        uVar20 = ZEXT48(local_4978[0]);
+        if (uVar20 == 0) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dobj_skin.cpp"
-                          ,0x137,0,pcVar15);
+                          ,0x137,0,pcVar14);
         }
         if (0x40 < uVar11) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dobj_skin.cpp"
                           ,0x139,0,local_48f0);
         }
         if (uVar11 != 0) {
-          uVar13 = uVar13 + 0x6c;
+          uVar20 = uVar20 + 0x6c;
           do {
-            puVar20 = (uchar *)uVar19;
-            if ((uVar14 - 0x11bc & 0xffffffff) < (uVar19 & 0xffffffff)) {
+            puVar19 = (uchar *)uVar18;
+            if ((uVar13 - 0x11bc & 0xffffffff) < (uVar18 & 0xffffffff)) {
               R_WarnOncePerFrame(R_WARN_MAX_SURF_BUF);
 LAB_827268d0:
-              puVar20[0] = 0xff;
-              puVar20[1] = 0xff;
-              puVar20[2] = 0xff;
-              puVar20[3] = 0xfd;
-              uVar19 = uVar19 + 4;
-              if ((uVar14 - 0xa0 & 0xffffffff) < (uVar19 & 0xffffffff)) {
+              puVar19[0] = 0xff;
+              puVar19[1] = 0xff;
+              puVar19[2] = 0xff;
+              puVar19[3] = 0xfd;
+              uVar18 = uVar18 + 4;
+              if ((uVar13 - 0xa0 & 0xffffffff) < (uVar18 & 0xffffffff)) {
                 XModelGetName(pXVar9);
                 va("DOBJ_MAX_SURFS exceeded for \'%s\'");
                 iVar12 = 0x162;
@@ -540,171 +518,166 @@ LAB_827269b8:
               }
             }
             else {
-              puVar6 = (undefined4 *)uVar13;
+              puVar6 = (undefined4 *)uVar20;
               local_491c[0] = puVar6[-1];
               local_491c[1] = *puVar6;
               local_491c[2] = puVar6[1];
               local_491c[3] = puVar6[2];
               local_491c[4] = puVar6[3];
               local_491c[5] = puVar6[4];
-              if ((uVar17 & 0x1f) == 0) {
-                iVar12 = (int)((-(ulonglong)(uVar17 >> 5) & 0x3fffffff) << 2);
-                uVar11 = *(uint *)((int)local_491c + iVar12);
-                uVar7 = *(uint *)((int)local_491c + iVar12 + 4);
+              if ((uVar16 & 0x1f) == 0) {
+                iVar12 = (int)((-(ulonglong)(uVar16 >> 5) & 0x3fffffff) << 2);
+                uVar8 = *(uint *)((int)local_491c + iVar12);
+                uVar11 = *(uint *)((int)local_491c + iVar12 + 4);
                 uVar2 = *(uint *)((int)local_491c + iVar12 + 8);
                 uVar3 = *(uint *)((int)local_491c + iVar12 + 0xc);
                 uVar4 = *(uint *)((int)local_491c + iVar12 + 0x10);
                 uVar5 = *(uint *)((int)local_491c + iVar12 + 0x14);
               }
               else {
-                iVar12 = (int)((-(ulonglong)(uVar17 >> 5) & 0x3fffffff) << 2);
+                iVar12 = (int)((-(ulonglong)(uVar16 >> 5) & 0x3fffffff) << 2);
                 uVar2 = *(uint *)((int)local_491c + iVar12 + 4);
                 uVar3 = *(uint *)((int)local_491c + iVar12 + 8);
                 uVar4 = *(uint *)((int)local_491c + iVar12 + 0xc);
                 uVar5 = *(uint *)((int)local_491c + iVar12 + 0x10);
-                local_48ec = uVar4 >> uVar21;
-                local_48e4 = uVar3 << (uVar23 & 0x3f);
-                uVar7 = uVar2 >> uVar21 | *(uint *)((int)local_491c + iVar12) << (uVar23 & 0x3f);
-                uVar11 = *(uint *)((int)local_491c + iVar12) >> uVar21;
-                uVar4 = uVar5 >> uVar21 | uVar4 << (uVar23 & 0x3f);
-                uVar2 = uVar3 >> uVar21 | uVar2 << (uVar23 & 0x3f);
+                local_48ec = uVar4 >> uVar7;
+                local_48e4 = uVar3 << (uVar21 & 0x3f);
+                uVar11 = uVar2 >> uVar7 | *(uint *)((int)local_491c + iVar12) << (uVar21 & 0x3f);
+                uVar8 = *(uint *)((int)local_491c + iVar12) >> uVar7;
+                uVar4 = uVar5 >> uVar7 | uVar4 << (uVar21 & 0x3f);
+                uVar2 = uVar3 >> uVar7 | uVar2 << (uVar21 & 0x3f);
                 uVar3 = local_48ec | local_48e4;
-                uVar5 = *(uint *)((int)local_491c + iVar12 + 0x14) >> uVar21 |
-                        uVar5 << (uVar23 & 0x3f);
-                pcVar15 = local_4904;
+                uVar5 = *(uint *)((int)local_491c + iVar12 + 0x14) >> uVar7 |
+                        uVar5 << (uVar21 & 0x3f);
+                pcVar14 = local_4904;
               }
               local_4970 = (ulonglong)uVar3;
               if ((((((local_48ac & uVar5) != 0 || (local_48b0 & uVar4) != 0) ||
                     (local_48b4 & uVar3) != 0) || (local_48b8 & uVar2) != 0) ||
-                  (local_48bc & uVar7) != 0) || (local_48c0 & uVar11) != 0) goto LAB_827268d0;
-              local_4958 = uVar11 | local_4958;
-              local_4954 = uVar7 | local_4954;
+                  (local_48bc & uVar11) != 0) || (local_48c0 & uVar8) != 0) goto LAB_827268d0;
+              local_4958 = uVar8 | local_4958;
+              local_4954 = uVar11 | local_4954;
               local_4950 = uVar2 | local_4950;
               local_494c = uVar3 | local_494c;
               local_4948 = uVar4 | local_4948;
               local_4944 = uVar5 | local_4944;
-              local_4970 = uVar13;
-              iVar12 = R_PreSkinXSurface(pDVar8,(XSurface *)(puVar6 + -0x1b),&local_48d0,&local_497c
-                                         ,puVar20);
-              uVar13 = local_4970;
+              local_4970 = uVar20;
+              iVar12 = R_PreSkinXSurface(param_2,(XSurface *)(puVar6 + -0x1b),&local_48d0,
+                                         &local_497c,puVar19);
+              uVar20 = local_4970;
               if (iVar12 == 0) {
                 MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dobj_skin.cpp"
-                                ,0x173,0,pcVar15);
+                                ,0x173,0,pcVar14);
               }
-              uVar19 = (longlong)iVar12 + uVar19;
-              if ((uVar14 - 0xa0 & 0xffffffff) < (uVar19 & 0xffffffff)) {
+              uVar18 = (longlong)iVar12 + uVar18;
+              if ((uVar13 - 0xa0 & 0xffffffff) < (uVar18 & 0xffffffff)) {
                 XModelGetName(pXVar9);
                 va("DOBJ_MAX_SURFS exceeded for \'%s\'");
                 iVar12 = 0x175;
                 goto LAB_827269b8;
               }
             }
-            lVar18 = lVar18 + -1;
-            uVar13 = uVar13 + 0x80;
-          } while (lVar18 != 0);
+            lVar17 = lVar17 + -1;
+            uVar20 = uVar20 + 0x80;
+          } while (lVar17 != 0);
           in_cr0 = 2;
-          uVar7 = local_4900;
+          uVar8 = local_4900;
         }
-        uVar13 = (ulonglong)uStack00000014;
-        uVar22 = (ulonglong)local_4980;
+        uVar20 = (ulonglong)local_4980;
+        param_1 = pGStack00000014;
       }
-      uVar11 = (uint)uVar13;
-      uVar16 = uVar16 + 1;
-      uVar17 = iVar10 + uVar17;
-      uVar21 = local_497c;
-    } while (uVar16 < uVar7);
+      uVar15 = uVar15 + 1;
+      uVar16 = iVar10 + uVar16;
+      uVar11 = local_497c;
+    } while (uVar15 < uVar8);
   }
-  iVar10 = DObjSkelAreBonesUpToDate(pDVar8,(int *)&local_4958);
+  iVar10 = DObjSkelAreBonesUpToDate(param_2,(int *)&local_4958);
   if (iVar10 == 0) {
-    DObjGetName(pDVar8);
+    DObjGetName(param_2);
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dobj_skin.cpp",0x179
                     ,0,"%s\n\t(DObjGetName( obj )) = %s");
   }
-  if (uVar21 != 0) {
-    iVar10 = R_AllocSkinnedCachedVerts(uVar21);
+  if (uVar11 != 0) {
+    iVar10 = R_AllocSkinnedCachedVerts(uVar11);
     if (iVar10 < 0) goto LAB_82726b84;
-    uVar13 = uVar14 - 0x48a0;
-    if (uVar22 != 0) {
+    uVar22 = uVar13 - 0x48a0;
+    if (uVar20 != 0) {
       do {
-        puVar24 = (uint *)uVar13;
-        uVar11 = *puVar24;
-        if ((int)uVar11 < -3) {
-          if (-4 < (int)uVar11) {
+        puVar23 = (uint *)uVar22;
+        uVar8 = *puVar23;
+        if ((int)uVar8 < -3) {
+          if (-4 < (int)uVar8) {
             MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_model.h",
-                            0x74,0,pcVar15);
+                            0x74,0,pcVar14);
           }
-          uVar13 = (uVar13 + ((ulonglong)uVar11 & 0x7ffffff) * -0x20) - 0x44;
+          uVar22 = (uVar22 + ((ulonglong)uVar8 & 0x7ffffff) * -0x20) - 0x44;
         }
-        else if (uVar11 == 0xfffffffd) {
-          uVar13 = uVar13 + 4;
+        else if (uVar8 == 0xfffffffd) {
+          uVar22 = uVar22 + 4;
         }
         else {
-          uVar13 = uVar13 + 0x18;
-          *puVar24 = *puVar24 * 0x20 + iVar10;
+          uVar22 = uVar22 + 0x18;
+          *puVar23 = *puVar23 * 0x20 + iVar10;
         }
-        uVar22 = uVar22 - 1;
-      } while (uVar22 != 0);
-      uVar22 = (ulonglong)local_4980;
+        uVar20 = uVar20 - 1;
+      } while (uVar20 != 0);
+      uVar20 = (ulonglong)local_4980;
       in_cr0 = 2;
-      uVar11 = uStack00000014;
+      param_1 = pGStack00000014;
     }
-    if ((uVar19 & 0xffffffff) != (uVar13 & 0xffffffff)) {
+    if ((uVar18 & 0xffffffff) != (uVar22 & 0xffffffff)) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dobj_skin.cpp",
-                      0x209,0,pcVar15);
+                      0x209,0,pcVar14);
     }
   }
-  lVar18 = uVar19 - (uVar14 - 0x48a0);
-  uVar14 = ZEXT48(frontEndDataOut);
-  if (uVar14 == 0) {
+  lVar17 = uVar18 - (uVar13 - 0x48a0);
+  uVar13 = ZEXT48(frontEndDataOut);
+  if (uVar13 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dobj_skin.cpp",0x216
-                    ,0,pcVar15);
-    uVar14 = ZEXT48(frontEndDataOut);
+                    ,0,pcVar14);
+    uVar13 = ZEXT48(frontEndDataOut);
   }
   do {
-    puVar24 = (uint *)(uVar14 + 0x1548);
-    uVar7 = *puVar24;
+    puVar23 = (uint *)(uVar13 + 0x1548);
+    uVar8 = *puVar23;
     if (in_RESERVE != '\0') {
-      uVar16 = storeWordConditionalIndexed(lVar18 + (ulonglong)uVar7,0,uVar14 + 0x1548);
-      *puVar24 = uVar16;
+      uVar15 = storeWordConditionalIndexed(lVar17 + (ulonglong)uVar8,0,uVar13 + 0x1548);
+      *puVar23 = uVar15;
       in_cr0 = 2;
     }
   } while (!(bool)(in_cr0 >> 1 & 1));
-  if (((ulonglong)uVar7 + lVar18 & 0xffffffff) < 0x20001) {
-    if ((uVar7 & 3) != 0) {
+  if (((ulonglong)uVar8 + lVar17 & 0xffffffff) < 0x20001) {
+    if ((uVar8 & 3) != 0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dobj_skin.cpp",
-                      0x224,0,pcVar15);
+                      0x224,0,pcVar14);
     }
     if (frontEndDataOut == (GfxBackEndData *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dobj_skin.cpp",
-                      0x226,0,pcVar15);
+                      0x226,0,pcVar14);
     }
-    puVar20 = frontEndDataOut->surfsBuffer;
-    *(uchar **)(uVar11 + 0x44) = puVar20 + uVar7;
+    puVar19 = frontEndDataOut->surfsBuffer;
+    (param_1->cull).skinnedSurfs.firstSurf = puVar19 + uVar8;
     memcpy();
     Profile_EndInternal((double *)0x0);
-    if (uVar22 == 0) {
+    if (uVar20 == 0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dobj_skin.cpp",
-                      0x240,0,pcVar15);
+                      0x240,0,pcVar14);
     }
     if ((r_xdebug->current).integer != 0) {
-      R_XModelDebug(pDVar8,(int *)&local_4958);
+      R_XModelDebug(param_2,(int *)&local_4958);
     }
-    if (uVar21 != 0) {
-      local_4940 = (undefined2)uVar22;
-      local_495c = uStack00000024;
-      local_4960 = puVar20 + uVar7;
+    if (uVar11 != 0) {
+      local_4940 = (undefined2)uVar20;
+      local_495c = pDStack00000024;
+      local_4960 = puVar19 + uVar8;
       R_AddWorkerCmd(WRKCMD_SKIN_XMODEL,&local_4960);
     }
-    uVar11 = (uint)uVar22;
-    __restgprlr();
-    return uVar11;
+    return (uint)uVar20;
   }
   R_WarnOncePerFrame(R_WARN_MAX_SCENE_SURFS_SIZE);
 LAB_82726b84:
   Profile_EndInternal((double *)0x0);
-  uVar11 = 0;
-  __restgprlr();
-  return uVar11;
+  return 0;
 }
 
 
@@ -725,62 +698,55 @@ void R_FlagXModelAsSkinned(GfxSceneEntity *param_1,uint param_2)
 
 // 82726D00  R_SkinSceneDObj  (gfx_d3d/r_dobj_skin.cpp:634)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 void R_SkinSceneDObj(GfxSceneEntity *param_1,GfxSceneEntity *param_2,DObj *param_3,
                     DObjAnimMat *param_4)
 
 {
   uint uVar1;
-  GfxSceneEntity *pGVar2;
+  uint uVar2;
   longlong lVar3;
-  uint uVar4;
-  ulonglong uVar5;
-  ulonglong uVar6;
-  ulonglong uVar7;
-  uint *puVar8;
+  uint *puVar4;
   char in_RESERVE;
   byte in_cr0;
   
-  uVar7 = (ulonglong)(int)param_4;
-  uVar6 = (ulonglong)(int)param_3;
-  uVar5 = (ulonglong)(int)param_2;
-  lVar3 = __savegprlr_26(param_1);
-  if ((uVar5 & 0xffffffff) == 0) {
+  if (param_2 == (GfxSceneEntity *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dobj_skin.cpp",0x27e
                     ,0,"%s");
   }
-  if ((uVar7 & 0xffffffff) == 0) {
+  if (param_4 == (DObjAnimMat *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dobj_skin.cpp",0x27f
                     ,0,"%s");
   }
-  if ((uVar6 & 0xffffffff) == 0) {
+  if (param_3 == (DObj *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dobj_skin.cpp",0x280
                     ,0,"%s");
   }
-  pGVar2 = (GfxSceneEntity *)uVar5;
-  if ((pGVar2->cull).state < 4) {
-    lVar3 = lVar3 + 0x28;
+  if ((param_2->cull).state < 4) {
+    lVar3 = (longlong)(int)param_1 + 0x28;
     do {
-      puVar8 = (uint *)lVar3;
-      uVar4 = *puVar8;
-      if (uVar4 != 2) {
+      puVar4 = (uint *)lVar3;
+      uVar2 = *puVar4;
+      if (uVar2 != 2) {
         if (in_RESERVE != '\0') {
-          uVar1 = storeWordConditionalIndexed((ulonglong)uVar4,0,lVar3);
-          *puVar8 = uVar1;
+          uVar1 = storeWordConditionalIndexed((ulonglong)uVar2,0,lVar3);
+          *puVar4 = uVar1;
         }
         break;
       }
       if (in_RESERVE != '\0') {
         uVar1 = storeWordConditionalIndexed(3,0,lVar3);
-        *puVar8 = uVar1;
+        *puVar4 = uVar1;
         in_cr0 = 2;
       }
     } while (!(bool)(in_cr0 >> 1 & 1));
-    if (uVar4 == 2) {
-      uVar4 = R_SkinSceneDObjModels(pGVar2,(DObj *)uVar6,(DObjAnimMat *)uVar7);
-      R_FlagXModelAsSkinned(pGVar2,uVar4);
+    if (uVar2 == 2) {
+      uVar2 = R_SkinSceneDObjModels(param_2,param_3,param_4);
+      R_FlagXModelAsSkinned(param_2,uVar2);
     }
   }
-  __restgprlr_26();
   return;
 }
 

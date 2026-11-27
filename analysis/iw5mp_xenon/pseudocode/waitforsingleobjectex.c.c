@@ -2,28 +2,25 @@
 
 // 828B4F50  WaitForSingleObjectEx  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/xrtl/waitforsingleobjectex.c:82)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 ulong WaitForSingleObjectEx(void *param_1,ulong param_2,int param_3)
 
 {
-  undefined8 uVar1;
-  _LARGE_INTEGER *p_Var3;
-  longlong lVar2;
-  ulong uVar4;
-  ulonglong uVar5;
+  _LARGE_INTEGER *p_Var2;
+  longlong lVar1;
   _LARGE_INTEGER a_Stack_40 [8];
   
-  uVar5 = (ulonglong)param_3;
-  uVar1 = __savegprlr_27(param_1);
-  p_Var3 = XapiFormatTimeOut(a_Stack_40,param_2);
+  p_Var2 = XapiFormatTimeOut(a_Stack_40,param_2);
   while( true ) {
-    lVar2 = NtWaitForSingleObjectEx(uVar1,1,uVar5 & 0xff,p_Var3);
-    if (lVar2 < 0) break;
-    if (((int)uVar5 == 0) || ((int)lVar2 != 0x101)) goto LAB_828b4fbc;
+    lVar1 = NtWaitForSingleObjectEx(param_1,1,param_3 & 0xff,p_Var2);
+    if (lVar1 < 0) break;
+    if ((param_3 == 0) || ((int)lVar1 != 0x101)) goto LAB_828b4fbc;
   }
-  RtlSetLastNTError((int)lVar2);
-  lVar2 = -1;
+  RtlSetLastNTError((int)lVar1);
+  lVar1 = -1;
 LAB_828b4fbc:
-  uVar4 = __restgprlr_27(lVar2);
-  return uVar4;
+  return (ulong)lVar1;
 }
 

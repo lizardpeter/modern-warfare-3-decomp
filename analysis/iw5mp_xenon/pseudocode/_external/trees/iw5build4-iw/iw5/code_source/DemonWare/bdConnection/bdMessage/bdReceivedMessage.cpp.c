@@ -2,52 +2,53 @@
 
 // 82934DB8  bdReceivedMessage  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdconnection/bdmessage/bdreceivedmessage.cpp:18)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 bdReceivedMessage * __thiscall
 bdReceivedMessage::bdReceivedMessage
           (bdReceivedMessage *this,bdReference<bdMessage> param_1,bdReference<bdConnection> param_2)
 
 {
-  uint uVar1;
-  uint *puVar2;
-  bdReceivedMessage *pbVar3;
+  bdMessage *pbVar1;
+  bdConnection *pbVar2;
+  uint uVar3;
   longlong lVar4;
   uint *puVar5;
   char in_RESERVE;
   byte in_cr0;
-  bdConnection *pbStack00000024;
+  bdReference<bdConnection> bStack00000024;
   
-  puVar2 = (uint *)__savegprlr_29(this);
-  uVar1 = (param_1.m_ptr)->_padding_;
-  *puVar2 = uVar1;
-  if ((ulonglong)uVar1 != 0) {
-    lVar4 = (ulonglong)uVar1 + 4;
+  pbVar1 = (bdMessage *)(param_1.m_ptr)->_padding_;
+  (this->m_message).m_ptr = pbVar1;
+  if (ZEXT48(pbVar1) != 0) {
+    lVar4 = ZEXT48(pbVar1) + 4;
     do {
       puVar5 = (uint *)lVar4;
       if (in_RESERVE != '\0') {
-        uVar1 = storeWordConditionalIndexed((ulonglong)*puVar5 + 1,0,lVar4);
-        *puVar5 = uVar1;
+        uVar3 = storeWordConditionalIndexed((ulonglong)*puVar5 + 1,0,lVar4);
+        *puVar5 = uVar3;
         in_cr0 = 2;
       }
     } while (!(bool)(in_cr0 >> 1 & 1));
   }
-  uVar1 = (param_2.m_ptr)->_padding_;
-  puVar2[1] = uVar1;
-  if ((ulonglong)uVar1 != 0) {
-    lVar4 = (ulonglong)uVar1 + 4;
+  pbVar2 = (bdConnection *)(param_2.m_ptr)->_padding_;
+  (this->m_connection).m_ptr = pbVar2;
+  if (ZEXT48(pbVar2) != 0) {
+    lVar4 = ZEXT48(pbVar2) + 4;
     do {
       puVar5 = (uint *)lVar4;
       if (in_RESERVE != '\0') {
-        uVar1 = storeWordConditionalIndexed((ulonglong)*puVar5 + 1,0,lVar4);
-        *puVar5 = uVar1;
+        uVar3 = storeWordConditionalIndexed((ulonglong)*puVar5 + 1,0,lVar4);
+        *puVar5 = uVar3;
         in_cr0 = 2;
       }
     } while (!(bool)(in_cr0 >> 1 & 1));
   }
-  pbStack00000024 = param_2.m_ptr;
+  bStack00000024.m_ptr = param_2.m_ptr;
   bdReference<bdMessage>::~bdReference<bdMessage>((bdReference<bdMessage> *)param_1.m_ptr);
   bdReference<bdConnection>::~bdReference<bdConnection>((bdReference<bdConnection> *)param_2.m_ptr);
-  pbVar3 = (bdReceivedMessage *)__restgprlr_29(puVar2);
-  return pbVar3;
+  return this;
 }
 
 

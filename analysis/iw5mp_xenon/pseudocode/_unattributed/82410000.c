@@ -2,6 +2,7 @@
 
 // 8241007C  FUN_8241007c  (line unknown)
 
+/* WARNING: Function: __restgprlr_17 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -115,7 +116,6 @@ void FUN_8241007c(LocalClientNum_t param_1,undefined8 param_2,longlong param_3)
       puVar10 = puVar10 + 1;
     } while (DVar8 < DYNENT_DRAW_COUNT);
   }
-  __restgprlr_17();
   return;
 }
 

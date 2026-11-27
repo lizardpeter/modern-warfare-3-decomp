@@ -34,6 +34,9 @@ long jround_up(long param_1,long param_2)
 
 // 827CBFA0  jcopy_sample_rows  (jpeg-6/jutils.c:119)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void jcopy_sample_rows(uchar **param_1,int param_2,uchar **param_3,int param_4,int param_5,
                       uint param_6)
 
@@ -41,14 +44,12 @@ void jcopy_sample_rows(uchar **param_1,int param_2,uchar **param_3,int param_4,i
   longlong lVar1;
   
   lVar1 = (longlong)param_5;
-  __savegprlr_28(param_1);
-  if (0 < (int)lVar1) {
+  if (0 < param_5) {
     do {
       memcpy();
       lVar1 = lVar1 + -1;
     } while (0 < lVar1);
   }
-  __restgprlr_28();
   return;
 }
 

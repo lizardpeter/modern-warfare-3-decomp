@@ -2,6 +2,8 @@
 
 // 82722368  R_AcquireCmdRingBuf  (gfx_d3d/r_cmdbuf.cpp:70)
 
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 
 int R_AcquireCmdRingBuf(uint param_1)
@@ -9,143 +11,138 @@ int R_AcquireCmdRingBuf(uint param_1)
 {
   uint uVar1;
   uint uVar2;
-  ulonglong uVar3;
-  ulong uVar4;
-  int iVar5;
+  ulong uVar3;
+  uint *puVar4;
+  longlong lVar5;
   uint *puVar6;
-  longlong lVar7;
-  uint *puVar8;
-  uint uVar9;
-  longlong lVar10;
-  uint uVar11;
-  uint *puVar12;
+  uint uVar7;
+  longlong lVar8;
+  int iVar9;
+  uint uVar10;
+  uint *puVar11;
   char in_RESERVE;
   byte in_cr0;
   
-  uVar3 = (ulonglong)(int)param_1;
-  __savegprlr();
-  uVar4 = GetCurrentProcessorNumber();
-  if (dx.cmdBufForProcId[uVar4] != (GfxCmdRingBuf *)0x0) {
+  uVar3 = GetCurrentProcessorNumber();
+  if (dx.cmdBufForProcId[uVar3] != (GfxCmdRingBuf *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_cmdbuf.cpp",0x4f,0,
                     "%s");
   }
-  if ((uVar4 != 3) && (uVar4 != 4)) {
-    if (0x26 < (uVar3 & 0xffffffff)) {
+  if ((uVar3 != 3) && (uVar3 != 4)) {
+    if (0x26 < param_1) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_cmdbuf.cpp",0x54,0
                       ,
                       "drawListType doesn\'t index ARRAY_COUNT( g_cmdBufDeviceLock )\n\t%i not in [0, %i)"
                      );
     }
-    lVar7 = (uVar3 & 0x3fffffff) * 4 + -0x7ba5eae8;
+    lVar5 = ((ulonglong)param_1 & 0x3fffffff) * 4 + -0x7ba5eae8;
     do {
-      puVar8 = (uint *)lVar7;
-      uVar9 = *puVar8;
-      if (uVar9 != 0) {
+      puVar6 = (uint *)lVar5;
+      uVar7 = *puVar6;
+      if (uVar7 != 0) {
         if (in_RESERVE != '\0') {
-          uVar11 = storeWordConditionalIndexed((ulonglong)uVar9,0,lVar7);
-          *puVar8 = uVar11;
+          uVar10 = storeWordConditionalIndexed((ulonglong)uVar7,0,lVar5);
+          *puVar6 = uVar10;
           in_cr0 = 2;
         }
         break;
       }
       if (in_RESERVE != '\0') {
-        uVar11 = storeWordConditionalIndexed(1,0,lVar7);
-        *puVar8 = uVar11;
+        uVar10 = storeWordConditionalIndexed(1,0,lVar5);
+        *puVar6 = uVar10;
         in_cr0 = 2;
       }
     } while (!(bool)(in_cr0 >> 1 & 1));
-    if (uVar9 == 0) {
+    if (uVar7 == 0) {
       do {
-        iVar5 = 0x2ffff;
-        uVar9 = 0xffffffff;
-        uVar11 = 0;
-        puVar6 = &dx.cmdBuf[0].memoryPos;
-        lVar10 = 4;
-        lVar7 = -0x7d6663b8;
+        iVar9 = 0x2ffff;
+        uVar7 = 0xffffffff;
+        uVar10 = 0;
+        puVar4 = &dx.cmdBuf[0].memoryPos;
+        lVar8 = 4;
+        lVar5 = -0x7d6663b8;
 LAB_82722488:
         do {
-          puVar12 = (uint *)lVar7;
-          uVar1 = *puVar12;
+          puVar11 = (uint *)lVar5;
+          uVar1 = *puVar11;
           if (uVar1 == 0xffffffff) {
             if (in_RESERVE != '\0') {
-              uVar2 = storeWordConditionalIndexed((longlong)(int)uVar4,0,lVar7);
-              *puVar12 = uVar2;
+              uVar2 = storeWordConditionalIndexed((longlong)(int)uVar3,0,lVar5);
+              *puVar11 = uVar2;
               in_cr0 = 2;
             }
             if (!(bool)(in_cr0 >> 1 & 1)) goto LAB_82722488;
           }
           else if (in_RESERVE != '\0') {
-            uVar2 = storeWordConditionalIndexed((ulonglong)uVar1,0,lVar7);
-            *puVar12 = uVar2;
+            uVar2 = storeWordConditionalIndexed((ulonglong)uVar1,0,lVar5);
+            *puVar11 = uVar2;
           }
           if (uVar1 == 0xffffffff) {
             sync(1);
-            R_CmdBufUpdateFences2((GfxCmdRingBuf *)(puVar6 + -1));
-            if (*puVar12 != uVar4) {
+            R_CmdBufUpdateFences2((GfxCmdRingBuf *)(puVar4 + -1));
+            if (*puVar11 != uVar3) {
               MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_cmdbuf.cpp"
                               ,0x67,0,"%s");
             }
             sync(1);
-            uVar1 = puVar6[6];
-            uVar2 = *puVar6;
-            *puVar12 = 0xffffffff;
-            if (iVar5 < (int)(uVar1 - uVar2)) {
-              uVar9 = uVar11;
-              iVar5 = uVar1 - uVar2;
+            uVar1 = puVar4[6];
+            uVar2 = *puVar4;
+            *puVar11 = 0xffffffff;
+            if (iVar9 < (int)(uVar1 - uVar2)) {
+              uVar7 = uVar10;
+              iVar9 = uVar1 - uVar2;
             }
           }
-          lVar10 = lVar10 + -1;
-          in_cr0 = (lVar10 == 0) << 1;
-          uVar11 = uVar11 + 1;
-          puVar6 = puVar6 + 0x10b;
-          lVar7 = lVar7 + 4;
-        } while (lVar10 != 0);
-        if (uVar9 == 0xffffffff) {
-          if (*puVar8 != 1) {
+          lVar8 = lVar8 + -1;
+          in_cr0 = (lVar8 == 0) << 1;
+          uVar10 = uVar10 + 1;
+          puVar4 = puVar4 + 0x10b;
+          lVar5 = lVar5 + 4;
+        } while (lVar8 != 0);
+        if (uVar7 == 0xffffffff) {
+          if (*puVar6 != 1) {
             MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_cmdbuf.cpp",
                             0x75,0,"%s\n\t(g_cmdBufDeviceLock[drawListType]) = %i");
           }
-          *puVar8 = 0;
-          break;
+          *puVar6 = 0;
+          return 0;
         }
-        lVar7 = ((ulonglong)uVar9 & 0x3fffffff) * 4 + -0x7d6663b8;
+        lVar5 = ((ulonglong)uVar7 & 0x3fffffff) * 4 + -0x7d6663b8;
         do {
-          puVar6 = (uint *)lVar7;
-          uVar11 = *puVar6;
-          if (uVar11 != 0xffffffff) {
+          puVar4 = (uint *)lVar5;
+          uVar10 = *puVar4;
+          if (uVar10 != 0xffffffff) {
             if (in_RESERVE != '\0') {
-              uVar1 = storeWordConditionalIndexed((ulonglong)uVar11,0,lVar7);
-              *puVar6 = uVar1;
+              uVar1 = storeWordConditionalIndexed((ulonglong)uVar10,0,lVar5);
+              *puVar4 = uVar1;
               in_cr0 = 2;
             }
             break;
           }
           if (in_RESERVE != '\0') {
-            uVar1 = storeWordConditionalIndexed((longlong)(int)uVar4,0,lVar7);
-            *puVar6 = uVar1;
+            uVar1 = storeWordConditionalIndexed((longlong)(int)uVar3,0,lVar5);
+            *puVar4 = uVar1;
             in_cr0 = 2;
           }
         } while (!(bool)(in_cr0 >> 1));
-        if (uVar11 == 0xffffffff) {
+        if (uVar10 == 0xffffffff) {
           sync(1);
-          iVar5 = 1;
-          dx.cmdBufForProcId[uVar4] = (GfxCmdRingBuf *)(uVar9 * 0x42c + -0x7b9e98cc);
-          dx.drawListTypeForProcId[uVar4] = (uint)uVar3;
-          __restgprlr();
-          return iVar5;
+          dx.cmdBufForProcId[uVar3] = (GfxCmdRingBuf *)(uVar7 * 0x42c + -0x7b9e98cc);
+          dx.drawListTypeForProcId[uVar3] = param_1;
+          return 1;
         }
         Sys_Sleep(0);
       } while( true );
     }
   }
-  iVar5 = 0;
-  __restgprlr();
-  return iVar5;
+  return 0;
 }
 
 
 // 827225E8  R_ReleaseCmdRingBuf  (gfx_d3d/r_cmdbuf.cpp:139)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 
@@ -156,7 +153,6 @@ void R_ReleaseCmdRingBuf(void)
   uint uVar2;
   ulong uVar3;
   
-  __savegprlr_24();
   uVar3 = GetCurrentProcessorNumber();
   if (dx.cmdBufForProcId[uVar3] == (GfxCmdRingBuf *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_cmdbuf.cpp",0x91,0,
@@ -176,13 +172,14 @@ void R_ReleaseCmdRingBuf(void)
   sync(1);
   g_cmdBufDeviceLock[uVar2] = 0;
   g_cmdBufOwner[iVar1] = -1;
-  __restgprlr_24();
   return;
 }
 
 
 // 827226F0  R_InitCmdBuf  (gfx_d3d/r_cmdbuf.cpp:165)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
@@ -195,7 +192,6 @@ void R_InitCmdBuf(GfxBackEndData *param_1,GfxCmdBuf *param_2)
   ulong uVar3;
   _D3DTAGCOLLECTION local_50 [2];
   
-  __savegprlr_29(param_1);
   pDVar1 = param_2->device;
   local_50[0].m_Mask[0] = 0;
   local_50[0].m_Mask[1] = 0;
@@ -219,35 +215,34 @@ void R_InitCmdBuf(GfxBackEndData *param_1,GfxCmdBuf *param_2)
     D3DDevice_BeginCommandBuffer
               (pDVar1,param_2->buf,0,(_D3DTAGCOLLECTION *)0x0,local_50,(_D3DRECT *)0x0,0);
   }
-  __restgprlr_29();
   return;
 }
 
 
 // 827227C0  R_ShutdownCmdBuf  (gfx_d3d/r_cmdbuf.cpp:185)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 
 void R_ShutdownCmdBuf(GfxCmdBuf *param_1)
 
 {
   D3DDevice *pDVar1;
-  undefined4 *puVar2;
-  ulong uVar3;
-  int iVar4;
+  ulong uVar2;
+  int iVar3;
   
-  puVar2 = (undefined4 *)__savegprlr_28(param_1);
-  uVar3 = GetCurrentProcessorNumber();
-  if (dx.cmdBufForProcId[uVar3] == (GfxCmdRingBuf *)0x0) {
+  uVar2 = GetCurrentProcessorNumber();
+  if (dx.cmdBufForProcId[uVar2] == (GfxCmdRingBuf *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_cmdbuf.cpp",0xbc,0,
                     "%s");
   }
-  pDVar1 = (D3DDevice *)*puVar2;
+  pDVar1 = param_1->device;
   if (pDVar1 != (D3DDevice *)0x0) {
     do {
-      iVar4 = D3DDevice_EndCommandBuffer(pDVar1);
-      if (iVar4 < 0) {
-        R_ErrorDescription(iVar4);
+      iVar3 = D3DDevice_EndCommandBuffer(pDVar1);
+      if (iVar3 < 0) {
+        R_ErrorDescription(iVar3);
                     /* WARNING: Subroutine does not return */
         Sys_Error(
                  "c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_cmdbuf.cpp (%i) device->EndCommandBuffer() failed: %s\n"
@@ -257,7 +252,6 @@ void R_ShutdownCmdBuf(GfxCmdBuf *param_1)
     D3DDevice_UnsetAll(pDVar1);
     D3DDevice_ReleaseThreadOwnership(pDVar1);
   }
-  __restgprlr_28();
   return;
 }
 

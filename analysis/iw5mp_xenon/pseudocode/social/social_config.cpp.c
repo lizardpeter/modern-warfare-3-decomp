@@ -2,6 +2,8 @@
 
 // 82701758  SocialConfig_ParseFile  (social/social_config.cpp:185)
 
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void SocialConfig_ParseFile(void)
@@ -19,7 +21,6 @@ void SocialConfig_ParseFile(void)
   char *local_a8;
   char *local_a4;
   
-  __savegprlr();
   local_ac = g_socialConfigFileBuffer;
   Com_BeginParseSession("social");
   Com_SetSpaceDelimited(1);
@@ -161,7 +162,6 @@ LAB_82701ab8:
   if (bVar3) {
     Com_PrintError(1,"Error processing the Social config file.\n");
   }
-  __restgprlr();
   return;
 }
 
@@ -186,6 +186,9 @@ void SocialConfig_RetryGetFile(void)
 
 // 82701BA8  SocialConfig_FileDownloaded  (social/social_config.cpp:379)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void SocialConfig_FileDownloaded(int param_1)
 
 {
@@ -193,7 +196,6 @@ void SocialConfig_FileDownloaded(int param_1)
   _func___cdecl_void **pp_Var2;
   int iVar3;
   
-  __savegprlr_29(param_1);
   pp_Var2 = g_configComplete_Callbacks;
   g_gotSocialConfigFile = true;
   DAT_84546d18 = 0;
@@ -211,12 +213,14 @@ void SocialConfig_FileDownloaded(int param_1)
       pp_Var2 = pp_Var2 + 1;
     } while (iVar3 < iVar1);
   }
-  __restgprlr_29();
   return;
 }
 
 
 // 82701C20  SocialConfig_FileDownload_Failed  (social/social_config.cpp:403)
+
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 
 void SocialConfig_FileDownload_Failed(int param_1)
 
@@ -224,13 +228,11 @@ void SocialConfig_FileDownload_Failed(int param_1)
   uint uVar1;
   int iVar2;
   
-  __savegprlr_29(param_1);
   DAT_84546d10 = DAT_84546d10 + 1;
   uVar1 = Live_GenerateTimeToRetryInSeconds(DAT_84546d10,0x1e);
   iVar2 = Sys_Milliseconds();
   g_socialConfigFileRetryTime = iVar2 + uVar1 * 1000;
   DAT_84546d18 = 0;
-  __restgprlr_29();
   return;
 }
 
@@ -273,12 +275,13 @@ bool SocialConfig_Ok(void)
 
 // 82701CE8  SocialConfig_Init  (social/social_config.cpp:434)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void SocialConfig_Init(void)
 
 {
-  __savegprlr_29();
   g_configComplete_Callbacks[0] = (_func___cdecl_void *)0x0;
   g_configComplete_Callbacks[1] = (_func___cdecl_void *)0x0;
   g_configComplete_Callbacks[2] = (_func___cdecl_void *)0x0;
@@ -520,40 +523,38 @@ void SocialConfig_Init(void)
   commerce_upload_retry_step =
        Dvar_RegisterInt("commerce_retry_step",1000,0,300000,0,
                         "Step in m/s for the commerce upload retry");
-  __restgprlr_29();
   return;
 }
 
 
 // 82702A48  SocialConfig_Update  (social/social_config.cpp:577)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void SocialConfig_Update(int param_1)
 
 {
   int iVar1;
-  int iVar2;
-  bool bVar4;
+  bool bVar3;
   bdLobbyService *this;
-  Status SVar3;
+  Status SVar2;
   
-  iVar1 = __savegprlr_29(param_1);
-  iVar2 = Sys_Milliseconds();
-  if ((((g_gotSocialConfigFile == false) && (bVar4 = Live_IsUserSignedInToLive(iVar1), bVar4)) &&
-      (this = dwGetLobbyService(iVar1), this != (bdLobbyService *)0x0)) &&
-     (((SVar3 = bdLobbyService::getStatus(this), SVar3 == BD_CONNECTED &&
+  iVar1 = Sys_Milliseconds();
+  if ((((g_gotSocialConfigFile == false) && (bVar3 = Live_IsUserSignedInToLive(param_1), bVar3)) &&
+      (this = dwGetLobbyService(param_1), this != (bdLobbyService *)0x0)) &&
+     (((SVar2 = bdLobbyService::getStatus(this), SVar2 == BD_CONNECTED &&
        (g_gotSocialConfigFile == false)) &&
-      ((DAT_84546d18 == '\0' && (g_socialConfigFileRetryTime < iVar2)))))) {
-    bVar4 = LiveStorage_ReadSocialConfigFile
-                      (iVar1,"social_tu0.cfg",(uchar *)g_socialConfigFileBuffer,0x1000);
-    if (bVar4) {
+      ((DAT_84546d18 == '\0' && (g_socialConfigFileRetryTime < iVar1)))))) {
+    bVar3 = LiveStorage_ReadSocialConfigFile
+                      (param_1,"social_tu0.cfg",(uchar *)g_socialConfigFileBuffer,0x1000);
+    if (bVar3) {
       g_gotSocialConfigFile = false;
       DAT_84546d18 = 1;
-      __restgprlr_29();
       return;
     }
     SocialConfig_RetryGetFile();
   }
-  __restgprlr_29();
   return;
 }
 

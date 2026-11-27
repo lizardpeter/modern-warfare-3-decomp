@@ -14,43 +14,44 @@ void TRACK_xenon_gamepad(void)
 
 // 82643248  GPad_Check  (xenon/xenon_gamepad.cpp:98)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void GPad_Check(int param_1)
 
 {
   bool bVar1;
-  GamePad *pGVar2;
-  ulong uVar3;
-  ulong uVar4;
+  ulong uVar2;
+  GamePad *pGVar3;
   
-  uVar3 = __savegprlr_27(param_1);
-  if (((int)uVar3 < 0) || (3 < (int)uVar3)) {
+  if ((param_1 < 0) || (3 < param_1)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_gamepad.cpp",0x66,
                     0,"%s");
   }
-  pGVar2 = s_gamePads + uVar3;
-  bVar1 = s_gamePads[uVar3].enabled;
-  uVar4 = XInputGetCapabilities(uVar3,1,&s_gamePads[uVar3].caps);
-  pGVar2->enabled = uVar4 == 0;
-  uVar4 = XInputGetCapabilities(uVar3,2,&s_gamePads[uVar3].keyboardCaps);
-  *(bool *)(uVar3 * 0xac + -0x7bdb5d87) = uVar4 == 0;
+  pGVar3 = s_gamePads + param_1;
+  bVar1 = s_gamePads[param_1].enabled;
+  uVar2 = XInputGetCapabilities(param_1,1,&s_gamePads[param_1].caps);
+  pGVar3->enabled = uVar2 == 0;
+  uVar2 = XInputGetCapabilities(param_1,2,&s_gamePads[param_1].keyboardCaps);
+  *(bool *)(param_1 * 0xac + -0x7bdb5d87) = uVar2 == 0;
   if (((s_removedCB != (_func___cdecl_void_int *)0x0) && (bVar1 != false)) &&
-     (pGVar2->enabled == false)) {
-    GPad_ResetState(uVar3);
-    (*s_removedCB)(uVar3);
-    __restgprlr_27();
+     (pGVar3->enabled == false)) {
+    GPad_ResetState(param_1);
+    (*s_removedCB)(param_1);
     return;
   }
   if (((s_insertedCB != (_func___cdecl_void_int *)0x0) && (bVar1 == false)) &&
-     (pGVar2->enabled != false)) {
-    (*s_insertedCB)(uVar3);
+     (pGVar3->enabled != false)) {
+    (*s_insertedCB)(param_1);
   }
-  __restgprlr_27();
   return;
 }
 
 
 // 82643370  GPad_RefreshAll  (xenon/xenon_gamepad.cpp:131)
 
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void GPad_RefreshAll(void)
@@ -64,7 +65,6 @@ void GPad_RefreshAll(void)
   _func___cdecl_void_int *p_Var6;
   _XINPUT_GAMEPAD local_70 [9];
   
-  __savegprlr_22();
   uVar5 = 0;
   pGVar4 = s_gamePads;
   do {
@@ -100,7 +100,6 @@ LAB_826434ac:
     pGVar4 = pGVar4 + 1;
     uVar5 = uVar5 + 1;
     if (-0x7bdb5ad9 < (int)pGVar4) {
-      __restgprlr_22();
       return;
     }
   } while( true );
@@ -109,48 +108,49 @@ LAB_826434ac:
 
 // 82641FF0  GPad_UpdateDigitals  (xenon/xenon_gamepad.cpp:145)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void GPad_UpdateDigitals(int param_1,_XINPUT_GAMEPAD *param_2)
 
 {
   float fVar1;
-  int iVar2;
-  GamerSettingState *pGVar3;
-  ulonglong uVar4;
+  GamerSettingState *pGVar2;
   
-  uVar4 = (ulonglong)(int)param_2;
-  iVar2 = __savegprlr_28(param_1);
-  if ((iVar2 < 0) || (3 < iVar2)) {
+  if ((param_1 < 0) || (3 < param_1)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_gamepad.cpp",0x97,
                     0,"%s");
   }
-  if ((uVar4 & 0xffffffff) == 0) {
+  if (param_2 == (_XINPUT_GAMEPAD *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_gamepad.cpp",0x98,
                     0,"%s");
   }
-  s_gamePads[iVar2].lastDigitals = s_gamePads[iVar2].digitals;
-  s_gamePads[iVar2].digitals = *(short *)uVar4;
-  pGVar3 = GamerProfile_GetProfileSettings(iVar2);
-  fVar1 = (pGVar3->commonConfig).gpadButtonRStickDeflect;
-  if (fVar1 < ABS(s_gamePads[iVar2].sticks[2])) {
-    s_gamePads[iVar2].digitals = s_gamePads[iVar2].digitals & 0xff7f;
+  s_gamePads[param_1].lastDigitals = s_gamePads[param_1].digitals;
+  s_gamePads[param_1].digitals = param_2->wButtons;
+  pGVar2 = GamerProfile_GetProfileSettings(param_1);
+  fVar1 = (pGVar2->commonConfig).gpadButtonRStickDeflect;
+  if (fVar1 < ABS(s_gamePads[param_1].sticks[2])) {
+    s_gamePads[param_1].digitals = s_gamePads[param_1].digitals & 0xff7f;
   }
-  if (fVar1 < ABS(s_gamePads[iVar2].sticks[3])) {
-    s_gamePads[iVar2].digitals = s_gamePads[iVar2].digitals & 0xff7f;
+  if (fVar1 < ABS(s_gamePads[param_1].sticks[3])) {
+    s_gamePads[param_1].digitals = s_gamePads[param_1].digitals & 0xff7f;
   }
-  pGVar3 = GamerProfile_GetProfileSettings(iVar2);
-  fVar1 = (pGVar3->commonConfig).gpadButtonLStickDeflect;
-  if (fVar1 < ABS(s_gamePads[iVar2].sticks[0])) {
-    s_gamePads[iVar2].digitals = s_gamePads[iVar2].digitals & 0xffbf;
+  pGVar2 = GamerProfile_GetProfileSettings(param_1);
+  fVar1 = (pGVar2->commonConfig).gpadButtonLStickDeflect;
+  if (fVar1 < ABS(s_gamePads[param_1].sticks[0])) {
+    s_gamePads[param_1].digitals = s_gamePads[param_1].digitals & 0xffbf;
   }
-  if (fVar1 < ABS(s_gamePads[iVar2].sticks[1])) {
-    s_gamePads[iVar2].digitals = s_gamePads[iVar2].digitals & 0xffbf;
+  if (fVar1 < ABS(s_gamePads[param_1].sticks[1])) {
+    s_gamePads[param_1].digitals = s_gamePads[param_1].digitals & 0xffbf;
   }
-  __restgprlr_28();
   return;
 }
 
 
 // 82642128  GPad_UpdateAnalogs  (xenon/xenon_gamepad.cpp:187)
+
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 
 void GPad_UpdateAnalogs(int param_1,_XINPUT_GAMEPAD *param_2)
 
@@ -158,63 +158,59 @@ void GPad_UpdateAnalogs(int param_1,_XINPUT_GAMEPAD *param_2)
   float fVar1;
   float fVar2;
   dvar_t *pdVar3;
-  int iVar4;
-  ulonglong uVar5;
   
-  uVar5 = (ulonglong)(int)param_2;
-  iVar4 = __savegprlr_28(param_1);
-  if ((iVar4 < 0) || (3 < iVar4)) {
+  if ((param_1 < 0) || (3 < param_1)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_gamepad.cpp",0xc0,
                     0,"%s");
   }
-  if ((uVar5 & 0xffffffff) == 0) {
+  if (param_2 == (_XINPUT_GAMEPAD *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_gamepad.cpp",0xc1,
                     0,"%s");
   }
   pdVar3 = gpad_button_deadzone;
-  s_gamePads[iVar4].lastAnalogs[0] = s_gamePads[iVar4].analogs[0];
+  s_gamePads[param_1].lastAnalogs[0] = s_gamePads[param_1].analogs[0];
   fVar1 = (pdVar3->current).value;
-  fVar1 = ((float)*(byte *)((int)uVar5 + 2) * 0.003921569 - fVar1) / (1.0 - fVar1);
+  fVar1 = ((float)param_2->bLeftTrigger * 0.003921569 - fVar1) / (1.0 - fVar1);
   fVar2 = 0.0;
   if (-fVar1 < 0.0) {
     fVar2 = fVar1;
   }
-  s_gamePads[iVar4].analogs[0] = fVar2;
-  s_gamePads[iVar4].lastAnalogs[1] = s_gamePads[iVar4].analogs[1];
+  s_gamePads[param_1].analogs[0] = fVar2;
+  s_gamePads[param_1].lastAnalogs[1] = s_gamePads[param_1].analogs[1];
   fVar1 = (pdVar3->current).value;
-  fVar2 = ((float)*(byte *)((int)uVar5 + 3) * 0.003921569 - fVar1) / (1.0 - fVar1);
+  fVar2 = ((float)param_2->bRightTrigger * 0.003921569 - fVar1) / (1.0 - fVar1);
   fVar1 = 0.0;
   if (-fVar2 < 0.0) {
     fVar1 = fVar2;
   }
-  s_gamePads[iVar4].analogs[1] = fVar1;
-  __restgprlr_28();
+  s_gamePads[param_1].analogs[1] = fVar1;
   return;
 }
 
 
 // 82642248  GPad_ConvertStickToFloat  (xenon/xenon_gamepad.cpp:215)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void GPad_ConvertStickToFloat(short param_1,short param_2,float *param_3,float *param_4)
 
 {
   float fVar1;
-  short sVar2;
-  double dVar3;
-  float fVar4;
+  double dVar2;
+  float fVar3;
   float local_40;
   float fStack_3c;
   
-  sVar2 = __savegprlr_28(param_1);
   fStack_3c = (float)(longlong)param_2 * 3.0517578e-05;
-  local_40 = (float)(longlong)sVar2 * 3.0517578e-05;
-  dVar3 = (double)((gpad_stick_deadzone_max->current).value +
+  local_40 = (float)(longlong)param_1 * 3.0517578e-05;
+  dVar2 = (double)((gpad_stick_deadzone_max->current).value +
                   (gpad_stick_deadzone_min->current).value);
-  fVar4 = Vec2Normalize(&local_40);
-  if ((gpad_stick_deadzone_min->current).value <= fVar4) {
+  fVar3 = Vec2Normalize(&local_40);
+  if ((gpad_stick_deadzone_min->current).value <= fVar3) {
     fVar1 = 1.0;
-    if (fVar4 <= 1.0 - (gpad_stick_deadzone_max->current).value) {
-      fVar1 = (fVar4 - (gpad_stick_deadzone_min->current).value) / (float)(1.0 - dVar3);
+    if (fVar3 <= 1.0 - (gpad_stick_deadzone_max->current).value) {
+      fVar1 = (fVar3 - (gpad_stick_deadzone_min->current).value) / (float)(1.0 - dVar2);
     }
   }
   else {
@@ -222,96 +218,92 @@ void GPad_ConvertStickToFloat(short param_1,short param_2,float *param_3,float *
   }
   *param_3 = fVar1 * local_40;
   *param_4 = fVar1 * fStack_3c;
-  __restgprlr_28();
   return;
 }
 
 
 // 82642330  GPad_UpdateSticksDown  (xenon/xenon_gamepad.cpp:240)
 
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
+
 void GPad_UpdateSticksDown(GamePad *param_1)
 
 {
   float fVar1;
-  int iVar2;
-  longlong lVar3;
-  float *pfVar4;
+  longlong lVar2;
+  float *pfVar3;
+  bool (*pabVar4) [2];
   int iVar5;
   double dVar6;
   
-  iVar2 = __savegprlr_22(param_1);
-  iVar5 = iVar2 + 0x68;
-  pfVar4 = (float *)(iVar2 + 0x48);
-  lVar3 = 4;
+  pabVar4 = param_1->stickDown;
+  pfVar3 = param_1->sticks;
+  lVar2 = 4;
   do {
-    iVar2 = 0;
+    iVar5 = 0;
     do {
       fVar1 = (gpad_stick_pressed->current).value;
-      *(char *)(iVar5 + 8 + iVar2) = *(char *)(iVar5 + iVar2);
-      if (*(char *)(iVar5 + iVar2) == '\0') {
+      pabVar4[4][iVar5] = (*pabVar4)[iVar5];
+      if ((*pabVar4)[iVar5] == false) {
         fVar1 = (gpad_stick_pressed_hysteresis->current).value + fVar1;
       }
       else {
         fVar1 = fVar1 - (gpad_stick_pressed_hysteresis->current).value;
       }
       dVar6 = (double)fVar1;
-      if (iVar2 == 0) {
-        *(bool *)iVar5 = dVar6 < (double)*pfVar4;
+      if (iVar5 == 0) {
+        (*pabVar4)[0] = dVar6 < (double)*pfVar3;
       }
       else {
-        if (iVar2 != 1) {
+        if (iVar5 != 1) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_gamepad.cpp"
                           ,0x107,0,"%s");
         }
-        *(bool *)(iVar5 + iVar2) = (double)*pfVar4 < -dVar6;
+        (*pabVar4)[iVar5] = (double)*pfVar3 < -dVar6;
       }
-      iVar2 = iVar2 + 1;
-    } while (iVar2 != 2);
-    lVar3 = lVar3 + -1;
-    pfVar4 = pfVar4 + 1;
-    iVar5 = iVar5 + 2;
-  } while (lVar3 != 0);
-  __restgprlr_22();
+      iVar5 = iVar5 + 1;
+    } while (iVar5 != 2);
+    lVar2 = lVar2 + -1;
+    pfVar3 = pfVar3 + 1;
+    pabVar4 = pabVar4 + 1;
+  } while (lVar2 != 0);
   return;
 }
 
 
 // 82642430  GPad_UpdateSticks  (xenon/xenon_gamepad.cpp:272)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void GPad_UpdateSticks(int param_1,_XINPUT_GAMEPAD *param_2)
 
 {
-  int iVar1;
-  int iVar2;
-  ulonglong uVar3;
   float local_40;
   float local_3c;
   float local_38;
   float local_34 [13];
   
-  uVar3 = (ulonglong)(int)param_2;
-  iVar2 = __savegprlr_28(param_1);
-  if ((iVar2 < 0) || (3 < iVar2)) {
+  if ((param_1 < 0) || (3 < param_1)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_gamepad.cpp",0x116
                     ,0,"%s");
   }
-  if ((uVar3 & 0xffffffff) == 0) {
+  if (param_2 == (_XINPUT_GAMEPAD *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_gamepad.cpp",0x117
                     ,0,"%s");
   }
-  iVar1 = (int)uVar3;
-  GPad_ConvertStickToFloat(*(short *)(iVar1 + 4),*(short *)(iVar1 + 6),&local_40,&local_3c);
-  GPad_ConvertStickToFloat(*(short *)(iVar1 + 8),*(short *)(iVar1 + 10),&local_38,local_34);
-  s_gamePads[iVar2].lastSticks[0] = s_gamePads[iVar2].sticks[0];
-  s_gamePads[iVar2].sticks[0] = local_40;
-  s_gamePads[iVar2].lastSticks[1] = s_gamePads[iVar2].sticks[1];
-  s_gamePads[iVar2].sticks[1] = local_3c;
-  s_gamePads[iVar2].lastSticks[2] = s_gamePads[iVar2].sticks[2];
-  s_gamePads[iVar2].sticks[2] = local_38;
-  s_gamePads[iVar2].lastSticks[3] = s_gamePads[iVar2].sticks[3];
-  s_gamePads[iVar2].sticks[3] = local_34[0];
-  GPad_UpdateSticksDown(s_gamePads + iVar2);
-  __restgprlr_28();
+  GPad_ConvertStickToFloat(param_2->sThumbLX,param_2->sThumbLY,&local_40,&local_3c);
+  GPad_ConvertStickToFloat(param_2->sThumbRX,param_2->sThumbRY,&local_38,local_34);
+  s_gamePads[param_1].lastSticks[0] = s_gamePads[param_1].sticks[0];
+  s_gamePads[param_1].sticks[0] = local_40;
+  s_gamePads[param_1].lastSticks[1] = s_gamePads[param_1].sticks[1];
+  s_gamePads[param_1].sticks[1] = local_3c;
+  s_gamePads[param_1].lastSticks[2] = s_gamePads[param_1].sticks[2];
+  s_gamePads[param_1].sticks[2] = local_38;
+  s_gamePads[param_1].lastSticks[3] = s_gamePads[param_1].sticks[3];
+  s_gamePads[param_1].sticks[3] = local_34[0];
+  GPad_UpdateSticksDown(s_gamePads + param_1);
   return;
 }
 
@@ -362,39 +354,39 @@ void GPad_UpdateRumbles(int param_1)
 
 // 82642688  GPad_InitAll  (xenon/xenon_gamepad.cpp:351)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void GPad_InitAll(void)
 
 {
-  ulong uVar1;
-  ushort uVar2;
-  char *pcVar3;
-  IMAGE_DOS_HEADER *pIVar4;
-  ulong uVar5;
-  _XINPUT_VIBRATION *p_Var6;
+  ushort uVar1;
+  char *pcVar2;
+  IMAGE_DOS_HEADER *pIVar3;
+  ulong uVar4;
+  _XINPUT_VIBRATION *p_Var5;
+  double dVar6;
   double dVar7;
-  double dVar8;
   
-  __savegprlr_28();
   gpad_debug = Dvar_RegisterInt("gpad_debug",0,-0x80000000,0x7fffffff,0,"coder use only");
-  pcVar3 = "ntroller %i, not logged in.\n";
-  uVar2 = 0;
-  dVar8 = 1.0;
-  dVar7 = 0.0;
+  pcVar2 = "ntroller %i, not logged in.\n";
+  uVar1 = 0;
+  dVar7 = 1.0;
+  dVar6 = 0.0;
   gpad_button_deadzone =
        Dvar_RegisterFloat("gpad_button_deadzone",0.13,0.0,1.0,0,"ntroller %i, not logged in.\n");
   gpad_stick_deadzone_min =
-       Dvar_RegisterFloat("gpad_stick_deadzone_min",0.2,(float)dVar7,(float)dVar8,uVar2,pcVar3);
-  pIVar4 = &IMAGE_DOS_HEADER_82000000;
-  uVar2 = 0;
+       Dvar_RegisterFloat("gpad_stick_deadzone_min",0.2,(float)dVar6,(float)dVar7,uVar1,pcVar2);
+  pIVar3 = &IMAGE_DOS_HEADER_82000000;
+  uVar1 = 0;
   gpad_stick_deadzone_max =
-       Dvar_RegisterFloat("gpad_stick_deadzone_max",0.01,(float)dVar7,(float)dVar8,0,
+       Dvar_RegisterFloat("gpad_stick_deadzone_max",0.01,(float)dVar6,(float)dVar7,0,
                           IMAGE_DOS_HEADER_82000000.e_magic);
   gpad_stick_pressed =
-       Dvar_RegisterFloat("gpad_stick_pressed",0.4,(float)dVar7,(float)dVar8,uVar2,pIVar4->e_magic);
+       Dvar_RegisterFloat("gpad_stick_pressed",0.4,(float)dVar6,(float)dVar7,uVar1,pIVar3->e_magic);
   gpad_stick_pressed_hysteresis =
-       Dvar_RegisterFloat("gpad_stick_pressed_hysteresis",0.1,(float)dVar7,(float)dVar8,0,
+       Dvar_RegisterFloat("gpad_stick_pressed_hysteresis",0.1,(float)dVar6,(float)dVar7,0,
                           IMAGE_DOS_HEADER_82000000.e_magic);
   gpad_menu_scroll_delay_first =
        Dvar_RegisterInt("gpad_menu_scroll_delay_first",0x1a4,0,1000,0,
@@ -407,22 +399,23 @@ void GPad_InitAll(void)
   gpad_rapidfire =
        Dvar_RegisterBool("gpad_rapidfire",false,4,
                          "Simulate a modded controller (hold rtrigger most of the way down)");
-  uVar5 = 0;
-  p_Var6 = &s_gamePads[0].feedback.Rumble;
+  uVar4 = 0;
+  p_Var5 = &s_gamePads[0].feedback.Rumble;
   do {
-    p_Var6->wLeftMotorSpeed = 0;
-    p_Var6->wRightMotorSpeed = 0;
-    uVar1 = XInputSetState(uVar5,p_Var6);
-    p_Var6 = p_Var6 + 0x2b;
-    uVar5 = uVar5 + 1;
-  } while ((int)p_Var6 < -0x7bdb5a58);
-  __restgprlr_28(uVar1);
+    p_Var5->wLeftMotorSpeed = 0;
+    p_Var5->wRightMotorSpeed = 0;
+    XInputSetState(uVar4,p_Var5);
+    p_Var5 = p_Var5 + 0x2b;
+    uVar4 = uVar4 + 1;
+  } while ((int)p_Var5 < -0x7bdb5a58);
   return;
 }
 
 
 // 826434D8  GPad_UpdateAll  (xenon/xenon_gamepad.cpp:390)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void GPad_UpdateAll(void)
@@ -435,7 +428,6 @@ void GPad_UpdateAll(void)
   ulong uVar5;
   _XINPUT_STATE a_Stack_40 [4];
   
-  __savegprlr_28();
   if (-1 < (gpad_debug->current).integer) {
     GPad_RefreshAll();
     uVar5 = 0;
@@ -454,7 +446,6 @@ void GPad_UpdateAll(void)
     } while ((int)uVar5 < 4);
     rapidFireCounter = rapidFireCounter + 1;
     inputCounter = 0;
-    __restgprlr_28();
     return;
   }
   p_Var4 = delayedInputState;
@@ -484,7 +475,6 @@ void GPad_UpdateAll(void)
     inputCounter = 0;
   }
   rapidFireCounter = rapidFireCounter + 1;
-  __restgprlr_28();
   return;
 }
 
@@ -576,229 +566,207 @@ bool GPad_HasKeyboard(int param_1)
 
 // 82642B10  GPad_GetButton  (xenon/xenon_gamepad.cpp:517)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 float GPad_GetButton(int param_1,GamePadButton param_2)
 
 {
-  int iVar1;
-  ulonglong uVar2;
-  double dVar3;
-  undefined8 uVar4;
+  double dVar1;
   
-  uVar2 = (ulonglong)(int)param_2;
-  iVar1 = __savegprlr_28(param_1);
-  uVar4 = 0;
-  if ((iVar1 < 0) || (3 < iVar1)) {
+  dVar1 = 0.0;
+  if ((param_1 < 0) || (3 < param_1)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_gamepad.cpp",0x20a
                     ,0,"%s");
   }
-  if ((uVar2 & 0x30000000) == 0) {
+  if ((param_2 & 0x30000000) == GPAD_NONE) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_gamepad.cpp",0x20b
                     ,0,"%s");
   }
-  if ((uVar2 & 0x10000000) == 0) {
-    if ((uVar2 & 0x20000000) != 0) {
-      dVar3 = (double)__restgprlr_28((double)*(float *)((int)s_gamePads[iVar1].analogs +
-                                                       (int)(((uVar2 & 0xdfffffff) + 2 & 0xffffffff)
-                                                            << 2) + -8));
-      return (float)dVar3;
+  if ((param_2 & 0x10000000) == GPAD_NONE) {
+    if ((param_2 & GPAD_L_TRIG) != GPAD_NONE) {
+      return s_gamePads[param_1].analogs[param_2 & ~GPAD_L_TRIG];
     }
   }
-  else if (((int)s_gamePads[iVar1].digitals & (uint)uVar2 & 0xefffffff) != 0) {
-    dVar3 = (double)__restgprlr_28(0x3ff0000000000000);
-    return (float)dVar3;
+  else if (((int)s_gamePads[param_1].digitals & param_2 & 0xefffffff) != GPAD_NONE) {
+    return 1.0;
   }
-  dVar3 = (double)__restgprlr_28(uVar4);
-  return (float)dVar3;
+  return (float)dVar1;
 }
 
 
 // 82642C18  GPad_IsButtonPressed  (xenon/xenon_gamepad.cpp:546)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 bool GPad_IsButtonPressed(int param_1,GamePadButton param_2)
 
 {
-  int iVar1;
-  undefined1 uVar2;
-  ulonglong uVar3;
-  undefined8 uVar4;
-  bool bVar5;
-  bool bVar6;
+  ulonglong uVar1;
+  bool bVar2;
+  bool bVar3;
   
-  uVar3 = (ulonglong)(int)param_2;
-  iVar1 = __savegprlr_26(param_1);
-  bVar5 = false;
-  bVar6 = false;
-  if ((iVar1 < 0) || (3 < iVar1)) {
+  bVar2 = false;
+  bVar3 = false;
+  if ((param_1 < 0) || (3 < param_1)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_gamepad.cpp",0x228
                     ,0,"%s");
   }
-  if ((uVar3 & 0x30000000) == 0) {
+  if ((param_2 & 0x30000000) == GPAD_NONE) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_gamepad.cpp",0x229
                     ,0,"%s");
   }
-  if ((uVar3 & 0x10000000) == 0) {
-    if ((uVar3 & 0x20000000) != 0) {
-      bVar5 = 0.0 < *(float *)((int)s_gamePads[iVar1].analogs +
-                              (int)(((uVar3 & 0xdfffffff) + 2 & 0xffffffff) << 2) + -8);
-      bVar6 = 0.0 < *(float *)((int)s_gamePads[iVar1].analogs +
-                              (int)(((uVar3 & 0xdfffffff) + 10 & 0xffffffff) << 2) + -8);
+  if ((param_2 & 0x10000000) == GPAD_NONE) {
+    if ((param_2 & GPAD_L_TRIG) != GPAD_NONE) {
+      uVar1 = CONCAT44(param_2,param_2) & 0xffffffffdfffffff;
+      bVar2 = 0.0 < *(float *)((int)s_gamePads[param_1].analogs +
+                              (int)((uVar1 + 2 & 0xffffffff) << 2) + -8);
+      bVar3 = 0.0 < *(float *)((int)s_gamePads[param_1].analogs +
+                              (int)((uVar1 + 10 & 0xffffffff) << 2) + -8);
     }
   }
   else {
-    uVar3 = uVar3 << 0x20 | uVar3 & 0xefffffff;
-    bVar5 = ((longlong)s_gamePads[iVar1].digitals & uVar3) != 0;
-    bVar6 = ((longlong)s_gamePads[iVar1].lastDigitals & uVar3) != 0;
+    uVar1 = CONCAT44(param_2,param_2) & 0xffffffffefffffff;
+    bVar2 = ((longlong)s_gamePads[param_1].digitals & uVar1) != 0;
+    bVar3 = ((longlong)s_gamePads[param_1].lastDigitals & uVar1) != 0;
   }
-  if ((!bVar5) || (uVar4 = 1, bVar6)) {
-    uVar4 = 0;
+  if ((!bVar2) || (bVar2 = true, bVar3)) {
+    bVar2 = false;
   }
-  uVar2 = __restgprlr_26(uVar4);
-  return (bool)uVar2;
+  return bVar2;
 }
 
 
 // 82642D68  GPad_IsButtonReleased  (xenon/xenon_gamepad.cpp:578)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 bool GPad_IsButtonReleased(int param_1,GamePadButton param_2)
 
 {
-  int iVar1;
-  undefined1 uVar2;
-  ulonglong uVar3;
-  undefined8 uVar4;
-  bool bVar5;
-  bool bVar6;
+  ulonglong uVar1;
+  bool bVar2;
+  bool bVar3;
   
-  uVar3 = (ulonglong)(int)param_2;
-  iVar1 = __savegprlr_26(param_1);
-  bVar5 = false;
-  bVar6 = false;
-  if ((iVar1 < 0) || (3 < iVar1)) {
+  bVar2 = false;
+  bVar3 = false;
+  if ((param_1 < 0) || (3 < param_1)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_gamepad.cpp",0x248
                     ,0,"%s");
   }
-  if ((uVar3 & 0x30000000) == 0) {
+  if ((param_2 & 0x30000000) == GPAD_NONE) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_gamepad.cpp",0x249
                     ,0,"%s");
   }
-  if ((uVar3 & 0x10000000) == 0) {
-    if ((uVar3 & 0x20000000) != 0) {
-      bVar5 = 0.0 < *(float *)((int)s_gamePads[iVar1].analogs +
-                              (int)(((uVar3 & 0xdfffffff) + 2 & 0xffffffff) << 2) + -8);
-      bVar6 = 0.0 < *(float *)((int)s_gamePads[iVar1].analogs +
-                              (int)(((uVar3 & 0xdfffffff) + 10 & 0xffffffff) << 2) + -8);
+  if ((param_2 & 0x10000000) == GPAD_NONE) {
+    if ((param_2 & GPAD_L_TRIG) != GPAD_NONE) {
+      uVar1 = CONCAT44(param_2,param_2) & 0xffffffffdfffffff;
+      bVar2 = 0.0 < *(float *)((int)s_gamePads[param_1].analogs +
+                              (int)((uVar1 + 2 & 0xffffffff) << 2) + -8);
+      bVar3 = 0.0 < *(float *)((int)s_gamePads[param_1].analogs +
+                              (int)((uVar1 + 10 & 0xffffffff) << 2) + -8);
     }
   }
   else {
-    uVar3 = uVar3 << 0x20 | uVar3 & 0xefffffff;
-    bVar5 = ((longlong)s_gamePads[iVar1].digitals & uVar3) != 0;
-    bVar6 = ((longlong)s_gamePads[iVar1].lastDigitals & uVar3) != 0;
+    uVar1 = CONCAT44(param_2,param_2) & 0xffffffffefffffff;
+    bVar2 = ((longlong)s_gamePads[param_1].digitals & uVar1) != 0;
+    bVar3 = ((longlong)s_gamePads[param_1].lastDigitals & uVar1) != 0;
   }
-  if ((bVar5) || (uVar4 = 1, !bVar6)) {
-    uVar4 = 0;
+  if ((bVar2) || (bVar2 = true, !bVar3)) {
+    bVar2 = false;
   }
-  uVar2 = __restgprlr_26(uVar4);
-  return (bool)uVar2;
+  return bVar2;
 }
 
 
 // 82642EB8  GPad_GetStick  (xenon/xenon_gamepad.cpp:610)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 float GPad_GetStick(int param_1,GamePadStick param_2)
 
 {
-  longlong lVar1;
-  ulonglong uVar2;
-  double dVar3;
-  
-  uVar2 = (ulonglong)(int)param_2;
-  lVar1 = __savegprlr_28(param_1);
-  if (((int)lVar1 < 0) || (3 < (int)lVar1)) {
+  if ((param_1 < 0) || (3 < param_1)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_gamepad.cpp",0x266
                     ,0,"%s");
   }
-  if ((uVar2 & 0x40000000) == 0) {
+  if ((param_2 & GPAD_LX) == GPAD_INVALID) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_gamepad.cpp",0x267
                     ,0,"%s");
   }
-  dVar3 = (double)__restgprlr_28((double)*(float *)((int)s_gamePads[0].sticks +
-                                                   (int)(((uVar2 & 0xbfffffff) + lVar1 * 0x2b &
-                                                         0xffffffff) << 2)));
-  return (float)dVar3;
+  return s_gamePads[param_1].sticks[param_2];
 }
 
 
 // 82642F58  GPad_SetLowRumble  (xenon/xenon_gamepad.cpp:629)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void GPad_SetLowRumble(int param_1,float param_2)
 
 {
-  int iVar1;
-  double extraout_f1;
-  double dVar2;
+  double dVar1;
   
-  iVar1 = __savegprlr_29((double)param_2,param_1);
-  dVar2 = extraout_f1;
-  if ((iVar1 < 0) || (3 < iVar1)) {
+  dVar1 = (double)param_2;
+  if ((param_1 < 0) || (3 < param_1)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_gamepad.cpp",0x278
                     ,0,"%s");
   }
-  if ((dVar2 < 0.0) && (1.0 < dVar2)) {
+  if ((dVar1 < 0.0) && (1.0 < dVar1)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_gamepad.cpp",0x279
                     ,0,"%s");
   }
-  s_gamePads[iVar1].lowRumble = (float)dVar2;
-  __restgprlr_29();
+  s_gamePads[param_1].lowRumble = (float)dVar1;
   return;
 }
 
 
 // 82643008  GPad_SetHighRumble  (xenon/xenon_gamepad.cpp:644)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void GPad_SetHighRumble(int param_1,float param_2)
 
 {
-  int iVar1;
-  double extraout_f1;
-  double dVar2;
+  double dVar1;
   
-  iVar1 = __savegprlr_29((double)param_2,param_1);
-  dVar2 = extraout_f1;
-  if ((iVar1 < 0) || (3 < iVar1)) {
+  dVar1 = (double)param_2;
+  if ((param_1 < 0) || (3 < param_1)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_gamepad.cpp",0x287
                     ,0,"%s");
   }
-  if ((dVar2 < 0.0) && (1.0 < dVar2)) {
+  if ((dVar1 < 0.0) && (1.0 < dVar1)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_gamepad.cpp",0x288
                     ,0,"%s");
   }
-  s_gamePads[iVar1].highRumble = (float)dVar2;
-  __restgprlr_29();
+  s_gamePads[param_1].highRumble = (float)dVar1;
   return;
 }
 
 
 // 826430B8  GPad_GetStickChangedToPressedState  (xenon/xenon_gamepad.cpp:656)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 bool GPad_GetStickChangedToPressedState
                (int param_1,GamePadStick param_2,GamePadStickDir param_3,bool param_4)
 
 {
-  int iVar1;
-  undefined1 uVar2;
-  ulonglong uVar3;
-  ulonglong uVar4;
-  ulonglong uVar5;
-  undefined8 uVar6;
+  char cVar1;
+  ulonglong uVar2;
+  bool bVar3;
   
-  uVar4 = (ulonglong)param_4;
-  uVar3 = (ulonglong)(int)param_2;
-  iVar1 = __savegprlr_26(param_1);
-  if ((iVar1 < 0) || (3 < iVar1)) {
+  if ((param_1 < 0) || (3 < param_1)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_gamepad.cpp",0x296
                     ,0,"%s");
   }
-  if ((uVar3 & 0x40000000) == 0) {
+  if ((param_2 & GPAD_LX) == GPAD_INVALID) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_gamepad.cpp",0x297
                     ,0,"%s");
   }
@@ -806,22 +774,19 @@ bool GPad_GetStickChangedToPressedState
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_gamepad.cpp",0x298
                     ,0,"%s");
   }
-  if (3 < (uVar3 & 0xbfffffff)) {
+  uVar2 = CONCAT44(param_2,param_2) & 0xffffffffbfffffff;
+  if (3 < (param_2 & ~GPAD_LX)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_gamepad.cpp",0x29c
                     ,0,"%s");
   }
-  uVar5 = (ulonglong)
-          *(byte *)((int)s_gamePads[iVar1].analogs +
-                   param_3 + (int)(((uVar3 & 0xbfffffff) + 0x34 & 0xffffffff) << 1) + -8);
-  if (uVar5 != *(byte *)((int)s_gamePads[iVar1].analogs +
-                        param_3 + (int)(((uVar3 & 0xbfffffff) + 0x38 & 0xffffffff) << 1) + -8)) {
-    uVar6 = 1;
-    if (uVar5 == (uVar4 & 0xff)) goto LAB_826431d8;
+  cVar1 = *(char *)((int)s_gamePads[param_1].analogs +
+                   param_3 + (int)((uVar2 + 0x34 & 0xffffffff) << 1) + -8);
+  if ((cVar1 == *(char *)((int)s_gamePads[param_1].analogs +
+                         param_3 + (int)((uVar2 + 0x38 & 0xffffffff) << 1) + -8)) ||
+     (bVar3 = true, (bool)cVar1 != param_4)) {
+    bVar3 = false;
   }
-  uVar6 = 0;
-LAB_826431d8:
-  uVar2 = __restgprlr_26(uVar6);
-  return (bool)uVar2;
+  return bVar3;
 }
 
 

@@ -2,6 +2,9 @@
 
 // 828BB860  Initialize  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/online/common/xontask.cpp:36)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
+
 undefined4 __thiscall
 CXLiveAsyncTask::Initialize
           (CXLiveAsyncTask *this,ulong param_1,CSchemaData *param_2,ulong param_3,ulong param_4,
@@ -10,49 +13,41 @@ CXLiveAsyncTask::Initialize
           _XOVERLAPPED *param_15)
 
 {
-  ulong *puVar1;
-  int iVar2;
-  undefined4 uVar3;
-  ulonglong uVar4;
-  uint uVar5;
+  int iVar1;
   ulong in_stack_00000054;
-  ulong in_stack_0000005c;
+  uchar *in_stack_0000005c;
   ulong in_stack_00000064;
   uchar *in_stack_0000006c;
   ulong in_stack_00000074;
-  ulong in_stack_0000007c;
+  uchar *in_stack_0000007c;
   ulong in_stack_00000084;
-  ulong in_stack_0000008c;
+  _XOVERLAPPED *in_stack_0000008c;
   
-  uVar4 = (ulonglong)(int)param_4;
-  puVar1 = (ulong *)__savegprlr_24(this);
-  uVar5 = (uint)uVar4;
-  if (((uVar4 & 0x40) != 0) && (iVar2 = KeGetCurrentProcessType(), iVar2 == 1)) {
-    uVar5 = uVar5 | 0x10;
+  if (((param_4 & 0x40) != 0) && (iVar1 = KeGetCurrentProcessType(), iVar1 == 1)) {
+    param_4 = param_4 | 0x10;
   }
-  *puVar1 = param_1;
-  puVar1[1] = (ulong)param_2;
-  puVar1[2] = param_3;
-  puVar1[0xb] = in_stack_0000007c;
-  puVar1[0xc] = in_stack_00000084;
-  puVar1[3] = uVar5;
-  puVar1[4] = (ulong)param_5;
-  puVar1[5] = param_6;
-  puVar1[6] = in_stack_0000005c;
-  puVar1[7] = 0;
-  puVar1[8] = in_stack_00000064;
-  puVar1[9] = param_7;
-  puVar1[10] = in_stack_00000054;
+  this->m_dwOrdinal = param_1;
+  this->m_pXDKSchema = param_2;
+  this->m_dwXDKSchemaIndex = param_3;
+  this->m_pbResults = in_stack_0000007c;
+  this->m_cbResults = in_stack_00000084;
+  this->m_dwFlags = param_4;
+  this->m_pInternal = param_5;
+  this->m_dwInternalTaskSize = param_6;
+  this->m_pbMarshalledRequest = in_stack_0000005c;
+  this->m_cbMarshalledRequest = 0;
+  this->m_cbTotalRequestBuffer = in_stack_00000064;
+  this->m_dwCounter = param_7;
+  this->m_dwLogonID = in_stack_00000054;
   CBaseEndianBuffer::Bind
-            ((CBaseEndianBuffer *)(puVar1 + 0xd),in_stack_0000006c,in_stack_00000074,0,1);
-  puVar1[0x12] = in_stack_0000008c;
-  if (in_stack_0000008c != 0) {
-    if (*(void **)(in_stack_0000008c + 0xc) != (void *)0x0) {
-      ResetEvent(*(void **)(in_stack_0000008c + 0xc));
+            ((CBaseEndianBuffer *)&this->m_WireBuffer,in_stack_0000006c,in_stack_00000074,0,1);
+  this->m_pxov = in_stack_0000008c;
+  if (in_stack_0000008c != (_XOVERLAPPED *)0x0) {
+    if (in_stack_0000008c->hEvent != (void *)0x0) {
+      ResetEvent(in_stack_0000008c->hEvent);
     }
-    *(undefined4 *)puVar1[0x12] = 0x3e5;
+    this->m_pxov->InternalLow = 0x3e5;
   }
-  uVar3 = __restgprlr_24(0);
-  return uVar3;
+  return 0;
 }
 

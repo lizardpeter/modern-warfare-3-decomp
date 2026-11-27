@@ -2,26 +2,26 @@
 
 // 82723DF0  SkipToNextDrawGroup  (gfx_d3d/r_codesurfiter.cpp:7)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void GfxCodeSurfIter::SkipToNextDrawGroup(GfxCodeSurfIter *param_1)
 
 {
-  int iVar1;
-  uint uVar2;
-  uint *puVar3;
-  int *piVar4;
+  uint uVar1;
+  GfxCodeSurf *pGVar2;
+  GfxCodeSurf *pGVar3;
   
-  puVar3 = (uint *)__savegprlr_27(param_1);
-  iVar1 = *(int *)*puVar3;
+  uVar1 = (param_1->current->drawGroup).packed;
   do {
-    if (puVar3[1] <= *puVar3) {
+    if (param_1->end <= param_1->current) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_codesurfiter_inline.h"
                       ,0x4d,0,"%s");
     }
-    uVar2 = *puVar3;
-    piVar4 = (int *)(uVar2 + 0x10);
-    *puVar3 = (uint)piVar4;
-  } while ((uVar2 + 0x10 != puVar3[1]) && (*piVar4 == iVar1));
-  __restgprlr_27();
+    pGVar2 = param_1->current;
+    pGVar3 = pGVar2 + 1;
+    param_1->current = pGVar3;
+  } while ((pGVar2 + 1 != param_1->end) && ((pGVar3->drawGroup).packed == uVar1));
   return;
 }
 

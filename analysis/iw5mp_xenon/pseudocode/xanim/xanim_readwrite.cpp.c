@@ -60,98 +60,94 @@ void XAnimSaveAnimInfo(XAnimInfo *param_1,MemoryFile *param_2)
 
 // 82630D30  XAnimLoadAnimTree  (xanim/xanim_readwrite.cpp:46)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
+
 void XAnimLoadAnimTree(DObj *param_1,MemoryFile *param_2)
 
 {
-  DObj *pDVar1;
-  MemoryFile *pMVar2;
-  XAnimInfo *pXVar3;
-  ushort uVar4;
-  ulonglong uVar5;
+  XAnimInfo *pXVar1;
+  ushort uVar2;
   ushort local_50;
   short local_4e;
   ushort local_4c;
   ushort local_4a [37];
   
-  uVar5 = (ulonglong)(int)param_2;
-  pDVar1 = (DObj *)__savegprlr_25(param_1);
-  if (pDVar1 == (DObj *)0x0) {
+  if (param_1 == (DObj *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim_readwrite.cpp",
                     0x33,0,"%s");
   }
-  if (pDVar1->tree != (XAnimTree *)0x0) {
-    if (pDVar1->tree->children != 0) {
+  if (param_1->tree != (XAnimTree *)0x0) {
+    if (param_1->tree->children != 0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim_readwrite.cpp",
                       0x38,0,"%s");
     }
-    pMVar2 = (MemoryFile *)uVar5;
-    MemFile_ReadData(pMVar2,2,&local_50);
+    MemFile_ReadData(param_2,2,&local_50);
     while (local_50 != 0xffff) {
-      pXVar3 = XAnimAllocInfo(pDVar1,(uint)local_50,1);
-      MemFile_ReadData(pMVar2,2,&local_4e);
-      pXVar3->notifyIndex = local_4e;
-      MemFile_ReadData(pMVar2,2,&local_4c);
-      pXVar3->notifyChild = local_4c;
-      MemFile_ReadData(pMVar2,2,local_4a);
-      pXVar3->notifyType = local_4a[0];
-      uVar4 = Scr_ReadString(pMVar2);
-      pXVar3->notifyName = uVar4;
-      if ((uVar5 & 0xffffffff) == 0) {
+      pXVar1 = XAnimAllocInfo(param_1,(uint)local_50,1);
+      MemFile_ReadData(param_2,2,&local_4e);
+      pXVar1->notifyIndex = local_4e;
+      MemFile_ReadData(param_2,2,&local_4c);
+      pXVar1->notifyChild = local_4c;
+      MemFile_ReadData(param_2,2,local_4a);
+      pXVar1->notifyType = local_4a[0];
+      uVar2 = Scr_ReadString(param_2);
+      pXVar1->notifyName = uVar2;
+      if (param_2 == (MemoryFile *)0x0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\../universal/memfile.h"
                         ,0xd5,0,"%s");
       }
-      if (pMVar2->archiveProc == (_func___cdecl_void_MemoryFile_ptr_int_void_ptr *)0x0) {
+      if (param_2->archiveProc == (_func___cdecl_void_MemoryFile_ptr_int_void_ptr *)0x0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\../universal/memfile.h"
                         ,0xd6,0,"%s");
       }
-      (*pMVar2->archiveProc)(pMVar2,0x20,&pXVar3->state);
-      MemFile_ReadData(pMVar2,2,&local_50);
+      (*param_2->archiveProc)(param_2,0x20,&pXVar1->state);
+      MemFile_ReadData(param_2,2,&local_50);
     }
   }
-  __restgprlr_25();
   return;
 }
 
 
 // 82630EC8  XAnimSaveAnimTree_r  (xanim/xanim_readwrite.cpp:70)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
+
 void XAnimSaveAnimTree_r(XAnimTree *param_1,MemoryFile *param_2,uint param_3)
 
 {
   ushort uVar1;
   uint uVar2;
-  XAnimTree *pXVar3;
-  XAnimInfo *pXVar4;
+  XAnimInfo *pXVar3;
   ushort local_50 [40];
   
-  pXVar3 = (XAnimTree *)__savegprlr_25(param_1);
-  if (pXVar3 == (XAnimTree *)0x0) {
+  if (param_1 == (XAnimTree *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim_readwrite.cpp",
                     0x49,0,"%s");
   }
-  pXVar4 = GetAnimInfo(param_3);
-  if (pXVar4 == (XAnimInfo *)0x0) {
+  pXVar3 = GetAnimInfo(param_3);
+  if (pXVar3 == (XAnimInfo *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim_readwrite.cpp",
                     0x4c,0,"%s");
   }
-  if (pXVar4->inuse == false) {
+  if (pXVar3->inuse == false) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim_readwrite.cpp",
                     0x4e,0,"%s");
   }
-  local_50[0] = pXVar4->animIndex;
+  local_50[0] = pXVar3->animIndex;
   MemFile_WriteData(param_2,2,local_50);
-  XAnimSaveAnimInfo(pXVar4,param_2);
-  uVar1 = pXVar4->children;
+  XAnimSaveAnimInfo(pXVar3,param_2);
+  uVar1 = pXVar3->children;
   while (uVar2 = (uint)uVar1, uVar2 != 0) {
-    pXVar4 = GetAnimInfo(uVar2);
-    if (pXVar4 == (XAnimInfo *)0x0) {
+    pXVar3 = GetAnimInfo(uVar2);
+    if (pXVar3 == (XAnimInfo *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim_readwrite.cpp",
                       0x57,0,"%s");
     }
-    XAnimSaveAnimTree_r(pXVar3,param_2,uVar2);
-    uVar1 = pXVar4->next;
+    XAnimSaveAnimTree_r(param_1,param_2,uVar2);
+    uVar1 = pXVar3->next;
   }
-  __restgprlr_25();
   return;
 }
 

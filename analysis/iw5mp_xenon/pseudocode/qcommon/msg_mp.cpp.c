@@ -85,75 +85,62 @@ bool MSG_ValuesAreEqual(int param_1,int *param_2,int *param_3)
 
 // 825056B0  MSG_WriteDeltaKey  (qcommon/msg_mp.cpp:140)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 void MSG_WriteDeltaKey(msg_t *param_1,int param_2,int param_3,int param_4,int param_5)
 
 {
-  msg_t *pmVar1;
-  
-  pmVar1 = (msg_t *)__savegprlr_27(param_1);
-  if (pmVar1->readOnly != 0) {
+  if (param_1->readOnly != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\msg_mp.cpp",0x8d,0,
                     "%s");
   }
   if (param_3 == param_4) {
-    MSG_WriteBit0(pmVar1);
-    __restgprlr_27();
+    MSG_WriteBit0(param_1);
     return;
   }
-  MSG_WriteBit1(pmVar1);
-  MSG_WriteBits(pmVar1,param_2 ^ param_4,param_5);
-  __restgprlr_27();
+  MSG_WriteBit1(param_1);
+  MSG_WriteBits(param_1,param_2 ^ param_4,param_5);
   return;
 }
 
 
 // 82505738  MSG_ReadDeltaKey  (qcommon/msg_mp.cpp:153)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 int MSG_ReadDeltaKey(msg_t *param_1,int param_2,int param_3,int param_4)
 
 {
-  msg_t *pmVar1;
-  int iVar2;
-  ulonglong uVar3;
-  longlong lVar4;
-  ulonglong uVar5;
+  int iVar1;
+  uint uVar2;
   
-  uVar5 = (ulonglong)param_4;
-  lVar4 = (longlong)param_3;
-  uVar3 = (ulonglong)param_2;
-  pmVar1 = (msg_t *)__savegprlr_28(param_1,uVar3,lVar4);
-  iVar2 = MSG_ReadBit(pmVar1);
-  if (iVar2 != 0) {
-    iVar2 = MSG_ReadBits(pmVar1,(int)uVar5);
-    iVar2 = __restgprlr_28((longlong)iVar2 ^
-                           *(uint *)((int)kbitmask + (int)((uVar5 & 0xffffffff) << 2)) & uVar3);
-    return iVar2;
+  iVar1 = MSG_ReadBit(param_1);
+  if (iVar1 != 0) {
+    uVar2 = MSG_ReadBits(param_1,param_4);
+    return uVar2 ^ kbitmask[param_4] & param_2;
   }
-  iVar2 = __restgprlr_28(lVar4);
-  return iVar2;
+  return param_3;
 }
 
 
 // 82505798  MSG_WriteKey  (qcommon/msg_mp.cpp:163)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 void MSG_WriteKey(msg_t *param_1,int param_2,int param_3,int param_4)
 
 {
-  msg_t *pmVar1;
-  
-  pmVar1 = (msg_t *)__savegprlr_28(param_1);
-  if (pmVar1->readOnly != 0) {
+  if (param_1->readOnly != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\msg_mp.cpp",0xa4,0,
                     "%s");
   }
-  MSG_WriteBits(pmVar1,param_2 ^ param_3,param_4);
-  __restgprlr_28();
+  MSG_WriteBits(param_1,param_2 ^ param_3,param_4);
   return;
 }
 
@@ -174,141 +161,116 @@ int MSG_ReadKey(msg_t *param_1,int param_2,int param_3)
 
 // 82505858  MSG_WriteDeltaKeyByte  (qcommon/msg_mp.cpp:176)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 void MSG_WriteDeltaKeyByte(msg_t *param_1,int param_2,int param_3,int param_4)
 
 {
-  msg_t *pmVar1;
-  ulonglong uVar2;
-  ulonglong uVar3;
-  
-  uVar3 = (ulonglong)param_4;
-  uVar2 = (ulonglong)param_3;
-  pmVar1 = (msg_t *)__savegprlr_28(param_1);
-  if (pmVar1->readOnly != 0) {
+  if (param_1->readOnly != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\msg_mp.cpp",0xb1,0,
                     "%s");
   }
-  if ((uVar2 & 0xff) == (uVar3 & 0xff)) {
-    MSG_WriteBit0(pmVar1);
-    __restgprlr_28();
+  if ((param_3 & 0xffU) == (param_4 & 0xffU)) {
+    MSG_WriteBit0(param_1);
     return;
   }
-  MSG_WriteBit1(pmVar1);
-  MSG_WriteByte(pmVar1,param_2 ^ (uint)uVar3);
-  __restgprlr_28();
+  MSG_WriteBit1(param_1);
+  MSG_WriteByte(param_1,param_2 ^ param_4);
   return;
 }
 
 
 // 825058E0  MSG_ReadDeltaKeyByte  (qcommon/msg_mp.cpp:189)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 int MSG_ReadDeltaKeyByte(msg_t *param_1,int param_2,int param_3)
 
 {
-  msg_t *pmVar1;
-  int iVar2;
-  uint uVar3;
-  ulonglong uVar4;
-  longlong lVar5;
+  int iVar1;
+  uint uVar2;
   
-  lVar5 = (longlong)param_3;
-  uVar4 = (ulonglong)param_2;
-  pmVar1 = (msg_t *)__savegprlr_29(param_1,uVar4,lVar5);
-  iVar2 = MSG_ReadBit(pmVar1);
-  if (iVar2 != 0) {
-    uVar3 = MSG_ReadByte(pmVar1);
-    iVar2 = __restgprlr_29((ulonglong)uVar3 & 0xff ^ uVar4 & 0xff);
-    return iVar2;
+  iVar1 = MSG_ReadBit(param_1);
+  if (iVar1 != 0) {
+    uVar2 = MSG_ReadByte(param_1);
+    return uVar2 & 0xff ^ param_2 & 0xffU;
   }
-  iVar2 = __restgprlr_29(lVar5);
-  return iVar2;
+  return param_3;
 }
 
 
 // 82505930  MSG_WriteDeltaKeyShort  (qcommon/msg_mp.cpp:198)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 void MSG_WriteDeltaKeyShort(msg_t *param_1,int param_2,int param_3,int param_4)
 
 {
-  msg_t *pmVar1;
-  short sVar2;
-  
-  sVar2 = (short)param_3;
-  pmVar1 = (msg_t *)__savegprlr_28(param_1);
-  if (pmVar1->readOnly != 0) {
+  if (param_1->readOnly != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\msg_mp.cpp",199,0,"%s"
                    );
   }
-  if (sVar2 == (short)param_4) {
-    MSG_WriteBit0(pmVar1);
-    __restgprlr_28();
+  if ((short)param_3 == (short)param_4) {
+    MSG_WriteBit0(param_1);
     return;
   }
-  MSG_WriteBit1(pmVar1);
-  MSG_WriteShort(pmVar1,param_2 ^ param_4);
-  __restgprlr_28();
+  MSG_WriteBit1(param_1);
+  MSG_WriteShort(param_1,param_2 ^ param_4);
   return;
 }
 
 
 // 825059B8  MSG_ReadDeltaKeyShort  (qcommon/msg_mp.cpp:211)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 int MSG_ReadDeltaKeyShort(msg_t *param_1,int param_2,int param_3)
 
 {
-  msg_t *pmVar1;
-  int iVar2;
-  longlong lVar3;
-  longlong lVar4;
+  int iVar1;
   
-  lVar4 = (longlong)param_3;
-  lVar3 = (longlong)param_2;
-  pmVar1 = (msg_t *)__savegprlr_29(param_1,lVar3,lVar4);
-  iVar2 = MSG_ReadBit(pmVar1);
-  if (iVar2 != 0) {
-    iVar2 = MSG_ReadShort(pmVar1);
-    iVar2 = __restgprlr_29((ushort)iVar2 ^ (ushort)lVar3);
-    return iVar2;
+  iVar1 = MSG_ReadBit(param_1);
+  if (iVar1 != 0) {
+    iVar1 = MSG_ReadShort(param_1);
+    return (int)(short)((ushort)iVar1 ^ (ushort)param_2);
   }
-  iVar2 = __restgprlr_29(lVar4);
-  return iVar2;
+  return param_3;
 }
 
 
 // 82505A08  MSG_CompressWithZLib  (qcommon/msg_mp.cpp:261)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 int MSG_CompressWithZLib(uchar *param_1,int param_2,uchar *param_3,int param_4)
 
 {
-  uchar *puVar1;
-  int iVar2;
+  int iVar1;
   
-  puVar1 = (uchar *)__savegprlr_29(param_1);
   MemFile_deflateInit(param_3,param_4,true);
   stream.data_type = 0;
-  stream.next_in = puVar1;
+  stream.next_in = param_1;
   stream.avail_in = param_2;
-  iVar2 = deflate(&stream,4);
-  if (iVar2 == 1) {
-    iVar2 = MemFile_deflateEnd(true);
-    if (iVar2 == 0) {
-      iVar2 = __restgprlr_29(stream.total_out);
-      return iVar2;
+  iVar1 = deflate(&stream,4);
+  if (iVar1 == 1) {
+    iVar1 = MemFile_deflateEnd(true);
+    if (iVar1 == 0) {
+      return stream.total_out;
     }
   }
   else {
     MemFile_deflateEnd(true);
   }
-  iVar2 = __restgprlr_29(0);
-  return iVar2;
+  return 0;
 }
 
 
@@ -329,6 +291,8 @@ bool HasMeleeChargeChanged(usercmd_s *param_1,usercmd_s *param_2)
 
 // 82505AB8  MSG_WriteDeltaUsercmdKey  (qcommon/msg_mp.cpp:309)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 void MSG_WriteDeltaUsercmdKey(msg_t *param_1,int param_2,usercmd_s *param_3,usercmd_s *param_4)
@@ -336,11 +300,9 @@ void MSG_WriteDeltaUsercmdKey(msg_t *param_1,int param_2,usercmd_s *param_3,user
 {
   bool bVar1;
   bool bVar2;
-  msg_t *pmVar3;
-  uint uVar4;
+  uint uVar3;
   
-  pmVar3 = (msg_t *)__savegprlr_24(param_1);
-  if (pmVar3->readOnly != 0) {
+  if (param_1->readOnly != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\msg_mp.cpp",0x13e,0,
                     "%s");
   }
@@ -352,14 +314,14 @@ void MSG_WriteDeltaUsercmdKey(msg_t *param_1,int param_2,usercmd_s *param_3,user
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\msg_mp.cpp",0x141,0,
                     "%s");
   }
-  uVar4 = param_4->serverTime - param_3->serverTime;
-  if (uVar4 < 0x100) {
-    MSG_WriteBit1(pmVar3);
-    MSG_WriteByte(pmVar3,uVar4);
+  uVar3 = param_4->serverTime - param_3->serverTime;
+  if (uVar3 < 0x100) {
+    MSG_WriteBit1(param_1);
+    MSG_WriteByte(param_1,uVar3);
   }
   else {
-    MSG_WriteBit0(pmVar3);
-    MSG_WriteLong(pmVar3,param_4->serverTime);
+    MSG_WriteBit0(param_1);
+    MSG_WriteLong(param_1,param_4->serverTime);
   }
   if ((param_3->forwardmove != param_4->forwardmove) ||
      (bVar2 = true, param_3->rightmove != param_4->rightmove)) {
@@ -376,295 +338,287 @@ void MSG_WriteDeltaUsercmdKey(msg_t *param_1,int param_2,usercmd_s *param_3,user
     if (!bVar1) {
       if (((param_3->angles[0] == param_4->angles[0]) && (param_3->angles[1] == param_4->angles[1]))
          && ((((param_4->buttons ^ param_3->buttons) & 1U) == 0 && (bVar2)))) {
-        MSG_WriteKey(pmVar3,param_2,0,1);
-        MSG_WriteBits(pmVar3,7,3);
-        __restgprlr_24();
+        MSG_WriteKey(param_1,param_2,0,1);
+        MSG_WriteBits(param_1,7,3);
         return;
       }
-      MSG_WriteKey(pmVar3,param_2,1,1);
-      MSG_WriteKey(pmVar3,param_2,0,1);
-      uVar4 = param_4->serverTime ^ param_2;
-      MSG_WriteKey(pmVar3,uVar4,param_4->buttons,1);
-      MSG_WriteDeltaKeyShort(pmVar3,uVar4,param_3->angles[0],param_4->angles[0]);
-      MSG_WriteDeltaKeyShort(pmVar3,uVar4,param_3->angles[1],param_4->angles[1]);
-      MSG_WriteDeltaKeyByte(pmVar3,uVar4,(int)param_3->forwardmove,(int)param_4->forwardmove);
-      MSG_WriteDeltaKeyByte(pmVar3,uVar4,(int)param_3->rightmove,(int)param_4->rightmove);
-      MSG_WriteBits(pmVar3,2,3);
-      __restgprlr_24();
+      MSG_WriteKey(param_1,param_2,1,1);
+      MSG_WriteKey(param_1,param_2,0,1);
+      uVar3 = param_4->serverTime ^ param_2;
+      MSG_WriteKey(param_1,uVar3,param_4->buttons,1);
+      MSG_WriteDeltaKeyShort(param_1,uVar3,param_3->angles[0],param_4->angles[0]);
+      MSG_WriteDeltaKeyShort(param_1,uVar3,param_3->angles[1],param_4->angles[1]);
+      MSG_WriteDeltaKeyByte(param_1,uVar3,(int)param_3->forwardmove,(int)param_4->forwardmove);
+      MSG_WriteDeltaKeyByte(param_1,uVar3,(int)param_3->rightmove,(int)param_4->rightmove);
+      MSG_WriteBits(param_1,2,3);
       return;
     }
   }
-  if (pmVar3->readOnly != 0) {
+  if (param_1->readOnly != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\msg_mp.cpp",0xa4,0,
                     "%s");
   }
-  MSG_WriteBits(pmVar3,param_2 ^ 1U,1);
-  if (pmVar3->readOnly != 0) {
+  MSG_WriteBits(param_1,param_2 ^ 1U,1);
+  if (param_1->readOnly != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\msg_mp.cpp",0xa4,0,
                     "%s");
   }
-  MSG_WriteBits(pmVar3,param_2 ^ 1U,1);
-  uVar4 = param_4->buttons;
-  if (pmVar3->readOnly != 0) {
+  MSG_WriteBits(param_1,param_2 ^ 1U,1);
+  uVar3 = param_4->buttons;
+  if (param_1->readOnly != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\msg_mp.cpp",0xa4,0,
                     "%s");
   }
-  MSG_WriteBits(pmVar3,uVar4 ^ param_2,1);
-  MSG_WriteDeltaKeyShort(pmVar3,param_2,param_3->angles[0],param_4->angles[0]);
-  MSG_WriteDeltaKeyShort(pmVar3,param_2,param_3->angles[1],param_4->angles[1]);
-  MSG_WriteDeltaKeyByte(pmVar3,param_2,(int)param_3->forwardmove,(int)param_4->forwardmove);
-  MSG_WriteDeltaKeyByte(pmVar3,param_2,(int)param_3->rightmove,(int)param_4->rightmove);
-  uVar4 = param_4->serverTime ^ param_2;
-  MSG_WriteDeltaKeyShort(pmVar3,uVar4,param_3->angles[2],param_4->angles[2]);
-  MSG_WriteDeltaKey(pmVar3,uVar4,param_3->buttons >> 1,param_4->buttons >> 1,0x1b);
-  MSG_WriteDeltaKey(pmVar3,uVar4,(param_3->weapon).data,(param_4->weapon).data,0x18);
-  MSG_WriteDeltaKey(pmVar3,uVar4,(param_3->offHand).data,(param_4->offHand).data,0x18);
+  MSG_WriteBits(param_1,uVar3 ^ param_2,1);
+  MSG_WriteDeltaKeyShort(param_1,param_2,param_3->angles[0],param_4->angles[0]);
+  MSG_WriteDeltaKeyShort(param_1,param_2,param_3->angles[1],param_4->angles[1]);
+  MSG_WriteDeltaKeyByte(param_1,param_2,(int)param_3->forwardmove,(int)param_4->forwardmove);
+  MSG_WriteDeltaKeyByte(param_1,param_2,(int)param_3->rightmove,(int)param_4->rightmove);
+  uVar3 = param_4->serverTime ^ param_2;
+  MSG_WriteDeltaKeyShort(param_1,uVar3,param_3->angles[2],param_4->angles[2]);
+  MSG_WriteDeltaKey(param_1,uVar3,param_3->buttons >> 1,param_4->buttons >> 1,0x1b);
+  MSG_WriteDeltaKey(param_1,uVar3,(param_3->weapon).data,(param_4->weapon).data,0x18);
+  MSG_WriteDeltaKey(param_1,uVar3,(param_3->offHand).data,(param_4->offHand).data,0x18);
   if ((param_4->buttons & 0x10000U) != 0) {
-    MSG_WriteDeltaKeyByte(pmVar3,uVar4,(int)param_3->selectedLoc[0],(int)param_4->selectedLoc[0]);
-    MSG_WriteDeltaKeyByte(pmVar3,uVar4,(int)param_3->selectedLoc[1],(int)param_4->selectedLoc[1]);
+    MSG_WriteDeltaKeyByte(param_1,uVar3,(int)param_3->selectedLoc[0],(int)param_4->selectedLoc[0]);
+    MSG_WriteDeltaKeyByte(param_1,uVar3,(int)param_3->selectedLoc[1],(int)param_4->selectedLoc[1]);
     MSG_WriteDeltaKeyByte
-              (pmVar3,uVar4,(uint)param_3->selectedLocAngle,(uint)param_4->selectedLocAngle);
+              (param_1,uVar3,(uint)param_3->selectedLocAngle,(uint)param_4->selectedLocAngle);
   }
   if ((param_4->buttons & 0x100000U) != 0) {
     MSG_WriteDeltaKeyByte
-              (pmVar3,uVar4,(int)param_3->remoteControlAngles[0],
+              (param_1,uVar3,(int)param_3->remoteControlAngles[0],
                (int)param_4->remoteControlAngles[0]);
     MSG_WriteDeltaKeyByte
-              (pmVar3,uVar4,(int)param_3->remoteControlAngles[1],
+              (param_1,uVar3,(int)param_3->remoteControlAngles[1],
                (int)param_4->remoteControlAngles[1]);
     MSG_WriteDeltaKeyByte
-              (pmVar3,uVar4,(int)param_3->remoteControlMove[0],(int)param_4->remoteControlMove[0]);
+              (param_1,uVar3,(int)param_3->remoteControlMove[0],(int)param_4->remoteControlMove[0]);
     MSG_WriteDeltaKeyByte
-              (pmVar3,uVar4,(int)param_3->remoteControlMove[1],(int)param_4->remoteControlMove[1]);
+              (param_1,uVar3,(int)param_3->remoteControlMove[1],(int)param_4->remoteControlMove[1]);
     MSG_WriteDeltaKeyByte
-              (pmVar3,uVar4,(int)param_3->remoteControlMove[2],(int)param_4->remoteControlMove[2]);
+              (param_1,uVar3,(int)param_3->remoteControlMove[2],(int)param_4->remoteControlMove[2]);
   }
   if ((param_4->buttons & 4U) != 0) {
-    MSG_WriteDeltaKey(pmVar3,uVar4,(uint)param_3->meleeChargeEnt,(uint)param_4->meleeChargeEnt,0xb);
-    MSG_WriteDeltaKey(pmVar3,uVar4,(uint)param_3->meleeChargeDist,(uint)param_4->meleeChargeDist,8);
+    MSG_WriteDeltaKey(param_1,uVar3,(uint)param_3->meleeChargeEnt,(uint)param_4->meleeChargeEnt,0xb)
+    ;
+    MSG_WriteDeltaKey(param_1,uVar3,(uint)param_3->meleeChargeDist,(uint)param_4->meleeChargeDist,8)
+    ;
   }
   if ((param_4->buttons & 0x8000000U) != 0) {
-    MSG_WriteDeltaKey(pmVar3,uVar4,(uint)param_3->airburstMarkDistance,
+    MSG_WriteDeltaKey(param_1,uVar3,(uint)param_3->airburstMarkDistance,
                       (uint)param_4->airburstMarkDistance,0x10);
   }
-  MSG_WriteBits(pmVar3,5,3);
-  __restgprlr_24();
+  MSG_WriteBits(param_1,5,3);
   return;
 }
 
 
 // 82506058  MSG_ReadDeltaUsercmdKey  (qcommon/msg_mp.cpp:441)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 bool MSG_ReadDeltaUsercmdKey(msg_t *param_1,int param_2,usercmd_s *param_3,usercmd_s *param_4)
 
 {
   bool bVar1;
-  msg_t *pmVar2;
+  uint uVar2;
   int iVar3;
   uint uVar4;
-  uint uVar5;
-  undefined1 uVar6;
-  int iVar7;
-  byte bVar8;
-  byte bVar9;
-  ulonglong uVar10;
+  byte bVar5;
+  byte bVar6;
+  uint uVar7;
   
-  uVar10 = (ulonglong)param_2;
-  pmVar2 = (msg_t *)__savegprlr_26(param_1);
   if (0xfffffff < param_3->buttons) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\msg_mp.cpp",0x1bf,0,
                     "%s");
   }
   memcpy();
-  iVar3 = MSG_ReadBit(pmVar2);
+  iVar3 = MSG_ReadBit(param_1);
   if (iVar3 == 0) {
-    iVar3 = MSG_ReadLong(pmVar2);
+    iVar3 = MSG_ReadLong(param_1);
     param_4->serverTime = iVar3;
   }
   else {
-    iVar3 = MSG_ReadByte(pmVar2);
+    iVar3 = MSG_ReadByte(param_1);
     param_4->serverTime = iVar3 + param_3->serverTime;
   }
-  uVar4 = MSG_ReadBits(pmVar2,1);
-  uVar5 = (uint)uVar10;
-  if (uVar4 == (kbitmask[1] & uVar5)) {
-    iVar3 = MSG_ReadBits(pmVar2,3);
+  uVar4 = MSG_ReadBits(param_1,1);
+  if (uVar4 == (kbitmask[1] & param_2)) {
+    iVar3 = MSG_ReadBits(param_1,3);
     bVar1 = iVar3 == 7;
   }
   else {
     param_4->buttons = param_4->buttons & 0xfffffffe;
-    uVar4 = MSG_ReadBits(pmVar2,1);
-    if (uVar4 == (kbitmask[1] & uVar5)) {
-      uVar10 = (uint)param_4->serverTime ^ uVar10;
-      uVar5 = MSG_ReadBits(pmVar2,1);
-      param_4->buttons = param_4->buttons | uVar5 ^ kbitmask[1] & (uint)uVar10;
-      uVar5 = param_3->angles[0];
-      iVar3 = MSG_ReadBit(pmVar2);
+    uVar4 = MSG_ReadBits(param_1,1);
+    if (uVar4 == (kbitmask[1] & param_2)) {
+      uVar7 = param_4->serverTime ^ param_2;
+      uVar4 = MSG_ReadBits(param_1,1);
+      param_4->buttons = param_4->buttons | uVar4 ^ kbitmask[1] & uVar7;
+      uVar4 = param_3->angles[0];
+      iVar3 = MSG_ReadBit(param_1);
       if (iVar3 != 0) {
-        iVar3 = MSG_ReadShort(pmVar2);
-        uVar5 = (uint)(short)((ushort)iVar3 ^ (ushort)uVar10);
+        iVar3 = MSG_ReadShort(param_1);
+        uVar4 = (uint)(short)((ushort)iVar3 ^ (ushort)uVar7);
       }
-      param_4->angles[0] = uVar5 & 0xffff;
-      uVar5 = param_3->angles[1];
-      iVar3 = MSG_ReadBit(pmVar2);
+      param_4->angles[0] = uVar4 & 0xffff;
+      uVar4 = param_3->angles[1];
+      iVar3 = MSG_ReadBit(param_1);
       if (iVar3 != 0) {
-        iVar3 = MSG_ReadShort(pmVar2);
-        uVar5 = (uint)(short)((ushort)iVar3 ^ (ushort)uVar10);
+        iVar3 = MSG_ReadShort(param_1);
+        uVar4 = (uint)(short)((ushort)iVar3 ^ (ushort)uVar7);
       }
-      param_4->angles[1] = uVar5 & 0xffff;
-      bVar8 = param_3->forwardmove;
-      iVar3 = MSG_ReadBit(pmVar2);
+      param_4->angles[1] = uVar4 & 0xffff;
+      bVar5 = param_3->forwardmove;
+      iVar3 = MSG_ReadBit(param_1);
       if (iVar3 != 0) {
-        iVar3 = MSG_ReadByte(pmVar2);
-        bVar8 = (byte)iVar3 ^ (byte)uVar10;
+        iVar3 = MSG_ReadByte(param_1);
+        bVar5 = (byte)iVar3 ^ (byte)uVar7;
       }
-      param_4->forwardmove = bVar8;
-      bVar8 = param_3->rightmove;
-      iVar3 = MSG_ReadBit(pmVar2);
+      param_4->forwardmove = bVar5;
+      bVar5 = param_3->rightmove;
+      iVar3 = MSG_ReadBit(param_1);
       if (iVar3 != 0) {
-        iVar3 = MSG_ReadByte(pmVar2);
-        bVar8 = (byte)iVar3 ^ (byte)uVar10;
+        iVar3 = MSG_ReadByte(param_1);
+        bVar5 = (byte)iVar3 ^ (byte)uVar7;
       }
-      param_4->rightmove = bVar8;
-      iVar3 = MSG_ReadBits(pmVar2,3);
+      param_4->rightmove = bVar5;
+      iVar3 = MSG_ReadBits(param_1,3);
       bVar1 = iVar3 == 2;
     }
     else {
-      uVar4 = MSG_ReadBits(pmVar2,1);
-      param_4->buttons = param_4->buttons | uVar4 ^ kbitmask[1] & uVar5;
-      uVar5 = param_3->angles[0];
-      iVar3 = MSG_ReadBit(pmVar2);
+      uVar4 = MSG_ReadBits(param_1,1);
+      param_4->buttons = param_4->buttons | uVar4 ^ kbitmask[1] & param_2;
+      uVar4 = param_3->angles[0];
+      iVar3 = MSG_ReadBit(param_1);
       if (iVar3 != 0) {
-        iVar3 = MSG_ReadShort(pmVar2);
-        uVar5 = (uint)(short)((ushort)iVar3 ^ (ushort)uVar10);
+        iVar3 = MSG_ReadShort(param_1);
+        uVar4 = (uint)(short)((ushort)iVar3 ^ (ushort)param_2);
       }
-      param_4->angles[0] = uVar5 & 0xffff;
-      uVar5 = param_3->angles[1];
-      iVar3 = MSG_ReadBit(pmVar2);
+      param_4->angles[0] = uVar4 & 0xffff;
+      uVar4 = param_3->angles[1];
+      iVar3 = MSG_ReadBit(param_1);
       if (iVar3 != 0) {
-        iVar3 = MSG_ReadShort(pmVar2);
-        uVar5 = (uint)(short)((ushort)iVar3 ^ (ushort)uVar10);
+        iVar3 = MSG_ReadShort(param_1);
+        uVar4 = (uint)(short)((ushort)iVar3 ^ (ushort)param_2);
       }
-      param_4->angles[1] = uVar5 & 0xffff;
-      bVar8 = param_3->forwardmove;
-      iVar3 = MSG_ReadBit(pmVar2);
+      param_4->angles[1] = uVar4 & 0xffff;
+      bVar5 = param_3->forwardmove;
+      iVar3 = MSG_ReadBit(param_1);
       if (iVar3 != 0) {
-        iVar3 = MSG_ReadByte(pmVar2);
-        bVar8 = (byte)iVar3 ^ (byte)uVar10;
+        iVar3 = MSG_ReadByte(param_1);
+        bVar5 = (byte)iVar3 ^ (byte)param_2;
       }
-      param_4->forwardmove = bVar8;
-      bVar8 = param_3->rightmove;
-      iVar3 = MSG_ReadBit(pmVar2);
+      param_4->forwardmove = bVar5;
+      bVar5 = param_3->rightmove;
+      iVar3 = MSG_ReadBit(param_1);
       if (iVar3 != 0) {
-        iVar3 = MSG_ReadByte(pmVar2);
-        bVar8 = (byte)iVar3 ^ (byte)uVar10;
+        iVar3 = MSG_ReadByte(param_1);
+        bVar5 = (byte)iVar3 ^ (byte)param_2;
       }
-      param_4->rightmove = bVar8;
-      uVar5 = param_3->angles[2];
-      uVar10 = (uint)param_4->serverTime ^ uVar10;
-      iVar3 = MSG_ReadBit(pmVar2);
+      param_4->rightmove = bVar5;
+      uVar4 = param_3->angles[2];
+      uVar7 = param_4->serverTime ^ param_2;
+      iVar3 = MSG_ReadBit(param_1);
       if (iVar3 != 0) {
-        iVar3 = MSG_ReadShort(pmVar2);
-        uVar5 = (uint)(short)((ushort)iVar3 ^ (ushort)uVar10);
+        iVar3 = MSG_ReadShort(param_1);
+        uVar4 = (uint)(short)((ushort)iVar3 ^ (ushort)uVar7);
       }
-      uVar4 = param_4->buttons;
-      param_4->angles[2] = uVar5 & 0xffff;
-      param_4->buttons = uVar4 & 1;
-      iVar7 = (int)uVar10;
-      iVar3 = MSG_ReadDeltaKey(pmVar2,iVar7,param_3->buttons >> 1,0x1b);
+      uVar2 = param_4->buttons;
+      param_4->angles[2] = uVar4 & 0xffff;
+      param_4->buttons = uVar2 & 1;
+      iVar3 = MSG_ReadDeltaKey(param_1,uVar7,param_3->buttons >> 1,0x1b);
       param_4->buttons = iVar3 << 1 | param_4->buttons;
-      uVar5 = MSG_ReadDeltaKey(pmVar2,iVar7,(param_3->weapon).data,0x18);
-      (param_4->weapon).data = uVar5;
-      uVar5 = MSG_ReadDeltaKey(pmVar2,iVar7,(param_3->offHand).data,0x18);
-      (param_4->offHand).data = uVar5 & 0xffff;
-      bVar8 = (byte)uVar10;
+      uVar4 = MSG_ReadDeltaKey(param_1,uVar7,(param_3->weapon).data,0x18);
+      (param_4->weapon).data = uVar4;
+      uVar4 = MSG_ReadDeltaKey(param_1,uVar7,(param_3->offHand).data,0x18);
+      (param_4->offHand).data = uVar4 & 0xffff;
+      bVar5 = (byte)uVar7;
       if ((param_4->buttons & 0x10000U) != 0) {
-        bVar9 = param_3->selectedLoc[0];
-        iVar3 = MSG_ReadBit(pmVar2);
+        bVar6 = param_3->selectedLoc[0];
+        iVar3 = MSG_ReadBit(param_1);
         if (iVar3 != 0) {
-          iVar3 = MSG_ReadByte(pmVar2);
-          bVar9 = (byte)iVar3 ^ bVar8;
+          iVar3 = MSG_ReadByte(param_1);
+          bVar6 = (byte)iVar3 ^ bVar5;
         }
-        param_4->selectedLoc[0] = bVar9;
-        bVar9 = param_3->selectedLoc[1];
-        iVar3 = MSG_ReadBit(pmVar2);
+        param_4->selectedLoc[0] = bVar6;
+        bVar6 = param_3->selectedLoc[1];
+        iVar3 = MSG_ReadBit(param_1);
         if (iVar3 != 0) {
-          iVar3 = MSG_ReadByte(pmVar2);
-          bVar9 = (byte)iVar3 ^ bVar8;
+          iVar3 = MSG_ReadByte(param_1);
+          bVar6 = (byte)iVar3 ^ bVar5;
         }
-        param_4->selectedLoc[1] = bVar9;
-        bVar9 = param_3->selectedLocAngle;
-        iVar3 = MSG_ReadBit(pmVar2);
+        param_4->selectedLoc[1] = bVar6;
+        bVar6 = param_3->selectedLocAngle;
+        iVar3 = MSG_ReadBit(param_1);
         if (iVar3 != 0) {
-          iVar3 = MSG_ReadByte(pmVar2);
-          bVar9 = (byte)iVar3 ^ bVar8;
+          iVar3 = MSG_ReadByte(param_1);
+          bVar6 = (byte)iVar3 ^ bVar5;
         }
-        param_4->selectedLocAngle = bVar9;
+        param_4->selectedLocAngle = bVar6;
       }
       if ((param_4->buttons & 0x100000U) != 0) {
-        bVar9 = param_3->remoteControlAngles[0];
-        iVar3 = MSG_ReadBit(pmVar2);
+        bVar6 = param_3->remoteControlAngles[0];
+        iVar3 = MSG_ReadBit(param_1);
         if (iVar3 != 0) {
-          iVar3 = MSG_ReadByte(pmVar2);
-          bVar9 = (byte)iVar3 ^ bVar8;
+          iVar3 = MSG_ReadByte(param_1);
+          bVar6 = (byte)iVar3 ^ bVar5;
         }
-        param_4->remoteControlAngles[0] = bVar9;
-        bVar9 = param_3->remoteControlAngles[1];
-        iVar3 = MSG_ReadBit(pmVar2);
+        param_4->remoteControlAngles[0] = bVar6;
+        bVar6 = param_3->remoteControlAngles[1];
+        iVar3 = MSG_ReadBit(param_1);
         if (iVar3 != 0) {
-          iVar3 = MSG_ReadByte(pmVar2);
-          bVar9 = (byte)iVar3 ^ bVar8;
+          iVar3 = MSG_ReadByte(param_1);
+          bVar6 = (byte)iVar3 ^ bVar5;
         }
-        param_4->remoteControlAngles[1] = bVar9;
-        bVar9 = param_3->remoteControlMove[0];
-        iVar3 = MSG_ReadBit(pmVar2);
+        param_4->remoteControlAngles[1] = bVar6;
+        bVar6 = param_3->remoteControlMove[0];
+        iVar3 = MSG_ReadBit(param_1);
         if (iVar3 != 0) {
-          iVar3 = MSG_ReadByte(pmVar2);
-          bVar9 = (byte)iVar3 ^ bVar8;
+          iVar3 = MSG_ReadByte(param_1);
+          bVar6 = (byte)iVar3 ^ bVar5;
         }
-        param_4->remoteControlMove[0] = bVar9;
-        bVar9 = param_3->remoteControlMove[1];
-        iVar3 = MSG_ReadBit(pmVar2);
+        param_4->remoteControlMove[0] = bVar6;
+        bVar6 = param_3->remoteControlMove[1];
+        iVar3 = MSG_ReadBit(param_1);
         if (iVar3 != 0) {
-          iVar3 = MSG_ReadByte(pmVar2);
-          bVar9 = (byte)iVar3 ^ bVar8;
+          iVar3 = MSG_ReadByte(param_1);
+          bVar6 = (byte)iVar3 ^ bVar5;
         }
-        param_4->remoteControlMove[1] = bVar9;
-        bVar9 = param_3->remoteControlMove[2];
-        iVar3 = MSG_ReadBit(pmVar2);
+        param_4->remoteControlMove[1] = bVar6;
+        bVar6 = param_3->remoteControlMove[2];
+        iVar3 = MSG_ReadBit(param_1);
         if (iVar3 != 0) {
-          iVar3 = MSG_ReadByte(pmVar2);
-          bVar9 = (byte)iVar3 ^ bVar8;
+          iVar3 = MSG_ReadByte(param_1);
+          bVar6 = (byte)iVar3 ^ bVar5;
         }
-        param_4->remoteControlMove[2] = bVar9;
+        param_4->remoteControlMove[2] = bVar6;
       }
       if ((param_4->buttons & 4U) != 0) {
-        iVar3 = MSG_ReadDeltaKey(pmVar2,iVar7,(uint)param_3->meleeChargeEnt,0xb);
+        iVar3 = MSG_ReadDeltaKey(param_1,uVar7,(uint)param_3->meleeChargeEnt,0xb);
         param_4->meleeChargeEnt = (ushort)iVar3;
-        iVar3 = MSG_ReadDeltaKey(pmVar2,iVar7,(uint)param_3->meleeChargeDist,8);
+        iVar3 = MSG_ReadDeltaKey(param_1,uVar7,(uint)param_3->meleeChargeDist,8);
         param_4->meleeChargeDist = (uchar)iVar3;
       }
       if ((param_4->buttons & 0x8000000U) != 0) {
-        iVar3 = MSG_ReadDeltaKey(pmVar2,iVar7,(uint)param_3->airburstMarkDistance,0x10);
+        iVar3 = MSG_ReadDeltaKey(param_1,uVar7,(uint)param_3->airburstMarkDistance,0x10);
         param_4->airburstMarkDistance = (ushort)iVar3;
       }
       if (0xfffffff < param_4->buttons) {
         Com_PrintError(0xf,"client sent an invalid buttons value %i\n");
         param_4->buttons = param_3->buttons;
       }
-      iVar3 = MSG_ReadBits(pmVar2,3);
+      iVar3 = MSG_ReadBits(param_1,3);
       bVar1 = iVar3 == 5;
     }
   }
   if (bVar1) {
-    uVar6 = __restgprlr_26(1);
-    return (bool)uVar6;
+    return true;
   }
   Com_PrintError(0xf,"invalid packet from client\n");
-  uVar6 = __restgprlr_26(0);
-  return (bool)uVar6;
+  return false;
 }
 
 
@@ -732,31 +686,28 @@ int MSG_ReadDeltaGroundEntity(msg_t *param_1)
 
 // 825067A0  MSG_ReadDeltaEventField  (qcommon/msg_mp.cpp:644)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 int MSG_ReadDeltaEventField(msg_t *param_1)
 
 {
-  msg_t *pmVar1;
-  uint uVar2;
-  int iVar3;
+  uint uVar1;
   
-  pmVar1 = (msg_t *)__savegprlr_27(param_1);
-  if (pmVar1->readcount < pmVar1->splitSize + pmVar1->cursize) {
-    uVar2 = MSG_GetByte(pmVar1,pmVar1->readcount);
-    if ((uVar2 != (uVar2 & 0xff)) &&
+  if (param_1->readcount < param_1->splitSize + param_1->cursize) {
+    uVar1 = MSG_GetByte(param_1,param_1->readcount);
+    if ((uVar1 != (uVar1 & 0xff)) &&
        (MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\msg.cpp",0x2cb,0,
-                        "c == static_cast< byte >( c )\n\t%i, %i"), uVar2 != (uVar2 & 0xff))) {
+                        "c == static_cast< byte >( c )\n\t%i, %i"), uVar1 != (uVar1 & 0xff))) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\msg.cpp",0x2d3,0,
                       "c == static_cast< byte >( c )\n\t%i, %i");
     }
-    pmVar1->readcount = pmVar1->readcount + 1;
-    iVar3 = __restgprlr_27(uVar2);
-    return iVar3;
+    param_1->readcount = param_1->readcount + 1;
+    return uVar1;
   }
-  pmVar1->overflowed = 1;
-  iVar3 = __restgprlr_27(0xffffffffffffffff);
-  return iVar3;
+  param_1->overflowed = 1;
+  return -1;
 }
 
 
@@ -776,35 +727,31 @@ int MSG_ReadDeltaEventParamField(msg_t *param_1)
 
 // 825067B0  MSG_ReadEFlags  (qcommon/msg_mp.cpp:656)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 int MSG_ReadEFlags(msg_t *param_1,int param_2)
 
 {
-  msg_t *pmVar1;
-  int iVar2;
-  uint uVar3;
-  ulonglong uVar4;
+  int iVar1;
+  uint uVar2;
   
-  uVar4 = (ulonglong)param_2;
-  pmVar1 = (msg_t *)__savegprlr_29(param_1,uVar4);
-  if (pmVar1->overflowed != 0) {
+  if (param_1->overflowed != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\msg_mp.cpp",0x294,0,
                     "%s");
   }
-  iVar2 = MSG_ReadBit(pmVar1);
-  if (iVar2 == 1) {
-    iVar2 = MSG_ReadBits(pmVar1,0x1d);
-    iVar2 = __restgprlr_29(iVar2);
-    return iVar2;
+  iVar1 = MSG_ReadBit(param_1);
+  if (iVar1 == 1) {
+    iVar1 = MSG_ReadBits(param_1,0x1d);
+    return iVar1;
   }
-  uVar3 = MSG_ReadBits(pmVar1,5);
-  if (((int)uVar3 < 0) || (0x1c < (int)uVar3)) {
+  uVar2 = MSG_ReadBits(param_1,5);
+  if (((int)uVar2 < 0) || (0x1c < (int)uVar2)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\msg_mp.cpp",0x29f,0,
                     "%s\n\t(bitChanged) = %i");
   }
-  iVar2 = __restgprlr_29((uint)(1 << (uVar3 & 0x3f)) ^ uVar4);
-  return iVar2;
+  return 1 << (uVar2 & 0x3f) ^ param_2;
 }
 
 
@@ -888,59 +835,55 @@ float MSG_ReadOriginZFloat(msg_t *param_1,float param_2)
 
 // 82506AE0  MSG_ReadEntityIndex  (qcommon/msg_mp.cpp:784)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 int MSG_ReadEntityIndex(msg_t *param_1,int param_2)
 
 {
-  msg_t *pmVar1;
-  int iVar2;
+  int iVar1;
   
-  pmVar1 = (msg_t *)__savegprlr_28(param_1);
-  iVar2 = MSG_ReadBit(pmVar1);
-  if (iVar2 == 0) {
-    if (param_2 == 0xb) {
-      iVar2 = MSG_ReadBit(pmVar1);
-      if (iVar2 == 0) {
-        if ((msg_printEntityNums->current).enabled != false) {
-          Com_Printf(0x19,"Entity num: %i bits (delta)\n");
-        }
-        iVar2 = MSG_ReadBits(pmVar1,9);
-        if (iVar2 < 1) {
-          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\msg_mp.cpp",
-                          0x32d,0,"%s\n\t(delta) = %i");
-        }
-        pmVar1->lastEntityRef = pmVar1->lastEntityRef + iVar2;
-        goto LAB_82506c50;
+  iVar1 = MSG_ReadBit(param_1);
+  if (iVar1 == 0) {
+    if ((param_2 == 0xb) && (iVar1 = MSG_ReadBit(param_1), iVar1 == 0)) {
+      if ((msg_printEntityNums->current).enabled != false) {
+        Com_Printf(0x19,"Entity num: %i bits (delta)\n");
       }
+      iVar1 = MSG_ReadBits(param_1,9);
+      if (iVar1 < 1) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\msg_mp.cpp",0x32d,
+                        0,"%s\n\t(delta) = %i");
+      }
+      param_1->lastEntityRef = param_1->lastEntityRef + iVar1;
     }
-    if ((msg_printEntityNums->current).enabled != false) {
-      Com_Printf(0x19,"Entity num: %i bits (full)\n");
+    else {
+      if ((msg_printEntityNums->current).enabled != false) {
+        Com_Printf(0x19,"Entity num: %i bits (full)\n");
+      }
+      iVar1 = MSG_ReadBits(param_1,param_2);
+      if (iVar1 <= param_1->lastEntityRef) {
+        va("%i <= %i");
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\msg_mp.cpp",0x337,
+                        0,"%s\n\t%s");
+      }
+      param_1->lastEntityRef = iVar1;
     }
-    iVar2 = MSG_ReadBits(pmVar1,param_2);
-    if (iVar2 <= pmVar1->lastEntityRef) {
-      va("%i <= %i");
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\msg_mp.cpp",0x337,0,
-                      "%s\n\t%s");
-    }
-    pmVar1->lastEntityRef = iVar2;
   }
   else {
     if ((msg_printEntityNums->current).enabled != false) {
       Com_Printf(0x19,"Entity num: 1 bit (inc)\n");
     }
-    pmVar1->lastEntityRef = pmVar1->lastEntityRef + 1;
+    param_1->lastEntityRef = param_1->lastEntityRef + 1;
   }
-LAB_82506c50:
   if ((msg_printEntityNums->current).enabled != false) {
     Com_Printf(0x19,"Read entity num %i\n");
   }
-  if ((pmVar1->overflowed == 0) && (pmVar1->lastEntityRef < 0)) {
+  if ((param_1->overflowed == 0) && (param_1->lastEntityRef < 0)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\msg_mp.cpp",0x33e,0,
                     "%s\n\t(msg->lastEntityRef) = %i");
   }
-  iVar2 = __restgprlr_28(pmVar1->lastEntityRef);
-  return iVar2;
+  return param_1->lastEntityRef;
 }
 
 
@@ -965,229 +908,200 @@ int MSG_ReadLastChangedField(msg_t *param_1,int param_2)
 
 // 82506D48  MSG_ReadValueNoXor  (qcommon/msg_mp.cpp:872)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 int MSG_ReadValueNoXor(msg_t *param_1,int param_2)
 
 {
-  msg_t *pmVar1;
+  uint uVar1;
   int iVar2;
-  int iVar3;
-  ulonglong uVar4;
-  ulonglong uVar5;
-  uint uVar7;
-  ulonglong uVar6;
+  uint uVar3;
   
-  uVar4 = (ulonglong)param_2;
-  pmVar1 = (msg_t *)__savegprlr_28(param_1);
-  if ((int)uVar4 < 0) {
+  if (param_2 < 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\msg_mp.cpp",0x36d,0,
                     "%s");
   }
-  uVar6 = uVar4 & 7;
-  iVar3 = (int)uVar6;
-  if (iVar3 == 0) {
-    uVar5 = 0;
+  uVar3 = param_2 & 7;
+  if (uVar3 == 0) {
+    uVar1 = 0;
   }
   else {
-    iVar2 = MSG_ReadBits(pmVar1,iVar3);
-    uVar5 = (ulonglong)iVar2;
+    uVar1 = MSG_ReadBits(param_1,uVar3);
   }
-  while (iVar3 < (int)uVar4) {
-    iVar3 = MSG_ReadByte(pmVar1);
-    uVar7 = (uint)uVar6;
-    uVar6 = uVar6 + 8;
-    uVar5 = (uint)(iVar3 << (uVar7 & 0x3f)) | uVar5;
-    iVar3 = (int)uVar6;
+  for (; (int)uVar3 < param_2; uVar3 = uVar3 + 8) {
+    iVar2 = MSG_ReadByte(param_1);
+    uVar1 = iVar2 << (uVar3 & 0x3f) | uVar1;
   }
-  iVar3 = __restgprlr_28(uVar5);
-  return iVar3;
+  return uVar1;
 }
 
 
 // 82506DE0  MSG_ReadValue  (qcommon/msg_mp.cpp:899)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 int MSG_ReadValue(msg_t *param_1,int *param_2,int *param_3,int param_4)
 
 {
   uint uVar1;
-  msg_t *pmVar3;
-  int iVar4;
-  ulonglong uVar2;
-  longlong lVar5;
-  longlong lVar6;
-  ulonglong uVar7;
-  uint uVar8;
+  uint uVar2;
+  int *piVar3;
   
-  lVar6 = (longlong)(int)param_3;
-  lVar5 = (longlong)(int)param_2;
-  pmVar3 = (msg_t *)__savegprlr_28(param_1,lVar5,lVar6,param_4);
-  uVar1 = (uint)lVar6;
-  uVar8 = uVar1;
-  if ((int)uVar1 < 0) {
-    uVar8 = -uVar1;
+  piVar3 = param_3;
+  if ((int)param_3 < 0) {
+    piVar3 = (int *)-(int)param_3;
   }
-  iVar4 = MSG_ReadValueNoXor(pmVar3,uVar8);
-  if (0x20 < (int)uVar8) {
+  uVar1 = MSG_ReadValueNoXor(param_1,(int)piVar3);
+  if (0x20 < (int)piVar3) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\msg_mp.cpp",0x38f,0,
                     "%s\n\t(absbits) = %i");
   }
-  if (uVar8 == 0x20) {
-    uVar7 = 0xffffffffffffffff;
+  if (piVar3 == (int *)0x20) {
+    uVar2 = 0xffffffff;
   }
   else {
-    uVar7 = (ulonglong)(uint)(1 << (uVar8 & 0x3f)) - 1;
+    uVar2 = (1 << ((uint)piVar3 & 0x3f)) - 1;
   }
-  uVar2 = *(uint *)lVar5 & uVar7 ^ (longlong)iVar4;
-  if ((int)uVar1 < 0) {
-    if ((1 << (uVar8 - 1 & 0x3f) & (uint)uVar2) != 0) {
-      uVar2 = uVar2 | ~uVar7;
-    }
+  uVar1 = *param_2 & uVar2 ^ uVar1;
+  if (((int)param_3 < 0) && ((1 << ((int)piVar3 - 1U & 0x3f) & uVar1) != 0)) {
+    uVar1 = uVar1 | ~uVar2;
   }
-  iVar4 = __restgprlr_28(uVar2);
-  return iVar4;
+  return uVar1;
 }
 
 
 // 82506E90  MSG_ReadDeltaAngle  (qcommon/msg_mp.cpp:928)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 float MSG_ReadDeltaAngle(msg_t *param_1,float param_2)
 
 {
   short sVar1;
-  msg_t *pmVar2;
-  int iVar3;
-  uint uVar4;
-  short sVar5;
-  double extraout_f1;
+  int iVar2;
+  uint uVar3;
+  short sVar4;
+  double dVar5;
   double dVar6;
-  double dVar7;
-  float fVar8;
+  float fVar7;
   
-  pmVar2 = (msg_t *)__savegprlr_29((double)param_2,param_1);
-  sVar5 = 1;
-  dVar7 = (double)(float)(extraout_f1 * 182.04444885253906);
-  dVar6 = 0.5;
-  floor((double)(float)(dVar7 + 0.5));
-  iVar3 = MSG_ReadBit(pmVar2);
-  if (iVar3 == 1) {
-    iVar3 = MSG_ReadBit(pmVar2);
-    if (iVar3 != 0) {
-      sVar5 = -1;
+  sVar4 = 1;
+  dVar6 = (double)(param_2 * 182.04445);
+  dVar5 = 0.5;
+  floor((double)(float)(dVar6 + 0.5));
+  iVar2 = MSG_ReadBit(param_1);
+  if (iVar2 == 1) {
+    iVar2 = MSG_ReadBit(param_1);
+    if (iVar2 != 0) {
+      sVar4 = -1;
     }
-    uVar4 = MSG_ReadBits(pmVar2,3);
-    if (6 < uVar4) {
+    uVar3 = MSG_ReadBits(param_1,3);
+    if (6 < uVar3) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\msg_mp.cpp",0x3b1,0,
                       "index doesn\'t index COMMON_ANGLE_DELTA_ARRAYCOUNT\n\t%i not in [0, %i)");
     }
-    sVar1 = g_commonAngleDeltas[uVar4];
+    sVar1 = g_commonAngleDeltas[uVar3];
     if (sVar1 == 0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\msg_mp.cpp",0x3b3,0,
                       "%s");
     }
-    dVar6 = floor((double)(float)(dVar7 + dVar6));
-    sVar5 = (short)(int)dVar6 + sVar5 * sVar1;
+    dVar5 = floor((double)(float)(dVar6 + dVar5));
+    sVar4 = (short)(int)dVar5 + sVar4 * sVar1;
   }
   else {
-    iVar3 = MSG_ReadBit(pmVar2);
-    if (iVar3 == 0) {
-      fVar8 = MSG_ReadAngle16(pmVar2);
-      dVar6 = (double)__restgprlr_29((double)fVar8);
-      return (float)dVar6;
+    iVar2 = MSG_ReadBit(param_1);
+    if (iVar2 == 0) {
+      fVar7 = MSG_ReadAngle16(param_1);
+      return fVar7;
     }
-    iVar3 = MSG_ReadBit(pmVar2);
-    if (iVar3 != 0) {
-      sVar5 = -1;
+    iVar2 = MSG_ReadBit(param_1);
+    if (iVar2 != 0) {
+      sVar4 = -1;
     }
-    iVar3 = MSG_ReadBits(pmVar2,0xc);
-    if ((short)iVar3 == 0) {
+    iVar2 = MSG_ReadBits(param_1,0xc);
+    if ((short)iVar2 == 0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\msg_mp.cpp",0x3c9,0,
                       "%s");
     }
-    dVar6 = floor((double)(float)(dVar7 + dVar6));
-    sVar5 = (short)(int)dVar6 + sVar5 * (short)iVar3;
+    dVar5 = floor((double)(float)(dVar6 + dVar5));
+    sVar4 = (short)(int)dVar5 + sVar4 * (short)iVar2;
   }
-  dVar6 = (double)__restgprlr_29((double)((float)(longlong)sVar5 * 0.005493164));
-  return (float)dVar6;
+  return (float)(longlong)sVar4 * 0.005493164;
 }
 
 
 // 82507070  MSG_ReadDeltaField  (qcommon/msg_mp.cpp:1016)
 
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 void MSG_ReadDeltaField(msg_t *param_1,int param_2,void *param_3,void *param_4,NetField *param_5,
                        int param_6,bool param_7)
 
 {
-  msg_t *pmVar1;
-  int iVar2;
-  uint uVar3;
-  int iVar4;
-  float fVar5;
-  ulonglong uVar6;
-  char *pcVar7;
-  ulonglong uVar8;
-  float *pfVar9;
-  float *pfVar10;
+  int iVar1;
+  uint uVar2;
+  int iVar3;
+  float fVar4;
+  char *pcVar5;
+  float *pfVar6;
+  float *pfVar7;
   undefined8 local_60;
   
-  uVar8 = (ulonglong)param_7;
-  uVar6 = (ulonglong)(int)param_3;
-  pmVar1 = (msg_t *)__savegprlr_22(param_1);
   local_60 = (ulonglong)local_60._4_4_;
-  pcVar7 = param_4;
-  if ((uVar6 & 0xffffffff) == 0) {
-    pcVar7 = "%s";
+  pcVar5 = param_4;
+  if (param_3 == (void *)0x0) {
+    pcVar5 = "%s";
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\msg_mp.cpp",0x401,0,
                     "%s");
   }
-  if ((uVar8 & 0xff) == 0) {
-    pfVar9 = (float *)(param_5->offset + (int)uVar6);
+  if (param_7) {
+    pfVar6 = (float *)&local_60;
   }
   else {
-    pfVar9 = (float *)&local_60;
+    pfVar6 = (float *)(param_5->offset + (int)param_3);
   }
-  pfVar10 = (float *)((int)param_4 + param_5->offset);
-  if (pmVar1->overflowed != 0) {
-    pcVar7 = "%s";
+  pfVar7 = (float *)(param_5->offset + (int)param_4);
+  if (param_1->overflowed != 0) {
+    pcVar5 = "%s";
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\msg_mp.cpp",0x409,0,
                     "%s");
   }
   switch(param_5->bits) {
   case 0:
-    iVar4 = MSG_ReadBit(pmVar1);
-    if (iVar4 == 0) {
-      iVar4 = MSG_ReadBit(pmVar1);
-      *pfVar10 = (float)(iVar4 << 0x1f);
-      if (*pfVar10 != 0.0) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\msg_mp.cpp",0x422,
-                        0,"%s");
-        __restgprlr_22();
+    iVar3 = MSG_ReadBit(param_1);
+    if (iVar3 == 0) {
+      iVar3 = MSG_ReadBit(param_1);
+      *pfVar7 = (float)(iVar3 << 0x1f);
+      if (*pfVar7 == 0.0) {
         return;
       }
-      break;
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\msg_mp.cpp",0x422,0,
+                      "%s");
+      return;
     }
-    iVar4 = MSG_ReadBit(pmVar1);
-    if (iVar4 != 0) {
-      fVar5 = (float)MSG_ReadLong(pmVar1);
-      *pfVar10 = fVar5;
-      *pfVar10 = (float)((uint)fVar5 ^ (uint)*pfVar9);
-      if (param_6 != 0) {
-        Com_Printf(0x19,"%s:%f ");
-        __restgprlr_22();
+    iVar3 = MSG_ReadBit(param_1);
+    if (iVar3 != 0) {
+      fVar4 = (float)MSG_ReadLong(param_1);
+      *pfVar7 = fVar4;
+      *pfVar7 = (float)((uint)fVar4 ^ (uint)*pfVar6);
+      if (param_6 == 0) {
         return;
       }
-      break;
+      Com_Printf(0x19,"%s:%f ");
+      return;
     }
-    iVar4 = MSG_ReadBits(pmVar1,5);
-    iVar2 = MSG_ReadByte(pmVar1);
-    local_60 = (ulonglong)(int)(((int)*pfVar9 + 0x1000U ^ iVar2 * 0x20 + iVar4) - 0x1000);
-    *pfVar10 = (float)(longlong)local_60;
+    iVar3 = MSG_ReadBits(param_1,5);
+    iVar1 = MSG_ReadByte(param_1);
+    local_60 = (ulonglong)(int)(((int)*pfVar6 + 0x1000U ^ iVar1 * 0x20 + iVar3) - 0x1000);
+    *pfVar7 = (float)(longlong)local_60;
 LAB_825079b4:
     if (param_6 != 0) {
 LAB_825079bc:
@@ -1195,299 +1109,269 @@ LAB_825079bc:
     }
     break;
   case -0x67:
-    iVar4 = MSG_ReadBit(pmVar1);
-    if (iVar4 == 0) {
-      iVar4 = MSG_ReadBits(pmVar1,4);
-      *pfVar10 = (float)(iVar4 * 0x32);
-      __restgprlr_22();
+    iVar3 = MSG_ReadBit(param_1);
+    if (iVar3 == 0) {
+      iVar3 = MSG_ReadBits(param_1,4);
+      *pfVar7 = (float)(iVar3 * 0x32);
       return;
     }
     goto LAB_82507830;
   case -0x66:
-    iVar4 = MSG_ReadBit(pmVar1);
-    if (iVar4 == 0) {
-      iVar4 = MSG_ReadBits(pmVar1,4);
-      *pfVar10 = (float)(iVar4 * 0xfa);
-      __restgprlr_22();
+    iVar3 = MSG_ReadBit(param_1);
+    if (iVar3 == 0) {
+      iVar3 = MSG_ReadBits(param_1,4);
+      *pfVar7 = (float)(iVar3 * 0xfa);
       return;
     }
 LAB_82507830:
-    fVar5 = (float)MSG_ReadBits(pmVar1,0x10);
-    *pfVar10 = fVar5;
-    __restgprlr_22();
+    fVar4 = (float)MSG_ReadBits(param_1,0x10);
+    *pfVar7 = fVar4;
     return;
   case -0x65:
-    iVar4 = MSG_ReadBit(pmVar1);
-    if (iVar4 != 0) {
-      fVar5 = (float)MSG_ReadShort(pmVar1);
-      *pfVar10 = fVar5;
-      __restgprlr_22();
+    iVar3 = MSG_ReadBit(param_1);
+    if (iVar3 != 0) {
+      fVar4 = (float)MSG_ReadShort(param_1);
+      *pfVar7 = fVar4;
       return;
     }
 LAB_82507990:
-    *pfVar10 = 0.0;
-    __restgprlr_22();
+    *pfVar7 = 0.0;
     return;
   case -100:
   case -0x4f:
-    fVar5 = MSG_ReadDeltaAngle(pmVar1,*pfVar9);
-    *pfVar10 = fVar5;
-    __restgprlr_22();
+    fVar4 = MSG_ReadDeltaAngle(param_1,*pfVar6);
+    *pfVar7 = fVar4;
     return;
   case -99:
-    iVar4 = MSG_ReadBit(pmVar1);
-    if (iVar4 == 0) {
-      *pfVar10 = 0.0;
-      if (*pfVar10 != 0.0) {
+    iVar3 = MSG_ReadBit(param_1);
+    if (iVar3 == 0) {
+      *pfVar7 = 0.0;
+      if (*pfVar7 != 0.0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\msg_mp.cpp",0x48a,
                         0,"%s");
       }
     }
     else {
-      iVar4 = MSG_ReadBit(pmVar1);
-      if (iVar4 == 0) {
-        iVar4 = MSG_ReadBits(pmVar1,4);
-        iVar2 = MSG_ReadByte(pmVar1);
-        local_60 = (ulonglong)(int)(((int)*pfVar9 + 0x800U ^ iVar2 * 0x10 + iVar4) - 0x800);
-        *pfVar10 = (float)(longlong)local_60;
+      iVar3 = MSG_ReadBit(param_1);
+      if (iVar3 == 0) {
+        iVar3 = MSG_ReadBits(param_1,4);
+        iVar1 = MSG_ReadByte(param_1);
+        local_60 = (ulonglong)(int)(((int)*pfVar6 + 0x800U ^ iVar1 * 0x10 + iVar3) - 0x800);
+        *pfVar7 = (float)(longlong)local_60;
         if (param_6 != 0) {
           Com_Printf(0x19,"%s:%i ");
         }
       }
       else {
-        uVar3 = MSG_ReadLong(pmVar1);
-        *pfVar10 = (float)((uint)*pfVar9 ^ uVar3);
+        uVar2 = MSG_ReadLong(param_1);
+        *pfVar7 = (float)((uint)*pfVar6 ^ uVar2);
         if (param_6 != 0) {
           Com_Printf(0x19,"%s:%f ");
         }
       }
     }
-    local_60 = (ulonglong)(*pfVar10 + 2048.0);
+    local_60 = (ulonglong)(*pfVar7 + 2048.0);
     if (0xfff < local_60._4_4_) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\msg_mp.cpp",0x4ae,0,
                       "*(float *)toF + HUDELEM_COORD_BIAS doesn\'t index 1 << HUDELEM_COORD_BITS\n\t%i not in [0, %i)"
                      );
-      __restgprlr_22();
       return;
     }
     break;
   case -0x62:
-    fVar5 = (float)MSG_ReadEFlags(pmVar1,(int)*pfVar9);
-    *pfVar10 = fVar5;
-    __restgprlr_22();
+    fVar4 = (float)MSG_ReadEFlags(param_1,(int)*pfVar6);
+    *pfVar7 = fVar4;
     return;
   case -0x61:
   case -0x4a:
   case -0x48:
   case -0x46:
-    fVar5 = (float)MSG_ReadDeltaTime(pmVar1,param_2);
-    *pfVar10 = fVar5;
-    __restgprlr_22();
+    fVar4 = (float)MSG_ReadDeltaTime(param_1,param_2);
+    *pfVar7 = fVar4;
     return;
   case -0x60:
-    fVar5 = (float)MSG_ReadDeltaGroundEntity(pmVar1);
-    *pfVar10 = fVar5;
-    __restgprlr_22();
+    fVar4 = (float)MSG_ReadDeltaGroundEntity(param_1);
+    *pfVar7 = fVar4;
     return;
   case -0x5f:
-    iVar4 = MSG_ReadBits(pmVar1,7);
-    *pfVar10 = (float)(iVar4 * 100);
-    __restgprlr_22();
+    iVar3 = MSG_ReadBits(param_1,7);
+    *pfVar7 = (float)(iVar3 * 100);
     return;
   case -0x5e:
   case -0x4d:
-    fVar5 = (float)MSG_ReadByte(pmVar1);
-    *pfVar10 = fVar5;
-    __restgprlr_22();
+    fVar4 = (float)MSG_ReadByte(param_1);
+    *pfVar7 = fVar4;
     return;
   case -0x5d:
-    fVar5 = (float)MSG_ReadBits(pmVar1,0x18);
-    *pfVar10 = fVar5;
-    __restgprlr_22();
+    fVar4 = (float)MSG_ReadBits(param_1,0x18);
+    *pfVar7 = fVar4;
     return;
   case -0x5c:
   case -0x5b:
   case -0x53:
   case -0x52:
-    fVar5 = MSG_ReadOriginFloat(param_5->bits,pmVar1,*pfVar9);
-    *pfVar10 = fVar5;
+    fVar4 = MSG_ReadOriginFloat(param_5->bits,param_1,*pfVar6);
+    *pfVar7 = fVar4;
     if (param_6 != 0) {
       Com_Printf(0x19,"%s:%f ");
-      __restgprlr_22();
       return;
     }
     break;
   case -0x5a:
   case -0x51:
-    fVar5 = MSG_ReadOriginZFloat(pmVar1,*pfVar9);
-    *pfVar10 = fVar5;
+    fVar4 = MSG_ReadOriginZFloat(param_1,*pfVar6);
+    *pfVar7 = fVar4;
     if (param_6 != 0) {
       Com_Printf(0x19,"%s:%f ");
-      __restgprlr_22();
       return;
     }
     break;
   case -0x59:
-    iVar4 = MSG_ReadBit(pmVar1);
-    if (iVar4 != 0) {
-      fVar5 = (float)MSG_ReadLong(pmVar1);
-      *pfVar10 = fVar5;
-      *pfVar10 = (float)((uint)fVar5 ^ (uint)*pfVar9);
-      if (param_6 != 0) {
-        Com_Printf(0x19,"%s:%f ");
-        __restgprlr_22();
+    iVar3 = MSG_ReadBit(param_1);
+    if (iVar3 != 0) {
+      fVar4 = (float)MSG_ReadLong(param_1);
+      *pfVar7 = fVar4;
+      *pfVar7 = (float)((uint)fVar4 ^ (uint)*pfVar6);
+      if (param_6 == 0) {
         return;
       }
-      break;
+      Com_Printf(0x19,"%s:%f ");
+      return;
     }
-    iVar4 = MSG_ReadBits(pmVar1,5);
-    iVar2 = MSG_ReadByte(pmVar1);
-    local_60 = (ulonglong)(int)(((int)*pfVar9 + 0x1000U ^ iVar2 * 0x20 + iVar4) - 0x1000);
-    *pfVar10 = (float)(longlong)local_60;
+    iVar3 = MSG_ReadBits(param_1,5);
+    iVar1 = MSG_ReadByte(param_1);
+    local_60 = (ulonglong)(int)(((int)*pfVar6 + 0x1000U ^ iVar1 * 0x20 + iVar3) - 0x1000);
+    *pfVar7 = (float)(longlong)local_60;
     goto LAB_825079b4;
   case -0x58:
-    fVar5 = (float)MSG_ReadLong(pmVar1);
-    *pfVar10 = fVar5;
-    *pfVar10 = (float)((uint)fVar5 ^ (uint)*pfVar9);
+    fVar4 = (float)MSG_ReadLong(param_1);
+    *pfVar7 = fVar4;
+    *pfVar7 = (float)((uint)fVar4 ^ (uint)*pfVar6);
     if (param_6 != 0) {
       Com_Printf(0x19,"%s:%f ");
-      __restgprlr_22();
       return;
     }
     break;
   case -0x57:
-    fVar5 = MSG_ReadAngle16(pmVar1);
-    *pfVar10 = fVar5;
-    __restgprlr_22();
+    fVar4 = MSG_ReadAngle16(param_1);
+    *pfVar7 = fVar4;
     return;
   case -0x56:
-    iVar4 = MSG_ReadBits(pmVar1,6);
-    local_60 = (ulonglong)iVar4;
-    *pfVar10 = (float)(longlong)local_60 * 0.1;
-    __restgprlr_22();
+    iVar3 = MSG_ReadBits(param_1,6);
+    *pfVar7 = (float)(longlong)iVar3 * 0.1;
     return;
   case -0x55:
-    iVar4 = MSG_ReadBit(pmVar1);
-    if (iVar4 != 0) {
-      *pfVar10 = *pfVar9;
-      *(char *)((int)pfVar10 + 3) = -(*(char *)((int)pfVar9 + 3) == '\0');
-      __restgprlr_22();
+    iVar3 = MSG_ReadBit(param_1);
+    if (iVar3 == 0) {
+      iVar3 = MSG_ReadBit(param_1);
+      if (iVar3 == 0) {
+        iVar3 = MSG_ReadByte(param_1);
+        *(char *)pfVar7 = (char)iVar3;
+        iVar3 = MSG_ReadByte(param_1);
+        *(char *)((int)pfVar7 + 1) = (char)iVar3;
+        iVar3 = MSG_ReadByte(param_1);
+        *(char *)((int)pfVar7 + 2) = (char)iVar3;
+      }
+      iVar3 = MSG_ReadBits(param_1,5);
+      *(char *)((int)pfVar7 + 3) = (char)iVar3 << 3;
       return;
     }
-    iVar4 = MSG_ReadBit(pmVar1);
-    if (iVar4 == 0) {
-      iVar4 = MSG_ReadByte(pmVar1);
-      *(char *)pfVar10 = (char)iVar4;
-      iVar4 = MSG_ReadByte(pmVar1);
-      *(char *)((int)pfVar10 + 1) = (char)iVar4;
-      iVar4 = MSG_ReadByte(pmVar1);
-      *(char *)((int)pfVar10 + 2) = (char)iVar4;
-    }
-    iVar4 = MSG_ReadBits(pmVar1,5);
-    *(char *)((int)pfVar10 + 3) = (char)iVar4 << 3;
-    __restgprlr_22();
+    *pfVar7 = *pfVar6;
+    *(char *)((int)pfVar7 + 3) = -(*(char *)((int)pfVar6 + 3) == '\0');
     return;
   case -0x54:
-    fVar5 = (float)MSG_ReadBits(pmVar1,0xb);
-    *pfVar10 = fVar5;
-    __restgprlr_22();
+    fVar4 = (float)MSG_ReadBits(param_1,0xb);
+    *pfVar7 = fVar4;
     return;
   case -0x50:
   case -0x4e:
   case -0x49:
   case -0x47:
-    fVar5 = (float)MSG_ReadLong(pmVar1);
-    *pfVar10 = fVar5;
-    __restgprlr_22();
+    fVar4 = (float)MSG_ReadLong(param_1);
+    *pfVar7 = fVar4;
     return;
   case -0x4c:
-    iVar4 = MSG_ReadBit(pmVar1);
-    if (iVar4 == 1) {
-      iVar4 = MSG_ReadBits(pmVar1,5);
-      *pfVar10 = (float)((int)*pfVar9 + iVar4 + -0x10);
+    iVar3 = MSG_ReadBit(param_1);
+    if (iVar3 == 1) {
+      iVar3 = MSG_ReadBits(param_1,5);
+      *pfVar7 = (float)((int)*pfVar6 + iVar3 + -0x10);
     }
     else {
-      fVar5 = (float)MSG_ReadValue(pmVar1,(int *)pfVar9,(int *)0xfffffff8,(int)pcVar7);
-      *pfVar10 = fVar5;
+      fVar4 = (float)MSG_ReadValue(param_1,(int *)pfVar6,(int *)0xfffffff8,(int)pcVar5);
+      *pfVar7 = fVar4;
     }
-    if (param_6 == 0) break;
-    goto LAB_825079bc;
-  case -0x4b:
-    iVar4 = MSG_ReadBit(pmVar1);
-    if (iVar4 == 1) {
-      iVar4 = MSG_ReadBits(pmVar1,5);
-      *pfVar10 = (float)(iVar4 + (int)*pfVar9 + 1);
-      __restgprlr_22();
+    if (param_6 == 0) {
       return;
     }
-    fVar5 = (float)MSG_ReadValue(pmVar1,(int *)pfVar9,(int *)&DAT_00000018,(int)pcVar7);
-    *pfVar10 = fVar5;
-    __restgprlr_22();
+    goto LAB_825079bc;
+  case -0x4b:
+    iVar3 = MSG_ReadBit(param_1);
+    if (iVar3 != 1) {
+      fVar4 = (float)MSG_ReadValue(param_1,(int *)pfVar6,(int *)&DAT_00000018,(int)pcVar5);
+      *pfVar7 = fVar4;
+      return;
+    }
+    iVar3 = MSG_ReadBits(param_1,5);
+    *pfVar7 = (float)(iVar3 + (int)*pfVar6 + 1);
     return;
   default:
-    iVar4 = MSG_ReadBit(pmVar1);
-    if (iVar4 == 0) goto LAB_82507990;
-    fVar5 = (float)MSG_ReadValue(pmVar1,(int *)pfVar9,(int *)param_5->bits,(int)pcVar7);
-    *pfVar10 = fVar5;
+    iVar3 = MSG_ReadBit(param_1);
+    if (iVar3 == 0) goto LAB_82507990;
+    fVar4 = (float)MSG_ReadValue(param_1,(int *)pfVar6,(int *)param_5->bits,(int)pcVar5);
+    *pfVar7 = fVar4;
     goto LAB_825079b4;
   }
-  __restgprlr_22();
   return;
 }
 
 
 // 825079D8  MSG_ReadNumFieldsSkipped  (qcommon/msg_mp.cpp:1369)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 int MSG_ReadNumFieldsSkipped(msg_t *param_1,int param_2,int param_3)
 
 {
-  msg_t *pmVar1;
+  int iVar1;
   int iVar2;
-  longlong lVar3;
-  int iVar4;
-  longlong lVar5;
+  int iVar3;
   
-  pmVar1 = (msg_t *)__savegprlr_24(param_1);
-  lVar5 = 0;
+  iVar2 = 0;
   if (param_2 == 1) {
     do {
-      lVar5 = lVar5 + 1;
-      iVar2 = MSG_ReadBit(pmVar1);
-    } while (iVar2 == 0);
-    if (param_3 < (int)lVar5) {
+      iVar2 = iVar2 + 1;
+      iVar1 = MSG_ReadBit(param_1);
+    } while (iVar1 == 0);
+    if (param_3 < iVar2) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\msg_mp.cpp",0x579,0,
                       "%s");
-      iVar2 = __restgprlr_24(lVar5);
       return iVar2;
     }
   }
   else {
-    iVar2 = MSG_ReadBit(pmVar1);
+    iVar2 = MSG_ReadBit(param_1);
     if (iVar2 != 0) {
-      iVar2 = __restgprlr_24(1);
-      return iVar2;
+      return 1;
     }
-    lVar5 = 1;
-    iVar2 = MSG_ReadBits(pmVar1,param_2);
-    lVar3 = (ulonglong)(uint)(1 << (param_2 & 0x3fU)) - 1;
-    iVar4 = (int)lVar3;
-    if (iVar4 < iVar2) {
+    iVar1 = 1;
+    iVar2 = MSG_ReadBits(param_1,param_2);
+    iVar3 = (1 << (param_2 & 0x3fU)) + -1;
+    if (iVar3 < iVar2) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\msg_mp.cpp",0x59b,0,
                       "%s");
     }
-    while (iVar2 == iVar4) {
-      lVar5 = lVar3 + lVar5;
-      iVar2 = MSG_ReadBits(pmVar1,param_2);
-      if (iVar4 < iVar2) {
+    while (iVar2 == iVar3) {
+      iVar1 = iVar3 + iVar1;
+      iVar2 = MSG_ReadBits(param_1,param_2);
+      if (iVar3 < iVar2) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\msg_mp.cpp",0x5a7,
                         0,"%s");
       }
     }
-    lVar5 = iVar2 + lVar5;
+    iVar2 = iVar2 + iVar1;
   }
-  iVar2 = __restgprlr_24(lVar5);
   return iVar2;
 }
 
@@ -1505,6 +1389,8 @@ void MSG_CopyFieldOver(NetField *param_1,void *param_2,void *param_3,int param_4
 
 // 82507B28  MSG_ReadDeltaFields  (qcommon/msg_mp.cpp:1499)
 
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 void MSG_ReadDeltaFields(msg_t *param_1,int param_2,void *param_3,void *param_4,int param_5,
@@ -1516,51 +1402,44 @@ void MSG_ReadDeltaFields(msg_t *param_1,int param_2,void *param_3,void *param_4,
   bool bVar3;
   int iVar4;
   int iVar5;
-  uint uVar6;
+  longlong lVar6;
   longlong lVar7;
-  uint uVar10;
   longlong lVar8;
-  longlong lVar9;
-  int *piVar11;
-  int *piVar12;
-  ulonglong uVar13;
-  ulonglong uVar14;
+  int *piVar9;
+  int *piVar10;
+  ulonglong uVar11;
+  ulonglong uVar12;
   uint uStack00000034;
   
-  uVar10 = (uint)param_8;
-  lVar9 = (longlong)(int)param_6;
-  uVar14 = (ulonglong)param_5;
-  __savegprlr();
-  uVar6 = (uint)uVar14;
-  if ((uVar10 & 0xff) == 0) {
-    piVar12 = (int *)0x0;
-    piVar11 = (int *)0x0;
+  lVar8 = (longlong)(int)param_6;
+  uVar12 = (ulonglong)param_5;
+  if (param_8) {
+    piVar10 = (int *)(param_6->offset + (int)param_3);
+    piVar9 = (int *)(param_6->offset + (int)param_4);
   }
   else {
-    iVar4 = *(int *)((int)lVar9 + 4);
-    piVar12 = (int *)(iVar4 + (int)param_3);
-    piVar11 = (int *)(iVar4 + (int)param_4);
+    piVar10 = (int *)0x0;
+    piVar9 = (int *)0x0;
   }
-  uStack00000034 = uVar6;
+  uStack00000034 = param_5;
   iVar4 = MSG_ReadBit(param_1);
   if (iVar4 == 0) {
-    if (0 < (int)uVar6) {
-      lVar9 = lVar9 + -0xc;
+    if (0 < param_5) {
+      lVar8 = lVar8 + -0xc;
       do {
-        lVar9 = lVar9 + 0x10;
-        *(undefined4 *)(*(int *)lVar9 + (int)param_4) =
-             *(undefined4 *)(*(int *)lVar9 + (int)param_3);
-        uVar14 = uVar14 - 1;
-      } while (uVar14 != 0);
+        lVar8 = lVar8 + 0x10;
+        *(undefined4 *)(*(int *)lVar8 + (int)param_4) =
+             *(undefined4 *)(*(int *)lVar8 + (int)param_3);
+        uVar12 = uVar12 - 1;
+      } while (uVar12 != 0);
     }
   }
   else {
-    uVar13 = 0xffffffffffffffff;
-    iVar4 = MSG_ReadLastChangedField(param_1,uVar6);
-    if ((int)uVar6 < iVar4) {
+    uVar11 = 0xffffffffffffffff;
+    iVar4 = MSG_ReadLastChangedField(param_1,param_5);
+    if (param_5 < iVar4) {
       MSG_Discard(param_1);
       Com_PrintError(0x19,"Got lastChanged field of %i, but there are only %i fields\n");
-      __restgprlr();
       return;
     }
     bVar1 = true;
@@ -1568,10 +1447,10 @@ void MSG_ReadDeltaFields(msg_t *param_1,int param_2,void *param_3,void *param_4,
     if (iVar4 != -1) {
       do {
         bVar1 = bVar3;
-        iVar5 = MSG_ReadNumFieldsSkipped(param_1,param_7,iVar4 - (int)uVar13);
-        uVar14 = (longlong)iVar5 + uVar13;
-        iVar5 = (int)uVar14;
-        if (iVar5 <= (int)uVar13) {
+        iVar5 = MSG_ReadNumFieldsSkipped(param_1,param_7,iVar4 - (int)uVar11);
+        uVar12 = (longlong)iVar5 + uVar11;
+        iVar5 = (int)uVar12;
+        if (iVar5 <= (int)uVar11) {
           va("lastChanged was %i, nextChanged is %i");
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\msg_mp.cpp",
                           0x620,0,"%s\n\t%s");
@@ -1581,99 +1460,96 @@ void MSG_ReadDeltaFields(msg_t *param_1,int param_2,void *param_3,void *param_4,
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\msg_mp.cpp",
                           0x621,0,"%s\n\t%s");
         }
-        uVar13 = uVar13 + 1;
-        if ((int)uVar13 < iVar5) {
-          uVar2 = uVar13 & 0xfffffff;
-          lVar8 = uVar14 - uVar13;
-          uVar13 = lVar8 + uVar13;
-          lVar7 = uVar2 * 0x10 + lVar9 + -0xc;
+        uVar11 = uVar11 + 1;
+        if ((int)uVar11 < iVar5) {
+          uVar2 = uVar11 & 0xfffffff;
+          lVar7 = uVar12 - uVar11;
+          uVar11 = lVar7 + uVar11;
+          lVar6 = uVar2 * 0x10 + lVar8 + -0xc;
           do {
-            lVar7 = lVar7 + 0x10;
-            *(undefined4 *)(*(int *)lVar7 + (int)param_4) =
-                 *(undefined4 *)(*(int *)lVar7 + (int)param_3);
-            lVar8 = lVar8 + -1;
-          } while (lVar8 != 0);
+            lVar6 = lVar6 + 0x10;
+            *(undefined4 *)(*(int *)lVar6 + (int)param_4) =
+                 *(undefined4 *)(*(int *)lVar6 + (int)param_3);
+            lVar7 = lVar7 + -1;
+          } while (lVar7 != 0);
         }
-        if (((uVar10 & 0xff) != 0) && (0 < (int)uVar13)) {
-          bVar1 = *piVar11 == *piVar12;
+        if ((param_8) && (0 < (int)uVar11)) {
+          bVar1 = *piVar9 == *piVar10;
         }
         MSG_ReadDeltaField(param_1,param_2,param_3,param_4,
-                           (NetField *)((int)((uVar14 & 0xffffffff) << 4) + (int)lVar9),0,!bVar1);
-        uVar13 = uVar14;
+                           (NetField *)((int)&param_6->name + (int)((uVar12 & 0xffffffff) << 4)),0,
+                           !bVar1);
+        uVar11 = uVar12;
         bVar3 = bVar1;
       } while (iVar5 != iVar4);
-      uVar14 = (ulonglong)uStack00000034;
+      uVar12 = (ulonglong)uStack00000034;
     }
-    lVar7 = (longlong)iVar4;
-    lVar8 = lVar9;
+    lVar6 = (longlong)iVar4;
+    lVar7 = lVar8;
     if (0 < iVar4) {
       do {
-        if (((NetField *)lVar8)->changeHints == '\x02') {
-          MSG_ReadDeltaField(param_1,param_2,param_3,param_4,(NetField *)lVar8,0,!bVar1);
+        if (((NetField *)lVar7)->changeHints == '\x02') {
+          MSG_ReadDeltaField(param_1,param_2,param_3,param_4,(NetField *)lVar7,0,!bVar1);
         }
-        lVar7 = lVar7 + -1;
-        lVar8 = lVar8 + 0x10;
-      } while (lVar7 != 0);
-      uVar14 = (ulonglong)uStack00000034;
+        lVar6 = lVar6 + -1;
+        lVar7 = lVar7 + 0x10;
+      } while (lVar6 != 0);
+      uVar12 = (ulonglong)uStack00000034;
     }
-    uVar13 = (longlong)iVar4 + 1;
-    if ((int)uVar13 < (int)uVar14) {
-      lVar7 = uVar14 - uVar13;
-      lVar9 = (uVar13 & 0xfffffff) * 0x10 + lVar9 + -0xc;
+    uVar11 = (longlong)iVar4 + 1;
+    if ((int)uVar11 < (int)uVar12) {
+      lVar6 = uVar12 - uVar11;
+      lVar8 = (uVar11 & 0xfffffff) * 0x10 + lVar8 + -0xc;
       do {
-        lVar9 = lVar9 + 0x10;
-        *(undefined4 *)(*(int *)lVar9 + (int)param_4) =
-             *(undefined4 *)(*(int *)lVar9 + (int)param_3);
-        lVar7 = lVar7 + -1;
-      } while (lVar7 != 0);
-      __restgprlr();
+        lVar8 = lVar8 + 0x10;
+        *(undefined4 *)(*(int *)lVar8 + (int)param_4) =
+             *(undefined4 *)(*(int *)lVar8 + (int)param_3);
+        lVar6 = lVar6 + -1;
+      } while (lVar6 != 0);
       return;
     }
   }
-  __restgprlr();
   return;
 }
 
 
 // 82507DD8  MSG_ReadDeltaStruct  (qcommon/msg_mp.cpp:1633)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 int MSG_ReadDeltaStruct(msg_t *param_1,int param_2,void *param_3,void *param_4,uint param_5,
                        int param_6,int param_7,NetField *param_8,int param_9,bool param_10)
 
 {
-  msg_t *pmVar1;
-  int iVar2;
-  ulonglong uVar3;
+  int iVar1;
   int in_stack_00000054;
   bool in_stack_0000005f;
   
-  uVar3 = (ulonglong)(int)param_5;
-  pmVar1 = (msg_t *)__savegprlr_25(param_1);
-  if ((ulonglong)(uint)(1 << (param_7 & 0x3fU)) <= (uVar3 & 0xffffffff)) {
+  if ((uint)(1 << (param_7 & 0x3fU)) <= param_5) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\msg_mp.cpp",0x662,0,
                     "%s");
   }
-  iVar2 = MSG_ReadBit(pmVar1);
-  if (iVar2 == 1) {
+  iVar1 = MSG_ReadBit(param_1);
+  if (iVar1 == 1) {
     if ((cl_shownet != (dvar_t *)0x0) &&
        ((1 < (cl_shownet->current).integer || ((cl_shownet->current).integer == -1)))) {
       Com_Printf(0x19,"%3i: #%-3i remove\n");
     }
-    iVar2 = __restgprlr_25(1);
-    return iVar2;
+    return 1;
   }
-  *(int *)param_4 = (int)uVar3;
-  MSG_ReadDeltaFields(pmVar1,param_2,param_3,param_4,param_6,param_8,in_stack_00000054,
+  *(uint *)param_4 = param_5;
+  MSG_ReadDeltaFields(param_1,param_2,param_3,param_4,param_6,param_8,in_stack_00000054,
                       in_stack_0000005f);
-  iVar2 = __restgprlr_25(0);
-  return iVar2;
+  return 0;
 }
 
 
 // 82507EC0  MSG_ReadDeltaEntityStruct  (qcommon/msg_mp.cpp:1682)
 
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 int MSG_ReadDeltaEntityStruct
@@ -1690,26 +1566,22 @@ int MSG_ReadDeltaEntityStruct
   uint uVar8;
   int iVar9;
   NetFieldList *pNVar10;
-  undefined4 uVar11;
+  longlong lVar11;
+  char *pcVar13;
   longlong lVar12;
-  char *pcVar14;
-  longlong lVar13;
-  char *pcVar16;
-  bool bVar17;
-  ulonglong uVar15;
+  char *pcVar15;
+  bool bVar16;
+  ulonglong uVar14;
+  ulonglong uVar17;
   ulonglong uVar18;
   ulonglong uVar19;
   ulonglong uVar20;
   ulonglong uVar21;
-  ulonglong uVar22;
-  int iVar23;
-  undefined4 uStack00000034;
+  int iVar22;
+  uint uStack00000034;
   
-  uVar21 = (ulonglong)(int)param_5;
-  __savegprlr();
-  uVar11 = (undefined4)uVar21;
-  uStack00000034 = uVar11;
-  if (0x7ff < (uVar21 & 0xffffffff)) {
+  uStack00000034 = param_5;
+  if (0x7ff < param_5) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\msg_mp.cpp",0x6a6,0,
                     "%s");
   }
@@ -1719,42 +1591,36 @@ int MSG_ReadDeltaEntityStruct
        ((1 < (cl_shownet->current).integer || ((cl_shownet->current).integer == -1)))) {
       Com_Printf(0x19,"%3i: #%-3i remove\n");
     }
-    iVar7 = 1;
-    __restgprlr();
-    return iVar7;
+    return 1;
   }
   iVar7 = MSG_ReadBit(param_1);
   if (iVar7 == 0) {
     Com_Memcpy(param_4,param_3,0x100);
-    iVar7 = 0;
-    __restgprlr();
-    return iVar7;
+    return 0;
   }
   uVar8 = g_netFieldList[5].count;
-  uVar18 = (ulonglong)uVar8;
+  uVar17 = (ulonglong)uVar8;
   pNVar3 = g_netFieldList[5].array;
   iVar7 = MSG_ReadBit(param_1);
   uVar8 = MSG_ReadLastChangedField(param_1,uVar8);
-  uVar21 = (ulonglong)(int)uVar8;
-  if (uVar18 < uVar8) {
+  uVar20 = (ulonglong)(int)uVar8;
+  if (uVar17 < uVar8) {
     MSG_Discard(param_1);
-    iVar7 = 0;
-    __restgprlr();
-    return iVar7;
+    return 0;
   }
   if ((cl_shownet != (dvar_t *)0x0) &&
      ((1 < (cl_shownet->current).integer || ((cl_shownet->current).integer == -1)))) {
     Com_Printf(0x19,"%3i: #%-3i ");
   }
-  *(undefined4 *)param_4 = uVar11;
-  pcVar16 = pNVar3->name;
-  pcVar14 = "eType";
+  *(uint *)param_4 = param_5;
+  pcVar15 = pNVar3->name;
+  pcVar13 = "eType";
   do {
-    cVar1 = *pcVar16;
-    cVar2 = *pcVar14;
+    cVar1 = *pcVar15;
+    cVar2 = *pcVar13;
     if (cVar1 == '\0') break;
-    pcVar16 = pcVar16 + 1;
-    pcVar14 = pcVar14 + 1;
+    pcVar15 = pcVar15 + 1;
+    pcVar13 = pcVar13 + 1;
   } while (cVar1 == cVar2);
   if (cVar1 != cVar2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\msg_mp.cpp",0x6ef,0,
@@ -1764,15 +1630,15 @@ int MSG_ReadDeltaEntityStruct
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\msg_mp.cpp",0x6f0,0,
                     "%s");
   }
-  uVar20 = 0xffffffffffffffff;
+  uVar19 = 0xffffffffffffffff;
   iVar9 = MSG_ReadNumFieldsSkipped(param_1,param_6,uVar8 + 1);
-  uVar22 = (longlong)iVar9 - 1;
-  if ((longlong)uVar22 < 1) {
+  uVar21 = (longlong)iVar9 - 1;
+  if ((longlong)uVar21 < 1) {
     MSG_ReadDeltaField(param_1,param_2,param_3,param_4,pNVar3,0,false);
-    uVar20 = 0;
+    uVar19 = 0;
     if (uVar8 != 0) {
       iVar9 = MSG_ReadNumFieldsSkipped(param_1,param_6,uVar8);
-      uVar22 = (ulonglong)iVar9;
+      uVar21 = (ulonglong)iVar9;
     }
   }
   else {
@@ -1780,117 +1646,115 @@ int MSG_ReadDeltaEntityStruct
   }
   pNVar10 = MSG_GetStateFieldListForEntityType(*(int *)(pNVar3->offset + (int)param_4));
   pNVar4 = pNVar10->array;
-  uVar19 = ZEXT48(pNVar4);
+  uVar18 = ZEXT48(pNVar4);
   if (pNVar10->count < uVar8) {
     Com_Printf(0xe,"Last changed field was %i, but there are only %i fields\n");
-    iVar7 = 0;
     param_1->overflowed = 1;
-    __restgprlr();
-    return iVar7;
+    return 0;
   }
-  uVar15 = uVar21;
-  if ((uint)uVar20 != uVar8) {
+  uVar14 = uVar20;
+  if ((uint)uVar19 != uVar8) {
     do {
-      uVar15 = uVar22;
-      uVar20 = uVar20 + 1;
-      if ((uVar20 & 0xffffffff) < (uVar15 & 0xffffffff)) {
-        lVar12 = uVar15 - uVar20;
-        lVar13 = (uVar20 & 0xfffffff) * 0x10 + uVar19 + -0xc;
+      uVar14 = uVar21;
+      uVar19 = uVar19 + 1;
+      if ((uVar19 & 0xffffffff) < (uVar14 & 0xffffffff)) {
+        lVar11 = uVar14 - uVar19;
+        lVar12 = (uVar19 & 0xfffffff) * 0x10 + uVar18 + -0xc;
         do {
-          lVar13 = lVar13 + 0x10;
-          *(undefined4 *)(*(int *)lVar13 + (int)param_4) =
-               *(undefined4 *)(*(int *)lVar13 + (int)param_3);
-          lVar12 = lVar12 + -1;
-        } while (lVar12 != 0);
+          lVar12 = lVar12 + 0x10;
+          *(undefined4 *)(*(int *)lVar12 + (int)param_4) =
+               *(undefined4 *)(*(int *)lVar12 + (int)param_3);
+          lVar11 = lVar11 + -1;
+        } while (lVar11 != 0);
       }
-      uVar6 = (uint)uVar15;
+      uVar6 = (uint)uVar14;
       if (*(int *)((int)param_3 + 4) == *(int *)((int)param_4 + 4)) {
         if (iVar7 != 0) {
           iVar9 = pNVar4[uVar6].bits;
-          if ((iVar9 < -0x53) || (bVar17 = true, -0x4e < iVar9)) {
-            bVar17 = false;
+          if ((iVar9 < -0x53) || (bVar16 = true, -0x4e < iVar9)) {
+            bVar16 = false;
           }
-          if (bVar17) goto LAB_82508218;
+          if (bVar16) goto LAB_82508218;
         }
-        bVar17 = false;
+        bVar16 = false;
       }
       else {
 LAB_82508218:
-        bVar17 = true;
+        bVar16 = true;
       }
-      MSG_ReadDeltaField(param_1,param_2,param_3,param_4,pNVar4 + uVar6,0,bVar17);
+      MSG_ReadDeltaField(param_1,param_2,param_3,param_4,pNVar4 + uVar6,0,bVar16);
       if (uVar6 == uVar8) break;
       iVar9 = MSG_ReadNumFieldsSkipped(param_1,param_6,uVar8 - uVar6);
-      iVar23 = (int)((longlong)iVar9 + uVar15);
-      if ((int)uVar8 < iVar23) {
+      iVar22 = (int)((longlong)iVar9 + uVar14);
+      if ((int)uVar8 < iVar22) {
         va("nextChanged is %i, lc is %i");
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\msg_mp.cpp",0x751,
                         0,"%s\n\t%s");
       }
-      if (iVar23 <= (int)uVar6) {
+      if (iVar22 <= (int)uVar6) {
         va("nextChanged is %i, lastChanged is %i");
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\msg_mp.cpp",0x752,
                         0,"%s\n\t%s");
       }
-      uVar20 = uVar15;
-      uVar22 = (longlong)iVar9 + uVar15;
-    } while (iVar23 <= (int)uVar8);
+      uVar19 = uVar14;
+      uVar21 = (longlong)iVar9 + uVar14;
+    } while (iVar22 <= (int)uVar8);
   }
   if (uVar8 != 0) {
-    lVar13 = uVar19 + 8;
+    lVar12 = uVar18 + 8;
     do {
-      piVar5 = (int *)lVar13;
+      piVar5 = (int *)lVar12;
       if (*(char *)(piVar5 + 1) == '\x02') {
         if (*(int *)((int)param_3 + 4) == *(int *)((int)param_4 + 4)) {
           if (iVar7 != 0) {
-            if ((*piVar5 < -0x53) || (bVar17 = true, -0x4e < *piVar5)) {
-              bVar17 = false;
+            if ((*piVar5 < -0x53) || (bVar16 = true, -0x4e < *piVar5)) {
+              bVar16 = false;
             }
-            if (bVar17) goto LAB_82508340;
+            if (bVar16) goto LAB_82508340;
           }
-          bVar17 = false;
+          bVar16 = false;
         }
         else {
 LAB_82508340:
-          bVar17 = true;
+          bVar16 = true;
         }
-        MSG_ReadDeltaField(param_1,param_2,param_3,param_4,(NetField *)(piVar5 + -2),0,bVar17);
+        MSG_ReadDeltaField(param_1,param_2,param_3,param_4,(NetField *)(piVar5 + -2),0,bVar16);
       }
-      uVar21 = uVar21 - 1;
-      lVar13 = lVar13 + 0x10;
-    } while (uVar21 != 0);
+      uVar20 = uVar20 - 1;
+      lVar12 = lVar12 + 0x10;
+    } while (uVar20 != 0);
   }
-  if ((uint)uVar15 != uVar8) {
+  if ((uint)uVar14 != uVar8) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\msg_mp.cpp",0x785,0,
                     "%s");
   }
-  if ((int)(uint)uVar15 < 0) {
+  if ((int)(uint)uVar14 < 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\msg_mp.cpp",0x786,0,
                     "%s");
   }
-  uVar15 = uVar15 + 1;
-  if ((uVar15 & 0xffffffff) < uVar18) {
-    lVar12 = uVar18 - uVar15;
-    lVar13 = (uVar15 & 0xfffffff) * 0x10 + uVar19 + -0xc;
+  uVar14 = uVar14 + 1;
+  if ((uVar14 & 0xffffffff) < uVar17) {
+    lVar11 = uVar17 - uVar14;
+    lVar12 = (uVar14 & 0xfffffff) * 0x10 + uVar18 + -0xc;
     do {
-      lVar13 = lVar13 + 0x10;
-      *(undefined4 *)(*(int *)lVar13 + (int)param_4) =
-           *(undefined4 *)(*(int *)lVar13 + (int)param_3);
-      lVar12 = lVar12 + -1;
-    } while (lVar12 != 0);
+      lVar12 = lVar12 + 0x10;
+      *(undefined4 *)(*(int *)lVar12 + (int)param_4) =
+           *(undefined4 *)(*(int *)lVar12 + (int)param_3);
+      lVar11 = lVar11 + -1;
+    } while (lVar11 != 0);
   }
   if ((msg_dumpEnts->current).enabled != false) {
     BG_GetEntityTypeName(*(int *)(pNVar3->offset + (int)param_4));
     Com_Printf(0x19,"%3i: changed ent, eType %s\n");
   }
-  pcVar16 = pNVar4->name;
-  pcVar14 = "eType";
+  pcVar15 = pNVar4->name;
+  pcVar13 = "eType";
   do {
-    cVar1 = *pcVar16;
-    cVar2 = *pcVar14;
+    cVar1 = *pcVar15;
+    cVar2 = *pcVar13;
     if (cVar1 == '\0') break;
-    pcVar16 = pcVar16 + 1;
-    pcVar14 = pcVar14 + 1;
+    pcVar15 = pcVar15 + 1;
+    pcVar13 = pcVar13 + 1;
   } while (cVar1 == cVar2);
   if (cVar1 != cVar2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\msg_mp.cpp",0x795,0,
@@ -1900,14 +1764,14 @@ LAB_82508340:
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\msg_mp.cpp",0x796,0,
                     "%s");
   }
-  iVar7 = 0;
-  __restgprlr();
-  return iVar7;
+  return 0;
 }
 
 
 // 825084A8  MSG_ReadDeltaEntity  (qcommon/msg_mp.cpp:1959)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 
@@ -1915,29 +1779,23 @@ int MSG_ReadDeltaEntity(msg_t *param_1,int param_2,entityState_s *param_3,entity
                        int param_5)
 
 {
-  msg_t *pmVar1;
-  int iVar2;
-  ulonglong uVar3;
-  ulonglong uVar4;
+  int iVar1;
   
-  uVar4 = (ulonglong)(int)param_4;
-  uVar3 = (ulonglong)(int)param_3;
-  pmVar1 = (msg_t *)__savegprlr_27(param_1);
-  if ((uVar3 & 0xffffffff) != 0) {
-    SV_ValidateEntityState((entityState_s *)uVar3);
+  if (param_3 != (entityState_s *)0x0) {
+    SV_ValidateEntityState(param_3);
   }
-  iVar2 = MSG_ReadDeltaEntityStruct
-                    (pmVar1,param_2,(entityState_s *)uVar3,(entityState_s *)uVar4,param_5,3);
-  if ((iVar2 == 0) && ((uVar4 & 0xffffffff) != 0)) {
-    SV_ValidateEntityState((entityState_s *)uVar4);
+  iVar1 = MSG_ReadDeltaEntityStruct(param_1,param_2,param_3,param_4,param_5,3);
+  if ((iVar1 == 0) && (param_4 != (entityState_s *)0x0)) {
+    SV_ValidateEntityState(param_4);
   }
-  iVar2 = __restgprlr_27(iVar2);
-  return iVar2;
+  return iVar1;
 }
 
 
 // 82508520  MSG_ReadDeltaArchivedEntity  (qcommon/msg_mp.cpp:1987)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
@@ -1948,33 +1806,28 @@ int MSG_ReadDeltaArchivedEntity
 {
   uint uVar1;
   NetField *pNVar2;
-  msg_t *pmVar3;
-  int iVar4;
-  ulonglong uVar5;
-  ulonglong uVar6;
+  int iVar3;
   int in_stack_ffffff68;
   undefined1 in_stack_ffffff6f;
   
-  uVar6 = (ulonglong)(int)param_4;
-  uVar5 = (ulonglong)(int)param_3;
-  pmVar3 = (msg_t *)__savegprlr_25(param_1);
   uVar1 = g_netFieldList->count;
   pNVar2 = g_netFieldList->array;
-  if ((uVar5 & 0xffffffff) != 0) {
-    SV_ValidateEntityState((entityState_s *)uVar5);
+  if (param_3 != (archivedEntity_s *)0x0) {
+    SV_ValidateEntityState(&param_3->s);
   }
-  iVar4 = MSG_ReadDeltaStruct(pmVar3,param_2,(entityState_s *)uVar5,(entityState_s *)uVar6,param_5,
-                              uVar1,0xb,pNVar2,in_stack_ffffff68,(bool)in_stack_ffffff6f);
-  if ((iVar4 == 0) && ((uVar6 & 0xffffffff) != 0)) {
-    SV_ValidateEntityState((entityState_s *)uVar6);
+  iVar3 = MSG_ReadDeltaStruct(param_1,param_2,param_3,param_4,param_5,uVar1,0xb,pNVar2,
+                              in_stack_ffffff68,(bool)in_stack_ffffff6f);
+  if ((iVar3 == 0) && (param_4 != (archivedEntity_s *)0x0)) {
+    SV_ValidateEntityState(&param_4->s);
   }
-  iVar4 = __restgprlr_25(iVar4);
-  return iVar4;
+  return iVar3;
 }
 
 
 // 825085C0  MSG_ReadDeltaClient  (qcommon/msg_mp.cpp:2020)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 int MSG_ReadDeltaClient(msg_t *param_1,int param_2,clientState_s *param_3,clientState_s *param_4,
@@ -1983,32 +1836,27 @@ int MSG_ReadDeltaClient(msg_t *param_1,int param_2,clientState_s *param_3,client
 {
   uint uVar1;
   NetField *pNVar2;
-  msg_t *pmVar3;
-  int iVar4;
-  ulonglong uVar5;
-  undefined1 *puVar6;
+  int iVar3;
   int in_stack_fffffe88;
   undefined1 in_stack_fffffe8f;
-  undefined1 auStack_120 [288];
+  clientState_s cStack_120;
   
-  uVar5 = (ulonglong)(int)param_3;
-  pmVar3 = (msg_t *)__savegprlr_25(param_1);
-  puVar6 = (undefined1 *)uVar5;
   uVar1 = g_netFieldList[1].count;
   pNVar2 = g_netFieldList[1].array;
-  if ((uVar5 & 0xffffffff) == 0) {
-    puVar6 = auStack_120;
+  if (param_3 == (clientState_s *)0x0) {
+    param_3 = &cStack_120;
     memset();
   }
-  iVar4 = MSG_ReadDeltaStruct(pmVar3,param_2,puVar6,param_4,param_5,uVar1,5,pNVar2,in_stack_fffffe88
-                              ,(bool)in_stack_fffffe8f);
-  iVar4 = __restgprlr_25(iVar4);
-  return iVar4;
+  iVar3 = MSG_ReadDeltaStruct(param_1,param_2,param_3,param_4,param_5,uVar1,5,pNVar2,
+                              in_stack_fffffe88,(bool)in_stack_fffffe8f);
+  return iVar3;
 }
 
 
 // 82508648  MSG_ReadDeltaHudElems  (qcommon/msg_mp.cpp:2074)
 
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 void MSG_ReadDeltaHudElems
@@ -2017,29 +1865,21 @@ void MSG_ReadDeltaHudElems
 {
   uint uVar1;
   NetField *pNVar2;
-  int iVar3;
+  uint uVar3;
   int iVar4;
-  uint uVar5;
-  int iVar6;
-  int iVar7;
-  int iVar8;
-  longlong lVar9;
-  longlong lVar10;
-  longlong lVar11;
-  ulonglong uVar12;
-  longlong lVar13;
-  longlong lVar14;
-  uint *puVar15;
-  ulonglong uVar16;
-  longlong lVar17;
+  int iVar5;
+  longlong lVar6;
+  longlong lVar7;
+  ulonglong uVar8;
+  int iVar9;
+  int *piVar10;
+  ulonglong uVar11;
+  hudelem_s *phVar12;
   int iStack0000001c;
   int iStack00000034;
   uint local_c0;
   uint local_b8;
   
-  lVar17 = (longlong)(int)param_4;
-  lVar9 = (longlong)(int)param_3;
-  __savegprlr();
   iStack0000001c = param_2;
   iStack00000034 = param_5;
   if (param_5 != 0x1f) {
@@ -2049,120 +1889,116 @@ void MSG_ReadDeltaHudElems
   uVar1 = g_netFieldList[4].count;
   pNVar2 = g_netFieldList[4].array;
   local_c0 = MSG_ReadBits(param_1,5);
-  uVar16 = (ulonglong)(int)local_c0;
   if (0 < (int)local_c0) {
-    iVar3 = (int)lVar17;
-    lVar14 = lVar17 + 0x28;
-    lVar13 = lVar9;
+    piVar10 = &param_4->alignOrg;
+    phVar12 = param_3;
     local_b8 = local_c0;
     do {
-      iVar7 = MSG_ReadBits(param_1,6);
-      uVar16 = 0xffffffffffffffff;
-      iVar4 = (int)lVar9;
-      puVar15 = (uint *)lVar14;
-      if ((iVar7 != 0) && (iVar7 = iVar7 + -1, -1 < iVar7)) {
-        uVar12 = 0xffffffffffffffff;
+      iVar4 = MSG_ReadBits(param_1,6);
+      uVar11 = 0xffffffffffffffff;
+      if ((iVar4 != 0) && (iVar4 = iVar4 + -1, -1 < iVar4)) {
+        uVar8 = 0xffffffffffffffff;
         do {
-          iVar8 = MSG_ReadNumFieldsSkipped(param_1,3,iVar7 - (int)uVar12);
-          uVar16 = (longlong)iVar8 + uVar12;
-          iVar8 = (int)uVar16;
-          if (iVar7 < iVar8) {
+          iVar5 = MSG_ReadNumFieldsSkipped(param_1,3,iVar4 - (int)uVar8);
+          uVar11 = (longlong)iVar5 + uVar8;
+          iVar5 = (int)uVar11;
+          if (iVar4 < iVar5) {
             va("lc is %i, nextChanged is %i");
             MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\msg_mp.cpp",
                             0x83c,0,"%s\n\t%s");
           }
-          if (iVar8 <= (int)uVar12) {
+          if (iVar5 <= (int)uVar8) {
             va("nextChanged is %i, lastChanged is %i");
             MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\msg_mp.cpp",
                             0x83d,0,"%s\n\t%s");
           }
-          uVar12 = uVar12 + 1;
-          if ((int)uVar12 < iVar8) {
-            lVar10 = uVar16 - uVar12;
-            lVar11 = (uVar12 & 0xfffffff) * 0x10 + ZEXT48(pNVar2) + -0xc;
+          uVar8 = uVar8 + 1;
+          if ((int)uVar8 < iVar5) {
+            lVar6 = uVar11 - uVar8;
+            lVar7 = (uVar8 & 0xfffffff) * 0x10 + ZEXT48(pNVar2) + -0xc;
             do {
-              lVar11 = lVar11 + 0x10;
-              iVar6 = *(int *)lVar11 + (-0x28 - iVar3);
-              *(undefined4 *)((int)puVar15 + iVar3 + iVar6) =
-                   *(undefined4 *)((int)puVar15 + iVar4 + iVar6);
-              lVar10 = lVar10 + -1;
-            } while (lVar10 != 0);
+              lVar7 = lVar7 + 0x10;
+              iVar9 = (int)piVar10 + *(int *)lVar7 + (-0x28 - (int)param_4);
+              *(undefined4 *)(iVar9 + (int)param_4) = *(undefined4 *)(iVar9 + (int)param_3);
+              lVar6 = lVar6 + -1;
+            } while (lVar6 != 0);
           }
-          MSG_ReadDeltaField(param_1,iStack0000001c,(void *)lVar13,puVar15 + -10,
-                             (NetField *)((int)&pNVar2->name + (int)((uVar16 & 0xffffffff) << 4)),0,
+          MSG_ReadDeltaField(param_1,iStack0000001c,phVar12,(hudelem_s *)(piVar10 + -10),
+                             (NetField *)((int)&pNVar2->name + (int)((uVar11 & 0xffffffff) << 4)),0,
                              false);
-          uVar12 = uVar16;
-        } while (iVar8 < iVar7);
+          uVar8 = uVar11;
+        } while (iVar5 < iVar4);
       }
-      uVar16 = uVar16 + 1;
-      if ((int)uVar16 < (int)uVar1) {
-        lVar10 = uVar1 - uVar16;
-        lVar11 = (uVar16 & 0xfffffff) * 0x10 + ZEXT48(pNVar2) + -0xc;
+      uVar11 = uVar11 + 1;
+      if ((int)uVar11 < (int)uVar1) {
+        lVar6 = uVar1 - uVar11;
+        lVar7 = (uVar11 & 0xfffffff) * 0x10 + ZEXT48(pNVar2) + -0xc;
         do {
-          lVar11 = lVar11 + 0x10;
-          iVar7 = *(int *)lVar11 + (-0x28 - iVar3);
-          *(undefined4 *)((int)puVar15 + iVar3 + iVar7) =
-               *(undefined4 *)((int)puVar15 + iVar4 + iVar7);
-          lVar10 = lVar10 + -1;
-        } while (lVar10 != 0);
+          lVar7 = lVar7 + 0x10;
+          iVar4 = (int)piVar10 + *(int *)lVar7 + (-0x28 - (int)param_4);
+          *(undefined4 *)(iVar4 + (int)param_4) = *(undefined4 *)(iVar4 + (int)param_3);
+          lVar6 = lVar6 + -1;
+        } while (lVar6 != 0);
       }
-      iVar4 = iVar4 - iVar3;
-      if ((*(uint *)(iVar4 + (int)puVar15) & 0xfffffff0) != 0) {
+      iVar4 = (int)param_3 - (int)param_4;
+      if ((*(uint *)(iVar4 + (int)piVar10) & 0xfffffff0) != 0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\msg_mp.cpp",0x84b,
                         0,"%s\n\t(from[i].alignOrg) = %i");
       }
-      if ((*puVar15 & 0xfffffff0) != 0) {
+      if ((*piVar10 & 0xfffffff0U) != 0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\msg_mp.cpp",0x84c,
                         0,"%s\n\t(to[i].alignOrg) = %i");
       }
-      uVar5 = *(int *)(iVar4 + (int)puVar15) >> 2 & 3;
-      if (((uVar5 != 0) && (uVar5 != 1)) && (uVar5 != 2)) {
+      uVar3 = *(int *)(iVar4 + (int)piVar10) >> 2 & 3;
+      if (((uVar3 != 0) && (uVar3 != 1)) && (uVar3 != 2)) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\msg_mp.cpp",0x84f,
                         0,"%s\n\t(from[i].alignOrg) = %i");
       }
-      uVar5 = *(uint *)(iVar4 + (int)puVar15) & 3;
-      if (((uVar5 != 0) && (uVar5 != 1)) && (uVar5 != 2)) {
+      uVar3 = *(uint *)(iVar4 + (int)piVar10) & 3;
+      if (((uVar3 != 0) && (uVar3 != 1)) && (uVar3 != 2)) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\msg_mp.cpp",0x852,
                         0,"%s\n\t(from[i].alignOrg) = %i");
       }
-      uVar5 = (int)*puVar15 >> 2 & 3;
-      if (((uVar5 != 0) && (uVar5 != 1)) && (uVar5 != 2)) {
+      uVar3 = *piVar10 >> 2 & 3;
+      if (((uVar3 != 0) && (uVar3 != 1)) && (uVar3 != 2)) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\msg_mp.cpp",0x855,
                         0,"%s\n\t(to[i].alignOrg) = %i");
       }
-      uVar5 = *puVar15 & 3;
-      if (((uVar5 != 0) && (uVar5 != 1)) && (uVar5 != 2)) {
+      uVar3 = *piVar10 & 3;
+      if (((uVar3 != 0) && (uVar3 != 1)) && (uVar3 != 2)) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\msg_mp.cpp",0x858,
                         0,"%s\n\t(to[i].alignOrg) = %i");
       }
-      uVar16 = (ulonglong)local_b8;
-      lVar13 = lVar13 + 0xa8;
-      lVar14 = lVar14 + 0xa8;
-      local_b8 = (uint)(uVar16 - 1);
-    } while (uVar16 - 1 != 0);
-    uVar16 = (ulonglong)local_c0;
-    param_5 = iStack00000034;
+      uVar11 = (ulonglong)local_b8;
+      phVar12 = phVar12 + 1;
+      piVar10 = piVar10 + 0x2a;
+      local_b8 = (uint)(uVar11 - 1);
+      param_5 = iStack00000034;
+    } while (uVar11 - 1 != 0);
   }
-  if ((int)uVar16 < param_5) {
-    lVar17 = uVar16 * 0xa8 + lVar17;
+  if ((int)local_c0 < param_5) {
+    phVar12 = param_4 + local_c0;
     do {
-      if (*(int *)lVar17 == 0) break;
+      if (phVar12->type == HE_TYPE_FREE) {
+        return;
+      }
       memset();
-      if (*(int *)lVar17 != 0) {
+      if (phVar12->type != HE_TYPE_FREE) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\msg_mp.cpp",0x85f,
                         0,"%s");
       }
-      lVar17 = lVar17 + 0xa8;
+      phVar12 = phVar12 + 1;
       local_c0 = local_c0 + 1;
     } while ((int)local_c0 < param_5);
   }
-  __restgprlr();
   return;
 }
 
 
 // 82508A88  MSG_ReadDeltaPlayerstate  (qcommon/msg_mp.cpp:2158)
 
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
@@ -2187,21 +2023,20 @@ void MSG_ReadDeltaPlayerstate
   bool bVar14;
   uint uVar12;
   objectiveState_t oVar13;
-  ulonglong uVar15;
-  int iVar16;
-  bool bVar18;
-  int iVar17;
-  Weapon *pWVar19;
-  Weapon *pWVar20;
-  int iVar21;
-  uint uVar22;
-  playerState_s *ppVar23;
-  playerState_s *ppVar24;
-  longlong lVar25;
-  int *piVar26;
-  bool *pbVar27;
-  NetField *pNVar28;
-  objective_t *poVar29;
+  int iVar15;
+  bool bVar16;
+  Weapon *pWVar17;
+  Weapon *pWVar18;
+  int iVar19;
+  uint uVar20;
+  playerState_s *ppVar21;
+  playerState_s *ppVar22;
+  longlong lVar23;
+  int iVar24;
+  int *piVar25;
+  bool *pbVar26;
+  NetField *pNVar27;
+  objective_t *poVar28;
   LocalClientNum_t LStack00000014;
   int iStack00000024;
   playerState_s *ppStack0000002c;
@@ -2210,8 +2045,6 @@ void MSG_ReadDeltaPlayerstate
   char acStack_37a0 [1024];
   playerState_s pStack_33a0;
   
-  uVar15 = (ulonglong)param_6;
-  __savegprlr();
   LStack00000014 = param_1;
   iStack00000024 = param_3;
   ppStack0000002c = param_4;
@@ -2234,45 +2067,44 @@ void MSG_ReadDeltaPlayerstate
   iVar8 = MSG_ReadBit(param_2);
   uVar2 = (-(longlong)iVar8 & ~(longlong)iVar8 & 0xffffffffU) >> 0x1f;
   uVar12 = g_netFieldList[2].count;
-  pNVar28 = g_netFieldList[2].array;
+  pNVar27 = g_netFieldList[2].array;
   iVar8 = MSG_ReadLastChangedField(param_2,uVar12 + 1);
-  lVar25 = (longlong)iVar8;
+  lVar23 = (longlong)iVar8;
   if (iVar8 < 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\msg_mp.cpp",0x8af,0,
                     "%s");
   }
   if ((int)(uVar12 + 1) < iVar8) {
     MSG_Discard(param_2);
-    __restgprlr();
     return;
   }
   iVar9 = -1;
   if (0 < iVar8) {
-    lVar25 = lVar25 + -1;
-    iVar8 = (int)lVar25;
-    if (-1 < iVar8) {
-      iVar17 = iVar9;
+    lVar23 = lVar23 + -1;
+    iVar24 = (int)lVar23;
+    iVar8 = iVar9;
+    if (-1 < iVar24) {
       do {
         if (param_2->overflowed != 0) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\msg_mp.cpp",
                           0x8bf,0,"%s");
         }
-        iVar9 = MSG_ReadNumFieldsSkipped(param_2,4,iVar8 - iVar17);
-        iVar9 = iVar9 + iVar17;
-        iVar21 = iVar17 + 1;
-        if (iVar21 < iVar9) {
-          iVar16 = iVar9 - iVar21;
-          piVar26 = &pNVar28[iVar21].offset;
+        iVar9 = MSG_ReadNumFieldsSkipped(param_2,4,iVar24 - iVar8);
+        iVar9 = iVar9 + iVar8;
+        iVar19 = iVar8 + 1;
+        if (iVar19 < iVar9) {
+          iVar15 = iVar9 - iVar19;
+          piVar25 = &pNVar27[iVar19].offset;
           do {
-            if (*(uchar *)(piVar26 + 2) != '\x02') {
-              *(undefined4 *)((int)ppStack00000034->origin + *piVar26 + -0x1c) =
-                   *(undefined4 *)((int)ppStack0000002c->origin + *piVar26 + -0x1c);
+            if (*(uchar *)(piVar25 + 2) != '\x02') {
+              *(undefined4 *)((int)ppStack00000034->origin + *piVar25 + -0x1c) =
+                   *(undefined4 *)((int)ppStack0000002c->origin + *piVar25 + -0x1c);
             }
-            piVar26 = piVar26 + 4;
-            iVar16 = iVar16 + -1;
-          } while (iVar16 != 0);
+            piVar25 = piVar25 + 4;
+            iVar15 = iVar15 + -1;
+          } while (iVar15 != 0);
         }
-        pNVar3 = pNVar28 + iVar9;
+        pNVar3 = pNVar27 + iVar9;
         if (((uVar1 == 0) || (pNVar3->changeHints != '\x03')) &&
            ((uVar2 == 0 || (pNVar3->changeHints != '\x04')))) {
           bVar14 = false;
@@ -2280,86 +2112,86 @@ void MSG_ReadDeltaPlayerstate
         else {
           bVar14 = true;
         }
-        if (iVar8 < iVar9) {
+        if (iVar24 < iVar9) {
           va("nextChanged == %i, lc == %i");
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\msg_mp.cpp",
                           0x8d5,0,"%s\n\t%s");
         }
-        if (iVar9 <= iVar17) {
+        if (iVar9 <= iVar8) {
           va("nextChanged == %i, lastChanged == %i");
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\msg_mp.cpp",
                           0x8d6,0,"%s\n\t%s");
         }
-        if (((uVar15 & 0xff) == 0) || (bVar18 = true, !bVar14)) {
-          bVar18 = false;
+        if ((!param_6) || (bVar16 = true, !bVar14)) {
+          bVar16 = false;
         }
         MSG_ReadDeltaField(param_2,iStack00000024,ppStack0000002c,ppStack00000034,pNVar3,iVar11,
-                           bVar18);
+                           bVar16);
         if (param_2->overflowed != 0) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\msg_mp.cpp",
                           0x8d8,0,"%s");
         }
-        iVar17 = iVar9;
-      } while (iVar9 < iVar8);
+        iVar8 = iVar9;
+      } while (iVar9 < iVar24);
     }
-    if (iVar9 != iVar8) {
+    if (iVar9 != iVar24) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\msg_mp.cpp",0x8db,0,
                       "%s");
     }
   }
-  ppVar24 = ppStack00000034;
-  ppVar23 = ppStack0000002c;
+  ppVar22 = ppStack00000034;
+  ppVar21 = ppStack0000002c;
   iVar8 = iStack00000024;
   if (iVar9 + 1 < (int)uVar12) {
-    iVar17 = uVar12 - (iVar9 + 1);
-    piVar26 = &pNVar28[iVar9].offset;
+    iVar24 = uVar12 - (iVar9 + 1);
+    piVar25 = &pNVar27[iVar9].offset;
     do {
-      piVar26 = piVar26 + 4;
-      *(undefined4 *)((int)ppStack00000034->origin + *piVar26 + -0x1c) =
-           *(undefined4 *)((int)ppStack0000002c->origin + *piVar26 + -0x1c);
-      iVar17 = iVar17 + -1;
-    } while (iVar17 != 0);
+      piVar25 = piVar25 + 4;
+      *(undefined4 *)((int)ppStack00000034->origin + *piVar25 + -0x1c) =
+           *(undefined4 *)((int)ppStack0000002c->origin + *piVar25 + -0x1c);
+      iVar24 = iVar24 + -1;
+    } while (iVar24 != 0);
   }
-  if (0 < (int)lVar25) {
+  if (0 < (int)lVar23) {
     do {
-      if (pNVar28->changeHints == '\x02') {
-        MSG_ReadDeltaField(param_2,iVar8,ppVar23,ppVar24,pNVar28,iVar11,false);
+      if (pNVar27->changeHints == '\x02') {
+        MSG_ReadDeltaField(param_2,iVar8,ppVar21,ppVar22,pNVar27,iVar11,false);
       }
-      lVar25 = lVar25 + -1;
-      pNVar28 = pNVar28 + 1;
-    } while (lVar25 != 0);
+      lVar23 = lVar23 + -1;
+      pNVar27 = pNVar27 + 1;
+    } while (lVar23 != 0);
   }
   LVar7 = LStack00000014;
   if (uVar1 == 0) {
     pcVar10 = CL_GetLocalClientGlobals(LStack00000014);
-    iVar11 = CL_GetPredictedPlayerInformationForServerTime(pcVar10,ppVar24->commandTime,ppVar24);
+    iVar11 = CL_GetPredictedPlayerInformationForServerTime(pcVar10,ppVar22->commandTime,ppVar22);
     if (iVar11 == 0) {
       Com_PrintError(0x19,"Unable to find the origin we sent, delta is not going to work\n");
-      ppVar24->origin[0] = ppVar23->origin[0];
-      ppVar24->origin[1] = ppVar23->origin[1];
-      ppVar24->origin[2] = ppVar23->origin[2];
-      ppVar24->velocity[0] = ppVar23->velocity[0];
-      ppVar24->velocity[1] = ppVar23->velocity[1];
-      ppVar24->velocity[2] = ppVar23->velocity[2];
-      ppVar24->bobCycle = ppVar23->bobCycle;
-      ppVar24->movementDir = ppVar23->movementDir;
+      ppVar22->origin[0] = ppVar21->origin[0];
+      ppVar22->origin[1] = ppVar21->origin[1];
+      ppVar22->origin[2] = ppVar21->origin[2];
+      ppVar22->velocity[0] = ppVar21->velocity[0];
+      ppVar22->velocity[1] = ppVar21->velocity[1];
+      ppVar22->velocity[2] = ppVar21->velocity[2];
+      ppVar22->bobCycle = ppVar21->bobCycle;
+      ppVar22->movementDir = ppVar21->movementDir;
     }
     bVar14 = CL_Demo_IsPlaying(LVar7);
     if ((bVar14) &&
        (iVar11 = CL_UpdatePredictedPlayerInformationForServerTime
-                           (LVar7,ppVar24->commandTime,ppVar24), iVar11 == 0)) {
-      ppVar24->viewangles[0] = ppVar23->viewangles[0];
-      ppVar24->viewangles[1] = ppVar23->viewangles[1];
-      ppVar24->viewangles[2] = ppVar23->viewangles[2];
+                           (LVar7,ppVar22->commandTime,ppVar22), iVar11 == 0)) {
+      ppVar22->viewangles[0] = ppVar21->viewangles[0];
+      ppVar22->viewangles[1] = ppVar21->viewangles[1];
+      ppVar22->viewangles[2] = ppVar21->viewangles[2];
     }
   }
   else if (0.0 < (msg_logPredictionPositionErrors->current).value) {
     pcVar10 = CL_GetLocalClientGlobals(LStack00000014);
-    iVar11 = CL_GetClientArchiveIndexForServerTime(pcVar10,ppVar24->commandTime,&local_37a4);
-    if ((((iVar11 != 0) && (pcVar10->clientArchive[local_37a4].serverTime == ppVar24->commandTime))
-        && (fVar4 = ppVar24->origin[2] - pcVar10->clientArchive[local_37a4].origin[2],
-           fVar5 = ppVar24->origin[0] - pcVar10->clientArchive[local_37a4].origin[0],
-           fVar6 = ppVar24->origin[1] - pcVar10->clientArchive[local_37a4].origin[1],
+    iVar11 = CL_GetClientArchiveIndexForServerTime(pcVar10,ppVar22->commandTime,&local_37a4);
+    if ((((iVar11 != 0) && (pcVar10->clientArchive[local_37a4].serverTime == ppVar22->commandTime))
+        && (fVar4 = ppVar22->origin[2] - pcVar10->clientArchive[local_37a4].origin[2],
+           fVar5 = ppVar22->origin[0] - pcVar10->clientArchive[local_37a4].origin[0],
+           fVar6 = ppVar22->origin[1] - pcVar10->clientArchive[local_37a4].origin[1],
            fVar4 = fVar6 * fVar6 + fVar5 * fVar5 + fVar4 * fVar4,
            fVar4 < (msg_logPredictionPositionErrors->current).value *
                    (msg_logPredictionPositionErrors->current).value)) && (0.01 < fVar4)) {
@@ -2368,28 +2200,28 @@ void MSG_ReadDeltaPlayerstate
                 );
     }
   }
-  if ((uVar2 == 0) && ((ppVar24->vehicleState).entity != 0x7ff)) {
+  if ((uVar2 == 0) && ((ppVar22->vehicleState).entity != 0x7ff)) {
     pcVar10 = CL_GetLocalClientGlobals(LVar7);
     iVar11 = CL_GetPredictedVehicleForServerTime
-                       (pcVar10,ppVar24->commandTime,&ppVar24->vehicleState);
+                       (pcVar10,ppVar22->commandTime,&ppVar22->vehicleState);
     if (iVar11 == 0) {
-      (ppVar24->vehicleState).flags = (ppVar23->vehicleState).flags;
-      (ppVar24->vehicleState).origin[0] = (ppVar23->vehicleState).origin[0];
-      (ppVar24->vehicleState).origin[1] = (ppVar23->vehicleState).origin[1];
-      (ppVar24->vehicleState).origin[2] = (ppVar23->vehicleState).origin[2];
-      (ppVar24->vehicleState).angles[0] = (ppVar23->vehicleState).angles[0];
-      (ppVar24->vehicleState).angles[1] = (ppVar23->vehicleState).angles[1];
-      (ppVar24->vehicleState).angles[2] = (ppVar23->vehicleState).angles[2];
-      (ppVar24->vehicleState).velocity[0] = (ppVar23->vehicleState).velocity[0];
-      (ppVar24->vehicleState).velocity[1] = (ppVar23->vehicleState).velocity[1];
-      (ppVar24->vehicleState).velocity[2] = (ppVar23->vehicleState).velocity[2];
-      (ppVar24->vehicleState).angVelocity[0] = (ppVar23->vehicleState).angVelocity[0];
-      (ppVar24->vehicleState).angVelocity[1] = (ppVar23->vehicleState).angVelocity[1];
-      (ppVar24->vehicleState).angVelocity[2] = (ppVar23->vehicleState).angVelocity[2];
-      (ppVar24->vehicleState).tilt[0] = (ppVar23->vehicleState).tilt[0];
-      (ppVar24->vehicleState).tilt[1] = (ppVar23->vehicleState).tilt[1];
-      (ppVar24->vehicleState).tiltVelocity[0] = (ppVar23->vehicleState).tiltVelocity[0];
-      (ppVar24->vehicleState).tiltVelocity[1] = (ppVar23->vehicleState).tiltVelocity[1];
+      (ppVar22->vehicleState).flags = (ppVar21->vehicleState).flags;
+      (ppVar22->vehicleState).origin[0] = (ppVar21->vehicleState).origin[0];
+      (ppVar22->vehicleState).origin[1] = (ppVar21->vehicleState).origin[1];
+      (ppVar22->vehicleState).origin[2] = (ppVar21->vehicleState).origin[2];
+      (ppVar22->vehicleState).angles[0] = (ppVar21->vehicleState).angles[0];
+      (ppVar22->vehicleState).angles[1] = (ppVar21->vehicleState).angles[1];
+      (ppVar22->vehicleState).angles[2] = (ppVar21->vehicleState).angles[2];
+      (ppVar22->vehicleState).velocity[0] = (ppVar21->vehicleState).velocity[0];
+      (ppVar22->vehicleState).velocity[1] = (ppVar21->vehicleState).velocity[1];
+      (ppVar22->vehicleState).velocity[2] = (ppVar21->vehicleState).velocity[2];
+      (ppVar22->vehicleState).angVelocity[0] = (ppVar21->vehicleState).angVelocity[0];
+      (ppVar22->vehicleState).angVelocity[1] = (ppVar21->vehicleState).angVelocity[1];
+      (ppVar22->vehicleState).angVelocity[2] = (ppVar21->vehicleState).angVelocity[2];
+      (ppVar22->vehicleState).tilt[0] = (ppVar21->vehicleState).tilt[0];
+      (ppVar22->vehicleState).tilt[1] = (ppVar21->vehicleState).tilt[1];
+      (ppVar22->vehicleState).tiltVelocity[0] = (ppVar21->vehicleState).tiltVelocity[0];
+      (ppVar22->vehicleState).tiltVelocity[1] = (ppVar21->vehicleState).tiltVelocity[1];
     }
   }
   uVar12 = param_2->bit & 7;
@@ -2414,19 +2246,19 @@ LAB_82509134:
   uVar12 = MSG_ReadBits(param_2,4);
   if ((uVar12 & 1) != 0) {
     iVar11 = MSG_ReadShort(param_2);
-    ppVar24->stats[0] = iVar11;
+    ppVar22->stats[0] = iVar11;
   }
   if ((uVar12 & 2) != 0) {
     iVar11 = MSG_ReadShort(param_2);
-    ppVar24->stats[1] = iVar11;
+    ppVar22->stats[1] = iVar11;
   }
   if ((uVar12 & 4) != 0) {
     iVar11 = MSG_ReadShort(param_2);
-    ppVar24->stats[2] = iVar11;
+    ppVar22->stats[2] = iVar11;
   }
   if ((uVar12 & 8) != 0) {
     iVar11 = MSG_ReadByte(param_2);
-    ppVar24->stats[3] = iVar11;
+    ppVar22->stats[3] = iVar11;
   }
 LAB_82509208:
   do {
@@ -2443,15 +2275,15 @@ LAB_82509208:
     else {
 LAB_82509248:
       iVar11 = MSG_GetByte(param_2,param_2->bit >> 3);
-      uVar22 = param_2->bit + 1;
-      param_2->bit = uVar22;
+      uVar20 = param_2->bit + 1;
+      param_2->bit = uVar20;
       if ((iVar11 >> uVar12 & 1U) == 0) break;
     }
     iVar11 = MSG_ReadBits(param_2,4);
     iVar8 = MSG_ReadBits(param_2,0x19);
-    (ppVar24->weapCommon).ammoInClip[iVar11].clipIndex = iVar8;
-    piVar26 = (ppVar24->weapCommon).ammoInClip[iVar11].ammoCount;
-    lVar25 = 2;
+    (ppVar22->weapCommon).ammoInClip[iVar11].clipIndex = iVar8;
+    piVar25 = (ppVar22->weapCommon).ammoInClip[iVar11].ammoCount;
+    lVar23 = 2;
     do {
       uVar12 = param_2->bit & 7;
       if (uVar12 == 0) {
@@ -2464,7 +2296,7 @@ LAB_82509248:
         param_2->overflowed = 1;
 LAB_8250931c:
         iVar11 = MSG_ReadBits(param_2,8);
-        *piVar26 = iVar11;
+        *piVar25 = iVar11;
       }
       else {
 LAB_825092f0:
@@ -2472,12 +2304,12 @@ LAB_825092f0:
         param_2->bit = param_2->bit + 1;
         if ((iVar11 >> uVar12 & 1U) != 0) goto LAB_8250931c;
       }
-      lVar25 = lVar25 + -1;
-      piVar26 = piVar26 + 1;
-    } while (lVar25 != 0);
+      lVar23 = lVar23 + -1;
+      piVar25 = piVar25 + 1;
+    } while (lVar23 != 0);
   } while( true );
-  uVar22 = uVar22 & 7;
-  if (uVar22 == 0) {
+  uVar20 = uVar20 & 7;
+  if (uVar20 == 0) {
     iVar11 = param_2->readcount;
     if (iVar11 < param_2->splitSize + param_2->cursize) {
       param_2->bit = iVar11 << 3;
@@ -2486,9 +2318,9 @@ LAB_825092f0:
     }
     param_2->overflowed = 1;
 LAB_825093a8:
-    pbVar27 = &ppVar24->weapEquippedData[0].dualWielding;
-    lVar25 = 0xf;
-    pWVar20 = ppVar24->weaponsEquipped;
+    pbVar26 = &ppVar22->weapEquippedData[0].dualWielding;
+    lVar23 = 0xf;
+    pWVar18 = ppVar22->weaponsEquipped;
     do {
       uVar12 = param_2->bit & 7;
       if (uVar12 == 0) {
@@ -2511,23 +2343,23 @@ LAB_82509434:
           param_2->overflowed = 1;
 LAB_825094a0:
           uVar12 = MSG_ReadBits(param_2,0x18);
-          pWVar20->data = uVar12;
+          pWVar18->data = uVar12;
           if ((g_giveAll == (dvar_t *)0x0) || ((g_giveAll->current).enabled == false)) {
             iVar11 = 0;
-            pWVar19 = ppVar24->weaponsEquipped;
+            pWVar17 = ppVar22->weaponsEquipped;
             do {
-              if (pWVar19->data == uVar12) {
+              if (pWVar17->data == uVar12) {
                 if (-1 < iVar11) goto LAB_82509500;
                 break;
               }
               iVar11 = iVar11 + 1;
-              pWVar19 = pWVar19 + 1;
+              pWVar17 = pWVar17 + 1;
             } while (iVar11 < 0xf);
           }
           else {
             iVar11 = 0xe;
 LAB_82509500:
-            if (ppVar24->origin + iVar11 * 3 + -7 != (float *)0xfffffd50) goto LAB_82509534;
+            if (ppVar22->origin + iVar11 * 3 + -7 != (float *)0xfffffd50) goto LAB_82509534;
           }
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\msg_mp.cpp",
                           0x988,0,"%s");
@@ -2558,7 +2390,7 @@ LAB_82509574:
           bVar14 = true;
           if ((iVar11 >> uVar12 & 1U) == 0) goto LAB_825095a4;
         }
-        ((PlayerEquippedWeaponState *)(pbVar27 + -1))->usedBefore = bVar14;
+        ((PlayerEquippedWeaponState *)(pbVar26 + -1))->usedBefore = bVar14;
         uVar12 = param_2->bit & 7;
         if (uVar12 == 0) {
           iVar11 = param_2->readcount;
@@ -2578,7 +2410,7 @@ LAB_825095ec:
           bVar14 = true;
           if ((iVar11 >> uVar12 & 1U) == 0) goto LAB_8250961c;
         }
-        *pbVar27 = bVar14;
+        *pbVar26 = bVar14;
         uVar12 = param_2->bit & 7;
         if (uVar12 == 0) {
           iVar11 = param_2->readcount;
@@ -2598,7 +2430,7 @@ LAB_82509664:
           bVar14 = true;
           if ((iVar11 >> uVar12 & 1U) == 0) goto LAB_82509694;
         }
-        pbVar27[1] = bVar14;
+        pbVar26[1] = bVar14;
         uVar12 = param_2->bit & 7;
         if (uVar12 == 0) {
           iVar11 = param_2->readcount;
@@ -2618,7 +2450,7 @@ LAB_825096dc:
           bVar14 = true;
           if ((iVar11 >> uVar12 & 1U) == 0) goto LAB_8250970c;
         }
-        pbVar27[2] = bVar14;
+        pbVar26[2] = bVar14;
         uVar12 = param_2->bit & 7;
         if (uVar12 == 0) {
           iVar11 = param_2->readcount;
@@ -2638,9 +2470,9 @@ LAB_82509754:
           bVar14 = true;
           if ((iVar11 >> uVar12 & 1U) == 0) goto LAB_82509784;
         }
-        pbVar27[3] = bVar14;
+        pbVar26[3] = bVar14;
         iVar11 = MSG_ReadBits(param_2,2);
-        *(int *)(pbVar27 + 7) = iVar11;
+        *(int *)(pbVar26 + 7) = iVar11;
       }
       else {
 LAB_82509408:
@@ -2648,37 +2480,37 @@ LAB_82509408:
         param_2->bit = param_2->bit + 1;
         if ((iVar11 >> uVar12 & 1U) != 0) goto LAB_82509434;
       }
-      lVar25 = lVar25 + -1;
-      pWVar20 = pWVar20 + 1;
-      pbVar27 = pbVar27 + 0xc;
-    } while (lVar25 != 0);
+      lVar23 = lVar23 + -1;
+      pWVar18 = pWVar18 + 1;
+      pbVar26 = pbVar26 + 0xc;
+    } while (lVar23 != 0);
   }
   else {
 LAB_8250937c:
     iVar11 = MSG_GetByte(param_2,param_2->bit >> 3);
     param_2->bit = param_2->bit + 1;
-    if ((iVar11 >> uVar22 & 1U) != 0) goto LAB_825093a8;
+    if ((iVar11 >> uVar20 & 1U) != 0) goto LAB_825093a8;
   }
-  uVar12 = (ppVar24->weapCommon).weapon.data;
+  uVar12 = (ppVar22->weapCommon).weapon.data;
   if ((uVar12 & 0xff) != 0) {
     if ((g_giveAll == (dvar_t *)0x0) || ((g_giveAll->current).enabled == false)) {
       iVar11 = 0;
-      pWVar20 = ppVar24->weaponsEquipped;
+      pWVar18 = ppVar22->weaponsEquipped;
       do {
-        if (pWVar20->data == uVar12) {
+        if (pWVar18->data == uVar12) {
           if (-1 < iVar11) goto LAB_82509814;
           break;
         }
         iVar11 = iVar11 + 1;
-        pWVar20 = pWVar20 + 1;
+        pWVar18 = pWVar18 + 1;
       } while (iVar11 < 0xf);
     }
     else {
       iVar11 = 0xe;
 LAB_82509814:
-      if (ppVar24->origin + iVar11 * 3 + -7 != (float *)0xfffffd50) goto LAB_82509870;
+      if (ppVar22->origin + iVar11 * 3 + -7 != (float *)0xfffffd50) goto LAB_82509870;
     }
-    BG_GetWeaponName((ppVar24->weapCommon).weapon,acStack_37a0,0x400);
+    BG_GetWeaponName((ppVar22->weapCommon).weapon,acStack_37a0,0x400);
     va("Player thinks their current weapon is %s but we don\'t have that weapon equipped");
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\msg_mp.cpp",0x997,0,
                     "%s\n\t%s");
@@ -2698,18 +2530,18 @@ LAB_82509870:
     else {
 LAB_825098b0:
       iVar11 = MSG_GetByte(param_2,param_2->bit >> 3);
-      uVar22 = param_2->bit + 1;
-      param_2->bit = uVar22;
+      uVar20 = param_2->bit + 1;
+      param_2->bit = uVar20;
       if ((iVar11 >> uVar12 & 1U) == 0) break;
     }
     iVar11 = MSG_ReadBits(param_2,4);
     iVar8 = MSG_ReadBits(param_2,0x19);
-    (ppVar24->weapCommon).ammoNotInClip[iVar11].ammoType = iVar8;
+    (ppVar22->weapCommon).ammoNotInClip[iVar11].ammoType = iVar8;
     iVar8 = MSG_ReadBits(param_2,10);
-    (ppVar24->weapCommon).ammoNotInClip[iVar11].ammoCount = iVar8;
+    (ppVar22->weapCommon).ammoNotInClip[iVar11].ammoCount = iVar8;
   } while( true );
-  uVar22 = uVar22 & 7;
-  if (uVar22 == 0) {
+  uVar20 = uVar20 & 7;
+  if (uVar20 == 0) {
     iVar11 = param_2->readcount;
     if (iVar11 < param_2->splitSize + param_2->cursize) {
       param_2->bit = iVar11 << 3;
@@ -2718,52 +2550,50 @@ LAB_825098b0:
     }
     param_2->overflowed = 1;
 LAB_82509988:
-    ppVar24 = ppStack00000034;
-    ppVar23 = ppStack0000002c;
+    ppVar22 = ppStack00000034;
+    ppVar21 = ppStack0000002c;
     iVar11 = iStack00000024;
-    lVar25 = 0x20;
-    poVar29 = ppStack00000034->objective;
+    lVar23 = 0x20;
+    poVar28 = ppStack00000034->objective;
     iVar8 = (int)ppStack0000002c - (int)ppStack00000034;
     uVar12 = g_netFieldList[3].count;
-    pNVar28 = g_netFieldList[3].array;
+    pNVar27 = g_netFieldList[3].array;
     do {
       oVar13 = MSG_ReadBits(param_2,3);
-      poVar29->state = oVar13;
-      MSG_ReadDeltaFields(param_2,iVar11,(void *)(iVar8 + (int)poVar29),poVar29,uVar12,pNVar28,1,
+      poVar28->state = oVar13;
+      MSG_ReadDeltaFields(param_2,iVar11,(void *)(iVar8 + (int)poVar28),poVar28,uVar12,pNVar27,1,
                           false);
-      lVar25 = lVar25 + -1;
-      poVar29 = poVar29 + 1;
-    } while (lVar25 != 0);
+      lVar23 = lVar23 + -1;
+      poVar28 = poVar28 + 1;
+    } while (lVar23 != 0);
   }
   else {
 LAB_8250995c:
     iVar8 = MSG_GetByte(param_2,param_2->bit >> 3);
     param_2->bit = param_2->bit + 1;
-    ppVar24 = ppStack00000034;
-    ppVar23 = ppStack0000002c;
+    ppVar22 = ppStack00000034;
+    ppVar21 = ppStack0000002c;
     iVar11 = iStack00000024;
-    if ((iVar8 >> uVar22 & 1U) != 0) goto LAB_82509988;
+    if ((iVar8 >> uVar20 & 1U) != 0) goto LAB_82509988;
   }
   uVar12 = param_2->bit & 7;
   if (uVar12 == 0) {
     iVar8 = param_2->readcount;
-    if (iVar8 < param_2->splitSize + param_2->cursize) {
-      param_2->bit = iVar8 << 3;
-      param_2->readcount = iVar8 + 1;
-      goto LAB_82509a44;
+    if (param_2->splitSize + param_2->cursize <= iVar8) {
+      param_2->overflowed = 1;
+      goto LAB_82509a70;
     }
-    param_2->overflowed = 1;
+    param_2->bit = iVar8 << 3;
+    param_2->readcount = iVar8 + 1;
   }
-  else {
-LAB_82509a44:
-    iVar8 = MSG_GetByte(param_2,param_2->bit >> 3);
-    param_2->bit = param_2->bit + 1;
-    if ((iVar8 >> uVar12 & 1U) == 0) goto LAB_82509aa0;
+  iVar8 = MSG_GetByte(param_2,param_2->bit >> 3);
+  param_2->bit = param_2->bit + 1;
+  if ((iVar8 >> uVar12 & 1U) == 0) {
+    return;
   }
-  MSG_ReadDeltaHudElems(param_2,iVar11,(ppVar23->hud).archival,(ppVar24->hud).archival,0x1f);
-  MSG_ReadDeltaHudElems(param_2,iVar11,(ppVar23->hud).current,(ppVar24->hud).current,0x1f);
-LAB_82509aa0:
-  __restgprlr();
+LAB_82509a70:
+  MSG_ReadDeltaHudElems(param_2,iVar11,(ppVar21->hud).archival,(ppVar22->hud).archival,0x1f);
+  MSG_ReadDeltaHudElems(param_2,iVar11,(ppVar21->hud).current,(ppVar22->hud).current,0x1f);
   return;
 }
 
@@ -2786,6 +2616,8 @@ void MSG_initHuffmanInternal(void)
 
 // 82509B18  MSG_CheckFields  (qcommon/msg_mp.cpp:2577)
 
+/* WARNING: Function: __savegprlr_18 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_18 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void MSG_CheckFields(void)
@@ -2805,7 +2637,6 @@ void MSG_CheckFields(void)
   NetField *pNVar12;
   NetField *pNVar13;
   
-  __savegprlr_18();
   bVar3 = false;
   iVar7 = 0;
   uVar1 = g_netFieldList[5].count;
@@ -2916,7 +2747,6 @@ LAB_82509bcc:
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\msg_mp.cpp",0xa6d,
                         0,"Error in the msg_mp_*.h file, see log!");
       }
-      __restgprlr_18();
       return;
     }
   } while( true );
@@ -2938,6 +2768,8 @@ void MSG_InitHuffman(void)
 
 // 82509D98  MSG_DumpNetFieldChanges_f  (qcommon/msg_mp.cpp:2685)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void MSG_DumpNetFieldChanges_f(void)
@@ -2950,7 +2782,6 @@ void MSG_DumpNetFieldChanges_f(void)
   int local_80 [8];
   netFieldOrderInfo_t *local_60 [24];
   
-  __savegprlr_24();
   local_60[0] = &orderInfo;
   local_60[1] = (netFieldOrderInfo_t *)0x8368bcf8;
   local_60[4] = (netFieldOrderInfo_t *)0x8368c57c;
@@ -2986,7 +2817,6 @@ void MSG_DumpNetFieldChanges_f(void)
   } while (uVar2 < 0x18);
   Com_Printf(0,"========================================\n");
   Com_Printf(0,"========================================\n");
-  __restgprlr_24();
   return;
 }
 

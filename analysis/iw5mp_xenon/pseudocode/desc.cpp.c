@@ -2,6 +2,9 @@
 
 // 8289F068  GetSurfaceLayout  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/xgraphics/misc/desc.cpp:39)
 
+/* WARNING: Function: __savegprlr_19 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_19 replaced with injection: xenon_save_restore */
+
 void GetSurfaceLayout(uint *param_1,uint *param_2,int *param_3,int *param_4,D3DBaseTexture *param_5,
                      uint param_6)
 
@@ -9,21 +12,16 @@ void GetSurfaceLayout(uint *param_1,uint *param_2,int *param_3,int *param_4,D3DB
   byte bVar1;
   uint uVar2;
   uint uVar3;
-  int iVar4;
-  uint *puVar5;
-  ulong uVar6;
-  ulonglong uVar7;
+  uint uVar4;
+  int iVar5;
+  longlong lVar6;
+  longlong lVar7;
   ulonglong uVar8;
   ulonglong uVar9;
   longlong lVar10;
-  longlong lVar11;
-  ulonglong uVar12;
-  ulonglong uVar13;
-  longlong lVar14;
-  ulonglong uVar15;
-  longlong lVar16;
-  uint uVar17;
-  undefined4 uVar18;
+  ulonglong uVar11;
+  longlong lVar12;
+  int iVar13;
   uint local_90;
   uint local_8c;
   ulong local_88;
@@ -31,102 +29,93 @@ void GetSurfaceLayout(uint *param_1,uint *param_2,int *param_3,int *param_4,D3DB
   uint local_80;
   ulong local_7c [31];
   
-  uVar13 = (ulonglong)(int)param_6;
-  uVar9 = (ulonglong)(int)param_4;
-  uVar8 = (ulonglong)(int)param_3;
-  uVar7 = (ulonglong)(int)param_2;
-  puVar5 = (uint *)__savegprlr_19(param_1);
-  uVar17 = (param_5->Format).dword[1] & 0x3f;
-  iVar4 = (int)(param_5->Format).dword[3] >> 0x1f;
-  uVar12 = (ulonglong)(uint)-iVar4;
-  bVar1 = *(byte *)((int)D3D::g_FormatTable + uVar17 * 2 + 1);
-  uVar3 = (param_5->Format).dword[5] >> 9 & 3;
+  uVar9 = (ulonglong)(int)param_6;
+  uVar3 = (param_5->Format).dword[1] & 0x3f;
+  iVar5 = (int)(param_5->Format).dword[3] >> 0x1f;
+  uVar8 = (ulonglong)(uint)-iVar5;
+  bVar1 = *(byte *)((int)D3D::g_FormatTable + uVar3 * 2 + 1);
+  uVar4 = (param_5->Format).dword[5] >> 9 & 3;
   uVar2 = (param_5->Format).dword[0] >> 0x1f;
   D3D::GetTextureDimensions(param_5,&local_84,&local_80,local_7c);
-  lVar11 = (uVar12 - LZCOUNT(local_84 + iVar4 * 2 + -1)) + 0x20;
-  lVar10 = (uVar12 - LZCOUNT(local_80 + iVar4 * 2 + -1)) + 0x20;
-  if ((uVar13 & 0xffffffff) == 0) {
-    local_90 = 1 << ((uint)lVar11 & 0x3f);
-    local_8c = 1 << ((uint)lVar10 & 0x3f);
+  lVar7 = (uVar8 - LZCOUNT(local_84 + iVar5 * 2 + -1)) + 0x20;
+  lVar6 = (uVar8 - LZCOUNT(local_80 + iVar5 * 2 + -1)) + 0x20;
+  if (param_6 == 0) {
+    local_90 = 1 << ((uint)lVar7 & 0x3f);
+    local_8c = 1 << ((uint)lVar6 & 0x3f);
     if (((local_90 < 0x11) || (local_8c < 0x11)) && (((param_5->Format).dword[5] & 0x800) != 0)) {
-      uVar18 = 1;
+      iVar13 = 1;
     }
     else {
       local_90 = local_84;
-      uVar18 = 0;
+      iVar13 = 0;
       local_8c = local_80;
     }
     local_88 = 1;
-    uVar6 = D3D::AlignTextureDimensions
-                      (&local_90,&local_8c,&local_88,(uint)bVar1,uVar17,uVar3,uVar2);
-    uVar17 = (param_5->Format).dword[0] >> 0x11 & 0x3fe0;
+    D3D::AlignTextureDimensions(&local_90,&local_8c,&local_88,(uint)bVar1,uVar3,uVar4,uVar2);
+    local_90 = (param_5->Format).dword[0] >> 0x11 & 0x3fe0;
   }
   else {
-    lVar16 = (uVar12 - LZCOUNT(local_84 + iVar4 * 2 + -1)) + 0x20;
-    lVar14 = (uVar12 - LZCOUNT(local_80 + iVar4 * 2 + -1)) + 0x20;
-    if ((int)lVar14 <= (int)lVar16) {
-      lVar16 = lVar14;
+    lVar12 = (uVar8 - LZCOUNT(local_84 + iVar5 * 2 + -1)) + 0x20;
+    lVar10 = (uVar8 - LZCOUNT(local_80 + iVar5 * 2 + -1)) + 0x20;
+    if ((int)lVar10 <= (int)lVar12) {
+      lVar12 = lVar10;
     }
-    uVar15 = lVar16 - 4;
-    uVar15 = (((uVar15 & 0xffffffff) >> 0x1f) - 1) + (ulonglong)(uVar15 == 0) & uVar15;
-    if (((uVar13 & 0xffffffff) < (uVar15 & 0xffffffff)) ||
-       (((param_5->Format).dword[5] & 0x800) == 0)) {
-      uVar18 = 0;
-    }
-    else {
-      uVar18 = 1;
-      uVar13 = uVar15;
-    }
-    if (uVar3 == 2) {
-      lVar16 = (uVar12 - LZCOUNT(local_7c[0] + iVar4 * 2 + -1)) + 0x20;
+    uVar11 = lVar12 - 4;
+    uVar11 = (((uVar11 & 0xffffffff) >> 0x1f) - 1) + (ulonglong)(uVar11 == 0) & uVar11;
+    if (((ulonglong)param_6 < (uVar11 & 0xffffffff)) || (((param_5->Format).dword[5] & 0x800) == 0))
+    {
+      iVar13 = 0;
     }
     else {
-      lVar16 = 0;
+      iVar13 = 1;
+      uVar9 = uVar11;
     }
-    uVar15 = lVar11 - uVar13;
-    uVar12 = lVar10 - uVar13;
-    local_90 = 1 << (-(uint)(uVar15 < 0xffffffff80000000) & (uint)uVar15 & 0x3f);
-    local_8c = 1 << (-(uint)(uVar12 < 0xffffffff80000000) & (uint)uVar12 & 0x3f);
-    local_88 = 1 << (-(uint)(lVar16 - uVar13 < 0xffffffff80000000) & (uint)(lVar16 - uVar13) & 0x3f)
-    ;
-    uVar6 = D3D::AlignTextureDimensions
-                      (&local_90,&local_8c,&local_88,(uint)bVar1,uVar17,uVar3,uVar2);
-    uVar17 = local_90;
+    if (uVar4 == 2) {
+      lVar12 = (uVar8 - LZCOUNT(local_7c[0] + iVar5 * 2 + -1)) + 0x20;
+    }
+    else {
+      lVar12 = 0;
+    }
+    uVar11 = lVar7 - uVar9;
+    uVar8 = lVar6 - uVar9;
+    local_90 = 1 << (-(uint)(uVar11 < 0xffffffff80000000) & (uint)uVar11 & 0x3f);
+    local_8c = 1 << (-(uint)(uVar8 < 0xffffffff80000000) & (uint)uVar8 & 0x3f);
+    local_88 = 1 << (-(uint)(lVar12 - uVar9 < 0xffffffff80000000) & (uint)(lVar12 - uVar9) & 0x3f);
+    D3D::AlignTextureDimensions(&local_90,&local_8c,&local_88,(uint)bVar1,uVar3,uVar4,uVar2);
   }
-  if (puVar5 != (uint *)0x0) {
-    *puVar5 = uVar17;
+  if (param_1 != (uint *)0x0) {
+    *param_1 = local_90;
   }
-  if ((uVar7 & 0xffffffff) != 0) {
-    *(uint *)uVar7 = local_8c;
+  if (param_2 != (uint *)0x0) {
+    *param_2 = local_8c;
   }
-  if ((uVar8 & 0xffffffff) != 0) {
-    *(uint *)uVar8 = uVar2;
+  if (param_3 != (int *)0x0) {
+    *param_3 = uVar2;
   }
-  if ((uVar9 & 0xffffffff) != 0) {
-    *(undefined4 *)uVar9 = uVar18;
+  if (param_4 != (int *)0x0) {
+    *param_4 = iVar13;
   }
-  __restgprlr_19(uVar6);
   return;
 }
 
 
 // 8289F2E8  GetTextureDesc  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/xgraphics/misc/desc.cpp:137)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 
 void GetTextureDesc(D3DBaseTexture *param_1,uint param_2,_XGTEXTURE_DESC *param_3)
 
 {
   byte bVar1;
-  uint uVar2;
+  ulong uVar2;
   _D3DFORMAT _Var3;
-  D3DBaseTexture *pDVar4;
+  uint uVar4;
   _D3DRESOURCETYPE _Var5;
-  ulonglong uVar6;
-  uint uVar7;
+  uint uVar6;
+  D3DBaseTexture *pDVar7;
   ulonglong uVar8;
-  D3DBaseTexture *pDVar9;
-  ulonglong uVar10;
   uint local_140;
   uint local_13c;
   int local_138;
@@ -142,16 +131,13 @@ void GetTextureDesc(D3DBaseTexture *param_1,uint param_2,_XGTEXTURE_DESC *param_
   _D3DSURFACE_DESC local_80;
   _D3DSURFACE_DESC local_60 [3];
   
-  uVar6 = (ulonglong)(int)param_2;
-  pDVar4 = (D3DBaseTexture *)__savegprlr_26(param_1);
   local_138 = 0;
-  _Var5 = D3DResource_GetType((D3DResource *)pDVar4);
+  _Var5 = D3DResource_GetType((D3DResource *)param_1);
   param_3->ResourceType = _Var5;
-  uVar7 = (uint)uVar6;
-  uVar8 = uVar6;
-  pDVar9 = pDVar4;
+  pDVar7 = param_1;
+  uVar6 = param_2;
   if (_Var5 == D3DRTYPE_TEXTURE) {
-    D3DTexture_GetLevelDesc((D3DTexture *)pDVar4,uVar7,&local_a0);
+    D3DTexture_GetLevelDesc((D3DTexture *)param_1,param_2,&local_a0);
     param_3->Depth = 1;
     local_80.Format = local_a0.Format;
     local_80.MultiSampleType = local_a0.MultiSampleType;
@@ -162,122 +148,123 @@ LAB_8289f528:
     param_3->Format = local_80.Format;
 LAB_8289f530:
     param_3->Height = local_120.Height;
-LAB_8289f534:
-    param_3->Width = local_60[0].Width;
-  }
-  else if (_Var5 == D3DRTYPE_SURFACE) {
-    D3DSurface_GetDesc((D3DSurface *)pDVar4,&local_c0);
-    param_3->Depth = 1;
-    param_3->MultiSampleType = local_c0.MultiSampleType;
-    param_3->Width = local_c0.Width;
-    param_3->Height = local_c0.Height;
-    param_3->Format = local_c0.Format;
-    if ((pDVar4->_padding_ & 0x40000000U) == 0) {
-      bVar1 = g_XGTextureFormatBitsPerPixel[local_c0.Format & 0x3f];
-      param_3->WidthInBlocks = local_c0.Width;
-      param_3->HeightInBlocks = local_c0.Height;
-      param_3->DepthInBlocks = 1;
-      uVar7 = (uint)(bVar1 >> 3);
-      param_3->BitsPerPixel = (uint)bVar1;
-      param_3->BytesPerBlock = uVar7;
-      param_3->RowPitch = (pDVar4->MipFlush & 0x3fff) * uVar7;
-      uVar7 = (pDVar4->Format).dword[4];
-      param_3->ExpBias = 0;
-      param_3->Flags = 1;
-      param_3->SlicePitch = uVar7;
-      goto LAB_8289f70c;
-    }
-    pDVar9 = (D3DBaseTexture *)pDVar4->MipFlush;
-    uVar8 = (ulonglong)((pDVar4->Format).dword[0] >> 0x1c);
-  }
-  else if (_Var5 == D3DRTYPE_VOLUME) {
-    D3DVolume_GetDesc((D3DVolume *)pDVar4,&local_100);
-    param_3->MultiSampleType = D3DMULTISAMPLE_NONE;
-    param_3->Depth = local_100.Depth;
-    param_3->Format = local_100.Format;
-    param_3->Width = local_100.Width;
-    param_3->Height = local_100.Height;
-    pDVar9 = (D3DBaseTexture *)pDVar4->MipFlush;
-    uVar8 = (ulonglong)((pDVar4->Format).dword[0] >> 0x1c);
   }
   else {
+    if (_Var5 == D3DRTYPE_SURFACE) {
+      D3DSurface_GetDesc((D3DSurface *)param_1,&local_c0);
+      param_3->Depth = 1;
+      param_3->MultiSampleType = local_c0.MultiSampleType;
+      param_3->Width = local_c0.Width;
+      param_3->Height = local_c0.Height;
+      param_3->Format = local_c0.Format;
+      if ((param_1->_padding_ & 0x40000000U) == 0) {
+        bVar1 = g_XGTextureFormatBitsPerPixel[local_c0.Format & 0x3f];
+        param_3->WidthInBlocks = local_c0.Width;
+        param_3->HeightInBlocks = local_c0.Height;
+        param_3->DepthInBlocks = 1;
+        uVar6 = (uint)(bVar1 >> 3);
+        param_3->BitsPerPixel = (uint)bVar1;
+        param_3->BytesPerBlock = uVar6;
+        param_3->RowPitch = (param_1->MipFlush & 0x3fff) * uVar6;
+        uVar2 = (param_1->Format).dword[4];
+        param_3->ExpBias = 0;
+        param_3->Flags = 1;
+        param_3->SlicePitch = uVar2;
+        return;
+      }
+      pDVar7 = (D3DBaseTexture *)param_1->MipFlush;
+      uVar6 = (param_1->Format).dword[0] >> 0x1c;
+      goto LAB_8289f538;
+    }
+    if (_Var5 == D3DRTYPE_VOLUME) {
+      D3DVolume_GetDesc((D3DVolume *)param_1,&local_100);
+      param_3->MultiSampleType = D3DMULTISAMPLE_NONE;
+      param_3->Depth = local_100.Depth;
+      param_3->Format = local_100.Format;
+      param_3->Width = local_100.Width;
+      param_3->Height = local_100.Height;
+      pDVar7 = (D3DBaseTexture *)param_1->MipFlush;
+      uVar6 = (param_1->Format).dword[0] >> 0x1c;
+      goto LAB_8289f538;
+    }
     if (_Var5 == D3DRTYPE_VOLUMETEXTURE) {
-      D3DVolumeTexture_GetLevelDesc((D3DVolumeTexture *)pDVar4,uVar7,&local_120);
+      D3DVolumeTexture_GetLevelDesc((D3DVolumeTexture *)param_1,param_2,&local_120);
       param_3->MultiSampleType = D3DMULTISAMPLE_NONE;
       param_3->Depth = local_120.Depth;
       param_3->Format = local_120.Format;
       local_60[0].Width = local_120.Width;
       goto LAB_8289f530;
     }
-    if (_Var5 != D3DRTYPE_CUBETEXTURE) {
-      if (_Var5 == D3DRTYPE_ARRAYTEXTURE) {
-        D3DArrayTexture_GetLevelDesc((D3DArrayTexture *)pDVar4,uVar7,&local_80);
-        param_3->Depth = 1;
-        local_120.Height = local_80.Height;
-        local_60[0].Width = local_80.Width;
-        goto LAB_8289f528;
-      }
-      if (_Var5 != D3DRTYPE_LINETEXTURE) goto LAB_8289f70c;
-      D3DLineTexture_GetLevelDesc((D3DLineTexture *)pDVar4,uVar7,local_60);
-      param_3->Height = 1;
-      param_3->Depth = 1;
-      param_3->Format = local_60[0].Format;
-      param_3->MultiSampleType = local_60[0].MultiSampleType;
-      goto LAB_8289f534;
+    if (_Var5 == D3DRTYPE_CUBETEXTURE) {
+      D3DCubeTexture_GetLevelDesc((D3DCubeTexture *)param_1,param_2,&local_e0);
+      param_3->Width = local_e0.Width;
+      param_3->Height = local_e0.Height;
+      param_3->Depth = (param_1->Format).dword[2] >> 0x1a;
+      param_3->Format = local_e0.Format;
+      param_3->MultiSampleType = local_e0.MultiSampleType;
+      goto LAB_8289f538;
     }
-    D3DCubeTexture_GetLevelDesc((D3DCubeTexture *)pDVar4,uVar7,&local_e0);
-    param_3->Width = local_e0.Width;
-    param_3->Height = local_e0.Height;
-    param_3->Depth = (pDVar4->Format).dword[2] >> 0x1a;
-    param_3->Format = local_e0.Format;
-    param_3->MultiSampleType = local_e0.MultiSampleType;
+    if (_Var5 == D3DRTYPE_ARRAYTEXTURE) {
+      D3DArrayTexture_GetLevelDesc((D3DArrayTexture *)param_1,param_2,&local_80);
+      param_3->Depth = 1;
+      local_120.Height = local_80.Height;
+      local_60[0].Width = local_80.Width;
+      goto LAB_8289f528;
+    }
+    if (_Var5 != D3DRTYPE_LINETEXTURE) {
+      return;
+    }
+    D3DLineTexture_GetLevelDesc((D3DLineTexture *)param_1,param_2,local_60);
+    param_3->Height = 1;
+    param_3->Depth = 1;
+    param_3->Format = local_60[0].Format;
+    param_3->MultiSampleType = local_60[0].MultiSampleType;
   }
+  param_3->Width = local_60[0].Width;
+LAB_8289f538:
   _Var3 = param_3->Format & 0x3f;
   bVar1 = g_XGTextureFormatBitsPerPixel[_Var3];
   param_3->Flags = 0;
   param_3->BitsPerPixel = (uint)bVar1;
   D3D::BlockSizeOfGpuFormat(_Var3,&local_12c,&local_140);
-  GetSurfaceLayout(&local_134,&local_13c,&local_130,&local_138,pDVar9,(uint)uVar8);
-  uVar7 = local_140;
-  uVar10 = (ulonglong)local_140;
-  if ((((((uVar8 & 0xffffffff) == 0) &&
-        (uVar2 = (pDVar9->Format).dword[5], (uVar2 & 0x600) == 0x200)) &&
-       (((pDVar9->Format).dword[0] & 0x80000000) == 0)) &&
-      ((((pDVar9->Format).dword[1] & 0x400) == 0 && ((uVar2 & 0xfffff000) == 0)))) &&
-     (((uVar2 & 0x800) == 0 && (((pDVar9->Format).dword[3] & 0x80000000) == 0)))) {
-    D3D::GetTextureDimensions(pDVar9,auStack_128,&local_140,&local_13c);
-    local_13c = (local_140 + uVar7) - 1 & ~(uVar7 - 1);
+  GetSurfaceLayout(&local_134,&local_13c,&local_130,&local_138,pDVar7,uVar6);
+  uVar4 = local_140;
+  uVar8 = (ulonglong)local_140;
+  if (((((uVar6 == 0) && (uVar6 = (pDVar7->Format).dword[5], (uVar6 & 0x600) == 0x200)) &&
+       (((pDVar7->Format).dword[0] & 0x80000000) == 0)) &&
+      ((((pDVar7->Format).dword[1] & 0x400) == 0 && ((uVar6 & 0xfffff000) == 0)))) &&
+     (((uVar6 & 0x800) == 0 && (((pDVar7->Format).dword[3] & 0x80000000) == 0)))) {
+    D3D::GetTextureDimensions(pDVar7,auStack_128,&local_140,&local_13c);
+    local_13c = (local_140 + uVar4) - 1 & ~(uVar4 - 1);
   }
-  uVar2 = param_3->BitsPerPixel * local_134 >> 3;
-  param_3->RowPitch = uVar2;
-  param_3->SlicePitch = uVar2 * local_13c;
-  if ((((local_130 != 0) || (1 < (uVar6 & 0xffffffff))) ||
-      (_Var5 = D3DResource_GetType((D3DResource *)pDVar9), _Var5 != D3DRTYPE_TEXTURE)) &&
-     (_Var5 = D3DResource_GetType((D3DResource *)pDVar9), _Var5 != D3DRTYPE_VOLUMETEXTURE)) {
+  uVar6 = param_3->BitsPerPixel * local_134 >> 3;
+  param_3->RowPitch = uVar6;
+  param_3->SlicePitch = uVar6 * local_13c;
+  if ((((local_130 != 0) || (1 < param_2)) ||
+      (_Var5 = D3DResource_GetType((D3DResource *)pDVar7), _Var5 != D3DRTYPE_TEXTURE)) &&
+     (_Var5 = D3DResource_GetType((D3DResource *)pDVar7), _Var5 != D3DRTYPE_VOLUMETEXTURE)) {
     param_3->SlicePitch = param_3->SlicePitch + 0xfff & 0xfffff000;
   }
   param_3->ExpBias =
-       (int)((pDVar9->Format).dword[3] << 0xd | (pDVar9->Format).dword[3] >> 0x13) >> 0x1a;
+       (int)((pDVar7->Format).dword[3] << 0xd | (pDVar7->Format).dword[3] >> 0x13) >> 0x1a;
   if (local_130 != 0) {
     param_3->Flags = param_3->Flags | 1;
   }
   if (local_138 != 0) {
     param_3->Flags = param_3->Flags | 2;
   }
-  if (((pDVar9->Format).dword[3] & 0x80000000) != 0) {
+  if (((pDVar7->Format).dword[3] & 0x80000000) != 0) {
     param_3->Flags = param_3->Flags | 8;
   }
-  trapWord(6,uVar10,0);
+  trapWord(6,uVar8,0);
   trapWord(6,(ulonglong)local_12c,0);
   param_3->DepthInBlocks = param_3->Depth;
   param_3->WidthInBlocks =
        (uint)((((ulonglong)param_3->Width + (ulonglong)local_12c) - 1 & 0xffffffff) /
              (ulonglong)local_12c);
-  param_3->RowPitch = param_3->RowPitch * uVar7;
-  param_3->HeightInBlocks = (uint)(((param_3->Height + uVar10) - 1 & 0xffffffff) / uVar10);
-  param_3->BytesPerBlock = param_3->BitsPerPixel * local_12c * uVar7 >> 3;
-LAB_8289f70c:
-  __restgprlr_26();
+  param_3->RowPitch = param_3->RowPitch * uVar4;
+  param_3->HeightInBlocks = (uint)(((param_3->Height + uVar8) - 1 & 0xffffffff) / uVar8);
+  param_3->BytesPerBlock = param_3->BitsPerPixel * local_12c * uVar4 >> 3;
   return;
 }
 
@@ -333,6 +320,9 @@ uint XGGetMipTailBaseLevel(uint param_1,uint param_2,int param_3)
 
 // 8289F780  GetMipTailLevelOffsetCoords  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/xgraphics/misc/desc.cpp:519)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
+
 uint XGRAPHICS::GetMipTailLevelOffsetCoords
                (uint param_1,uint param_2,uint param_3,uint param_4,ulong param_5,int param_6,
                int param_7,_XGPOINT3D *param_8)
@@ -343,17 +333,13 @@ uint XGRAPHICS::GetMipTailLevelOffsetCoords
   ulong uVar3;
   int iVar4;
   int iVar5;
-  int iVar6;
+  uint uVar6;
   ulong uVar7;
-  uint uVar8;
-  ulonglong uVar9;
-  ulonglong uVar10;
+  longlong lVar8;
+  uint uVar9;
+  longlong lVar10;
   ulonglong uVar11;
-  longlong lVar12;
-  uint uVar13;
-  longlong lVar14;
-  ulonglong uVar15;
-  ulonglong uVar16;
+  ulonglong uVar12;
   uint *in_stack_ffffff38;
   uint *in_stack_ffffff3c;
   ulong local_70;
@@ -363,56 +349,51 @@ uint XGRAPHICS::GetMipTailLevelOffsetCoords
   long local_60;
   long local_5c;
   
-  uVar11 = (ulonglong)(int)param_5;
-  uVar10 = (ulonglong)(int)param_4;
-  uVar9 = (ulonglong)(int)param_3;
-  iVar6 = __savegprlr_23(param_1);
-  uVar16 = (ulonglong)(param_7 == 0) ^ 1;
-  iVar4 = (int)(uVar16 << 1);
-  lVar14 = (uVar16 - LZCOUNT((iVar6 - iVar4) + -1)) + 0x20;
-  lVar12 = (uVar16 - LZCOUNT((param_2 - iVar4) + -1)) + 0x20;
-  if ((int)lVar12 <= (int)lVar14) {
-    lVar14 = lVar12;
+  uVar12 = (ulonglong)(param_7 == 0) ^ 1;
+  iVar4 = (int)(uVar12 << 1);
+  lVar10 = (uVar12 - LZCOUNT((param_1 - iVar4) + -1)) + 0x20;
+  lVar8 = (uVar12 - LZCOUNT((param_2 - iVar4) + -1)) + 0x20;
+  if ((int)lVar8 <= (int)lVar10) {
+    lVar10 = lVar8;
   }
-  uVar15 = lVar14 - 4;
-  uVar15 = (((uVar15 & 0xffffffff) >> 0x1f) - 1) + (ulonglong)(uVar15 == 0) & uVar15;
-  if ((uVar10 & 0xffffffff) < (uVar15 & 0xffffffff)) {
+  uVar11 = lVar10 - 4;
+  uVar11 = (((uVar11 & 0xffffffff) >> 0x1f) - 1) + (ulonglong)(uVar11 == 0) & uVar11;
+  if ((ulonglong)param_4 < (uVar11 & 0xffffffff)) {
     local_64 = 0;
     uVar7 = 0;
     param_8->y = 0;
     param_8->z = 0;
   }
   else {
-    if ((uVar9 & 0xffffffff) < 2) {
-      lVar14 = 0;
+    if (param_3 < 2) {
+      lVar10 = 0;
     }
     else {
-      lVar14 = (uVar16 - LZCOUNT(((int)uVar9 - iVar4) + -1)) + 0x20;
+      lVar10 = (uVar12 - LZCOUNT((param_3 - iVar4) + -1)) + 0x20;
     }
-    uVar8 = (uint)(lVar14 - uVar15);
-    iVar5 = (int)uVar15;
-    uVar7 = 1 << ((((int)uVar16 - (int)LZCOUNT((iVar6 - iVar4) + -1)) + 0x20) - iVar5 & 0x3fU);
-    uVar2 = 1 << ((((int)uVar16 - (int)LZCOUNT((param_2 - iVar4) + -1)) + 0x20) - iVar5 & 0x3fU);
-    uVar3 = 1 << ((-1 - ((int)uVar8 >> 0x1f)) + (uint)(lVar14 - uVar15 == 0) & uVar8 & 0x3f);
-    bVar1 = *(byte *)((int)D3D::g_FormatTable + (int)((uVar11 & 0xffffffff) << 1) + 1);
+    uVar6 = (uint)(lVar10 - uVar11);
+    iVar5 = (int)uVar11;
+    uVar7 = 1 << ((((int)uVar12 - (int)LZCOUNT((param_1 - iVar4) + -1)) + 0x20) - iVar5 & 0x3fU);
+    uVar2 = 1 << ((((int)uVar12 - (int)LZCOUNT((param_2 - iVar4) + -1)) + 0x20) - iVar5 & 0x3fU);
+    uVar3 = 1 << ((-1 - ((int)uVar6 >> 0x1f)) + (uint)(lVar10 - uVar11 == 0) & uVar6 & 0x3f);
+    bVar1 = *(byte *)((int)D3D::g_FormatTable + param_5 * 2 + 1);
     local_70 = uVar7;
     local_6c = uVar2;
     local_68 = uVar3;
-    D3D::AlignTextureDimensions(&local_70,&local_6c,&local_68,(uint)bVar1,(ulong)uVar11,1,param_6);
-    uVar8 = local_70 * bVar1 >> 3;
-    uVar13 = uVar8 * local_6c;
-    if ((uVar9 & 0xffffffff) < 2) {
-      uVar13 = uVar13 + 0xfff & 0xfffff000;
+    D3D::AlignTextureDimensions(&local_70,&local_6c,&local_68,(uint)bVar1,param_5,1,param_6);
+    uVar6 = local_70 * bVar1 >> 3;
+    uVar9 = uVar6 * local_6c;
+    if (param_3 < 2) {
+      uVar9 = uVar9 + 0xfff & 0xfffff000;
     }
     uVar7 = D3D::GetMipTailLevelOffsetCoords
-                      ((int)uVar10 - iVar5,uVar7,uVar2,uVar3,uVar8,uVar13,(ulong)uVar11,&local_64,
+                      (param_4 - iVar5,uVar7,uVar2,uVar3,uVar6,uVar9,param_5,&local_64,
                        in_stack_ffffff38,in_stack_ffffff3c);
     param_8->y = local_60;
     param_8->z = local_5c;
   }
   param_8->x = local_64;
-  uVar8 = __restgprlr_23(uVar7);
-  return uVar8;
+  return uVar7;
 }
 
 

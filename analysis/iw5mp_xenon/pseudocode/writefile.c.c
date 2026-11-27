@@ -2,67 +2,51 @@
 
 // 828A33C0  WriteFile  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/xrtl/writefile.c:83)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 int WriteFile(void *param_1,void *param_2,ulong param_3,ulong *param_4,_OVERLAPPED *param_5)
 
 {
-  undefined4 *puVar1;
-  undefined8 uVar2;
-  uint uVar3;
-  uint uVar4;
-  int iVar5;
-  longlong lVar6;
-  longlong lVar7;
-  ulonglong uVar8;
-  undefined4 *puVar9;
-  ulonglong uVar10;
+  uint uVar1;
+  uint uVar2;
   uint local_40;
-  undefined4 local_3c;
-  undefined4 local_38;
-  undefined4 local_34;
+  ulong local_3c;
+  ulong local_38;
+  ulong local_34;
   
-  uVar10 = (ulonglong)(int)param_5;
-  uVar8 = (ulonglong)(int)param_4;
-  lVar7 = (longlong)(int)param_3;
-  lVar6 = (longlong)(int)param_2;
-  uVar2 = __savegprlr_27(param_1,lVar6,lVar7);
-  puVar9 = (undefined4 *)uVar8;
-  if ((uVar8 & 0xffffffff) != 0) {
-    *puVar9 = 0;
+  if (param_4 != (ulong *)0x0) {
+    *param_4 = 0;
   }
-  if ((uVar10 & 0xffffffff) == 0) {
-    uVar4 = NtWriteFile(uVar2,0,0,0,&local_40,lVar6,lVar7,0);
-    if (((uVar4 != 0x103) ||
-        (uVar3 = NtWaitForSingleObjectEx(uVar2,1,0,0), uVar4 = local_40, -1 < (int)uVar3)) &&
-       (uVar3 = uVar4, -1 < (int)uVar4)) {
-LAB_828a3468:
-      *puVar9 = local_3c;
-      goto LAB_828a346c;
-    }
-    if ((uVar3 & 0xc0000000) == 0x80000000) {
-      *puVar9 = local_3c;
+  if (param_5 == (_OVERLAPPED *)0x0) {
+    uVar2 = NtWriteFile(param_1,0,0,0,&local_40,param_2,param_3,0);
+    if (((uVar2 == 0x103) &&
+        (uVar1 = NtWaitForSingleObjectEx(param_1,1,0,0), uVar2 = local_40, (int)uVar1 < 0)) ||
+       (uVar1 = uVar2, (int)uVar2 < 0)) {
+      if ((uVar1 & 0xc0000000) == 0x80000000) {
+        *param_4 = local_3c;
+      }
+      goto LAB_828a34e0;
     }
   }
   else {
-    puVar1 = (undefined4 *)uVar10;
-    local_34 = puVar1[2];
-    local_38 = puVar1[3];
-    *puVar1 = 0x103;
-    uVar3 = NtWriteFile(uVar2,puVar1[4],0,-(ulonglong)((puVar1[4] & 1) == 0) & uVar10,uVar10,lVar6,
-                        lVar7,&local_38);
-    if (((uVar3 & 0xc0000000) != 0xc0000000) && (uVar3 != 0x103)) {
-      if ((uVar8 & 0xffffffff) != 0) {
-        local_3c = puVar1[1];
-        goto LAB_828a3468;
-      }
-LAB_828a346c:
-      uVar2 = 1;
-      goto LAB_828a34ec;
+    local_34 = param_5->Offset;
+    local_38 = param_5->OffsetHigh;
+    param_5->Internal = 0x103;
+    uVar1 = NtWriteFile(param_1,param_5->hEvent,0,
+                        -(ulonglong)(((uint)param_5->hEvent & 1) == 0) & (longlong)(int)param_5,
+                        (longlong)(int)param_5,param_2,param_3,&local_38);
+    if (((uVar1 & 0xc0000000) == 0xc0000000) || (uVar1 == 0x103)) {
+LAB_828a34e0:
+      RtlSetLastNTError(uVar1);
+      return 0;
     }
+    if (param_4 == (ulong *)0x0) {
+      return 1;
+    }
+    local_3c = param_5->InternalHigh;
   }
-  RtlSetLastNTError(uVar3);
-  uVar2 = 0;
-LAB_828a34ec:
-  iVar5 = __restgprlr_27(uVar2);
-  return iVar5;
+  *param_4 = local_3c;
+  return 1;
 }
 

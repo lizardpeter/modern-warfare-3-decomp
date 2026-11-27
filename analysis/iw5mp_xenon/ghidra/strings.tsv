@@ -9061,6 +9061,7 @@ va	type	value
 820590AC	TerminatedCString	DB_Auth: Subheader hash validation failed. 
 820590D8	TerminatedCString	DB_Auth: Filename not zero-padded 
 82059100	TerminatedCString	DB_Auth: Missing magic (not an authenticated fastfile, or out of date?) 
+8205914D	string	Wffs100
 82059158	TerminatedCString	g_authLoad.authedChunkInGroupCount == 0
 82059180	TerminatedCString	DB_Auth: Master block hash validation failed. 
 820591B0	TerminatedCString	g_authLoad.authedGroupCount > 0
@@ -15770,7 +15771,7 @@ va	type	value
 8209BDEC	TerminatedCString	getdebugeye
 8209BDF8	TerminatedCString	getshootatpos
 8209BE08	TerminatedCString	getcentroid
-8209BE14	string	getorigin
+8209BE14	TerminatedCString	getorigin
 8209BE20	TerminatedCString	stalingradspawn
 8209BE30	TerminatedCString	dospawn
 8209BE38	TerminatedCString	dontinterpolate
@@ -15804,7 +15805,7 @@ va	type	value
 8209C040	TerminatedCString	settargetent
 8209C050	TerminatedCString	setshader
 8209C05C	string	clearalltextafterhudelem
-8209C078	string	settext
+8209C078	TerminatedCString	settext
 8209C080	TerminatedCString	vehicleusealtblendedaudio
 8209C09C	TerminatedCString	vehphys_clearautodisable
 8209C0B8	TerminatedCString	vehphys_starttrack
@@ -16021,7 +16022,7 @@ va	type	value
 8209CFE4	TerminatedCString	playersetstreamorigin
 8209CFFC	TerminatedCString	playerlinkedturretanglesdisable
 8209D01C	TerminatedCString	playerlinkedturretanglesenable
-8209D03C	string	freehelicopter
+8209D03C	TerminatedCString	freehelicopter
 8209D04C	TerminatedCString	vehphys_setconveyorbelt
 8209D064	TerminatedCString	vehphys_setspeed
 8209D078	TerminatedCString	vehphys_enablecrashing
@@ -16082,7 +16083,7 @@ va	type	value
 8209D474	TerminatedCString	startpath
 8209D480	TerminatedCString	getattachpos
 8209D490	string	attachpath
-8209D49C	string	vehicle_teleport
+8209D49C	TerminatedCString	vehicle_teleport
 8209D4B0	TerminatedCString	scriptmodelclearanim
 8209D4C8	TerminatedCString	scriptmodelplayanim
 8209D4DC	TerminatedCString	clonebrushmodeltoscriptmodel
@@ -16107,7 +16108,7 @@ va	type	value
 8209D5F8	TerminatedCString	movez
 8209D600	TerminatedCString	movey
 8209D608	string	movex
-8209D610	string	moveto
+8209D610	TerminatedCString	moveto
 8209D618	TerminatedCString	unsetperk
 8209D624	TerminatedCString	clearperks
 8209D630	TerminatedCString	hasperk
@@ -16221,7 +16222,7 @@ va	type	value
 8209DE60	TerminatedCString	getcurrentweaponclipammo
 8209DE7C	TerminatedCString	secondaryoffhandbuttonpressed
 8209DE9C	string	fragbuttonpressed
-8209DEB0	string	getviewmodel
+8209DEB0	TerminatedCString	getviewmodel
 8209DEC0	TerminatedCString	issplitscreenplayerprimary
 8209DEDC	TerminatedCString	issplitscreenplayer
 8209DEF0	TerminatedCString	enableweaponpickup
@@ -16256,7 +16257,7 @@ va	type	value
 8209E0CC	TerminatedCString	sayteam
 8209E0D4	TerminatedCString	sayall
 8209E0DC	string	buttonpressed
-8209E0EC	string	pingplayer
+8209E0EC	TerminatedCString	pingplayer
 8209E0F8	TerminatedCString	trackerupdate
 8209E108	TerminatedCString	setplayerdata
 8209E118	TerminatedCString	getplayerdata
@@ -16418,7 +16419,7 @@ va	type	value
 8209ECD0	TerminatedCString	detachshieldmodel
 8209ECE4	TerminatedCString	detach
 8209ECEC	string	attachshieldmodel
-8209ED00	string	attach
+8209ED00	TerminatedCString	attach
 8209ED08	TerminatedCString	setlasermaterial
 8209ED1C	TerminatedCString	gettimesincelastpaused
 8209ED34	TerminatedCString	notifyoncommand
@@ -16666,7 +16667,7 @@ va	type	value
 8209FF00	TerminatedCString	getent
 8209FF08	TerminatedCString	logstring
 8209FF14	string	iprintlnbold
-8209FF24	string	iprintln
+8209FF24	TerminatedCString	iprintln
 8209FF30	TerminatedCString	objective_playerenemyteam
 8209FF4C	TerminatedCString	objective_playerteam
 8209FF64	TerminatedCString	objective_player
@@ -16677,7 +16678,7 @@ va	type	value
 8209FFC4	TerminatedCString	objective_icon
 8209FFD4	TerminatedCString	objective_state
 8209FFE4	string	objective_delete
-8209FFF8	string	objective_add
+8209FFF8	TerminatedCString	objective_add
 820A0008	TerminatedCString	getentchannelname
 820A001C	TerminatedCString	getentchannelscount
 820A0030	TerminatedCString	deleteglass
@@ -16848,7 +16849,7 @@ va	type	value
 820A0A14	TerminatedCString	print3d
 820A0A1C	TerminatedCString	println
 820A0A24	string	setprintchannel
-820A0A34	string	createprintchannel
+820A0A34	TerminatedCString	createprintchannel
 820A0A48	TerminatedCString	flash_killed
 820A0A58	TerminatedCString	transition_siren
 820A0A6C	TerminatedCString	gaz_turret_disable
@@ -51092,7 +51093,7 @@ va	type	value
 8215AFE4	TerminatedCString	dumpuser
 8215AFF0	TerminatedCString	serverinfo
 8215AFFC	TerminatedCString	mdone
-8215B004	string	userinfo
+8215B004	TerminatedCString	userinfo
 8215B010	TerminatedCString	client2 doesn't index MAX_CLIENTS  %i not in [0, %i)
 8215B048	TerminatedCString	client1 doesn't index MAX_CLIENTS  %i not in [0, %i)
 8215B080	TerminatedCString	c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_client_mp.cpp

@@ -2,75 +2,61 @@
 
 // 825E61F8  Com_RleCompress  (universal/com_rle_compress.cpp:7)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
+
 RleCompressResult
 Com_RleCompress(uchar *param_1,uint param_2,uchar *param_3,uint param_4,uint *param_5)
 
 {
-  uchar uVar1;
-  int iVar2;
-  RleCompressResult RVar3;
-  ulonglong uVar4;
-  ulonglong uVar5;
-  ulonglong uVar6;
-  ulonglong uVar7;
-  ulonglong uVar9;
-  ulonglong uVar10;
-  uint uVar11;
-  ulonglong uVar12;
-  uint uVar8;
+  uint uVar1;
+  uint uVar2;
+  uint uVar3;
+  uint uVar4;
+  uint uVar5;
+  uint uVar6;
   
-  uVar5 = (ulonglong)(int)param_4;
-  uVar4 = (ulonglong)(int)param_2;
-  iVar2 = __savegprlr_25(param_1);
-  uVar11 = 8;
-  uVar10 = 0;
+  uVar5 = 8;
+  uVar4 = 0;
+  uVar1 = 0;
   uVar6 = 0;
-  uVar8 = 0;
-  uVar12 = 0;
-  if ((uVar4 & 0xffffffff) != 0) {
+  if (param_2 != 0) {
     do {
-      uVar8 = (uint)uVar6;
-      uVar7 = uVar6;
-      if (uVar11 == 8) {
-        uVar11 = 0;
-        if ((uVar6 & 0xffffffff) == (uVar5 & 0xffffffff)) goto LAB_825e62d4;
-        uVar7 = uVar6 + 1;
-        param_3[uVar8] = '\0';
-        uVar10 = uVar6;
+      uVar2 = uVar1;
+      if (uVar5 == 8) {
+        uVar5 = 0;
+        if (uVar1 == param_4) goto LAB_825e62d4;
+        uVar2 = uVar1 + 1;
+        param_3[uVar1] = '\0';
+        uVar4 = uVar1;
       }
-      uVar8 = (uint)uVar7;
-      uVar1 = *(uchar *)((int)uVar12 + iVar2);
-      uVar9 = 1;
+      uVar3 = 1;
       do {
-        if (((uVar9 + uVar12 & 0xffffffff) == (uVar4 & 0xffffffff)) ||
-           (*(uchar *)((int)uVar12 + iVar2 + (int)uVar9) != uVar1)) break;
-        uVar9 = uVar9 + 1;
-      } while ((uVar9 & 0xffffffff) != 0x100);
-      if ((uVar7 & 0xffffffff) == (uVar5 & 0xffffffff)) {
+        if ((uVar3 + uVar6 == param_2) || (param_1[uVar3 + uVar6] != param_1[uVar6])) break;
+        uVar3 = uVar3 + 1;
+      } while (uVar3 != 0x100);
+      uVar1 = uVar2;
+      if (uVar2 == param_4) {
 LAB_825e62d4:
-        *param_5 = uVar8;
-        RVar3 = __restgprlr_25(1);
-        return RVar3;
+        *param_5 = uVar1;
+        return RLE_COMPRESS_OUT_OF_OUTPUT_BUFFER;
       }
-      param_3[uVar8] = uVar1;
-      uVar6 = uVar7 + 1;
-      uVar8 = (uint)uVar6;
-      if ((uVar9 & 0xffffffff) < 2) {
-        param_3[(int)uVar10] = (byte)(1 << (uVar11 & 0x3f)) | param_3[(int)uVar10];
+      param_3[uVar2] = param_1[uVar6];
+      uVar1 = uVar2 + 1;
+      if (uVar3 < 2) {
+        param_3[uVar4] = (byte)(1 << (uVar5 & 0x3f)) | param_3[uVar4];
       }
       else {
-        if ((uVar6 & 0xffffffff) == (uVar5 & 0xffffffff)) goto LAB_825e62d4;
-        param_3[uVar8] = (char)uVar9 + 0xff;
-        uVar6 = uVar7 + 2;
+        if (uVar1 == param_4) goto LAB_825e62d4;
+        param_3[uVar1] = (char)uVar3 + 0xff;
+        uVar1 = uVar2 + 2;
       }
-      uVar8 = (uint)uVar6;
-      uVar12 = uVar9 + uVar12;
-      uVar11 = uVar11 + 1;
-    } while ((uVar12 & 0xffffffff) != (uVar4 & 0xffffffff));
+      uVar6 = uVar3 + uVar6;
+      uVar5 = uVar5 + 1;
+    } while (uVar6 != param_2);
   }
-  *param_5 = uVar8;
-  RVar3 = __restgprlr_25(0);
-  return RVar3;
+  *param_5 = uVar1;
+  return RLE_COMPRESS_OK;
 }
 
 

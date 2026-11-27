@@ -36,32 +36,35 @@ void Glass_GetFallPosAtTime
 
 // 8242FD08  Glass_Fall_GetLastPassedTraceTime  (EffectsCore/fx_glass_update.cpp:53)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 int Glass_Fall_GetLastPassedTraceTime(int param_1,int param_2)
 
 {
   uint uVar1;
-  longlong lVar2;
-  int iVar3;
-  longlong lVar4;
-  ulonglong uVar5;
+  ulonglong uVar2;
   
-  lVar4 = (longlong)param_2;
-  lVar2 = __savegprlr_29(param_1);
-  uVar5 = ((ulonglong)(glass_trace_interval->current).unsignedInt - lVar4) + lVar2;
-  if ((longlong)uVar5 < 0) {
+  uVar2 = ((ulonglong)(glass_trace_interval->current).unsignedInt - (longlong)param_2) +
+          (longlong)param_1;
+  if ((longlong)uVar2 < 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_glass_update.cpp"
                     ,0x3a,0,"baseTime >= 0\n\t%i, %i");
   }
   uVar1 = (glass_trace_interval->current).integer;
   trapWord(6,(ulonglong)uVar1,0);
-  trapWord(5,(ulonglong)uVar1 & ~(((uVar5 & 0x7fffffff) << 1 | (uVar5 & 0xffffffff) >> 0x1f) - 1),
+  trapWord(5,(ulonglong)uVar1 & ~(((uVar2 & 0x7fffffff) << 1 | (uVar2 & 0xffffffff) >> 0x1f) - 1),
            0xffff);
-  iVar3 = __restgprlr_29((longlong)((int)uVar5 / (int)uVar1 + -1) * (longlong)(int)uVar1 + lVar4);
-  return iVar3;
+  return ((int)uVar2 / (int)uVar1 + -1) * uVar1 + param_2;
 }
 
 
 // 8242FD88  Glass_UpdateFall  (EffectsCore/fx_glass_update.cpp:65)
+
+/* WARNING: Function: __savegprlr_20 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_20 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_20 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_20 replaced with injection: xenon_save_restore */
 
 void Glass_UpdateFall(FxGlassSystem *param_1,uint param_2)
 
@@ -72,16 +75,16 @@ void Glass_UpdateFall(FxGlassSystem *param_1,uint param_2)
   float fVar4;
   FxGlassPieceState *pFVar5;
   int iVar6;
-  FxGlassPiecePlace *pFVar7;
-  uint uVar8;
-  FxGlassSystem *pFVar9;
-  int iVar10;
-  int iVar11;
-  ulonglong uVar12;
-  int iVar13;
-  uint uVar14;
-  uint uVar15;
-  FxGlassPieceDynamics *pFVar16;
+  int iVar7;
+  int iVar8;
+  int iVar9;
+  uint uVar10;
+  uint uVar11;
+  FxGlassPiecePlace *pFVar12;
+  FxGlassPieceDynamics *pFVar13;
+  double dVar14;
+  double dVar15;
+  double dVar16;
   double dVar17;
   double dVar18;
   double dVar19;
@@ -93,9 +96,6 @@ void Glass_UpdateFall(FxGlassSystem *param_1,uint param_2)
   double dVar25;
   double dVar26;
   double dVar27;
-  double dVar28;
-  double dVar29;
-  double dVar30;
   undefined8 local_160;
   float local_158;
   float local_154;
@@ -116,140 +116,133 @@ void Glass_UpdateFall(FxGlassSystem *param_1,uint param_2)
   float local_108;
   trace_t local_100 [4];
   
-  uVar12 = (ulonglong)(int)param_2;
-  __savegprlr_20(param_1);
-  pFVar9 = (FxGlassSystem *)__savefpr_20();
-  pFVar5 = pFVar9->pieceStates;
-  uVar8 = (uint)uVar12;
-  pFVar7 = pFVar9->piecePlaces + uVar8;
-  pFVar16 = pFVar9->pieceDynamics + uVar8;
-  if (pFVar5[uVar8].supportMask != 0) {
+  pFVar5 = param_1->pieceStates;
+  pFVar12 = param_1->piecePlaces + param_2;
+  pFVar13 = param_1->pieceDynamics + param_2;
+  if (pFVar5[param_2].supportMask != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_glass_update.cpp"
                     ,0x57,0,
                     "pieceState->supportMask == IndexMask_Empty( pieceState->vertCount )\n\t%i, %i")
     ;
   }
-  iVar10 = pFVar9->time;
-  iVar11 = pFVar9->prevTime;
-  iVar6 = pFVar16->fallTime;
-  uVar15 = iVar11 + iVar10;
-  dVar29 = (double)pFVar16->vel[2];
-  dVar28 = (double)pFVar16->vel[0];
-  dVar30 = 0.0010000000474974513;
-  dVar27 = (double)pFVar16->vel[1];
-  dVar26 = (double)(pFVar7->_s_0).frame.origin[0];
-  local_160 = (longlong)(iVar10 - iVar11);
+  iVar7 = param_1->time;
+  iVar8 = param_1->prevTime;
+  iVar6 = pFVar13->fallTime;
+  uVar11 = iVar8 + iVar7;
+  dVar26 = (double)pFVar13->vel[2];
+  dVar25 = (double)pFVar13->vel[0];
+  dVar27 = 0.0010000000474974513;
+  dVar24 = (double)pFVar13->vel[1];
+  dVar23 = (double)(pFVar12->_s_0).frame.origin[0];
+  local_160 = (longlong)(iVar7 - iVar8);
   local_150 = (longlong)
-              (int)((((int)uVar15 >> 1) + (uint)((int)uVar15 < 0 && (uVar15 & 1) != 0)) - iVar6);
-  dVar25 = (double)(pFVar7->_s_0).frame.origin[1];
-  uVar15 = (glass_trace_interval->current).unsignedInt;
-  uVar12 = (uVar12 & 0xfffffff) * 0x10 + uVar12;
-  dVar24 = (double)(pFVar7->_s_0).frame.origin[2];
-  trapWord(6,(ulonglong)uVar15,0);
-  iVar13 = (int)uVar12 - (int)((uVar12 & 0xffffffff) / (ulonglong)uVar15) * uVar15;
-  dVar17 = (double)(float)((double)(longlong)(iVar10 - iVar11) * 0.0010000000474974513);
-  dVar22 = (double)(float)((double)local_160 * 0.0010000000474974513);
-  dVar21 = (double)(float)(dVar28 * dVar17 + dVar26);
-  dVar20 = (double)(float)(dVar27 * dVar17 + dVar25);
-  dVar17 = (double)(float)(-(double)(float)((double)(float)((double)local_150 *
+              (int)((((int)uVar11 >> 1) + (uint)((int)uVar11 < 0 && (uVar11 & 1) != 0)) - iVar6);
+  dVar22 = (double)(pFVar12->_s_0).frame.origin[1];
+  uVar11 = (glass_trace_interval->current).unsignedInt;
+  dVar21 = (double)(pFVar12->_s_0).frame.origin[2];
+  trapWord(6,(ulonglong)uVar11,0);
+  iVar9 = param_2 * 0x11 - ((param_2 * 0x11) / uVar11) * uVar11;
+  dVar14 = (double)(float)((double)(longlong)(iVar7 - iVar8) * 0.0010000000474974513);
+  dVar19 = (double)(float)((double)local_160 * 0.0010000000474974513);
+  dVar18 = (double)(float)(dVar25 * dVar14 + dVar23);
+  dVar17 = (double)(float)(dVar24 * dVar14 + dVar22);
+  dVar14 = (double)(float)(-(double)(float)((double)(float)((double)local_150 *
                                                            0.0010000000474974513) *
-                                            (double)(glass_fall_gravity->current).value - dVar29) *
-                           dVar17 + dVar24);
-  if (iVar10 < iVar6) {
+                                            (double)(glass_fall_gravity->current).value - dVar26) *
+                           dVar14 + dVar21);
+  if (iVar7 < iVar6) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_glass_update.cpp"
                     ,0x61,0,"glassSys->time >= pieceDynamics->fallTime\n\t%i, %i");
   }
-  iVar10 = pFVar9->prevTime;
-  if (pFVar9->prevTime < iVar6) {
-    iVar10 = iVar6;
+  iVar7 = param_1->prevTime;
+  if (param_1->prevTime < iVar6) {
+    iVar7 = iVar6;
   }
-  iVar10 = Glass_Fall_GetLastPassedTraceTime(iVar10,iVar13);
-  iVar11 = Glass_Fall_GetLastPassedTraceTime(pFVar9->time,iVar13);
-  dVar23 = 1.0;
-  if (iVar11 <= iVar10) {
+  iVar7 = Glass_Fall_GetLastPassedTraceTime(iVar7,iVar9);
+  iVar8 = Glass_Fall_GetLastPassedTraceTime(param_1->time,iVar9);
+  dVar20 = 1.0;
+  if (iVar8 <= iVar7) {
 LAB_824301c8:
-    fVar2 = pFVar16->avel[1];
-    fVar3 = pFVar16->avel[0];
-    fVar4 = pFVar16->avel[2];
-    (pFVar7->_s_0).frame.origin[0] = (float)dVar21;
-    (pFVar7->_s_0).frame.origin[1] = (float)dVar20;
-    (pFVar7->_s_0).frame.origin[2] = (float)dVar17;
-    dVar20 = (double)SQRT(fVar4 * fVar4 + fVar3 * fVar3 + fVar2 * fVar2);
-    dVar17 = dVar23;
-    if (-dVar20 < 0.0) {
-      dVar17 = dVar20;
+    fVar2 = pFVar13->avel[1];
+    fVar3 = pFVar13->avel[0];
+    fVar4 = pFVar13->avel[2];
+    (pFVar12->_s_0).frame.origin[0] = (float)dVar18;
+    (pFVar12->_s_0).frame.origin[1] = (float)dVar17;
+    (pFVar12->_s_0).frame.origin[2] = (float)dVar14;
+    dVar17 = (double)SQRT(fVar4 * fVar4 + fVar3 * fVar3 + fVar2 * fVar2);
+    dVar14 = dVar20;
+    if (-dVar17 < 0.0) {
+      dVar14 = dVar17;
     }
-    dVar25 = (double)((float)(dVar20 * dVar22) * 0.5);
-    fVar1 = (float)(dVar23 / dVar17);
-    dVar24 = (double)(fVar3 * fVar1);
-    dVar22 = (double)(fVar2 * fVar1);
-    dVar21 = (double)(fVar4 * fVar1);
-    dVar17 = sin(dVar25);
-    dVar20 = (double)(float)dVar17;
-    dVar17 = cos(dVar25);
-    local_144 = (float)dVar17;
-    local_150 = CONCAT44((float)(dVar24 * dVar20),(float)(dVar22 * dVar20));
-    local_148 = (float)(dVar21 * dVar20);
-    QuatMultiply((float *)&pFVar7->nextFree,(float *)&local_150,(float *)&local_160);
-    pFVar7->nextFree = (uint)local_160._0_4_;
-    (pFVar7->_s_0).frame.quat[1] = local_160._4_4_;
-    (pFVar7->_s_0).frame.quat[2] = local_158;
-    (pFVar7->_s_0).frame.quat[3] = local_154;
-    Glass_LinkPiece_Dynamic(pFVar9,uVar8);
-    __restfpr_20();
-    __restgprlr_20();
+    dVar22 = (double)((float)(dVar17 * dVar19) * 0.5);
+    fVar1 = (float)(dVar20 / dVar14);
+    dVar21 = (double)(fVar3 * fVar1);
+    dVar19 = (double)(fVar2 * fVar1);
+    dVar18 = (double)(fVar4 * fVar1);
+    dVar14 = sin(dVar22);
+    dVar17 = (double)(float)dVar14;
+    dVar14 = cos(dVar22);
+    local_144 = (float)dVar14;
+    local_150 = CONCAT44((float)(dVar21 * dVar17),(float)(dVar19 * dVar17));
+    local_148 = (float)(dVar18 * dVar17);
+    QuatMultiply((float *)&pFVar12->nextFree,(float *)&local_150,(float *)&local_160);
+    pFVar12->nextFree = (uint)local_160._0_4_;
+    (pFVar12->_s_0).frame.quat[1] = local_160._4_4_;
+    (pFVar12->_s_0).frame.quat[2] = local_158;
+    (pFVar12->_s_0).frame.quat[3] = local_154;
+    Glass_LinkPiece_Dynamic(param_1,param_2);
     return;
   }
-  iVar13 = iVar6;
-  if (iVar6 < iVar10) {
-    uVar15 = (glass_trace_interval->current).integer;
-    iVar13 = ((int)uVar15 >> 1) + (uint)((int)uVar15 < 0 && (uVar15 & 1) != 0) + iVar10;
+  iVar9 = iVar6;
+  if (iVar6 < iVar7) {
+    uVar11 = (glass_trace_interval->current).integer;
+    iVar9 = ((int)uVar11 >> 1) + (uint)((int)uVar11 < 0 && (uVar11 & 1) != 0) + iVar7;
   }
-  if (iVar11 < iVar6) {
+  if (iVar8 < iVar6) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_glass_update.cpp"
                     ,0x75,0,"nextTraceTime >= pieceDynamics->fallTime\n\t%i, %i");
   }
-  uVar15 = (glass_trace_interval->current).integer;
-  iVar10 = pFVar9->prevTime;
-  uVar14 = iVar10 + iVar13;
-  iVar11 = ((int)uVar15 >> 1) + (uint)((int)uVar15 < 0 && (uVar15 & 1) != 0) + iVar11;
-  uVar15 = iVar10 + iVar11;
+  uVar11 = (glass_trace_interval->current).integer;
+  iVar7 = param_1->prevTime;
+  uVar10 = iVar7 + iVar9;
+  iVar8 = ((int)uVar11 >> 1) + (uint)((int)uVar11 < 0 && (uVar11 & 1) != 0) + iVar8;
+  uVar11 = iVar7 + iVar8;
   local_150 = (longlong)
-              (int)((((int)uVar14 >> 1) + (uint)((int)uVar14 < 0 && (uVar14 & 1) != 0)) - iVar6);
-  dVar19 = (double)(float)((double)(longlong)(iVar13 - iVar10) * dVar30);
-  local_140 = (float)(dVar28 * dVar19 + dVar26);
-  local_13c = (float)(dVar27 * dVar19 + dVar25);
-  dVar18 = (double)(float)((double)(longlong)(iVar11 - iVar10) * dVar30);
-  local_138 = (float)(-(double)(float)((double)(float)((double)local_150 * dVar30) *
-                                       (double)(glass_fall_gravity->current).value - dVar29) *
-                      dVar19 + dVar24);
-  local_130 = (float)(dVar28 * dVar18 + dVar26);
-  local_12c = (float)(dVar27 * dVar18 + dVar25);
+              (int)((((int)uVar10 >> 1) + (uint)((int)uVar10 < 0 && (uVar10 & 1) != 0)) - iVar6);
+  dVar16 = (double)(float)((double)(longlong)(iVar9 - iVar7) * dVar27);
+  local_140 = (float)(dVar25 * dVar16 + dVar23);
+  local_13c = (float)(dVar24 * dVar16 + dVar22);
+  dVar15 = (double)(float)((double)(longlong)(iVar8 - iVar7) * dVar27);
+  local_138 = (float)(-(double)(float)((double)(float)((double)local_150 * dVar27) *
+                                       (double)(glass_fall_gravity->current).value - dVar26) *
+                      dVar16 + dVar21);
+  local_130 = (float)(dVar25 * dVar15 + dVar23);
+  local_12c = (float)(dVar24 * dVar15 + dVar22);
   local_128 = (float)(-(double)(float)((double)(float)((double)(longlong)
-                                                               (int)((((int)uVar15 >> 1) +
-                                                                     (uint)((int)uVar15 < 0 &&
-                                                                           (uVar15 & 1) != 0)) -
-                                                                    iVar6) * dVar30) *
-                                       (double)(glass_fall_gravity->current).value - dVar29) *
-                      dVar18 + dVar24);
+                                                               (int)((((int)uVar11 >> 1) +
+                                                                     (uint)((int)uVar11 < 0 &&
+                                                                           (uVar11 & 1) != 0)) -
+                                                                    iVar6) * dVar27) *
+                                       (double)(glass_fall_gravity->current).value - dVar26) *
+                      dVar15 + dVar21);
   CG_WorldTrace(local_100,&local_140,&local_130,&bounds_origin,0x2806091);
-  if (dVar23 <= (double)local_100[0].fraction) goto LAB_824301c8;
+  if (dVar20 <= (double)local_100[0].fraction) goto LAB_824301c8;
   if (local_100[0].allsolid == false) {
 LAB_824300ac:
-    if (pFVar9->time - iVar6 < 0xc9) goto LAB_824300bc;
+    if (param_1->time - iVar6 < 0xc9) goto LAB_824300bc;
   }
   else {
-    if (pFVar9->time - iVar6 < 0xc9) goto LAB_824301c8;
+    if (param_1->time - iVar6 < 0xc9) goto LAB_824301c8;
     if (local_100[0].allsolid == false) goto LAB_824300ac;
 LAB_824300bc:
-    if ((pFVar5[uVar8].flags & 0x10) == 0) goto LAB_824301ac;
+    if ((pFVar5[param_2].flags & 0x10) == 0) goto LAB_824301ac;
   }
-  fVar2 = (glass_fx_chance->current).value + pFVar9->effectChanceAccum;
-  dVar17 = (double)fVar2;
-  pFVar9->effectChanceAccum = fVar2;
-  if ((dVar23 <= dVar17) || ((pFVar5[uVar8].flags & 0x10) != 0)) {
-    dVar17 = floor(dVar17);
-    pFVar9->effectChanceAccum = pFVar9->effectChanceAccum - (float)dVar17;
+  fVar2 = (glass_fx_chance->current).value + param_1->effectChanceAccum;
+  dVar14 = (double)fVar2;
+  param_1->effectChanceAccum = fVar2;
+  if ((dVar20 <= dVar14) || ((pFVar5[param_2].flags & 0x10) != 0)) {
+    dVar14 = floor(dVar14);
+    param_1->effectChanceAccum = param_1->effectChanceAccum - (float)dVar14;
     local_110 = (local_130 - local_140) * local_100[0].fraction + local_140;
     local_10c = (local_12c - local_13c) * local_100[0].fraction + local_13c;
     local_108 = (local_128 - local_138) * local_100[0].fraction + local_138;
@@ -258,7 +251,7 @@ LAB_824300bc:
         local_100[0].normal[2] * local_100[0].normal[2] <= 0.0) {
       local_120 = 0.0;
       local_11c = 0.0;
-      local_118 = (float)dVar23;
+      local_118 = (float)dVar20;
     }
     else {
       local_120 = local_100[0].normal[0];
@@ -268,15 +261,15 @@ LAB_824300bc:
     Glass_PlayEffect(cgMedia.glassPieceBreak,&local_110,&local_120);
   }
 LAB_824301ac:
-  Glass_FreePiece(pFVar9,uVar8);
-  __restfpr_20();
-  __restgprlr_20();
+  Glass_FreePiece(param_1,param_2);
   return;
 }
 
 
 // 82430298  Glass_UpdatePhysics  (EffectsCore/fx_glass_update.cpp:169)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PhysWorld": Some values do not have unique names */
 
 void Glass_UpdatePhysics(FxGlassSystem *param_1,uint param_2)
@@ -286,40 +279,36 @@ void Glass_UpdatePhysics(FxGlassSystem *param_1,uint param_2)
   FxGlassPieceState *pFVar2;
   FxGlassPiecePlace *pFVar3;
   int iVar4;
-  FxGlassPieceDynamics *pFVar5;
-  FxGlassSystem *pFVar6;
-  bool bVar7;
+  bool bVar5;
+  FxGlassPieceDynamics *pFVar6;
   
-  pFVar6 = (FxGlassSystem *)__savegprlr_26(param_1);
-  pFVar2 = pFVar6->pieceStates;
-  pFVar3 = pFVar6->piecePlaces;
-  pFVar5 = pFVar6->pieceDynamics + param_2;
+  pFVar2 = param_1->pieceStates;
+  pFVar3 = param_1->piecePlaces;
+  pFVar6 = param_1->pieceDynamics + param_2;
   uVar1 = pFVar2[param_2].flags;
-  iVar4 = pFVar5->physObjId;
+  iVar4 = pFVar6->physObjId;
   pFVar2[param_2].flags = uVar1 | 8;
   Phys_ObjGetInterpolatedState
             (PHYS_WORLD_FX,iVar4,pFVar3[param_2]._s_0.frame.origin,
              (float *)&pFVar3[param_2].nextFree);
-  bVar7 = Phys_ObjIsAsleep(iVar4);
-  if (bVar7) {
+  bVar5 = Phys_ObjIsAsleep(iVar4);
+  if (bVar5) {
     pFVar2[param_2].flags = uVar1 | 0x28;
-    Glass_FreePiecePhysicsObject(pFVar5);
-    if (pFVar5->fallTime == 0x7fffffff) {
-      Glass_LinkPiece_Static(pFVar6,param_2);
-      __restgprlr_26();
+    Glass_FreePiecePhysicsObject(pFVar6);
+    if (pFVar6->fallTime == 0x7fffffff) {
+      Glass_LinkPiece_Static(param_1,param_2);
       return;
     }
   }
   else {
-    if (pFVar5->physJointId == 0) goto LAB_82430388;
-    if ((((pFVar6->time >> 0x1f) - (pFVar5->fallTime >> 0x1f)) +
-         (uint)((uint)pFVar5->fallTime <= (uint)pFVar6->time) & 0xff) == 0) goto LAB_82430388;
-    Glass_FreePiecePhysicsJoint(pFVar5);
+    if (pFVar6->physJointId == 0) goto LAB_82430388;
+    if ((((param_1->time >> 0x1f) - (pFVar6->fallTime >> 0x1f)) +
+         (uint)((uint)pFVar6->fallTime <= (uint)param_1->time) & 0xff) == 0) goto LAB_82430388;
+    Glass_FreePiecePhysicsJoint(pFVar6);
   }
-  Glass_StartDelayedFall(pFVar6,param_2);
+  Glass_StartDelayedFall(param_1,param_2);
 LAB_82430388:
-  Glass_LinkPiece_Dynamic(pFVar6,param_2);
-  __restgprlr_26();
+  Glass_LinkPiece_Dynamic(param_1,param_2);
   return;
 }
 

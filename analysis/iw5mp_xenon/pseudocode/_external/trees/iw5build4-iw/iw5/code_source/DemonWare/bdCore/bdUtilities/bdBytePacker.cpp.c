@@ -2,173 +2,158 @@
 
 // 828F72B8  appendBuffer  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdutilities/bdbytepacker.cpp:20)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
+
 bool bdBytePacker::appendBuffer
                (void *param_1,uint param_2,uint param_3,uint *param_4,void *param_5,uint param_6)
 
 {
   uint uVar1;
-  int iVar2;
-  undefined1 uVar3;
-  ulonglong uVar4;
-  ulonglong uVar5;
-  ulonglong uVar6;
-  longlong lVar7;
+  bool bVar2;
+  ulonglong uVar3;
   
-  uVar6 = (ulonglong)(int)param_5;
-  uVar5 = (ulonglong)(int)param_3;
-  uVar4 = (ulonglong)(int)param_2;
-  iVar2 = __savegprlr_23(param_1);
-  *param_4 = (int)uVar5 + param_6;
-  lVar7 = 1;
-  if ((iVar2 != 0) && ((uVar6 & 0xffffffff) != 0)) {
-    if (uVar4 < uVar5) {
+  uVar3 = (ulonglong)(int)param_2;
+  *param_4 = param_3 + param_6;
+  bVar2 = true;
+  if ((param_1 != (void *)0x0) && (param_5 != (void *)0x0)) {
+    if (uVar3 < (ulonglong)(longlong)(int)param_3) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdCore\\bdUtilities\\bdBytePacker.cpp"
                       ,0x1e,0,"%s\n\t%s");
     }
     uVar1 = *param_4;
-    if (uVar4 < uVar1) {
+    if (uVar3 < uVar1) {
       bdLogMessage(BD_LOG_WARNING,"warn/","byte packer",
                    "c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdCore\\bdUtilities\\bdBytePacker.cpp"
                    ,"bdBytePacker::appendBuffer",0x24,"Not enough room left to write %u bytes.");
     }
-    if ((uVar4 < uVar5) || (lVar7 = 1, uVar4 < uVar1)) {
-      lVar7 = 0;
+    if ((uVar3 < (ulonglong)(longlong)(int)param_3) || (bVar2 = true, uVar3 < uVar1)) {
+      bVar2 = false;
     }
-    if (lVar7 != 0) {
+    if (bVar2) {
       memmove();
     }
   }
-  uVar3 = __restgprlr_23(lVar7);
-  return (bool)uVar3;
+  return bVar2;
 }
 
 
 // 828F74C8  appendEncodedUInt16  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdutilities/bdbytepacker.cpp:55)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 bool bdBytePacker::appendEncodedUInt16
                (void *param_1,uint param_2,uint param_3,uint *param_4,ushort param_5)
 
 {
-  void *pvVar1;
-  bool bVar2;
-  bool bVar3;
-  undefined1 uVar4;
-  ulonglong uVar5;
+  bool bVar1;
   byte local_40;
   undefined1 local_3f;
   undefined1 local_3e [62];
   
-  uVar5 = (ulonglong)(short)param_5;
-  pvVar1 = (void *)__savegprlr_27(param_1);
-  if ((uVar5 & 0xffff) < 0x80) {
-    local_3e[0] = (char)uVar5;
-    bVar2 = appendBuffer(pvVar1,param_2,param_3,param_4,local_3e,1);
+  if (param_5 < 0x80) {
+    local_3e[0] = (char)param_5;
+    bVar1 = appendBuffer(param_1,param_2,param_3,param_4,local_3e,1);
   }
   else {
-    if (0x7fff < (uVar5 & 0xffff)) {
+    if (0x7fff < param_5) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdCore\\bdUtilities\\bdBytePacker.cpp"
                       ,0x3a,0,"%s\n\t%s");
     }
-    local_40 = (byte)(uVar5 >> 8) | 0x80;
-    bVar2 = appendBuffer(pvVar1,param_2,param_3,param_4,&local_40,1);
-    if (bVar2) {
-      local_3f = (char)uVar5;
-      bVar3 = appendBuffer(pvVar1,param_2,*param_4,param_4,&local_3f,1);
-      bVar2 = true;
-      if (bVar3) goto LAB_828f75c0;
+    local_40 = (byte)(param_5 >> 8) | 0x80;
+    bVar1 = appendBuffer(param_1,param_2,param_3,param_4,&local_40,1);
+    if ((bVar1) &&
+       (local_3f = (char)param_5, bVar1 = appendBuffer(param_1,param_2,*param_4,param_4,&local_3f,1)
+       , bVar1)) {
+      return true;
     }
-    bVar2 = false;
+    bVar1 = false;
   }
-LAB_828f75c0:
-  uVar4 = __restgprlr_27(bVar2);
-  return (bool)uVar4;
+  return bVar1;
 }
 
 
 // 828F73C0  removeBuffer  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdutilities/bdbytepacker.cpp:89)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
+
 bool bdBytePacker::removeBuffer
                (void *param_1,uint param_2,uint param_3,uint *param_4,void *param_5,uint param_6)
 
 {
-  int iVar1;
-  undefined1 uVar2;
-  ulonglong uVar3;
-  ulonglong uVar4;
-  ulonglong uVar5;
-  longlong lVar6;
+  bool bVar1;
+  ulonglong uVar2;
   
-  uVar5 = (ulonglong)(int)param_5;
-  uVar4 = (ulonglong)(int)param_3;
-  uVar3 = (ulonglong)(int)param_2;
-  iVar1 = __savegprlr_23(param_1);
-  *param_4 = (int)uVar4 + param_6;
-  lVar6 = 1;
-  if (((uVar5 & 0xffffffff) == 0) || (iVar1 == 0)) goto LAB_828f74bc;
-  if (uVar3 < uVar4) {
+  uVar2 = (ulonglong)(int)param_2;
+  *param_4 = param_3 + param_6;
+  if (param_5 == (void *)0x0) {
+    return true;
+  }
+  if (param_1 == (void *)0x0) {
+    return true;
+  }
+  if (uVar2 < (ulonglong)(longlong)(int)param_3) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdCore\\bdUtilities\\bdBytePacker.cpp"
                     ,100,0,"%s\n\t%s");
   }
-  if (uVar3 < *param_4) {
+  if (uVar2 < *param_4) {
     bdLogMessage(BD_LOG_WARNING,"warn/","byte packer",
                  "c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdCore\\bdUtilities\\bdBytePacker.cpp"
                  ,"bdBytePacker::removeBuffer",0x6a,"Not enough data left to read %u bytes.");
-LAB_828f74a0:
-    lVar6 = 0;
   }
   else {
-    lVar6 = 1;
-    if (uVar3 < uVar4) goto LAB_828f74a0;
+    bVar1 = true;
+    if (uVar2 >= (ulonglong)(longlong)(int)param_3) goto LAB_828f74a4;
   }
-  if (lVar6 != 0) {
+  bVar1 = false;
+LAB_828f74a4:
+  if (bVar1) {
     memmove();
   }
-LAB_828f74bc:
-  uVar2 = __restgprlr_23(lVar6);
-  return (bool)uVar2;
+  return bVar1;
 }
 
 
 // 828F75C8  removeEncodedUInt16  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdutilities/bdbytepacker.cpp:125)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 bool bdBytePacker::removeEncodedUInt16
                (uchar *param_1,uint param_2,uint param_3,uint *param_4,ushort *param_5)
 
 {
-  void *pvVar1;
+  bool bVar1;
   bool bVar2;
-  char cVar3;
-  undefined1 uVar4;
-  ushort uVar5;
-  ushort uVar6;
+  ushort uVar3;
+  ushort uVar4;
   byte local_40;
   byte local_3f [63];
   
-  pvVar1 = (void *)__savegprlr_26(param_1);
-  uVar5 = 0;
-  bVar2 = removeBuffer(pvVar1,param_2,param_3,param_4,&local_40,1);
-  if (bVar2) {
-    uVar5 = (ushort)local_40;
+  uVar3 = 0;
+  bVar1 = removeBuffer(param_1,param_2,param_3,param_4,&local_40,1);
+  if (bVar1) {
+    uVar3 = (ushort)local_40;
   }
-  cVar3 = '\x01' - !bVar2;
-  if (uVar5 < 0x80) goto LAB_828f7678;
-  uVar6 = 0;
-  if (cVar3 == '\0') {
-LAB_828f765c:
-    cVar3 = '\0';
-  }
-  else {
-    bVar2 = removeBuffer(pvVar1,param_2,*param_4,param_4,local_3f,1);
+  if (uVar3 < 0x80) goto LAB_828f7678;
+  uVar4 = 0;
+  if (bVar1) {
+    bVar2 = removeBuffer(param_1,param_2,*param_4,param_4,local_3f,1);
     if (bVar2) {
-      uVar6 = (ushort)local_3f[0];
+      uVar4 = (ushort)local_3f[0];
     }
-    cVar3 = '\x01';
+    bVar1 = true;
     if (!bVar2) goto LAB_828f765c;
   }
-  uVar5 = (uVar5 & 0x7f) * 0x100 + uVar6;
+  else {
+LAB_828f765c:
+    bVar1 = false;
+  }
+  uVar3 = (uVar3 & 0x7f) * 0x100 + uVar4;
 LAB_828f7678:
-  *param_5 = uVar5;
-  uVar4 = __restgprlr_26(cVar3);
-  return (bool)uVar4;
+  *param_5 = uVar3;
+  return bVar1;
 }
 

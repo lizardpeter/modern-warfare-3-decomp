@@ -2,79 +2,73 @@
 
 // 82924DF8  _filbuf  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/_filbuf.c:100)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 int _filbuf(_iobuf *param_1)
 
 {
-  char *pcVar1;
-  _iobuf *p_Var3;
-  int *piVar4;
-  ulonglong uVar2;
-  int iVar5;
-  uint uVar6;
-  ioinfo *piVar7;
+  byte bVar1;
+  char *pcVar2;
+  int *piVar3;
+  int iVar4;
+  uint uVar5;
+  ioinfo *piVar6;
   
-  p_Var3 = (_iobuf *)__savegprlr_29(param_1);
-  if (p_Var3 == (_iobuf *)0x0) {
-    piVar4 = _errno();
-    *piVar4 = 0x16;
+  if (param_1 == (_iobuf *)0x0) {
+    piVar3 = _errno();
+    *piVar3 = 0x16;
     _invalid_parameter_noinfo();
   }
   else {
-    uVar6 = p_Var3->_flag;
-    if ((uVar6 & 0x83) != 0) {
-      if ((uVar6 & 0x40) == 0) {
-        if ((uVar6 & 2) == 0) {
-          p_Var3->_flag = uVar6 | 1;
-          if ((uVar6 & 0x10c) == 0) {
-            _getbuf(p_Var3);
-          }
-          else {
-            p_Var3->_ptr = p_Var3->_base;
-          }
-          pcVar1 = p_Var3->_base;
-          uVar6 = p_Var3->_bufsiz;
-          iVar5 = _fileno(p_Var3);
-          iVar5 = _read(iVar5,pcVar1,uVar6);
-          p_Var3->_cnt = iVar5;
-          if ((iVar5 != 0) && (iVar5 != -1)) {
-            if ((p_Var3->_flag & 0x82U) == 0) {
-              iVar5 = _fileno(p_Var3);
-              if ((iVar5 == -1) || (iVar5 = _fileno(p_Var3), iVar5 == -2)) {
-                piVar7 = &__badioinfo;
-              }
-              else {
-                iVar5 = _fileno(p_Var3);
-                uVar6 = _fileno(p_Var3);
-                piVar7 = (ioinfo *)((uVar6 & 0x1f) * 0x48 + *(int *)(&__pioinfo + (iVar5 >> 5) * 4))
-                ;
-              }
-              if ((piVar7->osfile & 0x82U) == 0x82) {
-                p_Var3->_flag = p_Var3->_flag | 0x2000;
-              }
-            }
-            if (p_Var3->_bufsiz == 0x200) {
-              if (((p_Var3->_flag & 8U) != 0) && ((p_Var3->_flag & 0x400U) == 0)) {
-                p_Var3->_bufsiz = 0x1000;
-              }
-            }
-            p_Var3->_cnt = p_Var3->_cnt + -1;
-            uVar2 = (ulonglong)(byte)*p_Var3->_ptr;
-            p_Var3->_ptr = p_Var3->_ptr + 1;
-            goto LAB_82924f9c;
-          }
-          p_Var3->_cnt = 0;
-          uVar6 = (-(uint)(iVar5 != 0) & 0x10) + 0x10 | p_Var3->_flag;
+    uVar5 = param_1->_flag;
+    if (((uVar5 & 0x83) != 0) && ((uVar5 & 0x40) == 0)) {
+      if ((uVar5 & 2) == 0) {
+        param_1->_flag = uVar5 | 1;
+        if ((uVar5 & 0x10c) == 0) {
+          _getbuf(param_1);
         }
         else {
-          uVar6 = uVar6 | 0x20;
+          param_1->_ptr = param_1->_base;
         }
-        p_Var3->_flag = uVar6;
+        pcVar2 = param_1->_base;
+        uVar5 = param_1->_bufsiz;
+        iVar4 = _fileno(param_1);
+        iVar4 = _read(iVar4,pcVar2,uVar5);
+        param_1->_cnt = iVar4;
+        if ((iVar4 != 0) && (iVar4 != -1)) {
+          if ((param_1->_flag & 0x82U) == 0) {
+            iVar4 = _fileno(param_1);
+            if ((iVar4 == -1) || (iVar4 = _fileno(param_1), iVar4 == -2)) {
+              piVar6 = &__badioinfo;
+            }
+            else {
+              iVar4 = _fileno(param_1);
+              uVar5 = _fileno(param_1);
+              piVar6 = (ioinfo *)((uVar5 & 0x1f) * 0x48 + *(int *)(&__pioinfo + (iVar4 >> 5) * 4));
+            }
+            if ((piVar6->osfile & 0x82U) == 0x82) {
+              param_1->_flag = param_1->_flag | 0x2000;
+            }
+          }
+          if (((param_1->_bufsiz == 0x200) && ((param_1->_flag & 8U) != 0)) &&
+             ((param_1->_flag & 0x400U) == 0)) {
+            param_1->_bufsiz = 0x1000;
+          }
+          param_1->_cnt = param_1->_cnt + -1;
+          bVar1 = *param_1->_ptr;
+          param_1->_ptr = param_1->_ptr + 1;
+          return (uint)bVar1;
+        }
+        param_1->_cnt = 0;
+        uVar5 = (-(uint)(iVar4 != 0) & 0x10) + 0x10 | param_1->_flag;
       }
+      else {
+        uVar5 = uVar5 | 0x20;
+      }
+      param_1->_flag = uVar5;
     }
   }
-  uVar2 = 0xffffffffffffffff;
-LAB_82924f9c:
-  iVar5 = __restgprlr_29(uVar2);
-  return iVar5;
+  return -1;
 }
 

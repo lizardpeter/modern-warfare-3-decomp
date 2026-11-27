@@ -2,36 +2,33 @@
 
 // 827E16F0  db_inflate_codes_new  (db_zlib/db_infcodes.c:67)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 db_inflate_codes_state *
 db_inflate_codes_new
           (uint param_1,uint param_2,db_inflate_huft_s *param_3,db_inflate_huft_s *param_4,
           db_z_stream_s *param_5)
 
 {
-  uchar uVar3;
-  uchar *puVar1;
-  db_inflate_codes_state *pdVar2;
-  uchar uVar4;
+  db_inflate_codes_state *pdVar1;
   
-  uVar4 = (uchar)param_2;
-  uVar3 = __savegprlr_28(param_1);
-  puVar1 = (*param_5->zalloc)(param_5->opaque,1,0x1c);
-  if (puVar1 != (uchar *)0x0) {
-    *(db_inflate_huft_s **)(puVar1 + 0x14) = param_3;
-    *(db_inflate_huft_s **)(puVar1 + 0x18) = param_4;
-    puVar1[0] = '\0';
-    puVar1[1] = '\0';
-    puVar1[2] = '\0';
-    puVar1[3] = '\0';
-    puVar1[0x10] = uVar3;
-    puVar1[0x11] = uVar4;
+  pdVar1 = (db_inflate_codes_state *)(*param_5->zalloc)(param_5->opaque,1,0x1c);
+  if (pdVar1 != (db_inflate_codes_state *)0x0) {
+    pdVar1[5].dummy = (int)param_3;
+    pdVar1[6].dummy = (int)param_4;
+    pdVar1->dummy = 0;
+    *(uchar *)&pdVar1[4].dummy = (uchar)param_1;
+    *(uchar *)((int)&pdVar1[4].dummy + 1) = (uchar)param_2;
   }
-  pdVar2 = (db_inflate_codes_state *)__restgprlr_28();
-  return pdVar2;
+  return pdVar1;
 }
 
 
 // 827E1750  db_inflate_codes  (db_zlib/db_infcodes.c:88)
+
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
 
 int db_inflate_codes(db_inflate_blocks_state *param_1,db_z_stream_s *param_2,int param_3)
 
@@ -42,105 +39,100 @@ int db_inflate_codes(db_inflate_blocks_state *param_1,db_z_stream_s *param_2,int
   uchar *puVar4;
   uchar *puVar5;
   int iVar6;
-  longlong lVar7;
-  uchar *puVar8;
+  uchar *puVar7;
+  uint uVar8;
   uint uVar9;
-  uint uVar10;
-  byte *pbVar11;
-  uchar *puVar12;
-  uint uVar13;
-  uchar *puVar14;
-  byte *pbVar15;
+  byte *pbVar10;
+  uchar *puVar11;
+  uint uVar12;
+  uchar *puVar13;
+  byte *pbVar14;
+  uint uVar15;
   uint uVar16;
-  uint uVar17;
   
-  lVar7 = (longlong)param_3;
-  __savegprlr();
-  puVar12 = param_1->write;
+  puVar11 = param_1->write;
   puVar3 = *(uint **)&param_1->sub;
-  pbVar15 = param_2->next_in;
-  uVar13 = param_2->avail_in;
-  uVar16 = param_1->bitb;
-  uVar17 = param_1->bitk;
-  if (puVar12 < param_1->read) {
-    puVar8 = param_1->read + (-1 - (int)puVar12);
+  pbVar14 = param_2->next_in;
+  uVar12 = param_2->avail_in;
+  uVar15 = param_1->bitb;
+  uVar16 = param_1->bitk;
+  if (puVar11 < param_1->read) {
+    puVar7 = param_1->read + (-1 - (int)puVar11);
   }
   else {
-    puVar8 = param_1->end + -(int)puVar12;
+    puVar7 = param_1->end + -(int)puVar11;
   }
-  uVar10 = *puVar3;
-  while (uVar10 < 10) {
-    switch(uVar10) {
+  uVar9 = *puVar3;
+  while (uVar9 < 10) {
+    switch(uVar9) {
     case 0:
-      if ((puVar8 < (uchar *)0x102) || (uVar13 < 10)) {
+      if ((puVar7 < (uchar *)0x102) || (uVar12 < 10)) {
 LAB_827e18c0:
         *puVar3 = 1;
         puVar3[3] = (uint)*(byte *)(puVar3 + 4);
         puVar3[2] = puVar3[5];
         goto switchD_827e17e8_caseD_1;
       }
-      param_1->bitb = uVar16;
-      param_1->bitk = uVar17;
-      puVar8 = param_2->next_in;
-      param_2->avail_in = uVar13;
-      param_2->next_in = pbVar15;
-      param_2->total_in = (ulong)(pbVar15 + (param_2->total_in - (int)puVar8));
-      param_1->write = puVar12;
-      iVar6 = db_inflate_fast((uint)*(byte *)(puVar3 + 4),(uint)*(byte *)((int)puVar3 + 0x11),
-                              (db_inflate_huft_s *)puVar3[5],(db_inflate_huft_s *)puVar3[6],param_1,
-                              param_2);
-      lVar7 = (longlong)iVar6;
-      puVar12 = param_1->write;
-      pbVar15 = param_2->next_in;
-      uVar13 = param_2->avail_in;
-      uVar16 = param_1->bitb;
-      uVar17 = param_1->bitk;
-      if (puVar12 < param_1->read) {
-        puVar8 = param_1->read + (-1 - (int)puVar12);
+      param_1->bitb = uVar15;
+      param_1->bitk = uVar16;
+      puVar7 = param_2->next_in;
+      param_2->avail_in = uVar12;
+      param_2->next_in = pbVar14;
+      param_2->total_in = (ulong)(pbVar14 + (param_2->total_in - (int)puVar7));
+      param_1->write = puVar11;
+      param_3 = db_inflate_fast((uint)*(byte *)(puVar3 + 4),(uint)*(byte *)((int)puVar3 + 0x11),
+                                (db_inflate_huft_s *)puVar3[5],(db_inflate_huft_s *)puVar3[6],
+                                param_1,param_2);
+      puVar11 = param_1->write;
+      pbVar14 = param_2->next_in;
+      uVar12 = param_2->avail_in;
+      uVar15 = param_1->bitb;
+      uVar16 = param_1->bitk;
+      if (puVar11 < param_1->read) {
+        puVar7 = param_1->read + (-1 - (int)puVar11);
       }
       else {
-        puVar8 = param_1->end + -(int)puVar12;
+        puVar7 = param_1->end + -(int)puVar11;
       }
-      if (iVar6 == 0) goto LAB_827e18c0;
-      uVar10 = 7;
-      if (iVar6 != 1) {
-        uVar10 = 9;
+      if (param_3 == 0) goto LAB_827e18c0;
+      uVar9 = 7;
+      if (param_3 != 1) {
+        uVar9 = 9;
       }
-      *puVar3 = uVar10;
+      *puVar3 = uVar9;
       break;
     case 1:
 switchD_827e17e8_caseD_1:
-      for (; uVar17 < puVar3[3]; uVar17 = uVar17 + 8) {
-        iVar6 = (int)lVar7;
-        if (uVar13 == 0) goto LAB_827e1d60;
-        lVar7 = 0;
-        uVar13 = uVar13 - 1;
-        uVar16 = (uint)*pbVar15 << (uVar17 & 0x3f) | uVar16;
-        pbVar15 = pbVar15 + 1;
+      for (; uVar16 < puVar3[3]; uVar16 = uVar16 + 8) {
+        if (uVar12 == 0) goto LAB_827e1d60;
+        param_3 = 0;
+        uVar12 = uVar12 - 1;
+        uVar15 = (uint)*pbVar14 << (uVar16 & 0x3f) | uVar15;
+        pbVar14 = pbVar14 + 1;
       }
-      pbVar11 = (byte *)((db_inflate_mask[puVar3[3]] & uVar16) * 8 + puVar3[2]);
-      bVar1 = *pbVar11;
-      uVar16 = uVar16 >> (pbVar11[1] & 0x3f);
-      uVar17 = uVar17 - pbVar11[1];
+      pbVar10 = (byte *)((db_inflate_mask[puVar3[3]] & uVar15) * 8 + puVar3[2]);
+      bVar1 = *pbVar10;
+      uVar15 = uVar15 >> (pbVar10[1] & 0x3f);
+      uVar16 = uVar16 - pbVar10[1];
       if (bVar1 == 0) {
-        uVar10 = *(uint *)(pbVar11 + 4);
+        uVar9 = *(uint *)(pbVar10 + 4);
         *puVar3 = 6;
-        puVar3[2] = uVar10;
+        puVar3[2] = uVar9;
       }
       else if ((bVar1 & 0x10) == 0) {
         if ((bVar1 & 0x40) == 0) {
           puVar3[3] = (uint)bVar1;
-          puVar3[2] = (uint)(pbVar11 + *(int *)(pbVar11 + 4) * 8);
+          puVar3[2] = (uint)(pbVar10 + *(int *)(pbVar10 + 4) * 8);
         }
         else {
           if ((bVar1 & 0x20) == 0) {
             *puVar3 = 9;
-            iVar6 = -3;
+            param_3 = -3;
             param_2->msg = "invalid literal/length code";
-            param_1->bitk = uVar17;
-            param_1->bitb = uVar16;
-            param_2->avail_in = uVar13;
-            param_2->total_in = (ulong)(pbVar15 + (param_2->total_in - (int)param_2->next_in));
+            param_1->bitk = uVar16;
+            param_1->bitb = uVar15;
+            param_2->avail_in = uVar12;
+            param_2->total_in = (ulong)(pbVar14 + (param_2->total_in - (int)param_2->next_in));
             goto LAB_827e1d44;
           }
           *puVar3 = 7;
@@ -148,230 +140,226 @@ switchD_827e17e8_caseD_1:
       }
       else {
         puVar3[2] = bVar1 & 0xf;
-        puVar3[1] = *(uint *)(pbVar11 + 4);
+        puVar3[1] = *(uint *)(pbVar10 + 4);
         *puVar3 = 2;
       }
       break;
     case 2:
-      uVar10 = puVar3[2];
-      for (; uVar17 < uVar10; uVar17 = uVar17 + 8) {
-        iVar6 = (int)lVar7;
-        if (uVar13 == 0) goto LAB_827e1d60;
-        lVar7 = 0;
-        uVar13 = uVar13 - 1;
-        uVar16 = (uint)*pbVar15 << (uVar17 & 0x3f) | uVar16;
-        pbVar15 = pbVar15 + 1;
+      uVar9 = puVar3[2];
+      for (; uVar16 < uVar9; uVar16 = uVar16 + 8) {
+        if (uVar12 == 0) goto LAB_827e1d60;
+        param_3 = 0;
+        uVar12 = uVar12 - 1;
+        uVar15 = (uint)*pbVar14 << (uVar16 & 0x3f) | uVar15;
+        pbVar14 = pbVar14 + 1;
       }
-      uVar17 = uVar17 - uVar10;
-      uVar9 = db_inflate_mask[uVar10];
+      uVar16 = uVar16 - uVar9;
+      uVar8 = db_inflate_mask[uVar9];
       puVar3[3] = (uint)*(byte *)((int)puVar3 + 0x11);
-      uVar9 = uVar9 & uVar16;
+      uVar8 = uVar8 & uVar15;
       puVar3[2] = puVar3[6];
-      uVar16 = uVar16 >> (uVar10 & 0x3f);
+      uVar15 = uVar15 >> (uVar9 & 0x3f);
       *puVar3 = 3;
-      puVar3[1] = uVar9 + puVar3[1];
+      puVar3[1] = uVar8 + puVar3[1];
     case 3:
-      for (; uVar17 < puVar3[3]; uVar17 = uVar17 + 8) {
-        iVar6 = (int)lVar7;
-        if (uVar13 == 0) goto LAB_827e1d60;
-        lVar7 = 0;
-        uVar13 = uVar13 - 1;
-        uVar16 = (uint)*pbVar15 << (uVar17 & 0x3f) | uVar16;
-        pbVar15 = pbVar15 + 1;
+      for (; uVar16 < puVar3[3]; uVar16 = uVar16 + 8) {
+        if (uVar12 == 0) goto LAB_827e1d60;
+        param_3 = 0;
+        uVar12 = uVar12 - 1;
+        uVar15 = (uint)*pbVar14 << (uVar16 & 0x3f) | uVar15;
+        pbVar14 = pbVar14 + 1;
       }
-      pbVar11 = (byte *)((db_inflate_mask[puVar3[3]] & uVar16) * 8 + puVar3[2]);
-      bVar1 = *pbVar11;
-      uVar16 = uVar16 >> (pbVar11[1] & 0x3f);
-      uVar17 = uVar17 - pbVar11[1];
+      pbVar10 = (byte *)((db_inflate_mask[puVar3[3]] & uVar15) * 8 + puVar3[2]);
+      bVar1 = *pbVar10;
+      uVar15 = uVar15 >> (pbVar10[1] & 0x3f);
+      uVar16 = uVar16 - pbVar10[1];
       if ((bVar1 & 0x10) == 0) {
         if ((bVar1 & 0x40) != 0) {
           *puVar3 = 9;
-          iVar6 = -3;
+          param_3 = -3;
           param_2->msg = "invalid distance code";
-          param_1->bitb = uVar16;
-          param_1->bitk = uVar17;
-          param_2->avail_in = uVar13;
-          param_2->total_in = (ulong)(pbVar15 + (param_2->total_in - (int)param_2->next_in));
+          param_1->bitb = uVar15;
+          param_1->bitk = uVar16;
+          param_2->avail_in = uVar12;
+          param_2->total_in = (ulong)(pbVar14 + (param_2->total_in - (int)param_2->next_in));
           goto LAB_827e1d44;
         }
         puVar3[3] = (uint)bVar1;
-        puVar3[2] = (uint)(pbVar11 + *(int *)(pbVar11 + 4) * 8);
+        puVar3[2] = (uint)(pbVar10 + *(int *)(pbVar10 + 4) * 8);
       }
       else {
         puVar3[2] = bVar1 & 0xf;
-        uVar10 = *(uint *)(pbVar11 + 4);
+        uVar9 = *(uint *)(pbVar10 + 4);
         *puVar3 = 4;
-        puVar3[3] = uVar10;
+        puVar3[3] = uVar9;
       }
       break;
     case 4:
-      uVar10 = puVar3[2];
-      for (; uVar17 < uVar10; uVar17 = uVar17 + 8) {
-        iVar6 = (int)lVar7;
-        if (uVar13 == 0) goto LAB_827e1d60;
-        lVar7 = 0;
-        uVar13 = uVar13 - 1;
-        uVar16 = (uint)*pbVar15 << (uVar17 & 0x3f) | uVar16;
-        pbVar15 = pbVar15 + 1;
+      uVar9 = puVar3[2];
+      for (; uVar16 < uVar9; uVar16 = uVar16 + 8) {
+        if (uVar12 == 0) goto LAB_827e1d60;
+        param_3 = 0;
+        uVar12 = uVar12 - 1;
+        uVar15 = (uint)*pbVar14 << (uVar16 & 0x3f) | uVar15;
+        pbVar14 = pbVar14 + 1;
       }
-      uVar17 = uVar17 - uVar10;
-      uVar9 = db_inflate_mask[uVar10];
+      uVar16 = uVar16 - uVar9;
+      uVar8 = db_inflate_mask[uVar9];
       *puVar3 = 5;
-      uVar9 = uVar9 & uVar16;
-      uVar16 = uVar16 >> (uVar10 & 0x3f);
-      puVar3[3] = uVar9 + puVar3[3];
+      uVar8 = uVar8 & uVar15;
+      uVar15 = uVar15 >> (uVar9 & 0x3f);
+      puVar3[3] = uVar8 + puVar3[3];
     case 5:
       puVar5 = param_1->window;
-      puVar14 = puVar12 + -puVar3[3];
-      if (puVar14 < puVar5) {
+      puVar13 = puVar11 + -puVar3[3];
+      if (puVar13 < puVar5) {
         do {
-          puVar14 = puVar14 + ((int)param_1->end - (int)puVar5);
-        } while (puVar14 < puVar5);
+          puVar13 = puVar13 + ((int)param_1->end - (int)puVar5);
+        } while (puVar13 < puVar5);
       }
       if (puVar3[1] != 0) {
         do {
-          if (puVar8 == (uchar *)0x0) {
-            if (puVar12 == param_1->end) {
-              puVar8 = param_1->read;
+          if (puVar7 == (uchar *)0x0) {
+            if (puVar11 == param_1->end) {
+              puVar7 = param_1->read;
               puVar5 = param_1->window;
-              if (puVar5 != puVar8) {
-                if (puVar5 < puVar8) {
-                  puVar8 = puVar8 + (-1 - (int)puVar5);
+              if (puVar5 != puVar7) {
+                if (puVar5 < puVar7) {
+                  puVar7 = puVar7 + (-1 - (int)puVar5);
                 }
                 else {
-                  puVar8 = param_1->end + -(int)puVar5;
+                  puVar7 = param_1->end + -(int)puVar5;
                 }
-                puVar12 = puVar5;
-                if (puVar8 != (uchar *)0x0) goto LAB_827e1c04;
+                puVar11 = puVar5;
+                if (puVar7 != (uchar *)0x0) goto LAB_827e1c04;
               }
             }
-            param_1->write = puVar12;
-            iVar6 = db_inflate_flush(param_1,param_2,(int)lVar7);
-            puVar12 = param_1->write;
+            param_1->write = puVar11;
+            param_3 = db_inflate_flush(param_1,param_2,param_3);
+            puVar11 = param_1->write;
             puVar5 = param_1->read;
-            if (puVar12 < puVar5) {
-              puVar8 = puVar5 + (-1 - (int)puVar12);
+            if (puVar11 < puVar5) {
+              puVar7 = puVar5 + (-1 - (int)puVar11);
             }
             else {
-              puVar8 = param_1->end + -(int)puVar12;
+              puVar7 = param_1->end + -(int)puVar11;
             }
-            if (puVar12 == param_1->end) {
+            if (puVar11 == param_1->end) {
               puVar4 = param_1->window;
               if (puVar4 != puVar5) {
-                puVar12 = puVar4;
+                puVar11 = puVar4;
                 if (puVar4 < puVar5) {
-                  puVar8 = puVar5 + (-1 - (int)puVar4);
+                  puVar7 = puVar5 + (-1 - (int)puVar4);
                 }
                 else {
-                  puVar8 = param_1->end + -(int)puVar4;
+                  puVar7 = param_1->end + -(int)puVar4;
                 }
               }
             }
-            if (puVar8 == (uchar *)0x0) goto LAB_827e1d24;
+            if (puVar7 == (uchar *)0x0) goto LAB_827e1d24;
           }
 LAB_827e1c04:
-          uVar2 = *puVar14;
-          puVar14 = puVar14 + 1;
-          lVar7 = 0;
-          puVar8 = puVar8 + -1;
-          *puVar12 = uVar2;
-          puVar12 = puVar12 + 1;
-          if (puVar14 == param_1->end) {
-            puVar14 = param_1->window;
+          uVar2 = *puVar13;
+          puVar13 = puVar13 + 1;
+          param_3 = 0;
+          puVar7 = puVar7 + -1;
+          *puVar11 = uVar2;
+          puVar11 = puVar11 + 1;
+          if (puVar13 == param_1->end) {
+            puVar13 = param_1->window;
           }
-          uVar10 = puVar3[1];
-          puVar3[1] = uVar10 - 1;
-        } while (uVar10 != 1);
+          uVar9 = puVar3[1];
+          puVar3[1] = uVar9 - 1;
+        } while (uVar9 != 1);
       }
 LAB_827e1d10:
       *puVar3 = 0;
       break;
     case 6:
-      if (puVar8 == (uchar *)0x0) {
-        if (puVar12 == param_1->end) {
-          puVar8 = param_1->read;
+      if (puVar7 == (uchar *)0x0) {
+        if (puVar11 == param_1->end) {
+          puVar7 = param_1->read;
           puVar5 = param_1->window;
-          if (puVar5 != puVar8) {
-            if (puVar5 < puVar8) {
-              puVar8 = puVar8 + (-1 - (int)puVar5);
+          if (puVar5 != puVar7) {
+            if (puVar5 < puVar7) {
+              puVar7 = puVar7 + (-1 - (int)puVar5);
             }
             else {
-              puVar8 = param_1->end + -(int)puVar5;
+              puVar7 = param_1->end + -(int)puVar5;
             }
-            puVar12 = puVar5;
-            if (puVar8 != (uchar *)0x0) goto LAB_827e1cfc;
+            puVar11 = puVar5;
+            if (puVar7 != (uchar *)0x0) goto LAB_827e1cfc;
           }
         }
-        param_1->write = puVar12;
-        iVar6 = db_inflate_flush(param_1,param_2,(int)lVar7);
-        puVar12 = param_1->write;
+        param_1->write = puVar11;
+        param_3 = db_inflate_flush(param_1,param_2,param_3);
+        puVar11 = param_1->write;
         puVar5 = param_1->read;
-        if (puVar12 < puVar5) {
-          puVar8 = puVar5 + (-1 - (int)puVar12);
+        if (puVar11 < puVar5) {
+          puVar7 = puVar5 + (-1 - (int)puVar11);
         }
         else {
-          puVar8 = param_1->end + -(int)puVar12;
+          puVar7 = param_1->end + -(int)puVar11;
         }
-        if (puVar12 == param_1->end) {
-          puVar14 = param_1->window;
-          if (puVar14 != puVar5) {
-            puVar12 = puVar14;
-            if (puVar14 < puVar5) {
-              puVar8 = puVar5 + (-1 - (int)puVar14);
+        if (puVar11 == param_1->end) {
+          puVar13 = param_1->window;
+          if (puVar13 != puVar5) {
+            puVar11 = puVar13;
+            if (puVar13 < puVar5) {
+              puVar7 = puVar5 + (-1 - (int)puVar13);
             }
             else {
-              puVar8 = param_1->end + -(int)puVar14;
+              puVar7 = param_1->end + -(int)puVar13;
             }
           }
         }
-        if (puVar8 == (uchar *)0x0) goto LAB_827e1d24;
+        if (puVar7 == (uchar *)0x0) goto LAB_827e1d24;
       }
 LAB_827e1cfc:
-      lVar7 = 0;
-      puVar8 = puVar8 + -1;
-      *puVar12 = (uchar)puVar3[2];
-      puVar12 = puVar12 + 1;
+      param_3 = 0;
+      puVar7 = puVar7 + -1;
+      *puVar11 = (uchar)puVar3[2];
+      puVar11 = puVar11 + 1;
       goto LAB_827e1d10;
     case 7:
-      if (7 < uVar17) {
-        uVar17 = uVar17 - 8;
-        uVar13 = uVar13 + 1;
-        pbVar15 = pbVar15 + -1;
+      if (7 < uVar16) {
+        uVar16 = uVar16 - 8;
+        uVar12 = uVar12 + 1;
+        pbVar14 = pbVar14 + -1;
       }
-      param_1->write = puVar12;
-      iVar6 = db_inflate_flush(param_1,param_2,(int)lVar7);
-      puVar12 = param_1->write;
-      if (param_1->read == puVar12) {
+      param_1->write = puVar11;
+      param_3 = db_inflate_flush(param_1,param_2,param_3);
+      puVar11 = param_1->write;
+      if (param_1->read == puVar11) {
         *puVar3 = 8;
         goto switchD_827e17e8_caseD_8;
       }
       goto LAB_827e1d24;
     case 8:
 switchD_827e17e8_caseD_8:
-      iVar6 = 1;
+      param_3 = 1;
       goto LAB_827e1d24;
     case 9:
-      iVar6 = -3;
+      param_3 = -3;
       goto LAB_827e1d24;
     }
-    uVar10 = *puVar3;
+    uVar9 = *puVar3;
   }
-  iVar6 = -2;
+  param_3 = -2;
 LAB_827e1d24:
-  param_1->bitb = uVar16;
-  param_1->bitk = uVar17;
-  param_2->avail_in = uVar13;
+  param_1->bitb = uVar15;
+  param_1->bitk = uVar16;
+  param_2->avail_in = uVar12;
 LAB_827e1d30:
-  param_2->total_in = (ulong)(pbVar15 + (param_2->total_in - (int)param_2->next_in));
+  param_2->total_in = (ulong)(pbVar14 + (param_2->total_in - (int)param_2->next_in));
 LAB_827e1d44:
-  param_2->next_in = pbVar15;
-  param_1->write = puVar12;
-  iVar6 = db_inflate_flush(param_1,param_2,iVar6);
-  __restgprlr();
+  param_2->next_in = pbVar14;
+  param_1->write = puVar11;
+  iVar6 = db_inflate_flush(param_1,param_2,param_3);
   return iVar6;
 LAB_827e1d60:
-  param_1->bitb = uVar16;
-  param_1->bitk = uVar17;
+  param_1->bitb = uVar15;
+  param_1->bitk = uVar16;
   param_2->avail_in = 0;
   goto LAB_827e1d30;
 }

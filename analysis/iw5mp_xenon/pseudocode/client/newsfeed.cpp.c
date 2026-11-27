@@ -85,29 +85,31 @@ void __thiscall LeaderBoardRow<10>::~LeaderBoardRow<10>(LeaderBoardRow<10> *this
 
 // 82364358  serialize  (DW/leaderboardinfo.h:64)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void __thiscall LeaderBoardRow<10>::serialize(LeaderBoardRow<10> *this,bdByteBuffer *param_1)
 
 {
-  bdStatsInfo *this_00;
-  bool bVar1;
-  uint *puVar2;
-  longlong lVar3;
+  int *piVar1;
+  longlong lVar2;
   
-  this_00 = (bdStatsInfo *)__savegprlr_29(this);
-  bdStatsInfo::serialize(this_00,param_1);
-  puVar2 = &this_00->m_secondsSinceUpdate;
-  lVar3 = 10;
+  bdStatsInfo::serialize((bdStatsInfo *)this,param_1);
+  piVar1 = &this->_padding_;
+  lVar2 = 10;
   do {
-    puVar2 = puVar2 + 1;
-    bVar1 = bdByteBuffer::writeInt32(param_1,*puVar2);
-    lVar3 = lVar3 + -1;
-  } while (lVar3 != 0);
-  __restgprlr_29(bVar1);
+    piVar1 = piVar1 + 1;
+    bdByteBuffer::writeInt32(param_1,*piVar1);
+    lVar2 = lVar2 + -1;
+  } while (lVar2 != 0);
   return;
 }
 
 
 // 82364568  deserialize  (DW/leaderboardinfo.h:73)
+
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 
 bool __thiscall
 LeaderBoardRow<10>::deserialize(LeaderBoardRow<10> *this,bdReference<bdByteBuffer> param_1)
@@ -115,53 +117,50 @@ LeaderBoardRow<10>::deserialize(LeaderBoardRow<10> *this,bdReference<bdByteBuffe
 {
   undefined4 *puVar1;
   uint uVar2;
-  bdStatsInfo *pbVar3;
-  bool bVar4;
-  undefined1 uVar5;
-  longlong lVar6;
-  uint *puVar7;
-  uint uVar8;
+  bool bVar3;
+  longlong lVar4;
+  uint *puVar5;
+  uint uVar6;
+  int *piVar7;
   char in_RESERVE;
   byte in_cr0;
   uint local_30 [12];
   
-  pbVar3 = (bdStatsInfo *)__savegprlr_28(this);
   local_30[0] = (param_1.m_ptr)->_padding_;
   if ((ulonglong)local_30[0] != 0) {
-    lVar6 = (ulonglong)local_30[0] + 4;
+    lVar4 = (ulonglong)local_30[0] + 4;
     do {
-      puVar7 = (uint *)lVar6;
+      puVar5 = (uint *)lVar4;
       if (in_RESERVE != '\0') {
-        uVar8 = storeWordConditionalIndexed((ulonglong)*puVar7 + 1,0,lVar6);
-        *puVar7 = uVar8;
+        uVar6 = storeWordConditionalIndexed((ulonglong)*puVar5 + 1,0,lVar4);
+        *puVar5 = uVar6;
         in_cr0 = 2;
       }
     } while (!(bool)(in_cr0 >> 1 & 1));
   }
-  bVar4 = bdStatsInfo::deserialize(pbVar3,(bdByteBuffer *)local_30);
-  uVar8 = 0;
-  if (bVar4) {
-    pbVar3 = pbVar3 + 1;
+  bVar3 = bdStatsInfo::deserialize((bdStatsInfo *)this,(bdByteBuffer *)local_30);
+  uVar6 = 0;
+  if (bVar3) {
+    piVar7 = this->m_columns;
     do {
-      if (9 < uVar8) break;
-      bVar4 = bdByteBuffer::readInt32((bdByteBuffer *)(param_1.m_ptr)->_padding_,&pbVar3->_padding_)
-      ;
-      uVar8 = uVar8 + 1;
-      pbVar3 = (bdStatsInfo *)&pbVar3->m_leaderboardID;
-    } while (bVar4);
+      if (9 < uVar6) break;
+      bVar3 = bdByteBuffer::readInt32((bdByteBuffer *)(param_1.m_ptr)->_padding_,piVar7);
+      uVar6 = uVar6 + 1;
+      piVar7 = piVar7 + 1;
+    } while (bVar3);
   }
-  uVar8 = (param_1.m_ptr)->_padding_;
-  if ((ulonglong)uVar8 != 0) {
-    lVar6 = (ulonglong)uVar8 + 4;
+  uVar6 = (param_1.m_ptr)->_padding_;
+  if ((ulonglong)uVar6 != 0) {
+    lVar4 = (ulonglong)uVar6 + 4;
     do {
-      puVar7 = (uint *)lVar6;
+      puVar5 = (uint *)lVar4;
       if (in_RESERVE != '\0') {
-        uVar2 = storeWordConditionalIndexed((ulonglong)*puVar7 - 1,0,lVar6);
-        *puVar7 = uVar2;
+        uVar2 = storeWordConditionalIndexed((ulonglong)*puVar5 - 1,0,lVar4);
+        *puVar5 = uVar2;
         in_cr0 = 2;
       }
     } while (!(bool)(in_cr0 >> 1 & 1));
-    if (*(int *)(uVar8 + 4) == 0) {
+    if (*(int *)(uVar6 + 4) == 0) {
       puVar1 = (undefined4 *)(param_1.m_ptr)->_padding_;
       if (puVar1 != (undefined4 *)0x0) {
         (**(code **)*puVar1)(puVar1,1);
@@ -169,8 +168,7 @@ LeaderBoardRow<10>::deserialize(LeaderBoardRow<10> *this,bdReference<bdByteBuffe
       (param_1.m_ptr)->_padding_ = 0;
     }
   }
-  uVar5 = __restgprlr_28(bVar4);
-  return (bool)uVar5;
+  return bVar3;
 }
 
 
@@ -228,33 +226,38 @@ int GetNextBufferIndex(newsFeed_t *param_1)
 
 // 82362860  AppendToBuffer  (client/newsfeed.cpp:169)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void AppendToBuffer(newsFeed_t *param_1,char *param_2)
 
 {
   int iVar1;
-  int iVar2;
+  char *pcVar2;
   int iVar3;
   ulonglong uVar4;
   
-  iVar2 = __savegprlr_29(param_1,param_2);
-  if (iVar2 == 0) {
+  if (param_1 == (newsFeed_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\newsfeed.cpp",0xa3,0,
                     "%s");
   }
-  uVar4 = (ulonglong)*(uint *)(iVar2 + 0x410) + 1;
+  uVar4 = (ulonglong)(uint)param_1->current + 1;
   uVar4 = uVar4 + ((longlong)((int)uVar4 >> 1) + (ulonglong)((int)uVar4 < 0 && (uVar4 & 1) != 0) &
                   0x7fffffff) * -2;
   iVar1 = (int)((uVar4 + 0x100 & 0x3fffffff) << 2);
-  iVar3 = Com_sprintf((char *)((int)((uVar4 & 0xffffffff) << 9) + *(int *)(iVar1 + iVar2) + iVar2),
-                      0x200 - *(int *)(iVar1 + iVar2),"%s");
+  iVar3 = *(int *)(param_1->buffer[0] + iVar1);
+  iVar3 = Com_sprintf(param_1->buffer[0] + (int)((uVar4 & 0xffffffff) << 9) + iVar3,0x200 - iVar3,
+                      "%s");
   if (iVar3 < 0) {
     Com_PrintError(1,"Exceeded buffer size, ignoring additional data.\n");
-    *(undefined4 *)(iVar1 + iVar2) = 0x200;
-    __restgprlr_29();
+    pcVar2 = param_1->buffer[0] + iVar1;
+    pcVar2[0] = '\0';
+    pcVar2[1] = '\0';
+    pcVar2[2] = '\x02';
+    pcVar2[3] = '\0';
     return;
   }
-  *(int *)(iVar1 + iVar2) = iVar3 + *(int *)(iVar1 + iVar2);
-  __restgprlr_29();
+  *(int *)(param_1->buffer[0] + iVar1) = iVar3 + *(int *)(param_1->buffer[0] + iVar1);
   return;
 }
 
@@ -271,39 +274,40 @@ void ClearTask(newsFeed_t *param_1)
 
 // 82362930  SetupTask  (client/newsfeed.cpp:199)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void SetupTask(newsFeed_t *param_1,int param_2)
 
 {
-  int iVar1;
-  ulonglong uVar2;
-  undefined4 *puVar3;
-  longlong lVar4;
+  taskShim *ptVar1;
+  longlong lVar2;
   
-  uVar2 = (ulonglong)param_2;
-  iVar1 = __savegprlr_29(param_1);
-  if ((uVar2 & 0xffffffff) != 0) {
+  if (param_2 != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\newsfeed.cpp",200,0,
                     "type doesn\'t index NUM_TASKS\n\t%i not in [0, %i)");
   }
-  if (iVar1 == 0) {
+  if (param_1 == (newsFeed_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\newsfeed.cpp",0xc9,0,
                     "%s");
   }
-  *(int *)(iVar1 + 0x840) = (int)uVar2;
-  puVar3 = (undefined4 *)(iVar1 + 0x7b8);
-  *(undefined1 *)(iVar1 + 0x844) = 1;
-  lVar4 = 7;
+  (param_1->task).type = param_2;
+  ptVar1 = &(param_1->task).u;
+  (param_1->task).active = true;
+  lVar2 = 7;
   do {
-    puVar3 = puVar3 + 1;
-    *puVar3 = 0;
-    lVar4 = lVar4 + -1;
-  } while (lVar4 != 0);
-  __restgprlr_29();
+    ptVar1 = (taskShim *)&ptVar1->overlappedIO;
+    ((_XOVERLAPPED *)ptVar1)->InternalLow = 0;
+    lVar2 = lVar2 + -1;
+  } while (lVar2 != 0);
   return;
 }
 
 
 // 823629C8  RewindToLastCompleteItem  (client/newsfeed.cpp:217)
+
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 
 void RewindToLastCompleteItem(newsFeed_t *param_1)
 
@@ -312,35 +316,32 @@ void RewindToLastCompleteItem(newsFeed_t *param_1)
   int iVar2;
   ulonglong uVar3;
   ulonglong uVar4;
-  int iVar5;
-  uint uVar6;
-  int iVar7;
+  uint uVar5;
+  int iVar6;
   
-  iVar5 = __savegprlr_27(param_1);
-  if (iVar5 == 0) {
+  if (param_1 == (newsFeed_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\newsfeed.cpp",0xde,0,
                     "%s");
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\newsfeed.cpp",0xa3,0,
                     "%s");
   }
-  uVar6 = *(int *)(iVar5 + 0x410) + 1;
-  iVar7 = uVar6 + (((int)uVar6 >> 1) + (uint)((int)uVar6 < 0 && (uVar6 & 1) != 0) & 0x7fffffff) * -2
+  uVar5 = param_1->current + 1;
+  iVar6 = uVar5 + (((int)uVar5 >> 1) + (uint)((int)uVar5 < 0 && (uVar5 & 1) != 0) & 0x7fffffff) * -2
   ;
-  iVar2 = (iVar7 + 0x100) * 4;
-  iVar7 = iVar7 * 0x200 + iVar5;
-  uVar3 = (ulonglong)*(uint *)(iVar2 + iVar5);
+  iVar2 = (iVar6 + 0x100) * 4;
+  uVar3 = (ulonglong)*(uint *)(iVar2 + (int)param_1);
   do {
     uVar4 = uVar3;
     uVar3 = uVar4 - 1;
-    if (((longlong)uVar3 < 0) || (cVar1 = *(char *)((int)uVar3 + iVar7), cVar1 == '\n')) break;
+    if (((longlong)uVar3 < 0) ||
+       (cVar1 = *(char *)((int)param_1 + (int)uVar3 + iVar6 * 0x200), cVar1 == '\n')) break;
   } while (cVar1 != '\r');
   if (0x1ff < (uVar4 & 0xffffffff)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\newsfeed.cpp",0xe7,0,
                     "size doesn\'t index MAX_FEED_SIZE\n\t%i not in [0, %i)");
   }
-  *(undefined1 *)((int)uVar4 + iVar7) = 0;
-  *(int *)(iVar2 + iVar5) = (int)uVar4;
-  __restgprlr_27();
+  *(undefined1 *)((int)param_1 + (int)uVar4 + iVar6 * 0x200) = 0;
+  *(int *)(iVar2 + (int)param_1) = (int)uVar4;
   return;
 }
 
@@ -413,60 +414,54 @@ taskCompleteResults FetchTestToken(newsFeed_t *param_1)
 
 // 82362C70  FetchLeaderboardRow  (client/newsfeed.cpp:288)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 taskCompleteResults FetchLeaderboardRow(int param_1,newsFeed_t *param_2,char *param_3)
 
 {
-  int iVar1;
-  int iVar2;
-  bool bVar4;
-  taskCompleteResults tVar3;
-  ulonglong uVar5;
-  longlong lVar6;
-  char *pcVar7;
-  longlong lVar8;
+  bool bVar1;
+  taskShim *ptVar2;
+  char *pcVar3;
+  longlong lVar4;
   char local_b0 [176];
   
-  uVar5 = (ulonglong)(int)param_2;
-  iVar2 = __savegprlr_28(param_1);
   I_strncpyz(local_b0,param_3,0x80);
-  pcVar7 = local_b0;
+  pcVar3 = local_b0;
   do {
     if (local_b0[0] == '\0') {
 LAB_82362ccc:
-      if (*pcVar7 == '\0') {
-        pcVar7 = "Rank";
+      if (*pcVar3 == '\0') {
+        pcVar3 = "Rank";
       }
-      if ((uVar5 & 0xffffffff) == 0) {
+      if (param_2 == (newsFeed_t *)0x0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\newsfeed.cpp",0xc9,
                         0,"%s");
       }
-      iVar1 = (int)uVar5;
-      *(undefined4 *)(iVar1 + 0x840) = 0;
-      lVar6 = uVar5 + 0x7b8;
-      *(undefined1 *)(iVar1 + 0x844) = 1;
-      lVar8 = 7;
+      (param_2->task).type = 0;
+      ptVar2 = &(param_2->task).u;
+      (param_2->task).active = true;
+      lVar4 = 7;
       do {
-        lVar6 = lVar6 + 4;
-        *(undefined4 *)lVar6 = 0;
-        lVar8 = lVar8 + -1;
-      } while (lVar8 != 0);
-      bVar4 = LB_GetCol(iVar2,local_b0,pcVar7,*(ulong64 *)(iVar1 + 0x850),
-                        (LbGetColData *)(iVar1 + 0x618),(overlappedTask *)(iVar1 + 0x7b0));
-      if (!bVar4) {
-        *(undefined1 *)(iVar1 + 0x844) = 0;
-        tVar3 = __restgprlr_28(2);
-        return tVar3;
+        ptVar2 = (taskShim *)&ptVar2->overlappedIO;
+        ((_XOVERLAPPED *)ptVar2)->InternalLow = 0;
+        lVar4 = lVar4 + -1;
+      } while (lVar4 != 0);
+      bVar1 = LB_GetCol(param_1,local_b0,pcVar3,param_2->xuid,&(param_2->data).lbColData,
+                        &param_2->task);
+      if (!bVar1) {
+        (param_2->task).active = false;
+        return TASK_ERROR;
       }
-      tVar3 = __restgprlr_28(0);
-      return tVar3;
+      return TASK_NOTCOMPLETE;
     }
-    if (*pcVar7 == ' ') {
-      *pcVar7 = '\0';
-      pcVar7 = pcVar7 + 1;
+    if (*pcVar3 == ' ') {
+      *pcVar3 = '\0';
+      pcVar3 = pcVar3 + 1;
       goto LAB_82362ccc;
     }
-    pcVar7 = pcVar7 + 1;
-    local_b0[0] = *pcVar7;
+    pcVar3 = pcVar3 + 1;
+    local_b0[0] = *pcVar3;
   } while( true );
 }
 
@@ -568,123 +563,113 @@ LAB_82362ec8:
 
 // 82362F38  FetchData  (client/newsfeed.cpp:395)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void FetchData(int param_1,newsFeed_t *param_2,char *param_3)
 
 {
-  newsFeed_t *pnVar1;
-  int iVar3;
-  int iVar4;
-  char *pcVar5;
-  taskCompleteResults tVar6;
-  ulong64 uVar2;
-  ulonglong uVar7;
-  ulonglong uVar8;
+  int iVar2;
+  char *pcVar3;
+  taskCompleteResults tVar4;
+  ulong64 uVar1;
   
-  uVar8 = (ulonglong)(int)param_3;
-  uVar7 = (ulonglong)(int)param_2;
-  iVar3 = __savegprlr_27(param_1);
-  if ((uVar7 & 0xffffffff) == 0) {
+  if (param_2 == (newsFeed_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\newsfeed.cpp",0x18e,0,
                     "%s");
   }
-  if ((uVar8 & 0xffffffff) == 0) {
+  if (param_3 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\newsfeed.cpp",399,0,
                     "%s");
   }
-  pnVar1 = (newsFeed_t *)uVar7;
-  if ((pnVar1->task).active != false) {
+  if ((param_2->task).active != false) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\newsfeed.cpp",400,0,
                     "%s");
   }
-  pcVar5 = (char *)uVar8;
-  iVar4 = I_stricmp(pcVar5,"MOTD");
-  if (iVar4 == 0) {
-    pcVar5 = Dvar_GetString("motd");
-    AppendToBuffer(pnVar1,pcVar5);
-    __restgprlr_27();
+  iVar2 = I_stricmp(param_3,"MOTD");
+  if (iVar2 == 0) {
+    pcVar3 = Dvar_GetString("motd");
+    AppendToBuffer(param_2,pcVar3);
     return;
   }
-  iVar4 = I_stricmp(pcVar5,"TTOKEN");
-  if (iVar4 == 0) {
-    AppendToBuffer(pnVar1,"TTOKEN");
-    __restgprlr_27();
+  iVar2 = I_stricmp(param_3,"TTOKEN");
+  if (iVar2 == 0) {
+    AppendToBuffer(param_2,"TTOKEN");
     return;
   }
-  iVar4 = I_strnicmp(pcVar5,"LB ",3);
-  if (iVar4 == 0) {
-    iVar4 = Sys_Milliseconds();
-    if (iVar4 <= s_readLeaderboardDelay) goto LAB_8236315c;
-    tVar6 = FetchLeaderboardRow(iVar3,pnVar1,pcVar5 + 3);
-LAB_82363154:
-    if (tVar6 != TASK_ERROR) goto LAB_8236316c;
+  iVar2 = I_strnicmp(param_3,"LB ",3);
+  if (iVar2 == 0) {
+    iVar2 = Sys_Milliseconds();
+    if (iVar2 <= s_readLeaderboardDelay) goto LAB_8236315c;
+    tVar4 = FetchLeaderboardRow(param_1,param_2,param_3 + 3);
   }
   else {
-    iVar4 = I_stricmp(pcVar5,"PRESENCE");
-    if (iVar4 == 0) {
-      tVar6 = FetchPresence(iVar3,pnVar1);
-      goto LAB_82363154;
+    iVar2 = I_stricmp(param_3,"PRESENCE");
+    if (iVar2 == 0) {
+      tVar4 = FetchPresence(param_1,param_2);
     }
-    iVar4 = I_stricmp(pcVar5,"FRIEND");
-    if (iVar4 != 0) {
-      iVar4 = I_stricmp(pcVar5,"ME");
-      if (iVar4 == 0) {
-        tVar6 = SetMe(iVar3,pnVar1);
+    else {
+      iVar2 = I_stricmp(param_3,"FRIEND");
+      if (iVar2 == 0) {
+        uVar1 = Friends_PickRandomOnline(param_1);
+        param_2->xuid = uVar1;
+        if (uVar1 != 0) {
+          return;
+        }
+        goto LAB_8236315c;
+      }
+      iVar2 = I_stricmp(param_3,"ME");
+      if (iVar2 == 0) {
+        tVar4 = SetMe(param_1,param_2);
       }
       else {
-        iVar4 = I_stricmp(pcVar5,"NAME");
-        if ((iVar4 != 0) && (iVar4 = I_stricmp(pcVar5,"GAMERTAG"), iVar4 != 0)) {
+        iVar2 = I_stricmp(param_3,"NAME");
+        if ((iVar2 != 0) && (iVar2 = I_stricmp(param_3,"GAMERTAG"), iVar2 != 0)) {
           Com_PrintWarning(1,"Unknown spec token in news feed spec: %s\n");
           goto LAB_8236315c;
         }
-        tVar6 = FetchGamertag(iVar3,pnVar1);
+        tVar4 = FetchGamertag(param_1,param_2);
       }
-      goto LAB_82363154;
-    }
-    uVar2 = Friends_PickRandomOnline(iVar3);
-    pnVar1->xuid = uVar2;
-    if (uVar2 != 0) {
-      __restgprlr_27();
-      return;
     }
   }
+  if (tVar4 != TASK_ERROR) {
+    return;
+  }
 LAB_8236315c:
-  RewindToLastCompleteItem(pnVar1);
-  AdvanceToNextSpecLine(pnVar1);
-LAB_8236316c:
-  __restgprlr_27();
+  RewindToLastCompleteItem(param_2);
+  AdvanceToNextSpecLine(param_2);
   return;
 }
 
 
 // 82363178  FetchLeaderboardColumnComplete  (client/newsfeed.cpp:452)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 taskCompleteResults FetchLeaderboardColumnComplete(newsFeed_t *param_1)
 
 {
-  newsFeed_t *pnVar1;
-  taskCompleteResults tVar2;
-  char *pcVar3;
+  taskCompleteResults tVar1;
+  char *pcVar2;
   
-  pnVar1 = (newsFeed_t *)__savegprlr_29(param_1);
-  if ((pnVar1->task).active == false) {
+  if ((param_1->task).active == false) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\newsfeed.cpp",0x1c8,0,
                     "%s");
   }
-  if ((pnVar1->task).type != 0) {
+  if ((param_1->task).type != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\newsfeed.cpp",0x1c9,0,
                     "%s");
   }
-  tVar2 = LB_GetColComplete(&pnVar1->task);
-  if (tVar2 == TASK_COMPLETE) {
-    pcVar3 = LB_GetColString(&(pnVar1->data).lbColData);
-    if (*pcVar3 == '\0') {
-      tVar2 = __restgprlr_29(2);
-      return tVar2;
+  tVar1 = LB_GetColComplete(&param_1->task);
+  if (tVar1 == TASK_COMPLETE) {
+    pcVar2 = LB_GetColString(&(param_1->data).lbColData);
+    if (*pcVar2 == '\0') {
+      return TASK_ERROR;
     }
-    AppendToBuffer(pnVar1,pcVar3);
+    AppendToBuffer(param_1,pcVar2);
   }
-  tVar2 = __restgprlr_29(tVar2);
-  return tVar2;
+  return tVar1;
 }
 
 
@@ -722,48 +707,43 @@ taskCompleteResults FetchDataComplete(newsFeed_t *param_1)
 
 // 823632F8  ParseSpecToDelim  (client/newsfeed.cpp:519)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 int ParseSpecToDelim(newsFeed_t *param_1,char param_2,char *param_3,int param_4)
 
 {
   char cVar1;
-  uint uVar2;
+  int iVar2;
   int iVar3;
-  longlong lVar4;
-  longlong lVar5;
-  int iVar7;
-  ulonglong uVar6;
+  int iVar4;
   
-  lVar5 = (longlong)param_4;
-  iVar3 = __savegprlr_27(param_1);
-  if (iVar3 == 0) {
+  if (param_1 == (newsFeed_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\newsfeed.cpp",0x20b,0,
                     "%s");
   }
-  if ((int)lVar5 < 1) {
+  if (param_4 < 1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\newsfeed.cpp",0x20c,0,
                     "%s\n\t(dstSize) = %i");
   }
-  uVar2 = *(uint *)(iVar3 + 0x614);
-  cVar1 = *(char *)(uVar2 + iVar3 + 0x414);
-  uVar6 = (ulonglong)uVar2;
-  while (((iVar7 = (int)uVar6, cVar1 != '\0' && (iVar7 < 0x200)) &&
-         (*(char *)(iVar3 + 0x414 + iVar7) != param_2))) {
-    uVar6 = uVar6 + 1;
-    cVar1 = *(char *)(iVar3 + 0x414 + (int)uVar6);
+  iVar2 = param_1->parsePos;
+  cVar1 = param_1->spec[iVar2];
+  for (iVar4 = iVar2; ((cVar1 != '\0' && (iVar4 < 0x200)) && (param_1->spec[iVar4] != param_2));
+      iVar4 = iVar4 + 1) {
+    cVar1 = param_1->spec[iVar4 + 1];
   }
-  lVar4 = uVar6 - uVar2;
-  if ((int)(lVar5 + -1) <= (int)lVar4) {
-    lVar4 = lVar5 + -1;
+  iVar3 = iVar4 - iVar2;
+  if (param_4 + -1 <= iVar4 - iVar2) {
+    iVar3 = param_4 + -1;
   }
-  if ((int)lVar4 < 1) {
-    lVar4 = 0;
+  if (iVar3 < 1) {
+    iVar3 = 0;
   }
-  else if (0 < (int)lVar4) {
+  else if (0 < iVar3) {
     memcpy();
   }
-  *(int *)(iVar3 + 0x614) = iVar7;
-  param_3[(int)lVar4] = '\0';
-  iVar3 = __restgprlr_27(lVar4);
+  param_1->parsePos = iVar4;
+  param_3[iVar3] = '\0';
   return iVar3;
 }
 
@@ -792,26 +772,24 @@ void FinishUpdate(newsFeed_t *param_1)
 
 // 82363490  AppendLocalizedStrings  (client/newsfeed.cpp:559)
 
+/* WARNING: Function: __savegprlr_18 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_18 replaced with injection: xenon_save_restore */
+
 void AppendLocalizedStrings(newsFeed_t *param_1,char *param_2,int param_3)
 
 {
   int iVar1;
-  int iVar2;
-  int iVar3;
-  ulonglong uVar4;
-  longlong lVar5;
-  longlong lVar6;
-  longlong lVar7;
-  ulonglong uVar8;
+  ulonglong uVar2;
+  char *pcVar3;
+  char *pcVar4;
+  int iVar5;
   char local_280 [640];
   
-  uVar8 = (ulonglong)(int)param_2;
-  iVar2 = __savegprlr_18(param_1);
-  if (iVar2 == 0) {
+  if (param_1 == (newsFeed_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\newsfeed.cpp",0x238,0,
                     "%s");
   }
-  if ((uVar8 & 0xffffffff) == 0) {
+  if (param_2 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\newsfeed.cpp",0x239,0,
                     "%s");
   }
@@ -819,50 +797,48 @@ void AppendLocalizedStrings(newsFeed_t *param_1,char *param_2,int param_3)
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\newsfeed.cpp",0x23a,0,
                     "%s\n\t(size) = %i");
   }
-  if (iVar2 == 0) {
+  if (param_1 == (newsFeed_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\newsfeed.cpp",0xa3,0,
                     "%s");
   }
-  uVar4 = (ulonglong)*(uint *)(iVar2 + 0x410) + 1;
-  lVar7 = 0;
-  lVar6 = 0;
-  uVar4 = uVar4 + ((longlong)((int)uVar4 >> 1) + (ulonglong)((int)uVar4 < 0 && (uVar4 & 1) != 0) &
+  uVar2 = (ulonglong)(uint)param_1->current + 1;
+  pcVar3 = (char *)0x0;
+  iVar5 = 0;
+  uVar2 = uVar2 + ((longlong)((int)uVar2 >> 1) + (ulonglong)((int)uVar2 < 0 && (uVar2 & 1) != 0) &
                   0x7fffffff) * -2;
-  iVar1 = (int)uVar8;
   if (0 < param_3) {
-    lVar5 = 1 - uVar8;
+    pcVar4 = param_2;
     do {
-      if (*(char *)uVar8 == '\0') {
+      if (*pcVar4 == '\0') {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\newsfeed.cpp",0x240
                         ,0,"%s");
       }
-      iVar3 = isspace((int)*(char *)uVar8);
-      if (iVar3 != 0) {
-        iVar3 = (int)lVar6 - (int)lVar7;
-        Com_Memcpy(local_280,(void *)((int)lVar7 + iVar1),iVar3);
-        local_280[iVar3] = '\0';
+      iVar1 = isspace((int)*pcVar4);
+      if (iVar1 != 0) {
+        Com_Memcpy(local_280,pcVar3 + (int)param_2,iVar5 - (int)pcVar3);
+        local_280[iVar5 - (int)pcVar3] = '\0';
         if (local_280[0] == '@') {
           UI_SafeTranslateString(local_280 + 1);
         }
-        Com_sprintfPos((char *)((int)((uVar4 & 0xffffffff) << 9) + iVar2),0x200,
-                       (int *)((int)((uVar4 + 0x100 & 0xffffffff) << 2) + iVar2),"%s%c");
-        lVar7 = lVar5 + uVar8;
+        Com_sprintfPos(param_1->buffer[0] + (int)((uVar2 & 0xffffffff) << 9),0x200,
+                       (int *)(param_1->buffer[0] + (int)((uVar2 + 0x100 & 0xffffffff) << 2)),"%s%c"
+                      );
+        pcVar3 = pcVar4 + (1 - (int)param_2);
       }
-      lVar6 = lVar6 + 1;
-      uVar8 = uVar8 + 1;
-    } while ((int)lVar6 < param_3);
+      iVar5 = iVar5 + 1;
+      pcVar4 = pcVar4 + 1;
+    } while (iVar5 < param_3);
   }
-  if (lVar6 - lVar7 != 0) {
-    iVar3 = (int)(lVar6 - lVar7);
-    Com_Memcpy(local_280,(void *)((int)lVar7 + iVar1),iVar3);
-    local_280[iVar3] = '\0';
+  iVar5 = iVar5 - (int)pcVar3;
+  if (iVar5 != 0) {
+    Com_Memcpy(local_280,pcVar3 + (int)param_2,iVar5);
+    local_280[iVar5] = '\0';
     if (local_280[0] == '@') {
       UI_SafeTranslateString(local_280 + 1);
     }
-    Com_sprintfPos((char *)((int)((uVar4 & 0xffffffff) << 9) + iVar2),0x200,
-                   (int *)((int)((uVar4 + 0x100 & 0xffffffff) << 2) + iVar2),"%s");
+    Com_sprintfPos(param_1->buffer[0] + (int)((uVar2 & 0xffffffff) << 9),0x200,
+                   (int *)(param_1->buffer[0] + (int)((uVar2 + 0x100 & 0xffffffff) << 2)),"%s");
   }
-  __restgprlr_18();
   return;
 }
 
@@ -894,44 +870,44 @@ void FetchSpec(newsFeed_t *param_1)
 
 // 82363780  ReInitCurrentBuffer  (client/newsfeed.cpp:635)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void ReInitCurrentBuffer(newsFeed_t *param_1)
 
 {
   int iVar2;
-  int iVar3;
-  bool bVar4;
+  bool bVar3;
   ulong64 uVar1;
-  uint uVar5;
+  uint uVar4;
   
-  iVar2 = __savegprlr_28(param_1);
-  iVar3 = CL_GetLocalClientActiveCount();
-  if (iVar3 != 0) {
-    iVar3 = CL_GetFirstActiveControllerIndex();
-    bVar4 = Live_IsSignedIn(iVar3);
-    if (bVar4) {
-      uVar1 = Live_GetXuid(iVar3);
-      *(ulong64 *)(iVar2 + 0x850) = uVar1;
+  iVar2 = CL_GetLocalClientActiveCount();
+  if (iVar2 != 0) {
+    iVar2 = CL_GetFirstActiveControllerIndex();
+    bVar3 = Live_IsSignedIn(iVar2);
+    if (bVar3) {
+      uVar1 = Live_GetXuid(iVar2);
+      param_1->xuid = uVar1;
       goto LAB_823637cc;
     }
   }
-  *(undefined8 *)(iVar2 + 0x850) = 0;
+  param_1->xuid = 0;
 LAB_823637cc:
-  if (1 < *(uint *)(iVar2 + 0x410)) {
+  if (1 < (uint)param_1->current) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\newsfeed.cpp",0x28e,0,
                     "feed->current doesn\'t index MAX_FEED_COUNT\n\t%i not in [0, %i)");
   }
-  *(undefined4 *)(iVar2 + 0x868) = 0;
-  *(undefined4 *)(iVar2 + 0x614) = 0;
-  *(undefined4 *)((*(int *)(iVar2 + 0x410) + 0x100) * 4 + iVar2) = 0;
-  *(int *)((*(int *)(iVar2 + 0x410) + 0x102) * 4 + iVar2) = *(int *)(iVar2 + 0x410) * 0x200 + iVar2;
-  uVar5 = *(int *)(iVar2 + 0x410) + 1;
-  uVar5 = uVar5 + (((int)uVar5 >> 1) + (uint)((int)uVar5 < 0 && (uVar5 & 1) != 0)) * -2;
-  *(uint *)(iVar2 + 0x410) = uVar5;
-  if (1 < uVar5) {
+  param_1->status = FETCH_READY;
+  param_1->parsePos = 0;
+  param_1->bufsize[param_1->current] = 0;
+  param_1->currentTextLocation[param_1->current] = param_1->buffer[param_1->current];
+  uVar4 = param_1->current + 1;
+  uVar4 = uVar4 + (((int)uVar4 >> 1) + (uint)((int)uVar4 < 0 && (uVar4 & 1) != 0)) * -2;
+  param_1->current = uVar4;
+  if (1 < uVar4) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\newsfeed.cpp",0x296,0,
                     "feed->current doesn\'t index MAX_FEED_COUNT\n\t%i not in [0, %i)");
   }
-  __restgprlr_28();
   return;
 }
 
@@ -960,153 +936,141 @@ void Init(newsFeed_t *param_1,int param_2)
 
 // 82363908  Update  (client/newsfeed.cpp:689)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void Update(int param_1,newsFeed_t *param_2)
 
 {
-  newsFeed_t *pnVar1;
+  taskCompleteResults tVar1;
+  bool bVar3;
   int iVar2;
-  taskCompleteResults tVar3;
-  bool bVar5;
-  int iVar4;
-  ulonglong uVar6;
   char acStack_230 [560];
   
-  uVar6 = (ulonglong)(int)param_2;
-  iVar2 = __savegprlr_28(param_1);
-  if ((uVar6 & 0xffffffff) == 0) {
+  if (param_2 == (newsFeed_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\newsfeed.cpp",0x2b5,0,
                     "%s");
   }
-  pnVar1 = (newsFeed_t *)uVar6;
-  if (pnVar1->localControllerIndex == -1) {
-    pnVar1->localControllerIndex = iVar2;
+  if (param_2->localControllerIndex == -1) {
+    param_2->localControllerIndex = param_1;
   }
-  else if (iVar2 != pnVar1->localControllerIndex) {
-    Init(pnVar1,pnVar1->id);
-    __restgprlr_28();
+  else if (param_1 != param_2->localControllerIndex) {
+    Init(param_2,param_2->id);
     return;
   }
-  tVar3 = FetchDataComplete(pnVar1);
-  if ((((tVar3 != TASK_NOTCOMPLETE) && (bVar5 = CL_AllLocalClientsDisconnected(), bVar5)) &&
-      (pnVar1->status == FETCH_READY)) && (iVar4 = Sys_Milliseconds(), pnVar1->nextUpdate <= iVar4))
-  {
-    iVar4 = ParseSpecToDelim(pnVar1,'[',acStack_230,0x200);
-    AppendLocalizedStrings(pnVar1,acStack_230,iVar4);
-    if (pnVar1->spec[pnVar1->parsePos] != '\0') {
-      if (pnVar1->spec[pnVar1->parsePos] != '[') {
+  tVar1 = FetchDataComplete(param_2);
+  if ((((tVar1 != TASK_NOTCOMPLETE) && (bVar3 = CL_AllLocalClientsDisconnected(), bVar3)) &&
+      (param_2->status == FETCH_READY)) &&
+     (iVar2 = Sys_Milliseconds(), param_2->nextUpdate <= iVar2)) {
+    iVar2 = ParseSpecToDelim(param_2,'[',acStack_230,0x200);
+    AppendLocalizedStrings(param_2,acStack_230,iVar2);
+    if (param_2->spec[param_2->parsePos] != '\0') {
+      if (param_2->spec[param_2->parsePos] != '[') {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\newsfeed.cpp",0x2dc
                         ,0,"%s");
       }
-      pnVar1->parsePos = pnVar1->parsePos + 1;
-      ParseSpecToDelim(pnVar1,']',acStack_230,0x200);
-      if (pnVar1->spec[pnVar1->parsePos] == ']') {
-        pnVar1->parsePos = pnVar1->parsePos + 1;
-        FetchData(iVar2,pnVar1,acStack_230);
-        goto LAB_82363a94;
+      param_2->parsePos = param_2->parsePos + 1;
+      ParseSpecToDelim(param_2,']',acStack_230,0x200);
+      if (param_2->spec[param_2->parsePos] == ']') {
+        param_2->parsePos = param_2->parsePos + 1;
+        FetchData(param_1,param_2,acStack_230);
+        return;
       }
       Com_PrintError(1,"Unable to find matching right brace in newsfeed spec.\n");
-      RewindToLastCompleteItem(pnVar1);
-      AdvanceToNextSpecLine(pnVar1);
+      RewindToLastCompleteItem(param_2);
+      AdvanceToNextSpecLine(param_2);
     }
-    FinishUpdate(pnVar1);
-    __restgprlr_28();
+    FinishUpdate(param_2);
     return;
   }
-LAB_82363a94:
-  __restgprlr_28();
   return;
 }
 
 
 // 82363AA0  RunTest  (client/newsfeed.cpp:753)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 bool RunTest(newsFeed_t *param_1,char *param_2,char *param_3)
 
 {
-  FeedStatus FVar1;
-  newsFeed_t *pnVar2;
-  int iVar3;
-  undefined1 uVar4;
+  char cVar1;
+  FeedStatus FVar2;
+  char *pcVar3;
+  int iVar4;
   uint uVar5;
-  ulonglong uVar6;
+  longlong lVar6;
   char *pcVar7;
-  longlong lVar8;
-  longlong lVar9;
-  char *pcVar12;
-  longlong lVar10;
-  char (*pacVar13) [512];
-  undefined8 uVar11;
+  char (*pacVar8) [512];
+  char *pcVar9;
   
-  lVar8 = (longlong)(int)param_3;
-  lVar9 = (longlong)(int)param_2;
-  pnVar2 = (newsFeed_t *)__savegprlr_28(param_1);
   memset();
-  lVar10 = lVar9;
+  pcVar9 = param_2;
   do {
-    pcVar12 = (char *)lVar10;
-    lVar10 = lVar10 + 1;
-  } while (*pcVar12 != '\0');
-  pcVar12 = pnVar2->spec;
+    cVar1 = *pcVar9;
+    pcVar9 = pcVar9 + 1;
+  } while (cVar1 != '\0');
+  pcVar9 = param_1->spec;
   memcpy();
-  FVar1 = pnVar2->status;
-  while (FVar1 != NEXT_READY) {
-    iVar3 = CL_GetFirstActiveControllerIndex();
-    Update(iVar3,pnVar2);
-    FVar1 = pnVar2->status;
+  FVar2 = param_1->status;
+  while (FVar2 != NEXT_READY) {
+    iVar4 = CL_GetFirstActiveControllerIndex();
+    Update(iVar4,param_1);
+    FVar2 = param_1->status;
   }
-  uVar5 = pnVar2->current + 1;
+  uVar5 = param_1->current + 1;
   uVar5 = uVar5 + (((int)uVar5 >> 1) + (uint)((int)uVar5 < 0 && (uVar5 & 1) != 0)) * -2;
-  pnVar2->current = uVar5;
-  lVar10 = lVar8;
+  param_1->current = uVar5;
+  pcVar7 = param_3;
   if (1 < uVar5) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\newsfeed.cpp",0x2fa,0,
                     "feed->current doesn\'t index MAX_FEED_COUNT\n\t%i not in [0, %i)");
   }
   do {
-    pcVar7 = (char *)lVar10;
-    lVar10 = lVar10 + 1;
-  } while (*pcVar7 != '\0');
-  uVar6 = (lVar10 - lVar8) - 1;
-  pacVar13 = pnVar2->buffer + pnVar2->current;
-  lVar10 = 0;
-  if ((uVar6 & 0xffffffff) != 0) {
-    pcVar7 = *pacVar13;
+    cVar1 = *pcVar7;
+    pcVar7 = pcVar7 + 1;
+  } while (cVar1 != '\0');
+  iVar4 = -1 - (int)param_3;
+  pacVar8 = param_1->buffer + param_1->current;
+  lVar6 = 0;
+  if (pcVar7 + iVar4 != (char *)0x0) {
+    pcVar3 = *pacVar8;
     do {
-      lVar10 = (ulonglong)(byte)(*pacVar13)[0] - (ulonglong)*(byte *)lVar8;
-      if (lVar10 != 0) break;
-      pacVar13 = (char (*) [512])(*pacVar13 + 1);
-      lVar8 = lVar8 + 1;
-    } while (pacVar13 != (char (*) [512])(pcVar7 + (int)uVar6));
+      lVar6 = (ulonglong)(byte)(*pacVar8)[0] - (ulonglong)(byte)*param_3;
+      if (lVar6 != 0) break;
+      pacVar8 = (char (*) [512])(*pacVar8 + 1);
+      param_3 = param_3 + 1;
+    } while (pacVar8 != (char (*) [512])(pcVar7 + iVar4 + (int)pcVar3));
   }
-  lVar8 = lVar9;
-  if ((int)lVar10 == 0) {
+  pcVar7 = param_2;
+  if ((int)lVar6 == 0) {
     do {
-      pcVar7 = (char *)lVar8;
-      lVar8 = lVar8 + 1;
-    } while (*pcVar7 != '\0');
-    uVar6 = (lVar8 - lVar9) - 1;
-    lVar10 = 0;
-    if ((uVar6 & 0xffffffff) != 0) {
-      pcVar7 = pcVar12 + (int)uVar6;
+      cVar1 = *pcVar7;
+      pcVar7 = pcVar7 + 1;
+    } while (cVar1 != '\0');
+    lVar6 = 0;
+    if (pcVar7 + (-1 - (int)param_2) != (char *)0x0) {
+      pcVar7 = pcVar9 + (int)(pcVar7 + (-1 - (int)param_2));
       do {
-        lVar10 = (ulonglong)(byte)*pcVar12 - (ulonglong)*(byte *)lVar9;
-        if (lVar10 != 0) break;
-        pcVar12 = pcVar12 + 1;
-        lVar9 = lVar9 + 1;
-      } while (pcVar12 != pcVar7);
+        lVar6 = (ulonglong)(byte)*pcVar9 - (ulonglong)(byte)*param_2;
+        if (lVar6 != 0) break;
+        pcVar9 = pcVar9 + 1;
+        param_2 = param_2 + 1;
+      } while (pcVar9 != pcVar7);
     }
-    uVar11 = 1;
-    if ((int)lVar10 == 0) goto LAB_82363c2c;
+    if ((int)lVar6 == 0) {
+      return true;
+    }
   }
-  uVar11 = 0;
-LAB_82363c2c:
-  uVar4 = __restgprlr_28(uVar11);
-  return (bool)uVar4;
+  return false;
 }
 
 
 // 82363C38  TestUpdate_f  (client/newsfeed.cpp:768)
 
+/* WARNING: Function: __savegprlr_18 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_18 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void TestUpdate_f(void)
@@ -1129,7 +1093,6 @@ void TestUpdate_f(void)
   char *local_f0 [16];
   char *local_b0 [44];
   
-  __savegprlr_18();
   LargeLocal::LargeLocal(aLStack_100,0x870);
   pnVar4 = LargeLocal::GetBuf(aLStack_100);
   local_b0[1] = "[unknown]";
@@ -1233,7 +1196,6 @@ LAB_82363f14:
     if (0x33 < iVar13) {
       Com_DPrintf(1,"%d / %d Tests Passed.\n");
       LargeLocal::~LargeLocal(aLStack_100);
-      __restgprlr_18();
       return;
     }
   } while( true );
@@ -1282,51 +1244,50 @@ void NewsFeed_Shutdown(void)
 
 // 82363F88  NewsFeed_Swap  (client/newsfeed.cpp:866)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void NewsFeed_Swap(int param_1)
 
 {
-  char cVar1;
-  char *pcVar2;
-  bool bVar3;
-  int iVar4;
-  newsFeed_t *pnVar5;
-  bool bVar6;
+  bool bVar1;
+  newsFeed_t *pnVar2;
+  int iVar3;
+  bool bVar4;
+  char *pcVar5;
   
-  iVar4 = __savegprlr_29(param_1);
-  bVar3 = false;
-  pnVar5 = GetFeedForId(iVar4);
-  if (pnVar5 != (newsFeed_t *)0x0) {
-    if (1 < (uint)pnVar5->current) {
+  bVar1 = false;
+  pnVar2 = GetFeedForId(param_1);
+  if (pnVar2 != (newsFeed_t *)0x0) {
+    if (1 < (uint)pnVar2->current) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\newsfeed.cpp",0x36a,0
                       ,"feed->current doesn\'t index MAX_FEED_COUNT\n\t%i not in [0, %i)");
     }
-    pcVar2 = pnVar5->currentTextLocation[pnVar5->current];
-    cVar1 = *pcVar2;
-    while (cVar1 != '\0') {
-      iVar4 = (int)cVar1;
-      if (bVar3) {
-        bVar6 = I_isalnum(iVar4);
-        if (bVar6) break;
-      }
-      else if ((iVar4 == 10) || (iVar4 == 0xd)) {
-        bVar3 = true;
-      }
-      pcVar2 = pcVar2 + 1;
-      cVar1 = *pcVar2;
+    pcVar5 = pnVar2->currentTextLocation[pnVar2->current];
+    iVar3 = (int)*pcVar5;
+    if (*pcVar5 != '\0') {
+      do {
+        if (bVar1) {
+          bVar4 = I_isalnum(iVar3);
+          if (bVar4) break;
+        }
+        else if ((iVar3 == 10) || (iVar3 == 0xd)) {
+          bVar1 = true;
+        }
+        pcVar5 = pcVar5 + 1;
+        iVar3 = (int)*pcVar5;
+      } while (iVar3 != 0);
     }
-    if (*pcVar2 == '\0') {
-      if (pnVar5->status == NEXT_READY) {
-        ReInitCurrentBuffer(pnVar5);
-        __restgprlr_29();
+    if (*pcVar5 == '\0') {
+      if (pnVar2->status != NEXT_READY) {
+        pnVar2->currentTextLocation[pnVar2->current] = pnVar2->buffer[pnVar2->current];
         return;
       }
-      pnVar5->currentTextLocation[pnVar5->current] = pnVar5->buffer[pnVar5->current];
-      __restgprlr_29();
+      ReInitCurrentBuffer(pnVar2);
       return;
     }
-    pnVar5->currentTextLocation[pnVar5->current] = pcVar2;
+    pnVar2->currentTextLocation[pnVar2->current] = pcVar5;
   }
-  __restgprlr_29();
   return;
 }
 
@@ -1417,45 +1378,42 @@ void NewsFeed_FetchSpecs(void)
 
 // 823626E8  `vector_constructor_iterator'  (line unknown)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void _vector_constructor_iterator_
                (void *param_1,uint param_2,int param_3,_func___cdecl_void_ptr_void_ptr *param_4)
 
 {
   longlong lVar1;
-  longlong lVar2;
-  longlong lVar3;
   
-  lVar3 = (longlong)param_3;
-  lVar2 = (longlong)(int)param_2;
-  lVar1 = __savegprlr_28(param_1,lVar2);
-  while (lVar3 = lVar3 + -1, -1 < lVar3) {
-    (*param_4)((void *)lVar1);
-    lVar1 = lVar1 + lVar2;
+  lVar1 = (longlong)param_3;
+  while (lVar1 = lVar1 + -1, -1 < lVar1) {
+    (*param_4)(param_1);
+    param_1 = (void *)((int)param_1 + param_2);
   }
-  __restgprlr_28();
   return;
 }
 
 
 // 82362728  `vector_destructor_iterator'  (line unknown)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void _vector_destructor_iterator_
                (void *param_1,uint param_2,int param_3,_func___cdecl_void_void_ptr *param_4)
 
 {
   longlong lVar1;
-  longlong lVar2;
-  longlong lVar3;
+  void *pvVar2;
   
-  lVar3 = (longlong)param_3;
-  lVar2 = (longlong)(int)param_2;
-  lVar1 = __savegprlr_28(param_1,lVar2);
-  lVar1 = (longlong)(int)lVar2 * (longlong)(int)lVar3 + lVar1;
-  while (lVar3 = lVar3 + -1, -1 < lVar3) {
-    lVar1 = lVar1 - lVar2;
-    (*param_4)((void *)lVar1);
+  lVar1 = (longlong)param_3;
+  pvVar2 = (void *)(param_2 * param_3 + (int)param_1);
+  while (lVar1 = lVar1 + -1, -1 < lVar1) {
+    pvVar2 = (void *)((int)pvVar2 - param_2);
+    (*param_4)(pvVar2);
   }
-  __restgprlr_28();
   return;
 }
 
@@ -1477,33 +1435,34 @@ LeaderBoardRow<10>::_scalar_deleting_destructor_(LeaderBoardRow<10> *this,uint p
 
 // 82364510  bdLeaderBoardResult<LeaderBoardRow<10>,100>  (line unknown)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 bdLeaderBoardResult<LeaderBoardRow<10>,100> * __thiscall
 bdLeaderBoardResult<LeaderBoardRow<10>,100>::bdLeaderBoardResult<LeaderBoardRow<10>,100>
           (bdLeaderBoardResult<LeaderBoardRow<10>,100> *this)
 
 {
-  bdStatsInfo *pbVar1;
-  bdLeaderBoardResult<LeaderBoardRow<10>,100> *pbVar2;
-  longlong lVar3;
-  bdStatsInfo *this_00;
+  longlong lVar1;
+  bdLeaderBoardResult<LeaderBoardRow<10>,100> *this_00;
   
-  pbVar1 = (bdStatsInfo *)__savegprlr_28(this);
-  lVar3 = 99;
-  this_00 = pbVar1;
+  lVar1 = 99;
+  this_00 = this;
   do {
-    bdStatsInfo::bdStatsInfo(this_00);
-    this_00->_padding_ = (int)&LeaderBoardRow<10>::_vftable_;
+    bdStatsInfo::bdStatsInfo((bdStatsInfo *)this_00);
+    this_00->m_leaderBoardEntries[0]._padding_ = (int)&LeaderBoardRow<10>::_vftable_;
     memset();
-    lVar3 = lVar3 + -1;
-    this_00 = (bdStatsInfo *)this_00[1].m_entityName;
-  } while (-1 < lVar3);
-  pbVar2 = (bdLeaderBoardResult<LeaderBoardRow<10>,100> *)__restgprlr_28(pbVar1);
-  return pbVar2;
+    lVar1 = lVar1 + -1;
+    this_00 = (bdLeaderBoardResult<LeaderBoardRow<10>,100> *)(this_00->m_leaderBoardEntries + 1);
+  } while (-1 < lVar1);
+  return this;
 }
 
 
 // 8293FBE0  `dynamic_atexit_destructor_for_'lbData''  (line unknown)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void _dynamic_atexit_destructor_for__lbData__(void)
@@ -1512,7 +1471,6 @@ void _dynamic_atexit_destructor_for__lbData__(void)
   longlong lVar1;
   bdStatsInfo *this;
   
-  __savegprlr_29();
   lVar1 = 99;
   this = (bdStatsInfo *)&lbData.numResults;
   do {
@@ -1521,7 +1479,6 @@ void _dynamic_atexit_destructor_for__lbData__(void)
     bdStatsInfo::~bdStatsInfo(this);
     lVar1 = lVar1 + -1;
   } while (-1 < lVar1);
-  __restgprlr_29();
   return;
 }
 

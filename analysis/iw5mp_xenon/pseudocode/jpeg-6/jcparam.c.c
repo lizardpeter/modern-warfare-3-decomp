@@ -2,113 +2,102 @@
 
 // 827B71F8  jpeg_add_quant_table  (jpeg-6/jcparam.c:31)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void jpeg_add_quant_table
                (jpeg_compress_struct *param_1,int param_2,uint *param_3,int param_4,uchar param_5)
 
 {
-  int *piVar1;
-  jpeg_common_struct *pjVar2;
-  JQUANT_TBL *pJVar3;
-  ulonglong uVar4;
+  JQUANT_TBL *pJVar1;
+  int iVar2;
+  uint *puVar3;
+  int iVar4;
   int iVar5;
   longlong lVar6;
-  int iVar7;
-  int iVar8;
-  int iVar9;
-  longlong lVar10;
   
-  uVar4 = (ulonglong)(char)param_5;
-  lVar6 = (longlong)(int)param_3;
-  lVar10 = (longlong)param_2;
-  pjVar2 = (jpeg_common_struct *)__savegprlr_27(param_1);
-  if (pjVar2->global_state != 100) {
-    pjVar2->err->msg_code = 0x14;
-    (pjVar2->err->msg_parm).i[0] = pjVar2->global_state;
-    (*pjVar2->err->error_exit)(pjVar2);
+  if (param_1->global_state != 100) {
+    param_1->err->msg_code = 0x14;
+    (param_1->err->msg_parm).i[0] = param_1->global_state;
+    (*param_1->err->error_exit)((jpeg_common_struct *)param_1);
   }
-  iVar9 = (int)lVar10;
-  if ((iVar9 < 0) || (3 < iVar9)) {
-    pjVar2->err->msg_code = 0x1f;
-    (pjVar2->err->msg_parm).i[0] = iVar9;
-    (*pjVar2->err->error_exit)(pjVar2);
+  if ((param_2 < 0) || (3 < param_2)) {
+    param_1->err->msg_code = 0x1f;
+    (param_1->err->msg_parm).i[0] = param_2;
+    (*param_1->err->error_exit)((jpeg_common_struct *)param_1);
   }
-  iVar9 = (int)((lVar10 + 0x14U & 0x3fffffff) << 2);
-  if (*(int *)((int)&pjVar2->err + iVar9) == 0) {
-    pJVar3 = jpeg_alloc_quant_table(pjVar2);
-    *(JQUANT_TBL **)((int)&pjVar2->err + iVar9) = pJVar3;
+  if (param_1->quant_tbl_ptrs[param_2] == (JQUANT_TBL *)0x0) {
+    pJVar1 = jpeg_alloc_quant_table((jpeg_common_struct *)param_1);
+    param_1->quant_tbl_ptrs[param_2] = pJVar1;
   }
-  uVar4 = uVar4 & 0xff;
-  iVar5 = 0;
-  lVar6 = lVar6 + 8;
-  lVar10 = 0x10;
+  iVar2 = 0;
+  puVar3 = param_3 + 2;
+  lVar6 = 0x10;
   do {
-    piVar1 = (int *)lVar6;
-    iVar8 = (piVar1[-2] * param_4 + 0x32) / 100;
-    if (iVar8 < 1) {
-      iVar8 = 1;
+    iVar5 = (int)(puVar3[-2] * param_4 + 0x32) / 100;
+    if (iVar5 < 1) {
+      iVar5 = 1;
     }
-    else if (0x7fff < iVar8) {
-      iVar8 = 0x7fff;
+    else if (0x7fff < iVar5) {
+      iVar5 = 0x7fff;
     }
-    if ((uVar4 != 0) && (0xff < iVar8)) {
-      iVar8 = 0xff;
+    if ((param_5 != '\0') && (0xff < iVar5)) {
+      iVar5 = 0xff;
     }
-    *(short *)(*(int *)((int)&pjVar2->err + iVar9) + iVar5) = (short)iVar8;
-    iVar8 = (piVar1[-1] * param_4 + 0x32) / 100;
-    if (iVar8 < 1) {
-      iVar8 = 1;
+    *(short *)((int)param_1->quant_tbl_ptrs[param_2]->quantval + iVar2) = (short)iVar5;
+    iVar5 = (int)(puVar3[-1] * param_4 + 0x32) / 100;
+    if (iVar5 < 1) {
+      iVar5 = 1;
     }
-    else if (0x7fff < iVar8) {
-      iVar8 = 0x7fff;
+    else if (0x7fff < iVar5) {
+      iVar5 = 0x7fff;
     }
-    if ((uVar4 != 0) && (0xff < iVar8)) {
-      iVar8 = 0xff;
+    if ((param_5 != '\0') && (0xff < iVar5)) {
+      iVar5 = 0xff;
     }
-    *(short *)(*(int *)((int)&pjVar2->err + iVar9) + iVar5 + 2) = (short)iVar8;
-    iVar8 = (*piVar1 * param_4 + 0x32) / 100;
-    if (iVar8 < 1) {
-      iVar8 = 1;
+    *(short *)((int)param_1->quant_tbl_ptrs[param_2]->quantval + iVar2 + 2) = (short)iVar5;
+    iVar5 = (int)(*puVar3 * param_4 + 0x32) / 100;
+    if (iVar5 < 1) {
+      iVar5 = 1;
     }
-    else if (0x7fff < iVar8) {
-      iVar8 = 0x7fff;
+    else if (0x7fff < iVar5) {
+      iVar5 = 0x7fff;
     }
-    if ((uVar4 != 0) && (0xff < iVar8)) {
-      iVar8 = 0xff;
+    if ((param_5 != '\0') && (0xff < iVar5)) {
+      iVar5 = 0xff;
     }
-    iVar7 = iVar5 + 6;
-    *(short *)(*(int *)((int)&pjVar2->err + iVar9) + iVar7 + -2) = (short)iVar8;
-    iVar8 = (piVar1[1] * param_4 + 0x32) / 100;
-    if (iVar8 < 1) {
-      iVar8 = 1;
+    iVar4 = iVar2 + 6;
+    *(short *)((int)param_1->quant_tbl_ptrs[param_2]->quantval + iVar2 + 4) = (short)iVar5;
+    iVar5 = (int)(puVar3[1] * param_4 + 0x32) / 100;
+    if (iVar5 < 1) {
+      iVar5 = 1;
     }
-    else if (0x7fff < iVar8) {
-      iVar8 = 0x7fff;
+    else if (0x7fff < iVar5) {
+      iVar5 = 0x7fff;
     }
-    if ((uVar4 != 0) && (0xff < iVar8)) {
-      iVar8 = 0xff;
+    if ((param_5 != '\0') && (0xff < iVar5)) {
+      iVar5 = 0xff;
     }
-    lVar6 = lVar6 + 0x10;
-    iVar5 = iVar5 + 8;
-    *(short *)(*(int *)((int)&pjVar2->err + iVar9) + iVar7) = (short)iVar8;
-    lVar10 = lVar10 + -1;
-  } while (lVar10 != 0);
-  *(undefined1 *)(*(int *)((int)&pjVar2->err + iVar9) + 0x80) = 0;
-  __restgprlr_27();
+    puVar3 = puVar3 + 4;
+    iVar2 = iVar2 + 8;
+    *(short *)((int)param_1->quant_tbl_ptrs[param_2]->quantval + iVar4) = (short)iVar5;
+    lVar6 = lVar6 + -1;
+  } while (lVar6 != 0);
+  param_1->quant_tbl_ptrs[param_2]->sent_table = '\0';
   return;
 }
 
 
 // 827B7400  jpeg_set_linear_quality  (jpeg-6/jcparam.c:71)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void jpeg_set_linear_quality(jpeg_compress_struct *param_1,int param_2,uchar param_3)
 
 {
-  jpeg_compress_struct *pjVar1;
-  
-  pjVar1 = (jpeg_compress_struct *)__savegprlr_28(param_1);
-  jpeg_add_quant_table(pjVar1,0,std_luminance_quant_tbl,param_2,param_3);
-  jpeg_add_quant_table(pjVar1,1,std_chrominance_quant_tbl,param_2,param_3);
-  __restgprlr_28();
+  jpeg_add_quant_table(param_1,0,std_luminance_quant_tbl,param_2,param_3);
+  jpeg_add_quant_table(param_1,1,std_chrominance_quant_tbl,param_2,param_3);
   return;
 }
 
@@ -140,90 +129,82 @@ int jpeg_quality_scaling(int param_1)
 
 // 827B74A8  jpeg_set_quality  (jpeg-6/jcparam.c:138)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void jpeg_set_quality(jpeg_compress_struct *param_1,int param_2,uchar param_3)
 
 {
-  jpeg_compress_struct *pjVar1;
+  longlong lVar1;
   int iVar2;
-  longlong lVar3;
   
-  lVar3 = (longlong)param_2;
-  pjVar1 = (jpeg_compress_struct *)__savegprlr_28(param_1);
-  iVar2 = (int)lVar3;
-  if (iVar2 < 1) {
+  lVar1 = (longlong)param_2;
+  if (param_2 < 1) {
     trapWord(6,1,0);
     iVar2 = 5000;
   }
   else {
-    if (iVar2 < 0x65) {
-      if (iVar2 < 0x32) {
-        trapWord(6,lVar3,0);
-        iVar2 = 5000 / iVar2;
+    if (param_2 < 0x65) {
+      if (param_2 < 0x32) {
+        trapWord(6,lVar1,0);
+        iVar2 = 5000 / param_2;
         goto LAB_827b74f0;
       }
     }
     else {
-      lVar3 = 100;
+      lVar1 = 100;
     }
-    iVar2 = (int)((100U - lVar3 & 0xffffffff) << 1);
+    iVar2 = (int)((100U - lVar1 & 0xffffffff) << 1);
   }
 LAB_827b74f0:
-  jpeg_add_quant_table(pjVar1,0,std_luminance_quant_tbl,iVar2,param_3);
-  jpeg_add_quant_table(pjVar1,1,std_chrominance_quant_tbl,iVar2,param_3);
-  __restgprlr_28();
+  jpeg_add_quant_table(param_1,0,std_luminance_quant_tbl,iVar2,param_3);
+  jpeg_add_quant_table(param_1,1,std_chrominance_quant_tbl,iVar2,param_3);
   return;
 }
 
 
 // 827B7548  add_huff_table  (jpeg-6/jcparam.c:155)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 void add_huff_table(jpeg_compress_struct *param_1,JHUFF_TBL **param_2,uchar *param_3,uchar *param_4)
 
 {
-  int iVar1;
-  jpeg_common_struct *pjVar2;
-  JHUFF_TBL *pJVar3;
-  int *piVar4;
-  longlong lVar5;
+  JHUFF_TBL *pJVar1;
+  int iVar2;
+  int iVar3;
+  int iVar4;
+  int iVar5;
   int iVar6;
-  int iVar7;
-  int iVar8;
-  int iVar9;
-  int iVar10;
-  longlong lVar11;
+  longlong lVar7;
   
-  lVar5 = (longlong)(int)param_3;
-  lVar11 = (longlong)(int)param_2;
-  pjVar2 = (jpeg_common_struct *)__savegprlr_26(param_1,lVar11,lVar5,param_4);
-  piVar4 = (int *)lVar11;
-  if (*piVar4 == 0) {
-    pJVar3 = jpeg_alloc_huff_table(pjVar2);
-    *piVar4 = (int)pJVar3;
+  if (*param_2 == (JHUFF_TBL *)0x0) {
+    pJVar1 = jpeg_alloc_huff_table((jpeg_common_struct *)param_1);
+    *param_2 = pJVar1;
   }
   memcpy();
-  iVar10 = 0;
-  iVar9 = 1;
   iVar6 = 0;
-  iVar7 = 0;
-  iVar8 = 0;
-  lVar11 = 4;
-  iVar1 = (int)lVar5;
+  iVar5 = 1;
+  iVar2 = 0;
+  iVar3 = 0;
+  iVar4 = 0;
+  lVar7 = 4;
   do {
-    iVar10 = (uint)*(byte *)(iVar9 + iVar1) + iVar10;
-    iVar8 = (uint)*(byte *)(iVar1 + 1 + iVar9) + iVar8;
-    iVar7 = (uint)*(byte *)(iVar1 + 2 + iVar9) + iVar7;
-    iVar6 = (uint)*(byte *)(iVar1 + 3 + iVar9) + iVar6;
-    iVar9 = iVar9 + 4;
-    lVar11 = lVar11 + -1;
-  } while (lVar11 != 0);
-  iVar10 = iVar6 + iVar7 + iVar8 + iVar10;
-  if ((iVar10 < 1) || (0x100 < iVar10)) {
-    pjVar2->err->msg_code = 8;
-    (*pjVar2->err->error_exit)(pjVar2);
+    iVar6 = (uint)param_3[iVar5] + iVar6;
+    iVar4 = (uint)param_3[iVar5 + 1] + iVar4;
+    iVar3 = (uint)param_3[iVar5 + 2] + iVar3;
+    iVar2 = (uint)param_3[iVar5 + 3] + iVar2;
+    iVar5 = iVar5 + 4;
+    lVar7 = lVar7 + -1;
+  } while (lVar7 != 0);
+  iVar6 = iVar2 + iVar3 + iVar4 + iVar6;
+  if ((iVar6 < 1) || (0x100 < iVar6)) {
+    param_1->err->msg_code = 8;
+    (*param_1->err->error_exit)((jpeg_common_struct *)param_1);
   }
   memcpy();
-  *(undefined1 *)(*piVar4 + 0x111) = 0;
-  __restgprlr_26();
+  (*param_2)->sent_table = '\0';
   return;
 }
 
@@ -448,193 +429,185 @@ void jpeg_default_colorspace(jpeg_compress_struct *param_1)
 
 // 827B76C8  jpeg_set_colorspace  (jpeg-6/jcparam.c:392)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void jpeg_set_colorspace(jpeg_compress_struct *param_1,J_COLOR_SPACE param_2)
 
 {
-  undefined4 *puVar1;
-  int *piVar2;
-  ulonglong uVar3;
-  int iVar4;
-  int iVar5;
-  int *piVar6;
+  jpeg_component_info *pjVar1;
+  int iVar2;
+  int iVar3;
+  int *piVar4;
   
-  uVar3 = (ulonglong)(int)param_2;
-  piVar2 = (int *)__savegprlr_29(param_1);
-  if (piVar2[5] != 100) {
-    *(undefined4 *)(*piVar2 + 0x14) = 0x14;
-    *(int *)(*piVar2 + 0x18) = piVar2[5];
-    (**(code **)*piVar2)();
+  if (param_1->global_state != 100) {
+    param_1->err->msg_code = 0x14;
+    (param_1->err->msg_parm).i[0] = param_1->global_state;
+    (*param_1->err->error_exit)((jpeg_common_struct *)param_1);
   }
-  piVar2[0x12] = (int)uVar3;
-  *(undefined1 *)(piVar2 + 0x33) = 0;
-  *(undefined1 *)(piVar2 + 0x35) = 0;
-  if ((uVar3 & 0xffffffff) < 6) {
-    if ((int)uVar3 != 0) {
-      if (uVar3 == 1) {
-        puVar1 = (undefined4 *)piVar2[0x13];
-        *(undefined1 *)(piVar2 + 0x33) = 1;
-        piVar2[0x11] = 1;
-        *puVar1 = 1;
-        puVar1[2] = 1;
-        puVar1[3] = 1;
-        puVar1[4] = 0;
-        puVar1[5] = 0;
-        puVar1[6] = 0;
-        __restgprlr_29();
+  param_1->jpeg_color_space = param_2;
+  param_1->write_JFIF_header = '\0';
+  param_1->write_Adobe_marker = '\0';
+  if (param_2 < (JCS_CMYK|JCS_RGB)) {
+    if (param_2 != JCS_UNKNOWN) {
+      if (param_2 == JCS_GRAYSCALE) {
+        pjVar1 = param_1->comp_info;
+        param_1->write_JFIF_header = '\x01';
+        param_1->num_components = 1;
+        pjVar1->component_id = 1;
+        pjVar1->h_samp_factor = 1;
+        pjVar1->v_samp_factor = 1;
+        pjVar1->quant_tbl_no = 0;
+        pjVar1->dc_tbl_no = 0;
+        pjVar1->ac_tbl_no = 0;
         return;
       }
-      if (uVar3 == 2) {
-        puVar1 = (undefined4 *)piVar2[0x13];
-        *(undefined1 *)(piVar2 + 0x35) = 1;
-        piVar2[0x11] = 3;
-        *puVar1 = 0x52;
-        puVar1[2] = 1;
-        puVar1[3] = 1;
-        puVar1[4] = 0;
-        puVar1[5] = 0;
-        puVar1[6] = 0;
-        iVar5 = piVar2[0x13];
-        *(undefined4 *)(iVar5 + 0x54) = 0x47;
-        *(undefined4 *)(iVar5 + 0x5c) = 1;
-        *(undefined4 *)(iVar5 + 0x60) = 1;
-        *(undefined4 *)(iVar5 + 100) = 0;
-        *(undefined4 *)(iVar5 + 0x68) = 0;
-        *(undefined4 *)(iVar5 + 0x6c) = 0;
-        iVar5 = piVar2[0x13];
-        *(undefined4 *)(iVar5 + 0xa8) = 0x42;
-        *(undefined4 *)(iVar5 + 0xb0) = 1;
-        *(undefined4 *)(iVar5 + 0xb4) = 1;
-        *(undefined4 *)(iVar5 + 0xb8) = 0;
-        *(undefined4 *)(iVar5 + 0xbc) = 0;
-        *(undefined4 *)(iVar5 + 0xc0) = 0;
-        __restgprlr_29();
+      if (param_2 == JCS_RGB) {
+        pjVar1 = param_1->comp_info;
+        param_1->write_Adobe_marker = '\x01';
+        param_1->num_components = 3;
+        pjVar1->component_id = 0x52;
+        pjVar1->h_samp_factor = 1;
+        pjVar1->v_samp_factor = 1;
+        pjVar1->quant_tbl_no = 0;
+        pjVar1->dc_tbl_no = 0;
+        pjVar1->ac_tbl_no = 0;
+        pjVar1 = param_1->comp_info;
+        pjVar1[1].component_id = 0x47;
+        pjVar1[1].h_samp_factor = 1;
+        pjVar1[1].v_samp_factor = 1;
+        pjVar1[1].quant_tbl_no = 0;
+        pjVar1[1].dc_tbl_no = 0;
+        pjVar1[1].ac_tbl_no = 0;
+        pjVar1 = param_1->comp_info;
+        pjVar1[2].component_id = 0x42;
+        pjVar1[2].h_samp_factor = 1;
+        pjVar1[2].v_samp_factor = 1;
+        pjVar1[2].quant_tbl_no = 0;
+        pjVar1[2].dc_tbl_no = 0;
+        pjVar1[2].ac_tbl_no = 0;
         return;
       }
-      if (uVar3 == 3) {
-        puVar1 = (undefined4 *)piVar2[0x13];
-        *(undefined1 *)(piVar2 + 0x33) = 1;
-        piVar2[0x11] = 3;
-        *puVar1 = 1;
-        puVar1[2] = 2;
-        puVar1[3] = 2;
-        puVar1[4] = 0;
-        puVar1[5] = 0;
-        puVar1[6] = 0;
-        iVar5 = piVar2[0x13];
-        *(undefined4 *)(iVar5 + 0x54) = 2;
-        *(undefined4 *)(iVar5 + 0x5c) = 1;
-        *(undefined4 *)(iVar5 + 0x60) = 1;
-        *(undefined4 *)(iVar5 + 100) = 1;
-        *(undefined4 *)(iVar5 + 0x68) = 1;
-        *(undefined4 *)(iVar5 + 0x6c) = 1;
-        iVar5 = piVar2[0x13];
-        *(undefined4 *)(iVar5 + 0xa8) = 3;
-        *(undefined4 *)(iVar5 + 0xb0) = 1;
-        *(undefined4 *)(iVar5 + 0xb4) = 1;
-        *(undefined4 *)(iVar5 + 0xb8) = 1;
-        *(undefined4 *)(iVar5 + 0xbc) = 1;
-        *(undefined4 *)(iVar5 + 0xc0) = 1;
-        __restgprlr_29();
+      if (param_2 == JCS_YCbCr) {
+        pjVar1 = param_1->comp_info;
+        param_1->write_JFIF_header = '\x01';
+        param_1->num_components = 3;
+        pjVar1->component_id = 1;
+        pjVar1->h_samp_factor = 2;
+        pjVar1->v_samp_factor = 2;
+        pjVar1->quant_tbl_no = 0;
+        pjVar1->dc_tbl_no = 0;
+        pjVar1->ac_tbl_no = 0;
+        pjVar1 = param_1->comp_info;
+        pjVar1[1].component_id = 2;
+        pjVar1[1].h_samp_factor = 1;
+        pjVar1[1].v_samp_factor = 1;
+        pjVar1[1].quant_tbl_no = 1;
+        pjVar1[1].dc_tbl_no = 1;
+        pjVar1[1].ac_tbl_no = 1;
+        pjVar1 = param_1->comp_info;
+        pjVar1[2].component_id = 3;
+        pjVar1[2].h_samp_factor = 1;
+        pjVar1[2].v_samp_factor = 1;
+        pjVar1[2].quant_tbl_no = 1;
+        pjVar1[2].dc_tbl_no = 1;
+        pjVar1[2].ac_tbl_no = 1;
         return;
       }
-      if (uVar3 != 4) {
-        puVar1 = (undefined4 *)piVar2[0x13];
-        *(undefined1 *)(piVar2 + 0x35) = 1;
-        piVar2[0x11] = 4;
-        *puVar1 = 1;
-        puVar1[2] = 2;
-        puVar1[3] = 2;
-        puVar1[5] = 0;
-        puVar1[6] = 0;
-        puVar1[4] = 0;
-        iVar5 = piVar2[0x13];
-        *(undefined4 *)(iVar5 + 0x54) = 2;
-        *(undefined4 *)(iVar5 + 0x5c) = 1;
-        *(undefined4 *)(iVar5 + 0x60) = 1;
-        *(undefined4 *)(iVar5 + 100) = 1;
-        *(undefined4 *)(iVar5 + 0x68) = 1;
-        *(undefined4 *)(iVar5 + 0x6c) = 1;
-        iVar5 = piVar2[0x13];
-        *(undefined4 *)(iVar5 + 0xa8) = 3;
-        *(undefined4 *)(iVar5 + 0xb0) = 1;
-        *(undefined4 *)(iVar5 + 0xb4) = 1;
-        *(undefined4 *)(iVar5 + 0xb8) = 1;
-        *(undefined4 *)(iVar5 + 0xbc) = 1;
-        *(undefined4 *)(iVar5 + 0xc0) = 1;
-        iVar5 = piVar2[0x13];
-        *(undefined4 *)(iVar5 + 0xfc) = 4;
-        *(undefined4 *)(iVar5 + 0x104) = 2;
-        *(undefined4 *)(iVar5 + 0x108) = 2;
-        *(undefined4 *)(iVar5 + 0x10c) = 0;
-        *(undefined4 *)(iVar5 + 0x110) = 0;
-        *(undefined4 *)(iVar5 + 0x114) = 0;
-        __restgprlr_29();
+      if (param_2 != JCS_CMYK) {
+        pjVar1 = param_1->comp_info;
+        param_1->write_Adobe_marker = '\x01';
+        param_1->num_components = 4;
+        pjVar1->component_id = 1;
+        pjVar1->h_samp_factor = 2;
+        pjVar1->v_samp_factor = 2;
+        pjVar1->dc_tbl_no = 0;
+        pjVar1->ac_tbl_no = 0;
+        pjVar1->quant_tbl_no = 0;
+        pjVar1 = param_1->comp_info;
+        pjVar1[1].component_id = 2;
+        pjVar1[1].h_samp_factor = 1;
+        pjVar1[1].v_samp_factor = 1;
+        pjVar1[1].quant_tbl_no = 1;
+        pjVar1[1].dc_tbl_no = 1;
+        pjVar1[1].ac_tbl_no = 1;
+        pjVar1 = param_1->comp_info;
+        pjVar1[2].component_id = 3;
+        pjVar1[2].h_samp_factor = 1;
+        pjVar1[2].v_samp_factor = 1;
+        pjVar1[2].quant_tbl_no = 1;
+        pjVar1[2].dc_tbl_no = 1;
+        pjVar1[2].ac_tbl_no = 1;
+        pjVar1 = param_1->comp_info;
+        pjVar1[3].component_id = 4;
+        pjVar1[3].h_samp_factor = 2;
+        pjVar1[3].v_samp_factor = 2;
+        pjVar1[3].quant_tbl_no = 0;
+        pjVar1[3].dc_tbl_no = 0;
+        pjVar1[3].ac_tbl_no = 0;
         return;
       }
-      puVar1 = (undefined4 *)piVar2[0x13];
-      *(undefined1 *)(piVar2 + 0x35) = 1;
-      piVar2[0x11] = 4;
-      puVar1[3] = 1;
-      *puVar1 = 0x43;
-      puVar1[2] = 1;
-      puVar1[4] = 0;
-      puVar1[5] = 0;
-      puVar1[6] = 0;
-      iVar5 = piVar2[0x13];
-      *(undefined4 *)(iVar5 + 0x54) = 0x4d;
-      *(undefined4 *)(iVar5 + 0x5c) = 1;
-      *(undefined4 *)(iVar5 + 0x60) = 1;
-      *(undefined4 *)(iVar5 + 100) = 0;
-      *(undefined4 *)(iVar5 + 0x68) = 0;
-      *(undefined4 *)(iVar5 + 0x6c) = 0;
-      iVar5 = piVar2[0x13];
-      *(undefined4 *)(iVar5 + 0xa8) = 0x59;
-      *(undefined4 *)(iVar5 + 0xb0) = 1;
-      *(undefined4 *)(iVar5 + 0xb4) = 1;
-      *(undefined4 *)(iVar5 + 0xb8) = 0;
-      *(undefined4 *)(iVar5 + 0xbc) = 0;
-      *(undefined4 *)(iVar5 + 0xc0) = 0;
-      iVar5 = piVar2[0x13];
-      *(undefined4 *)(iVar5 + 0xfc) = 0x4b;
-      *(undefined4 *)(iVar5 + 0x104) = 1;
-      *(undefined4 *)(iVar5 + 0x108) = 1;
-      *(undefined4 *)(iVar5 + 0x10c) = 0;
-      *(undefined4 *)(iVar5 + 0x110) = 0;
-      *(undefined4 *)(iVar5 + 0x114) = 0;
-      __restgprlr_29();
+      pjVar1 = param_1->comp_info;
+      param_1->write_Adobe_marker = '\x01';
+      param_1->num_components = 4;
+      pjVar1->v_samp_factor = 1;
+      pjVar1->component_id = 0x43;
+      pjVar1->h_samp_factor = 1;
+      pjVar1->quant_tbl_no = 0;
+      pjVar1->dc_tbl_no = 0;
+      pjVar1->ac_tbl_no = 0;
+      pjVar1 = param_1->comp_info;
+      pjVar1[1].component_id = 0x4d;
+      pjVar1[1].h_samp_factor = 1;
+      pjVar1[1].v_samp_factor = 1;
+      pjVar1[1].quant_tbl_no = 0;
+      pjVar1[1].dc_tbl_no = 0;
+      pjVar1[1].ac_tbl_no = 0;
+      pjVar1 = param_1->comp_info;
+      pjVar1[2].component_id = 0x59;
+      pjVar1[2].h_samp_factor = 1;
+      pjVar1[2].v_samp_factor = 1;
+      pjVar1[2].quant_tbl_no = 0;
+      pjVar1[2].dc_tbl_no = 0;
+      pjVar1[2].ac_tbl_no = 0;
+      pjVar1 = param_1->comp_info;
+      pjVar1[3].component_id = 0x4b;
+      pjVar1[3].h_samp_factor = 1;
+      pjVar1[3].v_samp_factor = 1;
+      pjVar1[3].quant_tbl_no = 0;
+      pjVar1[3].dc_tbl_no = 0;
+      pjVar1[3].ac_tbl_no = 0;
       return;
     }
-    iVar5 = piVar2[0xb];
-    piVar2[0x11] = iVar5;
-    if ((iVar5 < 1) || (10 < iVar5)) {
-      *(undefined4 *)(*piVar2 + 0x14) = 0x1a;
-      *(int *)(*piVar2 + 0x18) = piVar2[0x11];
-      *(undefined4 *)(*piVar2 + 0x1c) = 10;
-      (**(code **)*piVar2)(piVar2);
+    iVar3 = param_1->input_components;
+    param_1->num_components = iVar3;
+    if ((iVar3 < 1) || (10 < iVar3)) {
+      param_1->err->msg_code = 0x1a;
+      (param_1->err->msg_parm).i[0] = param_1->num_components;
+      (param_1->err->msg_parm).i[1] = 10;
+      (*param_1->err->error_exit)((jpeg_common_struct *)param_1);
     }
-    iVar5 = 0;
-    if (0 < piVar2[0x11]) {
-      iVar4 = 0;
+    iVar3 = 0;
+    if (0 < param_1->num_components) {
+      iVar2 = 0;
       do {
-        piVar6 = (int *)(iVar4 + piVar2[0x13]);
-        iVar4 = iVar4 + 0x54;
-        *piVar6 = iVar5;
-        iVar5 = iVar5 + 1;
-        piVar6[3] = 1;
-        piVar6[6] = 0;
-        piVar6[4] = 0;
-        piVar6[2] = 1;
-        piVar6[5] = 0;
-      } while (iVar5 < piVar2[0x11]);
-      __restgprlr_29();
+        piVar4 = (int *)((int)&param_1->comp_info->component_id + iVar2);
+        iVar2 = iVar2 + 0x54;
+        *piVar4 = iVar3;
+        iVar3 = iVar3 + 1;
+        piVar4[3] = 1;
+        piVar4[6] = 0;
+        piVar4[4] = 0;
+        piVar4[2] = 1;
+        piVar4[5] = 0;
+      } while (iVar3 < param_1->num_components);
       return;
     }
   }
   else {
-    *(undefined4 *)(*piVar2 + 0x14) = 10;
-    (**(code **)*piVar2)(piVar2);
+    param_1->err->msg_code = 10;
+    (*param_1->err->error_exit)((jpeg_common_struct *)param_1);
   }
-  __restgprlr_29();
   return;
 }
 
@@ -732,31 +705,33 @@ jpeg_scan_info * fill_dc_scans(jpeg_scan_info *param_1,int param_2,int param_3,i
 
 // 827B7B40  jpeg_simple_progression  (jpeg-6/jcparam.c:538)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void jpeg_simple_progression(jpeg_compress_struct *param_1)
 
 {
   uint uVar1;
-  int *piVar2;
-  int iVar3;
-  jpeg_scan_info *pjVar4;
-  longlong lVar5;
-  int iVar6;
-  undefined4 uVar7;
-  longlong lVar8;
+  jpeg_scan_info *pjVar2;
+  int iVar4;
+  longlong lVar3;
+  int iVar5;
+  undefined4 uVar6;
+  longlong lVar7;
+  int *piVar8;
   ulonglong uVar9;
   ulonglong uVar10;
   int iVar11;
   
-  piVar2 = (int *)__savegprlr_29(param_1);
-  uVar1 = piVar2[0x11];
+  uVar1 = param_1->num_components;
   uVar9 = (ulonglong)uVar1;
-  if (piVar2[5] != 100) {
-    *(undefined4 *)(*piVar2 + 0x14) = 0x14;
-    *(int *)(*piVar2 + 0x18) = piVar2[5];
-    (**(code **)*piVar2)();
+  if (param_1->global_state != 100) {
+    param_1->err->msg_code = 0x14;
+    (param_1->err->msg_parm).i[0] = param_1->global_state;
+    (*param_1->err->error_exit)((jpeg_common_struct *)param_1);
   }
   if (uVar1 == 3) {
-    if (piVar2[0x12] == 3) {
+    if (param_1->jpeg_color_space == JCS_YCbCr) {
       uVar10 = 10;
       goto LAB_827b7bc4;
     }
@@ -768,89 +743,90 @@ void jpeg_simple_progression(jpeg_compress_struct *param_1)
   uVar10 = ((ulonglong)uVar1 & 0x3fffffff) * 4 + 2;
 LAB_827b7bc4:
   iVar11 = (int)uVar10;
-  if ((piVar2[0x5a] == 0) || (piVar2[0x5b] < iVar11)) {
+  if ((param_1->script_space == (jpeg_scan_info *)0x0) || (param_1->script_space_size < iVar11)) {
     if (iVar11 < 0xb) {
       uVar10 = 10;
     }
-    piVar2[0x5b] = (int)uVar10;
-    iVar3 = (**(code **)piVar2[1])(piVar2,0,(uVar10 + (uVar10 & 0x1fffffff) * 8 & 0x3fffffff) << 2);
-    piVar2[0x5a] = iVar3;
+    param_1->script_space_size = (int)uVar10;
+    pjVar2 = (*param_1->mem->alloc_small)
+                       ((jpeg_common_struct *)param_1,0,
+                        (uint)((uVar10 + (uVar10 & 0x1fffffff) * 8 & 0xffffffff) << 2));
+    param_1->script_space = pjVar2;
   }
-  pjVar4 = (jpeg_scan_info *)piVar2[0x5a];
-  piVar2[0x2c] = iVar11;
-  piVar2[0x2d] = (int)pjVar4;
-  if ((uVar1 == 3) && (piVar2[0x12] == 3)) {
+  pjVar2 = param_1->script_space;
+  param_1->num_scans = iVar11;
+  param_1->scan_info = pjVar2;
+  if ((uVar1 == 3) && (param_1->jpeg_color_space == JCS_YCbCr)) {
     iVar11 = 3;
-    pjVar4 = fill_dc_scans(pjVar4,3,0,1);
-    iVar6 = 1;
-    iVar3 = 0;
-    pjVar4->comps_in_scan = 1;
-    pjVar4->Ss = 1;
-    pjVar4->component_index[0] = 0;
-    pjVar4->Ah = 0;
-    pjVar4->Se = 5;
-    pjVar4->Al = 2;
-    pjVar4[1].comps_in_scan = 1;
-    pjVar4[1].component_index[0] = 2;
-    pjVar4[1].Ss = 1;
-    pjVar4[1].Se = 0x3f;
-    pjVar4[1].Ah = 0;
-    pjVar4[1].Al = 1;
-    pjVar4[2].comps_in_scan = 1;
-    pjVar4[2].component_index[0] = 1;
-    pjVar4[2].Ss = 1;
-    pjVar4[2].Se = 0x3f;
-    pjVar4[2].Ah = 0;
-    pjVar4[2].Al = 1;
-    pjVar4[3].comps_in_scan = 1;
-    pjVar4[3].component_index[0] = 0;
-    pjVar4[3].Ss = 6;
-    pjVar4[3].Se = 0x3f;
-    pjVar4[3].Ah = 0;
-    pjVar4[3].Al = 2;
-    pjVar4[4].comps_in_scan = 1;
-    pjVar4[4].component_index[0] = 0;
-    pjVar4[4].Ss = 1;
-    pjVar4[4].Se = 0x3f;
-    pjVar4[4].Ah = 2;
-    pjVar4[4].Al = 1;
-    pjVar4 = fill_dc_scans(pjVar4 + 5,iVar11,1,0);
-    pjVar4->comps_in_scan = iVar6;
-    pjVar4->component_index[0] = 2;
-    pjVar4->Ss = iVar6;
-    pjVar4->Se = 0x3f;
-    pjVar4->Ah = iVar6;
-    pjVar4->Al = iVar3;
-    pjVar4[1].comps_in_scan = iVar6;
-    pjVar4[1].component_index[0] = iVar6;
-    pjVar4[1].Ss = iVar6;
-    pjVar4[1].Se = 0x3f;
-    pjVar4[1].Ah = iVar6;
-    pjVar4[1].Al = iVar3;
-    pjVar4[2].comps_in_scan = iVar6;
-    pjVar4[2].component_index[0] = iVar3;
-    pjVar4[2].Ss = iVar6;
-    pjVar4[2].Se = 0x3f;
-    pjVar4[2].Ah = iVar6;
-    pjVar4[2].Al = iVar3;
-    __restgprlr_29();
+    pjVar2 = fill_dc_scans(pjVar2,3,0,1);
+    iVar5 = 1;
+    iVar4 = 0;
+    pjVar2->comps_in_scan = 1;
+    pjVar2->Ss = 1;
+    pjVar2->component_index[0] = 0;
+    pjVar2->Ah = 0;
+    pjVar2->Se = 5;
+    pjVar2->Al = 2;
+    pjVar2[1].comps_in_scan = 1;
+    pjVar2[1].component_index[0] = 2;
+    pjVar2[1].Ss = 1;
+    pjVar2[1].Se = 0x3f;
+    pjVar2[1].Ah = 0;
+    pjVar2[1].Al = 1;
+    pjVar2[2].comps_in_scan = 1;
+    pjVar2[2].component_index[0] = 1;
+    pjVar2[2].Ss = 1;
+    pjVar2[2].Se = 0x3f;
+    pjVar2[2].Ah = 0;
+    pjVar2[2].Al = 1;
+    pjVar2[3].comps_in_scan = 1;
+    pjVar2[3].component_index[0] = 0;
+    pjVar2[3].Ss = 6;
+    pjVar2[3].Se = 0x3f;
+    pjVar2[3].Ah = 0;
+    pjVar2[3].Al = 2;
+    pjVar2[4].comps_in_scan = 1;
+    pjVar2[4].component_index[0] = 0;
+    pjVar2[4].Ss = 1;
+    pjVar2[4].Se = 0x3f;
+    pjVar2[4].Ah = 2;
+    pjVar2[4].Al = 1;
+    pjVar2 = fill_dc_scans(pjVar2 + 5,iVar11,1,0);
+    pjVar2->comps_in_scan = iVar5;
+    pjVar2->component_index[0] = 2;
+    pjVar2->Ss = iVar5;
+    pjVar2->Se = 0x3f;
+    pjVar2->Ah = iVar5;
+    pjVar2->Al = iVar4;
+    pjVar2[1].comps_in_scan = iVar5;
+    pjVar2[1].component_index[0] = iVar5;
+    pjVar2[1].Ss = iVar5;
+    pjVar2[1].Se = 0x3f;
+    pjVar2[1].Ah = iVar5;
+    pjVar2[1].Al = iVar4;
+    pjVar2[2].comps_in_scan = iVar5;
+    pjVar2[2].component_index[0] = iVar4;
+    pjVar2[2].Ss = iVar5;
+    pjVar2[2].Se = 0x3f;
+    pjVar2[2].Ah = iVar5;
+    pjVar2[2].Al = iVar4;
     return;
   }
-  pjVar4 = fill_dc_scans(pjVar4,uVar1,0,1);
-  lVar5 = 0;
-  uVar7 = 1;
+  pjVar2 = fill_dc_scans(pjVar2,uVar1,0,1);
+  lVar3 = 0;
+  uVar6 = 1;
   iVar11 = 0;
   uVar10 = uVar9;
   if (0 < (int)uVar1) {
     do {
-      pjVar4->component_index[0] = iVar11;
+      pjVar2->component_index[0] = iVar11;
       iVar11 = iVar11 + 1;
-      pjVar4->comps_in_scan = 1;
-      pjVar4->Ss = 1;
-      pjVar4->Se = 5;
-      pjVar4->Ah = 0;
-      pjVar4->Al = 2;
-      pjVar4 = pjVar4 + 1;
+      pjVar2->comps_in_scan = 1;
+      pjVar2->Ss = 1;
+      pjVar2->Se = 5;
+      pjVar2->Ah = 0;
+      pjVar2->Al = 2;
+      pjVar2 = pjVar2 + 1;
       uVar10 = uVar10 - 1;
     } while (uVar10 != 0);
   }
@@ -858,14 +834,14 @@ LAB_827b7bc4:
   uVar10 = uVar9;
   if (0 < (int)uVar1) {
     do {
-      pjVar4->component_index[0] = iVar11;
+      pjVar2->component_index[0] = iVar11;
       iVar11 = iVar11 + 1;
-      pjVar4->comps_in_scan = 1;
-      pjVar4->Ss = 6;
-      pjVar4->Se = 0x3f;
-      pjVar4->Ah = 0;
-      pjVar4->Al = 2;
-      pjVar4 = pjVar4 + 1;
+      pjVar2->comps_in_scan = 1;
+      pjVar2->Ss = 6;
+      pjVar2->Se = 0x3f;
+      pjVar2->Ah = 0;
+      pjVar2->Al = 2;
+      pjVar2 = pjVar2 + 1;
       uVar10 = uVar10 - 1;
     } while (uVar10 != 0);
   }
@@ -873,34 +849,33 @@ LAB_827b7bc4:
   uVar10 = uVar9;
   if (0 < (int)uVar1) {
     do {
-      pjVar4->component_index[0] = iVar11;
+      pjVar2->component_index[0] = iVar11;
       iVar11 = iVar11 + 1;
-      pjVar4->comps_in_scan = 1;
-      pjVar4->Ss = 1;
-      pjVar4->Se = 0x3f;
-      pjVar4->Ah = 2;
-      pjVar4->Al = 1;
-      pjVar4 = pjVar4 + 1;
+      pjVar2->comps_in_scan = 1;
+      pjVar2->Ss = 1;
+      pjVar2->Se = 0x3f;
+      pjVar2->Ah = 2;
+      pjVar2->Al = 1;
+      pjVar2 = pjVar2 + 1;
       uVar10 = uVar10 - 1;
     } while (uVar10 != 0);
   }
-  pjVar4 = fill_dc_scans(pjVar4,uVar1,1,0);
+  pjVar2 = fill_dc_scans(pjVar2,uVar1,1,0);
   if (0 < (int)uVar1) {
-    piVar2 = &pjVar4[-1].Al;
-    lVar8 = lVar5;
+    piVar8 = &pjVar2[-1].Al;
+    lVar7 = lVar3;
     do {
-      piVar2[2] = (int)lVar8;
-      lVar8 = lVar8 + 1;
-      piVar2[1] = uVar7;
-      piVar2[6] = uVar7;
-      piVar2[7] = 0x3f;
-      piVar2[8] = uVar7;
-      piVar2 = piVar2 + 9;
-      *piVar2 = (int)lVar5;
+      piVar8[2] = (int)lVar7;
+      lVar7 = lVar7 + 1;
+      piVar8[1] = uVar6;
+      piVar8[6] = uVar6;
+      piVar8[7] = 0x3f;
+      piVar8[8] = uVar6;
+      piVar8 = piVar8 + 9;
+      *piVar8 = (int)lVar3;
       uVar9 = uVar9 - 1;
     } while (uVar9 != 0);
   }
-  __restgprlr_29();
   return;
 }
 

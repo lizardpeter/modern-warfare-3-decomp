@@ -97,70 +97,69 @@ void * FileWrapper_OpenWriteBinary(char *param_1)
 
 // 824DB068  FileWrapper_Rotate  (universal/com_files_wrapper_ms.h:81)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void FileWrapper_Rotate(char *param_1)
 
 {
-  char *pcVar1;
-  void *pvVar2;
-  long lVar3;
+  void *pvVar1;
+  long lVar2;
+  int iVar3;
   int iVar4;
   int iVar5;
-  int iVar6;
   _FILETIME local_280 [2];
   char acStack_270 [256];
   _WIN32_FIND_DATAA _Stack_170;
   
-  pcVar1 = (char *)__savegprlr_28(param_1);
-  pvVar2 = FindFirstFileA(pcVar1,&_Stack_170);
-  if (pvVar2 != (void *)0xffffffff) {
-    CloseHandle(pvVar2);
-    iVar6 = 0;
+  pvVar1 = FindFirstFileA(param_1,&_Stack_170);
+  if (pvVar1 != (void *)0xffffffff) {
+    CloseHandle(pvVar1);
+    iVar5 = 0;
     local_280[0].dwHighDateTime = 0;
     local_280[0].dwLowDateTime = 0;
-    iVar4 = -1;
+    iVar3 = -1;
     do {
       sprintf(acStack_270,"%s.%03i");
-      pvVar2 = FindFirstFileA(acStack_270,&_Stack_170);
-      iVar5 = iVar6;
-      if (pvVar2 == (void *)0xffffffff) break;
-      CloseHandle(pvVar2);
-      if ((iVar4 == -1) ||
-         (lVar3 = CompareFileTime(local_280,&_Stack_170.ftLastWriteTime), iVar5 = iVar4, 0 < lVar3))
+      pvVar1 = FindFirstFileA(acStack_270,&_Stack_170);
+      iVar4 = iVar5;
+      if (pvVar1 == (void *)0xffffffff) break;
+      CloseHandle(pvVar1);
+      if ((iVar3 == -1) ||
+         (lVar2 = CompareFileTime(local_280,&_Stack_170.ftLastWriteTime), iVar4 = iVar3, 0 < lVar2))
       {
         local_280[0] = _Stack_170.ftLastWriteTime;
-        iVar5 = iVar6;
+        iVar4 = iVar5;
       }
-      iVar6 = iVar6 + 1;
-      iVar4 = iVar5;
-    } while (iVar6 < 0x14);
-    if (iVar5 < 0) {
+      iVar5 = iVar5 + 1;
+      iVar3 = iVar4;
+    } while (iVar5 < 0x14);
+    if (iVar4 < 0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\../universal/com_files_wrapper_ms.h"
                       ,0x77,0,"%s");
     }
     sprintf(acStack_270,"%s.%03i");
     DeleteFileA(acStack_270);
-    pvVar2 = (void *)MoveFileA(pcVar1,acStack_270);
+    MoveFileA(param_1,acStack_270);
   }
-  __restgprlr_28(pvVar2);
   return;
 }
 
 
 // 824DB350  FS_FileRead  (qcommon/com_fileaccess.cpp:99)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 uint FS_FileRead(void *param_1,uint param_2,_iobuf *param_3)
 
 {
-  void *pvVar1;
-  uint uVar2;
-  ulong local_30 [12];
+  uint local_30 [12];
   
-  pvVar1 = (void *)__savegprlr_29(param_1);
   ProfLoad_BeginTrackedValue(MAP_PROFILE_FILE_READ);
-  ReadFile(param_3,pvVar1,param_2,local_30,(_OVERLAPPED *)0x0);
+  ReadFile(param_3,param_1,param_2,local_30,(_OVERLAPPED *)0x0);
   ProfLoad_EndTrackedValue(MAP_PROFILE_FILE_READ);
-  uVar2 = __restgprlr_29(local_30[0]);
-  return uVar2;
+  return local_30[0];
 }
 
 
@@ -351,51 +350,51 @@ _iobuf * FS_FileOpenWriteText(char *param_1)
 
 // 824DB5E0  FS_FileRotate  (qcommon/com_fileaccess.cpp:288)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void FS_FileRotate(char *param_1)
 
 {
-  char *pcVar1;
-  void *pvVar2;
-  long lVar3;
+  void *pvVar1;
+  long lVar2;
+  int iVar3;
   int iVar4;
   int iVar5;
-  int iVar6;
   _FILETIME a_Stack_280 [2];
   char acStack_270 [256];
   _WIN32_FIND_DATAA _Stack_170;
   
-  pcVar1 = (char *)__savegprlr_28(param_1);
-  pvVar2 = FindFirstFileA(pcVar1,&_Stack_170);
-  if (pvVar2 != (void *)0xffffffff) {
-    CloseHandle(pvVar2);
-    iVar6 = 0;
+  pvVar1 = FindFirstFileA(param_1,&_Stack_170);
+  if (pvVar1 != (void *)0xffffffff) {
+    CloseHandle(pvVar1);
+    iVar5 = 0;
     a_Stack_280[0].dwHighDateTime = 0;
     a_Stack_280[0].dwLowDateTime = 0;
-    iVar4 = -1;
+    iVar3 = -1;
     do {
       sprintf(acStack_270,"%s.%03i");
-      pvVar2 = FindFirstFileA(acStack_270,&_Stack_170);
-      iVar5 = iVar6;
-      if (pvVar2 == (void *)0xffffffff) break;
-      CloseHandle(pvVar2);
-      if ((iVar4 == -1) ||
-         (lVar3 = CompareFileTime(a_Stack_280,&_Stack_170.ftLastWriteTime), iVar5 = iVar4, 0 < lVar3
+      pvVar1 = FindFirstFileA(acStack_270,&_Stack_170);
+      iVar4 = iVar5;
+      if (pvVar1 == (void *)0xffffffff) break;
+      CloseHandle(pvVar1);
+      if ((iVar3 == -1) ||
+         (lVar2 = CompareFileTime(a_Stack_280,&_Stack_170.ftLastWriteTime), iVar4 = iVar3, 0 < lVar2
          )) {
         a_Stack_280[0] = _Stack_170.ftLastWriteTime;
-        iVar5 = iVar6;
+        iVar4 = iVar5;
       }
-      iVar6 = iVar6 + 1;
-      iVar4 = iVar5;
-    } while (iVar6 < 0x14);
-    if (iVar5 < 0) {
+      iVar5 = iVar5 + 1;
+      iVar3 = iVar4;
+    } while (iVar5 < 0x14);
+    if (iVar4 < 0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\../universal/com_files_wrapper_ms.h"
                       ,0x77,0,"%s");
     }
     sprintf(acStack_270,"%s.%03i");
     DeleteFileA(acStack_270);
-    pvVar2 = (void *)MoveFileA(pcVar1,acStack_270);
+    MoveFileA(param_1,acStack_270);
   }
-  __restgprlr_28(pvVar2);
   return;
 }
 
@@ -417,18 +416,18 @@ void FS_FileClose(_iobuf *param_1)
 
 // 824DB5F0  FS_FileSeek  (qcommon/com_fileaccess.cpp:315)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 int FS_FileSeek(_iobuf *param_1,long param_2,int param_3)
 
 {
-  void *pvVar1;
-  int iVar2;
+  int iVar1;
   
-  pvVar1 = (void *)__savegprlr_29(param_1);
   ProfLoad_BeginTrackedValue(MAP_PROFILE_FILE_SEEK);
-  iVar2 = FileWrapper_Seek(pvVar1,param_2,param_3);
+  iVar1 = FileWrapper_Seek(param_1,param_2,param_3);
   ProfLoad_EndTrackedValue(MAP_PROFILE_FILE_SEEK);
-  iVar2 = __restgprlr_29(iVar2);
-  return iVar2;
+  return iVar1;
 }
 
 

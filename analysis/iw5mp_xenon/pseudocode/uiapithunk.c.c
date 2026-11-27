@@ -26,31 +26,17 @@ ulong XShowFriendsUI(ulong param_1)
 
 // 828A1CE8  XShowKeyboardUI  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/uiapithunk.c:86)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
+
 ulong XShowKeyboardUI(ulong param_1,ulong param_2,wchar_t *param_3,wchar_t *param_4,wchar_t *param_5
                      ,ushort *param_6,ulong param_7,_XOVERLAPPED *param_8)
 
 {
-  undefined8 uVar1;
-  ulong uVar2;
-  longlong lVar3;
-  longlong lVar4;
-  longlong lVar5;
-  longlong lVar6;
-  longlong lVar7;
-  longlong lVar8;
-  longlong lVar9;
+  ulong uVar1;
   
-  lVar9 = (longlong)(int)param_8;
-  lVar8 = (longlong)(int)param_7;
-  lVar7 = (longlong)(int)param_6;
-  lVar6 = (longlong)(int)param_5;
-  lVar5 = (longlong)(int)param_4;
-  lVar4 = (longlong)(int)param_3;
-  lVar3 = (longlong)(int)param_2;
-  uVar1 = __savegprlr_24(param_1,lVar3,lVar4,lVar5,lVar6,lVar7,lVar8,lVar9);
-  uVar1 = XamShowKeyboardUI(uVar1,lVar3,lVar4,lVar5,lVar6,lVar7,lVar8,lVar9);
-  uVar2 = __restgprlr_24(uVar1);
-  return uVar2;
+  uVar1 = XamShowKeyboardUI(param_1,param_2,param_3,param_4,param_5,param_6,param_7,param_8);
+  return uVar1;
 }
 
 
@@ -68,76 +54,50 @@ ulong XShowGamerCardUI(ulong param_1,ulong64 param_2)
 
 // 828A1DA8  XShowMarketplaceUI  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/uiapithunk.c:196)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 ulong XShowMarketplaceUI(ulong param_1,ulong param_2,ulong64 param_3,ulong param_4)
 
 {
-  undefined8 uVar1;
-  ulong uVar2;
-  longlong lVar3;
-  longlong lVar4;
+  ulong uVar1;
   
-  lVar4 = (longlong)(int)param_4;
-  lVar3 = (longlong)(int)param_2;
-  uVar1 = __savegprlr_28(param_1,lVar3,param_3,lVar4);
-  uVar1 = XamShowMarketplaceUI(uVar1,lVar3,param_3,0xffffffffffffffff,lVar4,0);
-  uVar2 = __restgprlr_28(uVar1);
-  return uVar2;
+  uVar1 = XamShowMarketplaceUI(param_1,param_2,param_3,0xffffffffffffffff,param_4,0);
+  return uVar1;
 }
 
 
 // 828A1DF8  XShowDeviceSelectorUI  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/uiapithunk.c:246)
+
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 
 ulong XShowDeviceSelectorUI
                 (ulong param_1,ulong param_2,ulong param_3,_ULARGE_INTEGER param_4,ulong *param_5,
                 _XOVERLAPPED *param_6)
 
 {
-  undefined8 uVar1;
-  ulong uVar2;
-  longlong lVar3;
-  longlong lVar4;
-  longlong lVar5;
-  longlong lVar6;
+  ulong uVar1;
   
-  lVar6 = (longlong)(int)param_6;
-  lVar5 = (longlong)(int)param_5;
-  lVar4 = (longlong)(int)param_3;
-  lVar3 = (longlong)(int)param_2;
-  uVar1 = __savegprlr_26(param_1,lVar3,lVar4,param_4.QuadPart,lVar5,lVar6);
-  uVar1 = XamShowDeviceSelectorUI(uVar1,lVar3,lVar4,param_4.QuadPart,lVar5,lVar6);
-  uVar2 = __restgprlr_26(uVar1);
-  return uVar2;
+  uVar1 = XamShowDeviceSelectorUI(param_1,param_2,param_3,param_4.QuadPart,param_5,param_6);
+  return uVar1;
 }
 
 
 // 828A1E50  XShowMessageBoxUI  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/uiapithunk.c:271)
+
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 
 ulong XShowMessageBoxUI(ulong param_1,wchar_t *param_2,wchar_t *param_3,ulong param_4,
                        wchar_t **param_5,ulong param_6,ulong param_7,_MESSAGEBOX_RESULT *param_8,
                        _XOVERLAPPED *param_9)
 
 {
-  undefined8 uVar1;
-  ulong uVar2;
-  longlong lVar3;
-  longlong lVar4;
-  longlong lVar5;
-  longlong lVar6;
-  longlong lVar7;
-  longlong lVar8;
-  longlong lVar9;
+  ulong uVar1;
   
-  lVar9 = (longlong)(int)param_8;
-  lVar8 = (longlong)(int)param_7;
-  lVar7 = (longlong)(int)param_6;
-  lVar6 = (longlong)(int)param_5;
-  lVar5 = (longlong)(int)param_4;
-  lVar4 = (longlong)(int)param_3;
-  lVar3 = (longlong)(int)param_2;
-  uVar1 = __savegprlr_24(param_1,lVar3,lVar4,lVar5,lVar6,lVar7,lVar8,lVar9);
-  uVar1 = XamShowMessageBoxUI(uVar1,lVar3,lVar4,lVar5,lVar6,lVar7,lVar8,lVar9);
-  uVar2 = __restgprlr_24(uVar1);
-  return uVar2;
+  uVar1 = XamShowMessageBoxUI(param_1,param_2,param_3,param_4,param_5,param_6,param_7,param_8);
+  return uVar1;
 }
 
 

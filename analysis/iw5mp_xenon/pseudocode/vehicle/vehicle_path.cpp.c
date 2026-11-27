@@ -30,6 +30,9 @@ void VehPath_DebugLine(float *param_1,float *param_2)
 
 // 826C05A8  VehPath_PathDebugLine  (vehicle/vehicle_path.cpp:211)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
+
 void VehPath_PathDebugLine(float *param_1,float *param_2,int param_3)
 
 {
@@ -38,47 +41,43 @@ void VehPath_PathDebugLine(float *param_1,float *param_2,int param_3)
   float fVar3;
   float fVar4;
   float fVar5;
-  float *pfVar6;
+  double dVar6;
   double dVar7;
   double dVar8;
-  double dVar9;
   float local_70 [28];
   
-  pfVar6 = (float *)__savegprlr_25(param_1);
-  fVar2 = *param_2 - *pfVar6;
-  fVar1 = param_2[2] - pfVar6[2];
-  fVar3 = param_2[1] - pfVar6[1];
-  fVar5 = SQRT(fVar3 * fVar3 + fVar1 * fVar1 + fVar2 * fVar2);
+  fVar1 = *param_2 - *param_1;
+  fVar2 = param_2[2] - param_1[2];
+  fVar3 = param_2[1] - param_1[1];
+  fVar5 = SQRT(fVar3 * fVar3 + fVar2 * fVar2 + fVar1 * fVar1);
   fVar4 = 1.0;
   if (-fVar5 < 0.0) {
     fVar4 = fVar5;
   }
   fVar4 = 1.0 / fVar4;
-  dVar9 = (double)(fVar4 * fVar2);
-  dVar8 = (double)(fVar4 * fVar3);
-  dVar7 = (double)(fVar1 * fVar4);
+  dVar8 = (double)(fVar4 * fVar1);
+  dVar7 = (double)(fVar4 * fVar3);
+  dVar6 = (double)(fVar2 * fVar4);
   if (s_newDebugLine != 0) {
-    s_start[1] = pfVar6[1];
-    s_start[2] = pfVar6[2];
+    s_start[0] = *param_1;
+    s_start[1] = param_1[1];
     s_newDebugLine = 0;
+    s_start[2] = param_1[2];
     s_end[0] = *param_2;
     s_end[1] = param_2[1];
     s_end[2] = param_2[2];
-    s_dir[0] = fVar4 * fVar2;
+    s_dir[0] = fVar4 * fVar1;
     s_dir[1] = fVar4 * fVar3;
-    s_dir[2] = fVar1 * fVar4;
-    s_start[0] = *pfVar6;
-    __restgprlr_25();
+    s_dir[2] = fVar2 * fVar4;
     return;
   }
-  if ((0.9999 <= (float)((double)s_dir[2] * dVar7 +
-                        (double)(float)((double)s_dir[0] * dVar9 +
-                                       (double)(float)((double)s_dir[1] * dVar8)))) &&
+  if ((0.9999 <= (float)((double)s_dir[2] * dVar6 +
+                        (double)(float)((double)s_dir[0] * dVar8 +
+                                       (double)(float)((double)s_dir[1] * dVar7)))) &&
      (param_3 == 0)) {
+    s_end[0] = *param_2;
     s_end[1] = param_2[1];
     s_end[2] = param_2[2];
-    s_end[0] = *param_2;
-    __restgprlr_25();
     return;
   }
   local_70[0] = 1.0;
@@ -86,21 +85,23 @@ void VehPath_PathDebugLine(float *param_1,float *param_2,int param_3)
   local_70[1] = 0.0;
   local_70[2] = 0.0;
   G_DebugLine(s_start,s_end,local_70,1);
-  s_start[0] = *pfVar6;
-  s_start[1] = pfVar6[1];
-  s_start[2] = pfVar6[2];
+  s_start[0] = *param_1;
+  s_start[1] = param_1[1];
+  s_start[2] = param_1[2];
   s_end[0] = *param_2;
   s_end[1] = param_2[1];
   s_end[2] = param_2[2];
-  s_dir[0] = (float)dVar9;
-  s_dir[1] = (float)dVar8;
-  s_dir[2] = (float)dVar7;
-  __restgprlr_25();
+  s_dir[0] = (float)dVar8;
+  s_dir[1] = (float)dVar7;
+  s_dir[2] = (float)dVar6;
   return;
 }
 
 
 // 826C0790  VehPath_SetScriptVariable  (vehicle/vehicle_path.cpp:297)
+
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 
 void VehPath_SetScriptVariable(uint param_1,char *param_2,VehiclePathNode *param_3)
 
@@ -112,8 +113,7 @@ void VehPath_SetScriptVariable(uint param_1,char *param_2,VehiclePathNode *param
   int local_40 [2];
   float local_38 [14];
   
-  uVar1 = __savegprlr_29(param_1);
-  uVar1 = Scr_FindField(uVar1,local_40);
+  uVar1 = Scr_FindField(param_1,local_40);
   if (uVar1 != 0) {
     if ((local_40[0] - 2U < 5) && (local_40[0] != 3)) {
       if (local_40[0] == 4) {
@@ -135,94 +135,86 @@ void VehPath_SetScriptVariable(uint param_1,char *param_2,VehiclePathNode *param
         Scr_AddInt(iVar2);
       }
       Scr_SetDynamicEntityField((int)param_3->index,3,uVar1);
-      __restgprlr_29();
       return;
     }
     pcVar3 = va("VehPath_SetScriptVariable: bad case %d");
     Scr_Error(pcVar3);
   }
-  __restgprlr_29();
   return;
 }
 
 
 // 826C0880  VehPath_ParseField  (vehicle/vehicle_path.cpp:343)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void VehPath_ParseField(char *param_1,char *param_2,VehiclePathNode *param_3)
 
 {
   ushort *puVar1;
-  char *pcVar2;
-  uint uVar3;
-  int iVar4;
-  VehicleNodeField *pVVar5;
-  double dVar6;
-  float fVar7;
+  uint uVar2;
+  int iVar3;
+  VehicleNodeField *pVVar4;
+  double dVar5;
+  float fVar6;
   
-  pcVar2 = (char *)__savegprlr_28(param_1);
-  uVar3 = SL_FindString(pcVar2);
-  pVVar5 = vehicleNodeFields;
+  uVar2 = SL_FindString(param_1);
+  pVVar4 = vehicleNodeFields;
   puVar1 = vehicleNodeFields[0].name;
-  do {
+  while( true ) {
     if (puVar1 == (ushort *)0x0) {
-      uVar3 = SL_GetCanonicalString(pcVar2);
-      VehPath_SetScriptVariable(uVar3,param_2,param_3);
-switchD_826c0904_caseD_4:
-      __restgprlr_28();
+      uVar2 = SL_GetCanonicalString(param_1);
+      VehPath_SetScriptVariable(uVar2,param_2,param_3);
       return;
     }
-    if (*puVar1 == uVar3) {
-      switch(pVVar5->type) {
-      case F_INT:
-        iVar4 = atoi(param_2);
-        *(int *)((int)param_3->origin + pVVar5->ofs + -0x14) = iVar4;
-        __restgprlr_28();
-        return;
-      case F_SHORT:
-        iVar4 = atoi(param_2);
-        *(short *)((int)param_3->origin + pVVar5->ofs + -0x14) = (short)iVar4;
-        __restgprlr_28();
-        return;
-      case F_BYTE:
-        iVar4 = atoi(param_2);
-        *(char *)((int)param_3->origin + pVVar5->ofs + -0x14) = (char)iVar4;
-        __restgprlr_28();
-        return;
-      case F_FLOAT:
-        dVar6 = atof(param_2);
-        *(float *)((int)param_3->origin + pVVar5->ofs + -0x14) = (float)dVar6;
-        __restgprlr_28();
-        return;
-      case F_STRING:
-        Scr_SetString((ushort *)((int)param_3->origin + pVVar5->ofs + -0x14),0);
-        uVar3 = G_NewString(param_2);
-        *(short *)((int)param_3->origin + pVVar5->ofs + -0x14) = (short)uVar3;
-        __restgprlr_28();
-        return;
-      case F_VECTOR:
-        iVar4 = sscanf(param_2,"%f %f %f");
-        *(undefined4 *)((int)param_3->origin + pVVar5->ofs + -0x14) = 0;
-        *(undefined4 *)((int)param_3->origin + pVVar5->ofs + -0x10) = 0;
-        *(undefined4 *)((int)param_3->origin + pVVar5->ofs + -0xc) = 0;
-        __restgprlr_28(iVar4);
-        return;
-      case F_ANGLES_YAW:
-        sscanf(param_2,"%f %f %f");
-        fVar7 = AngleNormalize360(0.0);
-        *(float *)((int)param_3->origin + pVVar5->ofs + -0x14) = fVar7;
-        __restgprlr_28();
-        return;
-      }
-      goto switchD_826c0904_caseD_4;
-    }
-    pVVar5 = pVVar5 + 1;
-    puVar1 = pVVar5->name;
-  } while( true );
+    if (*puVar1 == uVar2) break;
+    pVVar4 = pVVar4 + 1;
+    puVar1 = pVVar4->name;
+  }
+  switch(pVVar4->type) {
+  case F_INT:
+    iVar3 = atoi(param_2);
+    *(int *)((int)param_3->origin + pVVar4->ofs + -0x14) = iVar3;
+    return;
+  case F_SHORT:
+    iVar3 = atoi(param_2);
+    *(short *)((int)param_3->origin + pVVar4->ofs + -0x14) = (short)iVar3;
+    return;
+  case F_BYTE:
+    iVar3 = atoi(param_2);
+    *(char *)((int)param_3->origin + pVVar4->ofs + -0x14) = (char)iVar3;
+    return;
+  case F_FLOAT:
+    dVar5 = atof(param_2);
+    *(float *)((int)param_3->origin + pVVar4->ofs + -0x14) = (float)dVar5;
+    return;
+  default:
+    return;
+  case F_STRING:
+    Scr_SetString((ushort *)((int)param_3->origin + pVVar4->ofs + -0x14),0);
+    uVar2 = G_NewString(param_2);
+    *(short *)((int)param_3->origin + pVVar4->ofs + -0x14) = (short)uVar2;
+    return;
+  case F_VECTOR:
+    sscanf(param_2,"%f %f %f");
+    *(undefined4 *)((int)param_3->origin + pVVar4->ofs + -0x14) = 0;
+    *(undefined4 *)((int)param_3->origin + pVVar4->ofs + -0x10) = 0;
+    *(undefined4 *)((int)param_3->origin + pVVar4->ofs + -0xc) = 0;
+    return;
+  case F_ANGLES_YAW:
+    sscanf(param_2,"%f %f %f");
+    fVar6 = AngleNormalize360(0.0);
+    *(float *)((int)param_3->origin + pVVar4->ofs + -0x14) = fVar6;
+    return;
+  }
 }
 
 
 // 826C0A68  VehPath_ParseAllFields  (vehicle/vehicle_path.cpp:424)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 
@@ -236,81 +228,78 @@ void VehPath_ParseAllFields(VehiclePathNode *param_1)
   float fVar5;
   VehicleNodeField *pVVar6;
   SpawnVar *pSVar7;
-  VehiclePathNode *pVVar8;
-  uint uVar9;
+  uint uVar8;
+  int iVar9;
   int iVar10;
-  int iVar11;
+  double dVar11;
   double dVar12;
-  double dVar13;
-  float fVar14;
+  float fVar13;
   
-  pVVar8 = (VehiclePathNode *)__savegprlr_23(param_1);
-  if (level.spawnVar.spawnVarsValid == false) {
+  if (!level.spawnVar.spawnVarsValid) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_path.cpp",
                     0x1ab,0,"%s");
   }
-  iVar11 = 0;
+  iVar10 = 0;
   if (0 < level.spawnVar.numSpawnVars) {
-    dVar13 = 0.0;
+    dVar12 = 0.0;
     pSVar7 = &level.spawnVar;
     do {
       pcVar1 = pSVar7->spawnVars[0][0];
       pcVar2 = pSVar7->spawnVars[0][1];
-      uVar9 = SL_FindString(pcVar1);
+      uVar8 = SL_FindString(pcVar1);
       pVVar6 = vehicleNodeFields;
       puVar3 = vehicleNodeFields[0].name;
       while (puVar3 != (ushort *)0x0) {
-        if (*puVar3 == uVar9) {
+        if (*puVar3 == uVar8) {
           switch(pVVar6->type) {
           case F_INT:
-            iVar10 = atoi(pcVar2);
-            *(int *)((int)pVVar8->origin + pVVar6->ofs + -0x14) = iVar10;
+            iVar9 = atoi(pcVar2);
+            *(int *)((int)param_1->origin + pVVar6->ofs + -0x14) = iVar9;
             break;
           case F_SHORT:
-            iVar10 = atoi(pcVar2);
-            *(short *)((int)pVVar8->origin + pVVar6->ofs + -0x14) = (short)iVar10;
+            iVar9 = atoi(pcVar2);
+            *(short *)((int)param_1->origin + pVVar6->ofs + -0x14) = (short)iVar9;
             break;
           case F_BYTE:
-            iVar10 = atoi(pcVar2);
-            *(char *)((int)pVVar8->origin + pVVar6->ofs + -0x14) = (char)iVar10;
+            iVar9 = atoi(pcVar2);
+            *(char *)((int)param_1->origin + pVVar6->ofs + -0x14) = (char)iVar9;
             break;
           case F_FLOAT:
-            dVar12 = atof(pcVar2);
-            *(float *)((int)pVVar8->origin + pVVar6->ofs + -0x14) = (float)dVar12;
+            dVar11 = atof(pcVar2);
+            *(float *)((int)param_1->origin + pVVar6->ofs + -0x14) = (float)dVar11;
             break;
           case F_STRING:
-            Scr_SetString((ushort *)((int)pVVar8->origin + pVVar6->ofs + -0x14),0);
-            uVar9 = G_NewString(pcVar2);
-            *(short *)((int)pVVar8->origin + pVVar6->ofs + -0x14) = (short)uVar9;
+            Scr_SetString((ushort *)((int)param_1->origin + pVVar6->ofs + -0x14),0);
+            uVar8 = G_NewString(pcVar2);
+            *(short *)((int)param_1->origin + pVVar6->ofs + -0x14) = (short)uVar8;
             break;
           case F_VECTOR:
-            fVar14 = (float)dVar13;
-            fVar4 = (float)dVar13;
-            fVar5 = (float)dVar13;
+            fVar13 = (float)dVar12;
+            fVar4 = (float)dVar12;
+            fVar5 = (float)dVar12;
             sscanf(pcVar2,"%f %f %f");
-            *(float *)((int)pVVar8->origin + pVVar6->ofs + -0x14) = fVar14;
-            *(float *)((int)pVVar8->origin + pVVar6->ofs + -0x10) = fVar4;
-            *(float *)((int)pVVar8->origin + pVVar6->ofs + -0xc) = fVar5;
+            *(float *)((int)param_1->origin + pVVar6->ofs + -0x14) = fVar13;
+            *(float *)((int)param_1->origin + pVVar6->ofs + -0x10) = fVar4;
+            *(float *)((int)param_1->origin + pVVar6->ofs + -0xc) = fVar5;
             break;
           case F_ANGLES_YAW:
-            fVar14 = (float)dVar13;
+            fVar13 = (float)dVar12;
             sscanf(pcVar2,"%f %f %f");
-            fVar14 = AngleNormalize360(fVar14);
-            *(float *)((int)pVVar8->origin + pVVar6->ofs + -0x14) = fVar14;
+            fVar13 = AngleNormalize360(fVar13);
+            *(float *)((int)param_1->origin + pVVar6->ofs + -0x14) = fVar13;
           }
           goto switchD_826c0b6c_caseD_4;
         }
         pVVar6 = pVVar6 + 1;
         puVar3 = pVVar6->name;
       }
-      uVar9 = SL_GetCanonicalString(pcVar1);
-      VehPath_SetScriptVariable(uVar9,pcVar2,pVVar8);
+      uVar8 = SL_GetCanonicalString(pcVar1);
+      VehPath_SetScriptVariable(uVar8,pcVar2,param_1);
 switchD_826c0b6c_caseD_4:
-      iVar11 = iVar11 + 1;
+      iVar10 = iVar10 + 1;
       pSVar7 = (SpawnVar *)pSVar7->spawnVars;
-    } while (iVar11 < level.spawnVar.numSpawnVars);
+    } while (iVar10 < level.spawnVar.numSpawnVars);
   }
-  __restgprlr_23();
   return;
 }
 
@@ -431,163 +420,160 @@ short VehPath_GetNodeIndex(ushort param_1,float *param_2)
 
 // 826C0F28  VehPath_CalcNodeSpeed  (vehicle/vehicle_path.cpp:582)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 float VehPath_CalcNodeSpeed(short param_1)
 
 {
-  short sVar1;
-  short sVar2;
-  short sVar3;
-  int iVar4;
-  double dVar5;
-  double dVar6;
-  double dVar7;
-  double dVar8;
-  double dVar9;
-  double dVar10;
+  float fVar1;
+  float fVar2;
+  float fVar3;
+  float fVar4;
+  float fVar5;
+  float fVar6;
+  short sVar7;
+  short sVar8;
+  int iVar9;
   
-  sVar1 = __savegprlr_29(param_1);
-  iVar4 = (int)sVar1;
-  if ((s_nodes[iVar4].flags & 4U) != 0) {
+  iVar9 = (int)param_1;
+  if ((s_nodes[iVar9].flags & 4U) != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_path.cpp",
                     0x254,0,"%s");
   }
-  dVar6 = (double)s_nodes[iVar4].speed;
-  dVar5 = 0.0;
-  if (dVar6 < 0.0) {
-    sVar3 = s_nodes[iVar4].prevIdx;
-    dVar9 = -1.0;
-    dVar6 = dVar5;
-    dVar10 = dVar9;
-    if ((-1 < sVar3) && (sVar2 = 0, 0 < s_numNodes)) {
+  fVar1 = s_nodes[iVar9].speed;
+  fVar2 = 0.0;
+  if (fVar1 < 0.0) {
+    sVar8 = s_nodes[iVar9].prevIdx;
+    fVar3 = -1.0;
+    fVar5 = fVar2;
+    fVar1 = fVar3;
+    if ((-1 < sVar8) && (sVar7 = 0, 0 < s_numNodes)) {
       while( true ) {
-        sVar2 = sVar2 + 1;
-        dVar6 = (double)(float)((double)s_nodes[sVar3].length + dVar6);
-        dVar10 = (double)s_nodes[sVar3].speed;
-        if (0.0 <= (double)s_nodes[sVar3].speed) break;
-        sVar3 = s_nodes[sVar3].prevIdx;
-        dVar10 = dVar9;
-        if (((sVar3 < 0) || (sVar3 == sVar1)) || (s_numNodes <= sVar2)) break;
+        sVar7 = sVar7 + 1;
+        fVar5 = s_nodes[sVar8].length + fVar5;
+        fVar1 = s_nodes[sVar8].speed;
+        if (0.0 <= s_nodes[sVar8].speed) break;
+        sVar8 = s_nodes[sVar8].prevIdx;
+        fVar1 = fVar3;
+        if (((sVar8 < 0) || (sVar8 == param_1)) || (s_numNodes <= sVar7)) break;
       }
     }
-    sVar3 = 0;
-    dVar8 = dVar5;
-    dVar7 = dVar9;
+    sVar8 = 0;
+    fVar6 = fVar2;
+    fVar4 = fVar3;
     if (0 < s_numNodes) {
       while( true ) {
-        sVar3 = sVar3 + 1;
-        dVar7 = (double)s_nodes[iVar4].speed;
-        if (0.0 <= (double)s_nodes[iVar4].speed) break;
-        sVar2 = s_nodes[iVar4].nextIdx;
-        dVar7 = dVar9;
-        if ((sVar2 < 0) || (sVar2 == sVar1)) break;
-        dVar8 = (double)(float)((double)s_nodes[iVar4].length + dVar8);
-        iVar4 = (int)sVar2;
-        if (s_numNodes <= sVar3) break;
+        sVar8 = sVar8 + 1;
+        fVar4 = s_nodes[iVar9].speed;
+        if (0.0 <= s_nodes[iVar9].speed) break;
+        sVar7 = s_nodes[iVar9].nextIdx;
+        fVar4 = fVar3;
+        if ((sVar7 < 0) || (sVar7 == param_1)) break;
+        fVar6 = s_nodes[iVar9].length + fVar6;
+        iVar9 = (int)sVar7;
+        if (s_numNodes <= sVar8) break;
       }
     }
-    if (dVar10 < 0.0) {
-      if (dVar7 < 0.0) {
-        dVar7 = dVar5;
+    if (fVar1 < 0.0) {
+      if (fVar4 < 0.0) {
+        fVar4 = fVar2;
       }
-      dVar5 = (double)__restgprlr_29(dVar7);
-      return (float)dVar5;
+      return fVar4;
     }
-    if (dVar7 < 0.0) {
-      dVar5 = (double)__restgprlr_29(dVar10);
-      return (float)dVar5;
+    if (fVar4 < 0.0) {
+      return fVar1;
     }
-    if ((double)(float)(dVar8 + dVar6) <= 0.0) {
-      dVar5 = (double)__restgprlr_29(0);
-      return (float)dVar5;
+    if (fVar6 + fVar5 <= 0.0) {
+      return 0.0;
     }
-    dVar6 = (double)(float)((double)(float)(dVar6 / (double)(float)(dVar8 + dVar6)) *
-                            (double)(float)(dVar7 - dVar10) + dVar10);
+    fVar1 = (fVar5 / (fVar6 + fVar5)) * (fVar4 - fVar1) + fVar1;
   }
-  dVar5 = (double)__restgprlr_29(dVar6);
-  return (float)dVar5;
+  return fVar1;
 }
 
 
 // 826C10E0  VehPath_CalcNodeLookAhead  (vehicle/vehicle_path.cpp:669)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 float VehPath_CalcNodeLookAhead(short param_1)
 
 {
-  short sVar1;
-  short sVar2;
-  short sVar3;
-  int iVar4;
-  double dVar5;
-  double dVar6;
-  double dVar7;
-  double dVar8;
-  double dVar9;
-  double dVar10;
+  float fVar1;
+  float fVar2;
+  float fVar3;
+  float fVar4;
+  float fVar5;
+  float fVar6;
+  short sVar7;
+  short sVar8;
+  int iVar9;
   
-  sVar1 = __savegprlr_29(param_1);
-  iVar4 = (int)sVar1;
-  if ((s_nodes[iVar4].flags & 4U) != 0) {
+  iVar9 = (int)param_1;
+  if ((s_nodes[iVar9].flags & 4U) != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_path.cpp",
                     0x2ab,0,"%s");
   }
-  dVar6 = (double)s_nodes[iVar4].lookAhead;
-  dVar5 = 0.0;
-  if (dVar6 < 0.0) {
-    sVar3 = s_nodes[iVar4].prevIdx;
-    dVar9 = -1.0;
-    dVar6 = dVar5;
-    dVar10 = dVar9;
-    if ((-1 < sVar3) && (sVar2 = 0, 0 < s_numNodes)) {
+  fVar1 = s_nodes[iVar9].lookAhead;
+  fVar2 = 0.0;
+  if (fVar1 < 0.0) {
+    sVar8 = s_nodes[iVar9].prevIdx;
+    fVar3 = -1.0;
+    fVar5 = fVar2;
+    fVar1 = fVar3;
+    if ((-1 < sVar8) && (sVar7 = 0, 0 < s_numNodes)) {
       while( true ) {
-        sVar2 = sVar2 + 1;
-        dVar6 = (double)(float)((double)s_nodes[sVar3].length + dVar6);
-        dVar10 = (double)s_nodes[sVar3].lookAhead;
-        if (0.0 < (double)s_nodes[sVar3].lookAhead) break;
-        sVar3 = s_nodes[sVar3].prevIdx;
-        dVar10 = dVar9;
-        if (((sVar3 < 0) || (sVar3 == sVar1)) || (s_numNodes <= sVar2)) break;
+        sVar7 = sVar7 + 1;
+        fVar5 = s_nodes[sVar8].length + fVar5;
+        fVar1 = s_nodes[sVar8].lookAhead;
+        if (0.0 < s_nodes[sVar8].lookAhead) break;
+        sVar8 = s_nodes[sVar8].prevIdx;
+        fVar1 = fVar3;
+        if (((sVar8 < 0) || (sVar8 == param_1)) || (s_numNodes <= sVar7)) break;
       }
     }
-    sVar3 = 0;
-    dVar8 = dVar5;
-    dVar7 = dVar9;
+    sVar8 = 0;
+    fVar6 = fVar2;
+    fVar4 = fVar3;
     if (0 < s_numNodes) {
       while( true ) {
-        sVar3 = sVar3 + 1;
-        dVar7 = (double)s_nodes[iVar4].lookAhead;
-        if (0.0 < (double)s_nodes[iVar4].lookAhead) break;
-        sVar2 = s_nodes[iVar4].nextIdx;
-        dVar7 = dVar9;
-        if ((sVar2 < 0) || (sVar2 == sVar1)) break;
-        dVar8 = (double)(float)((double)s_nodes[iVar4].length + dVar8);
-        iVar4 = (int)sVar2;
-        if (s_numNodes <= sVar3) break;
+        sVar8 = sVar8 + 1;
+        fVar4 = s_nodes[iVar9].lookAhead;
+        if (0.0 < s_nodes[iVar9].lookAhead) break;
+        sVar7 = s_nodes[iVar9].nextIdx;
+        fVar4 = fVar3;
+        if ((sVar7 < 0) || (sVar7 == param_1)) break;
+        fVar6 = s_nodes[iVar9].length + fVar6;
+        iVar9 = (int)sVar7;
+        if (s_numNodes <= sVar8) break;
       }
     }
-    if (dVar10 < 0.0) {
-      if (dVar7 < 0.0) {
-        dVar7 = dVar5;
+    if (fVar1 < 0.0) {
+      if (fVar4 < 0.0) {
+        fVar4 = fVar2;
       }
-      dVar5 = (double)__restgprlr_29(dVar7);
-      return (float)dVar5;
+      return fVar4;
     }
-    if (dVar7 < 0.0) {
-      dVar5 = (double)__restgprlr_29(dVar10);
-      return (float)dVar5;
+    if (fVar4 < 0.0) {
+      return fVar1;
     }
-    if ((double)(float)(dVar8 + dVar6) <= 0.0) {
-      dVar5 = (double)__restgprlr_29(0);
-      return (float)dVar5;
+    if (fVar6 + fVar5 <= 0.0) {
+      return 0.0;
     }
-    dVar6 = (double)(float)((double)(float)(dVar6 / (double)(float)(dVar8 + dVar6)) *
-                            (double)(float)(dVar7 - dVar10) + dVar10);
+    fVar1 = (fVar5 / (fVar6 + fVar5)) * (fVar4 - fVar1) + fVar1;
   }
-  dVar5 = (double)__restgprlr_29(dVar6);
-  return (float)dVar5;
+  return fVar1;
 }
 
 
 // 826C1298  VehPath_CalcNodeAngles  (vehicle/vehicle_path.cpp:756)
+
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 
 void VehPath_CalcNodeAngles(short param_1,float *param_2)
 
@@ -596,8 +582,8 @@ void VehPath_CalcNodeAngles(short param_1,float *param_2)
   float fVar2;
   short sVar3;
   short sVar4;
-  short sVar5;
-  int iVar6;
+  int iVar5;
+  double dVar6;
   double dVar7;
   double dVar8;
   double dVar9;
@@ -609,115 +595,102 @@ void VehPath_CalcNodeAngles(short param_1,float *param_2)
   double dVar15;
   double dVar16;
   double dVar17;
-  double dVar18;
   
-  __savegprlr_28(param_1);
-  sVar3 = __savefpr_23();
-  iVar6 = (int)sVar3;
-  if ((s_nodes[iVar6].flags & 4U) != 0) {
+  iVar5 = (int)param_1;
+  if ((s_nodes[iVar5].flags & 4U) != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_path.cpp",
                     0x301,0,"%s");
   }
-  dVar9 = (double)s_invalidAngles[0];
-  if ((((double)s_nodes[iVar6].angles[0] != dVar9) ||
-      (dVar8 = (double)s_invalidAngles[1], (double)s_nodes[iVar6].angles[1] != dVar8)) ||
-     (dVar7 = (double)s_invalidAngles[2], (double)s_nodes[iVar6].angles[2] != dVar7)) {
-    *param_2 = s_nodes[iVar6].angles[0];
-    param_2[1] = s_nodes[iVar6].angles[1];
-    param_2[2] = s_nodes[iVar6].angles[2];
-    __restfpr_23();
-    __restgprlr_28();
+  dVar8 = (double)s_invalidAngles[0];
+  if ((((double)s_nodes[iVar5].angles[0] != dVar8) ||
+      (dVar7 = (double)s_invalidAngles[1], (double)s_nodes[iVar5].angles[1] != dVar7)) ||
+     (dVar6 = (double)s_invalidAngles[2], (double)s_nodes[iVar5].angles[2] != dVar6)) {
+    *param_2 = s_nodes[iVar5].angles[0];
+    param_2[1] = s_nodes[iVar5].angles[1];
+    param_2[2] = s_nodes[iVar5].angles[2];
     return;
   }
-  sVar5 = s_nodes[iVar6].prevIdx;
+  sVar4 = s_nodes[iVar5].prevIdx;
   fVar1 = 0.0;
-  dVar12 = dVar9;
+  dVar11 = dVar8;
+  dVar12 = dVar6;
   dVar13 = dVar7;
-  dVar14 = dVar8;
   fVar2 = fVar1;
-  if ((-1 < sVar5) && (sVar4 = 0, 0 < s_numNodes)) {
+  if ((-1 < sVar4) && (sVar3 = 0, 0 < s_numNodes)) {
     while( true ) {
-      sVar4 = sVar4 + 1;
-      fVar2 = s_nodes[sVar5].length + fVar2;
-      if (((double)s_nodes[sVar5].angles[0] != dVar9) ||
-         (((double)s_nodes[sVar5].angles[1] != dVar8 || ((double)s_nodes[sVar5].angles[2] != dVar7))
+      sVar3 = sVar3 + 1;
+      fVar2 = s_nodes[sVar4].length + fVar2;
+      if (((double)s_nodes[sVar4].angles[0] != dVar8) ||
+         (((double)s_nodes[sVar4].angles[1] != dVar7 || ((double)s_nodes[sVar4].angles[2] != dVar6))
          )) break;
-      sVar5 = s_nodes[sVar5].prevIdx;
-      if (((sVar5 < 0) || (sVar5 == sVar3)) || (s_numNodes <= sVar4)) goto LAB_826c141c;
+      sVar4 = s_nodes[sVar4].prevIdx;
+      if (((sVar4 < 0) || (sVar4 == param_1)) || (s_numNodes <= sVar3)) goto LAB_826c141c;
     }
-    dVar12 = (double)s_nodes[sVar5].angles[0];
-    dVar13 = (double)s_nodes[sVar5].angles[2];
-    dVar14 = (double)s_nodes[sVar5].angles[1];
+    dVar11 = (double)s_nodes[sVar4].angles[0];
+    dVar12 = (double)s_nodes[sVar4].angles[2];
+    dVar13 = (double)s_nodes[sVar4].angles[1];
   }
 LAB_826c141c:
-  sVar5 = 0;
-  dVar16 = dVar9;
-  dVar11 = dVar7;
+  sVar4 = 0;
   dVar15 = dVar8;
+  dVar10 = dVar6;
+  dVar14 = dVar7;
   if (0 < s_numNodes) {
     while( true ) {
-      sVar5 = sVar5 + 1;
-      if ((((double)s_nodes[iVar6].angles[0] != dVar9) ||
-          ((double)s_nodes[iVar6].angles[1] != dVar8)) ||
-         ((double)s_nodes[iVar6].angles[2] != dVar7)) break;
-      sVar4 = s_nodes[iVar6].nextIdx;
-      if ((sVar4 < 0) || (sVar4 == sVar3)) goto LAB_826c14a4;
-      fVar1 = s_nodes[iVar6].length + fVar1;
-      iVar6 = (int)sVar4;
-      if (s_numNodes <= sVar5) goto LAB_826c14a4;
+      sVar4 = sVar4 + 1;
+      if ((((double)s_nodes[iVar5].angles[0] != dVar8) ||
+          ((double)s_nodes[iVar5].angles[1] != dVar7)) ||
+         ((double)s_nodes[iVar5].angles[2] != dVar6)) break;
+      sVar3 = s_nodes[iVar5].nextIdx;
+      if ((sVar3 < 0) || (sVar3 == param_1)) goto LAB_826c14a4;
+      fVar1 = s_nodes[iVar5].length + fVar1;
+      iVar5 = (int)sVar3;
+      if (s_numNodes <= sVar4) goto LAB_826c14a4;
     }
-    dVar16 = (double)s_nodes[iVar6].angles[0];
-    dVar11 = (double)s_nodes[iVar6].angles[2];
-    dVar15 = (double)s_nodes[iVar6].angles[1];
+    dVar15 = (double)s_nodes[iVar5].angles[0];
+    dVar10 = (double)s_nodes[iVar5].angles[2];
+    dVar14 = (double)s_nodes[iVar5].angles[1];
   }
 LAB_826c14a4:
-  if (dVar12 == dVar9) {
-    if ((((dVar14 == dVar8) && (dVar13 == dVar7)) && (dVar16 == dVar9)) &&
-       ((dVar15 == dVar8 && (dVar11 == dVar7)))) goto LAB_826c14d4;
-    if ((dVar14 == dVar8) && (dVar13 == dVar7)) {
-      *param_2 = (float)dVar16;
-      param_2[1] = (float)dVar15;
-      param_2[2] = (float)dVar11;
-      __restfpr_23();
-      __restgprlr_28();
+  if (dVar11 == dVar8) {
+    if ((((dVar13 == dVar7) && (dVar12 == dVar6)) && (dVar15 == dVar8)) &&
+       ((dVar14 == dVar7 && (dVar10 == dVar6)))) goto LAB_826c14d4;
+    if ((dVar13 == dVar7) && (dVar12 == dVar6)) {
+      *param_2 = (float)dVar15;
+      param_2[1] = (float)dVar14;
+      param_2[2] = (float)dVar10;
       return;
     }
   }
-  if (((dVar16 == dVar9) && (dVar15 == dVar8)) && (dVar11 == dVar7)) {
-    *param_2 = (float)dVar12;
-    param_2[1] = (float)dVar14;
-    param_2[2] = (float)dVar13;
-    __restfpr_23();
-    __restgprlr_28();
+  if (((dVar15 == dVar8) && (dVar14 == dVar7)) && (dVar10 == dVar6)) {
+    *param_2 = (float)dVar11;
+    param_2[1] = (float)dVar13;
+    param_2[2] = (float)dVar12;
     return;
   }
   if (0.0 < fVar1 + fVar2) {
-    dVar10 = (double)(fVar2 / (fVar1 + fVar2));
-    dVar18 = 0.0027777778450399637;
-    dVar17 = 0.5;
-    dVar8 = (double)((float)(dVar16 - dVar12) * 0.0027777778);
-    dVar9 = floor((double)(float)(dVar8 + 0.5));
-    dVar16 = 360.0;
-    dVar7 = (double)(float)((double)(float)(dVar15 - dVar14) * dVar18);
-    *param_2 = (float)((double)(float)((double)(float)(dVar8 - (double)(float)dVar9) * dVar10) *
-                       360.0 + dVar12);
-    dVar9 = floor((double)(float)(dVar7 + dVar17));
-    dVar8 = (double)(float)((double)(float)(dVar11 - dVar13) * dVar18);
-    param_2[1] = (float)((double)(float)((double)(float)(dVar7 - (double)(float)dVar9) * dVar10) *
-                         dVar16 + dVar14);
-    dVar9 = floor((double)(float)(dVar8 + dVar17));
-    param_2[2] = (float)((double)(float)((double)(float)(dVar8 - (double)(float)dVar9) * dVar10) *
-                         dVar16 + dVar13);
-    __restfpr_23();
-    __restgprlr_28();
+    dVar9 = (double)(fVar2 / (fVar1 + fVar2));
+    dVar17 = 0.0027777778450399637;
+    dVar16 = 0.5;
+    dVar7 = (double)((float)(dVar15 - dVar11) * 0.0027777778);
+    dVar8 = floor((double)(float)(dVar7 + 0.5));
+    dVar15 = 360.0;
+    dVar6 = (double)(float)((double)(float)(dVar14 - dVar13) * dVar17);
+    *param_2 = (float)((double)(float)((double)(float)(dVar7 - (double)(float)dVar8) * dVar9) *
+                       360.0 + dVar11);
+    dVar8 = floor((double)(float)(dVar6 + dVar16));
+    dVar7 = (double)(float)((double)(float)(dVar10 - dVar12) * dVar17);
+    param_2[1] = (float)((double)(float)((double)(float)(dVar6 - (double)(float)dVar8) * dVar9) *
+                         dVar15 + dVar13);
+    dVar8 = floor((double)(float)(dVar7 + dVar16));
+    param_2[2] = (float)((double)(float)((double)(float)(dVar7 - (double)(float)dVar8) * dVar9) *
+                         dVar15 + dVar12);
     return;
   }
 LAB_826c14d4:
   *param_2 = 0.0;
   param_2[1] = 0.0;
   param_2[2] = 0.0;
-  __restfpr_23();
-  __restgprlr_28();
   return;
 }
 
@@ -756,6 +729,11 @@ float VehPath_GetLookAhead(VehiclePathPos *param_1)
 
 // 826C1698  VehPath_GetAngles  (vehicle/vehicle_path.cpp:896)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void VehPath_GetAngles(VehiclePathPos *param_1,float *param_2)
 
 {
@@ -763,192 +741,178 @@ void VehPath_GetAngles(VehiclePathPos *param_1,float *param_2)
   short sVar2;
   short sVar3;
   ushort uVar4;
-  short *psVar5;
-  int iVar6;
+  int iVar5;
+  double dVar6;
   double dVar7;
   double dVar8;
   double dVar9;
   double dVar10;
   double dVar11;
   double dVar12;
-  double dVar13;
   float local_70 [4];
   float local_60 [24];
   
-  __savegprlr_29(param_1);
-  psVar5 = (short *)__savefpr_26();
-  sVar2 = *psVar5;
+  sVar2 = param_1->nodeIdx;
   sVar3 = s_nodes[sVar2].nextIdx;
   if (sVar3 < 0) {
-    if ((s_nodes[sVar2].flags & 2U) != 0) {
-      *param_2 = s_nodes[sVar2].angles[0];
-      param_2[1] = s_nodes[sVar2].angles[1];
-      param_2[2] = s_nodes[sVar2].angles[2];
-      __restfpr_26();
-      __restgprlr_29();
+    if ((s_nodes[sVar2].flags & 2U) == 0) {
       return;
     }
-    goto LAB_826c1888;
+    *param_2 = s_nodes[sVar2].angles[0];
+    param_2[1] = s_nodes[sVar2].angles[1];
+    param_2[2] = s_nodes[sVar2].angles[2];
+    return;
   }
   uVar4 = s_nodes[sVar2].flags;
   if ((uVar4 & 2) == 0) {
-    if ((s_nodes[sVar3].flags & 2U) == 0) goto LAB_826c1888;
+    if ((s_nodes[sVar3].flags & 2U) == 0) {
+      return;
+    }
     if ((uVar4 & 2) != 0) goto LAB_826c1744;
 LAB_826c1790:
-    if ((s_nodes[sVar3].flags & 2U) == 0) {
-LAB_826c17d4:
-      local_70[0] = s_nodes[sVar2].angles[0];
-      local_70[1] = s_nodes[sVar2].angles[1];
-      local_70[2] = s_nodes[sVar2].angles[2];
-      local_60[0] = *param_2;
-      local_60[1] = param_2[1];
-      local_60[2] = param_2[2];
-    }
-    else {
+    if ((s_nodes[sVar3].flags & 2U) != 0) {
       local_70[0] = *param_2;
       local_70[1] = param_2[1];
       local_70[2] = param_2[2];
       local_60[0] = s_nodes[sVar3].angles[0];
       local_60[1] = s_nodes[sVar3].angles[1];
       local_60[2] = s_nodes[sVar3].angles[2];
+      goto LAB_826c1804;
     }
   }
   else {
 LAB_826c1744:
-    if ((s_nodes[sVar3].flags & 2U) == 0) {
-      if ((uVar4 & 2) == 0) goto LAB_826c1790;
-      goto LAB_826c17d4;
+    if ((s_nodes[sVar3].flags & 2U) != 0) {
+      local_70[0] = s_nodes[sVar2].angles[0];
+      local_70[1] = s_nodes[sVar2].angles[1];
+      local_70[2] = s_nodes[sVar2].angles[2];
+      local_60[0] = s_nodes[sVar3].angles[0];
+      local_60[1] = s_nodes[sVar3].angles[1];
+      local_60[2] = s_nodes[sVar3].angles[2];
+      goto LAB_826c1804;
     }
-    local_70[0] = s_nodes[sVar2].angles[0];
-    local_70[1] = s_nodes[sVar2].angles[1];
-    local_70[2] = s_nodes[sVar2].angles[2];
-    local_60[0] = s_nodes[sVar3].angles[0];
-    local_60[1] = s_nodes[sVar3].angles[1];
-    local_60[2] = s_nodes[sVar3].angles[2];
+    if ((uVar4 & 2) == 0) goto LAB_826c1790;
   }
-  iVar6 = 0;
-  dVar11 = 360.0;
-  dVar12 = 0.5;
-  dVar13 = 0.0027777778450399637;
+  local_60[0] = *param_2;
+  local_60[1] = param_2[1];
+  local_60[2] = param_2[2];
+  local_70[0] = s_nodes[sVar2].angles[0];
+  local_70[1] = s_nodes[sVar2].angles[1];
+  local_70[2] = s_nodes[sVar2].angles[2];
+LAB_826c1804:
+  iVar5 = 0;
+  dVar10 = 360.0;
+  dVar11 = 0.5;
+  dVar12 = 0.0027777778450399637;
   do {
-    dVar10 = (double)*(float *)((int)local_70 + iVar6);
-    dVar9 = (double)*(float *)(psVar5 + 2);
-    dVar8 = (double)(float)((double)(float)((double)*(float *)((int)local_60 + iVar6) - dVar10) *
-                           dVar13);
-    dVar7 = floor((double)(float)(dVar8 + dVar12));
-    fVar1 = (float)((double)(float)((double)(float)(dVar8 - (double)(float)dVar7) * dVar9) * dVar11
-                   + dVar10);
-    *(float *)(iVar6 + (int)param_2) = fVar1;
-    dVar8 = (double)(float)((double)fVar1 * dVar13);
-    dVar7 = floor((double)(float)(dVar8 + dVar12));
-    *(float *)(iVar6 + (int)param_2) =
-         (float)((double)(float)(dVar8 - (double)(float)dVar7) * dVar11);
-    iVar6 = iVar6 + 4;
-  } while (iVar6 < 0xc);
-LAB_826c1888:
-  __restfpr_26();
-  __restgprlr_29();
+    dVar9 = (double)*(float *)((int)local_70 + iVar5);
+    dVar8 = (double)param_1->frac;
+    dVar7 = (double)(float)((double)(float)((double)*(float *)((int)local_60 + iVar5) - dVar9) *
+                           dVar12);
+    dVar6 = floor((double)(float)(dVar7 + dVar11));
+    fVar1 = (float)((double)(float)((double)(float)(dVar7 - (double)(float)dVar6) * dVar8) * dVar10
+                   + dVar9);
+    *(float *)(iVar5 + (int)param_2) = fVar1;
+    dVar7 = (double)(float)((double)fVar1 * dVar12);
+    dVar6 = floor((double)(float)(dVar7 + dVar11));
+    *(float *)(iVar5 + (int)param_2) =
+         (float)((double)(float)(dVar7 - (double)(float)dVar6) * dVar10);
+    iVar5 = iVar5 + 4;
+  } while (iVar5 < 0xc);
   return;
 }
 
 
 // 826C1898  VehPath_GetForwardLookAheadOrigin  (vehicle/vehicle_path.cpp:944)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void VehPath_GetForwardLookAheadOrigin(VehiclePathPos *param_1,float *param_2,float param_3)
 
 {
   float fVar1;
   float fVar2;
-  short *psVar3;
-  ulonglong uVar4;
-  float *pfVar5;
-  short sVar6;
-  VehiclePathNode *pVVar7;
-  double extraout_f1;
-  double dVar8;
+  short sVar3;
+  VehiclePathNode *pVVar4;
+  double dVar5;
   
-  uVar4 = (ulonglong)(int)param_2;
-  psVar3 = (short *)__savegprlr_28((double)param_3,param_1);
-  dVar8 = extraout_f1;
-  if (psVar3 == (short *)0x0) {
+  dVar5 = (double)param_3;
+  if (param_1 == (VehiclePathPos *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_path.cpp",
                     0x3b6,0,"%s");
   }
-  if ((uVar4 & 0xffffffff) == 0) {
+  if (param_2 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_path.cpp",
                     0x3b7,0,"%s");
   }
-  pVVar7 = s_nodes + *psVar3;
-  sVar6 = 0;
-  fVar2 = s_nodes[*psVar3].length * *(float *)(psVar3 + 2) +
-          (float)((double)*(float *)(psVar3 + 6) * (double)*(float *)(psVar3 + 4) + dVar8);
+  pVVar4 = s_nodes + param_1->nodeIdx;
+  sVar3 = 0;
+  fVar2 = s_nodes[param_1->nodeIdx].length * param_1->frac +
+          (float)((double)param_1->lookAhead * (double)param_1->speed + dVar5);
   if (0 < s_numNodes) {
     do {
-      sVar6 = sVar6 + 1;
-      if (((pVVar7->nextIdx < 0) || (fVar1 = pVVar7->length, fVar1 == 0.0)) || (fVar2 < fVar1))
+      sVar3 = sVar3 + 1;
+      if (((pVVar4->nextIdx < 0) || (fVar1 = pVVar4->length, fVar1 == 0.0)) || (fVar2 < fVar1))
       break;
       fVar2 = fVar2 - fVar1;
-      pVVar7 = s_nodes + pVVar7->nextIdx;
-    } while (sVar6 < s_numNodes);
+      pVVar4 = s_nodes + pVVar4->nextIdx;
+    } while (sVar3 < s_numNodes);
   }
-  pfVar5 = (float *)uVar4;
-  *pfVar5 = pVVar7->dir[0] * fVar2 + pVVar7->origin[0];
-  pfVar5[1] = pVVar7->dir[1] * fVar2 + pVVar7->origin[1];
-  pfVar5[2] = pVVar7->dir[2] * fVar2 + pVVar7->origin[2];
-  __restgprlr_28();
+  *param_2 = pVVar4->dir[0] * fVar2 + pVVar4->origin[0];
+  param_2[1] = pVVar4->dir[1] * fVar2 + pVVar4->origin[1];
+  param_2[2] = pVVar4->dir[2] * fVar2 + pVVar4->origin[2];
   return;
 }
 
 
 // 826C19E0  VehPath_GetReverseLookAheadOrigin  (vehicle/vehicle_path.cpp:980)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void VehPath_GetReverseLookAheadOrigin(VehiclePathPos *param_1,float *param_2,float param_3)
 
 {
   short sVar1;
   float fVar2;
-  short *psVar3;
-  ulonglong uVar4;
-  float *pfVar5;
-  short sVar6;
-  VehiclePathNode *pVVar7;
-  double extraout_f1;
-  double dVar8;
+  short sVar3;
+  VehiclePathNode *pVVar4;
+  double dVar5;
   
-  uVar4 = (ulonglong)(int)param_2;
-  psVar3 = (short *)__savegprlr_28((double)param_3,param_1);
-  dVar8 = extraout_f1;
-  if (psVar3 == (short *)0x0) {
+  dVar5 = (double)param_3;
+  if (param_1 == (VehiclePathPos *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_path.cpp",
                     0x3da,0,"%s");
   }
-  if ((uVar4 & 0xffffffff) == 0) {
+  if (param_2 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_path.cpp",
                     0x3db,0,"%s");
   }
-  pVVar7 = s_nodes + *psVar3;
-  sVar6 = 0;
-  fVar2 = s_nodes[*psVar3].length * *(float *)(psVar3 + 2) -
-          (float)((double)*(float *)(psVar3 + 6) * (double)*(float *)(psVar3 + 4) + dVar8);
+  pVVar4 = s_nodes + param_1->nodeIdx;
+  sVar3 = 0;
+  fVar2 = s_nodes[param_1->nodeIdx].length * param_1->frac -
+          (float)((double)param_1->lookAhead * (double)param_1->speed + dVar5);
   if (0 < s_numNodes) {
     do {
-      sVar6 = sVar6 + 1;
-      if (((0.0 < fVar2) || (sVar1 = pVVar7->prevIdx, sVar1 < 0)) || (s_nodes[sVar1].length == 0.0))
+      sVar3 = sVar3 + 1;
+      if (((0.0 < fVar2) || (sVar1 = pVVar4->prevIdx, sVar1 < 0)) || (s_nodes[sVar1].length == 0.0))
       break;
-      pVVar7 = s_nodes + sVar1;
+      pVVar4 = s_nodes + sVar1;
       fVar2 = s_nodes[sVar1].length + fVar2;
-    } while (sVar6 < s_numNodes);
+    } while (sVar3 < s_numNodes);
   }
-  pfVar5 = (float *)uVar4;
-  *pfVar5 = pVVar7->dir[0] * fVar2 + pVVar7->origin[0];
-  pfVar5[1] = pVVar7->dir[1] * fVar2 + pVVar7->origin[1];
-  pfVar5[2] = pVVar7->dir[2] * fVar2 + pVVar7->origin[2];
-  __restgprlr_28();
+  *param_2 = pVVar4->dir[0] * fVar2 + pVVar4->origin[0];
+  param_2[1] = pVVar4->dir[1] * fVar2 + pVVar4->origin[1];
+  param_2[2] = pVVar4->dir[2] * fVar2 + pVVar4->origin[2];
   return;
 }
 
 
 // 826C1B30  VehPath_AdvancePathPosForward  (vehicle/vehicle_path.cpp:1016)
+
+/* WARNING: Function: __savegprlr_20 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_20 replaced with injection: xenon_save_restore */
 
 void VehPath_AdvancePathPosForward(VehiclePathPos *param_1,float *param_2)
 
@@ -957,108 +921,103 @@ void VehPath_AdvancePathPosForward(VehiclePathPos *param_1,float *param_2)
   float fVar2;
   float fVar3;
   float fVar4;
-  short *psVar5;
-  ulonglong uVar6;
-  float *pfVar7;
-  ushort uVar8;
-  short sVar9;
-  short sVar10;
-  uint uVar11;
-  double dVar12;
-  double dVar13;
-  double dVar14;
+  ushort uVar5;
+  short sVar6;
+  short sVar7;
+  uint uVar8;
+  double dVar9;
+  double dVar10;
+  double dVar11;
   
-  uVar6 = (ulonglong)(int)param_2;
-  psVar5 = (short *)__savegprlr_20(param_1);
-  if (psVar5 == (short *)0x0) {
+  if (param_1 == (VehiclePathPos *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_path.cpp",
                     0x402,0,"%s");
   }
-  if ((uVar6 & 0xffffffff) == 0) {
+  if (param_2 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_path.cpp",
                     0x403,0,"%s");
   }
-  dVar14 = 0.0;
-  sVar9 = 0;
-  sVar1 = *psVar5;
+  dVar11 = 0.0;
+  sVar6 = 0;
+  sVar1 = param_1->nodeIdx;
   do {
     while( true ) {
-      sVar10 = sVar1;
-      if (s_numNodes <= sVar9) {
+      sVar7 = sVar1;
+      if (s_numNodes <= sVar6) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_path.cpp",
                         0x40b,0,"%s");
       }
-      sVar9 = sVar9 + 1;
-      uVar11 = (uint)sVar10;
-      if ((uint)(int)s_numNodes <= uVar11) {
+      sVar6 = sVar6 + 1;
+      uVar8 = (uint)sVar7;
+      if ((uint)(int)s_numNodes <= uVar8) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_path.cpp",
                         0x40e,0,"nodeIdx doesn\'t index s_numNodes\n\t%i not in [0, %i)");
       }
-      if ((s_nodes[uVar11].nextIdx < 0) || ((double)s_nodes[uVar11].length == dVar14))
+      if ((s_nodes[uVar8].nextIdx < 0) || ((double)s_nodes[uVar8].length == dVar11))
       goto LAB_826c1d8c;
-      if ((ushort)s_numNodes <= (ushort)s_nodes[uVar11].nextIdx) {
+      if ((ushort)s_numNodes <= (ushort)s_nodes[uVar8].nextIdx) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_path.cpp",
                         0x418,0,"cnode->nextIdx doesn\'t index s_numNodes\n\t%i not in [0, %i)");
       }
-      sVar1 = s_nodes[uVar11].nextIdx;
-      fVar2 = *(float *)(psVar5 + 8) - s_nodes[uVar11].origin[0];
-      pfVar7 = (float *)uVar6;
-      fVar3 = *(float *)(psVar5 + 10) - s_nodes[uVar11].origin[1];
-      fVar4 = *(float *)(psVar5 + 0xc) - s_nodes[uVar11].origin[2];
-      dVar12 = (double)(pfVar7[2] * fVar4 + pfVar7[1] * fVar3 + *pfVar7 * fVar2);
-      dVar13 = (double)(pfVar7[2] * (s_nodes[sVar1].origin[2] - *(float *)(psVar5 + 0xc)) +
-                       pfVar7[1] * (s_nodes[sVar1].origin[1] - *(float *)(psVar5 + 10)) +
-                       *pfVar7 * (s_nodes[sVar1].origin[0] - *(float *)(psVar5 + 8)));
-      if ((dVar12 == dVar14) && (dVar13 == dVar14)) goto LAB_826c1d8c;
-      if (dVar14 <= dVar12) break;
-      if (dVar14 < dVar13) goto LAB_826c1d8c;
+      sVar1 = s_nodes[uVar8].nextIdx;
+      fVar2 = param_1->origin[0] - s_nodes[uVar8].origin[0];
+      fVar3 = param_1->origin[1] - s_nodes[uVar8].origin[1];
+      fVar4 = param_1->origin[2] - s_nodes[uVar8].origin[2];
+      dVar9 = (double)(param_2[2] * fVar4 + param_2[1] * fVar3 + *param_2 * fVar2);
+      dVar10 = (double)(param_2[2] * (s_nodes[sVar1].origin[2] - param_1->origin[2]) +
+                       param_2[1] * (s_nodes[sVar1].origin[1] - param_1->origin[1]) +
+                       *param_2 * (s_nodes[sVar1].origin[0] - param_1->origin[0]));
+      if ((dVar9 == dVar11) && (dVar10 == dVar11)) goto LAB_826c1d8c;
+      if (dVar11 <= dVar9) break;
+      if (dVar11 < dVar10) goto LAB_826c1d8c;
     }
-  } while (dVar13 < dVar14);
-  dVar12 = (double)(s_nodes[uVar11].dir[2] * fVar4 +
-                   s_nodes[uVar11].dir[1] * fVar3 + s_nodes[uVar11].dir[0] * fVar2);
-  if ((double)s_nodes[uVar11].length == dVar14) {
+  } while (dVar10 < dVar11);
+  dVar9 = (double)(s_nodes[uVar8].dir[2] * fVar4 +
+                  s_nodes[uVar8].dir[1] * fVar3 + s_nodes[uVar8].dir[0] * fVar2);
+  if ((double)s_nodes[uVar8].length == dVar11) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_path.cpp",
                     0x43a,0,"%s");
   }
-  dVar13 = (double)(float)(dVar12 / (double)s_nodes[uVar11].length);
-  dVar12 = 1.0;
-  if ((float)(dVar13 - 1.0) < 0.0) {
-    dVar12 = dVar13;
+  dVar10 = (double)(float)(dVar9 / (double)s_nodes[uVar8].length);
+  dVar9 = 1.0;
+  if ((float)(dVar10 - 1.0) < 0.0) {
+    dVar9 = dVar10;
   }
-  if (-dVar13 < 0.0) {
-    dVar14 = dVar12;
+  if (-dVar10 < 0.0) {
+    dVar11 = dVar9;
   }
 LAB_826c1d8c:
-  if ((ushort)s_nodes[uVar11].nextIdx < 0x8000) {
-    uVar8 = psVar5[1] & 0xfffe;
+  if ((ushort)s_nodes[uVar8].nextIdx < 0x8000) {
+    uVar5 = param_1->flags & 0xfffe;
   }
   else {
-    uVar8 = psVar5[1] | 1;
+    uVar5 = param_1->flags | 1;
   }
-  *(float *)(psVar5 + 2) = (float)dVar14;
-  psVar5[1] = uVar8;
-  *psVar5 = sVar10;
-  dVar12 = (double)s_nodes[uVar11].speed;
-  if (-1 < s_nodes[uVar11].nextIdx) {
-    dVar12 = (double)(float)((double)(float)((double)s_nodes[s_nodes[uVar11].nextIdx].speed - dVar12
-                                            ) * dVar14 + dVar12);
+  param_1->frac = (float)dVar11;
+  param_1->flags = uVar5;
+  param_1->nodeIdx = sVar7;
+  dVar9 = (double)s_nodes[uVar8].speed;
+  if (-1 < s_nodes[uVar8].nextIdx) {
+    dVar9 = (double)(float)((double)(float)((double)s_nodes[s_nodes[uVar8].nextIdx].speed - dVar9) *
+                            dVar11 + dVar9);
   }
-  *(float *)(psVar5 + 4) = (float)dVar12;
-  dVar12 = (double)s_nodes[uVar11].lookAhead;
-  if (-1 < s_nodes[uVar11].nextIdx) {
-    *(float *)(psVar5 + 6) =
-         (float)((double)(float)((double)s_nodes[s_nodes[uVar11].nextIdx].lookAhead - dVar12) *
-                 dVar14 + dVar12);
-    __restgprlr_20();
+  param_1->speed = (float)dVar9;
+  dVar9 = (double)s_nodes[uVar8].lookAhead;
+  if (-1 < s_nodes[uVar8].nextIdx) {
+    param_1->lookAhead =
+         (float)((double)(float)((double)s_nodes[s_nodes[uVar8].nextIdx].lookAhead - dVar9) * dVar11
+                + dVar9);
     return;
   }
-  *(float *)(psVar5 + 6) = s_nodes[uVar11].lookAhead;
-  __restgprlr_20();
+  param_1->lookAhead = s_nodes[uVar8].lookAhead;
   return;
 }
 
 
 // 826C1E38  VehPath_AdvancePathPosReverse  (vehicle/vehicle_path.cpp:1100)
+
+/* WARNING: Function: __savegprlr_20 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_20 replaced with injection: xenon_save_restore */
 
 void VehPath_AdvancePathPosReverse(VehiclePathPos *param_1,float *param_2)
 
@@ -1067,269 +1026,257 @@ void VehPath_AdvancePathPosReverse(VehiclePathPos *param_1,float *param_2)
   float fVar2;
   float fVar3;
   short sVar4;
-  short *psVar5;
-  ulonglong uVar6;
-  float *pfVar7;
-  ushort uVar8;
-  short sVar9;
-  short sVar10;
-  uint uVar11;
+  ushort uVar5;
+  short sVar6;
+  short sVar7;
+  uint uVar8;
+  double dVar9;
+  double dVar10;
+  double dVar11;
   double dVar12;
-  double dVar13;
-  double dVar14;
-  double dVar15;
   
-  uVar6 = (ulonglong)(int)param_2;
-  psVar5 = (short *)__savegprlr_20(param_1);
-  if (psVar5 == (short *)0x0) {
+  if (param_1 == (VehiclePathPos *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_path.cpp",
                     0x456,0,"%s");
   }
-  if ((uVar6 & 0xffffffff) == 0) {
+  if (param_2 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_path.cpp",
                     0x457,0,"%s");
   }
-  dVar15 = 0.0;
-  sVar9 = 0;
-  sVar4 = *psVar5;
+  dVar12 = 0.0;
+  sVar6 = 0;
+  sVar4 = param_1->nodeIdx;
   do {
-    sVar10 = sVar4;
-    if (s_numNodes <= sVar9) {
+    sVar7 = sVar4;
+    if (s_numNodes <= sVar6) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_path.cpp",
                       0x45f,0,"%s");
     }
-    sVar9 = sVar9 + 1;
-    uVar11 = (uint)sVar10;
-    if ((uint)(int)s_numNodes <= uVar11) {
+    sVar6 = sVar6 + 1;
+    uVar8 = (uint)sVar7;
+    if ((uint)(int)s_numNodes <= uVar8) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_path.cpp",
                       0x462,0,"nodeIdx doesn\'t index s_numNodes\n\t%i not in [0, %i)");
     }
-    if ((-1 < s_nodes[uVar11].nextIdx) && ((double)s_nodes[uVar11].length != dVar15)) {
-      if ((ushort)s_numNodes <= (ushort)s_nodes[uVar11].nextIdx) {
+    if ((-1 < s_nodes[uVar8].nextIdx) && ((double)s_nodes[uVar8].length != dVar12)) {
+      if ((ushort)s_numNodes <= (ushort)s_nodes[uVar8].nextIdx) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_path.cpp",
                         0x473,0,"cnode->nextIdx doesn\'t index s_numNodes\n\t%i not in [0, %i)");
       }
-      sVar4 = s_nodes[uVar11].nextIdx;
-      fVar1 = *(float *)(psVar5 + 8);
-      pfVar7 = (float *)uVar6;
-      fVar2 = *(float *)(psVar5 + 10);
-      fVar3 = *(float *)(psVar5 + 0xc);
-      dVar12 = (double)(pfVar7[2] * (s_nodes[uVar11].origin[2] - fVar3) +
-                       pfVar7[1] * (s_nodes[uVar11].origin[1] - fVar2) +
-                       *pfVar7 * (s_nodes[uVar11].origin[0] - fVar1));
-      dVar13 = (double)(pfVar7[2] * (fVar3 - s_nodes[sVar4].origin[2]) +
-                       pfVar7[1] * (fVar2 - s_nodes[sVar4].origin[1]) +
-                       *pfVar7 * (fVar1 - s_nodes[sVar4].origin[0]));
-      dVar14 = dVar15;
-      if ((dVar13 == dVar15) && (dVar12 == dVar15)) break;
-      if (dVar15 <= dVar13) {
-        if (dVar15 <= dVar12) {
-          dVar12 = (double)(s_nodes[uVar11].dir[2] * (fVar3 - s_nodes[uVar11].origin[2]) +
-                           s_nodes[uVar11].dir[1] * (fVar2 - s_nodes[uVar11].origin[1]) +
-                           s_nodes[uVar11].dir[0] * (fVar1 - s_nodes[uVar11].origin[0]));
-          if ((double)s_nodes[uVar11].length == dVar15) {
+      sVar4 = s_nodes[uVar8].nextIdx;
+      fVar1 = param_1->origin[0];
+      fVar2 = param_1->origin[1];
+      fVar3 = param_1->origin[2];
+      dVar9 = (double)(param_2[2] * (s_nodes[uVar8].origin[2] - fVar3) +
+                      param_2[1] * (s_nodes[uVar8].origin[1] - fVar2) +
+                      *param_2 * (s_nodes[uVar8].origin[0] - fVar1));
+      dVar10 = (double)(param_2[2] * (fVar3 - s_nodes[sVar4].origin[2]) +
+                       param_2[1] * (fVar2 - s_nodes[sVar4].origin[1]) +
+                       *param_2 * (fVar1 - s_nodes[sVar4].origin[0]));
+      dVar11 = dVar12;
+      if ((dVar10 == dVar12) && (dVar9 == dVar12)) break;
+      if (dVar12 <= dVar10) {
+        if (dVar12 <= dVar9) {
+          dVar9 = (double)(s_nodes[uVar8].dir[2] * (fVar3 - s_nodes[uVar8].origin[2]) +
+                          s_nodes[uVar8].dir[1] * (fVar2 - s_nodes[uVar8].origin[1]) +
+                          s_nodes[uVar8].dir[0] * (fVar1 - s_nodes[uVar8].origin[0]));
+          if ((double)s_nodes[uVar8].length == dVar12) {
             MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_path.cpp"
                             ,0x49d,0,"%s");
-            dVar14 = dVar15;
+            dVar11 = dVar12;
           }
-          dVar13 = (double)(float)(dVar12 / (double)s_nodes[uVar11].length);
-          dVar12 = 1.0;
-          if ((float)(dVar13 - 1.0) < 0.0) {
-            dVar12 = dVar13;
+          dVar10 = (double)(float)(dVar9 / (double)s_nodes[uVar8].length);
+          dVar9 = 1.0;
+          if ((float)(dVar10 - 1.0) < 0.0) {
+            dVar9 = dVar10;
           }
-          dVar15 = dVar14;
-          if (-dVar13 < 0.0) {
-            dVar15 = dVar12;
+          dVar12 = dVar11;
+          if (-dVar10 < 0.0) {
+            dVar12 = dVar9;
           }
           break;
         }
       }
-      else if (dVar15 < dVar12) break;
+      else if (dVar12 < dVar9) break;
     }
-    dVar14 = dVar15;
-    sVar4 = s_nodes[uVar11].prevIdx;
-  } while (-1 < s_nodes[uVar11].prevIdx);
-  if (((ushort)s_nodes[uVar11].prevIdx < 0x8000) || (dVar15 != dVar14)) {
-    uVar8 = psVar5[1] & 0xfffe;
+    dVar11 = dVar12;
+    sVar4 = s_nodes[uVar8].prevIdx;
+  } while (-1 < s_nodes[uVar8].prevIdx);
+  if (((ushort)s_nodes[uVar8].prevIdx < 0x8000) || (dVar12 != dVar11)) {
+    uVar5 = param_1->flags & 0xfffe;
   }
   else {
-    uVar8 = psVar5[1] | 1;
+    uVar5 = param_1->flags | 1;
   }
-  *(float *)(psVar5 + 2) = (float)dVar15;
-  psVar5[1] = uVar8;
-  *psVar5 = sVar10;
-  dVar14 = (double)s_nodes[uVar11].speed;
-  if (-1 < s_nodes[uVar11].nextIdx) {
-    dVar14 = (double)(float)((double)(float)((double)s_nodes[s_nodes[uVar11].nextIdx].speed - dVar14
-                                            ) * dVar15 + dVar14);
+  param_1->frac = (float)dVar12;
+  param_1->flags = uVar5;
+  param_1->nodeIdx = sVar7;
+  dVar11 = (double)s_nodes[uVar8].speed;
+  if (-1 < s_nodes[uVar8].nextIdx) {
+    dVar11 = (double)(float)((double)(float)((double)s_nodes[s_nodes[uVar8].nextIdx].speed - dVar11)
+                             * dVar12 + dVar11);
   }
-  *(float *)(psVar5 + 4) = (float)dVar14;
-  if (-1 < s_nodes[uVar11].nextIdx) {
-    *(float *)(psVar5 + 6) =
-         (float)((double)(float)((double)s_nodes[s_nodes[uVar11].nextIdx].lookAhead -
-                                (double)s_nodes[uVar11].lookAhead) * dVar15 +
-                (double)s_nodes[uVar11].lookAhead);
-    __restgprlr_20();
+  param_1->speed = (float)dVar11;
+  if (-1 < s_nodes[uVar8].nextIdx) {
+    param_1->lookAhead =
+         (float)((double)(float)((double)s_nodes[s_nodes[uVar8].nextIdx].lookAhead -
+                                (double)s_nodes[uVar8].lookAhead) * dVar12 +
+                (double)s_nodes[uVar8].lookAhead);
     return;
   }
-  *(float *)(psVar5 + 6) = s_nodes[uVar11].lookAhead;
-  __restgprlr_20();
+  param_1->lookAhead = s_nodes[uVar8].lookAhead;
   return;
 }
 
 
 // 826C2168  VehPath_AdvanceAnimPathPosForward  (vehicle/vehicle_path.cpp:1199)
 
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
+
 void VehPath_AdvanceAnimPathPosForward(VehiclePathPos *param_1)
 
 {
   short sVar1;
-  short *psVar2;
-  ushort uVar3;
+  ushort uVar2;
+  short sVar3;
   short sVar4;
-  short sVar5;
-  uint uVar6;
+  uint uVar5;
+  double dVar6;
   double dVar7;
   double dVar8;
-  double dVar9;
   
-  psVar2 = (short *)__savegprlr_22(param_1);
-  if (psVar2 == (short *)0x0) {
+  if (param_1 == (VehiclePathPos *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_path.cpp",
                     0x4b7,0,"%s");
   }
-  sVar4 = 0;
-  dVar9 = 0.0;
-  sVar1 = *psVar2;
+  sVar3 = 0;
+  dVar8 = 0.0;
+  sVar1 = param_1->nodeIdx;
   do {
-    sVar5 = sVar1;
-    if (s_numNodes <= sVar4) {
+    sVar4 = sVar1;
+    if (s_numNodes <= sVar3) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_path.cpp",
                       0x4bf,0,"%s");
     }
-    sVar4 = sVar4 + 1;
-    uVar6 = (uint)sVar5;
-    if ((uint)(int)s_numNodes <= uVar6) {
+    sVar3 = sVar3 + 1;
+    uVar5 = (uint)sVar4;
+    if ((uint)(int)s_numNodes <= uVar5) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_path.cpp",
                       0x4c2,0,"nodeIdx doesn\'t index s_numNodes\n\t%i not in [0, %i)");
     }
-    sVar1 = s_nodes[uVar6].nextIdx;
-    if (((sVar1 < 0) || (dVar8 = (double)s_nodes[uVar6].length, dVar8 == dVar9)) ||
-       (dVar7 = (double)(s_nodes[uVar6].dir[2] *
-                         (*(float *)(psVar2 + 0xc) - s_nodes[uVar6].origin[2]) +
-                        s_nodes[uVar6].dir[1] * (*(float *)(psVar2 + 10) - s_nodes[uVar6].origin[1])
-                        + (*(float *)(psVar2 + 8) - s_nodes[uVar6].origin[0]) *
-                          s_nodes[uVar6].dir[0]), dVar7 <= dVar9)) goto LAB_826c22c0;
-  } while (dVar8 < dVar7);
-  dVar9 = (double)(float)(dVar7 / dVar8);
+    sVar1 = s_nodes[uVar5].nextIdx;
+    if (((sVar1 < 0) || (dVar7 = (double)s_nodes[uVar5].length, dVar7 == dVar8)) ||
+       (dVar6 = (double)(s_nodes[uVar5].dir[2] * (param_1->origin[2] - s_nodes[uVar5].origin[2]) +
+                        s_nodes[uVar5].dir[1] * (param_1->origin[1] - s_nodes[uVar5].origin[1]) +
+                        (param_1->origin[0] - s_nodes[uVar5].origin[0]) * s_nodes[uVar5].dir[0]),
+       dVar6 <= dVar8)) goto LAB_826c22c0;
+  } while (dVar7 < dVar6);
+  dVar8 = (double)(float)(dVar6 / dVar7);
 LAB_826c22c0:
   if (sVar1 < 0) {
-    uVar3 = psVar2[1] | 1;
+    uVar2 = param_1->flags | 1;
   }
   else {
-    uVar3 = psVar2[1] & 0xfffe;
+    uVar2 = param_1->flags & 0xfffe;
   }
-  *(float *)(psVar2 + 2) = (float)dVar9;
-  psVar2[1] = uVar3;
-  *psVar2 = sVar5;
-  dVar8 = (double)s_nodes[uVar6].speed;
-  if (-1 < s_nodes[uVar6].nextIdx) {
-    dVar8 = (double)(float)((double)(float)((double)s_nodes[s_nodes[uVar6].nextIdx].speed - dVar8) *
-                            dVar9 + dVar8);
+  param_1->frac = (float)dVar8;
+  param_1->flags = uVar2;
+  param_1->nodeIdx = sVar4;
+  dVar7 = (double)s_nodes[uVar5].speed;
+  if (-1 < s_nodes[uVar5].nextIdx) {
+    dVar7 = (double)(float)((double)(float)((double)s_nodes[s_nodes[uVar5].nextIdx].speed - dVar7) *
+                            dVar8 + dVar7);
   }
-  *(float *)(psVar2 + 4) = (float)dVar8;
-  if (-1 < s_nodes[uVar6].nextIdx) {
-    *(float *)(psVar2 + 6) =
-         (float)((double)(float)((double)s_nodes[s_nodes[uVar6].nextIdx].lookAhead -
-                                (double)s_nodes[uVar6].lookAhead) * dVar9 +
-                (double)s_nodes[uVar6].lookAhead);
-    __restgprlr_22();
+  param_1->speed = (float)dVar7;
+  if (-1 < s_nodes[uVar5].nextIdx) {
+    param_1->lookAhead =
+         (float)((double)(float)((double)s_nodes[s_nodes[uVar5].nextIdx].lookAhead -
+                                (double)s_nodes[uVar5].lookAhead) * dVar8 +
+                (double)s_nodes[uVar5].lookAhead);
     return;
   }
-  *(float *)(psVar2 + 6) = s_nodes[uVar6].lookAhead;
-  __restgprlr_22();
+  param_1->lookAhead = s_nodes[uVar5].lookAhead;
   return;
 }
 
 
 // 826C2368  VehPath_AdvanceAnimPathPosReverse  (vehicle/vehicle_path.cpp:1263)
 
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
+
 void VehPath_AdvanceAnimPathPosReverse(VehiclePathPos *param_1)
 
 {
   short sVar1;
-  short *psVar2;
-  ushort uVar3;
+  ushort uVar2;
+  short sVar3;
   short sVar4;
-  short sVar5;
-  uint uVar6;
+  uint uVar5;
+  double dVar6;
   double dVar7;
   double dVar8;
-  double dVar9;
   
-  psVar2 = (short *)__savegprlr_22(param_1);
-  if (psVar2 == (short *)0x0) {
+  if (param_1 == (VehiclePathPos *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_path.cpp",
                     0x4f7,0,"%s");
   }
-  sVar4 = 0;
-  dVar9 = 0.0;
-  sVar1 = *psVar2;
+  sVar3 = 0;
+  dVar8 = 0.0;
+  sVar1 = param_1->nodeIdx;
   do {
-    sVar5 = sVar1;
-    if (s_numNodes <= sVar4) {
+    sVar4 = sVar1;
+    if (s_numNodes <= sVar3) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_path.cpp",
                       0x4ff,0,"%s");
     }
-    sVar4 = sVar4 + 1;
-    uVar6 = (uint)sVar5;
-    if ((uint)(int)s_numNodes <= uVar6) {
+    sVar3 = sVar3 + 1;
+    uVar5 = (uint)sVar4;
+    if ((uint)(int)s_numNodes <= uVar5) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_path.cpp",
                       0x502,0,"nodeIdx doesn\'t index s_numNodes\n\t%i not in [0, %i)");
     }
-    if (((ushort)s_nodes[uVar6].nextIdx < 0x8000) &&
-       (dVar8 = (double)s_nodes[uVar6].length, dVar8 != dVar9)) {
-      dVar7 = (double)(s_nodes[uVar6].dir[2] * (*(float *)(psVar2 + 0xc) - s_nodes[uVar6].origin[2])
-                      + s_nodes[uVar6].dir[1] * (*(float *)(psVar2 + 10) - s_nodes[uVar6].origin[1])
-                        + (*(float *)(psVar2 + 8) - s_nodes[uVar6].origin[0]) *
-                          s_nodes[uVar6].dir[0]);
-      if (dVar8 < dVar7) {
-        dVar8 = 1.0;
+    if (((ushort)s_nodes[uVar5].nextIdx < 0x8000) &&
+       (dVar7 = (double)s_nodes[uVar5].length, dVar7 != dVar8)) {
+      dVar6 = (double)(s_nodes[uVar5].dir[2] * (param_1->origin[2] - s_nodes[uVar5].origin[2]) +
+                      s_nodes[uVar5].dir[1] * (param_1->origin[1] - s_nodes[uVar5].origin[1]) +
+                      (param_1->origin[0] - s_nodes[uVar5].origin[0]) * s_nodes[uVar5].dir[0]);
+      if (dVar7 < dVar6) {
+        dVar7 = 1.0;
         break;
       }
-      if (dVar9 < dVar7) {
-        dVar8 = (double)(float)(dVar7 / dVar8);
+      if (dVar8 < dVar6) {
+        dVar7 = (double)(float)(dVar6 / dVar7);
         break;
       }
     }
-    dVar8 = dVar9;
-    sVar1 = s_nodes[uVar6].prevIdx;
-  } while (-1 < s_nodes[uVar6].prevIdx);
-  if (((ushort)s_nodes[uVar6].prevIdx < 0x8000) || (dVar8 != dVar9)) {
-    uVar3 = psVar2[1] & 0xfffe;
+    dVar7 = dVar8;
+    sVar1 = s_nodes[uVar5].prevIdx;
+  } while (-1 < s_nodes[uVar5].prevIdx);
+  if (((ushort)s_nodes[uVar5].prevIdx < 0x8000) || (dVar7 != dVar8)) {
+    uVar2 = param_1->flags & 0xfffe;
   }
   else {
-    uVar3 = psVar2[1] | 1;
+    uVar2 = param_1->flags | 1;
   }
-  *(float *)(psVar2 + 2) = (float)dVar8;
-  psVar2[1] = uVar3;
-  *psVar2 = sVar5;
-  dVar9 = (double)s_nodes[uVar6].speed;
-  if (-1 < s_nodes[uVar6].nextIdx) {
-    dVar9 = (double)(float)((double)(float)((double)s_nodes[s_nodes[uVar6].nextIdx].speed - dVar9) *
-                            dVar8 + dVar9);
+  param_1->frac = (float)dVar7;
+  param_1->flags = uVar2;
+  param_1->nodeIdx = sVar4;
+  dVar8 = (double)s_nodes[uVar5].speed;
+  if (-1 < s_nodes[uVar5].nextIdx) {
+    dVar8 = (double)(float)((double)(float)((double)s_nodes[s_nodes[uVar5].nextIdx].speed - dVar8) *
+                            dVar7 + dVar8);
   }
-  *(float *)(psVar2 + 4) = (float)dVar9;
-  if (-1 < s_nodes[uVar6].nextIdx) {
-    *(float *)(psVar2 + 6) =
-         (float)((double)(float)((double)s_nodes[s_nodes[uVar6].nextIdx].lookAhead -
-                                (double)s_nodes[uVar6].lookAhead) * dVar8 +
-                (double)s_nodes[uVar6].lookAhead);
-    __restgprlr_22();
+  param_1->speed = (float)dVar8;
+  if (-1 < s_nodes[uVar5].nextIdx) {
+    param_1->lookAhead =
+         (float)((double)(float)((double)s_nodes[s_nodes[uVar5].nextIdx].lookAhead -
+                                (double)s_nodes[uVar5].lookAhead) * dVar7 +
+                (double)s_nodes[uVar5].lookAhead);
     return;
   }
-  *(float *)(psVar2 + 6) = s_nodes[uVar6].lookAhead;
-  __restgprlr_22();
+  param_1->lookAhead = s_nodes[uVar5].lookAhead;
   return;
 }
 
@@ -1398,20 +1345,22 @@ LAB_826c2664:
 
 // 826C4570  VehPath_DrawPath  (vehicle/vehicle_path.cpp:1361)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
+
 void VehPath_DrawPath(VehiclePathPos *param_1)
 
 {
-  short *psVar1;
-  bool bVar2;
-  undefined8 uVar3;
-  undefined4 *puVar4;
+  bool bVar1;
+  undefined8 uVar2;
+  undefined4 *puVar3;
+  int iVar4;
   int iVar5;
-  int iVar6;
-  undefined8 uVar7;
-  int iVar8;
-  short sVar9;
+  undefined8 uVar6;
+  int iVar7;
+  short sVar8;
+  double dVar9;
   double dVar10;
-  double dVar11;
   Bounds local_220;
   undefined4 local_200;
   undefined4 local_1fc;
@@ -1428,36 +1377,35 @@ void VehPath_DrawPath(VehiclePathPos *param_1)
   VehiclePathPos VStack_1d0;
   VehiclePathPos local_110;
   
-  psVar1 = (short *)__savegprlr_25(param_1);
-  uVar7 = 0;
-  iVar5 = 0;
-  sVar9 = -1;
+  uVar6 = 0;
+  iVar4 = 0;
+  sVar8 = -1;
   memcpy();
-  uVar3 = 0xbc;
+  uVar2 = 0xbc;
   memcpy();
   s_newDebugLine = 1;
   do {
-    iVar5 = iVar5 + 1;
-    if (50000 < iVar5) {
+    iVar4 = iVar4 + 1;
+    if (50000 < iVar4) {
       Com_PrintWarning(0x10,"WARNING: Invalid vehicle path.  Possible infinite loop\n");
       break;
     }
-    if (local_110.nodeIdx != *psVar1) {
-      sVar9 = *psVar1;
+    if (local_110.nodeIdx != param_1->nodeIdx) {
+      sVar8 = param_1->nodeIdx;
     }
     memcpy();
     VehPath_UpdatePathPos(&VStack_1d0,VEH_PATH_FORWARD);
-    bVar2 = VehPath_UpdatePathPosNotifies
-                      (&local_110,&VStack_1d0,0x7ff,sVar9,VEH_PATH_NOTIFY_DRAW,VEH_PATH_FORWARD);
-    if (((VStack_1d0.flags & 1U) != 0) || (bVar2)) {
-      uVar7 = 1;
+    bVar1 = VehPath_UpdatePathPosNotifies
+                      (&local_110,&VStack_1d0,0x7ff,sVar8,VEH_PATH_NOTIFY_DRAW,VEH_PATH_FORWARD);
+    if (((VStack_1d0.flags & 1U) != 0) || (bVar1)) {
+      uVar6 = 1;
     }
-    uVar3 = uVar7;
-    VehPath_PathDebugLine(local_110.origin,VStack_1d0.origin,(int)uVar7);
-  } while ((int)uVar7 == 0);
-  iVar5 = (int)*psVar1;
-  iVar8 = 0;
-  dVar11 = 0.0;
+    uVar2 = uVar6;
+    VehPath_PathDebugLine(local_110.origin,VStack_1d0.origin,(int)uVar6);
+  } while ((int)uVar6 == 0);
+  iVar4 = (int)param_1->nodeIdx;
+  iVar7 = 0;
+  dVar10 = 0.0;
   local_1e0 = 0;
   local_1dc = 0x3f800000;
   local_1d8 = 0;
@@ -1471,37 +1419,37 @@ void VehPath_DrawPath(VehiclePathPos *param_1)
   local_1f8 = 0x3f800000;
   local_1f4 = 0x3f800000;
   if (0 < s_numNodes) {
-    dVar10 = 4.0;
-    iVar6 = iVar5;
+    dVar9 = 4.0;
+    iVar5 = iVar4;
     do {
-      local_220.midPoint[0] = (float)dVar11;
-      local_220.midPoint[1] = (float)dVar11;
-      local_220.midPoint[2] = (float)dVar11;
-      local_220.halfSize[0] = (float)dVar10;
-      local_220.halfSize[1] = (float)dVar10;
-      local_220.halfSize[2] = (float)dVar10;
-      iVar8 = iVar8 + 1;
-      puVar4 = &local_1e0;
-      if (s_nodes + iVar6 != s_nodes + iVar5) {
-        puVar4 = &local_1f0;
+      local_220.midPoint[0] = (float)dVar10;
+      local_220.midPoint[1] = (float)dVar10;
+      local_220.midPoint[2] = (float)dVar10;
+      local_220.halfSize[0] = (float)dVar9;
+      local_220.halfSize[1] = (float)dVar9;
+      local_220.halfSize[2] = (float)dVar9;
+      iVar7 = iVar7 + 1;
+      puVar3 = &local_1e0;
+      if (s_nodes + iVar5 != s_nodes + iVar4) {
+        puVar3 = &local_1f0;
       }
-      G_DebugBox(s_nodes[iVar6].origin,&local_220,s_nodes[iVar6].angles[1],(float *)uVar3,
-                 (int)puVar4,1);
-      if (-1 < s_nodes[iVar6].notifyIdx) {
-        if ((ushort)s_numNodes <= (ushort)s_nodes[iVar6].notifyIdx) {
-          uVar3 = 0;
+      G_DebugBox(s_nodes[iVar5].origin,&local_220,s_nodes[iVar5].angles[1],(float *)uVar2,
+                 (int)puVar3,1);
+      if (-1 < s_nodes[iVar5].notifyIdx) {
+        if ((ushort)s_numNodes <= (ushort)s_nodes[iVar5].notifyIdx) {
+          uVar2 = 0;
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_path.cpp"
                           ,0x5ab,0,"node->notifyIdx doesn\'t index s_numNodes\n\t%i not in [0, %i)")
           ;
         }
-        G_DebugBox(s_nodes[s_nodes[iVar6].notifyIdx].origin,&local_220,
-                   s_nodes[s_nodes[iVar6].notifyIdx].angles[1],(float *)uVar3,(int)&local_200,1);
+        G_DebugBox(s_nodes[s_nodes[iVar5].notifyIdx].origin,&local_220,
+                   s_nodes[s_nodes[iVar5].notifyIdx].angles[1],(float *)uVar2,(int)&local_200,1);
       }
-      sVar9 = s_nodes[iVar6].nextIdx;
-      iVar6 = (int)sVar9;
-    } while (((-1 < sVar9) && (iVar5 = (int)*psVar1, sVar9 != *psVar1)) && (iVar8 < s_numNodes));
+      sVar8 = s_nodes[iVar5].nextIdx;
+      iVar5 = (int)sVar8;
+    } while (((-1 < sVar8) && (iVar4 = (int)param_1->nodeIdx, sVar8 != param_1->nodeIdx)) &&
+            (iVar7 < s_numNodes));
   }
-  __restgprlr_25();
   return;
 }
 
@@ -1520,6 +1468,8 @@ void VehPath_Init(void)
 
 // 826C2698  VehPath_Free  (vehicle/vehicle_path.cpp:1472)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void VehPath_Free(void)
@@ -1528,7 +1478,6 @@ void VehPath_Free(void)
   int iVar1;
   short sVar2;
   
-  __savegprlr_28();
   if (0 < s_numNodes) {
     iVar1 = 0;
     do {
@@ -1542,13 +1491,16 @@ void VehPath_Free(void)
     } while (sVar2 < s_numNodes);
   }
   s_numNodes = 0;
-  __restgprlr_28();
   return;
 }
 
 
 // 826C2738  VehPath_Setup  (vehicle/vehicle_path.cpp:1491)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void VehPath_Setup(void)
@@ -1575,8 +1527,6 @@ void VehPath_Setup(void)
   float fVar19;
   float fVar20;
   
-  __savegprlr_24();
-  __savefpr_25();
   uVar5 = s_numNodes;
   if (0 < s_numNodes) {
     iVar8 = 0;
@@ -1742,14 +1692,14 @@ LAB_826c27dc:
       iVar8 = (int)(short)(sVar10 + 1);
     } while ((short)(sVar10 + 1) < s_numNodes);
   }
-  __restfpr_25();
-  __restgprlr_24();
   return;
 }
 
 
 // 826C47F0  VehPath_DrawDebug  (vehicle/vehicle_path.cpp:1619)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void VehPath_DrawDebug(void)
@@ -1764,11 +1714,8 @@ void VehPath_DrawDebug(void)
   int iVar7;
   VehiclePathPos VStack_100;
   
-  __savegprlr_26();
   if (((*(g_vehicleDrawPath->current).string == '\0') ||
       (*(g_vehicleDrawPath->current).string == '0')) || (s_numNodes < 1)) {
-LAB_826c4900:
-    __restgprlr_26();
     return;
   }
   iVar7 = 0;
@@ -1795,15 +1742,15 @@ LAB_826c4900:
         VStack_100.switchNode[1].script_linkname = 0;
         VStack_100.switchNode[1].script_noteworthy = 0;
         bVar4 = VehPath_AttachPathPos(&VStack_100,(short)iVar7);
-        if (bVar4) {
-          VehPath_DrawPath(&VStack_100);
+        if (!bVar4) {
+          return;
         }
-        goto LAB_826c4900;
+        VehPath_DrawPath(&VStack_100);
+        return;
       }
     }
     iVar7 = (int)(short)((short)iVar7 + 1);
     if (sVar5 <= iVar7) {
-      __restgprlr_26();
       return;
     }
   } while( true );
@@ -1894,104 +1841,83 @@ void VehPath_FreePathPos(VehiclePathPos *param_1)
 
 // 826C2E30  VehPath_AttachPathPos  (vehicle/vehicle_path.cpp:1793)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 bool VehPath_AttachPathPos(VehiclePathPos *param_1,short param_2)
 
 {
-  short *psVar1;
-  undefined1 uVar2;
-  uint uVar3;
+  uint uVar1;
   
-  psVar1 = (short *)__savegprlr_28(param_1);
-  if (psVar1 == (short *)0x0) {
+  if (param_1 == (VehiclePathPos *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_path.cpp",
                     0x704,0,"%s");
   }
-  uVar3 = (uint)param_2;
-  if ((uint)(int)s_numNodes <= uVar3) {
+  uVar1 = (uint)param_2;
+  if ((uint)(int)s_numNodes <= uVar1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_path.cpp",
                     0x705,0,"nodeIdx doesn\'t index s_numNodes\n\t%i not in [0, %i)");
   }
-  if ((s_nodes[uVar3].flags & 4U) != 0) {
-    uVar2 = __restgprlr_28(0);
-    return (bool)uVar2;
+  if ((s_nodes[uVar1].flags & 4U) != 0) {
+    return false;
   }
-  *psVar1 = param_2;
-  psVar1[1] = 0;
-  psVar1[2] = 0;
-  psVar1[3] = 0;
-  *(float *)(psVar1 + 4) = s_nodes[uVar3].speed;
-  *(float *)(psVar1 + 6) = s_nodes[uVar3].lookAhead;
-  *(float *)(psVar1 + 8) = s_nodes[uVar3].origin[0];
-  *(float *)(psVar1 + 10) = s_nodes[uVar3].origin[1];
-  *(float *)(psVar1 + 0xc) = s_nodes[uVar3].origin[2];
-  *(float *)(psVar1 + 0xe) = s_nodes[uVar3].angles[0];
-  *(float *)(psVar1 + 0x10) = s_nodes[uVar3].angles[1];
-  *(float *)(psVar1 + 0x12) = s_nodes[uVar3].angles[2];
-  *(float *)(psVar1 + 0x14) = s_nodes[uVar3].origin[0];
-  *(float *)(psVar1 + 0x16) = s_nodes[uVar3].origin[1];
-  *(float *)(psVar1 + 0x18) = s_nodes[uVar3].origin[2];
-  psVar1[0x1a] = 0;
-  psVar1[0x1b] = 0;
-  psVar1[0x20] = -0x4080;
-  psVar1[0x21] = 0;
-  psVar1[0x1c] = 0;
-  psVar1[0x22] = -0x4080;
-  psVar1[0x23] = 0;
-  psVar1[0x1d] = 0;
-  psVar1[0x1e] = -1;
-  psVar1[0x1f] = 0;
-  psVar1[0x24] = 0;
-  psVar1[0x25] = 0;
-  psVar1[0x26] = 0;
-  psVar1[0x27] = 0;
-  psVar1[0x28] = 0;
-  psVar1[0x29] = 0;
-  psVar1[0x2a] = 0;
-  psVar1[0x2b] = 0;
-  psVar1[0x2c] = 0;
-  psVar1[0x2d] = 0;
-  psVar1[0x2e] = 0;
-  psVar1[0x2f] = 0;
-  *(float *)(psVar1 + 0x30) = s_invalidAngles[0];
-  *(float *)(psVar1 + 0x32) = s_invalidAngles[1];
-  *(float *)(psVar1 + 0x34) = s_invalidAngles[2];
-  psVar1[0x38] = -1;
-  psVar1[0x36] = 0;
-  psVar1[0x37] = 0;
-  psVar1[0x39] = -1;
-  psVar1[0x3a] = -1;
-  psVar1[0x42] = -0x4080;
-  psVar1[0x43] = 0;
-  psVar1[0x44] = -0x4080;
-  psVar1[0x45] = 0;
-  psVar1[0x3c] = 0;
-  psVar1[0x3d] = 0;
-  psVar1[0x3e] = 0;
-  psVar1[0x3f] = 0;
-  psVar1[0x40] = -1;
-  psVar1[0x41] = 0;
-  psVar1[0x46] = 0;
-  psVar1[0x47] = 0;
-  psVar1[0x48] = 0;
-  psVar1[0x49] = 0;
-  psVar1[0x4a] = 0;
-  psVar1[0x4b] = 0;
-  psVar1[0x4c] = 0;
-  psVar1[0x4d] = 0;
-  psVar1[0x4e] = 0;
-  psVar1[0x4f] = 0;
-  psVar1[0x50] = 0;
-  psVar1[0x51] = 0;
-  *(float *)(psVar1 + 0x52) = s_invalidAngles[0];
-  *(float *)(psVar1 + 0x54) = s_invalidAngles[1];
-  *(float *)(psVar1 + 0x56) = s_invalidAngles[2];
-  psVar1[0x58] = 0;
-  psVar1[0x59] = 0;
-  psVar1[0x5a] = -1;
-  psVar1[0x5b] = -1;
-  psVar1[0x5c] = -1;
-  uVar2 = __restgprlr_28(1);
-  return (bool)uVar2;
+  param_1->nodeIdx = param_2;
+  param_1->flags = 0;
+  param_1->frac = 0.0;
+  param_1->speed = s_nodes[uVar1].speed;
+  param_1->lookAhead = s_nodes[uVar1].lookAhead;
+  param_1->origin[0] = s_nodes[uVar1].origin[0];
+  param_1->origin[1] = s_nodes[uVar1].origin[1];
+  param_1->origin[2] = s_nodes[uVar1].origin[2];
+  param_1->angles[0] = s_nodes[uVar1].angles[0];
+  param_1->angles[1] = s_nodes[uVar1].angles[1];
+  param_1->angles[2] = s_nodes[uVar1].angles[2];
+  param_1->lookPos[0] = s_nodes[uVar1].origin[0];
+  param_1->lookPos[1] = s_nodes[uVar1].origin[1];
+  param_1->lookPos[2] = s_nodes[uVar1].origin[2];
+  param_1->switchNode[0].name = 0;
+  param_1->switchNode[0].target = 0;
+  param_1->switchNode[0].speed = -1.0;
+  param_1->switchNode[0].script_linkname = 0;
+  param_1->switchNode[0].lookAhead = -1.0;
+  param_1->switchNode[0].script_noteworthy = 0;
+  param_1->switchNode[0].index = -1;
+  param_1->switchNode[0].flags = 0;
+  param_1->switchNode[0].origin[0] = 0.0;
+  param_1->switchNode[0].origin[1] = 0.0;
+  param_1->switchNode[0].origin[2] = 0.0;
+  param_1->switchNode[0].dir[0] = 0.0;
+  param_1->switchNode[0].dir[1] = 0.0;
+  param_1->switchNode[0].dir[2] = 0.0;
+  param_1->switchNode[0].angles[0] = s_invalidAngles[0];
+  param_1->switchNode[0].angles[1] = s_invalidAngles[1];
+  param_1->switchNode[0].angles[2] = s_invalidAngles[2];
+  param_1->switchNode[0].nextIdx = -1;
+  param_1->switchNode[0].length = 0.0;
+  param_1->switchNode[0].prevIdx = -1;
+  param_1->switchNode[0].notifyIdx = -1;
+  param_1->switchNode[1].speed = -1.0;
+  param_1->switchNode[1].lookAhead = -1.0;
+  param_1->switchNode[1].name = 0;
+  param_1->switchNode[1].target = 0;
+  param_1->switchNode[1].script_linkname = 0;
+  param_1->switchNode[1].script_noteworthy = 0;
+  param_1->switchNode[1].index = -1;
+  param_1->switchNode[1].flags = 0;
+  param_1->switchNode[1].origin[0] = 0.0;
+  param_1->switchNode[1].origin[1] = 0.0;
+  param_1->switchNode[1].origin[2] = 0.0;
+  param_1->switchNode[1].dir[0] = 0.0;
+  param_1->switchNode[1].dir[1] = 0.0;
+  param_1->switchNode[1].dir[2] = 0.0;
+  param_1->switchNode[1].angles[0] = s_invalidAngles[0];
+  param_1->switchNode[1].angles[1] = s_invalidAngles[1];
+  param_1->switchNode[1].angles[2] = s_invalidAngles[2];
+  param_1->switchNode[1].length = 0.0;
+  param_1->switchNode[1].nextIdx = -1;
+  param_1->switchNode[1].prevIdx = -1;
+  param_1->switchNode[1].notifyIdx = -1;
+  return true;
 }
 
 
@@ -2025,175 +1951,158 @@ bool VehPath_IsEndOfPath(VehiclePathPos *param_1)
 
 // 826C3110  VehPath_UpdatePathPos  (vehicle/vehicle_path.cpp:1839)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void VehPath_UpdatePathPos(VehiclePathPos *param_1,VehiclePathDir param_2)
 
 {
   float fVar1;
-  VehiclePathPos *pVVar2;
-  float *pfVar3;
+  float *pfVar2;
+  double dVar3;
   double dVar4;
   double dVar5;
   double dVar6;
   double dVar7;
   double dVar8;
-  double dVar9;
   float local_60;
   float local_5c;
   float local_58;
   
-  __savegprlr_28(param_1);
-  pVVar2 = (VehiclePathPos *)__savefpr_27();
-  if ((pVVar2->flags & 1U) == 0) {
-    VehPath_BeginSwitchNode(pVVar2);
-    pfVar3 = pVVar2->lookPos;
-    dVar8 = 0.0;
+  if ((param_1->flags & 1U) == 0) {
+    VehPath_BeginSwitchNode(param_1);
+    pfVar2 = param_1->lookPos;
+    dVar7 = 0.0;
     if (param_2 == VEH_PATH_FORWARD) {
-      VehPath_GetForwardLookAheadOrigin(pVVar2,pfVar3,0.0);
+      VehPath_GetForwardLookAheadOrigin(param_1,pfVar2,0.0);
     }
     else {
-      VehPath_GetReverseLookAheadOrigin(pVVar2,pfVar3,0.0);
+      VehPath_GetReverseLookAheadOrigin(param_1,pfVar2,0.0);
     }
-    local_5c = pVVar2->lookPos[1] - pVVar2->origin[1];
-    local_58 = pVVar2->lookPos[2] - pVVar2->origin[2];
-    local_60 = *pfVar3 - pVVar2->origin[0];
-    dVar4 = (double)SQRT(local_60 * local_60 + local_58 * local_58 + local_5c * local_5c);
-    dVar5 = 1.0;
-    if (-dVar4 < 0.0) {
-      dVar5 = dVar4;
+    local_5c = param_1->lookPos[1] - param_1->origin[1];
+    local_58 = param_1->lookPos[2] - param_1->origin[2];
+    local_60 = *pfVar2 - param_1->origin[0];
+    dVar3 = (double)SQRT(local_60 * local_60 + local_58 * local_58 + local_5c * local_5c);
+    dVar4 = 1.0;
+    if (-dVar3 < 0.0) {
+      dVar4 = dVar3;
     }
-    fVar1 = (float)(1.0 / dVar5);
+    fVar1 = (float)(1.0 / dVar4);
     local_60 = fVar1 * local_60;
     local_5c = local_5c * fVar1;
     local_58 = local_58 * fVar1;
-    if (dVar4 <= dVar8) {
-      pVVar2->flags = pVVar2->flags | 1;
+    if (dVar3 <= dVar7) {
+      param_1->flags = param_1->flags | 1;
     }
     else {
-      pfVar3 = pVVar2->angles;
-      vectoangles(&local_60,pfVar3);
-      dVar9 = 0.0027777778450399637;
-      dVar4 = (double)(pVVar2->angles[0] * 0.0027777778);
-      dVar7 = 0.5;
-      dVar8 = floor((double)(float)(dVar4 + 0.5));
-      dVar5 = (double)(float)((double)pVVar2->angles[1] * dVar9);
-      dVar6 = 360.0;
-      pVVar2->angles[0] = (float)(dVar4 - (double)(float)dVar8) * 360.0;
-      dVar8 = floor((double)(float)(dVar5 + dVar7));
-      dVar4 = (double)(float)((double)pVVar2->angles[2] * dVar9);
-      pVVar2->angles[1] = (float)((double)(float)(dVar5 - (double)(float)dVar8) * dVar6);
-      dVar8 = floor((double)(float)(dVar4 + dVar7));
-      fVar1 = pVVar2->speed * 0.05;
-      pVVar2->angles[2] = (float)((double)(float)(dVar4 - (double)(float)dVar8) * dVar6);
-      pVVar2->origin[0] = fVar1 * local_60 + pVVar2->origin[0];
-      pVVar2->origin[1] = fVar1 * local_5c + pVVar2->origin[1];
-      pVVar2->origin[2] = local_58 * fVar1 + pVVar2->origin[2];
+      pfVar2 = param_1->angles;
+      vectoangles(&local_60,pfVar2);
+      dVar8 = 0.0027777778450399637;
+      dVar3 = (double)(param_1->angles[0] * 0.0027777778);
+      dVar6 = 0.5;
+      dVar7 = floor((double)(float)(dVar3 + 0.5));
+      dVar4 = (double)(float)((double)param_1->angles[1] * dVar8);
+      dVar5 = 360.0;
+      param_1->angles[0] = (float)(dVar3 - (double)(float)dVar7) * 360.0;
+      dVar7 = floor((double)(float)(dVar4 + dVar6));
+      dVar3 = (double)(float)((double)param_1->angles[2] * dVar8);
+      param_1->angles[1] = (float)((double)(float)(dVar4 - (double)(float)dVar7) * dVar5);
+      dVar7 = floor((double)(float)(dVar3 + dVar6));
+      fVar1 = param_1->speed * 0.05;
+      param_1->angles[2] = (float)((double)(float)(dVar3 - (double)(float)dVar7) * dVar5);
+      param_1->origin[0] = fVar1 * local_60 + param_1->origin[0];
+      param_1->origin[1] = fVar1 * local_5c + param_1->origin[1];
+      param_1->origin[2] = local_58 * fVar1 + param_1->origin[2];
       if (param_2 == VEH_PATH_FORWARD) {
-        VehPath_AdvancePathPosForward(pVVar2,&local_60);
-        VehPath_GetAngles(pVVar2,pfVar3);
+        VehPath_AdvancePathPosForward(param_1,&local_60);
+        VehPath_GetAngles(param_1,pfVar2);
       }
       else {
-        VehPath_AdvancePathPosReverse(pVVar2,&local_60);
-        VehPath_GetAngles(pVVar2,pfVar3);
+        VehPath_AdvancePathPosReverse(param_1,&local_60);
+        VehPath_GetAngles(param_1,pfVar2);
       }
     }
-    VehPath_EndSwitchNode(pVVar2);
+    VehPath_EndSwitchNode(param_1);
   }
-  __restfpr_27();
-  __restgprlr_28();
   return;
 }
 
 
 // 826C3300  VehPath_UpdatePathPosAnimated  (vehicle/vehicle_path.cpp:1890)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void VehPath_UpdatePathPosAnimated(VehiclePathPos *param_1,float *param_2,float *param_3)
 
 {
-  VehiclePathPos *pVVar1;
-  ulonglong uVar2;
-  float *pfVar3;
-  ulonglong uVar4;
-  
-  uVar4 = (ulonglong)(int)param_3;
-  uVar2 = (ulonglong)(int)param_2;
-  pVVar1 = (VehiclePathPos *)__savegprlr_27(param_1);
-  if (pVVar1 == (VehiclePathPos *)0x0) {
+  if (param_1 == (VehiclePathPos *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_path.cpp",
                     0x763,0,"%s");
   }
-  if ((uVar2 & 0xffffffff) == 0) {
+  if (param_2 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_path.cpp",
                     0x764,0,"%s");
   }
-  if ((uVar4 & 0xffffffff) == 0) {
+  if (param_3 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_path.cpp",
                     0x765,0,"%s");
   }
-  if ((pVVar1->flags & 1U) == 0) {
-    VehPath_BeginSwitchNode(pVVar1);
-    VehPath_GetForwardLookAheadOrigin(pVVar1,pVVar1->lookPos,0.0);
-    pfVar3 = (float *)uVar2;
-    pVVar1->origin[0] = *pfVar3;
-    pVVar1->origin[1] = pfVar3[1];
-    pVVar1->origin[2] = pfVar3[2];
-    pfVar3 = (float *)uVar4;
-    pVVar1->angles[0] = *pfVar3;
-    pVVar1->angles[1] = pfVar3[1];
-    pVVar1->angles[2] = pfVar3[2];
-    VehPath_AdvanceAnimPathPosForward(pVVar1);
-    VehPath_EndSwitchNode(pVVar1);
+  if ((param_1->flags & 1U) == 0) {
+    VehPath_BeginSwitchNode(param_1);
+    VehPath_GetForwardLookAheadOrigin(param_1,param_1->lookPos,0.0);
+    param_1->origin[0] = *param_2;
+    param_1->origin[1] = param_2[1];
+    param_1->origin[2] = param_2[2];
+    param_1->angles[0] = *param_3;
+    param_1->angles[1] = param_3[1];
+    param_1->angles[2] = param_3[2];
+    VehPath_AdvanceAnimPathPosForward(param_1);
+    VehPath_EndSwitchNode(param_1);
   }
-  __restgprlr_27();
   return;
 }
 
 
 // 826C3408  VehPath_UpdatePathPosPhysics  (vehicle/vehicle_path.cpp:1916)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 void VehPath_UpdatePathPosPhysics
                (VehiclePathPos *param_1,float *param_2,float *param_3,VehiclePathDir param_4)
 
 {
-  VehiclePathPos *pVVar1;
-  ulonglong uVar2;
-  float *pfVar3;
-  ulonglong uVar4;
-  
-  uVar4 = (ulonglong)(int)param_3;
-  uVar2 = (ulonglong)(int)param_2;
-  pVVar1 = (VehiclePathPos *)__savegprlr_26(param_1);
-  if (pVVar1 == (VehiclePathPos *)0x0) {
+  if (param_1 == (VehiclePathPos *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_path.cpp",
                     0x77d,0,"%s");
   }
-  if ((uVar2 & 0xffffffff) == 0) {
+  if (param_2 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_path.cpp",
                     0x77e,0,"%s");
   }
-  if ((uVar4 & 0xffffffff) == 0) {
+  if (param_3 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_path.cpp",
                     0x77f,0,"%s");
   }
-  if ((pVVar1->flags & 1U) == 0) {
-    VehPath_BeginSwitchNode(pVVar1);
-    pfVar3 = (float *)uVar2;
-    pVVar1->origin[0] = *pfVar3;
-    pVVar1->origin[1] = pfVar3[1];
-    pVVar1->origin[2] = pfVar3[2];
-    pfVar3 = (float *)uVar4;
-    pVVar1->angles[0] = *pfVar3;
-    pVVar1->angles[1] = pfVar3[1];
-    pVVar1->angles[2] = pfVar3[2];
+  if ((param_1->flags & 1U) == 0) {
+    VehPath_BeginSwitchNode(param_1);
+    param_1->origin[0] = *param_2;
+    param_1->origin[1] = param_2[1];
+    param_1->origin[2] = param_2[2];
+    param_1->angles[0] = *param_3;
+    param_1->angles[1] = param_3[1];
+    param_1->angles[2] = param_3[2];
     if (param_4 == VEH_PATH_FORWARD) {
-      VehPath_AdvanceAnimPathPosForward(pVVar1);
-      VehPath_EndSwitchNode(pVVar1);
-      __restgprlr_26();
+      VehPath_AdvanceAnimPathPosForward(param_1);
+      VehPath_EndSwitchNode(param_1);
       return;
     }
-    VehPath_AdvanceAnimPathPosReverse(pVVar1);
-    VehPath_EndSwitchNode(pVVar1);
+    VehPath_AdvanceAnimPathPosReverse(param_1);
+    VehPath_EndSwitchNode(param_1);
   }
-  __restgprlr_26();
   return;
 }
 
@@ -2225,70 +2134,67 @@ void VehPath_UpdatePathPosLookAhead(VehiclePathPos *param_1,float param_2,Vehicl
 
 // 826C35C0  VehPath_GetNotifyFraction  (vehicle/vehicle_path.cpp:1957)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 float VehPath_GetNotifyFraction(VehiclePathNode *param_1)
 
 {
   short sVar1;
-  int iVar2;
+  double dVar2;
   double dVar3;
   double dVar4;
-  double dVar5;
   
-  iVar2 = __savegprlr_29(param_1);
-  if (iVar2 == 0) {
+  if (param_1 == (VehiclePathNode *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_path.cpp",
                     0x7ab,0,"%s");
   }
-  if ((ushort)s_numNodes <= *(ushort *)(iVar2 + 0x40)) {
+  if ((ushort)s_numNodes <= (ushort)param_1->notifyIdx) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_path.cpp",
                     0x7ad,0,"node->notifyIdx doesn\'t index s_numNodes\n\t%i not in [0, %i)");
   }
-  sVar1 = *(short *)(iVar2 + 0x40);
-  dVar5 = 0.0;
-  dVar4 = (double)(*(float *)(iVar2 + 0x28) * (s_nodes[sVar1].origin[2] - *(float *)(iVar2 + 0x1c))
-                  + *(float *)(iVar2 + 0x24) * (s_nodes[sVar1].origin[1] - *(float *)(iVar2 + 0x18))
-                    + *(float *)(iVar2 + 0x20) *
-                      (s_nodes[sVar1].origin[0] - *(float *)(iVar2 + 0x14)));
-  if (*(float *)(iVar2 + 0x38) == 0.0) {
+  sVar1 = param_1->notifyIdx;
+  dVar4 = 0.0;
+  dVar3 = (double)(param_1->dir[2] * (s_nodes[sVar1].origin[2] - param_1->origin[2]) +
+                  param_1->dir[1] * (s_nodes[sVar1].origin[1] - param_1->origin[1]) +
+                  param_1->dir[0] * (s_nodes[sVar1].origin[0] - param_1->origin[0]));
+  if (param_1->length == 0.0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_path.cpp",
                     0x7b3,0,"%s");
   }
-  dVar3 = (double)(float)(dVar4 / (double)*(float *)(iVar2 + 0x38));
-  dVar4 = 1.0;
-  if ((float)(dVar3 - 1.0) < 0.0) {
+  dVar2 = (double)(float)(dVar3 / (double)param_1->length);
+  dVar3 = 1.0;
+  if ((float)(dVar2 - 1.0) < 0.0) {
+    dVar3 = dVar2;
+  }
+  if (-dVar2 < 0.0) {
     dVar4 = dVar3;
   }
-  if (-dVar3 < 0.0) {
-    dVar5 = dVar4;
-  }
-  dVar5 = (double)__restgprlr_29(dVar5);
-  return (float)dVar5;
+  return (float)dVar4;
 }
 
 
 // 826C36F8  VehPath_ProcessNotify  (vehicle/vehicle_path.cpp:1979)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void VehPath_ProcessNotify(short param_1,int param_2,float *param_3,VehiclePathNotifyMode param_4)
 
 {
-  ushort uVar1;
-  ulonglong uVar2;
   float local_40 [16];
   
-  uVar2 = (ulonglong)param_2;
-  uVar1 = __savegprlr_27(param_1);
-  if ((ushort)s_numNodes <= uVar1) {
+  if ((ushort)s_numNodes <= (ushort)param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_path.cpp",
                     0x7bc,0,"nodeIndex doesn\'t index s_numNodes\n\t%i not in [0, %i)");
   }
-  if (0x7ff < (uVar2 & 0xffffffff)) {
+  if (0x7ff < (uint)param_2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_path.cpp",
                     0x7bd,0,"entIndex doesn\'t index MAX_GENTITIES\n\t%i not in [0, %i)");
   }
   if (param_4 == VEH_PATH_NOTIFY_SCRIPT) {
-    Scr_AddEntityNum((int)uVar2,0);
-    Scr_NotifyNum((int)(short)uVar1,3,(uint)scr_const.trigger,1);
-    __restgprlr_27();
+    Scr_AddEntityNum(param_2,0);
+    Scr_NotifyNum((int)param_1,3,(uint)scr_const.trigger,1);
     return;
   }
   if (param_4 == VEH_PATH_NOTIFY_DRAW) {
@@ -2296,20 +2202,21 @@ void VehPath_ProcessNotify(short param_1,int param_2,float *param_3,VehiclePathN
     local_40[1] = 0.0;
     local_40[2] = 0.0;
     local_40[3] = 1.0;
-    G_DebugLine(s_nodes[(short)uVar1].origin,param_3,local_40,1);
-    __restgprlr_27();
+    G_DebugLine(s_nodes[param_1].origin,param_3,local_40,1);
     return;
   }
   if (alwaysfails == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_path.cpp",2000
                     ,0,"VehPath_ProcessNotify: Unknown notify mode");
   }
-  __restgprlr_27();
   return;
 }
 
 
 // 826C3830  VehPath_UpdatePathPosNotifies  (vehicle/vehicle_path.cpp:2006)
+
+/* WARNING: Function: __savegprlr_15 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_15 replaced with injection: xenon_save_restore */
 
 bool VehPath_UpdatePathPosNotifies
                (VehiclePathPos *param_1,VehiclePathPos *param_2,int param_3,short param_4,
@@ -2317,140 +2224,128 @@ bool VehPath_UpdatePathPosNotifies
 
 {
   ushort uVar1;
-  VehiclePathPos *pVVar2;
-  undefined1 uVar3;
-  ulonglong uVar4;
-  ushort *puVar5;
-  int iVar6;
-  ulonglong uVar7;
-  short sVar8;
-  undefined8 uVar9;
-  ushort uVar10;
-  uint uVar11;
-  float fVar12;
+  short sVar2;
+  bool bVar3;
+  ushort uVar4;
+  uint uVar5;
+  float fVar6;
   
-  uVar7 = (ulonglong)param_3;
-  uVar4 = (ulonglong)(int)param_2;
-  pVVar2 = (VehiclePathPos *)__savegprlr_15(param_1);
-  if (pVVar2 == (VehiclePathPos *)0x0) {
+  if (param_1 == (VehiclePathPos *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_path.cpp",
                     0x7dd,0,"%s");
   }
-  if ((uVar4 & 0xffffffff) == 0) {
+  if (param_2 == (VehiclePathPos *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_path.cpp",
                     0x7de,0,"%s");
   }
-  if (0x7ff < (uVar7 & 0xffffffff)) {
+  if (0x7ff < (uint)param_3) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_path.cpp",
                     0x7df,0,"entIndex doesn\'t index MAX_GENTITIES\n\t%i not in [0, %i)");
   }
-  VehPath_BeginSwitchNode(pVVar2);
-  puVar5 = (ushort *)uVar4;
-  uVar10 = *puVar5;
-  iVar6 = (int)uVar7;
-  if (pVVar2->nodeIdx != uVar10) {
-    uVar9 = 0;
-    sVar8 = 0;
+  VehPath_BeginSwitchNode(param_1);
+  uVar4 = param_2->nodeIdx;
+  if (param_1->nodeIdx != uVar4) {
+    bVar3 = false;
+    sVar2 = 0;
     if (param_6 == VEH_PATH_REVERSE) {
       while( true ) {
-        if (s_numNodes <= sVar8) {
+        if (s_numNodes <= sVar2) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_path.cpp"
                           ,0x808,0,"%s");
         }
-        sVar8 = sVar8 + 1;
-        uVar11 = (uint)(short)uVar10;
-        if (uVar10 == pVVar2->nodeIdx) break;
-        if ((ushort)s_numNodes <= uVar10) {
+        sVar2 = sVar2 + 1;
+        uVar5 = (uint)(short)uVar4;
+        if (uVar4 == param_1->nodeIdx) break;
+        if ((ushort)s_numNodes <= uVar4) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_path.cpp"
                           ,0x80e,0,"nodeIndex doesn\'t index s_numNodes\n\t%i not in [0, %i)");
         }
-        uVar1 = s_nodes[uVar11].nextIdx;
-        if (((short)uVar1 < 0) || (uVar1 == *puVar5)) break;
+        uVar1 = s_nodes[uVar5].nextIdx;
+        if (((short)uVar1 < 0) || (uVar1 == param_2->nodeIdx)) break;
         if (uVar1 == param_4) {
-          uVar9 = 1;
+          bVar3 = true;
         }
-        if (((ushort)s_nodes[uVar11].notifyIdx < 0x8000) &&
-           ((*puVar5 != uVar10 ||
-            (fVar12 = VehPath_GetNotifyFraction(s_nodes + uVar11), *(float *)(puVar5 + 2) < fVar12))
-           )) {
-          VehPath_ProcessNotify(s_nodes[uVar11].notifyIdx,iVar6,(float *)(puVar5 + 8),param_5);
+        if (((ushort)s_nodes[uVar5].notifyIdx < 0x8000) &&
+           ((param_2->nodeIdx != uVar4 ||
+            (fVar6 = VehPath_GetNotifyFraction(s_nodes + uVar5), param_2->frac < fVar6)))) {
+          VehPath_ProcessNotify(s_nodes[uVar5].notifyIdx,param_3,param_2->origin,param_5);
         }
-        VehPath_ProcessNotify(s_nodes[uVar11].nextIdx,iVar6,(float *)(puVar5 + 8),param_5);
-        uVar10 = s_nodes[uVar11].nextIdx;
+        VehPath_ProcessNotify(s_nodes[uVar5].nextIdx,param_3,param_2->origin,param_5);
+        uVar4 = s_nodes[uVar5].nextIdx;
       }
     }
     else {
       while( true ) {
-        if (s_numNodes <= sVar8) {
+        if (s_numNodes <= sVar2) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_path.cpp"
                           ,0x826,0,"%s");
         }
-        sVar8 = sVar8 + 1;
-        uVar11 = (uint)(short)uVar10;
-        if (uVar10 == pVVar2->nodeIdx) break;
-        if ((ushort)s_numNodes <= uVar10) {
+        sVar2 = sVar2 + 1;
+        uVar5 = (uint)(short)uVar4;
+        if (uVar4 == param_1->nodeIdx) break;
+        if ((ushort)s_numNodes <= uVar4) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_path.cpp"
                           ,0x82c,0,"nodeIndex doesn\'t index s_numNodes\n\t%i not in [0, %i)");
         }
-        if ((s_nodes[uVar11].prevIdx < 0) || (s_nodes[uVar11].prevIdx == *puVar5)) break;
-        if (uVar10 == param_4) {
-          uVar9 = 1;
+        if ((s_nodes[uVar5].prevIdx < 0) || (s_nodes[uVar5].prevIdx == param_2->nodeIdx)) break;
+        if (uVar4 == param_4) {
+          bVar3 = true;
         }
-        if (((ushort)s_nodes[uVar11].notifyIdx < 0x8000) &&
-           ((*puVar5 != uVar10 ||
-            (fVar12 = VehPath_GetNotifyFraction(s_nodes + uVar11), fVar12 < *(float *)(puVar5 + 2)))
-           )) {
-          VehPath_ProcessNotify(s_nodes[uVar11].notifyIdx,iVar6,(float *)(puVar5 + 8),param_5);
+        if (((ushort)s_nodes[uVar5].notifyIdx < 0x8000) &&
+           ((param_2->nodeIdx != uVar4 ||
+            (fVar6 = VehPath_GetNotifyFraction(s_nodes + uVar5), fVar6 < param_2->frac)))) {
+          VehPath_ProcessNotify(s_nodes[uVar5].notifyIdx,param_3,param_2->origin,param_5);
         }
-        VehPath_ProcessNotify(uVar10,iVar6,(float *)(puVar5 + 8),param_5);
-        uVar10 = s_nodes[uVar11].prevIdx;
+        VehPath_ProcessNotify(uVar4,param_3,param_2->origin,param_5);
+        uVar4 = s_nodes[uVar5].prevIdx;
       }
     }
-    if ((-1 < (int)uVar11) && (uVar11 == (int)pVVar2->nodeIdx)) {
-      if ((uint)(int)s_numNodes <= uVar11) {
+    if ((-1 < (int)uVar5) && (uVar5 == (int)param_1->nodeIdx)) {
+      if ((uint)(int)s_numNodes <= uVar5) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_path.cpp",
                         0x843,0,"nodeIndex doesn\'t index s_numNodes\n\t%i not in [0, %i)");
       }
-      if ((ushort)s_nodes[uVar11].notifyIdx < 0x8000) {
-        fVar12 = VehPath_GetNotifyFraction(s_nodes + uVar11);
+      if ((ushort)s_nodes[uVar5].notifyIdx < 0x8000) {
+        fVar6 = VehPath_GetNotifyFraction(s_nodes + uVar5);
         if (param_6 == VEH_PATH_REVERSE) {
-          if (pVVar2->frac < fVar12) goto LAB_826c3cec;
+          if (param_1->frac < fVar6) goto LAB_826c3cec;
         }
-        else if ((param_6 != VEH_PATH_FORWARD) || (fVar12 <= pVVar2->frac)) goto LAB_826c3cec;
-        VehPath_ProcessNotify(s_nodes[uVar11].notifyIdx,iVar6,(float *)(puVar5 + 8),param_5);
+        else if ((param_6 != VEH_PATH_FORWARD) || (fVar6 <= param_1->frac)) goto LAB_826c3cec;
+        VehPath_ProcessNotify(s_nodes[uVar5].notifyIdx,param_3,param_2->origin,param_5);
       }
     }
 LAB_826c3cec:
-    VehPath_EndSwitchNode(pVVar2);
-    uVar3 = __restgprlr_15(uVar9);
-    return (bool)uVar3;
+    VehPath_EndSwitchNode(param_1);
+    return bVar3;
   }
-  if ((ushort)s_numNodes <= (ushort)pVVar2->nodeIdx) {
+  if ((ushort)s_numNodes <= (ushort)param_1->nodeIdx) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_path.cpp",
                     0x7e6,0,"prevVpp->nodeIdx doesn\'t index s_numNodes\n\t%i not in [0, %i)");
   }
-  sVar8 = pVVar2->nodeIdx;
-  if ((((param_6 == VEH_PATH_REVERSE) && (0x7fff < (ushort)s_nodes[sVar8].prevIdx)) &&
-      (0.0 < pVVar2->frac)) && (*(float *)(puVar5 + 2) == 0.0)) {
-    VehPath_ProcessNotify(sVar8,iVar6,(float *)(puVar5 + 8),param_5);
+  sVar2 = param_1->nodeIdx;
+  if ((((param_6 == VEH_PATH_REVERSE) && (0x7fff < (ushort)s_nodes[sVar2].prevIdx)) &&
+      (0.0 < param_1->frac)) && (param_2->frac == 0.0)) {
+    VehPath_ProcessNotify(sVar2,param_3,param_2->origin,param_5);
   }
-  if ((ushort)s_nodes[sVar8].notifyIdx < 0x8000) {
-    fVar12 = VehPath_GetNotifyFraction(s_nodes + sVar8);
+  if ((ushort)s_nodes[sVar2].notifyIdx < 0x8000) {
+    fVar6 = VehPath_GetNotifyFraction(s_nodes + sVar2);
     if (param_6 == VEH_PATH_FORWARD) {
-      if ((fVar12 <= pVVar2->frac) || (*(float *)(puVar5 + 2) < fVar12)) goto LAB_826c39e8;
+      if ((fVar6 <= param_1->frac) || (param_2->frac < fVar6)) goto LAB_826c39e8;
     }
-    else if (((param_6 != VEH_PATH_REVERSE) || (pVVar2->frac <= fVar12)) ||
-            (fVar12 < *(float *)(puVar5 + 2))) goto LAB_826c39e8;
-    VehPath_ProcessNotify(s_nodes[sVar8].notifyIdx,iVar6,(float *)(puVar5 + 8),param_5);
+    else if (((param_6 != VEH_PATH_REVERSE) || (param_1->frac <= fVar6)) || (fVar6 < param_2->frac))
+    goto LAB_826c39e8;
+    VehPath_ProcessNotify(s_nodes[sVar2].notifyIdx,param_3,param_2->origin,param_5);
   }
 LAB_826c39e8:
-  VehPath_EndSwitchNode(pVVar2);
-  uVar3 = __restgprlr_15(0);
-  return (bool)uVar3;
+  VehPath_EndSwitchNode(param_1);
+  return false;
 }
 
 
 // 826C3D00  VehPath_SetPathPosSwitchNode  (vehicle/vehicle_path.cpp:2137)
+
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 
 void VehPath_SetPathPosSwitchNode(VehiclePathPos *param_1,short param_2,short param_3)
 
@@ -2460,81 +2355,79 @@ void VehPath_SetPathPosSwitchNode(VehiclePathPos *param_1,short param_2,short pa
   float fVar3;
   float fVar4;
   float fVar5;
-  VehiclePathPos *pVVar6;
   
-  pVVar6 = (VehiclePathPos *)__savegprlr_26(param_1);
-  VehPath_FreePathPos(pVVar6);
-  pVVar6->switchNode[0].name = 0;
-  pVVar6->switchNode[0].target = 0;
-  pVVar6->switchNode[0].speed = -1.0;
-  pVVar6->switchNode[0].script_linkname = 0;
-  pVVar6->switchNode[0].lookAhead = -1.0;
-  pVVar6->switchNode[0].script_noteworthy = 0;
-  pVVar6->switchNode[0].index = -1;
-  pVVar6->switchNode[0].flags = 0;
-  pVVar6->switchNode[0].origin[0] = 0.0;
-  pVVar6->switchNode[0].origin[1] = 0.0;
-  pVVar6->switchNode[0].origin[2] = 0.0;
-  pVVar6->switchNode[0].dir[0] = 0.0;
-  pVVar6->switchNode[0].dir[1] = 0.0;
-  pVVar6->switchNode[0].dir[2] = 0.0;
-  pVVar6->switchNode[0].angles[0] = s_invalidAngles[0];
-  pVVar6->switchNode[0].angles[1] = s_invalidAngles[1];
-  pVVar6->switchNode[0].angles[2] = s_invalidAngles[2];
-  pVVar6->switchNode[0].nextIdx = -1;
-  pVVar6->switchNode[0].length = 0.0;
-  pVVar6->switchNode[0].prevIdx = -1;
-  pVVar6->switchNode[0].notifyIdx = -1;
-  pVVar6->switchNode[1].speed = -1.0;
-  pVVar6->switchNode[1].lookAhead = -1.0;
-  pVVar6->switchNode[1].name = 0;
-  pVVar6->switchNode[1].target = 0;
-  pVVar6->switchNode[1].script_linkname = 0;
-  pVVar6->switchNode[1].script_noteworthy = 0;
-  pVVar6->switchNode[1].index = -1;
-  pVVar6->switchNode[1].flags = 0;
-  pVVar6->switchNode[1].origin[0] = 0.0;
-  pVVar6->switchNode[1].origin[1] = 0.0;
-  pVVar6->switchNode[1].origin[2] = 0.0;
-  pVVar6->switchNode[1].dir[0] = 0.0;
-  pVVar6->switchNode[1].dir[1] = 0.0;
-  pVVar6->switchNode[1].dir[2] = 0.0;
-  pVVar6->switchNode[1].angles[0] = s_invalidAngles[0];
-  pVVar6->switchNode[1].angles[1] = s_invalidAngles[1];
-  pVVar6->switchNode[1].angles[2] = s_invalidAngles[2];
-  pVVar6->switchNode[1].nextIdx = -1;
-  pVVar6->switchNode[1].length = 0.0;
-  pVVar6->switchNode[1].prevIdx = -1;
-  pVVar6->switchNode[1].notifyIdx = -1;
-  if (-1 < param_2) {
-    if (-1 < param_3) {
-      VehPath_CopyNode(s_nodes + param_2,pVVar6->switchNode);
-      VehPath_CopyNode(s_nodes + param_2,pVVar6->switchNode + 1);
-      pVVar6->switchNode[0].nextIdx = param_3;
-      fVar1 = s_nodes[param_3].origin[0] - s_nodes[param_2].origin[0];
-      pVVar6->switchNode[0].dir[0] = fVar1;
-      fVar3 = s_nodes[param_3].origin[1] - s_nodes[param_2].origin[1];
-      pVVar6->switchNode[0].dir[1] = fVar3;
-      fVar4 = s_nodes[param_3].origin[2] - s_nodes[param_2].origin[2];
-      pVVar6->switchNode[0].dir[2] = fVar4;
-      fVar5 = SQRT(fVar4 * fVar4 + fVar1 * fVar1 + fVar3 * fVar3);
-      fVar2 = 1.0;
-      if (-fVar5 < 0.0) {
-        fVar2 = fVar5;
-      }
-      fVar2 = 1.0 / fVar2;
-      pVVar6->switchNode[0].dir[0] = fVar1 * fVar2;
-      pVVar6->switchNode[0].dir[1] = fVar3 * fVar2;
-      pVVar6->switchNode[0].dir[2] = fVar4 * fVar2;
-      pVVar6->switchNode[0].length = fVar5;
+  VehPath_FreePathPos(param_1);
+  param_1->switchNode[0].name = 0;
+  param_1->switchNode[0].target = 0;
+  param_1->switchNode[0].speed = -1.0;
+  param_1->switchNode[0].script_linkname = 0;
+  param_1->switchNode[0].lookAhead = -1.0;
+  param_1->switchNode[0].script_noteworthy = 0;
+  param_1->switchNode[0].index = -1;
+  param_1->switchNode[0].flags = 0;
+  param_1->switchNode[0].origin[0] = 0.0;
+  param_1->switchNode[0].origin[1] = 0.0;
+  param_1->switchNode[0].origin[2] = 0.0;
+  param_1->switchNode[0].dir[0] = 0.0;
+  param_1->switchNode[0].dir[1] = 0.0;
+  param_1->switchNode[0].dir[2] = 0.0;
+  param_1->switchNode[0].angles[0] = s_invalidAngles[0];
+  param_1->switchNode[0].angles[1] = s_invalidAngles[1];
+  param_1->switchNode[0].angles[2] = s_invalidAngles[2];
+  param_1->switchNode[0].nextIdx = -1;
+  param_1->switchNode[0].length = 0.0;
+  param_1->switchNode[0].prevIdx = -1;
+  param_1->switchNode[0].notifyIdx = -1;
+  param_1->switchNode[1].speed = -1.0;
+  param_1->switchNode[1].lookAhead = -1.0;
+  param_1->switchNode[1].name = 0;
+  param_1->switchNode[1].target = 0;
+  param_1->switchNode[1].script_linkname = 0;
+  param_1->switchNode[1].script_noteworthy = 0;
+  param_1->switchNode[1].index = -1;
+  param_1->switchNode[1].flags = 0;
+  param_1->switchNode[1].origin[0] = 0.0;
+  param_1->switchNode[1].origin[1] = 0.0;
+  param_1->switchNode[1].origin[2] = 0.0;
+  param_1->switchNode[1].dir[0] = 0.0;
+  param_1->switchNode[1].dir[1] = 0.0;
+  param_1->switchNode[1].dir[2] = 0.0;
+  param_1->switchNode[1].angles[0] = s_invalidAngles[0];
+  param_1->switchNode[1].angles[1] = s_invalidAngles[1];
+  param_1->switchNode[1].angles[2] = s_invalidAngles[2];
+  param_1->switchNode[1].nextIdx = -1;
+  param_1->switchNode[1].length = 0.0;
+  param_1->switchNode[1].prevIdx = -1;
+  param_1->switchNode[1].notifyIdx = -1;
+  if ((-1 < param_2) && (-1 < param_3)) {
+    VehPath_CopyNode(s_nodes + param_2,param_1->switchNode);
+    VehPath_CopyNode(s_nodes + param_2,param_1->switchNode + 1);
+    param_1->switchNode[0].nextIdx = param_3;
+    fVar1 = s_nodes[param_3].origin[0] - s_nodes[param_2].origin[0];
+    param_1->switchNode[0].dir[0] = fVar1;
+    fVar3 = s_nodes[param_3].origin[1] - s_nodes[param_2].origin[1];
+    param_1->switchNode[0].dir[1] = fVar3;
+    fVar4 = s_nodes[param_3].origin[2] - s_nodes[param_2].origin[2];
+    param_1->switchNode[0].dir[2] = fVar4;
+    fVar5 = SQRT(fVar4 * fVar4 + fVar1 * fVar1 + fVar3 * fVar3);
+    fVar2 = 1.0;
+    if (-fVar5 < 0.0) {
+      fVar2 = fVar5;
     }
+    fVar2 = 1.0 / fVar2;
+    param_1->switchNode[0].dir[0] = fVar1 * fVar2;
+    param_1->switchNode[0].dir[1] = fVar3 * fVar2;
+    param_1->switchNode[0].dir[2] = fVar4 * fVar2;
+    param_1->switchNode[0].length = fVar5;
   }
-  __restgprlr_26();
   return;
 }
 
 
 // 826C3ED8  VehPath_SpawnNode  (vehicle/vehicle_path.cpp:2165)
+
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 
 void VehPath_SpawnNode(char *param_1)
 
@@ -2542,65 +2435,64 @@ void VehPath_SpawnNode(char *param_1)
   float fVar1;
   float fVar2;
   float fVar3;
-  char *pcVar4;
-  int iVar5;
-  short sVar6;
-  double dVar7;
+  int iVar4;
+  short sVar5;
+  double dVar6;
   
-  pcVar4 = (char *)__savegprlr_29(param_1);
-  sVar6 = s_numNodes;
+  sVar5 = s_numNodes;
   if (3999 < s_numNodes) {
     Com_Error(ERR_DROP,"\x15Hit max vehicle path node count [%d]\n");
-    sVar6 = s_numNodes;
+    sVar5 = s_numNodes;
   }
   fVar1 = s_invalidAngles[0];
-  s_nodes[sVar6].lookAhead = -1.0;
-  s_nodes[sVar6].target = 0;
-  dVar7 = 0.0;
-  s_nodes[sVar6].script_linkname = 0;
-  s_nodes[sVar6].speed = -1.0;
-  s_nodes[sVar6].script_noteworthy = 0;
-  s_nodes[sVar6].flags = 0;
-  s_numNodes = sVar6 + 1;
-  s_nodes[sVar6].index = sVar6;
+  s_nodes[sVar5].lookAhead = -1.0;
+  s_nodes[sVar5].target = 0;
+  dVar6 = 0.0;
+  s_nodes[sVar5].script_linkname = 0;
+  s_nodes[sVar5].speed = -1.0;
+  s_nodes[sVar5].script_noteworthy = 0;
+  s_nodes[sVar5].flags = 0;
+  s_numNodes = sVar5 + 1;
+  s_nodes[sVar5].index = sVar5;
   fVar2 = s_invalidAngles[1];
-  s_nodes[sVar6].name = 0;
-  s_nodes[sVar6].origin[0] = 0.0;
-  s_nodes[sVar6].origin[1] = 0.0;
-  s_nodes[sVar6].origin[2] = 0.0;
-  s_nodes[sVar6].dir[0] = 0.0;
-  s_nodes[sVar6].dir[1] = 0.0;
-  s_nodes[sVar6].dir[2] = 0.0;
+  s_nodes[sVar5].name = 0;
+  s_nodes[sVar5].origin[0] = 0.0;
+  s_nodes[sVar5].origin[1] = 0.0;
+  s_nodes[sVar5].origin[2] = 0.0;
+  s_nodes[sVar5].dir[0] = 0.0;
+  s_nodes[sVar5].dir[1] = 0.0;
+  s_nodes[sVar5].dir[2] = 0.0;
   fVar3 = s_invalidAngles[2];
-  s_nodes[sVar6].angles[0] = fVar1;
-  s_nodes[sVar6].angles[1] = fVar2;
-  s_nodes[sVar6].angles[2] = fVar3;
-  s_nodes[sVar6].nextIdx = -1;
-  s_nodes[sVar6].length = 0.0;
-  s_nodes[sVar6].prevIdx = -1;
-  s_nodes[sVar6].notifyIdx = -1;
-  VehPath_ParseAllFields(s_nodes + sVar6);
-  iVar5 = IsParentClassname(pcVar4,"info_vehicle_node_rotate");
-  if (iVar5 != 0) {
-    s_nodes[sVar6].flags = s_nodes[sVar6].flags | 2;
+  s_nodes[sVar5].angles[0] = fVar1;
+  s_nodes[sVar5].angles[1] = fVar2;
+  s_nodes[sVar5].angles[2] = fVar3;
+  s_nodes[sVar5].nextIdx = -1;
+  s_nodes[sVar5].length = 0.0;
+  s_nodes[sVar5].prevIdx = -1;
+  s_nodes[sVar5].notifyIdx = -1;
+  VehPath_ParseAllFields(s_nodes + sVar5);
+  iVar4 = IsParentClassname(param_1,"info_vehicle_node_rotate");
+  if (iVar4 != 0) {
+    s_nodes[sVar5].flags = s_nodes[sVar5].flags | 2;
   }
-  iVar5 = IsParentClassname(pcVar4,"info_vehicle_node_notify");
-  if (iVar5 != 0) {
-    s_nodes[sVar6].flags = s_nodes[sVar6].flags | 4;
+  iVar4 = IsParentClassname(param_1,"info_vehicle_node_notify");
+  if (iVar4 != 0) {
+    s_nodes[sVar5].flags = s_nodes[sVar5].flags | 4;
   }
-  if (s_nodes[sVar6].name == 0) {
+  if (s_nodes[sVar5].name == 0) {
     Com_Error(ERR_DROP,"\x15Vehicle path node( %f, %f, %f ) found with no name\n");
   }
-  if (dVar7 <= (double)s_nodes[sVar6].speed) {
-    s_nodes[sVar6].speed = (float)((double)s_nodes[sVar6].speed * 17.600000381469727);
+  if (dVar6 <= (double)s_nodes[sVar5].speed) {
+    s_nodes[sVar5].speed = (float)((double)s_nodes[sVar5].speed * 17.600000381469727);
   }
-  __restgprlr_29();
   return;
 }
 
 
 // 826C4070  VehPathScr_FreeScriptInfo  (vehicle/vehicle_path.cpp:2194)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void VehPathScr_FreeScriptInfo(void)
@@ -2610,7 +2502,6 @@ void VehPathScr_FreeScriptInfo(void)
   short sVar2;
   int iVar3;
   
-  __savegprlr_29();
   if (0 < s_numNodes) {
     iVar1 = 0;
     iVar3 = 0;
@@ -2621,7 +2512,6 @@ void VehPathScr_FreeScriptInfo(void)
       iVar3 = iVar1 * 0x44;
     } while (sVar2 < s_numNodes);
   }
-  __restgprlr_29();
   return;
 }
 
@@ -2652,6 +2542,8 @@ short VehPathScr_GetNodeIndex(uint param_1)
 
 // 826C4188  VehPathScr_AddFieldsForNode  (vehicle/vehicle_path.cpp:2224)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void VehPathScr_AddFieldsForNode(void)
@@ -2661,7 +2553,6 @@ void VehPathScr_AddFieldsForNode(void)
   int iVar2;
   VehicleNodeField *pVVar3;
   
-  __savegprlr_26();
   pVVar3 = vehicleNodeFields;
   if (vehicleNodeFields[0].name != (ushort *)0x0) {
     iVar2 = 0;
@@ -2676,43 +2567,38 @@ void VehPathScr_AddFieldsForNode(void)
       iVar2 = iVar2 + 0x10;
     } while (pVVar3->name != (ushort *)0x0);
   }
-  __restgprlr_26();
   return;
 }
 
 
 // 826C4220  VehPathScr_GetNodeField  (vehicle/vehicle_path.cpp:2236)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void VehPathScr_GetNodeField(int param_1,int param_2)
 
 {
-  int iVar1;
-  uint uVar2;
-  ulonglong uVar3;
-  
-  uVar3 = (ulonglong)param_2;
-  uVar2 = __savegprlr_29(param_1);
-  if (7 < (uVar3 & 0xffffffff)) {
+  if (7 < (uint)param_2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_path.cpp",
                     0x8c0,0,
                     "offset doesn\'t index ARRAY_COUNT( vehicleNodeFields ) - 1\n\t%i not in [0, %i)"
                    );
   }
-  if ((uint)(int)s_numNodes <= uVar2) {
+  if ((uint)(int)s_numNodes <= (uint)param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_path.cpp",
                     0x8c1,0,"nodeIndex doesn\'t index s_numNodes\n\t%i not in [0, %i)");
   }
-  iVar1 = (int)((uVar3 & 0xffffffff) << 4);
-  Scr_GetGenericField((uchar *)(s_nodes + uVar2),
-                      *(fieldtype_t *)((int)&vehicleNodeFields[0].type + iVar1),
-                      *(int *)((int)&vehicleNodeFields[0].ofs + iVar1));
-  __restgprlr_29();
+  Scr_GetGenericField((uchar *)(s_nodes + param_1),vehicleNodeFields[param_2].type,
+                      vehicleNodeFields[param_2].ofs);
   return;
 }
 
 
 // 826C42C8  VehPathCmd_GetNode  (vehicle/vehicle_path.cpp:2262)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void VehPathCmd_GetNode(void)
@@ -2729,7 +2615,6 @@ void VehPathCmd_GetNode(void)
   short sVar9;
   VehiclePathNode *pVVar10;
   
-  __savegprlr_25();
   uVar2 = Scr_GetConstString(0);
   pcVar3 = Scr_GetString(1);
   uVar4 = Scr_GetOffset(3,pcVar3);
@@ -2763,13 +2648,14 @@ void VehPathCmd_GetNode(void)
       }
     }
   }
-  __restgprlr_25();
   return;
 }
 
 
 // 826C43F8  VehPathCmd_GetNodeArray  (vehicle/vehicle_path.cpp:2322)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void VehPathCmd_GetNodeArray(void)
@@ -2783,7 +2669,6 @@ void VehPathCmd_GetNodeArray(void)
   int iVar6;
   VehiclePathNode *pVVar7;
   
-  __savegprlr_27();
   uVar1 = Scr_GetConstString(0);
   pcVar2 = Scr_GetString(1);
   uVar3 = Scr_GetOffset(3,pcVar2);
@@ -2814,13 +2699,14 @@ void VehPathCmd_GetNodeArray(void)
       } while (iVar6 < sVar4);
     }
   }
-  __restgprlr_27();
   return;
 }
 
 
 // 826C44F8  VehPathCmd_GetAllNodes  (vehicle/vehicle_path.cpp:2374)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void VehPathCmd_GetAllNodes(void)
@@ -2830,7 +2716,6 @@ void VehPathCmd_GetAllNodes(void)
   short sVar2;
   int iVar3;
   
-  __savegprlr_29();
   Scr_MakeArray();
   if (0 < s_numNodes) {
     iVar1 = 0;
@@ -2843,7 +2728,6 @@ void VehPathCmd_GetAllNodes(void)
       iVar3 = iVar1 * 0x44;
     } while (sVar2 < s_numNodes);
   }
-  __restgprlr_29();
   return;
 }
 

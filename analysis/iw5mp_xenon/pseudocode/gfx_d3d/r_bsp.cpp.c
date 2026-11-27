@@ -49,37 +49,33 @@ void R_SetSunDirectionOverride(float *param_1)
 
 // 8271D0F8  R_LerpSunDirectionOverride  (gfx_d3d/r_bsp.cpp:153)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
+
 void R_LerpSunDirectionOverride
                (float *param_1,float *param_2,int param_3,int param_4,int param_5,int param_6)
 
 {
-  float *pfVar1;
-  ulonglong uVar2;
-  
-  uVar2 = (ulonglong)(int)param_2;
-  pfVar1 = (float *)__savegprlr_24(param_1);
-  if (pfVar1 == (float *)0x0) {
+  if (param_1 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_bsp.cpp",0x9a,0,"%s"
                    );
   }
-  if ((uVar2 & 0xffffffff) == 0) {
+  if (param_2 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_bsp.cpp",0x9b,0,"%s"
                    );
   }
   rg.useSunDirOverride = true;
   rg.useSunDirLerp = true;
-  rg.sunDirOverride[0] = *pfVar1;
-  rg.sunDirOverride[1] = pfVar1[1];
-  rg.sunDirOverride[2] = pfVar1[2];
-  pfVar1 = (float *)uVar2;
-  rg.sunDirOverrideTarget[0] = *pfVar1;
-  rg.sunDirOverrideTarget[1] = pfVar1[1];
-  rg.sunDirOverrideTarget[2] = pfVar1[2];
+  rg.sunDirOverride[0] = *param_1;
+  rg.sunDirOverride[1] = param_1[1];
+  rg.sunDirOverride[2] = param_1[2];
+  rg.sunDirOverrideTarget[0] = *param_2;
+  rg.sunDirOverrideTarget[1] = param_2[1];
   rg.sunDirLerpBeginTime = param_3;
+  rg.sunDirOverrideTarget[2] = param_2[2];
   rg.sunDirLerpEndTime = param_4;
   rg.sunDirLerpAccelTime = param_5;
   rg.sunDirLerpDecelTime = param_6;
-  __restgprlr_24();
   return;
 }
 
@@ -98,29 +94,29 @@ void R_ResetSunDirectionOverride(void)
 
 // 8271D1F0  R_GetActivePrimarySunLight  (gfx_d3d/r_bsp.cpp:175)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 uint R_GetActivePrimarySunLight(GfxStageInfo *param_1)
 
 {
-  int iVar1;
+  byte bVar1;
   ComPrimaryLight *pCVar2;
-  uint uVar3;
   
-  iVar1 = __savegprlr_29(param_1);
-  if (iVar1 == 0) {
+  if (param_1 == (GfxStageInfo *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_bsp.cpp",0xb0,0,"%s"
                    );
   }
-  if (*(char *)(iVar1 + 0x14) == '\0') {
+  if (param_1->activeStageValid == false) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_bsp.cpp",0xb1,0,"%s"
                    );
   }
-  if ((*(byte *)(iVar1 + 0x12) != 0) &&
-     (pCVar2 = Com_GetPrimaryLight((uint)*(byte *)(iVar1 + 0x12)), pCVar2->type != '\x01')) {
+  bVar1 = (param_1->activeStage).sunPrimaryLightIndex;
+  if ((bVar1 != 0) && (pCVar2 = Com_GetPrimaryLight((uint)bVar1), pCVar2->type != '\x01')) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_bsp.cpp",0xb2,0,"%s"
                    );
   }
-  uVar3 = __restgprlr_29(*(undefined1 *)(iVar1 + 0x12));
-  return uVar3;
+  return (uint)(param_1->activeStage).sunPrimaryLightIndex;
 }
 
 
@@ -138,28 +134,29 @@ void R_InitDynamicData(void)
 
 // 8271D2B8  R_SetWorldPtr_Internal  (gfx_d3d/r_bsp.cpp:306)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void R_SetWorldPtr_Internal(GfxWorld *param_1)
 
 {
-  GfxWorld *pGVar1;
-  
-  pGVar1 = (GfxWorld *)__savegprlr_28(param_1);
   if (rgp.world != (GfxWorld *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_bsp.cpp",0x133,0,
                     "%s");
   }
-  if (pGVar1 == (GfxWorld *)0x0) {
+  if (param_1 == (GfxWorld *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_bsp.cpp",0x134,0,
                     "%s");
   }
-  rgp.world = pGVar1;
-  __restgprlr_28();
+  rgp.world = param_1;
   return;
 }
 
 
 // 8271D338  R_SetWorldPtr_FastFile  (gfx_d3d/r_bsp.cpp:332)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "XAssetType": Some values do not have unique names */
 /* WARNING: Enum "nodeType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
@@ -169,12 +166,10 @@ void R_SetWorldPtr_Internal(GfxWorld *param_1)
 void R_SetWorldPtr_FastFile(char *param_1)
 
 {
-  char *pcVar1;
-  XAssetHeader XVar2;
+  XAssetHeader XVar1;
   
-  pcVar1 = (char *)__savegprlr_28(param_1);
-  XVar2 = DB_FindXAssetHeader(ASSET_TYPE_GFXWORLD,pcVar1,1);
-  R_SetWorldPtr_Internal(XVar2.gfxWorld);
+  XVar1 = DB_FindXAssetHeader(ASSET_TYPE_GFXWORLD,param_1,1);
+  R_SetWorldPtr_Internal(XVar1.gfxWorld);
   if ((g_addonMapEnts != (AddonMapEnts *)0x0) && (g_addonMapEnts->numSubModels != 0)) {
     if (rgp.world == (GfxWorld *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_bsp.cpp",0x155,0,
@@ -189,35 +184,32 @@ void R_SetWorldPtr_FastFile(char *param_1)
     (rgp.world)->modelCount = g_addonMapEnts->numSubModels;
     sync(1);
     rgp.needSortMaterials = 1;
-    __restgprlr_28();
     return;
   }
   sync(1);
   rgp.needSortMaterials = 1;
-  __restgprlr_28();
   return;
 }
 
 
 // 8271D460  R_LoadWorld  (gfx_d3d/r_bsp.cpp:365)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
+
 void R_LoadWorld(char *param_1,int *param_2,int param_3)
 
 {
   GfxWorld *pGVar1;
-  char *pcVar2;
-  uint uVar3;
-  ulonglong uVar4;
-  int iVar5;
+  uint uVar2;
+  int iVar3;
   
-  uVar4 = (ulonglong)(int)param_2;
-  pcVar2 = (char *)__savegprlr_25(param_1,uVar4,param_3);
   if (rgp.world != (GfxWorld *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_bsp.cpp",0x171,0,
                     "%s");
   }
-  R_InitLightVisHistory(pcVar2);
-  R_SetWorldPtr_FastFile(pcVar2);
+  R_InitLightVisHistory(param_1);
+  R_SetWorldPtr_FastFile(param_1);
   pGVar1 = rgp.world;
   g_worldDpvsPlanes = &(rgp.world)->dpvsPlanes;
   g_worldDpvs = &(rgp.world)->dpvs;
@@ -226,78 +218,77 @@ void R_LoadWorld(char *param_1,int *param_2,int param_3)
   g_worldCellCountPlusOne = ((rgp.world)->dpvsPlanes).cellCount + 1;
   g_worldPlanes = ((rgp.world)->dpvsPlanes).planes;
   memcpy();
-  if ((uVar4 & 0xffffffff) != 0) {
-    *(uint *)uVar4 = pGVar1->checksum;
+  if (param_2 != (int *)0x0) {
+    *param_2 = pGVar1->checksum;
   }
   R_InitLightTweaks();
   R_FlushSun();
   R_InitStaticModelLighting(((rgp.world)->dpvs).smodelCount);
-  uVar3 = CL_GetLocalClientActiveCount();
-  R_SetupModelLightingGlobals(uVar3);
+  uVar2 = CL_GetLocalClientActiveCount();
+  R_SetupModelLightingGlobals(uVar2);
   R_SkyOverride_InitForWorld();
   R_ResetModelLighting();
   RB_SetBspImages();
   DynEntCl_InitFilter();
   R_GenerateShadowMapCasterCells();
-  uVar3 = 0;
+  uVar2 = 0;
   if (g_worldDraw->reflectionProbeCount != 0) {
     do {
       memcpy();
-      uVar3 = uVar3 + 1;
-    } while (uVar3 < g_worldDraw->reflectionProbeCount);
+      uVar2 = uVar2 + 1;
+    } while (uVar2 < g_worldDraw->reflectionProbeCount);
   }
   g_worldDraw->lightmapOverridePrimary = (GfxImage *)0x0;
-  iVar5 = 0;
+  iVar3 = 0;
   g_worldDraw->lightmapOverrideSecondary = (GfxImage *)0x0;
   if (0 < g_worldDraw->lightmapCount) {
     do {
       memcpy();
       memcpy();
-      iVar5 = iVar5 + 1;
-    } while (iVar5 < g_worldDraw->lightmapCount);
+      iVar3 = iVar3 + 1;
+    } while (iVar3 < g_worldDraw->lightmapCount);
   }
-  __restgprlr_25();
   return;
 }
 
 
 // 8271D638  R_GetDebugReflectionProbeLocs  (gfx_d3d/r_bsp.cpp:499)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 uint R_GetDebugReflectionProbeLocs(float (*param_1) [3],uint param_2)
 
 {
   GfxReflectionProbe *pGVar1;
-  int iVar2;
-  uint uVar3;
-  undefined4 *puVar4;
-  ulonglong uVar5;
-  ulonglong uVar6;
-  int iVar7;
+  ulonglong uVar2;
+  undefined4 *puVar3;
+  ulonglong uVar4;
+  int iVar5;
   
-  uVar5 = (ulonglong)(int)param_2;
-  iVar2 = __savegprlr_29(param_1);
   if (g_worldDraw == (GfxWorldDraw *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_bsp.cpp",0x1f7,0,
                     "%s");
   }
-  uVar6 = (ulonglong)g_worldDraw->reflectionProbeCount - 1;
-  if ((uVar6 & 0xffffffff) < (uVar5 & 0xffffffff)) {
-    uVar5 = uVar6;
+  uVar4 = (ulonglong)g_worldDraw->reflectionProbeCount - 1;
+  uVar2 = (longlong)(int)param_2;
+  if ((uVar4 & 0xffffffff) < (ulonglong)param_2) {
+    uVar2 = uVar4;
   }
-  if ((uVar5 & 0xffffffff) != 0) {
-    iVar7 = 0;
+  if ((uVar2 & 0xffffffff) != 0) {
+    uVar4 = uVar2;
+    iVar5 = 0;
     do {
       pGVar1 = g_worldDraw->reflectionProbeOrigins;
-      puVar4 = (undefined4 *)(iVar7 + iVar2);
-      uVar5 = uVar5 - 1;
-      *puVar4 = *(undefined4 *)((int)pGVar1[1].origin + iVar7);
-      puVar4[1] = *(undefined4 *)((int)pGVar1[1].origin + iVar7 + 4);
-      puVar4[2] = *(undefined4 *)((int)pGVar1[1].origin + iVar7 + 8);
-      iVar7 = iVar7 + 0xc;
-    } while (uVar5 != 0);
+      puVar3 = (undefined4 *)((int)*param_1 + iVar5);
+      uVar4 = uVar4 - 1;
+      *puVar3 = *(undefined4 *)((int)pGVar1[1].origin + iVar5);
+      puVar3[1] = *(undefined4 *)((int)pGVar1[1].origin + iVar5 + 4);
+      puVar3[2] = *(undefined4 *)((int)pGVar1[1].origin + iVar5 + 8);
+      iVar5 = iVar5 + 0xc;
+    } while (uVar4 != 0);
   }
-  uVar3 = __restgprlr_29();
-  return uVar3;
+  return (uint)uVar2;
 }
 
 

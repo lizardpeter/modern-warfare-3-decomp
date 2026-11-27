@@ -134,6 +134,9 @@ void XGRAPHICS::CopyMemoryCachedDst(void *param_1,void *param_2,uint param_3)
 
 // 8289FBF0  TileSurface  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/xgraphics/tile/surface.cpp:162)
 
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
+
 void XGRAPHICS::TileSurface
                (void *param_1,uint param_2,uint param_3,tagPOINT *param_4,void *param_5,uint param_6
                ,tagRECT *param_7,uint param_8)
@@ -143,89 +146,67 @@ void XGRAPHICS::TileSurface
   int iVar2;
   int iVar3;
   int iVar4;
-  int iVar5;
-  int iVar6;
-  ulonglong uVar7;
-  void *pvVar8;
-  ulonglong uVar9;
-  int *piVar10;
-  void *pvVar11;
-  ulonglong uVar12;
-  int *piVar13;
-  ulonglong uVar14;
-  uint uVar15;
-  ulonglong uVar16;
-  uint uVar17;
+  void *pvVar5;
+  uint uVar6;
+  uint uVar7;
+  uint uVar8;
   void *pvStack00000034;
   uint uStack0000003c;
-  int local_b8;
-  undefined4 local_b4;
-  int local_b0;
-  undefined4 local_ac;
-  uint local_a8;
-  uint local_a4;
+  tagPOINT local_b8;
+  tagRECT local_b0 [11];
   
-  uVar14 = (ulonglong)(int)param_8;
-  uVar12 = (ulonglong)(int)param_7;
-  uVar16 = (ulonglong)(int)param_5;
-  uVar9 = (ulonglong)(int)param_4;
-  uVar7 = (ulonglong)(int)param_1;
-  __savegprlr();
-  piVar10 = (int *)uVar9;
-  piVar13 = (int *)uVar12;
-  pvVar11 = (void *)uVar16;
-  uVar15 = 0;
-  if ((uVar12 & 0xffffffff) == 0) {
-    piVar13 = &local_b0;
-    local_b0 = 0;
-    local_ac = 0;
-    local_a8 = param_2;
-    local_a4 = param_3;
+  uVar6 = 0;
+  if (param_7 == (tagRECT *)0x0) {
+    local_b0[0].right = param_2;
+    param_7 = local_b0;
+    local_b0[0].bottom = param_3;
+    local_b0[0].left = 0;
+    local_b0[0].top = 0;
   }
-  iVar1 = piVar13[2];
-  iVar2 = *piVar13;
-  iVar3 = piVar13[3];
-  iVar4 = piVar13[1];
-  if ((uVar9 & 0xffffffff) == 0) {
-    local_b8 = 0;
-    piVar10 = &local_b8;
-    local_b4 = 0;
+  iVar1 = param_7->bottom;
+  iVar2 = param_7->top;
+  uVar7 = param_7->right - param_7->left;
+  if (param_4 == (tagPOINT *)0x0) {
+    local_b8.x = 0;
+    param_4 = &local_b8;
+    local_b8.y = 0;
   }
-  pvStack00000034 = pvVar11;
+  pvVar5 = param_5;
+  pvStack00000034 = param_5;
   uStack0000003c = param_6;
-  if ((uVar16 & 0xffffffff) == (uVar7 & 0xffffffff)) {
-    uVar17 = (param_3 + 0x1f & 0xffffffe0) * (param_2 + 0x1f & 0xffffffe0) * (uint)uVar14 + 0xfff &
-             0xfffff000;
-    pvVar8 = XMemAlloc(uVar17,0x24870000);
-    CopyMemoryCachedDst(pvVar8,pvVar11,uVar17);
-    pvVar11 = pvVar8;
+  if (param_5 == param_1) {
+    uVar8 = (param_3 + 0x1f & 0xffffffe0) * (param_2 + 0x1f & 0xffffffe0) * param_8 + 0xfff &
+            0xfffff000;
+    pvVar5 = XMemAlloc(uVar8,0x24870000);
+    CopyMemoryCachedDst(pvVar5,param_5,uVar8);
   }
-  iVar5 = *piVar10;
-  iVar6 = 1 << ((((uint)uVar14 >> 4) - (int)((uVar14 & 0xffffffff) >> 2)) + 3 & 0x3f);
-  if (iVar3 != iVar4) {
+  iVar3 = param_4->x;
+  iVar4 = 1 << (((param_8 >> 4) - (param_8 >> 2)) + 3 & 0x3f);
+  if (iVar1 != iVar2) {
     do {
       memcpy();
-      for (uVar17 = (iVar5 + iVar6 & ~(iVar6 - 1U)) - iVar5;
-          (int)uVar17 < (int)((iVar5 + (iVar1 - iVar2) & ~(iVar6 - 1U)) - iVar5);
-          uVar17 = uVar17 + iVar6) {
+      for (uVar8 = (iVar3 + iVar4 & ~(iVar4 - 1U)) - iVar3;
+          (int)uVar8 < (int)((iVar3 + uVar7 & ~(iVar4 - 1U)) - iVar3); uVar8 = uVar8 + iVar4) {
         memcpy();
       }
-      if (uVar17 < (uint)(iVar1 - iVar2)) {
+      if (uVar8 < uVar7) {
         memcpy();
       }
-      uVar15 = uVar15 + 1;
-    } while (uVar15 < (uint)(iVar3 - iVar4));
-    uVar16 = ZEXT48(pvStack00000034);
+      uVar6 = uVar6 + 1;
+      param_5 = pvStack00000034;
+    } while (uVar6 < (uint)(iVar1 - iVar2));
   }
-  if ((uVar16 & 0xffffffff) == (uVar7 & 0xffffffff)) {
-    XMemFree(pvVar11,0x24870000);
+  if (param_5 == param_1) {
+    XMemFree(pvVar5,0x24870000);
   }
-  __restgprlr();
   return;
 }
 
 
 // 8289FFC0  UntileSurface  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/xgraphics/tile/surface.cpp:325)
+
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
 
 void XGRAPHICS::UntileSurface
                (void *param_1,uint param_2,tagPOINT *param_3,void *param_4,uint param_5,uint param_6
@@ -236,78 +217,61 @@ void XGRAPHICS::UntileSurface
   int iVar2;
   int iVar3;
   int iVar4;
-  int iVar5;
-  int iVar6;
-  ulonglong uVar7;
-  void *pvVar8;
-  void *pvVar9;
-  ulonglong uVar10;
-  int *piVar11;
-  ulonglong uVar12;
-  uint uVar13;
-  ulonglong uVar14;
-  uint uVar15;
+  void *pvVar5;
+  uint uVar6;
+  uint uVar7;
+  uint uVar8;
   uint uStack0000001c;
   void *pvStack0000002c;
-  int local_b0;
-  undefined4 local_ac;
-  uint local_a8;
-  uint local_a4;
+  tagRECT local_b0 [11];
   
-  uVar12 = (ulonglong)(int)param_8;
-  uVar10 = (ulonglong)(int)param_7;
-  uVar14 = (ulonglong)(int)param_4;
-  uVar7 = (ulonglong)(int)param_1;
-  __savegprlr();
-  piVar11 = (int *)uVar10;
-  pvVar9 = (void *)uVar14;
-  uVar13 = 0;
-  if ((uVar10 & 0xffffffff) == 0) {
-    piVar11 = &local_b0;
-    local_b0 = 0;
-    local_ac = 0;
-    local_a8 = param_5;
-    local_a4 = param_6;
+  uVar6 = 0;
+  if (param_7 == (tagRECT *)0x0) {
+    local_b0[0].right = param_5;
+    param_7 = local_b0;
+    local_b0[0].bottom = param_6;
+    local_b0[0].left = 0;
+    local_b0[0].top = 0;
   }
-  iVar1 = piVar11[2];
-  iVar2 = *piVar11;
-  iVar3 = piVar11[3];
-  iVar4 = piVar11[1];
+  iVar1 = param_7->bottom;
+  iVar2 = param_7->top;
+  uVar7 = param_7->right - param_7->left;
+  pvVar5 = param_4;
   uStack0000001c = param_2;
-  pvStack0000002c = pvVar9;
-  if ((uVar14 & 0xffffffff) == (uVar7 & 0xffffffff)) {
-    uVar15 = (param_6 + 0x1f & 0xffffffe0) * (param_5 + 0x1f & 0xffffffe0) * (uint)uVar12 + 0xfff &
-             0xfffff000;
-    pvVar8 = XMemAlloc(uVar15,0x24870000);
-    CopyMemoryCachedDst(pvVar8,pvVar9,uVar15);
-    pvVar9 = pvVar8;
+  pvStack0000002c = param_4;
+  if (param_4 == param_1) {
+    uVar8 = (param_6 + 0x1f & 0xffffffe0) * (param_5 + 0x1f & 0xffffffe0) * param_8 + 0xfff &
+            0xfffff000;
+    pvVar5 = XMemAlloc(uVar8,0x24870000);
+    CopyMemoryCachedDst(pvVar5,param_4,uVar8);
   }
-  iVar5 = *piVar11;
-  iVar6 = 1 << ((((uint)uVar12 >> 4) - (int)((uVar12 & 0xffffffff) >> 2)) + 3 & 0x3f);
-  if (iVar3 != iVar4) {
+  iVar3 = param_7->left;
+  iVar4 = 1 << (((param_8 >> 4) - (param_8 >> 2)) + 3 & 0x3f);
+  if (iVar1 != iVar2) {
     do {
       memcpy();
-      for (uVar15 = (iVar5 + iVar6 & ~(iVar6 - 1U)) - iVar5;
-          (int)uVar15 < (int)((iVar5 + (iVar1 - iVar2) & ~(iVar6 - 1U)) - iVar5);
-          uVar15 = uVar15 + iVar6) {
+      for (uVar8 = (iVar3 + iVar4 & ~(iVar4 - 1U)) - iVar3;
+          (int)uVar8 < (int)((iVar3 + uVar7 & ~(iVar4 - 1U)) - iVar3); uVar8 = uVar8 + iVar4) {
         memcpy();
       }
-      if (uVar15 < (uint)(iVar1 - iVar2)) {
+      if (uVar8 < uVar7) {
         memcpy();
       }
-      uVar13 = uVar13 + 1;
-    } while (uVar13 < (uint)(iVar3 - iVar4));
-    uVar14 = ZEXT48(pvStack0000002c);
+      uVar6 = uVar6 + 1;
+      param_4 = pvStack0000002c;
+    } while (uVar6 < (uint)(iVar1 - iVar2));
   }
-  if ((uVar14 & 0xffffffff) == (uVar7 & 0xffffffff)) {
-    XMemFree(pvVar9,0x24870000);
+  if (param_4 == param_1) {
+    XMemFree(pvVar5,0x24870000);
   }
-  __restgprlr();
   return;
 }
 
 
 // 828A0398  XGTileTextureLevel  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/xgraphics/tile/surface.cpp:569)
+
+/* WARNING: Function: __savegprlr_19 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_19 replaced with injection: xenon_save_restore */
 
 void XGTileTextureLevel(uint param_1,uint param_2,uint param_3,ulong param_4,ulong param_5,
                        void *param_6,tagPOINT *param_7,void *param_8,uint param_9,tagRECT *param_10)
@@ -317,21 +281,14 @@ void XGTileTextureLevel(uint param_1,uint param_2,uint param_3,ulong param_4,ulo
   uint uVar2;
   uint uVar3;
   uint uVar4;
-  long *plVar5;
-  long *plVar6;
-  long lVar7;
-  long lVar8;
+  long lVar5;
+  long lVar6;
+  uint uVar7;
+  int iVar8;
   uint uVar9;
   uint uVar10;
-  ulonglong uVar11;
-  int iVar12;
-  ulonglong uVar13;
-  ulonglong uVar14;
-  uint uVar15;
-  uint uVar16;
-  uint uVar17;
-  tagPOINT *ptVar18;
-  uint uVar19;
+  uint uVar11;
+  tagPOINT *ptVar12;
   uint in_stack_00000054;
   int *in_stack_0000005c;
   uint local_a0;
@@ -340,33 +297,27 @@ void XGTileTextureLevel(uint param_1,uint param_2,uint param_3,ulong param_4,ulo
   _XGPOINT3D local_90;
   tagRECT local_80 [8];
   
-  uVar14 = (ulonglong)(int)param_7;
-  uVar13 = (ulonglong)(int)param_5;
-  uVar11 = (ulonglong)(int)param_3;
-  uVar9 = __savegprlr_19(param_1);
-  ptVar18 = (tagPOINT *)uVar14;
   XGGetBlockDimensions(param_4,&local_a0,&local_9c);
   uVar4 = 0x1f - (int)LZCOUNT(local_a0);
   uVar3 = 0x1f - (int)LZCOUNT(local_9c);
-  uVar10 = (uint)uVar13 & 2;
-  uVar15 = (uint)((uVar13 & 0xffffffff) >> 1) & 1;
+  uVar7 = param_5 & 2;
+  uVar9 = param_5 >> 1 & 1;
   bVar1 = g_XGTextureFormatBitsPerPixel[param_4];
-  uVar19 = (uint)uVar11;
-  if ((uVar11 & 0xffffffff) == 0) {
-    uVar2 = (local_a0 + uVar9) - 1 >> (uVar4 & 0x3f);
-    uVar15 = param_2;
+  if (param_3 == 0) {
+    uVar2 = (local_a0 + param_1) - 1 >> (uVar4 & 0x3f);
+    uVar9 = param_2;
   }
   else {
-    iVar12 = (1 << ((uVar15 - (int)LZCOUNT((uVar9 - uVar10) + -1)) + 0x20 & 0x3f)) >>
-             (uVar19 & 0x3f);
-    if (iVar12 < 2) {
-      iVar12 = 1;
+    iVar8 = (1 << ((uVar9 - (int)LZCOUNT((param_1 - uVar7) + -1)) + 0x20 & 0x3f)) >>
+            (param_3 & 0x3f);
+    if (iVar8 < 2) {
+      iVar8 = 1;
     }
-    uVar2 = (iVar12 + local_a0) - 1 >> (uVar4 & 0x3f);
-    uVar15 = (1 << ((uVar15 - (int)LZCOUNT((param_2 - uVar10) + -1)) + 0x20 & 0x3f)) >>
-             (uVar19 & 0x3f);
-    if ((int)uVar15 < 2) {
-      uVar15 = 1;
+    uVar2 = (iVar8 + local_a0) - 1 >> (uVar4 & 0x3f);
+    uVar9 = (1 << ((uVar9 - (int)LZCOUNT((param_2 - uVar7) + -1)) + 0x20 & 0x3f)) >>
+            (param_3 & 0x3f);
+    if ((int)uVar9 < 2) {
+      uVar9 = 1;
     }
   }
   local_98.x = 0;
@@ -374,16 +325,16 @@ void XGTileTextureLevel(uint param_1,uint param_2,uint param_3,ulong param_4,ulo
   if (in_stack_0000005c == (int *)0x0) {
     local_80[0].left = 0;
     local_80[0].top = 0;
-    uVar16 = uVar9 - uVar10 >> (uVar19 & 0x3f);
-    if (uVar16 < 2) {
-      uVar16 = 1;
+    uVar10 = param_1 - uVar7 >> (param_3 & 0x3f);
+    if (uVar10 < 2) {
+      uVar10 = 1;
     }
-    uVar17 = param_2 - uVar10 >> (uVar19 & 0x3f);
-    local_80[0].right = (uVar16 + uVar10 + local_a0) - 1 >> (uVar4 & 0x3f);
-    if (uVar17 < 2) {
-      uVar17 = 1;
+    uVar11 = param_2 - uVar7 >> (param_3 & 0x3f);
+    local_80[0].right = (uVar10 + uVar7 + local_a0) - 1 >> (uVar4 & 0x3f);
+    if (uVar11 < 2) {
+      uVar11 = 1;
     }
-    local_80[0].bottom = (uVar17 + uVar10 + local_9c) - 1 >> (uVar3 & 0x3f);
+    local_80[0].bottom = (uVar11 + uVar7 + local_9c) - 1 >> (uVar3 & 0x3f);
   }
   else {
     local_80[0].left = *in_stack_0000005c >> (uVar4 & 0x3f);
@@ -391,27 +342,25 @@ void XGTileTextureLevel(uint param_1,uint param_2,uint param_3,ulong param_4,ulo
     local_80[0].right = (in_stack_0000005c[2] + local_a0) - 1 >> (uVar4 & 0x3f);
     local_80[0].bottom = (in_stack_0000005c[3] + local_9c) - 1 >> (uVar3 & 0x3f);
   }
-  if ((uVar14 & 0xffffffff) != 0) {
-    plVar6 = &ptVar18->x;
-    plVar5 = &ptVar18->y;
-    ptVar18 = &local_98;
-    local_98.x = *plVar6 >> (uVar4 & 0x3f);
-    local_98.y = *plVar5 >> (uVar3 & 0x3f);
+  ptVar12 = (tagPOINT *)0x0;
+  if (param_7 != (tagPOINT *)0x0) {
+    ptVar12 = &local_98;
+    local_98.x = param_7->x >> (uVar4 & 0x3f);
+    local_98.y = param_7->y >> (uVar3 & 0x3f);
   }
-  lVar8 = local_98.y;
-  lVar7 = local_98.x;
-  if ((uVar13 & 1) == 0) {
-    uVar10 = XGRAPHICS::GetMipTailLevelOffsetCoords
-                       (uVar9,param_2,1,uVar19,param_4,1,(uint)uVar13 >> 1 & 1,&local_90);
-    param_6 = (void *)((int)param_6 - uVar10);
-    local_98.x = local_90.x + lVar7;
-    local_98.y = local_90.y + lVar8;
-    ptVar18 = &local_98;
+  lVar6 = local_98.y;
+  lVar5 = local_98.x;
+  if ((param_5 & 1) == 0) {
+    uVar7 = XGRAPHICS::GetMipTailLevelOffsetCoords
+                      (param_1,param_2,1,param_3,param_4,1,param_5 >> 1 & 1,&local_90);
+    param_6 = (void *)((int)param_6 - uVar7);
+    local_98.x = local_90.x + lVar5;
+    local_98.y = local_90.y + lVar6;
+    ptVar12 = &local_98;
   }
   XGRAPHICS::TileSurface
-            (param_6,uVar2,(uVar15 + local_9c) - 1 >> (uVar3 & 0x3f),ptVar18,param_8,
+            (param_6,uVar2,(uVar9 + local_9c) - 1 >> (uVar3 & 0x3f),ptVar12,param_8,
              in_stack_00000054,local_80,((uint)bVar1 << (uVar3 + uVar4 & 0x3f)) >> 3);
-  __restgprlr_19();
   return;
 }
 

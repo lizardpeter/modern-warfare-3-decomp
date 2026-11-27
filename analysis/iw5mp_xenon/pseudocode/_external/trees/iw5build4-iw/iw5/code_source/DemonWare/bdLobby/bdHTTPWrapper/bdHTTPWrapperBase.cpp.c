@@ -16,25 +16,25 @@ bdHashMap<bdString,bdArray<bdString>,bdHashingClass>::
 
 // 8290E0A0  bdHTTPWrapperBase  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdhttpwrapper/bdhttpwrapperbase.cpp:44)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 bdHTTPWrapperBase * __thiscall bdHTTPWrapperBase::bdHTTPWrapperBase(bdHTTPWrapperBase *this)
 
 {
-  bdRunnable *this_00;
   bdSemaphore *pbVar1;
-  bdHTTPWrapperBase *pbVar2;
-  bdRunnable *pbStack00000014;
+  bdHTTPWrapperBase *pbStack00000014;
   
-  this_00 = (bdRunnable *)__savegprlr_29(this);
-  pbStack00000014 = this_00;
-  bdRunnable::bdRunnable(this_00);
-  this_00[1]._padding_ = -1;
-  this_00->_padding_ = (int)&_vftable_;
-  *(undefined1 *)&this_00[2]._padding_ = 1;
-  *(undefined1 *)((int)&this_00[2]._padding_ + 1) = 0;
-  bdMutex::bdMutex((bdMutex *)&this_00[2].m_stop);
-  *(undefined4 *)&this_00[3].m_stop = 0;
-  this_00[4]._padding_ = 0;
-  *(undefined4 *)&this_00[4].m_stop = 0;
+  pbStack00000014 = this;
+  bdRunnable::bdRunnable((bdRunnable *)this);
+  this->m_controllerIndex = -1;
+  this->_padding_ = (int)&_vftable_;
+  this->m_threadExitedSignal = true;
+  this->m_threadExiting = false;
+  bdMutex::bdMutex(&this->m_threadMutex);
+  this->m_thread = (bdThread *)0x0;
+  this->m_status = BD_EMPTY;
+  this->m_operation = BD_IDLE;
   pbVar1 = bdMemory::allocate(4);
   if (pbVar1 == (bdSemaphore *)0x0) {
     pbVar1 = (bdSemaphore *)0x0;
@@ -42,13 +42,15 @@ bdHTTPWrapperBase * __thiscall bdHTTPWrapperBase::bdHTTPWrapperBase(bdHTTPWrappe
   else {
     pbVar1 = bdSemaphore::bdSemaphore(pbVar1,0,1);
   }
-  this_00[3]._padding_ = (int)pbVar1;
-  pbVar2 = (bdHTTPWrapperBase *)__restgprlr_29(this_00);
-  return pbVar2;
+  this->m_httpSema = pbVar1;
+  return this;
 }
 
 
 // 8290F278  clear  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdcontainers/bdhashmap.inl:46)
+
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 
 void __thiscall
 bdHashMap<bdString,bdArray<bdString>,bdHashingClass>::clear
@@ -57,33 +59,30 @@ bdHashMap<bdString,bdArray<bdString>,bdHashingClass>::clear
 {
   Node *pNVar1;
   Node *this_00;
-  undefined4 *puVar2;
-  uint uVar3;
-  int iVar4;
+  uint uVar2;
+  int iVar3;
   
-  puVar2 = (undefined4 *)__savegprlr_26(this);
-  if (puVar2[6] != 0) {
+  if (this->m_numIterators != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdCore/bdContainers/bdHashMap.inl"
                     ,0x31,0,"%s\n\t%s");
   }
-  uVar3 = 0;
-  if (puVar2[1] != 0) {
-    iVar4 = 0;
+  uVar2 = 0;
+  if (this->m_capacity != 0) {
+    iVar3 = 0;
     do {
-      this_00 = *(Node **)(puVar2[4] + iVar4);
+      this_00 = *(Node **)((int)this->m_map + iVar3);
       while (this_00 != (Node *)0x0) {
         pNVar1 = this_00->m_next;
         Node::~Node(this_00);
         bdMemory::deallocate(this_00);
         this_00 = pNVar1;
       }
-      uVar3 = uVar3 + 1;
-      *(undefined4 *)(puVar2[4] + iVar4) = 0;
-      iVar4 = iVar4 + 4;
-    } while (uVar3 < (uint)puVar2[1]);
+      uVar2 = uVar2 + 1;
+      *(undefined4 *)((int)this->m_map + iVar3) = 0;
+      iVar3 = iVar3 + 4;
+    } while (uVar2 < this->m_capacity);
   }
-  *puVar2 = 0;
-  __restgprlr_26();
+  this->m_size = 0;
   return;
 }
 
@@ -115,70 +114,63 @@ void bdString::operator_delete(void *param_1,void *param_2)
 
 // 8290EF78  operator=  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdcontainers/bdarray.inl:54)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void __thiscall bdArray<bdString>::operator=(bdArray<bdString> *this,bdArray<bdString> *param_1)
 
 {
   uint uVar1;
-  bdArray<bdString> *this_00;
-  bdArray<bdString> *this_01;
-  ulonglong uVar2;
-  bdString *pbVar3;
-  longlong lVar4;
-  int iVar5;
-  uint uVar6;
-  ulonglong uVar7;
+  bdString *pbVar2;
+  longlong lVar3;
+  int iVar4;
+  uint uVar5;
+  ulonglong uVar6;
   
-  uVar7 = (ulonglong)(int)param_1;
-  uVar2 = __savegprlr_27(this);
-  if ((uVar2 & 0xffffffff) != (uVar7 & 0xffffffff)) {
-    this_00 = (bdArray<bdString> *)uVar7;
-    uVar1 = this_00->m_size;
-    uVar7 = (ulonglong)uVar1;
-    this_01 = (bdArray<bdString> *)uVar2;
-    if (this_01->m_capacity < uVar7) {
-      clear(this_01);
-      pbVar3 = uninitializedCopy(this_01,this_00);
-      this_01->m_data = pbVar3;
-      this_01->m_capacity = this_00->m_capacity;
+  if (this != param_1) {
+    uVar1 = param_1->m_size;
+    uVar6 = (ulonglong)uVar1;
+    if (this->m_capacity < uVar6) {
+      clear(this);
+      pbVar2 = uninitializedCopy(this,param_1);
+      this->m_data = pbVar2;
+      this->m_capacity = param_1->m_capacity;
     }
     else {
-      uVar6 = 0;
-      if (uVar7 <= this_01->m_size) {
-        if (uVar7 != 0) {
-          iVar5 = 0;
+      uVar5 = 0;
+      if (uVar6 <= this->m_size) {
+        if (uVar6 != 0) {
+          iVar4 = 0;
           do {
-            pbVar3 = operator[](this_00,uVar6);
-            bdString::operator=((bdString *)((int)&this_01->m_data->m_string + iVar5),pbVar3);
-            uVar6 = uVar6 + 1;
-            iVar5 = iVar5 + 4;
-          } while (uVar6 < uVar7);
+            pbVar2 = operator[](param_1,uVar5);
+            bdString::operator=((bdString *)((int)&this->m_data->m_string + iVar4),pbVar2);
+            uVar5 = uVar5 + 1;
+            iVar4 = iVar4 + 4;
+          } while (uVar5 < uVar6);
         }
-        pbVar3 = this_01->m_data + uVar1;
-        for (lVar4 = this_01->m_size - uVar7; lVar4 != 0; lVar4 = lVar4 + -1) {
-          bdString::~bdString(pbVar3);
-          pbVar3 = pbVar3 + 1;
+        pbVar2 = this->m_data + uVar1;
+        for (lVar3 = this->m_size - uVar6; lVar3 != 0; lVar3 = lVar3 + -1) {
+          bdString::~bdString(pbVar2);
+          pbVar2 = pbVar2 + 1;
         }
-        this_01->m_size = uVar1;
-        decreaseCapacity(this_01,0);
-        goto LAB_8290f0b4;
+        this->m_size = uVar1;
+        decreaseCapacity(this,0);
+        return;
       }
-      if (this_01->m_size != 0) {
-        iVar5 = 0;
+      if (this->m_size != 0) {
+        iVar4 = 0;
         do {
-          pbVar3 = operator[](this_00,uVar6);
-          bdString::operator=((bdString *)((int)&this_01->m_data->m_string + iVar5),pbVar3);
-          uVar6 = uVar6 + 1;
-          iVar5 = iVar5 + 4;
-        } while (uVar6 < this_01->m_size);
+          pbVar2 = operator[](param_1,uVar5);
+          bdString::operator=((bdString *)((int)&this->m_data->m_string + iVar4),pbVar2);
+          uVar5 = uVar5 + 1;
+          iVar4 = iVar4 + 4;
+        } while (uVar5 < this->m_size);
       }
-      uVar6 = this_01->m_size;
-      copyConstructArrayArray(this_01,this_01->m_data + uVar6,this_00->m_data + uVar6,uVar1 - uVar6)
-      ;
+      uVar5 = this->m_size;
+      copyConstructArrayArray(this,this->m_data + uVar5,param_1->m_data + uVar5,uVar1 - uVar5);
     }
-    this_01->m_size = uVar1;
+    this->m_size = uVar1;
   }
-LAB_8290f0b4:
-  __restgprlr_27();
   return;
 }
 
@@ -210,24 +202,23 @@ bool __thiscall bdHTTPWrapperBase::isOkayToStart(bdHTTPWrapperBase *this)
 
 // 8290F0C0  get  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdcontainers/bdhashmap.inl:72)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 bool __thiscall
 bdHashMap<bdString,bdArray<bdString>,bdHashingClass>::get
           (bdHashMap<bdString,bdArray<bdString>,bdHashingClass> *this,bdString *param_1,
           bdArray<bdString> *param_2)
 
 {
-  bdHashMap<bdString,bdArray<bdString>,bdHashingClass> *this_00;
   bdArray<bdString> *pbVar1;
-  undefined1 uVar2;
   
-  this_00 = (bdHashMap<bdString,bdArray<bdString>,bdHashingClass> *)__savegprlr_29(this);
-  pbVar1 = getIterator(this_00,param_1);
+  pbVar1 = getIterator(this,param_1);
   if (pbVar1 != (bdArray<bdString> *)0x0) {
     bdArray<bdString>::operator=(param_2,pbVar1);
-    releaseIterator(this_00,pbVar1);
+    releaseIterator(this,pbVar1);
   }
-  uVar2 = __restgprlr_29(pbVar1 != (bdArray<bdString> *)0x0);
-  return (bool)uVar2;
+  return pbVar1 != (bdArray<bdString> *)0x0;
 }
 
 
@@ -257,18 +248,20 @@ void __thiscall bdHTTPWrapperBase::finalize(bdHTTPWrapperBase *this)
 
 // 8290E030  getHash<bdString>  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdcontainers/bdhashmap.h:88)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 uint __thiscall bdHashingClass::getHash<bdString>(bdHashingClass *this,bdString *param_1)
 
 {
   char *pcVar1;
   uint uVar2;
   char *pcVar3;
-  longlong lVar4;
+  uint uVar4;
   int iVar5;
   longlong lVar6;
   
-  __savegprlr_28(this);
-  lVar4 = 0;
+  uVar4 = 0;
   iVar5 = 0;
   uVar2 = bdString::getLength(param_1);
   lVar6 = (longlong)(int)uVar2;
@@ -277,16 +270,18 @@ uint __thiscall bdHashingClass::getHash<bdString>(bdHashingClass *this,bdString 
     do {
       pcVar1 = pcVar3 + iVar5;
       iVar5 = iVar5 + 1;
-      lVar4 = (longlong)*pcVar1 + lVar4 * 0x1f;
+      uVar4 = (int)*pcVar1 + uVar4 * 0x1f;
       lVar6 = lVar6 + -1;
     } while (lVar6 != 0);
   }
-  uVar2 = __restgprlr_28(lVar4);
-  return uVar2;
+  return uVar4;
 }
 
 
 // 8290F118  put  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdcontainers/bdhashmap.inl:89)
+
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 
 bool __thiscall
 bdHashMap<bdString,bdArray<bdString>,bdHashingClass>::put
@@ -294,49 +289,40 @@ bdHashMap<bdString,bdArray<bdString>,bdHashingClass>::put
           bdArray<bdString> *param_2)
 
 {
-  bdHashMap<bdString,bdArray<bdString>,bdHashingClass> *this_00;
-  uint uVar2;
-  bool bVar4;
-  Node *pNVar3;
-  undefined8 uVar1;
-  undefined1 uVar5;
-  uint uVar6;
+  uint uVar1;
+  bool bVar3;
+  Node *pNVar2;
+  uint uVar4;
   
-  this_00 = (bdHashMap<bdString,bdArray<bdString>,bdHashingClass> *)__savegprlr_25(this);
-  if (this_00->m_numIterators != 0) {
+  if (this->m_numIterators != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdCore/bdContainers/bdHashMap.inl"
                     ,0x5b,0,"%s\n\t%s");
   }
-  uVar2 = bdHashingClass::getHash<bdString>(&this_00->m_hashClass,param_1);
-  uVar6 = this_00->m_capacity - 1 & uVar2;
-  pNVar3 = this_00->m_map[uVar6];
-  do {
-    if (pNVar3 == (Node *)0x0) {
-      if (this_00->m_threshold < this_00->m_size + 1) {
-        resize(this_00,this_00->m_capacity << 1);
-        uVar6 = this_00->m_capacity - 1 & uVar2;
+  uVar1 = bdHashingClass::getHash<bdString>(&this->m_hashClass,param_1);
+  uVar4 = this->m_capacity - 1 & uVar1;
+  pNVar2 = this->m_map[uVar4];
+  while( true ) {
+    if (pNVar2 == (Node *)0x0) {
+      if (this->m_threshold < this->m_size + 1) {
+        resize(this,this->m_capacity << 1);
+        uVar4 = this->m_capacity - 1 & uVar1;
       }
-      this_00->m_size = this_00->m_size + 1;
-      pNVar3 = bdMemory::allocate(0x14);
-      if (pNVar3 == (Node *)0x0) {
-        pNVar3 = (Node *)0x0;
+      this->m_size = this->m_size + 1;
+      pNVar2 = bdMemory::allocate(0x14);
+      if (pNVar2 == (Node *)0x0) {
+        pNVar2 = (Node *)0x0;
       }
       else {
-        pNVar3 = Node::Node(pNVar3,param_1,param_2,this_00->m_map[uVar6]);
+        pNVar2 = Node::Node(pNVar2,param_1,param_2,this->m_map[uVar4]);
       }
-      uVar1 = 1;
-      this_00->m_map[uVar6] = pNVar3;
-LAB_8290f244:
-      uVar5 = __restgprlr_25(uVar1);
-      return (bool)uVar5;
+      this->m_map[uVar4] = pNVar2;
+      return true;
     }
-    bVar4 = bdString::operator==(param_1,&pNVar3->m_key);
-    if (bVar4) {
-      uVar1 = 0;
-      goto LAB_8290f244;
-    }
-    pNVar3 = pNVar3->m_next;
-  } while( true );
+    bVar3 = bdString::operator==(param_1,&pNVar2->m_key);
+    if (bVar3) break;
+    pNVar2 = pNVar2->m_next;
+  }
+  return false;
 }
 
 
@@ -355,25 +341,24 @@ bdString * __thiscall bdArray<bdString>::operator[](bdArray<bdString> *this,uint
 
 // 8290E2F8  startAsyncOperation  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdhttpwrapper/bdhttpwrapperbase.cpp:111)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 bool __thiscall bdHTTPWrapperBase::startAsyncOperation(bdHTTPWrapperBase *this,bdOperation param_1)
 
 {
   bool bVar1;
-  int iVar2;
-  undefined1 uVar3;
   
-  iVar2 = __savegprlr_28(this);
-  bdPlatformMutex::_lock_bdMutex__QAAXXZ((void **)(iVar2 + 0x14));
-  bVar1 = *(char *)(iVar2 + 0x11) == '\0';
+  bdPlatformMutex::_lock_bdMutex__QAAXXZ(&(this->m_threadMutex).m_handle);
+  bVar1 = this->m_threadExiting == false;
   if (bVar1) {
-    *(bdOperation *)(iVar2 + 0x24) = param_1;
-    *(undefined4 *)(iVar2 + 0x20) = 1;
-    Sys_SignalPendingHTTPOperation(*(int *)(iVar2 + 8));
-    bdPlatformSemaphore::_release_bdSemaphore__QAAXXZ(*(void ***)(iVar2 + 0x18));
+    this->m_operation = param_1;
+    this->m_status = BD_PENDING;
+    Sys_SignalPendingHTTPOperation(this->m_controllerIndex);
+    bdPlatformSemaphore::_release_bdSemaphore__QAAXXZ(&this->m_httpSema->m_handle);
   }
-  bdPlatformMutex::_unlock_bdMutex__QAAXXZ((void **)(iVar2 + 0x14));
-  uVar3 = __restgprlr_28(bVar1);
-  return (bool)uVar3;
+  bdPlatformMutex::_unlock_bdMutex__QAAXXZ(&(this->m_threadMutex).m_handle);
+  return bVar1;
 }
 
 
@@ -392,110 +377,111 @@ bdString * __thiscall bdArray<bdString>::operator[](bdArray<bdString> *this,uint
 
 // 8290EC60  increaseCapacity  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdcontainers/bdarray.inl:137)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void __thiscall bdArray<bdString>::increaseCapacity(bdArray<bdString> *this,uint param_1)
 
 {
-  bdArray<bdString> *this_00;
   bdString *pbVar1;
   ulonglong uVar2;
-  bdString *this_01;
+  bdString *this_00;
   ulonglong uVar3;
   
-  uVar3 = (ulonglong)(int)param_1;
-  this_00 = (bdArray<bdString> *)__savegprlr_27(this);
-  uVar2 = (ulonglong)this_00->m_capacity;
-  if ((uVar3 & 0xffffffff) <= uVar2) {
+  uVar2 = (ulonglong)this->m_capacity;
+  uVar3 = (longlong)(int)param_1;
+  if (param_1 <= uVar2) {
     uVar3 = uVar2;
   }
   uVar2 = uVar2 + uVar3;
   pbVar1 = (bdString *)0x0;
   if (uVar2 != 0) {
     pbVar1 = bdMemory::allocate((uint)((uVar2 & 0xffffffff) << 2));
-    copyConstructArrayArray(this_00,pbVar1,this_00->m_data,this_00->m_size);
+    copyConstructArrayArray(this,pbVar1,this->m_data,this->m_size);
   }
-  this_01 = this_00->m_data;
-  for (uVar3 = (ulonglong)this_00->m_size; uVar3 != 0; uVar3 = uVar3 - 1) {
-    bdString::~bdString(this_01);
-    this_01 = this_01 + 1;
+  this_00 = this->m_data;
+  for (uVar3 = (ulonglong)this->m_size; uVar3 != 0; uVar3 = uVar3 - 1) {
+    bdString::~bdString(this_00);
+    this_00 = this_00 + 1;
   }
-  bdMemory::deallocate(this_00->m_data);
-  this_00->m_data = pbVar1;
-  this_00->m_capacity = (uint)uVar2;
-  __restgprlr_27();
+  bdMemory::deallocate(this->m_data);
+  this->m_data = pbVar1;
+  this->m_capacity = (uint)uVar2;
   return;
 }
 
 
 // 8290EEF8  Node  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdcontainers/bdhashmap.h:142)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 Node * __thiscall
 bdHashMap<bdString,bdArray<bdString>,bdHashingClass>::Node::Node
           (Node *this,bdString *param_1,bdArray<bdString> *param_2,Node *param_3)
 
 {
-  bdArray<bdString> *this_00;
   bdString *pbVar1;
-  Node *pNVar2;
-  bdArray<bdString> *pbStack00000014;
+  Node *pNStack00000014;
   
-  this_00 = (bdArray<bdString> *)__savegprlr_28(this);
-  this_00->m_capacity = param_2->m_capacity;
-  this_00->m_size = param_2->m_size;
-  pbStack00000014 = this_00;
-  pbVar1 = bdArray<bdString>::uninitializedCopy(this_00,param_2);
-  this_00->m_data = pbVar1;
-  bdString::bdString((bdString *)(this_00 + 1),param_1);
-  this_00[1].m_capacity = (uint)param_3;
-  pNVar2 = (Node *)__restgprlr_28(this_00);
-  return pNVar2;
+  (this->m_data).m_capacity = param_2->m_capacity;
+  (this->m_data).m_size = param_2->m_size;
+  pNStack00000014 = this;
+  pbVar1 = bdArray<bdString>::uninitializedCopy(&this->m_data,param_2);
+  (this->m_data).m_data = pbVar1;
+  bdString::bdString(&this->m_key,param_1);
+  this->m_next = param_3;
+  return this;
 }
 
 
 // 8290ED48  decreaseCapacity  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdcontainers/bdarray.inl:170)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void __thiscall bdArray<bdString>::decreaseCapacity(bdArray<bdString> *this,uint param_1)
 
 {
-  bdArray<bdString> *this_00;
-  bdString *pbVar1;
-  ulonglong uVar2;
+  ulonglong uVar1;
+  bdString *pbVar2;
   ulonglong uVar3;
-  bdString *this_01;
   ulonglong uVar4;
+  bdString *this_00;
   
-  uVar4 = (ulonglong)(int)param_1;
-  this_00 = (bdArray<bdString> *)__savegprlr_28(this);
-  uVar2 = (ulonglong)this_00->m_capacity;
-  if (((ulonglong)this_00->m_size & 0x3fffffff) << 2 < uVar2) {
-    uVar3 = uVar2 - this_00->m_size;
-    if ((uVar4 & 0xffffffff) <= (uVar3 & 0xffffffff)) {
-      uVar3 = uVar4;
+  uVar3 = (ulonglong)this->m_capacity;
+  if (((ulonglong)this->m_size & 0x3fffffff) << 2 < uVar3) {
+    uVar4 = uVar3 - this->m_size;
+    if ((ulonglong)param_1 <= (uVar4 & 0xffffffff)) {
+      uVar4 = (longlong)(int)param_1;
     }
-    uVar4 = (ulonglong)(this_00->m_capacity >> 1);
-    if ((uVar3 & 0xffffffff) <= uVar4) {
-      uVar3 = uVar4;
+    uVar1 = (ulonglong)(this->m_capacity >> 1);
+    if ((uVar4 & 0xffffffff) <= uVar1) {
+      uVar4 = uVar1;
     }
-    uVar2 = uVar2 - uVar3;
-    pbVar1 = (bdString *)0x0;
-    this_00->m_capacity = (uint)uVar2;
-    if (uVar2 != 0) {
-      pbVar1 = bdMemory::allocate((uint)((uVar2 & 0xffffffff) << 2));
-      copyConstructArrayArray(this_00,pbVar1,this_00->m_data,this_00->m_size);
+    uVar3 = uVar3 - uVar4;
+    pbVar2 = (bdString *)0x0;
+    this->m_capacity = (uint)uVar3;
+    if (uVar3 != 0) {
+      pbVar2 = bdMemory::allocate((uint)((uVar3 & 0xffffffff) << 2));
+      copyConstructArrayArray(this,pbVar2,this->m_data,this->m_size);
     }
-    this_01 = this_00->m_data;
-    for (uVar4 = (ulonglong)this_00->m_size; uVar4 != 0; uVar4 = uVar4 - 1) {
-      bdString::~bdString(this_01);
-      this_01 = this_01 + 1;
+    this_00 = this->m_data;
+    for (uVar3 = (ulonglong)this->m_size; uVar3 != 0; uVar3 = uVar3 - 1) {
+      bdString::~bdString(this_00);
+      this_00 = this_00 + 1;
     }
-    bdMemory::deallocate(this_00->m_data);
-    this_00->m_data = pbVar1;
+    bdMemory::deallocate(this->m_data);
+    this->m_data = pbVar2;
   }
-  __restgprlr_28();
   return;
 }
 
 
 // 8290F448  remove  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdcontainers/bdhashmap.inl:198)
+
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 
 bool __thiscall
 bdHashMap<bdString,bdArray<bdString>,bdHashingClass>::remove
@@ -504,139 +490,125 @@ bdHashMap<bdString,bdArray<bdString>,bdHashingClass>::remove
 
 {
   Node *pNVar1;
-  int iVar2;
-  int *piVar4;
-  uint uVar5;
-  bool bVar6;
-  undefined8 uVar3;
-  undefined1 uVar7;
-  Node *pNVar8;
+  uint uVar2;
+  bool bVar3;
+  Node *pNVar4;
   Node *this_00;
   
-  piVar4 = (int *)__savegprlr_26(this);
-  uVar5 = bdHashingClass::getHash<bdString>((bdHashingClass *)(piVar4 + 5),param_1);
-  iVar2 = (piVar4[1] - 1U & uVar5) * 4;
-  pNVar1 = *(Node **)(piVar4[4] + iVar2);
-  pNVar8 = (Node *)0x0;
-  if (piVar4[6] != 0) {
+  uVar2 = bdHashingClass::getHash<bdString>(&this->m_hashClass,param_1);
+  uVar2 = this->m_capacity - 1 & uVar2;
+  pNVar1 = this->m_map[uVar2];
+  pNVar4 = (Node *)0x0;
+  if (this->m_numIterators != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdCore/bdContainers/bdHashMap.inl"
                     ,0xce,0,"%s\n\t%s");
   }
-  do {
+  while( true ) {
     this_00 = pNVar1;
     if (this_00 == (Node *)0x0) {
-      uVar3 = 0;
-LAB_8290f4e8:
-      uVar7 = __restgprlr_26(uVar3);
-      return (bool)uVar7;
+      return false;
     }
-    bVar6 = bdString::operator==(param_1,&this_00->m_key);
-    if (bVar6) {
-      if (pNVar8 == (Node *)0x0) {
-        *(Node **)(piVar4[4] + iVar2) = this_00->m_next;
-      }
-      else {
-        pNVar8->m_next = this_00->m_next;
-      }
-      bdArray<bdString>::operator=(param_2,&this_00->m_data);
-      Node::~Node(this_00);
-      bdMemory::deallocate(this_00);
-      uVar3 = 1;
-      *piVar4 = *piVar4 + -1;
-      goto LAB_8290f4e8;
-    }
+    bVar3 = bdString::operator==(param_1,&this_00->m_key);
+    if (bVar3) break;
     pNVar1 = this_00->m_next;
-    pNVar8 = this_00;
-  } while( true );
+    pNVar4 = this_00;
+  }
+  if (pNVar4 == (Node *)0x0) {
+    this->m_map[uVar2] = this_00->m_next;
+  }
+  else {
+    pNVar4->m_next = this_00->m_next;
+  }
+  bdArray<bdString>::operator=(param_2,&this_00->m_data);
+  Node::~Node(this_00);
+  bdMemory::deallocate(this_00);
+  this->m_size = this->m_size - 1;
+  return true;
 }
 
 
 // 8290FA78  parseURL  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdhttpwrapper/bdhttpwrapperbase.cpp:200)
+
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 
 bool __thiscall
 bdHTTPWrapperBase::parseURL
           (bdHTTPWrapperBase *this,char *param_1,char *param_2,char **param_3,uint *param_4)
 
 {
-  bdHTTPWrapperBase *this_00;
   bool bVar2;
   uint uVar1;
-  undefined1 uVar3;
-  ulonglong uVar4;
-  char *pcVar5;
-  ulonglong uVar6;
+  ulonglong uVar3;
+  char *pcVar4;
+  ulonglong uVar5;
   
-  uVar4 = (ulonglong)(int)param_1;
-  this_00 = (bdHTTPWrapperBase *)__savegprlr_26(this);
-  uVar6 = uVar4;
+  uVar3 = (ulonglong)(int)param_1;
+  uVar5 = uVar3;
   strchr();
-  *param_3 = (char *)uVar6;
-  if ((uVar6 & 0xffffffff) == 0) {
+  *param_3 = (char *)uVar5;
+  if ((uVar5 & 0xffffffff) == 0) {
     uVar1 = 0xee;
-LAB_8290fb98:
-    pcVar5 = "URL was not of expected form. expected: proto://serverName:port/resource\nactual: %s";
   }
   else {
-    uVar6 = uVar4;
+    uVar5 = uVar3;
     strchr();
-    if (uVar6 != 0) {
-      uVar1 = atoi((char *)((int)uVar6 + 1));
-      uVar6 = uVar6 - 1;
-      *param_4 = uVar1;
-      if (((uVar6 & 0xffffffff) < (uVar4 & 0xffffffff)) || (ZEXT48(*param_3) < (uVar6 & 0xffffffff))
-         ) {
-        uVar1 = 0x104;
-      }
-      else {
-        if (uVar1 != 0) goto LAB_8290fb08;
-        uVar1 = 0x10a;
-      }
-      goto LAB_8290fb98;
-    }
-    uVar6 = uVar4;
-    strncmp();
-    *param_4 = (-(uint)(uVar6 != 0) & 0xfffffe95) + 0x1bb;
-    uVar6 = ZEXT48(*param_3) - 1;
+    if (uVar5 == 0) {
+      uVar5 = uVar3;
+      strncmp();
+      *param_4 = (-(uint)(uVar5 != 0) & 0xfffffe95) + 0x1bb;
+      uVar5 = ZEXT48(*param_3) - 1;
 LAB_8290fb08:
-    uVar6 = (uVar6 - uVar4) + 2;
-    if ((-1 < (longlong)uVar6) && ((uVar6 & 0xffffffff) < 0x181)) {
-      bdStrlcpy(param_2,(char *)uVar4,(uint)uVar6);
-      bVar2 = serverNameToIP(this_00,param_2);
-      goto LAB_8290fbc8;
+      uVar5 = (uVar5 - uVar3) + 2;
+      if ((-1 < (longlong)uVar5) && ((uVar5 & 0xffffffff) < 0x181)) {
+        bdStrlcpy(param_2,param_1,(uint)uVar5);
+        bVar2 = serverNameToIP(this,param_2);
+        return bVar2;
+      }
+      pcVar4 = "URL host greater than BD_MAX_SERVER_HOST_SIZE. (\'%s\')";
+      uVar1 = 0x115;
+      goto LAB_8290fba0;
     }
-    pcVar5 = "URL host greater than BD_MAX_SERVER_HOST_SIZE. (\'%s\')";
-    uVar1 = 0x115;
+    uVar1 = atoi((char *)((int)uVar5 + 1));
+    uVar5 = uVar5 - 1;
+    *param_4 = uVar1;
+    if (((uVar5 & 0xffffffff) < ZEXT48(param_1)) || (ZEXT48(*param_3) < (uVar5 & 0xffffffff))) {
+      uVar1 = 0x104;
+    }
+    else {
+      if (uVar1 != 0) goto LAB_8290fb08;
+      uVar1 = 0x10a;
+    }
   }
+  pcVar4 = "URL was not of expected form. expected: proto://serverName:port/resource\nactual: %s";
+LAB_8290fba0:
   bdLogMessage(BD_LOG_ERROR,"err/","http",
                "c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdLobby\\bdHTTPWrapper\\bdHTTPWrapperBase.cpp"
-               ,"bdHTTPWrapperBase::parseURL",uVar1,pcVar5);
-  bVar2 = false;
-LAB_8290fbc8:
-  uVar3 = __restgprlr_26(bVar2);
-  return (bool)uVar3;
+               ,"bdHTTPWrapperBase::parseURL",uVar1,pcVar4);
+  return false;
 }
 
 
 // 8290ECF0  clear  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdcontainers/bdarray.inl:211)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void __thiscall bdArray<bdString>::clear(bdArray<bdString> *this)
 
 {
-  undefined4 *puVar1;
   bdString *this_00;
-  ulonglong uVar2;
+  ulonglong uVar1;
   
-  puVar1 = (undefined4 *)__savegprlr_29(this);
-  this_00 = (bdString *)*puVar1;
-  for (uVar2 = (ulonglong)(uint)puVar1[2]; uVar2 != 0; uVar2 = uVar2 - 1) {
+  this_00 = this->m_data;
+  for (uVar1 = (ulonglong)this->m_size; uVar1 != 0; uVar1 = uVar1 - 1) {
     bdString::~bdString(this_00);
     this_00 = this_00 + 1;
   }
-  bdMemory::deallocate((void *)*puVar1);
-  *puVar1 = 0;
-  puVar1[2] = 0;
-  puVar1[1] = 0;
-  __restgprlr_29();
+  bdMemory::deallocate(this->m_data);
+  this->m_data = (bdString *)0x0;
+  this->m_size = 0;
+  this->m_capacity = 0;
   return;
 }
 
@@ -697,34 +669,32 @@ bool __thiscall bdHTTPWrapperBase::initPump(bdHTTPWrapperBase *this)
 
 // 8290F548  serverNameToIP  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdhttpwrapper/bdhttpwrapperbase.cpp:317)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 bool __thiscall bdHTTPWrapperBase::serverNameToIP(bdHTTPWrapperBase *this,char *param_1)
 
 {
   uint uVar1;
-  int iVar3;
   bdRandom *this_00;
-  uint uVar4;
+  uint uVar2;
   bdString *this_01;
-  char *pcVar5;
-  undefined8 uVar2;
-  undefined1 uVar6;
-  ulonglong uVar7;
+  char *pcVar3;
+  ulonglong uVar4;
   bdString bStack_40;
   bdRandom bStack_3c;
   bdArray<bdString> local_38 [4];
   
-  iVar3 = __savegprlr_29(this);
   bdString::bdString(&bStack_40,param_1);
   local_38[0].m_data = (bdString *)0x0;
   local_38[0].m_capacity = 0;
   local_38[0].m_size = 0;
   bdHashMap<bdString,bdArray<bdString>,bdHashingClass>::get
-            (*(bdHashMap<bdString,bdArray<bdString>,bdHashingClass> **)(iVar3 + 0xc),&bStack_40,
-             local_38);
+            (&this->m_lspEnumState->m_lspDescToIP,&bStack_40,local_38);
   uVar1 = local_38[0].m_size;
-  uVar7 = (ulonglong)local_38[0].m_size;
-  if (uVar7 < 2) {
-    if (uVar7 != 1) {
+  uVar4 = (ulonglong)local_38[0].m_size;
+  if (uVar4 < 2) {
+    if (uVar4 != 1) {
       bdStrlcpy(param_1,"",1);
       bdLogMessage(BD_LOG_ERROR,"err/","http",
                    "c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdLobby\\bdHTTPWrapper\\bdHTTPWrapperBase.cpp"
@@ -732,59 +702,52 @@ bool __thiscall bdHTTPWrapperBase::serverNameToIP(bdHTTPWrapperBase *this,char *
                    "Error when accessing lsp desc to ip hash map");
       bdArray<bdString>::clear(local_38);
       bdString::~bdString(&bStack_40);
-      uVar2 = 0;
-      goto LAB_8290f658;
+      return false;
     }
-    uVar4 = 0;
+    uVar2 = 0;
   }
   else {
     this_00 = bdRandom::bdRandom(&bStack_3c);
-    uVar4 = bdRandom::nextUInt(this_00);
-    trapWord(6,uVar7,0);
-    uVar4 = uVar4 - (uVar4 / uVar1) * uVar1;
+    uVar2 = bdRandom::nextUInt(this_00);
+    trapWord(6,uVar4,0);
+    uVar2 = uVar2 - (uVar2 / uVar1) * uVar1;
     bdRandom::~bdRandom(&bStack_3c);
   }
-  this_01 = bdArray<bdString>::operator[](local_38,uVar4);
-  pcVar5 = bdString::getBuffer(this_01);
-  bdStrlcpy(param_1,pcVar5,0x100);
+  this_01 = bdArray<bdString>::operator[](local_38,uVar2);
+  pcVar3 = bdString::getBuffer(this_01);
+  bdStrlcpy(param_1,pcVar3,0x100);
   bdArray<bdString>::clear(local_38);
   bdString::~bdString(&bStack_40);
-  uVar2 = 1;
-LAB_8290f658:
-  uVar6 = __restgprlr_29(uVar2);
-  return (bool)uVar6;
+  return true;
 }
 
 
 // 8290EA98  getIterator  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdcontainers/bdhashmap.inl:325)
+
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 
 void * __thiscall
 bdHashMap<bdString,bdArray<bdString>,bdHashingClass>::getIterator
           (bdHashMap<bdString,bdArray<bdString>,bdHashingClass> *this,bdString *param_1)
 
 {
-  int *piVar1;
+  Node *pNVar1;
   uint uVar2;
-  bool bVar5;
-  int iVar3;
-  void *pvVar4;
+  bool bVar3;
   
-  piVar1 = (int *)__savegprlr_29(this);
-  if (*piVar1 != 0) {
-    uVar2 = bdHashingClass::getHash<bdString>((bdHashingClass *)(piVar1 + 5),param_1);
-    for (iVar3 = *(int *)((piVar1[1] - 1U & uVar2) * 4 + piVar1[4]); iVar3 != 0;
-        iVar3 = *(int *)(iVar3 + 0x10)) {
-      bVar5 = bdString::operator==(param_1,(bdString *)(iVar3 + 0xc));
-      if (bVar5) {
-        piVar1[6] = piVar1[6] + 1;
-        goto LAB_8290eb00;
+  if (this->m_size != 0) {
+    uVar2 = bdHashingClass::getHash<bdString>(&this->m_hashClass,param_1);
+    for (pNVar1 = this->m_map[this->m_capacity - 1 & uVar2]; pNVar1 != (Node *)0x0;
+        pNVar1 = pNVar1->m_next) {
+      bVar3 = bdString::operator==(param_1,&pNVar1->m_key);
+      if (bVar3) {
+        this->m_numIterators = this->m_numIterators + 1;
+        return pNVar1;
       }
     }
   }
-  iVar3 = 0;
-LAB_8290eb00:
-  pvVar4 = (void *)__restgprlr_29(iVar3);
-  return pvVar4;
+  return (void *)0x0;
 }
 
 
@@ -872,13 +835,13 @@ void __thiscall bdLSPEnumerator::cancelTasks(bdLSPEnumerator *this)
 
 // 8290E3F8  decRefCount  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdhttpwrapper/bdhttpwrapperbase.cpp:399)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void __thiscall bdLSPEnumerator::decRefCount(bdLSPEnumerator *this)
 
 {
-  int iVar1;
-  
-  iVar1 = __savegprlr_28(this);
-  if (*(char *)(iVar1 + 0x38) != '\0') {
+  if (this->m_hasRefCount != false) {
     m_resultsRefCount = m_resultsRefCount - 1;
     if (m_resultsRefCount == 0) {
       if (m_resultsa == (XTITLE_SERVER_INFO *)0x0) {
@@ -893,39 +856,46 @@ void __thiscall bdLSPEnumerator::decRefCount(bdLSPEnumerator *this)
       s_isLSPListEnumerated = false;
       m_resultsRefCount = 0;
     }
-    *(undefined1 *)(iVar1 + 0x38) = 0;
+    this->m_hasRefCount = false;
   }
-  __restgprlr_28();
   return;
 }
 
 
 // 8290E7E8  start  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdhttpwrapper/bdhttpwrapperbase.cpp:418)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
+
 void __thiscall bdLSPEnumerator::start(bdLSPEnumerator *this)
 
 {
-  bdLSPEnumerator *this_00;
   ulong uVar1;
   uint uVar2;
   char *pcVar3;
   ulong local_50 [20];
   
-  this_00 = (bdLSPEnumerator *)__savegprlr_24(this);
-  if ((this_00->m_lspReady != false) || (this_00->m_serverEnumHandle != (void *)0x0))
-  goto LAB_8290ea14;
-  if (this_00->m_hasRefCount == false) {
+  if (this->m_lspReady != false) {
+    return;
+  }
+  if (this->m_serverEnumHandle != (void *)0x0) {
+    return;
+  }
+  if (this->m_hasRefCount == false) {
     m_resultsRefCount = m_resultsRefCount + 1;
-    this_00->m_hasRefCount = true;
+    this->m_hasRefCount = true;
   }
-  if (((1 < m_resultsRefCount) && (s_enumerationNeedsRestart == false)) ||
-     (s_isLSPListEnumerated != false)) goto LAB_8290ea14;
+  if ((1 < m_resultsRefCount) && (s_enumerationNeedsRestart == false)) {
+    return;
+  }
+  if (s_isLSPListEnumerated != false) {
+    return;
+  }
   local_50[0] = 0;
-  if (this_00->m_lspInfoCount == 0) {
-    this_00->m_lspInfoCount = 0x41;
+  if (this->m_lspInfoCount == 0) {
+    this->m_lspInfoCount = 0x41;
   }
-  uVar1 = XTitleServerCreateEnumerator
-                    ("",this_00->m_lspInfoCount,local_50,&this_00->m_serverEnumHandle);
+  uVar1 = XTitleServerCreateEnumerator("",this->m_lspInfoCount,local_50,&this->m_serverEnumHandle);
   if ((uVar1 == 0) && (local_50[0] != 0)) {
     bdLogMessage(BD_LOG_INFO,"info/","http",
                  "c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdLobby\\bdHTTPWrapper\\bdHTTPWrapperBase.cpp"
@@ -943,11 +913,11 @@ void __thiscall bdLSPEnumerator::start(bdLSPEnumerator *this)
       }
     }
     memset();
-    uVar1 = XEnumerate(this_00->m_serverEnumHandle,m_resultsa,local_50[0],(ulong *)0x0,
-                       &this_00->m_overlapped);
+    uVar1 = XEnumerate(this->m_serverEnumHandle,m_resultsa,local_50[0],(ulong *)0x0,
+                       &this->m_overlapped);
     if ((uVar1 == 0x3e5) || (uVar1 == 0)) {
       s_enumerationNeedsRestart = false;
-      goto LAB_8290ea14;
+      return;
     }
     bdLogMessage(BD_LOG_ERROR,"err/","http",
                  "c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdLobby\\bdHTTPWrapper\\bdHTTPWrapperBase.cpp"
@@ -962,14 +932,15 @@ LAB_8290ea04:
                  "c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdLobby\\bdHTTPWrapper\\bdHTTPWrapperBase.cpp"
                  ,"bdLSPEnumerator::start",uVar2,pcVar3);
   }
-  cleanupEnumHandle(this_00);
-LAB_8290ea14:
-  __restgprlr_24();
+  cleanupEnumHandle(this);
   return;
 }
 
 
 // 8290E640  copyConstructArrayArray  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdcontainers/bdarray.inl:466)
+
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 
 void __thiscall
 bdArray<bdString>::copyConstructArrayArray
@@ -977,25 +948,19 @@ bdArray<bdString>::copyConstructArrayArray
 
 {
   int iVar1;
-  bdString *pbVar2;
-  ulonglong uVar3;
-  ulonglong uVar4;
+  longlong lVar2;
   
-  uVar3 = (ulonglong)(int)param_3;
-  uVar4 = (ulonglong)(int)param_1;
-  pbVar2 = (bdString *)__savegprlr_28(this);
-  if ((uVar3 & 0xffffffff) != 0) {
-    iVar1 = (int)uVar4;
+  lVar2 = (longlong)(int)param_3;
+  if (param_3 != 0) {
+    iVar1 = (int)param_2 - (int)param_1;
     do {
-      if ((uVar4 & 0xffffffff) != 0) {
-        pbVar2 = bdString::bdString((bdString *)uVar4,
-                                    (bdString *)(((int)param_2 - iVar1) + (int)(bdString *)uVar4));
+      if (param_1 != (bdString *)0x0) {
+        bdString::bdString(param_1,(bdString *)(iVar1 + (int)param_1));
       }
-      uVar3 = uVar3 - 1;
-      uVar4 = uVar4 + 4;
-    } while (uVar3 != 0);
+      lVar2 = lVar2 + -1;
+      param_1 = param_1 + 1;
+    } while (lVar2 != 0);
   }
-  __restgprlr_28(pbVar2);
   return;
 }
 
@@ -1051,96 +1016,95 @@ bdArray<bdString>::copyConstructObjectObject
 
 // 8290FBD0  pump  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdhttpwrapper/bdhttpwrapperbase.cpp:500)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 bool __thiscall bdLSPEnumerator::pump(bdLSPEnumerator *this)
 
 {
-  bdLSPEnumerator *this_00;
-  undefined8 uVar1;
-  ulong uVar2;
-  undefined1 uVar3;
-  uint uVar4;
-  char *pcVar5;
+  ulong uVar1;
+  uint uVar2;
+  char *pcVar3;
   
-  this_00 = (bdLSPEnumerator *)__savegprlr_26(this);
-  if (this_00->m_lspReady == false) {
-    if (s_isLSPListEnumerated == false) {
-      if (this_00->m_serverEnumHandle == (void *)0x0) {
-        if (s_enumerationNeedsRestart != false) {
-          start(this_00);
-          uVar1 = 0;
-          s_enumerationNeedsRestart = false;
-          goto LAB_8290fd74;
-        }
-      }
-      else if ((this_00->m_overlapped).InternalLow != 0x3e5) {
-        uVar2 = XGetOverlappedResult(&this_00->m_overlapped,&s_serverCount,0);
-        if (uVar2 == 0) {
-          bdLogMessage(BD_LOG_INFO,"info/","http",
-                       "c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdLobby\\bdHTTPWrapper\\bdHTTPWrapperBase.cpp"
-                       ,"bdLSPEnumerator::pump",0x210,"Title Servers successfully enumerated.");
-          if (s_serverCount == 0) {
-            pcVar5 = "Got no results for LSP servers query, HTTP access will not be available.";
-            uVar4 = 0x215;
-            goto LAB_8290fd10;
-          }
-        }
-        else {
-          if (uVar2 == 0x12) {
-            uVar4 = 0x21a;
-            pcVar5 = "No more files ???";
-          }
-          else {
-            uVar4 = 0x21e;
-            pcVar5 = "Failed to enumerate servers, HTTP access will not be available. 0x%0x.";
-          }
-LAB_8290fd10:
-          bdLogMessage(BD_LOG_ERROR,"err/","http",
-                       "c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdLobby\\bdHTTPWrapper\\bdHTTPWrapperBase.cpp"
-                       ,"bdLSPEnumerator::pump",uVar4,pcVar5);
-        }
-        s_isLSPListEnumerated = true;
-        goto LAB_8290fd60;
-      }
-      uVar1 = 0;
-      goto LAB_8290fd74;
-    }
+  if (this->m_lspReady != false) {
+    return true;
+  }
+  if (s_isLSPListEnumerated) {
     bdLogMessage(BD_LOG_INFO,"info/","http",
                  "c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdLobby\\bdHTTPWrapper\\bdHTTPWrapperBase.cpp"
                  ,"bdLSPEnumerator::pump",0x225,
                  "Title Servers successfully enumerated already parsing previously obtained results buffer."
                 );
-LAB_8290fd60:
-    parseResultsBuffer(this_00);
-    cleanupEnumHandle(this_00);
+    goto LAB_8290fd60;
   }
-  uVar1 = 1;
-LAB_8290fd74:
-  uVar3 = __restgprlr_26(uVar1);
-  return (bool)uVar3;
+  if (this->m_serverEnumHandle == (void *)0x0) {
+    if (!s_enumerationNeedsRestart) {
+      return false;
+    }
+    start(this);
+    s_enumerationNeedsRestart = false;
+    return false;
+  }
+  if ((this->m_overlapped).InternalLow == 0x3e5) {
+    return false;
+  }
+  uVar1 = XGetOverlappedResult(&this->m_overlapped,&s_serverCount,0);
+  if (uVar1 == 0) {
+    bdLogMessage(BD_LOG_INFO,"info/","http",
+                 "c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdLobby\\bdHTTPWrapper\\bdHTTPWrapperBase.cpp"
+                 ,"bdLSPEnumerator::pump",0x210,"Title Servers successfully enumerated.");
+    if (s_serverCount == 0) {
+      pcVar3 = "Got no results for LSP servers query, HTTP access will not be available.";
+      uVar2 = 0x215;
+      goto LAB_8290fd10;
+    }
+  }
+  else {
+    if (uVar1 == 0x12) {
+      uVar2 = 0x21a;
+      pcVar3 = "No more files ???";
+    }
+    else {
+      uVar2 = 0x21e;
+      pcVar3 = "Failed to enumerate servers, HTTP access will not be available. 0x%0x.";
+    }
+LAB_8290fd10:
+    bdLogMessage(BD_LOG_ERROR,"err/","http",
+                 "c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdLobby\\bdHTTPWrapper\\bdHTTPWrapperBase.cpp"
+                 ,"bdLSPEnumerator::pump",uVar2,pcVar3);
+  }
+  s_isLSPListEnumerated = true;
+LAB_8290fd60:
+  parseResultsBuffer(this);
+  cleanupEnumHandle(this);
+  return true;
 }
 
 
 // 8290E6C0  uninitializedCopy  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdcontainers/bdarray.inl:515)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 bdString * __thiscall
 bdArray<bdString>::uninitializedCopy(bdArray<bdString> *this,bdArray<bdString> *param_1)
 
 {
-  bdArray<bdString> *this_00;
   bdString *pbVar1;
   
-  this_00 = (bdArray<bdString> *)__savegprlr_29(this);
   pbVar1 = (bdString *)0x0;
   if (param_1->m_capacity != 0) {
     pbVar1 = bdMemory::allocate(param_1->m_capacity << 2);
-    copyConstructArrayArray(this_00,pbVar1,param_1->m_data,param_1->m_size);
+    copyConstructArrayArray(this,pbVar1,param_1->m_data,param_1->m_size);
   }
-  pbVar1 = (bdString *)__restgprlr_29(pbVar1);
   return pbVar1;
 }
 
 
 // 8290F330  resize  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdcontainers/bdhashmap.inl:521)
+
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 
 void __thiscall
 bdHashMap<bdString,bdArray<bdString>,bdHashingClass>::resize
@@ -1150,27 +1114,25 @@ bdHashMap<bdString,bdArray<bdString>,bdHashingClass>::resize
   Node **ppNVar1;
   Node *pNVar2;
   Node *this_00;
-  bdHashMap<bdString,bdArray<bdString>,bdHashingClass> *this_01;
   uint uVar3;
   Node **ppNVar4;
   ulonglong uVar5;
   
-  this_01 = (bdHashMap<bdString,bdArray<bdString>,bdHashingClass> *)__savegprlr_26(this);
-  ppNVar1 = this_01->m_map;
-  uVar5 = (ulonglong)this_01->m_capacity;
+  ppNVar1 = this->m_map;
+  uVar5 = (ulonglong)this->m_capacity;
   uVar3 = bdBitOperations::nextPowerOf2(param_1);
-  if (this_01->m_capacity < uVar3) {
-    this_01->m_capacity = uVar3;
-    this_01->m_threshold = (uint)(longlong)(this_01->m_loadFactor * (float)uVar3);
+  if (this->m_capacity < uVar3) {
+    this->m_capacity = uVar3;
+    this->m_threshold = (uint)(longlong)(this->m_loadFactor * (float)uVar3);
     ppNVar4 = bdMemory::allocate(uVar3 << 2);
-    this_01->m_map = ppNVar4;
-    this_01->m_size = 0;
+    this->m_map = ppNVar4;
+    this->m_size = 0;
     memset();
     ppNVar4 = ppNVar1;
     for (; uVar5 != 0; uVar5 = uVar5 - 1) {
       this_00 = *ppNVar4;
       while (this_00 != (Node *)0x0) {
-        put(this_01,&this_00->m_key,&this_00->m_data);
+        put(this,&this_00->m_key,&this_00->m_data);
         pNVar2 = this_00->m_next;
         Node::~Node(this_00);
         bdMemory::deallocate(this_00);
@@ -1180,17 +1142,18 @@ bdHashMap<bdString,bdArray<bdString>,bdHashingClass>::resize
     }
     bdMemory::deallocate(ppNVar1);
   }
-  __restgprlr_26();
   return;
 }
 
 
 // 8290F7C0  parseResultsBuffer  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdhttpwrapper/bdhttpwrapperbase.cpp:559)
 
+/* WARNING: Function: __savegprlr_17 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_17 replaced with injection: xenon_save_restore */
+
 void __thiscall bdLSPEnumerator::parseResultsBuffer(bdLSPEnumerator *this)
 
 {
-  bdHashMap<bdString,bdArray<bdString>,bdHashingClass> *this_00;
   bool bVar2;
   bdString *pbVar1;
   uint uVar3;
@@ -1202,7 +1165,6 @@ void __thiscall bdLSPEnumerator::parseResultsBuffer(bdLSPEnumerator *this)
   bdArray<bdString> local_b0;
   char acStack_a0 [160];
   
-  this_00 = (bdHashMap<bdString,bdArray<bdString>,bdHashingClass> *)__savegprlr_17(this);
   uVar4 = 0;
   if (s_serverCount != 0) {
     iVar5 = 0;
@@ -1213,7 +1175,7 @@ void __thiscall bdLSPEnumerator::parseResultsBuffer(bdLSPEnumerator *this)
       local_b0.m_capacity = 0;
       local_b0.m_size = 0;
       bVar2 = bdHashMap<bdString,bdArray<bdString>,bdHashingClass>::remove
-                        (this_00,&bStack_bc,&local_b0);
+                        (&this->m_lspDescToIP,&bStack_bc,&local_b0);
       if (bVar2) {
         pbVar1 = bdString::bdString(&bStack_b4,acStack_a0);
         bdArray<bdString>::pushBack(&local_b0,pbVar1);
@@ -1222,7 +1184,7 @@ void __thiscall bdLSPEnumerator::parseResultsBuffer(bdLSPEnumerator *this)
                      "c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdLobby\\bdHTTPWrapper\\bdHTTPWrapperBase.cpp"
                      ,"bdLSPEnumerator::parseResultsBuffer",0x247,"Adding mapping from %s to %s");
         bVar2 = bdHashMap<bdString,bdArray<bdString>,bdHashingClass>::put
-                          (this_00,&bStack_bc,&local_b0);
+                          (&this->m_lspDescToIP,&bStack_bc,&local_b0);
         if (!bVar2) {
           uVar3 = 0x24b;
           goto LAB_8290f978;
@@ -1236,7 +1198,7 @@ void __thiscall bdLSPEnumerator::parseResultsBuffer(bdLSPEnumerator *this)
                      "c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdLobby\\bdHTTPWrapper\\bdHTTPWrapperBase.cpp"
                      ,"bdLSPEnumerator::parseResultsBuffer",0x23c,"Adding mapping from %s to %s");
         bVar2 = bdHashMap<bdString,bdArray<bdString>,bdHashingClass>::put
-                          (this_00,&bStack_bc,&local_b0);
+                          (&this->m_lspDescToIP,&bStack_bc,&local_b0);
         if (!bVar2) {
           uVar3 = 0x240;
 LAB_8290f978:
@@ -1253,10 +1215,9 @@ LAB_8290f978:
       iVar5 = iVar5 + 0xd0;
     } while (uVar4 < s_serverCount);
   }
-  if (0 < (int)this_00->m_size) {
-    *(undefined1 *)&this_00[2].m_threshold = 1;
+  if (0 < (int)(this->m_lspDescToIP).m_size) {
+    this->m_lspReady = true;
   }
-  __restgprlr_17();
   return;
 }
 

@@ -2,40 +2,38 @@
 
 // 829170E0  _vsnprintf_l  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/vsprintf.c:107)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 int _vsnprintf_l(char *param_1,uint param_2,char *param_3,localeinfo_struct *param_4,char *param_5)
 
 {
-  char *pcVar1;
-  int *piVar2;
-  int iVar3;
-  ulonglong uVar4;
-  ulonglong uVar5;
+  int *piVar1;
+  int iVar2;
+  ulonglong uVar3;
   _iobuf local_60 [3];
   
-  uVar4 = (ulonglong)(int)param_3;
-  uVar5 = (ulonglong)(int)param_2;
-  pcVar1 = (char *)__savegprlr_26(param_1);
   local_60[0]._ptr = (char *)0x0;
   memset();
-  if (((uVar4 & 0xffffffff) == 0) || (((uVar5 & 0xffffffff) != 0 && (pcVar1 == (char *)0x0)))) {
-    piVar2 = _errno();
-    *piVar2 = 0x16;
+  if ((param_3 == (char *)0x0) || ((param_2 != 0 && (param_1 == (char *)0x0)))) {
+    piVar1 = _errno();
+    *piVar1 = 0x16;
     _invalid_parameter_noinfo();
-    iVar3 = -1;
+    iVar2 = -1;
   }
   else {
     local_60[0]._cnt = 0x7fffffff;
-    if ((uVar5 & 0xffffffff) < 0x80000000) {
-      local_60[0]._cnt = (int)uVar5;
+    if (param_2 < 0x80000000) {
+      local_60[0]._cnt = param_2;
     }
     local_60[0]._flag = 0x42;
-    local_60[0]._ptr = pcVar1;
-    local_60[0]._base = pcVar1;
-    iVar3 = _output_l(local_60,(char *)uVar4,param_4,param_5);
-    if (pcVar1 != (char *)0x0) {
-      uVar5 = (ulonglong)(uint)local_60[0]._cnt;
-      local_60[0]._cnt = (int)(uVar5 - 1);
-      if ((longlong)(uVar5 - 1) < 0) {
+    local_60[0]._ptr = param_1;
+    local_60[0]._base = param_1;
+    iVar2 = _output_l(local_60,param_3,param_4,param_5);
+    if (param_1 != (char *)0x0) {
+      uVar3 = (ulonglong)(uint)local_60[0]._cnt;
+      local_60[0]._cnt = (int)(uVar3 - 1);
+      if ((longlong)(uVar3 - 1) < 0) {
         _flsbuf(0,local_60);
       }
       else {
@@ -43,8 +41,7 @@ int _vsnprintf_l(char *param_1,uint param_2,char *param_3,localeinfo_struct *par
       }
     }
   }
-  iVar3 = __restgprlr_26(iVar3);
-  return iVar3;
+  return iVar2;
 }
 
 

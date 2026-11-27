@@ -2,26 +2,21 @@
 
 // 82733AC8  R_HW_SetPixelSamplerTexture  (gfx_d3d/r_setstate_d3d.h:164)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void R_HW_SetPixelSamplerTexture(D3DDevice *param_1,uint param_2,GfxTexture *param_3)
 
 {
-  D3DDevice *pDVar1;
-  longlong lVar2;
-  ulonglong uVar3;
-  
-  uVar3 = (ulonglong)(int)param_3;
-  lVar2 = (longlong)(int)param_2;
-  pDVar1 = (D3DDevice *)__savegprlr_27(param_1);
-  if ((uVar3 & 0xffffffff) == 0) {
+  if (param_3 == (GfxTexture *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_setstate_d3d.h",0xa7
-                    ,(int)(D3DBaseTexture *)uVar3,"%s");
+                    ,0,"%s");
   }
   do {
     D3DDevice_SetTexture
-              (pDVar1,(ulong)lVar2,(D3DBaseTexture *)uVar3,
-               0x8000000000000000 >> (lVar2 + 0x20U & 0x7f));
+              (param_1,param_2,&param_3->basemap,
+               0x8000000000000000 >> ((longlong)(int)param_2 + 0x20U & 0x7f));
   } while (alwaysfails != 0);
-  __restgprlr_27();
   return;
 }
 
@@ -62,6 +57,8 @@ void R_DrawBspTris(GfxCmdBufPrimState *param_1,srfTriangles_t *param_2,uint para
 
 // 82733320  R_DrawTrianglesLit  (gfx_d3d/r_draw_bsp.cpp:237)
 
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 
 void R_DrawTrianglesLit(GfxTrianglesDrawStream *param_1,GfxCmdBufPrimState *param_2)
@@ -96,7 +93,6 @@ void R_DrawTrianglesLit(GfxTrianglesDrawStream *param_1,GfxCmdBufPrimState *para
   uint local_e0;
   GfxDrawPrimArgs local_a8 [14];
   
-  __savegprlr();
   uVar3 = param_1->customSamplerFlags;
   pGVar4 = param_1->bspSurfIter;
   pGVar21 = param_1->reflectionProbeTexture;
@@ -214,13 +210,14 @@ void R_DrawTrianglesLit(GfxTrianglesDrawStream *param_1,GfxCmdBufPrimState *para
   param_1->reflectionProbeTexture = pGVar21;
   param_1->lightmapPrimaryTexture = pGVar23;
   param_1->lightmapSecondaryTexture = pGVar22;
-  __restgprlr();
   return;
 }
 
 
 // 82733740  R_DrawTriangles  (gfx_d3d/r_draw_bsp.cpp:548)
 
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 
 void R_DrawTriangles(GfxTrianglesDrawStream *param_1,GfxCmdBufPrimState *param_2)
@@ -228,7 +225,7 @@ void R_DrawTriangles(GfxTrianglesDrawStream *param_1,GfxCmdBufPrimState *param_2
 {
   ushort uVar1;
   ushort uVar2;
-  undefined4 *puVar3;
+  GfxBspSurfIter *pGVar3;
   GfxCmdRingBuf *pGVar4;
   GfxSurface *pGVar5;
   uint uVar6;
@@ -237,28 +234,23 @@ void R_DrawTriangles(GfxTrianglesDrawStream *param_1,GfxCmdBufPrimState *param_2
   uint uVar9;
   uint uVar10;
   GfxSurface *pGVar11;
-  ulonglong uVar12;
-  ushort *puVar13;
-  ulong uVar14;
-  D3DVertexBuffer *pDVar15;
-  int iVar16;
-  uint uVar17;
-  D3DVertexBuffer *pDVar19;
-  ulonglong uVar18;
+  ushort *puVar12;
+  ulong uVar13;
+  D3DVertexBuffer *pDVar14;
+  int iVar15;
+  uint uVar16;
+  D3DVertexBuffer *pDVar17;
   GfxDrawPrimArgs local_a8 [14];
   
-  uVar12 = (ulonglong)(int)param_1;
-  __savegprlr();
-  puVar3 = (undefined4 *)*(undefined4 *)uVar12;
-  puVar13 = (ushort *)*puVar3;
-  uVar1 = *puVar13;
-  uVar17 = 0xffffffff;
-  uVar18 = uVar12;
+  pGVar3 = param_1->bspSurfIter;
+  puVar12 = pGVar3->current;
+  uVar1 = *puVar12;
+  uVar16 = 0xffffffff;
   do {
-    pGVar4 = *(GfxCmdRingBuf **)((int)uVar18 + 0x14);
-    *puVar3 = puVar13 + 1;
-    uVar14 = GetCurrentProcessorNumber();
-    if (pGVar4 != dx.cmdBufForProcId[uVar14]) {
+    pGVar4 = param_1->cmdBuf;
+    pGVar3->current = puVar12 + 1;
+    uVar13 = GetCurrentProcessorNumber();
+    if (pGVar4 != dx.cmdBufForProcId[uVar13]) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.h",
                       0x496,0,"%s");
     }
@@ -266,55 +258,55 @@ void R_DrawTriangles(GfxTrianglesDrawStream *param_1,GfxCmdBufPrimState *param_2
        ((longlong)((ulonglong)pGVar4->reserveMemoryPos0 - (ulonglong)pGVar4->memoryPos) < 0)) {
       R_CmdBufReserveMemory(pGVar4);
     }
-    uVar2 = *(ushort *)*puVar3;
-    *puVar3 = (ushort *)*puVar3 + 1;
+    uVar2 = *pGVar3->current;
+    pGVar3->current = pGVar3->current + 1;
     if ((rgp.world)->surfaceCount <= (uint)uVar2) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_draw_bsp.cpp",
                       0x253,0,
                       "firstSurfIndex doesn\'t index rgp.world->surfaceCount\n\t%i not in [0, %i)");
     }
-    iVar16 = (uint)uVar2 + (uVar1 & 0x7fff);
+    iVar15 = (uint)uVar2 + (uVar1 & 0x7fff);
     pGVar5 = ((rgp.world)->dpvs).surfaces;
     pGVar11 = pGVar5 + uVar2;
     uVar6 = (pGVar11->tris).firstVertex;
-    uVar1 = pGVar5[iVar16].tris.triCount;
-    uVar7 = pGVar5[iVar16].tris.baseIndex;
+    uVar1 = pGVar5[iVar15].tris.triCount;
+    uVar7 = pGVar5[iVar15].tris.baseIndex;
     uVar8 = (pGVar11->tris).baseIndex;
-    if (uVar17 != uVar6) {
+    if (uVar16 != uVar6) {
       uVar10 = *(uint *)(&g_layerDataStride + param_2->vertDeclType * 4);
-      uVar17 = uVar6;
+      uVar16 = uVar6;
       if (uVar10 == 0) {
         R_SetStreamSource(param_2,&(g_worldDraw->vd).worldVb,uVar6 * 0x2c,0x2c);
       }
       else {
         uVar9 = (pGVar11->tris).vertexLayerData;
-        pDVar15 = &(g_worldDraw->vd).worldVb;
-        pDVar19 = &(g_worldDraw->vld).layerVb;
-        if (((param_2->streams[0].vb != pDVar15) || (param_2->streams[0].offset != uVar6 * 0x2c)) ||
+        pDVar14 = &(g_worldDraw->vd).worldVb;
+        pDVar17 = &(g_worldDraw->vld).layerVb;
+        if (((param_2->streams[0].vb != pDVar14) || (param_2->streams[0].offset != uVar6 * 0x2c)) ||
            (param_2->streams[0].stride != 0x2c)) {
-          R_ChangeStreamSource(param_2,0,pDVar15,uVar6 * 0x2c,0x2c);
+          R_ChangeStreamSource(param_2,0,pDVar14,uVar6 * 0x2c,0x2c);
         }
-        if (((param_2->streams[1].vb != pDVar19) || (param_2->streams[1].offset != uVar9)) ||
+        if (((param_2->streams[1].vb != pDVar17) || (param_2->streams[1].offset != uVar9)) ||
            (param_2->streams[1].stride != uVar10)) {
-          R_ChangeStreamSource(param_2,1,pDVar19,uVar9,uVar10);
+          R_ChangeStreamSource(param_2,1,pDVar17,uVar9,uVar10);
         }
-        uVar18 = uVar12 & 0xffffffff;
       }
     }
     local_a8[0].triCount = (int)(((uint)uVar1 + (uint)uVar1 * 2 + uVar7) - uVar8) / 3;
     local_a8[0].baseIndex = (pGVar11->tris).baseIndex;
     local_a8[0].vertexCount = (int)(pGVar11->tris).vertexCount;
     R_DrawIndexedPrimitive(param_2,local_a8);
-    puVar13 = (ushort *)*puVar3;
-    uVar1 = *puVar13;
+    puVar12 = pGVar3->current;
+    uVar1 = *puVar12;
   } while ((uVar1 & 0x8000) == 0);
-  __restgprlr();
   return;
 }
 
 
 // 82733998  R_DrawBspSurfsLit  (gfx_d3d/r_draw_bsp.cpp:632)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
@@ -327,12 +319,10 @@ void R_DrawBspSurfsLit(GfxBspSurfIter *param_1,GfxCmdBufContext param_2,GfxDrawL
   MaterialPass *pMVar2;
   GfxCmdBufState *pGVar3;
   GfxCmdBufContext GVar4;
-  GfxBspSurfIter *pGVar5;
-  ulong uVar6;
+  ulong uVar5;
   GfxCmdBufContext GStack00000018;
   GfxTrianglesDrawStream local_40 [2];
   
-  pGVar5 = (GfxBspSurfIter *)__savegprlr_28(param_1,param_2,param_3,param_4);
   GStack00000018.state = param_2.state;
   pGVar3 = GStack00000018.state;
   pMVar2 = (GStack00000018.state)->pass;
@@ -354,14 +344,13 @@ void R_DrawBspSurfsLit(GfxBspSurfIter *param_1,GfxCmdBufContext param_2,GfxDrawL
   local_40[0].lightmapPrimaryTexture = pGVar3->samplerTexture[2];
   local_40[0].lightmapSecondaryTexture = pGVar3->samplerTexture[3];
   local_40[0].customSamplerFlags = (uint)pMVar2->customSamplerFlags;
-  local_40[0].bspSurfIter = pGVar5;
-  uVar6 = GetCurrentProcessorNumber();
-  local_40[0].cmdBuf = dx.cmdBufForProcId[uVar6];
+  local_40[0].bspSurfIter = param_1;
+  uVar5 = GetCurrentProcessorNumber();
+  local_40[0].cmdBuf = dx.cmdBufForProcId[uVar5];
   R_DrawTrianglesLit(local_40,&pGVar3->prim);
   pGVar3->samplerTexture[1] = local_40[0].reflectionProbeTexture;
   pGVar3->samplerTexture[2] = local_40[0].lightmapPrimaryTexture;
   pGVar3->samplerTexture[3] = local_40[0].lightmapSecondaryTexture;
-  __restgprlr_28();
   return;
 }
 
@@ -391,50 +380,41 @@ void R_DrawBspSurfs(GfxBspSurfIter *param_1,GfxCmdBufContext param_2,GfxDrawList
 
 // 82733B48  R_ChangeStreamSource  (gfx_d3d/r_state.h:793)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
+
 void R_ChangeStreamSource
                (GfxCmdBufPrimState *param_1,int param_2,D3DVertexBuffer *param_3,uint param_4,
                uint param_5)
 
 {
   D3DDevice *pDVar1;
-  uint uVar2;
-  undefined4 *puVar3;
-  longlong lVar4;
-  ulonglong uVar5;
-  ulonglong uVar6;
-  ulonglong uVar7;
+  longlong lVar2;
   
-  uVar7 = (ulonglong)(int)param_5;
-  uVar6 = (ulonglong)(int)param_4;
-  uVar5 = (ulonglong)(int)param_3;
-  lVar4 = (longlong)param_2;
-  puVar3 = (undefined4 *)__savegprlr_24(param_1);
-  uVar2 = (uint)lVar4;
-  if ((ulonglong)(uint)puVar3[uVar2 * 3 + 5] == (uVar5 & 0xffffffff)) {
-    if (((ulonglong)
-         *(uint *)((int)((lVar4 + 2U + (lVar4 + 2U & 0x7fffffff) * 2 & 0xffffffff) << 2) +
-                  (int)puVar3) == (uVar6 & 0xffffffff)) &&
-       ((ulonglong)(uint)puVar3[uVar2 * 3 + 4] == (uVar7 & 0xffffffff))) {
+  lVar2 = (longlong)param_2;
+  if (param_1->streams[param_2].vb == param_3) {
+    if ((*(uint *)((int)param_1->streams +
+                  (int)((lVar2 + 2U + (lVar2 + 2U & 0x7fffffff) * 2 & 0xffffffff) << 2) + -0x10) ==
+         param_4) && (param_1->streams[param_2].stride == param_5)) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_state.h",0x31c,0,
                       "%s");
     }
   }
-  puVar3[uVar2 * 3 + 5] = (D3DVertexBuffer *)uVar5;
-  puVar3[uVar2 * 3 + 4] = (uint)uVar7;
-  *(uint *)((int)((lVar4 + 2U + (lVar4 + 2U & 0x7fffffff) * 2 & 0xffffffff) << 2) + (int)puVar3) =
-       (uint)uVar6;
-  pDVar1 = (D3DDevice *)*puVar3;
+  param_1->streams[param_2].vb = param_3;
+  param_1->streams[param_2].stride = param_5;
+  *(uint *)((int)param_1->streams +
+           (int)((lVar2 + 2U + (lVar2 + 2U & 0x7fffffff) * 2 & 0xffffffff) << 2) + -0x10) = param_4;
+  pDVar1 = param_1->device;
   if (pDVar1 == (D3DDevice *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_state.h",0x322,0,
                     "%s");
   }
   do {
     D3DDevice_SetStreamSource
-              (pDVar1,uVar2,(D3DVertexBuffer *)uVar5,(uint)uVar6,(uint)uVar7,
+              (pDVar1,param_2,param_3,param_4,param_5,
                0x8000000000000000 >>
-               ((((0x5f - lVar4) * 0x5556 & 0xffffffffU) >> 0x10) + 0x20 & 0x7f));
+               ((((0x5f - lVar2) * 0x5556 & 0xffffffffU) >> 0x10) + 0x20 & 0x7f));
   } while (alwaysfails != 0);
-  __restgprlr_24();
   return;
 }
 
@@ -459,37 +439,22 @@ void R_SetStreamSource(GfxCmdBufPrimState *param_1,D3DVertexBuffer *param_2,uint
 
 // 82733D10  R_SetDoubleStreamSource  (gfx_d3d/r_state.h:818)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void R_SetDoubleStreamSource
                (GfxCmdBufPrimState *param_1,D3DVertexBuffer *param_2,uint param_3,uint param_4,
                D3DVertexBuffer *param_5,uint param_6,uint param_7)
 
 {
-  GfxCmdBufPrimState *pGVar1;
-  ulonglong uVar2;
-  ulonglong uVar3;
-  ulonglong uVar4;
-  ulonglong uVar5;
-  ulonglong uVar6;
-  ulonglong uVar7;
-  
-  uVar7 = (ulonglong)(int)param_7;
-  uVar6 = (ulonglong)(int)param_6;
-  uVar5 = (ulonglong)(int)param_5;
-  uVar4 = (ulonglong)(int)param_4;
-  uVar3 = (ulonglong)(int)param_3;
-  uVar2 = (ulonglong)(int)param_2;
-  pGVar1 = (GfxCmdBufPrimState *)__savegprlr_28(param_1);
-  if (((ZEXT48(pGVar1->streams[0].vb) != (uVar2 & 0xffffffff)) ||
-      ((ulonglong)pGVar1->streams[0].offset != (uVar3 & 0xffffffff))) ||
-     ((ulonglong)pGVar1->streams[0].stride != (uVar4 & 0xffffffff))) {
-    R_ChangeStreamSource(pGVar1,0,(D3DVertexBuffer *)uVar2,(uint)uVar3,(uint)uVar4);
+  if (((param_1->streams[0].vb != param_2) || (param_1->streams[0].offset != param_3)) ||
+     (param_1->streams[0].stride != param_4)) {
+    R_ChangeStreamSource(param_1,0,param_2,param_3,param_4);
   }
-  if (((ZEXT48(pGVar1->streams[1].vb) != (uVar5 & 0xffffffff)) ||
-      ((ulonglong)pGVar1->streams[1].offset != (uVar6 & 0xffffffff))) ||
-     ((ulonglong)pGVar1->streams[1].stride != (uVar7 & 0xffffffff))) {
-    R_ChangeStreamSource(pGVar1,1,(D3DVertexBuffer *)uVar5,(uint)uVar6,(uint)uVar7);
+  if (((param_1->streams[1].vb != param_5) || (param_1->streams[1].offset != param_6)) ||
+     (param_1->streams[1].stride != param_7)) {
+    R_ChangeStreamSource(param_1,1,param_5,param_6,param_7);
   }
-  __restgprlr_28();
   return;
 }
 

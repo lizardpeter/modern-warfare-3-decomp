@@ -14,101 +14,101 @@ void TRACK_r_debug(void)
 
 // 82724BF8  R_AddDebugPolygon  (gfx_d3d/r_debug.cpp:30)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 void R_AddDebugPolygon(DebugGlobals *param_1,float *param_2,int param_3,float (*param_4) [3],
                       bool param_5)
 
 {
-  int iVar1;
-  void **ppvVar2;
-  void **ppvVar3;
-  longlong lVar4;
-  undefined4 *puVar5;
-  longlong lVar6;
-  undefined4 *puVar7;
+  GfxDebugPoly **ppGVar1;
+  GfxDebugPoly *pGVar2;
   
-  lVar6 = (longlong)param_3;
-  lVar4 = (longlong)(int)param_2;
-  ppvVar2 = (void **)__savegprlr_26(param_1,lVar4,lVar6,param_4);
   Sys_EnterCriticalSection(CRITSECT_DEBUG_LINE);
-  iVar1 = (int)lVar6;
-  if ((iVar1 + (int)ppvVar2[1] <= (int)ppvVar2[2]) && ((int)ppvVar2[4] + 1 <= (int)ppvVar2[5])) {
-    ppvVar3 = ppvVar2 + 3;
-    if (ppvVar2[3] == (void *)0x0) {
-      if (*ppvVar2 != (void *)0x0) {
+  if ((param_3 + param_1->vertCount <= param_1->vertLimit) &&
+     (param_1->polyCount + 1 <= param_1->polyLimit)) {
+    ppGVar1 = &param_1->polys;
+    if (param_1->polys == (GfxDebugPoly *)0x0) {
+      if (param_1->verts != (float (*) [3])0x0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_debug.cpp",0x35,
                         0,"%s");
       }
-      R_DebugAlloc(ppvVar3,(int)ppvVar2[5] * 0x1c,"(debugGlobalsEntry->polys)");
-      R_DebugAlloc(ppvVar2,(int)ppvVar2[2] * 0xc,"(debugGlobalsEntry->verts)");
+      R_DebugAlloc(ppGVar1,param_1->polyLimit * 0x1c,"(debugGlobalsEntry->polys)");
+      R_DebugAlloc(&param_1->verts,param_1->vertLimit * 0xc,"(debugGlobalsEntry->verts)");
     }
-    if ((*ppvVar3 == (void *)0x0) || (*ppvVar2 == (void *)0x0)) goto LAB_82724da0;
-    *(void **)((int)*ppvVar3 + (int)ppvVar2[4] * 0x1c + 0x10) = ppvVar2[1];
-    *(int *)((int)*ppvVar3 + (int)ppvVar2[4] * 0x1c + 0x14) = iVar1;
-    *(bool *)((int)*ppvVar3 + (int)ppvVar2[4] * 0x1c + 0x18) = param_5;
-    puVar5 = (undefined4 *)lVar4;
-    puVar7 = (undefined4 *)((int)ppvVar2[4] * 0x1c + (int)*ppvVar3);
-    *puVar7 = *puVar5;
-    puVar7[1] = puVar5[1];
-    puVar7[2] = puVar5[2];
-    puVar7[3] = puVar5[3];
-    ppvVar2[4] = (void *)((int)ppvVar2[4] + 1);
+    if (*ppGVar1 == (GfxDebugPoly *)0x0) {
+      return;
+    }
+    if (param_1->verts == (float (*) [3])0x0) {
+      return;
+    }
+    (*ppGVar1)[param_1->polyCount].firstVert = param_1->vertCount;
+    (*ppGVar1)[param_1->polyCount].vertCount = param_3;
+    (*ppGVar1)[param_1->polyCount].outline = param_5;
+    pGVar2 = *ppGVar1 + param_1->polyCount;
+    pGVar2->color[0] = *param_2;
+    pGVar2->color[1] = param_2[1];
+    pGVar2->color[2] = param_2[2];
+    pGVar2->color[3] = param_2[3];
+    param_1->polyCount = param_1->polyCount + 1;
     Profile_Begin(0x9d);
     memcpy();
     Profile_EndInternal((double *)0x0);
-    ppvVar2[1] = (void *)(iVar1 + (int)ppvVar2[1]);
+    param_1->vertCount = param_3 + param_1->vertCount;
   }
   Sys_LeaveCriticalSection(CRITSECT_DEBUG_LINE);
-LAB_82724da0:
-  __restgprlr_26();
   return;
 }
 
 
 // 82724DA8  R_AddDebugLine  (gfx_d3d/r_debug.cpp:80)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void R_AddDebugLine(DebugGlobals *param_1,float *param_2,float *param_3,float *param_4)
 
 {
-  void *pvVar1;
+  trDebugLine_t *ptVar1;
   int iVar2;
-  int iVar3;
   
-  iVar3 = __savegprlr_27(param_1);
   Sys_EnterCriticalSection(CRITSECT_DEBUG_LINE);
-  if (*(int *)(iVar3 + 0x34) + 1 <= *(int *)(iVar3 + 0x38)) {
-    pvVar1 = *(void **)(iVar3 + 0x30);
-    if (pvVar1 == (void *)0x0) {
-      R_DebugAlloc((void **)(iVar3 + 0x30),*(int *)(iVar3 + 0x38) << 5,"R_AddDebugLine");
-      pvVar1 = *(void **)(iVar3 + 0x30);
-      if (pvVar1 == (void *)0x0) goto LAB_82724e74;
+  if (param_1->lineCount + 1 <= param_1->lineLimit) {
+    ptVar1 = param_1->lines;
+    if (ptVar1 == (trDebugLine_t *)0x0) {
+      R_DebugAlloc(&param_1->lines,param_1->lineLimit << 5,"R_AddDebugLine");
+      ptVar1 = param_1->lines;
+      if (ptVar1 == (trDebugLine_t *)0x0) {
+        return;
+      }
     }
-    iVar2 = *(int *)(iVar3 + 0x34) * 0x20;
-    *(float *)(iVar2 + (int)pvVar1) = *param_2;
-    *(float *)((int)pvVar1 + iVar2 + 4) = param_2[1];
-    *(float *)((int)pvVar1 + iVar2 + 8) = param_2[2];
-    *(float *)((int)pvVar1 + iVar2 + 0xc) = *param_3;
-    *(float *)((int)pvVar1 + iVar2 + 0x10) = param_3[1];
-    *(float *)((int)pvVar1 + iVar2 + 0x14) = param_3[2];
-    Byte4PackVertexColor(param_4,(uchar *)((int)pvVar1 + iVar2 + 0x18));
-    *(undefined4 *)((int)pvVar1 + iVar2 + 0x1c) = 0;
-    *(int *)(iVar3 + 0x34) = *(int *)(iVar3 + 0x34) + 1;
+    iVar2 = param_1->lineCount;
+    ptVar1[iVar2].start[0] = *param_2;
+    ptVar1[iVar2].start[1] = param_2[1];
+    ptVar1[iVar2].start[2] = param_2[2];
+    ptVar1[iVar2].end[0] = *param_3;
+    ptVar1[iVar2].end[1] = param_3[1];
+    ptVar1[iVar2].end[2] = param_3[2];
+    Byte4PackVertexColor(param_4,ptVar1[iVar2].color.array);
+    ptVar1[iVar2].depthTest = 0;
+    param_1->lineCount = param_1->lineCount + 1;
   }
   Sys_LeaveCriticalSection(CRITSECT_DEBUG_LINE);
-LAB_82724e74:
-  __restgprlr_27();
   return;
 }
 
 
 // 82724E80  R_AddDebugBox  (gfx_d3d/r_debug.cpp:116)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void R_AddDebugBox(DebugGlobals *param_1,Bounds *param_2,float *param_3)
 
 {
   int *piVar1;
-  DebugGlobals *pDVar2;
-  longlong lVar3;
-  int *piVar4;
+  longlong lVar2;
+  int *piVar3;
   float local_90 [4];
   float local_80;
   float local_7c;
@@ -131,15 +131,14 @@ void R_AddDebugBox(DebugGlobals *param_1,Bounds *param_2,float *param_3)
   float local_38;
   float local_34;
   
-  pDVar2 = (DebugGlobals *)__savegprlr_28(param_1);
   local_90[0] = param_2->midPoint[0] - param_2->halfSize[0];
   local_90[3] = param_2->midPoint[0] + param_2->halfSize[0];
   local_90[1] = param_2->midPoint[1] - param_2->halfSize[1];
   local_74 = param_2->midPoint[1] + param_2->halfSize[1];
   local_90[2] = param_2->midPoint[2] - param_2->halfSize[2];
   local_58 = param_2->midPoint[2] + param_2->halfSize[2];
-  lVar3 = 0xc;
-  piVar4 = (int *)0x821bbddc;
+  lVar2 = 0xc;
+  piVar3 = (int *)0x821bbddc;
   local_80 = local_90[1];
   local_7c = local_90[2];
   local_78 = local_90[0];
@@ -159,12 +158,11 @@ void R_AddDebugBox(DebugGlobals *param_1,Bounds *param_2,float *param_3)
   local_38 = local_74;
   local_34 = local_58;
   do {
-    piVar1 = piVar4 + 1;
-    piVar4 = piVar4 + 2;
-    R_AddDebugLine(pDVar2,local_90 + *piVar1 * 3,local_90 + *piVar4 * 3,param_3);
-    lVar3 = lVar3 + -1;
-  } while (lVar3 != 0);
-  __restgprlr_28();
+    piVar1 = piVar3 + 1;
+    piVar3 = piVar3 + 2;
+    R_AddDebugLine(param_1,local_90 + *piVar1 * 3,local_90 + *piVar3 * 3,param_3);
+    lVar2 = lVar2 + -1;
+  } while (lVar2 != 0);
   return;
 }
 
@@ -339,46 +337,40 @@ void R_AddDebugFrustum(GfxViewParms *param_1)
 
 // 827253D8  R_AddDebugString  (gfx_d3d/r_debug.cpp:222)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void R_AddDebugString(DebugGlobals *param_1,float *param_2,float *param_3,float param_4,
                      char *param_5)
 
 {
-  void *pvVar1;
+  trDebugString_t *ptVar1;
   int iVar2;
-  longlong lVar3;
-  undefined4 *puVar4;
-  longlong lVar5;
   char *in_r7;
-  int iVar6;
-  double extraout_f1;
-  double dVar7;
+  double dVar3;
   
-  lVar5 = (longlong)(int)param_3;
-  lVar3 = (longlong)(int)param_2;
-  iVar2 = __savegprlr_27((double)param_4,param_1,lVar3,lVar5,param_5);
-  dVar7 = extraout_f1;
+  dVar3 = (double)param_4;
   Sys_EnterCriticalSection(CRITSECT_DEBUG_LINE);
-  if (*(int *)(iVar2 + 0x1c) + 1 <= *(int *)(iVar2 + 0x20)) {
-    pvVar1 = *(void **)(iVar2 + 0x18);
-    if (pvVar1 == (void *)0x0) {
-      R_DebugAlloc((void **)(iVar2 + 0x18),*(int *)(iVar2 + 0x20) * 0x60,"R_AddDebugString");
-      pvVar1 = *(void **)(iVar2 + 0x18);
-      if (pvVar1 == (void *)0x0) goto LAB_827254b8;
+  if (param_1->stringCount + 1 <= param_1->stringLimit) {
+    ptVar1 = param_1->strings;
+    if (ptVar1 == (trDebugString_t *)0x0) {
+      R_DebugAlloc(&param_1->strings,param_1->stringLimit * 0x60,"R_AddDebugString");
+      ptVar1 = param_1->strings;
+      if (ptVar1 == (trDebugString_t *)0x0) {
+        return;
+      }
     }
-    puVar4 = (undefined4 *)lVar3;
-    iVar6 = *(int *)(iVar2 + 0x1c) * 0x60;
-    *(undefined4 *)(iVar6 + (int)pvVar1) = *puVar4;
-    *(undefined4 *)((int)pvVar1 + iVar6 + 4) = puVar4[1];
-    *(undefined4 *)((int)pvVar1 + iVar6 + 8) = puVar4[2];
-    Byte4PackVertexColor((float *)lVar5,(uchar *)((int)pvVar1 + iVar6 + 0xc));
-    *(float *)((int)pvVar1 + iVar6 + 0x10) = (float)dVar7;
-    strncpy((char *)((int)pvVar1 + iVar6 + 0x14),in_r7,0x4b);
-    *(undefined1 *)((int)pvVar1 + iVar6 + 0x5f) = 0;
-    *(int *)(iVar2 + 0x1c) = *(int *)(iVar2 + 0x1c) + 1;
+    iVar2 = param_1->stringCount;
+    ptVar1[iVar2].xyz[0] = *param_2;
+    ptVar1[iVar2].xyz[1] = param_2[1];
+    ptVar1[iVar2].xyz[2] = param_2[2];
+    Byte4PackVertexColor(param_3,ptVar1[iVar2].color.array);
+    ptVar1[iVar2].scale = (float)dVar3;
+    strncpy(ptVar1[iVar2].text,in_r7,0x4b);
+    ptVar1[iVar2].text[0x4b] = '\0';
+    param_1->stringCount = param_1->stringCount + 1;
   }
   Sys_LeaveCriticalSection(CRITSECT_DEBUG_LINE);
-LAB_827254b8:
-  __restgprlr_27();
   return;
 }
 
@@ -466,60 +458,59 @@ void R_ShutdownDebugEntry(DebugGlobals *param_1)
 
 // 82725680  R_TransferDebugGlobals  (gfx_d3d/r_debug.cpp:305)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void R_TransferDebugGlobals(DebugGlobals *param_1)
 
 {
-  int iVar1;
-  GfxDebugPlume *pGVar2;
+  GfxDebugPlume *pGVar1;
+  int iVar2;
   int iVar3;
-  int iVar4;
-  int *piVar5;
-  longlong lVar6;
-  int *piVar7;
-  int iVar8;
+  int *piVar4;
+  longlong lVar5;
+  int *piVar6;
+  int iVar7;
   
-  iVar1 = __savegprlr_29(param_1);
-  iVar3 = 0;
-  iVar8 = debugGlobals.plumeCount;
-  pGVar2 = debugGlobals.plumes;
+  iVar2 = 0;
+  iVar7 = debugGlobals.plumeCount;
+  pGVar1 = debugGlobals.plumes;
   if (0 < debugGlobals.plumeCount) {
-    iVar4 = 0;
+    iVar3 = 0;
     do {
-      lVar6 = (ulonglong)(uint)scene.def.time -
-              (ulonglong)*(uint *)((int)pGVar2->color + iVar4 + 0x14);
-      if ((lVar6 < 0) || (*(int *)((int)pGVar2->color + iVar4 + 0x18) < (int)lVar6)) {
-        debugGlobals.plumeCount = iVar8 + -1;
-        piVar5 = (int *)((int)pGVar2->origin + iVar4 + -4);
-        lVar6 = 10;
-        piVar7 = &pGVar2[iVar8 + -2].duration;
+      lVar5 = (ulonglong)(uint)scene.def.time -
+              (ulonglong)*(uint *)((int)pGVar1->color + iVar3 + 0x14);
+      if ((lVar5 < 0) || (*(int *)((int)pGVar1->color + iVar3 + 0x18) < (int)lVar5)) {
+        debugGlobals.plumeCount = iVar7 + -1;
+        piVar4 = (int *)((int)pGVar1->origin + iVar3 + -4);
+        lVar5 = 10;
+        piVar6 = &pGVar1[iVar7 + -2].duration;
         do {
-          piVar7 = piVar7 + 1;
-          piVar5 = piVar5 + 1;
-          *piVar5 = *piVar7;
-          lVar6 = lVar6 + -1;
-          pGVar2 = debugGlobals.plumes;
-          iVar8 = debugGlobals.plumeCount;
-        } while (lVar6 != 0);
+          piVar6 = piVar6 + 1;
+          piVar4 = piVar4 + 1;
+          *piVar4 = *piVar6;
+          lVar5 = lVar5 + -1;
+          pGVar1 = debugGlobals.plumes;
+          iVar7 = debugGlobals.plumeCount;
+        } while (lVar5 != 0);
       }
       else {
-        iVar3 = iVar3 + 1;
-        iVar4 = iVar4 + 0x28;
+        iVar2 = iVar2 + 1;
+        iVar3 = iVar3 + 0x28;
       }
-    } while (iVar3 < iVar8);
+    } while (iVar2 < iVar7);
   }
-  if (pGVar2 != (GfxDebugPlume *)0x0) {
-    if ((*(int *)(iVar1 + 0x48) == 0) &&
-       (R_DebugAlloc((void **)(iVar1 + 0x48),debugGlobals.plumeLimit * 0x28,
-                     "(debugGlobalsEntry->plumes)"), *(void **)(iVar1 + 0x48) == (void *)0x0))
-    goto LAB_82725794;
+  if (pGVar1 != (GfxDebugPlume *)0x0) {
+    if ((param_1->plumes == (GfxDebugPlume *)0x0) &&
+       (R_DebugAlloc(&param_1->plumes,debugGlobals.plumeLimit * 0x28,"(debugGlobalsEntry->plumes)"),
+       param_1->plumes == (GfxDebugPlume *)0x0)) {
+      return;
+    }
     memcpy();
-    iVar8 = debugGlobals.plumeCount;
+    iVar7 = debugGlobals.plumeCount;
   }
-  *(int *)(iVar1 + 0x4c) = iVar8;
-LAB_82725794:
-  __restgprlr_29();
+  param_1->plumeCount = iVar7;
   return;
 }
 
@@ -544,6 +535,8 @@ void R_ShutdownDebug(void)
 
 // 82725808  R_CopyDebugStrings  (gfx_d3d/r_debug.cpp:345)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 
@@ -552,37 +545,31 @@ void R_CopyDebugStrings(trDebugString_t *param_1,int param_2,trDebugString_t *pa
 
 {
   GfxBackEndData *pGVar1;
-  int iVar2;
-  trDebugString_t **pptVar3;
-  ulonglong uVar4;
-  ulonglong uVar5;
+  trDebugString_t **pptVar2;
   
-  uVar5 = (ulonglong)param_5;
-  uVar4 = (ulonglong)(int)param_3;
-  iVar2 = __savegprlr_26(param_1);
   pGVar1 = frontEndDataOut;
-  if (((iVar2 != 0) || ((uVar4 & 0xffffffff) != 0)) &&
-     (pptVar3 = &(frontEndDataOut->debugGlobals).externStrings,
-     (frontEndDataOut->debugGlobals).externStrings == (trDebugString_t *)0x0)) {
-    R_DebugAlloc(pptVar3,(int)((uVar5 + (uVar5 & 0x7fffffff) * 2 & 0xffffffff) << 5),
-                 "R_CopyDebugStrings");
-    if (*pptVar3 == (trDebugString_t *)0x0) goto LAB_827258cc;
+  if ((((param_1 != (trDebugString_t *)0x0) || (param_3 != (trDebugString_t *)0x0)) &&
+      (pptVar2 = &(frontEndDataOut->debugGlobals).externStrings,
+      (frontEndDataOut->debugGlobals).externStrings == (trDebugString_t *)0x0)) &&
+     (R_DebugAlloc(pptVar2,param_5 * 0x60,"R_CopyDebugStrings"), *pptVar2 == (trDebugString_t *)0x0)
+     ) {
+    return;
   }
-  if (iVar2 != 0) {
+  if (param_1 != (trDebugString_t *)0x0) {
     memcpy();
   }
-  if ((uVar4 & 0xffffffff) != 0) {
+  if (param_3 != (trDebugString_t *)0x0) {
     memcpy();
   }
   (pGVar1->debugGlobals).externStringCount = param_2 + param_4;
-LAB_827258cc:
-  __restgprlr_26();
   return;
 }
 
 
 // 827258D8  R_CopyDebugLines  (gfx_d3d/r_debug.cpp:379)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 
@@ -591,69 +578,62 @@ void R_CopyDebugLines(trDebugLine_t *param_1,int param_2,trDebugLine_t *param_3,
 
 {
   GfxBackEndData *pGVar1;
-  int iVar2;
-  trDebugLine_t **pptVar3;
-  ulonglong uVar4;
-  ulonglong uVar5;
+  trDebugLine_t **pptVar2;
   
-  uVar5 = (ulonglong)param_5;
-  uVar4 = (ulonglong)(int)param_3;
-  iVar2 = __savegprlr_25(param_1);
   pGVar1 = frontEndDataOut;
-  if ((((iVar2 == 0) && ((uVar4 & 0xffffffff) == 0)) ||
-      (pptVar3 = &(frontEndDataOut->debugGlobals).externLines,
+  if ((((param_1 == (trDebugLine_t *)0x0) && (param_3 == (trDebugLine_t *)0x0)) ||
+      (pptVar2 = &(frontEndDataOut->debugGlobals).externLines,
       (frontEndDataOut->debugGlobals).externLines != (trDebugLine_t *)0x0)) ||
-     (R_DebugAlloc(pptVar3,(int)((uVar5 & 0xffffffff) << 5),"R_CopyDebugLines"),
-     *pptVar3 != (trDebugLine_t *)0x0)) {
-    if (iVar2 != 0) {
+     (R_DebugAlloc(pptVar2,param_5 << 5,"R_CopyDebugLines"), *pptVar2 != (trDebugLine_t *)0x0)) {
+    if (param_1 != (trDebugLine_t *)0x0) {
       memcpy();
     }
-    if ((uVar4 & 0xffffffff) != 0) {
+    if (param_3 != (trDebugLine_t *)0x0) {
       memcpy();
     }
     (pGVar1->debugGlobals).externLineCount = param_2 + param_4;
   }
-  __restgprlr_25();
   return;
 }
 
 
 // 82725990  R_AddPlume  (gfx_d3d/r_debug.cpp:413)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void R_AddPlume(float *param_1,int param_2,float *param_3,int param_4)
 
 {
   int iVar1;
-  float *pfVar2;
-  GfxDebugPlume *pGVar3;
+  GfxDebugPlume *pGVar2;
   
-  pfVar2 = (float *)__savegprlr_27(param_1);
   Sys_EnterCriticalSection(CRITSECT_DEBUG_LINE);
   if (debugGlobals.plumes == (GfxDebugPlume *)0x0) {
     R_DebugAlloc(&debugGlobals.plumes,debugGlobals.plumeLimit * 0x28,"(debugGlobals.plumes)");
     debugGlobals.plumeCount = 0;
-    if (debugGlobals.plumes == (GfxDebugPlume *)0x0) goto LAB_82725ae8;
+    if (debugGlobals.plumes == (GfxDebugPlume *)0x0) {
+      debugGlobals.plumeCount = 0;
+      return;
+    }
   }
   if (debugGlobals.plumeCount != debugGlobals.plumeLimit) {
-    pGVar3 = debugGlobals.plumes + debugGlobals.plumeCount;
-    pGVar3->origin[0] = *pfVar2;
-    pGVar3->origin[1] = pfVar2[1];
-    pGVar3->origin[2] = pfVar2[2];
+    pGVar2 = debugGlobals.plumes + debugGlobals.plumeCount;
+    pGVar2->origin[0] = *param_1;
+    pGVar2->origin[1] = param_1[1];
+    pGVar2->origin[2] = param_1[2];
     iVar1 = debugGlobals.plumeCount;
-    pGVar3 = debugGlobals.plumes;
+    pGVar2 = debugGlobals.plumes;
     debugGlobals.plumes[debugGlobals.plumeCount].color[0] = *param_3;
-    pGVar3[iVar1].color[1] = param_3[1];
-    pGVar3[iVar1].color[2] = param_3[2];
+    pGVar2[iVar1].color[1] = param_3[1];
+    pGVar2[iVar1].color[2] = param_3[2];
     debugGlobals.plumes[debugGlobals.plumeCount].score = param_2;
     debugGlobals.plumes[debugGlobals.plumeCount].startTime = scene.def.time;
     debugGlobals.plumes[debugGlobals.plumeCount].duration = param_4;
     debugGlobals.plumeCount = debugGlobals.plumeCount + 1;
   }
   Sys_LeaveCriticalSection(CRITSECT_DEBUG_LINE);
-LAB_82725ae8:
-  __restgprlr_27();
   return;
 }
 

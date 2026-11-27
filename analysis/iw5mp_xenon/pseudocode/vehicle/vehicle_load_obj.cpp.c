@@ -24,6 +24,8 @@ VehicleDef * Vehicle_Register_FastFile(char *param_1)
 
 // 826C04C8  Vehicle_Register  (vehicle/vehicle_load_obj.cpp:704)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
 /* WARNING: Enum "XAssetType": Some values do not have unique names */
 /* WARNING: Enum "nodeType": Some values do not have unique names */
@@ -33,19 +35,15 @@ VehicleDef * Vehicle_Register_FastFile(char *param_1)
 VehicleDef * Vehicle_Register(char *param_1)
 
 {
-  char *pcVar1;
-  XAssetHeader XVar2;
-  VehicleDef *pVVar3;
+  XAssetHeader XVar1;
   
-  pcVar1 = (char *)__savegprlr_28(param_1);
-  if (pcVar1 == (char *)0x0) {
+  if (param_1 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_load_obj.cpp",
                     0x2c1,0,"%s");
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_load_obj.cpp",
                     0x2b8,0,"%s");
   }
-  XVar2 = DB_FindXAssetHeader(ASSET_TYPE_VEHICLE,pcVar1,1);
-  pVVar3 = (VehicleDef *)__restgprlr_28(XVar2.physPreset);
-  return pVVar3;
+  XVar1 = DB_FindXAssetHeader(ASSET_TYPE_VEHICLE,param_1,1);
+  return XVar1.vehDef;
 }
 

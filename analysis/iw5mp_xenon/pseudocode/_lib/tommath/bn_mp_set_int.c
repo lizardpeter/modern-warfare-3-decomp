@@ -2,52 +2,52 @@
 
 // 822596D8  mp_set_int  (line unknown)
 
-void mp_set_int(undefined8 param_1,ulonglong param_2)
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
+undefined8 mp_set_int(int *param_1,ulonglong param_2)
 
 {
   int iVar1;
   ulonglong uVar2;
-  int *piVar4;
   undefined8 uVar3;
-  undefined4 *puVar5;
-  int iVar6;
+  undefined4 *puVar4;
+  int iVar5;
   
-  piVar4 = (int *)__savegprlr_28();
-  piVar4[2] = 0;
-  iVar6 = 0;
-  *piVar4 = 0;
-  if (0 < piVar4[1]) {
-    puVar5 = (undefined4 *)(piVar4[3] + -4);
+  param_1[2] = 0;
+  iVar5 = 0;
+  *param_1 = 0;
+  if (0 < param_1[1]) {
+    puVar4 = (undefined4 *)(param_1[3] + -4);
     do {
-      iVar6 = iVar6 + 1;
-      puVar5 = puVar5 + 1;
-      *puVar5 = 0;
-    } while (iVar6 < piVar4[1]);
+      iVar5 = iVar5 + 1;
+      puVar4 = puVar4 + 1;
+      *puVar4 = 0;
+    } while (iVar5 < param_1[1]);
   }
-  iVar6 = 0;
+  iVar5 = 0;
   do {
-    uVar3 = mp_mul_2d(piVar4,4,piVar4);
-    if ((int)uVar3 != 0) goto LAB_822597bc;
+    uVar3 = mp_mul_2d(param_1,4,param_1);
+    if ((int)uVar3 != 0) {
+      return uVar3;
+    }
     uVar2 = param_2 & 0xffffffff;
-    iVar6 = iVar6 + 1;
+    iVar5 = iVar5 + 1;
     param_2 = (param_2 & 0xfffffff) << 4;
-    *(uint *)piVar4[3] = (uint)(uVar2 >> 0x1c) | *(uint *)piVar4[3];
-    iVar1 = *piVar4;
-    *piVar4 = iVar1 + 1;
-  } while (iVar6 < 8);
+    *(uint *)param_1[3] = (uint)(uVar2 >> 0x1c) | *(uint *)param_1[3];
+    iVar1 = *param_1;
+    *param_1 = iVar1 + 1;
+  } while (iVar5 < 8);
   if (0 < iVar1 + 1) {
     do {
-      iVar6 = *piVar4;
-      if (*(int *)(iVar6 * 4 + piVar4[3] + -4) != 0) break;
-      *piVar4 = iVar6 + -1;
-    } while (0 < iVar6 + -1);
+      iVar5 = *param_1;
+      if (*(int *)(iVar5 * 4 + param_1[3] + -4) != 0) break;
+      *param_1 = iVar5 + -1;
+    } while (0 < iVar5 + -1);
   }
-  if (*piVar4 == 0) {
-    piVar4[2] = 0;
+  if (*param_1 == 0) {
+    param_1[2] = 0;
   }
-  uVar3 = 0;
-LAB_822597bc:
-  __restgprlr_28(uVar3);
-  return;
+  return 0;
 }
 

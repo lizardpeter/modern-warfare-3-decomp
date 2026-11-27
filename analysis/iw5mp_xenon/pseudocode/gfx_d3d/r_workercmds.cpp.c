@@ -66,6 +66,8 @@ int R_DpvsCellStaticPending(void *param_1)
 
 // 82789FF8  R_EndFencePending  (gfx_d3d/r_workercmds.cpp:326)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
@@ -76,7 +78,6 @@ int R_EndFencePending(void)
   GfxBackEndData *pGVar1;
   int iVar2;
   
-  __savegprlr_29();
   if (frontEndDataOut == (GfxBackEndData *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_workercmds.cpp",
                     0x147,0,"%s");
@@ -87,7 +88,6 @@ int R_EndFencePending(void)
                     "%s");
   }
   iVar2 = D3DDevice_IsFencePending(pGVar1->endFence);
-  iVar2 = __restgprlr_29(iVar2);
   return iVar2;
 }
 
@@ -274,32 +274,33 @@ int R_GenerateGlassVertsNeedsToWait(void *param_1)
 
 // 8278A418  DB_StreamTabulatePending  (gfx_d3d/r_workercmds.cpp:471)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 int DB_StreamTabulatePending(void *param_1)
 
 {
   uint uVar1;
   uint *puVar2;
   uint uVar3;
-  int iVar4;
-  ulong uVar5;
-  bool bVar6;
+  ulong uVar4;
+  bool bVar5;
   char in_RESERVE;
   byte in_cr0;
   
-  iVar4 = __savegprlr_29(param_1);
-  uVar5 = GetCurrentProcessorNumber();
-  if (uVar5 == 4) {
+  uVar4 = GetCurrentProcessorNumber();
+  if (uVar4 == 4) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_workercmds.cpp",
                     0x1dc,0,"%s");
   }
-  bVar6 = Sys_IsMainThread();
-  if ((((!bVar6) || ((r_smp_worker->current).enabled == false)) &&
-      (bVar6 = Sys_IsRenderThread(), !bVar6)) && (g_workerCmds[0x1b].outSize < 1)) {
-    if (*(int *)(iVar4 + 4) == 0) {
+  bVar5 = Sys_IsMainThread();
+  if ((((!bVar5) || ((r_smp_worker->current).enabled == false)) &&
+      (bVar5 = Sys_IsRenderThread(), !bVar5)) && (g_workerCmds[0x1b].outSize < 1)) {
+    if (*(int *)((int)param_1 + 4) == 0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_workercmds.cpp",
                       0x1e6,0,"%s");
     }
-    puVar2 = *(uint **)(iVar4 + 4);
+    puVar2 = *(uint **)((int)param_1 + 4);
     do {
       uVar1 = *puVar2;
       if (uVar1 != 0) {
@@ -307,8 +308,7 @@ int DB_StreamTabulatePending(void *param_1)
           uVar3 = storeWordConditionalIndexed((ulonglong)uVar1,0,ZEXT48(puVar2));
           *puVar2 = uVar3;
         }
-        iVar4 = __restgprlr_29((ulonglong)uVar1 != 0);
-        return iVar4;
+        return (uint)((ulonglong)uVar1 != 0);
       }
       if (in_RESERVE != '\0') {
         uVar1 = storeWordConditionalIndexed(1,0,ZEXT48(puVar2));
@@ -316,11 +316,9 @@ int DB_StreamTabulatePending(void *param_1)
         in_cr0 = 2;
       }
     } while (!(bool)(in_cr0 >> 1 & 1));
-    iVar4 = __restgprlr_29(0);
-    return iVar4;
+    return 0;
   }
-  iVar4 = __restgprlr_29(1);
-  return iVar4;
+  return 1;
 }
 
 
@@ -449,6 +447,8 @@ void TRACK_r_workercmds(void)
 
 // 8278A840  R_InitWorkerCmdsPos  (gfx_d3d/r_workercmds.cpp:744)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void R_InitWorkerCmdsPos(void)
@@ -458,7 +458,6 @@ void R_InitWorkerCmdsPos(void)
   uint uVar2;
   long *plVar3;
   
-  __savegprlr_24();
   plVar3 = &g_workerCmds[0].syncedEndPos;
   do {
     iVar1 = plVar3[5];
@@ -480,13 +479,14 @@ void R_InitWorkerCmdsPos(void)
     }
     plVar3 = plVar3 + 0x20;
   } while ((int)plVar3 < -0x7b7f7778);
-  __restgprlr_24();
   return;
 }
 
 
 // 8278A910  R_InitWorkerCmds  (gfx_d3d/r_workercmds.cpp:764)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -496,7 +496,6 @@ void R_InitWorkerCmdsPos(void)
 void R_InitWorkerCmds(void)
 
 {
-  __savegprlr_24();
   g_workerCmds[0x20].buf = &DAT_8480a888;
   g_workerCmds[4].buf = (uchar *)g_dpvsEntityBuf;
   g_workerCmds[0x21].buf = &DAT_847fc280;
@@ -600,7 +599,6 @@ void R_InitWorkerCmds(void)
   g_workerCmds[0x17].bufSize = 0x10;
   g_workerCmds[0x17].dataSize = 0x10;
   R_InitWorkerCmdsPos();
-  __restgprlr_24();
   return;
 }
 
@@ -796,6 +794,9 @@ void R_ProcessWorkerCmdInternal(int param_1,void *param_2)
 
 // 8278AFC8  R_ProcessWorkerCmd  (gfx_d3d/r_workercmds.cpp:1162)
 
+/* WARNING: Function: __savegprlr_16 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_16 replaced with injection: xenon_save_restore */
+
 int R_ProcessWorkerCmd(int param_1,int param_2)
 
 {
@@ -805,211 +806,201 @@ int R_ProcessWorkerCmd(int param_1,int param_2)
   uint uVar4;
   uint uVar5;
   uint uVar6;
-  ulonglong uVar7;
-  int iVar8;
-  int iVar9;
-  int iVar10;
+  int iVar7;
+  uint *puVar8;
+  longlong lVar9;
+  longlong lVar10;
   uint *puVar11;
-  longlong lVar12;
-  longlong lVar13;
-  uint *puVar14;
+  ulonglong uVar12;
+  ulonglong uVar13;
+  ulonglong uVar14;
   ulonglong uVar15;
-  ulonglong uVar16;
-  ulonglong uVar17;
-  longlong lVar18;
+  longlong lVar16;
   char in_RESERVE;
-  byte bVar19;
+  byte bVar17;
   undefined1 auStack_d10 [3344];
   
-  uVar7 = __savegprlr_16(param_1);
-  lVar12 = (uVar7 & 0x1ffffff) * 0x80;
-  lVar18 = lVar12 + -0x7b7f8880;
-  puVar11 = (uint *)lVar18;
-  uVar2 = puVar11[7];
-  uVar3 = puVar11[5];
-  uVar16 = (ulonglong)uVar3;
-  uVar4 = puVar11[8];
-  trapWord(6,uVar16,0);
+  lVar9 = ((ulonglong)(uint)param_1 & 0x1ffffff) * 0x80;
+  lVar16 = lVar9 + -0x7b7f8880;
+  puVar8 = (uint *)lVar16;
+  uVar2 = puVar8[7];
+  uVar3 = puVar8[5];
+  uVar14 = (ulonglong)uVar3;
+  uVar4 = puVar8[8];
+  trapWord(6,uVar14,0);
   bVar1 = (ulonglong)uVar2 == (longlong)((int)uVar2 / (int)uVar3) * (longlong)(int)uVar3;
-  bVar19 = bVar1 << 1;
-  trapWord(5,uVar16 & ~((((ulonglong)uVar2 & 0x7fffffff) << 1 | (ulonglong)(uVar2 >> 0x1f)) - 1),
+  bVar17 = bVar1 << 1;
+  trapWord(5,uVar14 & ~((((ulonglong)uVar2 & 0x7fffffff) << 1 | (ulonglong)(uVar2 >> 0x1f)) - 1),
            0xffff);
   if (!bVar1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_workercmds.cpp",
                     0x49e,0,"%s");
   }
-  lVar13 = lVar12 + -0x7b7f8870;
-  uVar15 = 1;
+  lVar10 = lVar9 + -0x7b7f8870;
+  uVar12 = 1;
   while( true ) {
     do {
-      puVar14 = (uint *)lVar13;
-      uVar2 = *puVar14;
+      puVar11 = (uint *)lVar10;
+      uVar2 = *puVar11;
       if (in_RESERVE != '\0') {
-        uVar5 = storeWordConditionalIndexed((ulonglong)uVar2 - 1,0,lVar13);
-        *puVar14 = uVar5;
-        bVar19 = 2;
+        uVar5 = storeWordConditionalIndexed((ulonglong)uVar2 - 1,0,lVar10);
+        *puVar11 = uVar5;
+        bVar17 = 2;
       }
-    } while (!(bool)(bVar19 >> 1 & 1));
+    } while (!(bool)(bVar17 >> 1 & 1));
     if (0 < (int)uVar2) break;
     do {
-      uVar2 = *puVar14;
+      uVar2 = *puVar11;
       if (in_RESERVE != '\0') {
-        uVar5 = storeWordConditionalIndexed((ulonglong)uVar2 + 1,0,lVar13);
-        *puVar14 = uVar5;
-        bVar19 = 2;
+        uVar5 = storeWordConditionalIndexed((ulonglong)uVar2 + 1,0,lVar10);
+        *puVar11 = uVar5;
+        bVar17 = 2;
       }
-    } while (!(bool)(bVar19 >> 1 & 1));
+    } while (!(bool)(bVar17 >> 1 & 1));
     if ((int)uVar2 < 0) {
-      iVar8 = __restgprlr_16(0);
-      return iVar8;
+      return 0;
     }
   }
-  iVar8 = (int)((uVar7 & 0x3fffffff) << 2);
-  iVar9 = (int)uVar7;
-  if (*(int *)((int)g_cmdOutputBusy + iVar8) == 0) {
-    if (*(int *)((int)g_cmdExecFailed + iVar8) != 0) {
+  if (g_cmdOutputBusy[param_1] == (_func___cdecl_int_void_ptr *)0x0) {
+    if (g_cmdExecFailed[param_1] != (_func___cdecl_void *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_workercmds.cpp",
                       0x4d7,0,"%s");
     }
-    if ((param_2 != 0) && (8 < (int)*puVar14)) {
+    if ((param_2 != 0) && (8 < (int)*puVar11)) {
       do {
-        uVar2 = *puVar14;
+        uVar2 = *puVar11;
         if (in_RESERVE != '\0') {
-          uVar3 = storeWordConditionalIndexed((ulonglong)uVar2 - 9,0,lVar13);
-          *puVar14 = uVar3;
-          bVar19 = 2;
+          uVar3 = storeWordConditionalIndexed((ulonglong)uVar2 - 9,0,lVar10);
+          *puVar11 = uVar3;
+          bVar17 = 2;
         }
-      } while (!(bool)(bVar19 >> 1 & 1));
+      } while (!(bool)(bVar17 >> 1 & 1));
       if ((int)uVar2 < 9) {
-        uVar7 = (ulonglong)(uVar2 >> 0x1f) - 1 & (ulonglong)uVar2;
-        uVar15 = uVar7 + 1;
+        uVar13 = (ulonglong)(uVar2 >> 0x1f) - 1 & (ulonglong)uVar2;
+        uVar12 = uVar13 + 1;
         do {
           if (in_RESERVE != '\0') {
-            uVar2 = storeWordConditionalIndexed((9 - uVar7) + (ulonglong)*puVar14,0,lVar13);
-            *puVar14 = uVar2;
-            bVar19 = 2;
+            uVar2 = storeWordConditionalIndexed((9 - uVar13) + (ulonglong)*puVar11,0,lVar10);
+            *puVar11 = uVar2;
+            bVar17 = 2;
           }
-        } while (!(bool)(bVar19 >> 1 & 1));
+        } while (!(bool)(bVar17 >> 1 & 1));
       }
       else {
-        uVar15 = 10;
+        uVar12 = 10;
       }
     }
     sync(1);
     do {
-      uVar2 = *puVar11;
-      uVar7 = (ulonglong)uVar2;
-      uVar17 = uVar4 - uVar7;
-      if ((uVar17 & 0xffffffff) <= (uVar15 & 0xffffffff)) {
-        uVar7 = -uVar17;
+      uVar2 = *puVar8;
+      uVar13 = (ulonglong)uVar2;
+      uVar15 = uVar4 - uVar13;
+      if ((uVar15 & 0xffffffff) <= (uVar12 & 0xffffffff)) {
+        uVar13 = -uVar15;
         memcpy();
       }
       memcpy();
       sync(1);
       do {
-        uVar3 = *puVar11;
+        uVar3 = *puVar8;
         if (uVar3 != uVar2) {
           if (in_RESERVE != '\0') {
-            uVar5 = storeWordConditionalIndexed((ulonglong)uVar3,0,lVar18);
-            *puVar11 = uVar5;
-            bVar19 = 2;
+            uVar5 = storeWordConditionalIndexed((ulonglong)uVar3,0,lVar16);
+            *puVar8 = uVar5;
+            bVar17 = 2;
           }
           break;
         }
         if (in_RESERVE != '\0') {
-          uVar5 = storeWordConditionalIndexed(uVar15 + uVar7,0,lVar18);
-          *puVar11 = uVar5;
-          bVar19 = 2;
+          uVar5 = storeWordConditionalIndexed(uVar12 + uVar13,0,lVar16);
+          *puVar8 = uVar5;
+          bVar17 = 2;
         }
-      } while (!(bool)(bVar19 >> 1 & 1));
+      } while (!(bool)(bVar17 >> 1 & 1));
     } while ((ulonglong)uVar3 != (ulonglong)uVar2);
     PIXBeginNamedEvent_Copy_VarArgs(0xffffffff,"%s %d");
-    if ((uVar15 & 0xffffffff) != 0) {
-      lVar18 = ZEXT48(&stack0x00000000) - 0xd10;
-      uVar7 = uVar15;
+    if ((uVar12 & 0xffffffff) != 0) {
+      lVar16 = ZEXT48(&stack0x00000000) - 0xd10;
+      uVar13 = uVar12;
       do {
-        R_ProcessWorkerCmdInternal(iVar9,(void *)lVar18);
-        uVar7 = uVar7 - 1;
-        bVar19 = (uVar7 == 0) << 1;
-        lVar18 = lVar18 + uVar16;
-      } while (uVar7 != 0);
+        R_ProcessWorkerCmdInternal(param_1,(void *)lVar16);
+        uVar13 = uVar13 - 1;
+        bVar17 = (uVar13 == 0) << 1;
+        lVar16 = lVar16 + uVar14;
+      } while (uVar13 != 0);
     }
     sync(1);
     do {
-      puVar11 = (uint *)(lVar12 + -0x7b7f8874);
+      puVar8 = (uint *)(lVar9 + -0x7b7f8874);
       if (in_RESERVE != '\0') {
-        uVar2 = storeWordConditionalIndexed(*puVar11 - uVar15,0,lVar12 + -0x7b7f8874);
-        *puVar11 = uVar2;
-        bVar19 = 2;
+        uVar2 = storeWordConditionalIndexed(*puVar8 - uVar12,0,lVar9 + -0x7b7f8874);
+        *puVar8 = uVar2;
+        bVar17 = 2;
       }
-    } while (!(bool)(bVar19 >> 1 & 1));
+    } while (!(bool)(bVar17 >> 1 & 1));
 LAB_8278b3e4:
     if (g_workerCmdWaitCount != 0) {
       Sys_SetWorkerCmdEvent();
     }
     PIXEndNamedEvent();
-    iVar8 = __restgprlr_16(1);
-    return iVar8;
+    return 1;
   }
   sync(1);
-  uVar2 = *puVar11;
-  iVar10 = (**(code **)((int)g_cmdOutputBusy + iVar8))
-                     ((longlong)(int)uVar2 * (longlong)(int)uVar3 + (ulonglong)puVar11[6]);
+  uVar2 = *puVar8;
+  iVar7 = (*g_cmdOutputBusy[param_1])((void *)(uVar2 * uVar3 + puVar8[6]));
   do {
-    if (iVar10 != 0) {
+    if (iVar7 != 0) {
       do {
         if (in_RESERVE != '\0') {
-          uVar2 = storeWordConditionalIndexed((ulonglong)*puVar14 + 1,0,lVar13);
-          *puVar14 = uVar2;
-          bVar19 = 2;
+          uVar2 = storeWordConditionalIndexed((ulonglong)*puVar11 + 1,0,lVar10);
+          *puVar11 = uVar2;
+          bVar17 = 2;
         }
-      } while (!(bool)(bVar19 >> 1 & 1));
-      iVar8 = __restgprlr_16(0);
-      return iVar8;
+      } while (!(bool)(bVar17 >> 1 & 1));
+      return 0;
     }
     memcpy();
     sync(1);
-    uVar7 = (ulonglong)uVar2 + 1;
+    uVar14 = (ulonglong)uVar2 + 1;
     do {
-      uVar5 = *puVar11;
+      uVar5 = *puVar8;
       if (uVar5 != uVar2) {
         if (in_RESERVE != '\0') {
-          uVar6 = storeWordConditionalIndexed((ulonglong)uVar5,0,lVar18);
-          *puVar11 = uVar6;
-          bVar19 = 2;
+          uVar6 = storeWordConditionalIndexed((ulonglong)uVar5,0,lVar16);
+          *puVar8 = uVar6;
+          bVar17 = 2;
         }
         break;
       }
       if (in_RESERVE != '\0') {
-        uVar6 = storeWordConditionalIndexed(-(ulonglong)(uVar4 != uVar7) & uVar7,0,lVar18);
-        *puVar11 = uVar6;
-        bVar19 = 2;
+        uVar6 = storeWordConditionalIndexed(-(ulonglong)(uVar4 != uVar14) & uVar14,0,lVar16);
+        *puVar8 = uVar6;
+        bVar17 = 2;
       }
-    } while (!(bool)(bVar19 >> 1 & 1));
+    } while (!(bool)(bVar17 >> 1 & 1));
     if ((ulonglong)uVar5 == (ulonglong)uVar2) {
       PIXBeginNamedEvent_Copy_VarArgs(0xffffffff,"%s");
-      R_ProcessWorkerCmdInternal(iVar9,auStack_d10);
+      R_ProcessWorkerCmdInternal(param_1,auStack_d10);
       sync(1);
       do {
-        puVar11 = (uint *)(lVar12 + -0x7b7f8874);
+        puVar8 = (uint *)(lVar9 + -0x7b7f8874);
         if (in_RESERVE != '\0') {
-          uVar2 = storeWordConditionalIndexed((ulonglong)*puVar11 - 1,0,lVar12 + -0x7b7f8874);
-          *puVar11 = uVar2;
-          bVar19 = 2;
+          uVar2 = storeWordConditionalIndexed((ulonglong)*puVar8 - 1,0,lVar9 + -0x7b7f8874);
+          *puVar8 = uVar2;
+          bVar17 = 2;
         }
-      } while (!(bool)(bVar19 >> 1 & 1));
+      } while (!(bool)(bVar17 >> 1 & 1));
       goto LAB_8278b3e4;
     }
-    if (iVar9 == 0x1f) {
+    if (param_1 == 0x1f) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_workercmds.cpp",
                       0x4c2,0,"%s");
     }
-    if (*(code **)((int)g_cmdExecFailed + iVar8) != (code *)0x0) {
-      (**(code **)((int)g_cmdExecFailed + iVar8))();
+    if (g_cmdExecFailed[param_1] != (_func___cdecl_void *)0x0) {
+      (*g_cmdExecFailed[param_1])();
     }
-    uVar2 = *puVar11;
-    iVar10 = (**(code **)((int)g_cmdOutputBusy + iVar8))
-                       ((longlong)(int)uVar2 * (longlong)(int)uVar3 + (ulonglong)puVar11[6]);
+    uVar2 = *puVar8;
+    iVar7 = (*g_cmdOutputBusy[param_1])((void *)(uVar2 * uVar3 + puVar8[6]));
   } while( true );
 }
 
@@ -1080,29 +1071,27 @@ void R_WaitWorkerCmdsOfType(WorkerCmdType param_1)
 
 // 8278B430  R_WaitWorkerCmdsOnlyOfType  (gfx_d3d/r_workercmds.cpp:1332)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "WorkerCmdType": Some values do not have unique names */
 
 void R_WaitWorkerCmdsOnlyOfType(WorkerCmdType param_1)
 
 {
-  int iVar1;
-  long lVar2;
-  ulonglong uVar3;
-  int iVar4;
+  long lVar1;
+  int iVar2;
   char in_RESERVE;
   byte in_cr0;
   
-  uVar3 = __savegprlr_25(param_1);
-  if (*(int *)((int)g_cmdOutputBusy + (int)((uVar3 & 0xffffffff) << 2)) != 0) {
+  if (g_cmdOutputBusy[param_1] != (_func___cdecl_int_void_ptr *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_workercmds.cpp",
                     0x535,0,"%s");
   }
-  lVar2 = g_workerCmdMinType;
-  iVar1 = (int)((uVar3 & 0x1ffffff) << 7);
-  if (0 < *(int *)((int)g_workerCmds[0].pad + iVar1 + -0x18)) {
-    if ((int)uVar3 < g_workerCmdMinType) {
+  lVar1 = g_workerCmdMinType;
+  if (0 < g_workerCmds[param_1].inSize) {
+    if ((int)param_1 < g_workerCmdMinType) {
       do {
-        if (g_workerCmdMinType != lVar2) {
+        if (g_workerCmdMinType != lVar1) {
           if (in_RESERVE != '\0') {
             g_workerCmdMinType =
                  storeWordConditionalIndexed
@@ -1112,7 +1101,8 @@ void R_WaitWorkerCmdsOnlyOfType(WorkerCmdType param_1)
           break;
         }
         if (in_RESERVE != '\0') {
-          g_workerCmdMinType = storeWordConditionalIndexed(uVar3,0,0xffffffff84807778);
+          g_workerCmdMinType =
+               storeWordConditionalIndexed((longlong)(int)param_1,0,0xffffffff84807778);
           in_cr0 = 2;
         }
       } while (!(bool)(in_cr0 >> 1 & 1));
@@ -1121,9 +1111,9 @@ void R_WaitWorkerCmdsOnlyOfType(WorkerCmdType param_1)
       Sys_SetWorkerCmdEvent();
     }
     PIXBeginNamedEvent_Copy_VarArgs(0xffffffff,"wait only %s");
-    iVar4 = *(int *)((int)g_workerCmds[0].pad + iVar1 + -0x18);
-    while (0 < iVar4) {
-      if (*(int *)((int)g_workerCmds[0].pad + iVar1 + -0x14) < 1) {
+    iVar2 = g_workerCmds[param_1].inSize;
+    while (0 < iVar2) {
+      if (g_workerCmds[param_1].outSize < 1) {
         do {
           if (in_RESERVE != '\0') {
             g_workerCmdWaitCount =
@@ -1146,15 +1136,14 @@ void R_WaitWorkerCmdsOnlyOfType(WorkerCmdType param_1)
       }
       else {
         do {
-          iVar4 = R_ProcessWorkerCmd((int)uVar3,1);
-        } while (iVar4 != 0);
+          iVar2 = R_ProcessWorkerCmd(param_1,1);
+        } while (iVar2 != 0);
       }
-      iVar4 = *(int *)((int)g_workerCmds[0].pad + iVar1 + -0x18);
+      iVar2 = g_workerCmds[param_1].inSize;
     }
     PIXEndNamedEvent();
   }
   sync(1);
-  __restgprlr_25();
   return;
 }
 
@@ -1265,6 +1254,9 @@ void R_WaitDrawWorkerCmdsOfType(GfxBackEndData *param_1,uint param_2)
 
 // 8278B638  R_ProcessWorkerCmds  (gfx_d3d/r_workercmds.cpp:1428)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
+
 void R_ProcessWorkerCmds(uint param_1)
 
 {
@@ -1272,14 +1264,12 @@ void R_ProcessWorkerCmds(uint param_1)
   bool bVar2;
   long lVar3;
   int iVar4;
-  int iVar5;
-  uint uVar6;
-  long *plVar7;
-  uint uVar8;
+  uint uVar5;
+  long *plVar6;
+  uint uVar7;
   char in_RESERVE;
   byte in_cr0;
   
-  iVar4 = __savegprlr_24(param_1);
   bVar2 = true;
 LAB_8278b65c:
   do {
@@ -1287,11 +1277,11 @@ LAB_8278b65c:
     bVar1 = false;
     if ((-1 < g_waitTypeMainThread) && (0 < g_workerCmds[g_waitTypeMainThread].outSize)) {
       while( true ) {
-        if (iVar4 == 2) {
+        if (param_1 == 2) {
           Sys_CheckPauseWorkerCmd();
         }
-        iVar5 = R_ProcessWorkerCmd(lVar3,1);
-        if (iVar5 == 0) break;
+        iVar4 = R_ProcessWorkerCmd(lVar3,1);
+        if (iVar4 == 0) break;
         bVar1 = true;
       }
       if (bVar1) {
@@ -1306,25 +1296,25 @@ LAB_8278b65c:
       }
     }
     bVar1 = false;
-    uVar6 = -(uint)(g_workerCmdMinType != 0x7fffffff) & g_workerCmdMinType;
-    if ((int)uVar6 < 0x22) {
-      plVar7 = &g_workerCmds[uVar6].outSize;
-      uVar8 = uVar6;
+    uVar5 = -(uint)(g_workerCmdMinType != 0x7fffffff) & g_workerCmdMinType;
+    if ((int)uVar5 < 0x22) {
+      plVar6 = &g_workerCmds[uVar5].outSize;
+      uVar7 = uVar5;
       do {
-        if (0 < *plVar7) {
+        if (0 < *plVar6) {
           while( true ) {
-            if (iVar4 == 2) {
+            if (param_1 == 2) {
               Sys_CheckPauseWorkerCmd();
             }
-            iVar5 = R_ProcessWorkerCmd(uVar8,1);
-            if (iVar5 == 0) break;
-            if (g_workerCmdMinType < (int)uVar8) goto LAB_8278b65c;
+            iVar4 = R_ProcessWorkerCmd(uVar7,1);
+            if (iVar4 == 0) break;
+            if (g_workerCmdMinType < (int)uVar7) goto LAB_8278b65c;
             bVar1 = true;
           }
           if (bVar1) goto LAB_8278b7cc;
         }
         do {
-          if (g_workerCmdMinType != uVar8) {
+          if (g_workerCmdMinType != uVar7) {
             if (in_RESERVE != '\0') {
               g_workerCmdMinType =
                    storeWordConditionalIndexed
@@ -1338,13 +1328,12 @@ LAB_8278b65c:
             in_cr0 = 2;
           }
         } while (!(bool)(in_cr0 >> 1 & 1));
-        plVar7 = plVar7 + 0x20;
-        uVar8 = uVar8 + 1;
-      } while ((int)plVar7 < -0x7b7f7770);
+        plVar6 = plVar6 + 0x20;
+        uVar7 = uVar7 + 1;
+      } while ((int)plVar6 < -0x7b7f7770);
     }
-    if (uVar6 == 0) {
+    if (uVar5 == 0) {
       if (!bVar2) {
-        __restgprlr_24();
         return;
       }
       Sys_ResetWorkerCmdEvent();
@@ -1358,7 +1347,7 @@ LAB_8278b65c:
     }
     if ((bool)(in_cr0 >> 1 & 1)) break;
 LAB_8278b7cc:
-    if (g_workerCmdMinType != uVar8) goto LAB_8278b7bc;
+    if (g_workerCmdMinType != uVar7) goto LAB_8278b7bc;
   }
   goto LAB_8278b65c;
 LAB_8278b7bc:
@@ -1373,6 +1362,8 @@ LAB_8278b7bc:
 
 // 8278B7F8  R_ProcessLightWeightWorkerCmds  (gfx_d3d/r_workercmds.cpp:1512)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void R_ProcessLightWeightWorkerCmds(void)
@@ -1387,7 +1378,6 @@ void R_ProcessLightWeightWorkerCmds(void)
   char in_RESERVE;
   byte in_cr0;
   
-  __savegprlr_25();
   bVar1 = true;
 LAB_8278b820:
   do {
@@ -1435,7 +1425,6 @@ LAB_8278b820:
     }
     if (uVar4 == 0) {
       if (!bVar1) {
-        __restgprlr_25();
         return;
       }
       Sys_ResetWorkerCmdEvent();
@@ -1466,37 +1455,38 @@ LAB_8278b9b4:
 
 // 8278B9C8  R_ProcessWorkerCmdsWithTimeoutInternal  (gfx_d3d/r_workercmds.cpp:1585)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
+
 int R_ProcessWorkerCmdsWithTimeoutInternal(_func___cdecl_int *param_1)
 
 {
   bool bVar1;
   long lVar2;
-  code *pcVar3;
-  int iVar4;
+  int iVar3;
+  uint uVar4;
   uint uVar5;
-  uint uVar6;
-  long *plVar7;
+  long *plVar6;
   char in_RESERVE;
   byte in_cr0;
   
-  pcVar3 = (code *)__savegprlr_25(param_1);
-  iVar4 = (*pcVar3)();
-  if (iVar4 != 0) {
-LAB_8278b9e8:
-    iVar4 = __restgprlr_25(1);
-    return iVar4;
+  iVar3 = (*param_1)();
+  if (iVar3 != 0) {
+    return 1;
   }
   bVar1 = true;
 LAB_8278ba08:
   do {
     while (((lVar2 = g_waitTypeMainThread, -1 < g_waitTypeMainThread &&
             (0 < g_workerCmds[g_waitTypeMainThread].outSize)) &&
-           (iVar4 = R_ProcessWorkerCmd(g_waitTypeMainThread,1), iVar4 != 0))) {
+           (iVar3 = R_ProcessWorkerCmd(g_waitTypeMainThread,1), iVar3 != 0))) {
       do {
-        iVar4 = (*pcVar3)();
-        if (iVar4 != 0) goto LAB_8278b9e8;
-        iVar4 = R_ProcessWorkerCmd(lVar2,1);
-      } while (iVar4 != 0);
+        iVar3 = (*param_1)();
+        if (iVar3 != 0) {
+          return 1;
+        }
+        iVar3 = R_ProcessWorkerCmd(lVar2,1);
+      } while (iVar3 != 0);
       do {
         if (g_workerCmdMinType != lVar2) goto LAB_8278bbac;
         if (in_RESERVE != '\0') {
@@ -1505,14 +1495,14 @@ LAB_8278ba08:
         }
       } while (!(bool)(in_cr0 >> 1 & 1));
     }
-    uVar5 = -(uint)(g_workerCmdMinType != 0x7fffffff) & g_workerCmdMinType;
-    if ((int)uVar5 < 0x22) {
-      plVar7 = &g_workerCmds[uVar5].outSize;
-      uVar6 = uVar5;
+    uVar4 = -(uint)(g_workerCmdMinType != 0x7fffffff) & g_workerCmdMinType;
+    if ((int)uVar4 < 0x22) {
+      plVar6 = &g_workerCmds[uVar4].outSize;
+      uVar5 = uVar4;
       do {
-        if ((0 < *plVar7) && (iVar4 = R_ProcessWorkerCmd(uVar6,1), iVar4 != 0)) goto LAB_8278bb08;
+        if ((0 < *plVar6) && (iVar3 = R_ProcessWorkerCmd(uVar5,1), iVar3 != 0)) goto LAB_8278bb08;
         do {
-          if (g_workerCmdMinType != uVar6) {
+          if (g_workerCmdMinType != uVar5) {
             if (in_RESERVE != '\0') {
               g_workerCmdMinType =
                    storeWordConditionalIndexed
@@ -1526,31 +1516,32 @@ LAB_8278ba08:
             in_cr0 = 2;
           }
         } while (!(bool)(in_cr0 >> 1 & 1));
-        plVar7 = plVar7 + 0x20;
-        uVar6 = uVar6 + 1;
-      } while ((int)plVar7 < -0x7b7f7770);
+        plVar6 = plVar6 + 0x20;
+        uVar5 = uVar5 + 1;
+      } while ((int)plVar6 < -0x7b7f7770);
     }
-    iVar4 = (*pcVar3)();
-    if (iVar4 != 0) goto LAB_8278b9e8;
-    if (uVar5 == 0) {
+    iVar3 = (*param_1)();
+    if (iVar3 != 0) {
+      return 1;
+    }
+    if (uVar4 == 0) {
       if (!bVar1) {
-        iVar4 = __restgprlr_25(0);
-        return iVar4;
+        return 0;
       }
       Sys_ResetWorkerCmdEvent();
       bVar1 = false;
     }
   } while( true );
-  while( true ) {
-    if (g_workerCmdMinType < (int)uVar6) goto LAB_8278ba08;
-    iVar4 = R_ProcessWorkerCmd(uVar6,1);
-    if (iVar4 == 0) break;
+  while (iVar3 = R_ProcessWorkerCmd(uVar5,1), iVar3 != 0) {
 LAB_8278bb08:
-    iVar4 = (*pcVar3)();
-    if (iVar4 != 0) goto LAB_8278b9e8;
+    iVar3 = (*param_1)();
+    if (iVar3 != 0) {
+      return 1;
+    }
+    if (g_workerCmdMinType < (int)uVar5) goto LAB_8278ba08;
   }
   do {
-    if (g_workerCmdMinType != uVar6) goto LAB_8278bbac;
+    if (g_workerCmdMinType != uVar5) goto LAB_8278bbac;
     if (in_RESERVE != '\0') {
       g_workerCmdMinType = storeWordConditionalIndexed(0x7fffffff,0,0xffffffff84807778);
       in_cr0 = 2;
@@ -1569,33 +1560,39 @@ LAB_8278bbac:
 
 // 8278BBC8  R_ProcessWorkerCmdsWithTimeout  (gfx_d3d/r_workercmds.cpp:1662)
 
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
+
 void R_ProcessWorkerCmdsWithTimeout(_func___cdecl_int *param_1,int param_2)
 
 {
   bool bVar1;
   long lVar2;
-  code *pcVar3;
-  int iVar4;
+  int iVar3;
+  uint uVar4;
   uint uVar5;
-  uint uVar6;
-  long *plVar7;
+  long *plVar6;
   char in_RESERVE;
   byte in_cr0;
   
-  pcVar3 = (code *)__savegprlr_22(param_1);
-  iVar4 = (*pcVar3)();
-  while ((iVar4 == 0 && (iVar4 = (*pcVar3)(), iVar4 == 0))) {
+  iVar3 = (*param_1)();
+  do {
+    if ((iVar3 != 0) || (iVar3 = (*param_1)(), iVar3 != 0)) {
+LAB_8278be48:
+      sync(1);
+      return;
+    }
     bVar1 = true;
 LAB_8278bc1c:
     do {
       while (((lVar2 = g_waitTypeMainThread, -1 < g_waitTypeMainThread &&
               (0 < g_workerCmds[g_waitTypeMainThread].outSize)) &&
-             (iVar4 = R_ProcessWorkerCmd(g_waitTypeMainThread,1), iVar4 != 0))) {
+             (iVar3 = R_ProcessWorkerCmd(g_waitTypeMainThread,1), iVar3 != 0))) {
         do {
-          iVar4 = (*pcVar3)();
-          if (iVar4 != 0) goto LAB_8278be48;
-          iVar4 = R_ProcessWorkerCmd(lVar2,1);
-        } while (iVar4 != 0);
+          iVar3 = (*param_1)();
+          if (iVar3 != 0) goto LAB_8278be48;
+          iVar3 = R_ProcessWorkerCmd(lVar2,1);
+        } while (iVar3 != 0);
         do {
           if (g_workerCmdMinType != lVar2) goto LAB_8278bdc0;
           if (in_RESERVE != '\0') {
@@ -1604,14 +1601,14 @@ LAB_8278bc1c:
           }
         } while (!(bool)(in_cr0 >> 1 & 1));
       }
-      uVar5 = -(uint)(g_workerCmdMinType != 0x7fffffff) & g_workerCmdMinType;
-      if ((int)uVar5 < 0x22) {
-        plVar7 = &g_workerCmds[uVar5].outSize;
-        uVar6 = uVar5;
+      uVar4 = -(uint)(g_workerCmdMinType != 0x7fffffff) & g_workerCmdMinType;
+      if ((int)uVar4 < 0x22) {
+        plVar6 = &g_workerCmds[uVar4].outSize;
+        uVar5 = uVar4;
         do {
-          if ((0 < *plVar7) && (iVar4 = R_ProcessWorkerCmd(uVar6,1), iVar4 != 0)) goto LAB_8278bd1c;
+          if ((0 < *plVar6) && (iVar3 = R_ProcessWorkerCmd(uVar5,1), iVar3 != 0)) goto LAB_8278bd1c;
           do {
-            if (g_workerCmdMinType != uVar6) {
+            if (g_workerCmdMinType != uVar5) {
               if (in_RESERVE != '\0') {
                 g_workerCmdMinType =
                      storeWordConditionalIndexed
@@ -1625,19 +1622,21 @@ LAB_8278bc1c:
               in_cr0 = 2;
             }
           } while (!(bool)(in_cr0 >> 1 & 1));
-          plVar7 = plVar7 + 0x20;
-          uVar6 = uVar6 + 1;
-        } while ((int)plVar7 < -0x7b7f7770);
+          plVar6 = plVar6 + 0x20;
+          uVar5 = uVar5 + 1;
+        } while ((int)plVar6 < -0x7b7f7770);
       }
-      iVar4 = (*pcVar3)();
-      if (iVar4 != 0) goto LAB_8278be48;
-    } while (uVar5 != 0);
+      iVar3 = (*param_1)();
+      if (iVar3 != 0) goto LAB_8278be48;
+    } while (uVar4 != 0);
     if (bVar1) {
       Sys_ResetWorkerCmdEvent();
       bVar1 = false;
       goto LAB_8278bc1c;
     }
-    if (param_2 == 0) goto LAB_8278be4c;
+    if (param_2 == 0) {
+      return;
+    }
     do {
       if (in_RESERVE != '\0') {
         g_workerCmdWaitCount =
@@ -1649,8 +1648,8 @@ LAB_8278bc1c:
     PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffff,"wait cmd");
     Sys_WaitForWorkerCmd();
     PIXEndNamedEvent();
-    iVar4 = (*pcVar3)();
-    if (iVar4 != 0) {
+    iVar3 = (*param_1)();
+    if (iVar3 != 0) {
       sync(1);
       do {
         if (in_RESERVE != '\0') {
@@ -1660,7 +1659,6 @@ LAB_8278bc1c:
           in_cr0 = 2;
         }
       } while (!(bool)(in_cr0 >> 1 & 1));
-      __restgprlr_22();
       return;
     }
     do {
@@ -1671,23 +1669,18 @@ LAB_8278bc1c:
         in_cr0 = 2;
       }
     } while (!(bool)(in_cr0 >> 1 & 1));
-    iVar4 = (*pcVar3)();
-  }
-LAB_8278be48:
-  sync(1);
-LAB_8278be4c:
-  __restgprlr_22();
-  return;
+    iVar3 = (*param_1)();
+  } while( true );
   while( true ) {
-    if (g_workerCmdMinType < (int)uVar6) goto LAB_8278bc1c;
-    iVar4 = R_ProcessWorkerCmd(uVar6,1);
-    if (iVar4 == 0) break;
+    if (g_workerCmdMinType < (int)uVar5) goto LAB_8278bc1c;
+    iVar3 = R_ProcessWorkerCmd(uVar5,1);
+    if (iVar3 == 0) break;
 LAB_8278bd1c:
-    iVar4 = (*pcVar3)();
-    if (iVar4 != 0) goto LAB_8278be48;
+    iVar3 = (*param_1)();
+    if (iVar3 != 0) goto LAB_8278be48;
   }
   do {
-    if (g_workerCmdMinType != uVar6) goto LAB_8278bdc0;
+    if (g_workerCmdMinType != uVar5) goto LAB_8278bdc0;
     if (in_RESERVE != '\0') {
       g_workerCmdMinType = storeWordConditionalIndexed(0x7fffffff,0,0xffffffff84807778);
       in_cr0 = 2;
@@ -1706,6 +1699,8 @@ LAB_8278bdc0:
 
 // 8278BE80  R_WorkerThread  (gfx_d3d/r_workercmds.cpp:1694)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+
 void R_WorkerThread(uint param_1)
 
 {
@@ -1716,7 +1711,7 @@ void R_WorkerThread(uint param_1)
   byte in_cr0;
   uint uStack00000014;
   
-  uStack00000014 = __savegprlr_28(param_1);
+  uStack00000014 = param_1;
   pvVar2 = Sys_GetValue(2);
   setjmp();
   if (pvVar2 != (void *)0x0) {
@@ -1760,6 +1755,8 @@ void R_WorkerThread(uint param_1)
 
 // 8278BF50  R_LightWeightWorkerThread  (gfx_d3d/r_workercmds.cpp:1733)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+
 void R_LightWeightWorkerThread(uint param_1)
 
 {
@@ -1768,7 +1765,6 @@ void R_LightWeightWorkerThread(uint param_1)
   char in_RESERVE;
   byte in_cr0;
   
-  __savegprlr_29(param_1);
   uVar1 = GetCurrentProcessorNumber();
   if (uVar1 != 4) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_workercmds.cpp",
@@ -1842,6 +1838,8 @@ void R_InitWorkerThreads(void)
 
 // 8278C0D8  R_AddWorkerCmd  (gfx_d3d/r_workercmds.cpp:1791)
 
+/* WARNING: Function: __savegprlr_17 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_17 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "WorkerCmdType": Some values do not have unique names */
 
 void R_AddWorkerCmd(WorkerCmdType param_1,void *param_2)
@@ -1851,131 +1849,122 @@ void R_AddWorkerCmd(WorkerCmdType param_1,void *param_2)
   uint uVar2;
   uint uVar3;
   int iVar4;
-  code *pcVar5;
-  uint uVar6;
+  uint uVar5;
+  int iVar6;
   int iVar7;
-  ulonglong uVar8;
-  int iVar9;
-  longlong lVar10;
-  int iVar11;
-  ulonglong uVar12;
-  longlong lVar13;
-  ulonglong uVar14;
-  longlong lVar15;
-  uint *puVar16;
+  longlong lVar8;
+  ulonglong uVar9;
+  ulonglong uVar10;
+  longlong lVar11;
+  uint *puVar13;
+  longlong lVar12;
   char in_RESERVE;
-  byte bVar17;
+  byte bVar14;
   
-  lVar13 = (longlong)(int)param_2;
-  uVar8 = __savegprlr_17(param_1);
-  lVar10 = (uVar8 & 0x1ffffff) * 0x80;
-  iVar7 = (int)lVar10;
-  uVar2 = *(uint *)((int)g_workerCmds[0].pad + iVar7 + -0x10);
-  uVar12 = (ulonglong)uVar2;
+  lVar8 = ((ulonglong)param_1 & 0x1ffffff) * 0x80;
+  iVar6 = (int)lVar8;
+  uVar2 = *(uint *)((int)g_workerCmds[0].pad + iVar6 + -0x10);
+  uVar9 = (ulonglong)uVar2;
   if (uVar2 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_workercmds.cpp",
                     0x70b,0,"%s");
   }
-  uVar3 = *(uint *)((int)g_workerCmds[0].pad + iVar7 + -8);
-  uVar14 = (ulonglong)uVar3;
-  trapWord(6,uVar12,0);
-  iVar4 = *(int *)((int)g_workerCmds[0].pad + iVar7 + -4);
-  bVar1 = uVar14 == (longlong)((int)uVar3 / (int)uVar2) * (longlong)(int)uVar2;
-  bVar17 = bVar1 << 1;
-  trapWord(5,uVar12 & ~((((ulonglong)uVar3 & 0x7fffffff) << 1 | (ulonglong)(uVar3 >> 0x1f)) - 1),
+  uVar3 = *(uint *)((int)g_workerCmds[0].pad + iVar6 + -8);
+  uVar10 = (ulonglong)uVar3;
+  trapWord(6,uVar9,0);
+  iVar4 = *(int *)((int)g_workerCmds[0].pad + iVar6 + -4);
+  bVar1 = uVar10 == (longlong)((int)uVar3 / (int)uVar2) * (longlong)(int)uVar2;
+  bVar14 = bVar1 << 1;
+  trapWord(5,uVar9 & ~((((ulonglong)uVar3 & 0x7fffffff) << 1 | (ulonglong)(uVar3 >> 0x1f)) - 1),
            0xffff);
   if (!bVar1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_workercmds.cpp",
                     0x70f,0,"%s");
   }
-  lVar15 = lVar10 + -0x7b7f8874;
+  lVar11 = lVar8 + -0x7b7f8874;
   do {
-    puVar16 = (uint *)lVar15;
-    uVar2 = *puVar16;
+    puVar13 = (uint *)lVar11;
+    uVar2 = *puVar13;
     if (in_RESERVE != '\0') {
-      uVar6 = storeWordConditionalIndexed((ulonglong)uVar2 + 1,0,lVar15);
-      *puVar16 = uVar6;
-      bVar17 = 2;
+      uVar5 = storeWordConditionalIndexed((ulonglong)uVar2 + 1,0,lVar11);
+      *puVar13 = uVar5;
+      bVar14 = 2;
     }
-  } while (!(bool)(bVar17 >> 1 & 1));
-  iVar11 = (int)uVar8;
-  if (iVar4 <= (int)uVar2) {
-    do {
-      R_WarnOncePerFrame(R_WARN_WORKER_CMD_SIZE);
+  } while (!(bool)(bVar14 >> 1 & 1));
+  while( true ) {
+    if ((int)uVar2 < iVar4) {
+      lVar11 = lVar8 + -0x7b7f887c;
       do {
+        puVar13 = (uint *)lVar11;
+        uVar2 = *puVar13;
         if (in_RESERVE != '\0') {
-          uVar2 = storeWordConditionalIndexed((ulonglong)*puVar16 - 1,0,lVar15);
-          *puVar16 = uVar2;
-          bVar17 = 2;
+          uVar5 = storeWordConditionalIndexed(uVar9 + uVar2,0,lVar11);
+          *puVar13 = uVar5;
+          bVar14 = 2;
         }
-      } while (!(bool)(bVar17 >> 1 & 1));
-      if (iVar11 == 0x20) {
+      } while (!(bool)(bVar14 >> 1 & 1));
+      trapWord(6,uVar10,0);
+      lVar12 = (ulonglong)uVar2 - (longlong)((int)uVar2 / (int)uVar3) * (longlong)(int)uVar3;
+      bVar14 = (lVar12 == 0) << 1;
+      trapWord(5,uVar10 & ~((((ulonglong)uVar2 & 0x7fffffff) << 1 | (ulonglong)(uVar2 >> 0x1f)) - 1)
+               ,0xffff);
+      if (lVar12 < 0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_workercmds.cpp",
-                        0x72f,0,"%s");
+                        0x717,0,"%s\n\t(endPos) = %i");
       }
-      pcVar5 = *(code **)((int)g_cmdOutputBusy + (int)((uVar8 & 0xffffffff) << 2));
-      if ((pcVar5 == (code *)0x0) || (iVar9 = (*pcVar5)(lVar13), iVar9 == 0)) {
-        R_ProcessWorkerCmdInternal(iVar11,(void *)lVar13);
-        __restgprlr_17();
-        return;
+      if ((int)lVar12 == 0) {
+        do {
+          if (in_RESERVE != '\0') {
+            uVar2 = storeWordConditionalIndexed(*puVar13 - uVar10,0,lVar11);
+            *puVar13 = uVar2;
+            bVar14 = 2;
+          }
+        } while (!(bool)(bVar14 >> 1 & 1));
       }
-      Sys_Sleep(1);
+      memcpy();
+      sync(1);
+      uVar9 = lVar12 + uVar9;
+      trapWord(6,uVar10,0);
+      trapWord(5,uVar10 & ~(((uVar9 & 0x7fffffff) << 1 | (uVar9 & 0xffffffff) >> 0x1f) - 1),0xffff);
+      Sys_WaitInterlockedCompareExchange
+                ((long *)((int)g_workerCmds[0].pad + iVar6 + -0x1c),
+                 (int)uVar9 - ((int)uVar9 / (int)uVar3) * uVar3,(int)lVar12);
       do {
-        uVar2 = *puVar16;
+        puVar13 = (uint *)(lVar8 + -0x7b7f8870);
         if (in_RESERVE != '\0') {
-          uVar6 = storeWordConditionalIndexed((ulonglong)uVar2 + 1,0,lVar15);
-          *puVar16 = uVar6;
-          bVar17 = 2;
+          uVar2 = storeWordConditionalIndexed((ulonglong)*puVar13 + 1,0,lVar8 + -0x7b7f8870);
+          *puVar13 = uVar2;
+          bVar14 = 2;
         }
-      } while (!(bool)(bVar17 >> 1 & 1));
-    } while (iVar4 <= (int)uVar2);
-  }
-  lVar13 = lVar10 + -0x7b7f887c;
-  do {
-    puVar16 = (uint *)lVar13;
-    uVar2 = *puVar16;
-    if (in_RESERVE != '\0') {
-      uVar6 = storeWordConditionalIndexed(uVar12 + uVar2,0,lVar13);
-      *puVar16 = uVar6;
-      bVar17 = 2;
+      } while (!(bool)(bVar14 >> 1 & 1));
+      R_NotifyWorkerCmdType(param_1);
+      return;
     }
-  } while (!(bool)(bVar17 >> 1 & 1));
-  trapWord(6,uVar14,0);
-  lVar15 = (ulonglong)uVar2 - (longlong)((int)uVar2 / (int)uVar3) * (longlong)(int)uVar3;
-  bVar17 = (lVar15 == 0) << 1;
-  trapWord(5,uVar14 & ~((((ulonglong)uVar2 & 0x7fffffff) << 1 | (ulonglong)(uVar2 >> 0x1f)) - 1),
-           0xffff);
-  if (lVar15 < 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_workercmds.cpp",
-                    0x717,0,"%s\n\t(endPos) = %i");
-  }
-  if ((int)lVar15 == 0) {
+    R_WarnOncePerFrame(R_WARN_WORKER_CMD_SIZE);
     do {
       if (in_RESERVE != '\0') {
-        uVar2 = storeWordConditionalIndexed(*puVar16 - uVar14,0,lVar13);
-        *puVar16 = uVar2;
-        bVar17 = 2;
+        uVar2 = storeWordConditionalIndexed((ulonglong)*puVar13 - 1,0,lVar11);
+        *puVar13 = uVar2;
+        bVar14 = 2;
       }
-    } while (!(bool)(bVar17 >> 1 & 1));
-  }
-  memcpy();
-  sync(1);
-  uVar12 = lVar15 + uVar12;
-  trapWord(6,uVar14,0);
-  trapWord(5,uVar14 & ~(((uVar12 & 0x7fffffff) << 1 | (uVar12 & 0xffffffff) >> 0x1f) - 1),0xffff);
-  Sys_WaitInterlockedCompareExchange
-            ((long *)((int)g_workerCmds[0].pad + iVar7 + -0x1c),
-             (int)uVar12 - ((int)uVar12 / (int)uVar3) * uVar3,(int)lVar15);
-  do {
-    puVar16 = (uint *)(lVar10 + -0x7b7f8870);
-    if (in_RESERVE != '\0') {
-      uVar2 = storeWordConditionalIndexed((ulonglong)*puVar16 + 1,0,lVar10 + -0x7b7f8870);
-      *puVar16 = uVar2;
-      bVar17 = 2;
+    } while (!(bool)(bVar14 >> 1 & 1));
+    if (param_1 == WRKCMD_DRAW_LIT_OPAQUE) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_workercmds.cpp",
+                      0x72f,0,"%s");
     }
-  } while (!(bool)(bVar17 >> 1 & 1));
-  R_NotifyWorkerCmdType(iVar11);
-  __restgprlr_17();
+    if ((g_cmdOutputBusy[param_1] == (_func___cdecl_int_void_ptr *)0x0) ||
+       (iVar7 = (*g_cmdOutputBusy[param_1])(param_2), iVar7 == 0)) break;
+    Sys_Sleep(1);
+    do {
+      uVar2 = *puVar13;
+      if (in_RESERVE != '\0') {
+        uVar5 = storeWordConditionalIndexed((ulonglong)uVar2 + 1,0,lVar11);
+        *puVar13 = uVar5;
+        bVar14 = 2;
+      }
+    } while (!(bool)(bVar14 >> 1 & 1));
+  }
+  R_ProcessWorkerCmdInternal(param_1,param_2);
   return;
 }
 
@@ -2111,6 +2100,8 @@ bool R_ActiveWorkerThreadsModified(void)
 
 // 8278C5B8  R_UpdateActiveWorkerThreads  (gfx_d3d/r_workercmds.cpp:1936)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void R_UpdateActiveWorkerThreads(void)
@@ -2123,7 +2114,6 @@ void R_UpdateActiveWorkerThreads(void)
   uint uVar5;
   dvar_t **ppdVar6;
   
-  __savegprlr_29();
   bVar1 = Sys_IsMainThread();
   if (!bVar1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_workercmds.cpp",
@@ -2162,7 +2152,6 @@ LAB_8278c62c:
     } while (lVar4 != 0);
     R_ReleaseThreadOwnership();
   }
-  __restgprlr_29();
   return;
 }
 

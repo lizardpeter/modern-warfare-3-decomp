@@ -26,35 +26,33 @@ int CCS_GetChecksum(void)
 
 // 825D4898  CCS_LoadConstantConfigStrings  (universal/com_constantconfigstrings.cpp:35)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void CCS_LoadConstantConfigStrings(char *param_1,char *param_2)
 
 {
-  char *pcVar1;
-  ulonglong uVar2;
   char acStack_b0 [176];
   
-  uVar2 = (ulonglong)(int)param_2;
-  pcVar1 = (char *)__savegprlr_28(param_1);
-  if (pcVar1 == (char *)0x0) {
+  if (param_1 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_constantconfigstrings.cpp"
                     ,0x26,0,"%s");
   }
-  if ((uVar2 & 0xffffffff) == 0) {
+  if (param_2 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_constantconfigstrings.cpp"
                     ,0x27,0,"%s");
   }
-  if (*pcVar1 == '\0') {
+  if (*param_1 == '\0') {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_constantconfigstrings.cpp"
                     ,0x28,0,"%s");
   }
-  if (*(char *)uVar2 == '\0') {
+  if (*param_2 == '\0') {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_constantconfigstrings.cpp"
                     ,0x29,0,"%s");
   }
   Com_sprintf(acStack_b0,0x80,"mp/configStrings/cs_360_%s_%s.csv");
   StringTable_GetAsset(acStack_b0,&configStringTable);
   configStringTableChecksum = StringTable_Checksum(configStringTable,0);
-  __restgprlr_28();
   return;
 }
 

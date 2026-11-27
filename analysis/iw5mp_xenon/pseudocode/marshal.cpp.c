@@ -2,49 +2,54 @@
 
 // 828BB940  Initialize  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/online/common/marshal.cpp:55)
 
-undefined4 __thiscall
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
+
+int __thiscall
 CMarshaller::Initialize
           (CMarshaller *this,CSchemaData *param_1,ulong param_2,ulong param_3,CArgumentList *param_4
           ,uchar *param_5,ulong param_6,int param_7)
 
 {
-  undefined4 *puVar1;
+  CConformanceInfo *pCVar1;
   int iVar2;
-  undefined4 uVar3;
+  CConformanceList *pCVar3;
   longlong lVar4;
   
-  puVar1 = (undefined4 *)__savegprlr_25(this);
-  *puVar1 = param_1;
-  puVar1[1] = param_4;
-  iVar2 = CSchemaAccess::BindToSchema((CSchemaAccess *)(puVar1 + 7),param_1,param_2,1);
+  this->m_pSchemaData = param_1;
+  this->m_pArgumentList = param_4;
+  iVar2 = CSchemaAccess::BindToSchema(&this->m_SchemaBuffer,param_1,param_2,1);
   if (iVar2 < 0) {
-    *puVar1 = 0;
-    puVar1[1] = 0;
-    ((CSchemaAccess *)(puVar1 + 7))->_padding_ = 0;
-    puVar1[8] = 0;
-    puVar1[9] = 0;
-    puVar1[10] = 0;
-    puVar1[2] = 0;
-    puVar1[3] = 0;
-    puVar1[4] = 0;
-    puVar1[5] = 0;
-    puVar1[0x10e] = 0;
+    this->m_pSchemaData = (CSchemaData *)0x0;
+    this->m_pArgumentList = (CArgumentList *)0x0;
+    (this->m_SchemaBuffer)._padding_ = 0;
+    (this->m_SchemaBuffer)._padding_ = 0;
+    (this->m_SchemaBuffer)._padding_ = 0;
+    (this->m_SchemaBuffer)._padding_ = 0;
+    (this->m_WireBuffer).m_pbBuffer = (uchar *)0x0;
+    (this->m_WireBuffer).m_cbBuffer = 0;
+    (this->m_WireBuffer).m_cbAvailable = 0;
+    (this->m_WireBuffer).m_cbConsumed = 0;
+    this->m_dwCounter = 0;
   }
   else {
-    puVar1[0x10e] = param_3;
-    CBaseEndianBuffer::Bind((CBaseEndianBuffer *)(puVar1 + 2),param_5,param_6,param_6,param_7);
-    puVar1 = puVar1 + 0xe;
+    this->m_dwCounter = param_3;
+    CBaseEndianBuffer::Bind(&this->m_WireBuffer,param_5,param_6,param_6,param_7);
+    pCVar3 = &this->m_ConformanceList;
     lVar4 = 0x40;
     do {
-      *puVar1 = 0;
-      puVar1[1] = 0;
-      *(undefined8 *)(puVar1 + 2) = 0;
-      puVar1 = puVar1 + 4;
+      pCVar1 = pCVar3->m_rgConformanceInfo;
+      pCVar3->m_ConformanceSize = 0;
+      pCVar3->m_fInitialized = 0;
+      pCVar3->m_fInUse = 0;
+      pCVar3->m_Reserved = 0;
+      pCVar3->m_rgConformanceInfo[0].m_pbWrittenLocation = (uchar *)0x0;
+      pCVar3->m_rgConformanceInfo[0].m_Conformance = 0;
+      pCVar3 = (CConformanceList *)(pCVar3->m_rgConformanceInfo + 1);
       lVar4 = lVar4 + -1;
     } while (lVar4 != 0);
   }
-  uVar3 = __restgprlr_25(iVar2);
-  return uVar3;
+  return iVar2;
 }
 
 
@@ -64,47 +69,47 @@ undefined4 __thiscall CMarshaller::Marshal(CMarshaller *this)
 
 // 828BBA00  GetArgumentFromSchema  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/online/common/marshal.cpp:106)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 undefined4 __thiscall
 CMarshaller::GetArgumentFromSchema(CMarshaller *this,ulong param_1,CArgument **param_2,int *param_3)
 
 {
   int iVar1;
-  int iVar2;
-  undefined4 uVar3;
-  ulonglong uVar4;
-  ulonglong uVar5;
-  CArgument *pCVar6;
+  CArgument *pCVar2;
   SCHEMA_ARGUMENT_INFO local_30 [48];
   
-  uVar5 = (ulonglong)(int)param_3;
-  uVar4 = (ulonglong)(int)param_1;
-  iVar1 = __savegprlr_29(this);
-  if ((uVar4 & 0xffffffff) < 2) {
-    iVar2 = CSchemaAccess::GetArgumentInfo((CSchemaAccess *)(iVar1 + 0x1c),local_30);
-    if (iVar2 < 0) goto LAB_828bba78;
-    if ((uVar5 & 0xffffffff) != 0) {
-      *(uint *)uVar5 = ZPULL(local_30[0],5,1);
+  if (param_1 < 2) {
+    iVar1 = CSchemaAccess::GetArgumentInfo(&this->m_SchemaBuffer,local_30);
+    if (iVar1 < 0) {
+      return iVar1;
     }
-    pCVar6 = (CArgument *)
-             (-(uint)(ZPULL(local_30[0],0,5) < *(uint *)(*(int *)(iVar1 + 4) + 0x200)) &
-             ZPULL(local_30[0],0,5) * 0x10 + *(int *)(iVar1 + 4));
-    *param_2 = pCVar6;
-    if (pCVar6 != (CArgument *)0x0) goto LAB_828bba78;
+    if (param_3 != (int *)0x0) {
+      *param_3 = ZPULL(local_30[0],5,1);
+    }
+    pCVar2 = (CArgument *)
+             (-(uint)(ZPULL(local_30[0],0,5) < this->m_pArgumentList->m_Arguments) &
+             (uint)(this->m_pArgumentList->m_rgArguments + ZPULL(local_30[0],0,5)));
+    *param_2 = pCVar2;
+    if (pCVar2 != (CArgument *)0x0) {
+      return iVar1;
+    }
   }
-  iVar2 = -0x7fffbffb;
-LAB_828bba78:
-  uVar3 = __restgprlr_29(iVar2);
-  return uVar3;
+  return 0x80004005;
 }
 
 
 // 828BBA80  RecursiveMarshal  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/online/common/marshal.cpp:149)
 
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
+
 int __thiscall CMarshaller::RecursiveMarshal(CMarshaller *this,ulong param_1,uchar **param_2)
 
 {
-  uchar *puVar1;
-  ulong uVar2;
+  ulong uVar1;
+  uint uVar2;
   byte bVar3;
   bool bVar4;
   bool bVar5;
@@ -114,19 +119,17 @@ int __thiscall CMarshaller::RecursiveMarshal(CMarshaller *this,ulong param_1,uch
   int iVar8;
   ulong uVar9;
   ushort *puVar11;
-  ulong uVar12;
   ulonglong uVar10;
-  uint *puVar13;
+  uint uVar12;
+  ushort uVar13;
   uint uVar14;
-  ushort uVar15;
-  uint uVar16;
-  ulonglong uVar17;
-  ulonglong uVar18;
-  wchar_t *pwVar19;
-  ulonglong uVar20;
-  ulong64 uVar21;
-  uint uVar22;
-  uint *puStack00000024;
+  ulonglong uVar15;
+  ulonglong uVar16;
+  uchar *puVar17;
+  wchar_t *pwVar18;
+  ulonglong uVar19;
+  ulong64 uVar20;
+  uchar **ppuStack00000024;
   SCHEMA_DESCRIPTOR local_e0;
   SCHEMA_DESCRIPTOR local_df;
   byte local_de [2];
@@ -148,27 +151,24 @@ int __thiscall CMarshaller::RecursiveMarshal(CMarshaller *this,ulong param_1,uch
   ulong local_ac;
   uchar *apuStack_a8 [42];
   
-  uVar20 = (ulonglong)(int)param_2;
-  uVar17 = (ulonglong)(int)param_1;
-  __savegprlr();
-  puVar13 = (uint *)uVar20;
   local_d6 = 0;
   local_b8 = (CArgument *)0x0;
-  puStack00000024 = puVar13;
-  if (0xf < (uVar17 & 0xffffffff)) {
-    iVar8 = -0x7fffbffb;
-    goto LAB_828bbd14;
+  if (0xf < param_1) {
+    return 0x80004005;
   }
-  if ((uVar20 & 0xffffffff) == 0) {
-    uVar18 = 0;
+  if (param_2 == (uchar **)0x0) {
+    uVar16 = 0;
   }
   else {
-    uVar18 = (ulonglong)*puVar13;
+    uVar16 = ZEXT48(*param_2);
   }
   local_ac = (this->m_SchemaBuffer)._padding_;
   this_00 = &this->m_SchemaBuffer;
+  ppuStack00000024 = param_2;
   iVar8 = CSchemaAccess::GetDescriptor(this_00,&local_df);
-  if (iVar8 < 0) goto LAB_828bbd14;
+  if (iVar8 < 0) {
+    return iVar8;
+  }
   bVar3 = local_df.EntityType;
   if (bVar3 == 0) {
 LAB_828bbd08:
@@ -184,17 +184,18 @@ LAB_828bbd08:
     }
     iVar8 = CBaseEndianBuffer::GetWord((CBaseEndianBuffer *)this_00,puVar11);
     if (-1 < iVar8) {
-      uVar12 = (ulong)uVar17;
       if (local_df.IsArg != '\0') {
-        iVar8 = GetArgumentFromSchema(this,uVar12,&local_b8,(int *)0x0);
-        if (iVar8 < 0) goto LAB_828bbd14;
-        uVar22 = (this->m_WireBuffer).m_cbConsumed;
-        puVar1 = (this->m_WireBuffer).m_pbBuffer;
+        iVar8 = GetArgumentFromSchema(this,param_1,&local_b8,(int *)0x0);
+        if (iVar8 < 0) {
+          return iVar8;
+        }
+        uVar14 = (this->m_WireBuffer).m_cbConsumed;
+        puVar17 = (this->m_WireBuffer).m_pbBuffer;
         local_b8->m_NativeSize = 4;
-        uVar18 = local_b8->m_ArgumentValue & 0xffffffff;
-        local_b8->m_ArgumentValue = (ulonglong)uVar22 + ZEXT48(puVar1) & 0xffffffff;
+        uVar16 = local_b8->m_ArgumentValue & 0xffffffff;
+        local_b8->m_ArgumentValue = (ulonglong)uVar14 + ZEXT48(puVar17) & 0xffffffff;
       }
-      uVar22 = (uint)uVar18;
+      puVar17 = (uchar *)uVar16;
       if ((local_df.HasPropID == '\0') ||
          (iVar8 = CBaseEndianBuffer::GetWord((CBaseEndianBuffer *)this_00,&uStack_cc), -1 < iVar8))
       {
@@ -206,74 +207,96 @@ LAB_828bbd08:
           local_bc = this->m_dwCounter;
           iVar8 = CConformanceList::GetConformingScopeAndValue
                             (&this->m_ConformanceList,local_df,this_00,local_d4,&local_bc);
-          if (iVar8 < 0) goto LAB_828bbd14;
+          if (iVar8 < 0) {
+            return iVar8;
+          }
         }
-        uVar16 = 0;
+        uVar14 = 0;
         if (local_df.EntityType == '\x02') {
           iVar8 = CSchemaAccess::GetUnionInfo(this_00,&local_dc,(ushort *)&local_d0);
-          if (iVar8 < 0) goto LAB_828bbd14;
+          if (iVar8 < 0) {
+            return iVar8;
+          }
           iVar8 = CConformanceList::AcquireConformanceInfo
                             (&this->m_ConformanceList,local_dc.SelectorIndex,&local_b0);
-          if (iVar8 < 0) goto LAB_828bbd14;
-          uVar17 = local_b0->m_Conformance & 0xffffffff;
+          if (iVar8 < 0) {
+            return iVar8;
+          }
+          uVar15 = local_b0->m_Conformance & 0xffffffff;
           if (local_dc.SwitchIsMasked != 0) {
             iVar8 = CSchemaData::LookupConstantFromTable
                               ((this->m_SchemaBuffer).m_pSchemaData,local_d0._0_2_,&local_c4);
-            if (iVar8 < 0) goto LAB_828bbd14;
-            uVar17 = uVar17 & local_c4;
+            if (iVar8 < 0) {
+              return iVar8;
+            }
+            uVar15 = uVar15 & local_c4;
           }
           iVar8 = CConformanceList::ReleaseConformanceInfo
                             (&this->m_ConformanceList,local_dc.SelectorIndex);
-          if (iVar8 < 0) goto LAB_828bbd14;
+          if (iVar8 < 0) {
+            return iVar8;
+          }
         }
         else {
-          uVar17 = 0;
+          uVar15 = 0;
           local_dc = (SCHEMA_UNION_INFO)0x0;
         }
-        uVar2 = (this->m_SchemaBuffer)._padding_;
+        uVar1 = (this->m_SchemaBuffer)._padding_;
         if (local_bc != 0) {
           do {
-            uVar15 = 0;
+            uVar13 = 0;
             bVar4 = false;
             local_e0 = (SCHEMA_DESCRIPTOR)((byte)local_e0 & 0xf3);
             do {
               if (local_df.EntityType == '\x02') {
                 bVar5 = false;
-                if (uVar15 < ((ushort)local_dc & 0xff)) {
+                if (uVar13 < ((ushort)local_dc & 0xff)) {
                   iVar8 = CBaseEndianBuffer::GetByte((CBaseEndianBuffer *)this_00,local_de);
-                  if (iVar8 < 0) goto LAB_828bbd14;
-                  uVar22 = 0;
+                  if (iVar8 < 0) {
+                    return iVar8;
+                  }
+                  uVar12 = 0;
                   local_c4 = 0;
                   bVar7 = false;
                   if (local_de[0] != 0) {
                     do {
                       bVar5 = bVar7;
                       iVar8 = CBaseEndianBuffer::GetWord((CBaseEndianBuffer *)this_00,&local_da);
-                      if ((iVar8 < 0) ||
-                         (iVar8 = CSchemaData::LookupConstantFromTable
-                                            ((this->m_SchemaBuffer).m_pSchemaData,local_da,&local_c4
-                                            ), iVar8 < 0)) goto LAB_828bbd14;
-                      if (uVar17 == local_c4) {
+                      if (iVar8 < 0) {
+                        return iVar8;
+                      }
+                      iVar8 = CSchemaData::LookupConstantFromTable
+                                        ((this->m_SchemaBuffer).m_pSchemaData,local_da,&local_c4);
+                      if (iVar8 < 0) {
+                        return iVar8;
+                      }
+                      if (uVar15 == local_c4) {
                         bVar5 = true;
                         bVar4 = true;
                       }
-                      uVar22 = uVar22 + 1;
+                      uVar12 = uVar12 + 1;
                       bVar7 = bVar5;
-                    } while (uVar22 < local_de[0]);
+                    } while (uVar12 < local_de[0]);
                   }
                   iVar8 = CBaseEndianBuffer::GetWord((CBaseEndianBuffer *)this_00,&local_da);
-                  if (iVar8 < 0) goto LAB_828bbd14;
+                  if (iVar8 < 0) {
+                    return iVar8;
+                  }
                   if (bVar5) goto LAB_828bbdd4;
                   local_c4 = (ulong)local_da;
                   iVar8 = CBaseEndianBuffer::_GetDataPointer_CBaseEndianBuffer__QAAJPAPAEPAK_Z
                                     ((CBaseEndianBuffer *)this_00,apuStack_a8,&local_c4);
-                  if (iVar8 < 0) goto LAB_828bbd14;
-                  uVar14 = (uint)(byte)local_e0;
+                  if (iVar8 < 0) {
+                    return iVar8;
+                  }
+                  uVar12 = (uint)(byte)local_e0;
                 }
                 else {
                   iVar8 = CSchemaAccess::GetDescriptor(this_00,&local_e0);
-                  if (iVar8 < 0) goto LAB_828bbd14;
-                  uVar14 = (uint)(byte)local_e0;
+                  if (iVar8 < 0) {
+                    return iVar8;
+                  }
+                  uVar12 = (uint)(byte)local_e0;
                   if ((local_e0.EntityType != 3) || ((!bVar4 && (local_dc.FailOnDefault != 0))))
                   goto LAB_828bbd08;
                 }
@@ -282,206 +305,227 @@ LAB_828bbd08:
 LAB_828bbdd4:
                 uVar9 = (this->m_SchemaBuffer)._padding_;
                 iVar8 = CSchemaAccess::GetDescriptor(this_00,&local_e0);
-                if (iVar8 < 0) goto LAB_828bbd14;
-                uVar14 = (uint)(byte)local_e0;
+                if (iVar8 < 0) {
+                  return iVar8;
+                }
+                uVar12 = (uint)(byte)local_e0;
                 bVar3 = local_e0.EntityType;
                 if (bVar3 == 0) {
                   local_d0 = 0;
                   bVar5 = false;
                   if (local_e0.IsArg != '\0') {
-                    iVar8 = GetArgumentFromSchema(this,uVar12,&local_b8,&local_d0);
-                    if (iVar8 < 0) goto LAB_828bbd14;
-                    uVar22 = (this->m_WireBuffer).m_cbConsumed;
-                    puVar1 = (this->m_WireBuffer).m_pbBuffer;
-                    uVar18 = local_b8->m_ArgumentValue;
+                    iVar8 = GetArgumentFromSchema(this,param_1,&local_b8,&local_d0);
+                    if (iVar8 < 0) {
+                      return iVar8;
+                    }
+                    uVar12 = (this->m_WireBuffer).m_cbConsumed;
+                    puVar17 = (this->m_WireBuffer).m_pbBuffer;
+                    uVar16 = local_b8->m_ArgumentValue;
                     local_b8->m_NativeSize = 4;
-                    local_b8->m_ArgumentValue = (ulonglong)uVar22 + ZEXT48(puVar1) & 0xffffffff;
-                    uVar18 = uVar18 & 0xffffffff;
-                    uVar14 = (uint)(byte)local_e0;
+                    local_b8->m_ArgumentValue = (ulonglong)uVar12 + ZEXT48(puVar17) & 0xffffffff;
+                    uVar16 = uVar16 & 0xffffffff;
+                    uVar12 = (uint)(byte)local_e0;
                   }
                   iVar6 = local_d0;
-                  if ((uVar14 & 0x40) != 0) {
+                  if ((uVar12 & 0x40) != 0) {
                     iVar8 = CBaseEndianBuffer::GetWord((CBaseEndianBuffer *)this_00,&uStack_ca);
-                    if (iVar8 < 0) goto LAB_828bbd14;
-                    uVar14 = (uint)(byte)local_e0;
+                    if (iVar8 < 0) {
+                      return iVar8;
+                    }
+                    uVar12 = (uint)(byte)local_e0;
                   }
-                  uVar22 = 1 << (uVar14 & 3);
-                  uVar20 = (ulonglong)uVar22;
-                  pwVar19 = (wchar_t *)uVar18;
-                  if ((uVar14 & 0x20) == 0) {
+                  uVar2 = 1 << (uVar12 & 3);
+                  uVar19 = (ulonglong)uVar2;
+                  pwVar18 = (wchar_t *)uVar16;
+                  if ((uVar12 & 0x20) == 0) {
                     local_c0 = 1;
                     local_d8 = (SCHEMA_CONFORMING_INFO)0x0;
-                    uVar10 = uVar18;
-                    local_c8 = pwVar19;
+                    uVar10 = uVar16;
+                    local_c8 = pwVar18;
                   }
                   else {
                     local_c0 = this->m_dwCounter;
                     iVar8 = CConformanceList::GetConformingScopeAndValue
-                                      (&this->m_ConformanceList,SUB41(uVar14,0),this_00,&local_d8,
+                                      (&this->m_ConformanceList,SUB41(uVar12,0),this_00,&local_d8,
                                        &local_c0);
-                    if (iVar8 < 0) goto LAB_828bbd14;
-                    uVar14 = (uint)(byte)local_d8._0_1_;
+                    if (iVar8 < 0) {
+                      return iVar8;
+                    }
+                    uVar12 = (uint)(byte)local_d8._0_1_;
                     if ((local_d8.FixedArray == 0) && (local_e0.IsArg == '\0')) {
                       bVar7 = true;
-                      if ((uVar18 & 0xffffffff) == 0) {
-                        pwVar19 = (wchar_t *)0x0;
+                      if ((uVar16 & 0xffffffff) == 0) {
+                        pwVar18 = (wchar_t *)0x0;
                       }
                       else {
-                        pwVar19 = *(wchar_t **)pwVar19;
+                        pwVar18 = *(wchar_t **)pwVar18;
                       }
                     }
                     else {
                       bVar7 = false;
                     }
-                    local_c8 = pwVar19;
+                    local_c8 = pwVar18;
                     bVar5 = false;
                     if ((local_d8.UTF8 != 0) && (bVar5 = true, local_c0 == 0)) {
-                      uVar14 = wcslen(pwVar19);
-                      local_c0 = uVar14 + 1;
-                      uVar14 = (uint)(byte)local_d8._0_1_;
+                      uVar12 = wcslen(pwVar18);
+                      local_c0 = uVar12 + 1;
+                      uVar12 = (uint)(byte)local_d8._0_1_;
                     }
                     iVar8 = CConformanceList::ReleaseConformanceInfo
-                                      (&this->m_ConformanceList,uVar14 & 0x3f);
-                    if (iVar8 < 0) goto LAB_828bbd14;
-                    uVar14 = (uint)(byte)local_e0;
+                                      (&this->m_ConformanceList,uVar12 & 0x3f);
+                    if (iVar8 < 0) {
+                      return iVar8;
+                    }
+                    uVar12 = (uint)(byte)local_e0;
                     uVar10 = ZEXT48(local_c8);
                     if (bVar7) {
-                      uVar20 = 4;
+                      uVar19 = 4;
                     }
                     else {
-                      uVar20 = (longlong)(int)local_c0 * (longlong)(int)uVar22;
+                      uVar19 = (longlong)(int)local_c0 * (longlong)(int)uVar2;
                     }
                   }
-                  uVar21 = 0;
-                  pwVar19 = (wchar_t *)uVar10;
+                  uVar20 = 0;
+                  pwVar18 = (wchar_t *)uVar10;
                   if (bVar5) {
                     uVar9 = (this->m_WireBuffer).m_cbConsumed;
-                    uVar9 = WideCharToMultiByte(0xfde9,0,pwVar19,local_c0,
+                    uVar9 = WideCharToMultiByte(0xfde9,0,pwVar18,local_c0,
                                                 (char *)((this->m_WireBuffer).m_pbBuffer + uVar9),
                                                 (this->m_WireBuffer).m_cbAvailable - uVar9,
                                                 (char *)0x0,(int *)0x0);
                     iVar8 = CBaseEndianBuffer::AppendBytes(&this->m_WireBuffer,uVar9);
-                    if (-1 < iVar8) {
-                      iVar8 = CConformanceList::UpdateConformance
-                                        (&this->m_ConformanceList,local_d8.ConformsToIndex,
-                                         (ulonglong)uVar9,1);
-                      goto LAB_828bc0f0;
+                    if (iVar8 < 0) {
+                      return iVar8;
                     }
-                    goto LAB_828bbd14;
+                    iVar8 = CConformanceList::UpdateConformance
+                                      (&this->m_ConformanceList,local_d8.ConformsToIndex,
+                                       (ulonglong)uVar9,1);
+                    goto LAB_828bc0f0;
                   }
                   iVar8 = 0;
                   if ((uVar10 & 0xffffffff) != 0) {
-                    uVar22 = uVar14 & 3;
-                    if (uVar22 == 0) {
-                      uVar21 = (ulong64)*(byte *)pwVar19;
+                    uVar2 = uVar12 & 3;
+                    if (uVar2 == 0) {
+                      uVar20 = (ulong64)*(byte *)pwVar18;
                       if (iVar6 == 0) {
                         iVar8 = CBaseEndianBuffer::WriteBytes
-                                          (&this->m_WireBuffer,(uchar *)pwVar19,local_c0);
+                                          (&this->m_WireBuffer,(uchar *)pwVar18,local_c0);
                         goto LAB_828bc0f0;
                       }
                     }
-                    else if (uVar22 == 1) {
-                      uVar21 = (ulong64)(ushort)*pwVar19;
+                    else if (uVar2 == 1) {
+                      uVar20 = (ulong64)(ushort)*pwVar18;
                       if (iVar6 == 0) {
                         iVar8 = CBaseEndianBuffer::WriteWords
-                                          (&this->m_WireBuffer,(ushort *)pwVar19,local_c0);
+                                          (&this->m_WireBuffer,(ushort *)pwVar18,local_c0);
                         goto LAB_828bc0f0;
                       }
                     }
-                    else if (uVar22 < 3) {
-                      uVar21 = (ulong64)*(uint *)pwVar19;
+                    else if (uVar2 < 3) {
+                      uVar20 = (ulong64)*(uint *)pwVar18;
                       if (iVar6 == 0) {
                         iVar8 = CBaseEndianBuffer::WriteDwords
-                                          (&this->m_WireBuffer,(ulong *)pwVar19,local_c0);
+                                          (&this->m_WireBuffer,(ulong *)pwVar18,local_c0);
                         goto LAB_828bc0f0;
                       }
                     }
-                    else if ((uVar22 == 3) && (uVar21 = *(ulong64 *)pwVar19, iVar6 == 0)) {
+                    else if ((uVar2 == 3) && (uVar20 = *(ulong64 *)pwVar18, iVar6 == 0)) {
                       iVar8 = CBaseEndianBuffer::WriteQwords
-                                        (&this->m_WireBuffer,(ulong64 *)pwVar19,local_c0);
+                                        (&this->m_WireBuffer,(ulong64 *)pwVar18,local_c0);
 LAB_828bc0f0:
-                      if (iVar8 < 0) goto LAB_828bbd14;
-                      uVar14 = (uint)(byte)local_e0;
+                      if (iVar8 < 0) {
+                        return iVar8;
+                      }
+                      uVar12 = (uint)(byte)local_e0;
                       uVar10 = ZEXT48(local_c8);
                     }
                   }
                   if (local_df.EntityType == '\x02') {
-                    uVar20 = (ulonglong)local_d6;
+                    uVar19 = (ulonglong)local_d6;
                   }
                   if ((uVar10 & 0xffffffff) != 0) {
-                    uVar18 = uVar20 + uVar18;
+                    uVar16 = uVar19 + uVar16;
                   }
-                  if ((uVar14 & 0x10) != 0) {
+                  param_2 = ppuStack00000024;
+                  if ((uVar12 & 0x10) != 0) {
                     iVar8 = CSchemaAccess::GetConformanceInfo(this_00,&local_b4);
-                    if (((iVar8 < 0) ||
-                        (iVar8 = CSchemaData::LookupConstantFromTable
-                                           ((this->m_SchemaBuffer).m_pSchemaData,
-                                            local_b4.ConformanceMaxIndex,&local_c4), iVar8 < 0)) ||
-                       (uVar22 = local_b4.ConformanceSize,
-                       iVar8 = CConformanceList::EstablishConformanceInfo
-                                         (&this->m_ConformanceList,local_b4.ConformanceIndex,uVar22,
-                                          uVar21,local_c4,&local_b4,
-                                          (this->m_WireBuffer).m_pbBuffer +
-                                          ((this->m_WireBuffer).m_cbConsumed - (1 << uVar22))),
-                       iVar8 < 0)) goto LAB_828bbd14;
-                    uVar14 = (uint)(byte)local_e0;
+                    if (iVar8 < 0) {
+                      return iVar8;
+                    }
+                    iVar8 = CSchemaData::LookupConstantFromTable
+                                      ((this->m_SchemaBuffer).m_pSchemaData,
+                                       local_b4.ConformanceMaxIndex,&local_c4);
+                    if (iVar8 < 0) {
+                      return iVar8;
+                    }
+                    uVar12 = local_b4.ConformanceSize;
+                    iVar8 = CConformanceList::EstablishConformanceInfo
+                                      (&this->m_ConformanceList,local_b4.ConformanceIndex,uVar12,
+                                       uVar20,local_c4,&local_b4,
+                                       (this->m_WireBuffer).m_pbBuffer +
+                                       ((this->m_WireBuffer).m_cbConsumed - (1 << uVar12)));
+                    if (iVar8 < 0) {
+                      return iVar8;
+                    }
+                    uVar12 = (uint)(byte)local_e0;
+                    param_2 = ppuStack00000024;
                   }
-                  uVar20 = ZEXT48(puStack00000024);
                 }
                 else if (bVar3 < 3) {
                   CBaseEndianBuffer::SeekTo((CBaseEndianBuffer *)this_00,uVar9);
-                  local_c8 = (wchar_t *)uVar18;
+                  local_c8 = (wchar_t *)uVar16;
                   if ((local_e0.IsArray != '\0') && (local_e0.IsArg == '\0')) {
-                    if ((uVar18 & 0xffffffff) == 0) {
+                    if ((uVar16 & 0xffffffff) == 0) {
                       local_c8 = (wchar_t *)0x0;
                     }
                     else {
                       local_c8 = *(wchar_t **)local_c8;
                     }
                   }
-                  iVar8 = RecursiveMarshal(this,uVar12 + 1,(uchar **)&local_c8);
-                  if (iVar8 < 0) goto LAB_828bbd14;
-                  uVar14 = (uint)(byte)local_e0;
+                  iVar8 = RecursiveMarshal(this,param_1 + 1,(uchar **)&local_c8);
+                  if (iVar8 < 0) {
+                    return iVar8;
+                  }
+                  uVar12 = (uint)(byte)local_e0;
                   if (local_e0.IsArray == '\0') {
                     if (local_df.EntityType == '\x02') {
-                      uVar18 = local_d6 + uVar18;
+                      uVar16 = local_d6 + uVar16;
                     }
                     else {
-                      uVar18 = ZEXT48(local_c8);
+                      uVar16 = ZEXT48(local_c8);
                     }
                   }
                   else {
-                    uVar18 = uVar18 + 4;
+                    uVar16 = uVar16 + 4;
                   }
                 }
                 else if (bVar3 != 3) goto LAB_828bbd08;
               }
-              puVar13 = (uint *)uVar20;
-              uVar22 = (uint)uVar18;
+              puVar17 = (uchar *)uVar16;
               if (local_df.EntityType == '\x02') {
-                uVar15 = uVar15 + 1;
+                uVar13 = uVar13 + 1;
               }
-            } while ((uVar14 & 0xc) != 0xc);
-            uVar16 = uVar16 + 1;
-          } while ((uVar16 < local_bc) &&
-                  (CBaseEndianBuffer::SeekTo((CBaseEndianBuffer *)this_00,uVar2), uVar16 < local_bc)
+            } while ((uVar12 & 0xc) != 0xc);
+            uVar14 = uVar14 + 1;
+          } while ((uVar14 < local_bc) &&
+                  (CBaseEndianBuffer::SeekTo((CBaseEndianBuffer *)this_00,uVar1), uVar14 < local_bc)
                   );
         }
         if (local_df.IsArray != '\0') {
           iVar8 = CConformanceList::ReleaseConformanceInfo
                             (&this->m_ConformanceList,ZPULL(local_d4[0],8,6));
-          if (iVar8 < 0) goto LAB_828bbd14;
+          if (iVar8 < 0) {
+            return iVar8;
+          }
         }
         if ((local_bc != 0) ||
            ((iVar8 = CBaseEndianBuffer::SeekTo((CBaseEndianBuffer *)this_00,local_ac), -1 < iVar8 &&
             (iVar8 = CSchemaAccess::SkipScope(this_00,0), -1 < iVar8)))) {
-          *puVar13 = uVar22;
+          *param_2 = puVar17;
         }
       }
     }
   }
-LAB_828bbd14:
-  __restgprlr();
   return iVar8;
 }
 

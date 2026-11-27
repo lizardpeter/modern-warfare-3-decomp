@@ -145,38 +145,39 @@ void Z_VirtualCommitInternal(void *param_1,int param_2)
 
 // 825E07A0  Z_VirtualFree  (universal/com_memory.cpp:838)
 
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
+
 void Z_VirtualFree(void *param_1,int param_2)
 
 {
   void *pvVar1;
-  void *pvVar2;
-  ulong uVar3;
-  int iVar4;
-  void *pvVar5;
+  ulong uVar2;
+  int iVar3;
+  void *pvVar4;
   _MEMORY_BASIC_INFORMATION local_80 [4];
   
-  pvVar2 = (void *)__savegprlr_22(param_1);
-  if (pvVar2 == (void *)0x0) {
+  if (param_1 == (void *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
                     0x34e,0,"%s");
   }
-  iVar4 = 0;
-  uVar3 = VirtualQuery(pvVar2,local_80,0x1c);
+  iVar3 = 0;
+  uVar2 = VirtualQuery(param_1,local_80,0x1c);
   pvVar1 = local_80[0].AllocationBase;
-  if (uVar3 != 0) {
-    if (local_80[0].AllocationBase != pvVar2) {
+  if (uVar2 != 0) {
+    if (local_80[0].AllocationBase != param_1) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
                       0x355,0,"%s");
     }
-    if (local_80[0].BaseAddress != pvVar2) {
+    if (local_80[0].BaseAddress != param_1) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
                       0x356,0,"%s");
     }
-    uVar3 = VirtualQuery(pvVar2,local_80,0x1c);
-    pvVar5 = pvVar2;
-    if (uVar3 != 0) {
+    uVar2 = VirtualQuery(param_1,local_80,0x1c);
+    pvVar4 = param_1;
+    if (uVar2 != 0) {
       do {
-        if (local_80[0].BaseAddress != pvVar5) {
+        if (local_80[0].BaseAddress != pvVar4) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp"
                           ,0x360,0,"%s");
         }
@@ -186,64 +187,61 @@ void Z_VirtualFree(void *param_1,int param_2)
                           ,0x365,0,"%s\n\t(info.RegionSize) = %i");
         }
         if (local_80[0].State == 0x1000) {
-          iVar4 = local_80[0].RegionSize + iVar4;
+          iVar3 = local_80[0].RegionSize + iVar3;
         }
-        pvVar5 = (void *)(local_80[0].RegionSize + (int)pvVar5);
-        uVar3 = VirtualQuery(pvVar5,local_80,0x1c);
-      } while (uVar3 != 0);
-      if (iVar4 != 0) {
-        track_z_decommit(pvVar2,iVar4,param_2);
+        pvVar4 = (void *)(local_80[0].RegionSize + (int)pvVar4);
+        uVar2 = VirtualQuery(pvVar4,local_80,0x1c);
+      } while (uVar2 != 0);
+      if (iVar3 != 0) {
+        track_z_decommit(param_1,iVar3,param_2);
       }
     }
   }
   Profile_Begin(0x1b7);
   UpdateMemStats();
-  VirtualFree(pvVar2,0,0x8000);
-  iVar4 = Profile_EndInternal((double *)0x0);
-  __restgprlr_22(iVar4);
+  VirtualFree(param_1,0,0x8000);
+  Profile_EndInternal((double *)0x0);
   return;
 }
 
 
 // 825E0960  Z_VirtualDecommit  (universal/com_memory.cpp:896)
 
+/* WARNING: Function: __savegprlr_19 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_19 replaced with injection: xenon_save_restore */
+
 void Z_VirtualDecommit(void *param_1,int param_2,int param_3)
 
 {
   void *pvVar1;
-  void *pvVar2;
-  ulong uVar3;
-  int iVar4;
-  ulong uVar5;
-  longlong lVar6;
-  void *pvVar7;
+  ulong uVar2;
+  int iVar3;
+  longlong lVar4;
+  void *pvVar5;
   _MEMORY_BASIC_INFORMATION local_90 [5];
   
-  lVar6 = (longlong)param_2;
-  pvVar2 = (void *)__savegprlr_19(param_1);
-  if (pvVar2 == (void *)0x0) {
+  if (param_1 == (void *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
                     0x388,0,"%s");
   }
-  uVar5 = (ulong)lVar6;
-  if (uVar5 == 0) {
+  if (param_2 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
                     0x389,0,"%s");
   }
-  iVar4 = 0;
-  uVar3 = VirtualQuery(pvVar2,local_90,0x1c);
-  if (uVar3 != 0) {
-    if (local_90[0].BaseAddress != pvVar2) {
+  iVar3 = 0;
+  uVar2 = VirtualQuery(param_1,local_90,0x1c);
+  if (uVar2 != 0) {
+    if (local_90[0].BaseAddress != param_1) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
                       0x38f,0,"%s");
     }
     pvVar1 = local_90[0].AllocationBase;
-    if (0 < (int)uVar5) {
-      lVar6 = ((lVar6 - 1U & 0xffffffff) >> 0x10) + 1;
-      pvVar7 = pvVar2;
+    if (0 < param_2) {
+      lVar4 = (((longlong)param_2 - 1U & 0xffffffff) >> 0x10) + 1;
+      pvVar5 = param_1;
       do {
-        uVar3 = VirtualQuery(pvVar7,local_90,0x1c);
-        if (uVar3 == 0) {
+        uVar2 = VirtualQuery(pvVar5,local_90,0x1c);
+        if (uVar2 == 0) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp"
                           ,0x397,0,"%s");
         }
@@ -251,78 +249,76 @@ void Z_VirtualDecommit(void *param_1,int param_2,int param_3)
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp"
                           ,0x398,0,"%s");
         }
-        if (local_90[0].BaseAddress != pvVar7) {
+        if (local_90[0].BaseAddress != pvVar5) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp"
                           ,0x399,0,"%s");
         }
         if (local_90[0].State == 0x1000) {
-          iVar4 = iVar4 + 0x10000;
+          iVar3 = iVar3 + 0x10000;
         }
-        lVar6 = lVar6 + -1;
-        pvVar7 = (void *)((int)pvVar7 + 0x10000);
-      } while (lVar6 != 0);
-      if (iVar4 != 0) {
-        track_z_decommit(pvVar2,iVar4,param_3);
+        lVar4 = lVar4 + -1;
+        pvVar5 = (void *)((int)pvVar5 + 0x10000);
+      } while (lVar4 != 0);
+      if (iVar3 != 0) {
+        track_z_decommit(param_1,iVar3,param_3);
       }
     }
   }
-  if ((int)uVar5 < 0) {
+  if (param_2 < 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
                     0x270,0,"%s\n\t(size) = %i");
   }
   Profile_Begin(0x1b7);
-  VirtualFree(pvVar2,uVar5,0x4000);
+  VirtualFree(param_1,param_2,0x4000);
   UpdateMemStats();
-  iVar4 = Profile_EndInternal((double *)0x0);
-  __restgprlr_19(iVar4);
+  Profile_EndInternal((double *)0x0);
   return;
 }
 
 
 // 825E3F70  Z_TryVirtualAlloc  (universal/com_memory.cpp:1068)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void * Z_TryVirtualAlloc(int param_1,char *param_2,int param_3)
 
 {
-  int iVar1;
-  void *pvVar2;
-  int iVar3;
+  void *pvVar1;
+  int iVar2;
   
-  iVar1 = __savegprlr_29(param_1);
-  pvVar2 = Z_VirtualReserve(iVar1,param_2);
-  iVar3 = Z_TryVirtualCommitInternal(pvVar2,iVar1);
-  if (iVar3 == 0) {
-    Z_VirtualFree(pvVar2,0);
-    pvVar2 = (void *)__restgprlr_29(0);
-    return pvVar2;
+  pvVar1 = Z_VirtualReserve(param_1,param_2);
+  iVar2 = Z_TryVirtualCommitInternal(pvVar1,param_1);
+  if (iVar2 == 0) {
+    Z_VirtualFree(pvVar1,0);
+    return (void *)0x0;
   }
-  if (pvVar2 != (void *)0x0) {
-    track_z_commit(pvVar2,iVar1 + 0xffffU & 0xffff0000,param_3);
+  if (pvVar1 != (void *)0x0) {
+    track_z_commit(pvVar1,param_1 + 0xffffU & 0xffff0000,param_3);
   }
-  pvVar2 = (void *)__restgprlr_29(pvVar2);
-  return pvVar2;
+  return pvVar1;
 }
 
 
 // 825E3FE0  Z_VirtualAlloc  (universal/com_memory.cpp:1090)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void * Z_VirtualAlloc(int param_1,char *param_2,int param_3)
 
 {
-  int iVar1;
-  void *pvVar2;
-  int iVar3;
+  void *pvVar1;
+  int iVar2;
   
-  iVar1 = __savegprlr_29(param_1);
-  pvVar2 = Z_VirtualReserve(iVar1,param_2);
-  iVar3 = Z_TryVirtualCommitInternal(pvVar2,iVar1);
-  if (iVar3 == 0) {
-    Z_VirtualFree(pvVar2,0);
+  pvVar1 = Z_VirtualReserve(param_1,param_2);
+  iVar2 = Z_TryVirtualCommitInternal(pvVar1,param_1);
+  if (iVar2 == 0) {
+    Z_VirtualFree(pvVar1,0);
   }
-  else if (pvVar2 != (void *)0x0) {
-    track_z_commit(pvVar2,iVar1 + 0xffffU & 0xffff0000,param_3);
-    pvVar2 = (void *)__restgprlr_29(pvVar2);
-    return pvVar2;
+  else if (pvVar1 != (void *)0x0) {
+    track_z_commit(pvVar1,param_1 + 0xffffU & 0xffff0000,param_3);
+    return pvVar1;
   }
                     /* WARNING: Subroutine does not return */
   Sys_OutOfMemErrorInternal
@@ -332,18 +328,19 @@ void * Z_VirtualAlloc(int param_1,char *param_2,int param_3)
 
 // 825E0B50  Z_VirtualCommit  (universal/com_memory.cpp:1109)
 
+/* WARNING: Function: __savegprlr_21 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_21 replaced with injection: xenon_save_restore */
+
 void Z_VirtualCommit(void *param_1,int param_2,int param_3)
 
 {
   void *pvVar1;
-  void *pvVar2;
-  ulong uVar3;
+  ulong uVar2;
+  int iVar3;
   int iVar4;
-  int iVar5;
   _MEMORY_BASIC_INFORMATION a_Stack_80 [4];
   
-  pvVar2 = (void *)__savegprlr_21(param_1);
-  if (pvVar2 == (void *)0x0) {
+  if (param_1 == (void *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
                     0x45d,0,"%s");
   }
@@ -351,13 +348,13 @@ void Z_VirtualCommit(void *param_1,int param_2,int param_3)
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
                     0x45e,0,"%s");
   }
-  iVar4 = 0;
-  uVar3 = VirtualQuery(pvVar2,a_Stack_80,0x1c);
+  iVar3 = 0;
+  uVar2 = VirtualQuery(param_1,a_Stack_80,0x1c);
   pvVar1 = a_Stack_80[0].AllocationBase;
-  if ((uVar3 != 0) && (iVar5 = 0, 0 < param_2)) {
+  if ((uVar2 != 0) && (iVar4 = 0, 0 < param_2)) {
     do {
-      uVar3 = VirtualQuery((void *)(iVar5 + (int)pvVar2),a_Stack_80,0x1c);
-      if (uVar3 == 0) {
+      uVar2 = VirtualQuery((void *)(iVar4 + (int)param_1),a_Stack_80,0x1c);
+      if (uVar2 == 0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
                         0x46a,0,"%s");
       }
@@ -366,17 +363,16 @@ void Z_VirtualCommit(void *param_1,int param_2,int param_3)
                         0x46b,0,"%s");
       }
       if (a_Stack_80[0].State == 0x2000) {
-        iVar4 = iVar4 + 0x10000;
+        iVar3 = iVar3 + 0x10000;
       }
-      iVar5 = iVar5 + 0x10000;
-    } while (iVar5 < param_2);
-    if (iVar4 != 0) {
-      track_z_commit(pvVar2,iVar4,param_3);
+      iVar4 = iVar4 + 0x10000;
+    } while (iVar4 < param_2);
+    if (iVar3 != 0) {
+      track_z_commit(param_1,iVar3,param_3);
     }
   }
-  iVar4 = Z_TryVirtualCommitInternal(pvVar2,param_2);
-  if (iVar4 != 0) {
-    __restgprlr_21();
+  iVar3 = Z_TryVirtualCommitInternal(param_1,param_2);
+  if (iVar3 != 0) {
     return;
   }
                     /* WARNING: Subroutine does not return */
@@ -405,57 +401,55 @@ char * CopyString(char *param_1,char *param_2,int param_3)
 
 // 825E4068  ReplaceString  (universal/com_memory.cpp:1234)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 void ReplaceString(char **param_1,char *param_2,char *param_3,int param_4)
 
 {
-  undefined4 *puVar1;
-  uint uVar2;
-  char *pcVar3;
-  ulonglong uVar4;
+  uint uVar1;
+  char *pcVar2;
   
-  uVar4 = (ulonglong)(int)param_2;
-  puVar1 = (undefined4 *)__savegprlr_26(param_1,uVar4,param_3);
-  if (puVar1 == (undefined4 *)0x0) {
+  if (param_1 == (char **)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
                     0x4d5,0,"%s");
   }
-  if ((uVar4 & 0xffffffff) == 0) {
+  if (param_2 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
                     0x4d6,0,"%s");
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
                     0x4c5,0,"%s");
   }
-  uVar2 = SL_GetString_((char *)uVar4,0,0x16);
-  pcVar3 = SL_ConvertToString(uVar2);
-  if ((char *)*puVar1 != (char *)0x0) {
-    FreeString((char *)*puVar1,param_4);
+  uVar1 = SL_GetString_(param_2,0,0x16);
+  pcVar2 = SL_ConvertToString(uVar1);
+  if (*param_1 != (char *)0x0) {
+    FreeString(*param_1,param_4);
   }
-  *puVar1 = pcVar3;
-  __restgprlr_26();
+  *param_1 = pcVar2;
   return;
 }
 
 
 // 825E0D20  FreeString  (universal/com_memory.cpp:1253)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void FreeString(char *param_1,int param_2)
 
 {
-  char *pcVar1;
-  uint uVar2;
+  uint uVar1;
   
-  pcVar1 = (char *)__savegprlr_29(param_1,param_2);
-  if (pcVar1 == (char *)0x0) {
+  if (param_1 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
                     0x4e8,0,"%s");
   }
-  uVar2 = SL_FindString(pcVar1);
-  if (uVar2 == 0) {
+  uVar1 = SL_FindString(param_1);
+  if (uVar1 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
                     0x4ea,0,"%s");
   }
-  SL_RemoveRefToString(uVar2);
-  __restgprlr_29();
+  SL_RemoveRefToString(uVar1);
   return;
 }
 
@@ -484,6 +478,8 @@ void Com_Meminfo_f(void)
 
 // 825E4130  Com_InitHunkMemory  (universal/com_memory.cpp:1643)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void Com_InitHunkMemory(void)
@@ -491,7 +487,6 @@ void Com_InitHunkMemory(void)
 {
   bool bVar1;
   
-  __savegprlr_29();
   bVar1 = Sys_IsMainThread();
   if (!bVar1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
@@ -513,7 +508,6 @@ void Com_InitHunkMemory(void)
   track_set_hunk_size(s_hunkTotal);
   Cmd_AddCommandInternal("meminfo",Com_Meminfo_f,&Com_Meminfo_f_VAR);
   Cmd_AddCommandInternal("hunk_user_info",Hunk_UserMemoryInfo_f,&Hunk_UserMemoryInfo_f_VAR);
-  __restgprlr_29();
   return;
 }
 
@@ -538,29 +532,25 @@ void Com_FreeHunkMemory(void)
 
 // 825E0E60  Hunk_FindDataForFileInternal  (universal/com_memory.cpp:1781)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void * Hunk_FindDataForFileInternal(int param_1,char *param_2,int param_3)
 
 {
-  undefined4 *puVar1;
-  uint uVar2;
-  int iVar3;
-  void *pvVar4;
-  ulonglong uVar5;
+  fileData_s *pfVar1;
+  int iVar2;
   
-  uVar5 = (ulonglong)param_3;
-  uVar2 = __savegprlr_29(param_1);
-  puVar1 = *(undefined4 **)((int)com_fileDataHashTable + (int)((uVar5 & 0xffffffff) << 2));
+  pfVar1 = com_fileDataHashTable[param_3];
   while( true ) {
-    if (puVar1 == (undefined4 *)0x0) {
-      pvVar4 = (void *)__restgprlr_29(0);
-      return pvVar4;
+    if (pfVar1 == (fileData_s *)0x0) {
+      return (void *)0x0;
     }
-    if ((*(byte *)(puVar1 + 2) == uVar2) &&
-       (iVar3 = I_stricmp((char *)((int)puVar1 + 9),param_2), iVar3 == 0)) break;
-    puVar1 = (undefined4 *)puVar1[1];
+    if (((uint)pfVar1->type == param_1) && (iVar2 = I_stricmp(pfVar1->name,param_2), iVar2 == 0))
+    break;
+    pfVar1 = pfVar1->next;
   }
-  pvVar4 = (void *)__restgprlr_29(*puVar1);
-  return pvVar4;
+  return pfVar1->data;
 }
 
 
@@ -580,171 +570,157 @@ void * Hunk_FindDataForFile(int param_1,char *param_2)
 
 // 825E0F20  Hunk_DataOnHunk  (universal/com_memory.cpp:1818)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 int Hunk_DataOnHunk(void *param_1)
 
 {
-  ulonglong uVar1;
-  bool bVar3;
-  int iVar2;
-  ulonglong uVar4;
+  bool bVar1;
   
-  uVar1 = __savegprlr_28(param_1);
-  bVar3 = Sys_IsMainThread();
-  if (!bVar3) {
+  bVar1 = Sys_IsMainThread();
+  if (!bVar1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
                     0x71b,0,"%s");
   }
-  uVar4 = ZEXT48(s_hunkData);
-  if (uVar4 == 0) {
+  if (s_hunkData == (uchar *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
                     0x71c,0,"%s");
-    uVar4 = ZEXT48(s_hunkData);
   }
-  if ((uVar1 & 0xffffffff) < uVar4) {
-    iVar2 = __restgprlr_28(0);
-    return iVar2;
+  if (param_1 < s_hunkData) {
+    return 0;
   }
-  iVar2 = __restgprlr_28(-(uVar1 < (uint)s_hunkTotal + uVar4) & 1);
-  return iVar2;
+  return -(uint)(param_1 < s_hunkData + s_hunkTotal) & 1;
 }
 
 
 // 825E0FD0  Hunk_SetDataForFile  (universal/com_memory.cpp:1838)
+
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 
 char * Hunk_SetDataForFile(int param_1,char *param_2,void *param_3,
                           _func___cdecl_void_ptr_int *param_4)
 
 {
   char cVar1;
-  uint uVar2;
-  bool bVar8;
-  long lVar3;
-  void *pvVar4;
-  fileData_s *pfVar5;
-  int iVar6;
+  bool bVar6;
+  long lVar2;
+  void *pvVar3;
+  fileData_s *pfVar4;
+  int iVar5;
   char *pcVar7;
-  char *pcVar11;
-  longlong lVar9;
-  longlong lVar10;
   
-  lVar10 = (longlong)(int)param_2;
-  uVar2 = __savegprlr_25(param_1);
-  bVar8 = Sys_IsMainThread();
-  if (!bVar8) {
+  bVar6 = Sys_IsMainThread();
+  if (!bVar6) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
                     0x732,0,"%s");
   }
-  pcVar7 = (char *)lVar10;
-  lVar3 = FS_HashFileName(pcVar7,0x400);
-  pvVar4 = Hunk_FindDataForFileInternal(uVar2,pcVar7,lVar3);
-  lVar9 = lVar10;
-  if (pvVar4 != (void *)0x0) {
+  lVar2 = FS_HashFileName(param_2,0x400);
+  pvVar3 = Hunk_FindDataForFileInternal(param_1,param_2,lVar2);
+  pcVar7 = param_2;
+  if (pvVar3 != (void *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
                     0x735,0,"%s");
   }
   do {
-    pcVar11 = (char *)lVar9;
-    lVar9 = lVar9 + 1;
-  } while (*pcVar11 != '\0');
-  pfVar5 = (*param_4)(((int)lVar9 - (int)pcVar7) + 9);
-  iVar6 = Hunk_DataOnHunk(pfVar5);
-  if (iVar6 == 0) {
+    cVar1 = *pcVar7;
+    pcVar7 = pcVar7 + 1;
+  } while (cVar1 != '\0');
+  pfVar4 = (*param_4)((int)(pcVar7 + (9 - (int)param_2)));
+  iVar5 = Hunk_DataOnHunk(pfVar4);
+  if (iVar5 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
                     0x73a,0,"%s");
   }
-  pfVar5->data = param_3;
-  pfVar5->type = (uchar)uVar2;
-  if (uVar2 != (uVar2 & 0xff)) {
+  pfVar4->data = param_3;
+  pfVar4->type = (uchar)param_1;
+  if (param_1 != (param_1 & 0xffU)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
                     0x73f,0,"%s");
   }
+  iVar5 = (int)pfVar4->name - (int)param_2;
   do {
-    cVar1 = *(char *)lVar10;
-    ((char *)lVar10)[(int)pfVar5 + (9 - (int)pcVar7)] = cVar1;
-    lVar10 = lVar10 + 1;
+    cVar1 = *param_2;
+    param_2[iVar5] = cVar1;
+    param_2 = param_2 + 1;
   } while (cVar1 != '\0');
-  pfVar5->next = com_fileDataHashTable[lVar3];
-  com_fileDataHashTable[lVar3] = pfVar5;
-  pcVar7 = (char *)__restgprlr_25();
-  return pcVar7;
+  pfVar4->next = com_fileDataHashTable[lVar2];
+  com_fileDataHashTable[lVar2] = pfVar4;
+  return pfVar4->name;
 }
 
 
 // 825E1138  Hunk_AddData  (universal/com_memory.cpp:1870)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void Hunk_AddData(int param_1,void *param_2,_func___cdecl_void_ptr_int *param_3)
 
 {
-  uint uVar1;
-  bool bVar4;
-  fileData_s *pfVar2;
-  int iVar3;
+  bool bVar3;
+  fileData_s *pfVar1;
+  int iVar2;
   
-  uVar1 = __savegprlr_27(param_1);
-  bVar4 = Sys_IsMainThread();
-  if (!bVar4) {
+  bVar3 = Sys_IsMainThread();
+  if (!bVar3) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
                     0x751,0,"%s");
   }
-  pfVar2 = (*param_3)(9);
-  iVar3 = Hunk_DataOnHunk(pfVar2);
-  if (iVar3 == 0) {
+  pfVar1 = (*param_3)(9);
+  iVar2 = Hunk_DataOnHunk(pfVar1);
+  if (iVar2 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
                     0x756,0,"%s");
   }
-  pfVar2->data = param_2;
-  pfVar2->type = (uchar)uVar1;
-  if (uVar1 != (uVar1 & 0xff)) {
+  pfVar1->data = param_2;
+  pfVar1->type = (uchar)param_1;
+  if (param_1 != (param_1 & 0xffU)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
                     0x75b,0,"%s");
   }
-  pfVar2->next = com_hunkData;
-  com_hunkData = pfVar2;
-  __restgprlr_27();
+  pfVar1->next = com_hunkData;
+  com_hunkData = pfVar1;
   return;
 }
 
 
 // 825E1210  Hunk_ClearDataFor  (universal/com_memory.cpp:1928)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void Hunk_ClearDataFor(fileData_s **param_1,uchar *param_2,uchar *param_3)
 
 {
-  int iVar1;
-  uint uVar2;
-  longlong lVar3;
-  bool bVar4;
-  ulonglong uVar5;
-  ulonglong uVar6;
-  ulonglong uVar7;
+  fileData_s *pfVar1;
+  bool bVar2;
   
-  uVar6 = (ulonglong)(int)param_3;
-  uVar5 = (ulonglong)(int)param_2;
-  lVar3 = __savegprlr_29(param_1);
-  bVar4 = Sys_IsMainThread();
-  if (!bVar4) {
+  bVar2 = Sys_IsMainThread();
+  if (!bVar2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
                     0x78e,0,"%s");
   }
-  iVar1 = *(int *)lVar3;
-  while (iVar1 != 0) {
-    uVar2 = *(uint *)lVar3;
-    uVar7 = (ulonglong)uVar2;
-    if ((uVar7 < (uVar5 & 0xffffffff)) || ((uVar6 & 0xffffffff) <= uVar7)) {
-      lVar3 = uVar7 + 4;
+  pfVar1 = *param_1;
+  while (pfVar1 != (fileData_s *)0x0) {
+    pfVar1 = *param_1;
+    if ((pfVar1 < param_2) || (param_3 <= pfVar1)) {
+      param_1 = &pfVar1->next;
     }
     else {
-      *(uint *)lVar3 = *(uint *)(uVar2 + 4);
+      *param_1 = pfVar1->next;
     }
-    iVar1 = *(int *)lVar3;
+    pfVar1 = *param_1;
   }
-  __restgprlr_29();
   return;
 }
 
 
 // 825E12A0  Hunk_ClearData  (universal/com_memory.cpp:1975)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void Hunk_ClearData(void)
@@ -759,7 +735,6 @@ void Hunk_ClearData(void)
   fileData_s **ppfVar7;
   fileData_s **ppfVar8;
   
-  __savegprlr_23();
   bVar2 = Sys_IsMainThread();
   if (!bVar2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
@@ -812,42 +787,37 @@ void Hunk_ClearData(void)
     }
     pfVar1 = *ppfVar8;
   }
-  __restgprlr_23();
   return;
 }
 
 
 // 825E1428  Hunk_GetFileHandle  (universal/com_memory.cpp:2003)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void * Hunk_GetFileHandle(int param_1,char *param_2)
 
 {
   fileData_s *pfVar1;
-  uint uVar2;
-  long lVar3;
-  int iVar4;
-  void *pvVar5;
-  ulonglong uVar6;
+  long lVar2;
+  int iVar3;
   
-  uVar6 = (ulonglong)(int)param_2;
-  uVar2 = __savegprlr_28(param_1);
-  if ((uVar6 & 0xffffffff) == 0) {
+  if (param_2 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
                     0x7d8,0,"%s");
   }
-  lVar3 = FS_HashFileName((char *)uVar6,0x400);
-  pfVar1 = com_fileDataHashTable[lVar3];
+  lVar2 = FS_HashFileName(param_2,0x400);
+  pfVar1 = com_fileDataHashTable[lVar2];
   while( true ) {
     if (pfVar1 == (fileData_s *)0x0) {
-      pvVar5 = (void *)__restgprlr_28(0);
-      return pvVar5;
+      return (void *)0x0;
     }
-    if ((pfVar1->type == uVar2) && (iVar4 = I_stricmp(pfVar1->name,(char *)uVar6), iVar4 == 0))
+    if (((uint)pfVar1->type == param_1) && (iVar3 = I_stricmp(pfVar1->name,param_2), iVar3 == 0))
     break;
     pfVar1 = pfVar1->next;
   }
-  pvVar5 = (void *)__restgprlr_28(pfVar1);
-  return pvVar5;
+  return pfVar1;
 }
 
 
@@ -887,6 +857,8 @@ void Hunk_OrphanFile(void *param_1)
 
 // 825E1598  DB_GetAllXAssetOfType  (universal/com_memory.cpp:2204)
 
+/* WARNING: Function: __savegprlr_19 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_19 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "XAssetType": Some values do not have unique names */
 /* WARNING: Enum "nodeType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
@@ -896,51 +868,47 @@ void Hunk_OrphanFile(void *param_1)
 int DB_GetAllXAssetOfType(XAssetType param_1,XAssetHeader *param_2,int param_3)
 
 {
-  XAssetType XVar1;
-  int iVar2;
-  ulonglong uVar3;
-  uint uVar4;
-  longlong lVar5;
-  ushort *puVar6;
-  ulonglong uVar7;
-  longlong lVar8;
+  uint uVar1;
+  longlong lVar2;
+  ushort *puVar3;
+  int iVar4;
+  XAssetHeader *pXVar5;
   
-  uVar3 = (ulonglong)(int)param_2;
-  XVar1 = __savegprlr_19(param_1);
-  uVar7 = 0;
+  iVar4 = 0;
   Sys_LockRead(&db_hashCritSect);
-  puVar6 = db_hashTable;
-  lVar5 = 50000;
+  puVar3 = db_hashTable;
+  lVar2 = 50000;
   do {
-    uVar4 = (uint)*puVar6;
-    if (uVar4 != 0) {
-      lVar8 = (uVar7 & 0x3fffffff) * 4 + uVar3;
+    uVar1 = (uint)*puVar3;
+    if (uVar1 != 0) {
+      pXVar5 = param_2 + iVar4;
       do {
-        if (g_assetEntryPool[uVar4].asset.type == XVar1) {
-          if ((uVar3 & 0xffffffff) != 0) {
-            if (param_3 <= (int)uVar7) {
+        if (g_assetEntryPool[uVar1].asset.type == param_1) {
+          if (param_2 != (XAssetHeader *)0x0) {
+            if (param_3 <= iVar4) {
               MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_registry.cpp"
                               ,0x108f,0,"%s");
             }
-            *(XAssetHeader *)lVar8 = g_assetEntryPool[uVar4].asset.header;
+            *pXVar5 = g_assetEntryPool[uVar1].asset.header;
           }
-          uVar7 = uVar7 + 1;
-          lVar8 = lVar8 + 4;
+          iVar4 = iVar4 + 1;
+          pXVar5 = pXVar5 + 1;
         }
-        uVar4 = (uint)g_assetEntryPool[uVar4].nextHash;
-      } while (uVar4 != 0);
+        uVar1 = (uint)g_assetEntryPool[uVar1].nextHash;
+      } while (uVar1 != 0);
     }
-    lVar5 = lVar5 + -1;
-    puVar6 = puVar6 + 1;
-  } while (lVar5 != 0);
+    lVar2 = lVar2 + -1;
+    puVar3 = puVar3 + 1;
+  } while (lVar2 != 0);
   Sys_UnlockRead(&db_hashCritSect);
-  iVar2 = __restgprlr_19(uVar7);
-  return iVar2;
+  return iVar4;
 }
 
 
 // 825E15A0  DB_EnumXAssets  (universal/com_memory.cpp:2210)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "XAssetType": Some values do not have unique names */
 /* WARNING: Enum "nodeType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
@@ -951,13 +919,9 @@ void DB_EnumXAssets(XAssetType param_1,_func___cdecl_void_XAssetHeader_void_ptr 
                    void *param_3,bool param_4)
 
 {
-  XAssetType XVar1;
-  
-  XVar1 = __savegprlr_27(param_1);
   Sys_LockRead(&db_hashCritSect);
-  DB_EnumXAssets_Internal(XVar1,param_2,param_3,param_4);
+  DB_EnumXAssets_Internal(param_1,param_2,param_3,param_4);
   Sys_UnlockRead(&db_hashCritSect);
-  __restgprlr_27();
   return;
 }
 
@@ -983,15 +947,16 @@ int Hunk_SetMark(void)
 
 // 825E42A8  Hunk_ClearToMark  (universal/com_memory.cpp:2265)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void Hunk_ClearToMark(int param_1)
 
 {
-  int iVar1;
-  bool bVar2;
+  bool bVar1;
   
-  iVar1 = __savegprlr_28(param_1);
-  bVar2 = Sys_IsMainThread();
-  if (!bVar2) {
+  bVar1 = Sys_IsMainThread();
+  if (!bVar1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
                     0x8e0,0,"%s");
   }
@@ -1004,11 +969,10 @@ void Hunk_ClearToMark(int param_1)
                     0x8e3,0,"%s");
   }
   Hunk_CheckTempMemoryHighClear();
-  hunk_high.permanent = iVar1;
-  hunk_high.temp = iVar1;
+  hunk_high.permanent = param_1;
+  hunk_high.temp = param_1;
   Hunk_ClearData();
-  track_hunk_ClearToMarkHigh(iVar1);
-  __restgprlr_28();
+  track_hunk_ClearToMarkHigh(param_1);
   return;
 }
 
@@ -1034,15 +998,16 @@ int Hunk_SetMarkLow(void)
 
 // 825E43D0  Hunk_ClearToMarkLow  (universal/com_memory.cpp:2326)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void Hunk_ClearToMarkLow(int param_1)
 
 {
-  int iVar1;
-  bool bVar2;
+  bool bVar1;
   
-  iVar1 = __savegprlr_28(param_1);
-  bVar2 = Sys_IsMainThread();
-  if (!bVar2) {
+  bVar1 = Sys_IsMainThread();
+  if (!bVar1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
                     0x91d,0,"%s");
   }
@@ -1055,17 +1020,18 @@ void Hunk_ClearToMarkLow(int param_1)
                     0x920,0,"%s");
   }
   Hunk_CheckTempMemoryClear();
-  hunk_low.permanent = iVar1;
-  hunk_low.temp = iVar1;
+  hunk_low.permanent = param_1;
+  hunk_low.temp = param_1;
   Hunk_ClearData();
-  track_hunk_ClearToMarkLow(iVar1);
-  __restgprlr_28();
+  track_hunk_ClearToMarkLow(param_1);
   return;
 }
 
 
 // 825E15A8  Hunk_Clear  (universal/com_memory.cpp:2373)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void Hunk_Clear(void)
@@ -1073,7 +1039,6 @@ void Hunk_Clear(void)
 {
   bool bVar1;
   
-  __savegprlr_29();
   bVar1 = Sys_IsMainThread();
   if (!bVar1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
@@ -1095,7 +1060,6 @@ void Hunk_Clear(void)
   track_hunk_ClearToMarkLow(0);
   track_hunk_ClearToMarkHigh(0);
   track_hunk_ClearToStart();
-  __restgprlr_29();
   return;
 }
 
@@ -1121,45 +1085,40 @@ int Hunk_Used(void)
 
 // 825E4D88  Hunk_Alloc  (universal/com_memory.cpp:2427)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void * Hunk_Alloc(int param_1,char *param_2,int param_3)
 
 {
-  int iVar1;
-  bool bVar3;
-  void *pvVar2;
+  bool bVar2;
+  void *pvVar1;
   
-  iVar1 = __savegprlr_29(param_1);
-  bVar3 = Sys_IsMainThread();
-  if (!bVar3) {
+  bVar2 = Sys_IsMainThread();
+  if (!bVar2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
                     0x97c,0,"%s");
   }
-  pvVar2 = Hunk_AllocAlign(iVar1,0x20,param_2,param_3);
-  pvVar2 = (void *)__restgprlr_29(pvVar2);
-  return pvVar2;
+  pvVar1 = Hunk_AllocAlign(param_1,0x20,param_2,param_3);
+  return pvVar1;
 }
 
 
 // 825E4498  Hunk_AllocAlign  (universal/com_memory.cpp:2459)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
+
 void * Hunk_AllocAlign(int param_1,int param_2,char *param_3,int param_4)
 
 {
   int iVar1;
-  longlong lVar2;
-  bool bVar4;
-  void *pvVar3;
-  longlong lVar5;
-  int iVar6;
-  ulonglong uVar7;
-  ulonglong uVar8;
-  int iVar9;
-  ulonglong uVar10;
+  bool bVar2;
+  uchar *puVar3;
+  uint uVar4;
   
-  lVar5 = (longlong)param_2;
-  lVar2 = __savegprlr_23(param_1);
-  bVar4 = Sys_IsMainThread();
-  if (!bVar4) {
+  bVar2 = Sys_IsMainThread();
+  if (!bVar2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
                     0x9ab,0,"%s");
   }
@@ -1171,58 +1130,48 @@ void * Hunk_AllocAlign(int param_1,int param_2,char *param_3,int param_4)
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
                     0x9ae,0,"%s");
   }
-  uVar10 = lVar5 - 1;
-  if (((uint)uVar10 & (uint)lVar5) != 0) {
+  uVar4 = param_2 - 1;
+  if ((uVar4 & param_2) != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
                     0x9ba,0,"%s");
   }
-  if (0x1000 < (int)(uint)lVar5) {
+  if (0x1000 < param_2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
                     0x9bb,0,"%s");
   }
   Hunk_CheckTempMemoryHighClear();
   iVar1 = hunk_high.permanent;
-  uVar7 = (ulonglong)(uint)hunk_high.permanent + lVar2 + uVar10 & ~uVar10;
-  hunk_high.permanent = (int)uVar7;
-  lVar2 = ((uint)s_hunkTotal - uVar7) + ZEXT48(s_hunkData);
-  uVar8 = uVar7;
+  hunk_high.permanent = hunk_high.permanent + param_1 + uVar4 & ~uVar4;
+  puVar3 = s_hunkData + (s_hunkTotal - hunk_high.permanent);
   hunk_high.temp = hunk_high.permanent;
-  if (((uint)lVar2 & (uint)uVar10) != 0) {
+  if (((uint)puVar3 & uVar4) != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
                     0x9ce,0,"%s");
-    uVar7 = (ulonglong)(uint)hunk_high.temp;
-    uVar8 = (ulonglong)(uint)hunk_high.permanent;
   }
-  iVar6 = (int)uVar7;
-  iVar9 = (int)uVar8;
-  if (s_hunkTotal < hunk_low.temp + (int)uVar7) {
+  if (s_hunkTotal < hunk_low.temp + hunk_high.temp) {
     track_PrintAllInfo();
     Com_Error(ERR_DROP,"\x15Hunk_AllocAlign failed on %i bytes (total %i MB, low %i MB, high %i MB)"
              );
-    iVar6 = hunk_high.temp;
-    iVar9 = hunk_high.permanent;
   }
-  track_hunk_alloc(iVar9 - iVar1,iVar6,param_3,param_4);
+  track_hunk_alloc(hunk_high.permanent - iVar1,hunk_high.temp,param_3,param_4);
   memset();
-  pvVar3 = (void *)__restgprlr_23(lVar2);
-  return pvVar3;
+  return puVar3;
 }
 
 
 // 825E1720  Hunk_AllocateTempMemoryHigh  (universal/com_memory.cpp:2557)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void * Hunk_AllocateTempMemoryHigh(int param_1,char *param_2)
 
 {
-  longlong lVar1;
-  bool bVar3;
-  void *pvVar2;
-  ulonglong uVar4;
-  ulonglong uVar5;
+  bool bVar1;
+  uchar *puVar2;
   
-  lVar1 = __savegprlr_27(param_1,param_2);
-  bVar3 = Sys_IsMainThread();
-  if (!bVar3) {
+  bVar1 = Sys_IsMainThread();
+  if (!bVar1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
                     0xa09,0,"%s");
   }
@@ -1234,27 +1183,26 @@ void * Hunk_AllocateTempMemoryHigh(int param_1,char *param_2)
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
                     0xa0c,0,"%s");
   }
-  uVar4 = (ulonglong)(uint)hunk_high.temp + lVar1 + 0xf & 0xfffffff0;
-  hunk_high.temp = (int)uVar4;
-  uVar5 = ((uint)s_hunkTotal - uVar4) + ZEXT48(s_hunkData);
-  if ((uVar5 & 0xf) != 0) {
+  hunk_high.temp = hunk_high.temp + param_1 + 0xfU & 0xfffffff0;
+  puVar2 = s_hunkData + (s_hunkTotal - hunk_high.temp);
+  if (((uint)puVar2 & 0xf) != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
                     0xa20,0,"%s");
-    uVar4 = (ulonglong)(uint)hunk_high.temp;
   }
-  if (s_hunkTotal < hunk_low.temp + (int)uVar4) {
+  if (s_hunkTotal < hunk_low.temp + hunk_high.temp) {
     track_PrintAllInfo();
     Com_Error(ERR_DROP,
               "\x15Hunk_AllocateTempMemoryHigh: failed on %i bytes (total %i MB, low %i MB, high %i MB)"
              );
   }
-  pvVar2 = (void *)__restgprlr_27(uVar5);
-  return pvVar2;
+  return puVar2;
 }
 
 
 // 825E1870  Hunk_ClearTempMemoryHigh  (universal/com_memory.cpp:2637)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void Hunk_ClearTempMemoryHigh(void)
@@ -1262,7 +1210,6 @@ void Hunk_ClearTempMemoryHigh(void)
 {
   bool bVar1;
   
-  __savegprlr_29();
   bVar1 = Sys_IsMainThread();
   if (!bVar1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
@@ -1277,49 +1224,46 @@ void Hunk_ClearTempMemoryHigh(void)
                     0xa57,0,"%s");
   }
   hunk_high.temp = hunk_high.permanent;
-  __restgprlr_29();
   return;
 }
 
 
 // 825E4DF0  Hunk_AllocLow  (universal/com_memory.cpp:2683)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void * Hunk_AllocLow(int param_1,char *param_2,int param_3)
 
 {
-  int iVar1;
-  bool bVar3;
-  void *pvVar2;
+  bool bVar2;
+  void *pvVar1;
   
-  iVar1 = __savegprlr_29(param_1);
-  bVar3 = Sys_IsMainThread();
-  if (!bVar3) {
+  bVar2 = Sys_IsMainThread();
+  if (!bVar2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
                     0xa7c,0,"%s");
   }
-  pvVar2 = Hunk_AllocLowAlign(iVar1,0x20,param_2,param_3);
-  pvVar2 = (void *)__restgprlr_29(pvVar2);
-  return pvVar2;
+  pvVar1 = Hunk_AllocLowAlign(param_1,0x20,param_2,param_3);
+  return pvVar1;
 }
 
 
 // 825E4680  Hunk_AllocLowAlign  (universal/com_memory.cpp:2715)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
+
 void * Hunk_AllocLowAlign(int param_1,int param_2,char *param_3,int param_4)
 
 {
   int iVar1;
-  int iVar2;
-  bool bVar4;
-  void *pvVar3;
-  ulonglong uVar5;
-  longlong lVar6;
-  ulonglong uVar7;
+  bool bVar2;
+  uchar *puVar3;
+  uint uVar4;
   
-  lVar6 = (longlong)param_2;
-  iVar2 = __savegprlr_23(param_1);
-  bVar4 = Sys_IsMainThread();
-  if (!bVar4) {
+  bVar2 = Sys_IsMainThread();
+  if (!bVar2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
                     0xaab,0,"%s");
   }
@@ -1331,26 +1275,24 @@ void * Hunk_AllocLowAlign(int param_1,int param_2,char *param_3,int param_4)
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
                     0xaae,0,"%s");
   }
-  uVar7 = lVar6 - 1;
-  if (((uint)uVar7 & (uint)lVar6) != 0) {
+  uVar4 = param_2 - 1;
+  if ((uVar4 & param_2) != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
                     0xaba,0,"%s");
   }
-  if (0x1000 < (int)(uint)lVar6) {
+  if (0x1000 < param_2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
                     0xabb,0,"%s");
   }
   Hunk_CheckTempMemoryClear();
   iVar1 = hunk_low.permanent;
-  uVar5 = (uint)hunk_low.permanent + uVar7 & ~uVar7;
-  lVar6 = uVar5 + ZEXT48(s_hunkData);
-  hunk_low.permanent = (int)uVar5;
-  if (((uint)lVar6 & (uint)uVar7) != 0) {
+  hunk_low.permanent = hunk_low.permanent + uVar4 & ~uVar4;
+  puVar3 = s_hunkData + hunk_low.permanent;
+  if (((uint)puVar3 & uVar4) != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
                     0xacb,0,"%s");
-    uVar5 = (ulonglong)(uint)hunk_low.permanent;
   }
-  hunk_low.permanent = (int)uVar5 + iVar2;
+  hunk_low.permanent = hunk_low.permanent + param_1;
   hunk_low.temp = hunk_low.permanent;
   if (s_hunkTotal < hunk_high.temp + hunk_low.permanent) {
     track_PrintAllInfo();
@@ -1359,26 +1301,25 @@ void * Hunk_AllocLowAlign(int param_1,int param_2,char *param_3,int param_4)
   }
   track_hunk_allocLow(hunk_low.permanent - iVar1,hunk_low.permanent,param_3,param_4);
   memset();
-  pvVar3 = (void *)__restgprlr_23(lVar6);
-  return pvVar3;
+  return puVar3;
 }
 
 
 // 825E1920  Hunk_AllocateTempMemory  (universal/com_memory.cpp:2814)
+
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 
 void * Hunk_AllocateTempMemory(int param_1,char *param_2)
 
 {
   uint uVar1;
   int iVar2;
-  int iVar3;
-  bool bVar5;
-  void *pvVar4;
-  uchar *puVar6;
+  bool bVar3;
+  uchar *puVar4;
   
-  iVar3 = __savegprlr_25(param_1,param_2);
-  bVar5 = Sys_IsMainThread();
-  if (!bVar5) {
+  bVar3 = Sys_IsMainThread();
+  if (!bVar3) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
                     0xb0c,0,"%s");
   }
@@ -1392,9 +1333,9 @@ void * Hunk_AllocateTempMemory(int param_1,char *param_2)
   }
   iVar2 = hunk_low.temp;
   uVar1 = hunk_low.temp + 0xfU & 0xfffffff0;
-  puVar6 = s_hunkData + uVar1;
-  hunk_low.temp = uVar1 + iVar3 + 0x10;
-  if (((uint)(puVar6 + 0x10) & 0xf) != 0) {
+  puVar4 = s_hunkData + uVar1;
+  hunk_low.temp = uVar1 + param_1 + 0x10;
+  if (((uint)(puVar4 + 0x10) & 0xf) != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
                     0xb2f,0,"%s");
   }
@@ -1404,31 +1345,30 @@ void * Hunk_AllocateTempMemory(int param_1,char *param_2)
               "\x15Hunk_AllocateTempMemory: failed on %i bytes (total %i MB, low %i MB, high %i MB), needs %i more hunk bytes"
              );
   }
-  *(int *)(puVar6 + 4) = hunk_low.temp - iVar2;
-  puVar6[0] = 0x89;
-  puVar6[1] = 'S';
-  puVar6[2] = 'x';
-  puVar6[3] = 0x92;
-  pvVar4 = (void *)__restgprlr_25(puVar6 + 0x10);
-  return pvVar4;
+  *(int *)(puVar4 + 4) = hunk_low.temp - iVar2;
+  puVar4[0] = 0x89;
+  puVar4[1] = 'S';
+  puVar4[2] = 'x';
+  puVar4[3] = 0x92;
+  return puVar4 + 0x10;
 }
 
 
 // 825E1A98  Hunk_FreeTempMemory  (universal/com_memory.cpp:2911)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void Hunk_FreeTempMemory(void *param_1)
 
 {
   uchar *puVar1;
-  int iVar2;
-  bool bVar3;
+  bool bVar2;
+  int iVar3;
   int iVar4;
-  int iVar5;
-  int *piVar6;
   
-  iVar2 = __savegprlr_28(param_1);
-  bVar3 = Sys_IsMainThread();
-  if (!bVar3) {
+  bVar2 = Sys_IsMainThread();
+  if (!bVar2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
                     0xb67,0,"%s");
   }
@@ -1440,31 +1380,31 @@ void Hunk_FreeTempMemory(void *param_1)
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
                     0xb73,0,"%s");
   }
-  if (iVar2 == 0) {
+  if (param_1 == (void *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
                     0xb74,0,"%s");
   }
-  piVar6 = (int *)(iVar2 + -0x10);
-  if (*piVar6 != -0x76ac876e) {
+  if (*(int *)((int)param_1 + -0x10) != -0x76ac876e) {
     Com_Error(ERR_FATAL,"\x15Hunk_FreeTempMemory: bad magic");
   }
   puVar1 = s_hunkData;
-  iVar5 = hunk_low.temp;
-  iVar4 = hunk_low.temp - *(int *)(iVar2 + -0xc);
-  *piVar6 = -0x76ac876d;
-  if (piVar6 != (int *)(puVar1 + (iVar4 + 0xfU & 0xfffffff0))) {
+  iVar4 = hunk_low.temp;
+  iVar3 = hunk_low.temp - *(int *)((int)param_1 + -0xc);
+  *(int *)((int)param_1 + -0x10) = -0x76ac876d;
+  if ((uchar *)((int)param_1 + -0x10) != puVar1 + (iVar3 + 0xfU & 0xfffffff0)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
                     0xb81,0,"%s");
-    iVar5 = hunk_low.temp;
+    iVar4 = hunk_low.temp;
   }
-  hunk_low.temp = iVar5 - *(int *)(iVar2 + -0xc);
-  __restgprlr_28();
+  hunk_low.temp = iVar4 - *(int *)((int)param_1 + -0xc);
   return;
 }
 
 
 // 825E1BF0  Hunk_ClearTempMemory  (universal/com_memory.cpp:2974)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void Hunk_ClearTempMemory(void)
@@ -1472,7 +1412,6 @@ void Hunk_ClearTempMemory(void)
 {
   bool bVar1;
   
-  __savegprlr_29();
   bVar1 = Sys_IsMainThread();
   if (!bVar1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
@@ -1487,13 +1426,14 @@ void Hunk_ClearTempMemory(void)
                     0xba8,0,"%s");
   }
   hunk_low.temp = hunk_low.permanent;
-  __restgprlr_29();
   return;
 }
 
 
 // 825E1CA0  Hunk_CheckTempMemoryClear  (universal/com_memory.cpp:3019)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void Hunk_CheckTempMemoryClear(void)
@@ -1501,7 +1441,6 @@ void Hunk_CheckTempMemoryClear(void)
 {
   bool bVar1;
   
-  __savegprlr_29();
   bVar1 = Sys_IsMainThread();
   if (!bVar1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
@@ -1515,13 +1454,14 @@ void Hunk_CheckTempMemoryClear(void)
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
                     0xbce,0,"%s");
   }
-  __restgprlr_29();
   return;
 }
 
 
 // 825E1D50  Hunk_CheckTempMemoryHighClear  (universal/com_memory.cpp:3032)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void Hunk_CheckTempMemoryHighClear(void)
@@ -1529,7 +1469,6 @@ void Hunk_CheckTempMemoryHighClear(void)
 {
   bool bVar1;
   
-  __savegprlr_29();
   bVar1 = Sys_IsMainThread();
   if (!bVar1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
@@ -1543,22 +1482,22 @@ void Hunk_CheckTempMemoryHighClear(void)
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
                     0xbdb,0,"%s");
   }
-  __restgprlr_29();
   return;
 }
 
 
 // 825E1E00  Hunk_HideTempMemory  (universal/com_memory.cpp:3047)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 int Hunk_HideTempMemory(void)
 
 {
-  bool bVar2;
   int iVar1;
+  bool bVar2;
   
-  __savegprlr_29();
   bVar2 = Sys_IsMainThread();
   if (!bVar2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
@@ -1570,22 +1509,22 @@ int Hunk_HideTempMemory(void)
   }
   iVar1 = hunk_low.permanent;
   hunk_low.permanent = hunk_low.temp;
-  iVar1 = __restgprlr_29(iVar1);
   return iVar1;
 }
 
 
 // 825E1E90  Hunk_ShowTempMemory  (universal/com_memory.cpp:3068)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void Hunk_ShowTempMemory(int param_1)
 
 {
-  int iVar1;
-  bool bVar2;
+  bool bVar1;
   
-  iVar1 = __savegprlr_28(param_1);
-  bVar2 = Sys_IsMainThread();
-  if (!bVar2) {
+  bVar1 = Sys_IsMainThread();
+  if (!bVar1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
                     0xbfd,0,"%s");
   }
@@ -1594,23 +1533,23 @@ void Hunk_ShowTempMemory(int param_1)
                     0xbff,0,"%s");
   }
   Hunk_CheckTempMemoryClear();
-  hunk_low.permanent = iVar1;
-  __restgprlr_28();
+  hunk_low.permanent = param_1;
   return;
 }
 
 
 // 825E1F20  Hunk_HideTempMemoryHigh  (universal/com_memory.cpp:3086)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 int Hunk_HideTempMemoryHigh(void)
 
 {
-  bool bVar2;
   int iVar1;
+  bool bVar2;
   
-  __savegprlr_29();
   bVar2 = Sys_IsMainThread();
   if (!bVar2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
@@ -1622,22 +1561,22 @@ int Hunk_HideTempMemoryHigh(void)
   }
   iVar1 = hunk_high.permanent;
   hunk_high.permanent = hunk_high.temp;
-  iVar1 = __restgprlr_29(iVar1);
   return iVar1;
 }
 
 
 // 825E1FB0  Hunk_ShowTempMemoryHigh  (universal/com_memory.cpp:3107)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void Hunk_ShowTempMemoryHigh(int param_1)
 
 {
-  int iVar1;
-  bool bVar2;
+  bool bVar1;
   
-  iVar1 = __savegprlr_28(param_1);
-  bVar2 = Sys_IsMainThread();
-  if (!bVar2) {
+  bVar1 = Sys_IsMainThread();
+  if (!bVar1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
                     0xc24,0,"%s");
   }
@@ -1646,82 +1585,73 @@ void Hunk_ShowTempMemoryHigh(int param_1)
                     0xc26,0,"%s");
   }
   Hunk_CheckTempMemoryHighClear();
-  hunk_high.permanent = iVar1;
-  __restgprlr_28();
+  hunk_high.permanent = param_1;
   return;
 }
 
 
 // 825E2040  LargeLocalBegin  (universal/com_memory.cpp:3127)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
+
 int LargeLocalBegin(int param_1)
 
 {
-  ulonglong uVar1;
-  ulonglong uVar2;
-  bool bVar4;
-  int iVar3;
-  longlong lVar5;
-  ulonglong uVar6;
-  ulonglong uVar7;
-  ulonglong uVar8;
-  uint uVar9;
+  int iVar1;
+  bool bVar2;
+  longlong lVar3;
+  uchar *puVar4;
+  uchar *puVar5;
   
-  uVar2 = __savegprlr_25(param_1);
-  bVar4 = Sys_IsMainThread();
-  if (!bVar4) {
+  bVar2 = Sys_IsMainThread();
+  if (!bVar2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
                     0xc3d,0,"%s");
   }
-  if ((uVar2 & 0x7f) != 0) {
+  if ((param_1 & 0x7fU) != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
                     0xc3e,0,"%s");
   }
-  uVar6 = ZEXT48(g_largeLocalBuf);
-  if (uVar6 == 0) {
+  if (g_largeLocalBuf == (uchar *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
                     0xc3f,0,"%s");
-    uVar6 = ZEXT48(g_largeLocalBuf);
   }
-  uVar7 = (ulonglong)DAT_84015d5c;
-  uVar2 = uVar7 + uVar2;
-  DAT_84015d5c = (uint)uVar2;
-  uVar1 = DAT_84015a9c + uVar6 + 0xffff & 0xffff0000;
-  uVar8 = (ulonglong)DAT_84015a9c;
-  if ((int)DAT_84015a9c < (int)DAT_84015d5c) {
-    uVar8 = uVar2;
+  iVar1 = DAT_84015d5c;
+  DAT_84015d5c = DAT_84015d5c + param_1;
+  puVar4 = g_largeLocalBuf + DAT_84015a9c + 0xffff;
+  if (DAT_84015a9c < DAT_84015d5c) {
     DAT_84015a9c = DAT_84015d5c;
   }
-  uVar9 = (uint)uVar8;
-  if (0x90000 < (int)(uint)uVar8) {
+  puVar5 = g_largeLocalBuf + DAT_84015a9c + 0xffff;
+  if (0x90000 < DAT_84015a9c) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
                     0xc48,0,"%s");
-    uVar9 = DAT_84015a9c;
   }
-  if ((int)(g_minLargeLocalRightPos & 0xffff0000U) < (int)(uVar9 + 0xffff & 0xffff0000)) {
+  if ((int)(g_minLargeLocalRightPos & 0xffff0000U) < (int)(DAT_84015a9c + 0xffffU & 0xffff0000)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
                     0xc49,0,"%s");
   }
-  lVar5 = (uVar8 + uVar6 + 0xffff & 0xffff0000) - uVar1;
-  if (lVar5 != 0) {
-    Z_VirtualCommit((void *)uVar1,(int)lVar5,10);
+  lVar3 = (ZEXT48(puVar5) & 0xffff0000) - (ZEXT48(puVar4) & 0xffff0000);
+  if (lVar3 != 0) {
+    Z_VirtualCommit((void *)(ZEXT48(puVar4) & 0xffff0000),(int)lVar3,10);
   }
-  iVar3 = __restgprlr_25(uVar7);
-  return iVar3;
+  return iVar1;
 }
 
 
 // 825E21B0  LargeLocalEnd  (universal/com_memory.cpp:3166)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void LargeLocalEnd(int param_1)
 
 {
-  undefined4 uVar1;
-  bool bVar2;
+  bool bVar1;
   
-  uVar1 = __savegprlr_28(param_1);
-  bVar2 = Sys_IsMainThread();
-  if (!bVar2) {
+  bVar1 = Sys_IsMainThread();
+  if (!bVar1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
                     0xc5f,0,"%s");
   }
@@ -1729,93 +1659,93 @@ void LargeLocalEnd(int param_1)
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
                     0xc60,0,"%s");
   }
-  DAT_84015d5c = uVar1;
+  DAT_84015d5c = param_1;
   if ((int)(g_minLargeLocalRightPos & 0xffff0000U) < (int)(DAT_84015a9c + 0xffffU & 0xffff0000)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
                     0xc64,0,"%s");
   }
-  __restgprlr_28();
   return;
 }
 
 
 // 825E2278  LargeLocalBeginRight  (universal/com_memory.cpp:3182)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 int LargeLocalBeginRight(int param_1)
 
 {
-  ulonglong uVar1;
-  int iVar2;
-  bool bVar3;
-  longlong lVar4;
+  int iVar1;
+  bool bVar2;
+  longlong lVar3;
+  ulonglong uVar4;
   ulonglong uVar5;
   ulonglong uVar6;
   ulonglong uVar7;
-  ulonglong uVar8;
   
-  uVar1 = __savegprlr_27(param_1);
-  iVar2 = SV_GetServerThreadOwnsGame();
-  if (iVar2 == 0) {
-    bVar3 = Sys_IsRenderThread();
+  iVar1 = SV_GetServerThreadOwnsGame();
+  if (iVar1 == 0) {
+    bVar2 = Sys_IsRenderThread();
   }
   else {
-    bVar3 = Sys_IsServerThread();
+    bVar2 = Sys_IsServerThread();
   }
-  if (bVar3 == false) {
+  if (bVar2 == false) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
                     0xc74,0,"%s");
   }
-  if ((uVar1 & 0x7f) != 0) {
+  if ((param_1 & 0x7fU) != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
                     0xc75,0,"%s");
   }
-  uVar5 = ZEXT48(g_largeLocalBuf);
-  if (uVar5 == 0) {
+  uVar4 = ZEXT48(g_largeLocalBuf);
+  if (uVar4 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
                     0xc76,0,"%s");
-    uVar5 = ZEXT48(g_largeLocalBuf);
+    uVar4 = ZEXT48(g_largeLocalBuf);
   }
-  uVar6 = (ulonglong)(uint)g_largeLocalRightPos;
-  uVar7 = (ulonglong)(uint)g_minLargeLocalRightPos;
-  uVar1 = uVar6 - uVar1;
-  g_largeLocalRightPos = (int)uVar1;
-  uVar8 = uVar7;
+  iVar1 = g_largeLocalRightPos;
+  uVar5 = (ulonglong)(uint)g_largeLocalRightPos;
+  uVar6 = (ulonglong)(uint)g_minLargeLocalRightPos;
+  g_largeLocalRightPos = (int)(uVar5 - (longlong)param_1);
+  uVar7 = uVar6;
   if (g_largeLocalRightPos < g_minLargeLocalRightPos) {
-    uVar8 = uVar1;
+    uVar7 = uVar5 - (longlong)param_1;
     g_minLargeLocalRightPos = g_largeLocalRightPos;
   }
-  uVar1 = uVar8 + uVar5 & 0xffff0000;
-  if ((int)((uint)uVar8 & 0xffff0000) < (int)(DAT_84015a9c + 0xffffU & 0xffff0000)) {
+  uVar5 = uVar7 + uVar4 & 0xffff0000;
+  if ((int)((uint)uVar7 & 0xffff0000) < (int)(DAT_84015a9c + 0xffffU & 0xffff0000)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
                     0xc7f,0,"%s");
   }
-  lVar4 = (uVar7 + uVar5 & 0xffff0000) - uVar1;
-  if (lVar4 != 0) {
-    Z_VirtualCommit((void *)uVar1,(int)lVar4,10);
+  lVar3 = (uVar6 + uVar4 & 0xffff0000) - uVar5;
+  if (lVar3 != 0) {
+    Z_VirtualCommit((void *)uVar5,(int)lVar3,10);
   }
-  iVar2 = __restgprlr_27(uVar6);
-  return iVar2;
+  return iVar1;
 }
 
 
 // 825E23C0  LargeLocalEndRight  (universal/com_memory.cpp:3220)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void LargeLocalEndRight(int param_1)
 
 {
   int iVar1;
-  int iVar2;
-  bool bVar3;
+  bool bVar2;
   
-  iVar1 = __savegprlr_28(param_1);
-  iVar2 = SV_GetServerThreadOwnsGame();
-  if (iVar2 == 0) {
-    bVar3 = Sys_IsRenderThread();
+  iVar1 = SV_GetServerThreadOwnsGame();
+  if (iVar1 == 0) {
+    bVar2 = Sys_IsRenderThread();
   }
   else {
-    bVar3 = Sys_IsServerThread();
+    bVar2 = Sys_IsServerThread();
   }
-  if (bVar3 == false) {
+  if (bVar2 == false) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
                     0xc95,0,"%s");
   }
@@ -1823,12 +1753,11 @@ void LargeLocalEndRight(int param_1)
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
                     0xc96,0,"%s");
   }
-  g_largeLocalRightPos = iVar1;
+  g_largeLocalRightPos = param_1;
   if ((int)(g_minLargeLocalRightPos & 0xffff0000U) < (int)(DAT_84015a9c + 0xffffU & 0xffff0000)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
                     0xc9a,0,"%s");
   }
-  __restgprlr_28();
   return;
 }
 
@@ -1869,27 +1798,27 @@ void LargeLocalResetToMark(int param_1)
 
 // 825E2540  LargeLocalGetBuf  (universal/com_memory.cpp:3271)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void * LargeLocalGetBuf(int param_1,int param_2)
 
 {
-  longlong lVar1;
-  bool bVar4;
-  int iVar2;
-  void *pvVar3;
-  ulonglong uVar5;
+  bool bVar2;
+  int iVar1;
+  longlong lVar3;
   
-  uVar5 = (ulonglong)param_2;
-  lVar1 = __savegprlr_27(param_1);
-  bVar4 = Sys_IsMainThread();
-  if (!bVar4) {
-    iVar2 = SV_GetServerThreadOwnsGame();
-    if (iVar2 == 0) {
-      bVar4 = Sys_IsRenderThread();
+  lVar3 = (longlong)param_1;
+  bVar2 = Sys_IsMainThread();
+  if (!bVar2) {
+    iVar1 = SV_GetServerThreadOwnsGame();
+    if (iVar1 == 0) {
+      bVar2 = Sys_IsRenderThread();
     }
     else {
-      bVar4 = Sys_IsServerThread();
+      bVar2 = Sys_IsServerThread();
     }
-    if (bVar4 == false) {
+    if (bVar2 == false) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
                       0xcca,0,"%s");
     }
@@ -1898,80 +1827,34 @@ void * LargeLocalGetBuf(int param_1,int param_2)
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
                     0xccb,0,"%s");
   }
-  if ((uVar5 & 0x7f) != 0) {
+  if ((param_2 & 0x7fU) != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
                     0xccc,0,"%s");
   }
-  bVar4 = Sys_IsMainThread();
-  if ((!bVar4) && (lVar1 = lVar1 - uVar5, lVar1 < 0)) {
+  bVar2 = Sys_IsMainThread();
+  if ((!bVar2) && (lVar3 = lVar3 - param_2, lVar3 < 0)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
                     0xcd3,0,"%s");
   }
-  pvVar3 = (void *)__restgprlr_27(ZEXT48(g_largeLocalBuf) + lVar1);
-  return pvVar3;
+  return g_largeLocalBuf + (int)lVar3;
 }
 
 
 // 825E2650  LargeLocal  (universal/com_memory.cpp:3299)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 LargeLocal * __thiscall LargeLocal::LargeLocal(LargeLocal *this,int param_1)
 
 {
   uint uVar1;
-  int *piVar2;
-  bool bVar5;
-  int iVar3;
-  LargeLocal *pLVar4;
-  
-  piVar2 = (int *)__savegprlr_28(this);
-  if (param_1 == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
-                    0xce4,0,"%s");
-  }
-  bVar5 = Sys_IsMainThread();
-  if (!bVar5) {
-    iVar3 = SV_GetServerThreadOwnsGame();
-    if (iVar3 == 0) {
-      bVar5 = Sys_IsRenderThread();
-    }
-    else {
-      bVar5 = Sys_IsServerThread();
-    }
-    if (bVar5 == false) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
-                      0xce5,0,"%s");
-    }
-  }
-  uVar1 = param_1 + 0x7fU & 0xffffff80;
-  bVar5 = Sys_IsMainThread();
-  if (bVar5) {
-    iVar3 = LargeLocalBegin(uVar1);
-    *piVar2 = iVar3;
-    piVar2[1] = uVar1;
-    pLVar4 = (LargeLocal *)__restgprlr_28(piVar2);
-    return pLVar4;
-  }
-  iVar3 = LargeLocalBeginRight(uVar1);
-  *piVar2 = iVar3;
-  piVar2[1] = uVar1;
-  pLVar4 = (LargeLocal *)__restgprlr_28(piVar2);
-  return pLVar4;
-}
-
-
-// 825E2738  PopBuf  (universal/com_memory.cpp:3319)
-
-void __thiscall LargeLocal::PopBuf(LargeLocal *this)
-
-{
-  int *piVar1;
   bool bVar3;
   int iVar2;
   
-  piVar1 = (int *)__savegprlr_29(this);
-  if (piVar1[1] == 0) {
+  if (param_1 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
-                    0xcf8,0,"%s");
+                    0xce4,0,"%s");
   }
   bVar3 = Sys_IsMainThread();
   if (!bVar3) {
@@ -1984,19 +1867,61 @@ void __thiscall LargeLocal::PopBuf(LargeLocal *this)
     }
     if (bVar3 == false) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
+                      0xce5,0,"%s");
+    }
+  }
+  uVar1 = param_1 + 0x7fU & 0xffffff80;
+  bVar3 = Sys_IsMainThread();
+  if (bVar3) {
+    iVar2 = LargeLocalBegin(uVar1);
+    this->startPos = iVar2;
+    this->size = uVar1;
+    return this;
+  }
+  iVar2 = LargeLocalBeginRight(uVar1);
+  this->startPos = iVar2;
+  this->size = uVar1;
+  return this;
+}
+
+
+// 825E2738  PopBuf  (universal/com_memory.cpp:3319)
+
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
+void __thiscall LargeLocal::PopBuf(LargeLocal *this)
+
+{
+  bool bVar2;
+  int iVar1;
+  
+  if (this->size == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
+                    0xcf8,0,"%s");
+  }
+  bVar2 = Sys_IsMainThread();
+  if (!bVar2) {
+    iVar1 = SV_GetServerThreadOwnsGame();
+    if (iVar1 == 0) {
+      bVar2 = Sys_IsRenderThread();
+    }
+    else {
+      bVar2 = Sys_IsServerThread();
+    }
+    if (bVar2 == false) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
                       0xcf9,0,"%s");
     }
   }
-  bVar3 = Sys_IsMainThread();
-  if (bVar3) {
-    LargeLocalEnd(*piVar1);
-    piVar1[1] = 0;
-    __restgprlr_29();
+  bVar2 = Sys_IsMainThread();
+  if (bVar2) {
+    LargeLocalEnd(this->startPos);
+    this->size = 0;
     return;
   }
-  LargeLocalEndRight(*piVar1);
-  piVar1[1] = 0;
-  __restgprlr_29();
+  LargeLocalEndRight(this->startPos);
+  this->size = 0;
   return;
 }
 
@@ -2016,41 +1941,43 @@ void __thiscall LargeLocal::~LargeLocal(LargeLocal *this)
 
 // 825E2828  GetBuf  (universal/com_memory.cpp:3354)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void * __thiscall LargeLocal::GetBuf(LargeLocal *this)
 
 {
-  int *piVar1;
-  bool bVar4;
-  int iVar2;
-  void *pvVar3;
+  bool bVar3;
+  int iVar1;
+  void *pvVar2;
   
-  piVar1 = (int *)__savegprlr_29(this);
-  if (piVar1[1] == 0) {
+  if (this->size == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
                     0xd1b,0,"%s");
   }
-  bVar4 = Sys_IsMainThread();
-  if (!bVar4) {
-    iVar2 = SV_GetServerThreadOwnsGame();
-    if (iVar2 == 0) {
-      bVar4 = Sys_IsRenderThread();
+  bVar3 = Sys_IsMainThread();
+  if (!bVar3) {
+    iVar1 = SV_GetServerThreadOwnsGame();
+    if (iVar1 == 0) {
+      bVar3 = Sys_IsRenderThread();
     }
     else {
-      bVar4 = Sys_IsServerThread();
+      bVar3 = Sys_IsServerThread();
     }
-    if (bVar4 == false) {
+    if (bVar3 == false) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
                       0xd1c,0,"%s");
     }
   }
-  pvVar3 = LargeLocalGetBuf(*piVar1,piVar1[1]);
-  pvVar3 = (void *)__restgprlr_29(pvVar3);
-  return pvVar3;
+  pvVar2 = LargeLocalGetBuf(this->startPos,this->size);
+  return pvVar2;
 }
 
 
 // 825E4858  LargeLocalInit  (universal/com_memory.cpp:3368)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void LargeLocalInit(void)
@@ -2058,7 +1985,6 @@ void LargeLocalInit(void)
 {
   uchar *puVar1;
   
-  __savegprlr_28();
   if (g_largeLocalBuf != (uchar *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
                     0xd29,0,"%s");
@@ -2074,7 +2000,6 @@ void LargeLocalInit(void)
   g_minLargeLocalRightPos = 0x90000;
   g_largeLocalBuf = puVar1;
   LargeLocalClear();
-  __restgprlr_28();
   return;
 }
 
@@ -2103,6 +2028,8 @@ void LargeLocalShutdown(void)
 
 // 825E28D8  LargeLocalReset  (universal/com_memory.cpp:3403)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void LargeLocalReset(void)
@@ -2113,7 +2040,6 @@ void LargeLocalReset(void)
   bool bVar4;
   int iVar3;
   
-  __savegprlr_29();
   bVar4 = Sys_IsMainThread();
   if (!bVar4) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
@@ -2138,13 +2064,14 @@ void LargeLocalReset(void)
   g_minLargeLocalRightPos = g_largeLocalRightPos;
   R_ReleaseThreadOwnership();
   R_PushRemoteScreenUpdate(iVar3);
-  __restgprlr_29();
   return;
 }
 
 
 // 825E29F0  LargeLocalClear  (universal/com_memory.cpp:3445)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void LargeLocalClear(void)
@@ -2155,7 +2082,6 @@ void LargeLocalClear(void)
   longlong lVar3;
   uchar *puVar4;
   
-  __savegprlr_29();
   bVar2 = Sys_IsMainThread();
   if (!bVar2) {
     iVar1 = SV_GetServerThreadOwnsGame();
@@ -2198,13 +2124,14 @@ void LargeLocalClear(void)
     Z_VirtualCommit((void *)(ZEXT48(g_largeLocalBuf + g_minLargeLocalRightPos) & 0xffff0000),
                     (int)lVar3,10);
   }
-  __restgprlr_29();
   return;
 }
 
 
 // 825E49C8  Hunk_InitDebugMemory  (universal/com_memory.cpp:3494)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void Hunk_InitDebugMemory(void)
@@ -2212,7 +2139,6 @@ void Hunk_InitDebugMemory(void)
 {
   bool bVar1;
   
-  __savegprlr_29();
   bVar1 = Sys_IsMainThread();
   if (!bVar1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
@@ -2223,13 +2149,14 @@ void Hunk_InitDebugMemory(void)
                     0xda8,0,"%s");
   }
   g_debugUser = Hunk_UserCreate(0x1000000,"Hunk_InitDebugMemory",false,0);
-  __restgprlr_29();
   return;
 }
 
 
 // 825E4A60  Hunk_ShutdownDebugMemory  (universal/com_memory.cpp:3509)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void Hunk_ShutdownDebugMemory(void)
@@ -2237,7 +2164,6 @@ void Hunk_ShutdownDebugMemory(void)
 {
   bool bVar1;
   
-  __savegprlr_29();
   bVar1 = Sys_IsMainThread();
   if (!bVar1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
@@ -2249,7 +2175,6 @@ void Hunk_ShutdownDebugMemory(void)
   }
   Hunk_UserDestroy(g_debugUser);
   g_debugUser = (HunkUser *)0x0;
-  __restgprlr_29();
   return;
 }
 
@@ -2277,16 +2202,17 @@ void Hunk_ResetDebugMem(void)
 
 // 825E4AF0  Hunk_AllocDebugMem  (universal/com_memory.cpp:3540)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void * Hunk_AllocDebugMem(int param_1,char *param_2)
 
 {
-  int iVar1;
-  bool bVar3;
-  void *pvVar2;
+  bool bVar2;
+  void *pvVar1;
   
-  iVar1 = __savegprlr_28(param_1,param_2);
-  bVar3 = Sys_IsMainThread();
-  if (!bVar3) {
+  bVar2 = Sys_IsMainThread();
+  if (!bVar2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
                     0xdd5,0,"%s");
   }
@@ -2294,24 +2220,24 @@ void * Hunk_AllocDebugMem(int param_1,char *param_2)
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
                     0xdd6,0,"%s");
   }
-  pvVar2 = Hunk_UserAlloc(g_debugUser,iVar1,4);
-  pvVar2 = (void *)__restgprlr_28(pvVar2);
-  return pvVar2;
+  pvVar1 = Hunk_UserAlloc(g_debugUser,param_1,4);
+  return pvVar1;
 }
 
 
 // 825E4B80  Hunk_AllocDebugMemAligned  (universal/com_memory.cpp:3555)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void * Hunk_AllocDebugMemAligned(int param_1,int param_2)
 
 {
-  int iVar1;
-  bool bVar3;
-  void *pvVar2;
+  bool bVar2;
+  void *pvVar1;
   
-  iVar1 = __savegprlr_27(param_1);
-  bVar3 = Sys_IsMainThread();
-  if (!bVar3) {
+  bVar2 = Sys_IsMainThread();
+  if (!bVar2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
                     0xde4,0,"%s");
   }
@@ -2319,9 +2245,8 @@ void * Hunk_AllocDebugMemAligned(int param_1,int param_2)
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
                     0xde5,0,"%s");
   }
-  pvVar2 = Hunk_UserAlloc(g_debugUser,iVar1,param_2);
-  pvVar2 = (void *)__restgprlr_27(pvVar2);
-  return pvVar2;
+  pvVar1 = Hunk_UserAlloc(g_debugUser,param_1,param_2);
+  return pvVar1;
 }
 
 
@@ -2347,43 +2272,28 @@ void Hunk_FreeDebugMem(void *param_1)
 
 // 825E2BD8  Hunk_UserCreate  (universal/com_memory.cpp:3624)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
+
 HunkUser * Hunk_UserCreate(int param_1,char *param_2,bool param_3,int param_4)
 
 {
   HunkUser **ppHVar1;
   uint uVar2;
-  ulonglong uVar3;
-  uint uVar4;
-  bool bVar8;
-  uchar *puVar5;
-  void *pvVar6;
-  HunkUser *pHVar7;
-  ulonglong uVar9;
+  bool bVar6;
+  uchar *puVar3;
+  void *pvVar4;
+  HunkUser *pHVar5;
   
-  uVar9 = (ulonglong)param_3;
-  uVar3 = __savegprlr_23(param_1);
-  uVar4 = (uint)uVar3;
-  if (uVar3 != ((longlong)((int)uVar4 >> 0x10) +
-                (ulonglong)((int)uVar4 < 0 && (uVar3 & 0xffff) != 0) & 0xffff) << 0x10) {
+  if ((longlong)param_1 !=
+      ((longlong)(param_1 >> 0x10) + (ulonglong)(param_1 < 0 && (param_1 & 0xffffU) != 0) & 0xffff)
+      << 0x10) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
                     0xe2b,0,"%s\n\t(maxSize) = %i");
   }
-  if ((uVar9 & 0xff) == 0) {
-    pHVar7 = Z_VirtualReserve(uVar4,param_2);
-    Z_VirtualCommit(pHVar7,0x20,param_4);
-    pHVar7->end = (int)(pHVar7->buf + (uVar4 - 0x20));
-    pHVar7->pos = (int)pHVar7->buf;
-    if (0x7f < DAT_84015cac) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
-                      0xe6a,0,"%s");
-    }
-    ppHVar1 = g_virtualHunkUser + DAT_84015cac;
-    DAT_84015cac = DAT_84015cac + 1;
-    *ppHVar1 = pHVar7;
-  }
-  else {
-    bVar8 = Sys_IsMainThread();
-    if (bVar8) {
+  if (param_3) {
+    bVar6 = Sys_IsMainThread();
+    if (bVar6) {
       if (g_hunkInuse != 0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
                         0xe34,0,"%s");
@@ -2401,16 +2311,16 @@ HunkUser * Hunk_UserCreate(int param_1,char *param_2,bool param_3,int param_4)
         }
       }
       DAT_84015ca0 = uVar2 + 1;
-      pHVar7 = g_fixedHunkUser + uVar2;
-      puVar5 = PMem_Alloc_NoDebug(uVar4,0x10000,4);
-      g_fixedHunkUser[uVar2].pos = (int)puVar5;
-      g_fixedHunkUser[uVar2].end = (int)(puVar5 + uVar4);
-      XPhysicalProtect(puVar5,uVar4,0x404);
-      ImageCache_GiveMemory(puVar5,puVar5 + uVar4);
+      pHVar5 = g_fixedHunkUser + uVar2;
+      puVar3 = PMem_Alloc_NoDebug(param_1,0x10000,4);
+      g_fixedHunkUser[uVar2].pos = (int)puVar3;
+      g_fixedHunkUser[uVar2].end = (int)(puVar3 + param_1);
+      XPhysicalProtect(puVar3,param_1,0x404);
+      ImageCache_GiveMemory(puVar3,puVar3 + param_1);
     }
     else {
-      bVar8 = Sys_IsDatabaseThread();
-      if (!bVar8) {
+      bVar6 = Sys_IsDatabaseThread();
+      if (!bVar6) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
                         0xe49,0,"%s");
       }
@@ -2431,114 +2341,122 @@ HunkUser * Hunk_UserCreate(int param_1,char *param_2,bool param_3,int param_4)
         }
       }
       DAT_84015ca0 = uVar2 + 1;
-      pHVar7 = g_fixedHunkUser + uVar2;
-      pvVar6 = PMem_AllocFromSource_NoDebug(uVar4,0x10000,4,PMEM_SOURCE_DATABASE);
-      g_fixedHunkUser[uVar2].pos = (int)pvVar6;
-      g_fixedHunkUser[uVar2].end = (int)pvVar6 + uVar4;
-      Com_Memset(pvVar6,0,uVar4);
+      pHVar5 = g_fixedHunkUser + uVar2;
+      pvVar4 = PMem_AllocFromSource_NoDebug(param_1,0x10000,4,PMEM_SOURCE_DATABASE);
+      g_fixedHunkUser[uVar2].pos = (int)pvVar4;
+      g_fixedHunkUser[uVar2].end = (int)pvVar4 + param_1;
+      Com_Memset(pvVar4,0,param_1);
     }
   }
-  if ((pHVar7->pos & 0x1fU) != 0) {
+  else {
+    pHVar5 = Z_VirtualReserve(param_1,param_2);
+    Z_VirtualCommit(pHVar5,0x20,param_4);
+    pHVar5->end = (int)(pHVar5->buf + param_1 + -0x20);
+    pHVar5->pos = (int)pHVar5->buf;
+    if (0x7f < DAT_84015cac) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
+                      0xe6a,0,"%s");
+    }
+    ppHVar1 = g_virtualHunkUser + DAT_84015cac;
+    DAT_84015cac = DAT_84015cac + 1;
+    *ppHVar1 = pHVar5;
+  }
+  if ((pHVar5->pos & 0x1fU) != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
                     0xe71,0,"%s\n\t(user->pos) = %i");
   }
-  pHVar7->maxSize = uVar4;
-  pHVar7->current = pHVar7;
-  pHVar7->fixed = SUB81(uVar9,0);
-  pHVar7->name = param_2;
-  pHVar7->type = param_4;
-  if (pHVar7->next != (HunkUser *)0x0) {
+  pHVar5->maxSize = param_1;
+  pHVar5->current = pHVar5;
+  pHVar5->fixed = param_3;
+  pHVar5->name = param_2;
+  pHVar5->type = param_4;
+  if (pHVar5->next != (HunkUser *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
                     0xe77,0,"%s");
   }
-  pHVar7 = (HunkUser *)__restgprlr_23(pHVar7);
-  return pHVar7;
+  return pHVar5;
 }
 
 
 // 825E2F10  Hunk_UserAlloc  (universal/com_memory.cpp:3715)
 
+/* WARNING: Function: __savegprlr_19 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_19 replaced with injection: xenon_save_restore */
+
 void * Hunk_UserAlloc(HunkUser *param_1,int param_2,int param_3)
 
 {
-  int *piVar1;
-  HunkUser *pHVar2;
-  bool bVar4;
-  void *pvVar3;
+  HunkUser *pHVar1;
+  bool bVar2;
+  ulonglong uVar3;
+  longlong lVar4;
   ulonglong uVar5;
-  ulonglong uVar6;
-  longlong lVar7;
+  HunkUser *pHVar6;
+  void *pvVar7;
   ulonglong uVar8;
-  HunkUser *pHVar9;
-  ulonglong uVar10;
   
-  lVar7 = (longlong)param_3;
-  uVar5 = (ulonglong)param_2;
-  piVar1 = (int *)__savegprlr_19(param_1);
-  if (piVar1 == (int *)0x0) {
+  if (param_1 == (HunkUser *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
                     0xe89,0,"%s");
   }
-  uVar8 = lVar7 - 1;
-  if (((uint)uVar8 & (uint)lVar7) != 0) {
+  uVar5 = (longlong)param_3 - 1;
+  if (((uint)uVar5 & param_3) != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
                     0xe8a,0,"%s");
   }
-  if (0x1000 < (int)(uint)lVar7) {
+  if (0x1000 < param_3) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
                     0xe8b,0,"%s");
   }
-  pHVar2 = (HunkUser *)*piVar1;
-  uVar6 = (ulonglong)(uint)pHVar2->pos;
-  uVar10 = uVar6 + uVar8 & ~uVar8;
-  lVar7 = uVar10 + uVar5;
-  pHVar9 = pHVar2;
-  if (pHVar2->end < (int)lVar7) {
+  pHVar1 = param_1->current;
+  uVar3 = (ulonglong)(uint)pHVar1->pos;
+  uVar8 = uVar3 + uVar5 & ~uVar5;
+  lVar4 = uVar8 + (longlong)param_2;
+  pHVar6 = pHVar1;
+  if (pHVar1->end < (int)lVar4) {
     do {
-      if (*(char *)(piVar1 + 6) != '\0') {
+      if (param_1->fixed != false) {
         Com_Error(ERR_FATAL,"Hunk_UserAlloc: out of memory for \'%s\'");
       }
-      if ((ulonglong)(piVar1[2] - 0x20) < (uVar5 & 0xffffffff)) {
+      if (param_1->maxSize - 0x20U < (uint)param_2) {
         va("size: %d, maxSize: %d");
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
                         0xe9f,0,"%s\n\t%s");
       }
-      pHVar2 = Hunk_UserCreate(piVar1[2],(char *)piVar1[5],false,piVar1[7]);
-      *piVar1 = (int)pHVar2;
-      pHVar9->next = pHVar2;
-      uVar6 = (ulonglong)(uint)pHVar2->pos;
-      uVar10 = uVar6 + uVar8 & ~uVar8;
-      lVar7 = uVar10 + uVar5;
-      pHVar9 = pHVar2;
-    } while (pHVar2->end < (int)lVar7);
+      pHVar1 = Hunk_UserCreate(param_1->maxSize,param_1->name,false,param_1->type);
+      param_1->current = pHVar1;
+      pHVar6->next = pHVar1;
+      uVar3 = (ulonglong)(uint)pHVar1->pos;
+      uVar8 = uVar3 + uVar5 & ~uVar5;
+      lVar4 = uVar8 + (longlong)param_2;
+      pHVar6 = pHVar1;
+    } while (pHVar1->end < (int)lVar4);
   }
-  pHVar2->pos = (int)lVar7;
-  if (*(char *)(piVar1 + 6) == '\0') {
-    uVar5 = uVar6 + 0xffff & 0xffff0000;
-    pvVar3 = (void *)uVar5;
-    if (pvVar3 != (void *)((int)lVar7 + 0xffffU & 0xffff0000)) {
-      if ((longlong)(lVar7 - uVar5) < 1) {
+  pHVar1->pos = (int)lVar4;
+  if (param_1->fixed == false) {
+    uVar5 = uVar3 + 0xffff & 0xffff0000;
+    pvVar7 = (void *)uVar5;
+    if (pvVar7 != (void *)((int)lVar4 + 0xffffU & 0xffff0000)) {
+      if ((longlong)(lVar4 - uVar5) < 1) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
                         0xeb3,0,"%s");
       }
-      Z_VirtualCommit(pvVar3,pHVar2->pos - (int)pvVar3,piVar1[7]);
+      Z_VirtualCommit(pvVar7,pHVar1->pos - (int)pvVar7,param_1->type);
     }
   }
   else {
-    bVar4 = Sys_IsMainThread();
-    if (!bVar4) {
+    bVar2 = Sys_IsMainThread();
+    if (!bVar2) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
                       0xeaa,0,"%s");
     }
     if (g_hunkInuse == 0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
                       0xeab,0,"%s");
-      pvVar3 = (void *)__restgprlr_19(uVar10);
-      return pvVar3;
+      return (void *)uVar8;
     }
   }
-  pvVar3 = (void *)__restgprlr_19(uVar10);
-  return pvVar3;
+  return (void *)uVar8;
 }
 
 
@@ -2624,19 +2542,20 @@ LAB_825e3360:
 
 // 825E3388  Hunk_UserSetPos  (universal/com_memory.cpp:3859)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void Hunk_UserSetPos(HunkUser *param_1,void *param_2)
 
 {
-  int iVar1;
-  bool bVar2;
+  bool bVar1;
   
-  iVar1 = __savegprlr_28(param_1);
-  if (*(char *)(iVar1 + 0x18) == '\0') {
+  if (param_1->fixed == false) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
                     0xf14,0,"%s");
   }
-  bVar2 = Sys_IsMainThread();
-  if (!bVar2) {
+  bVar1 = Sys_IsMainThread();
+  if (!bVar1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
                     0xf16,0,"%s");
   }
@@ -2644,39 +2563,38 @@ void Hunk_UserSetPos(HunkUser *param_1,void *param_2)
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
                     0xf17,0,"%s");
   }
-  if ((int)param_2 < *(int *)(iVar1 + 0xc) - *(int *)(iVar1 + 8)) {
+  if ((int)param_2 < param_1->end - param_1->maxSize) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
                     0xf18,0,"%s");
   }
-  if (*(int *)(iVar1 + 0x10) < (int)param_2) {
+  if (param_1->pos < (int)param_2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
                     0xf1c,0,"%s");
   }
-  *(void **)(iVar1 + 0x10) = param_2;
-  __restgprlr_28();
+  param_1->pos = (int)param_2;
   return;
 }
 
 
 // 825E4C18  Hunk_UserReset  (universal/com_memory.cpp:3881)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void Hunk_UserReset(HunkUser *param_1)
 
 {
-  int iVar1;
-  ulonglong uVar2;
-  bool bVar3;
-  void *pvVar4;
+  ulonglong uVar1;
+  bool bVar2;
+  void *pvVar3;
   
-  uVar2 = __savegprlr_28(param_1);
-  if ((uVar2 & 0xffffffff) == 0) {
+  if (param_1 == (HunkUser *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
                     0xf2c,0,"%s");
   }
-  iVar1 = (int)uVar2;
-  if (*(char *)(iVar1 + 0x18) != '\0') {
-    bVar3 = Sys_IsMainThread();
-    if (!bVar3) {
+  if (param_1->fixed != false) {
+    bVar2 = Sys_IsMainThread();
+    if (!bVar2) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
                       0xf33,0,"%s");
     }
@@ -2684,47 +2602,46 @@ void Hunk_UserReset(HunkUser *param_1)
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
                       0xf34,0,"%s");
     }
-    pvVar4 = (void *)(*(int *)(iVar1 + 0xc) - *(int *)(iVar1 + 8));
-    Com_Memset(pvVar4,0,*(int *)(iVar1 + 0x10) - (int)pvVar4);
-    *(void **)(iVar1 + 0x10) = pvVar4;
-    __restgprlr_28();
+    pvVar3 = (void *)(param_1->end - param_1->maxSize);
+    Com_Memset(pvVar3,0,param_1->pos - (int)pvVar3);
+    param_1->pos = (int)pvVar3;
     return;
   }
-  if (*(HunkUser **)(iVar1 + 4) != (HunkUser *)0x0) {
-    Hunk_UserDestroy(*(HunkUser **)(iVar1 + 4));
-    *(int *)iVar1 = iVar1;
-    *(undefined4 *)(iVar1 + 4) = 0;
+  if (param_1->next != (HunkUser *)0x0) {
+    Hunk_UserDestroy(param_1->next);
+    param_1->current = param_1;
+    param_1->next = (HunkUser *)0x0;
   }
-  uVar2 = uVar2 + 0x1001f & 0xffff0000;
-  pvVar4 = (void *)uVar2;
-  if (pvVar4 != (void *)(*(uint *)(iVar1 + 0x10) + 0xffff & 0xffff0000)) {
-    if ((longlong)(*(uint *)(iVar1 + 0x10) - uVar2) < 1) {
+  uVar1 = (longlong)(int)param_1 + 0x1001fU & 0xffff0000;
+  pvVar3 = (void *)uVar1;
+  if (pvVar3 != (void *)(param_1->pos + 0xffffU & 0xffff0000)) {
+    if ((longlong)((uint)param_1->pos - uVar1) < 1) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
                       0xf47,0,"%s");
     }
-    Z_VirtualDecommit(pvVar4,*(int *)(iVar1 + 0x10) - (int)pvVar4,*(int *)(iVar1 + 0x1c));
+    Z_VirtualDecommit(pvVar3,param_1->pos - (int)pvVar3,param_1->type);
   }
-  *(int *)(iVar1 + 0x10) = iVar1 + 0x20;
+  param_1->pos = (int)param_1->buf;
   memset();
-  __restgprlr_28();
   return;
 }
 
 
 // 825E3490  Hunk_UserDestroy  (universal/com_memory.cpp:3927)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void Hunk_UserDestroy(HunkUser *param_1)
 
 {
-  void *pvVar1;
-  bool bVar2;
-  longlong lVar3;
-  ulonglong uVar4;
+  bool bVar1;
+  longlong lVar2;
+  ulonglong uVar3;
   
-  pvVar1 = (void *)__savegprlr_27(param_1);
-  if (*(char *)((int)pvVar1 + 0x18) != '\0') {
-    bVar2 = Sys_IsMainThread();
-    if (!bVar2) {
+  if (param_1->fixed != false) {
+    bVar1 = Sys_IsMainThread();
+    if (!bVar1) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
                       0xf62,0,"%s");
     }
@@ -2732,48 +2649,46 @@ void Hunk_UserDestroy(HunkUser *param_1)
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
                       0xf63,0,"%s");
     }
-    if (pvVar1 != (void *)(DAT_84015ca0 * 0x24 + -0x7bfea374)) {
+    if (param_1 != (HunkUser *)(g_virtualHunkUser + DAT_84015ca0 * 9 + 0x7b)) {
                     /* WARNING: Subroutine does not return */
       Sys_Error("Hunk_UserDestroy cannot be called on \'%s\'");
     }
     if (g_hunkInuse == 0) {
-      uVar4 = (ulonglong)*(uint *)((int)pvVar1 + 0x10) + 0xffff & 0xffff0000;
-      if (0 < (longlong)(ZEXT48(*(uchar **)((int)pvVar1 + 0xc)) - uVar4)) {
-        ImageCache_FreeMemory((uchar *)uVar4,*(uchar **)((int)pvVar1 + 0xc));
+      uVar3 = (ulonglong)(uint)param_1->pos + 0xffff & 0xffff0000;
+      if (0 < (longlong)(ZEXT48((uchar *)param_1->end) - uVar3)) {
+        ImageCache_FreeMemory((uchar *)uVar3,(uchar *)param_1->end);
       }
     }
     DAT_84015ca0 = DAT_84015ca0 + -1;
-    __restgprlr_27();
     return;
   }
-  if (*(HunkUser **)((int)pvVar1 + 4) != (HunkUser *)0x0) {
-    Hunk_UserDestroy(*(HunkUser **)((int)pvVar1 + 4));
+  if (param_1->next != (HunkUser *)0x0) {
+    Hunk_UserDestroy(param_1->next);
   }
-  if (*(char *)((int)pvVar1 + 0x18) != '\0') {
+  if (param_1->fixed != false) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
                     0xf81,0,"%s");
   }
-  uVar4 = (ulonglong)DAT_84015cac - 1;
-  if (-1 < (longlong)uVar4) {
-    lVar3 = (uVar4 & 0x3fffffff) * 4 + -0x7bfea560;
+  uVar3 = (ulonglong)DAT_84015cac - 1;
+  if (-1 < (longlong)uVar3) {
+    lVar2 = (uVar3 & 0x3fffffff) * 4 + -0x7bfea560;
     do {
-      if ((void *)*(int *)lVar3 == pvVar1) {
-        if (-1 < (int)uVar4) goto LAB_825e361c;
+      if ((HunkUser *)*(int *)lVar2 == param_1) {
+        if (-1 < (int)uVar3) goto LAB_825e361c;
         break;
       }
-      uVar4 = uVar4 - 1;
-      lVar3 = lVar3 + -4;
-    } while (-1 < (longlong)uVar4);
+      uVar3 = uVar3 - 1;
+      lVar2 = lVar2 + -4;
+    } while (-1 < (longlong)uVar3);
   }
   MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",0xf8b,
                   0,"%s");
 LAB_825e361c:
-  if ((int)uVar4 != DAT_84015cac - 1) {
+  if ((int)uVar3 != DAT_84015cac - 1) {
     memmove();
   }
   DAT_84015cac = DAT_84015cac - 1;
-  Z_VirtualFree(pvVar1,*(int *)((int)pvVar1 + 0x1c));
-  __restgprlr_27();
+  Z_VirtualFree(param_1,param_1->type);
   return;
 }
 
@@ -2793,34 +2708,34 @@ uint Hunk_UserFreeMemoryAmount(HunkUser *param_1)
 
 // 825E36D0  Hunk_UserUsedSize  (universal/com_memory.cpp:4007)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 int Hunk_UserUsedSize(HunkUser *param_1)
 
 {
-  int *piVar1;
-  int *piVar2;
-  bool bVar4;
+  HunkUser *pHVar1;
+  bool bVar2;
   int iVar3;
   
-  piVar2 = (int *)__savegprlr_26(param_1);
-  if (piVar2 == (int *)0x0) {
+  if (param_1 == (HunkUser *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
                     0xfac,0,"%s");
   }
-  if (*(char *)(piVar2 + 6) == '\0') {
-    piVar1 = (int *)*piVar2;
-    iVar3 = piVar1[4] - (int)piVar1;
-    for (; piVar2 != piVar1; piVar2 = (int *)piVar2[1]) {
-      if (piVar2 == (int *)0x0) {
+  if (param_1->fixed == false) {
+    pHVar1 = param_1->current;
+    iVar3 = pHVar1->pos - (int)pHVar1;
+    for (; param_1 != pHVar1; param_1 = param_1->next) {
+      if (param_1 == (HunkUser *)0x0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
                         0xfbf,0,"%s");
       }
-      iVar3 = (piVar2[4] - (int)piVar2) + iVar3 + -0x20;
+      iVar3 = (param_1->pos - (int)param_1) + iVar3 + -0x20;
     }
-    iVar3 = __restgprlr_26(iVar3 + -0x20);
-    return iVar3;
+    return iVar3 + -0x20;
   }
-  bVar4 = Sys_IsMainThread();
-  if (!bVar4) {
+  bVar2 = Sys_IsMainThread();
+  if (!bVar2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
                     0xfb1,0,"%s");
   }
@@ -2828,14 +2743,14 @@ int Hunk_UserUsedSize(HunkUser *param_1)
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
                     0xfb2,0,"%s");
   }
-  iVar3 = __restgprlr_26(((ulonglong)(uint)piVar2[4] - (ulonglong)(uint)piVar2[3]) +
-                         (ulonglong)(uint)piVar2[2]);
-  return iVar3;
+  return (param_1->pos - param_1->end) + param_1->maxSize;
 }
 
 
 // 825E37F8  Hunk_UserMemoryInfo_f  (universal/com_memory.cpp:4044)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void Hunk_UserMemoryInfo_f(void)
@@ -2844,7 +2759,6 @@ void Hunk_UserMemoryInfo_f(void)
   uint uVar1;
   int iVar2;
   
-  __savegprlr_24();
   if (DAT_84015ca0 != 0) {
     Com_Printf(0x10,"Fixed Hunk Users: %d\n");
     uVar1 = 0;
@@ -2867,13 +2781,14 @@ void Hunk_UserMemoryInfo_f(void)
     }
     Com_Printf(0x10,"Virtual Total : %6d/%6d KB committed\n");
   }
-  __restgprlr_24();
   return;
 }
 
 
 // 825E3970  Hunk_Begin  (universal/com_memory.cpp:4106)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void Hunk_Begin(void)
@@ -2888,7 +2803,6 @@ void Hunk_Begin(void)
   uint uVar7;
   int *piVar8;
   
-  __savegprlr_26();
   bVar3 = Sys_IsMainThread();
   if (!bVar3) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
@@ -2950,13 +2864,14 @@ void Hunk_Begin(void)
       piVar8 = piVar8 + 9;
     } while (uVar7 < uVar5);
   }
-  __restgprlr_26();
   return;
 }
 
 
 // 825E3B68  Hunk_End  (universal/com_memory.cpp:4182)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void Hunk_End(void)
@@ -2972,7 +2887,6 @@ void Hunk_End(void)
   uint uVar8;
   int *piVar9;
   
-  __savegprlr_26();
   bVar4 = Sys_IsMainThread();
   if (!bVar4) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_memory.cpp",
@@ -3031,7 +2945,6 @@ void Hunk_End(void)
   if (iVar3 != 0) {
     R_AcquireDeviceOwnership();
   }
-  __restgprlr_26();
   return;
 }
 
@@ -3057,6 +2970,8 @@ int Hunk_Inuse(void)
 
 // 825E3D80  Hunk_FreeMemory  (universal/com_memory.cpp:4272)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 int Hunk_FreeMemory(void)
@@ -3066,38 +2981,35 @@ int Hunk_FreeMemory(void)
   HunkUser **ppHVar2;
   HunkUser **ppHVar3;
   int iVar4;
-  longlong lVar5;
-  longlong lVar6;
-  uint uVar7;
-  HunkUser **ppHVar8;
-  longlong lVar9;
+  int iVar5;
+  uint uVar6;
+  HunkUser **ppHVar7;
+  int iVar8;
   
-  __savegprlr_27();
-  lVar6 = 0;
-  lVar5 = 0;
-  uVar7 = 0;
-  lVar9 = ((ulonglong)(uint)s_hunkTotal - (ulonglong)DAT_84015d44) - (ulonglong)DAT_84015d48;
+  iVar5 = 0;
+  iVar4 = 0;
+  uVar6 = 0;
+  iVar8 = (s_hunkTotal - DAT_84015d44) - DAT_84015d48;
   if (1 < (int)DAT_84015ca0) {
-    ppHVar8 = g_virtualHunkUser + 0x7f;
+    ppHVar7 = g_virtualHunkUser + 0x7f;
+    iVar5 = 0;
+    iVar4 = 0;
     do {
-      ppHVar1 = ppHVar8 + 8;
-      uVar7 = uVar7 + 2;
-      ppHVar2 = ppHVar8 + 9;
-      ppHVar3 = ppHVar8 + 0x11;
-      ppHVar8 = ppHVar8 + 0x12;
-      lVar6 = (ZEXT48(*ppHVar1) - (ZEXT48(*ppHVar2) + 0xffff & 0xffff0000)) + lVar6;
-      lVar5 = (ZEXT48(*ppHVar3) - (ZEXT48(*ppHVar8) + 0xffff & 0xffff0000)) + lVar5;
-    } while (uVar7 < DAT_84015ca0 - 1);
+      ppHVar1 = ppHVar7 + 8;
+      uVar6 = uVar6 + 2;
+      ppHVar2 = ppHVar7 + 9;
+      ppHVar3 = ppHVar7 + 0x11;
+      ppHVar7 = ppHVar7 + 0x12;
+      iVar5 = (int)*ppHVar1 + (iVar5 - ((uint)((int)&(*ppHVar2)[0x71c].end + 3) & 0xffff0000));
+      iVar4 = (int)*ppHVar3 + (iVar4 - ((uint)((int)&(*ppHVar7)[0x71c].end + 3) & 0xffff0000));
+    } while (uVar6 < DAT_84015ca0 - 1);
   }
-  if (uVar7 < DAT_84015ca0) {
-    iVar4 = __restgprlr_27(lVar5 + lVar6 +
-                           ((ulonglong)(uint)g_fixedHunkUser[uVar7].end -
-                           ((ulonglong)(uint)g_fixedHunkUser[uVar7].pos + 0xffff & 0xffff0000)) +
-                           lVar9);
-    return iVar4;
+  if (uVar6 < DAT_84015ca0) {
+    return iVar4 + iVar5 +
+           (g_fixedHunkUser[uVar6].end - (g_fixedHunkUser[uVar6].pos + 0xffffU & 0xffff0000)) +
+           iVar8;
   }
-  iVar4 = __restgprlr_27(lVar5 + lVar6 + lVar9);
-  return iVar4;
+  return iVar4 + iVar5 + iVar8;
 }
 
 
@@ -3128,17 +3040,17 @@ char * Hunk_CopyString(HunkUser *param_1,char *param_2)
 
 // 825E3ED0  Hunk_CopyNString  (universal/com_memory.cpp:4322)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 char * Hunk_CopyNString(HunkUser *param_1,char *param_2,int param_3)
 
 {
-  HunkUser *pHVar1;
-  char *pcVar2;
+  char *pcVar1;
   
-  pHVar1 = (HunkUser *)__savegprlr_29(param_1);
-  pcVar2 = Hunk_UserAlloc(pHVar1,param_3 + 1,1);
-  strncpy(pcVar2,param_2,param_3);
-  pcVar2[param_3] = '\0';
-  pcVar2 = (char *)__restgprlr_29(pcVar2);
-  return pcVar2;
+  pcVar1 = Hunk_UserAlloc(param_1,param_3 + 1,1);
+  strncpy(pcVar1,param_2,param_3);
+  pcVar1[param_3] = '\0';
+  return pcVar1;
 }
 

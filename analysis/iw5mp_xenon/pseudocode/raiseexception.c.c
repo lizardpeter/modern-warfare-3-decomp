@@ -2,37 +2,35 @@
 
 // 828A97A0  RaiseException  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/xrtl/raiseexception.c:62)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void RaiseException(ulong param_1,ulong param_2,ulong param_3,ulong *param_4)
 
 {
-  ulonglong uVar1;
-  ulonglong uVar2;
-  undefined4 local_80;
+  ulong local_80;
   uint local_7c;
   undefined4 local_78;
   code *local_74;
-  int local_70;
+  ulong local_70;
   
-  uVar2 = (ulonglong)(int)param_4;
-  uVar1 = (ulonglong)(int)param_3;
-  local_80 = __savegprlr_28(param_1);
   local_7c = param_2 & 1;
   local_78 = 0;
   local_74 = RaiseException;
-  if ((uVar2 & 0xffffffff) == 0) {
+  local_80 = param_1;
+  if (param_4 == (ulong *)0x0) {
     local_70 = 0;
   }
   else {
-    local_70 = (int)uVar1;
-    if (0xf < (uVar1 & 0xffffffff)) {
-      local_70 = 0xf;
+    if (0xf < param_3) {
+      param_3 = 0xf;
     }
-    if (local_70 != 0) {
+    local_70 = param_3;
+    if (param_3 != 0) {
       _blkmov();
     }
   }
   RtlRaiseException(&local_80);
-  __restgprlr_28();
   return;
 }
 

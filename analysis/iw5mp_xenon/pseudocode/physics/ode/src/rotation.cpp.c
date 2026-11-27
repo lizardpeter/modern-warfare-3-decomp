@@ -27,83 +27,84 @@ void dRSetIdentity(float *param_1)
 
 // 826A1068  dRFromAxisAndAngle  (physics/ode/src/rotation.cpp:61)
 
+/* WARNING: Function: __savefpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_28 replaced with injection: xenon_save_restore */
+
 void dRFromAxisAndAngle(float *param_1,float param_2,float param_3,float param_4,float param_5)
 
 {
-  float *pfVar1;
-  double extraout_f1;
+  double dVar1;
   double dVar2;
   double dVar3;
   double dVar4;
-  double dVar5;
   float afStack_40 [12];
   
   dVar4 = (double)param_5;
   dVar3 = (double)param_4;
   dVar2 = (double)param_3;
-  pfVar1 = (float *)__savefpr_28((double)param_2,param_1);
-  dVar5 = extraout_f1;
-  if (pfVar1 == (float *)0x0) {
+  dVar1 = (double)param_2;
+  if (param_1 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\rotation.cpp"
                     ,0x3e,0,"%s");
   }
-  dQFromAxisAndAngle(afStack_40,(float)dVar5,(float)dVar2,(float)dVar3,(float)dVar4);
-  dRfromQ(pfVar1,afStack_40);
-  __restfpr_28();
+  dQFromAxisAndAngle(afStack_40,(float)dVar1,(float)dVar2,(float)dVar3,(float)dVar4);
+  dRfromQ(param_1,afStack_40);
   return;
 }
 
 
 // 826A0160  dRFromEulerAngles  (physics/ode/src/rotation.cpp:70)
 
+/* WARNING: Function: __savefpr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_26 replaced with injection: xenon_save_restore */
+
 void dRFromEulerAngles(float *param_1,float param_2,float param_3,float param_4)
 
 {
-  float *pfVar1;
-  double extraout_f1;
+  double dVar1;
   double dVar2;
   double dVar3;
   double dVar4;
   double dVar5;
   double dVar6;
   double dVar7;
-  double dVar8;
   
-  dVar4 = (double)param_4;
-  dVar5 = (double)param_3;
-  pfVar1 = (float *)__savefpr_26((double)param_2,param_1);
-  dVar3 = extraout_f1;
-  if (pfVar1 == (float *)0x0) {
+  dVar3 = (double)param_4;
+  dVar4 = (double)param_3;
+  dVar2 = (double)param_2;
+  if (param_1 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\rotation.cpp"
                     ,0x48,0,"%s");
   }
-  dVar2 = sin(dVar3);
+  dVar1 = sin(dVar2);
+  dVar5 = (double)(float)dVar1;
+  dVar2 = cos(dVar2);
+  dVar7 = (double)(float)dVar2;
+  dVar2 = sin(dVar4);
+  dVar1 = (double)(float)dVar2;
+  dVar2 = cos(dVar4);
   dVar6 = (double)(float)dVar2;
-  dVar3 = cos(dVar3);
-  dVar8 = (double)(float)dVar3;
-  dVar3 = sin(dVar5);
-  dVar2 = (double)(float)dVar3;
-  dVar3 = cos(dVar5);
-  dVar7 = (double)(float)dVar3;
-  dVar3 = sin(dVar4);
-  dVar5 = (double)(float)dVar3;
-  dVar3 = cos(dVar4);
-  dVar3 = (double)(float)dVar3;
-  pfVar1[1] = (float)(dVar5 * dVar7);
-  pfVar1[2] = (float)-dVar2;
-  pfVar1[6] = (float)(dVar7 * dVar6);
-  pfVar1[10] = (float)(dVar7 * dVar8);
-  *pfVar1 = (float)(dVar3 * dVar7);
-  pfVar1[5] = (float)((double)(float)(dVar5 * dVar2) * dVar6 + (double)(float)(dVar3 * dVar8));
-  pfVar1[4] = (float)((double)(float)(dVar3 * dVar2) * dVar6 - (double)(float)(dVar5 * dVar8));
-  pfVar1[8] = (float)((double)(float)(dVar3 * dVar2) * dVar8 + (double)(float)(dVar5 * dVar6));
-  pfVar1[9] = (float)((double)(float)(dVar5 * dVar2) * dVar8 - (double)(float)(dVar3 * dVar6));
-  __restfpr_26();
+  dVar2 = sin(dVar3);
+  dVar4 = (double)(float)dVar2;
+  dVar2 = cos(dVar3);
+  dVar2 = (double)(float)dVar2;
+  param_1[1] = (float)(dVar4 * dVar6);
+  param_1[2] = (float)-dVar1;
+  param_1[6] = (float)(dVar6 * dVar5);
+  param_1[10] = (float)(dVar6 * dVar7);
+  *param_1 = (float)(dVar2 * dVar6);
+  param_1[5] = (float)((double)(float)(dVar4 * dVar1) * dVar5 + (double)(float)(dVar2 * dVar7));
+  param_1[4] = (float)((double)(float)(dVar2 * dVar1) * dVar5 - (double)(float)(dVar4 * dVar7));
+  param_1[8] = (float)((double)(float)(dVar2 * dVar1) * dVar7 + (double)(float)(dVar4 * dVar5));
+  param_1[9] = (float)((double)(float)(dVar4 * dVar1) * dVar7 - (double)(float)(dVar2 * dVar5));
   return;
 }
 
 
 // 826A0278  dRFrom2Axes  (physics/ode/src/rotation.cpp:93)
+
+/* WARNING: Function: __savefpr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_26 replaced with injection: xenon_save_restore */
 
 void dRFrom2Axes(float *param_1,float param_2,float param_3,float param_4,float param_5,
                 float param_6,float param_7)
@@ -113,9 +114,8 @@ void dRFrom2Axes(float *param_1,float param_2,float param_3,float param_4,float 
   float fVar2;
   float fVar3;
   float fVar4;
-  float *pfVar5;
+  double dVar5;
   double dVar6;
-  double extraout_f1;
   double dVar7;
   double dVar8;
   double dVar9;
@@ -125,52 +125,48 @@ void dRFrom2Axes(float *param_1,float param_2,float param_3,float param_4,float 
   double dVar13;
   double dVar14;
   double dVar15;
-  double dVar16;
   
-  dVar8 = (double)param_6;
-  dVar10 = (double)param_7;
-  dVar7 = (double)param_5;
-  dVar12 = (double)param_4;
-  dVar11 = (double)param_3;
-  pfVar5 = (float *)__savefpr_26((double)param_2,param_1);
-  dVar9 = extraout_f1;
-  if (pfVar5 == (float *)0x0) {
+  dVar7 = (double)param_6;
+  dVar9 = (double)param_7;
+  dVar6 = (double)param_5;
+  dVar11 = (double)param_4;
+  dVar8 = (double)param_2;
+  dVar10 = (double)param_3;
+  if (param_1 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\rotation.cpp"
                     ,0x5f,0,"%s");
   }
-  fVar1 = SQRT((float)(dVar12 * dVar12 +
-                      (double)(float)(dVar9 * dVar9 + (double)(float)(dVar11 * dVar11))));
+  fVar1 = SQRT((float)(dVar11 * dVar11 +
+                      (double)(float)(dVar8 * dVar8 + (double)(float)(dVar10 * dVar10))));
   if (0.0 < fVar1) {
-    dVar14 = (double)(1.0 / fVar1);
-    dVar6 = (double)(float)(dVar14 * dVar11);
-    dVar16 = (double)(float)(dVar14 * dVar9);
-    dVar15 = (double)(float)(dVar14 * dVar12);
-    dVar13 = (double)(float)(dVar15 * dVar10 +
-                            (double)(float)(dVar16 * dVar7 + (double)(float)(dVar6 * dVar8)));
-    fVar2 = -(float)(dVar13 * dVar6 - dVar8);
-    fVar4 = -(float)(dVar13 * dVar16 - dVar7);
-    fVar3 = -(float)(dVar13 * dVar15 - dVar10);
+    dVar13 = (double)(1.0 / fVar1);
+    dVar5 = (double)(float)(dVar13 * dVar10);
+    dVar15 = (double)(float)(dVar13 * dVar8);
+    dVar14 = (double)(float)(dVar13 * dVar11);
+    dVar12 = (double)(float)(dVar14 * dVar9 +
+                            (double)(float)(dVar15 * dVar6 + (double)(float)(dVar5 * dVar7)));
+    fVar2 = -(float)(dVar12 * dVar5 - dVar7);
+    fVar4 = -(float)(dVar12 * dVar15 - dVar6);
+    fVar3 = -(float)(dVar12 * dVar14 - dVar9);
     fVar1 = SQRT(fVar3 * fVar3 + fVar4 * fVar4 + fVar2 * fVar2);
     if (0.0 < fVar1) {
       fVar1 = 1.0 / fVar1;
-      *pfVar5 = (float)(dVar14 * dVar9);
-      pfVar5[4] = (float)(dVar14 * dVar11);
-      pfVar5[8] = (float)(dVar14 * dVar12);
-      dVar12 = (double)(fVar1 * fVar4);
-      pfVar5[1] = fVar1 * fVar4;
-      dVar11 = (double)(fVar1 * fVar2);
-      pfVar5[5] = fVar1 * fVar2;
-      dVar9 = (double)(fVar1 * fVar3);
-      pfVar5[9] = fVar1 * fVar3;
-      pfVar5[10] = (float)(dVar16 * dVar11 - (double)(float)(dVar6 * dVar12));
-      pfVar5[2] = (float)(dVar6 * dVar9 - (double)(float)(dVar15 * dVar11));
-      pfVar5[6] = (float)(dVar15 * dVar12 - (double)(float)(dVar16 * dVar9));
-      goto LAB_826a03a0;
+      *param_1 = (float)(dVar13 * dVar8);
+      param_1[4] = (float)(dVar13 * dVar10);
+      param_1[8] = (float)(dVar13 * dVar11);
+      dVar11 = (double)(fVar1 * fVar4);
+      param_1[1] = fVar1 * fVar4;
+      dVar10 = (double)(fVar1 * fVar2);
+      param_1[5] = fVar1 * fVar2;
+      dVar8 = (double)(fVar1 * fVar3);
+      param_1[9] = fVar1 * fVar3;
+      param_1[10] = (float)(dVar15 * dVar10 - (double)(float)(dVar5 * dVar11));
+      param_1[2] = (float)(dVar5 * dVar8 - (double)(float)(dVar14 * dVar10));
+      param_1[6] = (float)(dVar14 * dVar11 - (double)(float)(dVar15 * dVar8));
+      return;
     }
   }
   Com_PrintWarning(0x14,"ODE: zero length vector");
-LAB_826a03a0:
-  __restfpr_26();
   return;
 }
 
@@ -227,178 +223,141 @@ void dQSetIdentity(float *param_1)
 
 // 826A04D0  dQFromAxisAndAngle  (physics/ode/src/rotation.cpp:168)
 
+/* WARNING: Function: __savefpr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_27 replaced with injection: xenon_save_restore */
+
 void dQFromAxisAndAngle(float *param_1,float param_2,float param_3,float param_4,float param_5)
 
 {
-  float *pfVar1;
-  double extraout_f1;
+  double dVar1;
   double dVar2;
   double dVar3;
   double dVar4;
   double dVar5;
   double dVar6;
-  double dVar7;
   
   dVar2 = (double)param_5;
   dVar4 = (double)param_4;
   dVar3 = (double)param_3;
-  pfVar1 = (float *)__savefpr_27((double)param_2,param_1);
-  dVar7 = extraout_f1;
-  if (pfVar1 == (float *)0x0) {
+  dVar1 = (double)param_2;
+  if (param_1 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\rotation.cpp"
                     ,0xa9,0,"%s");
   }
   dVar6 = (double)(float)(dVar4 * dVar4 +
-                         (double)(float)(dVar7 * dVar7 + (double)(float)(dVar3 * dVar3)));
+                         (double)(float)(dVar1 * dVar1 + (double)(float)(dVar3 * dVar3)));
   if (dVar6 <= 0.0) {
-    pfVar1[1] = 0.0;
-    pfVar1[2] = 0.0;
-    pfVar1[3] = 0.0;
-    *pfVar1 = 1.0;
+    param_1[1] = 0.0;
+    param_1[2] = 0.0;
+    param_1[3] = 0.0;
+    *param_1 = 1.0;
   }
   else {
     dVar5 = (double)(float)(dVar2 * 0.5);
     dVar2 = cos(dVar5);
-    *pfVar1 = (float)dVar2;
+    *param_1 = (float)dVar2;
     dVar2 = sin(dVar5);
     dVar2 = (double)((float)dVar2 * (1.0 / (float)SQRT(dVar6)));
-    pfVar1[1] = (float)(dVar2 * dVar7);
-    pfVar1[2] = (float)(dVar2 * dVar3);
-    pfVar1[3] = (float)(dVar2 * dVar4);
+    param_1[1] = (float)(dVar2 * dVar1);
+    param_1[2] = (float)(dVar2 * dVar3);
+    param_1[3] = (float)(dVar2 * dVar4);
   }
-  __restfpr_27();
   return;
 }
 
 
 // 826A05D0  dQMultiply0  (physics/ode/src/rotation.cpp:189)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void dQMultiply0(float *param_1,float *param_2,float *param_3)
 
 {
-  float *pfVar1;
-  float *pfVar2;
-  float *pfVar3;
-  ulonglong uVar4;
-  ulonglong uVar5;
-  
-  uVar5 = (ulonglong)(int)param_3;
-  uVar4 = (ulonglong)(int)param_2;
-  pfVar3 = (float *)__savegprlr_29(param_1);
-  if (((pfVar3 == (float *)0x0) || ((uVar4 & 0xffffffff) == 0)) || ((uVar5 & 0xffffffff) == 0)) {
+  if (((param_1 == (float *)0x0) || (param_2 == (float *)0x0)) || (param_3 == (float *)0x0)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\rotation.cpp"
                     ,0xbe,0,"%s");
   }
-  pfVar1 = (float *)uVar5;
-  pfVar2 = (float *)uVar4;
-  *pfVar3 = -(pfVar1[3] * pfVar2[3] -
-             -(pfVar1[2] * pfVar2[2] - (*pfVar2 * *pfVar1 - pfVar1[1] * pfVar2[1])));
-  pfVar3[1] = -(pfVar1[2] * pfVar2[3] -
-               (*pfVar1 * pfVar2[1] + pfVar1[1] * *pfVar2 + pfVar1[3] * pfVar2[2]));
-  pfVar3[2] = -(pfVar1[3] * pfVar2[1] -
-               (*pfVar1 * pfVar2[2] + pfVar1[2] * *pfVar2 + pfVar1[1] * pfVar2[3]));
-  pfVar3[3] = -(pfVar1[1] * pfVar2[2] -
-               (*pfVar1 * pfVar2[3] + pfVar1[3] * *pfVar2 + pfVar1[2] * pfVar2[1]));
-  __restgprlr_29();
+  *param_1 = -(param_3[3] * param_2[3] -
+              -(param_3[2] * param_2[2] - (*param_2 * *param_3 - param_3[1] * param_2[1])));
+  param_1[1] = -(param_3[2] * param_2[3] -
+                (*param_3 * param_2[1] + param_3[1] * *param_2 + param_3[3] * param_2[2]));
+  param_1[2] = -(param_3[3] * param_2[1] -
+                (*param_3 * param_2[2] + param_3[2] * *param_2 + param_3[1] * param_2[3]));
+  param_1[3] = -(param_3[1] * param_2[2] -
+                (*param_3 * param_2[3] + param_3[3] * *param_2 + param_3[2] * param_2[1]));
   return;
 }
 
 
 // 826A0700  dQMultiply1  (physics/ode/src/rotation.cpp:199)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void dQMultiply1(float *param_1,float *param_2,float *param_3)
 
 {
-  float *pfVar1;
-  float *pfVar2;
-  float *pfVar3;
-  ulonglong uVar4;
-  ulonglong uVar5;
-  
-  uVar5 = (ulonglong)(int)param_3;
-  uVar4 = (ulonglong)(int)param_2;
-  pfVar3 = (float *)__savegprlr_29(param_1);
-  if (((pfVar3 == (float *)0x0) || ((uVar4 & 0xffffffff) == 0)) || ((uVar5 & 0xffffffff) == 0)) {
+  if (((param_1 == (float *)0x0) || (param_2 == (float *)0x0)) || (param_3 == (float *)0x0)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\rotation.cpp"
                     ,200,0,"%s");
   }
-  pfVar1 = (float *)uVar5;
-  pfVar2 = (float *)uVar4;
-  *pfVar3 = *pfVar2 * *pfVar1 +
-            pfVar1[1] * pfVar2[1] + pfVar2[3] * pfVar1[3] + pfVar1[2] * pfVar2[2];
-  pfVar3[1] = pfVar2[3] * pfVar1[2] +
-              -(pfVar2[2] * pfVar1[3] - (pfVar1[1] * *pfVar2 - pfVar2[1] * *pfVar1));
-  pfVar3[2] = pfVar2[1] * pfVar1[3] +
-              -(pfVar2[3] * pfVar1[1] - (pfVar1[2] * *pfVar2 - pfVar2[2] * *pfVar1));
-  pfVar3[3] = pfVar1[1] * pfVar2[2] +
-              -(pfVar1[2] * pfVar2[1] - (*pfVar2 * pfVar1[3] - pfVar2[3] * *pfVar1));
-  __restgprlr_29();
+  *param_1 = *param_2 * *param_3 +
+             param_3[1] * param_2[1] + param_2[3] * param_3[3] + param_3[2] * param_2[2];
+  param_1[1] = param_2[3] * param_3[2] +
+               -(param_2[2] * param_3[3] - (param_3[1] * *param_2 - param_2[1] * *param_3));
+  param_1[2] = param_2[1] * param_3[3] +
+               -(param_2[3] * param_3[1] - (param_3[2] * *param_2 - param_2[2] * *param_3));
+  param_1[3] = param_3[1] * param_2[2] +
+               -(param_3[2] * param_2[1] - (*param_2 * param_3[3] - param_2[3] * *param_3));
   return;
 }
 
 
 // 826A0830  dQMultiply2  (physics/ode/src/rotation.cpp:209)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void dQMultiply2(float *param_1,float *param_2,float *param_3)
 
 {
-  float *pfVar1;
-  float *pfVar2;
-  float *pfVar3;
-  ulonglong uVar4;
-  ulonglong uVar5;
-  
-  uVar5 = (ulonglong)(int)param_3;
-  uVar4 = (ulonglong)(int)param_2;
-  pfVar3 = (float *)__savegprlr_29(param_1);
-  if (((pfVar3 == (float *)0x0) || ((uVar4 & 0xffffffff) == 0)) || ((uVar5 & 0xffffffff) == 0)) {
+  if (((param_1 == (float *)0x0) || (param_2 == (float *)0x0)) || (param_3 == (float *)0x0)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\rotation.cpp"
                     ,0xd2,0,"%s");
   }
-  pfVar1 = (float *)uVar5;
-  pfVar2 = (float *)uVar4;
-  *pfVar3 = *pfVar2 * *pfVar1 +
-            pfVar1[1] * pfVar2[1] + pfVar2[3] * pfVar1[3] + pfVar1[2] * pfVar2[2];
-  pfVar3[1] = pfVar2[3] * pfVar1[2] +
-              -(pfVar2[2] * pfVar1[3] - (pfVar2[1] * *pfVar1 - pfVar1[1] * *pfVar2));
-  pfVar3[2] = pfVar2[1] * pfVar1[3] +
-              -(pfVar2[3] * pfVar1[1] - (pfVar2[2] * *pfVar1 - pfVar1[2] * *pfVar2));
-  pfVar3[3] = pfVar1[1] * pfVar2[2] +
-              -(pfVar1[2] * pfVar2[1] - (pfVar2[3] * *pfVar1 - *pfVar2 * pfVar1[3]));
-  __restgprlr_29();
+  *param_1 = *param_2 * *param_3 +
+             param_3[1] * param_2[1] + param_2[3] * param_3[3] + param_3[2] * param_2[2];
+  param_1[1] = param_2[3] * param_3[2] +
+               -(param_2[2] * param_3[3] - (param_2[1] * *param_3 - param_3[1] * *param_2));
+  param_1[2] = param_2[1] * param_3[3] +
+               -(param_2[3] * param_3[1] - (param_2[2] * *param_3 - param_3[2] * *param_2));
+  param_1[3] = param_3[1] * param_2[2] +
+               -(param_3[2] * param_2[1] - (param_2[3] * *param_3 - *param_2 * param_3[3]));
   return;
 }
 
 
 // 826A0960  dQMultiply3  (physics/ode/src/rotation.cpp:219)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void dQMultiply3(float *param_1,float *param_2,float *param_3)
 
 {
-  float *pfVar1;
-  float *pfVar2;
-  float *pfVar3;
-  ulonglong uVar4;
-  ulonglong uVar5;
-  
-  uVar5 = (ulonglong)(int)param_3;
-  uVar4 = (ulonglong)(int)param_2;
-  pfVar3 = (float *)__savegprlr_29(param_1);
-  if (((pfVar3 == (float *)0x0) || ((uVar4 & 0xffffffff) == 0)) || ((uVar5 & 0xffffffff) == 0)) {
+  if (((param_1 == (float *)0x0) || (param_2 == (float *)0x0)) || (param_3 == (float *)0x0)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\rotation.cpp"
                     ,0xdc,0,"%s");
   }
-  pfVar1 = (float *)uVar5;
-  pfVar2 = (float *)uVar4;
-  *pfVar3 = -(pfVar1[3] * pfVar2[3] -
-             -(pfVar1[2] * pfVar2[2] - (*pfVar2 * *pfVar1 - pfVar1[1] * pfVar2[1])));
-  pfVar3[1] = -(pfVar1[2] * pfVar2[3] -
-               (pfVar1[3] * pfVar2[2] - (pfVar1[1] * *pfVar2 + *pfVar1 * pfVar2[1])));
-  pfVar3[2] = -(pfVar1[3] * pfVar2[1] -
-               (pfVar1[1] * pfVar2[3] - (pfVar1[2] * *pfVar2 + *pfVar1 * pfVar2[2])));
-  pfVar3[3] = -(pfVar1[1] * pfVar2[2] -
-               (pfVar1[2] * pfVar2[1] - (pfVar1[3] * *pfVar2 + *pfVar1 * pfVar2[3])));
-  __restgprlr_29();
+  *param_1 = -(param_3[3] * param_2[3] -
+              -(param_3[2] * param_2[2] - (*param_2 * *param_3 - param_3[1] * param_2[1])));
+  param_1[1] = -(param_3[2] * param_2[3] -
+                (param_3[3] * param_2[2] - (param_3[1] * *param_2 + *param_3 * param_2[1])));
+  param_1[2] = -(param_3[3] * param_2[1] -
+                (param_3[1] * param_2[3] - (param_3[2] * *param_2 + *param_3 * param_2[2])));
+  param_1[3] = -(param_3[1] * param_2[2] -
+                (param_3[2] * param_2[1] - (param_3[3] * *param_2 + *param_3 * param_2[3])));
   return;
 }
 
@@ -446,6 +405,9 @@ void dRfromQ(float *param_1,float *param_2)
 
 // 826A0C10  dQfromR  (physics/ode/src/rotation.cpp:253)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void dQfromR(float *param_1,float *param_2)
 
 {
@@ -453,109 +415,93 @@ void dQfromR(float *param_1,float *param_2)
   float fVar2;
   float fVar3;
   float fVar4;
-  float *pfVar5;
-  float *pfVar6;
-  ulonglong uVar7;
-  double dVar8;
-  double dVar9;
+  double dVar5;
+  double dVar6;
   
-  uVar7 = (ulonglong)(int)param_2;
-  pfVar6 = (float *)__savegprlr_29(param_1);
-  if ((pfVar6 == (float *)0x0) || ((uVar7 & 0xffffffff) == 0)) {
+  if ((param_1 == (float *)0x0) || (param_2 == (float *)0x0)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\rotation.cpp"
                     ,0x100,0,"%s");
   }
-  pfVar5 = (float *)uVar7;
-  fVar1 = pfVar5[10];
-  fVar2 = pfVar5[5];
-  fVar3 = *pfVar5;
+  fVar1 = param_2[10];
+  fVar2 = param_2[5];
+  fVar3 = *param_2;
   fVar4 = fVar3 + fVar2 + fVar1;
   if (0.0 <= fVar4) {
     fVar1 = SQRT(fVar4 + 1.0);
-    *pfVar6 = fVar1 * 0.5;
+    *param_1 = fVar1 * 0.5;
     fVar1 = (1.0 / fVar1) * 0.5;
-    pfVar6[1] = (pfVar5[9] - pfVar5[6]) * fVar1;
-    pfVar6[2] = (pfVar5[2] - pfVar5[8]) * fVar1;
-    pfVar6[3] = (pfVar5[4] - pfVar5[1]) * fVar1;
-    __restgprlr_29();
+    param_1[1] = (param_2[9] - param_2[6]) * fVar1;
+    param_1[2] = (param_2[2] - param_2[8]) * fVar1;
+    param_1[3] = (param_2[4] - param_2[1]) * fVar1;
     return;
   }
   if (fVar2 <= fVar3) {
     if (fVar1 <= fVar3) {
-      dVar9 = 1.0;
+      dVar6 = 1.0;
       if ((fVar3 - (fVar2 + fVar1)) + 1.0 < 0.0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\rotation.cpp"
                         ,0x11a,0,"(_R(0,0) - (_R(1,1) + _R(2,2))) + 1 >= 0\n\t%g, %g");
       }
-      dVar8 = (double)SQRT((float)((double)(*pfVar5 - (pfVar5[5] + pfVar5[10])) + dVar9));
-      pfVar6[1] = (float)(dVar8 * 0.5);
-      fVar3 = (float)(dVar9 / dVar8) * 0.5;
-      pfVar6[2] = (pfVar5[4] + pfVar5[1]) * fVar3;
-      pfVar6[3] = (pfVar5[8] + pfVar5[2]) * fVar3;
-      fVar1 = pfVar5[9];
-      fVar2 = pfVar5[6];
+      dVar5 = (double)SQRT((float)((double)(*param_2 - (param_2[5] + param_2[10])) + dVar6));
+      param_1[1] = (float)(dVar5 * 0.5);
+      fVar3 = (float)(dVar6 / dVar5) * 0.5;
+      param_1[2] = (param_2[4] + param_2[1]) * fVar3;
+      param_1[3] = (param_2[8] + param_2[2]) * fVar3;
+      fVar1 = param_2[9];
+      fVar2 = param_2[6];
       goto LAB_826a0f38;
     }
   }
   else if (fVar1 <= fVar2) {
-    dVar9 = 1.0;
+    dVar6 = 1.0;
     if ((fVar2 - (fVar3 + fVar1)) + 1.0 < 0.0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\rotation.cpp"
                       ,0x124,0,"(_R(1,1) - (_R(2,2) + _R(0,0))) + 1 >= 0\n\t%g, %g");
     }
-    dVar8 = (double)SQRT((float)((double)(pfVar5[5] - (pfVar5[10] + *pfVar5)) + dVar9));
-    pfVar6[2] = (float)(dVar8 * 0.5);
-    fVar3 = (float)(dVar9 / dVar8) * 0.5;
-    pfVar6[3] = (pfVar5[9] + pfVar5[6]) * fVar3;
-    pfVar6[1] = (pfVar5[4] + pfVar5[1]) * fVar3;
-    fVar1 = pfVar5[2];
-    fVar2 = pfVar5[8];
+    dVar5 = (double)SQRT((float)((double)(param_2[5] - (param_2[10] + *param_2)) + dVar6));
+    param_1[2] = (float)(dVar5 * 0.5);
+    fVar3 = (float)(dVar6 / dVar5) * 0.5;
+    param_1[3] = (param_2[9] + param_2[6]) * fVar3;
+    param_1[1] = (param_2[4] + param_2[1]) * fVar3;
+    fVar1 = param_2[2];
+    fVar2 = param_2[8];
     goto LAB_826a0f38;
   }
-  dVar9 = 1.0;
+  dVar6 = 1.0;
   if ((fVar1 - (fVar3 + fVar2)) + 1.0 < 0.0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\rotation.cpp"
                     ,0x12e,0,"(_R(2,2) - (_R(0,0) + _R(1,1))) + 1 >= 0\n\t%g, %g");
   }
-  dVar8 = (double)SQRT((float)((double)(pfVar5[10] - (pfVar5[5] + *pfVar5)) + dVar9));
-  pfVar6[3] = (float)(dVar8 * 0.5);
-  fVar3 = (float)(dVar9 / dVar8) * 0.5;
-  pfVar6[1] = (pfVar5[8] + pfVar5[2]) * fVar3;
-  pfVar6[2] = (pfVar5[9] + pfVar5[6]) * fVar3;
-  fVar1 = pfVar5[4];
-  fVar2 = pfVar5[1];
+  dVar5 = (double)SQRT((float)((double)(param_2[10] - (param_2[5] + *param_2)) + dVar6));
+  param_1[3] = (float)(dVar5 * 0.5);
+  fVar3 = (float)(dVar6 / dVar5) * 0.5;
+  param_1[1] = (param_2[8] + param_2[2]) * fVar3;
+  param_1[2] = (param_2[9] + param_2[6]) * fVar3;
+  fVar1 = param_2[4];
+  fVar2 = param_2[1];
 LAB_826a0f38:
-  *pfVar6 = (fVar1 - fVar2) * fVar3;
-  __restgprlr_29();
+  *param_1 = (fVar1 - fVar2) * fVar3;
   return;
 }
 
 
 // 826A0F50  dDQfromW  (physics/ode/src/rotation.cpp:315)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void dDQfromW(float *param_1,float *param_2,float *param_3)
 
 {
-  float *pfVar1;
-  float *pfVar2;
-  ulonglong uVar3;
-  float *pfVar4;
-  ulonglong uVar5;
-  
-  uVar5 = (ulonglong)(int)param_3;
-  uVar3 = (ulonglong)(int)param_2;
-  pfVar2 = (float *)__savegprlr_29(param_1);
-  if ((((uVar3 & 0xffffffff) == 0) || ((uVar5 & 0xffffffff) == 0)) || (pfVar2 == (float *)0x0)) {
+  if (((param_2 == (float *)0x0) || (param_3 == (float *)0x0)) || (param_1 == (float *)0x0)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\rotation.cpp"
                     ,0x13c,0,"%s");
   }
-  pfVar1 = (float *)uVar5;
-  pfVar4 = (float *)uVar3;
-  *pfVar2 = -(pfVar1[3] * pfVar4[2] - -(pfVar1[2] * pfVar4[1] - -(pfVar1[1] * *pfVar4))) * 0.5;
-  pfVar2[1] = -(pfVar1[2] * pfVar4[2] - (pfVar1[3] * pfVar4[1] + *pfVar4 * *pfVar1)) * 0.5;
-  pfVar2[2] = (pfVar4[1] * *pfVar1 + (pfVar1[1] * pfVar4[2] - pfVar1[3] * *pfVar4)) * 0.5;
-  pfVar2[3] = (pfVar4[2] * *pfVar1 + (pfVar1[2] * *pfVar4 - pfVar1[1] * pfVar4[1])) * 0.5;
-  __restgprlr_29();
+  *param_1 = -(param_3[3] * param_2[2] - -(param_3[2] * param_2[1] - -(param_3[1] * *param_2))) *
+             0.5;
+  param_1[1] = -(param_3[2] * param_2[2] - (param_3[3] * param_2[1] + *param_2 * *param_3)) * 0.5;
+  param_1[2] = (param_2[1] * *param_3 + (param_3[1] * param_2[2] - param_3[3] * *param_2)) * 0.5;
+  param_1[3] = (param_2[2] * *param_3 + (param_3[2] * *param_2 - param_3[1] * param_2[1])) * 0.5;
   return;
 }
 

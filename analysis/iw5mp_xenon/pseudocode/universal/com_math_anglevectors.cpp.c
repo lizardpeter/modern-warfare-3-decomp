@@ -2,67 +2,55 @@
 
 // 825DFEB0  AngleVectors  (universal/com_math_anglevectors.cpp:12)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void AngleVectors(float *param_1,float *param_2,float *param_3,float *param_4)
 
 {
-  float *pfVar1;
-  ulonglong uVar2;
-  float *pfVar3;
-  ulonglong uVar4;
-  ulonglong uVar5;
+  double dVar1;
+  double dVar2;
+  double dVar3;
+  double dVar4;
+  double dVar5;
   double dVar6;
   double dVar7;
-  double dVar8;
-  double dVar9;
-  double dVar10;
-  double dVar11;
-  double dVar12;
   
-  uVar5 = (ulonglong)(int)param_4;
-  uVar4 = (ulonglong)(int)param_3;
-  uVar2 = (ulonglong)(int)param_2;
-  __savegprlr_28(param_1);
-  pfVar1 = (float *)__savefpr_26();
-  dVar8 = 0.01745329238474369;
-  dVar10 = (double)(pfVar1[1] * 0.017453292);
-  dVar6 = sin(dVar10);
-  dVar12 = (double)(float)dVar6;
-  dVar6 = cos(dVar10);
-  dVar11 = (double)(float)dVar6;
-  dVar7 = (double)(float)((double)*pfVar1 * dVar8);
-  dVar6 = sin(dVar7);
-  dVar10 = (double)(float)dVar6;
-  dVar6 = cos(dVar7);
-  dVar6 = (double)(float)dVar6;
-  if ((uVar2 & 0xffffffff) != 0) {
-    pfVar3 = (float *)uVar2;
-    *pfVar3 = (float)(dVar6 * dVar11);
-    pfVar3[1] = (float)(dVar6 * dVar12);
-    pfVar3[2] = (float)-dVar10;
+  dVar3 = 0.01745329238474369;
+  dVar5 = (double)(param_1[1] * 0.017453292);
+  dVar1 = sin(dVar5);
+  dVar7 = (double)(float)dVar1;
+  dVar1 = cos(dVar5);
+  dVar6 = (double)(float)dVar1;
+  dVar2 = (double)(float)((double)*param_1 * dVar3);
+  dVar1 = sin(dVar2);
+  dVar5 = (double)(float)dVar1;
+  dVar1 = cos(dVar2);
+  dVar1 = (double)(float)dVar1;
+  if (param_2 != (float *)0x0) {
+    *param_2 = (float)(dVar1 * dVar6);
+    param_2[1] = (float)(dVar1 * dVar7);
+    param_2[2] = (float)-dVar5;
   }
-  if (((uVar4 & 0xffffffff) != 0) || ((uVar5 & 0xffffffff) != 0)) {
-    dVar8 = (double)(float)((double)pfVar1[2] * dVar8);
-    dVar7 = sin(dVar8);
-    dVar9 = (double)(float)dVar7;
-    dVar7 = cos(dVar8);
-    dVar7 = (double)(float)dVar7;
-    if ((uVar4 & 0xffffffff) != 0) {
-      pfVar1 = (float *)uVar4;
-      pfVar1[2] = (float)(dVar9 * dVar6) * -1.0;
-      *pfVar1 = (float)(dVar7 * dVar12 - (double)(float)((double)(float)(dVar9 * dVar10) * dVar11));
-      pfVar1[1] = (float)(dVar7 * dVar11) * -1.0 - (float)((double)(float)(dVar9 * dVar10) * dVar12)
-      ;
+  if ((param_3 != (float *)0x0) || (param_4 != (float *)0x0)) {
+    dVar3 = (double)(float)((double)param_1[2] * dVar3);
+    dVar2 = sin(dVar3);
+    dVar4 = (double)(float)dVar2;
+    dVar2 = cos(dVar3);
+    dVar2 = (double)(float)dVar2;
+    if (param_3 != (float *)0x0) {
+      param_3[2] = (float)(dVar4 * dVar1) * -1.0;
+      *param_3 = (float)(dVar2 * dVar7 - (double)(float)((double)(float)(dVar4 * dVar5) * dVar6));
+      param_3[1] = (float)(dVar2 * dVar6) * -1.0 - (float)((double)(float)(dVar4 * dVar5) * dVar7);
     }
-    if ((uVar5 & 0xffffffff) != 0) {
-      pfVar1 = (float *)uVar5;
-      pfVar1[2] = (float)(dVar7 * dVar6);
-      *pfVar1 = (float)((double)(float)(dVar7 * dVar10) * dVar11 + (double)(float)(dVar9 * dVar12));
-      pfVar1[1] = (float)((double)(float)(dVar7 * dVar10) * dVar12 - (double)(float)(dVar9 * dVar11)
-                         );
+    if (param_4 != (float *)0x0) {
+      param_4[2] = (float)(dVar2 * dVar1);
+      *param_4 = (float)((double)(float)(dVar2 * dVar5) * dVar6 + (double)(float)(dVar4 * dVar7));
+      param_4[1] = (float)((double)(float)(dVar2 * dVar5) * dVar7 - (double)(float)(dVar4 * dVar6));
     }
   }
-  __restfpr_26();
-  __restgprlr_28();
   return;
 }
 

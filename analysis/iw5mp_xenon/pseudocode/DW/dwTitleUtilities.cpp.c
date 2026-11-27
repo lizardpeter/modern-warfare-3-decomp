@@ -29,77 +29,72 @@ void dwGetServerTime(int param_1,overlappedTask *param_2,bdTimeStamp *param_3)
 
 // 826F2570  dwGetServerTimeComplete  (DW/dwTitleUtilities.cpp:46)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 taskCompleteResults dwGetServerTimeComplete(int param_1,overlappedTask *param_2)
 
 {
-  overlappedTask *poVar1;
-  int iVar2;
-  bdTitleUtilities *pbVar3;
-  bdStatus bVar4;
-  bdLobbyErrorCode bVar5;
-  taskCompleteResults tVar6;
-  ulonglong uVar7;
+  bdTitleUtilities *pbVar1;
+  bdStatus bVar2;
+  bdLobbyErrorCode bVar3;
+  taskCompleteResults tVar4;
   char acStack_60 [96];
   
-  uVar7 = (ulonglong)(int)param_2;
-  iVar2 = __savegprlr_29(param_1);
-  pbVar3 = dwGetTitleUtilities(iVar2);
-  if (((pbVar3 != (bdTitleUtilities *)0x0) && ((uVar7 & 0xffffffff) != 0)) &&
-     (poVar1 = (overlappedTask *)uVar7, (poVar1->u).remoteTask.m_ptr != (bdRemoteTask *)0x0)) {
-    dwLobbyPump(iVar2);
-    bVar4 = (**(code **)(((poVar1->u).remoteTask.m_ptr)->_padding_ + 4))();
-    bVar5 = bdRemoteTask::getErrorCode((poVar1->u).remoteTask.m_ptr);
-    if (bVar5 != BD_NO_ERROR) {
-      TaskManager_ClearTask(poVar1);
-      if (bVar5 == BD_TOO_MANY_TASKS) {
+  pbVar1 = dwGetTitleUtilities(param_1);
+  if (((pbVar1 != (bdTitleUtilities *)0x0) && (param_2 != (overlappedTask *)0x0)) &&
+     ((param_2->u).remoteTask.m_ptr != (bdRemoteTask *)0x0)) {
+    dwLobbyPump(param_1);
+    bVar2 = (**(code **)(((param_2->u).remoteTask.m_ptr)->_padding_ + 4))();
+    bVar3 = bdRemoteTask::getErrorCode((param_2->u).remoteTask.m_ptr);
+    if (bVar3 != BD_NO_ERROR) {
+      TaskManager_ClearTask(param_2);
+      if (bVar3 == BD_TOO_MANY_TASKS) {
         Live_ThrowError(ERR_DROP,"XBOXLIVE_TOOMANYTASKS");
       }
-      dwLobbyErrorCodeToString(bVar5,acStack_60,0x40);
+      dwLobbyErrorCodeToString(bVar3,acStack_60,0x40);
       Com_PrintError(0x10,"DW get server time error %i - \'%s\'\n");
     }
-    tVar6 = dwTaskStatusConvert(bVar4,bVar5);
-    tVar6 = __restgprlr_29(tVar6);
-    return tVar6;
+    tVar4 = dwTaskStatusConvert(bVar2,bVar3);
+    return tVar4;
   }
   Com_Printf(0x10,"Failed to retrieve server time task status\n");
-  tVar6 = __restgprlr_29(2);
-  return tVar6;
+  return TASK_ERROR;
 }
 
 
 // 826F2658  dwGetTitleUtilitiesComplete  (DW/dwTitleUtilities.cpp:82)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 taskCompleteResults dwGetTitleUtilitiesComplete(overlappedTask *param_1)
 
 {
-  overlappedTask *poVar1;
-  bdTitleUtilities *pbVar2;
-  bdStatus bVar3;
-  bdLobbyErrorCode bVar4;
-  taskCompleteResults tVar5;
+  bdTitleUtilities *pbVar1;
+  bdStatus bVar2;
+  bdLobbyErrorCode bVar3;
+  taskCompleteResults tVar4;
   char acStack_60 [96];
   
-  poVar1 = (overlappedTask *)__savegprlr_29(param_1);
-  if (((poVar1 != (overlappedTask *)0x0) && ((poVar1->u).remoteTask.m_ptr != (bdRemoteTask *)0x0))
-     && (pbVar2 = dwGetTitleUtilities((uint)poVar1->controllerIndex),
-        pbVar2 != (bdTitleUtilities *)0x0)) {
-    dwLobbyPump((uint)poVar1->controllerIndex);
-    bVar3 = (**(code **)(((poVar1->u).remoteTask.m_ptr)->_padding_ + 4))();
-    bVar4 = bdRemoteTask::getErrorCode((poVar1->u).remoteTask.m_ptr);
-    if (bVar4 != BD_NO_ERROR) {
-      TaskManager_ClearTask(poVar1);
-      if (bVar4 == BD_TOO_MANY_TASKS) {
+  if (((param_1 != (overlappedTask *)0x0) && ((param_1->u).remoteTask.m_ptr != (bdRemoteTask *)0x0))
+     && (pbVar1 = dwGetTitleUtilities((uint)param_1->controllerIndex),
+        pbVar1 != (bdTitleUtilities *)0x0)) {
+    dwLobbyPump((uint)param_1->controllerIndex);
+    bVar2 = (**(code **)(((param_1->u).remoteTask.m_ptr)->_padding_ + 4))();
+    bVar3 = bdRemoteTask::getErrorCode((param_1->u).remoteTask.m_ptr);
+    if (bVar3 != BD_NO_ERROR) {
+      TaskManager_ClearTask(param_1);
+      if (bVar3 == BD_TOO_MANY_TASKS) {
         Live_ThrowError(ERR_DROP,"XBOXLIVE_TOOMANYTASKS");
       }
-      dwLobbyErrorCodeToString(bVar4,acStack_60,0x40);
+      dwLobbyErrorCodeToString(bVar3,acStack_60,0x40);
       Com_PrintError(0x10,"DW title utilities error %i - \'%s\'\n");
     }
-    tVar5 = dwTaskStatusConvert(bVar3,bVar4);
-    tVar5 = __restgprlr_29(tVar5);
-    return tVar5;
+    tVar4 = dwTaskStatusConvert(bVar2,bVar3);
+    return tVar4;
   }
   Com_Printf(0x10,"Failed to retrieve title utilities status\n");
-  tVar5 = __restgprlr_29(2);
-  return tVar5;
+  return TASK_ERROR;
 }
 

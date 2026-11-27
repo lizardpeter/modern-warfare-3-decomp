@@ -216,18 +216,17 @@ void CG_ShellShock_Load_f(void)
 
 // 822B2820  Cmd_Argv  (qcommon/cmd.h:201)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 char * Cmd_Argv(int param_1)
 
 {
-  int iVar1;
-  bool bVar3;
-  char *pcVar2;
+  bool bVar1;
   
-  iVar1 = __savegprlr_29(param_1);
-  bVar3 = Sys_IsMainThread();
-  if (!bVar3) {
+  bVar1 = Sys_IsMainThread();
+  if (!bVar1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\../qcommon/cmd.h",
                     0xca,0,"%s");
   }
@@ -235,16 +234,14 @@ char * Cmd_Argv(int param_1)
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\../qcommon/cmd.h",
                     0xcb,0,"cmd_args.nesting doesn\'t index CMD_MAX_NESTING\n\t%i not in [0, %i)");
   }
-  if (iVar1 < 0) {
+  if (param_1 < 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\../qcommon/cmd.h",
                     0xcc,0,"%s\n\t(argIndex) = %i");
   }
-  if (iVar1 < cmd_args.argc[cmd_args.nesting]) {
-    pcVar2 = (char *)__restgprlr_29(cmd_args.argv[cmd_args.nesting][iVar1]);
-    return pcVar2;
+  if (param_1 < cmd_args.argc[cmd_args.nesting]) {
+    return cmd_args.argv[cmd_args.nesting][param_1];
   }
-  pcVar2 = (char *)__restgprlr_29(0xffffffff820068af);
-  return pcVar2;
+  return "";
 }
 
 

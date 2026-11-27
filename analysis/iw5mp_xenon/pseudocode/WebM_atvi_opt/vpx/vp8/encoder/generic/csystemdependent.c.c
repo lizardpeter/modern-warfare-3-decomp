@@ -2,10 +2,12 @@
 
 // 8283CF58  vp8_cmachine_specific_config  (WebM_atvi_opt/vpx/vp8/encoder/generic/csystemdependent.c:38)
 
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
+
 void vp8_cmachine_specific_config(VP8_COMP *param_1)
 
 {
-  __savegprlr();
   (param_1->rtcd).variance.sad4x4x3 = (_func___cdecl_void_uchar_ptr_int_uchar_ptr_int_uint_ptr *)0x0
   ;
   (param_1->rtcd).variance.sad4x4 = (_func___cdecl_uint_uchar_ptr_int_uchar_ptr_int_int *)0x0;
@@ -87,7 +89,6 @@ void vp8_cmachine_specific_config(VP8_COMP *param_1)
   (param_1->rtcd).search.diamond_search = vp8_diamond_search_sad;
   vp8_yv12_copy_partial_frame_ptr = vp8_yv12_copy_partial_frame;
   vp8_arch_xenon_encoder_init(param_1);
-  __restgprlr();
   return;
 }
 

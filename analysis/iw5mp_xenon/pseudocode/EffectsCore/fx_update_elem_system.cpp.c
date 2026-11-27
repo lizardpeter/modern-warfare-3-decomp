@@ -2,6 +2,8 @@
 
 // 8244ED38  FXW_SystemUpdateElement  (EffectsCore/fx_update_elem_system.cpp:126)
 
+/* WARNING: Function: __savegprlr_15 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_15 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void FXW_SystemUpdateElement(FxSystem *param_1)
@@ -11,28 +13,26 @@ void FXW_SystemUpdateElement(FxSystem *param_1)
   ushort uVar2;
   ushort uVar3;
   FxPool<FxElem> *pFVar4;
-  FxSystem *pFVar5;
-  FxEffect *pFVar6;
-  FxUpdateResult FVar7;
-  uint uVar8;
-  ushort *puVar9;
+  FxEffect *pFVar5;
+  FxUpdateResult FVar6;
+  uint uVar7;
+  ushort *puVar8;
+  int iVar9;
   int iVar10;
-  int iVar11;
-  FxElem *pFVar12;
+  FxElem *pFVar11;
   
-  pFVar5 = (FxSystem *)__savegprlr_15(param_1);
-  if (pFVar5->numUpdateElement == 0) {
+  if (param_1->numUpdateElement == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_update_elem_system.cpp"
                     ,0x87,0,"%s");
   }
   FX_AutoAddElemForUpdate(1);
-  iVar10 = 0;
-  if (0 < pFVar5->numUpdateElement) {
-    iVar11 = 0;
+  iVar9 = 0;
+  if (0 < param_1->numUpdateElement) {
+    iVar10 = 0;
     do {
-      puVar9 = (ushort *)((int)&pFVar5->updateElement->effectHandle + iVar11);
-      uVar2 = *puVar9;
-      uVar3 = puVar9[1];
+      puVar8 = (ushort *)((int)&param_1->updateElement->effectHandle + iVar10);
+      uVar2 = *puVar8;
+      uVar3 = puVar8[1];
       if (uVar2 == 0xffff) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_update_elem_system.cpp"
                         ,0x8e,0,"%s");
@@ -41,40 +41,37 @@ void FXW_SystemUpdateElement(FxSystem *param_1)
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_update_elem_system.cpp"
                         ,0x8f,0,"%s");
       }
-      pFVar6 = FX_EffectFromHandle(pFVar5,uVar2);
-      pFVar4 = pFVar5->elems;
+      pFVar5 = FX_EffectFromHandle(param_1,uVar2);
+      pFVar4 = param_1->elems;
       if ((0x3fff < uVar3) || ((uVar3 & 7) != 0)) {
         va("%p %i");
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\fx_system_handle.h"
                         ,0x54,0,"%s\n\t%s");
       }
-      pFVar12 = (FxElem *)((int)&pFVar4->field0_0x0 + (uint)uVar3 * 4);
-      if (pFVar5->msecNow < pFVar6->msecLastUpdate) {
+      pFVar11 = (FxElem *)((int)&pFVar4->field0_0x0 + (uint)uVar3 * 4);
+      if (param_1->msecNow < pFVar5->msecLastUpdate) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_update_elem_system.cpp"
                         ,0x93,0,"%s");
       }
-      if (pFVar12->valid) {
-        FVar7 = FXW_UpdateElement(pFVar5,pFVar6,uVar2,pFVar12,uVar3,pFVar6->msecLastUpdate,
-                                  pFVar5->msecNow);
-        if (FVar7 == FX_UPDATE_REMOVE) {
-          bVar1 = *(byte *)((int)&pFVar6->def->elemDefs->collBounds +
-                           (*(byte *)pFVar12 & 0x3fffffc) * 0x40 + -0x10);
-          if (bVar1 < 4) {
-            uVar8 = 0;
-          }
-          else if ((bVar1 == 4) || (uVar8 = 1, bVar1 == 5)) {
-            uVar8 = 2;
-          }
-          FXW_FreeElem(pFVar5,uVar3,pFVar6,uVar2,uVar8);
+      if ((pFVar11->valid) &&
+         (FVar6 = FXW_UpdateElement(param_1,pFVar5,uVar2,pFVar11,uVar3,pFVar5->msecLastUpdate,
+                                    param_1->msecNow), FVar6 == FX_UPDATE_REMOVE)) {
+        bVar1 = *(byte *)((int)&pFVar5->def->elemDefs->collBounds +
+                         (*(byte *)pFVar11 & 0x3fffffc) * 0x40 + -0x10);
+        if (bVar1 < 4) {
+          uVar7 = 0;
         }
+        else if ((bVar1 == 4) || (uVar7 = 1, bVar1 == 5)) {
+          uVar7 = 2;
+        }
+        FXW_FreeElem(param_1,uVar3,pFVar5,uVar2,uVar7);
       }
-      iVar10 = iVar10 + 1;
-      iVar11 = iVar11 + 4;
-    } while (iVar10 < pFVar5->numUpdateElement);
+      iVar9 = iVar9 + 1;
+      iVar10 = iVar10 + 4;
+    } while (iVar9 < param_1->numUpdateElement);
   }
   FX_AutoAddElemForUpdate(0);
-  pFVar5->numUpdateElement = 0;
-  __restgprlr_15();
+  param_1->numUpdateElement = 0;
   return;
 }
 

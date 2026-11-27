@@ -47,6 +47,9 @@ void VCpSubmitCodecPacket(VOICECHAT_EXTENSION *param_1,PACKET_CONTEXT *param_2)
 
 // 828BD4C0  VCpProcessLocal  (<external>/Xenon/mar09/core/private/xam/apps/uvbase/xhv/voicechat.c:219)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 undefined4 VCpProcessLocal(VOICECHAT_EXTENSION *param_1)
 
 {
@@ -58,199 +61,194 @@ undefined4 VCpProcessLocal(VOICECHAT_EXTENSION *param_1)
   uchar *puVar6;
   LOCALTALKER *pLVar7;
   ushort uVar8;
-  VOICECHAT_EXTENSION *pVVar9;
-  undefined4 uVar10;
-  PACKET_QUEUE *pPVar11;
-  VOICECHAT_EXTENSION_u_52 *pVVar12;
+  PACKET_QUEUE *pPVar9;
+  VOICECHAT_EXTENSION_u_52 *pVVar10;
   
-  pVVar9 = (VOICECHAT_EXTENSION *)__savegprlr_28(param_1);
-  pPVar3 = (pVVar9->field5_0x34)._s_0.InNotification.Head;
-  pVVar12 = &pVVar9->field5_0x34;
+  pPVar3 = (param_1->field5_0x34)._s_0.InNotification.Head;
+  pVVar10 = &param_1->field5_0x34;
   while ((pPVar3 != (PACKET_CONTEXT *)0x0 && (pPVar3->Packet->Status != 0x103))) {
-    pPVar4 = (pVVar12->_s_0).InNotification.Head;
+    pPVar4 = (pVVar10->_s_0).InNotification.Head;
     if (pPVar4 != (PACKET_CONTEXT *)0x0) {
-      if (pPVar4 == (pVVar9->field5_0x34)._s_0.InNotification.Tail) {
-        (pVVar9->field5_0x34)._s_0.InNotification.Tail = (PACKET_CONTEXT *)0x0;
+      if (pPVar4 == (param_1->field5_0x34)._s_0.InNotification.Tail) {
+        (param_1->field5_0x34)._s_0.InNotification.Tail = (PACKET_CONTEXT *)0x0;
       }
-      (pVVar12->_s_0).InNotification.Head = pPVar4->Next;
+      (pVVar10->_s_0).InNotification.Head = pPVar4->Next;
       pPVar4->Next = (PACKET_CONTEXT *)0x0;
     }
-    VCpSubmitCodecPacket(pVVar9,pPVar3);
-    pPVar3 = (pVVar12->_s_0).InNotification.Head;
+    VCpSubmitCodecPacket(param_1,pPVar3);
+    pPVar3 = (pVVar10->_s_0).InNotification.Head;
   }
-  pPVar3 = (pVVar9->InCodec).Head;
-  pPVar11 = &pVVar9->InCodec;
+  pPVar3 = (param_1->InCodec).Head;
+  pPVar9 = &param_1->InCodec;
   while ((pPVar3 != (PACKET_CONTEXT *)0x0 && (pXVar5 = pPVar3->Packet, pXVar5->Status != 0x103))) {
-    pPVar4 = pPVar11->Head;
+    pPVar4 = pPVar9->Head;
     puVar6 = pXVar5->Buffer;
     if (pPVar4 != (PACKET_CONTEXT *)0x0) {
-      if (pPVar4 == (pVVar9->InCodec).Tail) {
-        (pVVar9->InCodec).Tail = (PACKET_CONTEXT *)0x0;
+      if (pPVar4 == (param_1->InCodec).Tail) {
+        (param_1->InCodec).Tail = (PACKET_CONTEXT *)0x0;
       }
-      pPVar11->Head = pPVar4->Next;
+      pPVar9->Head = pPVar4->Next;
       pPVar4->Next = (PACKET_CONTEXT *)0x0;
     }
     if (pXVar5->Status == 0) {
-      uVar1 = ((pVVar9->field0_0x0).ProcMode.field1_0x4.LocalTalker)->MicProxy->Talkspurt;
-      if ((pVVar9->field5_0x34)._s_0.LastTalkspurt != uVar1) {
-        (pVVar9->field5_0x34)._s_0.LastTalkspurt = uVar1;
+      uVar1 = ((param_1->field0_0x0).ProcMode.field1_0x4.LocalTalker)->MicProxy->Talkspurt;
+      if ((param_1->field5_0x34)._s_0.LastTalkspurt != uVar1) {
+        (param_1->field5_0x34)._s_0.LastTalkspurt = uVar1;
       }
-      if (0x7ff < (pVVar9->field5_0x34)._s_0.SequenceNumber) {
-        (pVVar9->field5_0x34)._s_0.SequenceNumber = 0;
+      if (0x7ff < (param_1->field5_0x34)._s_0.SequenceNumber) {
+        (param_1->field5_0x34)._s_0.SequenceNumber = 0;
       }
       uVar2 = *(ushort *)(puVar6 + -2);
-      uVar8 = (ushort)(pVVar9->field5_0x34)._s_0.LastTalkspurt << 0xc;
+      uVar8 = (ushort)(param_1->field5_0x34)._s_0.LastTalkspurt << 0xc;
       *(ushort *)(puVar6 + -2) = uVar8 | uVar2 & 0xfff;
       *(ushort *)(puVar6 + -2) =
-           ((pVVar9->field5_0x34)._s_0.SequenceNumber & 0x7ff) << 1 | uVar8 | uVar2 & 1;
-      pLVar7 = (pVVar9->field0_0x0).ProcMode.field1_0x4.LocalTalker;
-      (pVVar9->field5_0x34)._s_0.SequenceNumber = (pVVar9->field5_0x34)._s_0.SequenceNumber + 1;
+           ((param_1->field5_0x34)._s_0.SequenceNumber & 0x7ff) << 1 | uVar8 | uVar2 & 1;
+      pLVar7 = (param_1->field0_0x0).ProcMode.field1_0x4.LocalTalker;
+      (param_1->field5_0x34)._s_0.SequenceNumber = (param_1->field5_0x34)._s_0.SequenceNumber + 1;
       *(ushort *)(puVar6 + -2) =
            (ushort)((pLVar7->VoiceSettings & 0xf0000) == 0x10000) |
            *(ushort *)(puVar6 + -2) & 0xfffe;
       pPVar3->Packet->Status = 0x103;
       pPVar3->Packet->Offset = 0;
       pPVar3->Next = (PACKET_CONTEXT *)0x0;
-      pPVar4 = (pVVar9->field5_0x34)._s_0.InNotification.Tail;
+      pPVar4 = (param_1->field5_0x34)._s_0.InNotification.Tail;
       if (pPVar4 == (PACKET_CONTEXT *)0x0) {
-        (pVVar12->_s_0).InNotification.Head = pPVar3;
+        (pVVar10->_s_0).InNotification.Head = pPVar3;
       }
       else {
         pPVar4->Next = pPVar3;
       }
-      (pVVar9->field5_0x34)._s_0.InNotification.Tail = pPVar3;
-      pVVar9->XHVEngine->DataReadyFlags =
-           1 << (**(uint **)((int)&pVVar9->field0_0x0 + 4) & 0x3f) |
-           pVVar9->XHVEngine->DataReadyFlags;
+      (param_1->field5_0x34)._s_0.InNotification.Tail = pPVar3;
+      param_1->XHVEngine->DataReadyFlags =
+           1 << (**(uint **)((int)&param_1->field0_0x0 + 4) & 0x3f) |
+           param_1->XHVEngine->DataReadyFlags;
     }
     else {
-      VCpSubmitCodecPacket(pVVar9,pPVar3);
+      VCpSubmitCodecPacket(param_1,pPVar3);
     }
-    pPVar3 = pPVar11->Head;
+    pPVar3 = pPVar9->Head;
   }
-  uVar10 = __restgprlr_28(0);
-  return uVar10;
+  return 0;
 }
 
 
 // 828BD680  VCpProcessRemote  (<external>/Xenon/mar09/core/private/xam/apps/uvbase/xhv/voicechat.c:402)
 
-undefined4 VCpProcessRemote(VOICECHAT_EXTENSION *param_1)
+/* WARNING: Function: __savegprlr_20 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_20 replaced with injection: xenon_save_restore */
+
+int VCpProcessRemote(VOICECHAT_EXTENSION *param_1)
 
 {
   int iVar1;
   XHV_XAUDIO_SPEED XVar2;
   PACKET_CONTEXT *pPVar3;
-  VOICECHAT_EXTENSION *pVVar4;
-  ulong uVar5;
-  int iVar6;
-  undefined4 uVar7;
-  uint uVar8;
-  PACKET_QUEUE *pPVar9;
-  VOICECHAT_EXTENSION_u_52 *pVVar10;
-  PACKET_CONTEXT *pPVar11;
-  XMEDIAPACKET *pXVar12;
-  double dVar13;
-  double dVar14;
+  ulong uVar4;
+  int iVar5;
+  uint uVar6;
+  PACKET_QUEUE *pPVar7;
+  VOICECHAT_EXTENSION_u_52 *pVVar8;
+  PACKET_CONTEXT *pPVar9;
+  XMEDIAPACKET *pXVar10;
+  double dVar11;
+  double dVar12;
   XAUDIOPACKET local_d0 [2];
   
-  pVVar4 = (VOICECHAT_EXTENSION *)__savegprlr_20(param_1);
-  iVar6 = 0;
-  uVar8 = 0;
-  iVar1 = (pVVar4->field5_0x34)._s_1.Discontinuity;
-  XVar2 = pVVar4->PlaySpeed;
-  JitterBufProcess(pVVar4->JitterBuf);
-  pPVar11 = (pVVar4->field5_0x34)._s_0.InNotification.Head;
-  pVVar10 = &pVVar4->field5_0x34;
-  while ((pPVar11 != (PACKET_CONTEXT *)0x0 && (pPVar11->Packet->Status != 0x103))) {
-    pPVar3 = (pVVar10->_s_0).InNotification.Head;
+  iVar5 = 0;
+  uVar6 = 0;
+  iVar1 = (param_1->field5_0x34)._s_1.Discontinuity;
+  XVar2 = param_1->PlaySpeed;
+  JitterBufProcess(param_1->JitterBuf);
+  pPVar9 = (param_1->field5_0x34)._s_0.InNotification.Head;
+  pVVar8 = &param_1->field5_0x34;
+  while ((pPVar9 != (PACKET_CONTEXT *)0x0 && (pPVar9->Packet->Status != 0x103))) {
+    pPVar3 = (pVVar8->_s_0).InNotification.Head;
     if (pPVar3 != (PACKET_CONTEXT *)0x0) {
-      if (pPVar3 == (pVVar4->field5_0x34)._s_0.InNotification.Tail) {
-        (pVVar4->field5_0x34)._s_0.InNotification.Tail = (PACKET_CONTEXT *)0x0;
+      if (pPVar3 == (param_1->field5_0x34)._s_0.InNotification.Tail) {
+        (param_1->field5_0x34)._s_0.InNotification.Tail = (PACKET_CONTEXT *)0x0;
       }
-      (pVVar10->_s_0).InNotification.Head = pPVar3->Next;
+      (pVVar8->_s_0).InNotification.Head = pPVar3->Next;
       pPVar3->Next = (PACKET_CONTEXT *)0x0;
     }
-    VCpSubmitCodecPacket(pVVar4,pPVar11);
-    pPVar11 = (pVVar10->_s_0).InNotification.Head;
+    VCpSubmitCodecPacket(param_1,pPVar9);
+    pPVar9 = (pVVar8->_s_0).InNotification.Head;
   }
-  pPVar11 = (pVVar4->InCodec).Head;
-  pPVar9 = &pVVar4->InCodec;
-  pXVar12 = (XMEDIAPACKET *)0x0;
-  if (pPVar11 != (PACKET_CONTEXT *)0x0) {
-    pXVar12 = pPVar11->Packet;
+  pPVar9 = (param_1->InCodec).Head;
+  pPVar7 = &param_1->InCodec;
+  pXVar10 = (XMEDIAPACKET *)0x0;
+  if (pPVar9 != (PACKET_CONTEXT *)0x0) {
+    pXVar10 = pPVar9->Packet;
   }
-  uVar5 = PacketQueueLength(&(pVVar10->_s_0).InNotification);
-  if ((((pXVar12 == (XMEDIAPACKET *)0x0) || (pXVar12->Status == 0x103)) && (uVar5 < 2)) &&
-     ((pVVar4->field5_0x34)._s_1.Discontinuity == 0)) {
-    (pVVar4->field5_0x34)._s_1.Discontinuity = 1;
-    iVar6 = XAudioSourceVoice_Stop((pVVar4->field5_0x34)._s_1.SourceVoice,'\x01');
+  uVar4 = PacketQueueLength(&(pVVar8->_s_0).InNotification);
+  if ((((pXVar10 == (XMEDIAPACKET *)0x0) || (pXVar10->Status == 0x103)) && (uVar4 < 2)) &&
+     ((param_1->field5_0x34)._s_1.Discontinuity == 0)) {
+    (param_1->field5_0x34)._s_1.Discontinuity = 1;
+    iVar5 = XAudioSourceVoice_Stop((param_1->field5_0x34)._s_1.SourceVoice,'\x01');
   }
-  dVar14 = 0.0;
-  if ((pVVar4->field5_0x34)._s_1.Discontinuity == 0) {
-    if (uVar5 < 3) {
-      pVVar4->PlaySpeed = XHV_XAUDIO_SPEED_SLOW;
-      dVar13 = -0.014355000108480453;
+  dVar12 = 0.0;
+  if ((param_1->field5_0x34)._s_1.Discontinuity == 0) {
+    if (uVar4 < 3) {
+      param_1->PlaySpeed = XHV_XAUDIO_SPEED_SLOW;
+      dVar11 = -0.014355000108480453;
     }
-    else if (uVar5 < 9) {
-      pVVar4->PlaySpeed = XHV_XAUDIO_SPEED_NORMAL;
-      dVar13 = dVar14;
+    else if (uVar4 < 9) {
+      param_1->PlaySpeed = XHV_XAUDIO_SPEED_NORMAL;
+      dVar11 = dVar12;
     }
     else {
-      pVVar4->PlaySpeed = XHV_XAUDIO_SPEED_FAST;
-      dVar13 = 0.014355000108480453;
+      param_1->PlaySpeed = XHV_XAUDIO_SPEED_FAST;
+      dVar11 = 0.014355000108480453;
     }
-    if (XVar2 != pVVar4->PlaySpeed) {
-      XAudioSourceVoice_SetPitch((pVVar4->field5_0x34)._s_1.SourceVoice,(float)dVar13);
+    if (XVar2 != param_1->PlaySpeed) {
+      XAudioSourceVoice_SetPitch((param_1->field5_0x34)._s_1.SourceVoice,(float)dVar11);
     }
   }
-  if (pPVar11 != (PACKET_CONTEXT *)0x0) {
+  if (pPVar9 != (PACKET_CONTEXT *)0x0) {
     while( true ) {
-      if (((pXVar12->Status == 0x103) || ((pVVar4->field0_0x0).ProcMode.NumPackets <= uVar8)) ||
-         (uVar5 = PacketQueueLength(&(pVVar10->_s_0).InNotification),
-         (pVVar4->field0_0x0).ProcMode.NumPackets <= uVar5)) goto LAB_828bd8b0;
-      pXVar12->Status = 0x103;
+      if (((pXVar10->Status == 0x103) || ((param_1->field0_0x0).ProcMode.NumPackets <= uVar6)) ||
+         (uVar4 = PacketQueueLength(&(pVVar8->_s_0).InNotification),
+         (param_1->field0_0x0).ProcMode.NumPackets <= uVar4)) goto LAB_828bd8b0;
+      pXVar10->Status = 0x103;
       XMemSet(local_d0,0,0x58);
-      local_d0[0].pBuffer = pXVar12->Buffer;
-      local_d0[0].BufferSize = pXVar12->Length;
-      local_d0[0].pContext = pPVar11;
-      iVar6 = XAudioSourceVoice_SubmitPacket((pVVar4->field5_0x34)._s_1.SourceVoice,local_d0,'\0');
-      if (iVar6 < 0) break;
-      pPVar3 = pPVar9->Head;
+      local_d0[0].pBuffer = pXVar10->Buffer;
+      local_d0[0].BufferSize = pXVar10->Length;
+      local_d0[0].pContext = pPVar9;
+      iVar5 = XAudioSourceVoice_SubmitPacket((param_1->field5_0x34)._s_1.SourceVoice,local_d0,'\0');
+      if (iVar5 < 0) break;
+      pPVar3 = pPVar7->Head;
       if (pPVar3 != (PACKET_CONTEXT *)0x0) {
-        if (pPVar3 == (pVVar4->InCodec).Tail) {
-          (pVVar4->InCodec).Tail = (PACKET_CONTEXT *)0x0;
+        if (pPVar3 == (param_1->InCodec).Tail) {
+          (param_1->InCodec).Tail = (PACKET_CONTEXT *)0x0;
         }
-        pPVar9->Head = pPVar3->Next;
+        pPVar7->Head = pPVar3->Next;
         pPVar3->Next = (PACKET_CONTEXT *)0x0;
       }
-      pPVar11->Next = (PACKET_CONTEXT *)0x0;
-      pPVar3 = (pVVar4->field5_0x34)._s_0.InNotification.Tail;
+      pPVar9->Next = (PACKET_CONTEXT *)0x0;
+      pPVar3 = (param_1->field5_0x34)._s_0.InNotification.Tail;
       if (pPVar3 == (PACKET_CONTEXT *)0x0) {
-        (pVVar10->_s_0).InNotification.Head = pPVar11;
+        (pVVar8->_s_0).InNotification.Head = pPVar9;
       }
       else {
-        pPVar3->Next = pPVar11;
+        pPVar3->Next = pPVar9;
       }
-      (pVVar4->field5_0x34)._s_0.InNotification.Tail = pPVar11;
-      uVar8 = uVar8 + 1;
-      pPVar11 = pPVar9->Head;
-      if (pPVar11 == (PACKET_CONTEXT *)0x0) goto LAB_828bd8b0;
-      pXVar12 = pPVar11->Packet;
+      (param_1->field5_0x34)._s_0.InNotification.Tail = pPVar9;
+      uVar6 = uVar6 + 1;
+      pPVar9 = pPVar7->Head;
+      if (pPVar9 == (PACKET_CONTEXT *)0x0) goto LAB_828bd8b0;
+      pXVar10 = pPVar9->Packet;
     }
-    iVar6 = 0;
-    pXVar12->Status = 0;
+    iVar5 = 0;
+    pXVar10->Status = 0;
   }
 LAB_828bd8b0:
-  if ((((pVVar4->field5_0x34)._s_1.Discontinuity == 1) && (iVar1 == 1)) &&
-     (uVar5 = PacketQueueLength(&(pVVar10->_s_0).InNotification), 2 < uVar5)) {
-    XAudioSourceVoice_SetPitch((pVVar4->field5_0x34)._s_1.SourceVoice,(float)dVar14);
-    XAudioSourceVoice_Start((pVVar4->field5_0x34)._s_1.SourceVoice,'\0');
-    (pVVar4->field5_0x34)._s_1.Discontinuity = 0;
-    pVVar4->PlaySpeed = XHV_XAUDIO_SPEED_NORMAL;
+  if ((((param_1->field5_0x34)._s_1.Discontinuity == 1) && (iVar1 == 1)) &&
+     (uVar4 = PacketQueueLength(&(pVVar8->_s_0).InNotification), 2 < uVar4)) {
+    XAudioSourceVoice_SetPitch((param_1->field5_0x34)._s_1.SourceVoice,(float)dVar12);
+    XAudioSourceVoice_Start((param_1->field5_0x34)._s_1.SourceVoice,'\0');
+    (param_1->field5_0x34)._s_1.Discontinuity = 0;
+    param_1->PlaySpeed = XHV_XAUDIO_SPEED_NORMAL;
   }
-  uVar7 = __restgprlr_20(iVar6);
-  return uVar7;
+  return iVar5;
 }
 
 
@@ -346,87 +344,84 @@ int VoiceChatStop(PROCMODE *param_1)
 
 // 828BDEB0  VoiceChatCreate  (<external>/Xenon/mar09/core/private/xam/apps/uvbase/xhv/voicechat.c:891)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 undefined4 VoiceChatCreate(XHVENGINE *param_1,void *param_2,int param_3,IProcMode **param_4)
 
 {
-  IProcModeVtbl *pIVar1;
-  PROCMODE *pPVar2;
-  CODEC_PROCESSOR *pCVar3;
-  undefined4 uVar4;
-  undefined8 uVar5;
+  PROCMODE *pPVar1;
+  CODEC_PROCESSOR *pCVar2;
+  undefined4 uVar3;
   
-  pIVar1 = (IProcModeVtbl *)__savegprlr_26(param_1);
-  uVar5 = 0;
-  pPVar2 = XMemAlloc(0x4c,0x618a8011);
-  if (pPVar2 != (PROCMODE *)0x0) {
-    pPVar2[1].lpVtbl = pIVar1;
-    pPVar2[1].field1_0x4.LocalTalker = (LOCALTALKER *)param_3;
-    (pPVar2->field1_0x4).RemoteTalker = param_2;
-    pPVar2->ModeID = VOICECHAT_MODE;
-    pPVar2->lpVtbl = &VoiceChatVtbl;
-    pPVar2->NumPackets = 10;
-    if ((LOCALTALKER *)param_3 == (LOCALTALKER *)0x1) {
-      if (((REMOTETALKER *)param_2)->TalkerVoice != (void *)0x0) {
-        (*VoiceChatVtbl.SetOutputVoice)((IProcMode *)pPVar2,((REMOTETALKER *)param_2)->TalkerVoice);
+  uVar3 = 0;
+  pPVar1 = XMemAlloc(0x4c,0x618a8011);
+  if (pPVar1 != (PROCMODE *)0x0) {
+    pPVar1[1].lpVtbl = (IProcModeVtbl *)param_1;
+    pPVar1[1].field1_0x4 = (PROCMODE_u_4)param_3;
+    (pPVar1->field1_0x4).LocalTalker = param_2;
+    pPVar1->ModeID = VOICECHAT_MODE;
+    pPVar1->lpVtbl = &VoiceChatVtbl;
+    pPVar1->NumPackets = 10;
+    if (param_3 == 1) {
+      if (*(void **)((int)param_2 + 0x48) != (void *)0x0) {
+        (*VoiceChatVtbl.SetOutputVoice)((IProcMode *)pPVar1,*(void **)((int)param_2 + 0x48));
       }
     }
     else {
-      *(undefined1 *)&pPVar2[1].ModeID = 0xff;
+      *(undefined1 *)&pPVar1[1].ModeID = 0xff;
     }
-    pCVar3 = XMemAlloc(pPVar2->NumPackets << 3,0x618a0003);
-    pPVar2[1].Codec = pCVar3;
-    if (pCVar3 != (CODEC_PROCESSOR *)0x0) goto LAB_828bdf74;
+    pCVar2 = XMemAlloc(pPVar1->NumPackets << 3,0x618a0003);
+    pPVar1[1].Codec = pCVar2;
+    if (pCVar2 != (CODEC_PROCESSOR *)0x0) goto LAB_828bdf74;
   }
-  uVar5 = 0xffffffff8007000e;
-  VoiceChatDestroy(pPVar2);
-  pPVar2 = (PROCMODE *)0x0;
+  uVar3 = 0x8007000e;
+  VoiceChatDestroy(pPVar1);
+  pPVar1 = (PROCMODE *)0x0;
 LAB_828bdf74:
-  *param_4 = (IProcMode *)pPVar2;
-  uVar4 = __restgprlr_26(uVar5);
-  return uVar4;
+  *param_4 = (IProcMode *)pPVar1;
+  return uVar3;
 }
 
 
 // 828BD9B8  VoiceChatInitialize  (<external>/Xenon/mar09/core/private/xam/apps/uvbase/xhv/voicechat.c:1000)
 
-undefined4
-VoiceChatInitialize(PROCMODE *param_1,XHVENGINE *param_2,CODEC_PROCESSOR *param_3,ulong param_4)
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
+int VoiceChatInitialize(PROCMODE *param_1,XHVENGINE *param_2,CODEC_PROCESSOR *param_3,ulong param_4)
 
 {
   PACKET_BUFFER *pPVar1;
-  VOICECHAT_EXTENSION *pVVar2;
-  int iVar3;
-  undefined4 uVar4;
-  PACKET_BUFFER **ppPVar5;
-  uint uVar6;
-  int iVar7;
+  int iVar2;
+  uint uVar3;
+  int iVar4;
   
-  pVVar2 = (VOICECHAT_EXTENSION *)__savegprlr_27(param_1,param_2);
-  (pVVar2->field0_0x0).ProcMode.QueueIndex = param_4;
-  (pVVar2->field0_0x0).ProcMode.Codec = param_3;
-  ppPVar5 = &(pVVar2->field0_0x0).ProcMode.Packets;
-  uVar6 = -(uint)(pVVar2->RemoteMode != 1) & 2;
-  iVar3 = PacketBufferCreate(param_3->CodecType->OutputFrameSize + uVar6,0x18,
-                             (pVVar2->field0_0x0).ProcMode.NumPackets,uVar6,ppPVar5);
-  if (-1 < iVar3) {
-    uVar6 = 0;
-    if ((pVVar2->field0_0x0).ProcMode.NumPackets != 0) {
-      iVar7 = 0;
+  param_1->QueueIndex = param_4;
+  param_1->Codec = param_3;
+  uVar3 = -(uint)(param_1[1].field1_0x4.LocalTalker != (LOCALTALKER *)0x1) & 2;
+  iVar2 = PacketBufferCreate(param_3->CodecType->OutputFrameSize + uVar3,0x18,param_1->NumPackets,
+                             uVar3,&param_1->Packets);
+  if (-1 < iVar2) {
+    uVar3 = 0;
+    if (param_1->NumPackets != 0) {
+      iVar4 = 0;
       do {
-        pPVar1 = *ppPVar5;
-        *(long **)((int)&pVVar2->Contexts->Packet + iVar7) =
-             (long *)((int)&pPVar1->Packets->Status + pPVar1->PacketDescriptorSize * uVar6);
-        VCpSubmitCodecPacket(pVVar2,(PACKET_CONTEXT *)((int)&pVVar2->Contexts->Packet + iVar7));
-        uVar6 = uVar6 + 1;
-        iVar7 = iVar7 + 8;
-      } while (uVar6 < (pVVar2->field0_0x0).ProcMode.NumPackets);
+        pPVar1 = param_1->Packets;
+        *(long **)((int)(param_1[1].Codec)->Outputs + iVar4 + -8) =
+             (long *)((int)&pPVar1->Packets->Status + pPVar1->PacketDescriptorSize * uVar3);
+        VCpSubmitCodecPacket
+                  ((VOICECHAT_EXTENSION *)param_1,
+                   (PACKET_CONTEXT *)((int)(param_1[1].Codec)->Outputs + iVar4 + -8));
+        uVar3 = uVar3 + 1;
+        iVar4 = iVar4 + 8;
+      } while (uVar3 < param_1->NumPackets);
     }
-    if (pVVar2->RemoteMode == 1) {
-      iVar3 = JitterBufCreate((pVVar2->field0_0x0).ProcMode.Codec,&pVVar2->JitterBuf);
+    if (param_1[1].field1_0x4.LocalTalker == (LOCALTALKER *)0x1) {
+      iVar2 = JitterBufCreate(param_1->Codec,(JITTERBUF **)&param_1[2].Codec);
     }
   }
-  uVar4 = __restgprlr_27(iVar3);
-  return uVar4;
+  return iVar2;
 }
 
 
@@ -456,6 +451,9 @@ void VoiceChatDestroy(PROCMODE *param_1)
 
 // 828BDB28  VoiceChatGetNotificationData  (<external>/Xenon/mar09/core/private/xam/apps/uvbase/xhv/voicechat.c:1142)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
+
 undefined4
 VoiceChatGetNotificationData(PROCMODE *param_1,uchar *param_2,ulong *param_3,ulong *param_4)
 
@@ -464,63 +462,57 @@ VoiceChatGetNotificationData(PROCMODE *param_1,uchar *param_2,ulong *param_3,ulo
   int iVar2;
   int iVar3;
   int iVar4;
-  int iVar6;
-  undefined8 uVar5;
-  undefined4 uVar7;
-  ulonglong uVar8;
-  int *piVar9;
-  uint uVar10;
-  uint uVar11;
-  int *piVar12;
-  ulong uVar13;
+  undefined4 uVar5;
+  uint uVar6;
+  uint uVar7;
+  int *piVar8;
+  ulong uVar9;
   
-  uVar8 = (ulonglong)(int)param_4;
-  iVar6 = __savegprlr_24(param_1,param_2);
-  uVar13 = 0;
-  uVar5 = 0xffffffff8000000a;
-  piVar9 = (int *)uVar8;
-  if ((uVar8 & 0xffffffff) != 0) {
-    *piVar9 = 0;
+  uVar9 = 0;
+  uVar5 = 0x8000000a;
+  if (param_4 != (ulong *)0x0) {
+    *param_4 = 0;
   }
-  piVar12 = *(int **)(iVar6 + 0x34);
+  piVar8 = (int *)param_1[1].NumPackets;
 LAB_828bdc08:
-  if (piVar12 == (int *)0x0) {
-    *(uint *)(*(int *)(iVar6 + 0x20) + 0x4f4) =
-         *(uint *)(*(int *)(iVar6 + 0x20) + 0x4f4) & ~(1 << (**(uint **)(iVar6 + 4) & 0x3f));
+  if (piVar8 == (int *)0x0) {
+    param_1[1].lpVtbl[0x1f].GetNotificationData =
+         (_func___cdecl_T_HRESULT_IProcMode_ptr_uchar_ptr_ulong_ptr_ulong_ptr *)
+         ((uint)param_1[1].lpVtbl[0x1f].GetNotificationData &
+         ~(1 << (((param_1->field1_0x4).LocalTalker)->Port & 0x3f)));
   }
   else {
-    piVar1 = (int *)*piVar12;
+    piVar1 = (int *)*piVar8;
     if (*piVar1 == 0) goto LAB_828bdc04;
     iVar2 = piVar1[1];
     iVar3 = piVar1[3];
-    uVar11 = (iVar3 - iVar2) + 2;
-    if (uVar11 <= *param_3 - uVar13) goto code_r0x828bdb98;
-    if (uVar13 == 0) {
-      uVar5 = 0xffffffff8007000e;
-      uVar13 = uVar11;
+    uVar7 = (iVar3 - iVar2) + 2;
+    if (uVar7 <= *param_3 - uVar9) goto code_r0x828bdb98;
+    if (uVar9 == 0) {
+      uVar5 = 0x8007000e;
+      uVar9 = uVar7;
     }
   }
-  *param_3 = uVar13;
-  uVar7 = __restgprlr_24(uVar5);
-  return uVar7;
+  *param_3 = uVar9;
+  return uVar5;
 code_r0x828bdb98:
   memcpy();
-  uVar13 = uVar11 + uVar13;
+  uVar9 = uVar7 + uVar9;
   uVar5 = 0;
-  if ((uVar8 & 0xffffffff) != 0) {
-    *piVar9 = *piVar9 + 1;
+  if (param_4 != (ulong *)0x0) {
+    *param_4 = *param_4 + 1;
   }
-  iVar4 = *piVar12;
-  uVar10 = *(int *)(iVar4 + 4) + (iVar3 - iVar2);
-  uVar11 = *(uint *)(iVar4 + 0xc);
-  if (uVar10 < *(uint *)(iVar4 + 0xc)) {
-    uVar11 = uVar10;
+  iVar4 = *piVar8;
+  uVar6 = *(int *)(iVar4 + 4) + (iVar3 - iVar2);
+  uVar7 = *(uint *)(iVar4 + 0xc);
+  if (uVar6 < *(uint *)(iVar4 + 0xc)) {
+    uVar7 = uVar6;
   }
-  *(uint *)(iVar4 + 4) = uVar11;
-  if (uVar11 == ((undefined4 *)*piVar12)[3]) {
-    *(undefined4 *)*piVar12 = 0;
+  *(uint *)(iVar4 + 4) = uVar7;
+  if (uVar7 == ((undefined4 *)*piVar8)[3]) {
+    *(undefined4 *)*piVar8 = 0;
 LAB_828bdc04:
-    piVar12 = (int *)piVar12[1];
+    piVar8 = (int *)piVar8[1];
   }
   goto LAB_828bdc08;
 }
@@ -528,23 +520,21 @@ LAB_828bdc04:
 
 // 828BDC58  VoiceChatSetOutputVoice  (<external>/Xenon/mar09/core/private/xam/apps/uvbase/xhv/voicechat.c:1287)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 undefined4 VoiceChatSetOutputVoice(PROCMODE *param_1,void *param_2)
 
 {
-  void *pvVar1;
-  T_HRESULT TVar2;
-  undefined4 uVar3;
-  ulonglong uVar4;
+  T_HRESULT TVar1;
   XAUDIOCHANNELMAPENTRY local_c0;
   XAUDIOVOICEOUTPUT local_b8;
   XAUDIOCHANNELMAP local_b0;
   XAUDIOVOICEOUTPUTENTRY local_a8;
   XAUDIOSOURCEVOICEINIT local_a0;
   
-  uVar4 = (ulonglong)(int)param_2;
-  pvVar1 = (void *)__savegprlr_26(param_1);
-  TVar2 = 0x80004001;
-  if (*(int *)((int)pvVar1 + 0x24) != 0) {
+  TVar1 = 0x80004001;
+  if (param_1[1].field1_0x4.LocalTalker != (LOCALTALKER *)0x0) {
     XMemSet(&local_c0,0,8);
     local_c0.InputChannel = '\0';
     local_c0.OutputChannel = '\0';
@@ -554,11 +544,11 @@ undefined4 VoiceChatSetOutputVoice(PROCMODE *param_1,void *param_2)
     local_b0.EntryCount = '\x01';
     XMemSet(&local_a8,0,8);
     local_a8.pChannelMap = &local_b0;
-    local_a8.pDestVoice = (IXAudioVoice *)uVar4;
+    local_a8.pDestVoice = param_2;
     XMemSet(&local_b8,0,8);
     local_b8.paEntries = &local_a8;
     local_b8.EntryCount = '\x01';
-    if (*(IXAudioVoice **)((int)pvVar1 + 0x3c) == (IXAudioVoice *)0x0) {
+    if ((IXAudioVoice *)param_1[1].ModeID == (IXAudioVoice *)0x0) {
       XMemSet(&local_a0,0,0x5c);
       local_a0.Format.SampleType = '\x01';
       local_a0.pVoiceOutput = &local_b8;
@@ -571,61 +561,64 @@ undefined4 VoiceChatSetOutputVoice(PROCMODE *param_1,void *param_2)
       local_a0.pEffectChain = (XAUDIOVOICEFXCHAIN *)0x0;
       local_a0.pfnProcessCallback = (_func___cdecl_void_XAUDIOVOICEPROCESSCALLBACK_ptr *)0x0;
       local_a0.pfnPacketLoopCallback = (_func___cdecl_void_XAUDIOVOICEPACKETCALLBACK_ptr *)0x0;
-      local_a0.MaxPacketCount = (uchar)*(undefined4 *)((int)pvVar1 + 0x14);
-      local_a0.pContext = pvVar1;
-      TVar2 = XAudioCreateSourceVoice(&local_a0,(IXAudioSourceVoice **)((int)pvVar1 + 0x3c));
+      local_a0.MaxPacketCount = (uchar)param_1->NumPackets;
+      local_a0.pContext = param_1;
+      TVar1 = XAudioCreateSourceVoice(&local_a0,(IXAudioSourceVoice **)&param_1[1].ModeID);
     }
-    else if ((uVar4 & 0xffffffff) != 0) {
-      TVar2 = XAudioVoice_SetVoiceOutput(*(IXAudioVoice **)((int)pvVar1 + 0x3c),&local_b8);
+    else if (param_2 != (void *)0x0) {
+      TVar1 = XAudioVoice_SetVoiceOutput((IXAudioVoice *)param_1[1].ModeID,&local_b8);
     }
-    *(undefined4 *)((int)pvVar1 + 0x40) = 1;
+    param_1[2].lpVtbl = (IProcModeVtbl *)0x1;
   }
-  uVar3 = __restgprlr_26(TVar2);
-  return uVar3;
+  return TVar1;
 }
 
 
 // 828BDDA0  VoiceChatSubmitPackets  (<external>/Xenon/mar09/core/private/xam/apps/uvbase/xhv/voicechat.c:1402)
 
-undefined4 VoiceChatSubmitPackets(PROCMODE *param_1,uchar *param_2,ulong *param_3)
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
+int VoiceChatSubmitPackets(PROCMODE *param_1,uchar *param_2,ulong *param_3)
 
 {
   uint uVar1;
   uint uVar2;
   int iVar3;
-  int iVar4;
-  undefined4 uVar5;
+  ulonglong uVar4;
+  longlong lVar5;
   ulonglong uVar6;
-  longlong lVar7;
-  ulonglong uVar8;
-  ulonglong uVar9;
+  ulonglong uVar7;
   
-  lVar7 = (longlong)(int)param_2;
-  iVar3 = __savegprlr_26(param_1);
-  uVar8 = 0;
-  iVar4 = 0;
-  if (*(int *)(iVar3 + 0x24) == 0) {
-    iVar4 = -0x7fffbfff;
+  lVar5 = (longlong)(int)param_2;
+  uVar6 = 0;
+  iVar3 = 0;
+  if (param_1[1].field1_0x4.LocalTalker == (LOCALTALKER *)0x0) {
+    iVar3 = -0x7fffbfff;
   }
   else {
     uVar1 = *param_3;
-    uVar2 = *(uint *)(*(int *)(*(int *)(iVar3 + 8) + 0x18) + 0x18);
+    uVar2 = param_1->Codec->CodecType->InputFrameSize;
     *param_3 = 0;
-    uVar9 = (ulonglong)uVar2 + 2;
-    uVar6 = (ulonglong)uVar1 / (uVar9 & 0xffffffff);
-    trapWord(6,uVar9,0);
-    if ((int)uVar6 != 0) {
+    uVar7 = (ulonglong)uVar2 + 2;
+    uVar4 = (ulonglong)uVar1 / (uVar7 & 0xffffffff);
+    trapWord(6,uVar7,0);
+    if ((int)uVar4 != 0) {
       do {
-        iVar4 = JitterBufSubmitPacket(*(JITTERBUF **)(iVar3 + 0x48),(uchar *)lVar7,(ulong)uVar9);
-        if ((iVar4 < 0) || (iVar4 == 1)) break;
-        uVar8 = uVar8 + 1;
-        lVar7 = lVar7 + uVar9;
-        *param_3 = *param_3 + (ulong)uVar9;
-      } while ((uVar8 & 0xffffffff) < uVar6);
+        iVar3 = JitterBufSubmitPacket((JITTERBUF *)param_1[2].Codec,(uchar *)lVar5,(ulong)uVar7);
+        if (iVar3 < 0) {
+          return iVar3;
+        }
+        if (iVar3 == 1) {
+          return 1;
+        }
+        uVar6 = uVar6 + 1;
+        lVar5 = lVar5 + uVar7;
+        *param_3 = *param_3 + (ulong)uVar7;
+      } while ((uVar6 & 0xffffffff) < uVar4);
     }
   }
-  uVar5 = __restgprlr_26(iVar4);
-  return uVar5;
+  return iVar3;
 }
 
 

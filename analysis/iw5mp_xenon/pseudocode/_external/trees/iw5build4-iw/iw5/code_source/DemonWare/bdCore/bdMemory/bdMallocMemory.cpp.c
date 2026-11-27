@@ -44,27 +44,28 @@ void bdMallocMemory::deallocate(void *param_1)
 
 // 828F6B30  reallocate  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdmemory/bdmallocmemory.cpp:63)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void * bdMallocMemory::reallocate(void *param_1,uint param_2)
 
 {
   int iVar1;
-  int iVar2;
-  bdMemoryChainElement *pbVar3;
-  void *pvVar4;
+  bdMemoryChainElement *pbVar2;
+  void *pvVar3;
   
-  iVar2 = __savegprlr_29(param_1);
-  if (iVar2 == 0) {
-    pvVar4 = allocate(param_2);
+  if (param_1 == (void *)0x0) {
+    pvVar3 = allocate(param_2);
   }
   else {
-    iVar1 = *(int *)(iVar2 + -0x10);
-    eraseMemory((bdMemoryChainElement *)(iVar2 + -0x14));
-    pbVar3 = bdAlignedOffsetRealloc
-                       ((bdMemoryChainElement *)(iVar2 + -0x14),iVar1 + 0x14,param_2 + 0x14,8,0x14);
-    pvVar4 = recordMemory(pbVar3,param_2,false);
+    iVar1 = *(int *)((int)param_1 + -0x10);
+    eraseMemory((bdMemoryChainElement *)((int)param_1 + -0x14));
+    pbVar2 = bdAlignedOffsetRealloc
+                       ((bdMemoryChainElement *)((int)param_1 + -0x14),iVar1 + 0x14,param_2 + 0x14,8
+                        ,0x14);
+    pvVar3 = recordMemory(pbVar2,param_2,false);
   }
-  pvVar4 = (void *)__restgprlr_29(pvVar4);
-  return pvVar4;
+  return pvVar3;
 }
 
 
@@ -101,28 +102,28 @@ void bdMallocMemory::alignedDeallocate(void *param_1)
 
 // 828F6C50  alignedReallocate  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdmemory/bdmallocmemory.cpp:114)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void * bdMallocMemory::alignedReallocate(void *param_1,uint param_2,uint param_3)
 
 {
   int iVar1;
-  int iVar2;
-  bdMemoryChainElement *pbVar3;
-  void *pvVar4;
+  bdMemoryChainElement *pbVar2;
+  void *pvVar3;
   
-  iVar2 = __savegprlr_28(param_1);
-  if (iVar2 == 0) {
-    pbVar3 = bdAlignedOffsetMalloc(param_2 + 0x14,param_3,0x14);
+  if (param_1 == (void *)0x0) {
+    pbVar2 = bdAlignedOffsetMalloc(param_2 + 0x14,param_3,0x14);
   }
   else {
-    iVar1 = *(int *)(iVar2 + -0x10);
-    eraseMemory((bdMemoryChainElement *)(iVar2 + -0x14));
-    pbVar3 = bdAlignedOffsetRealloc
-                       ((bdMemoryChainElement *)(iVar2 + -0x14),iVar1 + 0x14,param_2 + 0x14,param_3,
-                        0x14);
+    iVar1 = *(int *)((int)param_1 + -0x10);
+    eraseMemory((bdMemoryChainElement *)((int)param_1 + -0x14));
+    pbVar2 = bdAlignedOffsetRealloc
+                       ((bdMemoryChainElement *)((int)param_1 + -0x14),iVar1 + 0x14,param_2 + 0x14,
+                        param_3,0x14);
   }
-  pvVar4 = recordMemory(pbVar3,param_2,true);
-  pvVar4 = (void *)__restgprlr_28(pvVar4);
-  return pvVar4;
+  pvVar3 = recordMemory(pbVar2,param_2,true);
+  return pvVar3;
 }
 
 
@@ -156,13 +157,15 @@ void bdMallocMemory::leakCheck(void)
 
 // 828F67E0  printRecords  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdmemory/bdmallocmemory.cpp:187)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void bdMallocMemory::printRecords(void)
 
 {
   bdMemoryChainElement *pbVar1;
   _iobuf *p_Var2;
   
-  __savegprlr_27();
   bdPlatformMutex::_lock_bdMutex__QAAXXZ(&m_mutex.m_handle);
   for (pbVar1 = m_memoryChain; pbVar1 != (bdMemoryChainElement *)0x0; pbVar1 = pbVar1->m_next) {
     p_Var2 = __iob_func();
@@ -173,7 +176,6 @@ void bdMallocMemory::printRecords(void)
     bdFprintf(p_Var2 + 2,"********************* END *********************\n");
   }
   bdPlatformMutex::_unlock_bdMutex__QAAXXZ(&m_mutex.m_handle);
-  __restgprlr_27();
   return;
 }
 
@@ -194,58 +196,54 @@ int bdFprintf(void *param_1,char *param_2)
 
 // 828F6878  recordMemory  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdmemory/bdmallocmemory.cpp:214)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void * bdMallocMemory::recordMemory(bdMemoryChainElement *param_1,uint param_2,bool param_3)
 
 {
   bdMemoryChainElement *pbVar1;
-  bdMemoryChainElement *pbVar2;
-  void *pvVar3;
-  ulonglong uVar4;
-  ulonglong uVar5;
   
-  uVar4 = (ulonglong)(int)param_2;
-  pbVar1 = (bdMemoryChainElement *)__savegprlr_28(param_1);
-  pbVar2 = (bdMemoryChainElement *)0x0;
-  if (pbVar1 != (bdMemoryChainElement *)0x0) {
+  pbVar1 = (bdMemoryChainElement *)0x0;
+  if (param_1 != (bdMemoryChainElement *)0x0) {
     bdPlatformMutex::_lock_bdMutex__QAAXXZ(&m_mutex.m_handle);
-    pbVar1->m_size = (uint)uVar4;
-    pbVar1->m_aligned = param_3;
-    pbVar1->m_magic = 0xbdbd;
-    pbVar2 = m_memoryChain;
-    pbVar1->m_prev = (bdMemoryChainElement *)0x0;
-    pbVar1->m_next = pbVar2;
+    param_1->m_size = param_2;
+    param_1->m_aligned = param_3;
+    param_1->m_magic = 0xbdbd;
+    pbVar1 = m_memoryChain;
+    param_1->m_prev = (bdMemoryChainElement *)0x0;
+    param_1->m_next = pbVar1;
     if (m_memoryChain != (bdMemoryChainElement *)0x0) {
-      m_memoryChain->m_prev = pbVar1;
+      m_memoryChain->m_prev = param_1;
     }
-    uVar5 = (ulonglong)m_allocatedBytes;
     m_numAllocations = m_numAllocations + 1;
-    m_allocatedBytes = (uint)(uVar5 + uVar4);
-    if ((ulonglong)m_largestBlock <= (uVar4 & 0xffffffff)) {
-      m_largestBlock = (uint)uVar4;
+    m_allocatedBytes = m_allocatedBytes + param_2;
+    if (m_largestBlock <= param_2) {
+      m_largestBlock = param_2;
     }
-    if ((ulonglong)m_maxAllocatedBytes <= (uVar5 + uVar4 & 0xffffffff)) {
+    if (m_maxAllocatedBytes <= m_allocatedBytes) {
       m_maxAllocatedBytes = m_allocatedBytes;
     }
-    m_memoryChain = pbVar1;
+    m_memoryChain = param_1;
     bdPlatformMutex::_unlock_bdMutex__QAAXXZ(&m_mutex.m_handle);
-    pbVar2 = pbVar1 + 1;
+    pbVar1 = param_1 + 1;
   }
-  pvVar3 = (void *)__restgprlr_28(pbVar2);
-  return pvVar3;
+  return pbVar1;
 }
 
 
 // 828F6940  eraseMemory  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdmemory/bdmallocmemory.cpp:246)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void bdMallocMemory::eraseMemory(bdMemoryChainElement *param_1)
 
 {
-  short *psVar1;
   char acStack_130 [304];
   
-  psVar1 = (short *)__savegprlr_28(param_1);
   bdPlatformMutex::_lock_bdMutex__QAAXXZ(&m_mutex.m_handle);
-  if (*psVar1 != -0x4243) {
+  if (param_1->m_magic != 0xbdbd) {
     bdPlatformMutex::_unlock_bdMutex__QAAXXZ(&m_mutex.m_handle);
     bdLogMessage(BD_LOG_ERROR,"err/","mallocmemory",
                  "c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdCore\\bdMemory\\bdMallocMemory.cpp"
@@ -258,19 +256,18 @@ void bdMallocMemory::eraseMemory(bdMemoryChainElement *param_1)
     }
     bdPlatformMutex::_lock_bdMutex__QAAXXZ(&m_mutex.m_handle);
   }
-  if (*(int *)(psVar1 + 6) == 0) {
-    m_memoryChain = *(bdMemoryChainElement **)(psVar1 + 8);
+  if (param_1->m_prev == (bdMemoryChainElement *)0x0) {
+    m_memoryChain = param_1->m_next;
   }
   else {
-    *(undefined4 *)(*(int *)(psVar1 + 6) + 0x10) = *(undefined4 *)(psVar1 + 8);
+    param_1->m_prev->m_next = param_1->m_next;
   }
-  if (*(int *)(psVar1 + 8) != 0) {
-    *(undefined4 *)(*(int *)(psVar1 + 8) + 0xc) = *(undefined4 *)(psVar1 + 6);
+  if (param_1->m_next != (bdMemoryChainElement *)0x0) {
+    param_1->m_next->m_prev = param_1->m_prev;
   }
   m_numAllocations = m_numAllocations - 1;
-  m_allocatedBytes = m_allocatedBytes - *(int *)(psVar1 + 2);
+  m_allocatedBytes = m_allocatedBytes - param_1->m_size;
   bdPlatformMutex::_unlock_bdMutex__QAAXXZ(&m_mutex.m_handle);
-  __restgprlr_28();
   return;
 }
 

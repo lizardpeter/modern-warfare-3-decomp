@@ -39,15 +39,15 @@ taskCompleteResults dwGetTaskStatus(overlappedTask *param_1)
 
 // 826F2310  dwHandleTaskError  (DW/dwTasks.cpp:35)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 taskCompleteResults dwHandleTaskError(overlappedTask *param_1,bdLobbyErrorCode param_2)
 
 {
-  overlappedTask *poVar1;
-  taskCompleteResults tVar2;
   char acStack_70 [112];
   
-  poVar1 = (overlappedTask *)__savegprlr_28(param_1);
-  if (poVar1 == (overlappedTask *)0x0) {
+  if (param_1 == (overlappedTask *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DW\\dwTasks.cpp",0x24,0,"%s");
   }
   Com_Printf(0x10,"%s()\n");
@@ -60,11 +60,10 @@ taskCompleteResults dwHandleTaskError(overlappedTask *param_1,bdLobbyErrorCode p
   else {
     Com_PrintError(0x10,"\t DW task type %d errorCode %i - \'%s\'\n");
   }
-  TaskManager_ClearTask(poVar1);
+  TaskManager_ClearTask(param_1);
   if (param_2 == BD_TOO_MANY_TASKS) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DW\\dwTasks.cpp",0x39,0,"%s");
   }
-  tVar2 = __restgprlr_28(2);
-  return tVar2;
+  return TASK_ERROR;
 }
 

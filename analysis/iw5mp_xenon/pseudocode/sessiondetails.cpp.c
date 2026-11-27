@@ -20,38 +20,37 @@ void SetExtendedError(ulong param_1,ulong *param_2,ulong *param_3,_XOVERLAPPED *
 
 // 828BADF0  XSessionGetDetails  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/online/src/sessiondetails.cpp:45)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 ulong XSessionGetDetails(void *param_1,ulong *param_2,_XSESSION_LOCAL_DETAILS *param_3,
                         _XOVERLAPPED *param_4)
 
 {
-  undefined8 uVar1;
-  uint uVar2;
+  uint uVar1;
+  ulong uVar2;
   int iVar3;
   long lVar4;
   ulong uVar5;
-  ulonglong uVar6;
-  undefined4 uVar7;
   int local_60 [4];
   int local_50;
-  uint *local_4c;
+  ulong *local_4c;
   _XSESSION_LOCAL_DETAILS *local_48;
   undefined4 local_44;
   undefined4 local_40;
   undefined4 local_3c;
   
-  uVar6 = (ulonglong)(int)param_4;
-  uVar1 = __savegprlr_27(param_1);
   local_60[0] = 0;
-  uVar2 = XamGetSystemVersion();
-  if (uVar2 < 0x200ce900) {
+  uVar1 = XamGetSystemVersion();
+  if (uVar1 < 0x200ce900) {
     uVar2 = 0x65b;
     RtlSetLastError(-0x7ff8f9a5);
-    if ((uVar6 & 0xffffffff) == 0) goto LAB_828baf04;
-    uVar7 = 0x8007065b;
+    if (param_4 == (_XOVERLAPPED *)0x0) goto LAB_828baf04;
+    uVar5 = 0x8007065b;
   }
   else {
     if (0x7f < *param_2) {
-      uVar2 = XamSessionRefObjByHandle(uVar1,local_60);
+      uVar2 = XamSessionRefObjByHandle(param_1,local_60);
       if (uVar2 == 0) {
         local_44 = 0;
         local_40 = 0;
@@ -59,11 +58,11 @@ ulong XSessionGetDetails(void *param_1,ulong *param_2,_XSESSION_LOCAL_DETAILS *p
         local_3c = 0;
         local_4c = param_2;
         local_48 = param_3;
-        iVar3 = XMsgStartIORequest(0xfb,0xb001d,uVar6,&local_50,0x18);
+        iVar3 = XMsgStartIORequest(0xfb,0xb001d,param_4,&local_50,0x18);
         if (iVar3 < 0) {
           uVar2 = 0x65b;
         }
-        else if ((uVar6 & 0xffffffff) == 0) {
+        else if (param_4 == (_XOVERLAPPED *)0x0) {
           lVar4 = RtlGetLastError();
           uVar2 = lVar4 >> 0x1f & 0x65b;
         }
@@ -76,15 +75,14 @@ ulong XSessionGetDetails(void *param_1,ulong *param_2,_XSESSION_LOCAL_DETAILS *p
     *param_2 = 0x80;
     uVar2 = 0x7a;
     RtlSetLastError(-0x7ff8ff86);
-    if ((uVar6 & 0xffffffff) == 0) goto LAB_828baf04;
-    uVar7 = 0x8007007a;
+    if (param_4 == (_XOVERLAPPED *)0x0) goto LAB_828baf04;
+    uVar5 = 0x8007007a;
   }
-  *(undefined4 *)((int)uVar6 + 0x18) = uVar7;
+  param_4->dwExtendedError = uVar5;
 LAB_828baf04:
   if (local_60[0] != 0) {
     ObDereferenceObject();
   }
-  uVar5 = __restgprlr_27(uVar2);
-  return uVar5;
+  return uVar2;
 }
 

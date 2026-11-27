@@ -26,92 +26,82 @@ float MidEstPitch(float param_1,float param_2,float param_3,float param_4)
 
 // 828C9C90  TDPitchRefine  (<external>/Xenon/mar09/core/private/xam/codecs/nci/enc/src/midpitch.c:84)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
+
 float TDPitchRefine(float *param_1,int param_2,float param_3,float *param_4,float param_5)
 
 {
-  uint uVar1;
-  longlong lVar2;
-  float *pfVar3;
-  float *pfVar4;
-  longlong lVar5;
-  int iVar6;
+  float *pfVar1;
   float *in_r6;
+  int iVar2;
+  int iVar3;
+  float *pfVar4;
+  int iVar5;
+  int iVar6;
   int iVar7;
-  longlong lVar8;
-  longlong lVar9;
-  longlong lVar10;
-  longlong lVar11;
-  ulonglong uVar12;
+  int iVar8;
+  double dVar9;
+  double dVar10;
+  double dVar11;
+  double dVar12;
   double dVar13;
-  double extraout_f1;
   double dVar14;
-  double dVar15;
-  double dVar16;
-  double dVar17;
-  double dVar18;
-  float fVar19;
+  float fVar15;
   
-  dVar13 = (double)param_5;
-  lVar5 = (longlong)param_2;
-  __savegprlr_23((double)param_3,param_1,lVar5,param_4);
-  lVar2 = __savefpr_28();
-  pfVar4 = (float *)lVar2;
-  iVar7 = (int)(extraout_f1 * dVar13 + 0.5);
-  if (4 < iVar7) {
-    iVar7 = 4;
+  iVar2 = (int)(param_3 * param_5 + 0.5);
+  if (4 < iVar2) {
+    iVar2 = 4;
   }
-  uVar1 = (uint)((float)(extraout_f1 - (double)(longlong)iVar7) + 0.5);
-  uVar12 = (ulonglong)uVar1;
-  iVar7 = (int)((float)((double)(longlong)iVar7 + extraout_f1) + 0.5);
-  if ((int)uVar1 < 8) {
-    uVar12 = 8;
+  iVar8 = (int)((param_3 - (float)(longlong)iVar2) + 0.5);
+  iVar2 = (int)((float)(longlong)iVar2 + param_3 + 0.5);
+  if (iVar8 < 8) {
+    iVar8 = 8;
   }
-  if (0xa0 < iVar7) {
-    iVar7 = 0xa0;
+  if (0xa0 < iVar2) {
+    iVar2 = 0xa0;
   }
-  lVar11 = 0;
-  dVar13 = 0.0;
-  lVar2 = (uVar12 & 0x3fffffff) * 4 + lVar2;
-  lVar10 = lVar5 - uVar12;
-  lVar8 = 0;
-  dVar15 = dVar13;
-  dVar14 = dVar13;
-  dVar17 = -3.4028234663852886e+38;
+  iVar6 = 0;
+  dVar9 = 0.0;
+  pfVar4 = param_1 + iVar8;
+  iVar5 = param_2 - iVar8;
+  dVar11 = dVar9;
+  dVar10 = dVar9;
+  dVar13 = -3.4028234663852886e+38;
+  iVar3 = 0;
   do {
-    dVar16 = dVar14;
-    pfVar3 = pfVar4;
-    fVar19 = DotProd(pfVar4,(float *)lVar2,(int)lVar10);
-    dVar14 = (double)fVar19;
-    lVar9 = lVar11;
-    dVar18 = dVar14;
-    if ((dVar14 <= dVar17) &&
-       (lVar9 = lVar8, dVar16 = dVar15, dVar18 = dVar17, (int)lVar8 == (int)lVar11 + -1)) {
-      dVar13 = dVar14;
+    dVar12 = dVar10;
+    pfVar1 = param_1;
+    fVar15 = DotProd(param_1,pfVar4,iVar5);
+    dVar10 = (double)fVar15;
+    dVar14 = dVar10;
+    iVar7 = iVar6;
+    if ((dVar10 <= dVar13) && (dVar12 = dVar11, dVar14 = dVar13, iVar7 = iVar3, iVar3 == iVar6 + -1)
+       ) {
+      dVar9 = dVar10;
     }
-    lVar11 = lVar11 + 1;
-    lVar10 = lVar10 + -1;
-    lVar2 = lVar2 + 4;
-    lVar8 = lVar9;
-    dVar15 = dVar16;
-    dVar17 = dVar18;
-  } while ((int)lVar11 + (int)uVar12 <= iVar7);
-  iVar6 = (int)(lVar9 + uVar12);
-  if (((int)uVar12 < iVar6) && (iVar6 < iVar7)) {
-    fVar19 = QuadraticPeak((float)dVar16,(float)dVar18,(float)dVar13,pfVar3);
-    dVar13 = (double)(fVar19 + (float)(longlong)iVar6);
+    iVar6 = iVar6 + 1;
+    iVar5 = iVar5 + -1;
+    pfVar4 = pfVar4 + 1;
+    dVar11 = dVar12;
+    dVar13 = dVar14;
+    iVar3 = iVar7;
+  } while (iVar6 + iVar8 <= iVar2);
+  iVar7 = iVar7 + iVar8;
+  if ((iVar8 < iVar7) && (iVar7 < iVar2)) {
+    fVar15 = QuadraticPeak((float)dVar12,(float)dVar14,(float)dVar9,pfVar1);
+    dVar9 = (double)(fVar15 + (float)(longlong)iVar7);
   }
   else {
-    *in_r6 = (float)dVar18;
-    dVar13 = (double)(longlong)iVar6;
+    *in_r6 = (float)dVar14;
+    dVar9 = (double)(longlong)iVar7;
   }
-  iVar6 = (int)lVar5 - iVar6;
-  fVar19 = DotProd(pfVar4,pfVar4,iVar6);
-  dVar15 = (double)fVar19;
-  pfVar4 = (float *)((int)((lVar9 + uVar12 & 0xffffffff) << 2) + (int)pfVar4);
-  fVar19 = DotProd(pfVar4,pfVar4,iVar6);
-  *in_r6 = *in_r6 / SQRT((float)((double)fVar19 * dVar15 + 9.999999974752427e-07));
-  __restfpr_28(dVar13);
-  dVar13 = (double)__restgprlr_23();
-  return (float)dVar13;
+  fVar15 = DotProd(param_1,param_1,param_2 - iVar7);
+  dVar11 = (double)fVar15;
+  fVar15 = DotProd(param_1 + iVar7,param_1 + iVar7,param_2 - iVar7);
+  *in_r6 = *in_r6 / SQRT((float)((double)fVar15 * dVar11 + 9.999999974752427e-07));
+  return (float)dVar9;
 }
 

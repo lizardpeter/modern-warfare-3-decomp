@@ -24,28 +24,27 @@ int Live_GetGameTypeCount(void)
 
 // 825E60D8  Live_GetMapIndex  (universal/com_presence.cpp:156)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 int Live_GetMapIndex(char *param_1)
 
 {
-  char *pcVar1;
-  int iVar2;
+  int iVar1;
+  char *pcVar2;
   int iVar3;
-  char *pcVar4;
   
-  pcVar1 = (char *)__savegprlr_29(param_1);
-  pcVar4 = "mp_alpha";
+  pcVar2 = "mp_alpha";
   iVar3 = 0;
   do {
-    iVar2 = I_stricmp(pcVar1,pcVar4);
-    if (iVar2 == 0) {
-      iVar3 = __restgprlr_29(iVar3);
+    iVar1 = I_stricmp(param_1,pcVar2);
+    if (iVar1 == 0) {
       return iVar3;
     }
     iVar3 = iVar3 + 1;
-    pcVar4 = &mapRichPresenceInfo + iVar3 * 0x28;
+    pcVar2 = &mapRichPresenceInfo + iVar3 * 0x28;
   } while ((&mapRichPresenceInfo)[iVar3 * 0x28] != '\0');
-  iVar3 = __restgprlr_29(0xffffffffffffffff);
-  return iVar3;
+  return -1;
 }
 
 

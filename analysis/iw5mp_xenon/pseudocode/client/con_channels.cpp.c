@@ -2,44 +2,41 @@
 
 // 82359B40  Con_OpenChannel  (client/con_channels.cpp:87)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 bool Con_OpenChannel(char *param_1,bool param_2)
 
 {
   bool bVar1;
-  char *pcVar2;
+  int iVar2;
   int iVar3;
-  undefined1 uVar4;
-  int iVar5;
-  PrintChannelGlob *pPVar6;
+  PrintChannelGlob *pPVar4;
   
-  pcVar2 = (char *)__savegprlr_26(param_1);
-  pPVar6 = &pcGlob;
+  pPVar4 = &pcGlob;
   bVar1 = false;
-  iVar5 = 0;
+  iVar3 = 0;
   do {
-    if (pPVar6->openChannels[0].name[0] == '\0') {
+    if (pPVar4->openChannels[0].name[0] == '\0') {
 LAB_82359bb0:
-      if (0xff < iVar5) {
-        uVar4 = __restgprlr_26(0);
-        return (bool)uVar4;
+      if (0xff < iVar3) {
+        return false;
       }
       if (!bVar1) {
-        I_strncpyz(pcGlob.openChannels[iVar5].name,pcVar2,0x20);
-        pcGlob.openChannels[iVar5].allowScript = param_2;
+        I_strncpyz(pcGlob.openChannels[iVar3].name,param_1,0x20);
+        *(bool *)(iVar3 * 0x21 + -0x7d4c05a8) = param_2;
       }
-      uVar4 = __restgprlr_26(1);
-      return (bool)uVar4;
+      return true;
     }
-    iVar3 = I_strnicmp((char *)pPVar6,pcVar2,0x20);
-    if (iVar3 == 0) {
+    iVar2 = I_strnicmp((char *)pPVar4,param_1,0x20);
+    if (iVar2 == 0) {
       bVar1 = true;
       goto LAB_82359bb0;
     }
-    pPVar6 = (PrintChannelGlob *)(pPVar6->openChannels + 1);
-    iVar5 = iVar5 + 1;
-    if (-0x7d4be4c9 < (int)pPVar6) {
-      uVar4 = __restgprlr_26(0);
-      return (bool)uVar4;
+    pPVar4 = (PrintChannelGlob *)(pPVar4->openChannels + 1);
+    iVar3 = iVar3 + 1;
+    if (-0x7d4be4c9 < (int)pPVar4) {
+      return false;
     }
   } while( true );
 }
@@ -47,39 +44,39 @@ LAB_82359bb0:
 
 // 82359C00  Con_CloseChannelInternal  (client/con_channels.cpp:118)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
+
 void Con_CloseChannelInternal(int param_1)
 
 {
   int iVar1;
-  uint uVar2;
-  longlong lVar3;
-  int iVar4;
+  longlong lVar2;
+  int iVar3;
   
-  uVar2 = __savegprlr_23(param_1);
-  if (0xff < uVar2) {
+  if (0xff < (uint)param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\con_channels.cpp",0x79,
                     0,"channel doesn\'t index CON_MAX_CHANNELS\n\t%i not in [0, %i)");
   }
-  if (pcGlob.openChannels[uVar2].name[0] != '\0') {
-    pcGlob.openChannels[uVar2].name[0] = '\0';
-    iVar4 = -0x7d4be4c8;
-    iVar1 = ((int)uVar2 >> 5) * 4;
-    lVar3 = 7;
+  if (pcGlob.openChannels[param_1].name[0] != '\0') {
+    pcGlob.openChannels[param_1].name[0] = '\0';
+    iVar3 = -0x7d4be4c8;
+    iVar1 = (param_1 >> 5) * 4;
+    lVar2 = 7;
     do {
-      if (iVar4 == 0) {
+      if (iVar3 == 0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_bitops.h",
                         0x19,0,"%s");
       }
-      if (0xff < uVar2) {
+      if (0xff < (uint)param_1) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_bitops.h",
                         0x1a,0,"bitNum doesn\'t index size * 8\n\t%i not in [0, %i)");
       }
-      lVar3 = lVar3 + -1;
-      *(uint *)(iVar4 + iVar1) = *(uint *)(iVar4 + iVar1) & ~(1 << (uVar2 & 0x1f));
-      iVar4 = iVar4 + 0x20;
-    } while (lVar3 != 0);
+      lVar2 = lVar2 + -1;
+      *(uint *)(iVar3 + iVar1) = *(uint *)(iVar3 + iVar1) & ~(1 << (param_1 & 0x1fU));
+      iVar3 = iVar3 + 0x20;
+    } while (lVar2 != 0);
   }
-  __restgprlr_23();
   return;
 }
 
@@ -98,30 +95,28 @@ bool Con_ScriptHasPermission(int param_1)
 
 // 82359D48  Con_GetChannel  (client/con_channels.cpp:148)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 bool Con_GetChannel(char *param_1,int *param_2)
 
 {
-  char *pcVar1;
+  int iVar1;
   int iVar2;
-  undefined1 uVar3;
-  int iVar4;
-  PrintChannelGlob *pPVar5;
+  PrintChannelGlob *pPVar3;
   
-  pcVar1 = (char *)__savegprlr_27(param_1);
-  pPVar5 = &pcGlob;
-  iVar4 = 0;
-  while ((pPVar5->openChannels[0].name[0] == '\0' ||
-         (iVar2 = I_stricmp(pcVar1,(char *)pPVar5), iVar2 != 0))) {
-    pPVar5 = (PrintChannelGlob *)(pPVar5->openChannels + 1);
-    iVar4 = iVar4 + 1;
-    if (-0x7d4be4c9 < (int)pPVar5) {
-      uVar3 = __restgprlr_27(0);
-      return (bool)uVar3;
+  pPVar3 = &pcGlob;
+  iVar2 = 0;
+  while ((pPVar3->openChannels[0].name[0] == '\0' ||
+         (iVar1 = I_stricmp(param_1,(char *)pPVar3), iVar1 != 0))) {
+    pPVar3 = (PrintChannelGlob *)(pPVar3->openChannels + 1);
+    iVar2 = iVar2 + 1;
+    if (-0x7d4be4c9 < (int)pPVar3) {
+      return false;
     }
   }
-  *param_2 = iVar4;
-  uVar3 = __restgprlr_27(iVar4 < 0x100);
-  return (bool)uVar3;
+  *param_2 = iVar2;
+  return iVar2 < 0x100;
 }
 
 
@@ -139,54 +134,51 @@ bool Con_IsChannelOpen(int param_1)
 
 // 82359E08  Con_FilterShowChannel  (client/con_channels.cpp:175)
 
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "print_msg_dest_t": Some values do not have unique names */
 
 void Con_FilterShowChannel(print_msg_dest_t param_1,char *param_2,bool param_3)
 
 {
   int iVar1;
-  int iVar2;
-  uint (*pauVar3) [8];
-  char *pcVar4;
-  ulonglong uVar5;
+  uint (*pauVar2) [8];
+  char *pcVar3;
+  int iVar4;
+  PrintChannel *pPVar5;
   int iVar6;
-  PrintChannel *pPVar7;
-  int iVar8;
   
-  uVar5 = (ulonglong)param_3;
-  iVar1 = __savegprlr_22(param_1);
-  iVar6 = 0;
-  iVar8 = 1;
-  pPVar7 = pcGlob.openChannels + 1;
+  iVar4 = 0;
+  iVar6 = 1;
+  pPVar5 = pcGlob.openChannels + 1;
   do {
-    if ((pPVar7->name[0] != '\0') && (iVar2 = I_stricmpwild(param_2,pPVar7->name), iVar2 == 0)) {
-      pauVar3 = pcGlob.filters + iVar1;
-      if ((uVar5 & 0xff) == 0) {
-        iVar2 = Com_BitCheckAssert(*pauVar3,iVar8,0x20);
-        if (iVar2 != 0) {
-          Com_BitClearAssert(*pauVar3,iVar8,0x20);
-          pcVar4 = "Hiding channel: %s\n";
-          goto LAB_82359ecc;
+    if ((pPVar5->name[0] != '\0') && (iVar1 = I_stricmpwild(param_2,pPVar5->name), iVar1 == 0)) {
+      pauVar2 = pcGlob.filters + param_1;
+      if (param_3) {
+        iVar1 = Com_BitCheckAssert(*pauVar2,iVar6,0x20);
+        if (iVar1 == 0) {
+          Com_BitSetAssert(*pauVar2,iVar6,0x20);
+          pcVar3 = "Adding channel: %s\n";
+LAB_82359ecc:
+          Com_Printf(0,pcVar3);
+          iVar4 = iVar4 + 1;
         }
       }
       else {
-        iVar2 = Com_BitCheckAssert(*pauVar3,iVar8,0x20);
-        if (iVar2 == 0) {
-          Com_BitSetAssert(*pauVar3,iVar8,0x20);
-          pcVar4 = "Adding channel: %s\n";
-LAB_82359ecc:
-          Com_Printf(0,pcVar4);
-          iVar6 = iVar6 + 1;
+        iVar1 = Com_BitCheckAssert(*pauVar2,iVar6,0x20);
+        if (iVar1 != 0) {
+          Com_BitClearAssert(*pauVar2,iVar6,0x20);
+          pcVar3 = "Hiding channel: %s\n";
+          goto LAB_82359ecc;
         }
       }
     }
-    pPVar7 = pPVar7 + 1;
-    iVar8 = iVar8 + 1;
-    if (-0x7d4be4c9 < (int)pPVar7) {
-      if (iVar6 == 0) {
+    pPVar5 = pPVar5 + 1;
+    iVar6 = iVar6 + 1;
+    if (-0x7d4be4c9 < (int)pPVar5) {
+      if (iVar4 == 0) {
         Com_Printf(0,"No channels added or hidden\n");
       }
-      __restgprlr_22();
       return;
     }
   } while( true );
@@ -195,6 +187,8 @@ LAB_82359ecc:
 
 // 82359F10  Con_IsChannelVisible  (client/con_channels.cpp:211)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "print_msg_dest_t": Some values do not have unique names */
 
 bool Con_IsChannelVisible(print_msg_dest_t param_1,int param_2,int param_3)
@@ -202,53 +196,46 @@ bool Con_IsChannelVisible(print_msg_dest_t param_1,int param_2,int param_3)
 {
   uint uVar1;
   bool bVar2;
-  int iVar4;
-  undefined1 uVar6;
-  int iVar5;
-  undefined8 uVar3;
-  ulonglong uVar7;
+  int iVar3;
   
-  uVar7 = (ulonglong)param_2;
-  iVar4 = __savegprlr_29(param_1);
-  iVar5 = (int)uVar7;
-  if ((iVar5 < 0) || (0xff < iVar5)) {
+  if ((param_2 < 0) || (0xff < param_2)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\con_channels.cpp",0xd6,
                     0,"%s\n\t(channel) = %i");
   }
-  if (pcGlob.openChannels[0].name[(int)((uVar7 & 0xffffffff) << 5) + iVar5] != '\0') {
-    if (iVar4 == 1) {
-      if (((iVar5 == 2) || (iVar5 == 3)) || (bVar2 = false, iVar5 == 4)) {
-        bVar2 = true;
-      }
-      if (bVar2) goto LAB_8235a02c;
-      iVar4 = 0;
-LAB_82359fc0:
-      if (iVar5 == 0) goto LAB_82359fc8;
-    }
-    else if (iVar4 == 0) goto LAB_82359fc0;
-    iVar5 = Com_BitCheckAssert(pcGlob.filters[iVar4],iVar5,0x20);
-    if (iVar5 != 0) {
-LAB_82359fc8:
-      uVar6 = __restgprlr_29(1);
-      return (bool)uVar6;
-    }
-    uVar1 = param_3 >> 5 & 0x1f;
-    if ((uVar1 == 3) || (uVar1 == 2)) {
-      iVar4 = Com_BitCheckAssert(pcGlob.filters[iVar4],1,0x20);
-      uVar3 = 1;
-      if (iVar4 != 0) goto LAB_8235a030;
-    }
+  if (pcGlob.openChannels[param_2].name[0] == '\0') {
+    return false;
   }
-LAB_8235a02c:
-  uVar3 = 0;
-LAB_8235a030:
-  uVar6 = __restgprlr_29(uVar3);
-  return (bool)uVar6;
+  if (param_1 == CON_DEST_MINICON) {
+    if (((param_2 == 2) || (param_2 == 3)) || (bVar2 = false, param_2 == 4)) {
+      bVar2 = true;
+    }
+    if (bVar2) {
+      return false;
+    }
+    param_1 = CON_DEST_CONSOLE;
+  }
+  else if (param_1 != CON_DEST_CONSOLE) goto LAB_82359fd4;
+  if (param_2 == 0) {
+    return true;
+  }
+LAB_82359fd4:
+  iVar3 = Com_BitCheckAssert(pcGlob.filters[param_1],param_2,0x20);
+  if (iVar3 != 0) {
+    return true;
+  }
+  uVar1 = param_3 >> 5 & 0x1f;
+  if (((uVar1 == 3) || (uVar1 == 2)) &&
+     (iVar3 = Com_BitCheckAssert(pcGlob.filters[param_1],1,0x20), iVar3 != 0)) {
+    return true;
+  }
+  return false;
 }
 
 
 // 8235A038  Con_ChannelList_f  (client/con_channels.cpp:245)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void Con_ChannelList_f(void)
@@ -257,7 +244,6 @@ void Con_ChannelList_f(void)
   int iVar1;
   PrintChannelGlob *pPVar2;
   
-  __savegprlr_28();
   iVar1 = 0;
   pPVar2 = &pcGlob;
   do {
@@ -267,40 +253,37 @@ void Con_ChannelList_f(void)
     pPVar2 = (PrintChannelGlob *)(pPVar2->openChannels + 1);
     iVar1 = iVar1 + 1;
   } while ((int)pPVar2 < -0x7d4be4c8);
-  __restgprlr_28();
   return;
 }
 
 
 // 8235A0A0  Con_FilterAdd  (client/con_channels.cpp:257)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "print_msg_dest_t": Some values do not have unique names */
 
 void Con_FilterAdd(bool param_1)
 
 {
-  bool bVar3;
   int iVar1;
   char *pcVar2;
-  int iVar4;
+  int iVar3;
   
-  bVar3 = (bool)__savegprlr_29(param_1);
   iVar1 = Cmd_Argc();
   if (iVar1 < 2) {
     Cmd_Argv(0);
     Com_Printf(0,"USAGE: %s <channel>\n<channel> may include wildcards */?\n");
-    __restgprlr_29();
     return;
   }
-  iVar4 = 1;
+  iVar3 = 1;
   if (1 < iVar1) {
     do {
-      pcVar2 = Cmd_Argv(iVar4);
-      Con_FilterShowChannel(CON_DEST_CONSOLE,pcVar2,bVar3);
-      iVar4 = iVar4 + 1;
-    } while (iVar4 < iVar1);
+      pcVar2 = Cmd_Argv(iVar3);
+      Con_FilterShowChannel(CON_DEST_CONSOLE,pcVar2,param_1);
+      iVar3 = iVar3 + 1;
+    } while (iVar3 < iVar1);
   }
-  __restgprlr_29();
   return;
 }
 
@@ -331,6 +314,8 @@ void Con_FilterRemove_f(void)
 
 // 8235A130  Con_FilterList_f  (client/con_channels.cpp:302)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void Con_FilterList_f(void)
@@ -341,7 +326,6 @@ void Con_FilterList_f(void)
   int iVar3;
   bool bVar4;
   
-  __savegprlr_25();
   pPVar2 = &pcGlob;
   iVar3 = 0;
   do {
@@ -362,52 +346,53 @@ void Con_FilterList_f(void)
     pPVar2 = (PrintChannelGlob *)(pPVar2->openChannels + 1);
     iVar3 = iVar3 + 1;
   } while ((int)pPVar2 < -0x7d4be4c8);
-  __restgprlr_25();
   return;
 }
 
 
 // 8235A1F8  Con_WriteFilterConfigString  (client/con_channels.cpp:314)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
+
 void Con_WriteFilterConfigString(void *param_1)
 
 {
-  void *pvVar1;
+  int iVar1;
   int iVar2;
-  int iVar3;
-  bool bVar4;
+  bool bVar3;
   
-  pvVar1 = (void *)__savegprlr_24(param_1);
-  FS_Printf(pvVar1,"con_hidechannel *; con_showchannel");
-  iVar3 = 0;
+  FS_Printf(param_1,"con_hidechannel *; con_showchannel");
+  iVar2 = 0;
   do {
-    if ((iVar3 < 0) || (0xff < iVar3)) {
+    if ((iVar2 < 0) || (0xff < iVar2)) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\con_channels.cpp",
                       0xd6,0,"%s\n\t(channel) = %i");
     }
-    bVar4 = false;
-    if (pcGlob.openChannels[iVar3].name[0] != '\0') {
-      if (iVar3 == 0) {
-        bVar4 = true;
+    bVar3 = false;
+    if (pcGlob.openChannels[iVar2].name[0] != '\0') {
+      if (iVar2 == 0) {
+        bVar3 = true;
       }
       else {
-        iVar2 = Com_BitCheckAssert(pcGlob.filters[0],iVar3,0x20);
-        bVar4 = iVar2 != 0;
+        iVar1 = Com_BitCheckAssert(pcGlob.filters[0],iVar2,0x20);
+        bVar3 = iVar1 != 0;
       }
     }
-    if (bVar4) {
-      FS_Printf(pvVar1," %s");
+    if (bVar3) {
+      FS_Printf(param_1," %s");
     }
-    iVar3 = iVar3 + 1;
-  } while (iVar3 < 0x100);
-  FS_Printf(pvVar1,"\n");
-  __restgprlr_24();
+    iVar2 = iVar2 + 1;
+  } while (iVar2 < 0x100);
+  FS_Printf(param_1,"\n");
   return;
 }
 
 
 // 8235A2F0  Con_InitChannelsForDestFromList  (client/con_channels.cpp:330)
 
+/* WARNING: Function: __savegprlr_18 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_18 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "print_msg_dest_t": Some values do not have unique names */
 
 void Con_InitChannelsForDestFromList(print_msg_dest_t param_1,char *param_2)
@@ -415,59 +400,54 @@ void Con_InitChannelsForDestFromList(print_msg_dest_t param_1,char *param_2)
 {
   char cVar1;
   bool bVar2;
-  print_msg_dest_t pVar3;
-  int iVar4;
-  ulonglong uVar5;
-  char *pcVar7;
-  ulonglong uVar6;
-  ulonglong uVar8;
-  ulonglong uVar9;
-  int iVar10;
-  PrintChannel *pPVar11;
-  int iVar12;
+  int iVar3;
+  char *pcVar4;
+  char *pcVar5;
+  char *pcVar6;
+  int iVar7;
+  PrintChannel *pPVar8;
+  int iVar9;
   char acStack_180 [384];
   
-  uVar5 = (ulonglong)(int)param_2;
-  pVar3 = __savegprlr_18(param_1);
-  uVar6 = uVar5;
-  if ((uVar5 & 0xffffffff) == 0) {
+  pcVar4 = param_2;
+  if (param_2 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\con_channels.cpp",0x152
                     ,0,"%s");
   }
   do {
-    pcVar7 = (char *)uVar6;
-    uVar6 = uVar6 + 1;
-  } while (*pcVar7 != '\0');
+    cVar1 = *pcVar4;
+    pcVar4 = pcVar4 + 1;
+  } while (cVar1 != '\0');
   bVar2 = false;
-  uVar9 = 0;
-  Con_FilterShowChannel(pVar3,"*",false);
-  uVar8 = 0;
+  pcVar6 = (char *)0x0;
+  Con_FilterShowChannel(param_1,"*",false);
+  pcVar5 = (char *)0x0;
   do {
-    cVar1 = *(char *)((int)uVar8 + (int)uVar5);
+    cVar1 = param_2[(int)pcVar5];
     if (((cVar1 == ' ') || (cVar1 == ',')) || (cVar1 == '\0')) {
       if (bVar2) {
-        if (0x100 < ((uVar8 - uVar9) + 1 & 0xffffffff)) {
+        if (0x100 < ((int)pcVar5 - (int)pcVar6) + 1U) {
           Com_Error(ERR_DROP,"Channel name too long in specified list: \"%s\"\n");
         }
         memcpy();
-        iVar10 = 0;
-        iVar12 = 1;
-        pPVar11 = pcGlob.openChannels + 1;
-        acStack_180[(int)(uVar8 - uVar9)] = '\0';
+        iVar7 = 0;
+        iVar9 = 1;
+        pPVar8 = pcGlob.openChannels + 1;
+        acStack_180[(int)pcVar5 - (int)pcVar6] = '\0';
         do {
-          if ((pPVar11->name[0] != '\0') &&
-             (iVar4 = I_stricmpwild(acStack_180,pPVar11->name), iVar4 == 0)) {
-            iVar4 = Com_BitCheckAssert(pcGlob.filters[pVar3],iVar12,0x20);
-            if (iVar4 == 0) {
-              Com_BitSetAssert(pcGlob.filters[pVar3],iVar12,0x20);
+          if ((pPVar8->name[0] != '\0') &&
+             (iVar3 = I_stricmpwild(acStack_180,pPVar8->name), iVar3 == 0)) {
+            iVar3 = Com_BitCheckAssert(pcGlob.filters[param_1],iVar9,0x20);
+            if (iVar3 == 0) {
+              Com_BitSetAssert(pcGlob.filters[param_1],iVar9,0x20);
               Com_Printf(0,"Adding channel: %s\n");
-              iVar10 = iVar10 + 1;
+              iVar7 = iVar7 + 1;
             }
           }
-          pPVar11 = pPVar11 + 1;
-          iVar12 = iVar12 + 1;
-        } while ((int)pPVar11 < -0x7d4be4c8);
-        if (iVar10 == 0) {
+          pPVar8 = pPVar8 + 1;
+          iVar9 = iVar9 + 1;
+        } while ((int)pPVar8 < -0x7d4be4c8);
+        if (iVar7 == 0) {
           Com_Printf(0,"No channels added or hidden\n");
         }
         bVar2 = false;
@@ -475,17 +455,18 @@ void Con_InitChannelsForDestFromList(print_msg_dest_t param_1,char *param_2)
     }
     else if (!bVar2) {
       bVar2 = true;
-      uVar9 = uVar8;
+      pcVar6 = pcVar5;
     }
-    uVar8 = uVar8 + 1;
-  } while ((uVar8 & 0xffffffff) <= ((uVar6 - uVar5) - 1 & 0xffffffff));
-  __restgprlr_18();
+    pcVar5 = pcVar5 + 1;
+  } while (pcVar5 <= pcVar4 + (-1 - (int)param_2));
   return;
 }
 
 
 // 8235A4C8  Con_InitGameMsgChannels  (client/con_channels.cpp:378)
 
+/* WARNING: Function: __savegprlr_18 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_18 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "print_msg_dest_t": Some values do not have unique names */
 
@@ -507,7 +488,6 @@ void Con_InitGameMsgChannels(void)
   char (*pacVar13) [25];
   char acStack_180 [384];
   
-  __savegprlr_18();
   pacVar11 = con_gameMsgWindowNFilter_Descs;
   pacVar13 = con_gameMsgWindowNFilter_Names;
   iVar9 = 0;
@@ -584,13 +564,14 @@ void Con_InitGameMsgChannels(void)
     ppdVar6 = ppdVar6 + 1;
     pVar8 = pVar8 + CON_DEST_MINICON;
   } while (lVar7 != 0);
-  __restgprlr_18();
   return;
 }
 
 
 // 8235A738  Con_InitChannels  (client/con_channels.cpp:405)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "print_msg_dest_t": Some values do not have unique names */
 
@@ -600,7 +581,6 @@ void Con_InitChannels(void)
   char **ppcVar1;
   longlong lVar2;
   
-  __savegprlr_29();
   memset();
   lVar2 = 0x1a;
   ppcVar1 = demoExeModeNames + 5;
@@ -621,13 +601,14 @@ void Con_InitChannels(void)
   Cmd_AddCommandInternal("con_showchannel",Con_FilterAdd_f,&Con_FilterAdd_f_VAR);
   Cmd_AddCommandInternal("con_hidechannel",Con_FilterRemove_f,&Con_FilterRemove_f_VAR);
   Cmd_AddCommandInternal("con_visiblechannellist",Con_FilterList_f,&Con_FilterList_f_VAR);
-  __restgprlr_29();
   return;
 }
 
 
 // 8235A878  Con_ShutdownChannels  (client/con_channels.cpp:439)
 
+/* WARNING: Function: __savegprlr_17 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_17 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void Con_ShutdownChannels(void)
@@ -639,7 +620,6 @@ void Con_ShutdownChannels(void)
   longlong lVar4;
   int iVar5;
   
-  __savegprlr_17();
   pPVar2 = &pcGlob;
   uVar3 = 0;
   do {
@@ -672,134 +652,133 @@ void Con_ShutdownChannels(void)
     pPVar2 = (PrintChannelGlob *)(pPVar2->openChannels + 1);
     uVar3 = uVar3 + 1;
   } while ((int)pPVar2 < -0x7d4be4c8);
-  __restgprlr_17();
   return;
 }
 
 
 // 8235A990  Con_SaveChannels  (client/con_channels.cpp:449)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void Con_SaveChannels(MemoryFile *param_1)
 
 {
-  MemoryFile *pMVar1;
-  PrintChannel *pPVar2;
-  PrintChannelGlob *pPVar3;
+  PrintChannel *pPVar1;
+  PrintChannelGlob *pPVar2;
+  char *pcVar3;
   char *pcVar4;
-  char *pcVar5;
-  PrintChannelGlob *pPVar6;
-  longlong lVar7;
+  PrintChannelGlob *pPVar5;
+  longlong lVar6;
   char *local_40 [16];
   
-  pMVar1 = (MemoryFile *)__savegprlr_27(param_1);
-  pPVar6 = &pcGlob;
+  pPVar5 = &pcGlob;
   local_40[0] = (char *)0x0;
-  pPVar2 = pcGlob.openChannels + 1;
-  lVar7 = 0x40;
+  pPVar1 = pcGlob.openChannels + 1;
+  lVar6 = 0x40;
   do {
-    if (((PrintChannelGlob *)(pPVar2 + -1))->openChannels[0].name[0] != '\0') {
+    if (((PrintChannelGlob *)(pPVar1 + -1))->openChannels[0].name[0] != '\0') {
       local_40[0] = local_40[0] + 1;
     }
-    if (pPVar2->name[0] != '\0') {
+    if (pPVar1->name[0] != '\0') {
       local_40[0] = local_40[0] + 1;
     }
-    if (pPVar2[1].name[0] != '\0') {
+    if (pPVar1[1].name[0] != '\0') {
       local_40[0] = local_40[0] + 1;
     }
-    if (pPVar2[2].name[0] != '\0') {
+    if (pPVar1[2].name[0] != '\0') {
       local_40[0] = local_40[0] + 1;
     }
-    pPVar2 = pPVar2 + 4;
-    lVar7 = lVar7 + -1;
-  } while (lVar7 != 0);
-  MemFile_WriteData(pMVar1,4,local_40);
-  pcVar5 = (char *)0x0;
+    pPVar1 = pPVar1 + 4;
+    lVar6 = lVar6 + -1;
+  } while (lVar6 != 0);
+  MemFile_WriteData(param_1,4,local_40);
+  pcVar4 = (char *)0x0;
   do {
-    pPVar3 = pPVar6;
-    if (pPVar6->openChannels[0].name[0] != '\0') {
+    pPVar2 = pPVar5;
+    if (pPVar5->openChannels[0].name[0] != '\0') {
       do {
-        pPVar2 = pPVar3->openChannels;
-        pPVar3 = (PrintChannelGlob *)(pPVar3->openChannels[0].name + 1);
-      } while (pPVar2->name[0] != '\0');
-      pcVar4 = (char *)((int)pPVar3 + (-1 - (int)pPVar6));
-      local_40[0] = pcVar5;
-      MemFile_WriteData(pMVar1,4,local_40);
+        pPVar1 = pPVar2->openChannels;
+        pPVar2 = (PrintChannelGlob *)(pPVar2->openChannels[0].name + 1);
+      } while (pPVar1->name[0] != '\0');
+      pcVar3 = (char *)((int)pPVar2 + (-1 - (int)pPVar5));
       local_40[0] = pcVar4;
-      MemFile_WriteData(pMVar1,4,local_40);
-      MemFile_WriteData(pMVar1,(int)pcVar4,pPVar6);
+      MemFile_WriteData(param_1,4,local_40);
+      local_40[0] = pcVar3;
+      MemFile_WriteData(param_1,4,local_40);
+      MemFile_WriteData(param_1,(int)pcVar3,pPVar5);
     }
-    pPVar6 = (PrintChannelGlob *)(pPVar6->openChannels + 1);
-    pcVar5 = pcVar5 + 1;
-  } while ((int)pPVar6 < -0x7d4be4c8);
-  __restgprlr_27();
+    pPVar5 = (PrintChannelGlob *)(pPVar5->openChannels + 1);
+    pcVar4 = pcVar4 + 1;
+  } while ((int)pPVar5 < -0x7d4be4c8);
   return;
 }
 
 
 // 8235AAA0  Con_RestoreChannels  (client/con_channels.cpp:476)
 
+/* WARNING: Function: __savegprlr_21 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_21 replaced with injection: xenon_save_restore */
+
 void Con_RestoreChannels(MemoryFile *param_1)
 
 {
   uint uVar1;
-  MemoryFile *pMVar2;
-  PrintChannel *pPVar3;
-  int iVar4;
-  uint uVar5;
-  uint (*pauVar6) [8];
-  longlong lVar7;
+  PrintChannel *pPVar2;
+  int iVar3;
+  uint uVar4;
+  uint (*pauVar5) [8];
+  longlong lVar6;
   uint local_90;
   int local_8c [3];
   char acStack_80 [128];
   
-  pMVar2 = (MemoryFile *)__savegprlr_21(param_1);
-  MemFile_ReadData(pMVar2,4,&local_90);
-  uVar5 = local_90;
+  MemFile_ReadData(param_1,4,&local_90);
+  uVar4 = local_90;
   do {
-    if (uVar5 == 0) {
-      __restgprlr_21();
+    if (uVar4 == 0) {
       return;
     }
-    MemFile_ReadData(pMVar2,4,&local_90);
+    MemFile_ReadData(param_1,4,&local_90);
     uVar1 = local_90;
     if (((int)local_90 < 0) || (0xff < (int)local_90)) {
                     /* WARNING: Subroutine does not return */
       Sys_Error("GAME_ERR_SAVEGAME_BAD");
     }
-    MemFile_ReadData(pMVar2,4,local_8c);
-    iVar4 = local_8c[0];
+    MemFile_ReadData(param_1,4,local_8c);
+    iVar3 = local_8c[0];
     if ((local_8c[0] == 0) || (0x1e < local_8c[0])) {
                     /* WARNING: Subroutine does not return */
       Sys_Error("GAME_ERR_SAVEGAME_BAD");
     }
-    MemFile_ReadData(pMVar2,local_8c[0],acStack_80);
-    pPVar3 = pcGlob.openChannels + uVar1;
-    acStack_80[iVar4] = '\0';
+    MemFile_ReadData(param_1,local_8c[0],acStack_80);
+    pPVar2 = pcGlob.openChannels + uVar1;
+    acStack_80[iVar3] = '\0';
     if (pcGlob.openChannels[uVar1].name[0] == '\0') {
 LAB_8235abe4:
-      I_strncpyz(pPVar3->name,acStack_80,0x20);
+      I_strncpyz(pPVar2->name,acStack_80,0x20);
     }
     else {
-      iVar4 = I_stricmp(pPVar3->name,acStack_80);
-      if (iVar4 != 0) {
+      iVar3 = I_stricmp(pPVar2->name,acStack_80);
+      if (iVar3 != 0) {
         if (0xff < uVar1) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\con_channels.cpp"
                           ,0x79,0,"channel doesn\'t index CON_MAX_CHANNELS\n\t%i not in [0, %i)");
         }
-        if (pPVar3->name[0] != '\0') {
-          lVar7 = 7;
-          pPVar3->name[0] = '\0';
-          pauVar6 = pcGlob.filters;
+        if (pPVar2->name[0] != '\0') {
+          lVar6 = 7;
+          pPVar2->name[0] = '\0';
+          pauVar5 = pcGlob.filters;
           do {
-            Com_BitClearAssert(*pauVar6,uVar1,0x20);
-            lVar7 = lVar7 + -1;
-            pauVar6 = pauVar6 + 1;
-          } while (lVar7 != 0);
+            Com_BitClearAssert(*pauVar5,uVar1,0x20);
+            lVar6 = lVar6 + -1;
+            pauVar5 = pauVar5 + 1;
+          } while (lVar6 != 0);
         }
         goto LAB_8235abe4;
       }
     }
-    uVar5 = uVar5 - 1;
+    uVar4 = uVar4 - 1;
   } while( true );
 }
 

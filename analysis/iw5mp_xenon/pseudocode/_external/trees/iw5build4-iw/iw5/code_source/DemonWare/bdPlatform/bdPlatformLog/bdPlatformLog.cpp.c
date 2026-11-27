@@ -25,37 +25,34 @@ void __thiscall bdLogSubscriber::~bdLogSubscriber(bdLogSubscriber *this)
 
 // 828F48D0  addChannel  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdplatform/bdplatformlog/bdplatformlog.cpp:43)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 bool __thiscall bdLogSubscriber::addChannel(bdLogSubscriber *this,char *param_1)
 
 {
-  bdLinkable *this_00;
   bool bVar1;
-  undefined1 uVar2;
+  bool bVar2;
   uint uVar3;
-  bdLinkable *pbVar4;
-  longlong lVar5;
+  char **ppcVar4;
   
-  this_00 = (bdLinkable *)__savegprlr_29(this);
-  lVar5 = 0;
+  bVar1 = false;
   uVar3 = 0;
-  pbVar4 = this_00 + 1;
+  ppcVar4 = this->m_channels;
   do {
     if (4 < uVar3) break;
-    if (pbVar4->_padding_ == 0) {
-      lVar5 = 1;
-      pbVar4->_padding_ = (int)param_1;
+    if (*ppcVar4 == (char *)0x0) {
+      bVar1 = true;
+      *ppcVar4 = param_1;
     }
     uVar3 = uVar3 + 1;
-    pbVar4 = (bdLinkable *)&pbVar4->m_previous;
-  } while (lVar5 == 0);
-  if (lVar5 != 0) {
-    bVar1 = bdLinkable::find((bdLinkable *)g_logSubscriberList,this_00);
-    if (!bVar1) {
-      bdLinkable::link(this_00,(bdLinkable **)&g_logSubscriberList);
-    }
+    ppcVar4 = ppcVar4 + 1;
+  } while (!bVar1);
+  if ((bVar1) &&
+     (bVar2 = bdLinkable::find((bdLinkable *)g_logSubscriberList,(bdLinkable *)this), !bVar2)) {
+    bdLinkable::link((bdLinkable *)this,(bdLinkable **)&g_logSubscriberList);
   }
-  uVar2 = __restgprlr_29(lVar5);
-  return (bool)uVar2;
+  return bVar1;
 }
 
 
@@ -85,23 +82,26 @@ bdLogSubscriber::publish
 
 // 828F4A40  bdSnprintf  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdplatform/bdplatformstring/bdplatformstring.inl:188)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 int bdSnprintf(char *param_1,uint param_2,char *param_3)
 
 {
-  char *pcVar1;
-  int iVar2;
+  int iVar1;
   char *pcStack00000024;
   
-  pcVar1 = (char *)__savegprlr_27(param_1);
   pcStack00000024 = param_3;
-  iVar2 = _vscprintf(param_3,&stack0x00000028);
-  _vsnprintf_s(pcVar1,param_2,0xffffffff,param_3,&stack0x00000028);
-  iVar2 = __restgprlr_27(iVar2);
-  return iVar2;
+  iVar1 = _vscprintf(param_3,&stack0x00000028);
+  _vsnprintf_s(param_1,param_2,0xffffffff,param_3,&stack0x00000028);
+  return iVar1;
 }
 
 
 // 828F49A8  logMessage  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdplatform/bdplatformlog/bdplatformlog.cpp:203)
+
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
 
 void __thiscall
 bdLogSubscriber::logMessage
@@ -109,90 +109,70 @@ bdLogSubscriber::logMessage
           uint param_5,char *param_6)
 
 {
-  int *piVar1;
-  bool bVar2;
-  longlong lVar3;
-  longlong lVar4;
-  longlong lVar5;
-  longlong lVar6;
-  longlong lVar7;
-  longlong lVar8;
-  longlong lVar9;
-  int *piVar10;
+  bool bVar1;
+  longlong lVar2;
+  char **ppcVar3;
   
-  lVar8 = (longlong)(int)param_6;
-  lVar7 = (longlong)(int)param_5;
-  lVar6 = (longlong)(int)param_4;
-  lVar5 = (longlong)(int)param_3;
-  lVar4 = (longlong)(int)param_2;
-  lVar3 = (longlong)(int)param_1;
-  piVar1 = (int *)__savegprlr_22(this,lVar3,lVar4,lVar5,lVar6,lVar7,lVar8);
-  piVar10 = piVar1 + 4;
-  lVar9 = 5;
+  ppcVar3 = this->m_channels;
+  lVar2 = 5;
   do {
-    if ((char *)*piVar10 != (char *)0x0) {
-      bVar2 = bdDelimSubstr((char *)lVar4,(char *)*piVar10,"\\/");
-      if (bVar2) {
-        (**(code **)(*piVar1 + 4))(piVar1,lVar3,lVar4,lVar5,lVar6,lVar7,lVar8);
+    if (*ppcVar3 != (char *)0x0) {
+      bVar1 = bdDelimSubstr(param_2,*ppcVar3,"\\/");
+      if (bVar1) {
+        (**(code **)(this->_padding_ + 4))(this,param_1,param_2,param_3,param_4,param_5,param_6);
       }
     }
-    lVar9 = lVar9 + -1;
-    piVar10 = piVar10 + 1;
-  } while (lVar9 != 0);
-  __restgprlr_22();
+    lVar2 = lVar2 + -1;
+    ppcVar3 = ppcVar3 + 1;
+  } while (lVar2 != 0);
   return;
 }
 
 
 // 828F4B10  bdLogMessage  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdplatform/bdplatformlog/bdplatformlog.cpp:238)
 
+/* WARNING: Function: __savegprlr_21 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_21 replaced with injection: xenon_save_restore */
+
 void bdLogMessage(bdLogMessageType param_1,char *param_2,char *param_3,char *param_4,char *param_5,
                  uint param_6,char *param_7)
 
 {
-  bdLogMessageType bVar1;
-  uint uVar2;
-  int iVar3;
-  bdLinkable *pbVar4;
-  char *pcVar5;
-  ulonglong uVar6;
-  ulonglong uVar7;
+  uint uVar1;
+  int iVar2;
+  bdLinkable *pbVar3;
+  ulonglong uVar4;
   char *pcStack00000044;
   char acStack_260 [256];
   char acStack_160 [352];
   
-  uVar6 = (ulonglong)(int)param_3;
-  uVar7 = (ulonglong)(int)param_2;
-  bVar1 = __savegprlr_21(param_1);
-  pcVar5 = (char *)uVar7;
-  pcStack00000044 = param_7;
   if (g_logSubscriberList != (bdLogSubscriber *)0x0) {
+    pcStack00000044 = param_7;
     memset();
-    uVar2 = _vscprintf(param_7,&stack0x00000048);
+    uVar1 = _vscprintf(param_7,&stack0x00000048);
     _vsnprintf_s(acStack_260,0x100,0xffffffff,param_7,&stack0x00000048);
-    if (0xff < uVar2) {
+    if (0xff < uVar1) {
       bdLogMessage(BD_LOG_WARNING,"warn/","bdPlatformLog",
                    "c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdPlatform\\bdPlatformLog\\bdPlatformLog.cpp"
                    ,"bdLogMessage",0xfb,"Message truncated.");
     }
-    if (((uVar7 & 0xffffffff) != 0) && ((uVar6 & 0xffffffff) != 0)) {
-      iVar3 = bdSnprintf(acStack_160,0x100,"%s%s");
-      if (0xff < iVar3) {
+    if ((param_2 != (char *)0x0) && (param_3 != (char *)0x0)) {
+      iVar2 = bdSnprintf(acStack_160,0x100,"%s%s");
+      if (0xff < iVar2) {
         bdLogMessage(BD_LOG_WARNING,"warn/","bdPlatformLog",
                      "c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdPlatform\\bdPlatformLog\\bdPlatformLog.cpp"
                      ,"bdLogMessage",0x109,"Channel name truncated: %s%s");
       }
-      pcVar5 = acStack_160;
+      param_2 = acStack_160;
     }
-    uVar7 = ZEXT48(g_logSubscriberList);
-    while (uVar7 != 0) {
+    uVar4 = ZEXT48(g_logSubscriberList);
+    while (uVar4 != 0) {
       bdLogSubscriber::logMessage
-                ((bdLogSubscriber *)uVar7,bVar1,pcVar5,param_4,param_5,param_6,acStack_260);
-      pbVar4 = bdLinkable::getNext((bdLinkable *)(bdLogSubscriber *)uVar7);
-      uVar7 = (ulonglong)(int)pbVar4;
+                ((bdLogSubscriber *)uVar4,param_1,param_2,param_4,param_5,param_6,acStack_260);
+      pbVar3 = bdLinkable::getNext((bdLinkable *)(bdLogSubscriber *)uVar4);
+      uVar4 = (ulonglong)(int)pbVar3;
     }
   }
-  __restgprlr_21();
   return;
 }
 

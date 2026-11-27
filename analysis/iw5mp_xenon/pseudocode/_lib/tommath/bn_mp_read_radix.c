@@ -2,91 +2,93 @@
 
 // 82258800  mp_read_radix  (line unknown)
 
-void mp_read_radix(undefined8 param_1,longlong param_2,undefined8 param_3)
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
+
+undefined8 mp_read_radix(int *param_1,char *param_2,undefined8 param_3)
 
 {
-  bool bVar1;
-  int *piVar3;
-  int iVar4;
-  char cVar5;
+  char cVar1;
+  int iVar3;
+  char cVar4;
   undefined8 uVar2;
-  undefined4 *puVar6;
-  char *pcVar7;
-  int iVar8;
-  longlong lVar9;
+  undefined4 *puVar5;
+  char *pcVar6;
+  int iVar7;
+  longlong lVar8;
   
-  piVar3 = (int *)__savegprlr_25();
-  piVar3[2] = 0;
-  *piVar3 = 0;
-  iVar8 = 0;
-  if (0 < piVar3[1]) {
-    puVar6 = (undefined4 *)(piVar3[3] + -4);
+  param_1[2] = 0;
+  *param_1 = 0;
+  iVar7 = 0;
+  if (0 < param_1[1]) {
+    puVar5 = (undefined4 *)(param_1[3] + -4);
     do {
-      iVar8 = iVar8 + 1;
-      puVar6 = puVar6 + 1;
-      *puVar6 = 0;
-    } while (iVar8 < piVar3[1]);
+      iVar7 = iVar7 + 1;
+      puVar5 = puVar5 + 1;
+      *puVar5 = 0;
+    } while (iVar7 < param_1[1]);
   }
-  iVar8 = (int)param_3;
-  if ((iVar8 < 2) || (0x40 < iVar8)) {
-    uVar2 = 0xfffffffffffffffd;
-LAB_822589b4:
-    __restgprlr_25(uVar2);
-    return;
+  iVar7 = (int)param_3;
+  if ((iVar7 < 2) || (0x40 < iVar7)) {
+    return 0xfffffffffffffffd;
   }
-  bVar1 = *(char *)param_2 == '-';
-  if (bVar1) {
+  cVar1 = *param_2;
+  if (cVar1 == '-') {
     param_2 = param_2 + 1;
   }
-  iVar4 = 0;
-  piVar3[2] = 0;
-  *piVar3 = 0;
-  if (0 < piVar3[1]) {
-    puVar6 = (undefined4 *)(piVar3[3] + -4);
+  iVar3 = 0;
+  param_1[2] = 0;
+  *param_1 = 0;
+  if (0 < param_1[1]) {
+    puVar5 = (undefined4 *)(param_1[3] + -4);
     do {
-      iVar4 = iVar4 + 1;
-      puVar6 = puVar6 + 1;
-      *puVar6 = 0;
-    } while (iVar4 < piVar3[1]);
+      iVar3 = iVar3 + 1;
+      puVar5 = puVar5 + 1;
+      *puVar5 = 0;
+    } while (iVar3 < param_1[1]);
   }
-  iVar4 = (int)*(char *)param_2;
-  if (*(char *)param_2 != '\0') {
+  iVar3 = (int)*param_2;
+  if (*param_2 != '\0') {
     do {
-      if (iVar8 < 0x24) {
-        iVar4 = toupper(iVar4);
+      if (iVar7 < 0x24) {
+        iVar3 = toupper(iVar3);
       }
-      lVar9 = 0;
-      cVar5 = (char)iVar4;
-      pcVar7 = "123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz+/";
+      lVar8 = 0;
+      cVar4 = (char)iVar3;
+      pcVar6 = "123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz+/";
       do {
-        if (cVar5 == pcVar7[-1]) break;
-        if (cVar5 == *pcVar7) {
-          lVar9 = lVar9 + 1;
+        if (cVar4 == pcVar6[-1]) break;
+        if (cVar4 == *pcVar6) {
+          lVar8 = lVar8 + 1;
           break;
         }
-        if (cVar5 == pcVar7[1]) {
-          lVar9 = lVar9 + 2;
+        if (cVar4 == pcVar6[1]) {
+          lVar8 = lVar8 + 2;
           break;
         }
-        if (cVar5 == pcVar7[2]) {
-          lVar9 = lVar9 + 3;
+        if (cVar4 == pcVar6[2]) {
+          lVar8 = lVar8 + 3;
           break;
         }
-        pcVar7 = pcVar7 + 4;
-        lVar9 = lVar9 + 4;
-      } while ((int)pcVar7 < -0x7dde2637);
-      if (iVar8 <= (int)lVar9) break;
-      uVar2 = mp_mul_d(piVar3,param_3,piVar3);
-      if (((int)uVar2 != 0) || (uVar2 = mp_add_d(piVar3,lVar9,piVar3), (int)uVar2 != 0))
-      goto LAB_822589b4;
+        pcVar6 = pcVar6 + 4;
+        lVar8 = lVar8 + 4;
+      } while ((int)pcVar6 < -0x7dde2637);
+      if (iVar7 <= (int)lVar8) break;
+      uVar2 = mp_mul_d(param_1,param_3,param_1);
+      if ((int)uVar2 != 0) {
+        return uVar2;
+      }
+      uVar2 = mp_add_d(param_1,lVar8,param_1);
+      if ((int)uVar2 != 0) {
+        return uVar2;
+      }
       param_2 = param_2 + 1;
-      iVar4 = (int)*(char *)param_2;
-    } while (iVar4 != 0);
+      iVar3 = (int)*param_2;
+    } while (iVar3 != 0);
   }
-  if (*piVar3 != 0) {
-    piVar3[2] = (uint)bVar1;
+  if (*param_1 != 0) {
+    param_1[2] = (uint)(cVar1 == '-');
   }
-  __restgprlr_25(0);
-  return;
+  return 0;
 }
 

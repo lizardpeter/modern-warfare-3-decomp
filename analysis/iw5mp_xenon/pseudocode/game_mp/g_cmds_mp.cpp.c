@@ -2,6 +2,8 @@
 
 // 82469528  SV_GetLocalClientPing  (game_mp/g_cmds_mp.cpp:21)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 
@@ -13,44 +15,42 @@ int SV_GetLocalClientPing(int param_1)
   int iVar3;
   ulonglong uVar4;
   int iVar5;
-  int iVar6;
-  int *piVar7;
+  int *piVar6;
   
-  iVar1 = __savegprlr_25(param_1);
   uVar4 = (ulonglong)(uint)level.numConnectedClients;
   if (0x40 < level.numConnectedClients) {
     uVar4 = 0x40;
   }
-  iVar5 = 999;
-  iVar6 = 0;
+  iVar3 = 999;
+  iVar5 = 0;
   if (0 < (int)uVar4) {
-    piVar7 = level.sortedClients;
+    piVar6 = level.sortedClients;
     do {
-      iVar3 = *piVar7;
-      iVar2 = SV_IsLocalClient(iVar3);
-      if ((iVar2 == 0) && (level.clients[iVar3].sess.connected != CON_CONNECTING)) {
-        iVar6 = iVar6 + 1;
-        iVar3 = SV_GetClientPing(iVar3);
-        if (iVar3 < iVar5) {
-          iVar5 = iVar3;
+      iVar2 = *piVar6;
+      iVar1 = SV_IsLocalClient(iVar2);
+      if ((iVar1 == 0) && (level.clients[iVar2].sess.connected != CON_CONNECTING)) {
+        iVar5 = iVar5 + 1;
+        iVar2 = SV_GetClientPing(iVar2);
+        if (iVar2 < iVar3) {
+          iVar3 = iVar2;
         }
       }
       uVar4 = uVar4 - 1;
-      piVar7 = piVar7 + 1;
+      piVar6 = piVar6 + 1;
     } while (uVar4 != 0);
-    if (0 < iVar6) {
-      iVar1 = __restgprlr_25(iVar5);
-      return iVar1;
+    if (0 < iVar5) {
+      return iVar3;
     }
   }
-  iVar1 = SV_GetClientPing(iVar1);
-  iVar1 = __restgprlr_25(iVar1);
-  return iVar1;
+  iVar3 = SV_GetClientPing(param_1);
+  return iVar3;
 }
 
 
 // 824695E0  SendScoreboard  (game_mp/g_cmds_mp.cpp:61)
 
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
@@ -62,60 +62,59 @@ void SendScoreboard(gentity_s *param_1)
   int iVar3;
   int iVar4;
   int iVar5;
-  int iVar6;
-  int *piVar7;
+  int *piVar6;
   char local_b70 [1408];
   char acStack_5f0 [1520];
   
-  iVar1 = __savegprlr_22(param_1);
-  iVar5 = 0;
+  iVar4 = 0;
   local_b70[0] = '\0';
-  iVar4 = level.numConnectedClients;
+  iVar3 = level.numConnectedClients;
   if (0x40 < level.numConnectedClients) {
-    iVar4 = 0x40;
+    iVar3 = 0x40;
   }
-  if (0 < iVar4) {
-    piVar7 = level.sortedClients;
-    iVar6 = 0;
+  if (0 < iVar3) {
+    piVar6 = level.sortedClients;
+    iVar5 = 0;
     do {
-      iVar3 = *piVar7;
-      if (level.clients[iVar3].sess.connected != CON_CONNECTING) {
-        iVar2 = SV_IsLocalClient(iVar3);
-        if (iVar2 == 0) {
-          SV_GetClientPing(iVar3);
+      iVar2 = *piVar6;
+      if (level.clients[iVar2].sess.connected != CON_CONNECTING) {
+        iVar1 = SV_IsLocalClient(iVar2);
+        if (iVar1 == 0) {
+          SV_GetClientPing(iVar2);
         }
         else {
-          SV_GetLocalClientPing(iVar3);
+          SV_GetLocalClientPing(iVar2);
         }
       }
-      SV_GetClientSkill(iVar3);
-      iVar3 = Com_sprintf(acStack_5f0,0x598," %i %i %i %i %i %i %i %i");
-      if ((iVar3 < 0) || (0x578 < iVar3 + iVar6)) {
+      SV_GetClientSkill(iVar2);
+      iVar2 = Com_sprintf(acStack_5f0,0x598," %i %i %i %i %i %i %i %i");
+      if ((iVar2 < 0) || (0x578 < iVar2 + iVar5)) {
         Com_PrintError(0xf,"Scoreboard message too large: %i\n");
         Com_DPrintf(6,"%s\n%s\n");
         break;
       }
-      I_strncpyz(local_b70 + iVar6,acStack_5f0,0x578 - iVar6);
-      iVar5 = iVar5 + 1;
-      piVar7 = piVar7 + 1;
-      iVar6 = iVar3 + iVar6;
-    } while (iVar5 < iVar4);
+      I_strncpyz(local_b70 + iVar5,acStack_5f0,0x578 - iVar5);
+      iVar4 = iVar4 + 1;
+      piVar6 = piVar6 + 1;
+      iVar5 = iVar2 + iVar5;
+    } while (iVar4 < iVar3);
   }
-  iVar4 = Com_sprintf(acStack_5f0,0x598,"%c %i %i %i %i%s");
-  if (iVar4 < 0) {
+  iVar3 = Com_sprintf(acStack_5f0,0x598,"%c %i %i %i %i%s");
+  if (iVar3 < 0) {
     Com_PrintError(0xf,"Scoreboard message too large > %i.  Message not sent.\n");
     Com_DPrintf(6,"%c %i %i %i %i%s");
-    __restgprlr_22();
     return;
   }
-  SV_GameSendServerCommand((iVar1 + 0x7cc8c980) / 0x280,SV_CMD_RELIABLE,acStack_5f0);
-  __restgprlr_22();
+  SV_GameSendServerCommand
+            ((int)&param_1[0x31e9ea].s.groundEntityNum / 0x280,SV_CMD_RELIABLE,acStack_5f0);
   return;
 }
 
 
 // 824697E0  Cmd_Score_f  (game_mp/g_cmds_mp.cpp:145)
 
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* void __cdecl Cmd_Score_f(struct gentity_s *) */
@@ -128,60 +127,59 @@ void Cmd_Score_f(gentity_s *param_1)
   int iVar3;
   int iVar4;
   int iVar5;
-  int iVar6;
-  int *piVar7;
+  int *piVar6;
   char acStack_b70 [1408];
   char acStack_5f0 [1520];
   
-  iVar1 = __savegprlr_22(param_1);
-  iVar5 = 0;
+  iVar4 = 0;
   acStack_b70[0] = '\0';
-  iVar4 = level.numConnectedClients;
+  iVar3 = level.numConnectedClients;
   if (0x40 < level.numConnectedClients) {
-    iVar4 = 0x40;
+    iVar3 = 0x40;
   }
-  if (0 < iVar4) {
-    piVar7 = level.sortedClients;
-    iVar6 = 0;
+  if (0 < iVar3) {
+    piVar6 = level.sortedClients;
+    iVar5 = 0;
     do {
-      iVar3 = *piVar7;
-      if (level.clients[iVar3].sess.connected != CON_CONNECTING) {
-        iVar2 = SV_IsLocalClient(iVar3);
-        if (iVar2 == 0) {
-          SV_GetClientPing(iVar3);
+      iVar2 = *piVar6;
+      if (level.clients[iVar2].sess.connected != CON_CONNECTING) {
+        iVar1 = SV_IsLocalClient(iVar2);
+        if (iVar1 == 0) {
+          SV_GetClientPing(iVar2);
         }
         else {
-          SV_GetLocalClientPing(iVar3);
+          SV_GetLocalClientPing(iVar2);
         }
       }
-      SV_GetClientSkill(iVar3);
-      iVar3 = Com_sprintf(acStack_5f0,0x598," %i %i %i %i %i %i %i %i");
-      if ((iVar3 < 0) || (0x578 < iVar3 + iVar6)) {
+      SV_GetClientSkill(iVar2);
+      iVar2 = Com_sprintf(acStack_5f0,0x598," %i %i %i %i %i %i %i %i");
+      if ((iVar2 < 0) || (0x578 < iVar2 + iVar5)) {
         Com_PrintError(0xf,"Scoreboard message too large: %i\n");
         Com_DPrintf(6,"%s\n%s\n");
         break;
       }
-      I_strncpyz(acStack_b70 + iVar6,acStack_5f0,0x578 - iVar6);
-      iVar5 = iVar5 + 1;
-      piVar7 = piVar7 + 1;
-      iVar6 = iVar3 + iVar6;
-    } while (iVar5 < iVar4);
+      I_strncpyz(acStack_b70 + iVar5,acStack_5f0,0x578 - iVar5);
+      iVar4 = iVar4 + 1;
+      piVar6 = piVar6 + 1;
+      iVar5 = iVar2 + iVar5;
+    } while (iVar4 < iVar3);
   }
-  iVar4 = Com_sprintf(acStack_5f0,0x598,"%c %i %i %i %i%s");
-  if (iVar4 < 0) {
+  iVar3 = Com_sprintf(acStack_5f0,0x598,"%c %i %i %i %i%s");
+  if (iVar3 < 0) {
     Com_PrintError(0xf,"Scoreboard message too large > %i.  Message not sent.\n");
     Com_DPrintf(6,"%c %i %i %i %i%s");
-    __restgprlr_22();
     return;
   }
-  SV_GameSendServerCommand((iVar1 + 0x7cc8c980) / 0x280,SV_CMD_RELIABLE,acStack_5f0);
-  __restgprlr_22();
+  SV_GameSendServerCommand
+            ((int)&param_1[0x31e9ea].s.groundEntityNum / 0x280,SV_CMD_RELIABLE,acStack_5f0);
   return;
 }
 
 
 // 824697E8  ClientNumberFromString  (game_mp/g_cmds_mp.cpp:159)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
@@ -191,67 +189,65 @@ int ClientNumberFromString(gentity_s *param_1,char *param_2)
   char cVar1;
   char cVar2;
   int iVar3;
-  int iVar4;
+  char *pcVar4;
   char *pcVar5;
-  char *pcVar6;
+  int iVar6;
   char *pcVar7;
-  longlong lVar8;
   char local_830 [1024];
   char local_430 [1072];
   
-  iVar3 = __savegprlr_27(param_1);
   if ((*param_2 < '0') || ('9' < *param_2)) {
     SanitizeString(param_2,local_830);
-    lVar8 = 0;
+    iVar3 = 0;
     if (0 < level.maxclients) {
-      pcVar5 = ((level.clients)->sess).cs.name;
-      iVar4 = level.maxclients;
+      pcVar4 = ((level.clients)->sess).cs.name;
+      iVar6 = level.maxclients;
       do {
-        if (*(int *)(pcVar5 + -0xe8) == 2) {
-          SanitizeString(pcVar5,local_430);
-          pcVar6 = local_830;
+        if (*(int *)(pcVar4 + -0xe8) == 2) {
+          SanitizeString(pcVar4,local_430);
+          pcVar5 = local_830;
           pcVar7 = local_430;
           do {
             cVar1 = *pcVar7;
-            cVar2 = *pcVar6;
+            cVar2 = *pcVar5;
             if (cVar1 == '\0') break;
             pcVar7 = pcVar7 + 1;
-            pcVar6 = pcVar6 + 1;
+            pcVar5 = pcVar5 + 1;
           } while (cVar1 == cVar2);
-          iVar4 = level.maxclients;
+          iVar6 = level.maxclients;
           if (cVar1 == cVar2) {
-            iVar3 = __restgprlr_27(lVar8);
             return iVar3;
           }
         }
-        lVar8 = lVar8 + 1;
-        pcVar5 = pcVar5 + 0x3980;
-      } while ((int)lVar8 < iVar4);
+        iVar3 = iVar3 + 1;
+        pcVar4 = pcVar4 + 0x3980;
+      } while (iVar3 < iVar6);
     }
-    pcVar5 = "%c \"GAME_USERNOTONSERVER\x15%s\"";
+    pcVar4 = "%c \"GAME_USERNOTONSERVER\x15%s\"";
   }
   else {
-    iVar4 = atoi(param_2);
-    if ((iVar4 < 0) || (level.maxclients <= iVar4)) {
-      pcVar5 = "%c \"GAME_BADCLIENTSLOT\x15 %i\"";
+    iVar3 = atoi(param_2);
+    if ((iVar3 < 0) || (level.maxclients <= iVar3)) {
+      pcVar4 = "%c \"GAME_BADCLIENTSLOT\x15 %i\"";
     }
     else {
-      if (level.clients[iVar4].sess.connected == CON_CONNECTED) {
-        iVar3 = __restgprlr_27(iVar4);
+      if (level.clients[iVar3].sess.connected == CON_CONNECTED) {
         return iVar3;
       }
-      pcVar5 = "%c \"GAME_CLIENTNOTACTIVE\x15%i\"";
+      pcVar4 = "%c \"GAME_CLIENTNOTACTIVE\x15%i\"";
     }
   }
-  pcVar5 = va(pcVar5);
-  SV_GameSendServerCommand((iVar3 + 0x7cc8c980) / 0x280,SV_CMD_CAN_IGNORE,pcVar5);
-  iVar3 = __restgprlr_27(0xffffffffffffffff);
-  return iVar3;
+  pcVar4 = va(pcVar4);
+  SV_GameSendServerCommand
+            ((int)&param_1[0x31e9ea].s.groundEntityNum / 0x280,SV_CMD_CAN_IGNORE,pcVar4);
+  return -1;
 }
 
 
 // 82469950  StopFollowing  (game_mp/g_cmds_mp.cpp:217)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
@@ -264,9 +260,8 @@ void StopFollowing(gentity_s *param_1)
   uint uVar4;
   uint uVar5;
   uint uVar6;
-  gentity_s *pgVar7;
-  int iVar8;
-  double dVar9;
+  int iVar7;
+  double dVar8;
   float local_e0;
   float local_dc;
   float local_d8;
@@ -285,21 +280,20 @@ void StopFollowing(gentity_s *param_1)
   Bounds local_90;
   trace_t local_70 [2];
   
-  pgVar7 = (gentity_s *)__savegprlr_27(param_1);
-  pgVar2 = pgVar7->client;
+  pgVar2 = param_1->client;
   if (pgVar2 == (gclient_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_cmds_mp.cpp",0xe5,0,
                     "%s");
   }
   uVar3 = (pgVar2->ps).otherFlags;
   (pgVar2->sess).forceSpectatorClient = -1;
-  iVar1 = (int)&pgVar7[0x31e9ea].s.groundEntityNum / 0x280;
+  iVar1 = (int)&param_1[0x31e9ea].s.groundEntityNum / 0x280;
   (pgVar2->sess).killCamEntity = -1;
   pgVar2->spectatorClient = -1;
   (pgVar2->sess).killCamLookAtEntity = iVar1;
   if ((uVar3 & 0x800) != 0) {
-    iVar8 = G_ClientCanSpectateTeam(pgVar2,TEAM_NUM_TEAMS);
-    if (iVar8 == 0) {
+    iVar7 = G_ClientCanSpectateTeam(pgVar2,TEAM_NUM_TEAMS);
+    if (iVar7 == 0) {
       local_e0 = (pgVar2->sess).spectateDefaultPos[0];
       local_dc = (pgVar2->sess).spectateDefaultPos[1];
       local_d8 = (pgVar2->sess).spectateDefaultPos[2];
@@ -309,7 +303,7 @@ void StopFollowing(gentity_s *param_1)
       G_GetPlayerViewOrigin(&pgVar2->ps,&local_e0);
       BG_GetPlayerViewDirection(&pgVar2->ps,&local_a0,(float *)0x0,&local_c0);
     }
-    dVar9 = 0.0;
+    dVar8 = 0.0;
     local_ac = (pgVar2->ps).viewangles[1];
     local_b0 = (pgVar2->ps).viewangles[0] + 15.0;
     local_a8 = (pgVar2->ps).viewangles[2];
@@ -322,16 +316,16 @@ void StopFollowing(gentity_s *param_1)
     local_90.halfSize[0] = 8.0;
     local_90.halfSize[1] = 8.0;
     local_90.halfSize[2] = 8.0;
-    iVar8 = (pgVar2->ps).vehicleState.entity;
-    if (iVar8 == 0x7ff) {
-      iVar8 = 0x7ff;
+    iVar7 = (pgVar2->ps).vehicleState.entity;
+    if (iVar7 == 0x7ff) {
+      iVar7 = 0x7ff;
     }
-    G_TraceCapsule(local_70,&local_e0,&local_d0,&local_90,iVar8,0x810011);
+    G_TraceCapsule(local_70,&local_e0,&local_d0,&local_90,iVar7,0x810011);
     local_e0 = (local_d0 - local_e0) * local_70[0].fraction + local_e0;
     local_dc = (local_cc - local_dc) * local_70[0].fraction + local_dc;
     local_d8 = (local_c8 - local_d8) * local_70[0].fraction + local_d8;
     uVar3 = (pgVar2->ps).otherFlags;
-    (pgVar2->ps).weapCommon.fWeaponPosFrac = (float)dVar9;
+    (pgVar2->ps).weapCommon.fWeaponPosFrac = (float)dVar8;
     uVar4 = (pgVar2->ps).eFlags;
     uVar5 = (pgVar2->ps).weapCommon.weapFlags;
     uVar6 = (pgVar2->ps).pm_flags;
@@ -346,13 +340,13 @@ void StopFollowing(gentity_s *param_1)
     (pgVar2->ps).pm_flags = uVar6 & 0xfff77fef;
     (pgVar2->ps).weapCommon.weapFlags = uVar5 & 0xffffffbf;
     (pgVar2->ps).otherFlags = uVar3 & 0xfff3f7c1;
-    G_SetOrigin(pgVar7,&local_e0);
+    G_SetOrigin(param_1,&local_e0);
     (pgVar2->ps).origin[0] = local_e0;
     (pgVar2->ps).origin[1] = local_dc;
     (pgVar2->ps).origin[2] = local_d8;
-    SetClientViewAngle(pgVar7,&local_b0);
-    if (pgVar7->tagInfo == (tagInfo_s *)0x0) {
-      (pgVar7->r).currentAngles[0] = (float)dVar9;
+    SetClientViewAngle(param_1,&local_b0);
+    if (param_1->tagInfo == (tagInfo_s *)0x0) {
+      (param_1->r).currentAngles[0] = (float)dVar8;
     }
     (pgVar2->ps).shellshockIndex = 0;
     (pgVar2->ps).shellshockTime = 0;
@@ -370,13 +364,14 @@ void StopFollowing(gentity_s *param_1)
     (pgVar2->ps).unpredictableEventParms[2] = 0;
     (pgVar2->ps).unpredictableEventParms[3] = 0;
   }
-  __restgprlr_27();
   return;
 }
 
 
 // 82469C48  Cmd_FollowCycle_f  (game_mp/g_cmds_mp.cpp:318)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
@@ -384,94 +379,83 @@ int Cmd_FollowCycle_f(gentity_s *param_1,int param_2)
 
 {
   gclient_s *pgVar1;
-  gentity_s *pgVar2;
-  int iVar3;
-  longlong lVar5;
-  playerState_s *ppVar6;
-  ulonglong uVar7;
-  ulonglong uVar8;
+  int iVar2;
+  playerState_s *ppVar3;
+  uint uVar4;
+  uint uVar5;
   uint local_34c0;
   int aiStack_34bc [3];
   clientState_s cStack_34b0;
   playerState_s pStack_33d0;
-  int iVar4;
   
-  lVar5 = (longlong)param_2;
-  pgVar2 = (gentity_s *)__savegprlr_23(param_1);
-  ppVar6 = (playerState_s *)((int)pStack_33d0.origin + ((-(int)&pStack_33d0 & 0x7fU) - 0x1c));
-  if (((uint)ppVar6 & 0x7f) != 0) {
+  ppVar3 = (playerState_s *)((int)pStack_33d0.origin + ((-(int)&pStack_33d0 & 0x7fU) - 0x1c));
+  if (((uint)ppVar3 & 0x7f) != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_cmds_mp.cpp",0x144,0
                     ,"%s");
   }
-  if (((int)lVar5 != 1) && ((int)lVar5 != -1)) {
+  if ((param_2 != 1) && (param_2 != -1)) {
     Com_Error(ERR_DROP,"\x15Cmd_FollowCycle_f: bad dir %i");
   }
-  if (pgVar2->client == (gclient_s *)0x0) {
+  if (param_1->client == (gclient_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_cmds_mp.cpp",0x14b,0
                     ,"%s");
   }
-  pgVar1 = pgVar2->client;
+  pgVar1 = param_1->client;
   if (((pgVar1->sess).sessionState == SESS_STATE_SPECTATOR) &&
      ((pgVar1->sess).forceSpectatorClient < 0)) {
-    uVar7 = (ulonglong)((uint)pgVar1->spectatorClient >> 0x1f) - 1 &
-            (ulonglong)(uint)pgVar1->spectatorClient;
-    uVar8 = uVar7;
+    uVar4 = 0xffffffffU - (pgVar1->spectatorClient >> 0x1f) & pgVar1->spectatorClient;
+    uVar5 = uVar4;
     do {
-      uVar8 = uVar8 + lVar5;
-      if ((int)uVar8 < level.maxclients) {
-        if ((int)uVar8 < 0) {
-          uVar8 = (ulonglong)(uint)level.maxclients - 1;
+      uVar5 = uVar5 + param_2;
+      if ((int)uVar5 < level.maxclients) {
+        if ((int)uVar5 < 0) {
+          uVar5 = level.maxclients - 1;
         }
       }
       else {
-        uVar8 = 0;
+        uVar5 = 0;
       }
-      iVar4 = (int)uVar8;
-      iVar3 = SV_GetArchivedClientInfo
-                        (iVar4,&(pgVar2->client->sess).archiveTime,ppVar6,&cStack_34b0,(float *)0x0,
-                         aiStack_34bc,(int *)&local_34c0);
-      if (iVar3 != 0) {
+      iVar2 = SV_GetArchivedClientInfo
+                        (uVar5,&(param_1->client->sess).archiveTime,ppVar3,&cStack_34b0,(float *)0x0
+                         ,aiStack_34bc,(int *)&local_34c0);
+      if (iVar2 != 0) {
         if ((local_34c0 & 0x1000) == 0) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_cmds_mp.cpp",
                           0x169,0,"%s");
         }
-        iVar3 = G_ClientCanSpectateTeam(pgVar2->client,cStack_34b0.team);
-        if (iVar3 != 0) {
-          pgVar2->client->spectatorClient = iVar4;
-          (pgVar2->client->sess).sessionState = SESS_STATE_SPECTATOR;
-          Scr_Notify(pgVar2,scr_const.spectating_cycle,0);
-          iVar3 = __restgprlr_23(1);
-          return iVar3;
+        iVar2 = G_ClientCanSpectateTeam(param_1->client,cStack_34b0.team);
+        if (iVar2 != 0) {
+          param_1->client->spectatorClient = uVar5;
+          (param_1->client->sess).sessionState = SESS_STATE_SPECTATOR;
+          Scr_Notify(param_1,scr_const.spectating_cycle,0);
+          return 1;
         }
       }
-    } while (iVar4 != (int)uVar7);
+    } while (uVar5 != uVar4);
   }
-  iVar3 = __restgprlr_23(0);
-  return iVar3;
+  return 0;
 }
 
 
 // 82469E18  G_IsPlaying  (game_mp/g_cmds_mp.cpp:380)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
 int G_IsPlaying(gentity_s *param_1)
 
 {
-  int iVar1;
-  
-  iVar1 = __savegprlr_29(param_1);
-  if (*(int *)(iVar1 + 0x158) == 0) {
+  if (param_1->client == (gclient_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_cmds_mp.cpp",0x17d,0
                     ,"%s");
   }
-  if (*(int *)(*(int *)(iVar1 + 0x158) + 0x332c) == 0) {
+  if ((param_1->client->sess).connected == CON_DISCONNECTED) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_cmds_mp.cpp",0x17e,0
                     ,"%s");
   }
-  iVar1 = __restgprlr_29(*(int *)(*(int *)(iVar1 + 0x158) + 0x3300) == 0);
-  return iVar1;
+  return (uint)LZCOUNT((param_1->client->sess).sessionState) >> 5;
 }
 
 

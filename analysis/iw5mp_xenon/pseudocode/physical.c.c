@@ -2,56 +2,48 @@
 
 // 828A9AF8  XPhysicalAlloc  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/physical.c:33)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void * XPhysicalAlloc(ulong param_1,ulong param_2,ulong param_3,ulong param_4)
 
 {
   longlong lVar1;
-  void *pvVar2;
-  ulonglong uVar3;
-  longlong lVar4;
-  longlong lVar5;
-  longlong lVar6;
+  ulonglong uVar2;
+  longlong lVar3;
   
-  uVar3 = (ulonglong)(int)param_4;
-  lVar6 = (longlong)(int)param_3;
-  lVar4 = (longlong)(int)param_2;
-  lVar1 = __savegprlr_28(param_1,lVar4,lVar6,uVar3);
+  uVar2 = (ulonglong)(int)param_4;
+  lVar1 = (longlong)(int)param_2;
   if (g_fSmallPagesOverride != 0) {
-    uVar3 = uVar3 << 0x20 | uVar3 & 0xdfffffff;
+    uVar2 = CONCAT44(param_4,param_4) & 0xffffffffdfffffff;
   }
-  if ((int)lVar4 == -1) {
-    lVar4 = 0;
-    lVar5 = -1;
+  if (param_2 == 0xffffffff) {
+    lVar1 = 0;
+    lVar3 = -1;
   }
   else {
-    lVar5 = lVar1 + lVar4 + -1;
-    lVar6 = 0;
+    lVar3 = (int)param_1 + lVar1 + -1;
+    param_3 = 0;
   }
-  lVar1 = MmAllocatePhysicalMemoryEx(0,lVar1,uVar3,lVar4,lVar5,lVar6);
+  lVar1 = MmAllocatePhysicalMemoryEx(0,(longlong)(int)param_1,uVar2,lVar1,lVar3,param_3);
   if (lVar1 == 0) {
     SetLastError(8);
   }
-  pvVar2 = (void *)__restgprlr_28(lVar1);
-  return pvVar2;
+  return (void *)lVar1;
 }
 
 
 // 828A9B88  XPhysicalProtect  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/physical.c:131)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void XPhysicalProtect(void *param_1,ulong param_2,ulong param_3)
 
 {
-  undefined8 uVar1;
-  ulonglong uVar2;
-  longlong lVar3;
-  
-  lVar3 = (longlong)(int)param_3;
-  uVar2 = (ulonglong)(int)param_2;
-  uVar1 = __savegprlr_29(param_1,uVar2,lVar3);
-  if ((uVar2 & 0xffffffff) != 0) {
-    MmSetAddressProtect(uVar1,uVar2,lVar3);
+  if (param_2 != 0) {
+    MmSetAddressProtect(param_1,param_2,param_3);
   }
-  __restgprlr_29();
   return;
 }
 

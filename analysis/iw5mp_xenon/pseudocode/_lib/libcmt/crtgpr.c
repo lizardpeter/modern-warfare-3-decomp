@@ -2,6 +2,8 @@
 
 // 82916684  __savegprlr_15  (line unknown)
 
+/* WARNING: This is an inlined function */
+
 void __savegprlr_15(void)
 
 {
@@ -10,6 +12,8 @@ void __savegprlr_15(void)
 
 
 // 82916688  __savegprlr_16  (line unknown)
+
+/* WARNING: This is an inlined function */
 
 void __savegprlr_16(void)
 
@@ -20,6 +24,8 @@ void __savegprlr_16(void)
 
 // 8291668C  __savegprlr_17  (line unknown)
 
+/* WARNING: This is an inlined function */
+
 void __savegprlr_17(void)
 
 {
@@ -28,6 +34,8 @@ void __savegprlr_17(void)
 
 
 // 82916690  __savegprlr_18  (line unknown)
+
+/* WARNING: This is an inlined function */
 
 void __savegprlr_18(void)
 
@@ -38,6 +46,8 @@ void __savegprlr_18(void)
 
 // 82916694  __savegprlr_19  (line unknown)
 
+/* WARNING: This is an inlined function */
+
 void __savegprlr_19(void)
 
 {
@@ -46,6 +56,8 @@ void __savegprlr_19(void)
 
 
 // 82916698  __savegprlr_20  (line unknown)
+
+/* WARNING: This is an inlined function */
 
 void __savegprlr_20(void)
 
@@ -56,6 +68,8 @@ void __savegprlr_20(void)
 
 // 8291669C  __savegprlr_21  (line unknown)
 
+/* WARNING: This is an inlined function */
+
 void __savegprlr_21(void)
 
 {
@@ -64,6 +78,8 @@ void __savegprlr_21(void)
 
 
 // 829166A0  __savegprlr_22  (line unknown)
+
+/* WARNING: This is an inlined function */
 
 void __savegprlr_22(void)
 
@@ -74,6 +90,8 @@ void __savegprlr_22(void)
 
 // 829166A4  __savegprlr_23  (line unknown)
 
+/* WARNING: This is an inlined function */
+
 void __savegprlr_23(void)
 
 {
@@ -82,6 +100,8 @@ void __savegprlr_23(void)
 
 
 // 829166A8  __savegprlr_24  (line unknown)
+
+/* WARNING: This is an inlined function */
 
 void __savegprlr_24(void)
 
@@ -92,6 +112,8 @@ void __savegprlr_24(void)
 
 // 829166AC  __savegprlr_25  (line unknown)
 
+/* WARNING: This is an inlined function */
+
 void __savegprlr_25(void)
 
 {
@@ -100,6 +122,8 @@ void __savegprlr_25(void)
 
 
 // 829166B0  __savegprlr_26  (line unknown)
+
+/* WARNING: This is an inlined function */
 
 void __savegprlr_26(void)
 
@@ -110,6 +134,8 @@ void __savegprlr_26(void)
 
 // 829166B4  __savegprlr_27  (line unknown)
 
+/* WARNING: This is an inlined function */
+
 void __savegprlr_27(void)
 
 {
@@ -118,6 +144,8 @@ void __savegprlr_27(void)
 
 
 // 829166B8  __savegprlr_28  (line unknown)
+
+/* WARNING: This is an inlined function */
 
 void __savegprlr_28(void)
 
@@ -128,6 +156,8 @@ void __savegprlr_28(void)
 
 // 829166BC  __savegprlr_29  (line unknown)
 
+/* WARNING: This is an inlined function */
+
 void __savegprlr_29(void)
 
 {
@@ -136,6 +166,8 @@ void __savegprlr_29(void)
 
 
 // 829166D4  __restgprlr_15  (line unknown)
+
+/* WARNING: This is an inlined function */
 
 void __restgprlr_15(void)
 
@@ -146,6 +178,8 @@ void __restgprlr_15(void)
 
 // 829166D8  __restgprlr_16  (line unknown)
 
+/* WARNING: This is an inlined function */
+
 void __restgprlr_16(void)
 
 {
@@ -154,6 +188,8 @@ void __restgprlr_16(void)
 
 
 // 829166DC  __restgprlr_17  (line unknown)
+
+/* WARNING: This is an inlined function */
 
 void __restgprlr_17(void)
 
@@ -164,6 +200,8 @@ void __restgprlr_17(void)
 
 // 829166E0  __restgprlr_18  (line unknown)
 
+/* WARNING: This is an inlined function */
+
 void __restgprlr_18(void)
 
 {
@@ -172,6 +210,8 @@ void __restgprlr_18(void)
 
 
 // 829166E4  __restgprlr_19  (line unknown)
+
+/* WARNING: This is an inlined function */
 
 void __restgprlr_19(void)
 
@@ -182,6 +222,8 @@ void __restgprlr_19(void)
 
 // 829166E8  __restgprlr_20  (line unknown)
 
+/* WARNING: This is an inlined function */
+
 void __restgprlr_20(void)
 
 {
@@ -190,6 +232,8 @@ void __restgprlr_20(void)
 
 
 // 829166EC  __restgprlr_21  (line unknown)
+
+/* WARNING: This is an inlined function */
 
 void __restgprlr_21(void)
 
@@ -200,6 +244,8 @@ void __restgprlr_21(void)
 
 // 829166F0  __restgprlr_22  (line unknown)
 
+/* WARNING: This is an inlined function */
+
 void __restgprlr_22(void)
 
 {
@@ -208,6 +254,8 @@ void __restgprlr_22(void)
 
 
 // 829166F4  __restgprlr_23  (line unknown)
+
+/* WARNING: This is an inlined function */
 
 void __restgprlr_23(void)
 
@@ -218,6 +266,8 @@ void __restgprlr_23(void)
 
 // 829166F8  __restgprlr_24  (line unknown)
 
+/* WARNING: This is an inlined function */
+
 void __restgprlr_24(void)
 
 {
@@ -226,6 +276,8 @@ void __restgprlr_24(void)
 
 
 // 829166FC  __restgprlr_25  (line unknown)
+
+/* WARNING: This is an inlined function */
 
 void __restgprlr_25(void)
 
@@ -236,6 +288,8 @@ void __restgprlr_25(void)
 
 // 82916700  __restgprlr_26  (line unknown)
 
+/* WARNING: This is an inlined function */
+
 void __restgprlr_26(void)
 
 {
@@ -244,6 +298,8 @@ void __restgprlr_26(void)
 
 
 // 82916704  __restgprlr_27  (line unknown)
+
+/* WARNING: This is an inlined function */
 
 void __restgprlr_27(void)
 
@@ -254,6 +310,8 @@ void __restgprlr_27(void)
 
 // 82916708  __restgprlr_28  (line unknown)
 
+/* WARNING: This is an inlined function */
+
 void __restgprlr_28(void)
 
 {
@@ -262,6 +320,8 @@ void __restgprlr_28(void)
 
 
 // 8291670C  __restgprlr_29  (line unknown)
+
+/* WARNING: This is an inlined function */
 
 void __restgprlr_29(void)
 

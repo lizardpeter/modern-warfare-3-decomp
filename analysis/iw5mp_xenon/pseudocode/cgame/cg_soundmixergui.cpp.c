@@ -2,28 +2,27 @@
 
 // 823038E8  DevSoundMixer_GetGroupNameForAlias  (cgame/cg_soundmixergui.cpp:68)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 char * DevSoundMixer_GetGroupNameForAlias(snd_alias_t *param_1)
 
 {
-  int iVar1;
-  char *pcVar2;
+  char *pcVar1;
   
-  iVar1 = __savegprlr_29(param_1);
-  if (iVar1 == 0) {
+  if (param_1 == (snd_alias_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_soundmixergui.cpp",
                     0x47,0,"%s");
   }
-  if (*(char **)(iVar1 + 0x10) != (char *)0x0) {
-    if (**(char **)(iVar1 + 0x10) == '\0') {
+  if (param_1->mixerGroup != (char *)0x0) {
+    if (*param_1->mixerGroup == '\0') {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_soundmixergui.cpp",
                       0x4b,0,"%s");
     }
-    pcVar2 = (char *)__restgprlr_29(*(undefined4 *)(iVar1 + 0x10));
-    return pcVar2;
+    return param_1->mixerGroup;
   }
-  pcVar2 = SND_GetEntChannelName(*(int *)(iVar1 + 0x3c) >> 9 & 0x3f);
-  pcVar2 = (char *)__restgprlr_29(pcVar2);
-  return pcVar2;
+  pcVar1 = SND_GetEntChannelName(param_1->flags >> 9 & 0x3f);
+  return pcVar1;
 }
 
 
@@ -42,21 +41,21 @@ SndMixGroupType DevSoundMixer_GetGroupTypeForAlias(snd_alias_t *param_1)
 
 // 823039E8  DevSoundMixer_GetGroupIndexByName  (cgame/cg_soundmixergui.cpp:96)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 uint DevSoundMixer_GetGroupIndexByName(char *param_1)
 
 {
-  char *pcVar1;
-  int iVar2;
+  int iVar1;
+  char *pcVar2;
   uint uVar3;
-  char *pcVar4;
-  ulonglong uVar5;
   
-  pcVar1 = (char *)__savegprlr_26(param_1);
-  if (pcVar1 == (char *)0x0) {
+  if (param_1 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_soundmixergui.cpp",
                     100,0,"%s");
   }
-  if (*pcVar1 == '\0') {
+  if (*param_1 == '\0') {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_soundmixergui.cpp",
                     0x65,0,"%s");
   }
@@ -64,63 +63,59 @@ uint DevSoundMixer_GetGroupIndexByName(char *param_1)
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_soundmixergui.cpp",
                     0x67,0,"%s");
   }
-  uVar5 = 0;
+  uVar3 = 0;
   if (devSoundMixer_Data.mixerGroupCount != 0) {
-    pcVar4 = devSoundMixer_Data.mixerGroups[0].name;
+    pcVar2 = devSoundMixer_Data.mixerGroups[0].name;
     do {
-      if (0x5f < (uVar5 & 0xffffffff)) {
+      if (0x5f < uVar3) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_soundmixergui.cpp"
                         ,0x6a,0,"groupIdx doesn\'t index SNDMIXGUI_MAX_GROUPS\n\t%i not in [0, %i)")
         ;
       }
-      iVar2 = I_stricmp(pcVar4,pcVar1);
-      if (iVar2 == 0) {
-        uVar3 = __restgprlr_26(uVar5);
+      iVar1 = I_stricmp(pcVar2,param_1);
+      if (iVar1 == 0) {
         return uVar3;
       }
-      uVar5 = uVar5 + 1;
-      pcVar4 = pcVar4 + 0x114;
-    } while ((uVar5 & 0xffffffff) < (ulonglong)devSoundMixer_Data.mixerGroupCount);
+      uVar3 = uVar3 + 1;
+      pcVar2 = pcVar2 + 0x114;
+    } while (uVar3 < devSoundMixer_Data.mixerGroupCount);
   }
-  uVar3 = __restgprlr_26(0x60);
-  return uVar3;
+  return 0x60;
 }
 
 
 // 82303B08  DevSoundMixer_GetGroupData  (cgame/cg_soundmixergui.cpp:119)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 SndMixGuiGroup * DevSoundMixer_GetGroupData(snd_alias_t *param_1)
 
 {
-  snd_alias_t *psVar1;
-  char *pcVar2;
-  SndMixGuiGroup *pSVar3;
-  uint uVar4;
+  char *pcVar1;
+  uint uVar2;
   
-  psVar1 = (snd_alias_t *)__savegprlr_29(param_1);
-  if (psVar1 == (snd_alias_t *)0x0) {
+  if (param_1 == (snd_alias_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_soundmixergui.cpp",
                     0x7b,0,"%s");
   }
-  pcVar2 = DevSoundMixer_GetGroupNameForAlias(psVar1);
-  if (pcVar2 != (char *)0x0) {
-    if (*pcVar2 == '\0') {
+  pcVar1 = DevSoundMixer_GetGroupNameForAlias(param_1);
+  if (pcVar1 != (char *)0x0) {
+    if (*pcVar1 == '\0') {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_soundmixergui.cpp",
                       0x81,0,"%s");
     }
-    uVar4 = DevSoundMixer_GetGroupIndexByName(pcVar2);
-    if (uVar4 != 0x60) {
-      if (0x5f < uVar4) {
+    uVar2 = DevSoundMixer_GetGroupIndexByName(pcVar1);
+    if (uVar2 != 0x60) {
+      if (0x5f < uVar2) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_soundmixergui.cpp"
                         ,0x86,0,
                         "mixerGroupIndex doesn\'t index SNDMIXGUI_MAX_GROUPS\n\t%i not in [0, %i)");
       }
-      pSVar3 = (SndMixGuiGroup *)__restgprlr_29((longlong)(int)uVar4 * 0x114 + -0x7d59d8dc);
-      return pSVar3;
+      return devSoundMixer_Data.mixerGroups + uVar2;
     }
   }
-  pSVar3 = (SndMixGuiGroup *)__restgprlr_29(0);
-  return pSVar3;
+  return (SndMixGuiGroup *)0x0;
 }
 
 
@@ -141,45 +136,43 @@ int DevSoundMixer_IsActive(void)
 
 // 82303C10  DevSoundMixer_ApplyMasterPriorityOffset  (cgame/cg_soundmixergui.cpp:146)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void DevSoundMixer_ApplyMasterPriorityOffset(snd_alias_t *param_1,uchar *param_2)
 
 {
-  snd_alias_t *psVar1;
-  SndMixGuiGroup *pSVar2;
-  ulonglong uVar3;
-  byte *pbVar4;
-  char *pcVar5;
+  SndMixGuiGroup *pSVar1;
+  char *pcVar2;
   
-  uVar3 = (ulonglong)(int)param_2;
-  psVar1 = (snd_alias_t *)__savegprlr_28(param_1);
-  if ((uVar3 & 0xffffffff) == 0) {
+  if (param_2 == (uchar *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_soundmixergui.cpp",
                     0x96,0,"%s");
   }
   if (((devSoundMixer_Active != (dvar_t *)0x0) && ((devSoundMixer_Active->current).enabled != false)
-      ) && (pSVar2 = DevSoundMixer_GetGroupData(psVar1), pSVar2 != (SndMixGuiGroup *)0x0)) {
-    if (pSVar2->masterPriorityOffset == (dvar_t *)0x0) {
+      ) && (pSVar1 = DevSoundMixer_GetGroupData(param_1), pSVar1 != (SndMixGuiGroup *)0x0)) {
+    if (pSVar1->masterPriorityOffset == (dvar_t *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_soundmixergui.cpp",
                       0x9e,0,"%s");
     }
-    pbVar4 = (byte *)uVar3;
-    pcVar5 = (pSVar2->masterPriorityOffset->current).string + *pbVar4;
-    if (0xfe < (int)pcVar5) {
-      *pbVar4 = 0xff;
-      __restgprlr_28();
+    pcVar2 = (pSVar1->masterPriorityOffset->current).string + *param_2;
+    if (0xfe < (int)pcVar2) {
+      *param_2 = 0xff;
       return;
     }
-    if ((int)pcVar5 < 1) {
-      pcVar5 = (char *)0x0;
+    if ((int)pcVar2 < 1) {
+      pcVar2 = (char *)0x0;
     }
-    *pbVar4 = (byte)pcVar5;
+    *param_2 = (uchar)pcVar2;
   }
-  __restgprlr_28();
   return;
 }
 
 
 // 82303CF0  DevSoundMixer_ApplyGroupVolumeModifier  (cgame/cg_soundmixergui.cpp:166)
+
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 
 void DevSoundMixer_ApplyGroupVolumeModifier(snd_alias_t *param_1,float *param_2)
 
@@ -187,23 +180,19 @@ void DevSoundMixer_ApplyGroupVolumeModifier(snd_alias_t *param_1,float *param_2)
   float fVar1;
   float fVar2;
   float fVar3;
-  snd_alias_t *psVar4;
-  SndMixGuiGroup *pSVar5;
-  ulonglong uVar6;
+  SndMixGuiGroup *pSVar4;
   
-  uVar6 = (ulonglong)(int)param_2;
-  psVar4 = (snd_alias_t *)__savegprlr_28(param_1);
-  if ((uVar6 & 0xffffffff) == 0) {
+  if (param_2 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_soundmixergui.cpp",
                     0xa9,0,"%s");
   }
   if (((devSoundMixer_Active != (dvar_t *)0x0) && ((devSoundMixer_Active->current).enabled != false)
-      ) && (pSVar5 = DevSoundMixer_GetGroupData(psVar4), pSVar5 != (SndMixGuiGroup *)0x0)) {
-    if (pSVar5->volume == (dvar_t *)0x0) {
+      ) && (pSVar4 = DevSoundMixer_GetGroupData(param_1), pSVar4 != (SndMixGuiGroup *)0x0)) {
+    if (pSVar4->volume == (dvar_t *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_soundmixergui.cpp",
                       0xb1,0,"%s");
     }
-    fVar1 = (pSVar5->volume->current).value * *(float *)uVar6;
+    fVar1 = (pSVar4->volume->current).value * *param_2;
     fVar2 = 1.0;
     if (fVar1 - 1.0 < 0.0) {
       fVar2 = fVar1;
@@ -212,14 +201,16 @@ void DevSoundMixer_ApplyGroupVolumeModifier(snd_alias_t *param_1,float *param_2)
     if (-fVar1 < 0.0) {
       fVar3 = fVar2;
     }
-    *(float *)uVar6 = fVar3;
+    *param_2 = fVar3;
   }
-  __restgprlr_28();
   return;
 }
 
 
 // 82303DD0  DevSoundMixer_ApplyGroupMasterPercentModifier  (cgame/cg_soundmixergui.cpp:184)
+
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 
 void DevSoundMixer_ApplyGroupMasterPercentModifier(snd_alias_t *param_1,float *param_2)
 
@@ -227,23 +218,19 @@ void DevSoundMixer_ApplyGroupMasterPercentModifier(snd_alias_t *param_1,float *p
   float fVar1;
   float fVar2;
   float fVar3;
-  snd_alias_t *psVar4;
-  SndMixGuiGroup *pSVar5;
-  ulonglong uVar6;
+  SndMixGuiGroup *pSVar4;
   
-  uVar6 = (ulonglong)(int)param_2;
-  psVar4 = (snd_alias_t *)__savegprlr_28(param_1);
-  if ((uVar6 & 0xffffffff) == 0) {
+  if (param_2 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_soundmixergui.cpp",
                     0xbb,0,"%s");
   }
   if (((devSoundMixer_Active != (dvar_t *)0x0) && ((devSoundMixer_Active->current).enabled != false)
-      ) && (pSVar5 = DevSoundMixer_GetGroupData(psVar4), pSVar5 != (SndMixGuiGroup *)0x0)) {
-    if (pSVar5->masterPct == (dvar_t *)0x0) {
+      ) && (pSVar4 = DevSoundMixer_GetGroupData(param_1), pSVar4 != (SndMixGuiGroup *)0x0)) {
+    if (pSVar4->masterPct == (dvar_t *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_soundmixergui.cpp",
                       0xc3,0,"%s");
     }
-    fVar1 = (pSVar5->masterPct->current).value + *(float *)uVar6;
+    fVar1 = (pSVar4->masterPct->current).value + *param_2;
     fVar2 = 1.0;
     if (fVar1 - 1.0 < 0.0) {
       fVar2 = fVar1;
@@ -252,14 +239,16 @@ void DevSoundMixer_ApplyGroupMasterPercentModifier(snd_alias_t *param_1,float *p
     if (-fVar1 < 0.0) {
       fVar3 = fVar2;
     }
-    *(float *)uVar6 = fVar3;
+    *param_2 = fVar3;
   }
-  __restgprlr_28();
   return;
 }
 
 
 // 82303EB0  DevSoundMixer_ApplyGroupSlavePercentModifier  (cgame/cg_soundmixergui.cpp:202)
+
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 
 void DevSoundMixer_ApplyGroupSlavePercentModifier(snd_alias_t *param_1,float *param_2)
 
@@ -267,23 +256,19 @@ void DevSoundMixer_ApplyGroupSlavePercentModifier(snd_alias_t *param_1,float *pa
   float fVar1;
   float fVar2;
   float fVar3;
-  snd_alias_t *psVar4;
-  SndMixGuiGroup *pSVar5;
-  ulonglong uVar6;
+  SndMixGuiGroup *pSVar4;
   
-  uVar6 = (ulonglong)(int)param_2;
-  psVar4 = (snd_alias_t *)__savegprlr_28(param_1);
-  if ((uVar6 & 0xffffffff) == 0) {
+  if (param_2 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_soundmixergui.cpp",
                     0xcd,0,"%s");
   }
   if (((devSoundMixer_Active != (dvar_t *)0x0) && ((devSoundMixer_Active->current).enabled != false)
-      ) && (pSVar5 = DevSoundMixer_GetGroupData(psVar4), pSVar5 != (SndMixGuiGroup *)0x0)) {
-    if (pSVar5->slavePct == (dvar_t *)0x0) {
+      ) && (pSVar4 = DevSoundMixer_GetGroupData(param_1), pSVar4 != (SndMixGuiGroup *)0x0)) {
+    if (pSVar4->slavePct == (dvar_t *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_soundmixergui.cpp",
                       0xd5,0,"%s");
     }
-    fVar1 = (pSVar5->slavePct->current).value + *(float *)uVar6;
+    fVar1 = (pSVar4->slavePct->current).value + *param_2;
     fVar2 = 1.0;
     if (fVar1 - 1.0 < 0.0) {
       fVar2 = fVar1;
@@ -292,15 +277,16 @@ void DevSoundMixer_ApplyGroupSlavePercentModifier(snd_alias_t *param_1,float *pa
     if (-fVar1 < 0.0) {
       fVar3 = fVar2;
     }
-    *(float *)uVar6 = fVar3;
+    *param_2 = fVar3;
   }
-  __restgprlr_28();
   return;
 }
 
 
 // 82303F90  DevSoundMixer_SaveCommand  (cgame/cg_soundmixergui.cpp:220)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void DevSoundMixer_SaveCommand(void)
@@ -308,7 +294,6 @@ void DevSoundMixer_SaveCommand(void)
 {
   uint uVar1;
   
-  __savegprlr_27();
   Com_Printf(9,"--------- DevSoundMixer SaveCommand() ---------\n");
   Com_Printf(9,"Status: %s\n");
   Com_Printf(9,"[#] %32s \t Volume \t Master%% \t Slave%% \t MasterPrio \n");
@@ -320,13 +305,14 @@ void DevSoundMixer_SaveCommand(void)
     } while (uVar1 < devSoundMixer_Data.mixerGroupCount);
   }
   Com_Printf(9,"--------- SaveCommand() Complete ---------\n");
-  __restgprlr_27();
   return;
 }
 
 
 // 823040A0  DevSoundMixer_MuteCommand  (cgame/cg_soundmixergui.cpp:238)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void DevSoundMixer_MuteCommand(void)
@@ -336,7 +322,6 @@ void DevSoundMixer_MuteCommand(void)
   uint uVar2;
   double dVar3;
   
-  __savegprlr_29();
   Com_Printf(9,"DevSoundMixer MuteCommand()\n");
   Dvar_SetBool(devSoundMixer_Active,true);
   uVar2 = 0;
@@ -350,34 +335,33 @@ void DevSoundMixer_MuteCommand(void)
     } while (uVar2 < devSoundMixer_Data.mixerGroupCount);
   }
   Com_Printf(9,"DevSoundMixer is now Active, with all %i channel volumes set to 0.\n");
-  __restgprlr_29();
   return;
 }
 
 
 // 82304130  DevSoundMixer_EnumerateGroupIte_CreateGroupData  (cgame/cg_soundmixergui.cpp:257)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void DevSoundMixer_EnumerateGroupIte_CreateGroupData(char *param_1,SndMixGroupType param_2)
 
 {
   uint uVar1;
-  char *pcVar2;
-  dvar_t *pdVar3;
-  ulonglong uVar4;
-  ushort uVar5;
-  SndMixGuiGroup *pSVar6;
+  dvar_t *pdVar2;
+  ushort uVar3;
+  char *pcVar4;
+  SndMixGuiGroup *pSVar5;
+  double dVar6;
   double dVar7;
   double dVar8;
-  double dVar9;
   char acStack_140 [320];
   
-  uVar4 = (ulonglong)(int)param_2;
-  pcVar2 = (char *)__savegprlr_28(param_1);
-  if (pcVar2 == (char *)0x0) {
+  if (param_1 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_soundmixergui.cpp",
                     0x105,0,"%s");
   }
-  if (1 < (uVar4 & 0xffffffff)) {
+  if (SNDMIXGRP_CUSTOM < param_2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_soundmixergui.cpp",
                     0x106,0,"groupType doesn\'t index SNDMIXGRP_COUNT\n\t%i not in [0, %i)");
   }
@@ -388,38 +372,39 @@ void DevSoundMixer_EnumerateGroupIte_CreateGroupData(char *param_1,SndMixGroupTy
                    );
   }
   uVar1 = devSoundMixer_Data.mixerGroupCount;
-  pSVar6 = devSoundMixer_Data.mixerGroups + devSoundMixer_Data.mixerGroupCount;
-  I_strncpyz(devSoundMixer_Data.mixerGroups[devSoundMixer_Data.mixerGroupCount].name,pcVar2,0x100);
-  pSVar6->type = (SndMixGroupType)uVar4;
-  uVar5 = 0x100;
+  pSVar5 = devSoundMixer_Data.mixerGroups + devSoundMixer_Data.mixerGroupCount;
+  I_strncpyz(devSoundMixer_Data.mixerGroups[devSoundMixer_Data.mixerGroupCount].name,param_1,0x100);
+  pSVar5->type = param_2;
+  uVar3 = 0x100;
   Com_sprintf(acStack_140,0x100,"dsm%d_vol");
-  dVar9 = 0.0;
-  dVar8 = 1.0;
-  pdVar3 = Dvar_RegisterFloat(acStack_140,1.0,0.0,5.0,uVar5,
+  dVar8 = 0.0;
+  dVar7 = 1.0;
+  pdVar2 = Dvar_RegisterFloat(acStack_140,1.0,0.0,5.0,uVar3,
                               "the motion tracker after being detected");
-  devSoundMixer_Data.mixerGroups[uVar1].volume = pdVar3;
-  uVar5 = 0x100;
-  pcVar2 = "dsm%d_mPct";
+  devSoundMixer_Data.mixerGroups[uVar1].volume = pdVar2;
+  uVar3 = 0x100;
+  pcVar4 = "dsm%d_mPct";
   Com_sprintf(acStack_140,0x100,"dsm%d_mPct");
-  dVar7 = -1.0;
-  pdVar3 = Dvar_RegisterFloat(acStack_140,(float)dVar9,-1.0,(float)dVar8,uVar5,pcVar2);
-  devSoundMixer_Data.mixerGroups[uVar1].masterPct = pdVar3;
-  uVar5 = 0x100;
-  pcVar2 = "dsm%d_sPct";
+  dVar6 = -1.0;
+  pdVar2 = Dvar_RegisterFloat(acStack_140,(float)dVar8,-1.0,(float)dVar7,uVar3,pcVar4);
+  devSoundMixer_Data.mixerGroups[uVar1].masterPct = pdVar2;
+  uVar3 = 0x100;
+  pcVar4 = "dsm%d_sPct";
   Com_sprintf(acStack_140,0x100,"dsm%d_sPct");
-  pdVar3 = Dvar_RegisterFloat(acStack_140,(float)dVar9,(float)dVar7,(float)dVar8,uVar5,pcVar2);
-  devSoundMixer_Data.mixerGroups[uVar1].slavePct = pdVar3;
+  pdVar2 = Dvar_RegisterFloat(acStack_140,(float)dVar8,(float)dVar6,(float)dVar7,uVar3,pcVar4);
+  devSoundMixer_Data.mixerGroups[uVar1].slavePct = pdVar2;
   Com_sprintf(acStack_140,0x100,"dsm%d_fM");
-  pdVar3 = Dvar_RegisterInt(acStack_140,0,-0xff,0xff,0x100,"MasterPriority");
-  devSoundMixer_Data.mixerGroups[uVar1].masterPriorityOffset = pdVar3;
+  pdVar2 = Dvar_RegisterInt(acStack_140,0,-0xff,0xff,0x100,"MasterPriority");
+  devSoundMixer_Data.mixerGroups[uVar1].masterPriorityOffset = pdVar2;
   devSoundMixer_Data.mixerGroupCount = devSoundMixer_Data.mixerGroupCount + 1;
-  __restgprlr_28();
   return;
 }
 
 
 // 82304328  DevSoundMixer_EnumerateGroupsItem  (cgame/cg_soundmixergui.cpp:287)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "nodeType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
@@ -429,88 +414,86 @@ void DevSoundMixer_EnumerateGroupsItem(XAssetHeader param_1,void *param_2)
 
 {
   snd_alias_t *psVar1;
-  int iVar2;
-  char *pcVar3;
-  uint uVar4;
-  SndMixGroupType SVar5;
+  char *pcVar2;
+  uint uVar3;
+  SndMixGroupType SVar4;
   
-  iVar2 = __savegprlr_29(param_1.physPreset,param_2);
-  if (iVar2 == 0) {
+  if (param_1.physPreset == (PhysPreset *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_soundmixergui.cpp",
                     0x126,0,"%s");
   }
-  if (*(int *)(iVar2 + 8) != 0) {
-    if (*(int *)(iVar2 + 4) == 0) {
+  if ((param_1.physCollmap)->geoms != (PhysGeomInfo *)0x0) {
+    if ((param_1.physPreset)->type == 0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_soundmixergui.cpp",
                       299,0,"%s");
     }
-    psVar1 = *(snd_alias_t **)(iVar2 + 4);
-    pcVar3 = DevSoundMixer_GetGroupNameForAlias(psVar1);
-    if (((pcVar3 != (char *)0x0) && (*pcVar3 != '\0')) &&
-       (uVar4 = DevSoundMixer_GetGroupIndexByName(pcVar3), uVar4 == 0x60)) {
+    psVar1 = (param_1.sound)->head;
+    pcVar2 = DevSoundMixer_GetGroupNameForAlias(psVar1);
+    if (((pcVar2 != (char *)0x0) && (*pcVar2 != '\0')) &&
+       (uVar3 = DevSoundMixer_GetGroupIndexByName(pcVar2), uVar3 == 0x60)) {
       if (devSoundMixer_Data.mixerGroupCount == 0x60) {
         Com_PrintWarning(0xe,
                          "WARNING: Sound Mixer DevGui has reached the maximum number of groups (%d), can\'t add \'%s\' from alias \'%s\'\n"
                         );
-        __restgprlr_29();
         return;
       }
-      SVar5 = DevSoundMixer_GetGroupTypeForAlias(psVar1);
-      DevSoundMixer_EnumerateGroupIte_CreateGroupData(pcVar3,SVar5);
+      SVar4 = DevSoundMixer_GetGroupTypeForAlias(psVar1);
+      DevSoundMixer_EnumerateGroupIte_CreateGroupData(pcVar2,SVar4);
     }
   }
-  __restgprlr_29();
   return;
 }
 
 
 // 82304420  DevSoundMixer_BuildGroupDevGui  (cgame/cg_soundmixergui.cpp:321)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
+
 void DevSoundMixer_BuildGroupDevGui(SndMixGuiGroup *param_1)
 
 {
-  int iVar1;
-  bool bVar2;
+  bool bVar1;
   char acStack_140 [320];
   
-  iVar1 = __savegprlr_25(param_1);
-  if (iVar1 == 0) {
+  if (param_1 == (SndMixGuiGroup *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_soundmixergui.cpp",
                     0x145,0,"%s");
   }
   Com_sprintf(acStack_140,0x100,"%s/%s/%s");
-  bVar2 = DevGui_DoesMenuExist(acStack_140);
-  if (!bVar2) {
-    DevGui_AddDvar(acStack_140,*(dvar_t **)(iVar1 + 0x104));
+  bVar1 = DevGui_DoesMenuExist(acStack_140);
+  if (!bVar1) {
+    DevGui_AddDvar(acStack_140,param_1->volume);
     Com_sprintf(acStack_140,0x100,"%s/%s/%s");
-    bVar2 = DevGui_DoesMenuExist(acStack_140);
-    if (bVar2) {
+    bVar1 = DevGui_DoesMenuExist(acStack_140);
+    if (bVar1) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_soundmixergui.cpp",
                       0x14f,0,"%s");
     }
-    DevGui_AddDvar(acStack_140,*(dvar_t **)(iVar1 + 0x108));
+    DevGui_AddDvar(acStack_140,param_1->masterPct);
     Com_sprintf(acStack_140,0x100,"%s/%s/%s");
-    bVar2 = DevGui_DoesMenuExist(acStack_140);
-    if (bVar2) {
+    bVar1 = DevGui_DoesMenuExist(acStack_140);
+    if (bVar1) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_soundmixergui.cpp",
                       0x153,0,"%s");
     }
-    DevGui_AddDvar(acStack_140,*(dvar_t **)(iVar1 + 0x10c));
+    DevGui_AddDvar(acStack_140,param_1->slavePct);
     Com_sprintf(acStack_140,0x100,"%s/%s/%s");
-    bVar2 = DevGui_DoesMenuExist(acStack_140);
-    if (bVar2) {
+    bVar1 = DevGui_DoesMenuExist(acStack_140);
+    if (bVar1) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_soundmixergui.cpp",
                       0x157,0,"%s");
     }
-    DevGui_AddDvar(acStack_140,*(dvar_t **)(iVar1 + 0x110));
+    DevGui_AddDvar(acStack_140,param_1->masterPriorityOffset);
   }
-  __restgprlr_25();
   return;
 }
 
 
 // 823045E0  DevSoundMixer_BuildGlobal  (cgame/cg_soundmixergui.cpp:349)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void DevSoundMixer_BuildGlobal(void)
@@ -518,7 +501,6 @@ void DevSoundMixer_BuildGlobal(void)
 {
   bool bVar1;
   
-  __savegprlr_29();
   devSoundMixer_Active =
        Dvar_RegisterBool("devSoundMixer_Active",false,0,"Enable the sound mixer effects.");
   bVar1 = DevGui_DoesMenuExist("SoundMixer/Active:1");
@@ -541,13 +523,14 @@ void DevSoundMixer_BuildGlobal(void)
     Cmd_AddCommandInternal
               ("devSoundMixerSave",DevSoundMixer_SaveCommand,&DevSoundMixer_SaveCommand_VAR);
   }
-  __restgprlr_29();
   return;
 }
 
 
 // 82304718  DevSoundMixer_BuildGroups  (cgame/cg_soundmixergui.cpp:368)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "XAssetType": Some values do not have unique names */
 /* WARNING: Enum "nodeType": Some values do not have unique names */
@@ -561,7 +544,6 @@ void DevSoundMixer_BuildGroups(void)
   SndMixGuiGroup *pSVar1;
   uint uVar2;
   
-  __savegprlr_27();
   DB_EnumXAssets(ASSET_TYPE_SOUND,DevSoundMixer_EnumerateGroupsItem,(void *)0x0,false);
   if (0x60 < devSoundMixer_Data.mixerGroupCount) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_soundmixergui.cpp",
@@ -581,7 +563,6 @@ void DevSoundMixer_BuildGroups(void)
       pSVar1 = pSVar1 + 1;
     } while (uVar2 < devSoundMixer_Data.mixerGroupCount);
   }
-  __restgprlr_27();
   return;
 }
 

@@ -2,6 +2,8 @@
 
 // 824D6C60  Com_LoadWorld_FastFile  (qcommon/com_bsp_load_obj.cpp:827)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "XAssetType": Some values do not have unique names */
 /* WARNING: Enum "nodeType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
@@ -11,12 +13,10 @@
 void Com_LoadWorld_FastFile(char *param_1)
 
 {
-  char *pcVar1;
-  XAssetHeader XVar2;
+  XAssetHeader XVar1;
   
-  pcVar1 = (char *)__savegprlr_29(param_1);
-  XVar2 = DB_FindXAssetHeader(ASSET_TYPE_COMWORLD,pcVar1,1);
-  if (XVar2.physPreset != (PhysPreset *)&comWorld) {
+  XVar1 = DB_FindXAssetHeader(ASSET_TYPE_COMWORLD,param_1,1);
+  if (XVar1.physPreset != (PhysPreset *)&comWorld) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_bsp_load_obj.cpp",
                     0x343,0,"%s");
   }
@@ -24,13 +24,14 @@ void Com_LoadWorld_FastFile(char *param_1)
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_bsp_load_obj.cpp",
                     0x344,0,"%s");
   }
-  __restgprlr_29();
   return;
 }
 
 
 // 824D6CE8  Com_LoadWorld  (qcommon/com_bsp_load_obj.cpp:842)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "XAssetType": Some values do not have unique names */
 /* WARNING: Enum "nodeType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
@@ -41,12 +42,10 @@ void Com_LoadWorld_FastFile(char *param_1)
 void Com_LoadWorld(char *param_1)
 
 {
-  char *pcVar1;
-  XAssetHeader XVar2;
+  XAssetHeader XVar1;
   
-  pcVar1 = (char *)__savegprlr_29(param_1);
-  XVar2 = DB_FindXAssetHeader(ASSET_TYPE_COMWORLD,pcVar1,1);
-  if (XVar2.physPreset != (PhysPreset *)&comWorld) {
+  XVar1 = DB_FindXAssetHeader(ASSET_TYPE_COMWORLD,param_1,1);
+  if (XVar1.physPreset != (PhysPreset *)&comWorld) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_bsp_load_obj.cpp",
                     0x343,0,"%s");
   }
@@ -54,7 +53,6 @@ void Com_LoadWorld(char *param_1)
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_bsp_load_obj.cpp",
                     0x344,0,"%s");
   }
-  __restgprlr_29();
   return;
 }
 

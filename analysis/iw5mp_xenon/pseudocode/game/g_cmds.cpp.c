@@ -28,6 +28,8 @@ int CheatsOk(gentity_s *param_1)
 
 // 82467EE0  ConcatArgs  (game/g_cmds.cpp:100)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 char * ConcatArgs(int param_1)
@@ -35,37 +37,34 @@ char * ConcatArgs(int param_1)
 {
   char cVar1;
   int iVar2;
-  int iVar3;
+  char *pcVar3;
   char *pcVar4;
-  char *pcVar5;
   char local_440 [1088];
   
-  iVar3 = __savegprlr_26(param_1);
   if (7 < (uint)sv_cmd_args.nesting) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\../qcommon/cmd.h",0xc3,0,
                     "sv_cmd_args.nesting doesn\'t index CMD_MAX_NESTING\n\t%i not in [0, %i)");
   }
   iVar2 = sv_cmd_args.argc[sv_cmd_args.nesting];
-  pcVar4 = (char *)0x0;
-  for (; iVar3 < iVar2; iVar3 = iVar3 + 1) {
-    SV_Cmd_ArgvBuffer(iVar3,local_440,0x400);
-    pcVar5 = local_440;
+  pcVar3 = (char *)0x0;
+  for (; param_1 < iVar2; param_1 = param_1 + 1) {
+    SV_Cmd_ArgvBuffer(param_1,local_440,0x400);
+    pcVar4 = local_440;
     do {
-      cVar1 = *pcVar5;
-      pcVar5 = pcVar5 + 1;
+      cVar1 = *pcVar4;
+      pcVar4 = pcVar4 + 1;
     } while (cVar1 != '\0');
-    pcVar5 = pcVar5 + (int)(pcVar4 + (-1 - (int)local_440));
-    if (0x3fe < (int)pcVar5) break;
+    pcVar4 = pcVar4 + (int)(pcVar3 + (-1 - (int)local_440));
+    if (0x3fe < (int)pcVar4) break;
     memcpy();
-    if (iVar3 != iVar2 + -1) {
-      line[(int)pcVar5] = ' ';
-      pcVar5 = pcVar5 + 1;
+    if (param_1 != iVar2 + -1) {
+      line[(int)pcVar4] = ' ';
+      pcVar4 = pcVar4 + 1;
     }
-    pcVar4 = pcVar5;
+    pcVar3 = pcVar4;
   }
-  line[(int)pcVar4] = '\0';
-  pcVar4 = (char *)__restgprlr_26(0xffffffff83345c78);
-  return pcVar4;
+  line[(int)pcVar3] = '\0';
+  return line;
 }
 
 
@@ -136,6 +135,8 @@ void Cmd_Fogswitch_f(void)
 
 // 824680E0  Cmd_Give_f  (game/g_cmds.cpp:190)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
@@ -148,132 +149,132 @@ void Cmd_Give_f(gentity_s *param_1)
   gclient_s *pgVar3;
   OffhandClass OVar4;
   bool bVar5;
-  gentity_s *pgVar7;
-  int iVar8;
-  char *pcVar9;
-  char *pcVar10;
-  int iVar11;
-  longlong lVar6;
-  uint uVar12;
-  Weapon WVar13;
-  Weapon WVar14;
-  gentity_s *pgVar15;
-  Weapon_s_0 *pWVar17;
-  uint uVar18;
-  bool bVar16;
+  int iVar6;
+  char *pcVar7;
+  char *pcVar8;
+  int iVar9;
+  bool bVar13;
+  Weapon WVar10;
+  Weapon WVar11;
+  gentity_s *pgVar12;
+  Weapon_s_0 *pWVar14;
+  uint uVar15;
   
-  pgVar7 = (gentity_s *)__savegprlr_26(param_1);
-  iVar8 = CheatsOk(pgVar7);
-  if (iVar8 == 0) goto LAB_824684d4;
-  pgVar3 = pgVar7->client;
-  if ((pgVar3 == (gclient_s *)0x0) ||
-     (bVar16 = true, ((pgVar3->ps).weapCommon.weapFlags & 0x8000U) == 0)) {
-    bVar16 = false;
+  iVar6 = CheatsOk(param_1);
+  if (iVar6 == 0) {
+    return;
   }
-  pcVar9 = ConcatArgs(2);
-  iVar8 = atoi(pcVar9);
-  pcVar10 = ConcatArgs(1);
-  pcVar9 = pcVar10;
-  if (pcVar10 == (char *)0x0) goto LAB_824684d4;
+  pgVar3 = param_1->client;
+  if ((pgVar3 == (gclient_s *)0x0) ||
+     (bVar13 = true, ((pgVar3->ps).weapCommon.weapFlags & 0x8000U) == 0)) {
+    bVar13 = false;
+  }
+  pcVar7 = ConcatArgs(2);
+  iVar6 = atoi(pcVar7);
+  pcVar8 = ConcatArgs(1);
+  pcVar7 = pcVar8;
+  if (pcVar8 == (char *)0x0) {
+    return;
+  }
   do {
-    cVar1 = *pcVar9;
-    pcVar9 = pcVar9 + 1;
+    cVar1 = *pcVar7;
+    pcVar7 = pcVar7 + 1;
   } while (cVar1 != '\0');
-  if ((int)pcVar9 - (int)pcVar10 == 1) goto LAB_824684d4;
-  iVar11 = I_stricmp(pcVar10,"all");
-  if (iVar11 == 0) {
+  if ((int)pcVar7 - (int)pcVar8 == 1) {
+    return;
+  }
+  iVar9 = I_stricmp(pcVar8,"all");
+  if (iVar9 == 0) {
     Dvar_SetBool(g_giveAll,true);
     bVar5 = true;
 LAB_824681c4:
-    if (iVar8 == 0) {
-      pgVar7->health = (pgVar7->client->ps).stats[2];
+    if (iVar6 == 0) {
+      param_1->health = (param_1->client->ps).stats[2];
     }
     else {
-      pgVar7->health = pgVar7->health + iVar8;
+      param_1->health = param_1->health + iVar6;
     }
-    if (!bVar5) goto LAB_824684d4;
-LAB_82468240:
-    if (iVar8 == 0) {
-      uVar18 = 0x274;
-      do {
-        pWVar17 = (Weapon_s_0 *)((int)(pgVar7->client->ps).origin + (uVar18 - 0x1c));
-        if (pWVar17->weaponIdx != 0) {
-          Add_Ammo(pgVar7,(Weapon)*pWVar17,false,0x3e6,1);
-          bVar16 = BG_HasUnderbarrelAmmo
-                             (*(Weapon *)((int)(pgVar7->client->ps).origin + (uVar18 - 0x1c)));
-          if (bVar16) {
-            Add_Ammo(pgVar7,*(Weapon *)((int)(pgVar7->client->ps).origin + (uVar18 - 0x1c)),true,
-                     0x3e6,1);
-          }
-        }
-        uVar18 = uVar18 + 4;
-      } while (uVar18 < 0x2b0);
+    if (!bVar5) {
+      return;
     }
-    else if ((pgVar3->ps).weapCommon.weapon._s_0.weaponIdx != 0) {
-      Add_Ammo(pgVar7,(pgVar3->ps).weapCommon.weapon,bVar16,iVar8,1);
-    }
-    if (!bVar5) goto LAB_824684d4;
   }
   else {
     bVar5 = false;
-    iVar11 = I_strnicmp(pcVar10,"health",6);
-    if (iVar11 == 0) goto LAB_824681c4;
-    iVar11 = I_stricmp(pcVar10,"weapons");
-    if (iVar11 == 0) {
+    iVar9 = I_strnicmp(pcVar8,"health",6);
+    if (iVar9 == 0) goto LAB_824681c4;
+    iVar9 = I_stricmp(pcVar8,"weapons");
+    if (iVar9 == 0) {
       Dvar_SetBool(g_giveAll,true);
-      __restgprlr_26();
       return;
     }
-    iVar11 = I_strnicmp(pcVar10,"ammo",4);
-    if (iVar11 == 0) goto LAB_82468240;
+    iVar9 = I_strnicmp(pcVar8,"ammo",4);
+    if (iVar9 != 0) goto LAB_824682e8;
   }
-  iVar11 = I_strnicmp(pcVar10,"allammo",7);
-  if ((iVar11 == 0) && (iVar8 != 0)) {
-    uVar18 = 0x274;
-    lVar6 = 0;
+  if (iVar6 == 0) {
+    uVar15 = 0x274;
     do {
-      pWVar17 = (Weapon_s_0 *)((int)(pgVar7->client->ps).origin + (uVar18 - 0x1c));
-      if (pWVar17->weaponIdx != 0) {
-        Add_Ammo(pgVar7,(Weapon)*pWVar17,false,0x3e6,1);
-        bVar16 = BG_HasUnderbarrelAmmo
-                           (*(Weapon *)((int)(pgVar7->client->ps).origin + (uVar18 - 0x1c)));
-        lVar6 = (longlong)bVar16;
-        if (lVar6 != 0) {
-          uVar12 = Add_Ammo(pgVar7,*(Weapon *)((int)(pgVar7->client->ps).origin + (uVar18 - 0x1c)),
-                            true,0x3e6,1);
-          lVar6 = (longlong)(int)uVar12;
+      pWVar14 = (Weapon_s_0 *)((int)(param_1->client->ps).origin + (uVar15 - 0x1c));
+      if (pWVar14->weaponIdx != 0) {
+        Add_Ammo(param_1,(Weapon)*pWVar14,false,0x3e6,1);
+        bVar13 = BG_HasUnderbarrelAmmo
+                           (*(Weapon *)((int)(param_1->client->ps).origin + (uVar15 - 0x1c)));
+        if (bVar13) {
+          Add_Ammo(param_1,*(Weapon *)((int)(param_1->client->ps).origin + (uVar15 - 0x1c)),true,
+                   0x3e6,1);
         }
       }
-      uVar18 = uVar18 + 4;
-    } while (uVar18 < 0x2b0);
-    __restgprlr_26(lVar6);
+      uVar15 = uVar15 + 4;
+    } while (uVar15 < 0x2b0);
+  }
+  else if ((pgVar3->ps).weapCommon.weapon._s_0.weaponIdx != 0) {
+    Add_Ammo(param_1,(pgVar3->ps).weapCommon.weapon,bVar13,iVar6,1);
+  }
+  if (!bVar5) {
+    return;
+  }
+LAB_824682e8:
+  iVar9 = I_strnicmp(pcVar8,"allammo",7);
+  if ((iVar9 == 0) && (iVar6 != 0)) {
+    uVar15 = 0x274;
+    do {
+      pWVar14 = (Weapon_s_0 *)((int)(param_1->client->ps).origin + (uVar15 - 0x1c));
+      if (pWVar14->weaponIdx != 0) {
+        Add_Ammo(param_1,(Weapon)*pWVar14,false,0x3e6,1);
+        bVar13 = BG_HasUnderbarrelAmmo
+                           (*(Weapon *)((int)(param_1->client->ps).origin + (uVar15 - 0x1c)));
+        if (bVar13) {
+          Add_Ammo(param_1,*(Weapon *)((int)(param_1->client->ps).origin + (uVar15 - 0x1c)),true,
+                   0x3e6,1);
+        }
+      }
+      uVar15 = uVar15 + 4;
+    } while (uVar15 < 0x2b0);
     return;
   }
   if (!bVar5) {
     level.initializing = 1;
-    WVar13 = G_GetWeaponForName(pcVar10);
-    if ((WVar13.data & 0xff) != 0) {
-      WVar14 = BG_GetAlternateWeapon(WVar13,false);
-      if (bg_weaponDefs[WVar14.data & 0xff]->inventoryType == WEAPINVENTORY_ALTMODE) {
+    WVar10 = G_GetWeaponForName(pcVar8);
+    if ((WVar10.data & 0xff) != 0) {
+      WVar11 = BG_GetAlternateWeapon(WVar10,false);
+      if (bg_weaponDefs[WVar11.data & 0xff]->inventoryType == WEAPINVENTORY_ALTMODE) {
         Com_PrintError(1,
                        "You can\'t directly spawn the altfire weapon \'%s\'.  Spawn a weapon that has this altmode instead.\n"
                       );
         level.initializing = 0;
-        __restgprlr_26();
         return;
       }
-      pgVar15 = G_Spawn();
-      (pgVar15->r).currentOrigin[0] = (pgVar7->r).currentOrigin[0];
-      (pgVar15->r).currentOrigin[1] = (pgVar7->r).currentOrigin[1];
-      (pgVar15->r).currentOrigin[2] = (pgVar7->r).currentOrigin[2];
-      G_GetItemClassname(WVar13,pgVar15);
-      G_SpawnItem(pgVar15,WVar13);
-      WVar13 = (pgVar15->field31_0x1ac).item[0].weapon;
-      pgVar15->active = '\x01';
-      WVar13 = BG_GetAlternateWeapon(WVar13,false);
-      OVar4 = bg_weaponDefs[WVar13.data & 0xff]->offhandClass;
+      pgVar12 = G_Spawn();
+      (pgVar12->r).currentOrigin[0] = (param_1->r).currentOrigin[0];
+      (pgVar12->r).currentOrigin[1] = (param_1->r).currentOrigin[1];
+      (pgVar12->r).currentOrigin[2] = (param_1->r).currentOrigin[2];
+      G_GetItemClassname(WVar10,pgVar12);
+      G_SpawnItem(pgVar12,WVar10);
+      WVar10 = (pgVar12->field31_0x1ac).item[0].weapon;
+      pgVar12->active = '\x01';
+      WVar10 = BG_GetAlternateWeapon(WVar10,false);
+      OVar4 = bg_weaponDefs[WVar10.data & 0xff]->offhandClass;
       if (((OVar4 != OFFHAND_CLASS_NONE) &&
-          (pgVar3 = pgVar7->client, (pgVar3->ps).weapCommon.offhandPrimary != OVar4)) &&
+          (pgVar3 = param_1->client, (pgVar3->ps).weapCommon.offhandPrimary != OVar4)) &&
          ((pgVar3->ps).weapCommon.offhandSecondary != OVar4)) {
         if (((OVar4 == OFFHAND_CLASS_FRAG_GRENADE) || (OVar4 == OFFHAND_CLASS_THROWINGKNIFE)) ||
            (OVar4 == OFFHAND_CLASS_OTHER)) {
@@ -283,17 +284,15 @@ LAB_82468240:
           (pgVar3->ps).weapCommon.offhandSecondary = OVar4;
         }
       }
-      Touch_Item(pgVar15,pgVar7,0,0);
-      uVar2 = (pgVar15->r).isInUse;
-      pgVar15->active = '\0';
+      Touch_Item(pgVar12,param_1,0,0);
+      uVar2 = (pgVar12->r).isInUse;
+      pgVar12->active = '\0';
       if (uVar2 != '\0') {
-        G_FreeEntity(pgVar15);
+        G_FreeEntity(pgVar12);
       }
     }
     level.initializing = 0;
   }
-LAB_824684d4:
-  __restgprlr_26();
   return;
 }
 
@@ -316,117 +315,110 @@ int SV_Cmd_Argc(void)
 
 // 82467D48  SV_Cmd_Argv  (qcommon/cmd.h:210)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 char * SV_Cmd_Argv(int param_1)
 
 {
-  int iVar1;
-  char *pcVar2;
-  
-  iVar1 = __savegprlr_29(param_1);
   if (7 < (uint)sv_cmd_args.nesting) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\../qcommon/cmd.h",0xd3,0,
                     "sv_cmd_args.nesting doesn\'t index CMD_MAX_NESTING\n\t%i not in [0, %i)");
   }
-  if (iVar1 < 0) {
+  if (param_1 < 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\../qcommon/cmd.h",0xd4,0,
                     "%s\n\t(argIndex) = %i");
   }
-  if (iVar1 < sv_cmd_args.argc[sv_cmd_args.nesting]) {
-    pcVar2 = (char *)__restgprlr_29(sv_cmd_args.argv[sv_cmd_args.nesting][iVar1]);
-    return pcVar2;
+  if (param_1 < sv_cmd_args.argc[sv_cmd_args.nesting]) {
+    return sv_cmd_args.argv[sv_cmd_args.nesting][param_1];
   }
-  pcVar2 = (char *)__restgprlr_29(0xffffffff820068af);
-  return pcVar2;
+  return "";
 }
 
 
 // 824684E0  TakeAwayAmmo  (game/g_cmds.cpp:335)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
 void TakeAwayAmmo(playerState_s *param_1,Weapon param_2,bool param_3,int param_4)
 
 {
-  playerState_s *ppVar1;
+  int iVar1;
   int iVar2;
   int iVar3;
   PlayerHandIndex PVar4;
-  longlong lVar5;
   
-  lVar5 = (longlong)param_4;
-  ppVar1 = (playerState_s *)__savegprlr_25(param_1);
-  if (ppVar1 == (playerState_s *)0x0) {
+  if (param_1 == (playerState_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_cmds.cpp",0x155,0,"%s")
     ;
   }
-  iVar2 = BG_GetAmmoNotInClip(ppVar1,param_2,param_3);
-  iVar3 = BG_GetEquippedWeaponIndex(ppVar1,param_2);
-  if ((-1 < iVar3) && (ppVar1->origin + iVar3 * 3 + -7 != (float *)0xfffffd50)) {
-    if ((int)lVar5 < iVar2) {
-      BG_SetGlobalAmmo(ppVar1,param_2,param_3,iVar2 - (int)lVar5);
-      __restgprlr_25();
+  iVar1 = BG_GetAmmoNotInClip(param_1,param_2,param_3);
+  iVar2 = BG_GetEquippedWeaponIndex(param_1,param_2);
+  if ((-1 < iVar2) && (param_1->origin + iVar2 * 3 + -7 != (float *)0xfffffd50)) {
+    if (param_4 < iVar1) {
+      BG_SetGlobalAmmo(param_1,param_2,param_3,iVar1 - param_4);
       return;
     }
-    lVar5 = lVar5 - iVar2;
-    BG_SetGlobalAmmo(ppVar1,param_2,param_3,0);
+    iVar1 = param_4 - iVar1;
+    BG_SetGlobalAmmo(param_1,param_2,param_3,0);
     iVar2 = BG_ClipForWeapon(param_2,param_3);
     PVar4 = WEAPON_HAND_DEFAULT;
     do {
-      iVar3 = BG_GetAmmoInClipForWeapon(ppVar1,param_2,param_3,PVar4);
-      if ((int)lVar5 < iVar3) {
-        BG_AddClipAmmo(ppVar1,iVar2,PVar4,-(int)lVar5);
+      iVar3 = BG_GetAmmoInClipForWeapon(param_1,param_2,param_3,PVar4);
+      if (iVar1 < iVar3) {
+        BG_AddClipAmmo(param_1,iVar2,PVar4,-iVar1);
       }
       else {
-        lVar5 = lVar5 - iVar3;
-        BG_SetClipAmmo(ppVar1,iVar2,PVar4,0);
+        iVar1 = iVar1 - iVar3;
+        BG_SetClipAmmo(param_1,iVar2,PVar4,0);
       }
       PVar4 = PVar4 + WEAPON_HAND_LEFT;
     } while ((int)PVar4 < 2);
-    __restgprlr_25();
     return;
   }
   MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_cmds.cpp",0x159,0,"%s");
-  __restgprlr_25();
   return;
 }
 
 
 // 82468638  ClearAmmo  (game/g_cmds.cpp:378)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
 void ClearAmmo(playerState_s *param_1,Weapon param_2)
 
 {
-  playerState_s *ppVar1;
-  int iVar2;
-  bool bVar3;
+  int iVar1;
+  bool bVar2;
   
-  ppVar1 = (playerState_s *)__savegprlr_29(param_1);
-  if (ppVar1 == (playerState_s *)0x0) {
+  if (param_1 == (playerState_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_cmds.cpp",0x17c,0,"%s")
     ;
   }
-  iVar2 = BG_ClipForWeapon(param_2,false);
-  BG_SetGlobalAmmo(ppVar1,param_2,false,0);
-  BG_SetClipAmmo(ppVar1,iVar2,WEAPON_HAND_DEFAULT,0);
-  BG_SetClipAmmo(ppVar1,iVar2,WEAPON_HAND_LEFT,0);
-  bVar3 = BG_HasUnderbarrelAmmo(param_2);
-  if (bVar3) {
-    BG_SetGlobalAmmo(ppVar1,param_2,true,0);
-    iVar2 = BG_ClipForWeapon(param_2,true);
-    BG_SetClipAmmo(ppVar1,iVar2,WEAPON_HAND_DEFAULT,0);
-    BG_SetClipAmmo(ppVar1,iVar2,WEAPON_HAND_LEFT,0);
+  iVar1 = BG_ClipForWeapon(param_2,false);
+  BG_SetGlobalAmmo(param_1,param_2,false,0);
+  BG_SetClipAmmo(param_1,iVar1,WEAPON_HAND_DEFAULT,0);
+  BG_SetClipAmmo(param_1,iVar1,WEAPON_HAND_LEFT,0);
+  bVar2 = BG_HasUnderbarrelAmmo(param_2);
+  if (bVar2) {
+    BG_SetGlobalAmmo(param_1,param_2,true,0);
+    iVar1 = BG_ClipForWeapon(param_2,true);
+    BG_SetClipAmmo(param_1,iVar1,WEAPON_HAND_DEFAULT,0);
+    BG_SetClipAmmo(param_1,iVar1,WEAPON_HAND_LEFT,0);
   }
-  __restgprlr_29();
   return;
 }
 
 
 // 82468730  Cmd_Take_f  (game/g_cmds.cpp:401)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
@@ -439,97 +431,107 @@ void Cmd_Take_f(gentity_s *param_1)
   gclient_s *pgVar3;
   Weapon WVar4;
   bool bVar5;
-  gentity_s *pgVar6;
-  int iVar7;
+  int iVar6;
+  char *pcVar7;
   char *pcVar8;
-  char *pcVar9;
-  int iVar10;
-  Weapon WVar11;
-  bool bVar13;
-  Weapon_s_0 *pWVar12;
+  int iVar9;
+  Weapon WVar10;
+  bool bVar12;
+  Weapon_s_0 *pWVar11;
   
-  pgVar6 = (gentity_s *)__savegprlr_24(param_1);
-  iVar7 = CheatsOk(pgVar6);
-  if (iVar7 == 0) goto LAB_824689fc;
-  pcVar8 = ConcatArgs(2);
-  iVar7 = atoi(pcVar8);
-  pcVar9 = ConcatArgs(1);
-  pcVar8 = pcVar9;
-  if (pcVar9 == (char *)0x0) goto LAB_824689fc;
+  iVar6 = CheatsOk(param_1);
+  if (iVar6 == 0) {
+    return;
+  }
+  pcVar7 = ConcatArgs(2);
+  iVar6 = atoi(pcVar7);
+  pcVar8 = ConcatArgs(1);
+  pcVar7 = pcVar8;
+  if (pcVar8 == (char *)0x0) {
+    return;
+  }
   do {
-    cVar1 = *pcVar8;
-    pcVar8 = pcVar8 + 1;
+    cVar1 = *pcVar7;
+    pcVar7 = pcVar7 + 1;
   } while (cVar1 != '\0');
-  if ((int)pcVar8 - (int)pcVar9 == 1) goto LAB_824689fc;
-  iVar10 = I_stricmp(pcVar9,"all");
-  if (iVar10 == 0) {
+  if ((int)pcVar7 - (int)pcVar8 == 1) {
+    return;
+  }
+  iVar9 = I_stricmp(pcVar8,"all");
+  if (iVar9 == 0) {
     Dvar_SetBool(g_giveAll,false);
     bVar5 = true;
-LAB_824687ec:
-    if ((iVar7 == 0) || (iVar10 = pgVar6->health - iVar7, pgVar6->health = iVar10, iVar10 < 1)) {
-      pgVar6->health = 1;
-    }
-    if (!bVar5) goto LAB_824689fc;
   }
   else {
     bVar5 = false;
-    iVar10 = I_strnicmp(pcVar9,"health",6);
-    if (iVar10 == 0) goto LAB_824687ec;
+    iVar9 = I_strnicmp(pcVar8,"health",6);
+    if (iVar9 != 0) goto LAB_82468814;
   }
-  pgVar2 = pgVar6->client;
-  if ((bVar5) || (iVar10 = I_strnicmp(pcVar9,"ammo",4), iVar10 == 0)) {
-    if (iVar7 == 0) {
-      iVar10 = 0x274;
+  if ((iVar6 == 0) || (iVar9 = param_1->health - iVar6, param_1->health = iVar9, iVar9 < 1)) {
+    param_1->health = 1;
+  }
+  if (!bVar5) {
+    return;
+  }
+LAB_82468814:
+  pgVar2 = param_1->client;
+  if ((bVar5) || (iVar9 = I_strnicmp(pcVar8,"ammo",4), iVar9 == 0)) {
+    if (iVar6 == 0) {
+      iVar9 = 0x274;
       do {
-        pWVar12 = (Weapon_s_0 *)((int)(pgVar6->client->ps).origin + iVar10 + -0x1c);
-        if (pWVar12->weaponIdx != 0) {
-          ClearAmmo(&pgVar6->client->ps,(Weapon)*pWVar12);
+        pWVar11 = (Weapon_s_0 *)((int)(param_1->client->ps).origin + iVar9 + -0x1c);
+        if (pWVar11->weaponIdx != 0) {
+          ClearAmmo(&param_1->client->ps,(Weapon)*pWVar11);
         }
-        iVar10 = iVar10 + 4;
-      } while (iVar10 < 0x2b0);
+        iVar9 = iVar9 + 4;
+      } while (iVar9 < 0x2b0);
     }
     else if ((pgVar2->ps).weapCommon.weapon._s_0.weaponIdx != 0) {
-      pgVar3 = pgVar6->client;
+      pgVar3 = param_1->client;
       if ((pgVar3 == (gclient_s *)0x0) ||
-         (bVar13 = true, ((pgVar3->ps).weapCommon.weapFlags & 0x8000U) == 0)) {
-        bVar13 = false;
+         (bVar12 = true, ((pgVar3->ps).weapCommon.weapFlags & 0x8000U) == 0)) {
+        bVar12 = false;
       }
-      TakeAwayAmmo(&pgVar3->ps,(pgVar2->ps).weapCommon.weapon,bVar13,iVar7);
+      TakeAwayAmmo(&pgVar3->ps,(pgVar2->ps).weapCommon.weapon,bVar12,iVar6);
     }
-    if (!bVar5) goto LAB_824689fc;
+    if (!bVar5) {
+      return;
+    }
   }
-  iVar10 = I_strnicmp(pcVar9,"allammo",7);
-  if ((iVar10 == 0) && (iVar7 != 0)) {
-    iVar10 = 0x274;
+  iVar9 = I_strnicmp(pcVar8,"allammo",7);
+  if ((iVar9 == 0) && (iVar6 != 0)) {
+    iVar9 = 0x274;
     do {
-      pWVar12 = (Weapon_s_0 *)((int)(pgVar6->client->ps).origin + iVar10 + -0x1c);
-      if (pWVar12->weaponIdx != 0) {
-        TakeAwayAmmo(&pgVar6->client->ps,(Weapon)*pWVar12,false,iVar7);
+      pWVar11 = (Weapon_s_0 *)((int)(param_1->client->ps).origin + iVar9 + -0x1c);
+      if (pWVar11->weaponIdx != 0) {
+        TakeAwayAmmo(&param_1->client->ps,(Weapon)*pWVar11,false,iVar6);
       }
-      iVar10 = iVar10 + 4;
-    } while (iVar10 < 0x2b0);
-    if (!bVar5) goto LAB_824689fc;
+      iVar9 = iVar9 + 4;
+    } while (iVar9 < 0x2b0);
+    if (!bVar5) {
+      return;
+    }
   }
-  else if ((!bVar5) && (iVar7 = I_stricmp(pcVar9,"weapons"), iVar7 != 0)) goto LAB_824689fc;
-  iVar7 = 0x274;
+  else if ((!bVar5) && (iVar6 = I_stricmp(pcVar8,"weapons"), iVar6 != 0)) {
+    return;
+  }
+  iVar6 = 0x274;
   do {
-    WVar4 = *(Weapon *)((int)(pgVar6->client->ps).origin + iVar7 + -0x1c);
+    WVar4 = *(Weapon *)((int)(param_1->client->ps).origin + iVar6 + -0x1c);
     if ((WVar4.data & 0xff) != 0) {
-      WVar11 = BG_GetAlternateWeapon(WVar4,false);
-      if (bg_weaponDefs[WVar11.data & 0xff]->inventoryType == WEAPINVENTORY_ALTMODE) {
+      WVar10 = BG_GetAlternateWeapon(WVar4,false);
+      if (bg_weaponDefs[WVar10.data & 0xff]->inventoryType == WEAPINVENTORY_ALTMODE) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_cmds.cpp",0x1e8,0,
                         "%s");
       }
-      G_TakePlayerWeapon(&pgVar6->client->ps,WVar4);
+      G_TakePlayerWeapon(&param_1->client->ps,WVar4);
     }
-    iVar7 = iVar7 + 4;
-  } while (iVar7 < 0x2b0);
+    iVar6 = iVar6 + 4;
+  } while (iVar6 < 0x2b0);
   if ((pgVar2->ps).weapCommon.weapon._s_0.weaponIdx != 0) {
     (pgVar2->ps).weapCommon.weapon.data = 0;
-    G_SelectWeapon((int)&pgVar6[0x31e9ea].s.groundEntityNum / 0x280,(Weapon)0x0);
+    G_SelectWeapon((int)&param_1[0x31e9ea].s.groundEntityNum / 0x280,(Weapon)0x0);
   }
-LAB_824689fc:
-  __restgprlr_24();
   return;
 }
 
@@ -664,6 +666,8 @@ void Cmd_UFO_f(gentity_s *param_1)
 
 // 82468CF8  Cmd_Kill_f  (game/g_cmds.cpp:660)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
@@ -671,41 +675,38 @@ void Cmd_UFO_f(gentity_s *param_1)
 void Cmd_Kill_f(gentity_s *param_1)
 
 {
-  gentity_s *pgVar1;
-  int iVar2;
+  int iVar1;
   int *in_r13;
   hitLocation_t in_stack_ffffff68;
   int in_stack_ffffff6c;
   
-  pgVar1 = (gentity_s *)__savegprlr_25(param_1);
-  if (pgVar1->client == (gclient_s *)0x0) {
+  if (param_1->client == (gclient_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_cmds.cpp",0x2a1,0,"%s")
     ;
   }
-  if ((pgVar1->client->sess).connected == CON_DISCONNECTED) {
+  if ((param_1->client->sess).connected == CON_DISCONNECTED) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_cmds.cpp",0x2a2,0,"%s")
     ;
   }
-  if (((pgVar1->client->sess).sessionState == SESS_STATE_PLAYING) &&
-     (iVar2 = CheatsOk(pgVar1), iVar2 != 0)) {
-    iVar2 = *in_r13;
-    if (*(int *)(iVar2 + 8) != 0) {
+  if (((param_1->client->sess).sessionState == SESS_STATE_PLAYING) &&
+     (iVar1 = CheatsOk(param_1), iVar1 != 0)) {
+    iVar1 = *in_r13;
+    if (*(int *)(iVar1 + 8) != 0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_cmds.cpp",0x2aa,0,
                       "%s\n\t(bgs) = %p");
     }
-    *(bgs_t **)(iVar2 + 8) = &level_bgs;
-    pgVar1->flags = pgVar1->flags & 0xfffffffc;
-    pgVar1->health = 0;
-    (pgVar1->client->ps).stats[0] = 0;
-    player_die(pgVar1,pgVar1,pgVar1,100000,0xc,(Weapon)0x0,false,(float *)0x0,in_stack_ffffff68,
+    *(bgs_t **)(iVar1 + 8) = &level_bgs;
+    param_1->flags = param_1->flags & 0xfffffffc;
+    param_1->health = 0;
+    (param_1->client->ps).stats[0] = 0;
+    player_die(param_1,param_1,param_1,100000,0xc,(Weapon)0x0,false,(float *)0x0,in_stack_ffffff68,
                in_stack_ffffff6c);
-    if (*(bgs_t **)(iVar2 + 8) != &level_bgs) {
+    if (*(bgs_t **)(iVar1 + 8) != &level_bgs) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_cmds.cpp",0x2b1,0,
                       "%s\n\t(bgs) = %p");
     }
-    *(undefined4 *)(iVar2 + 8) = 0;
+    *(undefined4 *)(iVar1 + 8) = 0;
   }
-  __restgprlr_25();
   return;
 }
 
@@ -730,6 +731,8 @@ void Cmd_Where_f(gentity_s *param_1)
 
 // 82468EB8  Cmd_SetViewpos_f  (game/g_cmds.cpp:702)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
@@ -737,11 +740,10 @@ void Cmd_Where_f(gentity_s *param_1)
 void Cmd_SetViewpos_f(gentity_s *param_1)
 
 {
-  gentity_s *pgVar1;
-  int iVar2;
-  char *pcVar3;
-  float *pfVar4;
-  double dVar5;
+  int iVar1;
+  char *pcVar2;
+  float *pfVar3;
+  double dVar4;
   float local_440;
   float local_43c;
   undefined4 local_438;
@@ -749,34 +751,32 @@ void Cmd_SetViewpos_f(gentity_s *param_1)
   float local_430 [4];
   char acStack_420 [1056];
   
-  pgVar1 = (gentity_s *)__savegprlr_29(param_1);
-  if (pgVar1 == (gentity_s *)0x0) {
+  if (param_1 == (gentity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_cmds.cpp",0x2c3,0,"%s")
     ;
   }
-  if (pgVar1->client == (gclient_s *)0x0) {
+  if (param_1->client == (gclient_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_cmds.cpp",0x2c4,0,"%s")
     ;
   }
-  iVar2 = CheatsOk(pgVar1);
-  if ((((iVar2 == 0) && ((g_cheats->current).enabled == false)) ||
-      (iVar2 = SV_Cmd_Argc(), iVar2 < 4)) || (iVar2 = SV_Cmd_Argc(), 6 < iVar2)) {
-    pcVar3 = va("%c \"%s\"");
+  iVar1 = CheatsOk(param_1);
+  if ((((iVar1 == 0) && ((g_cheats->current).enabled == false)) ||
+      (iVar1 = SV_Cmd_Argc(), iVar1 < 4)) || (iVar1 = SV_Cmd_Argc(), 6 < iVar1)) {
+    pcVar2 = va("%c \"%s\"");
     SV_GameSendServerCommand
-              ((int)&pgVar1[0x31e9ea].s.groundEntityNum / 0x280,SV_CMD_CAN_IGNORE,pcVar3);
-    __restgprlr_29();
+              ((int)&param_1[0x31e9ea].s.groundEntityNum / 0x280,SV_CMD_CAN_IGNORE,pcVar2);
     return;
   }
-  iVar2 = 0;
-  pfVar4 = &fStack_434;
+  iVar1 = 0;
+  pfVar3 = &fStack_434;
   do {
-    iVar2 = iVar2 + 1;
-    SV_Cmd_ArgvBuffer(iVar2,acStack_420,0x400);
-    dVar5 = atof(acStack_420);
-    pfVar4 = pfVar4 + 1;
-    *pfVar4 = (float)dVar5;
-  } while (iVar2 < 3);
-  local_430[2] = local_430[2] - (pgVar1->client->ps).viewHeightCurrent;
+    iVar1 = iVar1 + 1;
+    SV_Cmd_ArgvBuffer(iVar1,acStack_420,0x400);
+    dVar4 = atof(acStack_420);
+    pfVar3 = pfVar3 + 1;
+    *pfVar3 = (float)dVar4;
+  } while (iVar1 < 3);
+  local_430[2] = local_430[2] - (param_1->client->ps).viewHeightCurrent;
   local_440 = 0.0;
   local_43c = 0.0;
   local_438 = 0;
@@ -787,15 +787,14 @@ void Cmd_SetViewpos_f(gentity_s *param_1)
   if (sv_cmd_args.argc[sv_cmd_args.nesting] != 5) {
     if (sv_cmd_args.argc[sv_cmd_args.nesting] != 6) goto LAB_82469064;
     SV_Cmd_ArgvBuffer(5,acStack_420,0x400);
-    dVar5 = atof(acStack_420);
-    local_440 = (float)dVar5;
+    dVar4 = atof(acStack_420);
+    local_440 = (float)dVar4;
   }
   SV_Cmd_ArgvBuffer(4,acStack_420,0x400);
-  dVar5 = atof(acStack_420);
-  local_43c = (float)dVar5;
+  dVar4 = atof(acStack_420);
+  local_43c = (float)dVar4;
 LAB_82469064:
-  TeleportPlayer(pgVar1,local_430,&local_440);
-  __restgprlr_29();
+  TeleportPlayer(param_1,local_430,&local_440);
   return;
 }
 
@@ -849,6 +848,8 @@ void Cmd_MenuResponse_f(gentity_s *param_1)
 
 // 82469220  Cmd_PrintEntities_f  (game/g_cmds.cpp:818)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -860,7 +861,6 @@ void Cmd_PrintEntities_f(void)
   int iVar1;
   int iVar2;
   
-  __savegprlr_27();
   iVar1 = 0;
   if (0 < level.num_entities) {
     iVar2 = -0x7cc8cac0;
@@ -873,13 +873,14 @@ void Cmd_PrintEntities_f(void)
       iVar1 = iVar1 + 1;
     } while (iVar1 < level.num_entities);
   }
-  __restgprlr_27();
   return;
 }
 
 
 // 82469228  Cmd_VisionSetNaked_f  (game/g_cmds.cpp:826)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "ConfigString": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
@@ -890,7 +891,6 @@ void Cmd_VisionSetNaked_f(void)
   char *pcVar1;
   double dVar2;
   
-  __savegprlr_28();
   if (7 < (uint)sv_cmd_args.nesting) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\../qcommon/cmd.h",0xc3,0,
                     "sv_cmd_args.nesting doesn\'t index CMD_MAX_NESTING\n\t%i not in [0, %i)");
@@ -898,7 +898,6 @@ void Cmd_VisionSetNaked_f(void)
   if (sv_cmd_args.argc[sv_cmd_args.nesting] != 2) {
     if (sv_cmd_args.argc[sv_cmd_args.nesting] != 3) {
       Com_Printf(0,"USAGE: visionSetNaked <name> <duration>\n");
-      __restgprlr_28();
       return;
     }
     pcVar1 = SV_Cmd_Argv(2);
@@ -911,13 +910,14 @@ void Cmd_VisionSetNaked_f(void)
   }
   pcVar1 = va("\"%s\" %i");
   SV_SetConfigstring(CS_VISIONSET_NORMAL,pcVar1);
-  __restgprlr_28();
   return;
 }
 
 
 // 82469360  Cmd_VisionSetNight_f  (game/g_cmds.cpp:850)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "ConfigString": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
@@ -928,7 +928,6 @@ void Cmd_VisionSetNight_f(void)
   char *pcVar1;
   double dVar2;
   
-  __savegprlr_28();
   if (7 < (uint)sv_cmd_args.nesting) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\../qcommon/cmd.h",0xc3,0,
                     "sv_cmd_args.nesting doesn\'t index CMD_MAX_NESTING\n\t%i not in [0, %i)");
@@ -936,7 +935,6 @@ void Cmd_VisionSetNight_f(void)
   if (sv_cmd_args.argc[sv_cmd_args.nesting] != 2) {
     if (sv_cmd_args.argc[sv_cmd_args.nesting] != 3) {
       Com_Printf(0,"USAGE: visionSetNight <name> <duration>\n");
-      __restgprlr_28();
       return;
     }
     pcVar1 = SV_Cmd_Argv(2);
@@ -949,33 +947,30 @@ void Cmd_VisionSetNight_f(void)
   }
   pcVar1 = va("\"%s\" %i");
   SV_SetConfigstring(CS_VISIONSET_NIGHT,pcVar1);
-  __restgprlr_28();
   return;
 }
 
 
 // 82469498  Cmd_G_TestCmd_f  (game/g_cmds.cpp:874)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
 void Cmd_G_TestCmd_f(gentity_s *param_1)
 
 {
-  int iVar1;
-  
-  iVar1 = __savegprlr_29(param_1);
-  if (iVar1 == 0) {
+  if (param_1 == (gentity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_cmds.cpp",0x36b,0,"%s")
     ;
   }
-  if (*(int *)(iVar1 + 0x158) == 0) {
+  if (param_1->client == (gclient_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_cmds.cpp",0x36c,0,"%s")
     ;
   }
   BG_GetNumWeapons();
   Com_Printf(0,"\n%i - Total Weapons\n");
-  __restgprlr_29();
   return;
 }
 

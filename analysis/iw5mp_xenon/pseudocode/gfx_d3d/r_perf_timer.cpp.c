@@ -23,81 +23,77 @@ uint R_Perf_GetTotalTime(PerfTimer *param_1)
 
 // 82760DD0  R_Perf_GetTimerAverageAndMaxMs  (gfx_d3d/r_perf_timer.cpp:20)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
+
 void R_Perf_GetTimerAverageAndMaxMs
                (PerfTimerFrameHistory *param_1,PerfTimerStyle *param_2,uint param_3,float *param_4,
                float *param_5)
 
 {
-  uint uVar1;
-  uint *puVar2;
-  uint *puVar4;
-  longlong lVar3;
-  ulonglong uVar5;
-  longlong lVar6;
-  int iVar7;
-  longlong lVar8;
-  int iVar9;
-  double dVar10;
-  double dVar11;
+  int *piVar1;
+  uint uVar2;
+  uint uVar3;
+  int iVar4;
+  int iVar5;
+  int iVar6;
+  double dVar7;
+  double dVar8;
   
-  lVar6 = (longlong)(int)param_3;
-  uVar5 = (ulonglong)(int)param_2;
-  puVar4 = (uint *)__savegprlr_25(param_1);
   *param_4 = 0.0;
   *param_5 = 0.0;
-  if (puVar4 == (uint *)0x0) {
+  if (param_1 == (PerfTimerFrameHistory *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_perf_timer.cpp",0x1d
                     ,0,"%s");
   }
-  if ((uVar5 & 0xffffffff) == 0) {
+  if (param_2 == (PerfTimerStyle *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_perf_timer.cpp",0x1e
                     ,0,"%s");
   }
-  if (puVar4[1] < 0x3d) {
+  if (param_1->frameCount < 0x3d) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_perf_timer.cpp",0x1f
                     ,0,"%s");
   }
-  if (0x50 < puVar4[1]) {
+  if (0x50 < param_1->frameCount) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_perf_timer.cpp",0x20
                     ,0,"%s");
   }
-  iVar9 = 0;
-  lVar8 = 0;
+  iVar6 = 0;
+  iVar5 = 0;
   do {
-    uVar1 = puVar4[1];
-    trapWord(6,(ulonglong)uVar1,0);
-    iVar7 = *(int *)((int)(((((ulonglong)*puVar4 - lVar8) -
-                            (longlong)
-                            (int)(((ulonglong)*puVar4 - lVar8 & 0xffffffff) / (ulonglong)uVar1) *
-                            (longlong)(int)uVar1) * 0x52 + lVar6 + 4 & 0xffffffff) << 2) +
-                    (int)puVar4);
-    if (iVar7 != 0) {
-      lVar3 = 0;
+    uVar2 = param_1->frameCount;
+    uVar3 = param_1->currentFrame - iVar5;
+    trapWord(6,(ulonglong)uVar2,0);
+    iVar4 = *(int *)(((uVar3 - (uVar3 / uVar2) * uVar2) * 0x52 + param_3 + 4) * 4 + (int)param_1);
+    if (iVar4 != 0) {
+      uVar2 = 0;
       do {
-        puVar2 = (uint *)(iVar7 + 4);
-        iVar7 = *(int *)(iVar7 + 0xc);
-        lVar3 = (ulonglong)*puVar2 + lVar3;
-      } while (iVar7 != 0);
-      dVar10 = (double)(**(code **)((int)uVar5 + 0x14))(lVar3);
-      iVar9 = iVar9 + 1;
-      dVar11 = dVar10;
-      if ((float)(dVar10 - (double)*param_5) < 0.0) {
-        dVar11 = (double)*param_5;
+        piVar1 = (int *)(iVar4 + 4);
+        iVar4 = *(int *)(iVar4 + 0xc);
+        uVar2 = *piVar1 + uVar2;
+      } while (iVar4 != 0);
+      dVar7 = (double)(*param_2->convertTime)(uVar2);
+      iVar6 = iVar6 + 1;
+      dVar8 = dVar7;
+      if ((float)(dVar7 - (double)*param_5) < 0.0) {
+        dVar8 = (double)*param_5;
       }
-      *param_5 = (float)dVar11;
-      *param_4 = (float)((double)*param_4 + dVar10);
+      *param_5 = (float)dVar8;
+      *param_4 = (float)((double)*param_4 + dVar7);
     }
-    lVar8 = lVar8 + 1;
-  } while ((int)lVar8 < 0x3c);
-  if (iVar9 != 0) {
-    *param_4 = *param_4 / (float)(longlong)iVar9;
+    iVar5 = iVar5 + 1;
+  } while (iVar5 < 0x3c);
+  if (iVar6 != 0) {
+    *param_4 = *param_4 / (float)(longlong)iVar6;
   }
-  __restgprlr_25();
   return;
 }
 
 
 // 82760F68  R_Perf_GetFrameAverageAndMaxMs  (gfx_d3d/r_perf_timer.cpp:52)
+
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 
 void R_Perf_GetFrameAverageAndMaxMs
                (PerfTimerFrameHistory *param_1,PerfTimerStyle *param_2,float *param_3,float *param_4
@@ -105,53 +101,50 @@ void R_Perf_GetFrameAverageAndMaxMs
 
 {
   uint uVar1;
-  int *piVar2;
-  ulonglong uVar3;
-  int iVar4;
+  uint uVar2;
+  int iVar3;
+  double dVar4;
   double dVar5;
-  double dVar6;
   
-  uVar3 = (ulonglong)(int)param_2;
-  piVar2 = (int *)__savegprlr_25(param_1);
   *param_3 = 0.0;
   *param_4 = 0.0;
-  if (piVar2 == (int *)0x0) {
+  if (param_1 == (PerfTimerFrameHistory *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_perf_timer.cpp",0x3c
                     ,0,"%s");
   }
-  if ((uVar3 & 0xffffffff) == 0) {
+  if (param_2 == (PerfTimerStyle *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_perf_timer.cpp",0x3d
                     ,0,"%s");
   }
-  if ((uint)piVar2[1] < 0x3d) {
+  if (param_1->frameCount < 0x3d) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_perf_timer.cpp",0x3e
                     ,0,"%s");
   }
-  if (0x50 < (uint)piVar2[1]) {
+  if (0x50 < param_1->frameCount) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_perf_timer.cpp",0x3f
                     ,0,"%s");
   }
-  iVar4 = 0;
+  iVar3 = 0;
   do {
-    uVar1 = piVar2[1];
+    uVar1 = param_1->frameCount;
+    uVar2 = param_1->currentFrame - iVar3;
     trapWord(6,(ulonglong)uVar1,0);
-    dVar5 = (double)(**(code **)((int)uVar3 + 0x14))
-                              ((piVar2 + ((*piVar2 - iVar4) -
-                                         ((uint)(*piVar2 - iVar4) / uVar1) * uVar1) * 0x52)[3]);
-    iVar4 = iVar4 + 1;
-    dVar6 = dVar5;
-    if ((float)(dVar5 - (double)*param_4) < 0.0) {
-      dVar6 = (double)*param_4;
+    dVar4 = (double)(*param_2->convertTime)
+                              (*(uint *)((int)param_1 +
+                                        (uVar2 - (uVar2 / uVar1) * uVar1) * 0x148 + 0xc));
+    iVar3 = iVar3 + 1;
+    dVar5 = dVar4;
+    if ((float)(dVar4 - (double)*param_4) < 0.0) {
+      dVar5 = (double)*param_4;
     }
-    *param_4 = (float)dVar6;
-    *param_3 = (float)((double)*param_3 + dVar5);
-  } while (iVar4 < 0x3c);
-  if (iVar4 == 0) {
+    *param_4 = (float)dVar5;
+    *param_3 = (float)((double)*param_3 + dVar4);
+  } while (iVar3 < 0x3c);
+  if (iVar3 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_perf_timer.cpp",0x48
                     ,0,"%s");
   }
-  *param_3 = *param_3 / (float)(longlong)iVar4;
-  __restgprlr_25();
+  *param_3 = *param_3 / (float)(longlong)iVar3;
   return;
 }
 
@@ -170,6 +163,10 @@ void R_Perf_ResetDraw(void)
 
 // 82761100  R_Perf_DrawTimers  (gfx_d3d/r_perf_timer.cpp:88)
 
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
 /* WARNING: Enum "GfxPrimStatsTarget": Some values do not have unique names */
 
 void R_Perf_DrawTimers(PerfTimerFrameHistory *param_1,PerfTimerStyle *param_2)
@@ -177,26 +174,26 @@ void R_Perf_DrawTimers(PerfTimerFrameHistory *param_1,PerfTimerStyle *param_2)
 {
   PerfTimerDisplayMode PVar1;
   Font_s *pFVar2;
-  PerfTimerStyle *pPVar3;
-  int *piVar4;
+  int *piVar3;
+  bool bVar4;
   bool bVar5;
-  bool bVar6;
-  PerfTimerFrameHistory *pPVar7;
-  char *pcVar8;
-  int iVar9;
-  ulonglong uVar10;
-  ulonglong uVar11;
+  char *pcVar6;
+  int iVar7;
+  longlong lVar8;
+  ulonglong uVar9;
+  ulong uVar10;
+  undefined8 uVar11;
   ulonglong uVar12;
-  ulong uVar13;
-  undefined8 uVar14;
-  ulonglong uVar15;
-  GfxColor GVar16;
-  GfxPrimStatsTarget GVar17;
-  int *piVar18;
+  GfxColor GVar13;
+  GfxPrimStatsTarget GVar14;
+  int *piVar15;
+  ulonglong uVar16;
+  uint uVar17;
+  float *pfVar18;
   uint uVar19;
-  float *pfVar20;
-  uint uVar21;
-  int *piVar22;
+  int *piVar20;
+  double dVar21;
+  double dVar22;
   double dVar23;
   double dVar24;
   double dVar25;
@@ -210,8 +207,6 @@ void R_Perf_DrawTimers(PerfTimerFrameHistory *param_1,PerfTimerStyle *param_2)
   double dVar33;
   double dVar34;
   double dVar35;
-  double dVar36;
-  double dVar37;
   float local_154;
   uint local_150;
   float *local_14c;
@@ -221,243 +216,236 @@ void R_Perf_DrawTimers(PerfTimerFrameHistory *param_1,PerfTimerStyle *param_2)
   char *local_13c;
   longlong local_138 [39];
   
-  uVar10 = (ulonglong)(int)param_2;
-  uVar11 = (ulonglong)(int)param_1;
-  __savegprlr();
-  __savefpr();
   local_13c = "c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_perf_timer.cpp";
   local_140 = "%s";
-  if ((uVar11 & 0xffffffff) == 0) {
+  if (param_1 == (PerfTimerFrameHistory *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_perf_timer.cpp",0x6f
                     ,0,"%s");
   }
-  if ((uVar10 & 0xffffffff) == 0) {
+  if (param_2 == (PerfTimerStyle *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_perf_timer.cpp",0x70
                     ,0,"%s");
   }
-  pPVar7 = (PerfTimerFrameHistory *)uVar11;
-  if (pPVar7->frameCount <= pPVar7->currentFrame) {
+  if (param_1->frameCount <= param_1->currentFrame) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_perf_timer.cpp",0x71
                     ,0,"%s");
   }
-  pPVar3 = (PerfTimerStyle *)uVar10;
-  local_150 = pPVar3->timerNameCharCount;
+  local_150 = param_2->timerNameCharCount;
   local_138[0] = (longlong)(int)local_150;
-  dVar29 = (double)pPVar3->budgetPixels;
-  dVar28 = 50.0;
-  pfVar20 = s_bucketY;
-  PVar1 = pPVar3->displayMode;
-  dVar27 = (double)pPVar3->budgetMs;
-  bVar5 = pPVar3->displayType == PERF_TIMER_TYPE_IN_PLACE;
+  dVar27 = (double)param_2->budgetPixels;
+  dVar26 = 50.0;
+  pfVar18 = s_bucketY;
+  PVar1 = param_2->displayMode;
+  dVar25 = (double)param_2->budgetMs;
+  bVar4 = param_2->displayType == PERF_TIMER_TYPE_IN_PLACE;
   local_14c = s_bucketY;
-  dVar25 = (double)(pPVar3->totalBarY + s_topY);
-  dVar30 = (double)(((float)local_138[0] + 0.5) * pPVar3->fontWidth + 50.0);
-  dVar26 = (double)((float)(dVar30 + dVar29) - 50.0);
-  if ((PVar1 == PERF_TIMER_MODE_TOP) || (bVar6 = false, PVar1 == PERF_TIMER_MODE_ALL)) {
-    bVar6 = true;
+  dVar23 = (double)(param_2->totalBarY + s_topY);
+  dVar28 = (double)(((float)local_138[0] + 0.5) * param_2->fontWidth + 50.0);
+  dVar24 = (double)((float)(dVar28 + dVar27) - 50.0);
+  if ((PVar1 == PERF_TIMER_MODE_TOP) || (bVar5 = false, PVar1 == PERF_TIMER_MODE_ALL)) {
+    bVar5 = true;
   }
-  uVar19 = pPVar7->currentFrame;
-  if (pPVar3->convertTime == (_func___cdecl_float_uint *)0x0) {
+  uVar17 = param_1->currentFrame;
+  if (param_2->convertTime == (_func___cdecl_float_uint *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_perf_timer.cpp",0x8d
                     ,0,"%s");
   }
-  dVar23 = (double)(*pPVar3->convertTime)(pPVar7->frames[uVar19].totalTime);
-  uVar11 = uVar10;
-  dVar35 = dVar25;
-  R_Perf_GetFrameAverageAndMaxMs(pPVar7,pPVar3,&local_144,(float *)local_138);
-  if (pPVar3->displayMode == PERF_TIMER_MODE_UNKNOWN) {
-    uVar11 = 0x96;
+  dVar21 = (double)(*param_2->convertTime)(param_1->frames[uVar17].totalTime);
+  lVar8 = (longlong)(int)param_2;
+  dVar33 = dVar23;
+  R_Perf_GetFrameAverageAndMaxMs(param_1,param_2,&local_144,(float *)local_138);
+  if (param_2->displayMode == PERF_TIMER_MODE_UNKNOWN) {
+    lVar8 = 0x96;
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_perf_timer.cpp",0x96
                     ,0,"%s");
   }
-  if (pPVar3->displayType == PERF_TIMER_TYPE_UNKNOWN) {
-    uVar11 = 0x97;
+  if (param_2->displayType == PERF_TIMER_TYPE_UNKNOWN) {
+    lVar8 = 0x97;
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_perf_timer.cpp",0x97
                     ,0,"%s");
   }
-  uVar14 = 0xffffffffff800000;
-  dVar32 = 2.0;
-  dVar31 = 4.0;
-  dVar37 = 1.0;
-  dVar36 = 0.0;
-  if ((pPVar3->displayType != PERF_TIMER_TYPE_COM_ONLY) && (uVar21 = 0, pPVar3->bucketCount != 0)) {
-    dVar23 = (double)(float)((double)(float)(dVar23 * dVar29) / dVar27);
+  uVar11 = 0xffffffffff800000;
+  dVar30 = 2.0;
+  dVar29 = 4.0;
+  dVar35 = 1.0;
+  dVar34 = 0.0;
+  if ((param_2->displayType != PERF_TIMER_TYPE_COM_ONLY) && (uVar19 = 0, param_2->bucketCount != 0))
+  {
+    dVar21 = (double)(float)((double)(float)(dVar21 * dVar27) / dVar25);
     do {
-      if (3 < uVar21) {
-        uVar14 = 0;
-        uVar11 = 0x9d;
+      if (3 < uVar19) {
+        uVar11 = 0;
+        lVar8 = 0x9d;
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_perf_timer.cpp",
                         0x9d,0,"%s");
       }
-      *pfVar20 = (float)dVar35;
-      RB_DrawStretchPic(rgp.whiteMaterial,(float)dVar28,(float)dVar35,(float)dVar26,
-                        pPVar3->fontHeight,(float)dVar36,(float)dVar36,(float)dVar37,(float)dVar37,
-                        (ulong)uVar11,(GfxPrimStatsTarget)uVar14);
-      RB_DrawStretchPic(rgp.whiteMaterial,(float)dVar30,(float)(dVar35 + dVar32),(float)dVar23,
-                        (float)((double)pPVar3->fontHeight - dVar31),(float)dVar36,(float)dVar36,
-                        (float)dVar37,(float)dVar37,(ulong)uVar11,(GfxPrimStatsTarget)uVar14);
-      uVar21 = uVar21 + 1;
-      pfVar20 = pfVar20 + 1;
-      dVar35 = (double)(float)((double)(float)((double)pPVar3->fontHeight + dVar35) + dVar32);
-    } while (uVar21 < pPVar3->bucketCount);
+      *pfVar18 = (float)dVar33;
+      RB_DrawStretchPic(rgp.whiteMaterial,(float)dVar26,(float)dVar33,(float)dVar24,
+                        param_2->fontHeight,(float)dVar34,(float)dVar34,(float)dVar35,(float)dVar35,
+                        (ulong)lVar8,(GfxPrimStatsTarget)uVar11);
+      RB_DrawStretchPic(rgp.whiteMaterial,(float)dVar28,(float)(dVar33 + dVar30),(float)dVar21,
+                        (float)((double)param_2->fontHeight - dVar29),(float)dVar34,(float)dVar34,
+                        (float)dVar35,(float)dVar35,(ulong)lVar8,(GfxPrimStatsTarget)uVar11);
+      uVar19 = uVar19 + 1;
+      pfVar18 = pfVar18 + 1;
+      dVar33 = (double)(float)((double)(float)((double)param_2->fontHeight + dVar33) + dVar30);
+    } while (uVar19 < param_2->bucketCount);
   }
-  if (0x50 < pPVar3->timerCount) {
+  if (0x50 < param_2->timerCount) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_perf_timer.cpp",0xab
                     ,0,"%s");
   }
-  uVar11 = 0;
-  if (pPVar3->timerCount != 0) {
-    iVar9 = 0;
+  uVar16 = 0;
+  if (param_2->timerCount != 0) {
+    iVar7 = 0;
     do {
-      piVar22 = *(int **)((int)pPVar7->frames[uVar19].timers + iVar9);
-      if ((*(char *)((int)piVar22 + 0x12) == '\0') &&
-         ((bVar6 || ((*(char *)((int)piVar22 + 0x11) != '\0' &&
+      piVar20 = *(int **)((int)param_1->frames[uVar17].timers + iVar7);
+      if ((*(char *)((int)piVar20 + 0x12) == '\0') &&
+         ((bVar5 || ((*(char *)((int)piVar20 + 0x11) != '\0' &&
                      (((PVar1 == PERF_TIMER_MODE_ACTIVE ||
-                       ((PVar1 == PERF_TIMER_MODE_MAJOR && (piVar22[2] == 0)))) ||
-                      ((PVar1 == PERF_TIMER_MODE_MINOR && (*(char *)(piVar22 + 4) == '\0'))))))))))
+                       ((PVar1 == PERF_TIMER_MODE_MAJOR && (piVar20[2] == 0)))) ||
+                      ((PVar1 == PERF_TIMER_MODE_MINOR && (*(char *)(piVar20 + 4) == '\0'))))))))))
       {
-        GVar16 = *(GfxColor *)((int)pPVar3->timerNames + iVar9);
-        uVar12 = uVar10;
-        uVar15 = uVar11;
-        R_Perf_GetTimerAverageAndMaxMs(pPVar7,pPVar3,(uint)uVar11,&local_154,&local_148);
-        uVar21 = 0;
-        piVar18 = piVar22;
+        GVar13 = *(GfxColor *)((int)param_2->timerNames + iVar7);
+        lVar8 = (longlong)(int)param_2;
+        uVar12 = uVar16;
+        R_Perf_GetTimerAverageAndMaxMs(param_1,param_2,(uint)uVar16,&local_154,&local_148);
+        uVar19 = 0;
+        piVar15 = piVar20;
         do {
-          piVar4 = piVar18 + 1;
-          piVar18 = (int *)piVar18[3];
-          uVar21 = *piVar4 + uVar21;
-        } while (piVar18 != (int *)0x0);
-        (*pPVar3->convertTime)(uVar21);
-        if (pPVar3->displayType == PERF_TIMER_TYPE_COM_ONLY) {
+          piVar3 = piVar15 + 1;
+          piVar15 = (int *)piVar15[3];
+          uVar19 = *piVar3 + uVar19;
+        } while (piVar15 != (int *)0x0);
+        (*param_2->convertTime)(uVar19);
+        if (param_2->displayType == PERF_TIMER_TYPE_COM_ONLY) {
           va("% *s %5.2f %5.2f %5.2f");
           Com_Printf(8,"%s\n");
         }
         else {
-          dVar23 = (double)local_148;
-          if ((pPVar3->displayMode != PERF_TIMER_MODE_TOP) &&
-             (RB_DrawStretchPic(rgp.whiteMaterial,(float)dVar28,(float)dVar35,(float)dVar26,
-                                pPVar3->fontHeight,(float)dVar36,(float)dVar36,(float)dVar37,
-                                (float)dVar37,(ulong)uVar12,(GfxPrimStatsTarget)uVar15), !bVar5)) {
+          dVar21 = (double)local_148;
+          if ((param_2->displayMode != PERF_TIMER_MODE_TOP) &&
+             (RB_DrawStretchPic(rgp.whiteMaterial,(float)dVar26,(float)dVar33,(float)dVar24,
+                                param_2->fontHeight,(float)dVar34,(float)dVar34,(float)dVar35,
+                                (float)dVar35,(ulong)lVar8,(GfxPrimStatsTarget)uVar12), !bVar4)) {
             RB_DrawStretchPic(rgp.whiteMaterial,
-                              (float)((double)(float)((double)(float)((double)(float)(dVar23 * 
-                                                  dVar29) / dVar27) + dVar30) - dVar37),
-                              (float)dVar35,(float)dVar32,pPVar3->fontHeight,(float)dVar36,
-                              (float)dVar36,(float)dVar37,(float)dVar37,(ulong)uVar12,
-                              (GfxPrimStatsTarget)uVar15);
+                              (float)((double)(float)((double)(float)((double)(float)(dVar21 * 
+                                                  dVar27) / dVar25) + dVar28) - dVar35),
+                              (float)dVar33,(float)dVar30,param_2->fontHeight,(float)dVar34,
+                              (float)dVar34,(float)dVar35,(float)dVar35,(ulong)lVar8,
+                              (GfxPrimStatsTarget)uVar12);
           }
-          uVar21 = 0;
-          dVar33 = (double)(float)(dVar37 / dVar27);
-          dVar23 = dVar30;
+          uVar19 = 0;
+          dVar31 = (double)(float)(dVar35 / dVar25);
+          dVar21 = dVar28;
           do {
-            dVar24 = (double)(*pPVar3->convertTime)(*piVar22 - pPVar7->frames[uVar19].beginTime);
-            dVar34 = (double)(float)((double)(float)(dVar24 * dVar29) * dVar33 + dVar30);
-            dVar24 = (double)(*pPVar3->convertTime)(piVar22[1]);
-            dVar24 = (double)(float)((double)(float)(dVar24 * dVar29) * dVar33);
-            if (bVar5) {
-              dVar23 = dVar34;
+            dVar22 = (double)(*param_2->convertTime)(*piVar20 - param_1->frames[uVar17].beginTime);
+            dVar32 = (double)(float)((double)(float)(dVar22 * dVar27) * dVar31 + dVar28);
+            dVar22 = (double)(*param_2->convertTime)(piVar20[1]);
+            dVar22 = (double)(float)((double)(float)(dVar22 * dVar27) * dVar31);
+            if (bVar4) {
+              dVar21 = dVar32;
             }
-            if (3 < *(byte *)((int)piVar22 + 0x13)) {
-              uVar15 = 0;
-              uVar12 = 0xf1;
+            if (3 < *(byte *)((int)piVar20 + 0x13)) {
+              uVar12 = 0;
+              lVar8 = 0xf1;
               MyAssertHandler(local_13c,0xf1,0,local_140);
             }
-            RB_DrawStretchPic(rgp.whiteMaterial,(float)dVar34,
-                              local_14c[*(byte *)((int)piVar22 + 0x13)],(float)dVar24,
-                              (float)((double)pPVar3->fontHeight - dVar31),(float)dVar36,
-                              (float)dVar36,(float)dVar37,(float)dVar37,(ulong)uVar12,
-                              (GfxPrimStatsTarget)uVar15);
-            if (pPVar3->displayMode != PERF_TIMER_MODE_TOP) {
-              RB_DrawStretchPic(rgp.whiteMaterial,(float)dVar23,(float)(dVar35 + dVar32),
-                                (float)dVar24,(float)((double)pPVar3->fontHeight - dVar31),
-                                (float)dVar36,(float)dVar36,(float)dVar37,(float)dVar37,
-                                (ulong)uVar12,(GfxPrimStatsTarget)uVar15);
+            RB_DrawStretchPic(rgp.whiteMaterial,(float)dVar32,
+                              local_14c[*(byte *)((int)piVar20 + 0x13)],(float)dVar22,
+                              (float)((double)param_2->fontHeight - dVar29),(float)dVar34,
+                              (float)dVar34,(float)dVar35,(float)dVar35,(ulong)lVar8,
+                              (GfxPrimStatsTarget)uVar12);
+            if (param_2->displayMode != PERF_TIMER_MODE_TOP) {
+              RB_DrawStretchPic(rgp.whiteMaterial,(float)dVar21,(float)(dVar33 + dVar30),
+                                (float)dVar22,(float)((double)param_2->fontHeight - dVar29),
+                                (float)dVar34,(float)dVar34,(float)dVar35,(float)dVar35,(ulong)lVar8
+                                ,(GfxPrimStatsTarget)uVar12);
             }
-            piVar22 = (int *)piVar22[3];
-            if (piVar22 != (int *)0x0) {
-              RB_DrawStretchPic(rgp.whiteMaterial,(float)dVar23,(float)dVar35,(float)dVar37,
-                                pPVar3->fontHeight,(float)dVar36,(float)dVar36,(float)dVar37,
-                                (float)dVar37,(ulong)uVar12,(GfxPrimStatsTarget)uVar15);
+            piVar20 = (int *)piVar20[3];
+            if (piVar20 != (int *)0x0) {
+              RB_DrawStretchPic(rgp.whiteMaterial,(float)dVar21,(float)dVar33,(float)dVar35,
+                                param_2->fontHeight,(float)dVar34,(float)dVar34,(float)dVar35,
+                                (float)dVar35,(ulong)lVar8,(GfxPrimStatsTarget)uVar12);
             }
-            dVar23 = (double)(float)(dVar24 + dVar23);
-            uVar21 = uVar21 + 1;
-          } while (piVar22 != (int *)0x0);
-          if (pPVar3->displayMode != PERF_TIMER_MODE_TOP) {
-            pFVar2 = pPVar3->font;
-            dVar23 = (double)pPVar3->fontHeight;
-            if (uVar21 < 2) {
-              pcVar8 = va("% *s %5.2f %5.2f %5.2f");
+            dVar21 = (double)(float)(dVar22 + dVar21);
+            uVar19 = uVar19 + 1;
+          } while (piVar20 != (int *)0x0);
+          if (param_2->displayMode != PERF_TIMER_MODE_TOP) {
+            pFVar2 = param_2->font;
+            dVar21 = (double)param_2->fontHeight;
+            if (uVar19 < 2) {
+              pcVar6 = va("% *s %5.2f %5.2f %5.2f");
             }
             else {
-              pcVar8 = va("% *s %5.2f %5.2f %5.2f %2d");
+              pcVar6 = va("% *s %5.2f %5.2f %5.2f %2d");
             }
-            RB_DrawText(pcVar8,pFVar2,(float)dVar28,(float)(dVar23 + dVar35),GVar16);
+            RB_DrawText(pcVar6,pFVar2,(float)dVar26,(float)(dVar21 + dVar33),GVar13);
           }
-          dVar35 = (double)(float)((double)(float)((double)pPVar3->fontHeight + dVar35) + dVar32);
+          dVar33 = (double)(float)((double)(float)((double)param_2->fontHeight + dVar33) + dVar30);
         }
       }
-      uVar11 = uVar11 + 1;
-      iVar9 = iVar9 + 4;
-    } while ((uVar11 & 0xffffffff) < (ulonglong)pPVar3->timerCount);
+      uVar16 = uVar16 + 1;
+      iVar7 = iVar7 + 4;
+    } while ((uVar16 & 0xffffffff) < (ulonglong)param_2->timerCount);
   }
-  if ((pPVar3->bucketNames == (char **)0x0) ||
-     (pcVar8 = *pPVar3->bucketNames, pcVar8 == (char *)0x0)) {
-    uVar11 = 0xffffffff821ca4ec;
+  if ((param_2->bucketNames == (char **)0x0) ||
+     (pcVar6 = *param_2->bucketNames, pcVar6 == (char *)0x0)) {
+    uVar16 = 0xffffffff821ca4ec;
   }
   else {
-    uVar11 = ZEXT48(pcVar8);
+    uVar16 = ZEXT48(pcVar6);
   }
-  dVar26 = (double)local_138[0]._0_4_;
-  pcVar8 = va("% *s %5.2f %5.2f %5.2f");
-  uVar10 = (ulonglong)(int)pcVar8;
-  if (pPVar3->displayType == PERF_TIMER_TYPE_COM_ONLY) {
-    uVar12 = 0xffffffff82035128;
+  dVar24 = (double)local_138[0]._0_4_;
+  pcVar6 = va("% *s %5.2f %5.2f %5.2f");
+  uVar12 = (ulonglong)(int)pcVar6;
+  if (param_2->displayType == PERF_TIMER_TYPE_COM_ONLY) {
+    uVar9 = 0xffffffff82035128;
     Com_Printf(8,"%s\n\n");
-    uVar11 = uVar10;
+    uVar16 = uVar12;
   }
   else {
-    uVar12 = ZEXT48(pPVar3->font);
-    RB_DrawText(pcVar8,pPVar3->font,(float)dVar28,(float)((double)pPVar3->fontHeight + dVar25),
-                (GfxColor)(uint)uVar11);
+    uVar9 = ZEXT48(param_2->font);
+    RB_DrawText(pcVar6,param_2->font,(float)dVar26,(float)((double)param_2->fontHeight + dVar23),
+                (GfxColor)(uint)uVar16);
   }
-  pfVar20 = local_14c;
-  GVar17 = (GfxPrimStatsTarget)uVar11;
-  uVar13 = (ulong)uVar12;
-  uVar19 = 1;
-  if (1 < pPVar3->bucketCount) {
-    iVar9 = 4;
+  pfVar18 = local_14c;
+  GVar14 = (GfxPrimStatsTarget)uVar16;
+  uVar10 = (ulong)uVar9;
+  uVar17 = 1;
+  if (1 < param_2->bucketCount) {
+    iVar7 = 4;
     do {
-      if ((pPVar3->bucketNames != (char **)0x0) &&
-         (uVar21 = *(uint *)(iVar9 + (int)pPVar3->bucketNames), uVar21 != 0)) {
-        uVar11 = (ulonglong)uVar21;
-        pcVar8 = va("% *s");
-        uVar12 = ZEXT48(pPVar3->font);
-        RB_DrawText(pcVar8,pPVar3->font,(float)dVar28,
-                    *(float *)(iVar9 + (int)pfVar20) + pPVar3->fontHeight,(GfxColor)(uint)uVar11);
+      if ((param_2->bucketNames != (char **)0x0) &&
+         (uVar19 = *(uint *)(iVar7 + (int)param_2->bucketNames), uVar19 != 0)) {
+        uVar16 = (ulonglong)uVar19;
+        pcVar6 = va("% *s");
+        uVar9 = ZEXT48(param_2->font);
+        RB_DrawText(pcVar6,param_2->font,(float)dVar26,
+                    *(float *)(iVar7 + (int)pfVar18) + param_2->fontHeight,(GfxColor)(uint)uVar16);
       }
-      GVar17 = (GfxPrimStatsTarget)uVar11;
-      uVar13 = (ulong)uVar12;
-      uVar19 = uVar19 + 1;
-      iVar9 = iVar9 + 4;
-    } while (uVar19 < pPVar3->bucketCount);
+      GVar14 = (GfxPrimStatsTarget)uVar16;
+      uVar10 = (ulong)uVar9;
+      uVar17 = uVar17 + 1;
+      iVar7 = iVar7 + 4;
+    } while (uVar17 < param_2->bucketCount);
   }
-  if ((!bVar5) && (pPVar3->displayType != PERF_TIMER_TYPE_COM_ONLY)) {
+  if ((!bVar4) && (param_2->displayType != PERF_TIMER_TYPE_COM_ONLY)) {
     RB_DrawStretchPic(rgp.whiteMaterial,
-                      (float)((double)(float)((double)(float)((double)(float)(dVar26 * dVar29) /
-                                                             dVar27) + dVar30) - dVar37),
-                      (float)dVar25,(float)dVar32,pPVar3->fontHeight,(float)dVar36,(float)dVar36,
-                      (float)dVar37,(float)dVar37,uVar13,GVar17);
+                      (float)((double)(float)((double)(float)((double)(float)(dVar24 * dVar27) /
+                                                             dVar25) + dVar28) - dVar35),
+                      (float)dVar23,(float)dVar30,param_2->fontHeight,(float)dVar34,(float)dVar34,
+                      (float)dVar35,(float)dVar35,uVar10,GVar14);
   }
-  iVar9 = R_HasDeviceOwnership();
-  if (iVar9 == 0) {
+  iVar7 = R_HasDeviceOwnership();
+  if (iVar7 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_backend.h",0xaf,0,
                     local_140);
   }
   if (tess.vertexCount != 0) {
     RB_EndTessSurface();
   }
-  pfVar20[4] = (float)dVar35;
-  __restfpr();
-  __restgprlr();
+  pfVar18[4] = (float)dVar33;
   return;
 }
 

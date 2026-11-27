@@ -2,51 +2,52 @@
 
 // 82918710  _onexit  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/onexit.c:82)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
+
 _func___cdecl_int * _onexit(_func___cdecl_int *param_1)
 
 {
   _func___cdecl_void **pp_Var1;
   uint uVar2;
   _func___cdecl_void **pp_Var3;
-  _func___cdecl_int *p_Var4;
-  uint uVar5;
-  int iVar6;
-  _func___cdecl_void **pp_Var7;
-  _func___cdecl_void *local_60;
+  uint uVar4;
+  int iVar5;
+  _func___cdecl_void **pp_Var6;
+  _func___cdecl_int *local_60;
   
-  local_60 = (_func___cdecl_void *)__savegprlr_23(param_1);
   _lockexit();
   pp_Var1 = __onexitbegin;
-  pp_Var7 = __onexitend;
+  pp_Var6 = __onexitend;
   if (__onexitbegin <= __onexitend) {
-    iVar6 = (int)__onexitend - (int)__onexitbegin;
-    uVar5 = iVar6 + 4;
-    if (3 < uVar5) {
+    iVar5 = (int)__onexitend - (int)__onexitbegin;
+    uVar4 = iVar5 + 4;
+    if (3 < uVar4) {
       uVar2 = _msize(__onexitbegin);
-      if (uVar2 < uVar5) {
-        uVar5 = uVar2;
+      if (uVar2 < uVar4) {
+        uVar4 = uVar2;
         if (0x7ff < uVar2) {
-          uVar5 = 0x800;
+          uVar4 = 0x800;
         }
-        if (((uVar5 + uVar2 < uVar2) ||
-            (pp_Var3 = realloc(pp_Var1,uVar5 + uVar2), pp_Var3 == (_func___cdecl_void **)0x0)) &&
+        if (((uVar4 + uVar2 < uVar2) ||
+            (pp_Var3 = realloc(pp_Var1,uVar4 + uVar2), pp_Var3 == (_func___cdecl_void **)0x0)) &&
            ((uVar2 + 0x10 < uVar2 ||
             (pp_Var3 = realloc(pp_Var1,uVar2 + 0x10), pp_Var3 == (_func___cdecl_void **)0x0))))
         goto LAB_829187d4;
-        pp_Var7 = pp_Var3 + (iVar6 >> 2);
+        pp_Var6 = pp_Var3 + (iVar5 >> 2);
         __onexitbegin = pp_Var3;
       }
-      __onexitend = pp_Var7 + 1;
-      *pp_Var7 = local_60;
+      __onexitend = pp_Var6 + 1;
+      *pp_Var6 = (_func___cdecl_void *)param_1;
+      local_60 = param_1;
       goto LAB_829187dc;
     }
   }
 LAB_829187d4:
-  local_60 = (_func___cdecl_void *)0x0;
+  local_60 = (_func___cdecl_int *)0x0;
 LAB_829187dc:
   FUN_829187f4();
-  p_Var4 = (_func___cdecl_int *)__restgprlr_23(local_60);
-  return p_Var4;
+  return local_60;
 }
 
 

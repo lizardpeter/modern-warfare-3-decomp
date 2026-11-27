@@ -33,21 +33,19 @@ void __thiscall bdTeamProfile::serialize(bdTeamProfile *this,bdByteBuffer *param
 
 // 82909428  deserialize  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdteams/bdteamprofile.cpp:26)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 bool __thiscall bdTeamProfile::deserialize(bdTeamProfile *this,bdReference<bdByteBuffer> param_1)
 
 {
-  int iVar1;
-  bool bVar2;
-  undefined1 uVar3;
-  bdByteBuffer *pbStack0000001c;
+  bool bVar1;
+  bdReference<bdByteBuffer> bStack0000001c;
   
-  iVar1 = __savegprlr_29(this);
-  pbStack0000001c = param_1.m_ptr;
-  bVar2 = bdByteBuffer::readUInt64
-                    ((bdByteBuffer *)(param_1.m_ptr)->_padding_,(ulong64 *)(iVar1 + 8));
+  bStack0000001c.m_ptr = param_1.m_ptr;
+  bVar1 = bdByteBuffer::readUInt64((bdByteBuffer *)(param_1.m_ptr)->_padding_,&this->m_teamID);
   bdReference<bdByteBuffer>::~bdReference<bdByteBuffer>((bdReference<bdByteBuffer> *)param_1.m_ptr);
-  uVar3 = __restgprlr_29(bVar2);
-  return (bool)uVar3;
+  return bVar1;
 }
 
 

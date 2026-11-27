@@ -28,31 +28,30 @@ void PartyAtomic_Init(void)
 
 // 8238A380  PartyAtomic_GetPartyFromJoinInfo  (client_mp/partyjoining.cpp:73)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 PartyData * PartyAtomic_GetPartyFromJoinInfo(PartyJoinInfo *param_1)
 
 {
-  int iVar1;
+  PartyType PVar1;
   PartyData *pPVar2;
   
-  iVar1 = __savegprlr_29(param_1);
-  if (iVar1 == 0) {
+  if (param_1 == (PartyJoinInfo *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
                     0x4a,0,"%s");
   }
-  iVar1 = *(int *)(iVar1 + 8);
-  if (iVar1 == 1) {
-    pPVar2 = (PartyData *)__restgprlr_29(0xffffffff82b55118);
-    return pPVar2;
+  PVar1 = param_1->partyType;
+  if (PVar1 == PRIVATE_PARTY_ID) {
+    return &g_partyData;
   }
-  if ((iVar1 != 2) && (iVar1 != 0)) {
+  if ((PVar1 != ANY_PARTY_ID) && (PVar1 != GAME_LOBBY_ID)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
                     0x4f,0,"%s");
   }
   pPVar2 = Lobby_GetPartyData();
-  pPVar2 = (PartyData *)__restgprlr_29(pPVar2);
   return pPVar2;
 }
 
@@ -75,158 +74,143 @@ int PartyAtomic_IsJoiningActive(PartyJoinInfo *param_1)
 
 // 8238C198  PartyAtomic_IsJoiningActiveForSpecificParty  (client_mp/partyjoining.cpp:93)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 int PartyAtomic_IsJoiningActiveForSpecificParty(PartyJoinInfo *param_1,PartyData *param_2)
 
 {
-  PartyJoinInfo *pPVar1;
-  int iVar2;
-  PartyData *pPVar3;
-  ulonglong uVar4;
+  PartyData *pPVar1;
   
-  uVar4 = (ulonglong)(int)param_2;
-  pPVar1 = (PartyJoinInfo *)__savegprlr_26(param_1);
-  if (pPVar1 == (PartyJoinInfo *)0x0) {
+  if (param_1 == (PartyJoinInfo *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
                     0x60,0,"%s");
   }
-  if ((uVar4 & 0xffffffff) == 0) {
+  if (param_2 == (PartyData *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
                     0x61,0,"%s");
   }
-  if (pPVar1 == (PartyJoinInfo *)0x0) {
+  if (param_1 == (PartyJoinInfo *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
                     0x57,0,"%s");
   }
-  if (pPVar1->state == PARTYJOIN_INACTIVE) {
-    iVar2 = __restgprlr_26(0);
-    return iVar2;
+  if (param_1->state == PARTYJOIN_INACTIVE) {
+    return 0;
   }
-  if ((pPVar1->atomicParty != (PartyData *)0x0) &&
-     (pPVar1->atomicParty->partyId == *(PartyType *)((int)uVar4 + 0x1eb4))) {
-    iVar2 = __restgprlr_26(1);
-    return iVar2;
+  if ((param_1->atomicParty != (PartyData *)0x0) &&
+     (param_1->atomicParty->partyId == param_2->partyId)) {
+    return 1;
   }
-  pPVar3 = PartyAtomic_GetPartyFromJoinInfo(pPVar1);
-  if (pPVar3 == (PartyData *)0x0) {
+  pPVar1 = PartyAtomic_GetPartyFromJoinInfo(param_1);
+  if (pPVar1 == (PartyData *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
                     0x6a,0,"%s");
   }
-  if ((uVar4 & 0xffffffff) == 0) {
+  if (param_2 == (PartyData *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
                     0x6b,0,"%s");
   }
-  iVar2 = __restgprlr_26(*(PartyType *)((int)uVar4 + 0x1eb4) == pPVar3->partyId);
-  return iVar2;
+  return (uint)LZCOUNT(param_2->partyId - pPVar1->partyId) >> 5;
 }
 
 
 // 8238C2D8  PartyAtomic_IsJoiningActiveForSpecificSession  (client_mp/partyjoining.cpp:113)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 int PartyAtomic_IsJoiningActiveForSpecificSession(PartyJoinInfo *param_1,_XSESSION_INFO *param_2)
 
 {
-  int *piVar1;
-  int iVar2;
-  longlong lVar3;
-  byte *pbVar4;
-  ulonglong uVar5;
+  _XSESSION_INFO *p_Var1;
+  longlong lVar2;
+  _XSESSION_INFO *p_Var3;
   
-  uVar5 = (ulonglong)(int)param_2;
-  piVar1 = (int *)__savegprlr_27(param_1);
-  if (piVar1 == (int *)0x0) {
+  if (param_1 == (PartyJoinInfo *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
                     0x72,0,"%s");
   }
-  if ((uVar5 & 0xffffffff) == 0) {
+  if (param_2 == (_XSESSION_INFO *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
                     0x73,0,"%s");
   }
-  if (piVar1 == (int *)0x0) {
+  if (param_1 == (PartyJoinInfo *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
                     0x57,0,"%s");
   }
-  if (*piVar1 == 0) {
-    iVar2 = __restgprlr_27(0);
-    return iVar2;
+  if (param_1->state == PARTYJOIN_INACTIVE) {
+    return 0;
   }
-  pbVar4 = (byte *)(piVar1 + 4);
-  iVar2 = (int)uVar5;
+  p_Var3 = &param_1->sessionInfo;
+  p_Var1 = param_2 + 1;
   do {
-    lVar3 = (ulonglong)*(byte *)uVar5 - (ulonglong)*pbVar4;
-    if (lVar3 != 0) break;
-    uVar5 = uVar5 + 1;
-    pbVar4 = pbVar4 + 1;
-  } while ((int)uVar5 != iVar2 + 0x3c);
-  iVar2 = __restgprlr_27((int)lVar3 == 0);
-  return iVar2;
+    lVar2 = (ulonglong)(param_2->sessionID).ab[0] - (ulonglong)(p_Var3->sessionID).ab[0];
+    if (lVar2 != 0) break;
+    param_2 = (_XSESSION_INFO *)((param_2->sessionID).ab + 1);
+    p_Var3 = (_XSESSION_INFO *)((p_Var3->sessionID).ab + 1);
+  } while (param_2 != p_Var1);
+  return (uint)LZCOUNT((int)lVar2) >> 5;
 }
 
 
 // 8238C3C0  PartyAtomic_IsJoiningOnPresence  (client_mp/partyjoining.cpp:125)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 int PartyAtomic_IsJoiningOnPresence(PartyJoinInfo *param_1)
 
 {
-  int *piVar2;
-  int iVar3;
-  undefined8 uVar1;
+  int iVar1;
   
-  piVar2 = (int *)__savegprlr_28(param_1);
-  if (piVar2 == (int *)0x0) {
+  if (param_1 == (PartyJoinInfo *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
                     0x7e,0,"%s");
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
                     0x57,0,"%s");
   }
-  if (*piVar2 == 0) {
-    iVar3 = __restgprlr_28(0);
-    return iVar3;
+  if (param_1->state == PARTYJOIN_INACTIVE) {
+    return 0;
   }
-  if ((piVar2[1] == 2) || (uVar1 = 0, piVar2[1] == 1)) {
-    uVar1 = 1;
+  if ((param_1->joinType == PJT_INVITE) || (iVar1 = 0, param_1->joinType == PJT_PRESENCE)) {
+    iVar1 = 1;
   }
-  iVar3 = __restgprlr_28(uVar1);
-  return iVar3;
+  return iVar1;
 }
 
 
 // 8238C460  PartyAtomic_IsJoiningOnHostequest  (client_mp/partyjoining.cpp:136)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 int PartyAtomic_IsJoiningOnHostequest(PartyJoinInfo *param_1)
 
 {
-  int *piVar2;
-  int iVar3;
-  undefined8 uVar1;
+  int iVar1;
   
-  piVar2 = (int *)__savegprlr_28(param_1);
-  if (piVar2 == (int *)0x0) {
+  if (param_1 == (PartyJoinInfo *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
                     0x89,0,"%s");
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
                     0x57,0,"%s");
   }
-  if (*piVar2 == 0) {
-    iVar3 = __restgprlr_28(0);
-    return iVar3;
+  if (param_1->state == PARTYJOIN_INACTIVE) {
+    return 0;
   }
-  if ((piVar2[1] == 3) || (uVar1 = 0, piVar2[1] == 4)) {
-    uVar1 = 1;
+  if ((param_1->joinType == PJT_HOSTPRESENCE) || (iVar1 = 0, param_1->joinType == PJT_HOSTREQUEST))
+  {
+    iVar1 = 1;
   }
-  iVar3 = __restgprlr_28(uVar1);
-  return iVar3;
+  return iVar1;
 }
 
 
@@ -256,117 +240,111 @@ void PartyAtomic_FillSubPartyInfoForLocalClients(PartyJoinInfo *param_1)
 
 // 8238A490  PartyAtomic_FillSubPartyInfoForParty  (client_mp/partyjoining.cpp:164)
 
+/* WARNING: Function: __savegprlr_20 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_20 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void PartyAtomic_FillSubPartyInfoForParty(PartyJoinInfo *param_1,PartyData *param_2)
 
 {
-  PartyData *pPVar1;
-  PartyJoinInfo *pPVar2;
-  uint uVar3;
+  uint uVar1;
+  uint uVar2;
+  int iVar3;
   uint uVar4;
-  int iVar5;
-  ulonglong uVar6;
+  int *piVar5;
+  int iVar6;
   uint uVar7;
-  longlong lVar8;
-  int iVar9;
-  uint uVar10;
-  uint uVar11;
+  uint uVar8;
   
-  uVar6 = (ulonglong)(int)param_2;
-  pPVar2 = (PartyJoinInfo *)__savegprlr_20(param_1);
-  if (pPVar2 == (PartyJoinInfo *)0x0) {
+  if (param_1 == (PartyJoinInfo *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
                     0xab,0,"%s");
   }
-  if ((uVar6 & 0xffffffff) == 0) {
+  if (param_2 == (PartyData *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
                     0xac,0,"%s");
   }
-  pPVar1 = (PartyData *)uVar6;
-  if (pPVar1->areWeHost == 0) {
+  if (param_2->areWeHost == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
                     0xad,0,"%s");
   }
-  uVar3 = PartyClient_CountMembersEvenIfInactive(pPVar1);
-  uVar7 = pPVar1->subpartyCount;
-  if (0x11 < uVar7) {
+  uVar1 = PartyClient_CountMembersEvenIfInactive(param_2);
+  uVar4 = param_2->subpartyCount;
+  if (0x11 < uVar4) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
                     0xb7,0,"%s\n\t(subpartyCount) = %i");
   }
-  if (uVar7 == 0) {
-    if (uVar3 != 0) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
-                      0xbc,0,"%s\n\t(memberCount) = %i");
+  if (uVar4 != 0) {
+    uVar8 = 0;
+    uVar7 = 0;
+    if (uVar4 != 0) {
+      do {
+        uVar2 = Party_CountActivePlayersInSubparty(param_2,uVar7);
+        uVar8 = uVar2 + uVar8;
+        if (0x12 < uVar2) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp"
+                          ,200,0,"%s\n\t(subPartyActiveCount) = %i");
+        }
+        param_1->subPartyList[uVar7] = (uchar)uVar2;
+        uVar7 = uVar7 + 1;
+      } while (uVar7 < uVar4);
     }
-    PartyAtomic_FillSubPartyInfoForLocalClients(pPVar2);
-    __restgprlr_20();
+    if (0x12 < uVar1) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
+                      0xcc,0,"%s\n\t(memberCount) = %i");
+    }
+    if (0x12 < uVar4) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
+                      0xcd,0,"%s\n\t(subpartyCount) = %i");
+    }
+    param_1->memberCount = (uchar)uVar1;
+    param_1->subPartyCount = (uchar)uVar4;
+    if (uVar8 != uVar1) {
+      uVar4 = 0;
+      uVar8 = 0;
+      if (param_2->subpartyCount != 0) {
+        iVar6 = 0x5fe;
+        piVar5 = &param_2->subparties[0].count;
+        do {
+          iVar3 = 0;
+          if (0 < *piVar5) {
+            do {
+              uVar7 = *(uint *)(param_2->partyMembers[0].info.privatePartyId.ab +
+                               (iVar6 + iVar3) * 4 + -0x5c);
+              if (0x11 < uVar7) {
+                MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp"
+                                ,0xe0,0,
+                                "memberIndex doesn\'t index MAX_CLIENTS\n\t%i not in [0, %i)");
+              }
+              if (4 < param_2->partyMembers[uVar7].status) {
+                Party_GetMemberName(param_2,uVar7);
+                Com_PrintError(0x10," subparty %i: player \'%s\' (%llx)\n");
+              }
+              iVar3 = iVar3 + 1;
+            } while (iVar3 < *piVar5);
+          }
+          iVar3 = Party_CountActivePlayersInSubparty(param_2,uVar8);
+          uVar4 = iVar3 + uVar4;
+          Com_PrintError(0x10,"%i players in subparty %i\n");
+          uVar8 = uVar8 + 1;
+          iVar6 = iVar6 + 0x16;
+          piVar5 = piVar5 + 0x16;
+        } while (uVar8 < param_2->subpartyCount);
+      }
+      if (uVar4 != uVar1) {
+        va("There are %i players in subparties, but %i total players");
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp"
+                        ,0xe9,0,"%s\n\t%s");
+      }
+    }
     return;
   }
-  uVar11 = 0;
-  uVar10 = 0;
-  if (uVar7 != 0) {
-    do {
-      uVar4 = Party_CountActivePlayersInSubparty(pPVar1,uVar10);
-      uVar11 = uVar4 + uVar11;
-      if (0x12 < uVar4) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp"
-                        ,200,0,"%s\n\t(subPartyActiveCount) = %i");
-      }
-      pPVar2->subPartyList[uVar10] = (uchar)uVar4;
-      uVar10 = uVar10 + 1;
-    } while (uVar10 < uVar7);
-  }
-  if (0x12 < uVar3) {
+  if (uVar1 != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
-                    0xcc,0,"%s\n\t(memberCount) = %i");
+                    0xbc,0,"%s\n\t(memberCount) = %i");
   }
-  if (0x12 < uVar7) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
-                    0xcd,0,"%s\n\t(subpartyCount) = %i");
-  }
-  pPVar2->memberCount = (uchar)uVar3;
-  pPVar2->subPartyCount = (uchar)uVar7;
-  if (uVar11 != uVar3) {
-    uVar7 = 0;
-    uVar11 = 0;
-    if (pPVar1->subpartyCount != 0) {
-      iVar9 = 0x5fe;
-      lVar8 = uVar6 + 0x1840;
-      do {
-        iVar5 = 0;
-        if (0 < *(int *)lVar8) {
-          do {
-            uVar10 = *(uint *)(pPVar1->partyMembers[0].info.privatePartyId.ab +
-                              (iVar9 + iVar5) * 4 + -0x5c);
-            if (0x11 < uVar10) {
-              MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp"
-                              ,0xe0,0,"memberIndex doesn\'t index MAX_CLIENTS\n\t%i not in [0, %i)")
-              ;
-            }
-            if (4 < pPVar1->partyMembers[uVar10].status) {
-              Party_GetMemberName(pPVar1,uVar10);
-              Com_PrintError(0x10," subparty %i: player \'%s\' (%llx)\n");
-            }
-            iVar5 = iVar5 + 1;
-          } while (iVar5 < *(int *)lVar8);
-        }
-        iVar5 = Party_CountActivePlayersInSubparty(pPVar1,uVar11);
-        uVar7 = iVar5 + uVar7;
-        Com_PrintError(0x10,"%i players in subparty %i\n");
-        uVar11 = uVar11 + 1;
-        iVar9 = iVar9 + 0x16;
-        lVar8 = lVar8 + 0x58;
-      } while (uVar11 < pPVar1->subpartyCount);
-    }
-    if (uVar7 != uVar3) {
-      va("There are %i players in subparties, but %i total players");
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
-                      0xe9,0,"%s\n\t%s");
-    }
-  }
-  __restgprlr_20();
+  PartyAtomic_FillSubPartyInfoForLocalClients(param_1);
   return;
 }
 
@@ -389,6 +367,8 @@ int PartyAtomic_FixupAddressForPotentialHost(PartyJoinInfo *param_1,netadr_t *pa
 
 // 8238C550  PartyAtomic_PacketIsFromPotentialHost  (client_mp/partyjoining.cpp:260)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
@@ -396,151 +376,135 @@ int PartyAtomic_PacketIsFromPotentialHost
               (PartyJoinInfo *param_1,PartyType param_2,netadr_t *param_3)
 
 {
-  PartyJoinInfo *pPVar1;
-  int iVar2;
-  ulonglong uVar3;
-  netadr_t *pnVar4;
+  int iVar1;
   netadr_t in_stack_ffffff88;
   netadr_t in_stack_ffffff98;
   
-  uVar3 = (ulonglong)(int)param_3;
-  pPVar1 = (PartyJoinInfo *)__savegprlr_27(param_1);
-  pnVar4 = (netadr_t *)uVar3;
-  if (pPVar1 == (PartyJoinInfo *)0x0) {
+  if (param_1 == (PartyJoinInfo *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
                     0x105,0,"%s");
   }
-  if (pPVar1->session == (SessionData *)0x0) {
+  if (param_1->session == (SessionData *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
                     0x106,0,"%s");
   }
-  if ((uVar3 & 0xffffffff) == 0) {
+  if (param_3 == (netadr_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
                     0x107,0,"%s");
   }
-  if ((pPVar1->state != PARTYJOIN_INACTIVE) &&
-     ((pPVar1->partyType == ANY_PARTY_ID || (pPVar1->partyType == param_2)))) {
-    iVar2 = NET_CompareAdr(in_stack_ffffff88,in_stack_ffffff98);
-    if ((iVar2 == 0) &&
-       (iVar2 = NET_XnAddrAndNetAddrAreSamePerson
-                          (&(pPVar1->session->dyn).sessionInfo.hostAddress,pnVar4), iVar2 == 0)) {
-      iVar2 = PartyAtomic_FixupAddressForPotentialHost(pPVar1,pnVar4);
-      iVar2 = __restgprlr_27(iVar2 != 0);
-      return iVar2;
+  if ((param_1->state != PARTYJOIN_INACTIVE) &&
+     ((param_1->partyType == ANY_PARTY_ID || (param_1->partyType == param_2)))) {
+    iVar1 = NET_CompareAdr(in_stack_ffffff88,in_stack_ffffff98);
+    if ((iVar1 == 0) &&
+       (iVar1 = NET_XnAddrAndNetAddrAreSamePerson
+                          (&(param_1->session->dyn).sessionInfo.hostAddress,param_3), iVar1 == 0)) {
+      iVar1 = PartyAtomic_FixupAddressForPotentialHost(param_1,param_3);
+      return (uint)(iVar1 != 0);
     }
-    iVar2 = __restgprlr_27(1);
-    return iVar2;
+    return 1;
   }
-  iVar2 = __restgprlr_27(0);
-  return iVar2;
+  return 0;
 }
 
 
 // 8238C670  PartyAtomic_PacketIsFromJoiningHost  (client_mp/partyjoining.cpp:285)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 int PartyAtomic_PacketIsFromJoiningHost(PartyJoinInfo *param_1,PartyType param_2,netadr_t *param_3)
 
 {
-  PartyJoinInfo *pPVar1;
-  int iVar2;
-  ulonglong uVar3;
+  int iVar1;
   
-  uVar3 = (ulonglong)(int)param_3;
-  pPVar1 = (PartyJoinInfo *)__savegprlr_27(param_1);
-  if (pPVar1 == (PartyJoinInfo *)0x0) {
+  if (param_1 == (PartyJoinInfo *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
                     0x11e,0,"%s");
   }
-  if ((uVar3 & 0xffffffff) == 0) {
+  if (param_3 == (netadr_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
                     0x11f,0,"%s");
   }
-  if ((pPVar1->state != PARTYJOIN_COMMIT) && (pPVar1->state != PARTYJOIN_COMMITTING)) {
-    iVar2 = __restgprlr_27(0);
-    return iVar2;
+  if ((param_1->state != PARTYJOIN_COMMIT) && (param_1->state != PARTYJOIN_COMMITTING)) {
+    return 0;
   }
-  iVar2 = PartyAtomic_PacketIsFromPotentialHost(pPVar1,param_2,(netadr_t *)uVar3);
-  iVar2 = __restgprlr_27(iVar2);
-  return iVar2;
+  iVar1 = PartyAtomic_PacketIsFromPotentialHost(param_1,param_2,param_3);
+  return iVar1;
 }
 
 
 // 8238C718  PartyAtomicJoin_GetMainActiveClient  (client_mp/partyjoining.cpp:298)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 PartyActiveClient PartyAtomicJoin_GetMainActiveClient(PartyJoinInfo *param_1,uint param_2)
 
 {
-  int *piVar2;
   PartyActiveClient PVar1;
+  PartyActiveClient PVar2;
   LocalClientNum_t LVar3;
-  ulonglong uVar4;
   
-  uVar4 = (ulonglong)(int)param_2;
-  piVar2 = (int *)__savegprlr_27(param_1);
-  if (piVar2 == (int *)0x0) {
+  if (param_1 == (PartyJoinInfo *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
                     0x12d,0,"%s");
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
                     0x57,0,"%s");
   }
-  if (*piVar2 != 0) {
-    if ((uVar4 & 0xffffffff) != (ulonglong)(uint)piVar2[0xb6]) {
+  if (param_1->state != PARTYJOIN_INACTIVE) {
+    if (param_2 != (param_1->splitscreenData).mainControllerIndex) {
       Com_Printf(0x19,
                  "PartyAtomicJoin GetMainActiveClient - Swapping controller to use the main controller %i instead of %i.\n"
                 );
     }
-    PVar1 = (PartyActiveClient)__restgprlr_27(*(undefined8 *)(piVar2 + 0xb5));
-    return PVar1;
+    PVar2.localClientNum = (param_1->splitscreenData).mainClientNum;
+    PVar2.localControllerIndex = (param_1->splitscreenData).mainControllerIndex;
+    return PVar2;
   }
-  LVar3 = CL_LocalClientNumFromControllerIndex((int)uVar4);
-  PVar1 = (PartyActiveClient)__restgprlr_27(CONCAT44(LVar3,(int)uVar4));
+  LVar3 = CL_LocalClientNumFromControllerIndex(param_2);
+  PVar1.localClientNum = LVar3;
+  PVar1.localControllerIndex = param_2;
   return PVar1;
 }
 
 
 // 8238A7C0  PartyAtomicJoin_GetSecondaryActiveClient  (client_mp/partyjoining.cpp:323)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 int PartyAtomicJoin_GetSecondaryActiveClient(PartyJoinInfo *param_1,PartyActiveClient *param_2)
 
 {
-  int iVar1;
-  ulonglong uVar2;
-  
-  uVar2 = (ulonglong)(int)param_2;
-  iVar1 = __savegprlr_28(param_1);
-  if (iVar1 == 0) {
+  if (param_1 == (PartyJoinInfo *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
                     0x144,0,"%s");
   }
-  if ((uVar2 & 0xffffffff) == 0) {
+  if (param_2 == (PartyActiveClient *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
                     0x145,0,"%s");
   }
-  if (*(int *)(iVar1 + 0x2dc) != 0) {
-    if (*(int *)(iVar1 + 0x2e8) == *(int *)(iVar1 + 0x2d8)) {
+  if ((param_1->splitscreenData).otherClientActive != 0) {
+    if ((param_1->splitscreenData).otherControllerIndex ==
+        (param_1->splitscreenData).mainControllerIndex) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
                       0x14a,0,"%s\n\t(partyJoinInfo->splitscreenData.mainControllerIndex) = %i");
     }
-    if (*(int *)(iVar1 + 0x2e4) == *(int *)(iVar1 + 0x2d4)) {
+    if ((param_1->splitscreenData).otherClientNum == (param_1->splitscreenData).mainClientNum) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
                       0x14b,0,"%s\n\t(partyJoinInfo->splitscreenData.mainClientNum) = %i");
     }
-    ((undefined4 *)uVar2)[1] = *(undefined4 *)(iVar1 + 0x2e8);
-    *(undefined4 *)uVar2 = *(undefined4 *)(iVar1 + 0x2e4);
-    iVar1 = __restgprlr_28(1);
-    return iVar1;
+    param_2->localControllerIndex = (param_1->splitscreenData).otherControllerIndex;
+    param_2->localClientNum = (param_1->splitscreenData).otherClientNum;
+    return 1;
   }
-  iVar1 = __restgprlr_28(0);
-  return iVar1;
+  return 0;
 }
 
 
@@ -563,39 +527,36 @@ UI_LiveDialogState PartyAtmoic_GetDesiredDialog(void)
 
 // 8238A8C0  PartyAtomic_AssertNoPendingMemberMessages  (client_mp/partyjoining.cpp:371)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void PartyAtomic_AssertNoPendingMemberMessages(PartyJoinInfo *param_1)
 
 {
-  int iVar1;
-  RMsgSendStatus RVar2;
-  longlong lVar3;
-  uint *puVar4;
+  RMsgSendStatus RVar1;
+  longlong lVar2;
+  uint *puVar3;
   
-  iVar1 = __savegprlr_28(param_1);
-  if (iVar1 == 0) {
+  if (param_1 == (PartyJoinInfo *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
                     0x178,0,"%s");
   }
-  puVar4 = (uint *)(iVar1 + 0x88);
-  lVar3 = 0x12;
+  puVar3 = &param_1->memberJoinInfo[0].responseMessageHandle;
+  lVar2 = 0x12;
   do {
-    if (puVar4[-6] != 0) {
-      RVar2 = RMsg_GetSendStatusFromHandle(*puVar4);
-      if (RVar2 != RMSG_STATUS_INACTIVE) {
-        RMsg_GetSendStatusFromHandle(*puVar4);
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp"
-                        ,0x180,0,
-                        "RMsg_GetSendStatusFromHandle( memberJoinInfo->responseMessageHandle ) == RMSG_STATUS_INACTIVE\n\t%i, %i"
-                       );
-      }
+    if ((((PartyMemberJoinInfo *)(puVar3 + -6))->active != 0) &&
+       (RVar1 = RMsg_GetSendStatusFromHandle(*puVar3), RVar1 != RMSG_STATUS_INACTIVE)) {
+      RMsg_GetSendStatusFromHandle(*puVar3);
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
+                      0x180,0,
+                      "RMsg_GetSendStatusFromHandle( memberJoinInfo->responseMessageHandle ) == RMSG_STATUS_INACTIVE\n\t%i, %i"
+                     );
     }
-    lVar3 = lVar3 + -1;
-    puVar4 = puVar4 + 8;
-  } while (lVar3 != 0);
-  __restgprlr_28();
+    lVar2 = lVar2 + -1;
+    puVar3 = puVar3 + 8;
+  } while (lVar2 != 0);
   return;
 }
 
@@ -630,43 +591,42 @@ void PartyAtomic_CancelMemberResponseMessage(PartyMemberJoinInfo *param_1)
 
 // 8238AA28  PartyAtomic_CancelAllMemberMessages  (client_mp/partyjoining.cpp:402)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void PartyAtomic_CancelAllMemberMessages(PartyJoinInfo *param_1)
 
 {
-  int iVar1;
-  RMsgSendStatus RVar2;
-  longlong lVar3;
-  uint *puVar4;
+  RMsgSendStatus RVar1;
+  longlong lVar2;
+  uint *puVar3;
   
-  iVar1 = __savegprlr_27(param_1);
-  if (iVar1 == 0) {
+  if (param_1 == (PartyJoinInfo *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
                     0x196,0,"%s");
   }
   Com_PrintWarning(0xe,"PartyJoinAtomic: Canceling all queued member messages\n");
-  puVar4 = (uint *)(iVar1 + 0x88);
-  lVar3 = 0x12;
+  puVar3 = &param_1->memberJoinInfo[0].responseMessageHandle;
+  lVar2 = 0x12;
   do {
-    if (puVar4[-6] != 0) {
+    if (((PartyMemberJoinInfo *)(puVar3 + -6))->active != 0) {
       Com_PrintWarning(0xe,"PartyJoinAtomic: Canceling message for member %llx\n");
-      RMsg_MarkHandleMsgReceived(*puVar4);
-      RMsg_ReleaseHandle(puVar4);
-      RVar2 = RMsg_GetSendStatusFromHandle(*puVar4);
-      if (RVar2 != RMSG_STATUS_INACTIVE) {
-        RMsg_GetSendStatusFromHandle(*puVar4);
+      RMsg_MarkHandleMsgReceived(*puVar3);
+      RMsg_ReleaseHandle(puVar3);
+      RVar1 = RMsg_GetSendStatusFromHandle(*puVar3);
+      if (RVar1 != RMSG_STATUS_INACTIVE) {
+        RMsg_GetSendStatusFromHandle(*puVar3);
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp"
                         ,0x18d,0,
                         "RMsg_GetSendStatusFromHandle( memberJoinInfo->responseMessageHandle ) == RMSG_STATUS_INACTIVE\n\t%i, %i"
                        );
       }
     }
-    lVar3 = lVar3 + -1;
-    puVar4 = puVar4 + 8;
-  } while (lVar3 != 0);
-  __restgprlr_27();
+    lVar2 = lVar2 + -1;
+    puVar3 = puVar3 + 8;
+  } while (lVar2 != 0);
   return;
 }
 
@@ -723,59 +683,55 @@ void PartyAtomic_SendDisconnectMessage(PartyJoinInfo *param_1)
 
 // 8238C938  PartyAtomic_DisconnectFromJoiningSession  (client_mp/partyjoining.cpp:451)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void PartyAtomic_DisconnectFromJoiningSession(PartyJoinInfo *param_1)
 
 {
-  PartyJoinInfo *pPVar1;
-  
-  pPVar1 = (PartyJoinInfo *)__savegprlr_28(param_1);
-  if (pPVar1 == (PartyJoinInfo *)0x0) {
+  if (param_1 == (PartyJoinInfo *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
                     0x1c4,0,"%s");
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
                     0x57,0,"%s");
   }
-  if (pPVar1->state == PARTYJOIN_INACTIVE) {
+  if (param_1->state == PARTYJOIN_INACTIVE) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
                     0x1c5,0,"%s");
   }
-  PartyAtomic_SendDisconnectMessage(pPVar1);
-  Session_DeleteSessionDelayed(pPVar1->session);
-  Session_ClearSession(pPVar1->session);
-  __restgprlr_28();
+  PartyAtomic_SendDisconnectMessage(param_1);
+  Session_DeleteSessionDelayed(param_1->session);
+  Session_ClearSession(param_1->session);
   return;
 }
 
 
 // 82390378  PartyAtomic_AbortJoinAttempt  (client_mp/partyjoining.cpp:464)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void PartyAtomic_AbortJoinAttempt(PartyJoinInfo *param_1)
 
 {
-  PartyJoinInfo *pPVar1;
-  
-  pPVar1 = (PartyJoinInfo *)__savegprlr_28(param_1);
-  if (pPVar1 == (PartyJoinInfo *)0x0) {
+  if (param_1 == (PartyJoinInfo *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
                     0x1d1,0,"%s");
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
                     0x57,0,"%s");
   }
-  if (pPVar1->state != PARTYJOIN_INACTIVE) {
+  if (param_1->state != PARTYJOIN_INACTIVE) {
     Com_Printf(0x19,"PartyJoinAtomic: Canceling since we got an abort request\n");
-    PartyAtomic_CancelAllMemberMessages(pPVar1);
-    PartyAtomic_DisconnectFromJoiningSession(pPVar1);
-    PartyAtomic_SendAbortNotice(pPVar1);
-    PartyAtomic_AssertNoPendingMemberMessages(pPVar1);
+    PartyAtomic_CancelAllMemberMessages(param_1);
+    PartyAtomic_DisconnectFromJoiningSession(param_1);
+    PartyAtomic_SendAbortNotice(param_1);
+    PartyAtomic_AssertNoPendingMemberMessages(param_1);
     memset();
   }
-  __restgprlr_28();
   return;
 }
 
@@ -841,175 +797,156 @@ int PartyAtomicClient_ShouldHandleJoinFailed(PartyJoinInfo *param_1)
 
 // 8238CAA8  PartyAtomic_JoinAttemptFailed  (client_mp/partyjoining.cpp:519)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void PartyAtomic_JoinAttemptFailed(PartyJoinInfo *param_1,char *param_2)
 
 {
-  int *piVar1;
-  ulonglong uVar2;
-  
-  uVar2 = (ulonglong)(int)param_2;
-  piVar1 = (int *)__savegprlr_28(param_1);
-  if ((uVar2 & 0xffffffff) == 0) {
+  if (param_2 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
                     0x208,0,"%s");
   }
-  if (piVar1 == (int *)0x0) {
+  if (param_1 == (PartyJoinInfo *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
                     0x209,0,"%s");
   }
-  if (*piVar1 == 0) {
+  if (param_1->state == PARTYJOIN_INACTIVE) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
                     0x20a,0,"%s");
   }
   Sys_Milliseconds();
   Com_Printf(0x19,"PartyJoinAtomic: Join attempt failed - Reason: %s - Time: %i\n");
-  if (piVar1[0x878] != 0) {
+  if (param_1->errorMessage != (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
                     0x20e,0,"%s\n\t(partyJoinInfo->errorMessage) = %s");
   }
-  piVar1[0x878] = (int)uVar2;
-  __restgprlr_28();
+  param_1->errorMessage = param_2;
   return;
 }
 
 
 // 8238CB90  PartyAtomic_HasErrorOccured  (client_mp/partyjoining.cpp:532)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 int PartyAtomic_HasErrorOccured(PartyJoinInfo *param_1)
 
 {
-  int *piVar1;
-  int iVar2;
-  
-  piVar1 = (int *)__savegprlr_29(param_1);
-  if (piVar1 == (int *)0x0) {
+  if (param_1 == (PartyJoinInfo *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
                     0x215,0,"%s");
   }
-  if (*piVar1 == 0) {
+  if (param_1->state == PARTYJOIN_INACTIVE) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
                     0x216,0,"%s");
   }
-  iVar2 = __restgprlr_29(piVar1[0x878] != 0);
-  return iVar2;
+  return (uint)(param_1->errorMessage != (char *)0x0);
 }
 
 
 // 8238AB08  PartyAtomicClient_CopyPartyState  (client_mp/partyjoining.cpp:546)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 void PartyAtomicClient_CopyPartyState(PartyStateData *param_1,PartyStateData *param_2)
 
 {
-  int iVar1;
-  ulonglong uVar2;
-  uint *puVar3;
-  longlong lVar4;
-  longlong lVar5;
+  uchar *puVar1;
+  int iVar2;
+  uchar (*pauVar3) [1264];
   
-  uVar2 = (ulonglong)(int)param_2;
-  iVar1 = __savegprlr_28(param_1);
-  if (iVar1 == 0) {
+  if (param_1 == (PartyStateData *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
                     0x225,0,"%s");
   }
-  if ((uVar2 & 0xffffffff) == 0) {
+  if (param_2 == (PartyStateData *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
                     0x226,0,"%s");
   }
   memcpy();
-  puVar3 = (uint *)uVar2;
-  if (5 < *puVar3) {
+  if (5 < (uint)param_2->packetCount) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
                     0x22b,0,
                     "destPartyStateData->packetCount doesn\'t index MAX_PARTYSTATE_PACKETS\n\t%i not in [0, %i)"
                    );
   }
-  iVar1 = 0;
-  if (0 < (int)*puVar3) {
-    lVar4 = uVar2 - 8;
-    lVar5 = uVar2 + 0x124;
+  iVar2 = 0;
+  if (0 < param_2->packetCount) {
+    puVar1 = param_2[-1].partMsgBufs[5] + 0x4e8;
+    pauVar3 = param_2->partMsgBufs;
     do {
-      iVar1 = iVar1 + 1;
-      lVar4 = lVar4 + 0x2c;
-      *(undefined4 *)lVar4 = (int)lVar5;
-      lVar5 = lVar5 + 0x4f0;
-    } while (iVar1 < (int)*puVar3);
+      iVar2 = iVar2 + 1;
+      puVar1 = puVar1 + 0x2c;
+      *(uchar (**) [1264])puVar1 = pauVar3;
+      pauVar3 = pauVar3 + 1;
+    } while (iVar2 < param_2->packetCount);
   }
-  __restgprlr_28();
   return;
 }
 
 
 // 8238ABE8  PartyAtomicClient_MoveJoinSessionToParty  (client_mp/partyjoining.cpp:562)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void PartyAtomicClient_MoveJoinSessionToParty(PartyData *param_1,PartyJoinInfo *param_2)
 
 {
-  int iVar1;
-  int iVar2;
-  ulonglong uVar3;
-  
-  uVar3 = (ulonglong)(int)param_2;
-  iVar2 = __savegprlr_28(param_1);
-  if (iVar2 == 0) {
+  if (param_1 == (PartyData *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
                     0x233,0,"%s");
   }
-  if ((uVar3 & 0xffffffff) == 0) {
+  if (param_2 == (PartyJoinInfo *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
                     0x234,0,"%s");
   }
-  iVar1 = (int)uVar3;
-  if (*(int *)(iVar1 + 0x4c) == 0) {
+  if (param_2->session == (SessionData *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
                     0x236,0,"%s");
   }
-  if (*(int *)(*(int *)(iVar1 + 0x4c) + 0x10) == 0) {
+  if ((param_2->session->dyn).sessionHandle == (void *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
                     0x237,0,"%s");
   }
-  Session_MoveSession(*(SessionData **)(iVar1 + 0x4c),*(SessionData **)(iVar2 + 4));
-  Session_ClearSession(*(SessionData **)(iVar1 + 0x4c));
-  __restgprlr_28();
+  Session_MoveSession(param_2->session,param_1->searchSession);
+  Session_ClearSession(param_2->session);
   return;
 }
 
 
 // 8238ACC8  PartyAtomicClient_SetUpPartyHostFromJoinInfo  (client_mp/partyjoining.cpp:575)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void PartyAtomicClient_SetUpPartyHostFromJoinInfo(PartyData *param_1,PartyJoinInfo *param_2)
 
 {
-  PartyData *pPVar1;
-  int iVar2;
-  ulonglong uVar3;
-  longlong lVar4;
-  longlong lVar5;
-  byte *pbVar6;
+  int iVar1;
+  longlong lVar2;
+  _XSESSION_INFO *p_Var3;
+  byte *pbVar4;
   netadr_t in_stack_ffffff78;
   byte local_40 [64];
   
-  uVar3 = (ulonglong)(int)param_2;
-  pPVar1 = (PartyData *)__savegprlr_27(param_1);
-  if (pPVar1 == (PartyData *)0x0) {
+  if (param_1 == (PartyData *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
                     0x240,0,"%s");
   }
-  if ((uVar3 & 0xffffffff) == 0) {
+  if (param_2 == (PartyJoinInfo *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
                     0x241,0,"%s");
   }
@@ -1026,75 +963,69 @@ void PartyAtomicClient_SetUpPartyHostFromJoinInfo(PartyData *param_1,PartyJoinIn
                     ,0x1d3,0,"%s");
   }
   if ((debug_onlinePlayEvenIfDown->current).enabled == false) {
-    pbVar6 = local_40;
-    lVar5 = uVar3 + 0x10;
+    pbVar4 = local_40;
+    p_Var3 = &param_2->sessionInfo;
     do {
-      lVar4 = (ulonglong)*pbVar6 - (ulonglong)*(byte *)lVar5;
-      if (lVar4 != 0) break;
-      pbVar6 = pbVar6 + 1;
-      lVar5 = lVar5 + 1;
-    } while (pbVar6 != local_40 + 8);
-    if ((int)lVar4 == 0) {
+      lVar2 = (ulonglong)*pbVar4 - (ulonglong)(p_Var3->sessionID).ab[0];
+      if (lVar2 != 0) break;
+      pbVar4 = pbVar4 + 1;
+      p_Var3 = (_XSESSION_INFO *)((p_Var3->sessionID).ab + 1);
+    } while (pbVar4 != local_40 + 8);
+    if ((int)lVar2 == 0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
                       0x247,0,"%s");
     }
   }
   NET_AdrToString(in_stack_ffffff78);
   Com_Printf(0xe,"PartyJoin - SetUpPartyFromJoinInfo - host addr is %s\n");
-  iVar2 = (int)uVar3;
-  if (*(int *)(iVar2 + 0x60) != 4) {
+  if ((param_2->addr).localNetID != NS_MAXCLIENTS) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
                     0x24e,0,"partyJoinInfo->addr.localNetID == NS_SERVER\n\t%i, %i");
   }
   memset();
-  Party_UpdateHostAddr(pPVar1,in_stack_ffffff78);
-  (pPVar1->currentHost).numPublicSlots = *(int *)(iVar2 + 700);
-  (pPVar1->currentHost).numPrivateSlots = *(int *)(iVar2 + 0x2b8);
-  iVar2 = Party_HostNum(pPVar1);
-  (pPVar1->currentHost).hostNum = iVar2;
-  iVar2 = Sys_Milliseconds();
-  (pPVar1->currentHost).lastPacketTime = iVar2;
-  __restgprlr_27();
+  Party_UpdateHostAddr(param_1,in_stack_ffffff78);
+  (param_1->currentHost).numPublicSlots = param_2->numPublicSlots;
+  (param_1->currentHost).numPrivateSlots = param_2->numPrivateSlots;
+  iVar1 = Party_HostNum(param_1);
+  (param_1->currentHost).hostNum = iVar1;
+  iVar1 = Sys_Milliseconds();
+  (param_1->currentHost).lastPacketTime = iVar1;
   return;
 }
 
 
 // 8238CC10  PartyAtomic_ReturnToPartyScreen  (client_mp/partyjoining.cpp:605)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void PartyAtomic_ReturnToPartyScreen(PartyJoinInfo *param_1,char *param_2)
 
 {
-  PartyJoinInfo *pPVar2;
-  PartyData *pPVar3;
+  PartyData *pPVar2;
   PartyActiveClient PVar1;
-  int iVar4;
-  ulonglong uVar5;
   LocalClientNum_t local_30;
   uint uStack_2c;
   
-  uVar5 = (ulonglong)(int)param_2;
-  pPVar2 = (PartyJoinInfo *)__savegprlr_28(param_1);
-  if (pPVar2 == (PartyJoinInfo *)0x0) {
+  if (param_1 == (PartyJoinInfo *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
                     0x260,0,"%s");
   }
-  if ((uVar5 & 0xffffffff) == 0) {
+  if (param_2 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
                     0x261,0,"%s");
   }
-  pPVar3 = Lobby_GetPartyData();
-  Party_StopParty(pPVar3);
+  pPVar2 = Lobby_GetPartyData();
+  Party_StopParty(pPVar2);
   Party_StopParty(&g_partyData);
-  PVar1 = PartyAtomicJoin_GetMainActiveClient(pPVar2,pPVar2->controllerIndex);
+  PVar1 = PartyAtomicJoin_GetMainActiveClient(param_1,param_1->controllerIndex);
   uStack_2c = PVar1.localControllerIndex;
   local_30 = PVar1.localClientNum;
   Live_StartPrivateParty(local_30,uStack_2c);
-  Com_SetErrorMessage((char *)uVar5);
-  iVar4 = UI_SetActiveMenu(LOCAL_CLIENT_0,9);
-  __restgprlr_28(iVar4);
+  Com_SetErrorMessage(param_2);
+  UI_SetActiveMenu(LOCAL_CLIENT_0,9);
   return;
 }
 
@@ -1141,67 +1072,67 @@ LAB_8238af30:
 
 // 8238AF50  PartyAtomicClient_SetSplitscreenDataForJoiningParty  (client_mp/partyjoining.cpp:658)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void PartyAtomicClient_SetSplitscreenDataForJoiningParty(PartyData *param_1,PartyJoinInfo *param_2)
 
 {
-  int iVar1;
-  ulonglong uVar2;
-  longlong lVar3;
-  longlong lVar4;
-  undefined4 *puVar5;
-  byte *pbVar6;
+  longlong lVar1;
+  PartySplitscreenData *pPVar2;
+  PartySplitscreenData *pPVar3;
   
-  uVar2 = (ulonglong)(int)param_2;
-  iVar1 = __savegprlr_28(param_1);
-  if (iVar1 == 0) {
+  if (param_1 == (PartyData *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
                     0x293,0,"%s");
   }
-  if ((uVar2 & 0xffffffff) == 0) {
+  if (param_2 == (PartyJoinInfo *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
                     0x294,0,"%s");
   }
-  if (*(int *)(iVar1 + 0x1ef4) != 0) {
-    if (*(int *)(iVar1 + 0x1ec0) != *(int *)((int)uVar2 + 0x2dc)) {
+  if (param_1->inParty != 0) {
+    if ((param_1->splitscreenData).otherClientActive != (param_2->splitscreenData).otherClientActive
+       ) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
                       0x29a,0,
                       "party->splitscreenData.otherClientActive == partyJoinInfo->splitscreenData.otherClientActive\n\t%i, %i"
                      );
     }
-    if (*(int *)(iVar1 + 0x1ec0) != 0) {
-      pbVar6 = (byte *)(iVar1 + 0x1eb8);
-      lVar4 = uVar2 + 0x2d4;
+    if ((param_1->splitscreenData).otherClientActive != 0) {
+      pPVar2 = &param_1->splitscreenData;
+      pPVar3 = &param_2->splitscreenData;
       do {
-        lVar3 = (ulonglong)*pbVar6 - (ulonglong)*(byte *)lVar4;
-        if (lVar3 != 0) break;
-        pbVar6 = pbVar6 + 1;
-        lVar4 = lVar4 + 1;
-      } while (pbVar6 != (byte *)(iVar1 + 0x1ed0));
-      if ((int)lVar3 != 0) {
+        lVar1 = (ulonglong)(byte)*(undefined1 *)&pPVar2->mainClientNum -
+                (ulonglong)(byte)*(undefined1 *)&pPVar3->mainClientNum;
+        if (lVar1 != 0) break;
+        pPVar2 = (PartySplitscreenData *)((int)&pPVar2->mainClientNum + 1);
+        pPVar3 = (PartySplitscreenData *)((int)&pPVar3->mainClientNum + 1);
+      } while (pPVar2 != (PartySplitscreenData *)&param_1->nextSessionSearchTime);
+      if ((int)lVar1 != 0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp"
                         ,0x29c,0,"%s");
       }
     }
   }
-  lVar4 = uVar2 + 0x2d0;
-  puVar5 = (undefined4 *)(iVar1 + 0x1eb4);
-  lVar3 = 6;
+  pPVar3 = (PartySplitscreenData *)(param_2->subPartyList + 0xe);
+  pPVar2 = (PartySplitscreenData *)&param_1->partyId;
+  lVar1 = 6;
   do {
-    lVar4 = lVar4 + 4;
-    puVar5 = puVar5 + 1;
-    *puVar5 = *(undefined4 *)lVar4;
-    lVar3 = lVar3 + -1;
-  } while (lVar3 != 0);
-  __restgprlr_28();
+    pPVar3 = (PartySplitscreenData *)&pPVar3->mainControllerIndex;
+    pPVar2 = (PartySplitscreenData *)&pPVar2->mainControllerIndex;
+    pPVar2->mainClientNum = pPVar3->mainClientNum;
+    lVar1 = lVar1 + -1;
+  } while (lVar1 != 0);
   return;
 }
 
 
 // 8238CCC8  PartyAtomic_MovePotentialStateToActiveState  (client_mp/partyjoining.cpp:678)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
@@ -1209,223 +1140,203 @@ void PartyAtomic_MovePotentialStateToActiveState(PartyJoinInfo *param_1)
 
 {
   uint uVar1;
-  PartyJoinInfo *pPVar2;
+  PartyData *pPVar2;
   PartyData *pPVar3;
-  PartyData *pPVar4;
   netadr_t in_stack_ffffff88;
   PartyActiveClient local_30 [6];
   
-  pPVar2 = (PartyJoinInfo *)__savegprlr_29(param_1);
-  if (((pPVar2->partyType != GAME_LOBBY_ID) && (pPVar2->joinType != PJT_INVITE)) &&
-     (pPVar2->joinType != PJT_PRESENCE)) {
+  if (((param_1->partyType != GAME_LOBBY_ID) && (param_1->joinType != PJT_INVITE)) &&
+     (param_1->joinType != PJT_PRESENCE)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
                     0x2aa,0,"%s\n\t(partyJoinInfo->joinType) = %i");
   }
-  if (pPVar2->partyType == PRIVATE_PARTY_ID) {
-    pPVar4 = &g_partyData;
-    pPVar3 = Lobby_GetPartyData();
+  if (param_1->partyType == PRIVATE_PARTY_ID) {
+    pPVar3 = &g_partyData;
+    pPVar2 = Lobby_GetPartyData();
   }
   else {
-    if (pPVar2->partyType != GAME_LOBBY_ID) {
+    if (param_1->partyType != GAME_LOBBY_ID) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
                       0x2b3,0,"%s");
     }
-    pPVar4 = Lobby_GetPartyData();
-    pPVar3 = &g_partyData;
+    pPVar3 = Lobby_GetPartyData();
+    pPVar2 = &g_partyData;
     Voice_DisableLocalMics(g_partyData.session);
   }
   Session_ResetMinPing();
   Session_ResetFailedSearchCount();
-  PartyAtomicClient_CopyPartyState(&pPVar2->partyStateData,&pPVar4->partyStateData);
-  PartyAtomicClient_MoveJoinSessionToParty(pPVar4,pPVar2);
-  PartyAtomicClient_SetUpPartyHostFromJoinInfo(pPVar4,pPVar2);
-  PartyAtomicClient_SetSplitscreenDataForJoiningParty(pPVar4,pPVar2);
-  local_30[0] = PartyAtomicJoin_GetMainActiveClient(pPVar2,pPVar2->controllerIndex);
-  pPVar2->state = PARTYJOIN_INACTIVE;
-  PartyAtomicClient_CommitNewPartyState(pPVar4,local_30,in_stack_ffffff88);
-  if (pPVar4->inParty == 0) {
+  PartyAtomicClient_CopyPartyState(&param_1->partyStateData,&pPVar3->partyStateData);
+  PartyAtomicClient_MoveJoinSessionToParty(pPVar3,param_1);
+  PartyAtomicClient_SetUpPartyHostFromJoinInfo(pPVar3,param_1);
+  PartyAtomicClient_SetSplitscreenDataForJoiningParty(pPVar3,param_1);
+  local_30[0] = PartyAtomicJoin_GetMainActiveClient(param_1,param_1->controllerIndex);
+  param_1->state = PARTYJOIN_INACTIVE;
+  PartyAtomicClient_CommitNewPartyState(pPVar3,local_30,in_stack_ffffff88);
+  if (pPVar3->inParty == 0) {
     Com_Printf(0x19,
                "PartyJoinAtomic: There was an issue committing to the new party state, shutting down.\n"
               );
-    PartyAtomic_ReturnToPartyScreen(pPVar2,"XBOXLIVE_CANTJOINSESSION");
-    __restgprlr_29();
+    PartyAtomic_ReturnToPartyScreen(param_1,"XBOXLIVE_CANTJOINSESSION");
     return;
   }
-  uVar1 = pPVar4->lobbyFlags;
-  Party_Sleep(pPVar3);
-  Party_Awake(pPVar4,local_30[0].localControllerIndex,1);
-  pPVar4->lobbyFlags = uVar1;
-  PartyAtomic_UpdateMenuStateAfterJoin(pPVar2->partyType);
+  uVar1 = pPVar3->lobbyFlags;
+  Party_Sleep(pPVar2);
+  Party_Awake(pPVar3,local_30[0].localControllerIndex,1);
+  pPVar3->lobbyFlags = uVar1;
+  PartyAtomic_UpdateMenuStateAfterJoin(param_1->partyType);
   NET_AdrToString(in_stack_ffffff88);
   Com_Printf(0x19,"PartyJoinAtomic: Successful join attempt on %s!\n");
-  __restgprlr_29();
   return;
 }
 
 
 // 8238CE68  PartyAtomic_HandleSuccessfulJoinAttempt  (client_mp/partyjoining.cpp:742)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void PartyAtomic_HandleSuccessfulJoinAttempt(PartyJoinInfo *param_1)
 
 {
-  PartyJoinInfo *pPVar1;
-  
-  pPVar1 = (PartyJoinInfo *)__savegprlr_29(param_1);
-  if (pPVar1 == (PartyJoinInfo *)0x0) {
+  if (param_1 == (PartyJoinInfo *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
                     0x2e7,0,"%s");
   }
-  if (pPVar1->state != PARTYJOIN_SUCCESS) {
+  if (param_1->state != PARTYJOIN_SUCCESS) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
                     0x2e8,0,"%s");
   }
-  PartyAtomic_MovePotentialStateToActiveState(pPVar1);
-  if ((pPVar1->session->dyn).sessionHandle != (void *)0x0) {
+  PartyAtomic_MovePotentialStateToActiveState(param_1);
+  if ((param_1->session->dyn).sessionHandle != (void *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
                     0x2f5,0,"%s\n\t%s");
   }
-  __restgprlr_29();
   return;
 }
 
 
 // 8238B070  PartyAtomic_WriteJoinIdentifier  (client_mp/partyjoining.cpp:762)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void PartyAtomic_WriteJoinIdentifier(msg_t *param_1,PartyJoinInfo *param_2)
 
 {
-  msg_t *pmVar1;
-  ulonglong uVar2;
-  
-  uVar2 = (ulonglong)(int)param_2;
-  pmVar1 = (msg_t *)__savegprlr_28(param_1);
-  if ((uVar2 & 0xffffffff) == 0) {
+  if (param_2 == (PartyJoinInfo *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
                     0x2fb,0,"%s");
   }
-  if (pmVar1 == (msg_t *)0x0) {
+  if (param_1 == (msg_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
                     0x2fc,0,"%s");
   }
-  MSG_WriteData(pmVar1,(void *)((int)uVar2 + 0x10),8);
-  MSG_WriteData(pmVar1,(void *)((int)uVar2 + 0x30c),6);
-  __restgprlr_28();
+  MSG_WriteData(param_1,&param_2->sessionInfo,8);
+  MSG_WriteData(param_1,&param_2->challenge,6);
   return;
 }
 
 
 // 8238B108  PartyAtomic_ReadJoinIdentifier  (client_mp/partyjoining.cpp:772)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 void PartyAtomic_ReadJoinIdentifier(msg_t *param_1,PartyJoinChallenge *param_2,XNKID *param_3)
 
 {
-  msg_t *pmVar1;
-  ulonglong uVar2;
-  ulonglong uVar3;
-  
-  uVar3 = (ulonglong)(int)param_3;
-  uVar2 = (ulonglong)(int)param_2;
-  pmVar1 = (msg_t *)__savegprlr_27(param_1);
-  if (pmVar1 == (msg_t *)0x0) {
+  if (param_1 == (msg_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
                     0x305,0,"%s");
   }
-  if ((uVar2 & 0xffffffff) == 0) {
+  if (param_2 == (PartyJoinChallenge *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
                     0x306,0,"%s");
   }
-  if ((uVar3 & 0xffffffff) == 0) {
+  if (param_3 == (XNKID *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
                     0x307,0,"%s");
   }
-  MSG_ReadData(pmVar1,(void *)uVar3,8);
-  MSG_ReadData(pmVar1,(void *)uVar2,6);
-  __restgprlr_27();
+  MSG_ReadData(param_1,param_3,8);
+  MSG_ReadData(param_1,param_2,6);
   return;
 }
 
 
 // 8238B1C8  PartyAtomic_ReadAndVerifyJoinIdentifier  (client_mp/partyjoining.cpp:783)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 int PartyAtomic_ReadAndVerifyJoinIdentifier(msg_t *param_1,PartyJoinInfo *param_2)
 
 {
-  msg_t *pmVar1;
-  int iVar2;
-  ulonglong uVar3;
-  longlong lVar4;
-  longlong lVar5;
-  byte *pbVar6;
+  longlong lVar1;
+  _XSESSION_INFO *p_Var2;
+  PartyJoinChallenge *pPVar3;
+  byte *pbVar4;
   byte local_40 [6];
   byte abStack_3a [2];
   byte local_38 [8];
   byte abStack_30 [48];
   
-  uVar3 = (ulonglong)(int)param_2;
-  pmVar1 = (msg_t *)__savegprlr_28(param_1);
-  if ((uVar3 & 0xffffffff) == 0) {
+  if (param_2 == (PartyJoinInfo *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
                     0x313,0,"%s");
   }
-  if (pmVar1 == (msg_t *)0x0) {
+  if (param_1 == (msg_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
                     0x314,0,"%s");
   }
-  MSG_ReadData(pmVar1,local_38,8);
-  MSG_ReadData(pmVar1,local_40,6);
-  if (pmVar1->overflowed != 0) {
+  MSG_ReadData(param_1,local_38,8);
+  MSG_ReadData(param_1,local_40,6);
+  if (param_1->overflowed != 0) {
     Com_Printf(0x19,"PartyJoin: Join identifier verification failed: Message overflowed\n");
-    iVar2 = __restgprlr_28(0);
-    return iVar2;
+    return 0;
   }
-  lVar4 = uVar3 + 0x10;
-  pbVar6 = local_38;
+  p_Var2 = &param_2->sessionInfo;
+  pbVar4 = local_38;
   do {
-    lVar5 = (ulonglong)*pbVar6 - (ulonglong)*(byte *)lVar4;
-    if (lVar5 != 0) break;
-    pbVar6 = pbVar6 + 1;
-    lVar4 = lVar4 + 1;
-  } while (pbVar6 != abStack_30);
-  if ((int)lVar5 != 0) {
+    lVar1 = (ulonglong)*pbVar4 - (ulonglong)(p_Var2->sessionID).ab[0];
+    if (lVar1 != 0) break;
+    pbVar4 = pbVar4 + 1;
+    p_Var2 = (_XSESSION_INFO *)((p_Var2->sessionID).ab + 1);
+  } while (pbVar4 != abStack_30);
+  if ((int)lVar1 != 0) {
     Com_Printf(0x19,
                "PartyJoin: Join identifier verification failed: - invalid session ID (%llx), we are waiting for (%llx)\n"
               );
-    iVar2 = __restgprlr_28(0);
-    return iVar2;
+    return 0;
   }
-  lVar4 = uVar3 + 0x30c;
-  pbVar6 = local_40;
+  pPVar3 = &param_2->challenge;
+  pbVar4 = local_40;
   do {
-    lVar5 = (ulonglong)*pbVar6 - (ulonglong)*(byte *)lVar4;
-    if (lVar5 != 0) break;
-    pbVar6 = pbVar6 + 1;
-    lVar4 = lVar4 + 1;
-  } while (pbVar6 != abStack_3a);
-  if ((int)lVar5 != 0) {
+    lVar1 = (ulonglong)*pbVar4 - (ulonglong)(byte)pPVar3->str[0];
+    if (lVar1 != 0) break;
+    pbVar4 = pbVar4 + 1;
+    pPVar3 = (PartyJoinChallenge *)(pPVar3->str + 1);
+  } while (pbVar4 != abStack_3a);
+  if ((int)lVar1 != 0) {
     Com_Printf(0x19,
                "PartyJoin: Join identifier verification failed: - invalid challenge (%s), we are waiting for (%s)\n"
               );
-    iVar2 = __restgprlr_28(0);
-    return iVar2;
+    return 0;
   }
-  iVar2 = __restgprlr_28(1);
-  return iVar2;
+  return 1;
 }
 
 
 // 8238CF20  PartyAtomicClient_SendMemberActionResponse_Internal  (client_mp/partyjoining.cpp:820)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
@@ -1434,70 +1345,61 @@ void PartyAtomicClient_SendMemberActionResponse_Internal
 
 {
   PartyData *pPVar1;
-  PartyJoinInfo *pPVar2;
-  LocalClientNum_t *pLVar4;
-  uchar *puVar5;
-  char *pcVar6;
-  ulong64 uVar3;
-  netsrc_t nVar7;
-  ulonglong uVar8;
-  ulonglong uVar9;
-  int iVar10;
+  uchar *puVar3;
+  char *pcVar4;
+  ulong64 uVar2;
+  netsrc_t nVar5;
+  int iVar6;
   LargeLocal aLStack_90 [2];
   msg_t amStack_80 [2];
   
-  uVar9 = (ulonglong)(int)param_3;
-  uVar8 = (ulonglong)(int)param_2;
-  pLVar4 = (LocalClientNum_t *)__savegprlr_24(param_1);
   LargeLocal::LargeLocal(aLStack_90,0x800);
-  puVar5 = LargeLocal::GetBuf(aLStack_90);
-  if (pLVar4 == (LocalClientNum_t *)0x0) {
+  puVar3 = LargeLocal::GetBuf(aLStack_90);
+  if (param_1 == (PartyActiveClient *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
                     0x33a,0,"%s");
   }
-  if ((uVar8 & 0xffffffff) == 0) {
+  if (param_2 == (PartyJoinInfo *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
                     0x33b,0,"%s");
   }
-  pPVar2 = (PartyJoinInfo *)uVar8;
-  if (pPVar2->joinType != PJT_HOSTREQUEST) {
+  if (param_2->joinType != PJT_HOSTREQUEST) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
                     0x33c,0,"%s");
   }
-  if ((int)uVar9 == 0) {
+  if (param_3 == JOINRESPONSE_NONE) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
                     0x33d,0,"%s");
   }
-  else if (0x2c < (uVar9 & 0xffffffff)) {
+  else if (JOINRESPONSE_ERROR_MAXPARTY_EXCEEDED < param_3) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
                     0x33e,0,"response doesn\'t index JOINRESPONSE_COUNT\n\t%i not in [0, %i)");
   }
-  if (pPVar2->atomicParty == (PartyData *)0x0) {
+  if (param_2->atomicParty == (PartyData *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
                     0x33f,0,"%s");
   }
-  pPVar1 = pPVar2->atomicParty;
-  iVar10 = ((int)pPVar2->state >> 0x1f) + (uint)(PARTYJOIN_WAIT_HOST_ACK < pPVar2->state);
+  pPVar1 = param_2->atomicParty;
+  iVar6 = ((int)param_2->state >> 0x1f) + (uint)(PARTYJOIN_WAIT_HOST_ACK < param_2->state);
   if ((pPVar1->currentHost).addr.type != NA_IP) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
                     0x344,0,"%s");
   }
-  if (pPVar2->hostResponse[iVar10] == JOINRESPONSE_SUCCESS) {
+  if (param_2->hostResponse[iVar6] == JOINRESPONSE_SUCCESS) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
                     0x345,0,"%s\n\t%s");
   }
-  MSG_Init(amStack_80,puVar5,0x800);
-  pcVar6 = va("%ipa_memberjoinresponse");
-  MSG_WriteString(amStack_80,pcVar6);
-  PartyAtomic_WriteJoinIdentifier(amStack_80,pPVar2);
-  MSG_WriteByte(amStack_80,iVar10);
-  uVar3 = Live_GetXuid(pLVar4[1]);
-  MSG_WriteInt64(amStack_80,uVar3);
-  MSG_WriteLong(amStack_80,(int)uVar9);
-  nVar7 = NET_GetLocalNetIDFromLocalClientNum(*pLVar4);
-  RMsg_AddMessage(&(pPVar1->currentHost).addr,amStack_80,nVar7);
+  MSG_Init(amStack_80,puVar3,0x800);
+  pcVar4 = va("%ipa_memberjoinresponse");
+  MSG_WriteString(amStack_80,pcVar4);
+  PartyAtomic_WriteJoinIdentifier(amStack_80,param_2);
+  MSG_WriteByte(amStack_80,iVar6);
+  uVar2 = Live_GetXuid(param_1->localControllerIndex);
+  MSG_WriteInt64(amStack_80,uVar2);
+  MSG_WriteLong(amStack_80,param_3);
+  nVar5 = NET_GetLocalNetIDFromLocalClientNum(param_1->localClientNum);
+  RMsg_AddMessage(&(pPVar1->currentHost).addr,amStack_80,nVar5);
   LargeLocal::~LargeLocal(aLStack_90);
-  __restgprlr_24();
   return;
 }
 
@@ -1529,6 +1431,8 @@ void PartyAtomicClient_SendMemberActionResponse(PartyJoinInfo *param_1,PartyJoin
 
 // 8238D200  PartyAtomic_HandleFailedJoinAttempt  (client_mp/partyjoining.cpp:865)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
@@ -1536,109 +1440,104 @@ void PartyAtomic_HandleFailedJoinAttempt(PartyJoinInfo *param_1)
 
 {
   PartyJoinType PVar1;
-  PartyJoinInfo *pPVar2;
   netadr_t in_stack_ffffff98;
   
-  pPVar2 = (PartyJoinInfo *)__savegprlr_29(param_1);
-  if (pPVar2 == (PartyJoinInfo *)0x0) {
+  if (param_1 == (PartyJoinInfo *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
                     0x362,0,"%s");
   }
-  if (pPVar2->state != PARTYJOIN_FAILED) {
+  if (param_1->state != PARTYJOIN_FAILED) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
                     0x363,0,"%s");
   }
-  if (pPVar2->errorMessage == (char *)0x0) {
+  if (param_1->errorMessage == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
                     0x364,0,"%s");
   }
   Sys_Milliseconds();
   NET_AdrToString(in_stack_ffffff98);
   Com_Printf(0x19,"PartyJoinAtomic: HandleFailedJoinAttempt - Failed joining %s - at time %i\n");
-  PartyAtomic_DisconnectFromJoiningSession(pPVar2);
-  PVar1 = pPVar2->joinType;
-  pPVar2->state = PARTYJOIN_INACTIVE;
-  if (PVar1 - PJT_PRESENCE < 5) {
-    if (PVar1 != PJT_INVITE) {
-      if (PVar1 == PJT_HOSTPRESENCE) {
-        PartyAtomic_ReturnToPartyScreen(pPVar2,"@MPUI_PARTY_LOST_HOST");
-        __restgprlr_29();
-        return;
-      }
-      if ((PVar1 == PJT_HOSTREQUEST) || (PVar1 != PJT_PRESENCE)) goto LAB_8238d34c;
+  PartyAtomic_DisconnectFromJoiningSession(param_1);
+  PVar1 = param_1->joinType;
+  param_1->state = PARTYJOIN_INACTIVE;
+  if (4 < PVar1 - PJT_PRESENCE) {
+    if (alwaysfails == 0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
+                      0x38a,0,"Unhandled party join type");
     }
-    PartyAtomic_ReturnToPartyScreen(pPVar2,pPVar2->errorMessage);
-    __restgprlr_29();
     return;
   }
-  if (alwaysfails == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
-                    0x38a,0,"Unhandled party join type");
+  if (PVar1 != PJT_INVITE) {
+    if (PVar1 == PJT_HOSTPRESENCE) {
+      PartyAtomic_ReturnToPartyScreen(param_1,"@MPUI_PARTY_LOST_HOST");
+      return;
+    }
+    if (PVar1 == PJT_HOSTREQUEST) {
+      return;
+    }
+    if (PVar1 != PJT_PRESENCE) {
+      return;
+    }
   }
-LAB_8238d34c:
-  __restgprlr_29();
+  PartyAtomic_ReturnToPartyScreen(param_1,param_1->errorMessage);
   return;
 }
 
 
 // 8238D358  PartyAtomic_AskToJoinParty_Internal  (client_mp/partyjoining.cpp:913)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 void PartyAtomic_AskToJoinParty_Internal(PartyActiveClient *param_1,PartyJoinInfo *param_2)
 
 {
-  LocalClientNum_t *pLVar2;
-  uchar *puVar3;
-  bool bVar8;
-  char *pcVar4;
-  uint uVar5;
-  int iVar6;
+  uchar *puVar2;
+  bool bVar7;
+  char *pcVar3;
+  uint uVar4;
+  int iVar5;
   ulong64 uVar1;
-  netsrc_t nVar7;
-  ulonglong uVar9;
-  int *piVar10;
+  netsrc_t nVar6;
   netadr_t in_stack_ffffff28;
   LargeLocal aLStack_90 [2];
-  int local_80;
+  netadrtype_t local_80;
   uchar *puStack_7c;
-  int local_78;
-  int iStack_74;
+  undefined4 local_78;
+  netsrc_t nStack_74;
   msg_t amStack_70 [2];
   
-  uVar9 = (ulonglong)(int)param_2;
-  pLVar2 = (LocalClientNum_t *)__savegprlr_25(param_1);
   LargeLocal::LargeLocal(aLStack_90,0x800);
-  puVar3 = LargeLocal::GetBuf(aLStack_90);
-  if (pLVar2 == (LocalClientNum_t *)0x0) {
+  puVar2 = LargeLocal::GetBuf(aLStack_90);
+  if (param_1 == (PartyActiveClient *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
                     0x399,0,"%s");
   }
-  if ((uVar9 & 0xffffffff) == 0) {
+  if (param_2 == (PartyJoinInfo *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
                     0x39a,0,"%s");
   }
-  bVar8 = Session_SearchInProgress();
-  if (bVar8) {
+  bVar7 = Session_SearchInProgress();
+  if (bVar7) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
                     0x39b,0,"%s");
   }
   g_partyChatQuitting = false;
-  piVar10 = (int *)uVar9;
-  if (*piVar10 != 1) {
+  if (param_2->state != PARTYJOIN_REQUEST) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
                     0x3a1,0,"%s");
   }
-  if (*(char *)(piVar10 + 0x14) == '\0') {
+  if (param_2->hasValidHostAddr == false) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
                     0x3a2,0,"%s");
   }
-  if ((*(byte *)(piVar10 + 0xb0) == 0) || (0x12 < *(byte *)(piVar10 + 0xb0))) {
+  if ((param_2->memberCount == 0) || (0x12 < param_2->memberCount)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
                     0x3a5,0,"joinInfo->memberCount not in [1, MAX_CLIENTS]\n\t%i not in [%i, %i]");
   }
-  if ((*(byte *)((int)piVar10 + 0x2c1) == 0) || (0x12 < *(byte *)((int)piVar10 + 0x2c1))) {
+  if ((param_2->subPartyCount == 0) || (0x12 < param_2->subPartyCount)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
                     0x3a6,0,"joinInfo->subPartyCount not in [1, MAX_CLIENTS]\n\t%i not in [%i, %i]")
     ;
@@ -1646,39 +1545,38 @@ void PartyAtomic_AskToJoinParty_Internal(PartyActiveClient *param_1,PartyJoinInf
   Sys_Milliseconds();
   NET_AdrToString(in_stack_ffffff28);
   Com_Printf(0x19,"PartyJoin - AskToJoinParty for %i players to addr \'%s\'  time %i\n");
-  MSG_Init(amStack_70,puVar3,0x800);
-  pcVar4 = va("%ipa_joinrequest");
-  MSG_WriteString(amStack_70,pcVar4);
-  uVar5 = GetProtocolVersion();
-  MSG_WriteLong(amStack_70,uVar5);
-  iVar6 = LiveStorage_ShouldUseFFoTD();
-  if (iVar6 == 0) {
+  MSG_Init(amStack_70,puVar2,0x800);
+  pcVar3 = va("%ipa_joinrequest");
+  MSG_WriteString(amStack_70,pcVar3);
+  uVar4 = GetProtocolVersion();
+  MSG_WriteLong(amStack_70,uVar4);
+  iVar5 = LiveStorage_ShouldUseFFoTD();
+  if (iVar5 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
                     0x3b1,0,"%s");
   }
-  uVar5 = LiveStorage_GetFFotDChecksum(0);
-  MSG_WriteLong(amStack_70,uVar5);
-  uVar1 = Live_GetXuid(pLVar2[1]);
+  uVar4 = LiveStorage_GetFFotDChecksum(0);
+  MSG_WriteLong(amStack_70,uVar4);
+  uVar1 = Live_GetXuid(param_1->localControllerIndex);
   MSG_WriteInt64(amStack_70,uVar1);
-  if ((piVar10[1] < 0) || (0xff < piVar10[1])) {
+  if (((int)param_2->joinType < 0) || (0xff < (int)param_2->joinType)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
                     0x3bc,0,"joinInfo->joinType not in [0, UCHAR_MAX]\n\t%i not in [%i, %i]");
   }
-  MSG_WriteByte(amStack_70,piVar10[1]);
-  uVar5 = Playlist_GetVersionNumber();
-  MSG_WriteLong(amStack_70,uVar5);
+  MSG_WriteByte(amStack_70,param_2->joinType);
+  uVar4 = Playlist_GetVersionNumber();
+  MSG_WriteLong(amStack_70,uVar4);
   MSG_WriteLong(amStack_70,(playlist->current).integer);
-  MSG_WriteByte(amStack_70,(uint)*(byte *)(piVar10 + 0xb0));
-  MSG_WriteByte(amStack_70,(uint)*(byte *)((int)piVar10 + 0x2c1));
-  MSG_WriteData(amStack_70,(void *)((int)piVar10 + 0x2c2),(uint)*(byte *)((int)piVar10 + 0x2c1));
-  local_80 = piVar10[0x15];
-  puStack_7c = (uchar *)piVar10[0x16];
-  local_78 = piVar10[0x17];
-  iStack_74 = piVar10[0x18];
-  nVar7 = NET_GetLocalNetIDFromLocalClientNum(*pLVar2);
-  NET_OutOfBandData(nVar7,in_stack_ffffff28,puStack_7c,iStack_74);
+  MSG_WriteByte(amStack_70,(uint)param_2->memberCount);
+  MSG_WriteByte(amStack_70,(uint)param_2->subPartyCount);
+  MSG_WriteData(amStack_70,param_2->subPartyList,(uint)param_2->subPartyCount);
+  local_80 = (param_2->addr).type;
+  puStack_7c = *(uchar **)(param_2->addr).ip;
+  local_78 = *(undefined4 *)&(param_2->addr).port;
+  nStack_74 = (param_2->addr).localNetID;
+  nVar6 = NET_GetLocalNetIDFromLocalClientNum(param_1->localClientNum);
+  NET_OutOfBandData(nVar6,in_stack_ffffff28,puStack_7c,nStack_74);
   LargeLocal::~LargeLocal(aLStack_90);
-  __restgprlr_25();
   return;
 }
 
@@ -1722,28 +1620,24 @@ char * PartyAtomic_JoinInfoToString(PartyJoinInfo *param_1)
 
 // 8238B3C8  PartyAtomicClient_HasClientJoinedAcceptedParty  (client_mp/partyjoining.cpp:1017)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 int PartyAtomicClient_HasClientJoinedAcceptedParty(PartyJoinInfo *param_1,LocalClientNum_t param_2)
 
 {
-  int iVar1;
-  ulonglong uVar2;
-  
-  uVar2 = (ulonglong)(int)param_2;
-  iVar1 = __savegprlr_29(param_1);
-  if (iVar1 == 0) {
+  if (param_1 == (PartyJoinInfo *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
                     0x3fa,0,"%s");
   }
-  if (3 < (uVar2 & 0xffffffff)) {
+  if (LOCAL_CLIENT_3 < param_2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
                     0x3fb,0,
                     "localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)");
   }
-  iVar1 = __restgprlr_29(*(undefined4 *)((int)((uVar2 + 0xbb & 0xffffffff) << 2) + iVar1));
-  return iVar1;
+  return param_1->joinAccepted[param_2];
 }
 
 
@@ -1780,6 +1674,8 @@ int PartyAtomicClient_HaveAllClientsJoinedAcceptedParty(PartyJoinInfo *param_1)
 
 // 8238D7A8  PartyAtomicClient_JoinAcceptedParty_Internal  (client_mp/partyjoining.cpp:1045)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
@@ -1788,20 +1684,15 @@ void PartyAtomicClient_JoinAcceptedParty_Internal
 
 {
   undefined8 *puVar1;
-  PartyData *pPVar3;
-  uchar *puVar4;
-  bool bVar9;
-  int iVar5;
-  char *pcVar6;
+  uchar *puVar3;
+  bool bVar8;
+  int iVar4;
+  char *pcVar5;
   ulong64 uVar2;
-  XNADDR *pXVar7;
-  netsrc_t nVar8;
-  ulonglong uVar10;
-  LocalClientNum_t *pLVar11;
-  ulonglong uVar12;
-  PartyJoinInfo *pPVar13;
-  undefined8 *puVar14;
-  longlong lVar15;
+  XNADDR *pXVar6;
+  netsrc_t nVar7;
+  undefined8 *puVar9;
+  longlong lVar10;
   netadr_t in_stack_fffffe88;
   LargeLocal aLStack_130 [2];
   msg_t mStack_120;
@@ -1811,47 +1702,41 @@ void PartyAtomicClient_JoinAcceptedParty_Internal
   netsrc_t nStack_e4;
   ClientAuthoritativeMemberInfo local_e0;
   
-  uVar12 = (ulonglong)(int)param_3;
-  uVar10 = (ulonglong)(int)param_2;
-  pPVar3 = (PartyData *)__savegprlr_25(param_1);
   LargeLocal::LargeLocal(aLStack_130,0x800);
-  puVar4 = LargeLocal::GetBuf(aLStack_130);
-  bVar9 = CL_AllLocalClientsInactive();
-  if (bVar9) {
+  puVar3 = LargeLocal::GetBuf(aLStack_130);
+  bVar8 = CL_AllLocalClientsInactive();
+  if (bVar8) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
                     0x41b,0,"%s");
   }
-  if (pPVar3 == (PartyData *)0x0) {
+  if (param_1 == (PartyData *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
                     0x41c,0,"%s");
   }
-  if ((uVar12 & 0xffffffff) == 0) {
+  if (param_3 == (PartyJoinInfo *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
                     0x41d,0,"%s");
   }
-  if ((uVar10 & 0xffffffff) == 0) {
+  if (param_2 == (PartyActiveClient *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
                     0x41e,0,"%s");
   }
-  pPVar13 = (PartyJoinInfo *)uVar12;
-  if (pPVar13->state != PARTYJOIN_JOIN) {
+  if (param_3->state != PARTYJOIN_JOIN) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
                     0x420,0,"%s\n\t(partyJoinInfo) = %i");
   }
   Party_CheckValidAddress(in_stack_fffffe88);
-  pLVar11 = (LocalClientNum_t *)uVar10;
-  iVar5 = PartyAtomicClient_HasClientJoinedAcceptedParty(pPVar13,*pLVar11);
-  if (iVar5 != 0) {
+  iVar4 = PartyAtomicClient_HasClientJoinedAcceptedParty(param_3,param_2->localClientNum);
+  if (iVar4 != 0) {
     Com_Printf(0x19,"PartyJoin: [%i] Client already accepted, not sending another request.\n");
     LargeLocal::~LargeLocal(aLStack_130);
-    __restgprlr_25();
     return;
   }
-  bVar9 = Live_UserIsGuest(pLVar11[1]);
-  if (!bVar9) {
-    GamerProfile_UpdateSystemVarsFromProfile(pLVar11[1]);
+  bVar8 = Live_UserIsGuest(param_2->localControllerIndex);
+  if (!bVar8) {
+    GamerProfile_UpdateSystemVarsFromProfile(param_2->localControllerIndex);
   }
-  MSG_Init(&mStack_120,puVar4,0x800);
+  MSG_Init(&mStack_120,puVar3,0x800);
   if (mStack_120.cursize != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
                     0x431,0,"%s");
@@ -1860,114 +1745,108 @@ void PartyAtomicClient_JoinAcceptedParty_Internal
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
                     0x432,0,"%s");
   }
-  PartyAtomic_JoinInfoToString(pPVar13);
+  PartyAtomic_JoinInfoToString(param_3);
   Com_Printf(0x19,"PartyJoin: [%i] Joining accepted with id \'%s\'\n");
-  pcVar6 = va("%ipa_memberjoin");
-  MSG_WriteString(&mStack_120,pcVar6);
-  PartyAtomic_WriteJoinIdentifier(&mStack_120,pPVar13);
-  uVar2 = Live_GetXuid(pLVar11[1]);
+  pcVar5 = va("%ipa_memberjoin");
+  MSG_WriteString(&mStack_120,pcVar5);
+  PartyAtomic_WriteJoinIdentifier(&mStack_120,param_3);
+  uVar2 = Live_GetXuid(param_2->localControllerIndex);
   MSG_WriteInt64(&mStack_120,uVar2);
-  pXVar7 = Xenon_GetXNAddrForLive();
-  MSG_WriteData(&mStack_120,pXVar7,0x24);
-  iVar5 = Live_GetLocalNatType();
-  if (iVar5 < 1) {
+  pXVar6 = Xenon_GetXNAddrForLive();
+  MSG_WriteData(&mStack_120,pXVar6,0x24);
+  iVar4 = Live_GetLocalNatType();
+  if (iVar4 < 1) {
     Live_GetLocalNatType();
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
                     0x43b,0,"%s\n\t(Live_GetLocalNatType()) = %i");
   }
-  iVar5 = Live_GetLocalNatType();
-  MSG_WriteBits(&mStack_120,iVar5,2);
-  if (((int)pPVar13->joinType < 0) || (0xff < (int)pPVar13->joinType)) {
+  iVar4 = Live_GetLocalNatType();
+  MSG_WriteBits(&mStack_120,iVar4,2);
+  if (((int)param_3->joinType < 0) || (0xff < (int)param_3->joinType)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
                     0x43f,0,"partyJoinInfo->joinType not in [0, UCHAR_MAX]\n\t%i not in [%i, %i]");
   }
-  MSG_WriteByte(&mStack_120,pPVar13->joinType);
-  lVar15 = 0x13;
+  MSG_WriteByte(&mStack_120,param_3->joinType);
+  lVar10 = 0x13;
   puVar1 = (undefined8 *)&local_e8;
   do {
-    puVar14 = puVar1;
-    puVar1 = puVar14 + 1;
+    puVar9 = puVar1;
+    puVar1 = puVar9 + 1;
     *puVar1 = 0;
-    lVar15 = lVar15 + -1;
-  } while (lVar15 != 0);
-  *(undefined4 *)(puVar14 + 2) = 0;
-  Party_FillInOurMemberInfo(pPVar3,pLVar11[1],&local_e0);
+    lVar10 = lVar10 + -1;
+  } while (lVar10 != 0);
+  *(undefined4 *)(puVar9 + 2) = 0;
+  Party_FillInOurMemberInfo(param_1,param_2->localControllerIndex,&local_e0);
   Party_WriteMemberInfo(&mStack_120,&local_e0);
-  local_f0 = (pPVar13->addr).type;
-  puStack_ec = *(uchar **)(pPVar13->addr).ip;
-  local_e8 = *(undefined4 *)&(pPVar13->addr).port;
-  nStack_e4 = (pPVar13->addr).localNetID;
-  nVar8 = NET_GetLocalNetIDFromLocalClientNum(*pLVar11);
-  NET_OutOfBandData(nVar8,in_stack_fffffe88,puStack_ec,nStack_e4);
+  local_f0 = (param_3->addr).type;
+  puStack_ec = *(uchar **)(param_3->addr).ip;
+  local_e8 = *(undefined4 *)&(param_3->addr).port;
+  nStack_e4 = (param_3->addr).localNetID;
+  nVar7 = NET_GetLocalNetIDFromLocalClientNum(param_2->localClientNum);
+  NET_OutOfBandData(nVar7,in_stack_fffffe88,puStack_ec,nStack_e4);
   LargeLocal::~LargeLocal(aLStack_130);
-  __restgprlr_25();
   return;
 }
 
 
 // 8238DB00  PartyAtomicClient_JoinAcceptedParty  (client_mp/partyjoining.cpp:1099)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void PartyAtomicClient_JoinAcceptedParty(PartyJoinInfo *param_1)
 
 {
-  PartyJoinInfo *pPVar1;
-  PartyData *pPVar2;
-  int iVar3;
+  PartyData *pPVar1;
+  int iVar2;
   PartyActiveClient local_30 [6];
   
-  pPVar1 = (PartyJoinInfo *)__savegprlr_29(param_1);
-  if (pPVar1 == (PartyJoinInfo *)0x0) {
+  if (param_1 == (PartyJoinInfo *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
                     0x44f,0,"%s");
   }
-  if (pPVar1->partyType == ANY_PARTY_ID) {
+  if (param_1->partyType == ANY_PARTY_ID) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
                     0x452,0,"%s");
   }
-  if (pPVar1->partyType == PRIVATE_PARTY_ID) {
-    pPVar2 = &g_partyData;
+  if (param_1->partyType == PRIVATE_PARTY_ID) {
+    pPVar1 = &g_partyData;
   }
   else {
-    pPVar2 = Lobby_GetPartyData();
+    pPVar1 = Lobby_GetPartyData();
   }
-  local_30[0] = PartyAtomicJoin_GetMainActiveClient(pPVar1,pPVar1->controllerIndex);
-  PartyAtomicClient_JoinAcceptedParty_Internal(pPVar2,local_30,pPVar1);
-  iVar3 = PartyAtomicJoin_GetSecondaryActiveClient(pPVar1,local_30);
-  if (iVar3 != 0) {
-    PartyAtomicClient_JoinAcceptedParty_Internal(pPVar2,local_30,pPVar1);
+  local_30[0] = PartyAtomicJoin_GetMainActiveClient(param_1,param_1->controllerIndex);
+  PartyAtomicClient_JoinAcceptedParty_Internal(pPVar1,local_30,param_1);
+  iVar2 = PartyAtomicJoin_GetSecondaryActiveClient(param_1,local_30);
+  if (iVar2 != 0) {
+    PartyAtomicClient_JoinAcceptedParty_Internal(pPVar1,local_30,param_1);
   }
-  __restgprlr_29();
   return;
 }
 
 
 // 8238B448  PartyAtomicClient_IsClientCommittingToParty  (client_mp/partyjoining.cpp:1121)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 int PartyAtomicClient_IsClientCommittingToParty(PartyJoinInfo *param_1,LocalClientNum_t param_2)
 
 {
-  int iVar1;
-  ulonglong uVar2;
-  
-  uVar2 = (ulonglong)(int)param_2;
-  iVar1 = __savegprlr_29(param_1);
-  if (iVar1 == 0) {
+  if (param_1 == (PartyJoinInfo *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
                     0x462,0,"%s");
   }
-  if (3 < (uVar2 & 0xffffffff)) {
+  if (LOCAL_CLIENT_3 < param_2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
                     0x463,0,
                     "localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)");
   }
-  iVar1 = __restgprlr_29(*(undefined4 *)((int)((uVar2 + 0xbf & 0xffffffff) << 2) + iVar1));
-  return iVar1;
+  return param_1->committingAccepted[param_2];
 }
 
 
@@ -2004,6 +1883,8 @@ int PartyAtomicClient_AreAllClientsCommittingToParty(PartyJoinInfo *param_1)
 
 // 8238DCA0  PartyAtomicClient_CommitToJoinedParty_Internal  (client_mp/partyjoining.cpp:1149)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
@@ -2011,15 +1892,12 @@ void PartyAtomicClient_CommitToJoinedParty_Internal
                (PartyActiveClient *param_1,PartyJoinInfo *param_2)
 
 {
-  LocalClientNum_t *pLVar2;
-  uchar *puVar3;
-  bool bVar7;
-  char *pcVar4;
+  uchar *puVar2;
+  bool bVar6;
+  char *pcVar3;
   ulong64 uVar1;
-  XNKID *pXVar5;
-  netsrc_t nVar6;
-  ulonglong uVar8;
-  PartyJoinInfo *pPVar9;
+  XNKID *pXVar4;
+  netsrc_t nVar5;
   netadr_t in_stack_ffffff38;
   LargeLocal aLStack_80 [2];
   netadrtype_t local_70;
@@ -2028,46 +1906,42 @@ void PartyAtomicClient_CommitToJoinedParty_Internal
   netsrc_t nStack_64;
   msg_t amStack_60 [2];
   
-  uVar8 = (ulonglong)(int)param_2;
-  pLVar2 = (LocalClientNum_t *)__savegprlr_27(param_1);
   LargeLocal::LargeLocal(aLStack_80,0x800);
-  puVar3 = LargeLocal::GetBuf(aLStack_80);
-  bVar7 = CL_AllLocalClientsInactive();
-  if (bVar7) {
+  puVar2 = LargeLocal::GetBuf(aLStack_80);
+  bVar6 = CL_AllLocalClientsInactive();
+  if (bVar6) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
                     0x481,0,"%s");
   }
-  if ((uVar8 & 0xffffffff) == 0) {
+  if (param_2 == (PartyJoinInfo *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
                     0x482,0,"%s");
   }
-  if (pLVar2 == (LocalClientNum_t *)0x0) {
+  if (param_1 == (PartyActiveClient *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
                     0x483,0,"%s");
   }
-  pPVar9 = (PartyJoinInfo *)uVar8;
-  if (pPVar9->state != PARTYJOIN_COMMIT) {
+  if (param_2->state != PARTYJOIN_COMMIT) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
                     0x485,0,"%s\n\t(partyJoinInfo) = %i");
   }
   Party_CheckValidAddress(in_stack_ffffff38);
-  MSG_Init(amStack_60,puVar3,0x800);
-  PartyAtomic_JoinInfoToString(pPVar9);
+  MSG_Init(amStack_60,puVar2,0x800);
+  PartyAtomic_JoinInfoToString(param_2);
   Com_Printf(0x19,"PartyJoin: Committing to joined with id \'%s\'\n");
-  pcVar4 = va("%ipa_membercommit");
-  MSG_WriteString(amStack_60,pcVar4);
-  uVar1 = Live_GetXuid(pLVar2[1]);
+  pcVar3 = va("%ipa_membercommit");
+  MSG_WriteString(amStack_60,pcVar3);
+  uVar1 = Live_GetXuid(param_1->localControllerIndex);
   MSG_WriteInt64(amStack_60,uVar1);
-  pXVar5 = Party_GetOurPrivatePartyId();
-  MSG_WriteData(amStack_60,pXVar5,8);
-  local_70 = (pPVar9->addr).type;
-  puStack_6c = *(uchar **)(pPVar9->addr).ip;
-  local_68 = *(undefined4 *)&(pPVar9->addr).port;
-  nStack_64 = (pPVar9->addr).localNetID;
-  nVar6 = NET_GetLocalNetIDFromLocalClientNum(*pLVar2);
-  NET_OutOfBandData(nVar6,in_stack_ffffff38,puStack_6c,nStack_64);
+  pXVar4 = Party_GetOurPrivatePartyId();
+  MSG_WriteData(amStack_60,pXVar4,8);
+  local_70 = (param_2->addr).type;
+  puStack_6c = *(uchar **)(param_2->addr).ip;
+  local_68 = *(undefined4 *)&(param_2->addr).port;
+  nStack_64 = (param_2->addr).localNetID;
+  nVar5 = NET_GetLocalNetIDFromLocalClientNum(param_1->localClientNum);
+  NET_OutOfBandData(nVar5,in_stack_ffffff38,puStack_6c,nStack_64);
   LargeLocal::~LargeLocal(aLStack_80);
-  __restgprlr_27();
   return;
 }
 
@@ -2153,6 +2027,8 @@ int PartyAtomicClient_CheckForCommitAbort(PartyJoinInfo *param_1)
 
 // 8238E088  PartyAtomic_SetupPotentialHostForJoining  (client_mp/partyjoining.cpp:1218)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
@@ -2162,90 +2038,78 @@ int PartyAtomic_SetupPotentialHostForJoining
 
 {
   int iVar1;
-  ulonglong uVar2;
-  ulonglong uVar3;
-  ulonglong uVar4;
-  ulonglong uVar5;
-  int *piVar6;
   ushort local_60 [2];
   in_addr aiStack_5c [23];
   
-  uVar5 = (ulonglong)(int)param_6;
-  uVar4 = (ulonglong)(int)param_5;
-  uVar3 = (ulonglong)(int)param_4;
-  uVar2 = (ulonglong)(int)param_2;
-  iVar1 = __savegprlr_23(param_1);
-  if ((uVar2 & 0xffffffff) == 0) {
+  if (param_2 == (_XSESSION_INFO *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
                     0x4c7,0,"%s");
   }
-  if ((uVar5 & 0xffffffff) == 0) {
+  if (param_6 == (PartyJoinInfo *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
                     0x4c8,0,"%s");
   }
-  if (0x12 < (uVar3 & 0xffffffff)) {
+  if (0x12 < param_4) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
                     0x4c9,0,"%s\n\t(numPublicSlots) = %i");
   }
-  if (0x12 < (uVar4 & 0xffffffff)) {
+  if (0x12 < param_5) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
                     0x4ca,0,"%s\n\t(numPrivateSlots) = %i");
   }
-  if (0x12 < (uVar3 + uVar4 & 0xffffffff)) {
+  if (0x12 < param_4 + param_5) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
                     0x4cb,0,"%s\n\t((numPrivateSlots + numPublicSlots)) = %i");
   }
-  if ((uVar5 & 0xffffffff) == 0) {
+  if (param_6 == (PartyJoinInfo *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
                     0x57,0,"%s");
   }
-  piVar6 = (int *)uVar5;
-  if (*piVar6 != 0) {
+  if (param_6->state != PARTYJOIN_INACTIVE) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
                     0x4cd,0,"%s\n\t%s");
   }
   memset();
   memcpy();
-  piVar6[3] = iVar1;
-  piVar6[2] = param_3;
-  piVar6[0xaf] = (int)uVar3;
-  piVar6[0xae] = (int)uVar4;
-  piVar6[0x13] = (int)&g_partyJoinSession;
-  if (*(char *)(piVar6 + 0x14) != '\0') {
+  param_6->controllerIndex = param_1;
+  param_6->partyType = param_3;
+  param_6->numPublicSlots = param_4;
+  param_6->numPrivateSlots = param_5;
+  param_6->session = &g_partyJoinSession;
+  if (param_6->hasValidHostAddr != false) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
                     0x4e0,0,"%s");
   }
   iVar1 = Session_JoinPotentialHost
-                    (iVar1,(_XSESSION_INFO *)(piVar6 + 4),0x2e,piVar6[0xaf],piVar6[0xae],
-                     (SessionData *)piVar6[0x13],aiStack_5c,local_60);
+                    (param_1,&param_6->sessionInfo,0x2e,param_6->numPublicSlots,
+                     param_6->numPrivateSlots,param_6->session,aiStack_5c,local_60);
   if (iVar1 == 0) {
-    iVar1 = __restgprlr_23();
-    return iVar1;
+    return 0;
   }
-  iVar1 = Session_CompareSessionInfo
-                    ((_XSESSION_INFO *)(piVar6 + 4),(_XSESSION_INFO *)(piVar6[0x13] + 0x14));
+  iVar1 = Session_CompareSessionInfo(&param_6->sessionInfo,&(param_6->session->dyn).sessionInfo);
   if (iVar1 != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
                     0x4e8,0,"%s");
   }
-  NET_ConvertInAddrToServerNetAddr(aiStack_5c,local_60[0],(netadr_t *)(piVar6 + 0x15));
-  if (piVar6[0x15] != 4) {
+  NET_ConvertInAddrToServerNetAddr(aiStack_5c,local_60[0],&param_6->addr);
+  if ((param_6->addr).type != NA_IP) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
                     0x4ee,0,"%s");
   }
-  if ((((*(char *)(piVar6 + 0x16) == '\x7f') && (*(char *)((int)piVar6 + 0x59) == '\0')) &&
-      (*(char *)((int)piVar6 + 0x5a) == '\0')) && (*(char *)((int)piVar6 + 0x5b) == '\x01')) {
+  if (((((param_6->addr).ip[0] == '\x7f') && ((param_6->addr).ip[1] == '\0')) &&
+      ((param_6->addr).ip[2] == '\0')) && ((param_6->addr).ip[3] == '\x01')) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
                     0x4ef,0,"%s");
   }
-  *(undefined1 *)(piVar6 + 0x14) = 1;
-  iVar1 = __restgprlr_23(1);
-  return iVar1;
+  param_6->hasValidHostAddr = true;
+  return 1;
 }
 
 
 // 8238B4C8  PartyAtomicHost_BuildJoinLobbyMessage  (client_mp/partyjoining.cpp:1272)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 void PartyAtomicHost_BuildJoinLobbyMessage
@@ -2254,38 +2118,34 @@ void PartyAtomicHost_BuildJoinLobbyMessage
 
 {
   undefined8 *puVar1;
-  msg_t *pmVar2;
-  char *pcVar3;
-  longlong lVar4;
-  longlong lVar5;
-  undefined8 *puVar6;
-  byte *pbVar7;
-  longlong lVar8;
+  char *pcVar2;
+  undefined8 *puVar3;
+  _XSESSION_INFO *p_Var4;
+  byte *pbVar5;
+  longlong lVar6;
   undefined8 uStack_98;
   byte local_90 [8];
   undefined4 auStack_88 [13];
   byte abStack_54 [84];
   
-  lVar4 = (longlong)(int)param_4;
-  pmVar2 = (msg_t *)__savegprlr_24(param_1);
-  lVar8 = 7;
+  lVar6 = 7;
   puVar1 = &uStack_98;
   do {
-    puVar6 = puVar1;
-    puVar1 = puVar6 + 1;
+    puVar3 = puVar1;
+    puVar1 = puVar3 + 1;
     *puVar1 = 0;
-    lVar8 = lVar8 + -1;
-  } while (lVar8 != 0);
-  pbVar7 = local_90;
-  *(undefined4 *)(puVar6 + 2) = 0;
-  lVar8 = lVar4;
+    lVar6 = lVar6 + -1;
+  } while (lVar6 != 0);
+  pbVar5 = local_90;
+  *(undefined4 *)(puVar3 + 2) = 0;
+  p_Var4 = param_4;
   do {
-    lVar5 = (ulonglong)*pbVar7 - (ulonglong)*(byte *)lVar8;
-    if (lVar5 != 0) break;
-    pbVar7 = pbVar7 + 1;
-    lVar8 = lVar8 + 1;
-  } while (pbVar7 != abStack_54);
-  if ((int)lVar5 == 0) {
+    lVar6 = (ulonglong)*pbVar5 - (ulonglong)(p_Var4->sessionID).ab[0];
+    if (lVar6 != 0) break;
+    pbVar5 = pbVar5 + 1;
+    p_Var4 = (_XSESSION_INFO *)((p_Var4->sessionID).ab + 1);
+  } while (pbVar5 != abStack_54);
+  if ((int)lVar6 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
                     0x4fd,0,"%s");
   }
@@ -2301,19 +2161,20 @@ void PartyAtomicHost_BuildJoinLobbyMessage
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
                     0x503,0,"%s");
   }
-  pcVar3 = va("%ipa_joinlobbyrequest");
-  MSG_WriteString(pmVar2,pcVar3);
-  MSG_WriteData(pmVar2,param_3,6);
-  MSG_WriteData(pmVar2,(void *)lVar4,0x3c);
-  MSG_WriteByte(pmVar2,param_5);
-  MSG_WriteByte(pmVar2,param_6);
-  __restgprlr_24();
+  pcVar2 = va("%ipa_joinlobbyrequest");
+  MSG_WriteString(param_1,pcVar2);
+  MSG_WriteData(param_1,param_3,6);
+  MSG_WriteData(param_1,param_4,0x3c);
+  MSG_WriteByte(param_1,param_5);
+  MSG_WriteByte(param_1,param_6);
   return;
 }
 
 
 // 8238B650  PartyAtomicJoin_SetupMemberJoinInfo  (client_mp/partyjoining.cpp:1294)
 
+/* WARNING: Function: __savegprlr_17 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_17 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
@@ -2321,22 +2182,20 @@ void PartyAtomicJoin_SetupMemberJoinInfo(int param_1,PartyJoinInfo *param_2)
 
 {
   PartyData *pPVar1;
-  PartyJoinInfo *pPVar2;
-  bool bVar3;
-  int iVar4;
-  PartyJoinResponse *pPVar5;
-  ulong64 *puVar6;
+  bool bVar2;
+  int iVar3;
+  int *piVar4;
+  ulong64 *puVar5;
   
-  pPVar2 = (PartyJoinInfo *)__savegprlr_17(param_1,param_2);
-  if (pPVar2 == (PartyJoinInfo *)0x0) {
+  if (param_1 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
                     0x514,0,"%s");
   }
-  if (pPVar2->partyType != GAME_LOBBY_ID) {
+  if (*(int *)(param_1 + 8) != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
                     0x515,0,"%s");
   }
-  pPVar1 = pPVar2->atomicParty;
+  pPVar1 = *(PartyData **)(param_1 + 100);
   if (pPVar1 == (PartyData *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
                     0x518,0,"%s");
@@ -2350,47 +2209,48 @@ void PartyAtomicJoin_SetupMemberJoinInfo(int param_1,PartyJoinInfo *param_2)
                     0x51a,0,"%s");
   }
   memset();
-  iVar4 = 0;
-  pPVar2->nextBroadcastTime = 0;
-  puVar6 = &pPVar1->partyMembers[0].player;
-  pPVar5 = pPVar2->memberJoinInfo[0].responseState + 1;
+  iVar3 = 0;
+  *(undefined4 *)(param_1 + 0x68) = 0;
+  puVar5 = &pPVar1->partyMembers[0].player;
+  piVar4 = (int *)(param_1 + 0x84);
   do {
-    if (((PartyMemberJoinInfo *)(pPVar5 + -5))->active != 0) {
+    if (piVar4[-5] != 0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
                       0x524,0,"%s\n\t%s");
     }
-    if (pPVar5[-1] != JOINRESPONSE_NONE) {
+    if (piVar4[-1] != 0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
                       0x525,0,"%s\n\t%s");
     }
-    if (*pPVar5 != JOINRESPONSE_NONE) {
+    if (*piVar4 != 0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
                       0x526,0,"%s\n\t%s");
     }
-    if (((((PartyMember *)(puVar6 + -0x25))->status == '\x05') &&
-        (bVar3 = Party_IsHost(pPVar1,iVar4), !bVar3)) &&
-       (bVar3 = Live_XUIDIsLocalPlayer(*puVar6), !bVar3)) {
-      bVar3 = Session_IsUserRegistered(pPVar1->session,iVar4);
-      if (!bVar3) {
+    if (((((PartyMember *)(puVar5 + -0x25))->status == '\x05') &&
+        (bVar2 = Party_IsHost(pPVar1,iVar3), !bVar2)) &&
+       (bVar2 = Live_XUIDIsLocalPlayer(*puVar5), !bVar2)) {
+      bVar2 = Session_IsUserRegistered(pPVar1->session,iVar3);
+      if (!bVar2) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp"
                         ,0x533,0,"%s");
       }
-      PartyAtomic_JoinInfoToString(pPVar2);
+      PartyAtomic_JoinInfoToString((PartyJoinInfo *)param_1);
       Com_Printf(0x10,"PartyAtomicJoin: Setting up memberJoinInfo for %s (%llx) for id %s\n");
-      ((PartyMemberJoinInfo *)(pPVar5 + -5))->active = 1;
-      *(ulong64 *)(pPVar5 + -3) = *puVar6;
+      piVar4[-5] = 1;
+      *(ulong64 *)(piVar4 + -3) = *puVar5;
     }
-    iVar4 = iVar4 + 1;
-    puVar6 = puVar6 + 0x2a;
-    pPVar5 = pPVar5 + 8;
-  } while (iVar4 < 0x12);
-  __restgprlr_17();
+    iVar3 = iVar3 + 1;
+    puVar5 = puVar5 + 0x2a;
+    piVar4 = piVar4 + 8;
+  } while (iVar3 < 0x12);
   return;
 }
 
 
 // 8238B8B8  PartyAtomicHost_BroadcastLobbyJoin  (client_mp/partyjoining.cpp:1342)
 
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
@@ -2398,17 +2258,14 @@ void PartyAtomicHost_BroadcastLobbyJoin(int param_1,PartyJoinInfo *param_2)
 
 {
   PartyData *pPVar1;
-  PartyJoinInfo *pPVar2;
-  ulong64 *puVar3;
-  netsrc_t nVar4;
-  uchar *puVar5;
-  bool bVar8;
-  netadr_t *pnVar6;
-  int iVar7;
-  ulonglong uVar9;
-  longlong lVar10;
-  int iVar11;
-  PartyMember *pPVar12;
+  netsrc_t nVar2;
+  uchar *puVar3;
+  bool bVar6;
+  netadr_t *pnVar4;
+  int iVar5;
+  ulong64 *puVar7;
+  int iVar8;
+  PartyMember *pPVar9;
   netadr_t in_stack_fffffeb8;
   LargeLocal aLStack_100 [2];
   netadrtype_t local_f0;
@@ -2418,22 +2275,19 @@ void PartyAtomicHost_BroadcastLobbyJoin(int param_1,PartyJoinInfo *param_2)
   netadr_t nStack_e0;
   msg_t amStack_d0 [4];
   
-  uVar9 = (ulonglong)(int)param_2;
-  __savegprlr();
   LargeLocal::LargeLocal(aLStack_100,0x800);
-  puVar5 = LargeLocal::GetBuf(aLStack_100);
-  if ((uVar9 & 0xffffffff) == 0) {
+  puVar3 = LargeLocal::GetBuf(aLStack_100);
+  if (param_2 == (PartyJoinInfo *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
                     0x546,0,"%s");
   }
-  pPVar2 = (PartyJoinInfo *)uVar9;
-  if (pPVar2->partyType != GAME_LOBBY_ID) {
+  if (param_2->partyType != GAME_LOBBY_ID) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
                     0x547,0,"%s");
   }
-  if (pPVar2->nextBroadcastTime <= param_1) {
-    pPVar1 = pPVar2->atomicParty;
-    pPVar2->nextBroadcastTime = param_1 + 300;
+  if (param_2->nextBroadcastTime <= param_1) {
+    pPVar1 = param_2->atomicParty;
+    param_2->nextBroadcastTime = param_1 + 300;
     if (pPVar1 == (PartyData *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
                       0x54f,0,"%s");
@@ -2446,71 +2300,72 @@ void PartyAtomicHost_BroadcastLobbyJoin(int param_1,PartyJoinInfo *param_2)
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
                       0x551,0,"%s");
     }
-    MSG_Init(amStack_d0,puVar5,0x800);
+    MSG_Init(amStack_d0,puVar3,0x800);
     PartyAtomicHost_BuildJoinLobbyMessage
-              (amStack_d0,pPVar2->partyType,&pPVar2->challenge,&pPVar2->sessionInfo,
-               pPVar2->numPublicSlots,pPVar2->numPrivateSlots);
-    iVar11 = 0;
-    pPVar12 = pPVar1->partyMembers;
-    lVar10 = uVar9 + 0x78;
+              (amStack_d0,param_2->partyType,&param_2->challenge,&param_2->sessionInfo,
+               param_2->numPublicSlots,param_2->numPrivateSlots);
+    iVar8 = 0;
+    pPVar9 = pPVar1->partyMembers;
+    puVar7 = &param_2->memberJoinInfo[0].xuid;
     do {
-      puVar3 = (ulong64 *)lVar10;
-      if ((*(int *)(puVar3 + -1) != 0) && (*(int *)(puVar3 + 1) == 0)) {
-        if (*puVar3 != pPVar12->player) {
+      if ((((PartyMemberJoinInfo *)(puVar7 + -1))->active != 0) &&
+         (*(PartyJoinResponse *)(puVar7 + 1) == JOINRESPONSE_NONE)) {
+        if (*puVar7 != pPVar9->player) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp"
                           ,0x55f,0,"%s");
         }
-        if (pPVar12->status != '\x05') {
+        if (pPVar9->status != '\x05') {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp"
                           ,0x560,0,
                           "broadcastParty->partyMembers[memberIndex].status == PARTYSTATUS_PRESENT\n\t%i, %i"
                          );
         }
-        bVar8 = Party_IsHost(pPVar1,iVar11);
-        if (bVar8) {
+        bVar6 = Party_IsHost(pPVar1,iVar8);
+        if (bVar6) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp"
                           ,0x561,0,"%s");
         }
-        bVar8 = Session_IsUserRegistered(pPVar1->session,iVar11);
-        if (!bVar8) {
+        bVar6 = Session_IsUserRegistered(pPVar1->session,iVar8);
+        if (!bVar6) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp"
                           ,0x562,0,"%s");
         }
-        pnVar6 = Session_GetPlayerAddr(&nStack_e0,pPVar1->session,iVar11);
-        local_f0 = pnVar6->type;
-        puStack_ec = *(uchar **)pnVar6->ip;
-        local_e8 = *(undefined4 *)&pnVar6->port;
-        nStack_e4 = pnVar6->localNetID;
+        pnVar4 = Session_GetPlayerAddr(&nStack_e0,pPVar1->session,iVar8);
+        local_f0 = pnVar4->type;
+        puStack_ec = *(uchar **)pnVar4->ip;
+        local_e8 = *(undefined4 *)&pnVar4->port;
+        nStack_e4 = pnVar4->localNetID;
         if (local_f0 == NA_BOT) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp"
                           ,0x565,0,"%s");
         }
-        nVar4 = nStack_e4;
-        puVar5 = puStack_ec;
-        iVar7 = NET_IsLocalAddress(in_stack_fffffeb8);
-        if (iVar7 != 0) {
+        nVar2 = nStack_e4;
+        puVar3 = puStack_ec;
+        iVar5 = NET_IsLocalAddress(in_stack_fffffeb8);
+        if (iVar5 != 0) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp"
                           ,0x567,0,"%s");
         }
-        PartyAtomic_JoinInfoToString(pPVar2);
+        PartyAtomic_JoinInfoToString(param_2);
         NET_AdrToString(in_stack_fffffeb8);
         Com_Printf(0x10,"PartyAtomicJoin: Sending new lobby info to %s (%s) for id %s at time %i\n")
         ;
-        NET_OutOfBandData(NS_MAXCLIENTS,in_stack_fffffeb8,puVar5,nVar4);
+        NET_OutOfBandData(NS_MAXCLIENTS,in_stack_fffffeb8,puVar3,nVar2);
       }
-      iVar11 = iVar11 + 1;
-      lVar10 = lVar10 + 0x20;
-      pPVar12 = pPVar12 + 1;
-    } while (iVar11 < 0x12);
+      iVar8 = iVar8 + 1;
+      puVar7 = puVar7 + 4;
+      pPVar9 = pPVar9 + 1;
+    } while (iVar8 < 0x12);
   }
   LargeLocal::~LargeLocal(aLStack_100);
-  __restgprlr();
   return;
 }
 
 
 // 8238BC00  PartyAtomicHost_SendJoinHostResponse  (client_mp/partyjoining.cpp:1392)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
@@ -2519,15 +2374,13 @@ void PartyAtomicHost_SendJoinHostResponse
                PartyJoinAction param_4,uint *param_5)
 
 {
-  netadr_t *pnVar1;
-  char *pcVar2;
+  char *pcVar1;
   msg_t local_a0;
   uchar auStack_70 [112];
   
-  pnVar1 = (netadr_t *)__savegprlr_27(param_1);
   MSG_Init(&local_a0,auStack_70,0x40);
-  pcVar2 = va("%ipa_actionresponse");
-  MSG_WriteString(&local_a0,pcVar2);
+  pcVar1 = va("%ipa_actionresponse");
+  MSG_WriteString(&local_a0,pcVar1);
   PartyAtomic_WriteJoinIdentifier(&local_a0,param_2);
   MSG_WriteByte(&local_a0,param_4);
   MSG_WriteLong(&local_a0,param_3);
@@ -2535,14 +2388,15 @@ void PartyAtomicHost_SendJoinHostResponse
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
                     0x579,0,"%s");
   }
-  RMsg_AddMessageWithHandle(pnVar1,&local_a0,param_5,NS_MAXCLIENTS);
-  __restgprlr_27();
+  RMsg_AddMessageWithHandle(param_1,&local_a0,param_5,NS_MAXCLIENTS);
   return;
 }
 
 
 // 8238E348  PartyAtomicHost_BroadcastActionResponse  (client_mp/partyjoining.cpp:1409)
 
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
@@ -2551,40 +2405,32 @@ void PartyAtomicHost_BroadcastActionResponse
 
 {
   PartyData *pPVar1;
-  PartyJoinInfo *pPVar2;
-  ulonglong uVar3;
-  bool bVar7;
-  netadr_t *pnVar4;
-  int iVar5;
-  RMsgSendStatus RVar6;
-  uint *puVar8;
-  longlong lVar9;
-  int *piVar10;
-  PartyJoinAction PVar11;
-  int iVar12;
-  PartyMember *pPVar13;
-  ulonglong uVar14;
-  uint uStack0000001c;
+  bool bVar5;
+  netadr_t *pnVar2;
+  int iVar3;
+  RMsgSendStatus RVar4;
+  uint *puVar6;
+  PartyMemberJoinInfo *pPVar7;
+  PartyJoinAction PVar8;
+  int iVar9;
+  PartyMember *pPVar10;
+  PartyJoinResponse PStack0000001c;
   int iStack00000024;
   netadr_t in_stack_fffffef8;
   netadr_t local_c0;
   netadr_t anStack_b0 [11];
   
-  uVar14 = (ulonglong)(int)param_2;
-  uVar3 = (ulonglong)(int)param_1;
-  __savegprlr();
-  uStack0000001c = (uint)uVar14;
+  PStack0000001c = param_2;
   iStack00000024 = param_3;
-  if ((uVar3 & 0xffffffff) == 0) {
+  if (param_1 == (PartyJoinInfo *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
                     0x58c,0,"%s");
   }
-  pPVar2 = (PartyJoinInfo *)uVar3;
-  if (pPVar2->partyType != GAME_LOBBY_ID) {
+  if (param_1->partyType != GAME_LOBBY_ID) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
                     0x58d,0,"%s");
   }
-  pPVar1 = pPVar2->atomicParty;
+  pPVar1 = param_1->atomicParty;
   if (pPVar1 == (PartyData *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
                     0x590,0,"%s");
@@ -2597,132 +2443,125 @@ void PartyAtomicHost_BroadcastActionResponse
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
                     0x592,0,"%s");
   }
-  PVar11 = ((int)pPVar2->state >> 0x1f) + (uint)(PARTYJOIN_WAIT_HOST_ACK < pPVar2->state);
+  PVar8 = ((int)param_1->state >> 0x1f) + (uint)(PARTYJOIN_WAIT_HOST_ACK < param_1->state);
   Com_Printf(0x10,"PartyAtomicJoin: Sending lobby action %i response \'%i\' to party %i\n");
-  iVar12 = 0;
-  lVar9 = uVar3 + 0x70;
-  pPVar13 = pPVar1->partyMembers;
+  iVar9 = 0;
+  pPVar7 = param_1->memberJoinInfo;
+  pPVar10 = pPVar1->partyMembers;
   do {
-    piVar10 = (int *)lVar9;
-    if (*piVar10 != 0) {
-      if ((piVar10[PVar11 + 4] != 1) && ((int)uVar14 == 1)) {
+    if (pPVar7->active != 0) {
+      if ((pPVar7->responseState[PVar8] != JOINRESPONSE_SUCCESS) &&
+         (param_2 == JOINRESPONSE_SUCCESS)) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp"
                         ,0x5a3,0,"%s\n\t%s");
       }
-      if (pPVar13->status != '\x05') {
+      if (pPVar10->status != '\x05') {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp"
                         ,0x5a5,0,"%s\n\t%s");
       }
-      bVar7 = Party_IsHost(pPVar1,iVar12);
-      if (bVar7) {
+      bVar5 = Party_IsHost(pPVar1,iVar9);
+      if (bVar5) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp"
                         ,0x5a6,0,"%s");
       }
-      bVar7 = Session_IsUserRegistered(pPVar1->session,iVar12);
-      if (!bVar7) {
+      bVar5 = Session_IsUserRegistered(pPVar1->session,iVar9);
+      if (!bVar5) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp"
                         ,0x5a8,0,"%s");
       }
-      pnVar4 = Session_GetPlayerAddr(anStack_b0,pPVar1->session,iVar12);
-      local_c0.type = pnVar4->type;
-      local_c0.ip = *&pnVar4->ip;
-      local_c0.port = pnVar4->port;
-      local_c0._10_2_ = *(undefined2 *)&pnVar4->field_0xa;
-      local_c0.localNetID = pnVar4->localNetID;
-      iVar5 = NET_IsLocalAddress(in_stack_fffffef8);
-      if (iVar5 == 0) {
+      pnVar2 = Session_GetPlayerAddr(anStack_b0,pPVar1->session,iVar9);
+      local_c0.type = pnVar2->type;
+      local_c0.ip = *&pnVar2->ip;
+      local_c0.port = pnVar2->port;
+      local_c0._10_2_ = *(undefined2 *)&pnVar2->field_0xa;
+      local_c0.localNetID = pnVar2->localNetID;
+      iVar3 = NET_IsLocalAddress(in_stack_fffffef8);
+      if (iVar3 == 0) {
         if (iStack00000024 == 0) {
-          puVar8 = (uint *)0x0;
+          puVar6 = (uint *)0x0;
         }
         else {
-          puVar8 = (uint *)(piVar10 + 6);
-          RVar6 = RMsg_GetSendStatusFromHandle(piVar10[6]);
-          if (RVar6 != RMSG_STATUS_INACTIVE) {
+          puVar6 = &pPVar7->responseMessageHandle;
+          RVar4 = RMsg_GetSendStatusFromHandle(pPVar7->responseMessageHandle);
+          param_2 = PStack0000001c;
+          if (RVar4 != RMSG_STATUS_INACTIVE) {
             MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp"
                             ,0x5b0,0,"%s");
+            param_2 = PStack0000001c;
           }
-          uVar14 = (ulonglong)uStack0000001c;
         }
-        PartyAtomicHost_SendJoinHostResponse
-                  (&local_c0,pPVar2,(PartyJoinResponse)uVar14,PVar11,puVar8);
+        PartyAtomicHost_SendJoinHostResponse(&local_c0,param_1,param_2,PVar8,puVar6);
         NET_AdrToString(in_stack_fffffef8);
         Com_Printf(0x10,"PartyAtomicJoin: Sending response to %s (%s) (%i)\n");
       }
     }
-    iVar12 = iVar12 + 1;
-    pPVar13 = pPVar13 + 1;
-    lVar9 = lVar9 + 0x20;
-  } while (iVar12 < 0x12);
-  __restgprlr();
+    iVar9 = iVar9 + 1;
+    pPVar10 = pPVar10 + 1;
+    pPVar7 = pPVar7 + 1;
+  } while (iVar9 < 0x12);
   return;
 }
 
 
 // 8238BCC0  PartyAtomicHost_CheckForMemberDisconnect  (client_mp/partyjoining.cpp:1471)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 int PartyAtomicHost_CheckForMemberDisconnect(PartyJoinInfo *param_1,uint param_2)
 
 {
-  char cVar1;
-  int iVar2;
-  int iVar3;
-  ulonglong uVar4;
-  PartyMemberJoinInfo *pPVar5;
+  uchar uVar1;
+  PartyData *pPVar2;
   
-  uVar4 = (ulonglong)(int)param_2;
-  iVar3 = __savegprlr_27(param_1);
-  if (iVar3 == 0) {
+  if (param_1 == (PartyJoinInfo *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
                     0x5c4,0,"%s");
   }
-  if (0x11 < (uVar4 & 0xffffffff)) {
+  if (0x11 < param_2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
                     0x5c5,0,"memberIndex doesn\'t index MAX_PARTY_MEMBERS\n\t%i not in [0, %i)");
   }
-  iVar2 = *(int *)(iVar3 + 100);
-  if (iVar2 == 0) {
+  pPVar2 = param_1->atomicParty;
+  if (pPVar2 == (PartyData *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
                     0x5c8,0,"%s");
   }
-  if (*(int *)(iVar2 + 0x1ef4) == 0) {
+  if (pPVar2->inParty == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
                     0x5c9,0,"%s");
   }
-  if (*(int *)(iVar2 + 0x1eec) == 0) {
+  if (pPVar2->areWeHost == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
                     0x5ca,0,"%s");
   }
-  iVar2 = (int)uVar4 * 0x150 + iVar2;
-  iVar3 = (int)((uVar4 & 0xffffffff) << 5) + iVar3;
-  pPVar5 = (PartyMemberJoinInfo *)(iVar3 + 0x70);
-  cVar1 = *(char *)(iVar2 + 0x58);
-  if (cVar1 != '\x05') {
-    if (cVar1 == '\x01') {
+  uVar1 = pPVar2->partyMembers[param_2].status;
+  if (uVar1 != '\x05') {
+    if (uVar1 == '\x01') {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
                       0x5d2,0,"%s\n\t%s");
     }
     Com_PrintWarning(0x19,
                      "PartyJoinAtomic - WaitForMembersToJoin - Abandoning party member %i since he is no longer present\n"
                     );
-    pPVar5->active = 0;
-    PartyAtomic_CancelMemberResponseMessage(pPVar5);
-    iVar3 = __restgprlr_27(1);
-    return iVar3;
+    param_1->memberJoinInfo[param_2].active = 0;
+    PartyAtomic_CancelMemberResponseMessage(param_1->memberJoinInfo + param_2);
+    return 1;
   }
-  if (*(longlong *)(iVar2 + 0x180) != *(longlong *)(iVar3 + 0x78)) {
+  if (pPVar2->partyMembers[param_2].player != param_1->memberJoinInfo[param_2].xuid) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
                     0x5dc,0,"%s\n\t%s");
   }
-  iVar3 = __restgprlr_27(0);
-  return iVar3;
+  return 0;
 }
 
 
 // 8238E678  PartyAtomicHost_WaitForMembersToRespond  (client_mp/partyjoining.cpp:1506)
 
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
@@ -2731,122 +2570,112 @@ int PartyAtomicHost_WaitForMembersToRespond(PartyJoinInfo *param_1)
 {
   PartyJoinState PVar1;
   PartyJoinResponse PVar2;
-  PartyJoinInfo *pPVar3;
+  int iVar3;
   int iVar4;
-  int iVar5;
+  uint uVar5;
   uint uVar6;
-  uint uVar7;
-  PartyMemberJoinInfo *pPVar8;
+  PartyMemberJoinInfo *pPVar7;
   
-  pPVar3 = (PartyJoinInfo *)__savegprlr_22(param_1);
-  if (pPVar3 == (PartyJoinInfo *)0x0) {
+  if (param_1 == (PartyJoinInfo *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
                     0x5ec,0,"%s");
   }
-  if ((pPVar3->state != PARTYJOIN_WAIT_HOST) && (pPVar3->state != PARTYJOIN_WAIT_PRIMED_HOST)) {
+  if ((param_1->state != PARTYJOIN_WAIT_HOST) && (param_1->state != PARTYJOIN_WAIT_PRIMED_HOST)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
                     0x5ed,0,"%s");
   }
-  PVar1 = pPVar3->state;
-  iVar5 = 0;
-  uVar6 = (uint)((party_debugHostMembersFailing->current).integer == 1);
-  uVar7 = 0;
-  pPVar8 = pPVar3->memberJoinInfo;
+  PVar1 = param_1->state;
+  iVar4 = 0;
+  uVar5 = (uint)((party_debugHostMembersFailing->current).integer == 1);
+  uVar6 = 0;
+  pPVar7 = param_1->memberJoinInfo;
   do {
-    if ((pPVar8->active != 0) &&
-       (iVar4 = PartyAtomicHost_CheckForMemberDisconnect(pPVar3,uVar7), iVar4 == 0)) {
-      PVar2 = pPVar8->responseState[((int)PVar1 >> 0x1f) + (uint)(PARTYJOIN_WAIT_HOST_ACK < PVar1)];
+    if ((pPVar7->active != 0) &&
+       (iVar3 = PartyAtomicHost_CheckForMemberDisconnect(param_1,uVar6), iVar3 == 0)) {
+      PVar2 = pPVar7->responseState[((int)PVar1 >> 0x1f) + (uint)(PARTYJOIN_WAIT_HOST_ACK < PVar1)];
       if (PVar2 == JOINRESPONSE_NONE) {
-        iVar5 = iVar5 + 1;
+        iVar4 = iVar4 + 1;
       }
       else if (PVar2 != JOINRESPONSE_SUCCESS) {
         if ((int)PVar2 < 2) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp"
                           ,0x615,0,"%s");
         }
-        uVar6 = uVar6 + 1;
+        uVar5 = uVar5 + 1;
       }
     }
-    uVar7 = uVar7 + 1;
-    pPVar8 = pPVar8 + 1;
-  } while (uVar7 < 0x12);
-  if (uVar6 == 0) {
-    if (iVar5 == 0) {
+    uVar6 = uVar6 + 1;
+    pPVar7 = pPVar7 + 1;
+  } while (uVar6 < 0x12);
+  if (uVar5 == 0) {
+    if (iVar4 == 0) {
       Com_Printf(0xe,
                  "PartyJoinAtomic: WaitForMembersToJoin SUCCESS - Sending response to everybody (%i members)\n"
                 );
-      PartyAtomicHost_BroadcastActionResponse(pPVar3,JOINRESPONSE_SUCCESS,1);
-      iVar5 = __restgprlr_22(1);
-      return iVar5;
+      PartyAtomicHost_BroadcastActionResponse(param_1,JOINRESPONSE_SUCCESS,1);
+      return 1;
     }
   }
   else {
-    PartyAtomic_JoinAttemptFailed(pPVar3,"XBOXLIVE_CANTJOINSESSION");
+    PartyAtomic_JoinAttemptFailed(param_1,"XBOXLIVE_CANTJOINSESSION");
   }
-  iVar5 = __restgprlr_22(0);
-  return iVar5;
+  return 0;
 }
 
 
 // 8238E810  PartyAtomicHost_WaitForMembersToAckOurResponse  (client_mp/partyjoining.cpp:1580)
 
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 int PartyAtomicHost_WaitForMembersToAckOurResponse(int param_1,PartyJoinInfo *param_2)
 
 {
-  uint *puVar1;
-  int iVar2;
+  int iVar1;
+  RMsgSendStatus RVar2;
   int iVar3;
-  RMsgSendStatus RVar4;
-  ulonglong uVar5;
-  PartyJoinInfo *pPVar6;
-  int iVar7;
-  uint uVar8;
-  longlong lVar9;
+  uint uVar4;
+  uint *puVar5;
   
-  uVar5 = (ulonglong)(int)param_2;
-  iVar2 = __savegprlr_22(param_1);
-  if ((uVar5 & 0xffffffff) == 0) {
+  if (param_2 == (PartyJoinInfo *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
                     0x632,0,"%s");
   }
-  pPVar6 = (PartyJoinInfo *)uVar5;
-  if ((pPVar6->state != PARTYJOIN_WAIT_HOST_ACK) &&
-     (pPVar6->state != PARTYJOIN_WAIT_PRIMED_HOST_ACK)) {
+  if ((param_2->state != PARTYJOIN_WAIT_HOST_ACK) &&
+     (param_2->state != PARTYJOIN_WAIT_PRIMED_HOST_ACK)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
                     0x633,0,"%s");
   }
-  iVar7 = 0;
-  uVar8 = 0;
-  lVar9 = uVar5 + 0x88;
+  iVar3 = 0;
+  uVar4 = 0;
+  puVar5 = &param_2->memberJoinInfo[0].responseMessageHandle;
   do {
-    puVar1 = (uint *)lVar9;
-    if ((puVar1[-6] != 0) &&
-       (iVar3 = PartyAtomicHost_CheckForMemberDisconnect(pPVar6,uVar8), iVar3 == 0)) {
-      RVar4 = RMsg_GetSendStatusFromHandle(*puVar1);
-      if (RVar4 == RMSG_STATUS_IN_PROGRESS) {
-        if ((pPVar6->timeoutTime < 1) || (iVar2 < pPVar6->timeoutTime)) {
-          iVar7 = iVar7 + 1;
+    if ((((PartyMemberJoinInfo *)(puVar5 + -6))->active != 0) &&
+       (iVar1 = PartyAtomicHost_CheckForMemberDisconnect(param_2,uVar4), iVar1 == 0)) {
+      RVar2 = RMsg_GetSendStatusFromHandle(*puVar5);
+      if (RVar2 == RMSG_STATUS_IN_PROGRESS) {
+        if ((param_2->timeoutTime < 1) || (param_1 < param_2->timeoutTime)) {
+          iVar3 = iVar3 + 1;
         }
         else {
           Com_PrintWarning(0x19,
                            "PartyJoinAtomic: Party member %i timed out, potentially leaving behind.\n"
                           );
-          PartyAtomic_CancelMemberResponseMessage((PartyMemberJoinInfo *)(puVar1 + -6));
+          PartyAtomic_CancelMemberResponseMessage((PartyMemberJoinInfo *)(puVar5 + -6));
         }
       }
       else {
-        if (RVar4 == RMSG_STATUS_ERROR) {
+        if (RVar2 == RMSG_STATUS_ERROR) {
           Com_PrintWarning(0x19,
                            "PartyJoinAtomic: Potentially abandoning party member, failed to tell him to finish joining\n"
                           );
         }
-        RMsg_ReleaseHandle(puVar1);
-        RVar4 = RMsg_GetSendStatusFromHandle(*puVar1);
-        if (RVar4 != RMSG_STATUS_INACTIVE) {
-          RMsg_GetSendStatusFromHandle(*puVar1);
+        RMsg_ReleaseHandle(puVar5);
+        RVar2 = RMsg_GetSendStatusFromHandle(*puVar5);
+        if (RVar2 != RMSG_STATUS_INACTIVE) {
+          RMsg_GetSendStatusFromHandle(*puVar5);
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp"
                           ,0x657,0,
                           "RMsg_GetSendStatusFromHandle( memberJoinInfo->responseMessageHandle ) == RMSG_STATUS_INACTIVE\n\t%i, %i"
@@ -2854,56 +2683,51 @@ int PartyAtomicHost_WaitForMembersToAckOurResponse(int param_1,PartyJoinInfo *pa
         }
       }
     }
-    uVar8 = uVar8 + 1;
-    lVar9 = lVar9 + 0x20;
-  } while (uVar8 < 0x12);
-  if (iVar7 == 0) {
-    PartyAtomic_AssertNoPendingMemberMessages(pPVar6);
+    uVar4 = uVar4 + 1;
+    puVar5 = puVar5 + 8;
+  } while (uVar4 < 0x12);
+  if (iVar3 == 0) {
+    PartyAtomic_AssertNoPendingMemberMessages(param_2);
     Com_Printf(0x19,"PartyJoinAtomic: All members acknowledged our response or timed out\n");
-    iVar2 = __restgprlr_22(1);
-    return iVar2;
+    return 1;
   }
-  iVar2 = __restgprlr_22(0);
-  return iVar2;
+  return 0;
 }
 
 
 // 8238E9B0  PartyClientAtomic_HandleHostResponse  (client_mp/partyjoining.cpp:1638)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 int PartyClientAtomic_HandleHostResponse(PartyJoinInfo *param_1)
 
 {
-  PartyJoinInfo *pPVar1;
-  int iVar2;
-  
-  pPVar1 = (PartyJoinInfo *)__savegprlr_29(param_1);
-  if (pPVar1 == (PartyJoinInfo *)0x0) {
+  if (param_1 == (PartyJoinInfo *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
                     0x669,0,"%s");
   }
-  if ((pPVar1->state != PARTYJOIN_WAIT_CLIENT) && (pPVar1->state != PARTYJOIN_WAIT_PRIMED_CLIENT)) {
+  if ((param_1->state != PARTYJOIN_WAIT_CLIENT) && (param_1->state != PARTYJOIN_WAIT_PRIMED_CLIENT))
+  {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
                     0x66a,0,"%s");
   }
-  if (pPVar1->hostResponse
-      [((int)pPVar1->state >> 0x1f) + (uint)(PARTYJOIN_WAIT_HOST_ACK < pPVar1->state)] !=
+  if (param_1->hostResponse
+      [((int)param_1->state >> 0x1f) + (uint)(PARTYJOIN_WAIT_HOST_ACK < param_1->state)] !=
       JOINRESPONSE_NONE) {
-    if (pPVar1->hostResponse
-        [((int)pPVar1->state >> 0x1f) + (uint)(PARTYJOIN_WAIT_HOST_ACK < pPVar1->state)] ==
+    if (param_1->hostResponse
+        [((int)param_1->state >> 0x1f) + (uint)(PARTYJOIN_WAIT_HOST_ACK < param_1->state)] ==
         JOINRESPONSE_SUCCESS) {
       Com_Printf(0x19,
                  "PartyJoinAtomic: HandleHostResponse - Host says everyone joined successfully\n");
-      iVar2 = __restgprlr_29(1);
-      return iVar2;
+      return 1;
     }
     Com_PrintError(0x19,"PartyJoinAtomic: HandleHostResponse - Host says someone failed\n");
-    PartyAtomic_JoinAttemptFailed(pPVar1,"XBOXLIVE_CANTJOINSESSION");
+    PartyAtomic_JoinAttemptFailed(param_1,"XBOXLIVE_CANTJOINSESSION");
   }
-  iVar2 = __restgprlr_29(0);
-  return iVar2;
+  return 0;
 }
 
 
@@ -2990,15 +2814,14 @@ void PartyAtomic_AssertHasConnectivity(PartyJoinInfo *param_1)
 
 // 8238EBE8  PartyAtomic_OnFrame_CheckTimeout  (client_mp/partyjoining.cpp:1741)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void PartyAtomic_OnFrame_CheckTimeout(int param_1,PartyJoinState param_2,PartyJoinInfo *param_3)
 
 {
-  int iVar1;
-  
-  iVar1 = __savegprlr_27(param_1);
   if (param_3->timeoutTime < 1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
                     0x6d0,0,"%s");
@@ -3007,13 +2830,12 @@ void PartyAtomic_OnFrame_CheckTimeout(int param_1,PartyJoinState param_2,PartyJo
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
                     0x6d1,0,"%s");
   }
-  if (param_3->timeoutTime <= iVar1) {
+  if (param_3->timeoutTime <= param_1) {
     if (0 < param_3->availableRetryCount) {
       Com_PrintWarning(0xe,
                        "PartyJoinAtomic: Timed out executing state %i. Retrying (%i available).\n");
       param_3->state = param_2;
       param_3->availableRetryCount = param_3->availableRetryCount + -1;
-      __restgprlr_27();
       return;
     }
     Com_PrintError(0xe,
@@ -3021,13 +2843,14 @@ void PartyAtomic_OnFrame_CheckTimeout(int param_1,PartyJoinState param_2,PartyJo
                   );
     PartyAtomic_JoinAttemptFailed(param_3,"EXE_HOSTUNREACH");
   }
-  __restgprlr_27();
   return;
 }
 
 
 // 8238ECC8  PartyAtomic_OnFrame_Request  (client_mp/partyjoining.cpp:1765)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
@@ -3035,9 +2858,7 @@ void PartyAtomic_OnFrame_Request(int param_1,PartyJoinInfo *param_2)
 
 {
   int iVar1;
-  int iVar2;
   
-  iVar1 = __savegprlr_29(param_1);
   if (param_2->state != PARTYJOIN_REQUEST) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
                     0x6e6,0,"%s");
@@ -3046,28 +2867,26 @@ void PartyAtomic_OnFrame_Request(int param_1,PartyJoinInfo *param_2)
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
                     0x6e7,0,"%s\n\t%s");
   }
-  iVar2 = PartyAtomic_NeedsToCreatePrivateParty(param_2);
-  if (iVar2 == 0) {
+  iVar1 = PartyAtomic_NeedsToCreatePrivateParty(param_2);
+  if (iVar1 == 0) {
     PartyAtomic_AskToJoinParty(param_2);
     param_2->state = PARTYJOIN_REQUESTED;
-    param_2->timeoutTime = (int)((partyTweak_connectTimeout->current).string + iVar1);
+    param_2->timeoutTime = (int)((partyTweak_connectTimeout->current).string + param_1);
   }
-  __restgprlr_29();
   return;
 }
 
 
 // 8238ED80  PartyAtomic_OnFrame_Requested  (client_mp/partyjoining.cpp:1785)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void PartyAtomic_OnFrame_Requested(int param_1,PartyJoinInfo *param_2)
 
 {
-  int iVar1;
-  
-  iVar1 = __savegprlr_29(param_1);
   if (param_2->state != PARTYJOIN_REQUESTED) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
                     0x6fa,0,"%s");
@@ -3076,8 +2895,7 @@ void PartyAtomic_OnFrame_Requested(int param_1,PartyJoinInfo *param_2)
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
                     0x6fb,0,"%s\n\t%s");
   }
-  PartyAtomic_OnFrame_CheckTimeout(iVar1,PARTYJOIN_REQUEST,param_2);
-  __restgprlr_29();
+  PartyAtomic_OnFrame_CheckTimeout(param_1,PARTYJOIN_REQUEST,param_2);
   return;
 }
 
@@ -3148,6 +2966,8 @@ void PartyAtomic_OnFrame_Joining(int param_1,PartyJoinInfo *param_2)
 
 // 8238EFB0  PartyAtomic_OnFrame_Joined  (client_mp/partyjoining.cpp:1839)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
@@ -3158,7 +2978,6 @@ void PartyAtomic_OnFrame_Joined(int param_1,PartyJoinInfo *param_2)
   int iVar2;
   PartyJoinInfo *pPVar3;
   
-  __savegprlr_29(param_1);
   pPVar3 = param_2;
   if (param_2->state != PARTYJOIN_JOINED) {
     pPVar3 = (PartyJoinInfo *)0x730;
@@ -3166,56 +2985,51 @@ void PartyAtomic_OnFrame_Joined(int param_1,PartyJoinInfo *param_2)
                     0x730,0,"%s");
   }
   PVar1 = param_2->joinType;
-  if (PVar1 - PJT_PRESENCE < 5) {
-    if (PVar1 == PJT_INVITE) {
-LAB_8238f020:
+  if (4 < PVar1 - PJT_PRESENCE) {
+LAB_8238f0cc:
+    if (alwaysfails == 0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
+                      0x749,0,"Unhandled join type");
+    }
+    return;
+  }
+  if (PVar1 != PJT_INVITE) {
+    if (PVar1 == PJT_HOSTPRESENCE) goto LAB_8238f0cc;
+    if (PVar1 == PJT_HOSTREQUEST) {
       iVar2 = PartyAtomicClient_CheckForJoinAbort(param_2);
       if (iVar2 != 0) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp"
-                        ,0x736,0,"%s");
-      }
-      param_2->state = PARTYJOIN_COMMIT;
-      __restgprlr_29();
-      return;
-    }
-    if (PVar1 != PJT_HOSTPRESENCE) {
-      if (PVar1 != PJT_HOSTREQUEST) {
-        if (PVar1 != PJT_PRESENCE) {
-          iVar2 = PartyAtomicClient_CheckForJoinAbort(param_2);
-          if (iVar2 != 0) {
-            pPVar3 = (PartyJoinInfo *)0x743;
-            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp"
-                            ,0x743,0,"%s");
-          }
-          PartyAtomicJoin_SetupMemberJoinInfo((int)param_2,pPVar3);
-          param_2->state = PARTYJOIN_WAIT_HOST;
-          __restgprlr_29();
-          return;
-        }
-        goto LAB_8238f020;
-      }
-      iVar2 = PartyAtomicClient_CheckForJoinAbort(param_2);
-      if (iVar2 == 0) {
-        PartyAtomicClient_SendMemberActionResponse(param_2,JOINRESPONSE_SUCCESS);
-        param_2->state = PARTYJOIN_WAIT_CLIENT;
-        __restgprlr_29();
         return;
       }
-      goto LAB_8238f0f4;
+      PartyAtomicClient_SendMemberActionResponse(param_2,JOINRESPONSE_SUCCESS);
+      param_2->state = PARTYJOIN_WAIT_CLIENT;
+      return;
+    }
+    if (PVar1 != PJT_PRESENCE) {
+      iVar2 = PartyAtomicClient_CheckForJoinAbort(param_2);
+      if (iVar2 != 0) {
+        pPVar3 = (PartyJoinInfo *)0x743;
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp"
+                        ,0x743,0,"%s");
+      }
+      PartyAtomicJoin_SetupMemberJoinInfo((int)param_2,pPVar3);
+      param_2->state = PARTYJOIN_WAIT_HOST;
+      return;
     }
   }
-  if (alwaysfails == 0) {
+  iVar2 = PartyAtomicClient_CheckForJoinAbort(param_2);
+  if (iVar2 != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
-                    0x749,0,"Unhandled join type");
+                    0x736,0,"%s");
   }
-LAB_8238f0f4:
-  __restgprlr_29();
+  param_2->state = PARTYJOIN_COMMIT;
   return;
 }
 
 
 // 8238F100  PartyAtomic_OnFrame_ClientWait  (client_mp/partyjoining.cpp:1872)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
@@ -3225,7 +3039,6 @@ void PartyAtomic_OnFrame_ClientWait(int param_1,PartyJoinInfo *param_2)
   PartyJoinState PVar1;
   int iVar2;
   
-  __savegprlr_29(param_1);
   PVar1 = param_2->state;
   if ((PVar1 != PARTYJOIN_WAIT_CLIENT) && (PVar1 != PARTYJOIN_WAIT_PRIMED_CLIENT)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
@@ -3239,18 +3052,15 @@ void PartyAtomic_OnFrame_ClientWait(int param_1,PartyJoinInfo *param_2)
     else {
       if (PVar1 == PARTYJOIN_WAIT_PRIMED_CLIENT) {
         param_2->state = PARTYJOIN_SUCCESS;
-        __restgprlr_29();
         return;
       }
       if (alwaysfails == 0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp"
                         ,0x761,0,"Unhandled state for ClientWait");
-        __restgprlr_29();
         return;
       }
     }
   }
-  __restgprlr_29();
   return;
 }
 
@@ -3304,6 +3114,8 @@ void PartyAtomic_OnFrame_WaitHostPrimed(int param_1,PartyJoinInfo *param_2)
 
 // 8238F2D8  PartyAtomic_OnFrame_WaitHostAck  (client_mp/partyjoining.cpp:1924)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
@@ -3313,13 +3125,12 @@ void PartyAtomic_OnFrame_WaitHostAck(int param_1,PartyJoinInfo *param_2)
   PartyJoinState PVar1;
   int iVar2;
   
-  iVar2 = __savegprlr_28(param_1);
   PVar1 = param_2->state;
   if ((PVar1 != PARTYJOIN_WAIT_HOST_ACK) && (PVar1 != PARTYJOIN_WAIT_PRIMED_HOST_ACK)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
                     0x786,0,"%s\n\t(joinState) = %i");
   }
-  iVar2 = PartyAtomicHost_WaitForMembersToAckOurResponse(iVar2,param_2);
+  iVar2 = PartyAtomicHost_WaitForMembersToAckOurResponse(param_1,param_2);
   if (iVar2 != 0) {
     if (PVar1 == PARTYJOIN_WAIT_HOST_ACK) {
       param_2->state = PARTYJOIN_COMMIT;
@@ -3327,24 +3138,23 @@ void PartyAtomic_OnFrame_WaitHostAck(int param_1,PartyJoinInfo *param_2)
     else {
       if (PVar1 == PARTYJOIN_WAIT_PRIMED_HOST_ACK) {
         param_2->state = PARTYJOIN_SUCCESS;
-        __restgprlr_28();
         return;
       }
       if (alwaysfails == 0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp"
                         ,0x795,0,"Unhandled state for WaitHostAck");
-        __restgprlr_28();
         return;
       }
     }
   }
-  __restgprlr_28();
   return;
 }
 
 
 // 8238F3A0  PartyAtomic_OnFrame_Commit  (client_mp/partyjoining.cpp:1948)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
@@ -3352,32 +3162,28 @@ void PartyAtomic_OnFrame_Commit(int param_1,PartyJoinInfo *param_2)
 
 {
   int iVar1;
-  int iVar2;
-  bool bVar3;
+  bool bVar2;
   
-  iVar1 = __savegprlr_29(param_1);
   if (param_2->state != PARTYJOIN_COMMIT) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
                     0x79d,0,"%s");
   }
-  iVar2 = PartyAtomicClient_CheckForCommitAbort(param_2);
-  if (iVar2 == 0) {
+  iVar1 = PartyAtomicClient_CheckForCommitAbort(param_2);
+  if (iVar1 == 0) {
     if (((0 < (party_debugClientFailCommit->current).integer) &&
-        (iVar2 = PartyAtomic_IsJoiningOnHostequest(param_2), iVar2 != 0)) &&
-       (((party_debugClientFailCommit->current).integer == 1 || (bVar3 = Lobby_IsInLobby(), bVar3)))
+        (iVar1 = PartyAtomic_IsJoiningOnHostequest(param_2), iVar1 != 0)) &&
+       (((party_debugClientFailCommit->current).integer == 1 || (bVar2 = Lobby_IsInLobby(), bVar2)))
        ) {
       Com_Printf(0xe,
                  "PartyJoinAtomic: DEBUG - Party member simulating failure to join an accepted lobby\n"
                 );
       PartyAtomic_JoinAttemptFailed(param_2,"XBOXLIVE_CANTJOINSESSION");
-      __restgprlr_29();
       return;
     }
     PartyAtomicClient_CommitToJoinedParty(param_2);
     param_2->state = PARTYJOIN_COMMITTING;
-    param_2->timeoutTime = (int)((partyTweak_connectTimeout->current).string + iVar1);
+    param_2->timeoutTime = (int)((partyTweak_connectTimeout->current).string + param_1);
   }
-  __restgprlr_29();
   return;
 }
 
@@ -3413,6 +3219,8 @@ void PartyAtomic_OnFrame_Committing(int param_1,PartyJoinInfo *param_2)
 
 // 8238F540  PartyAtomic_OnFrame_Committed  (client_mp/partyjoining.cpp:1996)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
@@ -3422,63 +3230,58 @@ void PartyAtomic_OnFrame_Committed(int param_1,PartyJoinInfo *param_2)
   PartyJoinType PVar1;
   int iVar2;
   
-  __savegprlr_29(param_1);
   if (param_2->state != PARTYJOIN_COMMITTED) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
                     0x7cd,0,"%s");
   }
   PVar1 = param_2->joinType;
-  if (PVar1 - PJT_PRESENCE < 5) {
-    if ((PVar1 != PJT_INVITE) && (PVar1 != PJT_HOSTPRESENCE)) {
-      if (PVar1 == PJT_HOSTREQUEST) {
-        iVar2 = PartyAtomicClient_CheckForCommitAbort(param_2);
-        if (iVar2 == 0) {
-          PartyAtomicClient_SendMemberActionResponse(param_2,JOINRESPONSE_SUCCESS);
-          param_2->state = PARTYJOIN_WAIT_PRIMED_CLIENT;
-          __restgprlr_29();
-          return;
-        }
-        goto LAB_8238f67c;
-      }
-      if (PVar1 != PJT_PRESENCE) {
-        iVar2 = PartyAtomicClient_CheckForCommitAbort(param_2);
-        if (iVar2 != 0) {
-          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp"
-                          ,0x7e2,0,"%s");
-        }
-        param_2->state = PARTYJOIN_WAIT_PRIMED_HOST;
-        __restgprlr_29();
-        return;
-      }
-    }
-    iVar2 = PartyAtomicClient_CheckForCommitAbort(param_2);
-    if (iVar2 != 0) {
+  if (4 < PVar1 - PJT_PRESENCE) {
+    if (alwaysfails == 0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
-                      0x7d5,0,"%s");
+                      0x7e7,0,"Unhandled join type");
     }
-    param_2->state = PARTYJOIN_SUCCESS;
-    __restgprlr_29();
     return;
   }
-  if (alwaysfails == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
-                    0x7e7,0,"Unhandled join type");
+  if ((PVar1 != PJT_INVITE) && (PVar1 != PJT_HOSTPRESENCE)) {
+    if (PVar1 == PJT_HOSTREQUEST) {
+      iVar2 = PartyAtomicClient_CheckForCommitAbort(param_2);
+      if (iVar2 != 0) {
+        return;
+      }
+      PartyAtomicClient_SendMemberActionResponse(param_2,JOINRESPONSE_SUCCESS);
+      param_2->state = PARTYJOIN_WAIT_PRIMED_CLIENT;
+      return;
+    }
+    if (PVar1 != PJT_PRESENCE) {
+      iVar2 = PartyAtomicClient_CheckForCommitAbort(param_2);
+      if (iVar2 != 0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp"
+                        ,0x7e2,0,"%s");
+      }
+      param_2->state = PARTYJOIN_WAIT_PRIMED_HOST;
+      return;
+    }
   }
-LAB_8238f67c:
-  __restgprlr_29();
+  iVar2 = PartyAtomicClient_CheckForCommitAbort(param_2);
+  if (iVar2 != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
+                    0x7d5,0,"%s");
+  }
+  param_2->state = PARTYJOIN_SUCCESS;
   return;
 }
 
 
 // 8238F688  PartyAtomic_OnFrame_Success  (client_mp/partyjoining.cpp:2031)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void PartyAtomic_OnFrame_Success(int param_1,PartyJoinInfo *param_2)
 
 {
-  __savegprlr_29(param_1);
   if (param_2->state != PARTYJOIN_SUCCESS) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
                     0x7f0,0,"%s");
@@ -3490,7 +3293,6 @@ void PartyAtomic_OnFrame_Success(int param_1,PartyJoinInfo *param_2)
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
                     0x7f6,1,"%s");
   }
-  __restgprlr_29();
   return;
 }
 
@@ -3597,6 +3399,8 @@ void PartyAtomic_OnError_TellPartyToAbortCommit(int param_1,PartyJoinInfo *param
 
 // 8238F9C8  PartyAtomic_OnError_WaitHostAckFailed  (client_mp/partyjoining.cpp:2101)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
@@ -3604,30 +3408,29 @@ void PartyAtomic_OnError_WaitHostAckFailed(int param_1,PartyJoinInfo *param_2)
 
 {
   int iVar1;
-  int iVar2;
   
-  iVar1 = __savegprlr_28(param_1);
   if ((param_2->state != PARTYJOIN_WAIT_HOST_ACK) &&
      (param_2->state != PARTYJOIN_WAIT_PRIMED_HOST_ACK)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
                     0x836,0,"%s");
   }
-  iVar2 = PartyAtomic_HasErrorOccured(param_2);
-  if (iVar2 == 0) {
+  iVar1 = PartyAtomic_HasErrorOccured(param_2);
+  if (iVar1 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
                     0x837,0,"%s");
   }
-  iVar1 = PartyAtomicHost_WaitForMembersToAckOurResponse(iVar1,param_2);
+  iVar1 = PartyAtomicHost_WaitForMembersToAckOurResponse(param_1,param_2);
   if (iVar1 != 0) {
     param_2->state = PARTYJOIN_FAILED;
   }
-  __restgprlr_28();
   return;
 }
 
 
 // 8238FA70  PartyAtomic_OnError_CommitFailed  (client_mp/partyjoining.cpp:2111)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
@@ -3635,15 +3438,13 @@ void PartyAtomic_OnError_CommitFailed(int param_1,PartyJoinInfo *param_2)
 
 {
   int iVar1;
-  int iVar2;
   
-  iVar1 = __savegprlr_29(param_1);
   if (((int)param_2->state < 9) || (0xb < (int)param_2->state)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
                     0x840,0,"%s\n\t(PartyAtomic_GetJoinState( partyJoinInfo )) = %i");
   }
-  iVar2 = PartyAtomic_HasErrorOccured(param_2);
-  if (iVar2 == 0) {
+  iVar1 = PartyAtomic_HasErrorOccured(param_2);
+  if (iVar1 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
                     0x841,0,"%s");
   }
@@ -3652,29 +3453,27 @@ void PartyAtomic_OnError_CommitFailed(int param_1,PartyJoinInfo *param_2)
     Com_Printf(0xe,"PartyJoinAtomic: CommitFailed - Sending such message back to the host\n");
     PartyAtomicClient_SendMemberActionResponse(param_2,JOINRESPONSE_ERROR_MEMBER_FAILED);
     param_2->state = PARTYJOIN_WAIT_PRIMED_CLIENT;
-    __restgprlr_29();
     return;
   }
   if (param_2->joinType == PJT_MATCHMAKING) {
-    PartyAtomic_OnError_TellPartyToAbortCommit(iVar1,param_2);
-    __restgprlr_29();
+    PartyAtomic_OnError_TellPartyToAbortCommit(param_1,param_2);
     return;
   }
   param_2->state = PARTYJOIN_FAILED;
-  __restgprlr_29();
   return;
 }
 
 
 // 8238FB60  PartyAtomic_OnError_Failed  (client_mp/partyjoining.cpp:2137)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void PartyAtomic_OnError_Failed(int param_1,PartyJoinInfo *param_2)
 
 {
-  __savegprlr_29(param_1);
   if (param_2->state != PARTYJOIN_FAILED) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
                     0x85a,0,"%s");
@@ -3690,7 +3489,6 @@ void PartyAtomic_OnError_Failed(int param_1,PartyJoinInfo *param_2)
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
                     0x861,1,"%s");
   }
-  __restgprlr_29();
   return;
 }
 
@@ -3728,6 +3526,8 @@ void PartyAtomic_UpdateFakeLatency(PartyJoinInfo *param_1)
 
 // 8238FCE0  PartyAtomic_PartySanityCheck  (client_mp/partyjoining.cpp:2214)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
@@ -3735,99 +3535,98 @@ void PartyAtomic_PartySanityCheck(PartyJoinInfo *param_1)
 
 {
   PartyData *pPVar1;
-  int *piVar2;
-  int iVar3;
-  uint uVar4;
+  int iVar2;
+  uint uVar3;
+  PartyData *pPVar4;
+  bool bVar6;
   PartyData *pPVar5;
-  bool bVar7;
-  PartyData *pPVar6;
   
-  piVar2 = (int *)__savegprlr_25(param_1);
-  if (piVar2 == (int *)0x0) {
+  if (param_1 == (PartyJoinInfo *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
                     0x8a9,0,"%s");
   }
-  if (*piVar2 == 0) {
+  if (param_1->state == PARTYJOIN_INACTIVE) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
                     0x8aa,0,"%s");
   }
-  pPVar1 = (PartyData *)piVar2[0x19];
+  pPVar1 = param_1->atomicParty;
   if (pPVar1 != (PartyData *)0x0) {
     if (pPVar1->inParty == 0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
                       0x8af,0,"%s");
     }
-    iVar3 = PartyMigrate_MigrateActive(pPVar1);
-    if (iVar3 != 0) {
+    iVar2 = PartyMigrate_MigrateActive(pPVar1);
+    if (iVar2 != 0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
                       0x8b0,0,"%s\n\t%s");
     }
-    uVar4 = Party_HostNum(pPVar1);
-    iVar3 = Party_IsMemberIndexDataAvailable(pPVar1,uVar4);
-    if (iVar3 == 0) {
+    uVar3 = Party_HostNum(pPVar1);
+    iVar2 = Party_IsMemberIndexDataAvailable(pPVar1,uVar3);
+    if (iVar2 == 0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
                       0x8b1,0,"%s\n\t%s");
     }
   }
-  if ((piVar2[1] == 4) || (piVar2[1] == 3)) {
-    pPVar6 = &g_partyData;
-    iVar3 = Party_AreWeHost(&g_partyData);
-    if (iVar3 != 0) {
+  if ((param_1->joinType == PJT_HOSTREQUEST) || (param_1->joinType == PJT_HOSTPRESENCE)) {
+    pPVar5 = &g_partyData;
+    iVar2 = Party_AreWeHost(&g_partyData);
+    if (iVar2 != 0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
                       0x8ba,0,"%s");
     }
-    pPVar5 = Lobby_GetPartyData();
-    iVar3 = Party_AreWeHost(pPVar5);
-    if (iVar3 != 0) {
+    pPVar4 = Lobby_GetPartyData();
+    iVar2 = Party_AreWeHost(pPVar4);
+    if (iVar2 != 0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
                       0x8bb,0,"%s");
     }
-    if (piVar2[1] == 4) {
-      bVar7 = Lobby_IsInRunningLobby();
-      if (!bVar7) {
+    if (param_1->joinType == PJT_HOSTREQUEST) {
+      bVar6 = Lobby_IsInRunningLobby();
+      if (!bVar6) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp"
                         ,0x8be,0,"%s");
       }
-      pPVar6 = Lobby_GetPartyData();
+      pPVar5 = Lobby_GetPartyData();
     }
     else if (g_partyData.inParty == 0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
                       0x8c3,0,"%s");
     }
-    if (pPVar1 != pPVar6) {
+    if (pPVar1 != pPVar5) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
                       0x8c6,0,"%s");
     }
-    uVar4 = Party_HostNum(pPVar6);
-    if (0x11 < uVar4) {
+    uVar3 = Party_HostNum(pPVar5);
+    if (0x11 < uVar3) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
                       0x8c9,0,"hostNum doesn\'t index MAX_PARTY_MEMBERS\n\t%i not in [0, %i)");
     }
-    iVar3 = Party_IsMemberDataAvailable(pPVar6->partyMembers + uVar4);
-    if (iVar3 == 0) {
+    iVar2 = Party_IsMemberDataAvailable(pPVar5->partyMembers + uVar3);
+    if (iVar2 == 0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
                       0x8cb,0,"%s");
     }
   }
-  if (piVar2[1] == 5) {
-    pPVar6 = Lobby_GetPartyData();
-    if (pPVar1 != pPVar6) {
+  if (param_1->joinType == PJT_MATCHMAKING) {
+    pPVar5 = Lobby_GetPartyData();
+    if (pPVar1 != pPVar5) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
                       0x8cf,0,"%s");
     }
-    bVar7 = Lobby_IsInRunningLobby();
-    if (!bVar7) {
+    bVar6 = Lobby_IsInRunningLobby();
+    if (!bVar6) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
                       0x8d0,0,"%s");
     }
   }
-  __restgprlr_25();
   return;
 }
 
 
 // 8238FFD0  PartyAtomic_PartyJoinFrame  (client_mp/partyjoining.cpp:2263)
 
+/* WARNING: Function: __savegprlr_19 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_19 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
@@ -3840,12 +3639,13 @@ void PartyAtomic_PartyJoinFrame(void)
   int iVar3;
   bool bVar4;
   
-  __savegprlr_19();
   iVar3 = Sys_Milliseconds();
   PartyAtomic_UpdateFakeLatency(&g_partyJoinInfo);
   do {
     do {
-      if (g_partyJoinInfo.state == PARTYJOIN_INACTIVE) goto LAB_82390158;
+      if (g_partyJoinInfo.state == PARTYJOIN_INACTIVE) {
+        return;
+      }
       PartyAtomic_PartySanityCheck(&g_partyJoinInfo);
       PVar2 = g_partyJoinInfo.state;
       if (g_partyJoinInfo.state == PARTYJOIN_INACTIVE) {
@@ -3879,8 +3679,6 @@ void PartyAtomic_PartyJoinFrame(void)
                       0x216,0,"%s");
     }
   } while (-(uint)bVar4 + 1 != (uint)(g_partyJoinInfo.errorMessage != (char *)0x0));
-LAB_82390158:
-  __restgprlr_19();
   return;
 }
 
@@ -3912,112 +3710,107 @@ void PartyAtomic_Shutdown(void)
 
 // 8238BEF8  PartyAtomic_SetupSplitscreenControllersForInvite  (client_mp/partyjoining.cpp:2337)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void PartyAtomic_SetupSplitscreenControllersForInvite
                (uint param_1,int param_2,PartySplitscreenData *param_3)
 
 {
-  uint uVar1;
-  PartySplitscreenData *pPVar2;
-  int iVar3;
-  bool bVar4;
-  ulonglong uVar5;
+  int iVar1;
+  bool bVar2;
   
-  uVar5 = (ulonglong)(int)param_3;
-  uVar1 = __savegprlr_27(param_1);
-  if (3 < uVar1) {
+  if (3 < param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
                     0x924,0,
                     "requesterControllerIndex doesn\'t index MAX_GPAD_COUNT\n\t%i not in [0, %i)");
   }
-  if ((uVar5 & 0xffffffff) == 0) {
+  if (param_3 == (PartySplitscreenData *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
                     0x925,0,"%s");
   }
-  pPVar2 = (PartySplitscreenData *)uVar5;
   if (param_2 == 0) {
-    CL_ForceNoSplitscreenControl("PartyAtomic_SetupSplitscreenControllersForInvite",uVar1);
+    CL_ForceNoSplitscreenControl("PartyAtomic_SetupSplitscreenControllersForInvite",param_1);
     CL_UnMapInactiveClientControllers();
     Dvar_SetBool(splitscreen,false);
-    Party_SetupSplitscreenData(pPVar2,uVar1,LOCAL_CLIENT_0);
-    if (pPVar2->otherClientActive != 0) {
+    Party_SetupSplitscreenData(param_3,param_1,LOCAL_CLIENT_0);
+    if (param_3->otherClientActive != 0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
                       0x941,0,"%s");
     }
   }
   else {
-    CL_EnsureClientIsActive(uVar1);
-    iVar3 = CL_GetLocalClientActiveCount();
-    if (2 < iVar3) {
+    CL_EnsureClientIsActive(param_1);
+    iVar1 = CL_GetLocalClientActiveCount();
+    if (2 < iVar1) {
       CL_GetLocalClientActiveCount();
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
                       0x92d,0,"CL_GetLocalClientActiveCount() <= MAX_PARTY_CLIENT_COUNT\n\t%i, %i");
     }
-    uVar1 = CL_ControllerIndexFromClientNum(LOCAL_CLIENT_0);
-    CL_EnsureClientIsActive(uVar1);
-    Party_SetupSplitscreenData(pPVar2,uVar1,LOCAL_CLIENT_0);
-    if (pPVar2->otherClientActive == 0) {
-      CL_ForceNoSplitscreenControl("PartyAtomic_SetupSplitscreenControllersForInvite",uVar1);
+    param_1 = CL_ControllerIndexFromClientNum(LOCAL_CLIENT_0);
+    CL_EnsureClientIsActive(param_1);
+    Party_SetupSplitscreenData(param_3,param_1,LOCAL_CLIENT_0);
+    if (param_3->otherClientActive == 0) {
+      CL_ForceNoSplitscreenControl("PartyAtomic_SetupSplitscreenControllersForInvite",param_1);
     }
   }
-  bVar4 = CL_IsLocalClientActive(LOCAL_CLIENT_0);
-  if (!bVar4) {
+  bVar2 = CL_IsLocalClientActive(LOCAL_CLIENT_0);
+  if (!bVar2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
                     0x944,0,"%s");
   }
-  bVar4 = CL_IsLocalClientActive(LOCAL_CLIENT_1);
-  if ((bVar4) && (pPVar2->otherClientActive == 0)) {
+  bVar2 = CL_IsLocalClientActive(LOCAL_CLIENT_1);
+  if ((bVar2) && (param_3->otherClientActive == 0)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
                     0x945,0,"%s");
   }
-  bVar4 = CL_IsLocalClientActive(LOCAL_CLIENT_2);
-  if (bVar4) {
+  bVar2 = CL_IsLocalClientActive(LOCAL_CLIENT_2);
+  if (bVar2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
                     0x946,0,"%s");
   }
-  bVar4 = CL_IsLocalClientActive(LOCAL_CLIENT_3);
-  if (bVar4) {
+  bVar2 = CL_IsLocalClientActive(LOCAL_CLIENT_3);
+  if (bVar2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
                     0x947,0,"%s");
   }
   CL_UnMapInactiveClientControllers();
-  CL_EnsureClientIsActive(uVar1);
-  __restgprlr_27();
+  CL_EnsureClientIsActive(param_1);
   return;
 }
 
 
 // 82390160  PartyAtomic_AcceptInviteMP  (client_mp/partyjoining.cpp:2389)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 void PartyAtomic_AcceptInviteMP(uint param_1,_XSESSION_INFO *param_2,int param_3,int param_4)
 
 {
-  uint uVar1;
-  bool bVar3;
-  int iVar2;
-  PartySplitscreenData *pPVar4;
-  LocalClientNum_t *pLVar5;
-  longlong lVar6;
+  bool bVar2;
+  int iVar1;
+  PartySplitscreenData *pPVar3;
+  LocalClientNum_t *pLVar4;
+  longlong lVar5;
   LocalClientNum_t LStack_64;
   PartySplitscreenData local_60 [4];
   
-  uVar1 = __savegprlr_25(param_1);
-  bVar3 = Live_AreWeAcceptingInvite();
-  if (bVar3) {
+  bVar2 = Live_AreWeAcceptingInvite();
+  if (bVar2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
                     0x95e,0,"%s");
   }
-  bVar3 = Live_HasAcceptedInvitation();
-  if (!bVar3) {
+  bVar2 = Live_HasAcceptedInvitation();
+  if (!bVar2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
                     0x95f,0,"%s");
   }
-  bVar3 = CL_AllLocalClientsDisconnected();
-  if (!bVar3) {
+  bVar2 = CL_AllLocalClientsDisconnected();
+  if (!bVar2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyjoining.cpp",
                     0x960,0,"%s");
   }
@@ -4034,8 +3827,8 @@ void PartyAtomic_AcceptInviteMP(uint param_1,_XSESSION_INFO *param_2,int param_3
   local_60[0].waitingForStats = 0;
   local_60[0].otherClientNum = LOCAL_CLIENT_0;
   local_60[0].otherControllerIndex = 0;
-  PartyAtomic_SetupSplitscreenControllersForInvite(uVar1,param_4,local_60);
-  iVar2 = CL_ControllerIndexFromClientNum(LOCAL_CLIENT_0);
+  PartyAtomic_SetupSplitscreenControllersForInvite(param_1,param_4,local_60);
+  iVar1 = CL_ControllerIndexFromClientNum(LOCAL_CLIENT_0);
   Live_SetCurrentGametype();
   PartyAtomic_Shutdown();
   if (clientUIActives[0].active == false) {
@@ -4044,25 +3837,24 @@ void PartyAtomic_AcceptInviteMP(uint param_1,_XSESSION_INFO *param_2,int param_3
   }
   clientUIActives[0].invited = param_3 == 1;
   Live_SendIntroducerMessage();
-  iVar2 = PartyAtomic_SetupPotentialHostForJoining(iVar2,param_2,ANY_PARTY_ID,9,0,&g_partyJoinInfo);
-  pLVar5 = &LStack_64;
-  pPVar4 = (PartySplitscreenData *)(g_partyJoinInfo.subPartyList + 0xe);
-  lVar6 = 6;
+  iVar1 = PartyAtomic_SetupPotentialHostForJoining(iVar1,param_2,ANY_PARTY_ID,9,0,&g_partyJoinInfo);
+  pLVar4 = &LStack_64;
+  pPVar3 = (PartySplitscreenData *)(g_partyJoinInfo.subPartyList + 0xe);
+  lVar5 = 6;
   do {
-    pLVar5 = pLVar5 + 1;
-    pPVar4 = (PartySplitscreenData *)&pPVar4->mainControllerIndex;
-    pPVar4->mainClientNum = *pLVar5;
-    lVar6 = lVar6 + -1;
-  } while (lVar6 != 0);
+    pLVar4 = pLVar4 + 1;
+    pPVar3 = (PartySplitscreenData *)&pPVar3->mainControllerIndex;
+    pPVar3->mainClientNum = *pLVar4;
+    lVar5 = lVar5 + -1;
+  } while (lVar5 != 0);
   PartyAtomic_FillSubPartyInfoForLocalClients(&g_partyJoinInfo);
   g_partyJoinInfo.joinType = ((uint)LZCOUNT(param_3) >> 5 ^ 1) + PJT_PRESENCE;
   g_partyJoinInfo.availableRetryCount = (partyTweak_connectAttempts->current).integer;
   g_partyJoinInfo.state = PARTYJOIN_REQUEST;
-  if (iVar2 == 0) {
+  if (iVar1 == 0) {
     Com_PrintError(0xe,"PartyJoin: Failed to setup potential host.\n");
     PartyAtomic_JoinAttemptFailed(&g_partyJoinInfo,"XBOXLIVE_CANTJOINSESSION");
   }
-  __restgprlr_25();
   return;
 }
 

@@ -2,59 +2,59 @@
 
 // 82567320  SV_GetMapBaseName  (server_mp/sv_ccmds_mp.cpp:73)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void SV_GetMapBaseName(char *param_1,char *param_2,int param_3)
 
 {
   char cVar1;
-  char *pcVar2;
-  int iVar3;
-  longlong lVar4;
-  char *pcVar5;
-  ulonglong uVar6;
+  int iVar2;
+  char *pcVar3;
+  char *pcVar4;
   
-  lVar4 = (longlong)param_3;
-  pcVar2 = (char *)__savegprlr_28(param_1);
-  if (pcVar2 == (char *)0x0) {
+  if (param_1 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_ccmds_mp.cpp",
                     0x4d,0,"%s");
   }
-  iVar3 = I_strnicmp(pcVar2,"maps/mp/",8);
-  pcVar5 = pcVar2;
-  if (iVar3 == 0) {
-    pcVar2 = pcVar2 + 8;
-    pcVar5 = pcVar2;
+  iVar2 = I_strnicmp(param_1,"maps/mp/",8);
+  pcVar3 = param_1;
+  if (iVar2 == 0) {
+    param_1 = param_1 + 8;
+    pcVar3 = param_1;
   }
   do {
-    cVar1 = *pcVar5;
-    pcVar5 = pcVar5 + 1;
+    cVar1 = *param_1;
+    param_1 = param_1 + 1;
   } while (cVar1 != '\0');
-  uVar6 = ZEXT48(pcVar5 + (-1 - (int)pcVar2));
-  iVar3 = I_stricmp(pcVar2 + (int)(pcVar5 + (-1 - (int)pcVar2) + -3),"bsp");
-  if (iVar3 == 0) {
-    uVar6 = uVar6 - 7;
+  pcVar4 = param_1 + (-1 - (int)pcVar3);
+  iVar2 = I_stricmp(pcVar3 + (int)(pcVar4 + -3),"bsp");
+  if (iVar2 == 0) {
+    pcVar4 = param_1 + (-8 - (int)pcVar3);
   }
-  if ((int)(lVar4 - 1U) < (int)uVar6) {
-    uVar6 = lVar4 - 1U;
+  if (param_3 + -1 < (int)pcVar4) {
+    pcVar4 = (char *)(param_3 + -1);
   }
   memcpy();
-  iVar3 = 0;
-  param_2[(int)uVar6] = '\0';
-  if (0 < (int)uVar6) {
+  iVar2 = 0;
+  param_2[(int)pcVar4] = '\0';
+  if (0 < (int)pcVar4) {
     do {
-      if (param_2[iVar3] == '%') {
-        param_2[iVar3] = '_';
+      if (param_2[iVar2] == '%') {
+        param_2[iVar2] = '_';
       }
-      iVar3 = iVar3 + 1;
-      uVar6 = uVar6 - 1;
-    } while (uVar6 != 0);
+      iVar2 = iVar2 + 1;
+      pcVar4 = pcVar4 + -1;
+    } while (pcVar4 != (char *)0x0);
   }
-  __restgprlr_28();
   return;
 }
 
 
 // 82567420  SV_GetPlayerByName  (server_mp/sv_ccmds_mp.cpp:146)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -64,22 +64,20 @@ client_t * SV_GetPlayerByName(void)
 
 {
   int iVar1;
-  client_t *pcVar2;
-  char *pcVar3;
+  char *pcVar2;
+  int iVar3;
   int iVar4;
-  int iVar5;
+  client_t *pcVar5;
   char *pcVar6;
   char acStack_80 [128];
   
-  __savegprlr_26();
   if ((com_sv_running->current).enabled != false) {
     iVar1 = SV_Cmd_Argc();
     if (iVar1 < 2) {
       Com_Printf(0,"No player specified.\n");
-      pcVar2 = (client_t *)__restgprlr_26(0);
-      return pcVar2;
+      return (client_t *)0x0;
     }
-    pcVar3 = SV_Cmd_Argv(1);
+    pcVar2 = SV_Cmd_Argv(1);
     if (svs.clientCount < (sv_maxclients->current).integer) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_ccmds_mp.cpp",
                       0xa8,0,"%s");
@@ -87,31 +85,30 @@ client_t * SV_GetPlayerByName(void)
     iVar1 = 0;
     if (0 < svs.clientCount) {
       pcVar6 = (svs.clients)->name;
-      iVar4 = svs.clientCount;
-      pcVar2 = svs.clients;
+      iVar3 = svs.clientCount;
+      pcVar5 = svs.clients;
       do {
-        if ((pcVar2->header).state != 0) {
-          iVar4 = I_stricmp(pcVar6,pcVar3);
-          if (iVar4 == 0) {
-LAB_82567580:
-            pcVar2 = (client_t *)__restgprlr_26(pcVar2);
-            return pcVar2;
+        if ((pcVar5->header).state != 0) {
+          iVar3 = I_stricmp(pcVar6,pcVar2);
+          if (iVar3 == 0) {
+            return pcVar5;
           }
           I_strncpyz(acStack_80,pcVar6,0x40);
           I_CleanStr(acStack_80);
-          iVar5 = I_stricmp(acStack_80,pcVar3);
-          iVar4 = svs.clientCount;
-          if (iVar5 == 0) goto LAB_82567580;
+          iVar4 = I_stricmp(acStack_80,pcVar2);
+          iVar3 = svs.clientCount;
+          if (iVar4 == 0) {
+            return pcVar5;
+          }
         }
         iVar1 = iVar1 + 1;
-        pcVar2 = pcVar2 + 1;
+        pcVar5 = pcVar5 + 1;
         pcVar6 = pcVar6 + 0x68b00;
-      } while (iVar1 < iVar4);
+      } while (iVar1 < iVar3);
     }
     Com_Printf(0,"Player %s is not on the server\n");
   }
-  pcVar2 = (client_t *)__restgprlr_26(0);
-  return pcVar2;
+  return (client_t *)0x0;
 }
 
 
@@ -189,48 +186,44 @@ void ShowLoadErrorsSummary(char *param_1,uint param_2)
 
 // 825676F0  SV_StartMap  (server_mp/sv_ccmds_mp.cpp:286)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void SV_StartMap(LocalClientNum_t param_1,char *param_2,bool param_3)
 
 {
-  LocalClientNum_t LVar1;
-  int iVar2;
+  int iVar1;
+  bool bVar2;
   bool bVar3;
-  uint uVar4;
-  bool bVar5;
   char acStack_70 [112];
   
-  uVar4 = (uint)param_3;
-  LVar1 = __savegprlr_28(param_1);
   com_errorPrintsCount = 0;
   if (((systemlink->current).enabled != false) || ((onlinegame->current).enabled != false)) {
-    Live_CheckPlayerIsSignedIn(LVar1);
+    Live_CheckPlayerIsSignedIn(param_1);
   }
   SV_GetMapBaseName(param_2,acStack_70,0x40);
   I_strlwr(acStack_70);
-  bVar5 = sv_migrate != 0;
-  iVar2 = Live_GetMapIndex(acStack_70);
-  iVar2 = Live_GetMapSource(iVar2);
-  bVar3 = Content_DoWeHaveContentPack(iVar2);
-  if (!bVar3) {
+  bVar3 = sv_migrate != 0;
+  iVar1 = Live_GetMapIndex(acStack_70);
+  iVar1 = Live_GetMapSource(iVar1);
+  bVar2 = Content_DoWeHaveContentPack(iVar1);
+  if (!bVar2) {
     UI_MissingMapError();
   }
   FS_ConvertPath(acStack_70);
-  SV_SpawnServer(acStack_70,uVar4 & 0xff,(uint)bVar5,true);
+  SV_SpawnServer(acStack_70,(uint)param_3,(uint)bVar3,true);
   if (com_errorPrintsCount != 0) {
     if (com_errorPrintsCount == 1) {
       Com_Error(ERR_MAPLOADERRORSUMMARY,
                 "\x15\"%s\"\n-\nThere was %u error when loading this map.\nSee the console log for details."
                );
-      __restgprlr_28();
       return;
     }
     Com_Error(ERR_MAPLOADERRORSUMMARY,
               "\x15\"%s\"\n-\nThere were %u errors when loading this map.\nSee the console log for details."
              );
   }
-  __restgprlr_28();
   return;
 }
 
@@ -304,6 +297,8 @@ void SV_Map_f(void)
 
 // 82567930  SV_DevMap_f  (server_mp/sv_ccmds_mp.cpp:422)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
@@ -320,7 +315,6 @@ void SV_DevMap_f(void)
   int *in_r13;
   char *pcVar7;
   
-  __savegprlr_27();
   if (7 < (uint)sv_cmd_args.nesting) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\../qcommon/cmd.h",
                     0xd3,0,"sv_cmd_args.nesting doesn\'t index CMD_MAX_NESTING\n\t%i not in [0, %i)"
@@ -371,7 +365,6 @@ void SV_DevMap_f(void)
     LVar5 = Cmd_LocalClientNum();
     SV_StartMap(LVar5,pcVar7,false);
   }
-  __restgprlr_27();
   return;
 }
 
@@ -392,6 +385,8 @@ void SV_ClearLoadGame(void)
 
 // 82567AE8  SV_ReconnectClients  (server_mp/sv_ccmds_mp.cpp:500)
 
+/* WARNING: Function: __savegprlr_21 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_21 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
@@ -404,7 +399,6 @@ void SV_ReconnectClients(int param_1)
   int iVar3;
   client_t *pcVar4;
   
-  __savegprlr_21(param_1);
   iVar3 = 0;
   if (0 < svs.clientCount) {
     iVar2 = 0;
@@ -429,13 +423,14 @@ void SV_ReconnectClients(int param_1)
       iVar2 = iVar2 + 0x68b00;
     } while (iVar3 < svs.clientCount);
   }
-  __restgprlr_21();
   return;
 }
 
 
 // 82567C08  SV_MapRestart  (server_mp/sv_ccmds_mp.cpp:549)
 
+/* WARNING: Function: __savegprlr_20 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_20 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
@@ -446,27 +441,25 @@ void SV_MapRestart(int param_1,int param_2)
   dvar_t *pdVar1;
   int iVar2;
   int iVar3;
-  int iVar4;
-  ulonglong uVar5;
-  uchar *puVar6;
+  ulonglong uVar4;
+  uchar *puVar5;
   int *in_r13;
+  int iVar6;
   int iVar7;
-  int iVar8;
   char in_RESERVE;
   byte in_cr0;
   netadr_t in_stack_ffffff08;
   char acStack_b0 [176];
   
-  iVar2 = __savegprlr_20(param_1);
   Com_SyncThreads();
   do {
-    uVar5 = (ulonglong)(uint)g_serverThreadOwnership;
+    uVar4 = (ulonglong)(uint)g_serverThreadOwnership;
     if (in_RESERVE != '\0') {
-      g_serverThreadOwnership = storeWordConditionalIndexed(uVar5 + 1,0,0xffffffff83f1e19c);
+      g_serverThreadOwnership = storeWordConditionalIndexed(uVar4 + 1,0,0xffffffff83f1e19c);
       in_cr0 = 2;
     }
   } while (!(bool)(in_cr0 >> 1 & 1));
-  if ((int)(uVar5 + 1) != 1) {
+  if ((int)(uVar4 + 1) != 1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_ccmds_mp.cpp",
                     0x22e,0,"%s\n\t(g_serverThreadOwnership) = %i");
   }
@@ -477,66 +470,64 @@ void SV_MapRestart(int param_1,int param_2)
   if ((com_sv_running->current).enabled == false) {
     Com_Printf(0,"Server is not running.\n");
     do {
-      uVar5 = (ulonglong)(uint)g_serverThreadOwnership;
+      uVar4 = (ulonglong)(uint)g_serverThreadOwnership;
       if (in_RESERVE != '\0') {
-        g_serverThreadOwnership = storeWordConditionalIndexed(uVar5 - 1,0,0xffffffff83f1e19c);
+        g_serverThreadOwnership = storeWordConditionalIndexed(uVar4 - 1,0,0xffffffff83f1e19c);
         in_cr0 = 2;
       }
     } while (!(bool)(in_cr0 >> 1 & 1));
-    if ((int)(uVar5 - 1) != 0) {
+    if ((int)(uVar4 - 1) != 0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_ccmds_mp.cpp",
                       0x23b,0,"%s\n\t(g_serverThreadOwnership) = %i");
-      __restgprlr_20();
       return;
     }
   }
   else {
     SV_SetGametype();
-    iVar3 = G_GetSavePersist();
+    iVar2 = G_GetSavePersist();
     if (((sv_maxclients->modified == false) &&
-        (iVar4 = I_stricmp(sv.gametype,(sv_gametype->current).string), iVar4 == 0)) &&
+        (iVar3 = I_stricmp(sv.gametype,(sv_gametype->current).string), iVar3 == 0)) &&
        (param_2 == 0)) {
       if (com_frameTime == sv.start_frameTime) {
         do {
-          uVar5 = (ulonglong)(uint)g_serverThreadOwnership;
+          uVar4 = (ulonglong)(uint)g_serverThreadOwnership;
           if (in_RESERVE != '\0') {
-            g_serverThreadOwnership = storeWordConditionalIndexed(uVar5 - 1,0,0xffffffff83f1e19c);
+            g_serverThreadOwnership = storeWordConditionalIndexed(uVar4 - 1,0,0xffffffff83f1e19c);
             in_cr0 = 2;
           }
         } while (!(bool)(in_cr0 >> 1 & 1));
-        if ((int)(uVar5 - 1) != 0) {
+        if ((int)(uVar4 - 1) != 0) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_ccmds_mp.cpp"
                           ,0x259,0,"%s\n\t(g_serverThreadOwnership) = %i");
-          __restgprlr_20();
           return;
         }
       }
       else {
-        iVar4 = Hunk_Inuse();
-        if (iVar4 == 0) {
+        iVar3 = Hunk_Inuse();
+        if (iVar3 == 0) {
           Hunk_Begin();
         }
-        iVar4 = svs.clientCount;
+        iVar3 = svs.clientCount;
         pdVar1 = sv_maxclients;
         *(undefined4 *)(*in_r13 + 0xf4) = 0xfffffdff;
-        if (iVar4 < (pdVar1->current).integer) {
+        if (iVar3 < (pdVar1->current).integer) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_ccmds_mp.cpp"
                           ,0x266,0,"%s");
-          iVar4 = svs.clientCount;
+          iVar3 = svs.clientCount;
         }
-        iVar7 = 0;
-        if (0 < iVar4) {
-          iVar8 = 0;
+        iVar6 = 0;
+        if (0 < iVar3) {
+          iVar7 = 0;
           do {
-            puVar6 = ((svs.clients)->header).netchan.remoteAddress.ip + iVar8 + -0x2c;
-            if (2 < *(int *)puVar6) {
+            puVar5 = ((svs.clients)->header).netchan.remoteAddress.ip + iVar7 + -0x2c;
+            if (2 < *(int *)puVar5) {
               NET_OutOfBandPrint(NS_MAXCLIENTS,in_stack_ffffff08,
-                                 (char *)*(undefined8 *)(puVar6 + 0x28));
-              iVar4 = svs.clientCount;
+                                 (char *)*(undefined8 *)(puVar5 + 0x28));
+              iVar3 = svs.clientCount;
             }
-            iVar7 = iVar7 + 1;
-            iVar8 = iVar8 + 0x68b00;
-          } while (iVar7 < iVar4);
+            iVar6 = iVar6 + 1;
+            iVar7 = iVar7 + 0x68b00;
+          } while (iVar6 < iVar3);
         }
         Dvar_ResetScriptInfo();
         SV_InitArchivedSnapshot();
@@ -548,25 +539,24 @@ void SV_MapRestart(int param_1,int param_2)
         sv_serverId_value = (sv_serverId_value + 1U & 0xf) + (sv_serverId_value & 0xf0U);
         sv.start_frameTime = com_frameTime;
         SV_SetXUIDConfigStrings();
-        if ((iVar3 == 0) || (iVar4 = 0, iVar2 != 0)) {
-          iVar4 = 1;
+        if ((iVar2 == 0) || (iVar3 = 0, param_1 != 0)) {
+          iVar3 = 1;
         }
-        SV_RestartGameProgs(iVar4,iVar2);
-        SV_ReconnectClients(iVar3);
+        SV_RestartGameProgs(iVar3,param_1);
+        SV_ReconnectClients(iVar2);
         SV_SaveSystemInfo();
         Hunk_End();
         Com_ResetFrametime();
         do {
-          uVar5 = (ulonglong)(uint)g_serverThreadOwnership;
+          uVar4 = (ulonglong)(uint)g_serverThreadOwnership;
           if (in_RESERVE != '\0') {
-            g_serverThreadOwnership = storeWordConditionalIndexed(uVar5 - 1,0,0xffffffff83f1e19c);
+            g_serverThreadOwnership = storeWordConditionalIndexed(uVar4 - 1,0,0xffffffff83f1e19c);
             in_cr0 = 2;
           }
         } while (!(bool)(in_cr0 >> 1 & 1));
-        if ((int)(uVar5 - 1) != 0) {
+        if ((int)(uVar4 - 1) != 0) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_ccmds_mp.cpp"
                           ,0x2c8,0,"%s\n\t(g_serverThreadOwnership) = %i");
-          __restgprlr_20();
           return;
         }
       }
@@ -574,22 +564,21 @@ void SV_MapRestart(int param_1,int param_2)
     else {
       G_SetSavePersist(0);
       do {
-        uVar5 = (ulonglong)(uint)g_serverThreadOwnership;
+        uVar4 = (ulonglong)(uint)g_serverThreadOwnership;
         if (in_RESERVE != '\0') {
-          g_serverThreadOwnership = storeWordConditionalIndexed(uVar5 - 1,0,0xffffffff83f1e19c);
+          g_serverThreadOwnership = storeWordConditionalIndexed(uVar4 - 1,0,0xffffffff83f1e19c);
           in_cr0 = 2;
         }
       } while (!(bool)(in_cr0 >> 1 & 1));
-      if ((int)(uVar5 - 1) != 0) {
+      if ((int)(uVar4 - 1) != 0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_ccmds_mp.cpp"
                         ,0x248,0,"%s\n\t(g_serverThreadOwnership) = %i");
       }
       I_strncpyz(acStack_b0,(sv_mapname->current).string,0x40);
       FS_ConvertPath(acStack_b0);
-      SV_SpawnServer(acStack_b0,0,iVar2,(sv_cheats->current).enabled);
+      SV_SpawnServer(acStack_b0,0,param_1,(sv_cheats->current).enabled);
     }
   }
-  __restgprlr_20();
   return;
 }
 
@@ -717,6 +706,8 @@ void SV_MigrationStartCall(LocalClientNum_t param_1)
 
 // 82568220  SV_KickClient  (server_mp/sv_ccmds_mp.cpp:993)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
@@ -725,63 +716,50 @@ void SV_MigrationStartCall(LocalClientNum_t param_1)
 bool SV_KickClient(client_t *param_1,char *param_2,int param_3,char *param_4,char *param_5)
 
 {
-  client_t *pcVar1;
-  bool bVar2;
-  undefined1 uVar3;
-  ulonglong uVar4;
-  ulonglong uVar5;
-  ulonglong uVar6;
+  bool bVar1;
   
-  uVar6 = (ulonglong)(int)param_5;
-  uVar5 = (ulonglong)(int)param_4;
-  uVar4 = (ulonglong)(int)param_2;
-  pcVar1 = (client_t *)__savegprlr_25(param_1);
-  if (pcVar1 == (client_t *)0x0) {
+  if (param_1 == (client_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_ccmds_mp.cpp",
                     0x3e2,0,"%s");
   }
-  if ((pcVar1->header).netchan.remoteAddress.type == NA_LOOPBACK) {
+  if ((param_1->header).netchan.remoteAddress.type == NA_LOOPBACK) {
     if (((xblive_privatematch->current).enabled != false) ||
        ((onlinegame->current).enabled == false)) {
       SV_SendServerCommand((client_t *)0x0,SV_CMD_CAN_IGNORE,"%c \"EXE_CANNOTKICKHOSTPLAYER\"");
-      uVar3 = __restgprlr_25(0);
-      return (bool)uVar3;
+      return false;
     }
-    bVar2 = SV_IsMigrating();
-    if (!bVar2) {
-      if ((uVar6 & 0xffffffff) != 0) {
-        I_strncpyz(g_migrationReason,(char *)uVar6,0x40);
+    bVar1 = SV_IsMigrating();
+    if (!bVar1) {
+      if (param_5 != (char *)0x0) {
+        I_strncpyz(g_migrationReason,param_5,0x40);
         Cbuf_AddCall(LOCAL_CLIENT_0,SV_MigrationStartCall);
-        uVar3 = __restgprlr_25(1);
-        return (bool)uVar3;
+        return true;
       }
       g_migrationReason[0] = '\0';
       Cbuf_AddCall(LOCAL_CLIENT_0,SV_MigrationStartCall);
-      uVar3 = __restgprlr_25(1);
-      return (bool)uVar3;
+      return true;
     }
   }
   else {
-    if ((uVar4 & 0xffffffff) == 0) {
-      if ((uVar5 & 0xffffffff) != 0) {
+    if (param_2 == (char *)0x0) {
+      if (param_4 != (char *)0x0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_ccmds_mp.cpp"
                         ,0x404,0,"%s");
       }
     }
     else {
-      I_strncpyz((char *)uVar4,pcVar1->name,param_3);
-      I_CleanStr((char *)uVar4);
-      if ((uVar5 & 0xffffffff) == 0) {
+      I_strncpyz(param_2,param_1->name,param_3);
+      I_CleanStr(param_2);
+      if (param_4 == (char *)0x0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_ccmds_mp.cpp"
                         ,0x3ff,0,"%s");
       }
       memcpy();
     }
-    SV_DropClient(pcVar1,(char *)uVar6,true);
-    pcVar1->lastPacketTime = svs.time;
+    SV_DropClient(param_1,param_5,true);
+    param_1->lastPacketTime = svs.time;
   }
-  uVar3 = __restgprlr_25(1);
-  return (bool)uVar3;
+  return true;
 }
 
 
@@ -847,6 +825,8 @@ void SV_DevDropClient_f(void)
 
 // 82568550  SV_Status_f  (server_mp/sv_ccmds_mp.cpp:1228)
 
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -864,10 +844,8 @@ void SV_Status_f(void)
   client_t *pcVar7;
   netadr_t in_stack_ffffff08;
   
-  __savegprlr();
   if ((com_sv_running->current).enabled == false) {
     Com_Printf(0,"Server is not running.\n");
-    __restgprlr();
     return;
   }
   Com_Printf(0,"map: %s\n");
@@ -935,7 +913,6 @@ void SV_Status_f(void)
     } while (iVar5 < iVar2);
   }
   Com_Printf(0,"\n");
-  __restgprlr();
   return;
 }
 
@@ -1091,6 +1068,8 @@ void SV_ScriptBuiltin_f(void)
 
 // 82568B08  SV_StringUsage_f  (server_mp/sv_ccmds_mp.cpp:1709)
 
+/* WARNING: Function: __savegprlr_18 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_18 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void SV_StringUsage_f(void)
@@ -1107,7 +1086,6 @@ void SV_StringUsage_f(void)
   undefined8 uStack_e8;
   int aiStack_e0 [56];
   
-  __savegprlr_18();
   lVar8 = 0xb;
   puVar3 = &uStack_e8;
   do {
@@ -1153,13 +1131,14 @@ void SV_StringUsage_f(void)
   Com_Printf(0x17,"peak memory alloc buckets: %d (%d instances)\n");
   Com_Printf(0x17,"total memory free buckets: %d\n");
   Com_Printf(0x17,"********************************\n");
-  __restgprlr_18();
   return;
 }
 
 
 // 82568B10  SV_DumpHudElems_f  (server_mp/sv_ccmds_mp.cpp:1717)
 
+/* WARNING: Function: __savegprlr_15 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_15 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "ConfigString": Some values do not have unique names */
 
@@ -1171,7 +1150,6 @@ void SV_DumpHudElems_f(void)
   int *piVar3;
   char acStack_490 [1168];
   
-  __savegprlr_15();
   piVar3 = &g_hudelems[0].clientNum;
   lVar2 = 0x400;
   do {
@@ -1209,13 +1187,14 @@ void SV_DumpHudElems_f(void)
     piVar3 = piVar3 + 0x2d;
   } while (lVar2 != 0);
   Com_Printf(0x17,"\n%i archived + %i current = %i hud elems\n");
-  __restgprlr_15();
   return;
 }
 
 
 // 82568B18  SV_SetPerk_f  (server_mp/sv_ccmds_mp.cpp:1731)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -1232,7 +1211,6 @@ void SV_SetPerk_f(void)
   client_t *pcVar6;
   uint uVar7;
   
-  __savegprlr_27();
   pcVar1 = SV_GetPlayerByName();
   if (pcVar1 != (client_t *)0x0) {
     pcVar2 = SV_Cmd_Argv(2);
@@ -1259,12 +1237,10 @@ void SV_SetPerk_f(void)
       BG_SetPerk(ppVar4->perks,uVar3);
       pcVar5 = G_GetClientState(uVar7);
       BG_SetPerk(pcVar5->perks,uVar3);
-      __restgprlr_27();
       return;
     }
     Com_DPrintf(0,"Unknown perk: %s\n");
   }
-  __restgprlr_27();
   return;
 }
 
@@ -1311,6 +1287,8 @@ void SV_HostMigrationLoad_f(void)
 
 // 82568D10  SV_HostMigrationDevDrop_f  (server_mp/sv_ccmds_mp.cpp:1879)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -1324,7 +1302,6 @@ void SV_HostMigrationDevDrop_f(void)
   int iVar3;
   client_t *pcVar4;
   
-  __savegprlr_27();
   iVar3 = 0;
   iVar2 = svs.clientCount;
   pcVar4 = svs.clients;
@@ -1342,7 +1319,6 @@ void SV_HostMigrationDevDrop_f(void)
       pcVar4 = pcVar4 + 1;
     } while (iVar3 < iVar2);
   }
-  __restgprlr_27();
   return;
 }
 
@@ -1535,6 +1511,8 @@ void SV_DumpClientMatchData_f(void)
 
 // 825691F0  SV_SendMatchData_f  (server_mp/sv_ccmds_mp.cpp:2033)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
@@ -1550,8 +1528,7 @@ void SV_SendMatchData_f(void)
   ulong64 uVar5;
   StructuredDataBuffer aSStack_30 [6];
   
-  __savegprlr_29();
-  XVar1 = g_serverSession.dyn.sessionInfo.sessionID;
+  XVar1.ab = g_serverSession.dyn.sessionInfo.sessionID.ab;
   if (((com_sv_running->current).enabled != false) && (sv.matchDataDef[0] != '\0')) {
     if (g_serverSession.dyn.sessionHandle == (void *)0x0) {
       iVar2 = CL_GetFirstActiveControllerIndex();
@@ -1567,13 +1544,14 @@ void SV_SendMatchData_f(void)
     StructuredData_MakeBuffer(aSStack_30,sv.matchData,uVar4);
     LiveStorage_SendMatchData(iVar2,uVar5,aSStack_30);
   }
-  __restgprlr_29();
   return;
 }
 
 
 // 825692A8  SV_SendMatchData  (server_mp/sv_ccmds_mp.cpp:2063)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
@@ -1590,8 +1568,7 @@ void SV_SendMatchData(LocalClientNum_t param_1)
   ulong64 uVar5;
   StructuredDataBuffer aSStack_30 [6];
   
-  __savegprlr_29(param_1);
-  XVar1 = g_serverSession.dyn.sessionInfo.sessionID;
+  XVar1.ab = g_serverSession.dyn.sessionInfo.sessionID.ab;
   if (((com_sv_running->current).enabled != false) && (sv.matchDataDef[0] != '\0')) {
     if (g_serverSession.dyn.sessionHandle == (void *)0x0) {
       iVar2 = CL_GetFirstActiveControllerIndex();
@@ -1607,13 +1584,14 @@ void SV_SendMatchData(LocalClientNum_t param_1)
     StructuredData_MakeBuffer(aSStack_30,sv.matchData,uVar4);
     LiveStorage_SendMatchData(iVar2,uVar5,aSStack_30);
   }
-  __restgprlr_29();
   return;
 }
 
 
 // 825692B0  SV_ClearOldFramesForClient  (server_mp/sv_ccmds_mp.cpp:2076)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
@@ -1622,35 +1600,34 @@ void SV_ClearOldFramesForClient(int param_1)
 
 {
   uchar *puVar1;
-  uint uVar2;
-  int iVar3;
-  longlong lVar4;
+  int iVar2;
+  longlong lVar3;
   
-  uVar2 = __savegprlr_29(param_1);
-  if (0x11 < uVar2) {
+  if (0x11 < (uint)param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_ccmds_mp.cpp",
                     0x81f,0,"clientNum doesn\'t index MAX_CLIENTS\n\t%i not in [0, %i)");
   }
-  lVar4 = 0x10;
-  iVar3 = 0;
+  lVar3 = 0x10;
+  iVar2 = 0;
   do {
-    *(int *)(svs.clients[uVar2].frames[0].padding + iVar3 + -0x20) =
+    *(int *)(svs.clients[param_1].frames[0].padding + iVar2 + -0x20) =
          -1 - svsHeader.numSnapshotEntities;
-    puVar1 = svs.clients[uVar2].frames[0].padding + iVar3 + -4;
+    puVar1 = svs.clients[param_1].frames[0].padding + iVar2 + -4;
     puVar1[0] = '\0';
     puVar1[1] = '\0';
     puVar1[2] = '\0';
     puVar1[3] = '\0';
-    lVar4 = lVar4 + -1;
-    iVar3 = iVar3 + 0x3380;
-  } while (lVar4 != 0);
-  __restgprlr_29();
+    lVar3 = lVar3 + -1;
+    iVar2 = iVar2 + 0x3380;
+  } while (lVar3 != 0);
   return;
 }
 
 
 // 82569370  SV_SendNoDelta_f  (server_mp/sv_ccmds_mp.cpp:2088)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
@@ -1666,7 +1643,6 @@ void SV_SendNoDelta_f(void)
   int iVar5;
   longlong lVar6;
   
-  __savegprlr_24();
   uVar4 = 0;
   if (0 < svs.clientCount) {
     iVar5 = 0;
@@ -1697,7 +1673,6 @@ void SV_SendNoDelta_f(void)
       iVar5 = iVar5 + 0x68b00;
     } while ((int)uVar4 < iVar2);
   }
-  __restgprlr_24();
   return;
 }
 
@@ -1722,12 +1697,13 @@ void SV_SendNewBaseline_f(void)
 
 // 825694D0  SV_AddOperatorCommands  (server_mp/sv_ccmds_mp.cpp:2120)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void SV_AddOperatorCommands(void)
 
 {
-  __savegprlr_29();
   if (initialized == 0) {
     initialized = 1;
     Cmd_AddCommandInternal("status",Cbuf_AddServerText_f,&SV_Status_f_VAR);
@@ -1813,7 +1789,6 @@ void SV_AddOperatorCommands(void)
               ("sv_dumpClientMatchData",SV_DumpClientMatchData_f,
                &SV_DumpClientMatchData_f_VAR_SERVER);
   }
-  __restgprlr_29();
   return;
 }
 

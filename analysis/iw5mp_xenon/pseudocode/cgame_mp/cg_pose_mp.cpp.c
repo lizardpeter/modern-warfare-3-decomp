@@ -2,33 +2,33 @@
 
 // 822F04E0  BG_Player_DoControllers  (cgame_mp/cg_pose_mp.cpp:16)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
+
 void BG_Player_DoControllers(CEntPlayerInfo *param_1,DObj *param_2,int *param_3)
 
 {
-  float *pfVar1;
-  int *piVar2;
-  float *pfVar3;
-  int iVar4;
+  clientControllers_t *pcVar1;
+  clientControllers_t *pcVar2;
+  int iVar3;
   
-  piVar2 = (int *)__savegprlr_23(param_1);
-  pfVar1 = (float *)*piVar2;
-  if (pfVar1 == (float *)0x0) {
+  pcVar1 = param_1->control;
+  if (pcVar1 == (clientControllers_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_pose_mp.cpp",0x15,
                     0,"%s");
   }
-  iVar4 = 0;
-  pfVar3 = pfVar1;
+  iVar3 = 0;
+  pcVar2 = pcVar1;
   do {
-    if (*(char *)((int)piVar2 + iVar4 + 4) == -2) {
+    if (param_1->tag[iVar3] == 0xfe) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_pose_mp.cpp",
                       0x19,0,"%s");
     }
-    DObjSetControlTagAngles(param_2,param_3,(uint)*(byte *)((int)piVar2 + iVar4 + 4),pfVar3);
-    iVar4 = iVar4 + 1;
-    pfVar3 = pfVar3 + 3;
-  } while (iVar4 < 4);
-  DObjSetLocalTag(param_2,param_3,0,pfVar1 + 0xf,pfVar1 + 0xc);
-  __restgprlr_23();
+    DObjSetControlTagAngles(param_2,param_3,(uint)param_1->tag[iVar3],(float *)pcVar2);
+    iVar3 = iVar3 + 1;
+    pcVar2 = (clientControllers_t *)(pcVar2->angles + 1);
+  } while (iVar3 < 4);
+  DObjSetLocalTag(param_2,param_3,0,pcVar1->tag_origin_offset,pcVar1->tag_origin_angles);
   return;
 }
 
@@ -48,23 +48,30 @@ void CG_Player_DoControllers(cpose_t *param_1,DObj *param_2,int *param_3)
 
 // 822F05C8  CG_Vehicle_DoControllers  (cgame_mp/cg_pose_mp.cpp:43)
 
+/* WARNING: Function: __savegprlr_19 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savevmx_119 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restvmx_119 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_19 replaced with injection: xenon_save_restore */
+
 void CG_Vehicle_DoControllers(cpose_t *param_1,DObj *param_2,int *param_3)
 
 {
   byte bVar1;
   ulonglong uVar2;
-  int iVar3;
-  DObj *pDVar4;
-  XModel *pXVar5;
-  DObjAnimMat *pDVar6;
-  int iVar7;
-  int *piVar8;
+  XModel *pXVar3;
+  DObjAnimMat *pDVar4;
+  int iVar5;
+  float *pfVar6;
+  longlong lVar7;
+  int iVar8;
   ulonglong uVar9;
-  float *pfVar10;
-  longlong lVar11;
-  int iVar12;
-  ulonglong uVar13;
-  double dVar14;
+  double dVar10;
+  undefined1 auVar11 [16];
+  undefined1 auVar12 [16];
+  undefined1 auVar13 [16];
+  undefined1 auVar14 [16];
   undefined1 auVar15 [16];
   undefined1 auVar16 [16];
   undefined1 auVar17 [16];
@@ -74,10 +81,6 @@ void CG_Vehicle_DoControllers(cpose_t *param_1,DObj *param_2,int *param_3)
   undefined1 auVar21 [16];
   undefined1 auVar22 [16];
   undefined1 auVar23 [16];
-  undefined1 auVar24 [16];
-  undefined1 auVar25 [16];
-  undefined1 auVar26 [16];
-  undefined1 auVar27 [16];
   float local_1a0 [4];
   float local_190;
   float local_18c;
@@ -91,25 +94,20 @@ void CG_Vehicle_DoControllers(cpose_t *param_1,DObj *param_2,int *param_3)
   undefined1 local_140 [16];
   undefined1 local_130 [16];
   
-  uVar9 = (ulonglong)(int)param_3;
-  uVar13 = (ulonglong)(int)param_2;
   uVar2 = ZEXT48(&stack0x00000000);
-  __savegprlr_19(param_1);
-  __savefpr_28();
-  iVar3 = __savevmx_119();
-  if (iVar3 == 0) {
+  if (param_1 == (cpose_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_pose_mp.cpp",0x3f,
                     0,"%s");
   }
-  if ((uVar13 & 0xffffffff) == 0) {
+  if (param_2 == (DObj *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_pose_mp.cpp",0x40,
                     0,"%s");
   }
-  if ((uVar9 & 0xffffffff) == 0) {
+  if (param_3 == (int *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_pose_mp.cpp",0x41,
                     0,"%s");
   }
-  dVar14 = 0.0;
+  dVar10 = 0.0;
   local_170 = 0.0;
   local_168 = 0;
   local_1a0[1] = 0.0;
@@ -117,96 +115,94 @@ void CG_Vehicle_DoControllers(cpose_t *param_1,DObj *param_2,int *param_3)
   local_180[1] = 0.0;
   local_190 = 0.0;
   local_188 = 0;
-  local_1a0[0] = (float)(longlong)*(short *)(iVar3 + 0x32) * 0.005493164;
-  local_180[0] = (float)(longlong)*(short *)(iVar3 + 0x2c) * 0.005493164;
-  local_180[2] = (float)(longlong)*(short *)(iVar3 + 0x30) * 0.005493164;
-  if (*(char *)(iVar3 + 2) == '\f') {
-    local_1a0[2] = *(float *)(iVar3 + 0x34);
+  local_1a0[0] = (float)(longlong)(param_1->field9_0x2c).vehicle.barrelPitch * 0.005493164;
+  local_180[0] = (float)(longlong)(param_1->field9_0x2c).vehicle.pitch * 0.005493164;
+  local_180[2] = (float)(longlong)(param_1->field9_0x2c).vehicle.roll * 0.005493164;
+  if (param_1->eType == '\f') {
+    local_1a0[2] = (param_1->field9_0x2c).turret.barrelPitch;
   }
-  local_18c = (float)(longlong)*(short *)(iVar3 + 0x38) * 0.005493164;
-  local_16c = (float)(longlong)*(short *)(iVar3 + 0x2e) * 0.005493164;
-  pDVar4 = (DObj *)uVar13;
-  piVar8 = (int *)uVar9;
-  DObjSetLocalTag(pDVar4,piVar8,(uint)*(byte *)(iVar3 + 0x58),vec3_origin,local_180);
-  DObjSetLocalTag(pDVar4,piVar8,(uint)*(byte *)(iVar3 + 0x59),vec3_origin,&local_170);
-  DObjSetLocalTag(pDVar4,piVar8,(uint)*(byte *)(iVar3 + 0x5a),vec3_origin,local_1a0);
-  AnglesToAxis((float *)(iVar3 + 0x20),(float (*) [3])local_150);
-  auVar21 = vectorSplatImmediateSignedWord(0);
-  auVar20 = vectorUnpackD3Dtype(auVar21,4);
-  auVar21 = vectorShiftLeftDoubleByOctetImmediate(local_150,local_140,0xc);
-  auVar23 = vectorRotateLeftImmediateAndMaskInsert(local_150,auVar20,1,3);
-  auVar19 = loadVectorRightIndexed(uVar2 - 0x11c);
-  auVar18 = loadVectorLeftIndexed(uVar2 - 300);
-  auVar17 = loadVectorRightIndexed(uVar2 - 0x128);
-  auVar27 = vectorRotateLeftImmediateAndMaskInsert(auVar21,auVar20,1,3);
-  auVar21 = loadVectorLeftIndexed(uVar2 - 0x138);
-  auVar25 = vectorShiftLeftDoubleByOctetImmediate(local_140,local_130,8);
-  auVar26 = vectorRotateLeftImmediateAndMaskInsert(auVar25,auVar20,1,3);
-  auVar22 = vectorRotateLeftImmediateAndMaskInsert(auVar20,local_130,0xe,1);
-  auVar25 = vectorMergeHighWord128(auVar23,auVar26);
-  auVar24 = (auVar21 | auVar17) & (undefined1  [16])g_keepXYZ.field0_0x0;
-  auVar20 = vectorMergeLowWord128(auVar23,auVar26);
-  auVar19 = (auVar18 | auVar19) & (undefined1  [16])g_keepXYZ.field0_0x0;
-  auVar17 = vectorMergeHighWord128(auVar27,(undefined1  [16])g_one.field0_0x0);
-  auVar21 = vectorMergeLowWord128(auVar27,(undefined1  [16])g_one.field0_0x0);
-  auVar18 = vectorMergeHighWord128(auVar25,auVar17);
-  auVar17 = vectorMergeLowWord128(auVar25,auVar17);
-  auVar21 = vectorMergeHighWord128(auVar20,auVar21);
-  pXVar5 = DObjGetModel(pDVar4,0);
-  pDVar6 = XModelGetBasePose(pXVar5);
-  if (pDVar6 == (DObjAnimMat *)0x0) {
+  local_18c = (float)(longlong)(param_1->field9_0x2c).vehicle.steerYaw * 0.005493164;
+  local_16c = (float)(longlong)(param_1->field9_0x2c).vehicle.yaw * 0.005493164;
+  DObjSetLocalTag(param_2,param_3,(uint)(param_1->field9_0x2c).vehicle.tag_body,vec3_origin,
+                  local_180);
+  DObjSetLocalTag(param_2,param_3,(uint)(param_1->field9_0x2c).vehicle.tag_turret,vec3_origin,
+                  &local_170);
+  DObjSetLocalTag(param_2,param_3,(uint)(param_1->field9_0x2c).vehicle.tag_barrel,vec3_origin,
+                  local_1a0);
+  AnglesToAxis(param_1->angles,(float (*) [3])local_150);
+  auVar17 = vectorSplatImmediateSignedWord(0);
+  auVar16 = vectorUnpackD3Dtype(auVar17,4);
+  auVar17 = vectorShiftLeftDoubleByOctetImmediate(local_150,local_140,0xc);
+  auVar19 = vectorRotateLeftImmediateAndMaskInsert(local_150,auVar16,1,3);
+  auVar15 = loadVectorRightIndexed(uVar2 - 0x11c);
+  auVar14 = loadVectorLeftIndexed(uVar2 - 300);
+  auVar13 = loadVectorRightIndexed(uVar2 - 0x128);
+  auVar23 = vectorRotateLeftImmediateAndMaskInsert(auVar17,auVar16,1,3);
+  auVar17 = loadVectorLeftIndexed(uVar2 - 0x138);
+  auVar21 = vectorShiftLeftDoubleByOctetImmediate(local_140,local_130,8);
+  auVar22 = vectorRotateLeftImmediateAndMaskInsert(auVar21,auVar16,1,3);
+  auVar18 = vectorRotateLeftImmediateAndMaskInsert(auVar16,local_130,0xe,1);
+  auVar21 = vectorMergeHighWord128(auVar19,auVar22);
+  auVar20 = (auVar17 | auVar13) & (undefined1  [16])g_keepXYZ.field0_0x0;
+  auVar16 = vectorMergeLowWord128(auVar19,auVar22);
+  auVar15 = (auVar14 | auVar15) & (undefined1  [16])g_keepXYZ.field0_0x0;
+  auVar13 = vectorMergeHighWord128(auVar23,(undefined1  [16])g_one.field0_0x0);
+  auVar17 = vectorMergeLowWord128(auVar23,(undefined1  [16])g_one.field0_0x0);
+  auVar14 = vectorMergeHighWord128(auVar21,auVar13);
+  auVar13 = vectorMergeLowWord128(auVar21,auVar13);
+  auVar17 = vectorMergeHighWord128(auVar16,auVar17);
+  pXVar3 = DObjGetModel(param_2,0);
+  pDVar4 = XModelGetBasePose(pXVar3);
+  if (pDVar4 == (DObjAnimMat *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_pose_mp.cpp",0x62,
                     0,"%s");
   }
-  iVar12 = 0;
+  iVar8 = 0;
   do {
-    bVar1 = *(byte *)(iVar3 + 0x4c + iVar12);
-    uVar13 = (ulonglong)bVar1;
-    if (uVar13 < 0xfe) {
-      iVar7 = DObjSetRotTransIndex(pDVar4,piVar8,(uint)bVar1);
-      if (iVar7 != 0) {
-        lVar11 = uVar13 * 0x20 + (longlong)(int)pDVar6;
-        auVar25 = loadVectorLeftIndexed(lVar11 + 0x10);
-        auVar20 = loadVectorRightIndexed(lVar11 + 0x20);
-        auVar16 = (auVar25 | auVar20) & (undefined1  [16])g_keepXYZ.field0_0x0;
-        auVar20 = vectorSplatWord(auVar16,2);
-        auVar15 = vectorSplatWord(auVar16,1);
-        auVar25 = vectorSplatWord(auVar16,0);
-        auVar20 = vectorMultiplyAddFloatingPoint128(auVar26,auVar20,auVar22);
-        auVar20 = vectorMultiplyAddFloatingPoint128(auVar15,auVar27,auVar20);
-        auVar20 = vectorMultiplyAddFloatingPoint128(auVar25,auVar23,auVar20);
-        auVar15 = loadVectorLeftIndexed(uVar2 - 0x1b0);
-        auVar25 = loadVectorLeftIndexed(0xffffffff8200189c);
-        auVar25 = vectorSplatWord(auVar25,0);
-        auVar20 = vectorMultiplyAddFloatingPoint128(auVar25,auVar24,auVar20);
-        auVar25 = vectorSplatWord(auVar15,0);
-        auVar20 = vectorMultiplyAddFloatingPoint128(auVar25,auVar24,auVar20);
-        auVar25 = vectorSubtractFloatingPoint128(auVar20,auVar19);
-        auVar15 = vectorSplatWord(auVar25,2);
-        auVar20 = vectorSplatWord(auVar25,1);
-        auVar25 = vectorSplatWord(auVar25,0);
-        auVar15 = vectorMultiplyFloatingPoint(auVar15,auVar21);
-        auVar20 = vectorMultiplyAddFloatingPoint128(auVar17,auVar20,auVar15);
-        auVar20 = vectorMultiplyAddFloatingPoint128(auVar25,auVar18,auVar20);
-        local_160 = vectorSubtractFloatingPoint128(auVar20,auVar16);
-        if (((double)local_18c == dVar14) || ((iVar12 != 0 && (iVar12 != 1)))) {
-          pfVar10 = (float *)0x0;
+    bVar1 = *(byte *)((int)param_1->angles + iVar8 + 0x2c);
+    uVar9 = (ulonglong)bVar1;
+    if (uVar9 < 0xfe) {
+      iVar5 = DObjSetRotTransIndex(param_2,param_3,(uint)bVar1);
+      if (iVar5 != 0) {
+        lVar7 = uVar9 * 0x20 + (longlong)(int)pDVar4;
+        auVar21 = loadVectorLeftIndexed(lVar7 + 0x10);
+        auVar16 = loadVectorRightIndexed(lVar7 + 0x20);
+        auVar12 = (auVar21 | auVar16) & (undefined1  [16])g_keepXYZ.field0_0x0;
+        auVar16 = vectorSplatWord(auVar12,2);
+        auVar11 = vectorSplatWord(auVar12,1);
+        auVar21 = vectorSplatWord(auVar12,0);
+        auVar16 = vectorMultiplyAddFloatingPoint128(auVar22,auVar16,auVar18);
+        auVar16 = vectorMultiplyAddFloatingPoint128(auVar11,auVar23,auVar16);
+        auVar16 = vectorMultiplyAddFloatingPoint128(auVar21,auVar19,auVar16);
+        auVar11 = loadVectorLeftIndexed(uVar2 - 0x1b0);
+        auVar21 = loadVectorLeftIndexed(0xffffffff8200189c);
+        auVar21 = vectorSplatWord(auVar21,0);
+        auVar16 = vectorMultiplyAddFloatingPoint128(auVar21,auVar20,auVar16);
+        auVar21 = vectorSplatWord(auVar11,0);
+        auVar16 = vectorMultiplyAddFloatingPoint128(auVar21,auVar20,auVar16);
+        auVar21 = vectorSubtractFloatingPoint128(auVar16,auVar15);
+        auVar11 = vectorSplatWord(auVar21,2);
+        auVar16 = vectorSplatWord(auVar21,1);
+        auVar21 = vectorSplatWord(auVar21,0);
+        auVar11 = vectorMultiplyFloatingPoint(auVar11,auVar17);
+        auVar16 = vectorMultiplyAddFloatingPoint128(auVar13,auVar16,auVar11);
+        auVar16 = vectorMultiplyAddFloatingPoint128(auVar21,auVar14,auVar16);
+        local_160 = vectorSubtractFloatingPoint128(auVar16,auVar12);
+        if (((double)local_18c == dVar10) || ((iVar8 != 0 && (iVar8 != 1)))) {
+          pfVar6 = (float *)0x0;
         }
         else {
-          pfVar10 = &local_190;
+          pfVar6 = &local_190;
         }
-        DObjSetLocalTagInternal(pDVar4,(float *)local_160,pfVar10,(uint)bVar1);
+        DObjSetLocalTagInternal(param_2,(float *)local_160,pfVar6,(uint)bVar1);
       }
     }
-    else if ((uVar13 != 0xfe) && (uVar13 != 0xff)) {
+    else if ((uVar9 != 0xfe) && (uVar9 != 0xff)) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_pose_mp.cpp",
                       0x69,0,"%s\n\t(boneIndex) = %i");
     }
-    iVar12 = iVar12 + 1;
-  } while (iVar12 < 6);
-  __restvmx_119();
-  __restfpr_28();
-  __restgprlr_19();
+    iVar8 = iVar8 + 1;
+  } while (iVar8 < 6);
   return;
 }
 
@@ -242,29 +238,32 @@ void __stvx(__vector4 param_1,void *param_2,int param_3)
 
 // 822F0A30  CG_Turret_DoControllers  (cgame_mp/cg_pose_mp.cpp:141)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Restarted to delay deadcode elimination for space: stack */
 
 void CG_Turret_DoControllers(cpose_t *param_1,DObj *param_2,int *param_3)
 
 {
-  float *pfVar1;
-  int iVar2;
-  double dVar3;
+  bool bVar1;
+  uchar uVar2;
+  clientControllers_t *pcVar3;
   double dVar4;
   double dVar5;
   double dVar6;
   double dVar7;
   double dVar8;
-  undefined1 auVar9 [16];
+  double dVar9;
   undefined1 auVar10 [16];
   undefined1 auVar11 [16];
   undefined1 auVar12 [16];
   undefined1 auVar13 [16];
   undefined1 auVar14 [16];
   undefined1 auVar15 [16];
-  float fVar16;
-  float local_d0;
-  float local_cc;
+  undefined1 auVar16 [16];
+  float fVar17;
+  clientControllers_t *local_d0;
+  FxEffect *local_cc;
   float local_c8;
   float local_c0;
   float fStack_bc;
@@ -273,124 +272,134 @@ void CG_Turret_DoControllers(cpose_t *param_1,DObj *param_2,int *param_3)
   undefined1 local_a0 [16];
   undefined1 local_90 [16];
   
-  iVar2 = __savegprlr_26(param_1);
-  dVar8 = 0.0;
-  if (*(char *)(iVar2 + 0x39) == '\0') {
-    if (*(char *)(iVar2 + 0x38) == '\0') {
-      dVar4 = (double)*(float *)(iVar2 + 0x2c);
-      dVar7 = (double)*(float *)(iVar2 + 0x30);
+  bVar1 = (param_1->field9_0x2c).turret.playerUsing;
+  dVar9 = 0.0;
+  if ((param_1->field9_0x2c).turret.remoteTurret == false) {
+    if (bVar1 == false) {
+      dVar5 = (double)*(float *)&param_1->field9_0x2c;
+      dVar8 = (double)*(float *)((int)&param_1->field9_0x2c + 4);
     }
     else {
-      if (*(int *)(iVar2 + 0x2c) == 0) {
+      if ((param_1->field9_0x2c).player.control == (clientControllers_t *)0x0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_pose_mp.cpp",
                         0xcc,0,"%s");
       }
-      pfVar1 = *(float **)(iVar2 + 0x2c);
-      fVar16 = AngleSubtract(*pfVar1,*(float *)(iVar2 + 0x20));
-      dVar4 = (double)fVar16;
-      fVar16 = AngleSubtract(pfVar1[1],*(float *)(iVar2 + 0x24));
-      dVar7 = (double)fVar16;
+      pcVar3 = (param_1->field9_0x2c).player.control;
+      fVar17 = AngleSubtract(pcVar3->angles[0][0],param_1->angles[0]);
+      dVar5 = (double)fVar17;
+      fVar17 = AngleSubtract(pcVar3->angles[0][1],param_1->angles[1]);
+      dVar8 = (double)fVar17;
     }
   }
   else {
-    if (*(char *)(iVar2 + 0x38) == '\0') {
-      local_d0 = *(float *)(iVar2 + 0x2c);
-      local_cc = *(float *)(iVar2 + 0x30);
-      dVar7 = dVar8;
+    if (bVar1 == false) {
+      local_d0 = (param_1->field9_0x2c).player.control;
+      local_cc = (param_1->field9_0x2c).fx.effect;
+      dVar8 = dVar9;
     }
     else {
-      if (*(int *)(iVar2 + 0x2c) == 0) {
+      if ((param_1->field9_0x2c).player.control == (clientControllers_t *)0x0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_pose_mp.cpp",
                         0xa4,0,"%s");
       }
-      local_d0 = **(float **)(iVar2 + 0x2c);
-      local_cc = (*(float **)(iVar2 + 0x2c))[1];
-      dVar7 = dVar8;
+      pcVar3 = (param_1->field9_0x2c).player.control;
+      local_d0 = (clientControllers_t *)pcVar3->angles[0][0];
+      local_cc = (FxEffect *)pcVar3->angles[0][1];
+      dVar8 = dVar9;
     }
-    local_c8 = (float)dVar7;
-    AnglesToAxis((float *)(iVar2 + 0x20),(float (*) [3])local_b0);
-    auVar14 = vectorSplatImmediateSignedWord(0);
-    auVar13 = vectorUnpackD3Dtype(auVar14,4);
-    auVar14 = vectorShiftLeftDoubleByOctetImmediate(local_a0,local_90,8);
-    auVar14 = vectorRotateLeftImmediateAndMaskInsert(auVar14,auVar13,1,3);
-    auVar11 = vectorShiftLeftDoubleByOctetImmediate(local_b0,local_a0,0xc);
-    auVar15 = vectorRotateLeftImmediateAndMaskInsert(local_b0,auVar13,1,3);
-    auVar12 = vectorRotateLeftImmediateAndMaskInsert(auVar11,auVar13,1,3);
-    AnglesToAxis(&local_d0,(float (*) [3])local_b0);
-    auVar13 = vectorMergeLowWord128(auVar15,auVar14);
-    auVar10 = vectorMergeHighWord128(auVar15,auVar14);
-    auVar11 = loadVectorRightIndexed(ZEXT48(&stack0x00000000) - 0xa0);
-    auVar14 = loadVectorLeftIndexed(ZEXT48(&stack0x00000000) - 0xb0);
-    auVar9 = (auVar14 | auVar11) & (undefined1  [16])g_keepXYZ.field0_0x0;
-    auVar14 = vectorMergeLowWord128(auVar12,(undefined1  [16])g_one.field0_0x0);
-    auVar15 = vectorMergeHighWord128(auVar12,(undefined1  [16])g_one.field0_0x0);
-    auVar13 = vectorMergeHighWord128(auVar13,auVar14);
-    auVar11 = vectorSplatWord(auVar9,2);
-    auVar14 = vectorMergeLowWord128(auVar10,auVar15);
-    auVar12 = vectorSplatWord(auVar9,1);
-    auVar15 = vectorMergeHighWord128(auVar10,auVar15);
-    auVar13 = vectorMultiplyFloatingPoint(auVar11,auVar13);
-    auVar11 = vectorSplatWord(auVar9,0);
-    auVar14 = vectorMultiplyAddFloatingPoint(auVar12,auVar14,auVar13);
-    auVar14 = vectorMultiplyAddFloatingPoint(auVar11,auVar15,auVar14);
-    fStack_bc = auVar14._4_4_;
-    dVar4 = (double)fStack_bc;
-    local_c0 = auVar14._0_4_;
-    dVar6 = (double)local_c0;
-    fStack_b8 = auVar14._8_4_;
-    dVar8 = dVar7;
-    if ((dVar4 == dVar7) && (dVar6 == dVar7)) {
-      fVar16 = 90.0;
+    local_c8 = (float)dVar8;
+    AnglesToAxis(param_1->angles,(float (*) [3])local_b0);
+    auVar15 = vectorSplatImmediateSignedWord(0);
+    auVar14 = vectorUnpackD3Dtype(auVar15,4);
+    auVar15 = vectorShiftLeftDoubleByOctetImmediate(local_a0,local_90,8);
+    auVar15 = vectorRotateLeftImmediateAndMaskInsert(auVar15,auVar14,1,3);
+    auVar12 = vectorShiftLeftDoubleByOctetImmediate(local_b0,local_a0,0xc);
+    auVar16 = vectorRotateLeftImmediateAndMaskInsert(local_b0,auVar14,1,3);
+    auVar13 = vectorRotateLeftImmediateAndMaskInsert(auVar12,auVar14,1,3);
+    AnglesToAxis((float *)&local_d0,(float (*) [3])local_b0);
+    auVar14 = vectorMergeLowWord128(auVar16,auVar15);
+    auVar11 = vectorMergeHighWord128(auVar16,auVar15);
+    auVar12 = loadVectorRightIndexed(ZEXT48(&stack0x00000000) - 0xa0);
+    auVar15 = loadVectorLeftIndexed(ZEXT48(&stack0x00000000) - 0xb0);
+    auVar10 = (auVar15 | auVar12) & (undefined1  [16])g_keepXYZ.field0_0x0;
+    auVar15 = vectorMergeLowWord128(auVar13,(undefined1  [16])g_one.field0_0x0);
+    auVar16 = vectorMergeHighWord128(auVar13,(undefined1  [16])g_one.field0_0x0);
+    auVar14 = vectorMergeHighWord128(auVar14,auVar15);
+    auVar12 = vectorSplatWord(auVar10,2);
+    auVar15 = vectorMergeLowWord128(auVar11,auVar16);
+    auVar13 = vectorSplatWord(auVar10,1);
+    auVar16 = vectorMergeHighWord128(auVar11,auVar16);
+    auVar14 = vectorMultiplyFloatingPoint(auVar12,auVar14);
+    auVar12 = vectorSplatWord(auVar10,0);
+    auVar15 = vectorMultiplyAddFloatingPoint(auVar13,auVar15,auVar14);
+    auVar15 = vectorMultiplyAddFloatingPoint(auVar12,auVar16,auVar15);
+    fStack_bc = auVar15._4_4_;
+    dVar5 = (double)fStack_bc;
+    local_c0 = auVar15._0_4_;
+    dVar7 = (double)local_c0;
+    fStack_b8 = auVar15._8_4_;
+    dVar9 = dVar8;
+    if ((dVar5 == dVar8) && (dVar7 == dVar8)) {
+      fVar17 = 90.0;
       if (-fStack_b8 < 0.0) {
-        fVar16 = 270.0;
+        fVar17 = 270.0;
       }
-      dVar4 = (double)fVar16;
+      dVar5 = (double)fVar17;
     }
     else {
-      dVar3 = atan2(dVar4,dVar6);
-      dVar5 = 360.0;
-      dVar7 = dVar8;
-      if ((double)((float)dVar3 * 57.295776) < 0.0) {
-        dVar7 = dVar5;
+      dVar4 = atan2(dVar5,dVar7);
+      dVar6 = 360.0;
+      dVar8 = dVar9;
+      if ((double)((float)dVar4 * 57.295776) < 0.0) {
+        dVar8 = dVar6;
       }
-      dVar7 = (double)(float)(dVar7 + (double)((float)dVar3 * 57.295776));
-      dVar6 = atan2((double)fStack_b8,
-                    (double)SQRT((float)(dVar6 * dVar6 + (double)(float)(dVar4 * dVar4))));
-      dVar4 = dVar8;
-      if ((double)((float)dVar6 * -57.295776) < 0.0) {
-        dVar4 = dVar5;
+      dVar8 = (double)(float)(dVar8 + (double)((float)dVar4 * 57.295776));
+      dVar7 = atan2((double)fStack_b8,
+                    (double)SQRT((float)(dVar7 * dVar7 + (double)(float)(dVar5 * dVar5))));
+      dVar5 = dVar9;
+      if ((double)((float)dVar7 * -57.295776) < 0.0) {
+        dVar5 = dVar6;
       }
-      dVar4 = (double)(float)(dVar4 + (double)((float)dVar6 * -57.295776));
+      dVar5 = (double)(float)(dVar5 + (double)((float)dVar7 * -57.295776));
     }
   }
-  local_d0 = (float)dVar8;
-  local_c8 = (float)dVar8;
-  local_cc = (float)dVar7;
-  if (*(char *)(iVar2 + 0x3c) != -1) {
-    if (*(char *)(iVar2 + 0x3c) == -2) {
+  local_d0 = (clientControllers_t *)(float)dVar9;
+  local_c8 = (float)dVar9;
+  uVar2 = (param_1->field9_0x2c).turret.tagIdx_aim_pivot;
+  local_cc = (FxEffect *)(float)dVar8;
+  if (uVar2 != 0xff) {
+    if (uVar2 == 0xfe) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_pose_mp.cpp",
                       0xde,0,"%s");
     }
-    DObjSetLocalTag(param_2,param_3,(uint)*(byte *)(iVar2 + 0x3c),vec3_origin,&local_d0);
-    local_cc = (float)dVar8;
+    DObjSetLocalTag(param_2,param_3,(uint)(param_1->field9_0x2c).turret.tagIdx_aim_pivot,vec3_origin
+                    ,(float *)&local_d0);
+    local_cc = (FxEffect *)(float)dVar9;
   }
-  local_d0 = (float)dVar4;
-  DObjSetLocalTag(param_2,param_3,(uint)*(byte *)(iVar2 + 0x3a),vec3_origin,&local_d0);
-  DObjSetLocalTag(param_2,param_3,(uint)*(byte *)(iVar2 + 0x3b),vec3_origin,&local_d0);
-  local_d0 = *(float *)(iVar2 + 0x34);
-  local_cc = (float)dVar8;
-  DObjSetLocalTag(param_2,param_3,(uint)*(byte *)(iVar2 + 0x3d),vec3_origin,&local_d0);
-  local_c8 = *(float *)(iVar2 + 0x40);
-  local_d0 = (float)dVar8;
-  local_cc = (float)dVar8;
-  DObjSetLocalTag(param_2,param_3,(uint)*(byte *)(iVar2 + 0x3e),vec3_origin,&local_d0);
-  __restgprlr_26();
+  local_d0 = (clientControllers_t *)(float)dVar5;
+  DObjSetLocalTag(param_2,param_3,(uint)(param_1->field9_0x2c).turret.tagIdx_aim,vec3_origin,
+                  (float *)&local_d0);
+  DObjSetLocalTag(param_2,param_3,(uint)(param_1->field9_0x2c).turret.tagIdx_aim_animated,
+                  vec3_origin,(float *)&local_d0);
+  local_d0 = (clientControllers_t *)(param_1->field9_0x2c).turret.barrelPitch;
+  local_cc = (FxEffect *)(float)dVar9;
+  DObjSetLocalTag(param_2,param_3,(uint)(param_1->field9_0x2c).turret.tagIdx_flash,vec3_origin,
+                  (float *)&local_d0);
+  local_c8 = (param_1->field9_0x2c).turret.barrelRoll;
+  local_d0 = (clientControllers_t *)(float)dVar9;
+  local_cc = (FxEffect *)(float)dVar9;
+  DObjSetLocalTag(param_2,param_3,(uint)(param_1->field9_0x2c).turret.tagIdx_barrel,vec3_origin,
+                  (float *)&local_d0);
   return;
 }
 
 
 // 822F0DC8  CG_DoBaseOriginController  (cgame_mp/cg_pose_mp.cpp:247)
 
+/* WARNING: Function: __savegprlr_20 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_20 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void CG_DoBaseOriginController(cpose_t *param_1,DObj *param_2,int *param_3)
@@ -402,24 +411,22 @@ void CG_DoBaseOriginController(cpose_t *param_1,DObj *param_2,int *param_3)
   float fVar4;
   ulonglong uVar5;
   uint uVar6;
-  int iVar7;
-  float fVar8;
-  int iVar9;
-  uint uVar10;
-  DObjAnimMat *pDVar11;
-  int iVar12;
-  longlong lVar13;
-  ulonglong uVar14;
-  uint uVar15;
-  int iVar16;
-  float *pfVar17;
+  float fVar7;
+  uint uVar8;
+  DObjAnimMat *pDVar9;
+  int iVar10;
+  int *piVar12;
+  ulonglong uVar11;
+  uint uVar13;
+  int iVar14;
+  float *pfVar15;
+  double dVar16;
+  double dVar17;
   double dVar18;
   double dVar19;
   double dVar20;
   double dVar21;
   double dVar22;
-  double dVar23;
-  double dVar24;
   float local_128;
   float local_124;
   float local_120;
@@ -435,34 +442,31 @@ void CG_DoBaseOriginController(cpose_t *param_1,DObj *param_2,int *param_3)
   undefined4 local_d0;
   uint local_cc [51];
   
-  lVar13 = (longlong)(int)param_3;
-  __savegprlr_20(param_1);
-  iVar9 = __savefpr_23();
-  uVar10 = DObjGetRootBoneCount(param_2);
-  if (uVar10 == 0) {
+  uVar8 = DObjGetRootBoneCount(param_2);
+  if (uVar8 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_pose_mp.cpp",0x106
                     ,0,"%s");
   }
-  uVar10 = uVar10 - 1;
-  uVar6 = (int)uVar10 >> 5;
-  uVar15 = 0;
-  iVar7 = (int)lVar13;
+  uVar8 = uVar8 - 1;
+  uVar6 = (int)uVar8 >> 5;
+  uVar13 = 0;
+  piVar12 = param_3;
   if (uVar6 != 0) {
     do {
-      if (*(int *)lVar13 != -1) goto LAB_822f0e7c;
-      uVar15 = uVar15 + 1;
-      lVar13 = lVar13 + 4;
-    } while (uVar15 < uVar6);
+      if (*piVar12 != -1) goto LAB_822f0e7c;
+      uVar13 = uVar13 + 1;
+      piVar12 = piVar12 + 1;
+    } while (uVar13 < uVar6);
   }
-  if ((0xffffffffU >> (uVar10 & 0x1f) + 1 | *(uint *)(uVar6 * 4 + iVar7)) != 0xffffffff) {
+  if ((0xffffffffU >> (uVar8 & 0x1f) + 1 | param_3[uVar6]) != 0xffffffff) {
 LAB_822f0e7c:
-    pDVar11 = DObjGetRotTransArray(param_2);
-    if (pDVar11 != (DObjAnimMat *)0x0) {
-      AnglesToQuat((float *)(iVar9 + 0x20),&local_110);
-      uVar14 = 0xffffffff80000000;
+    pDVar9 = DObjGetRotTransArray(param_2);
+    if (pDVar9 != (DObjAnimMat *)0x0) {
+      AnglesToQuat(param_1->angles,&local_110);
+      uVar11 = 0xffffffff80000000;
       local_e0 = 0;
       local_dc = 0;
-      iVar16 = 0;
+      iVar14 = 0;
       local_cc[0] = 0x80000000;
       local_d8 = 0;
       local_d4 = 0;
@@ -472,51 +476,51 @@ LAB_822f0e7c:
       local_cc[3] = 0;
       local_cc[4] = 0;
       local_cc[5] = 0;
-      dVar21 = (double)g_activeRefDef->viewOffset[0];
-      dVar20 = (double)g_activeRefDef->viewOffset[1];
-      dVar19 = (double)g_activeRefDef->viewOffset[2];
-      if (-1 < (int)uVar10) {
-        dVar24 = 1.0;
-        dVar22 = 2.0;
-        pfVar17 = pDVar11->quat + 3;
-        dVar23 = 1e-06;
+      dVar19 = (double)g_activeRefDef->viewOffset[0];
+      dVar18 = (double)g_activeRefDef->viewOffset[1];
+      dVar17 = (double)g_activeRefDef->viewOffset[2];
+      if (-1 < (int)uVar8) {
+        dVar22 = 1.0;
+        dVar20 = 2.0;
+        pfVar15 = pDVar9->quat + 3;
+        dVar21 = 1e-06;
         do {
-          if ((*(uint *)((iVar16 >> 5) * 4 + iVar7) & (uint)uVar14) == 0) {
-            iVar12 = DObjSetRotTransIndex(param_2,(int *)(local_cc + -(iVar16 >> 5)),iVar16);
-            if (iVar12 == 0) {
+          if ((param_3[iVar14 >> 5] & (uint)uVar11) == 0) {
+            iVar10 = DObjSetRotTransIndex(param_2,(int *)(local_cc + -(iVar14 >> 5)),iVar14);
+            if (iVar10 == 0) {
               local_100.quat[0] = local_110;
               local_100.quat[1] = local_10c;
               local_100.quat[2] = local_108;
               local_100.quat[3] = local_104;
-              DObjSetTrans(&local_100,(float *)(iVar9 + 0x14));
-              dVar18 = (double)(local_100.quat[0] * local_100.quat[0] +
+              DObjSetTrans(&local_100,param_1->origin);
+              dVar16 = (double)(local_100.quat[0] * local_100.quat[0] +
                                local_100.quat[1] * local_100.quat[1] +
                                local_100.quat[3] * local_100.quat[3] +
                                local_100.quat[2] * local_100.quat[2]);
-              if (dVar18 <= dVar23) {
-                local_100.quat[3] = (float)dVar24;
-                dVar18 = dVar22;
+              if (dVar16 <= dVar21) {
+                local_100.quat[3] = (float)dVar22;
+                dVar16 = dVar20;
               }
               else {
-                dVar18 = (double)(float)(dVar22 / dVar18);
+                dVar16 = (double)(float)(dVar20 / dVar16);
               }
-              local_100.transWeight = (float)dVar18;
-              if (((uint)(float)dVar18 & 0x7f800000) == 0x7f800000) {
+              local_100.transWeight = (float)dVar16;
+              if (((uint)(float)dVar16 & 0x7f800000) == 0x7f800000) {
                 MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\../xanim/xanim_public.h"
                                 ,0x2fa,0,"%s");
               }
-              fVar1 = pfVar17[-1];
-              fVar2 = pfVar17[-2];
-              fVar3 = ((DObjAnimMat *)(pfVar17 + -3))->quat[0];
-              fVar4 = *pfVar17;
-              pfVar17[-2] = fVar4 * local_10c +
+              fVar1 = pfVar15[-1];
+              fVar2 = pfVar15[-2];
+              fVar3 = ((DObjAnimMat *)(pfVar15 + -3))->quat[0];
+              fVar4 = *pfVar15;
+              pfVar15[-2] = fVar4 * local_10c +
                             local_108 * fVar3 + (local_104 * fVar2 - fVar1 * local_110);
-              pfVar17[-1] = fVar4 * local_108 +
+              pfVar15[-1] = fVar4 * local_108 +
                             -(local_10c * fVar3 - (local_104 * fVar1 + fVar2 * local_110));
-              ((DObjAnimMat *)(pfVar17 + -3))->quat[0] =
+              ((DObjAnimMat *)(pfVar15 + -3))->quat[0] =
                    -(local_108 * fVar2 - (local_10c * fVar1 + fVar4 * local_110 + local_104 * fVar3)
                     );
-              *pfVar17 = -(local_108 * fVar1 -
+              *pfVar15 = -(local_108 * fVar1 -
                           -(local_10c * fVar2 - (fVar4 * local_104 - fVar3 * local_110)));
               if ((((((uint)local_100.quat[0] & 0x7f800000) == 0x7f800000) ||
                    (((uint)local_100.quat[1] & 0x7f800000) == 0x7f800000)) ||
@@ -532,159 +536,145 @@ LAB_822f0e7c:
               fVar3 = local_100.transWeight * local_100.quat[1];
               fVar4 = local_100.transWeight * local_100.quat[0];
               fVar2 = local_100.quat[2] * local_100.transWeight * local_100.quat[2];
-              fVar8 = local_100.quat[3] * local_100.transWeight * local_100.quat[2];
-              fVar1 = (local_100.quat[1] * fVar4 - fVar8) * pfVar17[2] +
-                      pfVar17[1] * (float)(dVar24 - (double)(fVar2 + local_100.quat[1] * fVar3)) +
-                      pfVar17[3] * (local_100.quat[3] * fVar3 + local_100.quat[2] * fVar4) +
+              fVar7 = local_100.quat[3] * local_100.transWeight * local_100.quat[2];
+              fVar1 = (local_100.quat[1] * fVar4 - fVar7) * pfVar15[2] +
+                      pfVar15[1] * (float)(dVar22 - (double)(fVar2 + local_100.quat[1] * fVar3)) +
+                      pfVar15[3] * (local_100.quat[3] * fVar3 + local_100.quat[2] * fVar4) +
                       local_100.trans[0];
-              fVar2 = (float)(dVar24 - (double)(fVar2 + fVar4 * local_100.quat[0])) * pfVar17[2] +
-                      pfVar17[1] * (fVar8 + local_100.quat[1] * fVar4) +
-                      pfVar17[3] * (local_100.quat[2] * fVar3 - local_100.quat[3] * fVar4) +
+              fVar2 = (float)(dVar22 - (double)(fVar2 + fVar4 * local_100.quat[0])) * pfVar15[2] +
+                      pfVar15[1] * (fVar7 + local_100.quat[1] * fVar4) +
+                      pfVar15[3] * (local_100.quat[2] * fVar3 - local_100.quat[3] * fVar4) +
                       local_100.trans[1];
-              fVar3 = (local_100.quat[2] * fVar3 + local_100.quat[3] * fVar4) * pfVar17[2] +
-                      pfVar17[1] * (local_100.quat[2] * fVar4 - local_100.quat[3] * fVar3) +
-                      pfVar17[3] *
-                      (float)(dVar24 - (double)(local_100.quat[1] * fVar3 +
+              fVar3 = (local_100.quat[2] * fVar3 + local_100.quat[3] * fVar4) * pfVar15[2] +
+                      pfVar15[1] * (local_100.quat[2] * fVar4 - local_100.quat[3] * fVar3) +
+                      pfVar15[3] *
+                      (float)(dVar22 - (double)(local_100.quat[1] * fVar3 +
                                                fVar4 * local_100.quat[0])) + local_100.trans[2];
             }
             else {
-              ((DObjAnimMat *)(pfVar17 + -3))->quat[0] = local_110;
-              pfVar17[-2] = local_10c;
-              pfVar17[-1] = local_108;
-              *pfVar17 = local_104;
-              fVar1 = *(float *)(iVar9 + 0x14);
-              fVar2 = *(float *)(iVar9 + 0x18);
-              fVar3 = *(float *)(iVar9 + 0x1c);
+              ((DObjAnimMat *)(pfVar15 + -3))->quat[0] = local_110;
+              pfVar15[-2] = local_10c;
+              pfVar15[-1] = local_108;
+              *pfVar15 = local_104;
+              fVar1 = param_1->origin[0];
+              fVar2 = param_1->origin[1];
+              fVar3 = param_1->origin[2];
             }
-            local_128 = (float)((double)fVar1 - dVar21);
-            local_124 = (float)((double)fVar2 - dVar20);
-            local_120 = (float)((double)fVar3 - dVar19);
-            DObjSetTrans((DObjAnimMat *)(pfVar17 + -3),&local_128);
-            uVar14 = (ulonglong)local_cc[0];
+            local_128 = (float)((double)fVar1 - dVar19);
+            local_124 = (float)((double)fVar2 - dVar18);
+            local_120 = (float)((double)fVar3 - dVar17);
+            DObjSetTrans((DObjAnimMat *)(pfVar15 + -3),&local_128);
+            uVar11 = (ulonglong)local_cc[0];
           }
-          iVar16 = iVar16 + 1;
-          uVar5 = (uVar14 & 0xffffffff) << 0x1f;
-          uVar14 = (uVar14 & 0xffffffff) >> 1;
-          local_cc[0] = (uint)uVar5 | (uint)uVar14;
-          uVar14 = uVar5 & 0xffffffff | uVar14;
-          pfVar17 = pfVar17 + 8;
-        } while (iVar16 <= (int)uVar10);
+          iVar14 = iVar14 + 1;
+          uVar5 = (uVar11 & 0xffffffff) << 0x1f;
+          uVar11 = (uVar11 & 0xffffffff) >> 1;
+          local_cc[0] = (uint)uVar5 | (uint)uVar11;
+          uVar11 = uVar5 & 0xffffffff | uVar11;
+          pfVar15 = pfVar15 + 8;
+        } while (iVar14 <= (int)uVar8);
       }
     }
   }
-  __restfpr_23();
-  __restgprlr_20();
   return;
 }
 
 
 // 822F1278  CG_DoControllers  (cgame_mp/cg_pose_mp.cpp:324)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void CG_DoControllers(cpose_t *param_1,DObj *param_2,int *param_3)
 
 {
-  cpose_t *pcVar1;
-  int iVar2;
   int aiStack_40 [16];
   
-  pcVar1 = (cpose_t *)__savegprlr_29(param_1);
   Profile_Begin(0x13e);
   DObjGetSetBones(param_2,aiStack_40);
-  switch(pcVar1->eType) {
+  switch(param_1->eType) {
   case '\x01':
-    if ((pcVar1->field9_0x2c).player.control != (clientControllers_t *)0x0) {
-      BG_Player_DoControllers(&(pcVar1->field9_0x2c).player,param_2,param_3);
+    if ((param_1->field9_0x2c).player.control != (clientControllers_t *)0x0) {
+      BG_Player_DoControllers(&(param_1->field9_0x2c).player,param_2,param_3);
     }
     break;
   case '\v':
-    CG_Turret_DoControllers(pcVar1,param_2,param_3);
+    CG_Turret_DoControllers(param_1,param_2,param_3);
     break;
   case '\f':
   case '\x0e':
-    CG_Vehicle_DoControllers(pcVar1,param_2,param_3);
+    CG_Vehicle_DoControllers(param_1,param_2,param_3);
   }
-  CG_DoBaseOriginController(pcVar1,param_2,aiStack_40);
-  if ((pcVar1->isRagdoll != '\0') &&
-     ((pcVar1->ragdollHandle != 0 || (pcVar1->killcamRagdollHandle != 0)))) {
-    Ragdoll_DoControllers(pcVar1,param_2,param_3);
+  CG_DoBaseOriginController(param_1,param_2,aiStack_40);
+  if ((param_1->isRagdoll != '\0') &&
+     ((param_1->ragdollHandle != 0 || (param_1->killcamRagdollHandle != 0)))) {
+    Ragdoll_DoControllers(param_1,param_2,param_3);
   }
-  iVar2 = Profile_EndInternal((double *)0x0);
-  __restgprlr_29(iVar2);
+  Profile_EndInternal((double *)0x0);
   return;
 }
 
 
 // 822F13A0  CG_DObjCalcPose  (cgame_mp/cg_pose_mp.cpp:359)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 DObjAnimMat * CG_DObjCalcPose(cpose_t *param_1,DObj *param_2,int *param_3)
 
 {
-  cpose_t *pcVar1;
-  int iVar2;
-  DObjAnimMat *pDVar4;
-  ulonglong uVar5;
+  int iVar1;
   DObjAnimMat *local_40 [16];
-  DObj *pDVar3;
   
-  uVar5 = (ulonglong)(int)param_2;
-  pcVar1 = (cpose_t *)__savegprlr_27(param_1);
-  if ((uVar5 & 0xffffffff) == 0) {
+  if (param_2 == (DObj *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_pose_mp.cpp",0x16a
                     ,0,"%s");
   }
-  if (pcVar1 == (cpose_t *)0x0) {
+  if (param_1 == (cpose_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_pose_mp.cpp",0x16b
                     ,0,"%s");
   }
-  pDVar3 = (DObj *)uVar5;
-  iVar2 = CL_DObjCreateSkelForBones(pDVar3,param_3,local_40);
-  if (iVar2 == 0) {
-    DObjCompleteHierarchyBits(pDVar3,param_3);
-    CG_DoControllers(pcVar1,pDVar3,param_3);
-    DObjCalcSkel(pDVar3,param_3);
+  iVar1 = CL_DObjCreateSkelForBones(param_2,param_3,local_40);
+  if (iVar1 == 0) {
+    DObjCompleteHierarchyBits(param_2,param_3);
+    CG_DoControllers(param_1,param_2,param_3);
+    DObjCalcSkel(param_2,param_3);
   }
-  pDVar4 = (DObjAnimMat *)__restgprlr_27(local_40[0]);
-  return pDVar4;
+  return local_40[0];
 }
 
 
 // 822F1460  CG_DObjCalcPoseForMark  (cgame_mp/cg_pose_mp.cpp:395)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 DObjAnimMat * CG_DObjCalcPoseForMark(cpose_t *param_1,DObj *param_2,int *param_3)
 
 {
-  cpose_t *pcVar1;
-  int iVar2;
-  XAnimTree *pXVar4;
-  DObjAnimMat *pDVar5;
-  ulonglong uVar6;
+  int iVar1;
+  XAnimTree *pXVar2;
   DObjAnimMat *local_40 [16];
-  DObj *pDVar3;
   
-  uVar6 = (ulonglong)(int)param_2;
-  pcVar1 = (cpose_t *)__savegprlr_27(param_1);
-  if ((uVar6 & 0xffffffff) == 0) {
+  if (param_2 == (DObj *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_pose_mp.cpp",0x18e
                     ,0,"%s");
   }
-  if (pcVar1 == (cpose_t *)0x0) {
+  if (param_1 == (cpose_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_pose_mp.cpp",399,0
                     ,"%s");
   }
-  pDVar3 = (DObj *)uVar6;
-  iVar2 = CL_DObjCreateSkelForBones(pDVar3,param_3,local_40);
-  if (iVar2 == 0) {
-    pXVar4 = DObjGetTree(pDVar3);
-    if (pXVar4 != (XAnimTree *)0x0) {
-      pDVar5 = (DObjAnimMat *)__restgprlr_27(0);
-      return pDVar5;
+  iVar1 = CL_DObjCreateSkelForBones(param_2,param_3,local_40);
+  if (iVar1 == 0) {
+    pXVar2 = DObjGetTree(param_2);
+    if (pXVar2 != (XAnimTree *)0x0) {
+      return (DObjAnimMat *)0x0;
     }
-    DObjCompleteHierarchyBits(pDVar3,param_3);
-    CG_DoControllers(pcVar1,pDVar3,param_3);
-    DObjCalcSkelNoAnim(pDVar3,param_3);
+    DObjCompleteHierarchyBits(param_2,param_3);
+    CG_DoControllers(param_1,param_2,param_3);
+    DObjCalcSkelNoAnim(param_2,param_3);
   }
-  pDVar5 = (DObjAnimMat *)__restgprlr_27(local_40[0]);
-  return pDVar5;
+  return local_40[0];
 }
 
 

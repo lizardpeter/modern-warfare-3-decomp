@@ -192,6 +192,10 @@ score_t * UI_GetScoreAtRank(LocalClientNum_t param_1,int param_2)
 
 // 822F5720  CG_DrawScoreboard_Controls  (cgame_mp/cg_scoreboard_mp.cpp:409)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -200,16 +204,15 @@ void CG_DrawScoreboard_Controls
                (LocalClientNum_t param_1,float param_2,float param_3,float param_4,float param_5)
 
 {
-  LocalClientNum_t LVar1;
-  int iVar2;
-  cg_s *pcVar3;
-  bool bVar7;
-  ScreenPlacement *pSVar4;
-  Font_s *pFVar5;
-  char *pcVar6;
+  int iVar1;
+  cg_s *pcVar2;
+  bool bVar6;
+  ScreenPlacement *pSVar3;
+  Font_s *pFVar4;
+  char *pcVar5;
+  char *pcVar7;
   char *pcVar8;
-  char *pcVar9;
-  double extraout_f1;
+  double dVar9;
   double dVar10;
   double dVar11;
   double dVar12;
@@ -217,61 +220,56 @@ void CG_DrawScoreboard_Controls
   double dVar14;
   double dVar15;
   double dVar16;
-  double dVar17;
   
   dVar11 = (double)param_4;
+  dVar9 = (double)param_2;
   dVar10 = (double)param_3;
-  __savegprlr_24((double)param_2,param_1);
-  LVar1 = __savefpr_24();
-  dVar12 = extraout_f1;
-  iVar2 = CL_ControllerIndexFromClientNum(LVar1);
-  iVar2 = CL_GetLocalClientSignInState(iVar2);
-  if (0 < iVar2) {
-    pcVar3 = CG_GetLocalClientGlobals(LVar1);
-    if ((pcVar3->selectedGamerXuid != 0) &&
-       (bVar7 = Live_XUIDIsLocalPlayer(pcVar3->selectedGamerXuid), !bVar7)) {
-      dVar17 = 0.30000001192092896;
-      bVar7 = CL_IsRenderingSplitScreen();
-      dVar15 = 0.5;
-      if (bVar7) {
-        dVar17 = dVar15;
+  iVar1 = CL_ControllerIndexFromClientNum(param_1);
+  iVar1 = CL_GetLocalClientSignInState(iVar1);
+  if (0 < iVar1) {
+    pcVar2 = CG_GetLocalClientGlobals(param_1);
+    if ((pcVar2->selectedGamerXuid != 0) &&
+       (bVar6 = Live_XUIDIsLocalPlayer(pcVar2->selectedGamerXuid), !bVar6)) {
+      dVar16 = 0.30000001192092896;
+      bVar6 = CL_IsRenderingSplitScreen();
+      dVar14 = 0.5;
+      if (bVar6) {
+        dVar16 = dVar14;
       }
-      pSVar4 = ScrPlace_GetActivePlacement(LVar1);
-      pFVar5 = UI_GetFontHandle(pSVar4,(cg_scoreboardFont->current).integer,(float)dVar17);
-      pcVar8 = "c\\cgame_mp\\cg_local_mp.h";
-      pcVar9 = "the motion tracker after being detected";
-      dVar13 = 8.0;
-      dVar14 = 0.0;
+      pSVar3 = ScrPlace_GetActivePlacement(param_1);
+      pFVar4 = UI_GetFontHandle(pSVar3,(cg_scoreboardFont->current).integer,(float)dVar16);
+      pcVar7 = "c\\cgame_mp\\cg_local_mp.h";
+      pcVar8 = "the motion tracker after being detected";
+      dVar12 = 8.0;
+      dVar13 = 0.0;
       if ((onlinegame->current).enabled != false) {
-        pcVar9 = "the motion tracker after being detected";
-        pcVar8 = "c\\cgame_mp\\cg_local_mp.h";
-        pcVar6 = UI_SafeTranslateString("XBOXLIVE_GAMERCARD");
-        iVar2 = UI_TextWidth(pcVar6,0x7fffffff,pFVar5,(float)dVar17);
-        dVar16 = (double)(float)((double)(float)(dVar11 - (double)(longlong)iVar2) * dVar15);
-        if (dVar16 <= dVar14) {
-          pcVar9 = SUB84(dVar16,0);
-          pcVar8 = "(xAdj > 0)";
+        pcVar8 = "the motion tracker after being detected";
+        pcVar7 = "c\\cgame_mp\\cg_local_mp.h";
+        pcVar5 = UI_SafeTranslateString("XBOXLIVE_GAMERCARD");
+        iVar1 = UI_TextWidth(pcVar5,0x7fffffff,pFVar4,(float)dVar16);
+        dVar15 = (double)(float)((double)(float)(dVar11 - (double)(longlong)iVar1) * dVar14);
+        if (dVar15 <= dVar13) {
+          pcVar8 = SUB84(dVar15,0);
+          pcVar7 = "(xAdj > 0)";
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_scoreboard_mp.cpp"
                           ,0x1bf,0,"%s\n\t(xAdj) = %i");
         }
-        UI_DrawText(pSVar4,pcVar6,0x7fffffff,pFVar5,(float)(dVar16 + dVar12),
-                    (float)(dVar10 - dVar13),(int)pcVar8,(int)pcVar9,(float)dVar17,(float *)0x1,0);
+        UI_DrawText(pSVar3,pcVar5,0x7fffffff,pFVar4,(float)(dVar15 + dVar9),(float)(dVar10 - dVar12)
+                    ,(int)pcVar7,(int)pcVar8,(float)dVar16,(float *)0x1,0);
       }
-      pcVar6 = UI_SafeTranslateString("PLATFORM_PLAYER_TOGGLE_MUTE_BTN");
-      iVar2 = UI_TextWidth(pcVar6,0x7fffffff,pFVar5,(float)dVar17);
-      dVar15 = (double)(float)((double)(float)(dVar11 - (double)(longlong)iVar2) * dVar15);
-      if (dVar15 <= dVar14) {
-        pcVar9 = SUB84(dVar15,0);
-        pcVar8 = "(xAdj > 0)";
+      pcVar5 = UI_SafeTranslateString("PLATFORM_PLAYER_TOGGLE_MUTE_BTN");
+      iVar1 = UI_TextWidth(pcVar5,0x7fffffff,pFVar4,(float)dVar16);
+      dVar14 = (double)(float)((double)(float)(dVar11 - (double)(longlong)iVar1) * dVar14);
+      if (dVar14 <= dVar13) {
+        pcVar8 = SUB84(dVar14,0);
+        pcVar7 = "(xAdj > 0)";
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_scoreboard_mp.cpp"
                         ,0x1c8,0,"%s\n\t(xAdj) = %i");
       }
-      UI_DrawText(pSVar4,pcVar6,0x7fffffff,pFVar5,(float)((double)(float)(dVar15 + dVar12) + dVar11)
-                  ,(float)(dVar10 - dVar13),(int)pcVar8,(int)pcVar9,(float)dVar17,(float *)0x1,0);
+      UI_DrawText(pSVar3,pcVar5,0x7fffffff,pFVar4,(float)((double)(float)(dVar14 + dVar9) + dVar11),
+                  (float)(dVar10 - dVar12),(int)pcVar7,(int)pcVar8,(float)dVar16,(float *)0x1,0);
     }
   }
-  __restfpr_24();
-  __restgprlr_24();
   return;
 }
 
@@ -355,23 +353,26 @@ void CG_GetScoreboardInfo(listColumnInfo_t **param_1,int *param_2)
 
 // 822F5B28  CG_DrawScoreboard_ListColumnHeaders  (cgame_mp/cg_scoreboard_mp.cpp:568)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 float CG_DrawScoreboard_ListColumnHeaders
                 (LocalClientNum_t param_1,float *param_2,float param_3,float param_4,float param_5)
 
 {
-  LocalClientNum_t LVar1;
-  ScreenPlacement *pSVar2;
-  bool bVar6;
-  Font_s *pFVar3;
-  char *pcVar4;
-  int iVar5;
-  undefined8 uVar7;
-  longlong lVar8;
-  ulonglong uVar9;
-  float *pfVar10;
-  double extraout_f1;
+  ScreenPlacement *pSVar1;
+  bool bVar5;
+  Font_s *pFVar2;
+  char *pcVar3;
+  int iVar4;
+  undefined8 uVar6;
+  longlong lVar7;
+  ulonglong uVar8;
+  float *pfVar9;
+  double dVar10;
   double dVar11;
   double dVar12;
   double dVar13;
@@ -379,69 +380,64 @@ float CG_DrawScoreboard_ListColumnHeaders
   double dVar15;
   double dVar16;
   double dVar17;
-  double dVar18;
-  float fVar19;
+  float fVar18;
   longlong local_b0;
   longlong local_a8;
   longlong local_a0;
   
-  dVar12 = (double)param_4;
-  dVar13 = (double)param_5;
-  __savegprlr_23((double)param_3,param_1);
-  LVar1 = __savefpr_24();
-  dVar11 = extraout_f1;
-  pSVar2 = ScrPlace_GetActivePlacement(LVar1);
-  bVar6 = CL_IsRenderingSplitScreen();
-  local_a8 = (longlong)bVar6;
-  dVar18 = 1.0;
-  uVar7 = 0xffffffff82010000;
-  dVar17 = 0.8500000238418579;
-  pFVar3 = UI_GetFontHandle(pSVar2,(cg_scoreboardFont->current).integer,
+  dVar10 = (double)param_3;
+  dVar11 = (double)param_4;
+  dVar12 = (double)param_5;
+  pSVar1 = ScrPlace_GetActivePlacement(param_1);
+  bVar5 = CL_IsRenderingSplitScreen();
+  local_a8 = (longlong)bVar5;
+  dVar17 = 1.0;
+  uVar6 = 0xffffffff82010000;
+  dVar16 = 0.8500000238418579;
+  pFVar2 = UI_GetFontHandle(pSVar1,(cg_scoreboardFont->current).integer,
                             (cg_scoreboardHeaderFontScale->current).value *
                             ((float)local_a8 *
                              ((cg_hudSplitscreenBannerScoreboardScale->current).value - 1.0) + 1.0)
                             * 0.85);
-  fVar19 = CG_BackdropLeft(LVar1);
-  dVar16 = (double)(fVar19 + 9.0);
+  fVar18 = CG_BackdropLeft(param_1);
+  dVar15 = (double)(fVar18 + 9.0);
   CG_GetScoreboardInfo((listColumnInfo_t **)&local_a8,(int *)&local_b0);
-  uVar9 = (ulonglong)local_b0._0_4_;
+  uVar8 = (ulonglong)local_b0._0_4_;
   if (0 < (int)local_b0._0_4_) {
-    pfVar10 = &local_a8._0_4_[-1].fWidth;
-    dVar15 = 0.5;
+    pfVar9 = &local_a8._0_4_[-1].fWidth;
+    dVar14 = 0.5;
     do {
-      if (*(char *)pfVar10[5] != '\0') {
-        pcVar4 = UI_SafeTranslateString((char *)pfVar10[5]);
-        bVar6 = CL_IsRenderingSplitScreen();
-        local_a8 = (longlong)bVar6;
-        dVar14 = (double)(float)((double)pfVar10[4] * dVar13);
-        iVar5 = UI_TextWidth(pcVar4,0,pFVar3,
+      if (*(char *)pfVar9[5] != '\0') {
+        pcVar3 = UI_SafeTranslateString((char *)pfVar9[5]);
+        bVar5 = CL_IsRenderingSplitScreen();
+        local_a8 = (longlong)bVar5;
+        dVar13 = (double)(float)((double)pfVar9[4] * dVar12);
+        iVar4 = UI_TextWidth(pcVar3,0,pFVar2,
                              (float)((double)((cg_scoreboardHeaderFontScale->current).value *
                                              (float)((double)local_a8 *
                                                      (double)(float)((double)(
                                                   cg_hudSplitscreenBannerScoreboardScale->current).
-                                                  value - dVar18) + dVar18)) * dVar17));
-        lVar8 = (longlong)iVar5;
-        dVar14 = (double)(float)((double)(float)(dVar14 - (double)lVar8) * dVar15);
-        local_b0 = lVar8;
-        bVar6 = CL_IsRenderingSplitScreen();
-        local_a0 = (longlong)bVar6;
-        UI_DrawText(pSVar2,pcVar4,0x7fffffff,pFVar3,(float)(dVar14 + dVar16),
-                    (float)(dVar11 + dVar12),(int)uVar7,(int)lVar8,
+                                                  value - dVar17) + dVar17)) * dVar16));
+        lVar7 = (longlong)iVar4;
+        dVar13 = (double)(float)((double)(float)(dVar13 - (double)lVar7) * dVar14);
+        local_b0 = lVar7;
+        bVar5 = CL_IsRenderingSplitScreen();
+        local_a0 = (longlong)bVar5;
+        UI_DrawText(pSVar1,pcVar3,0x7fffffff,pFVar2,(float)(dVar13 + dVar15),
+                    (float)(dVar10 + dVar11),(int)uVar6,(int)lVar7,
                     (float)((double)((cg_scoreboardHeaderFontScale->current).value *
                                     (float)((double)local_a0 *
                                             (double)(float)((double)(
                                                   cg_hudSplitscreenBannerScoreboardScale->current).
-                                                  value - dVar18) + dVar18)) * dVar17),(float *)0x1,
+                                                  value - dVar17) + dVar17)) * dVar16),(float *)0x1,
                     0);
       }
-      pfVar10 = pfVar10 + 4;
-      uVar9 = uVar9 - 1;
-      dVar16 = (double)(float)((double)*pfVar10 * dVar13 + dVar16);
-    } while (uVar9 != 0);
+      pfVar9 = pfVar9 + 4;
+      uVar8 = uVar8 - 1;
+      dVar15 = (double)(float)((double)*pfVar9 * dVar12 + dVar15);
+    } while (uVar8 != 0);
   }
-  __restfpr_24((double)((float)(dVar11 + dVar12) + 4.0));
-  dVar11 = (double)__restgprlr_23();
-  return (float)dVar11;
+  return (float)(dVar10 + dVar11) + 4.0;
 }
 
 
@@ -594,6 +590,10 @@ LAB_822f6058:
 
 // 822F6070  CG_DrawScoreboard_ListBanner  (cgame_mp/cg_scoreboard_mp.cpp:699)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -603,112 +603,103 @@ float CG_DrawScoreboard_ListBanner
                 int param_6,int *param_7)
 
 {
-  LocalClientNum_t LVar1;
-  int iVar2;
-  ScreenPlacement *pSVar3;
-  bool bVar8;
-  Font_s *pFVar4;
+  int iVar1;
+  ScreenPlacement *pSVar2;
+  bool bVar7;
+  Font_s *pFVar3;
+  char *pcVar4;
   char *pcVar5;
-  char *pcVar6;
-  Material *pMVar7;
+  Material *pMVar6;
+  char *pcVar8;
+  uint in_r7;
   char *pcVar9;
-  ulonglong in_r7;
-  char *pcVar10;
   int *in_r8;
-  double extraout_f1;
+  double dVar10;
   double dVar11;
   double dVar12;
   double dVar13;
   double dVar14;
   double dVar15;
-  double dVar16;
-  float fVar17;
+  float fVar16;
   char acStack_a0 [160];
   
-  dVar15 = (double)param_4;
-  pcVar9 = (char *)param_7;
-  __savegprlr_23((double)param_3,dVar15,(double)param_5,param_1);
-  LVar1 = __savefpr_26();
-  dVar11 = extraout_f1;
-  iVar2 = CG_CheckDrawScoreboardLine(LVar1,in_r8,(float)extraout_f1,(float)dVar15);
-  if (iVar2 == 0) {
-    __restfpr_26(dVar11);
-    dVar11 = (double)__restgprlr_23();
-    return (float)dVar11;
+  dVar12 = (double)param_3;
+  dVar14 = (double)param_4;
+  pcVar8 = (char *)param_7;
+  iVar1 = CG_CheckDrawScoreboardLine(param_1,in_r8,param_3,param_4);
+  if (iVar1 == 0) {
+    return (float)dVar12;
   }
-  CG_GetLocalClientGlobals(LVar1);
-  pSVar3 = ScrPlace_GetActivePlacement(LVar1);
-  bVar8 = CL_IsRenderingSplitScreen();
-  dVar16 = 1.0;
-  pcVar10 = "c\\cgame_mp\\cg_local_mp.h";
-  dVar13 = 0.3499999940395355;
-  pFVar4 = UI_GetFontHandle(pSVar3,(cg_scoreboardFont->current).integer,
-                            ((float)(longlong)bVar8 *
+  CG_GetLocalClientGlobals(param_1);
+  pSVar2 = ScrPlace_GetActivePlacement(param_1);
+  bVar7 = CL_IsRenderingSplitScreen();
+  dVar15 = 1.0;
+  pcVar9 = "c\\cgame_mp\\cg_local_mp.h";
+  dVar11 = 0.3499999940395355;
+  pFVar3 = UI_GetFontHandle(pSVar2,(cg_scoreboardFont->current).integer,
+                            ((float)(longlong)bVar7 *
                              ((cg_hudSplitscreenBannerScoreboardScale->current).value - 1.0) + 1.0)
                             * 0.35);
-  pcVar5 = TeamIconName(LVar1,(int)in_r7);
-  if ((in_r7 & 0xffffffff) == 0) {
-    pcVar6 = "";
+  pcVar4 = TeamIconName(param_1,in_r7);
+  if (in_r7 == 0) {
+    pcVar5 = "";
   }
-  else if ((in_r7 & 0xffffffff) == 1) {
-    pcVar6 = Dvar_GetString("g_TeamName_Axis");
+  else if (in_r7 == 1) {
+    pcVar5 = Dvar_GetString("g_TeamName_Axis");
     param_6 = 0;
-    pcVar6 = SEH_LocalizeTextMessage(pcVar6,"scoreboard team name",LOCMSG_SAFE);
+    pcVar5 = SEH_LocalizeTextMessage(pcVar5,"scoreboard team name",LOCMSG_SAFE);
   }
-  else if ((in_r7 & 0xffffffff) < 3) {
-    pcVar6 = Dvar_GetString("g_TeamName_Allies");
+  else if (in_r7 < 3) {
+    pcVar5 = Dvar_GetString("g_TeamName_Allies");
     param_6 = 0;
-    pcVar6 = SEH_LocalizeTextMessage(pcVar6,"scoreboard team name",LOCMSG_SAFE);
+    pcVar5 = SEH_LocalizeTextMessage(pcVar5,"scoreboard team name",LOCMSG_SAFE);
   }
   else {
-    if ((int)in_r7 != 3) {
-      pcVar10 = "(team == TEAM_SPECTATOR)";
-      pcVar9 = "%s\n\t(team) = %i";
+    if (in_r7 != 3) {
+      pcVar9 = "(team == TEAM_SPECTATOR)";
+      pcVar8 = "%s\n\t(team) = %i";
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_scoreboard_mp.cpp"
                       ,0x2dd,0,"%s\n\t(team) = %i");
     }
     param_6 = 0;
-    pcVar6 = SEH_LocalizeTextMessage("CGAME_SPECTATORS","scoreboard team name",LOCMSG_SAFE);
+    pcVar5 = SEH_LocalizeTextMessage("CGAME_SPECTATORS","scoreboard team name",LOCMSG_SAFE);
   }
-  fVar17 = CG_BackdropLeft(LVar1);
-  iVar2 = 7;
-  dVar12 = 9.0;
-  dVar14 = (double)(fVar17 + 9.0);
-  pMVar7 = Material_RegisterHandle(pcVar5,7);
-  bVar8 = Material_IsDefault(pMVar7);
-  if (!bVar8) {
-    fVar17 = CG_BackdropLeft(LVar1);
-    UI_DrawHandlePic(pSVar3,(float)((double)fVar17 + dVar12),(float)dVar11,(float)dVar15,
-                     (float)dVar15,iVar2,param_6,(float *)pcVar9,(Material *)pcVar10);
-    dVar14 = (double)((float)(dVar14 + dVar15) + 8.0);
+  fVar16 = CG_BackdropLeft(param_1);
+  iVar1 = 7;
+  dVar10 = 9.0;
+  dVar13 = (double)(fVar16 + 9.0);
+  pMVar6 = Material_RegisterHandle(pcVar4,7);
+  bVar7 = Material_IsDefault(pMVar6);
+  if (!bVar7) {
+    fVar16 = CG_BackdropLeft(param_1);
+    UI_DrawHandlePic(pSVar2,(float)((double)fVar16 + dVar10),(float)dVar12,(float)dVar14,
+                     (float)dVar14,iVar1,param_6,(float *)pcVar8,(Material *)pcVar9);
+    dVar13 = (double)((float)(dVar13 + dVar14) + 8.0);
   }
-  dVar11 = (double)(float)(dVar11 + dVar15);
-  bVar8 = CL_IsRenderingSplitScreen();
-  UI_DrawText(pSVar3,pcVar6,0x7fffffff,pFVar4,(float)dVar14,(float)dVar11,(int)pcVar10,(int)bVar8,
-              (float)((double)(float)((double)(longlong)bVar8 *
+  dVar12 = (double)(float)(dVar12 + dVar14);
+  bVar7 = CL_IsRenderingSplitScreen();
+  UI_DrawText(pSVar2,pcVar5,0x7fffffff,pFVar3,(float)dVar13,(float)dVar12,(int)pcVar9,(int)bVar7,
+              (float)((double)(float)((double)(longlong)bVar7 *
                                       (double)(float)((double)(
                                                   cg_hudSplitscreenBannerScoreboardScale->current).
-                                                  value - dVar16) + dVar16) * dVar13),(float *)0x1,0
+                                                  value - dVar15) + dVar15) * dVar11),(float *)0x1,0
              );
-  bVar8 = CL_IsRenderingSplitScreen();
-  iVar2 = UI_TextWidth(pcVar6,0x7fffffff,pFVar4,
-                       (float)((double)(float)((double)(longlong)bVar8 *
+  bVar7 = CL_IsRenderingSplitScreen();
+  iVar1 = UI_TextWidth(pcVar5,0x7fffffff,pFVar3,
+                       (float)((double)(float)((double)(longlong)bVar7 *
                                                (double)(float)((double)(
                                                   cg_hudSplitscreenBannerScoreboardScale->current).
-                                                  value - dVar16) + dVar16) * dVar13));
-  dVar15 = (double)(float)((double)(longlong)(iVar2 + 8) + dVar14);
+                                                  value - dVar15) + dVar15) * dVar11));
+  dVar14 = (double)(float)((double)(longlong)(iVar1 + 8) + dVar13);
   Com_sprintf(acStack_a0,0x20,"( %i )");
-  bVar8 = CL_IsRenderingSplitScreen();
-  UI_DrawText(pSVar3,acStack_a0,0x7fffffff,pFVar4,(float)dVar15,(float)dVar11,(int)pcVar10,
-              (int)bVar8,
-              (float)((double)(float)((double)(longlong)bVar8 *
-                                      (double)(float)((double)(
+  bVar7 = CL_IsRenderingSplitScreen();
+  UI_DrawText(pSVar2,acStack_a0,0x7fffffff,pFVar3,(float)dVar14,(float)dVar12,(int)pcVar9,(int)bVar7
+              ,(float)((double)(float)((double)(longlong)bVar7 *
+                                       (double)(float)((double)(
                                                   cg_hudSplitscreenBannerScoreboardScale->current).
-                                                  value - dVar16) + dVar16) * dVar13),(float *)0x1,0
+                                                  value - dVar15) + dVar15) * dVar11),(float *)0x1,0
              );
-  __restfpr_26((double)(float)(dVar11 + 4.0));
-  dVar11 = (double)__restgprlr_23();
-  return (float)dVar11;
+  return (float)(dVar12 + 4.0);
 }
 
 
@@ -733,6 +724,10 @@ float CalcXAdj(int param_1,float param_2,float param_3)
 
 // 822F6458  DrawListString  (cgame_mp/cg_scoreboard_mp.cpp:773)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void DrawListString(LocalClientNum_t param_1,char *param_2,float param_3,float param_4,float param_5
@@ -740,69 +735,63 @@ void DrawListString(LocalClientNum_t param_1,char *param_2,float param_3,float p
 
 {
   double dVar1;
-  LocalClientNum_t LVar2;
-  ScreenPlacement *pSVar3;
-  int iVar4;
-  bool bVar6;
-  ulonglong uVar7;
+  ScreenPlacement *pSVar2;
+  int iVar3;
+  bool bVar4;
   Font_s *in_r9;
-  double extraout_f1;
+  double dVar5;
+  double dVar6;
+  double dVar7;
   double dVar8;
   double dVar9;
-  double dVar10;
-  double dVar11;
-  double dVar12;
-  float fVar13;
-  char *pcVar5;
+  float fVar10;
   
-  dVar12 = (double)param_8;
-  dVar8 = (double)param_4;
-  dVar11 = (double)param_5;
-  uVar7 = (ulonglong)(int)param_2;
-  __savegprlr_26((double)param_3,param_1,uVar7,param_6,param_7,param_9);
-  LVar2 = __savefpr_27();
-  if ((uVar7 & 0xffffffff) != 0) {
-    dVar9 = extraout_f1;
-    pSVar3 = ScrPlace_GetActivePlacement(LVar2);
-    pcVar5 = (char *)uVar7;
-    iVar4 = UI_TextWidth(pcVar5,0x7fffffff,in_r9,(float)dVar12);
-    if (dVar11 < (double)(longlong)iVar4) {
-      dVar10 = 0.02500000037252903;
+  dVar9 = (double)param_8;
+  dVar5 = (double)param_3;
+  dVar6 = (double)param_4;
+  dVar8 = (double)param_5;
+  if (param_2 != (char *)0x0) {
+    pSVar2 = ScrPlace_GetActivePlacement(param_1);
+    iVar3 = UI_TextWidth(param_2,0x7fffffff,in_r9,(float)dVar9);
+    if (dVar8 < (double)(longlong)iVar3) {
+      dVar7 = 0.02500000037252903;
       do {
-        dVar1 = dVar12 - dVar10;
-        dVar12 = (double)(float)dVar1;
-        iVar4 = UI_TextWidth(pcVar5,0x7fffffff,in_r9,(float)dVar1);
-      } while (dVar11 < (double)(longlong)iVar4);
+        dVar1 = dVar9 - dVar7;
+        dVar9 = (double)(float)dVar1;
+        iVar3 = UI_TextWidth(param_2,0x7fffffff,in_r9,(float)dVar1);
+      } while (dVar8 < (double)(longlong)iVar3);
     }
-    if (dVar12 <= 0.0) {
+    if (dVar9 <= 0.0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_scoreboard_mp.cpp"
                       ,0x311,0,"%s\n\t(scale) = %i");
     }
-    iVar4 = UI_TextWidth(pcVar5,0x7fffffff,in_r9,(float)dVar12);
-    fVar13 = CalcXAdj((int)param_10,(float)dVar11,(float)(longlong)iVar4);
-    dVar11 = (double)fVar13;
+    iVar3 = UI_TextWidth(param_2,0x7fffffff,in_r9,(float)dVar9);
+    fVar10 = CalcXAdj((int)param_10,(float)dVar8,(float)(longlong)iVar3);
+    dVar8 = (double)fVar10;
     if (param_10 == (float *)0x2) {
-      dVar11 = (double)(float)(dVar11 - 4.0);
+      dVar8 = (double)(float)(dVar8 - 4.0);
     }
-    bVar6 = CL_IsRenderingSplitScreen();
-    dVar10 = (double)((float)(longlong)bVar6 *
-                      ((cg_hudSplitscreenScoreboardScale->current).value - 1.0) + 1.0);
-    iVar4 = UI_TextHeight(in_r9,(float)dVar12);
-    UI_DrawText(pSVar3,pcVar5,0x7fffffff,in_r9,(float)(dVar11 + dVar9),
+    bVar4 = CL_IsRenderingSplitScreen();
+    dVar7 = (double)((float)(longlong)bVar4 *
+                     ((cg_hudSplitscreenScoreboardScale->current).value - 1.0) + 1.0);
+    iVar3 = UI_TextHeight(in_r9,(float)dVar9);
+    UI_DrawText(pSVar2,param_2,0x7fffffff,in_r9,(float)(dVar8 + dVar5),
                 (float)((double)(float)((double)(longlong)(cg_scoreboardItemHeight->current).integer
-                                        * dVar10 + (double)(longlong)iVar4) *
-                        (double)(cg_scoreboardTextOffset->current).value + dVar8),
-                (cg_scoreboardItemHeight->current).integer,(int)cg_scoreboardTextOffset,
-                (float)dVar12,(float *)0x1,0);
+                                        * dVar7 + (double)(longlong)iVar3) *
+                        (double)(cg_scoreboardTextOffset->current).value + dVar6),
+                (cg_scoreboardItemHeight->current).integer,(int)cg_scoreboardTextOffset,(float)dVar9
+                ,(float *)0x1,0);
   }
-  __restfpr_27();
-  __restgprlr_26();
   return;
 }
 
 
 // 822F6678  CG_DrawClientPing  (cgame_mp/cg_scoreboard_mp.cpp:798)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void CG_DrawClientPing(LocalClientNum_t param_1,int param_2,float param_3,float param_4,
@@ -812,24 +801,21 @@ void CG_DrawClientPing(LocalClientNum_t param_1,int param_2,float param_3,float 
   float fVar1;
   uint uVar2;
   uint uVar3;
-  LocalClientNum_t LVar4;
-  ScreenPlacement *pSVar5;
-  ulonglong uVar6;
-  float *pfVar8;
-  longlong lVar7;
+  ScreenPlacement *pSVar4;
+  float *pfVar6;
+  longlong lVar5;
   int in_r5;
-  undefined8 uVar9;
-  undefined8 uVar10;
-  longlong lVar11;
-  int iVar12;
-  int iVar13;
-  double extraout_f1;
+  undefined8 uVar7;
+  undefined8 uVar8;
+  longlong lVar9;
+  int iVar10;
+  int iVar11;
+  double dVar12;
+  double dVar13;
   double dVar14;
   double dVar15;
   double dVar16;
   double dVar17;
-  double dVar18;
-  double dVar19;
   float local_90;
   float local_8c;
   float local_88;
@@ -843,88 +829,88 @@ void CG_DrawClientPing(LocalClientNum_t param_1,int param_2,float param_3,float 
   float local_68;
   float local_64;
   
-  dVar14 = (double)param_6;
-  dVar18 = (double)param_5;
-  dVar15 = (double)param_4;
-  uVar6 = (ulonglong)param_2;
-  __savegprlr_27((double)param_3,param_1);
-  LVar4 = __savefpr_26();
+  dVar12 = (double)param_6;
+  dVar16 = (double)param_5;
+  dVar13 = (double)param_4;
+  dVar15 = (double)param_3;
   if (((onlinegame->current).enabled != false) || ((systemlink->current).enabled != false)) {
-    dVar17 = extraout_f1;
-    pSVar5 = ScrPlace_GetActivePlacement(LVar4);
+    pSVar4 = ScrPlace_GetActivePlacement(param_1);
     Material_RegisterHandle("white",7);
-    pfVar8 = &local_90;
-    Dvar_GetUnpackedColor(cg_ScoresPing_BgColor,pfVar8);
-    lVar11 = -0x7e000000;
-    uVar10 = 0xffffffff82000000;
-    dVar17 = (double)(float)(dVar17 + 8.0);
-    dVar19 = 1.0;
-    UI_DrawHandlePic(pSVar5,(float)(dVar17 - 1.0),(float)dVar15,(float)(dVar18 + 2.0),(float)dVar14,
-                     (int)pfVar8,in_r5,(float *)&IMAGE_DOS_HEADER_82000000,
+    pfVar6 = &local_90;
+    Dvar_GetUnpackedColor(cg_ScoresPing_BgColor,pfVar6);
+    lVar9 = -0x7e000000;
+    uVar8 = 0xffffffff82000000;
+    dVar15 = (double)(float)(dVar15 + 8.0);
+    dVar17 = 1.0;
+    UI_DrawHandlePic(pSVar4,(float)(dVar15 - 1.0),(float)dVar13,(float)(dVar16 + 2.0),(float)dVar12,
+                     (int)pfVar6,in_r5,(float *)&IMAGE_DOS_HEADER_82000000,
                      (Material *)&IMAGE_DOS_HEADER_82000000);
-    uVar9 = 0xffffffff82a60000;
+    uVar7 = 0xffffffff82a60000;
     uVar2 = (cg_ScoresPing_Interval->current).integer;
     uVar3 = (cg_ScoresPing_MaxBars->current).integer;
     if ((int)uVar2 < 1) {
-      lVar11 = -0x7dfddc30;
-      uVar10 = 0xffffffff820223bc;
-      uVar9 = 0;
+      lVar9 = -0x7dfddc30;
+      uVar8 = 0xffffffff820223bc;
+      uVar7 = 0;
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_scoreboard_mp.cpp"
                       ,0x339,0,"%s\n\t(interval) = %i");
     }
     Material_RegisterHandle("white",7);
-    iVar12 = uVar3 - (int)uVar6 / (int)uVar2;
+    iVar10 = uVar3 - param_2 / (int)uVar2;
     trapWord(6,(ulonglong)uVar2,0);
-    trapWord(5,(ulonglong)uVar2 & ~(((uVar6 & 0x7fffffff) << 1 | (uVar6 & 0xffffffff) >> 0x1f) - 1),
-             0xffff);
-    if (iVar12 < 1) {
-      iVar12 = 1;
+    trapWord(5,(ulonglong)uVar2 &
+               ~((((ulonglong)(uint)param_2 & 0x7fffffff) << 1 | (ulonglong)((uint)param_2 >> 0x1f))
+                - 1),0xffff);
+    if (iVar10 < 1) {
+      iVar10 = 1;
     }
-    iVar13 = ((int)uVar3 >> 1) + (uint)((int)uVar3 < 0 && (uVar3 & 1) != 0);
-    if (iVar12 < iVar13) {
+    iVar11 = ((int)uVar3 >> 1) + (uint)((int)uVar3 < 0 && (uVar3 & 1) != 0);
+    if (iVar10 < iVar11) {
       Dvar_GetUnpackedColor(cg_ScoresPing_HighColor,&local_80);
-      lVar7 = ZEXT48(&stack0x00000000) - 0x70;
-      Dvar_GetUnpackedColor(cg_ScoresPing_MedColor,(float *)lVar7);
-      fVar1 = (float)(longlong)iVar12 / (float)(longlong)iVar13;
+      lVar5 = ZEXT48(&stack0x00000000) - 0x70;
+      Dvar_GetUnpackedColor(cg_ScoresPing_MedColor,(float *)lVar5);
+      fVar1 = (float)(longlong)iVar10 / (float)(longlong)iVar11;
     }
     else {
       Dvar_GetUnpackedColor(cg_ScoresPing_MedColor,&local_80);
-      lVar7 = ZEXT48(&stack0x00000000) - 0x70;
-      Dvar_GetUnpackedColor(cg_ScoresPing_LowColor,(float *)lVar7);
-      lVar11 = (longlong)(iVar12 - iVar13);
-      fVar1 = (float)lVar11 / (float)(longlong)iVar13;
+      lVar5 = ZEXT48(&stack0x00000000) - 0x70;
+      Dvar_GetUnpackedColor(cg_ScoresPing_LowColor,(float *)lVar5);
+      lVar9 = (longlong)(iVar10 - iVar11);
+      fVar1 = (float)lVar9 / (float)(longlong)iVar11;
     }
-    dVar16 = (double)(longlong)(int)uVar3;
+    dVar14 = (double)(longlong)(int)uVar3;
     local_90 = (local_70 - local_80) * fVar1 + local_80;
     local_8c = (local_6c - local_7c) * fVar1 + local_7c;
     local_88 = (local_68 - local_78) * fVar1 + local_78;
     local_84 = (local_64 - local_74) * fVar1 + local_74;
-    dVar18 = (double)(float)((double)(float)(dVar18 / dVar16) - dVar19);
-    if (dVar18 < dVar19) {
-      dVar18 = dVar19;
+    dVar16 = (double)(float)((double)(float)(dVar16 / dVar14) - dVar17);
+    if (dVar16 < dVar17) {
+      dVar16 = dVar17;
     }
-    iVar13 = 1;
-    if (0 < iVar12) {
-      dVar15 = (double)(float)(dVar15 + dVar14);
-      dVar19 = (double)(float)(dVar18 + dVar19);
+    iVar11 = 1;
+    if (0 < iVar10) {
+      dVar13 = (double)(float)(dVar13 + dVar12);
+      dVar17 = (double)(float)(dVar16 + dVar17);
       do {
         fVar1 = (float)((double)(float)((double)((cg_scoreboardPingHeight->current).value *
-                                                (float)(longlong)iVar13) * dVar14) / dVar16);
-        UI_DrawHandlePic(pSVar5,(float)dVar17,(float)(dVar15 - (double)fVar1),(float)dVar18,fVar1,
-                         (int)lVar7,(int)uVar9,(float *)uVar10,(Material *)lVar11);
-        iVar13 = iVar13 + 1;
-        dVar17 = (double)(float)(dVar19 + dVar17);
-      } while (iVar13 <= iVar12);
+                                                (float)(longlong)iVar11) * dVar12) / dVar14);
+        UI_DrawHandlePic(pSVar4,(float)dVar15,(float)(dVar13 - (double)fVar1),(float)dVar16,fVar1,
+                         (int)lVar5,(int)uVar7,(float *)uVar8,(Material *)lVar9);
+        iVar11 = iVar11 + 1;
+        dVar15 = (double)(float)(dVar17 + dVar15);
+      } while (iVar11 <= iVar10);
     }
   }
-  __restfpr_26();
-  __restgprlr_27();
   return;
 }
 
 
 // 822F6968  CG_DrawClientScore  (cgame_mp/cg_scoreboard_mp.cpp:858)
 
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -938,28 +924,27 @@ float CG_DrawClientScore(LocalClientNum_t param_1,float *param_2,float param_3,s
   dvar_t *pdVar2;
   int iVar3;
   ulonglong uVar4;
-  LocalClientNum_t LVar5;
-  cg_s *pcVar6;
-  ScreenPlacement *pSVar7;
-  bool bVar13;
-  Font_s *pFVar8;
-  int iVar9;
-  char *pcVar10;
-  listColumnInfo_t *plVar11;
-  Material *pMVar12;
-  ulonglong uVar14;
-  longlong lVar15;
-  ulonglong uVar16;
-  int iVar17;
-  float *pfVar18;
-  Font_s *pFVar19;
-  ulonglong uVar20;
+  cg_s *pcVar5;
+  ScreenPlacement *pSVar6;
+  bool bVar12;
+  Font_s *pFVar7;
+  int iVar8;
+  char *pcVar9;
+  listColumnInfo_t *plVar10;
+  Material *pMVar11;
+  ulonglong uVar13;
+  longlong lVar14;
+  ulonglong uVar15;
+  int iVar16;
+  float *pfVar17;
+  Font_s *pFVar18;
+  ulonglong uVar19;
   int in_r8;
-  longlong lVar21;
+  longlong lVar20;
+  ulonglong uVar21;
   ulonglong uVar22;
-  ulonglong uVar23;
-  int *piVar24;
-  double extraout_f1;
+  int *piVar23;
+  double dVar24;
   double dVar25;
   double dVar26;
   double dVar27;
@@ -968,8 +953,7 @@ float CG_DrawClientScore(LocalClientNum_t param_1,float *param_2,float param_3,s
   double dVar30;
   double dVar31;
   double dVar32;
-  double dVar33;
-  float fVar34;
+  float fVar33;
   int iStack0000003c;
   uint local_188;
   listColumnInfo_t *local_184;
@@ -992,60 +976,56 @@ float CG_DrawClientScore(LocalClientNum_t param_1,float *param_2,float param_3,s
   longlong local_f0;
   ulonglong local_e8;
   
-  dVar31 = (double)param_5;
+  dVar24 = (double)param_3;
+  dVar30 = (double)param_5;
   uVar4 = ZEXT48(&stack0x00000000);
-  __savegprlr();
-  LVar5 = __savefpr_23();
-  dVar25 = extraout_f1;
   iStack0000003c = in_r8;
-  pcVar6 = CG_GetLocalClientGlobals(LVar5);
+  pcVar5 = CG_GetLocalClientGlobals(param_1);
   if (0x11 < *(uint *)param_6) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_scoreboard_mp.cpp"
                     ,0x36d,0,"score->client doesn\'t index MAX_CLIENTS\n\t%i not in [0, %i)");
   }
-  lVar21 = (ulonglong)*(uint *)param_6 * 0x590 + (longlong)(int)pcVar6;
-  iVar3 = (int)lVar21;
+  lVar20 = (ulonglong)*(uint *)param_6 * 0x590 + (longlong)(int)pcVar5;
+  iVar3 = (int)lVar20;
   if (*(int *)(iVar3 + 0x100b88) == 0) {
-    dVar25 = (double)__restfpr_23(dVar25);
-    __restgprlr();
-    return (float)dVar25;
+    return (float)dVar24;
   }
-  pSVar7 = ScrPlace_GetActivePlacement(LVar5);
+  pSVar6 = ScrPlace_GetActivePlacement(param_1);
   CG_GetScoreboardInfo(&local_184,(int *)&local_188);
-  fVar34 = CG_BackdropLeft(LVar5);
-  dVar33 = 9.0;
-  dVar29 = (double)(fVar34 + 9.0);
-  bVar13 = CL_IsRenderingSplitScreen();
-  dVar32 = 1.0;
-  pMVar12 = (Material *)0x82020000;
-  pfVar18 = (float *)(cg_scoreboardItemHeight->current).integer;
-  lVar15 = (longlong)(int)pfVar18;
-  dVar28 = (double)((float)lVar15 *
-                   ((float)(longlong)bVar13 *
+  fVar33 = CG_BackdropLeft(param_1);
+  dVar32 = 9.0;
+  dVar28 = (double)(fVar33 + 9.0);
+  bVar12 = CL_IsRenderingSplitScreen();
+  dVar31 = 1.0;
+  pMVar11 = (Material *)0x82020000;
+  pfVar17 = (float *)(cg_scoreboardItemHeight->current).integer;
+  lVar14 = (longlong)(int)pfVar17;
+  dVar27 = (double)((float)lVar14 *
+                   ((float)(longlong)bVar12 *
                     ((cg_hudSplitscreenScoreboardScale->current).value - 1.0) + 1.0));
-  local_180 = lVar15;
+  local_180 = lVar14;
   Material_RegisterHandle("white",7);
-  UI_DrawHandlePic(pSVar7,(float)dVar29,(float)dVar25,(float)dVar31,(float)dVar28,-0x7e000000,
-                   (int)lVar15,pfVar18,pMVar12);
-  bVar13 = CL_IsRenderingSplitScreen();
-  local_180 = (longlong)bVar13;
-  dVar28 = 0.3499999940395355;
-  pFVar8 = UI_GetFontHandle(pSVar7,(cg_scoreboardFont->current).integer,
+  UI_DrawHandlePic(pSVar6,(float)dVar28,(float)dVar24,(float)dVar30,(float)dVar27,-0x7e000000,
+                   (int)lVar14,pfVar17,pMVar11);
+  bVar12 = CL_IsRenderingSplitScreen();
+  local_180 = (longlong)bVar12;
+  dVar27 = 0.3499999940395355;
+  pFVar7 = UI_GetFontHandle(pSVar6,(cg_scoreboardFont->current).integer,
                             (float)((double)local_180 *
                                     (double)(float)((double)(cg_hudSplitscreenScoreboardScale->
-                                                            current).value - dVar32) + dVar32) *
+                                                            current).value - dVar31) + dVar31) *
                             0.35);
-  fVar34 = CG_BackdropLeft(LVar5);
-  dVar29 = (double)(float)((double)fVar34 + dVar33);
-  if (*(uint *)param_6 == pcVar6->clientNum) {
+  fVar33 = CG_BackdropLeft(param_1);
+  dVar28 = (double)(float)((double)fVar33 + dVar32);
+  if (*(int *)param_6 == pcVar5->clientNum) {
     Dvar_GetUnpackedColor(cg_scoreboardMyColor,&local_170);
   }
   else {
-    iVar9 = CL_ClientIsInMyParty(LVar5,*(uint *)param_6);
-    if (iVar9 == 0) {
-      local_170 = (float)dVar32;
-      local_16c = (float)dVar32;
-      local_168 = (float)dVar32;
+    iVar8 = CL_ClientIsInMyParty(param_1,*(int *)param_6);
+    if (iVar8 == 0) {
+      local_170 = (float)dVar31;
+      local_16c = (float)dVar31;
+      local_168 = (float)dVar31;
     }
     else {
       Dvar_GetUnpackedColor(cg_scoreboardMyPartyColor,&local_170);
@@ -1053,263 +1033,258 @@ float CG_DrawClientScore(LocalClientNum_t param_1,float *param_2,float param_3,s
   }
   local_164 = param_2[3];
   if (0 < (int)local_188) {
-    uVar20 = 0xffffffff82020000;
-    piVar24 = &local_184->iAlignment;
-    dVar33 = 0.25;
-    uVar16 = 0xffffffff82180000;
-    uVar14 = 0xffffffff820223f4;
+    uVar19 = 0xffffffff82020000;
+    piVar23 = &local_184->iAlignment;
+    dVar32 = 0.25;
+    uVar15 = 0xffffffff82180000;
+    uVar13 = 0xffffffff820223f4;
     local_184 = (listColumnInfo_t *)0x820223f4;
-    uVar23 = 0xffffffff8200c28c;
+    uVar22 = 0xffffffff8200c28c;
     do {
-      iVar17 = (int)uVar16;
-      iVar9 = (int)uVar14;
-      dVar30 = (double)(float)((double)(float)piVar24[-2] * dVar31);
-      switch(((listColumnInfo_t *)(piVar24 + -3))->type) {
+      iVar16 = (int)uVar15;
+      iVar8 = (int)uVar13;
+      dVar29 = (double)(float)((double)(float)piVar23[-2] * dVar30);
+      switch(((listColumnInfo_t *)(piVar23 + -3))->type) {
       case LCT_NAME:
-        pFVar19 = (Font_s *)(iVar3 + 0x100bd4);
+        pFVar18 = (Font_s *)(iVar3 + 0x100bd4);
         if ((*(char *)(iVar3 + 0x100bd4) == '\0') || (*(char *)(iVar3 + 0x1010d0) != '\0')) {
-          pFVar19 = (Font_s *)(iVar3 + 0x1010f0);
+          pFVar18 = (Font_s *)(iVar3 + 0x1010f0);
           if ((*(char *)(iVar3 + 0x1010f0) == '\0') || (*(char *)(iVar3 + 0x1010d0) != '\x01')) {
-            uVar14 = lVar21 + 0x100b94;
+            uVar13 = lVar20 + 0x100b94;
           }
           else {
-            uVar20 = lVar21 + 0x100b94;
-            iVar9 = 0x20;
-            uVar16 = 0xffffffff820223e8;
+            uVar19 = lVar20 + 0x100b94;
+            iVar8 = 0x20;
+            uVar15 = 0xffffffff820223e8;
             Com_sprintf(acStack_160,0x20,"[^3%s^7]%s");
-            uVar14 = uVar4 - 0x160;
+            uVar13 = uVar4 - 0x160;
           }
         }
         else {
-          uVar20 = lVar21 + 0x100b94;
-          iVar9 = 0x20;
-          uVar16 = 0xffffffff820223e0;
+          uVar19 = lVar20 + 0x100b94;
+          iVar8 = 0x20;
+          uVar15 = 0xffffffff820223e0;
           Com_sprintf(acStack_160,0x20,"[%s]%s");
-          uVar14 = uVar4 - 0x160;
+          uVar13 = uVar4 - 0x160;
         }
-        iVar17 = (int)uVar16;
-        if (*(uint *)(param_6 + 0x24) == 0) {
-          pfVar18 = (float *)*piVar24;
-          fVar34 = CG_ScoreboardScaleMultiplier();
-          DrawListString(LVar5,(char *)uVar14,(float)dVar29,(float)dVar25,(float)dVar30,(int)uVar16,
-                         pFVar19,(float)((double)fVar34 * dVar28),(int)uVar20,pfVar18);
+        iVar16 = (int)uVar15;
+        if (*(int *)(param_6 + 0x24) == 0) {
+          pfVar17 = (float *)*piVar23;
+          fVar33 = CG_ScoreboardScaleMultiplier();
+          DrawListString(param_1,(char *)uVar13,(float)dVar28,(float)dVar24,(float)dVar29,
+                         (int)uVar15,pFVar18,(float)((double)fVar33 * dVar27),(int)uVar19,pfVar17);
         }
         else {
-          fVar34 = CG_ScoreboardScaleMultiplier();
+          fVar33 = CG_ScoreboardScaleMultiplier();
           local_110 = (longlong)(cg_scoreboardItemHeight->current).integer;
-          dVar27 = (double)(fVar34 * (float)local_110);
-          fVar34 = CG_ScoreboardScaleMultiplier();
-          pfVar18 = (float *)(cg_scoreboardItemHeight->current).integer;
-          uVar20 = ZEXT48(pfVar18);
-          lVar15 = (longlong)(int)pfVar18;
-          local_130 = lVar15;
-          UI_DrawHandlePic(pSVar7,(float)dVar29,(float)dVar25,fVar34 * (float)lVar15,(float)dVar27,
-                           iVar9,iVar17,pfVar18,(Material *)pfVar18);
-          pFVar19 = (Font_s *)lVar15;
-          pfVar18 = (float *)*piVar24;
-          fVar34 = CG_ScoreboardScaleMultiplier();
-          dVar26 = (double)(float)((double)fVar34 * dVar28);
-          fVar34 = CG_ScoreboardScaleMultiplier();
-          uVar16 = (ulonglong)(uint)(cg_scoreboardItemHeight->current).integer;
+          dVar26 = (double)(fVar33 * (float)local_110);
+          fVar33 = CG_ScoreboardScaleMultiplier();
+          pfVar17 = (float *)(cg_scoreboardItemHeight->current).integer;
+          uVar19 = ZEXT48(pfVar17);
+          lVar14 = (longlong)(int)pfVar17;
+          local_130 = lVar14;
+          UI_DrawHandlePic(pSVar6,(float)dVar28,(float)dVar24,fVar33 * (float)lVar14,(float)dVar26,
+                           iVar8,iVar16,pfVar17,(Material *)pfVar17);
+          pFVar18 = (Font_s *)lVar14;
+          pfVar17 = (float *)*piVar23;
+          fVar33 = CG_ScoreboardScaleMultiplier();
+          dVar25 = (double)(float)((double)fVar33 * dVar27);
+          fVar33 = CG_ScoreboardScaleMultiplier();
+          uVar15 = (ulonglong)(uint)(cg_scoreboardItemHeight->current).integer;
           local_140 = (longlong)(cg_scoreboardItemHeight->current).integer;
-          dVar27 = -(double)(float)((double)fVar34 * (double)local_140 - dVar30);
-          fVar34 = CG_ScoreboardScaleMultiplier();
-          DrawListString(LVar5,(char *)uVar14,
-                         (float)((double)fVar34 *
+          dVar26 = -(double)(float)((double)fVar33 * (double)local_140 - dVar29);
+          fVar33 = CG_ScoreboardScaleMultiplier();
+          DrawListString(param_1,(char *)uVar13,
+                         (float)((double)fVar33 *
                                  (double)(longlong)(cg_scoreboardItemHeight->current).integer +
-                                dVar29),(float)dVar25,(float)dVar27,(int)uVar16,pFVar19,
-                         (float)dVar26,(int)uVar20,pfVar18);
+                                dVar28),(float)dVar24,(float)dVar26,(int)uVar15,pFVar18,
+                         (float)dVar25,(int)uVar19,pfVar17);
         }
         break;
       case LCT_SCORE:
-        if (*(uint *)(param_6 + 0x10) != 3) {
-          pFVar19 = *(Font_s **)(param_6 + 4);
-          uVar16 = uVar23;
+        if (*(int *)(param_6 + 0x10) != 3) {
+          pFVar18 = *(Font_s **)(param_6 + 4);
+          uVar15 = uVar22;
           Com_sprintf(acStack_160,0x20,"%i");
-          pfVar18 = (float *)*piVar24;
-          fVar34 = CG_ScoreboardScaleMultiplier();
-          uVar14 = uVar4 - 0x160;
-          DrawListString(LVar5,(char *)uVar14,(float)dVar29,(float)dVar25,(float)dVar30,(int)uVar16,
-                         pFVar19,(float)((double)fVar34 * dVar28),(int)uVar20,pfVar18);
+          pfVar17 = (float *)*piVar23;
+          fVar33 = CG_ScoreboardScaleMultiplier();
+          uVar13 = uVar4 - 0x160;
+          DrawListString(param_1,(char *)uVar13,(float)dVar28,(float)dVar24,(float)dVar29,
+                         (int)uVar15,pFVar18,(float)((double)fVar33 * dVar27),(int)uVar19,pfVar17);
         }
         break;
       case LCT_DEATHS:
-        if (*(uint *)(param_6 + 0x10) != 3) {
-          pFVar19 = *(Font_s **)(param_6 + 0xc);
-          uVar16 = uVar23;
+        if (*(int *)(param_6 + 0x10) != 3) {
+          pFVar18 = *(Font_s **)(param_6 + 0xc);
+          uVar15 = uVar22;
           Com_sprintf(acStack_160,0x20,"%i");
-          pfVar18 = (float *)*piVar24;
-          fVar34 = CG_ScoreboardScaleMultiplier();
-          uVar14 = uVar4 - 0x160;
-          DrawListString(LVar5,(char *)uVar14,(float)dVar29,(float)dVar25,(float)dVar30,(int)uVar16,
-                         pFVar19,(float)((double)fVar34 * dVar28),(int)uVar20,pfVar18);
+          pfVar17 = (float *)*piVar23;
+          fVar33 = CG_ScoreboardScaleMultiplier();
+          uVar13 = uVar4 - 0x160;
+          DrawListString(param_1,(char *)uVar13,(float)dVar28,(float)dVar24,(float)dVar29,
+                         (int)uVar15,pFVar18,(float)((double)fVar33 * dVar27),(int)uVar19,pfVar17);
         }
         break;
       case LCT_PING:
-        pFVar19 = *(Font_s **)(param_6 + 8);
-        uVar16 = uVar23;
+        pFVar18 = *(Font_s **)(param_6 + 8);
+        uVar15 = uVar22;
         Com_sprintf(acStack_160,0x20,"%i");
-        pfVar18 = (float *)*piVar24;
-        fVar34 = CG_ScoreboardScaleMultiplier();
-        uVar14 = uVar4 - 0x160;
-        DrawListString(LVar5,(char *)uVar14,(float)dVar29,(float)dVar25,(float)dVar30,(int)uVar16,
-                       pFVar19,(float)((double)fVar34 * dVar28),(int)uVar20,pfVar18);
+        pfVar17 = (float *)*piVar23;
+        fVar33 = CG_ScoreboardScaleMultiplier();
+        uVar13 = uVar4 - 0x160;
+        DrawListString(param_1,(char *)uVar13,(float)dVar28,(float)dVar24,(float)dVar29,(int)uVar15,
+                       pFVar18,(float)((double)fVar33 * dVar27),(int)uVar19,pfVar17);
         break;
       case LCT_STATUS_ICON:
-        if (*(uint *)(param_6 + 0x28) != 0) {
-          iVar9 = *piVar24;
-          fVar34 = CG_ScoreboardScaleMultiplier();
+        if (*(int *)(param_6 + 0x28) != 0) {
+          iVar8 = *piVar23;
+          fVar33 = CG_ScoreboardScaleMultiplier();
           local_180 = (longlong)(cg_scoreboardItemHeight->current).integer;
-          fVar34 = CalcXAdj(iVar9,(float)dVar30,fVar34 * (float)local_180);
-          dVar27 = (double)fVar34;
-          fVar34 = CG_ScoreboardScaleMultiplier();
+          fVar33 = CalcXAdj(iVar8,(float)dVar29,fVar33 * (float)local_180);
+          dVar26 = (double)fVar33;
+          fVar33 = CG_ScoreboardScaleMultiplier();
           local_f0 = (longlong)(cg_scoreboardItemHeight->current).integer;
-          dVar26 = (double)(fVar34 * (float)local_f0);
-          fVar34 = CG_ScoreboardScaleMultiplier();
-          pfVar18 = (float *)(cg_scoreboardItemHeight->current).integer;
-          uVar20 = ZEXT48(pfVar18);
-          local_128 = (longlong)(int)pfVar18;
-          UI_DrawHandlePic(pSVar7,(float)(dVar27 + dVar29),(float)dVar25,fVar34 * (float)local_128,
-                           (float)dVar26,(int)uVar14,(int)uVar16,pfVar18,(Material *)pfVar18);
+          dVar25 = (double)(fVar33 * (float)local_f0);
+          fVar33 = CG_ScoreboardScaleMultiplier();
+          pfVar17 = (float *)(cg_scoreboardItemHeight->current).integer;
+          uVar19 = ZEXT48(pfVar17);
+          local_128 = (longlong)(int)pfVar17;
+          UI_DrawHandlePic(pSVar6,(float)(dVar26 + dVar28),(float)dVar24,fVar33 * (float)local_128,
+                           (float)dVar25,(int)uVar13,(int)uVar15,pfVar17,(Material *)pfVar17);
         }
         break;
       case LCT_TALKING_ICON:
-        bVar13 = CL_IsPlayerMuted(&g_serverSession,*(uint *)param_6);
-        plVar11 = local_184;
-        if (!bVar13) {
-          uVar14 = (ulonglong)*(uint *)param_6;
-          bVar13 = CL_IsPlayerTalking(&g_serverSession,*(uint *)param_6);
-          if (!bVar13) break;
-          plVar11 = (listColumnInfo_t *)"voice_on";
+        bVar12 = CL_IsPlayerMuted(&g_serverSession,*(int *)param_6);
+        plVar10 = local_184;
+        if (!bVar12) {
+          uVar13 = (ulonglong)*(uint *)param_6;
+          bVar12 = CL_IsPlayerTalking(&g_serverSession,*(uint *)param_6);
+          if (!bVar12) break;
+          plVar10 = (listColumnInfo_t *)"voice_on";
         }
-        uVar14 = 7;
-        pMVar12 = Material_RegisterHandle((char *)plVar11,7);
-        if (pMVar12 != (Material *)0x0) {
-          fVar34 = CG_ScoreboardScaleMultiplier();
+        uVar13 = 7;
+        pMVar11 = Material_RegisterHandle((char *)plVar10,7);
+        if (pMVar11 != (Material *)0x0) {
+          fVar33 = CG_ScoreboardScaleMultiplier();
           local_120 = (longlong)(cg_scoreboardItemHeight->current).integer;
-          dVar27 = (double)(fVar34 * (float)local_120);
-          fVar34 = CG_ScoreboardScaleMultiplier();
-          pfVar18 = (float *)(cg_scoreboardItemHeight->current).integer;
-          uVar20 = ZEXT48(pfVar18);
-          local_100 = (longlong)(int)pfVar18;
-          UI_DrawHandlePic(pSVar7,(float)dVar29,(float)dVar25,fVar34 * (float)local_100,
-                           (float)dVar27,(int)uVar14,(int)uVar16,pfVar18,(Material *)pfVar18);
+          dVar26 = (double)(fVar33 * (float)local_120);
+          fVar33 = CG_ScoreboardScaleMultiplier();
+          pfVar17 = (float *)(cg_scoreboardItemHeight->current).integer;
+          uVar19 = ZEXT48(pfVar17);
+          local_100 = (longlong)(int)pfVar17;
+          UI_DrawHandlePic(pSVar6,(float)dVar28,(float)dVar24,fVar33 * (float)local_100,
+                           (float)dVar26,(int)uVar13,(int)uVar15,pfVar17,(Material *)pfVar17);
         }
         break;
       case LCT_KILLS:
-        if (*(uint *)(param_6 + 0x10) != 3) {
-          pFVar19 = *(Font_s **)(param_6 + 0x14);
-          uVar16 = uVar23;
+        if (*(int *)(param_6 + 0x10) != 3) {
+          pFVar18 = *(Font_s **)(param_6 + 0x14);
+          uVar15 = uVar22;
           Com_sprintf(acStack_160,0x20,"%i");
-          pfVar18 = (float *)*piVar24;
-          fVar34 = CG_ScoreboardScaleMultiplier();
-          uVar14 = uVar4 - 0x160;
-          DrawListString(LVar5,(char *)uVar14,(float)dVar29,(float)dVar25,(float)dVar30,(int)uVar16,
-                         pFVar19,(float)((double)fVar34 * dVar28),(int)uVar20,pfVar18);
+          pfVar17 = (float *)*piVar23;
+          fVar33 = CG_ScoreboardScaleMultiplier();
+          uVar13 = uVar4 - 0x160;
+          DrawListString(param_1,(char *)uVar13,(float)dVar28,(float)dVar24,(float)dVar29,
+                         (int)uVar15,pFVar18,(float)((double)fVar33 * dVar27),(int)uVar19,pfVar17);
         }
         break;
       case LCT_RANK_ICON:
-        if (*(uint *)(param_6 + 0x2c) != 0) {
-          iVar1 = *piVar24;
-          fVar34 = CG_ScoreboardScaleMultiplier();
+        if (*(int *)(param_6 + 0x2c) != 0) {
+          iVar1 = *piVar23;
+          fVar33 = CG_ScoreboardScaleMultiplier();
           local_118 = (longlong)(cg_scoreboardItemHeight->current).integer;
-          fVar34 = CalcXAdj(iVar1,(float)dVar30,fVar34 * (float)local_118);
-          dVar27 = (double)fVar34;
-          fVar34 = CG_ScoreboardScaleMultiplier();
+          fVar33 = CalcXAdj(iVar1,(float)dVar29,fVar33 * (float)local_118);
+          dVar26 = (double)fVar33;
+          fVar33 = CG_ScoreboardScaleMultiplier();
           local_108 = (longlong)(cg_scoreboardItemHeight->current).integer;
-          dVar26 = (double)(fVar34 * (float)local_108);
-          fVar34 = CG_ScoreboardScaleMultiplier();
-          pfVar18 = (float *)(cg_scoreboardItemHeight->current).integer;
-          uVar20 = ZEXT48(pfVar18);
-          lVar15 = (longlong)(int)pfVar18;
-          local_f8 = lVar15;
-          UI_DrawHandlePic(pSVar7,(float)(dVar27 + dVar29),(float)dVar25,fVar34 * (float)lVar15,
-                           (float)dVar26,iVar9,iVar17,pfVar18,(Material *)pfVar18);
-          pFVar19 = (Font_s *)lVar15;
-          pcVar10 = CL_GetRankDataMP(*(uint *)(param_6 + 0x18),RANKTABLE_DISPLAYLEVEL);
-          uVar14 = (ulonglong)(int)pcVar10;
-          pfVar18 = (float *)*piVar24;
-          dVar26 = (double)(cg_scoreboardRankFontScale->current).value;
-          iVar9 = UI_TextHeight(pFVar8,(cg_scoreboardRankFontScale->current).value);
-          uVar16 = (ulonglong)iVar9;
-          local_e8 = uVar16;
-          fVar34 = CG_ScoreboardScaleMultiplier();
+          dVar25 = (double)(fVar33 * (float)local_108);
+          fVar33 = CG_ScoreboardScaleMultiplier();
+          pfVar17 = (float *)(cg_scoreboardItemHeight->current).integer;
+          uVar19 = ZEXT48(pfVar17);
+          lVar14 = (longlong)(int)pfVar17;
+          local_f8 = lVar14;
+          UI_DrawHandlePic(pSVar6,(float)(dVar26 + dVar28),(float)dVar24,fVar33 * (float)lVar14,
+                           (float)dVar25,iVar8,iVar16,pfVar17,(Material *)pfVar17);
+          pFVar18 = (Font_s *)lVar14;
+          pcVar9 = CL_GetRankDataMP(*(int *)(param_6 + 0x18),RANKTABLE_DISPLAYLEVEL);
+          uVar13 = (ulonglong)(int)pcVar9;
+          pfVar17 = (float *)*piVar23;
+          dVar25 = (double)(cg_scoreboardRankFontScale->current).value;
+          iVar8 = UI_TextHeight(pFVar7,(cg_scoreboardRankFontScale->current).value);
+          uVar15 = (ulonglong)iVar8;
+          local_e8 = uVar15;
+          fVar33 = CG_ScoreboardScaleMultiplier();
           local_138 = (longlong)(cg_scoreboardItemHeight->current).integer;
-          DrawListString(LVar5,pcVar10,
-                         (float)((double)(float)((double)fVar34 * (double)local_138 + dVar27) +
-                                dVar29),(float)((double)(longlong)local_e8 * dVar33 + dVar25),
-                         (float)dVar30,(int)uVar16,pFVar19,(float)dVar26,(int)uVar20,pfVar18);
+          DrawListString(param_1,pcVar9,
+                         (float)((double)(float)((double)fVar33 * (double)local_138 + dVar26) +
+                                dVar28),(float)((double)(longlong)local_e8 * dVar32 + dVar24),
+                         (float)dVar29,(int)uVar15,pFVar18,(float)dVar25,(int)uVar19,pfVar17);
         }
         break;
       case LCT_ASSISTS:
-        if (*(uint *)(param_6 + 0x10) != 3) {
-          pFVar19 = *(Font_s **)(param_6 + 0x1c);
-          uVar16 = uVar23;
+        if (*(int *)(param_6 + 0x10) != 3) {
+          pFVar18 = *(Font_s **)(param_6 + 0x1c);
+          uVar15 = uVar22;
           Com_sprintf(acStack_160,0x20,"%i");
-          pfVar18 = (float *)*piVar24;
-          fVar34 = CG_ScoreboardScaleMultiplier();
-          uVar14 = uVar4 - 0x160;
-          DrawListString(LVar5,(char *)uVar14,(float)dVar29,(float)dVar25,(float)dVar30,(int)uVar16,
-                         pFVar19,(float)((double)fVar34 * dVar28),(int)uVar20,pfVar18);
+          pfVar17 = (float *)*piVar23;
+          fVar33 = CG_ScoreboardScaleMultiplier();
+          uVar13 = uVar4 - 0x160;
+          DrawListString(param_1,(char *)uVar13,(float)dVar28,(float)dVar24,(float)dVar29,
+                         (int)uVar15,pFVar18,(float)((double)fVar33 * dVar27),(int)uVar19,pfVar17);
         }
         break;
       case LCT_SKILL:
-        pFVar19 = *(Font_s **)(param_6 + 0x20);
-        uVar16 = uVar23;
+        pFVar18 = *(Font_s **)(param_6 + 0x20);
+        uVar15 = uVar22;
         Com_sprintf(acStack_160,0x20,"%i");
-        pfVar18 = (float *)*piVar24;
-        fVar34 = CG_ScoreboardScaleMultiplier();
-        uVar14 = uVar4 - 0x160;
-        DrawListString(LVar5,(char *)uVar14,(float)dVar29,(float)dVar25,(float)dVar30,(int)uVar16,
-                       pFVar19,(float)((double)fVar34 * dVar28),(int)uVar20,pfVar18);
+        pfVar17 = (float *)*piVar23;
+        fVar33 = CG_ScoreboardScaleMultiplier();
+        uVar13 = uVar4 - 0x160;
+        DrawListString(param_1,(char *)uVar13,(float)dVar28,(float)dVar24,(float)dVar29,(int)uVar15,
+                       pFVar18,(float)((double)fVar33 * dVar27),(int)uVar19,pfVar17);
       }
-      uVar22 = (ulonglong)local_188;
-      dVar29 = (double)(float)(dVar30 + dVar29);
-      piVar24 = piVar24 + 4;
-      local_188 = (uint)(uVar22 - 1);
-    } while (uVar22 - 1 != 0);
+      uVar21 = (ulonglong)local_188;
+      dVar28 = (double)(float)(dVar29 + dVar28);
+      piVar23 = piVar23 + 4;
+      local_188 = (uint)(uVar21 - 1);
+    } while (uVar21 - 1 != 0);
   }
-  if (LOCAL_CLIENT_3 < LVar5) {
+  if (LOCAL_CLIENT_3 < param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\../client_mp/client_mp.h"
                     ,0x4c5,0,
                     "localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)");
   }
-  if ((clientUIActives[LVar5].migrationState == CMSTATE_INACTIVE) &&
+  if ((clientUIActives[param_1].migrationState == CMSTATE_INACTIVE) &&
      ((cg_scoreboardPingGraph->current).enabled != false)) {
-    bVar13 = CL_IsRenderingSplitScreen();
-    CG_DrawClientPing(LVar5,*(uint *)(param_6 + 8),(float)dVar29,(float)dVar25,
-                      (float)((double)(cg_scoreboardPingWidth->current).value * dVar31),
+    bVar12 = CL_IsRenderingSplitScreen();
+    CG_DrawClientPing(param_1,*(int *)(param_6 + 8),(float)dVar28,(float)dVar24,
+                      (float)((double)(cg_scoreboardPingWidth->current).value * dVar30),
                       (float)(longlong)(cg_scoreboardItemHeight->current).integer *
-                      (float)((double)(longlong)bVar13 *
+                      (float)((double)(longlong)bVar12 *
                               (double)(float)((double)(cg_hudSplitscreenScoreboardScale->current).
-                                                      value - dVar32) + dVar32));
+                                                      value - dVar31) + dVar31));
   }
   if (iStack0000003c != 0) {
-    fVar34 = CG_BackdropLeft(LVar5);
-    dVar31 = (double)(fVar34 + 5.0);
+    fVar33 = CG_BackdropLeft(param_1);
+    dVar30 = (double)(fVar33 + 5.0);
     pdVar2 = cg_scoreboardWidth;
     if (((splitscreen->current).enabled != false) && ((onlinegame->current).enabled != false)) {
       pdVar2 = cg_onlineSplitscreenScoreboardWidth;
     }
-    dVar28 = (double)(pdVar2->current).value;
-    bVar13 = CL_IsRenderingSplitScreen();
+    dVar27 = (double)(pdVar2->current).value;
+    bVar12 = CL_IsRenderingSplitScreen();
     iVar3 = (cg_scoreboardItemHeight->current).integer;
-    UI_DrawRect(pSVar7,(float)dVar31,(float)dVar25,(float)(dVar28 - 6.0) - 4.0,
+    UI_DrawRect(pSVar6,(float)dVar30,(float)dVar24,(float)(dVar27 - 6.0) - 4.0,
                 (float)(longlong)iVar3 *
-                (float)((double)(longlong)bVar13 *
+                (float)((double)(longlong)bVar12 *
                         (double)(float)((double)(cg_hudSplitscreenScoreboardScale->current).value -
-                                       dVar32) + dVar32),iVar3,-0x7dff0000,2.0,(float *)iVar3);
+                                       dVar31) + dVar31),iVar3,-0x7dff0000,2.0,(float *)iVar3);
   }
-  bVar13 = CL_IsRenderingSplitScreen();
-  local_140 = (longlong)bVar13;
-  dVar25 = (double)__restfpr_23((double)(float)((double)(longlong)
-                                                        (cg_scoreboardItemHeight->current).integer *
-                                                (double)(float)((double)local_140 *
-                                                                (double)(float)((double)(
-                                                  cg_hudSplitscreenScoreboardScale->current).value -
-                                                  dVar32) + dVar32) + dVar25));
-  __restgprlr();
-  return (float)dVar25;
+  bVar12 = CL_IsRenderingSplitScreen();
+  return (float)((double)(longlong)(cg_scoreboardItemHeight->current).integer *
+                 (double)(float)((double)(longlong)bVar12 *
+                                 (double)(float)((double)(cg_hudSplitscreenScoreboardScale->current)
+                                                         .value - dVar31) + dVar31) + dVar24);
 }
 
 
@@ -1342,6 +1317,10 @@ int CG_ScoreboardTotalLines(LocalClientNum_t param_1)
 
 // 822F75F0  CG_DrawTeamOfClientScore  (cgame_mp/cg_scoreboard_mp.cpp:1092)
 
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -1352,97 +1331,92 @@ float CG_DrawTeamOfClientScore
                 int *param_6)
 
 {
-  LocalClientNum_t LVar2;
-  cg_s *pcVar3;
-  bool bVar5;
+  cg_s *pcVar2;
+  bool bVar4;
   ulong64 uVar1;
-  int iVar4;
-  score_t *psVar6;
-  longlong lVar7;
-  int *in_r8;
-  int *piVar8;
-  int iVar9;
-  score_t *psVar10;
-  double extraout_f1;
-  double dVar11;
+  int iVar3;
+  score_t *psVar5;
+  float *in_r8;
+  int *piVar6;
+  int iVar7;
+  score_t *psVar8;
+  double dVar9;
   double in_f3;
+  double dVar10;
+  double dVar11;
   double dVar12;
-  double dVar13;
-  double dVar14;
-  float fVar15;
+  float fVar13;
   score_t asStack_d0 [4];
   
-  dVar11 = (double)param_5;
-  lVar7 = (longlong)(int)param_6;
-  __savegprlr();
-  LVar2 = __savefpr_28();
-  dVar14 = extraout_f1;
-  pcVar3 = CG_GetLocalClientGlobals(LVar2);
-  psVar10 = pcVar3->scores;
-  *(int *)((int)(pcVar3->predictedPlayerState).origin +
-          (int)((lVar7 + 0x1db98U & 0xffffffff) << 2) + -0x1c) = *in_r8;
-  bVar5 = CL_IsRenderingSplitScreen();
-  dVar13 = 1.0;
-  fVar15 = CG_DrawScoreboard_ListBanner
-                     (LVar2,param_2,(float)dVar14,
+  dVar12 = (double)param_3;
+  dVar9 = (double)param_5;
+  pcVar2 = CG_GetLocalClientGlobals(param_1);
+  psVar8 = pcVar2->scores;
+  (pcVar2->predictedPlayerState).origin[(int)(param_6 + 0x76e6) + -7] = *in_r8;
+  bVar4 = CL_IsRenderingSplitScreen();
+  dVar11 = 1.0;
+  fVar13 = CG_DrawScoreboard_ListBanner
+                     (param_1,param_2,(float)dVar12,
                       (float)(longlong)(cg_scoreboardBannerHeight->current).integer *
-                      ((float)(longlong)bVar5 *
+                      ((float)(longlong)bVar4 *
                        ((cg_hudSplitscreenScoreboardScale->current).value - 1.0) + 1.0),(float)in_f3
-                      ,-0x7e000000,(int *)(int)bVar5);
-  dVar14 = (double)fVar15;
-  iVar9 = 0;
-  if (0 < pcVar3->numScores) {
-    dVar12 = 4.0;
+                      ,-0x7e000000,(int *)(int)bVar4);
+  dVar12 = (double)fVar13;
+  iVar7 = 0;
+  if (0 < pcVar2->numScores) {
+    dVar10 = 4.0;
     do {
-      if (0x11 < (uint)psVar10->client) {
+      if (0x11 < (uint)psVar8->client) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_scoreboard_mp.cpp"
                         ,0x457,0,"score->client doesn\'t index MAX_CLIENTS\n\t%i not in [0, %i)");
       }
-      if (((pcVar3->bgs).clientinfo[psVar10->client].infoValid != 0) &&
-         (psVar10->team == (int)lVar7)) {
-        piVar8 = &pcVar3->selectedGamerIndex;
-        if ((*piVar8 == 0) && (psVar10->client == pcVar3->clientNum)) {
-          *piVar8 = *in_r8;
+      if (((pcVar2->bgs).clientinfo[psVar8->client].infoValid != 0) &&
+         ((int *)psVar8->team == param_6)) {
+        piVar6 = &pcVar2->selectedGamerIndex;
+        if ((*piVar6 == 0) && (psVar8->client == pcVar2->clientNum)) {
+          *piVar6 = (int)*in_r8;
         }
-        if (*in_r8 == *piVar8) {
-          uVar1 = Session_GetXuidEvenIfInactive(&g_serverSession,psVar10->client);
-          pcVar3->selectedGamerXuid = uVar1;
+        if (*in_r8 == (float)*piVar6) {
+          uVar1 = Session_GetXuidEvenIfInactive(&g_serverSession,psVar8->client);
+          pcVar2->selectedGamerXuid = uVar1;
         }
-        bVar5 = CL_IsRenderingSplitScreen();
-        iVar4 = CG_CheckDrawScoreboardLine
-                          (LVar2,in_r8,(float)dVar14,
+        bVar4 = CL_IsRenderingSplitScreen();
+        iVar3 = CG_CheckDrawScoreboardLine
+                          (param_1,(int *)in_r8,(float)dVar12,
                            (float)(longlong)(cg_scoreboardItemHeight->current).integer *
-                           (float)((double)(longlong)bVar5 *
+                           (float)((double)(longlong)bVar4 *
                                    (double)(float)((double)(cg_hudSplitscreenScoreboardScale->
-                                                           current).value - dVar13) + dVar13));
-        if (iVar4 != 0) {
+                                                           current).value - dVar11) + dVar11));
+        if (iVar3 != 0) {
           if ((cg_useRelativeTeamColors->current).enabled == false) {
-            psVar6 = asStack_d0;
-            CG_TeamColor((int)lVar7,"g_ScoresColor",(float *)psVar6);
+            psVar5 = asStack_d0;
+            CG_TeamColor((int)param_6,"g_ScoresColor",(float *)psVar5);
           }
           else {
-            psVar6 = (score_t *)"g_ScoresColor";
+            psVar5 = (score_t *)"g_ScoresColor";
             CG_RelativeTeamColor
-                      (LVar2,psVar10->client,"g_ScoresColor","g_ScoresColor",(float *)asStack_d0);
+                      (param_1,psVar8->client,"g_ScoresColor","g_ScoresColor",(float *)asStack_d0);
           }
           asStack_d0[0].deaths = (int)param_2[3];
-          fVar15 = CG_DrawClientScore(LVar2,(float *)asStack_d0,(float)dVar14,psVar6,(float)dVar11,
-                                      (int)psVar10);
-          dVar14 = (double)(float)((double)fVar15 + dVar12);
+          fVar13 = CG_DrawClientScore(param_1,(float *)asStack_d0,(float)dVar12,psVar5,(float)dVar9,
+                                      (int)psVar8);
+          dVar12 = (double)(float)((double)fVar13 + dVar10);
         }
       }
-      iVar9 = iVar9 + 1;
-      psVar10 = psVar10 + 1;
-    } while (iVar9 < pcVar3->numScores);
+      iVar7 = iVar7 + 1;
+      psVar8 = psVar8 + 1;
+    } while (iVar7 < pcVar2->numScores);
   }
-  dVar14 = (double)__restfpr_28(dVar14);
-  __restgprlr();
-  return (float)dVar14;
+  return (float)dVar12;
 }
 
 
 // 822F7898  CG_DrawScrollbar  (cgame_mp/cg_scoreboard_mp.cpp:1149)
 
+/* WARNING: Function: __savegprlr_19 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_16 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_16 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_19 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -1452,15 +1426,14 @@ void CG_DrawScrollbar(LocalClientNum_t param_1,float *param_2,float param_3)
 {
   dvar_t *pdVar1;
   float fVar2;
-  LocalClientNum_t LVar3;
-  cg_s *pcVar4;
-  int iVar5;
-  ScreenPlacement *pSVar6;
+  cg_s *pcVar3;
+  int iVar4;
+  ScreenPlacement *pSVar5;
+  IMAGE_DOS_HEADER *pIVar6;
   IMAGE_DOS_HEADER *pIVar7;
   IMAGE_DOS_HEADER *pIVar8;
-  IMAGE_DOS_HEADER *pIVar9;
-  int *piVar10;
-  double extraout_f1;
+  int *piVar9;
+  double dVar10;
   double dVar11;
   double dVar12;
   double dVar13;
@@ -1475,125 +1448,124 @@ void CG_DrawScrollbar(LocalClientNum_t param_1,float *param_2,float param_3)
   double dVar22;
   double dVar23;
   double dVar24;
-  double dVar25;
-  float fVar26;
+  float fVar25;
   
-  __savegprlr_19((double)param_3,param_1);
-  LVar3 = __savefpr_16();
-  dVar12 = extraout_f1;
-  pcVar4 = CG_GetLocalClientGlobals(LVar3);
-  piVar10 = &pcVar4->scoresTop;
-  if ((1 < *piVar10) || (pcVar4->scoresOffBottom != 0)) {
-    iVar5 = CG_ScoreboardTotalLines(LVar3);
-    pSVar6 = ScrPlace_GetActivePlacement(LVar3);
+  dVar11 = (double)param_3;
+  pcVar3 = CG_GetLocalClientGlobals(param_1);
+  piVar9 = &pcVar3->scoresTop;
+  if ((1 < *piVar9) || (pcVar3->scoresOffBottom != 0)) {
+    iVar4 = CG_ScoreboardTotalLines(param_1);
+    pSVar5 = ScrPlace_GetActivePlacement(param_1);
     Material_RegisterHandle("black",7);
-    dVar14 = 0.5;
+    dVar13 = 0.5;
     pdVar1 = cg_scoreboardWidth;
     if (((splitscreen->current).enabled != false) && ((onlinegame->current).enabled != false)) {
       pdVar1 = cg_onlineSplitscreenScoreboardWidth;
     }
-    dVar24 = (double)(pdVar1->current).value;
-    fVar26 = CG_BackdropLeft(LVar3);
-    pIVar8 = &IMAGE_DOS_HEADER_82000000;
-    dVar18 = 480.0;
-    dVar22 = 6.0;
-    dVar20 = 4.0;
-    dVar17 = 0.0;
-    dVar21 = 9.0;
-    dVar23 = 8.0;
-    dVar25 = 1.0;
-    dVar16 = 3.0;
-    dVar19 = 2.0;
+    dVar23 = (double)(pdVar1->current).value;
+    fVar25 = CG_BackdropLeft(param_1);
     pIVar7 = &IMAGE_DOS_HEADER_82000000;
-    dVar15 = 24.0;
-    dVar11 = (double)(float)((double)(float)(480.0 - (double)(cg_scoreboardHeight->current).value) *
-                            dVar14);
-    dVar13 = dVar17;
-    if (-dVar11 < 0.0) {
-      dVar13 = dVar11;
+    dVar17 = 480.0;
+    dVar21 = 6.0;
+    dVar19 = 4.0;
+    dVar16 = 0.0;
+    dVar20 = 9.0;
+    dVar22 = 8.0;
+    dVar24 = 1.0;
+    dVar15 = 3.0;
+    dVar18 = 2.0;
+    pIVar6 = &IMAGE_DOS_HEADER_82000000;
+    dVar14 = 24.0;
+    dVar10 = (double)(float)((double)(float)(480.0 - (double)(cg_scoreboardHeight->current).value) *
+                            dVar13);
+    dVar12 = dVar16;
+    if (-dVar10 < 0.0) {
+      dVar12 = dVar10;
     }
-    fVar26 = (((float)(dVar24 - 6.0) - 4.0) - 8.0) * ((cg_scoreboardPingWidth->current).value + 1.0)
-             + fVar26 + 9.0 + 12.0;
-    dVar11 = (double)fVar26;
-    fVar2 = (float)((double)(((((float)(dVar13 + (double)(cg_scoreboardHeight->current).value) - 3.0
-                               ) - 2.0) - 24.0) - 1.0) - dVar12) - 1.0;
-    dVar13 = (double)fVar2;
-    UI_DrawHandlePic(pSVar6,fVar26,(float)dVar12,8.0,fVar2,-0x7dff0000,-0x7e000000,
+    fVar25 = (((float)(dVar23 - 6.0) - 4.0) - 8.0) * ((cg_scoreboardPingWidth->current).value + 1.0)
+             + fVar25 + 9.0 + 12.0;
+    dVar10 = (double)fVar25;
+    fVar2 = (float)((double)(((((float)(dVar12 + (double)(cg_scoreboardHeight->current).value) - 3.0
+                               ) - 2.0) - 24.0) - 1.0) - dVar11) - 1.0;
+    dVar12 = (double)fVar2;
+    UI_DrawHandlePic(pSVar5,fVar25,(float)dVar11,8.0,fVar2,-0x7dff0000,-0x7e000000,
                      (float *)&IMAGE_DOS_HEADER_82000000,(Material *)0x82010000);
-    dVar11 = (double)(float)(dVar11 + dVar25);
-    dVar24 = (double)(float)(dVar12 + dVar25);
-    dVar13 = (double)(float)(dVar13 - dVar19);
-    if (iVar5 != 0) {
-      pIVar8 = (IMAGE_DOS_HEADER *)(*piVar10 + -1);
-      pIVar7 = (IMAGE_DOS_HEADER *)pcVar4->scoresBottom;
-      dVar24 = (double)(float)((double)((float)(longlong)(int)pIVar8 / (float)(longlong)iVar5) *
-                               dVar13 + dVar24);
-      dVar13 = (double)(float)((double)((float)(longlong)((int)pIVar7 + (1 - *piVar10)) /
-                                       (float)(longlong)iVar5) * dVar13);
+    dVar10 = (double)(float)(dVar10 + dVar24);
+    dVar23 = (double)(float)(dVar11 + dVar24);
+    dVar12 = (double)(float)(dVar12 - dVar18);
+    if (iVar4 != 0) {
+      pIVar7 = (IMAGE_DOS_HEADER *)(*piVar9 + -1);
+      pIVar6 = (IMAGE_DOS_HEADER *)pcVar3->scoresBottom;
+      dVar23 = (double)(float)((double)((float)(longlong)(int)pIVar7 / (float)(longlong)iVar4) *
+                               dVar12 + dVar23);
+      dVar12 = (double)(float)((double)((float)(longlong)((int)pIVar6 + (1 - *piVar9)) /
+                                       (float)(longlong)iVar4) * dVar12);
     }
-    iVar5 = 7;
+    iVar4 = 7;
     Material_RegisterHandle("white",7);
-    pIVar9 = &IMAGE_DOS_HEADER_82000000;
-    UI_DrawHandlePic(pSVar6,(float)dVar11,(float)dVar24,(float)dVar22,(float)dVar13,iVar5,
-                     (int)pIVar8,(float *)pIVar7,(Material *)&IMAGE_DOS_HEADER_82000000);
     pIVar8 = &IMAGE_DOS_HEADER_82000000;
+    UI_DrawHandlePic(pSVar5,(float)dVar10,(float)dVar23,(float)dVar21,(float)dVar12,iVar4,
+                     (int)pIVar7,(float *)pIVar6,(Material *)&IMAGE_DOS_HEADER_82000000);
     pIVar7 = &IMAGE_DOS_HEADER_82000000;
-    dVar11 = 16.0;
-    dVar13 = 26.0;
-    if (1 < *piVar10) {
-      iVar5 = 7;
+    pIVar6 = &IMAGE_DOS_HEADER_82000000;
+    dVar10 = 16.0;
+    dVar12 = 26.0;
+    if (1 < *piVar9) {
+      iVar4 = 7;
+      pIVar6 = &IMAGE_DOS_HEADER_82000000;
       pIVar7 = &IMAGE_DOS_HEADER_82000000;
-      pIVar8 = &IMAGE_DOS_HEADER_82000000;
       Material_RegisterHandle("hudscoreboardscroll_uparrow",7);
       pdVar1 = cg_scoreboardWidth;
       if (((splitscreen->current).enabled != false) && ((onlinegame->current).enabled != false)) {
         pdVar1 = cg_onlineSplitscreenScoreboardWidth;
       }
-      dVar24 = (double)(pdVar1->current).value;
-      fVar26 = CG_BackdropLeft(LVar3);
-      UI_DrawHandlePic(pSVar6,(float)((double)((float)((double)(float)((double)(float)(dVar24 - 
-                                                  dVar22) - dVar20) - dVar23) *
+      dVar23 = (double)(pdVar1->current).value;
+      fVar25 = CG_BackdropLeft(param_1);
+      UI_DrawHandlePic(pSVar5,(float)((double)((float)((double)(float)((double)(float)(dVar23 - 
+                                                  dVar21) - dVar19) - dVar22) *
                                                (float)((double)(cg_scoreboardPingWidth->current).
-                                                               value + dVar25) +
-                                              (float)((double)fVar26 + dVar21)) + dVar13),
-                       (float)dVar12,(float)dVar11,(float)dVar11,iVar5,(int)pIVar7,(float *)pIVar8,
-                       (Material *)pIVar9);
+                                                               value + dVar24) +
+                                              (float)((double)fVar25 + dVar20)) + dVar12),
+                       (float)dVar11,(float)dVar10,(float)dVar10,iVar4,(int)pIVar6,(float *)pIVar7,
+                       (Material *)pIVar8);
     }
-    if (pcVar4->scoresOffBottom != 0) {
-      iVar5 = 7;
+    if (pcVar3->scoresOffBottom != 0) {
+      iVar4 = 7;
       Material_RegisterHandle("hudscoreboardscroll_downarrow",7);
       pdVar1 = cg_scoreboardWidth;
       if (((splitscreen->current).enabled != false) && ((onlinegame->current).enabled != false)) {
         pdVar1 = cg_onlineSplitscreenScoreboardWidth;
       }
-      dVar24 = (double)(pdVar1->current).value;
-      fVar26 = CG_BackdropLeft(LVar3);
-      dVar12 = (double)(float)((double)(float)(dVar18 - (double)(cg_scoreboardHeight->current).value
-                                              ) * dVar14);
-      if (-dVar12 < 0.0) {
-        dVar17 = dVar12;
+      dVar23 = (double)(pdVar1->current).value;
+      fVar25 = CG_BackdropLeft(param_1);
+      dVar11 = (double)(float)((double)(float)(dVar17 - (double)(cg_scoreboardHeight->current).value
+                                              ) * dVar13);
+      if (-dVar11 < 0.0) {
+        dVar16 = dVar11;
       }
-      UI_DrawHandlePic(pSVar6,(float)((double)((float)((double)(float)((double)(float)(dVar24 - 
-                                                  dVar22) - dVar20) - dVar23) *
+      UI_DrawHandlePic(pSVar5,(float)((double)((float)((double)(float)((double)(float)(dVar23 - 
+                                                  dVar21) - dVar19) - dVar22) *
                                                (float)((double)(cg_scoreboardPingWidth->current).
-                                                               value + dVar25) +
-                                              (float)((double)fVar26 + dVar21)) + dVar13),
+                                                               value + dVar24) +
+                                              (float)((double)fVar25 + dVar20)) + dVar12),
                        (float)((double)(float)((double)(float)((double)(float)((double)(float)((
-                                                  double)(float)((double)(float)(dVar17 + (double)(
-                                                  cg_scoreboardHeight->current).value) - dVar16) -
-                                                  dVar19) - dVar15) - dVar25) - dVar25) - dVar11),
-                       (float)dVar11,(float)dVar11,iVar5,(int)pIVar7,(float *)pIVar8,
+                                                  double)(float)((double)(float)(dVar16 + (double)(
+                                                  cg_scoreboardHeight->current).value) - dVar15) -
+                                                  dVar18) - dVar14) - dVar24) - dVar24) - dVar10),
+                       (float)dVar10,(float)dVar10,iVar4,(int)pIVar6,(float *)pIVar7,
                        (Material *)cg_scoreboardPingWidth);
     }
   }
-  __restfpr_16();
-  __restgprlr_19();
   return;
 }
 
 
 // 822F8F00  CG_DrawScoreboard_ScoresList  (cgame_mp/cg_scoreboard_mp.cpp:1234)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -1602,122 +1574,120 @@ void CG_DrawScoreboard_ScoresList(LocalClientNum_t param_1,float param_2)
 
 {
   dvar_t *pdVar1;
-  LocalClientNum_t LVar2;
-  cg_s *pcVar3;
-  int iVar4;
-  bool bVar5;
-  longlong lVar6;
-  int iVar7;
+  cg_s *pcVar2;
+  int iVar3;
+  bool bVar4;
+  longlong lVar5;
+  int iVar6;
+  int *piVar7;
   int *piVar8;
-  int *piVar9;
-  double extraout_f1;
+  double dVar9;
   double dVar10;
   double dVar11;
   double dVar12;
-  double dVar13;
-  float fVar14;
+  float fVar13;
   float local_60 [24];
   
-  __savegprlr_27((double)param_2,param_1);
-  LVar2 = __savefpr_28();
-  dVar12 = extraout_f1;
-  pcVar3 = CG_GetLocalClientGlobals(LVar2);
-  if (pcVar3->numScores != 0) {
-    piVar8 = &pcVar3->scoresTop;
-    iVar7 = *piVar8;
-    iVar4 = CG_ScoreboardTotalLines(LVar2);
-    if (iVar4 < iVar7) {
+  dVar11 = (double)param_2;
+  pcVar2 = CG_GetLocalClientGlobals(param_1);
+  if (pcVar2->numScores != 0) {
+    piVar7 = &pcVar2->scoresTop;
+    iVar6 = *piVar7;
+    iVar3 = CG_ScoreboardTotalLines(param_1);
+    if (iVar3 < iVar6) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_scoreboard_mp.cpp"
                       ,0x4e0,0,"%s\n\t(cgameGlob->scoresTop) = %i");
     }
-    pcVar3->scoresOffBottom = 0;
-    dVar11 = (double)((480.0 - (cg_scoreboardHeight->current).value) * 0.5);
-    bVar5 = CL_IsRenderingSplitScreen();
-    dVar13 = 1.0;
-    dVar10 = 0.0;
-    if (-dVar11 < 0.0) {
-      dVar10 = dVar11;
+    pcVar2->scoresOffBottom = 0;
+    dVar10 = (double)((480.0 - (cg_scoreboardHeight->current).value) * 0.5);
+    bVar4 = CL_IsRenderingSplitScreen();
+    dVar12 = 1.0;
+    dVar9 = 0.0;
+    if (-dVar10 < 0.0) {
+      dVar9 = dVar10;
     }
-    local_60[3] = (float)dVar12;
+    local_60[3] = (float)dVar11;
     local_60[0] = 1.0;
     local_60[1] = 1.0;
     local_60[2] = 1.0;
-    dVar12 = (double)((float)((double)((float)(longlong)bVar5 *
+    dVar11 = (double)((float)((double)((float)(longlong)bVar4 *
                                        ((cg_hudSplitscreenBannerScoreboardScale->current).value -
-                                       1.0) + 1.0) * 24.0 + dVar10) + 6.0);
+                                       1.0) + 1.0) * 24.0 + dVar9) + 6.0);
     pdVar1 = cg_scoreboardWidth;
     if (((splitscreen->current).enabled != false) && ((onlinegame->current).enabled != false)) {
       pdVar1 = cg_onlineSplitscreenScoreboardWidth;
     }
-    dVar11 = 4.0;
-    dVar10 = (double)((((pdVar1->current).value - 6.0) - 4.0) - 8.0);
-    bVar5 = CL_IsRenderingSplitScreen();
-    lVar6 = (longlong)(cg_scoreboardItemHeight->current).integer;
-    dVar12 = (double)(float)((double)(float)((double)lVar6 *
-                                             (double)(float)((double)(longlong)bVar5 *
+    dVar10 = 4.0;
+    dVar9 = (double)((((pdVar1->current).value - 6.0) - 4.0) - 8.0);
+    bVar4 = CL_IsRenderingSplitScreen();
+    lVar5 = (longlong)(cg_scoreboardItemHeight->current).integer;
+    dVar11 = (double)(float)((double)(float)((double)lVar5 *
+                                             (double)(float)((double)(longlong)bVar4 *
                                                              (double)(float)((double)(
                                                   cg_hudSplitscreenBannerScoreboardScale->current).
-                                                  value - dVar13) + dVar13) + dVar12) + dVar11);
-    bVar5 = CL_IsRenderingSplitScreen();
-    iVar7 = (int)lVar6;
-    dVar13 = (double)(float)((double)(longlong)(cg_scoreboardBannerHeight->current).integer *
-                             (double)(float)((double)(longlong)bVar5 *
+                                                  value - dVar12) + dVar12) + dVar11) + dVar10);
+    bVar4 = CL_IsRenderingSplitScreen();
+    iVar6 = (int)lVar5;
+    dVar12 = (double)(float)((double)(longlong)(cg_scoreboardBannerHeight->current).integer *
+                             (double)(float)((double)(longlong)bVar4 *
                                              (double)(float)((double)(
                                                   cg_hudSplitscreenScoreboardScale->current).value -
-                                                  dVar13) + dVar13) + dVar12);
-    if (*piVar8 < 2) {
-      fVar14 = CG_ScoreboardScaleMultiplier();
+                                                  dVar12) + dVar12) + dVar11);
+    if (*piVar7 < 2) {
+      fVar13 = CG_ScoreboardScaleMultiplier();
       CG_DrawScoreboard_ListColumnHeaders
-                (LVar2,local_60,(float)dVar12,
-                 fVar14 * (float)(longlong)(cg_scoreboardBannerHeight->current).integer,
-                 (float)dVar10);
+                (param_1,local_60,(float)dVar11,
+                 fVar13 * (float)(longlong)(cg_scoreboardBannerHeight->current).integer,(float)dVar9
+                );
     }
     else {
-      fVar14 = CG_ScoreboardScaleMultiplier();
-      fVar14 = CG_DrawScoreboard_ListColumnHeaders
-                         (LVar2,local_60,(float)dVar12,
-                          fVar14 * (float)(longlong)(cg_scoreboardBannerHeight->current).integer,
-                          (float)dVar10);
-      dVar12 = (double)fVar14;
+      fVar13 = CG_ScoreboardScaleMultiplier();
+      fVar13 = CG_DrawScoreboard_ListColumnHeaders
+                         (param_1,local_60,(float)dVar11,
+                          fVar13 * (float)(longlong)(cg_scoreboardBannerHeight->current).integer,
+                          (float)dVar9);
+      dVar11 = (double)fVar13;
     }
-    if ((pcVar3->teamPlayers[1] != 0) || (pcVar3->teamPlayers[2] != 0)) {
-      piVar9 = (int *)(pcVar3->bgs).clientinfo[pcVar3->clientNum].team;
-      if ((piVar9 != (int *)0x1) && (piVar9 != (int *)0x2)) {
-        piVar9 = (int *)0x2;
+    if ((pcVar2->teamPlayers[1] != 0) || (pcVar2->teamPlayers[2] != 0)) {
+      piVar8 = (int *)(pcVar2->bgs).clientinfo[pcVar2->clientNum].team;
+      if ((piVar8 != (int *)0x1) && (piVar8 != (int *)0x2)) {
+        piVar8 = (int *)0x2;
       }
-      fVar14 = CG_DrawTeamOfClientScore(LVar2,local_60,(float)dVar12,iVar7,(float)dVar10,piVar9);
-      fVar14 = CG_DrawTeamOfClientScore
-                         (LVar2,local_60,(float)((double)fVar14 + dVar11),iVar7,(float)dVar10,
-                          (int *)(((uint)LZCOUNT((int)piVar9 + -1) >> 5) + 1));
-      dVar12 = (double)(float)((double)fVar14 + dVar11);
+      fVar13 = CG_DrawTeamOfClientScore(param_1,local_60,(float)dVar11,iVar6,(float)dVar9,piVar8);
+      fVar13 = CG_DrawTeamOfClientScore
+                         (param_1,local_60,(float)((double)fVar13 + dVar10),iVar6,(float)dVar9,
+                          (int *)(((uint)LZCOUNT((int)piVar8 + -1) >> 5) + 1));
+      dVar11 = (double)(float)((double)fVar13 + dVar10);
     }
-    if (pcVar3->teamPlayers[0] != 0) {
-      fVar14 = CG_DrawTeamOfClientScore(LVar2,local_60,(float)dVar12,iVar7,(float)dVar10,(int *)0x0)
-      ;
-      dVar12 = (double)(float)((double)fVar14 + dVar11);
+    if (pcVar2->teamPlayers[0] != 0) {
+      fVar13 = CG_DrawTeamOfClientScore
+                         (param_1,local_60,(float)dVar11,iVar6,(float)dVar9,(int *)0x0);
+      dVar11 = (double)(float)((double)fVar13 + dVar10);
     }
-    if (pcVar3->teamPlayers[3] != 0) {
-      CG_DrawTeamOfClientScore(LVar2,local_60,(float)dVar12,iVar7,(float)dVar10,(int *)0x3);
+    if (pcVar2->teamPlayers[3] != 0) {
+      CG_DrawTeamOfClientScore(param_1,local_60,(float)dVar11,iVar6,(float)dVar9,(int *)0x3);
     }
-    pcVar3->scoresBottom = 0;
-    if (0 < pcVar3->selectedGamerIndex) {
-      CG_ScrollScoreboardDown(pcVar3);
+    pcVar2->scoresBottom = 0;
+    if (0 < pcVar2->selectedGamerIndex) {
+      CG_ScrollScoreboardDown(pcVar2);
     }
-    iVar7 = *piVar8;
-    if (((pcVar3->selectedGamerIndex < iVar7) && (1 < iVar7)) &&
-       (iVar7 = iVar7 - (cg_scoreboardScrollStep->current).integer, *piVar8 = iVar7, iVar7 < 2)) {
-      *piVar8 = 1;
+    iVar6 = *piVar7;
+    if (((pcVar2->selectedGamerIndex < iVar6) && (1 < iVar6)) &&
+       (iVar6 = iVar6 - (cg_scoreboardScrollStep->current).integer, *piVar7 = iVar6, iVar6 < 2)) {
+      *piVar7 = 1;
     }
-    CG_DrawScrollbar(LVar2,local_60,(float)dVar13);
+    CG_DrawScrollbar(param_1,local_60,(float)dVar12);
   }
-  __restfpr_28();
-  __restgprlr_27();
   return;
 }
 
 
 // 822F7CC8  CenterViewOnClient  (cgame_mp/cg_scoreboard_mp.cpp:1318)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -1727,12 +1697,12 @@ void CenterViewOnClient(LocalClientNum_t param_1)
 {
   uint uVar1;
   team_t tVar2;
-  LocalClientNum_t LVar3;
-  cg_s *pcVar4;
-  bool bVar5;
+  cg_s *pcVar3;
+  bool bVar4;
+  int iVar5;
   int iVar6;
-  int iVar7;
-  score_t *psVar8;
+  score_t *psVar7;
+  double dVar8;
   double dVar9;
   double dVar10;
   double dVar11;
@@ -1740,73 +1710,67 @@ void CenterViewOnClient(LocalClientNum_t param_1)
   double dVar13;
   double dVar14;
   double dVar15;
-  double dVar16;
   
-  __savegprlr_29(param_1);
-  LVar3 = __savefpr_25();
-  pcVar4 = CG_GetLocalClientGlobals(LVar3);
-  dVar15 = (double)(cg_scoreboardHeight->current).value;
-  dVar14 = (double)((float)(480.0 - dVar15) * 0.5);
-  dVar13 = (double)((float)(480.0 - dVar15) * 0.5);
-  bVar5 = CL_IsRenderingSplitScreen();
-  dVar16 = 1.0;
-  dVar12 = (double)((float)(longlong)bVar5 *
+  pcVar3 = CG_GetLocalClientGlobals(param_1);
+  dVar14 = (double)(cg_scoreboardHeight->current).value;
+  dVar13 = (double)((float)(480.0 - dVar14) * 0.5);
+  dVar12 = (double)((float)(480.0 - dVar14) * 0.5);
+  bVar4 = CL_IsRenderingSplitScreen();
+  dVar15 = 1.0;
+  dVar11 = (double)((float)(longlong)bVar4 *
                     ((cg_hudSplitscreenBannerScoreboardScale->current).value - 1.0) + 1.0);
-  bVar5 = CL_IsRenderingSplitScreen();
-  dVar11 = (double)(float)((double)(longlong)bVar5 *
+  bVar4 = CL_IsRenderingSplitScreen();
+  dVar10 = (double)(float)((double)(longlong)bVar4 *
                            (double)(float)((double)(cg_hudSplitscreenScoreboardScale->current).value
-                                          - dVar16) + dVar16);
-  bVar5 = CL_IsRenderingSplitScreen();
-  dVar10 = (double)(float)((double)(longlong)bVar5 *
-                           (double)(float)((double)(cg_hudSplitscreenBannerScoreboardScale->current)
-                                                   .value - dVar16) + dVar16);
-  bVar5 = CL_IsRenderingSplitScreen();
-  dVar9 = 0.0;
-  if (-dVar14 < 0.0) {
-    dVar9 = dVar14;
-  }
-  dVar14 = 0.0;
+                                          - dVar15) + dVar15);
+  bVar4 = CL_IsRenderingSplitScreen();
+  dVar9 = (double)(float)((double)(longlong)bVar4 *
+                          (double)(float)((double)(cg_hudSplitscreenBannerScoreboardScale->current).
+                                                  value - dVar15) + dVar15);
+  bVar4 = CL_IsRenderingSplitScreen();
+  dVar8 = 0.0;
   if (-dVar13 < 0.0) {
-    dVar14 = dVar13;
+    dVar8 = dVar13;
   }
-  iVar6 = 1;
-  tVar2 = (pcVar4->bgs).clientinfo[pcVar4->clientNum].team;
-  uVar1 = (uint)((-(float)((double)(longlong)(cg_scoreboardItemHeight->current).integer * dVar10 -
+  dVar13 = 0.0;
+  if (-dVar12 < 0.0) {
+    dVar13 = dVar12;
+  }
+  iVar5 = 1;
+  tVar2 = (pcVar3->bgs).clientinfo[pcVar3->clientNum].team;
+  uVar1 = (uint)((-(float)((double)(longlong)(cg_scoreboardItemHeight->current).integer * dVar9 -
                           -(double)(float)((double)(longlong)
                                                    (cg_scoreboardBannerHeight->current).integer *
-                                           dVar11 - (double)(float)((double)(((((float)(dVar9 + 
-                                                  dVar15) - 3.0) - 2.0) - 24.0) -
-                                                  ((float)(dVar12 * 24.0 + dVar14) + 6.0)) - dVar16)
+                                           dVar10 - (double)(float)((double)(((((float)(dVar8 + 
+                                                  dVar14) - 3.0) - 2.0) - 24.0) -
+                                                  ((float)(dVar11 * 24.0 + dVar13) + 6.0)) - dVar15)
                                           )) - 4.0) /
                 (float)((double)(longlong)(cg_scoreboardItemHeight->current).integer *
-                        (double)(float)((double)(longlong)bVar5 *
+                        (double)(float)((double)(longlong)bVar4 *
                                         (double)(float)((double)(cg_hudSplitscreenScoreboardScale->
-                                                                current).value - dVar16) + dVar16) +
+                                                                current).value - dVar15) + dVar15) +
                        4.0));
   if (tVar2 != TEAM_SPECTATOR) {
-    iVar7 = 0;
-    if (0 < pcVar4->numScores) {
-      psVar8 = pcVar4->scores;
+    iVar6 = 0;
+    if (0 < pcVar3->numScores) {
+      psVar7 = pcVar3->scores;
+      iVar5 = 1;
       do {
-        if (psVar8->team == tVar2) {
-          if (psVar8->client == pcVar4->clientNum) break;
-          iVar6 = iVar6 + 1;
+        if (psVar7->team == tVar2) {
+          if (psVar7->client == pcVar3->clientNum) break;
+          iVar5 = iVar5 + 1;
         }
-        iVar7 = iVar7 + 1;
-        psVar8 = psVar8 + 1;
-      } while (iVar7 < pcVar4->numScores);
+        iVar6 = iVar6 + 1;
+        psVar7 = psVar7 + 1;
+      } while (iVar6 < pcVar3->numScores);
     }
-    if ((int)uVar1 < iVar6) {
-      pcVar4->scoresTop =
-           (iVar6 - (((int)uVar1 >> 1) + (uint)((int)uVar1 < 0 && (uVar1 & 1) != 0))) + 1;
-      __restfpr_25();
-      __restgprlr_29();
+    if ((int)uVar1 < iVar5) {
+      pcVar3->scoresTop =
+           (iVar5 - (((int)uVar1 >> 1) + (uint)((int)uVar1 < 0 && (uVar1 & 1) != 0))) + 1;
       return;
     }
   }
-  pcVar4->scoresTop = 1;
-  __restfpr_25();
-  __restgprlr_29();
+  pcVar3->scoresTop = 1;
   return;
 }
 
@@ -1956,6 +1920,8 @@ void CG_ScrollScoreboardDown(cg_s *param_1)
 
 // 822F80B0  CG_RegisterScoreboardDvars  (cgame_mp/cg_scoreboard_mp.cpp:1464)
 
+/* WARNING: Function: __savefpr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void CG_RegisterScoreboardDvars(void)
@@ -1970,7 +1936,6 @@ void CG_RegisterScoreboardDvars(void)
   double dVar7;
   double dVar8;
   
-  __savefpr_26();
   cg_ScoresPing_MaxBars =
        Dvar_RegisterInt("cg_ScoresPing_MaxBars",4,1,10,0,"Number of bars to show in ping graph");
   cg_ScoresPing_Interval =
@@ -2057,7 +2022,6 @@ void CG_RegisterScoreboardDvars(void)
   cg_scoreboard_externalmute_notice_duration =
        Dvar_RegisterInt("cg_scoreboard_externalmute_notice_duration",4000,0,10000,4,
                         "Total duration of the score board mute notice, including fade time");
-  __restfpr_26();
   return;
 }
 
@@ -2246,6 +2210,8 @@ void Scoreboard_UpdateUnmutableNotice(LocalClientNum_t param_1)
 
 // 822F8960  Scoreboard_HandleInputNonXboxLive  (cgame_mp/cg_scoreboard_mp.cpp:1646)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -2254,48 +2220,42 @@ void Scoreboard_UpdateUnmutableNotice(LocalClientNum_t param_1)
 bool Scoreboard_HandleInputNonXboxLive(LocalClientNum_t param_1,int param_2)
 
 {
-  LocalClientNum_t LVar1;
-  cg_s *pcVar2;
-  undefined1 uVar4;
-  int iVar3;
-  bool bVar5;
+  cg_s *pcVar1;
+  int iVar2;
+  bool bVar3;
   
-  LVar1 = __savegprlr_28(param_1);
-  pcVar2 = CG_GetLocalClientGlobals(LVar1);
+  pcVar1 = CG_GetLocalClientGlobals(param_1);
   if (param_2 == 1) {
-    if ((((pcVar2->selectedGamerXuid != 0) && (g_serverSession.dyn.sessionHandle != (void *)0x0)) &&
-        (iVar3 = Session_FindRegisteredUser(&g_serverSession,pcVar2->selectedGamerXuid), -1 < iVar3)
-        ) && (iVar3 != pcVar2->clientNum)) {
-      bVar5 = CL_IsPlayerMuted(&g_serverSession,iVar3);
-      if ((bVar5) && (bVar5 = CL_IsPlayerUnmutable(&g_serverSession,iVar3), !bVar5)) {
-        Scoreboard_UpdateUnmutableNotice(LVar1);
-        uVar4 = __restgprlr_28(1);
-        return (bool)uVar4;
+    if ((((pcVar1->selectedGamerXuid != 0) && (g_serverSession.dyn.sessionHandle != (void *)0x0)) &&
+        (iVar2 = Session_FindRegisteredUser(&g_serverSession,pcVar1->selectedGamerXuid), -1 < iVar2)
+        ) && (iVar2 != pcVar1->clientNum)) {
+      bVar3 = CL_IsPlayerMuted(&g_serverSession,iVar2);
+      if ((bVar3) && (bVar3 = CL_IsPlayerUnmutable(&g_serverSession,iVar2), !bVar3)) {
+        Scoreboard_UpdateUnmutableNotice(param_1);
+        return true;
       }
-      CL_TogglePlayerMute(&g_serverSession,iVar3);
-      uVar4 = __restgprlr_28(1);
-      return (bool)uVar4;
+      CL_TogglePlayerMute(&g_serverSession,iVar2);
+      return true;
     }
   }
   else {
     if (param_2 == 0x14) {
-      CG_ScoreboardPrevGamerIndex(LVar1);
-      uVar4 = __restgprlr_28(1);
-      return (bool)uVar4;
+      CG_ScoreboardPrevGamerIndex(param_1);
+      return true;
     }
     if (param_2 == 0x15) {
-      CG_ScoreboardNextGamerIndex(LVar1);
-      uVar4 = __restgprlr_28(1);
-      return (bool)uVar4;
+      CG_ScoreboardNextGamerIndex(param_1);
+      return true;
     }
   }
-  uVar4 = __restgprlr_28(0);
-  return (bool)uVar4;
+  return false;
 }
 
 
 // 822F8A70  Scoreboard_HandleInputXboxLive  (cgame_mp/cg_scoreboard_mp.cpp:1690)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -2304,93 +2264,93 @@ bool Scoreboard_HandleInputNonXboxLive(LocalClientNum_t param_1,int param_2)
 bool Scoreboard_HandleInputXboxLive(LocalClientNum_t param_1,int param_2)
 
 {
-  LocalClientNum_t LVar2;
-  cg_s *pcVar3;
-  int iVar4;
+  cg_s *pcVar2;
+  int iVar3;
   ulong64 uVar1;
-  bool bVar6;
-  ulong uVar5;
-  undefined1 uVar7;
-  int *piVar8;
+  bool bVar5;
+  ulong uVar4;
+  int *piVar6;
   
-  LVar2 = __savegprlr_28(param_1);
-  if ((((param_2 == 4) || (param_2 == 0x14)) || (param_2 == 0x15)) || (bVar6 = false, param_2 == 1))
+  if ((((param_2 == 4) || (param_2 == 0x14)) || (param_2 == 0x15)) || (bVar5 = false, param_2 == 1))
   {
-    bVar6 = true;
+    bVar5 = true;
   }
-  if (!bVar6) goto LAB_822f8cec;
-  pcVar3 = CG_GetLocalClientGlobals(LVar2);
-  iVar4 = CG_ScoreboardTotalLines(LVar2);
+  if (!bVar5) {
+    return false;
+  }
+  pcVar2 = CG_GetLocalClientGlobals(param_1);
+  iVar3 = CG_ScoreboardTotalLines(param_1);
   if (param_2 < 0x15) {
     if (param_2 == 0x14) {
-      CG_ScoreboardPrevGamerIndex(LVar2);
-      uVar7 = __restgprlr_28(1);
-      return (bool)uVar7;
+      CG_ScoreboardPrevGamerIndex(param_1);
+      return true;
     }
     if (param_2 == 1) {
-      if (pcVar3->selectedGamerXuid != 0) {
-        if (g_serverSession.dyn.sessionHandle == (void *)0x0) {
-          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_scoreboard_mp.cpp"
-                          ,0x6b8,0,"%s");
-        }
-        iVar4 = Session_FindRegisteredUser(&g_serverSession,pcVar3->selectedGamerXuid);
-        if ((-1 < iVar4) && (iVar4 != pcVar3->clientNum)) {
-          bVar6 = CL_IsPlayerMuted(&g_serverSession,iVar4);
-          if ((bVar6) && (bVar6 = CL_IsPlayerUnmutable(&g_serverSession,iVar4), !bVar6)) {
-            Scoreboard_UpdateUnmutableNotice(LVar2);
-            uVar7 = __restgprlr_28(1);
-            return (bool)uVar7;
-          }
-          bVar6 = Session_PlayerHasLoopbackAddr(&g_serverSession,iVar4);
-          if (!bVar6) {
-            CL_TogglePlayerMute(&g_serverSession,iVar4);
-            uVar7 = __restgprlr_28(1);
-            return (bool)uVar7;
-          }
-          goto LAB_822f8d00;
-        }
+      if (pcVar2->selectedGamerXuid == 0) {
+        return false;
       }
-      goto LAB_822f8cec;
+      if (g_serverSession.dyn.sessionHandle == (void *)0x0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_scoreboard_mp.cpp"
+                        ,0x6b8,0,"%s");
+      }
+      iVar3 = Session_FindRegisteredUser(&g_serverSession,pcVar2->selectedGamerXuid);
+      if (iVar3 < 0) {
+        return false;
+      }
+      if (iVar3 == pcVar2->clientNum) {
+        return false;
+      }
+      bVar5 = CL_IsPlayerMuted(&g_serverSession,iVar3);
+      if ((bVar5) && (bVar5 = CL_IsPlayerUnmutable(&g_serverSession,iVar3), !bVar5)) {
+        Scoreboard_UpdateUnmutableNotice(param_1);
+        return true;
+      }
+      bVar5 = Session_PlayerHasLoopbackAddr(&g_serverSession,iVar3);
+      if (bVar5) {
+        return true;
+      }
+      CL_TogglePlayerMute(&g_serverSession,iVar3);
+      return true;
     }
     if (param_2 == 4) {
-      piVar8 = &pcVar3->selectedGamerIndex;
-      if (1 < *piVar8) {
-        uVar1 = pcVar3->selectedGamerXuid;
-        if ((uVar1 != 0) && (bVar6 = Live_XUIDIsLocalPlayer(uVar1), !bVar6)) {
-          if ((iVar4 != 0) && (iVar4 < *piVar8)) {
-            *piVar8 = iVar4;
-          }
-          if (*piVar8 < 0) {
-            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_scoreboard_mp.cpp"
-                            ,0x6d1,0,"%s\n\t(cgameGlob->selectedGamerIndex) = %i");
-          }
-          uVar5 = CL_ControllerIndexFromClientNum(LVar2);
-          uVar5 = XShowGamerCardUI(uVar5,pcVar3->selectedGamerXuid);
-          if (uVar5 != 0) {
-            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_scoreboard_mp.cpp"
-                            ,0x6d5,0,"%s");
-          }
-          UI_SetActiveMenu(LVar2,0);
-          uVar7 = __restgprlr_28(1);
-          return (bool)uVar7;
-        }
+      piVar6 = &pcVar2->selectedGamerIndex;
+      if (*piVar6 < 2) {
+        return false;
       }
-      goto LAB_822f8cec;
+      uVar1 = pcVar2->selectedGamerXuid;
+      if (uVar1 == 0) {
+        return false;
+      }
+      bVar5 = Live_XUIDIsLocalPlayer(uVar1);
+      if (bVar5) {
+        return false;
+      }
+      if ((iVar3 != 0) && (iVar3 < *piVar6)) {
+        *piVar6 = iVar3;
+      }
+      if (*piVar6 < 0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_scoreboard_mp.cpp"
+                        ,0x6d1,0,"%s\n\t(cgameGlob->selectedGamerIndex) = %i");
+      }
+      uVar4 = CL_ControllerIndexFromClientNum(param_1);
+      uVar4 = XShowGamerCardUI(uVar4,pcVar2->selectedGamerXuid);
+      if (uVar4 != 0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_scoreboard_mp.cpp"
+                        ,0x6d5,0,"%s");
+      }
+      UI_SetActiveMenu(param_1,0);
+      return true;
     }
   }
   else if (param_2 == 0x15) {
-    CG_ScoreboardNextGamerIndex(LVar2);
-LAB_822f8d00:
-    uVar7 = __restgprlr_28(1);
-    return (bool)uVar7;
+    CG_ScoreboardNextGamerIndex(param_1);
+    return true;
   }
   if (alwaysfails == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_scoreboard_mp.cpp"
                     ,0x6db,0,"Invalid scoreboard input key");
   }
-LAB_822f8cec:
-  uVar7 = __restgprlr_28(0);
-  return (bool)uVar7;
+  return false;
 }
 
 

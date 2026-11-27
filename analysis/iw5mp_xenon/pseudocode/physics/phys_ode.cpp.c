@@ -2,96 +2,96 @@
 
 // 82679890  init  (physics/phys_alloc.h:21)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
+
 void __thiscall PhysStaticArray<dxJointHinge,192>::init(PhysStaticArray<dxJointHinge,192> *this)
 
 {
   longlong lVar1;
-  int *piVar2;
-  longlong lVar3;
-  ulonglong uVar4;
+  longlong lVar2;
+  ulonglong uVar3;
   
-  lVar1 = __savegprlr_23(this);
+  lVar1 = (longlong)(int)this;
   memset();
-  piVar2 = (int *)lVar1;
-  *piVar2 = -1;
-  lVar3 = 0x8948;
+  this->freeEntry = -1;
+  lVar2 = 0x8948;
   do {
-    uVar4 = lVar3 + lVar1 + 4;
-    if (((uVar4 & 0xffffffff) < (lVar1 + 4U & 0xffffffff)) ||
-       ((lVar1 + 0x8a04U & 0xffffffff) <= (uVar4 & 0xffffffff))) {
+    uVar3 = lVar2 + lVar1 + 4;
+    if (((uVar3 & 0xffffffff) < (lVar1 + 4U & 0xffffffff)) ||
+       ((lVar1 + 0x8a04U & 0xffffffff) <= (uVar3 & 0xffffffff))) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_alloc.h",0x22,0
                       ,"%s");
     }
     memset();
-    lVar3 = lVar3 + -0xb8;
-    *(int *)uVar4 = *piVar2;
-    *piVar2 = ((int)(int *)uVar4 + (-4 - (int)piVar2)) / 0xb8;
-  } while (-1 < lVar3);
-  __restgprlr_23();
+    lVar2 = lVar2 + -0xb8;
+    *(int *)uVar3 = this->freeEntry;
+    this->freeEntry = ((int)(int *)uVar3 + (-4 - (int)this)) / 0xb8;
+  } while (-1 < lVar2);
   return;
 }
 
 
 // 82679958  init  (physics/phys_alloc.h:21)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
+
 void __thiscall PhysStaticArray<dxJointBall,160>::init(PhysStaticArray<dxJointBall,160> *this)
 
 {
   longlong lVar1;
-  int *piVar2;
-  longlong lVar3;
-  ulonglong uVar4;
+  longlong lVar2;
+  ulonglong uVar3;
   
-  lVar1 = __savegprlr_24(this);
+  lVar1 = (longlong)(int)this;
   memset();
-  piVar2 = (int *)lVar1;
-  *piVar2 = -1;
-  lVar3 = 0x3924;
+  this->freeEntry = -1;
+  lVar2 = 0x3924;
   do {
-    uVar4 = lVar3 + lVar1 + 4;
-    if (((uVar4 & 0xffffffff) < (lVar1 + 4U & 0xffffffff)) ||
-       ((lVar1 + 0x3984U & 0xffffffff) <= (uVar4 & 0xffffffff))) {
+    uVar3 = lVar2 + lVar1 + 4;
+    if (((uVar3 & 0xffffffff) < (lVar1 + 4U & 0xffffffff)) ||
+       ((lVar1 + 0x3984U & 0xffffffff) <= (uVar3 & 0xffffffff))) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_alloc.h",0x22,0
                       ,"%s");
     }
     memset();
-    lVar3 = lVar3 + -0x5c;
-    *(int *)uVar4 = *piVar2;
-    *piVar2 = ((int)(int *)uVar4 + (-4 - (int)piVar2)) / 0x5c;
-  } while (-1 < lVar3);
-  __restgprlr_24();
+    lVar2 = lVar2 + -0x5c;
+    *(int *)uVar3 = this->freeEntry;
+    this->freeEntry = ((int)(int *)uVar3 + (-4 - (int)this)) / 0x5c;
+  } while (-1 < lVar2);
   return;
 }
 
 
 // 82679A10  init  (physics/phys_alloc.h:21)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
+
 void __thiscall PhysStaticArray<dxJointAMotor,160>::init(PhysStaticArray<dxJointAMotor,160> *this)
 
 {
   longlong lVar1;
-  int *piVar2;
-  longlong lVar3;
-  ulonglong uVar4;
+  longlong lVar2;
+  ulonglong uVar3;
   
-  lVar1 = __savegprlr_23(this);
+  lVar1 = (longlong)(int)this;
   memset();
-  piVar2 = (int *)lVar1;
-  *piVar2 = -1;
-  lVar3 = 0xb55c;
+  this->freeEntry = -1;
+  lVar2 = 0xb55c;
   do {
-    uVar4 = lVar3 + lVar1 + 4;
-    if (((uVar4 & 0xffffffff) < (lVar1 + 4U & 0xffffffff)) ||
-       ((lVar1 + 0xb684U & 0xffffffff) <= (uVar4 & 0xffffffff))) {
+    uVar3 = lVar2 + lVar1 + 4;
+    if (((uVar3 & 0xffffffff) < (lVar1 + 4U & 0xffffffff)) ||
+       ((lVar1 + 0xb684U & 0xffffffff) <= (uVar3 & 0xffffffff))) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_alloc.h",0x22,0
                       ,"%s");
     }
     memset();
-    lVar3 = lVar3 + -0x124;
-    *(int *)uVar4 = *piVar2;
-    *piVar2 = ((int)(int *)uVar4 + (-4 - (int)piVar2)) / 0x124;
-  } while (-1 < lVar3);
-  __restgprlr_23();
+    lVar2 = lVar2 + -0x124;
+    *(int *)uVar3 = this->freeEntry;
+    this->freeEntry = ((int)(int *)uVar3 + (-4 - (int)this)) / 0x124;
+  } while (-1 < lVar2);
   return;
 }
 
@@ -337,6 +337,8 @@ PhysWorldData * Phys_GetWorldData(uint param_1)
 
 // 826797C8  ODE_ForEachBody<void_(__cdecl*)(enum_PhysWorld,dxBody_*)>  (physics/phys_ode.cpp:396)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PhysWorld": Some values do not have unique names */
 
 void ODE_ForEachBody<void_(__cdecl*)(enum_PhysWorld,dxBody_*)>
@@ -344,18 +346,15 @@ void ODE_ForEachBody<void_(__cdecl*)(enum_PhysWorld,dxBody_*)>
 
 {
   dxBody *pdVar1;
-  PhysWorld PVar2;
   
-  PVar2 = __savegprlr_29(param_1);
-  if (PHYS_WORLD_LAST_SERVER_WORLD < PVar2) {
+  if (PHYS_WORLD_LAST_SERVER_WORLD < param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0x176,0,
                     "worldIndex doesn\'t index PHYS_WORLD_COUNT\n\t%i not in [0, %i)");
   }
-  for (pdVar1 = physGlob.world[PVar2].firstbody; pdVar1 != (dxBody *)0x0;
+  for (pdVar1 = physGlob.world[param_1].firstbody; pdVar1 != (dxBody *)0x0;
       pdVar1 = (dxBody *)pdVar1->_padding_) {
-    (*param_2)(PVar2,pdVar1);
+    (*param_2)(param_1,pdVar1);
   }
-  __restgprlr_29();
   return;
 }
 
@@ -387,66 +386,60 @@ dxGeom * Phys_GeomAlloc(PhysWorld param_1)
 
 // 8266DE70  Phys_IndexFromODEWorldID  (physics/phys_local.h:412)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PhysWorld": Some values do not have unique names */
 
 PhysWorld Phys_IndexFromODEWorldID(dxWorld *param_1)
 
 {
-  PhysGlob *pPVar1;
-  PhysWorld PVar2;
-  int iVar3;
-  PhysGlob *pPVar4;
+  int iVar1;
+  PhysGlob *pPVar2;
+  PhysWorld PVar3;
   
-  pPVar1 = (PhysGlob *)__savegprlr_29(param_1);
-  PVar2 = PHYS_WORLD_DYNENT;
-  pPVar4 = &physGlob;
-  iVar3 = 0;
+  PVar3 = PHYS_WORLD_DYNENT;
+  pPVar2 = &physGlob;
+  iVar1 = 0;
   do {
-    if (pPVar1 == pPVar4) break;
-    iVar3 = iVar3 + 0x70;
-    PVar2 = PVar2 + PHYS_WORLD_FX;
-    pPVar4 = (PhysGlob *)(pPVar4->world + 1);
-  } while (iVar3 < 0x230);
-  if (PHYS_WORLD_LAST_SERVER_WORLD < PVar2) {
+    if ((PhysGlob *)param_1 == pPVar2) break;
+    iVar1 = iVar1 + 0x70;
+    PVar3 = PVar3 + PHYS_WORLD_FX;
+    pPVar2 = (PhysGlob *)(pPVar2->world + 1);
+  } while (iVar1 < 0x230);
+  if (PHYS_WORLD_LAST_SERVER_WORLD < PVar3) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_local.h",0x1a4,0,
                     "worldIndex doesn\'t index PHYS_WORLD_COUNT\n\t%i not in [0, %i)");
   }
-  if (PVar2 != pPVar1->world[0].worldIndex) {
+  if (PVar3 != param_1->worldIndex) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_local.h",0x1a5,0,
                     "worldIndex == world->worldIndex\n\t%i, %i");
   }
-  PVar2 = __restgprlr_29(pPVar1->world[0].worldIndex);
-  return PVar2;
+  return param_1->worldIndex;
 }
 
 
 // 8266E068  Phys_GeomFree  (physics/phys_ode.cpp:427)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PhysWorld": Some values do not have unique names */
 
 void Phys_GeomFree(dxGeom *param_1,dxWorld *param_2)
 
 {
-  void *pvVar1;
-  ulonglong uVar2;
-  
-  uVar2 = (ulonglong)(int)param_2;
-  pvVar1 = (void *)__savegprlr_28(param_1);
-  if (pvVar1 == (void *)0x0) {
+  if (param_1 == (dxGeom *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0x1ac,0,
                     "%s");
   }
-  if ((uVar2 & 0xffffffff) == 0) {
+  if (param_2 == (dxWorld *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0x1ad,0,
                     "%s");
   }
-  if (*(int *)((int)uVar2 + 0x5c) == 3) {
-    Pool_Free(pvVar1,&physVehiclePool.geomPool);
-    __restgprlr_28();
+  if (param_2->worldIndex == PHYS_WORLD_FIRST_SERVER_WORLD) {
+    Pool_Free(param_1,&physVehiclePool.geomPool);
     return;
   }
-  Pool_Free(pvVar1,&physGeneralPool.geomPool);
-  __restgprlr_28();
+  Pool_Free(param_1,&physGeneralPool.geomPool);
   return;
 }
 
@@ -478,27 +471,25 @@ dxBody * Phys_BodyAlloc(PhysWorld param_1)
 
 // 8266E1A0  Phys_BodyFree  (physics/phys_ode.cpp:452)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void Phys_BodyFree(dxBody *param_1)
 
 {
-  void *pvVar1;
-  
-  pvVar1 = (void *)__savegprlr_29(param_1);
-  if (pvVar1 == (void *)0x0) {
+  if (param_1 == (dxBody *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0x1c7,0,
                     "%s");
   }
-  if (*(int *)((int)pvVar1 + 0x10) == 0) {
+  if (param_1->_padding_ == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0x1c8,0,
                     "%s");
   }
-  if (*(int *)(*(int *)((int)pvVar1 + 0x10) + 0x5c) == 3) {
-    Pool_Free(pvVar1,&physVehiclePool.bodyPool);
-    __restgprlr_29();
+  if (*(int *)(param_1->_padding_ + 0x5c) == 3) {
+    Pool_Free(param_1,&physVehiclePool.bodyPool);
     return;
   }
-  Pool_Free(pvVar1,&physGeneralPool.bodyPool);
-  __restgprlr_29();
+  Pool_Free(param_1,&physGeneralPool.bodyPool);
   return;
 }
 
@@ -611,6 +602,10 @@ void Phys_InitJoints(void)
 
 // 82678850  Phys_InitCommon  (physics/phys_ode.cpp:523)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "PhysWorld": Some values do not have unique names */
 
@@ -632,9 +627,7 @@ void Phys_InitCommon(void)
   double dVar12;
   double dVar13;
   
-  __savegprlr_28();
-  __savefpr_23();
-  if (physInitedCommon != false) {
+  if (physInitedCommon) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0x20e,0,
                     "%s");
   }
@@ -853,14 +846,14 @@ void Phys_InitCommon(void)
   PhysStaticArray<dxJointBall,160>::init(&physGlob.ballArray);
   PhysStaticArray<dxJointAMotor,160>::init(&physGlob.aMotorArray);
   physInitedCommon = true;
-  __restfpr_23();
-  __restgprlr_28();
   return;
 }
 
 
 // 8266E440  Phys_ShutdownCommon  (physics/phys_ode.cpp:643)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void Phys_ShutdownCommon(void)
@@ -868,8 +861,7 @@ void Phys_ShutdownCommon(void)
 {
   int iVar1;
   
-  __savegprlr_29();
-  if (physInitedCommon == false) {
+  if (!physInitedCommon) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0x284,0,
                     "%s");
   }
@@ -906,90 +898,88 @@ void Phys_ShutdownCommon(void)
   Cmd_RemoveCommand("phys_go");
   dCloseODE();
   physInitedCommon = false;
-  __restgprlr_29();
   return;
 }
 
 
 // 8266E5D0  Phys_InitWorld  (physics/phys_ode.cpp:677)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PhysWorld": Some values do not have unique names */
 
 void Phys_InitWorld(PhysWorld param_1)
 
 {
-  PhysWorld PVar1;
-  dxWorld *pdVar2;
+  dxWorld *pdVar1;
   
-  PVar1 = __savegprlr_25(param_1);
-  if (PHYS_WORLD_LAST_SERVER_WORLD < PVar1) {
+  if (PHYS_WORLD_LAST_SERVER_WORLD < param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0x2a8,0,
                     "worldIndex doesn\'t index PHYS_WORLD_COUNT\n\t%i not in [0, %i)");
   }
   memset();
-  pdVar2 = physGlob.world + PVar1;
-  ODE_WorldInit(pdVar2);
-  physGlob.world[PVar1].worldIndex = PVar1;
-  physGlob.worldData[PVar1].timeLastSnapshot = 0;
-  physGlob.worldData[PVar1].timeLastUpdate = 0;
-  ODE_InitSimpleSpace(physGlob.space + PVar1);
-  ODE_ContactJointGroupInit((dxJointGroup *)(&contactGroups + PVar1 * 0xc));
-  dWorldSetAutoDisableFlag(pdVar2,1);
-  dWorldSetAutoDisableSteps(pdVar2,0);
-  physGlob.worldData[PVar1].collisionCallback = (_func___cdecl_void *)0x0;
-  physGlob.worldData[PVar1].gravityDirection[0] = 0.0;
-  physGlob.worldData[PVar1].gravityDirection[1] = 0.0;
-  physGlob.worldData[PVar1].gravityDirection[2] = -1.0;
-  physGlob.worldData[PVar1].clipMask = 0x2806491;
-  physGlob.worldData[PVar1].doInterBodyCollisions = false;
-  ODE_WorldSetAngularVelocityMax(pdVar2,3.4028235e+38);
-  physGlob.world[PVar1].useWorkerCmd = 1;
-  __restgprlr_25();
+  pdVar1 = physGlob.world + param_1;
+  ODE_WorldInit(pdVar1);
+  physGlob.world[param_1].worldIndex = param_1;
+  physGlob.worldData[param_1].timeLastSnapshot = 0;
+  physGlob.worldData[param_1].timeLastUpdate = 0;
+  ODE_InitSimpleSpace(physGlob.space + param_1);
+  ODE_ContactJointGroupInit((dxJointGroup *)(&contactGroups + param_1 * 0xc));
+  dWorldSetAutoDisableFlag(pdVar1,1);
+  dWorldSetAutoDisableSteps(pdVar1,0);
+  physGlob.worldData[param_1].collisionCallback = (_func___cdecl_void *)0x0;
+  physGlob.worldData[param_1].gravityDirection[0] = 0.0;
+  physGlob.worldData[param_1].gravityDirection[1] = 0.0;
+  physGlob.worldData[param_1].gravityDirection[2] = -1.0;
+  physGlob.worldData[param_1].clipMask = 0x2806491;
+  physGlob.worldData[param_1].doInterBodyCollisions = false;
+  ODE_WorldSetAngularVelocityMax(pdVar1,3.4028235e+38);
+  physGlob.world[param_1].useWorkerCmd = 1;
   return;
 }
 
 
 // 82676010  Phys_ShutdownWorld  (physics/phys_ode.cpp:705)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PhysWorld": Some values do not have unique names */
 
 void Phys_ShutdownWorld(PhysWorld param_1)
 
 {
-  PhysWorld PVar1;
-  
-  PVar1 = __savegprlr_27(param_1);
-  if (PHYS_WORLD_LAST_SERVER_WORLD < PVar1) {
+  if (PHYS_WORLD_LAST_SERVER_WORLD < param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0x2c2,0,
                     "worldIndex doesn\'t index PHYS_WORLD_COUNT\n\t%i not in [0, %i)");
   }
-  Phys_LockWorld(PVar1);
-  if (physGlob.world[PVar1].bodyCount != 0) {
+  Phys_LockWorld(param_1);
+  if (physGlob.world[param_1].bodyCount != 0) {
     va("world: %i, bodyCount = %i");
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0x2c7,0,
                     "%s\n\t%s");
   }
-  if (*(int *)&physGlob.space[PVar1].field_0x4c != 0) {
+  if (*(int *)&physGlob.space[param_1].field_0x4c != 0) {
     va("world: %i, geomCount = %i");
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0x2c8,0,
                     "%s\n\t%s");
   }
-  if (*(int *)&physGlob.space[PVar1].field_0x50 != 0) {
+  if (*(int *)&physGlob.space[param_1].field_0x50 != 0) {
     va("world: %i");
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0x2c9,0,
                     "%s\n\t%s");
   }
-  dJointGroupDestroy((dxJointGroup *)(&contactGroups + PVar1 * 0xc));
-  ODE_SpaceDestroy((dxSpace *)(physGlob.space + PVar1));
-  ODE_WorldDestroy(physGlob.world + PVar1,Phys_BodyFree);
-  Phys_UnlockWorld(PVar1);
-  __restgprlr_27();
+  dJointGroupDestroy((dxJointGroup *)(&contactGroups + param_1 * 0xc));
+  ODE_SpaceDestroy((dxSpace *)(physGlob.space + param_1));
+  ODE_WorldDestroy(physGlob.world + param_1,Phys_BodyFree);
+  Phys_UnlockWorld(param_1);
   return;
 }
 
 
 // 8266E6F8  Phys_InitClient  (physics/phys_ode.cpp:724)
 
+/* WARNING: Function: __savegprlr_21 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_21 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "PhysWorld": Some values do not have unique names */
 
@@ -1004,8 +994,7 @@ void Phys_InitClient(void)
   double dVar6;
   double dVar7;
   
-  __savegprlr_21();
-  if (physInitedCommon == false) {
+  if (!physInitedCommon) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0x2d7,0,
                     "%s");
   }
@@ -1046,13 +1035,14 @@ void Phys_InitClient(void)
     } while ((int)pPVar3 < -0x7bd8459f);
     physInitedClient = true;
   }
-  __restgprlr_21();
   return;
 }
 
 
 // 82676178  Phys_ShutdownClient  (physics/phys_ode.cpp:740)
 
+/* WARNING: Function: __savegprlr_18 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_18 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "PhysWorld": Some values do not have unique names */
 
@@ -1063,8 +1053,7 @@ void Phys_ShutdownClient(void)
   int *piVar2;
   PhysWorld PVar3;
   
-  __savegprlr_18();
-  if (physInitedCommon == false) {
+  if (!physInitedCommon) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0x2e7,0,
                     "%s");
   }
@@ -1111,13 +1100,14 @@ void Phys_ShutdownClient(void)
     } while ((int)pdVar1 < -0x7d668cdf);
     physInitedClient = false;
   }
-  __restgprlr_18();
   return;
 }
 
 
 // 826763C0  Phys_InitServer  (physics/phys_ode.cpp:758)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "PhysWorld": Some values do not have unique names */
 
@@ -1128,8 +1118,7 @@ void Phys_InitServer(void)
   int *piVar2;
   double dVar3;
   
-  __savegprlr_27();
-  if (physInitedCommon == false) {
+  if (!physInitedCommon) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0x2f9,0,
                     "%s");
   }
@@ -1155,29 +1144,28 @@ void Phys_InitServer(void)
   ODE_WorldSetAngularVelocityMax(physGlob.world + 4,(float)dVar3);
   physInitedServer = true;
   physGlob.worldData[4].glassCallback = G_PhysBreakGlass;
-  __restgprlr_27();
   return;
 }
 
 
 // 82676508  Phys_ShutdownServer  (physics/phys_ode.cpp:791)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PhysWorld": Some values do not have unique names */
 
 void Phys_ShutdownServer(bool param_1)
 
 {
-  char cVar2;
   int iVar1;
-  PhysWorld PVar3;
+  PhysWorld PVar2;
   
-  cVar2 = __savegprlr_29(param_1);
-  if (physInitedCommon == false) {
+  if (!physInitedCommon) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0x31a,0,
                     "%s");
   }
   if (physInitedServer != false) {
-    if (cVar2 == '\0') {
+    if (!param_1) {
       iVar1 = Pool_FreeCount(&physVehiclePool.userDataPool);
       if (iVar1 != 8) {
         Pool_FreeCount(&physVehiclePool.userDataPool);
@@ -1207,206 +1195,199 @@ void Phys_ShutdownServer(bool param_1)
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",
                         0x325,0,"%s\n\t%s");
       }
-      PVar3 = PHYS_WORLD_FIRST_SERVER_WORLD;
+      PVar2 = PHYS_WORLD_FIRST_SERVER_WORLD;
       do {
-        Phys_ShutdownWorld(PVar3);
-        PVar3 = PVar3 + PHYS_WORLD_FX;
-      } while (PVar3 < PHYS_WORLD_COUNT);
+        Phys_ShutdownWorld(PVar2);
+        PVar2 = PVar2 + PHYS_WORLD_FX;
+      } while (PVar2 < PHYS_WORLD_COUNT);
       physInitedServer = false;
-      __restgprlr_29();
       return;
     }
     physInitedServer = false;
     g_entPhysObjCount = 0;
     g_vehiclePhysObjCount = 0;
   }
-  __restgprlr_29();
   return;
 }
 
 
 // 8266E870  Phys_GetStateFromBody  (physics/phys_ode.cpp:824)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void Phys_GetStateFromBody(dxBody *param_1,BodyState_conflict *param_2)
 
 {
-  dxBody *pdVar1;
+  float *pfVar1;
   float *pfVar2;
-  float *pfVar3;
-  bool bVar4;
-  ulonglong uVar5;
-  float *pfVar6;
+  bool bVar3;
   dMass local_80;
   
-  uVar5 = (ulonglong)(int)param_2;
-  pdVar1 = (dxBody *)__savegprlr_27(param_1);
   dMassSetZero(&local_80);
-  if (pdVar1 == (dxBody *)0x0) {
+  if (param_1 == (dxBody *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0x33c,0,
                     "%s");
   }
-  if ((uVar5 & 0xffffffff) == 0) {
+  if (param_2 == (BodyState_conflict *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0x33d,0,
                     "%s");
   }
-  pfVar2 = dBodyGetData(pdVar1);
-  if (pfVar2 == (float *)0x0) {
+  pfVar1 = dBodyGetData(param_1);
+  if (pfVar1 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0x340,0,
                     "%s");
   }
-  pfVar3 = dBodyGetPosition(pdVar1);
-  pfVar6 = (float *)uVar5;
-  *pfVar6 = *pfVar3;
-  pfVar6[1] = pfVar3[1];
-  pfVar6[2] = pfVar3[2];
-  pfVar3 = dBodyGetQuaternion(pdVar1);
-  pfVar6[3] = *pfVar3;
-  pfVar6[4] = pfVar3[1];
-  pfVar6[5] = pfVar3[2];
-  pfVar6[6] = pfVar3[3];
-  pfVar3 = dBodyGetLinearVel(pdVar1);
-  pfVar6[7] = *pfVar3;
-  pfVar6[8] = pfVar3[1];
-  pfVar6[9] = pfVar3[2];
-  pfVar3 = dBodyGetAngularVel(pdVar1);
-  pfVar6[10] = *pfVar3;
-  pfVar6[0xb] = pfVar3[1];
-  pfVar6[0xc] = pfVar3[2];
-  pfVar6[0xd] = *pfVar2;
-  pfVar6[0xe] = pfVar2[1];
-  pfVar6[0xf] = pfVar2[2];
-  dBodyGetMass(pdVar1,&local_80);
+  pfVar2 = dBodyGetPosition(param_1);
+  param_2->position[0] = *pfVar2;
+  param_2->position[1] = pfVar2[1];
+  param_2->position[2] = pfVar2[2];
+  pfVar2 = dBodyGetQuaternion(param_1);
+  param_2->odeQuaternion[0] = *pfVar2;
+  param_2->odeQuaternion[1] = pfVar2[1];
+  param_2->odeQuaternion[2] = pfVar2[2];
+  param_2->odeQuaternion[3] = pfVar2[3];
+  pfVar2 = dBodyGetLinearVel(param_1);
+  param_2->velocity[0] = *pfVar2;
+  param_2->velocity[1] = pfVar2[1];
+  param_2->velocity[2] = pfVar2[2];
+  pfVar2 = dBodyGetAngularVel(param_1);
+  param_2->angVelocity[0] = *pfVar2;
+  param_2->angVelocity[1] = pfVar2[1];
+  param_2->angVelocity[2] = pfVar2[2];
+  param_2->translation[0] = *pfVar1;
+  param_2->translation[1] = pfVar1[1];
+  param_2->translation[2] = pfVar1[2];
+  dBodyGetMass(param_1,&local_80);
   if (local_80.mass == 0.0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0x34b,0,
                     "%s");
   }
-  pfVar6[0x13] = local_80.mass;
-  pfVar6[0x10] = pfVar2[0x10];
-  pfVar6[0x11] = pfVar2[0x11];
-  pfVar6[0x12] = pfVar2[0x12];
-  pfVar6[0x15] = pfVar2[0x15];
-  pfVar6[0x14] = pfVar2[0x14];
-  pfVar6[0x16] = pfVar2[0x16];
-  pfVar6[0x17] = pfVar2[0x13];
-  bVar4 = dBodyIsEnabled(pdVar1);
-  *(bool *)(pfVar6 + 0x18) = bVar4;
-  *(undefined1 *)((int)pfVar6 + 0x61) = 1;
-  pfVar6[0x19] = pdVar1->adis_timeleft;
-  pfVar6[0x1a] = (float)pdVar1->adis_stepsleft;
-  pfVar6[0x1b] = (pdVar1->adis).linearThresholdSqrd;
-  pfVar6[0x1c] = (pdVar1->adis).angularThresholdSqrd;
-  pfVar6[0x1d] = (pdVar1->adis).idle_time;
-  __restgprlr_27();
+  param_2->mass = local_80.mass;
+  param_2->lastTunnelTracePos[0] = pfVar1[0x10];
+  param_2->lastTunnelTracePos[1] = pfVar1[0x11];
+  param_2->lastTunnelTracePos[2] = pfVar1[0x12];
+  param_2->bounce = pfVar1[0x15];
+  param_2->friction = pfVar1[0x14];
+  param_2->state = (physStuckState_t)pfVar1[0x16];
+  param_2->sndClass = (int)pfVar1[0x13];
+  bVar3 = dBodyIsEnabled(param_1);
+  param_2->isAwake = bVar3;
+  param_2->restoreAutodisable = true;
+  param_2->adis_timeleft = param_1->adis_timeleft;
+  param_2->adis_stepsleft = param_1->adis_stepsleft;
+  param_2->adis_linearThresholdSqrd = (param_1->adis).linearThresholdSqrd;
+  param_2->adis_angularThresholdSqrd = (param_1->adis).angularThresholdSqrd;
+  param_2->adis_idleTime = (param_1->adis).idle_time;
   return;
 }
 
 
 // 8266EA88  Phys_ObjGetPositionFromCenterOfMass  (physics/phys_ode.cpp:869)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void Phys_ObjGetPositionFromCenterOfMass
                (dxBody *param_1,float (*param_2) [3],float *param_3,float *param_4)
 
 {
-  dxBody *pdVar1;
-  float *pfVar2;
+  float *pfVar1;
   float local_40;
   float local_3c;
   float local_38;
   
-  pdVar1 = (dxBody *)__savegprlr_28(param_1);
-  pfVar2 = dBodyGetData(pdVar1);
-  if (pfVar2 == (float *)0x0) {
+  pfVar1 = dBodyGetData(param_1);
+  if (pfVar1 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0x36a,0,
                     "%s");
   }
-  MatrixTransformVector(pfVar2,param_2,&local_40);
+  MatrixTransformVector(pfVar1,param_2,&local_40);
   *param_4 = *param_3 + local_40;
   param_4[1] = param_3[1] + local_3c;
   param_4[2] = param_3[2] + local_38;
-  __restgprlr_28();
   return;
 }
 
 
 // 8266EB20  Phys_ObjGetCenterOfMassFromObjOrigin  (physics/phys_ode.cpp:882)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 void Phys_ObjGetCenterOfMassFromObjOrigin(int param_1,float *param_2,float *param_3)
 
 {
-  dxBody *pdVar1;
+  float *pfVar1;
   float *pfVar2;
-  float *pfVar3;
   float local_70;
   float local_6c;
   float local_68;
   float afStack_60 [24];
   
-  pdVar1 = (dxBody *)__savegprlr_26(param_1);
-  pfVar2 = dBodyGetData(pdVar1);
-  if (pfVar2 == (float *)0x0) {
+  pfVar1 = dBodyGetData((dxBody *)param_1);
+  if (pfVar1 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0x378,0,
                     "%s");
   }
-  if (pdVar1 == (dxBody *)0x0) {
+  if (param_1 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0x1eb,0,
                     "%s");
   }
-  pfVar3 = dBodyGetRotation(pdVar1);
-  Phys_OdeMatrix3ToAxis(pfVar3,(float (*) [3])afStack_60);
-  MatrixTransformVector(pfVar2,(float (*) [3])afStack_60,&local_70);
+  pfVar2 = dBodyGetRotation((dxBody *)param_1);
+  Phys_OdeMatrix3ToAxis(pfVar2,(float (*) [3])afStack_60);
+  MatrixTransformVector(pfVar1,(float (*) [3])afStack_60,&local_70);
   *param_3 = *param_2 - local_70;
   param_3[1] = param_2[1] - local_6c;
   param_3[2] = param_2[2] - local_68;
-  __restgprlr_26();
   return;
 }
 
 
 // 8266EBF0  Phys_ObjUpdateTunnelTracePos  (physics/phys_ode.cpp:898)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void Phys_ObjUpdateTunnelTracePos(int param_1,float *param_2,float (*param_3) [3])
 
 {
-  dxBody *pdVar1;
-  dxGeom *pdVar2;
-  void *pvVar3;
-  ulonglong uVar4;
-  float *pfVar5;
+  dxGeom *pdVar1;
+  void *pvVar2;
   float local_60;
   float local_5c;
   float local_58;
   Bounds aBStack_50 [3];
   
-  uVar4 = (ulonglong)(int)param_2;
-  pdVar1 = (dxBody *)__savegprlr_27(param_1);
-  if (pdVar1 == (dxBody *)0x0) {
+  if (param_1 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0x389,0,
                     "%s");
   }
-  if ((uVar4 & 0xffffffff) == 0) {
+  if (param_2 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0x38a,0,
                     "%s");
   }
-  pdVar2 = ODE_BodyGetFirstGeom(pdVar1);
-  if (pdVar2 != (dxGeom *)0x0) {
-    ODE_GeomGetAAContainedBox(pdVar2,aBStack_50);
+  pdVar1 = ODE_BodyGetFirstGeom((dxBody *)param_1);
+  if (pdVar1 != (dxGeom *)0x0) {
+    ODE_GeomGetAAContainedBox(pdVar1,aBStack_50);
     MatrixTransformVector(aBStack_50[0].midPoint,param_3,&local_60);
-    pvVar3 = dBodyGetData(pdVar1);
-    if (pvVar3 == (void *)0x0) {
+    pvVar2 = dBodyGetData((dxBody *)param_1);
+    if (pvVar2 == (void *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0x394,
                       0,"%s");
     }
-    pfVar5 = (float *)uVar4;
-    *(float *)((int)pvVar3 + 0x40) = *pfVar5 + local_60;
-    *(float *)((int)pvVar3 + 0x44) = pfVar5[1] + local_5c;
-    *(float *)((int)pvVar3 + 0x48) = pfVar5[2] + local_58;
+    *(float *)((int)pvVar2 + 0x40) = *param_2 + local_60;
+    *(float *)((int)pvVar2 + 0x44) = param_2[1] + local_5c;
+    *(float *)((int)pvVar2 + 0x48) = param_2[2] + local_58;
   }
-  __restgprlr_27();
   return;
 }
 
 
 // 8266ECF0  Phys_AdjustForNewCenterOfMass  (physics/phys_ode.cpp:924)
+
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 
 void Phys_AdjustForNewCenterOfMass(dxBody *param_1,float *param_2,bool param_3)
 
@@ -1414,17 +1395,13 @@ void Phys_AdjustForNewCenterOfMass(dxBody *param_1,float *param_2,bool param_3)
   float fVar1;
   float fVar2;
   float fVar3;
-  dxBody *pdVar4;
+  float *pfVar4;
   float *pfVar5;
-  float *pfVar6;
-  dxGeom *pdVar7;
-  int iVar8;
-  ulonglong uVar9;
-  float *pfVar10;
-  ulonglong uVar11;
-  double dVar12;
-  double dVar13;
-  double dVar14;
+  dxGeom *pdVar6;
+  int iVar7;
+  double dVar8;
+  double dVar9;
+  double dVar10;
   float local_b8;
   float local_b4;
   float local_b0;
@@ -1436,75 +1413,70 @@ void Phys_AdjustForNewCenterOfMass(dxBody *param_1,float *param_2,bool param_3)
   float local_90;
   float afStack_80 [32];
   
-  uVar11 = (ulonglong)param_3;
-  uVar9 = (ulonglong)(int)param_2;
-  pdVar4 = (dxBody *)__savegprlr_25(param_1);
-  if (pdVar4 == (dxBody *)0x0) {
+  if (param_1 == (dxBody *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0x3a8,0,
                     "%s");
   }
-  if ((uVar9 & 0xffffffff) == 0) {
+  if (param_2 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0x3a9,0,
                     "%s");
   }
-  pfVar10 = (float *)uVar9;
-  if (((((uint)*pfVar10 & 0x7f800000) == 0x7f800000) ||
-      (((uint)pfVar10[1] & 0x7f800000) == 0x7f800000)) ||
-     (((uint)pfVar10[2] & 0x7f800000) == 0x7f800000)) {
+  if (((((uint)*param_2 & 0x7f800000) == 0x7f800000) ||
+      (((uint)param_2[1] & 0x7f800000) == 0x7f800000)) ||
+     (((uint)param_2[2] & 0x7f800000) == 0x7f800000)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0x3aa,0,
                     "%s");
   }
-  pfVar5 = dBodyGetData(pdVar4);
-  if (pfVar5 == (float *)0x0) {
+  pfVar4 = dBodyGetData(param_1);
+  if (pfVar4 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0x3ad,0,
                     "%s");
   }
-  if (pdVar4 == (dxBody *)0x0) {
+  if (param_1 == (dxBody *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0x1eb,0,
                     "%s");
   }
-  pfVar6 = dBodyGetRotation(pdVar4);
-  Phys_OdeMatrix3ToAxis(pfVar6,(float (*) [3])afStack_80);
-  pfVar6 = dBodyGetPosition(pdVar4);
-  local_a8 = *pfVar6;
-  local_a4 = pfVar6[1];
-  local_a0 = pfVar6[2];
-  Phys_ObjGetPositionFromCenterOfMass(pdVar4,(float (*) [3])afStack_80,&local_a8,&local_98);
-  fVar1 = *pfVar5;
-  *pfVar5 = -*pfVar10;
-  fVar2 = pfVar5[1];
-  pfVar5[1] = -pfVar10[1];
-  fVar3 = pfVar5[2];
-  pfVar5[2] = -pfVar10[2];
-  dVar14 = (double)(-fVar1 - *pfVar10);
-  dVar12 = (double)(-fVar3 - pfVar10[2]);
-  dVar13 = (double)(-fVar2 - pfVar10[1]);
-  for (pdVar7 = ODE_BodyGetFirstGeom(pdVar4); pdVar7 != (dxGeom *)0x0;
-      pdVar7 = dGeomGetBodyNext(pdVar7)) {
-    iVar8 = dGeomGetClass(pdVar7);
-    if (iVar8 == 1) {
-      ODE_GeomTransformGetOffset(pdVar7,&local_b8);
-      local_b8 = (float)((double)local_b8 + dVar14);
-      local_b4 = (float)((double)local_b4 + dVar13);
-      local_b0 = (float)((double)local_b0 + dVar12);
-      ODE_GeomTransformSetOffset(pdVar7,&local_b8);
+  pfVar5 = dBodyGetRotation(param_1);
+  Phys_OdeMatrix3ToAxis(pfVar5,(float (*) [3])afStack_80);
+  pfVar5 = dBodyGetPosition(param_1);
+  local_a8 = *pfVar5;
+  local_a4 = pfVar5[1];
+  local_a0 = pfVar5[2];
+  Phys_ObjGetPositionFromCenterOfMass(param_1,(float (*) [3])afStack_80,&local_a8,&local_98);
+  fVar1 = *pfVar4;
+  *pfVar4 = -*param_2;
+  fVar2 = pfVar4[1];
+  pfVar4[1] = -param_2[1];
+  fVar3 = pfVar4[2];
+  pfVar4[2] = -param_2[2];
+  dVar10 = (double)(-fVar1 - *param_2);
+  dVar8 = (double)(-fVar3 - param_2[2]);
+  dVar9 = (double)(-fVar2 - param_2[1]);
+  for (pdVar6 = ODE_BodyGetFirstGeom(param_1); pdVar6 != (dxGeom *)0x0;
+      pdVar6 = dGeomGetBodyNext(pdVar6)) {
+    iVar7 = dGeomGetClass(pdVar6);
+    if (iVar7 == 1) {
+      ODE_GeomTransformGetOffset(pdVar6,&local_b8);
+      local_b8 = (float)((double)local_b8 + dVar10);
+      local_b4 = (float)((double)local_b4 + dVar9);
+      local_b0 = (float)((double)local_b0 + dVar8);
+      ODE_GeomTransformSetOffset(pdVar6,&local_b8);
     }
   }
-  if ((uVar11 & 0xff) == 0) {
-    MatrixTransformVector(pfVar10,(float (*) [3])afStack_80,&local_a8);
+  if (!param_3) {
+    MatrixTransformVector(param_2,(float (*) [3])afStack_80,&local_a8);
     local_98 = local_a8 + local_98;
-    dVar14 = (double)local_98;
+    dVar10 = (double)local_98;
     local_94 = local_a4 + local_94;
-    dVar13 = (double)local_94;
+    dVar9 = (double)local_94;
     local_90 = local_a0 + local_90;
-    dVar12 = (double)local_90;
-    dBodySetPosition(pdVar4,local_98,local_94,local_90);
-    Phys_ObjUpdateTunnelTracePos((int)pdVar4,&local_98,(float (*) [3])afStack_80);
-    pfVar5[4] = (float)dVar14;
-    pfVar5[5] = (float)dVar13;
-    pfVar5[6] = (float)dVar12;
+    dVar8 = (double)local_90;
+    dBodySetPosition(param_1,local_98,local_94,local_90);
+    Phys_ObjUpdateTunnelTracePos((int)param_1,&local_98,(float (*) [3])afStack_80);
+    pfVar4[4] = (float)dVar10;
+    pfVar4[5] = (float)dVar9;
+    pfVar4[6] = (float)dVar8;
   }
-  __restgprlr_25();
   return;
 }
 
@@ -1533,6 +1505,8 @@ void Phys_MassSetGlassTotal(dMass *param_1,float param_2,GeomStateGlass *param_3
 
 // 826766B8  Phys_BodyAddGeomAndSetMass  (physics/phys_ode.cpp:992)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PhysWorld": Some values do not have unique names */
 
 void Phys_BodyAddGeomAndSetMass
@@ -1541,44 +1515,35 @@ void Phys_BodyAddGeomAndSetMass
 
 {
   float fVar1;
-  PhysWorld PVar2;
-  void *pvVar3;
-  dxGeom *pdVar5;
-  dxGeom *pdVar6;
-  longlong lVar7;
-  GeomStateGlass *pGVar8;
-  GeomStateGlass *pGVar9;
-  undefined1 in_r8;
-  double extraout_f1;
-  double dVar10;
+  void *pvVar2;
+  dxGeom *pdVar3;
+  dxGeom *pdVar4;
+  GeomStateGlass *pGVar5;
+  bool in_r8;
+  double dVar6;
   dMass adStack_a0 [2];
-  dxBody *pdVar4;
   
-  pGVar9 = (GeomStateGlass *)(int)param_6;
-  lVar7 = (longlong)(int)param_2;
-  PVar2 = __savegprlr_24((double)param_3,param_1,lVar7,param_4);
-  dVar10 = extraout_f1;
+  dVar6 = (double)param_3;
+  pGVar5 = (GeomStateGlass *)(int)param_6;
   dMassSetZero(adStack_a0);
-  if (dVar10 <= 0.0) {
+  if (dVar6 <= 0.0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",1000,0,
                     "%s");
   }
-  pdVar4 = (dxBody *)lVar7;
-  pvVar3 = dBodyGetData(pdVar4);
-  if (pvVar3 == (void *)0x0) {
+  pvVar2 = dBodyGetData(param_2);
+  if (pvVar2 == (void *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0x3ed,0,
                     "%s");
   }
-  pdVar5 = (dxGeom *)0x0;
-  pGVar8 = pGVar9;
-  Phys_AdjustForNewCenterOfMass(pdVar4,(float *)pGVar9,(bool)in_r8);
+  pdVar3 = (dxGeom *)0x0;
+  Phys_AdjustForNewCenterOfMass(param_2,(float *)(int)param_6,in_r8);
   fVar1 = *param_5;
   if ((uint)fVar1 < 8) {
     if (fVar1 == 1.4013e-45) {
-      dMassSetBoxTotal(adStack_a0,(float)dVar10,param_5[0xb],param_5[0xc],param_5[0xd]);
-      pdVar5 = Phys_GeomAlloc(PVar2);
-      if (pdVar5 != (dxGeom *)0x0) {
-        ODE_BoxInit(pdVar5,(dxSpace *)(physGlob.space + PVar2),pdVar4,param_5[0xb],param_5[0xc],
+      dMassSetBoxTotal(adStack_a0,(float)dVar6,param_5[0xb],param_5[0xc],param_5[0xd]);
+      pdVar3 = Phys_GeomAlloc(param_1);
+      if (pdVar3 != (dxGeom *)0x0) {
+        ODE_BoxInit(pdVar3,(dxSpace *)(physGlob.space + param_1),param_2,param_5[0xb],param_5[0xc],
                     param_5[0xd]);
         goto LAB_826769b4;
       }
@@ -1587,42 +1552,42 @@ void Phys_BodyAddGeomAndSetMass
       if (fVar1 != 2.8026e-45) {
         if (fVar1 != 4.2039e-45) {
           if (fVar1 == 5.60519e-45) {
-            Phys_MassSetTotal(adStack_a0,(float)dVar10,(float *)pGVar8,param_5 + 0xc);
-            pdVar5 = Phys_CreateCollmapGeom
-                               ((dxSpace *)(physGlob.space + PVar2),pdVar4,
-                                (PhysCollmap *)param_5[0xb],(float *)pGVar9);
-            if (pdVar5 == (dxGeom *)0x0) {
+            Phys_MassSetTotal(adStack_a0,(float)dVar6,(float *)pGVar5,param_5 + 0xc);
+            pdVar3 = Phys_CreateCollmapGeom
+                               ((dxSpace *)(physGlob.space + param_1),param_2,
+                                (PhysCollmap *)param_5[0xb],(float *)(int)param_6);
+            if (pdVar3 == (dxGeom *)0x0) {
               Com_PrintWarning(0x14,"Maximum number of physics geoms exceeded\n");
             }
           }
           else if (fVar1 == 7.00649e-45) {
-            dMassSetCylinderTotal(adStack_a0,(float)dVar10,(int)pGVar8,param_5[0xc],param_5[0xd]);
-            pdVar5 = Phys_CreateCylinderGeom
-                               ((dxSpace *)(physGlob.space + PVar2),pdVar4,
+            dMassSetCylinderTotal(adStack_a0,(float)dVar6,(int)pGVar5,param_5[0xc],param_5[0xd]);
+            pdVar3 = Phys_CreateCylinderGeom
+                               ((dxSpace *)(physGlob.space + param_1),param_2,
                                 (GeomStateCylinder *)(param_5 + 0xb));
-            if (pdVar5 == (dxGeom *)0x0) {
+            if (pdVar3 == (dxGeom *)0x0) {
               Com_PrintWarning(0x14,"Maximum number of physics geoms exceeded\n");
             }
           }
           else if (fVar1 == 8.40779e-45) {
             dMassSetCappedCylinderTotal
-                      (adStack_a0,(float)dVar10,(int)pGVar8,param_5[0xc],param_5[0xd]);
-            pdVar5 = Phys_CreateCapsuleGeom
-                               ((dxSpace *)(physGlob.space + PVar2),pdVar4,
+                      (adStack_a0,(float)dVar6,(int)pGVar5,param_5[0xc],param_5[0xd]);
+            pdVar3 = Phys_CreateCapsuleGeom
+                               ((dxSpace *)(physGlob.space + param_1),param_2,
                                 (GeomStateCylinder *)(param_5 + 0xb));
-            if (pdVar5 == (dxGeom *)0x0) {
+            if (pdVar3 == (dxGeom *)0x0) {
               Com_PrintWarning(0x14,"Maximum number of physics geoms exceeded\n");
             }
           }
           else if (fVar1 == 0.0) {
-            dMassSetSphereTotal(adStack_a0,(float)dVar10,1.0);
+            dMassSetSphereTotal(adStack_a0,(float)dVar6,1.0);
           }
           else {
-            Phys_MassSetGlassTotal(adStack_a0,(float)dVar10,pGVar8);
-            pdVar5 = Phys_CreateGlassGeom
-                               ((dxSpace *)(physGlob.space + PVar2),pdVar4,
+            Phys_MassSetGlassTotal(adStack_a0,(float)dVar6,pGVar5);
+            pdVar3 = Phys_CreateGlassGeom
+                               ((dxSpace *)(physGlob.space + param_1),param_2,
                                 (GeomStateGlass *)(param_5 + 0xb));
-            if (pdVar5 == (dxGeom *)0x0) {
+            if (pdVar3 == (dxGeom *)0x0) {
               Com_PrintWarning(0x14,"Maximum number of physics geoms exceeded\n");
             }
           }
@@ -1630,11 +1595,11 @@ void Phys_BodyAddGeomAndSetMass
         }
         goto LAB_8267698c;
       }
-      Phys_MassSetTotal(adStack_a0,(float)dVar10,(float *)pGVar8,param_5 + 0xc);
-      pdVar5 = Phys_CreateBrushmodelGeom
-                         ((dxSpace *)(physGlob.space + PVar2),pdVar4,*(ushort *)(param_5 + 0xb),
-                          (float *)pGVar9);
-      if (pdVar5 != (dxGeom *)0x0) goto LAB_826769b4;
+      Phys_MassSetTotal(adStack_a0,(float)dVar6,(float *)pGVar5,param_5 + 0xc);
+      pdVar3 = Phys_CreateBrushmodelGeom
+                         ((dxSpace *)(physGlob.space + param_1),param_2,*(ushort *)(param_5 + 0xb),
+                          (float *)(int)param_6);
+      if (pdVar3 != (dxGeom *)0x0) goto LAB_826769b4;
     }
     Com_PrintWarning(0x14,"Maximum number of physics geoms exceeded\n");
   }
@@ -1646,228 +1611,208 @@ LAB_8267698c:
     }
   }
 LAB_826769b4:
-  if ((*(char *)(param_5 + 1) != '\0') && (pdVar5 != (dxGeom *)0x0)) {
-    pdVar6 = Phys_GeomAlloc(PVar2);
-    if (pdVar6 == (dxGeom *)0x0) {
+  if ((*(char *)(param_5 + 1) != '\0') && (pdVar3 != (dxGeom *)0x0)) {
+    pdVar4 = Phys_GeomAlloc(param_1);
+    if (pdVar4 == (dxGeom *)0x0) {
       Com_PrintError(0x14,"Maximum number of physics geoms exceeded\n");
     }
     else {
-      ODE_GeomTransformInit(pdVar6,(dxSpace *)(physGlob.space + PVar2),pdVar4);
-      dGeomTransformSetGeom(pdVar6,pdVar5);
-      ODE_GeomTransformSetRotation(pdVar6,vec3_origin,(float (*) [3])(param_5 + 2));
+      ODE_GeomTransformInit(pdVar4,(dxSpace *)(physGlob.space + param_1),param_2);
+      dGeomTransformSetGeom(pdVar4,pdVar3);
+      ODE_GeomTransformSetRotation(pdVar4,vec3_origin,(float (*) [3])(param_5 + 2));
     }
   }
-  dBodySetMass(pdVar4,adStack_a0);
-  __restgprlr_24();
+  dBodySetMass(param_2,adStack_a0);
   return;
 }
 
 
 // 8266F068  Phys_CreateBodyFromState  (physics/phys_ode.cpp:1087)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PhysWorld": Some values do not have unique names */
 
 dxBody * Phys_CreateBodyFromState(PhysWorld param_1,BodyState_conflict *param_2)
 
 {
-  float *pfVar1;
-  PhysWorld PVar2;
-  dxWorld *pdVar3;
-  dxBody *pdVar4;
-  float *pfVar5;
-  ulonglong uVar7;
+  dxBody *pdVar1;
+  float *pfVar2;
+  dxWorld *pdVar4;
   float local_90;
   float local_8c;
   float local_88;
   float local_84;
   dMass dStack_80;
-  pooldata_t *ppVar6;
+  pooldata_t *ppVar3;
   
-  uVar7 = (ulonglong)(int)param_2;
-  PVar2 = __savegprlr_26(param_1);
   dMassSetZero(&dStack_80);
-  if ((uVar7 & 0xffffffff) == 0) {
+  if (param_2 == (BodyState_conflict *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0x445,0,
                     "%s");
   }
-  if (PHYS_WORLD_LAST_SERVER_WORLD < PVar2) {
+  if (PHYS_WORLD_LAST_SERVER_WORLD < param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0x446,0,
                     "worldIndex doesn\'t index PHYS_WORLD_COUNT\n\t%i not in [0, %i)");
   }
-  if (*(int *)&physGlob.space[PVar2].field_0x64 == 0) {
+  if (*(int *)&physGlob.space[param_1].field_0x64 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0x447,0,
                     "%s");
   }
-  pdVar3 = physGlob.world + PVar2;
-  dWorldSetAutoDisableLinearThreshold(pdVar3,(phys_autoDisableLinear->current).value);
+  pdVar4 = physGlob.world + param_1;
+  dWorldSetAutoDisableLinearThreshold(pdVar4,(phys_autoDisableLinear->current).value);
   dWorldSetAutoDisableAngularThreshold
-            (pdVar3,(phys_autoDisableAngular->current).value * 0.017453292);
-  dWorldSetAutoDisableTime(pdVar3,(phys_autoDisableTime->current).value);
-  pdVar4 = Phys_BodyAlloc(PVar2);
-  if (pdVar4 == (dxBody *)0x0) {
+            (pdVar4,(phys_autoDisableAngular->current).value * 0.017453292);
+  dWorldSetAutoDisableTime(pdVar4,(phys_autoDisableTime->current).value);
+  pdVar1 = Phys_BodyAlloc(param_1);
+  if (pdVar1 == (dxBody *)0x0) {
     Com_PrintWarning(0x14,"Maximum number of physics bodies exceeded (more than %i)\n");
-    pdVar4 = (dxBody *)__restgprlr_26(0);
-    return pdVar4;
+    return (dxBody *)0x0;
   }
-  ODE_BodyInit(pdVar4,pdVar3);
-  if (PVar2 == PHYS_WORLD_LAST_CLIENT_WORLD) {
-    dBodySetFiniteRotationMode(pdVar4,1);
+  ODE_BodyInit(pdVar1,pdVar4);
+  if (param_1 == PHYS_WORLD_LAST_CLIENT_WORLD) {
+    dBodySetFiniteRotationMode(pdVar1,1);
   }
-  else if (PVar2 == PHYS_WORLD_FIRST_SERVER_WORLD) {
-    ppVar6 = &physVehiclePool.userDataPool;
+  else if (param_1 == PHYS_WORLD_FIRST_SERVER_WORLD) {
+    ppVar3 = &physVehiclePool.userDataPool;
     goto LAB_8266f1d4;
   }
-  ppVar6 = &physGeneralPool.userDataPool;
+  ppVar3 = &physGeneralPool.userDataPool;
 LAB_8266f1d4:
-  pfVar5 = Pool_Alloc(ppVar6);
-  if (pfVar5 == (float *)0x0) {
+  pfVar2 = Pool_Alloc(ppVar3);
+  if (pfVar2 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0x45b,0,
                     "%s");
   }
   memset();
-  dBodySetData(pdVar4,pfVar5);
-  pfVar1 = (float *)uVar7;
-  dBodySetPosition(pdVar4,*pfVar1,pfVar1[1],pfVar1[2]);
-  dBodySetLinearVel(pdVar4,pfVar1[7],pfVar1[8],pfVar1[9]);
-  dBodySetAngularVel(pdVar4,pfVar1[10],pfVar1[0xb],pfVar1[0xc]);
-  dBodySetQuaternionExact(pdVar4,pfVar1 + 3);
-  *pfVar5 = pfVar1[0xd];
-  pfVar5[1] = pfVar1[0xe];
-  pfVar5[2] = pfVar1[0xf];
-  dMassSetSphereTotal(&dStack_80,pfVar1[0x13],1.0);
-  dBodySetMass(pdVar4,&dStack_80);
-  pfVar5[3] = (float)pdVar4;
-  pfVar5[4] = *pfVar1;
-  pfVar5[5] = pfVar1[1];
-  pfVar5[6] = pfVar1[2];
-  local_84 = pfVar1[3];
-  local_90 = pfVar1[4];
-  local_8c = pfVar1[5];
-  local_88 = pfVar1[6];
-  UnitQuatToAxis(&local_90,(float (*) [3])(pfVar5 + 7));
-  pfVar5[0x10] = pfVar1[0x10];
-  pfVar5[0x11] = pfVar1[0x11];
-  pfVar5[0x12] = pfVar1[0x12];
-  pfVar5[0x15] = pfVar1[0x15];
-  pfVar5[0x14] = pfVar1[0x14];
-  pfVar5[0x16] = pfVar1[0x16];
-  pfVar5[0x13] = pfVar1[0x17];
-  if (*(char *)(pfVar1 + 0x18) == '\0') {
-    dBodyDisable(pdVar4);
+  dBodySetData(pdVar1,pfVar2);
+  dBodySetPosition(pdVar1,param_2->position[0],param_2->position[1],param_2->position[2]);
+  dBodySetLinearVel(pdVar1,param_2->velocity[0],param_2->velocity[1],param_2->velocity[2]);
+  dBodySetAngularVel(pdVar1,param_2->angVelocity[0],param_2->angVelocity[1],param_2->angVelocity[2])
+  ;
+  dBodySetQuaternionExact(pdVar1,param_2->odeQuaternion);
+  *pfVar2 = param_2->translation[0];
+  pfVar2[1] = param_2->translation[1];
+  pfVar2[2] = param_2->translation[2];
+  dMassSetSphereTotal(&dStack_80,param_2->mass,1.0);
+  dBodySetMass(pdVar1,&dStack_80);
+  pfVar2[3] = (float)pdVar1;
+  pfVar2[4] = param_2->position[0];
+  pfVar2[5] = param_2->position[1];
+  pfVar2[6] = param_2->position[2];
+  local_84 = param_2->odeQuaternion[0];
+  local_90 = param_2->odeQuaternion[1];
+  local_8c = param_2->odeQuaternion[2];
+  local_88 = param_2->odeQuaternion[3];
+  UnitQuatToAxis(&local_90,(float (*) [3])(pfVar2 + 7));
+  pfVar2[0x10] = param_2->lastTunnelTracePos[0];
+  pfVar2[0x11] = param_2->lastTunnelTracePos[1];
+  pfVar2[0x12] = param_2->lastTunnelTracePos[2];
+  pfVar2[0x15] = param_2->bounce;
+  pfVar2[0x14] = param_2->friction;
+  pfVar2[0x16] = (float)param_2->state;
+  pfVar2[0x13] = (float)param_2->sndClass;
+  if (param_2->isAwake == false) {
+    dBodyDisable(pdVar1);
   }
-  if (*(char *)((int)pfVar1 + 0x61) != '\0') {
-    pdVar4->adis_timeleft = pfVar1[0x19];
-    pdVar4->adis_stepsleft = (int)pfVar1[0x1a];
-    (pdVar4->adis).linearThresholdSqrd = pfVar1[0x1b];
-    (pdVar4->adis).angularThresholdSqrd = pfVar1[0x1c];
-    (pdVar4->adis).idle_time = pfVar1[0x1d];
+  if (param_2->restoreAutodisable != false) {
+    pdVar1->adis_timeleft = param_2->adis_timeleft;
+    pdVar1->adis_stepsleft = param_2->adis_stepsleft;
+    (pdVar1->adis).linearThresholdSqrd = param_2->adis_linearThresholdSqrd;
+    (pdVar1->adis).angularThresholdSqrd = param_2->adis_angularThresholdSqrd;
+    (pdVar1->adis).idle_time = param_2->adis_idleTime;
   }
-  pdVar4 = (dxBody *)__restgprlr_26(pdVar4);
-  return pdVar4;
+  return pdVar1;
 }
 
 
 // 826793A8  Phys_ObjCreateAngles  (physics/phys_ode.cpp:1161)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PhysWorld": Some values do not have unique names */
 
 int Phys_ObjCreateAngles
               (PhysWorld param_1,float *param_2,float *param_3,float *param_4,PhysPreset *param_5)
 
 {
-  PhysWorld PVar1;
-  int iVar2;
+  int iVar1;
   float afStack_40 [16];
   
-  PVar1 = __savegprlr_28(param_1);
   AnglesToQuat(param_3,afStack_40);
-  iVar2 = Phys_ObjCreate(PVar1,param_2,afStack_40,param_4,param_5);
-  iVar2 = __restgprlr_28(iVar2);
-  return iVar2;
+  iVar1 = Phys_ObjCreate(param_1,param_2,afStack_40,param_4,param_5);
+  return iVar1;
 }
 
 
 // 826793F0  Phys_ObjCreateAxis  (physics/phys_ode.cpp:1171)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PhysWorld": Some values do not have unique names */
 
 int Phys_ObjCreateAxis(PhysWorld param_1,float *param_2,float (*param_3) [3],float *param_4,
                       PhysPreset *param_5)
 
 {
-  PhysWorld PVar1;
-  int iVar2;
+  int iVar1;
   float afStack_40 [16];
   
-  PVar1 = __savegprlr_28(param_1);
   AxisToQuat(param_3,afStack_40);
-  iVar2 = Phys_ObjCreate(PVar1,param_2,afStack_40,param_4,param_5);
-  iVar2 = __restgprlr_28(iVar2);
-  return iVar2;
+  iVar1 = Phys_ObjCreate(param_1,param_2,afStack_40,param_4,param_5);
+  return iVar1;
 }
 
 
 // 82676A40  Phys_ObjCreate  (physics/phys_ode.cpp:1181)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PhysWorld": Some values do not have unique names */
 
 int Phys_ObjCreate(PhysWorld param_1,float *param_2,float *param_3,float *param_4,
                   PhysPreset *param_5)
 
 {
-  PhysWorld PVar1;
-  dxBody *pdVar2;
-  int iVar3;
-  ulonglong uVar4;
-  float *pfVar5;
-  ulonglong uVar6;
-  float *pfVar7;
-  ulonglong uVar8;
+  dxBody *pdVar1;
   BodyState_conflict local_c0;
   
-  uVar8 = (ulonglong)(int)param_5;
-  uVar6 = (ulonglong)(int)param_4;
-  uVar4 = (ulonglong)(int)param_2;
-  PVar1 = __savegprlr_24(param_1);
-  if ((uVar4 & 0xffffffff) == 0) {
+  if (param_2 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0x4a1,0,
                     "%s");
   }
-  if ((uVar6 & 0xffffffff) == 0) {
+  if (param_4 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0x4a2,0,
                     "%s");
   }
-  pfVar5 = (float *)uVar4;
-  if (((((uint)*pfVar5 & 0x7f800000) == 0x7f800000) ||
-      (((uint)pfVar5[1] & 0x7f800000) == 0x7f800000)) ||
-     (((uint)pfVar5[2] & 0x7f800000) == 0x7f800000)) {
+  if (((((uint)*param_2 & 0x7f800000) == 0x7f800000) ||
+      (((uint)param_2[1] & 0x7f800000) == 0x7f800000)) ||
+     (((uint)param_2[2] & 0x7f800000) == 0x7f800000)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0x4a3,0,
                     "%s");
   }
-  pfVar7 = (float *)uVar6;
-  if (((((uint)*pfVar7 & 0x7f800000) == 0x7f800000) ||
-      (((uint)pfVar7[1] & 0x7f800000) == 0x7f800000)) ||
-     (((uint)pfVar7[2] & 0x7f800000) == 0x7f800000)) {
+  if (((((uint)*param_4 & 0x7f800000) == 0x7f800000) ||
+      (((uint)param_4[1] & 0x7f800000) == 0x7f800000)) ||
+     (((uint)param_4[2] & 0x7f800000) == 0x7f800000)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0x4a4,0,
                     "%s");
   }
-  if ((physInitedClient == false) && ((int)PVar1 < 3)) {
+  if ((physInitedClient == false) && ((int)param_1 < 3)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0x4a6,0,
                     "%s");
   }
-  if ((physInitedServer == false) && (2 < (int)PVar1)) {
+  if ((physInitedServer == false) && (2 < (int)param_1)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0x4a7,0,
                     "%s");
   }
-  if ((uVar8 & 0xffffffff) == 0) {
+  if (param_5 == (PhysPreset *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0x4a8,0,
                     "%s");
   }
-  iVar3 = (int)uVar8;
-  local_c0.sndClass = *(int *)(iVar3 + 4);
-  local_c0.position[0] = *pfVar5;
-  local_c0.position[1] = pfVar5[1];
-  local_c0.position[2] = pfVar5[2];
+  local_c0.sndClass = param_5->type;
+  local_c0.position[0] = *param_2;
+  local_c0.position[1] = param_2[1];
+  local_c0.position[2] = param_2[2];
   local_c0.state = PHYS_OBJ_STATE_POSSIBLY_STUCK;
   local_c0.odeQuaternion[0] = param_3[3];
   local_c0.isAwake = true;
@@ -1875,12 +1820,12 @@ int Phys_ObjCreate(PhysWorld param_1,float *param_2,float *param_3,float *param_
   local_c0.restoreAutodisable = false;
   local_c0.odeQuaternion[2] = param_3[1];
   local_c0.odeQuaternion[3] = param_3[2];
-  local_c0.velocity[0] = *pfVar7;
-  local_c0.velocity[1] = pfVar7[1];
-  local_c0.velocity[2] = pfVar7[2];
-  local_c0.mass = *(float *)(iVar3 + 8);
-  local_c0.bounce = *(float *)(iVar3 + 0xc);
-  local_c0.friction = *(float *)(iVar3 + 0x10);
+  local_c0.velocity[0] = *param_4;
+  local_c0.velocity[1] = param_4[1];
+  local_c0.velocity[2] = param_4[2];
+  local_c0.mass = param_5->mass;
+  local_c0.bounce = param_5->bounce;
+  local_c0.friction = param_5->friction;
   local_c0.angVelocity[0] = 0.0;
   local_c0.angVelocity[1] = 0.0;
   local_c0.angVelocity[2] = 0.0;
@@ -1890,108 +1835,104 @@ int Phys_ObjCreate(PhysWorld param_1,float *param_2,float *param_3,float *param_
   local_c0.lastTunnelTracePos[0] = local_c0.position[0];
   local_c0.lastTunnelTracePos[1] = local_c0.position[1];
   local_c0.lastTunnelTracePos[2] = local_c0.position[2];
-  Phys_LockWorld(PVar1);
-  pdVar2 = Phys_CreateBodyFromState(PVar1,&local_c0);
-  Phys_UnlockWorld(PVar1);
-  iVar3 = __restgprlr_24(pdVar2);
-  return iVar3;
+  Phys_LockWorld(param_1);
+  pdVar1 = Phys_CreateBodyFromState(param_1,&local_c0);
+  Phys_UnlockWorld(param_1);
+  return (int)pdVar1;
 }
 
 
 // 82676CF0  Phys_ObjSetOrientation  (physics/phys_ode.cpp:1225)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 void Phys_ObjSetOrientation(int param_1,float *param_2,float (*param_3) [3])
 
 {
-  dxBody *pdVar1;
+  float *pfVar1;
   float *pfVar2;
-  float *pfVar3;
+  double dVar3;
   double dVar4;
   double dVar5;
-  double dVar6;
   float local_c0;
   float local_bc;
   float local_b8;
   float afStack_b0 [12];
   float afStack_80 [32];
   
-  pdVar1 = (dxBody *)__savegprlr_26(param_1);
-  if (pdVar1 == (dxBody *)0x0) {
+  if (param_1 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0x4d2,0,
                     "%s");
   }
-  pfVar2 = dBodyGetData(pdVar1);
-  if (pfVar2 == (float *)0x0) {
+  pfVar1 = dBodyGetData((dxBody *)param_1);
+  if (pfVar1 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0x4d6,0,
                     "%s");
   }
-  Phys_ObjGetPosition((int)pdVar1,&local_c0,(float (*) [3])afStack_b0);
-  if (pdVar1 == (dxBody *)0x0) {
+  Phys_ObjGetPosition(param_1,&local_c0,(float (*) [3])afStack_b0);
+  if (param_1 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0x1eb,0,
                     "%s");
   }
-  pfVar3 = dBodyGetRotation(pdVar1);
-  Phys_OdeMatrix3ToAxis(pfVar3,(float (*) [3])afStack_b0);
-  MatrixTransformVector(pfVar2,param_3,&local_c0);
+  pfVar2 = dBodyGetRotation((dxBody *)param_1);
+  Phys_OdeMatrix3ToAxis(pfVar2,(float (*) [3])afStack_b0);
+  MatrixTransformVector(pfVar1,param_3,&local_c0);
   local_c0 = *param_2 - local_c0;
-  dVar6 = (double)local_c0;
+  dVar5 = (double)local_c0;
   local_bc = param_2[1] - local_bc;
-  dVar5 = (double)local_bc;
+  dVar4 = (double)local_bc;
   local_b8 = param_2[2] - local_b8;
-  dVar4 = (double)local_b8;
+  dVar3 = (double)local_b8;
   Phys_AxisToOdeMatrix3(param_3,afStack_80);
-  pfVar2[4] = (float)dVar6;
-  pfVar2[5] = (float)dVar5;
-  pfVar2[6] = (float)dVar4;
-  AxisCopy(param_3,(float (*) [3])(pfVar2 + 7));
-  dBodySetPosition(pdVar1,(float)dVar6,(float)dVar5,(float)dVar4);
-  dBodySetRotation(pdVar1,afStack_80);
-  Phys_ObjUpdateTunnelTracePos((int)pdVar1,&local_c0,param_3);
-  __restgprlr_26();
+  pfVar1[4] = (float)dVar5;
+  pfVar1[5] = (float)dVar4;
+  pfVar1[6] = (float)dVar3;
+  AxisCopy(param_3,(float (*) [3])(pfVar1 + 7));
+  dBodySetPosition((dxBody *)param_1,(float)dVar5,(float)dVar4,(float)dVar3);
+  dBodySetRotation((dxBody *)param_1,afStack_80);
+  Phys_ObjUpdateTunnelTracePos(param_1,&local_c0,param_3);
   return;
 }
 
 
 // 8266F388  Phys_ObjSetPosition  (physics/phys_ode.cpp:1261)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void Phys_ObjSetPosition(int param_1,float *param_2)
 
 {
-  dxBody *pdVar1;
-  float *pfVar2;
+  float *pfVar1;
   float afStack_60 [24];
   
-  pdVar1 = (dxBody *)__savegprlr_27(param_1);
-  if (pdVar1 == (dxBody *)0x0) {
+  if (param_1 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0x4f4,0,
                     "%s");
   }
-  dBodySetPosition(pdVar1,*param_2,param_2[1],param_2[2]);
-  if (pdVar1 == (dxBody *)0x0) {
+  dBodySetPosition((dxBody *)param_1,*param_2,param_2[1],param_2[2]);
+  if (param_1 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0x1eb,0,
                     "%s");
   }
-  pfVar2 = dBodyGetRotation(pdVar1);
-  Phys_OdeMatrix3ToAxis(pfVar2,(float (*) [3])afStack_60);
-  Phys_ObjUpdateTunnelTracePos((int)pdVar1,param_2,(float (*) [3])afStack_60);
-  __restgprlr_27();
+  pfVar1 = dBodyGetRotation((dxBody *)param_1);
+  Phys_OdeMatrix3ToAxis(pfVar1,(float (*) [3])afStack_60);
+  Phys_ObjUpdateTunnelTracePos(param_1,param_2,(float (*) [3])afStack_60);
   return;
 }
 
 
 // 82676E68  Phys_ObjAddGeomBox  (physics/phys_ode.cpp:1280)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PhysWorld": Some values do not have unique names */
 
 void Phys_ObjAddGeomBox(PhysWorld param_1,int param_2,Bounds *param_3,bool param_4)
 
 {
-  PhysWorld PVar1;
-  longlong lVar2;
-  ulonglong uVar3;
-  GeomState *pGVar4;
-  GeomState *pGVar5;
-  dxBody *pdVar6;
+  GeomState *pGVar1;
   float local_e0;
   undefined1 local_dc;
   float local_b4;
@@ -1999,59 +1940,55 @@ void Phys_ObjAddGeomBox(PhysWorld param_1,int param_2,Bounds *param_3,bool param
   float local_ac;
   dMass local_90 [2];
   
-  uVar3 = (ulonglong)(int)param_3;
-  lVar2 = (longlong)param_2;
-  PVar1 = __savegprlr_25(param_1,lVar2,uVar3,param_4);
-  pGVar4 = (GeomState *)uVar3;
-  pGVar5 = pGVar4;
+  pGVar1 = (GeomState *)param_3;
   dMassSetZero(local_90);
-  pdVar6 = (dxBody *)lVar2;
-  if (pdVar6 == (dxBody *)0x0) {
-    pGVar5 = (GeomState *)0x0;
+  if (param_2 == 0) {
+    pGVar1 = (GeomState *)0x0;
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0x505,0,
                     "%s");
   }
-  if ((uVar3 & 0xffffffff) == 0) {
-    pGVar5 = (GeomState *)0x0;
+  if (param_3 == (Bounds *)0x0) {
+    pGVar1 = (GeomState *)0x0;
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0x506,0,
                     "%s");
   }
-  if (((((uint)pGVar4->orientation[0][1] & 0x7f800000) == 0x7f800000) ||
-      (((uint)pGVar4->orientation[0][2] & 0x7f800000) == 0x7f800000)) ||
-     (((uint)pGVar4->orientation[1][0] & 0x7f800000) == 0x7f800000)) {
-    pGVar5 = (GeomState *)0x0;
+  if (((((uint)param_3->halfSize[0] & 0x7f800000) == 0x7f800000) ||
+      (((uint)param_3->halfSize[1] & 0x7f800000) == 0x7f800000)) ||
+     (((uint)param_3->halfSize[2] & 0x7f800000) == 0x7f800000)) {
+    pGVar1 = (GeomState *)0x0;
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0x507,0,
                     "%s");
   }
-  if ((((pGVar4->type & 0x7f800000) == 0x7f800000) ||
-      ((*(uint *)&pGVar4->isOriented & 0x7f800000) == 0x7f800000)) ||
-     (((uint)pGVar4->orientation[0][0] & 0x7f800000) == 0x7f800000)) {
-    pGVar5 = (GeomState *)0x0;
+  if (((((uint)param_3->midPoint[0] & 0x7f800000) == 0x7f800000) ||
+      (((uint)param_3->midPoint[1] & 0x7f800000) == 0x7f800000)) ||
+     (((uint)param_3->midPoint[2] & 0x7f800000) == 0x7f800000)) {
+    pGVar1 = (GeomState *)0x0;
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0x508,0,
                     "%s");
   }
   local_e0 = 1.4013e-45;
   local_dc = 0;
-  local_b4 = pGVar4->orientation[0][1] * 2.0;
-  local_b0 = pGVar4->orientation[0][2] * 2.0;
-  local_ac = pGVar4->orientation[1][0] * 2.0;
-  dBodyGetMass(pdVar6,local_90);
-  Phys_BodyAddGeomAndSetMass(PVar1,pdVar6,local_90[0].mass,pGVar5,&local_e0,SUB81(uVar3,0));
-  __restgprlr_25();
+  local_b4 = param_3->halfSize[0] * 2.0;
+  local_b0 = param_3->halfSize[1] * 2.0;
+  local_ac = param_3->halfSize[2] * 2.0;
+  dBodyGetMass((dxBody *)param_2,local_90);
+  Phys_BodyAddGeomAndSetMass
+            (param_1,(dxBody *)param_2,local_90[0].mass,pGVar1,&local_e0,SUB41(param_3,0));
   return;
 }
 
 
 // 82677020  Phys_ObjAddGeomBoxRotated  (physics/phys_ode.cpp:1304)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PhysWorld": Some values do not have unique names */
 
 void Phys_ObjAddGeomBoxRotated
                (PhysWorld param_1,int param_2,Bounds *param_3,float (*param_4) [3],bool param_5)
 
 {
-  PhysWorld PVar1;
-  GeomState *pGVar2;
+  GeomState *pGVar1;
   float local_d0;
   undefined1 local_cc;
   float local_c8;
@@ -2068,11 +2005,10 @@ void Phys_ObjAddGeomBoxRotated
   float local_9c;
   dMass local_80;
   
-  PVar1 = __savegprlr_27(param_1);
-  pGVar2 = (GeomState *)param_3;
+  pGVar1 = (GeomState *)param_3;
   dMassSetZero(&local_80);
-  if ((dxBody *)param_2 == (dxBody *)0x0) {
-    pGVar2 = (GeomState *)0x0;
+  if (param_2 == 0) {
+    pGVar1 = (GeomState *)0x0;
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0x51d,0,
                     "%s");
   }
@@ -2080,11 +2016,11 @@ void Phys_ObjAddGeomBoxRotated
   local_d0 = 1.4013e-45;
   local_c4 = (*param_4)[1];
   local_cc = 1;
-  local_a4 = ((GeomState *)param_3)->orientation[0][1] * 2.0;
+  local_a4 = param_3->halfSize[0] * 2.0;
   local_c0 = (*param_4)[2];
-  local_a0 = ((GeomState *)param_3)->orientation[0][2] * 2.0;
+  local_a0 = param_3->halfSize[1] * 2.0;
   local_bc = param_4[1][0];
-  local_9c = ((GeomState *)param_3)->orientation[1][0] * 2.0;
+  local_9c = param_3->halfSize[2] * 2.0;
   local_b8 = param_4[1][1];
   local_b4 = param_4[1][2];
   local_b0 = param_4[2][0];
@@ -2092,26 +2028,25 @@ void Phys_ObjAddGeomBoxRotated
   local_a8 = param_4[2][2];
   dBodyGetMass((dxBody *)param_2,&local_80);
   Phys_BodyAddGeomAndSetMass
-            (PVar1,(dxBody *)param_2,local_80.mass,pGVar2,&local_d0,SUB41(param_3,0));
-  __restgprlr_27();
+            (param_1,(dxBody *)param_2,local_80.mass,pGVar1,&local_d0,SUB41(param_3,0));
   return;
 }
 
 
 // 82677128  Phys_ObjAddGeomBrushModel  (physics/phys_ode.cpp:1328)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PhysWorld": Some values do not have unique names */
 
 void Phys_ObjAddGeomBrushModel
                (PhysWorld param_1,int param_2,ushort param_3,PhysMass *param_4,bool param_5)
 
 {
-  PhysWorld PVar1;
-  GeomState *pGVar2;
-  GeomState *pGVar3;
+  GeomState *pGVar1;
   float local_d0;
   undefined1 local_cc;
-  undefined2 local_a4;
+  ushort local_a4;
   float local_a0;
   float local_9c;
   float local_98;
@@ -2120,12 +2055,10 @@ void Phys_ObjAddGeomBrushModel
   float local_8c;
   dMass local_80;
   
-  pGVar2 = (GeomState *)(int)(short)param_3;
-  PVar1 = __savegprlr_27(param_1);
-  pGVar3 = pGVar2;
+  pGVar1 = (GeomState *)(int)(short)param_3;
   dMassSetZero(&local_80);
-  if ((dxBody *)param_2 == (dxBody *)0x0) {
-    pGVar3 = (GeomState *)0x0;
+  if (param_2 == 0) {
+    pGVar1 = (GeomState *)0x0;
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0x535,0,
                     "%s");
   }
@@ -2134,141 +2067,122 @@ void Phys_ObjAddGeomBrushModel
   local_98 = param_4->momentsOfInertia[2];
   local_d0 = 2.8026e-45;
   local_94 = param_4->productsOfInertia[0];
-  local_a4 = SUB42(pGVar2,0);
   local_90 = param_4->productsOfInertia[1];
   local_cc = 0;
   local_8c = param_4->productsOfInertia[2];
+  local_a4 = param_3;
   dBodyGetMass((dxBody *)param_2,&local_80);
   Phys_BodyAddGeomAndSetMass
-            (PVar1,(dxBody *)param_2,local_80.mass,pGVar3,&local_d0,SUB41(param_4,0));
-  __restgprlr_27();
+            (param_1,(dxBody *)param_2,local_80.mass,pGVar1,&local_d0,SUB41(param_4,0));
   return;
 }
 
 
 // 8266F430  Phys_ObjSetInertialTensor  (physics/phys_ode.cpp:1349)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void Phys_ObjSetInertialTensor(int param_1,PhysMass *param_2,float param_3,bool param_4)
 
 {
-  float *pfVar1;
-  dxBody *pdVar2;
-  ulonglong uVar3;
-  dMass *pdVar4;
-  undefined1 in_r6;
-  double extraout_f1;
-  double dVar5;
+  dMass *pdVar1;
+  bool in_r6;
+  double dVar2;
   float local_90;
   float local_8c;
   float local_88;
   dMass local_80;
   
-  uVar3 = (ulonglong)(int)param_2;
-  pdVar2 = (dxBody *)__savegprlr_27((double)param_3,param_1,uVar3,param_4);
-  dVar5 = extraout_f1;
+  dVar2 = (double)param_3;
   dMassSetZero(&local_80);
-  if (pdVar2 == (dxBody *)0x0) {
+  if (param_1 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0x54a,0,
                     "%s");
   }
-  if ((uVar3 & 0xffffffff) == 0) {
+  if (param_2 == (PhysMass *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0x54b,0,
                     "%s");
   }
-  pdVar4 = &local_80;
-  dBodyGetMass(pdVar2,pdVar4);
-  pfVar1 = (float *)uVar3;
-  Phys_MassSetTotal(&local_80,local_80.mass,&pdVar4->mass,pfVar1 + 3);
-  dBodySetMass(pdVar2,&local_80);
-  local_90 = *pfVar1;
-  local_88 = (float)((double)pfVar1[2] * dVar5);
-  local_8c = pfVar1[1];
-  Phys_AdjustForNewCenterOfMass(pdVar2,&local_90,(bool)in_r6);
-  __restgprlr_27();
+  pdVar1 = &local_80;
+  dBodyGetMass((dxBody *)param_1,pdVar1);
+  Phys_MassSetTotal(&local_80,local_80.mass,&pdVar1->mass,param_2->momentsOfInertia);
+  dBodySetMass((dxBody *)param_1,&local_80);
+  local_90 = param_2->centerOfMass[0];
+  local_88 = (float)((double)param_2->centerOfMass[2] * dVar2);
+  local_8c = param_2->centerOfMass[1];
+  Phys_AdjustForNewCenterOfMass((dxBody *)param_1,&local_90,in_r6);
   return;
 }
 
 
 // 826771F0  Phys_ObjAddGeomCollmap  (physics/phys_ode.cpp:1371)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PhysWorld": Some values do not have unique names */
 
 void Phys_ObjAddGeomCollmap
                (PhysWorld param_1,int param_2,PhysCollmap *param_3,float param_4,bool param_5)
 
 {
-  int iVar1;
-  PhysWorld PVar2;
-  longlong lVar3;
-  longlong lVar4;
-  longlong lVar5;
-  dxBody *pdVar6;
-  double extraout_f1;
-  double dVar7;
+  longlong lVar1;
+  double dVar2;
   undefined1 *local_130 [20];
-  undefined4 local_e0;
-  undefined4 local_dc;
+  float local_e0;
+  float local_dc;
   float local_d8;
   float local_d0;
   undefined1 local_cc;
-  int local_a4;
-  undefined4 local_a0;
-  undefined4 local_9c;
-  undefined4 local_98;
-  undefined4 local_94;
-  undefined4 local_90;
-  undefined4 local_8c;
+  PhysCollmap *local_a4;
+  float local_a0;
+  float local_9c;
+  float local_98;
+  float local_94;
+  float local_90;
+  float local_8c;
   dMass local_80;
   
-  lVar4 = (longlong)(int)param_3;
-  lVar3 = (longlong)param_2;
-  PVar2 = __savegprlr_28((double)param_4,param_1,lVar3,lVar4,param_5);
-  lVar5 = lVar4;
-  dVar7 = extraout_f1;
+  dVar2 = (double)param_4;
+  lVar1 = (longlong)(int)param_3;
   local_130[0] = (undefined1 *)register0x0000000c;
   dMassSetZero(&local_80);
-  pdVar6 = (dxBody *)lVar3;
-  if (pdVar6 == (dxBody *)0x0) {
-    lVar5 = 0;
+  if (param_2 == 0) {
+    lVar1 = 0;
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0x561,0,
                     "%s");
   }
-  iVar1 = (int)lVar4;
-  local_a0 = *(undefined4 *)(iVar1 + 0x18);
-  local_9c = *(undefined4 *)(iVar1 + 0x1c);
-  local_98 = *(undefined4 *)(iVar1 + 0x20);
+  local_a0 = (param_3->mass).momentsOfInertia[0];
+  local_9c = (param_3->mass).momentsOfInertia[1];
+  local_98 = (param_3->mass).momentsOfInertia[2];
   local_d0 = 5.60519e-45;
-  local_94 = *(undefined4 *)(iVar1 + 0x24);
-  local_90 = *(undefined4 *)(iVar1 + 0x28);
+  local_94 = (param_3->mass).productsOfInertia[0];
+  local_90 = (param_3->mass).productsOfInertia[1];
   local_cc = 0;
-  local_8c = *(undefined4 *)(iVar1 + 0x2c);
-  local_a4 = iVar1;
-  dBodyGetMass(pdVar6,&local_80);
-  local_e0 = *(undefined4 *)(iVar1 + 0xc);
-  local_d8 = (float)((double)*(float *)(iVar1 + 0x14) * dVar7);
-  local_dc = *(undefined4 *)(iVar1 + 0x10);
+  local_8c = (param_3->mass).productsOfInertia[2];
+  local_a4 = param_3;
+  dBodyGetMass((dxBody *)param_2,&local_80);
+  local_e0 = (param_3->mass).centerOfMass[0];
+  local_d8 = (float)((double)(param_3->mass).centerOfMass[2] * dVar2);
+  local_dc = (param_3->mass).centerOfMass[1];
   Phys_BodyAddGeomAndSetMass
-            (PVar2,pdVar6,local_80.mass,(GeomState *)lVar5,&local_d0,(bool)((char)local_130 + 'P'));
-  Phys_ObjSetInertialTensor((int)pdVar6,(PhysMass *)(iVar1 + 0xc),(float)dVar7,SUB81(lVar5,0));
-  __restgprlr_28();
+            (param_1,(dxBody *)param_2,local_80.mass,(GeomState *)lVar1,&local_d0,
+             (bool)((char)local_130 + 'P'));
+  Phys_ObjSetInertialTensor(param_2,&param_3->mass,(float)dVar2,SUB81(lVar1,0));
   return;
 }
 
 
 // 826772F8  Phys_ObjAddGeomCylinder  (physics/phys_ode.cpp:1398)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PhysWorld": Some values do not have unique names */
 
 void Phys_ObjAddGeomCylinder(PhysWorld param_1,int param_2,Bounds *param_3,bool param_4)
 
 {
-  float fVar1;
-  PhysWorld PVar2;
-  longlong lVar3;
-  longlong lVar4;
-  GeomState *pGVar5;
-  GeomState *pGVar6;
-  dxBody *pdVar7;
+  GeomState *pGVar1;
   float local_c0;
   undefined1 local_bc;
   undefined4 local_94;
@@ -2276,36 +2190,32 @@ void Phys_ObjAddGeomCylinder(PhysWorld param_1,int param_2,Bounds *param_3,bool 
   float local_8c;
   dMass local_70;
   
-  lVar4 = (longlong)(int)param_3;
-  lVar3 = (longlong)param_2;
-  PVar2 = __savegprlr_28(param_1,lVar3,lVar4,param_4);
-  pGVar5 = (GeomState *)lVar4;
-  pGVar6 = pGVar5;
+  pGVar1 = (GeomState *)param_3;
   dMassSetZero(&local_70);
-  pdVar7 = (dxBody *)lVar3;
-  if (pdVar7 == (dxBody *)0x0) {
-    pGVar6 = (GeomState *)0x0;
+  if (param_2 == 0) {
+    pGVar1 = (GeomState *)0x0;
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0x57c,0,
                     "%s");
   }
-  fVar1 = pGVar5->orientation[0][2];
-  local_90 = pGVar5->orientation[0][1];
-  local_8c = pGVar5->orientation[1][0];
+  local_8c = param_3->halfSize[2];
   local_c0 = 7.00649e-45;
   local_94 = 3;
   local_bc = 0;
-  if (local_90 - fVar1 < 0.0) {
-    local_90 = fVar1;
+  local_90 = param_3->halfSize[0];
+  if (param_3->halfSize[0] - param_3->halfSize[1] < 0.0) {
+    local_90 = param_3->halfSize[1];
   }
-  dBodyGetMass(pdVar7,&local_70);
-  Phys_BodyAddGeomAndSetMass(PVar2,pdVar7,local_70.mass,pGVar6,&local_c0,SUB81(lVar4,0));
-  __restgprlr_28();
+  dBodyGetMass((dxBody *)param_2,&local_70);
+  Phys_BodyAddGeomAndSetMass
+            (param_1,(dxBody *)param_2,local_70.mass,pGVar1,&local_c0,SUB41(param_3,0));
   return;
 }
 
 
 // 826773B0  Phys_ObjAddGeomCylinderDirection  (physics/phys_ode.cpp:1423)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PhysWorld": Some values do not have unique names */
 
 void Phys_ObjAddGeomCylinderDirection
@@ -2313,54 +2223,46 @@ void Phys_ObjAddGeomCylinderDirection
                ,bool param_7)
 
 {
-  PhysWorld PVar1;
-  longlong lVar2;
-  longlong lVar3;
-  GeomState *pGVar4;
-  undefined1 in_r8;
-  dxBody *pdVar5;
-  double extraout_f1;
-  double dVar6;
-  double dVar7;
+  GeomState *pGVar1;
+  bool in_r8;
+  double dVar2;
+  double dVar3;
   float local_f0;
   undefined1 local_ec;
-  byte *local_c4;
+  int local_c4;
   float local_c0;
   float local_bc;
   dMass local_a0 [2];
   
-  dVar6 = (double)param_5;
-  lVar3 = (longlong)param_3;
-  lVar2 = (longlong)param_2;
-  PVar1 = __savegprlr_25((double)param_4,param_1,lVar2,lVar3,param_6,param_7);
-  dVar7 = extraout_f1;
-  pGVar4 = (GeomState *)lVar3;
+  dVar3 = (double)param_5;
+  dVar2 = (double)param_4;
+  pGVar1 = (GeomState *)param_3;
   dMassSetZero(local_a0);
-  pdVar5 = (dxBody *)lVar2;
-  if (pdVar5 == (dxBody *)0x0) {
-    pGVar4 = (GeomState *)0x0;
+  if (param_2 == 0) {
+    pGVar1 = (GeomState *)0x0;
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0x595,0,
                     "%s");
   }
-  local_c4 = (byte *)((int)&((GeomState *)lVar3)->type + 1);
+  local_c4 = param_3 + 1;
   local_f0 = 7.00649e-45;
-  if (((int)local_c4 < 1) || (3 < (int)local_c4)) {
-    pGVar4 = (GeomState *)0x0;
+  if ((local_c4 < 1) || (3 < local_c4)) {
+    pGVar1 = (GeomState *)0x0;
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0x59d,0,
                     "%s");
   }
-  local_c0 = (float)dVar7;
-  local_bc = (float)dVar6;
+  local_c0 = (float)dVar2;
+  local_bc = (float)dVar3;
   local_ec = 0;
-  dBodyGetMass(pdVar5,local_a0);
-  Phys_BodyAddGeomAndSetMass(PVar1,pdVar5,local_a0[0].mass,pGVar4,&local_f0,(bool)in_r8);
-  __restgprlr_25();
+  dBodyGetMass((dxBody *)param_2,local_a0);
+  Phys_BodyAddGeomAndSetMass(param_1,(dxBody *)param_2,local_a0[0].mass,pGVar1,&local_f0,in_r8);
   return;
 }
 
 
 // 826774A0  Phys_ObjAddGeomCylinderRotated  (physics/phys_ode.cpp:1450)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PhysWorld": Some values do not have unique names */
 
 void Phys_ObjAddGeomCylinderRotated
@@ -2368,15 +2270,10 @@ void Phys_ObjAddGeomCylinderRotated
                ,float (*param_7) [3],bool param_8)
 
 {
-  PhysWorld PVar1;
-  longlong lVar2;
-  longlong lVar3;
-  GeomState *pGVar4;
+  GeomState *pGVar1;
   undefined4 *in_r9;
-  dxBody *pdVar5;
-  double extraout_f1;
-  double dVar6;
-  double dVar7;
+  double dVar2;
+  double dVar3;
   float local_f0;
   undefined1 local_ec;
   undefined4 local_e8;
@@ -2388,28 +2285,24 @@ void Phys_ObjAddGeomCylinderRotated
   undefined4 local_d0;
   undefined4 local_cc;
   undefined4 local_c8;
-  byte *local_c4;
+  int local_c4;
   float local_c0;
   float local_bc;
   dMass local_a0 [2];
   
-  dVar6 = (double)param_5;
-  lVar3 = (longlong)param_3;
-  lVar2 = (longlong)param_2;
-  PVar1 = __savegprlr_24((double)param_4,param_1,lVar2,lVar3,param_6,param_7);
-  dVar7 = extraout_f1;
-  pGVar4 = (GeomState *)lVar3;
+  dVar2 = (double)param_4;
+  dVar3 = (double)param_5;
+  pGVar1 = (GeomState *)param_3;
   dMassSetZero(local_a0);
-  pdVar5 = (dxBody *)lVar2;
-  if (pdVar5 == (dxBody *)0x0) {
-    pGVar4 = (GeomState *)0x0;
+  if (param_2 == 0) {
+    pGVar1 = (GeomState *)0x0;
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0x5b0,0,
                     "%s");
   }
-  local_c4 = (byte *)((int)&((GeomState *)lVar3)->type + 1);
+  local_c4 = param_3 + 1;
   local_f0 = 7.00649e-45;
-  if (((int)local_c4 < 1) || (3 < (int)local_c4)) {
-    pGVar4 = (GeomState *)0x0;
+  if ((local_c4 < 1) || (3 < local_c4)) {
+    pGVar1 = (GeomState *)0x0;
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0x5b8,0,
                     "%s");
   }
@@ -2423,17 +2316,18 @@ void Phys_ObjAddGeomCylinderRotated
   local_d0 = in_r9[6];
   local_cc = in_r9[7];
   local_c8 = in_r9[8];
-  local_c0 = (float)dVar7;
-  local_bc = (float)dVar6;
-  dBodyGetMass(pdVar5,local_a0);
-  Phys_BodyAddGeomAndSetMass(PVar1,pdVar5,local_a0[0].mass,pGVar4,&local_f0,param_8);
-  __restgprlr_24();
+  local_c0 = (float)dVar2;
+  local_bc = (float)dVar3;
+  dBodyGetMass((dxBody *)param_2,local_a0);
+  Phys_BodyAddGeomAndSetMass(param_1,(dxBody *)param_2,local_a0[0].mass,pGVar1,&local_f0,param_8);
   return;
 }
 
 
 // 826775E0  Phys_ObjAddGeomCapsule  (physics/phys_ode.cpp:1480)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PhysWorld": Some values do not have unique names */
 
 void Phys_ObjAddGeomCapsule
@@ -2441,112 +2335,95 @@ void Phys_ObjAddGeomCapsule
                ,bool param_7)
 
 {
-  PhysWorld PVar1;
-  longlong lVar2;
-  longlong lVar3;
-  GeomState *pGVar4;
-  undefined1 in_r8;
-  dxBody *pdVar5;
-  double extraout_f1;
-  double dVar6;
-  double dVar7;
+  GeomState *pGVar1;
+  bool in_r8;
+  double dVar2;
+  double dVar3;
   float local_f0;
   undefined1 local_ec;
-  byte *local_c4;
+  int local_c4;
   float local_c0;
   float local_bc;
   dMass local_a0 [2];
   
-  dVar6 = (double)param_5;
-  lVar3 = (longlong)param_3;
-  lVar2 = (longlong)param_2;
-  PVar1 = __savegprlr_25((double)param_4,param_1,lVar2,lVar3,param_6,param_7);
-  dVar7 = extraout_f1;
-  pGVar4 = (GeomState *)lVar3;
+  dVar3 = (double)param_5;
+  dVar2 = (double)param_4;
+  pGVar1 = (GeomState *)param_3;
   dMassSetZero(local_a0);
-  pdVar5 = (dxBody *)lVar2;
-  if (pdVar5 == (dxBody *)0x0) {
-    pGVar4 = (GeomState *)0x0;
+  if (param_2 == 0) {
+    pGVar1 = (GeomState *)0x0;
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0x5ce,0,
                     "%s");
   }
-  local_c4 = (byte *)((int)&((GeomState *)lVar3)->type + 1);
+  local_c4 = param_3 + 1;
   local_f0 = 8.40779e-45;
-  if (((int)local_c4 < 1) || (3 < (int)local_c4)) {
-    pGVar4 = (GeomState *)0x0;
+  if ((local_c4 < 1) || (3 < local_c4)) {
+    pGVar1 = (GeomState *)0x0;
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0x5d6,0,
                     "%s");
   }
-  local_c0 = (float)dVar7;
-  local_bc = (float)dVar6;
+  local_c0 = (float)dVar2;
+  local_bc = (float)dVar3;
   local_ec = 0;
-  dBodyGetMass(pdVar5,local_a0);
-  Phys_BodyAddGeomAndSetMass(PVar1,pdVar5,local_a0[0].mass,pGVar4,&local_f0,(bool)in_r8);
-  __restgprlr_25();
+  dBodyGetMass((dxBody *)param_2,local_a0);
+  Phys_BodyAddGeomAndSetMass(param_1,(dxBody *)param_2,local_a0[0].mass,pGVar1,&local_f0,in_r8);
   return;
 }
 
 
 // 826776D0  Phys_ObjAddGeomGlass  (physics/phys_ode.cpp:1507)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PhysWorld": Some values do not have unique names */
 
 void Phys_ObjAddGeomGlass
                (PhysWorld param_1,int param_2,FxGlassSystem *param_3,uint param_4,bool param_5)
 
 {
-  FxGlassPieceState *pFVar1;
-  PhysWorld PVar2;
-  GeomState *pGVar3;
-  ulonglong uVar4;
+  GeomState *pGVar1;
   float local_d0;
   undefined1 local_cc;
   FxGlassSystem *local_a4;
-  undefined4 local_a0;
+  uint local_a0;
   float local_9c;
   uint local_98;
   dMass local_80;
   
-  uVar4 = (ulonglong)(int)param_4;
-  PVar2 = __savegprlr_27(param_1);
   dMassSetZero(&local_80);
-  if ((dxBody *)param_2 == (dxBody *)0x0) {
+  if (param_2 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0x5ea,0,
                     "%s");
   }
-  pFVar1 = (FxGlassPieceState *)
-           ((int)param_3->pieceStates->texCoordOrigin + (int)((uVar4 & 0xffffffff) << 5));
-  local_a0 = (undefined4)uVar4;
   local_d0 = 9.80909e-45;
-  local_9c = param_3->defs[pFVar1->defIndex].halfThickness;
+  local_9c = param_3->defs[param_3->pieceStates[param_4].defIndex].halfThickness;
   local_a4 = param_3;
-  local_98 = Glass_GetConvexHullMask(param_3,pFVar1);
-  pGVar3 = (GeomState *)0x0;
+  local_a0 = param_4;
+  local_98 = Glass_GetConvexHullMask(param_3,param_3->pieceStates + param_4);
+  pGVar1 = (GeomState *)0x0;
   local_cc = 0;
   dBodyGetMass((dxBody *)param_2,&local_80);
-  Phys_BodyAddGeomAndSetMass(PVar2,(dxBody *)param_2,local_80.mass,pGVar3,&local_d0,true);
-  __restgprlr_27();
+  Phys_BodyAddGeomAndSetMass(param_1,(dxBody *)param_2,local_80.mass,pGVar1,&local_d0,true);
   return;
 }
 
 
 // 826777A0  Phys_ObjSetCollisionFromXModel  (physics/phys_ode.cpp:1535)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PhysWorld": Some values do not have unique names */
 
 void Phys_ObjSetCollisionFromXModel(XModel *param_1,PhysWorld param_2,int param_3,bool param_4)
 
 {
-  XModel *pXVar1;
   Bounds local_40 [2];
   
-  pXVar1 = (XModel *)__savegprlr_29(param_1);
-  if (pXVar1->physCollmap != (PhysCollmap *)0x0) {
-    Phys_ObjAddGeomCollmap(param_2,param_3,pXVar1->physCollmap,1.0,param_4);
-    __restgprlr_29();
+  if (param_1->physCollmap != (PhysCollmap *)0x0) {
+    Phys_ObjAddGeomCollmap(param_2,param_3,param_1->physCollmap,1.0,param_4);
     return;
   }
-  XModelGetBounds(pXVar1,local_40);
+  XModelGetBounds(param_1,local_40);
   if (((local_40[0].halfSize[0] <= 0.0) || (local_40[0].halfSize[1] <= 0.0)) ||
      (local_40[0].halfSize[2] <= 0.0)) {
     local_40[0].midPoint[0] = 0.0;
@@ -2557,32 +2434,30 @@ void Phys_ObjSetCollisionFromXModel(XModel *param_1,PhysWorld param_2,int param_
     local_40[0].halfSize[2] = 50.0;
   }
   Phys_ObjAddGeomBox(param_2,param_3,local_40,param_4);
-  __restgprlr_29();
   return;
 }
 
 
 // 82677858  Phys_ObjSetCollisionFromDObj  (physics/phys_ode.cpp:1553)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PhysWorld": Some values do not have unique names */
 
 void Phys_ObjSetCollisionFromDObj(DObj *param_1,PhysWorld param_2,int param_3,bool param_4)
 
 {
-  DObj *pDVar1;
-  XModel *pXVar2;
-  bool bVar3;
+  XModel *pXVar1;
+  bool bVar2;
   Bounds local_40 [2];
   
-  pDVar1 = (DObj *)__savegprlr_28(param_1);
-  bVar3 = param_4;
-  pXVar2 = DObjGetFirstModel(pDVar1);
-  if (pXVar2->physCollmap != (PhysCollmap *)0x0) {
-    Phys_ObjAddGeomCollmap(param_2,param_3,pXVar2->physCollmap,1.0,bVar3);
-    __restgprlr_28();
+  bVar2 = param_4;
+  pXVar1 = DObjGetFirstModel(param_1);
+  if (pXVar1->physCollmap != (PhysCollmap *)0x0) {
+    Phys_ObjAddGeomCollmap(param_2,param_3,pXVar1->physCollmap,1.0,bVar2);
     return;
   }
-  DObjGetVisibleBounds(pDVar1,local_40);
+  DObjGetVisibleBounds(param_1,local_40);
   if (((local_40[0].halfSize[0] <= 0.0) || (local_40[0].halfSize[1] <= 0.0)) ||
      (local_40[0].halfSize[2] <= 0.0)) {
     local_40[0].midPoint[0] = 0.0;
@@ -2593,7 +2468,6 @@ void Phys_ObjSetCollisionFromDObj(DObj *param_1,PhysWorld param_2,int param_3,bo
     local_40[0].halfSize[2] = 50.0;
   }
   Phys_ObjAddGeomBox(param_2,param_3,local_40,param_4);
-  __restgprlr_28();
   return;
 }
 
@@ -2626,129 +2500,118 @@ void Phys_GetCenterOfMassFromDObj(DObj *param_1,float *param_2)
 
 // 8266F598  Phys_GetTunnelTraceOffsetFromCollmap  (physics/phys_ode.cpp:1593)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void Phys_GetTunnelTraceOffsetFromCollmap(PhysCollmap *param_1,float *param_2,float *param_3)
 
 {
-  float *pfVar1;
+  BrushWrapper *pBVar1;
   int iVar2;
-  undefined4 *puVar3;
-  int iVar4;
-  ulonglong uVar5;
+  PhysGeomInfo *pPVar3;
   
-  uVar5 = (ulonglong)(int)param_3;
-  iVar4 = __savegprlr_27(param_1);
-  if (iVar4 == 0) {
+  if (param_1 == (PhysCollmap *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0x63a,0,
                     "%s");
   }
-  if (*(int *)(iVar4 + 8) == 0) {
+  if (param_1->geoms == (PhysGeomInfo *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0x63b,0,
                     "%s");
   }
-  pfVar1 = (float *)**(undefined4 **)(iVar4 + 8);
-  puVar3 = (undefined4 *)uVar5;
-  if (pfVar1 == (float *)0x0) {
-    iVar2 = (*(undefined4 **)(iVar4 + 8))[1];
+  pBVar1 = param_1->geoms->brushWrapper;
+  if (pBVar1 == (BrushWrapper *)0x0) {
+    iVar2 = param_1->geoms->type;
     if ((iVar2 != 1) && (iVar2 != 5)) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0x645,
                       0,"%s");
     }
-    iVar2 = *(int *)(iVar4 + 8);
-    *param_2 = *(float *)(iVar2 + 0x2c);
-    param_2[1] = *(float *)(iVar2 + 0x30);
-    param_2[2] = *(float *)(iVar2 + 0x34);
-    if ((uVar5 & 0xffffffff) != 0) {
-      iVar4 = *(int *)(iVar4 + 8);
-      *puVar3 = *(undefined4 *)(iVar4 + 0x38);
-      puVar3[1] = *(undefined4 *)(iVar4 + 0x3c);
-      puVar3[2] = *(undefined4 *)(iVar4 + 0x40);
+    pPVar3 = param_1->geoms;
+    *param_2 = (pPVar3->bounds).midPoint[0];
+    param_2[1] = (pPVar3->bounds).midPoint[1];
+    param_2[2] = (pPVar3->bounds).midPoint[2];
+    if (param_3 != (float *)0x0) {
+      pPVar3 = param_1->geoms;
+      *param_3 = (pPVar3->bounds).halfSize[0];
+      param_3[1] = (pPVar3->bounds).halfSize[1];
+      param_3[2] = (pPVar3->bounds).halfSize[2];
     }
   }
   else {
-    *param_2 = *pfVar1;
-    param_2[1] = pfVar1[1];
-    param_2[2] = pfVar1[2];
-    if ((uVar5 & 0xffffffff) != 0) {
-      iVar4 = **(int **)(iVar4 + 8);
-      *puVar3 = *(undefined4 *)(iVar4 + 0xc);
-      puVar3[1] = *(undefined4 *)(iVar4 + 0x10);
-      puVar3[2] = *(undefined4 *)(iVar4 + 0x14);
-      __restgprlr_27();
+    *param_2 = (pBVar1->bounds).midPoint[0];
+    param_2[1] = (pBVar1->bounds).midPoint[1];
+    param_2[2] = (pBVar1->bounds).midPoint[2];
+    if (param_3 != (float *)0x0) {
+      pBVar1 = param_1->geoms->brushWrapper;
+      *param_3 = (pBVar1->bounds).halfSize[0];
+      param_3[1] = (pBVar1->bounds).halfSize[1];
+      param_3[2] = (pBVar1->bounds).halfSize[2];
       return;
     }
   }
-  __restgprlr_27();
   return;
 }
 
 
 // 8266F6E0  Phys_GetTunnelTraceOffsetFromDObj  (physics/phys_ode.cpp:1614)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void Phys_GetTunnelTraceOffsetFromDObj(DObj *param_1,float *param_2,float *param_3)
 
 {
-  DObj *pDVar1;
-  XModel *pXVar2;
-  ulonglong uVar3;
-  float *pfVar4;
+  XModel *pXVar1;
   Bounds local_40 [2];
   
-  uVar3 = (ulonglong)(int)param_3;
-  pDVar1 = (DObj *)__savegprlr_29(param_1);
-  if (pDVar1 == (DObj *)0x0) {
+  if (param_1 == (DObj *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0x652,0,
                     "%s");
   }
-  pXVar2 = DObjGetFirstModel(pDVar1);
-  pfVar4 = (float *)uVar3;
-  if (pXVar2->physCollmap != (PhysCollmap *)0x0) {
-    Phys_GetTunnelTraceOffsetFromCollmap(pXVar2->physCollmap,param_2,pfVar4);
-    __restgprlr_29();
+  pXVar1 = DObjGetFirstModel(param_1);
+  if (pXVar1->physCollmap != (PhysCollmap *)0x0) {
+    Phys_GetTunnelTraceOffsetFromCollmap(pXVar1->physCollmap,param_2,param_3);
     return;
   }
-  DObjGetVisibleBounds(pDVar1,local_40);
+  DObjGetVisibleBounds(param_1,local_40);
   *param_2 = local_40[0].midPoint[0];
   param_2[1] = local_40[0].midPoint[1];
   param_2[2] = local_40[0].midPoint[2];
-  if ((uVar3 & 0xffffffff) != 0) {
-    *pfVar4 = local_40[0].halfSize[0];
-    pfVar4[1] = local_40[0].halfSize[1];
-    pfVar4[2] = local_40[0].halfSize[2];
+  if (param_3 != (float *)0x0) {
+    *param_3 = local_40[0].halfSize[0];
+    param_3[1] = local_40[0].halfSize[1];
+    param_3[2] = local_40[0].halfSize[2];
   }
-  __restgprlr_29();
   return;
 }
 
 
 // 82677918  G_PhysObjSetCollisionFromModelIndex  (physics/phys_ode.cpp:1638)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PhysWorld": Some values do not have unique names */
 
 void G_PhysObjSetCollisionFromModelIndex
                (int param_1,PhysWorld param_2,int param_3,float param_4,bool param_5)
 
 {
-  int iVar1;
-  PhysCollmap *pPVar2;
-  bool bVar3;
-  undefined1 in_r7;
-  double extraout_f1;
-  double dVar4;
+  PhysCollmap *pPVar1;
+  bool bVar2;
+  bool in_r7;
+  double dVar3;
   Bounds local_50 [3];
   
-  iVar1 = __savegprlr_28((double)param_4,param_1);
-  dVar4 = extraout_f1;
+  dVar3 = (double)param_4;
   Phys_LockWorld(param_2);
   ODE_BodyDestroyAllGeoms((dxBody *)param_3);
   Phys_UnlockWorld(param_2);
-  pPVar2 = G_GetModelCollmap(iVar1);
-  if (pPVar2 != (PhysCollmap *)0x0) {
-    Phys_ObjAddGeomCollmap(param_2,param_3,pPVar2,(float)dVar4,param_5);
-    __restgprlr_28();
+  pPVar1 = G_GetModelCollmap(param_1);
+  if (pPVar1 != (PhysCollmap *)0x0) {
+    Phys_ObjAddGeomCollmap(param_2,param_3,pPVar1,(float)dVar3,param_5);
     return;
   }
-  bVar3 = G_GetModelBounds(iVar1,local_50);
-  if ((((!bVar3) || (local_50[0].halfSize[0] == 0.0)) || (local_50[0].halfSize[1] == 0.0)) ||
+  bVar2 = G_GetModelBounds(param_1,local_50);
+  if ((((!bVar2) || (local_50[0].halfSize[0] == 0.0)) || (local_50[0].halfSize[1] == 0.0)) ||
      (local_50[0].halfSize[2] == 0.0)) {
     local_50[0].midPoint[0] = 0.0;
     local_50[0].midPoint[1] = 0.0;
@@ -2757,8 +2620,7 @@ void G_PhysObjSetCollisionFromModelIndex
     local_50[0].halfSize[1] = 50.0;
     local_50[0].halfSize[2] = 50.0;
   }
-  Phys_ObjAddGeomBox(param_2,param_3,local_50,(bool)in_r7);
-  __restgprlr_28();
+  Phys_ObjAddGeomBox(param_2,param_3,local_50,in_r7);
   return;
 }
 
@@ -2784,32 +2646,27 @@ void Phys_ObjGetAngularVelocityRaw(int param_1,float *param_2)
 
 // 8266F818  Phys_ObjSetAngularVelocity  (physics/phys_ode.cpp:1678)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void Phys_ObjSetAngularVelocity(int param_1,float *param_2)
 
 {
-  dxBody *pdVar1;
-  ulonglong uVar2;
-  float *pfVar3;
-  
-  uVar2 = (ulonglong)(int)param_2;
-  pdVar1 = (dxBody *)__savegprlr_28(param_1);
-  if (pdVar1 == (dxBody *)0x0) {
+  if (param_1 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0x691,0,
                     "%s");
   }
-  if ((uVar2 & 0xffffffff) == 0) {
+  if (param_2 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0x692,0,
                     "%s");
   }
-  pfVar3 = (float *)uVar2;
-  if (((((uint)*pfVar3 & 0x7f800000) == 0x7f800000) ||
-      (((uint)pfVar3[1] & 0x7f800000) == 0x7f800000)) ||
-     (((uint)pfVar3[2] & 0x7f800000) == 0x7f800000)) {
+  if (((((uint)*param_2 & 0x7f800000) == 0x7f800000) ||
+      (((uint)param_2[1] & 0x7f800000) == 0x7f800000)) ||
+     (((uint)param_2[2] & 0x7f800000) == 0x7f800000)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0x693,0,
                     "%s");
   }
-  dBodySetAngularVel(pdVar1,pfVar3[2],*pfVar3,pfVar3[1]);
-  __restgprlr_28();
+  dBodySetAngularVel((dxBody *)param_1,param_2[2],*param_2,param_2[1]);
   return;
 }
 
@@ -2863,26 +2720,26 @@ void Phys_ObjGetVelocity(int param_1,float *param_2)
 
 // 8266FA78  Phys_ObjGetPosition  (physics/phys_ode.cpp:1731)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void Phys_ObjGetPosition(int param_1,float *param_2,float (*param_3) [3])
 
 {
-  dxBody *pdVar1;
+  float *pfVar1;
   float *pfVar2;
-  float *pfVar3;
   
-  pdVar1 = (dxBody *)__savegprlr_28(param_1);
-  if (pdVar1 == (dxBody *)0x0) {
+  if (param_1 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0x6c8,0,
                     "%s");
   }
-  pfVar2 = dBodyGetPosition(pdVar1);
-  pfVar3 = dBodyGetRotation(pdVar1);
-  Phys_OdeMatrix3ToAxis(pfVar3,param_3);
-  *param_2 = *pfVar2;
-  param_2[1] = pfVar2[1];
-  param_2[2] = pfVar2[2];
-  Phys_ObjGetPositionFromCenterOfMass(pdVar1,param_3,param_2,param_2);
-  __restgprlr_28();
+  pfVar1 = dBodyGetPosition((dxBody *)param_1);
+  pfVar2 = dBodyGetRotation((dxBody *)param_1);
+  Phys_OdeMatrix3ToAxis(pfVar2,param_3);
+  *param_2 = *pfVar1;
+  param_2[1] = pfVar1[1];
+  param_2[2] = pfVar1[2];
+  Phys_ObjGetPositionFromCenterOfMass((dxBody *)param_1,param_3,param_2,param_2);
   return;
 }
 
@@ -2908,42 +2765,41 @@ void Phys_ObjGetCenterOfMass(int param_1,float *param_2)
 
 // 82677A10  Phys_ObjDestroy  (physics/phys_ode.cpp:1763)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PhysWorld": Some values do not have unique names */
 
 void Phys_ObjDestroy(PhysWorld param_1,int param_2)
 
 {
-  PhysWorld PVar1;
-  PhysObjUserData *pPVar2;
+  PhysObjUserData *pPVar1;
   
-  PVar1 = __savegprlr_27(param_1);
-  if ((physInitedClient == false) && ((int)PVar1 < 3)) {
+  if ((!physInitedClient) && ((int)param_1 < 3)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0x6e7,0,
                     "%s");
   }
-  if ((physInitedServer == false) && (2 < (int)PVar1)) {
+  if ((physInitedServer == false) && (2 < (int)param_1)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0x6e8,0,
                     "%s");
   }
-  if ((dxBody *)param_2 == (dxBody *)0x0) {
+  if (param_2 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0x6e9,0,
                     "%s");
   }
-  Phys_LockWorld(PVar1);
-  if ((dxWorld *)((dxBody *)param_2)->_padding_ != physGlob.world + PVar1) {
+  Phys_LockWorld(param_1);
+  if ((dxWorld *)*(undefined1 **)(param_2 + 0x10) != physGlob.world + param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0x6ee,0,
                     "%s");
   }
-  pPVar2 = dBodyGetData((dxBody *)param_2);
-  if (pPVar2 == (PhysObjUserData *)0x0) {
+  pPVar1 = dBodyGetData((dxBody *)param_2);
+  if (pPVar1 == (PhysObjUserData *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0x6f0,0,
                     "%s");
   }
   dBodyDestroy((dxBody *)param_2);
   Phys_BodyFree((dxBody *)param_2);
-  Phys_UserDataFree(pPVar2,PVar1);
-  Phys_UnlockWorld(PVar1);
-  __restgprlr_27();
+  Phys_UserDataFree(pPVar1,param_1);
+  Phys_UnlockWorld(param_1);
   return;
 }
 
@@ -2964,58 +2820,60 @@ void Phys_ObjAddRelativeTorque(int param_1,float *param_2)
 
 // 8266FC08  Phys_ObjAddForce  (physics/phys_ode.cpp:1797)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void Phys_ObjAddForce(int param_1,float *param_2,float *param_3)
 
 {
-  dxBody *pdVar1;
-  
-  pdVar1 = (dxBody *)__savegprlr_29(param_1);
-  if (pdVar1 == (dxBody *)0x0) {
+  if (param_1 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0x708,0,
                     "%s");
   }
-  dBodyAddForceAtPos(pdVar1,*param_3,param_3[1],param_3[2],*param_2,param_2[1],param_2[2]);
-  dBodyEnable(pdVar1);
-  __restgprlr_29();
+  dBodyAddForceAtPos((dxBody *)param_1,*param_3,param_3[1],param_3[2],*param_2,param_2[1],param_2[2]
+                    );
+  dBodyEnable((dxBody *)param_1);
   return;
 }
 
 
 // 8266FC80  Phys_ObjAddImpulse  (physics/phys_ode.cpp:1810)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PhysWorld": Some values do not have unique names */
 
 void Phys_ObjAddImpulse(PhysWorld param_1,int param_2,float *param_3,float *param_4)
 
 {
   float fVar1;
-  int iVar2;
+  double dVar2;
   double dVar3;
   double dVar4;
-  double dVar5;
   
-  iVar2 = __savegprlr_26(param_1);
-  if (((physInitedClient == false) && (-1 < iVar2)) && (iVar2 < 3)) {
+  if (((!physInitedClient) && (-1 < (int)param_1)) && ((int)param_1 < 3)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0x715,0,
                     "%s");
   }
-  fVar1 = 1000.0 / (float)(longlong)g_phys_msecStep[iVar2];
-  dVar5 = (double)(*param_4 * fVar1);
-  dVar4 = (double)(param_4[1] * fVar1);
-  dVar3 = (double)(param_4[2] * fVar1);
-  if ((dxBody *)param_2 == (dxBody *)0x0) {
+  fVar1 = 1000.0 / (float)(longlong)g_phys_msecStep[param_1];
+  dVar4 = (double)(*param_4 * fVar1);
+  dVar3 = (double)(param_4[1] * fVar1);
+  dVar2 = (double)(param_4[2] * fVar1);
+  if (param_2 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0x708,0,
                     "%s");
   }
-  dBodyAddForceAtPos((dxBody *)param_2,(float)dVar5,(float)dVar4,(float)dVar3,*param_3,param_3[1],
+  dBodyAddForceAtPos((dxBody *)param_2,(float)dVar4,(float)dVar3,(float)dVar2,*param_3,param_3[1],
                      param_3[2]);
   dBodyEnable((dxBody *)param_2);
-  __restgprlr_26();
   return;
 }
 
 
 // 8266FDA0  Phys_TweakBulletImpact  (physics/phys_ode.cpp:1835)
+
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 
 void Phys_TweakBulletImpact(float *param_1,float *param_2,float *param_3)
 
@@ -3026,9 +2884,7 @@ void Phys_TweakBulletImpact(float *param_1,float *param_2,float *param_3)
   float fVar4;
   float fVar5;
   dvar_t *pdVar6;
-  float *pfVar7;
   
-  pfVar7 = (float *)__savegprlr_25(param_1);
   if (phys_bulletUpBias == (dvar_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0x72e,0,
                     "%s");
@@ -3054,16 +2910,19 @@ void Phys_TweakBulletImpact(float *param_1,float *param_2,float *param_3)
   fVar1 = *param_3;
   fVar2 = param_3[1];
   fVar3 = (pdVar6->current).value;
-  pfVar7[2] = pfVar7[2] + (pfVar7[2] - param_3[2]) * fVar3;
-  *pfVar7 = *pfVar7 + (*pfVar7 - fVar1) * fVar3;
-  pfVar7[1] = pfVar7[1] + fVar3 * (pfVar7[1] - fVar2);
-  __restgprlr_25();
+  param_1[2] = param_1[2] + (param_1[2] - param_3[2]) * fVar3;
+  *param_1 = *param_1 + (*param_1 - fVar1) * fVar3;
+  param_1[1] = param_1[1] + fVar3 * (param_1[1] - fVar2);
   return;
 }
 
 
 // 8266FED8  Phys_ObjBulletImpact  (physics/phys_ode.cpp:1852)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PhysWorld": Some values do not have unique names */
 
 void Phys_ObjBulletImpact
@@ -3071,9 +2930,8 @@ void Phys_ObjBulletImpact
                float param_6)
 
 {
-  PhysWorld PVar1;
-  float *pfVar2;
-  double extraout_f1;
+  float *pfVar1;
+  double dVar2;
   double dVar3;
   double dVar4;
   double dVar5;
@@ -3083,8 +2941,7 @@ void Phys_ObjBulletImpact
   double dVar9;
   double dVar10;
   double dVar11;
-  double dVar12;
-  float fVar13;
+  float fVar12;
   float local_150;
   float local_14c;
   float local_148;
@@ -3101,103 +2958,101 @@ void Phys_ObjBulletImpact
   dMass local_100;
   float afStack_b0 [44];
   
-  dVar3 = (double)param_6;
-  __savegprlr_26((double)param_5,param_1);
-  PVar1 = __savefpr_23();
-  dVar4 = extraout_f1;
+  dVar3 = (double)param_5;
+  dVar2 = (double)param_6;
   dMassSetZero(&local_100);
-  if (((physInitedClient == false) && (-1 < (int)PVar1)) && ((int)PVar1 < 3)) {
+  if (((physInitedClient == false) && (-1 < (int)param_1)) && ((int)param_1 < 3)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0x751,0,
                     "%s");
   }
-  if ((dxBody *)param_2 == (dxBody *)0x0) {
+  if (param_2 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0x752,0,
                     "%s");
   }
-  pfVar2 = dBodyGetPosition((dxBody *)param_2);
+  pfVar1 = dBodyGetPosition((dxBody *)param_2);
   local_120 = *param_4;
   local_11c = param_4[1];
   local_118 = param_4[2];
   local_130 = *param_3;
-  local_150 = *pfVar2;
-  dVar11 = (double)local_150;
-  local_14c = pfVar2[1];
-  dVar10 = (double)local_14c;
-  local_148 = pfVar2[2];
-  dVar9 = (double)local_148;
+  local_150 = *pfVar1;
+  dVar10 = (double)local_150;
+  local_14c = pfVar1[1];
+  dVar9 = (double)local_14c;
+  local_148 = pfVar1[2];
+  dVar8 = (double)local_148;
   local_12c = param_3[1];
   local_128 = param_3[2];
   Phys_TweakBulletImpact(&local_130,&local_120,&local_150);
-  pfVar2 = dBodyGetLinearVel((dxBody *)param_2);
-  dVar7 = (double)local_120;
-  dVar6 = (double)local_11c;
-  dVar5 = (double)local_118;
-  dVar8 = (double)(float)(dVar4 - (double)(float)((double)pfVar2[2] * dVar5 +
-                                                 (double)(float)((double)pfVar2[1] * dVar6 +
-                                                                (double)(float)((double)*pfVar2 *
-                                                                               dVar7))));
+  pfVar1 = dBodyGetLinearVel((dxBody *)param_2);
+  dVar6 = (double)local_120;
+  dVar5 = (double)local_11c;
+  dVar4 = (double)local_118;
+  dVar7 = (double)(float)(dVar3 - (double)(float)((double)pfVar1[2] * dVar4 +
+                                                 (double)(float)((double)pfVar1[1] * dVar5 +
+                                                                (double)(float)((double)*pfVar1 *
+                                                                               dVar6))));
   dBodyGetMass((dxBody *)param_2,&local_100);
-  local_150 = (float)((double)local_130 - dVar11);
-  local_14c = (float)((double)local_12c - dVar10);
-  local_148 = (float)((double)local_128 - dVar9);
+  local_150 = (float)((double)local_130 - dVar10);
+  local_14c = (float)((double)local_12c - dVar9);
+  local_148 = (float)((double)local_128 - dVar8);
   Vec3Cross(&local_150,&local_120,&local_140);
-  dVar10 = 0.0;
-  dVar9 = (double)SQRT(local_140 * local_140 + local_138 * local_138 + local_13c * local_13c);
-  dVar4 = 1.0;
-  if (-dVar9 < 0.0) {
-    dVar4 = dVar9;
+  dVar9 = 0.0;
+  dVar8 = (double)SQRT(local_140 * local_140 + local_138 * local_138 + local_13c * local_13c);
+  dVar3 = 1.0;
+  if (-dVar8 < 0.0) {
+    dVar3 = dVar8;
   }
-  fVar13 = (float)(1.0 / dVar4);
-  local_140 = local_140 * fVar13;
-  local_13c = local_13c * fVar13;
-  local_138 = local_138 * fVar13;
-  dVar4 = dVar10;
-  dVar11 = dVar10;
-  dVar12 = dVar10;
-  if (0.10000000149011612 < dVar9) {
+  fVar12 = (float)(1.0 / dVar3);
+  local_140 = local_140 * fVar12;
+  local_13c = local_13c * fVar12;
+  local_138 = local_138 * fVar12;
+  dVar3 = dVar9;
+  dVar10 = dVar9;
+  dVar11 = dVar9;
+  if (0.10000000149011612 < dVar8) {
     Phys_BodyGetRotation((dxBody *)param_2,(float (*) [3])afStack_b0);
     MatrixTransposeTransformVector(&local_140,(float (*) [3])afStack_b0,afStack_110);
-    fVar13 = Phys_MomentOfInertiaAroundAxis(&local_100,afStack_110);
-    dVar4 = (double)fVar13;
-    dVar12 = dVar10;
-    pfVar2 = dBodyGetAngularVel((dxBody *)param_2);
-    dVar10 = (double)(pfVar2[2] * local_138 + pfVar2[1] * local_13c + *pfVar2 * local_140);
+    fVar12 = Phys_MomentOfInertiaAroundAxis(&local_100,afStack_110);
+    dVar3 = (double)fVar12;
     dVar11 = dVar9;
+    pfVar1 = dBodyGetAngularVel((dxBody *)param_2);
+    dVar9 = (double)(pfVar1[2] * local_138 + pfVar1[1] * local_13c + *pfVar1 * local_140);
+    dVar10 = dVar8;
   }
-  dVar9 = -(double)(float)(dVar10 * dVar11 - dVar8);
-  if (dVar12 < dVar9) {
-    dVar10 = (double)local_100.mass;
-    dVar8 = (double)(float)(dVar10 + 0.5);
-    if (dVar12 < dVar4) {
-      dVar8 = (double)(float)((double)(float)((double)(float)((double)(float)(dVar10 / dVar4) *
-                                                             dVar11) * dVar11) * 0.5 + dVar8);
+  dVar8 = -(double)(float)(dVar9 * dVar10 - dVar7);
+  if (dVar11 < dVar8) {
+    dVar9 = (double)local_100.mass;
+    dVar7 = (double)(float)(dVar9 + 0.5);
+    if (dVar11 < dVar3) {
+      dVar7 = (double)(float)((double)(float)((double)(float)((double)(float)(dVar9 / dVar3) *
+                                                             dVar10) * dVar10) * 0.5 + dVar7);
     }
-    if (dVar8 <= dVar12) {
+    if (dVar7 <= dVar11) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0x7d2,
                       0,"%s");
-      dVar10 = (double)local_100.mass;
+      dVar9 = (double)local_100.mass;
     }
-    dVar4 = (double)(float)((double)(float)((double)(float)(dVar10 / dVar8) * dVar9) * dVar3);
-    local_150 = (float)(dVar4 * dVar7);
-    local_14c = (float)(dVar6 * dVar4);
-    local_148 = (float)(dVar5 * dVar4);
-    Phys_ObjAddImpulse(PVar1,param_2,&local_130,&local_150);
+    dVar3 = (double)(float)((double)(float)((double)(float)(dVar9 / dVar7) * dVar8) * dVar2);
+    local_150 = (float)(dVar3 * dVar6);
+    local_14c = (float)(dVar5 * dVar3);
+    local_148 = (float)(dVar4 * dVar3);
+    Phys_ObjAddImpulse(param_1,param_2,&local_130,&local_150);
   }
-  __restfpr_23();
-  __restgprlr_26();
   return;
 }
 
 
 // 826701C8  Phys_ObjGetEffectiveInverseMassAtPoint  (physics/phys_ode.cpp:2046)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 float Phys_ObjGetEffectiveInverseMassAtPoint(int param_1,float *param_2,float *param_3)
 
 {
-  dxBody *pdVar1;
-  float *pfVar2;
+  float *pfVar1;
+  double dVar2;
   double dVar3;
-  double dVar4;
   float local_c0;
   float local_bc;
   float local_b8;
@@ -3208,80 +3063,82 @@ float Phys_ObjGetEffectiveInverseMassAtPoint(int param_1,float *param_2,float *p
   float afStack_90 [12];
   float afStack_60 [24];
   
-  pdVar1 = (dxBody *)__savegprlr_29(param_1);
-  pfVar2 = dBodyGetPosition(pdVar1);
-  local_b0 = *param_2 - *pfVar2;
-  local_ac = param_2[1] - pfVar2[1];
-  local_a8 = param_2[2] - pfVar2[2];
+  pfVar1 = dBodyGetPosition((dxBody *)param_1);
+  local_b0 = *param_2 - *pfVar1;
+  local_ac = param_2[1] - pfVar1[1];
+  local_a8 = param_2[2] - pfVar1[2];
   Vec3Cross(&local_b0,param_3,afStack_a0);
-  if (pdVar1 == (dxBody *)0x0) {
+  if (param_1 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0x1eb,0,
                     "%s");
   }
-  pfVar2 = dBodyGetRotation(pdVar1);
-  Phys_OdeMatrix3ToAxis(pfVar2,(float (*) [3])afStack_90);
+  pfVar1 = dBodyGetRotation((dxBody *)param_1);
+  Phys_OdeMatrix3ToAxis(pfVar1,(float (*) [3])afStack_90);
   MatrixTransposeTransformVector(afStack_a0,(float (*) [3])afStack_90,&local_c0);
-  Phys_OdeMatrix3ToAxis(pdVar1->invI,(float (*) [3])afStack_60);
+  Phys_OdeMatrix3ToAxis((float *)(param_1 + 100),(float (*) [3])afStack_60);
   MatrixTransformVector(&local_c0,(float (*) [3])afStack_60,&local_b0);
-  dVar4 = 0.0;
-  dVar3 = ABS((double)(local_a8 * local_b8 + local_ac * local_bc + local_c0 * local_b0));
-  if (pdVar1->invMass <= 0.0) {
+  dVar3 = 0.0;
+  dVar2 = ABS((double)(local_a8 * local_b8 + local_ac * local_bc + local_c0 * local_b0));
+  if (*(float *)(param_1 + 0x94) <= 0.0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0x816,0,
                     "%s\n\t(body->invMass) = %g");
   }
-  if (dVar3 < dVar4) {
+  if (dVar2 < dVar3) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0x817,0,
                     "%s\n\t(invMomentOfInertia) = %g");
   }
-  dVar3 = (double)(float)((double)pdVar1->invMass + dVar3);
-  if (dVar3 <= dVar4) {
+  dVar2 = (double)(float)((double)*(float *)(param_1 + 0x94) + dVar2);
+  if (dVar2 <= dVar3) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0x819,0,
                     "%s");
   }
-  dVar3 = (double)__restgprlr_29(dVar3);
-  return (float)dVar3;
+  return (float)dVar2;
 }
 
 
 // 82670378  Phys_ObjGetMomentumAtPoint  (physics/phys_ode.cpp:2082)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 float Phys_ObjGetMomentumAtPoint(int param_1,float *param_2,float *param_3)
 
 {
-  dxBody *pdVar1;
+  float fVar1;
   float *pfVar2;
   double dVar3;
-  double dVar4;
-  float fVar5;
+  float fVar4;
   float local_40;
   float local_3c;
   float local_38;
   
-  pdVar1 = (dxBody *)__savegprlr_29(param_1);
   pfVar2 = param_2;
-  fVar5 = Phys_ObjGetEffectiveInverseMassAtPoint((int)pdVar1,param_2,param_3);
-  dVar3 = (double)fVar5;
-  dBodyGetPointVel(pdVar1,*param_2,param_2[1],param_2[2],pfVar2);
-  dVar4 = -(double)(float)((double)(param_3[2] * local_38 +
-                                   param_3[1] * local_3c + *param_3 * local_40) / dVar3);
-  dVar3 = 0.0;
-  if (-dVar4 < 0.0) {
-    dVar3 = dVar4;
+  fVar4 = Phys_ObjGetEffectiveInverseMassAtPoint(param_1,param_2,param_3);
+  dVar3 = (double)fVar4;
+  dBodyGetPointVel((dxBody *)param_1,*param_2,param_2[1],param_2[2],pfVar2);
+  fVar1 = -(float)((double)(param_3[2] * local_38 + param_3[1] * local_3c + *param_3 * local_40) /
+                  dVar3);
+  fVar4 = 0.0;
+  if (-fVar1 < 0.0) {
+    fVar4 = fVar1;
   }
-  dVar3 = (double)__restgprlr_29(dVar3);
-  return (float)dVar3;
+  return fVar4;
 }
 
 
 // 82670400  Phys_ObjGet2BodyImpulseAtPoint  (physics/phys_ode.cpp:2100)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 float Phys_ObjGet2BodyImpulseAtPoint(int param_1,int param_2,float *param_3,float *param_4)
 
 {
-  dxBody *pdVar1;
-  dxBody *pdVar2;
-  double dVar3;
+  float fVar1;
+  float fVar2;
+  float *pfVar3;
   double dVar4;
+  double dVar5;
   float local_50;
   float local_4c;
   float local_48;
@@ -3289,121 +3146,95 @@ float Phys_ObjGet2BodyImpulseAtPoint(int param_1,int param_2,float *param_3,floa
   float local_3c;
   float local_38;
   
-  pdVar1 = (dxBody *)__savegprlr_29(param_1);
-  dVar4 = (double)(pdVar1->invMass * 0.5);
-  dVar3 = (double)(((dxBody *)param_2)->invMass * 0.5);
-  pdVar2 = (dxBody *)param_2;
-  dBodyGetPointVel(pdVar1,*param_3,param_3[1],param_3[2],(float *)param_2);
-  dBodyGetPointVel((dxBody *)param_2,*param_3,param_3[1],param_3[2],(float *)pdVar2);
-  dVar4 = (double)((param_4[2] * (local_38 - local_48) +
-                   param_4[1] * (local_3c - local_4c) + *param_4 * (local_40 - local_50)) /
-                  (float)(dVar3 + dVar4));
-  dVar3 = 0.0;
-  if (-dVar4 < 0.0) {
-    dVar3 = dVar4;
+  dVar5 = (double)(*(float *)(param_1 + 0x94) * 0.5);
+  dVar4 = (double)(*(float *)(param_2 + 0x94) * 0.5);
+  pfVar3 = (float *)param_2;
+  dBodyGetPointVel((dxBody *)param_1,*param_3,param_3[1],param_3[2],(float *)param_2);
+  dBodyGetPointVel((dxBody *)param_2,*param_3,param_3[1],param_3[2],pfVar3);
+  fVar1 = (param_4[2] * (local_38 - local_48) +
+          param_4[1] * (local_3c - local_4c) + *param_4 * (local_40 - local_50)) /
+          (float)(dVar4 + dVar5);
+  fVar2 = 0.0;
+  if (-fVar1 < 0.0) {
+    fVar2 = fVar1;
   }
-  dVar3 = (double)__restgprlr_29(dVar3);
-  return (float)dVar3;
+  return fVar2;
 }
 
 
 // 826704C8  Phys_GetContactCFM  (physics/phys_ode.cpp:2136)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PhysWorld": Some values do not have unique names */
 
 float Phys_GetContactCFM(uint param_1,float param_2,dxBody *param_3,dxBody *param_4)
 
 {
-  uint uVar1;
-  bool bVar2;
-  ulonglong uVar3;
-  ulonglong in_r6;
-  double extraout_f1;
-  double dVar4;
+  bool bVar1;
+  dxBody *in_r6;
+  double dVar2;
   
-  uVar3 = (ulonglong)(int)param_4;
-  uVar1 = __savegprlr_28((double)param_2,param_1,param_3);
-  dVar4 = extraout_f1;
-  if (4 < uVar1) {
+  dVar2 = (double)param_2;
+  if (4 < param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0x181,0,
                     "worldIndex doesn\'t index PHYS_WORLD_COUNT\n\t%i not in [0, %i)");
   }
-  if (uVar1 == 2) {
-    dVar4 = (double)__restgprlr_28((double)(float)((double)physGlob.worldData[2].
-                                                           constraintForceMixingRagdoll * dVar4));
-    return (float)dVar4;
+  if (param_1 == 2) {
+    return (float)((double)physGlob.worldData[2].constraintForceMixingRagdoll * dVar2);
   }
-  if (uVar1 != 3) {
-    dVar4 = (double)__restgprlr_28((double)(float)((double)physGlob.worldData[uVar1].
-                                                           constraintForceMixing * dVar4));
-    return (float)dVar4;
+  if (param_1 != 3) {
+    return (float)((double)physGlob.worldData[param_1].constraintForceMixing * dVar2);
   }
-  if ((((uVar3 & 0xffffffff) != 0) && (bVar2 = ODE_BodyGetSoftContactsFlag((dxBody *)uVar3), bVar2))
-     || (((in_r6 & 0xffffffff) != 0 && (bVar2 = ODE_BodyGetSoftContactsFlag((dxBody *)in_r6), bVar2)
-         ))) {
-    bVar2 = true;
+  if (((param_4 != (dxBody *)0x0) && (bVar1 = ODE_BodyGetSoftContactsFlag(param_4), bVar1)) ||
+     ((in_r6 != (dxBody *)0x0 && (bVar1 = ODE_BodyGetSoftContactsFlag(in_r6), bVar1)))) {
+    bVar1 = true;
   }
   else {
-    bVar2 = false;
+    bVar1 = false;
   }
-  if (bVar2) {
-    dVar4 = (double)__restgprlr_28((double)(float)((double)physGlob.worldData[3].
-                                                           constraintForceMixingVehicleSoft * dVar4)
-                                  );
-    return (float)dVar4;
+  if (bVar1) {
+    return (float)((double)physGlob.worldData[3].constraintForceMixingVehicleSoft * dVar2);
   }
-  dVar4 = (double)__restgprlr_28((double)(float)((double)physGlob.worldData[3].
-                                                         constraintForceMixingVehicle * dVar4));
-  return (float)dVar4;
+  return (float)((double)physGlob.worldData[3].constraintForceMixingVehicle * dVar2);
 }
 
 
 // 826705D8  Phys_GetContactERP  (physics/phys_ode.cpp:2162)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PhysWorld": Some values do not have unique names */
 
 float Phys_GetContactERP(uint param_1,float param_2,dxBody *param_3,dxBody *param_4)
 
 {
-  uint uVar1;
-  bool bVar2;
-  ulonglong uVar3;
-  ulonglong in_r6;
-  double extraout_f1;
-  double dVar4;
+  bool bVar1;
+  dxBody *in_r6;
+  double dVar2;
   
-  uVar3 = (ulonglong)(int)param_4;
-  uVar1 = __savegprlr_28((double)param_2,param_1,param_3);
-  dVar4 = extraout_f1;
-  if (4 < uVar1) {
+  dVar2 = (double)param_2;
+  if (4 < param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0x181,0,
                     "worldIndex doesn\'t index PHYS_WORLD_COUNT\n\t%i not in [0, %i)");
   }
-  if (uVar1 == 2) {
-    dVar4 = (double)__restgprlr_28((double)physGlob.worldData[2].errorReductionRagdoll);
-    return (float)dVar4;
+  if (param_1 == 2) {
+    return physGlob.worldData[2].errorReductionRagdoll;
   }
-  if (uVar1 != 3) {
-    dVar4 = (double)__restgprlr_28((double)physGlob.worldData[uVar1].errorReduction);
-    return (float)dVar4;
+  if (param_1 != 3) {
+    return physGlob.worldData[param_1].errorReduction;
   }
-  if ((((uVar3 & 0xffffffff) != 0) && (bVar2 = ODE_BodyGetSoftContactsFlag((dxBody *)uVar3), bVar2))
-     || (((in_r6 & 0xffffffff) != 0 && (bVar2 = ODE_BodyGetSoftContactsFlag((dxBody *)in_r6), bVar2)
-         ))) {
-    bVar2 = true;
+  if (((param_4 != (dxBody *)0x0) && (bVar1 = ODE_BodyGetSoftContactsFlag(param_4), bVar1)) ||
+     ((in_r6 != (dxBody *)0x0 && (bVar1 = ODE_BodyGetSoftContactsFlag(in_r6), bVar1)))) {
+    bVar1 = true;
   }
   else {
-    bVar2 = false;
+    bVar1 = false;
   }
-  if (bVar2) {
-    dVar4 = (double)__restgprlr_28((double)((float)((double)physGlob.worldData[3].
-                                                            errorReductionVehicleSoft * dVar4) *
-                                           20.0));
-    return (float)dVar4;
+  if (bVar1) {
+    return (float)((double)physGlob.worldData[3].errorReductionVehicleSoft * dVar2) * 20.0;
   }
-  dVar4 = (double)__restgprlr_28((double)((float)((double)physGlob.worldData[3].
-                                                          errorReductionVehicle * dVar4) * 20.0));
-  return (float)dVar4;
+  return (float)((double)physGlob.worldData[3].errorReductionVehicle * dVar2) * 20.0;
 }
 
 
@@ -3439,6 +3270,8 @@ float Phys_GetContactMCV(uint param_1,float param_2)
 
 // 826707B0  Phys_NearCallbackCreateJoints  (physics/phys_ode.cpp:2214)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PhysWorld": Some values do not have unique names */
 
 void Phys_NearCallbackCreateJoints
@@ -3452,17 +3285,15 @@ void Phys_NearCallbackCreateJoints
   uint *puVar4;
   int iVar5;
   uint uVar6;
-  ContactList *pCVar7;
-  int iVar8;
+  int iVar7;
   char in_RESERVE;
   byte in_cr0;
   ContactList CStack_1060;
   
-  pCVar7 = (ContactList *)__savegprlr_23(param_1);
   PVar2 = param_7->worldIndex;
-  if (4 < pCVar7->contactCount) {
-    Phys_ReduceContacts(PVar2,pCVar7,&CStack_1060);
-    pCVar7 = &CStack_1060;
+  if (4 < param_1->contactCount) {
+    Phys_ReduceContacts(PVar2,param_1,&CStack_1060);
+    param_1 = &CStack_1060;
   }
   if (PHYS_WORLD_LAST_SERVER_WORLD < PVar2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0x176,0,
@@ -3470,7 +3301,7 @@ void Phys_NearCallbackCreateJoints
   }
   pRVar3 = param_7->reducedContactListBase;
   if ((physGlob.world[PVar2].useWorkerCmd == 0) || (pRVar3 == (ReducedContactList *)0x0)) {
-    Phys_CreateJointForEachContact(pCVar7,param_2,param_4,param_6,PVar2);
+    Phys_CreateJointForEachContact(param_1,param_2,param_4,param_6,PVar2);
   }
   else {
     puVar4 = (uint *)param_7->reducedContactListCount;
@@ -3482,30 +3313,32 @@ void Phys_NearCallbackCreateJoints
         in_cr0 = 2;
       }
     } while (!(bool)(in_cr0 >> 1 & 1));
-    iVar8 = (int)((ulonglong)uVar1 + 1);
-    if (iVar8 <= param_7->reducedContactListMax) {
-      if (0xf < pCVar7->contactCount) {
+    iVar7 = (int)((ulonglong)uVar1 + 1);
+    if (iVar7 <= param_7->reducedContactListMax) {
+      if (0xf < param_1->contactCount) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",
                         0x8c9,0,"%s");
       }
       memcpy();
-      iVar5 = pCVar7->contactCount;
-      pRVar3[iVar8 + -1].body1 = param_3;
-      pRVar3[iVar8 + -1].body2 = param_5;
-      pRVar3[iVar8 + -1].contactCount = iVar5;
+      iVar5 = param_1->contactCount;
+      pRVar3[iVar7 + -1].body1 = param_3;
+      pRVar3[iVar7 + -1].body2 = param_5;
+      pRVar3[iVar7 + -1].contactCount = iVar5;
       memcpy();
-      pRVar3[iVar8 + -1].worldIndex = PVar2;
-      __restgprlr_23();
+      pRVar3[iVar7 + -1].worldIndex = PVar2;
       return;
     }
   }
-  __restgprlr_23();
   return;
 }
 
 
 // 82670930  Phys_NearCallback  (physics/phys_ode.cpp:2292)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PhysWorld": Some values do not have unique names */
 
 void Phys_NearCallback(void *param_1,dxGeom *param_2,dxGeom *param_3)
@@ -3513,110 +3346,104 @@ void Phys_NearCallback(void *param_1,dxGeom *param_2,dxGeom *param_3)
 {
   uint uVar1;
   double dVar2;
-  FrameInfo *pFVar3;
+  dxBody *pdVar3;
   dxBody *pdVar4;
-  dxBody *pdVar5;
-  int iVar6;
-  void *pvVar7;
+  int iVar5;
+  void *pvVar6;
+  dxBody *pdVar7;
   dxBody *pdVar8;
   dxBody *pdVar9;
-  dxBody *pdVar10;
+  double dVar10;
   double dVar11;
   double dVar12;
   double dVar13;
-  double dVar14;
-  float fVar15;
+  float fVar14;
   dSurfaceParameters local_10a0;
   ContactList CStack_1070;
   
-  __savegprlr_24(param_1);
-  pFVar3 = (FrameInfo *)__savefpr_28();
-  uVar1 = pFVar3->worldIndex;
-  pdVar4 = dGeomGetBody(param_2);
-  pdVar5 = dGeomGetBody(param_3);
-  if (pdVar4 == (dxBody *)0x0) {
-    pdVar10 = (dxBody *)0x0;
+  uVar1 = *(uint *)param_1;
+  pdVar3 = dGeomGetBody(param_2);
+  pdVar4 = dGeomGetBody(param_3);
+  if (pdVar3 == (dxBody *)0x0) {
+    pdVar9 = (dxBody *)0x0;
   }
   else {
-    pdVar10 = pdVar4;
-    if ((pdVar4->flags & 4U) != 0) goto LAB_82670b9c;
+    pdVar9 = pdVar3;
+    if ((pdVar3->flags & 4U) != 0) {
+      return;
+    }
   }
-  if (((pdVar10 == (dxBody *)0x0) || (pdVar5 == (dxBody *)0x0)) ||
-     (iVar6 = dAreConnectedExcluding(pdVar10,pdVar5,4), iVar6 == 0)) {
-    pdVar8 = (dxBody *)param_3;
+  if (((pdVar9 == (dxBody *)0x0) || (pdVar4 == (dxBody *)0x0)) ||
+     (iVar5 = dAreConnectedExcluding(pdVar9,pdVar4,4), iVar5 == 0)) {
+    pdVar7 = (dxBody *)param_3;
     CStack_1070.contactCount =
          dCollide(param_2,param_3,uVar1 << 0x10 | 0x80,CStack_1070.contacts,0x20);
-    pdVar9 = pdVar5;
-    if (pdVar10 != (dxBody *)0x0) {
-      pdVar9 = (dxBody *)(-(uint)(pdVar5 == (dxBody *)0x0) & (uint)pdVar10);
+    pdVar8 = pdVar4;
+    if (pdVar9 != (dxBody *)0x0) {
+      pdVar8 = (dxBody *)(-(uint)(pdVar4 == (dxBody *)0x0) & (uint)pdVar9);
     }
     if (CStack_1070.contactCount < 1) {
-      if (pdVar9 != (dxBody *)0x0) {
-        pvVar7 = dBodyGetData(pdVar9);
-        if (pvVar7 == (void *)0x0) {
+      if (pdVar8 != (dxBody *)0x0) {
+        pvVar6 = dBodyGetData(pdVar8);
+        if (pvVar6 == (void *)0x0) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",
                           0x95e,0,"%s");
         }
-        *(undefined4 *)((int)pvVar7 + 0x68) = 2;
+        *(undefined4 *)((int)pvVar6 + 0x68) = 2;
       }
     }
     else {
-      dVar13 = 1.0;
-      dVar11 = 0.0;
-      dVar12 = dVar11;
-      dVar14 = dVar13;
-      if (pdVar10 != (dxBody *)0x0) {
-        pvVar7 = dBodyGetData(pdVar10);
-        pdVar8 = (dxBody *)0x1;
-        dVar12 = (double)*(float *)((int)pvVar7 + 0x50);
-        dVar14 = (double)*(float *)((int)pvVar7 + 0x54);
-        if ((float)(dVar13 - (double)*(float *)((int)pvVar7 + 0x54)) < 0.0) {
-          dVar14 = dVar13;
+      dVar12 = 1.0;
+      dVar10 = 0.0;
+      dVar11 = dVar10;
+      dVar13 = dVar12;
+      if (pdVar9 != (dxBody *)0x0) {
+        pvVar6 = dBodyGetData(pdVar9);
+        pdVar7 = (dxBody *)0x1;
+        dVar11 = (double)*(float *)((int)pvVar6 + 0x50);
+        dVar13 = (double)*(float *)((int)pvVar6 + 0x54);
+        if ((float)(dVar12 - (double)*(float *)((int)pvVar6 + 0x54)) < 0.0) {
+          dVar13 = dVar12;
         }
-        ODE_BodySetHasContactsFlag(pdVar10,1);
-        dVar13 = (double)pdVar10->invMass;
+        ODE_BodySetHasContactsFlag(pdVar9,1);
+        dVar12 = (double)pdVar9->invMass;
       }
-      if (pdVar5 != (dxBody *)0x0) {
-        pvVar7 = dBodyGetData(pdVar5);
-        pdVar8 = (dxBody *)0x1;
-        dVar12 = (double)(float)((double)*(float *)((int)pvVar7 + 0x50) + dVar12);
-        dVar2 = (double)*(float *)((int)pvVar7 + 0x54);
-        if ((float)(dVar14 - (double)*(float *)((int)pvVar7 + 0x54)) < 0.0) {
-          dVar2 = dVar14;
+      if (pdVar4 != (dxBody *)0x0) {
+        pvVar6 = dBodyGetData(pdVar4);
+        pdVar7 = (dxBody *)0x1;
+        dVar11 = (double)(float)((double)*(float *)((int)pvVar6 + 0x50) + dVar11);
+        dVar2 = (double)*(float *)((int)pvVar6 + 0x54);
+        if ((float)(dVar13 - (double)*(float *)((int)pvVar6 + 0x54)) < 0.0) {
+          dVar2 = dVar13;
         }
-        dVar14 = dVar2;
-        ODE_BodySetHasContactsFlag(pdVar5,1);
-        if ((float)(dVar13 - (double)pdVar5->invMass) < 0.0) {
-          dVar13 = (double)pdVar5->invMass;
+        dVar13 = dVar2;
+        ODE_BodySetHasContactsFlag(pdVar4,1);
+        if ((float)(dVar12 - (double)pdVar4->invMass) < 0.0) {
+          dVar12 = (double)pdVar4->invMass;
         }
       }
       local_10a0.mode = 0x301c;
-      local_10a0.soft_cfm = Phys_GetContactCFM(uVar1,(float)dVar13,pdVar8,pdVar10);
-      local_10a0.soft_erp = Phys_GetContactERP(uVar1,pFVar3->timestep,pdVar8,pdVar10);
-      fVar15 = Phys_GetFrictionScale(uVar1);
-      local_10a0.mu = (float)((double)fVar15 * dVar12);
-      local_10a0.mu2 = (float)dVar11;
-      local_10a0.bounce = (float)dVar14;
+      local_10a0.soft_cfm = Phys_GetContactCFM(uVar1,(float)dVar12,pdVar7,pdVar9);
+      local_10a0.soft_erp = Phys_GetContactERP(uVar1,*(float *)((int)param_1 + 4),pdVar7,pdVar9);
+      fVar14 = Phys_GetFrictionScale(uVar1);
+      local_10a0.mu = (float)((double)fVar14 * dVar11);
+      local_10a0.mu2 = (float)dVar10;
+      local_10a0.bounce = (float)dVar13;
       local_10a0.bounce_vel = 0.1;
-      if (pdVar9 != pdVar10) {
+      if (pdVar8 != pdVar9) {
         param_2 = param_3;
       }
-      Phys_ReduceContactsToForceBoxFallover(pdVar9,param_2,&CStack_1070);
-      Phys_NearCallbackCreateJoints(&CStack_1070,pdVar10,pdVar4,pdVar5,pdVar5,&local_10a0,pFVar3);
-      if (pdVar4 != (dxBody *)0x0) {
-        pdVar4->flags = pdVar10->flags;
+      Phys_ReduceContactsToForceBoxFallover(pdVar8,param_2,&CStack_1070);
+      Phys_NearCallbackCreateJoints(&CStack_1070,pdVar9,pdVar3,pdVar4,pdVar4,&local_10a0,param_1);
+      if (pdVar3 != (dxBody *)0x0) {
+        pdVar3->flags = pdVar9->flags;
       }
-      if (pdVar5 != (dxBody *)0x0) {
-        pdVar5->flags = pdVar5->flags;
-        __restfpr_28();
-        __restgprlr_24();
+      if (pdVar4 != (dxBody *)0x0) {
+        pdVar4->flags = pdVar4->flags;
         return;
       }
     }
   }
-LAB_82670b9c:
-  __restfpr_28();
-  __restgprlr_24();
   return;
 }
 
@@ -3659,20 +3486,21 @@ void Phys_DebugDrawCylinder
 
 // 82670CA0  Phys_DebugDrawCollmap  (physics/phys_ode.cpp:2422)
 
+/* WARNING: Function: __savegprlr_20 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_20 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PhysWorld": Some values do not have unique names */
 
 void Phys_DebugDrawCollmap(PhysWorld param_1,dxGeom *param_2,float (*param_3) [3],float *param_4)
 
 {
   int iVar1;
-  int iVar2;
-  int *piVar3;
-  float *pfVar4;
-  float (*pafVar5) [3];
-  int *piVar6;
-  uint uVar7;
-  float *pfVar8;
-  double dVar9;
+  int *piVar2;
+  float *pfVar3;
+  float (*pafVar4) [3];
+  int *piVar5;
+  uint uVar6;
+  float *pfVar7;
+  double dVar8;
   float local_e0;
   float local_dc;
   float local_d8;
@@ -3682,39 +3510,38 @@ void Phys_DebugDrawCollmap(PhysWorld param_1,dxGeom *param_2,float (*param_3) [3
   Bounds local_c0;
   float afStack_a0 [40];
   
-  iVar1 = __savegprlr_20(param_1);
-  iVar2 = dGeomGetClass(param_2);
-  if (iVar2 != 4) {
+  iVar1 = dGeomGetClass(param_2);
+  if (iVar1 != 4) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0x97f,0,
                     "%s");
   }
-  piVar3 = ODE_GeomGetClassData(param_2);
-  iVar2 = *piVar3;
-  uVar7 = 0;
-  piVar6 = *(int **)(iVar2 + 8);
-  if (*(int *)(iVar2 + 4) != 0) {
-    pfVar8 = (float *)(piVar6 + 0xd);
-    dVar9 = 0.0;
+  piVar2 = ODE_GeomGetClassData(param_2);
+  iVar1 = *piVar2;
+  uVar6 = 0;
+  piVar5 = *(int **)(iVar1 + 8);
+  if (*(int *)(iVar1 + 4) != 0) {
+    pfVar7 = (float *)(piVar5 + 0xd);
+    dVar8 = 0.0;
     do {
-      if (*piVar6 == 0) {
-        MatrixMultiply((float (*) [3])(pfVar8 + -0xb),param_3,(float (*) [3])afStack_a0);
-        local_d0 = pfVar8[-2] - (float)piVar3[1];
-        local_cc = pfVar8[-1] - (float)piVar3[2];
-        pfVar4 = &local_d0;
-        local_c8 = *pfVar8 - (float)piVar3[3];
-        pafVar5 = param_3;
-        MatrixTransformVector(pfVar4,param_3,&local_e0);
+      if (*piVar5 == 0) {
+        MatrixMultiply((float (*) [3])(pfVar7 + -0xb),param_3,(float (*) [3])afStack_a0);
+        local_d0 = pfVar7[-2] - (float)piVar2[1];
+        local_cc = pfVar7[-1] - (float)piVar2[2];
+        pfVar3 = &local_d0;
+        local_c8 = *pfVar7 - (float)piVar2[3];
+        pafVar4 = param_3;
+        MatrixTransformVector(pfVar3,param_3,&local_e0);
         local_e0 = *param_4 + local_e0;
         local_dc = param_4[1] + local_dc;
         local_d8 = param_4[2] + local_d8;
-        if (pfVar8[-0xc] == 1.4013e-45) {
-          local_c0.midPoint[0] = (float)dVar9;
-          local_c0.midPoint[1] = (float)dVar9;
-          local_c0.midPoint[2] = (float)dVar9;
-          local_c0.halfSize[0] = pfVar8[1];
-          local_c0.halfSize[1] = pfVar8[2];
-          local_c0.halfSize[2] = pfVar8[3];
-          if (iVar1 < 3) {
+        if (pfVar7[-0xc] == 1.4013e-45) {
+          local_c0.midPoint[0] = (float)dVar8;
+          local_c0.midPoint[1] = (float)dVar8;
+          local_c0.midPoint[2] = (float)dVar8;
+          local_c0.halfSize[0] = pfVar7[1];
+          local_c0.halfSize[1] = pfVar7[2];
+          local_c0.halfSize[2] = pfVar7[3];
+          if ((int)param_1 < 3) {
             CG_DebugBoxOriented(&local_e0,&local_c0,(float (*) [3])afStack_a0,colorLtGreen,0,3);
           }
           else {
@@ -3722,44 +3549,44 @@ void Phys_DebugDrawCollmap(PhysWorld param_1,dxGeom *param_2,float (*param_3) [3
           }
         }
         else {
-          if (pfVar8[-0xc] != 7.00649e-45) {
-            pafVar5 = (float (*) [3])0x99b;
-            pfVar4 = (float *)
+          if (pfVar7[-0xc] != 7.00649e-45) {
+            pafVar4 = (float (*) [3])0x99b;
+            pfVar3 = (float *)
                      "c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp";
             MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",
                             0x99b,0,"%s");
           }
-          Phys_DebugDrawCylinder(pfVar8[1],pfVar8[3],pfVar4,pafVar5,(uint)&local_e0);
+          Phys_DebugDrawCylinder(pfVar7[1],pfVar7[3],pfVar3,pafVar4,(uint)&local_e0);
         }
       }
-      uVar7 = uVar7 + 1;
-      piVar6 = piVar6 + 0x11;
-      pfVar8 = pfVar8 + 0x11;
-    } while (uVar7 < *(uint *)(iVar2 + 4));
+      uVar6 = uVar6 + 1;
+      piVar5 = piVar5 + 0x11;
+      pfVar7 = pfVar7 + 0x11;
+    } while (uVar6 < *(uint *)(iVar1 + 4));
   }
-  __restgprlr_20();
   return;
 }
 
 
 // 82670E88  Phys_ObjDraw  (physics/phys_ode.cpp:2467)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PhysWorld": Some values do not have unique names */
 
 void Phys_ObjDraw(PhysWorld param_1,dxBody *param_2)
 
 {
-  PhysWorld PVar1;
-  float *pfVar2;
-  bool bVar7;
-  dxGeom *pdVar3;
-  uint uVar4;
-  dxGeom *pdVar5;
-  float *pfVar6;
-  float (*pafVar8) [3];
+  float *pfVar1;
+  bool bVar6;
+  dxGeom *pdVar2;
+  uint uVar3;
+  dxGeom *pdVar4;
+  float *pfVar5;
+  float (*pafVar7) [3];
   float *in_r5;
+  double dVar8;
   double dVar9;
-  double dVar10;
   float local_c0;
   float local_bc;
   float local_b8;
@@ -3769,67 +3596,66 @@ void Phys_ObjDraw(PhysWorld param_1,dxBody *param_2)
   Bounds local_a0;
   float afStack_80 [32];
   
-  PVar1 = __savegprlr_24(param_1);
-  pfVar2 = dBodyGetPosition(param_2);
-  local_c0 = *pfVar2;
-  local_bc = pfVar2[1];
-  local_b8 = pfVar2[2];
-  dVar10 = 0.0;
-  if (((phys_drawAwake->current).enabled != false) && (bVar7 = dBodyIsEnabled(param_2), bVar7)) {
-    local_a0.midPoint[0] = (float)dVar10;
-    local_a0.midPoint[1] = (float)dVar10;
-    local_a0.midPoint[2] = (float)dVar10;
+  pfVar1 = dBodyGetPosition(param_2);
+  local_c0 = *pfVar1;
+  local_bc = pfVar1[1];
+  local_b8 = pfVar1[2];
+  dVar9 = 0.0;
+  if (((phys_drawAwake->current).enabled != false) && (bVar6 = dBodyIsEnabled(param_2), bVar6)) {
+    local_a0.midPoint[0] = (float)dVar9;
+    local_a0.midPoint[1] = (float)dVar9;
+    local_a0.midPoint[2] = (float)dVar9;
     local_a0.halfSize[0] = 4.0;
     local_a0.halfSize[1] = 4.0;
     local_a0.halfSize[2] = 4.0;
-    if ((int)PVar1 < 3) {
-      CG_DebugBox(&local_c0,&local_a0,(float)dVar10,in_r5,(int)g_phys_awakeColors[PVar1],0);
+    if ((int)param_1 < 3) {
+      CG_DebugBox(&local_c0,&local_a0,(float)dVar9,in_r5,(int)g_phys_awakeColors[param_1],0);
     }
     else {
-      G_DebugBox(&local_c0,&local_a0,(float)dVar10,in_r5,(int)g_phys_awakeColors[PVar1],0);
+      G_DebugBox(&local_c0,&local_a0,(float)dVar9,in_r5,(int)g_phys_awakeColors[param_1],0);
     }
   }
   if (((phys_drawCollisionObj->current).enabled != false) &&
-     (pdVar3 = ODE_BodyGetFirstGeom(param_2), pdVar3 != (dxGeom *)0x0)) {
-    dVar9 = 0.5;
+     (pdVar2 = ODE_BodyGetFirstGeom(param_2), pdVar2 != (dxGeom *)0x0)) {
+    dVar8 = 0.5;
     do {
-      uVar4 = dGeomGetClass(pdVar3);
-      pdVar5 = pdVar3;
-      if (uVar4 == 1) {
-        pdVar5 = ODE_GeomTransformUpdateGeomOrientation(pdVar3);
-        uVar4 = dGeomGetClass(pdVar5);
+      uVar3 = dGeomGetClass(pdVar2);
+      pdVar4 = pdVar2;
+      if (uVar3 == 1) {
+        pdVar4 = ODE_GeomTransformUpdateGeomOrientation(pdVar2);
+        uVar3 = dGeomGetClass(pdVar4);
       }
-      pfVar2 = dGeomGetRotation(pdVar5);
-      pafVar8 = (float (*) [3])afStack_80;
-      Phys_OdeMatrix3ToAxis(pfVar2,pafVar8);
-      pfVar2 = dGeomGetPosition(pdVar5);
-      local_c0 = *pfVar2;
-      local_bc = pfVar2[1];
-      local_b8 = pfVar2[2];
-      if ((((uVar4 < 7) && (uVar4 != 1)) && (uVar4 != 2)) && (uVar4 != 3)) {
-        if (uVar4 == 4) {
-          Phys_DebugDrawCollmap(PVar1,pdVar5,(float (*) [3])afStack_80,&local_c0);
+      pfVar1 = dGeomGetRotation(pdVar4);
+      pafVar7 = (float (*) [3])afStack_80;
+      Phys_OdeMatrix3ToAxis(pfVar1,pafVar7);
+      pfVar1 = dGeomGetPosition(pdVar4);
+      local_c0 = *pfVar1;
+      local_bc = pfVar1[1];
+      local_b8 = pfVar1[2];
+      if ((((uVar3 < 7) && (uVar3 != 1)) && (uVar3 != 2)) && (uVar3 != 3)) {
+        if (uVar3 == 4) {
+          Phys_DebugDrawCollmap(param_1,pdVar4,(float (*) [3])afStack_80,&local_c0);
         }
-        else if ((uVar4 == 5) || (uVar4 != 0)) {
-          pfVar2 = ODE_GeomGetClassData(pdVar5);
-          if (((int)*pfVar2 < 1) || (pfVar6 = pfVar2, 3 < (int)*pfVar2)) {
-            pafVar8 = (float (*) [3])0x9eb;
-            pfVar6 = (float *)
+        else if ((uVar3 == 5) || (uVar3 != 0)) {
+          pfVar1 = ODE_GeomGetClassData(pdVar4);
+          if (((int)*pfVar1 < 1) || (pfVar5 = pfVar1, 3 < (int)*pfVar1)) {
+            pafVar7 = (float (*) [3])0x9eb;
+            pfVar5 = (float *)
                      "c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp";
             MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",
                             0x9eb,0,"%s");
           }
-          Phys_DebugDrawCylinder(pfVar2[1],pfVar2[2],pfVar6,pafVar8,(uint)&local_c0);
+          Phys_DebugDrawCylinder(pfVar1[1],pfVar1[2],pfVar5,pafVar7,(uint)&local_c0);
         }
         else {
-          dGeomBoxGetLengths(pdVar5,&local_b0);
-          local_a0.halfSize[0] = (float)((double)local_b0 * dVar9);
-          local_a0.halfSize[1] = (float)((double)local_ac * dVar9);
-          local_a0.halfSize[2] = (float)((double)local_a8 * dVar9);
-          local_a0.midPoint[0] = (float)dVar10;
-          local_a0.midPoint[1] = (float)dVar10;
-          local_a0.midPoint[2] = (float)dVar10;
-          if ((int)PVar1 < 3) {
+          dGeomBoxGetLengths(pdVar4,&local_b0);
+          local_a0.halfSize[0] = (float)((double)local_b0 * dVar8);
+          local_a0.halfSize[1] = (float)((double)local_ac * dVar8);
+          local_a0.halfSize[2] = (float)((double)local_a8 * dVar8);
+          local_a0.midPoint[0] = (float)dVar9;
+          local_a0.midPoint[1] = (float)dVar9;
+          local_a0.midPoint[2] = (float)dVar9;
+          if ((int)param_1 < 3) {
             CG_DebugBoxOriented(&local_c0,&local_a0,(float (*) [3])afStack_80,colorLtGreen,0,3);
           }
           else {
@@ -3837,16 +3663,17 @@ void Phys_ObjDraw(PhysWorld param_1,dxBody *param_2)
           }
         }
       }
-      pdVar3 = dGeomGetBodyNext(pdVar3);
-    } while (pdVar3 != (dxGeom *)0x0);
+      pdVar2 = dGeomGetBodyNext(pdVar2);
+    } while (pdVar2 != (dxGeom *)0x0);
   }
-  __restgprlr_24();
   return;
 }
 
 
 // 82671120  Phys_DrawDebugTextForWorld  (physics/phys_ode.cpp:2625)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PhysWorld": Some values do not have unique names */
 
 uint Phys_DrawDebugTextForWorld
@@ -3856,74 +3683,64 @@ uint Phys_DrawDebugTextForWorld
 {
   dxBody *pdVar1;
   uint uVar2;
-  uint uVar3;
   bool bVar5;
+  char *pcVar3;
   char *pcVar4;
   longlong lVar6;
   longlong lVar7;
-  char *pcVar8;
-  longlong lVar9;
-  longlong lVar10;
-  float *pfVar11;
-  float *pfVar12;
+  float *pfVar8;
   ScreenPlacement *in_r8;
-  longlong lVar13;
-  double extraout_f1;
-  double dVar14;
+  char *pcVar9;
+  double dVar10;
   
-  lVar9 = (longlong)(int)param_3;
+  dVar10 = (double)param_5;
+  lVar7 = (longlong)(int)param_3;
   lVar6 = (longlong)(int)param_2;
-  uVar2 = __savegprlr_23((double)param_5,param_1);
-  lVar7 = lVar6;
-  lVar10 = lVar9;
-  dVar14 = extraout_f1;
-  if (4 < uVar2) {
-    lVar10 = 0;
-    lVar7 = 0xa47;
+  if (PHYS_WORLD_LAST_SERVER_WORLD < param_1) {
+    lVar7 = 0;
+    lVar6 = 0xa47;
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0xa47,0,
                     "worldIndex doesn\'t index PHYS_WORLD_COUNT\n\t%i not in [0, %i)");
   }
-  if ((physInitedClient == false) && ((int)uVar2 < 3)) {
-    lVar10 = 0;
-    lVar7 = 0xa48;
+  if ((physInitedClient == false) && ((int)param_1 < 3)) {
+    lVar7 = 0;
+    lVar6 = 0xa48;
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0xa48,0,
                     "%s");
   }
-  if ((physInitedServer == false) && (2 < (int)uVar2)) {
-    lVar10 = 0;
-    lVar7 = 0xa49;
+  if ((physInitedServer == false) && (2 < (int)param_1)) {
+    lVar7 = 0;
+    lVar6 = 0xa49;
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0xa49,0,
                     "%s");
   }
-  uVar3 = ODE_WorldGetBodyCount(physGlob.world + uVar2);
-  pfVar12 = (float *)lVar10;
-  pcVar4 = (char *)lVar7;
-  lVar13 = 0;
-  for (pdVar1 = physGlob.world[uVar2].firstbody; pdVar1 != (dxBody *)0x0;
+  uVar2 = ODE_WorldGetBodyCount(physGlob.world + param_1);
+  pfVar8 = (float *)lVar7;
+  pcVar4 = (char *)lVar6;
+  pcVar9 = (char *)0x0;
+  for (pdVar1 = physGlob.world[param_1].firstbody; pdVar1 != (dxBody *)0x0;
       pdVar1 = (dxBody *)pdVar1->_padding_) {
     bVar5 = dBodyIsEnabled(pdVar1);
-    pfVar12 = (float *)lVar10;
-    pcVar4 = (char *)lVar7;
+    pfVar8 = (float *)lVar7;
+    pcVar4 = (char *)lVar6;
     if (bVar5) {
-      lVar13 = lVar13 + 1;
+      pcVar9 = pcVar9 + 1;
     }
   }
-  pfVar11 = (float *)lVar9;
-  CG_DrawStringExt(in_r8,*pfVar11,*param_4,pcVar4,pfVar12,(int)lVar6,(int)g_phys_awakeColors[uVar2],
-                   (float)dVar14,0);
-  *param_4 = (float)((double)*param_4 + dVar14);
-  lVar7 = lVar13;
-  pcVar4 = va("   Awake: %i");
-  CG_DrawStringExt(in_r8,*pfVar11,*param_4,(char *)lVar7,pfVar12,(int)pcVar4,
-                   (int)g_phys_awakeColors[uVar2],(float)dVar14,0);
-  *param_4 = (float)((double)*param_4 + dVar14);
-  pcVar8 = (char *)(uVar3 - (int)lVar13);
+  CG_DrawStringExt(in_r8,*param_3,*param_4,pcVar4,pfVar8,(int)param_2,
+                   (int)g_phys_awakeColors[param_1],(float)dVar10,0);
+  *param_4 = (float)((double)*param_4 + dVar10);
+  pcVar4 = pcVar9;
+  pcVar3 = va("   Awake: %i");
+  CG_DrawStringExt(in_r8,*param_3,*param_4,pcVar4,pfVar8,(int)pcVar3,
+                   (int)g_phys_awakeColors[param_1],(float)dVar10,0);
+  *param_4 = (float)((double)*param_4 + dVar10);
+  pcVar3 = (char *)(uVar2 - (int)pcVar9);
   pcVar4 = va("   Asleep: %i");
-  CG_DrawStringExt(in_r8,*pfVar11,*param_4,pcVar8,pfVar12,(int)pcVar4,(int)g_phys_awakeColors[uVar2]
-                   ,(float)dVar14,0);
-  *param_4 = (float)((double)*param_4 + dVar14);
-  uVar2 = __restgprlr_23(lVar13);
-  return uVar2;
+  CG_DrawStringExt(in_r8,*param_3,*param_4,pcVar3,pfVar8,(int)pcVar4,
+                   (int)g_phys_awakeColors[param_1],(float)dVar10,0);
+  *param_4 = (float)((double)*param_4 + dVar10);
+  return (uint)pcVar9;
 }
 
 
@@ -4030,6 +3847,10 @@ int Phys_DoBodyOncePerFrame(uint param_1,dxBody *param_2,float param_3)
 
 // 826715B0  Phys_ContactEffects  (physics/phys_ode.cpp:2735)
 
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PhysWorld": Some values do not have unique names */
 
 void Phys_ContactEffects(dxWorld *param_1)
@@ -4043,17 +3864,17 @@ void Phys_ContactEffects(dxWorld *param_1)
   snd_alias_list_t *psVar6;
   PhysPresetScaling PVar7;
   bool bVar8;
-  dxWorld *pdVar9;
-  bool bVar12;
-  PhysWorld PVar10;
-  void *pvVar11;
-  float *pfVar13;
-  ulonglong uVar14;
-  float *pfVar15;
-  uint uVar16;
-  dxBody *pdVar17;
-  dxJointNode *pdVar18;
-  bool bVar19;
+  bool bVar11;
+  PhysWorld PVar9;
+  void *pvVar10;
+  float *pfVar12;
+  ulonglong uVar13;
+  float *pfVar14;
+  uint uVar15;
+  dxBody *pdVar16;
+  dxJointNode *pdVar17;
+  bool bVar18;
+  double dVar19;
   double dVar20;
   double dVar21;
   double dVar22;
@@ -4063,8 +3884,7 @@ void Phys_ContactEffects(dxWorld *param_1)
   double dVar26;
   double dVar27;
   double dVar28;
-  double dVar29;
-  float fVar30;
+  float fVar29;
   bool local_150;
   int local_14c;
   float local_128;
@@ -4080,120 +3900,118 @@ void Phys_ContactEffects(dxWorld *param_1)
   float local_f4;
   float local_f0;
   
-  __savegprlr();
-  pdVar9 = (dxWorld *)__savefpr_23();
-  pdVar17 = pdVar9->firstbody;
+  pdVar16 = param_1->firstbody;
   local_14c = 0;
   local_150 = false;
-  if (pdVar17 != (dxBody *)0x0) {
-    dVar25 = 1.0;
-    dVar23 = 0.699999988079071;
-    dVar24 = 0.009999999776482582;
-    dVar26 = 0.0;
-    uVar14 = 0xffffffff82194578;
+  if (pdVar16 != (dxBody *)0x0) {
+    dVar24 = 1.0;
+    dVar22 = 0.699999988079071;
+    dVar23 = 0.009999999776482582;
+    dVar25 = 0.0;
+    uVar13 = 0xffffffff82194578;
     do {
-      local_128 = (float)dVar26;
-      uVar16 = 0;
-      local_124 = (float)dVar26;
-      local_120 = (float)dVar26;
-      pdVar18 = pdVar17->firstjoint;
-      dVar22 = dVar26;
-      if (pdVar18 != (dxJointNode *)0x0) {
+      local_128 = (float)dVar25;
+      uVar15 = 0;
+      local_124 = (float)dVar25;
+      local_120 = (float)dVar25;
+      pdVar17 = pdVar16->firstjoint;
+      dVar21 = dVar25;
+      if (pdVar17 != (dxJointNode *)0x0) {
         do {
-          pdVar1 = pdVar18->joint;
+          pdVar1 = pdVar17->joint;
           if (pdVar1->type == ODE_JOINT_TYPE_CONTACT) {
             if ((pdVar1->node[0].body == (dxBody *)0x0) ||
                (bVar8 = true, pdVar1->node[1].body == (dxBody *)0x0)) {
               bVar8 = false;
             }
-            bVar19 = dVar24 <= (double)(float)pdVar1[1].node[0].joint;
-            if ((((physGlob.worldData[pdVar9->worldIndex].glassCallback !=
+            bVar18 = dVar23 <= (double)(float)pdVar1[1].node[0].joint;
+            if ((((physGlob.worldData[param_1->worldIndex].glassCallback !=
                    (_func___cdecl_void_float_ptr_float_ptr *)0x0) &&
                  ((pdVar1[2]._padding_ & 0x1f00000U) == 0x900000)) &&
-                (bVar12 = ODE_BodyGetBreaksGlass(pdVar17), bVar12)) &&
-               (dVar23 < (double)(float)pdVar1[2]._padding_)) {
-              (*physGlob.worldData[pdVar9->worldIndex].glassCallback)
+                (bVar11 = ODE_BodyGetBreaksGlass(pdVar16), bVar11)) &&
+               (dVar22 < (double)(float)pdVar1[2]._padding_)) {
+              (*physGlob.worldData[param_1->worldIndex].glassCallback)
                         ((float *)&pdVar1[1].node[1].body,(float *)(pdVar1 + 2));
             }
             if (!bVar8) {
               pdVar2 = pdVar1->node[1].body;
               pdVar3 = pdVar1->node[0].body;
-              uVar14 = ZEXT48(pdVar3);
-              PVar10 = Phys_IndexFromODEWorldID(pdVar9);
+              uVar13 = ZEXT48(pdVar3);
+              PVar9 = Phys_IndexFromODEWorldID(param_1);
               Phys_ApplyContactJitter
-                        (PVar10,(dContactGeom *)&pdVar1[1].node[1].body,pdVar3,pdVar2,bVar19);
+                        (PVar9,(dContactGeom *)&pdVar1[1].node[1].body,pdVar3,pdVar2,bVar18);
             }
-            if (!bVar19) {
-              if (pdVar17 == pdVar1->node[1].body) {
-                dVar29 = -(double)(float)pdVar1[2]._padding_;
+            if (!bVar18) {
+              if (pdVar16 == pdVar1->node[1].body) {
                 dVar28 = -(double)(float)pdVar1[2]._padding_;
                 dVar27 = -(double)(float)pdVar1[2]._padding_;
+                dVar26 = -(double)(float)pdVar1[2]._padding_;
               }
               else {
-                if (pdVar17 != pdVar1->node[0].body) {
+                if (pdVar16 != pdVar1->node[0].body) {
                   MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp"
                                   ,0xaf2,0,"%s");
                 }
-                dVar29 = (double)(float)pdVar1[2]._padding_;
                 dVar28 = (double)(float)pdVar1[2]._padding_;
                 dVar27 = (double)(float)pdVar1[2]._padding_;
+                dVar26 = (double)(float)pdVar1[2]._padding_;
               }
               if ((pdVar1->flags & 2U) != 0) {
-                dVar29 = -dVar29;
                 dVar28 = -dVar28;
                 dVar27 = -dVar27;
+                dVar26 = -dVar26;
               }
-              local_110 = (float)dVar27;
-              local_114 = (float)dVar28;
-              local_118 = (float)dVar29;
-              uVar14 = ZEXT48(pdVar1) + 0x6c;
-              pfVar15 = (float *)uVar14;
+              local_110 = (float)dVar26;
+              local_114 = (float)dVar27;
+              local_118 = (float)dVar28;
+              uVar13 = ZEXT48(pdVar1) + 0x6c;
+              pfVar14 = (float *)uVar13;
               if (bVar8) {
-                fVar30 = Phys_ObjGet2BodyImpulseAtPoint
-                                   ((int)pdVar1->node[0].body,(int)pdVar1->node[1].body,pfVar15,
+                fVar29 = Phys_ObjGet2BodyImpulseAtPoint
+                                   ((int)pdVar1->node[0].body,(int)pdVar1->node[1].body,pfVar14,
                                     (float *)(pdVar1 + 2));
-                dVar20 = (double)fVar30;
+                dVar19 = (double)fVar29;
               }
               else {
-                uVar14 = ZEXT48(&stack0x00000000) - 0x118;
-                pfVar13 = pfVar15;
-                fVar30 = Phys_ObjGetEffectiveInverseMassAtPoint
-                                   ((int)pdVar17,pfVar15,(float *)uVar14);
-                dVar20 = (double)fVar30;
-                dBodyGetPointVel(pdVar17,(float)pdVar1[1].node[1].body,
+                uVar13 = ZEXT48(&stack0x00000000) - 0x118;
+                pfVar12 = pfVar14;
+                fVar29 = Phys_ObjGetEffectiveInverseMassAtPoint
+                                   ((int)pdVar16,pfVar14,(float *)uVar13);
+                dVar19 = (double)fVar29;
+                dBodyGetPointVel(pdVar16,(float)pdVar1[1].node[1].body,
                                  (float)pdVar1[1].node[1].bodyTag,(float)pdVar1[1].node[1].next,
-                                 pfVar13);
-                dVar21 = -(double)(float)((double)(float)((double)local_100 * dVar27 +
-                                                         (double)(float)((double)local_104 * dVar28
+                                 pfVar12);
+                dVar20 = -(double)(float)((double)(float)((double)local_100 * dVar26 +
+                                                         (double)(float)((double)local_104 * dVar27
                                                                         + (double)(float)((double)
-                                                  local_108 * dVar29))) / dVar20);
-                dVar20 = dVar26;
-                if (-dVar21 < 0.0) {
-                  dVar20 = dVar21;
+                                                  local_108 * dVar28))) / dVar19);
+                dVar19 = dVar25;
+                if (-dVar20 < 0.0) {
+                  dVar19 = dVar20;
                 }
               }
-              uVar16 = uVar16 + 1;
-              local_128 = *pfVar15 + local_128;
+              uVar15 = uVar15 + 1;
+              local_128 = *pfVar14 + local_128;
               local_124 = (float)pdVar1[1].node[1].bodyTag + local_124;
               local_120 = (float)pdVar1[1].node[1].next + local_120;
-              if (dVar22 < dVar20) {
-                local_f8 = (float)dVar29;
-                local_f4 = (float)dVar28;
-                local_f0 = (float)dVar27;
+              if (dVar21 < dVar19) {
+                local_f8 = (float)dVar28;
+                local_f4 = (float)dVar27;
+                local_f0 = (float)dVar26;
                 local_14c = pdVar1[2]._padding_;
-                dVar22 = dVar20;
+                dVar21 = dVar19;
                 local_150 = bVar8;
               }
             }
           }
-          pdVar18 = pdVar18->next;
-        } while (pdVar18 != (dxJointNode *)0x0);
-        if ((uVar16 != 0) && (dVar22 != dVar26)) {
-          PVar10 = Phys_IndexFromODEWorldID(pdVar9);
-          if ((int)PVar10 < 3) {
-            pvVar11 = dBodyGetData(pdVar17);
-            if (*(uint *)((int)pvVar11 + 0x4c) != 0x40) {
-              if (0x3f < *(uint *)((int)pvVar11 + 0x4c)) {
+          pdVar17 = pdVar17->next;
+        } while (pdVar17 != (dxJointNode *)0x0);
+        if ((uVar15 != 0) && (dVar21 != dVar25)) {
+          PVar9 = Phys_IndexFromODEWorldID(param_1);
+          if ((int)PVar9 < 3) {
+            pvVar10 = dBodyGetData(pdVar16);
+            if (*(uint *)((int)pvVar10 + 0x4c) != 0x40) {
+              if (0x3f < *(uint *)((int)pvVar10 + 0x4c)) {
                 MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp"
                                 ,0xb1e,0,
                                 "bodyUserData->sndClass doesn\'t index AUDIOPHYS_CLASSMAX\n\t%i not in [0, %i)"
@@ -4205,85 +4023,83 @@ void Phys_ContactEffects(dxWorld *param_1)
                                 "SURF_TYPEINDEX( surfFlags ) doesn\'t index SURF_TYPECOUNT\n\t%i not in [0, %i)"
                                );
               }
-              uVar4 = *(uint *)((int)pvVar11 + 0x4c);
-              uVar14 = (((ulonglong)(uint)(local_14c >> 0x14) & 0x1f) + (ulonglong)uVar4 * 0x25 &
+              uVar4 = *(uint *)((int)pvVar10 + 0x4c);
+              uVar13 = (((ulonglong)(uint)(local_14c >> 0x14) & 0x1f) + (ulonglong)uVar4 * 0x25 &
                        0x3fffffff) << 2;
               psVar6 = *(snd_alias_list_t **)
-                        ((int)cgMedia.physCollisionSoundInfo[0].sound + (int)uVar14);
-              dVar27 = (double)cgMedia.physCollisionSoundInfo[uVar4].minMomentum;
-              dVar28 = (double)cgMedia.physCollisionSoundInfo[uVar4].maxMomentum;
-              if ((psVar6 != (snd_alias_list_t *)0x0) && (dVar27 <= dVar22)) {
-                dVar29 = dVar25;
-                if (dVar28 != dVar27) {
-                  if ((float)(dVar28 - dVar22) < 0.0) {
-                    dVar22 = dVar28;
+                        ((int)cgMedia.physCollisionSoundInfo[0].sound + (int)uVar13);
+              dVar26 = (double)cgMedia.physCollisionSoundInfo[uVar4].minMomentum;
+              dVar27 = (double)cgMedia.physCollisionSoundInfo[uVar4].maxMomentum;
+              if ((psVar6 != (snd_alias_list_t *)0x0) && (dVar26 <= dVar21)) {
+                dVar28 = dVar24;
+                if (dVar27 != dVar26) {
+                  if ((float)(dVar27 - dVar21) < 0.0) {
+                    dVar21 = dVar27;
                   }
-                  dVar29 = (double)((float)(dVar22 - dVar27) / (float)(dVar28 - dVar27));
+                  dVar28 = (double)((float)(dVar21 - dVar26) / (float)(dVar27 - dVar26));
                 }
-                PVar7 = cgMedia.physCollisionSoundInfo[*(int *)((int)pvVar11 + 0x4c)].volumeType;
-                dVar22 = dVar29;
+                PVar7 = cgMedia.physCollisionSoundInfo[*(int *)((int)pvVar10 + 0x4c)].volumeType;
+                dVar21 = dVar28;
                 if (PVar7 != PHYSPRESET_SCALING_LINEAR) {
                   if (PVar7 == PHYSPRESET_SCALING_QUADRATIC) {
-                    dVar22 = (double)(float)(dVar29 * dVar29);
+                    dVar21 = (double)(float)(dVar28 * dVar28);
                   }
                   else {
-                    dVar22 = dVar25;
+                    dVar21 = dVar24;
                     if (alwaysfails == 0) {
-                      uVar14 = 1;
+                      uVar13 = 1;
                       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp"
                                       ,0xb34,1,"invalid physic sound volume scaling");
                     }
                   }
                 }
-                iVar5 = *(int *)((int)pvVar11 + 0x4c);
+                iVar5 = *(int *)((int)pvVar10 + 0x4c);
                 PVar7 = cgMedia.physCollisionSoundInfo[iVar5].pitchType;
-                dVar27 = (double)cgMedia.physCollisionSoundInfo[iVar5].minPitch;
-                dVar28 = (double)cgMedia.physCollisionSoundInfo[iVar5].maxPitch;
+                dVar26 = (double)cgMedia.physCollisionSoundInfo[iVar5].minPitch;
+                dVar27 = (double)cgMedia.physCollisionSoundInfo[iVar5].maxPitch;
                 if (PVar7 == PHYSPRESET_SCALING_LINEAR) {
-                  dVar27 = (double)(float)((double)(float)(dVar28 - dVar27) * dVar29 + dVar27);
+                  dVar26 = (double)(float)((double)(float)(dVar27 - dVar26) * dVar28 + dVar26);
                 }
                 else if (PVar7 == PHYSPRESET_SCALING_QUADRATIC) {
-                  dVar27 = (double)(float)((double)(float)((double)(float)(dVar28 - dVar27) * dVar29
-                                                          ) * dVar29 + dVar27);
+                  dVar26 = (double)(float)((double)(float)((double)(float)(dVar27 - dVar26) * dVar28
+                                                          ) * dVar28 + dVar26);
                 }
                 else {
-                  dVar27 = dVar25;
+                  dVar26 = dVar24;
                   if (alwaysfails == 0) {
-                    uVar14 = 1;
+                    uVar13 = 1;
                     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp"
                                     ,0xb43,1,"invalid physic sound pitch scaling");
                   }
                 }
-                if (((uint)(float)dVar22 & 0x7f800000) == 0x7f800000) {
-                  uVar14 = 0;
+                if (((uint)(float)dVar21 & 0x7f800000) == 0x7f800000) {
+                  uVar13 = 0;
                   MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp"
                                   ,0xb46,0,"%s");
                 }
-                if (((uint)(float)dVar27 & 0x7f800000) == 0x7f800000) {
-                  uVar14 = 0;
+                if (((uint)(float)dVar26 & 0x7f800000) == 0x7f800000) {
+                  uVar13 = 0;
                   MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp"
                                   ,0xb47,0,"%s");
                 }
-                fVar30 = (float)(dVar25 / (double)uVar16);
-                local_128 = fVar30 * local_128;
-                local_124 = fVar30 * local_124;
-                local_120 = local_120 * fVar30;
-                SND_AddPhysicsSound(psVar6,&local_128,(float)dVar22,(float)dVar27);
+                fVar29 = (float)(dVar24 / (double)uVar15);
+                local_128 = fVar29 * local_128;
+                local_124 = fVar29 * local_124;
+                local_120 = local_120 * fVar29;
+                SND_AddPhysicsSound(psVar6,&local_128,(float)dVar21,(float)dVar26);
               }
             }
           }
-          else if ((pdVar9->worldIndex == PHYS_WORLD_FIRST_SERVER_WORLD) &&
+          else if ((param_1->worldIndex == PHYS_WORLD_FIRST_SERVER_WORLD) &&
                   (physGlob.worldData[3].impactCallback !=
                    (_func___cdecl_void_int_float_ptr_float_bool *)0x0)) {
-            (*physGlob.worldData[3].impactCallback)((int)pdVar17,&local_f8,(float)uVar14,local_150);
+            (*physGlob.worldData[3].impactCallback)((int)pdVar16,&local_f8,(float)uVar13,local_150);
           }
         }
       }
-      pdVar17 = (dxBody *)pdVar17->_padding_;
-    } while (pdVar17 != (dxBody *)0x0);
+      pdVar16 = (dxBody *)pdVar16->_padding_;
+    } while (pdVar16 != (dxBody *)0x0);
   }
-  __restfpr_23();
-  __restgprlr();
   return;
 }
 
@@ -4332,6 +4148,8 @@ void Phys_GetGravityAccel(PhysWorld param_1,float *param_2)
 
 // 82671CD8  Phys_DoCollideCmds  (physics/phys_ode.cpp:2927)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PhysWorld": Some values do not have unique names */
 /* WARNING: Enum "WorkerCmdType": Some values do not have unique names */
 
@@ -4339,17 +4157,15 @@ void Phys_DoCollideCmds(PhysWorld param_1,float param_2)
 
 {
   uint uVar1;
-  ulonglong uVar2;
+  int iVar2;
   int iVar3;
   int iVar4;
-  int iVar5;
-  longlong lVar6;
-  uint *puVar7;
+  longlong lVar5;
+  uint *puVar6;
   char in_RESERVE;
   byte in_cr0;
-  double extraout_f1;
-  double dVar8;
-  int local_80;
+  double dVar7;
+  PhysWorld local_80;
   float local_7c;
   dxGeom *local_78;
   PhysGlob *local_74;
@@ -4362,72 +4178,72 @@ void Phys_DoCollideCmds(PhysWorld param_1,float param_2)
   int local_58;
   int local_54 [21];
   
-  uVar2 = __savegprlr_29((double)param_2,param_1);
-  dVar8 = extraout_f1;
+  dVar7 = (double)param_2;
   PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffff,"physics collide");
-  if (4 < (uVar2 & 0xffffffff)) {
+  if (PHYS_WORLD_LAST_SERVER_WORLD < param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0x176,0,
                     "worldIndex doesn\'t index PHYS_WORLD_COUNT\n\t%i not in [0, %i)");
   }
-  local_80 = (int)uVar2;
-  local_7c = (float)dVar8;
-  g_phys_contactListGroups[local_80].contactListCount = 0;
-  local_6c = local_80 * 0xc + -0x7d668cb8;
-  local_68 = g_phys_contactListGroups[local_80].contactListMax;
-  local_70 = g_phys_contactListGroups[local_80].contactList;
+  local_7c = (float)dVar7;
+  g_phys_contactListGroups[param_1].contactListCount = 0;
+  local_6c = param_1 * 0xc + -0x7d668cb8;
+  local_68 = g_phys_contactListGroups[param_1].contactListMax;
+  local_70 = g_phys_contactListGroups[param_1].contactList;
   local_74 = &physGlob;
   local_78 = physGlob.worldGeom;
+  local_80 = param_1;
   local_64 = CM_GetClipMapPtr();
   local_60 = CG_GlassPieceFromIndex(0);
-  lVar6 = uVar2 * 0x70 + -0x7bd8461c;
-  iVar3 = (int)(uVar2 * 0x70);
-  puVar7 = (uint *)lVar6;
-  iVar5 = *(int *)(&physGlob.space[0].field_0x50 + iVar3);
-  *(int *)(&physGlob.space[0].field_0x60 + iVar3) =
-       *(int *)(&physGlob.space[0].field_0x60 + iVar3) + 1;
-  iVar3 = 0;
-  local_5c = puVar7;
+  lVar5 = (longlong)(int)param_1 * 0x70 + -0x7bd8461c;
+  iVar2 = (int)((longlong)(int)param_1 * 0x70);
+  puVar6 = (uint *)lVar5;
+  iVar4 = *(int *)(&physGlob.space[0].field_0x50 + iVar2);
+  *(int *)(&physGlob.space[0].field_0x60 + iVar2) =
+       *(int *)(&physGlob.space[0].field_0x60 + iVar2) + 1;
+  iVar2 = 0;
+  local_5c = puVar6;
   do {
-    iVar4 = iVar3;
-    if (((*(int *)(iVar5 + 0x10) == 0) || ((*(uint *)(*(int *)(iVar5 + 0x10) + 0x18) & 4) == 0)) &&
-       ((*(uint *)(iVar5 + 8) & 8) != 0)) {
-      iVar4 = iVar3 + 1;
-      local_54[iVar3] = iVar5;
+    iVar3 = iVar2;
+    if (((*(int *)(iVar4 + 0x10) == 0) || ((*(uint *)(*(int *)(iVar4 + 0x10) + 0x18) & 4) == 0)) &&
+       ((*(uint *)(iVar4 + 8) & 8) != 0)) {
+      iVar3 = iVar2 + 1;
+      local_54[iVar2] = iVar4;
     }
-    if (7 < iVar4) {
+    if (7 < iVar3) {
       do {
         if (in_RESERVE != '\0') {
-          uVar1 = storeWordConditionalIndexed((ulonglong)*puVar7 + 1,0,lVar6);
-          *puVar7 = uVar1;
+          uVar1 = storeWordConditionalIndexed((ulonglong)*puVar6 + 1,0,lVar5);
+          *puVar6 = uVar1;
           in_cr0 = 2;
         }
       } while (!(bool)(in_cr0 >> 1 & 1));
-      local_58 = iVar4;
+      local_58 = iVar3;
       R_AddWorkerCmd(WRKCMD_END_FRONTEND,&local_80);
-      iVar4 = 0;
+      iVar3 = 0;
     }
-    iVar5 = *(int *)(iVar5 + 0x20);
-    iVar3 = iVar4;
-  } while (iVar5 != 0);
-  if (0 < iVar4) {
+    iVar4 = *(int *)(iVar4 + 0x20);
+    iVar2 = iVar3;
+  } while (iVar4 != 0);
+  if (0 < iVar3) {
     do {
       if (in_RESERVE != '\0') {
-        uVar1 = storeWordConditionalIndexed((ulonglong)*puVar7 + 1,0,lVar6);
-        *puVar7 = uVar1;
+        uVar1 = storeWordConditionalIndexed((ulonglong)*puVar6 + 1,0,lVar5);
+        *puVar6 = uVar1;
         in_cr0 = 2;
       }
     } while (!(bool)(in_cr0 >> 1 & 1));
-    local_58 = iVar4;
+    local_58 = iVar3;
     R_AddWorkerCmd(WRKCMD_END_FRONTEND,&local_80);
   }
   PIXEndNamedEvent();
-  __restgprlr_29();
   return;
 }
 
 
 // 82671E90  Phys_PostCollideCmds  (physics/phys_ode.cpp:2995)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PhysWorld": Some values do not have unique names */
 
 void Phys_PostCollideCmds(PhysWorld param_1)
@@ -4435,47 +4251,46 @@ void Phys_PostCollideCmds(PhysWorld param_1)
 {
   uint uVar1;
   ReducedContactList *pRVar2;
-  int iVar3;
-  ulonglong uVar4;
-  int iVar5;
+  ulonglong uVar3;
+  int iVar4;
   ContactList CStack_1050;
   
-  iVar3 = __savegprlr_24(param_1);
-  *(int *)&physGlob.space[iVar3].field_0x60 = *(int *)&physGlob.space[iVar3].field_0x60 + -1;
+  *(int *)&physGlob.space[param_1].field_0x60 = *(int *)&physGlob.space[param_1].field_0x60 + -1;
   PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffff,"physics joints");
-  uVar1 = g_phys_contactListGroups[iVar3].contactListCount;
-  if (g_phys_contactListGroups[iVar3].contactListMax <= (int)uVar1) {
+  uVar1 = g_phys_contactListGroups[param_1].contactListCount;
+  if (g_phys_contactListGroups[param_1].contactListMax <= (int)uVar1) {
     R_WarnOncePerFrame(R_WARN_MAX_CONTACT_LIST);
-    uVar1 = g_phys_contactListGroups[iVar3].contactListMax;
+    uVar1 = g_phys_contactListGroups[param_1].contactListMax;
   }
-  uVar4 = (ulonglong)uVar1;
+  uVar3 = (ulonglong)uVar1;
   if (0 < (int)uVar1) {
-    iVar5 = 0;
+    iVar4 = 0;
     do {
-      pRVar2 = g_phys_contactListGroups[iVar3].contactList;
+      pRVar2 = g_phys_contactListGroups[param_1].contactList;
       memcpy();
-      CStack_1050.contactCount = *(int *)(pRVar2->pad + iVar5 + -0x3c);
-      if (iVar3 != *(int *)(pRVar2->pad + iVar5 + -4)) {
+      CStack_1050.contactCount = *(int *)(pRVar2->pad + iVar4 + -0x3c);
+      if (param_1 != *(PhysWorld *)(pRVar2->pad + iVar4 + -4)) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",
                         0xbd0,0,"%s");
       }
       Phys_CreateJointForEachContact
-                (&CStack_1050,*(dxBody **)(pRVar2->pad + iVar5 + -0x38),
-                 *(dxBody **)(pRVar2->pad + iVar5 + -0x34),
-                 (dSurfaceParameters *)(pRVar2->pad + iVar5 + -0x30),
-                 *(PhysWorld *)(pRVar2->pad + iVar5 + -4));
-      uVar4 = uVar4 - 1;
-      iVar5 = iVar5 + 0x240;
-    } while (uVar4 != 0);
+                (&CStack_1050,*(dxBody **)(pRVar2->pad + iVar4 + -0x38),
+                 *(dxBody **)(pRVar2->pad + iVar4 + -0x34),
+                 (dSurfaceParameters *)(pRVar2->pad + iVar4 + -0x30),
+                 *(PhysWorld *)(pRVar2->pad + iVar4 + -4));
+      uVar3 = uVar3 - 1;
+      iVar4 = iVar4 + 0x240;
+    } while (uVar3 != 0);
   }
   PIXEndNamedEvent();
-  __restgprlr_24();
   return;
 }
 
 
 // 82671FB0  Phys_RunFrame  (physics/phys_ode.cpp:3034)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PhysWorld": Some values do not have unique names */
 
 void Phys_RunFrame(PhysWorld param_1,float param_2,FrameInfo *param_3)
@@ -4484,94 +4299,89 @@ void Phys_RunFrame(PhysWorld param_1,float param_2,FrameInfo *param_3)
   float fVar1;
   dvar_t *pdVar2;
   _func___cdecl_void *p_Var3;
-  dxWorld *pdVar4;
+  dvar_t *pdVar4;
   dvar_t *pdVar5;
   dvar_t *pdVar6;
   dvar_t *pdVar7;
-  dvar_t *pdVar8;
-  PhysWorld PVar9;
-  int iVar10;
   PhysWorld *in_r5;
-  double extraout_f1;
-  double dVar11;
+  dxWorld *pdVar8;
+  double dVar9;
   float local_60;
   float local_5c;
   float local_58;
   
-  PVar9 = __savegprlr_25((double)param_2,param_1,param_3);
-  dVar11 = extraout_f1;
-  if ((physInitedClient == false) && ((int)PVar9 < 3)) {
+  dVar9 = (double)param_2;
+  if ((!physInitedClient) && ((int)param_1 < 3)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0xbe0,0,
                     "%s");
   }
-  if ((physInitedServer == false) && (2 < (int)PVar9)) {
+  if ((physInitedServer == false) && (2 < (int)param_1)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0xbe1,0,
                     "%s");
   }
-  Phys_AssertCheckWorld(PVar9);
-  pdVar4 = physGlob.world + PVar9;
-  if (physGlob.world[PVar9].bodyCount == 0) {
+  Phys_AssertCheckWorld(param_1);
+  pdVar8 = physGlob.world + param_1;
+  if (physGlob.world[param_1].bodyCount == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0xbe8,0,
                     "%s");
   }
-  physGlob.world[PVar9].seconds = (float)dVar11;
-  dWorldSetCFM(pdVar4,(phys_cfm->current).value);
-  dWorldSetERP(pdVar4,(phys_erp->current).value);
+  physGlob.world[param_1].seconds = (float)dVar9;
+  dWorldSetCFM(pdVar8,(phys_cfm->current).value);
+  dWorldSetERP(pdVar8,(phys_erp->current).value);
   pdVar2 = phys_mcv_ragdoll;
-  if ((PVar9 == PHYS_WORLD_LAST_CLIENT_WORLD) ||
-     (pdVar2 = phys_mcv, PVar9 != PHYS_WORLD_FIRST_SERVER_WORLD)) {
+  if ((param_1 == PHYS_WORLD_LAST_CLIENT_WORLD) ||
+     (pdVar2 = phys_mcv, param_1 != PHYS_WORLD_FIRST_SERVER_WORLD)) {
     fVar1 = (pdVar2->current).value;
   }
   else {
-    fVar1 = (float)((double)(phys_mcv_vehicle->current).value * dVar11) * 20.0;
+    fVar1 = (float)((double)(phys_mcv_vehicle->current).value * dVar9) * 20.0;
   }
-  dWorldSetContactMaxCorrectingVel(pdVar4,fVar1);
-  dWorldSetContactSurfaceLayer(pdVar4,(phys_csl->current).value);
-  dWorldSetQuickStepNumIterations(pdVar4,(phys_qsi->current).integer);
-  dWorldSetAutoDisableLinearThreshold(pdVar4,(phys_autoDisableLinear->current).value);
+  dWorldSetContactMaxCorrectingVel(pdVar8,fVar1);
+  dWorldSetContactSurfaceLayer(pdVar8,(phys_csl->current).value);
+  dWorldSetQuickStepNumIterations(pdVar8,(phys_qsi->current).integer);
+  dWorldSetAutoDisableLinearThreshold(pdVar8,(phys_autoDisableLinear->current).value);
   dWorldSetAutoDisableAngularThreshold
-            (pdVar4,(phys_autoDisableAngular->current).value * 0.017453292);
-  dWorldSetAutoDisableTime(pdVar4,(phys_autoDisableTime->current).value);
-  Phys_GetGravityAccel(PVar9,&local_60);
-  dWorldSetGravity(pdVar4,local_60,local_5c,local_58);
-  if (PHYS_WORLD_LAST_SERVER_WORLD < PVar9) {
+            (pdVar8,(phys_autoDisableAngular->current).value * 0.017453292);
+  dWorldSetAutoDisableTime(pdVar8,(phys_autoDisableTime->current).value);
+  Phys_GetGravityAccel(param_1,&local_60);
+  dWorldSetGravity(pdVar8,local_60,local_5c,local_58);
+  if (PHYS_WORLD_LAST_SERVER_WORLD < param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0x181,0,
                     "worldIndex doesn\'t index PHYS_WORLD_COUNT\n\t%i not in [0, %i)");
   }
-  pdVar6 = phys_frictionScale;
+  pdVar5 = phys_frictionScale;
   pdVar2 = phys_contact_erp;
-  physGlob.worldData[PVar9].contactSurfaceLevel = (float)(phys_csl->current).integer;
-  pdVar5 = phys_contact_cfm;
-  physGlob.worldData[PVar9].frictionScale = (float)(pdVar6->current).integer;
-  pdVar8 = phys_contact_erp_ragdoll;
-  pdVar7 = phys_contact_cfm_ragdoll;
-  physGlob.worldData[PVar9].errorReduction = (float)(pdVar2->current).integer;
-  pdVar6 = phys_contact_erp_vehicle;
-  physGlob.worldData[PVar9].constraintForceMixing = (float)(pdVar5->current).integer;
-  pdVar5 = phys_contact_cfm_vehicle;
-  physGlob.worldData[PVar9].errorReductionRagdoll = (float)(pdVar8->current).integer;
-  pdVar8 = phys_contact_erp_vehicleSoft;
+  physGlob.worldData[param_1].contactSurfaceLevel = (float)(phys_csl->current).integer;
+  pdVar4 = phys_contact_cfm;
+  physGlob.worldData[param_1].frictionScale = (float)(pdVar5->current).integer;
+  pdVar7 = phys_contact_erp_ragdoll;
+  pdVar6 = phys_contact_cfm_ragdoll;
+  physGlob.worldData[param_1].errorReduction = (float)(pdVar2->current).integer;
+  pdVar5 = phys_contact_erp_vehicle;
+  physGlob.worldData[param_1].constraintForceMixing = (float)(pdVar4->current).integer;
+  pdVar4 = phys_contact_cfm_vehicle;
+  physGlob.worldData[param_1].errorReductionRagdoll = (float)(pdVar7->current).integer;
+  pdVar7 = phys_contact_erp_vehicleSoft;
   pdVar2 = phys_contact_cfm_vehicleSoft;
-  physGlob.worldData[PVar9].constraintForceMixingRagdoll = (float)(pdVar7->current).integer;
-  physGlob.worldData[PVar9].errorReductionVehicle = (float)(pdVar6->current).integer;
-  physGlob.worldData[PVar9].constraintForceMixingVehicle = (float)(pdVar5->current).integer;
-  physGlob.worldData[PVar9].errorReductionVehicleSoft = (float)(pdVar8->current).integer;
-  physGlob.worldData[PVar9].constraintForceMixingVehicleSoft = (float)(pdVar2->current).integer;
+  physGlob.worldData[param_1].constraintForceMixingRagdoll = (float)(pdVar6->current).integer;
+  physGlob.worldData[param_1].errorReductionVehicle = (float)(pdVar5->current).integer;
+  physGlob.worldData[param_1].constraintForceMixingVehicle = (float)(pdVar4->current).integer;
+  physGlob.worldData[param_1].errorReductionVehicleSoft = (float)(pdVar7->current).integer;
+  physGlob.worldData[param_1].constraintForceMixingVehicleSoft = (float)(pdVar2->current).integer;
   Profile_Begin(0x174);
-  in_r5[1] = (PhysWorld)(float)dVar11;
-  *in_r5 = PVar9;
+  in_r5[1] = (PhysWorld)(float)dVar9;
+  *in_r5 = param_1;
   in_r5[2] = PHYS_WORLD_DYNENT;
   in_r5[3] = PHYS_WORLD_DYNENT;
   in_r5[4] = PHYS_WORLD_DYNENT;
-  if (physGlob.worldData[PVar9].doInterBodyCollisions != false) {
-    dSpaceCollide((dxSpace *)(physGlob.space + PVar9),in_r5,Phys_NearCallback);
+  if (physGlob.worldData[param_1].doInterBodyCollisions != false) {
+    dSpaceCollide((dxSpace *)(physGlob.space + param_1),in_r5,Phys_NearCallback);
   }
-  p_Var3 = physGlob.worldData[PVar9].collisionCallback;
+  p_Var3 = physGlob.worldData[param_1].collisionCallback;
   if (p_Var3 != (_func___cdecl_void *)0x0) {
     (*p_Var3)();
   }
-  iVar10 = Profile_EndInternal((double *)0x0);
-  __restgprlr_25(iVar10);
+  Profile_EndInternal((double *)0x0);
   return;
 }
 
@@ -4605,6 +4415,8 @@ void Phys_PostRunFrame(PhysWorld param_1,float param_2)
 
 // 82672388  dxPostProcessIslands  (physics/phys_ode.cpp:3124)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PhysWorld": Some values do not have unique names */
 
 void dxPostProcessIslands(PhysWorld param_1)
@@ -4612,72 +4424,65 @@ void dxPostProcessIslands(PhysWorld param_1)
 {
   dxBody *pdVar1;
   int iVar2;
-  int iVar3;
-  ulonglong uVar4;
-  uint uVar5;
-  dxGeom *pdVar6;
-  int iVar7;
-  int iVar8;
-  double dVar9;
-  double dVar10;
-  double dVar11;
+  dxGeom *pdVar3;
+  int iVar4;
+  int iVar5;
+  double dVar6;
+  double dVar7;
+  double dVar8;
   
-  uVar4 = __savegprlr_27(param_1);
-  uVar5 = (uint)uVar4;
-  if (2 < (int)uVar5) {
+  if (2 < (int)param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0xc3c,0,
                     "%s");
   }
   Profile_Begin(0x186);
-  dVar11 = 0.0;
-  for (pdVar1 = physGlob.world[uVar5].firstbody; pdVar1 != (dxBody *)0x0;
+  dVar8 = 0.0;
+  for (pdVar1 = physGlob.world[param_1].firstbody; pdVar1 != (dxBody *)0x0;
       pdVar1 = (dxBody *)pdVar1->_padding_) {
     if ((pdVar1->flags & 4U) == 0) {
-      pdVar1->facc[0] = (float)dVar11;
-      pdVar1->facc[1] = (float)dVar11;
-      pdVar1->facc[2] = (float)dVar11;
-      pdVar1->tacc[0] = (float)dVar11;
-      pdVar1->tacc[1] = (float)dVar11;
-      pdVar1->tacc[2] = (float)dVar11;
-      for (pdVar6 = pdVar1->geom; pdVar6 != (dxGeom *)0x0; pdVar6 = dGeomGetBodyNext(pdVar6)) {
-        dGeomMoved(pdVar6);
+      pdVar1->facc[0] = (float)dVar8;
+      pdVar1->facc[1] = (float)dVar8;
+      pdVar1->facc[2] = (float)dVar8;
+      pdVar1->tacc[0] = (float)dVar8;
+      pdVar1->tacc[1] = (float)dVar8;
+      pdVar1->tacc[2] = (float)dVar8;
+      for (pdVar3 = pdVar1->geom; pdVar3 != (dxGeom *)0x0; pdVar3 = dGeomGetBodyNext(pdVar3)) {
+        dGeomMoved(pdVar3);
       }
     }
   }
-  dJointGroupEmpty((dxJointGroup *)
-                   (&contactGroups + (int)((uVar4 + (uVar4 & 0x7fffffff) * 2 & 0xffffffff) << 2)));
-  iVar8 = 0;
-  physGlob.worldData[uVar5].numJitterRegions = 0;
-  dVar10 = (double)physGlob.world[uVar5].seconds;
-  for (pdVar1 = physGlob.world[uVar5].firstbody; pdVar1 != (dxBody *)0x0;
+  dJointGroupEmpty((dxJointGroup *)(&contactGroups + param_1 * 0xc));
+  iVar5 = 0;
+  physGlob.worldData[param_1].numJitterRegions = 0;
+  dVar7 = (double)physGlob.world[param_1].seconds;
+  for (pdVar1 = physGlob.world[param_1].firstbody; pdVar1 != (dxBody *)0x0;
       pdVar1 = (dxBody *)pdVar1->_padding_) {
-    iVar7 = Phys_DoBodyOncePerFrame(uVar5,pdVar1,(float)dVar10);
-    if (iVar7 != 0) {
-      iVar8 = iVar8 + 1;
+    iVar4 = Phys_DoBodyOncePerFrame(param_1,pdVar1,(float)dVar7);
+    if (iVar4 != 0) {
+      iVar5 = iVar5 + 1;
     }
   }
-  iVar3 = (int)((uVar4 & 0x3fffffff) << 2);
-  iVar7 = *(int *)((int)g_phys_maxMsecStep + iVar3);
-  iVar2 = *(int *)((int)g_phys_minMsecStep + iVar3);
-  physGlob.world[uVar5].allowDelete = 1;
-  dVar9 = (double)((float)(longlong)(iVar8 + -0x20) * 0.055555556);
-  dVar10 = 1.0;
-  if ((float)(dVar9 - 1.0) < 0.0) {
-    dVar10 = dVar9;
+  iVar4 = g_phys_maxMsecStep[param_1];
+  iVar2 = g_phys_minMsecStep[param_1];
+  physGlob.world[param_1].allowDelete = 1;
+  dVar6 = (double)((float)(longlong)(iVar5 + -0x20) * 0.055555556);
+  dVar7 = 1.0;
+  if ((float)(dVar6 - 1.0) < 0.0) {
+    dVar7 = dVar6;
   }
-  if (-dVar9 < 0.0) {
-    dVar11 = dVar10;
+  if (-dVar6 < 0.0) {
+    dVar8 = dVar7;
   }
-  *(int *)((int)g_phys_msecStep + iVar3) = (int)((double)(longlong)(iVar7 - iVar2) * dVar11) + iVar2
-  ;
-  iVar8 = Profile_EndInternal((double *)0x0);
-  __restgprlr_27(iVar8);
+  g_phys_msecStep[param_1] = (int)((double)(longlong)(iVar4 - iVar2) * dVar8) + iVar2;
+  Profile_EndInternal((double *)0x0);
   return;
 }
 
 
 // 82672568  Phys_BodyGrabSnapshot  (physics/phys_ode.cpp:3185)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PhysWorld": Some values do not have unique names */
 
 void Phys_BodyGrabSnapshot(PhysWorld param_1,dxBody *param_2)
@@ -4686,66 +4491,63 @@ void Phys_BodyGrabSnapshot(PhysWorld param_1,dxBody *param_2)
   float fVar1;
   float fVar2;
   float fVar3;
-  dxBody *pdVar4;
-  void *pvVar5;
-  float *pfVar6;
-  ulonglong uVar7;
+  void *pvVar4;
+  float *pfVar5;
   
-  uVar7 = (ulonglong)(int)param_2;
-  __savegprlr_26(param_1);
-  if ((uVar7 & 0xffffffff) == 0) {
+  if (param_2 == (dxBody *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0xc74,0,
                     "%s");
   }
-  pdVar4 = (dxBody *)uVar7;
-  ODE_BodySetHasContactsFlag(pdVar4,0);
-  pvVar5 = dBodyGetData(pdVar4);
-  if (pvVar5 == (void *)0x0) {
+  ODE_BodySetHasContactsFlag(param_2,0);
+  pvVar4 = dBodyGetData(param_2);
+  if (pvVar4 == (void *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0xc79,0,
                     "%s");
   }
-  pfVar6 = dBodyGetPosition(pdVar4);
-  fVar1 = *pfVar6;
-  *(float *)((int)pvVar5 + 0x10) = fVar1;
-  fVar2 = pfVar6[1];
-  *(float *)((int)pvVar5 + 0x14) = fVar2;
-  fVar3 = pfVar6[2];
-  *(float *)((int)pvVar5 + 0x18) = fVar3;
+  pfVar5 = dBodyGetPosition(param_2);
+  fVar1 = *pfVar5;
+  *(float *)((int)pvVar4 + 0x10) = fVar1;
+  fVar2 = pfVar5[1];
+  *(float *)((int)pvVar4 + 0x14) = fVar2;
+  fVar3 = pfVar5[2];
+  *(float *)((int)pvVar4 + 0x18) = fVar3;
   if (((((uint)fVar1 & 0x7f800000) == 0x7f800000) || (((uint)fVar2 & 0x7f800000) == 0x7f800000)) ||
      (((uint)fVar3 & 0x7f800000) == 0x7f800000)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0xc7c,0,
                     "%s");
   }
-  if ((uVar7 & 0xffffffff) == 0) {
+  if (param_2 == (dxBody *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0x1eb,0,
                     "%s");
   }
-  pfVar6 = dBodyGetRotation(pdVar4);
-  Phys_OdeMatrix3ToAxis(pfVar6,(float (*) [3])((int)pvVar5 + 0x1c));
-  if ((((*(uint *)((int)pvVar5 + 0x1c) & 0x7f800000) == 0x7f800000) ||
-      ((*(uint *)((int)pvVar5 + 0x20) & 0x7f800000) == 0x7f800000)) ||
-     ((*(uint *)((int)pvVar5 + 0x24) & 0x7f800000) == 0x7f800000)) {
+  pfVar5 = dBodyGetRotation(param_2);
+  Phys_OdeMatrix3ToAxis(pfVar5,(float (*) [3])((int)pvVar4 + 0x1c));
+  if ((((*(uint *)((int)pvVar4 + 0x1c) & 0x7f800000) == 0x7f800000) ||
+      ((*(uint *)((int)pvVar4 + 0x20) & 0x7f800000) == 0x7f800000)) ||
+     ((*(uint *)((int)pvVar4 + 0x24) & 0x7f800000) == 0x7f800000)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0xc7e,0,
                     "%s");
   }
-  if ((((*(uint *)((int)pvVar5 + 0x28) & 0x7f800000) == 0x7f800000) ||
-      ((*(uint *)((int)pvVar5 + 0x2c) & 0x7f800000) == 0x7f800000)) ||
-     ((*(uint *)((int)pvVar5 + 0x30) & 0x7f800000) == 0x7f800000)) {
+  if ((((*(uint *)((int)pvVar4 + 0x28) & 0x7f800000) == 0x7f800000) ||
+      ((*(uint *)((int)pvVar4 + 0x2c) & 0x7f800000) == 0x7f800000)) ||
+     ((*(uint *)((int)pvVar4 + 0x30) & 0x7f800000) == 0x7f800000)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0xc7f,0,
                     "%s");
   }
-  if ((((*(uint *)((int)pvVar5 + 0x34) & 0x7f800000) == 0x7f800000) ||
-      ((*(uint *)((int)pvVar5 + 0x38) & 0x7f800000) == 0x7f800000)) ||
-     ((*(uint *)((int)pvVar5 + 0x3c) & 0x7f800000) == 0x7f800000)) {
+  if ((((*(uint *)((int)pvVar4 + 0x34) & 0x7f800000) == 0x7f800000) ||
+      ((*(uint *)((int)pvVar4 + 0x38) & 0x7f800000) == 0x7f800000)) ||
+     ((*(uint *)((int)pvVar4 + 0x3c) & 0x7f800000) == 0x7f800000)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0xc80,0,
                     "%s");
   }
-  __restgprlr_26();
   return;
 }
 
 
 // 826727D8  Phys_GeomUserGetAAContainedBox  (physics/phys_ode.cpp:3208)
+
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 
 void Phys_GeomUserGetAAContainedBox(dxGeom *param_1,Bounds *param_2)
 
@@ -4756,34 +4558,31 @@ void Phys_GeomUserGetAAContainedBox(dxGeom *param_1,Bounds *param_2)
   undefined4 *puVar4;
   float *pfVar5;
   float fVar6;
-  dxGeom *pdVar8;
   longlong lVar7;
-  ushort *puVar10;
-  cmodel_t *pcVar11;
-  int *piVar12;
-  void *pvVar13;
-  double dVar14;
-  int iVar9;
+  ushort *puVar9;
+  cmodel_t *pcVar10;
+  int *piVar11;
+  void *pvVar12;
+  double dVar13;
+  int iVar8;
   
-  pdVar8 = (dxGeom *)__savegprlr_27(param_1);
-  if (pdVar8 == (dxGeom *)0x0) {
+  if (param_1 == (dxGeom *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0xc98,0,
                     "%s");
   }
-  iVar9 = dGeomGetClass(pdVar8);
-  lVar7 = (longlong)iVar9;
+  iVar8 = dGeomGetClass(param_1);
+  lVar7 = (longlong)iVar8;
   if (4 < (lVar7 - 3U & 0xffffffff)) {
     if (alwaysfails == 0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0xcdc,
                       0,"Invalid geom");
     }
-    __restgprlr_27();
     return;
   }
   bVar1 = (int)(lVar7 - 3U) != 0;
   if (lVar7 == 4 && bVar1) {
-    piVar12 = ODE_GeomGetClassData(pdVar8);
-    puVar4 = *(undefined4 **)(*piVar12 + 8);
+    piVar11 = ODE_GeomGetClassData(param_1);
+    puVar4 = *(undefined4 **)(*piVar11 + 8);
     pfVar5 = (float *)*puVar4;
     if (pfVar5 == (float *)0x0) {
       if ((puVar4[1] != 1) && (puVar4[1] != 5)) {
@@ -4814,59 +4613,57 @@ void Phys_GeomUserGetAAContainedBox(dxGeom *param_1,Bounds *param_2)
       }
       fVar2 = fVar2 * 0.01;
     }
-    param_2->midPoint[0] = param_2->midPoint[0] - (float)piVar12[1];
-    param_2->midPoint[1] = param_2->midPoint[1] - (float)piVar12[2];
-    param_2->midPoint[2] = param_2->midPoint[2] - (float)piVar12[3];
+    param_2->midPoint[0] = param_2->midPoint[0] - (float)piVar11[1];
+    param_2->midPoint[1] = param_2->midPoint[1] - (float)piVar11[2];
+    param_2->midPoint[2] = param_2->midPoint[2] - (float)piVar11[3];
     param_2->halfSize[0] = fVar2;
     param_2->halfSize[1] = fVar2;
     param_2->halfSize[2] = fVar2;
-    __restgprlr_27();
     return;
   }
   if (lVar7 != 5 || !bVar1) {
     if (lVar7 == 6 && bVar1) {
-      pvVar13 = ODE_GeomGetClassData(pdVar8);
-      fVar2 = *(float *)((int)pvVar13 + 4);
-      dVar14 = (double)(fVar2 * 0.70710677);
-      if ((double)(fVar2 * 2.0 + *(float *)((int)pvVar13 + 8)) < dVar14) {
-        dVar14 = (double)(fVar2 * 2.0 + *(float *)((int)pvVar13 + 8));
+      pvVar12 = ODE_GeomGetClassData(param_1);
+      fVar2 = *(float *)((int)pvVar12 + 4);
+      dVar13 = (double)(fVar2 * 0.70710677);
+      if ((double)(fVar2 * 2.0 + *(float *)((int)pvVar12 + 8)) < dVar13) {
+        dVar13 = (double)(fVar2 * 2.0 + *(float *)((int)pvVar12 + 8));
       }
-      if (dVar14 <= 0.0) {
+      if (dVar13 <= 0.0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",
                         0xcd2,0,"%s");
       }
-      param_2->halfSize[0] = (float)dVar14;
-      param_2->halfSize[1] = (float)dVar14;
-      param_2->halfSize[2] = (float)dVar14;
-      __restgprlr_27();
+      param_2->halfSize[0] = (float)dVar13;
+      param_2->halfSize[1] = (float)dVar13;
+      param_2->halfSize[2] = (float)dVar13;
       return;
     }
     if (!bVar1) {
-      puVar10 = ODE_GeomGetClassData(pdVar8);
-      pcVar11 = CM_GetBrushModel((uint)*puVar10);
-      fVar2 = *(float *)(puVar10 + 2) + param_2->midPoint[0];
+      puVar9 = ODE_GeomGetClassData(param_1);
+      pcVar10 = CM_GetBrushModel((uint)*puVar9);
+      fVar2 = *(float *)(puVar9 + 2) + param_2->midPoint[0];
       param_2->midPoint[0] = fVar2;
-      fVar3 = *(float *)(puVar10 + 4) + param_2->midPoint[1];
+      fVar3 = *(float *)(puVar9 + 4) + param_2->midPoint[1];
       param_2->midPoint[1] = fVar3;
-      fVar6 = *(float *)(puVar10 + 6) + param_2->midPoint[2];
+      fVar6 = *(float *)(puVar9 + 6) + param_2->midPoint[2];
       param_2->midPoint[2] = fVar6;
-      param_2->midPoint[0] = fVar2 - *(float *)(puVar10 + 2);
-      param_2->midPoint[1] = fVar3 - *(float *)(puVar10 + 4);
-      param_2->midPoint[2] = fVar6 - *(float *)(puVar10 + 6);
-      fVar2 = (pcVar11->bounds).halfSize[0] * 0.01;
+      param_2->midPoint[0] = fVar2 - *(float *)(puVar9 + 2);
+      param_2->midPoint[1] = fVar3 - *(float *)(puVar9 + 4);
+      param_2->midPoint[2] = fVar6 - *(float *)(puVar9 + 6);
+      fVar2 = (pcVar10->bounds).halfSize[0] * 0.01;
       param_2->halfSize[0] = fVar2;
-      param_2->halfSize[1] = (pcVar11->bounds).halfSize[1] * 0.01;
-      dVar14 = 0.0;
-      param_2->halfSize[2] = (pcVar11->bounds).halfSize[2] * 0.01;
+      param_2->halfSize[1] = (pcVar10->bounds).halfSize[1] * 0.01;
+      dVar13 = 0.0;
+      param_2->halfSize[2] = (pcVar10->bounds).halfSize[2] * 0.01;
       if (fVar2 < 0.0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\../universal/bounds_inline.h"
                         ,0x372,0,"bounds->halfSize[0] >= 0.0f\n\t%g, %g");
       }
-      if ((double)param_2->halfSize[1] < dVar14) {
+      if ((double)param_2->halfSize[1] < dVar13) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\../universal/bounds_inline.h"
                         ,0x373,0,"bounds->halfSize[1] >= 0.0f\n\t%g, %g");
       }
-      if ((double)param_2->halfSize[2] < dVar14) {
+      if ((double)param_2->halfSize[2] < dVar13) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\../universal/bounds_inline.h"
                         ,0x374,0,"bounds->halfSize[2] >= 0.0f\n\t%g, %g");
       }
@@ -4881,59 +4678,59 @@ void Phys_GeomUserGetAAContainedBox(dxGeom *param_1,Bounds *param_2)
         fVar3 = fVar2;
       }
       param_2->halfSize[1] = fVar3;
-      __restgprlr_27();
       return;
     }
-    pvVar13 = ODE_GeomGetClassData(pdVar8);
-    fVar2 = *(float *)((int)pvVar13 + 8);
+    pvVar12 = ODE_GeomGetClassData(param_1);
+    fVar2 = *(float *)((int)pvVar12 + 8);
     param_2->halfSize[0] = fVar2;
     param_2->halfSize[1] = fVar2;
     param_2->halfSize[2] = fVar2;
-    __restgprlr_27();
     return;
   }
-  pvVar13 = ODE_GeomGetClassData(pdVar8);
-  dVar14 = (double)(*(float *)((int)pvVar13 + 4) * 0.70710677);
-  if ((double)*(float *)((int)pvVar13 + 8) < dVar14) {
-    dVar14 = (double)*(float *)((int)pvVar13 + 8);
+  pvVar12 = ODE_GeomGetClassData(param_1);
+  dVar13 = (double)(*(float *)((int)pvVar12 + 4) * 0.70710677);
+  if ((double)*(float *)((int)pvVar12 + 8) < dVar13) {
+    dVar13 = (double)*(float *)((int)pvVar12 + 8);
   }
-  if (dVar14 <= 0.0) {
+  if (dVar13 <= 0.0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0xcc8,0,
                     "%s");
   }
-  param_2->halfSize[0] = (float)dVar14;
-  param_2->halfSize[1] = (float)dVar14;
-  param_2->halfSize[2] = (float)dVar14;
-  __restgprlr_27();
+  param_2->halfSize[0] = (float)dVar13;
+  param_2->halfSize[1] = (float)dVar13;
+  param_2->halfSize[2] = (float)dVar13;
   return;
 }
 
 
 // 82672C80  Phys_ObjTunnelTrace  (physics/phys_ode.cpp:3300)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PhysWorld": Some values do not have unique names */
 
 void Phys_ObjTunnelTrace(PhysWorld param_1,dxBody *param_2)
 
 {
   float fVar1;
-  uint uVar2;
-  bool bVar9;
-  void *pvVar3;
-  dxGeom *pdVar4;
-  PhysWorldData *pPVar5;
-  float *pfVar6;
-  PhysWorld PVar7;
-  int iVar8;
-  undefined4 uVar10;
-  float *pfVar11;
+  bool bVar8;
+  void *pvVar2;
+  dxGeom *pdVar3;
+  PhysWorldData *pPVar4;
+  float *pfVar5;
+  PhysWorld PVar6;
+  int iVar7;
+  undefined4 uVar9;
+  float *pfVar10;
+  double dVar11;
   double dVar12;
   double dVar13;
   double dVar14;
   double dVar15;
   double dVar16;
   double dVar17;
-  double dVar18;
   float local_198;
   float local_194;
   float local_190;
@@ -4949,146 +4746,148 @@ void Phys_ObjTunnelTrace(PhysWorld param_1,dxBody *param_2)
   trace_t local_100;
   float afStack_c0 [48];
   
-  __savegprlr_23(param_1);
-  uVar2 = __savefpr_24();
-  bVar9 = dBodyIsEnabled(param_2);
-  if (!bVar9) goto LAB_826731d8;
-  pvVar3 = dBodyGetData(param_2);
-  if (pvVar3 == (void *)0x0) {
+  bVar8 = dBodyIsEnabled(param_2);
+  if (!bVar8) {
+    return;
+  }
+  pvVar2 = dBodyGetData(param_2);
+  if (pvVar2 == (void *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0xcfe,0,
                     "%s");
   }
-  if ((*(uint *)((int)pvVar3 + 0x68) & 1) != 0) goto LAB_826731d8;
-  pfVar11 = (float *)((int)pvVar3 + 0x40);
-  if ((((*(uint *)((int)pvVar3 + 0x40) & 0x7f800000) == 0x7f800000) ||
-      ((*(uint *)((int)pvVar3 + 0x44) & 0x7f800000) == 0x7f800000)) ||
-     ((*(uint *)((int)pvVar3 + 0x48) & 0x7f800000) == 0x7f800000)) {
+  if ((*(uint *)((int)pvVar2 + 0x68) & 1) != 0) {
+    return;
+  }
+  pfVar10 = (float *)((int)pvVar2 + 0x40);
+  if ((((*(uint *)((int)pvVar2 + 0x40) & 0x7f800000) == 0x7f800000) ||
+      ((*(uint *)((int)pvVar2 + 0x44) & 0x7f800000) == 0x7f800000)) ||
+     ((*(uint *)((int)pvVar2 + 0x48) & 0x7f800000) == 0x7f800000)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0xd04,0,
                     "%s");
   }
-  pdVar4 = ODE_BodyGetFirstGeom(param_2);
-  if (pdVar4 == (dxGeom *)0x0) goto LAB_826731d8;
-  bVar9 = false;
-  ODE_GeomGetAAContainedBox(pdVar4,&local_150);
+  pdVar3 = ODE_BodyGetFirstGeom(param_2);
+  if (pdVar3 == (dxGeom *)0x0) {
+    return;
+  }
+  bVar8 = false;
+  ODE_GeomGetAAContainedBox(pdVar3,&local_150);
   local_180 = local_150.midPoint[2];
   local_184 = local_150.midPoint[1];
   local_188 = local_150.midPoint[0];
-  dVar18 = 0.0;
+  dVar17 = 0.0;
   local_150.midPoint[0] = 0.0;
   local_150.midPoint[1] = 0.0;
   local_150.midPoint[2] = 0.0;
-  dVar13 = (double)local_150.halfSize[0];
-  pPVar5 = Phys_GetWorldData(uVar2);
-  dVar12 = (double)(pPVar5->contactSurfaceLevel * 2.0);
-  if (dVar12 <= dVar13) {
+  dVar12 = (double)local_150.halfSize[0];
+  pPVar4 = Phys_GetWorldData(param_1);
+  dVar11 = (double)(pPVar4->contactSurfaceLevel * 2.0);
+  if (dVar11 <= dVar12) {
     local_170.midPoint[0] = local_150.midPoint[0] * 0.2;
     local_170.halfSize[0] = local_150.halfSize[0] * 0.2;
     local_170.midPoint[1] = local_150.midPoint[1] * 0.2;
     local_170.midPoint[2] = local_150.midPoint[2] * 0.2;
     local_170.halfSize[1] = local_150.halfSize[1] * 0.2;
     local_170.halfSize[2] = local_150.halfSize[2] * 0.2;
-    if ((double)(float)(dVar13 - (double)(local_170.midPoint[0] + local_170.halfSize[0])) < dVar12)
-    {
-      local_170.halfSize[2] = (float)(dVar13 - dVar12);
-      if ((float)(dVar13 - dVar12) - 0.001 < 0.0) {
-        local_170.halfSize[2] = 0.001;
-      }
-      goto LAB_82672e78;
+    if (dVar11 <= (double)(float)(dVar12 - (double)(local_170.midPoint[0] + local_170.halfSize[0])))
+    goto LAB_82672e84;
+    local_170.halfSize[2] = (float)(dVar12 - dVar11);
+    if ((float)(dVar12 - dVar11) - 0.001 < 0.0) {
+      local_170.halfSize[2] = 0.001;
     }
   }
   else {
-    bVar9 = true;
+    bVar8 = true;
     local_170.halfSize[2] = 0.001;
-LAB_82672e78:
-    local_170.midPoint[2] = (float)dVar18;
-    local_170.midPoint[1] = (float)dVar18;
-    local_170.midPoint[0] = (float)dVar18;
-    local_170.halfSize[0] = local_170.halfSize[2];
-    local_170.halfSize[1] = local_170.halfSize[2];
   }
-  pfVar6 = dBodyGetPosition(param_2);
-  dVar17 = (double)*pfVar6;
-  dVar16 = (double)pfVar6[1];
-  dVar12 = (double)pfVar6[2];
-  if (((((uint)*pfVar6 & 0x7f800000) == 0x7f800000) ||
-      (((uint)pfVar6[1] & 0x7f800000) == 0x7f800000)) ||
-     (((uint)pfVar6[2] & 0x7f800000) == 0x7f800000)) {
+  local_170.midPoint[2] = (float)dVar17;
+  local_170.midPoint[1] = (float)dVar17;
+  local_170.midPoint[0] = (float)dVar17;
+  local_170.halfSize[0] = local_170.halfSize[2];
+  local_170.halfSize[1] = local_170.halfSize[2];
+LAB_82672e84:
+  pfVar5 = dBodyGetPosition(param_2);
+  dVar16 = (double)*pfVar5;
+  dVar15 = (double)pfVar5[1];
+  dVar11 = (double)pfVar5[2];
+  if (((((uint)*pfVar5 & 0x7f800000) == 0x7f800000) ||
+      (((uint)pfVar5[1] & 0x7f800000) == 0x7f800000)) ||
+     (((uint)pfVar5[2] & 0x7f800000) == 0x7f800000)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0xd28,0,
                     "%s");
   }
   Phys_BodyGetRotation(param_2,(float (*) [3])afStack_c0);
-  pfVar6 = &local_118;
-  MatrixTransformVector(&local_188,(float (*) [3])afStack_c0,pfVar6);
-  dVar15 = (double)local_118;
-  dVar14 = (double)local_114;
-  local_198 = (float)(dVar15 + dVar17);
-  dVar17 = (double)local_110;
-  local_194 = (float)(dVar14 + dVar16);
-  local_190 = (float)(dVar17 + dVar12);
+  pfVar5 = &local_118;
+  MatrixTransformVector(&local_188,(float (*) [3])afStack_c0,pfVar5);
+  dVar14 = (double)local_118;
+  dVar13 = (double)local_114;
+  local_198 = (float)(dVar14 + dVar16);
+  dVar16 = (double)local_110;
+  local_194 = (float)(dVar13 + dVar15);
+  local_190 = (float)(dVar16 + dVar11);
   if ((phys_drawCollisionObj->current).enabled != false) {
-    local_130.midPoint[0] = (float)dVar18;
-    local_130.midPoint[1] = (float)dVar18;
-    local_130.midPoint[2] = (float)dVar18;
+    local_130.midPoint[0] = (float)dVar17;
+    local_130.midPoint[1] = (float)dVar17;
+    local_130.midPoint[2] = (float)dVar17;
     local_130.halfSize[0] = 0.5;
     local_130.halfSize[1] = 0.5;
     local_130.halfSize[2] = 0.5;
-    PVar7 = Phys_IndexFromODEWorldID((dxWorld *)param_2->_padding_);
-    if ((int)PVar7 < 3) {
-      CG_DebugBox(&local_198,&local_130,(float)dVar18,pfVar6,-0x7de7e808,0);
-      CG_DebugLine(pfVar11,&local_198,colorGreen,0,3);
+    PVar6 = Phys_IndexFromODEWorldID((dxWorld *)param_2->_padding_);
+    if ((int)PVar6 < 3) {
+      CG_DebugBox(&local_198,&local_130,(float)dVar17,pfVar5,-0x7de7e808,0);
+      CG_DebugLine(pfVar10,&local_198,colorGreen,0,3);
     }
     else {
-      G_DebugBox(&local_198,&local_130,(float)dVar18,pfVar6,-0x7de7e808,0);
-      G_DebugLine(pfVar11,&local_198,colorGreen,0);
+      G_DebugBox(&local_198,&local_130,(float)dVar17,pfVar5,-0x7de7e808,0);
+      G_DebugLine(pfVar10,&local_198,colorGreen,0);
     }
   }
-  if (((*pfVar11 != local_198) || (*(float *)((int)pvVar3 + 0x44) != local_194)) ||
-     ((*(float *)((int)pvVar3 + 0x48) != local_190 ||
-      ((*(int *)((int)pvVar3 + 0x58) == 0 || (*(int *)((int)pvVar3 + 0x58) == 1)))))) {
+  if (((*pfVar10 != local_198) || (*(float *)((int)pvVar2 + 0x44) != local_194)) ||
+     ((*(float *)((int)pvVar2 + 0x48) != local_190 ||
+      ((*(int *)((int)pvVar2 + 0x58) == 0 || (*(int *)((int)pvVar2 + 0x58) == 1)))))) {
     PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffff,"physics trace");
-    if ((int)uVar2 < 3) {
-      CG_WorldTrace(&local_100,pfVar11,&local_198,&local_170,pPVar5->clipMask);
+    if ((int)param_1 < 3) {
+      CG_WorldTrace(&local_100,pfVar10,&local_198,&local_170,pPVar4->clipMask);
     }
     else {
-      SV_WorldTrace(&local_100,pfVar11,&local_198,&local_170,pPVar5->clipMask);
+      SV_WorldTrace(&local_100,pfVar10,&local_198,&local_170,pPVar4->clipMask);
     }
     PIXEndNamedEvent();
-    uVar10 = 1;
+    uVar9 = 1;
     if (local_100.startsolid == false) {
-      uVar10 = 2;
+      uVar9 = 2;
     }
-    *(undefined4 *)((int)pvVar3 + 0x58) = uVar10;
-    dVar12 = (double)local_100.fraction;
-    if ((dVar12 < 1.0) && (local_100.startsolid == false)) {
-      if (bVar9) {
-        dVar13 = -(double)(float)((double)(float)(dVar13 / ABS((double)(local_100.normal[2] *
+    *(undefined4 *)((int)pvVar2 + 0x58) = uVar9;
+    dVar11 = (double)local_100.fraction;
+    if ((dVar11 < 1.0) && (local_100.startsolid == false)) {
+      if (bVar8) {
+        dVar12 = -(double)(float)((double)(float)(dVar12 / ABS((double)(local_100.normal[2] *
                                                                         (float)((double)local_190 -
                                                                                (double)*(float *)((
-                                                  int)pvVar3 + 0x48)) +
+                                                  int)pvVar2 + 0x48)) +
                                                   local_100.normal[1] *
                                                   (float)((double)local_194 -
-                                                         (double)*(float *)((int)pvVar3 + 0x44)) +
+                                                         (double)*(float *)((int)pvVar2 + 0x44)) +
                                                   local_100.normal[0] *
-                                                  (float)((double)local_198 - (double)*pfVar11)))) *
-                                  0.009999999776482582 - dVar12);
-        dVar12 = dVar18;
-        if (-dVar13 < 0.0) {
-          dVar12 = dVar13;
+                                                  (float)((double)local_198 - (double)*pfVar10)))) *
+                                  0.009999999776482582 - dVar11);
+        dVar11 = dVar17;
+        if (-dVar12 < 0.0) {
+          dVar11 = dVar12;
         }
-        local_100.fraction = (float)dVar12;
+        local_100.fraction = (float)dVar11;
       }
-      local_198 = (float)((double)(float)((double)local_198 - (double)*pfVar11) * dVar12 +
-                         (double)*pfVar11);
-      local_194 = (float)((double)(float)((double)local_194 - (double)*(float *)((int)pvVar3 + 0x44)
-                                         ) * dVar12 + (double)*(float *)((int)pvVar3 + 0x44));
-      local_190 = (float)((double)(float)((double)local_190 - (double)*(float *)((int)pvVar3 + 0x48)
-                                         ) * dVar12 + (double)*(float *)((int)pvVar3 + 0x48));
-      dBodySetPosition(param_2,(float)((double)local_198 - dVar15),
-                       (float)((double)local_194 - dVar14),(float)((double)local_190 - dVar17));
-      iVar8 = ODE_BodyGetHasContactsFlag(param_2);
-      if (iVar8 == 0) {
-        dBodySetLinearVel(param_2,(float)dVar18,(float)dVar18,(float)dVar18);
-        dBodySetAngularVel(param_2,(float)dVar18,(float)dVar18,(float)dVar18);
+      local_198 = (float)((double)(float)((double)local_198 - (double)*pfVar10) * dVar11 +
+                         (double)*pfVar10);
+      local_194 = (float)((double)(float)((double)local_194 - (double)*(float *)((int)pvVar2 + 0x44)
+                                         ) * dVar11 + (double)*(float *)((int)pvVar2 + 0x44));
+      local_190 = (float)((double)(float)((double)local_190 - (double)*(float *)((int)pvVar2 + 0x48)
+                                         ) * dVar11 + (double)*(float *)((int)pvVar2 + 0x48));
+      dBodySetPosition(param_2,(float)((double)local_198 - dVar14),
+                       (float)((double)local_194 - dVar13),(float)((double)local_190 - dVar16));
+      iVar7 = ODE_BodyGetHasContactsFlag(param_2);
+      if (iVar7 == 0) {
+        dBodySetLinearVel(param_2,(float)dVar17,(float)dVar17,(float)dVar17);
+        dBodySetAngularVel(param_2,(float)dVar17,(float)dVar17,(float)dVar17);
       }
       else {
         Phys_ObjGetVelocity((int)param_2,&local_188);
@@ -5101,12 +4900,9 @@ LAB_82672e78:
       }
     }
   }
-  *pfVar11 = local_198;
-  *(float *)((int)pvVar3 + 0x44) = local_194;
-  *(float *)((int)pvVar3 + 0x48) = local_190;
-LAB_826731d8:
-  __restfpr_24();
-  __restgprlr_23();
+  *pfVar10 = local_198;
+  *(float *)((int)pvVar2 + 0x44) = local_194;
+  *(float *)((int)pvVar2 + 0x48) = local_190;
   return;
 }
 
@@ -5173,39 +4969,36 @@ int Phys_GetCurrentTime(PhysWorld param_1)
 
 // 826733B0  Phys_ObjGetSnapshot  (physics/phys_ode.cpp:3495)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PhysWorld": Some values do not have unique names */
 
 int Phys_ObjGetSnapshot(PhysWorld param_1,int param_2,float *param_3,float (*param_4) [3])
 
 {
-  uint uVar1;
-  void *pvVar2;
-  int iVar3;
+  void *pvVar1;
+  float *pfVar2;
+  float *pfVar3;
   longlong lVar4;
-  undefined4 *puVar5;
-  longlong lVar6;
   
-  lVar4 = (longlong)(int)param_4;
-  uVar1 = __savegprlr_28(param_1);
-  pvVar2 = dBodyGetData((dxBody *)param_2);
+  pvVar1 = dBodyGetData((dxBody *)param_2);
   Phys_ObjGetPositionFromCenterOfMass
-            ((dxBody *)param_2,(float (*) [3])((int)pvVar2 + 0x1c),(float *)((int)pvVar2 + 0x10),
+            ((dxBody *)param_2,(float (*) [3])((int)pvVar1 + 0x1c),(float *)((int)pvVar1 + 0x10),
              param_3);
-  puVar5 = (undefined4 *)((int)pvVar2 + 0x18);
-  lVar4 = lVar4 + -4;
-  lVar6 = 9;
+  pfVar3 = (float *)((int)pvVar1 + 0x18);
+  pfVar2 = param_4[-1] + 2;
+  lVar4 = 9;
   do {
-    puVar5 = puVar5 + 1;
-    lVar4 = lVar4 + 4;
-    *(undefined4 *)lVar4 = *puVar5;
-    lVar6 = lVar6 + -1;
-  } while (lVar6 != 0);
-  if (4 < uVar1) {
+    pfVar3 = pfVar3 + 1;
+    pfVar2 = pfVar2 + 1;
+    *pfVar2 = *pfVar3;
+    lVar4 = lVar4 + -1;
+  } while (lVar4 != 0);
+  if (PHYS_WORLD_LAST_SERVER_WORLD < param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0x181,0,
                     "worldIndex doesn\'t index PHYS_WORLD_COUNT\n\t%i not in [0, %i)");
   }
-  iVar3 = __restgprlr_28(physGlob.worldData[uVar1].timeLastSnapshot);
-  return iVar3;
+  return physGlob.worldData[param_1].timeLastSnapshot;
 }
 
 
@@ -5320,181 +5113,173 @@ void Phys_PerformanceEndFrame(void)
 
 // 82677B60  Phys_RunServerFrame  (physics/phys_ode.cpp:3582)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PhysWorld": Some values do not have unique names */
 
 void Phys_RunServerFrame(PhysWorld param_1,float param_2)
 
 {
   dxBody *pdVar1;
-  ulonglong uVar2;
-  dxGeom *pdVar3;
-  int iVar4;
-  FrameInfo *pFVar5;
-  PhysWorld PVar6;
-  double extraout_f1;
-  double dVar7;
-  double dVar8;
+  dxGeom *pdVar2;
+  int iVar3;
+  FrameInfo *pFVar4;
+  double dVar5;
+  double dVar6;
   undefined1 auStack_70 [112];
   
-  uVar2 = __savegprlr_24((double)param_2,param_1);
-  dVar7 = extraout_f1;
-  if (physInitedServer == false) {
+  dVar5 = (double)param_2;
+  if (!physInitedServer) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0xe04,0,
                     "%s");
   }
-  PVar6 = (PhysWorld)uVar2;
-  if ((int)PVar6 < 3) {
+  if ((int)param_1 < 3) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0xe05,0,
                     "%s");
   }
   PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffff,"physics server");
   Profile_Begin(0x165);
-  *(int *)((int)g_phys_msecStep + (int)((uVar2 & 0xffffffff) << 2)) = (int)(dVar7 * 1000.0 + 0.5);
-  ODE_ForEachBody<void_(__cdecl*)(enum_PhysWorld,dxBody_*)>(PVar6,Phys_BodyGrabSnapshot);
-  pFVar5 = (FrameInfo *)physGlob.world[PVar6].bodyCount;
-  if (pFVar5 != (FrameInfo *)0x0) {
-    if (physGlob.world[PVar6].useWorkerCmd != 0) {
-      pFVar5 = (FrameInfo *)0xe12;
+  g_phys_msecStep[param_1] = (int)(dVar5 * 1000.0 + 0.5);
+  ODE_ForEachBody<void_(__cdecl*)(enum_PhysWorld,dxBody_*)>(param_1,Phys_BodyGrabSnapshot);
+  pFVar4 = (FrameInfo *)physGlob.world[param_1].bodyCount;
+  if (pFVar4 != (FrameInfo *)0x0) {
+    if (physGlob.world[param_1].useWorkerCmd != 0) {
+      pFVar4 = (FrameInfo *)0xe12;
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0xe12,
                       0,"%s");
     }
-    Phys_RunFrame(PVar6,(float)dVar7,pFVar5);
+    Phys_RunFrame(param_1,(float)dVar5,pFVar4);
     ODE_CollideSimpleSpaceWithGeomNoAABBTest
-              ((dxSpace *)(physGlob.space + PVar6),physGlob.worldGeom,auStack_70);
-    Phys_PostRunFrame(PVar6,(float)dVar7);
+              ((dxSpace *)(physGlob.space + param_1),physGlob.worldGeom,auStack_70);
+    Phys_PostRunFrame(param_1,(float)dVar5);
   }
-  pdVar1 = physGlob.world[PVar6].firstbody;
+  pdVar1 = physGlob.world[param_1].firstbody;
   if (pdVar1 != (dxBody *)0x0) {
-    dVar8 = 0.0;
+    dVar6 = 0.0;
     do {
       if ((pdVar1->flags & 4U) == 0) {
-        pdVar1->facc[0] = (float)dVar8;
-        pdVar1->facc[1] = (float)dVar8;
-        pdVar1->facc[2] = (float)dVar8;
-        pdVar1->tacc[0] = (float)dVar8;
-        pdVar1->tacc[1] = (float)dVar8;
-        pdVar1->tacc[2] = (float)dVar8;
-        for (pdVar3 = pdVar1->geom; pdVar3 != (dxGeom *)0x0; pdVar3 = dGeomGetBodyNext(pdVar3)) {
-          dGeomMoved(pdVar3);
+        pdVar1->facc[0] = (float)dVar6;
+        pdVar1->facc[1] = (float)dVar6;
+        pdVar1->facc[2] = (float)dVar6;
+        pdVar1->tacc[0] = (float)dVar6;
+        pdVar1->tacc[1] = (float)dVar6;
+        pdVar1->tacc[2] = (float)dVar6;
+        for (pdVar2 = pdVar1->geom; pdVar2 != (dxGeom *)0x0; pdVar2 = dGeomGetBodyNext(pdVar2)) {
+          dGeomMoved(pdVar2);
         }
       }
       pdVar1 = (dxBody *)pdVar1->_padding_;
     } while (pdVar1 != (dxBody *)0x0);
   }
-  dJointGroupEmpty((dxJointGroup *)
-                   (&contactGroups + (int)((uVar2 + (uVar2 & 0x7fffffff) * 2 & 0xffffffff) << 2)));
-  physGlob.worldData[PVar6].numJitterRegions = 0;
+  dJointGroupEmpty((dxJointGroup *)(&contactGroups + param_1 * 0xc));
+  physGlob.worldData[param_1].numJitterRegions = 0;
   PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffff,"physics traces");
-  for (pdVar1 = physGlob.world[PVar6].firstbody; pdVar1 != (dxBody *)0x0;
+  for (pdVar1 = physGlob.world[param_1].firstbody; pdVar1 != (dxBody *)0x0;
       pdVar1 = (dxBody *)pdVar1->_padding_) {
-    iVar4 = ODE_BodyGetContactJointCount(pdVar1);
-    if (iVar4 != 0) {
+    iVar3 = ODE_BodyGetContactJointCount(pdVar1);
+    if (iVar3 != 0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0xe33,
                       0,"%s");
     }
-    Phys_DoBodyOncePerRun(PVar6,pdVar1);
-    Phys_DoBodyOncePerFrame(PVar6,pdVar1,(float)dVar7);
+    Phys_DoBodyOncePerRun(param_1,pdVar1);
+    Phys_DoBodyOncePerFrame(param_1,pdVar1,(float)dVar5);
   }
   PIXEndNamedEvent();
   if (((phys_drawAwake->current).enabled != false) ||
      ((phys_drawCollisionObj->current).enabled != false)) {
-    ODE_ForEachBody<void_(__cdecl*)(enum_PhysWorld,dxBody_*)>(PVar6,Phys_ObjDraw);
+    ODE_ForEachBody<void_(__cdecl*)(enum_PhysWorld,dxBody_*)>(param_1,Phys_ObjDraw);
   }
   Profile_EndInternal((double *)0x0);
   PIXEndNamedEvent();
-  __restgprlr_24();
   return;
 }
 
 
 // 826736C0  Phys_LockWorld  (physics/phys_ode.cpp:3752)
 
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PhysWorld": Some values do not have unique names */
 
 void Phys_LockWorld(PhysWorld param_1)
 
 {
   int iVar1;
-  uint uVar2;
   
-  uVar2 = __savegprlr_22(param_1);
-  if (4 < uVar2) {
+  if (PHYS_WORLD_LAST_SERVER_WORLD < param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0xea9,0,
                     "worldIndex doesn\'t index PHYS_WORLD_COUNT\n\t%i not in [0, %i)");
   }
-  if (physGlob.world[uVar2].isStepping != 0) {
+  if (physGlob.world[param_1].isStepping != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0xeaa,0,
                     "%s\n\t(worldIndex) = %i");
   }
-  if (physGlob.world[uVar2].isStepping != 0) {
+  if (physGlob.world[param_1].isStepping != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0xeab,0,
                     "%s");
   }
   Sys_EnterCriticalSection(CRITSECT_PHYSICS);
-  if (*(int *)&physGlob.space[uVar2].field_0x64 != 0) {
+  if (*(int *)&physGlob.space[param_1].field_0x64 != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0xeb1,0,
                     "%s");
   }
-  iVar1 = physGlob.world[uVar2].isStepping;
-  *(undefined4 *)&physGlob.space[uVar2].field_0x64 = 1;
+  iVar1 = physGlob.world[param_1].isStepping;
+  *(undefined4 *)&physGlob.space[param_1].field_0x64 = 1;
   if (iVar1 != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0xeb6,0,
                     "%s\n\t(worldIndex) = %i");
   }
-  if (physGlob.world[uVar2].isStepping != 0) {
+  if (physGlob.world[param_1].isStepping != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0xeb7,0,
                     "%s");
   }
-  if (physGlob.world[uVar2].cmdCount != 0) {
+  if (physGlob.world[param_1].cmdCount != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0xeb9,0,
                     "%s");
   }
-  __restgprlr_22();
   return;
 }
 
 
 // 82673838  Phys_UnlockWorld  (physics/phys_ode.cpp:3775)
 
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PhysWorld": Some values do not have unique names */
 
 void Phys_UnlockWorld(PhysWorld param_1)
 
 {
-  uint uVar1;
-  
-  uVar1 = __savegprlr_22(param_1);
-  if (4 < uVar1) {
+  if (PHYS_WORLD_LAST_SERVER_WORLD < param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0xec0,0,
                     "worldIndex doesn\'t index PHYS_WORLD_COUNT\n\t%i not in [0, %i)");
   }
-  if (physGlob.world[uVar1].isStepping != 0) {
+  if (physGlob.world[param_1].isStepping != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0xec1,0,
                     "%s\n\t(worldIndex) = %i");
   }
-  if (physGlob.world[uVar1].isStepping != 0) {
+  if (physGlob.world[param_1].isStepping != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0xec2,0,
                     "%s");
   }
-  if (*(int *)&physGlob.space[uVar1].field_0x64 == 0) {
+  if (*(int *)&physGlob.space[param_1].field_0x64 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0xec4,0,
                     "%s");
   }
-  *(undefined4 *)&physGlob.space[uVar1].field_0x64 = 0;
-  if (physGlob.world[uVar1].cmdCount != 0) {
+  *(undefined4 *)&physGlob.space[param_1].field_0x64 = 0;
+  if (physGlob.world[param_1].cmdCount != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0xeca,0,
                     "%s");
   }
   Sys_LeaveCriticalSection(CRITSECT_PHYSICS);
-  if (physGlob.world[uVar1].isStepping != 0) {
+  if (physGlob.world[param_1].isStepping != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0xed1,0,
                     "%s\n\t(worldIndex) = %i");
   }
-  if (physGlob.world[uVar1].isStepping != 0) {
+  if (physGlob.world[param_1].isStepping != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0xed2,0,
                     "%s");
   }
-  __restgprlr_22();
   return;
 }
 
@@ -5520,21 +5305,21 @@ void Phys_UpdateMovedGeoms(PhysWorld param_1,dxBody *param_2)
 
 // 82673A28  Phys_DoTracesCmds  (physics/phys_ode.cpp:3814)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PhysWorld": Some values do not have unique names */
 /* WARNING: Enum "WorkerCmdType": Some values do not have unique names */
 
 void Phys_DoTracesCmds(PhysWorld param_1)
 
 {
-  ulonglong uVar1;
-  longlong lVar2;
-  uint *puVar3;
-  int *piVar4;
-  uint uVar5;
-  uint uVar6;
+  longlong lVar1;
+  uint *puVar2;
+  int *piVar3;
+  uint uVar4;
   char in_RESERVE;
   byte in_cr0;
-  undefined4 local_60;
+  PhysWorld local_60;
   PhysGlob *local_5c;
   void *local_58;
   CG_GlassPiece *local_54;
@@ -5542,60 +5327,59 @@ void Phys_DoTracesCmds(PhysWorld param_1)
   uint local_4c;
   int local_48 [18];
   
-  uVar1 = __savegprlr_28(param_1);
-  if (4 < (uVar1 & 0xffffffff)) {
+  if (PHYS_WORLD_LAST_SERVER_WORLD < param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0x176,0,
                     "worldIndex doesn\'t index PHYS_WORLD_COUNT\n\t%i not in [0, %i)");
   }
-  local_60 = (undefined4)uVar1;
   local_5c = &physGlob;
+  local_60 = param_1;
   local_58 = CM_GetClipMapPtr();
   local_54 = CG_GlassPieceFromIndex(0);
-  piVar4 = *(int **)((int)physGlob.world[0].stepInfo.gravity + (int)(uVar1 * 0x70) + -0x10);
-  lVar2 = uVar1 * 0x70 + -0x7bd8461c;
-  puVar3 = (uint *)lVar2;
-  uVar5 = 0;
-  local_50 = puVar3;
-  if (piVar4 == (int *)0x0) {
+  piVar3 = *(int **)((int)physGlob.world[0].stepInfo.gravity +
+                    (int)((longlong)(int)param_1 * 0x70) + -0x10);
+  lVar1 = (longlong)(int)param_1 * 0x70 + -0x7bd8461c;
+  puVar2 = (uint *)lVar1;
+  uVar4 = 0;
+  local_50 = puVar2;
+  if (piVar3 == (int *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0xef5,0,
                     "%s");
   }
   do {
-    uVar6 = uVar5 + 1;
-    local_48[uVar5] = (int)piVar4;
-    if (7 < uVar6) {
+    local_4c = uVar4 + 1;
+    local_48[uVar4] = (int)piVar3;
+    if (7 < local_4c) {
       do {
         if (in_RESERVE != '\0') {
-          uVar5 = storeWordConditionalIndexed((ulonglong)*puVar3 + 1,0,lVar2);
-          *puVar3 = uVar5;
+          uVar4 = storeWordConditionalIndexed((ulonglong)*puVar2 + 1,0,lVar1);
+          *puVar2 = uVar4;
           in_cr0 = 2;
         }
       } while (!(bool)(in_cr0 >> 1 & 1));
-      local_4c = uVar6;
       R_AddWorkerCmd(WRKCMD_PHYSICS_TRACES,&local_60);
-      uVar6 = 0;
+      local_4c = 0;
     }
-    piVar4 = (int *)*piVar4;
-    uVar5 = uVar6;
-  } while (piVar4 != (int *)0x0);
-  if (uVar6 != 0) {
+    piVar3 = (int *)*piVar3;
+    uVar4 = local_4c;
+  } while (piVar3 != (int *)0x0);
+  if (local_4c != 0) {
     do {
       if (in_RESERVE != '\0') {
-        uVar5 = storeWordConditionalIndexed((ulonglong)*puVar3 + 1,0,lVar2);
-        *puVar3 = uVar5;
+        uVar4 = storeWordConditionalIndexed((ulonglong)*puVar2 + 1,0,lVar1);
+        *puVar2 = uVar4;
         in_cr0 = 2;
       }
     } while (!(bool)(in_cr0 >> 1 & 1));
-    local_4c = uVar6;
     R_AddWorkerCmd(WRKCMD_PHYSICS_TRACES,&local_60);
   }
-  __restgprlr_28();
   return;
 }
 
 
 // 82677E18  Phys_RunToTimeCmd  (physics/phys_ode.cpp:3862)
 
+/* WARNING: Function: __savegprlr_21 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_21 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PhysWorld": Some values do not have unique names */
 /* WARNING: Enum "WorkerCmdType": Some values do not have unique names */
 
@@ -5604,20 +5388,18 @@ void Phys_RunToTimeCmd(PhysicsCmd *param_1)
 {
   PhysWorld PVar1;
   int iVar2;
-  float fVar3;
-  uint *puVar4;
+  int iVar3;
+  float fVar4;
   PhysWorldData *pPVar5;
   int iVar6;
   code *pcVar7;
   uint uVar8;
   uint uVar9;
-  uint uVar10;
-  double dVar11;
+  double dVar10;
   undefined1 auStack_80 [128];
   
-  puVar4 = (uint *)__savegprlr_21(param_1);
-  PVar1 = puVar4[1];
-  uVar9 = puVar4[2];
+  PVar1 = param_1->worldIndex;
+  iVar2 = param_1->timeNow;
   if (PHYS_WORLD_LAST_SERVER_WORLD < PVar1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0xf27,0,
                     "worldIndex doesn\'t index PHYS_WORLD_COUNT\n\t%i not in [0, %i)");
@@ -5631,10 +5413,10 @@ void Phys_RunToTimeCmd(PhysicsCmd *param_1)
                     "%s");
   }
   Profile_Begin(0x171);
-  PIXBeginNamedEvent_Copy_Int(0xffffffff,"physics %d",*puVar4);
-  uVar10 = *puVar4;
-  if (4 < uVar10) goto LAB_82678058;
-  if (uVar10 == 1) {
+  PIXBeginNamedEvent_Copy_Int(0xffffffff,"physics %d",param_1->type);
+  uVar9 = param_1->type;
+  if (4 < uVar9) goto LAB_82678058;
+  if (uVar9 == 1) {
 LAB_82677f08:
     if (physGlob.world[PVar1].isStepping != 0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0xf32,
@@ -5646,50 +5428,49 @@ LAB_82677f08:
     }
     physGlob.world[PVar1].isStepping = 1;
     pPVar5 = Phys_GetWorldData(PVar1);
-    if ((int)uVar9 < pPVar5->timeLastSnapshot) {
-      Phys_RewindCurrentTime(PVar1,uVar9);
+    if (iVar2 < pPVar5->timeLastSnapshot) {
+      Phys_RewindCurrentTime(PVar1,iVar2);
     }
     Phys_GetWorld(PVar1);
-    if ((int)uVar9 <= pPVar5->timeLastUpdate) goto LAB_82678184;
+    if (iVar2 <= pPVar5->timeLastUpdate) goto LAB_82678184;
     pPVar5->timeLastSnapshot = pPVar5->timeLastUpdate;
     pcVar7 = Phys_BodyGrabSnapshot;
     ODE_ForEachBody<void_(__cdecl*)(enum_PhysWorld,dxBody_*)>(PVar1,Phys_BodyGrabSnapshot);
-    uVar8 = uVar9 - pPVar5->timeLastUpdate;
-    uVar10 = g_phys_msecStep[PVar1];
+    uVar8 = iVar2 - pPVar5->timeLastUpdate;
+    uVar9 = g_phys_msecStep[PVar1];
     if (g_phys_msecStep[PVar1] < (int)uVar8) {
-      uVar10 = uVar8;
+      uVar9 = uVar8;
     }
     if (physGlob.world[PVar1].bodyCount == 0) goto LAB_826780e0;
-    dVar11 = (double)((float)uVar10 * 0.001);
-    Phys_RunFrame(PVar1,(float)uVar10 * 0.001,(FrameInfo *)pcVar7);
+    dVar10 = (double)((float)uVar9 * 0.001);
+    Phys_RunFrame(PVar1,(float)uVar9 * 0.001,(FrameInfo *)pcVar7);
     if ((physGlob.world[PVar1].useWorkerCmd == 0) || ((phys_worker_cmds->current).enabled == false))
     {
       ODE_CollideSimpleSpaceWithGeomNoAABBTest
                 ((dxSpace *)(physGlob.space + PVar1),physGlob.worldGeom,auStack_80);
       goto LAB_826780d4;
     }
-    Phys_DoCollideCmds(PVar1,(float)dVar11);
-    uVar9 = 2;
-    puVar4[3] = uVar10;
+    Phys_DoCollideCmds(PVar1,(float)dVar10);
+    uVar8 = 2;
+    param_1->msecStep = uVar9;
 LAB_82678054:
-    *puVar4 = uVar9;
+    param_1->type = uVar8;
 LAB_82678058:
     PIXEndNamedEvent();
     Profile_EndInternal((double *)0x0);
-    R_AddWorkerCmd(WRKCMD_RUN_PHYSICS,puVar4);
-    __restgprlr_21();
+    R_AddWorkerCmd(WRKCMD_RUN_PHYSICS,param_1);
     return;
   }
-  if (uVar10 == 2) {
-    uVar10 = puVar4[3];
-    dVar11 = (double)((float)uVar10 * 0.001);
+  if (uVar9 == 2) {
+    uVar9 = param_1->msecStep;
+    dVar10 = (double)((float)uVar9 * 0.001);
     pPVar5 = Phys_GetWorldData(PVar1);
     Phys_PostCollideCmds(PVar1);
 LAB_826780d4:
-    Phys_PostRunFrame(PVar1,(float)dVar11);
+    Phys_PostRunFrame(PVar1,(float)dVar10);
 LAB_826780e0:
-    pPVar5->timeLastUpdate = pPVar5->timeLastUpdate + uVar10;
-    *puVar4 = 3;
+    pPVar5->timeLastUpdate = pPVar5->timeLastUpdate + uVar9;
+    param_1->type = 3;
 LAB_826780f4:
     iVar6 = TryWaitForPhysics();
     if (iVar6 == 0) goto LAB_82678058;
@@ -5701,13 +5482,13 @@ LAB_826780f4:
     }
     if (physGlob.world[PVar1].firstbody != (dxBody *)0x0) {
       Phys_DoTracesCmds(PVar1);
-      uVar9 = 4;
+      uVar8 = 4;
       goto LAB_82678054;
     }
   }
   else {
-    if (uVar10 == 3) goto LAB_826780f4;
-    if (uVar10 == 0) goto LAB_82677f08;
+    if (uVar9 == 3) goto LAB_826780f4;
+    if (uVar9 == 0) goto LAB_82677f08;
     pcVar7 = Phys_UpdateMovedGeoms;
 LAB_8267815c:
     ODE_ForEachBody<void_(__cdecl*)(enum_PhysWorld,dxBody_*)>(PVar1,pcVar7);
@@ -5721,23 +5502,23 @@ LAB_82678184:
      ((phys_drawCollisionObj->current).enabled != false)) {
     ODE_ForEachBody<void_(__cdecl*)(enum_PhysWorld,dxBody_*)>(PVar1,Phys_ObjDraw);
   }
-  if (((int)uVar9 < pPVar5->timeLastSnapshot) || (pPVar5->timeLastUpdate < (int)uVar9)) {
+  if ((iVar2 < pPVar5->timeLastSnapshot) || (pPVar5->timeLastUpdate < iVar2)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0xfc6,0,
                     "timeNow not in [data->timeLastSnapshot, data->timeLastUpdate]\n\t%i not in [%i, %i]"
                    );
   }
   iVar6 = pPVar5->timeLastUpdate;
-  iVar2 = pPVar5->timeLastSnapshot;
-  if (iVar2 < iVar6) {
-    fVar3 = (float)(longlong)(int)(uVar9 - iVar2) / (float)(longlong)(iVar6 - iVar2);
-    pPVar5->timeNowLerpFrac = fVar3;
-    if ((fVar3 < 0.0) || (1.0 < fVar3)) {
+  iVar3 = pPVar5->timeLastSnapshot;
+  if (iVar3 < iVar6) {
+    fVar4 = (float)(longlong)(iVar2 - iVar3) / (float)(longlong)(iVar6 - iVar3);
+    pPVar5->timeNowLerpFrac = fVar4;
+    if ((fVar4 < 0.0) || (1.0 < fVar4)) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0xfca,
                       0,"data->timeNowLerpFrac not in [0.0f, 1.0f]\n\t%g not in [%g, %g]");
     }
   }
   else {
-    if (iVar6 != iVar2) {
+    if (iVar6 != iVar3) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0xfce,
                       0,"%s");
     }
@@ -5749,8 +5530,7 @@ LAB_82678184:
   }
   physGlob.world[PVar1].isStepping = 0;
   PIXEndNamedEvent();
-  iVar6 = Profile_EndInternal((double *)0x0);
-  __restgprlr_21(iVar6);
+  Profile_EndInternal((double *)0x0);
   return;
 }
 
@@ -5802,15 +5582,15 @@ void Phys_EndFrame(void)
 
 // 82673C28  Phys_ObjGetInterpolatedState  (physics/phys_ode.cpp:4100)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PhysWorld": Some values do not have unique names */
 
 void Phys_ObjGetInterpolatedState(PhysWorld param_1,int param_2,float *param_3,float *param_4)
 
 {
-  PhysWorld PVar1;
-  float (*pafVar2) [3];
-  double dVar3;
-  float fVar4;
+  float (*pafVar1) [3];
+  double dVar2;
   float local_f0;
   float local_ec;
   float local_e8;
@@ -5822,42 +5602,40 @@ void Phys_ObjGetInterpolatedState(PhysWorld param_1,int param_2,float *param_3,f
   float afStack_b0 [12];
   float afStack_80 [32];
   
-  PVar1 = __savegprlr_23(param_1);
-  if (PHYS_WORLD_LAST_SERVER_WORLD < PVar1) {
+  if (PHYS_WORLD_LAST_SERVER_WORLD < param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0x176,0,
                     "worldIndex doesn\'t index PHYS_WORLD_COUNT\n\t%i not in [0, %i)");
   }
-  if (physGlob.world[PVar1].isStepping != 0) {
+  if (physGlob.world[param_1].isStepping != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0x1014,0
                     ,"%s\n\t(worldIndex) = %i");
   }
-  if (PHYS_WORLD_LAST_SERVER_WORLD < PVar1) {
+  if (PHYS_WORLD_LAST_SERVER_WORLD < param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0x176,0,
                     "worldIndex doesn\'t index PHYS_WORLD_COUNT\n\t%i not in [0, %i)");
   }
-  if (physGlob.world[PVar1].isStepping != 0) {
+  if (physGlob.world[param_1].isStepping != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0x1015,0
                     ,"%s");
   }
-  if (PHYS_WORLD_LAST_SERVER_WORLD < PVar1) {
+  if (PHYS_WORLD_LAST_SERVER_WORLD < param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0x181,0,
                     "worldIndex doesn\'t index PHYS_WORLD_COUNT\n\t%i not in [0, %i)");
   }
-  dVar3 = (double)physGlob.worldData[PVar1].timeNowLerpFrac;
-  Phys_ObjGetSnapshot(PVar1,param_2,&local_f0,(float (*) [3])afStack_b0);
-  pafVar2 = (float (*) [3])afStack_80;
-  Phys_ObjGetPosition(param_2,&local_e0,pafVar2);
-  *param_3 = (float)((double)(float)((double)local_e0 - (double)local_f0) * dVar3 + (double)local_f0
+  dVar2 = (double)physGlob.worldData[param_1].timeNowLerpFrac;
+  Phys_ObjGetSnapshot(param_1,param_2,&local_f0,(float (*) [3])afStack_b0);
+  pafVar1 = (float (*) [3])afStack_80;
+  Phys_ObjGetPosition(param_2,&local_e0,pafVar1);
+  *param_3 = (float)((double)(float)((double)local_e0 - (double)local_f0) * dVar2 + (double)local_f0
                     );
-  param_3[1] = (float)((double)(float)((double)local_dc - (double)local_ec) * dVar3 +
+  param_3[1] = (float)((double)(float)((double)local_dc - (double)local_ec) * dVar2 +
                       (double)local_ec);
-  param_3[2] = (float)((double)(float)((double)local_d8 - (double)local_e8) * dVar3 +
+  param_3[2] = (float)((double)(float)((double)local_d8 - (double)local_e8) * dVar2 +
                       (double)local_e8);
   AxisToQuat((float (*) [3])afStack_b0,afStack_c0);
   AxisToQuat((float (*) [3])afStack_80,afStack_d0);
-  QuatLerp(afStack_c0,afStack_d0,(float)dVar3,*pafVar2);
-  fVar4 = Vec4Normalize(param_4);
-  __restgprlr_23((double)fVar4);
+  QuatLerp(afStack_c0,afStack_d0,(float)dVar2,*pafVar1);
+  Vec4Normalize(param_4);
   return;
 }
 
@@ -5889,27 +5667,26 @@ void Phys_ObjSetMass(int param_1,float param_2)
 
 // 82673EB8  Phys_ObjSetFriction  (physics/phys_ode.cpp:4150)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void Phys_ObjSetFriction(int param_1,float param_2)
 
 {
-  dxBody *pdVar1;
-  void *pvVar2;
-  double extraout_f1;
-  double dVar3;
+  void *pvVar1;
+  double dVar2;
   
-  pdVar1 = (dxBody *)__savegprlr_29((double)param_2,param_1);
-  dVar3 = extraout_f1;
-  if (pdVar1 == (dxBody *)0x0) {
+  dVar2 = (double)param_2;
+  if (param_1 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0x103a,0
                     ,"%s");
   }
-  if (dVar3 < 0.0) {
+  if (dVar2 < 0.0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0x103b,0
                     ,"%s");
   }
-  pvVar2 = dBodyGetData(pdVar1);
-  *(float *)((int)pvVar2 + 0x50) = (float)dVar3;
-  __restgprlr_29();
+  pvVar1 = dBodyGetData((dxBody *)param_1);
+  *(float *)((int)pvVar1 + 0x50) = (float)dVar2;
   return;
 }
 
@@ -5968,157 +5745,151 @@ void Phys_ObjSave(int param_1,MemoryFile *param_2)
 
 // 826740D8  Phys_ObjLoad  (physics/phys_ode.cpp:4198)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PhysWorld": Some values do not have unique names */
 
 int Phys_ObjLoad(PhysWorld param_1,MemoryFile *param_2)
 
 {
-  PhysWorld PVar1;
-  dxBody *pdVar2;
-  int iVar3;
+  dxBody *pdVar1;
   BodyState_conflict BStack_b0;
   
-  PVar1 = __savegprlr_27(param_1);
-  if ((physInitedClient == false) && ((int)PVar1 < 3)) {
+  if ((!physInitedClient) && ((int)param_1 < 3)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0x106a,0
                     ,"%s");
   }
-  if ((physInitedServer == false) && (2 < (int)PVar1)) {
+  if ((physInitedServer == false) && (2 < (int)param_1)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0x106b,0
                     ,"%s");
   }
   MemFile_ReadData(param_2,0x78,&BStack_b0);
-  Phys_LockWorld(PVar1);
-  pdVar2 = Phys_CreateBodyFromState(PVar1,&BStack_b0);
-  Phys_UnlockWorld(PVar1);
-  if (pdVar2 == (dxBody *)0x0) {
+  Phys_LockWorld(param_1);
+  pdVar1 = Phys_CreateBodyFromState(param_1,&BStack_b0);
+  Phys_UnlockWorld(param_1);
+  if (pdVar1 == (dxBody *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0x1073,0
                     ,"%s");
   }
-  iVar3 = __restgprlr_27(pdVar2);
-  return iVar3;
+  return (int)pdVar1;
 }
 
 
 // 826741C8  Phys_BodyGetPrev  (physics/phys_ode.cpp:4217)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 dxBody * Phys_BodyGetPrev(dxBody *param_1)
 
 {
-  int *piVar1;
-  int iVar2;
-  dxBody *pdVar3;
+  dxBody *pdVar1;
   
-  iVar2 = __savegprlr_28(param_1);
-  if (iVar2 == **(int **)(iVar2 + 0x10)) {
-    if (*(int **)(iVar2 + 4) != *(int **)(iVar2 + 0x10)) {
+  if (param_1 == *(dxBody **)param_1->_padding_) {
+    if ((int *)param_1->_padding_ != (int *)param_1->_padding_) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0x107e
                       ,0,"%s");
     }
-    pdVar3 = (dxBody *)__restgprlr_28(0);
-    return pdVar3;
+    return (dxBody *)0x0;
   }
-  if (**(int **)(iVar2 + 4) != iVar2) {
+  if (*(dxBody **)param_1->_padding_ != param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0x1082,0
                     ,"%s");
   }
-  piVar1 = *(int **)(iVar2 + 4);
-  if (*piVar1 != iVar2) {
+  pdVar1 = (dxBody *)param_1->_padding_;
+  if ((dxBody *)pdVar1->_padding_ != param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0x1084,0
                     ,"%s");
   }
-  if (*(int **)(iVar2 + 4) != piVar1) {
+  if ((dxBody *)param_1->_padding_ != pdVar1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0x1085,0
                     ,"%s");
   }
-  pdVar3 = (dxBody *)__restgprlr_28(piVar1);
-  return pdVar3;
+  return pdVar1;
 }
 
 
 // 826742C0  Phys_SaveAllObjsInWorld  (physics/phys_ode.cpp:4235)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PhysWorld": Some values do not have unique names */
 
 void Phys_SaveAllObjsInWorld(PhysWorld param_1,MemoryFile *param_2)
 
 {
   dxBody *pdVar1;
-  int iVar2;
-  dxBody *pdVar3;
-  int iVar4;
+  dxBody *pdVar2;
+  int iVar3;
   int local_d0 [4];
   BodyState_conflict BStack_c0;
   
-  iVar2 = __savegprlr_25(param_1);
-  iVar4 = 0;
-  if (iVar2 < 3) {
+  iVar3 = 0;
+  if ((int)param_1 < 3) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0x1095,0
                     ,"%s");
   }
-  local_d0[0] = physGlob.world[iVar2].bodyCount;
+  local_d0[0] = physGlob.world[param_1].bodyCount;
   MemFile_WriteData(param_2,4,local_d0);
-  if (physGlob.world[iVar2].bodyCount < 0) {
+  if (physGlob.world[param_1].bodyCount < 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0x1099,0
                     ,"%s\n\t(world->bodyCount) = %i");
   }
-  if (physGlob.world[iVar2].bodyCount != 0) {
-    pdVar3 = physGlob.world[iVar2].firstbody;
-    for (pdVar1 = (dxBody *)pdVar3->_padding_; pdVar1 != (dxBody *)0x0;
+  if (physGlob.world[param_1].bodyCount != 0) {
+    pdVar2 = physGlob.world[param_1].firstbody;
+    for (pdVar1 = (dxBody *)pdVar2->_padding_; pdVar1 != (dxBody *)0x0;
         pdVar1 = (dxBody *)pdVar1->_padding_) {
-      pdVar3 = pdVar1;
+      pdVar2 = pdVar1;
     }
     do {
-      if (pdVar3 == (dxBody *)0x0) {
+      if (pdVar2 == (dxBody *)0x0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",
                         0x105e,0,"%s");
       }
-      Phys_GetStateFromBody(pdVar3,&BStack_c0);
+      Phys_GetStateFromBody(pdVar2,&BStack_c0);
       MemFile_WriteData(param_2,0x78,&BStack_c0);
-      iVar4 = iVar4 + 1;
-      pdVar3 = Phys_BodyGetPrev(pdVar3);
-    } while (pdVar3 != (dxBody *)0x0);
-    if (iVar4 != physGlob.world[iVar2].bodyCount) {
+      iVar3 = iVar3 + 1;
+      pdVar2 = Phys_BodyGetPrev(pdVar2);
+    } while (pdVar2 != (dxBody *)0x0);
+    if (iVar3 != physGlob.world[param_1].bodyCount) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0x10ab
                       ,1,"%s");
     }
   }
-  __restgprlr_25();
   return;
 }
 
 
 // 82674418  Phys_LoadAllObjsInWorld  (physics/phys_ode.cpp:4272)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PhysWorld": Some values do not have unique names */
 
 void Phys_LoadAllObjsInWorld(PhysWorld param_1,MemoryFile *param_2)
 
 {
-  PhysWorld PVar1;
+  ulonglong uVar1;
   ulonglong uVar2;
-  ulonglong uVar3;
   uint local_30 [12];
   
-  PVar1 = __savegprlr_29(param_1);
-  if ((int)PVar1 < 3) {
+  if ((int)param_1 < 3) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0x10b5,0
                     ,"%s");
   }
   MemFile_ReadData(param_2,4,local_30);
-  uVar2 = 8;
-  if (PVar1 != PHYS_WORLD_FIRST_SERVER_WORLD) {
-    uVar2 = 0x1f8;
+  uVar1 = 8;
+  if (param_1 != PHYS_WORLD_FIRST_SERVER_WORLD) {
+    uVar1 = 0x1f8;
   }
-  uVar3 = (ulonglong)local_30[0];
-  if (uVar2 <= uVar3) {
+  uVar2 = (ulonglong)local_30[0];
+  if (uVar1 <= uVar2) {
     Com_Error(ERR_DROP,
               "Invalid physics body count (%i) for world %i. Max: %i.  Savegame is invalid.");
   }
-  for (; uVar3 != 0; uVar3 = uVar3 - 1) {
-    Phys_ObjLoad(PVar1,param_2);
+  for (; uVar2 != 0; uVar2 = uVar2 - 1) {
+    Phys_ObjLoad(param_1,param_2);
   }
-  __restgprlr_29();
   return;
 }
 
@@ -6156,6 +5927,8 @@ void Phys_ArchiveState(MemoryFile *param_1)
 
 // 82674568  Phys_ObjGetSaveIndex  (physics/phys_ode.cpp:4308)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PhysWorld": Some values do not have unique names */
 
 uint Phys_ObjGetSaveIndex(int param_1)
@@ -6163,92 +5936,90 @@ uint Phys_ObjGetSaveIndex(int param_1)
 {
   dxWorld *pdVar1;
   dxBody *pdVar2;
-  dxBody *pdVar3;
-  PhysWorld PVar4;
-  uint uVar5;
-  ulonglong uVar6;
+  PhysWorld PVar3;
+  uint uVar4;
   
-  pdVar3 = (dxBody *)__savegprlr_27(param_1);
-  if (pdVar3 == (dxBody *)0x0) {
+  if (param_1 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0x10db,0
                     ,"%s");
   }
-  pdVar1 = (dxWorld *)pdVar3->_padding_;
-  PVar4 = Phys_IndexFromODEWorldID(pdVar1);
-  if ((int)PVar4 < 3) {
+  pdVar1 = *(dxWorld **)(param_1 + 0x10);
+  PVar3 = Phys_IndexFromODEWorldID(pdVar1);
+  if ((int)PVar3 < 3) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0x10e0,0
                     ,"%s");
   }
   pdVar2 = pdVar1->firstbody;
-  uVar6 = 0;
+  uVar4 = 0;
   do {
     if (pdVar2 == (dxBody *)0x0) {
 LAB_82674610:
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0x10ea
                       ,0,"%s");
 LAB_8267462c:
-      if ((ulonglong)(uint)pdVar1->bodyCount <= (uVar6 & 0xffffffff)) {
+      if ((uint)pdVar1->bodyCount <= uVar4) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",
                         0x10eb,0,"index doesn\'t index world->bodyCount\n\t%i not in [0, %i)");
       }
-      uVar5 = __restgprlr_27(uVar6);
-      return uVar5;
+      return uVar4;
     }
-    if (pdVar2 == pdVar3) {
+    if (pdVar2 == (dxBody *)param_1) {
       if (pdVar2 != (dxBody *)0x0) goto LAB_8267462c;
       goto LAB_82674610;
     }
     pdVar2 = (dxBody *)pdVar2->_padding_;
-    uVar6 = uVar6 + 1;
+    uVar4 = uVar4 + 1;
   } while( true );
 }
 
 
 // 82674660  Phys_ObjFromSaveIndex  (physics/phys_ode.cpp:4338)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PhysWorld": Some values do not have unique names */
 
 int Phys_ObjFromSaveIndex(PhysWorld param_1,uint param_2)
 
 {
   dxBody *pdVar1;
-  int iVar2;
-  ulonglong uVar3;
-  ulonglong uVar4;
+  uint uVar2;
   
-  uVar3 = (ulonglong)(int)param_2;
-  iVar2 = __savegprlr_29(param_1);
-  if (iVar2 < 3) {
+  if ((int)param_1 < 3) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0x10f8,0
                     ,"%s");
   }
-  if ((ulonglong)(uint)physGlob.world[iVar2].bodyCount <= (uVar3 & 0xffffffff)) {
+  if ((uint)physGlob.world[param_1].bodyCount <= param_2) {
     Com_Error(ERR_DROP,"\x15Phys obj index out of range (%i).  Does not index %i.");
   }
-  pdVar1 = physGlob.world[iVar2].firstbody;
-  uVar4 = 0;
+  pdVar1 = physGlob.world[param_1].firstbody;
+  uVar2 = 0;
   do {
     if (pdVar1 == (dxBody *)0x0) {
 LAB_82674704:
       Com_Error(ERR_DROP,
                 "\x15Physics body not found for index %i, (lastindex %i) Number of bodies the world thinks it has: %i"
                );
-LAB_8267471c:
-      iVar2 = __restgprlr_29(pdVar1);
-      return iVar2;
+      return (int)pdVar1;
     }
-    if ((uVar4 & 0xffffffff) == (uVar3 & 0xffffffff)) {
-      if (pdVar1 != (dxBody *)0x0) goto LAB_8267471c;
+    if (uVar2 == param_2) {
+      if (pdVar1 != (dxBody *)0x0) {
+        return (int)pdVar1;
+      }
       goto LAB_82674704;
     }
     pdVar1 = (dxBody *)pdVar1->_padding_;
-    uVar4 = uVar4 + 1;
+    uVar2 = uVar2 + 1;
   } while( true );
 }
 
 
 // 82674728  Phys_SetHingeParams  (physics/phys_ode.cpp:4367)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PhysWorld": Some values do not have unique names */
 
 void Phys_SetHingeParams(PhysWorld param_1,int param_2,float param_3,float param_4,float param_5,
@@ -6263,13 +6034,12 @@ void Phys_SetHingeParams(PhysWorld param_1,int param_2,float param_3,float param
   dVar4 = (double)param_6;
   dVar3 = (double)param_5;
   dVar2 = (double)param_4;
-  __savegprlr_29((double)param_3,param_1);
-  dVar1 = (double)__savefpr_28();
-  if ((dxJointHinge *)param_2 == (dxJointHinge *)0x0) {
+  dVar1 = (double)param_3;
+  if (param_2 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0x1113,0
                     ,"%s");
   }
-  if (((dxJointHinge *)param_2)->_padding_ != 2) {
+  if (*(int *)(param_2 + 0x14) != 2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0x1117,0
                     ,"%s");
   }
@@ -6281,91 +6051,81 @@ void Phys_SetHingeParams(PhysWorld param_1,int param_2,float param_3,float param
   dJointSetHingeParam((dxJointHinge *)param_2,7,(phys_joint_stop_erp->current).value);
   dJointSetHingeParam((dxJointHinge *)param_2,0,(float)dVar3);
   dJointSetHingeParam((dxJointHinge *)param_2,1,(float)dVar4);
-  __restfpr_28();
-  __restgprlr_29();
   return;
 }
 
 
 // 82678320  Phys_CreateHinge  (physics/phys_ode.cpp:4390)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PhysWorld": Some values do not have unique names */
 
 int Phys_CreateHinge(PhysWorld param_1,int param_2,int param_3,float *param_4,float *param_5,
                     float param_6,float param_7,float param_8,float param_9)
 
 {
-  PhysWorld PVar1;
-  dxJointHinge *pdVar2;
-  int iVar3;
-  double extraout_f1;
+  dxJointHinge *pdVar1;
+  double dVar2;
+  double dVar3;
   double dVar4;
   double dVar5;
-  double dVar6;
-  double dVar7;
   
-  dVar6 = (double)param_9;
-  dVar5 = (double)param_8;
-  dVar4 = (double)param_7;
-  __savegprlr_26((double)param_6,param_1);
-  PVar1 = __savefpr_28();
-  dVar7 = extraout_f1;
-  pdVar2 = PhysStaticArray<dxJointHinge,192>::allocate(&physGlob.hingeArray);
-  if (pdVar2 == (dxJointHinge *)0x0) {
+  dVar5 = (double)param_9;
+  dVar4 = (double)param_8;
+  dVar3 = (double)param_7;
+  dVar2 = (double)param_6;
+  pdVar1 = PhysStaticArray<dxJointHinge,192>::allocate(&physGlob.hingeArray);
+  if (pdVar1 == (dxJointHinge *)0x0) {
     Com_PrintWarning(0x14,"Physics: Out of hinge joints (%d max)\n");
-    __restfpr_28(0);
-    iVar3 = __restgprlr_26();
-    return iVar3;
+    return 0;
   }
-  pdVar2 = (dxJointHinge *)dJointCreateHinge(physGlob.world + PVar1,(dxJoint *)pdVar2);
-  if (pdVar2 == (dxJointHinge *)0x0) {
+  pdVar1 = (dxJointHinge *)dJointCreateHinge(physGlob.world + param_1,(dxJoint *)pdVar1);
+  if (pdVar1 == (dxJointHinge *)0x0) {
     Com_PrintWarning(0x14,"Physics: Maximum number of joints exceeded in world %i.\n");
-    __restfpr_28(0);
-    iVar3 = __restgprlr_26();
-    return iVar3;
+    return 0;
   }
-  dJointAttach((dxJoint *)pdVar2,(dxBody *)param_2,(dxBody *)param_3);
-  dJointSetHingeAnchor(pdVar2,*param_4,param_4[1],param_4[2]);
-  dJointSetHingeAxis(pdVar2,*param_5,param_5[1],param_5[2]);
-  Phys_SetHingeParams(PVar1,(int)pdVar2,(float)dVar7,(float)dVar4,(float)dVar5,(float)dVar6);
-  __restfpr_28(pdVar2);
-  iVar3 = __restgprlr_26();
-  return iVar3;
+  dJointAttach((dxJoint *)pdVar1,(dxBody *)param_2,(dxBody *)param_3);
+  dJointSetHingeAnchor(pdVar1,*param_4,param_4[1],param_4[2]);
+  dJointSetHingeAxis(pdVar1,*param_5,param_5[1],param_5[2]);
+  Phys_SetHingeParams(param_1,(int)pdVar1,(float)dVar2,(float)dVar3,(float)dVar4,(float)dVar5);
+  return (int)pdVar1;
 }
 
 
 // 82678448  Phys_CreateBallAndSocket  (physics/phys_ode.cpp:4428)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PhysWorld": Some values do not have unique names */
 
 int Phys_CreateBallAndSocket(PhysWorld param_1,int param_2,int param_3,float *param_4)
 
 {
-  int iVar1;
-  dxJointBall *pdVar2;
+  dxJointBall *pdVar1;
   
-  iVar1 = __savegprlr_27(param_1);
-  pdVar2 = PhysStaticArray<dxJointBall,160>::allocate(&physGlob.ballArray);
-  if (pdVar2 == (dxJointBall *)0x0) {
+  pdVar1 = PhysStaticArray<dxJointBall,160>::allocate(&physGlob.ballArray);
+  if (pdVar1 == (dxJointBall *)0x0) {
     Com_PrintWarning(0x14,"Physics: Out of ball and socket joints (%d max)\n");
-    iVar1 = __restgprlr_27(0);
-    return iVar1;
+    return 0;
   }
-  pdVar2 = (dxJointBall *)dJointCreateBall(physGlob.world + iVar1,(dxJoint *)pdVar2);
-  if (pdVar2 == (dxJointBall *)0x0) {
+  pdVar1 = (dxJointBall *)dJointCreateBall(physGlob.world + param_1,(dxJoint *)pdVar1);
+  if (pdVar1 == (dxJointBall *)0x0) {
     Com_PrintWarning(0x14,"Physics: Maximum number of joints exceeded in world %i.\n");
-    iVar1 = __restgprlr_27(0);
-    return iVar1;
+    return 0;
   }
-  dJointAttach((dxJoint *)pdVar2,(dxBody *)param_2,(dxBody *)param_3);
-  dJointSetBallAnchor(pdVar2,*param_4,param_4[1],param_4[2]);
-  iVar1 = __restgprlr_27(pdVar2);
-  return iVar1;
+  dJointAttach((dxJoint *)pdVar1,(dxBody *)param_2,(dxBody *)param_3);
+  dJointSetBallAnchor(pdVar1,*param_4,param_4[1],param_4[2]);
+  return (int)pdVar1;
 }
 
 
 // 82674858  Phys_SetAngularMotorParams  (physics/phys_ode.cpp:4458)
 
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PhysWorld": Some values do not have unique names */
 
 void Phys_SetAngularMotorParams
@@ -6373,52 +6133,48 @@ void Phys_SetAngularMotorParams
                float *param_6)
 
 {
-  float *pfVar1;
+  int iVar1;
   int iVar2;
-  longlong lVar3;
+  int iVar3;
   longlong lVar4;
   int iVar5;
   double dVar6;
   
-  lVar4 = (longlong)(int)param_6;
-  __savegprlr_22(param_1);
-  if ((dxJointAMotor *)param_2 == (dxJointAMotor *)0x0) {
+  if (param_2 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0x1170,0
                     ,"%s");
   }
-  if (((dxJointAMotor *)param_2)->_padding_ != 10) {
+  if (*(int *)(param_2 + 0x14) != 10) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0x1174,0
                     ,"%s");
   }
-  iVar2 = (int)lVar4;
+  iVar2 = (int)param_3 - (int)param_6;
   iVar5 = 2;
+  iVar1 = (int)param_5 - (int)param_6;
+  iVar3 = (int)param_4 - (int)param_6;
   dVar6 = 0.8999999761581421;
-  lVar3 = 3;
+  lVar4 = 3;
   do {
-    pfVar1 = (float *)lVar4;
-    dJointSetAMotorParam
-              ((dxJointAMotor *)param_2,iVar5 + -2,*(float *)(((int)param_5 - iVar2) + (int)pfVar1))
-    ;
-    dJointSetAMotorParam((dxJointAMotor *)param_2,iVar5 + -1,*pfVar1);
-    dJointSetAMotorParam
-              ((dxJointAMotor *)param_2,iVar5,*(float *)(((int)param_3 - iVar2) + (int)pfVar1));
-    dJointSetAMotorParam
-              ((dxJointAMotor *)param_2,iVar5 + 1,*(float *)(((int)param_4 - iVar2) + (int)pfVar1));
+    dJointSetAMotorParam((dxJointAMotor *)param_2,iVar5 + -2,*(float *)(iVar1 + (int)param_6));
+    dJointSetAMotorParam((dxJointAMotor *)param_2,iVar5 + -1,*param_6);
+    dJointSetAMotorParam((dxJointAMotor *)param_2,iVar5,*(float *)(iVar2 + (int)param_6));
+    dJointSetAMotorParam((dxJointAMotor *)param_2,iVar5 + 1,*(float *)(iVar3 + (int)param_6));
     dJointSetAMotorParam((dxJointAMotor *)param_2,iVar5 + 2,(float)dVar6);
     dJointSetAMotorParam((dxJointAMotor *)param_2,iVar5 + 4,(phys_joint_cfm->current).value);
     dJointSetAMotorParam((dxJointAMotor *)param_2,iVar5 + 6,(phys_joint_stop_cfm->current).value);
     dJointSetAMotorParam((dxJointAMotor *)param_2,iVar5 + 5,(phys_joint_stop_erp->current).value);
-    lVar3 = lVar3 + -1;
-    lVar4 = lVar4 + 4;
+    lVar4 = lVar4 + -1;
+    param_6 = param_6 + 1;
     iVar5 = iVar5 + 0x100;
-  } while (lVar3 != 0);
-  __restgprlr_22();
+  } while (lVar4 != 0);
   return;
 }
 
 
 // 82678510  Phys_CreateAngularMotor  (physics/phys_ode.cpp:4486)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PhysWorld": Some values do not have unique names */
 
 int Phys_CreateAngularMotor
@@ -6426,104 +6182,92 @@ int Phys_CreateAngularMotor
               float *param_6,float *param_7,float *param_8,float *param_9)
 
 {
-  PhysWorld PVar1;
-  dxJointAMotor *pdVar2;
-  int iVar3;
+  dxJointAMotor *pdVar1;
+  int iVar2;
   float *in_stack_00000054;
   
-  PVar1 = __savegprlr_24(param_1);
   if ((param_4 < 0) || (3 < param_4)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0x118d,0
                     ,"%s");
   }
-  pdVar2 = PhysStaticArray<dxJointAMotor,160>::allocate(&physGlob.aMotorArray);
-  if (pdVar2 == (dxJointAMotor *)0x0) {
+  pdVar1 = PhysStaticArray<dxJointAMotor,160>::allocate(&physGlob.aMotorArray);
+  if (pdVar1 == (dxJointAMotor *)0x0) {
     Com_PrintWarning(0x14,"Physics: Out of angular motor joints (%d max)\n");
-    iVar3 = __restgprlr_24(0);
-    return iVar3;
+    return 0;
   }
-  pdVar2 = (dxJointAMotor *)dJointCreateAMotor(physGlob.world + PVar1,(dxJoint *)pdVar2);
-  if (pdVar2 == (dxJointAMotor *)0x0) {
+  pdVar1 = (dxJointAMotor *)dJointCreateAMotor(physGlob.world + param_1,(dxJoint *)pdVar1);
+  if (pdVar1 == (dxJointAMotor *)0x0) {
     Com_PrintWarning(0x14,"Physics: Maximum number of joints exceeded in world %i.\n");
-    iVar3 = __restgprlr_24(0);
-    return iVar3;
+    return 0;
   }
-  dJointAttach((dxJoint *)pdVar2,(dxBody *)param_2,(dxBody *)param_3);
-  dJointSetAMotorMode(pdVar2,1);
-  dJointSetAMotorNumAxes(pdVar2,3);
-  iVar3 = 2;
-  if ((dxBody *)param_3 == (dxBody *)0x0) {
-    iVar3 = 0;
+  dJointAttach((dxJoint *)pdVar1,(dxBody *)param_2,(dxBody *)param_3);
+  dJointSetAMotorMode(pdVar1,1);
+  dJointSetAMotorNumAxes(pdVar1,3);
+  iVar2 = 2;
+  if (param_3 == 0) {
+    iVar2 = 0;
   }
-  dJointSetAMotorAxis(pdVar2,2,iVar3,param_5[2][0],param_5[2][1],param_5[2][2]);
-  dJointSetAMotorAxis(pdVar2,0,(uint)((dxBody *)param_2 != (dxBody *)0x0),(*param_5)[0],
-                      (*param_5)[1],(*param_5)[2]);
-  Phys_SetAngularMotorParams(PVar1,(int)pdVar2,param_6,param_7,param_8,in_stack_00000054);
-  iVar3 = __restgprlr_24(pdVar2);
-  return iVar3;
+  dJointSetAMotorAxis(pdVar1,2,iVar2,param_5[2][0],param_5[2][1],param_5[2][2]);
+  dJointSetAMotorAxis(pdVar1,0,(uint)(param_2 != 0),(*param_5)[0],(*param_5)[1],(*param_5)[2]);
+  Phys_SetAngularMotorParams(param_1,(int)pdVar1,param_6,param_7,param_8,in_stack_00000054);
+  return (int)pdVar1;
 }
 
 
 // 826749A8  Phys_CreateOrientationConstraint  (physics/phys_ode.cpp:4549)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PhysWorld": Some values do not have unique names */
 
 int Phys_CreateOrientationConstraint(PhysWorld param_1,int param_2,dxJoint *param_3)
 
 {
-  int iVar1;
-  dxJoint *pdVar2;
-  ulonglong uVar3;
+  dxJoint *pdVar1;
   
-  uVar3 = (ulonglong)(int)param_3;
-  iVar1 = __savegprlr_29(param_1);
-  if ((uVar3 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0x11c9,
-                    (int)(dxJoint *)uVar3,"%s");
+  if (param_3 == (dxJoint *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0x11c9,0
+                    ,"%s");
   }
-  pdVar2 = ODE_JointCreateOrientation(physGlob.world + iVar1,(dxJoint *)uVar3);
-  if (pdVar2 == (dxJoint *)0x0) {
+  pdVar1 = ODE_JointCreateOrientation(physGlob.world + param_1,param_3);
+  if (pdVar1 == (dxJoint *)0x0) {
     Com_PrintWarning(0x14,"Physics: Maximum number of joints exceeded in world %i.\n");
-    iVar1 = __restgprlr_29(0);
-    return iVar1;
+    return 0;
   }
-  dJointAttach(pdVar2,(dxBody *)param_2,(dxBody *)0x0);
-  iVar1 = __restgprlr_29(pdVar2);
-  return iVar1;
+  dJointAttach(pdVar1,(dxBody *)param_2,(dxBody *)0x0);
+  return (int)pdVar1;
 }
 
 
 // 82674A48  Phys_CreatePathConstraint  (physics/phys_ode.cpp:4570)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PhysWorld": Some values do not have unique names */
 
 int Phys_CreatePathConstraint(PhysWorld param_1,int param_2,dxJoint *param_3)
 
 {
-  int iVar1;
-  dxJoint *pdVar2;
-  ulonglong uVar3;
+  dxJoint *pdVar1;
   
-  uVar3 = (ulonglong)(int)param_3;
-  iVar1 = __savegprlr_29(param_1);
-  if ((uVar3 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0x11de,
-                    (int)(dxJoint *)uVar3,"%s");
+  if (param_3 == (dxJoint *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0x11de,0
+                    ,"%s");
   }
-  pdVar2 = ODE_JointCreatePath(physGlob.world + iVar1,(dxJoint *)uVar3);
-  if (pdVar2 == (dxJoint *)0x0) {
+  pdVar1 = ODE_JointCreatePath(physGlob.world + param_1,param_3);
+  if (pdVar1 == (dxJoint *)0x0) {
     Com_PrintWarning(0x14,"Physics: Maximum number of joints exceeded in world %i.\n");
-    iVar1 = __restgprlr_29(0);
-    return iVar1;
+    return 0;
   }
-  dJointAttach(pdVar2,(dxBody *)param_2,(dxBody *)0x0);
-  iVar1 = __restgprlr_29(pdVar2);
-  return iVar1;
+  dJointAttach(pdVar1,(dxBody *)param_2,(dxBody *)0x0);
+  return (int)pdVar1;
 }
 
 
 // 82678688  Phys_JointDestroy  (physics/phys_ode.cpp:4591)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PhysWorld": Some values do not have unique names */
 
 void Phys_JointDestroy(PhysWorld param_1,int param_2)
@@ -6531,47 +6275,38 @@ void Phys_JointDestroy(PhysWorld param_1,int param_2)
 {
   int iVar1;
   bool bVar2;
-  ulonglong uVar3;
-  dxJointAMotor *pdVar4;
   
-  uVar3 = (ulonglong)param_2;
-  __savegprlr_29(param_1);
-  pdVar4 = (dxJointAMotor *)uVar3;
-  if (pdVar4 == (dxJointAMotor *)0x0) {
+  if (param_2 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0x11f3,0
                     ,"%s");
   }
-  iVar1 = pdVar4->_padding_;
-  dJointDestroy((dxJoint *)pdVar4);
-  if (((uVar3 & 0xffffffff) < 0x84313154) || (bVar2 = true, 0x8431bb53 < (uVar3 & 0xffffffff))) {
+  iVar1 = *(int *)(param_2 + 0x14);
+  dJointDestroy((dxJoint *)param_2);
+  if (((uint)param_2 < 0x84313154) || (bVar2 = true, 0x8431bb53 < (uint)param_2)) {
     bVar2 = false;
   }
   if (bVar2) {
-    PhysStaticArray<dxJointHinge,192>::release(&physGlob.hingeArray,(dxJointHinge *)pdVar4);
-    __restgprlr_29();
+    PhysStaticArray<dxJointHinge,192>::release(&physGlob.hingeArray,(dxJointHinge *)param_2);
     return;
   }
-  if (((uVar3 & 0xffffffff) < 0x8431bb58) || (bVar2 = true, 0x8431f4d7 < (uVar3 & 0xffffffff))) {
+  if (((uint)param_2 < 0x8431bb58) || (bVar2 = true, 0x8431f4d7 < (uint)param_2)) {
     bVar2 = false;
   }
   if (bVar2) {
-    PhysStaticArray<dxJointBall,160>::release(&physGlob.ballArray,(dxJointBall *)pdVar4);
-    __restgprlr_29();
+    PhysStaticArray<dxJointBall,160>::release(&physGlob.ballArray,(dxJointBall *)param_2);
     return;
   }
-  if (((uVar3 & 0xffffffff) < 0x8431f4dc) || (bVar2 = true, 0x8432ab5b < (uVar3 & 0xffffffff))) {
+  if (((uint)param_2 < 0x8431f4dc) || (bVar2 = true, 0x8432ab5b < (uint)param_2)) {
     bVar2 = false;
   }
   if (bVar2) {
-    PhysStaticArray<dxJointAMotor,160>::release(&physGlob.aMotorArray,pdVar4);
-    __restgprlr_29();
+    PhysStaticArray<dxJointAMotor,160>::release(&physGlob.aMotorArray,(dxJointAMotor *)param_2);
     return;
   }
   if (((iVar1 != 5) && (iVar1 != 6)) && (alwaysfails == 0)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0x1205,0
                     ,"Phys_JointDestroy: Tried to destroy joint of unknown type");
   }
-  __restgprlr_29();
   return;
 }
 
@@ -6610,118 +6345,110 @@ void Phys_SetPostFrameCallback(PhysWorld param_1,_func___cdecl_void *param_2)
 
 // 82674BD8  Phys_SetImpactCallback  (physics/phys_ode.cpp:4632)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PhysWorld": Some values do not have unique names */
 
 void Phys_SetImpactCallback(PhysWorld param_1,_func___cdecl_void_int_float_ptr_float_bool *param_2)
 
 {
-  uint uVar1;
-  
-  uVar1 = __savegprlr_27(param_1);
-  if (4 < uVar1) {
+  if (PHYS_WORLD_LAST_SERVER_WORLD < param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0x1219,0
                     ,"worldIndex doesn\'t index PHYS_WORLD_COUNT\n\t%i not in [0, %i)");
   }
-  if ((physInitedClient == false) && ((int)uVar1 < 3)) {
+  if ((physInitedClient == false) && ((int)param_1 < 3)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0x121a,0
                     ,"%s");
   }
-  if ((physInitedServer == false) && (2 < (int)uVar1)) {
+  if ((physInitedServer == false) && (2 < (int)param_1)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0x121b,0
                     ,"%s");
   }
-  physGlob.worldData[uVar1].impactCallback = param_2;
-  __restgprlr_27();
+  physGlob.worldData[param_1].impactCallback = param_2;
   return;
 }
 
 
 // 82674CA8  Phys_SetGlassCallback  (physics/phys_ode.cpp:4642)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PhysWorld": Some values do not have unique names */
 
 void Phys_SetGlassCallback(PhysWorld param_1,_func___cdecl_void_float_ptr_float_ptr *param_2)
 
 {
-  uint uVar1;
-  
-  uVar1 = __savegprlr_27(param_1);
-  if (4 < uVar1) {
+  if (PHYS_WORLD_LAST_SERVER_WORLD < param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0x1223,0
                     ,"worldIndex doesn\'t index PHYS_WORLD_COUNT\n\t%i not in [0, %i)");
   }
-  if ((physInitedClient == false) && ((int)uVar1 < 3)) {
+  if ((physInitedClient == false) && ((int)param_1 < 3)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0x1224,0
                     ,"%s");
   }
-  if ((physInitedServer == false) && (2 < (int)uVar1)) {
+  if ((physInitedServer == false) && (2 < (int)param_1)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0x1225,0
                     ,"%s");
   }
-  physGlob.worldData[uVar1].glassCallback = param_2;
-  __restgprlr_27();
+  physGlob.worldData[param_1].glassCallback = param_2;
   return;
 }
 
 
 // 82674D78  Phys_JointGetLimitAxis  (physics/phys_ode.cpp:4652)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PhysWorld": Some values do not have unique names */
 
 void Phys_JointGetLimitAxis(PhysWorld param_1,int param_2,float (*param_3) [3])
 
 {
-  dxJointAMotor *pdVar1;
-  ulonglong uVar2;
-  float *pfVar3;
-  longlong lVar4;
-  int iVar5;
+  float *pfVar1;
+  int iVar2;
   float local_30;
   float local_2c;
   float local_28;
   
-  lVar4 = (longlong)(int)param_3;
-  uVar2 = (ulonglong)param_2;
-  __savegprlr_29(param_1);
-  if ((uVar2 & 0xffffffff) == 0) {
+  if (param_2 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0x1232,0
                     ,"%s");
   }
-  pdVar1 = (dxJointAMotor *)uVar2;
-  if (pdVar1->_padding_ == 10) {
-    iVar5 = 0;
-    lVar4 = lVar4 + -4;
+  if (*(int *)(param_2 + 0x14) == 10) {
+    iVar2 = 0;
+    pfVar1 = param_3[-1] + 2;
     do {
-      dJointGetAMotorAxis(pdVar1,iVar5,&local_30);
-      iVar5 = iVar5 + 1;
-      *(float *)((int)lVar4 + 4) = local_30;
-      *(float *)((int)lVar4 + 8) = local_2c;
-      lVar4 = lVar4 + 0xc;
-      *(float *)lVar4 = local_28;
-    } while (iVar5 < 3);
-    __restgprlr_29();
+      dJointGetAMotorAxis((dxJointAMotor *)param_2,iVar2,&local_30);
+      iVar2 = iVar2 + 1;
+      pfVar1[1] = local_30;
+      pfVar1[2] = local_2c;
+      pfVar1 = pfVar1 + 3;
+      *pfVar1 = local_28;
+    } while (iVar2 < 3);
     return;
   }
-  if (pdVar1->_padding_ == 2) {
-    dJointGetHingeAxis((dxJointHinge *)pdVar1,&local_30);
-    pfVar3 = (float *)lVar4;
-    *pfVar3 = local_30;
-    pfVar3[1] = local_2c;
-    pfVar3[2] = local_28;
-    pfVar3[3] = 0.0;
-    pfVar3[4] = 0.0;
-    pfVar3[5] = 0.0;
-    pfVar3[6] = 0.0;
-    pfVar3[7] = 0.0;
-    pfVar3[8] = 0.0;
+  if (*(int *)(param_2 + 0x14) == 2) {
+    dJointGetHingeAxis((dxJointHinge *)param_2,&local_30);
+    (*param_3)[0] = local_30;
+    (*param_3)[1] = local_2c;
+    (*param_3)[2] = local_28;
+    param_3[1][0] = 0.0;
+    param_3[1][1] = 0.0;
+    param_3[1][2] = 0.0;
+    param_3[2][0] = 0.0;
+    param_3[2][1] = 0.0;
+    param_3[2][2] = 0.0;
   }
-  __restgprlr_29();
   return;
 }
 
 
 // 82674E60  Phys_AddJitterRegion  (physics/phys_ode.cpp:4679)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PhysWorld": Some values do not have unique names */
 
 void Phys_AddJitterRegion
@@ -6731,82 +6458,76 @@ void Phys_AddJitterRegion
 {
   int iVar1;
   dxBody *pdVar2;
-  uint uVar3;
-  float *pfVar4;
-  Jitter *pJVar5;
-  double extraout_f1;
+  float *pfVar3;
+  Jitter *pJVar4;
+  double dVar5;
   double dVar6;
   double dVar7;
   double dVar8;
-  double dVar9;
   
   dVar8 = (double)param_6;
+  dVar5 = (double)param_3;
   dVar6 = (double)param_4;
   dVar7 = (double)param_5;
-  __savegprlr_26((double)param_3,param_1);
-  uVar3 = __savefpr_28();
-  dVar9 = extraout_f1;
-  if (4 < uVar3) {
+  if (PHYS_WORLD_LAST_SERVER_WORLD < param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0x124e,0
                     ,"worldIndex doesn\'t index PHYS_WORLD_COUNT\n\t%i not in [0, %i)");
   }
-  iVar1 = physGlob.worldData[uVar3].numJitterRegions;
+  iVar1 = physGlob.worldData[param_1].numJitterRegions;
   if (iVar1 < 5) {
-    physGlob.worldData[uVar3].numJitterRegions = iVar1 + 1;
-    pJVar5 = physGlob.worldData[uVar3].jitterRegions + iVar1;
+    physGlob.worldData[param_1].numJitterRegions = iVar1 + 1;
+    pJVar4 = physGlob.worldData[param_1].jitterRegions + iVar1;
   }
   else {
-    pJVar5 = physGlob.worldData[uVar3].jitterRegions + 4;
+    pJVar4 = physGlob.worldData[param_1].jitterRegions + 4;
   }
-  pJVar5->origin[0] = *param_2;
-  pJVar5->origin[1] = param_2[1];
-  pJVar5->origin[2] = param_2[2];
-  pJVar5->innerRadius = (float)dVar9;
-  pJVar5->outerRadius = (float)dVar6;
-  pJVar5->innerRadiusSq = (float)(dVar9 * dVar9);
-  pJVar5->outerRadiusSq = (float)(dVar6 * dVar6);
-  pJVar5->minDisplacement = (float)dVar7;
-  pJVar5->maxDisplacement = (float)dVar8;
-  for (pdVar2 = physGlob.world[uVar3].firstbody; pdVar2 != (dxBody *)0x0;
+  pJVar4->origin[0] = *param_2;
+  pJVar4->origin[1] = param_2[1];
+  pJVar4->origin[2] = param_2[2];
+  pJVar4->innerRadius = (float)dVar5;
+  pJVar4->outerRadius = (float)dVar6;
+  pJVar4->innerRadiusSq = (float)(dVar5 * dVar5);
+  pJVar4->outerRadiusSq = (float)(dVar6 * dVar6);
+  pJVar4->minDisplacement = (float)dVar7;
+  pJVar4->maxDisplacement = (float)dVar8;
+  for (pdVar2 = physGlob.world[param_1].firstbody; pdVar2 != (dxBody *)0x0;
       pdVar2 = (dxBody *)pdVar2->_padding_) {
     if (pdVar2 == (dxBody *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0x6da,
                       0,"%s");
     }
-    pfVar4 = dBodyGetPosition(pdVar2);
-    if ((*pfVar4 - *param_2) * (*pfVar4 - *param_2) +
-        (pfVar4[1] - param_2[1]) * (pfVar4[1] - param_2[1]) <= pJVar5->outerRadiusSq) {
+    pfVar3 = dBodyGetPosition(pdVar2);
+    if ((*pfVar3 - *param_2) * (*pfVar3 - *param_2) +
+        (pfVar3[1] - param_2[1]) * (pfVar3[1] - param_2[1]) <= pJVar4->outerRadiusSq) {
       dBodyEnable(pdVar2);
     }
   }
-  __restfpr_28();
-  __restgprlr_26();
   return;
 }
 
 
 // 82674FD0  Phys_ObjSetContactCentroid  (physics/phys_ode.cpp:4720)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void Phys_ObjSetContactCentroid(int param_1,float *param_2)
 
 {
-  dxBody *pdVar1;
-  void *pvVar2;
+  void *pvVar1;
   
-  pdVar1 = (dxBody *)__savegprlr_28(param_1);
-  if (pdVar1 == (dxBody *)0x0) {
+  if (param_1 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0x1274,0
                     ,"%s");
   }
-  pvVar2 = dBodyGetData(pdVar1);
-  if (pvVar2 == (void *)0x0) {
+  pvVar1 = dBodyGetData((dxBody *)param_1);
+  if (pvVar1 == (void *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0x1278,0
                     ,"%s");
   }
-  *(float *)((int)pvVar2 + 0x5c) = *param_2;
-  *(float *)((int)pvVar2 + 0x60) = param_2[1];
-  *(float *)((int)pvVar2 + 100) = param_2[2];
-  __restgprlr_28();
+  *(float *)((int)pvVar1 + 0x5c) = *param_2;
+  *(float *)((int)pvVar1 + 0x60) = param_2[1];
+  *(float *)((int)pvVar1 + 100) = param_2[2];
   return;
 }
 
@@ -6875,122 +6596,120 @@ int Phys_GetWorldClipMask(PhysWorld param_1)
 
 // 82675228  Phys_ObjGetFlags  (physics/phys_ode.cpp:4763)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 uint Phys_ObjGetFlags(int param_1)
 
 {
-  dxBody *pdVar1;
-  void *pvVar2;
-  uint uVar3;
+  void *pvVar1;
   
-  pdVar1 = (dxBody *)__savegprlr_29(param_1);
-  if (pdVar1 == (dxBody *)0x0) {
+  if (param_1 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0x129f,0
                     ,"%s");
   }
-  pvVar2 = dBodyGetData(pdVar1);
-  if (pvVar2 == (void *)0x0) {
+  pvVar1 = dBodyGetData((dxBody *)param_1);
+  if (pvVar1 == (void *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0x12a3,0
                     ,"%s");
   }
-  uVar3 = __restgprlr_29(*(undefined4 *)((int)pvVar2 + 0x68));
-  return uVar3;
+  return *(uint *)((int)pvVar1 + 0x68);
 }
 
 
 // 826752A8  Phys_ObjSetFlags  (physics/phys_ode.cpp:4778)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void Phys_ObjSetFlags(int param_1,uint param_2)
 
 {
-  dxBody *pdVar1;
-  void *pvVar2;
+  void *pvVar1;
   
-  pdVar1 = (dxBody *)__savegprlr_28(param_1);
-  if (pdVar1 == (dxBody *)0x0) {
+  if (param_1 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0x12ae,0
                     ,"%s");
   }
-  pvVar2 = dBodyGetData(pdVar1);
-  if (pvVar2 == (void *)0x0) {
+  pvVar1 = dBodyGetData((dxBody *)param_1);
+  if (pvVar1 == (void *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0x12b2,0
                     ,"%s");
   }
-  *(uint *)((int)pvVar2 + 0x68) = param_2;
-  __restgprlr_28();
+  *(uint *)((int)pvVar1 + 0x68) = param_2;
   return;
 }
 
 
 // 82675330  Phys_ObjSetState  (physics/phys_ode.cpp:4793)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void Phys_ObjSetState(int param_1,physStuckState_t param_2)
 
 {
-  dxBody *pdVar1;
-  void *pvVar2;
+  void *pvVar1;
   
-  pdVar1 = (dxBody *)__savegprlr_28(param_1);
-  if (pdVar1 == (dxBody *)0x0) {
+  if (param_1 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0x12bd,0
                     ,"%s");
   }
-  pvVar2 = dBodyGetData(pdVar1);
-  if (pvVar2 == (void *)0x0) {
+  pvVar1 = dBodyGetData((dxBody *)param_1);
+  if (pvVar1 == (void *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0x12c1,0
                     ,"%s");
   }
-  *(physStuckState_t *)((int)pvVar2 + 0x58) = param_2;
-  __restgprlr_28();
+  *(physStuckState_t *)((int)pvVar1 + 0x58) = param_2;
   return;
 }
 
 
 // 826753B8  Phys_ObjGetState  (physics/phys_ode.cpp:4808)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 physStuckState_t Phys_ObjGetState(int param_1)
 
 {
-  dxBody *pdVar1;
-  void *pvVar2;
-  physStuckState_t pVar3;
+  void *pvVar1;
   
-  pdVar1 = (dxBody *)__savegprlr_29(param_1);
-  if (pdVar1 == (dxBody *)0x0) {
+  if (param_1 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0x12cc,0
                     ,"%s");
   }
-  pvVar2 = dBodyGetData(pdVar1);
-  if (pvVar2 == (void *)0x0) {
+  pvVar1 = dBodyGetData((dxBody *)param_1);
+  if (pvVar1 == (void *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0x12d0,0
                     ,"%s");
   }
-  pVar3 = __restgprlr_29(*(undefined4 *)((int)pvVar2 + 0x58));
-  return pVar3;
+  return *(physStuckState_t *)((int)pvVar1 + 0x58);
 }
 
 
 // 82675438  Phys_ObjGetPreviousCenterOfMass  (physics/phys_ode.cpp:4823)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void Phys_ObjGetPreviousCenterOfMass(int param_1,float *param_2)
 
 {
-  dxBody *pdVar1;
-  void *pvVar2;
+  void *pvVar1;
   
-  pdVar1 = (dxBody *)__savegprlr_28(param_1);
-  if (pdVar1 == (dxBody *)0x0) {
+  if (param_1 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0x12db,0
                     ,"%s");
   }
-  pvVar2 = dBodyGetData(pdVar1);
-  if (pvVar2 == (void *)0x0) {
+  pvVar1 = dBodyGetData((dxBody *)param_1);
+  if (pvVar1 == (void *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0x12df,0
                     ,"%s");
   }
-  *param_2 = *(float *)((int)pvVar2 + 0x10);
-  param_2[1] = *(float *)((int)pvVar2 + 0x14);
-  param_2[2] = *(float *)((int)pvVar2 + 0x18);
-  __restgprlr_28();
+  *param_2 = *(float *)((int)pvVar1 + 0x10);
+  param_2[1] = *(float *)((int)pvVar1 + 0x14);
+  param_2[2] = *(float *)((int)pvVar1 + 0x18);
   return;
 }
 
@@ -7015,24 +6734,24 @@ PhysWorld Phys_ObjGetWorld(int param_1)
 
 // 82675530  Phys_ObjSetDebugContacts  (physics/phys_ode.cpp:4847)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void Phys_ObjSetDebugContacts(int param_1,bool param_2)
 
 {
-  dxBody *pdVar1;
-  void *pvVar2;
+  void *pvVar1;
   
-  pdVar1 = (dxBody *)__savegprlr_28(param_1);
-  if (pdVar1 == (dxBody *)0x0) {
+  if (param_1 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0x12f3,0
                     ,"%s");
   }
-  pvVar2 = dBodyGetData(pdVar1);
-  if (pvVar2 == (void *)0x0) {
+  pvVar1 = dBodyGetData((dxBody *)param_1);
+  if (pvVar1 == (void *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0x12f7,0
                     ,"%s");
   }
-  *(bool *)((int)pvVar2 + 0x6c) = param_2;
-  __restgprlr_28();
+  *(bool *)((int)pvVar1 + 0x6c) = param_2;
   return;
 }
 
@@ -7092,6 +6811,9 @@ void Phys_ObjDisable(int param_1)
 
 // 82675658  Phys_PullJointTogether  (physics/phys_ode.cpp:4895)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 float Phys_PullJointTogether(int param_1)
 
 {
@@ -7101,8 +6823,10 @@ float Phys_PullJointTogether(int param_1)
   float fVar4;
   float fVar5;
   float fVar6;
-  dxJointUniversal *pdVar7;
-  double dVar8;
+  float fVar7;
+  float fVar8;
+  float fVar9;
+  double dVar10;
   float local_60;
   float local_5c;
   float local_58;
@@ -7110,25 +6834,24 @@ float Phys_PullJointTogether(int param_1)
   float local_4c;
   float local_48;
   
-  pdVar7 = (dxJointUniversal *)__savegprlr_26(param_1);
-  if (pdVar7 == (dxJointUniversal *)0x0) {
+  if (param_1 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0x132a,0
                     ,"%s");
   }
-  iVar1 = pdVar7->_padding_;
-  iVar2 = pdVar7->_padding_;
-  iVar3 = pdVar7->_padding_;
+  iVar1 = *(int *)(param_1 + 0x14);
+  iVar2 = *(int *)(param_1 + 0x20);
+  iVar3 = *(int *)(param_1 + 0x30);
   if (iVar1 == 1) {
-    dJointGetBallAnchor((dxJointBall *)pdVar7,&local_50);
-    dJointGetBallAnchor2((dxJointBall *)pdVar7,&local_60);
+    dJointGetBallAnchor((dxJointBall *)param_1,&local_50);
+    dJointGetBallAnchor2((dxJointBall *)param_1,&local_60);
   }
   else if (iVar1 == 2) {
-    dJointGetHingeAnchor((dxJointHinge *)pdVar7,&local_50);
-    dJointGetHingeAnchor2((dxJointHinge *)pdVar7,&local_60);
+    dJointGetHingeAnchor((dxJointHinge *)param_1,&local_50);
+    dJointGetHingeAnchor2((dxJointHinge *)param_1,&local_60);
   }
   else if (iVar1 == 7) {
-    dJointGetUniversalAnchor(pdVar7,&local_50);
-    dJointGetUniversalAnchor2(pdVar7,&local_60);
+    dJointGetUniversalAnchor((dxJointUniversal *)param_1,&local_50);
+    dJointGetUniversalAnchor2((dxJointUniversal *)param_1,&local_60);
   }
   if (((((uint)local_60 & 0x7f800000) == 0x7f800000) ||
       (((uint)local_5c & 0x7f800000) == 0x7f800000)) ||
@@ -7142,39 +6865,39 @@ float Phys_PullJointTogether(int param_1)
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0x1345,0
                     ,"%s");
   }
-  local_60 = local_60 - local_50;
-  local_5c = local_5c - local_4c;
-  local_58 = local_58 - local_48;
-  fVar4 = local_58;
-  fVar5 = local_5c;
-  fVar6 = local_60;
+  fVar4 = local_60 - local_50;
+  fVar5 = local_5c - local_4c;
+  fVar9 = local_58 - local_48;
+  fVar6 = fVar9;
+  fVar7 = fVar5;
+  fVar8 = fVar4;
   if (iVar3 != 0) {
-    fVar4 = local_58 * 0.5;
-    fVar5 = local_5c * 0.5;
-    fVar6 = local_60 * 0.5;
+    fVar6 = fVar9 * 0.5;
+    fVar7 = fVar5 * 0.5;
+    fVar8 = fVar4 * 0.5;
   }
-  dVar8 = (double)(local_58 * local_58 + local_5c * local_5c + local_60 * local_60);
-  if (dVar8 <= (double)(phys_jointPullThreshold->current).value) {
-    dVar8 = 0.0;
+  dVar10 = (double)(fVar9 * fVar9 + fVar5 * fVar5 + fVar4 * fVar4);
+  if (dVar10 <= (double)(phys_jointPullThreshold->current).value) {
+    dVar10 = 0.0;
   }
-  else if ((pdVar7->_padding_ & 2U) == 0) {
-    *(float *)(iVar2 + 0xe0) = *(float *)(iVar2 + 0xe0) + fVar6;
-    *(float *)(iVar2 + 0xe4) = *(float *)(iVar2 + 0xe4) + fVar5;
-    *(float *)(iVar2 + 0xe8) = *(float *)(iVar2 + 0xe8) + fVar4;
+  else if ((*(uint *)(param_1 + 0x18) & 2) == 0) {
+    *(float *)(iVar2 + 0xe0) = *(float *)(iVar2 + 0xe0) + fVar8;
+    *(float *)(iVar2 + 0xe4) = *(float *)(iVar2 + 0xe4) + fVar7;
+    *(float *)(iVar2 + 0xe8) = *(float *)(iVar2 + 0xe8) + fVar6;
     if (iVar3 != 0) {
-      *(float *)(iVar3 + 0xe0) = *(float *)(iVar3 + 0xe0) - fVar6;
-      *(float *)(iVar3 + 0xe4) = *(float *)(iVar3 + 0xe4) - fVar5;
-      *(float *)(iVar3 + 0xe8) = *(float *)(iVar3 + 0xe8) - fVar4;
+      *(float *)(iVar3 + 0xe0) = *(float *)(iVar3 + 0xe0) - fVar8;
+      *(float *)(iVar3 + 0xe4) = *(float *)(iVar3 + 0xe4) - fVar7;
+      *(float *)(iVar3 + 0xe8) = *(float *)(iVar3 + 0xe8) - fVar6;
     }
   }
   else {
-    *(float *)(iVar2 + 0xe0) = *(float *)(iVar2 + 0xe0) - fVar6;
-    *(float *)(iVar2 + 0xe4) = *(float *)(iVar2 + 0xe4) - fVar5;
-    *(float *)(iVar2 + 0xe8) = *(float *)(iVar2 + 0xe8) - fVar4;
+    *(float *)(iVar2 + 0xe0) = *(float *)(iVar2 + 0xe0) - fVar8;
+    *(float *)(iVar2 + 0xe4) = *(float *)(iVar2 + 0xe4) - fVar7;
+    *(float *)(iVar2 + 0xe8) = *(float *)(iVar2 + 0xe8) - fVar6;
     if (iVar3 != 0) {
-      *(float *)(iVar3 + 0xe0) = fVar6 + *(float *)(iVar3 + 0xe0);
-      *(float *)(iVar3 + 0xe4) = *(float *)(iVar3 + 0xe4) + fVar5;
-      *(float *)(iVar3 + 0xe8) = *(float *)(iVar3 + 0xe8) + fVar4;
+      *(float *)(iVar3 + 0xe0) = fVar8 + *(float *)(iVar3 + 0xe0);
+      *(float *)(iVar3 + 0xe4) = *(float *)(iVar3 + 0xe4) + fVar7;
+      *(float *)(iVar3 + 0xe8) = *(float *)(iVar3 + 0xe8) + fVar6;
     }
   }
   if ((((*(uint *)(iVar2 + 0xe0) & 0x7f800000) == 0x7f800000) ||
@@ -7189,8 +6912,7 @@ float Phys_PullJointTogether(int param_1)
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0x1366,0
                     ,"%s");
   }
-  dVar8 = (double)__restgprlr_26(dVar8);
-  return (float)dVar8;
+  return (float)dVar10;
 }
 
 
@@ -7241,6 +6963,8 @@ void Phys_ObjClearAutoDisable(int param_1)
 
 // 82675AB8  Phys_TracesCmd  (physics/phys_ode.cpp:5001)
 
+/* WARNING: Function: __savegprlr_21 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_21 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PhysWorld": Some values do not have unique names */
 
 void Phys_TracesCmd(void *param_1)
@@ -7250,49 +6974,47 @@ void Phys_TracesCmd(void *param_1)
   dxBody *pdVar2;
   uint *puVar3;
   uint uVar4;
-  PhysWorld *pPVar5;
-  bool bVar6;
-  int iVar7;
-  PhysWorld *pPVar8;
-  dxBodyInfo *pdVar9;
+  bool bVar5;
+  int iVar6;
+  undefined4 *puVar7;
+  dxBodyInfo *pdVar8;
   char in_RESERVE;
   byte in_cr0;
   Bounds local_80 [5];
   
-  pPVar5 = (PhysWorld *)__savegprlr_21(param_1);
-  PVar1 = *pPVar5;
-  iVar7 = 0;
-  if (0 < (int)pPVar5[5]) {
-    pPVar8 = pPVar5 + 6;
+  PVar1 = *(PhysWorld *)param_1;
+  iVar6 = 0;
+  if (0 < *(int *)((int)param_1 + 0x14)) {
+    puVar7 = (undefined4 *)((int)param_1 + 0x18);
     do {
-      pdVar2 = (dxBody *)*pPVar8;
+      pdVar2 = (dxBody *)*puVar7;
       if (((uint)pdVar2 & 0xf) != 0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",
                         0x13ac,0,"%s");
       }
-      bVar6 = dBodyIsEnabled(pdVar2);
-      if (bVar6) {
+      bVar5 = dBodyIsEnabled(pdVar2);
+      if (bVar5) {
         Profile_Begin(0x172);
         Phys_ObjTunnelTrace(PVar1,pdVar2);
         Profile_EndInternal((double *)0x0);
         CM_BrushModelBounds(0,local_80);
-        pdVar9 = &pdVar2->info;
-        in_cr0 = (pdVar9 == (dxBodyInfo *)0x0) << 1;
-        if (pdVar9 == (dxBodyInfo *)0x0) {
+        pdVar8 = &pdVar2->info;
+        in_cr0 = (pdVar8 == (dxBodyInfo *)0x0) << 1;
+        if (pdVar8 == (dxBodyInfo *)0x0) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\../universal/bounds_inline.h"
                           ,0x1c2,0,"%s");
         }
-        if (((local_80[0].halfSize[0] <= ABS(pdVar9->pos[0] - local_80[0].midPoint[0])) ||
+        if (((local_80[0].halfSize[0] <= ABS(pdVar8->pos[0] - local_80[0].midPoint[0])) ||
             (local_80[0].halfSize[1] <= ABS((pdVar2->info).pos[1] - local_80[0].midPoint[1]))) ||
            (local_80[0].halfSize[2] <= ABS((pdVar2->info).pos[2] - local_80[0].midPoint[2]))) {
           dBodyDisable(pdVar2);
         }
       }
-      iVar7 = iVar7 + 1;
-      pPVar8 = pPVar8 + 1;
-    } while (iVar7 < (int)pPVar5[5]);
+      iVar6 = iVar6 + 1;
+      puVar7 = puVar7 + 1;
+    } while (iVar6 < *(int *)((int)param_1 + 0x14));
   }
-  puVar3 = (uint *)pPVar5[4];
+  puVar3 = *(uint **)((int)param_1 + 0x10);
   do {
     if (in_RESERVE != '\0') {
       uVar4 = storeWordConditionalIndexed((ulonglong)*puVar3 - 1,0,ZEXT48(puVar3));
@@ -7300,13 +7022,16 @@ void Phys_TracesCmd(void *param_1)
       in_cr0 = 2;
     }
   } while (!(bool)(in_cr0 >> 1 & 1));
-  __restgprlr_21();
   return;
 }
 
 
 // 82675C28  Phys_CollideCmd  (physics/phys_ode.cpp:5048)
 
+/* WARNING: Function: __savegprlr_16 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_16 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PhysWorld": Some values do not have unique names */
 
 void Phys_CollideCmd(void *param_1)
@@ -7314,8 +7039,8 @@ void Phys_CollideCmd(void *param_1)
 {
   uint uVar1;
   dxBody *pdVar2;
-  double dVar3;
-  uint *puVar4;
+  uint *puVar3;
+  double dVar4;
   dxBody *pdVar5;
   dxBody *pdVar6;
   int iVar7;
@@ -7323,7 +7048,7 @@ void Phys_CollideCmd(void *param_1)
   dxBody *pdVar9;
   dxBody *pdVar10;
   int iVar11;
-  uint *puVar12;
+  undefined4 *puVar12;
   dxBody *pdVar13;
   dxBody *pdVar14;
   char in_RESERVE;
@@ -7340,22 +7065,20 @@ void Phys_CollideCmd(void *param_1)
   dSurfaceParameters local_1100;
   ContactList CStack_10d0;
   
-  __savegprlr_16(param_1);
-  puVar4 = (uint *)__savefpr_25();
-  local_1120.reducedContactListBase = (ReducedContactList *)puVar4[4];
-  local_1120.timestep = (float)puVar4[1];
+  local_1120.reducedContactListBase = *(ReducedContactList **)((int)param_1 + 0x10);
+  local_1120.timestep = *(float *)((int)param_1 + 4);
   dVar15 = (double)local_1120.timestep;
-  local_1120.reducedContactListCount = (long *)puVar4[5];
-  local_1120.reducedContactListMax = puVar4[6];
-  uVar1 = *puVar4;
+  local_1120.reducedContactListCount = *(long **)((int)param_1 + 0x14);
+  local_1120.reducedContactListMax = *(int *)((int)param_1 + 0x18);
+  uVar1 = *(uint *)param_1;
   iVar11 = 0;
-  pdVar2 = (dxBody *)puVar4[2];
-  local_1120.worldIndex = uVar1;
-  if (0 < (int)puVar4[10]) {
+  pdVar2 = *(dxBody **)((int)param_1 + 8);
+  if (0 < *(int *)((int)param_1 + 0x28)) {
     dVar16 = 0.10000000149011612;
     dVar18 = 1.0;
     dVar17 = 0.0;
-    puVar12 = puVar4 + 0xb;
+    puVar12 = (undefined4 *)((int)param_1 + 0x2c);
+    local_1120.worldIndex = uVar1;
     do {
       pdVar10 = (dxBody *)*puVar12;
       if (((uint)pdVar10 & 0xf) != 0) {
@@ -7411,11 +7134,11 @@ void Phys_CollideCmd(void *param_1)
               pvVar8 = dBodyGetData(pdVar6);
               pdVar9 = (dxBody *)0x1;
               dVar19 = (double)(float)((double)*(float *)((int)pvVar8 + 0x50) + dVar19);
-              dVar3 = (double)*(float *)((int)pvVar8 + 0x54);
+              dVar4 = (double)*(float *)((int)pvVar8 + 0x54);
               if ((float)(dVar21 - (double)*(float *)((int)pvVar8 + 0x54)) < 0.0) {
-                dVar3 = dVar21;
+                dVar4 = dVar21;
               }
-              dVar21 = dVar3;
+              dVar21 = dVar4;
               ODE_BodySetHasContactsFlag(pdVar6,1);
               if ((float)(dVar20 - (double)pdVar6->invMass) < 0.0) {
                 dVar20 = (double)pdVar6->invMass;
@@ -7447,18 +7170,16 @@ void Phys_CollideCmd(void *param_1)
 LAB_82675f18:
       iVar11 = iVar11 + 1;
       puVar12 = puVar12 + 1;
-    } while (iVar11 < (int)puVar4[10]);
+    } while (iVar11 < *(int *)((int)param_1 + 0x28));
   }
-  puVar4 = (uint *)puVar4[9];
+  puVar3 = *(uint **)((int)param_1 + 0x24);
   do {
     if (in_RESERVE != '\0') {
-      uVar1 = storeWordConditionalIndexed((ulonglong)*puVar4 - 1,0,ZEXT48(puVar4));
-      *puVar4 = uVar1;
+      uVar1 = storeWordConditionalIndexed((ulonglong)*puVar3 - 1,0,ZEXT48(puVar3));
+      *puVar3 = uVar1;
       in_cr0 = 2;
     }
   } while (!(bool)(in_cr0 >> 1 & 1));
-  __restfpr_25();
-  __restgprlr_16();
   return;
 }
 

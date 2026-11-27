@@ -117,62 +117,53 @@ void dNormalize4(float *param_1)
 
 // 8269CE70  dPlaneSpace  (physics/ode/src/odemath.cpp:138)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void dPlaneSpace(float *param_1,float *param_2,float *param_3)
 
 {
   float fVar1;
   float fVar2;
-  float *pfVar3;
-  float *pfVar4;
-  float *pfVar5;
-  ulonglong uVar6;
-  ulonglong uVar7;
-  double dVar8;
-  double dVar9;
-  double dVar10;
+  double dVar3;
+  double dVar4;
+  double dVar5;
   
-  uVar7 = (ulonglong)(int)param_3;
-  uVar6 = (ulonglong)(int)param_2;
-  pfVar5 = (float *)__savegprlr_27(param_1);
-  if (((pfVar5 == (float *)0x0) || ((uVar6 & 0xffffffff) == 0)) || ((uVar7 & 0xffffffff) == 0)) {
+  if (((param_1 == (float *)0x0) || (param_2 == (float *)0x0)) || (param_3 == (float *)0x0)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\odemath.cpp"
                     ,0x8b,0,"%s");
   }
-  fVar1 = pfVar5[2];
-  fVar2 = pfVar5[1];
-  pfVar3 = (float *)uVar6;
-  pfVar4 = (float *)uVar7;
+  fVar1 = param_1[2];
+  fVar2 = param_1[1];
   if (0.70710677 < ABS(fVar1)) {
-    *pfVar3 = 0.0;
+    *param_2 = 0.0;
     fVar1 = fVar2 * fVar2 + fVar1 * fVar1;
     fVar2 = 1.0 / SQRT(fVar1);
-    pfVar3[1] = -(pfVar5[2] * fVar2);
-    pfVar3[2] = pfVar5[1] * fVar2;
-    *pfVar4 = fVar2 * fVar1;
-    pfVar4[1] = -(pfVar3[2] * *pfVar5);
-    pfVar4[2] = *pfVar5 * pfVar3[1];
-    __restgprlr_27();
+    param_2[1] = -(param_1[2] * fVar2);
+    param_2[2] = param_1[1] * fVar2;
+    *param_3 = fVar2 * fVar1;
+    param_3[1] = -(param_2[2] * *param_1);
+    param_3[2] = *param_1 * param_2[1];
     return;
   }
-  dVar8 = 0.0;
-  dVar9 = (double)(fVar2 * fVar2 + *pfVar5 * *pfVar5);
-  if (dVar9 <= 0.0) {
+  dVar3 = 0.0;
+  dVar4 = (double)(fVar2 * fVar2 + *param_1 * *param_1);
+  if (dVar4 <= 0.0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\odemath.cpp"
                     ,0x9b,0,"%s\n\t(n[2]) = %g");
   }
-  dVar10 = (double)(1.0 / (float)SQRT(dVar9));
-  if (((uint)(1.0 / (float)SQRT(dVar9)) & 0x7f800000) == 0x7f800000) {
+  dVar5 = (double)(1.0 / (float)SQRT(dVar4));
+  if (((uint)(1.0 / (float)SQRT(dVar4)) & 0x7f800000) == 0x7f800000) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\odemath.cpp"
                     ,0x9d,0,"%s");
   }
-  *pfVar3 = -(float)((double)pfVar5[1] * dVar10);
-  fVar1 = *pfVar5;
-  pfVar3[1] = (float)((double)fVar1 * dVar10);
-  pfVar3[2] = (float)dVar8;
-  *pfVar4 = -(pfVar5[2] * (float)((double)fVar1 * dVar10));
-  pfVar4[1] = pfVar5[2] * *pfVar3;
-  pfVar4[2] = (float)(dVar10 * dVar9);
-  __restgprlr_27();
+  *param_2 = -(float)((double)param_1[1] * dVar5);
+  fVar1 = *param_1;
+  param_2[1] = (float)((double)fVar1 * dVar5);
+  param_2[2] = (float)dVar3;
+  *param_3 = -(param_1[2] * (float)((double)fVar1 * dVar5));
+  param_3[1] = param_1[2] * *param_2;
+  param_3[2] = (float)(dVar5 * dVar4);
   return;
 }
 

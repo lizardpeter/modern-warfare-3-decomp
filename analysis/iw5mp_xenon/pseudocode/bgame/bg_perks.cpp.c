@@ -2,29 +2,29 @@
 
 // 82277238  BG_GetPerkCodeIndexForName  (bgame/bg_perks.cpp:110)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 uint BG_GetPerkCodeIndexForName(char *param_1)
 
 {
-  char *pcVar1;
+  int iVar1;
   uint uVar2;
-  int iVar3;
-  ulonglong uVar4;
-  char **ppcVar5;
+  char **ppcVar3;
   
-  pcVar1 = (char *)__savegprlr_29(param_1);
-  if (pcVar1 == (char *)0x0) {
-    uVar2 = __restgprlr_29(0x32);
-    return uVar2;
+  if (param_1 == (char *)0x0) {
+    return 0x32;
   }
-  uVar4 = 0;
-  ppcVar5 = bg_perkNames;
+  uVar2 = 0;
+  ppcVar3 = bg_perkNames;
   do {
-    iVar3 = I_stricmp(pcVar1,*ppcVar5);
-    if (iVar3 == 0) break;
-    uVar4 = uVar4 + 1;
-    ppcVar5 = ppcVar5 + 1;
-  } while ((uVar4 & 0xffffffff) < 0x32);
-  uVar2 = __restgprlr_29(uVar4);
+    iVar1 = I_stricmp(param_1,*ppcVar3);
+    if (iVar1 == 0) {
+      return uVar2;
+    }
+    uVar2 = uVar2 + 1;
+    ppcVar3 = ppcVar3 + 1;
+  } while (uVar2 < 0x32);
   return uVar2;
 }
 
@@ -44,6 +44,8 @@ char * BG_GetPerkNameForCodeIndex(uint param_1)
 
 // 82277300  Perks_RegisterDvars  (bgame/bg_perks.cpp:132)
 
+/* WARNING: Function: __savefpr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_24 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void Perks_RegisterDvars(void)
@@ -63,7 +65,6 @@ void Perks_RegisterDvars(void)
   double dVar10;
   double dVar11;
   
-  __savefpr_24();
   dVar9 = 1.0;
   dVar11 = 0.0;
   dVar4 = 0.6499999761581421;
@@ -211,7 +212,6 @@ void Perks_RegisterDvars(void)
   perk_reducedSwayScale =
        Dvar_RegisterFloat("perk_reducedSwayScale",(float)dVar7,(float)dVar11,(float)dVar10,uVar1,
                           pcVar3);
-  __restfpr_24();
   return;
 }
 
@@ -232,29 +232,27 @@ char * Perk_GetSlotIndexName(char *param_1)
 
 // 82277A80  Perk_GetSlotIndex  (bgame/bg_perks.cpp:189)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 uint Perk_GetSlotIndex(char *param_1)
 
 {
-  char *pcVar1;
-  int iVar2;
-  uint uVar3;
-  longlong lVar4;
-  char **ppcVar5;
+  int iVar1;
+  uint uVar2;
+  char **ppcVar3;
   
-  pcVar1 = (char *)__savegprlr_28(param_1);
-  ppcVar5 = perkSlotNames;
-  lVar4 = 0;
+  ppcVar3 = perkSlotNames;
+  uVar2 = 0;
   do {
-    iVar2 = I_stricmp(pcVar1,*ppcVar5);
-    if (iVar2 == 0) {
-      uVar3 = __restgprlr_28(lVar4);
-      return uVar3;
+    iVar1 = I_stricmp(param_1,*ppcVar3);
+    if (iVar1 == 0) {
+      return uVar2;
     }
-    ppcVar5 = ppcVar5 + 1;
-    lVar4 = lVar4 + 1;
-  } while ((int)ppcVar5 < -0x7d69ec24);
-  uVar3 = __restgprlr_28(9);
-  return uVar3;
+    ppcVar3 = ppcVar3 + 1;
+    uVar2 = uVar2 + 1;
+  } while ((int)ppcVar3 < -0x7d69ec24);
+  return 9;
 }
 
 

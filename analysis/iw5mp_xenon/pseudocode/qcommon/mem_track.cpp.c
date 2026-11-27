@@ -100,6 +100,9 @@ void track_addbasicmeminfo(meminfo_t *param_1,meminfo_t *param_2)
 
 // 825027A0  track_static_alloc_internal  (qcommon/mem_track.cpp:348)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
+
 void track_static_alloc_internal(void *param_1,int param_2,char *param_3,int param_4)
 
 {
@@ -108,7 +111,6 @@ void track_static_alloc_internal(void *param_1,int param_2,char *param_3,int par
   int iVar3;
   int iVar4;
   
-  __savegprlr_23(param_1);
   RtlEnterCriticalSection(0xffffffff83689b28);
   if (0x3ff < DAT_8367aa7c) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\mem_track.cpp",0x162,0
@@ -131,37 +133,38 @@ void track_static_alloc_internal(void *param_1,int param_2,char *param_3,int par
   track_addbasicinfo(&g_info,param_4,param_2);
   DAT_8367aa7c = iVar4 + 1;
   RtlLeaveCriticalSection(0xffffffff83689b28);
-  __restgprlr_23();
   return;
 }
 
 
 // 82502898  track_z_commit  (qcommon/mem_track.cpp:596)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void track_z_commit(void *param_1,int param_2,int param_3)
 
 {
-  __savegprlr_29(param_1);
   RtlEnterCriticalSection(0xffffffff83689b28);
   track_addbasicinfo(&g_virtualMemInfo,param_3,param_2);
   track_addbasicinfo(&g_info,param_3,param_2);
   RtlLeaveCriticalSection(0xffffffff83689b28);
-  __restgprlr_29();
   return;
 }
 
 
 // 825028F0  track_z_decommit  (qcommon/mem_track.cpp:622)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void track_z_decommit(void *param_1,int param_2,int param_3)
 
 {
-  __savegprlr_29(param_1);
   RtlEnterCriticalSection(0xffffffff83689b28);
   track_addbasicinfo(&g_virtualMemInfo,param_3,-param_2);
   track_addbasicinfo(&g_info,param_3,-param_2);
   RtlLeaveCriticalSection(0xffffffff83689b28);
-  __restgprlr_29();
   return;
 }
 
@@ -195,21 +198,20 @@ void track_hunk_allocLow(int param_1,int param_2,char *param_3,int param_4)
 
 // 82502968  track_set_hunk_size  (qcommon/mem_track.cpp:859)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void track_set_hunk_size(int param_1)
 
 {
-  int iVar1;
-  
-  iVar1 = __savegprlr_29(param_1);
   RtlEnterCriticalSection(0xffffffff83689b28);
   if (DAT_8367ab44 != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\mem_track.cpp",0x35e,0
                     ,"%s");
   }
-  DAT_8367ab44 = iVar1;
-  track_addbasicinfo(&g_info,1,iVar1);
+  DAT_8367ab44 = param_1;
+  track_addbasicinfo(&g_info,1,param_1);
   RtlLeaveCriticalSection(0xffffffff83689b28);
-  __restgprlr_29();
   return;
 }
 
@@ -245,6 +247,8 @@ void track_hunk_ClearToStart(void)
 
 // 82503520  track_init  (qcommon/mem_track.cpp:1156)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void track_init(void)
@@ -254,7 +258,6 @@ void track_init(void)
   int *piVar2;
   longlong lVar3;
   
-  __savegprlr_28();
   RtlInitializeCriticalSection(0xffffffff83689b28);
   memset();
   memset();
@@ -417,7 +420,6 @@ void track_init(void)
   UI_track_init();
   R_Track_Init();
   g_mem_track_filename = "";
-  __restgprlr_28();
   return;
 }
 
@@ -504,29 +506,29 @@ void track_printLine(int param_1,char *param_2,float param_3)
 
 // 82502C40  track_printSum  (qcommon/mem_track.cpp:1500)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void track_printSum(int param_1,int param_2,char *param_3,float param_4)
 
 {
-  int iVar1;
-  double extraout_f1;
-  double dVar2;
+  double dVar1;
   
-  iVar1 = __savegprlr_27((double)param_4,param_1);
-  dVar2 = extraout_f1;
+  dVar1 = (double)param_4;
   track_print("%*s %*s%*.6s\n");
   if (param_2 != -1) {
     track_print("%-*s %*s%*.1f%*s%*.1f\n");
-    __restgprlr_27();
     return;
   }
-  track_printLine(iVar1,param_3,(float)dVar2);
-  __restgprlr_27();
+  track_printLine(param_1,param_3,(float)dVar1);
   return;
 }
 
 
 // 82502D18  track_PrintInfo  (qcommon/mem_track.cpp:1510)
 
+/* WARNING: Function: __savegprlr_19 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_19 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void track_PrintInfo(void)
@@ -582,7 +584,6 @@ void track_PrintInfo(void)
   undefined4 local_90;
   undefined4 local_80;
   
-  __savegprlr_19();
   RtlEnterCriticalSection(0xffffffff83689b28);
   lVar26 = 0x14;
   plVar10 = &local_128;
@@ -787,7 +788,6 @@ LAB_825033ec:
       track_print("\n");
       DumpMemStats(iStack_11c);
       RtlLeaveCriticalSection(0xffffffff83689b28);
-      __restgprlr_19();
       return;
     }
   } while( true );

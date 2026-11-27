@@ -2,6 +2,8 @@
 
 // 82419878  FXIR_DrawElem_BillboardSprite  (EffectsCore/fx_draw_elem.cpp:73)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void FXIR_DrawElem_BillboardSprite(FxDrawState *param_1)
@@ -9,119 +11,118 @@ void FXIR_DrawElem_BillboardSprite(FxDrawState *param_1)
 {
   uint uVar1;
   FxDrawState *pFVar2;
-  FxDrawState *pFVar3;
-  bool bVar4;
+  bool bVar3;
+  FxElemVisualState *pFVar4;
   FxElemVisualState *pFVar5;
-  FxElemVisualState *pFVar6;
-  FxElemPreVisualState *pFVar7;
+  FxElemPreVisualState *pFVar6;
   __vector4_u_0 in_stack_ffffff78;
   __vector4_u_0 in_stack_ffffff88;
   __vector4_u_0 in_stack_ffffff98;
   
-  pFVar2 = (FxDrawState *)__savegprlr_27(param_1);
-  pFVar3 = pFVar2;
-  FX_DrawElement_Setup_Time(pFVar2,pFVar2->elem->msecBegin,(float *)0x0);
-  pFVar7 = (FxElemPreVisualState *)pFVar3->randomSeed;
-  FX_GetOrientation(pFVar3->elemDef,&pFVar3->effect->frameAtSpawn,&pFVar3->effect->frameNow,
-                    (int)pFVar7,&pFVar3->orient);
-  FX_OrientationPosToWorldPos(&pFVar3->orient,(pFVar2->elem->field8_0x14).origin,pFVar2->posWorld);
-  FX_SetupVisualState(pFVar2->elemDef,pFVar2->effect,pFVar2->randomSeed,pFVar2->normTimeUpdateEnd,
-                      pFVar7);
-  pFVar5 = &pFVar2->visState;
-  pFVar6 = pFVar5;
-  FX_EvaluateSize(&pFVar2->preVisState,pFVar5);
-  bVar4 = FX_CullElementForDraw_Sprite(pFVar2);
-  if (!bVar4) {
+  pFVar2 = param_1;
+  FX_DrawElement_Setup_Time(param_1,param_1->elem->msecBegin,(float *)0x0);
+  pFVar6 = (FxElemPreVisualState *)pFVar2->randomSeed;
+  FX_GetOrientation(pFVar2->elemDef,&pFVar2->effect->frameAtSpawn,&pFVar2->effect->frameNow,
+                    (int)pFVar6,&pFVar2->orient);
+  FX_OrientationPosToWorldPos(&pFVar2->orient,(param_1->elem->field8_0x14).origin,param_1->posWorld)
+  ;
+  FX_SetupVisualState(param_1->elemDef,param_1->effect,param_1->randomSeed,
+                      param_1->normTimeUpdateEnd,pFVar6);
+  pFVar4 = &param_1->visState;
+  pFVar5 = pFVar4;
+  FX_EvaluateSize(&param_1->preVisState,pFVar4);
+  bVar3 = FX_CullElementForDraw_Sprite(param_1);
+  if (!bVar3) {
     uVar1 = (fx_alphaThreshold->current).unsignedInt;
-    FX_EvaluateDistanceFade(pFVar2);
-    if ((uVar1 <= (pFVar2->preVisState).distanceFade) &&
-       (((pFVar2->elemDef->flags & 0x10000U) == 0 ||
-        (FX_EvaluateVisStateOcclusionFadeAndScale(pFVar2),
-        uVar1 <= (pFVar2->preVisState).occlusionFade)))) {
-      FX_EvaluateVisualState(&pFVar2->preVisState,pFVar2->msecLifeSpan,pFVar6);
-      if (uVar1 <= pFVar5->color[0]) {
-        if ((pFVar2->elemDef->flags & 0x1000U) != 0) {
-          FX_AddVisBlocker(pFVar2->system,pFVar2->posWorld,(pFVar2->visState).size[0],
-                           (float)pFVar5->color[0] * 0.003921569);
+    FX_EvaluateDistanceFade(param_1);
+    if ((uVar1 <= (param_1->preVisState).distanceFade) &&
+       (((param_1->elemDef->flags & 0x10000U) == 0 ||
+        (FX_EvaluateVisStateOcclusionFadeAndScale(param_1),
+        uVar1 <= (param_1->preVisState).occlusionFade)))) {
+      FX_EvaluateVisualState(&param_1->preVisState,param_1->msecLifeSpan,pFVar5);
+      if (uVar1 <= pFVar4->color[0]) {
+        if ((param_1->elemDef->flags & 0x1000U) != 0) {
+          FX_AddVisBlocker(param_1->system,param_1->posWorld,(param_1->visState).size[0],
+                           (float)pFVar4->color[0] * 0.003921569);
         }
-        FXV_GenSpriteVerts(pFVar2,(__vector4)in_stack_ffffff78,(__vector4)in_stack_ffffff88,
+        FXV_GenSpriteVerts(param_1,(__vector4)in_stack_ffffff78,(__vector4)in_stack_ffffff88,
                            (__vector4)in_stack_ffffff98);
       }
     }
   }
-  __restgprlr_27();
   return;
 }
 
 
 // 824199E0  FXIR_DrawElem_OrientedSprite  (EffectsCore/fx_draw_elem.cpp:129)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void FXIR_DrawElem_OrientedSprite(FxDrawState *param_1)
 
 {
   uint uVar1;
-  FxDrawState *pFVar2;
-  int iVar3;
+  int iVar2;
+  longlong lVar3;
   longlong lVar4;
-  longlong lVar5;
-  bool bVar6;
+  bool bVar5;
+  FxElemVisualState *pFVar6;
   FxElemVisualState *pFVar7;
-  FxElemVisualState *pFVar8;
-  FxElemPreVisualState *pFVar9;
+  FxElemPreVisualState *pFVar8;
   __vector4_u_0 in_stack_ffffff78;
   __vector4_u_0 in_stack_ffffff88;
   __vector4_u_0 in_stack_ffffff98;
   
-  lVar4 = __savegprlr_27(param_1);
-  pFVar2 = (FxDrawState *)lVar4;
-  lVar5 = lVar4;
-  FX_DrawElement_Setup_Time(pFVar2,pFVar2->elem->msecBegin,(float *)0x0);
-  iVar3 = (int)lVar5;
-  pFVar9 = *(FxElemPreVisualState **)(iVar3 + 0x48);
-  FX_GetOrientation(*(FxElemDef **)(iVar3 + 0xc),(FxSpatialFrame *)(*(int *)(iVar3 + 4) + 0x34),
-                    (FxSpatialFrame *)(*(int *)(iVar3 + 4) + 0x50),(int)pFVar9,
-                    (orientation_t *)(iVar3 + 0x14));
+  lVar3 = (longlong)(int)param_1;
+  lVar4 = lVar3;
+  FX_DrawElement_Setup_Time(param_1,param_1->elem->msecBegin,(float *)0x0);
+  iVar2 = (int)lVar4;
+  pFVar8 = *(FxElemPreVisualState **)(iVar2 + 0x48);
+  FX_GetOrientation(*(FxElemDef **)(iVar2 + 0xc),(FxSpatialFrame *)(*(int *)(iVar2 + 4) + 0x34),
+                    (FxSpatialFrame *)(*(int *)(iVar2 + 4) + 0x50),(int)pFVar8,
+                    (orientation_t *)(iVar2 + 0x14));
   FX_OrientationPosToWorldPos
-            ((orientation_t *)(iVar3 + 0x14),(pFVar2->elem->field8_0x14).origin,pFVar2->posWorld);
-  FX_SetupVisualState(pFVar2->elemDef,pFVar2->effect,pFVar2->randomSeed,pFVar2->normTimeUpdateEnd,
-                      pFVar9);
-  pFVar7 = &pFVar2->visState;
-  pFVar8 = pFVar7;
-  FX_EvaluateSize(&pFVar2->preVisState,pFVar7);
-  bVar6 = FX_CullElementForDraw_Sprite(pFVar2);
-  if (!bVar6) {
+            ((orientation_t *)(iVar2 + 0x14),(param_1->elem->field8_0x14).origin,param_1->posWorld);
+  FX_SetupVisualState(param_1->elemDef,param_1->effect,param_1->randomSeed,
+                      param_1->normTimeUpdateEnd,pFVar8);
+  pFVar6 = &param_1->visState;
+  pFVar7 = pFVar6;
+  FX_EvaluateSize(&param_1->preVisState,pFVar6);
+  bVar5 = FX_CullElementForDraw_Sprite(param_1);
+  if (!bVar5) {
     uVar1 = (fx_alphaThreshold->current).unsignedInt;
-    FX_EvaluateDistanceFade(pFVar2);
-    if ((uVar1 <= (pFVar2->preVisState).distanceFade) &&
-       (((pFVar2->elemDef->flags & 0x10000U) == 0 ||
-        (FX_EvaluateVisStateOcclusionFadeAndScale(pFVar2),
-        uVar1 <= (pFVar2->preVisState).occlusionFade)))) {
-      FX_EvaluateVisualState(&pFVar2->preVisState,pFVar2->msecLifeSpan,pFVar8);
-      if (uVar1 <= pFVar7->color[0]) {
-        if ((pFVar2->elemDef->flags & 0x1000U) != 0) {
-          FX_AddVisBlocker(pFVar2->system,pFVar2->posWorld,(pFVar2->visState).size[0],
-                           (float)pFVar7->color[0] * 0.003921569);
+    FX_EvaluateDistanceFade(param_1);
+    if ((uVar1 <= (param_1->preVisState).distanceFade) &&
+       (((param_1->elemDef->flags & 0x10000U) == 0 ||
+        (FX_EvaluateVisStateOcclusionFadeAndScale(param_1),
+        uVar1 <= (param_1->preVisState).occlusionFade)))) {
+      FX_EvaluateVisualState(&param_1->preVisState,param_1->msecLifeSpan,pFVar7);
+      if (uVar1 <= pFVar6->color[0]) {
+        if ((param_1->elemDef->flags & 0x1000U) != 0) {
+          FX_AddVisBlocker(param_1->system,param_1->posWorld,(param_1->visState).size[0],
+                           (float)pFVar6->color[0] * 0.003921569);
         }
-        loadVectorLeftIndexed(lVar4 + 0x20);
-        loadVectorLeftIndexed(lVar4 + 0x2c);
-        loadVectorLeftIndexed(lVar4 + 0x38);
-        loadVectorRightIndexed(lVar4 + 0x30);
-        loadVectorRightIndexed(lVar4 + 0x48);
-        loadVectorRightIndexed(lVar4 + 0x3c);
-        FXV_GenSpriteVerts(pFVar2,(__vector4)in_stack_ffffff78,(__vector4)in_stack_ffffff88,
+        loadVectorLeftIndexed(lVar3 + 0x20);
+        loadVectorLeftIndexed(lVar3 + 0x2c);
+        loadVectorLeftIndexed(lVar3 + 0x38);
+        loadVectorRightIndexed(lVar3 + 0x30);
+        loadVectorRightIndexed(lVar3 + 0x48);
+        loadVectorRightIndexed(lVar3 + 0x3c);
+        FXV_GenSpriteVerts(param_1,(__vector4)in_stack_ffffff78,(__vector4)in_stack_ffffff88,
                            (__vector4)in_stack_ffffff98);
       }
     }
   }
-  __restgprlr_27();
   return;
 }
 
 
 // 82419B80  FXIR_DrawElem_Tail  (EffectsCore/fx_draw_elem.cpp:185)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void FXIR_DrawElem_Tail(FxDrawState *param_1)
@@ -134,17 +135,16 @@ void FXIR_DrawElem_Tail(FxDrawState *param_1)
   FxElem *pFVar5;
   FxCamera *pFVar6;
   FxDrawState *pFVar7;
-  FxDrawState *pFVar8;
-  bool bVar9;
-  FxElemVisualState *pFVar10;
-  float *pfVar11;
-  orientation_t *poVar12;
-  float *pfVar13;
-  orientation_t *poVar14;
-  float *pfVar15;
+  bool bVar8;
+  FxElemVisualState *pFVar9;
+  float *pfVar10;
+  orientation_t *poVar11;
+  float *pfVar12;
+  orientation_t *poVar13;
+  float *pfVar14;
+  double dVar15;
   double dVar16;
   double dVar17;
-  double dVar18;
   float local_60;
   float local_5c;
   float local_58;
@@ -153,72 +153,72 @@ void FXIR_DrawElem_Tail(FxDrawState *param_1)
   float local_48;
   float afStack_40 [16];
   
-  pFVar7 = (FxDrawState *)__savegprlr_28(param_1);
-  pFVar8 = pFVar7;
-  FX_DrawElement_Setup_Time(pFVar7,pFVar7->elem->msecBegin,(float *)0x0);
-  poVar14 = &pFVar8->orient;
-  pFVar5 = pFVar8->elem;
-  pfVar13 = (float *)pFVar8->randomSeed;
-  FX_GetOrientation(pFVar8->elemDef,&pFVar8->effect->frameAtSpawn,&pFVar8->effect->frameNow,
-                    (int)pfVar13,poVar14);
-  pfVar11 = pFVar7->posWorld;
-  poVar12 = (orientation_t *)pfVar11;
-  FX_OrientationPosToWorldPos(poVar14,(pFVar5->field8_0x14).origin,pfVar11);
-  FX_DrawElement_Setup_VisualState(pFVar7);
-  pfVar15 = pFVar7->velDirWorld;
+  pFVar7 = param_1;
+  FX_DrawElement_Setup_Time(param_1,param_1->elem->msecBegin,(float *)0x0);
+  poVar13 = &pFVar7->orient;
+  pFVar5 = pFVar7->elem;
+  pfVar12 = (float *)pFVar7->randomSeed;
+  FX_GetOrientation(pFVar7->elemDef,&pFVar7->effect->frameAtSpawn,&pFVar7->effect->frameNow,
+                    (int)pfVar12,poVar13);
+  pfVar10 = param_1->posWorld;
+  poVar11 = (orientation_t *)pfVar10;
+  FX_OrientationPosToWorldPos(poVar13,(pFVar5->field8_0x14).origin,pfVar10);
+  FX_DrawElement_Setup_VisualState(param_1);
+  pfVar14 = param_1->velDirWorld;
   FX_GetVelocityAtTime
-            (pFVar7->elemDef,pFVar7->randomSeed,pFVar7->msecLifeSpan,pFVar7->msecElapsed,poVar12,
-             pfVar13,poVar14->origin);
-  fVar2 = pFVar7->velDirWorld[1];
-  fVar3 = pFVar7->velDirWorld[0];
-  fVar4 = pFVar7->velDirWorld[2];
-  dVar18 = 1.0;
-  dVar17 = (double)SQRT(fVar4 * fVar4 + fVar3 * fVar3 + fVar2 * fVar2);
-  dVar16 = dVar18;
-  if (-dVar17 < 0.0) {
-    dVar16 = dVar17;
+            (param_1->elemDef,param_1->randomSeed,param_1->msecLifeSpan,param_1->msecElapsed,poVar11
+             ,pfVar12,poVar13->origin);
+  fVar2 = param_1->velDirWorld[1];
+  fVar3 = param_1->velDirWorld[0];
+  fVar4 = param_1->velDirWorld[2];
+  dVar17 = 1.0;
+  dVar16 = (double)SQRT(fVar4 * fVar4 + fVar3 * fVar3 + fVar2 * fVar2);
+  dVar15 = dVar17;
+  if (-dVar16 < 0.0) {
+    dVar15 = dVar16;
   }
-  fVar1 = (float)(1.0 / dVar16);
-  pFVar7->velDirWorld[0] = fVar3 * fVar1;
-  pFVar7->velDirWorld[1] = fVar2 * fVar1;
-  pFVar7->velDirWorld[2] = fVar4 * fVar1;
-  bVar9 = FX_CullElementForDraw_Tail(pFVar7);
-  if (!bVar9) {
-    fVar2 = -(pFVar7->visState).size[1];
-    local_50 = fVar2 * *pfVar15 + *pfVar11;
-    *pfVar11 = local_50;
-    local_4c = fVar2 * pFVar7->velDirWorld[1] + pFVar7->posWorld[1];
-    pFVar7->posWorld[1] = local_4c;
-    local_48 = pFVar7->velDirWorld[2] * fVar2 + pFVar7->posWorld[2];
-    pFVar7->posWorld[2] = local_48;
-    pFVar6 = pFVar7->camera;
+  fVar1 = (float)(1.0 / dVar15);
+  param_1->velDirWorld[0] = fVar3 * fVar1;
+  param_1->velDirWorld[1] = fVar2 * fVar1;
+  param_1->velDirWorld[2] = fVar4 * fVar1;
+  bVar8 = FX_CullElementForDraw_Tail(param_1);
+  if (!bVar8) {
+    fVar2 = -(param_1->visState).size[1];
+    local_50 = fVar2 * *pfVar14 + *pfVar10;
+    *pfVar10 = local_50;
+    local_4c = fVar2 * param_1->velDirWorld[1] + param_1->posWorld[1];
+    param_1->posWorld[1] = local_4c;
+    local_48 = param_1->velDirWorld[2] * fVar2 + param_1->posWorld[2];
+    param_1->posWorld[2] = local_48;
+    pFVar6 = param_1->camera;
     local_50 = pFVar6->origin[0] - local_50;
     local_48 = pFVar6->origin[2] - local_48;
     local_4c = pFVar6->origin[1] - local_4c;
-    Vec3Cross(pfVar15,&local_50,&local_60);
-    dVar17 = (double)SQRT(local_60 * local_60 + local_58 * local_58 + local_5c * local_5c);
-    dVar16 = dVar18;
-    if (-dVar17 < 0.0) {
-      dVar16 = dVar17;
+    Vec3Cross(pfVar14,&local_50,&local_60);
+    dVar16 = (double)SQRT(local_60 * local_60 + local_58 * local_58 + local_5c * local_5c);
+    dVar15 = dVar17;
+    if (-dVar16 < 0.0) {
+      dVar15 = dVar16;
     }
-    fVar2 = (float)(dVar18 / dVar16);
+    fVar2 = (float)(dVar17 / dVar15);
     local_60 = local_60 * fVar2;
     local_5c = local_5c * fVar2;
     local_58 = local_58 * fVar2;
-    pFVar10 = (FxElemVisualState *)pfVar15;
-    Vec3Cross(&local_60,pfVar15,afStack_40);
-    FX_EvaluateVisualState(&pFVar7->preVisState,pFVar7->msecLifeSpan,pFVar10);
-    if ((fx_alphaThreshold->current).unsignedInt <= (uint)(pFVar7->visState).color[0]) {
-      FX_GenSpriteVerts(pFVar7,&local_60,pfVar15,afStack_40);
+    pFVar9 = (FxElemVisualState *)pfVar14;
+    Vec3Cross(&local_60,pfVar14,afStack_40);
+    FX_EvaluateVisualState(&param_1->preVisState,param_1->msecLifeSpan,pFVar9);
+    if ((fx_alphaThreshold->current).unsignedInt <= (uint)(param_1->visState).color[0]) {
+      FX_GenSpriteVerts(param_1,&local_60,pfVar14,afStack_40);
     }
   }
-  __restgprlr_28();
   return;
 }
 
 
 // 82419D90  FXIR_DrawElem_Model  (EffectsCore/fx_draw_elem.cpp:219)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PhysWorld": Some values do not have unique names */
 
@@ -228,41 +228,39 @@ void FXIR_DrawElem_Model(FxDrawState *param_1)
   FxElemDef *pFVar1;
   bool bVar2;
   FxDrawState *pFVar3;
-  FxDrawState *pFVar4;
-  FxElemVisuals FVar5;
-  FxElem *pFVar6;
-  uint uVar7;
+  FxElemVisuals FVar4;
+  FxElem *pFVar5;
+  uint uVar6;
   GfxScaledPlacement aGStack_50 [2];
   
-  pFVar3 = (FxDrawState *)__savegprlr_27(param_1);
-  pFVar4 = pFVar3;
-  FX_DrawElement_Setup_Time(pFVar3,pFVar3->elem->msecBegin,(float *)0x0);
-  pFVar6 = pFVar4->elem;
-  FX_GetOrientation(pFVar4->elemDef,&pFVar4->effect->frameAtSpawn,&pFVar4->effect->frameNow,
-                    pFVar4->randomSeed,&pFVar4->orient);
-  FX_OrientationPosToWorldPos(&pFVar4->orient,(pFVar6->field8_0x14).origin,pFVar3->posWorld);
-  FX_DrawElement_Setup_VisualState(pFVar3);
-  FX_EvaluateScale(&pFVar3->preVisState,&pFVar3->visState);
-  if ((pFVar3->visState).scale != 0.0) {
-    FX_SetPlacement(pFVar3,aGStack_50);
-    if (pFVar3->elemDef->elemType != '\a') {
+  pFVar3 = param_1;
+  FX_DrawElement_Setup_Time(param_1,param_1->elem->msecBegin,(float *)0x0);
+  pFVar5 = pFVar3->elem;
+  FX_GetOrientation(pFVar3->elemDef,&pFVar3->effect->frameAtSpawn,&pFVar3->effect->frameNow,
+                    pFVar3->randomSeed,&pFVar3->orient);
+  FX_OrientationPosToWorldPos(&pFVar3->orient,(pFVar5->field8_0x14).origin,param_1->posWorld);
+  FX_DrawElement_Setup_VisualState(param_1);
+  FX_EvaluateScale(&param_1->preVisState,&param_1->visState);
+  if ((param_1->visState).scale != 0.0) {
+    FX_SetPlacement(param_1,aGStack_50);
+    if (param_1->elemDef->elemType != '\a') {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_draw_elem.cpp"
                       ,0xeb,0,"%s\n\t(draw->elemDef->elemType) = %i");
     }
-    if ((pFVar3->elemDef->flags & 0x8000000U) != 0) {
+    if ((param_1->elemDef->flags & 0x8000000U) != 0) {
       Phys_ObjGetInterpolatedState
-                (PHYS_WORLD_FX,(pFVar3->elem->field8_0x14).physObjId,aGStack_50[0].base.origin,
+                (PHYS_WORLD_FX,(param_1->elem->field8_0x14).physObjId,aGStack_50[0].base.origin,
                  (float *)aGStack_50);
     }
-    FVar5 = FX_GetElemVisuals(pFVar3->elemDef,pFVar3->randomSeed);
-    if (FVar5.anonymous == (void *)0x0) {
+    FVar4 = FX_GetElemVisuals(param_1->elemDef,param_1->randomSeed);
+    if (FVar4.anonymous == (void *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_draw_elem.cpp"
                       ,0xf2,0,"%s");
     }
-    pFVar1 = pFVar3->elemDef;
-    uVar7 = 0xe00;
+    pFVar1 = param_1->elemDef;
+    uVar6 = 0xe00;
     if ((pFVar1->flags & 0x800U) != 0) {
-      uVar7 = 0xe02;
+      uVar6 = 0xe02;
     }
     if (((pFVar1->flags & 0x80000000U) == 0) ||
        (bVar2 = true, (pFVar1->effectEmitted).handle == (FxEffectDef *)0x0)) {
@@ -272,28 +270,30 @@ void FXIR_DrawElem_Model(FxDrawState *param_1)
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_draw_elem.cpp"
                       ,0xf6,0,"%s");
     }
-    pFVar6 = FX_ElemFromHandle(pFVar3->system,pFVar3->elemHandle);
-    if (pFVar6 != pFVar3->elem) {
+    pFVar5 = FX_ElemFromHandle(param_1->system,param_1->elemHandle);
+    if (pFVar5 != param_1->elem) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_draw_elem.cpp"
                       ,0xf7,0,"%s");
     }
-    if (0x7ff < pFVar3->elemHandle >> 3) {
+    if (0x7ff < param_1->elemHandle >> 3) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_draw_elem.cpp"
                       ,0xf8,0,
                       "draw->elemHandle * FxElem::HANDLE_SCALE / sizeof( FxElem ) doesn\'t index FX_ELEM_LIMIT\n\t%i not in [0, %i)"
                      );
     }
     R_FilterXModelIntoScene
-              (FVar5.model,aGStack_50,uVar7,
-               (ushort *)((pFVar3->elemHandle >> 2 & 0x3ffffffe) + (int)pFVar3->system->elemChild));
+              (FVar4.model,aGStack_50,uVar6,
+               (ushort *)((param_1->elemHandle >> 2 & 0x3ffffffe) + (int)param_1->system->elemChild)
+              );
   }
-  __restgprlr_27();
   return;
 }
 
 
 // 82419FB0  FXIR_DrawElem_Light  (EffectsCore/fx_draw_elem.cpp:255)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void FXIR_DrawElem_Light(FxDrawState *param_1)
@@ -301,38 +301,37 @@ void FXIR_DrawElem_Light(FxDrawState *param_1)
 {
   float fVar1;
   FxDrawState *pFVar2;
-  FxDrawState *pFVar3;
-  bool bVar4;
-  FxElemVisualState *pFVar5;
+  bool bVar3;
+  FxElemVisualState *pFVar4;
   
-  pFVar2 = (FxDrawState *)__savegprlr_28(param_1);
-  if ((pFVar2->system->systemFlags & 0x82) == 0) {
-    pFVar3 = pFVar2;
-    FX_DrawElement_Setup_Time(pFVar2,pFVar2->elem->msecBegin,(float *)0x0);
-    pFVar5 = (FxElemVisualState *)&pFVar3->elem->field8_0x14;
-    FX_GetOrientation(pFVar3->elemDef,&pFVar3->effect->frameAtSpawn,&pFVar3->effect->frameNow,
-                      pFVar3->randomSeed,&pFVar3->orient);
-    FX_OrientationPosToWorldPos(&pFVar3->orient,(float *)pFVar5,pFVar2->posWorld);
-    FX_DrawElement_Setup_VisualState(pFVar2);
-    bVar4 = FX_CullElementForDraw_Light(pFVar2);
-    if (!bVar4) {
-      FX_EvaluateVisualState(&pFVar2->preVisState,pFVar2->msecLifeSpan,pFVar5);
-      FX_EvaluateScale(&pFVar2->preVisState,&pFVar2->visState);
-      fVar1 = (pFVar2->visState).scale * 0.003921569;
+  if ((param_1->system->systemFlags & 0x82) == 0) {
+    pFVar2 = param_1;
+    FX_DrawElement_Setup_Time(param_1,param_1->elem->msecBegin,(float *)0x0);
+    pFVar4 = (FxElemVisualState *)&pFVar2->elem->field8_0x14;
+    FX_GetOrientation(pFVar2->elemDef,&pFVar2->effect->frameAtSpawn,&pFVar2->effect->frameNow,
+                      pFVar2->randomSeed,&pFVar2->orient);
+    FX_OrientationPosToWorldPos(&pFVar2->orient,(float *)pFVar4,param_1->posWorld);
+    FX_DrawElement_Setup_VisualState(param_1);
+    bVar3 = FX_CullElementForDraw_Light(param_1);
+    if (!bVar3) {
+      FX_EvaluateVisualState(&param_1->preVisState,param_1->msecLifeSpan,pFVar4);
+      FX_EvaluateScale(&param_1->preVisState,&param_1->visState);
+      fVar1 = (param_1->visState).scale * 0.003921569;
       R_AddOmniLightToScene
-                (pFVar2->posWorld,(pFVar2->visState).size[0],
-                 (float)(pFVar2->visState).color[1] * fVar1,
-                 (float)(pFVar2->visState).color[2] * fVar1,
-                 (float)(pFVar2->visState).color[3] * fVar1);
+                (param_1->posWorld,(param_1->visState).size[0],
+                 (float)(param_1->visState).color[1] * fVar1,
+                 (float)(param_1->visState).color[2] * fVar1,
+                 (float)(param_1->visState).color[3] * fVar1);
     }
   }
-  __restgprlr_28();
   return;
 }
 
 
 // 8241A0D0  FXIR_DrawElem_SpotLight  (EffectsCore/fx_draw_elem.cpp:283)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void FXIR_DrawElem_SpotLight(FxDrawState *param_1)
@@ -341,48 +340,45 @@ void FXIR_DrawElem_SpotLight(FxDrawState *param_1)
   byte bVar1;
   float fVar2;
   FxDrawState *pFVar3;
-  FxDrawState *pFVar4;
-  bool bVar5;
-  FxElemVisualState *pFVar6;
-  GfxLightDef *pGVar7;
-  orientation_t *poVar8;
-  char *pcVar9;
+  bool bVar4;
+  FxElemVisualState *pFVar5;
+  GfxLightDef *pGVar6;
+  orientation_t *poVar7;
+  char *pcVar8;
+  double dVar9;
   double dVar10;
   double dVar11;
-  double dVar12;
   
-  pFVar3 = (FxDrawState *)__savegprlr_28(param_1);
-  pFVar4 = pFVar3;
-  FX_DrawElement_Setup_Time(pFVar3,pFVar3->elem->msecBegin,(float *)0x0);
-  poVar8 = &pFVar4->orient;
-  pFVar6 = (FxElemVisualState *)&pFVar4->elem->field8_0x14;
-  pcVar9 = (char *)poVar8;
-  FX_GetOrientation(pFVar4->elemDef,&pFVar4->effect->frameAtSpawn,&pFVar4->effect->frameNow,
-                    pFVar4->randomSeed,poVar8);
-  FX_OrientationPosToWorldPos(poVar8,(float *)pFVar6,pFVar3->posWorld);
-  FX_DrawElement_Setup_VisualState(pFVar3);
-  bVar5 = FX_CullElementForDraw_Light(pFVar3);
-  if (!bVar5) {
-    FX_EvaluateVisualState(&pFVar3->preVisState,pFVar3->msecLifeSpan,pFVar6);
-    FX_EvaluateScale(&pFVar3->preVisState,&pFVar3->visState);
-    if ((pFVar3->elemDef->extended).trailDef == (FxTrailDef *)0x0) {
-      pcVar9 = "draw->elemDef->extended.spotLightDef";
+  pFVar3 = param_1;
+  FX_DrawElement_Setup_Time(param_1,param_1->elem->msecBegin,(float *)0x0);
+  poVar7 = &pFVar3->orient;
+  pFVar5 = (FxElemVisualState *)&pFVar3->elem->field8_0x14;
+  pcVar8 = (char *)poVar7;
+  FX_GetOrientation(pFVar3->elemDef,&pFVar3->effect->frameAtSpawn,&pFVar3->effect->frameNow,
+                    pFVar3->randomSeed,poVar7);
+  FX_OrientationPosToWorldPos(poVar7,(float *)pFVar5,param_1->posWorld);
+  FX_DrawElement_Setup_VisualState(param_1);
+  bVar4 = FX_CullElementForDraw_Light(param_1);
+  if (!bVar4) {
+    FX_EvaluateVisualState(&param_1->preVisState,param_1->msecLifeSpan,pFVar5);
+    FX_EvaluateScale(&param_1->preVisState,&param_1->visState);
+    if ((param_1->elemDef->extended).trailDef == (FxTrailDef *)0x0) {
+      pcVar8 = "draw->elemDef->extended.spotLightDef";
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_draw_elem.cpp"
                       ,0x12d,0,"%s");
     }
-    bVar1 = (pFVar3->visState).color[2];
-    pGVar7 = (GfxLightDef *)(uint)bVar1;
-    fVar2 = (pFVar3->visState).scale * 0.003921569;
-    dVar12 = (double)((float)(pFVar3->visState).color[3] * fVar2);
-    dVar11 = (double)((float)bVar1 * fVar2);
-    dVar10 = (double)((float)(pFVar3->visState).color[1] * fVar2);
-    FX_GetElemVisuals(pFVar3->elemDef,pFVar3->randomSeed);
+    bVar1 = (param_1->visState).color[2];
+    pGVar6 = (GfxLightDef *)(uint)bVar1;
+    fVar2 = (param_1->visState).scale * 0.003921569;
+    dVar11 = (double)((float)(param_1->visState).color[3] * fVar2);
+    dVar10 = (double)((float)bVar1 * fVar2);
+    dVar9 = (double)((float)(param_1->visState).color[1] * fVar2);
+    FX_GetElemVisuals(param_1->elemDef,param_1->randomSeed);
     R_AddSpotLightToScene
-              (pFVar3->posWorld,(pFVar3->orient).axis[0],(pFVar3->orient).axis[2],
-               (pFVar3->visState).size[0],(float)dVar10,(float)dVar11,(float)dVar12,pGVar7,
-               (FxSpotLightDef *)pcVar9);
+              (param_1->posWorld,(param_1->orient).axis[0],(param_1->orient).axis[2],
+               (param_1->visState).size[0],(float)dVar9,(float)dVar10,(float)dVar11,pGVar6,
+               (FxSpotLightDef *)pcVar8);
   }
-  __restgprlr_28();
   return;
 }
 
@@ -423,52 +419,48 @@ void FX_DrawElement_Setup_Time(FxDrawState *param_1,int param_2,float *param_3)
 
 // 82419568  FX_DrawElement_Setup_Position  (EffectsCore/fx_draw_elem.cpp:341)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void FX_DrawElement_Setup_Position(FxDrawState *param_1,float *param_2)
 
 {
-  int iVar1;
-  
-  iVar1 = __savegprlr_29(param_1);
-  FX_GetOrientation(*(FxElemDef **)(iVar1 + 0xc),(FxSpatialFrame *)(*(int *)(iVar1 + 4) + 0x34),
-                    (FxSpatialFrame *)(*(int *)(iVar1 + 4) + 0x50),*(int *)(iVar1 + 0x48),
-                    (orientation_t *)(iVar1 + 0x14));
-  FX_OrientationPosToWorldPos((orientation_t *)(iVar1 + 0x14),param_2,(float *)(iVar1 + 0x58));
-  __restgprlr_29();
+  FX_GetOrientation(param_1->elemDef,&param_1->effect->frameAtSpawn,&param_1->effect->frameNow,
+                    param_1->randomSeed,&param_1->orient);
+  FX_OrientationPosToWorldPos(&param_1->orient,param_2,param_1->posWorld);
   return;
 }
 
 
 // 824195B8  FX_DrawElement_Setup_VisualState  (EffectsCore/fx_draw_elem.cpp:348)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void FX_DrawElement_Setup_VisualState(FxDrawState *param_1)
 
 {
-  FxDrawState *pFVar1;
-  FxElemVisualState *pFVar2;
+  FxElemVisualState *pFVar1;
   FxElemPreVisualState *in_r6;
   
-  pFVar1 = (FxDrawState *)__savegprlr_29(param_1);
-  FX_SetupVisualState(pFVar1->elemDef,pFVar1->effect,pFVar1->randomSeed,pFVar1->normTimeUpdateEnd,
-                      in_r6);
-  pFVar2 = &pFVar1->visState;
-  FX_EvaluateSize(&pFVar1->preVisState,pFVar2);
-  if ((pFVar1->elemDef->flags & 0x1000U) != 0) {
-    FX_EvaluateVisAlpha(&pFVar1->preVisState,pFVar2);
+  FX_SetupVisualState(param_1->elemDef,param_1->effect,param_1->randomSeed,
+                      param_1->normTimeUpdateEnd,in_r6);
+  pFVar1 = &param_1->visState;
+  FX_EvaluateSize(&param_1->preVisState,pFVar1);
+  if ((param_1->elemDef->flags & 0x1000U) != 0) {
+    FX_EvaluateVisAlpha(&param_1->preVisState,pFVar1);
   }
-  FX_EvaluateDistanceFade(pFVar1);
-  if ((pFVar1->elemDef->flags & 0x10000U) != 0) {
-    FX_EvaluateVisStateOcclusionFadeAndScale(pFVar1);
+  FX_EvaluateDistanceFade(param_1);
+  if ((param_1->elemDef->flags & 0x10000U) != 0) {
+    FX_EvaluateVisStateOcclusionFadeAndScale(param_1);
   }
-  if ((pFVar1->elemDef->flags & 0x1000U) != 0) {
-    FX_AddVisBlocker(pFVar1->system,pFVar1->posWorld,(pFVar1->visState).size[0],
-                     (float)(uint)((int)((uint)(pFVar1->preVisState).distanceFade *
-                                        (uint)pFVar2->color[0]) >> 8) * 0.003921569);
+  if ((param_1->elemDef->flags & 0x1000U) != 0) {
+    FX_AddVisBlocker(param_1->system,param_1->posWorld,(param_1->visState).size[0],
+                     (float)(uint)((int)((uint)(param_1->preVisState).distanceFade *
+                                        (uint)pFVar1->color[0]) >> 8) * 0.003921569);
   }
-  __restgprlr_29();
   return;
 }
 
@@ -515,6 +507,8 @@ void FX_DrawElement_Setup_Camera(FxDrawState *param_1,FxCamera *param_2)
 
 // 82419758  FXIR_DrawElement  (EffectsCore/fx_draw_elem.cpp:388)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void FXIR_DrawElement(FxCamera *param_1,FxElemDef *param_2,FxElem *param_3,ushort param_4,
@@ -524,7 +518,6 @@ void FXIR_DrawElement(FxCamera *param_1,FxElemDef *param_2,FxElem *param_3,ushor
   ulonglong uVar1;
   ulonglong uVar2;
   
-  __savegprlr_27(param_1);
   if (9 < param_2->elemType) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_draw_elem.cpp",
                     0x189,0,
@@ -546,7 +539,6 @@ void FXIR_DrawElement(FxCamera *param_1,FxElemDef *param_2,FxElem *param_3,ushor
     }
     (*s_drawElemHandler[param_2->elemType])(param_5);
   }
-  __restgprlr_27();
   return;
 }
 

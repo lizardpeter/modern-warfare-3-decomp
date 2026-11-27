@@ -150,6 +150,8 @@ void G_SetEntityScriptVariable(uint param_1,char *param_2,gentity_s *param_3)
 
 // 824AB2C8  G_ParseEntityField  (game_mp/g_spawn_mp.cpp:233)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
@@ -158,91 +160,85 @@ void G_ParseEntityField(char *param_1,char *param_2,gentity_s *param_3)
 {
   <unnamed_type_index> <Var1;
   <unnamed_type_index> <Var2;
-  char *pcVar3;
-  uint uVar4;
-  int iVar5;
-  ushort uVar6;
-  ushort *puVar7;
-  ent_field_t *peVar8;
-  double dVar9;
+  uint uVar3;
+  int iVar4;
+  ushort uVar5;
+  ushort *puVar6;
+  ent_field_t *peVar7;
+  double dVar8;
   
-  pcVar3 = (char *)__savegprlr_28(param_1);
-  uVar4 = SL_FindString(pcVar3);
-  peVar8 = fields;
-  puVar7 = &scr_const.code_classname;
+  uVar3 = SL_FindString(param_1);
+  peVar7 = fields;
+  puVar6 = &scr_const.code_classname;
   do {
-    if (*puVar7 == uVar4) {
-      switch(peVar8->type) {
+    if (*puVar6 == uVar3) {
+      switch(peVar7->type) {
       case F_INT:
-        iVar5 = atoi(param_2);
-        *(int *)((int)(param_3->s).lerp.pos.trBase + peVar8->ofs + -0x18) = iVar5;
-        __restgprlr_28();
+        iVar4 = atoi(param_2);
+        *(int *)((int)(param_3->s).lerp.pos.trBase + peVar7->ofs + -0x18) = iVar4;
+        return;
+      default:
         return;
       case F_FLOAT:
-        dVar9 = atof(param_2);
-        *(float *)((int)(param_3->s).lerp.pos.trBase + peVar8->ofs + -0x18) = (float)dVar9;
-        __restgprlr_28();
+        dVar8 = atof(param_2);
+        *(float *)((int)(param_3->s).lerp.pos.trBase + peVar7->ofs + -0x18) = (float)dVar8;
         return;
       case F_STRING:
-        if (*(short *)((int)(param_3->s).lerp.pos.trBase + peVar8->ofs + -0x18) != 0) {
+        if (*(short *)((int)(param_3->s).lerp.pos.trBase + peVar7->ofs + -0x18) != 0) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_spawn_mp.cpp",
                           0x105,0,"%s");
         }
-        Scr_SetString((ushort *)((int)(param_3->s).lerp.pos.trBase + peVar8->ofs + -0x18),0);
-        uVar4 = G_NewString(param_2);
-        *(short *)((int)(param_3->s).lerp.pos.trBase + peVar8->ofs + -0x18) = (short)uVar4;
-        __restgprlr_28();
+        Scr_SetString((ushort *)((int)(param_3->s).lerp.pos.trBase + peVar7->ofs + -0x18),0);
+        uVar3 = G_NewString(param_2);
+        *(short *)((int)(param_3->s).lerp.pos.trBase + peVar7->ofs + -0x18) = (short)uVar3;
         return;
       case F_VECTOR:
-        iVar5 = sscanf(param_2,"%f %f %f");
-        *(undefined4 *)((int)(param_3->s).lerp.pos.trBase + peVar8->ofs + -0x18) = 0;
-        *(undefined4 *)((int)(param_3->s).lerp.pos.trBase + peVar8->ofs + -0x14) = 0;
-        *(undefined4 *)((int)(param_3->s).lerp.pos.trBase + peVar8->ofs + -0x10) = 0;
-        __restgprlr_28(iVar5);
+        sscanf(param_2,"%f %f %f");
+        *(undefined4 *)((int)(param_3->s).lerp.pos.trBase + peVar7->ofs + -0x18) = 0;
+        *(undefined4 *)((int)(param_3->s).lerp.pos.trBase + peVar7->ofs + -0x14) = 0;
+        *(undefined4 *)((int)(param_3->s).lerp.pos.trBase + peVar7->ofs + -0x10) = 0;
         return;
       case F_MODEL:
-        if (*param_2 == '*') {
-          iVar5 = atoi(param_2 + 1);
-          uVar6 = truncate_cast<unsigned_short>(iVar5);
-          <Var1.brushModel._0_2_ = 0;
-          <Var1.brushModel._2_2_ = uVar6;
-          (param_3->s).index = <Var1;
-          (param_3->r).modelType = '\x04';
-          __restgprlr_28();
-          return;
-        }
-        if (*param_2 != '?') {
-          G_SetModel(param_3,param_2);
-          __restgprlr_28();
-          return;
-        }
-        iVar5 = atoi(param_2 + 1);
-        uVar6 = truncate_cast<unsigned_short>(iVar5);
-        <Var2.brushModel._0_2_ = 0;
-        <Var2.brushModel._2_2_ = uVar6;
-        (param_3->s).index = <Var2;
-        (param_3->r).modelType = '\x03';
-        __restgprlr_28();
-        return;
+        goto switchD_824ab360_caseD_b;
       }
-      goto switchD_824ab360_caseD_1;
     }
-    peVar8 = peVar8 + 1;
-    puVar7 = peVar8->name;
-  } while (puVar7 != (ushort *)0x0);
-  uVar4 = SL_GetCanonicalString(pcVar3);
-  uVar4 = G_SetEntityScriptVariableInternal(uVar4,param_2);
-  if (uVar4 != 0) {
-    Scr_SetDynamicEntityField((param_3->s).number,0,uVar4);
+    peVar7 = peVar7 + 1;
+    puVar6 = peVar7->name;
+  } while (puVar6 != (ushort *)0x0);
+  uVar3 = SL_GetCanonicalString(param_1);
+  uVar3 = G_SetEntityScriptVariableInternal(uVar3,param_2);
+  if (uVar3 != 0) {
+    Scr_SetDynamicEntityField((param_3->s).number,0,uVar3);
   }
-switchD_824ab360_caseD_1:
-  __restgprlr_28();
+  return;
+switchD_824ab360_caseD_b:
+  if (*param_2 == '*') {
+    iVar4 = atoi(param_2 + 1);
+    uVar5 = truncate_cast<unsigned_short>(iVar4);
+    <Var1.brushModel._0_2_ = 0;
+    <Var1.brushModel._2_2_ = uVar5;
+    (param_3->s).index = <Var1;
+    (param_3->r).modelType = '\x04';
+    return;
+  }
+  if (*param_2 == '?') {
+    iVar4 = atoi(param_2 + 1);
+    uVar5 = truncate_cast<unsigned_short>(iVar4);
+    <Var2.brushModel._0_2_ = 0;
+    <Var2.brushModel._2_2_ = uVar5;
+    (param_3->s).index = <Var2;
+    (param_3->r).modelType = '\x03';
+    return;
+  }
+  G_SetModel(param_3,param_2);
   return;
 }
 
 
 // 824AB500  G_ParseEntityFields  (game_mp/g_spawn_mp.cpp:318)
 
+/* WARNING: Function: __savegprlr_15 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_15 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
@@ -256,116 +252,113 @@ void G_ParseEntityFields(gentity_s *param_1,char *param_2)
   float fVar5;
   <unnamed_type_index> <Var6;
   SpawnVar *pSVar7;
-  gentity_s *pgVar8;
-  uint uVar9;
-  int iVar10;
-  ushort uVar11;
-  ulonglong uVar12;
-  ushort *puVar13;
-  int iVar14;
-  ent_field_t *peVar15;
-  double dVar16;
-  double dVar17;
+  uint uVar8;
+  int iVar9;
+  ushort uVar10;
+  ushort *puVar11;
+  int iVar12;
+  ent_field_t *peVar13;
+  double dVar14;
+  double dVar15;
   
-  uVar12 = (ulonglong)(int)param_2;
-  pgVar8 = (gentity_s *)__savegprlr_15(param_1);
-  if (level.spawnVar.spawnVarsValid == false) {
+  if (!level.spawnVar.spawnVarsValid) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_spawn_mp.cpp",0x141,
                     0,"%s");
   }
-  iVar14 = 0;
+  iVar12 = 0;
   if (0 < level.spawnVar.numSpawnVars) {
-    dVar17 = 0.0;
+    dVar15 = 0.0;
     pSVar7 = &level.spawnVar;
     do {
       pcVar1 = pSVar7->spawnVars[0][0];
       pcVar2 = pSVar7->spawnVars[0][1];
-      uVar9 = SL_FindString(pcVar1);
-      puVar13 = &scr_const.code_classname;
-      peVar15 = fields;
+      uVar8 = SL_FindString(pcVar1);
+      puVar11 = &scr_const.code_classname;
+      peVar13 = fields;
       do {
-        if (*puVar13 == uVar9) {
-          switch(peVar15->type) {
+        if (*puVar11 == uVar8) {
+          switch(peVar13->type) {
           case F_INT:
-            iVar10 = atoi(pcVar2);
-            *(int *)((int)(pgVar8->s).lerp.pos.trBase + peVar15->ofs + -0x18) = iVar10;
+            iVar9 = atoi(pcVar2);
+            *(int *)((int)(param_1->s).lerp.pos.trBase + peVar13->ofs + -0x18) = iVar9;
             break;
           case F_FLOAT:
-            dVar16 = atof(pcVar2);
-            *(float *)((int)(pgVar8->s).lerp.pos.trBase + peVar15->ofs + -0x18) = (float)dVar16;
+            dVar14 = atof(pcVar2);
+            *(float *)((int)(param_1->s).lerp.pos.trBase + peVar13->ofs + -0x18) = (float)dVar14;
             break;
           case F_STRING:
-            if (*(short *)((int)(pgVar8->s).lerp.pos.trBase + peVar15->ofs + -0x18) != 0) {
+            if (*(short *)((int)(param_1->s).lerp.pos.trBase + peVar13->ofs + -0x18) != 0) {
               MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_spawn_mp.cpp"
                               ,0x105,0,"%s");
             }
-            Scr_SetString((ushort *)((int)(pgVar8->s).lerp.pos.trBase + peVar15->ofs + -0x18),0);
-            uVar9 = G_NewString(pcVar2);
-            *(short *)((int)(pgVar8->s).lerp.pos.trBase + peVar15->ofs + -0x18) = (short)uVar9;
+            Scr_SetString((ushort *)((int)(param_1->s).lerp.pos.trBase + peVar13->ofs + -0x18),0);
+            uVar8 = G_NewString(pcVar2);
+            *(short *)((int)(param_1->s).lerp.pos.trBase + peVar13->ofs + -0x18) = (short)uVar8;
             break;
           case F_VECTOR:
-            fVar3 = (float)dVar17;
-            fVar4 = (float)dVar17;
-            fVar5 = (float)dVar17;
+            fVar3 = (float)dVar15;
+            fVar4 = (float)dVar15;
+            fVar5 = (float)dVar15;
             sscanf(pcVar2,"%f %f %f");
-            *(float *)((int)(pgVar8->s).lerp.pos.trBase + peVar15->ofs + -0x18) = fVar3;
-            *(float *)((int)(pgVar8->s).lerp.pos.trBase + peVar15->ofs + -0x14) = fVar4;
-            *(float *)((int)(pgVar8->s).lerp.pos.trBase + peVar15->ofs + -0x10) = fVar5;
+            *(float *)((int)(param_1->s).lerp.pos.trBase + peVar13->ofs + -0x18) = fVar3;
+            *(float *)((int)(param_1->s).lerp.pos.trBase + peVar13->ofs + -0x14) = fVar4;
+            *(float *)((int)(param_1->s).lerp.pos.trBase + peVar13->ofs + -0x10) = fVar5;
             break;
           case F_MODEL:
             if (*pcVar2 == '*') {
-              uVar9 = atoi(pcVar2 + 1);
-              if (uVar9 != (uVar9 & 0xffff)) {
+              uVar8 = atoi(pcVar2 + 1);
+              if (uVar8 != (uVar8 & 0xffff)) {
                 MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\../universal/assertive.h"
                                 ,0x1ce,0,"i == static_cast< Type >( i )\n\t%i, %i");
               }
-              (pgVar8->s).index.brushModel = uVar9 & 0xffff;
-              (pgVar8->r).modelType = '\x04';
+              (param_1->s).index.brushModel = uVar8 & 0xffff;
+              (param_1->r).modelType = '\x04';
             }
             else if (*pcVar2 == '?') {
-              iVar10 = atoi(pcVar2 + 1);
-              uVar11 = truncate_cast<unsigned_short>(iVar10);
+              iVar9 = atoi(pcVar2 + 1);
+              uVar10 = truncate_cast<unsigned_short>(iVar9);
               <Var6.brushModel._0_2_ = 0;
-              <Var6.brushModel._2_2_ = uVar11;
-              (pgVar8->r).modelType = '\x03';
-              (pgVar8->s).index = <Var6;
+              <Var6.brushModel._2_2_ = uVar10;
+              (param_1->r).modelType = '\x03';
+              (param_1->s).index = <Var6;
             }
             else {
-              G_SetModel(pgVar8,pcVar2);
+              G_SetModel(param_1,pcVar2);
             }
           }
           goto switchD_824ab698_caseD_1;
         }
-        peVar15 = peVar15 + 1;
-        puVar13 = peVar15->name;
-      } while (puVar13 != (ushort *)0x0);
-      uVar9 = SL_GetCanonicalString(pcVar1);
-      uVar9 = G_SetEntityScriptVariableInternal(uVar9,pcVar2);
-      if (uVar9 != 0) {
-        Scr_SetDynamicEntityField((pgVar8->s).number,0,uVar9);
+        peVar13 = peVar13 + 1;
+        puVar11 = peVar13->name;
+      } while (puVar11 != (ushort *)0x0);
+      uVar8 = SL_GetCanonicalString(pcVar1);
+      uVar8 = G_SetEntityScriptVariableInternal(uVar8,pcVar2);
+      if (uVar8 != 0) {
+        Scr_SetDynamicEntityField((param_1->s).number,0,uVar8);
       }
 switchD_824ab698_caseD_1:
-      iVar14 = iVar14 + 1;
+      iVar12 = iVar12 + 1;
       pSVar7 = (SpawnVar *)pSVar7->spawnVars;
-    } while (iVar14 < level.spawnVar.numSpawnVars);
+    } while (iVar12 < level.spawnVar.numSpawnVars);
   }
-  G_SetOrigin(pgVar8,(pgVar8->r).currentOrigin);
-  G_SetAngle(pgVar8,(pgVar8->r).currentAngles);
-  if (pgVar8->classname != 0) {
+  G_SetOrigin(param_1,(param_1->r).currentOrigin);
+  G_SetAngle(param_1,(param_1->r).currentAngles);
+  if (param_1->classname != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_spawn_mp.cpp",0x14e,
                     0,"%s");
   }
-  if ((uVar12 & 0xffffffff) != 0) {
-    uVar9 = G_NewString((char *)uVar12);
-    pgVar8->classname = (ushort)uVar9;
+  if (param_2 != (char *)0x0) {
+    uVar8 = G_NewString(param_2);
+    param_1->classname = (ushort)uVar8;
   }
-  __restgprlr_15();
   return;
 }
 
 
 // 824A9D68  G_SpawnStruct  (game_mp/g_spawn_mp.cpp:347)
 
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -386,8 +379,7 @@ void G_SpawnStruct(void)
   float local_74;
   float local_70;
   
-  __savegprlr_22();
-  if (level.spawnVar.spawnVarsValid == false) {
+  if (!level.spawnVar.spawnVarsValid) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_spawn_mp.cpp",0x163,
                     0,"%s");
   }
@@ -437,13 +429,14 @@ void G_SpawnStruct(void)
       ppcVar6 = ppcVar6 + 2;
     } while (iVar5 < level.spawnVar.numSpawnVars);
   }
-  __restgprlr_22();
   return;
 }
 
 
 // 824A9F30  G_DuplicateEntityFieldsForSpawn  (game_mp/g_spawn_mp.cpp:378)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
@@ -452,63 +445,59 @@ void G_DuplicateEntityFieldsForSpawn(gentity_s *param_1,gentity_s *param_2)
 {
   int iVar1;
   int *piVar2;
-  int iVar3;
-  int *piVar4;
+  int *piVar3;
   
-  iVar3 = __savegprlr_28(param_1);
-  piVar4 = &fields[0].ofs;
+  piVar3 = &fields[0].ofs;
   do {
-    switch(piVar4[1]) {
+    switch(piVar3[1]) {
     case 0:
-      *(undefined4 *)(*piVar4 + iVar3) =
-           *(undefined4 *)((int)(param_2->s).lerp.pos.trBase + *piVar4 + -0x18);
+      *(undefined4 *)((int)(param_1->s).lerp.pos.trBase + *piVar3 + -0x18) =
+           *(undefined4 *)((int)(param_2->s).lerp.pos.trBase + *piVar3 + -0x18);
       break;
     default:
       Com_PrintError(1,"G_DuplicateEntityFieldsForSpawn(): Unhandled type #%i.");
       break;
     case 3:
-      *(undefined4 *)(*piVar4 + iVar3) =
-           *(undefined4 *)((int)(param_2->s).lerp.pos.trBase + *piVar4 + -0x18);
+      *(undefined4 *)((int)(param_1->s).lerp.pos.trBase + *piVar3 + -0x18) =
+           *(undefined4 *)((int)(param_2->s).lerp.pos.trBase + *piVar3 + -0x18);
       break;
     case 5:
-      Scr_SetString((ushort *)(*piVar4 + iVar3),
-                    (uint)*(ushort *)((int)(param_2->s).lerp.pos.trBase + *piVar4 + -0x18));
+      Scr_SetString((ushort *)((int)(param_1->s).lerp.pos.trBase + *piVar3 + -0x18),
+                    (uint)*(ushort *)((int)(param_2->s).lerp.pos.trBase + *piVar3 + -0x18));
       break;
     case 6:
-      iVar1 = *piVar4;
-      *(undefined4 *)(iVar1 + iVar3) =
+      iVar1 = *piVar3;
+      *(undefined4 *)((int)(param_1->s).lerp.pos.trBase + iVar1 + -0x18) =
            *(undefined4 *)((int)(param_2->s).lerp.pos.trBase + iVar1 + -0x18);
-      *(undefined4 *)(iVar1 + iVar3 + 4) =
+      *(undefined4 *)((int)(param_1->s).lerp.pos.trBase + iVar1 + -0x14) =
            *(undefined4 *)((int)(param_2->s).lerp.pos.trBase + iVar1 + -0x14);
-      *(undefined4 *)(iVar1 + iVar3 + 8) =
+      *(undefined4 *)((int)(param_1->s).lerp.pos.trBase + iVar1 + -0x10) =
            *(undefined4 *)((int)(param_2->s).lerp.pos.trBase + iVar1 + -0x10);
       break;
     case 7:
       break;
     case 0xb:
-      *(undefined2 *)(*piVar4 + iVar3) =
-           *(undefined2 *)((int)(param_2->s).lerp.pos.trBase + *piVar4 + -0x18);
+      *(undefined2 *)((int)(param_1->s).lerp.pos.trBase + *piVar3 + -0x18) =
+           *(undefined2 *)((int)(param_2->s).lerp.pos.trBase + *piVar3 + -0x18);
     }
-    piVar2 = piVar4 + 4;
-    piVar4 = piVar4 + 6;
+    piVar2 = piVar3 + 4;
+    piVar3 = piVar3 + 6;
   } while (*piVar2 != 0);
-  __restgprlr_28();
   return;
 }
 
 
 // 824AA048  G_DuplicateScriptFields  (game_mp/g_spawn_mp.cpp:422)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
 void G_DuplicateScriptFields(gentity_s *param_1,gentity_s *param_2)
 
 {
-  int *piVar1;
-  
-  piVar1 = (int *)__savegprlr_26(param_1);
-  if (*piVar1 != (int)(piVar1 + 0x1f323260) / 0x280) {
+  if ((param_1->s).number != (int)&param_1[0x31e9ea].s.groundEntityNum / 0x280) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_spawn_mp.cpp",0x1a7,
                     0,"%s");
   }
@@ -516,8 +505,7 @@ void G_DuplicateScriptFields(gentity_s *param_1,gentity_s *param_2)
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_spawn_mp.cpp",0x1a8,
                     0,"%s");
   }
-  Scr_CopyEntityNum((param_2->s).number,*piVar1,0);
-  __restgprlr_26();
+  Scr_CopyEntityNum((param_2->s).number,(param_1->s).number,0);
   return;
 }
 
@@ -544,41 +532,38 @@ Weapon G_GetItemForClassname(char *param_1)
 
 // 824AA150  G_FindSpawnFunc  (game_mp/g_spawn_mp.cpp:448)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
 SpawnFuncEntry * G_FindSpawnFunc(char *param_1,SpawnFuncEntry *param_2,int param_3)
 
 {
-  char *pcVar1;
-  int iVar2;
-  SpawnFuncEntry *pSVar3;
-  longlong lVar4;
-  longlong lVar5;
-  uint uVar6;
+  int iVar1;
+  SpawnFuncEntry *pSVar2;
+  int iVar3;
   
-  lVar4 = (longlong)(int)param_2;
-  pcVar1 = (char *)__savegprlr_27(param_1);
-  uVar6 = 0;
-  lVar5 = lVar4;
+  iVar3 = 0;
+  pSVar2 = param_2;
   if (0 < param_3) {
     do {
-      iVar2 = IsParentClassname(pcVar1,(char *)*(undefined4 *)lVar5);
-      if (iVar2 != 0) {
-        pSVar3 = (SpawnFuncEntry *)__restgprlr_27(((ulonglong)uVar6 & 0x1fffffff) * 8 + lVar4);
-        return pSVar3;
+      iVar1 = IsParentClassname(param_1,pSVar2->classname);
+      if (iVar1 != 0) {
+        return param_2 + iVar3;
       }
-      uVar6 = uVar6 + 1;
-      lVar5 = lVar5 + 8;
-    } while ((int)uVar6 < param_3);
+      iVar3 = iVar3 + 1;
+      pSVar2 = pSVar2 + 1;
+    } while (iVar3 < param_3);
   }
-  pSVar3 = (SpawnFuncEntry *)__restgprlr_27(0);
-  return pSVar3;
+  return (SpawnFuncEntry *)0x0;
 }
 
 
 // 824AB820  G_CallSpawn  (game_mp/g_spawn_mp.cpp:472)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
@@ -595,8 +580,7 @@ void G_CallSpawn(void)
   SpawnFuncEntry *pSVar7;
   char *local_30 [12];
   
-  __savegprlr_28();
-  if (level.spawnVar.spawnVarsValid == false) {
+  if (!level.spawnVar.spawnVarsValid) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_spawn_mp.cpp",0x1de,
                     1,"%s");
   }
@@ -606,17 +590,21 @@ void G_CallSpawn(void)
                     0,"%s");
   }
   iVar1 = IsDynClassname(local_30[0]);
-  if ((iVar1 != 0) || (iVar1 = IsNodeClassname(local_30[0]), iVar1 != 0)) goto LAB_824aba48;
+  if (iVar1 != 0) {
+    return;
+  }
+  iVar1 = IsNodeClassname(local_30[0]);
+  if (iVar1 != 0) {
+    return;
+  }
   iVar1 = IsParentClassname(local_30[0],"info_vehicle_node");
   if (iVar1 != 0) {
     VehPath_SpawnNode(local_30[0]);
-    __restgprlr_28();
     return;
   }
   iVar1 = IsActorClassname(local_30[0]);
   if (iVar1 != 0) {
     Com_PrintError(1,"classname \'%s\' should not be added to MP map - discarding.\n");
-    __restgprlr_28();
     return;
   }
   WVar2 = G_GetItemForClassname(local_30[0]);
@@ -625,7 +613,6 @@ void G_CallSpawn(void)
     pgVar3 = G_Spawn();
     G_ParseEntityFields(pgVar3,local_30[0]);
     G_SpawnItem(pgVar3,WVar2);
-    __restgprlr_28();
     return;
   }
   iVar1 = 0;
@@ -642,15 +629,22 @@ void G_CallSpawn(void)
     iVar1 = iVar1 + 1;
   } while ((int)pSVar6 < -0x7df827e8);
   iVar1 = 0;
-  while (iVar4 = IsParentClassname(local_30[0],pSVar7->classname), iVar4 == 0) {
+  do {
+    iVar4 = IsParentClassname(local_30[0],pSVar7->classname);
+    if (iVar4 != 0) {
+      pSVar6 = s_bspOnlySpawns + iVar1;
+      if (pSVar6 != (SpawnFuncEntry *)0x0) {
+LAB_824ab9f8:
+        if (pSVar6->callback == G_FreeEntity) {
+          return;
+        }
+      }
+      goto LAB_824aba0c;
+    }
     pSVar7 = pSVar7 + 1;
     iVar1 = iVar1 + 1;
-    if (-0x7df82811 < (int)pSVar7) goto code_r0x824ab9e0;
-  }
-  pSVar6 = s_bspOnlySpawns + iVar1;
-  if (pSVar6 == (SpawnFuncEntry *)0x0) goto LAB_824aba0c;
-LAB_824ab9f8:
-  if (pSVar6->callback == G_FreeEntity) goto LAB_824aba48;
+  } while ((int)pSVar7 < -0x7df82810);
+  pSVar6 = (SpawnFuncEntry *)0x0;
 LAB_824aba0c:
   pgVar3 = G_Spawn();
   if (pSVar6 == (SpawnFuncEntry *)0x0) {
@@ -663,93 +657,86 @@ LAB_824aba0c:
   if (pSVar6 != (SpawnFuncEntry *)0x0) {
     (*pSVar6->callback)(pgVar3);
   }
-LAB_824aba48:
-  __restgprlr_28();
   return;
-code_r0x824ab9e0:
-  pSVar6 = (SpawnFuncEntry *)0x0;
-  goto LAB_824aba0c;
 }
 
 
 // 824AA1B8  G_CallSpawnEntity  (game_mp/g_spawn_mp.cpp:542)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
 int G_CallSpawnEntity(gentity_s *param_1)
 
 {
-  gentity_s *pgVar1;
-  int iVar2;
-  char *pcVar3;
-  char *pcVar4;
-  Weapon WVar5;
-  uint uVar6;
-  int iVar7;
-  SpawnFuncEntry *pSVar8;
+  char *pcVar1;
+  char *pcVar2;
+  Weapon WVar3;
+  uint uVar4;
+  int iVar5;
+  int iVar6;
+  SpawnFuncEntry *pSVar7;
   
-  pgVar1 = (gentity_s *)__savegprlr_25(param_1);
-  if (level.spawnVar.spawnVarsValid != false) {
+  if (level.spawnVar.spawnVarsValid) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_spawn_mp.cpp",0x223,
                     1,"%s");
   }
-  if (pgVar1->classname != 0) {
+  if (param_1->classname != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_spawn_mp.cpp",0x224,
                     0,"%s");
   }
-  if (pgVar1->script_classname == 0) {
+  if (param_1->script_classname == 0) {
     Com_Printf(0xf,"G_CallSpawnEntity: NULL classname\n");
-    iVar2 = __restgprlr_25(0);
-    return iVar2;
+    return 0;
   }
-  pcVar3 = SL_ConvertToString((uint)pgVar1->script_classname);
-  WVar5.data = 0;
-  pcVar4 = pcVar3;
+  pcVar1 = SL_ConvertToString((uint)param_1->script_classname);
+  WVar3.data = 0;
+  pcVar2 = pcVar1;
   strncmp();
-  if (pcVar4 == (char *)0x0) {
-    WVar5 = G_GetWeaponForName(pcVar3 + 7);
+  if (pcVar2 == (char *)0x0) {
+    WVar3 = G_GetWeaponForName(pcVar1 + 7);
   }
-  if ((WVar5.data & 0xff) != 0) {
-    uVar6 = G_NewString(pcVar3);
-    pgVar1->classname = (ushort)uVar6;
-    G_SpawnItem(pgVar1,WVar5);
-    iVar2 = __restgprlr_25(1);
-    return iVar2;
+  if ((WVar3.data & 0xff) != 0) {
+    uVar4 = G_NewString(pcVar1);
+    param_1->classname = (ushort)uVar4;
+    G_SpawnItem(param_1,WVar3);
+    return 1;
   }
-  iVar2 = 0;
-  pSVar8 = s_bspOrDynamicSpawns;
+  iVar6 = 0;
+  pSVar7 = s_bspOrDynamicSpawns;
   do {
-    iVar7 = IsParentClassname(pcVar3,pSVar8->classname);
-    if (iVar7 != 0) {
-      if (s_bspOrDynamicSpawns + iVar2 != (SpawnFuncEntry *)0x0) {
-        uVar6 = G_NewString(s_bspOrDynamicSpawns[iVar2].classname);
-        pgVar1->classname = (ushort)uVar6;
-        if (s_bspOrDynamicSpawns[iVar2].callback == G_FreeEntity) {
+    iVar5 = IsParentClassname(pcVar1,pSVar7->classname);
+    if (iVar5 != 0) {
+      if (s_bspOrDynamicSpawns + iVar6 != (SpawnFuncEntry *)0x0) {
+        uVar4 = G_NewString(s_bspOrDynamicSpawns[iVar6].classname);
+        param_1->classname = (ushort)uVar4;
+        if (s_bspOrDynamicSpawns[iVar6].callback == G_FreeEntity) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_spawn_mp.cpp",
                           0x23f,0,"%s");
         }
-        (*s_bspOrDynamicSpawns[iVar2].callback)(pgVar1);
-        if ((pgVar1->r).isInUse == '\0') {
+        (*s_bspOrDynamicSpawns[iVar6].callback)(param_1);
+        if ((param_1->r).isInUse == '\0') {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_spawn_mp.cpp",
                           0x241,0,"%s");
         }
-        iVar2 = __restgprlr_25(1);
-        return iVar2;
+        return 1;
       }
       break;
     }
-    pSVar8 = pSVar8 + 1;
-    iVar2 = iVar2 + 1;
-  } while ((int)pSVar8 < -0x7df827e8);
+    pSVar7 = pSVar7 + 1;
+    iVar6 = iVar6 + 1;
+  } while ((int)pSVar7 < -0x7df827e8);
   Com_Printf(0xf,"%s cannot be spawned dynamically\n");
-  iVar2 = __restgprlr_25(0);
-  return iVar2;
+  return 0;
 }
 
 
 // 824AA3A8  GScr_AddFieldsForEntity  (game_mp/g_spawn_mp.cpp:588)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
@@ -761,7 +748,6 @@ void GScr_AddFieldsForEntity(void)
   int iVar2;
   ent_field_t *peVar3;
   
-  __savegprlr_23();
   peVar3 = fields;
   iVar2 = 0;
   do {
@@ -780,7 +766,6 @@ void GScr_AddFieldsForEntity(void)
   } while (peVar3->name != (ushort *)0x0);
   GScr_AddFieldsForClient();
   VehicleScript_AddFields();
-  __restgprlr_23();
   return;
 }
 
@@ -799,58 +784,47 @@ void GScr_AddFieldsForRadiant(void)
 
 // 824ABD98  Scr_SetEntityField  (game_mp/g_spawn_mp.cpp:624)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
 int Scr_SetEntityField(int param_1,int param_2)
 
 {
-  uint uVar1;
-  uint uVar2;
-  int iVar3;
-  ulonglong uVar4;
-  
-  uVar4 = (ulonglong)param_2;
-  uVar2 = __savegprlr_28(param_1);
-  if (0x7ff < uVar2) {
+  if (0x7ff < (uint)param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_spawn_mp.cpp",0x275,
                     0,"%s");
   }
-  if (g_entities[uVar2].r.isInUse == '\0') {
+  if (g_entities[param_1].r.isInUse == '\0') {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_spawn_mp.cpp",0x278,
                     0,"%s\n\t(ent->s.number) = %i");
   }
-  uVar1 = (uint)uVar4;
-  if ((uVar1 & 0xe000) == 0x6000) {
-    if (g_entities[uVar2].client != (gclient_s *)0x0) {
-      Scr_SetClientField(g_entities[uVar2].client,uVar1 & 0xffff1fff);
-      iVar3 = __restgprlr_28(1);
-      return iVar3;
+  if ((param_2 & 0xe000U) == 0x6000) {
+    if (g_entities[param_1].client != (gclient_s *)0x0) {
+      Scr_SetClientField(g_entities[param_1].client,param_2 & 0xffff1fff);
+      return 1;
     }
   }
   else {
-    if ((uVar1 & 0xe000) != 0x8000) {
-      if (0xd < (uVar4 & 0xffffffff)) {
+    if ((param_2 & 0xe000U) != 0x8000) {
+      if (0xd < (uint)param_2) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_spawn_mp.cpp",
                         0x28f,0,"%s");
       }
-      if (fields[uVar1].setter != (_func___cdecl_void_gentity_s_ptr_int *)0x0) {
-        (*fields[uVar1].setter)(g_entities + uVar2,uVar1);
-        iVar3 = __restgprlr_28(1);
-        return iVar3;
+      if (fields[param_2].setter != (_func___cdecl_void_gentity_s_ptr_int *)0x0) {
+        (*fields[param_2].setter)(g_entities + param_1,param_2);
+        return 1;
       }
-      Scr_SetGenericField((uchar *)(g_entities + uVar2),fields[uVar1].type,fields[uVar1].ofs);
-      iVar3 = __restgprlr_28(1);
-      return iVar3;
+      Scr_SetGenericField((uchar *)(g_entities + param_1),fields[param_2].type,fields[param_2].ofs);
+      return 1;
     }
-    if (g_entities[uVar2].vehicle != (Vehicle *)0x0) {
-      VehicleScript_SetField(g_entities[uVar2].vehicle,uVar1 & 0xffff1fff);
-      iVar3 = __restgprlr_28(1);
-      return iVar3;
+    if (g_entities[param_1].vehicle != (Vehicle *)0x0) {
+      VehicleScript_SetField(g_entities[param_1].vehicle,param_2 & 0xffff1fff);
+      return 1;
     }
   }
-  iVar3 = __restgprlr_28(0);
-  return iVar3;
+  return 0;
 }
 
 
@@ -939,54 +913,45 @@ int Scr_SetObjectField(uint param_1,int param_2,int param_3)
 
 // 824ABFD0  Scr_GetEntityField  (game_mp/g_spawn_mp.cpp:742)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
 void Scr_GetEntityField(int param_1,int param_2)
 
 {
-  uint uVar1;
-  uint uVar2;
-  ulonglong uVar3;
-  
-  uVar3 = (ulonglong)param_2;
-  uVar2 = __savegprlr_28(param_1);
-  if (0x7ff < uVar2) {
+  if (0x7ff < (uint)param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_spawn_mp.cpp",0x2eb,
                     0,"%s");
   }
-  if (g_entities[uVar2].r.isInUse == '\0') {
+  if (g_entities[param_1].r.isInUse == '\0') {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_spawn_mp.cpp",0x2ee,
                     0,"%s\n\t(ent->s.number) = %i");
   }
-  uVar1 = (uint)uVar3;
-  if ((uVar1 & 0xe000) == 0x6000) {
-    if (g_entities[uVar2].client != (gclient_s *)0x0) {
-      Scr_GetClientField(g_entities[uVar2].client,uVar1 & 0xffff1fff);
+  if ((param_2 & 0xe000U) == 0x6000) {
+    if (g_entities[param_1].client != (gclient_s *)0x0) {
+      Scr_GetClientField(g_entities[param_1].client,param_2 & 0xffff1fff);
     }
   }
   else {
-    if ((uVar1 & 0xe000) != 0x8000) {
-      if (0xd < (uVar3 & 0xffffffff)) {
+    if ((param_2 & 0xe000U) != 0x8000) {
+      if (0xd < (uint)param_2) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_spawn_mp.cpp",
                         0x305,0,"%s");
       }
-      if (fields[uVar1].getter != (_func___cdecl_void_gentity_s_ptr_int *)0x0) {
-        (*fields[uVar1].getter)(g_entities + uVar2,uVar1);
-        __restgprlr_28();
+      if (fields[param_2].getter != (_func___cdecl_void_gentity_s_ptr_int *)0x0) {
+        (*fields[param_2].getter)(g_entities + param_1,param_2);
         return;
       }
-      Scr_GetGenericField((uchar *)(g_entities + uVar2),fields[uVar1].type,fields[uVar1].ofs);
-      __restgprlr_28();
+      Scr_GetGenericField((uchar *)(g_entities + param_1),fields[param_2].type,fields[param_2].ofs);
       return;
     }
-    if (g_entities[uVar2].vehicle != (Vehicle *)0x0) {
-      VehicleScript_GetField(g_entities[uVar2].vehicle,uVar1 & 0xffff1fff);
-      __restgprlr_28();
+    if (g_entities[param_1].vehicle != (Vehicle *)0x0) {
+      VehicleScript_GetField(g_entities[param_1].vehicle,param_2 & 0xffff1fff);
       return;
     }
   }
-  __restgprlr_28();
   return;
 }
 
@@ -1199,56 +1164,58 @@ gentity_s * Scr_GetEntity(uint param_1)
 
 // 824AA7B8  Scr_FreeHudElem  (game_mp/g_spawn_mp.cpp:950)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void Scr_FreeHudElem(game_hudelem_s *param_1)
 
 {
   uint uVar1;
-  game_hudelem_s *pgVar2;
   
-  pgVar2 = (game_hudelem_s *)__savegprlr_28(param_1);
-  if (pgVar2 == (game_hudelem_s *)0x0) {
+  if (param_1 == (game_hudelem_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_spawn_mp.cpp",0x3b9,
                     0,"%s");
   }
-  uVar1 = (int)&pgVar2[0xb17c98].elem.color / 0xb4;
+  uVar1 = (int)&param_1[0xb17c98].elem.color / 0xb4;
   if (0x3ff < uVar1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_spawn_mp.cpp",0x3ba,
                     0,"hud - g_hudelems doesn\'t index MAX_HUDELEMS_TOTAL\n\t%i not in [0, %i)");
   }
-  if ((pgVar2->elem).type == HE_TYPE_FREE) {
+  if ((param_1->elem).type == HE_TYPE_FREE) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_spawn_mp.cpp",0x3bb,
                     0,"%s");
   }
   Scr_NotifyNum(uVar1,1,(uint)scr_const.death,0);
-  Scr_FreeHudElemConstStrings(pgVar2);
+  Scr_FreeHudElemConstStrings(param_1);
   Scr_FreeEntityNum(uVar1,1);
-  __restgprlr_28();
   return;
 }
 
 
 // 824AA898  Scr_AddHudElem  (game_mp/g_spawn_mp.cpp:973)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void Scr_AddHudElem(game_hudelem_s *param_1)
 
 {
-  int *piVar1;
+  uint uVar1;
   
-  piVar1 = (int *)__savegprlr_28(param_1);
-  if (piVar1 == (int *)0x0) {
+  if (param_1 == (game_hudelem_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_spawn_mp.cpp",0x3ce,
                     0,"%s");
   }
-  if (0x3ff < (uint)((int)(piVar1 + 0x1f32e6c4) / 0xb4)) {
+  uVar1 = (int)&param_1[0xb17c98].elem.color / 0xb4;
+  if (0x3ff < uVar1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_spawn_mp.cpp",0x3cf,
                     0,"hud - g_hudelems doesn\'t index MAX_HUDELEMS_TOTAL\n\t%i not in [0, %i)");
   }
-  if (*piVar1 == 0) {
+  if ((param_1->elem).type == HE_TYPE_FREE) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_spawn_mp.cpp",0x3d0,
                     0,"%s");
   }
-  Scr_AddEntityNum((int)(piVar1 + 0x1f32e6c4) / 0xb4,1);
-  __restgprlr_28();
+  Scr_AddEntityNum(uVar1,1);
   return;
 }
 
@@ -1279,98 +1246,93 @@ game_hudelem_s * Scr_GetHudElem(uint param_1)
 
 // 824AAA00  Scr_ExecEntThread  (game_mp/g_spawn_mp.cpp:1008)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
 ushort Scr_ExecEntThread(gentity_s *param_1,int param_2,uint param_3)
 
 {
-  int *piVar1;
-  ushort uVar2;
+  ushort uVar1;
   
-  piVar1 = (int *)__savegprlr_28(param_1);
-  if (piVar1 == (int *)0x0) {
+  if (param_1 == (gentity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_spawn_mp.cpp",0x3f1,
                     0,"%s");
   }
-  if (*piVar1 != (int)(piVar1 + 0x1f323260) / 0x280) {
+  if ((param_1->s).number != (int)&param_1[0x31e9ea].s.groundEntityNum / 0x280) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_spawn_mp.cpp",0x3f2,
                     0,"ent->s.number == ent - g_entities\n\t%i, %i");
   }
-  if (*(char *)((int)piVar1 + 0x103) == '\0') {
+  if ((param_1->r).isInUse == '\0') {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_spawn_mp.cpp",0x3f3,
                     0,"%s\n\t(ent->s.number) = %i");
   }
-  uVar2 = Scr_ExecEntThreadNum(*piVar1,0,param_2,param_3);
-  uVar2 = __restgprlr_28(uVar2);
-  return uVar2;
+  uVar1 = Scr_ExecEntThreadNum((param_1->s).number,0,param_2,param_3);
+  return uVar1;
 }
 
 
 // 824AAAD0  Scr_AddExecEntThread  (game_mp/g_spawn_mp.cpp:1023)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
 void Scr_AddExecEntThread(gentity_s *param_1,int param_2,uint param_3)
 
 {
-  int *piVar1;
-  
-  piVar1 = (int *)__savegprlr_28(param_1);
-  if (piVar1 == (int *)0x0) {
+  if (param_1 == (gentity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_spawn_mp.cpp",0x400,
                     0,"%s");
   }
-  if (*piVar1 != (int)(piVar1 + 0x1f323260) / 0x280) {
+  if ((param_1->s).number != (int)&param_1[0x31e9ea].s.groundEntityNum / 0x280) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_spawn_mp.cpp",0x401,
                     0,"ent->s.number == ent - g_entities\n\t%i, %i");
   }
-  if (*(char *)((int)piVar1 + 0x103) == '\0') {
+  if ((param_1->r).isInUse == '\0') {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_spawn_mp.cpp",0x402,
                     0,"%s\n\t(ent->s.number) = %i");
   }
-  Scr_AddExecEntThreadNum(*piVar1,0,param_2,param_3);
-  __restgprlr_28();
+  Scr_AddExecEntThreadNum((param_1->s).number,0,param_2,param_3);
   return;
 }
 
 
 // 824AABA0  Scr_Notify  (game_mp/g_spawn_mp.cpp:1038)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
 void Scr_Notify(gentity_s *param_1,ushort param_2,uint param_3)
 
 {
-  int *piVar1;
-  uint uVar2;
-  
-  uVar2 = (uint)(short)param_2;
-  piVar1 = (int *)__savegprlr_27(param_1);
-  if (piVar1 == (int *)0x0) {
+  if (param_1 == (gentity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_spawn_mp.cpp",0x40f,
                     0,"%s");
   }
-  if (*piVar1 != (int)(piVar1 + 0x1f323260) / 0x280) {
-    SL_ConvertToString(uVar2 & 0xffff);
+  if ((param_1->s).number != (int)&param_1[0x31e9ea].s.groundEntityNum / 0x280) {
+    SL_ConvertToString((uint)param_2);
     va("s.number = %i, index = %i, stringValue = %s");
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_spawn_mp.cpp",0x410,
                     0,"%s\n\t%s");
   }
-  if (*(char *)((int)piVar1 + 0x103) == '\0') {
+  if ((param_1->r).isInUse == '\0') {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_spawn_mp.cpp",0x411,
                     0,"%s\n\t(ent->s.number) = %i");
   }
-  Scr_NotifyNum(*piVar1,0,uVar2 & 0xffff,param_3);
-  __restgprlr_27();
+  Scr_NotifyNum((param_1->s).number,0,(uint)param_2,param_3);
   return;
 }
 
 
 // 824AAC98  Scr_GetEnt  (game_mp/g_spawn_mp.cpp:1053)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
@@ -1388,7 +1350,6 @@ void Scr_GetEnt(void)
   int iVar8;
   gentity_s *pgVar9;
   
-  __savegprlr_26();
   uVar2 = Scr_GetConstString(0);
   pcVar3 = Scr_GetString(1);
   iVar4 = Scr_GetOffset(0,pcVar3);
@@ -1421,13 +1382,14 @@ void Scr_GetEnt(void)
       }
     }
   }
-  __restgprlr_26();
   return;
 }
 
 
 // 824AADB0  Scr_GetEntArray  (game_mp/g_spawn_mp.cpp:1106)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
@@ -1443,7 +1405,6 @@ void Scr_GetEntArray(void)
   int iVar6;
   gentity_s *pgVar7;
   
-  __savegprlr_27();
   uVar1 = Scr_GetNumParam();
   if (uVar1 == 0) {
     Scr_MakeArray();
@@ -1460,7 +1421,6 @@ void Scr_GetEntArray(void)
         iVar5 = iVar5 + 1;
         pgVar7 = pgVar7 + 1;
       } while (iVar5 < iVar3);
-      __restgprlr_27();
       return;
     }
   }
@@ -1495,7 +1455,6 @@ void Scr_GetEntArray(void)
       }
     }
   }
-  __restgprlr_27();
   return;
 }
 
@@ -1515,6 +1474,8 @@ void GScr_SetDynamicEntityField(gentity_s *param_1,uint param_2)
 
 // 824AAF20  SP_worldspawn  (game_mp/g_spawn_mp.cpp:1171)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "ConfigString": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
@@ -1529,7 +1490,6 @@ void SP_worldspawn(void)
   double dVar4;
   char *local_30 [12];
   
-  __savegprlr_29();
   G_SpawnString(&level.spawnVar,0x2c4,"",local_30);
   iVar1 = I_stricmp(local_30[0],"worldspawn");
   if (iVar1 != 0) {
@@ -1582,7 +1542,6 @@ void SP_worldspawn(void)
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_spawn_mp.cpp",0x4d8,
                     0,"%s");
   }
-  __restgprlr_29();
   return;
 }
 
@@ -1615,6 +1574,8 @@ void G_SpawnEntitiesFromString(void)
 
 // 824AB1B8  G_LoadStructs  (game_mp/g_spawn_mp.cpp:1276)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -1626,7 +1587,6 @@ void G_LoadStructs(void)
   int iVar1;
   char *local_30 [12];
   
-  __savegprlr_29();
   if (g_scr_data.initstructs == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_spawn_mp.cpp",0x500,
                     0,"%s");
@@ -1643,7 +1603,6 @@ void G_LoadStructs(void)
     iVar1 = G_ParseSpawnVars2(&level.spawnVar);
   }
   G_ResetEntityParsePoint();
-  __restgprlr_29();
   return;
 }
 

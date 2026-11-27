@@ -96,107 +96,109 @@ undefined4 NCIEncoderDestroy(NCIENCODER_EXTENSION *param_1)
 
 // 828C1218  NCIEncoderProcess  (<external>/Xenon/mar09/core/private/xam/apps/uvbase/xhv/codecnci.c:284)
 
+/* WARNING: Function: __savegprlr_20 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_20 replaced with injection: xenon_save_restore */
+
 undefined4 NCIEncoderProcess(NCIENCODER_EXTENSION *param_1,ulong param_2)
 
 {
   XMEDIAPACKET *pXVar1;
-  int iVar2;
-  ushort uVar6;
+  ushort uVar4;
+  PACKET_CONTEXT *pPVar2;
   PACKET_CONTEXT *pPVar3;
-  PACKET_CONTEXT *pPVar4;
-  undefined4 uVar5;
+  uint uVar5;
+  PACKET_PROCESSOR **ppPVar6;
   uint uVar7;
-  int *piVar8;
-  uint uVar9;
-  int iVar10;
-  ulonglong uVar11;
-  undefined8 uVar12;
-  int *piVar13;
-  longlong lVar14;
+  int iVar8;
+  undefined4 uVar9;
+  PACKET_PROCESSOR **ppPVar10;
+  int *piVar11;
+  longlong lVar12;
   void *local_80;
   NCI_CODEC_IO_BLOCK *local_7c;
   int local_78 [30];
   
-  uVar11 = (ulonglong)(int)param_2;
-  iVar2 = __savegprlr_20(param_1);
-  local_7c = (NCI_CODEC_IO_BLOCK *)(iVar2 + 0x1c);
-  pPVar4 = *(PACKET_CONTEXT **)(*(int *)(iVar2 + 4) + 8);
-  lVar14 = 2;
-  iVar10 = 0;
+  ppPVar10 = (param_1->field0_0x0).CodecProcessor.Outputs;
+  local_7c = &param_1->CodecIO;
+  pPVar3 = (((param_1->field0_0x0).CodecProcessor.InputPackets)->InFlight).Head;
+  lVar12 = 2;
+  iVar8 = 0;
   local_80 = (void *)0x0;
-  uVar12 = 1;
-  piVar13 = local_78;
-  piVar8 = (int *)(iVar2 + 8);
+  uVar9 = 1;
+  piVar11 = local_78;
+  ppPVar6 = ppPVar10;
   do {
-    if (*piVar8 == 0) {
-      *piVar13 = 0;
+    if (*ppPVar6 == (PACKET_PROCESSOR *)0x0) {
+      *piVar11 = 0;
     }
     else {
-      if (piVar8[2] == 1) {
-        *piVar13 = *(int *)(*piVar8 + 8);
+      if (ppPVar6[2] == (PACKET_PROCESSOR *)0x1) {
+        *piVar11 = (int)((*ppPVar6)->InFlight).Head;
       }
       else {
-        *piVar13 = 0;
+        *piVar11 = 0;
       }
-      if (*piVar13 != 0) {
-        iVar10 = iVar10 + 1;
+      if (*piVar11 != 0) {
+        iVar8 = iVar8 + 1;
       }
     }
-    piVar8 = piVar8 + 1;
-    piVar13 = piVar13 + 1;
-    lVar14 = lVar14 + -1;
-  } while (lVar14 != 0);
-  if ((pPVar4 != (PACKET_CONTEXT *)0x0) && (iVar10 != 0)) {
-    while ((uVar12 = 0, (uVar11 & 0xffffffff) != 0 &&
-           ((uVar11 = uVar11 - 1, pPVar4 != (PACKET_CONTEXT *)0x0 && (iVar10 != 0))))) {
-      XHVResamplerProcess((XHVRESAMPLER *)(iVar2 + 400),(short *)(iVar2 + 0x40),
-                          (short *)(pPVar4->Packet->Buffer + pPVar4->Packet->Offset),
-                          *(uint *)(*(int *)(iVar2 + 0x18) + 0x18) >> 1,0);
-      *(undefined1 *)(iVar2 + 0x30) = 0;
-      *(undefined2 *)(iVar2 + 0x2e) = 0;
-      uVar6 = nciEncode1by1((void **)(iVar2 + 0x34),&local_7c,&local_80);
-      if (uVar6 != 0) break;
-      uVar6 = *(ushort *)(iVar2 + 0x2e);
-      piVar13 = local_78;
-      lVar14 = 2;
-      piVar8 = (int *)(iVar2 + 8);
+    ppPVar6 = ppPVar6 + 1;
+    piVar11 = piVar11 + 1;
+    lVar12 = lVar12 + -1;
+  } while (lVar12 != 0);
+  if ((pPVar3 != (PACKET_CONTEXT *)0x0) && (iVar8 != 0)) {
+    while ((uVar9 = 0, param_2 != 0 &&
+           ((param_2 = param_2 - 1, pPVar3 != (PACKET_CONTEXT *)0x0 && (iVar8 != 0))))) {
+      XHVResamplerProcess(&param_1->Resampler,(short *)param_1->InputFrame,
+                          (short *)(pPVar3->Packet->Buffer + pPVar3->Packet->Offset),
+                          ((param_1->field0_0x0).CodecProcessor.CodecType)->InputFrameSize >> 1,0);
+      (param_1->CodecIO).chNellyBufferWriteBitOffset = '\0';
+      (param_1->CodecIO).wNellyBufferWriteByteOffset = 0;
+      uVar4 = nciEncode1by1(&param_1->Encoder,&local_7c,&local_80);
+      if (uVar4 != 0) {
+        return 0;
+      }
+      uVar4 = (param_1->CodecIO).wNellyBufferWriteByteOffset;
+      piVar11 = local_78;
+      lVar12 = 2;
+      ppPVar6 = ppPVar10;
       do {
-        pPVar3 = (PACKET_CONTEXT *)*piVar13;
-        if (pPVar3 != (PACKET_CONTEXT *)0x0) {
+        pPVar2 = (PACKET_CONTEXT *)*piVar11;
+        if (pPVar2 != (PACKET_CONTEXT *)0x0) {
           memcpy();
-          pXVar1 = pPVar3->Packet;
-          uVar7 = pXVar1->Offset + (uint)uVar6;
-          uVar9 = pXVar1->Length;
-          if (uVar7 < pXVar1->Length) {
-            uVar9 = uVar7;
+          pXVar1 = pPVar2->Packet;
+          uVar5 = pXVar1->Offset + (uint)uVar4;
+          uVar7 = pXVar1->Length;
+          if (uVar5 < pXVar1->Length) {
+            uVar7 = uVar5;
           }
-          pXVar1->Offset = uVar9;
-          if (uVar9 == pPVar3->Packet->Length) {
-            pPVar3 = PacketProcessorRetireContext((PACKET_PROCESSOR *)*piVar8,pPVar3);
-            *piVar13 = (int)pPVar3;
-            if (pPVar3 == (PACKET_CONTEXT *)0x0) {
-              iVar10 = iVar10 + -1;
+          pXVar1->Offset = uVar7;
+          if (uVar7 == pPVar2->Packet->Length) {
+            pPVar2 = PacketProcessorRetireContext(*ppPVar6,pPVar2);
+            *piVar11 = (int)pPVar2;
+            if (pPVar2 == (PACKET_CONTEXT *)0x0) {
+              iVar8 = iVar8 + -1;
             }
           }
         }
-        lVar14 = lVar14 + -1;
-        piVar8 = piVar8 + 1;
-        piVar13 = piVar13 + 1;
-      } while (lVar14 != 0);
-      pXVar1 = pPVar4->Packet;
-      uVar7 = pXVar1->Offset + *(int *)(*(int *)(iVar2 + 0x18) + 0x18);
-      uVar9 = pXVar1->Length;
-      if (uVar7 < pXVar1->Length) {
-        uVar9 = uVar7;
+        lVar12 = lVar12 + -1;
+        ppPVar6 = ppPVar6 + 1;
+        piVar11 = piVar11 + 1;
+      } while (lVar12 != 0);
+      pXVar1 = pPVar3->Packet;
+      uVar5 = pXVar1->Offset + ((param_1->field0_0x0).CodecProcessor.CodecType)->InputFrameSize;
+      uVar7 = pXVar1->Length;
+      if (uVar5 < pXVar1->Length) {
+        uVar7 = uVar5;
       }
-      pXVar1->Offset = uVar9;
-      if (uVar9 == pPVar4->Packet->Length) {
-        pPVar4 = PacketProcessorRetireContext(*(PACKET_PROCESSOR **)(iVar2 + 4),pPVar4);
+      pXVar1->Offset = uVar7;
+      if (uVar7 == pPVar3->Packet->Length) {
+        pPVar3 = PacketProcessorRetireContext
+                           ((param_1->field0_0x0).CodecProcessor.InputPackets,pPVar3);
       }
     }
   }
-  uVar5 = __restgprlr_20(uVar12);
-  return uVar5;
+  return uVar9;
 }
 
 
@@ -236,131 +238,130 @@ undefined4 NCIDecoderDestroy(NCIDECODER_EXTENSION *param_1)
 
 // 828C1490  NCIDecoderProcess  (<external>/Xenon/mar09/core/private/xam/apps/uvbase/xhv/codecnci.c:680)
 
+/* WARNING: Function: __savegprlr_17 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_17 replaced with injection: xenon_save_restore */
+
 undefined4 NCIDecoderProcess(NCIDECODER_EXTENSION *param_1,ulong param_2)
 
 {
   ushort uVar1;
-  short *psVar2;
-  void *pvVar3;
-  XMEDIAPACKET *pXVar4;
-  int iVar5;
-  ushort uVar9;
-  PACKET_CONTEXT *pPVar6;
-  PACKET_CONTEXT *pPVar7;
-  undefined4 uVar8;
-  int *piVar10;
-  uint uVar11;
-  uint uVar12;
-  undefined8 uVar13;
-  int iVar14;
-  ulonglong uVar15;
-  NCI_CODEC_IO_BLOCK *pNVar16;
-  int *piVar17;
-  longlong lVar18;
+  void *pvVar2;
+  XMEDIAPACKET *pXVar3;
+  ushort uVar6;
+  PACKET_CONTEXT *pPVar4;
+  PACKET_CONTEXT *pPVar5;
+  PACKET_PROCESSOR **ppPVar7;
+  uint uVar8;
+  uint uVar9;
+  undefined4 uVar10;
+  int iVar11;
+  PACKET_PROCESSOR **ppPVar12;
+  NCI_CODEC_IO_BLOCK *pNVar13;
+  int *piVar14;
+  longlong lVar15;
   uchar local_320 [4];
   NCI_CODEC_IO_BLOCK *local_31c;
   NCI_VOICE_PROPERTIES_BLOCK *local_318 [2];
   int local_310 [4];
   short asStack_300 [384];
   
-  uVar15 = (ulonglong)(int)param_2;
-  iVar5 = __savegprlr_17(param_1);
-  pNVar16 = (NCI_CODEC_IO_BLOCK *)(iVar5 + 0x1c);
-  pPVar7 = *(PACKET_CONTEXT **)(*(int *)(iVar5 + 4) + 8);
-  lVar18 = 2;
-  iVar14 = 0;
+  pNVar13 = &param_1->CodecIO;
+  ppPVar12 = (param_1->field0_0x0).CodecProcessor.Outputs;
+  pPVar5 = (((param_1->field0_0x0).CodecProcessor.InputPackets)->InFlight).Head;
+  lVar15 = 2;
+  iVar11 = 0;
   local_318[0] = (NCI_VOICE_PROPERTIES_BLOCK *)0x0;
-  uVar13 = 1;
-  piVar17 = local_310;
-  piVar10 = (int *)(iVar5 + 8);
+  uVar10 = 1;
+  piVar14 = local_310;
+  ppPVar7 = ppPVar12;
   do {
-    if (*piVar10 == 0) {
-      *piVar17 = 0;
+    if (*ppPVar7 == (PACKET_PROCESSOR *)0x0) {
+      *piVar14 = 0;
     }
     else {
-      if (piVar10[2] == 1) {
-        *piVar17 = *(int *)(*piVar10 + 8);
+      if (ppPVar7[2] == (PACKET_PROCESSOR *)0x1) {
+        *piVar14 = (int)((*ppPVar7)->InFlight).Head;
       }
       else {
-        *piVar17 = 0;
+        *piVar14 = 0;
       }
-      if (*piVar17 != 0) {
-        iVar14 = iVar14 + 1;
+      if (*piVar14 != 0) {
+        iVar11 = iVar11 + 1;
       }
     }
-    piVar10 = piVar10 + 1;
-    piVar17 = piVar17 + 1;
-    lVar18 = lVar18 + -1;
-  } while (lVar18 != 0);
-  local_31c = pNVar16;
-  if ((pPVar7 != (PACKET_CONTEXT *)0x0) && (iVar14 != 0)) {
-    uVar13 = 0;
-    while ((((uVar15 & 0xffffffff) != 0 && (uVar15 = uVar15 - 1, pPVar7 != (PACKET_CONTEXT *)0x0))
-           && (iVar14 != 0))) {
+    ppPVar7 = ppPVar7 + 1;
+    piVar14 = piVar14 + 1;
+    lVar15 = lVar15 + -1;
+  } while (lVar15 != 0);
+  if ((pPVar5 != (PACKET_CONTEXT *)0x0) && (iVar11 != 0)) {
+    uVar10 = 0;
+    local_31c = pNVar13;
+    while (((param_2 != 0 && (param_2 = param_2 - 1, pPVar5 != (PACKET_CONTEXT *)0x0)) &&
+           (iVar11 != 0))) {
       memcpy();
-      *(undefined2 *)(iVar5 + 0x20) = 0;
-      pNVar16->pPCMBuffer = (short *)(iVar5 + 0x40);
-      *(undefined2 *)(iVar5 + 0x2a) = 0;
-      *(undefined1 *)(iVar5 + 0x2c) = 0;
+      (param_1->CodecIO).wSamplesInPCMBuffer = 0;
+      pNVar13->pPCMBuffer = (short *)param_1->OutputFrame;
+      (param_1->CodecIO).wNellyBufferReadByteOffset = 0;
+      (param_1->CodecIO).chNellyBufferReadBitOffset = '\0';
       do {
-        uVar9 = nciDecode1by1((void **)(iVar5 + 0x34),&local_31c,local_318);
-        if (uVar9 != 0) break;
-        uVar1 = *(ushort *)(iVar5 + 0x20);
-        psVar2 = pNVar16->pPCMBuffer;
-        *(undefined2 *)(iVar5 + 0x20) = 0;
-        pvVar3 = *(void **)(iVar5 + 0x34);
-        pNVar16->pPCMBuffer = psVar2 + uVar1;
-        nciDecodeNeedsInput(pvVar3,local_320);
+        uVar6 = nciDecode1by1(&param_1->Decoder,&local_31c,local_318);
+        if (uVar6 != 0) break;
+        uVar1 = (param_1->CodecIO).wSamplesInPCMBuffer;
+        (param_1->CodecIO).wSamplesInPCMBuffer = 0;
+        pvVar2 = param_1->Decoder;
+        pNVar13->pPCMBuffer = pNVar13->pPCMBuffer + uVar1;
+        nciDecodeNeedsInput(pvVar2,local_320);
       } while (local_320[0] == '\0');
-      if (uVar9 != 0) break;
-      uVar9 = *(ushort *)(iVar5 + 0x2a);
-      *(undefined2 *)(iVar5 + 0x20) = 0xa0;
+      if (uVar6 != 0) {
+        return 0;
+      }
+      uVar6 = (param_1->CodecIO).wNellyBufferReadByteOffset;
+      (param_1->CodecIO).wSamplesInPCMBuffer = 0xa0;
       memcpy();
-      XHVResamplerProcess((XHVRESAMPLER *)(iVar5 + 0x2d0),(short *)(iVar5 + 0x40),asStack_300,0xa0,1
-                         );
-      piVar17 = local_310;
-      lVar18 = 2;
-      piVar10 = (int *)(iVar5 + 8);
+      XHVResamplerProcess(&param_1->Resampler,(short *)param_1->OutputFrame,asStack_300,0xa0,1);
+      piVar14 = local_310;
+      lVar15 = 2;
+      ppPVar7 = ppPVar12;
       do {
-        pPVar6 = (PACKET_CONTEXT *)*piVar17;
-        if (pPVar6 != (PACKET_CONTEXT *)0x0) {
-          uVar12 = ((uint)*(ushort *)(iVar5 + 0x20) * 16000) / 8000 << 1;
-          if (pPVar6->Packet->Length - pPVar6->Packet->Offset <= uVar12) {
-            uVar12 = pPVar6->Packet->Length - pPVar6->Packet->Offset;
+        pPVar4 = (PACKET_CONTEXT *)*piVar14;
+        if (pPVar4 != (PACKET_CONTEXT *)0x0) {
+          uVar9 = ((uint)(param_1->CodecIO).wSamplesInPCMBuffer * 16000) / 8000 << 1;
+          if (pPVar4->Packet->Length - pPVar4->Packet->Offset <= uVar9) {
+            uVar9 = pPVar4->Packet->Length - pPVar4->Packet->Offset;
           }
           memcpy();
-          pXVar4 = pPVar6->Packet;
-          uVar12 = pXVar4->Offset + uVar12;
-          uVar11 = pXVar4->Length;
-          if (uVar12 < pXVar4->Length) {
-            uVar11 = uVar12;
+          pXVar3 = pPVar4->Packet;
+          uVar9 = pXVar3->Offset + uVar9;
+          uVar8 = pXVar3->Length;
+          if (uVar9 < pXVar3->Length) {
+            uVar8 = uVar9;
           }
-          pXVar4->Offset = uVar11;
-          if (uVar11 == pPVar6->Packet->Length) {
-            pPVar6 = PacketProcessorRetireContext((PACKET_PROCESSOR *)*piVar10,pPVar6);
-            *piVar17 = (int)pPVar6;
-            if (pPVar6 == (PACKET_CONTEXT *)0x0) {
-              iVar14 = iVar14 + -1;
+          pXVar3->Offset = uVar8;
+          if (uVar8 == pPVar4->Packet->Length) {
+            pPVar4 = PacketProcessorRetireContext(*ppPVar7,pPVar4);
+            *piVar14 = (int)pPVar4;
+            if (pPVar4 == (PACKET_CONTEXT *)0x0) {
+              iVar11 = iVar11 + -1;
             }
           }
         }
-        lVar18 = lVar18 + -1;
-        piVar10 = piVar10 + 1;
-        piVar17 = piVar17 + 1;
-      } while (lVar18 != 0);
-      pXVar4 = pPVar7->Packet;
-      uVar11 = (uint)uVar9 + pXVar4->Offset;
-      uVar12 = pXVar4->Length;
-      if (uVar11 < pXVar4->Length) {
-        uVar12 = uVar11;
+        lVar15 = lVar15 + -1;
+        ppPVar7 = ppPVar7 + 1;
+        piVar14 = piVar14 + 1;
+      } while (lVar15 != 0);
+      pXVar3 = pPVar5->Packet;
+      uVar8 = (uint)uVar6 + pXVar3->Offset;
+      uVar9 = pXVar3->Length;
+      if (uVar8 < pXVar3->Length) {
+        uVar9 = uVar8;
       }
-      pXVar4->Offset = uVar12;
-      if (uVar12 == pPVar7->Packet->Length) {
-        pPVar7 = PacketProcessorRetireContext(*(PACKET_PROCESSOR **)(iVar5 + 4),pPVar7);
+      pXVar3->Offset = uVar9;
+      if (uVar9 == pPVar5->Packet->Length) {
+        pPVar5 = PacketProcessorRetireContext
+                           ((param_1->field0_0x0).CodecProcessor.InputPackets,pPVar5);
       }
     }
   }
-  uVar8 = __restgprlr_17(uVar13);
-  return uVar8;
+  return uVar10;
 }
 

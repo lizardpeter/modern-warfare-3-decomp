@@ -2,19 +2,21 @@
 
 // 8225A3F8  mp_prime_miller_rabin  (line unknown)
 
-void mp_prime_miller_rabin(undefined8 param_1,undefined8 param_2,undefined4 *param_3)
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
+undefined8 mp_prime_miller_rabin(undefined8 param_1,int *param_2,undefined4 *param_3)
 
 {
   undefined8 uVar1;
   undefined8 uVar2;
-  undefined8 uVar3;
+  int iVar3;
   int iVar4;
-  int iVar5;
+  int *piVar5;
   int *piVar6;
-  int *piVar7;
-  ulonglong uVar8;
-  uint uVar9;
-  int iVar10;
+  ulonglong uVar7;
+  uint uVar8;
+  int iVar9;
   int local_60 [2];
   uint local_58;
   uint *local_54;
@@ -22,96 +24,95 @@ void mp_prime_miller_rabin(undefined8 param_1,undefined8 param_2,undefined4 *par
   uint local_48;
   undefined1 auStack_40 [64];
   
-  uVar1 = __savegprlr_27();
-  piVar6 = (int *)param_2;
-  iVar4 = piVar6[2];
+  iVar3 = param_2[2];
   *param_3 = 0;
-  if ((iVar4 == 1) || ((*piVar6 < 2 && (*(uint *)piVar6[3] < 2)))) {
-    __restgprlr_27(0xfffffffffffffffd);
-    return;
+  if ((iVar3 == 1) || ((*param_2 < 2 && (*(uint *)param_2[3] < 2)))) {
+    return 0xfffffffffffffffd;
   }
-  uVar2 = mp_init(aiStack_50);
-  if (((int)uVar2 != 0) || (uVar2 = mp_copy(uVar1,aiStack_50), (int)uVar2 != 0)) goto LAB_8225a664;
-  uVar2 = mp_sub_d(aiStack_50,1,aiStack_50);
-  if ((int)uVar2 == 0) {
-    uVar2 = mp_init(auStack_40);
-    if ((int)uVar2 == 0) {
-      uVar2 = mp_copy(aiStack_50,auStack_40);
-    }
-    if ((int)uVar2 == 0) {
-      uVar3 = mp_cnt_lsb(auStack_40);
-      uVar2 = mp_div_2d(auStack_40,uVar3,auStack_40,0);
-      if (((int)uVar2 == 0) && (uVar2 = mp_init(local_60), (int)uVar2 == 0)) {
-        uVar2 = mp_exptmod(param_2,auStack_40,uVar1,local_60);
-        if ((int)uVar2 == 0) {
-          uVar8 = (ulonglong)local_58;
-          if ((((local_58 == 1) || (1 < local_60[0])) || (1 < *local_54)) || (*local_54 == 0)) {
-            if (local_58 == local_48) {
-              if (local_58 == 1) {
-                piVar7 = local_60;
-                piVar6 = aiStack_50;
-              }
-              else {
-                piVar7 = aiStack_50;
-                piVar6 = local_60;
-              }
-              iVar4 = mp_cmp_mag(piVar6,piVar7);
-              if (iVar4 == 0) goto LAB_8225a640;
-            }
-            iVar4 = (int)uVar3 + -1;
-            iVar10 = 1;
-            uVar9 = (uint)uVar8;
-            if (0 < iVar4) {
-              do {
-                uVar9 = (uint)uVar8;
-                if (uVar9 == local_48) {
-                  if (uVar9 == 1) {
-                    piVar7 = local_60;
-                    piVar6 = aiStack_50;
-                  }
-                  else {
-                    piVar7 = aiStack_50;
-                    piVar6 = local_60;
-                  }
-                  iVar5 = mp_cmp_mag(piVar6,piVar7);
-                  if (iVar5 == 0) break;
-                }
-                uVar2 = mp_sqrmod(local_60,uVar1,local_60);
-                if ((int)uVar2 != 0) goto LAB_8225a648;
-                uVar8 = (ulonglong)local_58;
-                if (((local_58 != 1) && (local_60[0] < 2)) && ((*local_54 < 2 && (*local_54 != 0))))
-                goto LAB_8225a648;
-                iVar10 = iVar10 + 1;
-                uVar9 = local_58;
-              } while (iVar10 <= iVar4);
-            }
-            if (uVar9 == local_48) {
-              if (uVar9 == 1) {
-                piVar7 = local_60;
-                piVar6 = aiStack_50;
-              }
-              else {
-                piVar7 = aiStack_50;
-                piVar6 = local_60;
-              }
-              iVar4 = mp_cmp_mag(piVar6,piVar7);
-              if (iVar4 == 0) goto LAB_8225a640;
-            }
+  uVar1 = mp_init(aiStack_50);
+  if ((int)uVar1 != 0) {
+    return uVar1;
+  }
+  uVar1 = mp_copy(param_1,aiStack_50);
+  if ((int)uVar1 != 0) {
+    return uVar1;
+  }
+  uVar1 = mp_sub_d(aiStack_50,1,aiStack_50);
+  if ((int)uVar1 != 0) goto LAB_8225a658;
+  uVar1 = mp_init(auStack_40);
+  if ((int)uVar1 == 0) {
+    uVar1 = mp_copy(aiStack_50,auStack_40);
+  }
+  if ((int)uVar1 != 0) goto LAB_8225a658;
+  uVar2 = mp_cnt_lsb(auStack_40);
+  uVar1 = mp_div_2d(auStack_40,uVar2,auStack_40,0);
+  if (((int)uVar1 == 0) && (uVar1 = mp_init(local_60), (int)uVar1 == 0)) {
+    uVar1 = mp_exptmod(param_2,auStack_40,param_1,local_60);
+    if ((int)uVar1 == 0) {
+      uVar7 = (ulonglong)local_58;
+      if ((((local_58 == 1) || (1 < local_60[0])) || (1 < *local_54)) || (*local_54 == 0)) {
+        if (local_58 == local_48) {
+          if (local_58 == 1) {
+            piVar6 = local_60;
+            piVar5 = aiStack_50;
           }
           else {
-LAB_8225a640:
-            *param_3 = 1;
+            piVar6 = aiStack_50;
+            piVar5 = local_60;
           }
+          iVar3 = mp_cmp_mag(piVar5,piVar6);
+          if (iVar3 == 0) goto LAB_8225a640;
         }
-LAB_8225a648:
-        mp_clear(local_60);
+        iVar3 = (int)uVar2 + -1;
+        iVar9 = 1;
+        uVar8 = (uint)uVar7;
+        if (0 < iVar3) {
+          do {
+            uVar8 = (uint)uVar7;
+            if (uVar8 == local_48) {
+              if (uVar8 == 1) {
+                piVar6 = local_60;
+                piVar5 = aiStack_50;
+              }
+              else {
+                piVar6 = aiStack_50;
+                piVar5 = local_60;
+              }
+              iVar4 = mp_cmp_mag(piVar5,piVar6);
+              if (iVar4 == 0) break;
+            }
+            uVar1 = mp_sqrmod(local_60,param_1,local_60);
+            if (((int)uVar1 != 0) ||
+               (((uVar7 = (ulonglong)local_58, local_58 != 1 && (local_60[0] < 2)) &&
+                ((*local_54 < 2 && (*local_54 != 0)))))) goto LAB_8225a648;
+            iVar9 = iVar9 + 1;
+            uVar8 = local_58;
+          } while (iVar9 <= iVar3);
+        }
+        if (uVar8 == local_48) {
+          if (uVar8 == 1) {
+            piVar6 = local_60;
+            piVar5 = aiStack_50;
+          }
+          else {
+            piVar6 = aiStack_50;
+            piVar5 = local_60;
+          }
+          iVar3 = mp_cmp_mag(piVar5,piVar6);
+          if (iVar3 == 0) goto LAB_8225a640;
+        }
       }
-      mp_clear(auStack_40);
+      else {
+LAB_8225a640:
+        *param_3 = 1;
+      }
     }
+LAB_8225a648:
+    mp_clear(local_60);
   }
+  mp_clear(auStack_40);
+LAB_8225a658:
   mp_clear(aiStack_50);
-LAB_8225a664:
-  __restgprlr_27(uVar2);
-  return;
+  return uVar1;
 }
 

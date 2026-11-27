@@ -2,44 +2,39 @@
 
 // 828AB100  GetOverlappedResult  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/xrtl/getoverlappedresult.c:60)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 int GetOverlappedResult(void *param_1,_OVERLAPPED *param_2,ulong *param_3,int param_4)
 
 {
-  void *pvVar2;
-  void *pvVar3;
-  ulong uVar4;
-  undefined8 uVar1;
-  int iVar5;
+  void *pvVar1;
+  ulong uVar2;
   
-  pvVar2 = (void *)__savegprlr_28(param_1);
   if (param_2->Internal == 0x103) {
     if (param_4 == 0) {
-      uVar4 = 0x102;
+      uVar2 = 0x102;
     }
     else {
-      pvVar3 = param_2->hEvent;
+      pvVar1 = param_2->hEvent;
       if (param_2->hEvent == (void *)0x0) {
-        pvVar3 = pvVar2;
+        pvVar1 = param_1;
       }
-      uVar4 = WaitForSingleObject(pvVar3,0xffffffff);
+      uVar2 = WaitForSingleObject(pvVar1,0xffffffff);
     }
-    if (uVar4 == 0x102) {
+    if (uVar2 == 0x102) {
       SetLastError(0x3e4);
+      return 0;
     }
-    else if (uVar4 == 0) goto LAB_828ab170;
+    if (uVar2 != 0) {
+      return 0;
+    }
   }
-  else {
-LAB_828ab170:
-    *param_3 = param_2->InternalHigh;
-    if (-1 < (int)param_2->Internal) {
-      uVar1 = 1;
-      goto LAB_828ab19c;
-    }
+  *param_3 = param_2->InternalHigh;
+  if ((int)param_2->Internal < 0) {
     RtlSetLastNTError(param_2->Internal);
+    return 0;
   }
-  uVar1 = 0;
-LAB_828ab19c:
-  iVar5 = __restgprlr_28(uVar1);
-  return iVar5;
+  return 1;
 }
 

@@ -22,36 +22,30 @@ void writeHeader(EbmlGlobal *param_1)
 
 // 8280F448  writeSimpleBlock  (WebM_atvi_opt/vpx/libmkv/WebMElement.c:43)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void writeSimpleBlock(EbmlGlobal *param_1,uchar param_2,short param_3,int param_4,uchar param_5,
                      int param_6,uchar *param_7,ulong param_8)
 
 {
-  EbmlGlobal *pEVar1;
-  longlong lVar2;
-  ulonglong uVar3;
-  byte bVar4;
   byte bStack0000001f;
   short sStack00000026;
   byte local_30 [4];
   uint local_2c [11];
   
-  bVar4 = (byte)param_6;
-  uVar3 = (ulonglong)(char)param_5;
-  lVar2 = (longlong)param_4;
+  local_30[0] = param_5 << 1 | -(param_4 != 0) & 0x80U | (byte)param_6;
+  local_2c[0] = param_8 + 4;
   bStack0000001f = param_2;
   sStack00000026 = param_3;
-  pEVar1 = (EbmlGlobal *)__savegprlr_29(param_1);
-  local_30[0] = (byte)((uVar3 & 0xffffffff) << 1) | -(lVar2 != 0) & 0x80U | bVar4;
-  local_2c[0] = param_8 + 4;
-  Ebml_WriteID(pEVar1,0xa3);
+  Ebml_WriteID(param_1,0xa3);
   local_2c[0] = local_2c[0] | 0x10000000;
-  Ebml_Serialize(pEVar1,local_2c,4);
+  Ebml_Serialize(param_1,local_2c,4);
   bStack0000001f = bStack0000001f | 0x80;
-  Ebml_Write(pEVar1,&stack0x0000001f,1);
-  Ebml_Serialize(pEVar1,&stack0x00000026,2);
-  Ebml_Write(pEVar1,local_30,1);
-  Ebml_Write(pEVar1,param_7,param_8);
-  __restgprlr_29();
+  Ebml_Write(param_1,&stack0x0000001f,1);
+  Ebml_Serialize(param_1,&stack0x00000026,2);
+  Ebml_Write(param_1,local_30,1);
+  Ebml_Write(param_1,param_7,param_8);
   return;
 }
 
@@ -74,101 +68,85 @@ ulong64 generateTrackID(uint param_1)
 
 // 8280F568  writeVideoTrack  (WebM_atvi_opt/vpx/libmkv/WebMElement.c:72)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 void writeVideoTrack(EbmlGlobal *param_1,uint param_2,int param_3,char *param_4,uint param_5,
                     uint param_6,double param_7)
 
 {
-  EbmlGlobal *pEVar2;
   long64 lVar1;
-  uint uVar3;
-  longlong lVar4;
-  double extraout_f1;
-  double dVar5;
+  uint uVar2;
   uchar *apuStack_50 [2];
   uchar *apuStack_48 [18];
   
-  lVar4 = (longlong)(int)param_2;
-  pEVar2 = (EbmlGlobal *)__savegprlr_26(param_1,lVar4,param_3);
-  dVar5 = extraout_f1;
-  Ebml_StartSubElement(pEVar2,apuStack_48,0xae);
-  Ebml_SerializeUnsigned(pEVar2,0xd7,(ulong)lVar4);
+  Ebml_StartSubElement(param_1,apuStack_48,0xae);
+  Ebml_SerializeUnsigned(param_1,0xd7,param_2);
   lVar1 = _time64((long64 *)0x0);
   rand();
-  uVar3 = rand();
-  Ebml_SerializeUnsigned(pEVar2,0x73c5,uVar3 ^ (int)lVar1 * (ulong)lVar4);
-  Ebml_SerializeString(pEVar2,0x258688,"VP8");
-  Ebml_SerializeUnsigned(pEVar2,0x83,1);
-  Ebml_SerializeString(pEVar2,0x86,param_4);
-  Ebml_StartSubElement(pEVar2,apuStack_50,0xe0);
-  Ebml_SerializeUnsigned(pEVar2,0xb0,param_5);
-  Ebml_SerializeUnsigned(pEVar2,0xba,param_6);
-  Ebml_SerializeFloat(pEVar2,0x2383e3,dVar5);
-  Ebml_EndSubElement(pEVar2,apuStack_50);
-  Ebml_EndSubElement(pEVar2,apuStack_48);
-  __restgprlr_26();
+  uVar2 = rand();
+  Ebml_SerializeUnsigned(param_1,0x73c5,uVar2 ^ (int)lVar1 * param_2);
+  Ebml_SerializeString(param_1,0x258688,"VP8");
+  Ebml_SerializeUnsigned(param_1,0x83,1);
+  Ebml_SerializeString(param_1,0x86,param_4);
+  Ebml_StartSubElement(param_1,apuStack_50,0xe0);
+  Ebml_SerializeUnsigned(param_1,0xb0,param_5);
+  Ebml_SerializeUnsigned(param_1,0xba,param_6);
+  Ebml_SerializeFloat(param_1,0x2383e3,param_7);
+  Ebml_EndSubElement(param_1,apuStack_50);
+  Ebml_EndSubElement(param_1,apuStack_48);
   return;
 }
 
 
 // 8280F688  writeAudioTrack  (WebM_atvi_opt/vpx/libmkv/WebMElement.c:96)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
+
 void writeAudioTrack(EbmlGlobal *param_1,uint param_2,int param_3,char *param_4,double param_5,
                     uint param_6,uchar *param_7,ulong param_8)
 
 {
-  EbmlGlobal *pEVar2;
   long64 lVar1;
-  uint uVar3;
-  longlong lVar4;
-  longlong lVar5;
+  uint uVar2;
   ulong in_r10;
-  double extraout_f1;
-  double dVar6;
   uchar *apuStack_60 [2];
   uchar *apuStack_58 [22];
   
-  lVar5 = (longlong)(int)param_4;
-  lVar4 = (longlong)(int)param_2;
-  pEVar2 = (EbmlGlobal *)__savegprlr_25(param_1,lVar4,param_3,lVar5,param_6);
-  dVar6 = extraout_f1;
-  Ebml_StartSubElement(pEVar2,apuStack_58,0xae);
-  Ebml_SerializeUnsigned(pEVar2,0xd7,(ulong)lVar4);
+  Ebml_StartSubElement(param_1,apuStack_58,0xae);
+  Ebml_SerializeUnsigned(param_1,0xd7,param_2);
   lVar1 = _time64((long64 *)0x0);
   rand();
-  uVar3 = rand();
-  Ebml_SerializeUnsigned(pEVar2,0x73c5,uVar3 ^ (int)lVar1 * (ulong)lVar4);
-  Ebml_SerializeUnsigned(pEVar2,0x83,2);
-  Ebml_SerializeString(pEVar2,0x86,(char *)lVar5);
-  Ebml_SerializeData(pEVar2,0x63a2,(uchar *)param_8,in_r10);
-  Ebml_SerializeString(pEVar2,0x258688,"VORBIS");
-  Ebml_StartSubElement(pEVar2,apuStack_60,0xe1);
-  Ebml_SerializeFloat(pEVar2,0xb5,dVar6);
-  Ebml_SerializeUnsigned(pEVar2,0x9f,(ulong)param_7);
-  Ebml_EndSubElement(pEVar2,apuStack_60);
-  Ebml_EndSubElement(pEVar2,apuStack_58);
-  __restgprlr_25();
+  uVar2 = rand();
+  Ebml_SerializeUnsigned(param_1,0x73c5,uVar2 ^ (int)lVar1 * param_2);
+  Ebml_SerializeUnsigned(param_1,0x83,2);
+  Ebml_SerializeString(param_1,0x86,param_4);
+  Ebml_SerializeData(param_1,0x63a2,(uchar *)param_8,in_r10);
+  Ebml_SerializeString(param_1,0x258688,"VORBIS");
+  Ebml_StartSubElement(param_1,apuStack_60,0xe1);
+  Ebml_SerializeFloat(param_1,0xb5,param_5);
+  Ebml_SerializeUnsigned(param_1,0x9f,(ulong)param_7);
+  Ebml_EndSubElement(param_1,apuStack_60);
+  Ebml_EndSubElement(param_1,apuStack_58);
   return;
 }
 
 
 // 8280F7B0  writeSegmentInformation  (WebM_atvi_opt/vpx/libmkv/WebMElement.c:123)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void writeSegmentInformation(EbmlGlobal *param_1,EbmlLoc *param_2,ulong param_3,double param_4)
 
 {
-  EbmlGlobal *pEVar1;
-  double extraout_f1;
-  double dVar2;
-  
-  pEVar1 = (EbmlGlobal *)__savegprlr_29(param_1);
-  dVar2 = extraout_f1;
-  Ebml_StartSubElement(pEVar1,(uchar **)param_2,0x1549a966);
-  Ebml_SerializeUnsigned(pEVar1,0x2ad7b1,param_3);
-  Ebml_SerializeFloat(pEVar1,0x4489,dVar2 * 1000.0);
-  Ebml_SerializeString(pEVar1,0x4d80,"QTmuxingAppLibWebM-0.0.1");
-  Ebml_SerializeString(pEVar1,0x5741,"QTwritingAppLibWebM-0.0.1");
-  Ebml_EndSubElement(pEVar1,(uchar **)param_2);
-  __restgprlr_29();
+  Ebml_StartSubElement(param_1,(uchar **)param_2,0x1549a966);
+  Ebml_SerializeUnsigned(param_1,0x2ad7b1,param_3);
+  Ebml_SerializeFloat(param_1,0x4489,param_4 * 1000.0);
+  Ebml_SerializeString(param_1,0x4d80,"QTmuxingAppLibWebM-0.0.1");
+  Ebml_SerializeString(param_1,0x5741,"QTwritingAppLibWebM-0.0.1");
+  Ebml_EndSubElement(param_1,(uchar **)param_2);
   return;
 }
 

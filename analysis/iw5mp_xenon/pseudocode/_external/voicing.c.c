@@ -76,6 +76,11 @@ float ModifyPv(float param_1,float param_2,float param_3,float param_4,float par
 
 // 828C9900  NellySTCVoicing  (<external>/Xenon/mar09/core/private/xam/codecs/nci/enc/src/voicing.c:373)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
+
 void NellySTCVoicing(float *param_1,float *param_2,float *param_3,float *param_4,float *param_5,
                     float *param_6,int param_7,int param_8)
 
@@ -84,17 +89,14 @@ void NellySTCVoicing(float *param_1,float *param_2,float *param_3,float *param_4
   float fVar2;
   float *pfVar3;
   float *pfVar4;
-  float *pfVar5;
-  float *pfVar6;
-  int iVar8;
-  longlong lVar7;
-  float fVar9;
+  int iVar5;
+  float fVar6;
+  double dVar7;
+  double dVar8;
+  double dVar9;
   double dVar10;
   double dVar11;
   double dVar12;
-  double dVar13;
-  double dVar14;
-  double dVar15;
   float local_7c0;
   float local_7bc;
   longlong local_7b8;
@@ -107,98 +109,92 @@ void NellySTCVoicing(float *param_1,float *param_2,float *param_3,float *param_4
   float afStack_600 [100];
   float afStack_470 [284];
   
-  lVar7 = (longlong)(int)param_5;
-  __savegprlr_23(param_1);
-  pfVar3 = (float *)__savefpr_28();
-  pfVar6 = (float *)lVar7;
-  dVar15 = (double)*param_3;
-  fVar1 = (float)(dVar15 * 0.16796875);
-  dVar13 = 1.0;
+  dVar12 = (double)*param_3;
+  fVar1 = (float)(dVar12 * 0.16796875);
+  dVar10 = 1.0;
   if (fVar1 < 0.0) {
     fVar1 = fVar1 - 1.0;
   }
-  iVar8 = (int)fVar1;
-  if (iVar8 < 5) {
-    iVar8 = 5;
+  iVar5 = (int)fVar1;
+  if (iVar5 < 5) {
+    iVar5 = 5;
   }
-  dVar10 = (double)(((float)(longlong)iVar8 + 0.125) * (float)(512.0 / dVar15));
-  if (160.0 < dVar10) {
-    dVar10 = 160.0;
+  dVar7 = (double)(((float)(longlong)iVar5 + 0.125) * (float)(512.0 / dVar12));
+  if (160.0 < dVar7) {
+    dVar7 = 160.0;
   }
   local_7bc = 0.0;
-  dVar14 = 0.5;
-  local_7b8 = (longlong)(int)(dVar10 + 0.5);
-  iVar8 = (int)(dVar10 + 0.5) + 1;
+  dVar11 = 0.5;
+  local_7b8 = (longlong)(int)(dVar7 + 0.5);
+  iVar5 = (int)(dVar7 + 0.5) + 1;
   if (0 < param_7) {
     do {
-      if (dVar10 < (double)param_6[(int)local_7bc]) break;
+      if (dVar7 < (double)param_6[(int)local_7bc]) break;
       local_7bc = (float)((int)local_7bc + 1);
     } while ((int)local_7bc < param_7);
   }
   fVar1 = local_7bc;
   if ((int)local_7bc < 1) {
-    dVar15 = 0.0;
+    dVar12 = 0.0;
     local_7a8 = 0.0;
-    dVar10 = dVar15;
+    dVar7 = dVar12;
     local_7ac = *param_3;
   }
   else {
-    FindMaxValueFlt(pfVar6,(int)local_7bc,(int *)&local_7bc,&local_7b0);
-    pfVar4 = &local_7bc;
-    FindMaxValueFlt(param_2,iVar8,(int *)pfVar4,&local_7c0);
-    dVar12 = (double)local_7b0;
+    FindMaxValueFlt(param_5,(int)local_7bc,(int *)&local_7bc,&local_7b0);
+    pfVar3 = &local_7bc;
+    FindMaxValueFlt(param_2,iVar5,(int *)pfVar3,&local_7c0);
+    dVar9 = (double)local_7b0;
     if ((double)local_7b0 <= (double)local_7c0) {
       local_7b0 = local_7c0;
-      dVar12 = (double)local_7c0;
+      dVar9 = (double)local_7c0;
     }
-    dVar10 = 0.0;
-    dVar11 = dVar13;
-    if (dVar12 != 0.0) {
-      dVar11 = (double)(float)(dVar13 / dVar12);
+    dVar7 = 0.0;
+    dVar8 = dVar10;
+    if (dVar9 != 0.0) {
+      dVar8 = (double)(float)(dVar10 / dVar9);
     }
-    dVar12 = (double)(float)dVar11;
-    ScaleAndCompress(pfVar6,(int)fVar1,(float)dVar11,pfVar4);
-    pfVar5 = afStack_470;
-    ScaleAndCompress(param_2,iVar8,(float)dVar12,pfVar4);
+    dVar9 = (double)(float)dVar8;
+    ScaleAndCompress(param_5,(int)fVar1,(float)dVar8,pfVar3);
+    pfVar4 = afStack_470;
+    ScaleAndCompress(param_2,iVar5,(float)dVar9,pfVar3);
     if (0 < (int)fVar1) {
-      fVar9 = fVar1;
+      fVar6 = fVar1;
+      pfVar3 = param_5;
       do {
-        pfVar4 = (float *)lVar7;
-        local_7c0 = *(float *)(((int)param_6 - (int)pfVar6) + (int)pfVar4);
-        fVar2 = *pfVar4;
-        local_7a0 = (longlong)(int)((double)local_7c0 + dVar14);
-        if (fVar2 < afStack_470[(int)((double)local_7c0 + dVar14)]) {
-          local_7c0 = fVar2 / afStack_470[(int)((double)local_7c0 + dVar14)];
+        local_7c0 = *(float *)(((int)param_6 - (int)param_5) + (int)pfVar3);
+        fVar2 = *pfVar3;
+        local_7a0 = (longlong)(int)((double)local_7c0 + dVar11);
+        if (fVar2 < afStack_470[(int)((double)local_7c0 + dVar11)]) {
+          local_7c0 = fVar2 / afStack_470[(int)((double)local_7c0 + dVar11)];
           local_7c0 = local_7c0 * local_7c0;
-          *pfVar4 = local_7c0 * local_7c0 * fVar2;
+          *pfVar3 = local_7c0 * local_7c0 * fVar2;
         }
-        lVar7 = lVar7 + 4;
-        fVar9 = (float)((int)fVar9 + -1);
-      } while (fVar9 != 0.0);
+        pfVar3 = pfVar3 + 1;
+        fVar6 = (float)((int)fVar6 + -1);
+      } while (fVar6 != 0.0);
     }
-    NellySquareLawPeaks(pfVar6,param_6,(int)fVar1,54.4,pfVar5,afStack_600,aiStack_790,
+    NellySquareLawPeaks(param_5,param_6,(int)fVar1,54.4,pfVar4,afStack_600,aiStack_790,
                         (int)&local_7a4);
-    NellyRefineC0((float)dVar15,pfVar6,afStack_600,(int)aiStack_790,local_7a4,(float *)&local_7b8,
+    NellyRefineC0((float)dVar12,param_5,afStack_600,(int)aiStack_790,local_7a4,(float *)&local_7b8,
                   &local_7ac);
-    dVar15 = (double)local_7a8;
+    dVar12 = (double)local_7a8;
   }
-  dVar14 = -(double)(float)((double)*pfVar3 * dVar14 - 4.5);
-  if (dVar15 <= dVar10) {
-    dVar15 = 9.999999974752427e-07;
+  dVar11 = -(double)(float)((double)*param_1 * dVar11 - 4.5);
+  if (dVar12 <= dVar7) {
+    dVar12 = 9.999999974752427e-07;
   }
-  if (dVar13 <= dVar15) {
-    dVar15 = 0.9999989867210388;
+  if (dVar10 <= dVar12) {
+    dVar12 = 0.9999989867210388;
   }
-  dVar15 = log10((double)(float)(dVar13 - dVar15));
-  dVar15 = (double)((float)dVar15 * -10.0);
-  if ((dVar14 <= dVar15) && (dVar10 = dVar13, dVar15 <= 13.0)) {
-    dVar10 = (double)((float)(dVar15 - dVar14) / (float)(13.0 - dVar14));
+  dVar12 = log10((double)(float)(dVar10 - dVar12));
+  dVar12 = (double)((float)dVar12 * -10.0);
+  if ((dVar11 <= dVar12) && (dVar7 = dVar10, dVar12 <= 13.0)) {
+    dVar7 = (double)((float)(dVar12 - dVar11) / (float)(13.0 - dVar11));
   }
-  *pfVar3 = (float)dVar10;
+  *param_1 = (float)dVar7;
   *param_3 = local_7ac;
-  *param_4 = (float)dVar10;
-  __restfpr_28();
-  __restgprlr_23();
+  *param_4 = (float)dVar7;
   return;
 }
 

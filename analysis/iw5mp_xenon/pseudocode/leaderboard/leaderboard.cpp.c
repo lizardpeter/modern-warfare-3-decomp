@@ -70,71 +70,66 @@ void LB_FeederSelection(LocalClientNum_t param_1,int param_2)
 
 // 826D11D0  LB_OverrideCursorPos  (leaderboard/leaderboard.cpp:99)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
+
 void LB_OverrideCursorPos(int param_1,int *param_2,int *param_3)
 
 {
   uint uVar1;
-  int *piVar2;
-  ulonglong uVar3;
-  uint *puVar4;
-  ulonglong uVar5;
-  longlong lVar6;
-  uint uVar7;
+  ulonglong uVar2;
+  longlong lVar3;
+  int iVar4;
   
-  uVar3 = (ulonglong)(int)param_3;
-  uVar5 = (ulonglong)(int)param_2;
-  uVar1 = __savegprlr_25(param_1);
-  if ((uVar5 & 0xffffffff) == 0) {
+  if (param_2 == (int *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\leaderboard\\leaderboard.cpp",
                     0x65,0,"%s");
   }
-  if ((uVar3 & 0xffffffff) == 0) {
+  if (param_3 == (int *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\leaderboard\\leaderboard.cpp",
                     0x66,0,"%s");
   }
-  piVar2 = (int *)uVar5;
-  if (*piVar2 < 0) {
+  if (*param_2 < 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\leaderboard\\leaderboard.cpp",
                     0x67,0,"%s");
   }
-  puVar4 = (uint *)uVar3;
-  if ((int)*puVar4 < 0) {
+  if (*param_3 < 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\leaderboard\\leaderboard.cpp",
                     0x68,0,"%s");
   }
-  uVar7 = lbGlob.leaderboard.curIdx;
-  if (lbGlob.leaderboard.isUpdating != false) goto LAB_826d1390;
-  uVar5 = (ulonglong)(uint)lbGlob.leaderboard.curIdx;
-  *piVar2 = lbGlob.leaderboard.curIdx;
+  iVar4 = lbGlob.leaderboard.curIdx;
+  if (lbGlob.leaderboard.isUpdating != false) {
+    return;
+  }
+  uVar2 = (ulonglong)(uint)lbGlob.leaderboard.curIdx;
+  *param_2 = lbGlob.leaderboard.curIdx;
   if (lbGlob.leaderboard.notSameFilter == false) {
-    if ((int)*puVar4 <= (int)uVar7) {
-      if ((int)(uVar7 - uVar1) < (int)*puVar4) goto LAB_826d1318;
-      uVar7 = (uVar7 - uVar1) + 1;
+    if (*param_3 <= iVar4) {
+      if (iVar4 - param_1 < *param_3) goto LAB_826d1318;
+      iVar4 = (iVar4 - param_1) + 1;
     }
-    *puVar4 = uVar7;
+    *param_3 = iVar4;
   }
   else {
-    lVar6 = (uVar5 - ((longlong)((int)uVar1 >> 1) + (ulonglong)((int)uVar1 < 0 && (uVar1 & 1) != 0))
-            ) + 1;
-    uVar7 = (uint)lVar6;
-    *puVar4 = -((int)uVar7 >> 0x1f) - (uint)(lVar6 != 0) & uVar7;
+    lVar3 = (uVar2 - ((longlong)(param_1 >> 1) + (ulonglong)(param_1 < 0 && (param_1 & 1U) != 0))) +
+            1;
+    uVar1 = (uint)lVar3;
+    *param_3 = -((int)uVar1 >> 0x1f) - (uint)(lVar3 != 0) & uVar1;
     lbGlob.leaderboard.notSameFilter = false;
   }
 LAB_826d1318:
-  if (*piVar2 < 0) {
+  if (*param_2 < 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\leaderboard\\leaderboard.cpp",
                     0x7f,1,"%s");
   }
-  if ((int)*puVar4 < 0) {
+  if (*param_3 < 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\leaderboard\\leaderboard.cpp",
                     0x80,1,"%s");
   }
-  if (uVar1 <= *piVar2 - *puVar4) {
+  if ((uint)param_1 <= (uint)(*param_2 - *param_3)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\leaderboard\\leaderboard.cpp",
                     0x81,1,"(*cursorPos - *startPos) doesn\'t index viewmax\n\t%i not in [0, %i)");
   }
-LAB_826d1390:
-  __restgprlr_25();
   return;
 }
 
@@ -167,63 +162,57 @@ void LB_OpenLeaderboard(char *param_1)
 
 // 826D1418  LB_OpenLeaderboardExt  (leaderboard/leaderboard.cpp:149)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void LB_OpenLeaderboardExt(char *param_1,char *param_2)
 
 {
   LeaderboardDef *pLVar1;
-  char *pcVar2;
-  int iVar3;
-  ulonglong uVar4;
-  dvar_t **ppdVar5;
-  int *piVar6;
-  TrackType *pTVar7;
-  uint uVar8;
-  longlong lVar9;
+  int iVar2;
+  dvar_t **ppdVar3;
+  int *piVar4;
+  TrackType *pTVar5;
+  uint uVar6;
+  longlong lVar7;
   
-  uVar4 = (ulonglong)(int)param_2;
-  pcVar2 = (char *)__savegprlr_28(param_1);
-  lbGlob.leaderboard.lbDef = LB_LoadDef(pcVar2);
-  if (lbGlob.leaderboard.lbDef == (LeaderboardDef *)0x0) {
-    Com_PrintError(0x16,"Unable to open leaderboard named %s.\n");
-    if (lbGlob.leaderboard.lbDef == (LeaderboardDef *)0x0) goto LAB_826d1530;
+  lbGlob.leaderboard.lbDef = LB_LoadDef(param_1);
+  if ((lbGlob.leaderboard.lbDef == (LeaderboardDef *)0x0) &&
+     (Com_PrintError(0x16,"Unable to open leaderboard named %s.\n"),
+     lbGlob.leaderboard.lbDef == (LeaderboardDef *)0x0)) {
+    return;
   }
-  if ((uVar4 & 0xffffffff) != 0) {
-    piVar6 = &lbGlob.leaderboard.lbDef[-1].trackTypes;
-    ppdVar5 = &lb_filter;
-    lVar9 = 8;
+  if (param_2 != (char *)0x0) {
+    piVar4 = &lbGlob.leaderboard.lbDef[-1].trackTypes;
+    ppdVar3 = &lb_filter;
+    lVar7 = 8;
     do {
-      piVar6 = piVar6 + 1;
-      ppdVar5 = ppdVar5 + 1;
-      *ppdVar5 = (dvar_t *)*piVar6;
-      lVar9 = lVar9 + -1;
-    } while (lVar9 != 0);
+      piVar4 = piVar4 + 1;
+      ppdVar3 = ppdVar3 + 1;
+      *ppdVar3 = (dvar_t *)*piVar4;
+      lVar7 = lVar7 + -1;
+    } while (lVar7 != 0);
     lbGlob.leaderboard.lbDef = &s_lbDef;
-    iVar3 = I_stricmp(pcVar2,"LB_ACCOLADES");
+    iVar2 = I_stricmp(param_1,"LB_ACCOLADES");
     pLVar1 = lbGlob.leaderboard.lbDef;
-    if (iVar3 == 0) {
-      iVar3 = atoi((char *)uVar4);
-      pLVar1->id = iVar3 + pLVar1->id;
-      __restgprlr_28();
+    if (iVar2 == 0) {
+      iVar2 = atoi(param_2);
+      pLVar1->id = iVar2 + pLVar1->id;
       return;
     }
-    uVar8 = 0;
-    pTVar7 = lbTrackTypes;
-    while( true ) {
-      iVar3 = I_stricmp((char *)uVar4,pTVar7->trackType);
-      if (iVar3 == 0) break;
-      uVar8 = uVar8 + 1;
-      pTVar7 = pTVar7 + 1;
-      if (7 < uVar8) {
-        __restgprlr_28();
+    uVar6 = 0;
+    pTVar5 = lbTrackTypes;
+    while (iVar2 = I_stricmp(param_2,pTVar5->trackType), iVar2 != 0) {
+      uVar6 = uVar6 + 1;
+      pTVar5 = pTVar5 + 1;
+      if (7 < uVar6) {
         return;
       }
     }
-    if (((lbGlob.leaderboard.lbDef)->trackTypes & 1 << (uVar8 & 0x3f)) != 0) {
-      (lbGlob.leaderboard.lbDef)->id = uVar8 * 100 + (lbGlob.leaderboard.lbDef)->id;
+    if (((lbGlob.leaderboard.lbDef)->trackTypes & 1 << (uVar6 & 0x3f)) != 0) {
+      (lbGlob.leaderboard.lbDef)->id = uVar6 * 100 + (lbGlob.leaderboard.lbDef)->id;
     }
   }
-LAB_826d1530:
-  __restgprlr_28();
   return;
 }
 
@@ -244,6 +233,8 @@ void LB_ClearLeaderboard(void)
 
 // 826D15A0  LB_SetWriteLeaderboards  (leaderboard/leaderboard.cpp:199)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void LB_SetWriteLeaderboards(LocalClientNum_t param_1,char *param_2)
@@ -252,62 +243,60 @@ void LB_SetWriteLeaderboards(LocalClientNum_t param_1,char *param_2)
   char cVar1;
   ulonglong uVar2;
   LocalClientNum_t LVar3;
-  LocalClientNum_t LVar4;
-  LeaderboardDef *pLVar5;
+  LeaderboardDef *pLVar4;
+  longlong lVar5;
   longlong lVar6;
-  longlong lVar7;
-  char *pcVar8;
-  ulonglong uVar9;
-  longlong lVar10;
+  char *pcVar7;
+  ulonglong uVar8;
+  longlong lVar9;
   char local_450 [1104];
   
   uVar2 = ZEXT48(&stack0x00000000);
-  LVar3 = __savegprlr_24(param_1);
-  if (((g_generateAllMaps == 0) && (LVar3 != LOCAL_CLIENT_INVALID)) &&
-     (LVar4 = CL_GetFirstActiveLocalClient(), LVar3 == LVar4)) {
+  if (((g_generateAllMaps == 0) && (param_1 != LOCAL_CLIENT_INVALID)) &&
+     (LVar3 = CL_GetFirstActiveLocalClient(), param_1 == LVar3)) {
     I_strncpyz(local_450,param_2,0x400);
-    lVar7 = uVar2 - 0x450;
-    lVar10 = 1;
+    lVar6 = uVar2 - 0x450;
+    lVar9 = 1;
     if (local_450[0] != '\0') {
-      lVar6 = uVar2 - 0x490;
+      lVar5 = uVar2 - 0x490;
       do {
-        pcVar8 = (char *)lVar7;
-        if (*pcVar8 == ' ') {
-          *pcVar8 = '\0';
-          cVar1 = pcVar8[1];
+        pcVar7 = (char *)lVar6;
+        if (*pcVar7 == ' ') {
+          *pcVar7 = '\0';
+          cVar1 = pcVar7[1];
           if ((cVar1 != '\0') && (cVar1 != ' ')) {
-            if (0xf < (int)lVar10) break;
-            lVar6 = lVar6 + 4;
-            *(undefined4 *)lVar6 = pcVar8 + 1;
-            lVar10 = lVar10 + 1;
+            if (0xf < (int)lVar9) break;
+            lVar5 = lVar5 + 4;
+            *(undefined4 *)lVar5 = pcVar7 + 1;
+            lVar9 = lVar9 + 1;
           }
         }
-        lVar7 = lVar7 + 1;
-      } while (*(char *)lVar7 != '\0');
+        lVar6 = lVar6 + 1;
+      } while (*(char *)lVar6 != '\0');
     }
     if (lbGlob.isWritingInUse != false) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\leaderboard\\leaderboard.cpp"
                       ,0xf2,0,"%s");
     }
     lbGlob.writeCount = 0;
-    uVar9 = lVar10 - 1;
+    uVar8 = lVar9 - 1;
     lbGlob.isWritingInUse = true;
-    if (-1 < (longlong)uVar9) {
-      lVar7 = (uVar9 & 0x3fffffff) * 4 + (uVar2 - 0x490);
+    if (-1 < (longlong)uVar8) {
+      lVar6 = (uVar8 & 0x3fffffff) * 4 + (uVar2 - 0x490);
       do {
-        if (*(char *)*(undefined4 *)lVar7 != '\0') {
-          pLVar5 = LB_LoadDef((char *)*(undefined4 *)lVar7);
-          if (pLVar5 == (LeaderboardDef *)0x0) {
+        if (*(char *)*(undefined4 *)lVar6 != '\0') {
+          pLVar4 = LB_LoadDef((char *)*(undefined4 *)lVar6);
+          if (pLVar4 == (LeaderboardDef *)0x0) {
             Com_DPrintf(0x16,"Leaderboard \'%s\' in server config string not supported.\n");
           }
           else {
-            lbGlob.writeLeaderboards[lbGlob.writeCount] = pLVar5;
+            lbGlob.writeLeaderboards[lbGlob.writeCount] = pLVar4;
             lbGlob.writeCount = lbGlob.writeCount + 1;
           }
         }
-        uVar9 = uVar9 - 1;
-        lVar7 = lVar7 + -4;
-      } while (-1 < (longlong)uVar9);
+        uVar8 = uVar8 - 1;
+        lVar6 = lVar6 + -4;
+      } while (-1 < (longlong)uVar8);
     }
     if (lbGlob.isWritingInUse == false) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\leaderboard\\leaderboard.cpp"
@@ -318,7 +307,6 @@ void LB_SetWriteLeaderboards(LocalClientNum_t param_1,char *param_2)
       LB_RequestCacheLeaderboardValues();
     }
   }
-  __restgprlr_24();
   return;
 }
 
@@ -524,47 +512,44 @@ char * LB_GetPlayerDataString(int param_1,LbColumnDef *param_2)
 
 // 826D1B28  GetFeederColumn  (leaderboard/leaderboard.cpp:423)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 LbColumnDef * GetFeederColumn(LeaderboardDef *param_1,int param_2)
 
 {
-  int iVar1;
+  LbColumnDef *pLVar1;
   int iVar2;
-  LbColumnDef *pLVar3;
-  ulonglong uVar4;
+  int iVar3;
+  int iVar4;
   int iVar5;
-  int iVar6;
-  int iVar7;
   
-  uVar4 = (ulonglong)param_2;
-  iVar2 = __savegprlr_29(param_1);
-  if (iVar2 == 0) {
+  if (param_1 == (LeaderboardDef *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\leaderboard\\leaderboard.cpp",
                     0x1ab,0,"%s");
   }
-  if ((ulonglong)*(uint *)(iVar2 + 8) <= (uVar4 & 0xffffffff)) {
+  if ((uint)param_1->columnCount <= (uint)param_2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\leaderboard\\leaderboard.cpp",
                     0x1ac,0,"column doesn\'t index lbDef->columnCount\n\t%i not in [0, %i)");
   }
-  iVar5 = 0;
-  iVar6 = 0;
-  if (0 < *(int *)(iVar2 + 8)) {
-    iVar7 = 0;
+  iVar3 = 0;
+  iVar4 = 0;
+  if (0 < param_1->columnCount) {
+    pLVar1 = param_1->columns;
+    iVar5 = 0;
     do {
-      iVar1 = iVar7 + *(int *)(iVar2 + 0x14);
-      if (((*(char *)(iVar1 + 0xc) == '\0') || (iVar1 = *(int *)(iVar1 + 0x14), iVar1 == 2)) ||
-         (iVar1 == 3)) {
-        if (iVar5 == (int)uVar4) {
-          pLVar3 = (LbColumnDef *)__restgprlr_29(iVar6 * 0x28 + *(int *)(iVar2 + 0x14));
-          return pLVar3;
+      if ((((&pLVar1->hidden)[iVar5] == false) ||
+          (iVar2 = *(int *)((int)&pLVar1->type + iVar5), iVar2 == 2)) || (iVar2 == 3)) {
+        if (iVar3 == param_2) {
+          return pLVar1 + iVar4;
         }
-        iVar5 = iVar5 + 1;
+        iVar3 = iVar3 + 1;
       }
-      iVar6 = iVar6 + 1;
-      iVar7 = iVar7 + 0x28;
-    } while (iVar6 < *(int *)(iVar2 + 8));
+      iVar4 = iVar4 + 1;
+      iVar5 = iVar5 + 0x28;
+    } while (iVar4 < param_1->columnCount);
   }
-  pLVar3 = (LbColumnDef *)__restgprlr_29(0);
-  return pLVar3;
+  return (LbColumnDef *)0x0;
 }
 
 
@@ -610,30 +595,36 @@ LbColumnDef * GetFacebookFeederColumn(LeaderboardDef *param_1,int param_2)
 
 // 826D1D18  LB_FeederItemText  (leaderboard/leaderboard.cpp:475)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 char * LB_FeederItemText(LocalClientNum_t param_1,int param_2,int param_3,Material **param_4)
 
 {
-  LocalClientNum_t LVar1;
-  LbColumnDef *pLVar2;
-  char *pcVar3;
+  LbColumnDef *pLVar1;
+  char *pcVar2;
   
-  LVar1 = __savegprlr_29(param_1);
-  if (lbGlob.leaderboard.lbDef != (LeaderboardDef *)0x0) {
-    if (lbGlob.leaderboard.filter == 4) {
-      pLVar2 = GetFacebookFeederColumn(lbGlob.leaderboard.lbDef,param_3);
-    }
-    else if (((param_3 < 0) || ((lbGlob.leaderboard.lbDef)->columnCount <= param_3)) ||
-            (pLVar2 = GetFeederColumn(lbGlob.leaderboard.lbDef,param_3),
-            pLVar2 == (LbColumnDef *)0x0)) goto LAB_826d1d98;
-    pcVar3 = LB_FeederItemText_Platform(LVar1,param_2,pLVar2,param_4);
-    pcVar3 = (char *)__restgprlr_29(pcVar3);
-    return pcVar3;
+  if (lbGlob.leaderboard.lbDef == (LeaderboardDef *)0x0) {
+    return "";
   }
-LAB_826d1d98:
-  pcVar3 = (char *)__restgprlr_29(0xffffffff820068af);
-  return pcVar3;
+  if (lbGlob.leaderboard.filter == 4) {
+    pLVar1 = GetFacebookFeederColumn(lbGlob.leaderboard.lbDef,param_3);
+  }
+  else {
+    if (param_3 < 0) {
+      return "";
+    }
+    if ((lbGlob.leaderboard.lbDef)->columnCount <= param_3) {
+      return "";
+    }
+    pLVar1 = GetFeederColumn(lbGlob.leaderboard.lbDef,param_3);
+    if (pLVar1 == (LbColumnDef *)0x0) {
+      return "";
+    }
+  }
+  pcVar2 = LB_FeederItemText_Platform(param_1,param_2,pLVar1,param_4);
+  return pcVar2;
 }
 
 
@@ -689,44 +680,44 @@ char * LB_HandleNumber(LbColumnDef *param_1,int param_2)
 
 // 826D2138  LB_HandleTime  (leaderboard/leaderboard.cpp:543)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 char * LB_HandleTime(LbColumnDef *param_1,int param_2)
 
 {
   int iVar1;
-  char *pcVar2;
+  double dVar2;
   double dVar3;
-  double dVar4;
-  float fVar5;
+  float fVar4;
   
-  pcVar2 = (char *)__savegprlr_27(param_1);
-  if (pcVar2 == (char *)0x0) {
-    pcVar2 = "c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\leaderboard\\leaderboard.cpp";
+  if (param_1 == (LbColumnDef *)0x0) {
+    param_1 = (LbColumnDef *)
+              "c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\leaderboard\\leaderboard.cpp";
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\leaderboard\\leaderboard.cpp",
                     0x223,0,"%s");
   }
-  fVar5 = _Pow_int<float>(10.0,(int)pcVar2);
-  dVar4 = (double)((float)(longlong)param_2 / fVar5);
-  if (dVar4 < 0.0) {
-    dVar4 = (double)(float)(dVar4 * -1.0);
+  fVar4 = _Pow_int<float>(10.0,(int)param_1);
+  dVar3 = (double)((float)(longlong)param_2 / fVar4);
+  if (dVar3 < 0.0) {
+    dVar3 = (double)(float)(dVar3 * -1.0);
   }
-  dVar3 = floor((double)(float)(dVar4 * 0.01666666753590107));
-  iVar1 = (int)dVar3;
+  dVar2 = floor((double)(float)(dVar3 * 0.01666666753590107));
+  iVar1 = (int)dVar2;
   if (0x59f < iVar1) {
     UI_SafeTranslateString("MENU_MINUTES_ABBREVIATION");
     UI_SafeTranslateString("MENU_HOURS_ABBREVIATION");
     UI_SafeTranslateString("MENU_DAYS_ABBREVIATION");
     Com_sprintf(lbGlob.feederText,0x20,"%i%s %02i%s %02i%s");
-    pcVar2 = (char *)__restgprlr_27(0xffffffff844a0740);
-    return pcVar2;
+    return lbGlob.feederText;
   }
   if (iVar1 < 0x3c) {
-    if (dVar4 < 60.0) {
+    if (dVar3 < 60.0) {
       UI_SafeTranslateString("MENU_SECONDS_ABBREVIATION");
       Com_sprintf(lbGlob.feederText,0x20,"%.2f%s");
-      pcVar2 = (char *)__restgprlr_27(0xffffffff844a0740);
-      return pcVar2;
+      return lbGlob.feederText;
     }
-    floor((double)((float)(dVar4 - (double)(longlong)(iVar1 * 0x3c)) + 0.5));
+    floor((double)((float)(dVar3 - (double)(longlong)(iVar1 * 0x3c)) + 0.5));
     UI_SafeTranslateString("MENU_SECONDS_ABBREVIATION");
     UI_SafeTranslateString("MENU_MINUTES_ABBREVIATION");
   }
@@ -735,62 +726,59 @@ char * LB_HandleTime(LbColumnDef *param_1,int param_2)
     UI_SafeTranslateString("MENU_HOURS_ABBREVIATION");
   }
   Com_sprintf(lbGlob.feederText,0x20,"%02i%s %02i%s");
-  pcVar2 = (char *)__restgprlr_27(0xffffffff844a0740);
-  return pcVar2;
+  return lbGlob.feederText;
 }
 
 
 // 826D2408  LB_HandleTimeFull  (leaderboard/leaderboard.cpp:574)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
+
 char * LB_HandleTimeFull(LbColumnDef *param_1,int param_2)
 
 {
   int iVar1;
-  char *pcVar2;
-  double dVar3;
-  float fVar4;
+  double dVar2;
+  float fVar3;
   
-  pcVar2 = (char *)__savegprlr_25(param_1);
-  if (pcVar2 == (char *)0x0) {
-    pcVar2 = "c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\leaderboard\\leaderboard.cpp";
+  if (param_1 == (LbColumnDef *)0x0) {
+    param_1 = (LbColumnDef *)
+              "c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\leaderboard\\leaderboard.cpp";
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\leaderboard\\leaderboard.cpp",
                     0x243,0,"%s");
   }
-  fVar4 = _Pow_int<float>(10.0,(int)pcVar2);
-  fVar4 = (float)(longlong)param_2 / fVar4;
-  if (fVar4 < 0.0) {
-    fVar4 = fVar4 * -1.0;
+  fVar3 = _Pow_int<float>(10.0,(int)param_1);
+  fVar3 = (float)(longlong)param_2 / fVar3;
+  if (fVar3 < 0.0) {
+    fVar3 = fVar3 * -1.0;
   }
-  dVar3 = floor((double)(fVar4 * 0.016666668));
-  iVar1 = (int)dVar3;
+  dVar2 = floor((double)(fVar3 * 0.016666668));
+  iVar1 = (int)dVar2;
   if (0x59f < iVar1) {
     UI_SafeTranslateString("MENU_SECONDS_ABBREVIATION");
     UI_SafeTranslateString("MENU_MINUTES_ABBREVIATION");
     UI_SafeTranslateString("MENU_HOURS_ABBREVIATION");
     UI_SafeTranslateString("MENU_DAYS_ABBREVIATION");
     Com_sprintf(lbGlob.feederText,0x20,"%i%s %02i%s %02i%s %04.1f%s");
-    pcVar2 = (char *)__restgprlr_25(0xffffffff844a0740);
-    return pcVar2;
+    return lbGlob.feederText;
   }
   if (0x3b < iVar1) {
     UI_SafeTranslateString("MENU_SECONDS_ABBREVIATION");
     UI_SafeTranslateString("MENU_MINUTES_ABBREVIATION");
     UI_SafeTranslateString("MENU_HOURS_ABBREVIATION");
     Com_sprintf(lbGlob.feederText,0x20,"%02i%s %02i%s %04.1f%s");
-    pcVar2 = (char *)__restgprlr_25(0xffffffff844a0740);
-    return pcVar2;
+    return lbGlob.feederText;
   }
   if (0 < iVar1) {
     UI_SafeTranslateString("MENU_SECONDS_ABBREVIATION");
     UI_SafeTranslateString("MENU_MINUTES_ABBREVIATION");
     Com_sprintf(lbGlob.feederText,0x20,"%02i%s %04.1f%s");
-    pcVar2 = (char *)__restgprlr_25(0xffffffff844a0740);
-    return pcVar2;
+    return lbGlob.feederText;
   }
   UI_SafeTranslateString("MENU_SECONDS_ABBREVIATION");
   Com_sprintf(lbGlob.feederText,0x20,"%04.1f%s");
-  pcVar2 = (char *)__restgprlr_25(0xffffffff844a0740);
-  return pcVar2;
+  return lbGlob.feederText;
 }
 
 
@@ -814,87 +802,81 @@ char * LB_HandleLevelDisplay(LbColumnDef *param_1,int param_2)
 
 // 826D1EE0  LB_HandleLevelIcon  (leaderboard/leaderboard.cpp:629)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 char * LB_HandleLevelIcon(LbColumnDef *param_1,int param_2,int param_3,Material **param_4)
 
 {
   int iVar1;
-  char *pcVar2;
   
-  iVar1 = __savegprlr_29(param_1);
-  if (iVar1 == 0) {
+  if (param_1 == (LbColumnDef *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\leaderboard\\leaderboard.cpp",
                     0x277,0,"%s");
   }
   iVar1 = CL_GetRankForXpMP(param_2);
   CL_GetRankIcon(iVar1,param_3,param_4);
-  pcVar2 = (char *)__restgprlr_29(0xffffffff820068af);
-  return pcVar2;
+  return "";
 }
 
 
 // 826D2720  LB_HandlePercent  (leaderboard/leaderboard.cpp:645)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 char * LB_HandlePercent(LbColumnDef *param_1,int param_2)
 
 {
-  LbColumnDef *pLVar1;
-  char *pcVar2;
+  char *pcVar1;
   
-  pLVar1 = (LbColumnDef *)__savegprlr_28(param_1);
-  if (pLVar1 == (LbColumnDef *)0x0) {
+  if (param_1 == (LbColumnDef *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\leaderboard\\leaderboard.cpp",
                     0x287,0,"%s");
   }
-  pcVar2 = LB_HandleNumber(pLVar1,param_2);
-  if (pcVar2 != lbGlob.feederText) {
+  pcVar1 = LB_HandleNumber(param_1,param_2);
+  if (pcVar1 != lbGlob.feederText) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\leaderboard\\leaderboard.cpp",
                     0x28a,0,"%s");
   }
-  I_strncat(pcVar2,0xa3,"%");
-  pcVar2 = (char *)__restgprlr_28(pcVar2);
-  return pcVar2;
+  I_strncat(pcVar1,0xa3,"%");
+  return pcVar1;
 }
 
 
 // 826D1F48  LB_GetColumnByName  (leaderboard/leaderboard.cpp:658)
+
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 
 LbColumnDef * LB_GetColumnByName(LeaderboardDef *param_1,char *param_2)
 
 {
   int iVar1;
   int iVar2;
-  LbColumnDef *pLVar3;
-  ulonglong uVar4;
-  int iVar5;
-  ulonglong uVar6;
+  int iVar3;
   
-  uVar4 = (ulonglong)(int)param_2;
-  iVar1 = __savegprlr_28(param_1);
-  if (iVar1 == 0) {
+  if (param_1 == (LeaderboardDef *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\leaderboard\\leaderboard.cpp",
                     0x295,0,"%s");
   }
-  if ((uVar4 & 0xffffffff) == 0) {
+  if (param_2 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\leaderboard\\leaderboard.cpp",
                     0x296,0,"%s");
   }
-  uVar6 = 0;
-  if (0 < *(int *)(iVar1 + 8)) {
-    iVar5 = 0;
+  iVar3 = 0;
+  if (0 < param_1->columnCount) {
+    iVar2 = 0;
     do {
-      iVar2 = I_stricmp(*(char **)(*(int *)(iVar1 + 0x14) + iVar5),(char *)uVar4);
-      if (iVar2 == 0) {
-        pLVar3 = (LbColumnDef *)
-                 __restgprlr_28((uVar6 + (uVar6 & 0x3fffffff) * 4 & 0x1fffffff) * 8 +
-                                (ulonglong)*(uint *)(iVar1 + 0x14));
-        return pLVar3;
+      iVar1 = I_stricmp(*(char **)((int)&param_1->columns->name + iVar2),param_2);
+      if (iVar1 == 0) {
+        return param_1->columns + iVar3;
       }
-      uVar6 = uVar6 + 1;
-      iVar5 = iVar5 + 0x28;
-    } while ((int)uVar6 < *(int *)(iVar1 + 8));
+      iVar3 = iVar3 + 1;
+      iVar2 = iVar2 + 0x28;
+    } while (iVar3 < param_1->columnCount);
   }
-  pLVar3 = (LbColumnDef *)__restgprlr_28(0);
-  return pLVar3;
+  return (LbColumnDef *)0x0;
 }
 
 
@@ -919,67 +901,68 @@ void LB_OpenLeaderboard_f(void)
 
 // 826D2820  ~Leaderboard  (line unknown)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void __thiscall Leaderboard::~Leaderboard(Leaderboard *this)
 
 {
-  int iVar1;
-  longlong lVar2;
+  longlong lVar1;
   bdStatsInfo *this_00;
   
-  iVar1 = __savegprlr_29(this);
-  *(undefined ***)(iVar1 + 0x3b68) = &LeaderBoardRow<10>::_vftable_;
-  bdStatsInfo::~bdStatsInfo((bdStatsInfo *)(iVar1 + 0x3b68));
-  this_00 = (bdStatsInfo *)(iVar1 + 0x3b60);
-  lVar2 = 99;
+  (this->playerStats)._padding_ = (int)&LeaderBoardRow<10>::_vftable_;
+  bdStatsInfo::~bdStatsInfo((bdStatsInfo *)&this->playerStats);
+  this_00 = (bdStatsInfo *)&(this->userStats).numResults;
+  lVar1 = 99;
   do {
     this_00 = (bdStatsInfo *)(this_00[-2].m_entityName + 0x20);
     this_00->_padding_ = (int)&LeaderBoardRow<10>::_vftable_;
     bdStatsInfo::~bdStatsInfo(this_00);
-    lVar2 = lVar2 + -1;
-  } while (-1 < lVar2);
-  __restgprlr_29();
+    lVar1 = lVar1 + -1;
+  } while (-1 < lVar1);
   return;
 }
 
 
 // 826D2868  LbGlob  (line unknown)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 LbGlob * __thiscall LbGlob::LbGlob(LbGlob *this)
 
 {
-  int iVar1;
-  LbGlob *pLVar2;
-  undefined4 *puVar3;
+  _XSESSION_VIEW_PROPERTIES *p_Var1;
   NamedStatsResult *this_00;
-  longlong lVar4;
+  longlong lVar2;
   
-  iVar1 = __savegprlr_29(this);
-  puVar3 = (undefined4 *)(iVar1 + -0x90);
-  lVar4 = 0x20;
+  p_Var1 = this[-1].playerStats[3].views + 4;
+  lVar2 = 0x20;
   do {
-    puVar3 = puVar3 + 0x28;
-    *puVar3 = 0;
-    lVar4 = lVar4 + -1;
-  } while (lVar4 != 0);
+    p_Var1 = (_XSESSION_VIEW_PROPERTIES *)((int)(p_Var1 + 0xd) + 4);
+    *(undefined4 *)p_Var1 = 0;
+    lVar2 = lVar2 + -1;
+  } while (lVar2 != 0);
   bdLeaderBoardResult<LeaderBoardRow<10>,100>::bdLeaderBoardResult<LeaderBoardRow<10>,100>
-            ((bdLeaderBoardResult<LeaderBoardRow<10>,100> *)(iVar1 + 0x1408));
-  bdStatsInfo::bdStatsInfo((bdStatsInfo *)(iVar1 + 0x4f70));
-  *(undefined ***)(iVar1 + 0x4f70) = &LeaderBoardRow<10>::_vftable_;
+            (&(this->leaderboard).userStats);
+  bdStatsInfo::bdStatsInfo((bdStatsInfo *)&(this->leaderboard).playerStats);
+  (this->leaderboard).playerStats._padding_ = (int)&LeaderBoardRow<10>::_vftable_;
   memset();
-  lVar4 = 3;
-  this_00 = (NamedStatsResult *)(iVar1 + 0xa7a8);
+  lVar2 = 3;
+  this_00 = this->pastTitleBlackOpsResult;
   do {
     NamedStatsResult::NamedStatsResult(this_00);
-    lVar4 = lVar4 + -1;
+    lVar2 = lVar2 + -1;
     this_00 = this_00 + 1;
-  } while (-1 < lVar4);
-  pLVar2 = (LbGlob *)__restgprlr_29(iVar1);
-  return pLVar2;
+  } while (-1 < lVar2);
+  return this;
 }
 
 
 // 82940250  `dynamic_atexit_destructor_for_'lbGlob''  (line unknown)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void _dynamic_atexit_destructor_for__lbGlob__(void)
@@ -988,7 +971,6 @@ void _dynamic_atexit_destructor_for__lbGlob__(void)
   longlong lVar1;
   NamedStatsResult *this;
   
-  __savegprlr_29();
   lVar1 = 3;
   this = (NamedStatsResult *)lbGlob.playerStats;
   do {
@@ -998,7 +980,6 @@ void _dynamic_atexit_destructor_for__lbGlob__(void)
   } while (-1 < lVar1);
   Leaderboard::~Leaderboard(&lbGlob.leaderboard);
   OverlappedTaskSet::~OverlappedTaskSet(&lbGlob.tasks);
-  __restgprlr_29();
   return;
 }
 

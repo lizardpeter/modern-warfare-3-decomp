@@ -81,158 +81,147 @@ bdSocketStatusCode bdPlatformStreamSocket::connect(int param_1,bdInAddr param_2,
 
 // 8293CC60  send  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdplatform/bdplatformsocket/bdplatformstreamsocket-win32.cpp:172)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 int bdPlatformStreamSocket::send(int param_1,void *param_2,uint param_3)
 
 {
-  uint uVar2;
-  longlong lVar1;
-  bool bVar4;
-  int iVar3;
+  bool bVar2;
+  int iVar1;
   bdSocketStatusCode local_30 [12];
   
-  uVar2 = __savegprlr_29(param_1);
-  if (uVar2 == 0xffffffff) {
-    lVar1 = -10;
-    goto LAB_8293cdc0;
+  if (param_1 == -1) {
+    return -10;
   }
-  bVar4 = isWritable(uVar2,local_30);
-  if ((!bVar4) && (bVar4 = checkSocketException(uVar2), bVar4)) {
-    if (local_30[0] == BD_NET_WOULD_BLOCK) {
-LAB_8293ccb8:
-      lVar1 = -2;
-      goto LAB_8293cdc0;
+  bVar2 = isWritable(param_1,local_30);
+  if ((!bVar2) && (bVar2 = checkSocketException(param_1), bVar2)) {
+    if (local_30[0] != BD_NET_WOULD_BLOCK) {
+      return -5;
     }
-    goto LAB_8293ccc0;
+    return -2;
   }
-  iVar3 = ::send(uVar2,param_2,param_3,0);
-  lVar1 = (longlong)iVar3;
-  if (-1 < iVar3) {
-    m_totalBytesSent = (longlong)iVar3 + m_totalBytesSent;
-    goto LAB_8293cdc0;
+  iVar1 = ::send(param_1,param_2,param_3,0);
+  if (-1 < iVar1) {
+    m_totalBytesSent = (longlong)iVar1 + m_totalBytesSent;
+    return iVar1;
   }
-  iVar3 = WSAGetLastError();
-  if (iVar3 < 0x2742) {
-    if (iVar3 != 0x2741) {
-      if (iVar3 == 0x2714) {
-        lVar1 = -8;
-        goto LAB_8293cdc0;
+  iVar1 = WSAGetLastError();
+  if (0x2741 < iVar1) {
+    if (iVar1 < 0x274a) {
+      if (iVar1 == 0x2749) {
+        bVar2 = checkSocketException(param_1);
+        return (-(uint)bVar2 & 6) - 0xb;
       }
-      if (iVar3 != 0x2726) {
-        if (iVar3 == 0x2733) goto LAB_8293ccb8;
-        if (iVar3 != 0x2737) {
-          if (iVar3 == 0x2738) {
-            lVar1 = -6;
-            goto LAB_8293cdc0;
-          }
-          if (iVar3 != 0x273f) goto LAB_8293cda4;
+      if ((0x2741 < iVar1) && ((iVar1 < 0x2744 || ((0x2744 < iVar1 && (iVar1 < 0x2747)))))) {
+        return -5;
+      }
+    }
+    else if (0x274b < iVar1) {
+      if (iVar1 < 0x274e) {
+        return -5;
+      }
+      if (iVar1 == 0x2751) {
+        return -5;
+      }
+    }
+    return -1;
+  }
+  if (iVar1 != 0x2741) {
+    if (iVar1 == 0x2714) {
+      return -8;
+    }
+    if (iVar1 != 0x2726) {
+      if (iVar1 == 0x2733) {
+        return -2;
+      }
+      if (iVar1 != 0x2737) {
+        if (iVar1 == 0x2738) {
+          return -6;
+        }
+        if (iVar1 != 0x273f) {
+          return -1;
         }
       }
     }
-    lVar1 = -7;
-    goto LAB_8293cdc0;
   }
-  if (iVar3 < 0x274a) {
-    if (iVar3 == 0x2749) {
-      bVar4 = checkSocketException(uVar2);
-      lVar1 = (-(ulonglong)bVar4 & 6) - 0xb;
-      goto LAB_8293cdc0;
-    }
-    if ((0x2741 < iVar3) && ((iVar3 < 0x2744 || ((0x2744 < iVar3 && (iVar3 < 0x2747))))))
-    goto LAB_8293ccc0;
-  }
-  else if ((0x274b < iVar3) && ((iVar3 < 0x274e || (iVar3 == 0x2751)))) {
-LAB_8293ccc0:
-    lVar1 = -5;
-    goto LAB_8293cdc0;
-  }
-LAB_8293cda4:
-  lVar1 = -1;
-LAB_8293cdc0:
-  iVar3 = __restgprlr_29(lVar1);
-  return iVar3;
+  return -7;
 }
 
 
 // 8293CDC8  receive  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdplatform/bdplatformsocket/bdplatformstreamsocket-win32.cpp:259)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 int bdPlatformStreamSocket::receive(int param_1,void *param_2,uint param_3)
 
 {
-  uint uVar2;
-  longlong lVar1;
-  bool bVar4;
-  int iVar3;
+  bool bVar2;
+  int iVar1;
   bdSocketStatusCode local_30 [12];
   
-  uVar2 = __savegprlr_29(param_1);
-  if (uVar2 == 0xffffffff) {
-    lVar1 = -10;
-    goto LAB_8293cf84;
+  if (param_1 == -1) {
+    return -10;
   }
-  bVar4 = isWritable(uVar2,local_30);
-  if ((!bVar4) && (bVar4 = checkSocketException(uVar2), bVar4)) {
+  bVar2 = isWritable(param_1,local_30);
+  if ((bVar2) || (bVar2 = checkSocketException(param_1), !bVar2)) {
+    iVar1 = recv(param_1,param_2,param_3,0);
+    if (-1 < iVar1) {
+      m_totalBytesRecvd = (longlong)iVar1 + m_totalBytesRecvd;
+      return iVar1;
+    }
+    iVar1 = WSAGetLastError();
+    if (iVar1 != 0x2733) {
+      bdLogMessage(BD_LOG_INFO,"info/","platform stream socket",
+                   "c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdPlatform\\bdPlatformSocket\\bdPlatformStreamSocket-win32.cpp"
+                   ,"bdPlatformStreamSocket::receive",0x138,"receive error = %i");
+    }
+    if (iVar1 < 0x2744) {
+      if (iVar1 < 0x2742) {
+        if (iVar1 == 0x2714) {
+          return -8;
+        }
+        if (iVar1 == 0x2726) {
+          return -9;
+        }
+        if (iVar1 == 0x2733) {
+          return -2;
+        }
+        if (iVar1 != 0x2738) {
+          return -1;
+        }
+        return -6;
+      }
+    }
+    else {
+      if (iVar1 < 0x2745) {
+        return -1;
+      }
+      if (0x2746 < iVar1) {
+        if (iVar1 == 0x2749) {
+          bVar2 = checkSocketException(param_1);
+          return (-(uint)bVar2 & 6) - 0xb;
+        }
+        if ((iVar1 != 0x274c) && (iVar1 != 0x2751)) {
+          return -1;
+        }
+      }
+    }
+  }
+  else {
     if (local_30[0] == BD_NET_WOULD_BLOCK) {
       bdLogMessage(BD_LOG_INFO,"info/","platform stream socket",
                    "c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdPlatform\\bdPlatformSocket\\bdPlatformStreamSocket-win32.cpp"
                    ,"bdPlatformStreamSocket::receive",0x115,"receive returning BD_NET_WOULD_BLOCK");
-LAB_8293ce54:
-      lVar1 = -2;
-      goto LAB_8293cf84;
+      return -2;
     }
     bdLogMessage(BD_LOG_INFO,"info/","platform stream socket",
                  "c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdPlatform\\bdPlatformSocket\\bdPlatformStreamSocket-win32.cpp"
                  ,"bdPlatformStreamSocket::receive",0x11a,
                  "receive returning BD_NET_CONNECTION_RESET");
-    goto LAB_8293ce6c;
   }
-  iVar3 = recv(uVar2,param_2,param_3,0);
-  lVar1 = (longlong)iVar3;
-  if (-1 < iVar3) {
-    m_totalBytesRecvd = (longlong)iVar3 + m_totalBytesRecvd;
-    goto LAB_8293cf84;
-  }
-  iVar3 = WSAGetLastError();
-  if (iVar3 != 0x2733) {
-    bdLogMessage(BD_LOG_INFO,"info/","platform stream socket",
-                 "c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdPlatform\\bdPlatformSocket\\bdPlatformStreamSocket-win32.cpp"
-                 ,"bdPlatformStreamSocket::receive",0x138,"receive error = %i");
-  }
-  if (iVar3 < 0x2744) {
-    if (iVar3 < 0x2742) {
-      if (iVar3 == 0x2714) {
-        lVar1 = -8;
-        goto LAB_8293cf84;
-      }
-      if (iVar3 == 0x2726) {
-        lVar1 = -9;
-        goto LAB_8293cf84;
-      }
-      if (iVar3 == 0x2733) goto LAB_8293ce54;
-      if (iVar3 == 0x2738) {
-        lVar1 = -6;
-        goto LAB_8293cf84;
-      }
-LAB_8293cf48:
-      lVar1 = -1;
-      goto LAB_8293cf84;
-    }
-  }
-  else {
-    if (iVar3 < 0x2745) goto LAB_8293cf48;
-    if (0x2746 < iVar3) {
-      if (iVar3 == 0x2749) {
-        bVar4 = checkSocketException(uVar2);
-        lVar1 = (-(ulonglong)bVar4 & 6) - 0xb;
-        goto LAB_8293cf84;
-      }
-      if ((iVar3 != 0x274c) && (iVar3 != 0x2751)) goto LAB_8293cf48;
-    }
-  }
-LAB_8293ce6c:
-  lVar1 = -5;
-LAB_8293cf84:
-  iVar3 = __restgprlr_29(lVar1);
-  return iVar3;
+  return -5;
 }
 
 
@@ -295,89 +284,88 @@ bool bdPlatformStreamSocket::checkSocketException(int param_1)
 
 // 8293CAC0  isWritable  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdplatform/bdplatformsocket/bdplatformstreamsocket-win32.cpp:415)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 bool bdPlatformStreamSocket::isWritable(int param_1,bdSocketStatusCode *param_2)
 
 {
-  uint uVar2;
-  undefined8 uVar1;
-  int iVar3;
-  int iVar4;
-  undefined1 uVar5;
-  bdSocketStatusCode bVar6;
+  int iVar1;
+  int iVar2;
+  bdSocketStatusCode bVar3;
+  bool bVar4;
   timeval local_260 [2];
   fd_set local_250;
   fd_set local_140;
   
-  uVar2 = __savegprlr_27(param_1);
-  if (uVar2 == 0xffffffff) {
-    uVar1 = 0;
-    goto LAB_8293cbcc;
+  if (param_1 == -1) {
+    return false;
   }
-  uVar1 = 1;
+  bVar4 = true;
   *param_2 = BD_NET_SUCCESS;
   local_260[0].tv_sec = 0;
   local_260[0].tv_usec = 0;
   local_250.fd_count = 1;
   local_140.fd_count = 1;
-  local_250.fd_array[0] = uVar2;
-  local_140.fd_array[0] = uVar2;
-  iVar3 = select(0,(fd_set *)0x0,&local_250,&local_140,local_260);
-  iVar4 = __WSAFDIsSet(uVar2,&local_250);
-  if ((iVar4 == 0) || (iVar3 == -1)) {
-    uVar1 = 0;
+  local_250.fd_array[0] = param_1;
+  local_140.fd_array[0] = param_1;
+  iVar1 = select(0,(fd_set *)0x0,&local_250,&local_140,local_260);
+  iVar2 = __WSAFDIsSet(param_1,&local_250);
+  if ((iVar2 == 0) || (iVar1 == -1)) {
+    bVar4 = false;
   }
-  iVar3 = __WSAFDIsSet(uVar2,&local_140);
-  if (iVar3 == 0) goto LAB_8293cbcc;
-  iVar3 = WSAGetLastError();
-  if (iVar3 < 0x2744) {
-    if (iVar3 == 0x2743) {
+  iVar1 = __WSAFDIsSet(param_1,&local_140);
+  if (iVar1 == 0) {
+    return bVar4;
+  }
+  iVar1 = WSAGetLastError();
+  if (iVar1 < 0x2744) {
+    if (iVar1 == 0x2743) {
 LAB_8293cc48:
-      bVar6 = BD_NET_HOST_UNREACH;
+      bVar3 = BD_NET_HOST_UNREACH;
+      goto LAB_8293cbc4;
     }
-    else if (iVar3 == 0x2714) {
-      bVar6 = BD_NET_BLOCKING_CALL_CANCELED;
+    if (iVar1 == 0x2714) {
+      bVar3 = BD_NET_BLOCKING_CALL_CANCELED;
+      goto LAB_8293cbc4;
     }
-    else if (iVar3 == 0x2726) {
-      bVar6 = BD_NET_INVALID_HANDLE;
+    if (iVar1 == 0x2726) {
+      bVar3 = BD_NET_INVALID_HANDLE;
+      goto LAB_8293cbc4;
     }
-    else {
-      if (iVar3 != 0x2733) {
-        if (iVar3 == 0x2742) goto LAB_8293cc58;
-        goto LAB_8293cb8c;
-      }
+    if (iVar1 == 0x2733) {
       bdLogMessage(BD_LOG_INFO,"info/","platform stream socket",
                    "c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdPlatform\\bdPlatformSocket\\bdPlatformStreamSocket-win32.cpp"
                    ,"bdPlatformStreamSocket::isWritable",0x1d1,
                    "isWritable encountered WSAEWOULDBLOCK. Returning BD_NET_WOULD_BLOCK");
-      bVar6 = BD_NET_WOULD_BLOCK;
+      bVar3 = BD_NET_WOULD_BLOCK;
+      goto LAB_8293cbc4;
     }
+    if (iVar1 == 0x2742) goto LAB_8293cc58;
   }
-  else if (iVar3 < 0x2745) {
-LAB_8293cb8c:
-    bdLogMessage(BD_LOG_INFO,"info/","platform stream socket",
-                 "c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdPlatform\\bdPlatformSocket\\bdPlatformStreamSocket-win32.cpp"
-                 ,"bdPlatformStreamSocket::isWritable",0x1d5,
-                 "isWritable encountered socket error %i. Returning error");
-    bVar6 = BD_NET_ERROR;
-  }
-  else {
-    if (0x2746 < iVar3) {
-      if (iVar3 == 0x2749) {
-        bVar6 = BD_NET_NOT_CONNECTED;
+  else if (0x2744 < iVar1) {
+    if (0x2746 < iVar1) {
+      if (iVar1 == 0x2749) {
+        bVar3 = BD_NET_NOT_CONNECTED;
         goto LAB_8293cbc4;
       }
-      if (iVar3 != 0x274c) {
-        if (iVar3 == 0x2751) goto LAB_8293cc48;
+      if (iVar1 != 0x274c) {
+        if (iVar1 == 0x2751) goto LAB_8293cc48;
         goto LAB_8293cb8c;
       }
     }
 LAB_8293cc58:
-    bVar6 = BD_NET_CONNECTION_RESET;
+    bVar3 = BD_NET_CONNECTION_RESET;
+    goto LAB_8293cbc4;
   }
+LAB_8293cb8c:
+  bdLogMessage(BD_LOG_INFO,"info/","platform stream socket",
+               "c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdPlatform\\bdPlatformSocket\\bdPlatformStreamSocket-win32.cpp"
+               ,"bdPlatformStreamSocket::isWritable",0x1d5,
+               "isWritable encountered socket error %i. Returning error");
+  bVar3 = BD_NET_ERROR;
 LAB_8293cbc4:
-  *param_2 = bVar6;
-LAB_8293cbcc:
-  uVar5 = __restgprlr_27(uVar1);
-  return (bool)uVar5;
+  *param_2 = bVar3;
+  return bVar4;
 }
 

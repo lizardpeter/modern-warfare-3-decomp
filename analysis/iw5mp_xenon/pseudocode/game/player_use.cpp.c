@@ -2,6 +2,8 @@
 
 // 824B8740  Player_UseEntity  (game/player_use.cpp:56)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
@@ -10,57 +12,53 @@ void Player_UseEntity(gentity_s *param_1,gentity_s *param_2)
 {
   int iVar1;
   code *pcVar2;
-  gentity_s *pgVar3;
-  bool bVar4;
-  ulonglong uVar5;
-  gentity_s *pgVar6;
+  bool bVar3;
+  gentity_s *pgVar4;
   
-  uVar5 = (ulonglong)(int)param_2;
-  pgVar3 = (gentity_s *)__savegprlr_28(param_1);
-  if (pgVar3 == (gentity_s *)0x0) {
+  if (param_1 == (gentity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\player_use.cpp",0x3c,0,
                     "%s");
   }
-  if (pgVar3->client == (gclient_s *)0x0) {
+  if (param_1->client == (gclient_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\player_use.cpp",0x3d,0,
                     "%s");
   }
-  if ((uVar5 & 0xffffffff) == 0) {
+  if (param_2 == (gentity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\player_use.cpp",0x3e,0,
                     "%s");
   }
-  pgVar6 = (gentity_s *)uVar5;
-  if ((pgVar6->r).isInUse == '\0') {
+  if ((param_2->r).isInUse == '\0') {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\player_use.cpp",0x40,0,
                     "%s");
   }
-  iVar1 = (pgVar6->s).eType;
+  iVar1 = (param_2->s).eType;
   if ((iVar1 == 3) || (iVar1 == 4)) {
-    Scr_AddEntity(pgVar3);
-    Scr_Notify(pgVar6,scr_const.touch,1);
-    pgVar6->active = '\x01';
-    pcVar2 = *(code **)(&DAT_8296984c + (uint)pgVar6->handler * 0x28);
+    Scr_AddEntity(param_1);
+    Scr_Notify(param_2,scr_const.touch,1);
+    param_2->active = '\x01';
+    pcVar2 = *(code **)(&DAT_8296984c + (uint)param_2->handler * 0x28);
     if (pcVar2 == (code *)0x0) goto LAB_824b88e4;
-    pgVar6 = (gentity_s *)0x0;
+    pgVar4 = (gentity_s *)0x0;
   }
   else {
-    if ((iVar1 == 0xb) && (bVar4 = G_IsTurretUsable(pgVar6,pgVar3), !bVar4)) goto LAB_824b88e4;
-    Scr_AddEntity(pgVar3);
-    Scr_Notify(pgVar6,scr_const.trigger,1);
-    pcVar2 = *(code **)(&DAT_82969850 + (uint)pgVar6->handler * 0x28);
-    pgVar6 = pgVar3;
+    if ((iVar1 == 0xb) && (bVar3 = G_IsTurretUsable(param_2,param_1), !bVar3)) goto LAB_824b88e4;
+    Scr_AddEntity(param_1);
+    Scr_Notify(param_2,scr_const.trigger,1);
+    pcVar2 = *(code **)(&DAT_82969850 + (uint)param_2->handler * 0x28);
+    pgVar4 = param_1;
     if (pcVar2 == (code *)0x0) goto LAB_824b88e4;
   }
-  (*pcVar2)(uVar5,pgVar3,pgVar6);
+  (*pcVar2)(param_2,param_1,pgVar4);
 LAB_824b88e4:
-  EntHandle::setEnt(&pgVar3->client->useHoldEntity,(gentity_s *)0x0);
-  __restgprlr_28();
+  EntHandle::setEnt(&param_1->client->useHoldEntity,(gentity_s *)0x0);
   return;
 }
 
 
 // 824B8900  Player_ActivateCmd  (game/player_use.cpp:105)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
@@ -69,123 +67,117 @@ bool Player_ActivateCmd(gentity_s *param_1)
 {
   gclient_s *pgVar1;
   uint uVar2;
-  gentity_s *pgVar3;
-  int iVar4;
-  undefined1 uVar7;
-  gentity_s *pgVar5;
-  weapClass_t wVar6;
+  int iVar3;
+  gentity_s *pgVar4;
+  weapClass_t wVar5;
   
-  pgVar3 = (gentity_s *)__savegprlr_28(param_1);
-  if (pgVar3 == (gentity_s *)0x0) {
+  if (param_1 == (gentity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\player_use.cpp",0x6d,0,
                     "%s");
   }
-  if ((pgVar3->r).isInUse == '\0') {
+  if ((param_1->r).isInUse == '\0') {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\player_use.cpp",0x6e,0,
                     "%s");
   }
-  if (pgVar3->client == (gclient_s *)0x0) {
+  if (param_1->client == (gclient_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\player_use.cpp",0x6f,0,
                     "%s");
   }
-  iVar4 = Scr_IsSystemActive('\x01');
-  if (iVar4 == 0) goto LAB_824b89a4;
-  EntHandle::setEnt(&pgVar3->client->useHoldEntity,(gentity_s *)0x0);
-  pgVar5 = G_IsVehicleUnusable(pgVar3);
-  if (pgVar5 != (gentity_s *)0x0) {
-    Player_UseEntity(pgVar3,pgVar5);
-    uVar7 = __restgprlr_28(1);
-    return (bool)uVar7;
+  iVar3 = Scr_IsSystemActive('\x01');
+  if (iVar3 == 0) {
+    return false;
   }
-  pgVar1 = pgVar3->client;
-  if (pgVar3->active == '\0') {
+  EntHandle::setEnt(&param_1->client->useHoldEntity,(gentity_s *)0x0);
+  pgVar4 = G_IsVehicleUnusable(param_1);
+  if (pgVar4 != (gentity_s *)0x0) {
+    Player_UseEntity(param_1,pgVar4);
+    return true;
+  }
+  pgVar1 = param_1->client;
+  if (param_1->active == '\0') {
     uVar2 = (pgVar1->ps).pm_flags;
-    if (((uVar2 & 4) == 0) && ((uVar2 & 0x4000) == 0)) {
-      iVar4 = (pgVar1->ps).weapState[0].weaponState;
-      if ((iVar4 < 0x10) || (0x14 < iVar4)) {
-        if ((pgVar1->ps).cursorHint != 0) {
-          iVar4 = (pgVar1->ps).cursorHintEntIndex;
-          if (iVar4 != 0x7ff) {
-            if (g_entities[iVar4].r.isInUse == '\0') {
-              MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\player_use.cpp"
-                              ,0xa5,0,"%s");
-            }
-            if ((g_entities[iVar4].s.eType != 4) ||
-               (wVar6 = BG_GetWeaponClass(g_entities[iVar4].s.weapon,false),
-               wVar6 == WEAPCLASS_THROWINGKNIFE)) {
-              EntHandle::setEnt(&pgVar3->client->useHoldEntity,g_entities + iVar4);
-              pgVar3->client->useHoldTime = level.time;
-              goto LAB_824b8af8;
-            }
-          }
-        }
-LAB_824b89a4:
-        uVar7 = __restgprlr_28(0);
-        return (bool)uVar7;
+    if ((((uVar2 & 4) == 0) && ((uVar2 & 0x4000) == 0)) &&
+       ((iVar3 = (pgVar1->ps).weapState[0].weaponState, iVar3 < 0x10 || (0x14 < iVar3)))) {
+      if ((pgVar1->ps).cursorHint == 0) {
+        return false;
       }
+      iVar3 = (pgVar1->ps).cursorHintEntIndex;
+      if (iVar3 == 0x7ff) {
+        return false;
+      }
+      if (g_entities[iVar3].r.isInUse == '\0') {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\player_use.cpp",0xa5,
+                        0,"%s");
+      }
+      if ((g_entities[iVar3].s.eType == 4) &&
+         (wVar5 = BG_GetWeaponClass(g_entities[iVar3].s.weapon,false),
+         wVar5 != WEAPCLASS_THROWINGKNIFE)) {
+        return false;
+      }
+      EntHandle::setEnt(&param_1->client->useHoldEntity,g_entities + iVar3);
+      param_1->client->useHoldTime = level.time;
+      return true;
     }
   }
   else {
     uVar2 = (pgVar1->ps).eFlags;
     if ((uVar2 & 0x2000) == 0) {
-      pgVar3->active = -((uVar2 & 0x3800) != 0) & 2;
-      uVar7 = __restgprlr_28(1);
-      return (bool)uVar7;
+      param_1->active = -((uVar2 & 0x3800) != 0) & 2;
+      return true;
     }
   }
-LAB_824b8af8:
-  uVar7 = __restgprlr_28(1);
-  return (bool)uVar7;
+  return true;
 }
 
 
 // 824B8B08  Player_ActivateHoldCmd  (game/player_use.cpp:185)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
 void Player_ActivateHoldCmd(gentity_s *param_1)
 
 {
-  gentity_s *pgVar1;
-  int iVar2;
-  gentity_s *pgVar3;
-  uint uVar4;
+  int iVar1;
+  gentity_s *pgVar2;
+  uint uVar3;
   
-  pgVar1 = (gentity_s *)__savegprlr_29(param_1);
-  if (pgVar1 == (gentity_s *)0x0) {
+  if (param_1 == (gentity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\player_use.cpp",0xbc,0,
                     "%s");
   }
-  if (pgVar1->client == (gclient_s *)0x0) {
+  if (param_1->client == (gclient_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\player_use.cpp",0xbd,0,
                     "%s");
   }
-  iVar2 = Scr_IsSystemActive('\x01');
-  if ((((iVar2 != 0) && (iVar2 = EntHandle::isDefined(&pgVar1->client->useHoldEntity), iVar2 != 0))
+  iVar1 = Scr_IsSystemActive('\x01');
+  if ((((iVar1 != 0) && (iVar1 = EntHandle::isDefined(&param_1->client->useHoldEntity), iVar1 != 0))
       && ((g_useholdspawndelay->current).integer <=
-          level.time - (pgVar1->s).lerp.u.turret.lastHeatChangeTime)) &&
-     ((g_useholdtime->current).integer <= level.time - pgVar1->client->useHoldTime)) {
-    pgVar3 = EntHandle::ent(&pgVar1->client->useHoldEntity);
-    uVar4 = EntHandle::entnum(&pgVar1->client->useHoldEntity);
-    if ((pgVar3->s).number != uVar4) {
-      EntHandle::entnum(&pgVar1->client->useHoldEntity);
+          level.time - (param_1->s).lerp.u.turret.lastHeatChangeTime)) &&
+     ((g_useholdtime->current).integer <= level.time - param_1->client->useHoldTime)) {
+    pgVar2 = EntHandle::ent(&param_1->client->useHoldEntity);
+    uVar3 = EntHandle::entnum(&param_1->client->useHoldEntity);
+    if ((pgVar2->s).number != uVar3) {
+      EntHandle::entnum(&param_1->client->useHoldEntity);
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\player_use.cpp",0xd0,0,
                       "useEnt->s.number == (int)ent->client->useHoldEntity.entnum()\n\t%i, %i");
     }
-    if ((pgVar3->r).isInUse == '\0') {
+    if ((pgVar2->r).isInUse == '\0') {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\player_use.cpp",0xd1,0,
                       "%s\n\t(useEnt->s.number) = %i");
     }
-    Player_UseEntity(pgVar1,pgVar3);
+    Player_UseEntity(param_1,pgVar2);
   }
-  __restgprlr_29();
   return;
 }
 
 
 // 824B8C78  Player_UpdateActivate  (game/player_use.cpp:219)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
@@ -193,57 +185,52 @@ void Player_UpdateActivate(gentity_s *param_1)
 
 {
   gclient_s *pgVar1;
-  gentity_s *pgVar2;
-  int iVar3;
-  bool bVar4;
+  int iVar2;
+  bool bVar3;
   
-  pgVar2 = (gentity_s *)__savegprlr_29(param_1);
-  if (pgVar2 == (gentity_s *)0x0) {
+  if (param_1 == (gentity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\player_use.cpp",0xde,0,
                     "%s");
   }
-  if (pgVar2->client == (gclient_s *)0x0) {
+  if (param_1->client == (gclient_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\player_use.cpp",0xdf,0,
                     "%s");
   }
-  (pgVar2->client->ps).weapCommon.weapFlags = (pgVar2->client->ps).weapCommon.weapFlags & 0xfffffffe
-  ;
-  pgVar1 = pgVar2->client;
+  (param_1->client->ps).weapCommon.weapFlags =
+       (param_1->client->ps).weapCommon.weapFlags & 0xfffffffe;
+  pgVar1 = param_1->client;
   if ((pgVar1->flags & 8U) != 0) {
     if (((pgVar1->oldbuttons & 0x20U) != 0) && ((pgVar1->buttons & 0x20U) == 0)) {
       (pgVar1->ps).weapCommon.weapFlags = (pgVar1->ps).weapCommon.weapFlags | 1;
     }
-    EntHandle::setEnt(&pgVar2->client->useHoldEntity,(gentity_s *)0x0);
-    pgVar2->client->useButtonDone = 1;
-    __restgprlr_29();
+    EntHandle::setEnt(&param_1->client->useHoldEntity,(gentity_s *)0x0);
+    param_1->client->useButtonDone = 1;
     return;
   }
-  iVar3 = EntHandle::isDefined(&pgVar1->useHoldEntity);
-  if (((iVar3 != 0) && ((pgVar2->client->oldbuttons & 0x20U) != 0)) &&
-     ((pgVar2->client->buttons & 0x20U) == 0)) {
+  iVar2 = EntHandle::isDefined(&pgVar1->useHoldEntity);
+  if (((iVar2 != 0) && ((param_1->client->oldbuttons & 0x20U) != 0)) &&
+     ((param_1->client->buttons & 0x20U) == 0)) {
 LAB_824b8df4:
-    (pgVar2->client->ps).weapCommon.weapFlags = (pgVar2->client->ps).weapCommon.weapFlags | 1;
-    __restgprlr_29();
+    (param_1->client->ps).weapCommon.weapFlags = (param_1->client->ps).weapCommon.weapFlags | 1;
     return;
   }
-  if ((pgVar2->client->latched_buttons & 0x28U) == 0) {
-    bVar4 = false;
+  if ((param_1->client->latched_buttons & 0x28U) == 0) {
+    bVar3 = false;
   }
   else {
-    bVar4 = Player_ActivateCmd(pgVar2);
+    bVar3 = Player_ActivateCmd(param_1);
   }
-  iVar3 = EntHandle::isDefined(&pgVar2->client->useHoldEntity);
-  if ((iVar3 == 0) && (bVar4 == false)) {
-    if ((pgVar2->client->latched_buttons & 0x20U) != 0) goto LAB_824b8df4;
+  iVar2 = EntHandle::isDefined(&param_1->client->useHoldEntity);
+  if ((iVar2 == 0) && (bVar3 == false)) {
+    if ((param_1->client->latched_buttons & 0x20U) != 0) goto LAB_824b8df4;
   }
   else {
-    iVar3 = SV_IsTestClient((int)&pgVar2[0x31e9ea].s.groundEntityNum / 0x280);
-    if ((iVar3 == 0) && ((pgVar2->client->buttons & 0x28U) != 0)) {
-      Player_ActivateHoldCmd(pgVar2);
+    iVar2 = SV_IsTestClient((int)&param_1[0x31e9ea].s.groundEntityNum / 0x280);
+    if ((iVar2 == 0) && ((param_1->client->buttons & 0x28U) != 0)) {
+      Player_ActivateHoldCmd(param_1);
     }
-    pgVar2->client->useButtonDone = 1;
+    param_1->client->useButtonDone = 1;
   }
-  __restgprlr_29();
   return;
 }
 
@@ -299,6 +286,10 @@ bool MayPickupMissile(gclient_s *param_1,gentity_s *param_2)
 
 // 824B8F28  Player_GetUseList  (game/player_use.cpp:316)
 
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
@@ -309,22 +300,22 @@ int Player_GetUseList(gentity_s *param_1,useList_t *param_2,int param_3)
   float fVar2;
   float fVar3;
   gclient_s *pgVar4;
-  uint uVar5;
+  gentity_s *pgVar5;
   int iVar6;
-  float *pfVar7;
-  gentity_s *pgVar8;
+  bool bVar10;
+  DObj *pDVar7;
+  weapClass_t wVar8;
   int iVar9;
-  bool bVar12;
-  DObj *pDVar10;
-  weapClass_t wVar11;
+  dvar_t *pdVar11;
+  longlong lVar12;
   longlong lVar13;
-  dvar_t *pdVar14;
+  int *piVar14;
   longlong lVar15;
-  longlong lVar16;
-  uint *puVar17;
-  longlong lVar18;
-  longlong lVar19;
-  gentity_s *pgVar20;
+  float *pfVar16;
+  gentity_s *pgVar17;
+  double dVar18;
+  double dVar19;
+  double dVar20;
   double dVar21;
   double dVar22;
   double dVar23;
@@ -335,10 +326,7 @@ int Player_GetUseList(gentity_s *param_1,useList_t *param_2,int param_3)
   double dVar28;
   double dVar29;
   double dVar30;
-  double dVar31;
-  double dVar32;
-  double dVar33;
-  float fVar34;
+  float fVar31;
   float local_21d0;
   float local_21cc;
   float local_21c8;
@@ -351,27 +339,24 @@ int Player_GetUseList(gentity_s *param_1,useList_t *param_2,int param_3)
   float afStack_2158 [6];
   Bounds aBStack_2140 [2];
   float afStack_2110 [12];
-  uint local_20e0 [2104];
+  int local_20e0 [2104];
   
-  lVar13 = (longlong)(int)param_2;
-  __savegprlr();
-  pgVar8 = (gentity_s *)__savefpr_23();
-  pgVar4 = pgVar8->client;
-  dVar30 = 192.0;
-  lVar16 = 0;
-  dVar24 = dVar30;
+  pgVar4 = param_1->client;
+  dVar27 = 192.0;
+  lVar13 = 0;
+  dVar21 = dVar27;
   if ((float)(192.0 - (double)(player_throwbackOuterRadius->current).value) < 0.0) {
-    dVar24 = (double)(player_throwbackOuterRadius->current).value;
+    dVar21 = (double)(player_throwbackOuterRadius->current).value;
   }
-  if ((float)(dVar24 - (double)(player_useRadius->current).value) < 0.0) {
-    dVar24 = (double)(player_useRadius->current).value;
+  if ((float)(dVar21 - (double)(player_useRadius->current).value) < 0.0) {
+    dVar21 = (double)(player_useRadius->current).value;
   }
   local_21c0.halfSize[2] = 96.0;
-  if ((float)(dVar24 - (double)(player_MGUseRadius->current).value) < 0.0) {
-    dVar24 = (double)(player_MGUseRadius->current).value;
+  if ((float)(dVar21 - (double)(player_MGUseRadius->current).value) < 0.0) {
+    dVar21 = (double)(player_MGUseRadius->current).value;
   }
-  local_21c0.halfSize[0] = (float)dVar24;
-  local_21c0.halfSize[1] = (float)dVar24;
+  local_21c0.halfSize[0] = (float)dVar21;
+  local_21c0.halfSize[1] = (float)dVar21;
   G_GetPlayerViewOrigin(&pgVar4->ps,local_21c0.midPoint);
   BG_GetPlayerViewDirection(&pgVar4->ps,&local_2188,(float *)0x0,(float *)0x0);
   local_21a0.midPoint[0] = (pgVar4->ps).origin[0] + 0.0;
@@ -380,215 +365,214 @@ int Player_GetUseList(gentity_s *param_1,useList_t *param_2,int param_3)
   local_21a0.halfSize[0] = 15.0;
   local_21a0.halfSize[1] = 15.0;
   local_21a0.halfSize[2] = 35.0;
-  iVar9 = CM_AreaEntities(&local_21c0,(int *)local_20e0,0x800,0x200000);
-  lVar15 = (longlong)iVar9;
-  lVar18 = 0;
-  dVar24 = 10000.0;
-  if (0 < iVar9) {
-    dVar25 = 128.0;
-    dVar27 = 512.0;
-    dVar29 = 0.5;
-    lVar19 = lVar13 + -4;
-    dVar31 = 1.0;
-    puVar17 = local_20e0;
-    dVar26 = -2.0;
-    dVar28 = 0.0;
+  iVar6 = CM_AreaEntities(&local_21c0,local_20e0,0x800,0x200000);
+  lVar12 = (longlong)iVar6;
+  lVar15 = 0;
+  dVar21 = 10000.0;
+  if (0 < iVar6) {
+    dVar22 = 128.0;
+    dVar24 = 512.0;
+    dVar26 = 0.5;
+    pfVar16 = &param_2[-1].score;
+    dVar28 = 1.0;
+    piVar14 = local_20e0;
+    dVar23 = -2.0;
+    dVar25 = 0.0;
     do {
-      uVar5 = *puVar17;
-      pgVar20 = g_entities + uVar5;
-      if ((pgVar8 != pgVar20) &&
-         ((iVar9 = g_entities[uVar5].s.eType, iVar9 == 3 ||
-          ((g_entities[uVar5].r.contents & 0x200000U) != 0)))) {
-        iVar6 = (int)lVar19;
-        if (g_entities[uVar5].classname == scr_const.trigger_use_touch) {
-          bVar12 = Bounds_OverlapOrTouch(&g_entities[uVar5].r.absBox,&local_21a0);
-          if ((bVar12) && (iVar9 = SV_EntityContactBounds(&local_21a0,pgVar20), iVar9 != 0)) {
-            fVar34 = (player_useRadius->current).value;
-            *(gentity_s **)(iVar6 + 4) = pgVar20;
-            *(float *)(iVar6 + 8) = (float)((double)fVar34 * dVar26);
+      iVar6 = *piVar14;
+      pgVar17 = g_entities + iVar6;
+      if ((param_1 != pgVar17) &&
+         ((iVar9 = g_entities[iVar6].s.eType, iVar9 == 3 ||
+          ((g_entities[iVar6].r.contents & 0x200000U) != 0)))) {
+        if (g_entities[iVar6].classname == scr_const.trigger_use_touch) {
+          bVar10 = Bounds_OverlapOrTouch(&g_entities[iVar6].r.absBox,&local_21a0);
+          if ((bVar10) && (iVar6 = SV_EntityContactBounds(&local_21a0,pgVar17), iVar6 != 0)) {
+            fVar31 = (player_useRadius->current).value;
+            pfVar16[1] = (float)pgVar17;
+            pfVar16[2] = (float)((double)fVar31 * dVar23);
 LAB_824b93c4:
-            lVar19 = lVar19 + 8;
-            lVar18 = lVar18 + 1;
+            pfVar16 = pfVar16 + 2;
+            lVar15 = lVar15 + 1;
           }
         }
         else if (iVar9 == 4) {
-          if (param_3 != (pgVar20->s).number) {
-            dVar32 = (double)(player_throwbackInnerRadius->current).value;
-            fVar34 = Vec2DistanceSq(g_entities[uVar5].r.currentOrigin,(pgVar8->r).currentOrigin);
-            if ((float)(dVar32 * dVar32) < fVar34) goto LAB_824b93c8;
+          if (param_3 != (pgVar17->s).number) {
+            dVar29 = (double)(player_throwbackInnerRadius->current).value;
+            fVar31 = Vec2DistanceSq(g_entities[iVar6].r.currentOrigin,(param_1->r).currentOrigin);
+            if ((float)(dVar29 * dVar29) < fVar31) goto LAB_824b93c8;
           }
-          wVar11 = BG_GetWeaponClass(g_entities[uVar5].s.weapon,false);
-          if (wVar11 == WEAPCLASS_THROWINGKNIFE) {
-            iVar9 = BG_CanItemBeGrabbed(&pgVar20->s,&pgVar8->client->ps,0);
-            if ((iVar9 != 0) && (bVar12 = MayPickupMissile(pgVar8->client,pgVar20), bVar12)) {
+          wVar8 = BG_GetWeaponClass(g_entities[iVar6].s.weapon,false);
+          if (wVar8 == WEAPCLASS_THROWINGKNIFE) {
+            iVar9 = BG_CanItemBeGrabbed(&pgVar17->s,&param_1->client->ps,0);
+            if ((iVar9 != 0) && (bVar10 = MayPickupMissile(param_1->client,pgVar17), bVar10)) {
 LAB_824b91c0:
-              fVar34 = g_entities[uVar5].s.lerp.pos.trDelta[1];
-              fVar2 = g_entities[uVar5].s.lerp.pos.trDelta[0];
-              fVar3 = g_entities[uVar5].s.lerp.pos.trDelta[2];
-              if (fVar3 * fVar3 + fVar2 * fVar2 + fVar34 * fVar34 <=
+              fVar31 = g_entities[iVar6].s.lerp.pos.trDelta[1];
+              fVar2 = g_entities[iVar6].s.lerp.pos.trDelta[0];
+              fVar3 = g_entities[iVar6].s.lerp.pos.trDelta[2];
+              if (fVar3 * fVar3 + fVar2 * fVar2 + fVar31 * fVar31 <=
                   (bg_maxGrenadeIndicatorSpeed->current).value *
                   (bg_maxGrenadeIndicatorSpeed->current).value) goto LAB_824b91ec;
             }
           }
-          else if (g_entities[uVar5].tagInfo == (tagInfo_s *)0x0) goto LAB_824b91c0;
+          else if (g_entities[iVar6].tagInfo == (tagInfo_s *)0x0) goto LAB_824b91c0;
         }
         else {
 LAB_824b91ec:
-          bVar12 = ClientMayUseEnt(pgVar8->client,(ushort)(pgVar20->s).number);
-          if (bVar12) {
-            iVar9 = g_entities[uVar5].s.eType;
-            pdVar14 = player_throwbackOuterRadius;
-            if ((iVar9 != 4) && (pdVar14 = player_MGUseRadius, iVar9 != 0xb)) {
-              pdVar14 = player_useRadius;
+          bVar10 = ClientMayUseEnt(param_1->client,(ushort)(pgVar17->s).number);
+          if (bVar10) {
+            iVar9 = g_entities[iVar6].s.eType;
+            pdVar11 = player_throwbackOuterRadius;
+            if ((iVar9 != 4) && (pdVar11 = player_MGUseRadius, iVar9 != 0xb)) {
+              pdVar11 = player_useRadius;
             }
-            local_21cc = g_entities[uVar5].r.absBox.midPoint[1];
-            fVar34 = local_21cc - local_21c0.midPoint[1];
-            local_21c8 = g_entities[uVar5].r.absBox.midPoint[2];
+            local_21cc = g_entities[iVar6].r.absBox.midPoint[1];
+            fVar31 = local_21cc - local_21c0.midPoint[1];
+            local_21c8 = g_entities[iVar6].r.absBox.midPoint[2];
             fVar2 = local_21c8 - local_21c0.midPoint[2];
-            local_21d0 = g_entities[uVar5].r.absBox.midPoint[0];
+            local_21d0 = g_entities[iVar6].r.absBox.midPoint[0];
             fVar3 = local_21d0 - local_21c0.midPoint[0];
-            dVar33 = (double)SQRT(fVar3 * fVar3 + fVar2 * fVar2 + fVar34 * fVar34);
-            dVar32 = dVar31;
-            if (-dVar33 < 0.0) {
-              dVar32 = dVar33;
+            dVar30 = (double)SQRT(fVar3 * fVar3 + fVar2 * fVar2 + fVar31 * fVar31);
+            dVar29 = dVar28;
+            if (-dVar30 < 0.0) {
+              dVar29 = dVar30;
             }
-            fVar1 = (float)(dVar31 / dVar32);
-            if (dVar33 <= (double)(pdVar14->current).value) {
-              dVar32 = (double)(local_2180 * fVar2 * fVar1 +
-                               local_2184 * fVar34 * fVar1 + local_2188 * fVar1 * fVar3);
-              if ((g_entities[uVar5].classname == scr_const.trigger_use) &&
-                 (g_entities[uVar5].field31_0x1ac.item[0].dualWieldItem != false)) {
-                if (dVar32 < dVar28) goto LAB_824b93c8;
-                if (dVar31 < dVar33) {
-                  dVar23 = (double)g_entities[uVar5].r.box.halfSize[2];
-                  dVar22 = (double)g_entities[uVar5].r.box.halfSize[1];
-                  dVar21 = (double)g_entities[uVar5].r.box.halfSize[0];
-                  if ((float)(dVar22 - dVar23) < 0.0) {
-                    dVar22 = dVar23;
+            fVar1 = (float)(dVar28 / dVar29);
+            if (dVar30 <= (double)(pdVar11->current).value) {
+              dVar29 = (double)(local_2180 * fVar2 * fVar1 +
+                               local_2184 * fVar31 * fVar1 + local_2188 * fVar1 * fVar3);
+              if ((g_entities[iVar6].classname == scr_const.trigger_use) &&
+                 (g_entities[iVar6].field31_0x1ac.item[0].dualWieldItem != false)) {
+                if (dVar29 < dVar25) goto LAB_824b93c8;
+                if (dVar28 < dVar30) {
+                  dVar20 = (double)g_entities[iVar6].r.box.halfSize[2];
+                  dVar19 = (double)g_entities[iVar6].r.box.halfSize[1];
+                  dVar18 = (double)g_entities[iVar6].r.box.halfSize[0];
+                  if ((float)(dVar19 - dVar20) < 0.0) {
+                    dVar19 = dVar20;
                   }
-                  if ((float)(dVar21 - dVar22) < 0.0) {
-                    dVar21 = dVar22;
+                  if ((float)(dVar18 - dVar19) < 0.0) {
+                    dVar18 = dVar19;
                   }
-                  if ((float)(dVar32 * dVar32) <
-                      (float)(dVar31 / (double)(float)((double)(float)(dVar21 / dVar33) *
-                                                       (double)(float)(dVar21 / dVar33) + dVar31)))
+                  if ((float)(dVar29 * dVar29) <
+                      (float)(dVar28 / (double)(float)((double)(float)(dVar18 / dVar30) *
+                                                       (double)(float)(dVar18 / dVar30) + dVar28)))
                   goto LAB_824b93c8;
                 }
               }
-              fVar34 = -(float)((double)(float)(dVar32 + dVar31) * dVar29 - dVar31) * 256.0;
-              *(float *)(iVar6 + 8) = fVar34;
-              if (g_entities[uVar5].s.eType == 4) {
-                *(float *)(iVar6 + 8) = (float)((double)fVar34 - dVar27);
+              fVar31 = -(float)((double)(float)(dVar29 + dVar28) * dVar26 - dVar28) * 256.0;
+              pfVar16[2] = fVar31;
+              if (g_entities[iVar6].s.eType == 4) {
+                pfVar16[2] = (float)((double)fVar31 - dVar24);
               }
-              if (g_entities[uVar5].classname == scr_const.trigger_use) {
-                *(float *)(iVar6 + 8) = *(float *)(iVar6 + 8) - 256.0;
+              if (g_entities[iVar6].classname == scr_const.trigger_use) {
+                pfVar16[2] = pfVar16[2] - 256.0;
               }
-              if (g_entities[uVar5].s.eType == 6) {
-                *(float *)(iVar6 + 8) = (float)((double)*(float *)(iVar6 + 8) - dVar30);
+              if (g_entities[iVar6].s.eType == 6) {
+                pfVar16[2] = (float)((double)pfVar16[2] - dVar27);
               }
-              if (g_entities[uVar5].s.eType == 0xb) {
-                *(float *)(iVar6 + 8) = (float)((double)*(float *)(iVar6 + 8) - dVar25);
+              if (g_entities[iVar6].s.eType == 0xb) {
+                pfVar16[2] = (float)((double)pfVar16[2] - dVar22);
               }
-              if ((g_entities[uVar5].s.eType == 3) &&
-                 (iVar9 = BG_CanItemBeGrabbed(&pgVar20->s,&pgVar8->client->ps,0), iVar9 == 0)) {
-                lVar16 = lVar16 + 1;
-                *(float *)(iVar6 + 8) = (float)((double)*(float *)(iVar6 + 8) + dVar24);
+              if ((g_entities[iVar6].s.eType == 3) &&
+                 (iVar6 = BG_CanItemBeGrabbed(&pgVar17->s,&param_1->client->ps,0), iVar6 == 0)) {
+                lVar13 = lVar13 + 1;
+                pfVar16[2] = (float)((double)pfVar16[2] + dVar21);
               }
-              *(gentity_s **)(iVar6 + 4) = pgVar20;
-              *(float *)(iVar6 + 8) = (float)((double)*(float *)(iVar6 + 8) + dVar33);
+              pfVar16[1] = (float)pgVar17;
+              pfVar16[2] = (float)((double)pfVar16[2] + dVar30);
               goto LAB_824b93c4;
             }
           }
         }
       }
 LAB_824b93c8:
-      lVar15 = lVar15 + -1;
-      puVar17 = puVar17 + 1;
-    } while (lVar15 != 0);
+      lVar12 = lVar12 + -1;
+      piVar14 = piVar14 + 1;
+    } while (lVar12 != 0);
   }
-  qsort((void *)lVar13,(uint)lVar18,8,compare_use);
-  lVar18 = lVar18 - lVar16;
-  lVar16 = 0;
-  if (0 < lVar18) {
-    lVar19 = lVar13 + 4;
-    lVar15 = lVar18;
+  qsort(param_2,(uint)lVar15,8,compare_use);
+  lVar15 = lVar15 - lVar13;
+  iVar6 = 0;
+  if (0 < lVar15) {
+    pfVar16 = &param_2->score;
+    lVar13 = lVar15;
+    iVar6 = 0;
     do {
-      pfVar7 = (float *)lVar19;
-      pgVar8 = (gentity_s *)pfVar7[-1];
-      if (pgVar8->classname != scr_const.trigger_use_touch) {
-        local_21d0 = (pgVar8->r).absBox.midPoint[0];
-        local_21cc = (pgVar8->r).absBox.midPoint[1];
-        local_21c8 = (pgVar8->r).absBox.midPoint[2];
-        iVar9 = (pgVar8->s).eType;
+      pgVar17 = ((useList_t *)(pfVar16 + -1))->ent;
+      if (pgVar17->classname != scr_const.trigger_use_touch) {
+        local_21d0 = (pgVar17->r).absBox.midPoint[0];
+        local_21cc = (pgVar17->r).absBox.midPoint[1];
+        local_21c8 = (pgVar17->r).absBox.midPoint[2];
+        iVar9 = (pgVar17->s).eType;
         if (iVar9 == 3) {
-          pDVar10 = Com_GetServerDObjForEnt(pgVar8);
-          if (pDVar10 != (DObj *)0x0) {
-            Phys_GetCenterOfMassFromDObj(pDVar10,afStack_2158);
-            AnglesToAxis((pgVar8->r).currentAngles,aBStack_2140[0].midPoint);
+          pDVar7 = Com_GetServerDObjForEnt(pgVar17);
+          if (pDVar7 != (DObj *)0x0) {
+            Phys_GetCenterOfMassFromDObj(pDVar7,afStack_2158);
+            AnglesToAxis((pgVar17->r).currentAngles,aBStack_2140[0].midPoint);
             MatrixTransformVector(afStack_2158,aBStack_2140[0].midPoint,&local_21d0);
-            local_21d0 = (pgVar8->r).currentOrigin[0] + local_21d0;
-            local_21cc = (pgVar8->r).currentOrigin[1] + local_21cc;
-            local_21c8 = (pgVar8->r).currentOrigin[2] + local_21c8;
+            local_21d0 = (pgVar17->r).currentOrigin[0] + local_21d0;
+            local_21cc = (pgVar17->r).currentOrigin[1] + local_21cc;
+            local_21c8 = (pgVar17->r).currentOrigin[2] + local_21c8;
           }
         }
         else if (iVar9 == 6) {
-          pDVar10 = Com_GetServerDObjForEnt(pgVar8);
-          if (pDVar10 != (DObj *)0x0) {
-            DObjPhysicsGetBounds(pDVar10,&local_2170);
-            local_21d0 = local_2170.midPoint[0] + (pgVar8->r).currentOrigin[0];
-            local_21cc = (pgVar8->r).currentOrigin[1] + local_2170.midPoint[1];
-            local_21c8 = (pgVar8->r).currentOrigin[2] + local_2170.midPoint[2];
+          pDVar7 = Com_GetServerDObjForEnt(pgVar17);
+          if (pDVar7 != (DObj *)0x0) {
+            DObjPhysicsGetBounds(pDVar7,&local_2170);
+            local_21d0 = local_2170.midPoint[0] + (pgVar17->r).currentOrigin[0];
+            local_21cc = (pgVar17->r).currentOrigin[1] + local_2170.midPoint[1];
+            local_21c8 = (pgVar17->r).currentOrigin[2] + local_2170.midPoint[2];
           }
         }
         else if (iVar9 == 0xb) {
-          G_DObjGetWorldTagPos_CheckTagExists(pgVar8,(uint)scr_const.tag_aim,&local_21d0);
+          G_DObjGetWorldTagPos_CheckTagExists(pgVar17,(uint)scr_const.tag_aim,&local_21d0);
         }
         else if (iVar9 == 0xe) {
-          bVar12 = G_GetModelBounds((uint)pgVar8->model,aBStack_2140);
-          if (bVar12) {
-            AnglesToAxis((pgVar8->r).currentAngles,(float (*) [3])afStack_2110);
+          bVar10 = G_GetModelBounds((uint)pgVar17->model,aBStack_2140);
+          if (bVar10) {
+            AnglesToAxis((pgVar17->r).currentAngles,(float (*) [3])afStack_2110);
             MatrixTransformVector(aBStack_2140[0].midPoint,(float (*) [3])afStack_2110,&local_21d0);
-            local_21d0 = (pgVar8->r).currentOrigin[0] + local_21d0;
-            local_21cc = (pgVar8->r).currentOrigin[1] + local_21cc;
-            local_21c8 = (pgVar8->r).currentOrigin[2] + local_21c8;
+            local_21d0 = (pgVar17->r).currentOrigin[0] + local_21d0;
+            local_21cc = (pgVar17->r).currentOrigin[1] + local_21cc;
+            local_21c8 = (pgVar17->r).currentOrigin[2] + local_21c8;
           }
         }
-        else if (((iVar9 == 4) && (pgVar8->tagInfo != (tagInfo_s *)0x0)) &&
-                (wVar11 = BG_GetWeaponClass((pgVar8->s).weapon,false),
-                wVar11 == WEAPCLASS_THROWINGKNIFE)) {
-          pgVar20 = pgVar8->tagInfo->parent;
-          if (pgVar20 == (gentity_s *)0x0) {
+        else if (((iVar9 == 4) && (pgVar17->tagInfo != (tagInfo_s *)0x0)) &&
+                (wVar8 = BG_GetWeaponClass((pgVar17->s).weapon,false),
+                wVar8 == WEAPCLASS_THROWINGKNIFE)) {
+          pgVar5 = pgVar17->tagInfo->parent;
+          if (pgVar5 == (gentity_s *)0x0) {
             MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\player_use.cpp",
                             0x247,0,"%s");
           }
-          iVar9 = (pgVar20->s).eType;
+          iVar9 = (pgVar5->s).eType;
           if (iVar9 == 1 || iVar9 == 2) {
-            local_21d0 = (pgVar20->r).absBox.midPoint[0];
-            local_21cc = (pgVar20->r).absBox.midPoint[1];
-            local_21c8 = (pgVar20->r).absBox.midPoint[2];
+            local_21d0 = (pgVar5->r).absBox.midPoint[0];
+            local_21cc = (pgVar5->r).absBox.midPoint[1];
+            local_21c8 = (pgVar5->r).absBox.midPoint[2];
           }
         }
         iVar9 = G_TraceCapsuleComplete
                           (local_21c0.midPoint,&local_21d0,&bounds_origin,(pgVar4->ps).clientNum,
-                           (pgVar8->s).number,0x11);
+                           (pgVar17->s).number,0x11);
         if (iVar9 == 0) {
-          lVar16 = lVar16 + 1;
-          *pfVar7 = (float)((double)*pfVar7 + dVar24);
+          iVar6 = iVar6 + 1;
+          *pfVar16 = (float)((double)*pfVar16 + dVar21);
         }
       }
-      lVar15 = lVar15 + -1;
-      lVar19 = lVar19 + 8;
-    } while (lVar15 != 0);
+      lVar13 = lVar13 + -1;
+      pfVar16 = pfVar16 + 2;
+    } while (lVar13 != 0);
   }
-  qsort((void *)lVar13,(uint)lVar18,8,compare_use);
-  iVar9 = __restfpr_23(lVar18 - lVar16);
-  __restgprlr();
-  return iVar9;
+  qsort(param_2,(uint)lVar15,8,compare_use);
+  return (uint)lVar15 - iVar6;
 }
 
 
 // 824B9698  Player_GetItemCursorHint  (game/player_use.cpp:679)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
@@ -599,49 +583,41 @@ int Player_GetItemCursorHint(gclient_s *param_1,gentity_s *param_2)
   Weapon WVar1;
   WeaponDef *pWVar2;
   WeaponDef *pWVar3;
-  playerState_s *ppVar5;
-  Weapon WVar6;
-  int iVar7;
-  undefined8 uVar4;
-  ulonglong uVar8;
+  Weapon WVar4;
+  int iVar5;
   
-  uVar8 = (ulonglong)(int)param_2;
-  ppVar5 = (playerState_s *)__savegprlr_28(param_1);
-  if ((uVar8 & 0xffffffff) == 0) {
+  if (param_2 == (gentity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\player_use.cpp",0x2ae,0,
                     "%s");
   }
-  if (ppVar5 == (playerState_s *)0x0) {
+  if (param_1 == (gclient_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\player_use.cpp",0x2af,0,
                     "%s");
   }
-  WVar1 = *(Weapon *)((int)uVar8 + 200);
-  WVar6 = BG_GetAlternateWeapon(WVar1,false);
-  pWVar2 = bg_weaponDefs[WVar6.data & 0xff];
-  WVar6 = BG_GetAlternateWeapon((ppVar5->weapCommon).weapon,false);
-  pWVar3 = bg_weaponDefs[WVar6.data & 0xff];
-  iVar7 = BG_PlayerHasWeapon(ppVar5,WVar1);
-  if (iVar7 != 0) {
-    iVar7 = __restgprlr_28(0);
-    return iVar7;
+  WVar1 = (param_2->s).weapon;
+  WVar4 = BG_GetAlternateWeapon(WVar1,false);
+  pWVar2 = bg_weaponDefs[WVar4.data & 0xff];
+  WVar4 = BG_GetAlternateWeapon((param_1->ps).weapCommon.weapon,false);
+  pWVar3 = bg_weaponDefs[WVar4.data & 0xff];
+  iVar5 = BG_PlayerHasWeapon(&param_1->ps,WVar1);
+  if (iVar5 == 0) {
+    if ((((pWVar3->inventoryType != WEAPINVENTORY_PRIMARY) &&
+         (pWVar3->inventoryType != WEAPINVENTORY_ALTMODE)) &&
+        ((pWVar2->inventoryType == WEAPINVENTORY_PRIMARY ||
+         (pWVar2->inventoryType == WEAPINVENTORY_ALTMODE)))) &&
+       (iVar5 = BG_PlayerWeaponCountPrimaryTypes(&param_1->ps), 1 < iVar5)) {
+      return 0;
+    }
+    return 5;
   }
-  if (((pWVar3->inventoryType != WEAPINVENTORY_PRIMARY) &&
-      (pWVar3->inventoryType != WEAPINVENTORY_ALTMODE)) &&
-     ((pWVar2->inventoryType == WEAPINVENTORY_PRIMARY ||
-      (pWVar2->inventoryType == WEAPINVENTORY_ALTMODE)))) {
-    iVar7 = BG_PlayerWeaponCountPrimaryTypes(ppVar5);
-    uVar4 = 0;
-    if (1 < iVar7) goto LAB_824b9798;
-  }
-  uVar4 = 5;
-LAB_824b9798:
-  iVar7 = __restgprlr_28(uVar4);
-  return iVar7;
+  return 0;
 }
 
 
 // 824B97A0  Player_SetTurretDropHint  (game/player_use.cpp:720)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
@@ -649,54 +625,54 @@ LAB_824b9798:
 void Player_SetTurretDropHint(gentity_s *param_1)
 
 {
-  int iVar1;
-  gentity_s *pgVar2;
-  int iVar3;
+  gclient_s *pgVar1;
+  int iVar2;
+  gentity_s *pgVar3;
   Weapon WVar4;
   
-  iVar3 = __savegprlr_28(param_1);
-  if (iVar3 == 0) {
+  if (param_1 == (gentity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\player_use.cpp",0x2d4,0,
                     "%s");
   }
-  if (*(int *)(iVar3 + 0x158) == 0) {
+  if (param_1->client == (gclient_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\player_use.cpp",0x2d5,0,
                     "%s");
   }
-  if (*(char *)(iVar3 + 0x16c) == '\0') {
+  if (param_1->active == '\0') {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\player_use.cpp",0x2d6,0,
                     "%s");
   }
-  iVar3 = *(int *)(iVar3 + 0x158);
-  if ((*(uint *)(iVar3 + 0xf8) & 0x3800) == 0) {
+  pgVar1 = param_1->client;
+  if (((pgVar1->ps).eFlags & 0x3800U) == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\player_use.cpp",0x2da,0,
                     "%s");
   }
-  if (*(int *)(iVar3 + 0x1bc) == 0x7ff) {
+  if ((pgVar1->ps).viewlocked_entNum == 0x7ff) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\player_use.cpp",0x2db,0,
                     "%s");
   }
-  pgVar2 = level.gentities;
-  iVar1 = *(int *)(iVar3 + 0x1bc);
-  if (level.gentities[iVar1].s.eType != 0xb) {
+  pgVar3 = level.gentities;
+  iVar2 = (pgVar1->ps).viewlocked_entNum;
+  if (level.gentities[iVar2].s.eType != 0xb) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\player_use.cpp",0x2de,0,
                     "%s");
   }
-  WVar4 = BG_GetAlternateWeapon(pgVar2[iVar1].s.weapon,false);
+  WVar4 = BG_GetAlternateWeapon(pgVar3[iVar2].s.weapon,false);
   if (*bg_weaponDefs[WVar4.data & 0xff]->dropHintString != '\0') {
-    *(undefined4 *)(iVar3 + 0x1e8) = 0x7ff;
-    *(undefined4 *)(iVar3 + 0x1e0) = 5;
-    *(undefined4 *)(iVar3 + 0x1ec) = 0;
-    WVar4 = BG_GetAlternateWeapon(pgVar2[iVar1].s.weapon,false);
-    *(int *)(iVar3 + 0x1e4) = bg_weaponDefs[WVar4.data & 0xff]->dropHintStringIndex;
+    (pgVar1->ps).cursorHintEntIndex = 0x7ff;
+    (pgVar1->ps).cursorHint = 5;
+    (pgVar1->ps).cursorHintDualWield = 0;
+    WVar4 = BG_GetAlternateWeapon(pgVar3[iVar2].s.weapon,false);
+    (pgVar1->ps).cursorHintString = bg_weaponDefs[WVar4.data & 0xff]->dropHintStringIndex;
   }
-  __restgprlr_28();
   return;
 }
 
 
 // 824B9940  MayThrowBackGrenade  (game/player_use.cpp:747)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 
@@ -706,46 +682,38 @@ bool MayThrowBackGrenade(gclient_s *param_1,gentity_s *param_2)
   gclient_s *pgVar1;
   team_t tVar2;
   team_t tVar3;
-  gclient_s *pgVar4;
-  weapClass_t wVar5;
-  undefined1 uVar8;
+  weapClass_t wVar4;
   EntHandle *this;
-  int iVar6;
-  gentity_s *pgVar7;
-  ulonglong uVar9;
+  int iVar5;
+  gentity_s *pgVar6;
   
-  uVar9 = (ulonglong)(int)param_2;
-  pgVar4 = (gclient_s *)__savegprlr_28(param_1);
-  if (pgVar4 == (gclient_s *)0x0) {
+  if (param_1 == (gclient_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\player_use.cpp",0x2ec,0,
                     "%s");
   }
-  if ((uVar9 & 0xffffffff) == 0) {
+  if (param_2 == (gentity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\player_use.cpp",0x2ed,0,
                     "%s");
   }
-  wVar5 = BG_GetWeaponClass(*(Weapon *)((int)uVar9 + 200),false);
-  if (wVar5 != WEAPCLASS_GRENADE) {
-    uVar8 = __restgprlr_28(0);
-    return (bool)uVar8;
+  wVar4 = BG_GetWeaponClass((param_2->s).weapon,false);
+  if (wVar4 != WEAPCLASS_GRENADE) {
+    return false;
   }
-  this = (EntHandle *)((int)uVar9 + 0x150);
-  iVar6 = EntHandle::isDefined(this);
-  if (iVar6 != 0) {
-    pgVar7 = EntHandle::ent(this);
-    pgVar1 = pgVar7->client;
+  this = &(param_2->r).ownerNum;
+  iVar5 = EntHandle::isDefined(this);
+  if (iVar5 != 0) {
+    pgVar6 = EntHandle::ent(this);
+    pgVar1 = pgVar6->client;
     if (pgVar1 != (gclient_s *)0x0) {
-      tVar2 = (pgVar4->sess).cs.team;
+      tVar2 = (param_1->sess).cs.team;
       tVar3 = (pgVar1->sess).cs.team;
       if ((((tVar2 == tVar3) && ((tVar2 == TEAM_AXIS || (tVar2 == TEAM_ALLIES)))) &&
-          ((tVar3 == TEAM_AXIS || (tVar3 == TEAM_ALLIES)))) && (pgVar4 != pgVar1)) {
-        uVar8 = __restgprlr_28((scr_team_fftype->current).integer != 0);
-        return (bool)uVar8;
+          ((tVar3 == TEAM_AXIS || (tVar3 == TEAM_ALLIES)))) && (param_1 != pgVar1)) {
+        return (bool)('\x01' - ((scr_team_fftype->current).integer == 0));
       }
     }
   }
-  uVar8 = __restgprlr_28(1);
-  return (bool)uVar8;
+  return true;
 }
 
 
@@ -775,6 +743,8 @@ bool EnsurePlayerHasWeaponForThrowback(playerState_s *param_1,Weapon param_2)
 
 // 824B9AD0  Player_UpdateCursorHints  (game/player_use.cpp:816)
 
+/* WARNING: Function: __savegprlr_18 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_18 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
@@ -785,59 +755,56 @@ void Player_UpdateCursorHints(gentity_s *param_1)
   gclient_s *pgVar1;
   gclient_s *pgVar2;
   gentity_s *pgVar3;
-  gentity_s *pgVar4;
-  bool bVar8;
+  bool bVar7;
+  int iVar4;
   int iVar5;
-  int iVar6;
-  Weapon WVar7;
+  Weapon WVar6;
+  uint uVar8;
   uint uVar9;
-  uint uVar10;
+  int iVar10;
   int iVar11;
   int iVar12;
-  int iVar13;
-  useList_t *puVar14;
+  useList_t *puVar13;
   useList_t local_4080 [2064];
   
-  pgVar4 = (gentity_s *)__savegprlr_18(param_1);
-  if (pgVar4->client == (gclient_s *)0x0) {
+  if (param_1->client == (gclient_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\player_use.cpp",0x33c,0,
                     "%s");
   }
-  pgVar1 = pgVar4->client;
+  pgVar1 = param_1->client;
   (pgVar1->ps).cursorHint = 0;
   (pgVar1->ps).cursorHintDualWield = 0;
-  iVar5 = (pgVar1->ps).cursorHintEntIndex;
-  bVar8 = BG_ThrowingBackGrenade(&pgVar1->ps);
-  if (!bVar8) {
+  iVar4 = (pgVar1->ps).cursorHintEntIndex;
+  bVar7 = BG_ThrowingBackGrenade(&pgVar1->ps);
+  if (!bVar7) {
     (pgVar1->ps).throwbackGrenadeTimeLeft = 0;
     (pgVar1->ps).throwbackWeapon.data = 0;
   }
-  if (0 < pgVar4->health) {
-    pgVar2 = pgVar4->client;
+  if (0 < param_1->health) {
+    pgVar2 = param_1->client;
     if (((pgVar2->flags & 8U) == 0) && (((pgVar1->ps).otherFlags & 2U) == 0)) {
-      if (pgVar4->active == '\0') {
-        uVar10 = (pgVar2->ps).pm_flags;
-        if (((((uVar10 & 4) == 0) && ((uVar10 & 0x4000) == 0)) &&
-            ((iVar11 = (pgVar1->ps).weapState[0].weaponState, iVar11 < 0x10 ||
-             ((0x14 < iVar11 && ((iVar11 < 0x10 || (0x14 < iVar11)))))))) &&
+      if (param_1->active == '\0') {
+        uVar9 = (pgVar2->ps).pm_flags;
+        if (((((uVar9 & 4) == 0) && ((uVar9 & 0x4000) == 0)) &&
+            ((iVar10 = (pgVar1->ps).weapState[0].weaponState, iVar10 < 0x10 ||
+             ((0x14 < iVar10 && ((iVar10 < 0x10 || (0x14 < iVar10)))))))) &&
            ((pgVar2->flags & 4U) == 0)) {
           if (pgVar2->hintForcedType != HINT_NONE) {
-            (pgVar1->ps).cursorHint = pgVar4->client->hintForcedType;
-            (pgVar1->ps).cursorHintString = pgVar4->client->hintForcedString;
+            (pgVar1->ps).cursorHint = param_1->client->hintForcedType;
+            (pgVar1->ps).cursorHintString = param_1->client->hintForcedString;
             (pgVar1->ps).cursorHintEntIndex = 0x7ff;
             (pgVar1->ps).cursorHintDualWield = 0;
-            __restgprlr_18();
             return;
           }
-          iVar5 = Player_GetUseList(pgVar4,local_4080,iVar5);
-          if (iVar5 != 0) {
-            iVar11 = -1;
-            iVar13 = 0;
-            if (0 < iVar5) {
-              uVar10 = 0;
-              puVar14 = local_4080;
+          iVar4 = Player_GetUseList(param_1,local_4080,iVar4);
+          if (iVar4 != 0) {
+            iVar10 = -1;
+            iVar12 = 0;
+            if (0 < iVar4) {
+              uVar9 = 0;
+              puVar13 = local_4080;
               do {
-                pgVar3 = puVar14->ent;
+                pgVar3 = puVar13->ent;
                 if (pgVar3 == (gentity_s *)0x0) {
                   MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\player_use.cpp"
                                   ,0x38b,0,"%s");
@@ -846,74 +813,80 @@ void Player_UpdateCursorHints(gentity_s *param_1)
                   MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\player_use.cpp"
                                   ,0x38c,0,"%s");
                 }
-                iVar12 = iVar11;
+                iVar11 = iVar10;
                 switch((pgVar3->s).eType) {
                 case 0:
                   if ((pgVar3->classname != scr_const.trigger_use) &&
                      (pgVar3->classname != scr_const.trigger_use_touch)) goto LAB_824b9da8;
-                  if (((pgVar3->team != 0) && ((uint)pgVar3->team != (pgVar4->client->sess).cs.team)
-                      ) || ((iVar12 = (pgVar3->field31_0x1ac).trigger.singleUserEntIndex,
-                            iVar12 != 0x7ff && (iVar12 != (pgVar4->client->ps).clientNum)))) break;
+                  if (((pgVar3->team != 0) &&
+                      ((uint)pgVar3->team != (param_1->client->sess).cs.team)) ||
+                     ((iVar11 = (pgVar3->field31_0x1ac).trigger.singleUserEntIndex, iVar11 != 0x7ff
+                      && (iVar11 != (param_1->client->ps).clientNum)))) break;
                 case 6:
-                  iVar6 = (pgVar3->s).un2.hintType;
-                  if (iVar6 == 0) {
-LAB_824b9da8:
-                    (pgVar1->ps).cursorHintEntIndex = 0x7ff;
-                  }
-                  else {
-                    iVar5 = (pgVar3->s).un1.eventParm2;
-                    uVar10 = 0;
-                    if (iVar5 != 0xff) {
-                      iVar11 = iVar5;
+                  iVar5 = (pgVar3->s).un2.hintType;
+                  if (iVar5 != 0) {
+                    iVar4 = (pgVar3->s).un1.eventParm2;
+                    uVar9 = 0;
+                    if (iVar4 != 0xff) {
+                      iVar10 = iVar4;
                     }
 LAB_824b9da0:
-                    iVar12 = iVar11;
-                    if (iVar6 == 0) goto LAB_824b9da8;
+                    iVar11 = iVar10;
+                    if (iVar5 != 0) {
 LAB_824b9de0:
-                    (pgVar1->ps).cursorHintEntIndex = (pgVar3->s).number;
-                    pgVar3->flags = pgVar3->flags | 0x200000;
-                    (pgVar1->ps).cursorHint = iVar6;
-                    (pgVar1->ps).cursorHintString = iVar12;
-                    (pgVar1->ps).cursorHintDualWield = uVar10;
+                      (pgVar1->ps).cursorHintEntIndex = (pgVar3->s).number;
+                      pgVar3->flags = pgVar3->flags | 0x200000;
+                      (pgVar1->ps).cursorHint = iVar5;
+                      (pgVar1->ps).cursorHintString = iVar11;
+                      (pgVar1->ps).cursorHintDualWield = uVar9;
+                      goto LAB_824b9e00;
+                    }
                   }
-                  iVar5 = (pgVar1->ps).cursorHintEntIndex;
-                  if ((iVar5 != 0x7ff) && (g_entities[iVar5].r.isInUse == '\0')) {
-                    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\player_use.cpp"
-                                    ,0x3fa,1,"%s\n\t(ps->cursorHintEntIndex) = %i");
+LAB_824b9da8:
+                  (pgVar1->ps).cursorHintEntIndex = 0x7ff;
+LAB_824b9e00:
+                  iVar4 = (pgVar1->ps).cursorHintEntIndex;
+                  if (iVar4 == 0x7ff) {
+                    return;
                   }
-                  goto LAB_824b9e50;
+                  if (g_entities[iVar4].r.isInUse != '\0') {
+                    return;
+                  }
+                  MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\player_use.cpp"
+                                  ,0x3fa,1,"%s\n\t(ps->cursorHintEntIndex) = %i");
+                  return;
                 case 3:
-                  iVar6 = Player_GetItemCursorHint(pgVar4->client,pgVar3);
-                  if (iVar6 == 0) break;
-                  uVar10 = (uint)(pgVar3->field31_0x1ac).item[0].dualWieldItem;
+                  iVar5 = Player_GetItemCursorHint(param_1->client,pgVar3);
+                  if (iVar5 == 0) break;
+                  uVar9 = (uint)(pgVar3->field31_0x1ac).item[0].dualWieldItem;
                   goto LAB_824b9da0;
                 case 4:
-                  bVar8 = MayThrowBackGrenade(pgVar4->client,pgVar3);
-                  if (!bVar8) {
-                    bVar8 = MayPickupMissile(pgVar4->client,pgVar3);
-                    if (bVar8) {
-                      iVar6 = 5;
+                  bVar7 = MayThrowBackGrenade(param_1->client,pgVar3);
+                  if (bVar7) {
+                    bVar7 = EnsurePlayerHasWeaponForThrowback(&pgVar1->ps,(pgVar3->s).weapon);
+                    if (bVar7) {
+                      iVar5 = 5;
+                      uVar8 = pgVar3->nextthink - level.time;
+                      (pgVar1->ps).throwbackGrenadeTimeLeft = -((int)uVar8 >> 0x1f) - 1U & uVar8;
+                      (pgVar1->ps).throwbackWeapon = (pgVar3->s).weapon;
                       goto LAB_824b9de0;
                     }
                     goto LAB_824b9da8;
                   }
-                  bVar8 = EnsurePlayerHasWeaponForThrowback(&pgVar1->ps,(pgVar3->s).weapon);
-                  if (!bVar8) goto LAB_824b9da8;
-                  iVar6 = 5;
-                  uVar9 = pgVar3->nextthink - level.time;
-                  (pgVar1->ps).throwbackGrenadeTimeLeft = -((int)uVar9 >> 0x1f) - 1U & uVar9;
-                  (pgVar1->ps).throwbackWeapon = (pgVar3->s).weapon;
+                  bVar7 = MayPickupMissile(param_1->client,pgVar3);
+                  if (!bVar7) goto LAB_824b9da8;
+                  iVar5 = 5;
                   goto LAB_824b9de0;
                 case 0xb:
-                  bVar8 = G_IsTurretUsable(pgVar3,pgVar4);
-                  if (bVar8) {
-                    iVar12 = (pgVar3->s).un1.eventParm2;
-                    iVar6 = 5;
-                    if ((iVar12 == 0xff) &&
-                       (WVar7 = BG_GetAlternateWeapon((pgVar3->s).weapon,false), iVar12 = iVar11,
-                       *bg_weaponDefs[WVar7.data & 0xff]->szUseHintString != '\0')) {
-                      WVar7 = BG_GetAlternateWeapon((pgVar3->s).weapon,false);
-                      iVar12 = bg_weaponDefs[WVar7.data & 0xff]->iUseHintStringIndex;
+                  bVar7 = G_IsTurretUsable(pgVar3,param_1);
+                  if (bVar7) {
+                    iVar11 = (pgVar3->s).un1.eventParm2;
+                    iVar5 = 5;
+                    if ((iVar11 == 0xff) &&
+                       (WVar6 = BG_GetAlternateWeapon((pgVar3->s).weapon,false), iVar11 = iVar10,
+                       *bg_weaponDefs[WVar6.data & 0xff]->szUseHintString != '\0')) {
+                      WVar6 = BG_GetAlternateWeapon((pgVar3->s).weapon,false);
+                      iVar11 = bg_weaponDefs[WVar6.data & 0xff]->iUseHintStringIndex;
                     }
                     goto LAB_824b9de0;
                   }
@@ -923,17 +896,16 @@ LAB_824b9de0:
                     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\player_use.cpp"
                                     ,0x3de,0,"%s");
                   }
-                  bVar8 = G_IsVehicleUsable(pgVar3,pgVar4);
-                  if (bVar8) {
-                    iVar6 = 1;
-                    iVar12 = pgVar3->vehicle->useHintStringIndex;
+                  bVar7 = G_IsVehicleUsable(pgVar3,param_1);
+                  if (bVar7) {
+                    iVar5 = 1;
+                    iVar11 = pgVar3->vehicle->useHintStringIndex;
                     goto LAB_824b9de0;
                   }
                 }
-                iVar13 = iVar13 + 1;
-                puVar14 = puVar14 + 1;
-                if (iVar5 <= iVar13) {
-                  __restgprlr_18();
+                iVar12 = iVar12 + 1;
+                puVar13 = puVar13 + 1;
+                if (iVar4 <= iVar12) {
                   return;
                 }
               } while( true );
@@ -942,14 +914,11 @@ LAB_824b9de0:
         }
       }
       else if (((pgVar1->ps).eFlags & 0x3800U) != 0) {
-        Player_SetTurretDropHint(pgVar4);
-        __restgprlr_18();
+        Player_SetTurretDropHint(param_1);
         return;
       }
     }
   }
-LAB_824b9e50:
-  __restgprlr_18();
   return;
 }
 

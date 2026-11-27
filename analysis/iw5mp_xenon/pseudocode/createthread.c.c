@@ -2,15 +2,16 @@
 
 // 828A96E8  CreateThread  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/xrtl/createthread.c:109)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 void * CreateThread(void *param_1,ulong param_2,_func___cdecl_ulong_void_ptr *param_3,void *param_4,
                    ulong param_5,ulong *param_6)
 
 {
   void *pvVar1;
   
-  pvVar1 = (void *)__savegprlr_26(param_1);
-  pvVar1 = XapipCreateThread(pvVar1,param_2,param_3,param_4,param_5,0xffffffff,param_6);
-  pvVar1 = (void *)__restgprlr_26(pvVar1);
+  pvVar1 = XapipCreateThread(param_1,param_2,param_3,param_4,param_5,0xffffffff,param_6);
   return pvVar1;
 }
 

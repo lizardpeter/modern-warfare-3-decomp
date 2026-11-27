@@ -2,60 +2,58 @@
 
 // 827BB0F8  jpeg_CreateDecompress  (jpeg-6/jdapimin.c:31)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void jpeg_CreateDecompress(jpeg_decompress_struct *param_1,int param_2,uint param_3)
 
 {
   jpeg_error_mgr *pjVar1;
   void *pvVar2;
-  jpeg_decompress_struct *pjVar3;
-  ulonglong uVar4;
-  JHUFF_TBL **ppJVar5;
-  jpeg_alloc jVar6;
-  longlong lVar7;
+  JHUFF_TBL **ppJVar3;
+  jpeg_alloc jVar4;
+  longlong lVar5;
   
-  uVar4 = (ulonglong)(int)param_3;
-  pjVar3 = (jpeg_decompress_struct *)__savegprlr_27(param_1);
-  pjVar3->mem = (jpeg_memory_mgr *)0x0;
+  param_1->mem = (jpeg_memory_mgr *)0x0;
   if (param_2 != 0x3e) {
-    pjVar3->err->msg_code = 0xc;
-    (pjVar3->err->msg_parm).i[0] = 0x3e;
-    (pjVar3->err->msg_parm).i[1] = param_2;
-    (*pjVar3->err->error_exit)((jpeg_common_struct *)pjVar3);
+    param_1->err->msg_code = 0xc;
+    (param_1->err->msg_parm).i[0] = 0x3e;
+    (param_1->err->msg_parm).i[1] = param_2;
+    (*param_1->err->error_exit)((jpeg_common_struct *)param_1);
   }
-  if ((uVar4 & 0xffffffff) != 0x1b8) {
-    pjVar3->err->msg_code = 0x15;
-    (pjVar3->err->msg_parm).i[0] = 0x1b8;
-    (pjVar3->err->msg_parm).i[1] = (int)uVar4;
-    (*pjVar3->err->error_exit)((jpeg_common_struct *)pjVar3);
+  if (param_3 != 0x1b8) {
+    param_1->err->msg_code = 0x15;
+    (param_1->err->msg_parm).i[0] = 0x1b8;
+    (param_1->err->msg_parm).i[1] = param_3;
+    (*param_1->err->error_exit)((jpeg_common_struct *)param_1);
   }
-  pjVar1 = pjVar3->err;
-  pvVar2 = pjVar3->client_data;
-  jVar6 = pjVar3->alloc;
+  pjVar1 = param_1->err;
+  pvVar2 = param_1->client_data;
+  jVar4 = param_1->alloc;
   memset();
-  pjVar3->err = pjVar1;
-  pjVar3->client_data = pvVar2;
-  pjVar3->alloc = jVar6;
-  pjVar3->is_decompressor = '\x01';
-  jinit_memory_mgr((jpeg_common_struct *)pjVar3);
-  pjVar3->progress = (jpeg_progress_mgr *)0x0;
-  pjVar3->src = (jpeg_source_mgr *)0x0;
-  ppJVar5 = pjVar3->dc_huff_tbl_ptrs + 3;
-  pjVar3->quant_tbl_ptrs[0] = (JQUANT_TBL *)0x0;
-  pjVar3->quant_tbl_ptrs[1] = (JQUANT_TBL *)0x0;
-  pjVar3->quant_tbl_ptrs[2] = (JQUANT_TBL *)0x0;
-  lVar7 = 4;
-  pjVar3->quant_tbl_ptrs[3] = (JQUANT_TBL *)0x0;
+  param_1->err = pjVar1;
+  param_1->client_data = pvVar2;
+  param_1->alloc = jVar4;
+  param_1->is_decompressor = '\x01';
+  jinit_memory_mgr((jpeg_common_struct *)param_1);
+  param_1->progress = (jpeg_progress_mgr *)0x0;
+  param_1->src = (jpeg_source_mgr *)0x0;
+  ppJVar3 = param_1->dc_huff_tbl_ptrs + 3;
+  param_1->quant_tbl_ptrs[0] = (JQUANT_TBL *)0x0;
+  param_1->quant_tbl_ptrs[1] = (JQUANT_TBL *)0x0;
+  param_1->quant_tbl_ptrs[2] = (JQUANT_TBL *)0x0;
+  lVar5 = 4;
+  param_1->quant_tbl_ptrs[3] = (JQUANT_TBL *)0x0;
   do {
-    ppJVar5[-3] = (JHUFF_TBL *)0x0;
-    ppJVar5 = ppJVar5 + 1;
-    *ppJVar5 = (JHUFF_TBL *)0x0;
-    lVar7 = lVar7 + -1;
-  } while (lVar7 != 0);
-  pjVar3->marker_list = (jpeg_marker_struct *)0x0;
-  jinit_marker_reader(pjVar3);
-  jinit_input_controller(pjVar3);
-  pjVar3->global_state = 200;
-  __restgprlr_27();
+    ppJVar3[-3] = (JHUFF_TBL *)0x0;
+    ppJVar3 = ppJVar3 + 1;
+    *ppJVar3 = (JHUFF_TBL *)0x0;
+    lVar5 = lVar5 + -1;
+  } while (lVar5 != 0);
+  param_1->marker_list = (jpeg_marker_struct *)0x0;
+  jinit_marker_reader(param_1);
+  jinit_input_controller(param_1);
+  param_1->global_state = 200;
   return;
 }
 
@@ -98,104 +96,103 @@ void jpeg_abort_decompress(jpeg_decompress_struct *param_1)
 
 // 827BB228  default_decompress_parms  (jpeg-6/jdapimin.c:121)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void default_decompress_parms(jpeg_decompress_struct *param_1)
 
 {
   int iVar1;
-  int *piVar2;
+  jpeg_component_info *pjVar2;
   int iVar3;
   int iVar4;
-  int iVar5;
-  int *piVar6;
+  jpeg_error_mgr *pjVar5;
   
-  piVar6 = (int *)__savegprlr_27(param_1);
-  iVar1 = piVar6[0xb];
+  iVar1 = param_1->num_components;
   if (iVar1 == 1) {
-    piVar6[0xc] = 1;
-    piVar6[0xd] = 1;
+    param_1->jpeg_color_space = JCS_GRAYSCALE;
+    param_1->out_color_space = JCS_GRAYSCALE;
     goto LAB_827bb3fc;
   }
   if (iVar1 != 3) {
     if (iVar1 == 4) {
-      if ((*(char *)(piVar6 + 0x44) == '\0') || (*(char *)((int)piVar6 + 0x111) == '\0')) {
-        piVar6[0xc] = 4;
-        piVar6[0xd] = 4;
+      if ((param_1->saw_Adobe_marker == '\0') || (param_1->Adobe_transform == '\0')) {
+        param_1->jpeg_color_space = JCS_CMYK;
+        param_1->out_color_space = JCS_CMYK;
       }
-      else if (*(char *)((int)piVar6 + 0x111) == '\x02') {
-        piVar6[0xd] = 4;
-        piVar6[0xc] = 5;
+      else if (param_1->Adobe_transform == '\x02') {
+        param_1->out_color_space = JCS_CMYK;
+        param_1->jpeg_color_space = JCS_YCCK;
       }
       else {
-        *(undefined4 *)(*piVar6 + 0x14) = 0x72;
-        *(uint *)(*piVar6 + 0x18) = (uint)*(byte *)((int)piVar6 + 0x111);
-        (**(code **)(*piVar6 + 4))(piVar6,0xffffffffffffffff);
-        piVar6[0xd] = 4;
-        piVar6[0xc] = 5;
+        param_1->err->msg_code = 0x72;
+        *(uint *)&param_1->err->msg_parm = (uint)param_1->Adobe_transform;
+        (*param_1->err->emit_message)((jpeg_common_struct *)param_1,-1);
+        param_1->out_color_space = JCS_CMYK;
+        param_1->jpeg_color_space = JCS_YCCK;
       }
     }
     else {
-      piVar6[0xc] = 0;
-      piVar6[0xd] = 0;
+      param_1->jpeg_color_space = JCS_UNKNOWN;
+      param_1->out_color_space = JCS_UNKNOWN;
     }
     goto LAB_827bb3fc;
   }
-  if (*(char *)(piVar6 + 0x42) == '\0') {
-    if (*(char *)(piVar6 + 0x44) == '\0') {
-      piVar2 = (int *)piVar6[0x33];
-      iVar1 = *piVar2;
-      iVar3 = piVar2[0x15];
-      iVar4 = piVar2[0x2a];
+  if (param_1->saw_JFIF_marker == '\0') {
+    if (param_1->saw_Adobe_marker == '\0') {
+      pjVar2 = param_1->comp_info;
+      iVar1 = pjVar2->component_id;
+      iVar3 = pjVar2[1].component_id;
+      iVar4 = pjVar2[2].component_id;
       if (iVar1 == 1) {
         if ((iVar3 == 2) && (iVar4 == 3)) goto LAB_827bb37c;
       }
       else if (((iVar1 == 0x52) && (iVar3 == 0x47)) && (iVar4 == 0x42)) goto LAB_827bb3a4;
-      iVar5 = *piVar6;
-      *(int *)(iVar5 + 0x1c) = iVar3;
-      *(int *)(iVar5 + 0x18) = iVar1;
-      *(int *)(iVar5 + 0x20) = iVar4;
-      *(undefined4 *)(*piVar6 + 0x14) = 0x6f;
-      (**(code **)(*piVar6 + 4))(piVar6,1);
-      piVar6[0xd] = 2;
-      piVar6[0xc] = 3;
+      pjVar5 = param_1->err;
+      (pjVar5->msg_parm).i[1] = iVar3;
+      (pjVar5->msg_parm).i[0] = iVar1;
+      (pjVar5->msg_parm).i[2] = iVar4;
+      param_1->err->msg_code = 0x6f;
+      (*param_1->err->emit_message)((jpeg_common_struct *)param_1,1);
+      param_1->out_color_space = JCS_RGB;
+      param_1->jpeg_color_space = JCS_YCbCr;
       goto LAB_827bb3fc;
     }
-    if (*(char *)((int)piVar6 + 0x111) == '\0') {
+    if (param_1->Adobe_transform == '\0') {
 LAB_827bb3a4:
-      piVar6[0xc] = 2;
-      piVar6[0xd] = 2;
+      param_1->jpeg_color_space = JCS_RGB;
+      param_1->out_color_space = JCS_RGB;
       goto LAB_827bb3fc;
     }
-    if (*(char *)((int)piVar6 + 0x111) != '\x01') {
-      *(undefined4 *)(*piVar6 + 0x14) = 0x72;
-      *(uint *)(*piVar6 + 0x18) = (uint)*(byte *)((int)piVar6 + 0x111);
-      (**(code **)(*piVar6 + 4))(piVar6,0xffffffffffffffff);
-      piVar6[0xd] = 2;
-      piVar6[0xc] = 3;
+    if (param_1->Adobe_transform != '\x01') {
+      param_1->err->msg_code = 0x72;
+      *(uint *)&param_1->err->msg_parm = (uint)param_1->Adobe_transform;
+      (*param_1->err->emit_message)((jpeg_common_struct *)param_1,-1);
+      param_1->out_color_space = JCS_RGB;
+      param_1->jpeg_color_space = JCS_YCbCr;
       goto LAB_827bb3fc;
     }
   }
 LAB_827bb37c:
-  piVar6[0xd] = 2;
-  piVar6[0xc] = 3;
+  param_1->out_color_space = JCS_RGB;
+  param_1->jpeg_color_space = JCS_YCbCr;
 LAB_827bb3fc:
-  piVar6[0xe] = 1;
-  piVar6[0xf] = 1;
-  *(undefined1 *)(piVar6 + 0x12) = 0;
-  *(undefined1 *)((int)piVar6 + 0x49) = 0;
-  piVar6[0x13] = 0;
-  *(undefined1 *)(piVar6 + 0x14) = 1;
-  piVar6[0x10] = 0x3ff00000;
-  piVar6[0x11] = 0;
-  *(undefined1 *)((int)piVar6 + 0x51) = 1;
-  *(undefined1 *)((int)piVar6 + 0x52) = 0;
-  piVar6[0x15] = 2;
-  *(undefined1 *)(piVar6 + 0x16) = 1;
-  piVar6[0x17] = 0x100;
-  piVar6[0x1f] = 0;
-  *(undefined1 *)(piVar6 + 0x18) = 0;
-  *(undefined1 *)((int)piVar6 + 0x61) = 0;
-  *(undefined1 *)((int)piVar6 + 0x62) = 0;
-  __restgprlr_27();
+  param_1->scale_num = 1;
+  param_1->scale_denom = 1;
+  param_1->buffered_image = '\0';
+  param_1->raw_data_out = '\0';
+  param_1->dct_method = JDCT_ISLOW;
+  param_1->do_fancy_upsampling = '\x01';
+  param_1->output_gamma = 1.0;
+  param_1->do_block_smoothing = '\x01';
+  param_1->quantize_colors = '\0';
+  param_1->dither_mode = JDITHER_FS;
+  param_1->two_pass_quantize = '\x01';
+  param_1->desired_number_of_colors = 0x100;
+  param_1->colormap = (uchar **)0x0;
+  param_1->enable_1pass_quant = '\0';
+  param_1->enable_external_quant = '\0';
+  param_1->enable_2pass_quant = '\0';
   return;
 }
 

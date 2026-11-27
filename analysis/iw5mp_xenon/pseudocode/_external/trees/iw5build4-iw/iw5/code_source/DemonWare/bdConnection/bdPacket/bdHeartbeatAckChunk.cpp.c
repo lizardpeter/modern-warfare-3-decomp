@@ -14,94 +14,92 @@ bdHeartbeatAckChunk * __thiscall bdHeartbeatAckChunk::bdHeartbeatAckChunk(bdHear
 
 // 8293A308  serialize  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdconnection/bdpacket/bdheartbeatackchunk.cpp:29)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 uint __thiscall
 bdHeartbeatAckChunk::serialize(bdHeartbeatAckChunk *this,uchar *param_1,uint param_2)
 
 {
   undefined1 *puVar1;
-  bdChunk *this_00;
-  bool bVar3;
-  uint uVar2;
-  undefined1 *puVar4;
-  int iVar5;
-  longlong lVar6;
+  bool bVar2;
+  undefined1 *puVar3;
+  int iVar4;
+  longlong lVar5;
   undefined1 local_40 [2];
   undefined2 local_3e;
   undefined1 uStack_3c;
   undefined1 local_3b [3];
   uint local_38 [14];
   
-  this_00 = (bdChunk *)__savegprlr_28(this);
   local_38[0] = 0;
-  local_38[0] = bdChunk::serialize(this_00,param_1,param_2);
-  local_40[0] = (undefined1)this_00[1]._padding_;
-  bVar3 = bdBytePacker::appendBuffer(param_1,param_2,local_38[0],local_38,local_40,1);
+  local_38[0] = bdChunk::serialize((bdChunk *)this,param_1,param_2);
+  local_40[0] = (undefined1)this->m_flags;
+  bVar2 = bdBytePacker::appendBuffer(param_1,param_2,local_38[0],local_38,local_40,1);
   local_3e = 0;
-  if (bVar3) {
-    iVar5 = 0;
-    puVar4 = local_3b + 1;
-    lVar6 = 2;
+  if (bVar2) {
+    iVar4 = 0;
+    puVar3 = local_3b + 1;
+    lVar5 = 2;
     do {
-      puVar1 = (undefined1 *)((int)&local_3e + iVar5);
-      iVar5 = iVar5 + 1;
-      puVar4 = puVar4 + -1;
-      *puVar4 = *puVar1;
-      lVar6 = lVar6 + -1;
-    } while (lVar6 != 0);
+      puVar1 = (undefined1 *)((int)&local_3e + iVar4);
+      iVar4 = iVar4 + 1;
+      puVar3 = puVar3 + -1;
+      *puVar3 = *puVar1;
+      lVar5 = lVar5 + -1;
+    } while (lVar5 != 0);
     bdBytePacker::appendBuffer(param_1,param_2,local_38[0],local_38,&uStack_3c,2);
   }
-  uVar2 = __restgprlr_28(local_38[0]);
-  return uVar2;
+  return local_38[0];
 }
 
 
 // 8293A3B8  deserialize  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdconnection/bdpacket/bdheartbeatackchunk.cpp:50)
+
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 
 bool __thiscall
 bdHeartbeatAckChunk::deserialize
           (bdHeartbeatAckChunk *this,uchar *param_1,uint param_2,uint *param_3)
 
 {
-  bdChunk *this_00;
   bool bVar1;
-  undefined1 uVar2;
-  bool bVar3;
-  uint uVar4;
+  bool bVar2;
+  bdHeartbeatAckFlags bVar3;
   byte local_40 [2];
   ushort local_3e;
   uint local_3c [15];
   
-  this_00 = (bdChunk *)__savegprlr_27(this);
   local_3c[0] = *param_3;
-  uVar4 = 0;
-  bVar1 = bdChunk::deserialize(this_00,param_1,param_2,local_3c);
+  bVar3 = BD_CA_NO_FLAGS;
+  bVar1 = bdChunk::deserialize((bdChunk *)this,param_1,param_2,local_3c);
   if (bVar1) {
     bVar1 = bdBytePacker::removeBuffer(param_1,param_2,local_3c[0],local_3c,local_40,1);
     if (bVar1) {
-      uVar4 = (uint)local_40[0];
+      bVar3 = (bdHeartbeatAckFlags)local_40[0];
     }
-    bVar3 = true;
+    bVar2 = true;
     if (!bVar1) goto LAB_8293a424;
   }
   else {
 LAB_8293a424:
-    bVar3 = false;
+    bVar2 = false;
   }
-  this_00[1]._padding_ = uVar4;
+  this->m_flags = bVar3;
   local_3e = 0;
-  if (bVar3) {
-    bVar1 = bdBytePacker::removeBasicType<unsigned_short>
+  if (bVar2) {
+    bVar2 = bdBytePacker::removeBasicType<unsigned_short>
                       (param_1,param_2,local_3c[0],local_3c,&local_3e);
-    bVar3 = true;
-    if (bVar1) goto LAB_8293a468;
+    bVar1 = true;
+    if (bVar2) goto LAB_8293a468;
   }
-  bVar3 = false;
+  bVar1 = false;
 LAB_8293a468:
-  if (bVar3) {
+  if (bVar1) {
     *param_3 = local_3c[0];
   }
-  uVar2 = __restgprlr_27();
-  return (bool)uVar2;
+  return bVar1;
 }
 
 

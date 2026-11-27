@@ -2,72 +2,70 @@
 
 // 82352798  CL_GetRankForXpTable  (client_mp/cl_rank.cpp:21)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
+
 int CL_GetRankForXpTable(int param_1,char *param_2)
 
 {
   int iVar1;
-  int iVar2;
-  char *pcVar3;
+  char *pcVar2;
+  int iVar3;
   int iVar4;
-  int iVar5;
-  ulonglong uVar6;
-  uint uVar7;
-  int iVar8;
-  int iVar9;
+  uint uVar5;
+  int iVar6;
+  int iVar7;
   StringTable *local_60 [24];
   
-  uVar6 = (ulonglong)(int)param_2;
-  iVar1 = __savegprlr_23(param_1);
-  if ((uVar6 & 0xffffffff) == 0) {
+  if (param_2 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_rank.cpp",0x1d,0,
                     "%s");
   }
-  StringTable_GetAsset((char *)uVar6,local_60);
+  StringTable_GetAsset(param_2,local_60);
   if (local_60[0] == (StringTable *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_rank.cpp",0x20,0,
                     "%s");
   }
-  iVar2 = StringTable_LookupRowNumForValue(local_60[0],0,"maxrank");
-  iVar2 = iVar2 + 1;
-  if (iVar2 < 1) {
+  iVar1 = StringTable_LookupRowNumForValue(local_60[0],0,"maxrank");
+  iVar1 = iVar1 + 1;
+  if (iVar1 < 1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_rank.cpp",0x23,0,
                     "%s");
   }
-  iVar8 = local_60[0]->rowCount + -1;
-  if (iVar8 < iVar2) {
+  iVar6 = local_60[0]->rowCount + -1;
+  if (iVar6 < iVar1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_rank.cpp",0x25,0,
                     "%s");
   }
-  uVar7 = iVar8 - iVar2;
-  iVar9 = ((int)uVar7 >> 1) + (uint)((int)uVar7 < 0 && (uVar7 & 1) != 0) + iVar2;
-  if (iVar2 < iVar8) {
+  uVar5 = iVar6 - iVar1;
+  iVar7 = ((int)uVar5 >> 1) + (uint)((int)uVar5 < 0 && (uVar5 & 1) != 0) + iVar1;
+  if (iVar1 < iVar6) {
     do {
-      pcVar3 = StringTable_GetColumnValueForRow(local_60[0],iVar9,2);
-      iVar4 = atoi(pcVar3);
-      pcVar3 = StringTable_GetColumnValueForRow(local_60[0],iVar9,7);
-      iVar5 = atoi(pcVar3);
-      if (iVar5 < iVar4) {
+      pcVar2 = StringTable_GetColumnValueForRow(local_60[0],iVar7,2);
+      iVar3 = atoi(pcVar2);
+      pcVar2 = StringTable_GetColumnValueForRow(local_60[0],iVar7,7);
+      iVar4 = atoi(pcVar2);
+      if (iVar4 < iVar3) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_rank.cpp",
                         0x30,0,"%s");
       }
-      if (iVar1 < iVar4) {
-        iVar8 = iVar9 + -1;
+      if (param_1 < iVar3) {
+        iVar6 = iVar7 + -1;
       }
       else {
-        if (iVar1 < iVar5) break;
-        iVar2 = iVar9 + 1;
+        if (param_1 < iVar4) break;
+        iVar1 = iVar7 + 1;
       }
-      uVar7 = iVar8 - iVar2;
-      iVar9 = ((int)uVar7 >> 1) + (uint)((int)uVar7 < 0 && (uVar7 & 1) != 0) + iVar2;
-    } while (iVar2 < iVar8);
+      uVar5 = iVar6 - iVar1;
+      iVar7 = ((int)uVar5 >> 1) + (uint)((int)uVar5 < 0 && (uVar5 & 1) != 0) + iVar1;
+    } while (iVar1 < iVar6);
   }
-  if ((iVar9 < 0) || (local_60[0]->rowCount <= iVar9)) {
+  if ((iVar7 < 0) || (local_60[0]->rowCount <= iVar7)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_rank.cpp",0x3b,0,
                     "%s\n\t(row) = %i");
   }
-  pcVar3 = StringTable_GetColumnValueForRow(local_60[0],iVar9,0);
-  iVar1 = atoi(pcVar3);
-  iVar1 = __restgprlr_23(iVar1);
+  pcVar2 = StringTable_GetColumnValueForRow(local_60[0],iVar7,0);
+  iVar1 = atoi(pcVar2);
   return iVar1;
 }
 
@@ -98,21 +96,21 @@ int CL_GetRankForXpSO(int param_1)
 
 // 823529A8  CL_GetXpForRankTable  (client_mp/cl_rank.cpp:78)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 int CL_GetXpForRankTable(int param_1,char *param_2)
 
 {
   char *pcVar1;
   int iVar2;
-  ulonglong uVar3;
   StringTable *local_30 [12];
   
-  uVar3 = (ulonglong)(int)param_2;
-  __savegprlr_28(param_1);
-  if ((uVar3 & 0xffffffff) == 0) {
+  if (param_2 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_rank.cpp",0x52,0,
                     "%s");
   }
-  StringTable_GetAsset((char *)uVar3,local_30);
+  StringTable_GetAsset(param_2,local_30);
   if (local_30[0] == (StringTable *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_rank.cpp",0x55,0,
                     "%s");
@@ -120,11 +118,9 @@ int CL_GetXpForRankTable(int param_1,char *param_2)
   pcVar1 = va("%d");
   pcVar1 = StringTable_Lookup(local_30[0],0,pcVar1,2);
   if (*pcVar1 == '\0') {
-    iVar2 = __restgprlr_28(100000000);
-    return iVar2;
+    return 100000000;
   }
   iVar2 = atoi(pcVar1);
-  iVar2 = __restgprlr_28(iVar2);
   return iVar2;
 }
 
@@ -155,34 +151,31 @@ int CL_GetXpForRankSO(int param_1)
 
 // 82352A90  CL_GetRankDataFromTable  (client_mp/cl_rank.cpp:112)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 char * CL_GetRankDataFromTable(int param_1,rankTableColumns_t param_2,char *param_3)
 
 {
   char *pcVar1;
-  ulonglong uVar2;
-  ulonglong uVar3;
   StringTable *local_40;
   char acStack_3c [60];
   
-  uVar3 = (ulonglong)(int)param_3;
-  uVar2 = (ulonglong)(int)param_2;
-  __savegprlr_27(param_1);
-  if (0xe < (uVar2 & 0xffffffff)) {
+  if (RANKTABLE_DISPLAYLEVEL < param_2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_rank.cpp",0x75,0,
                     "column doesn\'t index RANKTABLE_COUNT\n\t%i not in [0, %i)");
   }
-  if ((uVar3 & 0xffffffff) == 0) {
+  if (param_3 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_rank.cpp",0x76,0,
                     "%s");
   }
-  StringTable_GetAsset((char *)uVar3,&local_40);
+  StringTable_GetAsset(param_3,&local_40);
   if (local_40 == (StringTable *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_rank.cpp",0x79,0,
                     "%s");
   }
   Com_sprintf(acStack_3c,4,"%i");
-  pcVar1 = StringTable_Lookup(local_40,0,acStack_3c,(int)uVar2);
-  pcVar1 = (char *)__restgprlr_27(pcVar1);
+  pcVar1 = StringTable_Lookup(local_40,0,acStack_3c,param_2);
   return pcVar1;
 }
 
@@ -213,20 +206,19 @@ char * CL_GetRankDataSO(int param_1,rankTableColumns_t param_2)
 
 // 82352B90  CL_GetRankIcon  (client_mp/cl_rank.cpp:143)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void CL_GetRankIcon(int param_1,int param_2,Material **param_3)
 
 {
-  int iVar1;
-  char *pcVar2;
-  Material *pMVar3;
-  bool bVar4;
-  ulonglong uVar5;
+  char *pcVar1;
+  Material *pMVar2;
+  bool bVar3;
   StringTable *local_40;
   char acStack_3c [60];
   
-  uVar5 = (ulonglong)(int)param_3;
-  iVar1 = __savegprlr_27(param_1);
-  if (iVar1 < 0) {
+  if (param_1 < 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_rank.cpp",0x94,0,
                     "%s\n\t(rank) = %i");
   }
@@ -234,7 +226,7 @@ void CL_GetRankIcon(int param_1,int param_2,Material **param_3)
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_rank.cpp",0x95,0,
                     "%s\n\t(prestige) = %i");
   }
-  if ((uVar5 & 0xffffffff) == 0) {
+  if (param_3 == (Material **)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_rank.cpp",0x96,0,
                     "%s");
   }
@@ -244,19 +236,21 @@ void CL_GetRankIcon(int param_1,int param_2,Material **param_3)
                     "%s");
   }
   Com_sprintf(acStack_3c,4,"%i");
-  pcVar2 = StringTable_Lookup(local_40,0,acStack_3c,param_2 + 1);
-  pMVar3 = Material_RegisterHandle(pcVar2,7);
-  *(undefined4 *)uVar5 = pMVar3;
-  bVar4 = Material_IsDefault(pMVar3);
-  if (bVar4) {
-    *(undefined4 *)uVar5 = 0;
+  pcVar1 = StringTable_Lookup(local_40,0,acStack_3c,param_2 + 1);
+  pMVar2 = Material_RegisterHandle(pcVar1,7);
+  *param_3 = pMVar2;
+  bVar3 = Material_IsDefault(pMVar2);
+  if (bVar3) {
+    *param_3 = (Material *)0x0;
   }
-  __restgprlr_27();
   return;
 }
 
 
 // 82352CC8  CL_GetMaxRankFromFile  (client_mp/cl_rank.cpp:176)
+
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 
 int CL_GetMaxRankFromFile(char *param_1)
 
@@ -265,20 +259,18 @@ int CL_GetMaxRankFromFile(char *param_1)
   int iVar2;
   StringTable *local_30 [12];
   
-  pcVar1 = (char *)__savegprlr_29(param_1);
-  if (pcVar1 == (char *)0x0) {
+  if (param_1 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_rank.cpp",0xb4,0,
                     "%s");
   }
-  StringTable_GetAsset(pcVar1,local_30);
+  StringTable_GetAsset(param_1,local_30);
   if (local_30[0] == (StringTable *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_rank.cpp",0xb7,0,
                     "%s");
   }
   pcVar1 = StringTable_Lookup(local_30[0],0,"maxrank",1);
   iVar2 = atoi(pcVar1);
-  iVar2 = __restgprlr_29((longlong)iVar2 + 1);
-  return iVar2;
+  return iVar2 + 1;
 }
 
 
@@ -312,6 +304,9 @@ int CL_GetMaxRankSO(void)
 
 // 82352D88  CL_GetMaxXPFromFile  (client_mp/cl_rank.cpp:204)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 int CL_GetMaxXPFromFile(char *param_1)
 
 {
@@ -319,12 +314,11 @@ int CL_GetMaxXPFromFile(char *param_1)
   int iVar2;
   StringTable *local_30 [12];
   
-  pcVar1 = (char *)__savegprlr_29(param_1);
-  if (pcVar1 == (char *)0x0) {
+  if (param_1 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_rank.cpp",0xd1,0,
                     "%s");
   }
-  StringTable_GetAsset(pcVar1,local_30);
+  StringTable_GetAsset(param_1,local_30);
   if (local_30[0] == (StringTable *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_rank.cpp",0xd4,0,
                     "%s");
@@ -332,7 +326,6 @@ int CL_GetMaxXPFromFile(char *param_1)
   pcVar1 = StringTable_Lookup(local_30[0],0,"maxrank",1);
   pcVar1 = StringTable_Lookup(local_30[0],0,pcVar1,7);
   iVar2 = atoi(pcVar1);
-  iVar2 = __restgprlr_29(iVar2);
   return iVar2;
 }
 
@@ -367,220 +360,192 @@ int CL_GetMaxXPSO(void)
 
 // 82352E58  CL_GetPastTitleRank  (client_mp/cl_rank.cpp:237)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 int CL_GetPastTitleRank(LocalClientNum_t param_1,char *param_2)
 
 {
-  LocalClientNum_t LVar1;
+  int iVar1;
   int iVar2;
-  int iVar3;
-  ulong uVar5;
-  ulonglong uVar6;
-  char *pcVar4;
+  ulong uVar3;
   
-  uVar6 = (ulonglong)(int)param_2;
-  LVar1 = __savegprlr_28(param_1);
-  if (3 < (int)LVar1) {
+  if (3 < (int)param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_rank.cpp",0xef,0,
                     "%s");
   }
-  if ((uVar6 & 0xffffffff) == 0) {
+  if (param_2 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_rank.cpp",0xf0,0,
                     "%s");
   }
-  iVar2 = CL_ControllerIndexFromClientNum(LVar1);
-  pcVar4 = (char *)uVar6;
-  iVar3 = I_stricmp(pcVar4,"blackops");
-  if (iVar3 == 0) {
-    uVar5 = GetPastTitleRank(0x1442,iVar2);
-    iVar2 = __restgprlr_28(uVar5);
-    return iVar2;
+  iVar1 = CL_ControllerIndexFromClientNum(param_1);
+  iVar2 = I_stricmp(param_2,"blackops");
+  if (iVar2 == 0) {
+    uVar3 = GetPastTitleRank(0x1442,iVar1);
+    return uVar3;
   }
-  iVar3 = I_stricmp(pcVar4,"mw2");
-  if (iVar3 == 0) {
-    uVar5 = GetPastTitleRank(0x41560817,iVar2);
-    iVar2 = __restgprlr_28(uVar5);
-    return iVar2;
+  iVar2 = I_stricmp(param_2,"mw2");
+  if (iVar2 == 0) {
+    uVar3 = GetPastTitleRank(0x41560817,iVar1);
+    return uVar3;
   }
-  iVar3 = I_stricmp(pcVar4,"waw");
-  if (iVar3 == 0) {
-    uVar5 = GetPastTitleRank(0x4156081c,iVar2);
-    iVar2 = __restgprlr_28(uVar5);
-    return iVar2;
+  iVar2 = I_stricmp(param_2,"waw");
+  if (iVar2 == 0) {
+    uVar3 = GetPastTitleRank(0x4156081c,iVar1);
+    return uVar3;
   }
-  iVar3 = I_stricmp(pcVar4,"mw");
-  if (iVar3 == 0) {
-    uVar5 = GetPastTitleRank(0x415607e6,iVar2);
-    iVar2 = __restgprlr_28(uVar5);
-    return iVar2;
+  iVar2 = I_stricmp(param_2,"mw");
+  if (iVar2 == 0) {
+    uVar3 = GetPastTitleRank(0x415607e6,iVar1);
+    return uVar3;
   }
-  iVar2 = __restgprlr_28(1);
-  return iVar2;
+  return 1;
 }
 
 
 // 82352F98  CL_GetPastTitlePrestige  (client_mp/cl_rank.cpp:256)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 int CL_GetPastTitlePrestige(LocalClientNum_t param_1,char *param_2)
 
 {
-  LocalClientNum_t LVar1;
+  int iVar1;
   int iVar2;
-  int iVar3;
-  ulong uVar5;
-  ulonglong uVar6;
-  char *pcVar4;
+  ulong uVar3;
   
-  uVar6 = (ulonglong)(int)param_2;
-  LVar1 = __savegprlr_28(param_1);
-  if (3 < (int)LVar1) {
+  if (3 < (int)param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_rank.cpp",0x102,0
                     ,"%s");
   }
-  if ((uVar6 & 0xffffffff) == 0) {
+  if (param_2 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_rank.cpp",0x103,0
                     ,"%s");
   }
-  iVar2 = CL_ControllerIndexFromClientNum(LVar1);
-  pcVar4 = (char *)uVar6;
-  iVar3 = I_stricmp(pcVar4,"blackops");
-  if (iVar3 == 0) {
-    uVar5 = GetPastTitlePrestigeLevel(0x1442,iVar2);
-    iVar2 = __restgprlr_28(uVar5);
-    return iVar2;
+  iVar1 = CL_ControllerIndexFromClientNum(param_1);
+  iVar2 = I_stricmp(param_2,"blackops");
+  if (iVar2 == 0) {
+    uVar3 = GetPastTitlePrestigeLevel(0x1442,iVar1);
+    return uVar3;
   }
-  iVar3 = I_stricmp(pcVar4,"mw2");
-  if (iVar3 == 0) {
-    uVar5 = GetPastTitlePrestigeLevel(0x41560817,iVar2);
-    iVar2 = __restgprlr_28(uVar5);
-    return iVar2;
+  iVar2 = I_stricmp(param_2,"mw2");
+  if (iVar2 == 0) {
+    uVar3 = GetPastTitlePrestigeLevel(0x41560817,iVar1);
+    return uVar3;
   }
-  iVar3 = I_stricmp(pcVar4,"waw");
-  if (iVar3 == 0) {
-    uVar5 = GetPastTitlePrestigeLevel(0x4156081c,iVar2);
-    iVar2 = __restgprlr_28(uVar5);
-    return iVar2;
+  iVar2 = I_stricmp(param_2,"waw");
+  if (iVar2 == 0) {
+    uVar3 = GetPastTitlePrestigeLevel(0x4156081c,iVar1);
+    return uVar3;
   }
-  iVar3 = I_stricmp(pcVar4,"mw");
-  if (iVar3 == 0) {
-    uVar5 = GetPastTitlePrestigeLevel(0x415607e6,iVar2);
-    iVar2 = __restgprlr_28(uVar5);
-    return iVar2;
+  iVar2 = I_stricmp(param_2,"mw");
+  if (iVar2 == 0) {
+    uVar3 = GetPastTitlePrestigeLevel(0x415607e6,iVar1);
+    return uVar3;
   }
-  iVar2 = __restgprlr_28(0);
-  return iVar2;
+  return 0;
 }
 
 
 // 823530D8  CL_SetPastTitleRank  (client_mp/cl_rank.cpp:276)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void CL_SetPastTitleRank(LocalClientNum_t param_1,char *param_2,int param_3)
 
 {
-  LocalClientNum_t LVar1;
+  int iVar1;
   int iVar2;
-  int iVar3;
-  ulong uVar5;
-  ulonglong uVar6;
-  char *pcVar4;
+  ulong uVar3;
   
-  uVar6 = (ulonglong)(int)param_2;
-  LVar1 = __savegprlr_27(param_1);
-  if (3 < (int)LVar1) {
+  if (3 < (int)param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_rank.cpp",0x116,0
                     ,"%s");
   }
-  if ((uVar6 & 0xffffffff) == 0) {
+  if (param_2 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_rank.cpp",0x117,0
                     ,"%s");
   }
-  iVar2 = CL_ControllerIndexFromClientNum(LVar1);
-  pcVar4 = (char *)uVar6;
-  iVar3 = I_stricmp(pcVar4,"blackops");
-  if (iVar3 == 0) {
-    uVar5 = 0x1442;
+  iVar1 = CL_ControllerIndexFromClientNum(param_1);
+  iVar2 = I_stricmp(param_2,"blackops");
+  if (iVar2 == 0) {
+    uVar3 = 0x1442;
   }
   else {
-    iVar3 = I_stricmp(pcVar4,"mw2");
-    if (iVar3 == 0) {
-      uVar5 = 0x41560817;
+    iVar2 = I_stricmp(param_2,"mw2");
+    if (iVar2 == 0) {
+      uVar3 = 0x41560817;
     }
     else {
-      iVar3 = I_stricmp(pcVar4,"waw");
-      if (iVar3 == 0) {
-        uVar5 = 0x4156081c;
+      iVar2 = I_stricmp(param_2,"waw");
+      if (iVar2 == 0) {
+        uVar3 = 0x4156081c;
       }
       else {
-        iVar3 = I_stricmp(pcVar4,"mw");
-        if (iVar3 != 0) goto LAB_823531e8;
-        uVar5 = 0x415607e6;
+        iVar2 = I_stricmp(param_2,"mw");
+        if (iVar2 != 0) goto LAB_823531e8;
+        uVar3 = 0x415607e6;
       }
     }
   }
-  SetPastTitleRank(uVar5,param_3,iVar2);
+  SetPastTitleRank(uVar3,param_3,iVar1);
 LAB_823531e8:
-  GamerProfile_UpdateProfilePastTitleData(iVar2);
-  __restgprlr_27();
+  GamerProfile_UpdateProfilePastTitleData(iVar1);
   return;
 }
 
 
 // 823531F8  CL_SetPastTitlePrestige  (client_mp/cl_rank.cpp:296)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void CL_SetPastTitlePrestige(LocalClientNum_t param_1,char *param_2,int param_3)
 
 {
-  LocalClientNum_t LVar1;
+  int iVar1;
   int iVar2;
-  int iVar3;
-  ulong uVar5;
-  ulonglong uVar6;
-  char *pcVar4;
+  ulong uVar3;
   
-  uVar6 = (ulonglong)(int)param_2;
-  LVar1 = __savegprlr_27(param_1);
-  if (3 < (int)LVar1) {
+  if (3 < (int)param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_rank.cpp",0x12a,0
                     ,"%s");
   }
-  if ((uVar6 & 0xffffffff) == 0) {
+  if (param_2 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_rank.cpp",299,0,
                     "%s");
   }
-  iVar2 = CL_ControllerIndexFromClientNum(LVar1);
-  pcVar4 = (char *)uVar6;
-  iVar3 = I_stricmp(pcVar4,"blackops");
-  if (iVar3 == 0) {
-    uVar5 = 0x1442;
+  iVar1 = CL_ControllerIndexFromClientNum(param_1);
+  iVar2 = I_stricmp(param_2,"blackops");
+  if (iVar2 == 0) {
+    uVar3 = 0x1442;
   }
   else {
-    iVar3 = I_stricmp(pcVar4,"mw2");
-    if (iVar3 == 0) {
-      uVar5 = 0x41560817;
+    iVar2 = I_stricmp(param_2,"mw2");
+    if (iVar2 == 0) {
+      uVar3 = 0x41560817;
     }
     else {
-      iVar3 = I_stricmp(pcVar4,"waw");
-      if (iVar3 == 0) {
-        uVar5 = 0x4156081c;
+      iVar2 = I_stricmp(param_2,"waw");
+      if (iVar2 == 0) {
+        uVar3 = 0x4156081c;
       }
       else {
-        iVar3 = I_stricmp(pcVar4,"mw");
-        if (iVar3 != 0) goto LAB_82353308;
-        uVar5 = 0x415607e6;
+        iVar2 = I_stricmp(param_2,"mw");
+        if (iVar2 != 0) goto LAB_82353308;
+        uVar3 = 0x415607e6;
       }
     }
   }
-  SetPastTitlePrestigeLevel(uVar5,param_3,iVar2);
+  SetPastTitlePrestigeLevel(uVar3,param_3,iVar1);
 LAB_82353308:
-  GamerProfile_UpdateProfilePastTitleData(iVar2);
-  __restgprlr_27();
+  GamerProfile_UpdateProfilePastTitleData(iVar1);
   return;
 }
 

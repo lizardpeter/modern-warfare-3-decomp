@@ -2,70 +2,66 @@
 
 // 82256E58  der_length_object_identifier  (line unknown)
 
-void der_length_object_identifier(undefined8 param_1,uint param_2,int *param_3)
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
+undefined8 der_length_object_identifier(uint *param_1,uint param_2,int *param_3)
 
 {
   ulonglong uVar1;
   ulonglong uVar2;
-  uint *puVar3;
-  ulonglong uVar4;
+  ulonglong uVar3;
+  ulonglong uVar5;
   ulonglong uVar6;
-  ulonglong uVar7;
-  uint uVar8;
-  int iVar5;
+  uint uVar7;
+  int iVar4;
   
-  puVar3 = (uint *)__savegprlr_27();
   if (1 < param_2) {
-    uVar6 = (ulonglong)*puVar3;
-    if ((uVar6 < 4) && ((1 < uVar6 || (puVar3[1] < 0x28)))) {
-      uVar4 = 0;
-      iVar5 = 0;
-      uVar8 = 1;
-      uVar6 = (uVar6 + ((ulonglong)*puVar3 & 0x3fffffff) * 4 & 0x1fffffff) * 8 +
-              (ulonglong)puVar3[1];
+    uVar5 = (ulonglong)*param_1;
+    if ((uVar5 < 4) && ((1 < uVar5 || (param_1[1] < 0x28)))) {
+      uVar3 = 0;
+      iVar4 = 0;
+      uVar7 = 1;
+      uVar5 = (uVar5 + ((ulonglong)*param_1 & 0x3fffffff) * 4 & 0x1fffffff) * 8 +
+              (ulonglong)param_1[1];
       if (1 < param_2) {
-        puVar3 = puVar3 + 2;
+        param_1 = param_1 + 2;
         do {
-          uVar7 = 0;
-          uVar1 = uVar6;
-          uVar2 = uVar6 & 0xffffffff;
+          uVar6 = 0;
+          uVar1 = uVar5;
+          uVar2 = uVar5 & 0xffffffff;
           while (uVar2 != 0) {
-            uVar7 = uVar7 + 1;
+            uVar6 = uVar6 + 1;
             uVar1 = (uVar1 & 0xffffffff) >> 1;
             uVar2 = uVar1;
           }
-          uVar1 = (uVar7 & 0xffffffff) * 0x24924925 >> 0x20;
-          uVar1 = ((uVar7 - uVar1 & 0xffffffff) >> 1) + uVar1 >> 2;
-          uVar4 = (ulonglong)(uVar7 != (uVar1 & 0x1fffffff) * 8 - uVar1) +
-                  (ulonglong)((int)uVar6 == 0) + (uVar7 & 0xffffffff) / 7 + uVar4;
-          iVar5 = (int)uVar4;
-          if (uVar8 < param_2 - 1) {
-            uVar6 = (ulonglong)*puVar3;
+          uVar1 = (uVar6 & 0xffffffff) * 0x24924925 >> 0x20;
+          uVar1 = ((uVar6 - uVar1 & 0xffffffff) >> 1) + uVar1 >> 2;
+          uVar3 = (ulonglong)(uVar6 != (uVar1 & 0x1fffffff) * 8 - uVar1) +
+                  (ulonglong)((int)uVar5 == 0) + (uVar6 & 0xffffffff) / 7 + uVar3;
+          iVar4 = (int)uVar3;
+          if (uVar7 < param_2 - 1) {
+            uVar5 = (ulonglong)*param_1;
           }
-          uVar8 = uVar8 + 1;
-          puVar3 = puVar3 + 1;
-        } while (uVar8 < param_2);
-        if (0x7f < (uVar4 & 0xffffffff)) {
-          if ((uVar4 & 0xffffffff) < 0x100) {
-            *param_3 = iVar5 + 3;
-            __restgprlr_27(0);
-            return;
+          uVar7 = uVar7 + 1;
+          param_1 = param_1 + 1;
+        } while (uVar7 < param_2);
+        if (0x7f < (uVar3 & 0xffffffff)) {
+          if ((uVar3 & 0xffffffff) < 0x100) {
+            *param_3 = iVar4 + 3;
+            return 0;
           }
-          if ((uVar4 & 0xffffffff) < 0x10000) {
-            *param_3 = iVar5 + 4;
-            __restgprlr_27(0);
-            return;
+          if (0xffff < (uVar3 & 0xffffffff)) {
+            return 0x10;
           }
-          goto LAB_82256f88;
+          *param_3 = iVar4 + 4;
+          return 0;
         }
       }
-      *param_3 = iVar5 + 2;
-      __restgprlr_27(0);
-      return;
+      *param_3 = iVar4 + 2;
+      return 0;
     }
   }
-LAB_82256f88:
-  __restgprlr_27(0x10);
-  return;
+  return 0x10;
 }
 

@@ -2,52 +2,52 @@
 
 // 827784B0  R_GetCodeConstant  (gfx_d3d/r_shade.cpp:35)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 
 float * R_GetCodeConstant(GfxCmdBufContext param_1,uint param_2)
 
 {
-  uint uVar1;
-  float *pfVar2;
-  ulonglong uVar3;
+  bool bVar1;
+  GfxCmdBufSourceState *pGVar2;
+  GfxCmdBufState *pGVar3;
   int iVar4;
-  ulonglong uVar5;
-  uint uStack00000010;
-  int iStack00000014;
+  GfxCmdBufSourceState *pGStack00000010;
+  GfxCmdBufState *pGStack00000014;
   
-  uVar3 = (ulonglong)(int)param_2;
-  _uStack00000010 = __savegprlr_27();
-  iVar4 = iStack00000014;
-  if (iStack00000014 == 0) {
+  pGStack00000014 = param_1.state;
+  pGVar3 = pGStack00000014;
+  bVar1 = pGStack00000014 == (GfxCmdBufState *)0x0;
+  _pGStack00000010 = param_1;
+  if (bVar1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_shade.cpp",0x24,0,
                     "%s");
   }
-  uVar1 = uStack00000010;
-  uVar5 = (ulonglong)uStack00000010;
-  if (uVar5 == 0) {
+  pGVar2 = pGStack00000010;
+  if (pGStack00000010 == (GfxCmdBufSourceState *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_shade.cpp",0x25,0,
                     "%s");
   }
-  if (0x51 < (uVar3 & 0xffffffff)) {
+  if (0x51 < param_2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_shade.cpp",0x26,0,
                     "constant doesn\'t index CONST_SRC_CODE_COUNT_FLOAT4\n\t%i not in [0, %i)");
   }
-  if (*(int *)(*(int *)(iVar4 + 0xf8) + 0x58) == 0) {
-    if (*(short *)((int)((uVar3 + 0xac8 & 0xffffffff) << 1) + uVar1) != 0) goto LAB_8277861c;
+  if (pGVar3->pass->vertexShader == (MaterialVertexShader *)0x0) {
+    if (pGVar2->constVersions[param_2] != 0) goto LAB_8277861c;
     va("const %i mtl %s tech %s ps %s");
     iVar4 = 0x2d;
   }
   else {
-    if (*(short *)((int)((uVar3 + 0xac8 & 0xffffffff) << 1) + uVar1) != 0) goto LAB_8277861c;
+    if (pGVar2->constVersions[param_2] != 0) goto LAB_8277861c;
     va("const %i mtl %s tech %s vs %s ps %s");
     iVar4 = 0x2b;
   }
   MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_shade.cpp",iVar4,0,
                   "%s\n\t%s");
 LAB_8277861c:
-  pfVar2 = (float *)__restgprlr_27((uVar3 + 0xe0 & 0xfffffff) * 0x10 + uVar5);
-  return pfVar2;
+  return (pGVar2->input).consts[param_2];
 }
 
 
@@ -114,6 +114,8 @@ bool R_IsShaderMatrixUpToDate
 
 // 82778740  R_IsShaderConstantUpToDate  (gfx_d3d/r_shade.cpp:87)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 
@@ -122,52 +124,41 @@ bool R_IsShaderConstantUpToDate
 
 {
   ulong64 uVar1;
-  int iVar2;
-  undefined1 uVar3;
   
-  iVar2 = __savegprlr_27(param_1);
-  if (iVar2 == 0) {
+  if (param_1 == (GfxCmdBufSourceState *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_shade.cpp",0x5b,0,
                     "%s");
   }
   uVar1 = CONCAT44((param_3->u).literalConst,
-                   (uint)*(ushort *)(((param_3->u).codeConst.index + 0xac8) * 2 + iVar2));
+                   (uint)param_1->constVersions[(param_3->u).codeConst.index]);
   if (*param_2 == uVar1) {
-    uVar3 = __restgprlr_27(1);
-    return (bool)uVar3;
+    return true;
   }
   *param_2 = uVar1;
   if ((param_3->u).codeConst.rowCount != '\x01') {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_shade.cpp",100,0,
                     "%s");
   }
-  uVar3 = __restgprlr_27(0);
-  return (bool)uVar3;
+  return false;
 }
 
 
 // 82779ED0  R_HW_SetVertexShaderConstant  (gfx_d3d/r_setstate_d3d.h:93)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
+
 void R_HW_SetVertexShaderConstant(D3DDevice *param_1,uint param_2,float *param_3,uint param_4)
 
 {
-  ulonglong uVar1;
-  D3DDevice *pDVar2;
-  ulonglong uVar3;
-  longlong lVar4;
-  
-  lVar4 = (longlong)(int)param_4;
-  uVar3 = (ulonglong)(int)param_2;
-  pDVar2 = (D3DDevice *)__savegprlr_25(param_1);
-  uVar1 = (uVar3 & 0xffffffff) >> 2;
   do {
     D3DDevice_SetVertexShaderConstantFN
-              (pDVar2,(uint)uVar3,param_3,(ulong)lVar4,
+              (param_1,param_2,param_3,param_4,
                (ulonglong)
-               (-0x8000000000000000 >> ((((uVar3 + lVar4) - 1 & 0xffffffff) >> 2) - uVar1 & 0x7f))
-               >> (uVar1 & 0x7f));
+               (-0x8000000000000000 >>
+               (((((longlong)(int)param_2 + (longlong)(int)param_4) - 1U & 0xffffffff) >> 2) -
+                (ulonglong)(param_2 >> 2) & 0x7f)) >> ((ulonglong)(param_2 >> 2) & 0x7f));
   } while (alwaysfails != 0);
-  __restgprlr_25();
   return;
 }
 
@@ -205,26 +196,20 @@ bool R_IsVertexShaderConstantUpToDate(GfxCmdBufContext param_1,MaterialShaderArg
 
 // 82779F48  R_HW_SetPixelShaderConstant  (gfx_d3d/r_setstate_d3d.h:112)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
+
 void R_HW_SetPixelShaderConstant(D3DDevice *param_1,uint param_2,float *param_3,uint param_4)
 
 {
-  ulonglong uVar1;
-  D3DDevice *pDVar2;
-  ulonglong uVar3;
-  longlong lVar4;
-  
-  lVar4 = (longlong)(int)param_4;
-  uVar3 = (ulonglong)(int)param_2;
-  pDVar2 = (D3DDevice *)__savegprlr_25(param_1);
-  uVar1 = (uVar3 & 0xffffffff) >> 2;
   do {
     D3DDevice_SetPixelShaderConstantFN
-              (pDVar2,(uint)uVar3,param_3,(ulong)lVar4,
+              (param_1,param_2,param_3,param_4,
                (ulonglong)
-               (-0x8000000000000000 >> ((((uVar3 + lVar4) - 1 & 0xffffffff) >> 2) - uVar1 & 0x7f))
-               >> (uVar1 & 0x7f));
+               (-0x8000000000000000 >>
+               (((((longlong)(int)param_2 + (longlong)(int)param_4) - 1U & 0xffffffff) >> 2) -
+                (ulonglong)(param_2 >> 2) & 0x7f)) >> ((ulonglong)(param_2 >> 2) & 0x7f));
   } while (alwaysfails != 0);
-  __restgprlr_25();
   return;
 }
 
@@ -279,6 +264,8 @@ void R_SetVertexShaderConstantFromCode(GfxCmdBufContext param_1,MaterialShaderAr
 
 // 82778958  R_IsPixelShaderConstantUpToDate  (gfx_d3d/r_shade.cpp:137)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 
@@ -287,13 +274,13 @@ int R_IsPixelShaderConstantUpToDate(GfxCmdBufContext param_1,MaterialShaderArgum
 {
   ushort uVar1;
   float *pfVar2;
-  longlong lVar3;
-  int iVar4;
-  int iVar5;
-  int iStack00000010;
-  int iStack00000014;
+  ulong64 uVar3;
+  GfxCmdBufSourceState *pGVar4;
+  GfxCmdBufState *pGVar5;
+  GfxCmdBufSourceState *pGStack00000010;
+  GfxCmdBufState *pGStack00000014;
   
-  _iStack00000010 = __savegprlr_28();
+  _pGStack00000010 = param_1;
   if (0xff < param_2->dest) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_shade.cpp",0x8d,0,
                     "routingData->dest doesn\'t index ARRAY_COUNT( context.state->pixelShaderConstState )\n\t%i not in [0, %i)"
@@ -303,33 +290,32 @@ int R_IsPixelShaderConstantUpToDate(GfxCmdBufContext param_1,MaterialShaderArgum
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_shade.cpp",0x8e,0,
                     "%s\n\t(routingData->u.codeConst.rowCount) = %i");
   }
-  iVar5 = iStack00000010;
-  if (iStack00000010 == 0) {
+  pGVar4 = pGStack00000010;
+  if (pGStack00000010 == (GfxCmdBufSourceState *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_shade.cpp",0x8f,0,
                     "%s");
   }
   pfVar2 = (param_2->u).literalConst;
-  iVar4 = iStack00000014;
-  uVar1 = *(ushort *)(((param_2->u).codeConst.index + 0xac8) * 2 + iVar5);
+  pGVar5 = pGStack00000014;
+  uVar1 = pGVar4->constVersions[(param_2->u).codeConst.index];
   if (uVar1 == 0) {
     va("constant: %d, material: %s, technique: %s");
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_shade.cpp",0x94,0,
                     "%s\n\t%s");
   }
-  lVar3 = CONCAT44(pfVar2,(uint)uVar1);
-  iVar5 = (param_2->dest + 0x62) * 8;
-  if (*(longlong *)(iVar5 + iVar4) == lVar3) {
-    iVar5 = __restgprlr_28(1);
-    return iVar5;
+  uVar3 = CONCAT44(pfVar2,(uint)uVar1);
+  if (pGVar5->pixelShaderConstState[param_2->dest] == uVar3) {
+    return 1;
   }
-  *(longlong *)(iVar5 + iVar4) = lVar3;
-  iVar5 = __restgprlr_28(0);
-  return iVar5;
+  pGVar5->pixelShaderConstState[param_2->dest] = uVar3;
+  return 0;
 }
 
 
 // 82778A98  R_SetPixelShaderConstantFromCode  (gfx_d3d/r_shade.cpp:160)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 
@@ -338,17 +324,15 @@ void R_SetPixelShaderConstantFromCode(GfxCmdBufContext param_1,MaterialShaderArg
 {
   ushort *puVar1;
   GfxCmdBufState *pGVar2;
-  GfxCmdBufContext GVar3;
-  float *pfVar4;
+  float *pfVar3;
   GfxCmdBufSourceState *pGStack00000010;
   GfxCmdBufState *pGStack00000014;
   
-  GVar3 = (GfxCmdBufContext)__savegprlr_28();
-  pGStack00000010 = GVar3.source;
-  pGStack00000014 = GVar3.state;
+  pGStack00000010 = param_1.source;
+  pGStack00000014 = param_1.state;
   pGVar2 = pGStack00000014;
   puVar1 = pGStack00000010->constVersions;
-  _pGStack00000010 = GVar3;
+  _pGStack00000010 = param_1;
   if (puVar1[(param_2->u).codeConst.index] == 0) {
     va("constant: %d, material: %s, technique: %s");
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_shade.cpp",0xa5,0,
@@ -359,17 +343,18 @@ void R_SetPixelShaderConstantFromCode(GfxCmdBufContext param_1,MaterialShaderArg
                     "routingData->u.codeConst.index doesn\'t index CONST_SRC_FIRST_CODE_MATRIX\n\t%i not in [0, %i)"
                    );
   }
-  pfVar4 = R_GetCodeConstant(GVar3,(uint)(param_2->u).codeConst.index);
+  pfVar3 = R_GetCodeConstant(param_1,(uint)(param_2->u).codeConst.index);
   R_HW_SetPixelShaderConstant
-            ((pGVar2->prim).device,(uint)param_2->dest,pfVar4,(uint)(param_2->u).codeConst.rowCount)
+            ((pGVar2->prim).device,(uint)param_2->dest,pfVar3,(uint)(param_2->u).codeConst.rowCount)
   ;
-  __restgprlr_28();
   return;
 }
 
 
 // 82778B68  R_SetPassShaderPrimArguments  (gfx_d3d/r_shade.cpp:200)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 
@@ -378,71 +363,71 @@ void R_SetPassShaderPrimArguments
 
 {
   ushort uVar1;
-  ushort *puVar2;
+  short *psVar2;
   GfxCmdBufSourceState *pGVar3;
   GfxCmdBufState *pGVar4;
-  GfxCmdBufContext GVar5;
-  bool bVar7;
-  float *pfVar6;
-  ulong64 *puVar8;
-  longlong lVar9;
-  longlong lVar10;
+  bool bVar6;
+  float *pfVar5;
+  ulong64 *puVar7;
+  longlong lVar8;
+  MaterialArgumentDef *pMVar9;
   GfxCmdBufSourceState *pGStack00000010;
   GfxCmdBufState *pGStack00000014;
   
-  lVar10 = (longlong)(int)param_3;
-  lVar9 = (longlong)(int)param_2;
-  GVar5 = (GfxCmdBufContext)__savegprlr_25();
-  _pGStack00000010 = GVar5;
-  if (*(short *)lVar10 == 4) {
-    pGStack00000014 = GVar5.state;
+  lVar8 = (longlong)(int)param_2;
+  _pGStack00000010 = param_1;
+  if (param_3->type == 4) {
+    pGStack00000014 = param_1.state;
     pGVar4 = pGStack00000014;
-    pGStack00000010 = GVar5.source;
+    pGStack00000010 = param_1.source;
     pGVar3 = pGStack00000010;
-    lVar10 = lVar10 + 4;
+    pMVar9 = &param_3->u;
     do {
-      puVar2 = (ushort *)lVar10;
-      if (0x3f < puVar2[-1]) {
+      if (0x3f < *(ushort *)((int)pMVar9 + -2)) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_shade.cpp",0x6b,
                         0,
                         "routingData->dest doesn\'t index ARRAY_COUNT( context.state->vertexShaderConstState )\n\t%i not in [0, %i)"
                        );
       }
-      puVar8 = pGVar4->vertexShaderConstState + puVar2[-1];
-      if (*puVar2 < 0x52) {
-        bVar7 = R_IsShaderConstantUpToDate(pGVar3,puVar8,(MaterialShaderArgument *)(puVar2 + -2));
+      puVar7 = pGVar4->vertexShaderConstState + *(ushort *)((int)pMVar9 + -2);
+      if ((pMVar9->codeConst).index < 0x52) {
+        bVar6 = R_IsShaderConstantUpToDate(pGVar3,puVar7,(MaterialShaderArgument *)(pMVar9 + -1));
       }
       else {
-        bVar7 = R_IsShaderMatrixUpToDate(pGVar3,puVar8,(MaterialShaderArgument *)(puVar2 + -2));
+        bVar6 = R_IsShaderMatrixUpToDate(pGVar3,puVar7,(MaterialShaderArgument *)(pMVar9 + -1));
       }
-      if (bVar7 == false) {
-        uVar1 = *puVar2;
+      if (bVar6 == false) {
+        uVar1 = (pMVar9->codeConst).index;
         if (uVar1 < 0x52) {
-          pfVar6 = R_GetCodeConstant(GVar5,(uint)uVar1);
+          pfVar5 = R_GetCodeConstant(param_1,(uint)uVar1);
         }
         else {
-          pfVar6 = R_GetCodeMatrix(pGVar3,(uint)uVar1,(uint)*(byte *)(puVar2 + 1));
+          pfVar5 = R_GetCodeMatrix(pGVar3,(uint)uVar1,(uint)(pMVar9->codeConst).firstRow);
         }
         R_HW_SetVertexShaderConstant
-                  ((pGVar4->prim).device,(uint)puVar2[-1],pfVar6,(uint)*(byte *)((int)puVar2 + 3));
+                  ((pGVar4->prim).device,(uint)*(ushort *)((int)pMVar9 + -2),pfVar5,
+                   (uint)(pMVar9->codeConst).rowCount);
       }
-      lVar9 = lVar9 + -1;
-      lVar10 = lVar10 + 8;
-      if (lVar9 == 0) goto LAB_82778c80;
-    } while (puVar2[2] == 4);
+      lVar8 = lVar8 + -1;
+      if (lVar8 == 0) {
+        return;
+      }
+      psVar2 = (short *)(pMVar9 + 1);
+      pMVar9 = pMVar9 + 2;
+    } while (*psVar2 == 4);
   }
   if (alwaysfails == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_shade.cpp",0xd2,0,
                     "unreachable");
   }
-LAB_82778c80:
-  __restgprlr_25();
   return;
 }
 
 
 // 82778C88  R_SetPassShaderObjectArguments  (gfx_d3d/r_shade.cpp:215)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 
@@ -450,84 +435,82 @@ void R_SetPassShaderObjectArguments
                (GfxCmdBufContext param_1,uint param_2,MaterialShaderArgument *param_3)
 
 {
-  ushort uVar1;
-  MaterialShaderArgument *pMVar2;
-  GfxCmdBufSourceState *pGVar3;
-  GfxCmdBufState *pGVar4;
-  GfxCmdBufContext GVar5;
-  bool bVar8;
-  float *pfVar6;
-  GfxImage *pGVar7;
-  ulong64 *puVar9;
-  short sVar10;
-  longlong lVar11;
-  longlong lVar12;
+  ushort *puVar1;
+  GfxCmdBufSourceState *pGVar2;
+  GfxCmdBufState *pGVar3;
+  bool bVar6;
+  float *pfVar4;
+  GfxImage *pGVar5;
+  ulong64 *puVar7;
+  ushort uVar8;
+  longlong lVar9;
+  ushort *puVar10;
   GfxCmdBufSourceState *pGStack00000010;
   GfxCmdBufState *pGStack00000014;
   uchar local_50 [80];
   
-  lVar12 = (longlong)(int)param_3;
-  lVar11 = (longlong)(int)param_2;
-  GVar5 = (GfxCmdBufContext)__savegprlr_25();
-  pGStack00000010 = GVar5.source;
-  pGVar3 = pGStack00000010;
-  sVar10 = *(short *)lVar12;
-  _pGStack00000010 = GVar5;
-  if (sVar10 == 4) {
-    pGStack00000014 = GVar5.state;
-    pGVar4 = pGStack00000014;
+  lVar9 = (longlong)(int)param_2;
+  pGStack00000010 = param_1.source;
+  pGVar2 = pGStack00000010;
+  uVar8 = param_3->type;
+  _pGStack00000010 = param_1;
+  if (uVar8 == 4) {
+    pGStack00000014 = param_1.state;
+    pGVar3 = pGStack00000014;
     do {
-      pMVar2 = (MaterialShaderArgument *)lVar12;
-      if (0x3f < pMVar2->dest) {
+      if (0x3f < param_3->dest) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_shade.cpp",0x6b,
                         0,
                         "routingData->dest doesn\'t index ARRAY_COUNT( context.state->vertexShaderConstState )\n\t%i not in [0, %i)"
                        );
       }
-      puVar9 = pGVar4->vertexShaderConstState + pMVar2->dest;
-      if ((pMVar2->u).codeConst.index < 0x52) {
-        bVar8 = R_IsShaderConstantUpToDate(pGVar3,puVar9,pMVar2);
+      puVar7 = pGVar3->vertexShaderConstState + param_3->dest;
+      if ((param_3->u).codeConst.index < 0x52) {
+        bVar6 = R_IsShaderConstantUpToDate(pGVar2,puVar7,param_3);
       }
       else {
-        bVar8 = R_IsShaderMatrixUpToDate(pGVar3,puVar9,pMVar2);
+        bVar6 = R_IsShaderMatrixUpToDate(pGVar2,puVar7,param_3);
       }
-      if (bVar8 == false) {
-        uVar1 = (pMVar2->u).codeConst.index;
-        if (uVar1 < 0x52) {
-          pfVar6 = R_GetCodeConstant(GVar5,(uint)uVar1);
+      if (bVar6 == false) {
+        uVar8 = (param_3->u).codeConst.index;
+        if (uVar8 < 0x52) {
+          pfVar4 = R_GetCodeConstant(param_1,(uint)uVar8);
         }
         else {
-          pfVar6 = R_GetCodeMatrix(pGVar3,(uint)uVar1,(uint)(pMVar2->u).codeConst.firstRow);
+          pfVar4 = R_GetCodeMatrix(pGVar2,(uint)uVar8,(uint)(param_3->u).codeConst.firstRow);
         }
         R_HW_SetVertexShaderConstant
-                  ((pGVar4->prim).device,(uint)pMVar2->dest,pfVar6,
-                   (uint)(pMVar2->u).codeConst.rowCount);
+                  ((pGVar3->prim).device,(uint)param_3->dest,pfVar4,
+                   (uint)(param_3->u).codeConst.rowCount);
       }
-      lVar11 = lVar11 + -1;
-      lVar12 = lVar12 + 8;
-      if (lVar11 == 0) goto LAB_82778e04;
-      sVar10 = *(short *)lVar12;
-    } while (sVar10 == 4);
+      lVar9 = lVar9 + -1;
+      param_3 = param_3 + 1;
+      if (lVar9 == 0) {
+        return;
+      }
+      uVar8 = param_3->type;
+    } while (uVar8 == 4);
   }
-  if (sVar10 == 5) {
-    lVar12 = lVar12 + -6;
+  if (uVar8 == 5) {
+    puVar10 = &param_3[-1].dest;
     do {
-      pGVar7 = R_GetTextureFromCode(pGVar3,*(uint *)((int)lVar12 + 10),local_50);
-      if (pGVar7 == (GfxImage *)0x0) {
-        R_TextureFromCodeError(pGVar3,*(uint *)((int)lVar12 + 10));
+      pGVar5 = R_GetTextureFromCode(pGVar2,*(uint *)(puVar10 + 5),local_50);
+      if (pGVar5 == (GfxImage *)0x0) {
+        R_TextureFromCodeError(pGVar2,*(uint *)(puVar10 + 5));
       }
-      lVar12 = lVar12 + 8;
-      R_SetSampler(GVar5,(uint)*(ushort *)lVar12,local_50[0],pGVar7);
-      lVar11 = lVar11 + -1;
-      if (lVar11 == 0) goto LAB_82778e04;
-    } while (((ushort *)lVar12)[3] == 5);
+      R_SetSampler(param_1,(uint)puVar10[4],local_50[0],pGVar5);
+      lVar9 = lVar9 + -1;
+      if (lVar9 == 0) {
+        return;
+      }
+      puVar1 = puVar10 + 7;
+      puVar10 = puVar10 + 4;
+    } while (*puVar1 == 5);
   }
   if (alwaysfails == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_shade.cpp",0xff,0,
                     "unreachable");
   }
-LAB_82778e04:
-  __restgprlr_25();
   return;
 }
 
@@ -619,6 +602,8 @@ void R_SetupPassPerObjectArgs(GfxCmdBufContext param_1)
 
 // 82778E98  R_SetPassPixelShaderStableArguments  (gfx_d3d/r_shade.cpp:282)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 
@@ -628,79 +613,86 @@ void R_SetPassPixelShaderStableArguments
 {
   ushort uVar1;
   Material *pMVar2;
-  GfxCmdBufState *pGVar3;
-  GfxCmdBufContext GVar4;
+  short *psVar3;
+  GfxCmdBufState *pGVar4;
   int iVar5;
   longlong lVar6;
-  longlong lVar7;
-  MaterialConstantDef *pMVar8;
+  MaterialConstantDef *pMVar7;
+  MaterialArgumentDef *pMVar8;
   GfxCmdBufContext GStack00000010;
   
-  lVar7 = (longlong)(int)param_3;
   lVar6 = (longlong)(int)param_2;
-  GVar4 = (GfxCmdBufContext)__savegprlr_23();
-  GStack00000010.state = GVar4.state;
-  pGVar3 = GStack00000010.state;
+  GStack00000010.state = param_1.state;
+  pGVar4 = GStack00000010.state;
   pMVar2 = (GStack00000010.state)->material;
-  uVar1 = *(ushort *)lVar7;
-  while (GStack00000010 = GVar4, uVar1 < 6) {
+  uVar1 = param_3->type;
+  while (GStack00000010 = param_1, uVar1 < 6) {
     lVar6 = lVar6 + -1;
-    lVar7 = lVar7 + 8;
-    if (lVar6 == 0) goto LAB_82779034;
-    uVar1 = *(ushort *)lVar7;
-  }
-  while (uVar1 == 6) {
-    iVar5 = R_IsPixelShaderConstantUpToDate(GVar4,(MaterialShaderArgument *)lVar7);
-    if (iVar5 == 0) {
-      R_SetPixelShaderConstantFromCode(GVar4,(MaterialShaderArgument *)lVar7);
+    param_3 = param_3 + 1;
+    if (lVar6 == 0) {
+      return;
     }
-    lVar6 = lVar6 + -1;
-    lVar7 = lVar7 + 8;
-    if (lVar6 == 0) goto LAB_82779034;
-    uVar1 = *(ushort *)lVar7;
+    uVar1 = param_3->type;
   }
-  pMVar8 = pMVar2->constantTable;
-  while (uVar1 == 7) {
-    iVar5 = (int)lVar7;
-    if (pMVar8->nameHash != *(uint *)(iVar5 + 4)) {
-      do {
-        pMVar8 = pMVar8 + 1;
-        if (pMVar8 == pMVar2->constantTable + pMVar2->constantCount) {
-          va("material \'%s\' is missing a required named constant");
-          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_shade.cpp",
-                          0x136,0,"%s\n\t%s");
+  while( true ) {
+    if (uVar1 != 6) {
+      pMVar7 = pMVar2->constantTable;
+      while( true ) {
+        if (uVar1 != 7) {
+          if (uVar1 == 8) {
+            pMVar8 = &param_3[-1].u;
+            do {
+              R_SetPixelShaderConstantFromLiteral
+                        (pGVar4,(uint)*(ushort *)((int)pMVar8 + 6),pMVar8[2].literalConst);
+              lVar6 = lVar6 + -1;
+              if (lVar6 == 0) {
+                return;
+              }
+              psVar3 = (short *)(pMVar8 + 3);
+              pMVar8 = pMVar8 + 2;
+            } while (*psVar3 == 8);
+          }
+          if (alwaysfails == 0) {
+            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_shade.cpp",
+                            0x143,0,"unreachable");
+          }
+          return;
         }
-      } while (pMVar8->nameHash != *(uint *)(iVar5 + 4));
+        if ((float *)pMVar7->nameHash != (param_3->u).literalConst) {
+          do {
+            pMVar7 = pMVar7 + 1;
+            if (pMVar7 == pMVar2->constantTable + pMVar2->constantCount) {
+              va("material \'%s\' is missing a required named constant");
+              MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_shade.cpp"
+                              ,0x136,0,"%s\n\t%s");
+            }
+          } while ((float *)pMVar7->nameHash != (param_3->u).literalConst);
+        }
+        R_SetPixelShaderConstantFromLiteral(pGVar4,(uint)param_3->dest,pMVar7->literal);
+        lVar6 = lVar6 + -1;
+        param_3 = param_3 + 1;
+        if (lVar6 == 0) break;
+        uVar1 = param_3->type;
+      }
+      return;
     }
-    R_SetPixelShaderConstantFromLiteral(pGVar3,(uint)*(ushort *)(iVar5 + 2),pMVar8->literal);
+    iVar5 = R_IsPixelShaderConstantUpToDate(param_1,param_3);
+    if (iVar5 == 0) {
+      R_SetPixelShaderConstantFromCode(param_1,param_3);
+    }
     lVar6 = lVar6 + -1;
-    lVar7 = lVar7 + 8;
-    if (lVar6 == 0) goto LAB_82779034;
-    uVar1 = *(ushort *)lVar7;
+    param_3 = param_3 + 1;
+    if (lVar6 == 0) break;
+    uVar1 = param_3->type;
   }
-  if (uVar1 == 8) {
-    lVar7 = lVar7 + -4;
-    do {
-      iVar5 = (int)lVar7;
-      lVar7 = lVar7 + 8;
-      R_SetPixelShaderConstantFromLiteral
-                (pGVar3,(uint)*(ushort *)(iVar5 + 6),(float *)*(undefined4 *)lVar7);
-      lVar6 = lVar6 + -1;
-      if (lVar6 == 0) goto LAB_82779034;
-    } while (*(short *)((undefined4 *)lVar7 + 1) == 8);
-  }
-  if (alwaysfails == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_shade.cpp",0x143,0,
-                    "unreachable");
-  }
-LAB_82779034:
-  __restgprlr_23();
   return;
 }
 
 
 // 82779040  R_SetPassVertexShaderStableArguments  (gfx_d3d/r_shade.cpp:330)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 
@@ -709,53 +701,52 @@ void R_SetPassVertexShaderStableArguments
 
 {
   ushort uVar1;
-  ushort *puVar2;
+  short *psVar2;
   GfxCmdBufSourceState *pGVar3;
   GfxCmdBufState *pGVar4;
-  GfxCmdBufContext GVar5;
-  bool bVar7;
-  float *pfVar6;
-  longlong lVar8;
-  longlong lVar9;
+  bool bVar6;
+  float *pfVar5;
+  longlong lVar7;
+  MaterialArgumentDef *pMVar8;
   GfxCmdBufSourceState *pGStack00000010;
   GfxCmdBufState *pGStack00000014;
   
-  lVar8 = (longlong)(int)param_3;
-  lVar9 = (longlong)(int)param_2;
-  GVar5 = (GfxCmdBufContext)__savegprlr_27();
-  uVar1 = *(ushort *)lVar8;
-  while (_pGStack00000010 = GVar5, uVar1 < 4) {
-    lVar9 = lVar9 + -1;
-    lVar8 = lVar8 + 8;
-    if (lVar9 == 0) goto LAB_827790f8;
-    uVar1 = *(ushort *)lVar8;
-  }
-  if (uVar1 == 4) {
-    pGStack00000014 = GVar5.state;
-    pGVar4 = pGStack00000014;
-    lVar8 = lVar8 + 4;
-    pGStack00000010 = GVar5.source;
-    pGVar3 = pGStack00000010;
-    do {
-      puVar2 = (ushort *)lVar8;
-      bVar7 = R_IsVertexShaderConstantUpToDate(GVar5,(MaterialShaderArgument *)(puVar2 + -2));
-      if (!bVar7) {
-        uVar1 = *puVar2;
-        if (uVar1 < 0x52) {
-          pfVar6 = R_GetCodeConstant(GVar5,(uint)uVar1);
-        }
-        else {
-          pfVar6 = R_GetCodeMatrix(pGVar3,(uint)uVar1,(uint)*(byte *)(puVar2 + 1));
-        }
-        R_HW_SetVertexShaderConstant
-                  ((pGVar4->prim).device,(uint)puVar2[-1],pfVar6,(uint)*(byte *)((int)puVar2 + 3));
+  lVar7 = (longlong)(int)param_2;
+  uVar1 = param_3->type;
+  while( true ) {
+    if (3 < uVar1) {
+      if (uVar1 == 4) {
+        pGStack00000014 = param_1.state;
+        pGVar4 = pGStack00000014;
+        pGStack00000010 = param_1.source;
+        pGVar3 = pGStack00000010;
+        pMVar8 = &param_3->u;
+        _pGStack00000010 = param_1;
+        do {
+          bVar6 = R_IsVertexShaderConstantUpToDate(param_1,(MaterialShaderArgument *)(pMVar8 + -1));
+          if (!bVar6) {
+            uVar1 = (pMVar8->codeConst).index;
+            if (uVar1 < 0x52) {
+              pfVar5 = R_GetCodeConstant(param_1,(uint)uVar1);
+            }
+            else {
+              pfVar5 = R_GetCodeMatrix(pGVar3,(uint)uVar1,(uint)(pMVar8->codeConst).firstRow);
+            }
+            R_HW_SetVertexShaderConstant
+                      ((pGVar4->prim).device,(uint)*(ushort *)((int)pMVar8 + -2),pfVar5,
+                       (uint)(pMVar8->codeConst).rowCount);
+          }
+          lVar7 = lVar7 + -1;
+        } while ((lVar7 != 0) && (psVar2 = (short *)(pMVar8 + 1), pMVar8 = pMVar8 + 2, *psVar2 == 4)
+                );
       }
-      lVar9 = lVar9 + -1;
-      lVar8 = lVar8 + 8;
-    } while ((lVar9 != 0) && (puVar2[2] == 4));
+      return;
+    }
+    lVar7 = lVar7 + -1;
+    param_3 = param_3 + 1;
+    if (lVar7 == 0) break;
+    uVar1 = param_3->type;
   }
-LAB_827790f8:
-  __restgprlr_27();
   return;
 }
 
@@ -808,49 +799,46 @@ void R_SetupPassCriticalPixelShaderArgs(GfxCmdBufContext param_1)
 
 // 82779FC0  R_HW_SetPixelShader  (gfx_d3d/r_setstate_d3d.h:574)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void R_HW_SetPixelShader(D3DDevice *param_1,MaterialPixelShader *param_2)
 
 {
-  D3DDevice *pDVar1;
-  ulonglong uVar2;
-  D3DPixelShader *pDVar3;
+  D3DPixelShader *pDVar1;
   
-  uVar2 = (ulonglong)(int)param_2;
-  pDVar1 = (D3DDevice *)__savegprlr_29(param_1);
-  if (pDVar1 == (D3DDevice *)0x0) {
+  if (param_1 == (D3DDevice *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_setstate_d3d.h",
                     0x23f,0,"%s");
   }
   do {
-    if ((uVar2 & 0xffffffff) == 0) {
-      pDVar3 = (D3DPixelShader *)0x0;
+    if (param_2 == (MaterialPixelShader *)0x0) {
+      pDVar1 = (D3DPixelShader *)0x0;
     }
     else {
-      pDVar3 = *(D3DPixelShader **)((int)uVar2 + 4);
+      pDVar1 = (param_2->prog).ps;
     }
-    D3DDevice_SetPixelShader(pDVar1,pDVar3);
+    D3DDevice_SetPixelShader(param_1,pDVar1);
   } while (alwaysfails != 0);
-  __restgprlr_29();
   return;
 }
 
 
 // 8277A038  R_HW_SetVertexShader  (gfx_d3d/r_setstate_d3d.h:581)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void R_HW_SetVertexShader(D3DDevice *param_1,D3DVertexShader *param_2)
 
 {
-  D3DDevice *pDVar1;
-  
-  pDVar1 = (D3DDevice *)__savegprlr_29(param_1);
-  if (pDVar1 == (D3DDevice *)0x0) {
+  if (param_1 == (D3DDevice *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_setstate_d3d.h",
                     0x246,0,"%s");
   }
   do {
-    D3DDevice_SetVertexShader(pDVar1,param_2);
+    D3DDevice_SetVertexShader(param_1,param_2);
   } while (alwaysfails != 0);
-  __restgprlr_29();
   return;
 }
 
@@ -880,82 +868,74 @@ void R_SetupPassVertexShaderArgs(GfxCmdBufContext param_1)
 
 // 827791F0  R_OverrideImage  (gfx_d3d/r_shade.cpp:602)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void R_OverrideImage(GfxImage **param_1,MaterialTextureDef *param_2)
 
 {
-  int *piVar1;
-  GfxImage *pGVar2;
-  char *pcVar3;
-  ulonglong uVar4;
+  GfxImage *pGVar1;
+  char *pcVar2;
   
-  uVar4 = (ulonglong)(int)param_2;
-  piVar1 = (int *)__savegprlr_28(param_1);
-  if (piVar1 == (int *)0x0) {
+  if (param_1 == (GfxImage **)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_shade.cpp",0x25d,0,
                     "%s");
   }
-  if ((uVar4 & 0xffffffff) == 0) {
+  if (param_2 == (MaterialTextureDef *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_shade.cpp",0x25e,0,
                     "%s");
   }
-  if (*(char *)(*piVar1 + 0x38) == '\x03') {
-    switch(*(undefined1 *)((int)uVar4 + 7)) {
-    case 0:
-    case 1:
-    case 0xb:
-    case 0xc:
+  if ((*param_1)->mapType == '\x03') {
+    switch(param_2->semantic) {
+    case '\0':
+    case '\x01':
+    case '\v':
+    case '\f':
       break;
-    case 2:
+    case '\x02':
       if (rg.colorMap != 1) {
-        pGVar2 = R_OverrideGrayscaleImage(rg.colorMap,r_colorMap);
-        *piVar1 = (int)pGVar2;
-        __restgprlr_28();
+        pGVar1 = R_OverrideGrayscaleImage(rg.colorMap,r_colorMap);
+        *param_1 = pGVar1;
         return;
       }
       break;
-    case 3:
+    case '\x03':
       if ((r_detailMap->current).integer == 0) {
-        *piVar1 = (int)rgp.grayImage;
-        __restgprlr_28();
+        *param_1 = rgp.grayImage;
         return;
       }
       if ((r_detailMap->current).integer != 1) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_shade.cpp",0x281
                         ,0,"%s\n\t(r_detailMap->current.integer) = %i");
-        __restgprlr_28();
         return;
       }
       break;
     default:
       if (alwaysfails == 0) {
-        pcVar3 = va("unhandled case %i");
+        pcVar2 = va("unhandled case %i");
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_shade.cpp",0x28b
-                        ,1,pcVar3);
+                        ,1,pcVar2);
       }
       break;
-    case 5:
+    case '\x05':
       if ((r_normalMap->current).integer == 0) {
-        *piVar1 = (int)rgp.identityNormalMapImage;
-        __restgprlr_28();
+        *param_1 = rgp.identityNormalMapImage;
         return;
       }
       if ((r_normalMap->current).integer != 1) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_shade.cpp",0x277
                         ,0,"%s\n\t(r_normalMap->current.integer) = %i");
-        __restgprlr_28();
         return;
       }
       break;
-    case 8:
+    case '\b':
       if ((r_specularMap->current).integer != 1) {
-        pGVar2 = R_OverrideGrayscaleImage((r_specularMap->current).integer,r_specularMap);
-        *piVar1 = (int)pGVar2;
-        __restgprlr_28();
+        pGVar1 = R_OverrideGrayscaleImage((r_specularMap->current).integer,r_specularMap);
+        *param_1 = pGVar1;
         return;
       }
     }
   }
-  __restgprlr_28();
   return;
 }
 
@@ -1008,6 +988,8 @@ void D3DTagCollection_Set(_D3DTAGCOLLECTION *param_1,ulong param_2,ulong64 param
 
 // 82779408  R_MarkRenderedAndOverrideStreamingImage  (gfx_d3d/r_shade.cpp:657)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 
@@ -1016,43 +998,39 @@ void R_MarkRenderedAndOverrideStreamingImage
                MaterialTextureDef *param_4)
 
 {
-  undefined8 uVar1;
+  GfxBackEndData *pGVar1;
   bool bVar2;
   int iVar3;
   int iVar4;
-  int iStack00000010;
+  GfxCmdBufSourceState *pGStack00000010;
   
-  uVar1 = __savegprlr_28();
-  iStack00000010 = (int)((ulonglong)uVar1 >> 0x20);
-  iVar3 = *(int *)(iStack00000010 + 0x13ec);
-  _iStack00000010 = uVar1;
-  if (iVar3 == 0) {
+  pGStack00000010 = param_1.source;
+  pGVar1 = (pGStack00000010->input).data;
+  _pGStack00000010 = param_1;
+  if (pGVar1 == (GfxBackEndData *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_shade.cpp",0x296,0,
                     "%s");
   }
-  DB_MarkImageRendered(*param_2,(uint *)(iVar3 + 0x1944));
+  DB_MarkImageRendered(*param_2,pGVar1->imageRendered);
   if (((r_drawStreaming->current).enabled != false) && (param_4->semantic == '\x02')) {
     bVar2 = DB_ShouldOverrideStreamingImage(*param_2);
     if (!bVar2) {
       iVar3 = 0;
-      if (param_3->textureCount == '\0') goto LAB_827794f4;
+      if (param_3->textureCount == '\0') {
+        return;
+      }
       iVar4 = 0;
-      while( true ) {
-        bVar2 = DB_ShouldOverrideStreamingImage
-                          (*(GfxImage **)((int)&param_3->textureTable->u + iVar4));
-        if (bVar2) break;
+      while (bVar2 = DB_ShouldOverrideStreamingImage
+                               (*(GfxImage **)((int)&param_3->textureTable->u + iVar4)), !bVar2) {
         iVar3 = iVar3 + 1;
         iVar4 = iVar4 + 0xc;
         if ((int)(uint)param_3->textureCount <= iVar3) {
-          __restgprlr_28();
           return;
         }
       }
     }
     *param_2 = rgp.streamingLoadingImage;
   }
-LAB_827794f4:
-  __restgprlr_28();
   return;
 }
 
@@ -1083,6 +1061,8 @@ void R_UploadWaterTexture(water_t *param_1,float param_2)
 
 // 82779580  R_SetSamplerFromMaterial  (gfx_d3d/r_shade.cpp:721)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 
@@ -1095,34 +1075,27 @@ R_SetSamplerFromMaterial
   Material *pMVar1;
   water_t *pwVar2;
   GfxCmdBufSourceState *pGVar3;
-  longlong lVar4;
-  MaterialTextureDef *pMVar5;
-  byte bVar6;
-  ulonglong uVar7;
+  byte bVar4;
   GfxCmdBufSourceState *pGStack00000018;
   GfxCmdBufState *pGStack0000001c;
   GfxImage *local_60 [24];
   
-  uVar7 = (ulonglong)(int)param_4;
-  lVar4 = __savegprlr_23(param_1);
   pGStack0000001c = param_2.state;
   pMVar1 = pGStack0000001c->material;
   _pGStack00000018 = param_2;
-  if ((float *)*(int *)uVar7 != (param_3->u).literalConst) {
+  if ((float *)param_4->nameHash != (param_3->u).literalConst) {
     do {
-      uVar7 = uVar7 + 0xc;
-      if ((uVar7 & 0xffffffff) ==
-          ((ulonglong)pMVar1->textureCount * 0xc + ZEXT48(pMVar1->textureTable) & 0xffffffff)) {
+      param_4 = param_4 + 1;
+      if (param_4 == pMVar1->textureTable + pMVar1->textureCount) {
         va("material \'%s\' is missing a required named texture");
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_shade.cpp",0x2dd
                         ,1,"%s\n\t%s");
       }
-    } while ((float *)*(int *)uVar7 != (param_3->u).literalConst);
+    } while ((float *)param_4->nameHash != (param_3->u).literalConst);
   }
-  pMVar5 = (MaterialTextureDef *)uVar7;
   pGVar3 = pGStack00000018;
-  if (pMVar5->semantic == '\v') {
-    pwVar2 = (pMVar5->u).water;
+  if (param_4->semantic == '\v') {
+    pwVar2 = (param_4->u).water;
     local_60[0] = pwVar2->image;
     if ((r_drawWater->current).enabled == false) {
       R_UploadWaterTexture(pwVar2,rg.waterFloatTime);
@@ -1132,92 +1105,86 @@ R_SetSamplerFromMaterial
     }
   }
   else {
-    local_60[0] = (pMVar5->u).image;
+    local_60[0] = (param_4->u).image;
   }
-  bVar6 = pMVar5->samplerState;
-  if (((int)lVar4 == 0) && (2 < (bVar6 & 7))) {
-    bVar6 = bVar6 & 0xf8 | 2;
+  bVar4 = param_4->samplerState;
+  if ((param_1 == VERTEX_SAMPLER) && (2 < (bVar4 & 7))) {
+    bVar4 = bVar4 & 0xf8 | 2;
   }
   if ((rg.hasAnyImageOverrides != false) && (pGVar3->useTextureOverrides != false)) {
-    R_OverrideImage(local_60,pMVar5);
+    R_OverrideImage(local_60,param_4);
   }
-  R_MarkRenderedAndOverrideStreamingImage(param_2,local_60,pMVar1,pMVar5);
-  R_SetSampler(param_2,(uint)param_3->dest | -(uint)(lVar4 == 0) & 0x80000000,bVar6,local_60[0]);
-  pMVar5 = (MaterialTextureDef *)__restgprlr_23(uVar7);
-  return pMVar5;
+  R_MarkRenderedAndOverrideStreamingImage(param_2,local_60,pMVar1,param_4);
+  R_SetSampler(param_2,(uint)param_3->dest | -(uint)(param_1 == VERTEX_SAMPLER) & 0x80000000,bVar4,
+               local_60[0]);
+  return param_4;
 }
 
 
 // 827783F0  R_SetVertexShaderConstantFromLiteral  (gfx_d3d/r_state.h:755)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 
 void R_SetVertexShaderConstantFromLiteral(GfxCmdBufState *param_1,uint param_2,float *param_3)
 
 {
-  ulonglong *puVar1;
-  int iVar2;
-  int iVar3;
-  ulonglong uVar4;
+  D3DDevice *pDVar1;
   
-  uVar4 = (ulonglong)(int)param_2;
-  iVar3 = __savegprlr_29(param_1);
-  if (0x3f < (uVar4 & 0xffffffff)) {
+  if (0x3f < param_2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_state.h",0x2f4,0,
                     "dest doesn\'t index ARRAY_COUNT( state->vertexShaderConstState )\n\t%i not in [0, %i)"
                    );
   }
-  iVar2 = (int)uVar4;
-  *(undefined8 *)((int)((uVar4 + 0x22 & 0xffffffff) << 3) + iVar3) = 0xffffffffffffffff;
-  puVar1 = *(ulonglong **)(iVar3 + 0xc0);
+  param_1->vertexShaderConstState[param_2] = 0xffffffffffffffff;
+  pDVar1 = (param_1->prim).device;
   do {
-    *(float *)((int)((uVar4 + 0x78 & 0xffffffff) << 4) + (int)puVar1) = *param_3;
-    *(float *)((int)puVar1 + iVar2 * 0x10 + 0x784) = param_3[1];
-    *(float *)(puVar1 + iVar2 * 2 + 0xf1) = param_3[2];
-    *(float *)((int)puVar1 + iVar2 * 0x10 + 0x78c) = param_3[3];
-    *puVar1 = 0x8000000000000000U >> ((uVar4 & 0xffffffff) >> 2 & 0x7f) | *puVar1;
+    *(float *)((int)&(pDVar1->m_Constants).field1_0x300 + param_2 * 0x10) = *param_3;
+    *(float *)((int)&(pDVar1->m_Constants).field1_0x300 + param_2 * 0x10 + 4) = param_3[1];
+    *(float *)((int)&(pDVar1->m_Constants).field1_0x300 + param_2 * 0x10 + 8) = param_3[2];
+    *(float *)((int)&(pDVar1->m_Constants).field1_0x300 + param_2 * 0x10 + 0xc) = param_3[3];
+    (pDVar1->m_Pending).m_Mask[0] =
+         0x8000000000000000U >> ((ulonglong)(param_2 >> 2) & 0x7f) | (pDVar1->m_Pending).m_Mask[0];
   } while (alwaysfails != 0);
-  __restgprlr_29();
   return;
 }
 
 
 // 8277A0A0  R_SetPixelShaderConstantFromLiteral  (gfx_d3d/r_state.h:765)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 
 void R_SetPixelShaderConstantFromLiteral(GfxCmdBufState *param_1,uint param_2,float *param_3)
 
 {
-  int iVar1;
-  int iVar2;
-  ulonglong uVar3;
+  D3DDevice *pDVar1;
   
-  uVar3 = (ulonglong)(int)param_2;
-  iVar2 = __savegprlr_29(param_1);
-  if (0xff < (uVar3 & 0xffffffff)) {
+  if (0xff < param_2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_state.h",0x2fe,0,
                     "dest doesn\'t index ARRAY_COUNT( state->pixelShaderConstState )\n\t%i not in [0, %i)"
                    );
   }
-  *(undefined8 *)((int)((uVar3 + 0x62 & 0xffffffff) << 3) + iVar2) = 0xffffffffffffffff;
-  iVar2 = *(int *)(iVar2 + 0xc0);
-  iVar1 = (int)uVar3 * 0x10 + iVar2;
+  param_1->pixelShaderConstState[param_2] = 0xffffffffffffffff;
+  pDVar1 = (param_1->prim).device;
   do {
-    *(float *)((int)((uVar3 + 0x178 & 0xffffffff) << 4) + iVar2) = *param_3;
-    *(float *)(iVar1 + 0x1784) = param_3[1];
-    *(float *)(iVar1 + 0x1788) = param_3[2];
-    *(float *)(iVar1 + 0x178c) = param_3[3];
-    *(ulonglong *)(iVar2 + 8) =
-         0x8000000000000000U >> ((uVar3 & 0xffffffff) >> 2 & 0x7f) | *(ulonglong *)(iVar2 + 8);
+    *(float *)((int)&(pDVar1->m_Constants).field1_0x300 + param_2 * 0x10 + 0x1000) = *param_3;
+    *(float *)((int)&(pDVar1->m_Constants).field1_0x300 + param_2 * 0x10 + 0x1004) = param_3[1];
+    *(float *)((int)&(pDVar1->m_Constants).field1_0x300 + param_2 * 0x10 + 0x1008) = param_3[2];
+    *(float *)((int)&(pDVar1->m_Constants).field1_0x300 + param_2 * 0x10 + 0x100c) = param_3[3];
+    (pDVar1->m_Pending).m_Mask[1] =
+         0x8000000000000000U >> ((ulonglong)(param_2 >> 2) & 0x7f) | (pDVar1->m_Pending).m_Mask[1];
   } while (alwaysfails != 0);
-  __restgprlr_29();
   return;
 }
 
 
 // 82779720  R_SetPassShaderStableArguments  (gfx_d3d/r_shade.cpp:779)
 
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 
@@ -1225,130 +1192,132 @@ void R_SetPassShaderStableArguments
                (GfxCmdBufContext param_1,uint param_2,MaterialShaderArgument *param_3)
 
 {
-  short sVar1;
+  ushort uVar1;
   Material *pMVar2;
-  int iVar3;
+  ushort *puVar3;
   GfxCmdBufSourceState *pGVar4;
   GfxCmdBufState *pGVar5;
-  GfxCmdBufContext GVar6;
-  MaterialTextureDef *pMVar7;
-  GfxImage *pGVar8;
-  MaterialConstantDef *pMVar9;
-  longlong lVar10;
-  longlong lVar11;
+  MaterialTextureDef *pMVar6;
+  GfxImage *pGVar7;
+  MaterialConstantDef *pMVar8;
+  longlong lVar9;
+  ushort *puVar10;
   GfxCmdBufSourceState *pGStack00000010;
   GfxCmdBufState *pGStack00000014;
   uchar local_60 [96];
   
-  lVar11 = (longlong)(int)param_3;
-  lVar10 = (longlong)(int)param_2;
-  GVar6 = (GfxCmdBufContext)__savegprlr_22();
-  pGStack00000014 = GVar6.state;
+  lVar9 = (longlong)(int)param_2;
+  pGStack00000014 = param_1.state;
   pGVar5 = pGStack00000014;
+  uVar1 = param_3->type;
   pMVar2 = pGStack00000014->material;
-  pMVar9 = pMVar2->constantTable;
-  sVar1 = *(short *)lVar11;
-  _pGStack00000010 = GVar6;
-  while (sVar1 == 0) {
-    iVar3 = (int)lVar11;
-    if (pMVar9->nameHash != *(uint *)(iVar3 + 4)) {
+  pMVar8 = pMVar2->constantTable;
+  _pGStack00000010 = param_1;
+  while( true ) {
+    if (uVar1 != 0) {
+      while (uVar1 == 1) {
+        R_SetVertexShaderConstantFromLiteral(pGVar5,(uint)param_3->dest,(param_3->u).literalConst);
+        lVar9 = lVar9 + -1;
+        param_3 = param_3 + 1;
+        if (lVar9 == 0) {
+          return;
+        }
+        uVar1 = param_3->type;
+      }
+      pMVar6 = pMVar2->textureTable;
+      while (uVar1 == 2) {
+        pMVar6 = R_SetSamplerFromMaterial(VERTEX_SAMPLER,param_1,param_3,pMVar6);
+        lVar9 = lVar9 + -1;
+        param_3 = param_3 + 1;
+        if (lVar9 == 0) {
+          return;
+        }
+        uVar1 = param_3->type;
+      }
+      pMVar6 = pMVar2->textureTable;
+      while (uVar1 == 3) {
+        pMVar6 = R_SetSamplerFromMaterial(PIXEL_SAMPLER,param_1,param_3,pMVar6);
+        lVar9 = lVar9 + -1;
+        param_3 = param_3 + 1;
+        if (lVar9 == 0) {
+          return;
+        }
+        uVar1 = param_3->type;
+      }
+      while( true ) {
+        if (uVar1 != 4) {
+          if (uVar1 == 5) {
+            pGVar4 = pGStack00000010;
+            puVar10 = &param_3[-1].dest;
+            do {
+              pGVar7 = R_GetTextureFromCode(pGVar4,*(uint *)(puVar10 + 5),local_60);
+              if (pGVar7 == (GfxImage *)0x0) {
+                R_TextureFromCodeError(pGVar4,*(uint *)(puVar10 + 5));
+              }
+              R_SetSampler(param_1,(uint)puVar10[4],local_60[0],pGVar7);
+              lVar9 = lVar9 + -1;
+            } while ((lVar9 != 0) && (puVar3 = puVar10 + 7, puVar10 = puVar10 + 4, *puVar3 == 5));
+          }
+          return;
+        }
+        R_SetVertexShaderConstantFromCode(param_1,param_3);
+        lVar9 = lVar9 + -1;
+        param_3 = param_3 + 1;
+        if (lVar9 == 0) break;
+        uVar1 = param_3->type;
+      }
+      return;
+    }
+    if ((float *)pMVar8->nameHash != (param_3->u).literalConst) {
       do {
-        pMVar9 = pMVar9 + 1;
-        if (pMVar9 == pMVar2->constantTable + pMVar2->constantCount) {
+        pMVar8 = pMVar8 + 1;
+        if (pMVar8 == pMVar2->constantTable + pMVar2->constantCount) {
           va("material \'%s\' is missing a required named constant");
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_shade.cpp",
                           0x31d,0,"%s\n\t%s");
         }
-      } while (pMVar9->nameHash != *(uint *)(iVar3 + 4));
+      } while ((float *)pMVar8->nameHash != (param_3->u).literalConst);
     }
-    R_SetVertexShaderConstantFromLiteral(pGVar5,(uint)*(ushort *)(iVar3 + 2),pMVar9->literal);
-    lVar10 = lVar10 + -1;
-    lVar11 = lVar11 + 8;
-    if (lVar10 == 0) goto LAB_82779930;
-    sVar1 = *(short *)lVar11;
+    R_SetVertexShaderConstantFromLiteral(pGVar5,(uint)param_3->dest,pMVar8->literal);
+    lVar9 = lVar9 + -1;
+    param_3 = param_3 + 1;
+    if (lVar9 == 0) break;
+    uVar1 = param_3->type;
   }
-  while (sVar1 == 1) {
-    R_SetVertexShaderConstantFromLiteral
-              (pGVar5,(uint)*(ushort *)((int)lVar11 + 2),*(float **)((int)lVar11 + 4));
-    lVar10 = lVar10 + -1;
-    lVar11 = lVar11 + 8;
-    if (lVar10 == 0) goto LAB_82779930;
-    sVar1 = *(short *)lVar11;
-  }
-  pMVar7 = pMVar2->textureTable;
-  while (sVar1 == 2) {
-    pMVar7 = R_SetSamplerFromMaterial(VERTEX_SAMPLER,GVar6,(MaterialShaderArgument *)lVar11,pMVar7);
-    lVar10 = lVar10 + -1;
-    lVar11 = lVar11 + 8;
-    if (lVar10 == 0) goto LAB_82779930;
-    sVar1 = *(short *)lVar11;
-  }
-  pMVar7 = pMVar2->textureTable;
-  while (sVar1 == 3) {
-    pMVar7 = R_SetSamplerFromMaterial(PIXEL_SAMPLER,GVar6,(MaterialShaderArgument *)lVar11,pMVar7);
-    lVar10 = lVar10 + -1;
-    lVar11 = lVar11 + 8;
-    if (lVar10 == 0) goto LAB_82779930;
-    sVar1 = *(short *)lVar11;
-  }
-  while (sVar1 == 4) {
-    R_SetVertexShaderConstantFromCode(GVar6,(MaterialShaderArgument *)lVar11);
-    lVar10 = lVar10 + -1;
-    lVar11 = lVar11 + 8;
-    if (lVar10 == 0) goto LAB_82779930;
-    sVar1 = *(short *)lVar11;
-  }
-  if (sVar1 == 5) {
-    pGVar4 = pGStack00000010;
-    lVar11 = lVar11 + -6;
-    do {
-      pGVar8 = R_GetTextureFromCode(pGVar4,*(uint *)((int)lVar11 + 10),local_60);
-      if (pGVar8 == (GfxImage *)0x0) {
-        R_TextureFromCodeError(pGVar4,*(uint *)((int)lVar11 + 10));
-      }
-      lVar11 = lVar11 + 8;
-      R_SetSampler(GVar6,(uint)*(ushort *)lVar11,local_60[0],pGVar8);
-      lVar10 = lVar10 + -1;
-    } while ((lVar10 != 0) && (((ushort *)lVar11)[3] == 5));
-  }
-LAB_82779930:
-  __restgprlr_22();
   return;
 }
 
 
 // 8277A160  R_SetVertexDecl  (gfx_d3d/r_state.h:828)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void R_SetVertexDecl(GfxCmdBufPrimState *param_1,MaterialVertexDeclaration *param_2)
 
 {
   D3DDevice *pDVar1;
-  undefined4 *puVar2;
-  ulonglong uVar3;
-  D3DVertexDeclaration *pDVar4;
+  D3DVertexDeclaration *pDVar2;
   
-  uVar3 = (ulonglong)(int)param_2;
-  puVar2 = (undefined4 *)__savegprlr_28(param_1);
-  if ((uVar3 & 0xffffffff) == 0) {
-    pDVar4 = (D3DVertexDeclaration *)0x0;
+  if (param_2 == (MaterialVertexDeclaration *)0x0) {
+    pDVar2 = (D3DVertexDeclaration *)0x0;
   }
   else {
-    pDVar4 = *(D3DVertexDeclaration **)((puVar2[2] + 1) * 4 + (int)uVar3);
+    pDVar2 = *(D3DVertexDeclaration **)((int)&param_2->routing + param_1->vertDeclType * 4);
   }
-  if ((D3DVertexDeclaration *)puVar2[10] != pDVar4) {
+  if (param_1->vertexDecl != pDVar2) {
     Profile_Begin(0x5a);
-    pDVar1 = (D3DDevice *)*puVar2;
+    pDVar1 = param_1->device;
     if (pDVar1 == (D3DDevice *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_state.h",0x346,0,
                       "%s");
     }
     do {
-      D3DDevice_SetVertexDeclaration(pDVar1,pDVar4);
+      D3DDevice_SetVertexDeclaration(pDVar1,pDVar2);
     } while (alwaysfails != 0);
-    puVar2[10] = pDVar4;
-    puVar2 = (undefined4 *)Profile_EndInternal((double *)0x0);
+    param_1->vertexDecl = pDVar2;
+    Profile_EndInternal((double *)0x0);
   }
-  __restgprlr_28(puVar2);
   return;
 }
 
@@ -1397,6 +1366,8 @@ void R_SetVertexShader(GfxCmdBufState *param_1,MaterialVertexShader *param_2)
 
 // 82779A58  R_UpdateVertexDecl  (gfx_d3d/r_shade.cpp:1185)
 
+/* WARNING: Function: __savegprlr_21 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_21 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 
 void R_UpdateVertexDecl(GfxCmdBufState *param_1)
@@ -1404,31 +1375,29 @@ void R_UpdateVertexDecl(GfxCmdBufState *param_1)
 {
   MaterialPass *pMVar1;
   MaterialVertexShader *pMVar2;
-  GfxCmdBufState *pGVar3;
-  MaterialVertexDeclaration *pMVar4;
-  longlong lVar5;
-  MaterialPass *pMVar6;
+  MaterialVertexDeclaration *pMVar3;
+  longlong lVar4;
+  MaterialPass *pMVar5;
   
-  pGVar3 = (GfxCmdBufState *)__savegprlr_21(param_1);
-  pMVar1 = pGVar3->pass;
+  pMVar1 = param_1->pass;
   if (pMVar1->vertexDecl == (MaterialVertexDeclaration *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_shade.cpp",0x4a7,0,
                     "%s");
   }
-  pMVar2 = pMVar1->vertexShaderArray[(pGVar3->prim).vertDeclType];
+  pMVar2 = pMVar1->vertexShaderArray[(param_1->prim).vertDeclType];
   if (pMVar2 == (MaterialVertexShader *)0x0) {
     pMVar2 = pMVar1->vertexShader;
     if (pMVar2 == (MaterialVertexShader *)0x0) {
-      lVar5 = 0x15;
-      pMVar6 = pMVar1;
+      lVar4 = 0x15;
+      pMVar5 = pMVar1;
       do {
-        pMVar6 = (MaterialPass *)pMVar6->vertexShaderArray;
-        if (*(MaterialVertexShader **)pMVar6 != (MaterialVertexShader *)0x0) {
-          VertexDecl_GetName((pGVar3->prim).vertDeclType);
+        pMVar5 = (MaterialPass *)pMVar5->vertexShaderArray;
+        if (*(MaterialVertexShader **)pMVar5 != (MaterialVertexShader *)0x0) {
+          VertexDecl_GetName((param_1->prim).vertDeclType);
           Com_Error(ERR_FATAL,"Missing decl \'%s\' techset \'%s\' tech \'%s\' shader \'%s\'.");
         }
-        lVar5 = lVar5 + -1;
-      } while (lVar5 != 0);
+        lVar4 = lVar4 + -1;
+      } while (lVar4 != 0);
       if (alwaysfails == 0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_shade.cpp",0x4be
                         ,0,"unreachable");
@@ -1438,12 +1407,12 @@ void R_UpdateVertexDecl(GfxCmdBufState *param_1)
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_shade.cpp",0x4c6,0
                       ,"%s");
     }
-    pMVar4 = pMVar1->vertexDecl;
+    pMVar3 = pMVar1->vertexDecl;
   }
   else {
-    pMVar4 = (MaterialVertexDeclaration *)0x0;
+    pMVar3 = (MaterialVertexDeclaration *)0x0;
   }
-  R_SetVertexDecl(&pGVar3->prim,pMVar4);
+  R_SetVertexDecl(&param_1->prim,pMVar3);
   if (pMVar1->pixelShader == (MaterialPixelShader *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_shade.cpp",0x4ca,0,
                     "%s");
@@ -1452,12 +1421,11 @@ void R_UpdateVertexDecl(GfxCmdBufState *param_1)
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_shade.cpp",0x4cd,0,
                     "%s");
   }
-  if (*(int *)((int)&pMVar1->vertexDecl->routing + (pGVar3->prim).vertDeclType * 4) == 0) {
+  if (*(int *)((int)&pMVar1->vertexDecl->routing + (param_1->prim).vertDeclType * 4) == 0) {
     Com_Error(ERR_FATAL,
               "Vertex type %i doesn\'t have the information used by shader %s in material %s\n");
   }
-  R_SetVertexShader(pGVar3,pMVar2);
-  __restgprlr_21();
+  R_SetVertexShader(param_1,pMVar2);
   return;
 }
 
@@ -1473,6 +1441,8 @@ bool R_CanUseDepthBufferFor2D(GfxRenderTargetId param_1)
 
 // 82779C48  R_SetupPass  (gfx_d3d/r_shade.cpp:1258)
 
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 
@@ -1485,27 +1455,20 @@ void R_SetupPass(GfxCmdBufContext param_1,uint param_2)
   uint uVar4;
   MaterialPixelShader *pMVar5;
   char *pcVar6;
-  uint uVar7;
-  GfxCmdBufSourceState *pGVar8;
-  GfxCmdBufState *pGVar9;
-  GfxCmdBufContext GVar10;
-  int iVar11;
-  longlong lVar12;
-  uint *puVar13;
-  uint uVar14;
+  GfxCmdBufSourceState *pGVar7;
+  GfxCmdBufState *pGVar8;
+  int iVar9;
+  uint uVar10;
   GfxCmdBufSourceState *pGStack00000010;
   GfxCmdBufState *pGStack00000014;
   
-  lVar12 = (longlong)(int)param_2;
-  GVar10 = (GfxCmdBufContext)__savegprlr_22();
-  _pGStack00000010 = GVar10;
+  _pGStack00000010 = param_1;
   Profile_Begin(0x85);
-  pGVar9 = pGStack00000014;
-  uVar7 = (uint)lVar12;
-  pGStack00000014->passIndex = uVar7;
+  pGVar8 = pGStack00000014;
+  pGStack00000014->passIndex = param_2;
   pMVar2 = pGStack00000014->technique;
   pMVar3 = pGStack00000014->material;
-  pGStack00000014->pass = pMVar2->passArray + uVar7;
+  pGStack00000014->pass = pMVar2->passArray + param_2;
   if (pMVar3->stateBitsEntry[pGStack00000014->techType] == 0xff) {
     va(
       "Bug 135001 condition detected!  Please bug this to Wade.Brainerd@activision.com.\n     material=%s passIndex=%d techType=%d"
@@ -1513,61 +1476,57 @@ void R_SetupPass(GfxCmdBufContext param_1,uint param_2)
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_shade.cpp",0x501,0,
                     "%s\n\t%s");
   }
-  if (pMVar3->stateBitsCount <= pMVar3->stateBitsEntry[pGVar9->techType]) {
+  if (pMVar3->stateBitsCount <= pMVar3->stateBitsEntry[pGVar8->techType]) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_shade.cpp",0x503,0,
                     "material->stateBitsEntry[context.state->techType] doesn\'t index material->stateBitsCount\n\t%i not in [0, %i)"
                    );
   }
-  pGVar8 = pGStack00000010;
-  puVar13 = (uint *)((int)pMVar3->stateBitsTable->loadBits +
-                    (int)(((ulonglong)pMVar3->stateBitsEntry[pGVar9->techType] + lVar12 & 0xffffffff
-                          ) << 3));
-  uVar4 = *puVar13;
-  uVar14 = puVar13[1];
+  pGVar7 = pGStack00000010;
+  uVar4 = pMVar3->stateBitsTable[pMVar3->stateBitsEntry[pGVar8->techType] + param_2].loadBits[0];
+  uVar10 = pMVar3->stateBitsTable[pMVar3->stateBitsEntry[pGVar8->techType] + param_2].loadBits[1];
   if (pGStack00000010->viewMode == VIEW_MODE_NONE) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_shade.cpp",0x50b,0,
                     "%s");
   }
-  if ((pGVar8->viewMode == VIEW_MODE_2D) && ((pMVar3->stateFlags & 0x10) != 0)) {
+  if ((pGVar7->viewMode == VIEW_MODE_2D) && ((pMVar3->stateFlags & 0x10) != 0)) {
     va("Material \'%s\' uses depth buffer but drawing 2D.");
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_shade.cpp",0x51b,0,
                     "%s\n\t%s");
   }
-  if (pGVar8->forceDepthWrite != false) {
-    uVar14 = uVar14 | 1;
+  if (pGVar7->forceDepthWrite != false) {
+    uVar10 = uVar10 | 1;
   }
-  if (uVar4 != pGVar9->refStateBits[0]) {
-    R_ChangeState_0(pGVar9,uVar4);
-    pGVar9->refStateBits[0] = uVar4;
+  if (uVar4 != pGVar8->refStateBits[0]) {
+    R_ChangeState_0(pGVar8,uVar4);
+    pGVar8->refStateBits[0] = uVar4;
   }
-  if (uVar14 != pGVar9->refStateBits[1]) {
-    R_ChangeState_1(pGVar9,uVar14);
-    pGVar9->refStateBits[1] = uVar14;
+  if (uVar10 != pGVar8->refStateBits[1]) {
+    R_ChangeState_1(pGVar8,uVar10);
+    pGVar8->refStateBits[1] = uVar10;
   }
-  if (pMVar2->passArray[uVar7].pixelShader == (MaterialPixelShader *)0x0) {
+  if (pMVar2->passArray[param_2].pixelShader == (MaterialPixelShader *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_shade.cpp",0x56c,0,
                     "%s");
   }
   if (((1 < (r_pix_material->current).integer) &&
-      (pMVar5 = pMVar2->passArray[uVar7].pixelShader, pMVar5 != (MaterialPixelShader *)0x0)) &&
+      (pMVar5 = pMVar2->passArray[param_2].pixelShader, pMVar5 != (MaterialPixelShader *)0x0)) &&
      (pcVar6 = pMVar5->name, pcVar6 != (char *)0x0)) {
-    iVar11 = I_stricmp(pixelShaderName,pcVar6);
-    if (iVar11 != 0) {
-      PIXSetMarker(0xffffffff,(pMVar2->passArray[uVar7].pixelShader)->name);
+    iVar9 = I_stricmp(pixelShaderName,pcVar6);
+    if (iVar9 != 0) {
+      PIXSetMarker(0xffffffff,(pMVar2->passArray[param_2].pixelShader)->name);
     }
-    pixelShaderName = (pMVar2->passArray[uVar7].pixelShader)->name;
+    pixelShaderName = (pMVar2->passArray[param_2].pixelShader)->name;
   }
-  R_SetPixelShader(pGVar9,pMVar2->passArray[uVar7].pixelShader);
-  bVar1 = pMVar2->passArray[uVar7].stableArgCount;
+  R_SetPixelShader(pGVar8,pMVar2->passArray[param_2].pixelShader);
+  bVar1 = pMVar2->passArray[param_2].stableArgCount;
   if (bVar1 != 0) {
     R_SetPassShaderStableArguments
-              (GVar10,(uint)bVar1,
-               pMVar2->passArray[uVar7].args +
-               (uint)pMVar2->passArray[uVar7].perObjArgCount +
-               (uint)pMVar2->passArray[uVar7].perPrimArgCount);
+              (param_1,(uint)bVar1,
+               pMVar2->passArray[param_2].args +
+               (uint)pMVar2->passArray[param_2].perObjArgCount +
+               (uint)pMVar2->passArray[param_2].perPrimArgCount);
   }
-  iVar11 = Profile_EndInternal((double *)0x0);
-  __restgprlr_22(iVar11);
+  Profile_EndInternal((double *)0x0);
   return;
 }
 

@@ -31,88 +31,83 @@ void __thiscall bdFileInfo::~bdFileInfo(bdFileInfo *this)
 
 // 828F91A0  deserialize  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdstorage/bdfileinfo.cpp:27)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 bool __thiscall bdFileInfo::deserialize(bdFileInfo *this,bdReference<bdByteBuffer> param_1)
 
 {
-  int iVar1;
+  bool bVar1;
   bool bVar2;
-  bool bVar3;
-  undefined1 uVar4;
-  undefined8 uVar5;
-  bdByteBuffer *pbStack0000001c;
+  bdReference<bdByteBuffer> bStack0000001c;
   bool local_30 [48];
   
-  iVar1 = __savegprlr_28(this);
-  pbStack0000001c = param_1.m_ptr;
-  bVar2 = bdByteBuffer::readUInt32
-                    ((bdByteBuffer *)(param_1.m_ptr)->_padding_,(uint *)(iVar1 + 0xa8));
-  if (bVar2) {
-    bVar3 = bdByteBuffer::readUInt64
-                      ((bdByteBuffer *)(param_1.m_ptr)->_padding_,(ulong64 *)(iVar1 + 8));
-    bVar2 = true;
-    if (!bVar3) goto LAB_828f91f8;
+  bStack0000001c.m_ptr = param_1.m_ptr;
+  bVar1 = bdByteBuffer::readUInt32((bdByteBuffer *)(param_1.m_ptr)->_padding_,&this->m_fileSize);
+  if (bVar1) {
+    bVar2 = bdByteBuffer::readUInt64((bdByteBuffer *)(param_1.m_ptr)->_padding_,&this->m_fileID);
+    bVar1 = true;
+    if (!bVar2) goto LAB_828f91f8;
   }
   else {
 LAB_828f91f8:
-    bVar2 = false;
+    bVar1 = false;
   }
-  if (bVar2) {
-    bVar3 = bdByteBuffer::readUInt32
-                      ((bdByteBuffer *)(param_1.m_ptr)->_padding_,(uint *)(iVar1 + 0x10));
-    bVar2 = true;
-    if (!bVar3) goto LAB_828f921c;
+  if (bVar1) {
+    bVar2 = bdByteBuffer::readUInt32((bdByteBuffer *)(param_1.m_ptr)->_padding_,&this->m_createTime)
+    ;
+    bVar1 = true;
+    if (!bVar2) goto LAB_828f921c;
   }
   else {
 LAB_828f921c:
-    bVar2 = false;
+    bVar1 = false;
   }
-  if (bVar2) {
-    bVar3 = bdByteBuffer::readUInt32
-                      ((bdByteBuffer *)(param_1.m_ptr)->_padding_,(uint *)(iVar1 + 0x14));
-    bVar2 = true;
-    if (!bVar3) goto LAB_828f9240;
+  if (bVar1) {
+    bVar2 = bdByteBuffer::readUInt32
+                      ((bdByteBuffer *)(param_1.m_ptr)->_padding_,&this->m_modifedTime);
+    bVar1 = true;
+    if (!bVar2) goto LAB_828f9240;
   }
   else {
 LAB_828f9240:
-    bVar2 = false;
+    bVar1 = false;
   }
   local_30[0] = false;
-  if (bVar2) {
-    bVar3 = bdByteBuffer::readBool((bdByteBuffer *)(param_1.m_ptr)->_padding_,local_30);
-    bVar2 = true;
-    if (!bVar3) goto LAB_828f9268;
+  if (bVar1) {
+    bVar2 = bdByteBuffer::readBool((bdByteBuffer *)(param_1.m_ptr)->_padding_,local_30);
+    bVar1 = true;
+    if (!bVar2) goto LAB_828f9268;
   }
   else {
 LAB_828f9268:
-    bVar2 = false;
+    bVar1 = false;
   }
   if (local_30[0] == false) {
-    *(undefined4 *)(iVar1 + 0x18) = 0;
+    this->m_visibility = BD_VISIBLE_PUBLIC;
   }
   else {
-    *(undefined4 *)(iVar1 + 0x18) = 1;
+    this->m_visibility = BD_VISIBLE_PRIVATE;
   }
-  if (bVar2) {
-    bVar3 = bdByteBuffer::readUInt64
-                      ((bdByteBuffer *)(param_1.m_ptr)->_padding_,(ulong64 *)(iVar1 + 0x20));
-    bVar2 = true;
-    if (!bVar3) goto LAB_828f92ac;
+  if (bVar1) {
+    bVar2 = bdByteBuffer::readUInt64((bdByteBuffer *)(param_1.m_ptr)->_padding_,&this->m_ownerID);
+    bVar1 = true;
+    if (!bVar2) goto LAB_828f92ac;
   }
   else {
 LAB_828f92ac:
-    bVar2 = false;
+    bVar1 = false;
   }
-  if (bVar2) {
-    bVar2 = bdByteBuffer::readString
-                      ((bdByteBuffer *)(param_1.m_ptr)->_padding_,(char *)(iVar1 + 0x28),0x80);
-    uVar5 = 1;
-    if (bVar2) goto LAB_828f92d8;
+  if (bVar1) {
+    bVar1 = bdByteBuffer::readString
+                      ((bdByteBuffer *)(param_1.m_ptr)->_padding_,this->m_fileName,0x80);
+    bVar2 = true;
+    if (bVar1) goto LAB_828f92d8;
   }
-  uVar5 = 0;
+  bVar2 = false;
 LAB_828f92d8:
   bdReference<bdByteBuffer>::~bdReference<bdByteBuffer>((bdReference<bdByteBuffer> *)param_1.m_ptr);
-  uVar4 = __restgprlr_28(uVar5);
-  return (bool)uVar4;
+  return bVar2;
 }
 
 

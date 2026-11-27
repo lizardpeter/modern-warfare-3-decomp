@@ -29,58 +29,54 @@ bdUserGroupMembershipInfo::~bdUserGroupMembershipInfo(bdUserGroupMembershipInfo 
 
 // 8290CBB0  deserialize  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdusergroups/bdusergroupmembershipinfo.cpp:26)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 bool __thiscall
 bdUserGroupMembershipInfo::deserialize
           (bdUserGroupMembershipInfo *this,bdReference<bdByteBuffer> param_1)
 
 {
-  int iVar1;
+  bool bVar1;
   bool bVar2;
-  bool bVar3;
-  undefined1 uVar4;
-  longlong lVar5;
-  bdByteBuffer *pbStack0000001c;
+  bdReference<bdByteBuffer> bStack0000001c;
   
-  iVar1 = __savegprlr_29(this);
-  pbStack0000001c = param_1.m_ptr;
-  bVar2 = bdByteBuffer::readUInt64
-                    ((bdByteBuffer *)(param_1.m_ptr)->_padding_,(ulong64 *)(iVar1 + 8));
-  if (bVar2) {
-    bVar3 = bdByteBuffer::readString
-                      ((bdByteBuffer *)(param_1.m_ptr)->_padding_,(char *)(iVar1 + 0x10),0x40);
-    bVar2 = true;
-    if (!bVar3) goto LAB_8290cbfc;
+  bStack0000001c.m_ptr = param_1.m_ptr;
+  bVar1 = bdByteBuffer::readUInt64((bdByteBuffer *)(param_1.m_ptr)->_padding_,&this->m_userGroupID);
+  if (bVar1) {
+    bVar2 = bdByteBuffer::readString
+                      ((bdByteBuffer *)(param_1.m_ptr)->_padding_,this->m_userGroupName,0x40);
+    bVar1 = true;
+    if (!bVar2) goto LAB_8290cbfc;
   }
   else {
 LAB_8290cbfc:
-    bVar2 = false;
+    bVar1 = false;
   }
-  if (bVar2) {
-    bVar3 = bdByteBuffer::readUInt64
-                      ((bdByteBuffer *)(param_1.m_ptr)->_padding_,(ulong64 *)(iVar1 + 0x50));
-    bVar2 = true;
-    if (!bVar3) goto LAB_8290cc20;
+  if (bVar1) {
+    bVar2 = bdByteBuffer::readUInt64((bdByteBuffer *)(param_1.m_ptr)->_padding_,&this->m_userID);
+    bVar1 = true;
+    if (!bVar2) goto LAB_8290cc20;
   }
   else {
 LAB_8290cc20:
-    bVar2 = false;
+    bVar1 = false;
   }
-  if (bVar2) {
+  if (bVar1) {
     bVar2 = bdByteBuffer::readInt16
-                      ((bdByteBuffer *)(param_1.m_ptr)->_padding_,(short *)(iVar1 + 0x58));
-    lVar5 = 1;
+                      ((bdByteBuffer *)(param_1.m_ptr)->_padding_,&this->m_userGroupMemberType);
+    bVar1 = true;
     if (bVar2) goto LAB_8290cc48;
   }
-  lVar5 = 0;
+  bVar1 = false;
 LAB_8290cc48:
-  if (lVar5 == 0) {
+  if (!bVar1) {
     bdLogMessage(BD_LOG_ERROR,"err/","userGroupInfo",
                  "c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdLobby\\bdUserGroups\\bdUserGroupMembershipInfo.cpp"
                  ,"bdUserGroupMembershipInfo::deserialize",0x21,"Deserialization failed");
   }
   bdReference<bdByteBuffer>::~bdReference<bdByteBuffer>((bdReference<bdByteBuffer> *)param_1.m_ptr);
-  uVar4 = __restgprlr_29(lVar5);
-  return (bool)uVar4;
+  return bVar1;
 }
 
 

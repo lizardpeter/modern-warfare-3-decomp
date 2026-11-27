@@ -34,42 +34,43 @@ void __thiscall bdHTTPWrapper::~bdHTTPWrapper(bdHTTPWrapper *this)
 
 // 82912E30  run  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdhttpwrapper/bdhttpwrapper.cpp:39)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
+
 uint __thiscall bdHTTPWrapper::run(bdHTTPWrapper *this,void *param_1)
 
 {
-  int iVar1;
-  uint uVar2;
+  BD_HTTP_STATUS BVar1;
   
-  iVar1 = __savegprlr_24(this,param_1);
-  *(undefined1 *)(iVar1 + 0x10) = 0;
+  *(undefined1 *)&this->_padding_ = 0;
   do {
-    bdPlatformSemaphore::_wait_bdSemaphore__QAA_NXZ(*(void ***)(iVar1 + 0x18));
-    if (*(int *)(iVar1 + 0xcc) == 1) {
-      if (*(int *)(iVar1 + 0x20) != 1) {
+    bdPlatformSemaphore::_wait_bdSemaphore__QAA_NXZ((void **)this->_padding_);
+    if ((this->m_httpClient).m_status == BD_HTTP_STATUS_BUSY) {
+      if (this->_padding_ != 1) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdLobby\\bdHTTPWrapper\\bdHTTPWrapper.cpp"
                         ,0x30,0,"%s\n\t%s");
       }
-      bdHTTPClient::performOperation((bdHTTPClient *)(iVar1 + 0x28));
-      if (*(char *)(iVar1 + 0x680) == '\0') {
-        if (*(int *)(iVar1 + 0xcc) != 2) {
-          if (*(int *)(iVar1 + 0xcc) == 1) {
+      bdHTTPClient::performOperation(&this->m_httpClient);
+      if ((this->m_httpClient).m_abort == false) {
+        BVar1 = (this->m_httpClient).m_status;
+        if (BVar1 != BD_HTTP_STATUS_DONE) {
+          if (BVar1 == BD_HTTP_STATUS_BUSY) {
             MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdLobby\\bdHTTPWrapper\\bdHTTPWrapper.cpp"
                             ,0x43,0,"%s\n\t%s");
           }
           goto LAB_82912ef4;
         }
-        *(undefined4 *)(iVar1 + 0x20) = 2;
+        this->_padding_ = 2;
       }
       else {
 LAB_82912ef4:
-        *(undefined4 *)(iVar1 + 0x20) = 3;
+        this->_padding_ = 3;
       }
-      *(undefined4 *)(iVar1 + 0x24) = 0;
+      *(undefined4 *)&this->field_0x24 = 0;
     }
-    if (*(char *)(iVar1 + 0x11) != '\0') {
-      *(undefined1 *)(iVar1 + 0x10) = 1;
-      uVar2 = __restgprlr_24(0);
-      return uVar2;
+    if (*(char *)((int)&this->_padding_ + 1) != '\0') {
+      *(undefined1 *)&this->_padding_ = 1;
+      return 0;
     }
   } while( true );
 }
@@ -77,43 +78,46 @@ LAB_82912ef4:
 
 // 82912F28  _startDownload  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdhttpwrapper/bdhttpwrapper.cpp:94)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
+
 bdStatus __thiscall
 bdHTTPWrapper::_startDownload
           (bdHTTPWrapper *this,char *param_1,void *param_2,uint param_3,
           bdDownloadInterceptor *param_4,ulong64 param_5,uint param_6,uint param_7)
 
 {
-  bdHTTPWrapperBase *this_00;
-  bool bVar2;
-  bdStatus bVar1;
+  bool bVar1;
   uint in_stack_fffffdc8;
   uint in_stack_fffffdcc;
   char *local_1e0;
   uint local_1dc [3];
   char acStack_1d0 [464];
   
-  this_00 = (bdHTTPWrapperBase *)__savegprlr_24(this);
-  if (this_00->m_operation != BD_IDLE) {
+  if (*(int *)&this->field_0x24 != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdLobby\\bdHTTPWrapper\\bdHTTPWrapper.cpp"
                     ,0x5f,0,"%s\n\t%s");
   }
-  this_00->m_status = BD_FAILED;
+  this->_padding_ = 3;
   local_1e0 = (char *)0x0;
-  bVar2 = bdHTTPWrapperBase::parseURL(this_00,param_1,acStack_1d0,&local_1e0,local_1dc);
-  if (bVar2) {
-    bVar2 = bdHTTPClient::httpGet
-                      ((bdHTTPClient *)(this_00 + 1),acStack_1d0,local_1e0,param_2,param_3,param_4,
+  bVar1 = bdHTTPWrapperBase::parseURL
+                    ((bdHTTPWrapperBase *)this,param_1,acStack_1d0,&local_1e0,local_1dc);
+  if (bVar1) {
+    bVar1 = bdHTTPClient::httpGet
+                      (&this->m_httpClient,acStack_1d0,local_1e0,param_2,param_3,param_4,
                        local_1dc[0],param_5,in_stack_fffffdc8,in_stack_fffffdcc);
-    if (bVar2) {
-      bdHTTPWrapperBase::startAsyncOperation(this_00,BD_DOWNLOAD);
+    if (bVar1) {
+      bdHTTPWrapperBase::startAsyncOperation((bdHTTPWrapperBase *)this,BD_DOWNLOAD);
     }
   }
-  bVar1 = __restgprlr_24(this_00->m_status);
-  return bVar1;
+  return this->_padding_;
 }
 
 
 // 82913010  _startUpload  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdhttpwrapper/bdhttpwrapper.cpp:124)
+
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 
 bdStatus __thiscall
 bdHTTPWrapper::_startUpload
@@ -121,138 +125,132 @@ bdHTTPWrapper::_startUpload
           ,ulong64 param_5,char *param_6)
 
 {
-  bdHTTPWrapperBase *this_00;
-  bool bVar2;
-  bdStatus bVar1;
+  bool bVar1;
   char *in_stack_fffffdd8;
   char *local_1d0;
   uint local_1cc [3];
   char acStack_1c0 [448];
   
-  this_00 = (bdHTTPWrapperBase *)__savegprlr_25(this);
-  if (this_00->m_operation != BD_IDLE) {
+  if (*(int *)&this->field_0x24 != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdLobby\\bdHTTPWrapper\\bdHTTPWrapper.cpp"
                     ,0x7d,0,"%s\n\t%s");
   }
-  this_00->m_status = BD_FAILED;
+  this->_padding_ = 3;
   local_1d0 = (char *)0x0;
-  bVar2 = bdHTTPWrapperBase::parseURL(this_00,param_1,acStack_1c0,&local_1d0,local_1cc);
-  if (bVar2) {
-    bVar2 = bdHTTPClient::httpPut
-                      ((bdHTTPClient *)(this_00 + 1),acStack_1c0,local_1d0,param_2,param_4,param_3,
+  bVar1 = bdHTTPWrapperBase::parseURL
+                    ((bdHTTPWrapperBase *)this,param_1,acStack_1c0,&local_1d0,local_1cc);
+  if (bVar1) {
+    bVar1 = bdHTTPClient::httpPut
+                      (&this->m_httpClient,acStack_1c0,local_1d0,param_2,param_4,param_3,
                        local_1cc[0],param_5,in_stack_fffffdd8);
-    if (bVar2) {
-      bdHTTPWrapperBase::startAsyncOperation(this_00,BD_UPLOAD);
+    if (bVar1) {
+      bdHTTPWrapperBase::startAsyncOperation((bdHTTPWrapperBase *)this,BD_UPLOAD);
     }
   }
-  bVar1 = __restgprlr_25(this_00->m_status);
-  return bVar1;
+  return this->_padding_;
 }
 
 
 // 829132E8  startCopy  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdhttpwrapper/bdhttpwrapper.cpp:150)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 bdStatus __thiscall
 bdHTTPWrapper::startCopy(bdHTTPWrapper *this,char *param_1,char *param_2,ulong64 param_3)
 
 {
-  bdHTTPWrapperBase *this_00;
-  bool bVar4;
+  bool bVar3;
   char *pcVar2;
   ulonglong uVar1;
-  bool bVar5;
-  bdStatus bVar3;
-  char *pcVar6;
-  ulonglong uVar7;
+  bool bVar4;
+  ulonglong uVar5;
   char *local_350;
   uint local_34c [3];
   char acStack_340 [384];
   char acStack_1c0 [448];
   
-  uVar7 = (ulonglong)(int)param_2;
-  this_00 = (bdHTTPWrapperBase *)__savegprlr_26(this);
-  pcVar6 = (char *)uVar7;
-  if (this_00->m_operation != BD_IDLE) {
+  uVar5 = (ulonglong)(int)param_2;
+  if (*(int *)&this->field_0x24 != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdLobby\\bdHTTPWrapper\\bdHTTPWrapper.cpp"
                     ,0x97,0,"%s\n\t%s");
   }
-  this_00->m_status = BD_FAILED;
+  this->_padding_ = 3;
   local_350 = (char *)0x0;
-  bVar4 = bdHTTPWrapperBase::parseURL(this_00,param_1,acStack_1c0,&local_350,local_34c);
-  if (!bVar4) goto LAB_82913480;
-  bVar4 = true;
-  pcVar2 = pcVar6;
+  bVar3 = bdHTTPWrapperBase::parseURL
+                    ((bdHTTPWrapperBase *)this,param_1,acStack_1c0,&local_350,local_34c);
+  if (!bVar3) goto LAB_82913480;
+  bVar3 = true;
+  pcVar2 = param_2;
   strncmp();
   if (pcVar2 == (char *)0x0) {
-    uVar7 = uVar7 + 7;
+    uVar5 = uVar5 + 7;
   }
   else {
-    pcVar2 = pcVar6;
+    pcVar2 = param_2;
     strncmp();
     if (pcVar2 == (char *)0x0) {
-      uVar7 = uVar7 + 8;
+      uVar5 = uVar5 + 8;
     }
   }
-  uVar1 = uVar7;
+  uVar1 = uVar5;
   strchr();
-  if ((((uVar1 & 0xffffffff) < (uVar7 & 0xffffffff)) || ((uVar7 & 0xffffffff) == 0)) ||
+  if ((((uVar1 & 0xffffffff) < (uVar5 & 0xffffffff)) || ((uVar5 & 0xffffffff) == 0)) ||
      ((uVar1 & 0xffffffff) == 0)) {
     bdLogMessage(BD_LOG_ERROR,"err/","http",
                  "c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdLobby\\bdHTTPWrapper\\bdHTTPWrapper.cpp"
                  ,"bdHTTPWrapper::startCopy",0xba,"Destination URL was not of expected form (%s)");
-    bVar4 = false;
+    bVar3 = false;
   }
   else {
-    bdStrlcpy(acStack_340,(char *)uVar7,((int)uVar1 - (int)(char *)uVar7) + 1);
+    bdStrlcpy(acStack_340,(char *)uVar5,((int)uVar1 - (int)(char *)uVar5) + 1);
   }
-  if (bVar4) {
-    bVar5 = bdHTTPClient::httpCopy
-                      ((bdHTTPClient *)(this_00 + 1),acStack_1c0,local_350,pcVar6,acStack_340,
-                       local_34c[0],param_3);
-    bVar4 = true;
-    if (!bVar5) goto LAB_82913468;
+  if (bVar3) {
+    bVar4 = bdHTTPClient::httpCopy
+                      (&this->m_httpClient,acStack_1c0,local_350,param_2,acStack_340,local_34c[0],
+                       param_3);
+    bVar3 = true;
+    if (!bVar4) goto LAB_82913468;
   }
   else {
 LAB_82913468:
-    bVar4 = false;
+    bVar3 = false;
   }
-  if (bVar4) {
-    bdHTTPWrapperBase::startAsyncOperation(this_00,BD_COPY);
+  if (bVar3) {
+    bdHTTPWrapperBase::startAsyncOperation((bdHTTPWrapperBase *)this,BD_COPY);
   }
 LAB_82913480:
-  bVar3 = __restgprlr_26(this_00->m_status);
-  return bVar3;
+  return this->_padding_;
 }
 
 
 // 829130F0  startDelete  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdhttpwrapper/bdhttpwrapper.cpp:220)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 bdStatus __thiscall bdHTTPWrapper::startDelete(bdHTTPWrapper *this,char *param_1,ulong64 param_2)
 
 {
-  bdHTTPWrapperBase *this_00;
-  bool bVar2;
-  bdStatus bVar1;
+  bool bVar1;
   char *local_1b0;
   uint local_1ac [3];
   char acStack_1a0 [416];
   
-  this_00 = (bdHTTPWrapperBase *)__savegprlr_29(this);
-  if (this_00->m_operation != BD_IDLE) {
+  if (*(int *)&this->field_0x24 != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdLobby\\bdHTTPWrapper\\bdHTTPWrapper.cpp"
                     ,0xdd,0,"%s\n\t%s");
   }
-  this_00->m_status = BD_FAILED;
+  this->_padding_ = 3;
   local_1b0 = (char *)0x0;
-  bVar2 = bdHTTPWrapperBase::parseURL(this_00,param_1,acStack_1a0,&local_1b0,local_1ac);
-  if ((bVar2) &&
-     (bVar2 = bdHTTPClient::httpDelete
-                        ((bdHTTPClient *)(this_00 + 1),acStack_1a0,local_1b0,local_1ac[0],param_2),
-     bVar2)) {
-    bdHTTPWrapperBase::startAsyncOperation(this_00,BD_DELETE);
+  bVar1 = bdHTTPWrapperBase::parseURL
+                    ((bdHTTPWrapperBase *)this,param_1,acStack_1a0,&local_1b0,local_1ac);
+  if ((bVar1) &&
+     (bVar1 = bdHTTPClient::httpDelete
+                        (&this->m_httpClient,acStack_1a0,local_1b0,local_1ac[0],param_2), bVar1)) {
+    bdHTTPWrapperBase::startAsyncOperation((bdHTTPWrapperBase *)this,BD_DELETE);
   }
-  bVar1 = __restgprlr_29(this_00->m_status);
-  return bVar1;
+  return this->_padding_;
 }
 
 

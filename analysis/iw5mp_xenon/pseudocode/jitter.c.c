@@ -210,13 +210,16 @@ LAB_828c1c70:
 
 // 828C1E60  JBpRecomputeParameters  (<external>/Xenon/mar09/core/private/xam/apps/uvbase/xhv/jitter.c:395)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 void JBpRecomputeParameters(JITTERBUF *param_1)
 
 {
-  int *piVar1;
-  int iVar2;
-  bool bVar3;
-  int iVar4;
+  PACKET_CONTEXT *pPVar1;
+  XMEDIAPACKET *pXVar2;
+  int iVar3;
+  bool bVar4;
   PACKET_QUEUE *pPVar5;
   ulong uVar6;
   ulonglong uVar7;
@@ -225,205 +228,207 @@ void JBpRecomputeParameters(JITTERBUF *param_1)
   double dVar10;
   double dVar11;
   
-  iVar4 = __savegprlr_26(param_1);
-  dVar10 = (double)*(uint *)(iVar4 + 0x130);
-  uVar8 = (ulonglong)*(ushort *)(iVar4 + 0x44) - (ulonglong)*(ushort *)(iVar4 + 0x48);
+  dVar10 = (double)param_1->FramesInTalkspurtCount;
+  uVar8 = (ulonglong)param_1->HWMSeqCount - (ulonglong)param_1->MinSeqCount;
   dVar11 = 1.0;
-  if ((double)*(uint *)(iVar4 + 0x138) / dVar10 < 1.0) {
-    dVar11 = (double)*(uint *)(iVar4 + 0x138) / dVar10;
+  if ((double)param_1->ErrorCount / dVar10 < 1.0) {
+    dVar11 = (double)param_1->ErrorCount / dVar10;
   }
-  dVar10 = *(double *)(iVar4 + 0x120) * dVar10;
+  dVar10 = param_1->FrameStrength * dVar10;
   if (1.0 <= dVar10) {
     dVar10 = 1.0;
   }
-  *(double *)(iVar4 + 0x128) = dVar10;
-  iVar2 = (int)((uVar8 + 10 & 0x1fffffff) << 3);
-  *(double *)(iVar2 + iVar4) = (1.0 - dVar10) * *(double *)(iVar2 + iVar4) + dVar10 * dVar11;
-  dVar10 = *(double *)(iVar4 + 0x118);
-  *(undefined4 *)(iVar4 + 0x130) = 0;
-  *(undefined4 *)(iVar4 + 0x138) = 0;
-  dVar11 = *(double *)(iVar2 + iVar4);
+  param_1->CurrentTalkspurtWeighting = dVar10;
+  iVar3 = (int)((uVar8 + 10 & 0x1fffffff) << 3);
+  *(double *)((int)param_1->HighWaterMarkQuality + iVar3 + -0x50) =
+       (1.0 - dVar10) * *(double *)((int)param_1->HighWaterMarkQuality + iVar3 + -0x50) +
+       dVar10 * dVar11;
+  dVar10 = param_1->IdealQuality;
+  param_1->FramesInTalkspurtCount = 0;
+  param_1->ErrorCount = 0;
+  dVar11 = *(double *)((int)param_1->HighWaterMarkQuality + iVar3 + -0x50);
   if (dVar10 <= dVar11) {
     if ((((uVar8 + 1 & 0xffffffff) < 0x19) &&
-        (ABS(*(double *)((int)((uVar8 + 0xb & 0xffffffff) << 3) + iVar4) - dVar10) <
-         ABS(dVar11 - dVar10))) && (*(longlong *)(iVar4 + 0x10) != 0)) {
-      uVar8 = *(longlong *)(iVar4 + 0x28) + 0x14;
-      *(longlong *)(iVar4 + 0x10) = *(longlong *)(iVar4 + 0x10) + -0x14;
-      *(ulonglong *)(iVar4 + 0x28) = uVar8;
-      *(short *)(iVar4 + 0x44) = (short)(uVar8 / 0x14);
+        (ABS(*(double *)
+              ((int)param_1->HighWaterMarkQuality + (int)((uVar8 + 0xb & 0xffffffff) << 3) + -0x50)
+             - dVar10) < ABS(dVar11 - dVar10))) && (param_1->LogicalOutputTime != 0)) {
+      uVar8 = param_1->HighWaterMark + 0x14;
+      param_1->LogicalOutputTime = param_1->LogicalOutputTime - 0x14;
+      param_1->HighWaterMark = uVar8;
+      param_1->HWMSeqCount = (ushort)(uVar8 / 0x14);
     }
   }
   else if (((uVar8 & 0xffffffff) != 0) &&
-          (ABS(*(double *)((int)((uVar8 + 9 & 0xffffffff) << 3) + iVar4) - dVar10) <
-           ABS(dVar11 - dVar10))) {
-    piVar1 = *(int **)(iVar4 + 0x168);
-    pPVar5 = (PACKET_QUEUE *)(iVar4 + 0x168);
-    uVar8 = *(longlong *)(iVar4 + 0x28) - 0x14;
-    *(ulonglong *)(iVar4 + 0x28) = uVar8;
-    *(short *)(iVar4 + 0x44) = (short)(uVar8 / 0x14);
-    if (piVar1 != (int *)0x0) {
-      iVar2 = *piVar1;
-      uVar8 = *(ulonglong *)(iVar2 + 0x18);
-      *(longlong *)(iVar4 + 0x10) = *(longlong *)(iVar4 + 0x10) + 0x14;
+          (ABS(*(double *)
+                ((int)param_1->HighWaterMarkQuality + (int)((uVar8 + 9 & 0xffffffff) << 3) + -0x50)
+               - dVar10) < ABS(dVar11 - dVar10))) {
+    pPVar1 = (param_1->InUsePackets).Head;
+    pPVar5 = &param_1->InUsePackets;
+    uVar8 = param_1->HighWaterMark - 0x14;
+    param_1->HighWaterMark = uVar8;
+    param_1->HWMSeqCount = (ushort)(uVar8 / 0x14);
+    if (pPVar1 != (PACKET_CONTEXT *)0x0) {
+      pXVar2 = pPVar1->Packet;
+      uVar8 = *(ulonglong *)(pXVar2 + 1);
+      param_1->LogicalOutputTime = param_1->LogicalOutputTime + 0x14;
       uVar6 = PacketQueueLength(pPVar5);
-      if ((uVar6 != 0) && (uVar8 < *(ulonglong *)(iVar4 + 0x10))) {
+      if ((uVar6 != 0) && (uVar8 < param_1->LogicalOutputTime)) {
         pPVar9 = pPVar5->Head;
         uVar8 = uVar8 + 0x14;
-        bVar3 = false;
+        bVar4 = false;
         if (pPVar9 != (PACKET_CONTEXT *)0x0) {
           do {
             uVar7._0_4_ = pPVar9->Packet[1].Status;
             uVar7._4_4_ = pPVar9->Packet[1].Offset;
             if (uVar8 < uVar7) break;
             if (uVar7 == uVar8) {
-              bVar3 = true;
+              bVar4 = true;
             }
             pPVar9 = pPVar9->Next;
           } while (pPVar9 != (PACKET_CONTEXT *)0x0);
-          if (bVar3) {
+          if (bVar4) {
             pPVar9 = pPVar5->Head;
             if (pPVar9 != (PACKET_CONTEXT *)0x0) {
-              if (pPVar9 == *(PACKET_CONTEXT **)(iVar4 + 0x16c)) {
-                *(undefined4 *)(iVar4 + 0x16c) = 0;
+              if (pPVar9 == (param_1->InUsePackets).Tail) {
+                (param_1->InUsePackets).Tail = (PACKET_CONTEXT *)0x0;
               }
               pPVar5->Head = pPVar9->Next;
               pPVar9->Next = (PACKET_CONTEXT *)0x0;
             }
-            piVar1[1] = 0;
-            if (*(int *)(iVar4 + 0x164) == 0) {
-              *(int **)(iVar4 + 0x160) = piVar1;
+            pPVar1->Next = (PACKET_CONTEXT *)0x0;
+            pPVar9 = (param_1->FreePackets).Tail;
+            if (pPVar9 == (PACKET_CONTEXT *)0x0) {
+              (param_1->FreePackets).Head = pPVar1;
             }
             else {
-              *(int **)(*(int *)(iVar4 + 0x164) + 4) = piVar1;
+              pPVar9->Next = pPVar1;
             }
-            *(int **)(iVar4 + 0x164) = piVar1;
-            goto LAB_828c208c;
+            (param_1->FreePackets).Tail = pPVar1;
+            return;
           }
         }
-        *(longlong *)(iVar2 + 0x18) = *(longlong *)(iVar2 + 0x18) + 0x14;
+        *(longlong *)(pXVar2 + 1) = *(longlong *)(pXVar2 + 1) + 0x14;
       }
     }
   }
-LAB_828c208c:
-  __restgprlr_26();
   return;
 }
 
 
 // 828C2098  JBpSubmitCodecPacket  (<external>/Xenon/mar09/core/private/xam/apps/uvbase/xhv/jitter.c:529)
 
-undefined4 JBpSubmitCodecPacket(JITTERBUF *param_1,PACKET_CONTEXT *param_2)
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
+int JBpSubmitCodecPacket(JITTERBUF *param_1,PACKET_CONTEXT *param_2)
 
 {
   XMEDIAPACKET *pXVar1;
-  int iVar2;
+  PACKET_CONTEXT *pPVar2;
   int iVar3;
-  undefined4 uVar4;
   
-  iVar2 = __savegprlr_29(param_1);
   pXVar1 = param_2->Packet;
   pXVar1->Buffer = pXVar1->Buffer + 2;
   pXVar1->Length = pXVar1->Length - 2;
-  iVar3 = CodecSubmit(*(CODEC_PROCESSOR **)(iVar2 + 0x17c),2,pXVar1);
+  iVar3 = CodecSubmit(param_1->Codec,2,pXVar1);
   if (iVar3 < 0) {
     pXVar1->Buffer = pXVar1->Buffer + -2;
     pXVar1->Length = pXVar1->Length + 2;
   }
   else {
     param_2->Next = (PACKET_CONTEXT *)0x0;
-    if (*(int *)(iVar2 + 0x174) == 0) {
-      *(PACKET_CONTEXT **)(iVar2 + 0x170) = param_2;
+    pPVar2 = (param_1->InFlightPackets).Tail;
+    if (pPVar2 == (PACKET_CONTEXT *)0x0) {
+      (param_1->InFlightPackets).Head = param_2;
     }
     else {
-      *(PACKET_CONTEXT **)(*(int *)(iVar2 + 0x174) + 4) = param_2;
+      pPVar2->Next = param_2;
     }
-    *(PACKET_CONTEXT **)(iVar2 + 0x174) = param_2;
+    (param_1->InFlightPackets).Tail = param_2;
   }
-  uVar4 = __restgprlr_29();
-  return uVar4;
+  return iVar3;
 }
 
 
 // 828C2668  JitterBufCreate  (<external>/Xenon/mar09/core/private/xam/apps/uvbase/xhv/jitter.c:601)
 
-undefined4 JitterBufCreate(CODEC_PROCESSOR *param_1,JITTERBUF **param_2)
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
+int JitterBufCreate(CODEC_PROCESSOR *param_1,JITTERBUF **param_2)
 
 {
-  CODEC_PROCESSOR *pCVar1;
-  JITTERBUF *pJVar2;
-  undefined4 uVar3;
-  int iVar4;
-  PACKET_CONTEXT *pPVar5;
-  uint uVar6;
-  double *pdVar7;
-  PACKET_CONTEXT *pPVar8;
-  int iVar9;
-  longlong lVar10;
+  JITTERBUF *pJVar1;
+  int iVar2;
+  PACKET_CONTEXT *pPVar3;
+  uint uVar4;
+  double *pdVar5;
+  PACKET_CONTEXT *pPVar6;
+  int iVar7;
+  longlong lVar8;
   
-  pCVar1 = (CODEC_PROCESSOR *)__savegprlr_28(param_1);
-  pJVar2 = XMemAlloc(0x180,0x618a8013);
-  if (pJVar2 == (JITTERBUF *)0x0) {
+  pJVar1 = XMemAlloc(0x180,0x618a8013);
+  if (pJVar1 == (JITTERBUF *)0x0) {
 LAB_828c2698:
-    iVar4 = -0x7ff8fff2;
+    iVar2 = -0x7ff8fff2;
   }
   else {
-    pJVar2->Codec = pCVar1;
-    pJVar2->HWMReached = 0;
-    pJVar2->InitialHighWaterMark = 0xf0;
-    pJVar2->HighWaterMark = 0xf0;
-    pJVar2->FrameStrength = 0.0006666666666666666;
-    pJVar2->NumPackets = 0x1c;
-    pJVar2->IdealQuality = 0.005;
-    pJVar2->HWMSeqCount = 0xc;
-    pJVar2->MinSeqCount = 4;
-    pdVar7 = (double *)&pJVar2->MinSeqCount;
-    pJVar2->MaxSeqCount = 0x1c;
-    lVar10 = 0x19;
-    pJVar2->MaxOOSPackets = 10;
-    pJVar2->Synchronized = 1;
+    pJVar1->Codec = param_1;
+    pJVar1->HWMReached = 0;
+    pJVar1->InitialHighWaterMark = 0xf0;
+    pJVar1->HighWaterMark = 0xf0;
+    pJVar1->FrameStrength = 0.0006666666666666666;
+    pJVar1->NumPackets = 0x1c;
+    pJVar1->IdealQuality = 0.005;
+    pJVar1->HWMSeqCount = 0xc;
+    pJVar1->MinSeqCount = 4;
+    pdVar5 = (double *)&pJVar1->MinSeqCount;
+    pJVar1->MaxSeqCount = 0x1c;
+    lVar8 = 0x19;
+    pJVar1->MaxOOSPackets = 10;
+    pJVar1->Synchronized = 1;
     do {
-      pdVar7 = pdVar7 + 1;
-      *pdVar7 = pJVar2->IdealQuality;
-      lVar10 = lVar10 + -1;
-    } while (lVar10 != 0);
-    iVar4 = PacketBufferCreate(pCVar1->CodecType->InputFrameSize + 2,0x20,pJVar2->NumPackets,0,
-                               &pJVar2->Buffer);
-    if (-1 < iVar4) {
-      pPVar5 = XMemAlloc(pJVar2->NumPackets << 3,0x618a0003);
-      pJVar2->Contexts = pPVar5;
-      if (pPVar5 != (PACKET_CONTEXT *)0x0) {
-        uVar6 = 0;
-        if (pJVar2->NumPackets != 0) {
-          iVar9 = 0;
+      pdVar5 = pdVar5 + 1;
+      *pdVar5 = pJVar1->IdealQuality;
+      lVar8 = lVar8 + -1;
+    } while (lVar8 != 0);
+    iVar2 = PacketBufferCreate(param_1->CodecType->InputFrameSize + 2,0x20,pJVar1->NumPackets,0,
+                               &pJVar1->Buffer);
+    if (-1 < iVar2) {
+      pPVar3 = XMemAlloc(pJVar1->NumPackets << 3,0x618a0003);
+      pJVar1->Contexts = pPVar3;
+      if (pPVar3 != (PACKET_CONTEXT *)0x0) {
+        uVar4 = 0;
+        if (pJVar1->NumPackets != 0) {
+          iVar7 = 0;
           do {
-            *(long **)((int)&pJVar2->Contexts->Packet + iVar9) =
-                 (long *)((int)&pJVar2->Buffer->Packets->Status +
-                         pJVar2->Buffer->PacketDescriptorSize * uVar6);
-            pPVar8 = (PACKET_CONTEXT *)((int)&pJVar2->Contexts->Packet + iVar9);
-            pPVar8->Next = (PACKET_CONTEXT *)0x0;
-            pPVar5 = (pJVar2->FreePackets).Tail;
-            if (pPVar5 == (PACKET_CONTEXT *)0x0) {
-              (pJVar2->FreePackets).Head = pPVar8;
+            *(long **)((int)&pJVar1->Contexts->Packet + iVar7) =
+                 (long *)((int)&pJVar1->Buffer->Packets->Status +
+                         pJVar1->Buffer->PacketDescriptorSize * uVar4);
+            pPVar6 = (PACKET_CONTEXT *)((int)&pJVar1->Contexts->Packet + iVar7);
+            pPVar6->Next = (PACKET_CONTEXT *)0x0;
+            pPVar3 = (pJVar1->FreePackets).Tail;
+            if (pPVar3 == (PACKET_CONTEXT *)0x0) {
+              (pJVar1->FreePackets).Head = pPVar6;
             }
             else {
-              pPVar5->Next = pPVar8;
+              pPVar3->Next = pPVar6;
             }
-            uVar6 = uVar6 + 1;
-            (pJVar2->FreePackets).Tail = pPVar8;
-            iVar9 = iVar9 + 8;
-          } while (uVar6 < pJVar2->NumPackets);
+            uVar4 = uVar4 + 1;
+            (pJVar1->FreePackets).Tail = pPVar6;
+            iVar7 = iVar7 + 8;
+          } while (uVar4 < pJVar1->NumPackets);
         }
         goto LAB_828c26ac;
       }
       goto LAB_828c2698;
     }
   }
-  JitterBufDestroy(pJVar2);
-  pJVar2 = (JITTERBUF *)0x0;
+  JitterBufDestroy(pJVar1);
+  pJVar1 = (JITTERBUF *)0x0;
 LAB_828c26ac:
-  *param_2 = pJVar2;
-  uVar3 = __restgprlr_28(iVar4);
-  return uVar3;
+  *param_2 = pJVar1;
+  return iVar2;
 }
 
 
@@ -447,105 +452,105 @@ void JitterBufDestroy(JITTERBUF *param_1)
 
 // 828C21A8  JitterBufProcess  (<external>/Xenon/mar09/core/private/xam/apps/uvbase/xhv/jitter.c:742)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 undefined4 JitterBufProcess(JITTERBUF *param_1)
 
 {
   PACKET_CONTEXT *pPVar1;
   PACKET_CONTEXT *pPVar2;
-  JITTERBUF *pJVar3;
+  int iVar3;
   int iVar4;
-  int iVar5;
-  undefined4 uVar6;
-  ulong64 uVar7;
-  PACKET_QUEUE *pPVar8;
+  ulong64 uVar5;
+  PACKET_QUEUE *pPVar6;
   
-  pJVar3 = (JITTERBUF *)__savegprlr_27(param_1);
-  iVar5 = -0x7fffbffb;
-  iVar4 = JBpIsHWMReached(pJVar3);
-  if (iVar4 == 0) {
+  iVar4 = -0x7fffbffb;
+  iVar3 = JBpIsHWMReached(param_1);
+  if (iVar3 == 0) {
 LAB_828c231c:
-    pJVar3->HangTime = 0;
+    param_1->HangTime = 0;
   }
   else {
-    pPVar1 = (pJVar3->InUsePackets).Head;
-    pPVar8 = &pJVar3->InUsePackets;
+    pPVar1 = (param_1->InUsePackets).Head;
+    pPVar6 = &param_1->InUsePackets;
     if (pPVar1 == (PACKET_CONTEXT *)0x0) {
-      pJVar3->StartTiming = 0;
+      param_1->StartTiming = 0;
       goto LAB_828c231c;
     }
-    uVar7._0_4_ = pPVar1->Packet[1].Status;
-    uVar7._4_4_ = pPVar1->Packet[1].Offset;
-    if (uVar7 == pJVar3->LogicalOutputTime) {
-      pPVar2 = pPVar8->Head;
+    uVar5._0_4_ = pPVar1->Packet[1].Status;
+    uVar5._4_4_ = pPVar1->Packet[1].Offset;
+    if (uVar5 == param_1->LogicalOutputTime) {
+      pPVar2 = pPVar6->Head;
       if (pPVar2 != (PACKET_CONTEXT *)0x0) {
-        if (pPVar2 == (pJVar3->InUsePackets).Tail) {
-          (pJVar3->InUsePackets).Tail = (PACKET_CONTEXT *)0x0;
+        if (pPVar2 == (param_1->InUsePackets).Tail) {
+          (param_1->InUsePackets).Tail = (PACKET_CONTEXT *)0x0;
         }
-        pPVar8->Head = pPVar2->Next;
+        pPVar6->Head = pPVar2->Next;
         pPVar2->Next = (PACKET_CONTEXT *)0x0;
       }
       memcpy();
-      pJVar3->BackupFull = 1;
-      iVar5 = JBpSubmitCodecPacket(pJVar3,pPVar1);
-      if (iVar5 < 0) {
-        pPVar1->Next = pPVar8->Head;
-        pPVar8->Head = pPVar1;
-        if ((pJVar3->InUsePackets).Tail == (PACKET_CONTEXT *)0x0) {
-          (pJVar3->InUsePackets).Tail = pPVar1;
+      param_1->BackupFull = 1;
+      iVar4 = JBpSubmitCodecPacket(param_1,pPVar1);
+      if (iVar4 < 0) {
+        pPVar1->Next = pPVar6->Head;
+        pPVar6->Head = pPVar1;
+        if ((param_1->InUsePackets).Tail == (PACKET_CONTEXT *)0x0) {
+          (param_1->InUsePackets).Tail = pPVar1;
         }
       }
       else {
-        pJVar3->HangTime = pJVar3->HangTime + 0x14;
+        param_1->HangTime = param_1->HangTime + 0x14;
       }
     }
     else {
-      pJVar3->LostPackets = pJVar3->LostPackets + 1;
-      if (pJVar3->BackupFull == 0) {
-        iVar5 = 0;
+      param_1->LostPackets = param_1->LostPackets + 1;
+      if (param_1->BackupFull == 0) {
+        iVar4 = 0;
       }
       else {
-        pPVar1 = (pJVar3->FreePackets).Head;
-        pPVar8 = &pJVar3->FreePackets;
+        pPVar1 = (param_1->FreePackets).Head;
+        pPVar6 = &param_1->FreePackets;
         if (pPVar1 == (PACKET_CONTEXT *)0x0) goto LAB_828c2350;
-        if (pPVar1 == (pJVar3->FreePackets).Tail) {
-          (pJVar3->FreePackets).Tail = (PACKET_CONTEXT *)0x0;
+        if (pPVar1 == (param_1->FreePackets).Tail) {
+          (param_1->FreePackets).Tail = (PACKET_CONTEXT *)0x0;
         }
-        pPVar8->Head = pPVar1->Next;
+        pPVar6->Head = pPVar1->Next;
         pPVar1->Next = (PACKET_CONTEXT *)0x0;
         memcpy();
         pPVar1->Packet->Offset = 10;
-        iVar5 = JBpSubmitCodecPacket(pJVar3,pPVar1);
-        if (iVar5 < 0) {
+        iVar4 = JBpSubmitCodecPacket(param_1,pPVar1);
+        if (iVar4 < 0) {
           pPVar1->Packet->Offset = 0;
-          pPVar1->Next = pPVar8->Head;
-          pPVar8->Head = pPVar1;
-          if ((pJVar3->FreePackets).Tail == (PACKET_CONTEXT *)0x0) {
-            (pJVar3->FreePackets).Tail = pPVar1;
+          pPVar1->Next = pPVar6->Head;
+          pPVar6->Head = pPVar1;
+          if ((param_1->FreePackets).Tail == (PACKET_CONTEXT *)0x0) {
+            (param_1->FreePackets).Tail = pPVar1;
           }
         }
         else {
-          pJVar3->BackupFull = 0;
+          param_1->BackupFull = 0;
         }
       }
     }
   }
-  if (-1 < iVar5) {
-    pJVar3->LogicalOutputTime = pJVar3->LogicalOutputTime + 0x14;
-    pJVar3->PacketsPlayed = pJVar3->PacketsPlayed + 1;
+  if (-1 < iVar4) {
+    param_1->LogicalOutputTime = param_1->LogicalOutputTime + 0x14;
+    param_1->PacketsPlayed = param_1->PacketsPlayed + 1;
   }
 LAB_828c2350:
-  if (0 < pJVar3->HangTime) {
-    pJVar3->HangTime = pJVar3->HangTime + -0x14;
+  if (0 < param_1->HangTime) {
+    param_1->HangTime = param_1->HangTime + -0x14;
   }
-  pPVar1 = (pJVar3->InFlightPackets).Head;
-  pPVar8 = &pJVar3->InFlightPackets;
+  pPVar1 = (param_1->InFlightPackets).Head;
+  pPVar6 = &param_1->InFlightPackets;
   while ((pPVar1 != (PACKET_CONTEXT *)0x0 && (pPVar1->Packet->Status != 0x103))) {
-    pPVar2 = pPVar8->Head;
+    pPVar2 = pPVar6->Head;
     if (pPVar2 != (PACKET_CONTEXT *)0x0) {
-      if (pPVar2 == (pJVar3->InFlightPackets).Tail) {
-        (pJVar3->InFlightPackets).Tail = (PACKET_CONTEXT *)0x0;
+      if (pPVar2 == (param_1->InFlightPackets).Tail) {
+        (param_1->InFlightPackets).Tail = (PACKET_CONTEXT *)0x0;
       }
-      pPVar8->Head = pPVar2->Next;
+      pPVar6->Head = pPVar2->Next;
       pPVar2->Next = (PACKET_CONTEXT *)0x0;
     }
     pPVar1->Packet->Buffer = pPVar1->Packet->Buffer + -2;
@@ -553,22 +558,24 @@ LAB_828c2350:
     pPVar1->Packet->Offset = 0;
     XMemSet(pPVar1->Packet->Buffer,0,pPVar1->Packet->Length);
     pPVar1->Next = (PACKET_CONTEXT *)0x0;
-    pPVar2 = (pJVar3->FreePackets).Tail;
+    pPVar2 = (param_1->FreePackets).Tail;
     if (pPVar2 == (PACKET_CONTEXT *)0x0) {
-      (pJVar3->FreePackets).Head = pPVar1;
+      (param_1->FreePackets).Head = pPVar1;
     }
     else {
       pPVar2->Next = pPVar1;
     }
-    (pJVar3->FreePackets).Tail = pPVar1;
-    pPVar1 = pPVar8->Head;
+    (param_1->FreePackets).Tail = pPVar1;
+    pPVar1 = pPVar6->Head;
   }
-  uVar6 = __restgprlr_27(0);
-  return uVar6;
+  return 0;
 }
 
 
 // 828C2420  JitterBufSubmitPacket  (<external>/Xenon/mar09/core/private/xam/apps/uvbase/xhv/jitter.c:1009)
+
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 
 undefined4 JitterBufSubmitPacket(JITTERBUF *param_1,uchar *param_2,ulong param_3)
 
@@ -578,82 +585,76 @@ undefined4 JitterBufSubmitPacket(JITTERBUF *param_1,uchar *param_2,ulong param_3
   XMEDIAPACKET *pXVar3;
   PACKET_CONTEXT *pPVar4;
   byte bVar5;
-  JITTERBUF *pJVar6;
-  ulong uVar7;
-  PACKETSTATE PVar8;
-  JITTERBUF *pJVar9;
-  int iVar10;
-  undefined4 uVar11;
-  ushort uVar12;
+  ulong uVar6;
+  PACKETSTATE PVar7;
+  JITTERBUF *pJVar8;
+  int iVar9;
+  ushort uVar10;
   ulong64 local_50 [10];
   
-  pJVar6 = (JITTERBUF *)__savegprlr_24(param_1);
   uVar1 = *(ushort *)param_2;
-  iVar10 = 0;
-  uVar12 = uVar1 >> 1 & 0x7ff;
+  uVar10 = uVar1 >> 1 & 0x7ff;
   bVar5 = (byte)(uVar1 >> 0xc);
-  if (pJVar6->StartTiming == 0) {
-    uVar7 = GetTickCount();
-    pJVar6->CurrentTalkspurtID = bVar5;
-    pJVar6->InitialSeqNo = uVar12;
-    pJVar6->RealStartOutputTime = (ulonglong)uVar7;
-    pJVar6->LogicalOutputTime = 0;
-    pJVar6->StartTiming = 1;
+  if (param_1->StartTiming == 0) {
+    uVar6 = GetTickCount();
+    param_1->CurrentTalkspurtID = bVar5;
+    param_1->InitialSeqNo = uVar10;
+    param_1->RealStartOutputTime = (ulonglong)uVar6;
+    param_1->LogicalOutputTime = 0;
+    param_1->StartTiming = 1;
   }
-  if (uVar1 >> 0xc != (ushort)pJVar6->CurrentTalkspurtID) {
-    JBpRecomputeParameters(pJVar6);
-    pJVar6->CurrentTalkspurtID = bVar5;
+  if (uVar1 >> 0xc != (ushort)param_1->CurrentTalkspurtID) {
+    JBpRecomputeParameters(param_1);
+    param_1->CurrentTalkspurtID = bVar5;
   }
-  PVar8 = JBpGetTimestamp(pJVar6,uVar12,local_50);
-  pJVar6->FramesInTalkspurtCount = pJVar6->FramesInTalkspurtCount + 1;
-  if (PVar8 == PACKETSTATE_ONTIME) {
-LAB_828c24e8:
-    pPVar2 = (pJVar6->FreePackets).Head;
-    if (pPVar2 != (PACKET_CONTEXT *)0x0) {
-      if (pPVar2 == (pJVar6->FreePackets).Tail) {
-        (pJVar6->FreePackets).Tail = (PACKET_CONTEXT *)0x0;
+  PVar7 = JBpGetTimestamp(param_1,uVar10,local_50);
+  param_1->FramesInTalkspurtCount = param_1->FramesInTalkspurtCount + 1;
+  if (PVar7 != PACKETSTATE_ONTIME) {
+    if (PVar7 == PACKETSTATE_LATE) {
+      if (uVar1 >> 0xc == (ushort)param_1->CurrentTalkspurtID) {
+        param_1->ErrorCount = param_1->ErrorCount + 1;
+        return 1;
       }
-      (pJVar6->FreePackets).Head = pPVar2->Next;
-      pXVar3 = pPVar2->Packet;
-      pPVar2->Next = (PACKET_CONTEXT *)0x0;
-      pXVar3[1].Status = local_50[0]._0_4_;
-      pXVar3[1].Offset = local_50[0]._4_4_;
-      memcpy();
-      pPVar2->Packet->Offset = param_3;
-      iVar10 = JBpQueueInUsePacket(pJVar6,pPVar2);
-      if (-1 < iVar10) goto LAB_828c25a0;
-      pPVar2->Next = (PACKET_CONTEXT *)0x0;
-      pPVar4 = (pJVar6->FreePackets).Tail;
-      if (pPVar4 == (PACKET_CONTEXT *)0x0) {
-        (pJVar6->FreePackets).Head = pPVar2;
-      }
-      else {
-        pPVar4->Next = pPVar2;
-      }
-      (pJVar6->FreePackets).Tail = pPVar2;
-      pJVar6->FramesInTalkspurtCount = pJVar6->FramesInTalkspurtCount - 1;
+      return 1;
     }
-  }
-  else {
-    if (PVar8 == PACKETSTATE_LATE) {
-      iVar10 = 1;
-      if (uVar1 >> 0xc == (ushort)pJVar6->CurrentTalkspurtID) {
-        pJVar6->ErrorCount = pJVar6->ErrorCount + 1;
-      }
-      goto LAB_828c25a0;
+    if (PACKETSTATE_OUTOFSYNC < PVar7) {
+      return 0;
     }
-    if (PACKETSTATE_OUTOFSYNC < PVar8) goto LAB_828c25a0;
-    if (pJVar6->MaxOOSPackets < pJVar6->CurrentOOSPackets) {
-      pJVar9 = pJVar6;
-      JBpReset(pJVar6,uVar12);
-      JBpGetTimestamp(pJVar9,uVar12,local_50);
-      goto LAB_828c24e8;
+    if (param_1->CurrentOOSPackets <= param_1->MaxOOSPackets) {
+      return 1;
     }
+    pJVar8 = param_1;
+    JBpReset(param_1,uVar10);
+    JBpGetTimestamp(pJVar8,uVar10,local_50);
   }
-  iVar10 = 1;
-LAB_828c25a0:
-  uVar11 = __restgprlr_24(iVar10);
-  return uVar11;
+  pPVar2 = (param_1->FreePackets).Head;
+  if (pPVar2 != (PACKET_CONTEXT *)0x0) {
+    if (pPVar2 == (param_1->FreePackets).Tail) {
+      (param_1->FreePackets).Tail = (PACKET_CONTEXT *)0x0;
+    }
+    (param_1->FreePackets).Head = pPVar2->Next;
+    pXVar3 = pPVar2->Packet;
+    pPVar2->Next = (PACKET_CONTEXT *)0x0;
+    pXVar3[1].Status = local_50[0]._0_4_;
+    pXVar3[1].Offset = local_50[0]._4_4_;
+    memcpy();
+    pPVar2->Packet->Offset = param_3;
+    iVar9 = JBpQueueInUsePacket(param_1,pPVar2);
+    if (-1 < iVar9) {
+      return iVar9;
+    }
+    pPVar2->Next = (PACKET_CONTEXT *)0x0;
+    pPVar4 = (param_1->FreePackets).Tail;
+    if (pPVar4 == (PACKET_CONTEXT *)0x0) {
+      (param_1->FreePackets).Head = pPVar2;
+    }
+    else {
+      pPVar4->Next = pPVar2;
+    }
+    (param_1->FreePackets).Tail = pPVar2;
+    param_1->FramesInTalkspurtCount = param_1->FramesInTalkspurtCount - 1;
+  }
+  return 1;
 }
 
 

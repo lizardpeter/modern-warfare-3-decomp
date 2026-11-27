@@ -119,23 +119,23 @@ void Memcard_InitializeDevices(void)
 
 // 82650F30  Memcard_SelectSaveDevice  (xenon/xenon_memorycard.cpp:167)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
+
 bool Memcard_SelectSaveDevice(int param_1,bool param_2,int param_3)
 
 {
   char cVar1;
   char cVar2;
+  bool bVar9;
   ulong uVar4;
-  bool bVar10;
-  undefined1 uVar11;
-  ulong uVar5;
   _ULARGE_INTEGER _Var3;
-  int iVar6;
-  char *pcVar7;
-  int iVar8;
-  ulong uVar9;
-  char *pcVar12;
-  ulonglong uVar13;
-  byte bStack0000001f;
+  int iVar5;
+  char *pcVar6;
+  int iVar7;
+  ulong uVar8;
+  char *pcVar10;
+  char cStack0000001f;
   _XOVERLAPPED *in_stack_fffff838;
   ulong local_770;
   ulong local_76c;
@@ -150,36 +150,31 @@ bool Memcard_SelectSaveDevice(int param_1,bool param_2,int param_3)
   wchar_t awStack_650 [384];
   wchar_t awStack_350 [424];
   
-  uVar13 = (ulonglong)param_2;
-  uVar4 = __savegprlr_24(param_1);
-  bStack0000001f = (byte)uVar13;
-  bVar10 = Sys_IsMainThread();
-  if (!bVar10) {
+  cStack0000001f = param_2;
+  bVar9 = Sys_IsMainThread();
+  if (!bVar9) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_memorycard.cpp",
                     0xba,0,"%s");
   }
-  if (((int)uVar4 < 0) || (3 < (int)uVar4)) {
+  if ((param_1 < 0) || (3 < param_1)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_memorycard.cpp",
                     0xbb,0,"%s\n\t(controllerIndex) = %i");
   }
-  if ((uVar13 & 0xff) == 0) {
-    bVar10 = Memcard_IsDeviceAvailable(uVar4,param_3,(bool *)&stack0x0000001f);
-    if (bVar10) {
-      Memcard_ClearLostSaveDeviceID(uVar4);
-      uVar11 = __restgprlr_24(1);
-      return (bool)uVar11;
-    }
-    uVar13 = (ulonglong)bStack0000001f;
+  if ((!param_2) &&
+     (bVar9 = Memcard_IsDeviceAvailable(param_1,param_3,(bool *)&stack0x0000001f),
+     param_2 = (bool)cStack0000001f, bVar9)) {
+    Memcard_ClearLostSaveDeviceID(param_1);
+    return true;
   }
-  bVar10 = Com_ErrorEntered();
-  if ((!bVar10) && (uVar5 = XUserGetName(uVar4,local_720,0x10), uVar5 == 0)) {
+  bVar9 = Com_ErrorEntered();
+  if ((!bVar9) && (uVar4 = XUserGetName(param_1,local_720,0x10), uVar4 == 0)) {
     if (param_3 == 0) {
       _Var3.QuadPart = 0;
     }
     else {
       _Var3.QuadPart = XContentCalculateSize((longlong)param_3,0);
     }
-    iVar8 = 0;
+    iVar7 = 0;
     local_750.InternalLow = 0;
     local_750.InternalHigh = 0;
     local_750.InternalContext = 0;
@@ -187,58 +182,58 @@ bool Memcard_SelectSaveDevice(int param_1,bool param_2,int param_3)
     local_750.pCompletionRoutine = (_func___cdecl_void_ulong_ulong__XOVERLAPPED_ptr *)0x0;
     local_750.dwCompletionContext = 0;
     local_750.dwExtendedError = 0;
-    iVar6 = Sys_IsUpdateScreenThread();
-    if (iVar6 != 0) {
+    iVar5 = Sys_IsUpdateScreenThread();
+    if (iVar5 != 0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_memorycard.cpp",
                       0xe1,0,"%s");
     }
-    iVar6 = Sys_IsUpdateScreenThread();
-    if (iVar6 != 0) {
+    iVar5 = Sys_IsUpdateScreenThread();
+    if (iVar5 != 0) {
                     /* WARNING: Subroutine does not return */
       Sys_Error("Memcard_SelectSaveDevice illegally called from SCR_UpdateScreen");
     }
     R_BeginRemoteScreenUpdate();
-    uVar5 = XUserGetName(uVar4,local_730,0x10);
-    while (uVar5 == 0) {
-      pcVar7 = local_720;
-      pcVar12 = local_730;
+    uVar4 = XUserGetName(param_1,local_730,0x10);
+    while (uVar4 == 0) {
+      pcVar6 = local_720;
+      pcVar10 = local_730;
       do {
-        cVar1 = *pcVar12;
-        cVar2 = *pcVar7;
+        cVar1 = *pcVar10;
+        cVar2 = *pcVar6;
         if (cVar1 == '\0') break;
-        pcVar12 = pcVar12 + 1;
-        pcVar7 = pcVar7 + 1;
+        pcVar10 = pcVar10 + 1;
+        pcVar6 = pcVar6 + 1;
       } while (cVar1 == cVar2);
       if (cVar1 != cVar2) break;
-      uVar5 = XShowDeviceSelectorUI(uVar4,1,0,_Var3,&local_76c,&local_750);
-      if (uVar5 != 5) {
-        if (uVar5 == 0x3e5) {
-          uVar5 = XGetOverlappedResult(&local_750,&local_770,0);
-          while (uVar5 == 0x3e4) {
+      uVar4 = XShowDeviceSelectorUI(param_1,1,0,_Var3,&local_76c,&local_750);
+      if (uVar4 != 5) {
+        if (uVar4 == 0x3e5) {
+          uVar4 = XGetOverlappedResult(&local_750,&local_770,0);
+          while (uVar4 == 0x3e4) {
             R_DrawBlankScreenOnStartup();
             Sys_Sleep(1);
-            iVar8 = iVar8 + 1;
-            uVar5 = XGetOverlappedResult(&local_750,&local_770,0);
+            iVar7 = iVar7 + 1;
+            uVar4 = XGetOverlappedResult(&local_750,&local_770,0);
           }
-          if (((((uVar13 & 0xff) != 0) && (iVar8 < 0x1f)) && (uVar5 == 0)) && (local_770 == 0)) {
-            pcVar7 = SEH_LocalizeTextMessage
+          if ((((param_2 != false) && (iVar7 < 0x1f)) && (uVar4 == 0)) && (local_770 == 0)) {
+            pcVar6 = SEH_LocalizeTextMessage
                                ("PLATFORM_SAVE_DEVICE_SEL_TITLE","Save device selected",LOCMSG_SAFE)
             ;
-            iVar8 = MultiByteToWideChar(0xfde9,0,pcVar7,-1,(ushort *)awStack_710,0x20);
-            if (iVar8 == 0) {
+            iVar7 = MultiByteToWideChar(0xfde9,0,pcVar6,-1,(ushort *)awStack_710,0x20);
+            if (iVar7 == 0) {
               MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_memorycard.cpp"
                               ,0x121,0,"%s");
             }
-            pcVar7 = SEH_LocalizeTextMessage
+            pcVar6 = SEH_LocalizeTextMessage
                                ("PLATFORM_SAVE_DEVICE_SEL_BODY","Save device selected",LOCMSG_SAFE);
-            iVar8 = MultiByteToWideChar(0xfde9,0,pcVar7,-1,(ushort *)awStack_350,0x180);
-            if (iVar8 == 0) {
+            iVar7 = MultiByteToWideChar(0xfde9,0,pcVar6,-1,(ushort *)awStack_350,0x180);
+            if (iVar7 == 0) {
               MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_memorycard.cpp"
                               ,0x123,0,"%s");
             }
-            pcVar7 = SEH_LocalizeTextMessage("MENU_OK","OK",LOCMSG_SAFE);
-            iVar8 = MultiByteToWideChar(0xfde9,0,pcVar7,-1,(ushort *)awStack_690,0x20);
-            if (iVar8 == 0) {
+            pcVar6 = SEH_LocalizeTextMessage("MENU_OK","OK",LOCMSG_SAFE);
+            iVar7 = MultiByteToWideChar(0xfde9,0,pcVar6,-1,(ushort *)awStack_690,0x20);
+            if (iVar7 == 0) {
               MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_memorycard.cpp"
                               ,0x125,0,"%s");
             }
@@ -253,12 +248,12 @@ bool Memcard_SelectSaveDevice(int param_1,bool param_2,int param_3)
             local_750.dwCompletionContext = 0;
             local_760[0] = (_MESSAGEBOX_RESULT_u_0)0x0;
             local_750.dwExtendedError = 0;
-            uVar9 = XShowMessageBoxUI(uVar4,awStack_710,awStack_650,1,local_768,0,3,
+            uVar8 = XShowMessageBoxUI(param_1,awStack_710,awStack_650,1,local_768,0,3,
                                       (_MESSAGEBOX_RESULT *)local_760,in_stack_fffff838);
-            while (uVar9 != 0x3e5) {
+            while (uVar8 != 0x3e5) {
               R_DrawBlankScreenOnStartup();
               Sys_Sleep(1);
-              uVar9 = XShowMessageBoxUI(uVar4,awStack_710,awStack_650,1,local_768,0,3,
+              uVar8 = XShowMessageBoxUI(param_1,awStack_710,awStack_650,1,local_768,0,3,
                                         (_MESSAGEBOX_RESULT *)local_760,in_stack_fffff838);
             }
             while (local_750.InternalLow == 0x3e5) {
@@ -267,96 +262,94 @@ bool Memcard_SelectSaveDevice(int param_1,bool param_2,int param_3)
             }
           }
           R_EndRemoteScreenUpdate();
-          if ((uVar5 == 0) && (local_770 == 0)) {
-            if (local_76c == 0) {
-              MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_memorycard.cpp"
-                              ,0x142,0,"%s");
-            }
-            Memcard_ClearLostSaveDeviceID(uVar4);
-            Memcard_SetSelectedDevice(uVar4,local_76c);
-            uVar11 = __restgprlr_24(1);
-            return (bool)uVar11;
+          if (uVar4 != 0) {
+            return false;
           }
-          goto LAB_82651140;
+          if (local_770 != 0) {
+            return false;
+          }
+          if (local_76c == 0) {
+            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_memorycard.cpp"
+                            ,0x142,0,"%s");
+          }
+          Memcard_ClearLostSaveDeviceID(param_1);
+          Memcard_SetSelectedDevice(param_1,local_76c);
+          return true;
         }
         break;
       }
       R_DrawBlankScreenOnStartup();
       Sys_Sleep(1);
-      iVar8 = iVar8 + 1;
-      uVar5 = XUserGetName(uVar4,local_730,0x10);
+      iVar7 = iVar7 + 1;
+      uVar4 = XUserGetName(param_1,local_730,0x10);
     }
     R_EndRemoteScreenUpdate();
   }
-LAB_82651140:
-  uVar11 = __restgprlr_24(0);
-  return (bool)uVar11;
+  return false;
 }
 
 
 // 826509E0  Memcard_UnselectSaveDevice  (xenon/xenon_memorycard.cpp:336)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void Memcard_UnselectSaveDevice(int param_1)
 
 {
-  int iVar1;
-  bool bVar3;
-  ulong uVar2;
+  bool bVar2;
+  ulong uVar1;
   
-  iVar1 = __savegprlr_28(param_1);
-  bVar3 = Sys_IsMainThread();
-  if (!bVar3) {
+  bVar2 = Sys_IsMainThread();
+  if (!bVar2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_memorycard.cpp",
                     0x151,0,"%s");
   }
-  if ((iVar1 < 0) || (3 < iVar1)) {
+  if ((param_1 < 0) || (3 < param_1)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_memorycard.cpp",
                     0x152,0,"%s\n\t(controllerIndex) = %i");
   }
-  bVar3 = Sys_IsMainThread();
-  if (!bVar3) {
+  bVar2 = Sys_IsMainThread();
+  if (!bVar2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_memorycard.cpp",
                     0x1a4,0,"%s");
   }
-  uVar2 = Memcard_GetSelectedDeviceID(iVar1);
-  if (uVar2 != 0) {
-    g_launchData.selectedSaveDeviceIDs[iVar1] = 0;
+  uVar1 = Memcard_GetSelectedDeviceID(param_1);
+  if (uVar1 != 0) {
+    g_launchData.selectedSaveDeviceIDs[param_1] = 0;
     XSetLaunchData(0xffffffff84259cc8,1000);
   }
-  __restgprlr_28();
   return;
 }
 
 
 // 8264F068  Memcard_SetSelectedDevice  (xenon/xenon_memorycard.cpp:350)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void Memcard_SetSelectedDevice(int param_1,ulong param_2)
 
 {
-  int iVar1;
-  bool bVar2;
-  ulonglong uVar3;
+  bool bVar1;
   
-  uVar3 = (ulonglong)(int)param_2;
-  iVar1 = __savegprlr_28(param_1);
-  bVar2 = Sys_IsMainThread();
-  if (!bVar2) {
+  bVar1 = Sys_IsMainThread();
+  if (!bVar1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_memorycard.cpp",
                     0x15f,0,"%s");
   }
-  if ((iVar1 < 0) || (3 < iVar1)) {
+  if ((param_1 < 0) || (3 < param_1)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_memorycard.cpp",
                     0x160,0,"%s\n\t(controllerIndex) = %i");
   }
-  if ((uVar3 & 0xffffffff) == 0) {
+  if (param_2 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_memorycard.cpp",
                     0x162,0,"%s");
   }
-  if ((ulonglong)g_launchData.selectedSaveDeviceIDs[iVar1] != (uVar3 & 0xffffffff)) {
-    g_launchData.selectedSaveDeviceIDs[iVar1] = (ulong)uVar3;
+  if (g_launchData.selectedSaveDeviceIDs[param_1] != param_2) {
+    g_launchData.selectedSaveDeviceIDs[param_1] = param_2;
     XSetLaunchData(0xffffffff84259cc8,1000);
   }
-  __restgprlr_28();
   return;
 }
 
@@ -403,84 +396,83 @@ ulong Memcard_GetLostDeviceID(int param_1)
 
 // 82650AC8  Memcard_ClearLostSaveDeviceID  (xenon/xenon_memorycard.cpp:384)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void Memcard_ClearLostSaveDeviceID(int param_1)
 
 {
-  int iVar1;
-  bool bVar3;
-  ulong uVar2;
+  bool bVar2;
+  ulong uVar1;
   
-  iVar1 = __savegprlr_28(param_1);
-  bVar3 = Sys_IsMainThread();
-  if (!bVar3) {
+  bVar2 = Sys_IsMainThread();
+  if (!bVar2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_memorycard.cpp",
                     0x181,0,"%s");
   }
-  if ((iVar1 < 0) || (3 < iVar1)) {
+  if ((param_1 < 0) || (3 < param_1)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_memorycard.cpp",
                     0x182,0,"%s\n\t(controllerIndex) = %i");
   }
-  lostSaveDeviceID[iVar1] = 0;
-  bVar3 = Sys_IsMainThread();
-  if (!bVar3) {
+  lostSaveDeviceID[param_1] = 0;
+  bVar2 = Sys_IsMainThread();
+  if (!bVar2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_memorycard.cpp",
                     0x1ae,0,"%s");
   }
-  uVar2 = Memcard_GetLostDeviceID(iVar1);
-  if (uVar2 != 0) {
+  uVar1 = Memcard_GetLostDeviceID(param_1);
+  if (uVar1 != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_memorycard.cpp",
                     0x187,1,"%s");
   }
-  __restgprlr_28();
   return;
 }
 
 
 // 82650BC0  Memcard_RememberLostSaveDeviceID  (xenon/xenon_memorycard.cpp:396)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void Memcard_RememberLostSaveDeviceID(int param_1)
 
 {
-  int iVar1;
-  bool bVar3;
-  ulong uVar2;
+  bool bVar2;
+  ulong uVar1;
   
-  iVar1 = __savegprlr_28(param_1);
-  bVar3 = Sys_IsMainThread();
-  if (!bVar3) {
+  bVar2 = Sys_IsMainThread();
+  if (!bVar2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_memorycard.cpp",
                     0x18d,0,"%s");
   }
-  if ((iVar1 < 0) || (3 < iVar1)) {
+  if ((param_1 < 0) || (3 < param_1)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_memorycard.cpp",
                     0x18e,0,"%s\n\t(controllerIndex) = %i");
   }
-  bVar3 = Sys_IsMainThread();
-  if (!bVar3) {
+  bVar2 = Sys_IsMainThread();
+  if (!bVar2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_memorycard.cpp",
                     0x1a4,0,"%s");
   }
-  uVar2 = Memcard_GetSelectedDeviceID(iVar1);
-  if (uVar2 == 0) {
-    bVar3 = Memcard_HasLostSelectedSaveDevice(iVar1);
-    if (!bVar3) {
+  uVar1 = Memcard_GetSelectedDeviceID(param_1);
+  if (uVar1 == 0) {
+    bVar2 = Memcard_HasLostSelectedSaveDevice(param_1);
+    if (!bVar2) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_memorycard.cpp",
                       0x193,0,"%s");
     }
     Com_PrintWarning(0x10,
                      "Memcard_RememberLostSaveDeviceID() called but no save device is selected for controller %i.\n"
                     );
-    __restgprlr_28();
     return;
   }
-  uVar2 = Memcard_GetSelectedDeviceID(iVar1);
-  lostSaveDeviceID[iVar1] = uVar2;
-  bVar3 = Memcard_HasLostSelectedSaveDevice(iVar1);
-  if (!bVar3) {
+  uVar1 = Memcard_GetSelectedDeviceID(param_1);
+  lostSaveDeviceID[param_1] = uVar1;
+  bVar2 = Memcard_HasLostSelectedSaveDevice(param_1);
+  if (!bVar2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_memorycard.cpp",
                     0x19a,1,"%s");
   }
-  __restgprlr_28();
   return;
 }
 
@@ -523,106 +515,103 @@ bool Memcard_HasLostSelectedSaveDevice(int param_1)
 
 // 8264F380  Memcard_IsDeviceAvailable  (xenon/xenon_memorycard.cpp:445)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 bool Memcard_IsDeviceAvailable(int param_1,int param_2,bool *param_3)
 
 {
-  int iVar2;
-  bool bVar4;
-  ulong uVar3;
-  undefined1 uVar5;
+  bool bVar3;
+  ulong uVar2;
   ulong64 uVar1;
-  ulonglong uVar6;
   _XDEVICE_DATA _Stack_90;
   
-  uVar6 = (ulonglong)(int)param_3;
-  iVar2 = __savegprlr_26(param_1);
-  if ((uVar6 & 0xffffffff) == 0) {
+  if (param_3 == (bool *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_memorycard.cpp",
                     0x1c3,0,"%s");
   }
-  bVar4 = Sys_IsMainThread();
-  if (!bVar4) {
+  bVar3 = Sys_IsMainThread();
+  if (!bVar3) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_memorycard.cpp",
                     0x1c5,0,"%s");
   }
-  if ((iVar2 < 0) || (3 < iVar2)) {
+  if ((param_1 < 0) || (3 < param_1)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_memorycard.cpp",
                     0x1c6,0,"%s\n\t(controllerIndex) = %i");
   }
-  bVar4 = Sys_IsMainThread();
-  if (!bVar4) {
+  bVar3 = Sys_IsMainThread();
+  if (!bVar3) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_memorycard.cpp",
                     0x1a4,0,"%s");
   }
-  uVar3 = Memcard_GetSelectedDeviceID(iVar2);
-  if (uVar3 == 0) {
-    bVar4 = Memcard_HasLostSelectedSaveDevice(iVar2);
-    if (bVar4) {
-      *(undefined1 *)uVar6 = 1;
+  uVar2 = Memcard_GetSelectedDeviceID(param_1);
+  if (uVar2 == 0) {
+    bVar3 = Memcard_HasLostSelectedSaveDevice(param_1);
+    if (bVar3) {
+      *param_3 = true;
     }
-    uVar5 = __restgprlr_26(0);
-    return (bool)uVar5;
+    return false;
   }
   R_BeginRemoteScreenUpdate();
   if (param_2 == 0) {
-    uVar3 = Memcard_GetSelectedDeviceID(iVar2);
-    uVar3 = XContentGetDeviceState(uVar3,(_XOVERLAPPED *)0x0);
+    uVar2 = Memcard_GetSelectedDeviceID(param_1);
+    uVar2 = XContentGetDeviceState(uVar2,(_XOVERLAPPED *)0x0);
   }
   else {
-    uVar3 = Memcard_GetSelectedDeviceID(iVar2);
-    uVar3 = XContentGetDeviceData(uVar3,&_Stack_90);
-    if ((uVar3 == 0) &&
+    uVar2 = Memcard_GetSelectedDeviceID(param_1);
+    uVar2 = XContentGetDeviceData(uVar2,&_Stack_90);
+    if ((uVar2 == 0) &&
        (uVar1 = XContentCalculateSize((longlong)param_2,0), _Stack_90.ulDeviceFreeBytes < uVar1)) {
-      *(undefined1 *)uVar6 = 1;
+      *param_3 = true;
       R_EndRemoteScreenUpdate();
-      uVar5 = __restgprlr_26(0);
-      return (bool)uVar5;
+      return false;
     }
   }
   R_EndRemoteScreenUpdate();
-  uVar5 = __restgprlr_26(uVar3 == 0);
-  return (bool)uVar5;
+  return uVar2 == 0;
 }
 
 
 // 8264F510  Memcard_GetDeviceState  (xenon/xenon_memorycard.cpp:499)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void Memcard_GetDeviceState(int param_1)
 
 {
-  int iVar1;
-  bool bVar5;
-  ulong uVar2;
-  overlappedTask *poVar3;
-  _XOVERLAPPED *p_Var4;
+  bool bVar4;
+  ulong uVar1;
+  overlappedTask *poVar2;
+  _XOVERLAPPED *p_Var3;
   
-  iVar1 = __savegprlr_28(param_1);
-  bVar5 = Sys_IsMainThread();
-  if (!bVar5) {
+  bVar4 = Sys_IsMainThread();
+  if (!bVar4) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_memorycard.cpp",
                     0x1f6,0,"%s");
   }
-  bVar5 = Sys_IsMainThread();
-  if (!bVar5) {
+  bVar4 = Sys_IsMainThread();
+  if (!bVar4) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_memorycard.cpp",
                     0x1a4,0,"%s");
   }
-  uVar2 = Memcard_GetSelectedDeviceID(iVar1);
-  if (uVar2 == 0) {
+  uVar1 = Memcard_GetSelectedDeviceID(param_1);
+  if (uVar1 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_memorycard.cpp",
                     0x1f7,0,"%s");
   }
-  poVar3 = TaskManager_GetOpenTaskSlot(&memoryCardGlob.overlappedTasks,iVar1,1);
-  p_Var4 = TaskManager_TaskToXOverlapped(poVar3);
-  uVar2 = Memcard_GetSelectedDeviceID(iVar1);
-  uVar2 = XContentGetDeviceState(uVar2,p_Var4);
-  __restgprlr_28(uVar2);
+  poVar2 = TaskManager_GetOpenTaskSlot(&memoryCardGlob.overlappedTasks,param_1,1);
+  p_Var3 = TaskManager_TaskToXOverlapped(poVar2);
+  uVar1 = Memcard_GetSelectedDeviceID(param_1);
+  XContentGetDeviceState(uVar1,p_Var3);
   return;
 }
 
 
 // 8264F5E8  Memcard_CheckForStorageDeviceChange  (xenon/xenon_memorycard.cpp:514)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void Memcard_CheckForStorageDeviceChange(void)
@@ -632,7 +621,6 @@ void Memcard_CheckForStorageDeviceChange(void)
   ulong uVar1;
   int iVar3;
   
-  __savegprlr_28();
   iVar3 = 0;
   do {
     bVar2 = GamerProfile_IsProfileLoggedIn(iVar3);
@@ -649,66 +637,65 @@ void Memcard_CheckForStorageDeviceChange(void)
     }
     iVar3 = iVar3 + 1;
   } while (iVar3 < 4);
-  __restgprlr_28();
   return;
 }
 
 
 // 82650D18  Memcard_CheckAvailableOverlapped  (xenon/xenon_memorycard.cpp:536)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 taskCompleteResults Memcard_CheckAvailableOverlapped(int param_1)
 
 {
-  int iVar1;
-  _XOVERLAPPED *p_Var2;
-  taskCompleteResults tVar3;
-  ulong uVar4;
-  overlappedTask *poVar5;
+  _XOVERLAPPED *p_Var1;
+  ulong uVar2;
+  overlappedTask *poVar3;
   
-  iVar1 = __savegprlr_26(param_1);
-  p_Var2 = TaskManager_TaskToXOverlapped(memoryCardGlob.overlappedTasks.tasks + iVar1);
-  if (p_Var2 == (_XOVERLAPPED *)0x0) {
+  p_Var1 = TaskManager_TaskToXOverlapped(memoryCardGlob.overlappedTasks.tasks + param_1);
+  if (p_Var1 == (_XOVERLAPPED *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_memorycard.cpp",
                     0x21e,0,"%s");
   }
-  if (memoryCardGlob.overlappedTasks.tasks[iVar1].active == false) {
+  if (memoryCardGlob.overlappedTasks.tasks[param_1].active == false) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_memorycard.cpp",
                     0x220,0,"%s");
   }
-  if (memoryCardGlob.overlappedTasks.tasks[iVar1].type != 1) {
+  if (memoryCardGlob.overlappedTasks.tasks[param_1].type != 1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_memorycard.cpp",
                     0x221,0,"%s");
   }
-  if (3 < memoryCardGlob.overlappedTasks.tasks[iVar1].controllerIndex) {
+  if (3 < memoryCardGlob.overlappedTasks.tasks[param_1].controllerIndex) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_memorycard.cpp",
                     0x222,0,
                     "memoryCardGlob.overlappedTasks.tasks[slot].controllerIndex doesn\'t index MAX_GPAD_COUNT\n\t%i not in [0, %i)"
                    );
   }
-  if (p_Var2->InternalLow == 0x3e5) {
-    tVar3 = __restgprlr_26(0);
-    return tVar3;
+  if (p_Var1->InternalLow == 0x3e5) {
+    return TASK_NOTCOMPLETE;
   }
-  XGetOverlappedResult(p_Var2,(ulong *)0x0,0);
-  uVar4 = XGetOverlappedExtendedError(p_Var2);
-  if ((uVar4 & 0xffff) == 0x48f) {
+  XGetOverlappedResult(p_Var1,(ulong *)0x0,0);
+  uVar2 = XGetOverlappedExtendedError(p_Var1);
+  if ((uVar2 & 0xffff) == 0x48f) {
     Memcard_RememberLostSaveDeviceID
-              ((uint)memoryCardGlob.overlappedTasks.tasks[iVar1].controllerIndex);
-    Memcard_UnselectSaveDevice((uint)memoryCardGlob.overlappedTasks.tasks[iVar1].controllerIndex);
+              ((uint)memoryCardGlob.overlappedTasks.tasks[param_1].controllerIndex);
+    Memcard_UnselectSaveDevice((uint)memoryCardGlob.overlappedTasks.tasks[param_1].controllerIndex);
   }
-  else if (uVar4 != 0) {
+  else if (uVar2 != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_memorycard.cpp",
                     0x22c,0,"%s");
   }
-  poVar5 = TaskManager_TaskFromXOverlapped(&memoryCardGlob.overlappedTasks,p_Var2);
-  TaskManager_ClearTask(poVar5);
-  tVar3 = __restgprlr_26(1);
-  return tVar3;
+  poVar3 = TaskManager_TaskFromXOverlapped(&memoryCardGlob.overlappedTasks,p_Var1);
+  TaskManager_ClearTask(poVar3);
+  return TASK_COMPLETE;
 }
 
 
 // 82650E90  Memcard_CheckOngoingTasks  (xenon/xenon_memorycard.cpp:578)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void Memcard_CheckOngoingTasks(void)
@@ -718,7 +705,6 @@ void Memcard_CheckOngoingTasks(void)
   int iVar2;
   int *piVar3;
   
-  __savegprlr_26();
   bVar1 = Sys_IsMainThread();
   if (bVar1) {
     iVar2 = 0;
@@ -737,7 +723,6 @@ void Memcard_CheckOngoingTasks(void)
       iVar2 = iVar2 + 1;
     } while ((int)piVar3 < -0x7bda1e08);
   }
-  __restgprlr_26();
   return;
 }
 
@@ -774,132 +759,109 @@ void ClearMemcardError(MemcardError *param_1)
 
 // 8264F6B8  MemCard_OpenFromHDD  (xenon/xenon_memorycard.cpp:637)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void * MemCard_OpenFromHDD(char *param_1,MemcardOperation param_2,MemcardError *param_3)
 
 {
   char cVar1;
-  undefined4 *puVar2;
-  char *pcVar3;
-  bool bVar6;
-  int iVar4;
-  void *pvVar5;
-  longlong lVar7;
-  ulonglong uVar8;
-  char *pcVar10;
-  ulonglong uVar9;
+  bool bVar3;
+  int iVar2;
+  char *pcVar4;
   void *local_40 [16];
   
-  uVar8 = (ulonglong)(int)param_3;
-  lVar7 = (longlong)(int)param_2;
-  pcVar3 = (char *)__savegprlr_27(param_1);
-  iVar4 = (int)lVar7;
-  if ((iVar4 != 0) && (iVar4 != 1)) {
+  if ((param_2 != MEMCARD_READ) && (param_2 != MEMCARD_WRITE)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_memorycard.cpp",
                     0x282,0,"%s");
   }
-  pcVar10 = pcVar3;
-  if (pcVar3 == (char *)0x0) {
+  pcVar4 = param_1;
+  if (param_1 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_memorycard.cpp",
                     0x283,0,"%s");
   }
   do {
-    cVar1 = *pcVar10;
-    pcVar10 = pcVar10 + 1;
+    cVar1 = *pcVar4;
+    pcVar4 = pcVar4 + 1;
   } while (cVar1 != '\0');
-  if ((char *)0x3f < pcVar10 + (-1 - (int)pcVar3)) {
+  if ((char *)0x3f < pcVar4 + (-1 - (int)param_1)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_memorycard.cpp",
                     0x284,0,"%s");
   }
-  bVar6 = FS_IsUsingRemotePCSharing();
-  if (bVar6) {
-    if (iVar4 != 0) {
-      pvVar5 = FS_FOpenFileWriteRemote(pcVar3,(char *)0x0);
-      uVar9 = (ulonglong)(int)pvVar5;
-      iVar4 = -(uint)(uVar9 == 0);
-      goto LAB_8264f7c8;
+  bVar3 = FS_IsUsingRemotePCSharing();
+  if (bVar3) {
+    if (param_2 == MEMCARD_READ) {
+      iVar2 = FS_FOpenFileReadRemote(param_1,(char *)0x0,local_40);
     }
-    iVar4 = FS_FOpenFileReadRemote(pcVar3,(char *)0x0,local_40);
+    else {
+      local_40[0] = FS_FOpenFileWriteRemote(param_1,(char *)0x0);
+      iVar2 = -(uint)(local_40[0] == (void *)0x0);
+    }
   }
   else {
-    iVar4 = FS_FOpenFileByMode(pcVar3,local_40,(uint)(lVar7 != 0));
+    iVar2 = FS_FOpenFileByMode(param_1,local_40,(uint)(param_2 != MEMCARD_READ));
   }
-  uVar9 = ZEXT48(local_40[0]);
-LAB_8264f7c8:
-  puVar2 = (undefined4 *)uVar8;
-  if (iVar4 < 0) {
-    if ((uVar8 & 0xffffffff) != 0) {
-      puVar2[1] = 0;
-      *(undefined1 *)puVar2 = 1;
-      puVar2[2] = GAME_SAVE_UNABLE_TO_ACCESS_DEVICE;
-      pvVar5 = (void *)__restgprlr_27(uVar9);
-      return pvVar5;
+  if (iVar2 < 0) {
+    if (param_3 != (MemcardError *)0x0) {
+      param_3->extendedErrorCode = 0;
+      param_3->isError = true;
+      param_3->errorString = GAME_SAVE_UNABLE_TO_ACCESS_DEVICE;
+      return local_40[0];
     }
   }
-  else if ((uVar8 & 0xffffffff) != 0) {
-    *puVar2 = 0;
-    puVar2[1] = 0;
-    puVar2[2] = 0;
+  else if (param_3 != (MemcardError *)0x0) {
+    *(undefined4 *)param_3 = 0;
+    param_3->extendedErrorCode = 0;
+    param_3->errorString = (char *)0x0;
   }
-  pvVar5 = (void *)__restgprlr_27(uVar9);
-  return pvVar5;
+  return local_40[0];
 }
 
 
 // 8264F820  Memcard_OpenFile  (xenon/xenon_memorycard.cpp:677)
+
+/* WARNING: Function: __savegprlr_17 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_17 replaced with injection: xenon_save_restore */
 
 Memcard_OpenFile_Result
 Memcard_OpenFile(void **param_1,char *param_2,char *param_3,MemcardOperation param_4,int param_5,
                 ulong param_6)
 
 {
-  bool bVar1;
-  char cVar2;
-  undefined4 *puVar3;
-  Memcard_OpenFile_Result MVar4;
-  char *pcVar5;
-  ulong uVar6;
-  void *pvVar7;
-  longlong lVar8;
-  ulonglong uVar9;
-  ulonglong uVar10;
-  XenonMemoryCardFile *pXVar11;
-  ulonglong uVar12;
-  char *pcVar15;
-  longlong lVar13;
-  longlong lVar14;
-  int iVar16;
-  int iVar17;
-  ulong uVar18;
-  ulong uVar19;
-  ulong uVar20;
+  char cVar1;
+  char *pcVar2;
+  ulong uVar3;
+  void *pvVar4;
+  XenonMemoryCardFile *pXVar5;
+  ulonglong uVar6;
+  char *pcVar7;
+  char *pcVar8;
+  int iVar9;
+  ulong uVar10;
+  ulong uVar11;
+  ulong uVar12;
   char acStack_2e0 [16];
   _XCONTENT_DATA local_2d0;
   char acStack_190 [400];
   
-  uVar10 = (ulonglong)(int)param_6;
-  uVar9 = (ulonglong)(int)param_4;
-  lVar8 = (longlong)(int)param_2;
-  puVar3 = (undefined4 *)__savegprlr_17(param_1);
-  if ((uVar10 & 0xffffffff) == 0) {
+  if (param_6 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_memorycard.cpp",
                     0x2b3,0,"%s");
   }
   Sys_Milliseconds();
   Sys_EnterCriticalSection(CRITSECT_CONTENT_FILE);
-  *puVar3 = 0xffffffff;
-  iVar17 = 0;
-  pXVar11 = memoryCardGlob.files;
-  uVar12 = 0;
-  while (pXVar11->handle != (void *)0x0) {
-    uVar12 = uVar12 + 0x38;
-    iVar17 = iVar17 + 1;
-    pXVar11 = pXVar11 + 1;
-    if ((uVar12 & 0xffffffff) == 0x700) {
+  *param_1 = (void *)0xffffffff;
+  iVar9 = 0;
+  pXVar5 = memoryCardGlob.files;
+  uVar6 = 0;
+  while (pXVar5->handle != (void *)0x0) {
+    uVar6 = uVar6 + 0x38;
+    iVar9 = iVar9 + 1;
+    pXVar5 = pXVar5 + 1;
+    if ((uVar6 & 0xffffffff) == 0x700) {
       Sys_LeaveCriticalSection(CRITSECT_CONTENT_FILE);
       Com_Printf(0x10,"XENON_FILEHANDLE_COUNT exceeded\n");
-LAB_8264f8dc:
-      MVar4 = __restgprlr_17(2);
-      return MVar4;
+      return MEMCARD_FAILURE;
     }
   }
   if ((param_5 < 0) || (3 < param_5)) {
@@ -907,149 +869,145 @@ LAB_8264f8dc:
                     0x2c9,0,"%s\n\t(controllerIndex) = %i");
   }
   memset();
-  iVar16 = (int)uVar9;
-  lVar13 = lVar8;
-  if ((uVar9 & 0xffffffff) < 6) {
-    bVar1 = iVar16 != 0;
-    if (uVar9 == 1 && bVar1) {
-      uVar6 = 0x12;
-      uVar20 = 0x40000000;
-      uVar19 = 1;
-      uVar18 = 0x80;
-      pcVar5 = SEH_LocalizeTextMessage(param_3,"save game description",LOCMSG_SAFE);
-      pcVar15 = pcVar5;
+  pcVar8 = param_2;
+  if (param_4 < (MEMCARD_WRITE_DEMO|MEMCARD_READ_FREE_DOWNLOADED_CONTENT)) {
+    if (param_4 == MEMCARD_WRITE) {
+      uVar3 = 0x12;
+      uVar12 = 0x40000000;
+      uVar11 = 1;
+      uVar10 = 0x80;
+      pcVar2 = SEH_LocalizeTextMessage(param_3,"save game description",LOCMSG_SAFE);
+      pcVar7 = pcVar2;
       do {
-        cVar2 = *pcVar15;
-        pcVar15 = pcVar15 + 1;
-      } while (cVar2 != '\0');
+        cVar1 = *pcVar7;
+        pcVar7 = pcVar7 + 1;
+      } while (cVar1 != '\0');
     }
     else {
-      if (uVar9 == 2 && bVar1) {
-        uVar6 = 0x83;
-        uVar20 = 0x80000000;
-        uVar19 = 3;
-        uVar18 = 0x60000000;
+      if (param_4 == MEMCARD_READ_FREE_DOWNLOADED_CONTENT) {
+        uVar3 = 0x83;
+        uVar12 = 0x80000000;
+        uVar11 = 3;
+        uVar10 = 0x60000000;
         goto LAB_8264fad4;
       }
-      if (uVar9 == 3 && bVar1) goto LAB_8264fa44;
-      if (uVar9 == 4 && bVar1) {
-        uVar6 = 0x82;
-        uVar20 = 0x40000000;
-        uVar19 = 1;
-        uVar18 = 0x60000080;
+      if (param_4 == MEMCARD_WRITE_FREE_DOWNLOADED_CONTENT) goto LAB_8264fa44;
+      if (param_4 == MEMCARD_WRITE_DEMO) {
+        uVar3 = 0x82;
+        uVar12 = 0x40000000;
+        uVar11 = 1;
+        uVar10 = 0x60000080;
         param_5 = 0xff;
-        pcVar5 = SEH_LocalizeTextMessage(param_3,"save game description",LOCMSG_SAFE);
-        pcVar15 = pcVar5;
+        pcVar2 = SEH_LocalizeTextMessage(param_3,"save game description",LOCMSG_SAFE);
+        pcVar7 = pcVar2;
         do {
-          cVar2 = *pcVar15;
-          pcVar15 = pcVar15 + 1;
-        } while (cVar2 != '\0');
+          cVar1 = *pcVar7;
+          pcVar7 = pcVar7 + 1;
+        } while (cVar1 != '\0');
       }
       else {
-        if (!bVar1) {
-          uVar6 = 0x13;
-          uVar20 = 0x80000000;
-          uVar19 = 3;
-          uVar18 = 0x80;
+        if (param_4 == MEMCARD_READ) {
+          uVar3 = 0x13;
+          uVar12 = 0x80000000;
+          uVar11 = 3;
+          uVar10 = 0x80;
           goto LAB_8264fad4;
         }
-        uVar6 = 0x83;
-        uVar20 = 0x80000000;
-        uVar19 = 3;
-        uVar18 = 0x80;
+        uVar3 = 0x83;
+        uVar12 = 0x80000000;
+        uVar11 = 3;
+        uVar10 = 0x80;
         param_5 = 0xff;
-        pcVar5 = SEH_LocalizeTextMessage(param_3,"save game description",LOCMSG_SAFE);
-        pcVar15 = pcVar5;
+        pcVar2 = SEH_LocalizeTextMessage(param_3,"save game description",LOCMSG_SAFE);
+        pcVar7 = pcVar2;
         do {
-          cVar2 = *pcVar15;
-          pcVar15 = pcVar15 + 1;
-        } while (cVar2 != '\0');
+          cVar1 = *pcVar7;
+          pcVar7 = pcVar7 + 1;
+        } while (cVar1 != '\0');
       }
     }
   }
   else {
 LAB_8264fa44:
-    if (iVar16 != 3) {
+    if (param_4 != MEMCARD_WRITE_FREE_DOWNLOADED_CONTENT) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_memorycard.cpp",
                       0x302,0,"%s\n\t(operation) = %i");
     }
-    uVar6 = 0x82;
-    uVar20 = 0x40000000;
-    uVar19 = 1;
-    uVar18 = 0x80;
-    pcVar5 = SEH_LocalizeTextMessage(param_3,"downloaded content",LOCMSG_SAFE);
-    pcVar15 = pcVar5;
+    uVar3 = 0x82;
+    uVar12 = 0x40000000;
+    uVar11 = 1;
+    uVar10 = 0x80;
+    pcVar2 = SEH_LocalizeTextMessage(param_3,"downloaded content",LOCMSG_SAFE);
+    pcVar7 = pcVar2;
     do {
-      cVar2 = *pcVar15;
-      pcVar15 = pcVar15 + 1;
-    } while (cVar2 != '\0');
+      cVar1 = *pcVar7;
+      pcVar7 = pcVar7 + 1;
+    } while (cVar1 != '\0');
   }
-  MultiByteToWideChar(0xfde9,0,pcVar5,(int)(pcVar15 + (-1 - (int)pcVar5)),
+  MultiByteToWideChar(0xfde9,0,pcVar2,(int)(pcVar7 + (-1 - (int)pcVar2)),
                       (ushort *)local_2d0.szDisplayName,0x80);
 LAB_8264fad4:
   do {
-    pcVar15 = (char *)lVar13;
-    lVar13 = lVar13 + 1;
-  } while (*pcVar15 != '\0');
-  lVar14 = lVar8;
-  if (0x29 < ((lVar13 - lVar8) - 1U & 0xffffffff)) {
+    cVar1 = *pcVar8;
+    pcVar8 = pcVar8 + 1;
+  } while (cVar1 != '\0');
+  pcVar7 = param_2;
+  if ((char *)0x29 < pcVar8 + (-1 - (int)param_2)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_memorycard.cpp",
                     0x30d,0,"%s");
   }
   do {
-    pcVar15 = (char *)lVar14;
-    lVar14 = lVar14 + 1;
-  } while (*pcVar15 != '\0');
-  if (0xff < ((lVar14 - lVar8) - 1U & 0xffffffff)) {
+    cVar1 = *pcVar7;
+    pcVar7 = pcVar7 + 1;
+  } while (cVar1 != '\0');
+  if ((char *)0xff < pcVar7 + (-1 - (int)param_2)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_memorycard.cpp",
                     0x30e,0,"%s");
   }
-  I_strncpyz(local_2d0.szFileName,(char *)lVar8,0x2a);
+  I_strncpyz(local_2d0.szFileName,param_2,0x2a);
   local_2d0.dwContentType = 1;
-  local_2d0.DeviceID = (ulong)uVar10;
+  local_2d0.DeviceID = param_6;
   Com_sprintf(acStack_2e0,9,"save%d");
-  uVar6 = XContentCreate(param_5,acStack_2e0,&local_2d0,uVar6,(ulong *)0x0,(ulong *)0x0,
+  uVar3 = XContentCreate(param_5,acStack_2e0,&local_2d0,uVar3,(ulong *)0x0,(ulong *)0x0,
                          (_XOVERLAPPED *)0x0);
-  lVar13 = lVar8;
-  if (uVar6 == 0) {
-    do {
-      pcVar15 = (char *)lVar13;
-      lVar13 = lVar13 + 1;
-    } while (*pcVar15 != '\0');
-    if (0xff < ((lVar13 - lVar8) - 1U & 0xffffffff)) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_memorycard.cpp",
-                      0x331,0,"%s");
-    }
-    Com_sprintf(acStack_190,0x109,"%s:\\%s");
-    pvVar7 = CreateFileA(acStack_190,uVar20,0,(void *)0x0,uVar19,uVar18,(void *)0x0);
-    if (pvVar7 != (void *)0xffffffff) {
-      memoryCardGlob.files[iVar17].handle = pvVar7;
-      memoryCardGlob.files[iVar17].controllerIndex = param_5;
-      memoryCardGlob.files[iVar17].deviceId = (ulong)uVar10;
-      I_strncpyz(memoryCardGlob.files[iVar17].name,(char *)lVar8,0x2a);
-      Sys_LeaveCriticalSection(CRITSECT_CONTENT_FILE);
-      Sys_Milliseconds();
-      Com_Printf(0x10,"Mounted \'%s:\' drive (%i msec)\n");
-      *puVar3 = pvVar7;
-      MVar4 = __restgprlr_17(0);
-      return MVar4;
-    }
+  pcVar8 = param_2;
+  if (uVar3 != 0) {
     Sys_LeaveCriticalSection(CRITSECT_CONTENT_FILE);
-    XContentClose(acStack_2e0,(_XOVERLAPPED *)0x0);
-    MVar4 = __restgprlr_17(2);
-    return MVar4;
-  }
-  Sys_LeaveCriticalSection(CRITSECT_CONTENT_FILE);
-  Sys_Milliseconds();
-  Com_Printf(0x10,"Error %x from XContentCreate() to mount drive \'%s\' (%i msec)\n");
-  if (uVar6 == 0x570) {
-    if ((iVar16 == 2) || (iVar16 == 3)) {
+    Sys_Milliseconds();
+    Com_Printf(0x10,"Error %x from XContentCreate() to mount drive \'%s\' (%i msec)\n");
+    if (uVar3 != 0x570) {
+      return MEMCARD_FAILURE;
+    }
+    if ((param_4 == MEMCARD_READ_FREE_DOWNLOADED_CONTENT) ||
+       (param_4 == MEMCARD_WRITE_FREE_DOWNLOADED_CONTENT)) {
       XContentDelete(param_5,&local_2d0,(_XOVERLAPPED *)0x0);
     }
-    MVar4 = __restgprlr_17(1);
-    return MVar4;
+    return MEMCARD_FAILURE_CORRUPT;
   }
-  goto LAB_8264f8dc;
+  do {
+    cVar1 = *pcVar8;
+    pcVar8 = pcVar8 + 1;
+  } while (cVar1 != '\0');
+  if ((char *)0xff < pcVar8 + (-1 - (int)param_2)) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_memorycard.cpp",
+                    0x331,0,"%s");
+  }
+  Com_sprintf(acStack_190,0x109,"%s:\\%s");
+  pvVar4 = CreateFileA(acStack_190,uVar12,0,(void *)0x0,uVar11,uVar10,(void *)0x0);
+  if (pvVar4 == (void *)0xffffffff) {
+    Sys_LeaveCriticalSection(CRITSECT_CONTENT_FILE);
+    XContentClose(acStack_2e0,(_XOVERLAPPED *)0x0);
+    return MEMCARD_FAILURE;
+  }
+  memoryCardGlob.files[iVar9].handle = pvVar4;
+  memoryCardGlob.files[iVar9].controllerIndex = param_5;
+  memoryCardGlob.files[iVar9].deviceId = param_6;
+  I_strncpyz(memoryCardGlob.files[iVar9].name,param_2,0x2a);
+  Sys_LeaveCriticalSection(CRITSECT_CONTENT_FILE);
+  Sys_Milliseconds();
+  Com_Printf(0x10,"Mounted \'%s:\' drive (%i msec)\n");
+  *param_1 = pvVar4;
+  return MEMCARD_SUCCESS;
 }
 
 
@@ -1066,29 +1024,29 @@ MemcardError * Memcard_GetOpenError(void)
 
 // 8264FD38  OpenContextFile  (xenon/xenon_memorycard.cpp:859)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 void * OpenContextFile(char *param_1,char *param_2,MemcardOperation param_3,int param_4)
 
 {
-  char *pcVar1;
-  bool bVar5;
-  void *pvVar2;
-  ulong uVar3;
-  Memcard_OpenFile_Result MVar4;
+  bool bVar4;
+  void *pvVar1;
+  ulong uVar2;
+  Memcard_OpenFile_Result MVar3;
   void *local_40 [16];
   
-  pcVar1 = (char *)__savegprlr_26(param_1);
-  bVar5 = Sys_IsMainThread();
-  if ((!bVar5) && (bVar5 = Sys_IsServerThread(), !bVar5)) {
+  bVar4 = Sys_IsMainThread();
+  if ((!bVar4) && (bVar4 = Sys_IsServerThread(), !bVar4)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_memorycard.cpp",
                     0x361,0,"%s");
   }
   if (memoryCardGlob.useDevDrive != false) {
-    pvVar2 = MemCard_OpenFromHDD(pcVar1,param_3,&openFileInfoError);
-    pvVar2 = (void *)__restgprlr_26(pvVar2);
-    return pvVar2;
+    pvVar1 = MemCard_OpenFromHDD(param_1,param_3,&openFileInfoError);
+    return pvVar1;
   }
-  bVar5 = Sys_IsMainThread();
-  if (!bVar5) {
+  bVar4 = Sys_IsMainThread();
+  if (!bVar4) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_memorycard.cpp",
                     0x36a,0,"%s");
   }
@@ -1096,27 +1054,25 @@ void * OpenContextFile(char *param_1,char *param_2,MemcardOperation param_3,int 
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_memorycard.cpp",
                     0x36c,0,"%s\n\t(controllerIndex) = %i");
   }
-  bVar5 = Memcard_IsDeviceSelected(param_4);
-  if (!bVar5) {
+  bVar4 = Memcard_IsDeviceSelected(param_4);
+  if (!bVar4) {
     openFileInfoError.isError = true;
     openFileInfoError.extendedErrorCode = 0;
     openFileInfoError.errorString = GAME_SAVE_UNABLE_TO_ACCESS_DEVICE;
-    pvVar2 = (void *)__restgprlr_26(0);
-    return pvVar2;
+    return (void *)0x0;
   }
-  bVar5 = Memcard_IsDeviceSelected(param_4);
-  if (!bVar5) {
+  bVar4 = Memcard_IsDeviceSelected(param_4);
+  if (!bVar4) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_memorycard.cpp",
                     0x374,0,"%s");
   }
-  uVar3 = Memcard_GetSelectedDeviceID(param_4);
-  MVar4 = Memcard_OpenFile(local_40,pcVar1,param_2,param_3,param_4,uVar3);
-  if (MVar4 != MEMCARD_SUCCESS) {
+  uVar2 = Memcard_GetSelectedDeviceID(param_4);
+  MVar3 = Memcard_OpenFile(local_40,param_1,param_2,param_3,param_4,uVar2);
+  if (MVar3 != MEMCARD_SUCCESS) {
     openFileInfoError.isError = true;
-    openFileInfoError.extendedErrorCode = (ulong)(MVar4 == MEMCARD_FAILURE_CORRUPT);
+    openFileInfoError.extendedErrorCode = (uint)LZCOUNT(MVar3 - MEMCARD_FAILURE_CORRUPT) >> 5;
     openFileInfoError.errorString = GAME_SAVE_UNABLE_TO_ACCESS_DEVICE;
-    pvVar2 = (void *)__restgprlr_26(0);
-    return pvVar2;
+    return (void *)0x0;
   }
   openFileInfoError.isError = false;
   openFileInfoError._1_3_ = 0;
@@ -1126,179 +1082,149 @@ void * OpenContextFile(char *param_1,char *param_2,MemcardOperation param_3,int 
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_memorycard.cpp",
                     0x37f,0,"%s");
   }
-  pvVar2 = (void *)__restgprlr_26(local_40[0]);
-  return pvVar2;
+  return local_40[0];
 }
 
 
 // 8264FF50  MemCard_ReadFromHDD  (xenon/xenon_memorycard.cpp:906)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 int MemCard_ReadFromHDD(void *param_1,void *param_2,int param_3,MemcardError *param_4)
 
 {
-  undefined4 *puVar1;
-  void *pvVar2;
-  int iVar3;
-  ulonglong uVar4;
-  longlong lVar5;
-  ulonglong uVar6;
+  int iVar1;
   
-  uVar6 = (ulonglong)(int)param_4;
-  lVar5 = (longlong)param_3;
-  uVar4 = (ulonglong)(int)param_2;
-  pvVar2 = (void *)__savegprlr_26(param_1);
-  if ((uVar6 & 0xffffffff) == 0) {
+  if (param_4 == (MemcardError *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_memorycard.cpp",
                     0x38d,0,"%s");
   }
-  if (pvVar2 == (void *)0x0) {
+  if (param_1 == (void *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_memorycard.cpp",
                     0x38e,0,"%s");
   }
-  iVar3 = (int)lVar5;
-  if (iVar3 < 1) {
+  if (param_3 < 1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_memorycard.cpp",
                     0x38f,0,"%s");
   }
-  puVar1 = (undefined4 *)uVar6;
-  if ((uVar4 & 0xffffffff) == 0) {
-    iVar3 = FS_Seek(pvVar2,iVar3,0);
-    if (iVar3 == 0) {
-      if ((uVar6 & 0xffffffff) != 0) {
-        *puVar1 = 0;
-        puVar1[1] = 0;
-        puVar1[2] = 0;
+  if (param_2 == (void *)0x0) {
+    iVar1 = FS_Seek(param_1,param_3,0);
+    if (iVar1 == 0) {
+      if (param_4 != (MemcardError *)0x0) {
+        *(undefined4 *)param_4 = 0;
+        param_4->extendedErrorCode = 0;
+        param_4->errorString = (char *)0x0;
       }
     }
-    else if ((uVar6 & 0xffffffff) != 0) {
-      puVar1[1] = 0;
-      *(undefined1 *)puVar1 = 1;
-      puVar1[2] = GAME_SAVE_UNABLE_TO_READ_FROM_DEVICE;
-      iVar3 = __restgprlr_26(lVar5);
-      return iVar3;
+    else if (param_4 != (MemcardError *)0x0) {
+      param_4->extendedErrorCode = 0;
+      param_4->isError = true;
+      param_4->errorString = GAME_SAVE_UNABLE_TO_READ_FROM_DEVICE;
+      return param_3;
     }
   }
   else {
-    iVar3 = FS_Read((void *)uVar4,iVar3,pvVar2);
-    lVar5 = (longlong)iVar3;
-    if (iVar3 == 0) {
-      if ((uVar6 & 0xffffffff) != 0) {
-        puVar1[1] = 0;
-        *(undefined1 *)puVar1 = 1;
-        puVar1[2] = GAME_SAVE_UNABLE_TO_READ_FROM_DEVICE;
-        iVar3 = __restgprlr_26();
-        return iVar3;
+    param_3 = FS_Read(param_2,param_3,param_1);
+    if (param_3 == 0) {
+      if (param_4 != (MemcardError *)0x0) {
+        param_4->extendedErrorCode = 0;
+        param_4->isError = true;
+        param_4->errorString = GAME_SAVE_UNABLE_TO_READ_FROM_DEVICE;
+        return 0;
       }
     }
-    else if ((uVar6 & 0xffffffff) != 0) {
-      *puVar1 = 0;
-      puVar1[1] = 0;
-      puVar1[2] = 0;
-      iVar3 = __restgprlr_26();
-      return iVar3;
+    else if (param_4 != (MemcardError *)0x0) {
+      *(undefined4 *)param_4 = 0;
+      param_4->extendedErrorCode = 0;
+      param_4->errorString = (char *)0x0;
+      return param_3;
     }
   }
-  iVar3 = __restgprlr_26(lVar5);
-  return iVar3;
+  return param_3;
 }
 
 
 // 826500C0  ReadFromMemoryCard  (xenon/xenon_memorycard.cpp:943)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 int ReadFromMemoryCard(void *param_1,void *param_2,int param_3,MemcardError *param_4)
 
 {
-  void *pvVar1;
-  int iVar2;
-  ulong uVar3;
-  ulonglong uVar4;
-  ulonglong uVar5;
-  MemcardError *pMVar6;
-  longlong lVar7;
-  ulonglong uVar8;
-  uint local_40 [16];
+  int iVar1;
+  ulong uVar2;
+  longlong lVar3;
+  ulong local_40 [16];
   
-  uVar5 = (ulonglong)(int)param_4;
-  uVar8 = (ulonglong)param_3;
-  uVar4 = (ulonglong)(int)param_2;
-  pvVar1 = (void *)__savegprlr_26(param_1);
-  if ((uVar5 & 0xffffffff) == 0) {
+  if (param_4 == (MemcardError *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_memorycard.cpp",
                     0x3b3,0,"%s");
   }
-  if (pvVar1 == (void *)0x0) {
-    iVar2 = 0x3b4;
+  if (param_1 == (void *)0x0) {
+    iVar1 = 0x3b4;
   }
   else {
-    if (pvVar1 != (void *)0xffffffff) goto LAB_8265014c;
-    iVar2 = 0x3b5;
+    if (param_1 != (void *)0xffffffff) goto LAB_8265014c;
+    iVar1 = 0x3b5;
   }
   MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_memorycard.cpp",
-                  iVar2,0,"%s");
+                  iVar1,0,"%s");
 LAB_8265014c:
-  uVar3 = (ulong)uVar8;
-  pMVar6 = (MemcardError *)uVar5;
   if (memoryCardGlob.useDevDrive != false) {
-    iVar2 = MemCard_ReadFromHDD(pvVar1,(void *)uVar4,uVar3,pMVar6);
-    iVar2 = __restgprlr_26(iVar2);
-    return iVar2;
+    iVar1 = MemCard_ReadFromHDD(param_1,param_2,param_3,param_4);
+    return iVar1;
   }
-  if ((uVar4 & 0xffffffff) == 0) {
-    uVar3 = SetFilePointer(pvVar1,uVar3,(long *)0x0,1);
-    lVar7 = -(longlong)(int)uVar3 + -1;
-    iVar2 = (int)lVar7 + (-(uint)(lVar7 == 0) - ((int)-(longlong)(int)uVar3 + -2));
+  if (param_2 == (void *)0x0) {
+    uVar2 = SetFilePointer(param_1,param_3,(long *)0x0,1);
+    lVar3 = -(longlong)(int)uVar2 + -1;
+    iVar1 = (int)lVar3 + (-(uint)(lVar3 == 0) - ((int)-(longlong)(int)uVar2 + -2));
+    local_40[0] = param_3;
   }
   else {
-    iVar2 = ReadFile(pvVar1,(void *)uVar4,uVar3,local_40,(_OVERLAPPED *)0x0);
-    uVar8 = (ulonglong)local_40[0];
+    iVar1 = ReadFile(param_1,param_2,param_3,local_40,(_OVERLAPPED *)0x0);
   }
-  if (iVar2 == 0) {
-    if ((uVar5 & 0xffffffff) != 0) {
-      pMVar6->extendedErrorCode = 0;
-      pMVar6->isError = true;
-      pMVar6->errorString = GAME_SAVE_UNABLE_TO_ACCESS_DEVICE;
+  if (iVar1 == 0) {
+    if (param_4 != (MemcardError *)0x0) {
+      param_4->extendedErrorCode = 0;
+      param_4->isError = true;
+      param_4->errorString = GAME_SAVE_UNABLE_TO_ACCESS_DEVICE;
     }
-    iVar2 = __restgprlr_26(0xffffffffffffffff);
-    return iVar2;
+    return -1;
   }
-  if ((uVar8 & 0xffffffff) == 0) {
-    if ((uVar5 & 0xffffffff) != 0) {
-      pMVar6->extendedErrorCode = 0;
-      pMVar6->isError = true;
-      pMVar6->errorString = GAME_SAVE_UNABLE_TO_READ_FROM_DEVICE;
+  if (local_40[0] == 0) {
+    if (param_4 != (MemcardError *)0x0) {
+      param_4->extendedErrorCode = 0;
+      param_4->isError = true;
+      param_4->errorString = GAME_SAVE_UNABLE_TO_READ_FROM_DEVICE;
     }
-    iVar2 = __restgprlr_26(0);
-    return iVar2;
+    return 0;
   }
-  if ((uVar5 & 0xffffffff) != 0) {
-    *(undefined4 *)pMVar6 = 0;
-    pMVar6->extendedErrorCode = 0;
-    pMVar6->errorString = (char *)0x0;
+  if (param_4 != (MemcardError *)0x0) {
+    *(undefined4 *)param_4 = 0;
+    param_4->extendedErrorCode = 0;
+    param_4->errorString = (char *)0x0;
   }
-  iVar2 = __restgprlr_26(uVar8);
-  return iVar2;
+  return local_40[0];
 }
 
 
 // 82650258  MemCard_WriteToHDD  (xenon/xenon_memorycard.cpp:987)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 void MemCard_WriteToHDD(void *param_1,void *param_2,int param_3,MemcardError *param_4)
 
 {
-  undefined4 *puVar1;
-  void *pvVar2;
-  int iVar3;
-  ulonglong uVar4;
-  ulonglong uVar5;
+  int iVar1;
   
-  uVar5 = (ulonglong)(int)param_4;
-  uVar4 = (ulonglong)(int)param_2;
-  pvVar2 = (void *)__savegprlr_26(param_1);
-  if (pvVar2 == (void *)0x0) {
+  if (param_1 == (void *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_memorycard.cpp",
                     0x3de,0,"%s");
   }
-  if ((uVar4 & 0xffffffff) == 0) {
+  if (param_2 == (void *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_memorycard.cpp",
                     0x3df,0,"%s");
   }
@@ -1306,27 +1232,24 @@ void MemCard_WriteToHDD(void *param_1,void *param_2,int param_3,MemcardError *pa
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_memorycard.cpp",
                     0x3e0,0,"%s");
   }
-  if ((uVar5 & 0xffffffff) == 0) {
+  if (param_4 == (MemcardError *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_memorycard.cpp",
                     0x3e1,0,"%s");
   }
-  iVar3 = FS_Write((void *)uVar4,param_3,pvVar2);
-  puVar1 = (undefined4 *)uVar5;
-  if (iVar3 == param_3) {
-    if ((uVar5 & 0xffffffff) != 0) {
-      *puVar1 = 0;
-      puVar1[1] = 0;
-      puVar1[2] = 0;
+  iVar1 = FS_Write(param_2,param_3,param_1);
+  if (iVar1 == param_3) {
+    if (param_4 != (MemcardError *)0x0) {
+      *(undefined4 *)param_4 = 0;
+      param_4->extendedErrorCode = 0;
+      param_4->errorString = (char *)0x0;
     }
   }
-  else if ((uVar5 & 0xffffffff) != 0) {
-    puVar1[1] = 0;
-    *(undefined1 *)puVar1 = 1;
-    puVar1[2] = GAME_SAVE_INSUFFICIENT_FREE_DISK;
-    __restgprlr_26();
+  else if (param_4 != (MemcardError *)0x0) {
+    param_4->extendedErrorCode = 0;
+    param_4->isError = true;
+    param_4->errorString = GAME_SAVE_INSUFFICIENT_FREE_DISK;
     return;
   }
-  __restgprlr_26();
   return;
 }
 
@@ -1374,119 +1297,109 @@ void MemCard_SetDefaultOverlappedParams(_OVERLAPPED *param_1)
 
 // 826503B8  WriteToMemoryCardFile  (xenon/xenon_memorycard.cpp:1036)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void WriteToMemoryCardFile(void *param_1,void *param_2,uint param_3)
 
 {
-  void *pvVar1;
-  bool bVar3;
-  int iVar2;
-  ulonglong uVar4;
+  bool bVar2;
+  int iVar1;
   uint local_40 [16];
   
-  uVar4 = (ulonglong)(int)param_3;
-  pvVar1 = (void *)__savegprlr_27(param_1);
-  bVar3 = Sys_IsMainThread();
-  if ((!bVar3) && (bVar3 = Sys_IsServerThread(), !bVar3)) {
+  bVar2 = Sys_IsMainThread();
+  if ((!bVar2) && (bVar2 = Sys_IsServerThread(), !bVar2)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_memorycard.cpp",
                     0x410,0,"%s");
   }
-  if (pvVar1 == (void *)0x0) {
-    iVar2 = 0x414;
+  if (param_1 == (void *)0x0) {
+    iVar1 = 0x414;
   }
   else {
-    if (pvVar1 != (void *)0xffffffff) goto LAB_82650458;
-    iVar2 = 0x415;
+    if (param_1 != (void *)0xffffffff) goto LAB_82650458;
+    iVar1 = 0x415;
   }
   MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_memorycard.cpp",
-                  iVar2,0,"%s");
+                  iVar1,0,"%s");
 LAB_82650458:
   if (memoryCardGlob.useDevDrive != false) {
-    MemCard_WriteToHDD(pvVar1,param_2,(ulong)uVar4,&writeFileInfoError);
-    __restgprlr_27();
+    MemCard_WriteToHDD(param_1,param_2,param_3,&writeFileInfoError);
     return;
   }
-  bVar3 = Sys_IsMainThread();
-  if (!bVar3) {
+  bVar2 = Sys_IsMainThread();
+  if (!bVar2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_memorycard.cpp",
                     0x41e,0,"%s");
   }
-  iVar2 = WriteFile(pvVar1,param_2,(ulong)uVar4,local_40,(_OVERLAPPED *)0x0);
-  if (iVar2 == 0) {
+  iVar1 = WriteFile(param_1,param_2,param_3,local_40,(_OVERLAPPED *)0x0);
+  if (iVar1 == 0) {
     writeFileInfoError.isError = true;
     writeFileInfoError.extendedErrorCode = 0;
     writeFileInfoError.errorString = GAME_SAVE_UNABLE_TO_ACCESS_DEVICE;
-    __restgprlr_27();
     return;
   }
-  if ((ulonglong)local_40[0] != (uVar4 & 0xffffffff)) {
+  if (local_40[0] != param_3) {
     writeFileInfoError.extendedErrorCode = 0;
     writeFileInfoError.isError = true;
     writeFileInfoError.errorString = GAME_SAVE_INSUFFICIENT_FREE_DISK;
-    __restgprlr_27();
     return;
   }
   writeFileInfoError.isError = false;
   writeFileInfoError._1_3_ = 0;
   writeFileInfoError.extendedErrorCode = 0;
   writeFileInfoError.errorString = (char *)0x0;
-  __restgprlr_27();
   return;
 }
 
 
 // 82650560  WriteToMemoryCardFileAsync  (xenon/xenon_memorycard.cpp:1079)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 void WriteToMemoryCardFileAsync(void *param_1,void *param_2,uint param_3,_OVERLAPPED *param_4)
 
 {
-  void *pvVar1;
-  bool bVar4;
-  int iVar2;
-  ulong uVar3;
+  bool bVar3;
+  int iVar1;
+  ulong uVar2;
   ulong auStack_40 [16];
   
-  pvVar1 = (void *)__savegprlr_26(param_1);
-  bVar4 = Sys_IsMainThread();
-  if ((!bVar4) && (bVar4 = Sys_IsServerThread(), !bVar4)) {
+  bVar3 = Sys_IsMainThread();
+  if ((!bVar3) && (bVar3 = Sys_IsServerThread(), !bVar3)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_memorycard.cpp",
                     0x43c,0,"%s");
   }
-  if (pvVar1 == (void *)0x0) {
-    iVar2 = 0x440;
+  if (param_1 == (void *)0x0) {
+    iVar1 = 0x440;
   }
   else {
-    if (pvVar1 != (void *)0xffffffff) goto LAB_82650604;
-    iVar2 = 0x441;
+    if (param_1 != (void *)0xffffffff) goto LAB_82650604;
+    iVar1 = 0x441;
   }
   MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_memorycard.cpp",
-                  iVar2,0,"%s");
+                  iVar1,0,"%s");
 LAB_82650604:
   if (memoryCardGlob.useDevDrive != false) {
-    MemCard_WriteToHDD(pvVar1,param_2,param_3,&writeFileInfoError);
-    __restgprlr_26();
+    MemCard_WriteToHDD(param_1,param_2,param_3,&writeFileInfoError);
     return;
   }
-  bVar4 = Sys_IsMainThread();
-  if (!bVar4) {
+  bVar3 = Sys_IsMainThread();
+  if (!bVar3) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_memorycard.cpp",
                     0x44a,0,"%s");
   }
-  iVar2 = WriteFile(pvVar1,param_2,param_3,auStack_40,param_4);
-  if (iVar2 == 0) {
-    uVar3 = GetLastError();
-    if (uVar3 != 0x3e5) {
-      writeFileInfoError.isError = true;
-      writeFileInfoError.extendedErrorCode = 0;
-      writeFileInfoError.errorString = GAME_SAVE_INSUFFICIENT_FREE_DISK;
-      __restgprlr_26();
-      return;
-    }
+  iVar1 = WriteFile(param_1,param_2,param_3,auStack_40,param_4);
+  if ((iVar1 == 0) && (uVar2 = GetLastError(), uVar2 != 0x3e5)) {
+    writeFileInfoError.isError = true;
+    writeFileInfoError.extendedErrorCode = 0;
+    writeFileInfoError.errorString = GAME_SAVE_INSUFFICIENT_FREE_DISK;
+    return;
   }
   writeFileInfoError.isError = false;
   writeFileInfoError._1_3_ = 0;
   writeFileInfoError.extendedErrorCode = 0;
   writeFileInfoError.errorString = (char *)0x0;
-  __restgprlr_26();
   return;
 }
 
@@ -1533,60 +1446,60 @@ void CloseContextFile(void *param_1)
 
 // 826507E0  DeleteContextFile  (xenon/xenon_memorycard.cpp:1156)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
+
 void DeleteContextFile(void *param_1)
 
 {
   ulong uVar1;
   ulong uVar2;
-  void *pvVar3;
+  int iVar3;
   int iVar4;
-  int iVar5;
-  uint uVar7;
-  ulonglong uVar6;
-  XenonMemoryCardFile *pXVar8;
+  uint uVar6;
+  ulonglong uVar5;
+  XenonMemoryCardFile *pXVar7;
   char acStack_190 [16];
   _XCONTENT_DATA local_180;
   
-  pvVar3 = (void *)__savegprlr_24(param_1);
-  if (pvVar3 == (void *)0x0) {
-    iVar4 = 0x48a;
+  if (param_1 == (void *)0x0) {
+    iVar3 = 0x48a;
   }
   else {
-    if (pvVar3 != (void *)0xffffffff) goto LAB_82650840;
-    iVar4 = 0x48b;
+    if (param_1 != (void *)0xffffffff) goto LAB_82650840;
+    iVar3 = 0x48b;
   }
   MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_memorycard.cpp",
-                  iVar4,0,"%s");
+                  iVar3,0,"%s");
 LAB_82650840:
   Sys_EnterCriticalSection(CRITSECT_CONTENT_FILE);
-  iVar4 = 0;
-  uVar7 = 0;
-  pXVar8 = memoryCardGlob.files;
-  while (pXVar8->handle != pvVar3) {
-    uVar7 = uVar7 + 0x38;
-    iVar4 = iVar4 + 1;
-    pXVar8 = pXVar8 + 1;
-    if (0x6ff < uVar7) {
+  iVar3 = 0;
+  uVar6 = 0;
+  pXVar7 = memoryCardGlob.files;
+  while (pXVar7->handle != param_1) {
+    uVar6 = uVar6 + 0x38;
+    iVar3 = iVar3 + 1;
+    pXVar7 = pXVar7 + 1;
+    if (0x6ff < uVar6) {
       Sys_LeaveCriticalSection(CRITSECT_CONTENT_FILE);
-      __restgprlr_24();
       return;
     }
   }
-  uVar1 = memoryCardGlob.files[iVar4].controllerIndex;
-  uVar2 = memoryCardGlob.files[iVar4].deviceId;
-  if (pvVar3 != (void *)0x0) {
-    if (pvVar3 == (void *)0xffffffff) {
+  uVar1 = memoryCardGlob.files[iVar3].controllerIndex;
+  uVar2 = memoryCardGlob.files[iVar3].deviceId;
+  if (param_1 != (void *)0x0) {
+    if (param_1 == (void *)0xffffffff) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_memorycard.cpp",
                       0x46a,0,"%s");
     }
-    CloseHandle(pvVar3);
+    CloseHandle(param_1);
     Sys_EnterCriticalSection(CRITSECT_CONTENT_FILE);
-    iVar5 = 0;
-    uVar6 = 0;
-    pXVar8 = memoryCardGlob.files;
+    iVar4 = 0;
+    uVar5 = 0;
+    pXVar7 = memoryCardGlob.files;
     do {
-      if (pXVar8->handle == pvVar3) {
-        memoryCardGlob.files[iVar5].handle = (void *)0x0;
+      if (pXVar7->handle == param_1) {
+        memoryCardGlob.files[iVar4].handle = (void *)0x0;
         Com_sprintf(acStack_190,9,"save%d");
         Sys_Milliseconds();
         XContentClose(acStack_190,(_XOVERLAPPED *)0x0);
@@ -1594,23 +1507,22 @@ LAB_82650840:
         Com_Printf(0x10,"Dismounted \'%s:\' drive (%i msec)\n");
         break;
       }
-      uVar6 = uVar6 + 0x38;
-      iVar5 = iVar5 + 1;
-      pXVar8 = pXVar8 + 1;
-    } while ((uVar6 & 0xffffffff) < 0x700);
+      uVar5 = uVar5 + 0x38;
+      iVar4 = iVar4 + 1;
+      pXVar7 = pXVar7 + 1;
+    } while ((uVar5 & 0xffffffff) < 0x700);
     Sys_LeaveCriticalSection(CRITSECT_CONTENT_FILE);
   }
-  if (memoryCardGlob.files[iVar4].handle != (void *)0x0) {
+  if (memoryCardGlob.files[iVar3].handle != (void *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_memorycard.cpp",
                     0x499,0,"%s");
   }
   memset();
-  I_strncpyz(local_180.szFileName,memoryCardGlob.files[iVar4].name,0x2a);
+  I_strncpyz(local_180.szFileName,memoryCardGlob.files[iVar3].name,0x2a);
   local_180.dwContentType = 1;
   local_180.DeviceID = uVar2;
   XContentDelete(uVar1,&local_180,(_XOVERLAPPED *)0x0);
   Sys_LeaveCriticalSection(CRITSECT_CONTENT_FILE);
-  __restgprlr_24();
   return;
 }
 

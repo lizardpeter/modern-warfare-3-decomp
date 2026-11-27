@@ -2,6 +2,8 @@
 
 // 8288D820  XenonGpu_Initialize  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/xenongpu.cpp:40)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 
 void D3D::XenonGpu_Initialize(CDevice *param_1)
@@ -9,15 +11,13 @@ void D3D::XenonGpu_Initialize(CDevice *param_1)
 {
   uint uVar1;
   uint *puVar2;
-  CDevice *this;
   ulong *puVar3;
   ulong uVar4;
   uint *puVar5;
   longlong lVar6;
   
-  this = (CDevice *)__savegprlr_29(param_1);
-  puVar5 = (uint *)&this->field_0x468;
-  this->m_AsynchronousInvalidateRange = 0xffffffff;
+  puVar5 = (uint *)&param_1->field_0x468;
+  param_1->m_AsynchronousInvalidateRange = 0xffffffff;
   lVar6 = 0x1a;
   do {
     puVar2 = puVar5 + 6;
@@ -25,7 +25,7 @@ void D3D::XenonGpu_Initialize(CDevice *param_1)
     *puVar5 = *puVar2 & 0xfffffffc;
     lVar6 = lVar6 + -1;
   } while (lVar6 != 0);
-  puVar5 = (uint *)&this->field_0x6e8;
+  puVar5 = (uint *)&param_1->field_0x6e8;
   lVar6 = 0x12;
   do {
     puVar2 = puVar5 + 2;
@@ -33,28 +33,28 @@ void D3D::XenonGpu_Initialize(CDevice *param_1)
     *puVar5 = *puVar2 & 0xfffffffc | 1;
     lVar6 = lVar6 + -1;
   } while (lVar6 != 0);
-  *(undefined4 *)&this->field_0x28bc = 0x20002000;
-  *(undefined4 *)&this->field_0x29d4 = 0xff000;
-  *(undefined4 *)&this->field_0x2a14 = 0x10;
-  *(uint *)&this->field_0x2944 = *(uint *)&this->field_0x2944 | 0x80000;
-  *(undefined4 *)&this->field_0x2984 = 0xe;
-  *(undefined4 *)&this->field_0x2a10 = 0xe;
-  *(undefined4 *)&this->field_0x296c = 8;
-  *(undefined4 *)&this->field_0x29d8 = 0xff100;
-  *(undefined4 *)&this->field_0x2954 = 4;
-  *(uint *)&this->field_0x2948 = *(uint *)&this->field_0x2948 | 0x10000;
-  *(undefined4 *)&this->field_0x28cc = 0xffffff;
-  *(undefined4 *)&this->field_0x29c0 = 4;
-  *(undefined4 *)&this->field_0x2a48 = 2;
-  *(undefined8 *)this = 0xffffffffffffffff;
-  *(undefined8 *)&this->field_0x8 = 0xffffffffffffffff;
-  *(undefined8 *)&this->field_0x10 = 0xffffffffffffffff;
-  *(undefined8 *)&this->field_0x18 = 0xffffffffffffffff;
-  *(undefined8 *)&this->field_0x20 = 0xffffffffffffffff;
-  (this->m_BcControl).dword = 0xe;
-  puVar3 = *(ulong **)&this->field_0x30;
-  if (*(ulong **)&this->field_0x38 < puVar3) {
-    puVar3 = CDevice::KickOff(this);
+  *(undefined4 *)&param_1->field_0x28bc = 0x20002000;
+  *(undefined4 *)&param_1->field_0x29d4 = 0xff000;
+  *(undefined4 *)&param_1->field_0x2a14 = 0x10;
+  *(uint *)&param_1->field_0x2944 = *(uint *)&param_1->field_0x2944 | 0x80000;
+  *(undefined4 *)&param_1->field_0x2984 = 0xe;
+  *(undefined4 *)&param_1->field_0x2a10 = 0xe;
+  *(undefined4 *)&param_1->field_0x296c = 8;
+  *(undefined4 *)&param_1->field_0x29d8 = 0xff100;
+  *(undefined4 *)&param_1->field_0x2954 = 4;
+  *(uint *)&param_1->field_0x2948 = *(uint *)&param_1->field_0x2948 | 0x10000;
+  *(undefined4 *)&param_1->field_0x28cc = 0xffffff;
+  *(undefined4 *)&param_1->field_0x29c0 = 4;
+  *(undefined4 *)&param_1->field_0x2a48 = 2;
+  *(undefined8 *)param_1 = 0xffffffffffffffff;
+  *(undefined8 *)&param_1->field_0x8 = 0xffffffffffffffff;
+  *(undefined8 *)&param_1->field_0x10 = 0xffffffffffffffff;
+  *(undefined8 *)&param_1->field_0x18 = 0xffffffffffffffff;
+  *(undefined8 *)&param_1->field_0x20 = 0xffffffffffffffff;
+  (param_1->m_BcControl).dword = 0xe;
+  puVar3 = *(ulong **)&param_1->field_0x30;
+  if (*(ulong **)&param_1->field_0x38 < puVar3) {
+    puVar3 = CDevice::KickOff(param_1);
   }
   puVar3[1] = 0xd01;
   puVar3[2] = 0x4000000;
@@ -69,7 +69,7 @@ void D3D::XenonGpu_Initialize(CDevice *param_1)
   puVar3[10] = D3D__Power3Chicken;
   puVar3[0xb] = 0xe42;
   puVar3[0xc] = 0x1f60;
-  uVar1 = this->m_CreateDeviceFlags;
+  uVar1 = param_1->m_CreateDeviceFlags;
   puVar3[0xd] = 0xc85;
   if ((uVar1 & 2) == 0) {
     uVar4 = 3;
@@ -84,8 +84,7 @@ void D3D::XenonGpu_Initialize(CDevice *param_1)
   puVar3[0x15] = 0;
   puVar3[0x16] = 0;
   puVar3[0x17] = 0;
-  *(ulong **)&this->field_0x30 = puVar3 + 0x17;
-  __restgprlr_29();
+  *(ulong **)&param_1->field_0x30 = puVar3 + 0x17;
   return;
 }
 

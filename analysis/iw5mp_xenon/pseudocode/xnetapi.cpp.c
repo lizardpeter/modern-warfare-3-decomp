@@ -194,30 +194,18 @@ int XNetQosListen(XNKID *param_1,uchar *param_2,uint param_3,ulong param_4,ulong
 
 // 828B84F8  XNetQosLookup  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/net/dll/xnetapi.cpp:157)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 int XNetQosLookup(uint param_1,XNADDR **param_2,XNKID **param_3,XNKEY **param_4,uint param_5,
                  in_addr *param_6,ulong *param_7,uint param_8,ulong param_9,ulong param_10,
                  void *param_11,XNQOS **param_12)
 
 {
-  undefined8 uVar1;
-  int iVar2;
-  longlong lVar3;
-  longlong lVar4;
-  longlong lVar5;
-  longlong lVar6;
-  longlong lVar7;
-  longlong lVar8;
+  int iVar1;
   
-  lVar8 = (longlong)(int)param_7;
-  lVar7 = (longlong)(int)param_6;
-  lVar6 = (longlong)(int)param_5;
-  lVar5 = (longlong)(int)param_4;
-  lVar4 = (longlong)(int)param_3;
-  lVar3 = (longlong)(int)param_2;
-  uVar1 = __savegprlr_28(param_1,lVar3,lVar4,lVar5,lVar6,lVar7,lVar8);
-  NetDll_XNetQosLookup(1,uVar1,lVar3,lVar4,lVar5,lVar6,lVar7,lVar8);
-  iVar2 = __restgprlr_28();
-  return iVar2;
+  iVar1 = NetDll_XNetQosLookup(1,param_1,param_2,param_3,param_4,param_5,param_6,param_7);
+  return iVar1;
 }
 
 

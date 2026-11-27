@@ -2,6 +2,8 @@
 
 // 82282DF8  PM_VerifyPronePosition  (bgame/bg_slidemove.cpp:29)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
 int PM_VerifyPronePosition(pmove_t *param_1,float *param_2,float *param_3)
@@ -13,108 +15,96 @@ int PM_VerifyPronePosition(pmove_t *param_1,float *param_2,float *param_3)
   playerState_s *ppVar4;
   float fVar5;
   float fVar6;
-  undefined4 *puVar7;
-  FeetDirection FVar8;
-  bool bVar10;
-  int iVar9;
-  float *pfVar11;
+  FeetDirection FVar7;
+  bool bVar8;
+  float *pfVar9;
+  double dVar10;
+  double dVar11;
   double dVar12;
-  double dVar13;
-  double dVar14;
   proneCheckType_t in_stack_ffffff28;
   FeetDirection in_stack_ffffff2c;
   float local_60;
   float local_5c;
   float local_58;
   
-  puVar7 = (undefined4 *)__savegprlr_26(param_1);
-  if (puVar7 == (undefined4 *)0x0) {
+  if (param_1 == (pmove_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_slidemove.cpp",0x27,0
                     ,"%s");
   }
-  ppVar4 = (playerState_s *)*puVar7;
+  ppVar4 = param_1->ps;
   if (ppVar4 == (playerState_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_slidemove.cpp",0x29,0
                     ,"%s");
   }
   if ((ppVar4->pm_flags & 1U) != 0) {
-    FVar8 = PM_GetProneFeetDirection(ppVar4);
-    pfVar11 = ppVar4->origin;
-    bVar10 = BG_CheckProne(ppVar4->clientNum,pfVar11,15.0,30.0,ppVar4->proneDirection,(float *)0x0,
-                           (float *)&IMAGE_DOS_HEADER_82000000,(uint)*(byte *)(puVar7 + 0x4d),
-                           (int)(puVar7 + 0x49),(int)(puVar7 + 0x4a),'\x01',in_stack_ffffff28,50.0,
-                           in_stack_ffffff2c);
-    if (!bVar10) {
-      if (FVar8 == FEETDIR_FRONT) {
+    FVar7 = PM_GetProneFeetDirection(ppVar4);
+    pfVar9 = ppVar4->origin;
+    bVar8 = BG_CheckProne(ppVar4->clientNum,pfVar9,15.0,30.0,ppVar4->proneDirection,(float *)0x0,
+                          (float *)&IMAGE_DOS_HEADER_82000000,(uint)param_1->handler,
+                          (int)&param_1->fTorsoPitch,(int)&param_1->fWaistPitch,'\x01',
+                          in_stack_ffffff28,50.0,in_stack_ffffff2c);
+    if (!bVar8) {
+      if (FVar7 == FEETDIR_FRONT) {
         fVar1 = ppVar4->velocity[1];
         fVar2 = ppVar4->velocity[0];
         fVar3 = ppVar4->velocity[2];
-        fVar5 = SQRT(fVar3 * fVar3 + fVar2 * fVar2 + fVar1 * fVar1);
-        fVar6 = 1.0;
-        if (-fVar5 < 0.0) {
-          fVar6 = fVar5;
+        fVar6 = SQRT(fVar3 * fVar3 + fVar2 * fVar2 + fVar1 * fVar1);
+        fVar5 = 1.0;
+        if (-fVar6 < 0.0) {
+          fVar5 = fVar6;
         }
-        fVar6 = 1.0 / fVar6;
-        dVar14 = (double)(fVar2 * fVar6);
-        dVar13 = (double)(fVar1 * fVar6);
-        dVar12 = (double)(fVar3 * fVar6);
-        if (0.0 < fVar5) {
-          YawVectors(ppVar4->proneDirection,(float *)0x0,&local_60);
-          if (-0.5 < (float)((double)local_58 * dVar12 +
-                            (double)(float)((double)local_5c * dVar13 +
-                                           (double)(float)((double)local_60 * dVar14)))) {
-            *pfVar11 = *param_2;
-            ppVar4->origin[1] = param_2[1];
-            ppVar4->origin[2] = param_2[2];
-            ppVar4->velocity[0] = *param_3;
-            ppVar4->velocity[1] = param_3[1];
-            ppVar4->velocity[2] = param_3[2];
-            iVar9 = __restgprlr_26(0);
-            return iVar9;
-          }
+        fVar5 = 1.0 / fVar5;
+        dVar12 = (double)(fVar2 * fVar5);
+        dVar11 = (double)(fVar1 * fVar5);
+        dVar10 = (double)(fVar3 * fVar5);
+        if ((0.0 < fVar6) &&
+           (YawVectors(ppVar4->proneDirection,(float *)0x0,&local_60),
+           -0.5 < (float)((double)local_58 * dVar10 +
+                         (double)(float)((double)local_5c * dVar11 +
+                                        (double)(float)((double)local_60 * dVar12))))) {
+          *pfVar9 = *param_2;
+          ppVar4->origin[1] = param_2[1];
+          ppVar4->origin[2] = param_2[2];
+          ppVar4->velocity[0] = *param_3;
+          ppVar4->velocity[1] = param_3[1];
+          ppVar4->velocity[2] = param_3[2];
+          return 0;
         }
       }
       else {
-        *pfVar11 = *param_2;
+        *pfVar9 = *param_2;
         ppVar4->origin[1] = param_2[1];
         ppVar4->origin[2] = param_2[2];
         ppVar4->velocity[0] = *param_3;
         ppVar4->velocity[1] = param_3[1];
         ppVar4->velocity[2] = param_3[2];
       }
-      iVar9 = __restgprlr_26(0);
-      return iVar9;
+      return 0;
     }
   }
-  iVar9 = __restgprlr_26(1);
-  return iVar9;
+  return 1;
 }
 
 
 // 82283038  PM_PermuteRestrictiveClipPlanes  (bgame/bg_slidemove.cpp:95)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 float PM_PermuteRestrictiveClipPlanes(float *param_1,int param_2,float (*param_3) [3],int *param_4)
 
 {
-  int iVar1;
-  float *pfVar2;
-  float fVar3;
+  float fVar1;
+  int *piVar2;
+  int *piVar3;
   float *pfVar4;
-  longlong lVar5;
-  ulonglong uVar6;
-  ulonglong uVar7;
-  float *pfVar8;
-  longlong lVar9;
-  longlong lVar10;
-  int iVar11;
-  int iVar12;
-  double dVar13;
+  float *pfVar5;
+  int *piVar6;
+  int iVar7;
+  int iVar8;
   float local_60 [24];
   
-  uVar7 = (ulonglong)(int)param_4;
-  uVar6 = (ulonglong)(int)param_3;
-  pfVar4 = (float *)__savegprlr_26(param_1);
-  if (pfVar4 == (float *)0x0) {
+  if (param_1 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_slidemove.cpp",100,0,
                     "%s");
   }
@@ -122,48 +112,51 @@ float PM_PermuteRestrictiveClipPlanes(float *param_1,int param_2,float (*param_3
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_slidemove.cpp",0x65,0
                     ,"%s\n\t(planeCount) = %i");
   }
-  if ((uVar6 & 0xffffffff) == 0) {
+  if (param_3 == (float (*) [3])0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_slidemove.cpp",0x66,0
                     ,"%s");
   }
-  if ((uVar7 & 0xffffffff) == 0) {
+  if (param_4 == (int *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_slidemove.cpp",0x67,0
                     ,"%s");
   }
-  iVar12 = 0;
+  iVar8 = 0;
   if (0 < param_2) {
-    pfVar8 = local_60;
-    lVar5 = uVar7 - 4;
-    lVar9 = uVar6 + 8;
+    pfVar4 = local_60;
+    piVar3 = param_4 + -1;
+    pfVar5 = *param_3 + 2;
     do {
-      pfVar2 = (float *)lVar9;
-      fVar3 = *pfVar2 * pfVar4[2] + pfVar4[1] * pfVar2[-1] + pfVar2[-2] * *pfVar4;
-      *pfVar8 = fVar3;
-      iVar11 = iVar12;
-      if (iVar12 != 0) {
-        lVar10 = lVar5 + 8;
+      fVar1 = *pfVar5 * param_1[2] +
+              param_1[1] * pfVar5[-1] + (*(float (*) [3])(pfVar5 + -2))[0] * *param_1;
+      *pfVar4 = fVar1;
+      iVar7 = iVar8;
+      if (iVar8 != 0) {
+        piVar6 = piVar3 + 2;
         do {
-          iVar1 = *(int *)((int)lVar10 + -8);
-          if (local_60[iVar1] < fVar3) break;
-          iVar11 = iVar11 + -1;
-          lVar10 = lVar10 + -4;
-          *(int *)lVar10 = iVar1;
-        } while (iVar11 != 0);
+          piVar2 = piVar6 + -2;
+          if (local_60[*piVar2] < fVar1) break;
+          iVar7 = iVar7 + -1;
+          piVar6 = piVar6 + -1;
+          *piVar6 = *piVar2;
+        } while (iVar7 != 0);
       }
-      lVar9 = lVar9 + 0xc;
-      pfVar8 = pfVar8 + 1;
-      lVar5 = lVar5 + 4;
-      ((int *)uVar7)[iVar11] = iVar12;
-      iVar12 = iVar12 + 1;
-    } while (iVar12 < param_2);
+      pfVar5 = pfVar5 + 3;
+      pfVar4 = pfVar4 + 1;
+      piVar3 = piVar3 + 1;
+      param_4[iVar7] = iVar8;
+      iVar8 = iVar8 + 1;
+    } while (iVar8 < param_2);
   }
-  dVar13 = (double)__restgprlr_26((double)local_60[*(int *)uVar7]);
-  return (float)dVar13;
+  return local_60[*param_4];
 }
 
 
 // 822831B0  PM_SlideMove  (bgame/bg_slidemove.cpp:140)
 
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
 int PM_SlideMove(pmove_t *param_1,pml_t *param_2,int param_3)
@@ -175,20 +168,20 @@ int PM_SlideMove(pmove_t *param_1,pml_t *param_2,int param_3)
   int iVar4;
   float fVar5;
   uint uVar6;
-  pmove_t *ppVar7;
-  ushort uVar9;
+  ushort uVar7;
   int iVar8;
-  int iVar10;
-  int *piVar11;
-  longlong lVar12;
-  float *pfVar13;
-  float *pfVar14;
-  int *piVar15;
+  int *piVar9;
+  longlong lVar10;
+  float *pfVar11;
+  float *pfVar12;
+  int *piVar13;
+  int iVar14;
+  float *pfVar15;
   int iVar16;
   float *pfVar17;
-  float *pfVar18;
-  int iVar19;
-  float *pfVar20;
+  int iVar18;
+  float *pfVar19;
+  double dVar20;
   double dVar21;
   double dVar22;
   double dVar23;
@@ -198,8 +191,7 @@ int PM_SlideMove(pmove_t *param_1,pml_t *param_2,int param_3)
   double dVar27;
   double dVar28;
   double dVar29;
-  double dVar30;
-  float fVar31;
+  float fVar30;
   float local_220;
   float local_21c;
   float local_218;
@@ -220,194 +212,188 @@ int PM_SlideMove(pmove_t *param_1,pml_t *param_2,int param_3)
   float afStack_174 [25];
   trace_t atStack_110 [5];
   
-  __savegprlr();
-  ppVar7 = (pmove_t *)__savefpr_24();
-  ppVar3 = ppVar7->ps;
+  ppVar3 = param_1->ps;
   if (ppVar3 == (playerState_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_slidemove.cpp",0xa3,0
                     ,"%s");
   }
   local_210 = ppVar3->velocity[0];
-  dVar24 = (double)local_210;
-  pfVar18 = ppVar3->velocity;
-  dVar23 = (double)ppVar3->velocity[1];
-  dVar25 = (double)ppVar3->velocity[2];
+  dVar23 = (double)local_210;
+  pfVar17 = ppVar3->velocity;
+  dVar22 = (double)ppVar3->velocity[1];
+  dVar24 = (double)ppVar3->velocity[2];
   local_20c = ppVar3->velocity[1];
   local_208 = ppVar3->velocity[2];
   if ((param_3 != 0) && ((ppVar3->pm_flags & 0x800U) == 0)) {
     local_200 = (longlong)ppVar3->gravity;
     local_208 = -((float)local_200 * param_2->frametime - local_208);
     ppVar3->velocity[2] = (ppVar3->velocity[2] + local_208) * 0.5;
-    dVar25 = (double)local_208;
+    dVar24 = (double)local_208;
     if (param_2->groundPlane != 0) {
-      PM_ClipVelocity(pfVar18,(param_2->groundTrace).normal,pfVar18);
+      PM_ClipVelocity(pfVar17,(param_2->groundTrace).normal,pfVar17);
     }
   }
-  dVar26 = (double)param_2->frametime;
+  dVar25 = (double)param_2->frametime;
   bVar1 = param_2->groundPlane != 0;
   if (bVar1) {
     afStack_174[1] = (param_2->groundTrace).normal[0];
     afStack_174[2] = (param_2->groundTrace).normal[1];
     afStack_174[3] = (param_2->groundTrace).normal[2];
   }
-  fVar31 = *pfVar18;
-  iVar8 = bVar1 + 1;
-  dVar30 = 1.0;
+  fVar30 = *pfVar17;
+  iVar16 = bVar1 + 1;
+  dVar29 = 1.0;
   uVar6 = (uint)bVar1;
-  pfVar13 = afStack_174 + iVar8 * 3;
-  dVar28 = 0.0;
-  pfVar14 = ppVar3->origin;
-  lVar12 = 0;
-  dVar27 = 0.9990000128746033;
-  dVar29 = 0.10000000149011612;
-  dVar22 = (double)SQRT(fVar31 * fVar31 +
+  pfVar11 = afStack_174 + iVar16 * 3;
+  dVar27 = 0.0;
+  pfVar12 = ppVar3->origin;
+  lVar10 = 0;
+  dVar26 = 0.9990000128746033;
+  dVar28 = 0.10000000149011612;
+  dVar21 = (double)SQRT(fVar30 * fVar30 +
                         ppVar3->velocity[1] * ppVar3->velocity[1] +
                         ppVar3->velocity[2] * ppVar3->velocity[2]);
-  dVar21 = dVar30;
-  if (-dVar22 < 0.0) {
-    dVar21 = dVar22;
+  dVar20 = dVar29;
+  if (-dVar21 < 0.0) {
+    dVar20 = dVar21;
   }
-  fVar2 = (float)(1.0 / dVar21);
-  afStack_174[uVar6 * 3 + 1] = fVar2 * fVar31;
+  fVar2 = (float)(1.0 / dVar20);
+  afStack_174[uVar6 * 3 + 1] = fVar2 * fVar30;
   afStack_174[uVar6 * 3 + 2] = ppVar3->velocity[1] * fVar2;
   afStack_174[uVar6 * 3 + 3] = ppVar3->velocity[2] * fVar2;
   do {
-    local_1e0 = (float)((double)*pfVar18 * dVar26 + (double)*pfVar14);
-    local_1dc = (float)((double)ppVar3->velocity[1] * dVar26 + (double)ppVar3->origin[1]);
-    local_1d8 = (float)((double)ppVar3->velocity[2] * dVar26 + (double)ppVar3->origin[2]);
-    PM_playerTrace(ppVar7,&local_1d0,pfVar14,&local_1e0,&ppVar7->bounds,ppVar3->clientNum,
-                   ppVar7->tracemask);
+    local_1e0 = (float)((double)*pfVar17 * dVar25 + (double)*pfVar12);
+    local_1dc = (float)((double)ppVar3->velocity[1] * dVar25 + (double)ppVar3->origin[1]);
+    local_1d8 = (float)((double)ppVar3->velocity[2] * dVar25 + (double)ppVar3->origin[2]);
+    PM_playerTrace(param_1,&local_1d0,pfVar12,&local_1e0,&param_1->bounds,ppVar3->clientNum,
+                   param_1->tracemask);
     if (local_1d0.allsolid != false) {
-      ppVar3->velocity[2] = (float)dVar28;
-      iVar8 = __restfpr_24(1);
-      __restgprlr();
-      return iVar8;
+      ppVar3->velocity[2] = (float)dVar27;
+      return 1;
     }
-    dVar21 = (double)local_1d0.fraction;
-    if (dVar28 < dVar21) {
-      *pfVar14 = (float)((double)(float)((double)local_1e0 - (double)*pfVar14) * dVar21 +
-                        (double)*pfVar14);
+    dVar20 = (double)local_1d0.fraction;
+    if (dVar27 < dVar20) {
+      *pfVar12 = (float)((double)(float)((double)local_1e0 - (double)*pfVar12) * dVar20 +
+                        (double)*pfVar12);
       ppVar3->origin[1] =
-           (float)((double)(float)((double)local_1dc - (double)ppVar3->origin[1]) * dVar21 +
+           (float)((double)(float)((double)local_1dc - (double)ppVar3->origin[1]) * dVar20 +
                   (double)ppVar3->origin[1]);
       ppVar3->origin[2] =
-           (float)((double)(float)((double)local_1d8 - (double)ppVar3->origin[2]) * dVar21 +
+           (float)((double)(float)((double)local_1d8 - (double)ppVar3->origin[2]) * dVar20 +
                   (double)ppVar3->origin[2]);
     }
     if (((bg_checkPlayerOutsideSolid->current).enabled != false) &&
-       (G_TraceCapsule(atStack_110,pfVar14,pfVar14,&ppVar7->bounds,ppVar3->clientNum,
-                       ppVar7->tracemask), atStack_110[0].startsolid != false)) {
+       (G_TraceCapsule(atStack_110,pfVar12,pfVar12,&param_1->bounds,ppVar3->clientNum,
+                       param_1->tracemask), atStack_110[0].startsolid != false)) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_slidemove.cpp",0xef
                       ,0,"%s");
     }
-    if ((double)local_1d0.fraction == dVar30) break;
-    uVar9 = Trace_GetEntityHitId(&local_1d0);
-    PM_AddTouchEnt(ppVar7,(uint)uVar9);
-    dVar26 = -(double)(float)((double)local_1d0.fraction * dVar26 - dVar26);
-    if (7 < iVar8) {
+    if ((double)local_1d0.fraction == dVar29) break;
+    uVar7 = Trace_GetEntityHitId(&local_1d0);
+    PM_AddTouchEnt(param_1,(uint)uVar7);
+    dVar25 = -(double)(float)((double)local_1d0.fraction * dVar25 - dVar25);
+    if (7 < iVar16) {
 LAB_82283820:
-      *pfVar18 = (float)dVar28;
-      ppVar3->velocity[1] = (float)dVar28;
-      ppVar3->velocity[2] = (float)dVar28;
-      iVar8 = __restfpr_24(1);
-      __restgprlr();
-      return iVar8;
+      *pfVar17 = (float)dVar27;
+      ppVar3->velocity[1] = (float)dVar27;
+      ppVar3->velocity[2] = (float)dVar27;
+      return 1;
     }
-    iVar19 = 0;
-    if (0 < iVar8) {
-      pfVar17 = afStack_174;
+    iVar18 = 0;
+    if (0 < iVar16) {
+      pfVar15 = afStack_174;
       do {
-        pfVar17 = pfVar17 + 3;
-        if (dVar27 < (double)(*pfVar17 * local_1d0.normal[2] +
-                             pfVar17[-2] * local_1d0.normal[0] + pfVar17[-1] * local_1d0.normal[1]))
+        pfVar15 = pfVar15 + 3;
+        if (dVar26 < (double)(*pfVar15 * local_1d0.normal[2] +
+                             pfVar15[-2] * local_1d0.normal[0] + pfVar15[-1] * local_1d0.normal[1]))
         {
-          PM_ClipVelocity(pfVar18,local_1d0.normal,pfVar18);
-          *pfVar18 = *pfVar18 + local_1d0.normal[0];
+          PM_ClipVelocity(pfVar17,local_1d0.normal,pfVar17);
+          *pfVar17 = *pfVar17 + local_1d0.normal[0];
           ppVar3->velocity[1] = ppVar3->velocity[1] + local_1d0.normal[1];
           ppVar3->velocity[2] = local_1d0.normal[2] + ppVar3->velocity[2];
-          if (iVar19 < iVar8) goto LAB_822837ac;
+          if (iVar18 < iVar16) goto LAB_822837ac;
           break;
         }
-        iVar19 = iVar19 + 1;
-      } while (iVar19 < iVar8);
+        iVar18 = iVar18 + 1;
+      } while (iVar18 < iVar16);
     }
-    pfVar13[1] = local_1d0.normal[0];
-    iVar8 = iVar8 + 1;
-    pfVar13[2] = local_1d0.normal[1];
-    pfVar13 = pfVar13 + 3;
-    *pfVar13 = local_1d0.normal[2];
-    fVar31 = PM_PermuteRestrictiveClipPlanes
-                       (pfVar18,iVar8,(float (*) [3])(afStack_174 + 1),&local_190);
-    iVar19 = local_190;
-    if ((double)fVar31 < dVar29) {
-      dVar21 = -(double)fVar31;
-      if ((double)param_2->impactSpeed < dVar21) {
-        param_2->impactSpeed = (float)dVar21;
+    pfVar11[1] = local_1d0.normal[0];
+    iVar16 = iVar16 + 1;
+    pfVar11[2] = local_1d0.normal[1];
+    pfVar11 = pfVar11 + 3;
+    *pfVar11 = local_1d0.normal[2];
+    fVar30 = PM_PermuteRestrictiveClipPlanes
+                       (pfVar17,iVar16,(float (*) [3])(afStack_174 + 1),&local_190);
+    iVar18 = local_190;
+    if ((double)fVar30 < dVar28) {
+      dVar20 = -(double)fVar30;
+      if ((double)param_2->impactSpeed < dVar20) {
+        param_2->impactSpeed = (float)dVar20;
       }
-      pfVar17 = afStack_174 + local_190 * 3 + 1;
-      PM_ClipVelocity(pfVar18,pfVar17,&local_220);
-      PM_ClipVelocity(&local_210,pfVar17,&local_1f0);
-      iVar16 = 1;
-      fVar31 = local_220;
-      if (1 < iVar8) {
-        piVar15 = local_18c;
+      pfVar15 = afStack_174 + local_190 * 3 + 1;
+      PM_ClipVelocity(pfVar17,pfVar15,&local_220);
+      PM_ClipVelocity(&local_210,pfVar15,&local_1f0);
+      iVar14 = 1;
+      fVar30 = local_220;
+      if (1 < iVar16) {
+        piVar13 = local_18c;
         fVar2 = local_218;
         fVar5 = local_21c;
         do {
-          iVar10 = *piVar15;
-          pfVar20 = afStack_174 + iVar10 * 3 + 1;
-          if ((double)(afStack_174[iVar10 * 3 + 3] * fVar2 +
-                      afStack_174[iVar10 * 3 + 2] * fVar5 + fVar31 * afStack_174[iVar10 * 3 + 1]) <
-              dVar29) {
-            PM_ClipVelocity(&local_220,pfVar20,&local_220);
-            PM_ClipVelocity(&local_1f0,pfVar20,&local_1f0);
-            fVar31 = local_220;
+          iVar8 = *piVar13;
+          pfVar19 = afStack_174 + iVar8 * 3 + 1;
+          if ((double)(afStack_174[iVar8 * 3 + 3] * fVar2 +
+                      afStack_174[iVar8 * 3 + 2] * fVar5 + fVar30 * afStack_174[iVar8 * 3 + 1]) <
+              dVar28) {
+            PM_ClipVelocity(&local_220,pfVar19,&local_220);
+            PM_ClipVelocity(&local_1f0,pfVar19,&local_1f0);
+            fVar30 = local_220;
             fVar2 = local_218;
             fVar5 = local_21c;
-            if ((double)(afStack_174[iVar19 * 3 + 3] * local_218 +
-                        afStack_174[iVar19 * 3 + 2] * local_21c + local_220 * *pfVar17) < dVar28) {
-              Vec3Cross(pfVar17,pfVar20,(float *)&local_200);
-              iVar10 = 1;
-              piVar11 = local_18c;
-              dVar22 = (double)SQRT(local_200._0_4_ * local_200._0_4_ +
+            if ((double)(afStack_174[iVar18 * 3 + 3] * local_218 +
+                        afStack_174[iVar18 * 3 + 2] * local_21c + local_220 * *pfVar15) < dVar27) {
+              Vec3Cross(pfVar15,pfVar19,(float *)&local_200);
+              iVar8 = 1;
+              piVar9 = local_18c;
+              dVar21 = (double)SQRT(local_200._0_4_ * local_200._0_4_ +
                                     local_1f8 * local_1f8 + local_200._4_4_ * local_200._4_4_);
-              dVar21 = dVar30;
-              if (-dVar22 < 0.0) {
-                dVar21 = dVar22;
+              dVar20 = dVar29;
+              if (-dVar21 < 0.0) {
+                dVar20 = dVar21;
               }
-              fVar31 = (float)(dVar30 / dVar21);
-              local_200._0_4_ = local_200._0_4_ * fVar31;
-              local_200._4_4_ = local_200._4_4_ * fVar31;
-              local_1f8 = local_1f8 * fVar31;
+              fVar30 = (float)(dVar29 / dVar20);
+              local_200._0_4_ = local_200._0_4_ * fVar30;
+              local_200._4_4_ = local_200._4_4_ * fVar30;
+              local_1f8 = local_1f8 * fVar30;
               fVar2 = local_1f8 * ppVar3->velocity[2] +
-                      ppVar3->velocity[1] * local_200._4_4_ + *pfVar18 * local_200._0_4_;
+                      ppVar3->velocity[1] * local_200._4_4_ + *pfVar17 * local_200._0_4_;
               local_1e8 = local_1f8 * local_208 +
                           local_200._4_4_ * local_20c + local_200._0_4_ * local_210;
-              fVar31 = local_200._0_4_ * fVar2;
+              fVar30 = local_200._0_4_ * fVar2;
               fVar5 = local_200._4_4_ * fVar2;
               fVar2 = local_1f8 * fVar2;
               local_1f0 = local_200._0_4_ * local_1e8;
               local_1ec = local_200._4_4_ * local_1e8;
               local_1e8 = local_1f8 * local_1e8;
               do {
-                local_220 = fVar31;
+                if ((iVar8 != iVar14) &&
+                   (iVar4 = *piVar9,
+                   (double)(afStack_174[iVar4 * 3 + 3] * fVar2 +
+                           afStack_174[iVar4 * 3 + 2] * fVar5 + fVar30 * afStack_174[iVar4 * 3 + 1])
+                   < dVar28)) goto LAB_82283820;
+                iVar8 = iVar8 + 1;
+                piVar9 = piVar9 + 1;
+                local_220 = fVar30;
                 local_21c = fVar5;
                 local_218 = fVar2;
-                if ((iVar10 != iVar16) &&
-                   (iVar4 = *piVar11,
-                   (double)(afStack_174[iVar4 * 3 + 3] * fVar2 +
-                           afStack_174[iVar4 * 3 + 2] * fVar5 + fVar31 * afStack_174[iVar4 * 3 + 1])
-                   < dVar29)) goto LAB_82283820;
-                iVar10 = iVar10 + 1;
-                piVar11 = piVar11 + 1;
-              } while (iVar10 < iVar8);
+              } while (iVar8 < iVar16);
             }
           }
-          iVar16 = iVar16 + 1;
-          piVar15 = piVar15 + 1;
-        } while (iVar16 < iVar8);
+          iVar14 = iVar14 + 1;
+          piVar13 = piVar13 + 1;
+        } while (iVar14 < iVar16);
       }
-      *pfVar18 = fVar31;
+      *pfVar17 = fVar30;
       ppVar3->velocity[1] = local_21c;
       ppVar3->velocity[2] = local_218;
       local_210 = local_1f0;
@@ -415,26 +401,28 @@ LAB_82283820:
       local_208 = local_1e8;
     }
 LAB_822837ac:
-    lVar12 = lVar12 + 1;
-  } while ((int)lVar12 < 4);
+    lVar10 = lVar10 + 1;
+  } while ((int)lVar10 < 4);
   if (param_3 != 0) {
-    *pfVar18 = local_210;
+    *pfVar17 = local_210;
     ppVar3->velocity[1] = local_20c;
     ppVar3->velocity[2] = local_208;
   }
   if (ppVar3->pm_time != 0) {
-    *pfVar18 = (float)dVar24;
-    ppVar3->velocity[1] = (float)dVar23;
-    ppVar3->velocity[2] = (float)dVar25;
+    *pfVar17 = (float)dVar23;
+    ppVar3->velocity[1] = (float)dVar22;
+    ppVar3->velocity[2] = (float)dVar24;
   }
-  iVar8 = __restfpr_24(lVar12 != 0);
-  __restgprlr();
-  return iVar8;
+  return (uint)(lVar10 != 0);
 }
 
 
 // 82283840  PM_StepSlideMove  (bgame/bg_slidemove.cpp:364)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_21 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_21 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
 void PM_StepSlideMove(pmove_t *param_1,pml_t *param_2,int param_3)
@@ -446,13 +434,13 @@ void PM_StepSlideMove(pmove_t *param_1,pml_t *param_2,int param_3)
   float fVar4;
   bool bVar5;
   bool bVar6;
-  pmove_t *ppVar7;
-  int iVar8;
-  bool bVar10;
-  ushort uVar9;
+  int iVar7;
+  bool bVar9;
+  ushort uVar8;
+  float *pfVar10;
   float *pfVar11;
-  float *pfVar12;
-  uint uVar13;
+  uint uVar12;
+  double dVar13;
   double dVar14;
   double dVar15;
   double dVar16;
@@ -464,7 +452,6 @@ void PM_StepSlideMove(pmove_t *param_1,pml_t *param_2,int param_3)
   double dVar22;
   double dVar23;
   double dVar24;
-  double dVar25;
   float local_140 [2];
   longlong local_138;
   longlong local_130;
@@ -483,15 +470,13 @@ void PM_StepSlideMove(pmove_t *param_1,pml_t *param_2,int param_3)
   float local_e8;
   trace_t local_e0 [4];
   
-  __savegprlr_23(param_1);
-  ppVar7 = (pmove_t *)__savefpr_21();
-  dVar23 = 0.0;
-  dVar14 = dVar23;
-  if (ppVar7 == (pmove_t *)0x0) {
+  dVar22 = 0.0;
+  dVar13 = dVar22;
+  if (param_1 == (pmove_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_slidemove.cpp",0x180,
                     0,"%s");
   }
-  ppVar3 = ppVar7->ps;
+  ppVar3 = param_1->ps;
   if (ppVar3 == (playerState_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_slidemove.cpp",0x182,
                     0,"%s");
@@ -513,105 +498,109 @@ LAB_82283914:
   }
   local_100 = ppVar3->origin[0];
   local_fc = ppVar3->origin[1];
-  pfVar12 = ppVar3->origin;
+  pfVar11 = ppVar3->origin;
   local_f8 = ppVar3->origin[2];
-  pfVar11 = ppVar3->velocity;
+  pfVar10 = ppVar3->velocity;
   local_128 = ppVar3->velocity[2];
-  dVar24 = (double)local_128;
-  dVar17 = (double)ppVar3->velocity[0];
+  dVar23 = (double)local_128;
+  dVar16 = (double)ppVar3->velocity[0];
   local_130 = *(longlong *)ppVar3->velocity;
-  dVar16 = (double)ppVar3->velocity[1];
-  iVar8 = PM_SlideMove(ppVar7,param_2,param_3);
+  dVar15 = (double)ppVar3->velocity[1];
+  iVar7 = PM_SlideMove(param_1,param_2,param_3);
   if ((ppVar3->pm_flags & 1U) == 0) {
     local_140[0] = 18.0;
   }
   else {
     local_140[0] = 10.0;
   }
-  dVar15 = 1.0;
+  dVar14 = 1.0;
   if (ppVar3->groundEntityNum == 0x7ff) {
     if (((ppVar3->pm_flags & 0x2000U) != 0) && (ppVar3->pm_time != 0)) {
       Jump_ClearState(ppVar3);
     }
-    if (((iVar8 == 0) || ((ppVar3->pm_flags & 0x2000U) == 0)) ||
-       (bVar10 = Jump_GetStepHeight(ppVar3,&local_100,local_140), !bVar10)) {
-      if (((ppVar3->pm_flags & 8U) == 0) || ((double)ppVar3->velocity[2] <= dVar23))
-      goto LAB_82283f8c;
+    if (((iVar7 == 0) || ((ppVar3->pm_flags & 0x2000U) == 0)) ||
+       (bVar9 = Jump_GetStepHeight(ppVar3,&local_100,local_140), !bVar9)) {
+      if ((ppVar3->pm_flags & 8U) == 0) {
+        return;
+      }
+      if ((double)ppVar3->velocity[2] <= dVar22) {
+        return;
+      }
     }
     else {
-      if ((double)local_140[0] < dVar15) goto LAB_82283f8c;
+      if ((double)local_140[0] < dVar14) {
+        return;
+      }
       bVar6 = true;
     }
   }
-  local_120 = *pfVar12;
+  local_120 = *pfVar11;
   local_11c = ppVar3->origin[1];
   local_118 = ppVar3->origin[2];
-  dVar22 = (double)(local_120 - local_100);
-  dVar19 = (double)ppVar3->velocity[1];
-  dVar21 = (double)(local_11c - local_fc);
-  dVar18 = (double)ppVar3->velocity[2];
-  dVar20 = (double)*pfVar11;
-  if ((iVar8 != 0) || ((param_2->groundPlane != 0 && ((param_2->groundTrace).normal[2] < 0.9)))) {
+  dVar21 = (double)(local_120 - local_100);
+  dVar18 = (double)ppVar3->velocity[1];
+  dVar20 = (double)(local_11c - local_fc);
+  dVar17 = (double)ppVar3->velocity[2];
+  dVar19 = (double)*pfVar10;
+  if ((iVar7 != 0) || ((param_2->groundPlane != 0 && ((param_2->groundTrace).normal[2] < 0.9)))) {
     local_ec = local_fc;
     local_f0 = local_100;
-    local_e8 = (float)((double)(local_f8 + local_140[0]) + dVar15);
-    PM_playerTrace(ppVar7,local_e0,&local_100,&local_f0,&ppVar7->bounds,ppVar3->clientNum,
-                   ppVar7->tracemask);
-    dVar25 = (double)(float)((double)(float)((double)local_140[0] + dVar15) *
-                             (double)local_e0[0].fraction - dVar15);
-    dVar14 = dVar23;
-    if (dVar15 <= dVar25) {
-      *pfVar12 = local_f0;
+    local_e8 = (float)((double)(local_f8 + local_140[0]) + dVar14);
+    PM_playerTrace(param_1,local_e0,&local_100,&local_f0,&param_1->bounds,ppVar3->clientNum,
+                   param_1->tracemask);
+    dVar24 = (double)(float)((double)(float)((double)local_140[0] + dVar14) *
+                             (double)local_e0[0].fraction - dVar14);
+    dVar13 = dVar22;
+    if (dVar14 <= dVar24) {
+      *pfVar11 = local_f0;
       ppVar3->origin[1] = local_ec;
-      ppVar3->origin[2] = (float)((double)local_f8 + dVar25);
-      *pfVar11 = (float)dVar17;
-      ppVar3->velocity[1] = (float)dVar16;
-      ppVar3->velocity[2] = (float)dVar24;
-      PM_SlideMove(ppVar7,param_2,param_3);
-      dVar14 = dVar25;
+      ppVar3->origin[2] = (float)((double)local_f8 + dVar24);
+      *pfVar10 = (float)dVar16;
+      ppVar3->velocity[1] = (float)dVar15;
+      ppVar3->velocity[2] = (float)dVar23;
+      PM_SlideMove(param_1,param_2,param_3);
+      dVar13 = dVar24;
     }
   }
-  dVar24 = 9.0;
-  if ((bVar5) || (dVar14 != dVar23)) {
-    local_110 = *pfVar12;
+  dVar23 = 9.0;
+  if ((bVar5) || (dVar13 != dVar22)) {
+    local_110 = *pfVar11;
     local_10c = ppVar3->origin[1];
-    local_108 = (float)((double)ppVar3->origin[2] - dVar14);
+    local_108 = (float)((double)ppVar3->origin[2] - dVar13);
     if (bVar5) {
       local_108 = local_108 - 9.0;
     }
-    PM_playerTrace(ppVar7,local_e0,pfVar12,&local_110,&ppVar7->bounds,ppVar3->clientNum,
-                   ppVar7->tracemask);
-    uVar9 = Trace_GetEntityHitId(local_e0);
-    if (uVar9 < 0x12) {
+    PM_playerTrace(param_1,local_e0,pfVar11,&local_110,&param_1->bounds,ppVar3->clientNum,
+                   param_1->tracemask);
+    uVar8 = Trace_GetEntityHitId(local_e0);
+    if (uVar8 < 0x12) {
 LAB_82283b94:
-      *pfVar12 = local_120;
+      *pfVar11 = local_120;
       ppVar3->origin[1] = local_11c;
       ppVar3->origin[2] = local_118;
-      *pfVar11 = (float)dVar20;
-      ppVar3->velocity[1] = (float)dVar19;
-      ppVar3->velocity[2] = (float)dVar18;
-      __restfpr_21();
-      __restgprlr_23();
+      *pfVar10 = (float)dVar19;
+      ppVar3->velocity[1] = (float)dVar18;
+      ppVar3->velocity[2] = (float)dVar17;
       return;
     }
-    dVar25 = (double)local_e0[0].fraction;
-    if (dVar15 <= dVar25) {
-      if (dVar14 != dVar23) {
-        ppVar3->origin[2] = (float)((double)ppVar3->origin[2] - dVar14);
+    dVar24 = (double)local_e0[0].fraction;
+    if (dVar14 <= dVar24) {
+      if (dVar13 != dVar22) {
+        ppVar3->origin[2] = (float)((double)ppVar3->origin[2] - dVar13);
       }
     }
     else {
       if ((local_e0[0].walkable == false) && ((bVar6 || (local_e0[0].normal[2] < 0.3))))
       goto LAB_82283b94;
-      *pfVar12 = (float)((double)(float)((double)local_110 - (double)*pfVar12) * dVar25 +
-                        (double)*pfVar12);
+      *pfVar11 = (float)((double)(float)((double)local_110 - (double)*pfVar11) * dVar24 +
+                        (double)*pfVar11);
       ppVar3->origin[1] =
-           (float)((double)(float)((double)local_10c - (double)ppVar3->origin[1]) * dVar25 +
+           (float)((double)(float)((double)local_10c - (double)ppVar3->origin[1]) * dVar24 +
                   (double)ppVar3->origin[1]);
       ppVar3->origin[2] =
-           (float)((double)(float)((double)local_108 - (double)ppVar3->origin[2]) * dVar25 +
+           (float)((double)(float)((double)local_108 - (double)ppVar3->origin[2]) * dVar24 +
                   (double)ppVar3->origin[2]);
-      if (dVar14 != dVar23) {
+      if (dVar13 != dVar22) {
         fVar1 = local_118;
         if (local_118 - local_f8 < 0.0) {
           fVar1 = local_f8;
@@ -619,88 +608,85 @@ LAB_82283b94:
         if (local_e0[0].normal[2] * local_140[0] * 2.0 < ppVar3->origin[2] - fVar1)
         goto LAB_82283b94;
       }
-      PM_ProjectVelocity(pfVar11,local_e0[0].normal,pfVar11);
+      PM_ProjectVelocity(pfVar10,local_e0[0].normal,pfVar10);
     }
   }
-  if ((float)((double)(ppVar3->origin[1] - local_fc) * dVar16 +
-             (double)(float)((double)(*pfVar12 - local_100) * dVar17)) <=
-      (float)(dVar21 * dVar16 + (double)(float)(dVar22 * dVar17)) + 0.001) {
+  if ((float)((double)(ppVar3->origin[1] - local_fc) * dVar15 +
+             (double)(float)((double)(*pfVar11 - local_100) * dVar16)) <=
+      (float)(dVar20 * dVar15 + (double)(float)(dVar21 * dVar16)) + 0.001) {
 LAB_82283cfc:
-    *pfVar12 = local_120;
+    *pfVar11 = local_120;
     ppVar3->origin[1] = local_11c;
     ppVar3->origin[2] = local_118;
-    *pfVar11 = (float)dVar20;
-    ppVar3->velocity[1] = (float)dVar19;
-    ppVar3->velocity[2] = (float)dVar18;
+    *pfVar10 = (float)dVar19;
+    ppVar3->velocity[1] = (float)dVar18;
+    ppVar3->velocity[2] = (float)dVar17;
     if (bVar5) {
-      local_110 = *pfVar12;
+      local_110 = *pfVar11;
       local_10c = ppVar3->origin[1];
-      local_108 = (float)((double)ppVar3->origin[2] - dVar24);
-      PM_playerTrace(ppVar7,local_e0,pfVar12,&local_110,&ppVar7->bounds,ppVar3->clientNum,
-                     ppVar7->tracemask);
-      dVar14 = (double)local_e0[0].fraction;
-      if (dVar14 < dVar15) {
+      local_108 = (float)((double)ppVar3->origin[2] - dVar23);
+      PM_playerTrace(param_1,local_e0,pfVar11,&local_110,&param_1->bounds,ppVar3->clientNum,
+                     param_1->tracemask);
+      dVar13 = (double)local_e0[0].fraction;
+      if (dVar13 < dVar14) {
         fVar1 = ppVar3->origin[1];
         fVar2 = ppVar3->origin[2];
-        *pfVar12 = (float)((double)(float)((double)local_110 - (double)*pfVar12) * dVar14 +
-                          (double)*pfVar12);
+        *pfVar11 = (float)((double)(float)((double)local_110 - (double)*pfVar11) * dVar13 +
+                          (double)*pfVar11);
         ppVar3->origin[1] =
-             (float)((double)(float)((double)local_10c - (double)fVar1) * dVar14 + (double)fVar1);
+             (float)((double)(float)((double)local_10c - (double)fVar1) * dVar13 + (double)fVar1);
         ppVar3->origin[2] =
-             (float)((double)(float)((double)local_108 - (double)fVar2) * dVar14 + (double)fVar2);
-        PM_ClipVelocity(pfVar11,local_e0[0].normal,pfVar11);
+             (float)((double)(float)((double)local_108 - (double)fVar2) * dVar13 + (double)fVar2);
+        PM_ClipVelocity(pfVar10,local_e0[0].normal,pfVar10);
       }
     }
-LAB_82283dbc:
-    if (bVar6) {
-      Jump_ClampVelocity(ppVar3,&local_120);
-    }
   }
-  else if (bVar6) {
-    bVar10 = Jump_IsPlayerAboveMax(ppVar3);
-    if (bVar10) goto LAB_82283cfc;
-    goto LAB_82283dbc;
+  else {
+    if (!bVar6) goto LAB_82283dd0;
+    bVar9 = Jump_IsPlayerAboveMax(ppVar3);
+    if (bVar9) goto LAB_82283cfc;
   }
+  if (bVar6) {
+    Jump_ClampVelocity(ppVar3,&local_120);
+  }
+LAB_82283dd0:
   if ((((bVar5) && (ppVar3->pm_type < 8)) &&
-      (iVar8 = PM_VerifyPronePosition(ppVar7,&local_100,(float *)&local_130), iVar8 != 0)) &&
+      (iVar7 = PM_VerifyPronePosition(param_1,&local_100,(float *)&local_130), iVar7 != 0)) &&
      (fVar1 = ppVar3->origin[2] - local_118, 0.5 < ABS(fVar1))) {
-    dVar14 = floor((double)(fVar1 + 0.5));
-    uVar13 = (uint)dVar14;
-    local_138 = (longlong)(int)uVar13;
-    if (uVar13 != 0) {
-      if (ppVar7->viewChangeTime < ppVar3->commandTime) {
-        ppVar7->viewChange = (ppVar3->origin[2] - local_118) + ppVar7->viewChange;
-        ppVar7->viewChangeTime = ppVar3->commandTime;
+    dVar13 = floor((double)(fVar1 + 0.5));
+    uVar12 = (uint)dVar13;
+    local_138 = (longlong)(int)uVar12;
+    if (uVar12 != 0) {
+      if (param_1->viewChangeTime < ppVar3->commandTime) {
+        param_1->viewChange = (ppVar3->origin[2] - local_118) + param_1->viewChange;
+        param_1->viewChangeTime = ppVar3->commandTime;
       }
-      uVar13 = (uVar13 ^ (int)uVar13 >> 0x1f) - ((int)uVar13 >> 0x1f);
-      fVar4 = (float)(dVar15 - (double)(ABS(ppVar3->origin[2] - local_f8) / local_140[0])) * 0.8 +
+      uVar12 = (uVar12 ^ (int)uVar12 >> 0x1f) - ((int)uVar12 >> 0x1f);
+      fVar4 = (float)(dVar14 - (double)(ABS(ppVar3->origin[2] - local_f8) / local_140[0])) * 0.8 +
               0.19999999;
-      fVar1 = fVar4 * *pfVar11;
-      *pfVar11 = fVar1;
+      fVar1 = fVar4 * *pfVar10;
+      *pfVar10 = fVar1;
       fVar2 = fVar4 * ppVar3->velocity[1];
       ppVar3->velocity[1] = fVar2;
       fVar4 = ppVar3->velocity[2] * fVar4;
       ppVar3->velocity[2] = fVar4;
-      ppVar7->speed = SQRT(fVar4 * fVar4 + fVar1 * fVar1 + fVar2 * fVar2);
-      if (((3 < (int)uVar13) && (ppVar3->groundEntityNum != 0x7ff)) &&
-         (iVar8 = PM_ShouldMakeFootsteps(ppVar7), iVar8 != 0)) {
-        iVar8 = ((int)uVar13 >> 1) + (uint)((int)uVar13 < 0 && (uVar13 & 1) != 0);
-        if (4 < iVar8) {
-          iVar8 = 4;
+      param_1->speed = SQRT(fVar4 * fVar4 + fVar1 * fVar1 + fVar2 * fVar2);
+      if (((3 < (int)uVar12) && (ppVar3->groundEntityNum != 0x7ff)) &&
+         (iVar7 = PM_ShouldMakeFootsteps(param_1), iVar7 != 0)) {
+        iVar7 = ((int)uVar12 >> 1) + (uint)((int)uVar12 < 0 && (uVar12 & 1) != 0);
+        if (4 < iVar7) {
+          iVar7 = 4;
         }
-        local_138 = (longlong)iVar8;
-        iVar8 = ppVar3->bobCycle;
-        uVar13 = (uint)((float)local_138 * 1.25 + 7.0 + (float)(longlong)iVar8);
-        local_130 = (longlong)(int)uVar13;
-        uVar13 = uVar13 & 0xff;
-        ppVar3->bobCycle = uVar13;
-        PM_FootstepEvent(ppVar7,param_2,iVar8,uVar13,1);
+        local_138 = (longlong)iVar7;
+        iVar7 = ppVar3->bobCycle;
+        uVar12 = (uint)((float)local_138 * 1.25 + 7.0 + (float)(longlong)iVar7);
+        local_130 = (longlong)(int)uVar12;
+        uVar12 = uVar12 & 0xff;
+        ppVar3->bobCycle = uVar12;
+        PM_FootstepEvent(param_1,param_2,iVar7,uVar12,1);
       }
     }
   }
-LAB_82283f8c:
-  __restfpr_21();
-  __restgprlr_23();
   return;
 }
 

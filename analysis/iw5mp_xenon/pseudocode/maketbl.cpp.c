@@ -2,179 +2,163 @@
 
 // 828B7EB0  make_table  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/compression/codec/lzx/decoder/maketbl.cpp:28)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
+
 bool XCOMPRESS::make_table
                (t_decoder_context *param_1,int param_2,uchar *param_3,uchar param_4,short *param_5,
                short *param_6)
 
 {
-  uint uVar1;
-  int iVar2;
-  byte *pbVar3;
-  uint uVar4;
+  byte bVar1;
+  byte *pbVar2;
+  uint uVar3;
+  int iVar4;
   uint uVar5;
-  undefined8 uVar6;
-  undefined1 uVar7;
-  ulonglong uVar8;
-  ulonglong uVar9;
-  int iVar10;
-  longlong lVar11;
-  uint uVar12;
-  longlong lVar13;
-  short *psVar14;
-  uint *puVar16;
-  longlong lVar15;
-  longlong lVar17;
-  int iVar19;
-  ulonglong uVar18;
-  ulonglong uVar20;
-  int iVar21;
-  longlong lVar22;
-  ulonglong uVar23;
-  uint auStack_e0 [20];
-  int aiStack_90 [36];
+  int iVar6;
+  uint uVar7;
+  int iVar8;
+  short *psVar9;
+  uint uVar10;
+  uint *puVar12;
+  int iVar13;
+  uint uVar14;
+  ulonglong uVar11;
+  int iVar16;
+  ulonglong uVar15;
+  short *psVar17;
+  longlong lVar18;
+  uint auStack_e0 [17];
+  int local_9c;
+  uint auStack_94 [37];
   
-  lVar13 = (longlong)(int)param_6;
-  lVar11 = (longlong)(int)param_5;
-  uVar9 = (ulonglong)(char)param_4;
-  uVar8 = (ulonglong)param_2;
-  __savegprlr_24(param_1);
-  lVar15 = ZEXT48(&stack0x00000000) - 0x130;
-  iVar2 = (int)lVar15;
-  *(BADSPACEBASE **)iVar2 = register0x0000000c;
-  lVar17 = ZEXT48(&stack0x00000000) - 0x90;
-  lVar22 = 0x10;
+  puVar12 = auStack_94 + 1;
+  lVar18 = 0x10;
   do {
-    lVar17 = lVar17 + 4;
-    *(undefined4 *)lVar17 = 0;
-    lVar22 = lVar22 + -1;
-  } while (lVar22 != 0);
-  iVar19 = 0;
-  uVar23 = uVar8;
-  uVar18 = uVar8 & 0xffffffff;
-  while (uVar18 != 0) {
-    pbVar3 = param_3 + iVar19;
-    iVar19 = iVar19 + 1;
-    aiStack_90[*pbVar3] = aiStack_90[*pbVar3] + 1;
-    uVar23 = uVar23 - 1;
-    uVar18 = uVar23;
+    puVar12 = puVar12 + 1;
+    *puVar12 = 0;
+    lVar18 = lVar18 + -1;
+  } while (lVar18 != 0);
+  iVar16 = 0;
+  for (iVar13 = param_2; iVar13 != 0; iVar13 = iVar13 + -1) {
+    pbVar2 = param_3 + iVar16;
+    iVar16 = iVar16 + 1;
+    auStack_94[*pbVar2 + 1] = auStack_94[*pbVar2 + 1] + 1;
   }
-  *(undefined4 *)(iVar2 + 0x54) = 0;
-  iVar21 = 0;
-  iVar19 = 1;
-  lVar17 = 0x10;
+  auStack_e0[1] = 0;
+  iVar16 = 0;
+  iVar13 = 1;
+  lVar18 = 0x10;
   do {
-    uVar12 = 0x10 - iVar19;
-    iVar19 = iVar19 + 1;
-    *(int *)(iVar21 + iVar2 + 0x58) =
-         (*(int *)(iVar21 + iVar2 + 0xa4) << (uVar12 & 0x3f)) + *(int *)(iVar21 + iVar2 + 0x54);
-    iVar21 = iVar21 + 4;
-    lVar17 = lVar17 + -1;
-  } while (lVar17 != 0);
-  if (*(int *)(iVar2 + 0x94) == 0x10000) {
-    uVar9 = uVar9 & 0xff;
-    uVar23 = 1;
-    uVar4 = (uint)uVar9;
-    uVar12 = 0x10 - uVar4;
-    if (uVar9 == 0) {
-LAB_828b7ff8:
-      lVar17 = 0x10 - uVar23;
-      lVar22 = 0x11 - uVar23;
-      lVar15 = (uVar23 & 0x3fffffff) * 4 + lVar15 + 0x9c;
-      do {
-        lVar15 = lVar15 + 4;
-        *(int *)lVar15 = 1 << ((uint)lVar17 & 0x3f);
-        lVar17 = lVar17 + -1;
-        lVar22 = lVar22 + -1;
-      } while (lVar22 != 0);
-    }
-    else {
-      iVar19 = 0;
-      do {
-        iVar21 = (int)uVar23;
-        puVar16 = (uint *)((int)auStack_e0 + iVar19 + 4);
-        uVar1 = *puVar16;
-        uVar23 = uVar23 + 1;
-        *(int *)(iVar19 + iVar2 + 0xa4) = 1 << (uVar4 - iVar21 & 0x3f);
-        iVar19 = iVar19 + 4;
-        *puVar16 = uVar1 >> (uVar12 & 0x3f);
-      } while ((uVar23 & 0xffffffff) <= uVar9);
-      if ((uVar23 & 0xffffffff) < 0x11) goto LAB_828b7ff8;
-    }
-    if (*(uint *)((int)(uVar9 << 2) + iVar2 + 0x54) >> (uVar12 & 0x3f) != 0x10000) {
+    uVar7 = 0x10 - iVar13;
+    iVar13 = iVar13 + 1;
+    *(int *)((int)auStack_e0 + iVar16 + 8) =
+         (*(int *)((int)auStack_94 + iVar16 + 8) << (uVar7 & 0x3f)) +
+         *(int *)((int)auStack_e0 + iVar16 + 4);
+    iVar16 = iVar16 + 4;
+    lVar18 = lVar18 + -1;
+  } while (lVar18 != 0);
+  if (local_9c != 0x10000) {
+    if (local_9c == 0) {
       memset();
+      return true;
     }
-    iVar19 = 0;
-    iVar21 = (int)uVar8;
-    if (0 < iVar21) {
-      do {
-        uVar23 = (ulonglong)param_3[iVar19];
-        if (uVar23 != 0) {
-          uVar5 = (uint)param_3[iVar19];
-          uVar1 = auStack_e0[uVar5];
-          uVar20 = (ulonglong)uVar1;
-          uVar18 = *(uint *)(uVar5 * 4 + iVar2 + 0xa0) + uVar20;
-          if (uVar9 < uVar23) {
-            auStack_e0[uVar5] = (uint)uVar18;
-            uVar23 = uVar23 - uVar9 & 0xff;
-            iVar10 = uVar1 << (uVar4 & 0x3f);
-            lVar22 = ((ulonglong)(uVar1 >> (uVar12 & 0x3f)) & 0x7fffffff) * 2 + lVar11;
-            lVar17 = -uVar8;
-            lVar15 = (uVar8 & 0x3fffffff) * 4 + lVar13 + -4;
-            do {
-              psVar14 = (short *)lVar22;
-              if (*psVar14 == 0) {
-                *(undefined2 *)((int)lVar15 + 6) = 0;
-                uVar8 = uVar8 + 1;
-                lVar15 = lVar15 + 4;
-                *(undefined2 *)lVar15 = 0;
-                *psVar14 = (short)lVar17;
-                lVar17 = lVar17 + -1;
-              }
-              if ((short)iVar10 < 0) {
-                lVar22 = lVar13 + ((longlong)*psVar14 & 0x3fffffffU) * -4 + 2;
-              }
-              else {
-                lVar22 = lVar13 + ((longlong)*psVar14 & 0x3fffffffU) * -4;
-              }
-              iVar10 = iVar10 << 1;
-              uVar23 = uVar23 + 0xff & 0xff;
-            } while (uVar23 != 0);
-            *(undefined2 *)lVar22 = (short)iVar19;
-          }
-          else {
-            if ((ulonglong)(uint)(1 << (uVar4 & 0x3f)) < (uVar18 & 0xffffffff)) goto LAB_828b7f94;
-            if (uVar20 < (uVar18 & 0xffffffff)) {
-              lVar17 = uVar18 - uVar20;
-              lVar15 = ((ulonglong)uVar1 & 0x7fffffff) * 2 + lVar11 + -2;
-              do {
-                lVar15 = lVar15 + 2;
-                *(undefined2 *)lVar15 = (short)iVar19;
-                lVar17 = lVar17 + -1;
-              } while (lVar17 != 0);
-            }
-            auStack_e0[uVar5] = (uint)uVar18;
-          }
-        }
-        iVar19 = iVar19 + 1;
-      } while (iVar19 < iVar21);
-    }
+    return false;
   }
-  else {
-    if (*(int *)(iVar2 + 0x94) != 0) {
-LAB_828b7f94:
-      uVar6 = 0;
-      goto LAB_828b8164;
-    }
+  uVar7 = (uint)param_4;
+  uVar10 = 1;
+  uVar3 = 0x10 - param_4;
+  if (uVar7 != 0) {
+    iVar13 = 0;
+    do {
+      uVar5 = param_4 - uVar10;
+      puVar12 = (uint *)((int)auStack_e0 + iVar13 + 4);
+      uVar14 = *puVar12;
+      uVar10 = uVar10 + 1;
+      *(int *)((int)auStack_94 + iVar13 + 8) = 1 << (uVar5 & 0x3f);
+      iVar13 = iVar13 + 4;
+      *puVar12 = uVar14 >> (uVar3 & 0x3f);
+    } while (uVar10 <= uVar7);
+    if (0x10 < uVar10) goto LAB_828b8024;
+  }
+  uVar14 = 0x10 - uVar10;
+  iVar13 = 0x11 - uVar10;
+  puVar12 = auStack_94 + uVar10;
+  do {
+    puVar12 = puVar12 + 1;
+    *puVar12 = 1 << (uVar14 & 0x3f);
+    uVar14 = uVar14 - 1;
+    iVar13 = iVar13 + -1;
+  } while (iVar13 != 0);
+LAB_828b8024:
+  if (auStack_e0[param_4 + 1] >> (uVar3 & 0x3f) != 0x10000) {
     memset();
   }
-  uVar6 = 1;
-LAB_828b8164:
-  uVar7 = __restgprlr_24(uVar6);
-  return (bool)uVar7;
+  iVar16 = 0;
+  iVar13 = param_2;
+  if (0 < param_2) {
+    do {
+      bVar1 = param_3[iVar16];
+      uVar10 = (uint)bVar1;
+      if (uVar10 != 0) {
+        uVar14 = auStack_e0[bVar1];
+        uVar15 = (ulonglong)uVar14;
+        uVar11 = auStack_94[bVar1 + 1] + uVar15;
+        if (uVar7 < uVar10) {
+          auStack_e0[bVar1] = (uint)uVar11;
+          uVar10 = uVar10 - uVar7 & 0xff;
+          iVar6 = uVar14 << (param_4 & 0x3f);
+          psVar9 = param_5 + (uVar14 >> (uVar3 & 0x3f));
+          iVar8 = -iVar13;
+          psVar17 = param_6 + iVar13 * 2 + -2;
+          do {
+            if (*psVar9 == 0) {
+              psVar17[3] = 0;
+              iVar13 = iVar13 + 1;
+              psVar17 = psVar17 + 2;
+              *psVar17 = 0;
+              *psVar9 = (short)iVar8;
+              iVar8 = iVar8 + -1;
+            }
+            if ((short)iVar6 < 0) {
+              iVar4 = ((int)*psVar9 & 0x3fffffffU) * -2 + 1;
+            }
+            else {
+              iVar4 = ((int)*psVar9 & 0x3fffffffU) * -2;
+            }
+            psVar9 = param_6 + iVar4;
+            iVar6 = iVar6 << 1;
+            uVar10 = uVar10 + 0xff & 0xff;
+          } while (uVar10 != 0);
+          *psVar9 = (short)iVar16;
+        }
+        else {
+          if ((ulonglong)(uint)(1 << (param_4 & 0x3f)) < (uVar11 & 0xffffffff)) {
+            return false;
+          }
+          if (uVar15 < (uVar11 & 0xffffffff)) {
+            lVar18 = uVar11 - uVar15;
+            psVar17 = param_5 + (uVar14 - 1);
+            do {
+              psVar17 = psVar17 + 1;
+              *psVar17 = (short)iVar16;
+              lVar18 = lVar18 + -1;
+            } while (lVar18 != 0);
+          }
+          auStack_e0[bVar1] = (uint)uVar11;
+        }
+      }
+      iVar16 = iVar16 + 1;
+    } while (iVar16 < param_2);
+  }
+  return true;
 }
 
 
 // 828B8170  make_table_8bit  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/compression/codec/lzx/decoder/maketbl.cpp:169)
+
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 
 bool XCOMPRESS::make_table_8bit(t_decoder_context *param_1,uchar *param_2,uchar *param_3)
 
@@ -183,72 +167,69 @@ bool XCOMPRESS::make_table_8bit(t_decoder_context *param_1,uchar *param_2,uchar 
   int iVar2;
   int iVar3;
   uint uVar4;
-  undefined8 uVar5;
-  undefined1 uVar6;
-  uint uVar7;
+  bool bVar5;
+  uint uVar6;
+  uint uVar8;
+  ulonglong uVar7;
   uint uVar9;
-  ulonglong uVar8;
   uint uVar10;
-  uint uVar11;
   ushort auStack_80 [24];
   ushort auStack_50 [17];
   short local_2e;
   
-  __savegprlr_29(param_1);
-  uVar9 = 1;
+  uVar8 = 1;
   do {
-    uVar10 = uVar9 + 1 & 0xffff;
-    auStack_80[uVar9] = 0;
-    uVar9 = uVar10;
-  } while (uVar10 < 0x11);
-  uVar9 = 0;
+    uVar9 = uVar8 + 1 & 0xffff;
+    auStack_80[uVar8] = 0;
+    uVar8 = uVar9;
+  } while (uVar9 < 0x11);
+  uVar8 = 0;
   do {
-    pbVar1 = param_2 + uVar9;
-    uVar9 = uVar9 + 1 & 0xffff;
+    pbVar1 = param_2 + uVar8;
+    uVar8 = uVar8 + 1 & 0xffff;
     auStack_80[*pbVar1] = auStack_80[*pbVar1] + 1;
-  } while (uVar9 < 8);
+  } while (uVar8 < 8);
   auStack_50[1] = 0;
-  uVar9 = 1;
+  uVar8 = 1;
   do {
-    uVar10 = uVar9 + 1 & 0xffff;
-    auStack_50[uVar9 + 1] = (auStack_80[uVar9] << (0x10 - uVar9 & 0x3f)) + auStack_50[uVar9];
-    uVar9 = uVar10;
-  } while (uVar10 < 0x11);
+    uVar9 = uVar8 + 1 & 0xffff;
+    auStack_50[uVar8 + 1] = (auStack_80[uVar8] << (0x10 - uVar8 & 0x3f)) + auStack_50[uVar8];
+    uVar8 = uVar9;
+  } while (uVar9 < 0x11);
   if (local_2e == 0) {
-    uVar8 = 1;
+    uVar7 = 1;
     do {
-      iVar2 = (int)uVar8;
-      iVar3 = (int)(uVar8 << 1);
-      uVar8 = uVar8 + 1 & 0xffff;
+      iVar2 = (int)uVar7;
+      iVar3 = (int)(uVar7 << 1);
+      uVar7 = uVar7 + 1 & 0xffff;
       *(ushort *)((int)auStack_50 + iVar3) = *(ushort *)((int)auStack_50 + iVar3) >> 9;
       *(short *)((int)auStack_80 + iVar3) = (short)(1 << (7U - iVar2 & 0x3f));
-    } while (uVar8 < 8);
-    for (; uVar8 < 0x11; uVar8 = uVar8 + 1 & 0xffff) {
-      *(short *)((int)auStack_80 + (int)(uVar8 << 1)) = (short)(1 << (0x10U - (int)uVar8 & 0x3f));
+    } while (uVar7 < 8);
+    for (; uVar7 < 0x11; uVar7 = uVar7 + 1 & 0xffff) {
+      *(short *)((int)auStack_80 + (int)(uVar7 << 1)) = (short)(1 << (0x10U - (int)uVar7 & 0x3f));
     }
     memset();
-    uVar9 = 0;
+    uVar8 = 0;
     do {
-      uVar10 = (uint)param_2[uVar9];
-      if (uVar10 != 0) {
-        uVar11 = (uint)auStack_50[uVar10];
-        uVar7 = auStack_80[uVar10] + uVar11;
-        uVar4 = uVar7 & 0xffff;
+      uVar9 = (uint)param_2[uVar8];
+      if (uVar9 != 0) {
+        uVar10 = (uint)auStack_50[uVar9];
+        uVar6 = auStack_80[uVar9] + uVar10;
+        uVar4 = uVar6 & 0xffff;
         if (0x80 < uVar4) goto LAB_828b822c;
-        for (; uVar11 < uVar4; uVar11 = uVar11 + 1 & 0xffff) {
-          param_3[uVar11] = (uchar)uVar9;
+        for (; uVar10 < uVar4; uVar10 = uVar10 + 1 & 0xffff) {
+          param_3[uVar10] = (uchar)uVar8;
         }
-        auStack_50[uVar10] = (ushort)uVar7;
+        auStack_50[uVar9] = (ushort)uVar6;
       }
-      uVar9 = uVar9 + 1 & 0xff;
-    } while (uVar9 < 8);
-    uVar5 = 1;
+      uVar8 = uVar8 + 1 & 0xff;
+    } while (uVar8 < 8);
+    bVar5 = true;
   }
   else {
 LAB_828b822c:
-    uVar5 = 0;
+    bVar5 = false;
   }
-  uVar6 = __restgprlr_29(uVar5);
-  return (bool)uVar6;
+  return bVar5;
 }
 

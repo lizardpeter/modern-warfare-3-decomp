@@ -121,6 +121,8 @@ uint Sys_GetCpuCount(void)
 
 // 82519638  Sys_FreezeCheckThread  (qcommon/threads.cpp:756)
 
+/* WARNING: Function: __savegprlr_21 replaced with injection: xenon_save_restore */
+
 ulong Sys_FreezeCheckThread(void *param_1)
 
 {
@@ -129,7 +131,6 @@ ulong Sys_FreezeCheckThread(void *param_1)
   longlong lVar2;
   void **ppvVar3;
   
-  __savegprlr_21(param_1);
   iVar1 = *in_r13;
   do {
     while( true ) {
@@ -225,6 +226,8 @@ void Sys_InitMainThread(void)
 
 // 8251BF70  Sys_CheckSuspendThread  (qcommon/threads.cpp:857)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void Sys_CheckSuspendThread(void)
@@ -233,9 +236,7 @@ void Sys_CheckSuspendThread(void)
   bool bVar1;
   undefined8 in_r13;
   
-  __savegprlr_29();
   if (g_suspendThreads == 0) {
-    __restgprlr_29();
     return;
   }
   bVar1 = Sys_IsRenderThread();
@@ -254,23 +255,23 @@ void Sys_CheckSuspendThread(void)
 
 // 82519848  Sys_InitThread  (qcommon/threads.cpp:943)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void Sys_InitThread(int param_1)
 
 {
   int iVar1;
-  int iVar2;
   int *in_r13;
   
-  iVar2 = __savegprlr_29(param_1);
   iVar1 = *in_r13;
   if (*(int *)(iVar1 + 0xdc) != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\threads.cpp",0x3b0,0,
                     "%s");
   }
-  *(void *(**) [4])(iVar1 + 0xdc) = g_threadValues + iVar2;
-  Com_InitThreadData(iVar2);
-  Profile_InitContext(iVar2);
-  __restgprlr_29();
+  *(void *(**) [4])(iVar1 + 0xdc) = g_threadValues + param_1;
+  Com_InitThreadData(param_1);
+  Profile_InitContext(param_1);
   return;
 }
 
@@ -296,62 +297,57 @@ void SetThreadName(ulong param_1,char *param_2)
 
 // 82519940  Sys_ThreadMain  (qcommon/threads.cpp:986)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 ulong Sys_ThreadMain(void *param_1)
 
 {
-  uint uVar1;
-  ulong uVar2;
-  
-  uVar1 = __savegprlr_28(param_1);
-  if (0xd < uVar1) {
+  if ((void *)0xd < param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\threads.cpp",0x3e3,0,
                     "threadContext doesn\'t index THREAD_CONTEXT_COUNT\n\t%i not in [0, %i)");
   }
-  if (threadFunc[uVar1] == (_func___cdecl_void_uint *)0x0) {
+  if (threadFunc[(int)param_1] == (_func___cdecl_void_uint *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\threads.cpp",0x3e4,0,
                     "%s");
   }
-  SetThreadName(0xffffffff,s_threadNames[uVar1]);
-  Sys_InitThread(uVar1);
-  (*threadFunc[uVar1])(uVar1);
-  uVar2 = __restgprlr_28(0);
-  return uVar2;
+  SetThreadName(0xffffffff,s_threadNames[(int)param_1]);
+  Sys_InitThread((int)param_1);
+  (*threadFunc[(int)param_1])((uint)param_1);
+  return 0;
 }
 
 
 // 825199F0  Sys_CreateThread  (qcommon/threads.cpp:1012)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
+
 void Sys_CreateThread(_func___cdecl_void_uint *param_1,uint param_2)
 
 {
-  int iVar1;
-  undefined4 uVar2;
-  void *pvVar3;
-  ulonglong uVar4;
+  void *pvVar1;
   
-  uVar4 = (ulonglong)(int)param_2;
-  uVar2 = __savegprlr_25(param_1);
-  iVar1 = (int)((uVar4 & 0x3fffffff) << 2);
-  if (*(int *)((int)threadFunc + iVar1) != 0) {
+  if (threadFunc[param_2] != (_func___cdecl_void_uint *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\threads.cpp",0x3f5,0,
                     "%s");
   }
-  if (0xd < (uVar4 & 0xffffffff)) {
+  if (0xd < param_2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\threads.cpp",0x3f6,0,
                     "%s");
   }
-  *(undefined4 *)((int)threadFunc + iVar1) = uVar2;
-  pvVar3 = CreateThread((void *)0x0,0,Sys_ThreadMain,(void *)uVar4,4,
-                        (ulong *)((int)threadId + iVar1));
-  *(void **)((int)threadHandle + iVar1) = pvVar3;
-  SetThreadName(*(ulong *)((int)threadId + iVar1),*(char **)((int)s_threadNames + iVar1));
-  __restgprlr_25();
+  threadFunc[param_2] = param_1;
+  pvVar1 = CreateThread((void *)0x0,0,Sys_ThreadMain,(void *)param_2,4,threadId + param_2);
+  threadHandle[param_2] = pvVar1;
+  SetThreadName(threadId[param_2],s_threadNames[param_2]);
   return;
 }
 
 
 // 82519AB8  Sys_TitleServerThreadData  (qcommon/threads.cpp:1057)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void Sys_TitleServerThreadData(void)
@@ -360,7 +356,6 @@ void Sys_TitleServerThreadData(void)
   ulong uVar1;
   int *in_r13;
   
-  __savegprlr_27();
   uVar1 = GetCurrentThreadId();
   if (uVar1 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\threads.cpp",0x102,0,
@@ -379,7 +374,6 @@ void Sys_TitleServerThreadData(void)
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\threads.cpp",0x427,0,
                     "%s");
   }
-  __restgprlr_27();
   return;
 }
 
@@ -496,31 +490,25 @@ void Sys_InitCmdEvents(void)
 
 // 82519CB8  Sys_SpawnWorkerThread  (qcommon/threads.cpp:1239)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 bool Sys_SpawnWorkerThread(_func___cdecl_void_uint *param_1,uint param_2)
 
 {
-  void *pvVar1;
-  int iVar2;
-  _func___cdecl_void_uint *p_Var3;
-  undefined1 uVar4;
-  ulonglong uVar5;
+  uint uVar1;
   
-  uVar5 = (ulonglong)(int)param_2;
-  p_Var3 = (_func___cdecl_void_uint *)__savegprlr_27(param_1);
-  iVar2 = (int)((uVar5 + 2 & 0xffffffff) << 2);
-  if (*(int *)((int)threadHandle + iVar2) != 0) {
+  uVar1 = param_2 + 2;
+  if (threadHandle[uVar1] != (void *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\threads.cpp",0x4e2,0,
                     "%s\n\t(threadContext) = %i");
   }
-  Sys_CreateThread(p_Var3,(uint)(uVar5 + 2));
-  pvVar1 = *(void **)((int)threadHandle + iVar2);
-  if (pvVar1 == (void *)0x0) {
-    uVar4 = __restgprlr_27();
-    return (bool)uVar4;
+  Sys_CreateThread(param_1,uVar1);
+  if (threadHandle[uVar1] == (void *)0x0) {
+    return false;
   }
-  XSetThreadProcessor(pvVar1,*(ulong *)((int)hardwareThread + (int)((uVar5 & 0xffffffff) << 2)));
-  uVar4 = __restgprlr_27(1);
-  return (bool)uVar4;
+  XSetThreadProcessor(threadHandle[uVar1],hardwareThread[param_2]);
+  return true;
 }
 
 
@@ -604,6 +592,8 @@ void Sys_RenderCompleted(void)
 
 // 82519E60  Sys_FrontEndSleep  (qcommon/threads.cpp:1338)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void Sys_FrontEndSleep(void)
@@ -615,7 +605,6 @@ void Sys_FrontEndSleep(void)
   char in_RESERVE;
   byte in_cr0;
   
-  __savegprlr_27();
   PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffff,"frontend sleep");
   uVar1 = WaitForSingleObject(noThreadOwnershipEvent,0);
   if (uVar1 != 0) {
@@ -647,7 +636,6 @@ void Sys_FrontEndSleep(void)
                     "%s\n\t(result) = %i");
   }
   PIXEndNamedEvent();
-  __restgprlr_27();
   return;
 }
 
@@ -680,15 +668,15 @@ int Sys_IsRendererReady2(void)
 
 // 8251C2C8  Sys_WakeRenderer  (qcommon/threads.cpp:1384)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void Sys_WakeRenderer(void *param_1)
 
 {
-  void *pvVar1;
-  int iVar2;
   char in_RESERVE;
   byte in_cr0;
   
-  pvVar1 = (void *)__savegprlr_29(param_1);
   if ((g_renderWaitCount != 0) && (g_renderWaitCount != 1)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\threads.cpp",0x56d,0,
                     "%s\n\t(renderWaitCount) = %i");
@@ -705,12 +693,11 @@ void Sys_WakeRenderer(void *param_1)
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\threads.cpp",0x572,0,
                     "%s");
   }
-  smpData = pvVar1;
+  smpData = param_1;
   PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffff,"set smpData");
   PIXEndNamedEvent();
   SetEvent(backendEvent[1]);
-  iVar2 = SetEvent(backendEvent[0]);
-  __restgprlr_29(iVar2);
+  SetEvent(backendEvent[0]);
   return;
 }
 
@@ -844,23 +831,24 @@ void Sys_ServerCompleted(void)
 
 // 8251A210  Sys_WaitStartServer  (qcommon/threads.cpp:1495)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
+
 int Sys_WaitStartServer(int param_1)
 
 {
   long lVar1;
   int iVar2;
   int iVar3;
-  int iVar4;
   undefined8 in_r13;
   char in_RESERVE;
   byte in_cr0;
   
-  iVar2 = __savegprlr_23(param_1);
-  if (iVar2 == 0) {
-    iVar3 = 0;
+  if (param_1 == 0) {
+    iVar2 = 0;
   }
   else {
-    iVar3 = Sys_Milliseconds();
+    iVar2 = Sys_Milliseconds();
   }
   do {
     if ((g_mainThreadRequestServerOwnership == 0) && (g_databaseStopServer == 0)) {
@@ -883,8 +871,7 @@ int Sys_WaitStartServer(int param_1)
       if (lVar1 != 2) {
         sync(1);
         sync(1);
-        iVar2 = __restgprlr_23(1);
-        return iVar2;
+        return 1;
       }
     }
     do {
@@ -902,16 +889,19 @@ int Sys_WaitStartServer(int param_1)
         in_cr0 = 2;
       }
     } while (!(bool)(in_cr0 >> 1 & 1));
-    if (iVar2 == 0) break;
+    if (param_1 == 0) {
+      return 0;
+    }
     if (*(int *)(*(int *)in_r13 + 0xe0) != 0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\threads.cpp",0xf5,0,
                       "%s");
     }
     Sleep(1);
-    iVar4 = Sys_Milliseconds();
-  } while (iVar4 - iVar3 < iVar2);
-  iVar2 = __restgprlr_23(0);
-  return iVar2;
+    iVar3 = Sys_Milliseconds();
+    if (param_1 <= iVar3 - iVar2) {
+      return 0;
+    }
+  } while( true );
 }
 
 
@@ -947,6 +937,8 @@ void Sys_StartDatabase(void)
 
 // 8251A3F0  Sys_DatabaseCompleted  (qcommon/threads.cpp:1755)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void Sys_DatabaseCompleted(void)
@@ -955,7 +947,6 @@ void Sys_DatabaseCompleted(void)
   int iVar1;
   int *in_r13;
   
-  __savegprlr_26();
   g_databaseStopServer = 1;
   if (g_serverContextOwnership == 1) {
     iVar1 = *in_r13;
@@ -968,8 +959,7 @@ void Sys_DatabaseCompleted(void)
     } while (g_serverContextOwnership == 1);
   }
   sync(1);
-  iVar1 = SetEvent(databaseCompletedEvent);
-  __restgprlr_26(iVar1);
+  SetEvent(databaseCompletedEvent);
   return;
 }
 
@@ -1317,43 +1307,42 @@ bool Sys_IsMainThread2(void)
 
 // 8251A950  Sys_SetValue  (qcommon/threads.cpp:2074)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void Sys_SetValue(int param_1,void *param_2)
 
 {
   int iVar1;
-  int iVar2;
   int *in_r13;
   
-  iVar2 = __savegprlr_28(param_1);
   iVar1 = *in_r13;
   if (*(int *)(iVar1 + 0xdc) == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\threads.cpp",0x81d,0,
                     "%s");
   }
-  *(void **)(iVar2 * 4 + *(int *)(iVar1 + 0xdc)) = param_2;
-  __restgprlr_28();
+  *(void **)(param_1 * 4 + *(int *)(iVar1 + 0xdc)) = param_2;
   return;
 }
 
 
 // 8251A9B0  Sys_GetValue  (qcommon/threads.cpp:2089)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void * Sys_GetValue(int param_1)
 
 {
   int iVar1;
-  int iVar2;
-  void *pvVar3;
   int *in_r13;
   
-  iVar2 = __savegprlr_29(param_1);
   iVar1 = *in_r13;
   if (*(int *)(iVar1 + 0xdc) == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\threads.cpp",0x82c,0,
                     "%s");
   }
-  pvVar3 = (void *)__restgprlr_29(*(undefined4 *)(iVar2 * 4 + *(int *)(iVar1 + 0xdc)));
-  return pvVar3;
+  return *(void **)(param_1 * 4 + *(int *)(iVar1 + 0xdc));
 }
 
 
@@ -1464,35 +1453,37 @@ void Sys_ResumeWorkerCmd(void)
 
 // 8251AC10  Sys_BlockDatabaseThread  (qcommon/threads.cpp:2183)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void Sys_BlockDatabaseThread(void)
 
 {
-  ulong uVar1;
-  int iVar2;
+  int iVar1;
+  ulong uVar2;
   int *in_r13;
   
-  __savegprlr_28();
-  uVar1 = GetCurrentProcessorNumber();
-  if (uVar1 != 1) {
+  uVar2 = GetCurrentProcessorNumber();
+  if (uVar2 != 1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\threads.cpp",0x888,0,
                     "%s");
   }
-  iVar2 = *in_r13;
-  if (*(int *)(iVar2 + 0xe0) != 0) {
+  iVar1 = *in_r13;
+  if (*(int *)(iVar1 + 0xe0) != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\threads.cpp",0x889,0,
                     "%s");
   }
-  *(undefined4 *)(iVar2 + 0xe0) = 1;
-  iVar2 = ResetEvent(blockDatabaseEvent);
-  __restgprlr_28(iVar2);
+  *(undefined4 *)(iVar1 + 0xe0) = 1;
+  ResetEvent(blockDatabaseEvent);
   return;
 }
 
 
 // 8251ACA0  Sys_UnblockDatabaseThread  (qcommon/threads.cpp:2195)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void Sys_UnblockDatabaseThread(void)
@@ -1500,10 +1491,8 @@ void Sys_UnblockDatabaseThread(void)
 {
   void *pvVar1;
   ulong uVar2;
-  int iVar3;
   int *in_r13;
   
-  __savegprlr_29();
   uVar2 = GetCurrentProcessorNumber();
   if (uVar2 != 1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\threads.cpp",0x894,0,
@@ -1516,8 +1505,7 @@ void Sys_UnblockDatabaseThread(void)
   pvVar1 = blockDatabaseEvent;
   DAT_83700894 = 1;
   *(undefined4 *)(*in_r13 + 0xe0) = 0;
-  iVar3 = SetEvent(pvVar1);
-  __restgprlr_29(iVar3);
+  SetEvent(pvVar1);
   return;
 }
 
@@ -1585,6 +1573,8 @@ void Sys_WaitBackendEvent(void)
 
 // 8251AD50  Sys_SuspendOtherThreads  (qcommon/threads.cpp:2258)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void Sys_SuspendOtherThreads(void)
@@ -1594,7 +1584,6 @@ void Sys_SuspendOtherThreads(void)
   int iVar2;
   uint uVar3;
   
-  __savegprlr_28();
   Sys_EnterCriticalSection(CRITSECT_STATS_WRITE);
   Live_DCacheShutdown();
   g_suspendThreads = 1;
@@ -1614,7 +1603,6 @@ void Sys_SuspendOtherThreads(void)
     uVar3 = uVar3 + 4;
     iVar2 = iVar2 + 1;
   } while (uVar3 < 0x38);
-  __restgprlr_28();
   return;
 }
 
@@ -1651,38 +1639,34 @@ void Sys_ReleaseThreadOwnership(void)
 
 // 8251AE78  Sys_SpawnContentServerThread  (qcommon/threads.cpp:2349)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 bool Sys_SpawnContentServerThread(_func___cdecl_void_uint *param_1,int param_2)
 
 {
-  _func___cdecl_void_uint *p_Var1;
-  undefined1 uVar2;
-  ulonglong uVar3;
-  uint uVar4;
-  
-  uVar3 = (ulonglong)param_2;
-  p_Var1 = (_func___cdecl_void_uint *)__savegprlr_29(param_1);
-  if (p_Var1 == (_func___cdecl_void_uint *)0x0) {
+  if (param_1 == (_func___cdecl_void_uint *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\threads.cpp",0x92e,0,
                     "%s");
   }
-  uVar4 = (uint)uVar3;
-  if (uVar4 != 0xc) {
+  if (param_2 != 0xc) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\threads.cpp",0x92f,0,
                     "%s\n\t(threadContext) = %i");
   }
   g_performHTTPOperation = CreateEventA((void *)0x0,0,0,(char *)0x0);
-  Sys_CreateThread(p_Var1,uVar4);
-  if (*(int *)((int)threadHandle + (int)((uVar3 & 0xffffffff) << 2)) == 0) {
-    uVar2 = __restgprlr_29(0);
-    return (bool)uVar2;
+  Sys_CreateThread(param_1,param_2);
+  if (threadHandle[param_2] == (void *)0x0) {
+    return false;
   }
-  Sys_ResumeThread(uVar4);
-  uVar2 = __restgprlr_29(1);
-  return (bool)uVar2;
+  Sys_ResumeThread(param_2);
+  return true;
 }
 
 
 // 8251AF48  Sys_WaitForHTTPOperation  (qcommon/threads.cpp:2365)
+
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 
 int Sys_WaitForHTTPOperation(int param_1)
 
@@ -1690,8 +1674,7 @@ int Sys_WaitForHTTPOperation(int param_1)
   int iVar1;
   ulong uVar2;
   
-  iVar1 = __savegprlr_27(param_1);
-  if (iVar1 != 0xc) {
+  if (param_1 != 0xc) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\threads.cpp",0x940,0,
                     "%s\n\t(threadContext) = %i");
   }
@@ -1701,7 +1684,6 @@ int Sys_WaitForHTTPOperation(int param_1)
       if ((&DAT_83700944)[iVar1] != '\0') {
         sync(1);
         (&DAT_83700944)[iVar1] = 0;
-        iVar1 = __restgprlr_27();
         return iVar1;
       }
       iVar1 = iVar1 + 1;
@@ -1754,6 +1736,8 @@ bool Sys_SpawnStreamThread(_func___cdecl_void_uint *param_1)
 
 // 8251B110  Sys_InitStreamPacketCallbackThreadData  (qcommon/threads.cpp:2439)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 bool Sys_InitStreamPacketCallbackThreadData(void)
@@ -1761,10 +1745,8 @@ bool Sys_InitStreamPacketCallbackThreadData(void)
 {
   bool bVar2;
   ulong uVar1;
-  undefined1 uVar3;
   int *in_r13;
   
-  __savegprlr_29();
   bVar2 = Sys_IsMainThread();
   if ((!bVar2) && (bVar2 = Sys_IsRenderThread(), !bVar2)) {
     bVar2 = Sys_IsMainThread();
@@ -1783,16 +1765,16 @@ bool Sys_InitStreamPacketCallbackThreadData(void)
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\threads.cpp",0x993,0
                       ,"%s");
     }
-    uVar3 = __restgprlr_29(1);
-    return (bool)uVar3;
+    return true;
   }
-  uVar3 = __restgprlr_29(0);
-  return (bool)uVar3;
+  return false;
 }
 
 
 // 8251B220  Sys_StreamSleep  (qcommon/threads.cpp:2464)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 int Sys_StreamSleep(void)
@@ -1800,30 +1782,27 @@ int Sys_StreamSleep(void)
 {
   bool bVar1;
   ulong uVar2;
-  int iVar3;
-  uint uVar4;
+  uint uVar3;
   
-  __savegprlr_25();
   bVar1 = false;
   do {
-    uVar4 = 0;
+    uVar3 = 0;
     do {
-      if ((&DAT_83700778)[uVar4] != '\0') {
+      if ((&DAT_83700778)[uVar3] != '\0') {
         if (bVar1) {
           Sys_YieldWorkerCmd();
         }
-        if (0xd < uVar4) {
+        if (0xd < uVar3) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\threads.cpp",
                           0x9b5,0,
                           "streamIndex doesn\'t index SND_MAX_STREAM_CHANNELS\n\t%i not in [0, %i)")
           ;
         }
-        (&DAT_83700778)[uVar4] = 0;
-        iVar3 = __restgprlr_25(uVar4);
-        return iVar3;
+        (&DAT_83700778)[uVar3] = 0;
+        return uVar3;
       }
-      uVar4 = uVar4 + 1;
-    } while ((int)uVar4 < 0xe);
+      uVar3 = uVar3 + 1;
+    } while ((int)uVar3 < 0xe);
     uVar2 = WaitForSingleObject(streamEvent,0xffffffff);
     if (uVar2 != 0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\threads.cpp",0x126,0
@@ -1837,28 +1816,26 @@ int Sys_StreamSleep(void)
 
 // 8251B300  Sys_WaitForStream  (qcommon/threads.cpp:2506)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void Sys_WaitForStream(int param_1)
 
 {
-  int iVar1;
-  ulong uVar2;
+  ulong uVar1;
   undefined8 in_r13;
   
-  iVar1 = __savegprlr_28(param_1);
-  if (iVar1 != 0) {
+  if (param_1 != 0) {
     memset();
   }
   SetEvent(streamEvent);
-  while( true ) {
-    uVar2 = WaitForSingleObject(streamEvent,0);
-    if (uVar2 != 0) break;
+  while (uVar1 = WaitForSingleObject(streamEvent,0), uVar1 == 0) {
     if (*(int *)(*(int *)in_r13 + 0xe0) != 0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\threads.cpp",0xf5,0,
                       "%s");
     }
     Sleep(1);
   }
-  __restgprlr_28();
   return;
 }
 
@@ -1966,6 +1943,8 @@ void Sys_ResetServerAllowNetworkEvent(void)
 
 // 8251B5A8  Sys_SetServerNetworkCompletedEvent  (qcommon/threads.cpp:2709)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void Sys_SetServerNetworkCompletedEvent(void)
@@ -1973,7 +1952,6 @@ void Sys_SetServerNetworkCompletedEvent(void)
 {
   ulong uVar1;
   
-  __savegprlr_28();
   Sys_EnterCriticalSection(CRITSECT_NETTHREAD_OVERRIDE);
   uVar1 = GetCurrentThreadId();
   if (uVar1 == 0) {
@@ -1987,13 +1965,14 @@ void Sys_SetServerNetworkCompletedEvent(void)
   g_networkOverrideThread = 0;
   SetEvent(serverNetworkCompletedEvent);
   Sys_LeaveCriticalSection(CRITSECT_NETTHREAD_OVERRIDE);
-  __restgprlr_28();
   return;
 }
 
 
 // 8251B650  Sys_ResetServerNetworkCompletedEvent  (qcommon/threads.cpp:2726)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void Sys_ResetServerNetworkCompletedEvent(void)
@@ -2001,7 +1980,6 @@ void Sys_ResetServerNetworkCompletedEvent(void)
 {
   ulong uVar1;
   
-  __savegprlr_28();
   Sys_EnterCriticalSection(CRITSECT_NETTHREAD_OVERRIDE);
   if (g_networkOverrideThread != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\threads.cpp",0xaab,0,
@@ -2015,7 +1993,6 @@ void Sys_ResetServerNetworkCompletedEvent(void)
   g_networkOverrideThread = uVar1;
   ResetEvent(serverNetworkCompletedEvent);
   Sys_LeaveCriticalSection(CRITSECT_NETTHREAD_OVERRIDE);
-  __restgprlr_28();
   return;
 }
 
@@ -2088,6 +2065,8 @@ void Sys_WaitServerNetworkCompleted(void)
 
 // 8251B890  Sys_SetDeviceOwner  (qcommon/threads.cpp:2882)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void Sys_SetDeviceOwner(void)
@@ -2097,7 +2076,6 @@ void Sys_SetDeviceOwner(void)
   ulong uVar2;
   int *in_r13;
   
-  __savegprlr_28();
   iVar1 = Sys_Milliseconds();
   *(int *)(*in_r13 + 0xe8) = iVar1;
   Sys_EnterCriticalSection(CRITSECT_DEVICE_OWNER);
@@ -2111,13 +2089,14 @@ void Sys_SetDeviceOwner(void)
                     "%s");
   }
   g_deviceOwner = uVar2;
-  __restgprlr_28();
   return;
 }
 
 
 // 8251B928  Sys_ResetDeviceOwner  (qcommon/threads.cpp:2895)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void Sys_ResetDeviceOwner(void)
@@ -2125,7 +2104,6 @@ void Sys_ResetDeviceOwner(void)
 {
   ulong uVar1;
   
-  __savegprlr_28();
   uVar1 = GetCurrentThreadId();
   if (uVar1 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\threads.cpp",0x102,0,
@@ -2137,7 +2115,6 @@ void Sys_ResetDeviceOwner(void)
   }
   g_deviceOwner = 0;
   Sys_LeaveCriticalSection(CRITSECT_DEVICE_OWNER);
-  __restgprlr_28();
   return;
 }
 
@@ -2162,6 +2139,8 @@ int Sys_HasDeviceOwnership(void)
 
 // 8251BA28  Sys_WaitFileRead  (qcommon/threads.cpp:3036)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void Sys_WaitFileRead(void)
@@ -2171,7 +2150,6 @@ void Sys_WaitFileRead(void)
   undefined8 in_r13;
   ulong uVar2;
   
-  __savegprlr_25();
   if (g_lockFileRead != 0) {
     iVar1 = *(int *)in_r13;
     do {
@@ -2197,13 +2175,14 @@ void Sys_WaitFileRead(void)
     iVar1 = Sys_Milliseconds();
     uVar2 = g_timeoutFileRead - iVar1;
   }
-  __restgprlr_25();
   return;
 }
 
 
 // 8251BB50  Sys_LockFileRead  (qcommon/threads.cpp:3055)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void Sys_LockFileRead(void)
@@ -2215,7 +2194,6 @@ void Sys_LockFileRead(void)
   char in_RESERVE;
   byte in_cr0;
   
-  __savegprlr_24();
   do {
     lVar2 = g_lockFileRead;
     if (g_lockFileRead != 0) {
@@ -2256,7 +2234,6 @@ void Sys_LockFileRead(void)
       } while (!(bool)(in_cr0 >> 1 & 1));
     } while (lVar2 != 0);
   }
-  __restgprlr_24();
   return;
 }
 
@@ -2282,6 +2259,8 @@ void Sys_UnlockFileRead(int param_1)
 
 // 8251BCB8  Sys_EnterUIOwnership  (qcommon/threads.cpp:3082)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void Sys_EnterUIOwnership(void)
@@ -2292,7 +2271,6 @@ void Sys_EnterUIOwnership(void)
   char in_RESERVE;
   byte in_cr0;
   
-  __savegprlr_28();
   do {
     uVar2 = (ulonglong)DAT_837007a0;
     if (in_RESERVE != '\0') {
@@ -2316,13 +2294,14 @@ void Sys_EnterUIOwnership(void)
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\threads.cpp",0xc11,0,
                     "%s\n\t(g_uiOwnershipThreadId) = %i");
   }
-  __restgprlr_28();
   return;
 }
 
 
 // 8251BDA0  Sys_LeaveUIOwnership  (qcommon/threads.cpp:3095)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void Sys_LeaveUIOwnership(void)
@@ -2333,7 +2312,6 @@ void Sys_LeaveUIOwnership(void)
   char in_RESERVE;
   byte in_cr0;
   
-  __savegprlr_29();
   uVar1 = GetCurrentThreadId();
   if (uVar1 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\threads.cpp",0x102,0,
@@ -2353,7 +2331,6 @@ void Sys_LeaveUIOwnership(void)
   if ((int)(uVar2 - 1) == 0) {
     g_uiOwnershipThreadId = 0;
   }
-  __restgprlr_29();
   return;
 }
 

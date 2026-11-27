@@ -96,64 +96,65 @@ void WriteFloat(float param_1,MemoryFile *param_2)
 
 // 8253FB50  WriteVector  (script/scr_readwrite.cpp:97)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void WriteVector(float *param_1,MemoryFile *param_2)
 
 {
   MemoryFile *pMVar1;
-  MemoryFile *pMVar2;
   
-  pMVar1 = (MemoryFile *)__savegprlr_28(param_1,param_2);
-  pMVar2 = pMVar1;
-  if (pMVar1 == (MemoryFile *)0x0) {
-    pMVar2 = (MemoryFile *)
+  pMVar1 = (MemoryFile *)param_1;
+  if (param_1 == (float *)0x0) {
+    pMVar1 = (MemoryFile *)
              "c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_readwrite.cpp";
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_readwrite.cpp",0x62
                     ,0,"%s");
   }
-  if (((((uint)pMVar1->buffer & 0x7f800000) == 0x7f800000) ||
-      ((pMVar1->bufferSize & 0x7f800000U) == 0x7f800000)) ||
-     ((pMVar1->bufferSizeOriginal & 0x7f800000U) == 0x7f800000)) {
-    pMVar2 = (MemoryFile *)
+  if (((((uint)*param_1 & 0x7f800000) == 0x7f800000) ||
+      (((uint)param_1[1] & 0x7f800000) == 0x7f800000)) ||
+     (((uint)param_1[2] & 0x7f800000) == 0x7f800000)) {
+    pMVar1 = (MemoryFile *)
              "c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_readwrite.cpp";
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_readwrite.cpp",100,
                     0,"%s");
   }
-  WriteFloat((float)pMVar1->buffer,pMVar2);
-  WriteFloat((float)pMVar1->bufferSize,pMVar2);
-  WriteFloat((float)pMVar1->bufferSizeOriginal,pMVar2);
-  __restgprlr_28();
+  WriteFloat(*param_1,pMVar1);
+  WriteFloat(param_1[1],pMVar1);
+  WriteFloat(param_1[2],pMVar1);
   return;
 }
 
 
 // 8253FC30  Scr_ReadVec3  (script/scr_readwrite.cpp:109)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 float * Scr_ReadVec3(MemoryFile *param_1)
 
 {
-  MemoryFile *pMVar1;
-  float *pfVar2;
+  float *pfVar1;
   float local_50;
   float local_4c;
   float local_48;
   float local_44;
   
-  pMVar1 = (MemoryFile *)__savegprlr_27(param_1);
-  MemFile_ReadData(pMVar1,4,&local_50);
+  MemFile_ReadData(param_1,4,&local_50);
   local_4c = local_50;
   if (((uint)local_50 & 0x7f800000) == 0x7f800000) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\../universal/memfile.h",
                     0xc6,0,"%s");
   }
   local_48 = local_50;
-  MemFile_ReadData(pMVar1,4,&local_50);
+  MemFile_ReadData(param_1,4,&local_50);
   local_4c = local_50;
   if (((uint)local_50 & 0x7f800000) == 0x7f800000) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\../universal/memfile.h",
                     0xc6,0,"%s");
   }
   local_44 = local_50;
-  MemFile_ReadData(pMVar1,4,&local_50);
+  MemFile_ReadData(param_1,4,&local_50);
   local_4c = local_50;
   if (((uint)local_50 & 0x7f800000) == 0x7f800000) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\../universal/memfile.h",
@@ -166,63 +167,61 @@ float * Scr_ReadVec3(MemoryFile *param_1)
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_readwrite.cpp",0x73
                     ,0,"%s");
   }
-  pfVar2 = Scr_AllocVector(&local_48);
-  pfVar2 = (float *)__restgprlr_27(pfVar2);
-  return pfVar2;
+  pfVar1 = Scr_AllocVector(&local_48);
+  return pfVar1;
 }
 
 
 // 8253FDA8  WriteCodepos  (script/scr_readwrite.cpp:121)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void WriteCodepos(char *param_1,MemoryFile *param_2)
 
 {
-  char *pcVar1;
-  int iVar2;
+  int iVar1;
   int local_30 [12];
   
-  pcVar1 = (char *)__savegprlr_28(param_1);
-  if (pcVar1 == (char *)0x0) {
+  if (param_1 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_readwrite.cpp",0x7c
                     ,0,"%s");
   }
-  iVar2 = Scr_IsInOpcodeMemory(pcVar1);
-  if (iVar2 == 0) {
+  iVar1 = Scr_IsInOpcodeMemory(param_1);
+  if (iVar1 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_readwrite.cpp",0x83
                     ,0,"%s");
   }
-  local_30[0] = (int)pcVar1 - (int)scrVarPub.programBuffer;
+  local_30[0] = (int)param_1 - (int)scrVarPub.programBuffer;
   MemFile_WriteData(param_2,4,local_30);
-  __restgprlr_28();
   return;
 }
 
 
 // 8253FE48  Scr_ReadCodepos  (script/scr_readwrite.cpp:147)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 char * Scr_ReadCodepos(MemoryFile *param_1)
 
 {
-  MemoryFile *pMVar1;
-  int iVar2;
-  char *pcVar3;
-  ulonglong uVar4;
-  uint local_30 [12];
+  int iVar1;
+  char *pcVar2;
+  int local_30 [12];
   
-  pMVar1 = (MemoryFile *)__savegprlr_29(param_1);
-  MemFile_ReadData(pMVar1,4,local_30);
-  if ((int)local_30[0] < 0) {
+  MemFile_ReadData(param_1,4,local_30);
+  if (local_30[0] < 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_readwrite.cpp",0xad
                     ,0,"%s");
   }
-  uVar4 = ZEXT48(scrVarPub.programBuffer);
-  iVar2 = Scr_IsInOpcodeMemory((char *)(uVar4 + local_30[0]));
-  if (iVar2 == 0) {
+  pcVar2 = scrVarPub.programBuffer + local_30[0];
+  iVar1 = Scr_IsInOpcodeMemory(pcVar2);
+  if (iVar1 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_readwrite.cpp",0xb6
                     ,0,"%s");
   }
-  pcVar3 = (char *)__restgprlr_29(uVar4 + local_30[0]);
-  return pcVar3;
+  return pcVar2;
 }
 
 
@@ -295,6 +294,8 @@ LAB_8253ffa4:
 
 // 8253FFB0  WriteId  (script/scr_readwrite.cpp:261)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Removing unreachable block (ram,0x8254006c) */
 
 void WriteId(uint param_1,uint param_2,MemoryFile *param_3)
@@ -302,203 +303,194 @@ void WriteId(uint param_1,uint param_2,MemoryFile *param_3)
 {
   ushort uVar1;
   ushort *puVar2;
-  int iVar3;
-  uint uVar4;
-  ulonglong uVar5;
+  uint uVar3;
   ushort local_40 [32];
   
-  uVar5 = (ulonglong)(int)param_2;
-  iVar3 = __savegprlr_27(param_1);
-  if ((scrVarPub.saveIdMap[iVar3] == 0) && (iVar3 != 0)) {
+  if ((scrVarPub.saveIdMap[param_1] == 0) && (param_1 != 0)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_readwrite.cpp",
                     0x10a,0,"%s");
   }
-  if ((uVar5 & 0xfffffff8) != 0) {
+  if ((param_2 & 0xfffffff8) != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_readwrite.cpp",
                     0x10b,0,"%s\n\t(opcode) = %i");
   }
-  uVar1 = scrVarPub.saveIdMap[iVar3];
-  uVar4 = Scr_CheckIdHistory((uint)uVar1);
-  uVar4 = uVar4 << 3 & -(uint)(uVar4 << 3 < 0x100);
-  local_40[0] = CONCAT11((char)uVar4 + (char)uVar5,(undefined1)local_40[0]);
+  uVar1 = scrVarPub.saveIdMap[param_1];
+  uVar3 = Scr_CheckIdHistory((uint)uVar1);
+  uVar3 = uVar3 << 3 & -(uint)(uVar3 << 3 < 0x100);
+  local_40[0] = CONCAT11((char)uVar3 + (char)param_2,(undefined1)local_40[0]);
   MemFile_WriteData(param_3,1,local_40);
-  if (uVar4 == 0) {
+  if (uVar3 == 0) {
     local_40[0] = uVar1;
     MemFile_WriteData(param_3,2,local_40);
   }
   puVar2 = &DAT_8387b8f4 + g_idHistoryIndex;
   g_idHistoryIndex = g_idHistoryIndex - 1 & 0xf;
   *puVar2 = uVar1;
-  __restgprlr_27();
   return;
 }
 
 
 // 825400F0  Scr_ReadId  (script/scr_readwrite.cpp:286)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 uint Scr_ReadId(MemoryFile *param_1,uint param_2)
 
 {
   int iVar1;
-  MemoryFile *pMVar2;
+  ulonglong uVar2;
   ulonglong uVar3;
-  ulonglong uVar4;
-  uint uVar5;
+  uint uVar4;
   short local_40 [32];
   
-  uVar4 = (ulonglong)(int)param_2;
-  pMVar2 = (MemoryFile *)__savegprlr_27(param_1);
-  uVar4 = (uVar4 & 0xffffffff) >> 3;
-  if (uVar4 == 0) {
-    MemFile_ReadData(pMVar2,2,local_40);
-    uVar3 = (ulonglong)g_idHistoryIndex;
-    uVar4 = (ulonglong)local_40[0];
+  uVar3 = (ulonglong)(param_2 >> 3);
+  if (uVar3 == 0) {
+    MemFile_ReadData(param_1,2,local_40);
+    uVar2 = (ulonglong)g_idHistoryIndex;
+    uVar3 = (ulonglong)local_40[0];
   }
   else {
-    uVar3 = (ulonglong)g_idHistoryIndex;
-    uVar4 = (ulonglong)
+    uVar2 = (ulonglong)g_idHistoryIndex;
+    uVar3 = (ulonglong)
             *(ushort *)
-             ((int)&DAT_8387b8f4 + ((uint)(((uVar4 + 1 >> 1) + uVar3 & 0xffffffff) << 1) & 0x1e)) +
-            (uVar4 & 1);
+             ((int)&DAT_8387b8f4 + ((uint)(((uVar3 + 1 >> 1) + uVar2 & 0xffffffff) << 1) & 0x1e)) +
+            (uVar3 & 1);
   }
-  if ((uVar4 & 0xffffffff) == 0) {
-    uVar5 = 0;
+  if ((uVar3 & 0xffffffff) == 0) {
+    uVar4 = 0;
   }
   else {
-    iVar1 = (int)((uVar4 & 0xffffffff) << 1);
-    uVar5 = (uint)*(ushort *)((int)scrVarPub.saveIdMapRev + iVar1);
-    if (uVar5 == 0) {
-      uVar5 = AllocObject();
-      *(short *)((int)scrVarPub.saveIdMapRev + iVar1) = (short)uVar5;
+    iVar1 = (int)((uVar3 & 0xffffffff) << 1);
+    uVar4 = (uint)*(ushort *)((int)scrVarPub.saveIdMapRev + iVar1);
+    if (uVar4 == 0) {
+      uVar4 = AllocObject();
+      *(short *)((int)scrVarPub.saveIdMapRev + iVar1) = (short)uVar4;
     }
-    AddRefToObject(uVar5);
-    uVar3 = (ulonglong)g_idHistoryIndex;
+    AddRefToObject(uVar4);
+    uVar2 = (ulonglong)g_idHistoryIndex;
   }
-  g_idHistoryIndex = (int)uVar3 - 1U & 0xf;
-  *(short *)((int)&DAT_8387b8f4 + (int)(uVar3 << 1)) = (short)uVar4;
-  uVar5 = __restgprlr_27(uVar5);
-  return uVar5;
+  g_idHistoryIndex = (int)uVar2 - 1U & 0xf;
+  *(short *)((int)&DAT_8387b8f4 + (int)(uVar2 << 1)) = (short)uVar3;
+  return uVar4;
 }
 
 
 // 825401C0  WriteStack  (script/scr_readwrite.cpp:320)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void WriteStack(VariableStackBuffer *param_1,MemoryFile *param_2)
 
 {
-  byte bVar1;
-  VariableUnion *pVVar2;
-  undefined4 *puVar3;
-  short sVar4;
-  byte *pbVar5;
-  short local_30 [24];
+  VariableUnion *pVVar1;
+  byte bVar2;
+  ushort uVar3;
+  char *pcVar4;
+  ushort local_30 [24];
   
-  puVar3 = (undefined4 *)__savegprlr_28(param_1);
-  if (puVar3 == (undefined4 *)0x0) {
+  if (param_1 == (VariableStackBuffer *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_readwrite.cpp",
                     0x146,0,"%s");
   }
-  sVar4 = *(short *)(puVar3 + 1);
-  local_30[0] = sVar4;
+  uVar3 = param_1->size;
+  local_30[0] = uVar3;
   MemFile_WriteData(param_2,2,local_30);
-  WriteCodepos((char *)*puVar3,param_2);
-  WriteId((uint)*(ushort *)(puVar3 + 2),0,param_2);
-  local_30[0] = CONCAT11(*(undefined1 *)((int)puVar3 + 10),(undefined1)local_30[0]);
+  WriteCodepos(param_1->pos,param_2);
+  WriteId((uint)param_1->localId,0,param_2);
+  local_30[0] = CONCAT11(param_1->time,(undefined1)local_30[0]);
   MemFile_WriteData(param_2,1,local_30);
-  pbVar5 = (byte *)((int)puVar3 + 0xb);
-  for (; sVar4 != 0; sVar4 = sVar4 + -1) {
-    bVar1 = *pbVar5;
-    pVVar2 = (VariableUnion *)(pbVar5 + 1);
-    pbVar5 = pbVar5 + 5;
-    DoSaveEntryInternal((uint)bVar1,*pVVar2,param_2);
+  pcVar4 = param_1->buf;
+  for (; uVar3 != 0; uVar3 = uVar3 - 1) {
+    bVar2 = *pcVar4;
+    pVVar1 = (VariableUnion *)(pcVar4 + 1);
+    pcVar4 = pcVar4 + 5;
+    DoSaveEntryInternal((uint)bVar2,*pVVar1,param_2);
   }
-  __restgprlr_28();
   return;
 }
 
 
 // 82540298  Scr_ReadStack  (script/scr_readwrite.cpp:348)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
+
 VariableStackBuffer * Scr_ReadStack(MemoryFile *param_1)
 
 {
   ushort uVar1;
-  MemoryFile *pMVar2;
-  undefined4 *puVar3;
-  char *pcVar4;
+  VariableStackBuffer *pVVar2;
+  char *pcVar3;
+  uint uVar4;
   uint uVar5;
-  VariableStackBuffer *pVVar6;
-  uint uVar7;
-  undefined1 *puVar8;
   ushort local_60 [4];
   VariableUnion local_58;
   undefined4 local_54;
   
-  pMVar2 = (MemoryFile *)__savegprlr_24(param_1);
-  MemFile_ReadData(pMVar2,2,local_60);
+  MemFile_ReadData(param_1,2,local_60);
   uVar1 = local_60[0];
-  uVar7 = (uint)local_60[0];
-  uVar5 = uVar7 * 5 + 0xb;
-  if (uVar5 != (uVar5 & 0xffff)) {
+  uVar5 = (uint)local_60[0];
+  uVar4 = uVar5 * 5 + 0xb;
+  if (uVar4 != (uVar4 & 0xffff)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_readwrite.cpp",
                     0x167,0,"%s");
   }
-  puVar3 = MT_Alloc(uVar5,1);
+  pVVar2 = MT_Alloc(uVar4,1);
   scrVarPub.numScriptThreads = scrVarPub.numScriptThreads + 1;
-  *(ushort *)(puVar3 + 1) = uVar1;
-  *(short *)((int)puVar3 + 6) = (short)uVar5;
-  pcVar4 = Scr_ReadCodepos(pMVar2);
-  if (pcVar4 == (char *)0x0) {
+  pVVar2->size = uVar1;
+  pVVar2->bufLen = (ushort)uVar4;
+  pcVar3 = Scr_ReadCodepos(param_1);
+  if (pcVar3 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_readwrite.cpp",
                     0x172,0,"%s");
   }
-  *puVar3 = pcVar4;
-  MemFile_ReadData(pMVar2,1,local_60);
-  uVar5 = Scr_ReadId(pMVar2,(uint)local_60[0]._0_1_);
-  *(short *)(puVar3 + 2) = (short)uVar5;
-  MemFile_ReadData(pMVar2,1,local_60);
-  puVar8 = (undefined1 *)((int)puVar3 + 0xb);
-  *(byte *)((int)puVar3 + 10) = local_60[0]._0_1_;
-  for (; uVar7 != 0; uVar7 = uVar7 + 0xffff & 0xffff) {
-    Scr_DoLoadEntryInternal((VariableValue *)&local_58,pMVar2);
-    *puVar8 = (char)local_54;
-    *(VariableUnion *)(puVar8 + 1) = local_58;
-    puVar8 = puVar8 + 5;
+  pVVar2->pos = pcVar3;
+  MemFile_ReadData(param_1,1,local_60);
+  uVar4 = Scr_ReadId(param_1,(uint)local_60[0]._0_1_);
+  pVVar2->localId = (ushort)uVar4;
+  MemFile_ReadData(param_1,1,local_60);
+  pcVar3 = pVVar2->buf;
+  pVVar2->time = local_60[0]._0_1_;
+  for (; uVar5 != 0; uVar5 = uVar5 + 0xffff & 0xffff) {
+    Scr_DoLoadEntryInternal((VariableValue *)&local_58,param_1);
+    *pcVar3 = (char)local_54;
+    *(VariableUnion *)(pcVar3 + 1) = local_58;
+    pcVar3 = pcVar3 + 5;
   }
-  pVVar6 = (VariableStackBuffer *)__restgprlr_24(puVar3);
-  return pVVar6;
+  return pVVar2;
 }
 
 
 // 82541878  AddSaveStackInternal  (script/scr_readwrite.cpp:399)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void AddSaveStackInternal(VariableStackBuffer *param_1)
 
 {
-  byte bVar1;
-  ushort uVar2;
-  VariableUnion *pVVar3;
-  int iVar4;
-  uint uVar5;
-  short sVar6;
-  byte *pbVar7;
+  VariableUnion *pVVar1;
+  byte bVar2;
+  uint uVar3;
+  ushort uVar4;
+  char *pcVar5;
   
-  iVar4 = __savegprlr_29(param_1);
-  uVar2 = *(ushort *)(iVar4 + 8);
-  uVar5 = (uint)uVar2;
-  if ((uVar5 != 0) && (scrVarPub.saveIdMap[uVar5] == 0)) {
+  uVar4 = param_1->localId;
+  uVar3 = (uint)uVar4;
+  if ((uVar3 != 0) && (scrVarPub.saveIdMap[uVar3] == 0)) {
     scrVarPub.savecount = scrVarPub.savecount + 1;
-    scrVarPub.saveIdMap[uVar5] = scrVarPub.savecount;
-    scrVarPub.saveIdMapRev[scrVarPub.savecount] = uVar2;
+    scrVarPub.saveIdMap[uVar3] = scrVarPub.savecount;
+    scrVarPub.saveIdMapRev[scrVarPub.savecount] = uVar4;
   }
-  pbVar7 = (byte *)(iVar4 + 0xb);
-  for (sVar6 = *(short *)(iVar4 + 4); sVar6 != 0; sVar6 = sVar6 + -1) {
-    bVar1 = *pbVar7;
-    pVVar3 = (VariableUnion *)(pbVar7 + 1);
-    pbVar7 = pbVar7 + 5;
-    AddSaveEntryInternal((uint)bVar1,*pVVar3);
+  pcVar5 = param_1->buf;
+  for (uVar4 = param_1->size; uVar4 != 0; uVar4 = uVar4 - 1) {
+    bVar2 = *pcVar5;
+    pVVar1 = (VariableUnion *)(pcVar5 + 1);
+    pcVar5 = pcVar5 + 5;
+    AddSaveEntryInternal((uint)bVar2,*pVVar1);
   }
-  __restgprlr_29();
   return;
 }
 
@@ -600,55 +592,51 @@ void AddSaveEntry(ChildVariableValue *param_1)
 
 // 825419F8  DoSaveEntry  (script/scr_readwrite.cpp:463)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void DoSaveEntry(VariableValue *param_1,uint param_2,bool param_3,MemoryFile *param_4)
 
 {
   VariableUnion VVar1;
-  VariableUnion *pVVar3;
-  uint uVar4;
+  uint uVar3;
   VariableValue VVar2;
-  char *pcVar5;
-  ulonglong uVar6;
-  ulonglong uVar7;
+  char *pcVar4;
   VariableUnion local_40 [2];
   VariableUnion local_38;
   int iStack_34;
   
-  uVar7 = (ulonglong)param_3;
-  uVar6 = (ulonglong)(int)param_2;
-  pVVar3 = (VariableUnion *)__savegprlr_27(param_1);
-  if (pVVar3 == (VariableUnion *)0x0) {
+  if (param_1 == (VariableValue *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_readwrite.cpp",
                     0x1d2,0,"%s");
   }
-  uVar4 = MemFile_GetUsedSize(param_4);
-  ProfMem_Begin("DoSaveEntry",uVar4);
-  uVar4 = MemFile_GetUsedSize(param_4);
-  ProfMem_Begin("DoSaveEntryInternal",uVar4);
-  DoSaveEntryInternal(pVVar3[1].uintValue,*pVVar3,param_4);
-  uVar4 = MemFile_GetUsedSize(param_4);
-  ProfMem_End(uVar4);
-  if ((uVar7 & 0xff) == 0) {
-    uVar4 = MemFile_GetUsedSize(param_4);
-    ProfMem_Begin("non-array",uVar4);
-    if ((uVar6 & 0xff000000) != 0) {
+  uVar3 = MemFile_GetUsedSize(param_4);
+  ProfMem_Begin("DoSaveEntry",uVar3);
+  uVar3 = MemFile_GetUsedSize(param_4);
+  ProfMem_Begin("DoSaveEntryInternal",uVar3);
+  DoSaveEntryInternal(param_1->type,param_1->u,param_4);
+  uVar3 = MemFile_GetUsedSize(param_4);
+  ProfMem_End(uVar3);
+  if (!param_3) {
+    uVar3 = MemFile_GetUsedSize(param_4);
+    ProfMem_Begin("non-array",uVar3);
+    if ((param_2 & 0xff000000) != 0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_readwrite.cpp",
                       0x1dd,0,"%s\n\t(name) = %i");
     }
-    local_40[0].intValue._0_1_ = (char)uVar6;
+    local_40[0].intValue._0_1_ = (char)param_2;
     MemFile_WriteData(param_4,1,local_40);
-    local_40[0].intValue._0_1_ = (char)(uVar6 >> 8);
+    local_40[0].intValue._0_1_ = (char)(param_2 >> 8);
     MemFile_WriteData(param_4,1,local_40);
-    local_40[0].intValue._0_1_ = (char)(uVar6 >> 0x10);
+    local_40[0].intValue._0_1_ = (char)(param_2 >> 0x10);
     MemFile_WriteData(param_4,1,local_40);
-    uVar4 = MemFile_GetUsedSize(param_4);
-    ProfMem_End(uVar4);
-    uVar4 = MemFile_GetUsedSize(param_4);
-    ProfMem_End(uVar4);
-    __restgprlr_27();
+    uVar3 = MemFile_GetUsedSize(param_4);
+    ProfMem_End(uVar3);
+    uVar3 = MemFile_GetUsedSize(param_4);
+    ProfMem_End(uVar3);
     return;
   }
-  VVar2 = Scr_GetArrayIndexValue((uint)uVar6);
+  VVar2 = Scr_GetArrayIndexValue(param_2);
   iStack_34 = VVar2.type;
   local_38 = VVar2.u;
   VVar1.intValue = local_38.intValue;
@@ -658,26 +646,24 @@ void DoSaveEntry(VariableValue *param_1,uint param_2,bool param_3,MemoryFile *pa
   }
   else {
     if (iStack_34 == 2) {
-      uVar4 = MemFile_GetUsedSize(param_4);
-      ProfMem_Begin("string array index",uVar4);
+      uVar3 = MemFile_GetUsedSize(param_4);
+      ProfMem_Begin("string array index",uVar3);
       local_40[0].intValue._0_1_ = 4;
       MemFile_WriteData(param_4,1,local_40);
-      pcVar5 = SL_ConvertToString(local_38.uintValue & 0xffff);
-      MemFile_WriteCString(param_4,pcVar5);
-      uVar4 = MemFile_GetUsedSize(param_4);
-      ProfMem_End(uVar4);
-      uVar4 = MemFile_GetUsedSize(param_4);
-      ProfMem_End(uVar4);
-      __restgprlr_27();
+      pcVar4 = SL_ConvertToString(local_38.uintValue & 0xffff);
+      MemFile_WriteCString(param_4,pcVar4);
+      uVar3 = MemFile_GetUsedSize(param_4);
+      ProfMem_End(uVar3);
+      uVar3 = MemFile_GetUsedSize(param_4);
+      ProfMem_End(uVar3);
       return;
     }
     if (iStack_34 == 6) {
       if (local_38.intValue == 0) {
         local_40[0].uintValue = local_40[0].uintValue & 0xffffff;
         MemFile_WriteData(param_4,1,local_40);
-        uVar4 = MemFile_GetUsedSize(param_4);
-        ProfMem_End(uVar4);
-        __restgprlr_27();
+        uVar3 = MemFile_GetUsedSize(param_4);
+        ProfMem_End(uVar3);
         return;
       }
       if ((-0x81 < local_38.intValue) && (local_38.intValue < 0x80)) {
@@ -685,9 +671,8 @@ void DoSaveEntry(VariableValue *param_1,uint param_2,bool param_3,MemoryFile *pa
         MemFile_WriteData(param_4,1,local_40);
         local_40[0].intValue._0_1_ = VVar2.u._3_1_;
         MemFile_WriteData(param_4,1,local_40);
-        uVar4 = MemFile_GetUsedSize(param_4);
-        ProfMem_End(uVar4);
-        __restgprlr_27();
+        uVar3 = MemFile_GetUsedSize(param_4);
+        ProfMem_End(uVar3);
         return;
       }
       if ((-0x8001 < local_38.intValue) && (local_38.intValue < 0x8000)) {
@@ -695,32 +680,28 @@ void DoSaveEntry(VariableValue *param_1,uint param_2,bool param_3,MemoryFile *pa
         MemFile_WriteData(param_4,1,local_40);
         local_40[0].intValue._0_2_ = VVar2.u._2_2_;
         MemFile_WriteData(param_4,2,local_40);
-        uVar4 = MemFile_GetUsedSize(param_4);
-        ProfMem_End(uVar4);
-        __restgprlr_27();
+        uVar3 = MemFile_GetUsedSize(param_4);
+        ProfMem_End(uVar3);
         return;
       }
       local_40[0].intValue._0_1_ = 3;
       MemFile_WriteData(param_4,1,local_40);
       local_40[0].intValue = VVar1.intValue;
       MemFile_WriteData(param_4,4,local_40);
-      uVar4 = MemFile_GetUsedSize(param_4);
-      ProfMem_End(uVar4);
-      __restgprlr_27();
+      uVar3 = MemFile_GetUsedSize(param_4);
+      ProfMem_End(uVar3);
       return;
     }
     if (alwaysfails == 0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_readwrite.cpp",
                       0x20c,1,"bad case");
-      uVar4 = MemFile_GetUsedSize(param_4);
-      ProfMem_End(uVar4);
-      __restgprlr_27();
+      uVar3 = MemFile_GetUsedSize(param_4);
+      ProfMem_End(uVar3);
       return;
     }
   }
-  uVar4 = MemFile_GetUsedSize(param_4);
-  ProfMem_End(uVar4);
-  __restgprlr_27();
+  uVar3 = MemFile_GetUsedSize(param_4);
+  ProfMem_End(uVar3);
   return;
 }
 
@@ -859,6 +840,9 @@ uint Scr_DoLoadEntry(VariableValue *param_1,bool param_2,MemoryFile *param_3)
 
 // 82541D58  AddSaveObjectChildren  (script/scr_readwrite.cpp:643)
 
+/* WARNING: Function: __savegprlr_19 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_19 replaced with injection: xenon_save_restore */
+
 void AddSaveObjectChildren(uint param_1)
 
 {
@@ -866,50 +850,48 @@ void AddSaveObjectChildren(uint param_1)
   uchar uVar2;
   ushort uVar3;
   <unnamed_type_f> <Var4;
-  int iVar5;
-  uint uVar7;
-  bool bVar9;
-  uint uVar8;
-  VariableValue VVar6;
+  bool bVar7;
+  uint uVar6;
+  VariableValue VVar5;
+  int iVar8;
+  uint uVar9;
   uint uVar10;
-  uint uVar11;
   VariableUnion local_80;
   int iStack_7c;
   
-  uVar7 = __savegprlr_19(param_1);
-  bVar9 = IsValid(scrVarGlob.objectVariableValue + uVar7);
-  if (!bVar9) {
+  bVar7 = IsValid(scrVarGlob.objectVariableValue + param_1);
+  if (!bVar7) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_readwrite.cpp",
                     0x28e,0,"%s");
   }
-  bVar1 = *(byte *)((int)&scrVarGlob.objectVariableValue[uVar7].w + 3);
-  uVar10 = (uint)bVar1;
-  uVar11 = (uVar7 & 1) * 0xc800;
-  for (uVar8 = FindLastSibling(uVar7); uVar8 != 0; uVar8 = FindPrevSibling(uVar11,uVar8)) {
-    iVar5 = uVar8 + uVar11;
-    bVar9 = IsValid(scrVarGlob.childVariableValue + iVar5);
-    if (!bVar9) {
+  bVar1 = *(byte *)((int)&scrVarGlob.objectVariableValue[param_1].w + 3);
+  uVar9 = (uint)bVar1;
+  uVar10 = (param_1 & 1) * 0xc800;
+  for (uVar6 = FindLastSibling(param_1); uVar6 != 0; uVar6 = FindPrevSibling(uVar10,uVar6)) {
+    iVar8 = uVar6 + uVar10;
+    bVar7 = IsValid(scrVarGlob.childVariableValue + iVar8);
+    if (!bVar7) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_readwrite.cpp",
                       0x297,0,"%s");
     }
     if (bVar1 == 0x17) {
-      if (scrVarGlob.childVariableValue[iVar5].k.keys.parentId == 0) {
+      if (scrVarGlob.childVariableValue[iVar8].k.keys.parentId == 0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_variable_local.h"
                         ,0xc5,0,"%s");
       }
-      VVar6 = Scr_GetArrayIndexValue
-                        ((uint)scrVarGlob.childVariableValue[iVar5].k.keys.name_hi * 0x100 +
-                         (uint)scrVarGlob.childVariableValue[iVar5].name_lo);
-      iStack_7c = VVar6.type;
-      if (((iStack_7c == 1) && (local_80 = VVar6.u, local_80.intValue != 0)) &&
+      VVar5 = Scr_GetArrayIndexValue
+                        ((uint)scrVarGlob.childVariableValue[iVar8].k.keys.name_hi * 0x100 +
+                         (uint)scrVarGlob.childVariableValue[iVar8].name_lo);
+      iStack_7c = VVar5.type;
+      if (((iStack_7c == 1) && (local_80 = VVar5.u, local_80.intValue != 0)) &&
          (scrVarPub.saveIdMap[local_80.intValue] == 0)) {
         scrVarPub.savecount = scrVarPub.savecount + 1;
         scrVarPub.saveIdMap[local_80.intValue] = scrVarPub.savecount;
-        scrVarPub.saveIdMapRev[scrVarPub.savecount] = VVar6.u._2_2_;
+        scrVarPub.saveIdMapRev[scrVarPub.savecount] = VVar5.u._2_2_;
       }
     }
-    uVar2 = scrVarGlob.childVariableValue[iVar5].type;
-    <Var4 = scrVarGlob.childVariableValue[iVar5].u.f;
+    uVar2 = scrVarGlob.childVariableValue[iVar8].type;
+    <Var4 = scrVarGlob.childVariableValue[iVar8].u.f;
     if (uVar2 == '\x01') {
       if ((<Var4 != (<unnamed_type_f>)0x0) && (scrVarPub.saveIdMap[(int)<Var4] == 0)) {
         scrVarPub.savecount = scrVarPub.savecount + 1;
@@ -921,29 +903,29 @@ void AddSaveObjectChildren(uint param_1)
       AddSaveStackInternal((VariableStackBuffer *)<Var4);
     }
   }
-  if (uVar10 - 0x10 < 6) {
-    if (((uVar10 != 0x10) && (uVar10 != 0x11)) && (uVar10 != 0x12)) {
-      if (uVar10 == 0x13) {
-        uVar8 = scrVarGlob.objectVariableValue[uVar7].w.type;
-        uVar10 = uVar8 >> 8 & 0xffff;
-        if ((uVar10 != 0) && (scrVarPub.saveIdMap[uVar10] == 0)) {
+  if (uVar9 - 0x10 < 6) {
+    if (((uVar9 != 0x10) && (uVar9 != 0x11)) && (uVar9 != 0x12)) {
+      if (uVar9 == 0x13) {
+        uVar6 = scrVarGlob.objectVariableValue[param_1].w.type;
+        uVar9 = uVar6 >> 8 & 0xffff;
+        if ((uVar9 != 0) && (scrVarPub.saveIdMap[uVar9] == 0)) {
           scrVarPub.savecount = scrVarPub.savecount + 1;
-          scrVarPub.saveIdMap[uVar10] = scrVarPub.savecount;
-          scrVarPub.saveIdMapRev[scrVarPub.savecount] = (ushort)(uVar8 >> 8);
+          scrVarPub.saveIdMap[uVar9] = scrVarPub.savecount;
+          scrVarPub.saveIdMapRev[scrVarPub.savecount] = (ushort)(uVar6 >> 8);
         }
       }
-      else if (uVar10 == 0x14) goto LAB_82542024;
+      else if (uVar9 == 0x14) {
+        return;
+      }
     }
-    uVar3 = scrVarGlob.objectVariableValue[uVar7].u.f.next;
-    uVar7 = (uint)uVar3;
-    if ((uVar7 != 0) && (scrVarPub.saveIdMap[uVar7] == 0)) {
+    uVar3 = scrVarGlob.objectVariableValue[param_1].u.f.next;
+    uVar6 = (uint)uVar3;
+    if ((uVar6 != 0) && (scrVarPub.saveIdMap[uVar6] == 0)) {
       scrVarPub.savecount = scrVarPub.savecount + 1;
-      scrVarPub.saveIdMap[uVar7] = scrVarPub.savecount;
+      scrVarPub.saveIdMap[uVar6] = scrVarPub.savecount;
       scrVarPub.saveIdMapRev[scrVarPub.savecount] = uVar3;
     }
   }
-LAB_82542024:
-  __restgprlr_19();
   return;
 }
 
@@ -968,40 +950,42 @@ void AddSaveObjectInternal(uint param_1)
 
 // 82542030  AddSaveObject  (script/scr_readwrite.cpp:710)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void AddSaveObject(uint param_1)
 
 {
   ushort uVar1;
-  int iVar2;
+  uint uVar2;
   uint uVar3;
-  uint uVar4;
-  ushort *puVar5;
+  ushort *puVar4;
   
-  iVar2 = __savegprlr_29(param_1);
   uVar1 = scrVarPub.savecount;
-  uVar3 = (uint)scrVarPub.savecount;
-  uVar4 = uVar3;
-  if ((iVar2 != 0) && (scrVarPub.saveIdMap[iVar2] == 0)) {
+  uVar2 = (uint)scrVarPub.savecount;
+  uVar3 = uVar2;
+  if ((param_1 != 0) && (scrVarPub.saveIdMap[param_1] == 0)) {
     scrVarPub.savecount = scrVarPub.savecount + 1;
-    scrVarPub.saveIdMap[iVar2] = scrVarPub.savecount;
-    scrVarPub.saveIdMapRev[scrVarPub.savecount] = (ushort)iVar2;
-    uVar4 = (uint)scrVarPub.savecount;
+    scrVarPub.saveIdMap[param_1] = scrVarPub.savecount;
+    scrVarPub.saveIdMapRev[scrVarPub.savecount] = (ushort)param_1;
+    uVar3 = (uint)scrVarPub.savecount;
   }
-  if (uVar1 < uVar4) {
-    puVar5 = scrVarPub.saveIdMapRev + uVar3;
+  if (uVar1 < uVar3) {
+    puVar4 = scrVarPub.saveIdMapRev + uVar2;
     do {
-      puVar5 = puVar5 + 1;
-      uVar3 = uVar3 + 1;
-      AddSaveObjectChildren((uint)*puVar5);
-    } while ((int)uVar3 < (int)(uint)scrVarPub.savecount);
+      puVar4 = puVar4 + 1;
+      uVar2 = uVar2 + 1;
+      AddSaveObjectChildren((uint)*puVar4);
+    } while ((int)uVar2 < (int)(uint)scrVarPub.savecount);
   }
-  __restgprlr_29();
   return;
 }
 
 
 // 825420D0  DoSaveObjectInfo  (script/scr_readwrite.cpp:737)
 
+/* WARNING: Function: __savegprlr_20 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_20 replaced with injection: xenon_save_restore */
 /* WARNING: Removing unreachable block (ram,0x82542144) */
 
 void DoSaveObjectInfo(uint param_1,MemoryFile *param_2)
@@ -1009,114 +993,111 @@ void DoSaveObjectInfo(uint param_1,MemoryFile *param_2)
 {
   byte bVar1;
   ushort uVar2;
-  uint uVar3;
-  bool bVar5;
-  char *pcVar4;
-  int iVar6;
+  bool bVar4;
+  char *pcVar3;
+  int iVar5;
+  uint uVar6;
   uint uVar7;
-  uint uVar8;
-  short sVar9;
-  undefined1 uVar10;
+  short sVar8;
+  undefined1 uVar9;
   VariableUnion local_70;
   uint local_6c;
   
-  uVar3 = __savegprlr_20(param_1);
-  bVar5 = IsValid(scrVarGlob.objectVariableValue + uVar3);
-  if (!bVar5) {
+  bVar4 = IsValid(scrVarGlob.objectVariableValue + param_1);
+  if (!bVar4) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_readwrite.cpp",
                     0x2ef,0,"%s");
   }
-  bVar1 = *(byte *)((int)&scrVarGlob.objectVariableValue[uVar3].w + 3);
-  uVar8 = (uint)bVar1;
-  if (uVar8 - 0x10 < 7) {
-    if (uVar8 == 0x11) {
-      uVar8 = MemFile_GetUsedSize(param_2);
-      ProfMem_Begin("VAR_NOTIFY_THREAD",uVar8);
-      WriteId((uint)scrVarGlob.objectVariableValue[uVar3].u.f.next,2,param_2);
-      pcVar4 = SL_ConvertToString(scrVarGlob.objectVariableValue[uVar3].w.type >> 8 & 0xffff);
-      MemFile_WriteCString(param_2,pcVar4);
-      uVar8 = MemFile_GetUsedSize(param_2);
-      ProfMem_End(uVar8);
+  bVar1 = *(byte *)((int)&scrVarGlob.objectVariableValue[param_1].w + 3);
+  uVar7 = (uint)bVar1;
+  if (uVar7 - 0x10 < 7) {
+    if (uVar7 == 0x11) {
+      uVar7 = MemFile_GetUsedSize(param_2);
+      ProfMem_Begin("VAR_NOTIFY_THREAD",uVar7);
+      WriteId((uint)scrVarGlob.objectVariableValue[param_1].u.f.next,2,param_2);
+      pcVar3 = SL_ConvertToString(scrVarGlob.objectVariableValue[param_1].w.type >> 8 & 0xffff);
+      MemFile_WriteCString(param_2,pcVar3);
+      uVar7 = MemFile_GetUsedSize(param_2);
+      ProfMem_End(uVar7);
       goto LAB_825422b4;
     }
-    if (uVar8 == 0x12) {
-      WriteId((uint)scrVarGlob.objectVariableValue[uVar3].u.f.next,3,param_2);
-      local_70.uintValue = scrVarGlob.objectVariableValue[uVar3].w.type >> 8;
-      iVar6 = 4;
+    if (uVar7 == 0x12) {
+      WriteId((uint)scrVarGlob.objectVariableValue[param_1].u.f.next,3,param_2);
+      local_70.uintValue = scrVarGlob.objectVariableValue[param_1].w.type >> 8;
+      iVar5 = 4;
     }
     else {
-      if (uVar8 == 0x13) {
-        WriteId((uint)scrVarGlob.objectVariableValue[uVar3].u.f.next,4,param_2);
-        WriteId(scrVarGlob.objectVariableValue[uVar3].w.type >> 8 & 0xffff,0,param_2);
+      if (uVar7 == 0x13) {
+        WriteId((uint)scrVarGlob.objectVariableValue[param_1].u.f.next,4,param_2);
+        WriteId(scrVarGlob.objectVariableValue[param_1].w.type >> 8 & 0xffff,0,param_2);
         goto LAB_825422b4;
       }
-      if (uVar8 == 0x14) goto LAB_8254229c;
-      if (uVar8 == 0x15) {
-        WriteId((uint)scrVarGlob.objectVariableValue[uVar3].u.f.next,5,param_2);
+      if (uVar7 == 0x14) goto LAB_8254229c;
+      if (uVar7 == 0x15) {
+        WriteId((uint)scrVarGlob.objectVariableValue[param_1].u.f.next,5,param_2);
         goto LAB_825422b4;
       }
-      if (uVar8 == 0x10) {
-        WriteId((uint)scrVarGlob.objectVariableValue[uVar3].u.f.next,1,param_2);
+      if (uVar7 == 0x10) {
+        WriteId((uint)scrVarGlob.objectVariableValue[param_1].u.f.next,1,param_2);
         goto LAB_825422b4;
       }
       local_70.intValue._0_1_ = 0xb0;
       MemFile_WriteData(param_2,1,&local_70);
-      local_70.intValue._0_2_ = scrVarGlob.objectVariableValue[uVar3].u.f.next;
+      local_70.intValue._0_2_ = scrVarGlob.objectVariableValue[param_1].u.f.next;
       MemFile_WriteData(param_2,2,&local_70);
-      iVar6 = 2;
-      local_70.intValue._0_2_ = (short)(scrVarGlob.objectVariableValue[uVar3].w.type >> 8);
+      iVar5 = 2;
+      local_70.intValue._0_2_ = (short)(scrVarGlob.objectVariableValue[param_1].w.type >> 8);
     }
   }
   else {
 LAB_8254229c:
     local_70.uintValue._0_1_ = bVar1 << 3;
-    iVar6 = 1;
+    iVar5 = 1;
   }
-  MemFile_WriteData(param_2,iVar6,&local_70);
+  MemFile_WriteData(param_2,iVar5,&local_70);
 LAB_825422b4:
-  uVar8 = MemFile_GetUsedSize(param_2);
-  ProfMem_Begin("children",uVar8);
-  uVar7 = (uVar3 & 1) * 0xc800;
-  sVar9 = 0;
-  for (uVar8 = FindFirstSibling(uVar3); uVar8 != 0; uVar8 = FindNextSibling(uVar7,uVar8)) {
-    sVar9 = sVar9 + 1;
+  uVar7 = MemFile_GetUsedSize(param_2);
+  ProfMem_Begin("children",uVar7);
+  uVar6 = (param_1 & 1) * 0xc800;
+  sVar8 = 0;
+  for (uVar7 = FindFirstSibling(param_1); uVar7 != 0; uVar7 = FindNextSibling(uVar6,uVar7)) {
+    sVar8 = sVar8 + 1;
   }
-  local_70.intValue._0_2_ = sVar9;
+  local_70.intValue._0_2_ = sVar8;
   MemFile_WriteData(param_2,2,&local_70);
-  for (uVar8 = FindLastSibling(uVar3); uVar8 != 0; uVar8 = FindPrevSibling(uVar7,uVar8)) {
-    iVar6 = uVar8 + uVar7;
-    bVar5 = IsValid(scrVarGlob.childVariableValue + iVar6);
-    if (!bVar5) {
+  for (uVar7 = FindLastSibling(param_1); uVar7 != 0; uVar7 = FindPrevSibling(uVar6,uVar7)) {
+    iVar5 = uVar7 + uVar6;
+    bVar4 = IsValid(scrVarGlob.childVariableValue + iVar5);
+    if (!bVar4) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_readwrite.cpp",
                       0x32b,0,"%s");
     }
-    if (scrVarGlob.childVariableValue[iVar6].k.keys.parentId == 0) {
+    if (scrVarGlob.childVariableValue[iVar5].k.keys.parentId == 0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_variable_local.h"
                       ,0xc5,0,"%s");
     }
-    local_70 = *(VariableUnion *)(scrVarGlob.childVariableValue + iVar6);
-    local_6c = (uint)scrVarGlob.childVariableValue[iVar6].type;
+    local_70 = *(VariableUnion *)(scrVarGlob.childVariableValue + iVar5);
+    local_6c = (uint)scrVarGlob.childVariableValue[iVar5].type;
     DoSaveEntry((VariableValue *)&local_70,
-                (uint)scrVarGlob.childVariableValue[iVar6].k.keys.name_hi * 0x100 +
-                (uint)scrVarGlob.childVariableValue[iVar6].name_lo,bVar1 == 0x17,param_2);
+                (uint)scrVarGlob.childVariableValue[iVar5].k.keys.name_hi * 0x100 +
+                (uint)scrVarGlob.childVariableValue[iVar5].name_lo,bVar1 == 0x17,param_2);
   }
-  uVar8 = MemFile_GetUsedSize(param_2);
-  ProfMem_End(uVar8);
+  uVar7 = MemFile_GetUsedSize(param_2);
+  ProfMem_End(uVar7);
   if (scrVarPub.developer != false) {
-    uVar2 = g_debugCallStack[uVar3];
+    uVar2 = g_debugCallStack[param_1];
     while( true ) {
-      uVar10 = 0;
-      if ((uVar2 == 0) || (uVar10 = 1, uVar2 == 1)) break;
+      uVar9 = 0;
+      if ((uVar2 == 0) || (uVar9 = 1, uVar2 == 1)) break;
       local_70.intValue._0_1_ = 2;
       MemFile_WriteData(param_2,1,&local_70);
       local_70 = (VariableUnion)((VariableUnion *)(g_debugCallStackEntry + uVar2))->intValue;
       uVar2 = g_debugCallStackEntry2[uVar2].next;
       MemFile_WriteData(param_2,4,&local_70);
     }
-    local_70.intValue._0_1_ = uVar10;
+    local_70.intValue._0_1_ = uVar9;
     MemFile_WriteData(param_2,1,&local_70);
   }
-  __restgprlr_20();
   return;
 }
 
@@ -1143,28 +1124,27 @@ uint Scr_ConvertObjectToSave(uint param_1)
 
 // 82540790  Scr_ConvertObjectFromLoad  (script/scr_readwrite.cpp:863)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 uint Scr_ConvertObjectFromLoad(uint param_1)
 
 {
-  int iVar1;
-  uint uVar2;
+  uint uVar1;
   
-  iVar1 = __savegprlr_29(param_1);
-  if (iVar1 == 0) {
-    uVar2 = __restgprlr_29();
-    return uVar2;
+  if (param_1 == 0) {
+    return 0;
   }
-  uVar2 = (uint)scrVarPub.saveIdMapRev[iVar1];
-  if (uVar2 == 0) {
-    uVar2 = AllocObject();
-    scrVarPub.saveIdMapRev[iVar1] = (ushort)uVar2;
+  uVar1 = (uint)scrVarPub.saveIdMapRev[param_1];
+  if (uVar1 == 0) {
+    uVar1 = AllocObject();
+    scrVarPub.saveIdMapRev[param_1] = (ushort)uVar1;
   }
-  AddRefToObject(uVar2);
+  AddRefToObject(uVar1);
   if (scrVarDebugPub != (scrVarDebugPub_t *)0x0) {
-    scrVarDebugPub->extRefCount[uVar2] = scrVarDebugPub->extRefCount[uVar2] + 1;
+    scrVarDebugPub->extRefCount[uVar1] = scrVarDebugPub->extRefCount[uVar1] + 1;
   }
-  uVar2 = __restgprlr_29(uVar2);
-  return uVar2;
+  return uVar1;
 }
 
 
@@ -1194,34 +1174,37 @@ ushort Scr_ConvertThreadToSave(ushort param_1)
 
 // 82540818  Scr_ConvertThreadFromLoad  (script/scr_readwrite.cpp:900)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 ushort Scr_ConvertThreadFromLoad(ushort param_1)
 
 {
   ushort uVar1;
   uint uVar2;
   
-  uVar1 = __savegprlr_29(param_1);
-  if (uVar1 == 0) {
-    uVar1 = __restgprlr_29(0);
-    return uVar1;
+  uVar2 = (uint)param_1;
+  if (uVar2 == 0) {
+    return 0;
   }
-  if (scrVarPub.saveIdMapRev[uVar1] == 0) {
+  if (scrVarPub.saveIdMapRev[uVar2] == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_readwrite.cpp",
                     0x388,0,"%s");
   }
-  uVar2 = (uint)scrVarPub.saveIdMapRev[uVar1];
+  uVar1 = scrVarPub.saveIdMapRev[uVar2];
   scrVarPub.ext_threadcount = scrVarPub.ext_threadcount + 1;
-  AddRefToObject((uint)scrVarPub.saveIdMapRev[uVar1]);
+  AddRefToObject((uint)uVar1);
   if (scrVarDebugPub != (scrVarDebugPub_t *)0x0) {
-    scrVarDebugPub->extRefCount[uVar2] = scrVarDebugPub->extRefCount[uVar2] + 1;
+    scrVarDebugPub->extRefCount[uVar1] = scrVarDebugPub->extRefCount[uVar1] + 1;
   }
-  uVar1 = __restgprlr_29(uVar2);
   return uVar1;
 }
 
 
 // 825408E0  Scr_DoLoadObjectInfo  (script/scr_readwrite.cpp:923)
 
+/* WARNING: Function: __savegprlr_19 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_19 replaced with injection: xenon_save_restore */
 /* WARNING: Removing unreachable block (ram,0x82540b70) */
 
 void Scr_DoLoadObjectInfo(uint param_1,MemoryFile *param_2)
@@ -1229,157 +1212,155 @@ void Scr_DoLoadObjectInfo(uint param_1,MemoryFile *param_2)
 {
   byte bVar1;
   DebugCallStackEntry2 *pDVar2;
+  bool bVar6;
   uint uVar3;
-  bool bVar7;
+  ushort uVar5;
   uint uVar4;
-  ushort uVar6;
-  uint uVar5;
-  int iVar8;
-  ulonglong uVar9;
-  uint uVar10;
-  DebugCallStackEntry2 *pDVar11;
+  int iVar7;
+  ulonglong uVar8;
+  uint uVar9;
   VariableUnion local_80 [2];
   VariableUnion local_78;
   int iStack_74;
   
-  uVar3 = __savegprlr_19(param_1);
-  bVar7 = IsValid(scrVarGlob.objectVariableValue + uVar3);
-  if (!bVar7) {
+  bVar6 = IsValid(scrVarGlob.objectVariableValue + param_1);
+  if (!bVar6) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_readwrite.cpp",
                     0x3aa,0,"%s");
   }
   MemFile_ReadData(param_2,1,local_80);
-  uVar10 = (byte)local_80[0]._0_1_ & 7;
-  if (uVar10 - 1 < 5) {
-    uVar4 = (uint)(byte)local_80[0]._0_1_;
-    if (uVar10 == 2) {
-      uVar10 = 0x11;
-      uVar5 = Scr_ReadId(param_2,uVar4);
-      uVar4 = scrVarGlob.objectVariableValue[uVar3].w.type;
-      scrVarGlob.objectVariableValue[uVar3].u.f.next = (ushort)uVar5;
-      if ((uVar4 & 0xffffff00) != 0) {
+  uVar9 = (byte)local_80[0]._0_1_ & 7;
+  if (uVar9 - 1 < 5) {
+    uVar3 = (uint)(byte)local_80[0]._0_1_;
+    if (uVar9 == 2) {
+      uVar9 = 0x11;
+      uVar4 = Scr_ReadId(param_2,uVar3);
+      uVar3 = scrVarGlob.objectVariableValue[param_1].w.type;
+      scrVarGlob.objectVariableValue[param_1].u.f.next = (ushort)uVar4;
+      if ((uVar3 & 0xffffff00) != 0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_readwrite.cpp",
                         0x3b9,0,"%s");
       }
-      uVar6 = Scr_ReadString(param_2);
-      scrVarGlob.objectVariableValue[uVar3].w.type =
-           (uint)uVar6 << 8 | scrVarGlob.objectVariableValue[uVar3].w.type;
+      uVar5 = Scr_ReadString(param_2);
+      scrVarGlob.objectVariableValue[param_1].w.type =
+           (uint)uVar5 << 8 | scrVarGlob.objectVariableValue[param_1].w.type;
     }
-    else if (uVar10 == 3) {
-      uVar10 = 0x12;
-      uVar5 = Scr_ReadId(param_2,uVar4);
-      uVar4 = scrVarGlob.objectVariableValue[uVar3].w.type;
-      scrVarGlob.objectVariableValue[uVar3].u.f.next = (ushort)uVar5;
-      if ((uVar4 & 0xffffff00) != 0) {
+    else if (uVar9 == 3) {
+      uVar9 = 0x12;
+      uVar4 = Scr_ReadId(param_2,uVar3);
+      uVar3 = scrVarGlob.objectVariableValue[param_1].w.type;
+      scrVarGlob.objectVariableValue[param_1].u.f.next = (ushort)uVar4;
+      if ((uVar3 & 0xffffff00) != 0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_readwrite.cpp",
                         0x3c1,0,"%s");
       }
       MemFile_ReadData(param_2,4,local_80);
-      scrVarGlob.objectVariableValue[uVar3].w.type =
-           local_80[0].uintValue << 8 | scrVarGlob.objectVariableValue[uVar3].w.type;
+      scrVarGlob.objectVariableValue[param_1].w.type =
+           local_80[0].uintValue << 8 | scrVarGlob.objectVariableValue[param_1].w.type;
     }
-    else if (uVar10 == 4) {
-      uVar10 = 0x13;
-      uVar4 = Scr_ReadId(param_2,uVar4);
-      scrVarGlob.objectVariableValue[uVar3].u.f.next = (ushort)uVar4;
+    else if (uVar9 == 4) {
+      uVar9 = 0x13;
+      uVar3 = Scr_ReadId(param_2,uVar3);
+      scrVarGlob.objectVariableValue[param_1].u.f.next = (ushort)uVar3;
       MemFile_ReadData(param_2,1,local_80);
-      uVar4 = local_80[0].uintValue >> 0x18;
-      if ((scrVarGlob.objectVariableValue[uVar3].w.type & 0xffffff00) != 0) {
+      uVar3 = local_80[0].uintValue >> 0x18;
+      if ((scrVarGlob.objectVariableValue[param_1].w.type & 0xffffff00) != 0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_readwrite.cpp",
                         0x3ca,0,"%s");
       }
-      uVar4 = Scr_ReadId(param_2,uVar4);
-      scrVarGlob.objectVariableValue[uVar3].w.type =
-           uVar4 << 8 | scrVarGlob.objectVariableValue[uVar3].w.type;
+      uVar3 = Scr_ReadId(param_2,uVar3);
+      scrVarGlob.objectVariableValue[param_1].w.type =
+           uVar3 << 8 | scrVarGlob.objectVariableValue[param_1].w.type;
     }
-    else if (uVar10 == 1) {
-      uVar10 = 0x10;
-      uVar4 = Scr_ReadId(param_2,(uint)(byte)local_80[0]._0_1_);
-      scrVarGlob.objectVariableValue[uVar3].u.f.next = (ushort)uVar4;
+    else if (uVar9 == 1) {
+      uVar9 = 0x10;
+      uVar3 = Scr_ReadId(param_2,(uint)(byte)local_80[0]._0_1_);
+      scrVarGlob.objectVariableValue[param_1].u.f.next = (ushort)uVar3;
     }
     else {
-      uVar10 = 0x15;
-      uVar4 = Scr_ReadId(param_2,uVar4);
-      scrVarGlob.objectVariableValue[uVar3].u.f.next = (ushort)uVar4;
+      uVar9 = 0x15;
+      uVar3 = Scr_ReadId(param_2,uVar3);
+      scrVarGlob.objectVariableValue[param_1].u.f.next = (ushort)uVar3;
     }
   }
   else {
     bVar1 = (byte)local_80[0]._0_1_ >> 3;
-    uVar10 = (uint)bVar1;
+    uVar9 = (uint)bVar1;
     if (bVar1 == 0x16) {
       MemFile_ReadData(param_2,2,local_80);
-      uVar10 = scrVarGlob.objectVariableValue[uVar3].w.type;
-      scrVarGlob.objectVariableValue[uVar3].u.f.next = local_80[0].intValue._0_2_;
-      if ((uVar10 & 0xffffff00) != 0) {
+      uVar9 = scrVarGlob.objectVariableValue[param_1].w.type;
+      scrVarGlob.objectVariableValue[param_1].u.f.next = local_80[0].intValue._0_2_;
+      if ((uVar9 & 0xffffff00) != 0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_readwrite.cpp",
                         0x3d9,0,"%s");
       }
       MemFile_ReadData(param_2,2,local_80);
-      scrVarGlob.objectVariableValue[uVar3].w.type =
-           (int)(short)local_80[0]._0_2_ << 8 | scrVarGlob.objectVariableValue[uVar3].w.type;
-      uVar10 = 0x16;
+      scrVarGlob.objectVariableValue[param_1].w.type =
+           (int)(short)local_80[0]._0_2_ << 8 | scrVarGlob.objectVariableValue[param_1].w.type;
+      uVar9 = 0x16;
     }
     else if (bVar1 == 0x17) {
-      scrVarGlob.objectVariableValue[uVar3].u.f.next = 0;
+      scrVarGlob.objectVariableValue[param_1].u.f.next = 0;
     }
   }
-  *(undefined1 *)((int)&scrVarGlob.objectVariableValue[uVar3].w + 3) = 0;
-  scrVarGlob.objectVariableValue[uVar3].w.type =
-       uVar10 | scrVarGlob.objectVariableValue[uVar3].w.type;
+  *(undefined1 *)((int)&scrVarGlob.objectVariableValue[param_1].w + 3) = 0;
+  scrVarGlob.objectVariableValue[param_1].w.type =
+       uVar9 | scrVarGlob.objectVariableValue[param_1].w.type;
   MemFile_ReadData(param_2,2,local_80);
-  uVar9 = (ulonglong)(ushort)local_80[0]._0_2_;
+  uVar8 = (ulonglong)(ushort)local_80[0]._0_2_;
   if (local_80[0].intValue._0_2_ != 0) {
     do {
-      uVar4 = Scr_DoLoadEntry((VariableValue *)local_80,uVar10 == 0x17,param_2);
-      uVar5 = GetVariable(uVar3,uVar4);
-      iVar8 = uVar5 + (uVar3 & 1) * 0xc800;
-      if (uVar10 == 0x17) {
-        _local_78 = Scr_GetArrayIndexValue(uVar4);
+      uVar3 = Scr_DoLoadEntry((VariableValue *)local_80,uVar9 == 0x17,param_2);
+      uVar4 = GetVariable(param_1,uVar3);
+      iVar7 = uVar4 + (param_1 & 1) * 0xc800;
+      if (uVar9 == 0x17) {
+        _local_78 = Scr_GetArrayIndexValue(uVar3);
         RemoveRefToValue(iStack_74,local_78);
       }
-      if (scrVarGlob.childVariableValue[iVar8].type != '\0') {
+      if (scrVarGlob.childVariableValue[iVar7].type != '\0') {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_readwrite.cpp",
                         0x3f7,0,"%s");
       }
-      uVar9 = uVar9 - 1;
-      scrVarGlob.childVariableValue[iVar8].type = local_80[1]._3_1_;
-      ((VariableUnion *)(scrVarGlob.childVariableValue + iVar8))->uintValue = (uint)local_80[0];
-    } while (uVar9 != 0);
+      uVar8 = uVar8 - 1;
+      scrVarGlob.childVariableValue[iVar7].type = local_80[1]._3_1_;
+      ((VariableUnion *)(scrVarGlob.childVariableValue + iVar7))->uintValue = (uint)local_80[0];
+    } while (uVar8 != 0);
   }
   if (scrVarPub.developer != false) {
-    if (g_debugCallStack[uVar3] != 0) {
+    if (g_debugCallStack[param_1] != 0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_readwrite.cpp",
                       0x405,0,"%s");
     }
     MemFile_ReadData(param_2,1,local_80);
-    uVar6 = (ushort)(byte)local_80[0]._0_1_;
-    uVar10 = g_freeDebugCallStack;
-    pDVar2 = (DebugCallStackEntry2 *)(g_debugCallStack + uVar3);
-    while ((g_freeDebugCallStack = uVar10, local_80[0].intValue._0_1_ != 0 &&
-           (uVar6 = 1, local_80[0]._0_1_ != 1))) {
-      if (uVar10 == 0) {
+    uVar5 = (ushort)(byte)local_80[0]._0_1_;
+    pDVar2 = (DebugCallStackEntry2 *)(g_debugCallStack + param_1);
+    uVar9 = g_freeDebugCallStack;
+    while ((g_freeDebugCallStack = uVar9, local_80[0].intValue._0_1_ != 0 &&
+           (uVar5 = 1, local_80[0]._0_1_ != 1))) {
+      if (uVar9 == 0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_readwrite.cpp",
                         0x412,0,"%s");
       }
-      pDVar11 = g_debugCallStackEntry2 + uVar10;
-      g_freeDebugCallStack = (uint)g_debugCallStackEntry2[uVar10].next;
+      g_freeDebugCallStack = (uint)g_debugCallStackEntry2[uVar9].next;
       MemFile_ReadData(param_2,4,&local_78);
-      pDVar11->next = 0;
-      pDVar2->next = (ushort)uVar10;
-      ((VariableUnion *)(g_debugCallStackEntry + uVar10))->intValue = (int)local_78;
+      g_debugCallStackEntry2[uVar9].next = 0;
+      pDVar2->next = (ushort)uVar9;
+      ((VariableUnion *)(g_debugCallStackEntry + uVar9))->intValue = (int)local_78;
       MemFile_ReadData(param_2,1,local_80);
-      uVar6 = 0;
-      uVar10 = g_freeDebugCallStack;
-      pDVar2 = pDVar11;
+      uVar5 = 0;
+      pDVar2 = g_debugCallStackEntry2 + uVar9;
+      uVar9 = g_freeDebugCallStack;
     }
-    pDVar2->next = uVar6;
+    pDVar2->next = uVar5;
   }
-  __restgprlr_19();
   return;
 }
 
 
 // 82542990  Scr_SavePre  (script/scr_readwrite.cpp:1059)
+
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
 
 void Scr_SavePre(int param_1)
 
@@ -1404,7 +1385,6 @@ void Scr_SavePre(int param_1)
   ushort *puVar18;
   longlong lVar19;
   
-  __savegprlr();
   Com_Memset(scrVarPub.saveIdMap,0,0x12000);
   Com_Memset(scrVarPub.saveIdMapRev,0,0x12000);
   scrVarPub.savecount = 0;
@@ -1567,7 +1547,6 @@ LAB_82542fc4:
       } while ((int)uVar16 < (int)(uint)scrVarPub.savecount);
     }
   }
-  __restgprlr();
   return;
 }
 
@@ -1638,118 +1617,119 @@ void Scr_ReadGameEntry(MemoryFile *param_1)
 
 // 825426C0  Scr_SavePost  (script/scr_readwrite.cpp:1251)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void Scr_SavePost(MemoryFile *param_1,int param_2)
 
 {
-  MemoryFile *pMVar1;
-  uint uVar2;
-  ushort *puVar3;
-  uint uVar5;
-  longlong lVar4;
+  uint uVar1;
+  ushort *puVar2;
+  uint uVar4;
+  longlong lVar3;
   uint local_40 [16];
   
-  pMVar1 = (MemoryFile *)__savegprlr_27(param_1);
   memset();
   g_idHistoryIndex = 0;
   if (param_2 != 0) {
     local_40[0] = scrVarPub.time;
-    MemFile_WriteData(pMVar1,4,local_40);
+    MemFile_WriteData(param_1,4,local_40);
   }
   local_40[0] = CONCAT22(scrVarPub.savecount,local_40[0]._2_2_);
-  MemFile_WriteData(pMVar1,2,local_40);
+  MemFile_WriteData(param_1,2,local_40);
   local_40[0] = CONCAT22(scrVarPub.savecountMark,local_40[0]._2_2_);
-  MemFile_WriteData(pMVar1,2,local_40);
-  uVar2 = MemFile_GetUsedSize(pMVar1);
-  ProfMem_Begin("DoSaveObjectInfo",uVar2);
-  uVar5 = 1;
-  uVar2 = 0;
+  MemFile_WriteData(param_1,2,local_40);
+  uVar1 = MemFile_GetUsedSize(param_1);
+  ProfMem_Begin("DoSaveObjectInfo",uVar1);
+  uVar4 = 1;
+  uVar1 = 0;
   if (scrVarPub.savecountMark != 0) {
-    puVar3 = scrVarPub.saveIdMapRev;
+    puVar2 = scrVarPub.saveIdMapRev;
     do {
-      puVar3 = puVar3 + 1;
-      DoSaveObjectInfo((uint)*puVar3,pMVar1);
-      uVar2 = (uint)scrVarPub.savecountMark;
-      uVar5 = uVar5 + 1;
-    } while (uVar5 <= uVar2);
+      puVar2 = puVar2 + 1;
+      DoSaveObjectInfo((uint)*puVar2,param_1);
+      uVar1 = (uint)scrVarPub.savecountMark;
+      uVar4 = uVar4 + 1;
+    } while (uVar4 <= uVar1);
   }
-  uVar5 = uVar2 + 1;
-  if (uVar5 <= scrVarPub.savecount) {
-    puVar3 = scrVarPub.saveIdMapRev + uVar2;
+  uVar4 = uVar1 + 1;
+  if (uVar4 <= scrVarPub.savecount) {
+    puVar2 = scrVarPub.saveIdMapRev + uVar1;
     do {
-      puVar3 = puVar3 + 1;
-      DoSaveObjectInfo((uint)*puVar3,pMVar1);
-      uVar5 = uVar5 + 1;
-    } while (uVar5 <= scrVarPub.savecount);
+      puVar2 = puVar2 + 1;
+      DoSaveObjectInfo((uint)*puVar2,param_1);
+      uVar4 = uVar4 + 1;
+    } while (uVar4 <= scrVarPub.savecount);
   }
-  uVar2 = MemFile_GetUsedSize(pMVar1);
-  ProfMem_End(uVar2);
+  uVar1 = MemFile_GetUsedSize(param_1);
+  ProfMem_End(uVar1);
   if (scrVarPub.gameId == 0) {
     local_40[0] = local_40[0] & 0xffffff;
-    MemFile_WriteData(pMVar1,1,local_40);
+    MemFile_WriteData(param_1,1,local_40);
   }
   else {
     local_40[0] = CONCAT13(1,local_40[0]._1_3_);
-    MemFile_WriteData(pMVar1,1,local_40);
+    MemFile_WriteData(param_1,1,local_40);
     DoSaveEntryInternal((uint)scrVarGlob.childVariableValue[scrVarPub.gameId].type,
-                        *(VariableUnion *)(scrVarGlob.childVariableValue + scrVarPub.gameId),pMVar1)
-    ;
+                        *(VariableUnion *)(scrVarGlob.childVariableValue + scrVarPub.gameId),param_1
+                       );
   }
   if (param_2 != 0) {
-    WriteId(scrVarPub.levelId,0,pMVar1);
-    WriteId(scrVarPub.animId,0,pMVar1);
-    WriteId(scrVarPub.freeEntList,0,pMVar1);
-    lVar4 = 6;
-    puVar3 = (ushort *)((int)mt_type_names + 0x56);
+    WriteId(scrVarPub.levelId,0,param_1);
+    WriteId(scrVarPub.animId,0,param_1);
+    WriteId(scrVarPub.freeEntList,0,param_1);
+    lVar3 = 6;
+    puVar2 = (ushort *)((int)mt_type_names + 0x56);
     do {
-      puVar3 = puVar3 + 6;
-      WriteId((uint)*puVar3,0,pMVar1);
-      lVar4 = lVar4 + -1;
-    } while (lVar4 != 0);
-    WriteId(scrVarPub.timeArrayId,0,pMVar1);
-    WriteId(scrVarPub.pauseArrayId,0,pMVar1);
-    WriteId(scrVarPub.notifyArrayId,0,pMVar1);
-    WriteId(scrVarPub.objectStackId,0,pMVar1);
+      puVar2 = puVar2 + 6;
+      WriteId((uint)*puVar2,0,param_1);
+      lVar3 = lVar3 + -1;
+    } while (lVar3 != 0);
+    WriteId(scrVarPub.timeArrayId,0,param_1);
+    WriteId(scrVarPub.pauseArrayId,0,param_1);
+    WriteId(scrVarPub.notifyArrayId,0,param_1);
+    WriteId(scrVarPub.objectStackId,0,param_1);
   }
-  __restgprlr_27();
   return;
 }
 
 
 // 82540E60  Scr_SaveShutdown  (script/scr_readwrite.cpp:1293)
 
+/* WARNING: Function: __savegprlr_18 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_18 replaced with injection: xenon_save_restore */
+
 void Scr_SaveShutdown(bool param_1,int param_2)
 
 {
   char *pcVar1;
   bool bVar2;
-  char cVar3;
-  bool bVar4;
-  ushort *puVar5;
-  longlong lVar6;
+  bool bVar3;
+  ushort *puVar4;
+  longlong lVar5;
+  int iVar6;
   int iVar7;
-  int iVar8;
   
-  cVar3 = __savegprlr_18(param_1);
   bVar2 = false;
   if (scrVarDebugPub != (scrVarDebugPub_t *)0x0) {
-    puVar5 = scrVarPub.saveIdMap;
-    iVar7 = -0x7c704574;
-    iVar8 = 4;
-    lVar6 = 0x8fff;
+    puVar4 = scrVarPub.saveIdMap;
+    iVar6 = -0x7c704574;
+    iVar7 = 4;
+    lVar5 = 0x8fff;
     do {
-      puVar5 = puVar5 + 1;
-      if (*(char *)(iVar7 + 3) != '\x19') {
-        bVar4 = IsValid((ObjectVariableValue *)(iVar7 + -4));
-        if (!bVar4) {
+      puVar4 = puVar4 + 1;
+      if (*(char *)(iVar6 + 3) != '\x19') {
+        bVar3 = IsValid((ObjectVariableValue *)(iVar6 + -4));
+        if (!bVar3) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_readwrite.cpp"
                           ,0x51e,0,"%s");
         }
-        pcVar1 = *(char **)((int)scrVarDebugPub->objectVarUsage + iVar8);
+        pcVar1 = *(char **)((int)scrVarDebugPub->objectVarUsage + iVar7);
         if (pcVar1 == (char *)0x0) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_readwrite.cpp"
                           ,0x520,0,"%s");
         }
-        if ((*puVar5 == 0) && (*(char *)(iVar7 + 3) != '\x17')) {
+        if ((*puVar4 == 0) && (*(char *)(iVar6 + 3) != '\x17')) {
           if (!bVar2) {
             bVar2 = true;
             Com_Printf(0x17,"\n****script variable cyclic leak*****\n");
@@ -1757,43 +1737,42 @@ void Scr_SaveShutdown(bool param_1,int param_2)
           Scr_PrintPrevCodePos(0x17,pcVar1,0,true);
         }
       }
-      lVar6 = lVar6 + -1;
-      iVar7 = iVar7 + 8;
-      iVar8 = iVar8 + 4;
-    } while (lVar6 != 0);
+      lVar5 = lVar5 + -1;
+      iVar6 = iVar6 + 8;
+      iVar7 = iVar7 + 4;
+    } while (lVar5 != 0);
   }
   if (param_2 != 0) {
     Scr_AddDebuggerRefs();
   }
   if (bVar2) {
     Com_Printf(0x17,"************************************\n");
-    if (cVar3 != '\0') {
+    if (param_1) {
       Com_Error(ERR_DROP,"\x15script variable leak due to cyclic usage\n(see console for details)");
-      __restgprlr_18();
       return;
     }
     Com_Printf(0x17,"script variable leak due to cyclic usage\n");
   }
-  __restgprlr_18();
   return;
 }
 
 
 // 82540FF8  Scr_LoadPre  (script/scr_readwrite.cpp:1345)
 
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
+
 void Scr_LoadPre(MemoryFile *param_1,int param_2)
 
 {
   bool bVar1;
   scrVarDebugPub_t *psVar2;
-  MemoryFile *pMVar3;
+  uint uVar3;
   uint uVar4;
-  uint uVar5;
-  longlong lVar6;
-  ushort *puVar7;
+  longlong lVar5;
+  ushort *puVar6;
   uint local_60 [24];
   
-  pMVar3 = (MemoryFile *)__savegprlr_22(param_1);
   MT_Reset();
   if (scrVarPub.varUsagePos != (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_readwrite.cpp",
@@ -1802,206 +1781,205 @@ void Scr_LoadPre(MemoryFile *param_1,int param_2)
   scrVarPub.varUsagePos = "<save game variable>";
   memset();
   if (param_2 != 0) {
-    MemFile_ReadData(pMVar3,4,local_60);
+    MemFile_ReadData(param_1,4,local_60);
     scrVarPub.time = local_60[0];
   }
-  MemFile_ReadData(pMVar3,2,local_60);
+  MemFile_ReadData(param_1,2,local_60);
   scrVarPub.savecount = local_60[0]._0_2_;
-  MemFile_ReadData(pMVar3,2,local_60);
+  MemFile_ReadData(param_1,2,local_60);
   scrVarPub.savecountMark = local_60[0]._0_2_;
   Com_Memset(scrVarPub.saveIdMapRev,0,0x12000);
   memset();
-  uVar5 = 1;
+  uVar4 = 1;
   g_idHistoryIndex = 0;
   if (scrVarPub.savecount != 0) {
-    puVar7 = scrVarPub.saveIdMapRev;
+    puVar6 = scrVarPub.saveIdMapRev;
     do {
-      puVar7 = puVar7 + 1;
-      uVar4 = (uint)*puVar7;
-      if (uVar4 == 0) {
-        uVar4 = AllocObject();
-        *puVar7 = (ushort)uVar4;
+      puVar6 = puVar6 + 1;
+      uVar3 = (uint)*puVar6;
+      if (uVar3 == 0) {
+        uVar3 = AllocObject();
+        *puVar6 = (ushort)uVar3;
       }
-      Scr_DoLoadObjectInfo(uVar4,pMVar3);
-      uVar5 = uVar5 + 1;
-    } while (uVar5 <= scrVarPub.savecount);
+      Scr_DoLoadObjectInfo(uVar3,param_1);
+      uVar4 = uVar4 + 1;
+    } while (uVar4 <= scrVarPub.savecount);
   }
-  Scr_ReadGameEntry(pMVar3);
+  Scr_ReadGameEntry(param_1);
   if (param_2 != 0) {
-    MemFile_ReadData(pMVar3,1,local_60);
-    uVar5 = local_60[0] >> 0x18;
+    MemFile_ReadData(param_1,1,local_60);
+    uVar4 = local_60[0] >> 0x18;
     if (scrVarPub.levelId != 0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_readwrite.cpp",
                       0x56e,0,"%s");
     }
-    scrVarPub.levelId = Scr_ReadId(pMVar3,uVar5);
+    scrVarPub.levelId = Scr_ReadId(param_1,uVar4);
     if (scrVarDebugPub != (scrVarDebugPub_t *)0x0) {
       scrVarDebugPub->extRefCount[scrVarPub.levelId] =
            scrVarDebugPub->extRefCount[scrVarPub.levelId] + 1;
     }
-    MemFile_ReadData(pMVar3,1,local_60);
-    uVar5 = local_60[0] >> 0x18;
+    MemFile_ReadData(param_1,1,local_60);
+    uVar4 = local_60[0] >> 0x18;
     if (scrVarPub.animId != 0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_readwrite.cpp",
                       0x576,0,"%s");
     }
-    scrVarPub.animId = Scr_ReadId(pMVar3,uVar5);
+    scrVarPub.animId = Scr_ReadId(param_1,uVar4);
     if (scrVarDebugPub != (scrVarDebugPub_t *)0x0) {
       scrVarDebugPub->extRefCount[scrVarPub.animId] =
            scrVarDebugPub->extRefCount[scrVarPub.animId] + 1;
     }
-    MemFile_ReadData(pMVar3,1,local_60);
-    uVar5 = local_60[0] >> 0x18;
+    MemFile_ReadData(param_1,1,local_60);
+    uVar4 = local_60[0] >> 0x18;
     if (scrVarPub.freeEntList != 0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_readwrite.cpp",
                       0x57e,0,"%s");
     }
-    scrVarPub.freeEntList = Scr_ReadId(pMVar3,uVar5);
+    scrVarPub.freeEntList = Scr_ReadId(param_1,uVar4);
     if (scrVarDebugPub != (scrVarDebugPub_t *)0x0) {
       scrVarDebugPub->extRefCount[scrVarPub.freeEntList] =
            scrVarDebugPub->extRefCount[scrVarPub.freeEntList] + 1;
     }
-    lVar6 = 6;
-    puVar7 = &g_classMap[0].entArrayId;
+    lVar5 = 6;
+    puVar6 = &g_classMap[0].entArrayId;
     do {
-      uVar5 = GetArraySize((uint)*puVar7);
-      if (uVar5 != 0) {
+      uVar4 = GetArraySize((uint)*puVar6);
+      if (uVar4 != 0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_readwrite.cpp",
                         0x587,0,"%s");
       }
       if (scrVarDebugPub != (scrVarDebugPub_t *)0x0) {
-        scrVarDebugPub->extRefCount[*puVar7] = scrVarDebugPub->extRefCount[*puVar7] - 1;
+        scrVarDebugPub->extRefCount[*puVar6] = scrVarDebugPub->extRefCount[*puVar6] - 1;
       }
-      RemoveRefToObject((uint)*puVar7);
-      MemFile_ReadData(pMVar3,1,local_60);
-      uVar5 = Scr_ReadId(pMVar3,local_60[0] >> 0x18);
+      RemoveRefToObject((uint)*puVar6);
+      MemFile_ReadData(param_1,1,local_60);
+      uVar4 = Scr_ReadId(param_1,local_60[0] >> 0x18);
       psVar2 = scrVarDebugPub;
       bVar1 = scrVarDebugPub != (scrVarDebugPub_t *)0x0;
-      *puVar7 = (ushort)uVar5;
+      *puVar6 = (ushort)uVar4;
       if (bVar1) {
-        psVar2->extRefCount[uVar5 & 0xffff] = psVar2->extRefCount[uVar5 & 0xffff] + 1;
+        psVar2->extRefCount[uVar4 & 0xffff] = psVar2->extRefCount[uVar4 & 0xffff] + 1;
       }
-      lVar6 = lVar6 + -1;
-      puVar7 = puVar7 + 6;
-    } while (lVar6 != 0);
-    MemFile_ReadData(pMVar3,1,local_60);
-    uVar5 = local_60[0] >> 0x18;
+      lVar5 = lVar5 + -1;
+      puVar6 = puVar6 + 6;
+    } while (lVar5 != 0);
+    MemFile_ReadData(param_1,1,local_60);
+    uVar4 = local_60[0] >> 0x18;
     if (scrVarPub.timeArrayId != 0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_readwrite.cpp",
                       0x597,0,"%s");
     }
-    scrVarPub.timeArrayId = Scr_ReadId(pMVar3,uVar5);
+    scrVarPub.timeArrayId = Scr_ReadId(param_1,uVar4);
     if (scrVarDebugPub != (scrVarDebugPub_t *)0x0) {
       scrVarDebugPub->extRefCount[scrVarPub.timeArrayId] =
            scrVarDebugPub->extRefCount[scrVarPub.timeArrayId] + 1;
     }
-    MemFile_ReadData(pMVar3,1,local_60);
-    uVar5 = local_60[0] >> 0x18;
+    MemFile_ReadData(param_1,1,local_60);
+    uVar4 = local_60[0] >> 0x18;
     if (scrVarPub.pauseArrayId != 0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_readwrite.cpp",
                       0x59f,0,"%s");
     }
-    scrVarPub.pauseArrayId = Scr_ReadId(pMVar3,uVar5);
+    scrVarPub.pauseArrayId = Scr_ReadId(param_1,uVar4);
     if (scrVarDebugPub != (scrVarDebugPub_t *)0x0) {
       scrVarDebugPub->extRefCount[scrVarPub.pauseArrayId] =
            scrVarDebugPub->extRefCount[scrVarPub.pauseArrayId] + 1;
     }
-    MemFile_ReadData(pMVar3,1,local_60);
-    uVar5 = local_60[0] >> 0x18;
+    MemFile_ReadData(param_1,1,local_60);
+    uVar4 = local_60[0] >> 0x18;
     if (scrVarPub.notifyArrayId != 0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_readwrite.cpp",
                       0x5a7,0,"%s");
     }
-    scrVarPub.notifyArrayId = Scr_ReadId(pMVar3,uVar5);
+    scrVarPub.notifyArrayId = Scr_ReadId(param_1,uVar4);
     if (scrVarDebugPub != (scrVarDebugPub_t *)0x0) {
       scrVarDebugPub->extRefCount[scrVarPub.notifyArrayId] =
            scrVarDebugPub->extRefCount[scrVarPub.notifyArrayId] + 1;
     }
-    MemFile_ReadData(pMVar3,1,local_60);
+    MemFile_ReadData(param_1,1,local_60);
     if (scrVarPub.objectStackId != 0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_readwrite.cpp",
                       0x5af,0,"%s");
     }
-    scrVarPub.objectStackId = Scr_ReadId(pMVar3,(uint)local_60[0]._0_1_);
+    scrVarPub.objectStackId = Scr_ReadId(param_1,(uint)local_60[0]._0_1_);
     if (scrVarDebugPub != (scrVarDebugPub_t *)0x0) {
       scrVarDebugPub->extRefCount[scrVarPub.objectStackId] =
            scrVarDebugPub->extRefCount[scrVarPub.objectStackId] + 1;
     }
   }
-  __restgprlr_22();
   return;
 }
 
 
 // 82541538  Scr_LoadShutdown  (script/scr_readwrite.cpp:1489)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void Scr_LoadShutdown(int param_1)
 
 {
-  int iVar1;
-  bool bVar2;
-  ushort *puVar3;
-  uint uVar4;
+  bool bVar1;
+  ushort *puVar2;
+  uint uVar3;
   
-  iVar1 = __savegprlr_28(param_1);
-  uVar4 = 1;
+  uVar3 = 1;
   if (scrVarPub.savecount != 0) {
-    puVar3 = scrVarPub.saveIdMapRev;
+    puVar2 = scrVarPub.saveIdMapRev;
     do {
-      puVar3 = puVar3 + 1;
-      RemoveRefToObject((uint)*puVar3);
-      uVar4 = uVar4 + 1;
-    } while (uVar4 <= scrVarPub.savecount);
+      puVar2 = puVar2 + 1;
+      RemoveRefToObject((uint)*puVar2);
+      uVar3 = uVar3 + 1;
+    } while (uVar3 <= scrVarPub.savecount);
   }
-  if (iVar1 != 0) {
+  if (param_1 != 0) {
     Scr_InitDebuggerSystem();
   }
   scrVarPub.varUsagePos = (char *)0x0;
-  if ((iVar1 != 0) && (bVar2 = CheckReferences(), !bVar2)) {
+  if ((param_1 != 0) && (bVar1 = CheckReferences(), !bVar1)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_readwrite.cpp",
                     0x5e7,0,"%s");
   }
   MT_Reset();
-  __restgprlr_28();
   return;
 }
 
 
 // 825415E8  DoSaveEntryInternal  (script/scr_readwrite.cpp:1519)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void DoSaveEntryInternal(uint param_1,VariableUnion param_2,MemoryFile *param_3)
 
 {
-  ulonglong uVar1;
-  uint uVar2;
-  MemoryFile *pMVar3;
-  char *pcVar4;
+  uint uVar1;
+  MemoryFile *pMVar2;
+  char *pcVar3;
   VariableUnion VStack0000001c;
-  undefined1 local_30 [4];
+  char local_30 [4];
   VariableUnion local_2c [11];
   
-  uVar1 = __savegprlr_28(param_1);
   VStack0000001c = param_2;
-  if ((uVar1 & 0xffffffff) != (uVar1 & 0xff)) {
+  if (param_1 != (param_1 & 0xff)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_readwrite.cpp",
                     0x5f0,0,"%s");
   }
-  if ((uVar1 & 0xffffffff) == 1) {
-    uVar2 = MemFile_GetUsedSize(param_3);
-    ProfMem_Begin("pointer",uVar2);
+  if (param_1 == 1) {
+    uVar1 = MemFile_GetUsedSize(param_3);
+    ProfMem_Begin("pointer",uVar1);
     WriteId(param_2.uintValue,1,param_3);
-    uVar2 = MemFile_GetUsedSize(param_3);
-    ProfMem_End(uVar2);
-    __restgprlr_28();
+    uVar1 = MemFile_GetUsedSize(param_3);
+    ProfMem_End(uVar1);
     return;
   }
-  uVar2 = MemFile_GetUsedSize(param_3);
-  ProfMem_Begin("type",uVar2);
-  local_30[0] = (undefined1)((uVar1 & 0xffffffff) << 3);
+  uVar1 = MemFile_GetUsedSize(param_3);
+  ProfMem_Begin("type",uVar1);
+  local_30[0] = (char)param_1 << 3;
   MemFile_WriteData(param_3,1,local_30);
-  pMVar3 = (MemoryFile *)MemFile_GetUsedSize(param_3);
-  ProfMem_End((uint)pMVar3);
-  switch((int)uVar1) {
+  pMVar2 = (MemoryFile *)MemFile_GetUsedSize(param_3);
+  ProfMem_End((uint)pMVar2);
+  switch(param_1) {
   case 0:
   case 8:
     goto switchD_825416d0_caseD_0;
@@ -2011,21 +1989,17 @@ void DoSaveEntryInternal(uint param_1,VariableUnion param_2,MemoryFile *param_3)
                       0x61c,0,"unknown type");
     }
 switchD_825416d0_caseD_0:
-    __restgprlr_28();
     return;
   case 2:
   case 3:
-    pcVar4 = SL_ConvertToString(param_2.uintValue & 0xffff);
-    MemFile_WriteCString(param_3,pcVar4);
-    __restgprlr_28();
+    pcVar3 = SL_ConvertToString(param_2.uintValue & 0xffff);
+    MemFile_WriteCString(param_3,pcVar3);
     return;
   case 4:
     WriteVector(param_2.vectorValue,param_3);
-    __restgprlr_28();
     return;
   case 5:
-    WriteFloat(VStack0000001c.floatValue,pMVar3);
-    __restgprlr_28();
+    WriteFloat(VStack0000001c.floatValue,pMVar2);
     return;
   case 6:
   case 10:
@@ -2033,16 +2007,13 @@ switchD_825416d0_caseD_0:
   case 0xd:
     local_2c[0] = param_2;
     MemFile_WriteData(param_3,4,local_2c);
-    __restgprlr_28();
     return;
   case 7:
   case 9:
     WriteCodepos(param_2.codePosValue,param_3);
-    __restgprlr_28();
     return;
   case 0xc:
     WriteStack(param_2.stackValue,param_3);
-    __restgprlr_28();
     return;
   }
 }

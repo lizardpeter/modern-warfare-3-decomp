@@ -112,6 +112,8 @@ int SV_IsFirstTokenEqual(char *param_1,char *param_2)
 
 // 82576678  SV_CanReplaceServerCommand  (server_mp/sv_main_mp.cpp:340)
 
+/* WARNING: Function: __savegprlr_21 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_21 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
@@ -120,51 +122,48 @@ int SV_CanReplaceServerCommand(client_t *param_1,uchar *param_2,int param_3)
 
 {
   bool bVar1;
-  int iVar2;
+  uint uVar2;
   int iVar3;
-  char *pcVar4;
-  ulonglong uVar5;
-  longlong lVar6;
-  longlong lVar7;
-  byte *pbVar8;
-  ulonglong uVar9;
-  uint uVar10;
+  longlong lVar4;
+  uchar *puVar5;
+  svscmd_info_t *psVar6;
+  byte *pbVar7;
+  uint uVar8;
   
-  lVar6 = (longlong)param_3;
-  uVar5 = (ulonglong)(int)param_2;
-  iVar2 = __savegprlr_21(param_1);
-  if ((uVar5 & 0xffffffff) == 0) {
+  if (param_2 == (uchar *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_main_mp.cpp",
                     0x158,0,"%s");
   }
-  if ((int)lVar6 < 1) {
+  if (param_3 < 1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_main_mp.cpp",
                     0x159,0,"%s");
   }
-  uVar10 = *(int *)(iVar2 + 0x20e6c) + 1;
-  if ((int)uVar10 <= *(int *)(iVar2 + 0x20e64)) {
+  uVar8 = param_1->reliableSent + 1;
+  if ((int)uVar8 <= param_1->reliableSequence) {
     do {
-      iVar3 = (uVar10 & 0x7f) * 0x408 + iVar2;
-      if (*(int *)(iVar3 + 0xe68) != 0) {
-        if (*(int *)(iVar3 + 0xe68) != 1) {
+      uVar2 = uVar8 & 0x7f;
+      iVar3 = param_1->reliableCommandInfo[uVar2].type;
+      if (iVar3 != 0) {
+        if (iVar3 != 1) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_main_mp.cpp"
                           ,0x162,0,"%s\n\t(client->reliableCommandInfo[index].type) = %i");
         }
-        pbVar8 = (byte *)(iVar3 + 0xa64);
-        pcVar4 = (char *)uVar5;
-        if (*pcVar4 == *(char *)(iVar3 + 0xa64)) {
-          lVar7 = 0;
-          if (lVar6 + -1 != 0) {
-            uVar9 = uVar5;
+        psVar6 = param_1->reliableCommandInfo + uVar2;
+        if (*param_2 == param_1->reliableCommandInfo[uVar2].cmd[0]) {
+          lVar4 = 0;
+          if ((longlong)param_3 + -1 != 0) {
+            pbVar7 = param_2;
             do {
-              lVar7 = (ulonglong)*(byte *)uVar9 - (ulonglong)*pbVar8;
-              if (lVar7 != 0) break;
-              uVar9 = uVar9 + 1;
-              pbVar8 = pbVar8 + 1;
-            } while ((char *)uVar9 != pcVar4 + (int)(lVar6 + -1));
+              lVar4 = (ulonglong)*pbVar7 - (ulonglong)(byte)psVar6->cmd[0];
+              if (lVar4 != 0) break;
+              pbVar7 = pbVar7 + 1;
+              psVar6 = (svscmd_info_t *)(psVar6->cmd + 1);
+            } while (pbVar7 != param_2 + (int)((longlong)param_3 + -1));
           }
-          if ((int)lVar7 == 0) goto switchD_825767d0_caseD_61;
-          switch(*pcVar4) {
+          if ((int)lVar4 == 0) {
+            return uVar8;
+          }
+          switch(*param_2) {
           case 'a':
           case 'b':
           case 'l':
@@ -174,44 +173,46 @@ int SV_CanReplaceServerCommand(client_t *param_1,uchar *param_2,int param_3)
           case 'x':
             goto switchD_825767d0_caseD_61;
           case 'd':
-            if (pcVar4[1] != ' ') {
+            if (param_2[1] != ' ') {
               MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_main_mp.cpp"
                               ,0x182,0,"%s");
             }
-            pcVar4 = pcVar4 + 2;
-            iVar3 = SV_IsFirstTokenEqual(pcVar4,(char *)(iVar3 + 0xa66));
+            puVar5 = param_2 + 2;
+            iVar3 = SV_IsFirstTokenEqual((char *)puVar5,param_1->reliableCommandInfo[uVar2].cmd + 2)
+            ;
             if (iVar3 != 0) {
-              iVar3 = atoi(pcVar4);
+              iVar3 = atoi((char *)puVar5);
               bVar1 = iVar3 == 0x3fc;
               goto LAB_825768b4;
             }
             break;
           case 'q':
-            if (pcVar4[1] != ' ') {
+            if (param_2[1] != ' ') {
               MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_main_mp.cpp"
                               ,0x179,0,"%s");
             }
-            iVar3 = SV_IsFirstTokenEqual(pcVar4 + 2,(char *)(iVar3 + 0xa66));
+            iVar3 = SV_IsFirstTokenEqual
+                              ((char *)(param_2 + 2),param_1->reliableCommandInfo[uVar2].cmd + 2);
             bVar1 = iVar3 == 0;
 LAB_825768b4:
             if (!bVar1) {
 switchD_825767d0_caseD_61:
-              iVar2 = __restgprlr_21(uVar10);
-              return iVar2;
+              return uVar8;
             }
           }
         }
       }
-      uVar10 = uVar10 + 1;
-    } while ((int)uVar10 <= *(int *)(iVar2 + 0x20e64));
+      uVar8 = uVar8 + 1;
+    } while ((int)uVar8 <= param_1->reliableSequence);
   }
-  iVar2 = __restgprlr_21(0xffffffffffffffff);
-  return iVar2;
+  return -1;
 }
 
 
 // 825768E0  SV_CullIgnorableServerCommands  (server_mp/sv_main_mp.cpp:416)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
@@ -219,34 +220,33 @@ switchD_825767d0_caseD_61:
 void SV_CullIgnorableServerCommands(client_t *param_1)
 
 {
-  int iVar1;
-  int *piVar2;
+  int *piVar1;
+  uint uVar2;
   uint uVar3;
-  uint uVar4;
   
-  iVar1 = __savegprlr_28(param_1);
-  piVar2 = (int *)(iVar1 + 0x20e64);
-  uVar3 = *(int *)(iVar1 + 0x20e6c) + 1;
-  uVar4 = uVar3;
-  if ((int)uVar3 <= *piVar2) {
+  piVar1 = &param_1->reliableSequence;
+  uVar2 = param_1->reliableSent + 1;
+  uVar3 = uVar2;
+  if ((int)uVar2 <= *piVar1) {
     do {
-      if (*(int *)((uVar4 & 0x7f) * 0x408 + iVar1 + 0xe68) != 0) {
-        if ((uVar3 & 0x7f) != (uVar4 & 0x7f)) {
+      if (param_1->reliableCommandInfo[uVar3 & 0x7f].type != 0) {
+        if ((uVar2 & 0x7f) != (uVar3 & 0x7f)) {
           memcpy();
         }
-        uVar3 = uVar3 + 1;
+        uVar2 = uVar2 + 1;
       }
-      uVar4 = uVar4 + 1;
-    } while ((int)uVar4 <= *piVar2);
+      uVar3 = uVar3 + 1;
+    } while ((int)uVar3 <= *piVar1);
   }
-  *piVar2 = uVar3 - 1;
-  __restgprlr_28();
+  *piVar1 = uVar2 - 1;
   return;
 }
 
 
 // 82576978  SV_ServerCommandOverFlow  (server_mp/sv_main_mp.cpp:439)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
@@ -254,35 +254,34 @@ void SV_CullIgnorableServerCommands(client_t *param_1)
 void SV_ServerCommandOverFlow(client_t *param_1,char *param_2)
 
 {
-  client_t *pcVar1;
-  undefined8 uVar2;
-  int iVar3;
+  undefined8 uVar1;
+  int iVar2;
   netadr_t in_stack_ffffff88;
   
-  pcVar1 = (client_t *)__savegprlr_27(param_1,param_2);
   Com_Printf(0xf,"===== pending server commands =====\n");
-  iVar3 = pcVar1->reliableAcknowledge + 1;
-  if (iVar3 <= pcVar1->reliableSequence) {
+  iVar2 = param_1->reliableAcknowledge + 1;
+  if (iVar2 <= param_1->reliableSequence) {
     do {
       Com_Printf(0xf,"cmd %5d: %8d: %s\n");
-      iVar3 = iVar3 + 1;
-    } while (iVar3 <= pcVar1->reliableSequence);
+      iVar2 = iVar2 + 1;
+    } while (iVar2 <= param_1->reliableSequence);
   }
   Com_Printf(0xf,"cmd %5d: %8d: %s\n");
-  uVar2._0_4_ = (pcVar1->header).netchan.remoteAddress.type;
-  uVar2._4_1_ = (pcVar1->header).netchan.remoteAddress.ip[0];
-  uVar2._5_1_ = (pcVar1->header).netchan.remoteAddress.ip[1];
-  uVar2._6_1_ = (pcVar1->header).netchan.remoteAddress.ip[2];
-  uVar2._7_1_ = (pcVar1->header).netchan.remoteAddress.ip[3];
-  NET_OutOfBandPrint(NS_MAXCLIENTS,in_stack_ffffff88,(char *)uVar2);
-  SV_DelayDropClient(pcVar1,"EXE_SERVERCOMMANDOVERFLOW");
-  __restgprlr_27();
+  uVar1._0_4_ = (param_1->header).netchan.remoteAddress.type;
+  uVar1._4_1_ = (param_1->header).netchan.remoteAddress.ip[0];
+  uVar1._5_1_ = (param_1->header).netchan.remoteAddress.ip[1];
+  uVar1._6_1_ = (param_1->header).netchan.remoteAddress.ip[2];
+  uVar1._7_1_ = (param_1->header).netchan.remoteAddress.ip[3];
+  NET_OutOfBandPrint(NS_MAXCLIENTS,in_stack_ffffff88,(char *)uVar1);
+  SV_DelayDropClient(param_1,"EXE_SERVERCOMMANDOVERFLOW");
   return;
 }
 
 
 // 82576A58  SV_AddServerCommand  (server_mp/sv_main_mp.cpp:462)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
@@ -290,55 +289,52 @@ void SV_ServerCommandOverFlow(client_t *param_1,char *param_2)
 void SV_AddServerCommand(client_t *param_1,svscmd_type param_2,char *param_3)
 
 {
-  uint uVar1;
-  client_t *pcVar2;
+  char cVar1;
+  uint uVar2;
   int iVar3;
-  uchar *puVar4;
-  char *pcVar6;
-  longlong lVar5;
-  int *piVar7;
+  char *pcVar4;
+  int *piVar5;
   
-  lVar5 = (longlong)(int)param_3;
-  pcVar2 = (client_t *)__savegprlr_25(param_1);
-  puVar4 = (uchar *)lVar5;
-  piVar7 = &pcVar2->reliableSequence;
-  if (((*piVar7 - pcVar2->reliableAcknowledge < 0x40) && ((pcVar2->header).state == 5)) ||
-     (SV_CullIgnorableServerCommands(pcVar2), param_2 != SV_CMD_CAN_IGNORE)) {
+  piVar5 = &param_1->reliableSequence;
+  pcVar4 = param_3;
+  if (((*piVar5 - param_1->reliableAcknowledge < 0x40) && ((param_1->header).state == 5)) ||
+     (SV_CullIgnorableServerCommands(param_1), param_2 != SV_CMD_CAN_IGNORE)) {
     do {
-      pcVar6 = (char *)lVar5;
-      lVar5 = lVar5 + 1;
-    } while (*pcVar6 != '\0');
-    iVar3 = SV_CanReplaceServerCommand(pcVar2,puVar4,(int)lVar5 - (int)puVar4);
+      cVar1 = *pcVar4;
+      pcVar4 = pcVar4 + 1;
+    } while (cVar1 != '\0');
+    iVar3 = SV_CanReplaceServerCommand(param_1,(uchar *)param_3,(int)pcVar4 - (int)param_3);
     if (iVar3 < 0) {
-      *piVar7 = *piVar7 + 1;
+      *piVar5 = *piVar5 + 1;
     }
     else {
       iVar3 = iVar3 + 1;
-      if (iVar3 <= *piVar7) {
+      if (iVar3 <= *piVar5) {
         do {
           memcpy();
           iVar3 = iVar3 + 1;
-        } while (iVar3 <= *piVar7);
+        } while (iVar3 <= *piVar5);
       }
     }
-    if (*piVar7 - pcVar2->reliableAcknowledge == 0x81) {
-      SV_ServerCommandOverFlow(pcVar2,(char *)puVar4);
+    if (*piVar5 - param_1->reliableAcknowledge == 0x81) {
+      SV_ServerCommandOverFlow(param_1,param_3);
       param_2 = SV_CMD_RELIABLE;
-      puVar4 = (uchar *)va("%c \"EXE_SERVERCOMMANDOVERFLOW\"");
+      param_3 = va("%c \"EXE_SERVERCOMMANDOVERFLOW\"");
     }
-    uVar1 = *piVar7 & 0x7f;
-    MSG_WriteReliableCommandToBuffer((char *)puVar4,pcVar2->reliableCommandInfo[uVar1].cmd,0x400);
+    uVar2 = *piVar5 & 0x7f;
+    MSG_WriteReliableCommandToBuffer(param_3,param_1->reliableCommandInfo[uVar2].cmd,0x400);
     iVar3 = svs.time;
-    pcVar2->reliableCommandInfo[uVar1].type = param_2;
-    pcVar2->reliableCommandInfo[uVar1].time = iVar3;
+    param_1->reliableCommandInfo[uVar2].type = param_2;
+    param_1->reliableCommandInfo[uVar2].time = iVar3;
   }
-  __restgprlr_25();
   return;
 }
 
 
 // 82576BC0  SV_AddServerCommandMsg  (server_mp/sv_main_mp.cpp:521)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
@@ -348,59 +344,54 @@ void SV_AddServerCommandMsg(client_t *param_1,svscmd_type param_2,msg_t *param_3
 {
   uint uVar1;
   int iVar2;
-  client_t *pcVar3;
-  int iVar4;
-  char *pcVar5;
-  ulonglong uVar6;
-  msg_t *pmVar7;
-  int *piVar8;
+  int iVar3;
+  char *pcVar4;
+  int *piVar5;
   
-  uVar6 = (ulonglong)(int)param_3;
-  pcVar3 = (client_t *)__savegprlr_25(param_1);
-  pmVar7 = (msg_t *)uVar6;
-  if ((uVar6 & 0xffffffff) == 0) {
+  if (param_3 == (msg_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_main_mp.cpp",
-                    0x20e,(int)pmVar7,"%s");
+                    0x20e,0,"%s");
   }
-  piVar8 = &pcVar3->reliableSequence;
-  if (((*piVar8 - pcVar3->reliableAcknowledge < 0x40) && ((pcVar3->header).state == 5)) ||
-     (SV_CullIgnorableServerCommands(pcVar3), param_2 != SV_CMD_CAN_IGNORE)) {
-    iVar4 = SV_CanReplaceServerCommand(pcVar3,pmVar7->data,pmVar7->cursize);
-    if (iVar4 < 0) {
-      *piVar8 = *piVar8 + 1;
+  piVar5 = &param_1->reliableSequence;
+  if (((*piVar5 - param_1->reliableAcknowledge < 0x40) && ((param_1->header).state == 5)) ||
+     (SV_CullIgnorableServerCommands(param_1), param_2 != SV_CMD_CAN_IGNORE)) {
+    iVar3 = SV_CanReplaceServerCommand(param_1,param_3->data,param_3->cursize);
+    if (iVar3 < 0) {
+      *piVar5 = *piVar5 + 1;
     }
     else {
-      iVar4 = iVar4 + 1;
-      if (iVar4 <= *piVar8) {
+      iVar3 = iVar3 + 1;
+      if (iVar3 <= *piVar5) {
         do {
           memcpy();
-          iVar4 = iVar4 + 1;
-        } while (iVar4 <= *piVar8);
+          iVar3 = iVar3 + 1;
+        } while (iVar3 <= *piVar5);
       }
     }
-    uVar1 = *piVar8 & 0x7f;
-    if (*piVar8 - pcVar3->reliableAcknowledge == 0x81) {
-      SV_ServerCommandOverFlow(pcVar3,(char *)pmVar7->data);
+    uVar1 = *piVar5 & 0x7f;
+    if (*piVar5 - param_1->reliableAcknowledge == 0x81) {
+      SV_ServerCommandOverFlow(param_1,(char *)param_3->data);
       param_2 = SV_CMD_RELIABLE;
-      pcVar5 = va("%c \"EXE_SERVERCOMMANDOVERFLOW\"");
-      iVar4 = (int)&(pcVar3->header).netchan.remoteAddress + uVar1 * 0x408 + -0x28;
-      MSG_WriteReliableCommandToBuffer(pcVar5,(char *)(iVar4 + 0xa64),0x400);
+      pcVar4 = va("%c \"EXE_SERVERCOMMANDOVERFLOW\"");
+      iVar3 = (int)&(param_1->header).netchan.remoteAddress + uVar1 * 0x408 + -0x28;
+      MSG_WriteReliableCommandToBuffer(pcVar4,(char *)(iVar3 + 0xa64),0x400);
     }
     else {
-      iVar4 = (int)&(pcVar3->header).netchan.remoteAddress + uVar1 * 0x408 + -0x28;
-      MSG_WriteReliableCommandMsgToBuffer(pmVar7,(char *)(iVar4 + 0xa64),0x400);
+      iVar3 = (int)&(param_1->header).netchan.remoteAddress + uVar1 * 0x408 + -0x28;
+      MSG_WriteReliableCommandMsgToBuffer(param_3,(char *)(iVar3 + 0xa64),0x400);
     }
     iVar2 = svs.time;
-    *(svscmd_type *)(iVar4 + 0xe68) = param_2;
-    *(int *)(iVar4 + 0xe64) = iVar2;
+    *(svscmd_type *)(iVar3 + 0xe68) = param_2;
+    *(int *)(iVar3 + 0xe64) = iVar2;
   }
-  __restgprlr_25();
   return;
 }
 
 
 // 82576D40  SV_SendServerCommand  (server_mp/sv_main_mp.cpp:589)
 
+/* WARNING: Function: __savegprlr_19 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_19 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
@@ -410,82 +401,81 @@ void SV_SendServerCommand(client_t *param_1,svscmd_type param_2,char *param_3)
 {
   uchar uVar1;
   uint uVar2;
-  client_t *pcVar3;
-  uchar *puVar4;
+  uchar *puVar3;
+  int iVar4;
   int iVar5;
-  int iVar6;
-  uchar *puVar7;
-  svscmd_type sVar8;
+  uchar *puVar6;
+  svscmd_type sVar7;
+  client_t *pcVar8;
   char *pcStack00000024;
   LargeLocal aLStack_78 [15];
   
   pcStack00000024 = param_3;
-  pcVar3 = (client_t *)__savegprlr_19(param_1);
   LargeLocal::LargeLocal(aLStack_78,0x10000);
-  puVar4 = LargeLocal::GetBuf(aLStack_78);
-  iVar5 = _vsnprintf((char *)puVar4,0x10000,pcStack00000024,&stack0x00000028);
-  if (iVar5 == -1) {
+  puVar3 = LargeLocal::GetBuf(aLStack_78);
+  iVar4 = _vsnprintf((char *)puVar3,0x10000,pcStack00000024,&stack0x00000028);
+  if (iVar4 == -1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_main_mp.cpp",
                     0x256,0,"%s");
   }
-  if (pcVar3 == (client_t *)0x0) {
-    iVar5 = 0;
-    pcVar3 = svs.clients;
+  if (param_1 == (client_t *)0x0) {
+    iVar4 = 0;
+    pcVar8 = svs.clients;
     if (0 < svs.clientCount) {
       do {
-        iVar6 = (pcVar3->header).state;
-        if ((3 < iVar6) &&
-           (((puVar7 = puVar4, pcVar3->reliableSequence - pcVar3->reliableAcknowledge < 0x40 &&
-             (iVar6 == 5)) || (SV_CullIgnorableServerCommands(pcVar3), param_2 != SV_CMD_CAN_IGNORE)
+        iVar5 = (pcVar8->header).state;
+        if ((3 < iVar5) &&
+           (((puVar6 = puVar3, pcVar8->reliableSequence - pcVar8->reliableAcknowledge < 0x40 &&
+             (iVar5 == 5)) || (SV_CullIgnorableServerCommands(pcVar8), param_2 != SV_CMD_CAN_IGNORE)
             ))) {
           do {
-            uVar1 = *puVar7;
-            puVar7 = puVar7 + 1;
+            uVar1 = *puVar6;
+            puVar6 = puVar6 + 1;
           } while (uVar1 != '\0');
-          iVar6 = SV_CanReplaceServerCommand(pcVar3,puVar4,(int)puVar7 - (int)puVar4);
-          if (iVar6 < 0) {
-            pcVar3->reliableSequence = pcVar3->reliableSequence + 1;
+          iVar5 = SV_CanReplaceServerCommand(pcVar8,puVar3,(int)puVar6 - (int)puVar3);
+          if (iVar5 < 0) {
+            pcVar8->reliableSequence = pcVar8->reliableSequence + 1;
           }
           else {
-            iVar6 = iVar6 + 1;
-            if (iVar6 <= pcVar3->reliableSequence) {
+            iVar5 = iVar5 + 1;
+            if (iVar5 <= pcVar8->reliableSequence) {
               do {
                 memcpy();
-                iVar6 = iVar6 + 1;
-              } while (iVar6 <= pcVar3->reliableSequence);
+                iVar5 = iVar5 + 1;
+              } while (iVar5 <= pcVar8->reliableSequence);
             }
           }
-          sVar8 = param_2;
-          puVar7 = puVar4;
-          if (pcVar3->reliableSequence - pcVar3->reliableAcknowledge == 0x81) {
-            SV_ServerCommandOverFlow(pcVar3,(char *)puVar4);
-            sVar8 = SV_CMD_RELIABLE;
-            puVar7 = (uchar *)va("%c \"EXE_SERVERCOMMANDOVERFLOW\"");
+          sVar7 = param_2;
+          puVar6 = puVar3;
+          if (pcVar8->reliableSequence - pcVar8->reliableAcknowledge == 0x81) {
+            SV_ServerCommandOverFlow(pcVar8,(char *)puVar3);
+            sVar7 = SV_CMD_RELIABLE;
+            puVar6 = (uchar *)va("%c \"EXE_SERVERCOMMANDOVERFLOW\"");
           }
-          uVar2 = pcVar3->reliableSequence & 0x7f;
+          uVar2 = pcVar8->reliableSequence & 0x7f;
           MSG_WriteReliableCommandToBuffer
-                    ((char *)puVar7,pcVar3->reliableCommandInfo[uVar2].cmd,0x400);
-          iVar6 = svs.time;
-          pcVar3->reliableCommandInfo[uVar2].type = sVar8;
-          pcVar3->reliableCommandInfo[uVar2].time = iVar6;
+                    ((char *)puVar6,pcVar8->reliableCommandInfo[uVar2].cmd,0x400);
+          iVar5 = svs.time;
+          pcVar8->reliableCommandInfo[uVar2].type = sVar7;
+          pcVar8->reliableCommandInfo[uVar2].time = iVar5;
         }
-        iVar5 = iVar5 + 1;
-        pcVar3 = pcVar3 + 1;
-      } while (iVar5 < svs.clientCount);
+        iVar4 = iVar4 + 1;
+        pcVar8 = pcVar8 + 1;
+      } while (iVar4 < svs.clientCount);
     }
     LargeLocal::~LargeLocal(aLStack_78);
-    __restgprlr_19();
     return;
   }
-  SV_AddServerCommand(pcVar3,param_2,(char *)puVar4);
+  SV_AddServerCommand(param_1,param_2,(char *)puVar3);
   LargeLocal::~LargeLocal(aLStack_78);
-  __restgprlr_19();
   return;
 }
 
 
 // 82576FA8  SV_SendServerCommandMsg  (server_mp/sv_main_mp.cpp:647)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
@@ -493,62 +483,58 @@ void SV_SendServerCommand(client_t *param_1,svscmd_type param_2,char *param_3)
 void SV_SendServerCommandMsg(client_t *param_1,svscmd_type param_2,msg_t *param_3)
 
 {
-  client_t *pcVar1;
-  ulonglong uVar2;
-  int iVar3;
-  int iVar4;
+  int iVar1;
+  int iVar2;
+  client_t *pcVar3;
   msg_t local_460;
   uchar auStack_430 [1072];
   
-  uVar2 = (ulonglong)(int)param_3;
-  pcVar1 = (client_t *)__savegprlr_27(param_1);
-  if ((uVar2 & 0xffffffff) == 0) {
+  if (param_3 == (msg_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_main_mp.cpp",
                     0x28d,0,"%s");
   }
-  iVar3 = (int)uVar2;
-  if (0x3fc < *(uint *)(iVar3 + 0x14)) {
+  if (0x3fc < (uint)param_3->cursize) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_main_mp.cpp",
                     0x28e,0,"%s");
   }
   MSG_Init(&local_460,auStack_430,0x400);
   MSG_WriteByte(&local_460,0x5a);
   MSG_WriteByte(&local_460,0);
-  MSG_WriteShort(&local_460,*(int *)(iVar3 + 0x14));
+  MSG_WriteShort(&local_460,param_3->cursize);
   if (local_460.cursize != 4) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_main_mp.cpp",
                     0x295,0,"%s\n\t%s");
   }
-  MSG_WriteData(&local_460,*(void **)(iVar3 + 8),*(int *)(iVar3 + 0x14));
+  MSG_WriteData(&local_460,param_3->data,param_3->cursize);
   if (local_460.overflowed != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_main_mp.cpp",
                     0x298,0,"%s");
   }
-  if (pcVar1 == (client_t *)0x0) {
-    iVar4 = 0;
-    iVar3 = svs.clientCount;
-    pcVar1 = svs.clients;
+  if (param_1 == (client_t *)0x0) {
+    iVar2 = 0;
+    iVar1 = svs.clientCount;
+    pcVar3 = svs.clients;
     if (0 < svs.clientCount) {
       do {
-        if (3 < (pcVar1->header).state) {
-          SV_AddServerCommandMsg(pcVar1,param_2,&local_460);
-          iVar3 = svs.clientCount;
+        if (3 < (pcVar3->header).state) {
+          SV_AddServerCommandMsg(pcVar3,param_2,&local_460);
+          iVar1 = svs.clientCount;
         }
-        iVar4 = iVar4 + 1;
-        pcVar1 = pcVar1 + 1;
-      } while (iVar4 < iVar3);
+        iVar2 = iVar2 + 1;
+        pcVar3 = pcVar3 + 1;
+      } while (iVar2 < iVar1);
     }
-    __restgprlr_27();
     return;
   }
-  SV_AddServerCommandMsg(pcVar1,param_2,&local_460);
-  __restgprlr_27();
+  SV_AddServerCommandMsg(param_1,param_2,&local_460);
   return;
 }
 
 
 // 82577150  SV_FindClientByAddress  (server_mp/sv_main_mp.cpp:700)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
@@ -557,39 +543,38 @@ client_t * SV_FindClientByAddress(netadr_t param_1,int param_2)
 
 {
   int iVar1;
-  client_t *pcVar2;
+  int iVar2;
   int iVar3;
-  int iVar4;
+  client_t *pcVar4;
   netadr_t in_stack_ffffff78;
   netadr_t in_stack_ffffff88;
   
-  __savegprlr_26(param_2);
   if (svs.clientCount < (sv_maxclients->current).integer) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_main_mp.cpp",
                     0x2c2,0,"%s");
   }
-  iVar4 = 0;
-  iVar3 = svs.clientCount;
-  pcVar2 = svs.clients;
+  iVar3 = 0;
+  iVar2 = svs.clientCount;
+  pcVar4 = svs.clients;
   if (0 < svs.clientCount) {
     do {
-      if (((pcVar2->header).state != 0) &&
-         (iVar1 = NET_CompareBaseAdr(in_stack_ffffff78,in_stack_ffffff88), iVar3 = svs.clientCount,
+      if (((pcVar4->header).state != 0) &&
+         (iVar1 = NET_CompareBaseAdr(in_stack_ffffff78,in_stack_ffffff88), iVar2 = svs.clientCount,
          iVar1 != 0)) {
-        pcVar2 = (client_t *)__restgprlr_26(pcVar2);
-        return pcVar2;
+        return pcVar4;
       }
-      iVar4 = iVar4 + 1;
-      pcVar2 = pcVar2 + 1;
-    } while (iVar4 < iVar3);
+      iVar3 = iVar3 + 1;
+      pcVar4 = pcVar4 + 1;
+    } while (iVar3 < iVar2);
   }
-  pcVar2 = (client_t *)__restgprlr_26(0);
-  return pcVar2;
+  return (client_t *)0x0;
 }
 
 
 // 82577238  SVC_Status  (server_mp/sv_main_mp.cpp:796)
 
+/* WARNING: Function: __savegprlr_15 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_15 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -599,98 +584,98 @@ void SVC_Status(netadr_t param_1)
 
 {
   char cVar1;
-  char *pcVar2;
-  undefined1 *puVar3;
-  char *pcVar4;
-  bool bVar5;
-  client_t *pcVar6;
-  int iVar7;
+  char *in_r3;
+  undefined1 *puVar2;
+  char *pcVar3;
+  bool bVar4;
+  client_t *pcVar5;
+  int iVar6;
+  char *pcVar7;
   char *pcVar8;
-  char *pcVar9;
+  int iVar9;
   int iVar10;
-  int iVar11;
   netadr_t in_stack_ffffbb18;
   LargeLocal aLStack_44a0 [2];
   char local_4490 [1024];
   char acStack_4090 [8192];
   char acStack_2090 [8336];
   
-  pcVar2 = (char *)__savegprlr_15();
   LargeLocal::LargeLocal(aLStack_44a0,0x10000);
-  puVar3 = LargeLocal::GetBuf(aLStack_44a0);
-  pcVar4 = Dvar_InfoString(LOCAL_CLIENT_0,0x400);
-  I_strncpyz(acStack_4090,pcVar4,0x2000);
+  puVar2 = LargeLocal::GetBuf(aLStack_44a0);
+  pcVar3 = Dvar_InfoString(LOCAL_CLIENT_0,0x400);
+  I_strncpyz(acStack_4090,pcVar3,0x2000);
   if (7 < (uint)sv_cmd_args.nesting) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\../qcommon/cmd.h",
                     0xd3,0,"sv_cmd_args.nesting doesn\'t index CMD_MAX_NESTING\n\t%i not in [0, %i)"
                    );
   }
   if (sv_cmd_args.argc[sv_cmd_args.nesting] < 2) {
-    pcVar4 = "";
+    pcVar3 = "";
   }
   else {
-    pcVar4 = sv_cmd_args.argv[sv_cmd_args.nesting][1];
+    pcVar3 = sv_cmd_args.argv[sv_cmd_args.nesting][1];
   }
-  Info_SetValueForKey(acStack_4090,"challenge",pcVar4);
-  bVar5 = Sys_IsServerThread();
-  if (!bVar5) {
+  Info_SetValueForKey(acStack_4090,"challenge",pcVar3);
+  bVar4 = Sys_IsServerThread();
+  if (!bVar4) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_main_mp.cpp",
                     0x337,0,"%s");
   }
-  *puVar3 = 0;
+  *puVar2 = 0;
   if (svs.clientCount < (sv_maxclients->current).integer) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_main_mp.cpp",
                     0x33e,0,"%s");
   }
-  iVar10 = 0;
+  iVar9 = 0;
   if (0 < svs.clientCount) {
-    iVar11 = 0;
-    iVar7 = svs.clientCount;
-    pcVar6 = svs.clients;
-    pcVar4 = (char *)0x0;
+    iVar10 = 0;
+    iVar6 = svs.clientCount;
+    pcVar5 = svs.clients;
+    pcVar3 = (char *)0x0;
     do {
-      pcVar8 = pcVar4;
-      if (2 < *(int *)((pcVar6->header).netchan.remoteAddress.ip + iVar11 + -0x2c)) {
+      pcVar7 = pcVar3;
+      if (2 < *(int *)((pcVar5->header).netchan.remoteAddress.ip + iVar10 + -0x2c)) {
         if (gameInitialized != 0) {
-          G_GetClientScore(iVar11 / 0x68b00);
+          G_GetClientScore(iVar10 / 0x68b00);
         }
         Com_sprintf(local_4490,0x400,"%i %i \"%s\"\n");
+        pcVar7 = local_4490;
+        do {
+          cVar1 = *pcVar7;
+          pcVar7 = pcVar7 + 1;
+        } while (cVar1 != '\0');
+        pcVar7 = pcVar7 + (int)(pcVar3 + (-1 - (int)local_4490));
+        if (0xffff < (int)pcVar7) break;
         pcVar8 = local_4490;
         do {
           cVar1 = *pcVar8;
+          (puVar2 + ((int)pcVar3 - (int)local_4490))[(int)pcVar8] = cVar1;
           pcVar8 = pcVar8 + 1;
-        } while (cVar1 != '\0');
-        pcVar8 = pcVar8 + (int)(pcVar4 + (-1 - (int)local_4490));
-        if (0xffff < (int)pcVar8) break;
-        pcVar9 = local_4490;
-        do {
-          cVar1 = *pcVar9;
-          (puVar3 + ((int)pcVar4 - (int)local_4490))[(int)pcVar9] = cVar1;
-          pcVar9 = pcVar9 + 1;
-          iVar7 = svs.clientCount;
-          pcVar6 = svs.clients;
+          iVar6 = svs.clientCount;
+          pcVar5 = svs.clients;
         } while (cVar1 != '\0');
       }
-      iVar10 = iVar10 + 1;
-      iVar11 = iVar11 + 0x68b00;
-      pcVar4 = pcVar8;
-    } while (iVar10 < iVar7);
+      iVar9 = iVar9 + 1;
+      iVar10 = iVar10 + 0x68b00;
+      pcVar3 = pcVar7;
+    } while (iVar9 < iVar6);
   }
-  bVar5 = Sys_IsServerThread();
-  if (!bVar5) {
+  bVar4 = Sys_IsServerThread();
+  if (!bVar4) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_main_mp.cpp",
                     0x375,0,"%s");
   }
   Com_sprintf(acStack_2090,0x2000,"statusResponse\n%s\n%s");
-  NET_OutOfBandPrint(NS_MAXCLIENTS,in_stack_ffffbb18,pcVar2);
+  NET_OutOfBandPrint(NS_MAXCLIENTS,in_stack_ffffbb18,in_r3);
   LargeLocal::~LargeLocal(aLStack_44a0);
-  __restgprlr_15();
   return;
 }
 
 
 // 82577520  SVC_Info  (server_mp/sv_main_mp.cpp:909)
 
+/* WARNING: Function: __savegprlr_16 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_16 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
@@ -700,18 +685,18 @@ void SVC_Info(netadr_t param_1)
 
 {
   uint uVar1;
+  char *in_r3;
   char *pcVar3;
-  char *pcVar4;
-  bool bVar8;
-  XNKEY *pXVar5;
-  XNKID *pXVar6;
-  XNADDR *pXVar7;
+  bool bVar7;
+  XNKEY *pXVar4;
+  XNKID *pXVar5;
+  XNADDR *pXVar6;
   ulong64 uVar2;
-  ulonglong uVar9;
-  longlong lVar10;
-  client_t *pcVar11;
+  ulonglong uVar8;
+  longlong lVar9;
+  client_t *pcVar10;
+  longlong lVar11;
   longlong lVar12;
-  longlong lVar13;
   netadr_t in_stack_fffff668;
   char acStack_950 [32];
   char acStack_930 [32];
@@ -720,40 +705,39 @@ void SVC_Info(netadr_t param_1)
   char local_890 [1024];
   char acStack_490 [1168];
   
-  pcVar3 = (char *)__savegprlr_16();
-  lVar12 = 0;
+  lVar11 = 0;
   if (svs.clientCount < (sv_privateClients->current).integer) {
     va("%i > %i");
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_main_mp.cpp",
                     0x3ba,0,"%s\n\t%s");
   }
-  uVar9 = (ulonglong)(uint)(sv_privateClients->current).integer;
-  pcVar11 = svs.clients;
+  uVar8 = (ulonglong)(uint)(sv_privateClients->current).integer;
+  pcVar10 = svs.clients;
   if (0 < (sv_privateClients->current).integer) {
     do {
-      if (2 < (pcVar11->header).state) {
-        lVar12 = lVar12 + 1;
+      if (2 < (pcVar10->header).state) {
+        lVar11 = lVar11 + 1;
       }
-      uVar9 = uVar9 - 1;
-      pcVar11 = pcVar11 + 1;
-    } while (uVar9 != 0);
+      uVar8 = uVar8 - 1;
+      pcVar10 = pcVar10 + 1;
+    } while (uVar8 != 0);
   }
   if (svs.clientCount < (sv_maxclients->current).integer) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_main_mp.cpp",
                     0x3c6,0,"%s");
   }
   uVar1 = (sv_privateClients->current).integer;
-  lVar13 = lVar12;
+  lVar12 = lVar11;
   if ((int)uVar1 < svs.clientCount) {
-    lVar10 = (ulonglong)(uint)svs.clientCount - (ulonglong)uVar1;
-    pcVar11 = svs.clients + uVar1;
+    lVar9 = (ulonglong)(uint)svs.clientCount - (ulonglong)uVar1;
+    pcVar10 = svs.clients + uVar1;
     do {
-      if (2 < (pcVar11->header).state) {
-        lVar13 = lVar13 + 1;
+      if (2 < (pcVar10->header).state) {
+        lVar12 = lVar12 + 1;
       }
-      pcVar11 = pcVar11 + 1;
-      lVar10 = lVar10 + -1;
-    } while (lVar10 != 0);
+      pcVar10 = pcVar10 + 1;
+      lVar9 = lVar9 + -1;
+    } while (lVar9 != 0);
   }
   local_890[0] = '\0';
   if (7 < (uint)sv_cmd_args.nesting) {
@@ -762,85 +746,82 @@ void SVC_Info(netadr_t param_1)
                    );
   }
   if (sv_cmd_args.argc[sv_cmd_args.nesting] < 2) {
-    pcVar4 = "";
+    pcVar3 = "";
   }
   else {
-    pcVar4 = sv_cmd_args.argv[sv_cmd_args.nesting][1];
+    pcVar3 = sv_cmd_args.argv[sv_cmd_args.nesting][1];
   }
-  Info_SetValueForKey(local_890,"challenge",pcVar4);
+  Info_SetValueForKey(local_890,"challenge",pcVar3);
   GetProtocolVersion();
-  pcVar4 = va("%i");
-  Info_SetValueForKey(local_890,"protocol",pcVar4);
+  pcVar3 = va("%i");
+  Info_SetValueForKey(local_890,"protocol",pcVar3);
   BG_NetDataChecksum();
-  pcVar4 = va("%i");
-  Info_SetValueForKey(local_890,"checksum",pcVar4);
+  pcVar3 = va("%i");
+  Info_SetValueForKey(local_890,"checksum",pcVar3);
   Info_SetValueForKey(local_890,"hostname",(sv_hostname->current).string);
   Info_SetValueForKey(local_890,"mapname",(sv_mapname->current).string);
-  if ((int)lVar13 != 0) {
-    pcVar4 = va("%i");
-    Info_SetValueForKey(local_890,"clients",pcVar4);
+  if ((int)lVar12 != 0) {
+    pcVar3 = va("%i");
+    Info_SetValueForKey(local_890,"clients",pcVar3);
   }
   if (0 < (longlong)
           (((ulonglong)(sv_maxclients->current).unsignedInt -
-           (ulonglong)(sv_privateClients->current).unsignedInt) + lVar12)) {
-    pcVar4 = va("%i");
-    Info_SetValueForKey(local_890,"sv_maxclients",pcVar4);
+           (ulonglong)(sv_privateClients->current).unsignedInt) + lVar11)) {
+    pcVar3 = va("%i");
+    Info_SetValueForKey(local_890,"sv_maxclients",pcVar3);
   }
-  bVar8 = Lobby_IsInRunningLobby();
-  if ((bVar8) && ((party_maxplayers->current).integer != (sv_maxclients->current).integer)) {
+  bVar7 = Lobby_IsInRunningLobby();
+  if ((bVar7) && ((party_maxplayers->current).integer != (sv_maxclients->current).integer)) {
     va("party_maxplayers->current.integer != sv_maxclients->current.integer, %i != %i");
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_main_mp.cpp",
                     0x3e3,0,"%s\n\t%s");
   }
   Info_SetValueForKey(local_890,"gametype",(sv_gametype->current).string);
   if ((scr_team_fftype->current).integer != 0) {
-    pcVar4 = va("%i");
-    Info_SetValueForKey(local_890,"ff",pcVar4);
+    pcVar3 = va("%i");
+    Info_SetValueForKey(local_890,"ff",pcVar3);
   }
   if ((scr_game_allowkillcam->current).integer != 0) {
-    pcVar4 = va("%i");
-    Info_SetValueForKey(local_890,"kc",pcVar4);
+    pcVar3 = va("%i");
+    Info_SetValueForKey(local_890,"kc",pcVar3);
   }
   if ((useonlinestats->current).enabled != false) {
-    pcVar4 = va("%i");
-    Info_SetValueForKey(local_890,"st",pcVar4);
+    pcVar3 = va("%i");
+    Info_SetValueForKey(local_890,"st",pcVar3);
   }
-  pcVar4 = va("%i");
-  Info_SetValueForKey(local_890,"hw",pcVar4);
-  pXVar5 = Xenon_GetXNKey(&g_serverSession);
-  lVar12 = (longlong)(int)pXVar5;
-  if (pXVar5 != (XNKEY *)0x0) {
-    pXVar6 = Xenon_GetXNKId(&g_serverSession);
-    pXVar7 = Xenon_GetXNAddr();
-    Int128ToString(pXVar5->ab,acStack_910);
-    Int64ToString(*(long64 *)pXVar6->ab,acStack_950);
-    XNAddrToString(pXVar7,acStack_8e0);
+  pcVar3 = va("%i");
+  Info_SetValueForKey(local_890,"hw",pcVar3);
+  pXVar4 = Xenon_GetXNKey(&g_serverSession);
+  if (pXVar4 != (XNKEY *)0x0) {
+    pXVar5 = Xenon_GetXNKId(&g_serverSession);
+    pXVar6 = Xenon_GetXNAddr();
+    Int128ToString(pXVar4->ab,acStack_910);
+    Int64ToString(*(long64 *)pXVar5->ab,acStack_950);
+    XNAddrToString(pXVar6,acStack_8e0);
     uVar2 = Session_GetNonce(&g_serverSession);
     Int64ToString(uVar2,acStack_930);
     Info_SetValueForKey(local_890,"xnkey",acStack_910);
     Info_SetValueForKey(local_890,"xnkid",acStack_950);
     Info_SetValueForKey(local_890,"xnaddr",acStack_8e0);
-    bVar8 = Lobby_IsInRunningLobby();
-    if ((bVar8) && ((party_maxplayers->current).integer != (sv_maxclients->current).integer)) {
+    bVar7 = Lobby_IsInRunningLobby();
+    if ((bVar7) && ((party_maxplayers->current).integer != (sv_maxclients->current).integer)) {
       va("party_maxplayers->current.integer != sv_maxclients->current.integer, %i != %i");
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_main_mp.cpp",
                       0x473,0,"%s\n\t%s");
     }
-    pcVar4 = va("%i");
-    Info_SetValueForKey(local_890,"pslots",pcVar4);
-    pcVar4 = va("%i");
-    Info_SetValueForKey(local_890,"pused",pcVar4);
-    pcVar4 = va("%i");
-    Info_SetValueForKey(local_890,"prslots",pcVar4);
-    pcVar4 = va("%i");
-    Info_SetValueForKey(local_890,"prused",pcVar4);
+    pcVar3 = va("%i");
+    Info_SetValueForKey(local_890,"pslots",pcVar3);
+    pcVar3 = va("%i");
+    Info_SetValueForKey(local_890,"pused",pcVar3);
+    pcVar3 = va("%i");
+    Info_SetValueForKey(local_890,"prslots",pcVar3);
+    pcVar3 = va("%i");
+    Info_SetValueForKey(local_890,"prused",pcVar3);
     Info_SetValueForKey(local_890,"nonce",acStack_930);
     I_strncpyz(acStack_490,"infoResponse\n",0x400);
     I_strncat(acStack_490,0x400,local_890);
-    bVar8 = NET_OutOfBandPrint(NS_MAXCLIENTS,in_stack_fffff668,pcVar3);
-    lVar12 = (longlong)bVar8;
+    NET_OutOfBandPrint(NS_MAXCLIENTS,in_stack_fffff668,in_r3);
   }
-  __restgprlr_16(lVar12);
   return;
 }
 
@@ -945,6 +926,8 @@ void SV_ConnectionlessPacket(netadr_t param_1,msg_t *param_2)
 
 // 82577D50  SV_PacketEvent  (server_mp/sv_main_mp.cpp:1407)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
@@ -952,71 +935,66 @@ void SV_ConnectionlessPacket(netadr_t param_1,msg_t *param_2)
 void SV_PacketEvent(netadr_t param_1,msg_t *param_2)
 
 {
-  msg_t *pmVar1;
-  bool bVar4;
-  client_t *pcVar2;
-  int iVar3;
+  bool bVar3;
+  client_t *pcVar1;
+  int iVar2;
   msg_t *in_r5;
   int *in_r13;
   netadr_t in_stack_ffffff88;
   
-  pmVar1 = (msg_t *)__savegprlr_27(param_2);
-  bVar4 = Sys_IsServerThread();
-  if (!bVar4) {
+  bVar3 = Sys_IsServerThread();
+  if (!bVar3) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_main_mp.cpp",
                     0x586,0,"%s");
   }
   if ((3 < in_r5->cursize) && (*(int *)in_r5->data == -1)) {
-    SV_ConnectionlessPacket(in_stack_ffffff88,pmVar1);
-    __restgprlr_27();
+    SV_ConnectionlessPacket(in_stack_ffffff88,param_2);
     return;
   }
   SV_ResetSkeletonCache();
   MSG_BeginReading(in_r5);
   MSG_ReadLong(in_r5);
-  pcVar2 = SV_FindClientByAddress(in_stack_ffffff88,(int)pmVar1);
-  if (pcVar2 == (client_t *)0x0) {
-    bVar4 = NET_OutOfBandPrint(NS_MAXCLIENTS,in_stack_ffffff88,(char *)pmVar1);
-    __restgprlr_27(bVar4);
+  pcVar1 = SV_FindClientByAddress(in_stack_ffffff88,(int)param_2);
+  if (pcVar1 == (client_t *)0x0) {
+    NET_OutOfBandPrint(NS_MAXCLIENTS,in_stack_ffffff88,(char *)param_2);
     return;
   }
-  iVar3 = Netchan_Process(&(pcVar2->header).netchan,in_r5);
-  if (iVar3 != 0) {
-    iVar3 = MSG_ReadByte(in_r5);
-    pcVar2->serverId = iVar3;
-    iVar3 = MSG_ReadLong(in_r5);
-    pcVar2->messageAcknowledge = iVar3;
-    iVar3 = MSG_ReadLong(in_r5);
-    pcVar2->reliableAcknowledge = iVar3;
-    if (pcVar2->messageAcknowledge < 0) {
+  iVar2 = Netchan_Process(&(pcVar1->header).netchan,in_r5);
+  if (iVar2 != 0) {
+    iVar2 = MSG_ReadByte(in_r5);
+    pcVar1->serverId = iVar2;
+    iVar2 = MSG_ReadLong(in_r5);
+    pcVar1->messageAcknowledge = iVar2;
+    iVar2 = MSG_ReadLong(in_r5);
+    pcVar1->reliableAcknowledge = iVar2;
+    if (pcVar1->messageAcknowledge < 0) {
       Com_Printf(0xf,"Invalid reliableAcknowledge message from %s - reliableAcknowledge is %i\n");
-      __restgprlr_27();
       return;
     }
-    if (0x7f < pcVar2->reliableSequence - iVar3) {
+    if (0x7f < pcVar1->reliableSequence - iVar2) {
       Com_Printf(0xf,
                  "Out of range reliableAcknowledge message from %s - cl->reliableSequence is %i, reliableAcknowledge is %i\n"
                 );
-      pcVar2->reliableAcknowledge = pcVar2->reliableSequence;
-      __restgprlr_27();
+      pcVar1->reliableAcknowledge = pcVar1->reliableSequence;
       return;
     }
-    if ((pcVar2->header).state != 1) {
+    if ((pcVar1->header).state != 1) {
       if (*(int *)(*in_r13 + 8) != 0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_main_mp.cpp",
                         0x5e6,0,"%s\n\t(bgs) = %p");
       }
-      pcVar2->lastPacketTime = svs.time;
-      SV_ExecuteClientMessage(pcVar2,in_r5);
+      pcVar1->lastPacketTime = svs.time;
+      SV_ExecuteClientMessage(pcVar1,in_r5);
     }
   }
-  __restgprlr_27();
   return;
 }
 
 
 // 82577F60  SV_DoISuckAsHost  (server_mp/sv_main_mp.cpp:1523)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
@@ -1026,58 +1004,55 @@ bool SV_DoISuckAsHost(void)
 
 {
   float fVar1;
-  undefined8 uVar2;
-  undefined1 uVar3;
-  netadr_t *pnVar4;
-  ulonglong uVar5;
+  bool bVar2;
+  netadr_t *pnVar3;
+  ulonglong uVar4;
+  longlong lVar5;
   longlong lVar6;
-  longlong lVar7;
-  int iVar8;
-  double dVar9;
+  int iVar7;
+  double dVar8;
   
-  __savegprlr_29();
+  lVar5 = 0;
   lVar6 = 0;
-  lVar7 = 0;
   if (svs.clientCount < (sv_maxclients->current).integer) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_main_mp.cpp",
                     0x5fd,0,"%s");
   }
-  uVar5 = (ulonglong)(uint)svs.clientCount;
+  uVar4 = (ulonglong)(uint)svs.clientCount;
   if (0 < svs.clientCount) {
-    pnVar4 = &((svs.clients)->header).netchan.remoteAddress;
+    pnVar3 = &((svs.clients)->header).netchan.remoteAddress;
     do {
-      if (((*(int *)((int)(pnVar4 + -3) + 8) == 5) && (*(int *)((int)(pnVar4 + -2) + 8) != 0)) &&
-         (pnVar4->type == NA_IP)) {
-        if (*(int *)((int)(pnVar4 + 0x2147) + 4) < (badhost_maxHappyPingTime->current).integer) {
+      if (((*(int *)((int)(pnVar3 + -3) + 8) == 5) && (*(int *)((int)(pnVar3 + -2) + 8) != 0)) &&
+         (pnVar3->type == NA_IP)) {
+        if (*(int *)((int)(pnVar3 + 0x2147) + 4) < (badhost_maxHappyPingTime->current).integer) {
 LAB_82578064:
-          lVar7 = lVar7 + 1;
-        }
-        else {
           lVar6 = lVar6 + 1;
         }
+        else {
+          lVar5 = lVar5 + 1;
+        }
       }
-      else if ((1 < *(int *)((int)(pnVar4 + -3) + 8)) && (pnVar4->type == NA_IP)) goto LAB_82578064;
-      pnVar4 = pnVar4 + 0x68b0;
-      uVar5 = uVar5 - 1;
-    } while (uVar5 != 0);
+      else if ((1 < *(int *)((int)(pnVar3 + -3) + 8)) && (pnVar3->type == NA_IP)) goto LAB_82578064;
+      pnVar3 = pnVar3 + 0x68b0;
+      uVar4 = uVar4 - 1;
+    } while (uVar4 != 0);
   }
-  iVar8 = (int)(lVar7 + lVar6);
-  if (lVar7 + lVar6 == 0) {
+  iVar7 = (int)(lVar6 + lVar5);
+  if (lVar6 + lVar5 == 0) {
     fVar1 = 0.0;
   }
   else {
-    fVar1 = (float)(longlong)(int)lVar6 / (float)(longlong)iVar8;
+    fVar1 = (float)(longlong)(int)lVar5 / (float)(longlong)iVar7;
   }
-  dVar9 = (double)fVar1;
+  dVar8 = (double)fVar1;
   if ((badhost_debug->current).enabled != false) {
     Com_Printf(0xf,"Out of %i non-local clients, %i are lagged (%f%%)\n");
   }
-  if ((iVar8 < (badhost_minTotalClientsForHappyTest->current).integer) ||
-     (uVar2 = 1, dVar9 < (double)(badhost_minPercentClientsUnhappyToSuck->current).value)) {
-    uVar2 = 0;
+  if ((iVar7 < (badhost_minTotalClientsForHappyTest->current).integer) ||
+     (bVar2 = true, dVar8 < (double)(badhost_minPercentClientsUnhappyToSuck->current).value)) {
+    bVar2 = false;
   }
-  uVar3 = __restgprlr_29(uVar2);
-  return (bool)uVar3;
+  return bVar2;
 }
 
 
@@ -1139,6 +1114,8 @@ int compare_ints(void *param_1,void *param_2)
 
 // 82578268  SV_CalcPings  (server_mp/sv_main_mp.cpp:1616)
 
+/* WARNING: Function: __savegprlr_18 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_18 replaced with injection: xenon_save_restore */
 /* WARNING: Type propagation algorithm not settling */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
@@ -1163,7 +1140,6 @@ void SV_CalcPings(void)
   int iStack_c4;
   int local_c0 [48];
   
-  __savegprlr_18();
   if (svs.clientCount < (sv_maxclients->current).integer) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_main_mp.cpp",
                     0x657,0,"%s");
@@ -1255,7 +1231,6 @@ LAB_8257846c:
     pcVar2 = va("hostmigration_start %i\n");
     Cbuf_AddText(LOCAL_CLIENT_0,pcVar2);
   }
-  __restgprlr_18();
   return;
 }
 
@@ -1332,6 +1307,8 @@ bool SV_ShouldWaitForStatsWrite(SessionData *param_1,int param_2)
 
 // 825786E0  SV_CheckLiveDropRequest  (server_mp/sv_main_mp.cpp:1747)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
@@ -1340,28 +1317,24 @@ int SV_CheckLiveDropRequest(client_t *param_1)
 
 {
   uint uVar1;
-  client_t *pcVar2;
-  LiveClientDropType LVar3;
-  int iVar4;
-  char *pcVar5;
+  LiveClientDropType LVar2;
+  char *pcVar3;
   
-  pcVar2 = (client_t *)__savegprlr_29(param_1);
-  if (pcVar2 == (client_t *)0x0) {
+  if (param_1 == (client_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_main_mp.cpp",
                     0x6d4,0,"%s");
   }
-  LVar3 = SV_Live_GetClientDropRequest(pcVar2);
-  if (LVar3 == SV_LIVE_DROP_NONE) {
-    iVar4 = __restgprlr_29();
-    return iVar4;
+  LVar2 = SV_Live_GetClientDropRequest(param_1);
+  if (LVar2 == SV_LIVE_DROP_NONE) {
+    return 0;
   }
-  uVar1 = ((int)pcVar2 - (int)svs.clients) / 0x68b00;
-  if (LVar3 == SV_LIVE_DROP_DISCONNECT) {
-    pcVar5 = "EXE_DISCONNECTED";
+  uVar1 = ((int)param_1 - (int)svs.clients) / 0x68b00;
+  if (LVar2 == SV_LIVE_DROP_DISCONNECT) {
+    pcVar3 = "EXE_DISCONNECTED";
   }
   else {
-    if (LVar3 != SV_LIVE_DROP_RMSG_LOST) {
-      if (LVar3 == SV_LIVE_DROP_INACTIVE) {
+    if (LVar2 != SV_LIVE_DROP_RMSG_LOST) {
+      if (LVar2 == SV_LIVE_DROP_INACTIVE) {
         SV_DropClientIfInactive(uVar1,"EXE_TIMEDOUT",false);
       }
       else if (alwaysfails == 0) {
@@ -1370,21 +1343,22 @@ int SV_CheckLiveDropRequest(client_t *param_1)
       }
       goto LAB_825787d8;
     }
-    pcVar5 = "EXE_LOSTRELIABLECOMMANDS";
+    pcVar3 = "EXE_LOSTRELIABLECOMMANDS";
   }
-  SV_DropClientSlot(uVar1,pcVar5,true);
+  SV_DropClientSlot(uVar1,pcVar3,true);
 LAB_825787d8:
   Com_Printf(0xf,
              "SV - CheckLiveDropRequest - Processed client request from main thread to drop client %i\n"
             );
-  SV_Live_ClearDropFlagClient(pcVar2);
-  iVar4 = __restgprlr_29(1);
-  return iVar4;
+  SV_Live_ClearDropFlagClient(param_1);
+  return 1;
 }
 
 
 // 82578800  SV_CheckLiveConnectingClient  (server_mp/sv_main_mp.cpp:1781)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
@@ -1394,74 +1368,66 @@ void SV_CheckLiveConnectingClient
 
 {
   int iVar1;
-  int iVar2;
-  bool bVar3;
-  ulonglong uVar4;
-  ulonglong uVar5;
-  int *piVar6;
-  int *piVar7;
+  bool bVar2;
+  int *piVar3;
+  int *piVar4;
   
-  uVar5 = (ulonglong)param_4;
-  uVar4 = (ulonglong)(int)param_3;
-  iVar2 = __savegprlr_25(param_1);
-  if (iVar2 == 0) {
+  if (param_1 == (client_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_main_mp.cpp",
                     0x6f6,0,"%s");
   }
-  if ((uVar4 & 0xffffffff) == 0) {
+  if (param_3 == (SessionData *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_main_mp.cpp",
                     0x6f7,0,"%s");
   }
-  if ((uVar5 & 0xff) == 0) {
-    piVar6 = (int *)(iVar2 + 0x2148c);
-    if (*piVar6 == 0) {
-      bVar3 = Session_IsUserRegistered((SessionData *)uVar4,param_2);
-      if (bVar3) {
+  if (!param_4) {
+    piVar3 = &param_1->lastPacketTime;
+    if (*piVar3 == 0) {
+      bVar2 = Session_IsUserRegistered(param_3,param_2);
+      if (bVar2) {
         SV_Live_AddConnectingClient(param_2);
         iVar1 = svs.time;
-        *(undefined4 *)(iVar2 + 0x21498) = 0;
-        *piVar6 = iVar1;
-        __restgprlr_25();
+        param_1->timeoutCount = 0;
+        *piVar3 = iVar1;
         return;
       }
     }
     else {
-      bVar3 = Session_IsUserRegistered((SessionData *)uVar4,param_2);
-      if (!bVar3) {
+      bVar2 = Session_IsUserRegistered(param_3,param_2);
+      if (!bVar2) {
         Com_PrintWarning(0xe,
                          "CS_FREE client %i cleared due to session not registered. This is a defensive test that should not happen, report this.\n"
                         );
         SV_Live_RemoveClient(param_2,"",0,0);
-        *piVar6 = 0;
-        *(undefined4 *)(iVar2 + 0x21498) = 0;
-        __restgprlr_25();
+        *piVar3 = 0;
+        param_1->timeoutCount = 0;
         return;
       }
-      if (*piVar6 < param_5) {
-        piVar7 = (int *)(iVar2 + 0x21498);
-        iVar2 = *piVar7;
-        *piVar7 = iVar2 + 1;
-        if (5 < iVar2 + 1) {
+      if (*piVar3 < param_5) {
+        piVar4 = &param_1->timeoutCount;
+        iVar1 = *piVar4;
+        *piVar4 = iVar1 + 1;
+        if (5 < iVar1 + 1) {
           Com_Printf(0xe,"CS_FREE client %i cleared due to lastPacketTime < connectdroppoint\n");
           SV_Live_RemoveClient(param_2,"",0,0);
-          *piVar6 = 0;
-          *piVar7 = 0;
-          __restgprlr_25();
+          *piVar3 = 0;
+          *piVar4 = 0;
           return;
         }
       }
       else {
-        *(undefined4 *)(iVar2 + 0x21498) = 0;
+        param_1->timeoutCount = 0;
       }
     }
   }
-  __restgprlr_25();
   return;
 }
 
 
 // 825789C0  SV_CheckTimeouts  (server_mp/sv_main_mp.cpp:1839)
 
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -1479,7 +1445,6 @@ void SV_CheckTimeouts(void)
   int iVar7;
   client_t *pcVar8;
   
-  __savegprlr();
   pSVar1 = Live_GetCurrentSession();
   iVar4 = svs.time + (sv_zombietime->current).integer * -1000;
   iVar5 = svs.time + (sv_timeout->current).integer * -1000;
@@ -1538,7 +1503,6 @@ void SV_CheckTimeouts(void)
       pcVar8 = pcVar8 + 1;
     } while (iVar7 < svs.clientCount);
   }
-  __restgprlr();
   return;
 }
 
@@ -1623,6 +1587,8 @@ void SV_CheckBackout(void)
 
 // 82578EC0  SV_PostFrame  (server_mp/sv_main_mp.cpp:2030)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "ConfigString": Some values do not have unique names */
@@ -1630,41 +1596,40 @@ void SV_CheckBackout(void)
 void SV_PostFrame(void)
 
 {
-  char *pcVar1;
-  int iVar2;
+  int iVar1;
+  char *pcVar2;
   int *in_r13;
   
-  __savegprlr_27();
   G_PreDebuggerUpdate();
   Scr_UpdateDebugger();
   G_PostDebuggerUpdate();
-  iVar2 = *in_r13;
-  if ((*(uint *)(iVar2 + 0xf4) & 0x400) == 0) {
+  iVar1 = *in_r13;
+  if ((*(uint *)(iVar1 + 0xf4) & 0x400) == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_main_mp.cpp",
                     0x804,0,"%s");
   }
-  if ((*(uint *)(iVar2 + 0xf0) & 0x400) != 0) {
-    pcVar1 = Dvar_InfoString(LOCAL_CLIENT_0,0x400);
-    SV_SetConfigstring(CS_FIRST,pcVar1);
-    *(uint *)(iVar2 + 0xf0) = *(uint *)(iVar2 + 0xf0) & 0xfffffbff;
+  if ((*(uint *)(iVar1 + 0xf0) & 0x400) != 0) {
+    pcVar2 = Dvar_InfoString(LOCAL_CLIENT_0,0x400);
+    SV_SetConfigstring(CS_FIRST,pcVar2);
+    *(uint *)(iVar1 + 0xf0) = *(uint *)(iVar1 + 0xf0) & 0xfffffbff;
   }
-  if ((*(uint *)(iVar2 + 0xf4) & 0x1000) != 0) {
+  if ((*(uint *)(iVar1 + 0xf4) & 0x1000) != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_main_mp.cpp",
                     0x80c,0,"%s");
   }
-  if ((*(uint *)(iVar2 + 0xf0) & 0x1000) != 0) {
+  if ((*(uint *)(iVar1 + 0xf0) & 0x1000) != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_main_mp.cpp",
                     0x80d,0,"%s");
   }
-  if ((*(uint *)(iVar2 + 0xf4) & 0x18) == 0) {
+  if ((*(uint *)(iVar1 + 0xf4) & 0x18) == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_main_mp.cpp",
                     0x80f,0,"%s");
   }
-  if ((*(uint *)(iVar2 + 0xf0) & 0x18) != 0) {
+  if ((*(uint *)(iVar1 + 0xf0) & 0x18) != 0) {
     SV_SetConfig(0x12,200,0x18);
-    *(uint *)(iVar2 + 0xf0) = *(uint *)(iVar2 + 0xf0) & 0xffffffe7;
+    *(uint *)(iVar1 + 0xf0) = *(uint *)(iVar1 + 0xf0) & 0xffffffe7;
   }
-  *(uint *)(iVar2 + 0xf0) = *(uint *)(iVar2 + 0xf0) & 0xffffff7f;
+  *(uint *)(iVar1 + 0xf0) = *(uint *)(iVar1 + 0xf0) & 0xffffff7f;
   Profile_Begin(300);
   SV_CheckTimeouts();
   Profile_EndInternal((double *)0x0);
@@ -1673,8 +1638,7 @@ void SV_PostFrame(void)
   SV_SendClientMessages();
   Profile_Begin(0x12d);
   FakeLag_Frame();
-  iVar2 = Profile_EndInternal((double *)0x0);
-  __restgprlr_27(iVar2);
+  Profile_EndInternal((double *)0x0);
   return;
 }
 
@@ -1847,6 +1811,8 @@ schar BotMoveRight(client_t *param_1)
 
 // 82579468  SV_BotUserMove  (server_mp/sv_main_mp.cpp:2225)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
@@ -1857,18 +1823,16 @@ void SV_BotUserMove(client_t *param_1)
   client_t *pcVar1;
   int iVar2;
   undefined8 uVar3;
-  client_t *pcVar4;
+  playerState_s *ppVar4;
   playerState_s *ppVar5;
-  playerState_s *ppVar6;
+  int iVar6;
   int iVar7;
-  int iVar8;
-  gentity_s **ppgVar9;
-  float fVar10;
+  gentity_s **ppgVar8;
+  float fVar9;
   usercmd_s local_60 [2];
   
-  pcVar4 = (client_t *)__savegprlr_27(param_1);
-  ppgVar9 = &pcVar4->gentity;
-  if (*ppgVar9 != (gentity_s *)0x0) {
+  ppgVar8 = &param_1->gentity;
+  if (*ppgVar8 != (gentity_s *)0x0) {
     local_60[0].serverTime = 0;
     local_60[0].buttons = 0;
     local_60[0].angles[0] = 0;
@@ -1890,58 +1854,59 @@ void SV_BotUserMove(client_t *param_1)
     local_60[0].remoteControlMove[1] = '\0';
     local_60[0].remoteControlMove[2] = '\0';
     local_60[0]._43_1_ = 0;
-    ppVar5 = SV_GetPlayerstateForClientNum(((int)pcVar4 - (int)svs.clients) / 0x68b00);
-    ppVar6 = SV_GetPlayerstateForClientNum(((int)pcVar4 - (int)svs.clients) / 0x68b00);
-    if ((ppVar5->weapCommon).weapon.data != (ppVar6->weapCommon).weapon.data) {
+    ppVar4 = SV_GetPlayerstateForClientNum(((int)param_1 - (int)svs.clients) / 0x68b00);
+    ppVar5 = SV_GetPlayerstateForClientNum(((int)param_1 - (int)svs.clients) / 0x68b00);
+    if ((ppVar4->weapCommon).weapon.data != (ppVar5->weapCommon).weapon.data) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_main_mp.cpp",
                       0x8b8,0,"%s");
     }
-    ppVar5 = SV_GetPlayerstateForClientNum(((int)pcVar4 - (int)svs.clients) / 0x68b00);
-    local_60[0].weapon.data = (ppVar5->weapCommon).weapon.data;
+    ppVar4 = SV_GetPlayerstateForClientNum(((int)param_1 - (int)svs.clients) / 0x68b00);
+    local_60[0].weapon.data = (ppVar4->weapCommon).weapon.data;
     local_60[0].serverTime = svs.time + -200;
-    iVar7 = G_GetClientArchiveTime(((int)pcVar4 - (int)svs.clients) / 0x68b00);
-    if ((iVar7 == 0) && (0 < (*ppgVar9)->health)) {
-      fVar10 = G_random();
-      if ((fVar10 < 0.5) && ((testClients_doAttack->current).enabled != false)) {
-        local_60[0]._0_8_ = local_60[0]._0_8_ | 1;
+    iVar6 = G_GetClientArchiveTime(((int)param_1 - (int)svs.clients) / 0x68b00);
+    if ((iVar6 == 0) && (0 < (*ppgVar8)->health)) {
+      fVar9 = G_random();
+      if ((fVar9 < 0.5) && ((testClients_doAttack->current).enabled != false)) {
+        local_60[0].buttons = local_60[0].buttons | 1;
       }
-      fVar10 = G_random();
+      fVar9 = G_random();
       uVar3 = local_60[0]._24_8_;
-      if ((fVar10 < 0.3) && ((testClients_doReload->current).enabled != false)) {
-        local_60[0]._0_8_ = local_60[0]._0_8_ | 0x20;
+      if ((fVar9 < 0.3) && ((testClients_doReload->current).enabled != false)) {
+        local_60[0].buttons = local_60[0].buttons | 0x20;
       }
       if ((testClients_doCrouch->current).enabled != false) {
-        local_60[0]._0_8_ = local_60[0]._0_8_ | 0x200;
+        local_60[0].buttons = local_60[0].buttons | 0x200;
       }
       if ((testClients_doMove->current).enabled != false) {
-        iVar8 = ((*ppgVar9)->s).number * 0x22b + svs.time;
+        iVar7 = ((*ppgVar8)->s).number * 0x22b + svs.time;
         pcVar1 = (client_t *)((svs.time + 0x7d) * 2);
-        iVar7 = iVar8 / 0x639c + (iVar8 >> 0x1f);
+        iVar6 = iVar7 / 0x639c + (iVar7 >> 0x1f);
         iVar2 = (int)pcVar1 / 0x639c + ((int)pcVar1 >> 0x1f);
         local_60[0].forwardmove =
-             (char)((iVar8 + (iVar7 - (iVar7 >> 0x1f)) * -0x639c) / 100) + -0x7f;
+             (char)((iVar7 + (iVar6 - (iVar6 >> 0x1f)) * -0x639c) / 100) + -0x7f;
         local_60[0].airburstMarkDistance = (ushort)uVar3;
         local_60[0].rightmove =
              (char)(((int)pcVar1 + (iVar2 - (iVar2 >> 0x1f)) * -0x639c) / 100) + -0x7f;
-        iVar7 = BotAnglePitch(pcVar1);
-        local_60[0].angles[0] = iVar7;
-        local_60[0].angles[1] = BotAngleYaw(pcVar4);
+        iVar6 = BotAnglePitch(pcVar1);
+        local_60[0].angles[0] = iVar6;
+        local_60[0].angles[1] = BotAngleYaw(param_1);
       }
     }
     else if (((testClients_watchKillcam->current).enabled == false) &&
-            (fVar10 = G_random(), fVar10 < 0.5)) {
-      local_60[0]._0_8_ = local_60[0]._0_8_ | 0x20;
+            (fVar9 = G_random(), fVar9 < 0.5)) {
+      local_60[0].buttons = local_60[0].buttons | 0x20;
     }
-    (pcVar4->header).deltaMessage = (pcVar4->header).netchan.outgoingSequence + -1;
-    SV_ClientThink(pcVar4,local_60);
+    (param_1->header).deltaMessage = (param_1->header).netchan.outgoingSequence + -1;
+    SV_ClientThink(param_1,local_60);
   }
-  __restgprlr_27();
   return;
 }
 
 
 // 82579710  SV_UpdateBots  (server_mp/sv_main_mp.cpp:2267)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -1954,7 +1919,6 @@ void SV_UpdateBots(void)
   int iVar2;
   client_t *pcVar3;
   
-  __savegprlr_28();
   Profile_Begin(0x12a);
   SV_ResetSkeletonCache();
   if (svs.clientCount < (sv_maxclients->current).integer) {
@@ -1975,14 +1939,15 @@ void SV_UpdateBots(void)
       pcVar3 = pcVar3 + 1;
     } while (iVar2 < iVar1);
   }
-  iVar1 = Profile_EndInternal((double *)0x0);
-  __restgprlr_28(iVar1);
+  Profile_EndInternal((double *)0x0);
   return;
 }
 
 
 // 825797F0  SV_DropAllBots  (server_mp/sv_main_mp.cpp:2294)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
@@ -1996,7 +1961,6 @@ void SV_DropAllBots(void)
   int iVar3;
   int iVar4;
   
-  __savegprlr_27();
   iVar4 = 0;
   if (0 < svs.clientCount) {
     iVar3 = 0;
@@ -2011,7 +1975,6 @@ void SV_DropAllBots(void)
       iVar3 = iVar3 + 0x68b00;
     } while (iVar4 < iVar1);
   }
-  __restgprlr_27();
   return;
 }
 
@@ -2154,6 +2117,8 @@ int SV_CheckStartServer(void)
 
 // 82579B20  SV_UpdateFakeCPUHitch  (server_mp/sv_main_mp.cpp:2431)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void SV_UpdateFakeCPUHitch(void)
@@ -2161,7 +2126,6 @@ void SV_UpdateFakeCPUHitch(void)
 {
   int iVar1;
   
-  __savegprlr_28();
   if (sv_fakeHitchDelay == (dvar_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_main_mp.cpp",
                     0x983,0,"%s");
@@ -2180,13 +2144,13 @@ void SV_UpdateFakeCPUHitch(void)
       lastHitchTime = iVar1;
     }
   }
-  __restgprlr_28();
   return;
 }
 
 
 // 82579BF0  SV_ServerThread  (server_mp/sv_main_mp.cpp:2461)
 
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
@@ -2206,9 +2170,7 @@ void SV_ServerThread(uint param_1)
   char in_RESERVE;
   byte in_cr0;
   
-  uVar5 = (ulonglong)(int)param_1;
-  __savegprlr();
-  if ((uVar5 & 0xffffffff) != 5) {
+  if (param_1 != 5) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_main_mp.cpp",
                     0x9af,0,"threadContext == THREAD_CONTEXT_SERVER\n\t%i, %i");
   }
@@ -2387,6 +2349,8 @@ void SV_InitServerThread(void)
 
 // 8257AD60  SV_WaitServer  (server_mp/sv_main_mp.cpp:2715)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
@@ -2398,7 +2362,6 @@ void SV_WaitServer(void)
   bool bVar2;
   int iVar1;
   
-  __savegprlr_27();
   bVar2 = Sys_IsMainThread();
   if (!bVar2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_main_mp.cpp",
@@ -2431,7 +2394,6 @@ void SV_WaitServer(void)
       Sys_Sleep(1);
     }
   }
-  __restgprlr_27();
   return;
 }
 
@@ -2546,6 +2508,8 @@ bool SV_CheckOverflow(void)
 
 // 8257AEC8  SV_FrameInternal  (server_mp/sv_main_mp.cpp:2910)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
@@ -2553,20 +2517,16 @@ bool SV_CheckOverflow(void)
 void SV_FrameInternal(int param_1)
 
 {
-  longlong lVar1;
-  bool bVar3;
-  ulonglong uVar4;
-  ulonglong uVar5;
-  int iVar2;
+  bool bVar1;
+  uint uVar2;
+  ulonglong uVar3;
   
-  lVar1 = __savegprlr_28(param_1);
-  iVar2 = (int)lVar1;
-  bVar3 = Sys_IsMainThread();
-  if (!bVar3) {
+  bVar1 = Sys_IsMainThread();
+  if (!bVar1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_main_mp.cpp",
                     0xb61,0,"%s");
   }
-  if (iVar2 < 0) {
+  if (param_1 < 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_main_mp.cpp",
                     0xb62,0,"%s");
   }
@@ -2574,20 +2534,21 @@ void SV_FrameInternal(int param_1)
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_main_mp.cpp",
                     0xb65,0,"%s");
   }
-  if (iVar2 != 0) {
-    uVar5 = (ulonglong)(uint)sv.levelTime - (ulonglong)(uint)svs.time;
-    if (0x32 < (int)uVar5) {
-      uVar4 = lVar1 * 0x32;
-      iVar2 = (int)uVar4 / (int)uVar5;
-      trapWord(6,uVar5,0);
-      trapWord(5,uVar5 & ~(((uVar4 & 0x7fffffff) << 1 | (uVar4 & 0xffffffff) >> 0x1f) - 1),0xffff);
-      if (iVar2 < 1) {
-        iVar2 = 1;
+  if (param_1 != 0) {
+    uVar3 = (ulonglong)(uint)sv.levelTime - (ulonglong)(uint)svs.time;
+    if (0x32 < (int)uVar3) {
+      uVar2 = param_1 * 0x32;
+      param_1 = (int)uVar2 / (int)uVar3;
+      trapWord(6,uVar3,0);
+      trapWord(5,uVar3 & ~((((ulonglong)uVar2 & 0x7fffffff) << 1 | (ulonglong)(uVar2 >> 0x1f)) - 1),
+               0xffff);
+      if (param_1 < 1) {
+        param_1 = 1;
       }
     }
   }
-  sv.timeResidual = sv.timeResidual + iVar2;
-  if ((0x31 < sv.timeResidual) && (bVar3 = SV_CheckOverflow(), !bVar3)) {
+  sv.timeResidual = sv.timeResidual + param_1;
+  if ((0x31 < sv.timeResidual) && (bVar1 = SV_CheckOverflow(), !bVar1)) {
     do {
       sv.timeResidual = sv.timeResidual + -0x32;
       sv.levelTime = sv.levelTime + 0x32;
@@ -2596,7 +2557,6 @@ void SV_FrameInternal(int param_1)
     Sys_WakeServer();
     SV_AllowPackets(true);
   }
-  __restgprlr_28();
   return;
 }
 
@@ -2771,36 +2731,34 @@ bool SV_HasAssignedTeam(uint param_1)
 
 // 8257A678  SV_GetAssignedTeam_Internal  (server_mp/sv_main_mp.cpp:3252)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 int SV_GetAssignedTeam_Internal(uint param_1)
 
 {
-  uint uVar2;
   ulong64 uVar1;
-  int iVar3;
-  PartyData *pPVar4;
+  PartyData *pPVar2;
+  uint uVar3;
   
-  uVar2 = __savegprlr_29(param_1);
-  if (0x11 < uVar2) {
+  if (0x11 < param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_main_mp.cpp",
                     0xcb9,0,"clientNum doesn\'t index MAX_CLIENTS\n\t%i not in [0, %i)");
   }
-  uVar1 = Session_GetXuidEvenIfInactive(&g_serverSession,uVar2);
+  uVar1 = Session_GetXuidEvenIfInactive(&g_serverSession,param_1);
   if (uVar1 == 0) {
     Com_PrintError(0xf,"SV_GetAssignedTeam Error: unknown xuid (%llx) for client (%i).\n");
-    iVar3 = __restgprlr_29(0);
-    return iVar3;
+    return 0;
   }
-  pPVar4 = Lobby_GetPartyData();
-  uVar2 = Party_GetAssignedTeam(pPVar4,uVar1);
-  if (3 < uVar2) {
+  pPVar2 = Lobby_GetPartyData();
+  uVar3 = Party_GetAssignedTeam(pPVar2,uVar1);
+  if (3 < uVar3) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_main_mp.cpp",
                     0xcc3,1,"team doesn\'t index TEAM_NUM_TEAMS\n\t%i not in [0, %i)");
   }
-  iVar3 = __restgprlr_29(uVar2);
-  return iVar3;
+  return uVar3;
 }
 
 
@@ -2827,36 +2785,32 @@ int SV_GetAssignedTeam(uint param_1)
 
 // 8257A7C8  SV_SetAssignedTeam  (server_mp/sv_main_mp.cpp:3307)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void SV_SetAssignedTeam(uint param_1,int param_2)
 
 {
-  uint uVar2;
   ulong64 uVar1;
-  PartyData *pPVar3;
-  ulonglong uVar4;
+  PartyData *pPVar2;
   
-  uVar4 = (ulonglong)param_2;
-  uVar2 = __savegprlr_29(param_1);
-  if (0x11 < uVar2) {
+  if (0x11 < param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_main_mp.cpp",
                     0xcf4,0,"clientNum doesn\'t index MAX_CLIENTS\n\t%i not in [0, %i)");
   }
-  if (3 < (uVar4 & 0xffffffff)) {
+  if (3 < (uint)param_2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_main_mp.cpp",
                     0xcf5,0,"team doesn\'t index TEAM_NUM_TEAMS\n\t%i not in [0, %i)");
   }
-  uVar1 = Session_GetXuidEvenIfInactive(&g_serverSession,uVar2);
+  uVar1 = Session_GetXuidEvenIfInactive(&g_serverSession,param_1);
   if (uVar1 == 0) {
     Com_PrintError(0xf,"SV_SetAssignedTeam Error: unknown xuid (%llx) for client (%i).\n");
-    __restgprlr_29();
     return;
   }
-  pPVar3 = Lobby_GetPartyData();
-  PartyHost_SetAssignedTeam(pPVar3,uVar1,(int)uVar4);
-  __restgprlr_29();
+  pPVar2 = Lobby_GetPartyData();
+  PartyHost_SetAssignedTeam(pPVar2,uVar1,param_2);
   return;
 }
 
@@ -2986,6 +2940,8 @@ void SV_KeepPointInPlayableBounds(float *param_1)
 
 // 8257AB00  MatchEnd_Party  (server_mp/sv_main_mp.cpp:3407)
 
+/* WARNING: Function: __savegprlr_21 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_21 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
@@ -3004,7 +2960,6 @@ void MatchEnd_Party(void)
   int iVar7;
   netadr_t in_stack_ffffff48;
   
-  __savegprlr_21();
   bVar5 = Lobby_IsInLobby();
   if ((bVar5) && (bVar5 = Lobby_AreWeHost(), bVar5)) {
     if ((onlinegame->current).enabled == false) {
@@ -3061,7 +3016,6 @@ void MatchEnd_Party(void)
       }
     }
   }
-  __restgprlr_21();
   return;
 }
 

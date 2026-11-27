@@ -40,27 +40,25 @@ void vp8_clamp_mv(MV *param_1,MACROBLOCKD *param_2)
 
 // 82812AE0  vp8_find_near_mvs  (WebM_atvi_opt/vpx/vp8/common/findnearmv.c:70)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
+
 void vp8_find_near_mvs(MACROBLOCKD *param_1,MODE_INFO *param_2,MV *param_3,MV *param_4,MV *param_5,
                       int *param_6,int param_7,int *param_8)
 
 {
   MV_REFERENCE_FRAME MVar1;
-  MODE_INFO *pMVar2;
+  MV *pMVar2;
   int iVar3;
-  MV *pMVar4;
-  ulonglong uVar5;
-  int iVar6;
+  int *piVar4;
+  MV MVar5;
+  MV MVar6;
   int *piVar7;
-  MV MVar8;
-  MV MVar9;
-  MV MVar10;
-  int *piVar11;
+  MODE_INFO *pMVar8;
   MV local_70;
   MV local_60 [24];
   
-  uVar5 = (ulonglong)param_7;
-  iVar3 = __savegprlr_23(param_1);
-  iVar6 = *(int *)(iVar3 + 0x1144);
+  iVar3 = param_1->mode_info_stride;
   param_6[3] = 0;
   param_6[2] = 0;
   param_6[1] = 0;
@@ -71,23 +69,23 @@ void vp8_find_near_mvs(MACROBLOCKD *param_1,MODE_INFO *param_2,MV *param_3,MV *p
   local_60[2].col = 0;
   local_60[1].row = 0;
   local_60[1].col = 0;
-  pMVar2 = param_2 + -iVar6;
-  piVar11 = param_6 + 1;
-  MVar1 = (pMVar2->mbmi).ref_frame;
-  pMVar4 = local_60;
-  piVar7 = param_6;
+  pMVar8 = param_2 + -iVar3;
+  piVar7 = param_6 + 1;
+  MVar1 = (pMVar8->mbmi).ref_frame;
+  pMVar2 = local_60;
+  piVar4 = param_6;
   if (MVar1 != INTRA_FRAME) {
-    local_70 = (pMVar2->mbmi).mv.as_mv;
+    local_70 = (pMVar8->mbmi).mv.as_mv;
     if (local_70 != (MV)0x0) {
-      pMVar4 = local_60 + 1;
-      if (param_8[MVar1] != *(int *)((int)((uVar5 & 0xffffffff) << 2) + (int)param_8)) {
+      pMVar2 = local_60 + 1;
+      if (param_8[MVar1] != param_8[param_7]) {
         local_70.row = -local_70.row;
         local_70.col = -local_70.col;
       }
       local_60[1] = local_70;
-      piVar7 = piVar11;
+      piVar4 = piVar7;
     }
-    *piVar7 = *piVar7 + 2;
+    *piVar4 = *piVar4 + 2;
   }
   MVar1 = param_2[-1].mbmi.ref_frame;
   if (MVar1 != INTRA_FRAME) {
@@ -96,84 +94,82 @@ void vp8_find_near_mvs(MACROBLOCKD *param_1,MODE_INFO *param_2,MV *param_3,MV *p
     }
     else {
       local_70 = param_2[-1].mbmi.mv.as_mv;
-      if (param_8[MVar1] != *(int *)((int)((uVar5 & 0xffffffff) << 2) + (int)param_8)) {
+      if (param_8[MVar1] != param_8[param_7]) {
         local_70.row = -local_70.row;
         local_70.col = -local_70.col;
       }
-      if (local_70 != *pMVar4) {
-        pMVar4 = pMVar4 + 1;
-        *pMVar4 = local_70;
-        piVar7 = piVar7 + 1;
+      if (local_70 != *pMVar2) {
+        pMVar2 = pMVar2 + 1;
+        *pMVar2 = local_70;
+        piVar4 = piVar4 + 1;
       }
-      *piVar7 = *piVar7 + 2;
+      *piVar4 = *piVar4 + 2;
     }
   }
-  MVar1 = pMVar2[-1].mbmi.ref_frame;
+  MVar1 = pMVar8[-1].mbmi.ref_frame;
   if (MVar1 != INTRA_FRAME) {
-    if (pMVar2[-1].mbmi.mv.as_int == 0) {
+    if (pMVar8[-1].mbmi.mv.as_int == 0) {
       *param_6 = *param_6 + 1;
     }
     else {
-      local_70 = pMVar2[-1].mbmi.mv.as_mv;
-      if (param_8[MVar1] != *(int *)((int)((uVar5 & 0xffffffff) << 2) + (int)param_8)) {
+      local_70 = pMVar8[-1].mbmi.mv.as_mv;
+      if (param_8[MVar1] != param_8[param_7]) {
         local_70.row = -local_70.row;
         local_70.col = -local_70.col;
       }
-      if (local_70 != *pMVar4) {
-        pMVar4 = pMVar4 + 1;
-        *pMVar4 = local_70;
-        piVar7 = piVar7 + 1;
+      if (local_70 != *pMVar2) {
+        pMVar2 = pMVar2 + 1;
+        *pMVar2 = local_70;
+        piVar4 = piVar4 + 1;
       }
-      *piVar7 = *piVar7 + 1;
+      *piVar4 = *piVar4 + 1;
     }
   }
-  if ((param_6[3] != 0) && (*pMVar4 == local_60[1])) {
-    *piVar11 = *piVar11 + 1;
+  if ((param_6[3] != 0) && (*pMVar2 == local_60[1])) {
+    *piVar7 = *piVar7 + 1;
   }
-  iVar6 = *piVar11;
-  param_6[3] = ((uint)(param_2[-1].mbmi.mode == SPLITMV) + (uint)((pMVar2->mbmi).mode == SPLITMV)) *
-               2 + (uint)(pMVar2[-1].mbmi.mode == SPLITMV);
-  MVar10 = local_60[1];
-  MVar9 = local_60[2];
-  if (iVar6 < param_6[2]) {
-    *piVar11 = param_6[2];
-    param_6[2] = iVar6;
-    MVar10 = local_60[2];
-    MVar9 = local_60[1];
+  iVar3 = *piVar7;
+  param_6[3] = ((uint)(param_2[-1].mbmi.mode == SPLITMV) + (uint)((pMVar8->mbmi).mode == SPLITMV)) *
+               2 + ((uint)LZCOUNT(pMVar8[-1].mbmi.mode - SPLITMV) >> 5);
+  MVar6 = local_60[1];
+  if (iVar3 < param_6[2]) {
+    *piVar7 = param_6[2];
+    param_6[2] = iVar3;
+    MVar6 = local_60[2];
+    local_60[2] = local_60[1];
   }
-  MVar8 = MVar10;
-  if (*piVar11 < *param_6) {
-    MVar8.row = 0;
-    MVar8.col = 0;
+  MVar5 = MVar6;
+  if (*piVar7 < *param_6) {
+    MVar5.row = 0;
+    MVar5.col = 0;
   }
-  *param_5 = MVar8;
-  *param_3 = MVar10;
-  *param_4 = MVar9;
-  iVar6 = *(int *)(iVar3 + 0x1180) + -0x80;
-  if ((param_3->col < iVar6) || (iVar6 = *(int *)(iVar3 + 0x1184) + 0x80, iVar6 < param_3->col)) {
-    param_3->col = (short)iVar6;
+  *param_5 = MVar5;
+  *param_3 = MVar6;
+  *param_4 = local_60[2];
+  iVar3 = param_1->mb_to_left_edge + -0x80;
+  if ((param_3->col < iVar3) || (iVar3 = param_1->mb_to_right_edge + 0x80, iVar3 < param_3->col)) {
+    param_3->col = (short)iVar3;
   }
-  iVar6 = *(int *)(iVar3 + 0x1188) + -0x80;
-  if ((param_3->row < iVar6) || (iVar6 = *(int *)(iVar3 + 0x118c) + 0x80, iVar6 < param_3->row)) {
-    param_3->row = (short)iVar6;
+  iVar3 = param_1->mb_to_top_edge + -0x80;
+  if ((param_3->row < iVar3) || (iVar3 = param_1->mb_to_bottom_edge + 0x80, iVar3 < param_3->row)) {
+    param_3->row = (short)iVar3;
   }
-  iVar6 = *(int *)(iVar3 + 0x1180) + -0x80;
-  if ((param_4->col < iVar6) || (iVar6 = *(int *)(iVar3 + 0x1184) + 0x80, iVar6 < param_4->col)) {
-    param_4->col = (short)iVar6;
+  iVar3 = param_1->mb_to_left_edge + -0x80;
+  if ((param_4->col < iVar3) || (iVar3 = param_1->mb_to_right_edge + 0x80, iVar3 < param_4->col)) {
+    param_4->col = (short)iVar3;
   }
-  iVar6 = *(int *)(iVar3 + 0x1188) + -0x80;
-  if ((param_4->row < iVar6) || (iVar6 = *(int *)(iVar3 + 0x118c) + 0x80, iVar6 < param_4->row)) {
-    param_4->row = (short)iVar6;
+  iVar3 = param_1->mb_to_top_edge + -0x80;
+  if ((param_4->row < iVar3) || (iVar3 = param_1->mb_to_bottom_edge + 0x80, iVar3 < param_4->row)) {
+    param_4->row = (short)iVar3;
   }
-  iVar6 = *(int *)(iVar3 + 0x1180) + -0x80;
-  if ((param_5->col < iVar6) || (iVar6 = *(int *)(iVar3 + 0x1184) + 0x80, iVar6 < param_5->col)) {
-    param_5->col = (short)iVar6;
+  iVar3 = param_1->mb_to_left_edge + -0x80;
+  if ((param_5->col < iVar3) || (iVar3 = param_1->mb_to_right_edge + 0x80, iVar3 < param_5->col)) {
+    param_5->col = (short)iVar3;
   }
-  iVar6 = *(int *)(iVar3 + 0x1188) + -0x80;
-  if ((param_5->row < iVar6) || (iVar6 = *(int *)(iVar3 + 0x118c) + 0x80, iVar6 < param_5->row)) {
-    param_5->row = (short)iVar6;
+  iVar3 = param_1->mb_to_top_edge + -0x80;
+  if ((param_5->row < iVar3) || (iVar3 = param_1->mb_to_bottom_edge + 0x80, iVar3 < param_5->row)) {
+    param_5->row = (short)iVar3;
   }
-  __restgprlr_23();
   return;
 }
 

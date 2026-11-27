@@ -27,6 +27,8 @@ void IN_StartupGamepads(void)
 
 // 826436C8  IN_GamepadsMove  (xenon/xenon_input.cpp:300)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void IN_GamepadsMove(void)
@@ -47,7 +49,6 @@ void IN_GamepadsMove(void)
   double dVar13;
   float fVar14;
   
-  __savegprlr_24();
   GPad_UpdateAll();
   uVar7 = Sys_Milliseconds();
   iVar12 = 0;
@@ -95,7 +96,6 @@ LAB_82643884:
     }
     iVar12 = iVar12 + 1;
     if (3 < iVar12) {
-      __restgprlr_24();
       return;
     }
   } while( true );
@@ -104,30 +104,30 @@ LAB_82643884:
 
 // 826438B8  IN_GamepadsReset  (xenon/xenon_input.cpp:352)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void IN_GamepadsReset(int param_1)
 
 {
-  int iVar1;
-  uint uVar2;
-  char **ppcVar3;
-  longlong lVar4;
+  uint uVar1;
+  char **ppcVar2;
+  longlong lVar3;
   
-  iVar1 = __savegprlr_28(param_1);
-  uVar2 = Sys_Milliseconds();
-  CL_GamepadEvent(iVar1,0,0,uVar2);
-  CL_GamepadEvent(iVar1,1,0,uVar2);
-  CL_GamepadEvent(iVar1,2,0,uVar2);
-  CL_GamepadEvent(iVar1,3,0,uVar2);
-  CL_GamepadEvent(iVar1,5,0,uVar2);
-  CL_GamepadEvent(iVar1,4,0,uVar2);
-  lVar4 = 0x10;
-  ppcVar3 = demoExeModeNames + 5;
+  uVar1 = Sys_Milliseconds();
+  CL_GamepadEvent(param_1,0,0,uVar1);
+  CL_GamepadEvent(param_1,1,0,uVar1);
+  CL_GamepadEvent(param_1,2,0,uVar1);
+  CL_GamepadEvent(param_1,3,0,uVar1);
+  CL_GamepadEvent(param_1,5,0,uVar1);
+  CL_GamepadEvent(param_1,4,0,uVar1);
+  lVar3 = 0x10;
+  ppcVar2 = demoExeModeNames + 5;
   do {
-    ppcVar3 = ppcVar3 + 2;
-    CL_GamepadButtonEventForPort(iVar1,(int)*ppcVar3,0,uVar2);
-    lVar4 = lVar4 + -1;
-  } while (lVar4 != 0);
-  __restgprlr_28();
+    ppcVar2 = ppcVar2 + 2;
+    CL_GamepadButtonEventForPort(param_1,(int)*ppcVar2,0,uVar1);
+    lVar3 = lVar3 + -1;
+  } while (lVar3 != 0);
   return;
 }
 
@@ -147,36 +147,34 @@ void IN_StartupXenonDevKeyboard(void)
 
 // 826439C8  IN_XenonDevKeyboardHandleModifiers  (xenon/xenon_input.cpp:384)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
+
 void IN_XenonDevKeyboardHandleModifiers(int param_1,ushort param_2)
 
 {
   int iVar1;
   bool bVar2;
-  int iVar3;
-  uint uVar4;
-  ulonglong uVar5;
-  ushort *puVar6;
-  longlong lVar7;
-  int *piVar8;
+  uint uVar3;
+  ushort *puVar4;
+  longlong lVar5;
+  int *piVar6;
   
-  uVar5 = (ulonglong)(short)param_2;
-  iVar3 = __savegprlr_25(param_1);
-  uVar4 = Sys_Milliseconds();
-  puVar6 = modifierMasks;
-  piVar8 = modifierKeyCodes;
-  lVar7 = 3;
+  uVar3 = Sys_Milliseconds();
+  puVar4 = modifierMasks;
+  piVar6 = modifierKeyCodes;
+  lVar5 = 3;
   do {
-    iVar1 = *piVar8;
-    bVar2 = (uVar5 & 0xffff & (ulonglong)*puVar6) != 0;
+    iVar1 = *piVar6;
+    bVar2 = (param_2 & *puVar4) != 0;
     if (bVar2 != xenonDevKeyIsDown[iVar1]) {
       xenonDevKeyIsDown[iVar1] = bVar2;
-      CL_GamepadButtonEventForPort(iVar3,iVar1,(uint)bVar2,uVar4);
+      CL_GamepadButtonEventForPort(param_1,iVar1,(uint)bVar2,uVar3);
     }
-    lVar7 = lVar7 + -1;
-    puVar6 = puVar6 + 1;
-    piVar8 = piVar8 + 1;
-  } while (lVar7 != 0);
-  __restgprlr_25();
+    lVar5 = lVar5 + -1;
+    puVar4 = puVar4 + 1;
+    piVar6 = piVar6 + 1;
+  } while (lVar5 != 0);
   return;
 }
 
@@ -207,44 +205,38 @@ uint IN_XenonDevKeyboardConvertKey(int param_1)
 
 // 82643B20  IN_XenonDevKeyboardProcessKeyDown  (xenon/xenon_input.cpp:429)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void IN_XenonDevKeyboardProcessKeyDown(int param_1,int param_2,char param_3,int param_4,int param_5)
 
 {
-  int iVar1;
-  
-  iVar1 = __savegprlr_29(param_1);
   xenonDevKeyIsDown[param_2] = true;
   if (param_4 != 0) {
-    CL_GamepadButtonEventForPort(iVar1,param_4,1,param_5);
+    CL_GamepadButtonEventForPort(param_1,param_4,1,param_5);
   }
   if (param_3 != 0) {
-    Sys_QueEvent(param_5,SE_CHAR,(int)param_3,0,iVar1,0,(void *)0x0);
+    Sys_QueEvent(param_5,SE_CHAR,(int)param_3,0,param_1,0,(void *)0x0);
   }
-  __restgprlr_29();
   return;
 }
 
 
 // 82643B98  IN_XenonDevKeyboardProcessKeyRepeat  (xenon/xenon_input.cpp:441)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void IN_XenonDevKeyboardProcessKeyRepeat
                (int param_1,int param_2,char param_3,int param_4,int param_5)
 
 {
-  int iVar1;
-  char cVar2;
-  int iVar3;
-  
-  iVar3 = (int)param_3;
-  cVar2 = (char)param_2;
-  iVar1 = __savegprlr_29(param_1);
-  if (iVar3 != 0) {
-    CL_GamepadButtonEventForPort(iVar1,iVar3,1,param_4);
+  if (param_3 != '\0') {
+    CL_GamepadButtonEventForPort(param_1,(int)param_3,1,param_4);
   }
-  if (cVar2 != 0) {
-    Sys_QueEvent(param_4,SE_CHAR,(int)cVar2,0,iVar1,0,(void *)0x0);
+  if ((char)param_2 != 0) {
+    Sys_QueEvent(param_4,SE_CHAR,(int)(char)param_2,0,param_1,0,(void *)0x0);
   }
-  __restgprlr_29();
   return;
 }
 
@@ -262,110 +254,110 @@ void IN_XenonDevKeyboardProcessKeyUp(int param_1,int param_2,int param_3,int par
 
 // 82643C18  IN_XenonGenerateFakeKeyPress  (xenon/xenon_input.cpp:459)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
+
 void IN_XenonGenerateFakeKeyPress
                (int param_1,uint param_2,char param_3,int param_4,int param_5,bool param_6)
 
 {
-  int iVar1;
-  ulonglong uVar2;
-  
-  uVar2 = (ulonglong)param_6;
-  iVar1 = __savegprlr_24(param_1);
-  if ((uVar2 & 0xff) != 0) {
+  if (param_6) {
     xenonDevKeyIsDown[param_2] = true;
-    CL_GamepadButtonEventForPort(iVar1,0xa0,1,param_5);
+    CL_GamepadButtonEventForPort(param_1,0xa0,1,param_5);
   }
   xenonDevKeyIsDown[param_2] = true;
   if (param_4 != 0) {
-    CL_GamepadButtonEventForPort(iVar1,param_4,1,param_5);
+    CL_GamepadButtonEventForPort(param_1,param_4,1,param_5);
   }
   if (param_3 != 0) {
-    Sys_QueEvent(param_5,SE_CHAR,(int)param_3,0,iVar1,0,(void *)0x0);
+    Sys_QueEvent(param_5,SE_CHAR,(int)param_3,0,param_1,0,(void *)0x0);
   }
   xenonDevKeyIsDown[param_2] = false;
-  CL_GamepadButtonEventForPort(iVar1,param_4,0,param_5);
-  if ((uVar2 & 0xff) != 0) {
+  CL_GamepadButtonEventForPort(param_1,param_4,0,param_5);
+  if (param_6) {
     xenonDevKeyIsDown[param_2] = false;
-    CL_GamepadButtonEventForPort(iVar1,0xa0,0,param_5);
+    CL_GamepadButtonEventForPort(param_1,0xa0,0,param_5);
   }
-  __restgprlr_24();
   return;
 }
 
 
 // 82643CF0  IN_XenonChatpadGenerateFakeKeys  (xenon/xenon_input.cpp:470)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 bool IN_XenonChatpadGenerateFakeKeys
                (_XINPUT_KEYSTROKE *param_1,int param_2,uint param_3,int param_4)
 
 {
-  ushort uVar1;
-  int iVar2;
-  undefined1 uVar3;
-  char cVar4;
-  bool bVar5;
+  wchar_t wVar1;
+  char cVar2;
+  int iVar3;
+  bool bVar4;
   char acStack_140 [320];
   
-  iVar2 = __savegprlr_28(param_1);
   memcpy();
-  if ((*(ushort *)(iVar2 + 4) & 0x1000) == 0) goto LAB_82643dd8;
-  uVar1 = *(ushort *)(iVar2 + 2);
-  if (uVar1 < 0xe6) {
-    if (uVar1 == 0xe5) {
-      iVar2 = 0x9a;
+  if ((param_1->Flags & 0x1000) == 0) {
+    return false;
+  }
+  wVar1 = param_1->Unicode;
+  if ((ushort)wVar1 < 0xe6) {
+    if (wVar1 == L'å') {
+      iVar3 = 0x9a;
       goto LAB_82643df8;
     }
-    if (0xdf < uVar1) {
-      if (uVar1 != 0xe1) {
-LAB_82643dd8:
-        uVar3 = __restgprlr_28(0);
-        return (bool)uVar3;
+    if (0xdf < (ushort)wVar1) {
+      if (wVar1 != L'á') {
+        return false;
       }
-      bVar5 = true;
-      iVar2 = 0x60;
-      cVar4 = '~';
+      bVar4 = true;
+      iVar3 = 0x60;
+      cVar2 = '~';
       goto LAB_82643e00;
     }
-    if (uVar1 == 0xdf) {
-      iVar2 = 0x9b;
+    if (wVar1 == L'ß') {
+      iVar3 = 0x9b;
       goto LAB_82643df8;
     }
-    if (uVar1 != 0xa1) {
-      if (uVar1 == 0xbf) {
-        IN_XenonGenerateFakeKeyPress(param_2,param_3,'`',0x60,param_4,true);
-        Com_Printf_NoFilter(acStack_140);
-        uVar3 = __restgprlr_28(1);
-        return (bool)uVar3;
+    if (wVar1 != L'¡') {
+      if (wVar1 != L'¿') {
+        return false;
       }
-      goto LAB_82643dd8;
+      IN_XenonGenerateFakeKeyPress(param_2,param_3,'`',0x60,param_4,true);
+      Com_Printf_NoFilter(acStack_140);
+      return true;
     }
-    iVar2 = 0x60;
-    cVar4 = '`';
+    iVar3 = 0x60;
+    cVar2 = '`';
   }
   else {
-    if (uVar1 == 0xe6) {
-      iVar2 = 9;
+    if (wVar1 == L'æ') {
+      iVar3 = 9;
     }
-    else if (uVar1 == 0xe9) {
-      iVar2 = 0xa4;
+    else if (wVar1 == L'é') {
+      iVar3 = 0xa4;
     }
     else {
-      if (uVar1 != 0xf0) goto LAB_82643dd8;
-      iVar2 = 0xa3;
+      if (wVar1 != L'ð') {
+        return false;
+      }
+      iVar3 = 0xa3;
     }
 LAB_82643df8:
-    cVar4 = '\0';
+    cVar2 = '\0';
   }
-  bVar5 = false;
+  bVar4 = false;
 LAB_82643e00:
-  IN_XenonGenerateFakeKeyPress(param_2,param_3,cVar4,iVar2,param_4,bVar5);
-  uVar3 = __restgprlr_28(1);
-  return (bool)uVar3;
+  IN_XenonGenerateFakeKeyPress(param_2,param_3,cVar2,iVar3,param_4,bVar4);
+  return true;
 }
 
 
 // 82643E20  IN_XenonDevKeyboard  (xenon/xenon_input.cpp:526)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void IN_XenonDevKeyboard(void)
@@ -381,7 +373,6 @@ void IN_XenonDevKeyboard(void)
   ulong uVar8;
   _XINPUT_KEYSTROKE local_60 [12];
   
-  __savegprlr_23();
   uVar3 = Sys_Milliseconds();
   iVar2 = cl_controller_in_use;
   uVar8 = 0;
@@ -435,7 +426,6 @@ void IN_XenonDevKeyboard(void)
     }
     uVar8 = uVar8 + 1;
   } while ((int)uVar8 < 4);
-  __restgprlr_23();
   return;
 }
 

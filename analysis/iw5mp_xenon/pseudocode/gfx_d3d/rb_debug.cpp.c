@@ -16,33 +16,29 @@ void TRACK_rb_debug(void)
 
 // 8279AE60  RB_AddDebugLine  (gfx_d3d/rb_debug.cpp:36)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 int RB_AddDebugLine(float *param_1,float *param_2,GfxColor param_3,bool param_4,int param_5,
                    int param_6,GfxPointVertex *param_7)
 
 {
   GfxPointVertex *pGVar1;
-  float *pfVar2;
-  int iVar3;
-  ulonglong uVar4;
   
-  uVar4 = (ulonglong)param_5;
-  pfVar2 = (float *)__savegprlr_28(param_1);
-  iVar3 = (int)uVar4;
-  if (param_6 < iVar3 + 2) {
-    RB_DrawLines3D((iVar3 >> 1) + (uint)(iVar3 < 0 && (uVar4 & 1) != 0),1,param_7,param_4);
-    uVar4 = 0;
+  if (param_6 < param_5 + 2) {
+    RB_DrawLines3D((param_5 >> 1) + (uint)(param_5 < 0 && (param_5 & 1U) != 0),1,param_7,param_4);
+    param_5 = 0;
   }
-  pGVar1 = param_7 + (int)uVar4;
+  pGVar1 = param_7 + param_5;
   *(GfxColor *)pGVar1->color = param_3;
   *(GfxColor *)pGVar1[1].color = param_3;
-  pGVar1->xyz[0] = *pfVar2;
-  pGVar1->xyz[1] = pfVar2[1];
-  pGVar1->xyz[2] = pfVar2[2];
+  pGVar1->xyz[0] = *param_1;
+  pGVar1->xyz[1] = param_1[1];
+  pGVar1->xyz[2] = param_1[2];
   pGVar1[1].xyz[0] = *param_2;
   pGVar1[1].xyz[1] = param_2[1];
   pGVar1[1].xyz[2] = param_2[2];
-  iVar3 = __restgprlr_28(uVar4 + 2);
-  return iVar3;
+  return param_5 + 2;
 }
 
 
@@ -77,6 +73,8 @@ void RB_SetPolyVert(float *param_1,GfxColor param_2,int param_3)
 
 // 8279AFA8  RB_DrawPolyInteriors  (gfx_d3d/rb_debug.cpp:75)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 /* WARNING: Enum "GfxPrimStatsTarget": Some values do not have unique names */
@@ -99,7 +97,6 @@ void RB_DrawPolyInteriors(void)
   double dVar12;
   GfxColor local_60 [24];
   
-  __savegprlr_24();
   if ((backEndData->debugGlobals).polyCount < 1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_debug.cpp",0x53,0,
                     "%s");
@@ -155,13 +152,14 @@ void RB_DrawPolyInteriors(void)
     } while (iVar8 < (backEndData->debugGlobals).polyCount);
   }
   RB_EndTessSurface();
-  __restgprlr_24();
   return;
 }
 
 
 // 8279B210  RB_DrawPolyOutlines  (gfx_d3d/rb_debug.cpp:114)
 
+/* WARNING: Function: __savegprlr_20 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_20 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
@@ -184,7 +182,6 @@ void RB_DrawPolyOutlines(void)
   float *pfVar13;
   undefined4 local_70 [28];
   
-  __savegprlr_20();
   if ((backEndData->debugGlobals).polyCount < 1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_debug.cpp",0x7c,0,
                     "%s");
@@ -236,7 +233,6 @@ void RB_DrawPolyOutlines(void)
   if (iVar10 >> 1 != 0) {
     RB_DrawLines3D(iVar10 >> 1,1,g_debugPolyVerts,false);
   }
-  __restgprlr_20();
   return;
 }
 
@@ -263,68 +259,70 @@ void RB_DrawDebugPolys(void)
 
 // 8279B408  RB_DrawDebugLines  (gfx_d3d/rb_debug.cpp:159)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 
 void RB_DrawDebugLines(trDebugLine_t *param_1,int param_2,GfxPointVertex *param_3)
 
 {
-  float fVar1;
-  GfxPointVertex *pGVar2;
+  int iVar1;
+  undefined4 uVar2;
   int iVar3;
-  int iVar4;
+  GfxPointVertex *pGVar4;
   longlong lVar5;
   float *pfVar6;
   bool bVar7;
   
   lVar5 = (longlong)param_2;
-  iVar3 = __savegprlr_27(param_1);
-  if ((int)lVar5 != 0) {
+  if (param_2 != 0) {
     RB_EndSurfaceIfNeeded();
     R_Set3D(&gfxCmdBufSourceState);
-    iVar4 = 0;
-    bVar7 = *(int *)(iVar3 + 0x1c) != 0;
-    if (0 < (int)lVar5) {
-      pfVar6 = (float *)(iVar3 + -0xc);
+    iVar3 = 0;
+    bVar7 = param_1->depthTest != 0;
+    if (0 < param_2) {
+      pfVar6 = param_1[-1].end + 2;
       do {
-        fVar1 = pfVar6[10];
-        if (bVar7 != (fVar1 != 0.0)) {
-          if (iVar4 >> 1 != 0) {
-            RB_DrawLines3D(iVar4 >> 1,1,param_3,bVar7);
+        iVar1 = (int)pfVar6[10];
+        if (bVar7 != (iVar1 != 0)) {
+          if (iVar3 >> 1 != 0) {
+            RB_DrawLines3D(iVar3 >> 1,1,param_3,bVar7);
           }
-          iVar4 = 0;
-          bVar7 = fVar1 != 0.0;
+          iVar3 = 0;
+          bVar7 = iVar1 != 0;
         }
-        fVar1 = pfVar6[9];
-        if (0x400 < iVar4 + 2) {
-          RB_DrawLines3D(iVar4 >> 1,1,param_3,bVar7);
-          iVar4 = 0;
+        uVar2 = pfVar6[9];
+        if (0x400 < iVar3 + 2) {
+          RB_DrawLines3D(iVar3 >> 1,1,param_3,bVar7);
+          iVar3 = 0;
         }
         lVar5 = lVar5 + -1;
-        pGVar2 = param_3 + iVar4;
-        iVar4 = iVar4 + 2;
-        *(float *)pGVar2->color = fVar1;
-        *(float *)pGVar2[1].color = fVar1;
-        pGVar2->xyz[0] = pfVar6[3];
-        pGVar2->xyz[1] = pfVar6[4];
-        pGVar2->xyz[2] = pfVar6[5];
-        pGVar2[1].xyz[0] = pfVar6[6];
-        pGVar2[1].xyz[1] = pfVar6[7];
+        pGVar4 = param_3 + iVar3;
+        iVar3 = iVar3 + 2;
+        *(undefined4 *)pGVar4->color = uVar2;
+        *(undefined4 *)pGVar4[1].color = uVar2;
+        pGVar4->xyz[0] = pfVar6[3];
+        pGVar4->xyz[1] = pfVar6[4];
+        pGVar4->xyz[2] = pfVar6[5];
+        pGVar4[1].xyz[0] = pfVar6[6];
+        pGVar4[1].xyz[1] = pfVar6[7];
         pfVar6 = pfVar6 + 8;
-        pGVar2[1].xyz[2] = *pfVar6;
+        pGVar4[1].xyz[2] = *pfVar6;
       } while (lVar5 != 0);
     }
-    if (iVar4 >> 1 != 0) {
-      RB_DrawLines3D(iVar4 >> 1,1,param_3,bVar7);
+    if (iVar3 >> 1 != 0) {
+      RB_DrawLines3D(iVar3 >> 1,1,param_3,bVar7);
     }
   }
-  __restgprlr_27();
   return;
 }
 
 
 // 8279B538  RB_DrawDebugStrings  (gfx_d3d/rb_debug.cpp:199)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 
@@ -342,12 +340,11 @@ void RB_DrawDebugStrings(trDebugString_t *param_1,int param_2)
   float local_38;
   
   lVar2 = (longlong)param_2;
-  iVar1 = __savegprlr_28(param_1);
-  if ((int)lVar2 != 0) {
+  if (param_2 != 0) {
     RB_EndSurfaceIfNeeded();
     R_Set3D(&gfxCmdBufSourceState);
-    if (0 < (int)lVar2) {
-      pfVar3 = (float *)(iVar1 + 0x10);
+    if (0 < param_2) {
+      pfVar3 = &param_1->scale;
       do {
         local_38 = -*pfVar3;
         local_50 = gfxCmdBufSourceState.viewParms.camera.axis[1][0] * local_38;
@@ -356,8 +353,8 @@ void RB_DrawDebugStrings(trDebugString_t *param_1,int param_2)
         local_40 = gfxCmdBufSourceState.viewParms.camera.axis[2][0] * local_38;
         local_3c = gfxCmdBufSourceState.viewParms.camera.axis[2][1] * local_38;
         local_38 = gfxCmdBufSourceState.viewParms.camera.axis[2][2] * local_38;
-        RB_DrawTextInSpace((char *)(pfVar3 + 1),backEnd.debugFont,pfVar3 + -4,&local_50,&local_40,
-                           (ulong)pfVar3[-1]);
+        RB_DrawTextInSpace((char *)(pfVar3 + 1),backEnd.debugFont,(float *)(pfVar3 + -4),&local_50,
+                           &local_40,((GfxColor *)(pfVar3 + -1))->packed);
         lVar2 = lVar2 + -1;
         pfVar3 = pfVar3 + 0x18;
       } while (lVar2 != 0);
@@ -371,13 +368,16 @@ void RB_DrawDebugStrings(trDebugString_t *param_1,int param_2)
       RB_EndTessSurface();
     }
   }
-  __restgprlr_28();
   return;
 }
 
 
 // 8279B650  RB_AddPlumeStrings  (gfx_d3d/rb_debug.cpp:221)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 
@@ -386,14 +386,14 @@ void RB_AddPlumeStrings(GfxViewParms *param_1)
 {
   float fVar1;
   GfxDebugPlume *pGVar2;
-  int iVar3;
-  undefined8 uVar4;
-  GfxBackEndData *pGVar5;
-  ulonglong uVar6;
-  int iVar7;
-  float *pfVar8;
+  undefined8 uVar3;
+  GfxBackEndData *pGVar4;
+  ulonglong uVar5;
+  int iVar6;
+  float *pfVar7;
+  int iVar8;
   int iVar9;
-  int iVar10;
+  double dVar10;
   double dVar11;
   double dVar12;
   double dVar13;
@@ -401,59 +401,54 @@ void RB_AddPlumeStrings(GfxViewParms *param_1)
   double dVar15;
   double dVar16;
   double dVar17;
-  double dVar18;
   float local_80;
   float local_7c;
   float local_78;
   
-  __savegprlr_26(param_1);
-  iVar3 = __savefpr_25();
-  iVar9 = 0;
+  iVar8 = 0;
   if (0 < (backEndData->debugGlobals).plumeCount) {
-    uVar4 = 0xffffffff82000000;
-    dVar15 = 0.5;
-    dVar16 = 0.06400000303983688;
-    dVar17 = 4.0;
-    dVar18 = 0.012566370889544487;
-    iVar10 = 0;
-    dVar14 = 2.0;
-    dVar13 = 1.0;
-    pGVar5 = backEndData;
+    uVar3 = 0xffffffff82000000;
+    dVar14 = 0.5;
+    dVar15 = 0.06400000303983688;
+    dVar16 = 4.0;
+    dVar17 = 0.012566370889544487;
+    iVar9 = 0;
+    dVar13 = 2.0;
+    dVar12 = 1.0;
+    pGVar4 = backEndData;
     do {
-      pGVar2 = (pGVar5->debugGlobals).plumes;
-      uVar6 = (ulonglong)(uint)gfxCmdBufSourceState.sceneDef.time -
-              (ulonglong)*(uint *)((int)pGVar2->color + iVar10 + 0x14);
-      if ((-1 < (longlong)uVar6) &&
-         (iVar7 = (int)uVar6, iVar7 <= *(int *)((int)pGVar2->color + iVar10 + 0x18))) {
-        pGVar2 = (pGVar5->debugGlobals).plumes;
-        *(float *)((int)pGVar2->color + iVar10 + 0xc) = (float)dVar13;
-        if (*(int *)((int)pGVar2->color + iVar10 + 0x18) < (int)((uVar6 & 0xffffffff) << 1)) {
-          pGVar2 = (pGVar5->debugGlobals).plumes;
-          *(float *)((int)pGVar2->color + iVar10 + 0xc) =
-               (float)(dVar14 - (double)((float)((double)(longlong)iVar7 * dVar14) /
-                                        (float)(longlong)
-                                               *(int *)((int)pGVar2->color + iVar10 + 0x18)));
+      pGVar2 = (pGVar4->debugGlobals).plumes;
+      uVar5 = (ulonglong)(uint)gfxCmdBufSourceState.sceneDef.time -
+              (ulonglong)*(uint *)((int)pGVar2->color + iVar9 + 0x14);
+      if ((-1 < (longlong)uVar5) &&
+         (iVar6 = (int)uVar5, iVar6 <= *(int *)((int)pGVar2->color + iVar9 + 0x18))) {
+        pGVar2 = (pGVar4->debugGlobals).plumes;
+        *(float *)((int)pGVar2->color + iVar9 + 0xc) = (float)dVar12;
+        if (*(int *)((int)pGVar2->color + iVar9 + 0x18) < (int)((uVar5 & 0xffffffff) << 1)) {
+          pGVar2 = (pGVar4->debugGlobals).plumes;
+          *(float *)((int)pGVar2->color + iVar9 + 0xc) =
+               (float)(dVar13 - (double)((float)((double)(longlong)iVar6 * dVar13) /
+                                        (float)(longlong)*(int *)((int)pGVar2->color + iVar9 + 0x18)
+                                        ));
         }
-        dVar12 = (double)(longlong)iVar7;
-        dVar11 = sin((double)(float)(dVar12 * dVar18 + (double)(longlong)iVar9));
-        pfVar8 = (float *)((int)((backEndData->debugGlobals).plumes)->origin + iVar10);
-        fVar1 = (float)((double)(float)dVar11 * dVar17);
-        local_80 = fVar1 * *(float *)(iVar3 + 0x118) + *pfVar8;
-        local_7c = *(float *)(iVar3 + 0x11c) * fVar1 + pfVar8[1];
-        local_78 = (float)(dVar12 * dVar16 + (double)(*(float *)(iVar3 + 0x120) * fVar1 + pfVar8[2])
-                          );
+        dVar11 = (double)(longlong)iVar6;
+        dVar10 = sin((double)(float)(dVar11 * dVar17 + (double)(longlong)iVar8));
+        pfVar7 = (float *)((int)((backEndData->debugGlobals).plumes)->origin + iVar9);
+        fVar1 = (float)((double)(float)dVar10 * dVar16);
+        local_80 = fVar1 * (param_1->camera).axis[1][0] + *pfVar7;
+        local_7c = (param_1->camera).axis[1][1] * fVar1 + pfVar7[1];
+        local_78 = (float)(dVar11 * dVar15 +
+                          (double)((param_1->camera).axis[1][2] * fVar1 + pfVar7[2]));
         va("%i");
         R_AddDebugString(&backEndData->debugGlobals,&local_80,
-                         (float *)((int)((backEndData->debugGlobals).plumes)->color + iVar10),
-                         (float)dVar15,(char *)uVar4);
-        pGVar5 = backEndData;
+                         (float *)((int)((backEndData->debugGlobals).plumes)->color + iVar9),
+                         (float)dVar14,(char *)uVar3);
+        pGVar4 = backEndData;
       }
-      iVar9 = iVar9 + 1;
-      iVar10 = iVar10 + 0x28;
-    } while (iVar9 < (pGVar5->debugGlobals).plumeCount);
+      iVar8 = iVar8 + 1;
+      iVar9 = iVar9 + 0x28;
+    } while (iVar8 < (pGVar4->debugGlobals).plumeCount);
   }
-  __restfpr_25();
-  __restgprlr_26();
   return;
 }
 

@@ -2,30 +2,31 @@
 
 // 824DA190  LiveStorage_FetchFile  (qcommon/com_fetchfile.cpp:54)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
+
 bool LiveStorage_FetchFile(int param_1,char *param_2,fileFetchData *param_3,int param_4)
 
 {
   RequiredTask *pRVar1;
-  ulong uVar2;
-  _XUSER_SIGNIN_STATE _Var3;
+  _XUSER_SIGNIN_STATE _Var2;
+  int iVar3;
   int iVar4;
-  undefined1 uVar8;
-  int iVar5;
-  overlappedTask *poVar6;
-  _XOVERLAPPED *p_Var7;
+  overlappedTask *poVar5;
+  _XOVERLAPPED *p_Var6;
+  ulong uVar7;
   
-  uVar2 = __savegprlr_25(param_1);
-  _Var3 = XUserGetSigninState(uVar2);
-  if (_Var3 == eXUserSigninState_SignedInToLive) {
-    iVar4 = Sys_Milliseconds();
+  _Var2 = XUserGetSigninState(param_1);
+  if (_Var2 == eXUserSigninState_SignedInToLive) {
+    iVar3 = Sys_Milliseconds();
     pRVar1 = param_3->requiredTask;
     if (pRVar1 == (RequiredTask *)0x0) {
 LAB_824da214:
       param_3->serverPathLen = 0x100;
-      iVar5 = Xenon_StorageBuildServerPath
-                        (uVar2,param_2,XSTORAGE_FACILITY_PER_TITLE,param_3->serverPath,
+      iVar4 = Xenon_StorageBuildServerPath
+                        (param_1,param_2,XSTORAGE_FACILITY_PER_TITLE,param_3->serverPath,
                          &param_3->serverPathLen);
-      if (iVar5 == 0) {
+      if (iVar4 == 0) {
         Com_Error(ERR_DROP,"XBOXLIVE_LIVEERROR");
       }
       if (0x100 < param_3->serverPathLen) {
@@ -33,38 +34,38 @@ LAB_824da214:
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_fetchfile.cpp"
                         ,0x55,0,"%s\n\t%s");
       }
-      poVar6 = TaskManager_GetOpenTaskSlot(&storageTasks,uVar2,param_4);
-      p_Var7 = TaskManager_TaskToXOverlapped(poVar6);
-      poVar6 = TaskManager_TaskFromXOverlapped(&storageTasks,p_Var7);
-      TaskManager_SetTaskData(poVar6,param_3);
+      poVar5 = TaskManager_GetOpenTaskSlot(&storageTasks,param_1,param_4);
+      p_Var6 = TaskManager_TaskToXOverlapped(poVar5);
+      poVar5 = TaskManager_TaskFromXOverlapped(&storageTasks,p_Var6);
+      TaskManager_SetTaskData(poVar5,param_3);
       Com_Printf(0xe,"Downloading the file %s from Xbox Live\n");
       if (param_3->requiredTask != (RequiredTask *)0x0) {
-        param_3->requiredTask->lastTime = iVar4;
+        param_3->requiredTask->lastTime = iVar3;
       }
-      uVar2 = XStorageDownloadToMemory
-                        (uVar2,param_3->serverPath,param_3->bufferSize,param_3->buffer,0x14,
-                         &param_3->results,p_Var7);
-      if ((uVar2 != 0) && (uVar2 != 0x3e5)) {
+      uVar7 = XStorageDownloadToMemory
+                        (param_1,param_3->serverPath,param_3->bufferSize,param_3->buffer,0x14,
+                         &param_3->results,p_Var6);
+      if ((uVar7 != 0) && (uVar7 != 0x3e5)) {
         Com_Error(ERR_DROP,"Microsoft error %llx while trying to download %s");
       }
-      uVar8 = __restgprlr_25(1);
-      return (bool)uVar8;
+      return true;
     }
     if (pRVar1->backoffs < 0x28) {
-      if (pRVar1->lastTime + pRVar1->interval <= iVar4) goto LAB_824da214;
+      if (pRVar1->lastTime + pRVar1->interval <= iVar3) goto LAB_824da214;
     }
     else {
       Com_PrintError(0x10,
                      "Unable to retrieve file \'%s\' for task \'%i\'- Backoff count exceeded %i\n");
     }
   }
-  uVar8 = __restgprlr_25(0);
-  return (bool)uVar8;
+  return false;
 }
 
 
 // 824DA348  LiveStorage_FileFetchComplete  (qcommon/com_fetchfile.cpp:106)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 taskCompleteResults LiveStorage_FileFetchComplete(int param_1)
@@ -74,81 +75,73 @@ taskCompleteResults LiveStorage_FileFetchComplete(int param_1)
   int *piVar2;
   int iVar3;
   _XOVERLAPPED *p_Var4;
-  taskCompleteResults tVar5;
-  ulong uVar6;
-  overlappedTask *poVar7;
-  void *pvVar8;
-  bool bVar9;
+  ulong uVar5;
+  overlappedTask *poVar6;
+  void *pvVar7;
+  bool bVar8;
   
-  iVar3 = __savegprlr_26(param_1);
-  p_Var4 = TaskManager_TaskToXOverlapped(storageTasks.tasks + iVar3);
+  p_Var4 = TaskManager_TaskToXOverlapped(storageTasks.tasks + param_1);
   if (p_Var4 == (_XOVERLAPPED *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_fetchfile.cpp",
                     0x71,0,"%s");
   }
-  if (storageTasks.tasks[iVar3].active == false) {
+  if (storageTasks.tasks[param_1].active == false) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_fetchfile.cpp",
                     0x73,0,"%s");
   }
   if ((p_Var4->InternalLow != 0x3e5) &&
-     (uVar6 = XGetOverlappedResult(p_Var4,(ulong *)0x0,0), uVar6 != 0x3e4)) {
-    bVar1 = storageTasks.tasks[iVar3].controllerIndex;
-    poVar7 = TaskManager_TaskFromXOverlapped(&storageTasks,p_Var4);
-    pvVar8 = TaskManager_GetTaskData(poVar7);
-    if (pvVar8 == (void *)0x0) {
+     (uVar5 = XGetOverlappedResult(p_Var4,(ulong *)0x0,0), uVar5 != 0x3e4)) {
+    bVar1 = storageTasks.tasks[param_1].controllerIndex;
+    poVar6 = TaskManager_TaskFromXOverlapped(&storageTasks,p_Var4);
+    pvVar7 = TaskManager_GetTaskData(poVar6);
+    if (pvVar7 == (void *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_fetchfile.cpp",
                       0x7f,0,"%s");
     }
-    uVar6 = XGetOverlappedExtendedError(p_Var4);
-    if (uVar6 != 0) {
-      poVar7 = TaskManager_TaskFromXOverlapped(&storageTasks,p_Var4);
-      TaskManager_ClearTask(poVar7);
-      piVar2 = *(int **)((int)pvVar8 + 0xc);
+    uVar5 = XGetOverlappedExtendedError(p_Var4);
+    if (uVar5 != 0) {
+      poVar6 = TaskManager_TaskFromXOverlapped(&storageTasks,p_Var4);
+      TaskManager_ClearTask(poVar6);
+      piVar2 = *(int **)((int)pvVar7 + 0xc);
       if ((piVar2 != (int *)0x0) && (iVar3 = *piVar2, *piVar2 = iVar3 + 1, 2 < iVar3 + 1)) {
-        **(undefined4 **)((int)pvVar8 + 0xc) = 0;
-        *(int *)(*(int *)((int)pvVar8 + 0xc) + 4) = *(int *)(*(int *)((int)pvVar8 + 0xc) + 4) + 1;
-        *(int *)(*(int *)((int)pvVar8 + 0xc) + 8) = *(int *)(*(int *)((int)pvVar8 + 0xc) + 8) * 5;
+        **(undefined4 **)((int)pvVar7 + 0xc) = 0;
+        *(int *)(*(int *)((int)pvVar7 + 0xc) + 4) = *(int *)(*(int *)((int)pvVar7 + 0xc) + 4) + 1;
+        *(int *)(*(int *)((int)pvVar7 + 0xc) + 8) = *(int *)(*(int *)((int)pvVar7 + 0xc) + 8) * 5;
       }
-      if ((uVar6 != 0x8015000a) && (uVar6 != 0x80072741)) {
-        if ((uVar6 == 0x80151802) || (uVar6 == 0x80070525)) {
-          if (uVar6 == 0x8007007a) {
+      if ((uVar5 != 0x8015000a) && (uVar5 != 0x80072741)) {
+        if ((uVar5 == 0x80151802) || (uVar5 == 0x80070525)) {
+          if (uVar5 == 0x8007007a) {
             Com_Error(ERR_DROP,"Microsoft error: Insufficient space for file");
-            tVar5 = __restgprlr_26(2);
-            return tVar5;
+            return TASK_ERROR;
           }
           Com_PrintError(0x10,"Microsoft error %llx while downloading file\n");
         }
         else {
-          bVar9 = Live_IsUserSignedInToLive((uint)bVar1);
-          if (bVar9) {
-            if (uVar6 == 0x8015c004) {
+          bVar8 = Live_IsUserSignedInToLive((uint)bVar1);
+          if (bVar8) {
+            if (uVar5 == 0x8015c004) {
               Com_PrintError(0x10,
                              "Warning: Unable to retrieve file - Microsoft error XONLINE_E_STORAGE_FILE_NOT_FOUND\n"
                             );
-              tVar5 = __restgprlr_26(2);
-              return tVar5;
+              return TASK_ERROR;
             }
             Com_PrintError(0x10,"Error: Unable to retrieve file - Microsoft error %x\n");
-            tVar5 = __restgprlr_26(2);
-            return tVar5;
+            return TASK_ERROR;
           }
         }
       }
-      tVar5 = __restgprlr_26(2);
-      return tVar5;
+      return TASK_ERROR;
     }
-    poVar7 = TaskManager_TaskFromXOverlapped(&storageTasks,p_Var4);
-    TaskManager_ClearTask(poVar7);
-    if (*(RequiredTask **)((int)pvVar8 + 0xc) != (RequiredTask *)0x0) {
-      InitRequiredTask(*(RequiredTask **)((int)pvVar8 + 0xc));
+    poVar6 = TaskManager_TaskFromXOverlapped(&storageTasks,p_Var4);
+    TaskManager_ClearTask(poVar6);
+    if (*(RequiredTask **)((int)pvVar7 + 0xc) != (RequiredTask *)0x0) {
+      InitRequiredTask(*(RequiredTask **)((int)pvVar7 + 0xc));
     }
-    *(undefined1 *)((int)pvVar8 + 8) = 1;
+    *(undefined1 *)((int)pvVar7 + 8) = 1;
     Com_Printf(0x10,"File was %i bytes\n");
     ClosePopupGettingData(LOCAL_CLIENT_0);
-    tVar5 = __restgprlr_26(1);
-    return tVar5;
+    return TASK_COMPLETE;
   }
-  tVar5 = __restgprlr_26(0);
-  return tVar5;
+  return TASK_NOTCOMPLETE;
 }
 

@@ -2,6 +2,8 @@
 
 // 827A9F80  RB_ResampleScene  (gfx_d3d/rb_resample_scene.cpp:16)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
@@ -9,9 +11,6 @@
 void RB_ResampleScene(GfxViewInfo *param_1,bool param_2)
 
 {
-  int iVar1;
-  
-  iVar1 = __savegprlr_26(param_1);
   if (gfxCmdBufSourceState.input.data == (GfxBackEndData *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_resample_scene.cpp"
                     ,0x11,0,"%s");
@@ -22,16 +21,16 @@ void RB_ResampleScene(GfxViewInfo *param_1,bool param_2)
   }
   R_SetRenderTargetSize(&gfxCmdBufSourceState,R_RENDERTARGET_FRAME_BUFFER);
   R_SetRenderTarget((GfxCmdBufContext)0x8484c7e08484df40,R_RENDERTARGET_FRAME_BUFFER);
-  R_SetViewportStruct(&gfxCmdBufSourceState,(GfxViewport *)(iVar1 + 0x160));
-  if (*(int *)(iVar1 + 0x950) == 0x10) {
+  R_SetViewportStruct(&gfxCmdBufSourceState,&param_1->displayViewport);
+  if (param_1->sceneResolveRenderTargetId == R_RENDERTARGET_NONE) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_resample_scene.cpp"
                     ,0x18,0,"%s");
   }
-  gfxCmdBufSourceState.input.codeImages[8] = gfxRenderTargets[*(int *)(iVar1 + 0x950)].image;
+  gfxCmdBufSourceState.input.codeImages[8] =
+       gfxRenderTargets[param_1->sceneResolveRenderTargetId].image;
   gfxCmdBufSourceState.input.codeImages[10] = gfxCmdBufSourceState.input.codeImages[8];
-  RB_ViewportFilter(rgp.postFxMaterial[0],(GfxViewport *)(iVar1 + 0x160),param_2,
-                    *(bool *)(iVar1 + 0x92c),0.0);
-  __restgprlr_26();
+  RB_ViewportFilter(rgp.postFxMaterial[0],&param_1->displayViewport,param_2,param_1->isPIPScene,0.0)
+  ;
   return;
 }
 

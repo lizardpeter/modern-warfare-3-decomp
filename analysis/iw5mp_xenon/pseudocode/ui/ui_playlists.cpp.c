@@ -85,18 +85,25 @@ void PlaylistStack_Pop(void)
 
 // 825B82D8  PlaylistStack_Clear  (ui/ui_playlists.cpp:257)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void PlaylistStack_Clear(void)
 
 {
-  __savegprlr_28();
-  while (s_playlistUIStack.count != 0) {
+  while( true ) {
+    if (s_playlistUIStack.count == 0) {
+      return;
+    }
     s_playlistUIStack.count = s_playlistUIStack.count - 1;
     UI_CloseMenu(LOCAL_CLIENT_0,"popup_findgame");
-    if ((s_playlistUIStack.count == 0) ||
-       (UI_OpenMenu(LOCAL_CLIENT_0,"popup_findgame"), s_playlistUIStack.count == 0)) break;
+    if (s_playlistUIStack.count == 0) break;
+    UI_OpenMenu(LOCAL_CLIENT_0,"popup_findgame");
+    if (s_playlistUIStack.count == 0) {
+      return;
+    }
     if (gametypes[0x3f].abbrvName + s_playlistUIStack.count * 8 + 0x14 != (char *)0x0) {
       Dvar_SetStringByName
                 ("playlist_title",
@@ -104,7 +111,6 @@ void PlaylistStack_Clear(void)
                  [*(int *)(gametypes[0x3f].abbrvName + s_playlistUIStack.count * 8 + 0x14)].name);
     }
   }
-  __restgprlr_28();
   return;
 }
 
@@ -218,31 +224,30 @@ int CustomGameTypes_GetGametypeCount(void)
 
 // 825B4590  Playlist_FindGametypeIndex  (ui/ui_playlists.cpp:354)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 int Playlist_FindGametypeIndex(char *param_1)
 
 {
-  char *pcVar1;
-  int iVar2;
-  char *pcVar3;
-  longlong lVar4;
+  int iVar1;
+  char *pcVar2;
+  int iVar3;
   
-  pcVar1 = (char *)__savegprlr_28(param_1);
-  lVar4 = 0;
+  iVar3 = 0;
   if ((ulonglong)(uint)numGametypes != 0xffffffffffffffff) {
-    pcVar3 = gametypes[0].internalName;
+    pcVar2 = gametypes[0].internalName;
     do {
-      iVar2 = I_stricmp(pcVar3,pcVar1);
-      if (iVar2 == 0) {
-        iVar2 = __restgprlr_28(lVar4);
-        return iVar2;
+      iVar1 = I_stricmp(pcVar2,param_1);
+      if (iVar1 == 0) {
+        return iVar3;
       }
-      lVar4 = lVar4 + 1;
-      pcVar3 = pcVar3 + 0x78;
-    } while ((int)lVar4 < numGametypes + 1);
+      iVar3 = iVar3 + 1;
+      pcVar2 = pcVar2 + 0x78;
+    } while (iVar3 < numGametypes + 1);
   }
   Com_PrintError(0x10,"Unknown gametype name \'%s\'\n");
-  iVar2 = __restgprlr_28(0xffffffffffffffff);
-  return iVar2;
+  return -1;
 }
 
 
@@ -257,30 +262,29 @@ playlistGametype * Playlist_FindGametypeIndex(int param_1)
 
 // 825B4630  Playlist_FindMapIndex  (ui/ui_playlists.cpp:374)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 int Playlist_FindMapIndex(char *param_1)
 
 {
-  char *pcVar1;
-  int iVar2;
-  playlistMapInfo *ppVar3;
-  ulonglong uVar4;
+  int iVar1;
+  playlistMapInfo *ppVar2;
+  uint uVar3;
   
-  pcVar1 = (char *)__savegprlr_28(param_1);
-  ppVar3 = &maps;
-  uVar4 = 0;
+  ppVar2 = &maps;
+  uVar3 = 0;
   if (maps.numEntries != '\0') {
     do {
-      iVar2 = I_stricmp(ppVar3->name[0],pcVar1);
-      if (iVar2 == 0) {
-        iVar2 = __restgprlr_28(uVar4);
-        return iVar2;
+      iVar1 = I_stricmp(ppVar2->name[0],param_1);
+      if (iVar1 == 0) {
+        return uVar3;
       }
-      uVar4 = uVar4 + 1;
-      ppVar3 = (playlistMapInfo *)(ppVar3->name + 1);
-    } while ((uVar4 & 0xffffffff) < (ulonglong)maps.numEntries);
+      uVar3 = uVar3 + 1;
+      ppVar2 = (playlistMapInfo *)(ppVar2->name + 1);
+    } while (uVar3 < maps.numEntries);
   }
-  iVar2 = __restgprlr_28(0xff);
-  return iVar2;
+  return 0xff;
 }
 
 
@@ -337,53 +341,48 @@ bool CustomGameTypes_IsHardcore(int param_1)
 
 // 825B4818  ParseIntRange  (ui/ui_playlists.cpp:415)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
+
 int ParseIntRange(char *param_1,char **param_2,int param_3,int param_4,int param_5)
 
 {
+  char *pcVar1;
   int iVar2;
-  char *pcVar3;
-  longlong lVar1;
-  ulonglong uVar4;
-  longlong lVar5;
-  longlong lVar6;
   
-  lVar6 = (longlong)param_4;
-  lVar5 = (longlong)param_3;
-  uVar4 = (ulonglong)(int)param_2;
-  iVar2 = __savegprlr_25(param_1);
-  if (iVar2 == 0) {
+  if (param_1 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_playlists.cpp",0x1a3,0,
                     "%s");
   }
-  if ((uVar4 & 0xffffffff) == 0) {
+  if (param_2 == (char **)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_playlists.cpp",0x1a4,0,
                     "%s");
   }
-  pcVar3 = Com_ParseOnLine((char **)uVar4);
-  if (*pcVar3 == '\0') {
-    Com_PrintError(0x10,"Playlist error: line %i: Expected \'%s\' number after \'%s\' command\n");
-    iVar2 = __restgprlr_25(lVar5);
-    return iVar2;
+  pcVar1 = Com_ParseOnLine(param_2);
+  if (*pcVar1 != '\0') {
+    iVar2 = atoi(pcVar1);
+    if (iVar2 < param_3) {
+      pcVar1 = "Playlist error: line %i: \'%s\' number (%i) must be >= %i, \n";
+    }
+    else {
+      if (iVar2 <= param_4) {
+        return iVar2;
+      }
+      pcVar1 = "Playlist error: line %i: \'%s\' number (%i) must be <= %i, \n";
+      param_3 = param_4;
+    }
+    Com_PrintError(0x10,pcVar1);
+    return param_3;
   }
-  iVar2 = atoi(pcVar3);
-  lVar1 = (longlong)iVar2;
-  if (iVar2 < (int)lVar5) {
-    pcVar3 = "Playlist error: line %i: \'%s\' number (%i) must be >= %i, \n";
-    lVar6 = lVar5;
-  }
-  else {
-    if (iVar2 <= (int)lVar6) goto LAB_825b4920;
-    pcVar3 = "Playlist error: line %i: \'%s\' number (%i) must be <= %i, \n";
-  }
-  Com_PrintError(0x10,pcVar3);
-  lVar1 = lVar6;
-LAB_825b4920:
-  iVar2 = __restgprlr_25(lVar1);
-  return iVar2;
+  Com_PrintError(0x10,"Playlist error: line %i: Expected \'%s\' number after \'%s\' command\n");
+  return param_3;
 }
 
 
 // 825B4930  Playlist_ParsePlaylists  (ui/ui_playlists.cpp:446)
+
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
 
 void Playlist_ParsePlaylists(char *param_1)
 
@@ -509,7 +508,6 @@ void Playlist_ParsePlaylists(char *param_1)
   undefined8 local_8a8;
   char acStack_8a0 [2208];
   
-  __savegprlr();
   local_9c8 = &s_playlistEntryCount;
   local_9e4 = &maps;
   local_998 = 0;
@@ -1566,43 +1564,38 @@ LAB_825b630c:
   Com_Printf(0xe,"Playlist: There are %i/%i bytes of the playlist string buffer used\n");
   Com_Printf(0xe,"Playlist: There are %d/%d bytes of static char arrays being used\n");
   Com_Printf(0xe,"Playlist: Total memory footprint of data is approximately %d bytes\n");
-  __restgprlr();
   return;
 }
 
 
 // 825B6870  PlaylistFeeder_ClampIndex  (ui/ui_playlists.cpp:1402)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 int PlaylistFeeder_ClampIndex(PlaylistUIStackItem *param_1,uint param_2)
 
 {
-  uint *puVar2;
-  int iVar3;
-  ulonglong uVar1;
-  ulonglong uVar4;
-  ulonglong uVar5;
+  byte bVar1;
+  uint uVar2;
   
-  uVar4 = (ulonglong)(int)param_2;
-  puVar2 = (uint *)__savegprlr_29(param_1);
-  if (puVar2 == (uint *)0x0) {
+  if (param_1 == (PlaylistUIStackItem *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_playlists.cpp",0x57b,0,
                     "%s");
   }
-  if (0x13 < *puVar2) {
+  if (0x13 < param_1->category) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_playlists.cpp",0x57c,0,
                     "item->category doesn\'t index MAX_CATEGORIES\n\t%i not in [0, %i)");
   }
-  uVar5 = (ulonglong)categories[*puVar2].numEntries;
-  if (uVar5 == 0) {
-    iVar3 = __restgprlr_29(0);
-    return iVar3;
+  bVar1 = categories[param_1->category].numEntries;
+  if (bVar1 == 0) {
+    return 0;
   }
-  uVar1 = uVar5 - 1;
-  if ((uVar4 & 0xffffffff) < uVar5) {
-    uVar1 = uVar4;
+  uVar2 = bVar1 - 1;
+  if (param_2 < bVar1) {
+    uVar2 = param_2;
   }
-  iVar3 = __restgprlr_29(uVar1);
-  return iVar3;
+  return uVar2;
 }
 
 
@@ -1698,6 +1691,8 @@ void PlaylistFeeder_CloseMenu(LocalClientNum_t param_1,int param_2)
 
 // 825B83A0  PlaylistFeeder_DoAction  (ui/ui_playlists.cpp:1465)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
@@ -1706,213 +1701,184 @@ void PlaylistFeeder_DoAction(LocalClientNum_t param_1)
 {
   byte bVar1;
   uint *puVar2;
-  LocalClientNum_t LVar4;
-  uint uVar5;
-  int iVar6;
-  uint uVar7;
+  uint uVar4;
+  int iVar5;
+  uint uVar6;
   PartyActiveClient PVar3;
-  PlaylistUIStackItem *pPVar8;
+  PlaylistUIStackItem *pPVar7;
   LocalClientNum_t local_40;
   uint uStack_3c;
   PartyActiveClient local_38 [7];
   
-  LVar4 = __savegprlr_28(param_1);
   if (s_playlistUIStack.count != 0) {
     puVar2 = &s_playlistUIStack.stack[s_playlistUIStack.count - 1].selected;
-    pPVar8 = (PlaylistUIStackItem *)(gametypes[0x3f].abbrvName + s_playlistUIStack.count * 8 + 0x14)
+    pPVar7 = (PlaylistUIStackItem *)(gametypes[0x3f].abbrvName + s_playlistUIStack.count * 8 + 0x14)
     ;
-    if (pPVar8 != (PlaylistUIStackItem *)0x0) {
-      uVar5 = PlaylistFeeder_ClampIndex(pPVar8,*puVar2);
-      uVar7 = pPVar8->category;
-      *puVar2 = uVar5;
-      if (uVar5 < categories[uVar7].numEntries) {
-        if (categories[uVar7].entries[uVar5].type == PLAYLIST) {
+    if (pPVar7 != (PlaylistUIStackItem *)0x0) {
+      uVar4 = PlaylistFeeder_ClampIndex(pPVar7,*puVar2);
+      uVar6 = pPVar7->category;
+      *puVar2 = uVar4;
+      if (uVar4 < categories[uVar6].numEntries) {
+        if (categories[uVar6].entries[uVar4].type == PLAYLIST) {
           Dvar_SetInt(playlist,0);
-          bVar1 = categories[uVar7].entries[uVar5].num;
+          bVar1 = categories[uVar6].entries[uVar4].num;
           if (playlists[bVar1].numEntries != 0) {
-            iVar6 = CL_ControllerIndexFromClientNum(LVar4);
-            iVar6 = Playlist_GetPlaylistNumForId(iVar6,(uint)bVar1);
-            Dvar_SetInt(playlist,iVar6);
+            iVar5 = CL_ControllerIndexFromClientNum(param_1);
+            iVar5 = Playlist_GetPlaylistNumForId(iVar5,(uint)bVar1);
+            Dvar_SetInt(playlist,iVar5);
           }
-          uVar7 = CL_ControllerIndexFromClientNum(LVar4);
-          PVar3 = Party_GetMainActiveClient(&g_partyData,uVar7);
+          uVar6 = CL_ControllerIndexFromClientNum(param_1);
+          PVar3 = Party_GetMainActiveClient(&g_partyData,uVar6);
           uStack_3c = PVar3.localControllerIndex;
           local_40 = PVar3.localClientNum;
           Cbuf_ExecuteBuffer(local_40,uStack_3c,"xstartlobby");
           Cbuf_ExecuteBuffer(local_40,uStack_3c,"updategamerprofile");
-          iVar6 = Party_GetSecondaryActiveClient(&g_partyData,local_38);
-          if (iVar6 != 0) {
+          iVar5 = Party_GetSecondaryActiveClient(&g_partyData,local_38);
+          if (iVar5 != 0) {
             Cbuf_ExecuteBuffer(local_38[0].localClientNum,local_38[0].localControllerIndex,
                                "updategamerprofile");
           }
           PlaylistStack_Clear();
-          UI_OpenMenu(LVar4,"menu_xboxlive_lobby");
-          __restgprlr_28();
+          UI_OpenMenu(param_1,"menu_xboxlive_lobby");
           return;
         }
-        PlaylistStack_Push((uint)categories[uVar7].entries[uVar5].num);
+        PlaylistStack_Push((uint)categories[uVar6].entries[uVar4].num);
       }
     }
   }
-  __restgprlr_28();
   return;
 }
 
 
 // 825B69F8  PlaylistFeeder_GetItemName  (ui/ui_playlists.cpp:1514)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 char * PlaylistFeeder_GetItemName(LocalClientNum_t param_1,uint param_2)
 
 {
-  int iVar1;
-  LocalClientNum_t LVar2;
+  byte bVar1;
+  int iVar2;
   int iVar3;
-  char *pcVar4;
-  bool bVar5;
-  ulonglong uVar6;
-  ulonglong uVar7;
+  bool bVar4;
   
-  uVar6 = (ulonglong)(int)param_2;
-  LVar2 = __savegprlr_29(param_1);
-  iVar3 = CL_ControllerIndexFromClientNum(LVar2);
+  iVar3 = CL_ControllerIndexFromClientNum(param_1);
   if ((((s_playlistUIStack.count != 0) &&
        (gametypes[0x3f].abbrvName + s_playlistUIStack.count * 8 + 0x14 != (char *)0x0)) &&
-      (iVar1 = *(int *)(gametypes[0x3f].abbrvName + s_playlistUIStack.count * 8 + 0x14),
-      (uVar6 & 0xffffffff) < (ulonglong)categories[iVar1].numEntries)) &&
-     (bVar5 = HavePlaylists(iVar3), bVar5)) {
-    uVar7 = (ulonglong)(&categories[iVar1].entries[0].num)[(int)((uVar6 & 0xffffffff) << 3)];
-    if (*(int *)(categories[iVar1].name + (int)((uVar6 + 0x2c & 0xffffffff) << 3)) == 1) {
-      pcVar4 = (char *)__restgprlr_29(uVar7 * 0x20c + -0x7c011ca8);
-      return pcVar4;
+      (iVar2 = *(int *)(gametypes[0x3f].abbrvName + s_playlistUIStack.count * 8 + 0x14),
+      param_2 < categories[iVar2].numEntries)) && (bVar4 = HavePlaylists(iVar3), bVar4)) {
+    bVar1 = categories[iVar2].entries[param_2].num;
+    if (categories[iVar2].entries[param_2].type == CATEGORY) {
+      return categories[bVar1].name;
     }
-    pcVar4 = (char *)__restgprlr_29(uVar7 * 0x178 + -0x7c0158e0);
-    return pcVar4;
+    return playlists[bVar1].name;
   }
-  pcVar4 = (char *)__restgprlr_29(0);
-  return pcVar4;
+  return (char *)0x0;
 }
 
 
 // 825B6AB8  PlaylistFeeder_GetItemDesc  (ui/ui_playlists.cpp:1537)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 char * PlaylistFeeder_GetItemDesc(LocalClientNum_t param_1,uint param_2)
 
 {
-  int iVar1;
-  LocalClientNum_t LVar2;
+  byte bVar1;
+  int iVar2;
   int iVar3;
-  char *pcVar4;
-  bool bVar5;
-  ulonglong uVar6;
-  ulonglong uVar7;
+  bool bVar4;
   
-  uVar6 = (ulonglong)(int)param_2;
-  LVar2 = __savegprlr_29(param_1);
-  iVar3 = CL_ControllerIndexFromClientNum(LVar2);
+  iVar3 = CL_ControllerIndexFromClientNum(param_1);
   if ((((s_playlistUIStack.count != 0) &&
        (gametypes[0x3f].abbrvName + s_playlistUIStack.count * 8 + 0x14 != (char *)0x0)) &&
-      (iVar1 = *(int *)(gametypes[0x3f].abbrvName + s_playlistUIStack.count * 8 + 0x14),
-      (uVar6 & 0xffffffff) < (ulonglong)categories[iVar1].numEntries)) &&
-     (bVar5 = HavePlaylists(iVar3), bVar5)) {
-    uVar7 = (ulonglong)(&categories[iVar1].entries[0].num)[(int)((uVar6 & 0xffffffff) << 3)];
-    if (*(int *)(categories[iVar1].name + (int)((uVar6 + 0x2c & 0xffffffff) << 3)) == 1) {
-      pcVar4 = (char *)__restgprlr_29(uVar7 * 0x20c + -0x7c011c68);
-      return pcVar4;
+      (iVar2 = *(int *)(gametypes[0x3f].abbrvName + s_playlistUIStack.count * 8 + 0x14),
+      param_2 < categories[iVar2].numEntries)) && (bVar4 = HavePlaylists(iVar3), bVar4)) {
+    bVar1 = categories[iVar2].entries[param_2].num;
+    if (categories[iVar2].entries[param_2].type == CATEGORY) {
+      return categories[bVar1].description;
     }
-    pcVar4 = (char *)__restgprlr_29(uVar7 * 0x178 + -0x7c0158a0);
-    return pcVar4;
+    return playlists[bVar1].description;
   }
-  pcVar4 = (char *)__restgprlr_29(0);
-  return pcVar4;
+  return (char *)0x0;
 }
 
 
 // 825B6B80  PlaylistFeeder_GetItemImage  (ui/ui_playlists.cpp:1560)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 char * PlaylistFeeder_GetItemImage(LocalClientNum_t param_1,uint param_2)
 
 {
-  int iVar1;
-  LocalClientNum_t LVar2;
+  byte bVar1;
+  int iVar2;
   int iVar3;
-  char *pcVar4;
-  bool bVar5;
-  ulonglong uVar6;
-  ulonglong uVar7;
+  bool bVar4;
   
-  uVar6 = (ulonglong)(int)param_2;
-  LVar2 = __savegprlr_29(param_1);
-  iVar3 = CL_ControllerIndexFromClientNum(LVar2);
+  iVar3 = CL_ControllerIndexFromClientNum(param_1);
   if ((((s_playlistUIStack.count != 0) &&
        (gametypes[0x3f].abbrvName + s_playlistUIStack.count * 8 + 0x14 != (char *)0x0)) &&
-      (iVar1 = *(int *)(gametypes[0x3f].abbrvName + s_playlistUIStack.count * 8 + 0x14),
-      (uVar6 & 0xffffffff) < (ulonglong)categories[iVar1].numEntries)) &&
-     (bVar5 = HavePlaylists(iVar3), bVar5)) {
-    uVar7 = (ulonglong)(&categories[iVar1].entries[0].num)[(int)((uVar6 & 0xffffffff) << 3)];
-    if (*(int *)(categories[iVar1].name + (int)((uVar6 + 0x2c & 0xffffffff) << 3)) == 1) {
-      pcVar4 = (char *)__restgprlr_29(uVar7 * 0x20c + -0x7c011b68);
-      return pcVar4;
+      (iVar2 = *(int *)(gametypes[0x3f].abbrvName + s_playlistUIStack.count * 8 + 0x14),
+      param_2 < categories[iVar2].numEntries)) && (bVar4 = HavePlaylists(iVar3), bVar4)) {
+    bVar1 = categories[iVar2].entries[param_2].num;
+    if (categories[iVar2].entries[param_2].type == CATEGORY) {
+      return categories[bVar1].image;
     }
-    pcVar4 = (char *)__restgprlr_29(uVar7 * 0x178 + -0x7c0157a0);
-    return pcVar4;
+    return playlists[bVar1].image;
   }
-  pcVar4 = (char *)__restgprlr_29(0);
-  return pcVar4;
+  return (char *)0x0;
 }
 
 
 // 825B8518  PlaylistFeeder_DoubleClick  (ui/ui_playlists.cpp:1583)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 bool PlaylistFeeder_DoubleClick(LocalClientNum_t param_1,uint param_2)
 
 {
-  LocalClientNum_t LVar1;
-  int iVar2;
-  undefined1 uVar4;
-  uint uVar3;
-  bool bVar5;
-  PlaylistUIStackItem *pPVar6;
+  int iVar1;
+  uint uVar2;
+  bool bVar3;
+  PlaylistUIStackItem *pPVar4;
   
-  LVar1 = __savegprlr_29(param_1);
-  iVar2 = CL_ControllerIndexFromClientNum(LVar1);
-  if (s_playlistUIStack.count != 0) {
-    pPVar6 = (PlaylistUIStackItem *)(gametypes[0x3f].abbrvName + s_playlistUIStack.count * 8 + 0x14)
-    ;
-    if (pPVar6 != (PlaylistUIStackItem *)0x0) {
-      uVar3 = PlaylistFeeder_ClampIndex(pPVar6,param_2);
-      if (uVar3 < categories[pPVar6->category].numEntries) {
-        bVar5 = PlaylistFeeder_DoWeHaveRequiredDLC(iVar2,uVar3);
-        if (bVar5) {
-          bVar5 = PlaylistFeeder_DoesEveryoneHaveRequiredDLC(iVar2,uVar3);
-          if (bVar5) {
-            bVar5 = PlaylistFeeder_AnyRequiredMapPacksEnabled(iVar2,uVar3);
-            uVar4 = __restgprlr_29(!bVar5);
-            return (bool)uVar4;
-          }
-        }
-        else {
-          Live_ShowMarketplaceUI(iVar2);
-        }
-        uVar4 = __restgprlr_29(1);
-        return (bool)uVar4;
+  iVar1 = CL_ControllerIndexFromClientNum(param_1);
+  if (((s_playlistUIStack.count != 0) &&
+      (pPVar4 = (PlaylistUIStackItem *)
+                (gametypes[0x3f].abbrvName + s_playlistUIStack.count * 8 + 0x14),
+      pPVar4 != (PlaylistUIStackItem *)0x0)) &&
+     (uVar2 = PlaylistFeeder_ClampIndex(pPVar4,param_2),
+     uVar2 < categories[pPVar4->category].numEntries)) {
+    bVar3 = PlaylistFeeder_DoWeHaveRequiredDLC(iVar1,uVar2);
+    if (bVar3) {
+      bVar3 = PlaylistFeeder_DoesEveryoneHaveRequiredDLC(iVar1,uVar2);
+      if (bVar3) {
+        bVar3 = PlaylistFeeder_AnyRequiredMapPacksEnabled(iVar1,uVar2);
+        return !bVar3;
       }
     }
+    else {
+      Live_ShowMarketplaceUI(iVar1);
+    }
+    return true;
   }
-  uVar4 = __restgprlr_29(0);
-  return (bool)uVar4;
+  return false;
 }
 
 
 // 825B9420  PlaylistFeeder_ItemEnabled  (ui/ui_playlists.cpp:1613)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 bool PlaylistFeeder_ItemEnabled(LocalClientNum_t param_1,uint param_2)
@@ -1920,60 +1886,56 @@ bool PlaylistFeeder_ItemEnabled(LocalClientNum_t param_1,uint param_2)
 {
   uint uVar1;
   <unnamed_type_type> <Var2;
-  LocalClientNum_t LVar3;
-  uint uVar4;
+  uint uVar3;
+  int iVar4;
   int iVar5;
   int iVar6;
-  int iVar7;
-  PlaylistLockState PVar8;
-  bool bVar10;
-  int iVar9;
-  undefined1 uVar11;
-  int iVar12;
-  PlaylistUIStackItem *pPVar13;
+  PlaylistLockState PVar7;
+  bool bVar9;
+  int iVar8;
+  int iVar10;
+  PlaylistUIStackItem *pPVar11;
   
-  LVar3 = __savegprlr_27(param_1);
   if ((s_playlistUIStack.count != 0) &&
-     (pPVar13 = (PlaylistUIStackItem *)
+     (pPVar11 = (PlaylistUIStackItem *)
                 (gametypes[0x3f].abbrvName + s_playlistUIStack.count * 8 + 0x14),
-     pPVar13 != (PlaylistUIStackItem *)0x0)) {
-    uVar4 = PlaylistFeeder_ClampIndex(pPVar13,param_2);
-    uVar1 = pPVar13->category;
-    if (uVar4 < categories[uVar1].numEntries) {
-      <Var2 = categories[uVar1].entries[uVar4].type;
-      if (((<Var2 != PLAYLIST) || (playlists[categories[uVar1].entries[uVar4].num].numEntries != 0))
+     pPVar11 != (PlaylistUIStackItem *)0x0)) {
+    uVar3 = PlaylistFeeder_ClampIndex(pPVar11,param_2);
+    uVar1 = pPVar11->category;
+    if (uVar3 < categories[uVar1].numEntries) {
+      <Var2 = categories[uVar1].entries[uVar3].type;
+      if (((<Var2 != PLAYLIST) || (playlists[categories[uVar1].entries[uVar3].num].numEntries != 0))
          && ((<Var2 != CATEGORY ||
-             (categories[categories[uVar1].entries[uVar4].num].numEntries != '\0')))) {
-        iVar5 = CL_ControllerIndexFromClientNum(LVar3);
-        iVar6 = GetPartyMemberCount();
-        iVar12 = 1;
-        if (1 < iVar6) {
-          iVar12 = iVar6;
+             (categories[categories[uVar1].entries[uVar3].num].numEntries != '\0')))) {
+        iVar4 = CL_ControllerIndexFromClientNum(param_1);
+        iVar5 = GetPartyMemberCount();
+        iVar10 = 1;
+        if (1 < iVar5) {
+          iVar10 = iVar5;
         }
-        iVar6 = Live_GetPrestigeMP(iVar5);
-        iVar7 = Live_GetXpMP(iVar5);
-        PVar8 = PlaylistFeeder_IsLocked(iVar5,uVar4,iVar7,iVar6,iVar12);
-        if (PVar8 == PLS_UNLOCKED) {
-LAB_825b95b8:
-          uVar11 = __restgprlr_27(1);
-          return (bool)uVar11;
+        iVar5 = Live_GetPrestigeMP(iVar4);
+        iVar6 = Live_GetXpMP(iVar4);
+        PVar7 = PlaylistFeeder_IsLocked(iVar4,uVar3,iVar6,iVar5,iVar10);
+        if (PVar7 == PLS_UNLOCKED) {
+          return true;
         }
-        iVar6 = 0;
+        iVar5 = 0;
         do {
-          if (((iVar5 != iVar6) && (bVar10 = CL_IsSplitscreenControllerActive(iVar6), bVar10)) &&
-             (bVar10 = Live_UserIsGuest(iVar6), !bVar10)) {
-            iVar7 = Live_GetPrestigeMP(iVar6);
-            iVar9 = Live_GetXpMP(iVar6);
-            PVar8 = PlaylistFeeder_IsLocked(iVar6,uVar4,iVar9,iVar7,iVar12);
-            if (PVar8 == PLS_UNLOCKED) goto LAB_825b95b8;
+          if (((iVar4 != iVar5) && (bVar9 = CL_IsSplitscreenControllerActive(iVar5), bVar9)) &&
+             (bVar9 = Live_UserIsGuest(iVar5), !bVar9)) {
+            iVar6 = Live_GetPrestigeMP(iVar5);
+            iVar8 = Live_GetXpMP(iVar5);
+            PVar7 = PlaylistFeeder_IsLocked(iVar5,uVar3,iVar8,iVar6,iVar10);
+            if (PVar7 == PLS_UNLOCKED) {
+              return true;
+            }
           }
-          iVar6 = iVar6 + 1;
-        } while (iVar6 < 4);
+          iVar5 = iVar5 + 1;
+        } while (iVar5 < 4);
       }
     }
   }
-  uVar11 = __restgprlr_27(0);
-  return (bool)uVar11;
+  return false;
 }
 
 
@@ -2009,59 +1971,55 @@ int PlaylistFeeder_GetItemPlaylistId(LocalClientNum_t param_1,uint param_2)
 
 // 825B6D08  PlaylistFeeder_GetActivePlayersCount  (ui/ui_playlists.cpp:1680)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 int PlaylistFeeder_GetActivePlayersCount(LocalClientNum_t param_1,uint param_2)
 
 {
   byte bVar1;
-  LocalClientNum_t LVar2;
-  int iVar3;
-  bool bVar7;
-  uint uVar4;
-  char *pcVar5;
-  uint uVar6;
-  longlong lVar8;
-  PlaylistUIStackItem *pPVar9;
-  categoryEntry *pcVar10;
+  int iVar2;
+  bool bVar6;
+  uint uVar3;
+  char *pcVar4;
+  uint uVar5;
+  PlaylistUIStackItem *pPVar7;
+  categoryEntry *pcVar8;
   
-  LVar2 = __savegprlr_27(param_1);
-  iVar3 = CL_ControllerIndexFromClientNum(LVar2);
-  bVar7 = HavePlaylists(iVar3);
-  if (((bVar7) && (s_playlistUIStack.count != 0)) &&
-     (pPVar9 = (PlaylistUIStackItem *)
+  iVar2 = CL_ControllerIndexFromClientNum(param_1);
+  bVar6 = HavePlaylists(iVar2);
+  if (((bVar6) && (s_playlistUIStack.count != 0)) &&
+     (pPVar7 = (PlaylistUIStackItem *)
                (gametypes[0x3f].abbrvName + s_playlistUIStack.count * 8 + 0x14),
-     pPVar9 != (PlaylistUIStackItem *)0x0)) {
-    uVar4 = PlaylistFeeder_ClampIndex(pPVar9,param_2);
-    uVar6 = pPVar9->category;
-    if (uVar4 < categories[uVar6].numEntries) {
-      if (categories[uVar6].entries[uVar4].type == PLAYLIST) {
-        pcVar5 = va("playlist/%d");
-        uVar6 = ComGroups_GetCount(pcVar5);
-        iVar3 = __restgprlr_27(uVar6);
-        return iVar3;
+     pPVar7 != (PlaylistUIStackItem *)0x0)) {
+    uVar3 = PlaylistFeeder_ClampIndex(pPVar7,param_2);
+    uVar5 = pPVar7->category;
+    if (uVar3 < categories[uVar5].numEntries) {
+      if (categories[uVar5].entries[uVar3].type == PLAYLIST) {
+        pcVar4 = va("playlist/%d");
+        uVar5 = ComGroups_GetCount(pcVar4);
+        return uVar5;
       }
-      bVar1 = categories[uVar6].entries[uVar4].num;
-      lVar8 = 0;
-      uVar6 = 0;
+      bVar1 = categories[uVar5].entries[uVar3].num;
+      iVar2 = 0;
+      uVar5 = 0;
       if (categories[bVar1].numEntries != '\0') {
-        pcVar10 = categories[bVar1].entries;
+        pcVar8 = categories[bVar1].entries;
         do {
-          if (pcVar10->type != CATEGORY) {
-            pcVar5 = va("playlist/%d");
-            uVar4 = ComGroups_GetCount(pcVar5);
-            lVar8 = (int)uVar4 + lVar8;
+          if (pcVar8->type != CATEGORY) {
+            pcVar4 = va("playlist/%d");
+            uVar3 = ComGroups_GetCount(pcVar4);
+            iVar2 = uVar3 + iVar2;
           }
-          uVar6 = uVar6 + 1;
-          pcVar10 = pcVar10 + 1;
-        } while (uVar6 < categories[bVar1].numEntries);
+          uVar5 = uVar5 + 1;
+          pcVar8 = pcVar8 + 1;
+        } while (uVar5 < categories[bVar1].numEntries);
       }
-      iVar3 = __restgprlr_27(lVar8);
-      return iVar3;
+      return iVar2;
     }
   }
-  iVar3 = __restgprlr_27(0);
-  return iVar3;
+  return 0;
 }
 
 
@@ -2092,6 +2050,8 @@ int PlaylistFeeder_GetSelectedIndex(LocalClientNum_t param_1)
 
 // 825B95C8  PlaylistFeeder_ItemColor  (ui/ui_playlists.cpp:1731)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
@@ -2102,51 +2062,46 @@ void PlaylistFeeder_ItemColor
 
 {
   uint uVar1;
-  LocalClientNum_t LVar2;
-  uint uVar3;
-  bool bVar4;
-  ulonglong uVar5;
-  PlaylistUIStackItem *pPVar6;
+  uint uVar2;
+  bool bVar3;
+  PlaylistUIStackItem *pPVar4;
   
-  uVar5 = (ulonglong)param_5;
-  LVar2 = __savegprlr_26(param_1);
   if ((s_playlistUIStack.count != 0) &&
-     (pPVar6 = (PlaylistUIStackItem *)
+     (pPVar4 = (PlaylistUIStackItem *)
                (gametypes[0x3f].abbrvName + s_playlistUIStack.count * 8 + 0x14),
-     pPVar6 != (PlaylistUIStackItem *)0x0)) {
-    uVar3 = PlaylistFeeder_ClampIndex(pPVar6,param_3);
-    uVar1 = pPVar6->category;
-    if (uVar3 < categories[uVar1].numEntries) {
-      bVar4 = PlaylistFeeder_ItemEnabled(LVar2,uVar3);
-      if (categories[uVar1].entries[uVar3].type == PLAYLIST) {
-        if (bVar4) {
+     pPVar4 != (PlaylistUIStackItem *)0x0)) {
+    uVar2 = PlaylistFeeder_ClampIndex(pPVar4,param_3);
+    uVar1 = pPVar4->category;
+    if (uVar2 < categories[uVar1].numEntries) {
+      bVar3 = PlaylistFeeder_ItemEnabled(param_1,uVar2);
+      if (categories[uVar1].entries[uVar2].type == PLAYLIST) {
+        if (bVar3) {
           *param_4 = (param_2->window).foreColor[0];
           param_4[1] = (param_2->window).foreColor[1];
           param_4[2] = (param_2->window).foreColor[2];
           param_4[3] = (param_2->window).foreColor[3];
         }
-        else if ((uVar5 & 0xff) == 0) {
-          *param_4 = (param_2->window).disableColor[0];
-          param_4[1] = (param_2->window).disableColor[1];
-          param_4[2] = (param_2->window).disableColor[2];
-          param_4[3] = (param_2->window).disableColor[3];
-        }
-        else {
+        else if (param_5) {
           *param_4 = 0.0;
           param_4[1] = 0.0;
           param_4[2] = 0.0;
           param_4[3] = 1.0;
         }
+        else {
+          *param_4 = (param_2->window).disableColor[0];
+          param_4[1] = (param_2->window).disableColor[1];
+          param_4[2] = (param_2->window).disableColor[2];
+          param_4[3] = (param_2->window).disableColor[3];
+        }
       }
       else {
-        Dvar_GetUnpackedColor(ui_playlistCategoryColor[bVar4],param_4);
+        Dvar_GetUnpackedColor(ui_playlistCategoryColor[bVar3],param_4);
       }
-      if (((uVar5 & 0xff) != 0) && (bVar4)) {
-        UI_FeederGetColorPulsed(LVar2,param_4);
+      if ((param_5) && (bVar3)) {
+        UI_FeederGetColorPulsed(param_1,param_4);
       }
     }
   }
-  __restgprlr_26();
   return;
 }
 
@@ -2506,322 +2461,306 @@ char * Playlist_GetPlaylistDescription(int param_1,int param_2)
 
 // 825B88E0  PlaylistFeeder_IsLocked  (ui/ui_playlists.cpp:2006)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 PlaylistLockState
 PlaylistFeeder_IsLocked(int param_1,uint param_2,int param_3,int param_4,int param_5)
 
 {
   byte bVar1;
   uint uVar2;
-  int iVar3;
-  bool bVar6;
-  PlaylistLockState PVar4;
+  bool bVar4;
+  uint uVar3;
   uint uVar5;
-  ulonglong uVar7;
-  PlaylistUIStackItem *pPVar8;
+  PlaylistUIStackItem *pPVar6;
   
-  uVar7 = (ulonglong)param_3;
-  iVar3 = __savegprlr_26(param_1);
   if ((param_5 < 1) || (0x12 < param_5)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_playlists.cpp",0x7d9,0,
                     "partyCount not in [1, MAX_CLIENTS]\n\t%i not in [%i, %i]");
   }
-  bVar6 = HavePlaylists(iVar3);
-  if (((bVar6) && (s_playlistUIStack.count != 0)) &&
-     (pPVar8 = (PlaylistUIStackItem *)
+  bVar4 = HavePlaylists(param_1);
+  if (((bVar4) && (s_playlistUIStack.count != 0)) &&
+     (pPVar6 = (PlaylistUIStackItem *)
                (gametypes[0x3f].abbrvName + s_playlistUIStack.count * 8 + 0x14),
-     pPVar8 != (PlaylistUIStackItem *)0x0)) {
-    uVar5 = PlaylistFeeder_ClampIndex(pPVar8,param_2);
-    uVar2 = pPVar8->category;
-    if (uVar5 < categories[uVar2].numEntries) {
-      uVar7 = ((uVar7 & 0xffffffff) >> 0x1f) - 1 & uVar7;
-      if (categories[uVar2].entries[uVar5].type == PLAYLIST) {
-        bVar1 = categories[uVar2].entries[uVar5].num;
-        if (param_4 == 0) {
-          if ((0 < playlists[bVar1].unlockXp) && ((int)uVar7 < playlists[bVar1].unlockXp))
-          goto LAB_825b8a08;
+     pPVar6 != (PlaylistUIStackItem *)0x0)) {
+    uVar3 = PlaylistFeeder_ClampIndex(pPVar6,param_2);
+    uVar2 = pPVar6->category;
+    if (uVar3 < categories[uVar2].numEntries) {
+      uVar5 = 0xffffffffU - (param_3 >> 0x1f) & param_3;
+      if (categories[uVar2].entries[uVar3].type == PLAYLIST) {
+        bVar1 = categories[uVar2].entries[uVar3].num;
+        if (((param_4 != 0) || (playlists[bVar1].unlockXp < 1)) ||
+           (playlists[bVar1].unlockXp <= (int)uVar5)) {
+          if ((int)(uint)playlists[bVar1].maxPartySize < param_5) {
+            return PLS_MAXPARTY;
+          }
+          if (param_5 < (int)(uint)playlists[bVar1].minPartySize) {
+            return PLS_MINPARTY;
+          }
+LAB_825b8a70:
+          bVar4 = PlaylistFeeder_DoWeHaveRequiredDLC(param_1,uVar3);
+          if (!bVar4) {
+            return PLS_UNLOCKED;
+          }
+          bVar4 = PlaylistFeeder_DoesEveryoneHaveRequiredDLC(param_1,uVar3);
+          if (!bVar4) {
+            return PLS_DLC;
+          }
+          bVar4 = PlaylistFeeder_AnyRequiredMapPacksEnabled(param_1,uVar3);
+          return -(uint)!bVar4 & PLS_DLC;
         }
-        if ((int)(uint)playlists[bVar1].maxPartySize < param_5) {
-          PVar4 = __restgprlr_26(3);
-          return PVar4;
-        }
-        if (param_5 < (int)(uint)playlists[bVar1].minPartySize) {
-          PVar4 = __restgprlr_26(4);
-          return PVar4;
-        }
       }
-      else if (((param_4 == 0) && (categories[categories[uVar2].entries[uVar5].num].unlockXp != 0))
-              && ((uVar7 & 0xffffffff) <
-                  (ulonglong)categories[categories[uVar2].entries[uVar5].num].unlockXp)) {
-LAB_825b8a08:
-        PVar4 = __restgprlr_26(2);
-        return PVar4;
-      }
-      bVar6 = PlaylistFeeder_DoWeHaveRequiredDLC(iVar3,uVar5);
-      if (!bVar6) {
-        PVar4 = __restgprlr_26(0);
-        return PVar4;
-      }
-      bVar6 = PlaylistFeeder_DoesEveryoneHaveRequiredDLC(iVar3,uVar5);
-      if (!bVar6) {
-        PVar4 = __restgprlr_26(5);
-        return PVar4;
-      }
-      bVar6 = PlaylistFeeder_AnyRequiredMapPacksEnabled(iVar3,uVar5);
-      PVar4 = __restgprlr_26(-!bVar6 & 5);
-      return PVar4;
+      else if (((param_4 != 0) || (categories[categories[uVar2].entries[uVar3].num].unlockXp == 0))
+              || (categories[categories[uVar2].entries[uVar3].num].unlockXp <= uVar5))
+      goto LAB_825b8a70;
+      return PLS_XP;
     }
   }
-  PVar4 = __restgprlr_26(1);
-  return PVar4;
+  return PLS_FETCHING;
 }
 
 
 // 825B7210  Playlist_GetEntry  (ui/ui_playlists.cpp:2062)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 playlistEntry * Playlist_GetEntry(uint param_1,uint param_2)
 
 {
   uint uVar1;
-  playlistEntry *ppVar2;
-  ulonglong uVar3;
   
-  uVar3 = (ulonglong)(int)param_2;
-  uVar1 = __savegprlr_27(param_1);
-  if (0x28 < uVar1) {
+  if (0x28 < param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_playlists.cpp",0x80f,0,
                     "playlistId doesn\'t index MAX_PLAYLISTS\n\t%i not in [0, %i)");
   }
-  if (s_playlistEntryCount <= playlists[uVar1].firstEntry) {
+  if (s_playlistEntryCount <= playlists[param_1].firstEntry) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_playlists.cpp",0x812,0,
                     "playlist->firstEntry doesn\'t index s_playlistEntryCount\n\t%i not in [0, %i)")
     ;
   }
-  if ((ulonglong)playlists[uVar1].numEntries <= (uVar3 & 0xffffffff)) {
+  if (playlists[param_1].numEntries <= param_2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_playlists.cpp",0x813,0,
                     "entryNum doesn\'t index playlist->numEntries\n\t%i not in [0, %i)");
   }
-  uVar3 = playlists[uVar1].firstEntry + uVar3;
-  if ((ulonglong)s_playlistEntryCount <= (uVar3 & 0xffffffff)) {
+  uVar1 = playlists[param_1].firstEntry + param_2;
+  if (s_playlistEntryCount <= uVar1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_playlists.cpp",0x816,0,
                     "entryIndex doesn\'t index s_playlistEntryCount\n\t%i not in [0, %i)");
   }
-  ppVar2 = (playlistEntry *)__restgprlr_27((uVar3 & 0x3fffffff) * 4 + -0x7c0178e0);
-  return ppVar2;
+  return s_playlistEntries + uVar1;
 }
 
 
 // 825B7300  Playlist_GetMapPacksUsedByPlaylist  (ui/ui_playlists.cpp:2076)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
+
 int Playlist_GetMapPacksUsedByPlaylist(int param_1)
 
 {
-  uint uVar1;
-  playlistEntry *ppVar2;
-  uint uVar3;
+  playlistEntry *ppVar1;
+  uint uVar2;
+  uint uVar4;
   uint uVar5;
-  int iVar6;
-  uint uVar7;
-  uint uVar8;
-  char *pcVar4;
+  uint uVar6;
+  char *pcVar3;
   
-  uVar1 = __savegprlr_23(param_1);
-  uVar7 = 0;
-  uVar8 = 0;
-  if (playlists[uVar1].numEntries != 0) {
+  uVar5 = 0;
+  uVar6 = 0;
+  if (playlists[param_1].numEntries != 0) {
     do {
-      ppVar2 = Playlist_GetEntry(uVar1,uVar8);
-      if (ppVar2->mapindex < maps.numEntries) {
-        pcVar4 = maps.name[ppVar2->mapindex];
+      ppVar1 = Playlist_GetEntry(param_1,uVar6);
+      if (ppVar1->mapindex < maps.numEntries) {
+        pcVar3 = maps.name[ppVar1->mapindex];
       }
       else {
-        pcVar4 = (char *)0x0;
+        pcVar3 = (char *)0x0;
       }
-      uVar3 = Live_GetMapIndex(pcVar4);
-      if ((int)uVar3 < 0) {
-        uVar7 = uVar7 | 2;
+      uVar2 = Live_GetMapIndex(pcVar3);
+      if ((int)uVar2 < 0) {
+        uVar5 = uVar5 | 2;
       }
       else {
-        uVar5 = Live_GetMapCount();
-        if (uVar5 <= uVar3) {
+        uVar4 = Live_GetMapCount();
+        if (uVar4 <= uVar2) {
           Live_GetMapCount();
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_playlists.cpp",
                           0x82b,0,"mapIndex doesn\'t index Live_GetMapCount()\n\t%i not in [0, %i)")
           ;
         }
-        uVar3 = Live_GetMapSource(uVar3);
-        uVar7 = uVar3 | uVar7;
+        uVar2 = Live_GetMapSource(uVar2);
+        uVar5 = uVar2 | uVar5;
       }
-      uVar8 = uVar8 + 1;
-    } while ((int)uVar8 < (int)(uint)playlists[uVar1].numEntries);
+      uVar6 = uVar6 + 1;
+    } while ((int)uVar6 < (int)(uint)playlists[param_1].numEntries);
   }
-  iVar6 = __restgprlr_23(uVar7);
-  return iVar6;
+  return uVar5;
 }
 
 
 // 825B73E0  PlaylistFeeder_DoWeHaveRequiredDLC  (ui/ui_playlists.cpp:2102)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 bool PlaylistFeeder_DoWeHaveRequiredDLC(int param_1,uint param_2)
 
 {
-  int iVar2;
-  bool bVar6;
-  undefined1 uVar7;
+  bool bVar4;
+  uint uVar1;
+  uint uVar2;
   uint uVar3;
-  uint uVar4;
-  uint uVar5;
-  undefined8 uVar1;
-  int iVar8;
-  uint uVar9;
-  PlaylistUIStackItem *pPVar10;
+  int iVar5;
+  int iVar6;
+  uint uVar7;
+  PlaylistUIStackItem *pPVar8;
   
-  iVar2 = __savegprlr_29(param_1);
-  bVar6 = HavePlaylists(iVar2);
-  if (!bVar6) {
+  bVar4 = HavePlaylists(param_1);
+  if (!bVar4) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_playlists.cpp",0x839,0,
                     "%s");
   }
   if ((s_playlistUIStack.count == 0) ||
-     (pPVar10 = (PlaylistUIStackItem *)
-                (gametypes[0x3f].abbrvName + s_playlistUIStack.count * 8 + 0x14),
-     pPVar10 == (PlaylistUIStackItem *)0x0)) {
-LAB_825b744c:
-    uVar7 = __restgprlr_29(0);
-    return (bool)uVar7;
+     (pPVar8 = (PlaylistUIStackItem *)
+               (gametypes[0x3f].abbrvName + s_playlistUIStack.count * 8 + 0x14),
+     pPVar8 == (PlaylistUIStackItem *)0x0)) {
+    return false;
   }
-  uVar3 = PlaylistFeeder_ClampIndex(pPVar10,param_2);
-  uVar5 = pPVar10->category;
-  if (categories[uVar5].numEntries <= uVar3) goto LAB_825b744c;
-  uVar9 = (uint)categories[uVar5].entries[uVar3].num;
-  if (categories[uVar5].entries[uVar3].type == PLAYLIST) {
-    iVar8 = -0x7c015778;
-    iVar2 = uVar9 * 0x178;
+  uVar1 = PlaylistFeeder_ClampIndex(pPVar8,param_2);
+  uVar3 = pPVar8->category;
+  if (categories[uVar3].numEntries <= uVar1) {
+    return false;
+  }
+  uVar7 = (uint)categories[uVar3].entries[uVar1].num;
+  if (categories[uVar3].entries[uVar1].type == PLAYLIST) {
+    iVar6 = -0x7c015778;
+    iVar5 = uVar7 * 0x178;
   }
   else {
-    iVar2 = uVar9 * 0x20c;
-    iVar8 = -0x7c011aa0;
+    iVar5 = uVar7 * 0x20c;
+    iVar6 = -0x7c011aa0;
   }
-  uVar9 = *(uint *)(iVar2 + iVar8);
-  uVar4 = Content_GetAvailableContentPacks();
-  if ((uVar9 & ~uVar4) != 0) goto LAB_825b744c;
-  if (categories[uVar5].entries[uVar3].type == PLAYLIST) {
-    uVar5 = Playlist_GetMapPacksUsedByPlaylist((uint)categories[uVar5].entries[uVar3].num);
-    uVar1 = 0;
-    if ((uVar5 & uVar4) == 0) goto LAB_825b7504;
+  uVar7 = *(uint *)(iVar5 + iVar6);
+  uVar2 = Content_GetAvailableContentPacks();
+  if ((uVar7 & ~uVar2) == 0) {
+    if ((categories[uVar3].entries[uVar1].type == PLAYLIST) &&
+       (uVar3 = Playlist_GetMapPacksUsedByPlaylist((uint)categories[uVar3].entries[uVar1].num),
+       (uVar3 & uVar2) == 0)) {
+      return false;
+    }
+    return true;
   }
-  uVar1 = 1;
-LAB_825b7504:
-  uVar7 = __restgprlr_29(uVar1);
-  return (bool)uVar7;
+  return false;
 }
 
 
 // 825B7510  PlaylistFeeder_DoesEveryoneHaveRequiredDLC  (ui/ui_playlists.cpp:2140)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 bool PlaylistFeeder_DoesEveryoneHaveRequiredDLC(int param_1,uint param_2)
 
 {
-  int iVar2;
-  bool bVar6;
-  undefined1 uVar7;
+  bool bVar4;
+  uint uVar1;
+  uint uVar2;
   uint uVar3;
-  uint uVar4;
-  uint uVar5;
-  undefined8 uVar1;
-  int iVar8;
-  uint uVar9;
-  PlaylistUIStackItem *pPVar10;
+  int iVar5;
+  int iVar6;
+  uint uVar7;
+  PlaylistUIStackItem *pPVar8;
   
-  iVar2 = __savegprlr_29(param_1);
-  bVar6 = HavePlaylists(iVar2);
-  if (!bVar6) {
+  bVar4 = HavePlaylists(param_1);
+  if (!bVar4) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_playlists.cpp",0x85d,0,
                     "%s");
   }
-  if (s_playlistUIStack.count == 0) {
-LAB_825b757c:
-    uVar7 = __restgprlr_29(0);
-    return (bool)uVar7;
+  if ((s_playlistUIStack.count == 0) ||
+     (pPVar8 = (PlaylistUIStackItem *)
+               (gametypes[0x3f].abbrvName + s_playlistUIStack.count * 8 + 0x14),
+     pPVar8 == (PlaylistUIStackItem *)0x0)) {
+    return false;
   }
-  pPVar10 = (PlaylistUIStackItem *)(gametypes[0x3f].abbrvName + s_playlistUIStack.count * 8 + 0x14);
-  if (pPVar10 == (PlaylistUIStackItem *)0x0) goto LAB_825b757c;
-  uVar3 = PlaylistFeeder_ClampIndex(pPVar10,param_2);
-  uVar5 = pPVar10->category;
-  if (categories[uVar5].numEntries <= uVar3) goto LAB_825b757c;
-  uVar9 = (uint)categories[uVar5].entries[uVar3].num;
-  if (categories[uVar5].entries[uVar3].type == PLAYLIST) {
-    iVar8 = -0x7c015778;
-    iVar2 = uVar9 * 0x178;
+  uVar1 = PlaylistFeeder_ClampIndex(pPVar8,param_2);
+  uVar3 = pPVar8->category;
+  if (categories[uVar3].numEntries <= uVar1) {
+    return false;
+  }
+  uVar7 = (uint)categories[uVar3].entries[uVar1].num;
+  if (categories[uVar3].entries[uVar1].type == PLAYLIST) {
+    iVar6 = -0x7c015778;
+    iVar5 = uVar7 * 0x178;
   }
   else {
-    iVar2 = uVar9 * 0x20c;
-    iVar8 = -0x7c011aa0;
+    iVar5 = uVar7 * 0x20c;
+    iVar6 = -0x7c011aa0;
   }
-  uVar9 = *(uint *)(iVar2 + iVar8);
-  uVar4 = Live_CurrentFullPartyMapPackFlags(&g_partyData);
-  if ((uVar9 & ~uVar4) != 0) goto LAB_825b757c;
-  if (categories[uVar5].entries[uVar3].type == PLAYLIST) {
-    uVar5 = Playlist_GetMapPacksUsedByPlaylist((uint)categories[uVar5].entries[uVar3].num);
-    uVar1 = 0;
-    if ((uVar5 & uVar4) == 0) goto LAB_825b763c;
+  uVar7 = *(uint *)(iVar5 + iVar6);
+  uVar2 = Live_CurrentFullPartyMapPackFlags(&g_partyData);
+  if ((uVar7 & ~uVar2) == 0) {
+    if ((categories[uVar3].entries[uVar1].type == PLAYLIST) &&
+       (uVar3 = Playlist_GetMapPacksUsedByPlaylist((uint)categories[uVar3].entries[uVar1].num),
+       (uVar3 & uVar2) == 0)) {
+      return false;
+    }
+    return true;
   }
-  uVar1 = 1;
-LAB_825b763c:
-  uVar7 = __restgprlr_29(uVar1);
-  return (bool)uVar7;
+  return false;
 }
 
 
 // 825B7648  PlaylistFeeder_AnyRequiredMapPacksEnabled  (ui/ui_playlists.cpp:2176)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 bool PlaylistFeeder_AnyRequiredMapPacksEnabled(int param_1,uint param_2)
 
 {
-  int iVar1;
-  undefined1 uVar5;
+  uint uVar1;
+  bool bVar4;
   uint uVar2;
-  bool bVar6;
   uint uVar3;
-  uint uVar4;
-  PlaylistUIStackItem *pPVar7;
+  PlaylistUIStackItem *pPVar5;
   
-  iVar1 = __savegprlr_29(param_1);
-  if (s_playlistUIStack.count != 0) {
-    pPVar7 = (PlaylistUIStackItem *)(gametypes[0x3f].abbrvName + s_playlistUIStack.count * 8 + 0x14)
-    ;
-    if (pPVar7 != (PlaylistUIStackItem *)0x0) {
-      uVar2 = PlaylistFeeder_ClampIndex(pPVar7,param_2);
-      uVar4 = pPVar7->category;
-      if (uVar2 < categories[uVar4].numEntries) {
-        if (categories[uVar4].entries[uVar2].type != PLAYLIST) {
-          uVar5 = __restgprlr_29(1);
-          return (bool)uVar5;
-        }
-        if (0x28 < categories[uVar4].entries[uVar2].num) {
-          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_playlists.cpp",
-                          0x88f,0,"entry->num doesn\'t index MAX_PLAYLISTS\n\t%i not in [0, %i)");
-        }
-        bVar6 = HavePlaylists(iVar1);
-        if (!bVar6) {
-          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_playlists.cpp",
-                          0x890,0,"%s");
-        }
-        uVar3 = Content_GetEnabledContentPacks();
-        uVar4 = Playlist_GetMapPacksUsedByPlaylist((uint)categories[uVar4].entries[uVar2].num);
-        uVar5 = __restgprlr_29((uVar4 & uVar3) != 0);
-        return (bool)uVar5;
+  if ((s_playlistUIStack.count != 0) &&
+     (pPVar5 = (PlaylistUIStackItem *)
+               (gametypes[0x3f].abbrvName + s_playlistUIStack.count * 8 + 0x14),
+     pPVar5 != (PlaylistUIStackItem *)0x0)) {
+    uVar1 = PlaylistFeeder_ClampIndex(pPVar5,param_2);
+    uVar3 = pPVar5->category;
+    if (uVar1 < categories[uVar3].numEntries) {
+      if (categories[uVar3].entries[uVar1].type != PLAYLIST) {
+        return true;
       }
+      if (0x28 < categories[uVar3].entries[uVar1].num) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_playlists.cpp",0x88f
+                        ,0,"entry->num doesn\'t index MAX_PLAYLISTS\n\t%i not in [0, %i)");
+      }
+      bVar4 = HavePlaylists(param_1);
+      if (!bVar4) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_playlists.cpp",0x890
+                        ,0,"%s");
+      }
+      uVar2 = Content_GetEnabledContentPacks();
+      uVar3 = Playlist_GetMapPacksUsedByPlaylist((uint)categories[uVar3].entries[uVar1].num);
+      return (bool)('\x01' - ((uVar3 & uVar2) == 0));
     }
   }
-  uVar5 = __restgprlr_29(0);
-  return (bool)uVar5;
+  return false;
 }
 
 
 // 825B7768  Playlist_ResetWeights  (ui/ui_playlists.cpp:2205)
+
+/* WARNING: Function: __savegprlr_20 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_20 replaced with injection: xenon_save_restore */
 
 void Playlist_ResetWeights(int param_1)
 
@@ -2829,169 +2768,163 @@ void Playlist_ResetWeights(int param_1)
   ushort uVar1;
   uint uVar2;
   uint uVar3;
-  uint uVar4;
   
-  uVar2 = __savegprlr_20(param_1);
   if (g_generateAllMaps != 2) {
     Com_DPrintf(0x10,"Playlists: Resetting all weights to their default.\n");
-    uVar3 = 0;
-    if (playlists[uVar2].numEntries != 0) {
+    uVar2 = 0;
+    if (playlists[param_1].numEntries != 0) {
       do {
-        if (0x28 < uVar2) {
+        if (0x28 < (uint)param_1) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_playlists.cpp",
                           0x80f,0,"playlistId doesn\'t index MAX_PLAYLISTS\n\t%i not in [0, %i)");
         }
-        if (s_playlistEntryCount <= playlists[uVar2].firstEntry) {
+        if (s_playlistEntryCount <= playlists[param_1].firstEntry) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_playlists.cpp",
                           0x812,0,
                           "playlist->firstEntry doesn\'t index s_playlistEntryCount\n\t%i not in [0, %i)"
                          );
         }
-        if (playlists[uVar2].numEntries <= uVar3) {
+        if (playlists[param_1].numEntries <= uVar2) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_playlists.cpp",
                           0x813,0,
                           "entryNum doesn\'t index playlist->numEntries\n\t%i not in [0, %i)");
         }
-        uVar4 = playlists[uVar2].firstEntry + uVar3;
-        if (s_playlistEntryCount <= uVar4) {
+        uVar3 = playlists[param_1].firstEntry + uVar2;
+        if (s_playlistEntryCount <= uVar3) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_playlists.cpp",
                           0x816,0,
                           "entryIndex doesn\'t index s_playlistEntryCount\n\t%i not in [0, %i)");
         }
-        uVar1 = playlists[uVar2].numEntries;
-        uVar3 = uVar3 + 1;
-        s_playlistEntries[uVar4].remainingWeight = s_playlistEntries[uVar4].fullWeight;
-      } while ((int)uVar3 < (int)(uint)uVar1);
+        uVar1 = playlists[param_1].numEntries;
+        uVar2 = uVar2 + 1;
+        s_playlistEntries[uVar3].remainingWeight = s_playlistEntries[uVar3].fullWeight;
+      } while ((int)uVar2 < (int)(uint)uVar1);
     }
-    __restgprlr_20();
     return;
   }
   Com_PrintWarning(0x10,"Playlists: Not resetting weights, generateAllMaps is running.\n");
-  __restgprlr_20();
   return;
 }
 
 
 // 825B78C8  Playlist_CalcTotalWeights  (ui/ui_playlists.cpp:2228)
 
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 int Playlist_CalcTotalWeights(int param_1,int param_2)
 
 {
-  uint uVar1;
+  playlistEntry *ppVar1;
   playlistEntry *ppVar2;
-  playlistEntry *ppVar3;
-  PartyData *pPVar4;
-  bool bVar6;
+  PartyData *pPVar3;
+  bool bVar4;
   int iVar5;
-  longlong lVar7;
-  uint uVar8;
-  char *pcVar9;
+  uint uVar6;
+  char *pcVar7;
   
-  uVar1 = __savegprlr_22(param_1);
-  lVar7 = 0;
-  if (0x28 < uVar1) {
+  iVar5 = 0;
+  if (0x28 < (uint)param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_playlists.cpp",0x8bc,0,
                     "playlistId doesn\'t index MAX_PLAYLISTS\n\t%i not in [0, %i)");
   }
   if (((g_generateAllMaps == 0) && (-1 < param_2)) &&
-     (param_2 < (int)(uint)playlists[uVar1].numEntries)) {
-    ppVar2 = Playlist_GetEntry(uVar1,param_2);
+     (param_2 < (int)(uint)playlists[param_1].numEntries)) {
+    ppVar1 = Playlist_GetEntry(param_1,param_2);
   }
   else {
-    ppVar2 = (playlistEntry *)0x0;
+    ppVar1 = (playlistEntry *)0x0;
   }
-  uVar8 = 0;
-  if (playlists[uVar1].numEntries != 0) {
+  uVar6 = 0;
+  if (playlists[param_1].numEntries != 0) {
     do {
-      if ((uVar8 != param_2) &&
-         ((ppVar3 = Playlist_GetEntry(uVar1,uVar8), ppVar2 == (playlistEntry *)0x0 ||
-          (ppVar3->mapindex != ppVar2->mapindex)))) {
-        if (ppVar3->mapindex < maps.numEntries) {
-          pcVar9 = maps.name[ppVar3->mapindex];
+      if ((uVar6 != param_2) &&
+         ((ppVar2 = Playlist_GetEntry(param_1,uVar6), ppVar1 == (playlistEntry *)0x0 ||
+          (ppVar2->mapindex != ppVar1->mapindex)))) {
+        if (ppVar2->mapindex < maps.numEntries) {
+          pcVar7 = maps.name[ppVar2->mapindex];
         }
         else {
-          pcVar9 = (char *)0x0;
+          pcVar7 = (char *)0x0;
         }
-        pPVar4 = Lobby_GetPartyData();
-        bVar6 = PartyHost_MapIsAcceptable(pPVar4,pcVar9);
-        if (bVar6) {
-          lVar7 = (ulonglong)ppVar3->remainingWeight + lVar7;
+        pPVar3 = Lobby_GetPartyData();
+        bVar4 = PartyHost_MapIsAcceptable(pPVar3,pcVar7);
+        if (bVar4) {
+          iVar5 = (uint)ppVar2->remainingWeight + iVar5;
         }
       }
-      uVar8 = uVar8 + 1;
-    } while ((int)uVar8 < (int)(uint)playlists[uVar1].numEntries);
+      uVar6 = uVar6 + 1;
+    } while ((int)uVar6 < (int)(uint)playlists[param_1].numEntries);
   }
-  iVar5 = __restgprlr_22(lVar7);
   return iVar5;
 }
 
 
 // 825B7A08  Playlist_FindEntryByWeight  (ui/ui_playlists.cpp:2276)
 
+/* WARNING: Function: __savegprlr_21 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_21 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 int Playlist_FindEntryByWeight(int param_1,int param_2,int param_3)
 
 {
-  uint uVar1;
+  playlistEntry *ppVar1;
   playlistEntry *ppVar2;
-  playlistEntry *ppVar3;
-  PartyData *pPVar4;
-  bool bVar6;
-  int iVar5;
-  longlong lVar7;
-  longlong lVar8;
-  char *pcVar9;
+  PartyData *pPVar3;
+  bool bVar5;
+  int iVar4;
+  int iVar6;
+  uint uVar7;
+  char *pcVar8;
   
-  uVar1 = __savegprlr_21(param_1);
-  if (0x28 < uVar1) {
+  if (0x28 < (uint)param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_playlists.cpp",0x8ea,0,
                     "playlistId doesn\'t index MAX_PLAYLISTS\n\t%i not in [0, %i)");
   }
-  lVar7 = 0;
+  iVar6 = 0;
   if (((g_generateAllMaps == 0) && (-1 < param_3)) &&
-     (param_3 < (int)(uint)playlists[uVar1].numEntries)) {
-    ppVar2 = Playlist_GetEntry(uVar1,param_3);
+     (param_3 < (int)(uint)playlists[param_1].numEntries)) {
+    ppVar1 = Playlist_GetEntry(param_1,param_3);
   }
   else {
-    ppVar2 = (playlistEntry *)0x0;
+    ppVar1 = (playlistEntry *)0x0;
   }
-  lVar8 = 0;
-  if (playlists[uVar1].numEntries != 0) {
+  uVar7 = 0;
+  if (playlists[param_1].numEntries != 0) {
     do {
-      if (((uint)lVar8 != param_3) &&
-         ((ppVar3 = Playlist_GetEntry(uVar1,(uint)lVar8), ppVar2 == (playlistEntry *)0x0 ||
-          (ppVar3->mapindex != ppVar2->mapindex)))) {
-        if (ppVar3->mapindex < maps.numEntries) {
-          pcVar9 = maps.name[ppVar3->mapindex];
+      if ((uVar7 != param_3) &&
+         ((ppVar2 = Playlist_GetEntry(param_1,uVar7), ppVar1 == (playlistEntry *)0x0 ||
+          (ppVar2->mapindex != ppVar1->mapindex)))) {
+        if (ppVar2->mapindex < maps.numEntries) {
+          pcVar8 = maps.name[ppVar2->mapindex];
         }
         else {
-          pcVar9 = (char *)0x0;
+          pcVar8 = (char *)0x0;
         }
-        pPVar4 = Lobby_GetPartyData();
-        bVar6 = PartyHost_MapIsAcceptable(pPVar4,pcVar9);
-        if ((bVar6) && (lVar7 = (ulonglong)ppVar3->remainingWeight + lVar7, param_2 < (int)lVar7)) {
-          iVar5 = __restgprlr_21(lVar8);
-          return iVar5;
+        pPVar3 = Lobby_GetPartyData();
+        bVar5 = PartyHost_MapIsAcceptable(pPVar3,pcVar8);
+        if (bVar5) {
+          iVar6 = (uint)ppVar2->remainingWeight + iVar6;
+          if (param_2 < iVar6) {
+            return uVar7;
+          }
         }
       }
-      lVar8 = lVar8 + 1;
-    } while ((int)lVar8 < (int)(uint)playlists[uVar1].numEntries);
+      uVar7 = uVar7 + 1;
+    } while ((int)uVar7 < (int)(uint)playlists[param_1].numEntries);
   }
-  iVar5 = Playlist_CalcTotalWeights(uVar1,param_3);
-  if (iVar5 == 0) {
-    iVar5 = __restgprlr_21();
-    return iVar5;
+  iVar4 = Playlist_CalcTotalWeights(param_1,param_3);
+  if (iVar4 == 0) {
+    return 0;
   }
-  Playlist_CalcTotalWeights(uVar1,param_3);
+  Playlist_CalcTotalWeights(param_1,param_3);
   Com_Error(ERR_DROP,
             "Invalid selectedWeight of %i for playlist %i, total weight for this playlist is %i");
-  iVar5 = __restgprlr_21(lVar7);
-  return iVar5;
+  return iVar6;
 }
 
 
@@ -3032,6 +2965,9 @@ void Playlist_HandleMapVoteSucceeded(int param_1,int param_2)
 
 // 825B8B40  Playlist_ChooseEntry  (ui/ui_playlists.cpp:2354)
 
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
+
 int Playlist_ChooseEntry(int param_1,int param_2,bool param_3)
 
 {
@@ -3039,18 +2975,11 @@ int Playlist_ChooseEntry(int param_1,int param_2,bool param_3)
   void *pvVar2;
   int iVar3;
   int iVar4;
-  longlong lVar5;
-  int iVar6;
-  ulonglong uVar7;
   
-  uVar7 = (ulonglong)param_3;
-  lVar5 = (longlong)param_2;
-  iVar1 = __savegprlr_22(param_1);
-  iVar1 = Playlist_GetPlaylistIdForNum(iVar1,(playlist->current).integer);
+  iVar1 = Playlist_GetPlaylistIdForNum(param_1,(playlist->current).integer);
   if (playlists[iVar1].numEntries == 0) {
     Com_Error(ERR_DROP,"Playlist %s has no entries\n");
-    iVar1 = __restgprlr_22(0xffffffffffffffff);
-    return iVar1;
+    return -1;
   }
   if (g_generateAllMaps == 1) {
     Playlist_ResetWeights(iVar1);
@@ -3059,13 +2988,11 @@ int Playlist_ChooseEntry(int param_1,int param_2,bool param_3)
     FS_Printf(pvVar2,"hi");
     FS_FCloseFile(pvVar2);
   }
-  iVar6 = (int)lVar5;
-  iVar3 = Playlist_CalcTotalWeights(iVar1,iVar6);
+  iVar3 = Playlist_CalcTotalWeights(iVar1,param_2);
   if (iVar3 == 0) {
     if ((playlists[iVar1].flags & 4U) != 0) {
-      if ((uVar7 & 0xff) == 0) {
-        iVar1 = __restgprlr_22(lVar5);
-        return iVar1;
+      if (!param_3) {
+        return param_2;
       }
       if (g_generateAllMaps != 0) {
         if (g_generateAllMaps != 2) {
@@ -3080,11 +3007,11 @@ int Playlist_ChooseEntry(int param_1,int param_2,bool param_3)
       Com_Error(ERR_DROP,"\x15Playlist complete\n");
     }
     Playlist_ResetWeights(iVar1);
-    iVar3 = Playlist_CalcTotalWeights(iVar1,iVar6);
+    iVar3 = Playlist_CalcTotalWeights(iVar1,param_2);
   }
   iVar4 = rand();
   iVar3 = Playlist_FindEntryByWeight
-                    (iVar1,(int)((ulonglong)((longlong)iVar4 * (longlong)iVar3) >> 0xf),iVar6);
+                    (iVar1,(int)((ulonglong)((longlong)iVar4 * (longlong)iVar3) >> 0xf),param_2);
   if ((int)(uint)playlists[iVar1].numEntries <= iVar3) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_playlists.cpp",0x972,0,
                     "%s\n\t(itemSelected) = %i");
@@ -3092,247 +3019,234 @@ int Playlist_ChooseEntry(int param_1,int param_2,bool param_3)
   Com_DPrintf(0x10,
               "Last playlist entry we played was %i, this time it\'s %i for playlistId %i. We choose from a pool of %i total weight.\n"
              );
-  if ((uVar7 & 0xff) != 0) {
+  if (param_3) {
     Playlist_MarkEntryPlayed(iVar1,iVar3);
   }
-  iVar1 = __restgprlr_22(iVar3);
-  return iVar1;
+  return iVar3;
 }
 
 
 // 825B8D58  Playlist_MigrateHost  (ui/ui_playlists.cpp:2430)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
+
 void Playlist_MigrateHost(int param_1,uchar *param_2,int param_3)
 
 {
-  int iVar1;
-  uint uVar2;
-  playlistEntry *ppVar3;
+  uint uVar1;
+  playlistEntry *ppVar2;
+  int iVar3;
   
-  iVar1 = __savegprlr_25(param_1);
-  uVar2 = Playlist_GetPlaylistIdForNum(iVar1,(playlist->current).integer);
-  Playlist_ResetWeights(uVar2);
+  uVar1 = Playlist_GetPlaylistIdForNum(param_1,(playlist->current).integer);
+  Playlist_ResetWeights(uVar1);
   Com_DPrintf(0x10,"Playlists: Migrating host: copying %i states for playlistId %i.\n");
-  iVar1 = 0;
+  iVar3 = 0;
   if (0 < param_3) {
     do {
-      if (param_2[iVar1] != 0xff) {
-        ppVar3 = Playlist_GetEntry(uVar2,(uint)param_2[iVar1]);
-        if (ppVar3->remainingWeight == '\0') {
+      if (param_2[iVar3] != 0xff) {
+        ppVar2 = Playlist_GetEntry(uVar1,(uint)param_2[iVar3]);
+        if (ppVar2->remainingWeight == '\0') {
           Com_PrintWarning(0x10,
                            "Trying to mark playlistId %i, entry %i as played but it\'s already reached its quota for this playlist\n"
                           );
         }
         else {
-          ppVar3->remainingWeight = ppVar3->remainingWeight + 0xff;
+          ppVar2->remainingWeight = ppVar2->remainingWeight + 0xff;
           Com_DPrintf(0x10,"Marking playlistId %i, entry %i as played. Remaining weight is %i\n");
         }
       }
-      iVar1 = iVar1 + 1;
-    } while (iVar1 < param_3);
+      iVar3 = iVar3 + 1;
+    } while (iVar3 < param_3);
   }
-  __restgprlr_25();
   return;
 }
 
 
 // 825B8E20  Playlist_SetDVarsForVoteEntry  (ui/ui_playlists.cpp:2447)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void Playlist_SetDVarsForVoteEntry(int param_1,int param_2,int param_3)
 
 {
   byte bVar1;
-  int iVar2;
-  uint uVar3;
-  playlistEntry *ppVar4;
-  ulonglong uVar5;
-  char *pcVar6;
-  ulonglong uVar7;
+  uint uVar2;
+  playlistEntry *ppVar3;
+  char *pcVar4;
   
-  uVar7 = (ulonglong)param_3;
-  uVar5 = (ulonglong)param_2;
-  iVar2 = __savegprlr_27(param_1);
-  if (1 < (uVar7 & 0xffffffff)) {
+  if (1 < (uint)param_3) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_playlists.cpp",0x994,0,
                     "index doesn\'t index NUM_MAP_VOTE_ENTRIES\n\t%i not in [0, %i)");
   }
-  if (0x7ff < (uVar5 & 0xffffffff)) {
+  if (0x7ff < (uint)param_2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_playlists.cpp",0x995,0,
                     "entryNum doesn\'t index MAX_ENTRIES\n\t%i not in [0, %i)");
   }
-  uVar3 = Playlist_GetPlaylistIdForNum(iVar2,(playlist->current).integer);
-  ppVar4 = Playlist_GetEntry(uVar3,(uint)uVar5);
-  bVar1 = ppVar4->gametype;
-  if (ppVar4->mapindex < maps.numEntries) {
-    pcVar6 = maps.name[ppVar4->mapindex];
+  uVar2 = Playlist_GetPlaylistIdForNum(param_1,(playlist->current).integer);
+  ppVar3 = Playlist_GetEntry(uVar2,param_2);
+  bVar1 = ppVar3->gametype;
+  if (ppVar3->mapindex < maps.numEntries) {
+    pcVar4 = maps.name[ppVar3->mapindex];
   }
   else {
-    pcVar6 = (char *)0x0;
+    pcVar4 = (char *)0x0;
   }
-  iVar2 = (int)((uVar7 + (uVar7 & 0x7fffffff) * 2 & 0xffffffff) << 2);
-  Dvar_SetStringByName(*(char **)((int)&g_mapVoteInfo[0].uiMapnameDVar + iVar2),pcVar6);
+  Dvar_SetStringByName(g_mapVoteInfo[param_3].uiMapnameDVar,pcVar4);
   if (gametypes + bVar1 == (playlistGametype *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_playlists.cpp",0x99f,0,
                     "%s");
   }
   Com_DPrintf(0x10,
               "Playlists: Setting up mapvote %d =[%s] gametype \'%s\' (running script \'%s\')\n");
-  Dvar_SetStringByName
-            (*(char **)((int)&g_mapVoteInfo[0].uiGameTypeDVar + iVar2),gametypes[bVar1].scriptName);
+  Dvar_SetStringByName(g_mapVoteInfo[param_3].uiGameTypeDVar,gametypes[bVar1].scriptName);
   Dvar_SetBoolByName("g_hardcore",*(bool *)((uint)bVar1 * 0x78 + -0x7bff6332));
-  __restgprlr_27();
   return;
 }
 
 
 // 825B8F78  Playlist_RunRules  (ui/ui_playlists.cpp:2472)
 
+/* WARNING: Function: __savegprlr_21 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_21 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void Playlist_RunRules(int param_1,int param_2)
 
 {
-  int iVar1;
-  LocalClientNum_t LVar2;
-  uint uVar3;
-  playlistEntry *ppVar4;
-  dvar_t *pdVar5;
-  GameStateInfo *pGVar6;
-  int iVar7;
-  char *pcVar8;
-  uint uVar9;
-  playlistGametype *ppVar10;
+  LocalClientNum_t LVar1;
+  uint uVar2;
+  playlistEntry *ppVar3;
+  dvar_t *pdVar4;
+  GameStateInfo *pGVar5;
+  int iVar6;
+  char *pcVar7;
+  uint uVar8;
+  playlistGametype *ppVar9;
   
-  iVar1 = __savegprlr_21(param_1);
-  LVar2 = CL_LocalClientNumFromControllerIndex(iVar1);
-  uVar3 = Playlist_GetPlaylistIdForNum(iVar1,(playlist->current).integer);
-  ppVar4 = Playlist_GetEntry(uVar3,param_2);
-  uVar9 = (uint)ppVar4->gametype;
-  ppVar10 = gametypes + uVar9;
-  if (ppVar4->mapindex < maps.numEntries) {
-    pcVar8 = maps.name[ppVar4->mapindex];
+  LVar1 = CL_LocalClientNumFromControllerIndex(param_1);
+  uVar2 = Playlist_GetPlaylistIdForNum(param_1,(playlist->current).integer);
+  ppVar3 = Playlist_GetEntry(uVar2,param_2);
+  uVar8 = (uint)ppVar3->gametype;
+  ppVar9 = gametypes + uVar8;
+  if (ppVar3->mapindex < maps.numEntries) {
+    pcVar7 = maps.name[ppVar3->mapindex];
   }
   else {
-    pcVar8 = (char *)0x0;
+    pcVar7 = (char *)0x0;
   }
   Com_DPrintf(0x10,"Playlists: Setting up rules for the \'%s\' playlist, for entry \'%s\'.\n");
-  pdVar5 = Dvar_FindVar("ui_oldmapname");
-  if ((pdVar5 == (dvar_t *)0x0) || (*(pdVar5->current).string == '\0')) {
+  pdVar4 = Dvar_FindVar("ui_oldmapname");
+  if ((pdVar4 == (dvar_t *)0x0) || (*(pdVar4->current).string == '\0')) {
     Dvar_SetStringByName("ui_oldmapname",(ui_mapname->current).string);
   }
-  Dvar_SetStringByName("ui_mapname",pcVar8);
-  if (ppVar10 == (playlistGametype *)0x0) {
+  Dvar_SetStringByName("ui_mapname",pcVar7);
+  if (ppVar9 == (playlistGametype *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_playlists.cpp",0x9bf,0,
                     "%s");
   }
   Com_DPrintf(0x10,"Playlists: Setting up gametype \'%s\' (running script \'%s\')\n");
-  pGVar6 = GameStateInfo_Get();
-  if (gametypes[uVar9].recipeIndex == 0xff) {
-    pGVar6->usingRecipe = 0;
-    Dvar_SetStringByName("ui_gametype",ppVar10->scriptName);
-    Dvar_SetBoolByName("g_hardcore",*(bool *)(uVar9 * 0x78 + -0x7bff6332));
+  pGVar5 = GameStateInfo_Get();
+  if (gametypes[uVar8].recipeIndex == 0xff) {
+    pGVar5->usingRecipe = 0;
+    Dvar_SetStringByName("ui_gametype",ppVar9->scriptName);
+    Dvar_SetBoolByName("g_hardcore",*(bool *)(uVar8 * 0x78 + -0x7bff6332));
   }
   else {
     Com_DPrintf(0x10,
                 "Playlists: Setting up gametype \'%s\' (loading recipe defaults \'%s\' with delta from \'%d\')\n"
                );
-    if (pGVar6->matchRules == (MatchRules *)0x0) {
+    if (pGVar5->matchRules == (MatchRules *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_playlists.cpp",0x9c8,0
                       ,"%s");
     }
-    iVar7 = LoadMatchRulesFromPlaylists
-                      (pGVar6->matchRules,ppVar10->scriptName,(uint)gametypes[uVar9].recipeIndex,
-                       iVar1);
-    if (iVar7 == 0) {
+    iVar6 = LoadMatchRulesFromPlaylists
+                      (pGVar5->matchRules,ppVar9->scriptName,(uint)gametypes[uVar8].recipeIndex,
+                       param_1);
+    if (iVar6 == 0) {
       Com_Error(ERR_DROP,"Invalid playlist\n");
     }
-    pcVar8 = BG_MatchRulesData_GetGameType(pGVar6->matchRules);
-    Dvar_SetStringByName("ui_gametype",pcVar8);
-    pGVar6->usingRecipe = 1;
+    pcVar7 = BG_MatchRulesData_GetGameType(pGVar5->matchRules);
+    Dvar_SetStringByName("ui_gametype",pcVar7);
+    pGVar5->usingRecipe = 1;
   }
-  Cmd_ExecuteSingleCommand(LVar2,iVar1,"exec default_xboxlive.cfg");
+  Cmd_ExecuteSingleCommand(LVar1,param_1,"exec default_xboxlive.cfg");
   if (*DAT_84009c4c != '\0') {
-    Cbuf_ExecuteBuffer(LVar2,iVar1,DAT_84009c4c);
+    Cbuf_ExecuteBuffer(LVar1,param_1,DAT_84009c4c);
   }
-  Cbuf_ExecuteBuffer(LVar2,iVar1,playlists[uVar3].rules);
-  if (*gametypes[uVar9].rules != '\0') {
+  Cbuf_ExecuteBuffer(LVar1,param_1,playlists[uVar2].rules);
+  if (*gametypes[uVar8].rules != '\0') {
     Com_DPrintf(0x10,"Playlists: Running custom game rules for gametype %s: %s\n");
-    Cbuf_ExecuteBuffer(LVar2,iVar1,gametypes[uVar9].rules);
+    Cbuf_ExecuteBuffer(LVar1,param_1,gametypes[uVar8].rules);
   }
-  Dvar_SetBool(party_teambased,*(bool *)(uVar9 * 0x78 + -0x7bff6333));
-  Dvar_SetStringByName("playlist_name",playlists[uVar3].name);
-  Dvar_SetStringByName("playlist_image",playlists[uVar3].image);
+  Dvar_SetBool(party_teambased,*(bool *)(uVar8 * 0x78 + -0x7bff6333));
+  Dvar_SetStringByName("playlist_name",playlists[uVar2].name);
+  Dvar_SetStringByName("playlist_image",playlists[uVar2].image);
   Com_DPrintf(0x10,"Playlists: Finished setting up rules.\n");
-  __restgprlr_21();
   return;
 }
 
 
 // 825B9248  Playlist_GetLocalizedGametypeName  (ui/ui_playlists.cpp:2542)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 char * Playlist_GetLocalizedGametypeName(int param_1,int param_2)
 
 {
-  int iVar1;
-  uint uVar2;
-  playlistEntry *ppVar3;
-  char *pcVar4;
-  ulonglong uVar5;
-  longlong lVar6;
+  uint uVar1;
+  playlistEntry *ppVar2;
+  longlong lVar3;
   
-  uVar5 = (ulonglong)param_2;
-  iVar1 = __savegprlr_29(param_1);
-  uVar2 = Playlist_GetPlaylistIdForNum(iVar1,(playlist->current).integer);
-  if (0x28 < uVar2) {
+  uVar1 = Playlist_GetPlaylistIdForNum(param_1,(playlist->current).integer);
+  if (0x28 < uVar1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_playlists.cpp",0x9f5,0,
                     "playlistId doesn\'t index MAX_PLAYLISTS\n\t%i not in [0, %i)");
   }
-  if (0x7ff < (uVar5 & 0xffffffff)) {
+  if (0x7ff < (uint)param_2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_playlists.cpp",0x9f6,0,
                     "entryNum doesn\'t index MAX_ENTRIES\n\t%i not in [0, %i)");
   }
-  ppVar3 = Playlist_GetEntry(uVar2,(uint)uVar5);
-  lVar6 = (ulonglong)ppVar3->gametype * 0x78;
-  if (lVar6 == 0x7bff63a8) {
+  ppVar2 = Playlist_GetEntry(uVar1,param_2);
+  lVar3 = (ulonglong)ppVar2->gametype * 0x78 + -0x7bff63a8;
+  if (lVar3 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_playlists.cpp",0x9fa,0,
                     "%s");
   }
-  pcVar4 = (char *)__restgprlr_29(lVar6 + -0x7bff6388);
-  return pcVar4;
+  return (char *)((int)lVar3 + 0x20);
 }
 
 
 // 825B9318  Playlist_GetLocalizedGametypeAbbrv  (ui/ui_playlists.cpp:2559)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 char * Playlist_GetLocalizedGametypeAbbrv(int param_1,int param_2)
 
 {
-  int iVar1;
-  uint uVar2;
-  playlistEntry *ppVar3;
-  char *pcVar4;
-  ulonglong uVar5;
-  longlong lVar6;
+  uint uVar1;
+  playlistEntry *ppVar2;
+  longlong lVar3;
   
-  uVar5 = (ulonglong)param_2;
-  iVar1 = __savegprlr_29(param_1);
-  uVar2 = Playlist_GetPlaylistIdForNum(iVar1,(playlist->current).integer);
-  if (0x28 < uVar2) {
+  uVar1 = Playlist_GetPlaylistIdForNum(param_1,(playlist->current).integer);
+  if (0x28 < uVar1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_playlists.cpp",0xa06,0,
                     "playlistId doesn\'t index MAX_PLAYLISTS\n\t%i not in [0, %i)");
   }
-  if (0x7ff < (uVar5 & 0xffffffff)) {
+  if (0x7ff < (uint)param_2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_playlists.cpp",0xa07,0,
                     "entryNum doesn\'t index MAX_ENTRIES\n\t%i not in [0, %i)");
   }
-  ppVar3 = Playlist_GetEntry(uVar2,(uint)uVar5);
-  lVar6 = (ulonglong)ppVar3->gametype * 0x78;
-  if (lVar6 == 0x7bff63a8) {
+  ppVar2 = Playlist_GetEntry(uVar1,param_2);
+  lVar3 = (ulonglong)ppVar2->gametype * 0x78 + -0x7bff63a8;
+  if (lVar3 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_playlists.cpp",0xa0b,0,
                     "%s");
   }
-  pcVar4 = (char *)__restgprlr_29(lVar6 + -0x7bff6348);
-  return pcVar4;
+  return (char *)((int)lVar3 + 0x60);
 }
 
 

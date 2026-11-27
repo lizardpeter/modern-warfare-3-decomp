@@ -2,6 +2,7 @@
 
 // 82917DF0  __savevmx  (<external>/bt/278379/vctools/crt/xb/xbox/crtvmx.asm:3)
 
+/* WARNING: This is an inlined function */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void __savevmx(void)
@@ -178,6 +179,7 @@ void __savevmx(void)
 
 // 82918088  __restvmx  (<external>/bt/278379/vctools/crt/xb/xbox/crtvmx.asm:343)
 
+/* WARNING: This is an inlined function */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void __restvmx(void)

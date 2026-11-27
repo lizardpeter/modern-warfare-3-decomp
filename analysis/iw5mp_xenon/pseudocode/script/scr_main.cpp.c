@@ -2,24 +2,22 @@
 
 // 82536F88  Scr_IsInOpcodeMemory  (script/scr_main.cpp:31)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 int Scr_IsInOpcodeMemory(char *param_1)
 
 {
-  ulonglong uVar1;
-  int iVar2;
-  
-  uVar1 = __savegprlr_28(param_1);
   if (scrVarPub.programBuffer == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_main.cpp",0x20,0,
                     "%s");
   }
-  if ((uVar1 & 0xffffffff) == 0) {
+  if (param_1 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_main.cpp",0x21,0,
                     "%s");
   }
-  iVar2 = __restgprlr_28(-(uVar1 - ZEXT48(scrVarPub.programBuffer) <
-                          (ulonglong)scrCompilePub.programLen) & 1);
-  return iVar2;
+  return -(uint)((longlong)(int)param_1 - ZEXT48(scrVarPub.programBuffer) <
+                (ulonglong)scrCompilePub.programLen) & 1;
 }
 
 
@@ -47,66 +45,65 @@ bool Scr_IsIdentifier(char *param_1)
 
 // 82537098  Scr_GetFunctionHandle  (script/scr_main.cpp:60)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 int Scr_GetFunctionHandle(char *param_1,char *param_2)
 
 {
   char cVar1;
-  char *pcVar3;
+  uint uVar3;
   uint uVar4;
-  uint uVar5;
-  int iVar6;
   VariableValue VVar2;
-  char *pcVar8;
-  ulonglong uVar7;
+  int iVar5;
+  char *pcVar7;
+  ulonglong uVar6;
   VariableUnion local_40;
   int iStack_3c;
   
-  pcVar3 = (char *)__savegprlr_26(param_1);
-  pcVar8 = pcVar3;
+  pcVar7 = param_1;
   if (scrCompilePub.scriptsPos == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_main.cpp",0x49,0,
                     "%s");
   }
   do {
-    cVar1 = *pcVar8;
-    pcVar8 = pcVar8 + 1;
+    cVar1 = *pcVar7;
+    pcVar7 = pcVar7 + 1;
   } while (cVar1 != '\0');
-  if ((char *)0x3f < pcVar8 + (-1 - (int)pcVar3)) {
+  if ((char *)0x3f < pcVar7 + (-1 - (int)param_1)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_main.cpp",0x4b,0,
                     "%s");
   }
-  uVar4 = Scr_CreateCanonicalFilename(pcVar3);
-  uVar5 = FindVariable(scrCompilePub.scriptsPos,uVar4);
-  SL_RemoveRefToString(uVar4);
-  if (uVar5 != 0) {
-    uVar4 = FindObject(scrCompilePub.scriptsPos,uVar5);
-    if (uVar4 == 0) {
+  uVar3 = Scr_CreateCanonicalFilename(param_1);
+  uVar4 = FindVariable(scrCompilePub.scriptsPos,uVar3);
+  SL_RemoveRefToString(uVar3);
+  if (uVar4 != 0) {
+    uVar3 = FindObject(scrCompilePub.scriptsPos,uVar4);
+    if (uVar3 == 0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_main.cpp",0x58,0,
                       "%s");
     }
-    uVar5 = SL_FindLowercaseString(param_2);
-    if ((uVar5 != 0) && (uVar5 = FindVariable(uVar4,uVar5), uVar5 != 0)) {
-      VVar2 = Scr_EvalVariable(uVar4,uVar5);
+    uVar4 = SL_FindLowercaseString(param_2);
+    if ((uVar4 != 0) && (uVar4 = FindVariable(uVar3,uVar4), uVar4 != 0)) {
+      VVar2 = Scr_EvalVariable(uVar3,uVar4);
       iStack_3c = VVar2.type;
       if ((iStack_3c != 7) && (iStack_3c != 0xe)) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_main.cpp",0x6d,
                         0,"%s");
       }
       local_40 = VVar2.u;
-      iVar6 = Scr_IsInOpcodeMemory(local_40.codePosValue);
-      if (iVar6 != 0) {
-        uVar7 = ZEXT48(scrVarPub.programBuffer);
-        if (local_40.uintValue - uVar7 == 0) {
+      iVar5 = Scr_IsInOpcodeMemory(local_40.codePosValue);
+      if (iVar5 != 0) {
+        uVar6 = ZEXT48(scrVarPub.programBuffer);
+        if (local_40.uintValue - uVar6 == 0) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_main.cpp",
                           0x7a,0,"%s");
         }
-        iVar6 = __restgprlr_26(local_40.uintValue - uVar7);
-        return iVar6;
+        return (int)(local_40.uintValue - uVar6);
       }
     }
   }
-  iVar6 = __restgprlr_26(0);
-  return iVar6;
+  return 0;
 }
 
 
@@ -137,6 +134,9 @@ uint Scr_CanonicalStringGetHashCode(char *param_1,uint *param_2)
 
 // 825372C0  SL_GetCanonicalString  (script/scr_main.cpp:164)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
+
 uint SL_GetCanonicalString(char *param_1)
 
 {
@@ -145,16 +145,14 @@ uint SL_GetCanonicalString(char *param_1)
   int iVar3;
   int iVar4;
   ulonglong uVar5;
-  char *pcVar6;
-  uint uVar7;
+  uint uVar6;
+  char *pcVar7;
   char *pcVar8;
-  char *pcVar9;
+  ulonglong uVar9;
   ulonglong uVar10;
-  ulonglong uVar11;
   uint local_50 [20];
   
-  pcVar6 = (char *)__savegprlr_24(param_1);
-  if (pcVar6 == (char *)0x0) {
+  if (param_1 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_main.cpp",0xab,0,
                     "%s");
   }
@@ -162,52 +160,56 @@ uint SL_GetCanonicalString(char *param_1)
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_main.cpp",0xac,0,
                     "%s");
   }
-  uVar7 = Scr_CanonicalStringGetHashCode(pcVar6,local_50);
-  uVar10 = (longlong)(int)uVar7 + 1;
-  iVar4 = (int)((uVar10 & 0x3fffffff) << 2);
+  uVar6 = Scr_CanonicalStringGetHashCode(param_1,local_50);
+  uVar9 = (longlong)(int)uVar6 + 1;
+  uVar6 = (uint)uVar9;
+  iVar4 = (int)((uVar9 & 0x3fffffff) << 2);
   iVar3 = *(int *)((int)(scrCompilePub.canonicalString)->stringOffsets + iVar4);
-  uVar11 = uVar10;
-  while (iVar3 != 0) {
-    pcVar8 = (char *)((int)(scrCompilePub.canonicalString)->stringOffsets + iVar3 + 0xffff);
-    pcVar9 = pcVar6;
+  uVar10 = uVar9;
+  do {
+    if (iVar3 == 0) {
+      if (scrCompilePub.canonicalStringBufferSize + local_50[0] < 0x30001) {
+        pcVar8 = param_1 + -1;
+        *(uint *)((int)(scrCompilePub.canonicalString)->stringOffsets + iVar4) =
+             scrCompilePub.canonicalStringBufferSize + 1;
+        pcVar7 = (char *)((int)(scrCompilePub.canonicalString)->stringOffsets +
+                         scrCompilePub.canonicalStringBufferSize + 0xffff);
+        do {
+          pcVar8 = pcVar8 + 1;
+          cVar1 = *pcVar8;
+          pcVar7 = pcVar7 + 1;
+          *pcVar7 = cVar1;
+        } while (cVar1 != '\0');
+        scrCompilePub.canonicalStringBufferSize =
+             scrCompilePub.canonicalStringBufferSize + local_50[0] + 1;
+        return uVar6;
+      }
+                    /* WARNING: Subroutine does not return */
+      Sys_Error("CANONICAL_STRING_BUFFER_SIZE exceeded");
+    }
+    pcVar7 = (char *)((int)(scrCompilePub.canonicalString)->stringOffsets + iVar3 + 0xffff);
+    pcVar8 = param_1;
     do {
-      cVar1 = *pcVar9;
-      cVar2 = *pcVar8;
+      cVar1 = *pcVar8;
+      cVar2 = *pcVar7;
       if (cVar1 == '\0') break;
-      pcVar9 = pcVar9 + 1;
       pcVar8 = pcVar8 + 1;
+      pcVar7 = pcVar7 + 1;
     } while (cVar1 == cVar2);
-    if (cVar1 == cVar2) goto LAB_82537460;
-    uVar5 = (uVar11 & 0xffffffff) * 0x40011 >> 0x20;
-    uVar5 = ((uVar11 - uVar5 & 0xffffffff) >> 1) + uVar5 >> 0xd;
-    uVar11 = (uVar11 - ((uVar5 & 0x3ffff) * 0x4000 - uVar5)) + 1;
-    if ((uVar11 & 0xffffffff) == (uVar10 & 0xffffffff)) {
+    if (cVar1 == cVar2) {
+      return (uint)uVar10;
+    }
+    uVar5 = (uVar10 & 0xffffffff) * 0x40011 >> 0x20;
+    uVar5 = ((uVar10 - uVar5 & 0xffffffff) >> 1) + uVar5 >> 0xd;
+    uVar10 = (uVar10 - ((uVar5 & 0x3ffff) * 0x4000 - uVar5)) + 1;
+    uVar6 = (uint)uVar10;
+    if ((uVar10 & 0xffffffff) == (uVar9 & 0xffffffff)) {
                     /* WARNING: Subroutine does not return */
       Sys_Error("MAX_CANONICAL_STRING exceeded");
     }
-    iVar4 = (int)((uVar11 & 0x3fffffff) << 2);
+    iVar4 = (int)((uVar10 & 0x3fffffff) << 2);
     iVar3 = *(int *)((int)(scrCompilePub.canonicalString)->stringOffsets + iVar4);
-  }
-  if (0x30000 < scrCompilePub.canonicalStringBufferSize + local_50[0]) {
-                    /* WARNING: Subroutine does not return */
-    Sys_Error("CANONICAL_STRING_BUFFER_SIZE exceeded");
-  }
-  pcVar6 = pcVar6 + -1;
-  *(uint *)((int)(scrCompilePub.canonicalString)->stringOffsets + iVar4) =
-       scrCompilePub.canonicalStringBufferSize + 1;
-  pcVar9 = (char *)((int)(scrCompilePub.canonicalString)->stringOffsets +
-                   scrCompilePub.canonicalStringBufferSize + 0xffff);
-  do {
-    pcVar6 = pcVar6 + 1;
-    cVar1 = *pcVar6;
-    pcVar9 = pcVar9 + 1;
-    *pcVar9 = cVar1;
-  } while (cVar1 != '\0');
-  scrCompilePub.canonicalStringBufferSize =
-       scrCompilePub.canonicalStringBufferSize + local_50[0] + 1;
-LAB_82537460:
-  uVar7 = __restgprlr_24(uVar11);
-  return uVar7;
+  } while( true );
 }
 
 
@@ -238,12 +240,13 @@ void SL_ResetLocalCanonicalString(void)
 
 // 825374A0  Scr_InitProgramHunkUser  (script/scr_main.cpp:260)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void Scr_InitProgramHunkUser(void)
 
 {
-  __savegprlr_29();
   if (scrVarPub.programHunkUser != (HunkUser *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_main.cpp",0x105,0,
                     "%s");
@@ -255,19 +258,19 @@ void Scr_InitProgramHunkUser(void)
   }
   scrVarPub.canonicalStringHunkUser =
        Hunk_UserCreate(0x40000,"scrVarPub.canonicalStringHunkUser",true,7);
-  __restgprlr_29();
   return;
 }
 
 
 // 82537558  Scr_ShutdownProgramHunkUser  (script/scr_main.cpp:270)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void Scr_ShutdownProgramHunkUser(void)
 
 {
-  __savegprlr_29();
   if (scrVarPub.programHunkUser == (HunkUser *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_main.cpp",0x10f,0,
                     "%s");
@@ -278,22 +281,21 @@ void Scr_ShutdownProgramHunkUser(void)
   }
   scrVarPub.canonicalStringHunkUser = (HunkUser *)0x0;
   scrVarPub.programHunkUser = (HunkUser *)0x0;
-  __restgprlr_29();
   return;
 }
 
 
 // 825383B0  Scr_BeginLoadScripts  (script/scr_main.cpp:288)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void Scr_BeginLoadScripts(void)
 
 {
-  uint uVar1;
   int aiStack_40 [16];
   
-  __savegprlr_26();
   scrVarPub.varUsagePos = "<script compile variable>";
   LargeLocalReset();
   MT_Reset();
@@ -384,21 +386,21 @@ void Scr_BeginLoadScripts(void)
   memset();
   memset();
   Scr_GetFunction((char **)0x0,aiStack_40);
-  uVar1 = Scr_GetMethod((char **)0x0,aiStack_40);
-  __restgprlr_26(uVar1);
+  Scr_GetMethod((char **)0x0,aiStack_40);
   return;
 }
 
 
 // 825375E8  Scr_BeginLoadScriptsRemote  (script/scr_main.cpp:437)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void Scr_BeginLoadScriptsRemote(void)
 
 {
-  __savegprlr_29();
-  if (scrCompilePub.script_loading != false) {
+  if (scrCompilePub.script_loading) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_main.cpp",0x1b6,0,
                     "%s");
   }
@@ -414,27 +416,26 @@ void Scr_BeginLoadScriptsRemote(void)
     scrVarDebugPub->extRefCount[scrCompilePub.loadedscripts] =
          scrVarDebugPub->extRefCount[scrCompilePub.loadedscripts] + 1;
   }
-  __restgprlr_29();
   return;
 }
 
 
 // 825376A8  Scr_BeginLoadAnimTrees  (script/scr_main.cpp:461)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void Scr_BeginLoadAnimTrees(int param_1)
 
 {
-  ulonglong uVar1;
-  
-  uVar1 = __savegprlr_27(param_1);
   scrVarPub.varUsagePos = "<script compile variable>";
-  if (scrAnimPub.animtree_loading != false) {
+  if (scrAnimPub.animtree_loading) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_main.cpp",0x1d2,0,
                     "%s");
   }
   scrAnimPub.animtree_loading = true;
-  *(undefined4 *)((int)scrAnimPub.xanim_num + (int)((uVar1 & 0xffffffff) << 2)) = 0;
-  *(undefined4 *)((int)&scrAnimPub.xanim_lookup[0][0].anims + (int)((uVar1 & 0xffffffff) << 9)) = 0;
+  scrAnimPub.xanim_num[param_1] = 0;
+  scrAnimPub.xanim_lookup[param_1][0].anims = (XAnim_s *)0x0;
   if (scrAnimPub.animtrees != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_main.cpp",0x1da,0,
                     "%s");
@@ -445,12 +446,10 @@ void Scr_BeginLoadAnimTrees(int param_1)
          scrVarDebugPub->extRefCount[scrAnimPub.animtrees] + 1;
     scrAnimPub.animtree_node = 0;
     scrCompilePub.developer_statement = 0;
-    __restgprlr_27();
     return;
   }
   scrAnimPub.animtree_node = 0;
   scrCompilePub.developer_statement = 0;
-  __restgprlr_27();
   return;
 }
 
@@ -499,94 +498,92 @@ int Scr_ScanFile(char *param_1,int param_2)
 
 // 825378C8  Scr_LoadScriptInternal  (script/scr_main.cpp:525)
 
+/* WARNING: Function: __savegprlr_19 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_19 replaced with injection: xenon_save_restore */
+
 uint Scr_LoadScriptInternal(char *param_1,PrecacheEntry *param_2,int param_3)
 
 {
   char cVar1;
   uint uVar2;
-  char *pcVar3;
+  uint uVar3;
   uint uVar4;
   uint uVar5;
-  uint uVar6;
+  char *pcVar6;
   char *pcVar7;
-  char *pcVar8;
+  uint uVar8;
   uint uVar9;
-  uint uVar10;
-  char *pcVar11;
+  char *pcVar10;
   sval_u local_c0 [4];
   char acStack_b0 [176];
   
-  pcVar3 = (char *)__savegprlr_19(param_1);
-  pcVar11 = pcVar3;
-  if (scrCompilePub.script_loading == false) {
+  pcVar10 = param_1;
+  if (!scrCompilePub.script_loading) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_main.cpp",0x222,0,
                     "%s");
   }
   do {
-    cVar1 = *pcVar11;
-    pcVar11 = pcVar11 + 1;
+    cVar1 = *pcVar10;
+    pcVar10 = pcVar10 + 1;
   } while (cVar1 != '\0');
-  if ((char *)0x3f < pcVar11 + (-1 - (int)pcVar3)) {
+  if ((char *)0x3f < pcVar10 + (-1 - (int)param_1)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_main.cpp",0x223,0,
                     "%s");
   }
   Hunk_CheckTempMemoryHighClear();
-  uVar4 = Scr_CreateCanonicalFilename(pcVar3);
-  uVar5 = FindVariable(scrCompilePub.loadedscripts,uVar4);
-  if (uVar5 == 0) {
-    uVar6 = GetNewVariable(scrCompilePub.loadedscripts,uVar4);
-    SL_RemoveRefToString(uVar4);
-    SL_ConvertToString(uVar4);
+  uVar3 = Scr_CreateCanonicalFilename(param_1);
+  uVar4 = FindVariable(scrCompilePub.loadedscripts,uVar3);
+  if (uVar4 == 0) {
+    uVar5 = GetNewVariable(scrCompilePub.loadedscripts,uVar3);
+    SL_RemoveRefToString(uVar3);
+    SL_ConvertToString(uVar3);
     Com_sprintf(acStack_b0,0x40,"%s.gsc");
-    pcVar11 = scrParserPub.sourceBuf;
+    pcVar10 = scrParserPub.sourceBuf;
     ProfLoad_Begin("Scr_AddSourceBuffer");
-    pcVar7 = TempMalloc(0);
-    pcVar8 = SL_ConvertToString(uVar4);
-    pcVar7 = Scr_AddSourceBuffer(pcVar8,acStack_b0,pcVar7,true);
+    pcVar6 = TempMalloc(0);
+    pcVar7 = SL_ConvertToString(uVar3);
+    pcVar6 = Scr_AddSourceBuffer(pcVar7,acStack_b0,pcVar6,true);
     ProfLoad_End();
-    uVar5 = scrAnimPub.animTreeNames;
-    if (pcVar7 != (char *)0x0) {
+    uVar4 = scrAnimPub.animTreeNames;
+    if (pcVar6 != (char *)0x0) {
       scrCompilePub.far_function_count = 0;
       scrAnimPub.animTreeNames = 0;
       Scr_InitAllocNode();
-      pcVar8 = scrParserPub.scriptExtFilename;
+      pcVar7 = scrParserPub.scriptExtFilename;
       uVar2 = scrCompilePub.scriptFilename;
       scrCompilePub.in_ptr_valid = false;
       scrCompilePub.in_ptr = "+";
       scrParserPub.scriptExtFilename = acStack_b0;
-      scrCompilePub.parseBuf = pcVar7;
-      scrCompilePub.scriptFilename = uVar4;
+      scrCompilePub.parseBuf = pcVar6;
+      scrCompilePub.scriptFilename = uVar3;
       ScriptParse(local_c0,'\0');
       scrCompilePub.parseBuf = (char *)0x0;
-      Scr_CheckUsedSize(pcVar3);
-      uVar9 = GetVariable(scrCompilePub.scriptsPos,uVar4);
-      uVar9 = Scr_GetObject2(scrCompilePub.scriptsPos,uVar9);
-      uVar10 = GetVariable(scrCompilePub.scriptsCount,uVar4);
-      uVar10 = Scr_GetObject2(scrCompilePub.scriptsCount,uVar10);
+      Scr_CheckUsedSize(param_1);
+      uVar8 = GetVariable(scrCompilePub.scriptsPos,uVar3);
+      uVar8 = Scr_GetObject2(scrCompilePub.scriptsPos,uVar8);
+      uVar9 = GetVariable(scrCompilePub.scriptsCount,uVar3);
+      uVar9 = Scr_GetObject2(scrCompilePub.scriptsCount,uVar9);
       ProfLoad_Begin("ScriptCompile");
-      ScriptCompile(local_c0[0],uVar9,uVar10,uVar6,param_2,param_3,uVar4);
+      ScriptCompile(local_c0[0],uVar8,uVar9,uVar5,param_2,param_3,uVar3);
       ProfLoad_End();
-      RemoveVariable(scrCompilePub.scriptsCount,uVar4);
-      scrAnimPub.animTreeNames = uVar5;
+      RemoveVariable(scrCompilePub.scriptsCount,uVar3);
+      scrAnimPub.animTreeNames = uVar4;
       scrCompilePub.scriptFilename = uVar2;
-      scrParserPub.scriptExtFilename = pcVar8;
-      scrParserPub.sourceBuf = pcVar11;
+      scrParserPub.scriptExtFilename = pcVar7;
+      scrParserPub.sourceBuf = pcVar10;
       Hunk_CheckTempMemoryHighClear();
-      uVar4 = __restgprlr_19(uVar9);
-      return uVar4;
+      return uVar8;
     }
   }
   else {
-    SL_RemoveRefToString(uVar4);
-    uVar4 = FindVariable(scrCompilePub.scriptsPos,uVar4);
-    if (uVar4 != 0) {
-      uVar4 = FindObject(scrCompilePub.scriptsPos,uVar4);
-      uVar4 = __restgprlr_19(uVar4);
-      return uVar4;
+    SL_RemoveRefToString(uVar3);
+    uVar3 = FindVariable(scrCompilePub.scriptsPos,uVar3);
+    if (uVar3 != 0) {
+      uVar3 = FindObject(scrCompilePub.scriptsPos,uVar3);
+      return uVar3;
     }
   }
-  uVar4 = __restgprlr_19(0);
-  return uVar4;
+  return 0;
 }
 
 
@@ -665,6 +662,8 @@ int Scr_CompareFunctions(void *param_1,void *param_2)
 
 // 82537CD8  Scr_SortFunctionList  (script/scr_main.cpp:739)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void Scr_SortFunctionList(void)
@@ -680,7 +679,6 @@ void Scr_SortFunctionList(void)
   char **ppcVar8;
   char *pcVar9;
   
-  __savegprlr_23();
   qsort(scrParserPub.functionList,scrParserPub.functionCount,0xc,Scr_CompareFunctions);
   pcVar5 = (char *)0x0;
   pcVar6 = (char *)0x0;
@@ -736,19 +734,19 @@ void Scr_SortFunctionList(void)
       *ppcVar8 = pcVar9 + -0x7c7b4724;
     } while (uVar4 < scrParserPub.functionCount);
   }
-  __restgprlr_23();
   return;
 }
 
 
 // 82537E40  Scr_EndLoadScripts  (script/scr_main.cpp:790)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void Scr_EndLoadScripts(void)
 
 {
-  __savegprlr_26();
   Scr_SortFunctionList();
   Scr_EndLoadEvaluate();
   SL_EndLoadScripts();
@@ -822,32 +820,27 @@ void Scr_EndLoadScripts(void)
   RemoveRefToObject(scrCompilePub.builtinMeth);
   scrCompilePub.builtinMeth = 0;
   MT_Reset();
-  __restgprlr_26();
   return;
 }
 
 
 // 82538100  Scr_PrecacheAnimTrees  (script/scr_main.cpp:891)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void Scr_PrecacheAnimTrees(_func___cdecl_void_ptr_int *param_1,int param_2)
 
 {
-  int iVar1;
-  _func___cdecl_void_ptr_int *p_Var2;
-  ulonglong uVar3;
-  uint uVar4;
+  uint uVar1;
   
-  uVar3 = (ulonglong)param_2;
-  p_Var2 = (_func___cdecl_void_ptr_int *)__savegprlr_27(param_1);
-  iVar1 = (int)((uVar3 & 0xffffffff) << 2);
-  uVar4 = 1;
-  if (*(int *)((int)scrAnimPub.xanim_num + iVar1) != 0) {
+  uVar1 = 1;
+  if (scrAnimPub.xanim_num[param_2] != 0) {
     do {
-      Scr_LoadAnimTreeAtIndex(uVar4,p_Var2,(int)uVar3);
-      uVar4 = uVar4 + 1;
-    } while (uVar4 <= *(uint *)((int)scrAnimPub.xanim_num + iVar1));
+      Scr_LoadAnimTreeAtIndex(uVar1,param_1,param_2);
+      uVar1 = uVar1 + 1;
+    } while (uVar1 <= scrAnimPub.xanim_num[param_2]);
   }
-  __restgprlr_27();
   return;
 }
 
@@ -885,13 +878,13 @@ void Scr_EndLoadAnimTrees(void)
 
 // 82538278  Scr_FreeScripts  (script/scr_main.cpp:933)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void Scr_FreeScripts(uchar param_1)
 
 {
-  char cVar1;
-  
-  cVar1 = __savegprlr_28(param_1);
-  if (cVar1 != '\x01') {
+  if (param_1 != '\x01') {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_main.cpp",0x3a6,0,
                     "%s");
   }
@@ -924,7 +917,6 @@ void Scr_FreeScripts(uchar param_1)
   scrCompilePub.programLen = 0;
   scrVarPub.checksum = 0;
   scrVarPub.endScriptBuffer = (char *)0x0;
-  __restgprlr_28();
   return;
 }
 

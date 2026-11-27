@@ -269,47 +269,42 @@ vpx_codec_err_t vpx_codec_get_mem_map(vpx_codec_ctx *param_1,vpx_codec_mmap *par
 
 // 8283DB78  vpx_codec_set_mem_map  (WebM_atvi_opt/vpx/vpx/src/vpx_decoder.c:216)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "vpx_kf_mode": Some values do not have unique names */
 
 vpx_codec_err_t vpx_codec_set_mem_map(vpx_codec_ctx *param_1,vpx_codec_mmap *param_2,uint param_3)
 
 {
-  int iVar1;
-  int iVar2;
-  int iVar3;
-  vpx_codec_err_t vVar4;
-  ulonglong uVar5;
-  ulonglong uVar6;
-  ulonglong uVar7;
+  vpx_codec_err_t vVar1;
+  vpx_codec_err_t vVar2;
+  uint uVar3;
   
-  uVar5 = (ulonglong)(int)param_3;
-  uVar7 = (ulonglong)(int)param_2;
-  iVar2 = __savegprlr_28(param_1);
-  iVar3 = 2;
-  if (((iVar2 == 0) || ((uVar7 & 0xffffffff) == 0)) || (*(int *)(iVar2 + 4) == 0)) {
-    iVar3 = 8;
+  vVar2 = VPX_CODEC_MEM_ERROR;
+  if (((param_1 == (vpx_codec_ctx *)0x0) || (param_2 == (vpx_codec_mmap *)0x0)) ||
+     (param_1->iface == (vpx_codec_iface *)0x0)) {
+    vVar2 = VPX_CODEC_INVALID_PARAM;
   }
-  else if ((*(uint *)(*(int *)(iVar2 + 4) + 8) & 4) == 0) {
-    iVar3 = 1;
+  else if ((param_1->iface->caps & 4U) == 0) {
+    vVar2 = VPX_CODEC_ERROR;
   }
   else {
-    uVar6 = 0;
-    iVar1 = 2;
-    if ((uVar5 & 0xffffffff) != 0) {
+    uVar3 = 0;
+    vVar1 = VPX_CODEC_MEM_ERROR;
+    if (param_3 != 0) {
       do {
-        iVar3 = iVar1;
-        if ((*(int *)((int)uVar7 + 0x10) == 0) ||
-           (iVar3 = (**(code **)(*(int *)(iVar2 + 4) + 0x1c))(iVar2,uVar7), iVar3 != 0)) break;
-        uVar6 = uVar6 + 1;
-        uVar7 = uVar7 + 0x1c;
-        iVar1 = iVar3;
-      } while ((uVar6 & 0xffffffff) < (uVar5 & 0xffffffff));
+        vVar2 = vVar1;
+        if ((param_2->base == (void *)0x0) ||
+           (vVar2 = (*param_1->iface->set_mmap)(param_1,param_2), vVar2 != VPX_CODEC_OK)) break;
+        uVar3 = uVar3 + 1;
+        param_2 = param_2 + 1;
+        vVar1 = vVar2;
+      } while (uVar3 < param_3);
     }
   }
-  if (iVar2 != 0) {
-    *(int *)(iVar2 + 8) = iVar3;
+  if (param_1 != (vpx_codec_ctx *)0x0) {
+    param_1->err = vVar2;
   }
-  vVar4 = __restgprlr_28();
-  return vVar4;
+  return vVar2;
 }
 

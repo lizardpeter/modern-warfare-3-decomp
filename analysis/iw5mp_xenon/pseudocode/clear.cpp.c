@@ -2,6 +2,8 @@
 
 // 82870A08  ClearRects  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/clear.cpp:41)
 
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 
 void D3D::ClearRects(CDevice *param_1,ulong param_2,_D3DRECT *param_3,__vector4 *param_4,
@@ -9,21 +11,19 @@ void D3D::ClearRects(CDevice *param_1,ulong param_2,_D3DRECT *param_3,__vector4 
                     ulong param_9)
 
 {
-  undefined4 uVar1;
-  undefined4 uVar2;
-  undefined4 uVar3;
-  undefined4 uVar4;
-  CDevice *this;
-  ulong *puVar5;
-  ulong *puVar6;
-  undefined4 *puVar7;
-  ulonglong uVar8;
+  float fVar1;
+  float fVar2;
+  float fVar3;
+  float fVar4;
+  float *pfVar5;
+  uint uVar6;
+  ulong *puVar7;
+  ulong *puVar8;
   longlong lVar9;
   ulong uVar10;
   longlong lVar11;
   ulonglong uVar12;
-  ulonglong uVar13;
-  double extraout_f1;
+  longlong lVar13;
   double dVar14;
   undefined1 auVar15 [16];
   undefined1 auVar16 [16];
@@ -32,36 +32,32 @@ void D3D::ClearRects(CDevice *param_1,ulong param_2,_D3DRECT *param_3,__vector4 
   undefined1 auVar19 [16];
   ulong in_stack_00000054;
   
-  uVar8 = (ulonglong)(int)param_7.dword;
-  lVar11 = (longlong)(int)param_4;
+  dVar14 = (double)param_5;
   lVar9 = (longlong)(int)param_3;
-  uVar12 = (ulonglong)(int)param_2;
-  this = (CDevice *)__savegprlr_22((double)param_5,param_1,uVar12,lVar9,lVar11,param_6.dword);
-  puVar5 = *(ulong **)&this->field_0x30;
-  dVar14 = extraout_f1;
-  if (*(ulong **)&this->field_0x38 < puVar5) {
-    puVar5 = CDevice::KickOff(this);
+  lVar13 = (longlong)(int)param_2;
+  puVar7 = *(ulong **)&param_1->field_0x30;
+  if (*(ulong **)&param_1->field_0x38 < puVar7) {
+    puVar7 = CDevice::KickOff(param_1);
   }
-  puVar6 = CDevice::BeginRingAlloc(this,(ulong)(uVar12 * 0x15),4);
-  if (puVar6 == (ulong *)0x0) {
-    *(ulong **)&this->field_0x30 = puVar5;
+  uVar12 = lVar13 * 0x15;
+  puVar8 = CDevice::BeginRingAlloc(param_1,(ulong)uVar12,4);
+  if (puVar8 == (ulong *)0x0) {
+    *(ulong **)&param_1->field_0x30 = puVar7;
   }
   else {
-    if ((*(uint *)&this->field_0x29c0 & 1) == 0) {
+    if ((*(uint *)&param_1->field_0x29c0 & 1) == 0) {
       auVar19 = vectorSplatImmediateSignedWord(1);
       auVar19 = vectorConvertFromSignedFixedPointWord128(auVar19,1);
     }
     else {
       auVar19 = vectorSplatImmediateSignedWord(0);
     }
-    puVar7 = (undefined4 *)lVar11;
-    uVar1 = *puVar7;
-    uVar2 = puVar7[1];
-    uVar3 = puVar7[2];
-    uVar4 = puVar7[3];
-    if ((uVar12 & 0xffffffff) != 0) {
-      lVar11 = (longlong)(int)puVar6 + 0xc;
-      uVar13 = uVar12;
+    fVar1 = (param_4->field0_0x0).vector4_f32[0];
+    fVar2 = (param_4->field0_0x0).vector4_f32[1];
+    fVar3 = (param_4->field0_0x0).vector4_f32[2];
+    fVar4 = (param_4->field0_0x0).vector4_f32[3];
+    if (param_2 != 0) {
+      lVar11 = (longlong)(int)puVar8 + 0xc;
       do {
         auVar17 = loadVectorLeftIndexed(lVar9);
         auVar15 = loadVectorRightIndexed(lVar9 + 0x10);
@@ -74,105 +70,106 @@ void D3D::ClearRects(CDevice *param_1,ulong param_2,_D3DRECT *param_3,__vector4 
         auVar18 = vectorSplatWord(auVar18,3);
         storeVectorElementWordIndexed(auVar16,lVar11 + -0xc);
         storeVectorElementWordIndexed(auVar17,lVar11 + -8);
-        puVar7 = (undefined4 *)lVar11;
-        puVar7[-1] = (float)dVar14;
-        *puVar7 = uVar1;
-        puVar7[1] = uVar2;
-        puVar7[2] = uVar3;
-        puVar7[3] = uVar4;
+        pfVar5 = (float *)lVar11;
+        pfVar5[-1] = (float)dVar14;
+        *pfVar5 = fVar1;
+        pfVar5[1] = fVar2;
+        pfVar5[2] = fVar3;
+        pfVar5[3] = fVar4;
         storeVectorElementWordIndexed(auVar15,lVar11 + 0x10);
         storeVectorElementWordIndexed(auVar17,lVar11 + 0x14);
-        puVar7[6] = (float)dVar14;
-        puVar7[7] = uVar1;
-        puVar7[8] = uVar2;
-        puVar7[9] = uVar3;
-        puVar7[10] = uVar4;
+        pfVar5[6] = (float)dVar14;
+        pfVar5[7] = fVar1;
+        pfVar5[8] = fVar2;
+        pfVar5[9] = fVar3;
+        pfVar5[10] = fVar4;
         storeVectorElementWordIndexed(auVar15,lVar11 + 0x2c);
         storeVectorElementWordIndexed(auVar18,lVar11 + 0x30);
-        puVar7[0xd] = (float)dVar14;
-        puVar7[0xe] = uVar1;
-        puVar7[0xf] = uVar2;
-        puVar7[0x10] = uVar3;
-        puVar7[0x11] = uVar4;
+        pfVar5[0xd] = (float)dVar14;
+        pfVar5[0xe] = fVar1;
+        pfVar5[0xf] = fVar2;
+        pfVar5[0x10] = fVar3;
+        pfVar5[0x11] = fVar4;
         lVar11 = lVar11 + 0x54;
-        uVar13 = uVar13 - 1;
-      } while (uVar13 != 0);
+        lVar13 = lVar13 + -1;
+      } while (lVar13 != 0);
     }
-    puVar5[1] = 0x54800;
-    puVar5[2] = (((uint)puVar6 >> 0x14) + 0x200 & 0x1000) + ((uint)puVar6 & 0x1fffffff) | 3;
-    puVar5[3] = (uint)((uVar12 * 0x15 & 0xffffffff) << 2) & 0x3fffffc | 0x10000002;
-    uVar13 = (uVar8 & 0xffffffff) >> 0x10 & 3;
-    puVar5[4] = 0;
-    puVar5[5] = 0;
-    puVar5[6] = 0;
-    puVar5[7] = 0;
-    puVar5[8] = 0x25000;
-    puVar5[9] = 0;
-    puVar5[10] = 0;
-    puVar5[0xb] = 0;
-    puVar5[0xc] = 0x12000;
-    puVar5[0xd] = (ulong)uVar8;
-    puVar5[0xe] = param_8;
-    puVar5[0xf] = 0x2301;
-    if (uVar13 == 0) {
+    puVar7[1] = 0x54800;
+    puVar7[2] = (((uint)puVar8 >> 0x14) + 0x200 & 0x1000) + ((uint)puVar8 & 0x1fffffff) | 3;
+    puVar7[3] = (uint)((uVar12 & 0xffffffff) << 2) & 0x3fffffc | 0x10000002;
+    uVar6 = param_7.dword >> 0x10 & 3;
+    puVar7[4] = 0;
+    puVar7[5] = 0;
+    puVar7[6] = 0;
+    puVar7[7] = 0;
+    puVar7[8] = 0x25000;
+    puVar7[9] = 0;
+    puVar7[10] = 0;
+    puVar7[0xb] = 0;
+    puVar7[0xc] = 0x12000;
+    *(GPU_COLORINFO *)(puVar7 + 0xd) = param_7;
+    puVar7[0xe] = param_8;
+    puVar7[0xf] = 0x2301;
+    if (uVar6 == 0) {
       uVar10 = 0;
     }
-    else if (uVar13 == 1) {
+    else if (uVar6 == 1) {
       uVar10 = 0x8001;
     }
     else {
       uVar10 = 0xc003;
     }
-    puVar5[0x10] = uVar10;
-    puVar5[0x11] = 0x2200;
-    puVar5[0x12] = param_9;
-    puVar5[0x13] = 0x2208;
-    puVar5[0x14] = in_stack_00000054;
-    puVar5[0x15] = 0xc0003601;
-    puVar5[0x16] = (int)uVar12 * 0x30000 | 0x88;
-    *(ulong **)&this->field_0x30 = puVar5 + 0x16;
-    uVar12 = *(ulonglong *)&this->field_0x10;
-    *(ulonglong *)&this->field_0x10 = uVar12 | 0x200000000000000;
-    *(ulonglong *)&this->field_0x10 = uVar12 | 0x300000000000000;
-    *(ulonglong *)&this->field_0x10 = uVar12 | 0x300000000000800;
-    *(ulonglong *)&this->field_0x10 = uVar12 | 0x300000000000808;
-    *(ulonglong *)&this->field_0x18 = *(ulonglong *)&this->field_0x18 | 0x80000000;
-    *(ulonglong *)&this->field_0x20 = *(ulonglong *)&this->field_0x20 | 0x1000000000;
+    puVar7[0x10] = uVar10;
+    puVar7[0x11] = 0x2200;
+    puVar7[0x12] = param_9;
+    puVar7[0x13] = 0x2208;
+    puVar7[0x14] = in_stack_00000054;
+    puVar7[0x15] = 0xc0003601;
+    puVar7[0x16] = param_2 * 0x30000 | 0x88;
+    *(ulong **)&param_1->field_0x30 = puVar7 + 0x16;
+    uVar12 = *(ulonglong *)&param_1->field_0x10;
+    *(ulonglong *)&param_1->field_0x10 = uVar12 | 0x200000000000000;
+    *(ulonglong *)&param_1->field_0x10 = uVar12 | 0x300000000000000;
+    *(ulonglong *)&param_1->field_0x10 = uVar12 | 0x300000000000800;
+    *(ulonglong *)&param_1->field_0x10 = uVar12 | 0x300000000000808;
+    *(ulonglong *)&param_1->field_0x18 = *(ulonglong *)&param_1->field_0x18 | 0x80000000;
+    *(ulonglong *)&param_1->field_0x20 = *(ulonglong *)&param_1->field_0x20 | 0x1000000000;
   }
-  __restgprlr_22();
   return;
 }
 
 
 // 828709B0  GetEdramTileDimensions  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/texture.hpp:85)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void D3D::GetEdramTileDimensions(ulong param_1,ulong *param_2,ulong *param_3)
 
 {
-  int iVar1;
+  ulong uVar1;
   ulong uVar2;
-  ulong uVar3;
   
-  iVar1 = __savegprlr_29(param_1);
-  uVar3 = 0x50;
-  if (iVar1 == 0) {
-    uVar2 = 0x10;
+  uVar2 = 0x50;
+  if (param_1 == 0) {
+    uVar1 = 0x10;
   }
   else {
-    uVar2 = 8;
-    if (iVar1 != 1) {
-      uVar3 = 0x28;
+    uVar1 = 8;
+    if (param_1 != 1) {
+      uVar2 = 0x28;
     }
   }
-  *param_2 = uVar3;
-  *param_3 = uVar2;
-  __restgprlr_29();
+  *param_2 = uVar2;
+  *param_3 = uVar1;
   return;
 }
 
 
 // 82870CD0  ClearRect  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/clear.cpp:238)
 
+/* WARNING: Function: __savegprlr_19 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_19 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 
 void D3D::ClearRect(CDevice *param_1,long param_2,long param_3,long param_4,long param_5,
@@ -183,26 +180,14 @@ void D3D::ClearRect(CDevice *param_1,long param_2,long param_3,long param_4,long
   uint uVar1;
   uint uVar2;
   ulong uVar3;
-  CDevice *pCVar4;
-  longlong lVar5;
-  longlong lVar6;
+  ulonglong uVar4;
+  ulonglong uVar5;
+  ulonglong uVar6;
   ulonglong uVar7;
-  ulonglong uVar8;
-  ulonglong uVar9;
-  GPU_COLORINFO GVar10;
-  ulonglong uVar11;
-  ulonglong uVar12;
-  ulonglong uVar13;
-  ulonglong uVar14;
-  _D3DRECT *p_Var15;
-  int iVar16;
-  int iVar17;
-  int iVar18;
-  int iVar19;
-  int iVar20;
-  int iVar21;
-  double extraout_f1;
-  double dVar22;
+  _D3DRECT *p_Var8;
+  int iVar9;
+  int iVar10;
+  double dVar11;
   ulong in_stack_00000054;
   ulong in_stack_0000005c;
   ulong in_stack_00000064;
@@ -210,104 +195,101 @@ void D3D::ClearRect(CDevice *param_1,long param_2,long param_3,long param_4,long
   _D3DRECT local_c0;
   _D3DRECT local_b0 [11];
   
-  uVar11 = (ulonglong)(int)param_9.dword;
-  uVar9 = (ulonglong)param_5;
-  uVar8 = (ulonglong)param_4;
-  lVar6 = (longlong)param_3;
-  lVar5 = (longlong)param_2;
-  pCVar4 = (CDevice *)__savegprlr_19((double)param_7,param_1);
-  uVar13 = (uVar11 & 0xffffffff) >> 0x10 & 3;
-  iVar19 = 1;
-  if (uVar13 == 0) {
-    iVar18 = 1;
+  dVar11 = (double)param_7;
+  uVar1 = param_9.dword >> 0x10 & 3;
+  iVar10 = 1;
+  if (uVar1 == 0) {
+    iVar9 = 1;
   }
   else {
-    iVar18 = 0;
-    if (uVar13 != 1) {
-      iVar19 = 0;
+    iVar9 = 0;
+    if (uVar1 != 1) {
+      iVar10 = 0;
     }
   }
-  uVar1 = 0x28 << iVar19;
-  uVar14 = (ulonglong)uVar1;
-  uVar2 = 8 << iVar18;
-  uVar12 = (ulonglong)uVar2;
-  uVar7 = (uVar14 + lVar5) - 1;
-  uVar13 = (uVar12 + lVar6) - 1;
-  local_d0.x2 = (long)uVar8;
-  iVar21 = ((int)uVar7 / (int)uVar1) * uVar1;
-  uVar7 = uVar14 & ~(((uVar7 & 0x7fffffff) << 1 | (uVar7 & 0xffffffff) >> 0x1f) - 1);
-  iVar20 = (local_d0.x2 / (int)uVar1) * uVar1;
-  trapWord(6,uVar14,0);
-  trapWord(6,uVar14,0);
-  local_d0.y2 = (long)uVar9;
-  trapWord(6,uVar12,0);
-  trapWord(6,uVar12,0);
-  trapWord(5,uVar7,0xffff);
-  trapWord(5,uVar12 & ~(((uVar13 & 0x7fffffff) << 1 | (uVar13 & 0xffffffff) >> 0x1f) - 1),0xffff);
-  iVar17 = ((int)uVar13 / (int)uVar2) * uVar2;
-  trapWord(5,uVar14 & ~(((uVar8 & 0x7fffffff) << 1 | (uVar8 & 0xffffffff) >> 0x1f) - 1),0xffff);
-  trapWord(5,uVar12 & ~(((uVar9 & 0x7fffffff) << 1 | (uVar9 & 0xffffffff) >> 0x1f) - 1),0xffff);
-  iVar16 = (local_d0.y2 / (int)uVar2) * uVar2;
-  local_d0.y1 = (long)lVar6;
-  local_d0.x1 = (long)lVar5;
-  GVar10.dword = (ulong)uVar11;
-  if (((iVar21 < iVar20) && (iVar17 < iVar16)) && (D3D__EnableFastClears != 0)) {
-    p_Var15 = &local_c0;
-    if (local_d0.x1 < iVar21) {
-      p_Var15 = local_b0;
-      local_c0.x1 = local_d0.x1;
-      local_c0.y1 = local_d0.y1;
-      local_c0.x2 = iVar21;
-      local_c0.y2 = local_d0.y2;
+  uVar1 = 0x28 << iVar10;
+  uVar7 = (ulonglong)uVar1;
+  uVar2 = 8 << iVar9;
+  uVar6 = (ulonglong)uVar2;
+  uVar5 = (uVar7 + (longlong)param_2) - 1;
+  uVar4 = (uVar6 + (longlong)param_3) - 1;
+  local_d0.x1 = ((int)uVar5 / (int)uVar1) * uVar1;
+  uVar5 = uVar7 & ~(((uVar5 & 0x7fffffff) << 1 | (uVar5 & 0xffffffff) >> 0x1f) - 1);
+  local_d0.x2 = (param_4 / (int)uVar1) * uVar1;
+  trapWord(6,uVar7,0);
+  trapWord(6,uVar7,0);
+  trapWord(6,uVar6,0);
+  trapWord(6,uVar6,0);
+  trapWord(5,uVar5,0xffff);
+  trapWord(5,uVar6 & ~(((uVar4 & 0x7fffffff) << 1 | (uVar4 & 0xffffffff) >> 0x1f) - 1),0xffff);
+  local_d0.y1 = ((int)uVar4 / (int)uVar2) * uVar2;
+  trapWord(5,uVar7 & ~((((ulonglong)(uint)param_4 & 0x7fffffff) << 1 |
+                       (ulonglong)((uint)param_4 >> 0x1f)) - 1),0xffff);
+  trapWord(5,uVar6 & ~((((ulonglong)(uint)param_5 & 0x7fffffff) << 1 |
+                       (ulonglong)((uint)param_5 >> 0x1f)) - 1),0xffff);
+  local_d0.y2 = (param_5 / (int)uVar2) * uVar2;
+  if (((local_d0.x1 < local_d0.x2) && (local_d0.y1 < local_d0.y2)) && (D3D__EnableFastClears != 0))
+  {
+    p_Var8 = &local_c0;
+    if (param_2 < local_d0.x1) {
+      p_Var8 = local_b0;
+      local_c0.x1 = param_2;
+      local_c0.y1 = param_3;
+      local_c0.x2 = local_d0.x1;
+      local_c0.y2 = param_5;
     }
-    if (iVar20 < local_d0.x2) {
-      p_Var15->x1 = iVar20;
-      p_Var15->y1 = local_d0.y1;
-      p_Var15->x2 = local_d0.x2;
-      p_Var15->y2 = local_d0.y2;
-      p_Var15 = p_Var15 + 1;
+    if (local_d0.x2 < param_4) {
+      p_Var8->x1 = local_d0.x2;
+      p_Var8->y1 = param_3;
+      p_Var8->x2 = param_4;
+      p_Var8->y2 = param_5;
+      p_Var8 = p_Var8 + 1;
     }
-    if (local_d0.y1 < iVar17) {
-      p_Var15->x1 = iVar21;
-      p_Var15->y1 = local_d0.y1;
-      p_Var15->x2 = iVar20;
-      p_Var15->y2 = iVar17;
-      p_Var15 = p_Var15 + 1;
+    if (param_3 < local_d0.y1) {
+      p_Var8->x1 = local_d0.x1;
+      p_Var8->y1 = param_3;
+      p_Var8->x2 = local_d0.x2;
+      p_Var8->y2 = local_d0.y1;
+      p_Var8 = p_Var8 + 1;
     }
-    if (iVar16 < local_d0.y2) {
-      p_Var15->x1 = iVar21;
-      p_Var15->y1 = iVar16;
-      p_Var15->x2 = iVar20;
-      p_Var15->y2 = local_d0.y2;
-      p_Var15 = p_Var15 + 1;
+    if (local_d0.y2 < param_5) {
+      p_Var8->x1 = local_d0.x1;
+      p_Var8->y1 = local_d0.y2;
+      p_Var8->x2 = local_d0.x2;
+      p_Var8->y2 = param_5;
+      p_Var8 = p_Var8 + 1;
     }
-    uVar3 = (int)p_Var15 - (int)&local_c0 >> 4;
-    dVar22 = extraout_f1;
+    uVar3 = (int)p_Var8 - (int)&local_c0 >> 4;
     if (uVar3 != 0) {
-      ClearRects(pCVar4,uVar3,&local_c0,param_6,(float)extraout_f1,(GPU_SURFACEINFO)(ulong)uVar7,
-                 GVar10,in_stack_00000054,in_stack_0000005c);
+      ClearRects(param_1,uVar3,&local_c0,param_6,param_7,(GPU_SURFACEINFO)(ulong)uVar5,param_9,
+                 in_stack_00000054,in_stack_0000005c);
     }
-    local_d0.x1 = iVar21 >> iVar19;
-    local_d0.y1 = iVar17 >> iVar18;
-    local_d0.x2 = iVar20 >> iVar19;
-    local_d0.y2 = iVar16 >> iVar18;
-    ClearRects(pCVar4,1,&local_d0,param_6,(float)dVar22,(GPU_SURFACEINFO)(ulong)uVar7,
+    local_d0.x1 = local_d0.x1 >> iVar10;
+    local_d0.y1 = local_d0.y1 >> iVar9;
+    local_d0.x2 = local_d0.x2 >> iVar10;
+    local_d0.y2 = local_d0.y2 >> iVar9;
+    ClearRects(param_1,1,&local_d0,param_6,(float)dVar11,(GPU_SURFACEINFO)(ulong)uVar5,
                (GPU_COLORINFO)
-               (((GVar10.dword >> 0x12) >> iVar19) << 0x12 |
-               GVar10.dword & 0xc000 | 0x20000 | (GVar10.dword & 0x3fff) >> iVar19 & 0x3fff),
+               (((param_9.dword >> 0x12) >> iVar10) << 0x12 |
+               param_9.dword & 0xc000 | 0x20000 | (param_9.dword & 0x3fff) >> iVar10 & 0x3fff),
                in_stack_00000054,in_stack_00000064);
   }
   else {
-    ClearRects(pCVar4,1,&local_d0,param_6,(float)extraout_f1,(GPU_SURFACEINFO)(ulong)uVar7,GVar10,
+    local_d0.x1 = param_2;
+    local_d0.y1 = param_3;
+    local_d0.x2 = param_4;
+    local_d0.y2 = param_5;
+    ClearRects(param_1,1,&local_d0,param_6,param_7,(GPU_SURFACEINFO)(ulong)uVar5,param_9,
                in_stack_00000054,in_stack_0000005c);
   }
-  __restgprlr_19();
   return;
 }
 
 
 // 82870F48  ClearSurface  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/clear.cpp:377)
 
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 
 void D3D::ClearSurface(CDevice *param_1,ulong param_2,ulong param_3,long param_4,long param_5,
@@ -315,32 +297,26 @@ void D3D::ClearSurface(CDevice *param_1,ulong param_2,ulong param_3,long param_4
 
 {
   GPU_COLORINFO GVar1;
-  int iVar2;
-  GPU_SURFACEINFO GVar3;
-  CDevice *this;
-  undefined1 *puVar4;
-  int *piVar5;
-  ulonglong uVar6;
-  __vector4 _Var7;
-  bool bVar8;
-  ulong *puVar9;
-  uint uVar10;
-  int iVar11;
-  ulonglong uVar12;
-  __vector4 *p_Var13;
-  GPU_SURFACEINFO GVar14;
-  uint uVar16;
-  ulonglong uVar15;
+  GPU_SURFACEINFO GVar2;
+  undefined1 *puVar3;
+  __vector4 _Var4;
+  bool bVar5;
+  ulong *puVar6;
+  int iVar7;
+  GPU_SURFACEINFO GVar8;
+  uint uVar9;
+  ulonglong uVar10;
+  uint uVar11;
+  uint uVar12;
+  long *plVar13;
+  int iVar14;
+  int iVar15;
+  long *plVar16;
   uint uVar17;
-  longlong lVar18;
-  int iVar19;
-  int iVar20;
-  longlong lVar21;
-  uint uVar22;
-  double dVar23;
-  int iStack0000002c;
-  int iStack00000034;
-  int iStack0000003c;
+  double dVar18;
+  long lStack0000002c;
+  long lStack00000034;
+  long lStack0000003c;
   GPU_SURFACEINFO GStack00000044;
   uint in_stack_0000005c;
   ulong in_stack_fffffea8;
@@ -357,139 +333,130 @@ void D3D::ClearSurface(CDevice *param_1,ulong param_2,ulong param_3,long param_4
   undefined4 local_b4;
   undefined4 local_b0;
   
-  dVar23 = (double)param_9;
-  lVar21 = (longlong)(int)param_8;
-  uVar12 = (ulonglong)(int)param_3;
-  uVar15 = (ulonglong)(int)param_2;
-  lVar18 = (longlong)(int)param_1;
-  __savegprlr();
-  this = (CDevice *)lVar18;
-  GVar1 = *(GPU_COLORINFO *)&this->field_0x2880;
-  uVar17 = 0;
-  uVar10 = (uint)uVar12;
-  if (uVar10 != 0xffffffff) {
-    uVar17 = *(uint *)(*(int *)(&this->field_0x0 + (int)((uVar12 + 0xc64 & 0xffffffff) << 2)) + 0x1c
-                      );
-    if ((uVar17 & 0xf0000) == 0xa0000) {
-      uVar17 = uVar17 & 0xfff0ffff | 0x20000;
+  dVar18 = (double)param_9;
+  GVar1 = *(GPU_COLORINFO *)&param_1->field_0x2880;
+  uVar11 = 0;
+  if (param_3 != 0xffffffff) {
+    uVar11 = *(uint *)((int)&param_1->m_pRenderTarget[param_3]->field6_0x18 + 4);
+    if ((uVar11 & 0xf0000) == 0xa0000) {
+      uVar11 = uVar11 & 0xfff0ffff | 0x20000;
     }
-    if ((uVar17 & 0xf0000) == 0xc0000) {
-      uVar17 = uVar17 & 0xfff0ffff | 0x30000;
+    if ((uVar11 & 0xf0000) == 0xc0000) {
+      uVar11 = uVar11 & 0xfff0ffff | 0x30000;
     }
   }
-  uVar6 = uVar15 & 0x30;
-  uVar16 = local_c0 & 0xffffff00 | (uint)uVar6;
-  if (uVar10 != 0xffffffff) {
-    uVar16 = local_c0 & 0xffffff00 | (1 << (uVar10 & 0x3f) | uVar16) & 0xff;
+  uVar9 = local_c0 & 0xffffff00 | param_2 & 0x30;
+  if (param_3 != 0xffffffff) {
+    uVar9 = local_c0 & 0xffffff00 | (1 << (param_3 & 0x3f) | uVar9) & 0xff;
   }
-  local_b4 = *(undefined4 *)&this->field_0x2888;
-  local_c0 = (uint)((uVar12 & 0xffffffff) << 8) & 0xff00 | uVar16 & 0xffff00ff;
-  local_b0 = *(undefined4 *)&this->field_0x28c8;
-  local_e0 = *(ulong **)&this->field_0x30;
-  iStack0000002c = param_4;
-  iStack00000034 = param_5;
-  iStack0000003c = param_6;
+  local_b4 = *(undefined4 *)&param_1->field_0x2888;
+  local_c0 = (param_3 & 0xff) << 8 | uVar9 & 0xffff00ff;
+  local_b0 = *(undefined4 *)&param_1->field_0x28c8;
+  local_e0 = *(ulong **)&param_1->field_0x30;
+  lStack0000002c = param_4;
+  lStack00000034 = param_5;
+  lStack0000003c = param_6;
   GStack00000044 = (GPU_SURFACEINFO)param_7;
   local_bc = GVar1;
-  local_b8 = uVar17;
-  if (*(ulong **)&this->field_0x38 < local_e0) {
-    local_e0 = CDevice::KickOff(this);
+  local_b8 = uVar11;
+  if (*(ulong **)&param_1->field_0x38 < local_e0) {
+    local_e0 = CDevice::KickOff(param_1);
   }
-  CDevice::PutPix(this,&local_e0,PIXMeta_BeginClear,&local_c0,0x14);
-  *(ulong **)&this->field_0x30 = local_e0;
-  uVar10 = *(uint *)&this->field_0x2940 & 0xfffffff0;
-  if ((uVar15 & 0x10) != 0) {
-    uVar10 = uVar10 | 1;
+  CDevice::PutPix(param_1,&local_e0,PIXMeta_BeginClear,&local_c0,0x14);
+  *(ulong **)&param_1->field_0x30 = local_e0;
+  uVar9 = *(uint *)&param_1->field_0x2940 & 0xfffffff0;
+  if ((param_2 & 0x10) != 0) {
+    uVar9 = uVar9 | 1;
   }
-  if ((uVar15 & 0x20) != 0) {
-    if ((uVar15 & 0x40) == 0) {
-      uVar16 = uVar10 | 4;
-      if ((uVar15 & 0x80) != 0) {
-        uVar16 = (in_stack_0000005c & 0xff) << 8 | uVar10 & 0xffff00ff | 4 | 0x20;
+  if ((param_2 & 0x20) != 0) {
+    if ((param_2 & 0x40) == 0) {
+      uVar12 = uVar9 | 4;
+      if ((param_2 & 0x80) != 0) {
+        uVar12 = (in_stack_0000005c & 0xff) << 8 | uVar9 & 0xffff00ff | 4 | 0x20;
       }
     }
     else {
-      uVar16 = (in_stack_0000005c & 0xff) << 8 | uVar10 & 0xffff00df | 4;
+      uVar12 = (in_stack_0000005c & 0xff) << 8 | uVar9 & 0xffff00df | 4;
     }
-    uVar10 = uVar16;
-    if (*(ulong **)&this->field_0x38 < local_e0) {
-      local_e0 = CDevice::KickOff(this);
+    uVar9 = uVar12;
+    if (*(ulong **)&param_1->field_0x38 < local_e0) {
+      local_e0 = CDevice::KickOff(param_1);
     }
     local_e0[1] = 0x210d;
     local_e0 = local_e0 + 2;
     *local_e0 = in_stack_0000005c & 0xff | 0xff0000;
-    *(ulong **)&this->field_0x30 = local_e0;
-    *(ulonglong *)&this->field_0x10 = *(ulonglong *)&this->field_0x10 | 0x10000000;
+    *(ulong **)&param_1->field_0x30 = local_e0;
+    *(ulonglong *)&param_1->field_0x10 = *(ulonglong *)&param_1->field_0x10 | 0x10000000;
   }
-  SetPending_Predicated(this,0x100,uVar10);
-  puVar9 = *(ulong **)&this->field_0x30;
-  if (*(ulong **)&this->field_0x38 < puVar9) {
-    puVar9 = CDevice::KickOff(this);
+  SetPending_Predicated(param_1,0x100,uVar9);
+  puVar6 = *(ulong **)&param_1->field_0x30;
+  if (*(ulong **)&param_1->field_0x38 < puVar6) {
+    puVar6 = CDevice::KickOff(param_1);
   }
-  GVar14.dword = 0;
-  puVar9[1] = 0x22080;
-  puVar9[2] = 0;
-  puVar9[3] = 0;
-  puVar9 = puVar9 + 4;
-  *puVar9 = 0x20002000;
-  local_e0 = puVar9;
-  if (uVar6 == 0) {
-    uVar10 = uVar17 >> 0x10 & 0xf;
-    GVar14.dword = 0;
-    iVar11 = Is32BitEdramFormat(uVar10);
-    if (((iVar11 != 0) &&
+  GVar8.dword = 0;
+  puVar6[1] = 0x22080;
+  puVar6[2] = 0;
+  puVar6[3] = 0;
+  puVar6 = puVar6 + 4;
+  *puVar6 = 0x20002000;
+  local_e0 = puVar6;
+  if ((param_2 & 0x30) == 0) {
+    uVar9 = uVar11 >> 0x10 & 0xf;
+    GVar8.dword = 0;
+    iVar7 = Is32BitEdramFormat(uVar9);
+    if (((iVar7 != 0) &&
         (GetEdramTileDimensions(GVar1.dword >> 0x10 & 3,&local_dc,local_d8),
         (int)local_dc <= param_6 - param_4)) && ((int)local_d8[0] <= param_7 - param_5)) {
-      loadVectorLeftIndexed(lVar21);
-      loadVectorRightIndexed(lVar21 + 0x10);
-      _Var7.field0_0x0.vector4_u32[0] = in_stack_fffffea8;
-      _Var7.field0_0x0.vector4_u32[1] = in_stack_fffffeac;
-      _Var7.field0_0x0.vector4_u32[2] = in_stack_fffffeb0;
-      _Var7.field0_0x0.vector4_u32[3] = in_stack_fffffeb4;
-      ComputeClearColor(uVar10,uVar17 >> 0x14 & 0x3f,_Var7,local_d8,&local_dc);
+      loadVectorLeftIndexed((longlong)(int)param_8);
+      loadVectorRightIndexed((longlong)(int)param_8 + 0x10);
+      _Var4.field0_0x0.vector4_u32[0] = in_stack_fffffea8;
+      _Var4.field0_0x0.vector4_u32[1] = in_stack_fffffeac;
+      _Var4.field0_0x0.vector4_u32[2] = in_stack_fffffeb0;
+      _Var4.field0_0x0.vector4_u32[3] = in_stack_fffffeb4;
+      ComputeClearColor(uVar9,uVar11 >> 0x14 & 0x3f,_Var4,local_d8,&local_dc);
       local_d0 = (ulonglong)(local_d8[0] >> 8);
-      GVar14.dword = (int)"chanIndex doesn\'t index SND_MAX_CHANNELS\n\t%i not in [0, %i)" + 0x28;
+      GVar8.dword = (int)"chanIndex doesn\'t index SND_MAX_CHANNELS\n\t%i not in [0, %i)" + 0x28;
       local_e0[1] = 0x2203;
       local_e0[2] = 0;
       local_e0[3] = 0x2002;
-      local_e0[4] = uVar17 & 0xfff;
-      dVar23 = (double)(float)(((double)local_d0 - 0.0625) * 5.960464832810452e-08);
+      local_e0[4] = uVar11 & 0xfff;
+      dVar18 = (double)(float)(((double)local_d0 - 0.0625) * 5.960464832810452e-08);
       local_e0[5] = 0x210d;
-      puVar9 = local_e0 + 6;
-      *puVar9 = local_d8[0] & 0xff | 0xff0000;
-      uVar15 = *(ulonglong *)&this->field_0x10;
-      *(ulonglong *)&this->field_0x10 = uVar15 | 0x100;
-      *(ulonglong *)&this->field_0x10 = uVar15 | 0x80000000000100;
-      *(ulonglong *)&this->field_0x10 = uVar15 | 0x80000010000100;
-      local_e0 = puVar9;
+      puVar6 = local_e0 + 6;
+      *puVar6 = local_d8[0] & 0xff | 0xff0000;
+      uVar10 = *(ulonglong *)&param_1->field_0x10;
+      *(ulonglong *)&param_1->field_0x10 = uVar10 | 0x100;
+      *(ulonglong *)&param_1->field_0x10 = uVar10 | 0x80000000000100;
+      *(ulonglong *)&param_1->field_0x10 = uVar10 | 0x80000010000100;
+      local_e0 = puVar6;
     }
   }
-  *(ulong **)&this->field_0x30 = puVar9;
-  if (((this->m_WaitUntilIdleBeforeNextDoubleDepth) || (this->m_WaitUntilIdleRequired)) ||
-     (this->m_FlushAllCaches)) {
-    WaitUntilIdleOrFlushCaches(this);
+  *(ulong **)&param_1->field_0x30 = puVar6;
+  if (((param_1->m_WaitUntilIdleBeforeNextDoubleDepth) || (param_1->m_WaitUntilIdleRequired)) ||
+     (param_1->m_FlushAllCaches)) {
+    WaitUntilIdleOrFlushCaches(param_1);
   }
-  if (this->m_TilingSurfaceOverride) {
-    bVar8 = true;
+  if (param_1->m_TilingSurfaceOverride) {
+    bVar5 = true;
   }
   else {
-    if (this->m_TilingBracket) {
-      GVar14 = (GPU_SURFACEINFO)this->m_pTileSurfaces[0];
-      if (((D3DSurface *)GVar14.dword == this->m_pRenderTarget[0]) ||
-         (this->m_pRenderTarget[0] == (D3DSurface *)0x0)) {
-        GVar14 = *(GPU_SURFACEINFO *)(this->m_pTileSurfaces + 1);
-        if (((D3DSurface *)GVar14.dword == this->m_pRenderTarget[1]) ||
-           (this->m_pRenderTarget[1] == (D3DSurface *)0x0)) {
-          GVar14 = *(GPU_SURFACEINFO *)(this->m_pTileSurfaces + 2);
-          if (((D3DSurface *)GVar14.dword == this->m_pRenderTarget[2]) ||
-             (this->m_pRenderTarget[2] == (D3DSurface *)0x0)) {
-            GVar14 = *(GPU_SURFACEINFO *)(this->m_pTileSurfaces + 3);
-            if (((D3DSurface *)GVar14.dword == this->m_pRenderTarget[3]) ||
-               (this->m_pRenderTarget[3] == (D3DSurface *)0x0)) {
-              GVar14 = (GPU_SURFACEINFO)this->m_pTileDepthSurface;
-              if (((D3DSurface *)GVar14.dword == this->m_pDepthStencilSurface) ||
-                 (this->m_pDepthStencilSurface == (D3DSurface *)0x0)) {
-                bVar8 = true;
+    if (param_1->m_TilingBracket) {
+      GVar8 = (GPU_SURFACEINFO)param_1->m_pTileSurfaces[0];
+      if (((D3DSurface *)GVar8.dword == param_1->m_pRenderTarget[0]) ||
+         (param_1->m_pRenderTarget[0] == (D3DSurface *)0x0)) {
+        GVar8 = *(GPU_SURFACEINFO *)(param_1->m_pTileSurfaces + 1);
+        if (((D3DSurface *)GVar8.dword == param_1->m_pRenderTarget[1]) ||
+           (param_1->m_pRenderTarget[1] == (D3DSurface *)0x0)) {
+          GVar8 = *(GPU_SURFACEINFO *)(param_1->m_pTileSurfaces + 2);
+          if (((D3DSurface *)GVar8.dword == param_1->m_pRenderTarget[2]) ||
+             (param_1->m_pRenderTarget[2] == (D3DSurface *)0x0)) {
+            GVar8 = *(GPU_SURFACEINFO *)(param_1->m_pTileSurfaces + 3);
+            if (((D3DSurface *)GVar8.dword == param_1->m_pRenderTarget[3]) ||
+               (param_1->m_pRenderTarget[3] == (D3DSurface *)0x0)) {
+              GVar8 = (GPU_SURFACEINFO)param_1->m_pTileDepthSurface;
+              if (((D3DSurface *)GVar8.dword == param_1->m_pDepthStencilSurface) ||
+                 (param_1->m_pDepthStencilSurface == (D3DSurface *)0x0)) {
+                bVar5 = true;
                 goto LAB_82871348;
               }
             }
@@ -497,97 +464,95 @@ void D3D::ClearSurface(CDevice *param_1,ulong param_2,ulong param_3,long param_4
         }
       }
     }
-    bVar8 = false;
+    bVar5 = false;
   }
 LAB_82871348:
-  p_Var13 = (__vector4 *)lVar21;
-  if (bVar8) {
-    uVar17 = this->m_PredicationMaskLo;
-    if (((this->m_OnePassZPass) && (this->m_ZPassBracket)) && ((uVar17 & 0x15555555) != 0)) {
-      if (uVar6 != 0) {
-        puVar9 = *(ulong **)&this->field_0x30;
-        if (*(ulong **)&this->field_0x38 < puVar9) {
-          puVar9 = CDevice::KickOff(this);
+  if (bVar5) {
+    uVar11 = param_1->m_PredicationMaskLo;
+    if (((param_1->m_OnePassZPass) && (param_1->m_ZPassBracket)) && ((uVar11 & 0x15555555) != 0)) {
+      if ((param_2 & 0x30) != 0) {
+        puVar6 = *(ulong **)&param_1->field_0x30;
+        if (*(ulong **)&param_1->field_0x38 < puVar6) {
+          puVar6 = CDevice::KickOff(param_1);
         }
-        puVar9[1] = 0xc0006000;
-        local_e0 = puVar9 + 2;
-        *local_e0 = uVar17 & 0x15555555;
-        iVar11 = this->m_TileOffsets[0].x;
-        iVar19 = this->m_TileOffsets[0].y;
-        *(ulong **)&this->field_0x30 = local_e0;
-        ClearRect(this,param_4 - iVar11,param_5 - iVar19,param_6 - iVar11,
-                  GStack00000044.dword - iVar19,p_Var13,(float)dVar23,GStack00000044,
+        puVar6[1] = 0xc0006000;
+        local_e0 = puVar6 + 2;
+        *local_e0 = uVar11 & 0x15555555;
+        iVar7 = param_1->m_TileOffsets[0].x;
+        iVar14 = param_1->m_TileOffsets[0].y;
+        *(ulong **)&param_1->field_0x30 = local_e0;
+        ClearRect(param_1,param_4 - iVar7,param_5 - iVar14,param_6 - iVar7,
+                  GStack00000044.dword - iVar14,param_8,(float)dVar18,GStack00000044,
                   (GPU_COLORINFO)
-                  (this->m_TileZPassSurfacePitch & 0x3fff |
-                  this->m_TileHiZPitch << 0x12 | GVar1.dword & 0x3c000),in_stack_fffffea8,
+                  (param_1->m_TileZPassSurfacePitch & 0x3fff |
+                  param_1->m_TileHiZPitch << 0x12 | GVar1.dword & 0x3c000),in_stack_fffffea8,
                   in_stack_fffffeac,in_stack_fffffeb0,in_stack_fffffeb4);
       }
-      uVar17 = uVar17 & 0xeaaaaaaa;
+      uVar11 = uVar11 & 0xeaaaaaaa;
     }
-    uVar10 = 0;
-    if (this->m_Tiles != 0) {
-      uVar16 = 0;
-      lVar21 = lVar18 + 0x33bc;
-      lVar18 = lVar18 + 0x32cc;
+    uVar9 = 0;
+    if (param_1->m_Tiles != 0) {
+      uVar12 = 0;
+      plVar16 = &param_1->m_TileOffsets[0].y;
+      plVar13 = &param_1->m_TileRects[0].y1;
       do {
-        piVar5 = (int *)lVar18;
-        iVar11 = iStack0000002c;
-        if (iStack0000002c <= piVar5[-1]) {
-          iVar11 = piVar5[-1];
+        iVar7 = lStack0000002c;
+        if (lStack0000002c <= ((_D3DRECT *)(plVar13 + -1))->x1) {
+          iVar7 = ((_D3DRECT *)(plVar13 + -1))->x1;
         }
-        iVar19 = iStack00000034;
-        if (iStack00000034 <= *piVar5) {
-          iVar19 = *piVar5;
+        iVar14 = lStack00000034;
+        if (lStack00000034 <= *plVar13) {
+          iVar14 = *plVar13;
         }
-        iVar20 = iStack0000003c;
-        if (piVar5[1] <= iStack0000003c) {
-          iVar20 = piVar5[1];
+        iVar15 = lStack0000003c;
+        if (plVar13[1] <= lStack0000003c) {
+          iVar15 = plVar13[1];
         }
-        GVar14.dword = ((GPU_SURFACEINFO *)(piVar5 + 2))->dword;
-        if ((int)GStack00000044.dword < (int)((GPU_SURFACEINFO *)(piVar5 + 2))->dword) {
-          GVar14 = GStack00000044;
+        GVar8.dword = ((GPU_SURFACEINFO *)(plVar13 + 2))->dword;
+        if ((int)GStack00000044.dword < (int)((GPU_SURFACEINFO *)(plVar13 + 2))->dword) {
+          GVar8 = GStack00000044;
         }
-        if (((iVar11 < iVar20) && (iVar19 < (int)GVar14.dword)) &&
-           (uVar22 = 3 << (uVar16 & 0x3f) & uVar17, uVar22 != 0)) {
-          puVar9 = *(ulong **)&this->field_0x30;
-          if (*(ulong **)&this->field_0x38 < puVar9) {
-            puVar9 = CDevice::KickOff(this);
+        if (((iVar7 < iVar15) && (iVar14 < (int)GVar8.dword)) &&
+           (uVar17 = 3 << (uVar12 & 0x3f) & uVar11, uVar17 != 0)) {
+          puVar6 = *(ulong **)&param_1->field_0x30;
+          if (*(ulong **)&param_1->field_0x38 < puVar6) {
+            puVar6 = CDevice::KickOff(param_1);
           }
-          puVar9[1] = 0xc0006000;
-          local_e0 = puVar9 + 2;
-          *local_e0 = uVar22;
-          *(ulong **)&this->field_0x30 = local_e0;
-          iVar2 = *(int *)lVar21;
-          GVar3 = (GPU_SURFACEINFO)((GPU_SURFACEINFO *)((int *)lVar21 + -1))->dword;
-          ClearRect(this,iVar11 - (int)GVar3,iVar19 - iVar2,iVar20 - (int)GVar3,GVar14.dword - iVar2
-                    ,p_Var13,(float)dVar23,GVar3,GVar1,in_stack_fffffea8,in_stack_fffffeac,
-                    in_stack_fffffeb0,in_stack_fffffeb4);
+          puVar6[1] = 0xc0006000;
+          local_e0 = puVar6 + 2;
+          *local_e0 = uVar17;
+          *(ulong **)&param_1->field_0x30 = local_e0;
+          GVar2 = (GPU_SURFACEINFO)((GPU_SURFACEINFO *)(plVar16 + -1))->dword;
+          ClearRect(param_1,iVar7 - (int)GVar2,iVar14 - *plVar16,iVar15 - (int)GVar2,
+                    GVar8.dword - *plVar16,param_8,(float)dVar18,GVar2,GVar1,in_stack_fffffea8,
+                    in_stack_fffffeac,in_stack_fffffeb0,in_stack_fffffeb4);
         }
-        uVar10 = uVar10 + 1;
-        lVar18 = lVar18 + 0x10;
-        uVar16 = uVar16 + 2;
-        lVar21 = lVar21 + 8;
-      } while (uVar10 < this->m_Tiles);
+        uVar9 = uVar9 + 1;
+        plVar13 = plVar13 + 4;
+        uVar12 = uVar12 + 2;
+        plVar16 = plVar16 + 2;
+      } while (uVar9 < param_1->m_Tiles);
     }
   }
   else {
-    ClearRect(this,param_4,param_5,param_6,param_7,p_Var13,(float)dVar23,GVar14,GVar1,
+    ClearRect(param_1,param_4,param_5,param_6,param_7,param_8,(float)dVar18,GVar8,GVar1,
               in_stack_fffffea8,in_stack_fffffeac,in_stack_fffffeb0,in_stack_fffffeb4);
   }
-  puVar9 = *(ulong **)&this->field_0x30;
-  if (*(ulong **)&this->field_0x38 < puVar9) {
-    puVar9 = CDevice::KickOff(this);
+  puVar6 = *(ulong **)&param_1->field_0x30;
+  if (*(ulong **)&param_1->field_0x38 < puVar6) {
+    puVar6 = CDevice::KickOff(param_1);
   }
-  puVar9[1] = 0x57e;
-  puVar9[2] = 0x10029;
-  *(ulong **)&this->field_0x30 = puVar9 + 2;
-  __restgprlr();
+  puVar6[1] = 0x57e;
+  puVar6[2] = 0x10029;
+  *(ulong **)&param_1->field_0x30 = puVar6 + 2;
   return;
 }
 
 
 // 828715B0  ClearF  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/clear.cpp:731)
 
+/* WARNING: Function: __savegprlr_19 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_19 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 
 void D3D::ClearF(CDevice *param_1,ulong param_2,_D3DRECT *param_3,__vector4 *param_4,float param_5,
@@ -596,129 +561,129 @@ void D3D::ClearF(CDevice *param_1,ulong param_2,_D3DRECT *param_3,__vector4 *par
 {
   undefined2 uVar2;
   uint uVar1;
-  CDevice *this;
   ulong64 uVar3;
   ulong *puVar4;
   ulonglong uVar5;
   ulonglong uVar6;
-  __vector4_u_0 *p_Var7;
+  int iVar7;
   int iVar8;
   int iVar9;
   int iVar10;
   int iVar11;
-  int iVar12;
-  D3DSurface **ppDVar13;
-  uint uVar14;
-  double extraout_f1;
-  double dVar15;
+  D3DSurface **ppDVar12;
+  uint uVar13;
+  double dVar14;
   ulong in_stack_ffffff08;
   __vector4_u_0 local_90 [9];
   
-  uVar6 = (ulonglong)(int)param_4;
+  dVar14 = (double)param_5;
   uVar5 = (ulonglong)(int)param_2;
-  this = (CDevice *)__savegprlr_19((double)param_5,param_1);
-  p_Var7 = (__vector4_u_0 *)uVar6;
-  if ((uVar6 & 0xffffffff) == 0) {
-    p_Var7 = local_90;
+  if (param_4 == (__vector4 *)0x0) {
+    param_4 = (__vector4 *)local_90;
     local_90[0].vector4_f32[0] = 0.0;
     local_90[0].vector4_f32[1] = 0.0;
     local_90[0].vector4_f32[2] = 0.0;
     local_90[0].vector4_f32[3] = 0.0;
   }
-  if (this->m_pDepthStencilSurface == (D3DSurface *)0x0) {
-    uVar5 = uVar5 << 0x20 | uVar5 & 0xffffff0f;
-    if (uVar5 == 0) goto LAB_82871c38;
+  if ((param_1->m_pDepthStencilSurface == (D3DSurface *)0x0) &&
+     (uVar5 = CONCAT44(param_2,param_2) & 0xffffffffffffff0f, uVar5 == 0)) {
+    return;
   }
-  iVar8 = (int)(this->m_Viewport).X;
-  iVar9 = (int)(this->m_Viewport).Y;
-  iVar10 = param_3->x1;
-  if (param_3->x1 <= iVar8) {
+  iVar7 = (int)(param_1->m_Viewport).X;
+  iVar8 = (int)(param_1->m_Viewport).Y;
+  iVar9 = param_3->x1;
+  if (param_3->x1 <= iVar7) {
+    iVar9 = iVar7;
+  }
+  iVar10 = param_3->y1;
+  if (param_3->y1 <= iVar8) {
     iVar10 = iVar8;
   }
-  iVar11 = param_3->y1;
-  if (param_3->y1 <= iVar9) {
-    iVar11 = iVar9;
+  iVar7 = (int)(param_1->m_Viewport).Width + iVar7;
+  iVar11 = param_3->x2;
+  if (iVar7 <= param_3->x2) {
+    iVar11 = iVar7;
   }
-  iVar8 = (int)(this->m_Viewport).Width + iVar8;
-  iVar12 = param_3->x2;
-  if (iVar8 <= param_3->x2) {
-    iVar12 = iVar8;
+  iVar8 = (int)(param_1->m_Viewport).Height + iVar8;
+  iVar7 = param_3->y2;
+  if (iVar8 <= param_3->y2) {
+    iVar7 = iVar8;
   }
-  iVar9 = (int)(this->m_Viewport).Height + iVar9;
-  iVar8 = param_3->y2;
-  if (iVar9 <= param_3->y2) {
-    iVar8 = iVar9;
-  }
-  if (this->m_ScissorTestEnable != 0) {
-    iVar9 = (this->m_Scissor).left;
-    if (iVar10 <= iVar9) {
-      iVar10 = iVar9;
-    }
-    iVar9 = (this->m_Scissor).top;
-    if (iVar11 <= iVar9) {
-      iVar11 = iVar9;
-    }
-    iVar9 = (this->m_Scissor).right;
-    if (iVar9 <= iVar12) {
-      iVar12 = iVar9;
-    }
-    iVar9 = (this->m_Scissor).bottom;
+  if (param_1->m_ScissorTestEnable != 0) {
+    iVar8 = (param_1->m_Scissor).left;
     if (iVar9 <= iVar8) {
-      iVar8 = iVar9;
+      iVar9 = iVar8;
+    }
+    iVar8 = (param_1->m_Scissor).top;
+    if (iVar10 <= iVar8) {
+      iVar10 = iVar8;
+    }
+    iVar8 = (param_1->m_Scissor).right;
+    if (iVar8 <= iVar11) {
+      iVar11 = iVar8;
+    }
+    iVar8 = (param_1->m_Scissor).bottom;
+    if (iVar8 <= iVar7) {
+      iVar7 = iVar8;
     }
   }
-  if ((iVar10 < iVar12) && (iVar11 < iVar8)) {
-    uVar2 = (this->m_CpuDrPix).DrawApiCalls;
-    uVar6 = *(ulonglong *)&this->field_0x10;
-    (this->m_CpuDrPix).DrawApiCalls = uVar2 + 1;
-    dVar15 = extraout_f1;
+  if ((iVar9 < iVar11) && (iVar10 < iVar7)) {
+    uVar2 = (param_1->m_CpuDrPix).DrawApiCalls;
+    uVar6 = *(ulonglong *)&param_1->field_0x10;
+    (param_1->m_CpuDrPix).DrawApiCalls = uVar2 + 1;
     if (uVar6 != 0) {
-      if ((*(ulonglong *)&this->field_0x28 & uVar6) != 0) {
-        uVar3 = SetPending_Predicated(this,uVar6,*(ulong *)&this->field_0x2940);
-        *(ulong64 *)&this->field_0x10 = uVar3;
+      if ((*(ulonglong *)&param_1->field_0x28 & uVar6) != 0) {
+        uVar3 = SetPending_Predicated(param_1,uVar6,*(ulong *)&param_1->field_0x2940);
+        *(ulong64 *)&param_1->field_0x10 = uVar3;
       }
-      if ((*(ulonglong *)&this->field_0x10 & 0xfff) != 0) {
+      if ((*(ulonglong *)&param_1->field_0x10 & 0xfff) != 0) {
         SetPending_RenderStates
-                  (this,*(ulonglong *)&this->field_0x10 << 0x34,0x2200,&this->field_0x2934);
-        *(ulonglong *)&this->field_0x10 = *(ulonglong *)&this->field_0x10 & 0xfffffffffffff000;
+                  (param_1,*(ulonglong *)&param_1->field_0x10 << 0x34,0x2200,&param_1->field_0x2934)
+        ;
+        *(ulonglong *)&param_1->field_0x10 = *(ulonglong *)&param_1->field_0x10 & 0xfffffffffffff000
+        ;
       }
-      if ((*(ulonglong *)&this->field_0x10 & 0x1f000) != 0) {
+      if ((*(ulonglong *)&param_1->field_0x10 & 0x1f000) != 0) {
         SetPending_RenderStates
-                  (this,(*(ulonglong *)&this->field_0x10 & 0x1f000) << 0x2f,0x2180,
-                   &this->field_0x2920);
-        *(ulonglong *)&this->field_0x10 = *(ulonglong *)&this->field_0x10 & 0xfffffffffffe0fff;
+                  (param_1,(*(ulonglong *)&param_1->field_0x10 & 0x1f000) << 0x2f,0x2180,
+                   &param_1->field_0x2920);
+        *(ulonglong *)&param_1->field_0x10 = *(ulonglong *)&param_1->field_0x10 & 0xfffffffffffe0fff
+        ;
       }
-      if ((*(ulonglong *)&this->field_0x10 & 0x3fffc0000000000) != 0) {
+      if ((*(ulonglong *)&param_1->field_0x10 & 0x3fffc0000000000) != 0) {
         SetPending_RenderStates
-                  (this,(*(ulonglong *)&this->field_0x10 & 0x3fffc0000000000) << 6,0x2000,
-                   &this->field_0x2880);
-        *(ulonglong *)&this->field_0x10 = *(ulonglong *)&this->field_0x10 & 0xfc0003ffffffffff;
+                  (param_1,(*(ulonglong *)&param_1->field_0x10 & 0x3fffc0000000000) << 6,0x2000,
+                   &param_1->field_0x2880);
+        *(ulonglong *)&param_1->field_0x10 = *(ulonglong *)&param_1->field_0x10 & 0xfc0003ffffffffff
+        ;
       }
-      if ((*(ulonglong *)&this->field_0x10 & 0x3ffffe00000) != 0) {
+      if ((*(ulonglong *)&param_1->field_0x10 & 0x3ffffe00000) != 0) {
         SetPending_RenderStates
-                  (this,(*(ulonglong *)&this->field_0x10 & 0x3ffffe00000) << 0x16,0x2100,
-                   &this->field_0x28cc);
-        *(ulonglong *)&this->field_0x10 = *(ulonglong *)&this->field_0x10 & 0xfffffc00001fffff;
+                  (param_1,(*(ulonglong *)&param_1->field_0x10 & 0x3ffffe00000) << 0x16,0x2100,
+                   &param_1->field_0x28cc);
+        *(ulonglong *)&param_1->field_0x10 = *(ulonglong *)&param_1->field_0x10 & 0xfffffc00001fffff
+        ;
       }
     }
-    uVar6 = *(ulonglong *)&this->field_0x18;
+    uVar6 = *(ulonglong *)&param_1->field_0x18;
     if ((uVar6 != 0) && ((uVar6 & 0x7ffffc00000000) != 0)) {
-      SetPending_RenderStates(this,(uVar6 & 0x7ffffc00000000) << 9,0x2280,&this->field_0x2964);
-      *(ulonglong *)&this->field_0x18 = *(ulonglong *)&this->field_0x18 & 0xff800003ffffffff;
+      SetPending_RenderStates(param_1,(uVar6 & 0x7ffffc00000000) << 9,0x2280,&param_1->field_0x2964)
+      ;
+      *(ulonglong *)&param_1->field_0x18 = *(ulonglong *)&param_1->field_0x18 & 0xff800003ffffffff;
     }
-    uVar6 = *(ulonglong *)&this->field_0x20;
+    uVar6 = *(ulonglong *)&param_1->field_0x20;
     if ((uVar6 != 0) && ((uVar6 & 0x3fffffffff) != 0)) {
-      SetPending_RenderStates(this,uVar6 << 0x1a,0x2300,&this->field_0x29b8);
-      *(ulonglong *)&this->field_0x20 = *(ulonglong *)&this->field_0x20 & 0xffffffc000000000;
+      SetPending_RenderStates(param_1,uVar6 << 0x1a,0x2300,&param_1->field_0x29b8);
+      *(ulonglong *)&param_1->field_0x20 = *(ulonglong *)&param_1->field_0x20 & 0xffffffc000000000;
     }
-    puVar4 = *(ulong **)&this->field_0x30;
-    if (*(ulong **)&this->field_0x38 < puVar4) {
-      puVar4 = CDevice::KickOff(this);
+    puVar4 = *(ulong **)&param_1->field_0x30;
+    if (*(ulong **)&param_1->field_0x38 < puVar4) {
+      puVar4 = CDevice::KickOff(param_1);
     }
-    if (this->m_TilingBracket) {
+    if (param_1->m_TilingBracket) {
       puVar4[1] = 0xc0006000;
       puVar4 = puVar4 + 2;
-      *puVar4 = this->m_PredicationMaskLo;
+      *puVar4 = param_1->m_PredicationMaskLo;
     }
     puVar4[1] = 0xc0003b00;
     puVar4[2] = 0x300;
@@ -727,9 +692,9 @@ void D3D::ClearF(CDevice *param_1,ulong param_2,_D3DRECT *param_3,__vector4 *par
     puVar4[5] = 0x1b;
     memcpy();
     puVar4 = puVar4 + 0x20;
-    *(ulong **)&this->field_0x30 = puVar4;
-    if (*(ulong **)&this->field_0x38 < puVar4) {
-      puVar4 = CDevice::KickOff(this);
+    *(ulong **)&param_1->field_0x30 = puVar4;
+    if (*(ulong **)&param_1->field_0x38 < puVar4) {
+      puVar4 = CDevice::KickOff(param_1);
     }
     puVar4[1] = 0xc00a2b00;
     puVar4[2] = 1;
@@ -739,9 +704,9 @@ void D3D::ClearF(CDevice *param_1,ulong param_2,_D3DRECT *param_3,__vector4 *par
     puVar4[0xe] = 0x10010001;
     puVar4 = puVar4 + 0xf;
     *puVar4 = 0;
-    *(ulong **)&this->field_0x30 = puVar4;
-    if (*(ulong **)&this->field_0x38 < puVar4) {
-      puVar4 = CDevice::KickOff(this);
+    *(ulong **)&param_1->field_0x30 = puVar4;
+    if (*(ulong **)&param_1->field_0x38 < puVar4) {
+      puVar4 = CDevice::KickOff(param_1);
     }
     puVar4[1] = 0x22100;
     puVar4[2] = 0xffff;
@@ -758,196 +723,180 @@ void D3D::ClearF(CDevice *param_1,ulong param_2,_D3DRECT *param_3,__vector4 *par
     puVar4[0xd] = 0x200d;
     puVar4 = puVar4 + 0xe;
     *puVar4 = 0;
-    uVar6 = *(ulonglong *)&this->field_0x10;
-    *(ulonglong *)&this->field_0x10 = uVar6 | 0x20000000000;
-    *(ulonglong *)&this->field_0x10 = uVar6 | 0x30000000000;
-    *(ulonglong *)&this->field_0x10 = uVar6 | 0x38000000000;
-    *(ulonglong *)&this->field_0x18 = *(ulonglong *)&this->field_0x18 | 0x800000000;
-    uVar6 = *(ulonglong *)&this->field_0x10;
-    *(ulonglong *)&this->field_0x10 = uVar6 | 0x80;
-    *(ulonglong *)&this->field_0x10 = uVar6 | 0xc0;
-    *(ulonglong *)&this->field_0x10 = uVar6 | 0xe0;
-    *(ulonglong *)&this->field_0x20 = *(ulonglong *)&this->field_0x20 | 0x80000;
-    uVar6 = *(ulonglong *)&this->field_0x10;
-    *(ulonglong *)&this->field_0x10 = uVar6 | 0x100000000000;
-    *(ulonglong *)&this->field_0x10 = uVar6 | 0x100000080000;
-    *(ulonglong *)&this->field_0x10 = uVar6 | 0x100000180000;
-    *(ulong **)&this->field_0x30 = puVar4;
+    uVar6 = *(ulonglong *)&param_1->field_0x10;
+    *(ulonglong *)&param_1->field_0x10 = uVar6 | 0x20000000000;
+    *(ulonglong *)&param_1->field_0x10 = uVar6 | 0x30000000000;
+    *(ulonglong *)&param_1->field_0x10 = uVar6 | 0x38000000000;
+    *(ulonglong *)&param_1->field_0x18 = *(ulonglong *)&param_1->field_0x18 | 0x800000000;
+    uVar6 = *(ulonglong *)&param_1->field_0x10;
+    *(ulonglong *)&param_1->field_0x10 = uVar6 | 0x80;
+    *(ulonglong *)&param_1->field_0x10 = uVar6 | 0xc0;
+    *(ulonglong *)&param_1->field_0x10 = uVar6 | 0xe0;
+    *(ulonglong *)&param_1->field_0x20 = *(ulonglong *)&param_1->field_0x20 | 0x80000;
+    uVar6 = *(ulonglong *)&param_1->field_0x10;
+    *(ulonglong *)&param_1->field_0x10 = uVar6 | 0x100000000000;
+    *(ulonglong *)&param_1->field_0x10 = uVar6 | 0x100000080000;
+    *(ulonglong *)&param_1->field_0x10 = uVar6 | 0x100000180000;
+    *(ulong **)&param_1->field_0x30 = puVar4;
     if ((uVar5 & 0xf) == 0) {
-      ClearSurface(this,(ulong)uVar5,0xffffffff,iVar10,iVar11,iVar12,iVar8,
-                   (__vector4 *)&p_Var7->_s_2,(float)dVar15,in_stack_ffffff08);
+      ClearSurface(param_1,(ulong)uVar5,0xffffffff,iVar9,iVar10,iVar11,iVar7,param_4,(float)dVar14,
+                   in_stack_ffffff08);
     }
     else {
-      if (*(ulong **)&this->field_0x38 < puVar4) {
-        puVar4 = CDevice::KickOff(this);
+      if (*(ulong **)&param_1->field_0x38 < puVar4) {
+        puVar4 = CDevice::KickOff(param_1);
       }
       puVar4[1] = 0x2104;
       puVar4[2] = 0xffff;
-      uVar14 = 0;
-      ppDVar13 = this->m_pRenderTarget;
+      uVar13 = 0;
+      ppDVar12 = param_1->m_pRenderTarget;
       puVar4[3] = 0x2202;
       puVar4[4] = 0;
       puVar4[5] = 0x2201;
       puVar4[6] = 0x10001;
-      *(ulong **)&this->field_0x30 = puVar4 + 6;
-      uVar6 = *(ulonglong *)&this->field_0x10;
-      *(ulonglong *)&this->field_0x10 = uVar6 | 0x2000000000;
-      *(ulonglong *)&this->field_0x10 = uVar6 | 0x2000000200;
-      *(ulonglong *)&this->field_0x10 = uVar6 | 0x2000000600;
+      *(ulong **)&param_1->field_0x30 = puVar4 + 6;
+      uVar6 = *(ulonglong *)&param_1->field_0x10;
+      *(ulonglong *)&param_1->field_0x10 = uVar6 | 0x2000000000;
+      *(ulonglong *)&param_1->field_0x10 = uVar6 | 0x2000000200;
+      *(ulonglong *)&param_1->field_0x10 = uVar6 | 0x2000000600;
       do {
-        if ((((uint)(1 << (uVar14 & 0x3f)) & uVar5) != 0) && (*ppDVar13 != (D3DSurface *)0x0)) {
-          ClearSurface(this,(ulong)uVar5,uVar14,iVar10,iVar11,iVar12,iVar8,
-                       (__vector4 *)&p_Var7->_s_2,(float)dVar15,in_stack_ffffff08);
+        if ((((uint)(1 << (uVar13 & 0x3f)) & uVar5) != 0) && (*ppDVar12 != (D3DSurface *)0x0)) {
+          ClearSurface(param_1,(ulong)uVar5,uVar13,iVar9,iVar10,iVar11,iVar7,param_4,(float)dVar14,
+                       in_stack_ffffff08);
           uVar5 = uVar5 & 0xffffff0f;
         }
-        uVar14 = uVar14 + 1;
-        ppDVar13 = ppDVar13 + 1;
-      } while (uVar14 < 4);
+        uVar13 = uVar13 + 1;
+        ppDVar12 = ppDVar12 + 1;
+      } while (uVar13 < 4);
     }
-    uVar14 = *(uint *)&this->field_0x28c8;
-    uVar1 = *(uint *)&this->field_0x28c4;
-    SetSurfaceClip(this,(int)(uVar1 << 0x11 | uVar1 >> 0xf) >> 0x11,
+    uVar13 = *(uint *)&param_1->field_0x28c8;
+    uVar1 = *(uint *)&param_1->field_0x28c4;
+    SetSurfaceClip(param_1,(int)(uVar1 << 0x11 | uVar1 >> 0xf) >> 0x11,
                    (int)(uVar1 << 1 | uVar1 >> 0x1f) >> 0x11,
-                   (int)(uVar14 << 0x11 | uVar14 >> 0xf) >> 0x11,
-                   (int)(uVar14 << 1 | uVar14 >> 0x1f) >> 0x11);
-    this->m_PendingHiZFlush = true;
-    *(ulonglong *)&this->field_0x10 = *(ulonglong *)&this->field_0x10 | 0x20000;
+                   (int)(uVar13 << 0x11 | uVar13 >> 0xf) >> 0x11,
+                   (int)(uVar13 << 1 | uVar13 >> 0x1f) >> 0x11);
+    param_1->m_PendingHiZFlush = true;
+    *(ulonglong *)&param_1->field_0x10 = *(ulonglong *)&param_1->field_0x10 | 0x20000;
   }
-LAB_82871c38:
-  __restgprlr_19();
   return;
 }
 
 
 // 82871DE8  D3DDevice_Clear  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/clear.cpp:993)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 void D3DDevice_Clear(D3DDevice *param_1,ulong param_2,_D3DRECT *param_3,ulong param_4,ulong param_5,
                     float param_6,ulong param_7,int param_8)
 
 {
-  ulonglong uVar1;
-  D3DDevice *pDVar2;
-  longlong lVar3;
+  longlong lVar1;
   longlong in_r10;
-  ulonglong uVar4;
-  ulonglong uVar5;
-  double extraout_f1;
-  double dVar6;
-  undefined1 auVar7 [16];
-  undefined4 uStack00000034;
+  longlong lVar2;
+  double dVar3;
+  undefined1 auVar4 [16];
+  ulong uStack00000034;
   TimingMarker local_60 [4];
   __vector4 local_50 [5];
   
-  lVar3 = (longlong)(int)param_5;
-  uVar4 = (ulonglong)(int)param_3;
-  uVar5 = (ulonglong)(int)param_2;
-  pDVar2 = (D3DDevice *)__savegprlr_26((double)param_6,param_1);
-  uStack00000034 = (undefined4)lVar3;
-  dVar6 = extraout_f1;
+  dVar3 = (double)param_6;
+  lVar1 = (longlong)(int)param_5;
+  lVar2 = (longlong)(int)param_2;
+  uStack00000034 = param_5;
   D3D::TimingMarker::TimingMarker
             (local_60,-(uint)(in_r10 != 0) & PIXOP_EDRAMClear,PIXGROUP_GraphicsTiming);
-  auVar7 = loadVectorLeftIndexed(ZEXT48(&stack0x00000000) + 0x34);
-  auVar7 = vectorShiftLeftDoubleByOctetImmediate(auVar7,auVar7,4);
-  auVar7 = vectorUnpackD3Dtype(auVar7,0);
+  auVar4 = loadVectorLeftIndexed(ZEXT48(&stack0x00000000) + 0x34);
+  auVar4 = vectorShiftLeftDoubleByOctetImmediate(auVar4,auVar4,4);
+  auVar4 = vectorUnpackD3Dtype(auVar4,0);
   vectorMultiplyAddFloatingPoint
             ((undefined1  [16])
              `struct___vector4___cdecl_XMLoadColor(_XMCOLOR_const*)'::__l2::UnpackScale.field0_0x0,
-             auVar7,(undefined1  [16])
+             auVar4,(undefined1  [16])
                     `struct___vector4___cdecl_XMLoadColor(_XMCOLOR_const*)'::__l2::UnpackOffset.
                     field0_0x0);
-  if ((uVar4 & 0xffffffff) == 0) {
-    D3DDevice_ClearF(pDVar2,param_4,(_D3DRECT *)0x0,local_50,(float)dVar6,(ulong)lVar3);
+  if (param_3 == (_D3DRECT *)0x0) {
+    D3DDevice_ClearF(param_1,param_4,(_D3DRECT *)0x0,local_50,(float)dVar3,(ulong)lVar1);
   }
-  else {
-    uVar1 = uVar5 & 0xffffffff;
-    while (uVar1 != 0) {
-                    /* WARNING: Read-only address (ram,0x821f41f0) is written */
-                    /* WARNING: Read-only address (ram,0x821f4200) is written */
-      D3DDevice_ClearF(pDVar2,param_4,(_D3DRECT *)uVar4,local_50,(float)dVar6,(ulong)lVar3);
-      uVar4 = uVar4 + 0x10;
-      uVar5 = uVar5 - 1;
-      uVar1 = uVar5;
-    }
+  else if (param_2 != 0) {
+    do {
+      D3DDevice_ClearF(param_1,param_4,param_3,local_50,(float)dVar3,(ulong)lVar1);
+      lVar2 = lVar2 + -1;
+      param_3 = param_3 + 1;
+    } while (lVar2 != 0);
   }
   PIXAddPixOpWithData(local_60[0].m_EventID | 0x400000,0,(void *)0x0);
-  __restgprlr_26();
   return;
 }
 
 
 // 82871C48  D3DDevice_ClearF  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/clear.cpp:1030)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 
 void D3DDevice_ClearF(D3DDevice *param_1,ulong param_2,_D3DRECT *param_3,__vector4 *param_4,
                      float param_5,ulong param_6)
 
 {
-  D3DSurface *pDVar1;
-  uint uVar2;
-  bool bVar3;
-  CDevice *pCVar4;
-  ulonglong uVar5;
-  ulonglong uVar6;
-  _D3DRECT *p_Var7;
-  D3DSurface *pDVar8;
-  double extraout_f1;
-  double dVar9;
+  int iVar1;
+  bool bVar2;
+  int iVar3;
+  double dVar4;
   GPUTimingMarkerFull local_60 [2];
   _D3DRECT local_50 [5];
   
-  uVar6 = (ulonglong)(int)param_3;
-  uVar5 = (ulonglong)(int)param_2;
-  pCVar4 = (CDevice *)__savegprlr_27((double)param_5,param_1);
-  p_Var7 = (_D3DRECT *)uVar6;
+  dVar4 = (double)param_5;
   local_60[0].m_EventID = PIXOP_ClearF;
-  dVar9 = extraout_f1;
-  local_60[0].m_pDevice = pCVar4;
-  if (pCVar4->m_TimingCaptureActive != 0) {
+  local_60[0].m_pDevice = (CDevice *)param_1;
+  if ((param_1[1].m_MiscPacket.SampleCountAddress & 0x80000000) != 0) {
     PIXAddPixOpWithData(0x900021,0,(void *)0x0);
   }
-  if ((uVar6 & 0xffffffff) == 0) {
-    pDVar1 = pCVar4->m_pRenderTarget[0];
-    pDVar8 = pDVar1;
-    if (pDVar1 == (D3DSurface *)0x0) {
-      pDVar8 = pCVar4->m_pDepthStencilSurface;
+  if (param_3 == (_D3DRECT *)0x0) {
+    iVar1 = *(int *)((int)&param_1[1].m_Constants.field0_0x0 + 0x210);
+    iVar3 = iVar1;
+    if (iVar1 == 0) {
+      iVar3 = *(int *)((int)&param_1[1].m_Constants.field0_0x0 + 0x220);
     }
-    uVar2 = *(uint *)((int)&pDVar8->field6_0x18 + 0xc);
     param_6 = 0;
     local_50[0].x1 = 0;
     local_50[0].y1 = 0;
-    local_50[0].x2 = (uVar2 >> 0x12) + 1;
-    local_50[0].y2 = (uVar2 >> 3 & 0x7fff) + 1;
-    if (pCVar4->m_TilingSurfaceOverride) {
-      bVar3 = true;
-    }
-    else if ((((pCVar4->m_TilingBracket) &&
-              ((pCVar4->m_pTileSurfaces[0] == pDVar1 || (pDVar1 == (D3DSurface *)0x0)))) &&
-             ((pCVar4->m_pTileSurfaces[1] == pCVar4->m_pRenderTarget[1] ||
-              (pCVar4->m_pRenderTarget[1] == (D3DSurface *)0x0)))) &&
-            ((((pCVar4->m_pTileSurfaces[2] == pCVar4->m_pRenderTarget[2] ||
-               (pCVar4->m_pRenderTarget[2] == (D3DSurface *)0x0)) &&
-              ((pCVar4->m_pTileSurfaces[3] == pCVar4->m_pRenderTarget[3] ||
-               (pCVar4->m_pRenderTarget[3] == (D3DSurface *)0x0)))) &&
-             ((pCVar4->m_pTileDepthSurface == pCVar4->m_pDepthStencilSurface ||
-              (pCVar4->m_pDepthStencilSurface == (D3DSurface *)0x0)))))) {
-      bVar3 = true;
+    local_50[0].x2 = (*(uint *)(iVar3 + 0x24) >> 0x12) + 1;
+    local_50[0].y2 = (*(uint *)(iVar3 + 0x24) >> 3 & 0x7fff) + 1;
+    if ((param_1[1].m_ReferenceCount & 0x10000000) == 0) {
+      if (((((param_1[1].m_ReferenceCount & 0x20000000) == 0) ||
+           ((*(int *)((int)&param_1[1].m_Constants.field1_0x300 + 0x30) != iVar1 && (iVar1 != 0))))
+          || ((iVar1 = *(int *)((int)&param_1[1].m_Constants.field0_0x0 + 0x214),
+              *(int *)((int)&param_1[1].m_Constants.field1_0x300 + 0x34) != iVar1 && (iVar1 != 0))))
+         || ((((iVar1 = *(int *)((int)&param_1[1].m_Constants.field0_0x0 + 0x218),
+               *(int *)((int)&param_1[1].m_Constants.field1_0x300 + 0x38) != iVar1 && (iVar1 != 0))
+              || ((iVar1 = *(int *)((int)&param_1[1].m_Constants.field0_0x0 + 0x21c),
+                  *(int *)((int)&param_1[1].m_Constants.field1_0x300 + 0x3c) != iVar1 &&
+                  (iVar1 != 0)))) ||
+             ((iVar1 = *(int *)((int)&param_1[1].m_Constants.field0_0x0 + 0x220),
+              *(int *)((int)&param_1[1].m_Constants.field1_0x300 + 0x40) != iVar1 && (iVar1 != 0))))
+            )) {
+        bVar2 = false;
+      }
+      else {
+        bVar2 = true;
+      }
     }
     else {
-      bVar3 = false;
+      bVar2 = true;
     }
-    if (bVar3) {
-      local_50[0].x2 = pCVar4->m_TilingWidth;
-      local_50[0].y2 = pCVar4->m_TilingHeight;
+    if (bVar2) {
+      local_50[0].x2 = *(int *)((int)&param_1[1].m_Constants.field1_0x300 + 500);
+      local_50[0].y2 = *(int *)((int)&param_1[1].m_Constants.field1_0x300 + 0x1f8);
     }
-    p_Var7 = local_50;
+    param_3 = local_50;
   }
-  if ((uVar5 & 0x10) == 0) {
-    dVar9 = 0.0;
+  if ((param_2 & 0x10) == 0) {
+    dVar4 = 0.0;
   }
-  D3D::ClearF(pCVar4,(ulong)uVar5,p_Var7,param_4,(float)dVar9,param_6);
+  D3D::ClearF((CDevice *)param_1,param_2,param_3,param_4,(float)dVar4,param_6);
   D3D::GPUTimingMarkerFull::~GPUTimingMarkerFull(local_60);
-  __restgprlr_27();
   return;
 }
 

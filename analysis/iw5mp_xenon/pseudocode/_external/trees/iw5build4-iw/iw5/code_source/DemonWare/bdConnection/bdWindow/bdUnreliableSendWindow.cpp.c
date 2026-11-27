@@ -46,24 +46,24 @@ void __thiscall bdUnreliableSendWindow::~bdUnreliableSendWindow(bdUnreliableSend
 
 // 82937310  add  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdconnection/bdwindow/bdunreliablesendwindow.cpp:24)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void __thiscall
 bdUnreliableSendWindow::add(bdUnreliableSendWindow *this,bdReference<bdDataChunk> param_1)
 
 {
-  int iVar1;
-  bdDataChunk *pbStack0000001c;
+  bdReference<bdDataChunk> bStack0000001c;
   
-  iVar1 = __savegprlr_29(this);
-  pbStack0000001c = param_1.m_ptr;
+  bStack0000001c.m_ptr = param_1.m_ptr;
   if ((param_1.m_ptr)->_padding_ == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdConnection\\bdWindow\\bdUnreliableSendWindow.cpp"
                     ,0x19,0,"%s\n\t%s");
   }
   bdLinkedList<bdReference<bdDataChunk>_>::insertAfter
-            ((bdLinkedList<bdReference<bdDataChunk>_> *)(iVar1 + 8),*(void **)(iVar1 + 0xc),
+            (&(this->m_sendQueue).m_list,(this->m_sendQueue).m_list.m_tail,
              (bdReference<bdDataChunk> *)param_1.m_ptr);
   bdReference<bdDataChunk>::~bdReference<bdDataChunk>((bdReference<bdDataChunk> *)param_1.m_ptr);
-  __restgprlr_29();
   return;
 }
 
@@ -87,90 +87,87 @@ bdQueue<bdReference<bdDataChunk>_>::peek(bdQueue<bdReference<bdDataChunk>_> *thi
 
 // 829370E0  getDataToSend  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdconnection/bdwindow/bdunreliablesendwindow.cpp:30)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
+
 void __thiscall
 bdUnreliableSendWindow::getDataToSend(bdUnreliableSendWindow *this,bdPacket *param_1)
 
 {
   uint uVar1;
   bdReference<bdDataChunk> this_00;
-  int iVar2;
-  bdReference<bdDataChunk> *pbVar3;
-  bool bVar4;
-  longlong lVar5;
-  uint *puVar6;
-  ulonglong uVar7;
+  bdReference<bdDataChunk> *pbVar2;
+  bool bVar3;
+  longlong lVar4;
+  uint *puVar5;
+  ulonglong uVar6;
   char in_RESERVE;
   byte in_cr0;
   bdReference<bdDataChunk> local_60;
   bdDataChunk *local_5c [23];
   
-  iVar2 = __savegprlr_23(this);
   local_60.m_ptr = (bdDataChunk *)0x0;
-  if (*(int *)(iVar2 + 0x10) != 0) {
-    bVar4 = true;
+  if ((this->m_sendQueue).m_list.m_size != 0) {
+    bVar3 = true;
     do {
-      if (bVar4 == false) break;
-      pbVar3 = bdQueue<bdReference<bdDataChunk>_>::peek
-                         ((bdQueue<bdReference<bdDataChunk>_> *)(iVar2 + 8));
-      bdReference<bdDataChunk>::operator=(&local_60,pbVar3);
+      if (bVar3 == false) break;
+      pbVar2 = bdQueue<bdReference<bdDataChunk>_>::peek(&this->m_sendQueue);
+      bdReference<bdDataChunk>::operator=(&local_60,pbVar2);
       this_00.m_ptr = local_60.m_ptr;
-      uVar7 = ZEXT48(local_60.m_ptr);
-      if (uVar7 == 0) {
+      uVar6 = ZEXT48(local_60.m_ptr);
+      if (uVar6 == 0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdConnection\\bdWindow\\bdUnreliableSendWindow.cpp"
                         ,0x25,0,"%s\n\t%s");
       }
-      bdDataChunk::setSequenceNumber(this_00.m_ptr,*(ushort *)(iVar2 + 4));
+      bdDataChunk::setSequenceNumber(this_00.m_ptr,this->m_seqNumber);
       local_5c[0] = this_00.m_ptr;
       if (this_00.m_ptr != (bdDataChunk *)0x0) {
-        lVar5 = uVar7 + 4;
+        lVar4 = uVar6 + 4;
         do {
-          puVar6 = (uint *)lVar5;
+          puVar5 = (uint *)lVar4;
           if (in_RESERVE != '\0') {
-            uVar1 = storeWordConditionalIndexed((ulonglong)*puVar6 + 1,0,lVar5);
-            *puVar6 = uVar1;
+            uVar1 = storeWordConditionalIndexed((ulonglong)*puVar5 + 1,0,lVar4);
+            *puVar5 = uVar1;
             in_cr0 = 2;
           }
         } while (!(bool)(in_cr0 >> 1 & 1));
       }
-      bVar4 = bdPacket::addChunk(param_1,(bdChunk *)local_5c);
-      in_cr0 = !bVar4 << 1;
-      if (bVar4) {
-        *(short *)(iVar2 + 4) = *(short *)(iVar2 + 4) + 1;
-        bdQueue<bdReference<bdDataChunk>_>::dequeue
-                  ((bdQueue<bdReference<bdDataChunk>_> *)(iVar2 + 8));
+      bVar3 = bdPacket::addChunk(param_1,(bdChunk *)local_5c);
+      in_cr0 = !bVar3 << 1;
+      if (bVar3) {
+        this->m_seqNumber = this->m_seqNumber + 1;
+        bdQueue<bdReference<bdDataChunk>_>::dequeue(&this->m_sendQueue);
       }
-    } while (*(int *)(iVar2 + 0x10) != 0);
+    } while ((this->m_sendQueue).m_list.m_size != 0);
   }
   bdReference<bdDataChunk>::~bdReference<bdDataChunk>(&local_60);
-  __restgprlr_23();
   return;
 }
 
 
 // 82936ED8  clear  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdcontainers/bdlinkedlist.inl:39)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void __thiscall
 bdLinkedList<bdReference<bdDataChunk>_>::clear(bdLinkedList<bdReference<bdDataChunk>_> *this)
 
 {
-  bdReference<bdDataChunk> *this_00;
-  bdDataChunk *pbVar1;
-  int *piVar2;
+  Node *this_00;
+  Node *pNVar1;
   
-  piVar2 = (int *)__savegprlr_29(this);
-  while( true ) {
-    if (*piVar2 == 0) break;
-    this_00 = (bdReference<bdDataChunk> *)*piVar2;
-    pbVar1 = this_00[1].m_ptr;
-    if (this_00 != (bdReference<bdDataChunk> *)0x0) {
-      bdReference<bdDataChunk>::~bdReference<bdDataChunk>(this_00);
+  while (this->m_head != (Node *)0x0) {
+    this_00 = this->m_head;
+    pNVar1 = this_00->m_next;
+    if (this_00 != (Node *)0x0) {
+      bdReference<bdDataChunk>::~bdReference<bdDataChunk>(&this_00->m_data);
       bdMemory::deallocate(this_00);
     }
-    *piVar2 = (int)pbVar1;
+    this->m_head = pNVar1;
   }
-  piVar2[1] = 0;
-  piVar2[2] = 0;
-  __restgprlr_29();
+  this->m_tail = (Node *)0x0;
+  this->m_size = 0;
   return;
 }
 
@@ -241,6 +238,9 @@ bdLinkedList<bdReference<bdDataChunk>_>::removeAt
 
 // 82936F30  insertAfter  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdcontainers/bdlinkedlist.inl:346)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void __thiscall
 bdLinkedList<bdReference<bdDataChunk>_>::insertAfter
           (bdLinkedList<bdReference<bdDataChunk>_> *this,void *param_1,
@@ -248,68 +248,62 @@ bdLinkedList<bdReference<bdDataChunk>_>::insertAfter
 
 {
   bdDataChunk *pbVar1;
-  uint uVar2;
+  Node *pNVar2;
   uint uVar3;
   bool bVar4;
-  undefined4 *puVar5;
-  uint *puVar6;
-  ulonglong uVar7;
-  longlong lVar8;
-  uint *puVar9;
+  Node *pNVar5;
+  longlong lVar6;
+  uint *puVar7;
   char in_RESERVE;
   
-  uVar7 = (ulonglong)(int)param_1;
-  puVar5 = (undefined4 *)__savegprlr_29(this);
-  puVar6 = bdMemory::allocate(0xc);
-  if (puVar6 == (uint *)0x0) {
-    puVar6 = (uint *)0x0;
+  pNVar5 = bdMemory::allocate(0xc);
+  if (pNVar5 == (Node *)0x0) {
+    pNVar5 = (Node *)0x0;
   }
   else {
     pbVar1 = param_2->m_ptr;
-    *puVar6 = (uint)pbVar1;
+    (pNVar5->m_data).m_ptr = pbVar1;
     if (ZEXT48(pbVar1) != 0) {
-      lVar8 = ZEXT48(pbVar1) + 4;
+      lVar6 = ZEXT48(pbVar1) + 4;
       bVar4 = false;
       do {
-        puVar9 = (uint *)lVar8;
+        puVar7 = (uint *)lVar6;
         if (in_RESERVE != '\0') {
-          uVar2 = storeWordConditionalIndexed((ulonglong)*puVar9 + 1,0,lVar8);
-          *puVar9 = uVar2;
+          uVar3 = storeWordConditionalIndexed((ulonglong)*puVar7 + 1,0,lVar6);
+          *puVar7 = uVar3;
           bVar4 = true;
         }
       } while (!bVar4);
     }
   }
-  if ((uVar7 & 0xffffffff) == 0) {
-    puVar6[1] = 0;
-    puVar6[2] = puVar5[1];
-    if (puVar5[1] == 0) {
-      *puVar5 = puVar6;
+  if (param_1 == (void *)0x0) {
+    pNVar5->m_next = (Node *)0x0;
+    pNVar5->m_prev = this->m_tail;
+    if (this->m_tail == (Node *)0x0) {
+      this->m_head = pNVar5;
     }
     else {
-      *(uint **)(puVar5[1] + 4) = puVar6;
+      this->m_tail->m_next = pNVar5;
     }
-    puVar5[1] = puVar6;
+    this->m_tail = pNVar5;
   }
   else {
-    uVar3 = (uint)uVar7;
-    uVar2 = *(uint *)(uVar3 + 4);
-    puVar6[2] = uVar3;
-    puVar6[1] = uVar2;
-    if (*(int *)(uVar3 + 4) == 0) {
-      if ((uVar7 & 0xffffffff) != (ulonglong)(uint)puVar5[1]) {
+    pNVar2 = *(Node **)((int)param_1 + 4);
+    pNVar5->m_prev = param_1;
+    pNVar5->m_next = pNVar2;
+    if (*(int *)((int)param_1 + 4) == 0) {
+      if (param_1 != this->m_tail) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdCore/bdContainers/bdLinkedList.inl"
                         ,0x16b,0,"%s\n\t%s");
       }
-      puVar5[1] = puVar6;
+      this->m_tail = pNVar5;
     }
     else {
-      *(uint **)(*(int *)(uVar3 + 4) + 8) = puVar6;
+      *(Node **)(*(int *)((int)param_1 + 4) + 8) = pNVar5;
     }
-    *(uint **)(uVar3 + 4) = puVar6;
+    *(Node **)((int)param_1 + 4) = pNVar5;
   }
-  puVar5[2] = puVar5[2] + 1;
-  __restgprlr_29();
+  this->m_size = this->m_size + 1;
   return;
 }
 

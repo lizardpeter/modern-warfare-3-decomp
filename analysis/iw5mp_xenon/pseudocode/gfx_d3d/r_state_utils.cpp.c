@@ -16,79 +16,76 @@ void R_MatrixIdentity44(float (*param_1) [4])
 
 // 82781B68  R_InitCmdBufSourceState  (gfx_d3d/r_state_utils.cpp:25)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 
 void R_InitCmdBufSourceState(GfxCmdBufSourceState *param_1,GfxCmdBufInput *param_2,int param_3)
 
 {
-  int iVar1;
-  ulonglong uVar2;
-  int *piVar3;
-  uint uVar4;
-  undefined2 *puVar5;
-  undefined4 *puVar6;
-  longlong lVar7;
-  double dVar8;
+  int *piVar1;
+  uint uVar2;
+  ushort *puVar3;
+  float *pfVar4;
+  longlong lVar5;
+  double dVar6;
   
-  uVar2 = (ulonglong)(int)param_2;
-  iVar1 = __savegprlr_27(param_1);
-  if (iVar1 == 0) {
+  if (param_1 == (GfxCmdBufSourceState *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_state_utils.cpp",
                     0x1c,0,"%s");
   }
-  if ((uVar2 & 0xffffffff) == 0) {
+  if (param_2 == (GfxCmdBufInput *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_state_utils.cpp",
                     0x1d,0,"%s");
   }
   memset();
   memcpy();
-  uVar4 = 0;
-  lVar7 = 0x52;
-  piVar3 = (int *)&s_codeConstUpdateFreq;
-  puVar5 = (undefined2 *)(iVar1 + 0x1590);
-  puVar6 = (undefined4 *)(iVar1 + 0xe08);
+  uVar2 = 0;
+  lVar5 = 0x52;
+  piVar1 = (int *)&s_codeConstUpdateFreq;
+  puVar3 = param_1->constVersions;
+  pfVar4 = (param_1->input).consts[0] + 2;
   do {
-    if ((((uVar2 & 0xffffffff) == ZEXT48(&gfxCmdBufInput)) || (*piVar3 != 2)) || (uVar4 < 0x1b)) {
-      puVar6[-2] = 0x7f7fffff;
-      puVar6[-1] = 0x7f7fffff;
-      *puVar6 = 0x7f7fffff;
-      puVar6[1] = 0;
+    if (((param_2 == &gfxCmdBufInput) || (*piVar1 != 2)) || (uVar2 < 0x1b)) {
+      (*(float (*) [4])(pfVar4 + -2))[0] = 3.4028235e+38;
+      pfVar4[-1] = 3.4028235e+38;
+      *pfVar4 = 3.4028235e+38;
+      pfVar4[1] = 0.0;
     }
     else {
-      *puVar5 = 1;
+      *puVar3 = 1;
     }
-    uVar4 = uVar4 + 1;
-    puVar5 = puVar5 + 1;
-    puVar6 = puVar6 + 4;
-    piVar3 = piVar3 + 1;
-    lVar7 = lVar7 + -1;
-  } while (lVar7 != 0);
-  *(undefined4 *)(iVar1 + 0xe94) = 0;
-  *(undefined4 *)(iVar1 + 0xe98) = 0;
-  *(undefined4 *)(iVar1 + 0xe9c) = 0;
-  dVar8 = 1.0;
-  *(undefined4 *)(iVar1 + 0xe90) = 0x3f800000;
-  *(short *)(iVar1 + 0x15a2) = *(short *)(iVar1 + 0x15a2) + 1;
-  *(undefined4 *)(iVar1 + 0xea0) = 0;
-  *(undefined4 *)(iVar1 + 0xea4) = 0x3f800000;
-  *(undefined4 *)(iVar1 + 0xea8) = 0;
-  *(undefined4 *)(iVar1 + 0xeac) = 0;
-  *(short *)(iVar1 + 0x15a4) = *(short *)(iVar1 + 0x15a4) + 1;
-  *(undefined4 *)(iVar1 + 0xeb0) = 0;
-  *(undefined4 *)(iVar1 + 0xeb4) = 0;
-  *(undefined4 *)(iVar1 + 0xeb8) = 0x3f800000;
-  *(undefined4 *)(iVar1 + 0xebc) = 0;
-  *(short *)(iVar1 + 0x15a6) = *(short *)(iVar1 + 0x15a6) + 1;
-  if (*(int *)(iVar1 + 0x16c0) != 0) {
+    uVar2 = uVar2 + 1;
+    puVar3 = puVar3 + 1;
+    pfVar4 = pfVar4 + 4;
+    piVar1 = piVar1 + 1;
+    lVar5 = lVar5 + -1;
+  } while (lVar5 != 0);
+  (param_1->input).consts[9][1] = 0.0;
+  (param_1->input).consts[9][2] = 0.0;
+  (param_1->input).consts[9][3] = 0.0;
+  dVar6 = 1.0;
+  (param_1->input).consts[9][0] = 1.0;
+  param_1->constVersions[9] = param_1->constVersions[9] + 1;
+  (param_1->input).consts[10][0] = 0.0;
+  (param_1->input).consts[10][1] = 1.0;
+  (param_1->input).consts[10][2] = 0.0;
+  (param_1->input).consts[10][3] = 0.0;
+  param_1->constVersions[10] = param_1->constVersions[10] + 1;
+  (param_1->input).consts[0xb][0] = 0.0;
+  (param_1->input).consts[0xb][1] = 0.0;
+  (param_1->input).consts[0xb][2] = 1.0;
+  (param_1->input).consts[0xb][3] = 0.0;
+  param_1->constVersions[0xb] = param_1->constVersions[0xb] + 1;
+  if (param_1->sceneLightForShadowLookupMatrix != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_state_utils.cpp",
                     0x3e,1,"%s");
   }
-  *(float *)(iVar1 + 0x16e4) = (float)dVar8;
-  *(float *)(iVar1 + 0x16f4) = (float)dVar8;
-  *(int *)(iVar1 + 0x16f8) = param_3;
-  *(undefined4 *)(iVar1 + 0x174c) = 0x27;
-  __restgprlr_27();
+  (param_1->skinnedPlacement).base.quat[3] = (float)dVar6;
+  (param_1->skinnedPlacement).scale = (float)dVar6;
+  param_1->cameraView = param_3;
+  param_1->drawListId = 0x27;
   return;
 }
 
@@ -106,72 +103,71 @@ void R_SetDefaultStateBits(uint *param_1)
 
 // 82781D38  R_InitCmdBufState  (gfx_d3d/r_state_utils.cpp:102)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 
 void R_InitCmdBufState(GfxCmdBufState *param_1)
 
 {
   D3DDevice *pDVar1;
-  GfxCmdBufState *pGVar2;
-  uint uVar3;
+  uint uVar2;
+  uint *puVar3;
   longlong lVar4;
-  uint *puVar5;
-  uint uVar6;
+  uint uVar5;
   
-  pGVar2 = (GfxCmdBufState *)__savegprlr_23(param_1);
-  if (pGVar2 == (GfxCmdBufState *)0x0) {
+  if (param_1 == (GfxCmdBufState *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_state_utils.cpp",
                     0x6e,0,"%s");
   }
-  pDVar1 = (pGVar2->prim).device;
+  pDVar1 = (param_1->prim).device;
   memset();
-  (pGVar2->prim).device = pDVar1;
+  (param_1->prim).device = pDVar1;
   lVar4 = 4;
-  uVar6 = 0x10;
-  pGVar2->depthRangeNear = 1.0;
-  pGVar2->depthRangeFar = 0.0;
-  (pGVar2->prim).primType = 4;
-  pGVar2->renderTargetId = R_RENDERTARGET_NONE;
-  pGVar2->depthRangeType = GFX_DEPTH_RANGE_FULL;
-  pGVar2->activeStateBits[0] = 0x18004800;
-  pGVar2->activeStateBits[1] = 2;
-  pGVar2->refStateBits[0] = 0x18004800;
-  pGVar2->refStateBits[1] = 2;
-  R_SetCompleteState(pDVar1,pGVar2->activeStateBits);
-  R_SetDefaultAlphaTestFunction(pGVar2);
-  uVar3 = R_DecodeSamplerState('\x01');
-  puVar5 = pGVar2->samplerState + 0xf;
+  uVar5 = 0x10;
+  param_1->depthRangeNear = 1.0;
+  param_1->depthRangeFar = 0.0;
+  (param_1->prim).primType = 4;
+  param_1->renderTargetId = R_RENDERTARGET_NONE;
+  param_1->depthRangeType = GFX_DEPTH_RANGE_FULL;
+  param_1->activeStateBits[0] = 0x18004800;
+  param_1->activeStateBits[1] = 2;
+  param_1->refStateBits[0] = 0x18004800;
+  param_1->refStateBits[1] = 2;
+  R_SetCompleteState(pDVar1,param_1->activeStateBits);
+  R_SetDefaultAlphaTestFunction(param_1);
+  uVar2 = R_DecodeSamplerState('\x01');
+  puVar3 = param_1->samplerState + 0xf;
   do {
-    R_HW_ForceSamplerState((pGVar2->prim).device,uVar6,uVar3);
-    pGVar2->refSamplerState[uVar6] = '\x01';
+    R_HW_ForceSamplerState((param_1->prim).device,uVar5,uVar2);
+    param_1->refSamplerState[uVar5] = '\x01';
     lVar4 = lVar4 + -1;
-    puVar5 = puVar5 + 1;
-    *puVar5 = uVar3;
-    uVar6 = uVar6 + 1;
+    puVar3 = puVar3 + 1;
+    *puVar3 = uVar2;
+    uVar5 = uVar5 + 1;
   } while (lVar4 != 0);
-  uVar6 = 0;
-  puVar5 = (uint *)(pGVar2->refSamplerStatePadding + 8);
+  uVar5 = 0;
+  puVar3 = (uint *)(param_1->refSamplerStatePadding + 8);
   do {
-    R_HW_ForceSamplerState((pGVar2->prim).device,uVar6,uVar3);
-    pGVar2->refSamplerState[uVar6] = '\x01';
-    uVar6 = uVar6 + 1;
-    puVar5 = puVar5 + 1;
-    *puVar5 = uVar3;
-  } while (uVar6 < 0x10);
-  uVar3 = pGVar2->scissorX;
-  (pGVar2->prim).vertexDecl = (D3DVertexDeclaration *)0xffffffff;
-  pGVar2->pixelShader = (MaterialPixelShader *)0xffffffff;
-  if (uVar3 != 0) {
+    R_HW_ForceSamplerState((param_1->prim).device,uVar5,uVar2);
+    param_1->refSamplerState[uVar5] = '\x01';
+    uVar5 = uVar5 + 1;
+    puVar3 = puVar3 + 1;
+    *puVar3 = uVar2;
+  } while (uVar5 < 0x10);
+  uVar2 = param_1->scissorX;
+  (param_1->prim).vertexDecl = (D3DVertexDeclaration *)0xffffffff;
+  param_1->pixelShader = (MaterialPixelShader *)0xffffffff;
+  if (uVar2 != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_state_utils.cpp",
                     0xa7,0,"%s");
   }
-  if (pGVar2->scissorY != 0) {
+  if (param_1->scissorY != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_state_utils.cpp",
                     0xa8,0,"%s");
   }
-  pGVar2->scissorW = 0x1000;
-  pGVar2->scissorH = 0x1000;
-  __restgprlr_23();
+  param_1->scissorW = 0x1000;
+  param_1->scissorH = 0x1000;
   return;
 }
 
@@ -263,26 +259,29 @@ GfxMatrix * R_GetActiveWorldMatrixAlternate(GfxCmdBufSourceState *param_1,uint p
 
 // 82782040  R_CmdBufSet2D  (gfx_d3d/r_state_utils.cpp:220)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 
 void R_CmdBufSet2D(GfxCmdBufSourceState *param_1,GfxViewport *param_2)
 
 {
-  int iVar1;
-  undefined8 *puVar2;
-  undefined8 *puVar3;
-  ulong *puVar4;
-  longlong lVar5;
+  ushort uVar1;
+  ushort uVar2;
+  float *pfVar3;
+  undefined8 *puVar4;
+  ulong *puVar5;
+  longlong lVar6;
   undefined8 uStack_b8;
-  float local_b0;
+  float local_b0 [5];
   float local_9c;
   undefined4 local_80;
   undefined4 local_7c;
   undefined4 local_78;
   undefined4 local_74;
+  undefined8 local_70 [14];
   
-  iVar1 = __savegprlr_28(param_1);
   if (param_2->width < 1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_state_utils.cpp",
                     0xe4,0,"%s\n\t(viewport->width) = %i");
@@ -291,76 +290,78 @@ void R_CmdBufSet2D(GfxCmdBufSourceState *param_1,GfxViewport *param_2)
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_state_utils.cpp",
                     0xe5,0,"%s\n\t(viewport->height) = %i");
   }
-  puVar3 = &uStack_b8;
-  lVar5 = 8;
+  puVar4 = &uStack_b8;
+  lVar6 = 8;
   do {
-    puVar3 = puVar3 + 1;
-    *puVar3 = 0;
-    lVar5 = lVar5 + -1;
-  } while (lVar5 != 0);
+    puVar4 = puVar4 + 1;
+    *puVar4 = 0;
+    lVar6 = lVar6 + -1;
+  } while (lVar6 != 0);
   local_7c = 0x3f800000;
   local_74 = 0x3f800000;
-  puVar3 = (undefined8 *)&local_78;
-  puVar4 = s_stencilFuncTable + 7;
+  puVar4 = (undefined8 *)&local_78;
+  puVar5 = s_stencilFuncTable + 7;
   local_80 = 0xbf800000;
   local_78 = 0;
-  lVar5 = 8;
+  lVar6 = 8;
   local_9c = (1.0 / (float)(longlong)param_2->height) * -2.0;
-  local_b0 = (1.0 / (float)(longlong)param_2->width) * 2.0;
+  local_b0[0] = (1.0 / (float)(longlong)param_2->width) * 2.0;
   do {
-    puVar4 = puVar4 + 2;
-    puVar3 = puVar3 + 1;
-    *puVar3 = *(undefined8 *)puVar4;
-    lVar5 = lVar5 + -1;
-  } while (lVar5 != 0);
-  if (iVar1 == -0x13f0) {
+    puVar5 = puVar5 + 2;
+    puVar4 = puVar4 + 1;
+    *puVar4 = *(undefined8 *)puVar5;
+    lVar6 = lVar6 + -1;
+  } while (lVar6 != 0);
+  if (param_1 == (GfxCmdBufSourceState *)0xffffec10) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_state_utils.cpp",
                     0x13,0,"%s");
   }
   memcpy();
-  puVar3 = &uStack_b8;
-  puVar2 = (undefined8 *)(iVar1 + 0x1428);
-  lVar5 = 8;
+  puVar4 = &uStack_b8;
+  pfVar3 = (param_1->viewParms).viewMatrix.m[3] + 2;
+  lVar6 = 8;
   do {
-    puVar3 = puVar3 + 1;
-    puVar2 = puVar2 + 1;
-    *puVar2 = *puVar3;
-    lVar5 = lVar5 + -1;
-  } while (lVar5 != 0);
-  puVar3 = &uStack_b8;
-  puVar2 = (undefined8 *)(iVar1 + 0x1468);
-  lVar5 = 8;
+    puVar4 = puVar4 + 1;
+    pfVar3 = pfVar3 + 2;
+    *(undefined8 *)pfVar3 = *puVar4;
+    lVar6 = lVar6 + -1;
+  } while (lVar6 != 0);
+  puVar4 = &uStack_b8;
+  pfVar3 = (param_1->viewParms).projectionMatrix.m[3] + 2;
+  lVar6 = 8;
   do {
-    puVar3 = puVar3 + 1;
-    puVar2 = puVar2 + 1;
-    *puVar2 = *puVar3;
-    lVar5 = lVar5 + -1;
-  } while (lVar5 != 0);
-  puVar3 = (undefined8 *)(iVar1 + 0x14a8);
-  lVar5 = 8;
+    puVar4 = puVar4 + 1;
+    pfVar3 = pfVar3 + 2;
+    *(undefined8 *)pfVar3 = *puVar4;
+    lVar6 = lVar6 + -1;
+  } while (lVar6 != 0);
+  pfVar3 = (param_1->viewParms).viewProjectionMatrix.m[3] + 2;
+  lVar6 = 8;
   do {
-    puVar3 = puVar3 + 1;
-    *puVar3 = 0;
-    lVar5 = lVar5 + -1;
-  } while (lVar5 != 0);
-  *(short *)(iVar1 + 0x16a4) = *(short *)(iVar1 + 0x16a4) + 1;
-  *(short *)(iVar1 + 0x16a6) = *(short *)(iVar1 + 0x16a6) + 1;
-  lVar5 = 8;
-  *(short *)(iVar1 + 0x16a8) = *(short *)(iVar1 + 0x16a8) + 1;
-  puVar2 = (undefined8 *)(iVar1 + 0x4f8);
-  *(short *)(iVar1 + 0x16ae) = *(short *)(iVar1 + 0x16ae) + 1;
-  puVar3 = (undefined8 *)&local_78;
-  *(short *)(iVar1 + 0x16b0) = *(short *)(iVar1 + 0x16b0) + 1;
-  *(short *)(iVar1 + 0x16b2) = *(short *)(iVar1 + 0x16b2) + 1;
-  *(short *)(iVar1 + 0x16ac) = *(short *)(iVar1 + 0x16ac) + 1;
-  *(undefined2 *)(iVar1 + 0x165c) = *(undefined2 *)(iVar1 + 0x16ae);
+    pfVar3 = pfVar3 + 2;
+    pfVar3[0] = 0.0;
+    pfVar3[1] = 0.0;
+    lVar6 = lVar6 + -1;
+  } while (lVar6 != 0);
+  uVar1 = param_1->matrixVersions[1];
+  uVar2 = param_1->matrixVersions[2];
+  param_1->matrixVersions[0] = param_1->matrixVersions[0] + 1;
+  param_1->matrixVersions[1] = uVar1 + 1;
+  lVar6 = 8;
+  param_1->matrixVersions[2] = uVar2 + 1;
+  pfVar3 = (param_1->matrices).matrix[0x13].m[3] + 2;
+  param_1->matrixVersions[5] = param_1->matrixVersions[5] + 1;
+  puVar4 = (undefined8 *)&local_78;
+  param_1->matrixVersions[6] = param_1->matrixVersions[6] + 1;
+  param_1->matrixVersions[7] = param_1->matrixVersions[7] + 1;
+  param_1->matrixVersions[4] = param_1->matrixVersions[4] + 1;
+  param_1->constVersions[0x66] = param_1->matrixVersions[5];
   do {
-    puVar3 = puVar3 + 1;
-    puVar2 = puVar2 + 1;
-    *puVar2 = *puVar3;
-    lVar5 = lVar5 + -1;
-  } while (lVar5 != 0);
-  __restgprlr_28();
+    puVar4 = puVar4 + 1;
+    pfVar3 = pfVar3 + 2;
+    *(undefined8 *)pfVar3 = *puVar4;
+    lVar6 = lVar6 + -1;
+  } while (lVar6 != 0);
   return;
 }
 
@@ -427,64 +428,56 @@ void R_CmdBufSet3D(GfxCmdBufSourceState *param_1)
 
 // 82782878  R_HW_ForceSamplerState  (gfx_d3d/r_setstate_d3d.h:289)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 
 void R_HW_ForceSamplerState(D3DDevice *param_1,uint param_2,uint param_3)
 
 {
   int iVar1;
-  uint uVar2;
-  D3DDevice *pDVar3;
-  ulonglong uVar4;
-  ulong uVar5;
-  ulonglong uVar6;
-  ulonglong uVar7;
+  longlong lVar2;
+  ulonglong uVar3;
   
-  uVar6 = (ulonglong)(int)param_3;
-  uVar4 = (ulonglong)(int)param_2;
-  pDVar3 = (D3DDevice *)__savegprlr_26(param_1);
-  uVar2 = (uint)uVar6;
+  lVar2 = (longlong)(int)param_2;
   do {
-    uVar5 = (ulong)uVar4;
-    D3DDevice_SetSamplerState_MinFilter(pDVar3,uVar5,uVar2 >> 8 & 0xf);
+    D3DDevice_SetSamplerState_MinFilter(param_1,param_2,param_3 >> 8 & 0xf);
   } while (alwaysfails != 0);
   do {
-    D3DDevice_SetSamplerState_MagFilter(pDVar3,uVar5,uVar2 >> 0xc & 0xf);
+    D3DDevice_SetSamplerState_MagFilter(param_1,param_2,param_3 >> 0xc & 0xf);
   } while (alwaysfails != 0);
-  if (1 < (uVar2 & 0xff)) {
+  if (1 < (param_3 & 0xff)) {
     do {
-      D3DDevice_SetSamplerState_MaxAnisotropy(pDVar3,uVar5,uVar2 & 0xff);
+      D3DDevice_SetSamplerState_MaxAnisotropy(param_1,param_2,param_3 & 0xff);
     } while (alwaysfails != 0);
   }
-  iVar1 = (int)((uVar4 + (uVar4 & 0x7fffffff) * 2 & 0xffffffff) << 3);
-  uVar7 = 0x8000000000000000 >> (uVar4 + 0x20 & 0x7f);
+  iVar1 = (int)((lVar2 + ((ulonglong)param_2 & 0x7fffffff) * 2 & 0xffffffff) << 3);
+  uVar3 = 0x8000000000000000 >> (lVar2 + 0x20U & 0x7f);
   do {
-    *(uint *)((int)&(pDVar3->m_Constants).field0_0x0 + iVar1 + 0xc) =
-         *(uint *)((int)&(pDVar3->m_Constants).field0_0x0 + iVar1 + 0xc) & 0xfe7fffff |
-         (uint)((uVar6 & 0xffffffff) << 7) & 0x1800000;
-    (pDVar3->m_Pending).m_Mask[3] = uVar7 | (pDVar3->m_Pending).m_Mask[3];
+    *(uint *)((int)&(param_1->m_Constants).field0_0x0 + iVar1 + 0xc) =
+         *(uint *)((int)&(param_1->m_Constants).field0_0x0 + iVar1 + 0xc) & 0xfe7fffff |
+         (param_3 & 0x30000) << 7;
+    (param_1->m_Pending).m_Mask[3] = uVar3 | (param_1->m_Pending).m_Mask[3];
   } while (alwaysfails != 0);
   do {
-    D3DDevice_SetSamplerState_MipMapLodBias(pDVar3,uVar5,dx.mipBias);
+    D3DDevice_SetSamplerState_MipMapLodBias(param_1,param_2,dx.mipBias);
   } while (alwaysfails != 0);
   do {
-    iVar1 = (int)((uVar4 + 0x30 + (uVar4 + 0x30 & 0x7fffffff) * 2 & 0x1fffffff) << 3);
-    *(uint *)((int)(pDVar3->m_Pending).m_Mask + iVar1) =
-         *(uint *)((int)(pDVar3->m_Pending).m_Mask + iVar1) & 0xffffe3ff | uVar2 >> 10 & 0xc00;
-    (pDVar3->m_Pending).m_Mask[3] = uVar7 | (pDVar3->m_Pending).m_Mask[3];
+    iVar1 = (int)((lVar2 + 0x30U + (lVar2 + 0x30U & 0x7fffffff) * 2 & 0x1fffffff) << 3);
+    *(uint *)((int)(param_1->m_Pending).m_Mask + iVar1) =
+         *(uint *)((int)(param_1->m_Pending).m_Mask + iVar1) & 0xffffe3ff | param_3 >> 10 & 0xc00;
+    (param_1->m_Pending).m_Mask[3] = uVar3 | (param_1->m_Pending).m_Mask[3];
   } while (alwaysfails != 0);
   do {
-    *(uint *)((int)(pDVar3->m_Pending).m_Mask + iVar1) =
-         *(uint *)((int)(pDVar3->m_Pending).m_Mask + iVar1) & 0xffff1fff | uVar2 >> 9 & 0x6000;
-    (pDVar3->m_Pending).m_Mask[3] = uVar7 | (pDVar3->m_Pending).m_Mask[3];
+    *(uint *)((int)(param_1->m_Pending).m_Mask + iVar1) =
+         *(uint *)((int)(param_1->m_Pending).m_Mask + iVar1) & 0xffff1fff | param_3 >> 9 & 0x6000;
+    (param_1->m_Pending).m_Mask[3] = uVar3 | (param_1->m_Pending).m_Mask[3];
   } while (alwaysfails != 0);
   do {
-    *(uint *)((int)(pDVar3->m_Pending).m_Mask + iVar1) =
-         *(uint *)((int)(pDVar3->m_Pending).m_Mask + iVar1) & 0xfff8ffff |
-         (uint)(uVar6 >> 8) & 0x30000;
-    (pDVar3->m_Pending).m_Mask[3] = uVar7 | (pDVar3->m_Pending).m_Mask[3];
+    *(uint *)((int)(param_1->m_Pending).m_Mask + iVar1) =
+         *(uint *)((int)(param_1->m_Pending).m_Mask + iVar1) & 0xfff8ffff | param_3 >> 8 & 0x30000;
+    (param_1->m_Pending).m_Mask[3] = uVar3 | (param_1->m_Pending).m_Mask[3];
   } while (alwaysfails != 0);
-  __restgprlr_26();
   return;
 }
 
@@ -516,6 +509,8 @@ void R_Set3D(GfxCmdBufSourceState *param_1)
 
 // 827824A0  R_DeriveNearPlaneConstantsForView  (gfx_d3d/r_state_utils.cpp:316)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 
@@ -531,74 +526,73 @@ void R_DeriveNearPlaneConstantsForView(GfxCmdBufSourceState *param_1)
   float fVar7;
   float fVar8;
   float fVar9;
-  GfxCmdBufSourceState *pGVar10;
+  double dVar10;
   double dVar11;
-  double dVar12;
   
-  pGVar10 = (GfxCmdBufSourceState *)__savegprlr_28(param_1);
-  if (pGVar10->viewMode != VIEW_MODE_3D) {
+  if (param_1->viewMode != VIEW_MODE_3D) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_state_utils.cpp",
                     0x147,0,"%s\n\t(source->viewMode) = %i");
   }
-  dVar12 = 9.999999747378752e-06;
-  if (((pGVar10->viewParms).inverseViewProjectionMatrix.m[3][3] +
-      (pGVar10->viewParms).inverseViewProjectionMatrix.m[2][3]) * 1e-05 <=
-      ABS((pGVar10->viewParms).inverseViewProjectionMatrix.m[0][3])) {
+  dVar11 = 9.999999747378752e-06;
+  if (((param_1->viewParms).inverseViewProjectionMatrix.m[3][3] +
+      (param_1->viewParms).inverseViewProjectionMatrix.m[2][3]) * 1e-05 <=
+      ABS((param_1->viewParms).inverseViewProjectionMatrix.m[0][3])) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_state_utils.cpp",
                     0x14a,0,"%s\n\t(mtx->m[0][3]) = %g");
   }
-  if ((float)((double)((pGVar10->viewParms).inverseViewProjectionMatrix.m[3][3] +
-                      (pGVar10->viewParms).inverseViewProjectionMatrix.m[2][3]) * dVar12) <=
-      ABS((pGVar10->viewParms).inverseViewProjectionMatrix.m[1][3])) {
+  if ((float)((double)((param_1->viewParms).inverseViewProjectionMatrix.m[3][3] +
+                      (param_1->viewParms).inverseViewProjectionMatrix.m[2][3]) * dVar11) <=
+      ABS((param_1->viewParms).inverseViewProjectionMatrix.m[1][3])) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_state_utils.cpp",
                     0x14b,0,"%s\n\t(mtx->m[1][3]) = %g");
   }
-  dVar12 = 0.0;
-  if ((pGVar10->viewParms).inverseViewProjectionMatrix.m[3][3] +
-      (pGVar10->viewParms).inverseViewProjectionMatrix.m[2][3] == 0.0) {
+  dVar11 = 0.0;
+  if ((param_1->viewParms).inverseViewProjectionMatrix.m[3][3] +
+      (param_1->viewParms).inverseViewProjectionMatrix.m[2][3] == 0.0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_state_utils.cpp",
                     0x14c,0,"%s");
   }
-  fVar1 = (pGVar10->viewParms).inverseViewProjectionMatrix.m[3][2];
-  fVar2 = (pGVar10->viewParms).inverseViewProjectionMatrix.m[2][2];
-  fVar3 = (pGVar10->viewParms).inverseViewProjectionMatrix.m[3][1];
-  fVar4 = (pGVar10->viewParms).inverseViewProjectionMatrix.m[2][1];
-  fVar5 = (pGVar10->viewParms).inverseViewProjectionMatrix.m[3][0];
-  fVar6 = (pGVar10->viewParms).inverseViewProjectionMatrix.m[2][0];
-  fVar7 = (pGVar10->viewParms).camera.origin[2];
-  fVar8 = (pGVar10->viewParms).camera.origin[1];
-  fVar9 = (pGVar10->viewParms).camera.origin[0];
-  dVar11 = (double)(1.0 / ((pGVar10->viewParms).inverseViewProjectionMatrix.m[3][3] +
-                          (pGVar10->viewParms).inverseViewProjectionMatrix.m[2][3]));
-  (pGVar10->input).consts[0x42][3] = (float)dVar12;
-  (pGVar10->input).consts[0x42][2] = (float)((double)(fVar1 + fVar2) * dVar11 - (double)fVar7);
-  (pGVar10->input).consts[0x42][1] = (float)((double)(fVar3 + fVar4) * dVar11 - (double)fVar8);
-  (pGVar10->input).consts[0x42][0] = (float)((double)(fVar5 + fVar6) * dVar11 - (double)fVar9);
-  R_DirtyCodeConstant(pGVar10,0x42);
-  fVar1 = (pGVar10->viewParms).inverseViewProjectionMatrix.m[0][2];
-  fVar2 = (pGVar10->viewParms).inverseViewProjectionMatrix.m[0][1];
-  fVar3 = (pGVar10->viewParms).inverseViewProjectionMatrix.m[0][0];
-  (pGVar10->input).consts[0x43][3] = (float)dVar12;
-  dVar11 = (double)(float)(dVar11 * 2.0);
-  (pGVar10->input).consts[0x43][2] = (float)((double)fVar1 * dVar11);
-  (pGVar10->input).consts[0x43][1] = (float)((double)fVar2 * dVar11);
-  (pGVar10->input).consts[0x43][0] = (float)((double)fVar3 * dVar11);
-  R_DirtyCodeConstant(pGVar10,0x43);
-  fVar1 = (pGVar10->viewParms).inverseViewProjectionMatrix.m[1][2];
-  fVar2 = (pGVar10->viewParms).inverseViewProjectionMatrix.m[1][1];
-  fVar3 = (pGVar10->viewParms).inverseViewProjectionMatrix.m[1][0];
-  (pGVar10->input).consts[0x44][3] = (float)dVar12;
-  (pGVar10->input).consts[0x44][2] = -(float)((double)fVar1 * dVar11);
-  (pGVar10->input).consts[0x44][1] = -(float)((double)fVar2 * dVar11);
-  (pGVar10->input).consts[0x44][0] = -(float)((double)fVar3 * dVar11);
-  R_DirtyCodeConstant(pGVar10,0x44);
-  __restgprlr_28();
+  fVar1 = (param_1->viewParms).inverseViewProjectionMatrix.m[3][2];
+  fVar2 = (param_1->viewParms).inverseViewProjectionMatrix.m[2][2];
+  fVar3 = (param_1->viewParms).inverseViewProjectionMatrix.m[3][1];
+  fVar4 = (param_1->viewParms).inverseViewProjectionMatrix.m[2][1];
+  fVar5 = (param_1->viewParms).inverseViewProjectionMatrix.m[3][0];
+  fVar6 = (param_1->viewParms).inverseViewProjectionMatrix.m[2][0];
+  fVar7 = (param_1->viewParms).camera.origin[2];
+  fVar8 = (param_1->viewParms).camera.origin[1];
+  fVar9 = (param_1->viewParms).camera.origin[0];
+  dVar10 = (double)(1.0 / ((param_1->viewParms).inverseViewProjectionMatrix.m[3][3] +
+                          (param_1->viewParms).inverseViewProjectionMatrix.m[2][3]));
+  (param_1->input).consts[0x42][3] = (float)dVar11;
+  (param_1->input).consts[0x42][2] = (float)((double)(fVar1 + fVar2) * dVar10 - (double)fVar7);
+  (param_1->input).consts[0x42][1] = (float)((double)(fVar3 + fVar4) * dVar10 - (double)fVar8);
+  (param_1->input).consts[0x42][0] = (float)((double)(fVar5 + fVar6) * dVar10 - (double)fVar9);
+  R_DirtyCodeConstant(param_1,0x42);
+  fVar1 = (param_1->viewParms).inverseViewProjectionMatrix.m[0][2];
+  fVar2 = (param_1->viewParms).inverseViewProjectionMatrix.m[0][1];
+  fVar3 = (param_1->viewParms).inverseViewProjectionMatrix.m[0][0];
+  (param_1->input).consts[0x43][3] = (float)dVar11;
+  dVar10 = (double)(float)(dVar10 * 2.0);
+  (param_1->input).consts[0x43][2] = (float)((double)fVar1 * dVar10);
+  (param_1->input).consts[0x43][1] = (float)((double)fVar2 * dVar10);
+  (param_1->input).consts[0x43][0] = (float)((double)fVar3 * dVar10);
+  R_DirtyCodeConstant(param_1,0x43);
+  fVar1 = (param_1->viewParms).inverseViewProjectionMatrix.m[1][2];
+  fVar2 = (param_1->viewParms).inverseViewProjectionMatrix.m[1][1];
+  fVar3 = (param_1->viewParms).inverseViewProjectionMatrix.m[1][0];
+  (param_1->input).consts[0x44][3] = (float)dVar11;
+  (param_1->input).consts[0x44][2] = -(float)((double)fVar1 * dVar10);
+  (param_1->input).consts[0x44][1] = -(float)((double)fVar2 * dVar10);
+  (param_1->input).consts[0x44][0] = -(float)((double)fVar3 * dVar10);
+  R_DirtyCodeConstant(param_1,0x44);
   return;
 }
 
 
 // 827826C8  R_BeginView  (gfx_d3d/r_state_utils.cpp:363)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 
@@ -607,62 +601,55 @@ void R_BeginView(GfxCmdBufSourceState *param_1,GfxSceneDef *param_2,GfxViewParms
 {
   float fVar1;
   float fVar2;
-  int iVar3;
-  GfxCmdBufSourceState *pGVar4;
+  GfxSceneDef *pGVar3;
+  float *pfVar4;
   longlong lVar5;
-  GfxSceneDef *pGVar6;
-  longlong lVar7;
-  longlong lVar8;
-  double dVar9;
+  double dVar6;
   
-  lVar5 = (longlong)(int)param_2;
-  pGVar4 = (GfxCmdBufSourceState *)__savegprlr_28(param_1);
-  pGVar6 = (GfxSceneDef *)&pGVar4->viewMode;
-  lVar7 = lVar5 + -4;
-  lVar8 = 10;
+  pGVar3 = (GfxSceneDef *)&param_1->viewMode;
+  pfVar4 = param_2[-1].sunShadowPixelAdjust + 3;
+  lVar5 = 10;
   do {
-    lVar7 = lVar7 + 4;
-    pGVar6 = (GfxSceneDef *)&pGVar6->floatTime;
-    pGVar6->time = *(int *)lVar7;
-    lVar8 = lVar8 + -1;
-  } while (lVar8 != 0);
-  pGVar4->viewParms3D = param_3;
-  iVar3 = (int)lVar5;
-  (pGVar4->skinnedPlacement).base.origin[0] = *(float *)(iVar3 + 8);
-  (pGVar4->skinnedPlacement).base.origin[1] = *(float *)(iVar3 + 0xc);
-  (pGVar4->skinnedPlacement).base.origin[2] = *(float *)(iVar3 + 0x10);
-  pGVar4->viewMode = VIEW_MODE_NONE;
-  R_Set3D(pGVar4);
-  dVar9 = 0.0;
-  if (pGVar4->materialTime != 0.0) {
+    pfVar4 = pfVar4 + 1;
+    pGVar3 = (GfxSceneDef *)&pGVar3->floatTime;
+    pGVar3->time = (int)*pfVar4;
+    lVar5 = lVar5 + -1;
+  } while (lVar5 != 0);
+  param_1->viewParms3D = param_3;
+  (param_1->skinnedPlacement).base.origin[0] = param_2->viewOffset[0];
+  (param_1->skinnedPlacement).base.origin[1] = param_2->viewOffset[1];
+  (param_1->skinnedPlacement).base.origin[2] = param_2->viewOffset[2];
+  param_1->viewMode = VIEW_MODE_NONE;
+  R_Set3D(param_1);
+  dVar6 = 0.0;
+  if (param_1->materialTime != 0.0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_state_utils.cpp",
                     0x173,0,"%s");
   }
-  R_SetGameTime(pGVar4,*(float *)(iVar3 + 4));
-  fVar1 = pGVar4->eyeOffset[2];
-  fVar2 = pGVar4->eyeOffset[1];
-  (pGVar4->input).consts[8][0] = pGVar4->eyeOffset[0];
-  (pGVar4->input).consts[8][1] = fVar2;
-  (pGVar4->input).consts[8][2] = fVar1;
-  (pGVar4->input).consts[8][3] = (float)dVar9;
-  R_DirtyCodeConstant(pGVar4,8);
-  if (pGVar4->useHeroLighting != false) {
+  R_SetGameTime(param_1,param_2->floatTime);
+  fVar1 = param_1->eyeOffset[2];
+  fVar2 = param_1->eyeOffset[1];
+  (param_1->input).consts[8][0] = param_1->eyeOffset[0];
+  (param_1->input).consts[8][1] = fVar2;
+  (param_1->input).consts[8][2] = fVar1;
+  (param_1->input).consts[8][3] = (float)dVar6;
+  R_DirtyCodeConstant(param_1,8);
+  if (param_1->useHeroLighting != false) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_state_utils.cpp",
                     0x178,0,"%s");
   }
-  R_DeriveNearPlaneConstantsForView(pGVar4);
-  (pGVar4->input).codeImages[6] = *(GfxImage **)(iVar3 + 0x14);
-  if (((((pGVar4->input).consts[0x38][0] != *(float *)(iVar3 + 0x18)) ||
-       ((pGVar4->input).consts[0x38][1] != *(float *)(iVar3 + 0x1c))) ||
-      ((pGVar4->input).consts[0x38][2] != *(float *)(iVar3 + 0x20))) ||
-     ((pGVar4->input).consts[0x38][3] != *(float *)(iVar3 + 0x24))) {
-    (pGVar4->input).consts[0x38][0] = *(float *)(iVar3 + 0x18);
-    (pGVar4->input).consts[0x38][1] = *(float *)(iVar3 + 0x1c);
-    (pGVar4->input).consts[0x38][2] = *(float *)(iVar3 + 0x20);
-    (pGVar4->input).consts[0x38][3] = *(float *)(iVar3 + 0x24);
-    R_DirtyCodeConstant(pGVar4,0x38);
+  R_DeriveNearPlaneConstantsForView(param_1);
+  (param_1->input).codeImages[6] = param_2->sunShadowImage;
+  if (((((param_1->input).consts[0x38][0] != param_2->sunShadowPixelAdjust[0]) ||
+       ((param_1->input).consts[0x38][1] != param_2->sunShadowPixelAdjust[1])) ||
+      ((param_1->input).consts[0x38][2] != param_2->sunShadowPixelAdjust[2])) ||
+     ((param_1->input).consts[0x38][3] != param_2->sunShadowPixelAdjust[3])) {
+    (param_1->input).consts[0x38][0] = param_2->sunShadowPixelAdjust[0];
+    (param_1->input).consts[0x38][1] = param_2->sunShadowPixelAdjust[1];
+    (param_1->input).consts[0x38][2] = param_2->sunShadowPixelAdjust[2];
+    (param_1->input).consts[0x38][3] = param_2->sunShadowPixelAdjust[3];
+    R_DirtyCodeConstant(param_1,0x38);
   }
-  __restgprlr_28();
   return;
 }
 
@@ -738,16 +725,16 @@ void D3DTagCollection_Set(_D3DTAGCOLLECTION *param_1,ulong param_2,ulong64 param
 
 // 82782A10  R_SetDefaultAlphaTestFunction  (gfx_d3d/r_state.h:888)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 
 void R_SetDefaultAlphaTestFunction(GfxCmdBufState *param_1)
 
 {
   D3DDevice *pDVar1;
-  int iVar2;
   
-  iVar2 = __savegprlr_29(param_1);
-  pDVar1 = *(D3DDevice **)(iVar2 + 0xc0);
+  pDVar1 = (param_1->prim).device;
   if (pDVar1 == (D3DDevice *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_state.h",0x37c,0,
                     "%s");
@@ -755,8 +742,7 @@ void R_SetDefaultAlphaTestFunction(GfxCmdBufState *param_1)
   do {
     D3DDevice_SetRenderState_AlphaRef(pDVar1,0);
   } while (alwaysfails != 0);
-  *(undefined1 *)(iVar2 + 0xb10) = 0;
-  __restgprlr_29();
+  param_1->alphaRef = '\0';
   return;
 }
 

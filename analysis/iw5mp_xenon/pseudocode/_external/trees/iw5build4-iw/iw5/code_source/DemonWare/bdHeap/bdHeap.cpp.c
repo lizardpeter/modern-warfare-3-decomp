@@ -68,23 +68,21 @@ void * bdHeap::DW_Malloc(uint param_1)
 
 // 82916330  DW_Free  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdheap/bdheap.cpp:71)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void bdHeap::DW_Free(void *param_1)
 
 {
-  void *pvVar1;
-  ulong uVar2;
-  
-  pvVar1 = (void *)__savegprlr_29(param_1);
-  if (m_initialized == false) {
+  if (!m_initialized) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdHeap\\bdHeap.cpp",0x48,
                     0,"%s\n\t%s");
   }
-  if (pvVar1 == (void *)0x0) {
+  if (param_1 == (void *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdHeap\\bdHeap.cpp",0x49,
                     0,"%s\n\t%s");
   }
-  uVar2 = RtlFreeHeap(m_heap,m_flags,pvVar1);
-  __restgprlr_29(uVar2);
+  RtlFreeHeap(m_heap,m_flags,param_1);
   return;
 }
 

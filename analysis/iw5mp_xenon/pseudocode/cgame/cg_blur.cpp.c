@@ -14,6 +14,8 @@ void TRACK_cg_blur(void)
 
 // 822A5528  CG_Blur  (cgame/cg_blur.cpp:46)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -22,49 +24,43 @@ void CG_Blur(LocalClientNum_t param_1,int param_2,float param_3,BlurTime param_4
             BlurPriority param_5)
 
 {
-  LocalClientNum_t LVar1;
-  cg_s *pcVar2;
-  int iVar3;
-  longlong lVar4;
+  cg_s *pcVar1;
+  int iVar2;
   BlurPriority in_r7;
-  float *pfVar5;
-  double extraout_f1;
-  double dVar6;
-  double dVar7;
+  float *pfVar3;
+  double dVar4;
+  double dVar5;
   
-  lVar4 = (longlong)param_2;
-  LVar1 = __savegprlr_25((double)param_3,param_1,lVar4,param_4);
-  dVar6 = extraout_f1;
-  pcVar2 = CG_GetLocalClientGlobals(LVar1);
-  if ((int)lVar4 < 0) {
+  dVar4 = (double)param_3;
+  pcVar1 = CG_GetLocalClientGlobals(param_1);
+  if (param_2 < 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_blur.cpp",0x34,0,"%s"
                    );
   }
-  dVar7 = 0.0;
-  if (dVar6 < 0.0) {
+  dVar5 = 0.0;
+  if (dVar4 < 0.0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_blur.cpp",0x35,0,
                     "%s\n\t(endBlur) = %g");
   }
-  pfVar5 = &(pcVar2->refdef).blurRadius;
-  if ((double)*pfVar5 < dVar7) {
+  pfVar3 = &(pcVar1->refdef).blurRadius;
+  if ((double)*pfVar3 < dVar5) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_blur.cpp",0x36,0,
                     "%s\n\t(cgameGlob->refdef.blurRadius) = %g");
   }
-  if ((int)s_screenBlur[LVar1].priority <= (int)in_r7) {
-    if (param_5 == BLUR_TIME_ABSOLUTE) {
-      iVar3 = Sys_Milliseconds();
+  if ((int)s_screenBlur[param_1].priority <= (int)in_r7) {
+    if (param_5 == BLUR_PRIORITY_SCRIPT) {
+      iVar2 = Sys_Milliseconds();
     }
     else {
-      iVar3 = pcVar2->time;
+      iVar2 = pcVar1->time;
     }
-    s_screenBlur[LVar1].timeStart = iVar3;
-    s_screenBlur[LVar1].timeEnd = iVar3 + (int)lVar4;
-    s_screenBlur[LVar1].start = *pfVar5;
-    s_screenBlur[LVar1].time = param_5;
-    s_screenBlur[LVar1].end = (float)dVar6;
-    s_screenBlur[LVar1].priority = in_r7;
+    s_screenBlur[param_1].timeStart = iVar2;
+    s_screenBlur[param_1].timeEnd = iVar2 + param_2;
+    s_screenBlur[param_1].start = *pfVar3;
+    s_screenBlur[param_1].time = param_5;
+    s_screenBlur[param_1].end = (float)dVar4;
+    s_screenBlur[param_1].priority = in_r7;
   }
-  __restgprlr_25();
   return;
 }
 
@@ -105,6 +101,8 @@ float CG_GetBlurRadius(LocalClientNum_t param_1)
 
 // 822A5720  CG_ScreenBlur  (cgame/cg_blur.cpp:100)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -112,71 +110,69 @@ float CG_GetBlurRadius(LocalClientNum_t param_1)
 void CG_ScreenBlur(LocalClientNum_t param_1)
 
 {
-  LocalClientNum_t LVar1;
-  cg_s *pcVar2;
-  int iVar3;
+  cg_s *pcVar1;
+  int iVar2;
+  double dVar3;
   double dVar4;
   double dVar5;
   double dVar6;
-  double dVar7;
   
-  LVar1 = __savegprlr_28(param_1);
-  pcVar2 = CG_GetLocalClientGlobals(LVar1);
-  iVar3 = pcVar2->time;
-  if (s_screenBlur[LVar1].time == BLUR_TIME_ABSOLUTE) {
-    iVar3 = Sys_Milliseconds();
+  pcVar1 = CG_GetLocalClientGlobals(param_1);
+  iVar2 = pcVar1->time;
+  if (s_screenBlur[param_1].time == BLUR_TIME_ABSOLUTE) {
+    iVar2 = Sys_Milliseconds();
   }
-  if (s_screenBlur[LVar1].timeStart == 0) goto LAB_822a5934;
-  if (iVar3 < s_screenBlur[LVar1].timeStart) {
+  if (s_screenBlur[param_1].timeStart == 0) {
+    return;
+  }
+  if (iVar2 < s_screenBlur[param_1].timeStart) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_blur.cpp",0x72,0,"%s"
                    );
   }
-  if (s_screenBlur[LVar1].timeEnd < s_screenBlur[LVar1].timeStart) {
+  if (s_screenBlur[param_1].timeEnd < s_screenBlur[param_1].timeStart) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_blur.cpp",0x73,0,"%s"
                    );
   }
-  if (iVar3 < s_screenBlur[LVar1].timeEnd) {
-    dVar6 = 0.0;
-    if ((double)(longlong)(s_screenBlur[LVar1].timeEnd - s_screenBlur[LVar1].timeStart) <= 0.0) {
+  if (iVar2 < s_screenBlur[param_1].timeEnd) {
+    dVar5 = 0.0;
+    if ((double)(longlong)(s_screenBlur[param_1].timeEnd - s_screenBlur[param_1].timeStart) <= 0.0)
+    {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_blur.cpp",0x77,0,
                       "%s");
     }
-    dVar7 = (double)((float)(longlong)(iVar3 - s_screenBlur[LVar1].timeStart) /
-                    (float)(longlong)(s_screenBlur[LVar1].timeEnd - s_screenBlur[LVar1].timeStart));
-    if ((dVar7 < dVar6) || (1.0 <= dVar7)) {
+    dVar6 = (double)((float)(longlong)(iVar2 - s_screenBlur[param_1].timeStart) /
+                    (float)(longlong)
+                           (s_screenBlur[param_1].timeEnd - s_screenBlur[param_1].timeStart));
+    if ((dVar6 < dVar5) || (1.0 <= dVar6)) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_blur.cpp",0x79,0,
                       "%s\n\t(t) = %g");
     }
-    dVar4 = (double)s_screenBlur[LVar1].end;
-    dVar6 = (double)(float)((double)(float)(dVar4 - (double)s_screenBlur[LVar1].start) * dVar7 +
-                           (double)s_screenBlur[LVar1].start);
+    dVar3 = (double)s_screenBlur[param_1].end;
+    dVar5 = (double)(float)((double)(float)(dVar3 - (double)s_screenBlur[param_1].start) * dVar6 +
+                           (double)s_screenBlur[param_1].start);
   }
   else {
-    dVar4 = (double)s_screenBlur[LVar1].end;
-    s_screenBlur[LVar1].timeStart = 0;
-    s_screenBlur[LVar1].timeEnd = 0;
-    s_screenBlur[LVar1].priority = BLUR_PRIORITY_NONE;
-    dVar6 = dVar4;
+    dVar3 = (double)s_screenBlur[param_1].end;
+    s_screenBlur[param_1].timeStart = 0;
+    s_screenBlur[param_1].timeEnd = 0;
+    s_screenBlur[param_1].priority = BLUR_PRIORITY_NONE;
+    dVar5 = dVar3;
   }
-  dVar7 = (double)s_screenBlur[LVar1].start;
-  dVar5 = dVar7;
-  if ((float)(dVar4 - dVar7) < 0.0) {
-    dVar5 = dVar4;
+  dVar6 = (double)s_screenBlur[param_1].start;
+  dVar4 = dVar6;
+  if ((float)(dVar3 - dVar6) < 0.0) {
+    dVar4 = dVar3;
   }
-  if (dVar6 < dVar5) {
-LAB_822a5904:
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_blur.cpp",0x85,0,
-                    "%s\n\t(blur) = %g");
-  }
-  else {
-    if ((float)(dVar7 - dVar4) < 0.0) {
-      dVar7 = dVar4;
+  if (dVar4 <= dVar5) {
+    if ((float)(dVar6 - dVar3) < 0.0) {
+      dVar6 = dVar3;
     }
-    if (dVar7 < dVar6) goto LAB_822a5904;
+    if (dVar5 <= dVar6) goto LAB_822a5930;
   }
-  s_screenBlur[LVar1].radius = (float)dVar6;
-LAB_822a5934:
-  __restgprlr_28();
+  MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_blur.cpp",0x85,0,
+                  "%s\n\t(blur) = %g");
+LAB_822a5930:
+  s_screenBlur[param_1].radius = (float)dVar5;
   return;
 }
 

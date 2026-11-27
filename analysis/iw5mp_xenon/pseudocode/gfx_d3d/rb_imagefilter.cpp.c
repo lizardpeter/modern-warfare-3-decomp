@@ -2,56 +2,55 @@
 
 // 827A0D78  RB_VirtualToSceneRadius  (gfx_d3d/rb_imagefilter.cpp:54)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void RB_VirtualToSceneRadius(float param_1,float *param_2,float *param_3)
 
 {
   float fVar1;
-  ulonglong uVar2;
-  ulonglong in_r5;
-  double dVar3;
+  float *in_r5;
+  double dVar2;
   
-  uVar2 = (ulonglong)(int)param_3;
-  dVar3 = (double)__savegprlr_28((double)param_1,param_2);
-  if ((uVar2 & 0xffffffff) == 0) {
+  dVar2 = (double)param_1;
+  if (param_3 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_imagefilter.cpp",
                     0x37,0,"%s");
   }
-  if ((in_r5 & 0xffffffff) == 0) {
+  if (in_r5 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_imagefilter.cpp",
                     0x38,0,"%s");
   }
-  fVar1 = (float)((double)vidConfig.sceneHeight * dVar3) * 0.0020833334;
-  *(float *)in_r5 = fVar1;
-  *(float *)uVar2 = fVar1 * vidConfig.aspectRatioScenePixel;
-  __restgprlr_28();
+  fVar1 = (float)((double)vidConfig.sceneHeight * dVar2) * 0.0020833334;
+  *in_r5 = fVar1;
+  *param_3 = fVar1 * vidConfig.aspectRatioScenePixel;
   return;
 }
 
 
 // 827A0E38  RB_PickSymmetricFilterMaterial  (gfx_d3d/rb_imagefilter.cpp:64)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 int RB_PickSymmetricFilterMaterial(int param_1,int param_2,Material **param_3)
 
 {
-  longlong lVar1;
-  int iVar2;
-  ulonglong uVar3;
-  
-  uVar3 = (ulonglong)param_2;
-  lVar1 = __savegprlr_29(param_1);
-  if (((int)lVar1 < 1) || (8 < (int)lVar1)) {
+  if ((param_1 < 1) || (8 < param_1)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_imagefilter.cpp",
                     0x4a,0,"%s\n\t(halfTapCount) = %i");
   }
-  *param_3 = *(Material **)
-              ((int)rgp.postFxMaterial +
-              (int)((uVar3 + (uVar3 & 0x1fffffff) * 8 + lVar1 & 0xffffffff) << 2) + 0x1c);
-  iVar2 = __restgprlr_29(lVar1);
-  return iVar2;
+  *param_3 = rgp.postFxMaterial[param_2 * 9 + param_1 + 7];
+  return param_1;
 }
 
 
 // 827A0EB8  RB_GaussianFilterPoints1D  (gfx_d3d/rb_imagefilter.cpp:81)
+
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 
 int RB_GaussianFilterPoints1D
               (float param_1,int param_2,int param_3,int param_4,float *param_5,float *param_6)
@@ -61,16 +60,16 @@ int RB_GaussianFilterPoints1D
   uint uVar2;
   float fVar3;
   uint uVar4;
-  float *pfVar5;
-  int iVar7;
-  ulonglong uVar6;
-  uint uVar8;
-  longlong in_r8;
-  longlong lVar9;
+  uint uVar5;
+  float *in_r8;
+  float *pfVar6;
+  float *pfVar7;
+  int iVar8;
+  int iVar9;
   ulonglong uVar10;
-  int iVar11;
-  int iVar12;
-  ulonglong uVar13;
+  double dVar11;
+  double dVar12;
+  double dVar13;
   double dVar14;
   double dVar15;
   double dVar16;
@@ -79,15 +78,10 @@ int RB_GaussianFilterPoints1D
   double dVar19;
   double dVar20;
   double dVar21;
-  double dVar22;
-  double dVar23;
-  double dVar24;
   
-  uVar6 = (ulonglong)(int)param_5;
-  __savegprlr_25((double)param_1,param_2);
-  dVar15 = (double)__savefpr_23();
-  dVar19 = 0.0;
-  if (dVar15 <= 0.0) {
+  dVar12 = (double)param_1;
+  dVar16 = 0.0;
+  if (dVar12 <= 0.0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_imagefilter.cpp",
                     0x5c,0,"%s\n\t(pixels) = %g");
   }
@@ -99,130 +93,124 @@ int RB_GaussianFilterPoints1D
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_imagefilter.cpp",
                     0x5e,0,"srcRes >= dstRes\n\t%i, %i");
   }
-  dVar18 = 0.5;
-  dVar20 = (double)(longlong)param_3;
-  dVar16 = floor((double)((float)(dVar20 / (double)(longlong)param_4) + 0.5));
-  uVar2 = (uint)dVar16;
-  uVar8 = param_3 - uVar2 * param_4;
-  uVar4 = (int)uVar8 >> 0x1f;
-  if ((int)uVar2 <= (int)((uVar8 ^ uVar4) - uVar4)) {
+  dVar15 = 0.5;
+  dVar17 = (double)(longlong)param_3;
+  dVar13 = floor((double)((float)(dVar17 / (double)(longlong)param_4) + 0.5));
+  uVar2 = (uint)dVar13;
+  uVar5 = param_3 - uVar2 * param_4;
+  uVar4 = (int)uVar5 >> 0x1f;
+  if ((int)uVar2 <= (int)((uVar5 ^ uVar4) - uVar4)) {
     va("%i %i");
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_imagefilter.cpp",
                     0x61,0,"%s\n\t%s");
   }
-  dVar16 = dVar18;
+  dVar13 = dVar15;
   if ((uVar2 & 1) != 0) {
-    dVar16 = dVar19;
+    dVar13 = dVar16;
   }
-  iVar11 = (int)uVar6;
-  dVar21 = (double)(-0.5 / (float)(dVar15 * dVar15));
-  pfVar5 = (float *)in_r8;
-  dVar15 = dVar19;
-  iVar7 = 0;
-  if (0 < iVar11) {
+  dVar18 = (double)(-0.5 / (float)(dVar12 * dVar12));
+  dVar12 = dVar16;
+  iVar8 = 0;
+  if (0 < (int)param_5) {
     do {
-      dVar24 = (double)(float)((double)(longlong)(iVar7 * 2) + dVar16);
-      dVar23 = (double)(float)((double)(longlong)(iVar7 * 2 + 1) + dVar16);
-      dVar17 = exp((double)(float)((double)(float)(dVar24 * dVar24) * dVar21));
-      dVar22 = (double)(float)dVar17;
-      dVar17 = exp((double)(float)((double)(float)(dVar23 * dVar23) * dVar21));
-      if ((iVar7 == 0) && (dVar16 == dVar15)) {
-        dVar22 = (double)(float)(dVar22 * dVar18);
+      dVar21 = (double)(float)((double)(longlong)(iVar8 * 2) + dVar13);
+      dVar20 = (double)(float)((double)(longlong)(iVar8 * 2 + 1) + dVar13);
+      dVar14 = exp((double)(float)((double)(float)(dVar21 * dVar21) * dVar18));
+      dVar19 = (double)(float)dVar14;
+      dVar14 = exp((double)(float)((double)(float)(dVar20 * dVar20) * dVar18));
+      if ((iVar8 == 0) && (dVar13 == dVar12)) {
+        dVar19 = (double)(float)(dVar19 * dVar15);
       }
-      fVar1 = (float)((double)(float)dVar17 + dVar22);
-      dVar14 = (double)fVar1;
-      pfVar5[iVar7] = fVar1;
-      if (dVar14 == dVar15) {
-        param_6[iVar7] =
-             (float)((double)(float)((double)(float)(dVar23 + dVar24) * dVar18) / dVar20);
+      fVar1 = (float)((double)(float)dVar14 + dVar19);
+      dVar11 = (double)fVar1;
+      in_r8[iVar8] = fVar1;
+      if (dVar11 == dVar12) {
+        param_6[iVar8] =
+             (float)((double)(float)((double)(float)(dVar20 + dVar21) * dVar15) / dVar17);
       }
       else {
-        param_6[iVar7] =
-             (float)((double)(float)dVar17 * dVar23 + (double)(float)(dVar22 * dVar24)) /
-             (float)(dVar14 * dVar20);
+        param_6[iVar8] =
+             (float)((double)(float)dVar14 * dVar20 + (double)(float)(dVar19 * dVar21)) /
+             (float)(dVar11 * dVar17);
       }
-      iVar12 = iVar7 + 1;
-      dVar19 = (double)(float)((double)pfVar5[iVar7] + dVar19);
-      iVar7 = iVar12;
-    } while (iVar12 < iVar11);
-    if (0.0010000000474974513 < dVar19) {
-      if (dVar19 <= dVar15) {
+      iVar9 = iVar8 + 1;
+      dVar16 = (double)(float)((double)in_r8[iVar8] + dVar16);
+      iVar8 = iVar9;
+    } while (iVar9 < (int)param_5);
+    if (0.0010000000474974513 < dVar16) {
+      if (dVar16 <= dVar12) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_imagefilter.cpp"
                         ,0x81,0,"%s\n\t(totalWeight) = %g");
       }
-      uVar10 = uVar6 - 1;
-      fVar1 = (float)(dVar18 / dVar19);
-      if (-1 < (int)uVar10) {
-        if (3 < iVar11) {
-          uVar13 = (uVar6 & 0xffffffff) >> 2;
-          lVar9 = (uVar6 - 3 & 0x3fffffff) * 4 + in_r8;
+      pfVar7 = (float *)((int)param_5 + -1);
+      fVar1 = (float)(dVar15 / dVar16);
+      if (-1 < (int)pfVar7) {
+        if (3 < (int)param_5) {
+          uVar10 = (ulonglong)((uint)param_5 >> 2);
+          pfVar6 = in_r8 + (int)param_5 + -3;
           do {
-            pfVar5 = (float *)lVar9;
-            fVar3 = pfVar5[2];
-            pfVar5[2] = fVar3 * fVar1;
+            fVar3 = pfVar6[2];
+            pfVar6[2] = fVar3 * fVar1;
             if (fVar3 * fVar1 < 0.01) {
-              uVar6 = uVar10 + 1;
+              param_5 = (float *)((int)pfVar7 + 1);
             }
-            fVar3 = pfVar5[1];
-            pfVar5[1] = fVar3 * fVar1;
+            fVar3 = pfVar6[1];
+            pfVar6[1] = fVar3 * fVar1;
             if (fVar3 * fVar1 < 0.01) {
-              uVar6 = uVar10;
+              param_5 = pfVar7;
             }
-            fVar3 = *pfVar5;
-            *pfVar5 = fVar3 * fVar1;
+            fVar3 = *pfVar6;
+            *pfVar6 = fVar3 * fVar1;
             if (fVar3 * fVar1 < 0.01) {
-              uVar6 = uVar10 - 1;
+              param_5 = (float *)((int)pfVar7 + -1);
             }
-            fVar3 = pfVar5[-1];
-            pfVar5[-1] = fVar3 * fVar1;
+            fVar3 = pfVar6[-1];
+            pfVar6[-1] = fVar3 * fVar1;
             if (fVar3 * fVar1 < 0.01) {
-              uVar6 = uVar10 - 2;
+              param_5 = (float *)((int)pfVar7 + -2);
             }
-            uVar10 = uVar10 - 4;
-            lVar9 = lVar9 + -0x10;
-            uVar13 = uVar13 - 1;
-          } while (uVar13 != 0);
-        }
-        if (-1 < (int)uVar10) {
-          lVar9 = uVar10 + 1;
-          in_r8 = (uVar10 & 0x3fffffff) * 4 + in_r8;
-          do {
-            fVar3 = *(float *)in_r8 * fVar1;
-            *(float *)in_r8 = fVar3;
-            if (fVar3 < 0.01) {
-              uVar6 = uVar10 + 1;
-            }
+            pfVar7 = pfVar7 + -1;
+            pfVar6 = pfVar6 + -4;
             uVar10 = uVar10 - 1;
-            in_r8 = in_r8 + -4;
-            lVar9 = lVar9 + -1;
-          } while (lVar9 != 0);
+          } while (uVar10 != 0);
+        }
+        if (-1 < (int)pfVar7) {
+          iVar8 = (int)pfVar7 + 1;
+          pfVar6 = in_r8 + (int)pfVar7;
+          do {
+            fVar3 = *pfVar6;
+            *pfVar6 = fVar3 * fVar1;
+            if (fVar3 * fVar1 < 0.01) {
+              param_5 = (float *)((int)pfVar7 + 1);
+            }
+            pfVar7 = (float *)((int)pfVar7 + -1);
+            pfVar6 = pfVar6 + -1;
+            iVar8 = iVar8 + -1;
+          } while (iVar8 != 0);
         }
       }
-      __restfpr_23(uVar6);
-      iVar7 = __restgprlr_25();
-      return iVar7;
+      return (int)param_5;
     }
   }
-  *pfVar5 = (float)dVar18;
-  __restfpr_23(1);
-  iVar7 = __restgprlr_25();
-  return iVar7;
+  *in_r8 = (float)dVar15;
+  return 1;
 }
 
 
 // 827A1260  RB_GenerateGaussianFilter1D  (gfx_d3d/rb_imagefilter.cpp:144)
+
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 
 void RB_GenerateGaussianFilter1D
                (float param_1,int *param_2,int param_3,int param_4,GfxImageFilterPass *param_5)
 
 {
   int iVar1;
-  int iVar2;
-  Material *pMVar3;
-  ulonglong uVar4;
+  Material *pMVar2;
+  longlong lVar3;
   Material **in_r7;
-  longlong lVar5;
-  double extraout_f1;
+  longlong lVar4;
   float local_60;
   undefined4 local_5c;
   undefined4 local_58;
@@ -240,52 +228,53 @@ void RB_GenerateGaussianFilter1D
   Material *local_28;
   Material *local_24;
   
-  uVar4 = (ulonglong)param_4;
-  iVar1 = __savegprlr_29((double)param_1,param_2);
-  iVar2 = *(int *)((int)((uVar4 & 0xffffffff) << 2) + param_3);
-  iVar2 = RB_GaussianFilterPoints1D
-                    ((float)extraout_f1,iVar1,iVar2,iVar2,(float *)&DAT_00000008,&local_60);
-  pMVar3 = (Material *)RB_PickSymmetricFilterMaterial(iVar2,(int)param_5,in_r7);
-  lVar5 = -uVar4;
-  in_r7[1] = pMVar3;
-  *(float *)((int)((uVar4 + 2 & 0xffffffff) << 2) + (int)in_r7) = local_60;
-  *(undefined4 *)((int)((lVar5 + 3U & 0xffffffff) << 2) + (int)in_r7) = 0;
+  lVar3 = (longlong)param_4;
+  iVar1 = *(int *)(param_4 * 4 + param_3);
+  iVar1 = RB_GaussianFilterPoints1D
+                    (param_1,(int)param_2,iVar1,iVar1,(float *)&DAT_00000008,&local_60);
+  pMVar2 = (Material *)RB_PickSymmetricFilterMaterial(iVar1,(int)param_5,in_r7);
+  lVar4 = -lVar3;
+  in_r7[1] = pMVar2;
+  *(float *)((int)((lVar3 + 2U & 0xffffffff) << 2) + (int)in_r7) = local_60;
+  *(undefined4 *)((int)((lVar4 + 3U & 0xffffffff) << 2) + (int)in_r7) = 0;
   in_r7[4] = (Material *)0x0;
   in_r7[5] = local_40;
-  *(undefined4 *)((int)((uVar4 + 6 & 0xffffffff) << 2) + (int)in_r7) = local_5c;
-  *(undefined4 *)((int)((lVar5 + 7U & 0xffffffff) << 2) + (int)in_r7) = 0;
+  *(undefined4 *)((int)((lVar3 + 6U & 0xffffffff) << 2) + (int)in_r7) = local_5c;
+  *(undefined4 *)((int)((lVar4 + 7U & 0xffffffff) << 2) + (int)in_r7) = 0;
   in_r7[8] = (Material *)0x0;
   in_r7[9] = local_3c;
-  *(undefined4 *)((int)((uVar4 + 10 & 0xffffffff) << 2) + (int)in_r7) = local_58;
-  *(undefined4 *)((int)((lVar5 + 0xbU & 0xffffffff) << 2) + (int)in_r7) = 0;
+  *(undefined4 *)((int)((lVar3 + 10U & 0xffffffff) << 2) + (int)in_r7) = local_58;
+  *(undefined4 *)((int)((lVar4 + 0xbU & 0xffffffff) << 2) + (int)in_r7) = 0;
   in_r7[0xc] = (Material *)0x0;
   in_r7[0xd] = local_38;
-  *(undefined4 *)((int)((uVar4 + 0xe & 0xffffffff) << 2) + (int)in_r7) = local_54;
-  *(undefined4 *)((int)((lVar5 + 0xfU & 0xffffffff) << 2) + (int)in_r7) = 0;
+  *(undefined4 *)((int)((lVar3 + 0xeU & 0xffffffff) << 2) + (int)in_r7) = local_54;
+  *(undefined4 *)((int)((lVar4 + 0xfU & 0xffffffff) << 2) + (int)in_r7) = 0;
   in_r7[0x10] = (Material *)0x0;
   in_r7[0x11] = local_34;
-  *(undefined4 *)((int)((uVar4 + 0x12 & 0xffffffff) << 2) + (int)in_r7) = local_50;
-  *(undefined4 *)((int)((lVar5 + 0x13U & 0xffffffff) << 2) + (int)in_r7) = 0;
+  *(undefined4 *)((int)((lVar3 + 0x12U & 0xffffffff) << 2) + (int)in_r7) = local_50;
+  *(undefined4 *)((int)((lVar4 + 0x13U & 0xffffffff) << 2) + (int)in_r7) = 0;
   in_r7[0x14] = (Material *)0x0;
   in_r7[0x15] = local_30;
-  *(undefined4 *)((int)((uVar4 + 0x16 & 0xffffffff) << 2) + (int)in_r7) = local_4c;
-  *(undefined4 *)((int)((lVar5 + 0x17U & 0xffffffff) << 2) + (int)in_r7) = 0;
+  *(undefined4 *)((int)((lVar3 + 0x16U & 0xffffffff) << 2) + (int)in_r7) = local_4c;
+  *(undefined4 *)((int)((lVar4 + 0x17U & 0xffffffff) << 2) + (int)in_r7) = 0;
   in_r7[0x18] = (Material *)0x0;
   in_r7[0x19] = local_2c;
-  *(undefined4 *)((int)((uVar4 + 0x1a & 0xffffffff) << 2) + (int)in_r7) = local_48;
-  *(undefined4 *)((int)((lVar5 + 0x1bU & 0xffffffff) << 2) + (int)in_r7) = 0;
+  *(undefined4 *)((int)((lVar3 + 0x1aU & 0xffffffff) << 2) + (int)in_r7) = local_48;
+  *(undefined4 *)((int)((lVar4 + 0x1bU & 0xffffffff) << 2) + (int)in_r7) = 0;
   in_r7[0x1c] = (Material *)0x0;
   in_r7[0x1d] = local_28;
-  *(undefined4 *)((int)((uVar4 + 0x1e & 0xffffffff) << 2) + (int)in_r7) = local_44;
-  *(undefined4 *)((int)((lVar5 + 0x1fU & 0xffffffff) << 2) + (int)in_r7) = 0;
+  *(undefined4 *)((int)((lVar3 + 0x1eU & 0xffffffff) << 2) + (int)in_r7) = local_44;
+  *(undefined4 *)((int)((lVar4 + 0x1fU & 0xffffffff) << 2) + (int)in_r7) = 0;
   in_r7[0x20] = (Material *)0x0;
   in_r7[0x21] = local_24;
-  __restgprlr_29();
   return;
 }
 
 
 // 827A13F8  RB_GenerateGaussianFilter2D  (gfx_d3d/rb_imagefilter.cpp:167)
+
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 
 void RB_GenerateGaussianFilter2D
                (float param_1,int param_2,int param_3,int param_4,int param_5,int param_6,
@@ -293,10 +282,8 @@ void RB_GenerateGaussianFilter2D
 
 {
   int iVar1;
-  ulonglong uVar2;
   undefined4 *in_r9;
-  double extraout_f1;
-  double dVar3;
+  double dVar2;
   float local_50;
   float local_4c;
   float local_48;
@@ -306,12 +293,9 @@ void RB_GenerateGaussianFilter2D
   float local_38;
   float local_34;
   
-  uVar2 = (ulonglong)(int)param_7;
-  iVar1 = __savegprlr_28((double)param_1,param_2);
-  dVar3 = extraout_f1;
-  iVar1 = RB_GaussianFilterPoints1D((float)extraout_f1,iVar1,param_3,param_5,(float *)0x2,&local_50)
-  ;
-  iVar1 = RB_GaussianFilterPoints1D((float)dVar3,iVar1,param_4,param_6,(float *)0x2,&local_40);
+  dVar2 = (double)param_1;
+  iVar1 = RB_GaussianFilterPoints1D(param_1,param_2,param_3,param_5,(float *)0x2,&local_50);
+  RB_GaussianFilterPoints1D((float)dVar2,iVar1,param_4,param_6,(float *)0x2,&local_40);
   in_r9[2] = -local_50;
   in_r9[6] = local_50;
   in_r9[10] = -local_4c;
@@ -344,11 +328,8 @@ void RB_GenerateGaussianFilter2D
   in_r9[0x1f] = local_3c;
   in_r9[0x20] = 0;
   in_r9[0x21] = local_34 * local_44;
-  *in_r9 = *(undefined4 *)
-            ((int)rgp.symmetricFilterMaterial[0] +
-            (int)((uVar2 + (uVar2 & 0x1fffffff) * 8 & 0xffffffff) << 2) + 0x1c);
+  *in_r9 = rgp.symmetricFilterMaterial[(int)param_7][7];
   in_r9[1] = 8;
-  __restgprlr_28(iVar1);
   return;
 }
 
@@ -394,17 +375,21 @@ GfxRenderTargetId R_GetGammaRenderTargetId(GfxRenderTargetId param_1,bool param_
 
 // 827A1540  RB_GenerateGaussianFilterChain  (gfx_d3d/rb_imagefilter.cpp:215)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
+
 int RB_GenerateGaussianFilterChain
               (float param_1,float param_2,int param_3,int param_4,int param_5,int param_6,
               int param_7,int param_8,GfxImageFilterPass *param_9)
 
 {
   float fVar1;
-  undefined8 uVar2;
+  longlong lVar2;
   int iVar3;
   GfxImageFilterPass *in_r10;
-  longlong lVar4;
-  double extraout_f1;
+  int iVar4;
   double dVar5;
   double dVar6;
   double dVar7;
@@ -418,48 +403,48 @@ int RB_GenerateGaussianFilterChain
   int local_9c;
   longlong local_98;
   
+  dVar11 = (double)param_1;
   dVar12 = (double)param_2;
-  __savegprlr_24((double)param_1,param_3,param_4);
-  uVar2 = __savefpr_24();
+  lVar2 = (longlong)param_3;
   dVar5 = 1.3895604610443115;
-  lVar4 = 0;
+  iVar4 = 0;
   local_a0 = param_7;
   local_9c = param_8;
-  if ((param_5 != param_7) || (dVar11 = extraout_f1, param_6 != param_8)) {
-    dVar6 = extraout_f1;
-    if ((float)(dVar12 - extraout_f1) < 0.0) {
+  if ((param_5 != param_7) || (param_6 != param_8)) {
+    dVar6 = dVar11;
+    if ((float)(dVar12 - dVar11) < 0.0) {
       dVar6 = dVar12;
     }
     if (1.3895604610443115 < dVar6) {
       dVar6 = dVar5;
     }
     local_98 = (longlong)param_6;
-    dVar11 = (double)((SQRT((float)(extraout_f1 * extraout_f1 - (double)(float)(dVar6 * dVar6))) *
+    dVar11 = (double)((SQRT((float)(dVar11 * dVar11 - (double)(float)(dVar6 * dVar6))) *
                       (float)(longlong)param_7) / (float)(longlong)param_5);
     dVar12 = (double)((SQRT((float)(dVar12 * dVar12 - (double)(float)(dVar6 * dVar6))) *
                       (float)(longlong)param_8) / (float)local_98);
     if ((int)param_9 < 1) {
-      uVar2 = 0xffffffff821d66a8;
+      lVar2 = -0x7de29958;
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_imagefilter.cpp",
                       0xe9,0,"%s");
     }
-    RB_GenerateGaussianFilter2D((float)dVar6,(int)uVar2,param_5,param_6,param_7,param_8,in_r10);
-    lVar4 = 1;
+    RB_GenerateGaussianFilter2D((float)dVar6,(int)lVar2,param_5,param_6,param_7,param_8,in_r10);
+    iVar4 = 1;
   }
-  if ((int)lVar4 < (int)param_9) {
+  if (iVar4 < (int)param_9) {
     dVar9 = 42.220760345458984;
     dVar10 = 6.497750282287598;
     dVar6 = 0.5;
     dVar8 = 0.3295051157474518;
     dVar7 = 0.0;
     do {
-      if ((dVar11 < dVar8) && (dVar12 < dVar8)) break;
+      if ((dVar11 < dVar8) && (dVar12 < dVar8)) {
+        return iVar4;
+      }
       if ((ABS((double)(float)(dVar11 - dVar12)) < dVar8) &&
          (fVar1 = (float)((double)(float)(dVar11 + dVar12) * dVar6), (double)fVar1 <= dVar5)) {
-        RB_GenerateGaussianFilter2D(fVar1,(int)(int *)uVar2,param_7,param_8,param_7,param_8,in_r10);
-        __restfpr_24(lVar4 + 1);
-        iVar3 = __restgprlr_24();
-        return iVar3;
+        RB_GenerateGaussianFilter2D(fVar1,(int)(int *)lVar2,param_7,param_8,param_7,param_8,in_r10);
+        return iVar4 + 1;
       }
       if (dVar11 <= dVar12) {
         dVar13 = dVar7;
@@ -483,70 +468,67 @@ int RB_GenerateGaussianFilterChain
           dVar11 = dVar7;
         }
       }
-      RB_GenerateGaussianFilter1D((float)dVar12,(int *)uVar2,(int)&local_a0,iVar3,in_r10);
-      lVar4 = lVar4 + 1;
+      RB_GenerateGaussianFilter1D((float)dVar12,(int *)lVar2,(int)&local_a0,iVar3,in_r10);
+      iVar4 = iVar4 + 1;
       dVar12 = dVar13;
-    } while ((int)lVar4 < (int)param_9);
+    } while (iVar4 < (int)param_9);
   }
-  __restfpr_24(lVar4);
-  iVar3 = __restgprlr_24();
-  return iVar3;
+  return iVar4;
 }
 
 
 // 827A17A0  RB_SetupFilterPass  (gfx_d3d/rb_imagefilter.cpp:289)
 
+/* WARNING: Function: __savegprlr_21 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_21 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 
 void RB_SetupFilterPass(GfxImageFilterPass *param_1)
 
 {
-  undefined4 *puVar1;
+  GfxImageFilterPass *pGVar1;
   ushort *puVar2;
-  undefined4 *puVar3;
-  int iVar4;
-  ushort *puVar5;
-  uint uVar6;
-  undefined4 *puVar7;
+  int iVar3;
+  ushort *puVar4;
+  uint uVar5;
+  GfxImageFilterPass *pGVar6;
   
-  puVar3 = (undefined4 *)__savegprlr_21(param_1);
-  if (8 < (uint)puVar3[1]) {
+  if (8 < (uint)param_1->tapHalfCount) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_imagefilter.cpp",
                     0x124,0,
                     "filterPass->tapHalfCount doesn\'t index ARRAY_COUNT( filterPass->tapOffsetsAndWeights ) + 1\n\t%i not in [0, %i)"
                    );
   }
-  if (0 < (int)puVar3[1]) {
-    puVar5 = gfxCmdBufSourceState.constVersions + 0xd;
-    uVar6 = 0xe;
-    puVar1 = puVar3;
+  if (0 < param_1->tapHalfCount) {
+    puVar4 = gfxCmdBufSourceState.constVersions + 0xd;
+    uVar5 = 0xe;
+    pGVar1 = param_1;
     do {
-      puVar7 = puVar1 + 4;
-      if (0x51 < uVar6) {
+      pGVar6 = (GfxImageFilterPass *)(pGVar1->tapOffsetsAndWeights[0] + 2);
+      if (0x51 < uVar5) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_state.h",0x2ae,0
                         ,"constant doesn\'t index CONST_SRC_CODE_COUNT_FLOAT4\n\t%i not in [0, %i)")
         ;
       }
-      *(undefined4 *)((-0x7b7b2950 - (int)puVar3) + (int)puVar7) = puVar1[2];
-      *(undefined4 *)((-0x7b7b294c - (int)puVar3) + (int)puVar7) = puVar1[3];
-      *(undefined4 *)((-0x7b7b2948 - (int)puVar3) + (int)puVar7) = *puVar7;
-      *(undefined4 *)((-0x7b7b2944 - (int)puVar3) + (int)puVar7) = puVar1[5];
-      if (0x89 < uVar6) {
+      *(float *)((-0x7b7b2950 - (int)param_1) + (int)pGVar6) = pGVar1->tapOffsetsAndWeights[0][0];
+      *(float *)((-0x7b7b294c - (int)param_1) + (int)pGVar6) = pGVar1->tapOffsetsAndWeights[0][1];
+      *(Material **)((-0x7b7b2948 - (int)param_1) + (int)pGVar6) = pGVar6->material;
+      *(float *)((-0x7b7b2944 - (int)param_1) + (int)pGVar6) = pGVar1->tapOffsetsAndWeights[0][3];
+      if (0x89 < uVar5) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_state.h",0x250,0
                         ,
                         "constant doesn\'t index ARRAY_COUNT( source->constVersions )\n\t%i not in [0, %i)"
                        );
       }
-      puVar2 = puVar5 + 1;
-      iVar4 = uVar6 - 0xd;
-      puVar5 = puVar5 + 1;
-      *puVar5 = *puVar2 + 1;
-      uVar6 = uVar6 + 1;
-      puVar1 = puVar7;
-    } while (iVar4 < (int)puVar3[1]);
+      puVar2 = puVar4 + 1;
+      iVar3 = uVar5 - 0xd;
+      puVar4 = puVar4 + 1;
+      *puVar4 = *puVar2 + 1;
+      uVar5 = uVar5 + 1;
+      pGVar1 = pGVar6;
+    } while (iVar3 < param_1->tapHalfCount);
   }
-  __restgprlr_21();
   return;
 }
 
@@ -606,6 +588,8 @@ void RB_SetSrgbTextureReadsForFilteringImage(GfxImageFilter *param_1,bool param_
 
 // 827A1A58  RB_FilterImage  (gfx_d3d/rb_imagefilter.cpp:400)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
@@ -613,73 +597,72 @@ void RB_SetSrgbTextureReadsForFilteringImage(GfxImageFilter *param_1,bool param_
 void RB_FilterImage(GfxImageFilter *param_1,GfxViewInfo *param_2)
 
 {
-  GfxImageFilter *pGVar1;
-  bool bVar3;
-  GfxRenderTargetId GVar2;
+  bool bVar2;
+  GfxRenderTargetId GVar1;
   undefined8 in_r5;
   undefined8 in_r6;
-  undefined8 uVar4;
-  int iVar5;
-  GfxImageFilterPass *pGVar6;
+  undefined8 uVar3;
+  int iVar4;
+  GfxImageFilterPass *pGVar5;
   
-  pGVar1 = (GfxImageFilter *)__savegprlr_26(param_1);
-  uVar4 = 0xffffffff82000f98;
-  if (pGVar1 == (GfxImageFilter *)0x0) {
+  uVar3 = 0xffffffff82000f98;
+  if (param_1 == (GfxImageFilter *)0x0) {
     in_r5 = 0;
-    in_r6 = uVar4;
+    in_r6 = uVar3;
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_imagefilter.cpp",
                     0x195,0,"%s");
   }
-  if (pGVar1->passCount < 1) {
+  if (param_1->passCount < 1) {
     in_r6 = 0xffffffff821d68ac;
     in_r5 = 0;
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_imagefilter.cpp",
                     0x196,0,"%s\n\t(filter->passCount) = %i");
   }
-  if (pGVar1->sourceImage == (GfxImage *)0x0) {
+  if (param_1->sourceImage == (GfxImage *)0x0) {
     in_r5 = 0;
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_imagefilter.cpp",
                     0x197,0,"%s");
-    in_r6 = uVar4;
+    in_r6 = uVar3;
   }
   RB_EndSurfaceIfNeeded();
-  bVar3 = RB_IsViewFullScreen(param_2);
-  if (!bVar3) {
-    R_SetRenderTargetSize(&gfxCmdBufSourceState,pGVar1->finalTarget);
-    R_SetRenderTarget((GfxCmdBufContext)0x8484c7e08484df40,pGVar1->finalTarget);
+  bVar2 = RB_IsViewFullScreen(param_2);
+  if (!bVar2) {
+    R_SetRenderTargetSize(&gfxCmdBufSourceState,param_1->finalTarget);
+    R_SetRenderTarget((GfxCmdBufContext)0x8484c7e08484df40,param_1->finalTarget);
     in_r5 = 0xffffffff821817d8;
     R_ClearScreen(gfxCmdBufState.prim.device,'\x0f',colorBlack,0.0,(uchar)in_r6,(GfxViewport *)0x0);
   }
-  if ((1 < pGVar1->passCount) && (pGVar1->useGammaReadsAfterFirstPass != 0)) {
+  if ((1 < param_1->passCount) && (param_1->useGammaReadsAfterFirstPass != 0)) {
     RB_UnbindAllImages();
-    GVar2 = R_GetGammaRenderTargetId(pGVar1->feedbackTarget,true);
-    pGVar1->feedbackTarget = GVar2;
+    GVar1 = R_GetGammaRenderTargetId(param_1->feedbackTarget,true);
+    param_1->feedbackTarget = GVar1;
   }
-  iVar5 = 0;
-  if (0 < pGVar1->passCount) {
-    pGVar6 = pGVar1->passes;
+  iVar4 = 0;
+  if (0 < param_1->passCount) {
+    pGVar5 = param_1->passes;
     do {
-      RB_FilterPingPong(pGVar1,iVar5,(GfxViewInfo *)in_r5,(bool *)in_r6);
-      RB_SetupFilterPass(pGVar6);
-      RB_Filter(pGVar6->material,param_2);
-      iVar5 = iVar5 + 1;
-      pGVar6 = pGVar6 + 1;
-    } while (iVar5 < pGVar1->passCount);
+      RB_FilterPingPong(param_1,iVar4,(GfxViewInfo *)in_r5,(bool *)in_r6);
+      RB_SetupFilterPass(pGVar5);
+      RB_Filter(pGVar5->material,param_2);
+      iVar4 = iVar4 + 1;
+      pGVar5 = pGVar5 + 1;
+    } while (iVar4 < param_1->passCount);
   }
-  R_Resolve((GfxCmdBufContext)0x8484c7e08484df40,gfxRenderTargets[pGVar1->feedbackTarget].image);
-  gfxCmdBufSourceState.input.codeImages[8] = gfxRenderTargets[pGVar1->feedbackTarget].image;
-  if ((1 < pGVar1->passCount) && (pGVar1->useGammaReadsAfterFirstPass != 0)) {
+  R_Resolve((GfxCmdBufContext)0x8484c7e08484df40,gfxRenderTargets[param_1->feedbackTarget].image);
+  gfxCmdBufSourceState.input.codeImages[8] = gfxRenderTargets[param_1->feedbackTarget].image;
+  if ((1 < param_1->passCount) && (param_1->useGammaReadsAfterFirstPass != 0)) {
     RB_UnbindAllImages();
-    GVar2 = R_GetGammaRenderTargetId(pGVar1->feedbackTarget,false);
-    pGVar1->feedbackTarget = GVar2;
+    GVar1 = R_GetGammaRenderTargetId(param_1->feedbackTarget,false);
+    param_1->feedbackTarget = GVar1;
   }
-  __restgprlr_26();
   return;
 }
 
 
 // 827A1C40  RB_GaussianFilterImage  (gfx_d3d/rb_imagefilter.cpp:448)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
@@ -689,49 +672,41 @@ void RB_GaussianFilterImage
                GfxViewInfo *param_4)
 
 {
-  int iVar1;
-  int iVar2;
-  int iVar3;
-  int iVar4;
-  float *pfVar5;
-  GfxRenderTargetId GVar6;
-  ulonglong uVar7;
-  ulonglong uVar8;
+  uint uVar1;
+  uint uVar2;
+  uint uVar3;
+  uint uVar4;
+  GfxRenderTargetId GVar5;
   GfxViewInfo *in_r6;
-  double extraout_f1;
   float local_8f0;
   float local_8ec;
   GfxImageFilter local_8e0;
   
-  uVar8 = (ulonglong)(int)param_4;
-  uVar7 = (ulonglong)(int)param_3;
-  pfVar5 = (float *)__savegprlr_25((double)param_1,param_2);
-  RB_VirtualToSceneRadius((float)extraout_f1,pfVar5,&local_8f0);
-  iVar2 = (int)((uVar7 + (uVar7 & 0x3fffffff) * 4 & 0xffffffff) << 2);
-  iVar4 = (int)((uVar8 + (uVar8 & 0x3fffffff) * 4 & 0xffffffff) << 2);
-  iVar1 = *(int *)((int)&gfxRenderTargets[0].width + iVar2);
-  iVar2 = *(int *)((int)&gfxRenderTargets[0].height + iVar2);
-  iVar3 = *(int *)((int)&gfxRenderTargets[0].width + iVar4);
-  iVar4 = *(int *)((int)&gfxRenderTargets[0].height + iVar4);
-  local_8e0.feedbackTarget = (GfxRenderTargetId)uVar8;
-  GVar6 = R_GetGammaRenderTargetId((GfxRenderTargetId)uVar7,true);
+  RB_VirtualToSceneRadius(param_1,(float *)param_2,&local_8f0);
+  uVar1 = gfxRenderTargets[param_3].width;
+  uVar2 = gfxRenderTargets[param_3].height;
+  uVar3 = gfxRenderTargets[(int)param_4].width;
+  uVar4 = gfxRenderTargets[(int)param_4].height;
+  local_8e0.feedbackTarget = (GfxRenderTargetId)param_4;
+  GVar5 = R_GetGammaRenderTargetId(param_3,true);
   local_8e0.useGammaReadsAfterFirstPass = 1;
-  local_8e0.sourceImage = gfxRenderTargets[GVar6].image;
-  local_8e0.finalTarget = (GfxRenderTargetId)uVar8;
+  local_8e0.sourceImage = gfxRenderTargets[GVar5].image;
+  local_8e0.finalTarget = (GfxRenderTargetId)param_4;
   local_8e0.passCount =
        RB_GenerateGaussianFilterChain
-                 (local_8f0,local_8ec,(int)local_8e0.sourceImage,GVar6 * 0x14,iVar1,iVar2,iVar3,
-                  iVar4,(GfxImageFilterPass *)&DAT_00000010);
+                 (local_8f0,local_8ec,(int)local_8e0.sourceImage,GVar5 * 0x14,uVar1,uVar2,uVar3,
+                  uVar4,(GfxImageFilterPass *)&DAT_00000010);
   RB_UnbindAllImages();
   RB_FilterImage(&local_8e0,in_r6);
   RB_UnbindAllImages();
-  __restgprlr_25();
   return;
 }
 
 
 // 827A1D20  RB_ApplyGlowFilter  (gfx_d3d/rb_imagefilter.cpp:494)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
@@ -742,88 +717,77 @@ RB_ApplyGlowFilter(float param_1,GfxRenderTargetId param_2,GfxRenderTargetId par
 
 {
   int iVar1;
-  int iVar2;
-  float *pfVar3;
-  GfxRenderTargetId GVar4;
-  int iVar5;
-  ulonglong uVar6;
-  ulonglong uVar7;
   GfxViewInfo *in_r6;
-  double extraout_f1;
-  double dVar8;
-  double dVar9;
+  double dVar2;
+  double dVar3;
   float local_900;
   float local_8fc;
   GfxImageFilter local_8f0;
   
-  uVar7 = (ulonglong)(int)param_4;
-  uVar6 = (ulonglong)(int)param_3;
-  pfVar3 = (float *)__savegprlr_24((double)param_1,param_2);
-  dVar9 = extraout_f1;
-  if (((int)uVar6 < 0) || (0xe < (int)uVar6)) {
-    pfVar3 = (float *)"c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_imagefilter.cpp";
+  dVar2 = (double)param_1;
+  if (((int)param_3 < 0) || (0xe < (int)param_3)) {
+    param_2 = (GfxRenderTargetId)
+              "c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_imagefilter.cpp";
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_imagefilter.cpp",
                     0x1f5,0,
                     "srcRenderTarget not in [0, R_RENDERTARGET_COUNT - 1]\n\t%i not in [%i, %i]");
   }
-  GVar4 = (GfxRenderTargetId)uVar7;
-  if (((int)GVar4 < 0) || (0xe < (int)GVar4)) {
-    pfVar3 = (float *)"c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_imagefilter.cpp";
+  if (((int)param_4 < 0) || (0xe < (int)param_4)) {
+    param_2 = (GfxRenderTargetId)
+              "c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_imagefilter.cpp";
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_imagefilter.cpp",
                     0x1f6,0,
                     "dstRenderTarget not in [0, R_RENDERTARGET_COUNT - 1]\n\t%i not in [%i, %i]");
   }
-  dVar8 = 0.0;
-  if (dVar9 < 0.0) {
-    pfVar3 = (float *)"c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_imagefilter.cpp";
+  dVar3 = 0.0;
+  if (dVar2 < 0.0) {
+    param_2 = (GfxRenderTargetId)
+              "c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_imagefilter.cpp";
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_imagefilter.cpp",
                     0x1f7,0,"%s\n\t(radius) = %g");
   }
-  if (dVar9 == dVar8) {
-    GVar4 = __restgprlr_24(uVar6);
-    return GVar4;
+  if (dVar2 == dVar3) {
+    return param_3;
   }
-  iVar5 = (int)((uVar6 + (uVar6 & 0x3fffffff) * 4 & 0x3fffffff) << 2);
-  iVar2 = (int)((uVar7 + (uVar7 & 0x3fffffff) * 4 & 0x3fffffff) << 2);
-  if (*(uint *)((int)&gfxRenderTargets[0].width + iVar2) !=
-      *(uint *)((int)&gfxRenderTargets[0].width + iVar5) >> 2) {
-    pfVar3 = (float *)"c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_imagefilter.cpp";
+  if (gfxRenderTargets[(int)param_4].width != gfxRenderTargets[param_3].width >> 2) {
+    param_2 = (GfxRenderTargetId)
+              "c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_imagefilter.cpp";
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_imagefilter.cpp",
                     0x1fb,0,
                     "gfxRenderTargets[dstRenderTarget].width == gfxRenderTargets[srcRenderTarget].width / 4\n\t%i, %i"
                    );
   }
-  if (*(uint *)((int)&gfxRenderTargets[0].height + iVar2) !=
-      *(uint *)((int)&gfxRenderTargets[0].height + iVar5) >> 2) {
-    pfVar3 = (float *)"c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_imagefilter.cpp";
+  if (gfxRenderTargets[(int)param_4].height != gfxRenderTargets[param_3].height >> 2) {
+    param_2 = (GfxRenderTargetId)
+              "c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_imagefilter.cpp";
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_imagefilter.cpp",
                     0x1fc,0,
                     "gfxRenderTargets[dstRenderTarget].height == gfxRenderTargets[srcRenderTarget].height / 4\n\t%i, %i"
                    );
   }
-  RB_VirtualToSceneRadius((float)(dVar9 * 0.25),pfVar3,&local_900);
-  iVar1 = *(int *)((int)&gfxRenderTargets[0].width + iVar2);
-  iVar2 = *(int *)((int)&gfxRenderTargets[0].height + iVar2);
+  RB_VirtualToSceneRadius((float)(dVar2 * 0.25),(float *)param_2,&local_900);
   local_8f0.passCount = 1;
   local_8f0.useGammaReadsAfterFirstPass = 1;
   local_8f0.passes[0].tapHalfCount = 0;
-  local_8f0.sourceImage = *(GfxImage **)((int)&gfxRenderTargets[0].image + iVar5);
+  local_8f0.sourceImage = gfxRenderTargets[param_3].image;
   local_8f0.passes[0].material = rgp.glowConsistentSetupMaterial[in_r6->filmAltShader != false];
-  local_8f0.finalTarget = GVar4;
-  local_8f0.feedbackTarget = GVar4;
-  iVar5 = RB_GenerateGaussianFilterChain
+  local_8f0.finalTarget = (GfxRenderTargetId)param_4;
+  local_8f0.feedbackTarget = (GfxRenderTargetId)param_4;
+  iVar1 = RB_GenerateGaussianFilterChain
                     (local_900,local_8fc,(int)local_8f0.sourceImage,
-                     (int)local_8f0.passes[0].material,iVar1,iVar2,iVar1,iVar2,
-                     (GfxImageFilterPass *)0xf);
-  local_8f0.passCount = iVar5 + local_8f0.passCount;
+                     (int)local_8f0.passes[0].material,gfxRenderTargets[(int)param_4].width,
+                     gfxRenderTargets[(int)param_4].height,gfxRenderTargets[(int)param_4].width,
+                     gfxRenderTargets[(int)param_4].height,(GfxImageFilterPass *)0xf);
+  local_8f0.passCount = iVar1 + local_8f0.passCount;
   RB_FilterImage(&local_8f0,in_r6);
-  GVar4 = __restgprlr_24(uVar7);
-  return GVar4;
+  return (GfxRenderTargetId)param_4;
 }
 
 
 // 827A1F50  RB_GlowFilterImage  (gfx_d3d/rb_imagefilter.cpp:537)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
@@ -831,31 +795,30 @@ RB_ApplyGlowFilter(float param_1,GfxRenderTargetId param_2,GfxRenderTargetId par
 void RB_GlowFilterImage(GfxViewInfo *param_1)
 
 {
-  char *pcVar1;
-  char *pcVar2;
-  GfxRenderTargetId GVar3;
-  double dVar4;
+  GfxViewInfo *pGVar1;
+  GfxRenderTargetId GVar2;
+  double dVar3;
   
-  pcVar1 = (char *)__savegprlr_29(param_1);
-  pcVar2 = pcVar1;
+  pGVar1 = param_1;
   if (backEnd.glowCount != 0) {
-    pcVar2 = "c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_imagefilter.cpp";
+    pGVar1 = (GfxViewInfo *)
+             "c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_imagefilter.cpp";
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_imagefilter.cpp",
                     0x21d,0,"%s\n\t(backEnd.glowCount) = %i");
   }
-  dVar4 = (double)*(float *)(pcVar1 + 0x268);
-  if (dVar4 != 0.0) {
-    if (*(int *)(pcVar1 + 0x950) == 0x10) {
-      pcVar2 = "c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_imagefilter.cpp";
+  dVar3 = (double)(param_1->glow).radius;
+  if (dVar3 != 0.0) {
+    if (param_1->sceneResolveRenderTargetId == R_RENDERTARGET_NONE) {
+      pGVar1 = (GfxViewInfo *)
+               "c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_imagefilter.cpp";
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_imagefilter.cpp",
                       0x223,0,"%s");
     }
-    GVar3 = RB_ApplyGlowFilter((float)dVar4,(GfxRenderTargetId)pcVar2,
-                               *(GfxRenderTargetId *)(pcVar1 + 0x950),(GfxViewInfo *)&DAT_00000008);
+    GVar2 = RB_ApplyGlowFilter((float)dVar3,(GfxRenderTargetId)pGVar1,
+                               param_1->sceneResolveRenderTargetId,(GfxViewInfo *)&DAT_00000008);
     backEnd.glowCount = 1;
-    backEnd.glowImage = gfxRenderTargets[GVar3].image;
+    backEnd.glowImage = gfxRenderTargets[GVar2].image;
   }
-  __restgprlr_29();
   return;
 }
 

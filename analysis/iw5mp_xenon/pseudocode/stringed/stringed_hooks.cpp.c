@@ -203,55 +203,53 @@ char * SEH_SafeTranslateString(char *param_1)
 
 // 8258B4B8  SEH_GetLocalizedTokenReference  (stringed/stringed_hooks.cpp:378)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 int SEH_GetLocalizedTokenReference
               (char *param_1,char *param_2,char *param_3,msgLocErrType_t param_4)
 
 {
   char cVar1;
   int iVar2;
-  int iVar3;
-  char *pcVar4;
-  ulonglong uVar5;
+  char *pcVar3;
   
-  uVar5 = (ulonglong)(int)param_2;
-  iVar3 = __savegprlr_28(param_1,uVar5,param_3);
   if ((((loc_translate != (dvar_t *)0x0) && ((loc_translate->current).enabled != false)) &&
-      (pcVar4 = (char *)uVar5, *pcVar4 != '\0')) && (pcVar4[1] != '\0')) {
-    pcVar4 = SE_GetString(pcVar4);
-    uVar5 = (ulonglong)(int)pcVar4;
+      (*param_2 != '\0')) && (param_2[1] != '\0')) {
+    param_2 = SE_GetString(param_2);
   }
-  if ((uVar5 & 0xffffffff) == 0) {
+  if (param_2 == (char *)0x0) {
     if ((loc_warnings == (dvar_t *)0x0) || ((loc_warnings->current).enabled == false)) {
-      pcVar4 = "%s";
+      pcVar3 = "%s";
     }
     else if (((loc_warningsAsErrors == (dvar_t *)0x0) ||
              ((loc_warningsAsErrors->current).enabled == false)) || (param_4 == LOCMSG_NOERR)) {
       Com_PrintWarning(0x10,"WARNING: Could not translate part of %s: \"%s\"\n");
-      pcVar4 = "^1UNLOCALIZED(^7%s^1)^7";
+      pcVar3 = "^1UNLOCALIZED(^7%s^1)^7";
     }
     else {
       Com_Error(ERR_LOCALIZATION,"Could not translate part of %s: \"%s\"");
-      pcVar4 = "^1UNLOCALIZED(^7%s^1)^7";
+      pcVar3 = "^1UNLOCALIZED(^7%s^1)^7";
     }
-    pcVar4 = va(pcVar4);
-    uVar5 = (ulonglong)(int)pcVar4;
+    param_2 = va(pcVar3);
     if (param_4 == LOCMSG_NOERR) {
-      iVar3 = __restgprlr_28(0);
-      return iVar3;
+      return 0;
     }
   }
-  iVar2 = (int)uVar5;
+  iVar2 = (int)param_1 - (int)param_2;
   do {
-    cVar1 = *(char *)uVar5;
-    ((char *)uVar5)[iVar3 - iVar2] = cVar1;
-    uVar5 = uVar5 + 1;
+    cVar1 = *param_2;
+    param_2[iVar2] = cVar1;
+    param_2 = param_2 + 1;
   } while (cVar1 != '\0');
-  iVar3 = __restgprlr_28(1);
-  return iVar3;
+  return 1;
 }
 
 
 // 8258B5F8  SEH_LocalizeTextMessage  (stringed/stringed_hooks.cpp:421)
+
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
 
 char * SEH_LocalizeTextMessage(char *param_1,char *param_2,msgLocErrType_t param_3)
 
@@ -261,67 +259,61 @@ char * SEH_LocalizeTextMessage(char *param_1,char *param_2,msgLocErrType_t param
   bool bVar3;
   bool bVar4;
   int iVar5;
-  int iVar6;
-  char (*pacVar7) [1024];
-  char *pcVar8;
-  int iVar9;
+  char *pcVar6;
+  int iVar7;
+  int iVar8;
+  ulonglong uVar9;
   ulonglong uVar10;
-  ulonglong uVar11;
-  longlong lVar12;
+  longlong lVar11;
+  char (*pacVar12) [1024];
   ulonglong uVar13;
-  ulonglong uVar14;
+  longlong lVar14;
   longlong lVar15;
-  longlong lVar16;
-  uint uStack00000024;
+  msgLocErrType_t mStack00000024;
   int local_8c0;
   char local_8a0 [1024];
   char local_4a0 [1184];
   
-  uVar14 = (ulonglong)(int)param_3;
-  uVar10 = (ulonglong)(int)param_1;
-  __savegprlr();
-  uStack00000024 = (uint)uVar14;
+  uVar9 = (ulonglong)(int)param_1;
   iVar5 = iCurrString + 1;
-  iVar9 = iVar5 / 10 + (iVar5 >> 0x1f);
-  iCurrString = iVar5 + ((iVar9 - (iVar9 >> 0x1f)) * 5 & 0x7fffffffU) * -2;
-  pacVar7 = szStrings + iCurrString;
+  iVar8 = iVar5 / 10 + (iVar5 >> 0x1f);
+  iCurrString = iVar5 + ((iVar8 - (iVar8 >> 0x1f)) * 5 & 0x7fffffffU) * -2;
+  pacVar12 = szStrings + iCurrString;
+  mStack00000024 = param_3;
   memset();
   bVar1 = true;
-  lVar12 = 0;
+  lVar11 = 0;
   bVar3 = true;
   local_8c0 = 1;
-  iVar9 = 0;
+  iVar8 = 0;
   bVar4 = false;
-  uVar11 = uVar10;
-  if (*(char *)uVar10 != '\0') {
+  uVar10 = uVar9;
+  if (*param_1 != '\0') {
     do {
-      cVar2 = *(char *)uVar11;
-      lVar16 = lVar12;
+      cVar2 = *(char *)uVar10;
+      lVar15 = lVar11;
       if ((((cVar2 == '\0') || (cVar2 == '\x14')) || (cVar2 == '\x15')) || (cVar2 == '\x16')) {
-        if ((uVar10 & 0xffffffff) < (uVar11 & 0xffffffff)) {
-          uVar13 = uVar11 - uVar10;
-          I_strncpyz(local_8a0,(char *)uVar10,(int)uVar13 + 1);
+        if ((uVar9 & 0xffffffff) < (uVar10 & 0xffffffff)) {
+          uVar13 = uVar10 - uVar9;
+          I_strncpyz(local_8a0,(char *)uVar9,(int)uVar13 + 1);
           if (bVar3) {
-            iVar5 = SEH_GetLocalizedTokenReference
-                              (local_8a0,local_8a0,param_2,(msgLocErrType_t)uVar14);
+            iVar5 = SEH_GetLocalizedTokenReference(local_8a0,local_8a0,param_2,param_3);
             if (iVar5 == 0) {
-              pcVar8 = (char *)0x0;
-              __restgprlr();
-              return pcVar8;
+              return (char *)0x0;
             }
-            pcVar8 = local_8a0;
+            pcVar6 = local_8a0;
             do {
-              cVar2 = *pcVar8;
-              pcVar8 = pcVar8 + 1;
+              cVar2 = *pcVar6;
+              pcVar6 = pcVar6 + 1;
             } while (cVar2 != '\0');
-            uVar13 = ZEXT48(pcVar8 + (-1 - (int)local_8a0));
+            uVar13 = ZEXT48(pcVar6 + (-1 - (int)local_8a0));
           }
-          lVar16 = uVar13 + lVar12;
-          if (0x3ff < (int)lVar16) {
+          lVar15 = uVar13 + lVar11;
+          if (0x3ff < (int)lVar15) {
             if (((loc_warnings != (dvar_t *)0x0) && ((loc_warnings->current).enabled != false)) &&
                ((loc_warningsAsErrors != (dvar_t *)0x0 &&
-                (((loc_warningsAsErrors->current).enabled != false &&
-                 ((msgLocErrType_t)uVar14 != LOCMSG_NOERR)))))) {
+                (((loc_warningsAsErrors->current).enabled != false && (param_3 != LOCMSG_NOERR))))))
+            {
               Com_Error(ERR_DROP,"%s too long when translated: \"%s\"");
             }
             Com_Printf(0x10,"%s too long when translated: \"%s\"\n");
@@ -329,12 +321,12 @@ char * SEH_LocalizeTextMessage(char *param_1,char *param_2,msgLocErrType_t param
           iVar5 = 0;
           if (0 < (longlong)(uVar13 - 2)) {
             do {
-              pcVar8 = local_8a0 + iVar5;
+              pcVar6 = local_8a0 + iVar5;
               strncmp();
-              if ((pcVar8 == (char *)0x0) &&
-                 (iVar6 = isdigit((int)local_8a0[iVar5 + 2]), iVar6 != 0)) {
+              if ((pcVar6 == (char *)0x0) &&
+                 (iVar7 = isdigit((int)local_8a0[iVar5 + 2]), iVar7 != 0)) {
                 if (bVar1) {
-                  iVar9 = iVar9 + 1;
+                  iVar8 = iVar8 + 1;
                 }
                 else {
                   bVar4 = true;
@@ -344,40 +336,40 @@ char * SEH_LocalizeTextMessage(char *param_1,char *param_2,msgLocErrType_t param
               iVar5 = iVar5 + 1;
             } while (iVar5 < (int)(uVar13 - 2));
           }
-          if ((iVar9 < 1) || ((int)lVar12 < 1)) {
-            pcVar8 = local_8a0;
+          if ((iVar8 < 1) || ((int)lVar11 < 1)) {
+            pcVar6 = local_8a0;
             do {
-              cVar2 = *pcVar8;
-              pcVar8[(int)pacVar7 + ((int)lVar12 - (int)local_8a0)] = cVar2;
-              pcVar8 = pcVar8 + 1;
+              cVar2 = *pcVar6;
+              ((char *)((int)pacVar12 + ((int)lVar11 - (int)local_8a0)))[(int)pcVar6] = cVar2;
+              pcVar6 = pcVar6 + 1;
             } while (cVar2 != '\0');
           }
           else {
             bVar1 = false;
-            iVar6 = 0;
+            iVar7 = 0;
             iVar5 = 0;
-            if (0 < lVar12 + -2) {
+            if (0 < lVar11 + -2) {
 LAB_8258b870:
-              pcVar8 = *pacVar7 + iVar6;
+              pcVar6 = *pacVar12 + iVar7;
               strncmp();
-              if (pcVar8 != (char *)0x0) goto LAB_8258b8d4;
-              iVar5 = isdigit((int)(*pacVar7)[iVar6 + 2]);
+              if (pcVar6 != (char *)0x0) goto LAB_8258b8d4;
+              iVar5 = isdigit((int)(*pacVar12)[iVar7 + 2]);
               if (iVar5 == 0) goto LAB_8258b8d4;
-              lVar15 = (longlong)(*pacVar7)[iVar6 + 2] + -0x30;
-              if (lVar15 == 0) {
+              lVar14 = (longlong)(*pacVar12)[iVar7 + 2] + -0x30;
+              if (lVar14 == 0) {
                 Com_Printf(0x10,"%s cannot have &&0 as conversion format: \"%s\"\n");
               }
-              if ((int)lVar15 != local_8c0) goto LAB_8258b8d4;
-              pcVar8 = *pacVar7 + iVar6 + 3;
-              iVar5 = -(int)pcVar8;
+              if ((int)lVar14 != local_8c0) goto LAB_8258b8d4;
+              pcVar6 = *pacVar12 + iVar7 + 3;
+              iVar5 = -(int)pcVar6;
               do {
-                cVar2 = *pcVar8;
-                pcVar8[(int)(local_4a0 + iVar5)] = cVar2;
-                pcVar8 = pcVar8 + 1;
+                cVar2 = *pcVar6;
+                pcVar6[(int)(local_4a0 + iVar5)] = cVar2;
+                pcVar6 = pcVar6 + 1;
               } while (cVar2 != '\0');
               bVar1 = true;
-              (*pacVar7)[iVar6] = '\0';
-              iVar5 = iVar6;
+              (*pacVar12)[iVar7] = '\0';
+              iVar5 = iVar7;
 LAB_8258b918:
               if (iVar5 < 0) {
                 MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\stringed\\stringed_hooks.cpp"
@@ -385,68 +377,68 @@ LAB_8258b918:
               }
             }
             if (bVar1) {
-              pcVar8 = local_8a0;
+              pcVar6 = local_8a0;
               do {
-                cVar2 = *pcVar8;
-                pcVar8[(int)pacVar7 + (iVar5 - (int)local_8a0)] = cVar2;
-                pcVar8 = pcVar8 + 1;
+                cVar2 = *pcVar6;
+                ((char *)((int)pacVar12 + (iVar5 - (int)local_8a0)))[(int)pcVar6] = cVar2;
+                pcVar6 = pcVar6 + 1;
               } while (cVar2 != '\0');
-              pcVar8 = local_4a0;
+              pcVar6 = local_4a0;
               do {
-                cVar2 = *pcVar8;
-                pcVar8[(int)pacVar7 + (iVar5 - (int)local_4a0) + (int)uVar13] = cVar2;
-                pcVar8 = pcVar8 + 1;
+                cVar2 = *pcVar6;
+                ((char *)((int)pacVar12 + (iVar5 - (int)local_4a0) + (int)uVar13))[(int)pcVar6] =
+                     cVar2;
+                pcVar6 = pcVar6 + 1;
               } while (cVar2 != '\0');
-              lVar12 = lVar16 + -3;
-              iVar9 = iVar9 + -1;
+              lVar11 = lVar15 + -3;
+              iVar8 = iVar8 + -1;
             }
-            uVar14 = (ulonglong)uStack00000024;
             local_8c0 = local_8c0 + 1;
-            lVar16 = lVar12;
+            lVar15 = lVar11;
+            param_3 = mStack00000024;
           }
         }
-        cVar2 = *(char *)uVar11;
+        cVar2 = *(char *)uVar10;
         if (cVar2 == '\x14') {
           bVar3 = true;
 LAB_8258ba08:
-          uVar10 = uVar11 + 1;
+          uVar9 = uVar10 + 1;
         }
         else {
-          uVar10 = uVar11;
+          uVar9 = uVar10;
           if (cVar2 == '\x15') {
             bVar3 = false;
             goto LAB_8258ba08;
           }
         }
-        bVar1 = *(char *)uVar10 != '\x16';
-        uVar11 = uVar10;
+        bVar1 = *(char *)uVar9 != '\x16';
+        uVar10 = uVar9;
         if (!bVar1) {
-          uVar10 = uVar10 + 1;
-          uVar11 = uVar10;
+          uVar9 = uVar9 + 1;
+          uVar10 = uVar9;
         }
       }
       else {
-        uVar11 = uVar11 + 1;
+        uVar10 = uVar10 + 1;
       }
-      lVar12 = lVar16;
-    } while (*(char *)uVar10 != '\0');
-    if ((bVar4) && (0 < (int)lVar16)) {
-      iVar9 = 0;
+      lVar11 = lVar15;
+    } while (*(char *)uVar9 != '\0');
+    if ((bVar4) && (0 < (int)lVar15)) {
+      iVar8 = 0;
       do {
-        if ((*pacVar7)[iVar9] == '\x16') {
-          (*pacVar7)[iVar9] = '%';
+        if ((*pacVar12)[iVar8] == '\x16') {
+          (*pacVar12)[iVar8] = '%';
         }
-        iVar9 = iVar9 + 1;
-        lVar16 = lVar16 + -1;
-      } while (lVar16 != 0);
+        iVar8 = iVar8 + 1;
+        lVar15 = lVar15 + -1;
+      } while (lVar15 != 0);
     }
   }
-  __restgprlr();
-  return *pacVar7;
+  return *pacVar12;
 LAB_8258b8d4:
-  iVar6 = iVar6 + 1;
-  iVar5 = iVar6;
-  if ((int)(lVar12 + -2) <= iVar6) goto LAB_8258b918;
+  iVar7 = iVar7 + 1;
+  iVar5 = iVar7;
+  if ((int)(lVar11 + -2) <= iVar7) goto LAB_8258b918;
   goto LAB_8258b870;
 }
 
@@ -702,60 +694,56 @@ int Chinese_CollapseGBCode(uint param_1)
 
 // 8258BFF8  SEH_DecodeLetter  (stringed/stringed_hooks.cpp:824)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 uint SEH_DecodeLetter(uint param_1,uint param_2,int *param_3,int *param_4)
 
 {
-  byte bVar1;
+  ulonglong uVar1;
   ulonglong uVar2;
+  byte bVar3;
   int iVar5;
-  ulonglong uVar3;
   uint uVar6;
   bool bVar7;
   ulonglong uVar4;
   ulonglong uVar8;
-  uint *puVar9;
-  ulonglong uVar10;
   
-  uVar8 = (ulonglong)(int)param_4;
-  uVar4 = (ulonglong)(int)param_2;
-  uVar2 = __savegprlr_28(param_1);
-  uVar3 = uVar2 & 0xff;
-  uVar4 = uVar4 & 0xff;
-  puVar9 = (uint *)uVar8;
+  uVar2 = (ulonglong)param_1;
+  uVar1 = uVar2 & 0xff;
+  uVar4 = (ulonglong)param_2 & 0xff;
   if (g_currentAsian != 0) {
     iVar5 = SEH_GetCurrentLanguage();
-    uVar10 = (longlong)iVar5 - 8;
-    if ((uVar10 & 0xffffffff) < 4) {
-      bVar7 = (int)uVar10 != 0;
+    uVar8 = (longlong)iVar5 - 8;
+    if ((uVar8 & 0xffffffff) < 4) {
+      bVar7 = (int)uVar8 != 0;
       if ((longlong)iVar5 == 9 && bVar7) {
         uVar4 = (uVar2 & 0xff) * 0x100 + uVar4;
         bVar7 = Taiwanese_ValidBig5Code((uint)uVar4);
         if (bVar7) {
           *param_3 = 2;
-          if ((uVar8 & 0xffffffff) != 0) {
-            if (((uVar4 & 0xffffffff) < 0xa140) || (uVar6 = 1, 0xa153 < (uVar4 & 0xffffffff))) {
-              uVar6 = 0;
+          if (param_4 != (int *)0x0) {
+            if (((uVar4 & 0xffffffff) < 0xa140) || (iVar5 = 1, 0xa153 < (uVar4 & 0xffffffff))) {
+              iVar5 = 0;
             }
-            *puVar9 = uVar6;
+            *param_4 = iVar5;
           }
-          uVar6 = __restgprlr_28(uVar4);
-          return uVar6;
+          return (uint)uVar4;
         }
       }
-      else if (uVar10 == 2 && bVar7) {
-        bVar7 = Japanese_ValidShiftJISCode((uint)uVar3,(uint)uVar4);
+      else if (uVar8 == 2 && bVar7) {
+        bVar7 = Japanese_ValidShiftJISCode((uint)uVar1,(uint)uVar4);
         if (bVar7) {
-          uVar3 = (uVar2 & 0xff) * 0x100 + uVar4;
+          uVar4 = (uVar2 & 0xff) * 0x100 + uVar4;
           *param_3 = 2;
-          if ((uVar8 & 0xffffffff) != 0) {
-            if ((uVar3 < 0x8140) || (uVar6 = 1, 0x8151 < uVar3)) {
-              uVar6 = 0;
-            }
-            *puVar9 = uVar6;
-            uVar6 = __restgprlr_28();
-            return uVar6;
+          if (param_4 == (int *)0x0) {
+            return (uint)uVar4;
           }
-          goto LAB_8258c22c;
+          if ((uVar4 < 0x8140) || (iVar5 = 1, 0x8151 < uVar4)) {
+            iVar5 = 0;
+          }
+          *param_4 = iVar5;
+          return (uint)uVar4;
         }
       }
       else if (bVar7) {
@@ -766,46 +754,41 @@ uint SEH_DecodeLetter(uint param_1,uint param_2,int *param_3,int *param_4)
         }
         if (bVar7) {
           *param_3 = 2;
-          uVar3 = uVar4;
-          if ((uVar8 & 0xffffffff) != 0) {
-            if ((uVar4 < 0x8141) || (bVar1 = 1, 0x814d < uVar4)) {
-              bVar1 = 0;
-            }
-            *puVar9 = (uint)bVar1;
-            uVar6 = __restgprlr_28();
-            return uVar6;
+          if (param_4 == (int *)0x0) {
+            return (uint)uVar4;
           }
-          goto LAB_8258c22c;
+          if ((uVar4 < 0x8141) || (bVar3 = 1, 0x814d < uVar4)) {
+            bVar3 = 0;
+          }
+          *param_4 = (uint)bVar3;
+          return (uint)uVar4;
         }
       }
       else {
-        if (((uVar3 < 0xb0) || (200 < uVar3)) || ((uVar4 < 0xa1 || (bVar7 = true, 0xfe < uVar4)))) {
+        if (((uVar1 < 0xb0) || (200 < uVar1)) || ((uVar4 < 0xa1 || (bVar7 = true, 0xfe < uVar4)))) {
           bVar7 = false;
         }
         if (bVar7) {
-          uVar3 = (uVar2 & 0xff) * 0x100 + uVar4;
+          uVar6 = (int)(uVar1 << 8) + (uint)uVar4;
           *param_3 = 2;
-          if ((uVar8 & 0xffffffff) != 0) {
-            *puVar9 = 0;
-            uVar6 = __restgprlr_28(uVar3);
+          if (param_4 == (int *)0x0) {
             return uVar6;
           }
-          goto LAB_8258c22c;
+          *param_4 = 0;
+          return uVar6;
         }
       }
     }
   }
   *param_3 = 1;
-  if ((uVar8 & 0xffffffff) != 0) {
-    if (((((uVar3 == 0x21) || (uVar3 == 0x3f)) || (uVar3 == 0x2c)) ||
-        ((uVar3 == 0x2e || (uVar3 == 0x3b)))) || (uVar6 = 0, uVar3 == 0x3a)) {
-      uVar6 = 1;
+  if (param_4 != (int *)0x0) {
+    if (((((uVar1 == 0x21) || (uVar1 == 0x3f)) || (uVar1 == 0x2c)) ||
+        ((uVar1 == 0x2e || (uVar1 == 0x3b)))) || (iVar5 = 0, uVar1 == 0x3a)) {
+      iVar5 = 1;
     }
-    *puVar9 = uVar6;
+    *param_4 = iVar5;
   }
-LAB_8258c22c:
-  uVar6 = __restgprlr_28(uVar3);
-  return uVar6;
+  return (uint)uVar1;
 }
 
 
@@ -1145,29 +1128,28 @@ char * SEH_GetLanguageName(int param_1)
 
 // 8258BF88  SEH_GetLanguageIndexForName  (stringed/stringed_hooks.cpp:1217)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 int SEH_GetLanguageIndexForName(char *param_1,int *param_2)
 
 {
-  char *pcVar1;
+  int iVar1;
   int iVar2;
-  int iVar3;
-  languageInfo_t *plVar4;
+  languageInfo_t *plVar3;
   
-  pcVar1 = (char *)__savegprlr_27(param_1);
-  plVar4 = g_languages;
-  iVar3 = 0;
+  plVar3 = g_languages;
+  iVar2 = 0;
   do {
-    iVar2 = I_stricmp(pcVar1,plVar4->pszName);
-    if (iVar2 == 0) {
-      *param_2 = iVar3;
-      iVar3 = __restgprlr_27(1);
-      return iVar3;
+    iVar1 = I_stricmp(param_1,plVar3->pszName);
+    if (iVar1 == 0) {
+      *param_2 = iVar2;
+      return 1;
     }
-    plVar4 = plVar4 + 1;
-    iVar3 = iVar3 + 1;
-  } while ((int)plVar4 < -0x7d66ef38);
+    plVar3 = plVar3 + 1;
+    iVar2 = iVar2 + 1;
+  } while ((int)plVar3 < -0x7d66ef38);
   *param_2 = 0;
-  iVar3 = __restgprlr_27(0);
-  return iVar3;
+  return 0;
 }
 

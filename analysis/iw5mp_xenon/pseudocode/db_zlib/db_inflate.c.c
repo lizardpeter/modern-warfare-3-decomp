@@ -44,63 +44,54 @@ int db_inflateEnd(db_z_stream_s *param_1)
 
 // 827E2408  db_inflateInit2_  (db_zlib/db_inflate.c:91)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 int db_inflateInit2_(db_z_stream_s *param_1,int param_2,char *param_3,int param_4)
 
 {
-  db_z_stream_s *pdVar1;
-  db_internal_state *pdVar2;
-  db_inflate_blocks_state *pdVar3;
-  int iVar4;
-  ulonglong uVar5;
-  ulonglong uVar6;
+  db_internal_state *pdVar1;
+  db_inflate_blocks_state *pdVar2;
   
-  uVar6 = (ulonglong)param_4;
-  uVar5 = (ulonglong)(int)param_3;
-  pdVar1 = (db_z_stream_s *)__savegprlr_29(param_1);
-  if ((((uVar5 & 0xffffffff) == 0) || (*(char *)uVar5 != '1')) || ((uVar6 & 0xffffffff) != 0x30)) {
-    iVar4 = __restgprlr_29(0xfffffffffffffffa);
-    return iVar4;
+  if (((param_3 == (char *)0x0) || (*param_3 != '1')) || (param_4 != 0x30)) {
+    return -6;
   }
-  if (pdVar1 != (db_z_stream_s *)0x0) {
-    pdVar1->msg = (char *)0x0;
-    if (pdVar1->zalloc == (_func___cdecl_uchar_ptr_uchar_ptr_uint_uint *)0x0) {
-      pdVar1->opaque = (uchar *)0x0;
-      pdVar1->zalloc = db_zcalloc;
-    }
-    if (pdVar1->zfree == (_func___cdecl_void_uchar_ptr_uchar_ptr *)0x0) {
-      pdVar1->zfree = db_zcfree;
-    }
-    pdVar2 = (db_internal_state *)(*pdVar1->zalloc)(pdVar1->opaque,1,0x14);
-    pdVar1->state = pdVar2;
-    if (pdVar2 != (db_internal_state *)0x0) {
-      pdVar2[4].dummy = 0;
-      pdVar1->state[2].dummy = 0;
-      if (param_2 < 0) {
-        param_2 = -param_2;
-        pdVar1->state[2].dummy = 1;
-      }
-      if ((param_2 < 8) || (0xf < param_2)) {
-        db_inflateEnd(pdVar1);
-        goto LAB_827e2528;
-      }
-      pdVar1->state[3].dummy = param_2;
-      pdVar3 = db_inflate_blocks_new
-                         (pdVar1,(_func___cdecl_ulong_ulong_uchar_ptr_uint *)0x0,
-                          1 << (param_2 & 0x3fU));
-      pdVar1->state[4].dummy = (int)pdVar3;
-      if (pdVar3 != (db_inflate_blocks_state *)0x0) {
-        db_inflateReset(pdVar1);
-        iVar4 = __restgprlr_29(0);
-        return iVar4;
-      }
-      db_inflateEnd(pdVar1);
-    }
-    iVar4 = __restgprlr_29(0xfffffffffffffffc);
-    return iVar4;
+  if (param_1 == (db_z_stream_s *)0x0) {
+    return -2;
   }
-LAB_827e2528:
-  iVar4 = __restgprlr_29(0xfffffffffffffffe);
-  return iVar4;
+  param_1->msg = (char *)0x0;
+  if (param_1->zalloc == (_func___cdecl_uchar_ptr_uchar_ptr_uint_uint *)0x0) {
+    param_1->opaque = (uchar *)0x0;
+    param_1->zalloc = db_zcalloc;
+  }
+  if (param_1->zfree == (_func___cdecl_void_uchar_ptr_uchar_ptr *)0x0) {
+    param_1->zfree = db_zcfree;
+  }
+  pdVar1 = (db_internal_state *)(*param_1->zalloc)(param_1->opaque,1,0x14);
+  param_1->state = pdVar1;
+  if (pdVar1 != (db_internal_state *)0x0) {
+    pdVar1[4].dummy = 0;
+    param_1->state[2].dummy = 0;
+    if (param_2 < 0) {
+      param_2 = -param_2;
+      param_1->state[2].dummy = 1;
+    }
+    if ((param_2 < 8) || (0xf < param_2)) {
+      db_inflateEnd(param_1);
+      return -2;
+    }
+    param_1->state[3].dummy = param_2;
+    pdVar2 = db_inflate_blocks_new
+                       (param_1,(_func___cdecl_ulong_ulong_uchar_ptr_uint *)0x0,
+                        1 << (param_2 & 0x3fU));
+    param_1->state[4].dummy = (int)pdVar2;
+    if (pdVar2 != (db_inflate_blocks_state *)0x0) {
+      db_inflateReset(param_1);
+      return 0;
+    }
+    db_inflateEnd(param_1);
+  }
+  return -4;
 }
 
 
@@ -118,206 +109,212 @@ int db_inflateInit_(db_z_stream_s *param_1,char *param_2,int param_3)
 
 // 827E2550  db_inflate  (db_zlib/db_inflate.c:166)
 
+/* WARNING: Function: __savegprlr_19 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_19 replaced with injection: xenon_save_restore */
+
 int db_inflate(db_z_stream_s *param_1,int param_2)
 
 {
   byte bVar1;
-  uint uVar2;
-  byte *pbVar3;
-  db_internal_state *pdVar4;
-  db_z_stream_s *pdVar5;
-  int iVar6;
-  longlong lVar7;
-  ulonglong uVar8;
-  ulonglong uVar9;
+  byte *pbVar2;
+  db_internal_state *pdVar3;
+  ulonglong uVar4;
+  uint uVar5;
+  longlong lVar6;
+  uint uVar7;
+  uint uVar8;
   
-  lVar7 = (longlong)param_2;
-  pdVar5 = (db_z_stream_s *)__savegprlr_19(param_1);
-  if (((pdVar5 != (db_z_stream_s *)0x0) && (pdVar5->state != (db_internal_state *)0x0)) &&
-     (pdVar5->next_in != (uchar *)0x0)) {
-    uVar9 = 0xfffffffffffffffb;
-    uVar8 = -(ulonglong)(lVar7 == 4) & 0xfffffffffffffffb;
-    uVar2 = pdVar5->state->dummy;
-    while (uVar2 < 0xe) {
-      switch(uVar2) {
+  if (((param_1 != (db_z_stream_s *)0x0) && (param_1->state != (db_internal_state *)0x0)) &&
+     (param_1->next_in != (uchar *)0x0)) {
+    uVar8 = 0xfffffffb;
+    uVar7 = -(uint)(param_2 == 4) & 0xfffffffb;
+    uVar5 = param_1->state->dummy;
+    while (uVar5 < 0xe) {
+      switch(uVar5) {
       case 0:
-        if (pdVar5->avail_in == 0) goto LAB_827e27ec;
-        dataCacheBlockFlush(ZEXT48(pdVar5->next_in) - 0x80);
-        pdVar5->avail_in = pdVar5->avail_in - 1;
-        pdVar5->total_in = pdVar5->total_in + 1;
-        bVar1 = *pdVar5->next_in;
-        pdVar5->state[1].dummy = (uint)bVar1;
-        pdVar4 = pdVar5->state;
-        pdVar5->next_in = pdVar5->next_in + 1;
+        if (param_1->avail_in == 0) {
+          return uVar8;
+        }
+        dataCacheBlockFlush(ZEXT48(param_1->next_in) - 0x80);
+        param_1->avail_in = param_1->avail_in - 1;
+        param_1->total_in = param_1->total_in + 1;
+        bVar1 = *param_1->next_in;
+        param_1->state[1].dummy = (uint)bVar1;
+        pdVar3 = param_1->state;
+        param_1->next_in = param_1->next_in + 1;
         if ((bVar1 & 0xf) == 8) {
-          if (((uint)pdVar4[1].dummy >> 4) + 8 <= (uint)pdVar4[3].dummy) {
-            pdVar4->dummy = 1;
-            uVar9 = uVar8;
+          if (((uint)pdVar3[1].dummy >> 4) + 8 <= (uint)pdVar3[3].dummy) {
+            pdVar3->dummy = 1;
+            uVar8 = uVar7;
             goto switchD_827e25ec_caseD_827e26c4;
           }
-          pdVar4->dummy = 0xd;
-          pdVar5->msg = "invalid window size";
-          pdVar5->state[1].dummy = 5;
-          uVar9 = uVar8;
+          pdVar3->dummy = 0xd;
+          param_1->msg = "invalid window size";
+          param_1->state[1].dummy = 5;
+          uVar8 = uVar7;
         }
         else {
-          pdVar4->dummy = 0xd;
-          pdVar5->msg = "unknown compression method";
-          pdVar5->state[1].dummy = 5;
-          uVar9 = uVar8;
+          pdVar3->dummy = 0xd;
+          param_1->msg = "unknown compression method";
+          param_1->state[1].dummy = 5;
+          uVar8 = uVar7;
         }
         break;
       case 1:
 switchD_827e25ec_caseD_827e26c4:
-        if (pdVar5->avail_in == 0) goto LAB_827e27ec;
-        pbVar3 = pdVar5->next_in;
-        dataCacheBlockFlush(ZEXT48(pbVar3) - 0x80);
-        pdVar4 = pdVar5->state;
-        pdVar5->avail_in = pdVar5->avail_in - 1;
-        pdVar5->total_in = pdVar5->total_in + 1;
-        bVar1 = *pbVar3;
-        pdVar5->next_in = pbVar3 + 1;
-        lVar7 = ((ulonglong)(uint)pdVar4[1].dummy & 0xffffff) * 0x100 + (ulonglong)bVar1;
-        uVar9 = (ulonglong)(lVar7 * 0x8421085) >> 0x20;
-        uVar9 = ((lVar7 - uVar9 & 0xffffffff) >> 1) + uVar9 >> 4;
-        if (lVar7 == (uVar9 & 0x7ffffff) * 0x20 - uVar9) {
+        if (param_1->avail_in == 0) {
+          return uVar8;
+        }
+        pbVar2 = param_1->next_in;
+        dataCacheBlockFlush(ZEXT48(pbVar2) - 0x80);
+        pdVar3 = param_1->state;
+        param_1->avail_in = param_1->avail_in - 1;
+        param_1->total_in = param_1->total_in + 1;
+        bVar1 = *pbVar2;
+        param_1->next_in = pbVar2 + 1;
+        lVar6 = ((ulonglong)(uint)pdVar3[1].dummy & 0xffffff) * 0x100 + (ulonglong)bVar1;
+        uVar4 = (ulonglong)(lVar6 * 0x8421085) >> 0x20;
+        uVar4 = ((lVar6 - uVar4 & 0xffffffff) >> 1) + uVar4 >> 4;
+        if (lVar6 == (uVar4 & 0x7ffffff) * 0x20 - uVar4) {
           if ((bVar1 & 0x20) != 0) {
-            pdVar4->dummy = 2;
-            uVar9 = uVar8;
+            pdVar3->dummy = 2;
+            uVar8 = uVar7;
             goto switchD_827e25ec_caseD_827e2800;
           }
-          pdVar4->dummy = 7;
-          uVar9 = uVar8;
+          pdVar3->dummy = 7;
+          uVar8 = uVar7;
         }
         else {
-          pdVar4->dummy = 0xd;
-          pdVar5->msg = "incorrect header check";
-          pdVar5->state[1].dummy = 5;
-          uVar9 = uVar8;
+          pdVar3->dummy = 0xd;
+          param_1->msg = "incorrect header check";
+          param_1->state[1].dummy = 5;
+          uVar8 = uVar7;
         }
         break;
       case 2:
 switchD_827e25ec_caseD_827e2800:
-        if (pdVar5->avail_in == 0) goto LAB_827e27ec;
-        dataCacheBlockFlush(ZEXT48(pdVar5->next_in) - 0x80);
-        pdVar5->avail_in = pdVar5->avail_in - 1;
-        pdVar5->total_in = pdVar5->total_in + 1;
-        pdVar5->state[1].dummy = (uint)*pdVar5->next_in << 0x18;
-        pdVar5->next_in = pdVar5->next_in + 1;
-        pdVar5->state->dummy = 3;
-        uVar9 = uVar8;
+        if (param_1->avail_in == 0) {
+          return uVar8;
+        }
+        dataCacheBlockFlush(ZEXT48(param_1->next_in) - 0x80);
+        param_1->avail_in = param_1->avail_in - 1;
+        param_1->total_in = param_1->total_in + 1;
+        param_1->state[1].dummy = (uint)*param_1->next_in << 0x18;
+        param_1->next_in = param_1->next_in + 1;
+        param_1->state->dummy = 3;
+        uVar8 = uVar7;
       case 3:
-        if (pdVar5->avail_in != 0) {
-          dataCacheBlockFlush(ZEXT48(pdVar5->next_in) - 0x80);
-          pdVar5->avail_in = pdVar5->avail_in - 1;
-          pdVar5->total_in = pdVar5->total_in + 1;
-          pdVar5->state[1].dummy = (uint)*pdVar5->next_in * 0x10000 + pdVar5->state[1].dummy;
-          pdVar5->next_in = pdVar5->next_in + 1;
-          pdVar5->state->dummy = 4;
-          uVar9 = uVar8;
+        if (param_1->avail_in != 0) {
+          dataCacheBlockFlush(ZEXT48(param_1->next_in) - 0x80);
+          param_1->avail_in = param_1->avail_in - 1;
+          param_1->total_in = param_1->total_in + 1;
+          param_1->state[1].dummy = (uint)*param_1->next_in * 0x10000 + param_1->state[1].dummy;
+          param_1->next_in = param_1->next_in + 1;
+          param_1->state->dummy = 4;
+          uVar8 = uVar7;
 switchD_827e25ec_caseD_827e28b8:
-          if (pdVar5->avail_in != 0) {
-            dataCacheBlockFlush(ZEXT48(pdVar5->next_in) - 0x80);
-            pdVar5->avail_in = pdVar5->avail_in - 1;
-            pdVar5->total_in = pdVar5->total_in + 1;
-            pdVar5->state[1].dummy = (uint)*pdVar5->next_in * 0x100 + pdVar5->state[1].dummy;
-            pdVar5->next_in = pdVar5->next_in + 1;
-            pdVar5->state->dummy = 5;
-            uVar9 = uVar8;
+          if (param_1->avail_in != 0) {
+            dataCacheBlockFlush(ZEXT48(param_1->next_in) - 0x80);
+            param_1->avail_in = param_1->avail_in - 1;
+            param_1->total_in = param_1->total_in + 1;
+            param_1->state[1].dummy = (uint)*param_1->next_in * 0x100 + param_1->state[1].dummy;
+            param_1->next_in = param_1->next_in + 1;
+            param_1->state->dummy = 5;
+            uVar8 = uVar7;
 switchD_827e25ec_caseD_827e2914:
-            if (pdVar5->avail_in != 0) {
-              dataCacheBlockFlush(ZEXT48(pdVar5->next_in) - 0x80);
-              pdVar5->avail_in = pdVar5->avail_in - 1;
-              pdVar5->total_in = pdVar5->total_in + 1;
-              pdVar5->state[1].dummy = (uint)*pdVar5->next_in + pdVar5->state[1].dummy;
-              pdVar5->next_in = pdVar5->next_in + 1;
-              pdVar5->state->dummy = 6;
-              iVar6 = __restgprlr_19(2);
-              return iVar6;
+            if (param_1->avail_in != 0) {
+              dataCacheBlockFlush(ZEXT48(param_1->next_in) - 0x80);
+              param_1->avail_in = param_1->avail_in - 1;
+              param_1->total_in = param_1->total_in + 1;
+              param_1->state[1].dummy = (uint)*param_1->next_in + param_1->state[1].dummy;
+              param_1->next_in = param_1->next_in + 1;
+              param_1->state->dummy = 6;
+              return 2;
             }
           }
         }
-LAB_827e27ec:
-        iVar6 = __restgprlr_19(uVar9);
-        return iVar6;
+        return uVar8;
       case 4:
         goto switchD_827e25ec_caseD_827e28b8;
       case 5:
         goto switchD_827e25ec_caseD_827e2914;
       case 6:
-        pdVar5->state->dummy = 0xd;
-        pdVar5->msg = "need dictionary";
-        pdVar5->state[1].dummy = 0;
-        iVar6 = __restgprlr_19(0xfffffffffffffffe);
-        return iVar6;
+        param_1->state->dummy = 0xd;
+        param_1->msg = "need dictionary";
+        param_1->state[1].dummy = 0;
+        return -2;
       case 7:
-        iVar6 = db_inflate_blocks((db_inflate_blocks_state *)pdVar5->state[4].dummy,pdVar5,
-                                  (int)uVar9);
-        uVar9 = (longlong)iVar6;
-        if (iVar6 == -3) {
-          pdVar5->state->dummy = 0xd;
-          pdVar5->state[1].dummy = 0;
+        uVar5 = db_inflate_blocks((db_inflate_blocks_state *)param_1->state[4].dummy,param_1,uVar8);
+        if (uVar5 == 0xfffffffd) {
+          param_1->state->dummy = 0xd;
+          param_1->state[1].dummy = 0;
+          uVar8 = 0xfffffffd;
         }
         else {
-          if (iVar6 == 0) {
-            uVar9 = uVar8;
+          if (uVar5 == 0) {
+            uVar5 = uVar7;
           }
-          if ((int)uVar9 != 1) goto LAB_827e27ec;
+          if (uVar5 != 1) {
+            return uVar5;
+          }
           db_inflate_blocks_reset
-                    ((db_inflate_blocks_state *)pdVar5->state[4].dummy,pdVar5,(ulong *)0x0);
-          pdVar4 = pdVar5->state;
-          if (pdVar4[2].dummy == 0) {
-            pdVar4->dummy = 8;
-            uVar9 = uVar8;
+                    ((db_inflate_blocks_state *)param_1->state[4].dummy,param_1,(ulong *)0x0);
+          pdVar3 = param_1->state;
+          if (pdVar3[2].dummy == 0) {
+            pdVar3->dummy = 8;
+            uVar8 = uVar7;
             goto switchD_827e25ec_caseD_827e29a8;
           }
-          pdVar4->dummy = 0xc;
-          uVar9 = uVar8;
+          pdVar3->dummy = 0xc;
+          uVar8 = uVar7;
         }
         break;
       case 8:
 switchD_827e25ec_caseD_827e29a8:
-        if (pdVar5->avail_in == 0) goto LAB_827e27ec;
-        dataCacheBlockFlush(ZEXT48(pdVar5->next_in) - 0x80);
-        pdVar5->avail_in = pdVar5->avail_in - 1;
-        pdVar5->total_in = pdVar5->total_in + 1;
-        pdVar5->state[1].dummy = (uint)*pdVar5->next_in << 0x18;
-        pdVar5->next_in = pdVar5->next_in + 1;
-        pdVar5->state->dummy = 9;
-        uVar9 = uVar8;
-      case 9:
-        if (pdVar5->avail_in != 0) {
-          dataCacheBlockFlush(ZEXT48(pdVar5->next_in) - 0x80);
-          pdVar5->avail_in = pdVar5->avail_in - 1;
-          pdVar5->total_in = pdVar5->total_in + 1;
-          pdVar5->state[1].dummy = (uint)*pdVar5->next_in * 0x10000 + pdVar5->state[1].dummy;
-          pdVar5->next_in = pdVar5->next_in + 1;
-          pdVar5->state->dummy = 10;
-          uVar9 = uVar8;
-switchD_827e25ec_caseD_827e2a60:
-          if (pdVar5->avail_in != 0) {
-            dataCacheBlockFlush(ZEXT48(pdVar5->next_in) - 0x80);
-            pdVar5->avail_in = pdVar5->avail_in - 1;
-            pdVar5->total_in = pdVar5->total_in + 1;
-            pdVar5->state[1].dummy = (uint)*pdVar5->next_in * 0x100 + pdVar5->state[1].dummy;
-            pdVar5->next_in = pdVar5->next_in + 1;
-            pdVar5->state->dummy = 0xb;
-            uVar9 = uVar8;
-switchD_827e25ec_caseD_827e2ac0:
-            if (pdVar5->avail_in != 0) {
-              dataCacheBlockFlush(ZEXT48(pdVar5->next_in) - 0x80);
-              pdVar5->avail_in = pdVar5->avail_in - 1;
-              pdVar5->total_in = pdVar5->total_in + 1;
-              pdVar5->state[1].dummy = (uint)*pdVar5->next_in + pdVar5->state[1].dummy;
-              pdVar5->next_in = pdVar5->next_in + 1;
-              pdVar5->state->dummy = 0xc;
-switchD_827e25ec_caseD_827e2b14:
-              iVar6 = __restgprlr_19(1);
-              return iVar6;
-            }
-          }
+        if (param_1->avail_in == 0) {
+          return uVar8;
         }
-        goto LAB_827e27ec;
+        dataCacheBlockFlush(ZEXT48(param_1->next_in) - 0x80);
+        param_1->avail_in = param_1->avail_in - 1;
+        param_1->total_in = param_1->total_in + 1;
+        param_1->state[1].dummy = (uint)*param_1->next_in << 0x18;
+        param_1->next_in = param_1->next_in + 1;
+        param_1->state->dummy = 9;
+        uVar8 = uVar7;
+      case 9:
+        if (param_1->avail_in == 0) {
+          return uVar8;
+        }
+        dataCacheBlockFlush(ZEXT48(param_1->next_in) - 0x80);
+        param_1->avail_in = param_1->avail_in - 1;
+        param_1->total_in = param_1->total_in + 1;
+        param_1->state[1].dummy = (uint)*param_1->next_in * 0x10000 + param_1->state[1].dummy;
+        param_1->next_in = param_1->next_in + 1;
+        param_1->state->dummy = 10;
+        uVar8 = uVar7;
+switchD_827e25ec_caseD_827e2a60:
+        if (param_1->avail_in == 0) {
+          return uVar8;
+        }
+        dataCacheBlockFlush(ZEXT48(param_1->next_in) - 0x80);
+        param_1->avail_in = param_1->avail_in - 1;
+        param_1->total_in = param_1->total_in + 1;
+        param_1->state[1].dummy = (uint)*param_1->next_in * 0x100 + param_1->state[1].dummy;
+        param_1->next_in = param_1->next_in + 1;
+        param_1->state->dummy = 0xb;
+        uVar8 = uVar7;
+switchD_827e25ec_caseD_827e2ac0:
+        if (param_1->avail_in == 0) {
+          return uVar8;
+        }
+        dataCacheBlockFlush(ZEXT48(param_1->next_in) - 0x80);
+        param_1->avail_in = param_1->avail_in - 1;
+        param_1->total_in = param_1->total_in + 1;
+        param_1->state[1].dummy = (uint)*param_1->next_in + param_1->state[1].dummy;
+        param_1->next_in = param_1->next_in + 1;
+        param_1->state->dummy = 0xc;
+switchD_827e25ec_caseD_827e2b14:
+        return 1;
       case 10:
         goto switchD_827e25ec_caseD_827e2a60;
       case 0xb:
@@ -325,13 +322,11 @@ switchD_827e25ec_caseD_827e2b14:
       case 0xc:
         goto switchD_827e25ec_caseD_827e2b14;
       case 0xd:
-        iVar6 = __restgprlr_19(0xfffffffffffffffd);
-        return iVar6;
+        return -3;
       }
-      uVar2 = pdVar5->state->dummy;
+      uVar5 = param_1->state->dummy;
     }
   }
-  iVar6 = __restgprlr_19(0xfffffffffffffffe);
-  return iVar6;
+  return -2;
 }
 

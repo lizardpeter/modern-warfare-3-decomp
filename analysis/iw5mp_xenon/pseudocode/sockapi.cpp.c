@@ -2,42 +2,37 @@
 
 // 828B8598  NetDll_WSAStartup_Override  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/net/dll/sockapi.cpp:62)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "_XNCALLER_TYPE": Some values do not have unique names */
 
 int NetDll_WSAStartup_Override(_XNCALLER_TYPE param_1,ushort param_2,WSAData *param_3)
 
 {
-  undefined8 uVar1;
-  uint uVar3;
-  int iVar4;
-  ulonglong uVar2;
-  longlong lVar5;
-  longlong lVar6;
+  uint uVar2;
+  int iVar3;
+  ulonglong uVar1;
   uint local_30;
   undefined4 local_2c [11];
   
-  lVar6 = (longlong)(int)param_3;
-  lVar5 = (longlong)(short)param_2;
-  uVar1 = __savegprlr_29(param_1,lVar5,lVar6);
   local_30 = 0;
-  uVar3 = XamGetSystemVersion();
-  if ((uVar3 < 0x200a3200) || (iVar4 = XexGetModuleHandle(0xffffffff82201a78,local_2c), iVar4 < 0))
+  uVar2 = XamGetSystemVersion();
+  if ((uVar2 < 0x200a3200) || (iVar3 = XexGetModuleHandle(0xffffffff82201a78,local_2c), iVar3 < 0))
   {
-    uVar2 = (ulonglong)local_30;
+    uVar1 = (ulonglong)local_30;
   }
   else {
-    uVar2 = XexGetProcedureAddress(local_2c[0],0x24,&local_30);
-    uVar2 = ((uVar2 & 0xffffffff) >> 0x1f) - 1 & (ulonglong)local_30;
-    local_30 = (uint)uVar2;
+    uVar1 = XexGetProcedureAddress(local_2c[0],0x24,&local_30);
+    uVar1 = ((uVar1 & 0xffffffff) >> 0x1f) - 1 & (ulonglong)local_30;
+    local_30 = (uint)uVar1;
   }
-  if (uVar2 == 0) {
-    NetDll_WSAStartup(uVar1,lVar5,lVar6);
+  if (uVar1 == 0) {
+    iVar3 = NetDll_WSAStartup(param_1,param_2,param_3);
   }
   else {
-    (*(code *)uVar2)();
+    iVar3 = (*(code *)uVar1)();
   }
-  iVar4 = __restgprlr_29();
-  return iVar4;
+  return iVar3;
 }
 
 

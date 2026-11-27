@@ -16,54 +16,50 @@ undefined8 tiger_init(undefined8 *param_1)
 
 // 822609D8  tiger_process  (line unknown)
 
-void tiger_process(undefined8 param_1,longlong param_2,ulonglong param_3)
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
+undefined8 tiger_process(int param_1,longlong param_2,ulonglong param_3)
 
 {
-  int iVar2;
   undefined8 uVar1;
-  int iVar3;
-  ulonglong uVar4;
+  int iVar2;
+  ulonglong uVar3;
   
-  iVar2 = __savegprlr_27();
-  if (0x40 < *(uint *)(iVar2 + 0x20)) {
-    __restgprlr_27(0x10);
-    return;
+  if (0x40 < *(uint *)(param_1 + 0x20)) {
+    return 0x10;
   }
 joined_r0x82260a0c:
   if ((param_3 & 0xffffffff) == 0) {
-    uVar1 = 0;
+    return 0;
   }
-  else {
-    if (((ulonglong)*(uint *)(iVar2 + 0x20) != 0) || ((param_3 & 0xffffffff) < 0x40))
-    goto LAB_82260a48;
-    uVar1 = tiger_compress(iVar2,param_2);
-    if ((int)uVar1 == 0) {
-      param_2 = param_2 + 0x40;
-      param_3 = param_3 - 0x40;
-      goto LAB_82260aa0;
-    }
+  if (((ulonglong)*(uint *)(param_1 + 0x20) != 0) || ((param_3 & 0xffffffff) < 0x40))
+  goto LAB_82260a48;
+  uVar1 = tiger_compress(param_1,param_2);
+  if ((int)uVar1 != 0) {
+    return uVar1;
   }
-  goto LAB_82260ab8;
+  param_2 = param_2 + 0x40;
+  param_3 = param_3 - 0x40;
+  goto LAB_82260aa0;
 LAB_82260a48:
-  uVar4 = 0x40 - (ulonglong)*(uint *)(iVar2 + 0x20);
-  if ((param_3 & 0xffffffff) < (uVar4 & 0xffffffff)) {
-    uVar4 = param_3;
+  uVar3 = 0x40 - (ulonglong)*(uint *)(param_1 + 0x20);
+  if ((param_3 & 0xffffffff) < (uVar3 & 0xffffffff)) {
+    uVar3 = param_3;
   }
   memcpy();
-  param_2 = uVar4 + param_2;
-  iVar3 = (int)uVar4 + *(int *)(iVar2 + 0x20);
-  param_3 = param_3 - uVar4;
-  *(int *)(iVar2 + 0x20) = iVar3;
-  if (iVar3 == 0x40) {
-    uVar1 = tiger_compress(iVar2,iVar2 + 0x24);
+  param_2 = uVar3 + param_2;
+  iVar2 = (int)uVar3 + *(int *)(param_1 + 0x20);
+  param_3 = param_3 - uVar3;
+  *(int *)(param_1 + 0x20) = iVar2;
+  if (iVar2 == 0x40) {
+    uVar1 = tiger_compress(param_1,param_1 + 0x24);
     if ((int)uVar1 != 0) {
-LAB_82260ab8:
-      __restgprlr_27(uVar1);
-      return;
+      return uVar1;
     }
-    *(undefined4 *)(iVar2 + 0x20) = 0;
+    *(undefined4 *)(param_1 + 0x20) = 0;
 LAB_82260aa0:
-    *(longlong *)(iVar2 + 0x18) = *(longlong *)(iVar2 + 0x18) + 0x200;
+    *(longlong *)(param_1 + 0x18) = *(longlong *)(param_1 + 0x18) + 0x200;
   }
   goto joined_r0x82260a0c;
 }
@@ -71,74 +67,73 @@ LAB_82260aa0:
 
 // 82260AC0  tiger_done  (line unknown)
 
-void tiger_done(undefined8 param_1,undefined1 *param_2)
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
+undefined8 tiger_done(undefined8 *param_1,undefined1 *param_2)
 
 {
   int iVar1;
-  undefined8 *puVar2;
-  uint uVar3;
+  uint uVar2;
   
-  puVar2 = (undefined8 *)__savegprlr_29();
-  uVar3 = *(uint *)(puVar2 + 4);
-  if (0x3f < uVar3) {
-    __restgprlr_29(0x10);
-    return;
+  uVar2 = *(uint *)(param_1 + 4);
+  if (0x3f < uVar2) {
+    return 0x10;
   }
-  puVar2[3] = ((ulonglong)uVar3 & 0x1fffffff) * 8 + puVar2[3];
-  ((undefined1 *)(uVar3 + (int)puVar2))[0x24] = 1;
-  uVar3 = *(int *)(puVar2 + 4) + 1;
-  *(uint *)(puVar2 + 4) = uVar3;
-  if (0x38 < uVar3) {
-    while (uVar3 < 0x40) {
-      ((undefined1 *)((int)puVar2 + *(int *)(puVar2 + 4)))[0x24] = 0;
-      iVar1 = *(int *)(puVar2 + 4);
-      *(int *)(puVar2 + 4) = iVar1 + 1;
-      uVar3 = iVar1 + 1;
+  param_1[3] = ((ulonglong)uVar2 & 0x1fffffff) * 8 + param_1[3];
+  *(undefined1 *)((int)param_1 + uVar2 + 0x24) = 1;
+  uVar2 = *(int *)(param_1 + 4) + 1;
+  *(uint *)(param_1 + 4) = uVar2;
+  if (0x38 < uVar2) {
+    while (uVar2 < 0x40) {
+      *(undefined1 *)((int)param_1 + *(int *)(param_1 + 4) + 0x24) = 0;
+      iVar1 = *(int *)(param_1 + 4);
+      *(int *)(param_1 + 4) = iVar1 + 1;
+      uVar2 = iVar1 + 1;
     }
-    tiger_compress(puVar2,(undefined1 *)((int)puVar2 + 0x24));
-    *(undefined4 *)(puVar2 + 4) = 0;
+    tiger_compress(param_1,(undefined1 *)((int)param_1 + 0x24));
+    *(undefined4 *)(param_1 + 4) = 0;
   }
-  uVar3 = *(uint *)(puVar2 + 4);
-  while (uVar3 < 0x38) {
-    ((undefined1 *)((int)puVar2 + *(int *)(puVar2 + 4)))[0x24] = 0;
-    uVar3 = *(int *)(puVar2 + 4) + 1;
-    *(uint *)(puVar2 + 4) = uVar3;
+  uVar2 = *(uint *)(param_1 + 4);
+  while (uVar2 < 0x38) {
+    *(undefined1 *)((int)param_1 + *(int *)(param_1 + 4) + 0x24) = 0;
+    uVar2 = *(int *)(param_1 + 4) + 1;
+    *(uint *)(param_1 + 4) = uVar2;
   }
-  *(undefined1 *)((int)puVar2 + 99) = *(undefined1 *)(puVar2 + 3);
-  *(undefined1 *)((int)puVar2 + 0x62) = *(undefined1 *)((int)puVar2 + 0x19);
-  *(undefined1 *)((int)puVar2 + 0x61) = *(undefined1 *)((int)puVar2 + 0x1a);
-  *(undefined1 *)(puVar2 + 0xc) = *(undefined1 *)((int)puVar2 + 0x1b);
-  *(undefined1 *)((int)puVar2 + 0x5f) = *(undefined1 *)((int)puVar2 + 0x1c);
-  *(undefined1 *)((int)puVar2 + 0x5e) = *(undefined1 *)((int)puVar2 + 0x1d);
-  *(undefined1 *)((int)puVar2 + 0x5d) = *(undefined1 *)((int)puVar2 + 0x1e);
-  *(char *)((int)puVar2 + 0x5c) = (char)puVar2[3];
-  tiger_compress(puVar2,(undefined1 *)((int)puVar2 + 0x24));
-  param_2[7] = *(undefined1 *)puVar2;
-  param_2[6] = *(undefined1 *)((int)puVar2 + 1);
-  param_2[5] = *(undefined1 *)((int)puVar2 + 2);
-  param_2[4] = *(undefined1 *)((int)puVar2 + 3);
-  param_2[3] = *(undefined1 *)((int)puVar2 + 4);
-  param_2[2] = *(undefined1 *)((int)puVar2 + 5);
-  param_2[1] = *(undefined1 *)((int)puVar2 + 6);
-  *param_2 = (char)*puVar2;
-  param_2[0xf] = *(undefined1 *)(puVar2 + 1);
-  param_2[0xe] = *(undefined1 *)((int)puVar2 + 9);
-  param_2[0xd] = *(undefined1 *)((int)puVar2 + 10);
-  param_2[0xc] = *(undefined1 *)((int)puVar2 + 0xb);
-  param_2[0xb] = *(undefined1 *)((int)puVar2 + 0xc);
-  param_2[10] = *(undefined1 *)((int)puVar2 + 0xd);
-  param_2[9] = *(undefined1 *)((int)puVar2 + 0xe);
-  param_2[8] = (char)puVar2[1];
-  param_2[0x17] = *(undefined1 *)(puVar2 + 2);
-  param_2[0x16] = *(undefined1 *)((int)puVar2 + 0x11);
-  param_2[0x15] = *(undefined1 *)((int)puVar2 + 0x12);
-  param_2[0x14] = *(undefined1 *)((int)puVar2 + 0x13);
-  param_2[0x13] = *(undefined1 *)((int)puVar2 + 0x14);
-  param_2[0x12] = *(undefined1 *)((int)puVar2 + 0x15);
-  param_2[0x11] = *(undefined1 *)((int)puVar2 + 0x16);
-  param_2[0x10] = (char)puVar2[2];
-  __restgprlr_29(0);
-  return;
+  *(undefined1 *)((int)param_1 + 99) = *(undefined1 *)(param_1 + 3);
+  *(undefined1 *)((int)param_1 + 0x62) = *(undefined1 *)((int)param_1 + 0x19);
+  *(undefined1 *)((int)param_1 + 0x61) = *(undefined1 *)((int)param_1 + 0x1a);
+  *(undefined1 *)(param_1 + 0xc) = *(undefined1 *)((int)param_1 + 0x1b);
+  *(undefined1 *)((int)param_1 + 0x5f) = *(undefined1 *)((int)param_1 + 0x1c);
+  *(undefined1 *)((int)param_1 + 0x5e) = *(undefined1 *)((int)param_1 + 0x1d);
+  *(undefined1 *)((int)param_1 + 0x5d) = *(undefined1 *)((int)param_1 + 0x1e);
+  *(char *)((int)param_1 + 0x5c) = (char)param_1[3];
+  tiger_compress(param_1,(undefined1 *)((int)param_1 + 0x24));
+  param_2[7] = *(undefined1 *)param_1;
+  param_2[6] = *(undefined1 *)((int)param_1 + 1);
+  param_2[5] = *(undefined1 *)((int)param_1 + 2);
+  param_2[4] = *(undefined1 *)((int)param_1 + 3);
+  param_2[3] = *(undefined1 *)((int)param_1 + 4);
+  param_2[2] = *(undefined1 *)((int)param_1 + 5);
+  param_2[1] = *(undefined1 *)((int)param_1 + 6);
+  *param_2 = (char)*param_1;
+  param_2[0xf] = *(undefined1 *)(param_1 + 1);
+  param_2[0xe] = *(undefined1 *)((int)param_1 + 9);
+  param_2[0xd] = *(undefined1 *)((int)param_1 + 10);
+  param_2[0xc] = *(undefined1 *)((int)param_1 + 0xb);
+  param_2[0xb] = *(undefined1 *)((int)param_1 + 0xc);
+  param_2[10] = *(undefined1 *)((int)param_1 + 0xd);
+  param_2[9] = *(undefined1 *)((int)param_1 + 0xe);
+  param_2[8] = (char)param_1[1];
+  param_2[0x17] = *(undefined1 *)(param_1 + 2);
+  param_2[0x16] = *(undefined1 *)((int)param_1 + 0x11);
+  param_2[0x15] = *(undefined1 *)((int)param_1 + 0x12);
+  param_2[0x14] = *(undefined1 *)((int)param_1 + 0x13);
+  param_2[0x13] = *(undefined1 *)((int)param_1 + 0x14);
+  param_2[0x12] = *(undefined1 *)((int)param_1 + 0x15);
+  param_2[0x11] = *(undefined1 *)((int)param_1 + 0x16);
+  param_2[0x10] = (char)param_1[2];
+  return 0;
 }
 
 

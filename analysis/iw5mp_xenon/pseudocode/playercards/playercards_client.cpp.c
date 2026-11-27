@@ -2,6 +2,8 @@
 
 // 826E56B8  PlayerCard_InitGame  (playercards/playercards_client.cpp:102)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void PlayerCard_InitGame(void)
@@ -10,7 +12,6 @@ void PlayerCard_InitGame(void)
   ulonglong uVar1;
   longlong lVar2;
   
-  __savegprlr_27();
   uVar1 = 0;
   do {
     lVar2 = 0x12;
@@ -20,7 +21,6 @@ void PlayerCard_InitGame(void)
     } while (lVar2 != 0);
     uVar1 = uVar1 + 0x12;
   } while ((uVar1 & 0xffffffff) < 0x48);
-  __restgprlr_27();
   return;
 }
 
@@ -88,6 +88,8 @@ void PlayerCards_BuildPlayerCardDataForUnknownPartyMember(PlayerCardData *param_
 
 // 826E5858  PlayerCards_BuildPlayerCardDataFromPartyMember  (playercards/playercards_client.cpp:157)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
@@ -95,60 +97,54 @@ void PlayerCards_BuildPlayerCardDataFromPartyMember
                (PlayerCardData *param_1,LocalClientNum_t param_2,PartyMember *param_3)
 
 {
-  PlayerCardData *pPVar1;
-  int iVar2;
-  ulonglong uVar4;
-  PartyMember *pPVar3;
+  int iVar1;
   
-  uVar4 = (ulonglong)(int)param_2;
-  pPVar1 = (PlayerCardData *)__savegprlr_28(param_1,uVar4,param_3);
-  if (pPVar1 == (PlayerCardData *)0x0) {
+  if (param_1 == (PlayerCardData *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\playercards\\playercards_client.cpp"
                     ,0x9e,0,"%s");
   }
-  if ((uVar4 & 0xffffffff) == 0) {
+  if (param_2 == LOCAL_CLIENT_0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\playercards\\playercards_client.cpp"
                     ,0x9f,0,"%s");
   }
-  pPVar3 = (PartyMember *)uVar4;
-  iVar2 = Party_IsMemberDataAvailable(pPVar3);
-  if (iVar2 == 0) {
-    PlayerCards_BuildPlayerCardDataForUnknownPartyMember(pPVar1);
-    __restgprlr_28();
+  iVar1 = Party_IsMemberDataAvailable((PartyMember *)param_2);
+  if (iVar1 == 0) {
+    PlayerCards_BuildPlayerCardDataForUnknownPartyMember(param_1);
     return;
   }
-  pPVar1->iconIndex = (pPVar3->info).playerCardIcon;
-  pPVar1->titleIndex = (pPVar3->info).playerCardTitle;
-  pPVar1->nameplateIndex = (pPVar3->info).playerCardNameplate;
-  pPVar1->rank_mp = (pPVar3->info).rank_mp;
-  pPVar1->prestige_mp = (pPVar3->info).prestige_mp;
-  pPVar1->rank_so = (pPVar3->info).rank_so;
-  pPVar1->prestige_so = (pPVar3->info).prestige_so;
-  pPVar1->team = pPVar3->team;
-  I_strncpyz(pPVar1->name,(pPVar3->info).gamertag,0x20);
-  I_strncpyz(pPVar1->clanAbbrev,(pPVar3->info).clanAbbrev,5);
-  iVar2 = Party_IsPlayerInPrivateParty(pPVar3->player);
-  pPVar1->myParty = iVar2;
-  pPVar1->use_elite_clan_tag = (pPVar3->info).use_elite_clan_tag;
-  pPVar1->use_elite_clan_title = (pPVar3->info).use_elite_clan_title;
-  I_strncpyz(pPVar1->elite_clan_title_text,(pPVar3->info).elite_clan_title_text,0x18);
-  pPVar1->elite_clan_title_bg = (pPVar3->info).elite_clan_title_bg;
-  I_strncpyz(pPVar1->elite_clan_tag_text,(pPVar3->info).elite_clan_tag_text,5);
-  pPVar1->prestige_black_ops = (pPVar3->info).prestige_black_ops;
-  pPVar1->rank_black_ops = (pPVar3->info).rank_black_ops;
-  pPVar1->prestige_mw2 = (pPVar3->info).prestige_mw2;
-  pPVar1->rank_mw2 = (pPVar3->info).rank_mw2;
-  pPVar1->prestige_world_at_war = (pPVar3->info).prestige_world_at_war;
-  pPVar1->rank_world_at_war = (pPVar3->info).rank_world_at_war;
-  pPVar1->prestige_mw = (pPVar3->info).prestige_mw;
-  pPVar1->rank_mw = (pPVar3->info).rank_mw;
-  __restgprlr_28();
+  param_1->iconIndex = *(uint *)(param_2 + 0x20);
+  param_1->titleIndex = *(uint *)(param_2 + 0x24);
+  param_1->nameplateIndex = *(uint *)(param_2 + 0x28);
+  param_1->rank_mp = *(int *)(param_2 + 0xc);
+  param_1->prestige_mp = *(int *)(param_2 + 0x10);
+  param_1->rank_so = *(int *)(param_2 + 0x14);
+  param_1->prestige_so = *(int *)(param_2 + 0x18);
+  param_1->team = *(team_t *)(param_2 + 0x110);
+  I_strncpyz(param_1->name,(char *)(param_2 + 0x2c),0x20);
+  I_strncpyz(param_1->clanAbbrev,(char *)(param_2 + 0x4c),5);
+  iVar1 = Party_IsPlayerInPrivateParty(*(ulong64 *)(param_2 + 0x128));
+  param_1->myParty = iVar1;
+  param_1->use_elite_clan_tag = *(bool *)(param_2 + 0x58);
+  param_1->use_elite_clan_title = *(bool *)(param_2 + 0x59);
+  I_strncpyz(param_1->elite_clan_title_text,(char *)(param_2 + 0x5a),0x18);
+  param_1->elite_clan_title_bg = *(int *)(param_2 + 0x74);
+  I_strncpyz(param_1->elite_clan_tag_text,(char *)(param_2 + 0x78),5);
+  param_1->prestige_black_ops = *(int *)(param_2 + 0x80);
+  param_1->rank_black_ops = *(int *)(param_2 + 0x84);
+  param_1->prestige_mw2 = *(int *)(param_2 + 0x88);
+  param_1->rank_mw2 = *(int *)(param_2 + 0x8c);
+  param_1->prestige_world_at_war = *(int *)(param_2 + 0x90);
+  param_1->rank_world_at_war = *(int *)(param_2 + 0x94);
+  param_1->prestige_mw = *(int *)(param_2 + 0x98);
+  param_1->rank_mw = *(int *)(param_2 + 0x9c);
   return;
 }
 
 
 // 826E59D0  PlayerCards_GetPartyMemberData  (playercards/playercards_client.cpp:201)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
@@ -157,118 +153,104 @@ PlayerCards_GetPartyMemberData
           (LocalClientNum_t param_1,PlayerCardClientLookupType param_2,uint param_3)
 
 {
-  LocalClientNum_t LVar1;
-  PlayerCardData *pPVar2;
+  int iVar1;
+  PartyData *pPVar2;
   int iVar3;
-  PartyData *pPVar4;
-  int iVar5;
-  PartyMember *pPVar6;
-  PartyMember *pPVar7;
-  uint uVar8;
-  bool bVar9;
-  ulonglong uVar10;
-  ulonglong uVar11;
+  PartyMember *pPVar4;
+  PartyMember *pPVar5;
+  uint uVar6;
+  bool bVar7;
   
-  uVar11 = (ulonglong)(int)param_3;
-  uVar10 = (ulonglong)(int)param_2;
-  LVar1 = __savegprlr_28(param_1);
-  pPVar6 = (PartyMember *)uVar11;
-  if (9 < (uVar10 & 0xffffffff)) {
+  if (PLAYERCARD_LOOKUP_FRIEND_CACHE < param_2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\playercards\\playercards_client.cpp"
                     ,0xd0,0,"lookupType doesn\'t index PLAYERCARD_LOOKUP_COUNT\n\t%i not in [0, %i)"
                    );
   }
-  if (0x11 < (uVar11 & 0xffffffff)) {
+  if (0x11 < param_3) {
     Com_PrintError(0xd,
                    "PlayerCards_GetPartyMemberData: Invalid lookup index \'%i\'. Must be smaller than %i.\n"
                   );
-    pPVar2 = (PlayerCardData *)__restgprlr_28(0xffffffff821a9688);
-    return pPVar2;
+    return &g_DefaultPlayerData;
   }
-  iVar3 = CL_IsLocalClientInGame(LVar1);
-  if (iVar3 != 0) {
+  iVar1 = CL_IsLocalClientInGame(param_1);
+  if (iVar1 != 0) {
     Com_PrintError(0xd,
                    "PlayerCards_GetPartyMemberData: Called when in-game! Party state is no longer valid.\n"
                   );
-    pPVar2 = (PlayerCardData *)__restgprlr_28(0xffffffff821a9688);
-    return pPVar2;
+    return &g_DefaultPlayerData;
   }
-  pPVar4 = PlayerCards_GetActivePartyData();
-  if (pPVar4 != (PartyData *)0x0) {
-    iVar3 = CL_ControllerIndexFromClientNum(LVar1);
-    iVar5 = (int)uVar10;
-    if (iVar5 == 3) {
-      uVar8 = Party_CountUIVisibleMembers(pPVar4);
-      if (uVar8 == 0) {
-        bVar9 = Party_IsGameLobby(pPVar4);
-        if ((!bVar9) || (g_partyData.inParty == 0)) goto LAB_826e5a84;
-        pPVar4 = &g_partyData;
-        uVar8 = Party_CountUIVisibleMembers(&g_partyData);
-      }
-      if ((uVar11 & 0xffffffff) < (ulonglong)uVar8) {
-        pPVar7 = pPVar6;
-        iVar3 = PartyUI_ShowTruePlayerInfo(pPVar4,iVar3,(int)pPVar6);
-        if (iVar3 != 0) {
-          pPVar6 = PartyUI_GetMember(pPVar4,(int)pPVar6);
-          PlayerCards_BuildPlayerCardDataFromPartyMember
-                    (&staticResult,(LocalClientNum_t)pPVar6,pPVar7);
-          staticResult.lastUpdateTime = PartyUI_GetSelectedPlayerListChangedTime();
-          pPVar2 = (PlayerCardData *)__restgprlr_28(0xffffffff844efff8);
-          return pPVar2;
+  pPVar2 = PlayerCards_GetActivePartyData();
+  if (pPVar2 != (PartyData *)0x0) {
+    iVar1 = CL_ControllerIndexFromClientNum(param_1);
+    if (param_2 == PLAYERCARD_LOOKUP_LOBBY) {
+      uVar6 = Party_CountUIVisibleMembers(pPVar2);
+      if (uVar6 == 0) {
+        bVar7 = Party_IsGameLobby(pPVar2);
+        if (!bVar7) {
+          return &g_DefaultPlayerData;
         }
-        PlayerCards_BuildPlayerCardDataForUnknownPartyMember(&staticResult);
+        if (g_partyData.inParty == 0) {
+          return &g_DefaultPlayerData;
+        }
+        pPVar2 = &g_partyData;
+        uVar6 = Party_CountUIVisibleMembers(&g_partyData);
+      }
+      if (param_3 < uVar6) {
+        pPVar4 = (PartyMember *)param_3;
+        iVar1 = PartyUI_ShowTruePlayerInfo(pPVar2,iVar1,param_3);
+        if (iVar1 == 0) {
+          PlayerCards_BuildPlayerCardDataForUnknownPartyMember(&staticResult);
+          staticResult.lastUpdateTime = PartyUI_GetSelectedPlayerListChangedTime();
+          return &staticResult;
+        }
+        pPVar5 = PartyUI_GetMember(pPVar2,param_3);
+        PlayerCards_BuildPlayerCardDataFromPartyMember
+                  (&staticResult,(LocalClientNum_t)pPVar5,pPVar4);
         staticResult.lastUpdateTime = PartyUI_GetSelectedPlayerListChangedTime();
-        pPVar2 = (PlayerCardData *)__restgprlr_28(0xffffffff844efff8);
-        return pPVar2;
+        return &staticResult;
       }
     }
-    else if (iVar5 == 4) {
-      pPVar7 = (PartyMember *)PartyUI_GetTeam(pPVar4,iVar3);
-      if (((0 < (int)pPVar7) && ((int)pPVar7 < 3)) &&
-         (iVar5 = Party_CountTeamMembers(pPVar4,(int)pPVar7), (int)pPVar6 < iVar5)) {
-        pPVar6 = PartyUI_GetTeamMember(pPVar4,iVar3,(int)pPVar7,(int)pPVar6);
+    else if (param_2 == PLAYERCARD_LOOKUP_MYTEAM) {
+      pPVar4 = (PartyMember *)PartyUI_GetTeam(pPVar2,iVar1);
+      if (((0 < (int)pPVar4) && ((int)pPVar4 < 3)) &&
+         (iVar3 = Party_CountTeamMembers(pPVar2,(int)pPVar4), (int)param_3 < iVar3)) {
+        pPVar5 = PartyUI_GetTeamMember(pPVar2,iVar1,(int)pPVar4,param_3);
         PlayerCards_BuildPlayerCardDataFromPartyMember
-                  (&staticResult,(LocalClientNum_t)pPVar6,pPVar7);
+                  (&staticResult,(LocalClientNum_t)pPVar5,pPVar4);
         staticResult.lastUpdateTime = Sys_Milliseconds();
-        pPVar2 = (PlayerCardData *)__restgprlr_28(0xffffffff844efff8);
-        return pPVar2;
+        return &staticResult;
       }
     }
     else {
-      if (iVar5 != 5) {
+      if (param_2 != PLAYERCARD_LOOKUP_ENEMYTEAM) {
         Com_PrintError(0xd,
                        "PlayerCards_GetPartyMemberData: Invalid lookup type for party data (%i).\n")
         ;
-        pPVar2 = (PlayerCardData *)__restgprlr_28(0xffffffff821a9688);
-        return pPVar2;
+        return &g_DefaultPlayerData;
       }
-      iVar5 = PartyUI_GetTeam(pPVar4,iVar3);
-      if (iVar5 == 1) {
-        iVar5 = Party_CountTeamMembers(pPVar4,2);
-        if ((int)pPVar6 < iVar5) {
-          pPVar7 = (PartyMember *)0x2;
-          pPVar6 = PartyUI_GetTeamMember(pPVar4,iVar3,2,(int)pPVar6);
+      iVar3 = PartyUI_GetTeam(pPVar2,iVar1);
+      if (iVar3 == 1) {
+        iVar3 = Party_CountTeamMembers(pPVar2,2);
+        if ((int)param_3 < iVar3) {
+          pPVar5 = (PartyMember *)0x2;
+          pPVar4 = PartyUI_GetTeamMember(pPVar2,iVar1,2,param_3);
           PlayerCards_BuildPlayerCardDataFromPartyMember
-                    (&staticResult,(LocalClientNum_t)pPVar6,pPVar7);
+                    (&staticResult,(LocalClientNum_t)pPVar4,pPVar5);
           staticResult.lastUpdateTime = Sys_Milliseconds();
-          pPVar2 = (PlayerCardData *)__restgprlr_28(0xffffffff844efff8);
-          return pPVar2;
+          return &staticResult;
         }
       }
-      else if ((iVar5 == 2) && (iVar5 = Party_CountTeamMembers(pPVar4,1), (int)pPVar6 < iVar5)) {
-        pPVar7 = (PartyMember *)0x1;
-        pPVar6 = PartyUI_GetTeamMember(pPVar4,iVar3,1,(int)pPVar6);
+      else if ((iVar3 == 2) && (iVar3 = Party_CountTeamMembers(pPVar2,1), (int)param_3 < iVar3)) {
+        pPVar5 = (PartyMember *)0x1;
+        pPVar4 = PartyUI_GetTeamMember(pPVar2,iVar1,1,param_3);
         PlayerCards_BuildPlayerCardDataFromPartyMember
-                  (&staticResult,(LocalClientNum_t)pPVar6,pPVar7);
+                  (&staticResult,(LocalClientNum_t)pPVar4,pPVar5);
         staticResult.lastUpdateTime = Sys_Milliseconds();
-        pPVar2 = (PlayerCardData *)__restgprlr_28(0xffffffff844efff8);
-        return pPVar2;
+        return &staticResult;
       }
     }
   }
-LAB_826e5a84:
-  pPVar2 = (PlayerCardData *)__restgprlr_28(0xffffffff821a9688);
-  return pPVar2;
+  return &g_DefaultPlayerData;
 }
 
 
@@ -385,59 +367,54 @@ PlayerCardData * PlayerCards_GetLiveProfileDataForClient(LocalClientNum_t param_
 
 // 826E6060  PlayerCards_GetFriendCache  (playercards/playercards_client.cpp:446)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 PlayerCardData * PlayerCards_GetFriendCache(LocalClientNum_t param_1)
 
 {
-  LocalClientNum_t LVar2;
-  int iVar3;
-  bool bVar6;
+  int iVar2;
+  bool bVar5;
   ulong64 uVar1;
-  char *pcVar4;
-  PlayerCardData *pPVar5;
+  char *pcVar3;
+  PlayerCardData *pPVar4;
   
-  LVar2 = __savegprlr_29(param_1);
-  iVar3 = CL_ControllerIndexFromClientNum(LVar2);
-  bVar6 = Menu_IsMenuOpenAndVisible(LVar2,"page_friends");
-  if (bVar6) {
-    uVar1 = FriendsMenu_GetCurrentIndexXUID(iVar3);
-    pcVar4 = FriendsMenu_GetCurrentIndexName(iVar3);
-    pPVar5 = PlayercardCache_GetPlayercard(iVar3,uVar1,pcVar4);
-    pPVar5 = (PlayerCardData *)__restgprlr_29(pPVar5);
-    return pPVar5;
+  iVar2 = CL_ControllerIndexFromClientNum(param_1);
+  bVar5 = Menu_IsMenuOpenAndVisible(param_1,"page_friends");
+  if (bVar5) {
+    uVar1 = FriendsMenu_GetCurrentIndexXUID(iVar2);
+    pcVar3 = FriendsMenu_GetCurrentIndexName(iVar2);
+    pPVar4 = PlayercardCache_GetPlayercard(iVar2,uVar1,pcVar3);
+    return pPVar4;
   }
-  bVar6 = Menu_IsMenuOpenAndVisible(LVar2,"page_recent");
-  if (bVar6) {
-    uVar1 = MeetPlayer_GetCurrentIndexXUID(iVar3);
-    pcVar4 = MeetPlayer_GetCurrentIndexName(iVar3);
-    pPVar5 = PlayercardCache_GetPlayercard(iVar3,uVar1,pcVar4);
-    pPVar5 = (PlayerCardData *)__restgprlr_29(pPVar5);
-    return pPVar5;
+  bVar5 = Menu_IsMenuOpenAndVisible(param_1,"page_recent");
+  if (bVar5) {
+    uVar1 = MeetPlayer_GetCurrentIndexXUID(iVar2);
+    pcVar3 = MeetPlayer_GetCurrentIndexName(iVar2);
+    pPVar4 = PlayercardCache_GetPlayercard(iVar2,uVar1,pcVar3);
+    return pPVar4;
   }
-  bVar6 = Menu_IsMenuOpenAndVisible(LVar2,"page_party");
-  if (bVar6) {
-    uVar1 = LiveParty_GetCurrentIndexXUID(iVar3);
-    pcVar4 = LiveParty_GetCurrentIndexName(iVar3);
-    pPVar5 = PlayercardCache_GetPlayercard(iVar3,uVar1,pcVar4);
-    pPVar5 = (PlayerCardData *)__restgprlr_29(pPVar5);
-    return pPVar5;
+  bVar5 = Menu_IsMenuOpenAndVisible(param_1,"page_party");
+  if (bVar5) {
+    uVar1 = LiveParty_GetCurrentIndexXUID(iVar2);
+    pcVar3 = LiveParty_GetCurrentIndexName(iVar2);
+    pPVar4 = PlayercardCache_GetPlayercard(iVar2,uVar1,pcVar3);
+    return pPVar4;
   }
-  bVar6 = Menu_IsMenuOpenAndVisible(LVar2,"page_facebook");
-  if (bVar6) {
-    uVar1 = FacebookFriends_GetCurrentIndexXUID(iVar3);
-    pcVar4 = FacebookFriends_GetCurrentIndexName(iVar3);
-    pPVar5 = PlayercardCache_GetPlayercard(iVar3,uVar1,pcVar4);
-    pPVar5 = (PlayerCardData *)__restgprlr_29(pPVar5);
-    return pPVar5;
+  bVar5 = Menu_IsMenuOpenAndVisible(param_1,"page_facebook");
+  if (bVar5) {
+    uVar1 = FacebookFriends_GetCurrentIndexXUID(iVar2);
+    pcVar3 = FacebookFriends_GetCurrentIndexName(iVar2);
+    pPVar4 = PlayercardCache_GetPlayercard(iVar2,uVar1,pcVar3);
+    return pPVar4;
   }
-  bVar6 = Menu_IsMenuOpenAndVisible(LVar2,"page_elite_clan");
-  if (bVar6) {
-    uVar1 = EliteClan_GetCurrentIndexXUID(iVar3);
-    pcVar4 = EliteClan_GetCurrentIndexName(iVar3);
-    pPVar5 = PlayercardCache_GetPlayercard(iVar3,uVar1,pcVar4);
-    pPVar5 = (PlayerCardData *)__restgprlr_29(pPVar5);
-    return pPVar5;
+  bVar5 = Menu_IsMenuOpenAndVisible(param_1,"page_elite_clan");
+  if (bVar5) {
+    uVar1 = EliteClan_GetCurrentIndexXUID(iVar2);
+    pcVar3 = EliteClan_GetCurrentIndexName(iVar2);
+    pPVar4 = PlayercardCache_GetPlayercard(iVar2,uVar1,pcVar3);
+    return pPVar4;
   }
   if (alwaysfails == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\playercards\\playercards_client.cpp"
@@ -445,8 +422,7 @@ PlayerCardData * PlayerCards_GetFriendCache(LocalClientNum_t param_1)
                     "ERROR: Trying to show a friend players card and we\'re not in the friends menu "
                    );
   }
-  pPVar5 = (PlayerCardData *)__restgprlr_29(0xffffffff821a9688);
-  return pPVar5;
+  return &g_DefaultPlayerData;
 }
 
 
@@ -479,6 +455,8 @@ PlayerCardData * PlayerCards_GetCachedPlayerData(LocalClientNum_t param_1,uint p
 
 // 826E62D0  PlayerCards_PopulatePlayerDataForClient  (playercards/playercards_client.cpp:514)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -489,53 +467,51 @@ void PlayerCards_PopulatePlayerDataForClient
 {
   team_t tVar1;
   bool bVar2;
-  LocalClientNum_t LVar3;
-  cg_s *pcVar4;
-  int iVar5;
+  cg_s *pcVar3;
+  int iVar4;
   
-  LVar3 = __savegprlr_27(param_1);
-  pcVar4 = CG_GetLocalClientGlobals(LVar3);
-  param_3->lastUpdateTime = pcVar4->time;
-  if ((pcVar4->bgs).clientinfo[param_2].infoValid == 0) goto LAB_826e6454;
-  param_3->iconIndex = (pcVar4->bgs).clientinfo[param_2].playerCardIcon;
-  param_3->titleIndex = (pcVar4->bgs).clientinfo[param_2].playerCardTitle;
-  param_3->nameplateIndex = (pcVar4->bgs).clientinfo[param_2].playerCardNameplate;
-  param_3->rank_mp = (pcVar4->bgs).clientinfo[param_2].rank_mp;
-  param_3->prestige_mp = (pcVar4->bgs).clientinfo[param_2].prestige_mp;
-  param_3->rank_so = (pcVar4->bgs).clientinfo[param_2].rank_so;
-  param_3->prestige_so = (pcVar4->bgs).clientinfo[param_2].prestige_so;
-  param_3->team = (pcVar4->bgs).clientinfo[param_2].team;
-  I_strncpyz(param_3->name,(pcVar4->bgs).clientinfo[param_2].name,0x20);
-  if (param_2 == pcVar4->clientNum) {
-LAB_826e63bc:
-    iVar5 = CL_ClientIsInMyParty(LVar3,(pcVar4->bgs).clientinfo[param_2].clientNum);
-    param_3->myParty = iVar5;
+  pcVar3 = CG_GetLocalClientGlobals(param_1);
+  param_3->lastUpdateTime = pcVar3->time;
+  if ((pcVar3->bgs).clientinfo[param_2].infoValid == 0) {
+    return;
   }
-  else {
-    tVar1 = (pcVar4->bgs).clientinfo[pcVar4->clientNum].team;
-    if ((tVar1 == TEAM_FREE) || (bVar2 = true, tVar1 != (pcVar4->bgs).clientinfo[param_2].team)) {
+  param_3->iconIndex = (pcVar3->bgs).clientinfo[param_2].playerCardIcon;
+  param_3->titleIndex = (pcVar3->bgs).clientinfo[param_2].playerCardTitle;
+  param_3->nameplateIndex = (pcVar3->bgs).clientinfo[param_2].playerCardNameplate;
+  param_3->rank_mp = (pcVar3->bgs).clientinfo[param_2].rank_mp;
+  param_3->prestige_mp = (pcVar3->bgs).clientinfo[param_2].prestige_mp;
+  param_3->rank_so = (pcVar3->bgs).clientinfo[param_2].rank_so;
+  param_3->prestige_so = (pcVar3->bgs).clientinfo[param_2].prestige_so;
+  param_3->team = (pcVar3->bgs).clientinfo[param_2].team;
+  I_strncpyz(param_3->name,(pcVar3->bgs).clientinfo[param_2].name,0x20);
+  if (param_2 != pcVar3->clientNum) {
+    tVar1 = (pcVar3->bgs).clientinfo[pcVar3->clientNum].team;
+    if ((tVar1 == TEAM_FREE) || (bVar2 = true, tVar1 != (pcVar3->bgs).clientinfo[param_2].team)) {
       bVar2 = false;
     }
-    if (bVar2) goto LAB_826e63bc;
-    param_3->myParty = 0;
+    if (!bVar2) {
+      param_3->myParty = 0;
+      goto LAB_826e63cc;
+    }
   }
-  I_strncpyz(param_3->clanAbbrev,(pcVar4->bgs).clientinfo[param_2].clanAbbrev,5);
-  param_3->use_elite_clan_tag = (pcVar4->bgs).clientinfo[param_2].use_elite_clan_tag;
-  param_3->use_elite_clan_title = (pcVar4->bgs).clientinfo[param_2].use_elite_clan_title;
-  I_strncpyz(param_3->elite_clan_title_text,(pcVar4->bgs).clientinfo[param_2].elite_clan_title_text,
+  iVar4 = CL_ClientIsInMyParty(param_1,(pcVar3->bgs).clientinfo[param_2].clientNum);
+  param_3->myParty = iVar4;
+LAB_826e63cc:
+  I_strncpyz(param_3->clanAbbrev,(pcVar3->bgs).clientinfo[param_2].clanAbbrev,5);
+  param_3->use_elite_clan_tag = (pcVar3->bgs).clientinfo[param_2].use_elite_clan_tag;
+  param_3->use_elite_clan_title = (pcVar3->bgs).clientinfo[param_2].use_elite_clan_title;
+  I_strncpyz(param_3->elite_clan_title_text,(pcVar3->bgs).clientinfo[param_2].elite_clan_title_text,
              0x18);
-  param_3->elite_clan_title_bg = (pcVar4->bgs).clientinfo[param_2].elite_clan_title_bg;
-  I_strncpyz(param_3->elite_clan_tag_text,(pcVar4->bgs).clientinfo[param_2].elite_clan_tag_text,5);
-  param_3->prestige_black_ops = (pcVar4->bgs).clientinfo[param_2].prestige_black_ops;
-  param_3->rank_black_ops = (pcVar4->bgs).clientinfo[param_2].rank_black_ops;
-  param_3->prestige_mw2 = (pcVar4->bgs).clientinfo[param_2].prestige_mw2;
-  param_3->rank_mw2 = (pcVar4->bgs).clientinfo[param_2].rank_mw2;
-  param_3->prestige_world_at_war = (pcVar4->bgs).clientinfo[param_2].prestige_world_at_war;
-  param_3->rank_world_at_war = (pcVar4->bgs).clientinfo[param_2].rank_world_at_war;
-  param_3->prestige_mw = (pcVar4->bgs).clientinfo[param_2].prestige_mw;
-  param_3->rank_mw = (pcVar4->bgs).clientinfo[param_2].rank_mw;
-LAB_826e6454:
-  __restgprlr_27();
+  param_3->elite_clan_title_bg = (pcVar3->bgs).clientinfo[param_2].elite_clan_title_bg;
+  I_strncpyz(param_3->elite_clan_tag_text,(pcVar3->bgs).clientinfo[param_2].elite_clan_tag_text,5);
+  param_3->prestige_black_ops = (pcVar3->bgs).clientinfo[param_2].prestige_black_ops;
+  param_3->rank_black_ops = (pcVar3->bgs).clientinfo[param_2].rank_black_ops;
+  param_3->prestige_mw2 = (pcVar3->bgs).clientinfo[param_2].prestige_mw2;
+  param_3->rank_mw2 = (pcVar3->bgs).clientinfo[param_2].rank_mw2;
+  param_3->prestige_world_at_war = (pcVar3->bgs).clientinfo[param_2].prestige_world_at_war;
+  param_3->rank_world_at_war = (pcVar3->bgs).clientinfo[param_2].rank_world_at_war;
+  param_3->prestige_mw = (pcVar3->bgs).clientinfo[param_2].prestige_mw;
+  param_3->rank_mw = (pcVar3->bgs).clientinfo[param_2].rank_mw;
   return;
 }
 
@@ -581,43 +557,41 @@ PlayerCardData * PlayerCards_GetTheaterPlayerData(LocalClientNum_t param_1)
 
 // 826E6530  PlayerCardData_GetMultInternalVal  (playercards/playercards_client.cpp:595)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 int PlayerCardData_GetMultInternalVal
               (StructuredDataBuffer *param_1,char *param_2,char *param_3,char *param_4)
 
 {
-  StructuredDataBuffer *pSVar1;
+  int iVar1;
   int iVar2;
-  char *pcVar3;
-  int iVar4;
-  ulonglong uVar5;
   char *local_c0;
   char *local_bc;
   char acStack_b0 [64];
   char acStack_70 [112];
   
-  uVar5 = (ulonglong)(int)param_4;
-  pSVar1 = (StructuredDataBuffer *)__savegprlr_27(param_1);
   local_c0 = acStack_b0;
   local_bc = acStack_70;
   I_strncpyz(acStack_b0,param_2,0x40);
-  pcVar3 = (char *)uVar5;
-  if ((uVar5 & 0xffffffff) != 0) {
-    I_strncpyz(acStack_70,pcVar3,0x40);
+  if (param_4 != (char *)0x0) {
+    I_strncpyz(acStack_70,param_4,0x40);
   }
-  iVar4 = ((uint)LZCOUNT(pcVar3) >> 5 ^ 1) + 1;
-  iVar2 = LiveStorage_DataGetInternalInt(&local_c0,iVar4,pSVar1);
+  iVar2 = ((uint)LZCOUNT(param_4) >> 5 ^ 1) + 1;
+  iVar1 = LiveStorage_DataGetInternalInt(&local_c0,iVar2,param_1);
   I_strncpyz(acStack_b0,param_3,0x40);
-  if ((uVar5 & 0xffffffff) != 0) {
-    I_strncpyz(acStack_70,pcVar3,0x40);
+  if (param_4 != (char *)0x0) {
+    I_strncpyz(acStack_70,param_4,0x40);
   }
-  iVar4 = LiveStorage_DataGetInternalInt(&local_c0,iVar4,pSVar1);
-  iVar2 = __restgprlr_27((longlong)iVar2 - (longlong)iVar4);
-  return iVar2;
+  iVar2 = LiveStorage_DataGetInternalInt(&local_c0,iVar2,param_1);
+  return iVar1 - iVar2;
 }
 
 
 // 826E65E8  PlayerCardData_GetXPMult  (playercards/playercards_client.cpp:623)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 int PlayerCardData_GetXPMult(LocalClientNum_t param_1,PlayerCardData *param_2)
@@ -629,8 +603,8 @@ int PlayerCardData_GetXPMult(LocalClientNum_t param_1,PlayerCardData *param_2)
   char *pcVar3;
   int iVar4;
   int iVar5;
-  ulonglong uVar7;
-  longlong lVar8;
+  char *pcVar7;
+  int iVar8;
   char acStack_d0 [8];
   StructuredDataBuffer local_c8;
   char *local_c0;
@@ -638,64 +612,60 @@ int PlayerCardData_GetXPMult(LocalClientNum_t param_1,PlayerCardData *param_2)
   char acStack_b0 [64];
   undefined1 auStack_70 [112];
   
-  uVar7 = (ulonglong)(int)param_2;
-  __savegprlr_28(param_1);
-  if ((uVar7 & 0xffffffff) == 0) {
+  if (param_2 == (PlayerCardData *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\playercards\\playercards_client.cpp"
                     ,0x279,0,"%s");
   }
-  iVar4 = 0;
+  iVar8 = 0;
   do {
-    bVar6 = Live_UserIsGuest(iVar4);
+    bVar6 = Live_UserIsGuest(iVar8);
     if (!bVar6) {
-      pcVar3 = CL_GetUsernameForLocalClient(iVar4);
-      lVar8 = uVar7 + 0x24;
+      pcVar3 = CL_GetUsernameForLocalClient(iVar8);
+      pcVar7 = param_2->name;
       do {
-        cVar1 = *(char *)lVar8;
+        cVar1 = *pcVar7;
         cVar2 = *pcVar3;
         if (cVar1 == '\0') break;
-        lVar8 = lVar8 + 1;
+        pcVar7 = pcVar7 + 1;
         pcVar3 = pcVar3 + 1;
       } while (cVar1 == cVar2);
       if (cVar1 == cVar2) break;
     }
-    iVar4 = iVar4 + 1;
-  } while (iVar4 < 4);
-  if ((iVar4 != 4) &&
-     (local_c8.data = LiveStorage_GetPersistentDataBuffer(iVar4), local_c8.data != (uchar *)0x0)) {
+    iVar8 = iVar8 + 1;
+  } while (iVar8 < 4);
+  if ((iVar8 != 4) &&
+     (local_c8.data = LiveStorage_GetPersistentDataBuffer(iVar8), local_c8.data != (uchar *)0x0)) {
     local_c8.size = 0x2ffc;
-    lVar8 = 0;
-    iVar4 = 0;
+    iVar8 = 0;
+    iVar5 = 0;
     do {
-      _itoa(iVar4,acStack_d0,10);
-      iVar5 = PlayerCardData_GetMultInternalVal
+      _itoa(iVar5,acStack_d0,10);
+      iVar4 = PlayerCardData_GetMultInternalVal
                         (&local_c8,"xpMaxMultiplierTimePlayed","xpMultiplierTimePlayed",acStack_d0);
-      if (0 < iVar5) {
-        lVar8 = iVar5 + lVar8;
+      if (0 < iVar4) {
+        iVar8 = iVar4 + iVar8;
       }
-      iVar4 = iVar4 + 1;
-    } while (iVar4 < 3);
+      iVar5 = iVar5 + 1;
+    } while (iVar5 < 3);
     _itoa(0,acStack_d0,10);
-    iVar4 = PlayerCardData_GetMultInternalVal
+    iVar5 = PlayerCardData_GetMultInternalVal
                       (&local_c8,"challengeXPMaxMultiplierTimePlayed",
                        "challengeXPMultiplierTimePlayed",acStack_d0);
-    if (0 < iVar4) {
-      lVar8 = iVar4 + lVar8;
+    if (0 < iVar5) {
+      iVar8 = iVar5 + iVar8;
     }
     local_c0 = acStack_b0;
     local_bc = auStack_70;
     I_strncpyz(acStack_b0,"prestigeDoubleXpMaxTimePlayed",0x40);
-    iVar4 = LiveStorage_DataGetInternalInt(&local_c0,1,&local_c8);
-    I_strncpyz(acStack_b0,"prestigeDoubleXpTimePlayed",0x40);
     iVar5 = LiveStorage_DataGetInternalInt(&local_c0,1,&local_c8);
-    if (0 < (longlong)iVar4 - (longlong)iVar5) {
-      lVar8 = ((longlong)iVar4 - (longlong)iVar5) + lVar8;
+    I_strncpyz(acStack_b0,"prestigeDoubleXpTimePlayed",0x40);
+    iVar4 = LiveStorage_DataGetInternalInt(&local_c0,1,&local_c8);
+    if (0 < (longlong)iVar5 - (longlong)iVar4) {
+      iVar8 = (int)((longlong)iVar5 - (longlong)iVar4) + iVar8;
     }
-    iVar4 = __restgprlr_28(lVar8);
-    return iVar4;
+    return iVar8;
   }
-  iVar4 = __restgprlr_28(0);
-  return iVar4;
+  return 0;
 }
 
 
@@ -772,35 +742,29 @@ int PlayerCardData_GetWeaponXPMult(LocalClientNum_t param_1,PlayerCardData *para
 
 // 826E6940  PlayerCards_SetCachedPlayerData  (playercards/playercards_client.cpp:735)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void PlayerCards_SetCachedPlayerData(LocalClientNum_t param_1,int param_2,int param_3)
 
 {
-  LocalClientNum_t LVar1;
-  ulonglong uVar2;
-  ulonglong uVar3;
-  
-  uVar3 = (ulonglong)param_3;
-  uVar2 = (ulonglong)param_2;
-  LVar1 = __savegprlr_28(param_1);
-  if ((uint)cl_maxLocalClients <= LVar1) {
+  if ((uint)cl_maxLocalClients <= param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\playercards\\playercards_client.cpp"
                     ,0x2e1,0,"localClientNum doesn\'t index MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)")
     ;
   }
-  if (0x11 < (uVar2 & 0xffffffff)) {
+  if (0x11 < (uint)param_2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\playercards\\playercards_client.cpp"
                     ,0x2e2,0,"clientNum doesn\'t index MAX_CLIENTS\n\t%i not in [0, %i)");
   }
-  if (0x11 < (uVar3 & 0xffffffff)) {
+  if (0x11 < (uint)param_3) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\playercards\\playercards_client.cpp"
                     ,0x2e3,0,
                     "cardSlot doesn\'t index PLAYERCARD_NUM_SCRIPT_CARD_SLOTS\n\t%i not in [0, %i)")
     ;
   }
-  PlayerCards_PopulatePlayerDataForClient(LVar1,(int)uVar2,g_PlayerCardCache[LVar1] + (int)uVar3);
-  __restgprlr_28();
+  PlayerCards_PopulatePlayerDataForClient(param_1,param_2,g_PlayerCardCache[param_1] + param_3);
   return;
 }
 

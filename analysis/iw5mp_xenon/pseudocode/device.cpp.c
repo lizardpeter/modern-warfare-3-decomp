@@ -32,69 +32,69 @@ void D3D::BusyYield(void)
 
 // 8285A098  CBlocker  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/device.cpp:188)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 
 CBlocker * __thiscall D3D::CBlocker::CBlocker(CBlocker *this,CDevice *param_1,_D3DBLOCKTYPE param_2)
 
 {
-  undefined4 uVar1;
+  ulong uVar1;
   undefined8 uVar2;
-  undefined4 *puVar3;
-  CBlocker *pCVar4;
-  ulonglong uVar5;
   int in_r13;
   
-  uVar5 = (ulonglong)(int)param_2;
-  puVar3 = (undefined4 *)__savegprlr_29(this);
-  *puVar3 = param_1;
-  puVar3[1] = (int)uVar5;
-  uVar1 = *(undefined4 *)(*(int *)(in_r13 + 0x100) + 0x58);
-  puVar3[2] = param_1->m_pWriteBacks->GpuFence;
-  puVar3[3] = uVar1;
-  puVar3[4] = uVar1;
+  this->m_pDevice = param_1;
+  this->m_BlockType = param_2;
+  uVar1 = *(ulong *)(*(int *)(in_r13 + 0x100) + 0x58);
+  this->m_StartTimeoutFence = param_1->m_pWriteBacks->GpuFence;
+  this->m_StartTimeoutTime = uVar1;
+  this->m_StartThreadTime = uVar1;
   uVar2 = TBLr;
-  puVar3[5] = (int)uVar2;
-  if ((int)uVar5 != 0) {
-    PIXAddPixOpWithData(*(_PixDataOpcodesType *)
-                         ((int)g_BlockTypeToPixOp + (int)((uVar5 & 0xffffffff) << 2)) | 0x800000,0,
-                        (void *)0x0);
+  this->m_StartQpcTime = (ulong)uVar2;
+  if (param_2 != D3DBLOCKTYPE_NONE) {
+    PIXAddPixOpWithData(g_BlockTypeToPixOp[param_2] | 0x800000,0,(void *)0x0);
   }
-  pCVar4 = (CBlocker *)__restgprlr_29(puVar3);
-  return pCVar4;
+  return this;
 }
 
 
 // 8285A118  ~CBlocker  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/device.cpp:221)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 
 void __thiscall D3D::CBlocker::~CBlocker(CBlocker *this)
 
 {
-  int iVar1;
-  code *pcVar2;
-  int *piVar3;
-  ulonglong uVar4;
+  ulong uVar1;
+  int iVar2;
+  CDevice *pCVar3;
+  _func___cdecl_void_ulong__D3DBLOCKTYPE_float_ulong *p_Var4;
+  float fVar5;
+  int in_r13;
+  ulonglong uVar6;
   
-  piVar3 = (int *)__savegprlr_29(this);
-  if (piVar3[1] != 0) {
-    uVar4 = TBLr;
-    uVar4 = (uVar4 & 0xffffffff) - (ulonglong)(uint)piVar3[5];
-    iVar1 = *piVar3;
-    if (piVar3[1] == 3) {
-      *(ulonglong *)(iVar1 + 0x5590) = (uVar4 & 0xffffffff) + *(longlong *)(iVar1 + 0x5590);
+  if (this->m_BlockType != D3DBLOCKTYPE_NONE) {
+    uVar6 = TBLr;
+    uVar1 = this->m_StartThreadTime;
+    uVar6 = (uVar6 & 0xffffffff) - (ulonglong)this->m_StartQpcTime;
+    iVar2 = *(int *)(*(int *)(in_r13 + 0x100) + 0x58);
+    pCVar3 = this->m_pDevice;
+    if (this->m_BlockType == D3DBLOCKTYPE_SWAP_THROTTLE) {
+      (pCVar3->m_TimeThrottled).QuadPart = (uVar6 & 0xffffffff) + (pCVar3->m_TimeThrottled).QuadPart
+      ;
     }
     else {
-      *(ulonglong *)(iVar1 + 0x5588) = (uVar4 & 0xffffffff) + *(longlong *)(iVar1 + 0x5588);
+      (pCVar3->m_TimeBlocked).QuadPart = (uVar6 & 0xffffffff) + (pCVar3->m_TimeBlocked).QuadPart;
     }
-    PIXAddPixOpWithData(g_BlockTypeToPixOp[piVar3[1]] | 0x400000,0,(void *)0x0);
-    pcVar2 = *(code **)(*piVar3 + 0x358c);
-    if (pcVar2 != (code *)0x0) {
-      (*pcVar2)((double)(*(float *)(*piVar3 + 0x5584) * (float)(uVar4 & 0xffffffff) * 1000.0),0,
-                piVar3[1]);
+    fVar5 = 0.0;
+    PIXAddPixOpWithData(g_BlockTypeToPixOp[this->m_BlockType] | 0x400000,0,(void *)0x0);
+    p_Var4 = this->m_pDevice->m_pBlockCallback;
+    if (p_Var4 != (_func___cdecl_void_ulong__D3DBLOCKTYPE_float_ulong *)0x0) {
+      (*p_Var4)(0,this->m_BlockType,fVar5,iVar2 - uVar1);
     }
   }
-  __restgprlr_29();
   return;
 }
 
@@ -123,52 +123,50 @@ void D3D::MemFree(void *param_1)
 
 // 8285A208  Check  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/device.cpp:270)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 
 int __thiscall D3D::CBlocker::Check(CBlocker *this)
 
 {
   CDevice *pCVar1;
-  undefined4 *puVar3;
-  ulong uVar4;
-  undefined8 uVar2;
-  int iVar5;
-  int iVar6;
+  ulong uVar2;
+  ulong uVar3;
+  int iVar4;
   int in_r13;
   
-  puVar3 = (undefined4 *)__savegprlr_29(this);
-  pCVar1 = (CDevice *)*puVar3;
+  pCVar1 = this->m_pDevice;
   BusyYield();
   if (pCVar1->m_NullHardware) {
 LAB_8285a2e8:
-    uVar2 = 0;
+    iVar4 = 0;
   }
   else {
-    iVar6 = *(int *)(*(int *)(in_r13 + 0x100) + 0x58);
-    if (puVar3[2] != pCVar1->m_pWriteBacks->GpuFence) {
-      uVar4 = pCVar1->m_pWriteBacks->GpuFence;
-      puVar3[3] = iVar6;
-      puVar3[2] = uVar4;
+    uVar2 = *(ulong *)(*(int *)(in_r13 + 0x100) + 0x58);
+    if (this->m_StartTimeoutFence != pCVar1->m_pWriteBacks->GpuFence) {
+      uVar3 = pCVar1->m_pWriteBacks->GpuFence;
+      this->m_StartTimeoutTime = uVar2;
+      this->m_StartTimeoutFence = uVar3;
     }
-    uVar4 = GetCurrentThreadId();
-    if ((pCVar1->m_ThreadId == uVar4) && ((pCVar1->m_XpsGlobal).ActiveThreads != 0)) {
-      puVar3[3] = iVar6;
+    uVar3 = GetCurrentThreadId();
+    if ((pCVar1->m_ThreadId == uVar3) && ((pCVar1->m_XpsGlobal).ActiveThreads != 0)) {
+      this->m_StartTimeoutTime = uVar2;
     }
-    if (4999 < (uint)(iVar6 - puVar3[3])) {
-      if (puVar3[1] == 0x13) {
+    if (4999 < uVar2 - this->m_StartTimeoutTime) {
+      if (this->m_BlockType == D3DBLOCKTYPE_ASYNC_CB_CALL_BLOCK_ALLOC) {
         DbgPrint(0xffffffff821f3198);
         DbgPrint(0xffffffff821f3118);
         DbgPrint(0xffffffff821f3098);
         DbgPrint(0xffffffff821f3030);
       }
-      iVar5 = DebugGpuDeadlock(pCVar1);
-      if (iVar5 != 0) goto LAB_8285a2e8;
-      puVar3[3] = iVar6;
+      iVar4 = DebugGpuDeadlock(pCVar1);
+      if (iVar4 != 0) goto LAB_8285a2e8;
+      this->m_StartTimeoutTime = uVar2;
     }
-    uVar2 = 1;
+    iVar4 = 1;
   }
-  iVar6 = __restgprlr_29(uVar2);
-  return iVar6;
+  return iVar4;
 }
 
 
@@ -401,6 +399,8 @@ void D3D::WaitUntilIdleOrFlushCaches(CDevice *param_1)
 
 // 8285AAF0  Direct3D_CreateDevice  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/device.cpp:618)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 /* WARNING: Enum "ERareInstruction": Some values do not have unique names */
 
@@ -411,34 +411,24 @@ Direct3D_CreateDevice
 
 {
   CDevice *this;
-  undefined8 uVar1;
-  int iVar2;
-  undefined4 uVar3;
-  longlong lVar4;
-  ulonglong uVar5;
-  ulong uVar6;
+  int iVar1;
   AutoCriticalSection local_40 [8];
   
-  uVar5 = (ulonglong)(int)param_4;
-  lVar4 = (longlong)(int)param_2;
-  __savegprlr_27(param_1,lVar4,param_3);
-  uVar6 = (ulong)uVar5;
   *param_6 = (D3DDevice *)0x0;
   this = D3D::MemAllocAligned(0x5f80,0x80);
   if (this != (CDevice *)0x0) {
-    iVar2 = D3D::InitializeCommonDeviceState(this);
-    if (iVar2 == 0) {
+    iVar1 = D3D::InitializeCommonDeviceState(this);
+    if (iVar1 == 0) {
       XMemFree(*(void **)&this[-1].field_0x5f7c,0x24800000);
     }
-    else if ((int)lVar4 == 2) {
+    else if (param_2 == D3DDEVTYPE_COMMAND_BUFFER) {
       this->m_CommandBufferDevice = true;
       D3D::CDevice::MarkAsOutOfMemory(this);
-      iVar2 = D3D::InitializeCommandBufferDevice(this);
-      if (iVar2 != 0) {
+      iVar1 = D3D::InitializeCommandBufferDevice(this);
+      if (iVar1 != 0) {
 LAB_8285ac3c:
         *param_6 = (D3DDevice *)this;
-        uVar1 = 0;
-        goto LAB_8285ac48;
+        return 0;
       }
       D3DDevice_Release((D3DDevice *)this);
     }
@@ -449,12 +439,12 @@ LAB_8285ac3c:
       }
       this->m_RTTrackTextures = (bool)('\x01' - (g_RTGlobal.m_TrackTextures == 0));
       this->m_RTTrackMipUsage = (bool)('\x01' - (g_RTGlobal.m_TrackMipUsage == 0));
-      if (((uVar5 & 0x100) == 0) && ((uVar5 & 0x3f000000) == 0)) {
-        uVar6 = uVar6 | 0xc000000;
+      if (((param_4 & 0x100) == 0) && ((param_4 & 0x3f000000) == 0)) {
+        param_4 = param_4 | 0xc000000;
       }
-      this->m_CreateDeviceFlags = uVar6;
-      iVar2 = D3D::InitializeHardwareDevice(this,param_5);
-      if (iVar2 != 0) {
+      this->m_CreateDeviceFlags = param_4;
+      iVar1 = D3D::InitializeHardwareDevice(this,param_5);
+      if (iVar1 != 0) {
         if (local_40[0].m_bGotCriticalSection != false) {
           RtlLeaveCriticalSection(local_40[0].m_pCriticalSection);
         }
@@ -466,10 +456,7 @@ LAB_8285ac3c:
       }
     }
   }
-  uVar1 = 0xffffffff8007000e;
-LAB_8285ac48:
-  uVar3 = __restgprlr_27(uVar1);
-  return uVar3;
+  return 0x8007000e;
 }
 
 
@@ -567,50 +554,49 @@ void D3DDevice_FlushHiZStencil(D3DDevice *param_1,_D3DFHZS_FLUSHTYPE param_2)
 
 // 8285A768  D3DDevice_UnsetAll  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/device.cpp:1147)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 
 void D3DDevice_UnsetAll(D3DDevice *param_1)
 
 {
-  D3DDevice *pDVar1;
-  int *piVar2;
-  ulong uVar4;
-  ulonglong uVar3;
+  int *piVar1;
+  ulong uVar3;
+  ulonglong uVar2;
   
-  pDVar1 = (D3DDevice *)__savegprlr_29(param_1);
-  uVar4 = 0;
-  piVar2 = (int *)((int)&pDVar1[1].m_Constants.field0_0x0 + 0x210);
-  do {
-    if (*piVar2 != *(int *)((int)&pDVar1[1].m_Constants.field1_0x300 + 0x898)) {
-      D3DDevice_SetRenderTarget(pDVar1,uVar4,(D3DSurface *)0x0);
-    }
-    uVar4 = uVar4 + 1;
-    piVar2 = piVar2 + 1;
-  } while (uVar4 < 4);
-  if (*(int *)((int)&pDVar1[1].m_Constants.field0_0x0 + 0x220) !=
-      *(int *)((int)&pDVar1[1].m_Constants.field1_0x300 + 0x890)) {
-    D3DDevice_SetDepthStencilSurface(pDVar1,(D3DSurface *)0x0);
-  }
-  D3DDevice_SetVertexShader(pDVar1,(D3DVertexShader *)0x0);
-  D3DDevice_SetPixelShader(pDVar1,(D3DPixelShader *)0x0);
-  D3DDevice_SetVertexDeclaration(pDVar1,(D3DVertexDeclaration *)0x0);
-  D3DDevice_SetIndices(pDVar1,(D3DIndexBuffer *)0x0);
   uVar3 = 0;
+  piVar1 = (int *)((int)&param_1[1].m_Constants.field0_0x0 + 0x210);
+  do {
+    if (*piVar1 != *(int *)((int)&param_1[1].m_Constants.field1_0x300 + 0x898)) {
+      D3DDevice_SetRenderTarget(param_1,uVar3,(D3DSurface *)0x0);
+    }
+    uVar3 = uVar3 + 1;
+    piVar1 = piVar1 + 1;
+  } while (uVar3 < 4);
+  if (*(int *)((int)&param_1[1].m_Constants.field0_0x0 + 0x220) !=
+      *(int *)((int)&param_1[1].m_Constants.field1_0x300 + 0x890)) {
+    D3DDevice_SetDepthStencilSurface(param_1,(D3DSurface *)0x0);
+  }
+  D3DDevice_SetVertexShader(param_1,(D3DVertexShader *)0x0);
+  D3DDevice_SetPixelShader(param_1,(D3DPixelShader *)0x0);
+  D3DDevice_SetVertexDeclaration(param_1,(D3DVertexDeclaration *)0x0);
+  D3DDevice_SetIndices(param_1,(D3DIndexBuffer *)0x0);
+  uVar2 = 0;
   do {
     D3DDevice_SetStreamSource
-              (pDVar1,(uint)uVar3,(D3DVertexBuffer *)0x0,0,4,
+              (param_1,(uint)uVar2,(D3DVertexBuffer *)0x0,0,4,
                0x8000000000000000 >>
-               ((((0x5f - uVar3) * 0x5556 & 0xffffffff) >> 0x10) + 0x20 & 0x7f));
-    uVar3 = uVar3 + 1;
-  } while ((uVar3 & 0xffffffff) < 0x10);
-  uVar3 = 0;
+               ((((0x5f - uVar2) * 0x5556 & 0xffffffff) >> 0x10) + 0x20 & 0x7f));
+    uVar2 = uVar2 + 1;
+  } while ((uVar2 & 0xffffffff) < 0x10);
+  uVar2 = 0;
   do {
     D3DDevice_SetTexture
-              (pDVar1,(ulong)uVar3,(D3DBaseTexture *)0x0,0x8000000000000000 >> (uVar3 + 0x20 & 0x7f)
-              );
-    uVar3 = uVar3 + 1;
-  } while ((uVar3 & 0xffffffff) < 0x1a);
-  __restgprlr_29();
+              (param_1,(ulong)uVar2,(D3DBaseTexture *)0x0,
+               0x8000000000000000 >> (uVar2 + 0x20 & 0x7f));
+    uVar2 = uVar2 + 1;
+  } while ((uVar2 & 0xffffffff) < 0x1a);
   return;
 }
 

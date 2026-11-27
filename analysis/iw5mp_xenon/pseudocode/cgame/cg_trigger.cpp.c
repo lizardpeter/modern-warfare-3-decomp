@@ -2,6 +2,10 @@
 
 // 82304910  CG_TriggerVisionSet  (cgame/cg_trigger.cpp:174)
 
+/* WARNING: Function: __savegprlr_19 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_19 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -11,145 +15,142 @@ void CG_TriggerVisionSet(uint param_1,LocalClientNum_t param_2)
 {
   char cVar1;
   char *pcVar2;
-  ulonglong uVar3;
-  cg_s *pcVar4;
-  bool bVar5;
+  cg_s *pcVar3;
+  bool bVar4;
+  uchar uVar5;
   uchar uVar6;
   uchar uVar7;
-  uchar uVar8;
-  ClientSideVisionAndFogSet *pCVar9;
+  ClientSideVisionAndFogSet *pCVar8;
+  char (*pacVar9) [64];
   char (*pacVar10) [64];
-  char (*pacVar11) [64];
+  uint uVar11;
   uint uVar12;
-  uint uVar13;
-  ClientSideVisionAndFogSet *pCVar14;
+  ClientSideVisionAndFogSet *pCVar13;
+  double dVar14;
   double dVar15;
   double dVar16;
   double dVar17;
   double dVar18;
   double dVar19;
   double dVar20;
-  double dVar21;
   float *in_stack_fffffed8;
   
-  __savegprlr_19(param_1);
-  uVar3 = __savefpr_28();
-  if (0x3ff < (uVar3 & 0xffffffff)) {
+  if (0x3ff < param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_trigger.cpp",0xbc,0,
                     "trigIndex doesn\'t index MAX_MAP_TRIGGER_MODELS\n\t%i not in [0, %i)");
   }
-  if ((ulonglong)((cm.mapEnts)->clientTrigger).trigger.count <= (uVar3 & 0xffffffff)) {
+  if (((cm.mapEnts)->clientTrigger).trigger.count <= param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_trigger.cpp",0xbd,0,
                     "trigIndex doesn\'t index cm.mapEnts->clientTrigger.trigger.count\n\t%i not in [0, %i)"
                    );
   }
-  uVar13 = (uint)*(ushort *)((int)&DAT_82a75160 + (int)((uVar3 & 0xffffffff) << 1));
-  if (0x1f < uVar13) {
+  uVar12 = (uint)(ushort)(&DAT_82a75160)[param_1];
+  if (0x1f < uVar12) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_trigger.cpp",0xbf,0,
                     "fogIndex doesn\'t index MAX_CLIENT_SIDE_VISION_AND_FOG_SETS_PER_LEVEL\n\t%i not in [0, %i)"
                    );
   }
-  pCVar14 = g_fogSetArray + uVar13;
-  pcVar4 = CG_GetLocalClientGlobals(param_2);
-  pacVar11 = (pcVar4->cvsData).visionName + 5;
-  pCVar9 = pCVar14;
-  pacVar10 = pacVar11;
+  pCVar13 = g_fogSetArray + uVar12;
+  pcVar3 = CG_GetLocalClientGlobals(param_2);
+  pacVar10 = (pcVar3->cvsData).visionName + 5;
+  pCVar8 = pCVar13;
+  pacVar9 = pacVar10;
   do {
-    cVar1 = (*pacVar10)[0];
-    pcVar2 = pCVar9->name;
+    cVar1 = (*pacVar9)[0];
+    pcVar2 = pCVar8->name;
     if (cVar1 == '\0') break;
-    pacVar10 = (char (*) [64])(*pacVar10 + 1);
-    pCVar9 = (ClientSideVisionAndFogSet *)(pCVar9->name + 1);
+    pacVar9 = (char (*) [64])(*pacVar9 + 1);
+    pCVar8 = (ClientSideVisionAndFogSet *)(pCVar8->name + 1);
   } while (cVar1 == *pcVar2);
-  dVar21 = 0.5;
-  dVar20 = 255.0;
-  dVar19 = 0.6931471824645996;
+  dVar20 = 0.5;
+  dVar19 = 255.0;
+  dVar18 = 0.6931471824645996;
   if (cVar1 != *pcVar2) {
-    I_strncpyz(*pacVar11,pCVar14->name,0x40);
-    uVar7 = (uchar)pcVar4->time;
-    uVar6 = '\x05';
+    I_strncpyz(*pacVar10,pCVar13->name,0x40);
+    uVar6 = (uchar)pcVar3->time;
+    uVar5 = '\x05';
     CG_VisionSetStartLerp_To
-              (&pcVar4->cvsData,VISIONSET_3RD_PERSON,VISIONSETLERP_TO_SMOOTH,*pacVar11,0,
-               pcVar4->time);
-    dVar18 = (double)(float)(dVar19 / (double)g_fogSetArray[uVar13].halfwayDist);
-    dVar15 = floor((double)(float)((double)(float)((double)g_fogSetArray[uVar13].red * dVar20) +
-                                  dVar21));
-    dVar16 = floor((double)(float)((double)(float)((double)g_fogSetArray[uVar13].green * dVar20) +
-                                  dVar21));
-    dVar17 = floor((double)(float)((double)(float)((double)g_fogSetArray[uVar13].blue * dVar20) +
-                                  dVar21));
-    uVar8 = SUB41((int)dVar17,0);
-    floor((double)(float)((double)(float)((double)g_fogSetArray[uVar13].sunRed * dVar20) + dVar21));
-    floor((double)(float)((double)(float)((double)g_fogSetArray[uVar13].sunGreen * dVar20) + dVar21)
+              (&pcVar3->cvsData,VISIONSET_3RD_PERSON,VISIONSETLERP_TO_SMOOTH,*pacVar10,0,
+               pcVar3->time);
+    dVar17 = (double)(float)(dVar18 / (double)g_fogSetArray[uVar12].halfwayDist);
+    dVar14 = floor((double)(float)((double)(float)((double)g_fogSetArray[uVar12].red * dVar19) +
+                                  dVar20));
+    dVar15 = floor((double)(float)((double)(float)((double)g_fogSetArray[uVar12].green * dVar19) +
+                                  dVar20));
+    dVar16 = floor((double)(float)((double)(float)((double)g_fogSetArray[uVar12].blue * dVar19) +
+                                  dVar20));
+    uVar7 = SUB41((int)dVar16,0);
+    floor((double)(float)((double)(float)((double)g_fogSetArray[uVar12].sunRed * dVar19) + dVar20));
+    floor((double)(float)((double)(float)((double)g_fogSetArray[uVar12].sunGreen * dVar19) + dVar20)
          );
-    floor((double)(float)((double)(float)((double)g_fogSetArray[uVar13].sunBlue * dVar20) + dVar21))
+    floor((double)(float)((double)(float)((double)g_fogSetArray[uVar12].sunBlue * dVar19) + dVar20))
     ;
-    R_SetFog3rdPerson(param_2,g_fogSetArray[uVar13].startDist,uVar6,(uchar)(int)dVar15,
-                      (uchar)(int)dVar16,(float)dVar18,g_fogSetArray[uVar13].maxOpacity,
-                      SUB41((int)dVar17,0),uVar7,uVar8,g_fogSetArray[uVar13].sunFogEnabled,
-                      in_stack_fffffed8,g_fogSetArray[uVar13].sunBeginFadeAngle,
-                      g_fogSetArray[uVar13].sunEndFadeAngle,g_fogSetArray[uVar13].normalFogScale);
+    R_SetFog3rdPerson(param_2,g_fogSetArray[uVar12].startDist,uVar5,(uchar)(int)dVar14,
+                      (uchar)(int)dVar15,(float)dVar17,g_fogSetArray[uVar12].maxOpacity,
+                      SUB41((int)dVar16,0),uVar6,uVar7,g_fogSetArray[uVar12].sunFogEnabled,
+                      in_stack_fffffed8,g_fogSetArray[uVar12].sunBeginFadeAngle,
+                      g_fogSetArray[uVar12].sunEndFadeAngle,g_fogSetArray[uVar12].normalFogScale);
   }
-  bVar5 = CL_Demo_IsThirdPersonCamera(param_2);
-  if ((!bVar5) && (pcVar4->clientSideVisionSetsEnabled != 0)) {
-    pacVar11 = (pcVar4->cvsData).visionName;
-    pCVar9 = pCVar14;
-    pacVar10 = pacVar11;
+  bVar4 = CL_Demo_IsThirdPersonCamera(param_2);
+  if ((!bVar4) && (pcVar3->clientSideVisionSetsEnabled != 0)) {
+    pacVar10 = (pcVar3->cvsData).visionName;
+    pCVar8 = pCVar13;
+    pacVar9 = pacVar10;
     do {
-      cVar1 = (*pacVar10)[0];
-      pcVar2 = pCVar9->name;
+      cVar1 = (*pacVar9)[0];
+      pcVar2 = pCVar8->name;
       if (cVar1 == '\0') break;
-      pacVar10 = (char (*) [64])(*pacVar10 + 1);
-      pCVar9 = (ClientSideVisionAndFogSet *)(pCVar9->name + 1);
+      pacVar9 = (char (*) [64])(*pacVar9 + 1);
+      pCVar8 = (ClientSideVisionAndFogSet *)(pCVar8->name + 1);
     } while (cVar1 == *pcVar2);
     if (cVar1 != *pcVar2) {
-      I_strncpyz(*pacVar11,pCVar14->name,0x40);
-      dVar15 = floor((double)(float)((double)(*(float *)((int)((cm.mapEnts)->clientTrigger).
-                                                              scriptDelay +
-                                                        (int)((uVar3 & 0xffffffff) << 2)) * 1000.0)
-                                    + dVar21));
-      g_currentBlendDuration = (uint)dVar15;
-      uVar12 = -(uint)(pcVar4->playerTeleported == false) & g_currentBlendDuration;
-      bVar5 = CL_Demo_GetJumpTimeFlag();
-      if ((bVar5) || (bVar5 = CL_Demo_CameraModeChanged(), bVar5)) {
-        uVar12 = 0;
+      I_strncpyz(*pacVar10,pCVar13->name,0x40);
+      dVar14 = floor((double)(float)((double)(((cm.mapEnts)->clientTrigger).scriptDelay[param_1] *
+                                             1000.0) + dVar20));
+      g_currentBlendDuration = (uint)dVar14;
+      uVar11 = -(uint)(pcVar3->playerTeleported == false) & g_currentBlendDuration;
+      bVar4 = CL_Demo_GetJumpTimeFlag();
+      if ((bVar4) || (bVar4 = CL_Demo_CameraModeChanged(), bVar4)) {
+        uVar11 = 0;
       }
-      uVar6 = (uchar)pcVar4->time;
+      uVar5 = (uchar)pcVar3->time;
       CG_VisionSetStartLerp_To
-                (&pcVar4->cvsData,VISIONSET_NORMAL,VISIONSETLERP_TO_SMOOTH,*pacVar11,uVar12,
-                 pcVar4->time);
-      dVar17 = (double)(float)(dVar19 / (double)g_fogSetArray[uVar13].halfwayDist);
-      dVar19 = floor((double)(float)((double)(float)((double)g_fogSetArray[uVar13].red * dVar20) +
-                                    dVar21));
-      dVar15 = floor((double)(float)((double)(float)((double)g_fogSetArray[uVar13].green * dVar20) +
-                                    dVar21));
-      dVar16 = floor((double)(float)((double)(float)((double)g_fogSetArray[uVar13].blue * dVar20) +
-                                    dVar21));
-      uVar8 = SUB41((int)dVar16,0);
-      floor((double)(float)((double)(float)((double)g_fogSetArray[uVar13].sunRed * dVar20) + dVar21)
+                (&pcVar3->cvsData,VISIONSET_NORMAL,VISIONSETLERP_TO_SMOOTH,*pacVar10,uVar11,
+                 pcVar3->time);
+      dVar16 = (double)(float)(dVar18 / (double)g_fogSetArray[uVar12].halfwayDist);
+      dVar18 = floor((double)(float)((double)(float)((double)g_fogSetArray[uVar12].red * dVar19) +
+                                    dVar20));
+      dVar14 = floor((double)(float)((double)(float)((double)g_fogSetArray[uVar12].green * dVar19) +
+                                    dVar20));
+      dVar15 = floor((double)(float)((double)(float)((double)g_fogSetArray[uVar12].blue * dVar19) +
+                                    dVar20));
+      uVar7 = SUB41((int)dVar15,0);
+      floor((double)(float)((double)(float)((double)g_fogSetArray[uVar12].sunRed * dVar19) + dVar20)
            );
-      floor((double)(float)((double)(float)((double)g_fogSetArray[uVar13].sunGreen * dVar20) +
-                           dVar21));
-      dVar20 = floor((double)(float)((double)(float)((double)g_fogSetArray[uVar13].sunBlue * dVar20)
-                                    + dVar21));
-      R_SetFogFromServer(param_2,g_fogSetArray[uVar13].startDist,(uchar)(int)dVar20,
-                         (uchar)(int)dVar19,(uchar)(int)dVar15,(float)dVar17,
-                         g_fogSetArray[uVar13].maxOpacity,SUB41((int)dVar16,0),uVar6,uVar8,
-                         g_fogSetArray[uVar13].sunFogEnabled,in_stack_fffffed8,
-                         g_fogSetArray[uVar13].sunBeginFadeAngle,
-                         g_fogSetArray[uVar13].sunEndFadeAngle,g_fogSetArray[uVar13].normalFogScale)
+      floor((double)(float)((double)(float)((double)g_fogSetArray[uVar12].sunGreen * dVar19) +
+                           dVar20));
+      dVar19 = floor((double)(float)((double)(float)((double)g_fogSetArray[uVar12].sunBlue * dVar19)
+                                    + dVar20));
+      R_SetFogFromServer(param_2,g_fogSetArray[uVar12].startDist,(uchar)(int)dVar19,
+                         (uchar)(int)dVar18,(uchar)(int)dVar14,(float)dVar16,
+                         g_fogSetArray[uVar12].maxOpacity,SUB41((int)dVar15,0),uVar5,uVar7,
+                         g_fogSetArray[uVar12].sunFogEnabled,in_stack_fffffed8,
+                         g_fogSetArray[uVar12].sunBeginFadeAngle,
+                         g_fogSetArray[uVar12].sunEndFadeAngle,g_fogSetArray[uVar12].normalFogScale)
       ;
-      R_SwitchFog(param_2,1,pcVar4->time,uVar12);
+      R_SwitchFog(param_2,1,pcVar3->time,uVar11);
     }
   }
-  __restfpr_28();
-  __restgprlr_19();
   return;
 }
 
 
 // 82304DD0  CG_SetDefaultVisionAndFogSet  (cgame/cg_trigger.cpp:246)
 
+/* WARNING: Function: __savegprlr_20 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_20 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -159,133 +160,128 @@ void CG_SetDefaultVisionAndFogSet(LocalClientNum_t param_1,int param_2)
 {
   char cVar1;
   char *pcVar2;
-  LocalClientNum_t LVar3;
-  cg_s *pcVar4;
-  bool bVar5;
+  cg_s *pcVar3;
+  bool bVar4;
+  uchar uVar5;
   uchar uVar6;
   uchar uVar7;
-  uchar uVar8;
-  ClientSideVisionAndFogSet *pCVar9;
-  uint uVar10;
+  ClientSideVisionAndFogSet *pCVar8;
+  uint uVar9;
+  char (*pacVar10) [64];
   char (*pacVar11) [64];
-  char (*pacVar12) [64];
-  uint uVar13;
-  ClientSideVisionAndFogSet *pCVar14;
+  uint uVar12;
+  ClientSideVisionAndFogSet *pCVar13;
+  double dVar14;
   double dVar15;
   double dVar16;
   double dVar17;
   double dVar18;
   double dVar19;
   double dVar20;
-  double dVar21;
   float *in_stack_fffffee8;
   
-  __savegprlr_20(param_1);
-  LVar3 = __savefpr_28();
-  uVar10 = (uint)g_levelDefaultFogSet;
-  if (uVar10 != 0x20) {
-    if (0x1f < uVar10) {
+  uVar9 = (uint)g_levelDefaultFogSet;
+  if (uVar9 != 0x20) {
+    if (0x1f < uVar9) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_trigger.cpp",0x106,
                       0,
                       "g_levelDefaultFogSet doesn\'t index MAX_CLIENT_SIDE_VISION_AND_FOG_SETS_PER_LEVEL\n\t%i not in [0, %i)"
                      );
-      uVar10 = (uint)g_levelDefaultFogSet;
+      uVar9 = (uint)g_levelDefaultFogSet;
     }
-    pCVar14 = g_fogSetArray + uVar10;
-    pcVar4 = CG_GetLocalClientGlobals(LVar3);
-    pacVar12 = (pcVar4->cvsData).visionName + 5;
-    pacVar11 = pacVar12;
-    pCVar9 = pCVar14;
+    pCVar13 = g_fogSetArray + uVar9;
+    pcVar3 = CG_GetLocalClientGlobals(param_1);
+    pacVar11 = (pcVar3->cvsData).visionName + 5;
+    pacVar10 = pacVar11;
+    pCVar8 = pCVar13;
     do {
-      cVar1 = (*pacVar11)[0];
-      pcVar2 = pCVar9->name;
+      cVar1 = (*pacVar10)[0];
+      pcVar2 = pCVar8->name;
       if (cVar1 == '\0') break;
-      pacVar11 = (char (*) [64])(*pacVar11 + 1);
-      pCVar9 = (ClientSideVisionAndFogSet *)(pCVar9->name + 1);
+      pacVar10 = (char (*) [64])(*pacVar10 + 1);
+      pCVar8 = (ClientSideVisionAndFogSet *)(pCVar8->name + 1);
     } while (cVar1 == *pcVar2);
-    dVar20 = 0.5;
-    dVar21 = 255.0;
-    dVar19 = 0.6931471824645996;
+    dVar19 = 0.5;
+    dVar20 = 255.0;
+    dVar18 = 0.6931471824645996;
     if (cVar1 != *pcVar2) {
-      I_strncpyz(*pacVar12,pCVar14->name,0x40);
-      uVar7 = (uchar)pcVar4->time;
-      uVar6 = '\x05';
+      I_strncpyz(*pacVar11,pCVar13->name,0x40);
+      uVar6 = (uchar)pcVar3->time;
+      uVar5 = '\x05';
       CG_VisionSetStartLerp_To
-                (&pcVar4->cvsData,VISIONSET_3RD_PERSON,VISIONSETLERP_TO_SMOOTH,*pacVar12,0,
-                 pcVar4->time);
-      dVar18 = (double)(float)(dVar19 / (double)g_fogSetArray[uVar10].halfwayDist);
-      dVar15 = floor((double)(float)((double)(float)((double)g_fogSetArray[uVar10].red * dVar21) +
-                                    dVar20));
-      dVar16 = floor((double)(float)((double)(float)((double)g_fogSetArray[uVar10].green * dVar21) +
-                                    dVar20));
-      dVar17 = floor((double)(float)((double)(float)((double)g_fogSetArray[uVar10].blue * dVar21) +
-                                    dVar20));
-      uVar8 = SUB41((int)dVar17,0);
-      floor((double)(float)((double)(float)((double)g_fogSetArray[uVar10].sunRed * dVar21) + dVar20)
-           );
-      floor((double)(float)((double)(float)((double)g_fogSetArray[uVar10].sunGreen * dVar21) +
-                           dVar20));
-      floor((double)(float)((double)(float)((double)g_fogSetArray[uVar10].sunBlue * dVar21) + dVar20
+                (&pcVar3->cvsData,VISIONSET_3RD_PERSON,VISIONSETLERP_TO_SMOOTH,*pacVar11,0,
+                 pcVar3->time);
+      dVar17 = (double)(float)(dVar18 / (double)g_fogSetArray[uVar9].halfwayDist);
+      dVar14 = floor((double)(float)((double)(float)((double)g_fogSetArray[uVar9].red * dVar20) +
+                                    dVar19));
+      dVar15 = floor((double)(float)((double)(float)((double)g_fogSetArray[uVar9].green * dVar20) +
+                                    dVar19));
+      dVar16 = floor((double)(float)((double)(float)((double)g_fogSetArray[uVar9].blue * dVar20) +
+                                    dVar19));
+      uVar7 = SUB41((int)dVar16,0);
+      floor((double)(float)((double)(float)((double)g_fogSetArray[uVar9].sunRed * dVar20) + dVar19))
+      ;
+      floor((double)(float)((double)(float)((double)g_fogSetArray[uVar9].sunGreen * dVar20) + dVar19
                            ));
-      R_SetFog3rdPerson(LVar3,g_fogSetArray[uVar10].startDist,uVar6,(uchar)(int)dVar15,
-                        (uchar)(int)dVar16,(float)dVar18,g_fogSetArray[uVar10].maxOpacity,
-                        SUB41((int)dVar17,0),uVar7,uVar8,g_fogSetArray[uVar10].sunFogEnabled,
-                        in_stack_fffffee8,g_fogSetArray[uVar10].sunBeginFadeAngle,
-                        g_fogSetArray[uVar10].sunEndFadeAngle,g_fogSetArray[uVar10].normalFogScale);
+      floor((double)(float)((double)(float)((double)g_fogSetArray[uVar9].sunBlue * dVar20) + dVar19)
+           );
+      R_SetFog3rdPerson(param_1,g_fogSetArray[uVar9].startDist,uVar5,(uchar)(int)dVar14,
+                        (uchar)(int)dVar15,(float)dVar17,g_fogSetArray[uVar9].maxOpacity,
+                        SUB41((int)dVar16,0),uVar6,uVar7,g_fogSetArray[uVar9].sunFogEnabled,
+                        in_stack_fffffee8,g_fogSetArray[uVar9].sunBeginFadeAngle,
+                        g_fogSetArray[uVar9].sunEndFadeAngle,g_fogSetArray[uVar9].normalFogScale);
     }
-    bVar5 = CL_Demo_IsThirdPersonCamera(LVar3);
-    if ((!bVar5) && (pcVar4->clientSideVisionSetsEnabled != 0)) {
-      pacVar12 = (pcVar4->cvsData).visionName;
-      pacVar11 = pacVar12;
-      pCVar9 = pCVar14;
+    bVar4 = CL_Demo_IsThirdPersonCamera(param_1);
+    if ((!bVar4) && (pcVar3->clientSideVisionSetsEnabled != 0)) {
+      pacVar11 = (pcVar3->cvsData).visionName;
+      pacVar10 = pacVar11;
+      pCVar8 = pCVar13;
       do {
-        cVar1 = (*pacVar11)[0];
-        pcVar2 = pCVar9->name;
+        cVar1 = (*pacVar10)[0];
+        pcVar2 = pCVar8->name;
         if (cVar1 == '\0') break;
-        pacVar11 = (char (*) [64])(*pacVar11 + 1);
-        pCVar9 = (ClientSideVisionAndFogSet *)(pCVar9->name + 1);
+        pacVar10 = (char (*) [64])(*pacVar10 + 1);
+        pCVar8 = (ClientSideVisionAndFogSet *)(pCVar8->name + 1);
       } while (cVar1 == *pcVar2);
       if (cVar1 != *pcVar2) {
-        uVar13 = -(uint)(pcVar4->playerTeleported == false) & g_currentBlendDuration;
+        uVar12 = -(uint)(pcVar3->playerTeleported == false) & g_currentBlendDuration;
         if (-1 < param_2) {
-          uVar13 = param_2;
+          uVar12 = param_2;
         }
-        bVar5 = CL_Demo_GetJumpTimeFlag();
-        if ((bVar5) || (bVar5 = CL_Demo_CameraModeChanged(), bVar5)) {
-          uVar13 = 0;
+        bVar4 = CL_Demo_GetJumpTimeFlag();
+        if ((bVar4) || (bVar4 = CL_Demo_CameraModeChanged(), bVar4)) {
+          uVar12 = 0;
         }
-        I_strncpyz(*pacVar12,pCVar14->name,0x40);
-        uVar7 = (uchar)pcVar4->time;
-        uVar6 = '\0';
+        I_strncpyz(*pacVar11,pCVar13->name,0x40);
+        uVar6 = (uchar)pcVar3->time;
+        uVar5 = '\0';
         CG_VisionSetStartLerp_To
-                  (&pcVar4->cvsData,VISIONSET_NORMAL,VISIONSETLERP_TO_SMOOTH,*pacVar12,uVar13,
-                   pcVar4->time);
-        dVar17 = (double)(float)(dVar19 / (double)g_fogSetArray[uVar10].halfwayDist);
-        dVar19 = floor((double)(float)((double)(float)((double)g_fogSetArray[uVar10].red * dVar21) +
-                                      dVar20));
-        dVar15 = floor((double)(float)((double)(float)((double)g_fogSetArray[uVar10].green * dVar21)
-                                      + dVar20));
-        dVar16 = floor((double)(float)((double)(float)((double)g_fogSetArray[uVar10].blue * dVar21)
-                                      + dVar20));
-        uVar8 = SUB41((int)dVar16,0);
-        floor((double)(float)((double)(float)((double)g_fogSetArray[uVar10].sunRed * dVar21) +
-                             dVar20));
-        floor((double)(float)((double)(float)((double)g_fogSetArray[uVar10].sunGreen * dVar21) +
-                             dVar20));
-        floor((double)(float)((double)(float)((double)g_fogSetArray[uVar10].sunBlue * dVar21) +
-                             dVar20));
-        R_SetFogFromServer(LVar3,g_fogSetArray[uVar10].startDist,uVar6,(uchar)(int)dVar19,
-                           (uchar)(int)dVar15,(float)dVar17,g_fogSetArray[uVar10].maxOpacity,
-                           SUB41((int)dVar16,0),uVar7,uVar8,g_fogSetArray[uVar10].sunFogEnabled,
-                           in_stack_fffffee8,g_fogSetArray[uVar10].sunBeginFadeAngle,
-                           g_fogSetArray[uVar10].sunEndFadeAngle,
-                           g_fogSetArray[uVar10].normalFogScale);
-        R_SwitchFog(LVar3,1,pcVar4->time,uVar13);
+                  (&pcVar3->cvsData,VISIONSET_NORMAL,VISIONSETLERP_TO_SMOOTH,*pacVar11,uVar12,
+                   pcVar3->time);
+        dVar16 = (double)(float)(dVar18 / (double)g_fogSetArray[uVar9].halfwayDist);
+        dVar18 = floor((double)(float)((double)(float)((double)g_fogSetArray[uVar9].red * dVar20) +
+                                      dVar19));
+        dVar14 = floor((double)(float)((double)(float)((double)g_fogSetArray[uVar9].green * dVar20)
+                                      + dVar19));
+        dVar15 = floor((double)(float)((double)(float)((double)g_fogSetArray[uVar9].blue * dVar20) +
+                                      dVar19));
+        uVar7 = SUB41((int)dVar15,0);
+        floor((double)(float)((double)(float)((double)g_fogSetArray[uVar9].sunRed * dVar20) + dVar19
+                             ));
+        floor((double)(float)((double)(float)((double)g_fogSetArray[uVar9].sunGreen * dVar20) +
+                             dVar19));
+        floor((double)(float)((double)(float)((double)g_fogSetArray[uVar9].sunBlue * dVar20) +
+                             dVar19));
+        R_SetFogFromServer(param_1,g_fogSetArray[uVar9].startDist,uVar5,(uchar)(int)dVar18,
+                           (uchar)(int)dVar14,(float)dVar16,g_fogSetArray[uVar9].maxOpacity,
+                           SUB41((int)dVar15,0),uVar6,uVar7,g_fogSetArray[uVar9].sunFogEnabled,
+                           in_stack_fffffee8,g_fogSetArray[uVar9].sunBeginFadeAngle,
+                           g_fogSetArray[uVar9].sunEndFadeAngle,g_fogSetArray[uVar9].normalFogScale)
+        ;
+        R_SwitchFog(param_1,1,pcVar3->time,uVar12);
       }
     }
   }
-  __restfpr_28();
-  __restgprlr_20();
   return;
 }
 
@@ -366,34 +362,29 @@ char * CG_SkipWhiteSpace(char *param_1)
 
 // 82305370  CG_SkipText  (cgame/cg_trigger.cpp:372)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 char * CG_SkipText(char *param_1,char *param_2)
 
 {
-  longlong lVar1;
+  char cVar1;
   int iVar2;
   char *pcVar3;
-  longlong lVar4;
-  longlong lVar5;
-  ulonglong uVar6;
   char acStack_a0 [160];
   
-  lVar4 = (longlong)(int)param_2;
-  lVar1 = __savegprlr_29(param_1);
-  lVar5 = lVar4;
+  pcVar3 = param_2;
   do {
-    pcVar3 = (char *)lVar5;
-    lVar5 = lVar5 + 1;
-  } while (*pcVar3 != '\0');
-  uVar6 = (lVar5 - lVar4) - 1;
-  iVar2 = I_strncmp((char *)lVar4,(char *)lVar1,(int)uVar6);
+    cVar1 = *pcVar3;
+    pcVar3 = pcVar3 + 1;
+  } while (cVar1 != '\0');
+  iVar2 = I_strncmp(param_2,param_1,(int)(pcVar3 + (-1 - (int)param_2)));
   if (iVar2 != 0) {
-    I_strncpyz(acStack_a0,(char *)lVar1,0x80);
+    I_strncpyz(acStack_a0,param_1,0x80);
     Com_PrintError(1,"Unexpected text \'%s\' when trying to find \'%s\' in map\'s fog file\n");
-    pcVar3 = (char *)__restgprlr_29(0);
-    return pcVar3;
+    return (char *)0x0;
   }
-  pcVar3 = (char *)__restgprlr_29((uVar6 & 0xffffffff) + lVar1);
-  return pcVar3;
+  return param_1 + (int)(pcVar3 + (-1 - (int)param_2));
 }
 
 
@@ -452,44 +443,32 @@ bool CG_MatchLineStartingWith(char *param_1,char *param_2)
 
 // 823054D0  CG_ParseString  (cgame/cg_trigger.cpp:415)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 char * CG_ParseString(char *param_1,char *param_2,uint param_3)
 
 {
-  bool bVar1;
-  char cVar2;
-  longlong lVar3;
-  char *pcVar4;
-  ulonglong uVar5;
-  ulonglong uVar6;
+  char cVar1;
+  uint uVar2;
   char acStack_a0 [160];
   
-  uVar5 = (ulonglong)(int)param_3;
-  lVar3 = __savegprlr_29(param_1);
-  pcVar4 = (char *)lVar3;
-  if (*pcVar4 != '\"') {
-    I_strncpyz(acStack_a0,pcVar4,0x80);
+  if (*param_1 != '\"') {
+    I_strncpyz(acStack_a0,param_1,0x80);
     Com_PrintError(1,"Expected a quoted string instead of \'%s\'\n");
   }
-  uVar6 = 0;
-  cVar2 = pcVar4[1];
-  while ((cVar2 != '\"' && (cVar2 != '\0'))) {
-    bVar1 = (uVar6 & 0xffffffff) == (uVar5 & 0xffffffff);
-    if ((uVar5 & 0xffffffff) <= (uVar6 & 0xffffffff)) goto LAB_8230555c;
-    param_2[(int)uVar6] = cVar2;
-    uVar6 = uVar6 + 1;
-    cVar2 = pcVar4[(int)uVar6 + 1];
+  cVar1 = param_1[1];
+  for (uVar2 = 0; ((cVar1 != '\"' && (cVar1 != '\0')) && (uVar2 < param_3)); uVar2 = uVar2 + 1) {
+    param_2[uVar2] = cVar1;
+    cVar1 = param_1[uVar2 + 2];
   }
-  bVar1 = (uVar6 & 0xffffffff) == (uVar5 & 0xffffffff);
-LAB_8230555c:
-  if (!bVar1) {
-    param_2[(int)uVar6] = '\0';
-    pcVar4 = (char *)__restgprlr_29(uVar6 + lVar3 + 2);
-    return pcVar4;
+  if (uVar2 == param_3) {
+    I_strncpyz(acStack_a0,param_1,0x80);
+    Com_PrintError(1,"String was longer than expected \'%s\'\n");
+    return (char *)0x0;
   }
-  I_strncpyz(acStack_a0,pcVar4,0x80);
-  Com_PrintError(1,"String was longer than expected \'%s\'\n");
-  pcVar4 = (char *)__restgprlr_29(0);
-  return pcVar4;
+  param_2[uVar2] = '\0';
+  return param_1 + uVar2 + 2;
 }
 
 
@@ -599,6 +578,9 @@ char * CG_ParseVec3Finish(char *param_1,float *param_2)
 
 // 82305850  CG_ParseClientVisionSetTriggers  (cgame/cg_trigger.cpp:499)
 
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
+
 void CG_ParseClientVisionSetTriggers(char *param_1)
 
 {
@@ -610,7 +592,6 @@ void CG_ParseClientVisionSetTriggers(char *param_1)
   double dVar6;
   double dVar7;
   
-  __savegprlr();
   g_numActiveFogSets = 0;
   pcVar3 = CG_SkipText(param_1,"// _createart generated.  modify at your own risk. ");
   if (((((pcVar3 != (char *)0x0) && (pcVar3 = CG_SkipWhiteSpace(pcVar3), pcVar3 != (char *)0x0)) &&
@@ -621,12 +602,16 @@ void CG_ParseClientVisionSetTriggers(char *param_1)
     dVar6 = 0.0;
     dVar7 = 1.0;
     do {
-      if (*pcVar3 == '\0') break;
+      if (*pcVar3 == '\0') {
+        return;
+      }
       pcVar3 = CG_SkipWhiteSpace(pcVar3);
       iVar4 = I_strncmp("ent = maps\\_utility::create_vision_set_fog(",pcVar3,0x2b);
       if (iVar4 == 0) {
         pcVar3 = CG_SkipText(pcVar3,"ent = maps\\_utility::create_vision_set_fog(");
-        if (pcVar3 == (char *)0x0) break;
+        if (pcVar3 == (char *)0x0) {
+          return;
+        }
         pcVar3 = CG_SkipWhiteSpace(pcVar3);
         if (0x1f < g_numActiveFogSets) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_trigger.cpp",
@@ -636,45 +621,63 @@ void CG_ParseClientVisionSetTriggers(char *param_1)
         }
         uVar2 = g_numActiveFogSets;
         pcVar3 = CG_ParseStringFinish(pcVar3,g_fogSetArray[g_numActiveFogSets].name,0x40);
-        if (pcVar3 == (char *)0x0) break;
+        if (pcVar3 == (char *)0x0) {
+          return;
+        }
         pcVar3 = CG_SkipWhiteSpace(pcVar3);
         iVar4 = I_strncmp("ent.startDist = ",pcVar3,0x10);
-        if (iVar4 != 0) break;
+        if (iVar4 != 0) {
+          return;
+        }
         pcVar3 = CG_SkipText(pcVar3,"ent.startDist = ");
         pcVar3 = CG_ParseFloatFinish(pcVar3,&g_fogSetArray[uVar2].startDist);
         pcVar3 = CG_SkipWhiteSpace(pcVar3);
         iVar4 = I_strncmp("ent.halfwayDist = ",pcVar3,0x12);
-        if (iVar4 != 0) break;
+        if (iVar4 != 0) {
+          return;
+        }
         pcVar3 = CG_SkipText(pcVar3,"ent.halfwayDist = ");
         pcVar3 = CG_ParseFloatFinish(pcVar3,&g_fogSetArray[uVar2].halfwayDist);
         pcVar3 = CG_SkipWhiteSpace(pcVar3);
         iVar4 = I_strncmp("ent.red = ",pcVar3,10);
-        if (iVar4 != 0) break;
+        if (iVar4 != 0) {
+          return;
+        }
         pcVar3 = CG_SkipText(pcVar3,"ent.red = ");
         pcVar3 = CG_ParseFloatFinish(pcVar3,&g_fogSetArray[uVar2].red);
         pcVar3 = CG_SkipWhiteSpace(pcVar3);
         iVar4 = I_strncmp("ent.green = ",pcVar3,0xc);
-        if (iVar4 != 0) break;
+        if (iVar4 != 0) {
+          return;
+        }
         pcVar3 = CG_SkipText(pcVar3,"ent.green = ");
         pcVar3 = CG_ParseFloatFinish(pcVar3,&g_fogSetArray[uVar2].green);
         pcVar3 = CG_SkipWhiteSpace(pcVar3);
         iVar4 = I_strncmp("ent.blue = ",pcVar3,0xb);
-        if (iVar4 != 0) break;
+        if (iVar4 != 0) {
+          return;
+        }
         pcVar3 = CG_SkipText(pcVar3,"ent.blue = ");
         pcVar3 = CG_ParseFloatFinish(pcVar3,&g_fogSetArray[uVar2].blue);
         pcVar3 = CG_SkipWhiteSpace(pcVar3);
         iVar4 = I_strncmp("ent.maxOpacity = ",pcVar3,0x11);
-        if (iVar4 != 0) break;
+        if (iVar4 != 0) {
+          return;
+        }
         pcVar3 = CG_SkipText(pcVar3,"ent.maxOpacity = ");
         pcVar3 = CG_ParseFloatFinish(pcVar3,&g_fogSetArray[uVar2].maxOpacity);
         pcVar3 = CG_SkipWhiteSpace(pcVar3);
         iVar4 = I_strncmp("ent.transitionTime = ",pcVar3,0x15);
-        if (iVar4 != 0) break;
+        if (iVar4 != 0) {
+          return;
+        }
         pcVar3 = CG_SkipText(pcVar3,"ent.transitionTime = ");
         pcVar3 = CG_ParseFloatFinish(pcVar3,&g_fogSetArray[uVar2].transitionTime);
         pcVar3 = CG_SkipWhiteSpace(pcVar3);
         iVar4 = I_strncmp("ent.sunFogEnabled = ",pcVar3,0x14);
-        if (iVar4 != 0) break;
+        if (iVar4 != 0) {
+          return;
+        }
         pcVar3 = CG_SkipText(pcVar3,"ent.sunFogEnabled = ");
         pcVar3 = CG_ParseBoolFinish(pcVar3,&g_fogSetArray[uVar2].sunFogEnabled);
         if (g_fogSetArray[uVar2].sunFogEnabled == false) {
@@ -691,37 +694,51 @@ void CG_ParseClientVisionSetTriggers(char *param_1)
         else {
           pcVar3 = CG_SkipWhiteSpace(pcVar3);
           iVar4 = I_strncmp("ent.sunRed = ",pcVar3,0xd);
-          if (iVar4 != 0) break;
+          if (iVar4 != 0) {
+            return;
+          }
           pcVar3 = CG_SkipText(pcVar3,"ent.sunRed = ");
           pcVar3 = CG_ParseFloatFinish(pcVar3,&g_fogSetArray[uVar2].sunRed);
           pcVar3 = CG_SkipWhiteSpace(pcVar3);
           bVar5 = CG_MatchLineStartingWith(pcVar3,"ent.sunGreen = ");
-          if (!bVar5) break;
+          if (!bVar5) {
+            return;
+          }
           pcVar3 = CG_SkipText(pcVar3,"ent.sunGreen = ");
           pcVar3 = CG_ParseFloatFinish(pcVar3,&g_fogSetArray[uVar2].sunGreen);
           pcVar3 = CG_SkipWhiteSpace(pcVar3);
           bVar5 = CG_MatchLineStartingWith(pcVar3,"ent.sunBlue = ");
-          if (!bVar5) break;
+          if (!bVar5) {
+            return;
+          }
           pcVar3 = CG_SkipText(pcVar3,"ent.sunBlue = ");
           pcVar3 = CG_ParseFloatFinish(pcVar3,&g_fogSetArray[uVar2].sunBlue);
           pcVar3 = CG_SkipWhiteSpace(pcVar3);
           bVar5 = CG_MatchLineStartingWith(pcVar3,"ent.sunDir = (");
-          if (!bVar5) break;
+          if (!bVar5) {
+            return;
+          }
           pcVar3 = CG_SkipText(pcVar3,"ent.sunDir = (");
           pcVar3 = CG_ParseVec3Finish(pcVar3,g_fogSetArray[uVar2].sunDir);
           pcVar3 = CG_SkipWhiteSpace(pcVar3);
           bVar5 = CG_MatchLineStartingWith(pcVar3,"ent.sunBeginFadeAngle = ");
-          if (!bVar5) break;
+          if (!bVar5) {
+            return;
+          }
           pcVar3 = CG_SkipText(pcVar3,"ent.sunBeginFadeAngle = ");
           pcVar3 = CG_ParseFloatFinish(pcVar3,&g_fogSetArray[uVar2].sunBeginFadeAngle);
           pcVar3 = CG_SkipWhiteSpace(pcVar3);
           bVar5 = CG_MatchLineStartingWith(pcVar3,"ent.sunEndFadeAngle = ");
-          if (!bVar5) break;
+          if (!bVar5) {
+            return;
+          }
           pcVar3 = CG_SkipText(pcVar3,"ent.sunEndFadeAngle = ");
           pcVar3 = CG_ParseFloatFinish(pcVar3,&g_fogSetArray[uVar2].sunEndFadeAngle);
           pcVar3 = CG_SkipWhiteSpace(pcVar3);
           bVar5 = CG_MatchLineStartingWith(pcVar3,"ent.normalFogScale = ");
-          if (!bVar5) break;
+          if (!bVar5) {
+            return;
+          }
           pcVar3 = CG_SkipText(pcVar3,"ent.normalFogScale = ");
           pcVar3 = CG_ParseFloatFinish(pcVar3,&g_fogSetArray[uVar2].normalFogScale);
           g_numActiveFogSets = g_numActiveFogSets + 1;
@@ -737,47 +754,44 @@ void CG_ParseClientVisionSetTriggers(char *param_1)
       }
     } while (pcVar3 != (char *)0x0);
   }
-  __restgprlr();
   return;
 }
 
 
 // 82304808  Bounds_OverlapOrTouch  (universal/bounds_inline.h:616)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 bool Bounds_OverlapOrTouch(Bounds *param_1,Bounds *param_2)
 
 {
   float fVar1;
   float fVar2;
-  float *pfVar3;
-  undefined1 uVar4;
-  ulonglong uVar5;
-  float *pfVar6;
   
-  uVar5 = (ulonglong)(int)param_2;
-  pfVar3 = (float *)__savegprlr_28(param_1);
-  if (pfVar3 == (float *)0x0) {
+  if (param_1 == (Bounds *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\../universal/bounds_inline.h"
                     ,0x269,0,"%s");
   }
-  if ((uVar5 & 0xffffffff) == 0) {
+  if (param_2 == (Bounds *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\../universal/bounds_inline.h"
                     ,0x26a,0,"%s");
   }
-  pfVar6 = (float *)uVar5;
   fVar1 = 0.0;
   fVar2 = 1.0;
-  if ((pfVar3[3] + pfVar6[3]) - ABS(*pfVar3 - *pfVar6) < 0.0) {
+  if ((param_1->halfSize[0] + param_2->halfSize[0]) -
+      ABS(param_1->midPoint[0] - param_2->midPoint[0]) < 0.0) {
     fVar2 = fVar1;
   }
-  if ((pfVar3[4] + pfVar6[4]) - ABS(pfVar3[1] - pfVar6[1]) < 0.0) {
+  if ((param_1->halfSize[1] + param_2->halfSize[1]) -
+      ABS(param_1->midPoint[1] - param_2->midPoint[1]) < 0.0) {
     fVar2 = fVar1;
   }
-  if ((pfVar3[5] + pfVar6[5]) - ABS(pfVar3[2] - pfVar6[2]) < 0.0) {
+  if ((param_1->halfSize[2] + param_2->halfSize[2]) -
+      ABS(param_1->midPoint[2] - param_2->midPoint[2]) < 0.0) {
     fVar2 = fVar1;
   }
-  uVar4 = __restgprlr_28(fVar2 != 0.0);
-  return (bool)uVar4;
+  return fVar2 != 0.0;
 }
 
 
@@ -805,6 +819,8 @@ void CG_LoadClientVisionSetTriggers_FastFile(char *param_1)
 
 // 82305E48  CG_LoadClientAudioZoneSettings  (cgame/cg_trigger.cpp:691)
 
+/* WARNING: Function: __savegprlr_21 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_21 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "SND_EQTYPE": Some values do not have unique names */
 
 void CG_LoadClientAudioZoneSettings(char *param_1)
@@ -817,381 +833,378 @@ void CG_LoadClientAudioZoneSettings(char *param_1)
   FilterDef *pFVar5;
   char *pcVar6;
   char *pcVar7;
-  char *pcVar8;
-  int iVar9;
-  SND_EQTYPE SVar10;
-  char *pcVar11;
+  int iVar8;
+  SND_EQTYPE SVar9;
+  char *pcVar10;
+  uint uVar11;
   uint uVar12;
-  uint uVar13;
-  ZoneDef *pZVar14;
+  ZoneDef *pZVar13;
+  char *pcVar14;
   char *pcVar15;
   char *pcVar16;
-  char *pcVar17;
-  ZoneDef *pZVar18;
-  int iVar19;
-  uint uVar20;
+  ZoneDef *pZVar17;
+  int iVar18;
+  uint uVar19;
+  double dVar20;
   double dVar21;
-  double dVar22;
   StringTable *local_80;
   StringTable *local_7c;
   StringTable *local_78;
   StringTable *local_74;
   LargeLocal aLStack_70 [14];
   
-  pcVar6 = (char *)__savegprlr_21(param_1);
   LargeLocal::LargeLocal(aLStack_70,0xc000);
-  pcVar7 = LargeLocal::GetBuf(aLStack_70);
+  pcVar6 = LargeLocal::GetBuf(aLStack_70);
   StringTable_GetAsset("soundtables/mp_common_zone.csv",&local_74);
   StringTable_GetAsset("soundtables/mp_common_occlusion.csv",&local_7c);
   StringTable_GetAsset("soundtables/mp_common_filter.csv",&local_80);
   StringTable_GetAsset("soundtables/mp_common_reverb.csv",&local_78);
   DAT_82a6a6d4 = 0;
   DAT_82a6a6d0 = 0;
-  iVar19 = 1;
+  iVar18 = 1;
   DAT_82a704d8 = 0;
   DAT_82a704dc = 0;
   if (1 < local_78->rowCount) {
-    dVar22 = 1000.0;
+    dVar21 = 1000.0;
     do {
-      pcVar8 = StringTable_GetColumnValueForRow(local_78,iVar19,0);
-      if ((*pcVar8 != '\0') && (*pcVar8 != '#')) {
+      pcVar7 = StringTable_GetColumnValueForRow(local_78,iVar18,0);
+      if ((*pcVar7 != '\0') && (*pcVar7 != '#')) {
         if (DAT_82a704d8 == 0x100) {
           Com_PrintError(0xd,"Max MP reverb definitions exceeded (%d)");
           break;
         }
-        iVar9 = DAT_82a704d8 * 0x40 - (int)pcVar8;
+        iVar8 = DAT_82a704d8 * 0x40 - (int)pcVar7;
         do {
-          cVar2 = *pcVar8;
-          (pcVar7 + iVar9)[(int)pcVar8] = cVar2;
-          pcVar8 = pcVar8 + 1;
+          cVar2 = *pcVar7;
+          (pcVar6 + iVar8)[(int)pcVar7] = cVar2;
+          pcVar7 = pcVar7 + 1;
         } while (cVar2 != '\0');
-        pcVar8 = StringTable_GetColumnValueForRow(local_78,iVar19,2);
-        iVar9 = DAT_82a704d8 * 0x4c - (int)pcVar8;
+        pcVar7 = StringTable_GetColumnValueForRow(local_78,iVar18,2);
+        iVar8 = DAT_82a704d8 * 0x4c - (int)pcVar7;
         do {
-          cVar2 = *pcVar8;
-          pcVar8[(int)g_reverbs + iVar9] = cVar2;
-          pcVar8 = pcVar8 + 1;
+          cVar2 = *pcVar7;
+          pcVar7[(int)g_reverbs + iVar8] = cVar2;
+          pcVar7 = pcVar7 + 1;
         } while (cVar2 != '\0');
-        pcVar8 = StringTable_GetColumnValueForRow(local_78,iVar19,3);
-        dVar21 = atof(pcVar8);
-        g_reverbs[DAT_82a704d8].dryLevel = (float)dVar21;
-        pcVar8 = StringTable_GetColumnValueForRow(local_78,iVar19,4);
-        dVar21 = atof(pcVar8);
-        g_reverbs[DAT_82a704d8].wetLevel = (float)dVar21;
-        pcVar8 = StringTable_GetColumnValueForRow(local_78,iVar19,5);
-        dVar21 = atof(pcVar8);
+        pcVar7 = StringTable_GetColumnValueForRow(local_78,iVar18,3);
+        dVar20 = atof(pcVar7);
+        g_reverbs[DAT_82a704d8].dryLevel = (float)dVar20;
+        pcVar7 = StringTable_GetColumnValueForRow(local_78,iVar18,4);
+        dVar20 = atof(pcVar7);
+        g_reverbs[DAT_82a704d8].wetLevel = (float)dVar20;
+        pcVar7 = StringTable_GetColumnValueForRow(local_78,iVar18,5);
+        dVar20 = atof(pcVar7);
         pRVar4 = g_reverbs + DAT_82a704d8;
         DAT_82a704d8 = DAT_82a704d8 + 1;
-        pRVar4->fadeTime = (int)(dVar21 * dVar22);
+        pRVar4->fadeTime = (int)(dVar20 * dVar21);
       }
-      iVar19 = iVar19 + 1;
-    } while (iVar19 < local_78->rowCount);
+      iVar18 = iVar18 + 1;
+    } while (iVar18 < local_78->rowCount);
   }
-  iVar19 = 1;
+  iVar18 = 1;
   if (1 < local_80->rowCount) {
     do {
-      pcVar8 = StringTable_GetColumnValueForRow(local_80,iVar19,0);
-      if ((*pcVar8 != '\0') && (*pcVar8 != '#')) {
+      pcVar7 = StringTable_GetColumnValueForRow(local_80,iVar18,0);
+      if ((*pcVar7 != '\0') && (*pcVar7 != '#')) {
         if (DAT_82a6a6d0 == 0x100) {
           Com_PrintError(0xd,"Max MP filter definitions exceeded (%d)");
           break;
         }
-        iVar9 = (DAT_82a6a6d0 + 0x100) * 0x40 - (int)pcVar8;
+        iVar8 = (DAT_82a6a6d0 + 0x100) * 0x40 - (int)pcVar7;
         do {
-          cVar2 = *pcVar8;
-          (pcVar7 + iVar9)[(int)pcVar8] = cVar2;
-          pcVar8 = pcVar8 + 1;
+          cVar2 = *pcVar7;
+          (pcVar6 + iVar8)[(int)pcVar7] = cVar2;
+          pcVar7 = pcVar7 + 1;
         } while (cVar2 != '\0');
-        pcVar8 = StringTable_GetColumnValueForRow(local_80,iVar19,1);
-        if (*pcVar8 == '\0') break;
-        iVar9 = SND_GetEntChannelFromName(pcVar8);
-        g_filters[DAT_82a6a6d0].channelName = iVar9;
-        pcVar8 = StringTable_GetColumnValueForRow(local_80,iVar19,2);
-        iVar9 = atoi(pcVar8);
-        g_filters[DAT_82a6a6d0].band = iVar9;
-        pcVar8 = StringTable_GetColumnValueForRow(local_80,iVar19,3);
-        SVar10 = SND_GetEqTypeFromName(pcVar8);
-        g_filters[DAT_82a6a6d0].type = SVar10;
-        pcVar8 = StringTable_GetColumnValueForRow(local_80,iVar19,4);
-        dVar22 = atof(pcVar8);
-        g_filters[DAT_82a6a6d0].freq = (float)dVar22;
-        pcVar8 = StringTable_GetColumnValueForRow(local_80,iVar19,5);
-        dVar22 = atof(pcVar8);
-        g_filters[DAT_82a6a6d0].gain = (float)dVar22;
-        pcVar8 = StringTable_GetColumnValueForRow(local_80,iVar19,6);
-        dVar22 = atof(pcVar8);
+        pcVar7 = StringTable_GetColumnValueForRow(local_80,iVar18,1);
+        if (*pcVar7 == '\0') break;
+        iVar8 = SND_GetEntChannelFromName(pcVar7);
+        g_filters[DAT_82a6a6d0].channelName = iVar8;
+        pcVar7 = StringTable_GetColumnValueForRow(local_80,iVar18,2);
+        iVar8 = atoi(pcVar7);
+        g_filters[DAT_82a6a6d0].band = iVar8;
+        pcVar7 = StringTable_GetColumnValueForRow(local_80,iVar18,3);
+        SVar9 = SND_GetEqTypeFromName(pcVar7);
+        g_filters[DAT_82a6a6d0].type = SVar9;
+        pcVar7 = StringTable_GetColumnValueForRow(local_80,iVar18,4);
+        dVar21 = atof(pcVar7);
+        g_filters[DAT_82a6a6d0].freq = (float)dVar21;
+        pcVar7 = StringTable_GetColumnValueForRow(local_80,iVar18,5);
+        dVar21 = atof(pcVar7);
+        g_filters[DAT_82a6a6d0].gain = (float)dVar21;
+        pcVar7 = StringTable_GetColumnValueForRow(local_80,iVar18,6);
+        dVar21 = atof(pcVar7);
         pFVar5 = g_filters + DAT_82a6a6d0;
         DAT_82a6a6d0 = DAT_82a6a6d0 + 1;
-        pFVar5->q = (float)dVar22;
+        pFVar5->q = (float)dVar21;
       }
-      iVar19 = iVar19 + 1;
-    } while (iVar19 < local_80->rowCount);
+      iVar18 = iVar18 + 1;
+    } while (iVar18 < local_80->rowCount);
   }
-  iVar19 = 1;
+  iVar18 = 1;
   if (1 < local_7c->rowCount) {
     do {
-      pcVar8 = StringTable_GetColumnValueForRow(local_7c,iVar19,0);
-      if ((*pcVar8 != '\0') && (*pcVar8 != '#')) {
+      pcVar7 = StringTable_GetColumnValueForRow(local_7c,iVar18,0);
+      if ((*pcVar7 != '\0') && (*pcVar7 != '#')) {
         if (DAT_82a6a6d4 == 0x100) {
           Com_PrintError(0xd,"Max MP occlusion definitions exceeded (%d)");
           break;
         }
-        iVar9 = (DAT_82a6a6d4 + 0x200) * 0x40 - (int)pcVar8;
+        iVar8 = (DAT_82a6a6d4 + 0x200) * 0x40 - (int)pcVar7;
         do {
-          cVar2 = *pcVar8;
-          pcVar8[(int)(pcVar7 + iVar9)] = cVar2;
-          pcVar8 = pcVar8 + 1;
+          cVar2 = *pcVar7;
+          pcVar7[(int)(pcVar6 + iVar8)] = cVar2;
+          pcVar7 = pcVar7 + 1;
         } while (cVar2 != '\0');
-        pcVar8 = StringTable_GetColumnValueForRow(local_7c,iVar19,1);
-        if (*pcVar8 == '\0') break;
-        iVar9 = SND_GetEntChannelFromName(pcVar8);
-        (&DAT_82a6a6d8)[DAT_82a6a6d4 * 5] = iVar9;
-        pcVar8 = StringTable_GetColumnValueForRow(local_7c,iVar19,3);
-        SVar10 = SND_GetEqTypeFromName(pcVar8);
-        (&DAT_82a6a6e0)[DAT_82a6a6d4 * 5] = SVar10;
-        pcVar8 = StringTable_GetColumnValueForRow(local_7c,iVar19,2);
-        dVar22 = atof(pcVar8);
-        (&DAT_82a6a6dc)[DAT_82a6a6d4 * 5] = (float)dVar22;
-        pcVar8 = StringTable_GetColumnValueForRow(local_7c,iVar19,4);
-        dVar22 = atof(pcVar8);
-        (&DAT_82a6a6e4)[DAT_82a6a6d4 * 5] = (float)dVar22;
-        pcVar8 = StringTable_GetColumnValueForRow(local_7c,iVar19,5);
-        dVar22 = atof(pcVar8);
-        iVar9 = DAT_82a6a6d4 * 5;
+        pcVar7 = StringTable_GetColumnValueForRow(local_7c,iVar18,1);
+        if (*pcVar7 == '\0') break;
+        iVar8 = SND_GetEntChannelFromName(pcVar7);
+        (&DAT_82a6a6d8)[DAT_82a6a6d4 * 5] = iVar8;
+        pcVar7 = StringTable_GetColumnValueForRow(local_7c,iVar18,3);
+        SVar9 = SND_GetEqTypeFromName(pcVar7);
+        (&DAT_82a6a6e0)[DAT_82a6a6d4 * 5] = SVar9;
+        pcVar7 = StringTable_GetColumnValueForRow(local_7c,iVar18,2);
+        dVar21 = atof(pcVar7);
+        (&DAT_82a6a6dc)[DAT_82a6a6d4 * 5] = (float)dVar21;
+        pcVar7 = StringTable_GetColumnValueForRow(local_7c,iVar18,4);
+        dVar21 = atof(pcVar7);
+        (&DAT_82a6a6e4)[DAT_82a6a6d4 * 5] = (float)dVar21;
+        pcVar7 = StringTable_GetColumnValueForRow(local_7c,iVar18,5);
+        dVar21 = atof(pcVar7);
+        iVar8 = DAT_82a6a6d4 * 5;
         DAT_82a6a6d4 = DAT_82a6a6d4 + 1;
-        (&DAT_82a6a6e8)[iVar9] = (float)dVar22;
+        (&DAT_82a6a6e8)[iVar8] = (float)dVar21;
       }
-      iVar19 = iVar19 + 1;
-    } while (iVar19 < local_7c->rowCount);
+      iVar18 = iVar18 + 1;
+    } while (iVar18 < local_7c->rowCount);
   }
-  iVar19 = 1;
-  pcVar8 = "default";
+  iVar18 = 1;
+  pcVar7 = "default";
   if (1 < local_74->rowCount) {
     do {
-      pcVar11 = StringTable_GetColumnValueForRow(local_74,iVar19,0);
-      uVar20 = DAT_82a704dc;
-      if ((*pcVar11 != '\0') && (*pcVar11 != '#')) {
+      pcVar10 = StringTable_GetColumnValueForRow(local_74,iVar18,0);
+      uVar19 = DAT_82a704dc;
+      if ((*pcVar10 != '\0') && (*pcVar10 != '#')) {
         if (DAT_82a704dc == 0x100) {
           Com_PrintError(0xd,"Max MP zone definitions exceeded (%d)");
           break;
         }
-        iVar9 = DAT_82a704dc * 0x4a - (int)pcVar11;
+        iVar8 = DAT_82a704dc * 0x4a - (int)pcVar10;
         do {
-          cVar2 = *pcVar11;
-          pcVar11[(int)g_zones + iVar9] = cVar2;
-          pcVar11 = pcVar11 + 1;
+          cVar2 = *pcVar10;
+          pcVar10[(int)g_zones + iVar8] = cVar2;
+          pcVar10 = pcVar10 + 1;
         } while (cVar2 != '\0');
-        g_zones[uVar20].reverbIndex = 0x100;
-        g_zones[uVar20].startOcclusionIndex = 0x100;
-        g_zones[uVar20].startFilterIndex = 0x100;
-        pcVar11 = StringTable_GetColumnValueForRow(local_74,iVar19,2);
-        if (*pcVar11 == '\0') break;
-        uVar20 = 0;
-        pcVar17 = pcVar11;
-        pcVar15 = pcVar7;
-        pcVar16 = pcVar7;
+        g_zones[uVar19].reverbIndex = 0x100;
+        g_zones[uVar19].startOcclusionIndex = 0x100;
+        g_zones[uVar19].startFilterIndex = 0x100;
+        pcVar10 = StringTable_GetColumnValueForRow(local_74,iVar18,2);
+        if (*pcVar10 == '\0') break;
+        uVar19 = 0;
+        pcVar16 = pcVar10;
+        pcVar14 = pcVar6;
+        pcVar15 = pcVar6;
         if (DAT_82a704d8 != 0) {
 LAB_823064ac:
           do {
-            cVar2 = *pcVar17;
-            cVar3 = *pcVar15;
+            cVar2 = *pcVar16;
+            cVar3 = *pcVar14;
             if (cVar2 != '\0') {
-              pcVar17 = pcVar17 + 1;
-              pcVar15 = pcVar15 + 1;
+              pcVar16 = pcVar16 + 1;
+              pcVar14 = pcVar14 + 1;
               if (cVar2 == cVar3) goto LAB_823064ac;
             }
             if (cVar2 == cVar3) break;
-            uVar20 = uVar20 + 1;
-            pcVar17 = pcVar11;
-            pcVar15 = pcVar16 + 0x40;
-            pcVar16 = pcVar16 + 0x40;
-          } while (uVar20 < DAT_82a704d8);
+            uVar19 = uVar19 + 1;
+            pcVar16 = pcVar10;
+            pcVar14 = pcVar15 + 0x40;
+            pcVar15 = pcVar15 + 0x40;
+          } while (uVar19 < DAT_82a704d8);
         }
-        if (uVar20 == DAT_82a704d8) {
+        if (uVar19 == DAT_82a704d8) {
           Com_PrintError(0xd,"Could not find reverb \'%s\' for zone \'%s\'");
-          uVar20 = 0;
-          pcVar11 = pcVar8;
-          pcVar17 = pcVar7;
-          pcVar15 = pcVar7;
+          uVar19 = 0;
+          pcVar10 = pcVar7;
+          pcVar16 = pcVar6;
+          pcVar14 = pcVar6;
           if (DAT_82a704d8 != 0) {
 LAB_82306530:
             do {
-              cVar2 = *pcVar11;
-              cVar3 = *pcVar17;
+              cVar2 = *pcVar10;
+              cVar3 = *pcVar16;
               if (cVar2 != '\0') {
-                pcVar11 = pcVar11 + 1;
-                pcVar17 = pcVar17 + 1;
+                pcVar10 = pcVar10 + 1;
+                pcVar16 = pcVar16 + 1;
                 if (cVar2 == cVar3) goto LAB_82306530;
               }
               if (cVar2 == cVar3) break;
-              uVar20 = uVar20 + 1;
-              pcVar11 = pcVar8;
-              pcVar17 = pcVar15 + 0x40;
-              pcVar15 = pcVar15 + 0x40;
-            } while (uVar20 < DAT_82a704d8);
+              uVar19 = uVar19 + 1;
+              pcVar10 = pcVar7;
+              pcVar16 = pcVar14 + 0x40;
+              pcVar14 = pcVar14 + 0x40;
+            } while (uVar19 < DAT_82a704d8);
           }
-          if (uVar20 != DAT_82a704d8) goto LAB_82306580;
+          if (uVar19 != DAT_82a704d8) goto LAB_82306580;
         }
         else {
 LAB_82306580:
-          g_zones[DAT_82a704dc].reverbIndex = (ushort)uVar20;
+          g_zones[DAT_82a704dc].reverbIndex = (ushort)uVar19;
         }
-        pcVar11 = StringTable_GetColumnValueForRow(local_74,iVar19,3);
-        uVar13 = DAT_82a704dc;
-        uVar20 = DAT_82a6a6d0;
-        if (*pcVar11 != '\0') {
-          uVar12 = 0;
+        pcVar10 = StringTable_GetColumnValueForRow(local_74,iVar18,3);
+        uVar12 = DAT_82a704dc;
+        uVar19 = DAT_82a6a6d0;
+        if (*pcVar10 != '\0') {
+          uVar11 = 0;
           if (DAT_82a6a6d0 != 0) {
-            pcVar16 = pcVar7 + 0x4000;
-            pcVar17 = pcVar11;
-            pcVar15 = pcVar16;
+            pcVar15 = pcVar6 + 0x4000;
+            pcVar16 = pcVar10;
+            pcVar14 = pcVar15;
 LAB_823065c4:
             do {
-              cVar2 = *pcVar17;
-              cVar3 = *pcVar16;
+              cVar2 = *pcVar16;
+              cVar3 = *pcVar15;
               if (cVar2 != '\0') {
+                pcVar15 = pcVar15 + 1;
                 pcVar16 = pcVar16 + 1;
-                pcVar17 = pcVar17 + 1;
                 if (cVar2 == cVar3) goto LAB_823065c4;
               }
               if (cVar2 == cVar3) break;
-              uVar12 = uVar12 + 1;
-              pcVar16 = pcVar15 + 0x40;
-              pcVar17 = pcVar11;
-              pcVar15 = pcVar16;
-            } while (uVar12 < DAT_82a6a6d0);
+              uVar11 = uVar11 + 1;
+              pcVar15 = pcVar14 + 0x40;
+              pcVar16 = pcVar10;
+              pcVar14 = pcVar15;
+            } while (uVar11 < DAT_82a6a6d0);
           }
-          if (uVar12 != DAT_82a6a6d0) {
-            bVar1 = uVar12 < DAT_82a6a6d0;
-            g_zones[DAT_82a704dc].startFilterIndex = (ushort)uVar12;
+          if (uVar11 != DAT_82a6a6d0) {
+            bVar1 = uVar11 < DAT_82a6a6d0;
+            g_zones[DAT_82a704dc].startFilterIndex = (ushort)uVar11;
             if (bVar1) {
-              pcVar16 = pcVar7 + (uVar12 + 0x100) * 0x40;
-              pcVar17 = pcVar11;
-              pcVar15 = pcVar16;
+              pcVar15 = pcVar6 + (uVar11 + 0x100) * 0x40;
+              pcVar16 = pcVar10;
+              pcVar14 = pcVar15;
 LAB_82306638:
               do {
-                cVar2 = *pcVar17;
-                cVar3 = *pcVar16;
+                cVar2 = *pcVar16;
+                cVar3 = *pcVar15;
                 if (cVar2 != '\0') {
+                  pcVar15 = pcVar15 + 1;
                   pcVar16 = pcVar16 + 1;
-                  pcVar17 = pcVar17 + 1;
                   if (cVar2 == cVar3) goto LAB_82306638;
                 }
                 if (cVar2 != cVar3) break;
-                uVar12 = uVar12 + 1;
-                pcVar16 = pcVar15 + 0x40;
-                pcVar17 = pcVar11;
-                pcVar15 = pcVar16;
-              } while (uVar12 < uVar20);
+                uVar11 = uVar11 + 1;
+                pcVar15 = pcVar14 + 0x40;
+                pcVar16 = pcVar10;
+                pcVar14 = pcVar15;
+              } while (uVar11 < uVar19);
             }
-            g_zones[uVar13].endFilterIndex = (ushort)uVar12;
+            g_zones[uVar12].endFilterIndex = (ushort)uVar11;
           }
         }
-        pcVar11 = StringTable_GetColumnValueForRow(local_74,iVar19,4);
-        uVar20 = DAT_82a6a6d4;
-        if (*pcVar11 != '\0') {
-          uVar13 = 0;
+        pcVar10 = StringTable_GetColumnValueForRow(local_74,iVar18,4);
+        uVar19 = DAT_82a6a6d4;
+        if (*pcVar10 != '\0') {
+          uVar12 = 0;
           if (DAT_82a6a6d4 != 0) {
-            pcVar16 = pcVar7 + 0x8000;
-            pcVar17 = pcVar11;
-            pcVar15 = pcVar16;
+            pcVar15 = pcVar6 + 0x8000;
+            pcVar16 = pcVar10;
+            pcVar14 = pcVar15;
 LAB_823066bc:
             do {
-              cVar2 = *pcVar17;
-              cVar3 = *pcVar16;
+              cVar2 = *pcVar16;
+              cVar3 = *pcVar15;
               if (cVar2 != '\0') {
+                pcVar15 = pcVar15 + 1;
                 pcVar16 = pcVar16 + 1;
-                pcVar17 = pcVar17 + 1;
                 if (cVar2 == cVar3) goto LAB_823066bc;
               }
               if (cVar2 == cVar3) break;
-              uVar13 = uVar13 + 1;
-              pcVar16 = pcVar15 + 0x40;
-              pcVar17 = pcVar11;
-              pcVar15 = pcVar16;
-            } while (uVar13 < DAT_82a6a6d4);
+              uVar12 = uVar12 + 1;
+              pcVar15 = pcVar14 + 0x40;
+              pcVar16 = pcVar10;
+              pcVar14 = pcVar15;
+            } while (uVar12 < DAT_82a6a6d4);
           }
-          if (uVar13 != DAT_82a6a6d4) {
-            bVar1 = uVar13 < DAT_82a6a6d4;
-            g_zones[DAT_82a704dc].startOcclusionIndex = (ushort)uVar13;
+          if (uVar12 != DAT_82a6a6d4) {
+            bVar1 = uVar12 < DAT_82a6a6d4;
+            g_zones[DAT_82a704dc].startOcclusionIndex = (ushort)uVar12;
             if (bVar1) {
-              pcVar16 = pcVar7 + (uVar13 + 0x200) * 0x40;
-              pcVar17 = pcVar11;
-              pcVar15 = pcVar16;
+              pcVar15 = pcVar6 + (uVar12 + 0x200) * 0x40;
+              pcVar16 = pcVar10;
+              pcVar14 = pcVar15;
 LAB_8230672c:
               do {
-                cVar2 = *pcVar17;
-                cVar3 = *pcVar16;
+                cVar2 = *pcVar16;
+                cVar3 = *pcVar15;
                 if (cVar2 != '\0') {
+                  pcVar15 = pcVar15 + 1;
                   pcVar16 = pcVar16 + 1;
-                  pcVar17 = pcVar17 + 1;
                   if (cVar2 == cVar3) goto LAB_8230672c;
                 }
                 if (cVar2 != cVar3) break;
-                uVar13 = uVar13 + 1;
-                pcVar16 = pcVar15 + 0x40;
-                pcVar17 = pcVar11;
-                pcVar15 = pcVar16;
-              } while (uVar13 < uVar20);
+                uVar12 = uVar12 + 1;
+                pcVar15 = pcVar14 + 0x40;
+                pcVar16 = pcVar10;
+                pcVar14 = pcVar15;
+              } while (uVar12 < uVar19);
             }
-            g_zones[DAT_82a704dc].endOcclusionIndex = (ushort)uVar13;
+            g_zones[DAT_82a704dc].endOcclusionIndex = (ushort)uVar12;
           }
         }
         DAT_82a704dc = DAT_82a704dc + 1;
       }
-      iVar19 = iVar19 + 1;
-    } while (iVar19 < local_74->rowCount);
+      iVar18 = iVar18 + 1;
+    } while (iVar18 < local_74->rowCount);
   }
-  uVar20 = 0;
+  uVar19 = 0;
   if (DAT_82a704dc != 0) {
-    pZVar18 = g_zones;
-    pZVar14 = pZVar18;
-    pcVar7 = pcVar6;
+    pZVar17 = g_zones;
+    pcVar6 = param_1;
+    pZVar13 = pZVar17;
 LAB_823067c4:
     do {
-      cVar2 = pZVar18->name[0];
-      cVar3 = *pcVar7;
+      cVar2 = pZVar17->name[0];
+      cVar3 = *pcVar6;
       if (cVar2 != '\0') {
-        pZVar18 = (ZoneDef *)(pZVar18->name + 1);
-        pcVar7 = pcVar7 + 1;
+        pZVar17 = (ZoneDef *)(pZVar17->name + 1);
+        pcVar6 = pcVar6 + 1;
         if (cVar2 == cVar3) goto LAB_823067c4;
       }
       if (cVar2 == cVar3) break;
-      uVar20 = uVar20 + 1;
-      pZVar18 = pZVar14 + 1;
-      pZVar14 = pZVar18;
-      pcVar7 = pcVar6;
-    } while (uVar20 < DAT_82a704dc);
+      uVar19 = uVar19 + 1;
+      pZVar17 = pZVar13 + 1;
+      pcVar6 = param_1;
+      pZVar13 = pZVar17;
+    } while (uVar19 < DAT_82a704dc);
   }
-  if (uVar20 == DAT_82a704dc) {
-    uVar20 = 0;
+  if (uVar19 == DAT_82a704dc) {
+    uVar19 = 0;
     if (DAT_82a704dc != 0) {
-      pZVar18 = g_zones;
-      pcVar6 = pcVar8;
-      pZVar14 = pZVar18;
+      pZVar17 = g_zones;
+      pcVar6 = pcVar7;
+      pZVar13 = pZVar17;
 LAB_8230682c:
       do {
-        cVar2 = pZVar18->name[0];
+        cVar2 = pZVar17->name[0];
         cVar3 = *pcVar6;
         if (cVar2 != '\0') {
-          pZVar18 = (ZoneDef *)(pZVar18->name + 1);
+          pZVar17 = (ZoneDef *)(pZVar17->name + 1);
           pcVar6 = pcVar6 + 1;
           if (cVar2 == cVar3) goto LAB_8230682c;
         }
         if (cVar2 == cVar3) break;
-        uVar20 = uVar20 + 1;
-        pZVar18 = pZVar14 + 1;
-        pcVar6 = pcVar8;
-        pZVar14 = pZVar18;
-      } while (uVar20 < DAT_82a704dc);
+        uVar19 = uVar19 + 1;
+        pZVar17 = pZVar13 + 1;
+        pcVar6 = pcVar7;
+        pZVar13 = pZVar17;
+      } while (uVar19 < DAT_82a704dc);
     }
-    if (uVar20 == DAT_82a704dc) {
+    if (uVar19 == DAT_82a704dc) {
       Com_PrintError(1,"Map \'%s\' and \'default\' have not been registered in %s\n");
     }
   }
-  g_defaultZone = uVar20;
+  g_defaultZone = uVar19;
   LargeLocal::~LargeLocal(aLStack_70);
-  __restgprlr_21();
   return;
 }
 
@@ -1211,6 +1224,8 @@ void CG_ShutdownClientSideTriggers(LocalClientNum_t param_1)
 
 // 823076E8  CG_StartClientSideTriggers  (cgame/cg_trigger.cpp:919)
 
+/* WARNING: Function: __savegprlr_21 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_21 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -1224,26 +1239,24 @@ void CG_StartClientSideTriggers(LocalClientNum_t param_1)
   char *pcVar4;
   uint uVar5;
   MapEnts *pMVar6;
-  LocalClientNum_t LVar7;
-  char *pcVar8;
-  int iVar9;
-  cg_s *pcVar10;
-  char *pcVar11;
+  char *pcVar7;
+  int iVar8;
+  cg_s *pcVar9;
+  char *pcVar10;
+  uint uVar11;
   uint uVar12;
   uint uVar13;
-  uint uVar14;
-  ClientSideVisionAndFogSet *pCVar15;
-  ZoneDef *pZVar16;
-  char *pcVar17;
-  ZoneDef *pZVar18;
-  ClientSideVisionAndFogSet *pCVar19;
-  uint uVar20;
-  uint *puVar21;
+  ClientSideVisionAndFogSet *pCVar14;
+  ZoneDef *pZVar15;
+  char *pcVar16;
+  ZoneDef *pZVar17;
+  ClientSideVisionAndFogSet *pCVar18;
+  uint uVar19;
+  uint *puVar20;
   char acStack_160 [352];
   
-  LVar7 = __savegprlr_21(param_1);
-  pcVar8 = Dvar_GetString("mapname");
-  if ((pcVar8 == (char *)0x0) || (*pcVar8 == '\0')) {
+  pcVar7 = Dvar_GetString("mapname");
+  if ((pcVar7 == (char *)0x0) || (*pcVar7 == '\0')) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_trigger.cpp",0x3aa,0,
                     "%s");
   }
@@ -1251,100 +1264,100 @@ void CG_StartClientSideTriggers(LocalClientNum_t param_1)
   g_currentEQ = 0;
   Com_sprintf(acStack_160,0x100,"maps/createart/%s_fog.gsc");
   CG_LoadClientVisionSetTriggers_FastFile(acStack_160);
-  CG_LoadClientAudioZoneSettings(pcVar8);
+  CG_LoadClientAudioZoneSettings(pcVar7);
   pMVar6 = cm.mapEnts;
   uVar5 = g_numActiveFogSets;
-  uVar14 = DAT_82a704dc;
-  uVar20 = 0;
+  uVar13 = DAT_82a704dc;
+  uVar19 = 0;
   if (((cm.mapEnts)->clientTrigger).trigger.count != 0) {
-    puVar21 = &DAT_82a750e0;
-    iVar9 = 0;
+    puVar20 = &DAT_82a750e0;
+    iVar8 = 0;
     do {
-      uVar12 = 0;
-      uVar13 = 0x20;
+      uVar11 = 0;
+      uVar12 = 0x20;
       if (uVar5 != 0) {
-        pCVar19 = g_fogSetArray;
-        pcVar11 = (pMVar6->clientTrigger).triggerString +
-                  *(ushort *)((int)(pMVar6->clientTrigger).triggerStringOffsets + iVar9);
-        pcVar17 = pcVar11;
-        pCVar15 = pCVar19;
+        pCVar18 = g_fogSetArray;
+        pcVar10 = (pMVar6->clientTrigger).triggerString +
+                  *(ushort *)((int)(pMVar6->clientTrigger).triggerStringOffsets + iVar8);
+        pcVar16 = pcVar10;
+        pCVar14 = pCVar18;
 LAB_823077e8:
         do {
-          cVar1 = pCVar19->name[0];
-          cVar2 = *pcVar17;
+          cVar1 = pCVar18->name[0];
+          cVar2 = *pcVar16;
           if (cVar1 != '\0') {
-            pCVar19 = (ClientSideVisionAndFogSet *)(pCVar19->name + 1);
-            pcVar17 = pcVar17 + 1;
+            pCVar18 = (ClientSideVisionAndFogSet *)(pCVar18->name + 1);
+            pcVar16 = pcVar16 + 1;
             if (cVar1 == cVar2) goto LAB_823077e8;
           }
-          uVar13 = uVar12;
+          uVar12 = uVar11;
           if (cVar1 == cVar2) break;
-          uVar12 = uVar12 + 1;
-          pCVar19 = pCVar15 + 1;
-          pcVar17 = pcVar11;
-          uVar13 = 0x20;
-          pCVar15 = pCVar19;
-        } while (uVar12 < uVar5);
+          uVar11 = uVar11 + 1;
+          pCVar18 = pCVar14 + 1;
+          pcVar16 = pcVar10;
+          uVar12 = 0x20;
+          pCVar14 = pCVar18;
+        } while (uVar11 < uVar5);
       }
-      *puVar21 = 0xffffffff;
-      *(short *)((int)&DAT_82a75160 + iVar9) = (short)uVar13;
-      sVar3 = *(short *)(iVar9 + (int)(pMVar6->clientTrigger).audioTriggers);
+      *puVar20 = 0xffffffff;
+      *(short *)((int)&DAT_82a75160 + iVar8) = (short)uVar12;
+      sVar3 = *(short *)(iVar8 + (int)(pMVar6->clientTrigger).audioTriggers);
       if (-1 < sVar3) {
-        uVar13 = 0;
-        pcVar11 = (pMVar6->clientTrigger).triggerString + sVar3;
-        pcVar17 = pcVar11;
-        pZVar18 = g_zones;
-        pZVar16 = g_zones;
-        if (uVar14 != 0) {
+        uVar12 = 0;
+        pcVar10 = (pMVar6->clientTrigger).triggerString + sVar3;
+        pcVar16 = pcVar10;
+        pZVar17 = g_zones;
+        pZVar15 = g_zones;
+        if (uVar13 != 0) {
 LAB_8230786c:
           do {
-            cVar1 = *pcVar17;
-            pcVar4 = pZVar18->name;
+            cVar1 = *pcVar16;
+            pcVar4 = pZVar17->name;
             if (cVar1 != '\0') {
-              pcVar17 = pcVar17 + 1;
-              pZVar18 = (ZoneDef *)(pZVar18->name + 1);
+              pcVar16 = pcVar16 + 1;
+              pZVar17 = (ZoneDef *)(pZVar17->name + 1);
               if (cVar1 == *pcVar4) goto LAB_8230786c;
             }
             if (cVar1 == *pcVar4) {
-              *puVar21 = uVar13;
+              *puVar20 = uVar12;
               break;
             }
-            uVar13 = uVar13 + 1;
-            pcVar17 = pcVar11;
-            pZVar18 = pZVar16 + 1;
-            pZVar16 = pZVar16 + 1;
-          } while (uVar13 < uVar14);
+            uVar12 = uVar12 + 1;
+            pcVar16 = pcVar10;
+            pZVar17 = pZVar15 + 1;
+            pZVar15 = pZVar15 + 1;
+          } while (uVar12 < uVar13);
         }
       }
-      uVar20 = uVar20 + 1;
-      iVar9 = iVar9 + 2;
-      puVar21 = puVar21 + 1;
-    } while (uVar20 < (pMVar6->clientTrigger).trigger.count);
+      uVar19 = uVar19 + 1;
+      iVar8 = iVar8 + 2;
+      puVar20 = puVar20 + 1;
+    } while (uVar19 < (pMVar6->clientTrigger).trigger.count);
   }
-  uVar14 = 0;
+  uVar13 = 0;
   g_levelDefaultFogSet = 0x20;
   if (uVar5 != 0) {
-    pCVar19 = g_fogSetArray;
-    pcVar17 = pcVar8;
-    pCVar15 = pCVar19;
+    pCVar18 = g_fogSetArray;
+    pcVar16 = pcVar7;
+    pCVar14 = pCVar18;
 LAB_823078e8:
     do {
-      cVar1 = pCVar19->name[0];
-      cVar2 = *pcVar17;
+      cVar1 = pCVar18->name[0];
+      cVar2 = *pcVar16;
       if (cVar1 != '\0') {
-        pCVar19 = (ClientSideVisionAndFogSet *)(pCVar19->name + 1);
-        pcVar17 = pcVar17 + 1;
+        pCVar18 = (ClientSideVisionAndFogSet *)(pCVar18->name + 1);
+        pcVar16 = pcVar16 + 1;
         if (cVar1 == cVar2) goto LAB_823078e8;
       }
       if (cVar1 == cVar2) {
-        g_levelDefaultFogSet = (ushort)uVar14;
+        g_levelDefaultFogSet = (ushort)uVar13;
         break;
       }
-      uVar14 = uVar14 + 1;
-      pCVar19 = pCVar15 + 1;
-      pcVar17 = pcVar8;
-      pCVar15 = pCVar19;
-    } while (uVar14 < uVar5);
+      uVar13 = uVar13 + 1;
+      pCVar18 = pCVar14 + 1;
+      pcVar16 = pcVar7;
+      pCVar14 = pCVar18;
+    } while (uVar13 < uVar5);
   }
   SND_DeactivateAllEq(0);
   SND_DeactivateAllEq(1);
@@ -1354,21 +1367,22 @@ LAB_823078e8:
   SND_DeactivateEnvironmentEffects(4,0);
   SND_SetEqLerp(0.5);
   g_lastTrigIndex = 0x401;
-  CG_SetDefaultLevelReverb(LVar7);
+  CG_SetDefaultLevelReverb(param_1);
   if ((r_primaryLightUseTweaks->current).enabled == false) {
-    pcVar10 = CG_GetLocalClientGlobals(LVar7);
-    if (pcVar10->clientSideVisionSetsEnabled == 0) {
-      pcVar10->clientSideVisionSetsEnabled = 1;
-      CG_SetDefaultVisionAndFogSet(LVar7,-1);
+    pcVar9 = CG_GetLocalClientGlobals(param_1);
+    if (pcVar9->clientSideVisionSetsEnabled == 0) {
+      pcVar9->clientSideVisionSetsEnabled = 1;
+      CG_SetDefaultVisionAndFogSet(param_1,-1);
     }
   }
-  __restgprlr_21();
   return;
 }
 
 
 // 823068C8  CG_SetDefaultLevelReverb  (cgame/cg_trigger.cpp:1020)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "SND_EQTYPE": Some values do not have unique names */
 
@@ -1387,7 +1401,6 @@ void CG_SetDefaultLevelReverb(LocalClientNum_t param_1)
   uint uVar10;
   float *pfVar11;
   
-  __savegprlr_28(param_1);
   if ((g_lastTrigIndex != 0x400) &&
      ((bVar7 = SND_EnvironmentEffectsOverridden(), !bVar7 || (0x3ff < g_lastTrigIndex)))) {
     g_lastTrigIndex = 0x400;
@@ -1428,13 +1441,14 @@ void CG_SetDefaultLevelReverb(LocalClientNum_t param_1)
       } while ((int)uVar10 < (int)(uint)g_zones[g_defaultZone].endOcclusionIndex);
     }
   }
-  __restgprlr_28();
   return;
 }
 
 
 // 82306A68  CG_TriggerReverb  (cgame/cg_trigger.cpp:1050)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "SND_EQTYPE": Some values do not have unique names */
 
@@ -1448,45 +1462,44 @@ void CG_TriggerReverb(LocalClientNum_t param_1,uint param_2)
   float *pfVar5;
   float *pfVar6;
   float *pfVar7;
-  uint uVar8;
-  bool bVar9;
-  ulonglong uVar10;
+  bool bVar8;
+  ulonglong uVar9;
   int in_r5;
-  longlong lVar11;
+  longlong lVar10;
+  uint uVar11;
   float *pfVar12;
   
-  uVar10 = (ulonglong)(int)param_2;
-  uVar8 = __savegprlr_26(param_1);
-  if (0x3ff < uVar8) {
+  uVar9 = (ulonglong)(int)param_2;
+  if (0x3ff < param_1) {
     in_r5 = 0;
-    uVar10 = 0x41f;
+    uVar9 = 0x41f;
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_trigger.cpp",0x41f,0,
                     "trigIndex doesn\'t index MAX_MAP_TRIGGER_MODELS\n\t%i not in [0, %i)");
   }
-  if (((cm.mapEnts)->clientTrigger).trigger.count <= uVar8) {
+  if (((cm.mapEnts)->clientTrigger).trigger.count <= param_1) {
     in_r5 = 0;
-    uVar10 = 0x420;
+    uVar9 = 0x420;
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_trigger.cpp",0x420,0,
                     "trigIndex doesn\'t index cm.mapEnts->clientTrigger.trigger.count\n\t%i not in [0, %i)"
                    );
   }
-  if ((uVar8 != g_lastTrigIndex) && (bVar9 = SND_EnvironmentEffectsOverridden(), !bVar9)) {
-    iVar1 = (&DAT_82a750e0)[uVar8];
+  if ((param_1 != g_lastTrigIndex) && (bVar8 = SND_EnvironmentEffectsOverridden(), !bVar8)) {
+    iVar1 = (&DAT_82a750e0)[param_1];
     g_currentEQ = g_currentEQ ^ 1;
-    g_lastTrigIndex = uVar8;
+    g_lastTrigIndex = param_1;
     if (-1 < iVar1) {
       if (g_zones[iVar1].reverbIndex != 0x100) {
-        lVar11 = (ulonglong)g_zones[iVar1].reverbIndex * 0x4c;
-        uVar10 = lVar11 - 0x7d58fb20;
-        iVar2 = (int)lVar11;
+        lVar10 = (ulonglong)g_zones[iVar1].reverbIndex * 0x4c;
+        uVar9 = lVar10 - 0x7d58fb20;
+        iVar2 = (int)lVar10;
         SND_SetEnvironmentEffects
-                  (1,(char *)uVar10,*(float *)(g_reverbs[0].roomType + iVar2 + 0x40),
+                  (1,(char *)uVar9,*(float *)(g_reverbs[0].roomType + iVar2 + 0x40),
                    *(float *)(g_reverbs[0].roomType + iVar2 + 0x44),in_r5);
       }
       SND_DeactivateAllEq(g_currentEQ);
-      uVar8 = (uint)g_zones[iVar1].startFilterIndex;
+      uVar11 = (uint)g_zones[iVar1].startFilterIndex;
       if (g_zones[iVar1].startFilterIndex < g_zones[iVar1].endFilterIndex) {
-        pfVar12 = (float *)(uVar8 * 0x18 + -0x7d597134);
+        pfVar12 = (float *)(uVar11 * 0x18 + -0x7d597134);
         do {
           pfVar3 = pfVar12 + 5;
           pfVar4 = pfVar12 + 1;
@@ -1494,121 +1507,121 @@ void CG_TriggerReverb(LocalClientNum_t param_1,uint param_2)
           pfVar6 = pfVar12 + 2;
           pfVar7 = pfVar12 + 3;
           pfVar12 = pfVar12 + 6;
-          uVar10 = (ulonglong)(uint)g_currentEQ;
+          uVar9 = (ulonglong)(uint)g_currentEQ;
           SND_SetEqEntChannel((int)*pfVar4,g_currentEQ,(int)*pfVar6,(SND_EQTYPE)*pfVar7,*pfVar3,
                               *pfVar5,*pfVar12);
-          uVar8 = uVar8 + 1;
-        } while ((int)uVar8 < (int)(uint)g_zones[iVar1].endFilterIndex);
+          uVar11 = uVar11 + 1;
+        } while ((int)uVar11 < (int)(uint)g_zones[iVar1].endFilterIndex);
       }
-      uVar8 = (uint)g_zones[iVar1].startOcclusionIndex;
+      uVar11 = (uint)g_zones[iVar1].startOcclusionIndex;
       if (g_zones[iVar1].startOcclusionIndex < g_zones[iVar1].endOcclusionIndex) {
-        pfVar12 = (float *)(&DAT_82a6a6d4 + uVar8 * 5);
+        pfVar12 = (float *)(&DAT_82a6a6d4 + uVar11 * 5);
         do {
           pfVar3 = pfVar12 + 1;
           pfVar4 = pfVar12 + 2;
           pfVar5 = pfVar12 + 4;
           pfVar12 = pfVar12 + 5;
-          SND_SetOcclusionFilter((int)*pfVar3,*pfVar4,(SND_EQTYPE)uVar10,*pfVar5,*pfVar12);
-          uVar8 = uVar8 + 1;
-        } while ((int)uVar8 < (int)(uint)g_zones[iVar1].endOcclusionIndex);
+          SND_SetOcclusionFilter((int)*pfVar3,*pfVar4,(SND_EQTYPE)uVar9,*pfVar5,*pfVar12);
+          uVar11 = uVar11 + 1;
+        } while ((int)uVar11 < (int)(uint)g_zones[iVar1].endOcclusionIndex);
       }
     }
   }
-  __restgprlr_26();
   return;
 }
 
 
 // 82306C50  CG_FetchPotentialTriggers  (cgame/cg_trigger.cpp:1093)
 
+/* WARNING: Function: __savegprlr_17 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_17 replaced with injection: xenon_save_restore */
+
 uint CG_FetchPotentialTriggers(Bounds *param_1,uint *param_2)
 
 {
-  Bounds *pBVar1;
-  bool bVar3;
-  uint uVar2;
-  longlong lVar4;
+  uint uVar1;
+  bool bVar2;
+  uint uVar3;
+  int iVar4;
   uint uVar5;
-  int iVar6;
-  ulonglong uVar7;
-  uint uVar8;
-  int iVar9;
-  int *piVar11;
-  longlong lVar10;
-  int iVar12;
-  uint uVar13;
-  ClientTriggerAabbNode *pCVar14;
+  uint uVar6;
+  int iVar7;
+  int *piVar8;
+  uint *puVar9;
+  int iVar10;
+  uint uVar11;
+  ClientTriggerAabbNode *pCVar12;
   int aiStack_104 [65];
   
-  lVar4 = (longlong)(int)param_2;
-  pBVar1 = (Bounds *)__savegprlr_17(param_1);
-  uVar7 = 0;
+  uVar5 = 0;
   aiStack_104[1] = 0;
-  uVar2 = ((cm.mapEnts)->clientTrigger).trigger.count;
-  uVar5 = 1;
+  uVar1 = ((cm.mapEnts)->clientTrigger).trigger.count;
+  uVar3 = 1;
   do {
-    uVar8 = uVar5 - 1;
-    pCVar14 = ((cm.mapEnts)->clientTrigger).clientTriggerAabbTree + aiStack_104[uVar5];
-    uVar5 = (uint)pCVar14->firstChild;
-    if (uVar5 < uVar2) {
-      uVar5 = pCVar14->childCount + uVar5;
-      if (uVar2 < uVar5) {
+    uVar6 = uVar3 - 1;
+    pCVar12 = ((cm.mapEnts)->clientTrigger).clientTriggerAabbTree + aiStack_104[uVar3];
+    uVar3 = (uint)pCVar12->firstChild;
+    if (uVar3 < uVar1) {
+      uVar3 = pCVar12->childCount + uVar3;
+      if (uVar1 < uVar3) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_trigger.cpp",
                         0x468,0,"%s");
       }
-      uVar13 = (uint)pCVar14->firstChild;
-      if (uVar13 != uVar5) {
-        lVar10 = (uVar7 & 0x3fffffff) * 4 + lVar4 + -4;
+      uVar11 = (uint)pCVar12->firstChild;
+      if (uVar11 != uVar3) {
+        puVar9 = param_2 + (uVar5 - 1);
         do {
-          bVar3 = Bounds_OverlapOrTouch(&pCVar14->bounds,pBVar1);
-          if (bVar3) {
-            if (0x3ff < (uVar7 & 0xffffffff)) {
+          bVar2 = Bounds_OverlapOrTouch(&pCVar12->bounds,param_1);
+          if (bVar2) {
+            if (0x3ff < uVar5) {
               MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_trigger.cpp"
                               ,0x46d,0,"%s");
             }
-            lVar10 = lVar10 + 4;
-            *(uint *)lVar10 = uVar13;
-            uVar7 = uVar7 + 1;
+            puVar9 = puVar9 + 1;
+            *puVar9 = uVar11;
+            uVar5 = uVar5 + 1;
           }
-          uVar13 = uVar13 + 1;
-        } while (uVar13 != uVar5);
+          uVar11 = uVar11 + 1;
+        } while (uVar11 != uVar3);
       }
     }
     else {
-      iVar6 = uVar5 - uVar2;
-      iVar9 = (uint)pCVar14->childCount + iVar6;
-      if (iVar6 != iVar9) {
-        iVar12 = iVar6 * 0x1c;
-        piVar11 = aiStack_104 + uVar8;
+      iVar4 = uVar3 - uVar1;
+      iVar7 = (uint)pCVar12->childCount + iVar4;
+      if (iVar4 != iVar7) {
+        iVar10 = iVar4 * 0x1c;
+        piVar8 = aiStack_104 + uVar6;
         do {
-          bVar3 = Bounds_OverlapOrTouch
+          bVar2 = Bounds_OverlapOrTouch
                             ((Bounds *)
                              ((int)((((cm.mapEnts)->clientTrigger).clientTriggerAabbTree)->bounds).
-                                   midPoint + iVar12),pBVar1);
-          if (bVar3) {
-            if (0x1f < uVar8) {
+                                   midPoint + iVar10),param_1);
+          if (bVar2) {
+            if (0x1f < uVar6) {
               MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_trigger.cpp"
                               ,0x460,0,
                               "pushedNodesTop doesn\'t index MAX_AABB_TREE_DEPTH\n\t%i not in [0, %i)"
                              );
             }
-            piVar11 = piVar11 + 1;
-            *piVar11 = iVar6;
-            uVar8 = uVar8 + 1;
+            piVar8 = piVar8 + 1;
+            *piVar8 = iVar4;
+            uVar6 = uVar6 + 1;
           }
-          iVar6 = iVar6 + 1;
-          iVar12 = iVar12 + 0x1c;
-        } while (iVar6 != iVar9);
+          iVar4 = iVar4 + 1;
+          iVar10 = iVar10 + 0x1c;
+        } while (iVar4 != iVar7);
       }
     }
-    uVar5 = uVar8;
-  } while (uVar8 != 0);
-  uVar2 = __restgprlr_17(uVar7);
-  return uVar2;
+    uVar3 = uVar6;
+  } while (uVar6 != 0);
+  return uVar5;
 }
 
 
 // 82306DF8  CG_TestTriggerTouch_UnrotatedHull  (cgame/cg_trigger.cpp:1144)
+
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 
 int CG_TestTriggerTouch_UnrotatedHull
               (MapTriggers *param_1,TriggerHull *param_2,Bounds *param_3,float param_4,
@@ -1618,140 +1631,130 @@ int CG_TestTriggerTouch_UnrotatedHull
   float fVar1;
   float fVar2;
   float fVar3;
-  int iVar4;
-  ulonglong uVar5;
-  float *pfVar6;
-  ulonglong uVar7;
-  float *pfVar8;
   float *in_r7;
-  uint uVar9;
-  double extraout_f1;
-  double dVar10;
+  uint uVar4;
+  TriggerSlab *pTVar5;
+  double dVar6;
   
-  uVar7 = (ulonglong)(int)param_3;
-  uVar5 = (ulonglong)(int)param_2;
-  iVar4 = __savegprlr_26((double)param_4,param_1,uVar5,uVar7,param_5);
-  dVar10 = extraout_f1;
-  if ((uVar5 & 0xffffffff) == 0) {
+  dVar6 = (double)param_4;
+  if (param_2 == (TriggerHull *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\../universal/bounds_inline.h"
                     ,0x223,0,"%s");
   }
-  if ((uVar7 & 0xffffffff) == 0) {
+  if (param_3 == (Bounds *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\../universal/bounds_inline.h"
                     ,0x224,0,"%s");
   }
-  pfVar6 = (float *)uVar5;
-  pfVar8 = (float *)uVar7;
   fVar1 = 0.0;
-  fVar2 = fVar1;
-  if (ABS(*pfVar6 - *pfVar8) - (pfVar6[3] + pfVar8[3]) < 0.0) {
-    fVar2 = 1.0;
-  }
   fVar3 = fVar1;
-  if (ABS(pfVar6[1] - pfVar8[1]) - (pfVar6[4] + pfVar8[4]) < 0.0) {
-    fVar3 = fVar2;
+  if (ABS((param_2->bounds).midPoint[0] - param_3->midPoint[0]) -
+      ((param_2->bounds).halfSize[0] + param_3->halfSize[0]) < 0.0) {
+    fVar3 = 1.0;
   }
-  if (ABS(pfVar6[2] - pfVar8[2]) - (pfVar6[5] + pfVar8[5]) < 0.0) {
-    fVar1 = fVar3;
+  fVar2 = fVar1;
+  if (ABS((param_2->bounds).midPoint[1] - param_3->midPoint[1]) -
+      ((param_2->bounds).halfSize[1] + param_3->halfSize[1]) < 0.0) {
+    fVar2 = fVar3;
   }
-  if (fVar1 == 0.0) {
-LAB_82306f0c:
-    iVar4 = __restgprlr_26(0);
-    return iVar4;
+  if (ABS((param_2->bounds).midPoint[2] - param_3->midPoint[2]) -
+      ((param_2->bounds).halfSize[2] + param_3->halfSize[2]) < 0.0) {
+    fVar1 = fVar2;
   }
-  uVar9 = 0;
-  if (*(ushort *)(pfVar6 + 7) != 0) {
-    do {
-      pfVar8 = (float *)((*(ushort *)((int)pfVar6 + 0x1e) + uVar9) * 0x14 + *(int *)(iVar4 + 0x14));
-      if ((float)((double)pfVar8[4] + dVar10) <=
-          ABS((pfVar8[2] * in_r7[2] + pfVar8[1] * in_r7[1] + *pfVar8 * *in_r7) - pfVar8[3]))
-      goto LAB_82306f0c;
-      uVar9 = uVar9 + 1;
-    } while (uVar9 < *(ushort *)(pfVar6 + 7));
+  if (fVar1 != 0.0) {
+    uVar4 = 0;
+    if (param_2->slabCount != 0) {
+      do {
+        pTVar5 = param_1->slabs + param_2->firstSlab + uVar4;
+        if ((float)((double)pTVar5->halfSize + dVar6) <=
+            ABS((pTVar5->dir[2] * in_r7[2] + pTVar5->dir[1] * in_r7[1] + pTVar5->dir[0] * *in_r7) -
+                pTVar5->midPoint)) {
+          return 0;
+        }
+        uVar4 = uVar4 + 1;
+      } while (uVar4 < param_2->slabCount);
+    }
+    return 1;
   }
-  iVar4 = __restgprlr_26(1);
-  return iVar4;
+  return 0;
 }
 
 
 // 82306FA8  CG_TestTriggerTouch_Unrotated  (cgame/cg_trigger.cpp:1163)
+
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
 
 int CG_TestTriggerTouch_Unrotated
               (MapTriggers *param_1,TriggerModel *param_2,Bounds *param_3,float param_4,
               float *param_5)
 
 {
-  int iVar1;
-  longlong lVar2;
-  ulonglong uVar3;
-  float *pfVar4;
   float *in_r7;
-  uint uVar5;
-  uint uVar6;
-  float *pfVar7;
+  uint uVar1;
+  TriggerSlab *pTVar2;
+  uint uVar3;
+  TriggerHull *pTVar4;
+  double dVar5;
+  double dVar6;
+  double dVar7;
   double dVar8;
-  double extraout_f1;
   double dVar9;
-  double dVar10;
-  double dVar11;
-  double dVar12;
   
-  uVar3 = (ulonglong)(int)param_3;
-  lVar2 = (longlong)(int)param_2;
-  iVar1 = __savegprlr_22((double)param_4,param_1,lVar2,uVar3,param_5);
-  dVar10 = 1.0;
-  dVar11 = 0.0;
-  uVar6 = 0;
-  dVar12 = extraout_f1;
+  dVar6 = (double)param_4;
+  dVar8 = 1.0;
+  dVar9 = 0.0;
+  uVar3 = 0;
   do {
-    pfVar7 = (float *)((*(ushort *)((int)lVar2 + 6) + uVar6) * 0x20 + *(int *)(iVar1 + 0xc));
-    if (pfVar7 == (float *)0x0) {
+    pTVar4 = param_1->hulls + param_2->firstHull + uVar3;
+    if (pTVar4 == (TriggerHull *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\../universal/bounds_inline.h"
                       ,0x223,0,"%s");
     }
-    if ((uVar3 & 0xffffffff) == 0) {
+    if (param_3 == (Bounds *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\../universal/bounds_inline.h"
                       ,0x224,0,"%s");
     }
-    pfVar4 = (float *)uVar3;
-    dVar8 = dVar11;
-    if (ABS(*pfVar7 - *pfVar4) - (pfVar7[3] + pfVar4[3]) < 0.0) {
-      dVar8 = dVar10;
+    dVar5 = dVar9;
+    if (ABS((pTVar4->bounds).midPoint[0] - param_3->midPoint[0]) -
+        ((pTVar4->bounds).halfSize[0] + param_3->halfSize[0]) < 0.0) {
+      dVar5 = dVar8;
     }
-    dVar9 = dVar11;
-    if (ABS(pfVar7[1] - pfVar4[1]) - (pfVar7[4] + pfVar4[4]) < 0.0) {
-      dVar9 = dVar8;
+    dVar7 = dVar9;
+    if (ABS((pTVar4->bounds).midPoint[1] - param_3->midPoint[1]) -
+        ((pTVar4->bounds).halfSize[1] + param_3->halfSize[1]) < 0.0) {
+      dVar7 = dVar5;
     }
-    dVar8 = dVar11;
-    if (ABS(pfVar7[2] - pfVar4[2]) - (pfVar7[5] + pfVar4[5]) < 0.0) {
-      dVar8 = dVar9;
+    dVar5 = dVar9;
+    if (ABS((pTVar4->bounds).midPoint[2] - param_3->midPoint[2]) -
+        ((pTVar4->bounds).halfSize[2] + param_3->halfSize[2]) < 0.0) {
+      dVar5 = dVar7;
     }
-    if (dVar8 != dVar11) {
-      uVar5 = 0;
-      if (*(ushort *)(pfVar7 + 7) == 0) {
-LAB_82307158:
-        iVar1 = __restgprlr_22(1);
-        return iVar1;
+    if (dVar5 != dVar9) {
+      uVar1 = 0;
+      if (pTVar4->slabCount == 0) {
+        return 1;
       }
-      while (pfVar4 = (float *)((*(ushort *)((int)pfVar7 + 0x1e) + uVar5) * 0x14 +
-                               *(int *)(iVar1 + 0x14)),
-            ABS((pfVar4[2] * in_r7[2] + pfVar4[1] * in_r7[1] + *pfVar4 * *in_r7) - pfVar4[3]) <
-            (float)((double)pfVar4[4] + dVar12)) {
-        uVar5 = uVar5 + 1;
-        if (*(ushort *)(pfVar7 + 7) <= uVar5) goto LAB_82307158;
+      while (pTVar2 = param_1->slabs + pTVar4->firstSlab + uVar1,
+            ABS((pTVar2->dir[2] * in_r7[2] + pTVar2->dir[1] * in_r7[1] + pTVar2->dir[0] * *in_r7) -
+                pTVar2->midPoint) < (float)((double)pTVar2->halfSize + dVar6)) {
+        uVar1 = uVar1 + 1;
+        if (pTVar4->slabCount <= uVar1) {
+          return 1;
+        }
       }
     }
-    uVar6 = uVar6 + 1;
-    if (uVar6 == *(ushort *)((int)lVar2 + 4)) {
-      iVar1 = __restgprlr_22(0);
-      return iVar1;
-    }
-  } while( true );
+    uVar3 = uVar3 + 1;
+  } while (uVar3 != param_2->hullCount);
+  return 0;
 }
 
 
 // 82307198  CG_TriggerUpdate  (cgame/cg_trigger.cpp:1182)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -1760,120 +1763,111 @@ void CG_TriggerUpdate(LocalClientNum_t param_1)
 
 {
   byte bVar1;
-  LocalClientNum_t LVar2;
-  cg_s *pcVar3;
-  uint uVar4;
-  int iVar5;
-  LocalClientNum_t LVar6;
-  float *pfVar7;
-  Bounds *pBVar8;
+  cg_s *pcVar2;
+  uint uVar3;
+  int iVar4;
+  LocalClientNum_t LVar5;
+  float *pfVar6;
+  Bounds *pBVar7;
+  LocalClientNum_t LVar8;
   LocalClientNum_t LVar9;
-  LocalClientNum_t LVar10;
-  LocalClientNum_t *pLVar11;
-  longlong lVar12;
-  double dVar13;
+  LocalClientNum_t *pLVar10;
+  longlong lVar11;
+  double dVar12;
   Bounds local_1080;
   LocalClientNum_t local_1060 [1048];
   
-  __savegprlr_25(param_1);
-  LVar2 = __savefpr_28();
-  if (((cm.mapEnts)->clientTrigger).numClientTriggerNodes == 0) goto LAB_82307368;
-  LVar10 = 0x400;
-  LVar9 = 0x400;
-  pcVar3 = CG_GetLocalClientGlobals(LVar2);
-  if ((pcVar3->renderingThirdPerson == 0) || (pcVar3->playerTeleported != false)) {
-    pfVar7 = (pcVar3->refdef).viewOffset;
-  }
-  else {
-    pfVar7 = pcVar3->lastFrameViewPos;
-  }
-  pBVar8 = &local_1080;
-  lVar12 = 3;
-  dVar13 = 1.0;
-  do {
-    pBVar8->midPoint[0] = *(float *)(((int)pfVar7 - (int)&local_1080) + (int)pBVar8);
-    pBVar8->halfSize[0] = 1.0;
-    pBVar8 = (Bounds *)(pBVar8->midPoint + 1);
-    lVar12 = lVar12 + -1;
-  } while (lVar12 != 0);
-  uVar4 = CG_FetchPotentialTriggers(&local_1080,local_1060);
-  lVar12 = (longlong)(int)uVar4;
-  if (uVar4 == 0) {
-LAB_82307324:
-    LVar6 = LOCAL_CLIENT_INVALID;
-    CG_SetDefaultVisionAndFogSet(LVar2,-1);
-  }
-  else {
-    pLVar11 = local_1060;
-    do {
-      LVar6 = *pLVar11;
-      iVar5 = CG_TestTriggerTouch_Unrotated
-                        (&((cm.mapEnts)->clientTrigger).trigger,
-                         ((cm.mapEnts)->clientTrigger).trigger.models + LVar6,&local_1080,
-                         (float)dVar13,(float *)(LVar6 * 2));
-      if (iVar5 != 0) {
-        bVar1 = ((cm.mapEnts)->clientTrigger).triggerType[LVar6];
-        if (((bVar1 & 1) != 0) && (LVar6 < LVar10)) {
-          LVar10 = LVar6;
-        }
-        if (((bVar1 & 2) != 0) && (LVar6 < LVar9)) {
-          LVar9 = LVar6;
-        }
-      }
-      lVar12 = lVar12 + -1;
-      pLVar11 = pLVar11 + 1;
-    } while (lVar12 != 0);
-    if (LVar10 == 0x400) goto LAB_82307324;
-    LVar6 = LVar2;
-    CG_TriggerVisionSet(LVar10,LVar2);
-  }
-  if (LVar9 == 0x400) {
-    CG_SetDefaultLevelReverb(LVar2);
-    __restfpr_28();
-    __restgprlr_25();
+  if (((cm.mapEnts)->clientTrigger).numClientTriggerNodes == 0) {
     return;
   }
-  CG_TriggerReverb(LVar9,LVar6);
-LAB_82307368:
-  __restfpr_28();
-  __restgprlr_25();
+  LVar9 = 0x400;
+  LVar8 = 0x400;
+  pcVar2 = CG_GetLocalClientGlobals(param_1);
+  if ((pcVar2->renderingThirdPerson == 0) || (pcVar2->playerTeleported != false)) {
+    pfVar6 = (pcVar2->refdef).viewOffset;
+  }
+  else {
+    pfVar6 = pcVar2->lastFrameViewPos;
+  }
+  pBVar7 = &local_1080;
+  lVar11 = 3;
+  dVar12 = 1.0;
+  do {
+    pBVar7->midPoint[0] = *(float *)(((int)pfVar6 - (int)&local_1080) + (int)pBVar7);
+    pBVar7->halfSize[0] = 1.0;
+    pBVar7 = (Bounds *)(pBVar7->midPoint + 1);
+    lVar11 = lVar11 + -1;
+  } while (lVar11 != 0);
+  uVar3 = CG_FetchPotentialTriggers(&local_1080,local_1060);
+  lVar11 = (longlong)(int)uVar3;
+  if (uVar3 != 0) {
+    pLVar10 = local_1060;
+    do {
+      LVar5 = *pLVar10;
+      iVar4 = CG_TestTriggerTouch_Unrotated
+                        (&((cm.mapEnts)->clientTrigger).trigger,
+                         ((cm.mapEnts)->clientTrigger).trigger.models + LVar5,&local_1080,
+                         (float)dVar12,(float *)(LVar5 * 2));
+      if (iVar4 != 0) {
+        bVar1 = ((cm.mapEnts)->clientTrigger).triggerType[LVar5];
+        if (((bVar1 & 1) != 0) && (LVar5 < LVar9)) {
+          LVar9 = LVar5;
+        }
+        if (((bVar1 & 2) != 0) && (LVar5 < LVar8)) {
+          LVar8 = LVar5;
+        }
+      }
+      lVar11 = lVar11 + -1;
+      pLVar10 = pLVar10 + 1;
+    } while (lVar11 != 0);
+    if (LVar9 != 0x400) {
+      LVar5 = param_1;
+      CG_TriggerVisionSet(LVar9,param_1);
+      goto LAB_82307340;
+    }
+  }
+  LVar5 = LOCAL_CLIENT_INVALID;
+  CG_SetDefaultVisionAndFogSet(param_1,-1);
+LAB_82307340:
+  if (LVar8 != 0x400) {
+    CG_TriggerReverb(LVar8,LVar5);
+    return;
+  }
+  CG_SetDefaultLevelReverb(param_1);
   return;
 }
 
 
 // 82307378  CG_DrawTriggerStateString  (cgame/cg_trigger.cpp:1262)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void CG_DrawTriggerStateString(LocalClientNum_t param_1,char *param_2,int param_3,bool param_4)
 
 {
   float fVar1;
-  LocalClientNum_t LVar2;
-  ScreenPlacement *pSVar3;
-  Font_s *pFVar4;
+  ScreenPlacement *pSVar2;
+  Font_s *pFVar3;
+  int iVar4;
   int iVar5;
-  int iVar6;
-  ulonglong uVar7;
-  double dVar8;
+  double dVar6;
   
-  uVar7 = (ulonglong)param_4;
-  LVar2 = __savegprlr_27(param_1);
-  if ((uVar7 & 0xff) == 0) {
-    fVar1 = 0.375;
-  }
-  else {
+  if (param_4) {
     fVar1 = 0.29166666;
   }
-  dVar8 = (double)fVar1;
-  pSVar3 = ScrPlace_GetActivePlacement(LVar2);
-  pFVar4 = UI_GetFontHandle(pSVar3,0,(float)dVar8);
-  iVar5 = UI_TextWidth(param_2,0,pFVar4,(float)dVar8);
-  iVar6 = UI_TextHeight(pFVar4,(float)dVar8);
-  UI_DrawText(pSVar3,param_2,0x7fffffff,pFVar4,(640.0 - (float)(longlong)iVar5) - 80.0,
-              (float)(longlong)(iVar6 * param_3),-0x7dff0000,-0x7e000000,(float)dVar8,(float *)0x0,0
+  else {
+    fVar1 = 0.375;
+  }
+  dVar6 = (double)fVar1;
+  pSVar2 = ScrPlace_GetActivePlacement(param_1);
+  pFVar3 = UI_GetFontHandle(pSVar2,0,(float)dVar6);
+  iVar4 = UI_TextWidth(param_2,0,pFVar3,(float)dVar6);
+  iVar5 = UI_TextHeight(pFVar3,(float)dVar6);
+  UI_DrawText(pSVar2,param_2,0x7fffffff,pFVar3,(640.0 - (float)(longlong)iVar4) - 80.0,
+              (float)(longlong)(iVar5 * param_3),-0x7dff0000,-0x7e000000,(float)dVar6,(float *)0x0,0
              );
-  __restgprlr_27();
   return;
 }
 
@@ -1892,6 +1886,8 @@ char * GetNameFromEQType(uint param_1)
 
 // 823074A0  CG_DrawTriggerState  (cgame/cg_trigger.cpp:1302)
 
+/* WARNING: Function: __savegprlr_21 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_21 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -1901,45 +1897,42 @@ void CG_DrawTriggerState(LocalClientNum_t param_1)
 {
   uint uVar1;
   int *piVar2;
-  LocalClientNum_t LVar3;
-  int iVar4;
-  uint uVar5;
-  int iVar6;
+  int iVar3;
+  uint uVar4;
+  int iVar5;
   char acStack_470 [1136];
   
-  LVar3 = __savegprlr_21(param_1);
-  CG_GetLocalClientGlobals(LVar3);
+  CG_GetLocalClientGlobals(param_1);
   uVar1 = g_defaultZone;
   if (g_lastTrigIndex < 0x400) {
     uVar1 = (&DAT_82a750e0)[g_lastTrigIndex];
   }
   sprintf(acStack_470,"Vision Set \'%s\'");
-  CG_DrawTriggerStateString(LVar3,acStack_470,3,false);
+  CG_DrawTriggerStateString(param_1,acStack_470,3,false);
   if (uVar1 < DAT_82a704dc) {
     sprintf(acStack_470,"Audio Zone \'%s\'");
-    CG_DrawTriggerStateString(LVar3,acStack_470,4,false);
-    iVar4 = 8;
+    CG_DrawTriggerStateString(param_1,acStack_470,4,false);
+    iVar3 = 8;
     if (g_zones[uVar1].reverbIndex != 0x100) {
       sprintf(acStack_470,"Reverb \'%s\' Dry %.2f, Wet %.2f, Fade %.2f");
-      CG_DrawTriggerStateString(LVar3,acStack_470,8,true);
-      iVar4 = 10;
+      CG_DrawTriggerStateString(param_1,acStack_470,8,true);
+      iVar3 = 10;
     }
-    uVar5 = (uint)g_zones[uVar1].startFilterIndex;
-    if (uVar5 < g_zones[uVar1].endFilterIndex) {
-      iVar6 = uVar5 * 0x18 + -0x7d597134;
+    uVar4 = (uint)g_zones[uVar1].startFilterIndex;
+    if (uVar4 < g_zones[uVar1].endFilterIndex) {
+      iVar5 = uVar4 * 0x18 + -0x7d597134;
       do {
-        piVar2 = (int *)(iVar6 + 4);
-        iVar6 = iVar6 + 0x18;
+        piVar2 = (int *)(iVar5 + 4);
+        iVar5 = iVar5 + 0x18;
         SND_GetEntChannelName(*piVar2);
         sprintf(acStack_470,"Filter Channel \'%s\' Type \'%s\', Band %d, Gain %.1f, Freq %d, Q %.1f"
                );
-        CG_DrawTriggerStateString(LVar3,acStack_470,iVar4,true);
-        uVar5 = uVar5 + 1;
-        iVar4 = iVar4 + 1;
-      } while (uVar5 < g_zones[uVar1].endFilterIndex);
+        CG_DrawTriggerStateString(param_1,acStack_470,iVar3,true);
+        uVar4 = uVar4 + 1;
+        iVar3 = iVar3 + 1;
+      } while (uVar4 < g_zones[uVar1].endFilterIndex);
     }
   }
-  __restgprlr_21();
   return;
 }
 

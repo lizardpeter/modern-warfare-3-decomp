@@ -16,30 +16,27 @@ bdKeyValuePair * __thiscall bdKeyValuePair::bdKeyValuePair(bdKeyValuePair *this)
 
 // 8290A938  deserialize  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdkeyarchive/bdkeyvaluepair.cpp:21)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 bool __thiscall bdKeyValuePair::deserialize(bdKeyValuePair *this,bdReference<bdByteBuffer> param_1)
 
 {
-  int iVar1;
+  bool bVar1;
   bool bVar2;
-  undefined1 uVar3;
-  undefined8 uVar4;
-  bdByteBuffer *pbStack0000001c;
+  bdReference<bdByteBuffer> bStack0000001c;
   
-  iVar1 = __savegprlr_29(this);
-  pbStack0000001c = param_1.m_ptr;
-  bVar2 = bdByteBuffer::readUInt16((bdByteBuffer *)(param_1.m_ptr)->_padding_,(ushort *)(iVar1 + 6))
-  ;
-  if (bVar2) {
-    bVar2 = bdByteBuffer::readInt64
-                      ((bdByteBuffer *)(param_1.m_ptr)->_padding_,(long64 *)(iVar1 + 8));
-    uVar4 = 1;
-    if (bVar2) goto LAB_8290a990;
+  bStack0000001c.m_ptr = param_1.m_ptr;
+  bVar1 = bdByteBuffer::readUInt16((bdByteBuffer *)(param_1.m_ptr)->_padding_,&this->m_index);
+  if (bVar1) {
+    bVar1 = bdByteBuffer::readInt64((bdByteBuffer *)(param_1.m_ptr)->_padding_,&this->m_value);
+    bVar2 = true;
+    if (bVar1) goto LAB_8290a990;
   }
-  uVar4 = 0;
+  bVar2 = false;
 LAB_8290a990:
   bdReference<bdByteBuffer>::~bdReference<bdByteBuffer>((bdReference<bdByteBuffer> *)param_1.m_ptr);
-  uVar3 = __restgprlr_29(uVar4);
-  return (bool)uVar3;
+  return bVar2;
 }
 
 

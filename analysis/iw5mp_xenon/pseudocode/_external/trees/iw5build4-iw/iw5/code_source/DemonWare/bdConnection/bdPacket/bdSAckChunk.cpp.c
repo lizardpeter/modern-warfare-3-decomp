@@ -19,25 +19,21 @@ bdSAckChunk * __thiscall bdSAckChunk::bdSAckChunk(bdSAckChunk *this)
 
 // 8293C270  bdSAckChunk  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdconnection/bdpacket/bdsackchunk.cpp:27)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 bdSAckChunk * __thiscall bdSAckChunk::bdSAckChunk(bdSAckChunk *this,int param_1,bdSAckFlags param_2)
 
 {
-  bdChunk *this_00;
-  bdSAckChunk *pbVar1;
-  
-  this_00 = (bdChunk *)__savegprlr_29(this);
-  bdChunk::bdChunk(this_00,BD_CT_SACK);
-  this_00[1]._padding_ = param_2;
-  *(undefined2 *)&this_00[1]._padding_ = 0;
-  this_00->_padding_ = (int)&_vftable_;
-  this_00[1].m_type = BD_CT_INVALID;
-  this_00[1].m_headerData.m_type = '\0';
-  this_00[1].m_headerData.m_flags = '\0';
-  this_00[1].m_headerData.m_length = 0;
-  this_00[2]._padding_ = 0;
-  this_00[2]._padding_ = param_1;
-  pbVar1 = (bdSAckChunk *)__restgprlr_29(this_00);
-  return pbVar1;
+  bdChunk::bdChunk((bdChunk *)this,BD_CT_SACK);
+  this->m_flags = param_2;
+  this->m_cumulativeAck = 0;
+  this->_padding_ = (int)&_vftable_;
+  (this->m_gaps).m_head = (Node *)0x0;
+  (this->m_gaps).m_tail = (Node *)0x0;
+  (this->m_gaps).m_size = 0;
+  this->m_windowCredit = param_1;
+  return this;
 }
 
 
@@ -135,19 +131,20 @@ int __thiscall bdSAckChunk::getWindowCredit(bdSAckChunk *this)
 
 // 8293BEF8  serialize  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdconnection/bdpacket/bdsackchunk.cpp:72)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 uint __thiscall bdSAckChunk::serialize(bdSAckChunk *this,uchar *param_1,uint param_2)
 
 {
-  undefined4 *puVar1;
+  Node *pNVar1;
   undefined1 *puVar2;
-  bdChunk *this_00;
+  bool bVar3;
   bool bVar4;
-  bool bVar5;
-  uint uVar3;
-  undefined1 *puVar6;
-  uint *puVar7;
-  int iVar8;
-  longlong lVar9;
+  undefined1 *puVar5;
+  uint *puVar6;
+  int iVar7;
+  longlong lVar8;
   undefined1 local_50 [4];
   undefined4 local_4c;
   undefined1 uStack_48;
@@ -156,188 +153,185 @@ uint __thiscall bdSAckChunk::serialize(bdSAckChunk *this,uchar *param_1,uint par
   undefined1 auStack_38 [3];
   undefined1 local_35 [53];
   
-  this_00 = (bdChunk *)__savegprlr_28(this);
-  local_3c = bdChunk::serialize(this_00,param_1,param_2);
-  local_50[0] = (undefined1)this_00[1]._padding_;
-  bVar4 = bdBytePacker::appendBuffer(param_1,param_2,local_3c,&local_3c,local_50,1);
+  local_3c = bdChunk::serialize((bdChunk *)this,param_1,param_2);
+  local_50[0] = (undefined1)this->m_flags;
+  bVar3 = bdBytePacker::appendBuffer(param_1,param_2,local_3c,&local_3c,local_50,1);
   local_4c = (uint)local_4c._2_2_;
-  if (bVar4) {
-    iVar8 = 0;
-    puVar6 = local_47 + 1;
-    lVar9 = 2;
+  if (bVar3) {
+    iVar7 = 0;
+    puVar5 = local_47 + 1;
+    lVar8 = 2;
     do {
-      puVar2 = (undefined1 *)((int)&local_4c + iVar8);
-      iVar8 = iVar8 + 1;
-      puVar6 = puVar6 + -1;
-      *puVar6 = *puVar2;
-      lVar9 = lVar9 + -1;
-    } while (lVar9 != 0);
-    bVar5 = bdBytePacker::appendBuffer(param_1,param_2,local_3c,&local_3c,&uStack_48,2);
-    bVar4 = true;
-    if (!bVar5) goto LAB_8293bfa4;
+      puVar2 = (undefined1 *)((int)&local_4c + iVar7);
+      iVar7 = iVar7 + 1;
+      puVar5 = puVar5 + -1;
+      *puVar5 = *puVar2;
+      lVar8 = lVar8 + -1;
+    } while (lVar8 != 0);
+    bVar4 = bdBytePacker::appendBuffer(param_1,param_2,local_3c,&local_3c,&uStack_48,2);
+    bVar3 = true;
+    if (!bVar4) goto LAB_8293bfa4;
   }
   else {
 LAB_8293bfa4:
-    bVar4 = false;
+    bVar3 = false;
   }
   local_3c = local_3c + 1;
-  local_4c = CONCAT22(*(undefined2 *)&this_00[1]._padding_,local_4c._2_2_);
-  if (bVar4) {
-    iVar8 = 0;
-    puVar6 = local_47 + 3;
-    lVar9 = 2;
+  local_4c = CONCAT22(this->m_cumulativeAck,local_4c._2_2_);
+  if (bVar3) {
+    iVar7 = 0;
+    puVar5 = local_47 + 3;
+    lVar8 = 2;
     do {
-      puVar2 = (undefined1 *)((int)&local_4c + iVar8);
-      iVar8 = iVar8 + 1;
-      puVar6 = puVar6 + -1;
-      *puVar6 = *puVar2;
-      lVar9 = lVar9 + -1;
-    } while (lVar9 != 0);
-    bVar5 = bdBytePacker::appendBuffer(param_1,param_2,local_3c,&local_3c,local_47 + 1,2);
-    bVar4 = true;
-    if (!bVar5) goto LAB_8293c00c;
+      puVar2 = (undefined1 *)((int)&local_4c + iVar7);
+      iVar7 = iVar7 + 1;
+      puVar5 = puVar5 + -1;
+      *puVar5 = *puVar2;
+      lVar8 = lVar8 + -1;
+    } while (lVar8 != 0);
+    bVar4 = bdBytePacker::appendBuffer(param_1,param_2,local_3c,&local_3c,local_47 + 1,2);
+    bVar3 = true;
+    if (!bVar4) goto LAB_8293c00c;
   }
   else {
 LAB_8293c00c:
-    bVar4 = false;
+    bVar3 = false;
   }
-  local_4c = this_00[2]._padding_;
-  if (bVar4) {
-    iVar8 = 0;
-    puVar6 = local_35 + 1;
-    lVar9 = 4;
+  local_4c = this->m_windowCredit;
+  if (bVar3) {
+    iVar7 = 0;
+    puVar5 = local_35 + 1;
+    lVar8 = 4;
     do {
-      puVar2 = (undefined1 *)((int)&local_4c + iVar8);
-      iVar8 = iVar8 + 1;
-      puVar6 = puVar6 + -1;
-      *puVar6 = *puVar2;
-      lVar9 = lVar9 + -1;
-    } while (lVar9 != 0);
-    bVar5 = bdBytePacker::appendBuffer(param_1,param_2,local_3c,&local_3c,auStack_38,4);
-    bVar4 = true;
-    if (!bVar5) goto LAB_8293c06c;
+      puVar2 = (undefined1 *)((int)&local_4c + iVar7);
+      iVar7 = iVar7 + 1;
+      puVar5 = puVar5 + -1;
+      *puVar5 = *puVar2;
+      lVar8 = lVar8 + -1;
+    } while (lVar8 != 0);
+    bVar4 = bdBytePacker::appendBuffer(param_1,param_2,local_3c,&local_3c,auStack_38,4);
+    bVar3 = true;
+    if (!bVar4) goto LAB_8293c06c;
   }
   else {
 LAB_8293c06c:
-    bVar4 = false;
+    bVar3 = false;
   }
-  local_4c = CONCAT22((short)this_00[2]._padding_,local_4c._2_2_);
-  if (bVar4) {
-    iVar8 = 0;
-    puVar6 = local_47 + 5;
-    lVar9 = 2;
+  local_4c = CONCAT22((short)(this->m_gaps).m_size,local_4c._2_2_);
+  if (bVar3) {
+    iVar7 = 0;
+    puVar5 = local_47 + 5;
+    lVar8 = 2;
     do {
-      puVar2 = (undefined1 *)((int)&local_4c + iVar8);
-      iVar8 = iVar8 + 1;
-      puVar6 = puVar6 + -1;
-      *puVar6 = *puVar2;
-      lVar9 = lVar9 + -1;
-    } while (lVar9 != 0);
-    bVar5 = bdBytePacker::appendBuffer(param_1,param_2,local_3c,&local_3c,local_47 + 3,2);
-    bVar4 = true;
-    if (!bVar5) goto LAB_8293c0cc;
+      puVar2 = (undefined1 *)((int)&local_4c + iVar7);
+      iVar7 = iVar7 + 1;
+      puVar5 = puVar5 + -1;
+      *puVar5 = *puVar2;
+      lVar8 = lVar8 + -1;
+    } while (lVar8 != 0);
+    bVar4 = bdBytePacker::appendBuffer(param_1,param_2,local_3c,&local_3c,local_47 + 3,2);
+    bVar3 = true;
+    if (!bVar4) goto LAB_8293c0cc;
   }
   else {
 LAB_8293c0cc:
-    bVar4 = false;
+    bVar3 = false;
   }
   local_4c = local_4c & 0xffff;
-  if (bVar4) {
-    iVar8 = 0;
-    puVar6 = local_47 + 7;
-    lVar9 = 2;
+  if (bVar3) {
+    iVar7 = 0;
+    puVar5 = local_47 + 7;
+    lVar8 = 2;
     do {
-      puVar2 = (undefined1 *)((int)&local_4c + iVar8);
-      iVar8 = iVar8 + 1;
-      puVar6 = puVar6 + -1;
-      *puVar6 = *puVar2;
-      lVar9 = lVar9 + -1;
-    } while (lVar9 != 0);
-    bVar5 = bdBytePacker::appendBuffer(param_1,param_2,local_3c,&local_3c,local_47 + 5,2);
-    bVar4 = true;
-    if (bVar5) goto LAB_8293c12c;
+      puVar2 = (undefined1 *)((int)&local_4c + iVar7);
+      iVar7 = iVar7 + 1;
+      puVar5 = puVar5 + -1;
+      *puVar5 = *puVar2;
+      lVar8 = lVar8 + -1;
+    } while (lVar8 != 0);
+    bVar4 = bdBytePacker::appendBuffer(param_1,param_2,local_3c,&local_3c,local_47 + 5,2);
+    bVar3 = true;
+    if (bVar4) goto LAB_8293c12c;
   }
-  bVar4 = false;
+  bVar3 = false;
 LAB_8293c12c:
-  puVar1 = (undefined4 *)this_00[1].m_type;
+  pNVar1 = (this->m_gaps).m_head;
   do {
-    if (puVar1 == (undefined4 *)0x0) {
-      uVar3 = __restgprlr_28(local_3c);
-      return uVar3;
+    if (pNVar1 == (Node *)0x0) {
+      return local_3c;
     }
-    local_4c = CONCAT22((short)*puVar1,local_4c._2_2_);
-    if (bVar4) {
-      iVar8 = 0;
-      puVar6 = local_47 + 9;
-      lVar9 = 2;
+    local_4c = CONCAT22((short)(pNVar1->m_data).m_start,local_4c._2_2_);
+    if (bVar3) {
+      iVar7 = 0;
+      puVar5 = local_47 + 9;
+      lVar8 = 2;
       do {
-        puVar2 = (undefined1 *)((int)&local_4c + iVar8);
-        iVar8 = iVar8 + 1;
-        puVar6 = puVar6 + -1;
-        *puVar6 = *puVar2;
-        lVar9 = lVar9 + -1;
-      } while (lVar9 != 0);
-      bVar5 = bdBytePacker::appendBuffer(param_1,param_2,local_3c,&local_3c,local_47 + 7,2);
-      bVar4 = true;
-      if (!bVar5) goto LAB_8293c190;
+        puVar2 = (undefined1 *)((int)&local_4c + iVar7);
+        iVar7 = iVar7 + 1;
+        puVar5 = puVar5 + -1;
+        *puVar5 = *puVar2;
+        lVar8 = lVar8 + -1;
+      } while (lVar8 != 0);
+      bVar4 = bdBytePacker::appendBuffer(param_1,param_2,local_3c,&local_3c,local_47 + 7,2);
+      bVar3 = true;
+      if (!bVar4) goto LAB_8293c190;
     }
     else {
 LAB_8293c190:
-      bVar4 = false;
+      bVar3 = false;
     }
-    local_4c = CONCAT22((short)puVar1[1],local_4c._2_2_);
-    if (bVar4) {
-      iVar8 = 0;
-      puVar7 = &local_3c;
-      lVar9 = 2;
+    local_4c = CONCAT22((short)(pNVar1->m_data).m_end,local_4c._2_2_);
+    if (bVar3) {
+      iVar7 = 0;
+      puVar6 = &local_3c;
+      lVar8 = 2;
       do {
-        puVar6 = (undefined1 *)((int)&local_4c + iVar8);
-        iVar8 = iVar8 + 1;
-        puVar7 = (uint *)((int)puVar7 + -1);
-        *(undefined1 *)puVar7 = *puVar6;
-        lVar9 = lVar9 + -1;
-      } while (lVar9 != 0);
-      bVar5 = bdBytePacker::appendBuffer(param_1,param_2,local_3c,&local_3c,local_47 + 9,2);
-      bVar4 = true;
-      if (!bVar5) goto LAB_8293c1f0;
+        puVar5 = (undefined1 *)((int)&local_4c + iVar7);
+        iVar7 = iVar7 + 1;
+        puVar6 = (uint *)((int)puVar6 + -1);
+        *(undefined1 *)puVar6 = *puVar5;
+        lVar8 = lVar8 + -1;
+      } while (lVar8 != 0);
+      bVar4 = bdBytePacker::appendBuffer(param_1,param_2,local_3c,&local_3c,local_47 + 9,2);
+      bVar3 = true;
+      if (!bVar4) goto LAB_8293c1f0;
     }
     else {
 LAB_8293c1f0:
-      bVar4 = false;
+      bVar3 = false;
     }
-    puVar1 = (undefined4 *)puVar1[2];
+    pNVar1 = pNVar1->m_next;
   } while( true );
 }
 
 
 // 8293C368  deserialize  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdconnection/bdpacket/bdsackchunk.cpp:126)
 
+/* WARNING: Function: __savegprlr_17 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_17 replaced with injection: xenon_save_restore */
+
 bool __thiscall
 bdSAckChunk::deserialize(bdSAckChunk *this,uchar *param_1,uint param_2,uint *param_3)
 
 {
   ushort uVar1;
-  bdChunk *this_00;
   bool bVar2;
   bool bVar3;
-  undefined1 uVar4;
-  longlong lVar5;
-  ushort uVar6;
-  uint uVar7;
+  ushort uVar4;
+  bdSAckFlags bVar5;
   byte local_a0 [2];
   ushort local_9e;
   undefined4 local_9c;
   uint local_98 [2];
   bdGapAckBlock local_90 [18];
   
-  this_00 = (bdChunk *)__savegprlr_17(this);
   local_98[0] = *param_3;
-  uVar7 = 0;
-  bVar2 = bdChunk::deserialize(this_00,param_1,param_2,local_98);
+  bVar5 = BD_SC_NO_FLAGS;
+  bVar2 = bdChunk::deserialize((bdChunk *)this,param_1,param_2,local_98);
   if (bVar2) {
     bVar2 = bdBytePacker::removeBuffer(param_1,param_2,local_98[0],local_98,local_a0,1);
     if (bVar2) {
-      uVar7 = (uint)local_a0[0];
+      bVar5 = (bdSAckFlags)local_a0[0];
     }
     bVar3 = true;
     if (!bVar2) goto LAB_8293c3d8;
@@ -347,7 +341,7 @@ LAB_8293c3d8:
     bVar3 = false;
   }
   local_9c = (uint)local_9c._2_2_;
-  this_00[1]._padding_ = uVar7;
+  this->m_flags = bVar5;
   if (bVar3) {
     bVar3 = bdBytePacker::removeBasicType<unsigned_short>
                       (param_1,param_2,local_98[0],local_98,(ushort *)&local_9c);
@@ -371,7 +365,7 @@ LAB_8293c450:
     bVar2 = false;
   }
   local_9c = 0;
-  *(ushort *)&this_00[1]._padding_ = local_9e;
+  this->m_cumulativeAck = local_9e;
   if (bVar2) {
     bVar3 = bdBytePacker::removeBasicType<unsigned_int>
                       (param_1,param_2,local_98[0],local_98,&local_9c);
@@ -383,114 +377,109 @@ LAB_8293c48c:
     bVar2 = false;
   }
   local_9e = 0;
-  this_00[2]._padding_ = local_9c;
+  this->m_windowCredit = local_9c;
   if (bVar2) {
-    bVar2 = bdBytePacker::removeBasicType<unsigned_short>
+    bVar3 = bdBytePacker::removeBasicType<unsigned_short>
                       (param_1,param_2,local_98[0],local_98,&local_9e);
-    lVar5 = 1;
-    if (bVar2) goto LAB_8293c4cc;
+    bVar2 = true;
+    if (bVar3) goto LAB_8293c4cc;
   }
-  lVar5 = 0;
+  bVar2 = false;
 LAB_8293c4cc:
   uVar1 = local_9e;
   local_98[0] = local_98[0] + 2;
-  uVar6 = 0;
-  do {
-    if ((lVar5 == 0) || (uVar1 <= uVar6)) {
-      if (lVar5 != 0) {
-        *param_3 = local_98[0];
+  uVar4 = 0;
+  if (bVar2) {
+    do {
+      if (uVar1 <= uVar4) break;
+      local_9e = 0;
+      if (bVar2) {
+        bVar3 = bdBytePacker::removeBasicType<unsigned_short>
+                          (param_1,param_2,local_98[0],local_98,&local_9e);
+        bVar2 = true;
+        if (!bVar3) goto LAB_8293c550;
       }
-      uVar4 = __restgprlr_17(lVar5);
-      return (bool)uVar4;
-    }
-    local_9e = 0;
-    if (lVar5 == 0) {
+      else {
 LAB_8293c550:
-      bVar2 = false;
-    }
-    else {
-      bVar3 = bdBytePacker::removeBasicType<unsigned_short>
-                        (param_1,param_2,local_98[0],local_98,&local_9e);
-      bVar2 = true;
-      if (!bVar3) goto LAB_8293c550;
-    }
-    local_9c = local_9c & 0xffff;
-    if (bVar2) {
-      bVar2 = bdBytePacker::removeBasicType<unsigned_short>
-                        (param_1,param_2,local_98[0],local_98,(ushort *)&local_9c);
-      lVar5 = 1;
-      if (!bVar2) goto LAB_8293c584;
-    }
-    else {
+        bVar2 = false;
+      }
+      local_9c = local_9c & 0xffff;
+      if (bVar2) {
+        bVar3 = bdBytePacker::removeBasicType<unsigned_short>
+                          (param_1,param_2,local_98[0],local_98,(ushort *)&local_9c);
+        bVar2 = true;
+        if (!bVar3) goto LAB_8293c584;
+      }
+      else {
 LAB_8293c584:
-      lVar5 = 0;
-    }
-    local_90[0].m_end = local_9c >> 0x10;
-    local_90[0].m_start = (uint)local_9e;
-    bdLinkedList<bdSAckChunk::bdGapAckBlock>::insertAfter
-              ((bdLinkedList<bdSAckChunk::bdGapAckBlock> *)&this_00[1].m_type,
-               (void *)this_00[1].m_headerData,local_90);
-    bdLogMessage(BD_LOG_INFO,"info/","bdConnection/chunks",
-                 "c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdConnection\\bdPacket\\bdSAckChunk.cpp"
-                 ,"bdSAckChunk::deserialize",0xa7,"gap ack: %hu-%hu");
-    uVar6 = uVar6 + 1;
-  } while( true );
+        bVar2 = false;
+      }
+      local_90[0].m_end = local_9c >> 0x10;
+      local_90[0].m_start = (uint)local_9e;
+      bdLinkedList<bdSAckChunk::bdGapAckBlock>::insertAfter
+                (&this->m_gaps,(this->m_gaps).m_tail,local_90);
+      bdLogMessage(BD_LOG_INFO,"info/","bdConnection/chunks",
+                   "c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdConnection\\bdPacket\\bdSAckChunk.cpp"
+                   ,"bdSAckChunk::deserialize",0xa7,"gap ack: %hu-%hu");
+      uVar4 = uVar4 + 1;
+    } while (bVar2);
+  }
+  if (bVar2) {
+    *param_3 = local_98[0];
+  }
+  return bVar2;
 }
 
 
 // 8293BE08  insertAfter  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdcontainers/bdlinkedlist.inl:346)
+
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 
 void __thiscall
 bdLinkedList<bdSAckChunk::bdGapAckBlock>::insertAfter
           (bdLinkedList<bdSAckChunk::bdGapAckBlock> *this,void *param_1,bdGapAckBlock *param_2)
 
 {
-  uint uVar1;
-  uint uVar2;
-  undefined4 *puVar3;
-  uint *puVar4;
-  ulonglong uVar5;
+  Node *pNVar1;
+  Node *pNVar2;
   
-  uVar5 = (ulonglong)(int)param_1;
-  puVar3 = (undefined4 *)__savegprlr_28(this);
-  puVar4 = bdMemory::allocate(0x10);
-  if (puVar4 == (uint *)0x0) {
-    puVar4 = (uint *)0x0;
+  pNVar2 = bdMemory::allocate(0x10);
+  if (pNVar2 == (Node *)0x0) {
+    pNVar2 = (Node *)0x0;
   }
   else {
-    *puVar4 = param_2->m_start;
-    puVar4[1] = param_2->m_end;
+    (pNVar2->m_data).m_start = param_2->m_start;
+    (pNVar2->m_data).m_end = param_2->m_end;
   }
-  if ((uVar5 & 0xffffffff) == 0) {
-    puVar4[2] = 0;
-    puVar4[3] = puVar3[1];
-    if (puVar3[1] == 0) {
-      *puVar3 = puVar4;
+  if (param_1 == (void *)0x0) {
+    pNVar2->m_next = (Node *)0x0;
+    pNVar2->m_prev = this->m_tail;
+    if (this->m_tail == (Node *)0x0) {
+      this->m_head = pNVar2;
     }
     else {
-      *(uint **)(puVar3[1] + 8) = puVar4;
+      this->m_tail->m_next = pNVar2;
     }
-    puVar3[1] = puVar4;
+    this->m_tail = pNVar2;
   }
   else {
-    uVar2 = (uint)uVar5;
-    uVar1 = *(uint *)(uVar2 + 8);
-    puVar4[3] = uVar2;
-    puVar4[2] = uVar1;
-    if (*(int *)(uVar2 + 8) == 0) {
-      if ((uVar5 & 0xffffffff) != (ulonglong)(uint)puVar3[1]) {
+    pNVar1 = *(Node **)((int)param_1 + 8);
+    pNVar2->m_prev = param_1;
+    pNVar2->m_next = pNVar1;
+    if (*(int *)((int)param_1 + 8) == 0) {
+      if (param_1 != this->m_tail) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdCore/bdContainers/bdLinkedList.inl"
                         ,0x16b,0,"%s\n\t%s");
       }
-      puVar3[1] = puVar4;
+      this->m_tail = pNVar2;
     }
     else {
-      *(uint **)(*(int *)(uVar2 + 8) + 0xc) = puVar4;
+      *(Node **)(*(int *)((int)param_1 + 8) + 0xc) = pNVar2;
     }
-    *(uint **)(uVar2 + 8) = puVar4;
+    *(Node **)((int)param_1 + 8) = pNVar2;
   }
-  puVar3[2] = puVar3[2] + 1;
-  __restgprlr_28();
+  this->m_size = this->m_size + 1;
   return;
 }
 

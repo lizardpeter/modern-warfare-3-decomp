@@ -16,6 +16,9 @@ void Com_SwapHullPoints(uint *param_1,uint param_2,uint param_3)
 
 // 825D4A78  Com_InitialHull  (universal/com_convexhull.cpp:19)
 
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
+
 void Com_InitialHull(float (*param_1) [2],uint *param_2,uint param_3,uint *param_4)
 
 {
@@ -23,15 +26,15 @@ void Com_InitialHull(float (*param_1) [2],uint *param_2,uint param_3,uint *param
   undefined4 uVar2;
   undefined4 *puVar3;
   int iVar4;
-  undefined4 *puVar5;
-  ulonglong uVar6;
+  int iVar5;
+  longlong lVar6;
   int iVar7;
   longlong lVar8;
   longlong lVar9;
   ulonglong uVar10;
   ulonglong uVar11;
+  float (*pafVar15) [2];
   ulonglong uVar12;
-  int iVar15;
   longlong lVar13;
   longlong lVar14;
   int iVar17;
@@ -41,91 +44,88 @@ void Com_InitialHull(float (*param_1) [2],uint *param_2,uint param_3,uint *param
   ulonglong uVar20;
   ulonglong uVar21;
   
-  uVar6 = (ulonglong)(int)param_3;
-  lVar16 = (longlong)(int)param_2;
-  iVar4 = __savegprlr_22(param_1);
+  lVar6 = (longlong)(int)param_3;
   iVar17 = 0;
-  puVar5 = (undefined4 *)lVar16;
-  *puVar5 = 0;
+  *param_2 = 0;
   uVar11 = 1;
   uVar21 = 0;
   uVar20 = 0;
-  if (1 < (uVar6 & 0xffffffff)) {
-    if (3 < (int)uVar6 + -1) {
+  if (1 < param_3) {
+    if (3 < (int)(param_3 - 1)) {
       iVar7 = 0;
       uVar10 = 3;
-      lVar8 = lVar16 + 0xc;
-      pfVar19 = (float *)(iVar4 + 0x14);
-      iVar15 = iVar4;
+      lVar8 = (longlong)(int)param_2 + 0xc;
+      pfVar19 = param_1[2] + 1;
+      pafVar15 = param_1;
       do {
         puVar3 = (undefined4 *)lVar8;
         puVar3[-2] = (int)uVar11;
-        if (pfVar19[-2] < *(float *)(iVar15 + 4)) {
-          if (pfVar19[-2] < *(float *)(iVar7 + iVar4 + 4)) {
-            iVar7 = (-0xc - iVar4) + (int)pfVar19;
+        if (pfVar19[-2] < (*pafVar15)[1]) {
+          if (pfVar19[-2] < *(float *)((int)*param_1 + iVar7 + 4)) {
+            iVar7 = (-0xc - (int)param_1) + (int)pfVar19;
             uVar21 = uVar11;
           }
         }
         else {
-          iVar17 = (-0xc - iVar4) + (int)pfVar19;
+          iVar17 = (-0xc - (int)param_1) + (int)pfVar19;
           uVar20 = uVar11;
         }
         uVar12 = uVar10 - 1;
         puVar3[-1] = (int)uVar12;
-        if (*pfVar19 < *(float *)(iVar17 + iVar4 + 4)) {
-          if (*pfVar19 < *(float *)(iVar7 + iVar4 + 4)) {
-            iVar7 = (-4 - iVar4) + (int)pfVar19;
+        if (*pfVar19 < *(float *)((int)*param_1 + iVar17 + 4)) {
+          if (*pfVar19 < *(float *)((int)*param_1 + iVar7 + 4)) {
+            iVar7 = (-4 - (int)param_1) + (int)pfVar19;
             uVar21 = uVar12;
           }
         }
         else {
-          iVar17 = (-4 - iVar4) + (int)pfVar19;
+          iVar17 = (-4 - (int)param_1) + (int)pfVar19;
           uVar20 = uVar12;
         }
         *puVar3 = (int)uVar10;
-        if (pfVar19[2] < *(float *)(iVar17 + iVar4 + 4)) {
-          if (pfVar19[2] < *(float *)(iVar7 + iVar4 + 4)) {
-            iVar7 = (4 - iVar4) + (int)pfVar19;
+        if (pfVar19[2] < *(float *)((int)*param_1 + iVar17 + 4)) {
+          if (pfVar19[2] < *(float *)((int)*param_1 + iVar7 + 4)) {
+            iVar7 = (4 - (int)param_1) + (int)pfVar19;
             uVar21 = uVar10;
           }
         }
         else {
-          iVar17 = (4 - iVar4) + (int)pfVar19;
+          iVar17 = (4 - (int)param_1) + (int)pfVar19;
           uVar20 = uVar10;
         }
         uVar12 = uVar10 + 1;
         puVar3[1] = (int)uVar12;
-        if (pfVar19[4] < *(float *)(iVar17 + iVar4 + 4)) {
-          if (pfVar19[4] < *(float *)(iVar7 + iVar4 + 4)) {
-            iVar7 = (0xc - iVar4) + (int)pfVar19;
+        if (pfVar19[4] < *(float *)((int)*param_1 + iVar17 + 4)) {
+          if (pfVar19[4] < *(float *)((int)*param_1 + iVar7 + 4)) {
+            iVar7 = (0xc - (int)param_1) + (int)pfVar19;
             uVar21 = uVar12;
           }
         }
         else {
-          iVar17 = (0xc - iVar4) + (int)pfVar19;
+          iVar17 = (0xc - (int)param_1) + (int)pfVar19;
           uVar20 = uVar12;
         }
         uVar11 = uVar11 + 4;
         lVar8 = lVar8 + 0x10;
         uVar10 = uVar10 + 4;
         pfVar19 = pfVar19 + 8;
-        iVar15 = iVar17 + iVar4;
-      } while ((uVar11 & 0xffffffff) < (uVar6 - 3 & 0xffffffff));
+        pafVar15 = (float (*) [2])((int)*param_1 + iVar17);
+      } while ((uVar11 & 0xffffffff) < (lVar6 - 3U & 0xffffffff));
     }
-    if ((uVar11 & 0xffffffff) < (uVar6 & 0xffffffff)) {
-      lVar9 = uVar6 - uVar11;
+    if ((uVar11 & 0xffffffff) < (ulonglong)param_3) {
+      lVar9 = lVar6 - uVar11;
       lVar18 = (uVar11 & 0x1fffffff) << 3;
       lVar8 = (uVar21 & 0x1fffffff) << 3;
-      lVar16 = (uVar11 & 0x3fffffff) * 4 + lVar16;
+      lVar16 = (uVar11 & 0x3fffffff) * 4 + (longlong)(int)param_2;
       lVar13 = (uVar20 & 0x1fffffff) << 3;
       uVar10 = uVar20;
       do {
         *(undefined4 *)lVar16 = (int)uVar11;
-        fVar1 = *(float *)(iVar4 + 4 + (int)lVar18);
+        fVar1 = *(float *)((int)*param_1 + (int)lVar18 + 4);
         lVar14 = lVar18;
         uVar20 = uVar11;
-        if ((fVar1 < *(float *)((int)lVar13 + iVar4 + 4)) &&
-           (lVar14 = lVar13, uVar20 = uVar10, fVar1 < *(float *)((int)lVar8 + iVar4 + 4))) {
+        if ((fVar1 < *(float *)((int)*param_1 + (int)lVar13 + 4)) &&
+           (lVar14 = lVar13, uVar20 = uVar10, fVar1 < *(float *)((int)*param_1 + (int)lVar8 + 4))) {
           lVar8 = lVar18;
           uVar21 = uVar11;
         }
@@ -145,59 +145,54 @@ LAB_825d4c90:
   *param_4 = (uint)uVar21;
   param_4[1] = (uint)uVar20;
   if ((uVar21 & 0xffffffff) <= (uVar20 & 0xffffffff)) {
-    iVar4 = (int)((uVar20 & 0xffffffff) << 2);
-    iVar17 = (int)((uVar6 - 1 & 0xffffffff) << 2);
-    iVar7 = (int)((uVar21 & 0xffffffff) << 2);
-    iVar15 = (int)((uVar6 - 2 & 0xffffffff) << 2);
-    uVar2 = *(undefined4 *)(iVar4 + (int)puVar5);
-    *(undefined4 *)(iVar4 + (int)puVar5) = *(undefined4 *)(iVar17 + (int)puVar5);
-    *(undefined4 *)(iVar17 + (int)puVar5) = uVar2;
-    uVar2 = *(undefined4 *)(iVar7 + (int)puVar5);
-    *(undefined4 *)(iVar7 + (int)puVar5) = *(undefined4 *)(iVar15 + (int)puVar5);
-    *(undefined4 *)(iVar15 + (int)puVar5) = uVar2;
-    __restgprlr_22();
+    iVar17 = (int)((uVar20 & 0xffffffff) << 2);
+    iVar7 = (int)((lVar6 - 1U & 0xffffffff) << 2);
+    iVar5 = (int)((uVar21 & 0xffffffff) << 2);
+    iVar4 = (int)((lVar6 - 2U & 0xffffffff) << 2);
+    uVar2 = *(undefined4 *)(iVar17 + (int)param_2);
+    *(undefined4 *)(iVar17 + (int)param_2) = *(undefined4 *)(iVar7 + (int)param_2);
+    *(undefined4 *)(iVar7 + (int)param_2) = uVar2;
+    uVar2 = *(undefined4 *)(iVar5 + (int)param_2);
+    *(undefined4 *)(iVar5 + (int)param_2) = *(undefined4 *)(iVar4 + (int)param_2);
+    *(undefined4 *)(iVar4 + (int)param_2) = uVar2;
     return;
   }
-  iVar4 = (int)((uVar21 & 0xffffffff) << 2);
-  iVar17 = (int)((uVar6 - 1 & 0xffffffff) << 2);
-  iVar15 = (int)((uVar20 & 0xffffffff) << 2);
-  iVar7 = (int)((uVar6 - 2 & 0xffffffff) << 2);
-  uVar2 = *(undefined4 *)(iVar4 + (int)puVar5);
-  *(undefined4 *)(iVar4 + (int)puVar5) = *(undefined4 *)(iVar17 + (int)puVar5);
-  *(undefined4 *)(iVar17 + (int)puVar5) = uVar2;
-  uVar2 = *(undefined4 *)(iVar15 + (int)puVar5);
-  *(undefined4 *)(iVar15 + (int)puVar5) = *(undefined4 *)(iVar7 + (int)puVar5);
-  *(undefined4 *)(iVar7 + (int)puVar5) = uVar2;
-  __restgprlr_22();
+  iVar17 = (int)((uVar21 & 0xffffffff) << 2);
+  iVar7 = (int)((lVar6 - 1U & 0xffffffff) << 2);
+  iVar4 = (int)((uVar20 & 0xffffffff) << 2);
+  iVar5 = (int)((lVar6 - 2U & 0xffffffff) << 2);
+  uVar2 = *(undefined4 *)(iVar17 + (int)param_2);
+  *(undefined4 *)(iVar17 + (int)param_2) = *(undefined4 *)(iVar7 + (int)param_2);
+  *(undefined4 *)(iVar7 + (int)param_2) = uVar2;
+  uVar2 = *(undefined4 *)(iVar4 + (int)param_2);
+  *(undefined4 *)(iVar4 + (int)param_2) = *(undefined4 *)(iVar5 + (int)param_2);
+  *(undefined4 *)(iVar5 + (int)param_2) = uVar2;
   return;
 }
 
 
 // 825D4D20  Com_AddPointToHull  (universal/com_convexhull.cpp:58)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 uint Com_AddPointToHull(uint param_1,uint param_2,uint *param_3,uint param_4)
 
 {
-  undefined4 uVar1;
-  uint uVar2;
-  ulonglong uVar3;
-  ulonglong uVar4;
-  
-  uVar4 = (ulonglong)(int)param_4;
-  uVar3 = (ulonglong)(int)param_2;
-  uVar1 = __savegprlr_28(param_1);
-  if ((uVar4 & 0xffffffff) < (uVar3 & 0xffffffff)) {
+  if (param_4 < param_2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_convexhull.cpp",
                     0x3b,0,"newIndex not in [0, hullPointCount]\n\t%i not in [0, %i]");
   }
   memmove();
-  *(undefined4 *)((int)((uVar3 & 0xffffffff) << 2) + (int)param_3) = uVar1;
-  uVar2 = __restgprlr_28(uVar4 + 1);
-  return uVar2;
+  param_3[param_2] = param_1;
+  return param_4 + 1;
 }
 
 
 // 825D4D98  Com_RecursivelyGrowHull  (universal/com_convexhull.cpp:69)
+
+/* WARNING: Function: __savegprlr_18 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_18 replaced with injection: xenon_save_restore */
 
 uint Com_RecursivelyGrowHull
                (float (*param_1) [2],uint *param_2,uint param_3,uint param_4,uint param_5,
@@ -209,158 +204,137 @@ uint Com_RecursivelyGrowHull
   float fVar3;
   float fVar4;
   float fVar5;
-  uint *puVar6;
-  int iVar7;
-  double dVar8;
-  float (*pafVar9) [2];
-  uint uVar10;
+  int iVar6;
+  double dVar7;
+  uint uVar8;
+  uint uVar9;
+  longlong lVar10;
   longlong lVar11;
-  ulonglong uVar12;
+  uint uVar12;
   ulonglong uVar13;
-  ulonglong uVar14;
-  longlong lVar15;
-  longlong lVar16;
-  ulonglong uVar17;
-  uint uVar18;
-  uint uVar19;
-  ulonglong uVar20;
-  uint uVar21;
-  double dVar22;
-  double dVar23;
+  uint uVar14;
+  double dVar15;
+  double dVar16;
   float local_a0;
   float local_9c;
   float local_98;
   
-  uVar14 = (ulonglong)(int)param_7;
-  uVar13 = (ulonglong)(int)param_5;
-  uVar12 = (ulonglong)(int)param_4;
-  uVar20 = (ulonglong)(int)param_3;
-  lVar11 = (longlong)(int)param_2;
-  pafVar9 = (float (*) [2])__savegprlr_18(param_1);
-  uVar10 = (uint)uVar13;
-  if ((uVar20 & 0xffffffff) == 0) {
+  if (param_3 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_convexhull.cpp",
                     0x4d,0,"%s");
   }
-  uVar17 = uVar12 + 1;
-  if (((uVar13 & 0xffffffff) != (uVar17 & 0xffffffff)) &&
-     (((uVar12 & 0xffffffff) != (uVar14 - 1 & 0xffffffff) || ((uVar13 & 0xffffffff) != 0)))) {
+  uVar9 = param_4 + 1;
+  if ((param_5 != uVar9) && ((param_4 != param_7 - 1 || (param_5 != 0)))) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_convexhull.cpp",
                     0x4e,0,"%s");
   }
-  iVar7 = (int)((uVar12 & 0xffffffff) << 2);
-  local_a0 = pafVar9[*(int *)(iVar7 + (int)param_6)][1] -
-             pafVar9[*(int *)((int)((uVar13 & 0xffffffff) << 2) + (int)param_6)][1];
-  local_9c = pafVar9[*(int *)((int)((uVar13 & 0xffffffff) << 2) + (int)param_6)][0] -
-             pafVar9[*(int *)(iVar7 + (int)param_6)][0];
+  local_a0 = param_1[param_6[param_4]][1] - param_1[param_6[param_5]][1];
+  local_9c = param_1[param_6[param_5]][0] - param_1[param_6[param_4]][0];
   Vec2Normalize(&local_a0);
-  uVar20 = uVar20 - 1;
-  uVar19 = 0;
-  dVar22 = 0.0010000000474974513;
-  uVar18 = 0xffffffff;
-  fVar5 = pafVar9[*(int *)(iVar7 + (int)param_6)][1] * local_9c +
-          pafVar9[*(int *)(iVar7 + (int)param_6)][0] * local_a0;
-  puVar6 = (uint *)lVar11;
+  uVar13 = (longlong)(int)param_3 - 1;
+  uVar12 = 0;
+  dVar15 = 0.0010000000474974513;
+  uVar8 = 0xffffffff;
+  fVar5 = param_1[param_6[param_4]][1] * local_9c + param_1[param_6[param_4]][0] * local_a0;
   local_98 = fVar5;
-  if (-1 < (longlong)uVar20) {
-    dVar23 = 0.0;
+  if (-1 < (longlong)uVar13) {
+    dVar16 = 0.0;
     fVar2 = local_a0;
     fVar3 = local_9c;
     do {
-      lVar16 = ((ulonglong)uVar19 & 0x3fffffff) * 4;
-      lVar15 = lVar16 + lVar11;
-      fVar4 = pafVar9[*(int *)((int)lVar16 + (int)puVar6)][1] * fVar3 +
-              pafVar9[*(int *)((int)lVar16 + (int)puVar6)][0] * fVar2;
-      uVar21 = uVar19;
-      while (dVar8 = (double)(fVar4 - fVar5), dVar23 < dVar8) {
-        if (dVar22 < dVar8) {
-          dVar22 = dVar8;
-          uVar18 = uVar21;
+      lVar11 = ((ulonglong)uVar12 & 0x3fffffff) * 4;
+      lVar10 = lVar11 + (int)param_2;
+      fVar4 = param_1[*(int *)((int)lVar11 + (int)param_2)][1] * fVar3 +
+              param_1[*(int *)((int)lVar11 + (int)param_2)][0] * fVar2;
+      uVar14 = uVar12;
+      while (dVar7 = (double)(fVar4 - fVar5), dVar16 < dVar7) {
+        if (dVar15 < dVar7) {
+          dVar15 = dVar7;
+          uVar8 = uVar14;
         }
-        uVar21 = uVar21 + 1;
-        lVar15 = lVar15 + 4;
-        uVar19 = uVar21;
-        if ((int)uVar20 < (int)uVar21) goto LAB_825d5048;
-        fVar4 = pafVar9[*(int *)lVar15][1] * fVar3 + pafVar9[*(int *)lVar15][0] * fVar2;
+        uVar14 = uVar14 + 1;
+        lVar10 = lVar10 + 4;
+        uVar12 = uVar14;
+        if ((int)uVar13 < (int)uVar14) goto LAB_825d5048;
+        fVar4 = param_1[*(int *)lVar10][1] * fVar3 + param_1[*(int *)lVar10][0] * fVar2;
       }
-      if ((int)uVar20 < (int)uVar21) {
+      if ((int)uVar13 < (int)uVar14) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_convexhull.cpp"
                         ,0x68,1,"%s");
         fVar2 = local_a0;
         fVar3 = local_9c;
         fVar5 = local_98;
       }
-      lVar16 = (uVar20 & 0x3fffffff) * 4;
-      lVar15 = lVar16 + lVar11;
-      fVar4 = pafVar9[*(int *)((int)lVar16 + (int)puVar6)][1] * fVar3 +
-              pafVar9[*(int *)((int)lVar16 + (int)puVar6)][0] * fVar2;
-      while (dVar8 = (double)(fVar4 - fVar5), dVar8 <= dVar23) {
-        uVar20 = uVar20 - 1;
-        lVar15 = lVar15 + -4;
-        uVar19 = uVar21;
-        if ((int)uVar20 < (int)uVar21) goto LAB_825d5048;
-        fVar4 = pafVar9[*(int *)lVar15][1] * fVar3 + pafVar9[*(int *)lVar15][0] * fVar2;
+      lVar11 = (uVar13 & 0x3fffffff) * 4;
+      lVar10 = lVar11 + (int)param_2;
+      fVar4 = param_1[*(int *)((int)lVar11 + (int)param_2)][1] * fVar3 +
+              param_1[*(int *)((int)lVar11 + (int)param_2)][0] * fVar2;
+      while (dVar7 = (double)(fVar4 - fVar5), dVar7 <= dVar16) {
+        uVar13 = uVar13 - 1;
+        lVar10 = lVar10 + -4;
+        uVar12 = uVar14;
+        if ((int)uVar13 < (int)uVar14) goto LAB_825d5048;
+        fVar4 = param_1[*(int *)lVar10][1] * fVar3 + param_1[*(int *)lVar10][0] * fVar2;
       }
-      if (dVar22 < dVar8) {
-        dVar22 = dVar8;
-        uVar18 = uVar21;
+      if (dVar15 < dVar7) {
+        dVar15 = dVar7;
+        uVar8 = uVar14;
       }
-      if ((int)uVar20 <= (int)uVar21) {
+      if ((int)uVar13 <= (int)uVar14) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_convexhull.cpp"
                         ,0x7a,1,"%s");
         fVar2 = local_a0;
         fVar3 = local_9c;
         fVar5 = local_98;
       }
-      iVar7 = (int)((uVar20 & 0xffffffff) << 2);
-      uVar19 = uVar21 + 1;
-      uVar20 = uVar20 - 1;
-      uVar1 = puVar6[uVar21];
-      puVar6[uVar21] = *(uint *)(iVar7 + (int)puVar6);
-      *(uint *)(iVar7 + (int)puVar6) = uVar1;
-    } while ((int)uVar19 <= (int)uVar20);
+      iVar6 = (int)((uVar13 & 0xffffffff) << 2);
+      uVar12 = uVar14 + 1;
+      uVar13 = uVar13 - 1;
+      uVar1 = param_2[uVar14];
+      param_2[uVar14] = *(uint *)(iVar6 + (int)param_2);
+      *(uint *)(iVar6 + (int)param_2) = uVar1;
+    } while ((int)uVar12 <= (int)uVar13);
   }
 LAB_825d5048:
-  uVar21 = (uint)uVar20;
-  if (uVar21 != uVar19 - 1) {
+  uVar14 = (uint)uVar13;
+  if (uVar14 != uVar12 - 1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_convexhull.cpp",
                     0x82,1,"%s");
   }
-  if ((int)uVar21 < (int)uVar18) {
+  if ((int)uVar14 < (int)uVar8) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_convexhull.cpp",
                     0x83,1,"%s");
   }
-  if (-1 < (int)uVar18) {
-    iVar7 = (int)((uVar20 & 0xffffffff) << 2);
-    uVar19 = puVar6[uVar18];
-    puVar6[uVar18] = *(uint *)(iVar7 + (int)puVar6);
-    *(uint *)(iVar7 + (int)puVar6) = uVar19;
-    if ((uVar14 & 0xffffffff) < (uVar17 & 0xffffffff)) {
+  if (-1 < (int)uVar8) {
+    iVar6 = (int)((uVar13 & 0xffffffff) << 2);
+    uVar12 = param_2[uVar8];
+    param_2[uVar8] = *(uint *)(iVar6 + (int)param_2);
+    *(uint *)(iVar6 + (int)param_2) = uVar12;
+    if (param_7 < uVar9) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_convexhull.cpp"
                       ,0x3b,0,"newIndex not in [0, hullPointCount]\n\t%i not in [0, %i]");
     }
     memmove();
-    *(uint *)((int)((uVar17 & 0xffffffff) << 2) + (int)param_6) = uVar19;
-    if (uVar21 != 0) {
-      if ((uVar13 & 0xffffffff) != 0) {
-        uVar10 = (uint)uVar12 + 2;
+    param_6[uVar9] = uVar12;
+    if (uVar14 != 0) {
+      uVar8 = 0;
+      if (param_5 != 0) {
+        uVar8 = param_4 + 2;
       }
-      uVar10 = Com_RecursivelyGrowHull
-                         (pafVar9,puVar6,uVar21,(uint)uVar17,uVar10,param_6,(uint)(uVar14 + 1));
-      uVar10 = Com_RecursivelyGrowHull
-                         (pafVar9,puVar6,uVar21,(uint)uVar12,(uint)uVar17,param_6,uVar10);
-      uVar10 = __restgprlr_18(uVar10);
-      return uVar10;
+      uVar8 = Com_RecursivelyGrowHull(param_1,param_2,uVar14,uVar9,uVar8,param_6,param_7 + 1);
+      uVar9 = Com_RecursivelyGrowHull(param_1,param_2,uVar14,param_4,uVar9,param_6,uVar8);
+      return uVar9;
     }
-    uVar10 = __restgprlr_18(uVar14 + 1);
-    return uVar10;
+    return param_7 + 1;
   }
-  uVar10 = __restgprlr_18(uVar14);
-  return uVar10;
+  return param_7;
 }
 
 
 // 825D5188  Com_GrowInitialHull  (universal/com_convexhull.cpp:157)
+
+/* WARNING: Function: __savegprlr_19 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_19 replaced with injection: xenon_save_restore */
 
 uint Com_GrowInitialHull(float (*param_1) [2],uint *param_2,uint param_3,uint *param_4)
 
@@ -372,175 +346,164 @@ uint Com_GrowInitialHull(float (*param_1) [2],uint *param_2,uint param_3,uint *p
   float fVar5;
   int iVar6;
   double dVar7;
-  float (*pafVar8) [2];
+  uint uVar8;
   uint uVar9;
-  uint uVar10;
-  uint *puVar11;
-  ulonglong uVar12;
+  uint *puVar10;
+  uint uVar11;
+  longlong lVar12;
   longlong lVar13;
-  longlong lVar14;
-  ulonglong uVar15;
-  int iVar16;
-  ulonglong uVar17;
-  int iVar18;
+  ulonglong uVar14;
+  int iVar15;
+  ulonglong uVar16;
+  int iVar17;
+  ulonglong uVar18;
   ulonglong uVar19;
-  ulonglong uVar20;
-  ulonglong uVar21;
-  longlong lVar22;
-  double dVar23;
-  double dVar24;
-  double dVar25;
+  double dVar20;
+  double dVar21;
+  double dVar22;
   float local_a0;
   float local_9c;
   float local_98;
   
-  uVar12 = (ulonglong)(int)param_3;
-  lVar22 = (longlong)(int)param_2;
-  pafVar8 = (float (*) [2])__savegprlr_19(param_1);
-  if ((uVar12 & 0xffffffff) == 0) {
+  if (param_3 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_convexhull.cpp",
                     0xa8,0,"%s");
   }
-  local_a0 = pafVar8[param_4[1]][1] - pafVar8[*param_4][1];
-  local_9c = pafVar8[*param_4][0] - pafVar8[param_4[1]][0];
+  local_a0 = param_1[param_4[1]][1] - param_1[*param_4][1];
+  local_9c = param_1[*param_4][0] - param_1[param_4[1]][0];
   Vec2Normalize(&local_a0);
-  uVar21 = uVar12 - 1;
-  dVar23 = -0.0010000000474974513;
-  uVar19 = 0;
-  uVar15 = 0xffffffffffffffff;
-  dVar24 = 0.0010000000474974513;
-  uVar17 = 0xffffffffffffffff;
-  fVar5 = pafVar8[*param_4][1] * local_9c + pafVar8[*param_4][0] * local_a0;
-  puVar11 = (uint *)lVar22;
+  uVar19 = (longlong)(int)param_3 - 1;
+  dVar20 = -0.0010000000474974513;
+  uVar18 = 0;
+  uVar14 = 0xffffffffffffffff;
+  dVar21 = 0.0010000000474974513;
+  uVar16 = 0xffffffffffffffff;
+  fVar5 = param_1[*param_4][1] * local_9c + param_1[*param_4][0] * local_a0;
   local_98 = fVar5;
-  if (-1 < (longlong)uVar21) {
-    dVar25 = 0.0;
+  if (-1 < (longlong)uVar19) {
+    dVar22 = 0.0;
     fVar2 = local_a0;
     fVar3 = local_9c;
     do {
-      lVar14 = (uVar19 & 0x3fffffff) * 4;
-      lVar13 = lVar14 + lVar22;
-      fVar4 = pafVar8[*(int *)((int)lVar14 + (int)puVar11)][1] * fVar3 +
-              pafVar8[*(int *)((int)lVar14 + (int)puVar11)][0] * fVar2;
-      while (dVar7 = (double)(fVar4 - fVar5), dVar25 <= dVar7) {
-        if (dVar24 < dVar7) {
-          uVar15 = uVar19;
-          dVar24 = dVar7;
+      lVar13 = (uVar18 & 0x3fffffff) * 4;
+      lVar12 = lVar13 + (int)param_2;
+      fVar4 = param_1[*(int *)((int)lVar13 + (int)param_2)][1] * fVar3 +
+              param_1[*(int *)((int)lVar13 + (int)param_2)][0] * fVar2;
+      while (dVar7 = (double)(fVar4 - fVar5), dVar22 <= dVar7) {
+        if (dVar21 < dVar7) {
+          uVar14 = uVar18;
+          dVar21 = dVar7;
         }
-        uVar19 = uVar19 + 1;
-        lVar13 = lVar13 + 4;
-        if ((int)uVar21 < (int)uVar19) goto LAB_825d5428;
-        fVar4 = pafVar8[*(int *)lVar13][1] * fVar3 + pafVar8[*(int *)lVar13][0] * fVar2;
+        uVar18 = uVar18 + 1;
+        lVar12 = lVar12 + 4;
+        if ((int)uVar19 < (int)uVar18) goto LAB_825d5428;
+        fVar4 = param_1[*(int *)lVar12][1] * fVar3 + param_1[*(int *)lVar12][0] * fVar2;
       }
-      if (dVar7 < dVar23) {
-        uVar17 = uVar19;
-        dVar23 = dVar7;
+      if (dVar7 < dVar20) {
+        uVar16 = uVar18;
+        dVar20 = dVar7;
       }
-      iVar16 = (int)uVar19;
-      if ((int)uVar21 < iVar16) {
+      iVar15 = (int)uVar18;
+      if ((int)uVar19 < iVar15) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_convexhull.cpp"
                         ,0xcc,1,"%s");
         fVar2 = local_a0;
         fVar3 = local_9c;
         fVar5 = local_98;
       }
-      lVar14 = (uVar21 & 0x3fffffff) * 4;
-      lVar13 = lVar14 + lVar22;
-      fVar4 = pafVar8[*(int *)((int)lVar14 + (int)puVar11)][1] * fVar3 +
-              pafVar8[*(int *)((int)lVar14 + (int)puVar11)][0] * fVar2;
-      while (dVar7 = (double)(fVar4 - fVar5), dVar7 <= dVar25) {
-        if (dVar7 < dVar23) {
-          uVar17 = uVar21;
-          dVar23 = dVar7;
+      lVar13 = (uVar19 & 0x3fffffff) * 4;
+      lVar12 = lVar13 + (int)param_2;
+      fVar4 = param_1[*(int *)((int)lVar13 + (int)param_2)][1] * fVar3 +
+              param_1[*(int *)((int)lVar13 + (int)param_2)][0] * fVar2;
+      while (dVar7 = (double)(fVar4 - fVar5), dVar7 <= dVar22) {
+        if (dVar7 < dVar20) {
+          uVar16 = uVar19;
+          dVar20 = dVar7;
         }
-        uVar21 = uVar21 - 1;
-        lVar13 = lVar13 + -4;
-        if ((int)uVar21 < iVar16) goto LAB_825d5428;
-        fVar4 = pafVar8[*(int *)lVar13][1] * fVar3 + pafVar8[*(int *)lVar13][0] * fVar2;
+        uVar19 = uVar19 - 1;
+        lVar12 = lVar12 + -4;
+        if ((int)uVar19 < iVar15) goto LAB_825d5428;
+        fVar4 = param_1[*(int *)lVar12][1] * fVar3 + param_1[*(int *)lVar12][0] * fVar2;
       }
-      if (dVar24 < dVar7) {
-        uVar15 = uVar19;
-        dVar24 = dVar7;
+      if (dVar21 < dVar7) {
+        uVar14 = uVar18;
+        dVar21 = dVar7;
       }
-      if ((int)uVar21 <= iVar16) {
+      if ((int)uVar19 <= iVar15) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_convexhull.cpp"
                         ,0xe3,1,"%s");
         fVar2 = local_a0;
         fVar3 = local_9c;
         fVar5 = local_98;
       }
-      iVar18 = (int)((uVar21 & 0xffffffff) << 2);
-      iVar6 = (int)((uVar19 & 0xffffffff) << 2);
-      uVar1 = *(undefined4 *)(iVar6 + (int)puVar11);
-      *(undefined4 *)(iVar6 + (int)puVar11) = *(undefined4 *)(iVar18 + (int)puVar11);
-      *(undefined4 *)(iVar18 + (int)puVar11) = uVar1;
-      if ((int)uVar17 == iVar16) {
-        uVar17 = uVar21;
+      iVar17 = (int)((uVar19 & 0xffffffff) << 2);
+      iVar6 = (int)((uVar18 & 0xffffffff) << 2);
+      uVar1 = *(undefined4 *)(iVar6 + (int)param_2);
+      *(undefined4 *)(iVar6 + (int)param_2) = *(undefined4 *)(iVar17 + (int)param_2);
+      *(undefined4 *)(iVar17 + (int)param_2) = uVar1;
+      if ((int)uVar16 == iVar15) {
+        uVar16 = uVar19;
       }
-      uVar19 = uVar19 + 1;
-      uVar21 = uVar21 - 1;
-    } while ((int)uVar19 <= (int)uVar21);
+      uVar18 = uVar18 + 1;
+      uVar19 = uVar19 - 1;
+    } while ((int)uVar18 <= (int)uVar19);
   }
 LAB_825d5428:
-  uVar9 = (uint)uVar21;
-  if (uVar9 != (int)uVar19 - 1U) {
+  uVar9 = (uint)uVar19;
+  if (uVar9 != (int)uVar18 - 1U) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_convexhull.cpp",
                     0xed,1,"%s");
   }
-  iVar16 = (int)uVar15;
-  iVar18 = (int)uVar17;
-  if ((iVar16 < 0) && (iVar18 < 0)) {
-    uVar9 = __restgprlr_19(0);
-    return uVar9;
+  iVar15 = (int)uVar14;
+  iVar17 = (int)uVar16;
+  if ((iVar15 < 0) && (iVar17 < 0)) {
+    return 0;
   }
-  uVar20 = 2;
-  if (-1 < iVar16) {
-    if ((int)uVar9 < iVar16) {
+  uVar8 = 2;
+  if (-1 < iVar15) {
+    if ((int)uVar9 < iVar15) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_convexhull.cpp"
                       ,0xf5,1,"%s");
     }
-    iVar16 = (int)((uVar21 & 0xffffffff) << 2);
-    iVar6 = (int)((uVar15 & 0xffffffff) << 2);
-    uVar10 = *(uint *)(iVar6 + (int)puVar11);
-    *(undefined4 *)(iVar6 + (int)puVar11) = *(undefined4 *)(iVar16 + (int)puVar11);
-    *(uint *)(iVar16 + (int)puVar11) = uVar10;
+    iVar15 = (int)((uVar19 & 0xffffffff) << 2);
+    iVar6 = (int)((uVar14 & 0xffffffff) << 2);
+    uVar8 = *(uint *)(iVar6 + (int)param_2);
+    *(undefined4 *)(iVar6 + (int)param_2) = *(undefined4 *)(iVar15 + (int)param_2);
+    *(uint *)(iVar15 + (int)param_2) = uVar8;
     memmove();
-    param_4[2] = uVar10;
-    uVar20 = 3;
+    param_4[2] = uVar8;
+    uVar8 = 3;
     if (0 < (int)uVar9) {
-      uVar10 = Com_RecursivelyGrowHull(pafVar8,puVar11,uVar9,2,0,param_4,3);
-      uVar9 = Com_RecursivelyGrowHull(pafVar8,puVar11,uVar9,1,2,param_4,uVar10);
-      uVar20 = (ulonglong)(int)uVar9;
+      uVar8 = Com_RecursivelyGrowHull(param_1,param_2,uVar9,2,0,param_4,3);
+      uVar8 = Com_RecursivelyGrowHull(param_1,param_2,uVar9,1,2,param_4,uVar8);
     }
   }
-  if (-1 < iVar18) {
-    if (iVar18 < (int)uVar19) {
+  if (-1 < iVar17) {
+    if (iVar17 < (int)uVar18) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_convexhull.cpp"
                       ,0x103,1,"%s");
     }
-    iVar18 = (int)((uVar19 & 0xffffffff) << 2);
-    iVar16 = (int)((uVar17 & 0xffffffff) << 2);
-    uVar9 = *(uint *)(iVar16 + (int)puVar11);
-    *(undefined4 *)(iVar16 + (int)puVar11) = *(undefined4 *)(iVar18 + (int)puVar11);
-    *(uint *)(iVar18 + (int)puVar11) = uVar9;
-    if ((uVar20 & 0xffffffff) == 0) {
+    iVar17 = (int)((uVar18 & 0xffffffff) << 2);
+    iVar15 = (int)((uVar16 & 0xffffffff) << 2);
+    uVar9 = *(uint *)(iVar15 + (int)param_2);
+    *(undefined4 *)(iVar15 + (int)param_2) = *(undefined4 *)(iVar17 + (int)param_2);
+    *(uint *)(iVar17 + (int)param_2) = uVar9;
+    if (uVar8 == 0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_convexhull.cpp"
                       ,0x3b,0,"newIndex not in [0, hullPointCount]\n\t%i not in [0, %i]");
     }
     memmove();
     param_4[1] = uVar9;
-    uVar20 = uVar20 + 1;
-    lVar22 = (uVar12 - uVar19) + -1;
-    if (lVar22 != 0) {
-      puVar11 = (uint *)((int)puVar11 + iVar18 + 4);
-      uVar10 = (uint)lVar22;
-      uVar9 = Com_RecursivelyGrowHull(pafVar8,puVar11,uVar10,1,2,param_4,(uint)uVar20);
-      uVar9 = Com_RecursivelyGrowHull(pafVar8,puVar11,uVar10,0,1,param_4,uVar9);
-      uVar20 = (ulonglong)(int)uVar9;
+    uVar8 = uVar8 + 1;
+    lVar12 = ((longlong)(int)param_3 - uVar18) + -1;
+    if (lVar12 != 0) {
+      puVar10 = (uint *)((int)param_2 + iVar17 + 4);
+      uVar11 = (uint)lVar12;
+      uVar9 = Com_RecursivelyGrowHull(param_1,puVar10,uVar11,1,2,param_4,uVar8);
+      uVar8 = Com_RecursivelyGrowHull(param_1,puVar10,uVar11,0,1,param_4,uVar9);
     }
   }
-  uVar9 = __restgprlr_19(uVar20);
-  return uVar9;
+  return uVar8;
 }
 
 
@@ -589,121 +552,110 @@ void Com_TranslatePoints(float (*param_1) [2],uint param_2,float *param_3)
 
 // 825D5708  Com_ConvexHull  (universal/com_convexhull.cpp:289)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 uint Com_ConvexHull(float (*param_1) [2],uint param_2,float (*param_3) [2])
 
 {
   int iVar1;
   int iVar2;
   int iVar3;
-  int iVar4;
-  int iVar5;
-  ulonglong uVar6;
-  float (*pafVar8) [2];
-  uint uVar9;
-  ulonglong uVar10;
-  ulonglong uVar11;
-  longlong lVar12;
-  longlong lVar13;
-  longlong lVar14;
-  double dVar15;
-  double dVar16;
-  float (*pafVar7) [2];
+  float (*pafVar4) [2];
+  uint uVar5;
+  int iVar6;
+  uint uVar7;
+  int *piVar8;
+  float *pfVar9;
+  double dVar10;
+  double dVar11;
+  float local_250;
+  float local_24c;
+  int aiStack_244 [65];
+  uint auStack_140 [80];
   
-  uVar11 = (ulonglong)(int)param_3;
-  uVar10 = (ulonglong)(int)param_2;
-  uVar6 = __savegprlr_27(param_1);
-  pafVar7 = (float (*) [2])uVar6;
-  lVar12 = ZEXT48(&stack0x00000000) - 0x2a0;
-  iVar1 = (int)lVar12;
-  *(BADSPACEBASE **)iVar1 = register0x0000000c;
-  if (((uVar10 & 0xffffffff) < 3) || (0x40 < (uVar10 & 0xffffffff))) {
+  if ((param_2 < 3) || (0x40 < param_2)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_convexhull.cpp",
                     0x128,0,"pointCount not in [3, ARRAY_COUNT( pointOrder )]\n\t%i not in [%i, %i]"
                    );
   }
-  if ((uVar11 & 0xffffffff) == (uVar6 & 0xffffffff)) {
+  if (param_3 == param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_convexhull.cpp",
                     0x12a,0,"%s");
   }
-  lVar13 = (uVar10 & 0x1fffffff) * 8;
-  if (((uVar11 & 0xffffffff) < (lVar13 + uVar6 & 0xffffffff)) &&
-     ((uVar6 & 0xffffffff) < (lVar13 + uVar11 & 0xffffffff))) {
+  if ((param_3 < param_1 + param_2) && (param_1 < param_3 + param_2)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_convexhull.cpp",
                     299,0,"%s");
   }
-  dVar16 = -(double)(*pafVar7)[0];
-  dVar15 = -(double)(*pafVar7)[1];
-  *(float *)(iVar1 + 0x50) = (float)dVar16;
-  *(float *)(iVar1 + 0x54) = (float)dVar15;
-  uVar9 = (uint)uVar10;
-  pafVar8 = pafVar7;
-  Com_TranslatePoints(pafVar7,uVar9,(float *)(iVar1 + 0x50));
-  Com_InitialHull(pafVar8,(uint *)(iVar1 + 0x160),uVar9,(uint *)(iVar1 + 0x60));
-  uVar9 = Com_GrowInitialHull(pafVar7,(uint *)(iVar1 + 0x160),uVar9 - 2,(uint *)(iVar1 + 0x60));
-  uVar6 = 0;
-  if (3 < (int)uVar9) {
-    lVar13 = ZEXT48(&stack0x00000000) - 0x244;
-    lVar14 = uVar11 - 4;
+  dVar11 = -(double)(*param_1)[0];
+  dVar10 = -(double)(*param_1)[1];
+  local_250 = (float)dVar11;
+  local_24c = (float)dVar10;
+  pafVar4 = param_1;
+  Com_TranslatePoints(param_1,param_2,&local_250);
+  Com_InitialHull(pafVar4,auStack_140,param_2,(uint *)(aiStack_244 + 1));
+  uVar5 = Com_GrowInitialHull(param_1,auStack_140,param_2 - 2,(uint *)(aiStack_244 + 1));
+  uVar7 = 0;
+  if (3 < (int)uVar5) {
+    piVar8 = aiStack_244;
+    pfVar9 = param_3[-1] + 1;
     do {
-      iVar3 = (int)lVar13;
-      iVar1 = *(int *)(iVar3 + 4);
-      uVar6 = uVar6 + 4;
-      iVar2 = *(int *)(iVar3 + 8);
-      iVar3 = *(int *)(iVar3 + 0xc);
-      lVar13 = lVar13 + 0x10;
-      iVar4 = *(int *)lVar13;
-      iVar5 = (int)lVar14;
-      *(float *)(iVar5 + 4) = (float)((double)pafVar7[iVar1][0] - dVar16);
-      *(float *)(iVar5 + 8) = (float)((double)pafVar7[iVar1][1] - dVar15);
-      *(float *)(iVar5 + 0xc) = (float)((double)pafVar7[iVar2][0] - dVar16);
-      *(float *)(iVar5 + 0x10) = (float)((double)pafVar7[iVar2][1] - dVar15);
-      *(float *)(iVar5 + 0x14) = (float)((double)pafVar7[iVar3][0] - dVar16);
-      *(float *)(iVar5 + 0x18) = (float)((double)pafVar7[iVar3][1] - dVar15);
-      *(float *)(iVar5 + 0x1c) = (float)((double)pafVar7[iVar4][0] - dVar16);
-      lVar14 = lVar14 + 0x20;
-      *(float *)lVar14 = (float)((double)pafVar7[iVar4][1] - dVar15);
-    } while ((uVar6 & 0xffffffff) < ((longlong)(int)uVar9 - 3U & 0xffffffff));
+      iVar6 = piVar8[1];
+      uVar7 = uVar7 + 4;
+      iVar1 = piVar8[2];
+      iVar2 = piVar8[3];
+      piVar8 = piVar8 + 4;
+      iVar3 = *piVar8;
+      pfVar9[1] = (float)((double)param_1[iVar6][0] - dVar11);
+      pfVar9[2] = (float)((double)param_1[iVar6][1] - dVar10);
+      pfVar9[3] = (float)((double)param_1[iVar1][0] - dVar11);
+      pfVar9[4] = (float)((double)param_1[iVar1][1] - dVar10);
+      pfVar9[5] = (float)((double)param_1[iVar2][0] - dVar11);
+      pfVar9[6] = (float)((double)param_1[iVar2][1] - dVar10);
+      pfVar9[7] = (float)((double)param_1[iVar3][0] - dVar11);
+      pfVar9 = pfVar9 + 8;
+      *pfVar9 = (float)((double)param_1[iVar3][1] - dVar10);
+    } while (uVar7 < uVar5 - 3);
   }
-  if ((uVar6 & 0xffffffff) < (ulonglong)uVar9) {
-    lVar14 = (longlong)(int)uVar9 - uVar6;
-    lVar12 = (uVar6 & 0x3fffffff) * 4 + lVar12 + 0x5c;
-    lVar13 = (uVar6 & 0x1fffffff) * 8 + uVar11 + -4;
+  if (uVar7 < uVar5) {
+    iVar6 = uVar5 - uVar7;
+    piVar8 = aiStack_244 + uVar7;
+    pfVar9 = param_3[uVar7 - 1] + 1;
     do {
-      lVar12 = lVar12 + 4;
-      iVar1 = *(int *)lVar12;
-      *(float *)((int)lVar13 + 4) = (float)((double)pafVar7[iVar1][0] - dVar16);
-      lVar13 = lVar13 + 8;
-      *(float *)lVar13 = (float)((double)pafVar7[iVar1][1] - dVar15);
-      lVar14 = lVar14 + -1;
-    } while (lVar14 != 0);
+      piVar8 = piVar8 + 1;
+      iVar1 = *piVar8;
+      pfVar9[1] = (float)((double)param_1[iVar1][0] - dVar11);
+      pfVar9 = pfVar9 + 2;
+      *pfVar9 = (float)((double)param_1[iVar1][1] - dVar10);
+      iVar6 = iVar6 + -1;
+    } while (iVar6 != 0);
   }
-  uVar9 = __restgprlr_27();
-  return uVar9;
+  return uVar5;
 }
 
 
 // 825D5930  Com_ConvexHullOrder  (universal/com_convexhull.cpp:315)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 uint Com_ConvexHullOrder(float (*param_1) [2],uint *param_2,uint param_3,uint *param_4)
 
 {
   float (*pafVar1) [2];
-  float (*pafVar2) [2];
-  uint uVar3;
-  double dVar4;
+  uint uVar2;
+  double dVar3;
   float local_30;
   float local_2c;
   
-  pafVar1 = (float (*) [2])__savegprlr_28(param_1);
-  dVar4 = ceil((double)(*pafVar1)[0]);
-  local_30 = -(float)dVar4;
-  dVar4 = ceil((double)(*pafVar1)[1]);
-  local_2c = -(float)dVar4;
-  pafVar2 = pafVar1;
-  Com_TranslatePoints(pafVar1,param_3,&local_30);
-  Com_InitialHull(pafVar2,param_2,param_3,param_4);
-  uVar3 = Com_GrowInitialHull(pafVar1,param_2,param_3 - 2,param_4);
-  uVar3 = __restgprlr_28(uVar3);
-  return uVar3;
+  dVar3 = ceil((double)(*param_1)[0]);
+  local_30 = -(float)dVar3;
+  dVar3 = ceil((double)(*param_1)[1]);
+  local_2c = -(float)dVar3;
+  pafVar1 = param_1;
+  Com_TranslatePoints(param_1,param_3,&local_30);
+  Com_InitialHull(pafVar1,param_2,param_3,param_4);
+  uVar2 = Com_GrowInitialHull(param_1,param_2,param_3 - 2,param_4);
+  return uVar2;
 }
 

@@ -2,47 +2,47 @@
 
 // 8244BD60  FXIW_LimitStabilizeTimeForEffectDef_Recurse  (EffectsCore/fx_update_effect_time.cpp:16)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 int FXIW_LimitStabilizeTimeForEffectDef_Recurse(FxEffectDef *param_1,int param_2)
 
 {
   int iVar1;
-  int iVar2;
-  longlong lVar3;
-  longlong lVar4;
+  longlong lVar2;
+  int iVar3;
+  int iVar4;
   int iVar5;
-  int iVar6;
-  int iVar7;
   
-  lVar3 = (longlong)param_2;
-  iVar1 = __savegprlr_26(param_1);
-  if (iVar1 == 0) {
+  if (param_1 == (FxEffectDef *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_update_effect_time.cpp"
                     ,0x1b,0,"%s");
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_update_effect_time.cpp"
                     ,0x2a,0,"%s");
   }
-  iVar7 = 0;
   iVar5 = 0;
-  lVar4 = (ulonglong)*(uint *)(iVar1 + 0x18) + (ulonglong)*(uint *)(iVar1 + 0x14) +
-          (ulonglong)*(uint *)(iVar1 + 0x10);
-  if (lVar4 != 0) {
-    iVar6 = 0;
+  iVar3 = 0;
+  lVar2 = (ulonglong)(uint)param_1->elemDefCountEmission +
+          (ulonglong)(uint)param_1->elemDefCountOneShot +
+          (ulonglong)(uint)param_1->elemDefCountLooping;
+  if (lVar2 != 0) {
+    iVar4 = 0;
     do {
-      iVar2 = FXIW_LimitStabilizeTimeForElemDef_Recurse
-                        ((FxElemDef *)(*(int *)(iVar1 + 0x30) + iVar6),true,(int)lVar3);
-      if (iVar7 < iVar2) {
-        iVar7 = iVar2;
+      iVar1 = FXIW_LimitStabilizeTimeForElemDef_Recurse
+                        ((FxElemDef *)
+                         ((int)&((FxElemDef *)(param_1->elemDefs->spawnOrigin + -7))->flags + iVar4)
+                         ,true,param_2);
+      if (iVar5 < iVar1) {
+        iVar5 = iVar1;
       }
-      if ((int)lVar3 <= iVar7) {
-        iVar1 = __restgprlr_26(lVar3);
-        return iVar1;
+      if (param_2 <= iVar5) {
+        return param_2;
       }
-      iVar5 = iVar5 + 1;
-      iVar6 = iVar6 + 0x100;
-    } while (iVar5 != (int)lVar4);
+      iVar3 = iVar3 + 1;
+      iVar4 = iVar4 + 0x100;
+    } while (iVar3 != (int)lVar2);
   }
-  iVar1 = __restgprlr_26(iVar7);
-  return iVar1;
+  return iVar5;
 }
 
 
@@ -71,80 +71,81 @@ int FXIW_LimitStabilizeTimeForElemDef_SelfOnly(FxElemDef *param_1,bool param_2)
 
 // 8244BEB0  FXIW_LimitStabilizeTimeForElemDef_Recurse  (EffectsCore/fx_update_effect_time.cpp:105)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 int FXIW_LimitStabilizeTimeForElemDef_Recurse(FxElemDef *param_1,bool param_2,int param_3)
 
 {
-  FxElemDef *pFVar2;
-  longlong lVar1;
-  int iVar4;
-  longlong lVar5;
-  Material **ppMVar6;
-  int iVar7;
-  longlong lVar8;
+  int iVar1;
+  int iVar2;
   int iVar3;
+  Material **ppMVar4;
+  int iVar5;
   
-  lVar5 = (longlong)param_3;
-  pFVar2 = (FxElemDef *)__savegprlr_26(param_1);
-  if (pFVar2 == (FxElemDef *)0x0) {
+  if (param_1 == (FxElemDef *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_update_effect_time.cpp"
                     ,0x73,0,"%s");
   }
-  iVar3 = FXIW_LimitStabilizeTimeForElemDef_SelfOnly(pFVar2,param_2);
-  lVar1 = (longlong)iVar3;
-  iVar7 = (int)lVar5;
-  if (iVar3 < iVar7) {
-    lVar8 = lVar1;
-    if (pFVar2->elemType == '\f') {
-      if (pFVar2->visualCount == '\x01') {
-        iVar4 = FXIW_LimitStabilizeTimeForEffectDef_Recurse
-                          ((FxEffectDef *)(pFVar2->visuals).markArray,iVar7);
-        if (iVar3 < iVar4) {
-          lVar8 = (longlong)iVar4;
-        }
-        if (iVar7 <= (int)lVar8) goto LAB_8244bf48;
-      }
-      else {
-        ppMVar6 = ((pFVar2->visuals).markArray)->materials;
-        iVar3 = 0;
-        if (pFVar2->visualCount != '\0') {
-          do {
-            iVar4 = FXIW_LimitStabilizeTimeForEffectDef_Recurse((FxEffectDef *)*ppMVar6,iVar7);
-            if ((int)lVar8 < iVar4) {
-              lVar8 = (longlong)iVar4;
-            }
-            if (iVar7 <= (int)lVar8) goto LAB_8244bf48;
-            iVar3 = iVar3 + 1;
-            ppMVar6 = ppMVar6 + 1;
-          } while (iVar3 < (int)(uint)pFVar2->visualCount);
-        }
-      }
-    }
-    if ((pFVar2->effectOnDeath).handle != (FxEffectDef *)0x0) {
-      iVar3 = FXIW_LimitStabilizeTimeForEffectDef_Recurse((pFVar2->effectOnDeath).handle,iVar7);
-      if ((int)lVar8 < (int)(iVar3 + lVar1)) {
-        lVar8 = iVar3 + lVar1;
-      }
-      if (iVar7 <= (int)lVar8) goto LAB_8244bf48;
-    }
-    if ((pFVar2->effectOnImpact).handle != (FxEffectDef *)0x0) {
-      iVar3 = FXIW_LimitStabilizeTimeForEffectDef_Recurse((pFVar2->effectOnImpact).handle,iVar7);
-      if ((int)lVar8 < (int)(iVar3 + lVar1)) {
-        lVar8 = iVar3 + lVar1;
-      }
-      if (iVar7 <= (int)lVar8) goto LAB_8244bf48;
-    }
-    if ((pFVar2->effectEmitted).handle != (FxEffectDef *)0x0) {
-      iVar3 = FXIW_LimitStabilizeTimeForEffectDef_Recurse((pFVar2->effectEmitted).handle,iVar7);
-      if ((int)lVar8 < (int)(iVar3 + lVar1)) {
-        lVar8 = iVar3 + lVar1;
-      }
-    }
-    iVar3 = __restgprlr_26(lVar8);
-    return iVar3;
+  iVar1 = FXIW_LimitStabilizeTimeForElemDef_SelfOnly(param_1,param_2);
+  if (param_3 <= iVar1) {
+    return param_3;
   }
-LAB_8244bf48:
-  iVar3 = __restgprlr_26(lVar5);
-  return iVar3;
+  iVar5 = iVar1;
+  if (param_1->elemType == '\f') {
+    if (param_1->visualCount == '\x01') {
+      iVar2 = FXIW_LimitStabilizeTimeForEffectDef_Recurse
+                        ((FxEffectDef *)(param_1->visuals).markArray,param_3);
+      if (iVar1 < iVar2) {
+        iVar5 = iVar2;
+      }
+      if (param_3 <= iVar5) {
+        return param_3;
+      }
+    }
+    else {
+      ppMVar4 = ((param_1->visuals).markArray)->materials;
+      iVar2 = 0;
+      if (param_1->visualCount != '\0') {
+        do {
+          iVar3 = FXIW_LimitStabilizeTimeForEffectDef_Recurse((FxEffectDef *)*ppMVar4,param_3);
+          if (iVar5 < iVar3) {
+            iVar5 = iVar3;
+          }
+          if (param_3 <= iVar5) {
+            return param_3;
+          }
+          iVar2 = iVar2 + 1;
+          ppMVar4 = ppMVar4 + 1;
+        } while (iVar2 < (int)(uint)param_1->visualCount);
+      }
+    }
+  }
+  if ((param_1->effectOnDeath).handle != (FxEffectDef *)0x0) {
+    iVar2 = FXIW_LimitStabilizeTimeForEffectDef_Recurse((param_1->effectOnDeath).handle,param_3);
+    if (iVar5 < iVar2 + iVar1) {
+      iVar5 = iVar2 + iVar1;
+    }
+    if (param_3 <= iVar5) {
+      return param_3;
+    }
+  }
+  if ((param_1->effectOnImpact).handle != (FxEffectDef *)0x0) {
+    iVar2 = FXIW_LimitStabilizeTimeForEffectDef_Recurse((param_1->effectOnImpact).handle,param_3);
+    if (iVar5 < iVar2 + iVar1) {
+      iVar5 = iVar2 + iVar1;
+    }
+    if (param_3 <= iVar5) {
+      return param_3;
+    }
+  }
+  if ((param_1->effectEmitted).handle != (FxEffectDef *)0x0) {
+    iVar2 = FXIW_LimitStabilizeTimeForEffectDef_Recurse((param_1->effectEmitted).handle,param_3);
+    if (iVar5 < iVar2 + iVar1) {
+      iVar5 = iVar2 + iVar1;
+    }
+  }
+  return iVar5;
 }
 
 

@@ -360,7 +360,7 @@ LAB_825215a4:
   82521604  7C0903A6             mtspr CTR,r0
 switchD:
   82521608  4E800420             bctr
-caseD_0:
+caseD_25:
   82521650  894B0000             lbz r10,0x0(r11)
   82521654  2B0A0023             cmplwi cr6,r10,0x23
   82521658  409A001C             bne cr6,0x82521674
@@ -384,7 +384,7 @@ LAB_82521674:
   8252169C  9BC30000             stb r30,0x0(r3)
   825216A0  382100A0             addi r1,r1,0xa0
   825216A4  483F5054             b 0x829166f8
-caseD_4:
+caseD_29:
   825216A8  894B0000             lbz r10,0x0(r11)
   825216AC  2B0A003F             cmplwi cr6,r10,0x3f
   825216B0  409A003C             bne cr6,0x825216ec
@@ -434,7 +434,7 @@ LAB_8252172c:
   82521758  4800B8C1             bl 0x8252d018
   8252175C  382100A0             addi r1,r1,0xa0
   82521760  483F4F98             b 0x829166f8
-caseD_c:
+caseD_31:
   82521764  894B0000             lbz r10,0x0(r11)
   82521768  2B0A002D             cmplwi cr6,r10,0x2d
   8252176C  409A0034             bne cr6,0x825217a0
@@ -480,7 +480,7 @@ LAB_825217d8:
   82521804  4800B815             bl 0x8252d018
   82521808  382100A0             addi r1,r1,0xa0
   8252180C  483F4EEC             b 0x829166f8
-caseD_10:
+caseD_35:
   82521810  894B0000             lbz r10,0x0(r11)
   82521814  2B0A002D             cmplwi cr6,r10,0x2d
   82521818  409A0034             bne cr6,0x8252184c
@@ -699,7 +699,7 @@ LAB_82521b18:
   82521B38  3880040B             li r4,0x40b
   82521B3C  480B29C5             bl 0x825d4500
   82521B40  817F0034             lwz r11,0x34(r31)
-caseD_1:
+caseD_26:
   82521B44  894B0000             lbz r10,0x0(r11)
   82521B48  2B0A003E             cmplwi cr6,r10,0x3e
   82521B4C  409A0028             bne cr6,0x82521b74
@@ -802,7 +802,7 @@ LAB_82521c98:
   82521CB4  7C0903A6             mtspr CTR,r0
 switchD:
   82521CB8  4E800420             bctr
-caseD_3:
+caseD_63:
   82521D1C  894B0000             lbz r10,0x0(r11)
   82521D20  2B0A005A             cmplwi cr6,r10,0x5a
   82521D24  409AFE20             bne cr6,0x82521b44
@@ -812,7 +812,7 @@ caseD_3:
   82521D34  994B0000             stb r10,0x0(r11)
   82521D38  382100A0             addi r1,r1,0xa0
   82521D3C  483F49BC             b 0x829166f8
-caseD_4:
+caseD_64:
   82521D40  894B0000             lbz r10,0x0(r11)
   82521D44  2B0A0012             cmplwi cr6,r10,0x12
   82521D48  409AFDFC             bne cr6,0x82521b44
@@ -868,7 +868,7 @@ LAB_82521dd4:
   82521E08  992B0000             stb r9,0x0(r11)
   82521E0C  382100A0             addi r1,r1,0xa0
   82521E10  483F48E8             b 0x829166f8
-caseD_0:
+caseD_60:
   82521E14  894B0000             lbz r10,0x0(r11)
   82521E18  2B0A0012             cmplwi cr6,r10,0x12
   82521E1C  409AFD28             bne cr6,0x82521b44
@@ -878,7 +878,7 @@ caseD_0:
   82521E2C  994B0000             stb r10,0x0(r11)
   82521E30  382100A0             addi r1,r1,0xa0
   82521E34  483F48C4             b 0x829166f8
-caseD_7:
+caseD_67:
   82521E38  894B0000             lbz r10,0x0(r11)
   82521E3C  2B0A0012             cmplwi cr6,r10,0x12
   82521E40  409AFD04             bne cr6,0x82521b44
@@ -888,7 +888,7 @@ caseD_7:
   82521E50  994B0000             stb r10,0x0(r11)
   82521E54  382100A0             addi r1,r1,0xa0
   82521E58  483F48A0             b 0x829166f8
-caseD_1:
+caseD_61:
   82521E5C  894B0000             lbz r10,0x0(r11)
   82521E60  2B0A0012             cmplwi cr6,r10,0x12
   82521E64  409AFCE0             bne cr6,0x82521b44
@@ -898,7 +898,7 @@ caseD_1:
   82521E74  994B0000             stb r10,0x0(r11)
   82521E78  382100A0             addi r1,r1,0xa0
   82521E7C  483F487C             b 0x829166f8
-caseD_8:
+caseD_68:
   82521E80  894B0000             lbz r10,0x0(r11)
   82521E84  2B0A0012             cmplwi cr6,r10,0x12
   82521E88  409AFCBC             bne cr6,0x82521b44
@@ -908,7 +908,7 @@ caseD_8:
   82521E98  994B0000             stb r10,0x0(r11)
   82521E9C  382100A0             addi r1,r1,0xa0
   82521EA0  483F4858             b 0x829166f8
-caseD_12:
+caseD_72:
   82521EA4  894B0000             lbz r10,0x0(r11)
   82521EA8  2B0A0023             cmplwi cr6,r10,0x23
   82521EAC  409A0014             bne cr6,0x82521ec0
@@ -928,7 +928,7 @@ LAB_82521ec0:
   82521EE0  9BC30000             stb r30,0x0(r3)
   82521EE4  382100A0             addi r1,r1,0xa0
   82521EE8  483F4810             b 0x829166f8
-caseD_17:
+caseD_77:
   82521EEC  894B0000             lbz r10,0x0(r11)
   82521EF0  2B0A0075             cmplwi cr6,r10,0x75
   82521EF4  409AFC50             bne cr6,0x82521b44

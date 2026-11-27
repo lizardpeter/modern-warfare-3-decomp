@@ -2,53 +2,43 @@
 
 // 823973B8  PartyMember_SortComp  (client_mp/partyui.cpp:120)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 int PartyMember_SortComp(PartyData *param_1,int param_2,int param_3)
 
 {
-  PartyData *pPVar1;
+  int iVar1;
   int iVar2;
-  int iVar3;
-  ulonglong uVar4;
-  uint uVar5;
-  uint uVar6;
-  ulonglong uVar7;
   
-  uVar7 = (ulonglong)param_3;
-  uVar4 = (ulonglong)param_2;
-  pPVar1 = (PartyData *)__savegprlr_28(param_1);
-  if (0x11 < (uVar4 & 0xffffffff)) {
+  if (0x11 < (uint)param_2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyui.cpp",0x7c,0,
                     "i1 doesn\'t index MAX_PARTY_MEMBERS\n\t%i not in [0, %i)");
   }
-  if (0x11 < (uVar7 & 0xffffffff)) {
+  if (0x11 < (uint)param_3) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyui.cpp",0x7d,0,
                     "i2 doesn\'t index MAX_PARTY_MEMBERS\n\t%i not in [0, %i)");
   }
-  uVar5 = (uint)uVar4;
-  iVar2 = Party_IsMemberUIVisible(pPVar1,uVar5);
-  uVar6 = (uint)uVar7;
-  iVar3 = Party_IsMemberUIVisible(pPVar1,uVar6);
-  if (iVar2 != iVar3) {
-    iVar2 = __restgprlr_28((longlong)iVar2 - (longlong)iVar3);
-    return iVar2;
+  iVar1 = Party_IsMemberUIVisible(param_1,param_2);
+  iVar2 = Party_IsMemberUIVisible(param_1,param_3);
+  if (iVar1 != iVar2) {
+    return iVar1 - iVar2;
   }
-  iVar2 = Party_IsMemberPresent(pPVar1->partyMembers + uVar5);
-  iVar3 = Party_IsMemberPresent(pPVar1->partyMembers + uVar6);
-  if (iVar2 != iVar3) {
-    iVar2 = __restgprlr_28((longlong)iVar2 - (longlong)iVar3);
-    return iVar2;
+  iVar1 = Party_IsMemberPresent(param_1->partyMembers + param_2);
+  iVar2 = Party_IsMemberPresent(param_1->partyMembers + param_3);
+  if (iVar1 != iVar2) {
+    return iVar1 - iVar2;
   }
-  iVar2 = __restgprlr_28((ulonglong)pPVar1->partyMembers[uVar5].score -
-                         (ulonglong)pPVar1->partyMembers[uVar6].score);
-  return iVar2;
+  return (uint)param_1->partyMembers[param_2].score - (uint)param_1->partyMembers[param_3].score;
 }
 
 
 // 823974B0  Party_SortDescending  (client_mp/partyui.cpp:147)
 
+/* WARNING: Function: __savegprlr_18 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_18 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
@@ -57,32 +47,26 @@ void Party_SortDescending(PartyData *param_1,uint *param_2,int param_3)
 {
   uint uVar1;
   uint uVar2;
-  longlong lVar3;
-  int iVar4;
-  PartyData *pPVar5;
+  uint *puVar3;
+  uint *puVar4;
+  int iVar5;
   int iVar6;
-  int iVar7;
+  longlong lVar7;
   longlong lVar8;
   longlong lVar9;
-  longlong lVar10;
-  longlong lVar11;
-  longlong lVar12;
+  uint *puVar10;
   
-  lVar9 = (longlong)param_3;
-  lVar8 = (longlong)(int)param_2;
-  pPVar5 = (PartyData *)__savegprlr_18(param_1);
-  if (1 < (int)lVar9) {
-    lVar10 = 0;
-    lVar9 = lVar9 + -1;
-    lVar3 = lVar8;
+  if (1 < param_3) {
+    lVar8 = 0;
+    lVar7 = (longlong)param_3 + -1;
+    puVar3 = param_2;
     do {
-      uVar1 = *(uint *)(lVar3 + 4);
-      lVar11 = lVar10;
-      if (-1 < (int)lVar10) {
-        lVar12 = lVar3 + 8;
+      uVar1 = puVar3[1];
+      lVar9 = lVar8;
+      if (-1 < (int)lVar8) {
+        puVar10 = puVar3 + 2;
         do {
-          iVar4 = (int)lVar12;
-          uVar2 = *(uint *)(iVar4 + -8);
+          uVar2 = puVar10[-2];
           if (0x11 < uVar2) {
             MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyui.cpp"
                             ,0x7c,0,"i1 doesn\'t index MAX_PARTY_MEMBERS\n\t%i not in [0, %i)");
@@ -91,96 +75,92 @@ void Party_SortDescending(PartyData *param_1,uint *param_2,int param_3)
             MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyui.cpp"
                             ,0x7d,0,"i2 doesn\'t index MAX_PARTY_MEMBERS\n\t%i not in [0, %i)");
           }
-          iVar6 = Party_IsMemberUIVisible(pPVar5,uVar2);
-          iVar7 = Party_IsMemberUIVisible(pPVar5,uVar1);
-          if (iVar6 == iVar7) {
-            iVar6 = Party_IsMemberPresent(pPVar5->partyMembers + uVar2);
-            iVar7 = Party_IsMemberPresent(pPVar5->partyMembers + uVar1);
-            if (iVar6 == iVar7) {
-              iVar6 = (uint)pPVar5->partyMembers[uVar2].score -
-                      (uint)pPVar5->partyMembers[uVar1].score;
+          iVar5 = Party_IsMemberUIVisible(param_1,uVar2);
+          iVar6 = Party_IsMemberUIVisible(param_1,uVar1);
+          if (iVar5 == iVar6) {
+            iVar5 = Party_IsMemberPresent(param_1->partyMembers + uVar2);
+            iVar6 = Party_IsMemberPresent(param_1->partyMembers + uVar1);
+            if (iVar5 == iVar6) {
+              iVar5 = (uint)param_1->partyMembers[uVar2].score -
+                      (uint)param_1->partyMembers[uVar1].score;
             }
             else {
-              iVar6 = iVar6 - iVar7;
+              iVar5 = iVar5 - iVar6;
             }
           }
           else {
-            iVar6 = iVar6 - iVar7;
+            iVar5 = iVar5 - iVar6;
           }
-          if (-1 < iVar6) break;
-          lVar11 = lVar11 + -1;
-          lVar12 = lVar12 + -4;
-          *(undefined4 *)lVar12 = *(undefined4 *)(iVar4 + -8);
-        } while (-1 < lVar11);
+          if (-1 < iVar5) break;
+          puVar4 = puVar10 + -2;
+          lVar9 = lVar9 + -1;
+          puVar10 = puVar10 + -1;
+          *puVar10 = *puVar4;
+        } while (-1 < lVar9);
       }
-      lVar9 = lVar9 + -1;
-      lVar10 = lVar10 + 1;
-      *(uint *)((int)((lVar11 + 1U & 0xffffffff) << 2) + (int)lVar8) = uVar1;
-      lVar3 = lVar3 + 4;
-    } while (lVar9 != 0);
+      lVar7 = lVar7 + -1;
+      lVar8 = lVar8 + 1;
+      *(uint *)((int)((lVar9 + 1U & 0xffffffff) << 2) + (int)param_2) = uVar1;
+      puVar3 = puVar3 + 1;
+    } while (lVar7 != 0);
   }
-  __restgprlr_18();
   return;
 }
 
 
 // 82397600  PartyUI_GetMemberIndexForSlot  (client_mp/partyui.cpp:169)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 uint PartyUI_GetMemberIndexForSlot(PartyData *param_1,int param_2)
 
 {
-  PartyData *pPVar1;
-  uint uVar2;
-  bool bVar4;
-  int iVar3;
-  ulonglong uVar5;
-  ulonglong uVar6;
+  uint uVar1;
+  bool bVar3;
+  int iVar2;
   
-  uVar5 = (ulonglong)param_2;
-  pPVar1 = (PartyData *)__savegprlr_27(param_1);
-  uVar2 = Party_CountUIVisibleMembers(pPVar1);
-  if ((ulonglong)uVar2 <= (uVar5 & 0xffffffff)) {
-    Party_CountUIVisibleMembers(pPVar1);
+  uVar1 = Party_CountUIVisibleMembers(param_1);
+  if (uVar1 <= (uint)param_2) {
+    Party_CountUIVisibleMembers(param_1);
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyui.cpp",0xae,0,
                     "slot doesn\'t index Party_CountUIVisibleMembers( party )\n\t%i not in [0, %i)")
     ;
   }
-  bVar4 = Party_IsPrivateParty(pPVar1);
-  if ((bVar4) || ((xblive_privatematch->current).enabled != false)) {
-    uVar6 = 0;
+  bVar3 = Party_IsPrivateParty(param_1);
+  if ((bVar3) || ((xblive_privatematch->current).enabled != false)) {
+    uVar1 = 0;
     do {
-      iVar3 = Party_IsMemberUIVisible(pPVar1,(uint)uVar6);
-      if (iVar3 != 0) {
-        if ((int)uVar5 == 0) goto LAB_82397734;
-        uVar5 = uVar5 - 1;
+      iVar2 = Party_IsMemberUIVisible(param_1,uVar1);
+      if (iVar2 != 0) {
+        if (param_2 == 0) goto LAB_82397734;
+        param_2 = param_2 + -1;
       }
-      uVar6 = uVar6 + 1;
-    } while ((uVar6 & 0xffffffff) < 0x12);
-    if ((int)uVar5 != 0) {
+      uVar1 = uVar1 + 1;
+    } while (uVar1 < 0x12);
+    if (param_2 != 0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyui.cpp",0xbd,
                       0,"%s");
     }
   }
   else {
-    bVar4 = Party_IsGameLobby(pPVar1);
-    if (!bVar4) {
+    bVar3 = Party_IsGameLobby(param_1);
+    if (!bVar3) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyui.cpp",0xc1,
                       0,"%s\n\t%s");
     }
-    Party_SortDescending(pPVar1,sortedIndices,0x12);
-    uVar6 = (ulonglong)*(uint *)((int)sortedIndices + (int)((uVar5 & 0xffffffff) << 2));
+    Party_SortDescending(param_1,sortedIndices,0x12);
+    uVar1 = sortedIndices[param_2];
   }
 LAB_82397734:
-  iVar3 = Party_IsMemberIndexDataAvailable(pPVar1,(uint)uVar6);
-  if (iVar3 == 0) {
+  iVar2 = Party_IsMemberIndexDataAvailable(param_1,uVar1);
+  if (iVar2 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyui.cpp",0xc6,0,
                     "%s");
   }
-  uVar2 = __restgprlr_27(uVar6);
-  return uVar2;
+  return uVar1;
 }
 
 
@@ -207,28 +187,26 @@ PartyMember * PartyUI_GetMember(PartyData *param_1,int param_2)
 
 // 823977E0  PartyUI_ShowTruePlayerInfo  (client_mp/partyui.cpp:217)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 int PartyUI_ShowTruePlayerInfo(PartyData *param_1,int param_2,int param_3)
 
 {
-  PartyData *pPVar2;
-  bool bVar5;
-  int iVar3;
-  uint uVar4;
+  bool bVar4;
+  uint uVar2;
   ulong64 uVar1;
+  int iVar3;
   
-  pPVar2 = (PartyData *)__savegprlr_29(param_1);
-  bVar5 = Live_IsSignedIn(param_2);
-  if (!bVar5) {
-    iVar3 = __restgprlr_29(0);
-    return iVar3;
+  bVar4 = Live_IsSignedIn(param_2);
+  if (!bVar4) {
+    return 0;
   }
-  uVar4 = PartyUI_GetMemberIndexForSlot(pPVar2,param_3);
+  uVar2 = PartyUI_GetMemberIndexForSlot(param_1,param_3);
   uVar1 = Live_GetXuid(param_2);
-  iVar3 = Party_IsMemberInfoVisible(pPVar2,uVar1,uVar4);
-  iVar3 = __restgprlr_29(iVar3);
+  iVar3 = Party_IsMemberInfoVisible(param_1,uVar1,uVar2);
   return iVar3;
 }
 
@@ -296,41 +274,36 @@ char * PartyUI_GetEmptyClientSkill(LocalClientNum_t param_1)
 
 // 82397960  PartyUI_MemberStat  (client_mp/partyui.cpp:281)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 char * PartyUI_MemberStat(PartyMember *param_1,int param_2)
 
 {
-  int iVar1;
-  char *pcVar2;
-  ulonglong uVar3;
+  char *pcVar1;
   
-  uVar3 = (ulonglong)param_2;
-  iVar1 = __savegprlr_28(param_1);
-  if (iVar1 == 0) {
+  if (param_1 == (PartyMember *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyui.cpp",0x11a,0
                     ,"%s");
   }
-  if ((uVar3 & 0xffffffff) != 0) {
-    if ((uVar3 & 0xffffffff) == 1) {
-      pcVar2 = (char *)__restgprlr_28(0xffffffff8202080c);
-      return pcVar2;
+  if (param_2 != 0) {
+    if (param_2 == 1) {
+      return "|";
     }
-    if (2 < (uVar3 & 0xffffffff)) {
+    if (2 < (uint)param_2) {
       if (alwaysfails == 0) {
-        pcVar2 = va("unknown LOBBYSTAT_COLUMN: %i\n");
+        pcVar1 = va("unknown LOBBYSTAT_COLUMN: %i\n");
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyui.cpp",
-                        0x129,0,pcVar2);
-        pcVar2 = (char *)__restgprlr_28(0xffffffff82b5c538);
-        return pcVar2;
+                        0x129,0,pcVar1);
+        return stats;
       }
       goto LAB_82397a30;
     }
   }
   Com_sprintf(stats,0x20,"%i");
 LAB_82397a30:
-  pcVar2 = (char *)__restgprlr_28(0xffffffff82b5c538);
-  return pcVar2;
+  return stats;
 }
 
 
@@ -378,100 +351,93 @@ void MemberRankIcon(PartyMember *param_1,Material **param_2)
 
 // 82397B50  PartyUI_GetMemberXuid  (client_mp/partyui.cpp:332)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 ulong64 PartyUI_GetMemberXuid(PartyData *param_1,int param_2,int param_3)
 
 {
-  PartyData *pPVar2;
-  bool bVar6;
-  uint uVar3;
+  bool bVar5;
+  uint uVar2;
   ulong64 uVar1;
-  int iVar4;
-  PartyMember *pPVar5;
+  int iVar3;
+  PartyMember *pPVar4;
   
-  pPVar2 = (PartyData *)__savegprlr_28(param_1);
-  bVar6 = Live_IsSignedIn(param_2);
-  if (bVar6) {
-    uVar3 = PartyUI_GetMemberIndexForSlot(pPVar2,param_3);
+  bVar5 = Live_IsSignedIn(param_2);
+  if (bVar5) {
+    uVar2 = PartyUI_GetMemberIndexForSlot(param_1,param_3);
     uVar1 = Live_GetXuid(param_2);
-    iVar4 = Party_IsMemberInfoVisible(pPVar2,uVar1,uVar3);
-    if (iVar4 != 0) {
-      pPVar5 = PartyUI_GetMember(pPVar2,param_3);
-      if (pPVar5 == (PartyMember *)0x0) {
+    iVar3 = Party_IsMemberInfoVisible(param_1,uVar1,uVar2);
+    if (iVar3 != 0) {
+      pPVar4 = PartyUI_GetMember(param_1,param_3);
+      if (pPVar4 == (PartyMember *)0x0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyui.cpp",
                         0x152,1,"%s");
       }
-      uVar1 = __restgprlr_28(pPVar5->player);
-      return uVar1;
+      return pPVar4->player;
     }
   }
-  uVar1 = __restgprlr_28(0);
-  return uVar1;
+  return 0;
 }
 
 
 // 82397C00  PartyUI_IsMemberIndexAway  (client_mp/partyui.cpp:350)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 int PartyUI_IsMemberIndexAway(PartyData *param_1,uint param_2)
 
 {
-  PartyData *pPVar1;
-  int iVar2;
-  bool bVar3;
+  bool bVar1;
   
-  pPVar1 = (PartyData *)__savegprlr_28(param_1);
-  if (pPVar1 == (PartyData *)0x0) {
+  if (param_1 == (PartyData *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyui.cpp",0x15f,0
                     ,"%s");
   }
-  if (pPVar1->inParty == 0) {
+  if (param_1->inParty == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyui.cpp",0x160,0
                     ,"%s");
   }
-  if (pPVar1->partyMembers[param_2].status == '\x06') {
-    iVar2 = __restgprlr_28(1);
-    return iVar2;
+  if (param_1->partyMembers[param_2].status == '\x06') {
+    return 1;
   }
-  bVar3 = Party_IsUserRegistered(pPVar1,param_2);
-  iVar2 = __restgprlr_28(!bVar3);
-  return iVar2;
+  bVar1 = Party_IsUserRegistered(param_1,param_2);
+  return (uint)LZCOUNT((uint)bVar1) >> 5;
 }
 
 
 // 82397CB0  PartyUI_IsMemberSlotAway  (client_mp/partyui.cpp:365)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 int PartyUI_IsMemberSlotAway(PartyData *param_1,int param_2,int param_3)
 
 {
-  PartyData *pPVar2;
-  bool bVar5;
-  uint uVar3;
+  bool bVar4;
+  uint uVar2;
   ulong64 uVar1;
-  int iVar4;
+  int iVar3;
   
-  pPVar2 = (PartyData *)__savegprlr_28(param_1);
-  bVar5 = Live_IsSignedIn(param_2);
-  if (bVar5) {
-    uVar3 = PartyUI_GetMemberIndexForSlot(pPVar2,param_3);
+  bVar4 = Live_IsSignedIn(param_2);
+  if (bVar4) {
+    uVar2 = PartyUI_GetMemberIndexForSlot(param_1,param_3);
     uVar1 = Live_GetXuid(param_2);
-    iVar4 = Party_IsMemberInfoVisible(pPVar2,uVar1,uVar3);
-    if (iVar4 != 0) {
-      uVar3 = PartyUI_GetMemberIndexForSlot(pPVar2,param_3);
-      iVar4 = PartyUI_IsMemberIndexAway(pPVar2,uVar3);
-      iVar4 = __restgprlr_28(iVar4);
-      return iVar4;
+    iVar3 = Party_IsMemberInfoVisible(param_1,uVar1,uVar2);
+    if (iVar3 != 0) {
+      uVar2 = PartyUI_GetMemberIndexForSlot(param_1,param_3);
+      iVar3 = PartyUI_IsMemberIndexAway(param_1,uVar2);
+      return iVar3;
     }
   }
-  iVar4 = __restgprlr_28(0);
-  return iVar4;
+  return 0;
 }
 
 
@@ -497,111 +463,101 @@ int PartyUI_IsMemberXuidAway(PartyData *param_1,ulong64 param_2)
 
 // 82397DA0  PartyUI_GetMemberName  (client_mp/partyui.cpp:393)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 char * PartyUI_GetMemberName(PartyData *param_1,int param_2,int param_3)
 
 {
-  PartyData *pPVar2;
-  bool bVar7;
-  uint uVar3;
+  bool bVar6;
+  uint uVar2;
   ulong64 uVar1;
-  int iVar4;
-  PartyMember *pPVar5;
-  char *pcVar6;
+  int iVar3;
+  PartyMember *pPVar4;
+  char *pcVar5;
   
-  pPVar2 = (PartyData *)__savegprlr_28(param_1);
-  bVar7 = Live_IsSignedIn(param_2);
-  if (bVar7) {
-    uVar3 = PartyUI_GetMemberIndexForSlot(pPVar2,param_3);
+  bVar6 = Live_IsSignedIn(param_2);
+  if (bVar6) {
+    uVar2 = PartyUI_GetMemberIndexForSlot(param_1,param_3);
     uVar1 = Live_GetXuid(param_2);
-    iVar4 = Party_IsMemberInfoVisible(pPVar2,uVar1,uVar3);
-    if (iVar4 != 0) {
-      pPVar5 = PartyUI_GetMember(pPVar2,param_3);
-      pcVar6 = PartyUI_MemberNameWithClan(pPVar5);
-      pcVar6 = (char *)__restgprlr_28(pcVar6);
-      return pcVar6;
+    iVar3 = Party_IsMemberInfoVisible(param_1,uVar1,uVar2);
+    if (iVar3 != 0) {
+      pPVar4 = PartyUI_GetMember(param_1,param_3);
+      pcVar5 = PartyUI_MemberNameWithClan(pPVar4);
+      return pcVar5;
     }
   }
-  pcVar6 = UI_SafeTranslateString("MP_MATCHEDPLAYER");
-  pcVar6 = (char *)__restgprlr_28(pcVar6);
-  return pcVar6;
+  pcVar5 = UI_SafeTranslateString("MP_MATCHEDPLAYER");
+  return pcVar5;
 }
 
 
 // 82397E28  PartyUI_GetLocalClientName  (client_mp/partyui.cpp:409)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 char * PartyUI_GetLocalClientName(LocalClientNum_t param_1,char *param_2,int param_3)
 
 {
-  LocalClientNum_t LVar1;
-  int iVar2;
+  int iVar1;
+  char *pcVar2;
+  bool bVar5;
   char *pcVar3;
-  bool bVar6;
   char *pcVar4;
-  char *pcVar5;
-  longlong lVar7;
   
-  lVar7 = (longlong)(int)param_2;
-  LVar1 = __savegprlr_26(param_1);
-  iVar2 = CL_ControllerIndexFromClientNum(LVar1);
-  pcVar3 = GamerProfile_GetClanName(iVar2);
-  bVar6 = GamerProfile_GetUsingEliteClanTag(iVar2);
-  pcVar4 = GamerProfile_GetEliteClanClanTagText(iVar2);
-  pcVar5 = CL_GetUsernameForLocalClient(iVar2);
-  if ((*pcVar3 != '\0') && (!bVar6)) {
-    Com_sprintf((char *)lVar7,param_3,"[%s]%s");
-    pcVar3 = (char *)__restgprlr_26(lVar7);
-    return pcVar3;
+  iVar1 = CL_ControllerIndexFromClientNum(param_1);
+  pcVar2 = GamerProfile_GetClanName(iVar1);
+  bVar5 = GamerProfile_GetUsingEliteClanTag(iVar1);
+  pcVar3 = GamerProfile_GetEliteClanClanTagText(iVar1);
+  pcVar4 = CL_GetUsernameForLocalClient(iVar1);
+  if ((*pcVar2 != '\0') && (!bVar5)) {
+    Com_sprintf(param_2,param_3,"[%s]%s");
+    return param_2;
   }
-  if ((*pcVar4 != '\0') && (bVar6)) {
-    Com_sprintf((char *)lVar7,param_3,"[^3%s^7]%s");
-    pcVar3 = (char *)__restgprlr_26(lVar7);
-    return pcVar3;
+  if ((*pcVar3 != '\0') && (bVar5)) {
+    Com_sprintf(param_2,param_3,"[^3%s^7]%s");
+    return param_2;
   }
-  pcVar3 = (char *)__restgprlr_26(pcVar5);
-  return pcVar3;
+  return pcVar4;
 }
 
 
 // 82397EF8  PartyUI_GetMemberStat  (client_mp/partyui.cpp:453)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 char * PartyUI_GetMemberStat(PartyData *param_1,int param_2,int param_3,int param_4)
 
 {
-  PartyData *pPVar2;
-  bool bVar7;
-  uint uVar3;
+  bool bVar6;
+  uint uVar2;
   ulong64 uVar1;
-  int iVar4;
-  PartyMember *pPVar5;
-  char *pcVar6;
+  int iVar3;
+  PartyMember *pPVar4;
+  char *pcVar5;
   
-  pPVar2 = (PartyData *)__savegprlr_27(param_1);
-  bVar7 = Live_IsSignedIn(param_2);
-  if (bVar7) {
-    uVar3 = PartyUI_GetMemberIndexForSlot(pPVar2,param_3);
+  bVar6 = Live_IsSignedIn(param_2);
+  if (bVar6) {
+    uVar2 = PartyUI_GetMemberIndexForSlot(param_1,param_3);
     uVar1 = Live_GetXuid(param_2);
-    iVar4 = Party_IsMemberInfoVisible(pPVar2,uVar1,uVar3);
-    if (iVar4 != 0) {
-      pPVar5 = PartyUI_GetMember(pPVar2,param_3);
-      pcVar6 = PartyUI_MemberStat(pPVar5,param_4);
-      pcVar6 = (char *)__restgprlr_27(pcVar6);
-      return pcVar6;
+    iVar3 = Party_IsMemberInfoVisible(param_1,uVar1,uVar2);
+    if (iVar3 != 0) {
+      pPVar4 = PartyUI_GetMember(param_1,param_3);
+      pcVar5 = PartyUI_MemberStat(pPVar4,param_4);
+      return pcVar5;
     }
   }
   if (param_4 != 1) {
-    pcVar6 = (char *)__restgprlr_27(0xffffffff8203248c);
-    return pcVar6;
+    return "0";
   }
-  pcVar6 = (char *)__restgprlr_27(0xffffffff8202080c);
-  return pcVar6;
+  return "|";
 }
 
 
@@ -630,254 +586,234 @@ char * PartyUI_GetMemberSkill(PartyData *param_1,int param_2,int param_3)
 
 // 82398020  PartyUI_IsMemberTalking  (client_mp/partyui.cpp:491)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 bool PartyUI_IsMemberTalking(PartyData *param_1,int param_2,int param_3)
 
 {
-  PartyData *pPVar2;
-  bool bVar5;
-  uint uVar3;
+  bool bVar4;
+  uint uVar2;
   ulong64 uVar1;
-  int iVar4;
-  undefined1 uVar6;
+  int iVar3;
   
-  pPVar2 = (PartyData *)__savegprlr_28(param_1);
-  bVar5 = Live_IsSignedIn(param_2);
-  if (bVar5) {
-    uVar3 = PartyUI_GetMemberIndexForSlot(pPVar2,param_3);
+  bVar4 = Live_IsSignedIn(param_2);
+  if (bVar4) {
+    uVar2 = PartyUI_GetMemberIndexForSlot(param_1,param_3);
     uVar1 = Live_GetXuid(param_2);
-    iVar4 = Party_IsMemberInfoVisible(pPVar2,uVar1,uVar3);
-    if (iVar4 != 0) {
-      uVar3 = PartyUI_GetMemberIndexForSlot(pPVar2,param_3);
-      bVar5 = CL_IsPlayerTalking(pPVar2->session,uVar3);
-      uVar6 = __restgprlr_28(bVar5);
-      return (bool)uVar6;
+    iVar3 = Party_IsMemberInfoVisible(param_1,uVar1,uVar2);
+    if (iVar3 != 0) {
+      uVar2 = PartyUI_GetMemberIndexForSlot(param_1,param_3);
+      bVar4 = CL_IsPlayerTalking(param_1->session,uVar2);
+      return bVar4;
     }
   }
-  uVar6 = __restgprlr_28(0);
-  return (bool)uVar6;
+  return false;
 }
 
 
 // 823980A8  PartyUI_IsMemberMuted  (client_mp/partyui.cpp:504)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 bool PartyUI_IsMemberMuted(PartyData *param_1,int param_2,int param_3)
 
 {
-  PartyData *pPVar2;
-  bool bVar5;
-  uint uVar3;
+  bool bVar4;
+  uint uVar2;
   ulong64 uVar1;
-  int iVar4;
-  undefined1 uVar6;
+  int iVar3;
   
-  pPVar2 = (PartyData *)__savegprlr_28(param_1);
-  bVar5 = Live_IsSignedIn(param_2);
-  if (bVar5) {
-    uVar3 = PartyUI_GetMemberIndexForSlot(pPVar2,param_3);
+  bVar4 = Live_IsSignedIn(param_2);
+  if (bVar4) {
+    uVar2 = PartyUI_GetMemberIndexForSlot(param_1,param_3);
     uVar1 = Live_GetXuid(param_2);
-    iVar4 = Party_IsMemberInfoVisible(pPVar2,uVar1,uVar3);
-    if (iVar4 != 0) {
-      uVar3 = PartyUI_GetMemberIndexForSlot(pPVar2,param_3);
-      bVar5 = CL_IsPlayerMuted(pPVar2->session,uVar3);
-      uVar6 = __restgprlr_28(bVar5);
-      return (bool)uVar6;
+    iVar3 = Party_IsMemberInfoVisible(param_1,uVar1,uVar2);
+    if (iVar3 != 0) {
+      uVar2 = PartyUI_GetMemberIndexForSlot(param_1,param_3);
+      bVar4 = CL_IsPlayerMuted(param_1->session,uVar2);
+      return bVar4;
     }
   }
-  uVar6 = __restgprlr_28(0);
-  return (bool)uVar6;
+  return false;
 }
 
 
 // 82398130  PartyUI_MemberHasHeadset  (client_mp/partyui.cpp:517)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 bool PartyUI_MemberHasHeadset(PartyData *param_1,int param_2,int param_3)
 
 {
-  PartyData *pPVar2;
-  bool bVar6;
-  uint uVar3;
+  bool bVar5;
+  uint uVar2;
   ulong64 uVar1;
-  int iVar4;
-  PartyMember *pPVar5;
-  undefined1 uVar7;
+  int iVar3;
+  PartyMember *pPVar4;
   
-  pPVar2 = (PartyData *)__savegprlr_28(param_1);
-  bVar6 = Live_IsSignedIn(param_2);
-  if (bVar6) {
-    uVar3 = PartyUI_GetMemberIndexForSlot(pPVar2,param_3);
+  bVar5 = Live_IsSignedIn(param_2);
+  if (bVar5) {
+    uVar2 = PartyUI_GetMemberIndexForSlot(param_1,param_3);
     uVar1 = Live_GetXuid(param_2);
-    iVar4 = Party_IsMemberInfoVisible(pPVar2,uVar1,uVar3);
-    if (iVar4 != 0) {
-      pPVar5 = PartyUI_GetMember(pPVar2,param_3);
-      if (pPVar5 == (PartyMember *)0x0) {
+    iVar3 = Party_IsMemberInfoVisible(param_1,uVar1,uVar2);
+    if (iVar3 != 0) {
+      pPVar4 = PartyUI_GetMember(param_1,param_3);
+      if (pPVar4 == (PartyMember *)0x0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyui.cpp",
                         0x20b,1,"%s");
       }
-      uVar7 = __restgprlr_28((pPVar5->info).headsetPresent);
-      return (bool)uVar7;
+      return (pPVar4->info).headsetPresent;
     }
   }
-  uVar7 = __restgprlr_28(0);
-  return (bool)uVar7;
+  return false;
 }
 
 
 // 823981E0  PartyUI_MemberRankIcon  (client_mp/partyui.cpp:547)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void PartyUI_MemberRankIcon(PartyData *param_1,int param_2,int param_3,Material **param_4)
 
 {
-  PartyData *pPVar2;
-  bool bVar6;
-  uint uVar3;
+  bool bVar5;
+  uint uVar2;
   ulong64 uVar1;
-  int iVar4;
-  PartyMember *pPVar5;
+  int iVar3;
+  PartyMember *pPVar4;
   
-  pPVar2 = (PartyData *)__savegprlr_27(param_1);
-  bVar6 = Live_IsSignedIn(param_2);
-  if (bVar6) {
-    uVar3 = PartyUI_GetMemberIndexForSlot(pPVar2,param_3);
+  bVar5 = Live_IsSignedIn(param_2);
+  if (bVar5) {
+    uVar2 = PartyUI_GetMemberIndexForSlot(param_1,param_3);
     uVar1 = Live_GetXuid(param_2);
-    iVar4 = Party_IsMemberInfoVisible(pPVar2,uVar1,uVar3);
-    if (iVar4 != 0) {
-      pPVar5 = PartyUI_GetMember(pPVar2,param_3);
-      MemberRankIcon(pPVar5,param_4);
-      __restgprlr_27();
+    iVar3 = Party_IsMemberInfoVisible(param_1,uVar1,uVar2);
+    if (iVar3 != 0) {
+      pPVar4 = PartyUI_GetMember(param_1,param_3);
+      MemberRankIcon(pPVar4,param_4);
       return;
     }
   }
   *param_4 = (Material *)0x0;
-  __restgprlr_27();
   return;
 }
 
 
 // 82398270  PartyUI_MemberRank  (client_mp/partyui.cpp:556)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 char * PartyUI_MemberRank(PartyData *param_1,int param_2,int param_3)
 
 {
-  PartyData *pPVar2;
-  bool bVar7;
-  uint uVar3;
+  bool bVar6;
+  uint uVar2;
   ulong64 uVar1;
-  int iVar4;
-  PartyMember *pPVar5;
-  char *pcVar6;
+  int iVar3;
+  PartyMember *pPVar4;
+  char *pcVar5;
   
-  pPVar2 = (PartyData *)__savegprlr_28(param_1);
-  bVar7 = Live_IsSignedIn(param_2);
-  if (bVar7) {
-    uVar3 = PartyUI_GetMemberIndexForSlot(pPVar2,param_3);
+  bVar6 = Live_IsSignedIn(param_2);
+  if (bVar6) {
+    uVar2 = PartyUI_GetMemberIndexForSlot(param_1,param_3);
     uVar1 = Live_GetXuid(param_2);
-    iVar4 = Party_IsMemberInfoVisible(pPVar2,uVar1,uVar3);
-    if (iVar4 != 0) {
-      pPVar5 = PartyUI_GetMember(pPVar2,param_3);
-      pcVar6 = CL_GetRankDataMP((pPVar5->info).rank_mp,RANKTABLE_DISPLAYLEVEL);
-      pcVar6 = (char *)__restgprlr_28(pcVar6);
-      return pcVar6;
+    iVar3 = Party_IsMemberInfoVisible(param_1,uVar1,uVar2);
+    if (iVar3 != 0) {
+      pPVar4 = PartyUI_GetMember(param_1,param_3);
+      pcVar5 = CL_GetRankDataMP((pPVar4->info).rank_mp,RANKTABLE_DISPLAYLEVEL);
+      return pcVar5;
     }
   }
-  pcVar6 = (char *)__restgprlr_28(0xffffffff820068af);
-  return pcVar6;
+  return "";
 }
 
 
 // 82398300  PartyUI_GetLocalClientRank  (client_mp/partyui.cpp:571)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 char * PartyUI_GetLocalClientRank(LocalClientNum_t param_1,int param_2,Material **param_3)
 
 {
-  LocalClientNum_t LVar1;
+  int iVar1;
   int iVar2;
-  int iVar3;
-  char *pcVar4;
+  char *pcVar3;
   
-  LVar1 = __savegprlr_28(param_1);
-  iVar2 = CL_ControllerIndexFromClientNum(LVar1);
-  iVar3 = Live_GetRankMP(iVar2);
+  iVar1 = CL_ControllerIndexFromClientNum(param_1);
+  iVar2 = Live_GetRankMP(iVar1);
   if (param_2 == 0) {
-    iVar2 = Live_GetPrestigeMP(iVar2);
-    CL_GetRankIcon(iVar3,iVar2,param_3);
-    pcVar4 = (char *)__restgprlr_28(0xffffffff820068af);
-    return pcVar4;
+    iVar1 = Live_GetPrestigeMP(iVar1);
+    CL_GetRankIcon(iVar2,iVar1,param_3);
+    return "";
   }
-  pcVar4 = CL_GetRankDataMP(iVar3,RANKTABLE_DISPLAYLEVEL);
-  pcVar4 = (char *)__restgprlr_28(pcVar4);
-  return pcVar4;
+  pcVar3 = CL_GetRankDataMP(iVar2,RANKTABLE_DISPLAYLEVEL);
+  return pcVar3;
 }
 
 
 // 82398368  PartyUI_GetTeamMemberIndex  (client_mp/partyui.cpp:588)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 uint PartyUI_GetTeamMemberIndex(PartyData *param_1,int param_2,int param_3,uint param_4)
 
 {
-  PartyData *pPVar1;
-  bool bVar3;
-  uint uVar2;
-  longlong lVar4;
-  ulonglong uVar5;
-  ulonglong uVar6;
-  ulonglong uVar7;
-  uint *puVar8;
+  uint uVar1;
+  bool bVar2;
+  ulonglong uVar3;
+  uint uVar4;
+  uint *puVar5;
   
-  uVar5 = (ulonglong)param_3;
-  lVar4 = (longlong)param_2;
-  pPVar1 = (PartyData *)__savegprlr_27(param_1,lVar4,uVar5,param_4);
-  if (0x11 < (uVar5 & 0xffffffff)) {
+  if (0x11 < (uint)param_3) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyui.cpp",0x251,0
                     ,"slot doesn\'t index MAX_PARTY_MEMBERS\n\t%i not in [0, %i)");
   }
-  bVar3 = Party_IsGameLobby(pPVar1);
-  if (!bVar3) {
+  bVar2 = Party_IsGameLobby(param_1);
+  if (!bVar2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyui.cpp",0x253,0
                     ,"%s\n\t%s");
   }
-  puVar8 = sortedIndices;
-  Party_SortDescending(pPVar1,sortedIndices,0x12);
-  uVar7 = 0;
-  uVar6 = 0;
+  puVar5 = sortedIndices;
+  Party_SortDescending(param_1,sortedIndices,0x12);
+  uVar4 = 0;
+  uVar3 = 0;
   do {
-    if ((uVar5 & 0xffffffff) < (uVar7 & 0xffffffff)) break;
-    uVar2 = *puVar8;
-    if ((pPVar1->partyMembers[uVar2].team == (int)lVar4) && (4 < pPVar1->partyMembers[uVar2].status)
-       ) {
-      if ((uVar5 & 0xffffffff) == (uVar7 & 0xffffffff)) goto LAB_82398484;
-      uVar7 = uVar7 + 1;
+    if ((uint)param_3 < uVar4) break;
+    uVar1 = *puVar5;
+    if ((param_1->partyMembers[uVar1].team == param_2) && (4 < param_1->partyMembers[uVar1].status))
+    {
+      if (param_3 == uVar4) {
+        return uVar1;
+      }
+      uVar4 = uVar4 + 1;
     }
-    uVar6 = uVar6 + 4;
-    puVar8 = puVar8 + 1;
-  } while ((uVar6 & 0xffffffff) < 0x48);
+    uVar3 = uVar3 + 4;
+    puVar5 = puVar5 + 1;
+  } while ((uVar3 & 0xffffffff) < 0x48);
   if (alwaysfails == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyui.cpp",0x267,0
                     ,"Unknown slot for party member lookup");
   }
-  uVar2 = 0;
-LAB_82398484:
-  uVar2 = __restgprlr_27(uVar2);
-  return uVar2;
+  return 0;
 }
 
 
@@ -940,25 +876,24 @@ char * PartyUI_GetTeamMemberName(PartyData *param_1,int param_2,int param_3,int 
 
 // 823985C8  PartyUI_GetTeamMemberStat  (client_mp/partyui.cpp:649)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 char * PartyUI_GetTeamMemberStat(PartyData *param_1,int param_2,int param_3,int param_4,int param_5)
 
 {
-  PartyData *pPVar1;
-  uint uVar2;
-  char *pcVar3;
+  uint uVar1;
+  char *pcVar2;
   
-  pPVar1 = (PartyData *)__savegprlr_29(param_1,param_2);
-  uVar2 = PartyUI_GetTeamMemberIndex(pPVar1,param_3,param_4,param_4);
-  if (0x11 < uVar2) {
+  uVar1 = PartyUI_GetTeamMemberIndex(param_1,param_3,param_4,param_4);
+  if (0x11 < uVar1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyui.cpp",0x271,1
                     ,"memberIndex doesn\'t index MAX_PARTY_MEMBERS\n\t%i not in [0, %i)");
   }
-  pcVar3 = PartyUI_MemberStat(pPVar1->partyMembers + uVar2,param_5);
-  pcVar3 = (char *)__restgprlr_29(pcVar3);
-  return pcVar3;
+  pcVar2 = PartyUI_MemberStat(param_1->partyMembers + uVar1,param_5);
+  return pcVar2;
 }
 
 
@@ -1045,34 +980,35 @@ bool PartyUI_IsTeamMemberMuted(PartyData *param_1,int param_2,int param_3,int pa
 
 // 823987C8  PartyUI_TeamMemberHasHeadset  (client_mp/partyui.cpp:696)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 bool PartyUI_TeamMemberHasHeadset(PartyData *param_1,int param_2,int param_3,int param_4)
 
 {
-  longlong lVar1;
-  uint uVar2;
-  undefined1 uVar3;
+  uint uVar1;
+  longlong lVar2;
   
-  lVar1 = __savegprlr_29(param_1,param_2);
-  uVar2 = PartyUI_GetTeamMemberIndex((PartyData *)lVar1,param_3,param_4,param_4);
-  if (0x11 < uVar2) {
+  uVar1 = PartyUI_GetTeamMemberIndex(param_1,param_3,param_4,param_4);
+  if (0x11 < uVar1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyui.cpp",0x271,1
                     ,"memberIndex doesn\'t index MAX_PARTY_MEMBERS\n\t%i not in [0, %i)");
   }
-  lVar1 = (longlong)(int)uVar2 * 0x150 + lVar1;
-  if (lVar1 == -0x58) {
+  lVar2 = (longlong)(int)uVar1 * 0x150 + (longlong)(int)param_1;
+  if (lVar2 == -0x58) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyui.cpp",700,1,
                     "%s");
   }
-  uVar3 = __restgprlr_29(*(undefined1 *)((int)lVar1 + 0xa9));
-  return (bool)uVar3;
+  return (bool)*(undefined1 *)((int)lVar2 + 0xa9);
 }
 
 
 // 82398858  PartyUI_TeamMemberRankIcon  (client_mp/partyui.cpp:720)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
@@ -1081,23 +1017,21 @@ void PartyUI_TeamMemberRankIcon
 
 {
   int iVar1;
-  longlong lVar2;
-  uint uVar3;
+  uint uVar2;
+  longlong lVar3;
   
-  lVar2 = __savegprlr_28(param_1,param_2);
-  uVar3 = PartyUI_GetTeamMemberIndex((PartyData *)lVar2,param_3,param_4,param_4);
-  if (0x11 < uVar3) {
+  uVar2 = PartyUI_GetTeamMemberIndex(param_1,param_3,param_4,param_4);
+  if (0x11 < uVar2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyui.cpp",0x271,1
                     ,"memberIndex doesn\'t index MAX_PARTY_MEMBERS\n\t%i not in [0, %i)");
   }
-  lVar2 = (longlong)(int)uVar3 * 0x150 + lVar2;
-  if (lVar2 == -0x58) {
+  lVar3 = (longlong)(int)uVar2 * 0x150 + (longlong)(int)param_1;
+  if (lVar3 == -0x58) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyui.cpp",0x146,0
                     ,"%s");
   }
-  iVar1 = (int)lVar2;
+  iVar1 = (int)lVar3;
   CL_GetRankIcon(*(int *)(iVar1 + 100),*(int *)(iVar1 + 0x68),param_5);
-  __restgprlr_28();
   return;
 }
 
@@ -1125,6 +1059,8 @@ char * PartyUI_TeamMemberRank(PartyData *param_1,int param_2,int param_3,int par
 
 // 82398978  PartyUI_MemberPartyColor  (client_mp/partyui.cpp:733)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
@@ -1133,71 +1069,68 @@ void PartyUI_MemberPartyColor(PartyData *param_1,int param_2,int param_3,float *
 {
   uint uVar1;
   int iVar2;
-  PartyData *pPVar3;
-  PartyMember *pPVar4;
+  PartyMember *pPVar3;
   
-  pPVar3 = (PartyData *)__savegprlr_29(param_1,param_2);
-  if ((pPVar3->lobbyFlags & 2) == 0) {
-    pPVar4 = PartyUI_GetMember(pPVar3,param_3);
-    uVar1 = pPVar4->subpartyIndex;
-    if (((-1 < (int)uVar1) && ((int)uVar1 < (int)pPVar3->subpartyCount)) &&
-       (1 < pPVar3->subparties[uVar1].count)) {
+  if ((param_1->lobbyFlags & 2) == 0) {
+    pPVar3 = PartyUI_GetMember(param_1,param_3);
+    uVar1 = pPVar3->subpartyIndex;
+    if (((-1 < (int)uVar1) && ((int)uVar1 < (int)param_1->subpartyCount)) &&
+       (1 < param_1->subparties[uVar1].count)) {
       if (0x11 < uVar1) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyui.cpp",
                         0x2ea,0,
                         "member->subpartyIndex doesn\'t index MAX_PARTY_MEMBERS\n\t%i not in [0, %i)"
                        );
       }
-      iVar2 = pPVar4->subpartyIndex;
+      iVar2 = pPVar3->subpartyIndex;
       *param_4 = s_partyColors[iVar2][0];
       param_4[1] = s_partyColors[iVar2][1];
       param_4[2] = s_partyColors[iVar2][2];
       param_4[3] = s_partyColors[iVar2][3];
     }
   }
-  __restgprlr_29();
   return;
 }
 
 
 // 82398A38  Party_SetUIPlayerCount  (client_mp/partyui.cpp:754)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void Party_SetUIPlayerCount(PartyData *param_1)
 
 {
-  PartyData *pPVar1;
-  int iVar2;
-  uint uVar3;
-  char *pcVar4;
+  int iVar1;
+  uint uVar2;
+  char *pcVar3;
   uint local_480;
   int local_47c;
   ConversionArguments local_470;
   char acStack_440 [32];
   char acStack_420 [1056];
   
-  pPVar1 = (PartyData *)__savegprlr_29(param_1);
-  if (pPVar1 == (PartyData *)0x0) {
+  if (param_1 == (PartyData *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyui.cpp",0x2fc,0
                     ,"%s");
   }
-  if (pPVar1->inParty == 0) {
+  if (param_1->inParty == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyui.cpp",0x2fd,0
                     ,"%s");
   }
-  iVar2 = Session_CountTotalSlots(pPVar1->session);
-  uVar3 = PartyClient_CountMembersEvenIfInactive(pPVar1);
-  local_480 = uVar3;
-  if ((int)uVar3 < 2) {
+  iVar1 = Session_CountTotalSlots(param_1->session);
+  uVar2 = PartyClient_CountMembersEvenIfInactive(param_1);
+  local_480 = uVar2;
+  if ((int)uVar2 < 2) {
     local_480 = 1;
   }
-  local_47c = iVar2;
-  pcVar4 = UI_SafeTranslateString("MENU_LOBBYPLAYERCOUNT");
-  pcVar4 = UI_ReplaceConversionInts(pcVar4,2,(int *)&local_480);
-  Dvar_SetString(party_lobbyPlayerCount,pcVar4);
-  PartyClient_CountMembersEvenIfInactive(pPVar1);
+  local_47c = iVar1;
+  pcVar3 = UI_SafeTranslateString("MENU_LOBBYPLAYERCOUNT");
+  pcVar3 = UI_ReplaceConversionInts(pcVar3,2,(int *)&local_480);
+  Dvar_SetString(party_lobbyPlayerCount,pcVar3);
+  PartyClient_CountMembersEvenIfInactive(param_1);
   local_470.argCount = 0;
   local_470.args[0] = (char *)0x0;
   local_470.args[1] = (char *)0x0;
@@ -1211,19 +1144,18 @@ void Party_SetUIPlayerCount(PartyData *param_1)
   sprintf(acStack_440,"%d");
   local_470.argCount = 2;
   local_470.args[0] = acStack_440;
-  if (uVar3 == 0) {
-    iVar2 = Party_GetStartingControllerIndex(pPVar1);
-    pcVar4 = Live_GetLocalClientName(iVar2);
+  if (uVar2 == 0) {
+    iVar1 = Party_GetStartingControllerIndex(param_1);
+    pcVar3 = Live_GetLocalClientName(iVar1);
   }
   else {
-    iVar2 = Party_HostNum(pPVar1);
-    pcVar4 = Party_GetMemberName(pPVar1,iVar2);
+    iVar1 = Party_HostNum(param_1);
+    pcVar3 = Party_GetMemberName(param_1,iVar1);
   }
-  local_470.args[1] = pcVar4;
-  pcVar4 = UI_SafeTranslateString("MENU_PARTYPLAYERCOUNT");
-  UI_ReplaceConversions(pcVar4,&local_470,acStack_420,0x400);
+  local_470.args[1] = pcVar3;
+  pcVar3 = UI_SafeTranslateString("MENU_PARTYPLAYERCOUNT");
+  UI_ReplaceConversions(pcVar3,&local_470,acStack_420,0x400);
   Dvar_SetString(party_partyPlayerCount,acStack_420);
-  __restgprlr_29();
   return;
 }
 
@@ -1357,36 +1289,36 @@ int PartyUI_ShowMemberXuidPrivatePartyHost(ulong64 param_1)
 
 // 82398EC0  PartyUI_ShowMemberPrivatePartyHostIcon  (client_mp/partyui.cpp:885)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 int PartyUI_ShowMemberPrivatePartyHostIcon(PartyData *param_1,int param_2,int param_3)
 
 {
-  PartyData *pPVar2;
-  uint uVar3;
-  int iVar4;
+  uint uVar2;
   ulong64 uVar1;
+  int iVar3;
   
-  pPVar2 = (PartyData *)__savegprlr_29(param_1);
-  if (pPVar2 == (PartyData *)0x0) {
+  if (param_1 == (PartyData *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyui.cpp",0x376,0
                     ,"%s");
   }
-  uVar3 = PartyUI_GetMemberIndexForSlot(pPVar2,param_3);
-  if (pPVar2->partyMembers[uVar3].status == '\x06') {
-    iVar4 = __restgprlr_29(1);
-    return iVar4;
+  uVar2 = PartyUI_GetMemberIndexForSlot(param_1,param_3);
+  if (param_1->partyMembers[uVar2].status == '\x06') {
+    return 1;
   }
-  uVar1 = PartyUI_GetMemberXuid(pPVar2,param_2,param_3);
-  iVar4 = PartyUI_ShowMemberXuidPrivatePartyHost(uVar1);
-  iVar4 = __restgprlr_29(iVar4);
-  return iVar4;
+  uVar1 = PartyUI_GetMemberXuid(param_1,param_2,param_3);
+  iVar3 = PartyUI_ShowMemberXuidPrivatePartyHost(uVar1);
+  return iVar3;
 }
 
 
 // 82398F50  PartyUI_ShowTeamMemberPrivatePartyHostIcon  (client_mp/partyui.cpp:901)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
@@ -1394,19 +1326,16 @@ int PartyUI_ShowTeamMemberPrivatePartyHostIcon
               (PartyData *param_1,int param_2,int param_3,int param_4)
 
 {
-  PartyData *pPVar2;
   ulong64 uVar1;
-  int iVar3;
+  int iVar2;
   
-  pPVar2 = (PartyData *)__savegprlr_28(param_1);
-  if (pPVar2 == (PartyData *)0x0) {
+  if (param_1 == (PartyData *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\partyui.cpp",0x386,0
                     ,"%s");
   }
-  uVar1 = PartyUI_GetTeamMemberXuid(pPVar2,param_2,param_3,param_4);
-  iVar3 = PartyUI_ShowMemberXuidPrivatePartyHost(uVar1);
-  iVar3 = __restgprlr_28(iVar3);
-  return iVar3;
+  uVar1 = PartyUI_GetTeamMemberXuid(param_1,param_2,param_3,param_4);
+  iVar2 = PartyUI_ShowMemberXuidPrivatePartyHost(uVar1);
+  return iVar2;
 }
 
 

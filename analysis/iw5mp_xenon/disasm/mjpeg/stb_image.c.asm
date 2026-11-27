@@ -1339,7 +1339,7 @@ LAB_827ec7e0:
   827EC7F8  7C0903A6             mtspr CTR,r0
 switchD:
   827EC7FC  4E800420             bctr
-caseD_0:
+caseD_a:
   827EC868  357BFFFF             subic. r11,r27,0x1
   827EC86C  418002C4             blt 0x827ecb30
   827EC870  392B0001             addi r9,r11,0x1
@@ -1352,7 +1352,7 @@ LAB_827ec880:
   827EC888  9CAB0002             stbu r5,0x2(r11)
   827EC88C  4200FFF4             bdnz 0x827ec880
   827EC890  480002A0             b 0x827ecb30
-caseD_1:
+caseD_b:
   827EC894  357BFFFF             subic. r11,r27,0x1
   827EC898  41800298             blt 0x827ecb30
   827EC89C  394B0001             addi r10,r11,0x1
@@ -1366,7 +1366,7 @@ LAB_827ec8ac:
   827EC8B8  9D4B0003             stbu r10,0x3(r11)
   827EC8BC  4200FFF0             bdnz 0x827ec8ac
   827EC8C0  48000270             b 0x827ecb30
-caseD_2:
+caseD_c:
   827EC8C4  357BFFFF             subic. r11,r27,0x1
   827EC8C8  41800268             blt 0x827ecb30
   827EC8CC  394B0001             addi r10,r11,0x1
@@ -1381,7 +1381,7 @@ LAB_827ec8dc:
   827EC8EC  9CAB0004             stbu r5,0x4(r11)
   827EC8F0  4200FFEC             bdnz 0x827ec8dc
   827EC8F4  4800023C             b 0x827ecb30
-caseD_7:
+caseD_11:
   827EC8F8  357BFFFF             subic. r11,r27,0x1
   827EC8FC  41800234             blt 0x827ecb30
   827EC900  392B0001             addi r9,r11,0x1
@@ -1393,7 +1393,7 @@ LAB_827ec910:
   827EC914  9D2A0001             stbu r9,0x1(r10)
   827EC918  4200FFF8             bdnz 0x827ec910
   827EC91C  48000214             b 0x827ecb30
-caseD_9:
+caseD_13:
   827EC920  357BFFFF             subic. r11,r27,0x1
   827EC924  4180020C             blt 0x827ecb30
   827EC928  394B0001             addi r10,r11,0x1
@@ -1407,7 +1407,7 @@ LAB_827ec938:
   827EC944  9D4B0003             stbu r10,0x3(r11)
   827EC948  4200FFF0             bdnz 0x827ec938
   827EC94C  480001E4             b 0x827ecb30
-caseD_a:
+caseD_14:
   827EC950  357BFFFF             subic. r11,r27,0x1
   827EC954  418001DC             blt 0x827ecb30
   827EC958  392B0001             addi r9,r11,0x1
@@ -1423,7 +1423,7 @@ LAB_827ec968:
   827EC97C  9D2B0004             stbu r9,0x4(r11)
   827EC980  4200FFE8             bdnz 0x827ec968
   827EC984  480001AC             b 0x827ecb30
-caseD_12:
+caseD_1c:
   827EC988  357BFFFF             subic. r11,r27,0x1
   827EC98C  418001A4             blt 0x827ecb30
   827EC990  392B0001             addi r9,r11,0x1
@@ -1440,7 +1440,7 @@ LAB_827ec9a0:
   827EC9B8  9CAB0004             stbu r5,0x4(r11)
   827EC9BC  4200FFE4             bdnz 0x827ec9a0
   827EC9C0  48000170             b 0x827ecb30
-caseD_f:
+caseD_19:
   827EC9C4  357BFFFF             subic. r11,r27,0x1
   827EC9C8  41800168             blt 0x827ecb30
   827EC9CC  392B0001             addi r9,r11,0x1
@@ -1461,7 +1461,7 @@ LAB_827ec9dc:
   827ECA04  9D2A0001             stbu r9,0x1(r10)
   827ECA08  4200FFD4             bdnz 0x827ec9dc
   827ECA0C  48000124             b 0x827ecb30
-caseD_10:
+caseD_1a:
   827ECA10  357BFFFF             subic. r11,r27,0x1
   827ECA14  4180011C             blt 0x827ecb30
   827ECA18  392B0001             addi r9,r11,0x1
@@ -1483,7 +1483,7 @@ LAB_827eca28:
   827ECA54  9CAA0002             stbu r5,0x2(r10)
   827ECA58  4200FFD0             bdnz 0x827eca28
   827ECA5C  480000D4             b 0x827ecb30
-caseD_17:
+caseD_21:
   827ECA60  357BFFFF             subic. r11,r27,0x1
   827ECA64  418000CC             blt 0x827ecb30
   827ECA68  392B0001             addi r9,r11,0x1
@@ -1504,7 +1504,7 @@ LAB_827eca78:
   827ECAA0  9D2A0001             stbu r9,0x1(r10)
   827ECAA4  4200FFD4             bdnz 0x827eca78
   827ECAA8  48000088             b 0x827ecb30
-caseD_18:
+caseD_22:
   827ECAAC  357BFFFF             subic. r11,r27,0x1
   827ECAB0  41800080             blt 0x827ecb30
   827ECAB4  392B0001             addi r9,r11,0x1
@@ -1526,7 +1526,7 @@ LAB_827ecac4:
   827ECAF0  9D2A0002             stbu r9,0x2(r10)
   827ECAF4  4200FFD0             bdnz 0x827ecac4
   827ECAF8  48000038             b 0x827ecb30
-caseD_19:
+caseD_23:
   827ECAFC  357BFFFF             subic. r11,r27,0x1
   827ECB00  41800030             blt 0x827ecb30
   827ECB04  392B0001             addi r9,r11,0x1
@@ -1541,7 +1541,7 @@ LAB_827ecb14:
   827ECB24  8D2B0004             lbzu r9,0x4(r11)
   827ECB28  9D2A0003             stbu r9,0x3(r10)
   827ECB2C  4200FFE8             bdnz 0x827ecb14
-caseD_3:
+caseD_d:
   827ECB30  37BDFFFF             subic. r29,r29,0x1
   827ECB34  7CE43A14             add r7,r4,r7
   827ECB38  7CC6CA14             add r6,r6,r25

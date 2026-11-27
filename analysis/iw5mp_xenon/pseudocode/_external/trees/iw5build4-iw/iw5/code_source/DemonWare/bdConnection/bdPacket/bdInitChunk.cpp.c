@@ -17,21 +17,19 @@ bdInitChunk * __thiscall bdInitChunk::bdInitChunk(bdInitChunk *this)
 
 // 829387D0  bdInitChunk  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdconnection/bdpacket/bdinitchunk.cpp:26)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 bdInitChunk * __thiscall bdInitChunk::bdInitChunk(bdInitChunk *this,uint param_1,int param_2)
 
 {
-  bdChunk *this_00;
-  bdInitChunk *pbVar1;
-  
-  this_00 = (bdChunk *)__savegprlr_29(this);
-  bdChunk::bdChunk(this_00,BD_CT_INIT);
-  this_00[1]._padding_ = param_1;
-  this_00[1]._padding_ = 0;
-  this_00->_padding_ = (int)&_vftable_;
-  this_00[2]._padding_ = 0;
-  this_00[2]._padding_ = param_2;
-  pbVar1 = (bdInitChunk *)__restgprlr_29(this_00);
-  return pbVar1;
+  bdChunk::bdChunk((bdChunk *)this,BD_CT_INIT);
+  this->m_initTag = param_1;
+  this->m_flags = BD_IC_NO_FLAGS;
+  this->_padding_ = (int)&_vftable_;
+  (this->m_theirKey).m_ptr = (bdByteBuffer *)0x0;
+  this->m_windowCredit = param_2;
+  return this;
 }
 
 
@@ -61,17 +59,18 @@ uint __thiscall bdInitChunk::getInitTag(bdInitChunk *this)
 
 // 829388F8  serialize  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdconnection/bdpacket/bdinitchunk.cpp:50)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 uint __thiscall bdInitChunk::serialize(bdInitChunk *this,uchar *param_1,uint param_2)
 
 {
   undefined1 *puVar1;
-  bdChunk *this_00;
+  bool bVar2;
   bool bVar3;
-  bool bVar4;
-  uint uVar2;
-  undefined1 *puVar5;
-  int iVar6;
-  longlong lVar7;
+  undefined1 *puVar4;
+  int iVar5;
+  longlong lVar6;
   undefined1 local_40 [2];
   undefined2 local_3e;
   undefined1 uStack_3c;
@@ -80,76 +79,70 @@ uint __thiscall bdInitChunk::serialize(bdInitChunk *this,uchar *param_1,uint par
   undefined1 auStack_34 [3];
   undefined1 local_31 [49];
   
-  this_00 = (bdChunk *)__savegprlr_28(this);
   local_38 = 0;
-  local_38 = bdChunk::serialize(this_00,param_1,param_2);
-  local_40[0] = (undefined1)this_00[1]._padding_;
-  bVar3 = bdBytePacker::appendBuffer(param_1,param_2,local_38,&local_38,local_40,1);
+  local_38 = bdChunk::serialize((bdChunk *)this,param_1,param_2);
+  local_40[0] = (undefined1)this->m_flags;
+  bVar2 = bdBytePacker::appendBuffer(param_1,param_2,local_38,&local_38,local_40,1);
   local_3e = 0;
-  if (bVar3) {
-    iVar6 = 0;
-    puVar5 = local_3b + 1;
-    lVar7 = 2;
+  if (bVar2) {
+    iVar5 = 0;
+    puVar4 = local_3b + 1;
+    lVar6 = 2;
     do {
-      puVar1 = (undefined1 *)((int)&local_3e + iVar6);
-      iVar6 = iVar6 + 1;
-      puVar5 = puVar5 + -1;
-      *puVar5 = *puVar1;
-      lVar7 = lVar7 + -1;
-    } while (lVar7 != 0);
-    bVar4 = bdBytePacker::appendBuffer(param_1,param_2,local_38,&local_38,&uStack_3c,2);
-    bVar3 = true;
-    if (bVar4) goto LAB_829389ac;
+      puVar1 = (undefined1 *)((int)&local_3e + iVar5);
+      iVar5 = iVar5 + 1;
+      puVar4 = puVar4 + -1;
+      *puVar4 = *puVar1;
+      lVar6 = lVar6 + -1;
+    } while (lVar6 != 0);
+    bVar3 = bdBytePacker::appendBuffer(param_1,param_2,local_38,&local_38,&uStack_3c,2);
+    bVar2 = true;
+    if (bVar3) goto LAB_829389ac;
   }
-  bVar3 = false;
+  bVar2 = false;
 LAB_829389ac:
-  if (bVar3) {
-    iVar6 = 0;
-    puVar5 = local_31 + 1;
-    lVar7 = 4;
+  if (bVar2) {
+    iVar5 = 0;
+    puVar4 = local_31 + 1;
+    lVar6 = 4;
     do {
-      puVar1 = (undefined1 *)((int)&this_00[1]._padding_ + iVar6);
-      iVar6 = iVar6 + 1;
-      puVar5 = puVar5 + -1;
-      *puVar5 = *puVar1;
-      lVar7 = lVar7 + -1;
-    } while (lVar7 != 0);
+      puVar1 = (undefined1 *)((int)(&this->m_id + -1) + iVar5);
+      iVar5 = iVar5 + 1;
+      puVar4 = puVar4 + -1;
+      *puVar4 = *puVar1;
+      lVar6 = lVar6 + -1;
+    } while (lVar6 != 0);
     bdBytePacker::appendBuffer(param_1,param_2,local_38,&local_38,auStack_34,4);
   }
-  uVar2 = __restgprlr_28(local_38);
-  return uVar2;
+  return local_38;
 }
 
 
 // 82938A00  deserialize  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdconnection/bdpacket/bdinitchunk.cpp:72)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 bool __thiscall
 bdInitChunk::deserialize(bdInitChunk *this,uchar *param_1,uint param_2,uint *param_3)
 
 {
-  bdChunk *this_00;
   bool bVar1;
   bool bVar2;
-  undefined1 uVar3;
-  longlong lVar4;
-  uint uVar5;
-  uint uVar6;
+  bdInitChunkFlags bVar3;
   byte local_40 [2];
   ushort local_3e;
   uint local_3c [15];
   
-  lVar4 = (longlong)(int)param_2;
-  this_00 = (bdChunk *)__savegprlr_27(this);
   local_3c[0] = *param_3;
   bVar1 = true;
-  if ((lVar4 - (ulonglong)local_3c[0] & 0xffffffff) < 5) goto LAB_82938af8;
-  uVar6 = 0;
-  uVar5 = (uint)lVar4;
-  bVar1 = bdChunk::deserialize(this_00,param_1,uVar5,local_3c);
+  if (param_2 - local_3c[0] < 5) goto LAB_82938af8;
+  bVar3 = BD_IC_NO_FLAGS;
+  bVar1 = bdChunk::deserialize((bdChunk *)this,param_1,param_2,local_3c);
   if (bVar1) {
-    bVar1 = bdBytePacker::removeBuffer(param_1,uVar5,local_3c[0],local_3c,local_40,1);
+    bVar1 = bdBytePacker::removeBuffer(param_1,param_2,local_3c[0],local_3c,local_40,1);
     if (bVar1) {
-      uVar6 = (uint)local_40[0];
+      bVar3 = (bdInitChunkFlags)local_40[0];
     }
     bVar2 = true;
     if (!bVar1) goto LAB_82938a80;
@@ -158,11 +151,11 @@ bdInitChunk::deserialize(bdInitChunk *this,uchar *param_1,uint param_2,uint *par
 LAB_82938a80:
     bVar2 = false;
   }
-  this_00[1]._padding_ = uVar6;
+  this->m_flags = bVar3;
   local_3e = 0;
   if (bVar2) {
     bVar2 = bdBytePacker::removeBasicType<unsigned_short>
-                      (param_1,uVar5,local_3c[0],local_3c,&local_3e);
+                      (param_1,param_2,local_3c[0],local_3c,&local_3e);
     bVar1 = true;
     if (!bVar2) goto LAB_82938ac0;
   }
@@ -172,7 +165,7 @@ LAB_82938ac0:
   }
   if (bVar1) {
     bVar2 = bdBytePacker::removeBasicType<unsigned_int>
-                      (param_1,uVar5,local_3c[0],local_3c,(uint *)(this_00 + 1));
+                      (param_1,param_2,local_3c[0],local_3c,&this->m_initTag);
     bVar1 = true;
     if (bVar2) goto LAB_82938af8;
   }
@@ -181,8 +174,7 @@ LAB_82938af8:
   if (bVar1) {
     *param_3 = local_3c[0];
   }
-  uVar3 = __restgprlr_27();
-  return (bool)uVar3;
+  return bVar1;
 }
 
 

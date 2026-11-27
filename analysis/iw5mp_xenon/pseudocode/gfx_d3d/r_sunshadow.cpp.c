@@ -2,6 +2,8 @@
 
 // 82783238  R_GetSunAxes  (gfx_d3d/r_sunshadow.cpp:82)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 
@@ -12,22 +14,20 @@ void R_GetSunAxes(GfxBackEndData *param_1,float (*param_2) [3])
   float fVar2;
   float fVar3;
   float fVar4;
-  int iVar5;
+  double dVar5;
   double dVar6;
   double dVar7;
-  double dVar8;
   
-  iVar5 = __savegprlr_29(param_1);
-  if (iVar5 == 0) {
+  if (param_1 == (GfxBackEndData *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_sunshadow.cpp",0x53,
                     0,"%s");
   }
-  param_2[2][0] = *(float *)(iVar5 + 0x15d4);
-  param_2[2][1] = *(float *)(iVar5 + 0x15d8);
-  fVar2 = *(float *)(iVar5 + 0x15dc);
+  param_2[2][0] = param_1->sunShadowLightDir[0];
+  param_2[2][1] = param_1->sunShadowLightDir[1];
+  fVar2 = param_1->sunShadowLightDir[2];
   param_2[2][2] = fVar2;
   param_2[1][1] = 0.0;
-  dVar8 = 1.0;
+  dVar7 = 1.0;
   if (ABS(fVar2) <= 0.9) {
     param_2[1][0] = 0.0;
     param_2[1][2] = 1.0;
@@ -40,17 +40,16 @@ void R_GetSunAxes(GfxBackEndData *param_1,float (*param_2) [3])
   fVar2 = (*param_2)[1];
   fVar3 = (*param_2)[0];
   fVar4 = (*param_2)[2];
-  dVar7 = (double)SQRT(fVar4 * fVar4 + fVar3 * fVar3 + fVar2 * fVar2);
-  dVar6 = dVar8;
-  if (-dVar7 < 0.0) {
-    dVar6 = dVar7;
+  dVar6 = (double)SQRT(fVar4 * fVar4 + fVar3 * fVar3 + fVar2 * fVar2);
+  dVar5 = dVar7;
+  if (-dVar6 < 0.0) {
+    dVar5 = dVar6;
   }
-  fVar1 = (float)(dVar8 / dVar6);
+  fVar1 = (float)(dVar7 / dVar5);
   (*param_2)[0] = fVar3 * fVar1;
   (*param_2)[1] = fVar2 * fVar1;
   (*param_2)[2] = fVar4 * fVar1;
   Vec3Cross(param_2[2],*param_2,param_2[1]);
-  __restgprlr_29();
   return;
 }
 
@@ -104,6 +103,11 @@ void R_SetSunShadowPartitionViewMatrix
 
 // 827833F8  R_SetSunShadowPartitionProjectionMatrix  (gfx_d3d/r_sunshadow.cpp:121)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void R_SetSunShadowPartitionProjectionMatrix
                (GfxSunShadowMapMetrics *param_1,GfxSunShadowProjectionSetup *param_2,uint param_3,
                GfxViewParms *param_4)
@@ -111,37 +115,31 @@ void R_SetSunShadowPartitionProjectionMatrix
 {
   float fVar1;
   float fVar2;
-  uint *puVar3;
-  longlong lVar4;
+  double dVar3;
+  double dVar4;
   double dVar5;
   double dVar6;
   double dVar7;
-  double dVar8;
-  double dVar9;
   
-  lVar4 = (longlong)(int)param_3;
-  __savegprlr_29(param_1);
-  puVar3 = (uint *)__savefpr_27();
-  dVar7 = (double)(*(float *)((int)param_2->sunAxis[0] + (int)((lVar4 + 0x16U & 0xffffffff) << 2)) *
-                  (float)*puVar3);
-  if (dVar7 == 0.0) {
+  dVar5 = (double)(param_2->sampleSize[param_3] * (float)param_1->pixelsPerTile);
+  if (dVar5 == 0.0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_sunshadow.cpp",0x7e,
                     0,"%s");
   }
-  dVar9 = 2.0;
-  dVar8 = 1.0;
-  dVar6 = (double)(((param_2->shadowOrgPixelCenter[0] + (float)puVar3[3]) / (float)*puVar3) * 2.0 -
-                  1.0);
-  dVar5 = (double)(((param_2->shadowOrgPixelCenter[1] + (float)puVar3[3]) / (float)*puVar3) * 2.0 -
-                  1.0);
+  dVar7 = 2.0;
+  dVar6 = 1.0;
+  dVar4 = (double)(((param_2->shadowOrgPixelCenter[0] + (float)param_1->minCoord) /
+                   (float)param_1->pixelsPerTile) * 2.0 - 1.0);
+  dVar3 = (double)(((param_2->shadowOrgPixelCenter[1] + (float)param_1->minCoord) /
+                   (float)param_1->pixelsPerTile) * 2.0 - 1.0);
   memset();
-  fVar1 = (float)puVar3[5];
-  fVar2 = fVar1 - (float)puVar3[4];
-  (param_4->projectionMatrix).m[0][0] = (float)(dVar9 / dVar7);
-  (param_4->projectionMatrix).m[1][1] = (float)(dVar9 / dVar7);
-  (param_4->projectionMatrix).m[3][0] = (float)dVar6;
-  (param_4->projectionMatrix).m[3][1] = (float)dVar5;
-  (param_4->projectionMatrix).m[3][3] = (float)dVar8;
+  fVar1 = param_1->farClip;
+  fVar2 = fVar1 - param_1->nearClip;
+  (param_4->projectionMatrix).m[0][0] = (float)(dVar7 / dVar5);
+  (param_4->projectionMatrix).m[1][1] = (float)(dVar7 / dVar5);
+  (param_4->projectionMatrix).m[3][0] = (float)dVar4;
+  (param_4->projectionMatrix).m[3][1] = (float)dVar3;
+  (param_4->projectionMatrix).m[3][3] = (float)dVar6;
   fVar1 = fVar1 / fVar2;
   (param_4->projectionMatrix).m[3][2] = fVar1;
   (param_4->projectionMatrix).m[2][2] = -1.0 / fVar2;
@@ -150,13 +148,14 @@ void R_SetSunShadowPartitionProjectionMatrix
                    (float (*) [4])&param_4->viewProjectionMatrix);
   MatrixInverse44((float *)&param_4->viewProjectionMatrix,
                   (float *)&param_4->inverseViewProjectionMatrix);
-  __restfpr_27();
-  __restgprlr_29();
   return;
 }
 
 
 // 82783550  R_SetSunShadowMapViewParms  (gfx_d3d/r_sunshadow.cpp:168)
+
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 
 void R_SetSunShadowMapViewParms
                (GfxSunShadowMapMetrics *param_1,GfxSunShadowProjectionSetup *param_2,uint param_3,
@@ -174,11 +173,7 @@ void R_SetSunShadowMapViewParms
   float fVar9;
   float fVar10;
   float fVar11;
-  GfxSunShadowMapMetrics *pGVar12;
-  ulonglong uVar13;
   
-  uVar13 = (ulonglong)(int)param_3;
-  pGVar12 = (GfxSunShadowMapMetrics *)__savegprlr_28(param_1);
   memset();
   fVar1 = param_2->sunAxis[2][0];
   fVar2 = param_2->sunAxis[2][1];
@@ -198,13 +193,13 @@ void R_SetSunShadowMapViewParms
   (param_4->camera).axis[1][2] = -fVar6;
   fVar2 = param_2->sunAxis[1][0];
   fVar3 = param_2->sunAxis[1][2];
-  fVar11 = *(float *)((int)param_2->sunAxis[0] + (int)((uVar13 + 9 & 0xffffffff) << 3));
+  fVar11 = param_2->snappedShadowOrg[param_3][0];
   fVar7 = param_2->sunAxis[2][1];
   fVar8 = param_2->sunAxis[2][2];
   (param_4->camera).axis[2][1] = param_2->sunAxis[1][1];
   (param_4->camera).axis[2][2] = fVar3;
   (param_4->camera).axis[2][0] = fVar2;
-  fVar3 = *(float *)((int)param_2->snappedShadowOrg[0] + (int)((uVar13 & 0xffffffff) << 3) + 4);
+  fVar3 = param_2->snappedShadowOrg[param_3][1];
   (param_4->camera).subWindowMins[0] = 0.0;
   (param_4->camera).subWindowMins[1] = 0.0;
   (param_4->camera).subWindowMaxs[0] = 1.0;
@@ -231,13 +226,15 @@ void R_SetSunShadowMapViewParms
   (param_4->viewMatrix).m[1][3] = 0.0;
   (param_4->viewMatrix).m[2][3] = 0.0;
   (param_4->viewMatrix).m[3][3] = 1.0;
-  R_SetSunShadowPartitionProjectionMatrix(pGVar12,param_2,(uint)uVar13,param_4);
-  __restgprlr_28();
+  R_SetSunShadowPartitionProjectionMatrix(param_1,param_2,param_3,param_4);
   return;
 }
 
 
 // 827836B0  R_GetFrustumCornerRays  (gfx_d3d/r_sunshadow.cpp:190)
+
+/* WARNING: Function: __savefpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_28 replaced with injection: xenon_save_restore */
 
 void R_GetFrustumCornerRays(GfxCamera *param_1,float (*param_2) [3])
 
@@ -256,232 +253,228 @@ void R_GetFrustumCornerRays(GfxCamera *param_1,float (*param_2) [3])
   float fVar12;
   float fVar13;
   float fVar14;
-  int iVar15;
+  float fVar15;
   float fVar16;
-  float fVar17;
-  int iVar18;
-  ulonglong uVar19;
-  longlong lVar20;
-  longlong lVar21;
+  ulonglong uVar17;
+  float *pfVar18;
+  longlong lVar19;
   
-  lVar20 = (longlong)(int)param_2;
-  iVar18 = __savefpr_28(param_1);
-  fVar1 = *(float *)(iVar18 + 0x44);
-  fVar2 = *(float *)(iVar18 + 0x40);
-  fVar3 = *(float *)(iVar18 + 0x18);
-  uVar19 = 0;
-  fVar4 = *(float *)(iVar18 + 0x24);
-  lVar20 = lVar20 + -4;
-  fVar5 = *(float *)(iVar18 + 0xc);
-  lVar21 = 4;
-  fVar6 = *(float *)(iVar18 + 0x1c);
-  fVar7 = *(float *)(iVar18 + 0x28);
-  fVar8 = *(float *)(iVar18 + 0x10);
-  fVar9 = *(float *)(iVar18 + 0x20);
-  fVar10 = *(float *)(iVar18 + 0x2c);
-  fVar11 = *(float *)(iVar18 + 0x14);
+  fVar1 = param_1->tanHalfFovY;
+  fVar2 = param_1->tanHalfFovX;
+  fVar3 = param_1->axis[1][0];
+  uVar17 = 0;
+  fVar4 = param_1->axis[2][0];
+  pfVar18 = param_2[-1] + 2;
+  fVar5 = param_1->axis[0][0];
+  lVar19 = 4;
+  fVar6 = param_1->axis[1][1];
+  fVar7 = param_1->axis[2][1];
+  fVar8 = param_1->axis[0][1];
+  fVar9 = param_1->axis[1][2];
+  fVar10 = param_1->axis[2][2];
+  fVar11 = param_1->axis[0][2];
   do {
-    if ((uVar19 - 1 & 2) == 0) {
-      fVar12 = *(float *)(iVar18 + 0x30);
+    if ((uVar17 - 1 & 2) == 0) {
+      fVar12 = param_1->subWindowMins[0];
     }
     else {
-      fVar12 = *(float *)(iVar18 + 0x38);
+      fVar12 = param_1->subWindowMaxs[0];
     }
-    if ((uVar19 & 2) == 0) {
-      fVar13 = *(float *)(iVar18 + 0x34);
+    if ((uVar17 & 2) == 0) {
+      fVar13 = param_1->subWindowMins[1];
     }
     else {
-      fVar13 = *(float *)(iVar18 + 0x3c);
+      fVar13 = param_1->subWindowMaxs[1];
     }
-    uVar19 = uVar19 + 1;
+    uVar17 = uVar17 + 1;
     fVar12 = -((fVar12 * 2.0 - 1.0) * fVar2);
     fVar13 = -((fVar13 * 2.0 - 1.0) * fVar1);
-    iVar15 = (int)lVar20;
-    *(float *)(iVar15 + 4) = fVar4 * fVar13 + fVar3 * fVar12 + fVar5;
-    *(float *)(iVar15 + 8) = fVar7 * fVar13 + fVar6 * fVar12 + fVar8;
-    *(float *)(iVar15 + 0xc) = fVar10 * fVar13 + fVar9 * fVar12 + fVar11;
-    fVar12 = *(float *)(iVar15 + 4);
-    fVar13 = *(float *)(iVar15 + 0xc);
-    fVar14 = *(float *)(iVar15 + 8);
+    pfVar18[1] = fVar4 * fVar13 + fVar3 * fVar12 + fVar5;
+    pfVar18[2] = fVar7 * fVar13 + fVar6 * fVar12 + fVar8;
+    pfVar18[3] = fVar10 * fVar13 + fVar9 * fVar12 + fVar11;
+    fVar12 = pfVar18[1];
+    fVar13 = pfVar18[3];
+    fVar14 = pfVar18[2];
     fVar16 = SQRT(fVar13 * fVar13 + fVar12 * fVar12 + fVar14 * fVar14);
-    fVar17 = 1.0;
+    fVar15 = 1.0;
     if (-fVar16 < 0.0) {
-      fVar17 = fVar16;
+      fVar15 = fVar16;
     }
-    fVar17 = 1.0 / fVar17;
-    *(float *)(iVar15 + 4) = fVar12 * fVar17;
-    *(float *)(iVar15 + 8) = fVar14 * fVar17;
-    lVar20 = lVar20 + 0xc;
-    *(float *)lVar20 = fVar13 * fVar17;
-    lVar21 = lVar21 + -1;
-  } while (lVar21 != 0);
-  __restfpr_28();
+    fVar15 = 1.0 / fVar15;
+    pfVar18[1] = fVar12 * fVar15;
+    pfVar18[2] = fVar14 * fVar15;
+    pfVar18 = pfVar18 + 3;
+    *pfVar18 = fVar13 * fVar15;
+    lVar19 = lVar19 + -1;
+  } while (lVar19 != 0);
   return;
 }
 
 
 // 827837E8  R_TransformAndBoundFrustumRays  (gfx_d3d/r_sunshadow.cpp:210)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
+
 void R_TransformAndBoundFrustumRays(float (*param_1) [3],GfxSunShadowFrustumRays *param_2)
 
 {
-  int iVar1;
-  int iVar2;
-  float *pfVar3;
-  longlong lVar4;
-  longlong lVar5;
-  float *pfVar6;
-  longlong lVar7;
+  float *pfVar1;
+  float *pfVar2;
+  longlong lVar3;
+  float (*pafVar4) [2];
+  uint *puVar5;
   
-  lVar7 = (longlong)(int)param_2;
-  pfVar3 = (float *)__savegprlr_24(param_1);
-  iVar2 = (int)lVar7;
-  *(undefined4 *)(iVar2 + 0x68) = 0;
-  lVar5 = lVar7 + 0x30;
-  *(undefined4 *)(iVar2 + 0x6c) = 0;
-  lVar7 = lVar7 + -0xc;
-  *(undefined4 *)(iVar2 + 0x70) = 0;
-  lVar4 = 4;
-  *(undefined4 *)(iVar2 + 0x74) = 0;
+  param_2->mins[0] = 0.0;
+  pafVar4 = param_2->shadowRays;
+  param_2->mins[1] = 0.0;
+  puVar5 = param_2[-1].boundingArcRay + 1;
+  param_2->maxs[0] = 0.0;
+  lVar3 = 4;
+  param_2->maxs[1] = 0.0;
   do {
-    iVar1 = (int)lVar7;
-    pfVar6 = (float *)lVar5;
-    *pfVar6 = *(float *)(iVar1 + 0x14) * pfVar3[2] +
-              *(float *)(iVar1 + 0x10) * pfVar3[1] + *(float *)(iVar1 + 0xc) * *pfVar3;
-    lVar7 = lVar7 + 0xc;
-    pfVar6[1] = *(float *)(iVar1 + 0x14) * pfVar3[5] +
-                pfVar3[4] * *(float *)(iVar1 + 0x10) + pfVar3[3] * *(float *)lVar7;
-    AddPointToBounds2D(pfVar6,(float *)(iVar2 + 0x68),(float *)(iVar2 + 0x70));
-    lVar4 = lVar4 + -1;
-    lVar5 = lVar5 + 8;
-  } while (lVar4 != 0);
-  if (*(float *)(iVar2 + 0x70) <= *(float *)(iVar2 + 0x68)) {
+    (*pafVar4)[0] =
+         (float)puVar5[5] * (*param_1)[2] +
+         (float)puVar5[4] * (*param_1)[1] + (float)puVar5[3] * (*param_1)[0];
+    pfVar1 = (float *)(puVar5 + 4);
+    pfVar2 = (float *)(puVar5 + 5);
+    puVar5 = puVar5 + 3;
+    (*pafVar4)[1] =
+         *pfVar2 * param_1[1][2] + param_1[1][1] * *pfVar1 + param_1[1][0] * (float)*puVar5;
+    AddPointToBounds2D(*pafVar4,param_2->mins,param_2->maxs);
+    lVar3 = lVar3 + -1;
+    pafVar4 = pafVar4 + 1;
+  } while (lVar3 != 0);
+  if (param_2->maxs[0] <= param_2->mins[0]) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_sunshadow.cpp",0xdd,
                     0,"frustumRays->maxs[0] > frustumRays->mins[0]\n\t%g, %g");
   }
-  if (*(float *)(iVar2 + 0x74) <= *(float *)(iVar2 + 0x6c)) {
+  if (param_2->maxs[1] <= param_2->mins[1]) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_sunshadow.cpp",0xde,
                     0,"frustumRays->maxs[1] > frustumRays->mins[1]\n\t%g, %g");
   }
-  __restgprlr_24();
   return;
 }
 
 
 // 82783918  R_SetSunShadowSinesAndBoundingArcEdge  (gfx_d3d/r_sunshadow.cpp:227)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
+
 void R_SetSunShadowSinesAndBoundingArcEdge(GfxSunShadowFrustumRays *param_1)
 
 {
   float fVar1;
   float fVar2;
-  int iVar3;
+  float fVar3;
   int iVar4;
-  float *pfVar5;
-  uint *puVar6;
+  uint *puVar5;
+  float *pfVar6;
   uint uVar7;
   uint uVar8;
   double dVar9;
   double dVar10;
   
-  iVar3 = __savegprlr_24(param_1);
   dVar9 = 0.0010000000474974513;
-  pfVar5 = (float *)(iVar3 + 0x50);
-  fVar1 = *(float *)(iVar3 + 0x34) * *(float *)(iVar3 + 0x48) -
-          *(float *)(iVar3 + 0x4c) * *(float *)(iVar3 + 0x30);
-  *(float *)(iVar3 + 0x5c) = fVar1;
-  *(float *)(iVar3 + 100) = fVar1;
-  *(float *)(iVar3 + 0x60) = fVar1;
-  fVar1 = *(float *)(iVar3 + 0x3c) * *(float *)(iVar3 + 0x30) -
-          *(float *)(iVar3 + 0x34) * *(float *)(iVar3 + 0x38);
-  *(float *)(iVar3 + 0x50) = fVar1;
-  fVar2 = *(float *)(iVar3 + 0x60);
-  if (fVar1 - *(float *)(iVar3 + 0x60) < 0.0) {
-    fVar2 = fVar1;
+  pfVar6 = param_1->sinInteriorAngle;
+  fVar2 = param_1->shadowRays[0][1] * param_1->shadowRays[3][0] -
+          param_1->shadowRays[3][1] * param_1->shadowRays[0][0];
+  param_1->sinInteriorAngle[3] = fVar2;
+  param_1->sinMax = fVar2;
+  param_1->sinMin = fVar2;
+  fVar2 = param_1->shadowRays[1][1] * param_1->shadowRays[0][0] -
+          param_1->shadowRays[0][1] * param_1->shadowRays[1][0];
+  param_1->sinInteriorAngle[0] = fVar2;
+  fVar1 = param_1->sinMin;
+  if (fVar2 - param_1->sinMin < 0.0) {
+    fVar1 = fVar2;
   }
-  *(float *)(iVar3 + 0x60) = fVar2;
-  fVar1 = *(float *)(iVar3 + 100);
-  if (*(float *)(iVar3 + 100) - *(float *)(iVar3 + 0x50) < 0.0) {
-    fVar1 = *(float *)(iVar3 + 0x50);
+  param_1->sinMin = fVar1;
+  fVar2 = param_1->sinMax;
+  if (param_1->sinMax - param_1->sinInteriorAngle[0] < 0.0) {
+    fVar2 = param_1->sinInteriorAngle[0];
   }
-  *(float *)(iVar3 + 100) = fVar1;
-  fVar1 = *(float *)(iVar3 + 0x44) * *(float *)(iVar3 + 0x38) -
-          *(float *)(iVar3 + 0x3c) * *(float *)(iVar3 + 0x40);
-  *(float *)(iVar3 + 0x54) = fVar1;
-  fVar2 = *(float *)(iVar3 + 0x60);
-  if (fVar1 - *(float *)(iVar3 + 0x60) < 0.0) {
-    fVar2 = fVar1;
+  param_1->sinMax = fVar2;
+  fVar2 = param_1->shadowRays[2][1] * param_1->shadowRays[1][0] -
+          param_1->shadowRays[1][1] * param_1->shadowRays[2][0];
+  param_1->sinInteriorAngle[1] = fVar2;
+  fVar1 = param_1->sinMin;
+  if (fVar2 - param_1->sinMin < 0.0) {
+    fVar1 = fVar2;
   }
-  *(float *)(iVar3 + 0x60) = fVar2;
-  fVar1 = *(float *)(iVar3 + 100);
-  if (*(float *)(iVar3 + 100) - *(float *)(iVar3 + 0x54) < 0.0) {
-    fVar1 = *(float *)(iVar3 + 0x54);
+  param_1->sinMin = fVar1;
+  fVar2 = param_1->sinMax;
+  if (param_1->sinMax - param_1->sinInteriorAngle[1] < 0.0) {
+    fVar2 = param_1->sinInteriorAngle[1];
   }
-  *(float *)(iVar3 + 100) = fVar1;
-  fVar1 = *(float *)(iVar3 + 0x4c) * *(float *)(iVar3 + 0x40) -
-          *(float *)(iVar3 + 0x44) * *(float *)(iVar3 + 0x48);
-  *(float *)(iVar3 + 0x58) = fVar1;
-  fVar2 = *(float *)(iVar3 + 0x60);
-  if (fVar1 - *(float *)(iVar3 + 0x60) < 0.0) {
-    fVar2 = fVar1;
+  param_1->sinMax = fVar2;
+  fVar2 = param_1->shadowRays[3][1] * param_1->shadowRays[2][0] -
+          param_1->shadowRays[2][1] * param_1->shadowRays[3][0];
+  param_1->sinInteriorAngle[2] = fVar2;
+  fVar1 = param_1->sinMin;
+  if (fVar2 - param_1->sinMin < 0.0) {
+    fVar1 = fVar2;
   }
-  *(float *)(iVar3 + 0x60) = fVar2;
-  fVar1 = *(float *)(iVar3 + 100);
-  if (*(float *)(iVar3 + 100) - *(float *)(iVar3 + 0x58) < 0.0) {
-    fVar1 = *(float *)(iVar3 + 0x58);
+  param_1->sinMin = fVar1;
+  fVar2 = param_1->sinMax;
+  if (param_1->sinMax - param_1->sinInteriorAngle[2] < 0.0) {
+    fVar2 = param_1->sinInteriorAngle[2];
   }
-  *(float *)(iVar3 + 100) = fVar1;
-  *(undefined4 *)(iVar3 + 0x78) = 0xffffffff;
-  *(undefined4 *)(iVar3 + 0x7c) = 0xffffffff;
-  fVar2 = -*(float *)(iVar3 + 0x60);
-  if (fVar1 - -*(float *)(iVar3 + 0x60) < 0.0) {
-    fVar2 = fVar1;
+  param_1->sinMax = fVar2;
+  fVar1 = param_1->sinMin;
+  param_1->boundingArcRay[0] = 0xffffffff;
+  param_1->boundingArcRay[1] = 0xffffffff;
+  fVar3 = -fVar1;
+  if (fVar2 - -fVar1 < 0.0) {
+    fVar3 = fVar2;
   }
-  if (0.001 <= fVar2) {
+  if (0.001 <= fVar3) {
     uVar7 = 0;
     dVar10 = -0.0010000000474974513;
     uVar8 = 0;
     iVar4 = 0xc;
-    puVar6 = (uint *)(iVar3 + 0x7c);
+    puVar5 = param_1->boundingArcRay + 1;
     do {
-      if (((double)*pfVar5 <= dVar9) || (dVar9 < (double)*(float *)(iVar4 + 0x50 + iVar3))) {
-        if ((dVar10 <= (double)*pfVar5) || ((double)*(float *)(iVar4 + 0x50 + iVar3) < dVar10)) {
+      if (((double)*pfVar6 <= dVar9) ||
+         (dVar9 < (double)*(float *)((int)param_1->sinInteriorAngle + iVar4))) {
+        if ((dVar10 <= (double)*pfVar6) ||
+           ((double)*(float *)((int)param_1->sinInteriorAngle + iVar4) < dVar10)) {
           if (1 < uVar7) {
             MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_sunshadow.cpp"
                             ,0x105,0,
                             "interiorRayCount doesn\'t index ARRAY_COUNT( frustumRays->interiorArcRay )\n\t%i not in [0, %i)"
                            );
           }
-          puVar6 = puVar6 + 1;
-          *puVar6 = uVar8;
+          puVar5 = puVar5 + 1;
+          *puVar5 = uVar8;
           uVar7 = uVar7 + 1;
         }
         else {
-          *(uint *)(iVar3 + 0x7c) = uVar8;
+          param_1->boundingArcRay[1] = uVar8;
         }
       }
       else {
-        *(uint *)(iVar3 + 0x78) = uVar8;
+        param_1->boundingArcRay[0] = uVar8;
       }
       uVar8 = uVar8 + 1;
-      iVar4 = (-0x50 - iVar3) + (int)pfVar5;
-      pfVar5 = pfVar5 + 1;
+      iVar4 = (-0x50 - (int)param_1) + (int)pfVar6;
+      pfVar6 = pfVar6 + 1;
     } while (uVar8 < 4);
     if (uVar7 != 2) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_sunshadow.cpp",
                       0x10b,0,
                       "interiorRayCount == ARRAY_COUNT( frustumRays->interiorArcRay )\n\t%i, %i");
     }
-    if (*(int *)(iVar3 + 0x78) == -1) {
+    if (param_1->boundingArcRay[0] == 0xffffffff) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_sunshadow.cpp",
                       0x10c,0,"%s");
     }
-    if (*(int *)(iVar3 + 0x7c) == -1) {
+    if (param_1->boundingArcRay[1] == 0xffffffff) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_sunshadow.cpp",
                       0x10d,0,"%s");
     }
   }
-  __restgprlr_24();
   return;
 }
 
@@ -586,26 +579,25 @@ void R_AddSunShadowClipPlanesAlongViewDir_Far
 
 // 82783D50  R_AddSunShadowClipPlanesForViewDir_Common  (gfx_d3d/r_sunshadow.cpp:320)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void R_AddSunShadowClipPlanesForViewDir_Common
                (GfxCamera *param_1,float param_2,GfxSunShadowFrustumRays *param_3,
                GfxSunShadowClip *param_4)
 
 {
-  GfxCamera *pGVar1;
-  double extraout_f1;
-  double dVar2;
+  double dVar1;
   
-  pGVar1 = (GfxCamera *)__savegprlr_29((double)param_2,param_1);
-  dVar2 = extraout_f1;
+  dVar1 = (double)param_2;
   if ((param_4->planes[0][6].coeffs[2] != -NAN) || (param_4->planes[0][6].coeffs[3] != -NAN)) {
     param_3 = (GfxSunShadowFrustumRays *)0x141;
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_sunshadow.cpp",0x141
                     ,0,"%s");
   }
   if (param_4->planes[0][5].coeffs[1] < -0.001) {
-    R_AddSunShadowClipPlanesAlongViewDir_Near(pGVar1,(float)dVar2,(GfxSunShadowClip *)param_3);
+    R_AddSunShadowClipPlanesAlongViewDir_Near(param_1,(float)dVar1,(GfxSunShadowClip *)param_3);
   }
-  __restgprlr_29();
   return;
 }
 
@@ -638,6 +630,9 @@ void R_AddSunShadowClipPlanesForViewDir_FadeByDistance
 
 // 82783E38  R_AddSunShadowClipPlanesForFrustumSides  (gfx_d3d/r_sunshadow.cpp:346)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
+
 void R_AddSunShadowClipPlanesForFrustumSides
                (float *param_1,GfxSunShadowFrustumRays *param_2,GfxSunShadowClip *param_3)
 
@@ -647,28 +642,26 @@ void R_AddSunShadowClipPlanesForFrustumSides
   float fVar3;
   float fVar4;
   float fVar5;
-  float *pfVar6;
-  DpvsPlane *pDVar7;
+  uint uVar6;
+  uint uVar7;
   uint uVar8;
-  uint uVar9;
-  uint uVar10;
-  int iVar11;
-  int iVar12;
+  int iVar9;
+  int iVar10;
+  DpvsPlane *pDVar11;
+  double dVar12;
   double dVar13;
   double dVar14;
   double dVar15;
-  double dVar16;
   
-  pfVar6 = (float *)__savegprlr_23(param_1);
-  dVar15 = -0.0010000000474974513;
+  dVar14 = -0.0010000000474974513;
   if (param_2->sinMin < -0.001) {
-    dVar16 = 1.0;
-    iVar12 = 0x24;
-    iVar11 = 0;
-    uVar8 = 0xc;
-    uVar9 = 0;
+    dVar15 = 1.0;
+    iVar10 = 0x24;
+    iVar9 = 0;
+    uVar6 = 0xc;
+    uVar7 = 0;
     do {
-      if ((double)*(float *)((int)param_2->sinInteriorAngle + uVar8) < dVar15) {
+      if ((double)*(float *)((int)param_2->sinInteriorAngle + uVar6) < dVar14) {
         if (9 < param_3->planeCount[0]) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_sunshadow.cpp"
                           ,0x167,0,
@@ -681,46 +674,50 @@ void R_AddSunShadowClipPlanesForFrustumSides
                           "clip->planeCount[R_SUNSHADOW_FAR] doesn\'t index ARRAY_COUNT( clip->planes[R_SUNSHADOW_FAR] )\n\t%i not in [0, %i)"
                          );
         }
-        pDVar7 = param_3->planes[0] + param_3->planeCount[0];
-        Vec3Cross((float *)((int)param_2->worldRays[0] + iVar12),
-                  (float *)((int)param_2->worldRays[0] + iVar11),pDVar7->coeffs);
-        fVar2 = pDVar7->coeffs[1];
-        fVar3 = pDVar7->coeffs[0];
-        fVar4 = pDVar7->coeffs[2];
-        dVar14 = (double)SQRT(fVar4 * fVar4 + fVar3 * fVar3 + fVar2 * fVar2);
-        dVar13 = dVar16;
-        if (-dVar14 < 0.0) {
-          dVar13 = dVar14;
+        pDVar11 = param_3->planes[0] + param_3->planeCount[0];
+        Vec3Cross((float *)((int)param_2->worldRays[0] + iVar10),
+                  (float *)((int)param_2->worldRays[0] + iVar9),pDVar11->coeffs);
+        fVar2 = pDVar11->coeffs[1];
+        fVar3 = pDVar11->coeffs[0];
+        fVar4 = pDVar11->coeffs[2];
+        dVar13 = (double)SQRT(fVar4 * fVar4 + fVar3 * fVar3 + fVar2 * fVar2);
+        dVar12 = dVar15;
+        if (-dVar13 < 0.0) {
+          dVar12 = dVar13;
         }
-        fVar1 = (float)(dVar16 / dVar13);
-        pDVar7->coeffs[0] = fVar3 * fVar1;
-        pDVar7->coeffs[1] = fVar2 * fVar1;
-        pDVar7->coeffs[2] = fVar4 * fVar1;
-        fVar5 = pDVar7->coeffs[0];
-        pDVar7->coeffs[3] =
-             -(pfVar6[2] * fVar4 * fVar1 + pfVar6[1] * fVar2 * fVar1 + *pfVar6 * fVar3 * fVar1);
-        uVar8 = param_3->planeCount[1];
-        param_3->planes[1][uVar8].coeffs[0] = fVar5;
-        param_3->planes[1][uVar8].coeffs[1] = pDVar7->coeffs[1];
-        param_3->planes[1][uVar8].coeffs[2] = pDVar7->coeffs[2];
-        param_3->planes[1][uVar8].coeffs[3] = pDVar7->coeffs[3];
-        uVar8 = param_3->planeCount[1];
+        fVar1 = (float)(dVar15 / dVar12);
+        pDVar11->coeffs[0] = fVar3 * fVar1;
+        pDVar11->coeffs[1] = fVar2 * fVar1;
+        pDVar11->coeffs[2] = fVar4 * fVar1;
+        fVar5 = pDVar11->coeffs[0];
+        pDVar11->coeffs[3] =
+             -(param_1[2] * fVar4 * fVar1 + param_1[1] * fVar2 * fVar1 + *param_1 * fVar3 * fVar1);
+        uVar6 = param_3->planeCount[1];
+        param_3->planes[1][uVar6].coeffs[0] = fVar5;
+        param_3->planes[1][uVar6].coeffs[1] = pDVar11->coeffs[1];
+        param_3->planes[1][uVar6].coeffs[2] = pDVar11->coeffs[2];
+        param_3->planes[1][uVar6].coeffs[3] = pDVar11->coeffs[3];
+        uVar6 = param_3->planeCount[1];
         param_3->planeCount[0] = param_3->planeCount[0] + 1;
-        param_3->planeCount[1] = uVar8 + 1;
+        param_3->planeCount[1] = uVar6 + 1;
       }
-      uVar10 = uVar9 + 4;
-      iVar12 = iVar11;
-      iVar11 = iVar11 + 0xc;
-      uVar8 = uVar9;
-      uVar9 = uVar10;
-    } while (uVar10 < 0x10);
+      uVar8 = uVar7 + 4;
+      iVar10 = iVar9;
+      iVar9 = iVar9 + 0xc;
+      uVar6 = uVar7;
+      uVar7 = uVar8;
+    } while (uVar8 < 0x10);
   }
-  __restgprlr_23();
   return;
 }
 
 
 // 82783FE8  R_AddSunShadowClipPlanesForBoundingArc  (gfx_d3d/r_sunshadow.cpp:374)
+
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 
 void R_AddSunShadowClipPlanesForBoundingArc
                (float *param_1,GfxSunShadowProjectionSetup *param_2,GfxSunShadowFrustumRays *param_3
@@ -735,16 +732,13 @@ void R_AddSunShadowClipPlanesForBoundingArc
   float fVar6;
   float fVar7;
   float fVar8;
-  float *pfVar9;
+  double dVar9;
   double dVar10;
   double dVar11;
   double dVar12;
-  double dVar13;
   float local_60;
   float local_5c;
   
-  __savegprlr_27(param_1);
-  pfVar9 = (float *)__savefpr_28();
   if (param_4->planeCount[0] != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_sunshadow.cpp",0x17a
                     ,0,"clip->planeCount[0] == 0\n\t%i, %i");
@@ -760,15 +754,15 @@ void R_AddSunShadowClipPlanesForBoundingArc
   fVar3 = param_2->sunAxis[0][0];
   fVar7 = param_2->sunAxis[0][1] * fVar5 + local_60 * param_2->sunAxis[1][1];
   param_4->planes[0][0].coeffs[1] = fVar7;
-  dVar13 = 0.5;
+  dVar12 = 0.5;
   fVar6 = fVar3 * fVar5 + fVar2 * local_60;
   param_4->planes[0][0].coeffs[0] = fVar6;
-  dVar12 = 4.0;
+  dVar11 = 4.0;
   uVar4 = param_3->boundingArcRay[1];
-  fVar2 = pfVar9[1];
+  fVar2 = param_1[1];
   fVar5 = param_2->sunAxis[0][2] * fVar5 + fVar1 * local_60;
-  fVar1 = *pfVar9;
-  fVar3 = pfVar9[2];
+  fVar1 = *param_1;
+  fVar3 = param_1[2];
   param_4->planes[0][0].coeffs[2] = fVar5;
   fVar8 = (ABS(local_5c) + ABS(local_60)) * param_2->sampleSize[0] * 0.5;
   fVar6 = -(fVar5 * fVar3 + fVar1 * fVar6 + fVar2 * fVar7);
@@ -787,26 +781,26 @@ void R_AddSunShadowClipPlanesForBoundingArc
   fVar2 = -local_60;
   fVar8 = param_2->sunAxis[0][0] * local_5c + param_2->sunAxis[1][0] * fVar2;
   fVar7 = param_2->sunAxis[0][1] * local_5c + fVar2 * param_2->sunAxis[1][1];
-  fVar1 = pfVar9[1];
+  fVar1 = param_1[1];
   fVar6 = param_2->sunAxis[0][2] * local_5c + param_2->sunAxis[1][2] * fVar2;
   fVar2 = param_2->sampleSize[0];
-  fVar3 = *pfVar9;
-  fVar5 = pfVar9[2];
+  fVar3 = *param_1;
+  fVar5 = param_1[2];
   param_4->planes[0][1].coeffs[0] = fVar8;
   param_4->planes[0][1].coeffs[2] = fVar6;
   param_4->planes[0][1].coeffs[1] = fVar7;
-  dVar11 = 0.0;
-  dVar10 = (double)(float)((double)((ABS(local_5c) + ABS(local_60)) * fVar2) * dVar13);
-  dVar13 = -(double)(fVar5 * fVar6 + fVar3 * fVar8 + fVar1 * fVar7);
-  param_4->planes[0][1].coeffs[3] = (float)dVar13;
+  dVar10 = 0.0;
+  dVar9 = (double)(float)((double)((ABS(local_5c) + ABS(local_60)) * fVar2) * dVar12);
+  dVar12 = -(double)(fVar5 * fVar6 + fVar3 * fVar8 + fVar1 * fVar7);
+  param_4->planes[0][1].coeffs[3] = (float)dVar12;
   param_4->planes[1][1].coeffs[3] = param_4->planes[0][1].coeffs[3];
   fVar2 = param_4->planes[1][1].coeffs[3];
   fVar6 = param_4->planes[0][1].coeffs[1];
   fVar7 = param_4->planes[0][1].coeffs[2];
   fVar8 = param_4->planes[0][1].coeffs[0];
-  param_4->planes[0][1].coeffs[3] = (float)(dVar13 + dVar10);
+  param_4->planes[0][1].coeffs[3] = (float)(dVar12 + dVar9);
   param_4->planes[1][1].coeffs[0] = fVar8;
-  param_4->planes[1][1].coeffs[3] = (float)(dVar10 * dVar12 + (double)fVar2);
+  param_4->planes[1][1].coeffs[3] = (float)(dVar9 * dVar11 + (double)fVar2);
   param_4->planes[1][1].coeffs[1] = fVar6;
   param_4->planes[1][1].coeffs[2] = fVar7;
   if (param_4->planes[0][0].coeffs[3] + fVar5 * param_4->planes[0][0].coeffs[2] +
@@ -816,9 +810,9 @@ void R_AddSunShadowClipPlanesForBoundingArc
                     "R_DpvsPlaneDistToPoint( &clip->planes[R_SUNSHADOW_NEAR][0], viewOrg ) > 0.0f\n\t%g, %g"
                    );
   }
-  if ((double)(param_4->planes[1][1].coeffs[3] + param_4->planes[1][1].coeffs[2] * pfVar9[2] +
-              param_4->planes[1][1].coeffs[1] * pfVar9[1] +
-              *pfVar9 * param_4->planes[1][1].coeffs[0]) <= dVar11) {
+  if ((double)(param_4->planes[1][1].coeffs[3] + param_4->planes[1][1].coeffs[2] * param_1[2] +
+              param_4->planes[1][1].coeffs[1] * param_1[1] +
+              *param_1 * param_4->planes[1][1].coeffs[0]) <= dVar10) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_sunshadow.cpp",0x18e
                     ,0,
                     "R_DpvsPlaneDistToPoint( &clip->planes[R_SUNSHADOW_FAR][1], viewOrg ) > 0.0f\n\t%g, %g"
@@ -826,13 +820,14 @@ void R_AddSunShadowClipPlanesForBoundingArc
   }
   param_4->planeCount[0] = 2;
   param_4->planeCount[1] = 2;
-  __restfpr_28();
-  __restgprlr_27();
   return;
 }
 
 
 // 82784330  R_AddSunShadowClipPlaneForNearClipPoints  (gfx_d3d/r_sunshadow.cpp:406)
+
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 
 void R_AddSunShadowClipPlaneForNearClipPoints
                (float *param_1,GfxSunShadowProjectionSetup *param_2,float (*param_3) [2],
@@ -843,43 +838,32 @@ void R_AddSunShadowClipPlaneForNearClipPoints
   float fVar2;
   float fVar3;
   float fVar4;
-  int iVar5;
-  int iVar6;
-  float *pfVar7;
-  float *pfVar8;
-  float *pfVar9;
-  longlong lVar10;
-  longlong lVar11;
+  float (*pafVar5) [2];
   float local_30;
   float local_2c;
   
-  lVar11 = (longlong)(int)param_3;
-  lVar10 = (longlong)(int)param_2;
-  pfVar9 = (float *)__savegprlr_29(param_1,lVar10,lVar11,param_4);
-  iVar6 = (int)lVar11;
-  if (9 < *(uint *)(iVar6 + 4)) {
+  if (9 < (uint)(*param_3)[1]) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_sunshadow.cpp",0x19b
                     ,0,
                     "clip->planeCount[R_SUNSHADOW_FAR] doesn\'t index ARRAY_COUNT( clip->planes[R_SUNSHADOW_FAR] )\n\t%i not in [0, %i)"
                    );
   }
-  iVar5 = *(int *)(iVar6 + 4);
-  pfVar7 = (float *)lVar10;
-  local_30 = pfVar7[3] - pfVar7[1];
-  local_2c = *pfVar7 - pfVar7[2];
-  *(int *)(iVar6 + 4) = iVar5 + 1;
-  pfVar8 = (float *)((iVar5 + 0xb) * 0x10 + iVar6);
+  fVar4 = (*param_3)[1];
+  local_30 = param_2->sunAxis[1][0] - param_2->sunAxis[0][1];
+  local_2c = param_2->sunAxis[0][0] - param_2->sunAxis[0][2];
+  (*param_3)[1] = (float)((int)fVar4 + 1);
+  pafVar5 = param_3 + ((int)fVar4 + 0xb) * 2;
   Vec2Normalize(&local_30);
-  fVar1 = *pfVar9;
-  fVar2 = pfVar9[1];
-  fVar3 = pfVar9[4];
-  fVar4 = *pfVar7;
-  pfVar8[2] = pfVar9[5] * local_2c + pfVar9[2] * local_30;
-  *pfVar8 = pfVar9[3] * local_2c + fVar1 * local_30;
-  pfVar8[1] = fVar3 * local_2c + fVar2 * local_30;
-  pfVar8[3] = (ABS(local_2c) + ABS(local_30)) * pfVar9[0x17] * 0.5 -
-              (pfVar7[1] * local_2c + fVar4 * local_30);
-  __restgprlr_29();
+  fVar4 = *param_1;
+  fVar1 = param_1[1];
+  fVar2 = param_1[4];
+  fVar3 = param_2->sunAxis[0][0];
+  pafVar5[1][0] = param_1[5] * local_2c + param_1[2] * local_30;
+  (*pafVar5)[0] = param_1[3] * local_2c + fVar4 * local_30;
+  (*pafVar5)[1] = fVar2 * local_2c + fVar1 * local_30;
+  pafVar5[1][1] =
+       (ABS(local_2c) + ABS(local_30)) * param_1[0x17] * 0.5 -
+       (param_2->sunAxis[0][1] * local_2c + fVar3 * local_30);
   return;
 }
 
@@ -944,6 +928,11 @@ bool R_CullSunShadowClipPlane
 
 // 82784598  R_AddSunShadowClipPlanesForMapBoundary  (gfx_d3d/r_sunshadow.cpp:467)
 
+/* WARNING: Function: __savegprlr_16 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_16 replaced with injection: xenon_save_restore */
+
 void R_AddSunShadowClipPlanesForMapBoundary
                (GfxSunShadowProjectionSetup *param_1,GfxSunShadowFrustumRays *param_2,
                GfxSunShadowMapMetrics *param_3,uint param_4,GfxSunShadowClip *param_5)
@@ -952,18 +941,18 @@ void R_AddSunShadowClipPlanesForMapBoundary
   float fVar1;
   float fVar2;
   float fVar3;
-  int iVar4;
+  float fVar4;
   float fVar5;
-  float fVar6;
+  int iVar6;
   int iVar7;
-  int iVar8;
-  float *pfVar9;
-  ulonglong uVar10;
-  ulonglong uVar11;
-  ulonglong uVar12;
-  longlong lVar13;
+  ulonglong uVar8;
+  ulonglong uVar9;
+  longlong lVar10;
+  uint uVar12;
+  longlong lVar11;
+  float *pfVar13;
   uint uVar14;
-  float *pfVar15;
+  float (*pafVar15) [3];
   uint uVar16;
   DpvsPlane *pDVar17;
   uint uVar18;
@@ -989,156 +978,147 @@ void R_AddSunShadowClipPlanesForMapBoundary
   float local_b8;
   float local_b4;
   
-  uVar12 = (ulonglong)(int)param_4;
-  __savegprlr_16(param_1);
-  pfVar9 = (float *)__savefpr_27();
+  lVar10 = (longlong)(int)param_4;
   bVar19 = param_2->maxs[1] - param_2->mins[1] < param_2->maxs[0] - param_2->mins[0];
   local_100 = (ulonglong)param_3->usefulSize;
-  iVar4 = (int)((uVar12 + 0x16 & 0xffffffff) << 2);
-  iVar8 = (int)(uVar12 + 9) * 2;
-  fVar3 = *(float *)(iVar4 + (int)pfVar9);
-  fVar5 = (float)local_100 * fVar3;
-  fVar6 = pfVar9[bVar19 + 0x10] * fVar3 - pfVar9[iVar8 + (uint)bVar19];
-  dVar23 = (double)(fVar5 * 0.5);
-  uVar14 = (uint)(dVar23 <= (double)fVar6);
+  iVar6 = (int)((lVar10 + 0x16U & 0xffffffff) << 2);
+  iVar7 = (int)(lVar10 + 9U) * 2;
+  fVar3 = *(float *)((int)param_1->sunAxis[0] + iVar6);
+  fVar4 = (float)local_100 * fVar3;
+  fVar5 = param_1->shadowOrgPixelCenter[bVar19] * fVar3 - param_1->sunAxis[0][iVar7 + (uint)bVar19];
+  dVar23 = (double)(fVar4 * 0.5);
+  uVar14 = (uint)(dVar23 <= (double)fVar5);
   uVar16 = bVar19 ^ 1;
   uVar18 = uVar14 ^ 1;
-  pfVar15 = pfVar9 + (uint)bVar19 * 3;
-  fVar1 = pfVar15[1];
-  fVar2 = pfVar15[2];
-  local_f0[uVar14 * 4] = *pfVar15;
+  pafVar15 = param_1->sunAxis + bVar19;
+  fVar1 = (*pafVar15)[1];
+  fVar2 = (*pafVar15)[2];
+  local_f0[uVar14 * 4] = (*pafVar15)[0];
   local_f0[uVar14 * 4 + 2] = fVar2;
   local_f0[uVar14 * 4 + 1] = fVar1;
-  local_f0[uVar14 * 4 + 3] = fVar6;
-  fVar1 = pfVar9[uVar16 + 0x10];
-  fVar2 = pfVar9[iVar8 + uVar16];
+  local_f0[uVar14 * 4 + 3] = fVar5;
+  fVar1 = param_1->shadowOrgPixelCenter[uVar16];
+  fVar2 = param_1->sunAxis[0][iVar7 + uVar16];
   local_f0[uVar18 * 4] = -local_f0[uVar14 * 4];
   fVar2 = fVar1 * fVar3 - fVar2;
   local_f0[uVar18 * 4 + 1] = -local_f0[uVar14 * 4 + 1];
   local_f0[uVar18 * 4 + 2] = -local_f0[uVar14 * 4 + 2];
   local_f0[uVar18 * 4 + 3] = -local_f0[uVar14 * 4 + 3];
-  local_f0[uVar18 * 4 + 3] = fVar5 + local_f0[uVar18 * 4 + 3];
-  uVar14 = (dVar23 <= (double)fVar2) + 2;
-  uVar18 = uVar14 ^ 1;
-  fVar1 = pfVar9[uVar16 * 3 + 1];
-  local_f0[uVar14 * 4] = pfVar9[uVar16 * 3];
-  local_f0[uVar14 * 4 + 1] = fVar1;
-  local_f0[uVar14 * 4 + 2] = pfVar9[uVar16 * 3 + 2];
-  local_f0[uVar14 * 4 + 3] = fVar2;
-  local_f0[uVar18 * 4] = -local_f0[uVar14 * 4];
-  iVar7 = (int)((uVar12 & 0x3fffffff) << 2);
-  iVar8 = *(int *)((int)param_5->planeCount + iVar7);
-  local_f0[uVar18 * 4 + 1] = -local_f0[uVar14 * 4 + 1];
-  local_f0[uVar18 * 4 + 2] = -local_f0[uVar14 * 4 + 2];
-  local_f0[uVar18 * 4 + 3] = -local_f0[uVar14 * 4 + 3];
-  local_f0[uVar18 * 4 + 3] = fVar5 + local_f0[uVar18 * 4 + 3];
-  if (10 < iVar8 + 4U) {
+  local_f0[uVar18 * 4 + 3] = fVar4 + local_f0[uVar18 * 4 + 3];
+  uVar12 = (dVar23 <= (double)fVar2) + 2;
+  uVar14 = uVar12 ^ 1;
+  fVar1 = param_1->sunAxis[uVar16][1];
+  local_f0[uVar12 * 4] = param_1->sunAxis[uVar16][0];
+  local_f0[uVar12 * 4 + 1] = fVar1;
+  local_f0[uVar12 * 4 + 2] = param_1->sunAxis[uVar16][2];
+  local_f0[uVar12 * 4 + 3] = fVar2;
+  local_f0[uVar14 * 4] = -local_f0[uVar12 * 4];
+  uVar18 = param_5->planeCount[param_4];
+  local_f0[uVar14 * 4 + 1] = -local_f0[uVar12 * 4 + 1];
+  local_f0[uVar14 * 4 + 2] = -local_f0[uVar12 * 4 + 2];
+  local_f0[uVar14 * 4 + 3] = -local_f0[uVar12 * 4 + 3];
+  local_f0[uVar14 * 4 + 3] = fVar4 + local_f0[uVar14 * 4 + 3];
+  if (10 < uVar18 + 4) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_sunshadow.cpp",0x209
                     ,0,
                     "clip->planeCount[partitionIndex] + 4 <= ARRAY_COUNT( clip->planes[partitionIndex] )\n\t%i, %i"
                    );
   }
-  uVar18 = *(uint *)((int)param_5->planeCount + iVar7);
-  uVar11 = (ulonglong)uVar18;
-  uVar10 = 0;
-  iVar8 = (int)uVar12;
-  if (uVar11 != 0) {
+  uVar18 = param_5->planeCount[param_4];
+  uVar9 = (ulonglong)uVar18;
+  uVar8 = 0;
+  if (uVar9 != 0) {
     do {
-      pDVar17 = param_5->planes[iVar8] + (int)uVar10;
-      if (ABS(pDVar17->coeffs[2] * pfVar9[8] +
-              pDVar17->coeffs[1] * pfVar9[7] + pfVar9[6] * pDVar17->coeffs[0]) < 0.001) {
-        dVar20 = (double)*(float *)(iVar4 + (int)pfVar9);
+      pDVar17 = param_5->planes[param_4] + (int)uVar8;
+      if (ABS(pDVar17->coeffs[2] * param_1->sunAxis[2][2] +
+              pDVar17->coeffs[1] * param_1->sunAxis[2][1] +
+              param_1->sunAxis[2][0] * pDVar17->coeffs[0]) < 0.001) {
+        dVar20 = (double)*(float *)((int)param_1->sunAxis[0] + iVar6);
         uVar18 = 0;
         dVar24 = -dVar23;
-        lVar13 = ZEXT48(&stack0x00000000) - 0xf0;
-        fVar1 = -(float)((double)pfVar9[0x10] * dVar20 - dVar23) +
-                *(float *)((int)((uVar12 + 9 & 0xffffffff) << 3) + (int)pfVar9);
-        fVar2 = -(float)((double)pfVar9[0x11] * dVar20 - dVar23) +
-                *(float *)((int)pfVar9 + (int)((uVar12 & 0xffffffff) << 3) + 0x4c);
-        dVar22 = (double)(pfVar9[3] * fVar2 + *pfVar9 * fVar1);
-        dVar21 = (double)(pfVar9[4] * fVar2 + pfVar9[1] * fVar1);
-        dVar20 = (double)(pfVar9[5] * fVar2 + pfVar9[2] * fVar1);
+        lVar11 = ZEXT48(&stack0x00000000) - 0xf0;
+        fVar1 = -(float)((double)param_1->shadowOrgPixelCenter[0] * dVar20 - dVar23) +
+                *(float *)((int)param_1->sunAxis[0] + (int)((lVar10 + 9U & 0xffffffff) << 3));
+        fVar2 = -(float)((double)param_1->shadowOrgPixelCenter[1] * dVar20 - dVar23) +
+                param_1->snappedShadowOrg[param_4][1];
+        dVar22 = (double)(param_1->sunAxis[1][0] * fVar2 + param_1->sunAxis[0][0] * fVar1);
+        dVar21 = (double)(param_1->sunAxis[1][1] * fVar2 + param_1->sunAxis[0][1] * fVar1);
+        dVar20 = (double)(param_1->sunAxis[1][2] * fVar2 + param_1->sunAxis[0][2] * fVar1);
         do {
-          pfVar9 = (float *)lVar13;
-          local_f8 = (float)((double)pfVar9[2] * dVar24 + dVar20);
-          local_100 = CONCAT44((float)((double)*pfVar9 * dVar24 + dVar22),
-                               (float)((double)pfVar9[1] * dVar24 + dVar21));
+          pfVar13 = (float *)lVar11;
+          local_f8 = (float)((double)pfVar13[2] * dVar24 + dVar20);
+          local_100 = CONCAT44((float)((double)*pfVar13 * dVar24 + dVar22),
+                               (float)((double)pfVar13[1] * dVar24 + dVar21));
           bVar19 = R_CullSunShadowClipPlane
                              ((DpvsPlane *)
                               ((int)param_5->planes[0][0].coeffs +
-                              (int)((uVar12 + (uVar12 & 0x3fffffff) * 4 & 0xffffffff) << 5)),
-                              (uint)uVar10,(uint)uVar11,(float *)&local_100,
+                              (int)((lVar10 + ((ulonglong)param_4 & 0x3fffffff) * 4 & 0xffffffff) <<
+                                   5)),(uint)uVar8,(uint)uVar9,(float *)&local_100,
                               (float *)((int)local_f0 + (uVar18 << 4 ^ 0x20)),(float)dVar23);
           if (!bVar19) {
-            iVar4 = *(int *)((int)param_5->planeCount + iVar7);
-            pfVar9 = (float *)lVar13;
-            fVar1 = pfVar9[1];
-            fVar2 = pfVar9[2];
-            fVar3 = pfVar9[3];
-            param_5->planes[iVar8][iVar4].coeffs[0] = *pfVar9;
-            param_5->planes[iVar8][iVar4].coeffs[1] = fVar1;
-            param_5->planes[iVar8][iVar4].coeffs[2] = fVar2;
-            param_5->planes[iVar8][iVar4].coeffs[3] = fVar3;
-            *(int *)((int)param_5->planeCount + iVar7) =
-                 *(int *)((int)param_5->planeCount + iVar7) + 1;
+            uVar14 = param_5->planeCount[param_4];
+            pfVar13 = (float *)lVar11;
+            fVar1 = pfVar13[1];
+            fVar2 = pfVar13[2];
+            fVar3 = pfVar13[3];
+            param_5->planes[param_4][uVar14].coeffs[0] = *pfVar13;
+            param_5->planes[param_4][uVar14].coeffs[1] = fVar1;
+            param_5->planes[param_4][uVar14].coeffs[2] = fVar2;
+            param_5->planes[param_4][uVar14].coeffs[3] = fVar3;
+            param_5->planeCount[param_4] = param_5->planeCount[param_4] + 1;
           }
           uVar18 = uVar18 + 1;
-          lVar13 = lVar13 + 0x10;
+          lVar11 = lVar11 + 0x10;
         } while (uVar18 < 4);
-        __restfpr_27();
-        __restgprlr_16();
         return;
       }
-      uVar10 = uVar10 + 1;
-    } while ((uVar10 & 0xffffffff) != uVar11);
+      uVar8 = uVar8 + 1;
+    } while ((uVar8 & 0xffffffff) != uVar9);
   }
-  *(uint *)((int)param_5->planeCount + iVar7) = uVar18 + 4;
+  param_5->planeCount[param_4] = uVar18 + 4;
   if (local_f0[3] < local_c4) {
-    param_5->planes[iVar8][uVar18].coeffs[0] = local_f0[0];
-    param_5->planes[iVar8][uVar18].coeffs[1] = local_f0[1];
-    param_5->planes[iVar8][uVar18].coeffs[2] = local_f0[2];
-    param_5->planes[iVar8][uVar18].coeffs[3] = local_f0[3];
-    param_5->planes[iVar8][uVar18 + 1].coeffs[0] = local_e0;
-    param_5->planes[iVar8][uVar18 + 1].coeffs[1] = local_dc;
-    param_5->planes[iVar8][uVar18 + 1].coeffs[2] = local_d8;
-    param_5->planes[iVar8][uVar18 + 1].coeffs[3] = local_d4;
-    param_5->planes[iVar8][uVar18 + 2].coeffs[0] = local_d0;
-    param_5->planes[iVar8][uVar18 + 2].coeffs[1] = local_cc;
-    param_5->planes[iVar8][uVar18 + 2].coeffs[2] = local_c8;
-    param_5->planes[iVar8][uVar18 + 2].coeffs[3] = local_c4;
-    param_5->planes[iVar8][uVar18 + 3].coeffs[0] = local_c0;
-    param_5->planes[iVar8][uVar18 + 3].coeffs[1] = local_bc;
-    param_5->planes[iVar8][uVar18 + 3].coeffs[2] = local_b8;
-    param_5->planes[iVar8][uVar18 + 3].coeffs[3] = local_b4;
-    __restfpr_27();
-    __restgprlr_16();
+    param_5->planes[param_4][uVar18].coeffs[0] = local_f0[0];
+    param_5->planes[param_4][uVar18].coeffs[1] = local_f0[1];
+    param_5->planes[param_4][uVar18].coeffs[2] = local_f0[2];
+    param_5->planes[param_4][uVar18].coeffs[3] = local_f0[3];
+    param_5->planes[param_4][uVar18 + 1].coeffs[0] = local_e0;
+    param_5->planes[param_4][uVar18 + 1].coeffs[1] = local_dc;
+    param_5->planes[param_4][uVar18 + 1].coeffs[2] = local_d8;
+    param_5->planes[param_4][uVar18 + 1].coeffs[3] = local_d4;
+    param_5->planes[param_4][uVar18 + 2].coeffs[0] = local_d0;
+    param_5->planes[param_4][uVar18 + 2].coeffs[1] = local_cc;
+    param_5->planes[param_4][uVar18 + 2].coeffs[2] = local_c8;
+    param_5->planes[param_4][uVar18 + 2].coeffs[3] = local_c4;
+    param_5->planes[param_4][uVar18 + 3].coeffs[0] = local_c0;
+    param_5->planes[param_4][uVar18 + 3].coeffs[1] = local_bc;
+    param_5->planes[param_4][uVar18 + 3].coeffs[2] = local_b8;
+    param_5->planes[param_4][uVar18 + 3].coeffs[3] = local_b4;
     return;
   }
-  param_5->planes[iVar8][uVar18].coeffs[0] = local_d0;
-  param_5->planes[iVar8][uVar18].coeffs[1] = local_cc;
-  param_5->planes[iVar8][uVar18].coeffs[2] = local_c8;
-  param_5->planes[iVar8][uVar18].coeffs[3] = local_c4;
-  param_5->planes[iVar8][uVar18 + 1].coeffs[0] = local_c0;
-  param_5->planes[iVar8][uVar18 + 1].coeffs[1] = local_bc;
-  param_5->planes[iVar8][uVar18 + 1].coeffs[2] = local_b8;
-  param_5->planes[iVar8][uVar18 + 1].coeffs[3] = local_b4;
-  param_5->planes[iVar8][uVar18 + 2].coeffs[0] = local_f0[0];
-  param_5->planes[iVar8][uVar18 + 2].coeffs[1] = local_f0[1];
-  param_5->planes[iVar8][uVar18 + 2].coeffs[2] = local_f0[2];
-  param_5->planes[iVar8][uVar18 + 2].coeffs[3] = local_f0[3];
-  param_5->planes[iVar8][uVar18 + 3].coeffs[0] = local_e0;
-  param_5->planes[iVar8][uVar18 + 3].coeffs[1] = local_dc;
-  param_5->planes[iVar8][uVar18 + 3].coeffs[2] = local_d8;
-  param_5->planes[iVar8][uVar18 + 3].coeffs[3] = local_d4;
-  __restfpr_27();
-  __restgprlr_16();
+  param_5->planes[param_4][uVar18].coeffs[0] = local_d0;
+  param_5->planes[param_4][uVar18].coeffs[1] = local_cc;
+  param_5->planes[param_4][uVar18].coeffs[2] = local_c8;
+  param_5->planes[param_4][uVar18].coeffs[3] = local_c4;
+  param_5->planes[param_4][uVar18 + 1].coeffs[0] = local_c0;
+  param_5->planes[param_4][uVar18 + 1].coeffs[1] = local_bc;
+  param_5->planes[param_4][uVar18 + 1].coeffs[2] = local_b8;
+  param_5->planes[param_4][uVar18 + 1].coeffs[3] = local_b4;
+  param_5->planes[param_4][uVar18 + 2].coeffs[0] = local_f0[0];
+  param_5->planes[param_4][uVar18 + 2].coeffs[1] = local_f0[1];
+  param_5->planes[param_4][uVar18 + 2].coeffs[2] = local_f0[2];
+  param_5->planes[param_4][uVar18 + 2].coeffs[3] = local_f0[3];
+  param_5->planes[param_4][uVar18 + 3].coeffs[0] = local_e0;
+  param_5->planes[param_4][uVar18 + 3].coeffs[1] = local_dc;
+  param_5->planes[param_4][uVar18 + 3].coeffs[2] = local_d8;
+  param_5->planes[param_4][uVar18 + 3].coeffs[3] = local_d4;
   return;
 }
 
 
 // 82784B18  R_AddSunShadowClipPlaneForFrustumEdge  (gfx_d3d/r_sunshadow.cpp:575)
 
-/* WARNING: Restarted to delay deadcode elimination for space: stack */
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 
 void R_AddSunShadowClipPlaneForFrustumEdge
                (float *param_1,GfxSunShadowProjectionSetup *param_2,GfxSunShadowFrustumRays *param_3
@@ -1150,64 +1130,50 @@ void R_AddSunShadowClipPlaneForFrustumEdge
   float fVar3;
   float fVar4;
   float fVar5;
-  float *pfVar6;
-  ulonglong uVar7;
-  ulonglong uVar8;
   int *in_r9;
-  int iVar9;
-  float *pfVar10;
-  double extraout_f1;
-  double dVar11;
+  int iVar6;
+  double dVar7;
   float local_60;
   float local_5c;
-  int local_50;
-  float local_4c;
-  float local_48;
-  float local_44;
   
-  uVar8 = (ulonglong)(int)param_5;
-  uVar7 = (ulonglong)(int)param_4;
-  pfVar6 = (float *)__savegprlr_28((double)param_6,param_1);
-  iVar9 = (int)((uVar7 + 6 & 0x1fffffff) << 3);
-  pfVar10 = (float *)((int)param_3->worldRays[0] + iVar9);
-  local_60 = *(float *)((int)param_3->shadowRays[0] + (int)((uVar7 & 0xffffffff) << 3) + 4) -
-             *(float *)((int)param_3->shadowRays[0] + (int)((uVar8 & 0xffffffff) << 3) + 4);
-  local_5c = *(float *)((int)param_3->worldRays[0] + (int)((uVar8 + 6 & 0xffffffff) << 3)) -
-             *(float *)((int)param_3->worldRays[0] + iVar9);
-  dVar11 = extraout_f1;
+  dVar7 = (double)param_6;
+  local_60 = param_3->shadowRays[param_4][1] - param_3->shadowRays[param_5][1];
+  local_5c = param_3->shadowRays[param_5][0] - param_3->shadowRays[param_4][0];
   Vec2Normalize(&local_60);
   fVar1 = param_2->sunAxis[1][0];
   fVar2 = param_2->sunAxis[0][1];
   fVar3 = param_2->sunAxis[0][2];
-  fVar4 = *pfVar10;
+  fVar4 = param_3->shadowRays[param_4][0];
   fVar5 = param_2->sunAxis[0][0];
-  iVar9 = *in_r9 + 1;
+  iVar6 = *in_r9 + 1;
   *in_r9 = *in_r9 + 1;
-  fVar1 = fVar5 * local_60 + local_5c * fVar1;
-  local_4c = param_2->sunAxis[1][1] * local_5c + fVar2 * local_60;
-  local_48 = param_2->sunAxis[1][2] * local_5c + fVar3 * local_60;
-  local_44 = -(pfVar6[2] * local_48 + pfVar6[1] * local_4c + *pfVar6 * fVar1);
-  fVar2 = -(ABS(local_5c + local_60) * param_2->sampleSize[0] * 0.5 -
-           (float)((double)(pfVar10[1] * local_5c + fVar4 * local_60) *
-                   (double)param_2->frustumRayDistToEdgeOfNearMap + dVar11));
-  in_r9[iVar9 * 4 + 3] = (int)local_44;
-  in_r9[iVar9 * 4 + 3] = (int)((float)in_r9[iVar9 * 4 + 3] - fVar2);
-  in_r9[iVar9 * 4] = local_50;
-  in_r9[iVar9 * 4 + 1] = (int)local_4c;
-  in_r9[iVar9 * 4 + 2] = (int)local_48;
-  iVar9 = in_r9[1] + 0xb;
+  fVar5 = fVar5 * local_60 + local_5c * fVar1;
+  fVar2 = param_2->sunAxis[1][1] * local_5c + fVar2 * local_60;
+  fVar1 = param_2->sunAxis[1][2] * local_5c + fVar3 * local_60;
+  fVar3 = -(param_1[2] * fVar1 + param_1[1] * fVar2 + *param_1 * fVar5);
+  fVar4 = -(ABS(local_5c + local_60) * param_2->sampleSize[0] * 0.5 -
+           (float)((double)(param_3->shadowRays[param_4][1] * local_5c + fVar4 * local_60) *
+                   (double)param_2->frustumRayDistToEdgeOfNearMap + dVar7));
+  in_r9[iVar6 * 4 + 3] = (int)fVar3;
+  in_r9[iVar6 * 4 + 3] = (int)((float)in_r9[iVar6 * 4 + 3] - fVar4);
+  in_r9[iVar6 * 4] = (int)fVar5;
+  in_r9[iVar6 * 4 + 1] = (int)fVar2;
+  in_r9[iVar6 * 4 + 2] = (int)fVar1;
+  iVar6 = in_r9[1] + 0xb;
   in_r9[1] = in_r9[1] + 1;
-  in_r9[iVar9 * 4] = (int)fVar1;
-  in_r9[iVar9 * 4 + 1] = (int)local_4c;
-  in_r9[iVar9 * 4 + 2] = (int)local_48;
-  in_r9[iVar9 * 4 + 3] = (int)local_44;
-  in_r9[iVar9 * 4 + 3] = (int)-(fVar2 * 4.0 - (float)in_r9[iVar9 * 4 + 3]);
-  __restgprlr_28();
+  in_r9[iVar6 * 4] = (int)fVar5;
+  in_r9[iVar6 * 4 + 1] = (int)fVar2;
+  in_r9[iVar6 * 4 + 2] = (int)fVar1;
+  in_r9[iVar6 * 4 + 3] = (int)fVar3;
+  in_r9[iVar6 * 4 + 3] = (int)-(fVar4 * 4.0 - (float)in_r9[iVar6 * 4 + 3]);
   return;
 }
 
 
 // 82784CD0  R_AddSunShadowClipPlanesForFrustumBoundary  (gfx_d3d/r_sunshadow.cpp:603)
+
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 
 void R_AddSunShadowClipPlanesForFrustumBoundary
                (float *param_1,GfxSunShadowProjectionSetup *param_2,GfxSunShadowFrustumRays *param_3
@@ -1218,121 +1184,110 @@ void R_AddSunShadowClipPlanesForFrustumBoundary
   float fVar2;
   float fVar3;
   float fVar4;
-  GfxSunShadowFrustumRays *pGVar5;
+  float fVar5;
   float fVar6;
-  float fVar7;
+  int iVar7;
   int iVar8;
-  int iVar9;
+  float *pfVar9;
   float *pfVar10;
-  float *pfVar11;
-  float *pfVar12;
-  longlong lVar13;
-  GfxSunShadowProjectionSetup *pGVar14;
-  longlong lVar15;
-  uint uVar16;
-  uint uVar17;
+  uint uVar11;
+  uint uVar12;
   GfxSunShadowClip *in_r8;
-  ulonglong uVar18;
-  ulonglong uVar19;
-  ulonglong uVar20;
-  bool bVar21;
-  double dVar22;
+  ulonglong uVar13;
+  ulonglong uVar14;
+  ulonglong uVar15;
+  bool bVar16;
+  double dVar17;
   float local_60 [4];
   float local_50 [20];
   
-  lVar15 = (longlong)(int)param_3;
-  lVar13 = (longlong)(int)param_2;
-  pfVar12 = (float *)__savegprlr_26(param_1,lVar13,lVar15,param_4);
-  pGVar5 = (GfxSunShadowFrustumRays *)lVar15;
-  uVar16 = pGVar5->boundingArcRay[0];
-  pGVar14 = (GfxSunShadowProjectionSetup *)lVar13;
-  if (uVar16 == 0xffffffff) {
-    dVar22 = 0.0;
-    if (pGVar5->sinMax <= -pGVar5->sinMin) {
-      R_AddSunShadowClipPlaneForFrustumEdge(pfVar12,pGVar14,pGVar5,1,0,0.0,in_r8);
-      R_AddSunShadowClipPlaneForFrustumEdge(pfVar12,pGVar14,pGVar5,3,2,(float)dVar22,in_r8);
-      R_AddSunShadowClipPlaneForFrustumEdge(pfVar12,pGVar14,pGVar5,2,1,(float)dVar22,in_r8);
-      uVar17 = 3;
-      uVar16 = 0;
+  uVar11 = param_3->boundingArcRay[0];
+  if (uVar11 == 0xffffffff) {
+    dVar17 = 0.0;
+    if (param_3->sinMax <= -param_3->sinMin) {
+      R_AddSunShadowClipPlaneForFrustumEdge(param_1,param_2,param_3,1,0,0.0,in_r8);
+      R_AddSunShadowClipPlaneForFrustumEdge(param_1,param_2,param_3,3,2,(float)dVar17,in_r8);
+      R_AddSunShadowClipPlaneForFrustumEdge(param_1,param_2,param_3,2,1,(float)dVar17,in_r8);
+      uVar12 = 3;
+      uVar11 = 0;
     }
     else {
-      R_AddSunShadowClipPlaneForFrustumEdge(pfVar12,pGVar14,pGVar5,0,1,0.0,in_r8);
-      R_AddSunShadowClipPlaneForFrustumEdge(pfVar12,pGVar14,pGVar5,2,3,(float)dVar22,in_r8);
-      R_AddSunShadowClipPlaneForFrustumEdge(pfVar12,pGVar14,pGVar5,1,2,(float)dVar22,in_r8);
-      uVar17 = 0;
-      uVar16 = 3;
+      R_AddSunShadowClipPlaneForFrustumEdge(param_1,param_2,param_3,0,1,0.0,in_r8);
+      R_AddSunShadowClipPlaneForFrustumEdge(param_1,param_2,param_3,2,3,(float)dVar17,in_r8);
+      R_AddSunShadowClipPlaneForFrustumEdge(param_1,param_2,param_3,1,2,(float)dVar17,in_r8);
+      uVar12 = 0;
+      uVar11 = 3;
     }
     goto LAB_82784f80;
   }
-  uVar17 = pGVar5->boundingArcRay[1];
-  in_r8 = (GfxSunShadowClip *)(pGVar5->shadowRays + pGVar5->interiorArcRay[1]);
+  uVar12 = param_3->boundingArcRay[1];
+  in_r8 = (GfxSunShadowClip *)(param_3->shadowRays + param_3->interiorArcRay[1]);
+  pfVar9 = (float *)in_r8->planeCount;
   pfVar10 = (float *)in_r8->planeCount;
-  pfVar11 = (float *)in_r8->planeCount;
-  fVar1 = pGVar5->shadowRays[uVar17][0];
-  local_50[0] = pGVar5->shadowRays[uVar16][0];
-  fVar7 = fVar1 - local_50[0];
-  local_50[1] = pGVar5->shadowRays[uVar16][1];
-  fVar2 = pGVar5->shadowRays[uVar17][1];
-  local_50[3] = pfVar10[1] - local_50[1];
-  fVar3 = pGVar5->shadowRays[pGVar5->interiorArcRay[0]][1];
-  fVar6 = fVar2 - local_50[1];
+  fVar1 = param_3->shadowRays[uVar12][0];
+  local_50[0] = param_3->shadowRays[uVar11][0];
+  fVar6 = fVar1 - local_50[0];
+  local_50[1] = param_3->shadowRays[uVar11][1];
+  fVar2 = param_3->shadowRays[uVar12][1];
+  local_50[3] = pfVar9[1] - local_50[1];
+  fVar3 = param_3->shadowRays[param_3->interiorArcRay[0]][1];
+  fVar5 = fVar2 - local_50[1];
   local_50[1] = fVar3 - local_50[1];
-  fVar4 = pGVar5->shadowRays[pGVar5->interiorArcRay[0]][0];
-  local_50[2] = *pfVar11 - local_50[0];
+  fVar4 = param_3->shadowRays[param_3->interiorArcRay[0]][0];
+  local_50[2] = *pfVar10 - local_50[0];
   local_50[0] = fVar4 - local_50[0];
-  local_60[0] = fVar6 * local_50[0] - local_50[1] * fVar7;
-  local_60[1] = local_50[2] * fVar6 - local_50[3] * fVar7;
-  fVar7 = SQRT(fVar6 * fVar6 + fVar7 * fVar7);
-  fVar6 = fVar7 * 0.001;
-  bVar21 = local_60[0] < local_60[1];
-  uVar20 = (ulonglong)bVar21;
-  if (local_60[bVar21] < fVar6) {
-    dVar22 = (double)((pGVar14->nearShadowMinDist / fVar7) * local_60[bVar21]);
-    if (dVar22 < 0.0) {
-      dVar22 = 0.0;
+  local_60[0] = fVar5 * local_50[0] - local_50[1] * fVar6;
+  local_60[1] = local_50[2] * fVar5 - local_50[3] * fVar6;
+  fVar6 = SQRT(fVar5 * fVar5 + fVar6 * fVar6);
+  fVar5 = fVar6 * 0.001;
+  bVar16 = local_60[0] < local_60[1];
+  uVar15 = (ulonglong)bVar16;
+  if (local_60[bVar16] < fVar5) {
+    dVar17 = (double)((param_2->nearShadowMinDist / fVar6) * local_60[bVar16]);
+    if (dVar17 < 0.0) {
+      dVar17 = 0.0;
     }
     goto LAB_82784f80;
   }
-  uVar18 = 1 - uVar20;
-  in_r8 = (GfxSunShadowClip *)uVar18;
-  dVar22 = 0.0;
-  if (*(float *)((int)local_60 + (int)((uVar18 & 0xffffffff) << 2)) <= fVar6) {
+  uVar13 = 1 - uVar15;
+  in_r8 = (GfxSunShadowClip *)uVar13;
+  dVar17 = 0.0;
+  if (*(float *)((int)local_60 + (int)((uVar13 & 0xffffffff) << 2)) <= fVar5) {
 LAB_82784fe0:
     R_AddSunShadowClipPlaneForFrustumEdge
-              (pfVar12,pGVar14,pGVar5,uVar16,pGVar5->interiorArcRay[bVar21],0.0,in_r8);
-    uVar16 = pGVar5->interiorArcRay[bVar21];
+              (param_1,param_2,param_3,uVar11,param_3->interiorArcRay[bVar16],0.0,in_r8);
+    uVar11 = param_3->interiorArcRay[bVar16];
   }
   else {
-    uVar17 = (uint)bVar21;
-    if (local_50[uVar17 * 2 + 1] * local_50[(int)in_r8 * 2] -
-        local_50[(int)in_r8 * 2 + 1] * local_50[uVar17 * 2] <= 0.0) {
+    uVar12 = (uint)bVar16;
+    if (local_50[uVar12 * 2 + 1] * local_50[(int)in_r8 * 2] -
+        local_50[(int)in_r8 * 2 + 1] * local_50[uVar12 * 2] <= 0.0) {
       local_50[0] = fVar4 - fVar1;
-      local_50[2] = *pfVar11 - fVar1;
+      local_50[2] = *pfVar10 - fVar1;
       local_50[1] = fVar3 - fVar2;
-      local_50[3] = pfVar10[1] - fVar2;
-      uVar19 = uVar18;
-      if (local_50[(int)in_r8 * 2 + 1] * local_50[uVar17 * 2] -
-          local_50[uVar17 * 2 + 1] * local_50[(int)in_r8 * 2] <= 0.0) goto LAB_82784fe0;
+      local_50[3] = pfVar9[1] - fVar2;
+      uVar14 = uVar13;
+      if (local_50[(int)in_r8 * 2 + 1] * local_50[uVar12 * 2] -
+          local_50[uVar12 * 2 + 1] * local_50[(int)in_r8 * 2] <= 0.0) goto LAB_82784fe0;
     }
     else {
-      uVar19 = 1 - uVar18;
-      uVar20 = uVar18;
+      uVar14 = 1 - uVar13;
+      uVar15 = uVar13;
     }
-    iVar8 = (int)((uVar20 + 0x20 & 0xffffffff) << 2);
-    iVar9 = (int)((uVar19 + 0x20 & 0xffffffff) << 2);
-    in_r8 = (GfxSunShadowClip *)uVar19;
+    iVar7 = (int)((uVar15 + 0x20 & 0xffffffff) << 2);
+    iVar8 = (int)((uVar14 + 0x20 & 0xffffffff) << 2);
+    in_r8 = (GfxSunShadowClip *)uVar14;
     R_AddSunShadowClipPlaneForFrustumEdge
-              (pfVar12,pGVar14,pGVar5,*(uint *)((int)pGVar5->worldRays[0] + iVar8),
-               *(uint *)((int)pGVar5->worldRays[0] + iVar9),0.0,in_r8);
+              (param_1,param_2,param_3,*(uint *)((int)param_3->worldRays[0] + iVar7),
+               *(uint *)((int)param_3->worldRays[0] + iVar8),0.0,in_r8);
     R_AddSunShadowClipPlaneForFrustumEdge
-              (pfVar12,pGVar14,pGVar5,pGVar5->boundingArcRay[0],
-               *(uint *)((int)pGVar5->worldRays[0] + iVar8),(float)dVar22,in_r8);
-    uVar16 = *(uint *)((int)pGVar5->worldRays[0] + iVar9);
+              (param_1,param_2,param_3,param_3->boundingArcRay[0],
+               *(uint *)((int)param_3->worldRays[0] + iVar7),(float)dVar17,in_r8);
+    uVar11 = *(uint *)((int)param_3->worldRays[0] + iVar8);
   }
-  uVar17 = pGVar5->boundingArcRay[1];
+  uVar12 = param_3->boundingArcRay[1];
 LAB_82784f80:
-  R_AddSunShadowClipPlaneForFrustumEdge(pfVar12,pGVar14,pGVar5,uVar16,uVar17,(float)dVar22,in_r8);
-  __restgprlr_26();
+  R_AddSunShadowClipPlaneForFrustumEdge(param_1,param_2,param_3,uVar11,uVar12,(float)dVar17,in_r8);
   return;
 }
 
@@ -1383,70 +1338,79 @@ void R_SetupSunShadowMapProjection
 
 // 82785138  R_SetSnappedSunShadowOrg  (gfx_d3d/r_sunshadow.cpp:758)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void R_SetSnappedSunShadowOrg
                (GfxSunShadowProjectionSetup *param_1,uint param_2,GfxSunShadowMapMetrics *param_3)
 
 {
   float fVar1;
   dvar_t *pdVar2;
-  float *pfVar3;
-  ulonglong uVar4;
+  double dVar3;
+  double dVar4;
   double dVar5;
   double dVar6;
-  double dVar7;
-  double dVar8;
   
-  uVar4 = (ulonglong)(int)param_2;
-  pfVar3 = (float *)__savegprlr_29(param_1);
-  dVar8 = (double)*(float *)((int)((uVar4 + 0x16 & 0xffffffff) << 2) + (int)pfVar3);
+  dVar6 = (double)param_1->sampleSize[param_2];
   if (0.0 < (sm_cameraOffset->current).value) {
-    dVar7 = (double)(float)(1.0 / dVar8);
-    dVar6 = -(double)((float)param_3->usefulSize * 0.5 - 0.5);
-    dVar5 = floor((double)(float)(dVar7 * (double)(pfVar3[2] * pfVar3[0xd] +
-                                                  pfVar3[1] * pfVar3[0xc] + pfVar3[0xb] * *pfVar3)))
-    ;
-    *(float *)((int)((uVar4 + 9 & 0xffffffff) << 3) + (int)pfVar3) =
-         (float)((double)(float)((double)(pfVar3[0x10] + (float)dVar5) + dVar6) * dVar8);
-    dVar5 = floor((double)(float)(dVar7 * (double)(pfVar3[5] * pfVar3[0xd] +
-                                                  pfVar3[4] * pfVar3[0xc] + pfVar3[0xb] * pfVar3[3])
-                                 ));
-    *(float *)((int)pfVar3 + (int)((uVar4 & 0xffffffff) << 3) + 0x4c) =
-         (float)((double)(float)((double)(pfVar3[0x11] + (float)dVar5) + dVar6) * dVar8);
-    __restgprlr_29();
+    dVar5 = (double)(float)(1.0 / dVar6);
+    dVar4 = -(double)((float)param_3->usefulSize * 0.5 - 0.5);
+    dVar3 = floor((double)(float)(dVar5 * (double)(param_1->sunAxis[0][2] *
+                                                   param_1->cameraShadowPos[2] +
+                                                  param_1->sunAxis[0][1] *
+                                                  param_1->cameraShadowPos[1] +
+                                                  param_1->cameraShadowPos[0] *
+                                                  param_1->sunAxis[0][0])));
+    param_1->snappedShadowOrg[param_2][0] =
+         (float)((double)(float)((double)(param_1->shadowOrgPixelCenter[0] + (float)dVar3) + dVar4)
+                * dVar6);
+    dVar3 = floor((double)(float)(dVar5 * (double)(param_1->sunAxis[1][2] *
+                                                   param_1->cameraShadowPos[2] +
+                                                  param_1->sunAxis[1][1] *
+                                                  param_1->cameraShadowPos[1] +
+                                                  param_1->cameraShadowPos[0] *
+                                                  param_1->sunAxis[1][0])));
+    param_1->snappedShadowOrg[param_2][1] =
+         (float)((double)(float)((double)(param_1->shadowOrgPixelCenter[1] + (float)dVar3) + dVar4)
+                * dVar6);
     return;
   }
   fVar1 = (sm_sunShadowCenter->current).value;
   if (((sm_sunShadowCenter->current).vector[2] * (sm_sunShadowCenter->current).vector[2] +
        fVar1 * fVar1 +
        (sm_sunShadowCenter->current).vector[1] * (sm_sunShadowCenter->current).vector[1] != 0.0) &&
-     (((uVar4 & 0xffffffff) == 1 || ((sm_sunShadowCenterMode->current).enabled != false)))) {
-    dVar7 = (double)(float)(1.0 / dVar8);
-    dVar6 = -(double)((float)param_3->usefulSize * 0.5 - 0.5);
-    dVar5 = floor((double)(float)(dVar7 * (double)((sm_sunShadowCenter->current).vector[2] *
-                                                   pfVar3[2] +
+     ((param_2 == 1 || ((sm_sunShadowCenterMode->current).enabled != false)))) {
+    dVar5 = (double)(float)(1.0 / dVar6);
+    dVar4 = -(double)((float)param_3->usefulSize * 0.5 - 0.5);
+    dVar3 = floor((double)(float)(dVar5 * (double)((sm_sunShadowCenter->current).vector[2] *
+                                                   param_1->sunAxis[0][2] +
                                                   (sm_sunShadowCenter->current).vector[1] *
-                                                  pfVar3[1] +
-                                                  (sm_sunShadowCenter->current).value * *pfVar3)));
+                                                  param_1->sunAxis[0][1] +
+                                                  (sm_sunShadowCenter->current).value *
+                                                  param_1->sunAxis[0][0])));
     pdVar2 = sm_sunShadowCenter;
-    *(float *)((int)((uVar4 + 9 & 0xffffffff) << 3) + (int)pfVar3) =
-         (float)((double)(float)((double)(pfVar3[0x10] + (float)dVar5) + dVar6) * dVar8);
-    dVar5 = floor((double)(float)(dVar7 * (double)(pfVar3[5] * (pdVar2->current).vector[2] +
-                                                  pfVar3[4] * (pdVar2->current).vector[1] +
-                                                  pfVar3[3] * (pdVar2->current).value)));
-    *(float *)((int)pfVar3 + (int)((uVar4 & 0xffffffff) << 3) + 0x4c) =
-         (float)((double)(float)((double)(pfVar3[0x11] + (float)dVar5) + dVar6) * dVar8);
-    __restgprlr_29();
+    param_1->snappedShadowOrg[param_2][0] =
+         (float)((double)(float)((double)(param_1->shadowOrgPixelCenter[0] + (float)dVar3) + dVar4)
+                * dVar6);
+    dVar3 = floor((double)(float)(dVar5 * (double)(param_1->sunAxis[1][2] *
+                                                   (pdVar2->current).vector[2] +
+                                                  param_1->sunAxis[1][1] *
+                                                  (pdVar2->current).vector[1] +
+                                                  param_1->sunAxis[1][0] * (pdVar2->current).value))
+                 );
+    param_1->snappedShadowOrg[param_2][1] =
+         (float)((double)(float)((double)(param_1->shadowOrgPixelCenter[1] + (float)dVar3) + dVar4)
+                * dVar6);
     return;
   }
-  dVar6 = (double)(float)(1.0 / dVar8);
-  dVar5 = floor((double)(float)((double)pfVar3[0xe] * dVar6));
-  dVar7 = 0.5;
-  *(float *)((int)((uVar4 + 9 & 0xffffffff) << 3) + (int)pfVar3) =
-       (float)((double)((float)dVar5 + 0.5) * dVar8);
-  dVar5 = floor((double)(float)((double)pfVar3[0xf] * dVar6));
-  *(float *)((int)pfVar3 + (int)((uVar4 & 0xffffffff) << 3) + 0x4c) =
-       (float)((double)(float)((double)(float)dVar5 + dVar7) * dVar8);
-  __restgprlr_29();
+  dVar4 = (double)(float)(1.0 / dVar6);
+  dVar3 = floor((double)(float)((double)param_1->shadowOrg[0] * dVar4));
+  dVar5 = 0.5;
+  param_1->snappedShadowOrg[param_2][0] = (float)((double)((float)dVar3 + 0.5) * dVar6);
+  dVar3 = floor((double)(float)((double)param_1->shadowOrg[1] * dVar4));
+  param_1->snappedShadowOrg[param_2][1] =
+       (float)((double)(float)((double)(float)dVar3 + dVar5) * dVar6);
   return;
 }
 
@@ -1620,6 +1584,9 @@ void R_GetRayDistRangeInsideSingleRectangle
 
 // 827856D8  R_GetRayDistInsideRectangleArray  (gfx_d3d/r_sunshadow.cpp:889)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
+
 bool R_GetRayDistInsideRectangleArray
                (float *param_1,float *param_2,float (*param_3) [2] [2],uint param_4,float *param_5)
 
@@ -1628,123 +1595,118 @@ bool R_GetRayDistInsideRectangleArray
   int iVar2;
   int iVar3;
   ulonglong uVar4;
-  float *pfVar5;
-  undefined1 uVar6;
-  longlong lVar7;
-  ulonglong uVar8;
-  ulonglong uVar9;
+  longlong lVar5;
+  ulonglong uVar6;
+  ulonglong uVar7;
+  longlong lVar8;
+  float *pfVar9;
   ulonglong uVar10;
-  longlong lVar11;
-  ulonglong uVar12;
+  double dVar11;
+  double dVar12;
   double dVar13;
-  double dVar14;
-  double dVar15;
   
-  uVar10 = (ulonglong)(int)param_4;
   uVar4 = ZEXT48(&stack0x00000000);
-  pfVar5 = (float *)__savegprlr_25(param_1);
   iVar2 = (int)(uVar4 - 0xd0);
   *(BADSPACEBASE **)iVar2 = register0x0000000c;
-  if (((uVar10 & 0xffffffff) == 0) || (3 < (uVar10 & 0xffffffff))) {
+  if ((param_4 == 0) || (3 < param_4)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_sunshadow.cpp",0x381
                     ,0,"rectCount not in [1, ARRAY_COUNT( sortedDistRange )]\n\t%i not in [%i, %i]")
     ;
   }
-  uVar12 = 0;
-  uVar8 = 0;
-  dVar15 = 0.009999999776482582;
+  uVar10 = 0;
+  uVar6 = 0;
+  dVar13 = 0.009999999776482582;
   param_5[1] = 1.7014117e+38;
-  if ((uVar10 & 0xffffffff) != 0) {
-    lVar7 = uVar4 - 0x78;
+  if (param_4 != 0) {
+    lVar5 = uVar4 - 0x78;
     do {
       R_GetRayDistRangeInsideSingleRectangle
-                (pfVar5,param_2,
-                 (float (*) [2])((int)(*param_3)[0] + (int)((uVar8 & 0xffffffff) << 4)),
+                (param_1,param_2,
+                 (float (*) [2])((int)(*param_3)[0] + (int)((uVar6 & 0xffffffff) << 4)),
                  (ShadowRayDistRange *)(iVar2 + 0x50));
       fVar1 = *(float *)(iVar2 + 0x50);
-      dVar13 = (double)*(float *)(iVar2 + 0x54);
-      if (((double)fVar1 < dVar13) && (dVar15 <= dVar13)) {
-        if ((uVar8 & 0xffffffff) == 0) {
+      dVar11 = (double)*(float *)(iVar2 + 0x54);
+      if (((double)fVar1 < dVar11) && (dVar13 <= dVar11)) {
+        if ((uVar6 & 0xffffffff) == 0) {
           param_5[1] = *(float *)(iVar2 + 0x54);
         }
-        uVar9 = uVar12;
-        if ((uVar12 & 0xffffffff) != 0) {
-          lVar11 = lVar7 + 0x10;
+        uVar7 = uVar10;
+        if ((uVar10 & 0xffffffff) != 0) {
+          lVar8 = lVar5 + 0x10;
           do {
-            iVar3 = (int)lVar11;
+            iVar3 = (int)lVar8;
             if ((double)*(float *)(iVar3 + -0x10) <= (double)fVar1) break;
-            uVar9 = uVar9 - 1;
-            lVar11 = lVar11 + -8;
-            *(undefined8 *)lVar11 = *(undefined8 *)(iVar3 + -0x10);
-          } while (uVar9 != 0);
+            uVar7 = uVar7 - 1;
+            lVar8 = lVar8 + -8;
+            *(undefined8 *)lVar8 = *(undefined8 *)(iVar3 + -0x10);
+          } while (uVar7 != 0);
         }
-        uVar12 = uVar12 + 1;
-        lVar7 = lVar7 + 8;
-        *(undefined8 *)((int)((uVar9 & 0xffffffff) << 3) + iVar2 + 0x60) =
+        uVar10 = uVar10 + 1;
+        lVar5 = lVar5 + 8;
+        *(undefined8 *)((int)((uVar7 & 0xffffffff) << 3) + iVar2 + 0x60) =
              *(undefined8 *)(iVar2 + 0x50);
       }
-      uVar8 = uVar8 + 1;
-    } while ((uVar8 & 0xffffffff) < (uVar10 & 0xffffffff));
-    if (((uVar12 & 0xffffffff) != 0) && ((uVar12 & 0xffffffff) <= (uVar10 & 0xffffffff)))
+      uVar6 = uVar6 + 1;
+    } while ((uVar6 & 0xffffffff) < (ulonglong)param_4);
+    if (((uVar10 & 0xffffffff) != 0) && ((uVar10 & 0xffffffff) <= (ulonglong)param_4))
     goto LAB_82785824;
   }
   MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_sunshadow.cpp",0x392,0
                   ,"distCount not in [1, rectCount]\n\t%i not in [%i, %i]");
 LAB_82785824:
-  if (dVar15 < (double)*(float *)(iVar2 + 0x60)) {
-    uVar6 = __restgprlr_25(0);
-    return (bool)uVar6;
+  if (dVar13 < (double)*(float *)(iVar2 + 0x60)) {
+    return false;
   }
-  uVar10 = 1;
+  uVar6 = 1;
   *param_5 = *(float *)(iVar2 + 100);
-  if (1 < (uVar12 & 0xffffffff)) {
-    if (3 < (int)uVar12 + -1) {
-      lVar7 = uVar4 - 0x6c;
+  if (1 < (uVar10 & 0xffffffff)) {
+    if (3 < (int)uVar10 + -1) {
+      lVar5 = uVar4 - 0x6c;
       do {
-        pfVar5 = (float *)lVar7;
-        if ((float)((double)*pfVar5 + dVar15) <= pfVar5[1]) goto LAB_82785954;
-        dVar14 = (double)pfVar5[2];
-        fVar1 = pfVar5[3];
-        dVar13 = (double)*param_5;
-        if ((float)((double)*param_5 - dVar14) < 0.0) {
-          dVar13 = dVar14;
+        pfVar9 = (float *)lVar5;
+        if ((float)((double)*pfVar9 + dVar13) <= pfVar9[1]) goto LAB_82785954;
+        dVar12 = (double)pfVar9[2];
+        fVar1 = pfVar9[3];
+        dVar11 = (double)*param_5;
+        if ((float)((double)*param_5 - dVar12) < 0.0) {
+          dVar11 = dVar12;
         }
-        *param_5 = (float)dVar13;
-        if ((float)(dVar14 + dVar15) <= fVar1) goto LAB_82785954;
-        dVar14 = (double)pfVar5[4];
-        fVar1 = pfVar5[5];
-        if ((float)(dVar13 - dVar14) < 0.0) {
-          dVar13 = dVar14;
+        *param_5 = (float)dVar11;
+        if ((float)(dVar12 + dVar13) <= fVar1) goto LAB_82785954;
+        dVar12 = (double)pfVar9[4];
+        fVar1 = pfVar9[5];
+        if ((float)(dVar11 - dVar12) < 0.0) {
+          dVar11 = dVar12;
         }
-        *param_5 = (float)dVar13;
-        if ((float)(dVar14 + dVar15) <= fVar1) goto LAB_82785954;
-        dVar14 = (double)pfVar5[6];
-        fVar1 = pfVar5[7];
-        if ((float)(dVar13 - dVar14) < 0.0) {
-          dVar13 = dVar14;
+        *param_5 = (float)dVar11;
+        if ((float)(dVar12 + dVar13) <= fVar1) goto LAB_82785954;
+        dVar12 = (double)pfVar9[6];
+        fVar1 = pfVar9[7];
+        if ((float)(dVar11 - dVar12) < 0.0) {
+          dVar11 = dVar12;
         }
-        *param_5 = (float)dVar13;
-        if ((float)(dVar14 + dVar15) <= fVar1) goto LAB_82785954;
-        lVar7 = lVar7 + 0x20;
-        uVar10 = uVar10 + 4;
-        if ((float)(dVar13 - (double)*(float *)lVar7) < 0.0) {
-          dVar13 = (double)*(float *)lVar7;
+        *param_5 = (float)dVar11;
+        if ((float)(dVar12 + dVar13) <= fVar1) goto LAB_82785954;
+        lVar5 = lVar5 + 0x20;
+        uVar6 = uVar6 + 4;
+        if ((float)(dVar11 - (double)*(float *)lVar5) < 0.0) {
+          dVar11 = (double)*(float *)lVar5;
         }
-        *param_5 = (float)dVar13;
-      } while ((uVar10 & 0xffffffff) < (uVar12 - 3 & 0xffffffff));
+        *param_5 = (float)dVar11;
+      } while ((uVar6 & 0xffffffff) < (uVar10 - 3 & 0xffffffff));
     }
-    if ((uVar10 & 0xffffffff) < (uVar12 & 0xffffffff)) {
-      lVar7 = (uVar10 & 0x1fffffff) * 8 + (uVar4 - 0xd0) + 0x5c;
+    if ((uVar6 & 0xffffffff) < (uVar10 & 0xffffffff)) {
+      lVar5 = (uVar6 & 0x1fffffff) * 8 + (uVar4 - 0xd0) + 0x5c;
       do {
-        if ((float)((double)*(float *)lVar7 + dVar15) <= ((float *)lVar7)[1]) break;
-        uVar10 = uVar10 + 1;
-        lVar7 = lVar7 + 8;
+        if ((float)((double)*(float *)lVar5 + dVar13) <= ((float *)lVar5)[1]) break;
+        uVar6 = uVar6 + 1;
+        lVar5 = lVar5 + 8;
         fVar1 = *param_5;
-        if (*param_5 - *(float *)lVar7 < 0.0) {
-          fVar1 = *(float *)lVar7;
+        if (*param_5 - *(float *)lVar5 < 0.0) {
+          fVar1 = *(float *)lVar5;
         }
         *param_5 = fVar1;
-      } while ((uVar10 & 0xffffffff) < (uVar12 & 0xffffffff));
+      } while ((uVar6 & 0xffffffff) < (uVar10 & 0xffffffff));
     }
   }
 LAB_82785954:
@@ -1753,12 +1715,14 @@ LAB_82785954:
     fVar1 = *param_5;
   }
   param_5[1] = fVar1;
-  uVar6 = __restgprlr_25(1);
-  return (bool)uVar6;
+  return true;
 }
 
 
 // 82785978  R_IsEdgeContainedInRectangleArray  (gfx_d3d/r_sunshadow.cpp:927)
+
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 
 bool R_IsEdgeContainedInRectangleArray
                (float *param_1,float *param_2,float (*param_3) [2] [2],uint param_4)
@@ -1768,124 +1732,124 @@ bool R_IsEdgeContainedInRectangleArray
   int iVar2;
   int iVar3;
   ulonglong uVar4;
-  float *pfVar6;
-  undefined8 uVar5;
-  undefined1 uVar7;
-  longlong lVar8;
-  ulonglong uVar9;
+  longlong lVar5;
+  ulonglong uVar6;
+  longlong lVar7;
+  ulonglong uVar8;
+  float *pfVar9;
   longlong lVar10;
-  ulonglong uVar11;
-  longlong lVar12;
-  ulonglong uVar13;
+  longlong lVar11;
+  double dVar12;
+  double dVar13;
   double dVar14;
   double dVar15;
-  double dVar16;
-  double dVar17;
-  float fVar18;
+  float fVar16;
   
-  uVar13 = (ulonglong)(int)param_4;
-  lVar8 = (longlong)(int)param_3;
+  lVar11 = (longlong)(int)param_4;
+  lVar5 = (longlong)(int)param_3;
   uVar4 = ZEXT48(&stack0x00000000);
-  pfVar6 = (float *)__savegprlr_29(param_1);
   iVar2 = (int)(uVar4 - 0xb0);
   *(BADSPACEBASE **)iVar2 = register0x0000000c;
-  fVar18 = param_2[1];
-  fVar1 = pfVar6[1];
-  *(float *)(iVar2 + 0x50) = *param_2 - *pfVar6;
-  *(float *)(iVar2 + 0x54) = fVar18 - fVar1;
-  fVar18 = Vec2Normalize((float *)(iVar2 + 0x50));
-  dVar15 = (double)fVar18;
-  if (((uVar13 & 0xffffffff) == 0) || (3 < (uVar13 & 0xffffffff))) {
+  fVar16 = param_2[1];
+  fVar1 = param_1[1];
+  *(float *)(iVar2 + 0x50) = *param_2 - *param_1;
+  *(float *)(iVar2 + 0x54) = fVar16 - fVar1;
+  fVar16 = Vec2Normalize((float *)(iVar2 + 0x50));
+  dVar13 = (double)fVar16;
+  if ((param_4 == 0) || (3 < param_4)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_sunshadow.cpp",0x3ad
                     ,0,"rectCount not in [1, ARRAY_COUNT( sortedDistRange )]\n\t%i not in [%i, %i]")
     ;
   }
-  uVar9 = 0;
-  if ((uVar13 & 0xffffffff) != 0) {
-    lVar10 = uVar4 - 0x58;
-    dVar17 = 0.009999999776482582;
+  uVar6 = 0;
+  if (param_4 != 0) {
+    lVar7 = uVar4 - 0x58;
+    dVar15 = 0.009999999776482582;
     do {
       R_GetRayDistRangeInsideSingleRectangle
-                (pfVar6,(float *)(iVar2 + 0x50),(float (*) [2])lVar8,
+                (param_1,(float *)(iVar2 + 0x50),(float (*) [2])lVar5,
                  (ShadowRayDistRange *)(iVar2 + 0x58));
-      fVar18 = *(float *)(iVar2 + 0x58);
-      if (((double)fVar18 < (double)*(float *)(iVar2 + 0x5c)) &&
-         (dVar17 <= (double)*(float *)(iVar2 + 0x5c))) {
-        uVar11 = uVar9;
-        if ((uVar9 & 0xffffffff) != 0) {
-          lVar12 = lVar10 + 0x10;
+      fVar16 = *(float *)(iVar2 + 0x58);
+      if (((double)fVar16 < (double)*(float *)(iVar2 + 0x5c)) &&
+         (dVar15 <= (double)*(float *)(iVar2 + 0x5c))) {
+        uVar8 = uVar6;
+        if ((uVar6 & 0xffffffff) != 0) {
+          lVar10 = lVar7 + 0x10;
           do {
-            iVar3 = (int)lVar12;
-            if ((double)*(float *)(iVar3 + -0x10) <= (double)fVar18) break;
-            uVar11 = uVar11 - 1;
-            lVar12 = lVar12 + -8;
-            *(undefined8 *)lVar12 = *(undefined8 *)(iVar3 + -0x10);
-          } while (uVar11 != 0);
+            iVar3 = (int)lVar10;
+            if ((double)*(float *)(iVar3 + -0x10) <= (double)fVar16) break;
+            uVar8 = uVar8 - 1;
+            lVar10 = lVar10 + -8;
+            *(undefined8 *)lVar10 = *(undefined8 *)(iVar3 + -0x10);
+          } while (uVar8 != 0);
         }
-        uVar9 = uVar9 + 1;
-        lVar10 = lVar10 + 8;
-        *(undefined8 *)((int)((uVar11 & 0xffffffff) << 3) + iVar2 + 0x60) =
+        uVar6 = uVar6 + 1;
+        lVar7 = lVar7 + 8;
+        *(undefined8 *)((int)((uVar8 & 0xffffffff) << 3) + iVar2 + 0x60) =
              *(undefined8 *)(iVar2 + 0x58);
       }
-      uVar13 = uVar13 - 1;
-      lVar8 = lVar8 + 0x10;
-    } while (uVar13 != 0);
-    if (((uVar9 & 0xffffffff) != 0) && ((double)*(float *)(iVar2 + 0x60) <= dVar17)) {
-      dVar14 = (double)*(float *)(iVar2 + 100);
-      uVar13 = 1;
-      if (1 < (uVar9 & 0xffffffff)) {
-        if (3 < (int)uVar9 + -1) {
-          lVar8 = uVar4 - 0x4c;
+      lVar11 = lVar11 + -1;
+      lVar5 = lVar5 + 0x10;
+    } while (lVar11 != 0);
+    if (((uVar6 & 0xffffffff) != 0) && ((double)*(float *)(iVar2 + 0x60) <= dVar15)) {
+      dVar12 = (double)*(float *)(iVar2 + 100);
+      uVar8 = 1;
+      if (1 < (uVar6 & 0xffffffff)) {
+        if (3 < (int)uVar6 + -1) {
+          lVar5 = uVar4 - 0x4c;
           do {
-            pfVar6 = (float *)lVar8;
-            if ((float)((double)*pfVar6 + dVar17) <= pfVar6[1]) goto LAB_82785b90;
-            dVar16 = (double)pfVar6[2];
-            if ((float)(dVar14 - dVar16) < 0.0) {
-              dVar14 = dVar16;
+            pfVar9 = (float *)lVar5;
+            if ((float)((double)*pfVar9 + dVar15) <= pfVar9[1]) goto LAB_82785b90;
+            dVar14 = (double)pfVar9[2];
+            if ((float)(dVar12 - dVar14) < 0.0) {
+              dVar12 = dVar14;
             }
-            if ((float)(dVar16 + dVar17) <= pfVar6[3]) goto LAB_82785b90;
-            dVar16 = (double)pfVar6[4];
-            if ((float)(dVar14 - dVar16) < 0.0) {
-              dVar14 = dVar16;
+            if ((float)(dVar14 + dVar15) <= pfVar9[3]) goto LAB_82785b90;
+            dVar14 = (double)pfVar9[4];
+            if ((float)(dVar12 - dVar14) < 0.0) {
+              dVar12 = dVar14;
             }
-            if ((float)(dVar16 + dVar17) <= pfVar6[5]) goto LAB_82785b90;
-            dVar16 = (double)pfVar6[6];
-            if ((float)(dVar14 - dVar16) < 0.0) {
-              dVar14 = dVar16;
+            if ((float)(dVar14 + dVar15) <= pfVar9[5]) goto LAB_82785b90;
+            dVar14 = (double)pfVar9[6];
+            if ((float)(dVar12 - dVar14) < 0.0) {
+              dVar12 = dVar14;
             }
-            if ((float)(dVar16 + dVar17) <= pfVar6[7]) goto LAB_82785b90;
-            lVar8 = lVar8 + 0x20;
-            uVar13 = uVar13 + 4;
-            if ((float)(dVar14 - (double)*(float *)lVar8) < 0.0) {
-              dVar14 = (double)*(float *)lVar8;
+            if ((float)(dVar14 + dVar15) <= pfVar9[7]) goto LAB_82785b90;
+            lVar5 = lVar5 + 0x20;
+            uVar8 = uVar8 + 4;
+            if ((float)(dVar12 - (double)*(float *)lVar5) < 0.0) {
+              dVar12 = (double)*(float *)lVar5;
             }
-          } while ((uVar13 & 0xffffffff) < (uVar9 - 3 & 0xffffffff));
+          } while ((uVar8 & 0xffffffff) < (uVar6 - 3 & 0xffffffff));
         }
-        if ((uVar13 & 0xffffffff) < (uVar9 & 0xffffffff)) {
-          lVar8 = (uVar13 & 0x1fffffff) * 8 + (uVar4 - 0xb0) + 0x5c;
+        if ((uVar8 & 0xffffffff) < (uVar6 & 0xffffffff)) {
+          lVar5 = (uVar8 & 0x1fffffff) * 8 + (uVar4 - 0xb0) + 0x5c;
           do {
-            if ((float)((double)*(float *)lVar8 + dVar17) <= ((float *)lVar8)[1]) break;
-            lVar8 = lVar8 + 8;
-            uVar13 = uVar13 + 1;
-            if ((float)(dVar14 - (double)*(float *)lVar8) < 0.0) {
-              dVar14 = (double)*(float *)lVar8;
+            if ((float)((double)*(float *)lVar5 + dVar15) <= ((float *)lVar5)[1]) break;
+            lVar5 = lVar5 + 8;
+            uVar8 = uVar8 + 1;
+            if ((float)(dVar12 - (double)*(float *)lVar5) < 0.0) {
+              dVar12 = (double)*(float *)lVar5;
             }
-          } while ((uVar13 & 0xffffffff) < (uVar9 & 0xffffffff));
+          } while ((uVar8 & 0xffffffff) < (uVar6 & 0xffffffff));
         }
       }
 LAB_82785b90:
-      uVar5 = 1;
-      if ((double)(float)(dVar15 - dVar17) <= dVar14) goto LAB_82785ba4;
+      if ((double)(float)(dVar13 - dVar15) <= dVar12) {
+        return true;
+      }
     }
   }
-  uVar5 = 0;
-LAB_82785ba4:
-  uVar7 = __restgprlr_29(uVar5);
-  return (bool)uVar7;
+  return false;
 }
 
 
 // 82785BB8  R_GetFarSunShadowNearClipPoints  (gfx_d3d/r_sunshadow.cpp:968)
+
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 
 bool R_GetFarSunShadowNearClipPoints
                (GfxSunShadowProjectionSetup *param_1,GfxSunShadowFrustumRays *param_2,
@@ -1894,21 +1858,19 @@ bool R_GetFarSunShadowNearClipPoints
 {
   float fVar1;
   float fVar2;
-  GfxSunShadowProjectionSetup *pGVar3;
-  uint uVar4;
-  float *pfVar5;
-  bool bVar6;
-  undefined1 uVar7;
-  float (*pafVar8) [2];
-  uint uVar9;
+  uint uVar3;
+  float *pfVar4;
+  bool bVar5;
+  float (*pafVar6) [2];
+  uint uVar7;
+  double dVar8;
+  double dVar9;
   double dVar10;
   double dVar11;
   double dVar12;
   double dVar13;
   double dVar14;
   double dVar15;
-  double dVar16;
-  double dVar17;
   float local_c0;
   float local_bc;
   float local_b8;
@@ -1916,141 +1878,123 @@ bool R_GetFarSunShadowNearClipPoints
   float local_b0 [4];
   float afStack_a0 [40];
   
-  __savegprlr_26(param_1);
-  pGVar3 = (GfxSunShadowProjectionSetup *)__savefpr_26();
-  uVar4 = R_GetFarSunShadowCullingRectangles(pGVar3,param_3,(float (*) [2] [2])(local_b0 + 4));
-  if ((uVar4 == 0) || (3 < uVar4)) {
+  uVar3 = R_GetFarSunShadowCullingRectangles(param_1,param_3,(float (*) [2] [2])(local_b0 + 4));
+  if ((uVar3 == 0) || (3 < uVar3)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_sunshadow.cpp",0x3e3
                     ,0,"rectCount not in [1, 3]\n\t%i not in [%i, %i]");
   }
   Vec2NormalizeTo(param_2->shadowRays[param_2->boundingArcRay[0]],&local_c0);
   Vec2NormalizeTo(param_2->shadowRays[param_2->boundingArcRay[1]],&local_b8);
-  pfVar5 = pGVar3->shadowOrg;
-  bVar6 = R_GetRayDistInsideRectangleArray
-                    (pfVar5,&local_c0,(float (*) [2] [2])(local_b0 + 4),uVar4,local_b0);
-  if ((bVar6) &&
-     (bVar6 = R_GetRayDistInsideRectangleArray
-                        (pfVar5,&local_b8,(float (*) [2] [2])(local_b0 + 4),uVar4,local_b0 + 2),
-     bVar6)) {
-    fVar1 = *pfVar5;
-    pafVar8 = param_4 + 1;
-    dVar17 = (double)local_b0[0];
-    fVar2 = pGVar3->shadowOrg[1];
-    dVar12 = (double)local_b0[2];
-    (*param_4)[0] = (float)((double)local_c0 * dVar17 + (double)fVar1);
-    (*param_4)[1] = (float)((double)local_bc * dVar17 + (double)fVar2);
-    param_4[1][0] = (float)((double)local_b8 * dVar12 + (double)fVar1);
-    param_4[1][1] = (float)((double)local_b4 * dVar12 + (double)fVar2);
-    if ((uVar4 == 1) ||
-       (bVar6 = R_IsEdgeContainedInRectangleArray
-                          (*param_4,*pafVar8,(float (*) [2] [2])(local_b0 + 4),uVar4), bVar6)) {
-      __restfpr_26(1);
-      uVar7 = __restgprlr_26();
-      return (bool)uVar7;
+  pfVar4 = param_1->shadowOrg;
+  bVar5 = R_GetRayDistInsideRectangleArray
+                    (pfVar4,&local_c0,(float (*) [2] [2])(local_b0 + 4),uVar3,local_b0);
+  if ((bVar5) &&
+     (bVar5 = R_GetRayDistInsideRectangleArray
+                        (pfVar4,&local_b8,(float (*) [2] [2])(local_b0 + 4),uVar3,local_b0 + 2),
+     bVar5)) {
+    fVar1 = *pfVar4;
+    pafVar6 = param_4 + 1;
+    dVar15 = (double)local_b0[0];
+    fVar2 = param_1->shadowOrg[1];
+    dVar10 = (double)local_b0[2];
+    (*param_4)[0] = (float)((double)local_c0 * dVar15 + (double)fVar1);
+    (*param_4)[1] = (float)((double)local_bc * dVar15 + (double)fVar2);
+    param_4[1][0] = (float)((double)local_b8 * dVar10 + (double)fVar1);
+    param_4[1][1] = (float)((double)local_b4 * dVar10 + (double)fVar2);
+    if ((uVar3 == 1) ||
+       (bVar5 = R_IsEdgeContainedInRectangleArray
+                          (*param_4,*pafVar6,(float (*) [2] [2])(local_b0 + 4),uVar3), bVar5)) {
+      return true;
     }
-    dVar10 = (double)local_b0[1];
+    dVar8 = (double)local_b0[1];
+    dVar9 = (double)local_b0[3];
+    local_b0[0] = (float)((double)local_c0 * dVar8 + (double)*pfVar4);
+    dVar14 = (double)local_b0[0];
+    local_b0[1] = (float)((double)local_bc * dVar8 + (double)param_1->shadowOrg[1]);
+    dVar13 = (double)local_b0[1];
+    local_b0[2] = (float)((double)local_b8 * dVar9 + (double)*pfVar4);
+    dVar12 = (double)local_b0[2];
+    local_b0[3] = (float)((double)local_b4 * dVar9 + (double)param_1->shadowOrg[1]);
     dVar11 = (double)local_b0[3];
-    local_b0[0] = (float)((double)local_c0 * dVar10 + (double)*pfVar5);
-    dVar16 = (double)local_b0[0];
-    local_b0[1] = (float)((double)local_bc * dVar10 + (double)pGVar3->shadowOrg[1]);
-    dVar15 = (double)local_b0[1];
-    local_b0[2] = (float)((double)local_b8 * dVar11 + (double)*pfVar5);
-    dVar14 = (double)local_b0[2];
-    local_b0[3] = (float)((double)local_b4 * dVar11 + (double)pGVar3->shadowOrg[1]);
-    dVar13 = (double)local_b0[3];
-    if (dVar17 <= dVar10) {
-      if ((dVar11 < dVar12) &&
-         (bVar6 = R_IsEdgeContainedInRectangleArray
-                            (*param_4,local_b0 + 2,(float (*) [2] [2])(local_b0 + 4),uVar4), bVar6))
+    if (dVar15 <= dVar8) {
+      if ((dVar9 < dVar10) &&
+         (bVar5 = R_IsEdgeContainedInRectangleArray
+                            (*param_4,local_b0 + 2,(float (*) [2] [2])(local_b0 + 4),uVar3), bVar5))
       {
-        (*pafVar8)[0] = (float)dVar14;
-        param_4[1][1] = (float)dVar13;
-        __restfpr_26(1);
-        uVar7 = __restgprlr_26();
-        return (bool)uVar7;
+        (*pafVar6)[0] = (float)dVar12;
+        param_4[1][1] = (float)dVar11;
+        return true;
       }
     }
-    else if (dVar12 <= dVar11) {
-      bVar6 = R_IsEdgeContainedInRectangleArray
-                        (local_b0,*pafVar8,(float (*) [2] [2])(local_b0 + 4),uVar4);
-      if (bVar6) {
-        (*param_4)[0] = (float)dVar16;
-        (*param_4)[1] = (float)dVar15;
-        __restfpr_26(1);
-        uVar7 = __restgprlr_26();
-        return (bool)uVar7;
+    else if (dVar10 <= dVar9) {
+      bVar5 = R_IsEdgeContainedInRectangleArray
+                        (local_b0,*pafVar6,(float (*) [2] [2])(local_b0 + 4),uVar3);
+      if (bVar5) {
+        (*param_4)[0] = (float)dVar14;
+        (*param_4)[1] = (float)dVar13;
+        return true;
       }
     }
     else {
-      uVar9 = (uint)((float)(dVar10 * dVar12) < (float)(dVar11 * dVar17));
-      bVar6 = R_IsEdgeContainedInRectangleArray
-                        (local_b0 + uVar9 * 2,param_4[1 - uVar9],(float (*) [2] [2])(local_b0 + 4),
-                         uVar4);
-      if (bVar6) {
-        fVar1 = local_b0[uVar9 * 2 + 1];
-        param_4[uVar9][0] = local_b0[uVar9 * 2];
-        param_4[uVar9][1] = fVar1;
-        __restfpr_26(1);
-        uVar7 = __restgprlr_26();
-        return (bool)uVar7;
+      uVar7 = (uint)((float)(dVar8 * dVar10) < (float)(dVar9 * dVar15));
+      bVar5 = R_IsEdgeContainedInRectangleArray
+                        (local_b0 + uVar7 * 2,param_4[1 - uVar7],(float (*) [2] [2])(local_b0 + 4),
+                         uVar3);
+      if (bVar5) {
+        fVar1 = local_b0[uVar7 * 2 + 1];
+        param_4[uVar7][0] = local_b0[uVar7 * 2];
+        param_4[uVar7][1] = fVar1;
+        return true;
       }
-      bVar6 = R_IsEdgeContainedInRectangleArray
-                        (local_b0 + uVar9 * -2 + 2,param_4[uVar9],(float (*) [2] [2])(local_b0 + 4),
-                         uVar4);
-      if (bVar6) {
-        fVar1 = local_b0[uVar9 * -2 + 3];
-        param_4[1 - uVar9][0] = local_b0[uVar9 * -2 + 2];
-        param_4[1 - uVar9][1] = fVar1;
-        __restfpr_26(1);
-        uVar7 = __restgprlr_26();
-        return (bool)uVar7;
+      bVar5 = R_IsEdgeContainedInRectangleArray
+                        (local_b0 + uVar7 * -2 + 2,param_4[uVar7],(float (*) [2] [2])(local_b0 + 4),
+                         uVar3);
+      if (bVar5) {
+        fVar1 = local_b0[uVar7 * -2 + 3];
+        param_4[1 - uVar7][0] = local_b0[uVar7 * -2 + 2];
+        param_4[1 - uVar7][1] = fVar1;
+        return true;
       }
-      bVar6 = R_IsEdgeContainedInRectangleArray
-                        (local_b0,local_b0 + 2,(float (*) [2] [2])(local_b0 + 4),uVar4);
-      if (bVar6) {
-        (*param_4)[0] = (float)dVar16;
-        (*param_4)[1] = (float)dVar15;
-        (*pafVar8)[0] = (float)dVar14;
-        param_4[1][1] = (float)dVar13;
-        __restfpr_26(1);
-        uVar7 = __restgprlr_26();
-        return (bool)uVar7;
+      bVar5 = R_IsEdgeContainedInRectangleArray
+                        (local_b0,local_b0 + 2,(float (*) [2] [2])(local_b0 + 4),uVar3);
+      if (bVar5) {
+        (*param_4)[0] = (float)dVar14;
+        (*param_4)[1] = (float)dVar13;
+        (*pafVar6)[0] = (float)dVar12;
+        param_4[1][1] = (float)dVar11;
+        return true;
       }
     }
   }
-  __restfpr_26(0);
-  uVar7 = __restgprlr_26();
-  return (bool)uVar7;
+  return false;
 }
 
 
 // 82785F00  R_SetFarSunShadowOrg_NormalCascade  (gfx_d3d/r_sunshadow.cpp:1066)
+
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 
 int R_SetFarSunShadowOrg_NormalCascade
               (GfxSunShadowProjectionSetup *param_1,GfxSunShadowFrustumRays *param_2,
               GfxSunShadowMapMetrics *param_3,float (*param_4) [2])
 
 {
-  GfxSunShadowProjectionSetup *pGVar1;
-  int iVar2;
-  bool bVar3;
+  bool bVar1;
   
-  pGVar1 = (GfxSunShadowProjectionSetup *)__savegprlr_28(param_1);
   if (param_2->boundingArcRay[0] == 0xffffffff) {
     if (param_2->boundingArcRay[1] != 0xffffffff) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_sunshadow.cpp",
                       0x42d,0,"%s");
     }
-    iVar2 = __restgprlr_28(0);
-    return iVar2;
+    return 0;
   }
   if (param_2->boundingArcRay[1] == 0xffffffff) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_sunshadow.cpp",0x430
                     ,0,"%s");
   }
-  bVar3 = R_GetFarSunShadowNearClipPoints(pGVar1,param_2,param_3,param_4);
-  iVar2 = __restgprlr_28(bVar3);
-  return iVar2;
+  bVar1 = R_GetFarSunShadowNearClipPoints(param_1,param_2,param_3,param_4);
+  return (uint)bVar1;
 }
 
 
@@ -2065,6 +2009,11 @@ void R_SetSunShadowViewports_Common(GfxSunShadowMapMetrics *param_1,GfxSunShadow
 
 // 82785FB8  R_TrimSunShadowViewportForPartition  (gfx_d3d/r_sunshadow.cpp:1103)
 
+/* WARNING: Function: __savegprlr_21 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_21 replaced with injection: xenon_save_restore */
+
 void R_TrimSunShadowViewportForPartition
                (GfxSunShadowProjectionSetup *param_1,GfxSunShadowFrustumRays *param_2,
                GfxSunShadowMapMetrics *param_3,uint param_4,GfxSunShadow *param_5)
@@ -2073,113 +2022,101 @@ void R_TrimSunShadowViewportForPartition
   double dVar1;
   float fVar2;
   int iVar3;
-  int iVar4;
+  float *pfVar4;
   int iVar5;
-  longlong lVar6;
-  ulonglong uVar7;
-  float *pfVar8;
-  float *pfVar9;
-  int iVar10;
-  int iVar11;
-  float *pfVar12;
-  longlong lVar13;
-  longlong lVar14;
+  int iVar6;
+  float *pfVar7;
+  longlong lVar8;
+  uint *puVar9;
+  double dVar10;
+  double dVar11;
+  double dVar12;
+  double dVar13;
+  double dVar14;
   double dVar15;
   double dVar16;
   double dVar17;
   double dVar18;
-  double dVar19;
-  double dVar20;
-  double dVar21;
-  double dVar22;
-  double dVar23;
   
-  uVar7 = (ulonglong)(int)param_4;
-  lVar6 = (longlong)(int)param_2;
-  __savegprlr_21(param_1);
-  iVar5 = __savefpr_26();
-  iVar4 = (int)uVar7;
-  iVar3 = (int)((uVar7 + 0x16 & 0x3fffffff) << 2);
-  fVar2 = *(float *)(iVar3 + iVar5);
-  dVar21 = -(double)(fVar2 * *(float *)(iVar5 + 0x44) -
-                    *(float *)((int)((uVar7 & 0xffffffff) << 3) + iVar5 + 0x4c));
-  dVar22 = -(double)(fVar2 * *(float *)(iVar5 + 0x40) -
-                    *(float *)((int)((uVar7 + 9 & 0xffffffff) << 3) + iVar5));
-  dVar17 = (double)((float)param_3->usefulSize * fVar2);
-  pfVar8 = inwardSign;
-  pfVar12 = inwardSign + 1;
-  lVar14 = lVar6 + 0x78;
-  dVar20 = (double)(float)(dVar17 + dVar22);
-  lVar13 = 2;
-  dVar19 = (double)(float)(dVar17 + dVar21);
-  dVar17 = 0.5;
-  dVar23 = 0.0;
+  iVar3 = (int)(((longlong)(int)param_4 + 0x16U & 0x3fffffff) << 2);
+  fVar2 = *(float *)((int)param_1->sunAxis[0] + iVar3);
+  dVar16 = -(double)(fVar2 * param_1->shadowOrgPixelCenter[1] -
+                    param_1->snappedShadowOrg[param_4][1]);
+  dVar17 = -(double)(fVar2 * param_1->shadowOrgPixelCenter[0] -
+                    *(float *)((int)param_1->sunAxis[0] +
+                              (int)(((longlong)(int)param_4 + 9U & 0xffffffff) << 3)));
+  dVar12 = (double)((float)param_3->usefulSize * fVar2);
+  pfVar4 = inwardSign;
+  pfVar7 = inwardSign + 1;
+  puVar9 = param_2->boundingArcRay;
+  dVar15 = (double)(float)(dVar12 + dVar17);
+  lVar8 = 2;
+  dVar14 = (double)(float)(dVar12 + dVar16);
+  dVar12 = 0.5;
+  dVar18 = 0.0;
   do {
-    pfVar9 = (float *)((*(int *)lVar14 + 6) * 8 + (int)lVar6);
-    dVar15 = (double)*pfVar9;
-    dVar18 = (double)pfVar9[1];
-    dVar16 = dVar20 - (double)*(float *)(iVar5 + 0x38);
-    if (dVar15 < 0.0) {
-      dVar16 = (double)*(float *)(iVar5 + 0x38) - dVar22;
+    dVar10 = (double)param_2->shadowRays[*puVar9][0];
+    dVar13 = (double)param_2->shadowRays[*puVar9][1];
+    dVar11 = dVar15 - (double)param_1->shadowOrg[0];
+    if (dVar10 < 0.0) {
+      dVar11 = (double)param_1->shadowOrg[0] - dVar17;
     }
-    dVar1 = dVar19 - (double)*(float *)(iVar5 + 0x3c);
-    if (dVar18 < 0.0) {
-      dVar1 = (double)*(float *)(iVar5 + 0x3c) - dVar21;
+    dVar1 = dVar14 - (double)param_1->shadowOrg[1];
+    if (dVar13 < 0.0) {
+      dVar1 = (double)param_1->shadowOrg[1] - dVar16;
     }
-    if ((float)((double)(float)dVar1 * ABS(dVar15)) < (float)(ABS(dVar18) * (double)(float)dVar16))
+    if ((float)((double)(float)dVar1 * ABS(dVar10)) < (float)(ABS(dVar13) * (double)(float)dVar11))
     {
-      if (dVar23 <= (double)(float)((double)(float)((double)*pfVar12 * dVar18) * dVar15)) {
-        dVar16 = (double)((float)(dVar15 * (double)(float)dVar1) /
-                          (float)(ABS(dVar18) * (double)*(float *)(iVar3 + iVar5)) +
-                          (float)param_3->minCoord + *(float *)(iVar5 + 0x40));
-        if (dVar23 <= dVar15) {
-          dVar16 = ceil((double)(float)(dVar16 + dVar17));
-          iVar10 = (int)dVar16;
-          if (iVar10 < param_5->partition[iVar4].viewportParms.viewport.width) goto LAB_8278622c;
+      if (dVar18 <= (double)(float)((double)(float)((double)*pfVar7 * dVar13) * dVar10)) {
+        dVar11 = (double)((float)(dVar10 * (double)(float)dVar1) /
+                          (float)(ABS(dVar13) * (double)*(float *)((int)param_1->sunAxis[0] + iVar3)
+                                 ) + (float)param_3->minCoord + param_1->shadowOrgPixelCenter[0]);
+        if (dVar18 <= dVar10) {
+          dVar11 = ceil((double)(float)(dVar11 + dVar12));
+          iVar5 = (int)dVar11;
+          if (iVar5 < param_5->partition[param_4].viewportParms.viewport.width) goto LAB_8278622c;
         }
         else {
-          iVar10 = param_5->partition[iVar4].viewportParms.viewport.x;
-          dVar16 = floor((double)(float)(dVar16 - dVar17));
-          iVar11 = (int)dVar16 - iVar10;
-          if (iVar10 < iVar11) {
-            param_5->partition[iVar4].viewportParms.viewport.x = iVar11;
-            iVar10 = (iVar10 - iVar11) + param_5->partition[iVar4].viewportParms.viewport.width;
+          iVar5 = param_5->partition[param_4].viewportParms.viewport.x;
+          dVar11 = floor((double)(float)(dVar11 - dVar12));
+          iVar6 = (int)dVar11 - iVar5;
+          if (iVar5 < iVar6) {
+            param_5->partition[param_4].viewportParms.viewport.x = iVar6;
+            iVar5 = (iVar5 - iVar6) + param_5->partition[param_4].viewportParms.viewport.width;
 LAB_8278622c:
-            param_5->partition[iVar4].viewportParms.viewport.width = iVar10;
+            param_5->partition[param_4].viewportParms.viewport.width = iVar5;
           }
         }
       }
     }
-    else if (dVar23 <= (double)(float)((double)(float)((double)*pfVar8 * dVar18) * dVar15)) {
-      dVar16 = (double)((float)(dVar18 * (double)(float)dVar16) /
-                        (float)(ABS(dVar15) * (double)*(float *)(iVar3 + iVar5)) +
-                        (float)param_3->minCoord + *(float *)(iVar5 + 0x44));
-      if (dVar23 <= dVar18) {
-        dVar16 = ceil((double)(float)(dVar16 + dVar17));
-        iVar10 = param_5->partition[iVar4].viewportParms.viewport.y;
-        iVar11 = param_3->pixelsPerTile - (int)dVar16;
-        if (iVar10 < iVar11) {
-          param_5->partition[iVar4].viewportParms.viewport.y = iVar11;
-          param_5->partition[iVar4].viewportParms.viewport.height =
-               (iVar10 - iVar11) + param_5->partition[iVar4].viewportParms.viewport.height;
+    else if (dVar18 <= (double)(float)((double)(float)((double)*pfVar4 * dVar13) * dVar10)) {
+      dVar11 = (double)((float)(dVar13 * (double)(float)dVar11) /
+                        (float)(ABS(dVar10) * (double)*(float *)((int)param_1->sunAxis[0] + iVar3))
+                        + (float)param_3->minCoord + param_1->shadowOrgPixelCenter[1]);
+      if (dVar18 <= dVar13) {
+        dVar11 = ceil((double)(float)(dVar11 + dVar12));
+        iVar5 = param_5->partition[param_4].viewportParms.viewport.y;
+        iVar6 = param_3->pixelsPerTile - (int)dVar11;
+        if (iVar5 < iVar6) {
+          param_5->partition[param_4].viewportParms.viewport.y = iVar6;
+          param_5->partition[param_4].viewportParms.viewport.height =
+               (iVar5 - iVar6) + param_5->partition[param_4].viewportParms.viewport.height;
         }
       }
       else {
-        dVar16 = floor((double)(float)(dVar16 - dVar17));
-        iVar10 = (param_3->pixelsPerTile - param_5->partition[iVar4].viewportParms.viewport.y) -
-                 (int)dVar16;
-        if (iVar10 < param_5->partition[iVar4].viewportParms.viewport.height) {
-          param_5->partition[iVar4].viewportParms.viewport.height = iVar10;
+        dVar11 = floor((double)(float)(dVar11 - dVar12));
+        iVar5 = (param_3->pixelsPerTile - param_5->partition[param_4].viewportParms.viewport.y) -
+                (int)dVar11;
+        if (iVar5 < param_5->partition[param_4].viewportParms.viewport.height) {
+          param_5->partition[param_4].viewportParms.viewport.height = iVar5;
         }
       }
     }
-    lVar13 = lVar13 + -1;
-    lVar14 = lVar14 + 4;
-    pfVar8 = pfVar8 + 1;
-    pfVar12 = pfVar12 + -1;
-    if (lVar13 == 0) {
-      __restfpr_26();
-      __restgprlr_21();
+    lVar8 = lVar8 + -1;
+    puVar9 = puVar9 + 1;
+    pfVar4 = pfVar4 + 1;
+    pfVar7 = pfVar7 + -1;
+    if (lVar8 == 0) {
       return;
     }
   } while( true );
@@ -2188,6 +2125,9 @@ LAB_8278622c:
 
 // 82786258  R_TrimSunShadowViewportForNearClipPoints  (gfx_d3d/r_sunshadow.cpp:1193)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void R_TrimSunShadowViewportForNearClipPoints
                (GfxSunShadowProjectionSetup *param_1,GfxSunShadowFrustumRays *param_2,
                GfxSunShadowMapMetrics *param_3,float (*param_4) [2],GfxSunShadow *param_5)
@@ -2195,72 +2135,68 @@ void R_TrimSunShadowViewportForNearClipPoints
 {
   int iVar1;
   int iVar2;
-  int iVar3;
-  bool bVar4;
+  bool bVar3;
+  double dVar4;
   double dVar5;
   double dVar6;
-  double dVar7;
   float (*local_50 [2]) [2];
   ulonglong local_48;
   
-  iVar2 = __savegprlr_27(param_1);
-  bVar4 = param_4[1][0] < (*param_4)[0];
+  bVar3 = param_4[1][0] < (*param_4)[0];
   local_50[0] = param_2->shadowRays + param_2->boundingArcRay[0];
   local_50[1] = param_2->shadowRays + param_2->boundingArcRay[1];
-  dVar7 = 0.0;
-  dVar6 = 0.5;
-  if (0.0 < (*local_50[bVar4])[0]) {
+  dVar6 = 0.0;
+  dVar5 = 0.5;
+  if (0.0 < (*local_50[bVar3])[0]) {
     local_48 = (ulonglong)param_3->minCoord;
-    dVar5 = floor((double)(((param_4[bVar4][0] - *(float *)(iVar2 + 0x50)) /
-                            *(float *)(iVar2 + 0x5c) + (float)local_48 + *(float *)(iVar2 + 0x40)) -
-                          0.5));
-    iVar1 = param_5->partition[1].viewportParms.viewport.x;
-    iVar3 = (int)dVar5;
-    local_48 = (ulonglong)iVar3;
-    if (iVar1 < iVar3) {
-      param_5->partition[1].viewportParms.viewport.x = iVar3;
+    dVar4 = floor((double)(((param_4[bVar3][0] - param_1->snappedShadowOrg[1][0]) /
+                            param_1->sampleSize[1] + (float)local_48 +
+                           param_1->shadowOrgPixelCenter[0]) - 0.5));
+    iVar2 = param_5->partition[1].viewportParms.viewport.x;
+    iVar1 = (int)dVar4;
+    local_48 = (longlong)iVar1;
+    if (iVar2 < iVar1) {
+      param_5->partition[1].viewportParms.viewport.x = iVar1;
       param_5->partition[1].viewportParms.viewport.width =
-           (iVar1 - iVar3) + param_5->partition[1].viewportParms.viewport.width;
+           (iVar2 - iVar1) + param_5->partition[1].viewportParms.viewport.width;
     }
   }
-  if ((double)(*local_50[!bVar4])[0] < dVar7) {
+  if ((double)(*local_50[!bVar3])[0] < dVar6) {
     local_48 = (ulonglong)param_3->minCoord;
-    dVar5 = ceil((double)(float)((double)((param_4[!bVar4][0] - *(float *)(iVar2 + 0x50)) /
-                                          *(float *)(iVar2 + 0x5c) + (float)local_48 +
-                                         *(float *)(iVar2 + 0x40)) + dVar6));
-    iVar3 = (int)dVar5;
-    local_48 = (ulonglong)iVar3;
-    if (iVar3 < param_5->partition[1].viewportParms.viewport.width) {
-      param_5->partition[1].viewportParms.viewport.width = iVar3;
+    dVar4 = ceil((double)(float)((double)((param_4[!bVar3][0] - param_1->snappedShadowOrg[1][0]) /
+                                          param_1->sampleSize[1] + (float)local_48 +
+                                         param_1->shadowOrgPixelCenter[0]) + dVar5));
+    iVar1 = (int)dVar4;
+    local_48 = (longlong)iVar1;
+    if (iVar1 < param_5->partition[1].viewportParms.viewport.width) {
+      param_5->partition[1].viewportParms.viewport.width = iVar1;
     }
   }
-  bVar4 = param_4[1][1] < (*param_4)[1];
-  if (dVar7 < (double)(*local_50[bVar4])[1]) {
+  bVar3 = param_4[1][1] < (*param_4)[1];
+  if (dVar6 < (double)(*local_50[bVar3])[1]) {
     local_48 = (ulonglong)param_3->minCoord;
-    dVar5 = floor((double)(float)((double)((param_4[bVar4][1] - *(float *)(iVar2 + 0x54)) /
-                                           *(float *)(iVar2 + 0x5c) + (float)local_48 +
-                                          *(float *)(iVar2 + 0x44)) - dVar6));
-    local_48 = (ulonglong)(int)dVar5;
-    iVar3 = (param_3->pixelsPerTile - param_5->partition[1].viewportParms.viewport.y) - (int)dVar5;
-    if (iVar3 < param_5->partition[1].viewportParms.viewport.height) {
-      param_5->partition[1].viewportParms.viewport.height = iVar3;
+    dVar4 = floor((double)(float)((double)((param_4[bVar3][1] - param_1->snappedShadowOrg[1][1]) /
+                                           param_1->sampleSize[1] + (float)local_48 +
+                                          param_1->shadowOrgPixelCenter[1]) - dVar5));
+    local_48 = (longlong)(int)dVar4;
+    iVar1 = (param_3->pixelsPerTile - param_5->partition[1].viewportParms.viewport.y) - (int)dVar4;
+    if (iVar1 < param_5->partition[1].viewportParms.viewport.height) {
+      param_5->partition[1].viewportParms.viewport.height = iVar1;
     }
   }
-  if ((double)(*local_50[!bVar4])[1] < dVar7) {
+  if ((double)(*local_50[!bVar3])[1] < dVar6) {
     local_48 = (ulonglong)param_3->minCoord;
-    dVar6 = ceil((double)(float)((double)((param_4[!bVar4][1] - *(float *)(iVar2 + 0x54)) /
-                                          *(float *)(iVar2 + 0x5c) + (float)local_48 +
-                                         *(float *)(iVar2 + 0x44)) + dVar6));
-    iVar2 = param_5->partition[1].viewportParms.viewport.y;
-    local_48 = (ulonglong)(int)dVar6;
-    iVar3 = param_3->pixelsPerTile - (int)dVar6;
-    if (iVar2 < iVar3) {
-      param_5->partition[1].viewportParms.viewport.y = iVar3;
+    dVar5 = ceil((double)(float)((double)((param_4[!bVar3][1] - param_1->snappedShadowOrg[1][1]) /
+                                          param_1->sampleSize[1] + (float)local_48 +
+                                         param_1->shadowOrgPixelCenter[1]) + dVar5));
+    iVar1 = param_5->partition[1].viewportParms.viewport.y;
+    iVar2 = param_3->pixelsPerTile - (int)dVar5;
+    if (iVar1 < iVar2) {
+      param_5->partition[1].viewportParms.viewport.y = iVar2;
       param_5->partition[1].viewportParms.viewport.height =
-           (iVar2 - iVar3) + param_5->partition[1].viewportParms.viewport.height;
+           (iVar1 - iVar2) + param_5->partition[1].viewportParms.viewport.height;
     }
   }
-  __restgprlr_27();
   return;
 }
 
@@ -2286,6 +2222,9 @@ void R_SetSunShadowViewport_Untrimmed
 
 // 82786548  R_SetSunShadowViewports_UseFullMap  (gfx_d3d/r_sunshadow.cpp:1265)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
+
 void R_SetSunShadowViewports_UseFullMap
                (GfxSunShadowProjectionSetup *param_1,GfxSunShadowFrustumRays *param_2,
                GfxSunShadowMapMetrics *param_3,int param_4,int param_5,float (*param_6) [2],
@@ -2295,9 +2234,7 @@ void R_SetSunShadowViewports_UseFullMap
   uint uVar1;
   uint uVar2;
   uint uVar3;
-  GfxSunShadowProjectionSetup *pGVar4;
   
-  pGVar4 = (GfxSunShadowProjectionSetup *)__savegprlr_25(param_1);
   uVar1 = param_3->minCoord;
   uVar2 = param_3->usefulSize;
   uVar3 = param_2->boundingArcRay[0];
@@ -2309,21 +2246,21 @@ void R_SetSunShadowViewports_UseFullMap
   param_7->partition[1].viewportParms.viewport.y = uVar1;
   param_7->partition[1].viewportParms.viewport.width = uVar2;
   param_7->partition[1].viewportParms.viewport.height = uVar2;
-  if (uVar3 != 0xffffffff) {
-    R_TrimSunShadowViewportForPartition(pGVar4,param_2,param_3,0,param_7);
-    if (param_4 == 0) {
-      R_TrimSunShadowViewportForPartition(pGVar4,param_2,param_3,1,param_7);
-      if (param_5 != 0) {
-        R_TrimSunShadowViewportForNearClipPoints(pGVar4,param_2,param_3,param_6,param_7);
-      }
-    }
+  if (((uVar3 != 0xffffffff) &&
+      (R_TrimSunShadowViewportForPartition(param_1,param_2,param_3,0,param_7), param_4 == 0)) &&
+     (R_TrimSunShadowViewportForPartition(param_1,param_2,param_3,1,param_7), param_5 != 0)) {
+    R_TrimSunShadowViewportForNearClipPoints(param_1,param_2,param_3,param_6,param_7);
   }
-  __restgprlr_25();
   return;
 }
 
 
 // 827865F8  R_SetSunShadowViewports_FadeByDistance  (gfx_d3d/r_sunshadow.cpp:1284)
+
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
 
 void R_SetSunShadowViewports_FadeByDistance
                (GfxSunShadowProjectionSetup *param_1,GfxSunShadowFrustumRays *param_2,
@@ -2334,56 +2271,52 @@ void R_SetSunShadowViewports_FadeByDistance
   int iVar2;
   uint uVar3;
   uint uVar4;
-  int iVar5;
-  int iVar6;
-  longlong lVar7;
-  longlong lVar8;
-  float *pfVar9;
-  float *pfVar10;
+  longlong lVar5;
+  float *pfVar6;
+  float *pfVar7;
+  float *pfVar8;
+  double dVar9;
+  double dVar10;
   double dVar11;
   double dVar12;
   double dVar13;
   double dVar14;
   double dVar15;
-  double dVar16;
-  double dVar17;
   
-  lVar8 = (longlong)(int)param_4;
-  __savegprlr();
-  iVar6 = __savefpr_26();
-  dVar17 = (double)*(float *)(iVar6 + 0x28);
-  lVar8 = lVar8 + -0xf4;
-  dVar16 = 0.5;
-  dVar15 = 4.0;
-  pfVar10 = (float *)(iVar6 + 0x58);
-  pfVar9 = (float *)(iVar6 + 0x4c);
-  lVar7 = 2;
+  dVar15 = (double)param_1->frustumRayDistToEdgeOfNearMap;
+  pfVar6 = &param_4[-1].partition[1].viewportParms.viewParms.camera.depthHackNearClip;
+  dVar14 = 0.5;
+  dVar13 = 4.0;
+  pfVar8 = param_1->sampleSize;
+  pfVar7 = param_1->snappedShadowOrg[0] + 1;
+  lVar5 = 2;
   do {
-    dVar11 = (double)param_2->mins[0] * dVar17;
-    dVar14 = (double)(float)(dVar17 * (double)param_2->mins[1] + (double)*(float *)(iVar6 + 0x3c));
-    dVar13 = (double)(float)((double)param_2->maxs[0] * dVar17 + (double)*(float *)(iVar6 + 0x38));
-    dVar12 = (double)(float)((double)param_2->maxs[1] * dVar17 + (double)*(float *)(iVar6 + 0x3c));
-    dVar17 = (double)(float)(dVar17 * dVar15);
-    dVar11 = floor((double)(float)((double)(((float)(dVar11 + (double)*(float *)(iVar6 + 0x38)) -
-                                            pfVar9[-1]) / *pfVar10 + *(float *)(iVar6 + 0x40)) -
-                                  dVar16));
-    iVar1 = (int)dVar11;
-    dVar11 = floor((double)(float)((double)((float)(dVar14 - (double)*pfVar9) / *pfVar10 +
-                                           *(float *)(iVar6 + 0x44)) - dVar16));
-    dVar13 = ceil((double)(float)((double)((float)(dVar13 - (double)pfVar9[-1]) / *pfVar10 +
-                                          *(float *)(iVar6 + 0x40)) + dVar16));
-    dVar12 = ceil((double)(float)((double)((float)(dVar12 - (double)*pfVar9) / *pfVar10 +
-                                          *(float *)(iVar6 + 0x44)) + dVar16));
-    iVar2 = (int)dVar12;
+    dVar9 = (double)param_2->mins[0] * dVar15;
+    dVar12 = (double)(float)(dVar15 * (double)param_2->mins[1] + (double)param_1->shadowOrg[1]);
+    dVar11 = (double)(float)((double)param_2->maxs[0] * dVar15 + (double)param_1->shadowOrg[0]);
+    dVar10 = (double)(float)((double)param_2->maxs[1] * dVar15 + (double)param_1->shadowOrg[1]);
+    dVar15 = (double)(float)(dVar15 * dVar13);
+    dVar9 = floor((double)(float)((double)(((float)(dVar9 + (double)param_1->shadowOrg[0]) -
+                                           (*(float (*) [2])(pfVar7 + -1))[0]) / *pfVar8 +
+                                          param_1->shadowOrgPixelCenter[0]) - dVar14));
+    iVar1 = (int)dVar9;
+    dVar9 = floor((double)(float)((double)((float)(dVar12 - (double)*pfVar7) / *pfVar8 +
+                                          param_1->shadowOrgPixelCenter[1]) - dVar14));
+    dVar11 = ceil((double)(float)((double)((float)(dVar11 - (double)(*(float (*) [2])(pfVar7 + -1))
+                                                                    [0]) / *pfVar8 +
+                                          param_1->shadowOrgPixelCenter[0]) + dVar14));
+    dVar10 = ceil((double)(float)((double)((float)(dVar10 - (double)*pfVar7) / *pfVar8 +
+                                          param_1->shadowOrgPixelCenter[1]) + dVar14));
+    iVar2 = (int)dVar10;
     if (iVar1 < 0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_sunshadow.cpp",
                       0x519,0,"pixelMins[0] >= 0\n\t%i, %i");
     }
-    if ((int)dVar11 < 0) {
+    if ((int)dVar9 < 0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_sunshadow.cpp",
                       0x51a,0,"pixelMins[1] >= 0\n\t%i, %i");
     }
-    if ((int)param_3->usefulSize < (int)dVar13) {
+    if ((int)param_3->usefulSize < (int)dVar11) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_sunshadow.cpp",
                       0x51b,0,
                       "pixelMaxs[0] <= static_cast< int >( mapMetrics->usefulSize )\n\t%i, %i");
@@ -2395,23 +2328,25 @@ void R_SetSunShadowViewports_FadeByDistance
     }
     uVar3 = param_3->minCoord;
     uVar4 = param_3->usefulSize;
-    iVar5 = (int)lVar8;
-    *(int *)(iVar5 + 0x15c) = (int)dVar13 - iVar1;
-    *(uint *)(iVar5 + 0x154) = uVar3 + iVar1;
-    lVar7 = lVar7 + -1;
-    *(uint *)(iVar5 + 0x158) = (uVar3 - iVar2) + uVar4;
-    pfVar10 = pfVar10 + 1;
-    lVar8 = lVar8 + 0x160;
-    *(int *)lVar8 = iVar2 - (int)dVar11;
-    pfVar9 = pfVar9 + 2;
-  } while (lVar7 != 0);
-  __restfpr_26();
-  __restgprlr();
+    pfVar6[0x57] = (float)((int)dVar11 - iVar1);
+    pfVar6[0x55] = (float)(uVar3 + iVar1);
+    lVar5 = lVar5 + -1;
+    pfVar6[0x56] = (float)((uVar3 - iVar2) + uVar4);
+    pfVar8 = pfVar8 + 1;
+    pfVar6 = pfVar6 + 0x58;
+    *pfVar6 = (float)(iVar2 - (int)dVar9);
+    pfVar7 = pfVar7 + 2;
+  } while (lVar5 != 0);
   return;
 }
 
 
 // 82786838  R_InitSunShadowProjectionSetupForFrustum  (gfx_d3d/r_sunshadow.cpp:1320)
+
+/* WARNING: Function: __savegprlr_20 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_20 replaced with injection: xenon_save_restore */
 
 void R_InitSunShadowProjectionSetupForFrustum
                (GfxCamera *param_1,GfxSunShadowMapMetrics *param_2,GfxSunShadowFrustumRays *param_3,
@@ -2430,121 +2365,114 @@ void R_InitSunShadowProjectionSetupForFrustum
   float fVar10;
   float fVar11;
   float fVar12;
-  float *pfVar13;
+  float fVar13;
   float fVar14;
   float fVar15;
   float *pfVar16;
   longlong lVar17;
-  longlong lVar18;
-  longlong lVar19;
-  longlong lVar20;
-  longlong lVar21;
-  float *pfVar22;
+  float *pfVar18;
+  float *pfVar19;
+  double dVar20;
+  double dVar21;
+  double dVar22;
   double dVar23;
   double dVar24;
   double dVar25;
-  double dVar26;
-  double dVar27;
-  double dVar28;
   float local_d0 [2];
   ulonglong local_c8;
   ulonglong local_c0;
   ulonglong local_b8;
   ulonglong local_b0;
   
-  lVar18 = (longlong)(int)param_4;
-  lVar17 = (longlong)(int)param_3;
-  __savegprlr_20(param_1);
-  pfVar16 = (float *)__savefpr_25();
-  lVar19 = lVar18 + 0x3c;
-  dVar24 = 0.9990000128746033;
-  dVar27 = 1.0;
-  dVar26 = 0.5;
-  dVar25 = 2.0;
-  pfVar22 = local_d0;
-  lVar21 = lVar17 + 0x70;
-  lVar20 = 2;
+  pfVar16 = param_4->shadowOrg + 1;
+  dVar21 = 0.9990000128746033;
+  dVar24 = 1.0;
+  dVar23 = 0.5;
+  dVar22 = 2.0;
+  pfVar19 = local_d0;
+  pfVar18 = param_3->maxs;
+  lVar17 = 2;
   do {
     local_c8 = (ulonglong)param_2->usefulSize;
-    pfVar13 = (float *)lVar21;
-    fVar1 = pfVar13[-2];
-    fVar2 = (float)((double)local_c8 - dVar25) / (float)((double)*pfVar13 - (double)fVar1);
-    *pfVar22 = fVar2;
-    dVar23 = ceil(-(double)(float)((double)fVar2 * (double)fVar1 - dVar26));
+    fVar1 = pfVar18[-2];
+    fVar2 = (float)((double)local_c8 - dVar22) / (float)((double)*pfVar18 - (double)fVar1);
+    *pfVar19 = fVar2;
+    dVar20 = ceil(-(double)(float)((double)fVar2 * (double)fVar1 - dVar23));
     local_c0 = (ulonglong)param_2->usefulSize;
-    dVar28 = (double)(float)((double)(float)dVar23 + dVar26);
-    dVar23 = floor(-(double)(*pfVar13 * *pfVar22 - (float)((double)local_c0 - dVar26)));
-    dVar23 = (double)(float)((double)(float)dVar23 - dVar26);
-    if (dVar28 != dVar23) {
-      if ((double)(float)(dVar23 + dVar25) < dVar28) {
+    dVar25 = (double)(float)((double)(float)dVar20 + dVar23);
+    dVar20 = floor(-(double)(*pfVar18 * *pfVar19 - (float)((double)local_c0 - dVar23)));
+    dVar20 = (double)(float)((double)(float)dVar20 - dVar23);
+    if (dVar25 != dVar20) {
+      if ((double)(float)(dVar20 + dVar22) < dVar25) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_sunshadow.cpp",
                         0x54f,0,"centerMins <= centerMaxs + 2.0f\n\t%g, %g");
       }
-      if (*pfVar13 <= -pfVar13[-2]) {
-        dVar28 = (double)(float)(dVar28 - dVar27);
-        *pfVar22 = (float)(dVar27 - dVar28) / pfVar13[-2];
+      if (*pfVar18 <= -pfVar18[-2]) {
+        dVar25 = (double)(float)(dVar25 - dVar24);
+        *pfVar19 = (float)(dVar24 - dVar25) / pfVar18[-2];
       }
       else {
-        dVar28 = (double)(float)(dVar23 + dVar27);
+        dVar25 = (double)(float)(dVar20 + dVar24);
         local_b8 = (ulonglong)param_2->usefulSize;
-        *pfVar22 = (float)((double)(float)((double)param_2->usefulSize - dVar27) - dVar28) /
-                   *pfVar13;
+        *pfVar19 = (float)((double)(float)((double)param_2->usefulSize - dVar24) - dVar25) /
+                   *pfVar18;
       }
     }
-    if ((double)(float)((double)pfVar13[-2] * (double)*pfVar22 + dVar28) < dVar24) {
+    if ((double)(float)((double)pfVar18[-2] * (double)*pfVar19 + dVar25) < dVar21) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_sunshadow.cpp",
                       0x55d,0,
                       "centerMins + scale[coord] * frustumRays->mins[coord] >= R_SUNSHADOW_PIXEL_PAD + 0.5f - EQUAL_EPSILON\n\t%g, %g"
                      );
     }
     local_b0 = (ulonglong)param_2->usefulSize;
-    if ((float)((double)local_b0 - dVar24) < (float)((double)*pfVar22 * (double)*pfVar13 + dVar28))
+    if ((float)((double)local_b0 - dVar21) < (float)((double)*pfVar19 * (double)*pfVar18 + dVar25))
     {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_sunshadow.cpp",
                       0x55e,0,
                       "centerMins + scale[coord] * frustumRays->maxs[coord] <= mapMetrics->usefulSize - (R_SUNSHADOW_PIXEL_PAD + 0.5f - EQUAL_EPSILON)\n\t%g, %g"
                      );
     }
-    lVar19 = lVar19 + 4;
-    *(float *)lVar19 = (float)dVar28;
-    lVar20 = lVar20 + -1;
-    lVar21 = lVar21 + 4;
-    pfVar22 = pfVar22 + 1;
-  } while (lVar20 != 0);
-  fVar1 = pfVar16[5];
-  fVar2 = *pfVar16;
-  fVar3 = pfVar16[1];
-  fVar4 = pfVar16[2];
-  pfVar22 = (float *)lVar18;
+    pfVar16 = pfVar16 + 1;
+    *pfVar16 = (float)dVar25;
+    lVar17 = lVar17 + -1;
+    pfVar18 = pfVar18 + 1;
+    pfVar19 = pfVar19 + 1;
+  } while (lVar17 != 0);
+  fVar1 = param_1->axis[0][2];
+  fVar2 = param_1->origin[0];
+  fVar3 = param_1->origin[1];
+  fVar4 = param_1->origin[2];
   fVar5 = rg.sunSampleSizeNear / rg.sunShadowmapScale;
-  pfVar22[0x16] = fVar5;
-  pfVar22[0x17] = fVar5 * 4.0;
-  pfVar22[0xb] = fVar2;
-  pfVar22[0xc] = fVar3;
-  pfVar22[0xd] = fVar4;
-  if (1.1920929e-07 < ABS(fVar1)) {
-    if (0.0 < (sm_cameraOffset->current).value) {
-      fVar5 = pfVar16[4];
-      fVar6 = pfVar16[5];
-      fVar1 = ABS((sm_cameraOffset->current).value / fVar1);
-      pfVar22[0xb] = pfVar16[3] * fVar1 + pfVar22[0xb];
-      pfVar22[0xc] = fVar5 * fVar1 + pfVar22[0xc];
-      pfVar22[0xd] = fVar6 * fVar1 + pfVar22[0xd];
-    }
+  param_4->sampleSize[0] = fVar5;
+  param_4->sampleSize[1] = fVar5 * 4.0;
+  param_4->cameraShadowPos[0] = fVar2;
+  param_4->cameraShadowPos[1] = fVar3;
+  param_4->cameraShadowPos[2] = fVar4;
+  if ((1.1920929e-07 < ABS(fVar1)) && (0.0 < (sm_cameraOffset->current).value)) {
+    fVar5 = param_1->axis[0][1];
+    fVar6 = param_1->axis[0][2];
+    fVar1 = ABS((sm_cameraOffset->current).value / fVar1);
+    param_4->cameraShadowPos[0] = param_1->axis[0][0] * fVar1 + param_4->cameraShadowPos[0];
+    param_4->cameraShadowPos[1] = fVar5 * fVar1 + param_4->cameraShadowPos[1];
+    param_4->cameraShadowPos[2] = fVar6 * fVar1 + param_4->cameraShadowPos[2];
   }
-  fVar1 = pfVar16[3];
-  pfVar13 = (float *)lVar17;
-  fVar5 = pfVar13[3];
-  fVar6 = pfVar13[9];
-  fVar7 = pfVar16[4];
-  fVar8 = pfVar13[4];
-  fVar9 = pfVar13[10];
-  fVar10 = pfVar16[5];
-  fVar11 = pfVar13[5];
-  fVar12 = pfVar13[0xb];
-  fVar14 = pfVar13[8] * fVar10 + pfVar13[7] * fVar7 + fVar1 * pfVar13[6];
-  fVar15 = pfVar13[2] * fVar10 + pfVar13[1] * fVar7 + fVar1 * *pfVar13;
-  pfVar22[0xe] = pfVar22[2] * fVar4 + pfVar22[1] * fVar3 + fVar2 * *pfVar22;
+  fVar1 = param_1->axis[0][0];
+  fVar5 = param_3->worldRays[1][0];
+  fVar6 = param_3->worldRays[3][0];
+  fVar7 = param_1->axis[0][1];
+  fVar8 = param_3->worldRays[1][1];
+  fVar9 = param_3->worldRays[3][1];
+  fVar10 = param_1->axis[0][2];
+  fVar11 = param_3->worldRays[1][2];
+  fVar12 = param_3->worldRays[3][2];
+  fVar13 = param_4->sampleSize[0];
+  fVar14 = param_3->worldRays[2][2] * fVar10 +
+           param_3->worldRays[2][1] * fVar7 + fVar1 * param_3->worldRays[2][0];
+  fVar15 = param_3->worldRays[0][2] * fVar10 +
+           param_3->worldRays[0][1] * fVar7 + fVar1 * param_3->worldRays[0][0];
+  param_4->shadowOrg[0] =
+       param_4->sunAxis[0][2] * fVar4 +
+       param_4->sunAxis[0][1] * fVar3 + fVar2 * param_4->sunAxis[0][0];
   fVar5 = fVar11 * fVar10 + fVar8 * fVar7 + fVar1 * fVar5;
   fVar1 = fVar12 * fVar10 + fVar9 * fVar7 + fVar1 * fVar6;
   if (local_d0[1] - local_d0[0] < 0.0) {
@@ -2556,19 +2484,23 @@ void R_InitSunShadowProjectionSetupForFrustum
   if (fVar1 - fVar14 < 0.0) {
     fVar14 = fVar1;
   }
-  pfVar22[0xf] = pfVar22[5] * fVar4 + pfVar22[4] * fVar3 + fVar2 * pfVar22[3];
-  pfVar22[10] = local_d0[0] * pfVar22[0x16];
+  param_4->shadowOrg[1] =
+       param_4->sunAxis[1][2] * fVar4 +
+       param_4->sunAxis[1][1] * fVar3 + fVar2 * param_4->sunAxis[1][0];
+  local_d0[0] = local_d0[0] * fVar13;
+  param_4->frustumRayDistToEdgeOfNearMap = local_d0[0];
   if (fVar14 - fVar15 < 0.0) {
     fVar15 = fVar14;
   }
-  pfVar22[9] = fVar15 * local_d0[0] * pfVar22[0x16];
-  __restfpr_25();
-  __restgprlr_20();
+  param_4->nearShadowMinDist = fVar15 * local_d0[0];
   return;
 }
 
 
 // 82786BF0  R_SetupSunShadowMapDebugOverlay  (gfx_d3d/r_sunshadow.cpp:1401)
+
+/* WARNING: Function: __savegprlr_19 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_19 replaced with injection: xenon_save_restore */
 
 void R_SetupSunShadowMapDebugOverlay
                (GfxSunShadowProjectionSetup *param_1,GfxSunShadowFrustumRays *param_2,
@@ -2583,101 +2515,94 @@ void R_SetupSunShadowMapDebugOverlay
   float fVar6;
   float fVar7;
   float fVar8;
-  float fVar9;
-  float *pfVar10;
-  float *pfVar11;
+  int iVar9;
+  float (*pafVar11) [2];
+  ulonglong uVar10;
   float *pfVar12;
-  longlong lVar13;
-  longlong lVar14;
-  ulonglong uVar15;
-  longlong lVar16;
-  int iVar17;
-  longlong lVar18;
-  uint uVar19;
-  uint uVar20;
-  ulonglong uVar21;
-  longlong lVar23;
-  double dVar24;
-  undefined4 uVar22;
+  GfxSunShadowClip *pGVar13;
+  uint uVar14;
+  uint uVar15;
+  ulonglong uVar16;
+  DpvsPlane *pDVar18;
+  longlong lVar19;
+  double dVar20;
+  float fVar17;
   
-  lVar18 = (longlong)(int)param_4;
-  lVar13 = (longlong)(int)param_3;
-  lVar16 = (longlong)(int)param_2;
-  pfVar12 = (float *)__savegprlr_19(param_1);
-  pfVar10 = (float *)lVar18;
   if ((sm_showOverlay->current).integer != 1) {
-    pfVar10[10] = 0.0;
-    __restgprlr_19();
+    param_4->clipPlaneCount[0] = 0;
     return;
   }
-  fVar1 = pfVar12[0xf];
-  *pfVar10 = pfVar12[0xe];
-  lVar16 = lVar16 + 0x2c;
-  pfVar10[1] = fVar1;
-  lVar14 = lVar18 + 4;
-  lVar23 = 8;
+  fVar17 = param_1->shadowOrg[1];
+  param_4->shadowOrg[0] = param_1->shadowOrg[0];
+  pfVar12 = param_2->worldRays[3] + 2;
+  param_4->shadowOrg[1] = fVar17;
+  pafVar11 = (float (*) [2])(param_4->shadowOrg + 1);
+  lVar19 = 8;
   do {
-    lVar16 = lVar16 + 4;
-    lVar14 = lVar14 + 4;
-    *(undefined4 *)lVar14 = *(undefined4 *)lVar16;
-    lVar23 = lVar23 + -1;
-  } while (lVar23 != 0);
-  lVar14 = 0;
-  uVar19 = 0;
-  dVar24 = 0.0010000000474974513;
-  lVar18 = lVar18 + 0x24;
-  lVar16 = lVar13;
+    pfVar12 = pfVar12 + 1;
+    pafVar11 = (float (*) [2])(*pafVar11 + 1);
+    (*pafVar11)[0] = *pfVar12;
+    lVar19 = lVar19 + -1;
+  } while (lVar19 != 0);
+  lVar19 = 0;
+  uVar14 = 0;
+  dVar20 = 0.0010000000474974513;
+  pfVar12 = param_4->frustumShadowRays[3] + 1;
+  pGVar13 = param_3;
   do {
-    uVar21 = 0;
-    uVar22 = 0;
-    uVar20 = 0;
-    if (*(uint *)lVar16 != 0) {
+    uVar16 = 0;
+    fVar17 = 0.0;
+    uVar15 = 0;
+    if (pGVar13->planeCount[0] != 0) {
       do {
-        iVar17 = (uVar19 + uVar20 + 1) * 0x10;
-        pfVar11 = (float *)(iVar17 + (int)lVar13);
-        if (ABS((double)(pfVar12[8] * pfVar11[2] +
-                        pfVar12[7] * pfVar11[1] + pfVar12[6] * *(float *)(iVar17 + (int)lVar13))) <=
-            dVar24) {
-          if (7 < (uVar21 & 0xffffffff)) {
+        pDVar18 = param_3->planes[0] + uVar14 + uVar15;
+        if (ABS((double)(param_1->sunAxis[2][2] * pDVar18->coeffs[2] +
+                        param_1->sunAxis[2][1] * pDVar18->coeffs[1] +
+                        param_1->sunAxis[2][0] * param_3->planes[0][uVar14 + uVar15].coeffs[0])) <=
+            dVar20) {
+          if (7 < (uVar16 & 0xffffffff)) {
             MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_sunshadow.cpp"
                             ,0x592,0,
                             "planeCount doesn\'t index ARRAY_COUNT( overlaySetup->clipPlanes[partitionIter] )\n\t%i not in [0, %i)"
                            );
           }
-          fVar1 = *pfVar11;
-          fVar2 = *pfVar12;
-          fVar3 = pfVar12[3];
-          uVar15 = lVar14 + uVar21 + 4;
-          fVar4 = pfVar11[1];
-          fVar5 = pfVar12[1];
-          fVar6 = pfVar12[4];
-          iVar17 = (int)((lVar14 + uVar21 + (lVar14 + uVar21 & 0x7fffffff) * 2 & 0xffffffff) << 2);
-          fVar7 = pfVar11[2];
-          fVar8 = pfVar12[2];
-          fVar9 = pfVar12[5];
-          uVar21 = uVar21 + 1;
-          *(float *)((int)pfVar10 + iVar17 + 0x38) = -pfVar11[3];
-          *(float *)((int)((uVar15 + (uVar15 & 0x7fffffff) * 2 & 0xffffffff) << 2) + (int)pfVar10) =
-               fVar8 * fVar7 + fVar5 * fVar4 + fVar2 * fVar1;
-          *(float *)((int)pfVar10 + iVar17 + 0x34) = fVar9 * fVar7 + fVar6 * fVar4 + fVar3 * fVar1;
+          fVar17 = pDVar18->coeffs[0];
+          fVar1 = param_1->sunAxis[0][0];
+          fVar2 = param_1->sunAxis[1][0];
+          uVar10 = lVar19 + uVar16 + 4;
+          fVar3 = pDVar18->coeffs[1];
+          fVar4 = param_1->sunAxis[0][1];
+          fVar5 = param_1->sunAxis[1][1];
+          iVar9 = (int)((lVar19 + uVar16 + (lVar19 + uVar16 & 0x7fffffff) * 2 & 0xffffffff) << 2);
+          fVar6 = pDVar18->coeffs[2];
+          fVar7 = param_1->sunAxis[0][2];
+          fVar8 = param_1->sunAxis[1][2];
+          uVar16 = uVar16 + 1;
+          *(float *)((int)param_4->clipPlanes[0][0] + iVar9 + 8) = -pDVar18->coeffs[3];
+          *(float *)((int)param_4->shadowOrg +
+                    (int)((uVar10 + (uVar10 & 0x7fffffff) * 2 & 0xffffffff) << 2)) =
+               fVar7 * fVar6 + fVar4 * fVar3 + fVar1 * fVar17;
+          *(float *)((int)param_4->clipPlanes[0][0] + iVar9 + 4) =
+               fVar8 * fVar6 + fVar5 * fVar3 + fVar2 * fVar17;
         }
-        uVar22 = (undefined4)uVar21;
-        uVar20 = uVar20 + 1;
-      } while (uVar20 < *(uint *)lVar16);
+        fVar17 = (float)uVar16;
+        uVar15 = uVar15 + 1;
+      } while (uVar15 < pGVar13->planeCount[0]);
     }
-    uVar19 = uVar19 + 10;
-    lVar18 = lVar18 + 4;
-    *(undefined4 *)lVar18 = uVar22;
-    lVar16 = lVar16 + 4;
-    lVar14 = lVar14 + 8;
-  } while (uVar19 < 0x14);
-  __restgprlr_19();
+    uVar14 = uVar14 + 10;
+    pfVar12 = pfVar12 + 1;
+    *pfVar12 = fVar17;
+    pGVar13 = (GfxSunShadowClip *)(pGVar13->planeCount + 1);
+    lVar19 = lVar19 + 8;
+  } while (uVar14 < 0x14);
   return;
 }
 
 
 // 82786DB8  R_SetupSunShadowMapProjectionAndClipPlanes  (gfx_d3d/r_sunshadow.cpp:1439)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 
@@ -2689,66 +2614,63 @@ void R_SetupSunShadowMapProjectionAndClipPlanes
   float fVar1;
   float fVar2;
   float fVar3;
-  GfxCamera *pGVar4;
+  GfxSunShadowPartition *pGVar4;
   int iVar5;
   GfxSunShadowFrustumRays *pGVar6;
   GfxSunShadowClip *pGVar7;
-  GfxSunShadow *pGVar8;
-  longlong lVar9;
-  uint uVar10;
+  GfxViewParms *pGVar8;
+  uint uVar9;
   GfxSunShadowProjectionSetup GStack_140;
   undefined1 auStack_e0 [136];
   float local_58;
   
-  lVar9 = (longlong)(int)param_3;
-  pGVar4 = (GfxCamera *)__savegprlr_25(param_1);
   R_GetSunAxes(frontEndDataOut,(float (*) [3])&GStack_140);
-  R_GetFrustumCornerRays(pGVar4,(float (*) [3])(auStack_e0 + 0x10));
+  R_GetFrustumCornerRays(param_1,(float (*) [3])(auStack_e0 + 0x10));
   R_TransformAndBoundFrustumRays
             ((float (*) [3])&GStack_140,(GfxSunShadowFrustumRays *)(auStack_e0 + 0x10));
   R_SetSunShadowSinesAndBoundingArcEdge((GfxSunShadowFrustumRays *)(auStack_e0 + 0x10));
   R_InitSunShadowProjectionSetupForFrustum
-            (pGVar4,param_2,(GfxSunShadowFrustumRays *)(auStack_e0 + 0x10),&GStack_140);
+            (param_1,param_2,(GfxSunShadowFrustumRays *)(auStack_e0 + 0x10),&GStack_140);
   pGVar6 = (GfxSunShadowFrustumRays *)0x0;
   fVar1 = 1.0 / GStack_140.nearShadowMinDist;
-  fVar2 = pGVar4->axis[0][0] * fVar1;
+  fVar2 = param_1->axis[0][0] * fVar1;
   *param_5 = fVar2;
-  fVar3 = fVar1 * pGVar4->axis[0][1];
+  fVar3 = fVar1 * param_1->axis[0][1];
   param_5[1] = fVar3;
-  fVar1 = fVar1 * pGVar4->axis[0][2];
+  fVar1 = fVar1 * param_1->axis[0][2];
   param_5[2] = fVar1;
-  param_5[3] = -(pGVar4->origin[2] * fVar1 + pGVar4->origin[1] * fVar3 + pGVar4->origin[0] * fVar2);
+  param_5[3] = -(param_1->origin[2] * fVar1 +
+                param_1->origin[1] * fVar3 + param_1->origin[0] * fVar2);
   R_SetSnappedSunShadowOrg(&GStack_140,0,param_2);
   param_4->planeCount[0] = 0;
   param_4->planeCount[1] = 0;
   if (local_58 == -NAN) {
     R_AddSunShadowClipPlanesForViewDir_Common
-              (pGVar4,GStack_140.nearShadowMinDist,pGVar6,(GfxSunShadowClip *)(auStack_e0 + 0x10));
+              (param_1,GStack_140.nearShadowMinDist,pGVar6,(GfxSunShadowClip *)(auStack_e0 + 0x10));
   }
   else {
     R_AddSunShadowClipPlanesForBoundingArc
-              ((float *)pGVar4,&GStack_140,(GfxSunShadowFrustumRays *)(auStack_e0 + 0x10),param_4);
+              (param_1->origin,&GStack_140,(GfxSunShadowFrustumRays *)(auStack_e0 + 0x10),param_4);
   }
-  pGVar8 = (GfxSunShadow *)lVar9;
   if (rg.sunShadowFull == 0) {
     pGVar7 = (GfxSunShadowClip *)0x1;
-    uVar10 = 0;
+    uVar9 = 0;
     R_SetSnappedSunShadowOrg(&GStack_140,1,param_2);
-    fVar1 = GStack_140.sunAxis[2][2] * pGVar4->axis[0][2] +
-            pGVar4->axis[0][0] * GStack_140.sunAxis[2][0] +
-            GStack_140.sunAxis[2][1] * pGVar4->axis[0][1];
+    fVar1 = GStack_140.sunAxis[2][2] * param_1->axis[0][2] +
+            param_1->axis[0][0] * GStack_140.sunAxis[2][0] +
+            GStack_140.sunAxis[2][1] * param_1->axis[0][1];
     if (fVar1 <= 0.001) {
       if (fVar1 < -0.001) {
-        R_AddSunShadowClipPlanesAlongViewDir_Far(pGVar4,GStack_140.nearShadowMinDist,pGVar7);
+        R_AddSunShadowClipPlanesAlongViewDir_Far(param_1,GStack_140.nearShadowMinDist,pGVar7);
       }
     }
     else {
-      R_AddSunShadowClipPlanesAlongViewDir_Near(pGVar4,GStack_140.nearShadowMinDist,pGVar7);
+      R_AddSunShadowClipPlanesAlongViewDir_Near(param_1,GStack_140.nearShadowMinDist,pGVar7);
     }
     R_AddSunShadowClipPlanesForFrustumBoundary
-              ((float *)pGVar4,&GStack_140,(GfxSunShadowFrustumRays *)(auStack_e0 + 0x10),param_4);
+              (param_1->origin,&GStack_140,(GfxSunShadowFrustumRays *)(auStack_e0 + 0x10),param_4);
     R_SetSunShadowViewports_FadeByDistance
-              (&GStack_140,(GfxSunShadowFrustumRays *)(auStack_e0 + 0x10),param_2,pGVar8);
+              (&GStack_140,(GfxSunShadowFrustumRays *)(auStack_e0 + 0x10),param_2,param_3);
   }
   else {
     R_AddSunShadowClipPlanesForMapBoundary
@@ -2760,7 +2682,7 @@ void R_SetupSunShadowMapProjectionAndClipPlanes
           (sm_sunShadowCenter->current).vector[2] * (sm_sunShadowCenter->current).vector[2] == 0.0)
       {
         pGVar7 = (GfxSunShadowClip *)auStack_e0;
-        uVar10 = 0;
+        uVar9 = 0;
         iVar5 = R_SetFarSunShadowOrg_NormalCascade
                           (&GStack_140,(GfxSunShadowFrustumRays *)(auStack_e0 + 0x10),param_2,
                            (float (*) [2])pGVar7);
@@ -2772,35 +2694,35 @@ void R_SetupSunShadowMapProjectionAndClipPlanes
       }
       else {
         iVar5 = 0;
-        uVar10 = (uint)((sm_sunShadowCenterMode->current).enabled == false);
+        uVar9 = (uint)((sm_sunShadowCenterMode->current).enabled == false);
       }
     }
     else {
-      uVar10 = 0;
+      uVar9 = 0;
       iVar5 = 0;
     }
     R_AddSunShadowClipPlanesForMapBoundary
               (&GStack_140,(GfxSunShadowFrustumRays *)(auStack_e0 + 0x10),param_2,1,param_4);
     R_SetSunShadowViewports_UseFullMap
-              (&GStack_140,(GfxSunShadowFrustumRays *)(auStack_e0 + 0x10),param_2,uVar10,iVar5,
-               (float (*) [2])auStack_e0,pGVar8);
+              (&GStack_140,(GfxSunShadowFrustumRays *)(auStack_e0 + 0x10),param_2,uVar9,iVar5,
+               (float (*) [2])auStack_e0,param_3);
   }
   param_4->frustumPlaneCount[0] = param_4->planeCount[0];
   param_4->frustumPlaneCount[1] = param_4->planeCount[1];
   R_AddSunShadowClipPlanesForFrustumSides
-            ((float *)pGVar4,(GfxSunShadowFrustumRays *)(auStack_e0 + 0x10),param_4);
-  R_SetupSunShadowMapProjection(&GStack_140,uVar10,param_2,&pGVar8->sunProj);
-  uVar10 = 0;
-  lVar9 = lVar9 + 0x70;
+            (param_1->origin,(GfxSunShadowFrustumRays *)(auStack_e0 + 0x10),param_4);
+  R_SetupSunShadowMapProjection(&GStack_140,uVar9,param_2,&param_3->sunProj);
+  uVar9 = 0;
+  pGVar4 = param_3->partition;
   do {
-    R_SetSunShadowMapViewParms(param_2,&GStack_140,uVar10,(GfxViewParms *)lVar9);
-    uVar10 = uVar10 + 1;
-    lVar9 = lVar9 + 0x160;
-  } while (uVar10 < 2);
+    pGVar8 = &(pGVar4->viewportParms).viewParms;
+    R_SetSunShadowMapViewParms(param_2,&GStack_140,uVar9,pGVar8);
+    uVar9 = uVar9 + 1;
+    pGVar4 = (GfxSunShadowPartition *)(pGVar8 + 1);
+  } while (uVar9 < 2);
   R_SetupSunShadowMapDebugOverlay
             (&GStack_140,(GfxSunShadowFrustumRays *)(auStack_e0 + 0x10),param_4,
-             &pGVar8->overlaySetup);
-  __restgprlr_25();
+             &param_3->overlaySetup);
   return;
 }
 
@@ -2851,6 +2773,10 @@ void R_GetSunShadowLookupMatrix
 
 // 82787208  R_SetupSunShadowMapMetrics  (gfx_d3d/r_sunshadow.cpp:1626)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
@@ -2869,12 +2795,9 @@ void R_SetupSunShadowMapMetrics(GfxViewInfo *param_1,GfxSunShadowMapMetrics *par
   float fVar10;
   float fVar11;
   float fVar12;
-  int iVar13;
   
-  __savegprlr_29(param_1);
-  iVar13 = __savefpr_25();
-  uVar7 = *(uint *)(iVar13 + 0x938);
-  uVar8 = *(uint *)(iVar13 + 0x940);
+  uVar7 = param_1->sunShadowResolution;
+  uVar8 = param_1->sunShadowTileCount;
   param_2->pixelsPerTile = uVar7;
   param_2->tilesPerTexture = uVar8;
   uVar8 = rg.sunShadowSize;
@@ -2909,14 +2832,14 @@ void R_SetupSunShadowMapMetrics(GfxViewInfo *param_1,GfxSunShadowMapMetrics *par
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_sunshadow.cpp",0x66a
                     ,0,"%s");
   }
-  __restfpr_25();
-  __restgprlr_29();
   return;
 }
 
 
 // 827873A0  R_SetupSunShadowMaps  (gfx_d3d/r_sunshadow.cpp:1647)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
@@ -2924,48 +2847,45 @@ void R_SetupSunShadowMaps(GfxViewInfo *param_1,GfxCamera *param_2,GfxSunShadow *
 
 {
   uint *puVar1;
-  GfxViewInfo *pGVar2;
-  longlong lVar3;
-  uint uVar4;
-  GfxMatrix *pGVar5;
-  longlong lVar6;
-  DpvsPlane *pDVar7;
-  GfxDrawList *pGVar8;
-  uint *puVar9;
-  uint uVar10;
+  uint uVar2;
+  GfxMatrix *pGVar3;
+  GfxViewParms *pGVar4;
+  GfxViewParms *pGVar5;
+  DpvsPlane *pDVar6;
+  GfxDrawList *pGVar7;
+  uint *puVar8;
+  uint uVar9;
   GfxSunShadowMapMetrics GStack_1d0;
   undefined1 auStack_1b0 [20];
   uint uStack_19c;
   uint local_198 [2];
   DpvsPlane aDStack_190 [25];
   
-  lVar3 = (longlong)(int)param_3;
-  pGVar2 = (GfxViewInfo *)__savegprlr_23(param_1);
-  R_SetupSunShadowMapMetrics(pGVar2,&GStack_1d0);
+  R_SetupSunShadowMapMetrics(param_1,&GStack_1d0);
   R_SetupSunShadowMapProjectionAndClipPlanes
-            (param_2,&GStack_1d0,(GfxSunShadow *)lVar3,(GfxSunShadowClip *)(auStack_1b0 + 0x10),
+            (param_2,&GStack_1d0,param_3,(GfxSunShadowClip *)(auStack_1b0 + 0x10),
              (float *)auStack_1b0);
-  uVar10 = 0;
-  pDVar7 = aDStack_190;
-  puVar9 = &uStack_19c;
-  pGVar8 = pGVar2->drawList + 0x11;
-  lVar6 = lVar3 + 0x70;
+  pGVar4 = &param_3->partition[0].viewportParms.viewParms;
+  uVar9 = 0;
+  pDVar6 = aDStack_190;
+  puVar8 = &uStack_19c;
+  pGVar7 = param_1->drawList + 0x11;
+  pGVar5 = pGVar4;
   do {
-    R_InitDrawList(pGVar8,0,"sun shadow");
-    puVar1 = puVar9 + -1;
-    puVar9 = puVar9 + 1;
-    pGVar5 = (GfxMatrix *)pGVar2->viewInfoIndex;
-    uVar4 = uVar10;
-    R_SetupShadowSurfacesDpvs((GfxViewParms *)lVar6,pDVar7,*puVar1,*puVar9,uVar10,(int)pGVar5);
-    uVar10 = uVar10 + 1;
-    pGVar8 = pGVar8 + 1;
-    pDVar7 = pDVar7 + 10;
-    lVar6 = lVar6 + 0x160;
-  } while (uVar10 < 2);
+    R_InitDrawList(pGVar7,0,"sun shadow");
+    puVar1 = puVar8 + -1;
+    puVar8 = puVar8 + 1;
+    pGVar3 = (GfxMatrix *)param_1->viewInfoIndex;
+    uVar2 = uVar9;
+    R_SetupShadowSurfacesDpvs(pGVar5,pDVar6,*puVar1,*puVar8,uVar9,(int)pGVar3);
+    uVar9 = uVar9 + 1;
+    pGVar7 = pGVar7 + 1;
+    pDVar6 = pDVar6 + 10;
+    pGVar5 = (GfxViewParms *)(pGVar5[1].viewMatrix.m + 1);
+  } while (uVar9 < 2);
   R_GetSunShadowLookupMatrix
-            ((GfxViewParms *)(lVar3 + 0x70),(GfxSunShadowProjection *)auStack_1b0,
-             (float *)GStack_1d0.tilesPerTexture,(uint)(GfxSunShadow *)lVar3,uVar4,pGVar5);
-  __restgprlr_23();
+            (pGVar4,(GfxSunShadowProjection *)auStack_1b0,(float *)GStack_1d0.tilesPerTexture,
+             (uint)param_3,uVar2,pGVar3);
   return;
 }
 
@@ -2996,6 +2916,9 @@ int R_KeepSunShadowOverlayBorderPoint(float *param_1,float (*param_2) [3],uint p
 
 // 827874B8  R_GetSunShadowOverlayBorderPoly  (gfx_d3d/r_sunshadow.cpp:1690)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 uint R_GetSunShadowOverlayBorderPoly
                (float (*param_1) [3],uint param_2,float *param_3,float param_4,float (*param_5) [2])
 
@@ -3008,124 +2931,105 @@ uint R_GetSunShadowOverlayBorderPoly
   float fVar6;
   float fVar7;
   float fVar8;
-  int iVar9;
-  uint uVar10;
-  ulonglong uVar11;
+  uint uVar9;
+  ulonglong uVar10;
+  float (*in_r7) [2];
+  float *pfVar11;
   float *pfVar12;
-  longlong in_r7;
-  float *pfVar13;
+  uint uVar13;
   float *pfVar14;
-  ulonglong uVar15;
-  ulonglong uVar16;
-  longlong lVar17;
-  float *pfVar19;
+  int iVar15;
+  longlong lVar16;
+  float *pfVar17;
   longlong lVar18;
-  longlong lVar20;
-  double extraout_f1;
-  double dVar21;
+  double dVar19;
   float local_1a0 [104];
   
-  lVar18 = (longlong)(int)param_3;
-  uVar16 = (ulonglong)(int)param_2;
-  iVar9 = __savegprlr_28((double)param_4,param_1,uVar16,lVar18,param_5);
-  lVar17 = uVar16 - 1;
-  uVar10 = 0;
-  if (lVar17 != 0) {
-    uVar11 = 1;
-    pfVar12 = (float *)(iVar9 + 4);
+  dVar19 = (double)param_4;
+  lVar16 = (longlong)(int)param_2 + -1;
+  uVar9 = 0;
+  if (lVar16 != 0) {
+    uVar10 = 1;
+    pfVar14 = *param_1 + 1;
     do {
-      if ((uVar11 & 0xffffffff) < (uVar16 & 0xffffffff)) {
-        lVar20 = uVar16 - uVar11;
-        fVar1 = *pfVar12;
-        fVar2 = pfVar12[-1];
-        pfVar13 = pfVar12 + 4;
-        pfVar14 = local_1a0 + uVar10 * 2;
+      if ((uVar10 & 0xffffffff) < (ulonglong)param_2) {
+        lVar18 = (longlong)(int)param_2 - uVar10;
+        fVar1 = *pfVar14;
+        fVar2 = (*(float (*) [3])(pfVar14 + -1))[0];
+        pfVar11 = pfVar14 + 4;
+        pfVar12 = local_1a0 + uVar9 * 2;
         do {
-          fVar3 = pfVar13[-1];
-          fVar7 = fVar3 * fVar2 - pfVar13[-2] * fVar1;
+          fVar3 = pfVar11[-1];
+          fVar7 = fVar3 * fVar2 - pfVar11[-2] * fVar1;
           if (0.001 <= ABS(fVar7)) {
-            fVar4 = *pfVar13;
+            fVar4 = *pfVar11;
             fVar7 = 1.0 / fVar7;
-            fVar5 = pfVar12[1];
-            uVar15 = 0;
-            fVar6 = *pfVar12;
-            fVar8 = (fVar4 * pfVar12[-1] - pfVar13[-2] * fVar5) * fVar7;
-            pfVar14[1] = fVar8;
+            fVar5 = pfVar14[1];
+            uVar13 = 0;
+            fVar6 = *pfVar14;
+            fVar8 = (fVar4 * (*(float (*) [3])(pfVar14 + -1))[0] - pfVar11[-2] * fVar5) * fVar7;
+            pfVar12[1] = fVar8;
             fVar7 = (fVar3 * fVar5 - fVar4 * fVar6) * fVar7;
-            *pfVar14 = fVar7;
-            if ((uVar16 & 0xffffffff) != 0) {
-              pfVar19 = (float *)(iVar9 + 8);
+            *pfVar12 = fVar7;
+            if (param_2 != 0) {
+              pfVar17 = *param_1 + 2;
               do {
-                if ((fVar7 * pfVar19[-2] + fVar8 * pfVar19[-1]) - *pfVar19 < -0.1)
-                goto LAB_827875d0;
-                uVar15 = uVar15 + 1;
-                pfVar19 = pfVar19 + 3;
-              } while ((uVar15 & 0xffffffff) < (uVar16 & 0xffffffff));
+                if ((fVar7 * (*(float (*) [3])(pfVar17 + -2))[0] + fVar8 * pfVar17[-1]) - *pfVar17 <
+                    -0.1) goto LAB_827875d0;
+                uVar13 = uVar13 + 1;
+                pfVar17 = pfVar17 + 3;
+              } while (uVar13 < param_2);
             }
-            uVar10 = uVar10 + 1;
-            pfVar14 = pfVar14 + 2;
+            uVar9 = uVar9 + 1;
+            pfVar12 = pfVar12 + 2;
           }
 LAB_827875d0:
-          pfVar13 = pfVar13 + 3;
-          lVar20 = lVar20 + -1;
-        } while (lVar20 != 0);
+          pfVar11 = pfVar11 + 3;
+          lVar18 = lVar18 + -1;
+        } while (lVar18 != 0);
       }
-      lVar17 = lVar17 + -1;
-      uVar11 = uVar11 + 1;
-      pfVar12 = pfVar12 + 3;
-    } while (lVar17 != 0);
-    if (2 < uVar10) {
-      dVar21 = extraout_f1;
-      uVar10 = Com_ConvexHull((float (*) [2])local_1a0,uVar10,(float (*) [2])in_r7);
-      lVar17 = (longlong)(int)uVar10;
-      if (10 < uVar10) {
+      lVar16 = lVar16 + -1;
+      uVar10 = uVar10 + 1;
+      pfVar14 = pfVar14 + 3;
+    } while (lVar16 != 0);
+    if (2 < uVar9) {
+      uVar9 = Com_ConvexHull((float (*) [2])local_1a0,uVar9,in_r7);
+      if (10 < uVar9) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_sunshadow.cpp",
                         0x6b6,0,"hullPtCount <= R_SUNSHADOW_CLIP_PLANE_LIMIT\n\t%i, %i");
       }
-      uVar16 = 0;
-      pfVar12 = (float *)lVar18;
-      if (3 < (int)uVar10) {
-        lVar18 = in_r7 + -4;
+      uVar13 = 0;
+      if (3 < (int)uVar9) {
+        pfVar14 = in_r7[-1] + 1;
         do {
-          iVar9 = (int)lVar18;
-          uVar16 = uVar16 + 4;
-          *(float *)(iVar9 + 4) = (float)((double)*(float *)(iVar9 + 4) * dVar21 + (double)*pfVar12)
-          ;
-          *(float *)(iVar9 + 8) =
-               (float)((double)*(float *)(iVar9 + 8) * dVar21 + (double)pfVar12[1]);
-          *(float *)(iVar9 + 0xc) =
-               (float)((double)*(float *)(iVar9 + 0xc) * dVar21 + (double)*pfVar12);
-          *(float *)(iVar9 + 0x10) =
-               (float)((double)*(float *)(iVar9 + 0x10) * dVar21 + (double)pfVar12[1]);
-          *(float *)(iVar9 + 0x14) =
-               (float)((double)*(float *)(iVar9 + 0x14) * dVar21 + (double)*pfVar12);
-          *(float *)(iVar9 + 0x18) =
-               (float)((double)*(float *)(iVar9 + 0x18) * dVar21 + (double)pfVar12[1]);
-          *(float *)(iVar9 + 0x1c) =
-               (float)((double)*(float *)(iVar9 + 0x1c) * dVar21 + (double)*pfVar12);
-          lVar18 = lVar18 + 0x20;
-          *(float *)lVar18 = (float)((double)*(float *)(iVar9 + 0x20) * dVar21 + (double)pfVar12[1])
-          ;
-        } while ((uVar16 & 0xffffffff) < (lVar17 - 3U & 0xffffffff));
+          uVar13 = uVar13 + 4;
+          pfVar14[1] = (float)((double)pfVar14[1] * dVar19 + (double)*param_3);
+          pfVar14[2] = (float)((double)pfVar14[2] * dVar19 + (double)param_3[1]);
+          pfVar14[3] = (float)((double)pfVar14[3] * dVar19 + (double)*param_3);
+          pfVar14[4] = (float)((double)pfVar14[4] * dVar19 + (double)param_3[1]);
+          pfVar14[5] = (float)((double)pfVar14[5] * dVar19 + (double)*param_3);
+          pfVar14[6] = (float)((double)pfVar14[6] * dVar19 + (double)param_3[1]);
+          pfVar14[7] = (float)((double)pfVar14[7] * dVar19 + (double)*param_3);
+          pfVar11 = pfVar14 + 8;
+          pfVar14 = pfVar14 + 8;
+          *pfVar14 = (float)((double)*pfVar11 * dVar19 + (double)param_3[1]);
+        } while (uVar13 < uVar9 - 3);
       }
-      if ((uVar16 & 0xffffffff) < (ulonglong)uVar10) {
-        lVar20 = lVar17 - uVar16;
-        lVar18 = (uVar16 & 0x1fffffff) * 8 + in_r7 + -4;
+      if (uVar13 < uVar9) {
+        iVar15 = uVar9 - uVar13;
+        pfVar14 = in_r7[uVar13 - 1] + 1;
         do {
-          iVar9 = (int)lVar18;
-          *(float *)(iVar9 + 4) = (float)((double)*(float *)(iVar9 + 4) * dVar21 + (double)*pfVar12)
-          ;
-          lVar18 = lVar18 + 8;
-          *(float *)lVar18 = (float)((double)*(float *)(iVar9 + 8) * dVar21 + (double)pfVar12[1]);
-          lVar20 = lVar20 + -1;
-        } while (lVar20 != 0);
+          pfVar14[1] = (float)((double)pfVar14[1] * dVar19 + (double)*param_3);
+          pfVar11 = pfVar14 + 2;
+          pfVar14 = pfVar14 + 2;
+          *pfVar14 = (float)((double)*pfVar11 * dVar19 + (double)param_3[1]);
+          iVar15 = iVar15 + -1;
+        } while (iVar15 != 0);
       }
-      uVar10 = __restgprlr_28(lVar17);
-      return uVar10;
+      return uVar9;
     }
   }
-  uVar10 = __restgprlr_28(0);
-  return uVar10;
+  return 0;
 }
 
 
@@ -3172,6 +3076,8 @@ void R_GetSunShadowOverlayFrustumLines
 
 // 82787888  R_GetSunShadowMapOverlayLines  (gfx_d3d/r_sunshadow.cpp:1746)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 
@@ -3179,53 +3085,50 @@ void R_GetSunShadowMapOverlayLines
                (GfxBackEndData *param_1,GfxSunShadow *param_2,GfxSunShadowOverlayLines *param_3)
 
 {
-  int iVar1;
-  uint uVar2;
-  longlong lVar3;
+  float *pfVar1;
+  float *pfVar2;
+  float fVar3;
   float (*in_r6) [2] [2];
-  longlong lVar4;
-  longlong lVar5;
-  longlong lVar6;
+  float *pfVar4;
+  float *pfVar5;
+  float (*paafVar6) [8] [3];
   longlong lVar7;
-  longlong lVar8;
+  float *pfVar8;
   double dVar9;
   float local_60;
   float local_5c;
   
-  lVar4 = (longlong)(int)param_3;
-  lVar3 = (longlong)(int)param_2;
-  __savegprlr_23(param_1);
-  lVar4 = lVar4 + -4;
-  lVar6 = lVar3 + 0x350;
-  lVar5 = lVar3 + 0x344;
-  lVar8 = lVar3 + -0xbc;
+  pfVar4 = param_3[-1].frustumLines[1][3][1] + 1;
+  paafVar6 = (param_2->overlaySetup).clipPlanes;
+  pfVar5 = (param_2->overlaySetup).frustumShadowRays[3] + 1;
+  pfVar8 = param_2[-1].overlaySetup.clipPlanes[0][0] + 1;
   lVar7 = 2;
   do {
-    iVar1 = (int)lVar8;
-    dVar9 = (double)*(float *)(iVar1 + 0x16c);
-    local_60 = (float)((double)*(float *)(iVar1 + 0x15c) * dVar9 + (double)*(float *)(iVar1 + 0x19c)
-                      );
-    lVar8 = lVar8 + 0x160;
-    lVar5 = lVar5 + 4;
-    local_5c = (float)((double)*(float *)lVar8 * dVar9 + (double)*(float *)(iVar1 + 0x1a0));
-    uVar2 = R_GetSunShadowOverlayBorderPoly
-                      ((float (*) [3])lVar6,*(uint *)lVar5,&local_60,*(float *)(iVar1 + 0x16c),
-                       *in_r6);
-    lVar4 = lVar4 + 4;
-    *(uint *)lVar4 = uVar2;
+    pfVar1 = pfVar8 + 0x5b;
+    dVar9 = (double)*pfVar1;
+    pfVar2 = pfVar8 + 0x68;
+    local_60 = (float)((double)pfVar8[0x57] * dVar9 + (double)pfVar8[0x67]);
+    pfVar8 = pfVar8 + 0x58;
+    pfVar5 = pfVar5 + 1;
+    local_5c = (float)((double)*pfVar8 * dVar9 + (double)*pfVar2);
+    fVar3 = (float)R_GetSunShadowOverlayBorderPoly(*paafVar6,(uint)*pfVar5,&local_60,*pfVar1,*in_r6)
+    ;
+    pfVar4 = pfVar4 + 1;
+    *pfVar4 = fVar3;
     R_GetSunShadowOverlayFrustumLines
-              ((float (*) [2])((int)lVar3 + 0x328),(float *)((int)lVar3 + 800),&local_60,
-               (float)dVar9,in_r6);
+              ((param_2->overlaySetup).frustumShadowRays,(param_2->overlaySetup).shadowOrg,&local_60
+               ,(float)dVar9,in_r6);
     lVar7 = lVar7 + -1;
-    lVar6 = lVar6 + 0x60;
+    paafVar6 = paafVar6 + 1;
   } while (lVar7 != 0);
-  __restgprlr_23();
   return;
 }
 
 
 // 82787938  R_SunShadowMaps  (gfx_d3d/r_sunshadow.cpp:1770)
 
+/* WARNING: Function: __savegprlr_18 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_18 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "GfxSceneViewType": Some values do not have unique names */
 
 void R_SunShadowMaps(GfxSunShadow *param_1,int param_2)
@@ -3239,7 +3142,6 @@ void R_SunShadowMaps(GfxSunShadow *param_1,int param_2)
   GfxSceneViewType GVar6;
   uint *puVar7;
   
-  __savegprlr_18(param_1);
   if (rgp.world == (GfxWorld *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_sunshadow.cpp",0x6ee
                     ,0,"%s");
@@ -3291,13 +3193,14 @@ void R_SunShadowMaps(GfxSunShadow *param_1,int param_2)
   } while (lVar5 != 0);
   Profile_EndInternal((double *)0x0);
   PIXEndNamedEvent();
-  __restgprlr_18();
   return;
 }
 
 
 // 82787B18  R_MergeAndEmitSunShadowMapsSurfs  (gfx_d3d/r_sunshadow.cpp:1795)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
@@ -3305,43 +3208,39 @@ void R_MergeAndEmitSunShadowMapsSurfs(GfxViewInfo *param_1)
 
 {
   GfxDrawSurf **ppGVar1;
-  float fVar2;
-  int iVar3;
-  longlong lVar4;
-  long *plVar5;
-  float *pfVar6;
-  double dVar7;
+  longlong lVar2;
+  long *plVar3;
+  float *pfVar4;
+  double dVar5;
   
-  fVar2 = (float)__savegprlr_24(param_1);
   if (frontEndDataOut == (GfxBackEndData *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_sunshadow.cpp",0x70d
                     ,0,"%s");
   }
   Profile_Begin(0x46);
   PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffff,"emit sun shadow map surfs");
-  pfVar6 = (float *)((int)fVar2 + 0x2b30);
-  plVar5 = scene.drawSurfCount + 3;
-  dVar7 = 0.0;
-  lVar4 = 2;
+  pfVar4 = param_1->drawList[0x11].info.eyeOffset + 2;
+  plVar3 = scene.drawSurfCount + 3;
+  dVar5 = 0.0;
+  lVar2 = 2;
   do {
-    pfVar6[-3] = fVar2;
-    pfVar6[-4] = 2.8026e-45;
-    pfVar6[-2] = (float)dVar7;
-    pfVar6[-1] = (float)dVar7;
-    *pfVar6 = (float)dVar7;
-    if (pfVar6[2] != 0.0) {
+    pfVar4[-3] = (float)param_1;
+    ((GfxDrawListInfo *)(pfVar4 + -4))->baseTechType = TECHNIQUE_BUILD_SHADOWMAP_DEPTH;
+    pfVar4[-2] = (float)dVar5;
+    pfVar4[-1] = (float)dVar5;
+    *pfVar4 = (float)dVar5;
+    if (pfVar4[2] != 0.0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_sunshadow.cpp",
                       0x729,0,"%s");
     }
-    ppGVar1 = (GfxDrawSurf **)(plVar5 + 0xb);
-    plVar5 = plVar5 + 1;
-    R_EmitDrawSurfListAndAddDrawCommands(*ppGVar1,*plVar5,(GfxDrawList *)(pfVar6 + -0x18),0);
-    lVar4 = lVar4 + -1;
-    pfVar6 = pfVar6 + 0x7e;
-  } while (lVar4 != 0);
+    ppGVar1 = (GfxDrawSurf **)(plVar3 + 0xb);
+    plVar3 = plVar3 + 1;
+    R_EmitDrawSurfListAndAddDrawCommands(*ppGVar1,*plVar3,(GfxDrawList *)(pfVar4 + -0x18),0);
+    lVar2 = lVar2 + -1;
+    pfVar4 = pfVar4 + 0x7e;
+  } while (lVar2 != 0);
   PIXEndNamedEvent();
-  iVar3 = Profile_EndInternal((double *)0x0);
-  __restgprlr_24(iVar3);
+  Profile_EndInternal((double *)0x0);
   return;
 }
 

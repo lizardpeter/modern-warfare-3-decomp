@@ -2,37 +2,36 @@
 
 // 8292D8C0  operator==  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdsocket/bdendpoint.cpp:26)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 bool __thiscall bdEndpoint::operator==(bdEndpoint *this,bdEndpoint *param_1)
 
 {
   bdCommonAddr *this_00;
   bdCommonAddr *this_01;
-  undefined4 *puVar1;
+  uint uVar1;
   uint uVar2;
-  uint uVar3;
-  undefined1 uVar4;
-  undefined8 uVar5;
+  bool bVar3;
   
-  puVar1 = (undefined4 *)__savegprlr_28(this);
-  this_00 = (bdCommonAddr *)*puVar1;
-  uVar5 = 0;
+  this_00 = (this->m_ca).m_ptr;
+  bVar3 = false;
   if (this_00 == (bdCommonAddr *)0x0) {
     if ((param_1->m_ca).m_ptr == (bdCommonAddr *)0x0) {
-      uVar5 = 1;
+      bVar3 = true;
     }
   }
   else {
     this_01 = (param_1->m_ca).m_ptr;
     if (this_01 != (bdCommonAddr *)0x0) {
-      uVar2 = bdCommonAddr::getHash(this_01);
-      uVar3 = bdCommonAddr::getHash(this_00);
-      if ((uVar3 != uVar2) ||
-         (uVar5 = 1, *(longlong *)(puVar1 + 1) != *(longlong *)(param_1->m_secID).ab)) {
-        uVar5 = 0;
+      uVar1 = bdCommonAddr::getHash(this_01);
+      uVar2 = bdCommonAddr::getHash(this_00);
+      if ((uVar2 != uVar1) ||
+         (bVar3 = true, *(longlong *)(this->m_secID).ab != *(longlong *)(param_1->m_secID).ab)) {
+        bVar3 = false;
       }
     }
   }
-  uVar4 = __restgprlr_28(uVar5);
-  return (bool)uVar4;
+  return bVar3;
 }
 

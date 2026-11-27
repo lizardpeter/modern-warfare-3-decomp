@@ -2,63 +2,66 @@
 
 // 8271DFB8  SkipToNextDrawGroup  (gfx_d3d/r_bspsurfiter.cpp:7)
 
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
+
 void GfxBspSurfIter::SkipToNextDrawGroup(GfxBspSurfIter *param_1)
 
 {
   ushort uVar1;
-  uint uVar2;
-  uint *puVar3;
+  ushort *puVar2;
+  ulonglong uVar3;
   ulonglong uVar4;
-  ulonglong uVar5;
   
-  puVar3 = (uint *)__savegprlr_22(param_1);
-  uVar1 = *(ushort *)(*puVar3 + 2);
+  uVar1 = param_1->current[1];
   if (g_worldDpvs->staticSurfaceCount <= (uint)uVar1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_bspsurfiter_inline.h"
                     ,0xa3,0,
                     "bspSurfIndex doesn\'t index g_worldDpvs->staticSurfaceCount\n\t%i not in [0, %i)"
                    );
   }
-  uVar4 = g_worldDpvs->surfaceMaterials[uVar1].packed;
-  if ((uVar4 >> 0x2c & 0xff) != (ulonglong)g_worldDpvs->surfaces[uVar1].laf.fields.primaryLightIndex
+  uVar3 = g_worldDpvs->surfaceMaterials[uVar1].packed;
+  if ((uVar3 >> 0x2c & 0xff) != (ulonglong)g_worldDpvs->surfaces[uVar1].laf.fields.primaryLightIndex
      ) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_bspsurfiter_inline.h"
                     ,0xa5,0,
                     "drawSurf.fields.sceneLightIndex == g_worldDpvs->surfaces[bspSurfIndex].laf.fields.primaryLightIndex\n\t%i, %i"
                    );
   }
-  do {
+  while( true ) {
     do {
-      uVar2 = *puVar3;
-      *puVar3 = uVar2 + 4;
-      if (puVar3[1] < uVar2 + 4) {
+      puVar2 = param_1->current;
+      param_1->current = puVar2 + 2;
+      if (param_1->end < puVar2 + 2) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_bspsurfiter_inline.h"
                         ,0x85,0,"%s");
       }
-    } while ((*(ushort *)*puVar3 & 0x8000) == 0);
-    if ((ushort *)puVar3[1] < (ushort *)*puVar3) {
+    } while ((*param_1->current & 0x8000) == 0);
+    if (param_1->end < param_1->current) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_bspsurfiter_inline.h"
                       ,0x57,0,"%s");
     }
-    if (*puVar3 == puVar3[1]) break;
-    uVar1 = *(ushort *)(*puVar3 + 2);
+    if (param_1->current == param_1->end) break;
+    uVar1 = param_1->current[1];
     if (g_worldDpvs->staticSurfaceCount <= (uint)uVar1) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_bspsurfiter_inline.h"
                       ,0xa3,0,
                       "bspSurfIndex doesn\'t index g_worldDpvs->staticSurfaceCount\n\t%i not in [0, %i)"
                      );
     }
-    uVar5 = g_worldDpvs->surfaceMaterials[uVar1].packed;
-    if ((uVar5 >> 0x2c & 0xff) !=
+    uVar4 = g_worldDpvs->surfaceMaterials[uVar1].packed;
+    if ((uVar4 >> 0x2c & 0xff) !=
         (ulonglong)g_worldDpvs->surfaces[uVar1].laf.fields.primaryLightIndex) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_bspsurfiter_inline.h"
                       ,0xa5,0,
                       "drawSurf.fields.sceneLightIndex == g_worldDpvs->surfaces[bspSurfIndex].laf.fields.primaryLightIndex\n\t%i, %i"
                      );
     }
-  } while (((uVar5 >> 0x1d & 0xfff) << 10 | uVar5 >> 0x2c & 0xff) << 8 ==
-           ((uVar4 >> 0x1d & 0xfff) << 10 | uVar4 >> 0x2c & 0xff) << 8);
-  __restgprlr_22();
+    if (((uVar4 >> 0x1d & 0xfff) << 10 | uVar4 >> 0x2c & 0xff) << 8 !=
+        ((uVar3 >> 0x1d & 0xfff) << 10 | uVar3 >> 0x2c & 0xff) << 8) {
+      return;
+    }
+  }
   return;
 }
 

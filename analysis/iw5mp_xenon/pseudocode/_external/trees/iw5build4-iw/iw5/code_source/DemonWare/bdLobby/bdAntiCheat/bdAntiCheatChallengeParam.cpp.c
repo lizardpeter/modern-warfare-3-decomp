@@ -77,29 +77,27 @@ bdAntiCheatChallengeParam::operator=
 
 // 829160C8  deserialize  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdanticheat/bdanticheatchallengeparam.cpp:77)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 bool __thiscall
 bdAntiCheatChallengeParam::deserialize
           (bdAntiCheatChallengeParam *this,bdReference<bdByteBuffer> param_1)
 
 {
-  int iVar1;
-  bool bVar2;
-  undefined1 uVar3;
-  bdByteBuffer *pbStack0000001c;
+  bool bVar1;
+  bdReference<bdByteBuffer> bStack0000001c;
   
-  iVar1 = __savegprlr_28(this);
-  pbStack0000001c = param_1.m_ptr;
-  if (*(void **)(iVar1 + 4) != (void *)0x0) {
-    bdMemory::deallocate(*(void **)(iVar1 + 4));
-    *(uchar **)(iVar1 + 4) = (uchar *)0x0;
-    *(undefined4 *)(iVar1 + 8) = 0;
+  bStack0000001c.m_ptr = param_1.m_ptr;
+  if (this->m_data != (uchar *)0x0) {
+    bdMemory::deallocate(this->m_data);
+    this->m_data = (uchar *)0x0;
+    this->m_size = 0;
   }
-  bVar2 = bdByteBuffer::readAndAllocateBlob
-                    ((bdByteBuffer *)(param_1.m_ptr)->_padding_,(uchar **)(iVar1 + 4),
-                     (uint *)(iVar1 + 8));
+  bVar1 = bdByteBuffer::readAndAllocateBlob
+                    ((bdByteBuffer *)(param_1.m_ptr)->_padding_,&this->m_data,&this->m_size);
   bdReference<bdByteBuffer>::~bdReference<bdByteBuffer>((bdReference<bdByteBuffer> *)param_1.m_ptr);
-  uVar3 = __restgprlr_28(bVar2);
-  return (bool)uVar3;
+  return bVar1;
 }
 
 

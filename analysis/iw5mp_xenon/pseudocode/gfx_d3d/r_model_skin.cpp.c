@@ -145,28 +145,405 @@ void _dynamic_initializer_for__g_shortBoneWeightPerm__(void)
 
 // 8275D460  R_SkinXSurfaceWeight0  (gfx_d3d/r_model_skin.cpp:861)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
+
 void R_SkinXSurfaceWeight0
                (GfxPackedVertex *param_1,ushort *param_2,uint param_3,DObjSkelMat *param_4,
                GfxPackedVertex *param_5)
 
 {
-  uint uVar1;
-  ulonglong uVar2;
+  __vector4 _Var1;
+  __vector4 _Var2;
+  __vector4 _Var3;
+  __vector4 _Var4;
+  __vector4 _Var5;
+  longlong lVar6;
+  longlong lVar7;
+  int iVar10;
+  longlong lVar8;
+  longlong lVar9;
+  uint uVar11;
+  longlong lVar12;
+  longlong lVar13;
+  longlong lVar14;
+  undefined1 auVar15 [16];
+  undefined1 auVar16 [16];
+  undefined1 auVar17 [16];
+  undefined1 auVar18 [16];
+  undefined1 auVar19 [16];
+  undefined1 auVar20 [16];
+  undefined1 auVar21 [16];
+  undefined1 auVar22 [16];
+  undefined1 auVar23 [16];
+  undefined1 auVar24 [16];
+  undefined1 auVar25 [16];
+  undefined1 auVar26 [16];
+  undefined1 auVar27 [16];
+  undefined1 auVar28 [16];
+  
+  lVar14 = (longlong)(int)param_3;
+  lVar12 = (longlong)(int)param_2;
+  lVar13 = (longlong)(int)param_1;
+  if (param_1 == (GfxPackedVertex *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_model_skin.cpp",
+                    0x368,0,"%s");
+  }
+  if (param_5 == (GfxPackedVertex *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_model_skin.cpp",
+                    0x369,0,"%s");
+  }
+  if (((uint)param_1 & 0xf) != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_model_skin.cpp",
+                    0x36a,0,"%s");
+  }
+  if (((uint)param_5 & 0xf) != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_model_skin.cpp",
+                    0x36b,0,"%s");
+  }
+  if (((uint)param_4 & 0xf) != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_model_skin.cpp",
+                    0x36c,0,"%s");
+  }
+  _Var5.field0_0x0 = g_XYZw.field0_0x0;
+  _Var4.field0_0x0 = g_unpackAdd101010.field0_0x0;
+  _Var3.field0_0x0 = g_unpackMul101010.field0_0x0;
+  _Var2.field0_0x0 = g_packMul101010.field0_0x0;
+  _Var1.field0_0x0 = g_packAdd.field0_0x0;
+  iVar10 = param_3 << 5;
+  if (iVar10 < 0x201) {
+    lVar6 = 0;
+  }
+  else {
+    iVar10 = 0x200;
+    lVar6 = 0x200;
+  }
+  lVar7 = 0;
+  if (0 < iVar10) {
+    lVar8 = (ulonglong)(iVar10 - 1U >> 7) + 1;
+    do {
+      dataCacheBlockTouch(lVar7 + lVar13);
+      lVar7 = lVar7 + 0x80;
+      lVar8 = lVar8 + -1;
+    } while (lVar8 != 0);
+  }
+  iVar10 = param_3 << 1;
+  if (iVar10 < 0x201) {
+    lVar7 = 0;
+  }
+  else {
+    iVar10 = 0x200;
+    lVar7 = 0x200;
+  }
+  lVar8 = 0;
+  if (0 < iVar10) {
+    lVar9 = (ulonglong)(iVar10 - 1U >> 7) + 1;
+    do {
+      dataCacheBlockTouch(lVar8 + lVar12);
+      lVar8 = lVar8 + 0x80;
+      lVar9 = lVar9 + -1;
+    } while (lVar9 != 0);
+  }
+  if (param_3 != 0) {
+    do {
+      dataCacheBlockTouch(lVar6 + lVar13);
+      dataCacheBlockTouch(lVar7 + lVar12);
+      auVar28 = *(undefined1 (*) [16])((uint)lVar13 + 0x10 & 0xfffffff0);
+      auVar27 = *(undefined1 (*) [16])((uint)lVar13 & 0xfffffff0);
+      auVar26 = vectorSplatWord(auVar28,2);
+      auVar15 = vectorUnpackD3Dtype(auVar28,8);
+      uVar11 = (int)param_4->axis[0] + (uint)*(ushort *)lVar12;
+      auVar17 = vectorSplatWord(auVar27,2);
+      lVar13 = lVar13 + 0x20;
+      auVar18 = vectorSplatWord(auVar27,1);
+      lVar12 = lVar12 + 2;
+      auVar20 = vectorUnpackD3Dtype(auVar26,8);
+      auVar26 = vectorMultiplyAddFloatingPoint
+                          (auVar15,(undefined1  [16])_Var3.field0_0x0,
+                           (undefined1  [16])_Var4.field0_0x0);
+      auVar19 = vectorSplatWord(auVar27,0);
+      auVar16 = *(undefined1 (*) [16])(uVar11 + 0x20 & 0xfffffff0);
+      auVar25 = vectorSplatWord(auVar27,3);
+      auVar20 = vectorMultiplyAddFloatingPoint
+                          (auVar20,(undefined1  [16])_Var3.field0_0x0,
+                           (undefined1  [16])_Var4.field0_0x0);
+      auVar21 = *(undefined1 (*) [16])(uVar11 + 0x10 & 0xfffffff0);
+      auVar17 = vectorMultiplyAddFloatingPoint
+                          (auVar16,auVar17,*(undefined1 (*) [16])(uVar11 + 0x30 & 0xfffffff0));
+      auVar27 = *(undefined1 (*) [16])(uVar11 & 0xfffffff0);
+      auVar24 = vectorSplatWord(auVar26,2);
+      auVar15 = auVar26 >> 0x40;
+      auVar26 = auVar26 >> 0x60;
+      auVar22 = vectorMultiplyFloatingPoint(auVar24,auVar16);
+      auVar18 = vectorMultiplyAddFloatingPoint(auVar18,auVar21,auVar17);
+      auVar23 = vectorSplatWord(auVar20,2);
+      auVar24 = vectorSplatWord(auVar20,1);
+      auVar17 = vectorSplatWord(auVar20,0);
+      auVar20 = vectorMultiplyFloatingPoint(auVar23,auVar16);
+      auVar16 = vectorMultiplyAddFloatingPoint
+                          (auVar15 & (undefined1  [16])0xffffffff | auVar15 << 0x20 |
+                           (auVar15 & (undefined1  [16])0xffffffff) << 0x40 | auVar15 << 0x60,
+                           auVar21,auVar22);
+      auVar15 = vectorMultiplyAddFloatingPoint(auVar24,auVar21,auVar20);
+      auVar16 = vectorMultiplyAddFloatingPoint
+                          (auVar26 & (undefined1  [16])0xffffffff | auVar26 << 0x20 |
+                           auVar26 << 0x40 | auVar26 << 0x60,auVar27,auVar16);
+      auVar15 = vectorMultiplyAddFloatingPoint(auVar17,auVar27,auVar15);
+      auVar26 = vectorMultiplyAddFloatingPoint(auVar19,auVar27,auVar18);
+      auVar16 = vectorMultiplyAddFloatingPoint
+                          (auVar16,(undefined1  [16])_Var2.field0_0x0,
+                           (undefined1  [16])_Var1.field0_0x0);
+      auVar15 = vectorMultiplyAddFloatingPoint
+                          (auVar15,(undefined1  [16])_Var2.field0_0x0,
+                           (undefined1  [16])_Var1.field0_0x0);
+      auVar26 = vectorPermute128(auVar26,auVar25,(undefined1  [16])_Var5.field0_0x0);
+      *(undefined1 (*) [16])((uint)param_5 & 0xfffffff0) = auVar26;
+      auVar15 = vectorPackD3Dtype(auVar28,auVar15,9,1);
+      auVar15 = vectorPackD3Dtype(auVar15,auVar16,9,0);
+      *(undefined1 (*) [16])((uint)&param_5->color & 0xfffffff0) = auVar15;
+      param_5 = param_5 + 1;
+      lVar14 = lVar14 + -1;
+    } while (lVar14 != 0);
+  }
+  return;
+}
+
+
+// 8275D6F8  R_SkinXSurfaceWeight1  (gfx_d3d/r_model_skin.cpp:910)
+
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
+
+void R_SkinXSurfaceWeight1
+               (GfxPackedVertex *param_1,ushort *param_2,uint param_3,DObjSkelMat *param_4,
+               GfxPackedVertex *param_5)
+
+{
+  undefined1 auVar1 [16];
+  __vector4 _Var2;
   __vector4 _Var3;
   __vector4 _Var4;
   __vector4 _Var5;
   __vector4 _Var6;
   __vector4 _Var7;
-  ulonglong uVar8;
-  longlong lVar9;
-  ulonglong uVar10;
-  longlong lVar11;
-  longlong lVar12;
-  ulonglong uVar13;
+  undefined4 uVar8;
+  undefined4 uVar9;
+  undefined4 uVar10;
+  undefined4 uVar11;
+  __vector4 _Var12;
+  longlong lVar13;
   longlong lVar14;
+  uint uVar15;
+  int iVar18;
+  longlong lVar16;
+  longlong lVar17;
+  uint uVar19;
+  longlong lVar20;
+  longlong lVar21;
+  longlong lVar22;
+  undefined1 auVar23 [16];
+  undefined1 auVar24 [16];
+  undefined1 auVar25 [16];
+  undefined1 auVar26 [16];
+  undefined1 auVar27 [16];
+  undefined1 auVar28 [16];
+  undefined1 auVar29 [16];
+  undefined1 auVar30 [16];
+  undefined1 auVar31 [16];
+  undefined1 auVar32 [16];
+  undefined1 auVar33 [16];
+  undefined1 auVar34 [16];
+  undefined1 auVar35 [16];
+  undefined1 auVar36 [16];
+  undefined1 auVar37 [16];
+  undefined1 auVar38 [16];
+  undefined1 auVar39 [16];
+  
+  lVar22 = (longlong)(int)param_3;
+  lVar21 = (longlong)(int)param_2;
+  lVar20 = (longlong)(int)param_1;
+  if (param_1 == (GfxPackedVertex *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_model_skin.cpp",
+                    0x39c,0,"%s");
+  }
+  if (param_5 == (GfxPackedVertex *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_model_skin.cpp",
+                    0x39d,0,"%s");
+  }
+  if (((uint)param_1 & 0xf) != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_model_skin.cpp",
+                    0x39e,0,"%s");
+  }
+  if (((uint)param_5 & 0xf) != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_model_skin.cpp",
+                    0x39f,0,"%s");
+  }
+  if (((uint)param_4 & 0xf) != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_model_skin.cpp",
+                    0x3a0,0,"%s");
+  }
+  _Var12.field0_0x0 = g_shortBoneWeightPerm.field0_0x0;
+  uVar11 = g_XYZw.field0_0x0.vector4_f32[3];
+  uVar10 = g_XYZw.field0_0x0.vector4_f32[2];
+  uVar9 = g_XYZw.field0_0x0.vector4_f32[1];
+  uVar8 = g_XYZw.field0_0x0.vector4_f32[0];
+  _Var7.field0_0x0 = g_unpackAdd101010.field0_0x0;
+  _Var6.field0_0x0 = g_unpackMul101010.field0_0x0;
+  _Var5.field0_0x0 = g_packMul101010.field0_0x0;
+  _Var4.field0_0x0 = g_packAdd.field0_0x0;
+  _Var3.field0_0x0 = g_one.field0_0x0;
+  _Var2.field0_0x0 = g_zero.field0_0x0;
+  iVar18 = param_3 << 5;
+  if (iVar18 < 0x201) {
+    lVar13 = 0;
+  }
+  else {
+    iVar18 = 0x200;
+    lVar13 = 0x200;
+  }
+  lVar14 = 0;
+  if (0 < iVar18) {
+    lVar16 = (ulonglong)(iVar18 - 1U >> 7) + 1;
+    do {
+      dataCacheBlockTouch(lVar14 + lVar20);
+      lVar14 = lVar14 + 0x80;
+      lVar16 = lVar16 + -1;
+    } while (lVar16 != 0);
+  }
+  iVar18 = param_3 << 1;
+  if (iVar18 < 0x201) {
+    lVar14 = 0;
+  }
+  else {
+    iVar18 = 0x200;
+    lVar14 = 0x200;
+  }
+  lVar16 = 0;
+  if (0 < iVar18) {
+    lVar17 = (ulonglong)(iVar18 - 1U >> 7) + 1;
+    do {
+      dataCacheBlockTouch(lVar16 + lVar21);
+      lVar16 = lVar16 + 0x80;
+      lVar17 = lVar17 + -1;
+    } while (lVar17 != 0);
+  }
+  if (param_3 != 0) {
+    do {
+      dataCacheBlockTouch(lVar13 + lVar20);
+      dataCacheBlockTouch(lVar14 + lVar21);
+      auVar39 = *(undefined1 (*) [16])((uint)lVar20 + 0x10 & 0xfffffff0);
+      auVar38 = *(undefined1 (*) [16])((uint)lVar20 & 0xfffffff0);
+      auVar37 = vectorSplatWord(auVar39,2);
+      auVar23 = vectorUnpackD3Dtype(auVar39,8);
+      uVar19 = (int)param_4->axis[0] + (uint)*(ushort *)lVar21;
+      uVar15 = (int)param_4->axis[0] + (uint)((ushort *)lVar21)[1];
+      auVar28 = vectorSplatWord(auVar38,2);
+      auVar27 = vectorSplatWord(auVar38,1);
+      auVar37 = vectorUnpackD3Dtype(auVar37,8);
+      auVar25 = vectorMultiplyAddFloatingPoint
+                          (auVar23,(undefined1  [16])_Var6.field0_0x0,
+                           (undefined1  [16])_Var7.field0_0x0);
+      auVar26 = vectorSplatWord(auVar38,0);
+      auVar24 = *(undefined1 (*) [16])(uVar19 + 0x20 & 0xfffffff0);
+      auVar36 = vectorSplatWord(auVar38,3);
+      lVar20 = lVar20 + 0x20;
+      auVar38 = vectorMultiplyAddFloatingPoint
+                          (auVar37,(undefined1  [16])_Var6.field0_0x0,
+                           (undefined1  [16])_Var7.field0_0x0);
+      auVar30 = *(undefined1 (*) [16])(uVar19 + 0x10 & 0xfffffff0);
+      auVar31 = vectorMultiplyAddFloatingPoint
+                          (auVar24,auVar28,*(undefined1 (*) [16])(uVar19 + 0x30 & 0xfffffff0));
+      auVar29 = *(undefined1 (*) [16])(uVar19 & 0xfffffff0);
+      lVar16 = lVar21 + 4;
+      auVar1._0_4_ = uVar8;
+      auVar1._4_4_ = uVar9;
+      auVar1._8_4_ = uVar10;
+      auVar1._12_4_ = uVar11;
+      lVar21 = lVar21 + 6;
+      auVar35 = loadVectorLeftIndexed(lVar16);
+      auVar37 = vectorSplatWord(auVar25,2);
+      auVar23 = auVar25 >> 0x40;
+      auVar34 = vectorPermute128(auVar35,(undefined1  [16])_Var2.field0_0x0,
+                                 (undefined1  [16])_Var12.field0_0x0);
+      auVar33 = vectorSplatWord(auVar38,2);
+      auVar35 = vectorMultiplyFloatingPoint(auVar37,auVar24);
+      auVar37 = auVar38 >> 0x40;
+      auVar32 = vectorMultiplyAddFloatingPoint(auVar27,auVar30,auVar31);
+      auVar38 = auVar38 >> 0x60;
+      auVar34 = vectorConvertFromUnsignedFixedPointWord128(auVar34,0x10);
+      auVar25 = auVar25 >> 0x60;
+      auVar31 = vectorMultiplyFloatingPoint(auVar33,auVar24);
+      auVar28 = vectorMultiplyAddFloatingPoint
+                          (*(undefined1 (*) [16])(uVar15 + 0x20 & 0xfffffff0),auVar28,
+                           *(undefined1 (*) [16])(uVar15 + 0x30 & 0xfffffff0));
+      auVar35 = vectorMultiplyAddFloatingPoint
+                          (auVar23 & (undefined1  [16])0xffffffff | auVar23 << 0x20 |
+                           (auVar23 & (undefined1  [16])0xffffffff) << 0x40 | auVar23 << 0x60,
+                           auVar30,auVar35);
+      auVar32 = vectorMultiplyAddFloatingPoint(auVar26,auVar29,auVar32);
+      auVar24 = vectorSubtractFloatingPoint128((undefined1  [16])_Var3.field0_0x0,auVar34);
+      auVar37 = vectorMultiplyAddFloatingPoint
+                          (auVar37 & (undefined1  [16])0xffffffff | auVar37 << 0x20 |
+                           (auVar37 & (undefined1  [16])0xffffffff) << 0x40 | auVar37 << 0x60,
+                           auVar30,auVar31);
+      auVar23 = vectorMultiplyAddFloatingPoint
+                          (auVar27,*(undefined1 (*) [16])(uVar15 + 0x10 & 0xfffffff0),auVar28);
+      auVar25 = vectorMultiplyAddFloatingPoint
+                          (auVar25 & (undefined1  [16])0xffffffff | auVar25 << 0x20 |
+                           auVar25 << 0x40 | auVar25 << 0x60,auVar29,auVar35);
+      auVar37 = vectorMultiplyAddFloatingPoint
+                          (auVar38 & (undefined1  [16])0xffffffff | auVar38 << 0x20 |
+                           auVar38 << 0x40 | auVar38 << 0x60,auVar29,auVar37);
+      auVar23 = vectorMultiplyAddFloatingPoint
+                          (auVar26,*(undefined1 (*) [16])(uVar15 & 0xfffffff0),auVar23);
+      auVar38 = vectorMultiplyAddFloatingPoint
+                          (auVar25,(undefined1  [16])_Var5.field0_0x0,
+                           (undefined1  [16])_Var4.field0_0x0);
+      auVar37 = vectorMultiplyAddFloatingPoint
+                          (auVar37,(undefined1  [16])_Var5.field0_0x0,
+                           (undefined1  [16])_Var4.field0_0x0);
+      auVar23 = vectorMultiplyFloatingPoint(auVar23,auVar34);
+      auVar37 = vectorPackD3Dtype(auVar39,auVar37,9,1);
+      auVar23 = vectorMultiplyAddFloatingPoint(auVar24,auVar32,auVar23);
+      auVar37 = vectorPackD3Dtype(auVar37,auVar38,9,0);
+      *(undefined1 (*) [16])((uint)&param_5->color & 0xfffffff0) = auVar37;
+      auVar23 = vectorPermute128(auVar23,auVar36,auVar1);
+      *(undefined1 (*) [16])((uint)param_5 & 0xfffffff0) = auVar23;
+      param_5 = param_5 + 1;
+      lVar22 = lVar22 + -1;
+    } while (lVar22 != 0);
+  }
+  return;
+}
+
+
+// 8275DA00  R_SkinXSurfaceWeight2  (gfx_d3d/r_model_skin.cpp:972)
+
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
+
+void R_SkinXSurfaceWeight2
+               (GfxPackedVertex *param_1,ushort *param_2,uint param_3,DObjSkelMat *param_4,
+               GfxPackedVertex *param_5)
+
+{
+  __vector4 _Var1;
+  __vector4 _Var2;
+  __vector4 _Var3;
+  __vector4 _Var4;
+  __vector4 _Var5;
+  __vector4 _Var6;
+  __vector4 _Var7;
+  __vector4 _Var8;
+  uint uVar9;
+  longlong lVar10;
+  uint uVar11;
+  int iVar14;
+  longlong lVar12;
+  longlong lVar13;
   longlong lVar15;
-  ulonglong uVar16;
-  undefined1 auVar17 [16];
+  longlong lVar16;
+  longlong lVar17;
   undefined1 auVar18 [16];
   undefined1 auVar19 [16];
   undefined1 auVar20 [16];
@@ -180,375 +557,203 @@ void R_SkinXSurfaceWeight0
   undefined1 auVar28 [16];
   undefined1 auVar29 [16];
   undefined1 auVar30 [16];
-  
-  uVar13 = (ulonglong)(int)param_5;
-  uVar10 = (ulonglong)(int)param_4;
-  uVar16 = (ulonglong)(int)param_3;
-  lVar15 = (longlong)(int)param_2;
-  uVar8 = __savegprlr_25(param_1);
-  if ((uVar8 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_model_skin.cpp",
-                    0x368,0,"%s");
-  }
-  if ((uVar13 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_model_skin.cpp",
-                    0x369,0,"%s");
-  }
-  if ((uVar8 & 0xf) != 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_model_skin.cpp",
-                    0x36a,0,"%s");
-  }
-  if ((uVar13 & 0xf) != 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_model_skin.cpp",
-                    0x36b,0,"%s");
-  }
-  if ((uVar10 & 0xf) != 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_model_skin.cpp",
-                    0x36c,0,"%s");
-  }
-  _Var7.field0_0x0 = g_XYZw.field0_0x0;
-  _Var6.field0_0x0 = g_unpackAdd101010.field0_0x0;
-  _Var5.field0_0x0 = g_unpackMul101010.field0_0x0;
-  _Var4.field0_0x0 = g_packMul101010.field0_0x0;
-  _Var3.field0_0x0 = g_packAdd.field0_0x0;
-  lVar14 = (uVar16 & 0x7ffffff) << 5;
-  if ((int)lVar14 < 0x201) {
-    lVar9 = 0;
-  }
-  else {
-    lVar14 = 0x200;
-    lVar9 = 0x200;
-  }
-  lVar11 = 0;
-  if (0 < (int)lVar14) {
-    lVar14 = ((lVar14 - 1U & 0xffffffff) >> 7) + 1;
-    do {
-      dataCacheBlockTouch(lVar11 + uVar8);
-      lVar11 = lVar11 + 0x80;
-      lVar14 = lVar14 + -1;
-    } while (lVar14 != 0);
-  }
-  lVar14 = (uVar16 & 0x7fffffff) << 1;
-  if ((int)lVar14 < 0x201) {
-    lVar11 = 0;
-  }
-  else {
-    lVar14 = 0x200;
-    lVar11 = 0x200;
-  }
-  lVar12 = 0;
-  if (0 < (int)lVar14) {
-    lVar14 = ((lVar14 - 1U & 0xffffffff) >> 7) + 1;
-    do {
-      dataCacheBlockTouch(lVar12 + lVar15);
-      lVar12 = lVar12 + 0x80;
-      lVar14 = lVar14 + -1;
-    } while (lVar14 != 0);
-  }
-  uVar2 = uVar16 & 0xffffffff;
-  while (uVar2 != 0) {
-    dataCacheBlockTouch(lVar9 + uVar8);
-    dataCacheBlockTouch(lVar11 + lVar15);
-    auVar30 = *(undefined1 (*) [16])((uint)uVar8 + 0x10 & 0xfffffff0);
-    auVar29 = *(undefined1 (*) [16])((uint)uVar8 & 0xfffffff0);
-    auVar28 = vectorSplatWord(auVar30,2);
-    auVar17 = vectorUnpackD3Dtype(auVar30,8);
-    uVar1 = (uint)*(ushort *)lVar15 + (int)uVar10;
-    auVar19 = vectorSplatWord(auVar29,2);
-    uVar8 = uVar8 + 0x20;
-    auVar20 = vectorSplatWord(auVar29,1);
-    lVar15 = lVar15 + 2;
-    auVar22 = vectorUnpackD3Dtype(auVar28,8);
-    auVar28 = vectorMultiplyAddFloatingPoint
-                        (auVar17,(undefined1  [16])_Var5.field0_0x0,
-                         (undefined1  [16])_Var6.field0_0x0);
-    auVar21 = vectorSplatWord(auVar29,0);
-    auVar18 = *(undefined1 (*) [16])(uVar1 + 0x20 & 0xfffffff0);
-    auVar27 = vectorSplatWord(auVar29,3);
-    auVar22 = vectorMultiplyAddFloatingPoint
-                        (auVar22,(undefined1  [16])_Var5.field0_0x0,
-                         (undefined1  [16])_Var6.field0_0x0);
-    auVar23 = *(undefined1 (*) [16])(uVar1 + 0x10 & 0xfffffff0);
-    auVar19 = vectorMultiplyAddFloatingPoint
-                        (auVar18,auVar19,*(undefined1 (*) [16])(uVar1 + 0x30 & 0xfffffff0));
-    auVar29 = *(undefined1 (*) [16])(uVar1 & 0xfffffff0);
-    auVar26 = vectorSplatWord(auVar28,2);
-    auVar17 = auVar28 >> 0x40;
-    auVar28 = auVar28 >> 0x60;
-    auVar24 = vectorMultiplyFloatingPoint(auVar26,auVar18);
-    auVar20 = vectorMultiplyAddFloatingPoint(auVar20,auVar23,auVar19);
-    auVar25 = vectorSplatWord(auVar22,2);
-    auVar26 = vectorSplatWord(auVar22,1);
-    auVar19 = vectorSplatWord(auVar22,0);
-    auVar22 = vectorMultiplyFloatingPoint(auVar25,auVar18);
-    auVar18 = vectorMultiplyAddFloatingPoint
-                        (auVar17 & (undefined1  [16])0xffffffff | auVar17 << 0x20 |
-                         (auVar17 & (undefined1  [16])0xffffffff) << 0x40 | auVar17 << 0x60,auVar23,
-                         auVar24);
-    auVar17 = vectorMultiplyAddFloatingPoint(auVar26,auVar23,auVar22);
-    auVar18 = vectorMultiplyAddFloatingPoint
-                        (auVar28 & (undefined1  [16])0xffffffff | auVar28 << 0x20 | auVar28 << 0x40
-                         | auVar28 << 0x60,auVar29,auVar18);
-    auVar17 = vectorMultiplyAddFloatingPoint(auVar19,auVar29,auVar17);
-    auVar28 = vectorMultiplyAddFloatingPoint(auVar21,auVar29,auVar20);
-    auVar18 = vectorMultiplyAddFloatingPoint
-                        (auVar18,(undefined1  [16])_Var4.field0_0x0,
-                         (undefined1  [16])_Var3.field0_0x0);
-    auVar17 = vectorMultiplyAddFloatingPoint
-                        (auVar17,(undefined1  [16])_Var4.field0_0x0,
-                         (undefined1  [16])_Var3.field0_0x0);
-    auVar28 = vectorPermute128(auVar28,auVar27,(undefined1  [16])_Var7.field0_0x0);
-    *(undefined1 (*) [16])((uint)uVar13 & 0xfffffff0) = auVar28;
-    auVar17 = vectorPackD3Dtype(auVar30,auVar17,9,1);
-    auVar17 = vectorPackD3Dtype(auVar17,auVar18,9,0);
-    *(undefined1 (*) [16])((uint)uVar13 + 0x10 & 0xfffffff0) = auVar17;
-    uVar13 = uVar13 + 0x20;
-    uVar16 = uVar16 - 1;
-    uVar2 = uVar16;
-  }
-  __restgprlr_25();
-  return;
-}
-
-
-// 8275D6F8  R_SkinXSurfaceWeight1  (gfx_d3d/r_model_skin.cpp:910)
-
-void R_SkinXSurfaceWeight1
-               (GfxPackedVertex *param_1,ushort *param_2,uint param_3,DObjSkelMat *param_4,
-               GfxPackedVertex *param_5)
-
-{
-  uint uVar1;
-  uint uVar2;
-  undefined1 auVar3 [16];
-  ulonglong uVar4;
-  __vector4 _Var5;
-  __vector4 _Var6;
-  __vector4 _Var7;
-  __vector4 _Var8;
-  __vector4 _Var9;
-  __vector4 _Var10;
-  undefined4 uVar11;
-  undefined4 uVar12;
-  undefined4 uVar13;
-  undefined4 uVar14;
-  __vector4 _Var15;
-  ulonglong uVar16;
-  longlong lVar17;
-  ulonglong uVar18;
-  ulonglong uVar19;
-  longlong lVar20;
-  longlong lVar21;
-  longlong lVar22;
-  longlong lVar23;
-  ulonglong uVar24;
-  undefined1 auVar25 [16];
-  undefined1 auVar26 [16];
-  undefined1 auVar27 [16];
-  undefined1 auVar28 [16];
-  undefined1 auVar29 [16];
-  undefined1 auVar30 [16];
   undefined1 auVar31 [16];
   undefined1 auVar32 [16];
   undefined1 auVar33 [16];
   undefined1 auVar34 [16];
   undefined1 auVar35 [16];
-  undefined1 auVar36 [16];
-  undefined1 auVar37 [16];
-  undefined1 auVar38 [16];
-  undefined1 auVar39 [16];
-  undefined1 auVar40 [16];
-  undefined1 auVar41 [16];
   
-  uVar19 = (ulonglong)(int)param_5;
-  uVar18 = (ulonglong)(int)param_4;
-  uVar24 = (ulonglong)(int)param_3;
-  lVar23 = (longlong)(int)param_2;
-  uVar16 = __savegprlr_25(param_1);
-  if ((uVar16 & 0xffffffff) == 0) {
+  lVar17 = (longlong)(int)param_3;
+  lVar16 = (longlong)(int)param_1;
+  if (param_1 == (GfxPackedVertex *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_model_skin.cpp",
-                    0x39c,0,"%s");
+                    0x3dc,0,"%s");
   }
-  if ((uVar19 & 0xffffffff) == 0) {
+  if (param_5 == (GfxPackedVertex *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_model_skin.cpp",
-                    0x39d,0,"%s");
+                    0x3dd,0,"%s");
   }
-  if ((uVar16 & 0xf) != 0) {
+  if (((uint)param_1 & 0xf) != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_model_skin.cpp",
-                    0x39e,0,"%s");
+                    0x3de,0,"%s");
   }
-  if ((uVar19 & 0xf) != 0) {
+  if (((uint)param_5 & 0xf) != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_model_skin.cpp",
-                    0x39f,0,"%s");
+                    0x3df,0,"%s");
   }
-  if ((uVar18 & 0xf) != 0) {
+  if (((uint)param_4 & 0xf) != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_model_skin.cpp",
-                    0x3a0,0,"%s");
+                    0x3e0,0,"%s");
   }
-  _Var15.field0_0x0 = g_shortBoneWeightPerm.field0_0x0;
-  uVar14 = g_XYZw.field0_0x0.vector4_f32[3];
-  uVar13 = g_XYZw.field0_0x0.vector4_f32[2];
-  uVar12 = g_XYZw.field0_0x0.vector4_f32[1];
-  uVar11 = g_XYZw.field0_0x0.vector4_f32[0];
-  _Var10.field0_0x0 = g_unpackAdd101010.field0_0x0;
-  _Var9.field0_0x0 = g_unpackMul101010.field0_0x0;
-  _Var8.field0_0x0 = g_packMul101010.field0_0x0;
-  _Var7.field0_0x0 = g_packAdd.field0_0x0;
-  _Var6.field0_0x0 = g_one.field0_0x0;
-  _Var5.field0_0x0 = g_zero.field0_0x0;
-  lVar22 = (uVar24 & 0x7ffffff) << 5;
-  if ((int)lVar22 < 0x201) {
-    lVar17 = 0;
+  _Var8.field0_0x0 = g_shortBoneWeightPerm.field0_0x0;
+  _Var7.field0_0x0 = g_XYZw.field0_0x0;
+  _Var6.field0_0x0 = g_unpackAdd101010.field0_0x0;
+  _Var5.field0_0x0 = g_unpackMul101010.field0_0x0;
+  _Var4.field0_0x0 = g_packMul101010.field0_0x0;
+  _Var3.field0_0x0 = g_packAdd.field0_0x0;
+  _Var2.field0_0x0 = g_one.field0_0x0;
+  _Var1.field0_0x0 = g_zero.field0_0x0;
+  iVar14 = param_3 << 5;
+  if (iVar14 < 0x201) {
+    lVar15 = 0;
   }
   else {
-    lVar22 = 0x200;
-    lVar17 = 0x200;
+    iVar14 = 0x200;
+    lVar15 = 0x200;
   }
-  lVar20 = 0;
-  if (0 < (int)lVar22) {
-    lVar22 = ((lVar22 - 1U & 0xffffffff) >> 7) + 1;
+  lVar10 = 0;
+  if (0 < iVar14) {
+    lVar12 = (ulonglong)(iVar14 - 1U >> 7) + 1;
     do {
-      dataCacheBlockTouch(lVar20 + uVar16);
-      lVar20 = lVar20 + 0x80;
-      lVar22 = lVar22 + -1;
-    } while (lVar22 != 0);
+      dataCacheBlockTouch(lVar10 + lVar16);
+      lVar10 = lVar10 + 0x80;
+      lVar12 = lVar12 + -1;
+    } while (lVar12 != 0);
   }
-  lVar22 = (uVar24 & 0x7fffffff) << 1;
-  if ((int)lVar22 < 0x201) {
-    lVar20 = 0;
+  iVar14 = param_3 << 1;
+  if (iVar14 < 0x201) {
+    lVar10 = 0;
   }
   else {
-    lVar22 = 0x200;
-    lVar20 = 0x200;
+    iVar14 = 0x200;
+    lVar10 = 0x200;
   }
-  lVar21 = 0;
-  if (0 < (int)lVar22) {
-    lVar22 = ((lVar22 - 1U & 0xffffffff) >> 7) + 1;
+  lVar12 = 0;
+  if (0 < iVar14) {
+    lVar13 = (ulonglong)(iVar14 - 1U >> 7) + 1;
     do {
-      dataCacheBlockTouch(lVar21 + lVar23);
-      lVar21 = lVar21 + 0x80;
-      lVar22 = lVar22 + -1;
-    } while (lVar22 != 0);
+      dataCacheBlockTouch(lVar12 + (int)param_2);
+      lVar12 = lVar12 + 0x80;
+      lVar13 = lVar13 + -1;
+    } while (lVar13 != 0);
   }
-  uVar4 = uVar24 & 0xffffffff;
-  while (uVar4 != 0) {
-    dataCacheBlockTouch(lVar17 + uVar16);
-    dataCacheBlockTouch(lVar20 + lVar23);
-    auVar41 = *(undefined1 (*) [16])((uint)uVar16 + 0x10 & 0xfffffff0);
-    auVar40 = *(undefined1 (*) [16])((uint)uVar16 & 0xfffffff0);
-    auVar39 = vectorSplatWord(auVar41,2);
-    auVar25 = vectorUnpackD3Dtype(auVar41,8);
-    uVar1 = (uint)*(ushort *)lVar23 + (int)uVar18;
-    uVar2 = (uint)((ushort *)lVar23)[1] + (int)uVar18;
-    auVar30 = vectorSplatWord(auVar40,2);
-    auVar29 = vectorSplatWord(auVar40,1);
-    auVar39 = vectorUnpackD3Dtype(auVar39,8);
-    auVar27 = vectorMultiplyAddFloatingPoint
-                        (auVar25,(undefined1  [16])_Var9.field0_0x0,
-                         (undefined1  [16])_Var10.field0_0x0);
-    auVar28 = vectorSplatWord(auVar40,0);
-    auVar26 = *(undefined1 (*) [16])(uVar1 + 0x20 & 0xfffffff0);
-    auVar38 = vectorSplatWord(auVar40,3);
-    uVar16 = uVar16 + 0x20;
-    auVar40 = vectorMultiplyAddFloatingPoint
-                        (auVar39,(undefined1  [16])_Var9.field0_0x0,
-                         (undefined1  [16])_Var10.field0_0x0);
-    auVar32 = *(undefined1 (*) [16])(uVar1 + 0x10 & 0xfffffff0);
-    auVar33 = vectorMultiplyAddFloatingPoint
-                        (auVar26,auVar30,*(undefined1 (*) [16])(uVar1 + 0x30 & 0xfffffff0));
-    auVar31 = *(undefined1 (*) [16])(uVar1 & 0xfffffff0);
-    lVar22 = lVar23 + 4;
-    auVar3._0_4_ = uVar11;
-    auVar3._4_4_ = uVar12;
-    auVar3._8_4_ = uVar13;
-    auVar3._12_4_ = uVar14;
-    lVar23 = lVar23 + 6;
-    auVar37 = loadVectorLeftIndexed(lVar22);
-    auVar39 = vectorSplatWord(auVar27,2);
-    auVar25 = auVar27 >> 0x40;
-    auVar36 = vectorPermute128(auVar37,(undefined1  [16])_Var5.field0_0x0,
-                               (undefined1  [16])_Var15.field0_0x0);
-    auVar35 = vectorSplatWord(auVar40,2);
-    auVar37 = vectorMultiplyFloatingPoint(auVar39,auVar26);
-    auVar39 = auVar40 >> 0x40;
-    auVar34 = vectorMultiplyAddFloatingPoint(auVar29,auVar32,auVar33);
-    auVar40 = auVar40 >> 0x60;
-    auVar36 = vectorConvertFromUnsignedFixedPointWord128(auVar36,0x10);
-    auVar27 = auVar27 >> 0x60;
-    auVar33 = vectorMultiplyFloatingPoint(auVar35,auVar26);
-    auVar30 = vectorMultiplyAddFloatingPoint
-                        (*(undefined1 (*) [16])(uVar2 + 0x20 & 0xfffffff0),auVar30,
-                         *(undefined1 (*) [16])(uVar2 + 0x30 & 0xfffffff0));
-    auVar37 = vectorMultiplyAddFloatingPoint
-                        (auVar25 & (undefined1  [16])0xffffffff | auVar25 << 0x20 |
-                         (auVar25 & (undefined1  [16])0xffffffff) << 0x40 | auVar25 << 0x60,auVar32,
-                         auVar37);
-    auVar34 = vectorMultiplyAddFloatingPoint(auVar28,auVar31,auVar34);
-    auVar26 = vectorSubtractFloatingPoint128((undefined1  [16])_Var6.field0_0x0,auVar36);
-    auVar39 = vectorMultiplyAddFloatingPoint
-                        (auVar39 & (undefined1  [16])0xffffffff | auVar39 << 0x20 |
-                         (auVar39 & (undefined1  [16])0xffffffff) << 0x40 | auVar39 << 0x60,auVar32,
-                         auVar33);
-    auVar25 = vectorMultiplyAddFloatingPoint
-                        (auVar29,*(undefined1 (*) [16])(uVar2 + 0x10 & 0xfffffff0),auVar30);
-    auVar27 = vectorMultiplyAddFloatingPoint
-                        (auVar27 & (undefined1  [16])0xffffffff | auVar27 << 0x20 | auVar27 << 0x40
-                         | auVar27 << 0x60,auVar31,auVar37);
-    auVar39 = vectorMultiplyAddFloatingPoint
-                        (auVar40 & (undefined1  [16])0xffffffff | auVar40 << 0x20 | auVar40 << 0x40
-                         | auVar40 << 0x60,auVar31,auVar39);
-    auVar25 = vectorMultiplyAddFloatingPoint
-                        (auVar28,*(undefined1 (*) [16])(uVar2 & 0xfffffff0),auVar25);
-    auVar40 = vectorMultiplyAddFloatingPoint
-                        (auVar27,(undefined1  [16])_Var8.field0_0x0,
-                         (undefined1  [16])_Var7.field0_0x0);
-    auVar39 = vectorMultiplyAddFloatingPoint
-                        (auVar39,(undefined1  [16])_Var8.field0_0x0,
-                         (undefined1  [16])_Var7.field0_0x0);
-    auVar25 = vectorMultiplyFloatingPoint(auVar25,auVar36);
-    auVar39 = vectorPackD3Dtype(auVar41,auVar39,9,1);
-    auVar25 = vectorMultiplyAddFloatingPoint(auVar26,auVar34,auVar25);
-    auVar39 = vectorPackD3Dtype(auVar39,auVar40,9,0);
-    *(undefined1 (*) [16])((uint)uVar19 + 0x10 & 0xfffffff0) = auVar39;
-    auVar25 = vectorPermute128(auVar25,auVar38,auVar3);
-    *(undefined1 (*) [16])((uint)uVar19 & 0xfffffff0) = auVar25;
-    uVar19 = uVar19 + 0x20;
-    uVar24 = uVar24 - 1;
-    uVar4 = uVar24;
+  if (param_3 != 0) {
+    lVar12 = (longlong)(int)param_2 + 4;
+    do {
+      dataCacheBlockTouch(lVar15 + lVar16);
+      dataCacheBlockTouch(lVar10 + lVar12 + -4);
+      auVar35 = *(undefined1 (*) [16])((uint)lVar16 + 0x10 & 0xfffffff0);
+      iVar14 = (int)lVar12;
+      auVar34 = *(undefined1 (*) [16])((uint)lVar16 & 0xfffffff0);
+      auVar18 = vectorUnpackD3Dtype(auVar35,8);
+      auVar33 = vectorSplatWord(auVar35,2);
+      uVar11 = (int)param_4->axis[0] + (uint)*(ushort *)(iVar14 + -4);
+      auVar24 = vectorSplatWord(auVar34,2);
+      uVar9 = (int)param_4->axis[0] + (uint)*(ushort *)(iVar14 + -2);
+      auVar23 = vectorSplatWord(auVar34,1);
+      auVar32 = loadVectorLeftIndexed(lVar12);
+      auVar20 = vectorMultiplyAddFloatingPoint
+                          (auVar18,(undefined1  [16])_Var5.field0_0x0,
+                           (undefined1  [16])_Var6.field0_0x0);
+      auVar21 = vectorSplatWord(auVar34,0);
+      auVar18 = vectorUnpackD3Dtype(auVar33,8);
+      auVar33 = loadVectorLeftIndexed(lVar12 + 4);
+      auVar19 = *(undefined1 (*) [16])(uVar11 + 0x20 & 0xfffffff0);
+      auVar31 = vectorPermute128(auVar32,(undefined1  [16])_Var1.field0_0x0,
+                                 (undefined1  [16])_Var8.field0_0x0);
+      auVar30 = vectorPermute128(auVar33,(undefined1  [16])_Var1.field0_0x0,
+                                 (undefined1  [16])_Var8.field0_0x0);
+      auVar26 = vectorMultiplyAddFloatingPoint
+                          (auVar19,auVar24,*(undefined1 (*) [16])(uVar11 + 0x30 & 0xfffffff0));
+      auVar33 = vectorMultiplyAddFloatingPoint
+                          (auVar18,(undefined1  [16])_Var5.field0_0x0,
+                           (undefined1  [16])_Var6.field0_0x0);
+      auVar22 = *(undefined1 (*) [16])(uVar11 + 0x10 & 0xfffffff0);
+      auVar32 = *(undefined1 (*) [16])(uVar11 & 0xfffffff0);
+      auVar29 = vectorConvertFromUnsignedFixedPointWord128(auVar31,0x10);
+      auVar28 = vectorSplatWord(auVar34,3);
+      uVar11 = (int)param_4->axis[0] + (uint)*(ushort *)(iVar14 + 2);
+      lVar16 = lVar16 + 0x20;
+      lVar12 = lVar12 + 10;
+      auVar31 = vectorMultiplyAddFloatingPoint
+                          (*(undefined1 (*) [16])(uVar9 + 0x20 & 0xfffffff0),auVar24,
+                           *(undefined1 (*) [16])(uVar9 + 0x30 & 0xfffffff0));
+      auVar24 = vectorMultiplyAddFloatingPoint
+                          (*(undefined1 (*) [16])(uVar11 + 0x20 & 0xfffffff0),auVar24,
+                           *(undefined1 (*) [16])(uVar11 + 0x30 & 0xfffffff0));
+      auVar34 = vectorSplatWord(auVar20,2);
+      auVar27 = vectorMultiplyAddFloatingPoint(auVar23,auVar22,auVar26);
+      auVar26 = vectorSplatWord(auVar33,2);
+      auVar25 = vectorSplatWord(auVar20,1);
+      auVar18 = auVar33 >> 0x40;
+      auVar34 = vectorMultiplyFloatingPoint(auVar34,auVar19);
+      auVar20 = vectorSplatWord(auVar20,0);
+      auVar26 = vectorMultiplyFloatingPoint(auVar26,auVar19);
+      auVar33 = auVar33 >> 0x60;
+      auVar19 = vectorConvertFromUnsignedFixedPointWord128(auVar30,0x10);
+      auVar34 = vectorMultiplyAddFloatingPoint(auVar25,auVar22,auVar34);
+      auVar18 = vectorMultiplyAddFloatingPoint
+                          (auVar18 & (undefined1  [16])0xffffffff | auVar18 << 0x20 |
+                           (auVar18 & (undefined1  [16])0xffffffff) << 0x40 | auVar18 << 0x60,
+                           auVar22,auVar26);
+      auVar22 = vectorMultiplyAddFloatingPoint(auVar21,auVar32,auVar27);
+      auVar26 = vectorAddFloatingPoint128(auVar29,auVar19);
+      auVar20 = vectorMultiplyAddFloatingPoint(auVar20,auVar32,auVar34);
+      auVar31 = vectorMultiplyAddFloatingPoint
+                          (auVar23,*(undefined1 (*) [16])(uVar9 + 0x10 & 0xfffffff0),auVar31);
+      auVar32 = vectorMultiplyAddFloatingPoint
+                          (auVar33 & (undefined1  [16])0xffffffff | auVar33 << 0x20 |
+                           auVar33 << 0x40 | auVar33 << 0x60,auVar32,auVar18);
+      auVar33 = vectorMultiplyAddFloatingPoint
+                          (auVar23,*(undefined1 (*) [16])(uVar11 + 0x10 & 0xfffffff0),auVar24);
+      auVar23 = vectorSubtractFloatingPoint128((undefined1  [16])_Var2.field0_0x0,auVar26);
+      auVar18 = vectorMultiplyAddFloatingPoint
+                          (auVar21,*(undefined1 (*) [16])(uVar9 & 0xfffffff0),auVar31);
+      auVar24 = vectorMultiplyAddFloatingPoint
+                          (auVar32,(undefined1  [16])_Var4.field0_0x0,
+                           (undefined1  [16])_Var3.field0_0x0);
+      auVar33 = vectorMultiplyAddFloatingPoint
+                          (auVar21,*(undefined1 (*) [16])(uVar11 & 0xfffffff0),auVar33);
+      auVar18 = vectorMultiplyFloatingPoint(auVar18,auVar29);
+      auVar24 = vectorPackD3Dtype(auVar35,auVar24,9,1);
+      auVar18 = vectorMultiplyAddFloatingPoint(auVar19,auVar33,auVar18);
+      auVar18 = vectorMultiplyAddFloatingPoint(auVar23,auVar22,auVar18);
+      auVar33 = vectorPermute128(auVar18,auVar28,(undefined1  [16])_Var7.field0_0x0);
+      auVar18 = vectorMultiplyAddFloatingPoint
+                          (auVar20,(undefined1  [16])_Var4.field0_0x0,
+                           (undefined1  [16])_Var3.field0_0x0);
+      *(undefined1 (*) [16])((uint)param_5 & 0xfffffff0) = auVar33;
+      auVar18 = vectorPackD3Dtype(auVar24,auVar18,9,0);
+      *(undefined1 (*) [16])((uint)&param_5->color & 0xfffffff0) = auVar18;
+      param_5 = param_5 + 1;
+      lVar17 = lVar17 + -1;
+    } while (lVar17 != 0);
   }
-  __restgprlr_25();
   return;
 }
 
 
-// 8275DA00  R_SkinXSurfaceWeight2  (gfx_d3d/r_model_skin.cpp:972)
+// 8275DD38  R_SkinXSurfaceWeight3  (gfx_d3d/r_model_skin.cpp:1044)
 
-void R_SkinXSurfaceWeight2
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
+
+void R_SkinXSurfaceWeight3
                (GfxPackedVertex *param_1,ushort *param_2,uint param_3,DObjSkelMat *param_4,
                GfxPackedVertex *param_5)
 
 {
-  int iVar1;
-  uint uVar2;
-  uint uVar3;
-  int iVar4;
+  __vector4 _Var1;
+  __vector4 _Var2;
+  __vector4 _Var3;
+  __vector4 _Var4;
   __vector4 _Var5;
   __vector4 _Var6;
   __vector4 _Var7;
   __vector4 _Var8;
-  __vector4 _Var9;
-  __vector4 _Var10;
-  __vector4 _Var11;
-  __vector4 _Var12;
-  ulonglong uVar13;
-  ulonglong uVar14;
-  ulonglong uVar15;
-  longlong lVar16;
+  uint uVar9;
+  uint uVar10;
+  longlong lVar11;
+  uint uVar12;
+  uint uVar13;
+  int iVar16;
+  longlong lVar14;
+  longlong lVar15;
   longlong lVar17;
   longlong lVar18;
   longlong lVar19;
-  longlong lVar20;
-  ulonglong uVar21;
+  undefined1 auVar20 [16];
+  undefined1 auVar21 [16];
   undefined1 auVar22 [16];
   undefined1 auVar23 [16];
   undefined1 auVar24 [16];
@@ -565,420 +770,325 @@ void R_SkinXSurfaceWeight2
   undefined1 auVar35 [16];
   undefined1 auVar36 [16];
   undefined1 auVar37 [16];
-  undefined1 auVar38 [16];
-  undefined1 auVar39 [16];
   
-  uVar15 = (ulonglong)(int)param_5;
-  uVar14 = (ulonglong)(int)param_4;
-  uVar21 = (ulonglong)(int)param_3;
-  lVar19 = (longlong)(int)param_2;
-  uVar13 = __savegprlr_25(param_1);
-  if ((uVar13 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_model_skin.cpp",
-                    0x3dc,0,"%s");
-  }
-  if ((uVar15 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_model_skin.cpp",
-                    0x3dd,0,"%s");
-  }
-  if ((uVar13 & 0xf) != 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_model_skin.cpp",
-                    0x3de,0,"%s");
-  }
-  if ((uVar15 & 0xf) != 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_model_skin.cpp",
-                    0x3df,0,"%s");
-  }
-  if ((uVar14 & 0xf) != 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_model_skin.cpp",
-                    0x3e0,0,"%s");
-  }
-  _Var12.field0_0x0 = g_shortBoneWeightPerm.field0_0x0;
-  _Var11.field0_0x0 = g_XYZw.field0_0x0;
-  _Var10.field0_0x0 = g_unpackAdd101010.field0_0x0;
-  _Var9.field0_0x0 = g_unpackMul101010.field0_0x0;
-  _Var8.field0_0x0 = g_packMul101010.field0_0x0;
-  _Var7.field0_0x0 = g_packAdd.field0_0x0;
-  _Var6.field0_0x0 = g_one.field0_0x0;
-  _Var5.field0_0x0 = g_zero.field0_0x0;
-  lVar18 = (uVar21 & 0x7ffffff) << 5;
-  if ((int)lVar18 < 0x201) {
-    lVar20 = 0;
-  }
-  else {
-    lVar18 = 0x200;
-    lVar20 = 0x200;
-  }
-  lVar16 = 0;
-  if (0 < (int)lVar18) {
-    lVar18 = ((lVar18 - 1U & 0xffffffff) >> 7) + 1;
-    do {
-      dataCacheBlockTouch(lVar16 + uVar13);
-      lVar16 = lVar16 + 0x80;
-      lVar18 = lVar18 + -1;
-    } while (lVar18 != 0);
-  }
-  lVar18 = (uVar21 & 0x7fffffff) << 1;
-  if ((int)lVar18 < 0x201) {
-    lVar16 = 0;
-  }
-  else {
-    lVar18 = 0x200;
-    lVar16 = 0x200;
-  }
-  lVar17 = 0;
-  if (0 < (int)lVar18) {
-    lVar18 = ((lVar18 - 1U & 0xffffffff) >> 7) + 1;
-    do {
-      dataCacheBlockTouch(lVar17 + lVar19);
-      lVar17 = lVar17 + 0x80;
-      lVar18 = lVar18 + -1;
-    } while (lVar18 != 0);
-  }
-  if ((uVar21 & 0xffffffff) != 0) {
-    lVar19 = lVar19 + 4;
-    do {
-      dataCacheBlockTouch(lVar20 + uVar13);
-      dataCacheBlockTouch(lVar16 + lVar19 + -4);
-      auVar39 = *(undefined1 (*) [16])((uint)uVar13 + 0x10 & 0xfffffff0);
-      iVar1 = (int)lVar19;
-      auVar38 = *(undefined1 (*) [16])((uint)uVar13 & 0xfffffff0);
-      auVar22 = vectorUnpackD3Dtype(auVar39,8);
-      auVar37 = vectorSplatWord(auVar39,2);
-      iVar4 = (int)uVar14;
-      uVar2 = (uint)*(ushort *)(iVar1 + -4) + iVar4;
-      auVar28 = vectorSplatWord(auVar38,2);
-      uVar3 = (uint)*(ushort *)(iVar1 + -2) + iVar4;
-      auVar27 = vectorSplatWord(auVar38,1);
-      auVar36 = loadVectorLeftIndexed(lVar19);
-      auVar24 = vectorMultiplyAddFloatingPoint
-                          (auVar22,(undefined1  [16])_Var9.field0_0x0,
-                           (undefined1  [16])_Var10.field0_0x0);
-      auVar25 = vectorSplatWord(auVar38,0);
-      auVar22 = vectorUnpackD3Dtype(auVar37,8);
-      auVar37 = loadVectorLeftIndexed(lVar19 + 4);
-      auVar23 = *(undefined1 (*) [16])(uVar2 + 0x20 & 0xfffffff0);
-      auVar35 = vectorPermute128(auVar36,(undefined1  [16])_Var5.field0_0x0,
-                                 (undefined1  [16])_Var12.field0_0x0);
-      auVar34 = vectorPermute128(auVar37,(undefined1  [16])_Var5.field0_0x0,
-                                 (undefined1  [16])_Var12.field0_0x0);
-      auVar30 = vectorMultiplyAddFloatingPoint
-                          (auVar23,auVar28,*(undefined1 (*) [16])(uVar2 + 0x30 & 0xfffffff0));
-      auVar37 = vectorMultiplyAddFloatingPoint
-                          (auVar22,(undefined1  [16])_Var9.field0_0x0,
-                           (undefined1  [16])_Var10.field0_0x0);
-      auVar26 = *(undefined1 (*) [16])(uVar2 + 0x10 & 0xfffffff0);
-      auVar36 = *(undefined1 (*) [16])(uVar2 & 0xfffffff0);
-      auVar33 = vectorConvertFromUnsignedFixedPointWord128(auVar35,0x10);
-      auVar32 = vectorSplatWord(auVar38,3);
-      uVar2 = (uint)*(ushort *)(iVar1 + 2) + iVar4;
-      uVar13 = uVar13 + 0x20;
-      lVar19 = lVar19 + 10;
-      auVar35 = vectorMultiplyAddFloatingPoint
-                          (*(undefined1 (*) [16])(uVar3 + 0x20 & 0xfffffff0),auVar28,
-                           *(undefined1 (*) [16])(uVar3 + 0x30 & 0xfffffff0));
-      auVar28 = vectorMultiplyAddFloatingPoint
-                          (*(undefined1 (*) [16])(uVar2 + 0x20 & 0xfffffff0),auVar28,
-                           *(undefined1 (*) [16])(uVar2 + 0x30 & 0xfffffff0));
-      auVar38 = vectorSplatWord(auVar24,2);
-      auVar31 = vectorMultiplyAddFloatingPoint(auVar27,auVar26,auVar30);
-      auVar30 = vectorSplatWord(auVar37,2);
-      auVar29 = vectorSplatWord(auVar24,1);
-      auVar22 = auVar37 >> 0x40;
-      auVar38 = vectorMultiplyFloatingPoint(auVar38,auVar23);
-      auVar24 = vectorSplatWord(auVar24,0);
-      auVar30 = vectorMultiplyFloatingPoint(auVar30,auVar23);
-      auVar37 = auVar37 >> 0x60;
-      auVar23 = vectorConvertFromUnsignedFixedPointWord128(auVar34,0x10);
-      auVar38 = vectorMultiplyAddFloatingPoint(auVar29,auVar26,auVar38);
-      auVar22 = vectorMultiplyAddFloatingPoint
-                          (auVar22 & (undefined1  [16])0xffffffff | auVar22 << 0x20 |
-                           (auVar22 & (undefined1  [16])0xffffffff) << 0x40 | auVar22 << 0x60,
-                           auVar26,auVar30);
-      auVar26 = vectorMultiplyAddFloatingPoint(auVar25,auVar36,auVar31);
-      auVar30 = vectorAddFloatingPoint128(auVar33,auVar23);
-      auVar24 = vectorMultiplyAddFloatingPoint(auVar24,auVar36,auVar38);
-      auVar35 = vectorMultiplyAddFloatingPoint
-                          (auVar27,*(undefined1 (*) [16])(uVar3 + 0x10 & 0xfffffff0),auVar35);
-      auVar36 = vectorMultiplyAddFloatingPoint
-                          (auVar37 & (undefined1  [16])0xffffffff | auVar37 << 0x20 |
-                           auVar37 << 0x40 | auVar37 << 0x60,auVar36,auVar22);
-      auVar37 = vectorMultiplyAddFloatingPoint
-                          (auVar27,*(undefined1 (*) [16])(uVar2 + 0x10 & 0xfffffff0),auVar28);
-      auVar27 = vectorSubtractFloatingPoint128((undefined1  [16])_Var6.field0_0x0,auVar30);
-      auVar22 = vectorMultiplyAddFloatingPoint
-                          (auVar25,*(undefined1 (*) [16])(uVar3 & 0xfffffff0),auVar35);
-      auVar28 = vectorMultiplyAddFloatingPoint
-                          (auVar36,(undefined1  [16])_Var8.field0_0x0,
-                           (undefined1  [16])_Var7.field0_0x0);
-      auVar37 = vectorMultiplyAddFloatingPoint
-                          (auVar25,*(undefined1 (*) [16])(uVar2 & 0xfffffff0),auVar37);
-      auVar22 = vectorMultiplyFloatingPoint(auVar22,auVar33);
-      auVar28 = vectorPackD3Dtype(auVar39,auVar28,9,1);
-      auVar22 = vectorMultiplyAddFloatingPoint(auVar23,auVar37,auVar22);
-      auVar22 = vectorMultiplyAddFloatingPoint(auVar27,auVar26,auVar22);
-      auVar37 = vectorPermute128(auVar22,auVar32,(undefined1  [16])_Var11.field0_0x0);
-      auVar22 = vectorMultiplyAddFloatingPoint
-                          (auVar24,(undefined1  [16])_Var8.field0_0x0,
-                           (undefined1  [16])_Var7.field0_0x0);
-      *(undefined1 (*) [16])((uint)uVar15 & 0xfffffff0) = auVar37;
-      auVar22 = vectorPackD3Dtype(auVar28,auVar22,9,0);
-      *(undefined1 (*) [16])((uint)uVar15 + 0x10 & 0xfffffff0) = auVar22;
-      uVar15 = uVar15 + 0x20;
-      uVar21 = uVar21 - 1;
-    } while (uVar21 != 0);
-  }
-  __restgprlr_25(lVar16);
-  return;
-}
-
-
-// 8275DD38  R_SkinXSurfaceWeight3  (gfx_d3d/r_model_skin.cpp:1044)
-
-void R_SkinXSurfaceWeight3
-               (GfxPackedVertex *param_1,ushort *param_2,uint param_3,DObjSkelMat *param_4,
-               GfxPackedVertex *param_5)
-
-{
-  int iVar1;
-  uint uVar2;
-  uint uVar3;
-  uint uVar4;
-  uint uVar5;
-  int iVar6;
-  __vector4 _Var7;
-  __vector4 _Var8;
-  __vector4 _Var9;
-  __vector4 _Var10;
-  __vector4 _Var11;
-  __vector4 _Var12;
-  __vector4 _Var13;
-  __vector4 _Var14;
-  ulonglong uVar15;
-  ulonglong uVar16;
-  ulonglong uVar17;
-  longlong lVar18;
-  longlong lVar19;
-  longlong lVar20;
-  longlong lVar21;
-  longlong lVar22;
-  ulonglong uVar23;
-  undefined1 auVar24 [16];
-  undefined1 auVar25 [16];
-  undefined1 auVar26 [16];
-  undefined1 auVar27 [16];
-  undefined1 auVar28 [16];
-  undefined1 auVar29 [16];
-  undefined1 auVar30 [16];
-  undefined1 auVar31 [16];
-  undefined1 auVar32 [16];
-  undefined1 auVar33 [16];
-  undefined1 auVar34 [16];
-  undefined1 auVar35 [16];
-  undefined1 auVar36 [16];
-  undefined1 auVar37 [16];
-  undefined1 auVar38 [16];
-  undefined1 auVar39 [16];
-  undefined1 auVar40 [16];
-  undefined1 auVar41 [16];
-  
-  uVar17 = (ulonglong)(int)param_5;
-  uVar16 = (ulonglong)(int)param_4;
-  uVar23 = (ulonglong)(int)param_3;
-  lVar21 = (longlong)(int)param_2;
-  uVar15 = __savegprlr_24(param_1);
-  if ((uVar15 & 0xffffffff) == 0) {
+  lVar19 = (longlong)(int)param_3;
+  lVar18 = (longlong)(int)param_1;
+  if (param_1 == (GfxPackedVertex *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_model_skin.cpp",
                     0x424,0,"%s");
   }
-  if ((uVar17 & 0xffffffff) == 0) {
+  if (param_5 == (GfxPackedVertex *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_model_skin.cpp",
                     0x425,0,"%s");
   }
-  if ((uVar15 & 0xf) != 0) {
+  if (((uint)param_1 & 0xf) != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_model_skin.cpp",
                     0x426,0,"%s");
   }
-  if ((uVar17 & 0xf) != 0) {
+  if (((uint)param_5 & 0xf) != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_model_skin.cpp",
                     0x427,0,"%s");
   }
-  if ((uVar16 & 0xf) != 0) {
+  if (((uint)param_4 & 0xf) != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_model_skin.cpp",
                     0x428,0,"%s");
   }
-  _Var14.field0_0x0 = g_shortBoneWeightPerm.field0_0x0;
-  _Var13.field0_0x0 = g_XYZw.field0_0x0;
-  _Var12.field0_0x0 = g_unpackAdd101010.field0_0x0;
-  _Var11.field0_0x0 = g_unpackMul101010.field0_0x0;
-  _Var10.field0_0x0 = g_packMul101010.field0_0x0;
-  _Var9.field0_0x0 = g_packAdd.field0_0x0;
-  _Var8.field0_0x0 = g_one.field0_0x0;
-  _Var7.field0_0x0 = g_zero.field0_0x0;
-  lVar20 = (uVar23 & 0x7ffffff) << 5;
-  if ((int)lVar20 < 0x201) {
-    lVar22 = 0;
+  _Var8.field0_0x0 = g_shortBoneWeightPerm.field0_0x0;
+  _Var7.field0_0x0 = g_XYZw.field0_0x0;
+  _Var6.field0_0x0 = g_unpackAdd101010.field0_0x0;
+  _Var5.field0_0x0 = g_unpackMul101010.field0_0x0;
+  _Var4.field0_0x0 = g_packMul101010.field0_0x0;
+  _Var3.field0_0x0 = g_packAdd.field0_0x0;
+  _Var2.field0_0x0 = g_one.field0_0x0;
+  _Var1.field0_0x0 = g_zero.field0_0x0;
+  iVar16 = param_3 << 5;
+  if (iVar16 < 0x201) {
+    lVar17 = 0;
   }
   else {
-    lVar20 = 0x200;
-    lVar22 = 0x200;
+    iVar16 = 0x200;
+    lVar17 = 0x200;
   }
-  lVar18 = 0;
-  if (0 < (int)lVar20) {
-    lVar20 = ((lVar20 - 1U & 0xffffffff) >> 7) + 1;
+  lVar11 = 0;
+  if (0 < iVar16) {
+    lVar14 = (ulonglong)(iVar16 - 1U >> 7) + 1;
     do {
-      dataCacheBlockTouch(lVar18 + uVar15);
-      lVar18 = lVar18 + 0x80;
-      lVar20 = lVar20 + -1;
-    } while (lVar20 != 0);
+      dataCacheBlockTouch(lVar11 + lVar18);
+      lVar11 = lVar11 + 0x80;
+      lVar14 = lVar14 + -1;
+    } while (lVar14 != 0);
   }
-  lVar20 = (uVar23 & 0x7fffffff) << 1;
-  if ((int)lVar20 < 0x201) {
-    lVar18 = 0;
+  iVar16 = param_3 << 1;
+  if (iVar16 < 0x201) {
+    lVar11 = 0;
   }
   else {
-    lVar20 = 0x200;
-    lVar18 = 0x200;
+    iVar16 = 0x200;
+    lVar11 = 0x200;
   }
-  lVar19 = 0;
-  if (0 < (int)lVar20) {
-    lVar20 = ((lVar20 - 1U & 0xffffffff) >> 7) + 1;
+  lVar14 = 0;
+  if (0 < iVar16) {
+    lVar15 = (ulonglong)(iVar16 - 1U >> 7) + 1;
     do {
-      dataCacheBlockTouch(lVar19 + lVar21);
-      lVar19 = lVar19 + 0x80;
-      lVar20 = lVar20 + -1;
-    } while (lVar20 != 0);
+      dataCacheBlockTouch(lVar14 + (int)param_2);
+      lVar14 = lVar14 + 0x80;
+      lVar15 = lVar15 + -1;
+    } while (lVar15 != 0);
   }
-  if ((uVar23 & 0xffffffff) != 0) {
-    lVar21 = lVar21 + 4;
+  if (param_3 != 0) {
+    lVar14 = (longlong)(int)param_2 + 4;
     do {
-      dataCacheBlockTouch(lVar22 + uVar15);
-      dataCacheBlockTouch(lVar18 + lVar21 + -4);
-      auVar40 = *(undefined1 (*) [16])((uint)uVar15 + 0x10 & 0xfffffff0);
-      iVar1 = (int)lVar21;
-      auVar39 = *(undefined1 (*) [16])((uint)uVar15 & 0xfffffff0);
-      auVar24 = vectorUnpackD3Dtype(auVar40,8);
-      auVar38 = vectorSplatWord(auVar40,2);
-      iVar6 = (int)uVar16;
-      uVar2 = (uint)*(ushort *)(iVar1 + -4) + iVar6;
-      uVar3 = (uint)*(ushort *)(iVar1 + -2) + iVar6;
-      auVar31 = vectorSplatWord(auVar39,1);
-      auVar37 = loadVectorLeftIndexed(lVar21);
-      auVar26 = vectorMultiplyAddFloatingPoint
-                          (auVar24,(undefined1  [16])_Var11.field0_0x0,
-                           (undefined1  [16])_Var12.field0_0x0);
-      auVar25 = vectorSplatWord(auVar39,2);
-      auVar24 = vectorUnpackD3Dtype(auVar38,8);
-      auVar38 = loadVectorLeftIndexed(lVar21 + 4);
-      auVar29 = *(undefined1 (*) [16])(uVar2 + 0x20 & 0xfffffff0);
-      auVar36 = vectorPermute128(auVar37,(undefined1  [16])_Var7.field0_0x0,
-                                 (undefined1  [16])_Var14.field0_0x0);
-      auVar37 = vectorPermute128(auVar38,(undefined1  [16])_Var7.field0_0x0,
-                                 (undefined1  [16])_Var14.field0_0x0);
-      auVar28 = *(undefined1 (*) [16])(uVar2 + 0x10 & 0xfffffff0);
-      auVar38 = vectorMultiplyAddFloatingPoint
-                          (auVar24,(undefined1  [16])_Var11.field0_0x0,
-                           (undefined1  [16])_Var12.field0_0x0);
-      auVar27 = *(undefined1 (*) [16])(uVar2 & 0xfffffff0);
-      auVar30 = vectorSplatWord(auVar39,0);
-      auVar35 = vectorConvertFromUnsignedFixedPointWord128(auVar36,0x10);
-      auVar24 = loadVectorLeftIndexed(lVar21 + 8);
-      uVar4 = (uint)*(ushort *)(iVar1 + 2) + iVar6;
-      auVar41 = vectorConvertFromUnsignedFixedPointWord128(auVar37,0x10);
-      uVar5 = (uint)*(ushort *)(iVar1 + 6) + iVar6;
-      auVar33 = vectorPermute128(auVar24,(undefined1  [16])_Var7.field0_0x0,
-                                 (undefined1  [16])_Var14.field0_0x0);
-      auVar34 = vectorSplatWord(auVar39,3);
-      uVar15 = uVar15 + 0x20;
-      lVar21 = lVar21 + 0xe;
-      auVar37 = vectorMultiplyAddFloatingPoint
-                          (auVar29,auVar25,*(undefined1 (*) [16])(uVar2 + 0x30 & 0xfffffff0));
-      auVar36 = vectorSplatWord(auVar26,2);
-      auVar32 = vectorSplatWord(auVar38,2);
-      auVar39 = vectorSplatWord(auVar26,1);
-      auVar24 = auVar38 >> 0x40;
-      auVar36 = vectorMultiplyFloatingPoint(auVar36,auVar29);
-      auVar26 = vectorSplatWord(auVar26,0);
-      auVar29 = vectorMultiplyFloatingPoint(auVar32,auVar29);
-      auVar38 = auVar38 >> 0x60;
-      auVar32 = vectorAddFloatingPoint128(auVar35,auVar41);
-      auVar39 = vectorMultiplyAddFloatingPoint(auVar39,auVar28,auVar36);
-      auVar36 = vectorMultiplyAddFloatingPoint(auVar31,auVar28,auVar37);
-      auVar29 = vectorMultiplyAddFloatingPoint
-                          (auVar24 & (undefined1  [16])0xffffffff | auVar24 << 0x20 |
-                           (auVar24 & (undefined1  [16])0xffffffff) << 0x40 | auVar24 << 0x60,
-                           auVar28,auVar29);
-      auVar37 = vectorMultiplyAddFloatingPoint
-                          (*(undefined1 (*) [16])(uVar3 + 0x20 & 0xfffffff0),auVar25,
-                           *(undefined1 (*) [16])(uVar3 + 0x30 & 0xfffffff0));
-      auVar24 = vectorMultiplyAddFloatingPoint
-                          (*(undefined1 (*) [16])(uVar4 + 0x20 & 0xfffffff0),auVar25,
-                           *(undefined1 (*) [16])(uVar4 + 0x30 & 0xfffffff0));
-      auVar26 = vectorMultiplyAddFloatingPoint(auVar26,auVar27,auVar39);
-      auVar28 = vectorMultiplyAddFloatingPoint(auVar30,auVar27,auVar36);
-      auVar38 = vectorMultiplyAddFloatingPoint
-                          (auVar38 & (undefined1  [16])0xffffffff | auVar38 << 0x20 |
-                           auVar38 << 0x40 | auVar38 << 0x60,auVar27,auVar29);
-      auVar37 = vectorMultiplyAddFloatingPoint
-                          (auVar31,*(undefined1 (*) [16])(uVar3 + 0x10 & 0xfffffff0),auVar37);
-      auVar24 = vectorMultiplyAddFloatingPoint
-                          (auVar31,*(undefined1 (*) [16])(uVar4 + 0x10 & 0xfffffff0),auVar24);
-      auVar27 = vectorMultiplyAddFloatingPoint
-                          (auVar38,(undefined1  [16])_Var10.field0_0x0,
-                           (undefined1  [16])_Var9.field0_0x0);
-      auVar36 = vectorMultiplyAddFloatingPoint
-                          (auVar30,*(undefined1 (*) [16])(uVar3 & 0xfffffff0),auVar37);
-      auVar29 = vectorMultiplyAddFloatingPoint
-                          (auVar26,(undefined1  [16])_Var10.field0_0x0,
-                           (undefined1  [16])_Var9.field0_0x0);
-      auVar38 = vectorMultiplyAddFloatingPoint
-                          (auVar30,*(undefined1 (*) [16])(uVar4 & 0xfffffff0),auVar24);
-      auVar26 = *(undefined1 (*) [16])(uVar5 & 0xfffffff0);
+      dataCacheBlockTouch(lVar17 + lVar18);
+      dataCacheBlockTouch(lVar11 + lVar14 + -4);
+      auVar36 = *(undefined1 (*) [16])((uint)lVar18 + 0x10 & 0xfffffff0);
+      iVar16 = (int)lVar14;
+      auVar35 = *(undefined1 (*) [16])((uint)lVar18 & 0xfffffff0);
+      auVar20 = vectorUnpackD3Dtype(auVar36,8);
+      auVar34 = vectorSplatWord(auVar36,2);
+      uVar12 = (int)param_4->axis[0] + (uint)*(ushort *)(iVar16 + -4);
+      uVar10 = (int)param_4->axis[0] + (uint)*(ushort *)(iVar16 + -2);
+      auVar27 = vectorSplatWord(auVar35,1);
+      auVar33 = loadVectorLeftIndexed(lVar14);
+      auVar22 = vectorMultiplyAddFloatingPoint
+                          (auVar20,(undefined1  [16])_Var5.field0_0x0,
+                           (undefined1  [16])_Var6.field0_0x0);
+      auVar21 = vectorSplatWord(auVar35,2);
+      auVar20 = vectorUnpackD3Dtype(auVar34,8);
+      auVar34 = loadVectorLeftIndexed(lVar14 + 4);
+      auVar25 = *(undefined1 (*) [16])(uVar12 + 0x20 & 0xfffffff0);
+      auVar32 = vectorPermute128(auVar33,(undefined1  [16])_Var1.field0_0x0,
+                                 (undefined1  [16])_Var8.field0_0x0);
+      auVar33 = vectorPermute128(auVar34,(undefined1  [16])_Var1.field0_0x0,
+                                 (undefined1  [16])_Var8.field0_0x0);
+      auVar24 = *(undefined1 (*) [16])(uVar12 + 0x10 & 0xfffffff0);
+      auVar34 = vectorMultiplyAddFloatingPoint
+                          (auVar20,(undefined1  [16])_Var5.field0_0x0,
+                           (undefined1  [16])_Var6.field0_0x0);
+      auVar23 = *(undefined1 (*) [16])(uVar12 & 0xfffffff0);
+      auVar26 = vectorSplatWord(auVar35,0);
+      auVar31 = vectorConvertFromUnsignedFixedPointWord128(auVar32,0x10);
+      auVar20 = loadVectorLeftIndexed(lVar14 + 8);
+      uVar13 = (int)param_4->axis[0] + (uint)*(ushort *)(iVar16 + 2);
       auVar37 = vectorConvertFromUnsignedFixedPointWord128(auVar33,0x10);
-      auVar39 = vectorPackD3Dtype(auVar40,auVar27,9,1);
-      auVar27 = vectorMultiplyFloatingPoint(auVar36,auVar35);
-      auVar24 = vectorMultiplyAddFloatingPoint
-                          (*(undefined1 (*) [16])(uVar5 + 0x20 & 0xfffffff0),auVar25,
-                           *(undefined1 (*) [16])(uVar5 + 0x30 & 0xfffffff0));
-      auVar25 = vectorPackD3Dtype(auVar39,auVar29,9,0);
-      auVar38 = vectorMultiplyAddFloatingPoint(auVar41,auVar38,auVar27);
-      auVar24 = vectorMultiplyAddFloatingPoint
-                          (auVar31,*(undefined1 (*) [16])(uVar5 + 0x10 & 0xfffffff0),auVar24);
-      *(undefined1 (*) [16])((uint)uVar17 + 0x10 & 0xfffffff0) = auVar25;
-      auVar27 = vectorAddFloatingPoint128(auVar32,auVar37);
-      auVar25 = vectorMultiplyAddFloatingPoint(auVar30,auVar26,auVar24);
-      auVar24 = vectorSubtractFloatingPoint128((undefined1  [16])_Var8.field0_0x0,auVar27);
-      auVar38 = vectorMultiplyAddFloatingPoint(auVar37,auVar25,auVar38);
-      auVar24 = vectorMultiplyAddFloatingPoint(auVar24,auVar28,auVar38);
-      auVar24 = vectorPermute128(auVar24,auVar34,(undefined1  [16])_Var13.field0_0x0);
-      *(undefined1 (*) [16])((uint)uVar17 & 0xfffffff0) = auVar24;
-      uVar17 = uVar17 + 0x20;
-      uVar23 = uVar23 - 1;
-    } while (uVar23 != 0);
+      uVar9 = (int)param_4->axis[0] + (uint)*(ushort *)(iVar16 + 6);
+      auVar29 = vectorPermute128(auVar20,(undefined1  [16])_Var1.field0_0x0,
+                                 (undefined1  [16])_Var8.field0_0x0);
+      auVar30 = vectorSplatWord(auVar35,3);
+      lVar18 = lVar18 + 0x20;
+      lVar14 = lVar14 + 0xe;
+      auVar33 = vectorMultiplyAddFloatingPoint
+                          (auVar25,auVar21,*(undefined1 (*) [16])(uVar12 + 0x30 & 0xfffffff0));
+      auVar32 = vectorSplatWord(auVar22,2);
+      auVar28 = vectorSplatWord(auVar34,2);
+      auVar35 = vectorSplatWord(auVar22,1);
+      auVar20 = auVar34 >> 0x40;
+      auVar32 = vectorMultiplyFloatingPoint(auVar32,auVar25);
+      auVar22 = vectorSplatWord(auVar22,0);
+      auVar25 = vectorMultiplyFloatingPoint(auVar28,auVar25);
+      auVar34 = auVar34 >> 0x60;
+      auVar28 = vectorAddFloatingPoint128(auVar31,auVar37);
+      auVar35 = vectorMultiplyAddFloatingPoint(auVar35,auVar24,auVar32);
+      auVar32 = vectorMultiplyAddFloatingPoint(auVar27,auVar24,auVar33);
+      auVar25 = vectorMultiplyAddFloatingPoint
+                          (auVar20 & (undefined1  [16])0xffffffff | auVar20 << 0x20 |
+                           (auVar20 & (undefined1  [16])0xffffffff) << 0x40 | auVar20 << 0x60,
+                           auVar24,auVar25);
+      auVar33 = vectorMultiplyAddFloatingPoint
+                          (*(undefined1 (*) [16])(uVar10 + 0x20 & 0xfffffff0),auVar21,
+                           *(undefined1 (*) [16])(uVar10 + 0x30 & 0xfffffff0));
+      auVar20 = vectorMultiplyAddFloatingPoint
+                          (*(undefined1 (*) [16])(uVar13 + 0x20 & 0xfffffff0),auVar21,
+                           *(undefined1 (*) [16])(uVar13 + 0x30 & 0xfffffff0));
+      auVar22 = vectorMultiplyAddFloatingPoint(auVar22,auVar23,auVar35);
+      auVar24 = vectorMultiplyAddFloatingPoint(auVar26,auVar23,auVar32);
+      auVar34 = vectorMultiplyAddFloatingPoint
+                          (auVar34 & (undefined1  [16])0xffffffff | auVar34 << 0x20 |
+                           auVar34 << 0x40 | auVar34 << 0x60,auVar23,auVar25);
+      auVar33 = vectorMultiplyAddFloatingPoint
+                          (auVar27,*(undefined1 (*) [16])(uVar10 + 0x10 & 0xfffffff0),auVar33);
+      auVar20 = vectorMultiplyAddFloatingPoint
+                          (auVar27,*(undefined1 (*) [16])(uVar13 + 0x10 & 0xfffffff0),auVar20);
+      auVar23 = vectorMultiplyAddFloatingPoint
+                          (auVar34,(undefined1  [16])_Var4.field0_0x0,
+                           (undefined1  [16])_Var3.field0_0x0);
+      auVar32 = vectorMultiplyAddFloatingPoint
+                          (auVar26,*(undefined1 (*) [16])(uVar10 & 0xfffffff0),auVar33);
+      auVar25 = vectorMultiplyAddFloatingPoint
+                          (auVar22,(undefined1  [16])_Var4.field0_0x0,
+                           (undefined1  [16])_Var3.field0_0x0);
+      auVar34 = vectorMultiplyAddFloatingPoint
+                          (auVar26,*(undefined1 (*) [16])(uVar13 & 0xfffffff0),auVar20);
+      auVar22 = *(undefined1 (*) [16])(uVar9 & 0xfffffff0);
+      auVar33 = vectorConvertFromUnsignedFixedPointWord128(auVar29,0x10);
+      auVar35 = vectorPackD3Dtype(auVar36,auVar23,9,1);
+      auVar23 = vectorMultiplyFloatingPoint(auVar32,auVar31);
+      auVar20 = vectorMultiplyAddFloatingPoint
+                          (*(undefined1 (*) [16])(uVar9 + 0x20 & 0xfffffff0),auVar21,
+                           *(undefined1 (*) [16])(uVar9 + 0x30 & 0xfffffff0));
+      auVar21 = vectorPackD3Dtype(auVar35,auVar25,9,0);
+      auVar34 = vectorMultiplyAddFloatingPoint(auVar37,auVar34,auVar23);
+      auVar20 = vectorMultiplyAddFloatingPoint
+                          (auVar27,*(undefined1 (*) [16])(uVar9 + 0x10 & 0xfffffff0),auVar20);
+      *(undefined1 (*) [16])((uint)&param_5->color & 0xfffffff0) = auVar21;
+      auVar23 = vectorAddFloatingPoint128(auVar28,auVar33);
+      auVar21 = vectorMultiplyAddFloatingPoint(auVar26,auVar22,auVar20);
+      auVar20 = vectorSubtractFloatingPoint128((undefined1  [16])_Var2.field0_0x0,auVar23);
+      auVar34 = vectorMultiplyAddFloatingPoint(auVar33,auVar21,auVar34);
+      auVar20 = vectorMultiplyAddFloatingPoint(auVar20,auVar24,auVar34);
+      auVar20 = vectorPermute128(auVar20,auVar30,(undefined1  [16])_Var7.field0_0x0);
+      *(undefined1 (*) [16])((uint)param_5 & 0xfffffff0) = auVar20;
+      param_5 = param_5 + 1;
+      lVar19 = lVar19 + -1;
+    } while (lVar19 != 0);
   }
-  __restgprlr_24();
   return;
 }
 
 
 // 8275E0B0  R_SkinXSurfaceRigid0  (gfx_d3d/r_model_skin.cpp:1124)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
+
 void R_SkinXSurfaceRigid0
                (GfxPackedVertex *param_1,uint param_2,vector4 *param_3,int param_4,
                GfxPackedVertex *param_5)
 
 {
-  uint uVar1;
+  __vector4 _Var1;
   __vector4 _Var2;
   __vector4 _Var3;
   __vector4 _Var4;
   __vector4 _Var5;
-  __vector4 _Var6;
-  ulonglong uVar7;
-  longlong lVar8;
+  longlong lVar6;
+  longlong lVar7;
+  undefined1 auVar8 [16];
+  undefined1 auVar9 [16];
+  undefined1 auVar10 [16];
+  undefined1 auVar11 [16];
+  undefined1 auVar12 [16];
+  undefined1 auVar13 [16];
+  undefined1 auVar14 [16];
+  undefined1 auVar15 [16];
+  undefined1 auVar16 [16];
+  undefined1 auVar17 [16];
+  undefined1 auVar18 [16];
+  undefined1 auVar19 [16];
+  undefined1 auVar20 [16];
+  undefined1 auVar21 [16];
+  
+  lVar7 = (longlong)(int)param_2;
+  lVar6 = (longlong)(int)param_1;
+  if (param_1 == (GfxPackedVertex *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_model_skin.cpp",
+                    0x46c,0,"%s");
+  }
+  if (param_5 == (GfxPackedVertex *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_model_skin.cpp",
+                    0x46d,0,"%s");
+  }
+  if (((uint)param_1 & 0xf) != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_model_skin.cpp",
+                    0x46e,0,"%s");
+  }
+  if (((uint)param_5 & 0xf) != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_model_skin.cpp",
+                    0x46f,0,"%s");
+  }
+  _Var5.field0_0x0 = g_XYZw.field0_0x0;
+  _Var4.field0_0x0 = g_unpackAdd101010.field0_0x0;
+  _Var3.field0_0x0 = g_unpackMul101010.field0_0x0;
+  _Var2.field0_0x0 = g_packMul101010.field0_0x0;
+  _Var1.field0_0x0 = g_packAdd.field0_0x0;
+  if (param_2 != 0) {
+    auVar8 = *(undefined1 (*) [16])((uint)param_3 & 0xfffffff0);
+    auVar15 = *(undefined1 (*) [16])((uint)&param_3->w & 0xfffffff0);
+    auVar14 = *(undefined1 (*) [16])((uint)&param_3->_padding_ & 0xfffffff0);
+    auVar13 = *(undefined1 (*) [16])((uint)&param_3->_padding_ & 0xfffffff0);
+    do {
+      dataCacheBlockTouch(param_4 + lVar6);
+      auVar21 = *(undefined1 (*) [16])((uint)lVar6 + 0x10 & 0xfffffff0);
+      auVar20 = *(undefined1 (*) [16])((uint)lVar6 & 0xfffffff0);
+      auVar19 = vectorSplatWord(auVar21,2);
+      lVar6 = lVar6 + 0x20;
+      auVar10 = vectorSplatWord(auVar20,2);
+      auVar12 = vectorUnpackD3Dtype(auVar21,8);
+      auVar9 = vectorSplatWord(auVar20,1);
+      auVar19 = vectorUnpackD3Dtype(auVar19,8);
+      auVar11 = vectorMultiplyAddFloatingPoint(auVar14,auVar10,auVar15);
+      auVar16 = vectorSplatWord(auVar20,0);
+      auVar10 = vectorMultiplyAddFloatingPoint
+                          (auVar12,(undefined1  [16])_Var3.field0_0x0,
+                           (undefined1  [16])_Var4.field0_0x0);
+      auVar18 = vectorSplatWord(auVar20,3);
+      auVar12 = vectorMultiplyAddFloatingPoint
+                          (auVar19,(undefined1  [16])_Var3.field0_0x0,
+                           (undefined1  [16])_Var4.field0_0x0);
+      auVar11 = vectorMultiplyAddFloatingPoint(auVar9,auVar13,auVar11);
+      auVar20 = vectorSplatWord(auVar10,2);
+      auVar9 = auVar10 >> 0x40;
+      auVar17 = vectorSplatWord(auVar12,2);
+      auVar10 = auVar10 >> 0x60;
+      auVar19 = auVar12 >> 0x60;
+      auVar20 = vectorMultiplyFloatingPoint(auVar20,auVar14);
+      auVar12 = auVar12 >> 0x40;
+      auVar17 = vectorMultiplyFloatingPoint(auVar17,auVar14);
+      auVar11 = vectorMultiplyAddFloatingPoint(auVar16,auVar8,auVar11);
+      auVar9 = vectorMultiplyAddFloatingPoint
+                         (auVar9 & (undefined1  [16])0xffffffff | auVar9 << 0x20 |
+                          (auVar9 & (undefined1  [16])0xffffffff) << 0x40 | auVar9 << 0x60,auVar13,
+                          auVar20);
+      auVar12 = vectorMultiplyAddFloatingPoint
+                          (auVar12 & (undefined1  [16])0xffffffff | auVar12 << 0x20 |
+                           (auVar12 & (undefined1  [16])0xffffffff) << 0x40 | auVar12 << 0x60,
+                           auVar13,auVar17);
+      auVar11 = vectorPermute128(auVar11,auVar18,(undefined1  [16])_Var5.field0_0x0);
+      auVar9 = vectorMultiplyAddFloatingPoint
+                         (auVar10 & (undefined1  [16])0xffffffff | auVar10 << 0x20 | auVar10 << 0x40
+                          | auVar10 << 0x60,auVar8,auVar9);
+      auVar10 = vectorMultiplyAddFloatingPoint
+                          (auVar19 & (undefined1  [16])0xffffffff | auVar19 << 0x20 |
+                           auVar19 << 0x40 | auVar19 << 0x60,auVar8,auVar12);
+      *(undefined1 (*) [16])((uint)param_5 & 0xfffffff0) = auVar11;
+      auVar9 = vectorMultiplyAddFloatingPoint
+                         (auVar9,(undefined1  [16])_Var2.field0_0x0,
+                          (undefined1  [16])_Var1.field0_0x0);
+      auVar10 = vectorMultiplyAddFloatingPoint
+                          (auVar10,(undefined1  [16])_Var2.field0_0x0,
+                           (undefined1  [16])_Var1.field0_0x0);
+      auVar10 = vectorPackD3Dtype(auVar21,auVar10,9,1);
+      auVar9 = vectorPackD3Dtype(auVar10,auVar9,9,0);
+      *(undefined1 (*) [16])((uint)&param_5->color & 0xfffffff0) = auVar9;
+      param_5 = param_5 + 1;
+      lVar7 = lVar7 + -1;
+    } while (lVar7 != 0);
+  }
+  return;
+}
+
+
+// 8275E280  R_SkinXSurfaceWeight0Quantized  (gfx_d3d/r_model_skin.cpp:1686)
+
+/* WARNING: Function: __savegprlr_17 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_17 replaced with injection: xenon_save_restore */
+
+void R_SkinXSurfaceWeight0Quantized
+               (uchar *param_1,uint param_2,ushort *param_3,uint param_4,float param_5,
+               DObjSkelMat *param_6,GfxQuantizedSkinnedVertexOut0 *param_7)
+
+{
+  longlong lVar1;
+  uint uVar2;
+  uint in_r9;
+  uint uVar3;
+  longlong lVar4;
+  int iVar7;
+  longlong lVar5;
+  longlong lVar6;
+  uint uVar8;
   longlong lVar9;
-  ulonglong uVar10;
-  ulonglong uVar11;
+  longlong lVar10;
+  longlong lVar11;
   undefined1 auVar12 [16];
   undefined1 auVar13 [16];
   undefined1 auVar14 [16];
@@ -993,125 +1103,512 @@ void R_SkinXSurfaceRigid0
   undefined1 auVar23 [16];
   undefined1 auVar24 [16];
   undefined1 auVar25 [16];
+  undefined1 auVar26 [16];
+  undefined1 auVar27 [16];
+  undefined1 auVar28 [16];
+  undefined1 auVar29 [16];
+  undefined1 auVar30 [16];
+  undefined1 auVar31 [16];
+  undefined1 auVar32 [16];
+  undefined1 auVar33 [16];
+  undefined1 auVar34 [16];
+  undefined1 auVar35 [16];
+  float fStack00000034;
   
-  uVar10 = (ulonglong)(int)param_5;
-  lVar9 = (longlong)param_4;
-  lVar8 = (longlong)(int)param_3;
-  uVar11 = (ulonglong)(int)param_2;
-  uVar7 = __savegprlr_25(param_1,uVar11,lVar8,lVar9);
-  if ((uVar7 & 0xffffffff) == 0) {
+  lVar10 = (longlong)(int)param_3;
+  lVar1 = (longlong)(int)param_2;
+  lVar11 = (longlong)(int)param_1;
+  fStack00000034 = param_5;
+  if (param_1 == (uchar *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_model_skin.cpp",
-                    0x46c,0,"%s");
+                    0x6a0,0,"%s");
   }
-  if ((uVar10 & 0xffffffff) == 0) {
+  if (in_r9 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_model_skin.cpp",
-                    0x46d,0,"%s");
+                    0x6a1,0,"%s");
   }
-  if ((uVar7 & 0xf) != 0) {
+  if ((in_r9 & 0xf) != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_model_skin.cpp",
-                    0x46e,0,"%s");
+                    0x6a2,0,"%s");
   }
-  if ((uVar10 & 0xf) != 0) {
+  if (((uint)param_7 & 0xf) != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_model_skin.cpp",
-                    0x46f,0,"%s");
+                    0x6a3,0,"%s");
   }
-  _Var6.field0_0x0 = g_XYZw.field0_0x0;
-  _Var5.field0_0x0 = g_unpackAdd101010.field0_0x0;
-  _Var4.field0_0x0 = g_unpackMul101010.field0_0x0;
-  _Var3.field0_0x0 = g_packMul101010.field0_0x0;
-  _Var2.field0_0x0 = g_packAdd.field0_0x0;
-  if ((uVar11 & 0xffffffff) != 0) {
-    uVar1 = (uint)lVar8;
-    auVar12 = *(undefined1 (*) [16])(uVar1 & 0xfffffff0);
-    auVar19 = *(undefined1 (*) [16])(uVar1 + 0x30 & 0xfffffff0);
-    auVar18 = *(undefined1 (*) [16])(uVar1 + 0x20 & 0xfffffff0);
-    auVar17 = *(undefined1 (*) [16])(uVar1 + 0x10 & 0xfffffff0);
+  if ((param_4 & 1) != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_model_skin.cpp",
+                    0x6a4,0,"%s");
+  }
+  iVar7 = param_2 * param_4;
+  if (iVar7 < 0x201) {
+    lVar9 = 0;
+  }
+  else {
+    iVar7 = 0x200;
+    lVar9 = 0x200;
+  }
+  lVar4 = 0;
+  if (0 < iVar7) {
+    lVar5 = (ulonglong)(iVar7 - 1U >> 7) + 1;
     do {
-      dataCacheBlockTouch(lVar9 + uVar7);
-      auVar25 = *(undefined1 (*) [16])((uint)uVar7 + 0x10 & 0xfffffff0);
-      auVar24 = *(undefined1 (*) [16])((uint)uVar7 & 0xfffffff0);
-      auVar23 = vectorSplatWord(auVar25,2);
-      uVar7 = uVar7 + 0x20;
-      auVar14 = vectorSplatWord(auVar24,2);
-      auVar16 = vectorUnpackD3Dtype(auVar25,8);
-      auVar13 = vectorSplatWord(auVar24,1);
-      auVar23 = vectorUnpackD3Dtype(auVar23,8);
-      auVar15 = vectorMultiplyAddFloatingPoint(auVar18,auVar14,auVar19);
-      auVar20 = vectorSplatWord(auVar24,0);
-      auVar14 = vectorMultiplyAddFloatingPoint
-                          (auVar16,(undefined1  [16])_Var4.field0_0x0,
-                           (undefined1  [16])_Var5.field0_0x0);
-      auVar22 = vectorSplatWord(auVar24,3);
-      auVar16 = vectorMultiplyAddFloatingPoint
-                          (auVar23,(undefined1  [16])_Var4.field0_0x0,
-                           (undefined1  [16])_Var5.field0_0x0);
-      auVar15 = vectorMultiplyAddFloatingPoint(auVar13,auVar17,auVar15);
-      auVar24 = vectorSplatWord(auVar14,2);
-      auVar13 = auVar14 >> 0x40;
-      auVar21 = vectorSplatWord(auVar16,2);
-      auVar14 = auVar14 >> 0x60;
-      auVar23 = auVar16 >> 0x60;
-      auVar24 = vectorMultiplyFloatingPoint(auVar24,auVar18);
-      auVar16 = auVar16 >> 0x40;
-      auVar21 = vectorMultiplyFloatingPoint(auVar21,auVar18);
-      auVar15 = vectorMultiplyAddFloatingPoint(auVar20,auVar12,auVar15);
-      auVar13 = vectorMultiplyAddFloatingPoint
-                          (auVar13 & (undefined1  [16])0xffffffff | auVar13 << 0x20 |
-                           (auVar13 & (undefined1  [16])0xffffffff) << 0x40 | auVar13 << 0x60,
-                           auVar17,auVar24);
-      auVar16 = vectorMultiplyAddFloatingPoint
-                          (auVar16 & (undefined1  [16])0xffffffff | auVar16 << 0x20 |
-                           (auVar16 & (undefined1  [16])0xffffffff) << 0x40 | auVar16 << 0x60,
-                           auVar17,auVar21);
-      auVar15 = vectorPermute128(auVar15,auVar22,(undefined1  [16])_Var6.field0_0x0);
-      auVar13 = vectorMultiplyAddFloatingPoint
-                          (auVar14 & (undefined1  [16])0xffffffff | auVar14 << 0x20 |
-                           auVar14 << 0x40 | auVar14 << 0x60,auVar12,auVar13);
-      auVar14 = vectorMultiplyAddFloatingPoint
-                          (auVar23 & (undefined1  [16])0xffffffff | auVar23 << 0x20 |
-                           auVar23 << 0x40 | auVar23 << 0x60,auVar12,auVar16);
-      *(undefined1 (*) [16])((uint)uVar10 & 0xfffffff0) = auVar15;
-      auVar13 = vectorMultiplyAddFloatingPoint
-                          (auVar13,(undefined1  [16])_Var3.field0_0x0,
-                           (undefined1  [16])_Var2.field0_0x0);
-      auVar14 = vectorMultiplyAddFloatingPoint
-                          (auVar14,(undefined1  [16])_Var3.field0_0x0,
-                           (undefined1  [16])_Var2.field0_0x0);
-      auVar14 = vectorPackD3Dtype(auVar25,auVar14,9,1);
-      auVar13 = vectorPackD3Dtype(auVar14,auVar13,9,0);
-      *(undefined1 (*) [16])((uint)uVar10 + 0x10 & 0xfffffff0) = auVar13;
-      uVar10 = uVar10 + 0x20;
-      uVar11 = uVar11 - 1;
-    } while (uVar11 != 0);
+      dataCacheBlockTouch(lVar4 + lVar11);
+      lVar4 = lVar4 + 0x80;
+      lVar5 = lVar5 + -1;
+    } while (lVar5 != 0);
   }
-  __restgprlr_25();
+  iVar7 = param_4 << 1;
+  if (iVar7 < 0x201) {
+    lVar4 = 0;
+  }
+  else {
+    iVar7 = 0x200;
+    lVar4 = 0x200;
+  }
+  lVar5 = 0;
+  if (0 < iVar7) {
+    lVar6 = (ulonglong)(iVar7 - 1U >> 7) + 1;
+    do {
+      dataCacheBlockTouch(lVar5 + lVar10);
+      lVar5 = lVar5 + 0x80;
+      lVar6 = lVar6 + -1;
+    } while (lVar6 != 0);
+  }
+  if (param_4 != 0) {
+    uVar2 = in_r9 + 0x20;
+    lVar5 = (((longlong)(int)param_4 - 1U & 0xffffffff) >> 1) + 1;
+    auVar35 = loadVectorLeftIndexed(ZEXT48(&stack0x00000000) + 0x34);
+    auVar35 = vectorSplatWord(auVar35,0);
+    do {
+      dataCacheBlockTouch(lVar9 + lVar11);
+      dataCacheBlockTouch(lVar4 + lVar10);
+      lVar6 = lVar11 + lVar1;
+      auVar34 = loadVectorLeftIndexed(lVar11);
+      auVar33 = loadVectorRightIndexed(lVar11 + 0x10);
+      uVar8 = (int)param_7->xyz + (uint)*(ushort *)lVar10;
+      auVar32 = loadVectorRightIndexed(lVar6 + 8);
+      uVar3 = (int)param_7->xyz + (uint)((ushort *)lVar10)[1];
+      auVar31 = loadVectorLeftIndexed(lVar11 + lVar1);
+      lVar10 = lVar10 + 4;
+      auVar16 = vectorUnpackD3Dtype(auVar34 | auVar33,8);
+      auVar30 = loadVectorRightIndexed(lVar6 + 0x10);
+      auVar29 = vectorShiftLeftDoubleByOctetImmediate(auVar32,auVar32,8);
+      auVar32 = vectorSplatWord(auVar34 | auVar33,2);
+      auVar15 = *(undefined1 (*) [16])(uVar8 + 0x20 & 0xfffffff0);
+      auVar28 = loadVectorRightIndexed(lVar11 + 8);
+      lVar11 = lVar6 + lVar1;
+      auVar33 = vectorMultiplyAddFloatingPoint
+                          (auVar16,(undefined1  [16])g_unpackMul101010.field0_0x0,
+                           (undefined1  [16])g_unpackAdd101010.field0_0x0);
+      auVar13 = *(undefined1 (*) [16])(uVar8 + 0x10 & 0xfffffff0);
+      auVar27 = vectorSplatWord(auVar31 | auVar30,2);
+      auVar16 = vectorUnpackD3Dtype(auVar32,8);
+      auVar14 = *(undefined1 (*) [16])(uVar3 + 0x20 & 0xfffffff0);
+      auVar32 = vectorUnpackD3Dtype(auVar31 | auVar30,8);
+      auVar26 = vectorShiftLeftDoubleByOctetImmediate(auVar28,auVar28,8);
+      auVar12 = *(undefined1 (*) [16])(uVar8 & 0xfffffff0);
+      auVar28 = vectorUnpackHighSignedByte(auVar31 | auVar29);
+      auVar29 = *(undefined1 (*) [16])(uVar3 & 0xfffffff0);
+      auVar16 = vectorMultiplyAddFloatingPoint
+                          (auVar16,(undefined1  [16])g_unpackMul101010.field0_0x0,
+                           (undefined1  [16])g_unpackAdd101010.field0_0x0);
+      auVar30 = *(undefined1 (*) [16])(uVar3 + 0x10 & 0xfffffff0);
+      auVar17 = vectorMultiplyAddFloatingPoint
+                          (auVar32,(undefined1  [16])g_unpackMul101010.field0_0x0,
+                           (undefined1  [16])g_unpackAdd101010.field0_0x0);
+      auVar31 = vectorConvertFromSignedFixedPointWord128(auVar28,0);
+      auVar32 = vectorUnpackD3Dtype(auVar27,8);
+      auVar27 = vectorUnpackHighSignedByte(auVar34 | auVar26);
+      auVar28 = vectorSplatWord(auVar33,2);
+      auVar26 = vectorMultiplyAddFloatingPoint
+                          (auVar32,(undefined1  [16])g_unpackMul101010.field0_0x0,
+                           (undefined1  [16])g_unpackAdd101010.field0_0x0);
+      auVar25 = vectorConvertFromSignedFixedPointWord128(auVar27,0);
+      auVar32 = vectorSplatWord(auVar33,1);
+      auVar27 = vectorMultiplyFloatingPoint(auVar28,auVar15);
+      auVar24 = vectorMultiplyFloatingPoint(auVar35,auVar31);
+      auVar23 = vectorSplatWord(auVar31,3);
+      auVar31 = vectorSplatWord(auVar16,2);
+      auVar19 = vectorSplatWord(auVar16,1);
+      auVar28 = vectorSplatWord(auVar16,0);
+      auVar22 = vectorSplatWord(auVar17,2);
+      auVar16 = vectorMultiplyFloatingPoint(auVar31,auVar15);
+      auVar18 = vectorSplatWord(auVar17,1);
+      auVar21 = vectorMultiplyFloatingPoint(auVar35,auVar25);
+      auVar31 = vectorMultiplyAddFloatingPoint(auVar32,auVar13,auVar27);
+      auVar20 = vectorSplatWord(auVar26,2);
+      auVar32 = vectorSplatWord(auVar24,2);
+      auVar27 = vectorSplatWord(auVar24,1);
+      auVar34 = vectorSplatWord(auVar26,1);
+      auVar20 = vectorMultiplyFloatingPoint(auVar20,auVar14);
+      auVar32 = vectorMultiplyAddFloatingPoint
+                          (auVar14,auVar32,*(undefined1 (*) [16])(uVar3 + 0x30 & 0xfffffff0));
+      auVar19 = vectorMultiplyAddFloatingPoint(auVar19,auVar13,auVar16);
+      auVar16 = vectorSplatWord(auVar24,0);
+      auVar27 = vectorMultiplyAddFloatingPoint(auVar27,auVar30,auVar32);
+      auVar32 = vectorMultiplyAddFloatingPoint(auVar28,auVar12,auVar19);
+      auVar19 = vectorMultiplyFloatingPoint(auVar22,auVar14);
+      auVar14 = vectorMultiplyAddFloatingPoint(auVar16,auVar29,auVar27);
+      auVar27 = vectorMultiplyAddFloatingPoint
+                          (auVar32,(undefined1  [16])g_packMul101010.field0_0x0,
+                           (undefined1  [16])g_packAdd.field0_0x0);
+      auVar16 = vectorSplatWord(auVar21,2);
+      auVar15 = vectorMultiplyAddFloatingPoint
+                          (auVar15,auVar16,*(undefined1 (*) [16])(uVar8 + 0x30 & 0xfffffff0));
+      auVar28 = vectorSplatWord(auVar21,1);
+      auVar34 = vectorMultiplyAddFloatingPoint(auVar34,auVar30,auVar20);
+      auVar16 = vectorSplatWord(auVar26,0);
+      auVar32 = vectorMultiplyAddFloatingPoint(auVar18,auVar30,auVar19);
+      auVar26 = vectorSplatWord(auVar33,0);
+      auVar33 = vectorSplatWord(auVar17,0);
+      auVar30 = vectorSplatWord(auVar21,0);
+      auVar17 = vectorPermute128(auVar14,auVar23,(undefined1  [16])g_XYZw.field0_0x0);
+      auVar14 = vectorMultiplyAddFloatingPoint(auVar26,auVar12,auVar31);
+      auVar26 = vectorSplatWord(auVar25,3);
+      auVar20 = vectorPermute128((undefined1  [16])g_zero.field0_0x0,auVar17,
+                                 (undefined1  [16])g_XYxy.field0_0x0);
+      auVar31 = vectorPermute128(auVar17,(undefined1  [16])g_zero.field0_0x0,
+                                 (undefined1  [16])g_ZWxy.field0_0x0);
+      auVar28 = vectorMultiplyAddFloatingPoint(auVar28,auVar13,auVar15);
+      auVar16 = vectorMultiplyAddFloatingPoint(auVar16,auVar29,auVar34);
+      auVar13 = vectorPackD3Dtype(auVar20,auVar27,9,3);
+      auVar33 = vectorMultiplyAddFloatingPoint(auVar33,auVar29,auVar32);
+      auVar32 = vectorMultiplyAddFloatingPoint
+                          (auVar14,(undefined1  [16])g_packMul101010.field0_0x0,
+                           (undefined1  [16])g_packAdd.field0_0x0);
+      auVar28 = vectorMultiplyAddFloatingPoint(auVar30,auVar12,auVar28);
+      auVar29 = vectorMultiplyAddFloatingPoint
+                          (auVar16,(undefined1  [16])g_packMul101010.field0_0x0,
+                           (undefined1  [16])g_packAdd.field0_0x0);
+      auVar16 = vectorMultiplyAddFloatingPoint
+                          (auVar33,(undefined1  [16])g_packMul101010.field0_0x0,
+                           (undefined1  [16])g_packAdd.field0_0x0);
+      auVar30 = vectorPackD3Dtype(auVar13,auVar32,9,2);
+      auVar32 = vectorPermute128(auVar28,auVar26,(undefined1  [16])g_XYZw.field0_0x0);
+      auVar33 = vectorPackD3Dtype(auVar31,auVar29,9,1);
+      *(undefined1 (*) [16])(uVar2 - 0x10 & 0xfffffff0) = auVar30;
+      auVar16 = vectorPackD3Dtype(auVar33,auVar16,9,0);
+      *(undefined1 (*) [16])(uVar2 - 0x20 & 0xfffffff0) = auVar32;
+      *(undefined1 (*) [16])(uVar2 & 0xfffffff0) = auVar16;
+      uVar2 = uVar2 + 0x30;
+      lVar5 = lVar5 + -1;
+    } while (lVar5 != 0);
+  }
   return;
 }
 
 
-// 8275E280  R_SkinXSurfaceWeight0Quantized  (gfx_d3d/r_model_skin.cpp:1686)
+// 8275E648  R_SkinXSurfaceWeight1Quantized  (gfx_d3d/r_model_skin.cpp:1738)
 
-void R_SkinXSurfaceWeight0Quantized
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
+
+void R_SkinXSurfaceWeight1Quantized
                (uchar *param_1,uint param_2,ushort *param_3,uint param_4,float param_5,
                DObjSkelMat *param_6,GfxQuantizedSkinnedVertexOut0 *param_7)
 
 {
-  uint uVar1;
+  ushort uVar1;
+  __vector4 _Var2;
+  __vector4 _Var3;
+  __vector4 _Var4;
+  __vector4 _Var5;
+  longlong lVar6;
+  uint uVar7;
+  uint in_r9;
+  longlong lVar8;
+  longlong lVar9;
+  uint uVar10;
+  uint uVar11;
+  int iVar13;
+  longlong lVar12;
+  longlong lVar14;
+  longlong lVar15;
+  ushort *puVar17;
+  longlong lVar16;
+  undefined1 auVar18 [16];
+  undefined1 auVar19 [16];
+  undefined1 auVar20 [16];
+  undefined1 auVar21 [16];
+  undefined1 auVar22 [16];
+  undefined1 auVar23 [16];
+  undefined1 auVar24 [16];
+  undefined1 auVar25 [16];
+  undefined1 auVar26 [16];
+  undefined1 auVar27 [16];
+  undefined1 auVar28 [16];
+  undefined1 auVar29 [16];
+  undefined1 auVar30 [16];
+  undefined1 auVar31 [16];
+  undefined1 auVar32 [16];
+  undefined1 auVar33 [16];
+  undefined1 auVar34 [16];
+  undefined1 auVar35 [16];
+  undefined1 auVar36 [16];
+  undefined1 auVar37 [16];
+  undefined1 auVar38 [16];
+  undefined1 auVar39 [16];
+  undefined1 auVar40 [16];
+  undefined1 auVar41 [16];
+  undefined1 auVar42 [16];
+  undefined1 auVar43 [16];
+  float fStack00000034;
+  uint local_a0;
+  
+  lVar16 = (longlong)(int)param_3;
+  lVar6 = (longlong)(int)param_2;
+  lVar15 = (longlong)(int)param_1;
+  fStack00000034 = param_5;
+  if (param_1 == (uchar *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_model_skin.cpp",
+                    0x6d8,0,"%s");
+  }
+  if (in_r9 == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_model_skin.cpp",
+                    0x6d9,0,"%s");
+  }
+  if ((in_r9 & 0xf) != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_model_skin.cpp",
+                    0x6da,0,"%s");
+  }
+  if (((uint)param_7 & 0xf) != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_model_skin.cpp",
+                    0x6db,0,"%s");
+  }
+  if ((param_4 & 1) != 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_model_skin.cpp",
+                    0x6dc,0,"%s");
+  }
+  iVar13 = param_2 * param_4;
+  lVar14 = 0x200;
+  if (iVar13 < 0x201) {
+    local_a0 = 0;
+  }
+  else {
+    iVar13 = 0x200;
+    local_a0 = 0x200;
+  }
+  lVar9 = 0;
+  if (0 < iVar13) {
+    lVar12 = (ulonglong)(iVar13 - 1U >> 7) + 1;
+    do {
+      dataCacheBlockTouch(lVar9 + lVar15);
+      lVar9 = lVar9 + 0x80;
+      lVar12 = lVar12 + -1;
+    } while (lVar12 != 0);
+  }
+  iVar13 = param_4 << 1;
+  if (iVar13 < 0x201) {
+    lVar14 = 0;
+  }
+  else {
+    iVar13 = 0x200;
+  }
+  lVar9 = 0;
+  if (0 < iVar13) {
+    lVar12 = (ulonglong)(iVar13 - 1U >> 7) + 1;
+    do {
+      dataCacheBlockTouch(lVar9 + lVar16);
+      lVar9 = lVar9 + 0x80;
+      lVar12 = lVar12 + -1;
+    } while (lVar12 != 0);
+  }
+  if (param_4 != 0) {
+    lVar12 = (((longlong)(int)param_4 - 1U & 0xffffffff) >> 1) + 1;
+    auVar43 = loadVectorLeftIndexed(ZEXT48(&stack0x00000000) + 0x34);
+    auVar43 = vectorSplatWord(auVar43,0);
+    uVar7 = in_r9 + 0x20;
+    lVar9 = lVar16 + 4;
+    do {
+      _Var5.field0_0x0 = g_ZWxy.field0_0x0;
+      _Var4.field0_0x0 = g_XYxy.field0_0x0;
+      _Var3.field0_0x0 = g_XYZw.field0_0x0;
+      _Var2.field0_0x0 = g_zero.field0_0x0;
+      dataCacheBlockTouch((ulonglong)local_a0 + lVar15);
+      dataCacheBlockTouch(lVar14 + lVar16);
+      auVar41 = loadVectorRightIndexed(lVar15 + 8);
+      auVar38 = loadVectorLeftIndexed(lVar15);
+      lVar8 = lVar15 + lVar6;
+      auVar37 = vectorShiftLeftDoubleByOctetImmediate(auVar41,auVar41,8);
+      auVar36 = loadVectorRightIndexed(lVar15 + 0x10);
+      puVar17 = (ushort *)lVar16;
+      auVar35 = loadVectorLeftIndexed(lVar15 + lVar6);
+      auVar34 = loadVectorRightIndexed(lVar8 + 8);
+      auVar41 = vectorUnpackD3Dtype(auVar38 | auVar36,8);
+      uVar10 = (int)param_7->xyz + (uint)*puVar17;
+      auVar33 = vectorSplatWord(auVar38 | auVar36,2);
+      auVar32 = loadVectorRightIndexed(lVar8 + 0x10);
+      auVar31 = vectorShiftLeftDoubleByOctetImmediate(auVar34,auVar34,8);
+      auVar34 = vectorUnpackHighSignedByte(auVar38 | auVar37);
+      uVar1 = puVar17[3];
+      auVar36 = vectorMultiplyAddFloatingPoint
+                          (auVar41,(undefined1  [16])g_unpackMul101010.field0_0x0,
+                           (undefined1  [16])g_unpackAdd101010.field0_0x0);
+      auVar37 = loadVectorLeftIndexed(lVar9);
+      auVar41 = vectorUnpackD3Dtype(auVar33,8);
+      auVar21 = *(undefined1 (*) [16])(uVar10 + 0x20 & 0xfffffff0);
+      auVar42 = vectorConvertFromSignedFixedPointWord128(auVar34,0);
+      auVar19 = *(undefined1 (*) [16])(uVar10 + 0x10 & 0xfffffff0);
+      auVar20 = *(undefined1 (*) [16])(uVar10 & 0xfffffff0);
+      uVar11 = (int)param_7->xyz + (uint)puVar17[1];
+      auVar34 = vectorMultiplyAddFloatingPoint
+                          (auVar41,(undefined1  [16])g_unpackMul101010.field0_0x0,
+                           (undefined1  [16])g_unpackAdd101010.field0_0x0);
+      auVar30 = vectorSplatWord(auVar35 | auVar32,2);
+      auVar31 = vectorUnpackHighSignedByte(auVar35 | auVar31);
+      auVar18 = *(undefined1 (*) [16])((int)param_7->xyz + (uint)uVar1 & 0xfffffff0);
+      auVar41 = vectorPermute128(auVar37,(undefined1  [16])g_zero.field0_0x0,
+                                 (undefined1  [16])g_shortBoneWeightPerm.field0_0x0);
+      auVar39 = vectorConvertFromSignedFixedPointWord128(auVar31,0);
+      auVar38 = *(undefined1 (*) [16])((int)param_7->xyz + uVar1 + 0x10 & 0xfffffff0);
+      auVar29 = vectorConvertFromUnsignedFixedPointWord128(auVar41,0x10);
+      auVar28 = vectorMultiplyFloatingPoint(auVar43,auVar42);
+      auVar37 = vectorSplatWord(auVar36,2);
+      auVar41 = auVar34 >> 0x60;
+      auVar31 = vectorSplatWord(auVar34,2);
+      auVar34 = auVar34 >> 0x40;
+      auVar22 = vectorMultiplyFloatingPoint(auVar37,auVar21);
+      auVar24 = vectorSplatWord(auVar36,1);
+      auVar25 = vectorSplatWord(auVar36,0);
+      auVar36 = vectorMultiplyFloatingPoint(auVar31,auVar21);
+      auVar27 = vectorMultiplyFloatingPoint(auVar43,auVar39);
+      auVar33 = vectorSplatWord(auVar28,2);
+      auVar37 = vectorSplatWord(auVar28,1);
+      auVar31 = vectorSplatWord(auVar28,0);
+      auVar21 = vectorMultiplyAddFloatingPoint
+                          (auVar21,auVar33,*(undefined1 (*) [16])(uVar10 + 0x30 & 0xfffffff0));
+      auVar22 = vectorMultiplyAddFloatingPoint(auVar24,auVar19,auVar22);
+      auVar36 = vectorMultiplyAddFloatingPoint
+                          (auVar34 & (undefined1  [16])0xffffffff | auVar34 << 0x20 |
+                           (auVar34 & (undefined1  [16])0xffffffff) << 0x40 | auVar34 << 0x60,
+                           auVar19,auVar36);
+      auVar34 = vectorMultiplyAddFloatingPoint(auVar37,auVar19,auVar21);
+      auVar19 = vectorSplatWord(auVar27,1);
+      auVar22 = vectorMultiplyAddFloatingPoint(auVar25,auVar20,auVar22);
+      auVar24 = vectorMultiplyAddFloatingPoint
+                          (auVar41 & (undefined1  [16])0xffffffff | auVar41 << 0x20 |
+                           auVar41 << 0x40 | auVar41 << 0x60,auVar20,auVar36);
+      auVar41 = vectorUnpackD3Dtype(auVar30,8);
+      uVar10 = (int)param_7->xyz + (uint)puVar17[4];
+      auVar23 = vectorMultiplyAddFloatingPoint
+                          (auVar41,(undefined1  [16])g_unpackMul101010.field0_0x0,
+                           (undefined1  [16])g_unpackAdd101010.field0_0x0);
+      auVar21 = vectorMultiplyAddFloatingPoint(auVar31,auVar20,auVar34);
+      auVar41 = vectorUnpackD3Dtype(auVar35 | auVar32,8);
+      auVar20 = vectorSplatWord(auVar27,2);
+      auVar34 = vectorMultiplyAddFloatingPoint
+                          (auVar41,(undefined1  [16])g_unpackMul101010.field0_0x0,
+                           (undefined1  [16])g_unpackAdd101010.field0_0x0);
+      auVar36 = *(undefined1 (*) [16])((int)param_7[1].xyz + uVar1 + 8 & 0xfffffff0);
+      auVar32 = vectorMultiplyAddFloatingPoint
+                          (*(undefined1 (*) [16])(uVar11 + 0x20 & 0xfffffff0),auVar33,
+                           *(undefined1 (*) [16])(uVar11 + 0x30 & 0xfffffff0));
+      auVar42 = vectorSplatWord(auVar42,3);
+      auVar33 = vectorSplatWord(auVar34,2);
+      auVar26 = vectorSplatWord(auVar39,3);
+      auVar41 = auVar34 >> 0x60;
+      auVar24 = vectorMultiplyAddFloatingPoint
+                          (auVar24,(undefined1  [16])g_packMul101010.field0_0x0,
+                           (undefined1  [16])g_packAdd.field0_0x0);
+      auVar39 = loadVectorLeftIndexed(lVar9 + 6);
+      auVar40 = vectorSplatWord(auVar23,2);
+      auVar28 = vectorMultiplyFloatingPoint(auVar33,auVar36);
+      auVar22 = vectorMultiplyAddFloatingPoint
+                          (auVar22,(undefined1  [16])g_packMul101010.field0_0x0,
+                           (undefined1  [16])g_packAdd.field0_0x0);
+      auVar34 = auVar34 >> 0x40;
+      auVar30 = vectorSplatWord(auVar23,1);
+      auVar25 = vectorMultiplyAddFloatingPoint
+                          (auVar36,auVar20,
+                           *(undefined1 (*) [16])((int)param_7[2].xyz + (uint)uVar1 & 0xfffffff0));
+      auVar35 = vectorSplatWord(auVar23,0);
+      auVar33 = vectorSplatWord(auVar27,0);
+      auVar23 = vectorSubtractFloatingPoint128((undefined1  [16])g_one.field0_0x0,auVar29);
+      auVar39 = vectorPermute128(auVar39,(undefined1  [16])g_zero.field0_0x0,
+                                 (undefined1  [16])g_shortBoneWeightPerm.field0_0x0);
+      lVar15 = lVar8 + lVar6;
+      auVar37 = vectorMultiplyAddFloatingPoint
+                          (auVar37,*(undefined1 (*) [16])(uVar11 + 0x10 & 0xfffffff0),auVar32);
+      auVar32 = vectorMultiplyFloatingPoint(auVar40,auVar36);
+      auVar39 = vectorConvertFromUnsignedFixedPointWord128(auVar39,0x10);
+      lVar16 = lVar16 + 0xc;
+      lVar9 = lVar9 + 0xc;
+      auVar28 = vectorMultiplyAddFloatingPoint
+                          (auVar34 & (undefined1  [16])0xffffffff | auVar34 << 0x20 |
+                           (auVar34 & (undefined1  [16])0xffffffff) << 0x40 | auVar34 << 0x60,
+                           auVar38,auVar28);
+      auVar36 = vectorMultiplyAddFloatingPoint
+                          (auVar31,*(undefined1 (*) [16])(uVar11 & 0xfffffff0),auVar37);
+      auVar37 = vectorMultiplyAddFloatingPoint(auVar30,auVar38,auVar32);
+      auVar20 = vectorMultiplyAddFloatingPoint
+                          (*(undefined1 (*) [16])(uVar10 + 0x20 & 0xfffffff0),auVar20,
+                           *(undefined1 (*) [16])(uVar10 + 0x30 & 0xfffffff0));
+      auVar38 = vectorMultiplyAddFloatingPoint(auVar19,auVar38,auVar25);
+      auVar34 = vectorSubtractFloatingPoint128((undefined1  [16])g_one.field0_0x0,auVar39);
+      auVar31 = vectorMultiplyAddFloatingPoint
+                          (auVar41 & (undefined1  [16])0xffffffff | auVar41 << 0x20 |
+                           auVar41 << 0x40 | auVar41 << 0x60,auVar18,auVar28);
+      auVar41 = vectorMultiplyFloatingPoint(auVar36,auVar29);
+      auVar36 = vectorMultiplyAddFloatingPoint(auVar35,auVar18,auVar37);
+      auVar37 = vectorMultiplyAddFloatingPoint
+                          (auVar19,*(undefined1 (*) [16])(uVar10 + 0x10 & 0xfffffff0),auVar20);
+      auVar18 = vectorMultiplyAddFloatingPoint(auVar33,auVar18,auVar38);
+      auVar38 = vectorMultiplyAddFloatingPoint
+                          (auVar31,(undefined1  [16])g_packMul101010.field0_0x0,
+                           (undefined1  [16])g_packAdd.field0_0x0);
+      auVar31 = vectorMultiplyAddFloatingPoint(auVar23,auVar21,auVar41);
+      auVar36 = vectorMultiplyAddFloatingPoint
+                          (auVar36,(undefined1  [16])g_packMul101010.field0_0x0,
+                           (undefined1  [16])g_packAdd.field0_0x0);
+      auVar41 = vectorMultiplyAddFloatingPoint
+                          (auVar33,*(undefined1 (*) [16])(uVar10 & 0xfffffff0),auVar37);
+      auVar31 = vectorPermute128(auVar31,auVar42,(undefined1  [16])g_XYZw.field0_0x0);
+      auVar41 = vectorMultiplyFloatingPoint(auVar41,auVar39);
+      *(undefined1 (*) [16])(uVar7 - 0x20 & 0xfffffff0) = auVar31;
+      auVar41 = vectorMultiplyAddFloatingPoint(auVar34,auVar18,auVar41);
+      auVar41 = vectorPermute128(auVar41,auVar26,(undefined1  [16])_Var3.field0_0x0);
+      auVar34 = vectorPermute128((undefined1  [16])_Var2.field0_0x0,auVar41,
+                                 (undefined1  [16])_Var4.field0_0x0);
+      auVar41 = vectorPermute128(auVar41,(undefined1  [16])_Var2.field0_0x0,
+                                 (undefined1  [16])_Var5.field0_0x0);
+      auVar34 = vectorPackD3Dtype(auVar34,auVar24,9,3);
+      auVar41 = vectorPackD3Dtype(auVar41,auVar36,9,1);
+      auVar34 = vectorPackD3Dtype(auVar34,auVar22,9,2);
+      auVar41 = vectorPackD3Dtype(auVar41,auVar38,9,0);
+      *(undefined1 (*) [16])(uVar7 - 0x10 & 0xfffffff0) = auVar34;
+      *(undefined1 (*) [16])(uVar7 & 0xfffffff0) = auVar41;
+      uVar7 = uVar7 + 0x30;
+      lVar12 = lVar12 + -1;
+    } while (lVar12 != 0);
+  }
+  return;
+}
+
+
+// 8275EAB0  R_SkinXSurfaceWeight2Quantized  (gfx_d3d/r_model_skin.cpp:1814)
+
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
+
+void R_SkinXSurfaceWeight2Quantized
+               (uchar *param_1,uint param_2,ushort *param_3,uint param_4,float param_5,
+               DObjSkelMat *param_6,GfxQuantizedSkinnedVertexOut0 *param_7)
+
+{
+  longlong lVar1;
   uint uVar2;
-  ulonglong uVar3;
-  longlong lVar4;
-  ulonglong uVar5;
-  ulonglong uVar6;
-  ulonglong in_r9;
-  longlong lVar7;
+  longlong lVar3;
+  uint uVar4;
+  uint uVar5;
+  uint uVar6;
+  uint uVar7;
+  uint in_r9;
   longlong lVar8;
   longlong lVar9;
   int iVar11;
   longlong lVar10;
   longlong lVar12;
+  ushort *puVar14;
   longlong lVar13;
-  double extraout_f1;
-  undefined1 auVar14 [16];
   undefined1 auVar15 [16];
   undefined1 auVar16 [16];
   undefined1 auVar17 [16];
@@ -1135,559 +1632,26 @@ void R_SkinXSurfaceWeight0Quantized
   undefined1 auVar35 [16];
   undefined1 auVar36 [16];
   undefined1 auVar37 [16];
-  float fStack00000034;
-  
-  uVar6 = (ulonglong)(int)param_7;
-  uVar5 = (ulonglong)(int)param_4;
-  lVar13 = (longlong)(int)param_3;
-  lVar4 = (longlong)(int)param_2;
-  uVar3 = __savegprlr_17((double)param_5,param_1);
-  fStack00000034 = (float)extraout_f1;
-  if ((uVar3 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_model_skin.cpp",
-                    0x6a0,0,"%s");
-  }
-  if ((in_r9 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_model_skin.cpp",
-                    0x6a1,0,"%s");
-  }
-  if ((in_r9 & 0xf) != 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_model_skin.cpp",
-                    0x6a2,0,"%s");
-  }
-  if ((uVar6 & 0xf) != 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_model_skin.cpp",
-                    0x6a3,0,"%s");
-  }
-  if ((uVar5 & 1) != 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_model_skin.cpp",
-                    0x6a4,0,"%s");
-  }
-  iVar11 = (int)lVar4 * (int)uVar5;
-  if (iVar11 < 0x201) {
-    lVar12 = 0;
-  }
-  else {
-    iVar11 = 0x200;
-    lVar12 = 0x200;
-  }
-  lVar7 = 0;
-  if (0 < iVar11) {
-    lVar10 = (ulonglong)(iVar11 - 1U >> 7) + 1;
-    do {
-      dataCacheBlockTouch(lVar7 + uVar3);
-      lVar7 = lVar7 + 0x80;
-      lVar10 = lVar10 + -1;
-    } while (lVar10 != 0);
-  }
-  lVar7 = (uVar5 & 0x7fffffff) << 1;
-  if ((int)lVar7 < 0x201) {
-    lVar10 = 0;
-  }
-  else {
-    lVar7 = 0x200;
-    lVar10 = 0x200;
-  }
-  lVar8 = 0;
-  if (0 < (int)lVar7) {
-    lVar7 = ((lVar7 - 1U & 0xffffffff) >> 7) + 1;
-    do {
-      dataCacheBlockTouch(lVar8 + lVar13);
-      lVar8 = lVar8 + 0x80;
-      lVar7 = lVar7 + -1;
-    } while (lVar7 != 0);
-  }
-  if ((uVar5 & 0xffffffff) != 0) {
-    lVar7 = in_r9 + 0x20;
-    lVar8 = ((uVar5 - 1 & 0xffffffff) >> 1) + 1;
-    auVar37 = loadVectorLeftIndexed(ZEXT48(&stack0x00000000) + 0x34);
-    auVar37 = vectorSplatWord(auVar37,0);
-    do {
-      dataCacheBlockTouch(lVar12 + uVar3);
-      dataCacheBlockTouch(lVar10 + lVar13);
-      lVar9 = uVar3 + lVar4;
-      auVar36 = loadVectorLeftIndexed(uVar3);
-      auVar35 = loadVectorRightIndexed(uVar3 + 0x10);
-      uVar1 = (uint)*(ushort *)lVar13 + (int)uVar6;
-      auVar34 = loadVectorRightIndexed(lVar9 + 8);
-      uVar2 = (uint)((ushort *)lVar13)[1] + (int)uVar6;
-      auVar33 = loadVectorLeftIndexed(uVar3 + lVar4);
-      lVar13 = lVar13 + 4;
-      auVar18 = vectorUnpackD3Dtype(auVar36 | auVar35,8);
-      auVar32 = loadVectorRightIndexed(lVar9 + 0x10);
-      auVar31 = vectorShiftLeftDoubleByOctetImmediate(auVar34,auVar34,8);
-      auVar34 = vectorSplatWord(auVar36 | auVar35,2);
-      auVar17 = *(undefined1 (*) [16])(uVar1 + 0x20 & 0xfffffff0);
-      auVar30 = loadVectorRightIndexed(uVar3 + 8);
-      uVar3 = lVar9 + lVar4;
-      auVar35 = vectorMultiplyAddFloatingPoint
-                          (auVar18,(undefined1  [16])g_unpackMul101010.field0_0x0,
-                           (undefined1  [16])g_unpackAdd101010.field0_0x0);
-      auVar15 = *(undefined1 (*) [16])(uVar1 + 0x10 & 0xfffffff0);
-      auVar29 = vectorSplatWord(auVar33 | auVar32,2);
-      auVar18 = vectorUnpackD3Dtype(auVar34,8);
-      auVar16 = *(undefined1 (*) [16])(uVar2 + 0x20 & 0xfffffff0);
-      auVar34 = vectorUnpackD3Dtype(auVar33 | auVar32,8);
-      auVar28 = vectorShiftLeftDoubleByOctetImmediate(auVar30,auVar30,8);
-      auVar14 = *(undefined1 (*) [16])(uVar1 & 0xfffffff0);
-      auVar30 = vectorUnpackHighSignedByte(auVar33 | auVar31);
-      auVar31 = *(undefined1 (*) [16])(uVar2 & 0xfffffff0);
-      auVar18 = vectorMultiplyAddFloatingPoint
-                          (auVar18,(undefined1  [16])g_unpackMul101010.field0_0x0,
-                           (undefined1  [16])g_unpackAdd101010.field0_0x0);
-      auVar32 = *(undefined1 (*) [16])(uVar2 + 0x10 & 0xfffffff0);
-      auVar19 = vectorMultiplyAddFloatingPoint
-                          (auVar34,(undefined1  [16])g_unpackMul101010.field0_0x0,
-                           (undefined1  [16])g_unpackAdd101010.field0_0x0);
-      auVar33 = vectorConvertFromSignedFixedPointWord128(auVar30,0);
-      auVar34 = vectorUnpackD3Dtype(auVar29,8);
-      auVar29 = vectorUnpackHighSignedByte(auVar36 | auVar28);
-      auVar30 = vectorSplatWord(auVar35,2);
-      auVar28 = vectorMultiplyAddFloatingPoint
-                          (auVar34,(undefined1  [16])g_unpackMul101010.field0_0x0,
-                           (undefined1  [16])g_unpackAdd101010.field0_0x0);
-      auVar27 = vectorConvertFromSignedFixedPointWord128(auVar29,0);
-      auVar34 = vectorSplatWord(auVar35,1);
-      auVar29 = vectorMultiplyFloatingPoint(auVar30,auVar17);
-      auVar26 = vectorMultiplyFloatingPoint(auVar37,auVar33);
-      auVar25 = vectorSplatWord(auVar33,3);
-      auVar33 = vectorSplatWord(auVar18,2);
-      auVar21 = vectorSplatWord(auVar18,1);
-      auVar30 = vectorSplatWord(auVar18,0);
-      auVar24 = vectorSplatWord(auVar19,2);
-      auVar18 = vectorMultiplyFloatingPoint(auVar33,auVar17);
-      auVar20 = vectorSplatWord(auVar19,1);
-      auVar23 = vectorMultiplyFloatingPoint(auVar37,auVar27);
-      auVar33 = vectorMultiplyAddFloatingPoint(auVar34,auVar15,auVar29);
-      auVar22 = vectorSplatWord(auVar28,2);
-      auVar34 = vectorSplatWord(auVar26,2);
-      auVar29 = vectorSplatWord(auVar26,1);
-      auVar36 = vectorSplatWord(auVar28,1);
-      auVar22 = vectorMultiplyFloatingPoint(auVar22,auVar16);
-      auVar34 = vectorMultiplyAddFloatingPoint
-                          (auVar16,auVar34,*(undefined1 (*) [16])(uVar2 + 0x30 & 0xfffffff0));
-      auVar21 = vectorMultiplyAddFloatingPoint(auVar21,auVar15,auVar18);
-      auVar18 = vectorSplatWord(auVar26,0);
-      auVar29 = vectorMultiplyAddFloatingPoint(auVar29,auVar32,auVar34);
-      auVar34 = vectorMultiplyAddFloatingPoint(auVar30,auVar14,auVar21);
-      auVar21 = vectorMultiplyFloatingPoint(auVar24,auVar16);
-      auVar16 = vectorMultiplyAddFloatingPoint(auVar18,auVar31,auVar29);
-      auVar29 = vectorMultiplyAddFloatingPoint
-                          (auVar34,(undefined1  [16])g_packMul101010.field0_0x0,
-                           (undefined1  [16])g_packAdd.field0_0x0);
-      auVar18 = vectorSplatWord(auVar23,2);
-      auVar17 = vectorMultiplyAddFloatingPoint
-                          (auVar17,auVar18,*(undefined1 (*) [16])(uVar1 + 0x30 & 0xfffffff0));
-      auVar30 = vectorSplatWord(auVar23,1);
-      auVar36 = vectorMultiplyAddFloatingPoint(auVar36,auVar32,auVar22);
-      auVar18 = vectorSplatWord(auVar28,0);
-      auVar34 = vectorMultiplyAddFloatingPoint(auVar20,auVar32,auVar21);
-      auVar28 = vectorSplatWord(auVar35,0);
-      auVar35 = vectorSplatWord(auVar19,0);
-      auVar32 = vectorSplatWord(auVar23,0);
-      auVar19 = vectorPermute128(auVar16,auVar25,(undefined1  [16])g_XYZw.field0_0x0);
-      auVar16 = vectorMultiplyAddFloatingPoint(auVar28,auVar14,auVar33);
-      auVar28 = vectorSplatWord(auVar27,3);
-      auVar22 = vectorPermute128((undefined1  [16])g_zero.field0_0x0,auVar19,
-                                 (undefined1  [16])g_XYxy.field0_0x0);
-      auVar33 = vectorPermute128(auVar19,(undefined1  [16])g_zero.field0_0x0,
-                                 (undefined1  [16])g_ZWxy.field0_0x0);
-      auVar30 = vectorMultiplyAddFloatingPoint(auVar30,auVar15,auVar17);
-      auVar18 = vectorMultiplyAddFloatingPoint(auVar18,auVar31,auVar36);
-      auVar15 = vectorPackD3Dtype(auVar22,auVar29,9,3);
-      auVar35 = vectorMultiplyAddFloatingPoint(auVar35,auVar31,auVar34);
-      auVar34 = vectorMultiplyAddFloatingPoint
-                          (auVar16,(undefined1  [16])g_packMul101010.field0_0x0,
-                           (undefined1  [16])g_packAdd.field0_0x0);
-      auVar30 = vectorMultiplyAddFloatingPoint(auVar32,auVar14,auVar30);
-      auVar31 = vectorMultiplyAddFloatingPoint
-                          (auVar18,(undefined1  [16])g_packMul101010.field0_0x0,
-                           (undefined1  [16])g_packAdd.field0_0x0);
-      auVar18 = vectorMultiplyAddFloatingPoint
-                          (auVar35,(undefined1  [16])g_packMul101010.field0_0x0,
-                           (undefined1  [16])g_packAdd.field0_0x0);
-      auVar32 = vectorPackD3Dtype(auVar15,auVar34,9,2);
-      auVar34 = vectorPermute128(auVar30,auVar28,(undefined1  [16])g_XYZw.field0_0x0);
-      auVar35 = vectorPackD3Dtype(auVar33,auVar31,9,1);
-      uVar1 = (uint)lVar7;
-      *(undefined1 (*) [16])(uVar1 - 0x10 & 0xfffffff0) = auVar32;
-      auVar18 = vectorPackD3Dtype(auVar35,auVar18,9,0);
-      *(undefined1 (*) [16])(uVar1 - 0x20 & 0xfffffff0) = auVar34;
-      *(undefined1 (*) [16])(uVar1 & 0xfffffff0) = auVar18;
-      lVar7 = lVar7 + 0x30;
-      lVar8 = lVar8 + -1;
-    } while (lVar8 != 0);
-  }
-  __restgprlr_17();
-  return;
-}
-
-
-// 8275E648  R_SkinXSurfaceWeight1Quantized  (gfx_d3d/r_model_skin.cpp:1738)
-
-void R_SkinXSurfaceWeight1Quantized
-               (uchar *param_1,uint param_2,ushort *param_3,uint param_4,float param_5,
-               DObjSkelMat *param_6,GfxQuantizedSkinnedVertexOut0 *param_7)
-
-{
-  uint uVar1;
-  uint uVar2;
-  int iVar3;
-  __vector4 _Var4;
-  __vector4 _Var5;
-  __vector4 _Var6;
-  __vector4 _Var7;
-  longlong lVar8;
-  ulonglong uVar9;
-  ulonglong uVar10;
-  ulonglong in_r9;
-  longlong lVar11;
-  longlong lVar12;
-  int iVar15;
-  longlong lVar13;
-  longlong lVar14;
-  longlong lVar16;
-  ulonglong uVar17;
-  ushort *puVar19;
-  longlong lVar18;
-  double dVar20;
-  undefined1 auVar21 [16];
-  undefined1 auVar22 [16];
-  undefined1 auVar23 [16];
-  undefined1 auVar24 [16];
-  undefined1 auVar25 [16];
-  undefined1 auVar26 [16];
-  undefined1 auVar27 [16];
-  undefined1 auVar28 [16];
-  undefined1 auVar29 [16];
-  undefined1 auVar30 [16];
-  undefined1 auVar31 [16];
-  undefined1 auVar32 [16];
-  undefined1 auVar33 [16];
-  undefined1 auVar34 [16];
-  undefined1 auVar35 [16];
-  undefined1 auVar36 [16];
-  undefined1 auVar37 [16];
   undefined1 auVar38 [16];
   undefined1 auVar39 [16];
   undefined1 auVar40 [16];
   undefined1 auVar41 [16];
   undefined1 auVar42 [16];
   undefined1 auVar43 [16];
-  undefined1 auVar44 [16];
-  undefined1 auVar45 [16];
-  undefined1 auVar46 [16];
-  float fStack00000034;
-  uint local_a0;
-  
-  dVar20 = (double)param_5;
-  uVar10 = (ulonglong)(int)param_7;
-  uVar9 = (ulonglong)(int)param_4;
-  lVar18 = (longlong)(int)param_3;
-  lVar8 = (longlong)(int)param_2;
-  uVar17 = (ulonglong)(int)param_1;
-  __savegprlr();
-  fStack00000034 = (float)dVar20;
-  if ((uVar17 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_model_skin.cpp",
-                    0x6d8,0,"%s");
-  }
-  if ((in_r9 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_model_skin.cpp",
-                    0x6d9,0,"%s");
-  }
-  if ((in_r9 & 0xf) != 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_model_skin.cpp",
-                    0x6da,0,"%s");
-  }
-  if ((uVar10 & 0xf) != 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_model_skin.cpp",
-                    0x6db,0,"%s");
-  }
-  if ((uVar9 & 1) != 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_model_skin.cpp",
-                    0x6dc,0,"%s");
-  }
-  iVar15 = (int)lVar8 * (int)uVar9;
-  lVar16 = 0x200;
-  if (iVar15 < 0x201) {
-    local_a0 = 0;
-  }
-  else {
-    iVar15 = 0x200;
-    local_a0 = 0x200;
-  }
-  lVar12 = 0;
-  if (0 < iVar15) {
-    lVar13 = (ulonglong)(iVar15 - 1U >> 7) + 1;
-    do {
-      dataCacheBlockTouch(lVar12 + uVar17);
-      lVar12 = lVar12 + 0x80;
-      lVar13 = lVar13 + -1;
-    } while (lVar13 != 0);
-  }
-  lVar12 = (uVar9 & 0x7fffffff) << 1;
-  if ((int)lVar12 < 0x201) {
-    lVar16 = 0;
-  }
-  else {
-    lVar12 = 0x200;
-  }
-  lVar13 = 0;
-  if (0 < (int)lVar12) {
-    lVar12 = ((lVar12 - 1U & 0xffffffff) >> 7) + 1;
-    do {
-      dataCacheBlockTouch(lVar13 + lVar18);
-      lVar13 = lVar13 + 0x80;
-      lVar12 = lVar12 + -1;
-    } while (lVar12 != 0);
-  }
-  if ((uVar9 & 0xffffffff) != 0) {
-    lVar14 = ((uVar9 - 1 & 0xffffffff) >> 1) + 1;
-    auVar46 = loadVectorLeftIndexed(ZEXT48(&stack0x00000000) + 0x34);
-    auVar46 = vectorSplatWord(auVar46,0);
-    lVar13 = in_r9 + 0x20;
-    lVar12 = lVar18 + 4;
-    do {
-      _Var7.field0_0x0 = g_ZWxy.field0_0x0;
-      _Var6.field0_0x0 = g_XYxy.field0_0x0;
-      _Var5.field0_0x0 = g_XYZw.field0_0x0;
-      _Var4.field0_0x0 = g_zero.field0_0x0;
-      dataCacheBlockTouch(local_a0 + uVar17);
-      dataCacheBlockTouch(lVar16 + lVar18);
-      auVar44 = loadVectorRightIndexed(uVar17 + 8);
-      auVar41 = loadVectorLeftIndexed(uVar17);
-      lVar11 = uVar17 + lVar8;
-      auVar40 = vectorShiftLeftDoubleByOctetImmediate(auVar44,auVar44,8);
-      auVar39 = loadVectorRightIndexed(uVar17 + 0x10);
-      puVar19 = (ushort *)lVar18;
-      auVar38 = loadVectorLeftIndexed(uVar17 + lVar8);
-      auVar37 = loadVectorRightIndexed(lVar11 + 8);
-      auVar44 = vectorUnpackD3Dtype(auVar41 | auVar39,8);
-      iVar3 = (int)uVar10;
-      uVar1 = (uint)*puVar19 + iVar3;
-      auVar36 = vectorSplatWord(auVar41 | auVar39,2);
-      auVar35 = loadVectorRightIndexed(lVar11 + 0x10);
-      auVar34 = vectorShiftLeftDoubleByOctetImmediate(auVar37,auVar37,8);
-      auVar37 = vectorUnpackHighSignedByte(auVar41 | auVar40);
-      auVar39 = vectorMultiplyAddFloatingPoint
-                          (auVar44,(undefined1  [16])g_unpackMul101010.field0_0x0,
-                           (undefined1  [16])g_unpackAdd101010.field0_0x0);
-      auVar40 = loadVectorLeftIndexed(lVar12);
-      auVar44 = vectorUnpackD3Dtype(auVar36,8);
-      auVar24 = *(undefined1 (*) [16])(uVar1 + 0x20 & 0xfffffff0);
-      auVar45 = vectorConvertFromSignedFixedPointWord128(auVar37,0);
-      auVar22 = *(undefined1 (*) [16])(uVar1 + 0x10 & 0xfffffff0);
-      auVar23 = *(undefined1 (*) [16])(uVar1 & 0xfffffff0);
-      uVar2 = (uint)puVar19[1] + iVar3;
-      auVar37 = vectorMultiplyAddFloatingPoint
-                          (auVar44,(undefined1  [16])g_unpackMul101010.field0_0x0,
-                           (undefined1  [16])g_unpackAdd101010.field0_0x0);
-      auVar33 = vectorSplatWord(auVar38 | auVar35,2);
-      auVar34 = vectorUnpackHighSignedByte(auVar38 | auVar34);
-      iVar15 = (uint)puVar19[3] + iVar3;
-      auVar21 = *(undefined1 (*) [16])((uint)puVar19[3] + iVar3 & 0xfffffff0);
-      auVar44 = vectorPermute128(auVar40,(undefined1  [16])g_zero.field0_0x0,
-                                 (undefined1  [16])g_shortBoneWeightPerm.field0_0x0);
-      auVar42 = vectorConvertFromSignedFixedPointWord128(auVar34,0);
-      auVar41 = *(undefined1 (*) [16])(iVar15 + 0x10U & 0xfffffff0);
-      auVar32 = vectorConvertFromUnsignedFixedPointWord128(auVar44,0x10);
-      auVar31 = vectorMultiplyFloatingPoint(auVar46,auVar45);
-      auVar40 = vectorSplatWord(auVar39,2);
-      auVar44 = auVar37 >> 0x60;
-      auVar34 = vectorSplatWord(auVar37,2);
-      auVar37 = auVar37 >> 0x40;
-      auVar25 = vectorMultiplyFloatingPoint(auVar40,auVar24);
-      auVar27 = vectorSplatWord(auVar39,1);
-      auVar28 = vectorSplatWord(auVar39,0);
-      auVar39 = vectorMultiplyFloatingPoint(auVar34,auVar24);
-      auVar30 = vectorMultiplyFloatingPoint(auVar46,auVar42);
-      auVar36 = vectorSplatWord(auVar31,2);
-      auVar40 = vectorSplatWord(auVar31,1);
-      auVar34 = vectorSplatWord(auVar31,0);
-      auVar24 = vectorMultiplyAddFloatingPoint
-                          (auVar24,auVar36,*(undefined1 (*) [16])(uVar1 + 0x30 & 0xfffffff0));
-      auVar25 = vectorMultiplyAddFloatingPoint(auVar27,auVar22,auVar25);
-      auVar39 = vectorMultiplyAddFloatingPoint
-                          (auVar37 & (undefined1  [16])0xffffffff | auVar37 << 0x20 |
-                           (auVar37 & (undefined1  [16])0xffffffff) << 0x40 | auVar37 << 0x60,
-                           auVar22,auVar39);
-      auVar37 = vectorMultiplyAddFloatingPoint(auVar40,auVar22,auVar24);
-      auVar22 = vectorSplatWord(auVar30,1);
-      auVar25 = vectorMultiplyAddFloatingPoint(auVar28,auVar23,auVar25);
-      auVar27 = vectorMultiplyAddFloatingPoint
-                          (auVar44 & (undefined1  [16])0xffffffff | auVar44 << 0x20 |
-                           auVar44 << 0x40 | auVar44 << 0x60,auVar23,auVar39);
-      auVar44 = vectorUnpackD3Dtype(auVar33,8);
-      uVar1 = (uint)puVar19[4] + iVar3;
-      auVar26 = vectorMultiplyAddFloatingPoint
-                          (auVar44,(undefined1  [16])g_unpackMul101010.field0_0x0,
-                           (undefined1  [16])g_unpackAdd101010.field0_0x0);
-      auVar24 = vectorMultiplyAddFloatingPoint(auVar34,auVar23,auVar37);
-      auVar44 = vectorUnpackD3Dtype(auVar38 | auVar35,8);
-      auVar23 = vectorSplatWord(auVar30,2);
-      auVar37 = vectorMultiplyAddFloatingPoint
-                          (auVar44,(undefined1  [16])g_unpackMul101010.field0_0x0,
-                           (undefined1  [16])g_unpackAdd101010.field0_0x0);
-      auVar39 = *(undefined1 (*) [16])(iVar15 + 0x20U & 0xfffffff0);
-      auVar35 = vectorMultiplyAddFloatingPoint
-                          (*(undefined1 (*) [16])(uVar2 + 0x20 & 0xfffffff0),auVar36,
-                           *(undefined1 (*) [16])(uVar2 + 0x30 & 0xfffffff0));
-      auVar45 = vectorSplatWord(auVar45,3);
-      auVar36 = vectorSplatWord(auVar37,2);
-      auVar29 = vectorSplatWord(auVar42,3);
-      auVar44 = auVar37 >> 0x60;
-      auVar27 = vectorMultiplyAddFloatingPoint
-                          (auVar27,(undefined1  [16])g_packMul101010.field0_0x0,
-                           (undefined1  [16])g_packAdd.field0_0x0);
-      auVar42 = loadVectorLeftIndexed(lVar12 + 6);
-      auVar43 = vectorSplatWord(auVar26,2);
-      auVar31 = vectorMultiplyFloatingPoint(auVar36,auVar39);
-      auVar25 = vectorMultiplyAddFloatingPoint
-                          (auVar25,(undefined1  [16])g_packMul101010.field0_0x0,
-                           (undefined1  [16])g_packAdd.field0_0x0);
-      auVar37 = auVar37 >> 0x40;
-      auVar33 = vectorSplatWord(auVar26,1);
-      auVar28 = vectorMultiplyAddFloatingPoint
-                          (auVar39,auVar23,*(undefined1 (*) [16])(iVar15 + 0x30U & 0xfffffff0));
-      auVar38 = vectorSplatWord(auVar26,0);
-      auVar36 = vectorSplatWord(auVar30,0);
-      auVar26 = vectorSubtractFloatingPoint128((undefined1  [16])g_one.field0_0x0,auVar32);
-      auVar42 = vectorPermute128(auVar42,(undefined1  [16])g_zero.field0_0x0,
-                                 (undefined1  [16])g_shortBoneWeightPerm.field0_0x0);
-      uVar17 = lVar11 + lVar8;
-      auVar40 = vectorMultiplyAddFloatingPoint
-                          (auVar40,*(undefined1 (*) [16])(uVar2 + 0x10 & 0xfffffff0),auVar35);
-      auVar35 = vectorMultiplyFloatingPoint(auVar43,auVar39);
-      auVar42 = vectorConvertFromUnsignedFixedPointWord128(auVar42,0x10);
-      lVar18 = lVar18 + 0xc;
-      lVar12 = lVar12 + 0xc;
-      auVar31 = vectorMultiplyAddFloatingPoint
-                          (auVar37 & (undefined1  [16])0xffffffff | auVar37 << 0x20 |
-                           (auVar37 & (undefined1  [16])0xffffffff) << 0x40 | auVar37 << 0x60,
-                           auVar41,auVar31);
-      auVar39 = vectorMultiplyAddFloatingPoint
-                          (auVar34,*(undefined1 (*) [16])(uVar2 & 0xfffffff0),auVar40);
-      auVar40 = vectorMultiplyAddFloatingPoint(auVar33,auVar41,auVar35);
-      auVar23 = vectorMultiplyAddFloatingPoint
-                          (*(undefined1 (*) [16])(uVar1 + 0x20 & 0xfffffff0),auVar23,
-                           *(undefined1 (*) [16])(uVar1 + 0x30 & 0xfffffff0));
-      auVar41 = vectorMultiplyAddFloatingPoint(auVar22,auVar41,auVar28);
-      auVar37 = vectorSubtractFloatingPoint128((undefined1  [16])g_one.field0_0x0,auVar42);
-      auVar34 = vectorMultiplyAddFloatingPoint
-                          (auVar44 & (undefined1  [16])0xffffffff | auVar44 << 0x20 |
-                           auVar44 << 0x40 | auVar44 << 0x60,auVar21,auVar31);
-      auVar44 = vectorMultiplyFloatingPoint(auVar39,auVar32);
-      auVar39 = vectorMultiplyAddFloatingPoint(auVar38,auVar21,auVar40);
-      auVar40 = vectorMultiplyAddFloatingPoint
-                          (auVar22,*(undefined1 (*) [16])(uVar1 + 0x10 & 0xfffffff0),auVar23);
-      auVar21 = vectorMultiplyAddFloatingPoint(auVar36,auVar21,auVar41);
-      auVar41 = vectorMultiplyAddFloatingPoint
-                          (auVar34,(undefined1  [16])g_packMul101010.field0_0x0,
-                           (undefined1  [16])g_packAdd.field0_0x0);
-      auVar34 = vectorMultiplyAddFloatingPoint(auVar26,auVar24,auVar44);
-      auVar39 = vectorMultiplyAddFloatingPoint
-                          (auVar39,(undefined1  [16])g_packMul101010.field0_0x0,
-                           (undefined1  [16])g_packAdd.field0_0x0);
-      auVar44 = vectorMultiplyAddFloatingPoint
-                          (auVar36,*(undefined1 (*) [16])(uVar1 & 0xfffffff0),auVar40);
-      auVar34 = vectorPermute128(auVar34,auVar45,(undefined1  [16])g_XYZw.field0_0x0);
-      auVar44 = vectorMultiplyFloatingPoint(auVar44,auVar42);
-      uVar1 = (uint)lVar13;
-      *(undefined1 (*) [16])(uVar1 - 0x20 & 0xfffffff0) = auVar34;
-      auVar44 = vectorMultiplyAddFloatingPoint(auVar37,auVar21,auVar44);
-      auVar44 = vectorPermute128(auVar44,auVar29,(undefined1  [16])_Var5.field0_0x0);
-      auVar37 = vectorPermute128((undefined1  [16])_Var4.field0_0x0,auVar44,
-                                 (undefined1  [16])_Var6.field0_0x0);
-      auVar44 = vectorPermute128(auVar44,(undefined1  [16])_Var4.field0_0x0,
-                                 (undefined1  [16])_Var7.field0_0x0);
-      auVar37 = vectorPackD3Dtype(auVar37,auVar27,9,3);
-      auVar44 = vectorPackD3Dtype(auVar44,auVar39,9,1);
-      auVar37 = vectorPackD3Dtype(auVar37,auVar25,9,2);
-      auVar44 = vectorPackD3Dtype(auVar44,auVar41,9,0);
-      *(undefined1 (*) [16])(uVar1 - 0x10 & 0xfffffff0) = auVar37;
-      *(undefined1 (*) [16])(uVar1 & 0xfffffff0) = auVar44;
-      lVar13 = lVar13 + 0x30;
-      lVar14 = lVar14 + -1;
-    } while (lVar14 != 0);
-  }
-  __restgprlr();
-  return;
-}
-
-
-// 8275EAB0  R_SkinXSurfaceWeight2Quantized  (gfx_d3d/r_model_skin.cpp:1814)
-
-void R_SkinXSurfaceWeight2Quantized
-               (uchar *param_1,uint param_2,ushort *param_3,uint param_4,float param_5,
-               DObjSkelMat *param_6,GfxQuantizedSkinnedVertexOut0 *param_7)
-
-{
-  uint uVar1;
-  uint uVar2;
-  uint uVar3;
-  uint uVar4;
-  longlong lVar5;
-  ulonglong uVar6;
-  longlong lVar7;
-  ulonglong uVar8;
-  ulonglong in_r9;
-  longlong lVar9;
-  longlong lVar10;
-  int iVar12;
-  longlong lVar11;
-  longlong lVar13;
-  ulonglong uVar14;
-  ushort *puVar16;
-  longlong lVar15;
-  double dVar17;
-  undefined1 auVar18 [16];
-  undefined1 auVar19 [16];
-  undefined1 auVar20 [16];
-  undefined1 auVar21 [16];
-  undefined1 auVar22 [16];
-  undefined1 auVar23 [16];
-  undefined1 auVar24 [16];
-  undefined1 auVar25 [16];
-  undefined1 auVar26 [16];
-  undefined1 auVar27 [16];
-  undefined1 auVar28 [16];
-  undefined1 auVar29 [16];
-  undefined1 auVar30 [16];
-  undefined1 auVar31 [16];
-  undefined1 auVar32 [16];
-  undefined1 auVar33 [16];
-  undefined1 auVar34 [16];
-  undefined1 auVar35 [16];
-  undefined1 auVar36 [16];
-  undefined1 auVar37 [16];
-  undefined1 auVar38 [16];
-  undefined1 auVar39 [16];
-  undefined1 auVar40 [16];
-  undefined1 auVar41 [16];
-  undefined1 auVar42 [16];
-  undefined1 auVar43 [16];
-  undefined1 auVar44 [16];
-  undefined1 auVar45 [16];
-  undefined1 auVar46 [16];
   float fStack00000034;
   uint local_c0;
   uint local_bc;
   undefined1 local_b0 [16];
   
-  dVar17 = (double)param_5;
-  uVar8 = (ulonglong)(int)param_7;
-  uVar6 = (ulonglong)(int)param_4;
-  lVar15 = (longlong)(int)param_3;
-  lVar5 = (longlong)(int)param_2;
-  uVar14 = (ulonglong)(int)param_1;
-  __savegprlr();
-  fStack00000034 = (float)dVar17;
-  if ((uVar14 & 0xffffffff) == 0) {
+  lVar13 = (longlong)(int)param_3;
+  lVar1 = (longlong)(int)param_2;
+  lVar12 = (longlong)(int)param_1;
+  fStack00000034 = param_5;
+  if (param_1 == (uchar *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_model_skin.cpp",
                     0x725,0,"%s");
   }
-  if ((in_r9 & 0xffffffff) == 0) {
+  if (in_r9 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_model_skin.cpp",
                     0x726,0,"%s");
   }
@@ -1695,287 +1659,287 @@ void R_SkinXSurfaceWeight2Quantized
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_model_skin.cpp",
                     0x727,0,"%s");
   }
-  if ((uVar8 & 0xf) != 0) {
+  if (((uint)param_7 & 0xf) != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_model_skin.cpp",
                     0x728,0,"%s");
   }
-  if ((uVar6 & 1) != 0) {
+  if ((param_4 & 1) != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_model_skin.cpp",
                     0x729,0,"%s");
   }
-  iVar12 = (int)lVar5 * (int)uVar6;
-  lVar10 = 0;
-  if (iVar12 < 0x201) {
+  iVar11 = param_2 * param_4;
+  lVar9 = 0;
+  if (iVar11 < 0x201) {
     local_c0 = 0;
   }
   else {
-    iVar12 = 0x200;
+    iVar11 = 0x200;
     local_c0 = 0x200;
   }
-  lVar9 = 0;
-  if (0 < iVar12) {
-    lVar11 = (ulonglong)(iVar12 - 1U >> 7) + 1;
+  lVar8 = 0;
+  if (0 < iVar11) {
+    lVar10 = (ulonglong)(iVar11 - 1U >> 7) + 1;
     do {
-      dataCacheBlockTouch(lVar9 + uVar14);
-      lVar9 = lVar9 + 0x80;
-      lVar11 = lVar11 + -1;
-    } while (lVar11 != 0);
+      dataCacheBlockTouch(lVar8 + lVar12);
+      lVar8 = lVar8 + 0x80;
+      lVar10 = lVar10 + -1;
+    } while (lVar10 != 0);
   }
-  lVar9 = (uVar6 & 0x7fffffff) << 1;
-  if ((int)lVar9 < 0x201) {
+  iVar11 = param_4 << 1;
+  if (iVar11 < 0x201) {
     local_bc = 0;
   }
   else {
-    lVar9 = 0x200;
+    iVar11 = 0x200;
     local_bc = 0x200;
   }
-  if (0 < (int)lVar9) {
-    lVar9 = ((lVar9 - 1U & 0xffffffff) >> 7) + 1;
+  if (0 < iVar11) {
+    lVar8 = (ulonglong)(iVar11 - 1U >> 7) + 1;
     do {
-      dataCacheBlockTouch(lVar10 + lVar15);
-      lVar10 = lVar10 + 0x80;
-      lVar9 = lVar9 + -1;
-    } while (lVar9 != 0);
+      dataCacheBlockTouch(lVar9 + lVar13);
+      lVar9 = lVar9 + 0x80;
+      lVar8 = lVar8 + -1;
+    } while (lVar8 != 0);
   }
-  if ((uVar6 & 0xffffffff) != 0) {
-    lVar11 = ((uVar6 - 1 & 0xffffffff) >> 1) + 1;
-    auVar46 = loadVectorLeftIndexed(ZEXT48(&stack0x00000000) + 0x34);
-    auVar46 = vectorSplatWord(auVar46,0);
-    lVar9 = in_r9 + 0x20;
-    lVar13 = lVar15 + 8;
-    lVar10 = lVar15 + 4;
+  if (param_4 != 0) {
+    lVar8 = (((longlong)(int)param_4 - 1U & 0xffffffff) >> 1) + 1;
+    auVar43 = loadVectorLeftIndexed(ZEXT48(&stack0x00000000) + 0x34);
+    auVar43 = vectorSplatWord(auVar43,0);
+    uVar2 = in_r9 + 0x20;
+    lVar10 = lVar13 + 8;
+    lVar9 = lVar13 + 4;
     do {
-      dataCacheBlockTouch(local_c0 + uVar14);
-      dataCacheBlockTouch((ulonglong)local_bc + lVar15);
-      auVar44 = loadVectorRightIndexed(uVar14 + 8);
-      auVar43 = loadVectorLeftIndexed(uVar14);
-      puVar16 = (ushort *)lVar15;
-      auVar42 = vectorShiftLeftDoubleByOctetImmediate(auVar44,auVar44,8);
-      auVar41 = loadVectorRightIndexed(uVar14 + 0x10);
-      iVar12 = (int)uVar8;
-      uVar1 = (uint)*puVar16 + iVar12;
-      auVar44 = vectorSplatWord(auVar43 | auVar41,2);
-      uVar2 = (uint)puVar16[1] + iVar12;
-      auVar41 = vectorUnpackD3Dtype(auVar43 | auVar41,8);
-      auVar38 = loadVectorLeftIndexed(lVar10);
-      auVar23 = *(undefined1 (*) [16])(uVar1 + 0x20 & 0xfffffff0);
-      auVar43 = vectorUnpackHighSignedByte(auVar43 | auVar42);
-      auVar44 = vectorUnpackD3Dtype(auVar44,8);
-      auVar22 = *(undefined1 (*) [16])(uVar1 + 0x10 & 0xfffffff0);
-      auVar41 = vectorMultiplyAddFloatingPoint
+      dataCacheBlockTouch((ulonglong)local_c0 + lVar12);
+      dataCacheBlockTouch((ulonglong)local_bc + lVar13);
+      auVar41 = loadVectorRightIndexed(lVar12 + 8);
+      auVar40 = loadVectorLeftIndexed(lVar12);
+      puVar14 = (ushort *)lVar13;
+      auVar39 = vectorShiftLeftDoubleByOctetImmediate(auVar41,auVar41,8);
+      auVar38 = loadVectorRightIndexed(lVar12 + 0x10);
+      uVar6 = (int)param_7->xyz + (uint)*puVar14;
+      auVar41 = vectorSplatWord(auVar40 | auVar38,2);
+      uVar4 = (int)param_7->xyz + (uint)puVar14[1];
+      auVar38 = vectorUnpackD3Dtype(auVar40 | auVar38,8);
+      auVar35 = loadVectorLeftIndexed(lVar9);
+      auVar20 = *(undefined1 (*) [16])(uVar6 + 0x20 & 0xfffffff0);
+      auVar40 = vectorUnpackHighSignedByte(auVar40 | auVar39);
+      auVar41 = vectorUnpackD3Dtype(auVar41,8);
+      auVar19 = *(undefined1 (*) [16])(uVar6 + 0x10 & 0xfffffff0);
+      auVar38 = vectorMultiplyAddFloatingPoint
+                          (auVar38,(undefined1  [16])g_unpackMul101010.field0_0x0,
+                           (undefined1  [16])g_unpackAdd101010.field0_0x0);
+      auVar18 = *(undefined1 (*) [16])(uVar6 & 0xfffffff0);
+      uVar7 = (int)param_7->xyz + (uint)puVar14[3];
+      auVar39 = loadVectorLeftIndexed(lVar10);
+      auVar42 = vectorConvertFromSignedFixedPointWord128(auVar40,0);
+      lVar3 = lVar12 + lVar1;
+      auVar40 = vectorMultiplyAddFloatingPoint
                           (auVar41,(undefined1  [16])g_unpackMul101010.field0_0x0,
                            (undefined1  [16])g_unpackAdd101010.field0_0x0);
-      auVar21 = *(undefined1 (*) [16])(uVar1 & 0xfffffff0);
-      uVar3 = (uint)puVar16[3] + iVar12;
-      auVar42 = loadVectorLeftIndexed(lVar13);
-      auVar45 = vectorConvertFromSignedFixedPointWord128(auVar43,0);
-      lVar7 = uVar14 + lVar5;
-      auVar43 = vectorMultiplyAddFloatingPoint
-                          (auVar44,(undefined1  [16])g_unpackMul101010.field0_0x0,
+      auVar33 = loadVectorLeftIndexed(lVar12 + lVar1);
+      auVar35 = vectorPermute128(auVar35,(undefined1  [16])g_zero.field0_0x0,
+                                 (undefined1  [16])g_shortBoneWeightPerm.field0_0x0);
+      auVar32 = loadVectorLeftIndexed(lVar9 + 10);
+      auVar39 = vectorPermute128(auVar39,(undefined1  [16])g_zero.field0_0x0,
+                                 (undefined1  [16])g_shortBoneWeightPerm.field0_0x0);
+      auVar41 = loadVectorRightIndexed(lVar3 + 8);
+      auVar31 = loadVectorRightIndexed(lVar3 + 0x10);
+      auVar30 = vectorShiftLeftDoubleByOctetImmediate(auVar41,auVar41,8);
+      auVar29 = vectorConvertFromUnsignedFixedPointWord128(auVar35,0x10);
+      auVar15 = vectorConvertFromUnsignedFixedPointWord128(auVar39,0x10);
+      auVar41 = auVar38 >> 0x60;
+      auVar27 = vectorSplatWord(auVar38,2);
+      auVar28 = vectorMultiplyFloatingPoint(auVar43,auVar42);
+      auVar38 = auVar38 >> 0x40;
+      auVar35 = vectorSplatWord(auVar40,2);
+      auVar39 = auVar40 >> 0x40;
+      auVar25 = vectorMultiplyFloatingPoint(auVar27,auVar20);
+      auVar40 = auVar40 >> 0x60;
+      auVar35 = vectorMultiplyFloatingPoint(auVar35,auVar20);
+      auVar17 = vectorSplatWord(auVar28,2);
+      auVar16 = vectorSplatWord(auVar28,1);
+      auVar27 = vectorSplatWord(auVar28,0);
+      auVar25 = vectorMultiplyAddFloatingPoint
+                          (auVar38 & (undefined1  [16])0xffffffff | auVar38 << 0x20 |
+                           (auVar38 & (undefined1  [16])0xffffffff) << 0x40 | auVar38 << 0x60,
+                           auVar19,auVar25);
+      auVar20 = vectorMultiplyAddFloatingPoint
+                          (auVar20,auVar17,*(undefined1 (*) [16])(uVar6 + 0x30 & 0xfffffff0));
+      auVar38 = vectorMultiplyAddFloatingPoint
+                          (auVar39 & (undefined1  [16])0xffffffff | auVar39 << 0x20 |
+                           (auVar39 & (undefined1  [16])0xffffffff) << 0x40 | auVar39 << 0x60,
+                           auVar19,auVar35);
+      auVar39 = vectorMultiplyAddFloatingPoint
+                          (*(undefined1 (*) [16])(uVar4 + 0x20 & 0xfffffff0),auVar17,
+                           *(undefined1 (*) [16])(uVar4 + 0x30 & 0xfffffff0));
+      auVar22 = vectorMultiplyAddFloatingPoint
+                          (auVar41 & (undefined1  [16])0xffffffff | auVar41 << 0x20 |
+                           auVar41 << 0x40 | auVar41 << 0x60,auVar18,auVar25);
+      auVar35 = vectorMultiplyAddFloatingPoint(auVar16,auVar19,auVar20);
+      auVar23 = vectorMultiplyAddFloatingPoint
+                          (auVar40 & (undefined1  [16])0xffffffff | auVar40 << 0x20 |
+                           auVar40 << 0x40 | auVar40 << 0x60,auVar18,auVar38);
+      auVar41 = vectorMultiplyAddFloatingPoint
+                          (auVar16,*(undefined1 (*) [16])(uVar4 + 0x10 & 0xfffffff0),auVar39);
+      uVar5 = (int)param_7->xyz + (uint)puVar14[5];
+      auVar21 = *(undefined1 (*) [16])(uVar5 + 0x20 & 0xfffffff0);
+      uVar6 = (int)param_7->xyz + (uint)puVar14[6];
+      auVar24 = vectorMultiplyAddFloatingPoint(auVar27,auVar18,auVar35);
+      auVar39 = vectorSplatWord(auVar33 | auVar31,2);
+      auVar38 = vectorUnpackD3Dtype(auVar33 | auVar31,8);
+      auVar31 = vectorMultiplyAddFloatingPoint
+                          (auVar27,*(undefined1 (*) [16])(uVar4 & 0xfffffff0),auVar41);
+      auVar35 = vectorPermute128(auVar32,(undefined1  [16])g_zero.field0_0x0,
+                                 (undefined1  [16])g_shortBoneWeightPerm.field0_0x0);
+      auVar28 = *(undefined1 (*) [16])(uVar5 + 0x10 & 0xfffffff0);
+      auVar26 = vectorAddFloatingPoint128(auVar29,auVar15);
+      auVar40 = vectorUnpackHighSignedByte(auVar33 | auVar30);
+      auVar25 = *(undefined1 (*) [16])(uVar5 & 0xfffffff0);
+      auVar41 = vectorUnpackD3Dtype(auVar39,8);
+      auVar39 = vectorMultiplyAddFloatingPoint
+                          (auVar38,(undefined1  [16])g_unpackMul101010.field0_0x0,
                            (undefined1  [16])g_unpackAdd101010.field0_0x0);
-      auVar36 = loadVectorLeftIndexed(uVar14 + lVar5);
+      auVar38 = loadVectorLeftIndexed(lVar10 + 10);
+      uVar4 = (int)param_7->xyz + (uint)puVar14[8];
+      auVar33 = vectorConvertFromUnsignedFixedPointWord128(auVar35,0x10);
+      auVar20 = vectorConvertFromSignedFixedPointWord128(auVar40,0);
       auVar38 = vectorPermute128(auVar38,(undefined1  [16])g_zero.field0_0x0,
                                  (undefined1  [16])g_shortBoneWeightPerm.field0_0x0);
-      auVar35 = loadVectorLeftIndexed(lVar10 + 10);
-      auVar42 = vectorPermute128(auVar42,(undefined1  [16])g_zero.field0_0x0,
-                                 (undefined1  [16])g_shortBoneWeightPerm.field0_0x0);
-      auVar44 = loadVectorRightIndexed(lVar7 + 8);
-      auVar34 = loadVectorRightIndexed(lVar7 + 0x10);
-      auVar33 = vectorShiftLeftDoubleByOctetImmediate(auVar44,auVar44,8);
-      auVar32 = vectorConvertFromUnsignedFixedPointWord128(auVar38,0x10);
-      auVar18 = vectorConvertFromUnsignedFixedPointWord128(auVar42,0x10);
-      auVar44 = auVar41 >> 0x60;
-      auVar30 = vectorSplatWord(auVar41,2);
-      auVar31 = vectorMultiplyFloatingPoint(auVar46,auVar45);
-      auVar41 = auVar41 >> 0x40;
-      auVar38 = vectorSplatWord(auVar43,2);
-      auVar42 = auVar43 >> 0x40;
-      auVar28 = vectorMultiplyFloatingPoint(auVar30,auVar23);
-      auVar43 = auVar43 >> 0x60;
-      auVar38 = vectorMultiplyFloatingPoint(auVar38,auVar23);
-      auVar20 = vectorSplatWord(auVar31,2);
-      auVar19 = vectorSplatWord(auVar31,1);
-      auVar30 = vectorSplatWord(auVar31,0);
-      auVar28 = vectorMultiplyAddFloatingPoint
-                          (auVar41 & (undefined1  [16])0xffffffff | auVar41 << 0x20 |
-                           (auVar41 & (undefined1  [16])0xffffffff) << 0x40 | auVar41 << 0x60,
-                           auVar22,auVar28);
-      auVar23 = vectorMultiplyAddFloatingPoint
-                          (auVar23,auVar20,*(undefined1 (*) [16])(uVar1 + 0x30 & 0xfffffff0));
-      auVar41 = vectorMultiplyAddFloatingPoint
-                          (auVar42 & (undefined1  [16])0xffffffff | auVar42 << 0x20 |
-                           (auVar42 & (undefined1  [16])0xffffffff) << 0x40 | auVar42 << 0x60,
-                           auVar22,auVar38);
-      auVar42 = vectorMultiplyAddFloatingPoint
-                          (*(undefined1 (*) [16])(uVar2 + 0x20 & 0xfffffff0),auVar20,
-                           *(undefined1 (*) [16])(uVar2 + 0x30 & 0xfffffff0));
-      auVar25 = vectorMultiplyAddFloatingPoint
-                          (auVar44 & (undefined1  [16])0xffffffff | auVar44 << 0x20 |
-                           auVar44 << 0x40 | auVar44 << 0x60,auVar21,auVar28);
-      auVar38 = vectorMultiplyAddFloatingPoint(auVar19,auVar22,auVar23);
-      auVar26 = vectorMultiplyAddFloatingPoint
-                          (auVar43 & (undefined1  [16])0xffffffff | auVar43 << 0x20 |
-                           auVar43 << 0x40 | auVar43 << 0x60,auVar21,auVar41);
-      auVar44 = vectorMultiplyAddFloatingPoint
-                          (auVar19,*(undefined1 (*) [16])(uVar2 + 0x10 & 0xfffffff0),auVar42);
-      uVar1 = (uint)puVar16[5] + iVar12;
-      auVar24 = *(undefined1 (*) [16])(uVar1 + 0x20 & 0xfffffff0);
-      uVar4 = (uint)puVar16[6] + iVar12;
-      auVar27 = vectorMultiplyAddFloatingPoint(auVar30,auVar21,auVar38);
-      auVar42 = vectorSplatWord(auVar36 | auVar34,2);
-      auVar41 = vectorUnpackD3Dtype(auVar36 | auVar34,8);
-      auVar34 = vectorMultiplyAddFloatingPoint
-                          (auVar30,*(undefined1 (*) [16])(uVar2 & 0xfffffff0),auVar44);
-      auVar38 = vectorPermute128(auVar35,(undefined1  [16])g_zero.field0_0x0,
-                                 (undefined1  [16])g_shortBoneWeightPerm.field0_0x0);
-      auVar31 = *(undefined1 (*) [16])(uVar1 + 0x10 & 0xfffffff0);
-      auVar29 = vectorAddFloatingPoint128(auVar32,auVar18);
-      auVar43 = vectorUnpackHighSignedByte(auVar36 | auVar33);
-      auVar28 = *(undefined1 (*) [16])(uVar1 & 0xfffffff0);
-      auVar44 = vectorUnpackD3Dtype(auVar42,8);
-      auVar42 = vectorMultiplyAddFloatingPoint
+      auVar40 = vectorMultiplyAddFloatingPoint
                           (auVar41,(undefined1  [16])g_unpackMul101010.field0_0x0,
                            (undefined1  [16])g_unpackAdd101010.field0_0x0);
-      auVar41 = loadVectorLeftIndexed(lVar13 + 10);
-      uVar2 = (uint)puVar16[8] + iVar12;
-      auVar36 = vectorConvertFromUnsignedFixedPointWord128(auVar38,0x10);
-      auVar23 = vectorConvertFromSignedFixedPointWord128(auVar43,0);
-      auVar41 = vectorPermute128(auVar41,(undefined1  [16])g_zero.field0_0x0,
-                                 (undefined1  [16])g_shortBoneWeightPerm.field0_0x0);
-      auVar43 = vectorMultiplyAddFloatingPoint
-                          (auVar44,(undefined1  [16])g_unpackMul101010.field0_0x0,
-                           (undefined1  [16])g_unpackAdd101010.field0_0x0);
-      auVar21 = vectorConvertFromUnsignedFixedPointWord128(auVar41,0x10);
-      auVar39 = vectorMultiplyFloatingPoint(auVar46,auVar23);
-      auVar38 = vectorSplatWord(auVar43,2);
-      auVar44 = auVar42 >> 0x40;
-      auVar37 = vectorAddFloatingPoint128(auVar36,auVar21);
-      auVar41 = auVar42 >> 0x60;
-      uVar14 = lVar7 + lVar5;
-      auVar22 = vectorSplatWord(auVar42,2);
-      lVar15 = lVar15 + 0x14;
-      auVar35 = vectorMultiplyFloatingPoint(auVar38,auVar24);
-      auVar42 = auVar43 >> 0x40;
-      auVar43 = auVar43 >> 0x60;
-      lVar10 = lVar10 + 0x14;
+      auVar18 = vectorConvertFromUnsignedFixedPointWord128(auVar38,0x10);
+      auVar36 = vectorMultiplyFloatingPoint(auVar43,auVar20);
+      auVar35 = vectorSplatWord(auVar40,2);
+      auVar41 = auVar39 >> 0x40;
+      auVar34 = vectorAddFloatingPoint128(auVar33,auVar18);
+      auVar38 = auVar39 >> 0x60;
+      lVar12 = lVar3 + lVar1;
+      auVar19 = vectorSplatWord(auVar39,2);
       lVar13 = lVar13 + 0x14;
-      auVar40 = vectorSplatWord(auVar45,3);
-      auVar33 = vectorMultiplyFloatingPoint(auVar22,auVar24);
-      auVar45 = vectorSplatWord(auVar23,3);
-      auVar38 = vectorSplatWord(auVar39,2);
-      auVar23 = vectorSplatWord(auVar39,1);
-      auVar22 = vectorSplatWord(auVar39,0);
-      auVar24 = vectorMultiplyAddFloatingPoint
-                          (auVar24,auVar38,*(undefined1 (*) [16])(uVar1 + 0x30 & 0xfffffff0));
-      auVar35 = vectorMultiplyAddFloatingPoint
-                          (auVar42 & (undefined1  [16])0xffffffff | auVar42 << 0x20 |
-                           (auVar42 & (undefined1  [16])0xffffffff) << 0x40 | auVar42 << 0x60,
-                           auVar31,auVar35);
-      auVar42 = vectorMultiplyAddFloatingPoint
-                          (*(undefined1 (*) [16])(uVar3 + 0x20 & 0xfffffff0),auVar20,
-                           *(undefined1 (*) [16])(uVar3 + 0x30 & 0xfffffff0));
-      auVar44 = vectorMultiplyAddFloatingPoint
-                          (auVar44 & (undefined1  [16])0xffffffff | auVar44 << 0x20 |
-                           (auVar44 & (undefined1  [16])0xffffffff) << 0x40 | auVar44 << 0x60,
-                           auVar31,auVar33);
-      auVar31 = vectorMultiplyAddFloatingPoint(auVar23,auVar31,auVar24);
-      auVar43 = vectorMultiplyAddFloatingPoint
-                          (auVar43 & (undefined1  [16])0xffffffff | auVar43 << 0x20 |
-                           auVar43 << 0x40 | auVar43 << 0x60,auVar28,auVar35);
-      auVar24 = vectorMultiplyAddFloatingPoint
-                          (*(undefined1 (*) [16])(uVar4 + 0x20 & 0xfffffff0),auVar38,
-                           *(undefined1 (*) [16])(uVar4 + 0x30 & 0xfffffff0));
-      auVar20 = vectorMultiplyAddFloatingPoint
+      auVar32 = vectorMultiplyFloatingPoint(auVar35,auVar21);
+      auVar39 = auVar40 >> 0x40;
+      auVar40 = auVar40 >> 0x60;
+      lVar9 = lVar9 + 0x14;
+      lVar10 = lVar10 + 0x14;
+      auVar37 = vectorSplatWord(auVar42,3);
+      auVar30 = vectorMultiplyFloatingPoint(auVar19,auVar21);
+      auVar42 = vectorSplatWord(auVar20,3);
+      auVar35 = vectorSplatWord(auVar36,2);
+      auVar20 = vectorSplatWord(auVar36,1);
+      auVar19 = vectorSplatWord(auVar36,0);
+      auVar21 = vectorMultiplyAddFloatingPoint
+                          (auVar21,auVar35,*(undefined1 (*) [16])(uVar5 + 0x30 & 0xfffffff0));
+      auVar32 = vectorMultiplyAddFloatingPoint
+                          (auVar39 & (undefined1  [16])0xffffffff | auVar39 << 0x20 |
+                           (auVar39 & (undefined1  [16])0xffffffff) << 0x40 | auVar39 << 0x60,
+                           auVar28,auVar32);
+      auVar39 = vectorMultiplyAddFloatingPoint
+                          (*(undefined1 (*) [16])(uVar7 + 0x20 & 0xfffffff0),auVar17,
+                           *(undefined1 (*) [16])(uVar7 + 0x30 & 0xfffffff0));
+      auVar41 = vectorMultiplyAddFloatingPoint
                           (auVar41 & (undefined1  [16])0xffffffff | auVar41 << 0x20 |
-                           auVar41 << 0x40 | auVar41 << 0x60,auVar28,auVar44);
-      auVar44 = vectorMultiplyAddFloatingPoint
-                          (*(undefined1 (*) [16])(uVar2 + 0x20 & 0xfffffff0),auVar38,
-                           *(undefined1 (*) [16])(uVar2 + 0x30 & 0xfffffff0));
+                           (auVar41 & (undefined1  [16])0xffffffff) << 0x40 | auVar41 << 0x60,
+                           auVar28,auVar30);
+      auVar28 = vectorMultiplyAddFloatingPoint(auVar20,auVar28,auVar21);
+      auVar40 = vectorMultiplyAddFloatingPoint
+                          (auVar40 & (undefined1  [16])0xffffffff | auVar40 << 0x20 |
+                           auVar40 << 0x40 | auVar40 << 0x60,auVar25,auVar32);
+      auVar21 = vectorMultiplyAddFloatingPoint
+                          (*(undefined1 (*) [16])(uVar6 + 0x20 & 0xfffffff0),auVar35,
+                           *(undefined1 (*) [16])(uVar6 + 0x30 & 0xfffffff0));
+      auVar17 = vectorMultiplyAddFloatingPoint
+                          (auVar38 & (undefined1  [16])0xffffffff | auVar38 << 0x20 |
+                           auVar38 << 0x40 | auVar38 << 0x60,auVar25,auVar41);
       auVar41 = vectorMultiplyAddFloatingPoint
-                          (auVar19,*(undefined1 (*) [16])(uVar3 + 0x10 & 0xfffffff0),auVar42);
-      auVar38 = vectorMultiplyFloatingPoint(auVar34,auVar32);
-      auVar19 = vectorMultiplyAddFloatingPoint(auVar22,auVar28,auVar31);
-      auVar31 = vectorMultiplyAddFloatingPoint
-                          (auVar43,(undefined1  [16])g_packMul101010.field0_0x0,
-                           (undefined1  [16])g_packAdd.field0_0x0);
-      auVar42 = vectorMultiplyAddFloatingPoint
-                          (auVar23,*(undefined1 (*) [16])(uVar4 + 0x10 & 0xfffffff0),auVar24);
+                          (*(undefined1 (*) [16])(uVar4 + 0x20 & 0xfffffff0),auVar35,
+                           *(undefined1 (*) [16])(uVar4 + 0x30 & 0xfffffff0));
+      auVar38 = vectorMultiplyAddFloatingPoint
+                          (auVar16,*(undefined1 (*) [16])(uVar7 + 0x10 & 0xfffffff0),auVar39);
+      auVar35 = vectorMultiplyFloatingPoint(auVar31,auVar29);
+      auVar16 = vectorMultiplyAddFloatingPoint(auVar19,auVar25,auVar28);
       auVar28 = vectorMultiplyAddFloatingPoint
-                          (auVar26,(undefined1  [16])g_packMul101010.field0_0x0,
+                          (auVar40,(undefined1  [16])g_packMul101010.field0_0x0,
                            (undefined1  [16])g_packAdd.field0_0x0);
-      auVar44 = vectorMultiplyAddFloatingPoint
-                          (auVar23,*(undefined1 (*) [16])(uVar2 + 0x10 & 0xfffffff0),auVar44);
-      auVar23 = vectorMultiplyAddFloatingPoint
-                          (auVar25,(undefined1  [16])g_packMul101010.field0_0x0,
+      auVar39 = vectorMultiplyAddFloatingPoint
+                          (auVar20,*(undefined1 (*) [16])(uVar6 + 0x10 & 0xfffffff0),auVar21);
+      auVar25 = vectorMultiplyAddFloatingPoint
+                          (auVar23,(undefined1  [16])g_packMul101010.field0_0x0,
                            (undefined1  [16])g_packAdd.field0_0x0);
-      auVar42 = vectorMultiplyAddFloatingPoint
-                          (auVar22,*(undefined1 (*) [16])(uVar4 & 0xfffffff0),auVar42);
-      auVar43 = vectorMultiplyAddFloatingPoint
-                          (auVar22,*(undefined1 (*) [16])(uVar2 & 0xfffffff0),auVar44);
-      auVar42 = vectorMultiplyFloatingPoint(auVar42,auVar36);
-      auVar20 = vectorMultiplyAddFloatingPoint
-                          (auVar20,(undefined1  [16])g_packMul101010.field0_0x0,
-                           (undefined1  [16])g_packAdd.field0_0x0);
-      auVar22 = vectorSubtractFloatingPoint128((undefined1  [16])g_one.field0_0x0,auVar37);
-      auVar44 = vectorSubtractFloatingPoint128((undefined1  [16])g_one.field0_0x0,auVar29);
-      auVar42 = vectorMultiplyAddFloatingPoint(auVar21,auVar43,auVar42);
       auVar41 = vectorMultiplyAddFloatingPoint
-                          (auVar30,*(undefined1 (*) [16])(uVar3 & 0xfffffff0),auVar41);
-      auVar42 = vectorMultiplyAddFloatingPoint(auVar22,auVar19,auVar42);
-      auVar41 = vectorMultiplyAddFloatingPoint(auVar18,auVar41,auVar38);
-      auVar43 = vectorPermute128(auVar42,auVar45,(undefined1  [16])g_XYZw.field0_0x0);
-      auVar44 = vectorMultiplyAddFloatingPoint(auVar44,auVar27,auVar41);
-      auVar42 = vectorPermute128((undefined1  [16])g_zero.field0_0x0,auVar43,
+                          (auVar20,*(undefined1 (*) [16])(uVar4 + 0x10 & 0xfffffff0),auVar41);
+      auVar20 = vectorMultiplyAddFloatingPoint
+                          (auVar22,(undefined1  [16])g_packMul101010.field0_0x0,
+                           (undefined1  [16])g_packAdd.field0_0x0);
+      auVar39 = vectorMultiplyAddFloatingPoint
+                          (auVar19,*(undefined1 (*) [16])(uVar6 & 0xfffffff0),auVar39);
+      auVar40 = vectorMultiplyAddFloatingPoint
+                          (auVar19,*(undefined1 (*) [16])(uVar4 & 0xfffffff0),auVar41);
+      auVar39 = vectorMultiplyFloatingPoint(auVar39,auVar33);
+      auVar17 = vectorMultiplyAddFloatingPoint
+                          (auVar17,(undefined1  [16])g_packMul101010.field0_0x0,
+                           (undefined1  [16])g_packAdd.field0_0x0);
+      auVar19 = vectorSubtractFloatingPoint128((undefined1  [16])g_one.field0_0x0,auVar34);
+      auVar41 = vectorSubtractFloatingPoint128((undefined1  [16])g_one.field0_0x0,auVar26);
+      auVar39 = vectorMultiplyAddFloatingPoint(auVar18,auVar40,auVar39);
+      auVar38 = vectorMultiplyAddFloatingPoint
+                          (auVar27,*(undefined1 (*) [16])(uVar7 & 0xfffffff0),auVar38);
+      auVar39 = vectorMultiplyAddFloatingPoint(auVar19,auVar16,auVar39);
+      auVar38 = vectorMultiplyAddFloatingPoint(auVar15,auVar38,auVar35);
+      auVar40 = vectorPermute128(auVar39,auVar42,(undefined1  [16])g_XYZw.field0_0x0);
+      auVar41 = vectorMultiplyAddFloatingPoint(auVar41,auVar24,auVar38);
+      auVar39 = vectorPermute128((undefined1  [16])g_zero.field0_0x0,auVar40,
                                  (undefined1  [16])g_XYxy.field0_0x0);
-      auVar41 = vectorPermute128(auVar43,(undefined1  [16])g_zero.field0_0x0,local_b0);
-      auVar42 = vectorPackD3Dtype(auVar42,auVar28,9,3);
-      auVar41 = vectorPackD3Dtype(auVar41,auVar31,9,1);
-      auVar42 = vectorPackD3Dtype(auVar42,auVar23,9,2);
-      auVar43 = vectorPermute128(auVar44,auVar40,(undefined1  [16])g_XYZw.field0_0x0);
-      auVar44 = vectorPackD3Dtype(auVar41,auVar20,9,0);
-      uVar1 = (uint)lVar9;
-      *(undefined1 (*) [16])(uVar1 - 0x10 & 0xfffffff0) = auVar42;
-      *(undefined1 (*) [16])(uVar1 - 0x20 & 0xfffffff0) = auVar43;
-      *(undefined1 (*) [16])(uVar1 & 0xfffffff0) = auVar44;
-      lVar9 = lVar9 + 0x30;
-      lVar11 = lVar11 + -1;
-    } while (lVar11 != 0);
+      auVar38 = vectorPermute128(auVar40,(undefined1  [16])g_zero.field0_0x0,local_b0);
+      auVar39 = vectorPackD3Dtype(auVar39,auVar25,9,3);
+      auVar38 = vectorPackD3Dtype(auVar38,auVar28,9,1);
+      auVar39 = vectorPackD3Dtype(auVar39,auVar20,9,2);
+      auVar40 = vectorPermute128(auVar41,auVar37,(undefined1  [16])g_XYZw.field0_0x0);
+      auVar41 = vectorPackD3Dtype(auVar38,auVar17,9,0);
+      *(undefined1 (*) [16])(uVar2 - 0x10 & 0xfffffff0) = auVar39;
+      *(undefined1 (*) [16])(uVar2 - 0x20 & 0xfffffff0) = auVar40;
+      *(undefined1 (*) [16])(uVar2 & 0xfffffff0) = auVar41;
+      uVar2 = uVar2 + 0x30;
+      lVar8 = lVar8 + -1;
+    } while (lVar8 != 0);
   }
-  __restgprlr();
   return;
 }
 
 
 // 8275EFA8  R_SkinXSurfaceWeight3Quantized  (gfx_d3d/r_model_skin.cpp:1907)
 
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
+
 void R_SkinXSurfaceWeight3Quantized
                (uchar *param_1,uint param_2,ushort *param_3,uint param_4,float param_5,
                DObjSkelMat *param_6,GfxQuantizedSkinnedVertexOut0 *param_7)
 
 {
-  uint uVar1;
-  uint uVar2;
-  uint uVar3;
-  int iVar4;
+  ushort uVar1;
+  __vector4 _Var2;
+  __vector4 _Var3;
+  __vector4 _Var4;
   __vector4 _Var5;
-  __vector4 _Var6;
-  __vector4 _Var7;
-  __vector4 _Var8;
-  longlong lVar9;
-  ulonglong uVar10;
+  uint uVar6;
+  uint uVar8;
+  longlong lVar7;
+  uint uVar9;
+  uint uVar10;
+  uint in_r9;
   longlong lVar11;
-  ulonglong uVar12;
-  ulonglong in_r9;
+  longlong lVar12;
+  int iVar14;
   longlong lVar13;
-  longlong lVar14;
-  int iVar17;
   longlong lVar15;
+  ushort *puVar17;
   longlong lVar16;
-  longlong lVar18;
-  ulonglong uVar19;
-  ushort *puVar21;
-  longlong lVar20;
-  double dVar22;
+  undefined1 auVar18 [16];
+  undefined1 auVar19 [16];
+  undefined1 auVar20 [16];
+  undefined1 auVar21 [16];
+  undefined1 auVar22 [16];
   undefined1 auVar23 [16];
   undefined1 auVar24 [16];
   undefined1 auVar25 [16];
@@ -2001,28 +1965,18 @@ void R_SkinXSurfaceWeight3Quantized
   undefined1 auVar45 [16];
   undefined1 auVar46 [16];
   undefined1 auVar47 [16];
-  undefined1 auVar48 [16];
-  undefined1 auVar49 [16];
-  undefined1 auVar50 [16];
-  undefined1 auVar51 [16];
-  undefined1 auVar52 [16];
   float fStack00000034;
   uint local_b0;
   uint local_ac;
   
-  dVar22 = (double)param_5;
-  uVar12 = (ulonglong)(int)param_7;
-  uVar10 = (ulonglong)(int)param_4;
-  lVar20 = (longlong)(int)param_3;
-  lVar9 = (longlong)(int)param_2;
-  uVar19 = (ulonglong)(int)param_1;
-  __savegprlr();
-  fStack00000034 = (float)dVar22;
-  if ((uVar19 & 0xffffffff) == 0) {
+  lVar16 = (longlong)(int)param_3;
+  lVar7 = (longlong)(int)param_1;
+  fStack00000034 = param_5;
+  if (param_1 == (uchar *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_model_skin.cpp",
                     0x782,0,"%s");
   }
-  if ((in_r9 & 0xffffffff) == 0) {
+  if (in_r9 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_model_skin.cpp",
                     0x783,0,"%s");
   }
@@ -2030,312 +1984,313 @@ void R_SkinXSurfaceWeight3Quantized
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_model_skin.cpp",
                     0x784,0,"%s");
   }
-  if ((uVar12 & 0xf) != 0) {
+  if (((uint)param_7 & 0xf) != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_model_skin.cpp",
                     0x785,0,"%s");
   }
-  if ((uVar10 & 1) != 0) {
+  if ((param_4 & 1) != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_model_skin.cpp",
                     0x786,0,"%s");
   }
-  iVar17 = (int)lVar9 * (int)uVar10;
-  lVar14 = 0;
-  if (iVar17 < 0x201) {
+  iVar14 = param_2 * param_4;
+  lVar12 = 0;
+  if (iVar14 < 0x201) {
     local_b0 = 0;
   }
   else {
-    iVar17 = 0x200;
+    iVar14 = 0x200;
     local_b0 = 0x200;
   }
-  lVar13 = 0;
-  if (0 < iVar17) {
-    lVar15 = (ulonglong)(iVar17 - 1U >> 7) + 1;
+  lVar11 = 0;
+  if (0 < iVar14) {
+    lVar13 = (ulonglong)(iVar14 - 1U >> 7) + 1;
     do {
-      dataCacheBlockTouch(lVar13 + uVar19);
-      lVar13 = lVar13 + 0x80;
-      lVar15 = lVar15 + -1;
-    } while (lVar15 != 0);
-  }
-  lVar13 = (uVar10 & 0x7fffffff) << 1;
-  if ((int)lVar13 < 0x201) {
-    local_ac = 0;
-  }
-  else {
-    lVar13 = 0x200;
-    local_ac = 0x200;
-  }
-  if (0 < (int)lVar13) {
-    lVar13 = ((lVar13 - 1U & 0xffffffff) >> 7) + 1;
-    do {
-      dataCacheBlockTouch(lVar14 + lVar20);
-      lVar14 = lVar14 + 0x80;
+      dataCacheBlockTouch(lVar11 + lVar7);
+      lVar11 = lVar11 + 0x80;
       lVar13 = lVar13 + -1;
     } while (lVar13 != 0);
   }
-  if ((uVar10 & 0xffffffff) != 0) {
-    lVar16 = ((uVar10 - 1 & 0xffffffff) >> 1) + 1;
-    auVar52 = loadVectorLeftIndexed(ZEXT48(&stack0x00000000) + 0x34);
-    auVar52 = vectorSplatWord(auVar52,0);
-    lVar15 = in_r9 + 0x20;
-    lVar18 = lVar20 + 0xc;
-    lVar14 = lVar20 + 8;
-    lVar13 = lVar20 + 4;
+  iVar14 = param_4 << 1;
+  if (iVar14 < 0x201) {
+    local_ac = 0;
+  }
+  else {
+    iVar14 = 0x200;
+    local_ac = 0x200;
+  }
+  if (0 < iVar14) {
+    lVar11 = (ulonglong)(iVar14 - 1U >> 7) + 1;
     do {
-      _Var8.field0_0x0 = g_ZWxy.field0_0x0;
-      _Var7.field0_0x0 = g_XYxy.field0_0x0;
-      _Var6.field0_0x0 = g_XYZw.field0_0x0;
-      _Var5.field0_0x0 = g_zero.field0_0x0;
-      dataCacheBlockTouch(local_b0 + uVar19);
-      dataCacheBlockTouch((ulonglong)local_ac + lVar20);
-      auVar44 = loadVectorRightIndexed(uVar19 + 8);
-      auVar50 = loadVectorLeftIndexed(uVar19);
-      puVar21 = (ushort *)lVar20;
-      auVar43 = vectorShiftLeftDoubleByOctetImmediate(auVar44,auVar44,8);
-      auVar48 = loadVectorRightIndexed(uVar19 + 0x10);
-      iVar4 = (int)uVar12;
-      uVar1 = (uint)*puVar21 + iVar4;
-      auVar44 = vectorUnpackD3Dtype(auVar50 | auVar48,8);
-      uVar2 = (uint)puVar21[1] + iVar4;
-      auVar41 = vectorSplatWord(auVar50 | auVar48,2);
-      auVar48 = loadVectorLeftIndexed(lVar14);
-      auVar25 = *(undefined1 (*) [16])(uVar1 + 0x20 & 0xfffffff0);
-      auVar50 = vectorUnpackHighSignedByte(auVar50 | auVar43);
-      auVar43 = vectorMultiplyAddFloatingPoint
-                          (auVar44,(undefined1  [16])g_unpackMul101010.field0_0x0,
+      dataCacheBlockTouch(lVar12 + lVar16);
+      lVar12 = lVar12 + 0x80;
+      lVar11 = lVar11 + -1;
+    } while (lVar11 != 0);
+  }
+  if (param_4 != 0) {
+    lVar13 = (((longlong)(int)param_4 - 1U & 0xffffffff) >> 1) + 1;
+    auVar47 = loadVectorLeftIndexed(ZEXT48(&stack0x00000000) + 0x34);
+    auVar47 = vectorSplatWord(auVar47,0);
+    uVar6 = in_r9 + 0x20;
+    lVar15 = lVar16 + 0xc;
+    lVar12 = lVar16 + 8;
+    lVar11 = lVar16 + 4;
+    do {
+      _Var5.field0_0x0 = g_ZWxy.field0_0x0;
+      _Var4.field0_0x0 = g_XYxy.field0_0x0;
+      _Var3.field0_0x0 = g_XYZw.field0_0x0;
+      _Var2.field0_0x0 = g_zero.field0_0x0;
+      dataCacheBlockTouch((ulonglong)local_b0 + lVar7);
+      dataCacheBlockTouch((ulonglong)local_ac + lVar16);
+      auVar39 = loadVectorRightIndexed(lVar7 + 8);
+      auVar45 = loadVectorLeftIndexed(lVar7);
+      puVar17 = (ushort *)lVar16;
+      auVar38 = vectorShiftLeftDoubleByOctetImmediate(auVar39,auVar39,8);
+      auVar43 = loadVectorRightIndexed(lVar7 + 0x10);
+      uVar9 = (int)param_7->xyz + (uint)*puVar17;
+      auVar39 = vectorUnpackD3Dtype(auVar45 | auVar43,8);
+      uVar8 = (int)param_7->xyz + (uint)puVar17[1];
+      auVar36 = vectorSplatWord(auVar45 | auVar43,2);
+      auVar43 = loadVectorLeftIndexed(lVar12);
+      auVar20 = *(undefined1 (*) [16])(uVar9 + 0x20 & 0xfffffff0);
+      auVar45 = vectorUnpackHighSignedByte(auVar45 | auVar38);
+      auVar38 = vectorMultiplyAddFloatingPoint
+                          (auVar39,(undefined1  [16])g_unpackMul101010.field0_0x0,
                            (undefined1  [16])g_unpackAdd101010.field0_0x0);
-      auVar24 = *(undefined1 (*) [16])(uVar1 + 0x10 & 0xfffffff0);
-      auVar44 = vectorUnpackD3Dtype(auVar41,8);
-      auVar23 = *(undefined1 (*) [16])(uVar1 & 0xfffffff0);
-      uVar3 = (uint)puVar21[3] + iVar4;
-      auVar51 = vectorConvertFromSignedFixedPointWord128(auVar50,0);
-      auVar41 = loadVectorLeftIndexed(lVar13);
-      auVar48 = vectorPermute128(auVar48,(undefined1  [16])g_zero.field0_0x0,
+      auVar19 = *(undefined1 (*) [16])(uVar9 + 0x10 & 0xfffffff0);
+      auVar39 = vectorUnpackD3Dtype(auVar36,8);
+      auVar18 = *(undefined1 (*) [16])(uVar9 & 0xfffffff0);
+      uVar10 = (int)param_7->xyz + (uint)puVar17[3];
+      auVar46 = vectorConvertFromSignedFixedPointWord128(auVar45,0);
+      auVar36 = loadVectorLeftIndexed(lVar11);
+      auVar43 = vectorPermute128(auVar43,(undefined1  [16])g_zero.field0_0x0,
                                  (undefined1  [16])g_shortBoneWeightPerm.field0_0x0);
-      auVar50 = vectorMultiplyAddFloatingPoint
-                          (auVar44,(undefined1  [16])g_unpackMul101010.field0_0x0,
+      auVar45 = vectorMultiplyAddFloatingPoint
+                          (auVar39,(undefined1  [16])g_unpackMul101010.field0_0x0,
                            (undefined1  [16])g_unpackAdd101010.field0_0x0);
-      auVar44 = vectorPermute128(auVar41,(undefined1  [16])g_zero.field0_0x0,
+      auVar39 = vectorPermute128(auVar36,(undefined1  [16])g_zero.field0_0x0,
                                  (undefined1  [16])g_shortBoneWeightPerm.field0_0x0);
-      auVar49 = vectorConvertFromUnsignedFixedPointWord128(auVar48,0x10);
-      auVar36 = vectorConvertFromUnsignedFixedPointWord128(auVar44,0x10);
-      auVar48 = vectorSplatWord(auVar43,2);
-      auVar44 = auVar43 >> 0x40;
-      auVar43 = auVar43 >> 0x60;
-      auVar35 = vectorMultiplyFloatingPoint(auVar52,auVar51);
-      auVar33 = vectorMultiplyFloatingPoint(auVar48,auVar25);
-      auVar41 = vectorSplatWord(auVar50,2);
-      auVar48 = auVar50 >> 0x60;
-      auVar50 = auVar50 >> 0x40;
-      auVar41 = vectorMultiplyFloatingPoint(auVar41,auVar25);
-      auVar27 = vectorSplatWord(auVar35,2);
-      auVar33 = vectorMultiplyAddFloatingPoint
-                          (auVar44 & (undefined1  [16])0xffffffff | auVar44 << 0x20 |
-                           (auVar44 & (undefined1  [16])0xffffffff) << 0x40 | auVar44 << 0x60,
-                           auVar24,auVar33);
-      auVar26 = vectorSplatWord(auVar35,1);
-      auVar35 = vectorSplatWord(auVar35,0);
-      auVar25 = vectorMultiplyAddFloatingPoint
-                          (auVar25,auVar27,*(undefined1 (*) [16])(uVar1 + 0x30 & 0xfffffff0));
-      auVar44 = vectorMultiplyAddFloatingPoint
-                          (auVar50 & (undefined1  [16])0xffffffff | auVar50 << 0x20 |
-                           (auVar50 & (undefined1  [16])0xffffffff) << 0x40 | auVar50 << 0x60,
-                           auVar24,auVar41);
+      auVar44 = vectorConvertFromUnsignedFixedPointWord128(auVar43,0x10);
+      auVar31 = vectorConvertFromUnsignedFixedPointWord128(auVar39,0x10);
+      auVar43 = vectorSplatWord(auVar38,2);
+      auVar39 = auVar38 >> 0x40;
+      auVar38 = auVar38 >> 0x60;
+      auVar30 = vectorMultiplyFloatingPoint(auVar47,auVar46);
+      auVar28 = vectorMultiplyFloatingPoint(auVar43,auVar20);
+      auVar36 = vectorSplatWord(auVar45,2);
+      auVar43 = auVar45 >> 0x60;
+      auVar45 = auVar45 >> 0x40;
+      auVar36 = vectorMultiplyFloatingPoint(auVar36,auVar20);
+      auVar22 = vectorSplatWord(auVar30,2);
       auVar28 = vectorMultiplyAddFloatingPoint
+                          (auVar39 & (undefined1  [16])0xffffffff | auVar39 << 0x20 |
+                           (auVar39 & (undefined1  [16])0xffffffff) << 0x40 | auVar39 << 0x60,
+                           auVar19,auVar28);
+      auVar21 = vectorSplatWord(auVar30,1);
+      auVar30 = vectorSplatWord(auVar30,0);
+      auVar20 = vectorMultiplyAddFloatingPoint
+                          (auVar20,auVar22,*(undefined1 (*) [16])(uVar9 + 0x30 & 0xfffffff0));
+      auVar39 = vectorMultiplyAddFloatingPoint
+                          (auVar45 & (undefined1  [16])0xffffffff | auVar45 << 0x20 |
+                           (auVar45 & (undefined1  [16])0xffffffff) << 0x40 | auVar45 << 0x60,
+                           auVar19,auVar36);
+      auVar23 = vectorMultiplyAddFloatingPoint
+                          (auVar38 & (undefined1  [16])0xffffffff | auVar38 << 0x20 |
+                           auVar38 << 0x40 | auVar38 << 0x60,auVar18,auVar28);
+      auVar45 = vectorMultiplyAddFloatingPoint
+                          (*(undefined1 (*) [16])(uVar8 + 0x20 & 0xfffffff0),auVar22,
+                           *(undefined1 (*) [16])(uVar8 + 0x30 & 0xfffffff0));
+      auVar38 = vectorMultiplyAddFloatingPoint(auVar21,auVar19,auVar20);
+      auVar36 = vectorMultiplyAddFloatingPoint
+                          (*(undefined1 (*) [16])(uVar10 + 0x20 & 0xfffffff0),auVar22,
+                           *(undefined1 (*) [16])(uVar10 + 0x30 & 0xfffffff0));
+      auVar26 = vectorMultiplyAddFloatingPoint
                           (auVar43 & (undefined1  [16])0xffffffff | auVar43 << 0x20 |
-                           auVar43 << 0x40 | auVar43 << 0x60,auVar23,auVar33);
-      auVar50 = vectorMultiplyAddFloatingPoint
-                          (*(undefined1 (*) [16])(uVar2 + 0x20 & 0xfffffff0),auVar27,
-                           *(undefined1 (*) [16])(uVar2 + 0x30 & 0xfffffff0));
-      auVar43 = vectorMultiplyAddFloatingPoint(auVar26,auVar24,auVar25);
-      auVar41 = vectorMultiplyAddFloatingPoint
-                          (*(undefined1 (*) [16])(uVar3 + 0x20 & 0xfffffff0),auVar27,
-                           *(undefined1 (*) [16])(uVar3 + 0x30 & 0xfffffff0));
-      auVar31 = vectorMultiplyAddFloatingPoint
-                          (auVar48 & (undefined1  [16])0xffffffff | auVar48 << 0x20 |
-                           auVar48 << 0x40 | auVar48 << 0x60,auVar23,auVar44);
-      auVar44 = vectorMultiplyAddFloatingPoint
-                          (auVar26,*(undefined1 (*) [16])(uVar2 + 0x10 & 0xfffffff0),auVar50);
-      auVar29 = vectorMultiplyAddFloatingPoint(auVar35,auVar23,auVar43);
-      lVar11 = uVar19 + lVar9;
-      auVar48 = vectorMultiplyAddFloatingPoint
-                          (auVar26,*(undefined1 (*) [16])(uVar3 + 0x10 & 0xfffffff0),auVar41);
-      uVar1 = (uint)puVar21[7] + iVar4;
-      auVar33 = loadVectorLeftIndexed(lVar11);
-      auVar41 = loadVectorRightIndexed(lVar11 + 0x10);
-      auVar43 = loadVectorRightIndexed(lVar11 + 8);
-      auVar32 = vectorMultiplyAddFloatingPoint
-                          (auVar35,*(undefined1 (*) [16])(uVar2 & 0xfffffff0),auVar44);
-      auVar44 = vectorUnpackD3Dtype(auVar33 | auVar41,8);
-      auVar50 = vectorShiftLeftDoubleByOctetImmediate(auVar43,auVar43,8);
+                           auVar43 << 0x40 | auVar43 << 0x60,auVar18,auVar39);
+      auVar39 = vectorMultiplyAddFloatingPoint
+                          (auVar21,*(undefined1 (*) [16])(uVar8 + 0x10 & 0xfffffff0),auVar45);
+      auVar24 = vectorMultiplyAddFloatingPoint(auVar30,auVar18,auVar38);
+      lVar7 = lVar7 + (int)param_2;
+      uVar1 = puVar17[5];
       auVar43 = vectorMultiplyAddFloatingPoint
-                          (auVar44,(undefined1  [16])g_unpackMul101010.field0_0x0,
+                          (auVar21,*(undefined1 (*) [16])(uVar10 + 0x10 & 0xfffffff0),auVar36);
+      uVar9 = (int)param_7->xyz + (uint)puVar17[7];
+      auVar28 = loadVectorLeftIndexed(lVar7);
+      auVar36 = loadVectorRightIndexed(lVar7 + 0x10);
+      auVar38 = loadVectorRightIndexed(lVar7 + 8);
+      auVar27 = vectorMultiplyAddFloatingPoint
+                          (auVar30,*(undefined1 (*) [16])(uVar8 & 0xfffffff0),auVar39);
+      auVar39 = vectorUnpackD3Dtype(auVar28 | auVar36,8);
+      auVar45 = vectorShiftLeftDoubleByOctetImmediate(auVar38,auVar38,8);
+      auVar38 = vectorMultiplyAddFloatingPoint
+                          (auVar39,(undefined1  [16])g_unpackMul101010.field0_0x0,
                            (undefined1  [16])g_unpackAdd101010.field0_0x0);
-      auVar44 = vectorSplatWord(auVar33 | auVar41,2);
-      auVar25 = *(undefined1 (*) [16])(uVar1 + 0x20 & 0xfffffff0);
-      auVar24 = *(undefined1 (*) [16])(uVar1 + 0x10 & 0xfffffff0);
-      uVar2 = (uint)puVar21[8] + iVar4;
-      auVar30 = vectorMultiplyAddFloatingPoint
-                          (auVar35,*(undefined1 (*) [16])(uVar3 & 0xfffffff0),auVar48);
-      auVar23 = *(undefined1 (*) [16])(uVar1 & 0xfffffff0);
-      auVar44 = vectorUnpackD3Dtype(auVar44,8);
-      iVar17 = (uint)puVar21[5] + iVar4;
-      auVar48 = loadVectorLeftIndexed(lVar18);
-      auVar50 = vectorUnpackHighSignedByte(auVar33 | auVar50);
-      auVar33 = vectorMultiplyAddFloatingPoint
-                          (auVar44,(undefined1  [16])g_unpackMul101010.field0_0x0,
+      auVar39 = vectorSplatWord(auVar28 | auVar36,2);
+      auVar20 = *(undefined1 (*) [16])(uVar9 + 0x20 & 0xfffffff0);
+      auVar19 = *(undefined1 (*) [16])(uVar9 + 0x10 & 0xfffffff0);
+      uVar8 = (int)param_7->xyz + (uint)puVar17[8];
+      auVar25 = vectorMultiplyAddFloatingPoint
+                          (auVar30,*(undefined1 (*) [16])(uVar10 & 0xfffffff0),auVar43);
+      auVar18 = *(undefined1 (*) [16])(uVar9 & 0xfffffff0);
+      auVar39 = vectorUnpackD3Dtype(auVar39,8);
+      auVar43 = loadVectorLeftIndexed(lVar15);
+      auVar45 = vectorUnpackHighSignedByte(auVar28 | auVar45);
+      auVar28 = vectorMultiplyAddFloatingPoint
+                          (auVar39,(undefined1  [16])g_unpackMul101010.field0_0x0,
                            (undefined1  [16])g_unpackAdd101010.field0_0x0);
-      auVar48 = vectorPermute128(auVar48,(undefined1  [16])g_zero.field0_0x0,
+      auVar43 = vectorPermute128(auVar43,(undefined1  [16])g_zero.field0_0x0,
                                  (undefined1  [16])g_shortBoneWeightPerm.field0_0x0);
-      auVar40 = vectorSplatWord(auVar51,3);
-      auVar37 = vectorAddFloatingPoint128(auVar36,auVar49);
-      auVar47 = vectorConvertFromSignedFixedPointWord128(auVar50,0);
-      auVar51 = vectorSplatWord(auVar43,2);
-      auVar44 = auVar43 >> 0x60;
-      auVar43 = auVar43 >> 0x40;
-      auVar50 = loadVectorLeftIndexed(lVar13 + 0xe);
-      auVar41 = vectorConvertFromUnsignedFixedPointWord128(auVar48,0x10);
-      auVar51 = vectorMultiplyFloatingPoint(auVar51,auVar25);
-      auVar48 = loadVectorLeftIndexed(lVar14 + 0xe);
-      auVar42 = loadVectorLeftIndexed(lVar18 + 0xe);
-      uVar3 = (uint)puVar21[10] + iVar4;
-      auVar34 = vectorPermute128(auVar50,(undefined1  [16])g_zero.field0_0x0,
+      auVar35 = vectorSplatWord(auVar46,3);
+      auVar32 = vectorAddFloatingPoint128(auVar31,auVar44);
+      auVar42 = vectorConvertFromSignedFixedPointWord128(auVar45,0);
+      auVar46 = vectorSplatWord(auVar38,2);
+      auVar39 = auVar38 >> 0x60;
+      auVar38 = auVar38 >> 0x40;
+      auVar45 = loadVectorLeftIndexed(lVar11 + 0xe);
+      auVar36 = vectorConvertFromUnsignedFixedPointWord128(auVar43,0x10);
+      auVar46 = vectorMultiplyFloatingPoint(auVar46,auVar20);
+      auVar43 = loadVectorLeftIndexed(lVar12 + 0xe);
+      auVar37 = loadVectorLeftIndexed(lVar15 + 0xe);
+      uVar10 = (int)param_7->xyz + (uint)puVar17[10];
+      auVar29 = vectorPermute128(auVar45,(undefined1  [16])g_zero.field0_0x0,
                                  (undefined1  [16])g_shortBoneWeightPerm.field0_0x0);
-      auVar45 = vectorPermute128(auVar48,(undefined1  [16])g_zero.field0_0x0,
+      auVar40 = vectorPermute128(auVar43,(undefined1  [16])g_zero.field0_0x0,
                                  (undefined1  [16])g_shortBoneWeightPerm.field0_0x0);
-      auVar39 = vectorPermute128(auVar42,(undefined1  [16])g_zero.field0_0x0,
+      auVar34 = vectorPermute128(auVar37,(undefined1  [16])g_zero.field0_0x0,
                                  (undefined1  [16])g_shortBoneWeightPerm.field0_0x0);
-      auVar48 = auVar33 >> 0x40;
-      auVar50 = auVar33 >> 0x60;
-      auVar38 = vectorConvertFromUnsignedFixedPointWord128(auVar34,0x10);
-      auVar34 = vectorSplatWord(auVar33,2);
-      auVar46 = vectorConvertFromUnsignedFixedPointWord128(auVar45,0x10);
-      auVar33 = vectorMultiplyFloatingPoint(auVar52,auVar47);
-      auVar45 = vectorSplatWord(auVar47,3);
-      auVar42 = vectorMultiplyFloatingPoint(auVar34,auVar25);
-      auVar34 = vectorMultiplyAddFloatingPoint
+      auVar43 = auVar28 >> 0x40;
+      auVar45 = auVar28 >> 0x60;
+      auVar33 = vectorConvertFromUnsignedFixedPointWord128(auVar29,0x10);
+      auVar29 = vectorSplatWord(auVar28,2);
+      auVar41 = vectorConvertFromUnsignedFixedPointWord128(auVar40,0x10);
+      auVar28 = vectorMultiplyFloatingPoint(auVar47,auVar42);
+      auVar40 = vectorSplatWord(auVar42,3);
+      auVar37 = vectorMultiplyFloatingPoint(auVar29,auVar20);
+      auVar29 = vectorMultiplyAddFloatingPoint
+                          (auVar38 & (undefined1  [16])0xffffffff | auVar38 << 0x20 |
+                           (auVar38 & (undefined1  [16])0xffffffff) << 0x40 | auVar38 << 0x60,
+                           auVar19,auVar46);
+      auVar38 = vectorSplatWord(auVar28,2);
+      auVar46 = vectorSplatWord(auVar28,1);
+      auVar28 = vectorSplatWord(auVar28,0);
+      auVar37 = vectorMultiplyAddFloatingPoint
                           (auVar43 & (undefined1  [16])0xffffffff | auVar43 << 0x20 |
                            (auVar43 & (undefined1  [16])0xffffffff) << 0x40 | auVar43 << 0x60,
-                           auVar24,auVar51);
-      auVar43 = vectorSplatWord(auVar33,2);
-      auVar51 = vectorSplatWord(auVar33,1);
-      auVar33 = vectorSplatWord(auVar33,0);
-      auVar42 = vectorMultiplyAddFloatingPoint
-                          (auVar48 & (undefined1  [16])0xffffffff | auVar48 << 0x20 |
-                           (auVar48 & (undefined1  [16])0xffffffff) << 0x40 | auVar48 << 0x60,
-                           auVar24,auVar42);
-      auVar48 = vectorMultiplyAddFloatingPoint
-                          (auVar25,auVar43,*(undefined1 (*) [16])(uVar1 + 0x30 & 0xfffffff0));
+                           auVar19,auVar37);
+      auVar43 = vectorMultiplyAddFloatingPoint
+                          (auVar20,auVar38,*(undefined1 (*) [16])(uVar9 + 0x30 & 0xfffffff0));
+      auVar20 = vectorMultiplyAddFloatingPoint
+                          (auVar39 & (undefined1  [16])0xffffffff | auVar39 << 0x20 |
+                           auVar39 << 0x40 | auVar39 << 0x60,auVar18,auVar29);
+      auVar39 = vectorMultiplyAddFloatingPoint
+                          (*(undefined1 (*) [16])(uVar8 + 0x20 & 0xfffffff0),auVar38,
+                           *(undefined1 (*) [16])(uVar8 + 0x30 & 0xfffffff0));
+      auVar45 = vectorMultiplyAddFloatingPoint
+                          (auVar45 & (undefined1  [16])0xffffffff | auVar45 << 0x20 |
+                           auVar45 << 0x40 | auVar45 << 0x60,auVar18,auVar37);
+      auVar29 = vectorMultiplyAddFloatingPoint(auVar46,auVar19,auVar43);
+      auVar43 = vectorMultiplyAddFloatingPoint
+                          (*(undefined1 (*) [16])((int)param_7[1].xyz + uVar1 + 8 & 0xfffffff0),
+                           auVar22,*(undefined1 (*) [16])
+                                    ((int)param_7[2].xyz + (uint)uVar1 & 0xfffffff0));
+      auVar27 = vectorMultiplyFloatingPoint(auVar27,auVar31);
+      auVar19 = vectorMultiplyAddFloatingPoint
+                          (auVar26,(undefined1  [16])g_packMul101010.field0_0x0,
+                           (undefined1  [16])g_packAdd.field0_0x0);
+      auVar22 = vectorMultiplyAddFloatingPoint
+                          (auVar45,(undefined1  [16])g_packMul101010.field0_0x0,
+                           (undefined1  [16])g_packAdd.field0_0x0);
+      auVar18 = vectorMultiplyAddFloatingPoint(auVar28,auVar18,auVar29);
+      auVar45 = vectorMultiplyAddFloatingPoint
+                          (auVar46,*(undefined1 (*) [16])(uVar8 + 0x10 & 0xfffffff0),auVar39);
+      auVar39 = vectorMultiplyAddFloatingPoint
+                          (auVar21,*(undefined1 (*) [16])
+                                    ((int)param_7->xyz + uVar1 + 0x10 & 0xfffffff0),auVar43);
+      uVar9 = (int)param_7->xyz + (uint)puVar17[0xc];
+      auVar43 = vectorMultiplyAddFloatingPoint
+                          (auVar28,*(undefined1 (*) [16])(uVar8 & 0xfffffff0),auVar45);
+      auVar21 = vectorMultiplyAddFloatingPoint128(auVar44,auVar25,auVar27);
+      auVar26 = vectorMultiplyFloatingPoint(auVar43,auVar33);
       auVar25 = vectorMultiplyAddFloatingPoint
-                          (auVar44 & (undefined1  [16])0xffffffff | auVar44 << 0x20 |
-                           auVar44 << 0x40 | auVar44 << 0x60,auVar23,auVar34);
-      auVar44 = vectorMultiplyAddFloatingPoint
-                          (*(undefined1 (*) [16])(uVar2 + 0x20 & 0xfffffff0),auVar43,
-                           *(undefined1 (*) [16])(uVar2 + 0x30 & 0xfffffff0));
-      auVar50 = vectorMultiplyAddFloatingPoint
-                          (auVar50 & (undefined1  [16])0xffffffff | auVar50 << 0x20 |
-                           auVar50 << 0x40 | auVar50 << 0x60,auVar23,auVar42);
-      auVar34 = vectorMultiplyAddFloatingPoint(auVar51,auVar24,auVar48);
-      auVar48 = vectorMultiplyAddFloatingPoint
-                          (*(undefined1 (*) [16])(iVar17 + 0x20U & 0xfffffff0),auVar27,
-                           *(undefined1 (*) [16])(iVar17 + 0x30U & 0xfffffff0));
-      auVar32 = vectorMultiplyFloatingPoint(auVar32,auVar36);
-      auVar24 = vectorMultiplyAddFloatingPoint
-                          (auVar31,(undefined1  [16])g_packMul101010.field0_0x0,
-                           (undefined1  [16])g_packAdd.field0_0x0);
-      auVar27 = vectorMultiplyAddFloatingPoint
-                          (auVar50,(undefined1  [16])g_packMul101010.field0_0x0,
-                           (undefined1  [16])g_packAdd.field0_0x0);
-      auVar23 = vectorMultiplyAddFloatingPoint(auVar33,auVar23,auVar34);
-      auVar50 = vectorMultiplyAddFloatingPoint
-                          (auVar51,*(undefined1 (*) [16])(uVar2 + 0x10 & 0xfffffff0),auVar44);
-      auVar44 = vectorMultiplyAddFloatingPoint
-                          (auVar26,*(undefined1 (*) [16])(iVar17 + 0x10U & 0xfffffff0),auVar48);
-      uVar1 = (uint)puVar21[0xc] + iVar4;
-      auVar48 = vectorMultiplyAddFloatingPoint
-                          (auVar33,*(undefined1 (*) [16])(uVar2 & 0xfffffff0),auVar50);
-      auVar26 = vectorMultiplyAddFloatingPoint128(auVar49,auVar30,auVar32);
-      auVar31 = vectorMultiplyFloatingPoint(auVar48,auVar38);
+                          (*(undefined1 (*) [16])(uVar10 + 0x20 & 0xfffffff0),auVar38,
+                           *(undefined1 (*) [16])(uVar10 + 0x30 & 0xfffffff0));
+      auVar43 = vectorMultiplyAddFloatingPoint
+                          (auVar30,*(undefined1 (*) [16])
+                                    ((int)param_7->xyz + (uint)uVar1 & 0xfffffff0),auVar39);
       auVar30 = vectorMultiplyAddFloatingPoint
-                          (*(undefined1 (*) [16])(uVar3 + 0x20 & 0xfffffff0),auVar43,
-                           *(undefined1 (*) [16])(uVar3 + 0x30 & 0xfffffff0));
-      auVar48 = vectorMultiplyAddFloatingPoint
-                          (auVar35,*(undefined1 (*) [16])((uint)puVar21[5] + iVar4 & 0xfffffff0),
-                           auVar44);
-      auVar35 = vectorMultiplyAddFloatingPoint
-                          (auVar28,(undefined1  [16])g_packMul101010.field0_0x0,
+                          (auVar23,(undefined1  [16])g_packMul101010.field0_0x0,
                            (undefined1  [16])g_packAdd.field0_0x0);
-      auVar25 = vectorMultiplyAddFloatingPoint
-                          (auVar25,(undefined1  [16])g_packMul101010.field0_0x0,
+      auVar20 = vectorMultiplyAddFloatingPoint
+                          (auVar20,(undefined1  [16])g_packMul101010.field0_0x0,
                            (undefined1  [16])g_packAdd.field0_0x0);
-      auVar50 = vectorMultiplyAddFloatingPoint
-                          (*(undefined1 (*) [16])(uVar1 + 0x20 & 0xfffffff0),auVar43,
-                           *(undefined1 (*) [16])(uVar1 + 0x30 & 0xfffffff0));
-      auVar32 = vectorAddFloatingPoint128(auVar37,auVar41);
-      uVar19 = lVar11 + lVar9;
-      auVar44 = vectorConvertFromUnsignedFixedPointWord128(auVar39,0x10);
-      lVar20 = lVar20 + 0x1c;
-      auVar28 = vectorAddFloatingPoint128(auVar38,auVar46);
-      lVar13 = lVar13 + 0x1c;
-      lVar14 = lVar14 + 0x1c;
-      lVar18 = lVar18 + 0x1c;
-      auVar43 = vectorMultiplyAddFloatingPoint
-                          (auVar51,*(undefined1 (*) [16])(uVar3 + 0x10 & 0xfffffff0),auVar30);
-      auVar48 = vectorMultiplyAddFloatingPoint(auVar41,auVar48,auVar26);
-      auVar41 = vectorMultiplyAddFloatingPoint
-                          (auVar51,*(undefined1 (*) [16])(uVar1 + 0x10 & 0xfffffff0),auVar50);
-      auVar50 = vectorSubtractFloatingPoint128((undefined1  [16])g_one.field0_0x0,auVar32);
-      auVar26 = vectorAddFloatingPoint128(auVar28,auVar44);
-      auVar43 = vectorMultiplyAddFloatingPoint
-                          (auVar33,*(undefined1 (*) [16])(uVar3 & 0xfffffff0),auVar43);
-      auVar41 = vectorMultiplyAddFloatingPoint
-                          (auVar33,*(undefined1 (*) [16])(uVar1 & 0xfffffff0),auVar41);
-      auVar48 = vectorMultiplyAddFloatingPoint(auVar50,auVar29,auVar48);
-      auVar50 = vectorSubtractFloatingPoint128((undefined1  [16])g_one.field0_0x0,auVar26);
-      auVar43 = vectorMultiplyAddFloatingPoint128(auVar46,auVar43,auVar31);
-      auVar48 = vectorPermute128(auVar48,auVar40,(undefined1  [16])g_XYZw.field0_0x0);
-      uVar1 = (uint)lVar15;
-      *(undefined1 (*) [16])(uVar1 - 0x20 & 0xfffffff0) = auVar48;
-      auVar44 = vectorMultiplyAddFloatingPoint(auVar44,auVar41,auVar43);
-      auVar44 = vectorMultiplyAddFloatingPoint(auVar50,auVar23,auVar44);
-      auVar44 = vectorPermute128(auVar44,auVar45,(undefined1  [16])_Var6.field0_0x0);
-      auVar43 = vectorPermute128((undefined1  [16])_Var5.field0_0x0,auVar44,
-                                 (undefined1  [16])_Var7.field0_0x0);
-      auVar44 = vectorPermute128(auVar44,(undefined1  [16])_Var5.field0_0x0,
-                                 (undefined1  [16])_Var8.field0_0x0);
-      auVar43 = vectorPackD3Dtype(auVar43,auVar24,9,3);
-      auVar44 = vectorPackD3Dtype(auVar44,auVar27,9,1);
-      auVar43 = vectorPackD3Dtype(auVar43,auVar35,9,2);
-      auVar44 = vectorPackD3Dtype(auVar44,auVar25,9,0);
-      *(undefined1 (*) [16])(uVar1 - 0x10 & 0xfffffff0) = auVar43;
-      *(undefined1 (*) [16])(uVar1 & 0xfffffff0) = auVar44;
-      lVar15 = lVar15 + 0x30;
-      lVar16 = lVar16 + -1;
-    } while (lVar16 != 0);
+      auVar45 = vectorMultiplyAddFloatingPoint
+                          (*(undefined1 (*) [16])(uVar9 + 0x20 & 0xfffffff0),auVar38,
+                           *(undefined1 (*) [16])(uVar9 + 0x30 & 0xfffffff0));
+      auVar27 = vectorAddFloatingPoint128(auVar32,auVar36);
+      lVar7 = lVar7 + (int)param_2;
+      auVar39 = vectorConvertFromUnsignedFixedPointWord128(auVar34,0x10);
+      lVar16 = lVar16 + 0x1c;
+      auVar23 = vectorAddFloatingPoint128(auVar33,auVar41);
+      lVar11 = lVar11 + 0x1c;
+      lVar12 = lVar12 + 0x1c;
+      lVar15 = lVar15 + 0x1c;
+      auVar38 = vectorMultiplyAddFloatingPoint
+                          (auVar46,*(undefined1 (*) [16])(uVar10 + 0x10 & 0xfffffff0),auVar25);
+      auVar43 = vectorMultiplyAddFloatingPoint(auVar36,auVar43,auVar21);
+      auVar36 = vectorMultiplyAddFloatingPoint
+                          (auVar46,*(undefined1 (*) [16])(uVar9 + 0x10 & 0xfffffff0),auVar45);
+      auVar45 = vectorSubtractFloatingPoint128((undefined1  [16])g_one.field0_0x0,auVar27);
+      auVar21 = vectorAddFloatingPoint128(auVar23,auVar39);
+      auVar38 = vectorMultiplyAddFloatingPoint
+                          (auVar28,*(undefined1 (*) [16])(uVar10 & 0xfffffff0),auVar38);
+      auVar36 = vectorMultiplyAddFloatingPoint
+                          (auVar28,*(undefined1 (*) [16])(uVar9 & 0xfffffff0),auVar36);
+      auVar43 = vectorMultiplyAddFloatingPoint(auVar45,auVar24,auVar43);
+      auVar45 = vectorSubtractFloatingPoint128((undefined1  [16])g_one.field0_0x0,auVar21);
+      auVar38 = vectorMultiplyAddFloatingPoint128(auVar41,auVar38,auVar26);
+      auVar43 = vectorPermute128(auVar43,auVar35,(undefined1  [16])g_XYZw.field0_0x0);
+      *(undefined1 (*) [16])(uVar6 - 0x20 & 0xfffffff0) = auVar43;
+      auVar39 = vectorMultiplyAddFloatingPoint(auVar39,auVar36,auVar38);
+      auVar39 = vectorMultiplyAddFloatingPoint(auVar45,auVar18,auVar39);
+      auVar39 = vectorPermute128(auVar39,auVar40,(undefined1  [16])_Var3.field0_0x0);
+      auVar38 = vectorPermute128((undefined1  [16])_Var2.field0_0x0,auVar39,
+                                 (undefined1  [16])_Var4.field0_0x0);
+      auVar39 = vectorPermute128(auVar39,(undefined1  [16])_Var2.field0_0x0,
+                                 (undefined1  [16])_Var5.field0_0x0);
+      auVar38 = vectorPackD3Dtype(auVar38,auVar19,9,3);
+      auVar39 = vectorPackD3Dtype(auVar39,auVar22,9,1);
+      auVar38 = vectorPackD3Dtype(auVar38,auVar30,9,2);
+      auVar39 = vectorPackD3Dtype(auVar39,auVar20,9,0);
+      *(undefined1 (*) [16])(uVar6 - 0x10 & 0xfffffff0) = auVar38;
+      *(undefined1 (*) [16])(uVar6 & 0xfffffff0) = auVar39;
+      uVar6 = uVar6 + 0x30;
+      lVar13 = lVar13 + -1;
+    } while (lVar13 != 0);
   }
-  __restgprlr();
   return;
 }
 
 
 // 8275F518  R_SkinXSurfaceRigid0Quantized  (gfx_d3d/r_model_skin.cpp:2016)
 
+/* WARNING: Function: __savegprlr_20 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_20 replaced with injection: xenon_save_restore */
+
 void R_SkinXSurfaceRigid0Quantized
                (uchar *param_1,uint param_2,uint param_3,float param_4,vector4 *param_5,int param_6,
                GfxQuantizedSkinnedVertexOut0 *param_7)
 
 {
-  uint uVar1;
-  uint uVar2;
-  __vector4 _Var3;
-  ulonglong uVar4;
+  __vector4 _Var1;
+  longlong lVar2;
+  uint in_r9;
+  uint uVar3;
+  longlong lVar4;
   longlong lVar5;
-  ulonglong uVar6;
-  longlong lVar7;
-  ulonglong in_r9;
-  longlong lVar8;
-  longlong lVar9;
-  longlong lVar10;
-  double extraout_f1;
+  longlong lVar6;
+  undefined1 auVar7 [16];
+  undefined1 auVar8 [16];
+  undefined1 auVar9 [16];
+  undefined1 auVar10 [16];
   undefined1 auVar11 [16];
   undefined1 auVar12 [16];
   undefined1 auVar13 [16];
@@ -2353,27 +2308,20 @@ void R_SkinXSurfaceRigid0Quantized
   undefined1 auVar25 [16];
   undefined1 auVar26 [16];
   undefined1 auVar27 [16];
-  undefined1 auVar28 [16];
-  undefined1 auVar29 [16];
-  undefined1 auVar30 [16];
-  undefined1 auVar31 [16];
   float fStack0000002c;
   
-  lVar7 = (longlong)(int)param_7;
-  lVar10 = (longlong)param_6;
-  uVar6 = (ulonglong)(int)param_3;
-  lVar5 = (longlong)(int)param_2;
-  uVar4 = __savegprlr_20((double)param_4,param_1,lVar5,uVar6,param_5,lVar10,lVar7);
-  fStack0000002c = (float)extraout_f1;
-  if ((uVar4 & 0xffffffff) == 0) {
+  lVar2 = (longlong)(int)param_2;
+  lVar6 = (longlong)(int)param_1;
+  fStack0000002c = param_4;
+  if (param_1 == (uchar *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_model_skin.cpp",
                     0x7e8,0,"%s");
   }
-  if ((in_r9 & 0xffffffff) == 0) {
+  if (in_r9 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_model_skin.cpp",
                     0x7e9,0,"%s");
   }
-  if ((uVar4 & 0xf) != 0) {
+  if (((uint)param_1 & 0xf) != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_model_skin.cpp",
                     0x7ea,0,"%s");
   }
@@ -2381,167 +2329,169 @@ void R_SkinXSurfaceRigid0Quantized
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_model_skin.cpp",
                     0x7eb,0,"%s");
   }
-  if ((uVar6 & 1) != 0) {
+  if ((param_3 & 1) != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_model_skin.cpp",
                     0x7ec,0,"%s");
   }
-  if ((uVar6 & 0xffffffff) != 0) {
-    lVar9 = ((uVar6 - 1 & 0xffffffff) >> 1) + 1;
-    auVar31 = loadVectorLeftIndexed(ZEXT48(&stack0x00000000) + 0x2c);
-    auVar31 = vectorSplatWord(auVar31,0);
-    lVar8 = in_r9 + 0x20;
-    uVar2 = (uint)lVar10;
+  if (param_3 != 0) {
+    lVar4 = (((longlong)(int)param_3 - 1U & 0xffffffff) >> 1) + 1;
+    auVar27 = loadVectorLeftIndexed(ZEXT48(&stack0x00000000) + 0x2c);
+    auVar27 = vectorSplatWord(auVar27,0);
+    uVar3 = in_r9 + 0x20;
     do {
-      _Var3.field0_0x0 = g_XYZw.field0_0x0;
-      dataCacheBlockTouch(lVar7 + uVar4);
-      auVar30 = loadVectorLeftIndexed(uVar4);
-      auVar29 = loadVectorRightIndexed(uVar4 + 0x10);
-      lVar10 = uVar4 + lVar5;
-      auVar28 = loadVectorLeftIndexed(uVar4 + lVar5);
-      auVar11 = *(undefined1 (*) [16])(uVar2 + 0x20 & 0xfffffff0);
-      auVar26 = vectorSplatWord(auVar30 | auVar29,2);
-      auVar25 = loadVectorRightIndexed(lVar10 + 8);
-      auVar27 = loadVectorRightIndexed(lVar10 + 0x10);
-      auVar29 = vectorUnpackD3Dtype(auVar30 | auVar29,8);
-      auVar23 = vectorShiftLeftDoubleByOctetImmediate(auVar25,auVar25,8);
-      auVar14 = *(undefined1 (*) [16])(uVar2 + 0x10 & 0xfffffff0);
-      auVar25 = vectorUnpackD3Dtype(auVar26,8);
-      auVar24 = loadVectorRightIndexed(uVar4 + 8);
-      auVar29 = vectorMultiplyAddFloatingPoint
-                          (auVar29,(undefined1  [16])g_unpackMul101010.field0_0x0,
-                           (undefined1  [16])g_unpackAdd101010.field0_0x0);
-      auVar12 = *(undefined1 (*) [16])(uVar2 + 0x30 & 0xfffffff0);
-      auVar22 = vectorSplatWord(auVar28 | auVar27,2);
-      auVar26 = vectorUnpackD3Dtype(auVar28 | auVar27,8);
-      auVar13 = *(undefined1 (*) [16])(uVar2 & 0xfffffff0);
-      auVar27 = vectorMultiplyAddFloatingPoint
+      _Var1.field0_0x0 = g_XYZw.field0_0x0;
+      dataCacheBlockTouch((int)param_7 + lVar6);
+      auVar26 = loadVectorLeftIndexed(lVar6);
+      auVar25 = loadVectorRightIndexed(lVar6 + 0x10);
+      lVar5 = lVar6 + lVar2;
+      auVar24 = loadVectorLeftIndexed(lVar6 + lVar2);
+      auVar7 = *(undefined1 (*) [16])(param_6 + 0x20U & 0xfffffff0);
+      auVar22 = vectorSplatWord(auVar26 | auVar25,2);
+      auVar21 = loadVectorRightIndexed(lVar5 + 8);
+      auVar23 = loadVectorRightIndexed(lVar5 + 0x10);
+      auVar25 = vectorUnpackD3Dtype(auVar26 | auVar25,8);
+      auVar19 = vectorShiftLeftDoubleByOctetImmediate(auVar21,auVar21,8);
+      auVar10 = *(undefined1 (*) [16])(param_6 + 0x10U & 0xfffffff0);
+      auVar21 = vectorUnpackD3Dtype(auVar22,8);
+      auVar20 = loadVectorRightIndexed(lVar6 + 8);
+      auVar25 = vectorMultiplyAddFloatingPoint
                           (auVar25,(undefined1  [16])g_unpackMul101010.field0_0x0,
                            (undefined1  [16])g_unpackAdd101010.field0_0x0);
-      auVar24 = vectorShiftLeftDoubleByOctetImmediate(auVar24,auVar24,8);
-      uVar4 = lVar10 + lVar5;
-      auVar23 = vectorUnpackHighSignedByte(auVar28 | auVar23);
-      auVar25 = vectorUnpackD3Dtype(auVar22,8);
-      auVar22 = vectorMultiplyAddFloatingPoint
-                          (auVar26,(undefined1  [16])g_unpackMul101010.field0_0x0,
-                           (undefined1  [16])g_unpackAdd101010.field0_0x0);
-      auVar21 = vectorConvertFromSignedFixedPointWord128(auVar23,0);
+      auVar8 = *(undefined1 (*) [16])(param_6 + 0x30U & 0xfffffff0);
+      auVar18 = vectorSplatWord(auVar24 | auVar23,2);
+      auVar22 = vectorUnpackD3Dtype(auVar24 | auVar23,8);
+      auVar9 = *(undefined1 (*) [16])(param_6 & 0xfffffff0);
       auVar23 = vectorMultiplyAddFloatingPoint
-                          (auVar25,(undefined1  [16])g_unpackMul101010.field0_0x0,
+                          (auVar21,(undefined1  [16])g_unpackMul101010.field0_0x0,
                            (undefined1  [16])g_unpackAdd101010.field0_0x0);
-      auVar24 = vectorUnpackHighSignedByte(auVar30 | auVar24);
-      auVar26 = vectorSplatWord(auVar29,2);
-      auVar25 = auVar29 >> 0x40;
-      auVar29 = auVar29 >> 0x60;
-      auVar20 = vectorConvertFromSignedFixedPointWord128(auVar24,0);
-      auVar24 = vectorMultiplyFloatingPoint(auVar26,auVar11);
-      auVar26 = vectorSplatWord(auVar27,2);
-      auVar16 = vectorSplatWord(auVar27,1);
-      auVar19 = vectorMultiplyFloatingPoint(auVar31,auVar21);
-      auVar27 = vectorSplatWord(auVar27,0);
-      auVar28 = vectorSplatWord(auVar23,2);
-      auVar15 = vectorMultiplyFloatingPoint(auVar26,auVar11);
-      auVar26 = auVar23 >> 0x40;
-      auVar23 = auVar23 >> 0x60;
-      auVar30 = vectorSplatWord(auVar22,2);
-      auVar17 = vectorMultiplyFloatingPoint(auVar28,auVar11);
-      auVar21 = vectorSplatWord(auVar21,3);
-      auVar18 = vectorMultiplyFloatingPoint(auVar31,auVar20);
-      auVar25 = vectorMultiplyAddFloatingPoint
+      auVar20 = vectorShiftLeftDoubleByOctetImmediate(auVar20,auVar20,8);
+      lVar6 = lVar5 + lVar2;
+      auVar19 = vectorUnpackHighSignedByte(auVar24 | auVar19);
+      auVar21 = vectorUnpackD3Dtype(auVar18,8);
+      auVar18 = vectorMultiplyAddFloatingPoint
+                          (auVar22,(undefined1  [16])g_unpackMul101010.field0_0x0,
+                           (undefined1  [16])g_unpackAdd101010.field0_0x0);
+      auVar17 = vectorConvertFromSignedFixedPointWord128(auVar19,0);
+      auVar19 = vectorMultiplyAddFloatingPoint
+                          (auVar21,(undefined1  [16])g_unpackMul101010.field0_0x0,
+                           (undefined1  [16])g_unpackAdd101010.field0_0x0);
+      auVar20 = vectorUnpackHighSignedByte(auVar26 | auVar20);
+      auVar22 = vectorSplatWord(auVar25,2);
+      auVar21 = auVar25 >> 0x40;
+      auVar25 = auVar25 >> 0x60;
+      auVar16 = vectorConvertFromSignedFixedPointWord128(auVar20,0);
+      auVar20 = vectorMultiplyFloatingPoint(auVar22,auVar7);
+      auVar22 = vectorSplatWord(auVar23,2);
+      auVar12 = vectorSplatWord(auVar23,1);
+      auVar15 = vectorMultiplyFloatingPoint(auVar27,auVar17);
+      auVar23 = vectorSplatWord(auVar23,0);
+      auVar24 = vectorSplatWord(auVar19,2);
+      auVar11 = vectorMultiplyFloatingPoint(auVar22,auVar7);
+      auVar22 = auVar19 >> 0x40;
+      auVar19 = auVar19 >> 0x60;
+      auVar26 = vectorSplatWord(auVar18,2);
+      auVar13 = vectorMultiplyFloatingPoint(auVar24,auVar7);
+      auVar17 = vectorSplatWord(auVar17,3);
+      auVar14 = vectorMultiplyFloatingPoint(auVar27,auVar16);
+      auVar21 = vectorMultiplyAddFloatingPoint
+                          (auVar21 & (undefined1  [16])0xffffffff | auVar21 << 0x20 |
+                           (auVar21 & (undefined1  [16])0xffffffff) << 0x40 | auVar21 << 0x60,
+                           auVar10,auVar20);
+      auVar26 = vectorMultiplyFloatingPoint(auVar26,auVar7);
+      auVar20 = vectorSplatWord(auVar15,1);
+      auVar24 = vectorSplatWord(auVar15,0);
+      auVar11 = vectorMultiplyAddFloatingPoint(auVar12,auVar10,auVar11);
+      auVar12 = vectorSplatWord(auVar15,2);
+      auVar13 = vectorMultiplyAddFloatingPoint
+                          (auVar22 & (undefined1  [16])0xffffffff | auVar22 << 0x20 |
+                           (auVar22 & (undefined1  [16])0xffffffff) << 0x40 | auVar22 << 0x60,
+                           auVar10,auVar13);
+      auVar12 = vectorMultiplyAddFloatingPoint(auVar7,auVar12,auVar8);
+      auVar21 = vectorMultiplyAddFloatingPoint
                           (auVar25 & (undefined1  [16])0xffffffff | auVar25 << 0x20 |
-                           (auVar25 & (undefined1  [16])0xffffffff) << 0x40 | auVar25 << 0x60,
-                           auVar14,auVar24);
-      auVar30 = vectorMultiplyFloatingPoint(auVar30,auVar11);
-      auVar24 = vectorSplatWord(auVar19,1);
-      auVar28 = vectorSplatWord(auVar19,0);
-      auVar15 = vectorMultiplyAddFloatingPoint(auVar16,auVar14,auVar15);
-      auVar16 = vectorSplatWord(auVar19,2);
-      auVar17 = vectorMultiplyAddFloatingPoint
-                          (auVar26 & (undefined1  [16])0xffffffff | auVar26 << 0x20 |
-                           (auVar26 & (undefined1  [16])0xffffffff) << 0x40 | auVar26 << 0x60,
-                           auVar14,auVar17);
-      auVar16 = vectorMultiplyAddFloatingPoint(auVar11,auVar16,auVar12);
+                           auVar25 << 0x40 | auVar25 << 0x60,auVar9,auVar21);
+      auVar22 = vectorMultiplyAddFloatingPoint(auVar23,auVar9,auVar11);
+      auVar11 = vectorMultiplyAddFloatingPoint
+                          (auVar19 & (undefined1  [16])0xffffffff | auVar19 << 0x20 |
+                           auVar19 << 0x40 | auVar19 << 0x60,auVar9,auVar13);
+      auVar19 = vectorMultiplyAddFloatingPoint(auVar20,auVar10,auVar12);
+      auVar23 = vectorMultiplyAddFloatingPoint
+                          (auVar21,(undefined1  [16])g_packMul101010.field0_0x0,
+                           (undefined1  [16])g_packAdd.field0_0x0);
+      auVar21 = vectorSplatWord(auVar18,1);
+      auVar25 = vectorMultiplyAddFloatingPoint(auVar21,auVar10,auVar26);
+      auVar20 = vectorMultiplyAddFloatingPoint
+                          (auVar22,(undefined1  [16])g_packMul101010.field0_0x0,
+                           (undefined1  [16])g_packAdd.field0_0x0);
+      auVar21 = vectorSplatWord(auVar14,2);
+      auVar26 = vectorMultiplyAddFloatingPoint
+                          (auVar11,(undefined1  [16])g_packMul101010.field0_0x0,
+                           (undefined1  [16])g_packAdd.field0_0x0);
+      auVar24 = vectorMultiplyAddFloatingPoint(auVar24,auVar9,auVar19);
+      auVar22 = vectorSplatWord(auVar18,0);
+      auVar19 = vectorSplatWord(auVar14,1);
+      auVar24 = vectorPermute128(auVar24,auVar17,(undefined1  [16])g_XYZw.field0_0x0);
+      auVar21 = vectorMultiplyAddFloatingPoint(auVar7,auVar21,auVar8);
+      auVar7 = vectorSplatWord(auVar14,0);
+      auVar25 = vectorMultiplyAddFloatingPoint(auVar22,auVar9,auVar25);
+      auVar18 = vectorPermute128((undefined1  [16])g_zero.field0_0x0,auVar24,
+                                 (undefined1  [16])g_XYxy.field0_0x0);
+      auVar22 = vectorPermute128(auVar24,(undefined1  [16])g_zero.field0_0x0,
+                                 (undefined1  [16])g_ZWxy.field0_0x0);
+      auVar8 = vectorSplatWord(auVar16,3);
+      auVar18 = vectorPackD3Dtype(auVar18,auVar20,9,3);
+      auVar22 = vectorPackD3Dtype(auVar22,auVar26,9,1);
+      auVar18 = vectorPackD3Dtype(auVar18,auVar23,9,2);
+      auVar21 = vectorMultiplyAddFloatingPoint(auVar19,auVar10,auVar21);
       auVar25 = vectorMultiplyAddFloatingPoint
-                          (auVar29 & (undefined1  [16])0xffffffff | auVar29 << 0x20 |
-                           auVar29 << 0x40 | auVar29 << 0x60,auVar13,auVar25);
-      auVar26 = vectorMultiplyAddFloatingPoint(auVar27,auVar13,auVar15);
-      auVar15 = vectorMultiplyAddFloatingPoint
-                          (auVar23 & (undefined1  [16])0xffffffff | auVar23 << 0x20 |
-                           auVar23 << 0x40 | auVar23 << 0x60,auVar13,auVar17);
-      auVar23 = vectorMultiplyAddFloatingPoint(auVar24,auVar14,auVar16);
-      auVar27 = vectorMultiplyAddFloatingPoint
                           (auVar25,(undefined1  [16])g_packMul101010.field0_0x0,
                            (undefined1  [16])g_packAdd.field0_0x0);
-      auVar25 = vectorSplatWord(auVar22,1);
-      auVar29 = vectorMultiplyAddFloatingPoint(auVar25,auVar14,auVar30);
-      auVar24 = vectorMultiplyAddFloatingPoint
-                          (auVar26,(undefined1  [16])g_packMul101010.field0_0x0,
-                           (undefined1  [16])g_packAdd.field0_0x0);
-      auVar25 = vectorSplatWord(auVar18,2);
-      auVar30 = vectorMultiplyAddFloatingPoint
-                          (auVar15,(undefined1  [16])g_packMul101010.field0_0x0,
-                           (undefined1  [16])g_packAdd.field0_0x0);
-      auVar28 = vectorMultiplyAddFloatingPoint(auVar28,auVar13,auVar23);
-      auVar26 = vectorSplatWord(auVar22,0);
-      auVar23 = vectorSplatWord(auVar18,1);
-      auVar28 = vectorPermute128(auVar28,auVar21,(undefined1  [16])g_XYZw.field0_0x0);
-      auVar25 = vectorMultiplyAddFloatingPoint(auVar11,auVar25,auVar12);
-      auVar11 = vectorSplatWord(auVar18,0);
-      auVar29 = vectorMultiplyAddFloatingPoint(auVar26,auVar13,auVar29);
-      auVar22 = vectorPermute128((undefined1  [16])g_zero.field0_0x0,auVar28,
-                                 (undefined1  [16])g_XYxy.field0_0x0);
-      auVar26 = vectorPermute128(auVar28,(undefined1  [16])g_zero.field0_0x0,
-                                 (undefined1  [16])g_ZWxy.field0_0x0);
-      auVar12 = vectorSplatWord(auVar20,3);
-      auVar22 = vectorPackD3Dtype(auVar22,auVar24,9,3);
-      auVar26 = vectorPackD3Dtype(auVar26,auVar30,9,1);
-      auVar22 = vectorPackD3Dtype(auVar22,auVar27,9,2);
-      auVar25 = vectorMultiplyAddFloatingPoint(auVar23,auVar14,auVar25);
-      auVar29 = vectorMultiplyAddFloatingPoint
-                          (auVar29,(undefined1  [16])g_packMul101010.field0_0x0,
-                           (undefined1  [16])g_packAdd.field0_0x0);
-      uVar1 = (uint)lVar8;
-      *(undefined1 (*) [16])(uVar1 - 0x10 & 0xfffffff0) = auVar22;
-      auVar25 = vectorMultiplyAddFloatingPoint(auVar11,auVar13,auVar25);
-      auVar29 = vectorPackD3Dtype(auVar26,auVar29,9,0);
-      *(undefined1 (*) [16])(uVar1 & 0xfffffff0) = auVar29;
-      auVar25 = vectorPermute128(auVar25,auVar12,(undefined1  [16])_Var3.field0_0x0);
-      *(undefined1 (*) [16])(uVar1 - 0x20 & 0xfffffff0) = auVar25;
-      lVar8 = lVar8 + 0x30;
-      lVar9 = lVar9 + -1;
-    } while (lVar9 != 0);
+      *(undefined1 (*) [16])(uVar3 - 0x10 & 0xfffffff0) = auVar18;
+      auVar21 = vectorMultiplyAddFloatingPoint(auVar7,auVar9,auVar21);
+      auVar25 = vectorPackD3Dtype(auVar22,auVar25,9,0);
+      *(undefined1 (*) [16])(uVar3 & 0xfffffff0) = auVar25;
+      auVar21 = vectorPermute128(auVar21,auVar8,(undefined1  [16])_Var1.field0_0x0);
+      *(undefined1 (*) [16])(uVar3 - 0x20 & 0xfffffff0) = auVar21;
+      uVar3 = uVar3 + 0x30;
+      lVar4 = lVar4 + -1;
+    } while (lVar4 != 0);
   }
-  __restgprlr_20();
   return;
 }
 
 
 // 8275F830  R_SkinXSurfaceRigid  (gfx_d3d/r_model_skin.cpp:2074)
 
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savevmx_124 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restvmx_124 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
+
 void R_SkinXSurfaceRigid(XSurface *param_1,int param_2,DObjSkelMat *param_3,GfxPackedVertex *param_4
                         )
 
 {
-  int iVar1;
-  int iVar2;
-  longlong lVar3;
-  longlong lVar4;
-  ushort *puVar5;
+  longlong lVar1;
+  int iVar3;
+  longlong lVar2;
+  ushort *puVar4;
+  uint uVar5;
   int iVar6;
   ulonglong uVar7;
   ulonglong uVar8;
-  uint uVar9;
+  ulonglong uVar9;
   ulonglong uVar10;
-  ulonglong uVar11;
+  __vector4_u_0 _Var11;
   __vector4_u_0 _Var12;
-  __vector4_u_0 _Var13;
+  undefined1 auVar13 [16];
   undefined1 auVar14 [16];
   undefined1 auVar15 [16];
   undefined1 auVar16 [16];
   undefined1 auVar17 [16];
-  undefined1 auVar18 [16];
+  __vector4_u_0 _Var18;
   __vector4_u_0 _Var19;
   __vector4_u_0 _Var20;
-  __vector4_u_0 _Var21;
+  undefined1 auVar21 [16];
   undefined1 auVar22 [16];
   undefined1 auVar23 [16];
   undefined1 auVar24 [16];
@@ -2550,184 +2500,179 @@ void R_SkinXSurfaceRigid(XSurface *param_1,int param_2,DObjSkelMat *param_3,GfxP
   undefined1 auVar27 [16];
   undefined1 auVar28 [16];
   undefined1 auVar29 [16];
-  undefined1 auVar30 [16];
-  int iStack00000014;
+  XSurface *pXStack00000014;
   int iStack0000001c;
-  int iStack00000024;
-  uint uStack0000002c;
-  uint local_f0;
+  DObjSkelMat *pDStack00000024;
+  GfxPackedVertex *pGStack0000002c;
+  GfxPackedVertex *local_f0;
   uint local_ec;
   uint local_e8;
   
-  uVar10 = (ulonglong)(int)param_4;
-  uVar7 = (ulonglong)(int)param_3;
-  uVar8 = (ulonglong)param_2;
-  __savegprlr();
-  iVar1 = __savevmx_124();
-  iVar2 = (int)uVar8;
-  iStack00000024 = (int)uVar7;
-  local_f0 = (uint)uVar10;
-  iStack00000014 = iVar1;
-  iStack0000001c = iVar2;
-  uStack0000002c = local_f0;
-  if ((uVar10 & 0xffffffff) == 0) {
+  pXStack00000014 = param_1;
+  iStack0000001c = param_2;
+  pDStack00000024 = param_3;
+  pGStack0000002c = param_4;
+  if (param_4 == (GfxPackedVertex *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_model_skin.cpp",
                     0x823,0,"%s");
   }
-  if ((uVar10 & 0xf) != 0) {
+  if (((uint)param_4 & 0xf) != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_model_skin.cpp",
                     0x824,0,"%s");
   }
-  if ((uVar7 & 0xf) != 0) {
+  if (((uint)param_3 & 0xf) != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_model_skin.cpp",
                     0x825,0,"%s");
   }
   Profile_Begin(0x6c);
-  lVar4 = (uVar8 & 0x7ffffff) << 5;
+  iVar3 = param_2 << 5;
   iVar6 = 0;
-  uVar8 = (ulonglong)*(uint *)(iVar1 + 0x1c);
-  if ((int)lVar4 < 0x201) {
+  uVar8 = (ulonglong)(uint)param_1->verts0;
+  if (iVar3 < 0x201) {
     local_ec = 0;
   }
   else {
-    lVar4 = 0x200;
+    iVar3 = 0x200;
     local_ec = 0x200;
   }
-  lVar3 = 0;
-  if (0 < (int)lVar4) {
-    lVar4 = ((lVar4 - 1U & 0xffffffff) >> 7) + 1;
+  lVar1 = 0;
+  if (0 < iVar3) {
+    lVar2 = (ulonglong)(iVar3 - 1U >> 7) + 1;
     do {
-      dataCacheBlockTouch(lVar3 + uVar8);
-      lVar3 = lVar3 + 0x80;
-      lVar4 = lVar4 + -1;
-    } while (lVar4 != 0);
+      dataCacheBlockTouch(lVar1 + uVar8);
+      lVar1 = lVar1 + 0x80;
+      lVar2 = lVar2 + -1;
+    } while (lVar2 != 0);
   }
   local_e8 = 0;
-  _Var12 = g_unpackMul101010.field0_0x0;
-  _Var13 = g_XYZw.field0_0x0;
-  _Var19 = g_packMul101010.field0_0x0;
-  _Var20 = g_packAdd.field0_0x0;
-  _Var21 = g_unpackAdd101010.field0_0x0;
-  uVar9 = local_f0;
-  if (*(int *)(iVar1 + 0x40) != 0) {
+  _Var11 = g_unpackMul101010.field0_0x0;
+  _Var12 = g_XYZw.field0_0x0;
+  _Var18 = g_packMul101010.field0_0x0;
+  _Var19 = g_packAdd.field0_0x0;
+  _Var20 = g_unpackAdd101010.field0_0x0;
+  local_f0 = param_4;
+  if (param_1->vertListCount != 0) {
     do {
-      puVar5 = (ushort *)(iVar6 + *(int *)(iVar1 + 0x44));
-      uVar7 = (ulonglong)puVar5[1];
-      uVar9 = (uint)*puVar5 + iStack00000024;
-      auVar30 = *(undefined1 (*) [16])(uVar9 & 0xfffffff0);
-      auVar29 = *(undefined1 (*) [16])(uVar9 + 0x10 & 0xfffffff0);
-      auVar28 = *(undefined1 (*) [16])(uVar9 + 0x20 & 0xfffffff0);
-      auVar27 = *(undefined1 (*) [16])(uVar9 + 0x30 & 0xfffffff0);
+      puVar4 = (ushort *)((int)&param_1->vertList->boneOffset + iVar6);
+      uVar7 = (ulonglong)puVar4[1];
+      uVar5 = (int)pDStack00000024->axis[0] + (uint)*puVar4;
+      auVar29 = *(undefined1 (*) [16])(uVar5 & 0xfffffff0);
+      auVar28 = *(undefined1 (*) [16])(uVar5 + 0x10 & 0xfffffff0);
+      auVar27 = *(undefined1 (*) [16])(uVar5 + 0x20 & 0xfffffff0);
+      auVar26 = *(undefined1 (*) [16])(uVar5 + 0x30 & 0xfffffff0);
       if ((uVar8 & 0xffffffff) == 0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_model_skin.cpp",
                         0x46c,0,"%s");
-        _Var12 = g_unpackMul101010.field0_0x0;
-        _Var13 = g_XYZw.field0_0x0;
-        _Var19 = g_packMul101010.field0_0x0;
-        _Var20 = g_packAdd.field0_0x0;
-        _Var21 = g_unpackAdd101010.field0_0x0;
+        _Var11 = g_unpackMul101010.field0_0x0;
+        _Var12 = g_XYZw.field0_0x0;
+        _Var18 = g_packMul101010.field0_0x0;
+        _Var19 = g_packAdd.field0_0x0;
+        _Var20 = g_unpackAdd101010.field0_0x0;
       }
-      if (local_f0 == 0) {
+      if (local_f0 == (GfxPackedVertex *)0x0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_model_skin.cpp",
                         0x46d,0,"%s");
-        _Var12 = g_unpackMul101010.field0_0x0;
-        _Var13 = g_XYZw.field0_0x0;
-        _Var19 = g_packMul101010.field0_0x0;
-        _Var20 = g_packAdd.field0_0x0;
-        _Var21 = g_unpackAdd101010.field0_0x0;
+        _Var11 = g_unpackMul101010.field0_0x0;
+        _Var12 = g_XYZw.field0_0x0;
+        _Var18 = g_packMul101010.field0_0x0;
+        _Var19 = g_packAdd.field0_0x0;
+        _Var20 = g_unpackAdd101010.field0_0x0;
       }
       if ((uVar8 & 0xf) != 0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_model_skin.cpp",
                         0x46e,0,"%s");
-        _Var12 = g_unpackMul101010.field0_0x0;
-        _Var13 = g_XYZw.field0_0x0;
-        _Var19 = g_packMul101010.field0_0x0;
-        _Var20 = g_packAdd.field0_0x0;
-        _Var21 = g_unpackAdd101010.field0_0x0;
+        _Var11 = g_unpackMul101010.field0_0x0;
+        _Var12 = g_XYZw.field0_0x0;
+        _Var18 = g_packMul101010.field0_0x0;
+        _Var19 = g_packAdd.field0_0x0;
+        _Var20 = g_unpackAdd101010.field0_0x0;
       }
-      if ((local_f0 & 0xf) != 0) {
+      if (((uint)local_f0 & 0xf) != 0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_model_skin.cpp",
                         0x46f,0,"%s");
-        _Var12 = g_unpackMul101010.field0_0x0;
-        _Var13 = g_XYZw.field0_0x0;
-        _Var19 = g_packMul101010.field0_0x0;
-        _Var20 = g_packAdd.field0_0x0;
-        _Var21 = g_unpackAdd101010.field0_0x0;
+        _Var11 = g_unpackMul101010.field0_0x0;
+        _Var12 = g_XYZw.field0_0x0;
+        _Var18 = g_packMul101010.field0_0x0;
+        _Var19 = g_packAdd.field0_0x0;
+        _Var20 = g_unpackAdd101010.field0_0x0;
       }
       if (uVar7 != 0) {
-        iVar2 = local_f0 - (int)uVar8;
-        uVar10 = uVar8;
-        uVar11 = uVar7;
+        uVar9 = uVar8;
+        uVar10 = uVar7;
         do {
-          dataCacheBlockTouch(local_ec + uVar10);
-          uVar9 = (uint)uVar10;
-          auVar26 = *(undefined1 (*) [16])(uVar9 & 0xfffffff0);
-          auVar14 = vectorSplatWord(auVar26,2);
-          auVar16 = vectorSplatWord(auVar26,1);
-          auVar25 = *(undefined1 (*) [16])(uVar9 + 0x10 & 0xfffffff0);
-          auVar17 = vectorSplatWord(auVar26,0);
-          auVar24 = vectorSplatWord(auVar26,3);
-          auVar23 = vectorSplatWord(auVar25,2);
-          auVar14 = vectorMultiplyAddFloatingPoint128(auVar28,auVar14,auVar27);
-          auVar26 = vectorUnpackD3Dtype(auVar25,8);
-          auVar23 = vectorUnpackD3Dtype(auVar23,8);
-          auVar26 = vectorMultiplyAddFloatingPoint
-                              (auVar26,(undefined1  [16])_Var12,(undefined1  [16])_Var21);
-          auVar15 = vectorMultiplyAddFloatingPoint
-                              (auVar23,(undefined1  [16])_Var12,(undefined1  [16])_Var21);
-          auVar23 = vectorMultiplyAddFloatingPoint128(auVar16,auVar29,auVar14);
-          auVar16 = vectorSplatWord(auVar26,2);
-          auVar14 = auVar26 >> 0x60;
-          auVar26 = auVar26 >> 0x40;
-          auVar16 = vectorMultiplyFloatingPoint(auVar16,auVar28);
-          auVar22 = vectorSplatWord(auVar15,2);
-          auVar23 = vectorMultiplyAddFloatingPoint128(auVar17,auVar30,auVar23);
-          auVar17 = vectorSplatWord(auVar15,1);
-          auVar18 = vectorSplatWord(auVar15,0);
-          auVar15 = vectorMultiplyFloatingPoint(auVar22,auVar28);
-          auVar26 = vectorMultiplyAddFloatingPoint128
-                              (auVar26 & (undefined1  [16])0xffffffff | auVar26 << 0x20 |
-                               (auVar26 & (undefined1  [16])0xffffffff) << 0x40 | auVar26 << 0x60,
-                               auVar29,auVar16);
-          auVar16 = vectorPermute128(auVar23,auVar24,(undefined1  [16])_Var13);
-          auVar23 = vectorMultiplyAddFloatingPoint128(auVar17,auVar29,auVar15);
-          *(undefined1 (*) [16])(iVar2 + uVar9 & 0xfffffff0) = auVar16;
-          uVar10 = uVar10 + 0x20;
-          auVar14 = vectorMultiplyAddFloatingPoint128
-                              (auVar30,auVar14 & (undefined1  [16])0xffffffff | auVar14 << 0x20 |
-                                       auVar14 << 0x40 | auVar14 << 0x60,auVar26);
-          auVar26 = vectorMultiplyAddFloatingPoint128(auVar30,auVar18,auVar23);
+          dataCacheBlockTouch(local_ec + uVar9);
+          uVar5 = (uint)uVar9;
+          auVar25 = *(undefined1 (*) [16])(uVar5 & 0xfffffff0);
+          auVar13 = vectorSplatWord(auVar25,2);
+          auVar15 = vectorSplatWord(auVar25,1);
+          auVar24 = *(undefined1 (*) [16])(uVar5 + 0x10 & 0xfffffff0);
+          auVar16 = vectorSplatWord(auVar25,0);
+          auVar23 = vectorSplatWord(auVar25,3);
+          auVar22 = vectorSplatWord(auVar24,2);
+          auVar13 = vectorMultiplyAddFloatingPoint128(auVar27,auVar13,auVar26);
+          auVar25 = vectorUnpackD3Dtype(auVar24,8);
+          auVar22 = vectorUnpackD3Dtype(auVar22,8);
+          auVar25 = vectorMultiplyAddFloatingPoint
+                              (auVar25,(undefined1  [16])_Var11,(undefined1  [16])_Var20);
           auVar14 = vectorMultiplyAddFloatingPoint
-                              (auVar14,(undefined1  [16])_Var19,(undefined1  [16])_Var20);
-          auVar26 = vectorMultiplyAddFloatingPoint
-                              (auVar26,(undefined1  [16])_Var19,(undefined1  [16])_Var20);
-          auVar26 = vectorPackD3Dtype(auVar25,auVar26,9,1);
-          auVar14 = vectorPackD3Dtype(auVar26,auVar14,9,0);
-          *(undefined1 (*) [16])(iVar2 + uVar9 + 0x10 & 0xfffffff0) = auVar14;
-          uVar11 = uVar11 - 1;
-        } while (uVar11 != 0);
+                              (auVar22,(undefined1  [16])_Var11,(undefined1  [16])_Var20);
+          auVar22 = vectorMultiplyAddFloatingPoint128(auVar15,auVar28,auVar13);
+          auVar15 = vectorSplatWord(auVar25,2);
+          auVar13 = auVar25 >> 0x60;
+          auVar25 = auVar25 >> 0x40;
+          auVar15 = vectorMultiplyFloatingPoint(auVar15,auVar27);
+          auVar21 = vectorSplatWord(auVar14,2);
+          auVar22 = vectorMultiplyAddFloatingPoint128(auVar16,auVar29,auVar22);
+          auVar16 = vectorSplatWord(auVar14,1);
+          auVar17 = vectorSplatWord(auVar14,0);
+          auVar14 = vectorMultiplyFloatingPoint(auVar21,auVar27);
+          auVar25 = vectorMultiplyAddFloatingPoint128
+                              (auVar25 & (undefined1  [16])0xffffffff | auVar25 << 0x20 |
+                               (auVar25 & (undefined1  [16])0xffffffff) << 0x40 | auVar25 << 0x60,
+                               auVar28,auVar15);
+          auVar15 = vectorPermute128(auVar22,auVar23,(undefined1  [16])_Var12);
+          auVar22 = vectorMultiplyAddFloatingPoint128(auVar16,auVar28,auVar14);
+          *(undefined1 (*) [16])((int)local_f0 + (uVar5 - (int)uVar8) & 0xfffffff0) = auVar15;
+          uVar9 = uVar9 + 0x20;
+          auVar13 = vectorMultiplyAddFloatingPoint128
+                              (auVar29,auVar13 & (undefined1  [16])0xffffffff | auVar13 << 0x20 |
+                                       auVar13 << 0x40 | auVar13 << 0x60,auVar25);
+          auVar25 = vectorMultiplyAddFloatingPoint128(auVar29,auVar17,auVar22);
+          auVar13 = vectorMultiplyAddFloatingPoint
+                              (auVar13,(undefined1  [16])_Var18,(undefined1  [16])_Var19);
+          auVar25 = vectorMultiplyAddFloatingPoint
+                              (auVar25,(undefined1  [16])_Var18,(undefined1  [16])_Var19);
+          auVar25 = vectorPackD3Dtype(auVar24,auVar25,9,1);
+          auVar13 = vectorPackD3Dtype(auVar25,auVar13,9,0);
+          *(undefined1 (*) [16])((int)local_f0 + ((uVar5 + 0x10) - (int)uVar8) & 0xfffffff0) =
+               auVar13;
+          uVar10 = uVar10 - 1;
+        } while (uVar10 != 0);
       }
       iVar6 = iVar6 + 0xc;
       uVar8 = uVar7 * 0x20 + uVar8;
       local_e8 = local_e8 + 1;
-      local_f0 = (int)(uVar7 * 0x20) + local_f0;
-      uVar9 = uStack0000002c;
-      iVar2 = iStack0000001c;
-      iVar1 = iStack00000014;
-    } while (local_e8 < *(uint *)(iStack00000014 + 0x40));
+      local_f0 = (GfxPackedVertex *)((int)local_f0->xyz + (int)(uVar7 * 0x20));
+      param_2 = iStack0000001c;
+      param_4 = pGStack0000002c;
+      param_1 = pXStack00000014;
+    } while (local_e8 < pXStack00000014->vertListCount);
   }
-  if ((int)(local_f0 - uVar9) >> 5 != iVar2) {
+  if ((int)local_f0 - (int)param_4 >> 5 != param_2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_model_skin.cpp",
                     0x83a,0,"%s");
   }
-  iVar2 = Profile_EndInternal((double *)0x0);
-  __restvmx_124(iVar2);
-  __restgprlr();
+  Profile_EndInternal((double *)0x0);
   return;
 }
 
 
 // 8275FC10  R_SkinXSurfaceRigidQuantized  (gfx_d3d/r_model_skin.cpp:2113)
+
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savevmx_124 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restvmx_124 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
 
 void R_SkinXSurfaceRigidQuantized
                (XSurface *param_1,DObjSkelMat *param_2,GfxQuantizedSkinnedVertexOut0 *param_3)
@@ -2735,15 +2680,15 @@ void R_SkinXSurfaceRigidQuantized
 {
   ushort uVar1;
   ushort uVar2;
-  XSurface *pXVar4;
   longlong lVar3;
+  longlong lVar5;
+  int iVar7;
   longlong lVar6;
-  int iVar8;
-  longlong lVar7;
-  ushort *puVar9;
-  int iVar10;
-  ulonglong uVar11;
-  uint uVar12;
+  ushort *puVar8;
+  uint uVar9;
+  float *pfVar10;
+  int iVar11;
+  ulonglong uVar12;
   ulonglong uVar13;
   __vector4_u_0 _Var14;
   __vector4_u_0 _Var15;
@@ -2777,63 +2722,58 @@ void R_SkinXSurfaceRigidQuantized
   undefined1 auVar43 [16];
   undefined1 auVar44 [16];
   XSurface *pXStack00000014;
-  int iStack0000001c;
-  uint uStack00000024;
-  uint local_120;
+  DObjSkelMat *pDStack0000001c;
+  GfxQuantizedSkinnedVertexOut0 *pGStack00000024;
+  GfxQuantizedSkinnedVertexOut0 *local_120;
   uint local_11c;
   uint local_118;
   float local_f0;
   float fStack_ec;
   float fStack_e8;
   float fStack_e4;
-  int iVar5;
+  int iVar4;
   
-  uVar13 = (ulonglong)(int)param_3;
-  uVar11 = (ulonglong)(int)param_2;
-  __savegprlr();
-  pXVar4 = (XSurface *)__savevmx_124();
-  iStack0000001c = (int)uVar11;
-  local_120 = (uint)uVar13;
-  pXStack00000014 = pXVar4;
-  uStack00000024 = local_120;
-  if ((uVar13 & 0xffffffff) == 0) {
+  pXStack00000014 = param_1;
+  pDStack0000001c = param_2;
+  pGStack00000024 = param_3;
+  if (param_3 == (GfxQuantizedSkinnedVertexOut0 *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_model_skin.cpp",
                     0x84d,0,"%s");
   }
-  if ((uVar13 & 0xf) != 0) {
+  if (((uint)param_3 & 0xf) != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_model_skin.cpp",
                     0x84e,0,"%s");
   }
-  if ((uVar11 & 0xf) != 0) {
+  if (((uint)param_2 & 0xf) != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_model_skin.cpp",
                     0x84f,0,"%s");
   }
   Profile_Begin(0x6c);
-  uVar1 = pXVar4->vertCount;
-  uVar11 = (ulonglong)(uint)pXVar4->verts0;
-  iVar5 = XSurfaceGetVert0Size(pXVar4);
-  lVar3 = (longlong)iVar5;
-  iVar8 = iVar5 * (uint)uVar1;
-  iVar10 = 0;
-  if (iVar8 < 0x201) {
+  uVar1 = param_1->vertCount;
+  uVar12 = (ulonglong)(uint)param_1->verts0;
+  iVar4 = XSurfaceGetVert0Size(param_1);
+  lVar3 = (longlong)iVar4;
+  iVar7 = iVar4 * (uint)uVar1;
+  iVar11 = 0;
+  if (iVar7 < 0x201) {
     local_11c = 0;
   }
   else {
-    iVar8 = 0x200;
+    iVar7 = 0x200;
     local_11c = 0x200;
   }
-  lVar6 = 0;
-  if (0 < iVar8) {
-    lVar7 = (ulonglong)(iVar8 - 1U >> 7) + 1;
+  lVar5 = 0;
+  if (0 < iVar7) {
+    lVar6 = (ulonglong)(iVar7 - 1U >> 7) + 1;
     do {
-      dataCacheBlockTouch(lVar6 + uVar11);
-      lVar6 = lVar6 + 0x80;
-      lVar7 = lVar7 + -1;
-    } while (lVar7 != 0);
+      dataCacheBlockTouch(lVar5 + uVar12);
+      lVar5 = lVar5 + 0x80;
+      lVar6 = lVar6 + -1;
+    } while (lVar6 != 0);
   }
   local_118 = 0;
-  uVar12 = local_120;
-  if (pXVar4->vertListCount != 0) {
+  local_120 = param_3;
+  if (param_1->vertListCount != 0) {
     local_f0 = g_ZWxy.field0_0x0.vector4_f32[0];
     fStack_ec = g_ZWxy.field0_0x0.vector4_f32[1];
     fStack_e8 = g_ZWxy.field0_0x0.vector4_f32[2];
@@ -2846,14 +2786,14 @@ void R_SkinXSurfaceRigidQuantized
     _Var20 = g_unpackAdd101010.field0_0x0;
     _Var39 = g_zero.field0_0x0;
     do {
-      puVar9 = (ushort *)((int)&pXVar4->vertList->boneOffset + iVar10);
-      uVar2 = puVar9[1];
-      uVar12 = (uint)*puVar9 + iStack0000001c;
-      auVar44 = *(undefined1 (*) [16])(uVar12 & 0xfffffff0);
-      auVar43 = *(undefined1 (*) [16])(uVar12 + 0x10 & 0xfffffff0);
-      auVar42 = *(undefined1 (*) [16])(uVar12 + 0x20 & 0xfffffff0);
-      auVar41 = *(undefined1 (*) [16])(uVar12 + 0x30 & 0xfffffff0);
-      if ((uVar11 & 0xffffffff) == 0) {
+      puVar8 = (ushort *)((int)&param_1->vertList->boneOffset + iVar11);
+      uVar2 = puVar8[1];
+      uVar9 = (int)pDStack0000001c->axis[0] + (uint)*puVar8;
+      auVar44 = *(undefined1 (*) [16])(uVar9 & 0xfffffff0);
+      auVar43 = *(undefined1 (*) [16])(uVar9 + 0x10 & 0xfffffff0);
+      auVar42 = *(undefined1 (*) [16])(uVar9 + 0x20 & 0xfffffff0);
+      auVar41 = *(undefined1 (*) [16])(uVar9 + 0x30 & 0xfffffff0);
+      if ((uVar12 & 0xffffffff) == 0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_model_skin.cpp",
                         0x7e8,0,"%s");
         local_f0 = g_ZWxy.field0_0x0.vector4_f32[0];
@@ -2868,7 +2808,7 @@ void R_SkinXSurfaceRigidQuantized
         _Var20 = g_unpackAdd101010.field0_0x0;
         _Var39 = g_zero.field0_0x0;
       }
-      if (local_120 == 0) {
+      if (local_120 == (GfxQuantizedSkinnedVertexOut0 *)0x0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_model_skin.cpp",
                         0x7e9,0,"%s");
         local_f0 = (float)g_ZWxy.field0_0x0.vector4_u32[0];
@@ -2883,7 +2823,7 @@ void R_SkinXSurfaceRigidQuantized
         _Var20 = g_unpackAdd101010.field0_0x0;
         _Var39 = g_zero.field0_0x0;
       }
-      if ((uVar11 & 0xf) != 0) {
+      if ((uVar12 & 0xf) != 0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_model_skin.cpp",
                         0x7ea,0,"%s");
         local_f0 = (float)g_ZWxy.field0_0x0.vector4_u32[0];
@@ -2898,7 +2838,7 @@ void R_SkinXSurfaceRigidQuantized
         _Var20 = g_unpackAdd101010.field0_0x0;
         _Var39 = g_zero.field0_0x0;
       }
-      if ((local_120 & 7) != 0) {
+      if (((uint)local_120 & 7) != 0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_model_skin.cpp",
                         0x7eb,0,"%s");
         local_f0 = (float)g_ZWxy.field0_0x0.vector4_u32[0];
@@ -2929,24 +2869,24 @@ void R_SkinXSurfaceRigidQuantized
         _Var39 = g_zero.field0_0x0;
       }
       if ((ulonglong)uVar2 != 0) {
-        uVar12 = local_120 + 0x20;
-        lVar6 = (((ulonglong)uVar2 - 1 & 0xffffffff) >> 1) + 1;
+        pfVar10 = local_120[1].xyz + 2;
+        lVar5 = (((ulonglong)uVar2 - 1 & 0xffffffff) >> 1) + 1;
         auVar36 = loadVectorLeftIndexed(ZEXT48(&stack0x00000000) - 0x100);
         auVar36 = vectorSplatWord(auVar36,0);
-        uVar13 = uVar11;
+        uVar13 = uVar12;
         do {
           dataCacheBlockTouch(local_11c + uVar13);
-          lVar7 = uVar13 + lVar3;
+          lVar6 = uVar13 + lVar3;
           auVar34 = loadVectorLeftIndexed(uVar13);
           auVar33 = loadVectorRightIndexed(uVar13 + 0x10);
           auVar35 = loadVectorRightIndexed(uVar13 + 8);
           auVar31 = loadVectorLeftIndexed(uVar13 + lVar3);
-          auVar30 = loadVectorRightIndexed(lVar7 + 8);
+          auVar30 = loadVectorRightIndexed(lVar6 + 8);
           auVar32 = vectorShiftLeftDoubleByOctetImmediate(auVar35,auVar35,8);
-          auVar35 = loadVectorRightIndexed(lVar7 + 0x10);
+          auVar35 = loadVectorRightIndexed(lVar6 + 0x10);
           auVar28 = vectorShiftLeftDoubleByOctetImmediate(auVar30,auVar30,8);
           auVar30 = vectorUnpackD3Dtype(auVar34 | auVar33,8);
-          uVar13 = lVar7 + lVar3;
+          uVar13 = lVar6 + lVar3;
           auVar29 = vectorSplatWord(auVar34 | auVar33,2);
           auVar26 = vectorSplatWord(auVar31 | auVar35,2);
           auVar33 = vectorMultiplyAddFloatingPoint
@@ -3013,7 +2953,7 @@ void R_SkinXSurfaceRigidQuantized
           auVar35 = vectorMultiplyAddFloatingPoint128(auVar44,auVar27,auVar26);
           auVar30 = vectorPermute128(auVar30,auVar24,(undefined1  [16])_Var16);
           auVar32 = vectorPermute128(auVar35,auVar38,(undefined1  [16])_Var16);
-          *(undefined1 (*) [16])(uVar12 - 0x20 & 0xfffffff0) = auVar30;
+          *(undefined1 (*) [16])((uint)(pfVar10 + -8) & 0xfffffff0) = auVar30;
           auVar30 = vectorPermute128((undefined1  [16])_Var39,auVar32,(undefined1  [16])_Var15);
           auVar35 = vectorPackD3Dtype(auVar30,auVar33,9,3);
           auVar26 = vectorMultiplyFloatingPoint(auVar37,auVar42);
@@ -3027,7 +2967,7 @@ void R_SkinXSurfaceRigidQuantized
           auVar28 = vectorPackD3Dtype(auVar35,auVar28,9,2);
           auVar35 = vectorSplatWord(auVar34,1);
           auVar30 = vectorMultiplyAddFloatingPoint128(auVar44,auVar33,auVar23);
-          *(undefined1 (*) [16])(uVar12 - 0x10 & 0xfffffff0) = auVar28;
+          *(undefined1 (*) [16])((uint)(pfVar10 + -4) & 0xfffffff0) = auVar28;
           auVar33 = vectorMultiplyAddFloatingPoint128(auVar43,auVar35,auVar26);
           auVar30 = vectorMultiplyAddFloatingPoint
                               (auVar30,(undefined1  [16])_Var18,(undefined1  [16])_Var19);
@@ -3036,83 +2976,84 @@ void R_SkinXSurfaceRigidQuantized
                               (auVar33,(undefined1  [16])_Var18,(undefined1  [16])_Var19);
           auVar33 = vectorPackD3Dtype(auVar31,auVar33,9,1);
           auVar30 = vectorPackD3Dtype(auVar33,auVar30,9,0);
-          *(undefined1 (*) [16])(uVar12 & 0xfffffff0) = auVar30;
-          uVar12 = uVar12 + 0x30;
-          lVar6 = lVar6 + -1;
-        } while (lVar6 != 0);
+          *(undefined1 (*) [16])((uint)pfVar10 & 0xfffffff0) = auVar30;
+          pfVar10 = pfVar10 + 0xc;
+          lVar5 = lVar5 + -1;
+        } while (lVar5 != 0);
       }
       local_118 = local_118 + 1;
-      uVar11 = (longlong)(int)(uint)uVar2 * (longlong)iVar5 + uVar11;
-      local_120 = (uint)uVar2 * 0x18 + local_120;
-      iVar10 = iVar10 + 0xc;
-      uVar12 = uStack00000024;
-      pXVar4 = pXStack00000014;
+      uVar12 = (longlong)(int)(uint)uVar2 * (longlong)iVar4 + uVar12;
+      local_120 = local_120 + uVar2;
+      iVar11 = iVar11 + 0xc;
+      param_3 = pGStack00000024;
+      param_1 = pXStack00000014;
     } while (local_118 < pXStack00000014->vertListCount);
   }
-  if ((int)(local_120 - uVar12) / 0x18 != (uint)uVar1) {
+  if (((int)local_120 - (int)param_3) / 0x18 != (uint)uVar1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_model_skin.cpp",
                     0x869,0,"%s");
   }
-  iVar5 = Profile_EndInternal((double *)0x0);
-  __restvmx_124(iVar5);
-  __restgprlr();
+  Profile_EndInternal((double *)0x0);
   return;
 }
 
 
 // 82760208  R_SkinXSurfaceWeight  (gfx_d3d/r_model_skin.cpp:3019)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 void R_SkinXSurfaceWeight
                (GfxPackedVertex *param_1,XSurfaceVertexInfo *param_2,DObjSkelMat *param_3,
                GfxPackedVertex *param_4)
 
 {
-  GfxPackedVertex *pGVar1;
-  int iVar2;
+  int iVar1;
+  ulonglong uVar2;
   ulonglong uVar3;
-  ulonglong uVar4;
-  ushort *puVar5;
+  ushort *puVar4;
   
-  pGVar1 = (GfxPackedVertex *)__savegprlr_26(param_1);
   Profile_Begin(0x6c);
-  uVar4 = 0;
-  puVar5 = param_2->vertsBlend;
+  uVar3 = 0;
+  puVar4 = param_2->vertsBlend;
   if ((int)param_2->vertCount[0] != 0) {
-    R_SkinXSurfaceWeight0(pGVar1,puVar5,(int)param_2->vertCount[0],param_3,param_4);
-    uVar4 = (ulonglong)param_2->vertCount[0];
-    puVar5 = (ushort *)((int)((uVar4 & 0xffffffff) << 1) + (int)puVar5);
+    R_SkinXSurfaceWeight0(param_1,puVar4,(int)param_2->vertCount[0],param_3,param_4);
+    uVar3 = (ulonglong)param_2->vertCount[0];
+    puVar4 = (ushort *)((int)((uVar3 & 0xffffffff) << 1) + (int)puVar4);
   }
   if ((int)param_2->vertCount[1] != 0) {
-    iVar2 = (int)((uVar4 & 0xffffffff) << 5);
+    iVar1 = (int)((uVar3 & 0xffffffff) << 5);
     R_SkinXSurfaceWeight1
-              ((GfxPackedVertex *)((int)pGVar1->xyz + iVar2),puVar5,(int)param_2->vertCount[1],
-               param_3,(GfxPackedVertex *)((int)param_4->xyz + iVar2));
-    uVar3 = (ulonglong)param_2->vertCount[1];
-    uVar4 = uVar3 + uVar4;
-    puVar5 = (ushort *)((int)((uVar3 + (uVar3 & 0x7fffffff) * 2 & 0xffffffff) << 1) + (int)puVar5);
+              ((GfxPackedVertex *)((int)param_1->xyz + iVar1),puVar4,(int)param_2->vertCount[1],
+               param_3,(GfxPackedVertex *)((int)param_4->xyz + iVar1));
+    uVar2 = (ulonglong)param_2->vertCount[1];
+    uVar3 = uVar2 + uVar3;
+    puVar4 = (ushort *)((int)((uVar2 + (uVar2 & 0x7fffffff) * 2 & 0xffffffff) << 1) + (int)puVar4);
   }
   if ((int)param_2->vertCount[2] != 0) {
-    iVar2 = (int)((uVar4 & 0xffffffff) << 5);
+    iVar1 = (int)((uVar3 & 0xffffffff) << 5);
     R_SkinXSurfaceWeight2
-              ((GfxPackedVertex *)((int)pGVar1->xyz + iVar2),puVar5,(int)param_2->vertCount[2],
-               param_3,(GfxPackedVertex *)((int)param_4->xyz + iVar2));
-    uVar3 = (ulonglong)param_2->vertCount[2];
-    uVar4 = uVar3 + uVar4;
-    puVar5 = (ushort *)((int)((uVar3 + (uVar3 & 0x3fffffff) * 4 & 0xffffffff) << 1) + (int)puVar5);
+              ((GfxPackedVertex *)((int)param_1->xyz + iVar1),puVar4,(int)param_2->vertCount[2],
+               param_3,(GfxPackedVertex *)((int)param_4->xyz + iVar1));
+    uVar2 = (ulonglong)param_2->vertCount[2];
+    uVar3 = uVar2 + uVar3;
+    puVar4 = (ushort *)((int)((uVar2 + (uVar2 & 0x3fffffff) * 4 & 0xffffffff) << 1) + (int)puVar4);
   }
   if ((int)param_2->vertCount[3] != 0) {
-    iVar2 = (int)((uVar4 & 0xffffffff) << 5);
+    iVar1 = (int)((uVar3 & 0xffffffff) << 5);
     R_SkinXSurfaceWeight3
-              ((GfxPackedVertex *)((int)pGVar1->xyz + iVar2),puVar5,(int)param_2->vertCount[3],
-               param_3,(GfxPackedVertex *)((int)param_4->xyz + iVar2));
+              ((GfxPackedVertex *)((int)param_1->xyz + iVar1),puVar4,(int)param_2->vertCount[3],
+               param_3,(GfxPackedVertex *)((int)param_4->xyz + iVar1));
   }
-  iVar2 = Profile_EndInternal((double *)0x0);
-  __restgprlr_26(iVar2);
+  Profile_EndInternal((double *)0x0);
   return;
 }
 
 
 // 82760328  R_SkinXSurfaceWeightQuantized  (gfx_d3d/r_model_skin.cpp:3058)
+
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 
 void R_SkinXSurfaceWeightQuantized
                (XSurface *param_1,DObjSkelMat *param_2,GfxQuantizedSkinnedVertexOut0 *param_3)
@@ -3120,59 +3061,53 @@ void R_SkinXSurfaceWeightQuantized
 {
   short sVar1;
   GfxQuantizedNoColorVertex *pGVar2;
-  XSurface *pXVar3;
+  uint uVar3;
   uint uVar4;
-  longlong lVar5;
-  uint uVar6;
   DObjSkelMat *in_r7;
-  GfxQuantizedSkinnedVertexOut0 *pGVar7;
-  ushort *puVar8;
-  int iVar9;
-  double dVar10;
+  ushort *puVar5;
+  int iVar6;
+  double dVar7;
   
-  lVar5 = (longlong)(int)param_2;
-  pXVar3 = (XSurface *)__savegprlr_25(param_1,lVar5,param_3);
   Profile_Begin(0x6c);
-  pGVar2 = (pXVar3->verts0).quantizedNoColorVerts0;
-  uVar4 = XSurfaceGetVert0Size(pXVar3);
-  dVar10 = (double)pXVar3->quantizeScale;
-  iVar9 = 0;
-  puVar8 = (pXVar3->vertInfo).vertsBlend;
-  uVar6 = (uint)(pXVar3->vertInfo).vertCount[0];
-  pGVar7 = (GfxQuantizedSkinnedVertexOut0 *)lVar5;
-  if (uVar6 != 0) {
+  pGVar2 = (param_1->verts0).quantizedNoColorVerts0;
+  uVar3 = XSurfaceGetVert0Size(param_1);
+  dVar7 = (double)param_1->quantizeScale;
+  iVar6 = 0;
+  puVar5 = (param_1->vertInfo).vertsBlend;
+  uVar4 = (uint)(param_1->vertInfo).vertCount[0];
+  if (uVar4 != 0) {
     R_SkinXSurfaceWeight0Quantized
-              ((uchar *)pGVar2,uVar4,puVar8,uVar6,pXVar3->quantizeScale,in_r7,pGVar7);
-    sVar1 = (pXVar3->vertInfo).vertCount[0];
-    iVar9 = (int)sVar1;
-    puVar8 = puVar8 + sVar1;
+              ((uchar *)pGVar2,uVar3,puVar5,uVar4,param_1->quantizeScale,in_r7,
+               (GfxQuantizedSkinnedVertexOut0 *)param_2);
+    sVar1 = (param_1->vertInfo).vertCount[0];
+    iVar6 = (int)sVar1;
+    puVar5 = puVar5 + sVar1;
   }
-  uVar6 = (uint)(pXVar3->vertInfo).vertCount[1];
-  if (uVar6 != 0) {
+  uVar4 = (uint)(param_1->vertInfo).vertCount[1];
+  if (uVar4 != 0) {
     R_SkinXSurfaceWeight1Quantized
-              ((uchar *)((int)pGVar2->xyz + iVar9 * uVar4),uVar4,puVar8,uVar6,(float)dVar10,in_r7,
-               pGVar7);
-    sVar1 = (pXVar3->vertInfo).vertCount[1];
-    iVar9 = sVar1 + iVar9;
-    puVar8 = puVar8 + sVar1 * 3;
+              ((uchar *)((int)pGVar2->xyz + iVar6 * uVar3),uVar3,puVar5,uVar4,(float)dVar7,in_r7,
+               (GfxQuantizedSkinnedVertexOut0 *)param_2);
+    sVar1 = (param_1->vertInfo).vertCount[1];
+    iVar6 = sVar1 + iVar6;
+    puVar5 = puVar5 + sVar1 * 3;
   }
-  uVar6 = (uint)(pXVar3->vertInfo).vertCount[2];
-  if (uVar6 != 0) {
+  uVar4 = (uint)(param_1->vertInfo).vertCount[2];
+  if (uVar4 != 0) {
     R_SkinXSurfaceWeight2Quantized
-              ((uchar *)((int)pGVar2->xyz + iVar9 * uVar4),uVar4,puVar8,uVar6,(float)dVar10,in_r7,
-               pGVar7);
-    sVar1 = (pXVar3->vertInfo).vertCount[2];
-    iVar9 = sVar1 + iVar9;
-    puVar8 = puVar8 + sVar1 * 5;
+              ((uchar *)((int)pGVar2->xyz + iVar6 * uVar3),uVar3,puVar5,uVar4,(float)dVar7,in_r7,
+               (GfxQuantizedSkinnedVertexOut0 *)param_2);
+    sVar1 = (param_1->vertInfo).vertCount[2];
+    iVar6 = sVar1 + iVar6;
+    puVar5 = puVar5 + sVar1 * 5;
   }
-  uVar6 = (uint)(pXVar3->vertInfo).vertCount[3];
-  if (uVar6 != 0) {
+  uVar4 = (uint)(param_1->vertInfo).vertCount[3];
+  if (uVar4 != 0) {
     R_SkinXSurfaceWeight3Quantized
-              ((uchar *)((int)pGVar2->xyz + iVar9 * uVar4),uVar4,puVar8,uVar6,(float)dVar10,in_r7,
-               pGVar7);
+              ((uchar *)((int)pGVar2->xyz + iVar6 * uVar3),uVar3,puVar5,uVar4,(float)dVar7,in_r7,
+               (GfxQuantizedSkinnedVertexOut0 *)param_2);
   }
-  iVar9 = Profile_EndInternal((double *)0x0);
-  __restgprlr_25(iVar9);
+  Profile_EndInternal((double *)0x0);
   return;
 }
 
@@ -3252,6 +3187,11 @@ void R_MultiplySkelMat(DObjSkelMat *param_1,DObjSkelMat *param_2,DObjSkelMat *pa
 
 // 82760700  R_SkinXModelCmd  (gfx_d3d/r_model_skin.cpp:3555)
 
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
+
 void R_SkinXModelCmd(void *param_1)
 
 {
@@ -3262,22 +3202,22 @@ void R_SkinXModelCmd(void *param_1)
   float fVar5;
   ushort uVar6;
   int iVar7;
-  XSurface *pXVar8;
-  uint uVar9;
-  undefined4 *puVar10;
-  int iVar11;
-  DObjSkelMat *pDVar12;
-  GfxPackedVertex *pGVar13;
-  int iVar14;
-  uint uVar16;
-  ulonglong uVar15;
+  int iVar8;
+  XSurface *pXVar9;
+  uint uVar10;
+  DObjSkelMat *pDVar11;
+  GfxPackedVertex *pGVar12;
+  int iVar13;
+  uint uVar15;
+  ulonglong uVar14;
+  int *piVar16;
   int *piVar17;
-  int *piVar18;
+  uint uVar18;
   uint uVar19;
-  uint uVar20;
+  float *pfVar20;
   float *pfVar21;
   float *pfVar22;
-  float *pfVar23;
+  double dVar23;
   double dVar24;
   double dVar25;
   double dVar26;
@@ -3287,94 +3227,91 @@ void R_SkinXModelCmd(void *param_1)
   double dVar30;
   double dVar31;
   double dVar32;
-  double dVar33;
-  undefined4 *puStack00000014;
+  void *pvStack00000014;
   uint local_31a0;
   DObjSkelMat local_3150;
   DObjSkelMat local_3110;
   DObjSkelMat aDStack_30d0 [195];
   
-  __savegprlr();
-  puVar10 = (undefined4 *)__savefpr_26();
-  puStack00000014 = puVar10;
+  pvStack00000014 = param_1;
   Profile_Begin(0x55);
-  if (puVar10 == (undefined4 *)0x0) {
+  if (param_1 == (void *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_model_skin.cpp",
                     0xe47,0,"%s");
   }
-  uVar6 = *(ushort *)(puVar10 + 8);
+  uVar6 = *(ushort *)((int)param_1 + 0x20);
   if (uVar6 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_model_skin.cpp",
                     0xe48,0,"%s");
   }
-  piVar17 = (int *)*puVar10;
-  uVar19 = 0xffffffff;
-  iVar11 = puVar10[1];
+  piVar16 = *(int **)param_1;
+  uVar18 = 0xffffffff;
+  iVar7 = *(int *)((int)param_1 + 4);
   if (uVar6 != 0) {
     local_31a0 = (uint)uVar6;
-    dVar32 = 0.0;
-    dVar33 = 1.0;
+    dVar31 = 0.0;
+    dVar32 = 1.0;
     do {
-      iVar7 = *piVar17;
-      if (iVar7 == -3) {
-        piVar17 = piVar17 + 1;
+      iVar8 = *piVar16;
+      if (iVar8 == -3) {
+        piVar16 = piVar16 + 1;
       }
       else {
-        bVar2 = *(byte *)(piVar17 + 2);
-        uVar16 = (uint)bVar2;
-        if (uVar19 != bVar2) {
-          uVar20 = *(byte *)((int)piVar17 + 9) + uVar16;
-          iVar14 = piVar17[1] + uVar16 * -0x20;
-          uVar19 = uVar16;
-          if (bVar2 < uVar20) {
-            pfVar22 = (float *)(uVar16 * 0x20 + iVar11 + 8);
-            pfVar21 = aDStack_30d0[uVar16].axis[0] + 3;
-            pfVar23 = (float *)(uVar16 * 0x20 + iVar14 + 4);
-            iVar14 = iVar11 - iVar14;
-            uVar9 = uVar16 << 2;
+        bVar2 = *(byte *)(piVar16 + 2);
+        uVar15 = (uint)bVar2;
+        if (uVar18 != bVar2) {
+          uVar19 = *(byte *)((int)piVar16 + 9) + uVar15;
+          iVar13 = piVar16[1] + uVar15 * -0x20;
+          uVar18 = uVar15;
+          if (bVar2 < uVar19) {
+            pfVar21 = (float *)(uVar15 * 0x20 + iVar7 + 8);
+            pfVar20 = aDStack_30d0[uVar15].axis[0] + 3;
+            pfVar22 = (float *)(uVar15 * 0x20 + iVar13 + 4);
+            iVar13 = iVar7 - iVar13;
+            uVar10 = uVar15 << 2;
             do {
-              if ((puStack00000014[((int)uVar16 >> 5) + 2] & *(uint *)(&g_bitShift + (uVar9 & 0x7c))
-                  ) != 0) {
-                dVar29 = (double)pfVar23[-1];
-                if ((((((uint)pfVar23[-1] & 0x7f800000) == 0x7f800000) ||
-                     (((uint)*pfVar23 & 0x7f800000) == 0x7f800000)) ||
-                    (((uint)pfVar23[1] & 0x7f800000) == 0x7f800000)) ||
-                   (((uint)pfVar23[2] & 0x7f800000) == 0x7f800000)) {
+              if ((*(uint *)((((int)uVar15 >> 5) + 2) * 4 + (int)pvStack00000014) &
+                  *(uint *)(&g_bitShift + (uVar10 & 0x7c))) != 0) {
+                dVar28 = (double)pfVar22[-1];
+                if ((((((uint)pfVar22[-1] & 0x7f800000) == 0x7f800000) ||
+                     (((uint)*pfVar22 & 0x7f800000) == 0x7f800000)) ||
+                    (((uint)pfVar22[1] & 0x7f800000) == 0x7f800000)) ||
+                   (((uint)pfVar22[2] & 0x7f800000) == 0x7f800000)) {
                   MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\renderer\\../xanim/xanim_public.h"
                                   ,0x29a,0,"%s");
                 }
-                dVar30 = (double)pfVar23[6];
-                if (((uint)pfVar23[6] & 0x7f800000) == 0x7f800000) {
+                dVar29 = (double)pfVar22[6];
+                if (((uint)pfVar22[6] & 0x7f800000) == 0x7f800000) {
                   MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\renderer\\../xanim/xanim_public.h"
                                   ,0x29b,0,"%s");
                 }
-                dVar27 = (double)*pfVar23;
-                dVar28 = (double)(float)(dVar29 * dVar30);
-                dVar24 = (double)pfVar23[1];
-                dVar26 = (double)(float)(dVar27 * dVar30);
-                dVar25 = (double)pfVar23[2];
-                fVar3 = pfVar23[4];
-                fVar4 = pfVar23[5];
-                fVar5 = pfVar23[3];
-                dVar31 = (double)pfVar22[-2];
-                local_3150.axis[0][3] = (float)dVar32;
-                local_3150.axis[1][3] = (float)dVar32;
-                local_3150.axis[2][3] = (float)dVar32;
-                local_3150.origin[3] = (float)dVar33;
-                fVar1 = (float)(dVar24 * (double)(float)(dVar24 * dVar30));
-                local_3150.axis[1][0] = (float)(dVar25 * (double)(float)(dVar24 * dVar30));
-                local_3150.axis[1][2] = (float)(dVar24 * dVar26) - (float)(dVar25 * dVar28);
-                local_3150.axis[2][1] = (float)(dVar24 * dVar26) + (float)(dVar25 * dVar28);
-                local_3150.axis[2][0] = (float)(dVar24 * dVar28) - (float)(dVar25 * dVar26);
-                local_3150.axis[0][1] = (float)(dVar27 * dVar28) - local_3150.axis[1][0];
-                local_3150.axis[0][2] = (float)(dVar25 * dVar26) + (float)(dVar24 * dVar28);
-                local_3150.axis[1][0] = local_3150.axis[1][0] + (float)(dVar27 * dVar28);
+                dVar26 = (double)*pfVar22;
+                dVar27 = (double)(float)(dVar28 * dVar29);
+                dVar23 = (double)pfVar22[1];
+                dVar25 = (double)(float)(dVar26 * dVar29);
+                dVar24 = (double)pfVar22[2];
+                fVar3 = pfVar22[4];
+                fVar4 = pfVar22[5];
+                fVar5 = pfVar22[3];
+                dVar30 = (double)pfVar21[-2];
+                local_3150.axis[0][3] = (float)dVar31;
+                local_3150.axis[1][3] = (float)dVar31;
+                local_3150.axis[2][3] = (float)dVar31;
+                local_3150.origin[3] = (float)dVar32;
+                fVar1 = (float)(dVar23 * (double)(float)(dVar23 * dVar29));
+                local_3150.axis[1][0] = (float)(dVar24 * (double)(float)(dVar23 * dVar29));
+                local_3150.axis[1][2] = (float)(dVar23 * dVar25) - (float)(dVar24 * dVar27);
+                local_3150.axis[2][1] = (float)(dVar23 * dVar25) + (float)(dVar24 * dVar27);
+                local_3150.axis[2][0] = (float)(dVar23 * dVar27) - (float)(dVar24 * dVar25);
+                local_3150.axis[0][1] = (float)(dVar26 * dVar27) - local_3150.axis[1][0];
+                local_3150.axis[0][2] = (float)(dVar24 * dVar25) + (float)(dVar23 * dVar27);
+                local_3150.axis[1][0] = local_3150.axis[1][0] + (float)(dVar26 * dVar27);
                 local_3150.axis[2][2] =
-                     (float)(dVar33 - (double)((float)(dVar27 * dVar26) + (float)(dVar29 * dVar28)))
+                     (float)(dVar32 - (double)((float)(dVar26 * dVar25) + (float)(dVar28 * dVar27)))
                 ;
-                local_3150.axis[0][0] = (float)(dVar33 - (double)(fVar1 + (float)(dVar27 * dVar26)))
+                local_3150.axis[0][0] = (float)(dVar32 - (double)(fVar1 + (float)(dVar26 * dVar25)))
                 ;
-                local_3150.axis[1][1] = (float)(dVar33 - (double)(fVar1 + (float)(dVar29 * dVar28)))
+                local_3150.axis[1][1] = (float)(dVar32 - (double)(fVar1 + (float)(dVar28 * dVar27)))
                 ;
                 local_3150.origin[1] =
                      -(fVar3 * local_3150.axis[1][1] +
@@ -3385,75 +3322,75 @@ void R_SkinXModelCmd(void *param_1)
                 local_3150.origin[0] =
                      -(fVar3 * local_3150.axis[1][0] +
                       fVar5 * local_3150.axis[0][0] + fVar4 * local_3150.axis[2][0]);
-                if (((((uint)pfVar22[-2] & 0x7f800000) == 0x7f800000) ||
-                    ((*(uint *)((int)pfVar23 + iVar14) & 0x7f800000) == 0x7f800000)) ||
-                   ((((uint)*pfVar22 & 0x7f800000) == 0x7f800000 ||
-                    (((uint)pfVar22[1] & 0x7f800000) == 0x7f800000)))) {
+                if (((((uint)pfVar21[-2] & 0x7f800000) == 0x7f800000) ||
+                    ((*(uint *)((int)pfVar22 + iVar13) & 0x7f800000) == 0x7f800000)) ||
+                   ((((uint)*pfVar21 & 0x7f800000) == 0x7f800000 ||
+                    (((uint)pfVar21[1] & 0x7f800000) == 0x7f800000)))) {
                   MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\renderer\\../xanim/xanim_public.h"
                                   ,0x22e,0,"%s");
                 }
-                dVar29 = (double)pfVar22[5];
-                if (((uint)pfVar22[5] & 0x7f800000) == 0x7f800000) {
+                dVar28 = (double)pfVar21[5];
+                if (((uint)pfVar21[5] & 0x7f800000) == 0x7f800000) {
                   MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\renderer\\../xanim/xanim_public.h"
                                   ,0x22f,0,"%s");
                 }
-                dVar30 = (double)*pfVar22;
-                dVar27 = (double)(float)(dVar31 * dVar29);
-                dVar26 = (double)*(float *)((int)pfVar23 + iVar14);
-                dVar25 = (double)(float)(dVar29 * dVar26);
-                dVar24 = (double)pfVar22[1];
-                local_3110.origin[0] = pfVar22[2];
-                local_3110.origin[2] = *(float *)((int)pfVar23 + iVar14 + 0x14);
-                local_3110.origin[1] = *(float *)((int)pfVar23 + iVar14 + 0x10);
-                local_3110.axis[0][3] = (float)dVar32;
-                fVar1 = (float)(dVar30 * (double)(float)(dVar30 * dVar29));
-                local_3110.axis[1][3] = (float)dVar32;
-                local_3110.axis[2][3] = (float)dVar32;
-                local_3110.origin[3] = (float)dVar33;
-                local_3110.axis[1][0] = (float)(dVar24 * (double)(float)(dVar30 * dVar29));
-                local_3110.axis[0][2] = (float)(dVar30 * dVar27) - (float)(dVar24 * dVar25);
-                local_3110.axis[2][0] = (float)(dVar24 * dVar25) + (float)(dVar30 * dVar27);
-                local_3110.axis[0][1] = local_3110.axis[1][0] + (float)(dVar27 * dVar26);
-                local_3110.axis[1][0] = (float)(dVar27 * dVar26) - local_3110.axis[1][0];
-                local_3110.axis[1][2] = (float)(dVar30 * dVar25) + (float)(dVar24 * dVar27);
-                local_3110.axis[1][1] = (float)(dVar33 - (double)(fVar1 + (float)(dVar31 * dVar27)))
+                dVar29 = (double)*pfVar21;
+                dVar26 = (double)(float)(dVar30 * dVar28);
+                dVar25 = (double)*(float *)((int)pfVar22 + iVar13);
+                dVar24 = (double)(float)(dVar28 * dVar25);
+                dVar23 = (double)pfVar21[1];
+                local_3110.origin[0] = pfVar21[2];
+                local_3110.origin[2] = *(float *)((int)pfVar22 + iVar13 + 0x14);
+                local_3110.origin[1] = *(float *)((int)pfVar22 + iVar13 + 0x10);
+                local_3110.axis[0][3] = (float)dVar31;
+                fVar1 = (float)(dVar29 * (double)(float)(dVar29 * dVar28));
+                local_3110.axis[1][3] = (float)dVar31;
+                local_3110.axis[2][3] = (float)dVar31;
+                local_3110.origin[3] = (float)dVar32;
+                local_3110.axis[1][0] = (float)(dVar23 * (double)(float)(dVar29 * dVar28));
+                local_3110.axis[0][2] = (float)(dVar29 * dVar26) - (float)(dVar23 * dVar24);
+                local_3110.axis[2][0] = (float)(dVar23 * dVar24) + (float)(dVar29 * dVar26);
+                local_3110.axis[0][1] = local_3110.axis[1][0] + (float)(dVar26 * dVar25);
+                local_3110.axis[1][0] = (float)(dVar26 * dVar25) - local_3110.axis[1][0];
+                local_3110.axis[1][2] = (float)(dVar29 * dVar24) + (float)(dVar23 * dVar26);
+                local_3110.axis[1][1] = (float)(dVar32 - (double)(fVar1 + (float)(dVar30 * dVar26)))
                 ;
-                local_3110.axis[0][0] = (float)(dVar33 - (double)(fVar1 + (float)(dVar25 * dVar26)))
+                local_3110.axis[0][0] = (float)(dVar32 - (double)(fVar1 + (float)(dVar24 * dVar25)))
                 ;
-                local_3110.axis[2][1] = (float)(dVar30 * dVar25) - (float)(dVar24 * dVar27);
+                local_3110.axis[2][1] = (float)(dVar29 * dVar24) - (float)(dVar23 * dVar26);
                 local_3110.axis[2][2] =
-                     (float)(dVar33 - (double)((float)(dVar25 * dVar26) + (float)(dVar31 * dVar27)))
+                     (float)(dVar32 - (double)((float)(dVar24 * dVar25) + (float)(dVar30 * dVar26)))
                 ;
-                R_MultiplySkelMat(&local_3150,&local_3110,(DObjSkelMat *)(pfVar21 + -3));
-                *pfVar21 = (float)dVar32;
-                pfVar21[4] = (float)dVar32;
-                pfVar21[8] = (float)dVar32;
-                pfVar21[0xc] = (float)dVar33;
+                R_MultiplySkelMat(&local_3150,&local_3110,(DObjSkelMat *)(pfVar20 + -3));
+                *pfVar20 = (float)dVar31;
+                pfVar20[4] = (float)dVar31;
+                pfVar20[8] = (float)dVar31;
+                pfVar20[0xc] = (float)dVar32;
               }
-              uVar16 = uVar16 + 1;
-              pfVar23 = pfVar23 + 8;
+              uVar15 = uVar15 + 1;
               pfVar22 = pfVar22 + 8;
-              pfVar21 = pfVar21 + 0x10;
-              uVar9 = uVar16 * 4;
-            } while ((int)uVar16 < (int)uVar20);
+              pfVar21 = pfVar21 + 8;
+              pfVar20 = pfVar20 + 0x10;
+              uVar10 = uVar15 * 4;
+            } while ((int)uVar15 < (int)uVar19);
           }
         }
-        if (iVar7 < -3) {
-          if (-4 < *piVar17) {
+        if (iVar8 < -3) {
+          if (-4 < *piVar16) {
             MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_model.h",
                             0x74,0,"%s");
           }
-          piVar17 = piVar17 + *piVar17 * -8 + -0x11;
+          piVar16 = piVar16 + *piVar16 * -8 + -0x11;
         }
         else {
-          piVar18 = piVar17 + 6;
-          pXVar8 = (XSurface *)piVar17[5];
-          if (pXVar8 == (XSurface *)0x0) {
+          piVar17 = piVar16 + 6;
+          pXVar9 = (XSurface *)piVar16[5];
+          if (pXVar9 == (XSurface *)0x0) {
             MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_model_skin.cpp"
                             ,0xe7e,0,"%s");
           }
-          iVar7 = *piVar17;
-          if (iVar7 < 0) {
+          iVar8 = *piVar16;
+          if (iVar8 < 0) {
             MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_model_skin.cpp"
                             ,0xeba,0,"%s");
           }
@@ -3461,33 +3398,31 @@ void R_SkinXModelCmd(void *param_1)
             MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_model_skin.cpp"
                             ,0xebb,0,"%s");
           }
-          bVar2 = pXVar8->flags;
-          pGVar13 = (GfxPackedVertex *)(gfxBuf.skinnedCacheLockAddr + iVar7);
-          pDVar12 = aDStack_30d0 + uVar19;
-          piVar17 = piVar18;
+          bVar2 = pXVar9->flags;
+          pGVar12 = (GfxPackedVertex *)(gfxBuf.skinnedCacheLockAddr + iVar8);
+          pDVar11 = aDStack_30d0 + uVar18;
+          piVar16 = piVar17;
           if ((bVar2 & 0x20) == 0) {
             if ((bVar2 & 0x40) == 0) {
-              R_SkinXSurfaceRigid(pXVar8,(uint)pXVar8->vertCount,pDVar12,pGVar13);
+              R_SkinXSurfaceRigid(pXVar9,(uint)pXVar9->vertCount,pDVar11,pGVar12);
             }
             else {
-              R_SkinXSurfaceWeight((pXVar8->verts0).packedVerts0,&pXVar8->vertInfo,pDVar12,pGVar13);
+              R_SkinXSurfaceWeight((pXVar9->verts0).packedVerts0,&pXVar9->vertInfo,pDVar11,pGVar12);
             }
           }
           else if ((bVar2 & 0x40) == 0) {
-            R_SkinXSurfaceRigidQuantized(pXVar8,pDVar12,(GfxQuantizedSkinnedVertexOut0 *)pGVar13);
+            R_SkinXSurfaceRigidQuantized(pXVar9,pDVar11,(GfxQuantizedSkinnedVertexOut0 *)pGVar12);
           }
           else {
-            R_SkinXSurfaceWeightQuantized(pXVar8,pDVar12,(GfxQuantizedSkinnedVertexOut0 *)pGVar13);
+            R_SkinXSurfaceWeightQuantized(pXVar9,pDVar11,(GfxQuantizedSkinnedVertexOut0 *)pGVar12);
           }
         }
       }
-      uVar15 = (ulonglong)local_31a0;
-      local_31a0 = (uint)(uVar15 - 1);
-    } while (uVar15 - 1 != 0);
+      uVar14 = (ulonglong)local_31a0;
+      local_31a0 = (uint)(uVar14 - 1);
+    } while (uVar14 - 1 != 0);
   }
-  iVar11 = Profile_EndInternal((double *)0x0);
-  __restfpr_26(iVar11);
-  __restgprlr();
+  Profile_EndInternal((double *)0x0);
   return;
 }
 

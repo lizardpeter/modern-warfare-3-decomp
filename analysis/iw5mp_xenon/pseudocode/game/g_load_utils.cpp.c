@@ -38,301 +38,289 @@ char * G_GetEntityParsePoint(void)
 
 // 824782C0  G_EntityParseToken  (game/g_load_utils.cpp:100)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 int G_EntityParseToken(char *param_1,int param_2)
 
 {
   char *pcVar1;
-  char *pcVar2;
-  int iVar3;
   
-  pcVar1 = (char *)__savegprlr_29(param_1);
-  pcVar2 = Com_Parse(&DAT_833735a8);
-  I_strncpyz(pcVar1,pcVar2,param_2);
+  pcVar1 = Com_Parse(&DAT_833735a8);
+  I_strncpyz(param_1,pcVar1,param_2);
   if (DAT_833735a8 != (char *)0x0) {
     g_entityEndParsePoint = DAT_833735a8;
-    iVar3 = __restgprlr_29(1);
-    return iVar3;
+    return 1;
   }
-  iVar3 = __restgprlr_29(0);
-  return iVar3;
+  return 0;
 }
 
 
 // 82478320  G_GetEntityToken  (game/g_load_utils.cpp:121)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 int G_GetEntityToken(char *param_1,int param_2)
 
 {
-  char *pcVar2;
-  char *pcVar3;
-  int iVar4;
-  undefined8 uVar1;
+  char *pcVar1;
+  int iVar2;
   
-  pcVar2 = (char *)__savegprlr_29(param_1);
-  pcVar3 = Com_Parse(&DAT_833735a8);
-  I_strncpyz(pcVar2,pcVar3,param_2);
+  pcVar1 = Com_Parse(&DAT_833735a8);
+  I_strncpyz(param_1,pcVar1,param_2);
   if (DAT_833735a8 != (char *)0x0) {
     g_entityEndParsePoint = DAT_833735a8;
-    iVar4 = __restgprlr_29(1);
-    return iVar4;
+    return 1;
   }
   if (((g_addonMapEnts != (AddonMapEnts *)0x0) && (g_addonMapEnts->entityString != (char *)0x0)) &&
      (g_parsingAddonEntities == 0)) {
     DAT_833735a8 = g_addonMapEnts->entityString;
     g_parsingAddonEntities = 1;
-    iVar4 = G_EntityParseToken(pcVar2,param_2);
-    uVar1 = 1;
-    if (iVar4 != 0) goto LAB_824783c4;
+    iVar2 = G_EntityParseToken(param_1,param_2);
+    if (iVar2 != 0) {
+      return 1;
+    }
   }
-  uVar1 = 0;
-LAB_824783c4:
-  iVar4 = __restgprlr_29(uVar1);
-  return iVar4;
+  return 0;
 }
 
 
 // 824783D0  G_AddSpawnVarToken  (game/g_load_utils.cpp:146)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 char * G_AddSpawnVarToken(char *param_1,SpawnVar *param_2)
 
 {
   char cVar1;
-  uint uVar2;
-  int iVar3;
-  char *pcVar4;
-  char *pcVar5;
-  longlong lVar6;
+  int iVar2;
+  char *pcVar3;
   
-  lVar6 = (longlong)(int)param_2;
-  pcVar4 = (char *)__savegprlr_29(param_1);
-  pcVar5 = pcVar4;
+  pcVar3 = param_1;
   do {
-    cVar1 = *pcVar5;
-    pcVar5 = pcVar5 + 1;
+    cVar1 = *pcVar3;
+    pcVar3 = pcVar3 + 1;
   } while (cVar1 != '\0');
-  iVar3 = (int)lVar6;
-  if (0x800 < (int)(pcVar5 + *(int *)(iVar3 + 0x208) + (-1 - (int)pcVar4) + 1)) {
+  if (0x800 < (int)(pcVar3 + param_2->numSpawnVarChars + (-1 - (int)param_1) + 1)) {
     Com_Error(ERR_DROP,"\x15G_AddSpawnVarToken: MAX_SPAWN_VARS");
   }
-  uVar2 = *(uint *)(iVar3 + 0x208);
+  iVar2 = param_2->numSpawnVarChars;
   memcpy();
-  *(char **)(iVar3 + 0x208) = pcVar5 + *(int *)(iVar3 + 0x208) + (-1 - (int)pcVar4) + 1;
-  pcVar5 = (char *)__restgprlr_29(lVar6 + (ulonglong)uVar2 + 0x20c);
-  return pcVar5;
+  param_2->numSpawnVarChars = (int)(pcVar3 + param_2->numSpawnVarChars + (-1 - (int)param_1) + 1);
+  return param_2->spawnVarChars + iVar2;
 }
 
 
 // 82478460  G_ParseSpawnVars  (game/g_load_utils.cpp:175)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
+
 int G_ParseSpawnVars(SpawnVar *param_1)
 
 {
   char cVar1;
-  undefined1 *puVar2;
+  int iVar2;
   int iVar3;
-  int iVar4;
+  char *pcVar4;
   char *pcVar5;
-  char *pcVar6;
   char local_850 [1024];
   char local_450 [1104];
   
-  puVar2 = (undefined1 *)__savegprlr_23(param_1);
-  *puVar2 = 0;
-  *(undefined4 *)(puVar2 + 4) = 0;
-  *(undefined4 *)(puVar2 + 0x208) = 0;
-  iVar3 = G_GetEntityToken(local_850,0x400);
-  if (iVar3 != 0) {
+  param_1->spawnVarsValid = false;
+  param_1->numSpawnVars = 0;
+  param_1->numSpawnVarChars = 0;
+  iVar2 = G_GetEntityToken(local_850,0x400);
+  if (iVar2 != 0) {
     if (local_850[0] != '{') {
       Com_Error(ERR_DROP,"\x15G_ParseSpawnVars: found %s when expecting {");
     }
     while( true ) {
-      iVar3 = G_GetEntityToken(local_450,0x400);
-      if (iVar3 == 0) {
+      iVar2 = G_GetEntityToken(local_450,0x400);
+      if (iVar2 == 0) {
         Com_Error(ERR_DROP,"\x15G_ParseSpawnVars: EOF without closing brace");
       }
       if (local_450[0] == '}') break;
-      pcVar5 = local_450;
+      pcVar4 = local_450;
       do {
-        cVar1 = *pcVar5;
-        pcVar5 = pcVar5 + 1;
+        cVar1 = *pcVar4;
+        pcVar4 = pcVar4 + 1;
       } while (cVar1 != '\0');
-      iVar3 = 0;
-      if (pcVar5 != local_450) {
+      iVar2 = 0;
+      if (pcVar4 != local_450) {
         do {
-          pcVar6 = local_450 + iVar3;
-          iVar4 = tolower((int)local_450[iVar3]);
-          iVar3 = iVar3 + 1;
-          *pcVar6 = (char)iVar4;
-        } while (iVar3 < (int)pcVar5 - (int)local_450);
+          pcVar5 = local_450 + iVar2;
+          iVar3 = tolower((int)local_450[iVar2]);
+          iVar2 = iVar2 + 1;
+          *pcVar5 = (char)iVar3;
+        } while (iVar2 < (int)pcVar4 - (int)local_450);
       }
-      iVar3 = G_GetEntityToken(local_850,0x400);
-      if (iVar3 == 0) {
+      iVar2 = G_GetEntityToken(local_850,0x400);
+      if (iVar2 == 0) {
         Com_Error(ERR_DROP,"\x15G_ParseSpawnVars: EOF without closing brace");
       }
       if (local_850[0] == '}') {
         Com_Error(ERR_DROP,"\x15G_ParseSpawnVars: closing brace without data");
       }
-      if (*(int *)(puVar2 + 4) == 0x40) {
+      if (param_1->numSpawnVars == 0x40) {
         Com_Error(ERR_DROP,"\x15G_ParseSpawnVars: MAX_SPAWN_VARS");
       }
-      pcVar5 = local_450;
+      pcVar4 = local_450;
       do {
-        cVar1 = *pcVar5;
-        pcVar5 = pcVar5 + 1;
+        cVar1 = *pcVar4;
+        pcVar4 = pcVar4 + 1;
       } while (cVar1 != '\0');
-      iVar3 = -1 - (int)local_450;
-      if (0x800 < (int)(pcVar5 + *(int *)(puVar2 + 0x208) + iVar3 + 1)) {
+      iVar2 = -1 - (int)local_450;
+      if (0x800 < (int)(pcVar4 + param_1->numSpawnVarChars + iVar2 + 1)) {
         Com_Error(ERR_DROP,"\x15G_AddSpawnVarToken: MAX_SPAWN_VARS");
       }
-      iVar4 = *(int *)(puVar2 + 0x208);
+      iVar3 = param_1->numSpawnVarChars;
       memcpy();
-      *(char **)(puVar2 + 0x208) = pcVar5 + *(int *)(puVar2 + 0x208) + iVar3 + 1;
-      *(undefined1 **)(puVar2 + (*(int *)(puVar2 + 4) + 1) * 8) = puVar2 + iVar4 + 0x20c;
-      pcVar5 = local_850;
+      param_1->numSpawnVarChars = (int)(pcVar4 + param_1->numSpawnVarChars + iVar2 + 1);
+      param_1->spawnVars[param_1->numSpawnVars][0] = param_1->spawnVarChars + iVar3;
+      pcVar4 = local_850;
       do {
-        cVar1 = *pcVar5;
-        pcVar5 = pcVar5 + 1;
+        cVar1 = *pcVar4;
+        pcVar4 = pcVar4 + 1;
       } while (cVar1 != '\0');
-      iVar3 = -1 - (int)local_850;
-      if (0x800 < (int)(pcVar5 + *(int *)(puVar2 + 0x208) + iVar3 + 1)) {
+      iVar2 = -1 - (int)local_850;
+      if (0x800 < (int)(pcVar4 + param_1->numSpawnVarChars + iVar2 + 1)) {
         Com_Error(ERR_DROP,"\x15G_AddSpawnVarToken: MAX_SPAWN_VARS");
       }
-      iVar4 = *(int *)(puVar2 + 0x208);
+      iVar3 = param_1->numSpawnVarChars;
       memcpy();
-      *(char **)(puVar2 + 0x208) = pcVar5 + *(int *)(puVar2 + 0x208) + iVar3 + 1;
-      *(undefined1 **)(puVar2 + *(int *)(puVar2 + 4) * 8 + 0xc) = puVar2 + iVar4 + 0x20c;
-      *(int *)(puVar2 + 4) = *(int *)(puVar2 + 4) + 1;
+      param_1->numSpawnVarChars = (int)(pcVar4 + param_1->numSpawnVarChars + iVar2 + 1);
+      param_1->spawnVars[param_1->numSpawnVars][1] = param_1->spawnVarChars + iVar3;
+      param_1->numSpawnVars = param_1->numSpawnVars + 1;
     }
-    *puVar2 = 1;
-    iVar3 = __restgprlr_23(1);
-    return iVar3;
+    param_1->spawnVarsValid = true;
+    return 1;
   }
-  iVar3 = __restgprlr_23();
-  return iVar3;
+  return 0;
 }
 
 
 // 824786D8  G_ParseSpawnVars2  (game/g_load_utils.cpp:234)
+
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 
 int G_ParseSpawnVars2(SpawnVar *param_1)
 
 {
   char cVar1;
   int iVar2;
-  undefined1 *puVar3;
-  int iVar4;
-  uint uVar5;
-  char *pcVar6;
+  int iVar3;
+  uint uVar4;
+  char *pcVar5;
   char local_840 [1024];
   char local_440 [1088];
   
-  puVar3 = (undefined1 *)__savegprlr_25(param_1);
-  *puVar3 = 0;
-  *(undefined4 *)(puVar3 + 4) = 0;
-  *(undefined4 *)(puVar3 + 0x208) = 0;
-  iVar4 = G_GetEntityToken(local_440,0x400);
-  if (iVar4 != 0) {
+  param_1->spawnVarsValid = false;
+  param_1->numSpawnVars = 0;
+  param_1->numSpawnVarChars = 0;
+  iVar3 = G_GetEntityToken(local_440,0x400);
+  if (iVar3 != 0) {
     if (local_440[0] != '{') {
       Com_Error(ERR_DROP,"\x15G_ParseSpawnVars: found %s when expecting {");
     }
     while( true ) {
-      iVar4 = G_GetEntityToken(local_840,0x400);
-      if (iVar4 == 0) {
+      iVar3 = G_GetEntityToken(local_840,0x400);
+      if (iVar3 == 0) {
         Com_Error(ERR_DROP,"\x15G_ParseSpawnVars: EOF without closing brace");
       }
       if (local_840[0] == '}') break;
-      uVar5 = atoi(local_840);
-      if (uVar5 == 0) {
-        iVar4 = G_GetEntityToken(local_840,0x400);
-        if (iVar4 == 0) {
+      uVar4 = atoi(local_840);
+      if (uVar4 == 0) {
+        iVar3 = G_GetEntityToken(local_840,0x400);
+        if (iVar3 == 0) {
           Com_Error(ERR_DROP,"\x15G_ParseSpawnVars: EOF without closing brace");
         }
       }
       else {
-        pcVar6 = Scr_GetCanonicalStringAtIndex(uVar5);
-        I_strncpyz(local_840,pcVar6,0x400);
+        pcVar5 = Scr_GetCanonicalStringAtIndex(uVar4);
+        I_strncpyz(local_840,pcVar5,0x400);
       }
-      iVar4 = G_GetEntityToken(local_440,0x400);
-      if (iVar4 == 0) {
+      iVar3 = G_GetEntityToken(local_440,0x400);
+      if (iVar3 == 0) {
         Com_Error(ERR_DROP,"\x15G_ParseSpawnVars: EOF without closing brace");
       }
       if (local_440[0] == '}') {
         Com_Error(ERR_DROP,"\x15G_ParseSpawnVars: closing brace without data");
       }
-      if (*(int *)(puVar3 + 4) == 0x40) {
+      if (param_1->numSpawnVars == 0x40) {
         Com_Error(ERR_DROP,"\x15G_ParseSpawnVars: MAX_SPAWN_VARS");
       }
-      pcVar6 = local_840;
+      pcVar5 = local_840;
       do {
-        cVar1 = *pcVar6;
-        pcVar6 = pcVar6 + 1;
+        cVar1 = *pcVar5;
+        pcVar5 = pcVar5 + 1;
       } while (cVar1 != '\0');
-      iVar4 = -1 - (int)local_840;
-      if (0x800 < (int)(pcVar6 + *(int *)(puVar3 + 0x208) + iVar4 + 1)) {
+      iVar3 = -1 - (int)local_840;
+      if (0x800 < (int)(pcVar5 + param_1->numSpawnVarChars + iVar3 + 1)) {
         Com_Error(ERR_DROP,"\x15G_AddSpawnVarToken: MAX_SPAWN_VARS");
       }
-      iVar2 = *(int *)(puVar3 + 0x208);
+      iVar2 = param_1->numSpawnVarChars;
       memcpy();
-      *(char **)(puVar3 + 0x208) = pcVar6 + *(int *)(puVar3 + 0x208) + iVar4 + 1;
-      *(undefined1 **)(puVar3 + (*(int *)(puVar3 + 4) + 1) * 8) = puVar3 + iVar2 + 0x20c;
-      pcVar6 = local_440;
+      param_1->numSpawnVarChars = (int)(pcVar5 + param_1->numSpawnVarChars + iVar3 + 1);
+      param_1->spawnVars[param_1->numSpawnVars][0] = param_1->spawnVarChars + iVar2;
+      pcVar5 = local_440;
       do {
-        cVar1 = *pcVar6;
-        pcVar6 = pcVar6 + 1;
+        cVar1 = *pcVar5;
+        pcVar5 = pcVar5 + 1;
       } while (cVar1 != '\0');
-      iVar4 = -1 - (int)local_440;
-      if (0x800 < (int)(pcVar6 + *(int *)(puVar3 + 0x208) + iVar4 + 1)) {
+      iVar3 = -1 - (int)local_440;
+      if (0x800 < (int)(pcVar5 + param_1->numSpawnVarChars + iVar3 + 1)) {
         Com_Error(ERR_DROP,"\x15G_AddSpawnVarToken: MAX_SPAWN_VARS");
       }
-      iVar2 = *(int *)(puVar3 + 0x208);
+      iVar2 = param_1->numSpawnVarChars;
       memcpy();
-      *(char **)(puVar3 + 0x208) = pcVar6 + *(int *)(puVar3 + 0x208) + iVar4 + 1;
-      *(undefined1 **)(puVar3 + *(int *)(puVar3 + 4) * 8 + 0xc) = puVar3 + iVar2 + 0x20c;
-      *(int *)(puVar3 + 4) = *(int *)(puVar3 + 4) + 1;
+      param_1->numSpawnVarChars = (int)(pcVar5 + param_1->numSpawnVarChars + iVar3 + 1);
+      param_1->spawnVars[param_1->numSpawnVars][1] = param_1->spawnVarChars + iVar2;
+      param_1->numSpawnVars = param_1->numSpawnVars + 1;
     }
-    *puVar3 = 1;
-    iVar4 = __restgprlr_25(1);
-    return iVar4;
+    param_1->spawnVarsValid = true;
+    return 1;
   }
-  iVar4 = __restgprlr_25();
-  return iVar4;
+  return 0;
 }
 
 
 // 82478940  G_SpawnString  (game/g_load_utils.cpp:309)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 int G_SpawnString(SpawnVar *param_1,uint param_2,char *param_3,char **param_4)
 
 {
-  char *pcVar1;
+  SpawnVar *pSVar1;
   char *pcVar2;
-  char *pcVar3;
+  int iVar3;
   int iVar4;
-  int iVar5;
   
-  pcVar2 = (char *)__savegprlr_26(param_1);
-  if (*pcVar2 == '\0') {
+  if (param_1->spawnVarsValid == false) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_load_utils.cpp",0x139,0
                     ,"%s");
   }
-  pcVar3 = Scr_GetCanonicalStringAtIndex(param_2);
-  iVar5 = 0;
-  pcVar1 = pcVar2;
-  if (0 < *(int *)(pcVar2 + 4)) {
+  pcVar2 = Scr_GetCanonicalStringAtIndex(param_2);
+  iVar4 = 0;
+  pSVar1 = param_1;
+  if (0 < param_1->numSpawnVars) {
     do {
-      iVar4 = I_stricmp(pcVar3,*(char **)(pcVar1 + 8));
-      if (iVar4 == 0) {
-        *param_4 = *(char **)(pcVar2 + iVar5 * 8 + 0xc);
-        iVar5 = __restgprlr_26(1);
-        return iVar5;
+      iVar3 = I_stricmp(pcVar2,pSVar1->spawnVars[0][0]);
+      if (iVar3 == 0) {
+        *param_4 = param_1->spawnVars[iVar4][1];
+        return 1;
       }
-      iVar5 = iVar5 + 1;
-      pcVar1 = pcVar1 + 8;
-    } while (iVar5 < *(int *)(pcVar2 + 4));
+      iVar4 = iVar4 + 1;
+      pSVar1 = (SpawnVar *)pSVar1->spawnVars;
+    } while (iVar4 < param_1->numSpawnVars);
   }
   *param_4 = param_3;
-  iVar5 = __restgprlr_26(0);
-  return iVar5;
+  return 0;
 }
 
 

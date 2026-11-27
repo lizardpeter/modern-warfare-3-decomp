@@ -2,46 +2,44 @@
 
 // 8225EE88  mp_reduce_2k_setup  (line unknown)
 
-void mp_reduce_2k_setup(undefined8 param_1,undefined4 *param_2)
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
+undefined8 mp_reduce_2k_setup(uint *param_1,undefined4 *param_2)
 
 {
   uint uVar1;
-  uint *puVar3;
   undefined8 uVar2;
-  longlong lVar4;
-  ulonglong uVar5;
+  longlong lVar3;
+  ulonglong uVar4;
   undefined1 auStack_30 [12];
   undefined4 *local_24;
   
-  puVar3 = (uint *)__savegprlr_29();
   uVar2 = mp_init(auStack_30);
   if ((int)uVar2 != 0) {
-LAB_8225ef4c:
-    __restgprlr_29(uVar2);
-    return;
+    return uVar2;
   }
-  uVar1 = *puVar3;
+  uVar1 = *param_1;
   if (uVar1 == 0) {
-    lVar4 = 0;
+    lVar3 = 0;
   }
   else {
-    lVar4 = (ulonglong)uVar1 * 0x1c + -0x1c;
-    for (uVar5 = (ulonglong)*(uint *)(uVar1 * 4 + puVar3[3] + -4); uVar5 != 0; uVar5 = uVar5 >> 1) {
-      lVar4 = lVar4 + 1;
+    lVar3 = (ulonglong)uVar1 * 0x1c + -0x1c;
+    for (uVar4 = (ulonglong)*(uint *)(uVar1 * 4 + param_1[3] + -4); uVar4 != 0; uVar4 = uVar4 >> 1)
+    {
+      lVar3 = lVar3 + 1;
     }
   }
-  uVar2 = mp_2expt(auStack_30,lVar4);
+  uVar2 = mp_2expt(auStack_30,lVar3);
   if ((int)uVar2 == 0) {
-    uVar2 = s_mp_sub(auStack_30,puVar3,auStack_30);
+    uVar2 = s_mp_sub(auStack_30,param_1,auStack_30);
     if ((int)uVar2 == 0) {
       *param_2 = *local_24;
       mp_clear(auStack_30);
-      uVar2 = 0;
-      goto LAB_8225ef4c;
+      return 0;
     }
   }
   mp_clear(auStack_30);
-  __restgprlr_29(uVar2);
-  return;
+  return uVar2;
 }
 

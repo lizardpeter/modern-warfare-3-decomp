@@ -2,6 +2,8 @@
 
 // 82283FE0  G_GetVehicleDef  (bgame/bg_vehicle.cpp:117)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -12,28 +14,28 @@ VehicleDef * G_GetVehicleDef(playerState_s *param_1)
   int iVar1;
   VehicleDef *pVVar2;
   
-  iVar1 = __savegprlr_29(param_1);
-  if (iVar1 == 0) {
+  if (param_1 == (playerState_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_vehicle.cpp",0x79,0,
                     "%s");
   }
-  if (*(int *)(iVar1 + 0xac) == 0) {
+  if ((param_1->vehicleState).entity == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_vehicle.cpp",0x7a,0,
                     "%s");
   }
-  iVar1 = *(int *)(iVar1 + 0xac);
+  iVar1 = (param_1->vehicleState).entity;
   if (g_entities[iVar1].vehicle == (Vehicle *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_vehicle.cpp",0x7d,0,
                     "%s");
   }
   pVVar2 = Vehicle_GetServerDef((g_entities[iVar1].vehicle)->defIndex);
-  pVVar2 = (VehicleDef *)__restgprlr_29(pVVar2);
   return pVVar2;
 }
 
 
 // 822840A8  CG_GetVehicleDef  (bgame/bg_vehicle.cpp:133)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
@@ -43,13 +45,11 @@ VehicleDef * CG_GetVehicleDef(playerState_s *param_1)
 
 {
   LocalClientNum_t LVar1;
-  int iVar2;
-  centity_s *pcVar3;
-  VehicleClient *pVVar4;
-  VehicleDef *pVVar5;
+  centity_s *pcVar2;
+  VehicleClient *pVVar3;
+  VehicleDef *pVVar4;
   
-  iVar2 = __savegprlr_29(param_1);
-  if (iVar2 == 0) {
+  if (param_1 == (playerState_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_vehicle.cpp",0x8a,0,
                     "%s");
   }
@@ -58,16 +58,17 @@ VehicleDef * CG_GetVehicleDef(playerState_s *param_1)
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_vehicle.cpp",0x8d,0,
                     "localClientNum doesn\'t index MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)");
   }
-  pcVar3 = CG_GetEntity(LVar1,*(int *)(iVar2 + 0xac));
-  pVVar4 = VehicleCl_GetClient(LVar1,pcVar3);
-  pVVar5 = VehicleCl_GetClientDef(pVVar4);
-  pVVar5 = (VehicleDef *)__restgprlr_29(pVVar5);
-  return pVVar5;
+  pcVar2 = CG_GetEntity(LVar1,(param_1->vehicleState).entity);
+  pVVar3 = VehicleCl_GetClient(LVar1,pcVar2);
+  pVVar4 = VehicleCl_GetClientDef(pVVar3);
+  return pVVar4;
 }
 
 
 // 82284140  CG_GetWheelOrigin  (bgame/bg_vehicle.cpp:151)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -76,12 +77,11 @@ int CG_GetWheelOrigin(playerState_s *param_1,int param_2,float *param_3)
 
 {
   LocalClientNum_t LVar1;
-  int iVar2;
-  centity_s *pcVar3;
+  centity_s *pcVar2;
+  int iVar3;
   int local_40 [16];
   
-  iVar2 = __savegprlr_27(param_1);
-  if (iVar2 == 0) {
+  if (param_1 == (playerState_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_vehicle.cpp",0x9c,0,
                     "%s");
   }
@@ -90,21 +90,21 @@ int CG_GetWheelOrigin(playerState_s *param_1,int param_2,float *param_3)
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_vehicle.cpp",0x9f,0,
                     "localClientNum doesn\'t index MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)");
   }
-  pcVar3 = CG_GetEntity(LVar1,*(int *)(iVar2 + 0xac));
+  pcVar2 = CG_GetEntity(LVar1,(param_1->vehicleState).entity);
   local_40[0] = 0xfe;
-  iVar2 = VehicleCl_GetWheelBone(LVar1,pcVar3,param_2,local_40);
-  if (iVar2 != 0) {
-    VehicleCl_GetBoneOrigin(LVar1,pcVar3,local_40[0],param_3);
-    iVar2 = __restgprlr_27(1);
-    return iVar2;
+  iVar3 = VehicleCl_GetWheelBone(LVar1,pcVar2,param_2,local_40);
+  if (iVar3 != 0) {
+    VehicleCl_GetBoneOrigin(LVar1,pcVar2,local_40[0],param_3);
+    return 1;
   }
-  iVar2 = __restgprlr_27(0);
-  return iVar2;
+  return 0;
 }
 
 
 // 82284220  G_GetWheelOrigin  (bgame/bg_vehicle.cpp:177)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 
@@ -115,132 +115,111 @@ int G_GetWheelOrigin(playerState_s *param_1,int param_2,float *param_3)
   int iVar2;
   int local_30 [12];
   
-  iVar1 = __savegprlr_29(param_1);
-  if (iVar1 == 0) {
+  if (param_1 == (playerState_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_vehicle.cpp",0xb5,0,
                     "%s");
   }
-  iVar1 = *(int *)(iVar1 + 0xac);
+  iVar1 = (param_1->vehicleState).entity;
   local_30[0] = 0xfe;
   iVar2 = Vehicle_GetWheelBone(g_entities + iVar1,param_2,local_30);
   if (iVar2 != 0) {
     Vehicle_GetBoneOrigin(g_entities + iVar1,local_30[0],param_3);
-    iVar1 = __restgprlr_29(1);
-    return iVar1;
+    return 1;
   }
-  iVar1 = __restgprlr_29(0);
-  return iVar1;
+  return 0;
 }
 
 
 // 822842C8  BG_GetVehicleDef  (bgame/bg_vehicle.cpp:199)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
 
 VehicleDef * BG_GetVehicleDef(pmove_t *param_1)
 
 {
-  undefined4 *puVar2;
-  ulonglong uVar1;
-  VehicleDef *pVVar3;
+  VehicleDef *pVVar1;
   
-  puVar2 = (undefined4 *)__savegprlr_28(param_1);
-  if (puVar2 == (undefined4 *)0x0) {
+  if (param_1 == (pmove_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_vehicle.cpp",0xca,0,
                     "%s");
   }
-  if (1 < *(byte *)(puVar2 + 0x4d)) {
+  if (1 < param_1->handler) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_vehicle.cpp",0xcb,0,
                     "pm->handler doesn\'t index PMOVE_HANDLER_COUNT\n\t%i not in [0, %i)");
   }
-  if ((&PTR_CG_GetVehicleDef_82961794)[(uint)*(byte *)(puVar2 + 0x4d) * 3] == (undefined *)0x0) {
+  if ((&PTR_CG_GetVehicleDef_82961794)[(uint)param_1->handler * 3] == (undefined *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_vehicle.cpp",0xcc,0,
                     "%s");
   }
-  uVar1 = (*(code *)(&PTR_CG_GetVehicleDef_82961794)[(uint)*(byte *)(puVar2 + 0x4d) * 3])(*puVar2);
-  if ((uVar1 & 0xffffffff) == 0) {
+  pVVar1 = (VehicleDef *)
+           (*(code *)(&PTR_CG_GetVehicleDef_82961794)[(uint)param_1->handler * 3])(param_1->ps);
+  if (pVVar1 == (VehicleDef *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_vehicle.cpp",0xd0,1,
                     "%s");
   }
-  pVVar3 = (VehicleDef *)__restgprlr_28(uVar1);
-  return pVVar3;
+  return pVVar1;
 }
 
 
 // 822843D0  BG_GetWheelOrigin  (bgame/bg_vehicle.cpp:215)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
 int BG_GetWheelOrigin(pmove_t *param_1,int param_2,float *param_3)
 
 {
-  undefined4 *puVar1;
-  int iVar2;
-  longlong lVar3;
-  longlong lVar4;
+  int iVar1;
   
-  lVar4 = (longlong)(int)param_3;
-  lVar3 = (longlong)param_2;
-  puVar1 = (undefined4 *)__savegprlr_26(param_1,lVar3,lVar4);
-  if (puVar1 == (undefined4 *)0x0) {
+  if (param_1 == (pmove_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_vehicle.cpp",0xda,0,
                     "%s");
   }
-  if (1 < *(byte *)(puVar1 + 0x4d)) {
+  if (1 < param_1->handler) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_vehicle.cpp",0xdb,0,
                     "pm->handler doesn\'t index PMOVE_HANDLER_COUNT\n\t%i not in [0, %i)");
   }
-  if ((&PTR_CG_GetWheelOrigin_82961798)[(uint)*(byte *)(puVar1 + 0x4d) * 3] == (undefined *)0x0) {
+  if ((&PTR_CG_GetWheelOrigin_82961798)[(uint)param_1->handler * 3] == (undefined *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_vehicle.cpp",0xdc,0,
                     "%s");
   }
-  (*(code *)(&PTR_CG_GetWheelOrigin_82961798)[(uint)*(byte *)(puVar1 + 0x4d) * 3])
-            (*puVar1,lVar3,lVar4);
-  iVar2 = __restgprlr_26();
-  return iVar2;
+  iVar1 = (*(code *)(&PTR_CG_GetWheelOrigin_82961798)[(uint)param_1->handler * 3])
+                    (param_1->ps,param_2,param_3);
+  return iVar1;
 }
 
 
 // 822844C0  BG_TraceCapsule  (bgame/bg_vehicle.cpp:229)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
+
 void BG_TraceCapsule(uchar param_1,trace_t *param_2,float *param_3,float *param_4,Bounds *param_5,
                     int param_6,int param_7)
 
 {
-  int iVar1;
-  uint uVar2;
-  longlong lVar3;
-  longlong lVar4;
-  longlong lVar5;
-  longlong lVar6;
-  longlong lVar7;
-  longlong lVar8;
-  
-  lVar8 = (longlong)param_7;
-  lVar7 = (longlong)param_6;
-  lVar6 = (longlong)(int)param_5;
-  lVar5 = (longlong)(int)param_4;
-  lVar4 = (longlong)(int)param_3;
-  lVar3 = (longlong)(int)param_2;
-  uVar2 = __savegprlr_23(param_1,lVar3,lVar4,lVar5,lVar6,lVar7,lVar8);
-  if (1 < (uVar2 & 0xff)) {
+  if (1 < param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_vehicle.cpp",0xe6,0,
                     "handler doesn\'t index PMOVE_HANDLER_COUNT\n\t%i not in [0, %i)");
   }
-  iVar1 = (uVar2 & 0xff) + (uVar2 & 0xff) * 2;
-  if ((&bgVehicleHanders)[iVar1] == (undefined *)0x0) {
+  if ((&bgVehicleHanders)[(uint)param_1 * 3] == (undefined *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_vehicle.cpp",0xe7,0,
                     "%s");
   }
-  (*(code *)(&bgVehicleHanders)[iVar1])(lVar3,lVar4,lVar5,lVar6,lVar7,lVar8);
-  __restgprlr_23();
+  (*(code *)(&bgVehicleHanders)[(uint)param_1 * 3])(param_2,param_3,param_4,param_5,param_6,param_7)
+  ;
   return;
 }
 
 
 // 82284588  BG_GetVehicleBounds  (bgame/bg_vehicle.cpp:237)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
 
@@ -248,62 +227,57 @@ void BG_GetVehicleBounds(pmove_t *param_1,Bounds *param_2)
 
 {
   float fVar1;
-  int iVar2;
-  float fVar3;
-  VehicleType VVar4;
-  undefined4 *puVar5;
-  pmove_t *ppVar6;
-  VehicleDef *pVVar7;
-  ulonglong uVar8;
+  float fVar2;
+  VehicleType VVar3;
+  VehicleDef *pVVar4;
   
-  uVar8 = (ulonglong)(int)param_2;
-  ppVar6 = (pmove_t *)__savegprlr_28(param_1);
-  if (ppVar6 == (pmove_t *)0x0) {
+  if (param_1 == (pmove_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_vehicle.cpp",0xf1,0,
                     "%s");
   }
-  if ((uVar8 & 0xffffffff) == 0) {
+  if (param_2 == (Bounds *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_vehicle.cpp",0xf2,0,
                     "%s");
   }
-  pVVar7 = BG_GetVehicleDef(ppVar6);
-  puVar5 = (undefined4 *)uVar8;
-  *puVar5 = 0;
-  puVar5[1] = 0;
-  puVar5[2] = 0;
-  puVar5[3] = 0xc8000000;
-  puVar5[4] = 0xc8000000;
-  puVar5[5] = 0xc8000000;
-  VVar4 = pVVar7->type;
-  if ((VVar4 != VEH_PLANE) && (VVar4 != VEH_ARTILLERY)) {
-    if ((VVar4 != VEH_WHEELS_4) && (VVar4 != VEH_TANK)) {
-      fVar1 = pVVar7->vehHelicopterBoundsRadius;
-      iVar2 = (bg_vehicle_sphere_bounds_offset_z->current).integer;
-      *puVar5 = 0;
-      puVar5[1] = 0;
-      puVar5[2] = iVar2;
-      puVar5[3] = fVar1;
-      puVar5[4] = fVar1;
-      puVar5[5] = fVar1;
-      __restgprlr_28();
+  pVVar4 = BG_GetVehicleDef(param_1);
+  param_2->midPoint[0] = 0.0;
+  param_2->midPoint[1] = 0.0;
+  param_2->midPoint[2] = 0.0;
+  param_2->halfSize[0] = -131072.0;
+  param_2->halfSize[1] = -131072.0;
+  param_2->halfSize[2] = -131072.0;
+  VVar3 = pVVar4->type;
+  if ((VVar3 != VEH_PLANE) && (VVar3 != VEH_ARTILLERY)) {
+    if ((VVar3 != VEH_WHEELS_4) && (VVar3 != VEH_TANK)) {
+      fVar1 = pVVar4->vehHelicopterBoundsRadius;
+      fVar2 = (float)(bg_vehicle_sphere_bounds_offset_z->current).integer;
+      param_2->midPoint[0] = 0.0;
+      param_2->midPoint[1] = 0.0;
+      param_2->midPoint[2] = fVar2;
+      param_2->halfSize[0] = fVar1;
+      param_2->halfSize[1] = fVar1;
+      param_2->halfSize[2] = fVar1;
       return;
     }
-    fVar1 = pVVar7->camHeight;
-    fVar3 = pVVar7->camRadius;
-    *puVar5 = 0;
-    puVar5[1] = 0;
-    puVar5[2] = fVar1;
-    puVar5[3] = fVar3;
-    puVar5[4] = fVar3;
-    puVar5[5] = fVar1;
+    fVar1 = pVVar4->camHeight;
+    fVar2 = pVVar4->camRadius;
+    param_2->midPoint[0] = 0.0;
+    param_2->midPoint[1] = 0.0;
+    param_2->midPoint[2] = fVar1;
+    param_2->halfSize[0] = fVar2;
+    param_2->halfSize[1] = fVar2;
+    param_2->halfSize[2] = fVar1;
   }
-  __restgprlr_28();
   return;
 }
 
 
 // 822846A8  BG_VehicleCorrectAllSolid  (bgame/bg_vehicle.cpp:263)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
 int BG_VehicleCorrectAllSolid(pmove_t *param_1,VehicleState *param_2,trace_t *param_3)
@@ -311,79 +285,68 @@ int BG_VehicleCorrectAllSolid(pmove_t *param_1,VehicleState *param_2,trace_t *pa
 {
   double dVar1;
   float fVar2;
-  int *piVar3;
-  int iVar4;
-  ulonglong uVar5;
-  ulonglong uVar6;
-  float *pfVar7;
+  float *pfVar3;
+  double dVar4;
+  double dVar5;
+  double dVar6;
+  double dVar7;
   double dVar8;
   double dVar9;
-  double dVar10;
-  double dVar11;
-  double dVar12;
-  double dVar13;
   float local_b0;
   float local_ac;
   float local_a8;
   trace_t atStack_a0 [3];
   
-  uVar6 = (ulonglong)(int)param_3;
-  uVar5 = (ulonglong)(int)param_2;
-  __savegprlr_26(param_1);
-  iVar4 = __savefpr_26();
-  if ((uVar5 & 0xffffffff) == 0) {
+  if (param_2 == (VehicleState *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_vehicle.cpp",0x10c,0,
                     "%s");
   }
-  if ((uVar6 & 0xffffffff) == 0) {
+  if (param_3 == (trace_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_vehicle.cpp",0x10d,0,
                     "%s");
   }
-  dVar8 = -1.0;
-  dVar9 = 2.0;
-  dVar10 = 1.0;
-  dVar11 = dVar8;
-  dVar12 = dVar8;
-  dVar13 = dVar8;
+  dVar4 = -1.0;
+  dVar5 = 2.0;
+  dVar6 = 1.0;
+  dVar7 = dVar4;
+  dVar8 = dVar4;
+  dVar9 = dVar4;
   do {
-    if (((dVar11 != 0.0) || (dVar12 != 0.0)) || (dVar13 != 0.0)) {
-      piVar3 = (int *)uVar5;
-      local_b0 = (float)((double)(float)piVar3[1] + dVar11);
-      local_ac = (float)(dVar12 + (double)(float)piVar3[2]);
-      local_a8 = (float)(dVar13 + (double)(float)piVar3[3]);
-      pfVar7 = (float *)(piVar3 + 1);
-      BG_TraceCapsule(*(uchar *)(iVar4 + 0x134),atStack_a0,&local_b0,&local_b0,
-                      (Bounds *)(piVar3 + 0x1a),*piVar3,piVar3[0x20]);
+    if (((dVar7 != 0.0) || (dVar8 != 0.0)) || (dVar9 != 0.0)) {
+      local_b0 = (float)((double)param_2->origin[0] + dVar7);
+      local_ac = (float)(dVar8 + (double)param_2->origin[1]);
+      local_a8 = (float)(dVar9 + (double)param_2->origin[2]);
+      pfVar3 = param_2->origin;
+      BG_TraceCapsule(param_1->handler,atStack_a0,&local_b0,&local_b0,&param_2->bounds,
+                      param_2->entity,param_2->clipmask);
       if (atStack_a0[0].startsolid == false) {
-        piVar3[3] = (int)local_a8;
-        *pfVar7 = local_b0;
-        piVar3[2] = (int)local_ac;
-        local_a8 = (float)((double)local_a8 - dVar10);
-        BG_TraceCapsule(*(uchar *)(iVar4 + 0x134),(trace_t *)uVar6,pfVar7,&local_b0,
-                        (Bounds *)(piVar3 + 0x1a),*piVar3,piVar3[0x20]);
-        fVar2 = ((trace_t *)uVar6)->fraction;
-        *pfVar7 = (local_b0 - *pfVar7) * fVar2 + *pfVar7;
-        piVar3[2] = (int)((local_ac - (float)piVar3[2]) * fVar2 + (float)piVar3[2]);
-        piVar3[3] = (int)((local_a8 - (float)piVar3[3]) * fVar2 + (float)piVar3[3]);
-        __restfpr_26(1);
-        iVar4 = __restgprlr_26();
-        return iVar4;
+        param_2->origin[2] = local_a8;
+        *pfVar3 = local_b0;
+        param_2->origin[1] = local_ac;
+        local_a8 = (float)((double)local_a8 - dVar6);
+        BG_TraceCapsule(param_1->handler,param_3,pfVar3,&local_b0,&param_2->bounds,param_2->entity,
+                        param_2->clipmask);
+        fVar2 = param_3->fraction;
+        *pfVar3 = (local_b0 - *pfVar3) * fVar2 + *pfVar3;
+        param_2->origin[1] = (local_ac - param_2->origin[1]) * fVar2 + param_2->origin[1];
+        param_2->origin[2] = (local_a8 - param_2->origin[2]) * fVar2 + param_2->origin[2];
+        return 1;
       }
     }
-    dVar1 = dVar13 + dVar10;
-    dVar13 = (double)(float)dVar1;
-  } while ((((double)(float)dVar1 < dVar9) ||
-           (dVar1 = dVar12 + dVar10, dVar12 = (double)(float)dVar1, dVar13 = dVar8,
-           (double)(float)dVar1 < dVar9)) ||
-          (dVar11 = (double)(float)(dVar11 + dVar10), dVar12 = dVar8, dVar11 < dVar9));
-  __restfpr_26(0);
-  iVar4 = __restgprlr_26();
-  return iVar4;
+    dVar1 = dVar9 + dVar6;
+    dVar9 = (double)(float)dVar1;
+  } while ((((double)(float)dVar1 < dVar5) ||
+           (dVar1 = dVar8 + dVar6, dVar8 = (double)(float)dVar1, dVar9 = dVar4,
+           (double)(float)dVar1 < dVar5)) ||
+          (dVar7 = (double)(float)(dVar7 + dVar6), dVar8 = dVar4, dVar7 < dVar5));
+  return 0;
 }
 
 
 // 82284898  BG_VehicleGroundTrace  (bgame/bg_vehicle.cpp:306)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
 void BG_VehicleGroundTrace
@@ -392,11 +355,8 @@ void BG_VehicleGroundTrace
 {
   bool bVar1;
   float fVar2;
-  pmove_t *ppVar3;
-  int iVar4;
-  trace_t *ptVar5;
-  ulonglong uVar6;
-  double dVar7;
+  int iVar3;
+  double dVar4;
   float local_60;
   float local_5c;
   float local_58;
@@ -404,17 +364,15 @@ void BG_VehicleGroundTrace
   float local_4c;
   float local_48;
   
-  uVar6 = (ulonglong)(int)param_3;
-  ppVar3 = (pmove_t *)__savegprlr_27((double)param_4,param_1);
-  if (ppVar3 == (pmove_t *)0x0) {
+  if (param_1 == (pmove_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_vehicle.cpp",0x136,0,
                     "%s");
   }
-  if (ppVar3->ps == (playerState_s *)0x0) {
+  if (param_1->ps == (playerState_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_vehicle.cpp",0x137,0,
                     "%s");
   }
-  if ((uVar6 & 0xffffffff) == 0) {
+  if (param_3 == (GroundTrace *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_vehicle.cpp",0x138,0,
                     "%s");
   }
@@ -422,48 +380,42 @@ void BG_VehicleGroundTrace
   local_5c = param_2->origin[1];
   local_48 = param_2->origin[2] + (bg_vehicle_trace_offset->current).value;
   local_58 = param_2->origin[2] - (bg_vehicle_trace_offset->current).value;
-  ptVar5 = (trace_t *)uVar6;
   local_50 = local_60;
   local_4c = local_5c;
-  BG_TraceCapsule(ppVar3->handler,ptVar5,&local_50,&local_60,&param_2->bounds,param_2->entity,
-                  0x800a11);
-  fVar2 = ptVar5->fraction;
-  dVar7 = 1.0;
+  BG_TraceCapsule(param_1->handler,&param_3->trace,&local_50,&local_60,&param_2->bounds,
+                  param_2->entity,0x800a11);
+  fVar2 = (param_3->trace).fraction;
+  dVar4 = 1.0;
   if (1.0 <= fVar2) {
-    ptVar5[1].fraction = local_60;
-    ptVar5[1].normal[0] = local_5c;
-    ptVar5[1].normal[1] = local_58;
+    param_3->location[0] = local_60;
+    param_3->location[1] = local_5c;
+    param_3->location[2] = local_58;
   }
   else {
-    ptVar5[1].fraction = (local_60 - local_50) * fVar2 + local_50;
-    ptVar5[1].normal[0] = (local_5c - local_4c) * fVar2 + local_4c;
-    ptVar5[1].normal[1] = (local_58 - local_48) * fVar2 + local_48;
+    param_3->location[0] = (local_60 - local_50) * fVar2 + local_50;
+    param_3->location[1] = (local_5c - local_4c) * fVar2 + local_4c;
+    param_3->location[2] = (local_58 - local_48) * fVar2 + local_48;
   }
-  bVar1 = ptVar5->allsolid;
-  ptVar5[1].surfaceFlags = 0;
-  ptVar5[1].normal[2] = 0.0;
-  ptVar5[1].contents = 0;
-  if (bVar1 != false) {
-    iVar4 = BG_VehicleCorrectAllSolid(ppVar3,param_2,ptVar5);
-    if (iVar4 == 0) {
-      if (ptVar5->walkable != false) {
-        ptVar5[1].normal[2] = 1.4013e-45;
-        __restgprlr_27();
-        return;
+  bVar1 = (param_3->trace).allsolid;
+  param_3->hasGround = 0;
+  param_3->onGround = 0;
+  param_3->validGroundNormal = 0;
+  if ((bVar1 == false) ||
+     (iVar3 = BG_VehicleCorrectAllSolid(param_1,param_2,&param_3->trace), iVar3 != 0)) {
+    if ((double)(param_3->trace).fraction < dVar4) {
+      bVar1 = (param_3->trace).walkable;
+      param_3->hasGround = 1;
+      param_3->onGround = 1;
+      if ((bVar1 != false) ||
+         ((bg_vehicle_ground_min_normal->current).value <= (param_3->trace).normal[2])) {
+        param_3->validGroundNormal = 1;
       }
-      goto LAB_82284a90;
     }
   }
-  if ((double)ptVar5->fraction < dVar7) {
-    bVar1 = ptVar5->walkable;
-    ptVar5[1].surfaceFlags = 1;
-    ptVar5[1].normal[2] = 1.4013e-45;
-    if ((bVar1 != false) || ((bg_vehicle_ground_min_normal->current).value <= ptVar5->normal[2])) {
-      ptVar5[1].contents = 1;
-    }
+  else if ((param_3->trace).walkable != false) {
+    param_3->onGround = 1;
+    return;
   }
-LAB_82284a90:
-  __restgprlr_27();
   return;
 }
 
@@ -486,6 +438,10 @@ void BG_VehicleClipVelocity(float *param_1,float *param_2,float *param_3)
 
 // 82284B08  BG_VehicleSlideMove  (bgame/bg_vehicle.cpp:370)
 
+/* WARNING: Function: __savegprlr_16 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_17 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_17 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_16 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
 
@@ -499,28 +455,27 @@ int BG_VehicleSlideMove(pmove_t *param_1,VehicleState *param_2,GroundTrace *para
   float fVar4;
   float fVar5;
   playerState_s *ppVar6;
-  int *piVar7;
-  float fVar8;
-  uint uVar9;
-  pmove_t *ppVar10;
-  VehicleDef *pVVar11;
-  float *pfVar12;
+  float fVar7;
+  uint uVar8;
+  VehicleDef *pVVar9;
+  float *pfVar10;
+  dvar_t *pdVar11;
+  int iVar12;
   int iVar13;
-  ulonglong uVar14;
-  ulonglong uVar15;
-  dvar_t *pdVar16;
-  int iVar17;
-  int iVar18;
+  int *piVar14;
+  int iVar15;
+  longlong lVar16;
+  float *pfVar17;
+  float *pfVar18;
   int *piVar19;
   int iVar20;
-  longlong lVar21;
-  float *pfVar22;
-  float *pfVar23;
-  int *piVar24;
-  int iVar25;
-  float *pfVar26;
+  float *pfVar21;
+  double dVar22;
+  double dVar23;
+  double dVar24;
+  double dVar25;
+  double dVar26;
   double dVar27;
-  double extraout_f1;
   double dVar28;
   double dVar29;
   double dVar30;
@@ -535,12 +490,7 @@ int BG_VehicleSlideMove(pmove_t *param_1,VehicleState *param_2,GroundTrace *para
   double dVar39;
   double dVar40;
   double dVar41;
-  double dVar42;
-  double dVar43;
-  double dVar44;
-  double dVar45;
-  double dVar46;
-  float fVar47;
+  float fVar42;
   float local_240;
   float local_23c;
   float local_238;
@@ -562,353 +512,346 @@ int BG_VehicleSlideMove(pmove_t *param_1,VehicleState *param_2,GroundTrace *para
   int local_1c0;
   int local_1bc [7];
   trace_t local_1a0;
-  float afStack_164 [2];
-  int local_15c;
-  int local_158;
+  float afStack_164 [89];
   
-  uVar15 = (ulonglong)(int)param_3;
-  uVar14 = (ulonglong)(int)param_2;
-  __savegprlr_16((double)param_5,param_1);
-  ppVar10 = (pmove_t *)__savefpr_17();
-  dVar39 = extraout_f1;
-  if (ppVar10 == (pmove_t *)0x0) {
+  dVar34 = (double)param_5;
+  if (param_1 == (pmove_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_vehicle.cpp",0x18b,0,
                     "%s");
   }
-  if (ppVar10->ps == (playerState_s *)0x0) {
+  if (param_1->ps == (playerState_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_vehicle.cpp",0x18c,0,
                     "%s");
   }
-  if ((uVar14 & 0xffffffff) == 0) {
+  if (param_2 == (VehicleState *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_vehicle.cpp",0x18d,0,
                     "%s");
   }
-  if ((uVar15 & 0xffffffff) == 0) {
+  if (param_3 == (GroundTrace *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_vehicle.cpp",0x18e,0,
                     "%s");
   }
-  pVVar11 = BG_GetVehicleDef(ppVar10);
-  if (pVVar11 == (VehicleDef *)0x0) {
+  pVVar9 = BG_GetVehicleDef(param_1);
+  if (pVVar9 == (VehicleDef *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_vehicle.cpp",0x191,0,
                     "%s");
   }
-  piVar7 = (int *)uVar14;
-  dVar42 = (double)(float)piVar7[7];
-  pfVar26 = (float *)(piVar7 + 7);
-  dVar41 = (double)(float)piVar7[8];
-  dVar44 = (double)(float)piVar7[9];
-  iVar13 = (int)uVar15;
-  dVar45 = dVar44;
+  dVar37 = (double)param_2->velocity[0];
+  pfVar21 = param_2->velocity;
+  dVar36 = (double)param_2->velocity[1];
+  dVar39 = (double)param_2->velocity[2];
+  dVar40 = dVar39;
   if (param_4 != 0) {
-    dVar45 = -(double)(float)((double)(bg_vehicle_gravity->current).value * dVar39 - dVar44);
-    piVar7[9] = (int)((float)(dVar44 + dVar45) * 0.5);
-    if (*(int *)(iVar13 + 0x44) != 0) {
-      fVar47 = (float)piVar7[0x23] * (float)piVar7[9] +
-               (float)piVar7[0x22] * (float)piVar7[8] + (float)piVar7[0x21] * *pfVar26;
-      fVar47 = ABS(fVar47) * (bg_vehicle_overclip->current).value - fVar47;
-      *pfVar26 = fVar47 * (float)piVar7[0x21] + *pfVar26;
-      piVar7[8] = (int)((float)piVar7[0x22] * fVar47 + (float)piVar7[8]);
-      piVar7[9] = (int)((float)piVar7[0x23] * fVar47 + (float)piVar7[9]);
+    dVar40 = -(double)(float)((double)(bg_vehicle_gravity->current).value * dVar34 - dVar39);
+    param_2->velocity[2] = (float)(dVar39 + dVar40) * 0.5;
+    if (param_3->hasGround != 0) {
+      fVar42 = param_2->groundNormal[2] * param_2->velocity[2] +
+               param_2->groundNormal[1] * param_2->velocity[1] + param_2->groundNormal[0] * *pfVar21
+      ;
+      fVar42 = ABS(fVar42) * (bg_vehicle_overclip->current).value - fVar42;
+      *pfVar21 = fVar42 * param_2->groundNormal[0] + *pfVar21;
+      param_2->velocity[1] = param_2->groundNormal[1] * fVar42 + param_2->velocity[1];
+      param_2->velocity[2] = param_2->groundNormal[2] * fVar42 + param_2->velocity[2];
     }
   }
-  ppVar6 = ppVar10->ps;
-  fVar47 = ppVar6->origin[2];
-  if (pVVar11->type == VEH_HELICOPTER) {
-    fVar47 = fVar47 + 40.0;
+  ppVar6 = param_1->ps;
+  fVar42 = ppVar6->origin[2];
+  if (pVVar9->type == VEH_HELICOPTER) {
+    fVar42 = fVar42 + 40.0;
   }
-  dVar44 = 0.10000000149011612;
-  dVar46 = 1.0;
+  dVar39 = 0.10000000149011612;
+  dVar41 = 1.0;
   if ((ppVar6->eFlags & 0x20U) == 0) {
-    fVar47 = (float)piVar7[3] - fVar47;
-    fVar4 = (float)piVar7[1] - ppVar6->origin[0];
-    fVar5 = (float)piVar7[2] - ppVar6->origin[1];
-    dVar27 = (double)SQRT(fVar5 * fVar5 + fVar4 * fVar4 + fVar47 * fVar47);
-    if (dVar27 < (double)((float)piVar7[0x1d] + 30.0)) {
-      dVar30 = dVar46;
-      if (-dVar27 < 0.0) {
-        dVar30 = dVar27;
+    fVar42 = param_2->origin[2] - fVar42;
+    fVar4 = param_2->origin[0] - ppVar6->origin[0];
+    fVar5 = param_2->origin[1] - ppVar6->origin[1];
+    dVar22 = (double)SQRT(fVar5 * fVar5 + fVar4 * fVar4 + fVar42 * fVar42);
+    if (dVar22 < (double)((param_2->bounds).halfSize[0] + 30.0)) {
+      dVar25 = dVar41;
+      if (-dVar22 < 0.0) {
+        dVar25 = dVar22;
       }
-      fVar2 = (float)(1.0 / dVar30);
-      fVar3 = fVar47 * fVar2 * (float)piVar7[9];
-      fVar8 = fVar5 * fVar2 * (float)piVar7[8] + fVar2 * fVar4 * *pfVar26;
-      if (fVar3 + fVar8 < 0.1) {
-        fVar3 = fVar3 + fVar8;
+      fVar2 = (float)(1.0 / dVar25);
+      fVar3 = fVar42 * fVar2 * param_2->velocity[2];
+      fVar7 = fVar5 * fVar2 * param_2->velocity[1] + fVar2 * fVar4 * *pfVar21;
+      if (fVar3 + fVar7 < 0.1) {
+        fVar3 = fVar3 + fVar7;
         fVar3 = ABS(fVar3) * (bg_vehicle_overclip->current).value - fVar3;
-        *pfVar26 = fVar3 * fVar2 * fVar4 + *pfVar26;
-        piVar7[8] = (int)(fVar5 * fVar2 * fVar3 + (float)piVar7[8]);
-        piVar7[9] = (int)(fVar47 * fVar2 * fVar3 + (float)piVar7[9]);
+        *pfVar21 = fVar3 * fVar2 * fVar4 + *pfVar21;
+        param_2->velocity[1] = fVar5 * fVar2 * fVar3 + param_2->velocity[1];
+        param_2->velocity[2] = fVar42 * fVar2 * fVar3 + param_2->velocity[2];
       }
     }
   }
-  bVar1 = *(int *)(iVar13 + 0x44) != 0;
+  bVar1 = param_3->hasGround != 0;
   if (bVar1) {
-    afStack_164[1] = (float)piVar7[0x21];
-    local_15c = piVar7[0x22];
-    local_158 = piVar7[0x23];
+    afStack_164[1] = param_2->groundNormal[0];
+    afStack_164[2] = param_2->groundNormal[1];
+    afStack_164[3] = param_2->groundNormal[2];
   }
-  fVar47 = (float)piVar7[9];
-  fVar4 = (float)piVar7[8];
-  fVar5 = *pfVar26;
-  iVar25 = bVar1 + 1;
-  uVar9 = (uint)bVar1;
-  pfVar23 = (float *)(piVar7 + 1);
-  pfVar22 = afStack_164 + iVar25 * 3;
-  lVar21 = 0;
-  dVar43 = 0.0;
-  dVar40 = 0.9900000095367432;
-  dVar30 = (double)SQRT(fVar5 * fVar5 + fVar4 * fVar4 + fVar47 * fVar47);
-  dVar27 = dVar46;
-  if (-dVar30 < 0.0) {
-    dVar27 = dVar30;
+  fVar42 = param_2->velocity[2];
+  fVar4 = param_2->velocity[1];
+  fVar5 = *pfVar21;
+  iVar20 = bVar1 + 1;
+  uVar8 = (uint)bVar1;
+  pfVar18 = param_2->origin;
+  pfVar17 = afStack_164 + iVar20 * 3;
+  lVar16 = 0;
+  dVar38 = 0.0;
+  dVar35 = 0.9900000095367432;
+  dVar25 = (double)SQRT(fVar5 * fVar5 + fVar4 * fVar4 + fVar42 * fVar42);
+  dVar22 = dVar41;
+  if (-dVar25 < 0.0) {
+    dVar22 = dVar25;
   }
-  fVar2 = (float)(1.0 / dVar27);
-  afStack_164[uVar9 * 3 + 1] = fVar2 * fVar5;
-  afStack_164[uVar9 * 3 + 2] = fVar4 * fVar2;
-  afStack_164[uVar9 * 3 + 3] = fVar2 * fVar47;
-  dVar27 = 0.007874015718698502;
+  fVar2 = (float)(1.0 / dVar22);
+  afStack_164[uVar8 * 3 + 1] = fVar2 * fVar5;
+  afStack_164[uVar8 * 3 + 2] = fVar4 * fVar2;
+  afStack_164[uVar8 * 3 + 3] = fVar2 * fVar42;
+  dVar22 = 0.007874015718698502;
   do {
-    local_220 = (float)((double)*pfVar26 * dVar39 + (double)*pfVar23);
-    local_21c = (float)((double)(float)piVar7[8] * dVar39 + (double)(float)piVar7[2]);
-    local_218 = (float)(dVar39 * (double)(float)piVar7[9] + (double)(float)piVar7[3]);
-    BG_TraceCapsule(ppVar10->handler,&local_1a0,pfVar23,&local_220,(Bounds *)(piVar7 + 0x1a),*piVar7
-                    ,piVar7[0x20]);
+    local_220 = (float)((double)*pfVar21 * dVar34 + (double)*pfVar18);
+    local_21c = (float)((double)param_2->velocity[1] * dVar34 + (double)param_2->origin[1]);
+    local_218 = (float)(dVar34 * (double)param_2->velocity[2] + (double)param_2->origin[2]);
+    BG_TraceCapsule(param_1->handler,&local_1a0,pfVar18,&local_220,&param_2->bounds,param_2->entity,
+                    param_2->clipmask);
     if (local_1a0.allsolid != false) {
-      piVar7[9] = (int)(float)dVar43;
-      dVar41 = (double)*pfVar23;
-      *pfVar23 = (float)((double)(float)((double)(float)((double)*pfVar26 * dVar39 + dVar41) -
-                                        dVar41) + dVar41);
-      piVar7[2] = (int)(((float)((double)(float)piVar7[8] * dVar39 + (double)(float)piVar7[2]) -
-                        (float)piVar7[2]) + (float)piVar7[2]);
-      piVar7[3] = (int)(((float)(dVar39 * (double)(float)piVar7[9] + (double)(float)piVar7[3]) -
-                        (float)piVar7[3]) + (float)piVar7[3]);
-      __restfpr_17(1);
-      iVar13 = __restgprlr_16();
-      return iVar13;
+      param_2->velocity[2] = (float)dVar38;
+      dVar36 = (double)*pfVar18;
+      fVar42 = param_2->velocity[2];
+      fVar4 = param_2->origin[2];
+      *pfVar18 = (float)((double)(float)((double)(float)((double)*pfVar21 * dVar34 + dVar36) -
+                                        dVar36) + dVar36);
+      param_2->origin[1] =
+           ((float)((double)param_2->velocity[1] * dVar34 + (double)param_2->origin[1]) -
+           param_2->origin[1]) + param_2->origin[1];
+      param_2->origin[2] =
+           ((float)(dVar34 * (double)fVar42 + (double)fVar4) - param_2->origin[2]) +
+           param_2->origin[2];
+      return 1;
     }
-    dVar30 = (double)local_1a0.fraction;
-    if (dVar43 < dVar30) {
-      *pfVar23 = (float)((double)(float)((double)local_220 - (double)*pfVar23) * dVar30 +
-                        (double)*pfVar23);
-      piVar7[2] = (int)(float)((double)(float)((double)local_21c - (double)(float)piVar7[2]) *
-                               dVar30 + (double)(float)piVar7[2]);
-      piVar7[3] = (int)(float)((double)(float)((double)local_218 - (double)(float)piVar7[3]) *
-                               dVar30 + (double)(float)piVar7[3]);
+    dVar25 = (double)local_1a0.fraction;
+    if (dVar38 < dVar25) {
+      *pfVar18 = (float)((double)(float)((double)local_220 - (double)*pfVar18) * dVar25 +
+                        (double)*pfVar18);
+      param_2->origin[1] =
+           (float)((double)(float)((double)local_21c - (double)param_2->origin[1]) * dVar25 +
+                  (double)param_2->origin[1]);
+      param_2->origin[2] =
+           (float)((double)(float)((double)local_218 - (double)param_2->origin[2]) * dVar25 +
+                  (double)param_2->origin[2]);
     }
-    if (dVar30 == dVar46) break;
-    dVar39 = -(double)(float)(dVar30 * dVar39 - dVar39);
-    if (7 < iVar25) {
+    if (dVar25 == dVar41) break;
+    dVar34 = -(double)(float)(dVar25 * dVar34 - dVar34);
+    if (7 < iVar20) {
 LAB_822854c4:
-      *pfVar26 = (float)dVar43;
-      piVar7[8] = (int)(float)dVar43;
-      piVar7[9] = (int)(float)dVar43;
-      __restfpr_17(1);
-      iVar13 = __restgprlr_16();
-      return iVar13;
+      *pfVar21 = (float)dVar38;
+      param_2->velocity[1] = (float)dVar38;
+      param_2->velocity[2] = (float)dVar38;
+      return 1;
     }
-    iVar20 = 0;
-    if (0 < iVar25) {
-      pfVar12 = afStack_164;
+    iVar15 = 0;
+    if (0 < iVar20) {
+      pfVar10 = afStack_164;
       do {
-        pfVar12 = pfVar12 + 3;
-        if (dVar40 < (double)(local_1a0.normal[2] * *pfVar12 +
-                             pfVar12[-1] * local_1a0.normal[1] + local_1a0.normal[0] * pfVar12[-2]))
+        pfVar10 = pfVar10 + 3;
+        if (dVar35 < (double)(local_1a0.normal[2] * *pfVar10 +
+                             pfVar10[-1] * local_1a0.normal[1] + local_1a0.normal[0] * pfVar10[-2]))
         {
-          fVar4 = local_1a0.normal[2] * (float)piVar7[9] +
-                  local_1a0.normal[0] * *pfVar26 + local_1a0.normal[1] * (float)piVar7[8];
+          fVar4 = local_1a0.normal[2] * param_2->velocity[2] +
+                  local_1a0.normal[0] * *pfVar21 + local_1a0.normal[1] * param_2->velocity[1];
           fVar4 = ABS(fVar4) * (bg_vehicle_overclip->current).value - fVar4;
-          fVar47 = fVar4 * local_1a0.normal[0] + *pfVar26;
-          *pfVar26 = fVar47;
-          piVar7[8] = (int)(local_1a0.normal[1] * fVar4 + (float)piVar7[8]);
-          piVar7[9] = (int)(local_1a0.normal[2] * fVar4 + (float)piVar7[9]);
-          *pfVar26 = fVar47 + local_1a0.normal[0];
-          piVar7[8] = (int)(local_1a0.normal[1] + (float)piVar7[8]);
-          piVar7[9] = (int)(local_1a0.normal[2] + (float)piVar7[9]);
-          if (iVar20 < iVar25) goto LAB_82285424;
+          fVar42 = fVar4 * local_1a0.normal[0] + *pfVar21;
+          *pfVar21 = fVar42;
+          param_2->velocity[1] = local_1a0.normal[1] * fVar4 + param_2->velocity[1];
+          param_2->velocity[2] = local_1a0.normal[2] * fVar4 + param_2->velocity[2];
+          *pfVar21 = fVar42 + local_1a0.normal[0];
+          param_2->velocity[1] = local_1a0.normal[1] + param_2->velocity[1];
+          param_2->velocity[2] = local_1a0.normal[2] + param_2->velocity[2];
+          if (iVar15 < iVar20) goto LAB_82285424;
           break;
         }
-        iVar20 = iVar20 + 1;
-      } while (iVar20 < iVar25);
+        iVar15 = iVar15 + 1;
+      } while (iVar15 < iVar20);
     }
-    pfVar22[1] = local_1a0.normal[0];
-    iVar25 = iVar25 + 1;
-    pfVar22[2] = local_1a0.normal[1];
-    pfVar22 = pfVar22 + 3;
-    *pfVar22 = local_1a0.normal[2];
-    fVar47 = PM_PermuteRestrictiveClipPlanes
-                       (pfVar26,iVar25,(float (*) [3])(afStack_164 + 1),&local_1c0);
-    if ((double)fVar47 < dVar44) {
-      iVar20 = 1;
-      dVar37 = (double)afStack_164[local_1c0 * 3 + 1];
-      dVar36 = (double)afStack_164[local_1c0 * 3 + 2];
-      dVar28 = (double)afStack_164[local_1c0 * 3 + 3];
-      fVar47 = (float)(dVar28 * (double)(float)piVar7[9] +
-                      (double)(float)(dVar36 * (double)(float)piVar7[8] +
-                                     (double)(float)(dVar37 * (double)*pfVar26)));
-      fVar4 = (float)(dVar28 * dVar45 +
-                     (double)(float)(dVar37 * dVar42 + (double)(float)(dVar36 * dVar41)));
-      dVar34 = (double)(ABS(fVar47) * (bg_vehicle_overclip->current).value - fVar47);
-      dVar32 = (double)(ABS(fVar4) * (bg_vehicle_overclip->current).value - fVar4);
-      dVar30 = (double)(float)(dVar37 * dVar34 + (double)*pfVar26);
-      dVar37 = (double)(float)(dVar37 * dVar32 + dVar42);
-      dVar38 = (double)(float)(dVar36 * dVar34 + (double)(float)piVar7[8]);
-      dVar36 = (double)(float)(dVar36 * dVar32 + dVar41);
-      dVar34 = (double)(float)(dVar28 * dVar34 + (double)(float)piVar7[9]);
-      dVar28 = (double)(float)(dVar28 * dVar32 + dVar45);
-      if (1 < iVar25) {
-        piVar24 = local_1bc;
-        pdVar16 = bg_vehicle_overclip;
-        iVar18 = local_1c0;
+    pfVar17[1] = local_1a0.normal[0];
+    iVar20 = iVar20 + 1;
+    pfVar17[2] = local_1a0.normal[1];
+    pfVar17 = pfVar17 + 3;
+    *pfVar17 = local_1a0.normal[2];
+    fVar42 = PM_PermuteRestrictiveClipPlanes
+                       (pfVar21,iVar20,(float (*) [3])(afStack_164 + 1),&local_1c0);
+    if ((double)fVar42 < dVar39) {
+      iVar15 = 1;
+      dVar32 = (double)afStack_164[local_1c0 * 3 + 1];
+      dVar31 = (double)afStack_164[local_1c0 * 3 + 2];
+      dVar23 = (double)afStack_164[local_1c0 * 3 + 3];
+      fVar42 = (float)(dVar23 * (double)param_2->velocity[2] +
+                      (double)(float)(dVar31 * (double)param_2->velocity[1] +
+                                     (double)(float)(dVar32 * (double)*pfVar21)));
+      fVar4 = (float)(dVar23 * dVar40 +
+                     (double)(float)(dVar32 * dVar37 + (double)(float)(dVar31 * dVar36)));
+      dVar29 = (double)(ABS(fVar42) * (bg_vehicle_overclip->current).value - fVar42);
+      dVar27 = (double)(ABS(fVar4) * (bg_vehicle_overclip->current).value - fVar4);
+      dVar25 = (double)(float)(dVar32 * dVar29 + (double)*pfVar21);
+      dVar32 = (double)(float)(dVar32 * dVar27 + dVar37);
+      dVar33 = (double)(float)(dVar31 * dVar29 + (double)param_2->velocity[1]);
+      dVar31 = (double)(float)(dVar31 * dVar27 + dVar36);
+      dVar29 = (double)(float)(dVar23 * dVar29 + (double)param_2->velocity[2]);
+      dVar23 = (double)(float)(dVar23 * dVar27 + dVar40);
+      if (1 < iVar20) {
+        piVar19 = local_1bc;
+        pdVar11 = bg_vehicle_overclip;
+        iVar13 = local_1c0;
         do {
-          iVar17 = *piVar24;
-          if (((double)(float)((double)afStack_164[iVar17 * 3 + 3] * dVar34 +
-                              (double)(float)((double)afStack_164[iVar17 * 3 + 2] * dVar38 +
-                                             (double)(float)((double)afStack_164[iVar17 * 3 + 1] *
-                                                            dVar30))) < dVar44) ||
-             ((*(int *)(iVar13 + 0x44) != 0 && (iVar17 == 0)))) {
-            dVar35 = (double)afStack_164[iVar17 * 3 + 1];
-            dVar31 = (double)afStack_164[iVar17 * 3 + 2];
-            dVar29 = (double)afStack_164[iVar17 * 3 + 3];
-            pfVar12 = afStack_164 + iVar18 * 3 + 1;
-            fVar47 = (float)(dVar29 * dVar34 +
-                            (double)(float)(dVar31 * dVar38 + (double)(float)(dVar35 * dVar30)));
-            fVar4 = (float)(dVar29 * dVar28 +
-                           (double)(float)(dVar31 * dVar36 + (double)(float)(dVar35 * dVar37)));
-            dVar33 = (double)(ABS(fVar47) * (pdVar16->current).value - fVar47);
-            dVar32 = (double)(ABS(fVar4) * (pdVar16->current).value - fVar4);
-            dVar30 = (double)(float)(dVar35 * dVar33 + dVar30);
-            dVar38 = (double)(float)(dVar31 * dVar33 + dVar38);
-            dVar34 = (double)(float)(dVar29 * dVar33 + dVar34);
-            dVar37 = (double)(float)(dVar35 * dVar32 + dVar37);
-            dVar36 = (double)(float)(dVar31 * dVar32 + dVar36);
-            dVar28 = (double)(float)(dVar29 * dVar32 + dVar28);
-            if ((double)(float)((double)afStack_164[iVar18 * 3 + 3] * dVar34 +
-                               (double)(float)((double)afStack_164[iVar18 * 3 + 2] * dVar38 +
-                                              (double)(float)(dVar30 * (double)afStack_164
-                                                                               [iVar18 * 3 + 1]))) <
-                dVar44) {
-              Vec3Cross(pfVar12,afStack_164 + iVar17 * 3 + 1,&local_210);
-              dVar28 = (double)((bg_vehicle_tangential_clip_max_scale->current).value *
-                               pVVar11->topSpeed);
-              dVar32 = (double)SQRT(local_210 * local_210 +
+          iVar12 = *piVar19;
+          if (((double)(float)((double)afStack_164[iVar12 * 3 + 3] * dVar29 +
+                              (double)(float)((double)afStack_164[iVar12 * 3 + 2] * dVar33 +
+                                             (double)(float)((double)afStack_164[iVar12 * 3 + 1] *
+                                                            dVar25))) < dVar39) ||
+             ((param_3->hasGround != 0 && (iVar12 == 0)))) {
+            dVar30 = (double)afStack_164[iVar12 * 3 + 1];
+            dVar26 = (double)afStack_164[iVar12 * 3 + 2];
+            dVar24 = (double)afStack_164[iVar12 * 3 + 3];
+            pfVar10 = afStack_164 + iVar13 * 3 + 1;
+            fVar42 = (float)(dVar24 * dVar29 +
+                            (double)(float)(dVar26 * dVar33 + (double)(float)(dVar30 * dVar25)));
+            fVar4 = (float)(dVar24 * dVar23 +
+                           (double)(float)(dVar26 * dVar31 + (double)(float)(dVar30 * dVar32)));
+            dVar28 = (double)(ABS(fVar42) * (pdVar11->current).value - fVar42);
+            dVar27 = (double)(ABS(fVar4) * (pdVar11->current).value - fVar4);
+            dVar25 = (double)(float)(dVar30 * dVar28 + dVar25);
+            dVar33 = (double)(float)(dVar26 * dVar28 + dVar33);
+            dVar29 = (double)(float)(dVar24 * dVar28 + dVar29);
+            dVar32 = (double)(float)(dVar30 * dVar27 + dVar32);
+            dVar31 = (double)(float)(dVar26 * dVar27 + dVar31);
+            dVar23 = (double)(float)(dVar24 * dVar27 + dVar23);
+            if ((double)(float)((double)afStack_164[iVar13 * 3 + 3] * dVar29 +
+                               (double)(float)((double)afStack_164[iVar13 * 3 + 2] * dVar33 +
+                                              (double)(float)(dVar25 * (double)afStack_164
+                                                                               [iVar13 * 3 + 1]))) <
+                dVar39) {
+              Vec3Cross(pfVar10,afStack_164 + iVar12 * 3 + 1,&local_210);
+              dVar23 = (double)((bg_vehicle_tangential_clip_max_scale->current).value *
+                               pVVar9->topSpeed);
+              dVar27 = (double)SQRT(local_210 * local_210 +
                                     local_208 * local_208 + local_20c * local_20c);
-              dVar30 = dVar46;
-              if (-dVar32 < 0.0) {
-                dVar30 = dVar32;
+              dVar25 = dVar41;
+              if (-dVar27 < 0.0) {
+                dVar25 = dVar27;
               }
-              fVar47 = (float)(dVar46 / dVar30);
-              local_210 = local_210 * fVar47;
-              dVar34 = (double)local_210;
-              local_20c = local_20c * fVar47;
-              dVar36 = (double)local_20c;
-              local_208 = local_208 * fVar47;
-              dVar32 = (double)local_208;
-              dVar30 = dVar46;
-              if (*piVar24 == 0) {
-                local_228 = (float)dVar43;
-                local_200 = (longlong)(ppVar10->cmd).forwardmove;
-                local_1f8 = (longlong)(ppVar10->cmd).rightmove;
-                local_22c = (float)((double)local_1f8 * dVar27);
-                local_230 = (float)((double)local_200 * dVar27);
-                YawVectors(ppVar10->ps->viewangles[1],pfVar12,afStack_1f0);
-                local_1d8 = (float)dVar43;
-                local_1d4 = (float)dVar43;
-                local_1d0 = (float)dVar46;
+              fVar42 = (float)(dVar41 / dVar25);
+              local_210 = local_210 * fVar42;
+              dVar29 = (double)local_210;
+              local_20c = local_20c * fVar42;
+              dVar31 = (double)local_20c;
+              local_208 = local_208 * fVar42;
+              dVar27 = (double)local_208;
+              dVar25 = dVar41;
+              if (*piVar19 == 0) {
+                local_228 = (float)dVar38;
+                local_200 = (longlong)(param_1->cmd).forwardmove;
+                local_1f8 = (longlong)(param_1->cmd).rightmove;
+                local_22c = (float)((double)local_1f8 * dVar22);
+                local_230 = (float)((double)local_200 * dVar22);
+                YawVectors(param_1->ps->viewangles[1],pfVar10,afStack_1f0);
+                local_1d8 = (float)dVar38;
+                local_1d4 = (float)dVar38;
+                local_1d0 = (float)dVar41;
                 Vec3Rotate(&local_230,(float (*) [3])afStack_1f0,&local_240);
-                fVar47 = (float)piVar7[8];
-                fVar4 = (float)piVar7[9];
-                fVar5 = *pfVar26;
-                dVar29 = (double)SQRT(local_240 * local_240 +
+                fVar42 = param_2->velocity[1];
+                fVar4 = param_2->velocity[2];
+                fVar5 = *pfVar21;
+                dVar24 = (double)SQRT(local_240 * local_240 +
                                       local_238 * local_238 + local_23c * local_23c);
-                dVar38 = (double)SQRT(fVar5 * fVar5 + fVar4 * fVar4 + fVar47 * fVar47);
-                dVar37 = dVar46;
-                if (-dVar29 < 0.0) {
-                  dVar37 = dVar29;
+                dVar33 = (double)SQRT(fVar5 * fVar5 + fVar4 * fVar4 + fVar42 * fVar42);
+                dVar32 = dVar41;
+                if (-dVar24 < 0.0) {
+                  dVar32 = dVar24;
                 }
-                dVar29 = dVar46;
-                if (-dVar38 < 0.0) {
-                  dVar29 = dVar38;
+                dVar24 = dVar41;
+                if (-dVar33 < 0.0) {
+                  dVar24 = dVar33;
                 }
-                fVar2 = (float)(dVar46 / dVar37);
-                fVar3 = (float)(dVar46 / dVar29);
+                fVar2 = (float)(dVar41 / dVar32);
+                fVar3 = (float)(dVar41 / dVar24);
                 local_240 = local_240 * fVar2;
                 local_23c = local_23c * fVar2;
                 local_238 = local_238 * fVar2;
-                if ((dVar44 <= (double)(fVar4 * fVar3 * local_238 +
-                                       fVar47 * fVar3 * local_23c + fVar3 * fVar5 * local_240)) &&
-                   (pVVar11->type != VEH_HELICOPTER)) {
-                  dVar30 = (double)(SQRT(local_230 * local_230 +
+                if ((dVar39 <= (double)(fVar4 * fVar3 * local_238 +
+                                       fVar42 * fVar3 * local_23c + fVar3 * fVar5 * local_240)) &&
+                   (pVVar9->type != VEH_HELICOPTER)) {
+                  dVar25 = (double)(SQRT(local_230 * local_230 +
                                          local_228 * local_228 + local_22c * local_22c) *
                                    (bg_vehicle_tangential_clip_vel_scale->current).value);
                 }
               }
-              dVar29 = -dVar28;
-              iVar17 = 1;
-              piVar19 = local_1bc;
-              dVar38 = (double)(float)((double)(float)(dVar32 * dVar45 +
-                                                      (double)(float)(dVar34 * dVar42 +
-                                                                     (double)(float)(dVar36 * dVar41
-                                                                                    ))) * dVar30);
-              dVar37 = (double)(float)((double)(float)(dVar32 * (double)(float)piVar7[9] +
-                                                      (double)(float)((double)*pfVar26 * dVar34 +
-                                                                     (double)(float)(dVar36 * (
-                                                  double)(float)piVar7[8]))) * dVar30);
-              dVar30 = dVar28;
-              if ((float)(dVar38 - dVar28) < 0.0) {
-                dVar30 = dVar38;
+              dVar24 = -dVar23;
+              iVar12 = 1;
+              piVar14 = local_1bc;
+              dVar33 = (double)(float)((double)(float)(dVar27 * dVar40 +
+                                                      (double)(float)(dVar29 * dVar37 +
+                                                                     (double)(float)(dVar31 * dVar36
+                                                                                    ))) * dVar25);
+              dVar32 = (double)(float)((double)(float)(dVar27 * (double)param_2->velocity[2] +
+                                                      (double)(float)((double)*pfVar21 * dVar29 +
+                                                                     (double)(float)(dVar31 * (
+                                                  double)param_2->velocity[1]))) * dVar25);
+              dVar25 = dVar23;
+              if ((float)(dVar33 - dVar23) < 0.0) {
+                dVar25 = dVar33;
               }
-              if ((float)(dVar37 - dVar28) < 0.0) {
-                dVar28 = dVar37;
+              if ((float)(dVar32 - dVar23) < 0.0) {
+                dVar23 = dVar32;
               }
-              dVar31 = dVar29;
-              if ((float)(dVar29 - dVar38) < 0.0) {
-                dVar31 = dVar30;
+              dVar26 = dVar24;
+              if ((float)(dVar24 - dVar33) < 0.0) {
+                dVar26 = dVar25;
               }
-              if ((float)(dVar29 - dVar37) < 0.0) {
-                dVar29 = dVar28;
+              if ((float)(dVar24 - dVar32) < 0.0) {
+                dVar24 = dVar23;
               }
-              dVar37 = (double)(float)(dVar34 * dVar31);
-              dVar30 = (double)(float)(dVar34 * dVar29);
-              dVar38 = (double)(float)(dVar36 * dVar29);
-              dVar34 = (double)(float)(dVar32 * dVar29);
-              dVar36 = (double)(float)(dVar36 * dVar31);
-              dVar28 = (double)(float)(dVar32 * dVar31);
+              dVar32 = (double)(float)(dVar29 * dVar26);
+              dVar25 = (double)(float)(dVar29 * dVar24);
+              dVar33 = (double)(float)(dVar31 * dVar24);
+              dVar29 = (double)(float)(dVar27 * dVar24);
+              dVar31 = (double)(float)(dVar31 * dVar26);
+              dVar23 = (double)(float)(dVar27 * dVar26);
               do {
-                if ((iVar17 != iVar20) &&
-                   (iVar18 = *piVar19,
-                   (double)(float)((double)afStack_164[iVar18 * 3 + 3] * dVar34 +
-                                  (double)(float)((double)afStack_164[iVar18 * 3 + 2] * dVar38 +
-                                                 (double)(float)(dVar30 * (double)afStack_164
-                                                                                  [iVar18 * 3 + 1]))
-                                  ) < dVar44)) goto LAB_822854c4;
-                iVar17 = iVar17 + 1;
-                piVar19 = piVar19 + 1;
-                pdVar16 = bg_vehicle_overclip;
-                iVar18 = local_1c0;
-              } while (iVar17 < iVar25);
+                if ((iVar12 != iVar15) &&
+                   (iVar13 = *piVar14,
+                   (double)(float)((double)afStack_164[iVar13 * 3 + 3] * dVar29 +
+                                  (double)(float)((double)afStack_164[iVar13 * 3 + 2] * dVar33 +
+                                                 (double)(float)(dVar25 * (double)afStack_164
+                                                                                  [iVar13 * 3 + 1]))
+                                  ) < dVar39)) goto LAB_822854c4;
+                iVar12 = iVar12 + 1;
+                piVar14 = piVar14 + 1;
+                pdVar11 = bg_vehicle_overclip;
+                iVar13 = local_1c0;
+              } while (iVar12 < iVar20);
             }
           }
-          iVar20 = iVar20 + 1;
-          piVar24 = piVar24 + 1;
-        } while (iVar20 < iVar25);
+          iVar15 = iVar15 + 1;
+          piVar19 = piVar19 + 1;
+        } while (iVar15 < iVar20);
       }
-      *pfVar26 = (float)dVar30;
-      piVar7[8] = (int)(float)dVar38;
-      piVar7[9] = (int)(float)dVar34;
-      dVar41 = dVar36;
-      dVar42 = dVar37;
-      dVar45 = dVar28;
+      *pfVar21 = (float)dVar25;
+      param_2->velocity[1] = (float)dVar33;
+      param_2->velocity[2] = (float)dVar29;
+      dVar36 = dVar31;
+      dVar37 = dVar32;
+      dVar40 = dVar23;
     }
 LAB_82285424:
-    lVar21 = lVar21 + 1;
-  } while ((int)lVar21 < 4);
+    lVar16 = lVar16 + 1;
+  } while ((int)lVar16 < 4);
   if (param_4 != 0) {
-    *pfVar26 = (float)dVar42;
-    piVar7[8] = (int)(float)dVar41;
-    piVar7[9] = (int)(float)dVar45;
+    *pfVar21 = (float)dVar37;
+    param_2->velocity[1] = (float)dVar36;
+    param_2->velocity[2] = (float)dVar40;
   }
-  __restfpr_17(lVar21 != 0);
-  iVar13 = __restgprlr_16();
-  return iVar13;
+  return (uint)(lVar16 != 0);
 }
 
 
@@ -926,6 +869,10 @@ int Vec3Compare(float *param_1,float *param_2)
 
 // 822854E8  BG_VehicleStepSlideMove  (bgame/bg_vehicle.cpp:632)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_18 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_18 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
 void BG_VehicleStepSlideMove
@@ -935,16 +882,15 @@ void BG_VehicleStepSlideMove
 {
   float fVar1;
   float fVar2;
-  VehicleState *pVVar3;
-  pmove_t *ppVar4;
-  int iVar5;
-  ushort uVar6;
-  ulonglong uVar7;
-  ulonglong uVar8;
-  GroundTrace *pGVar9;
-  float *pfVar10;
-  float *pfVar11;
-  double extraout_f1;
+  int iVar3;
+  ushort uVar4;
+  float *pfVar5;
+  float *pfVar6;
+  double dVar7;
+  double dVar8;
+  double dVar9;
+  double dVar10;
+  double dVar11;
   double dVar12;
   double dVar13;
   double dVar14;
@@ -955,11 +901,6 @@ void BG_VehicleStepSlideMove
   double dVar19;
   double dVar20;
   double dVar21;
-  double dVar22;
-  double dVar23;
-  double dVar24;
-  double dVar25;
-  double dVar26;
   float local_120;
   float local_11c;
   float local_118;
@@ -971,127 +912,120 @@ void BG_VehicleStepSlideMove
   float local_f8;
   trace_t local_f0 [4];
   
-  uVar8 = (ulonglong)(int)param_3;
-  uVar7 = (ulonglong)(int)param_2;
-  __savegprlr_25((double)param_5,param_1);
-  ppVar4 = (pmove_t *)__savefpr_18();
-  dVar12 = extraout_f1;
-  if (ppVar4 == (pmove_t *)0x0) {
+  dVar7 = (double)param_5;
+  if (param_1 == (pmove_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_vehicle.cpp",0x285,0,
                     "%s");
   }
-  if ((uVar7 & 0xffffffff) == 0) {
+  if (param_2 == (VehicleState *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_vehicle.cpp",0x286,0,
                     "%s");
   }
-  if ((uVar8 & 0xffffffff) == 0) {
+  if (param_3 == (GroundTrace *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_vehicle.cpp",0x287,0,
                     "%s");
   }
-  pVVar3 = (VehicleState *)uVar7;
-  local_120 = pVVar3->origin[0];
-  local_11c = pVVar3->origin[1];
-  local_118 = pVVar3->origin[2];
-  dVar19 = (double)pVVar3->velocity[0];
-  dVar18 = (double)pVVar3->velocity[1];
-  dVar17 = (double)pVVar3->velocity[2];
-  pfVar11 = pVVar3->origin;
-  pfVar10 = pVVar3->velocity;
-  dVar14 = (double)(bg_vehicle_stepsize->current).value;
-  pGVar9 = (GroundTrace *)uVar8;
-  iVar5 = BG_VehicleSlideMove(ppVar4,pVVar3,pGVar9,param_4,(float)dVar12);
-  dVar13 = 1.0;
-  if (iVar5 != 0) {
-    local_f8 = (float)((double)local_118 + dVar14);
+  local_120 = param_2->origin[0];
+  local_11c = param_2->origin[1];
+  local_118 = param_2->origin[2];
+  dVar14 = (double)param_2->velocity[0];
+  dVar13 = (double)param_2->velocity[1];
+  dVar12 = (double)param_2->velocity[2];
+  pfVar6 = param_2->origin;
+  pfVar5 = param_2->velocity;
+  dVar9 = (double)(bg_vehicle_stepsize->current).value;
+  iVar3 = BG_VehicleSlideMove(param_1,param_2,param_3,param_4,(float)dVar7);
+  dVar8 = 1.0;
+  if (iVar3 != 0) {
+    local_f8 = (float)((double)local_118 + dVar9);
     local_100 = local_120;
     local_fc = local_11c;
-    dVar26 = (double)*pfVar11;
-    dVar25 = (double)pVVar3->origin[1];
-    dVar23 = (double)pVVar3->origin[2];
-    dVar22 = (double)*pfVar10;
-    dVar16 = (double)(float)(dVar26 - (double)local_120);
-    dVar21 = (double)pVVar3->velocity[1];
-    dVar15 = (double)(float)(dVar25 - (double)local_11c);
-    dVar20 = (double)pVVar3->velocity[2];
-    BG_TraceCapsule(ppVar4->handler,local_f0,&local_120,&local_100,&pVVar3->bounds,pVVar3->entity,
-                    pVVar3->clipmask);
+    dVar21 = (double)*pfVar6;
+    dVar20 = (double)param_2->origin[1];
+    dVar18 = (double)param_2->origin[2];
+    dVar17 = (double)*pfVar5;
+    dVar11 = (double)(float)(dVar21 - (double)local_120);
+    dVar16 = (double)param_2->velocity[1];
+    dVar10 = (double)(float)(dVar20 - (double)local_11c);
+    dVar15 = (double)param_2->velocity[2];
+    BG_TraceCapsule(param_1->handler,local_f0,&local_120,&local_100,&param_2->bounds,param_2->entity
+                    ,param_2->clipmask);
     fVar1 = (local_f8 - local_118) * local_f0[0].fraction + local_118;
-    dVar24 = (double)fVar1;
-    pVVar3->origin[2] = fVar1;
-    *pfVar11 = (local_100 - local_120) * local_f0[0].fraction + local_120;
-    pVVar3->origin[1] = (local_fc - local_11c) * local_f0[0].fraction + local_11c;
-    *pfVar10 = (float)dVar19;
-    pVVar3->velocity[1] = (float)dVar18;
-    pVVar3->velocity[2] = (float)dVar17;
-    BG_VehicleSlideMove(ppVar4,pVVar3,pGVar9,param_4,(float)dVar12);
-    local_110 = *pfVar11;
-    local_10c = pVVar3->origin[1];
-    dVar12 = (double)(float)((double)local_118 - dVar24);
-    if (pGVar9->hasGround != 0) {
-      dVar12 = -(double)(float)(dVar14 * 0.5 - dVar12);
+    dVar19 = (double)fVar1;
+    param_2->origin[2] = fVar1;
+    *pfVar6 = (local_100 - local_120) * local_f0[0].fraction + local_120;
+    param_2->origin[1] = (local_fc - local_11c) * local_f0[0].fraction + local_11c;
+    *pfVar5 = (float)dVar14;
+    param_2->velocity[1] = (float)dVar13;
+    param_2->velocity[2] = (float)dVar12;
+    BG_VehicleSlideMove(param_1,param_2,param_3,param_4,(float)dVar7);
+    local_110 = *pfVar6;
+    local_10c = param_2->origin[1];
+    dVar7 = (double)(float)((double)local_118 - dVar19);
+    if (param_3->hasGround != 0) {
+      dVar7 = -(double)(float)(dVar9 * 0.5 - dVar7);
     }
-    local_108 = (float)(dVar12 + (double)pVVar3->origin[2]);
-    BG_TraceCapsule(ppVar4->handler,local_f0,pfVar11,&local_110,&pVVar3->bounds,pVVar3->entity,
-                    pVVar3->clipmask);
-    uVar6 = Trace_GetEntityHitId(local_f0);
-    if ((0x11 < uVar6) && (local_f0[0].startsolid == false)) {
-      dVar12 = (double)local_f0[0].fraction;
-      if (dVar13 <= dVar12) {
-        pVVar3->origin[2] = (float)((double)local_118 - dVar24) + pVVar3->origin[2];
-        __restfpr_18();
-        __restgprlr_25();
+    local_108 = (float)(dVar7 + (double)param_2->origin[2]);
+    BG_TraceCapsule(param_1->handler,local_f0,pfVar6,&local_110,&param_2->bounds,param_2->entity,
+                    param_2->clipmask);
+    uVar4 = Trace_GetEntityHitId(local_f0);
+    if ((0x11 < uVar4) && (local_f0[0].startsolid == false)) {
+      dVar7 = (double)local_f0[0].fraction;
+      if (dVar8 <= dVar7) {
+        param_2->origin[2] = (float)((double)local_118 - dVar19) + param_2->origin[2];
         return;
       }
       if ((local_f0[0].walkable != false) ||
          ((bg_vehicle_ground_max_normal->current).value <= local_f0[0].normal[2])) {
-        fVar1 = (float)((double)(float)((double)local_110 - (double)*pfVar11) * dVar12 +
-                       (double)*pfVar11);
-        *pfVar11 = fVar1;
-        fVar2 = (float)((double)(float)((double)local_10c - (double)pVVar3->origin[1]) * dVar12 +
-                       (double)pVVar3->origin[1]);
-        pVVar3->origin[1] = fVar2;
-        pVVar3->origin[2] =
-             (float)((double)(float)((double)local_108 - (double)pVVar3->origin[2]) * dVar12 +
-                    (double)pVVar3->origin[2]);
-        if ((float)(dVar15 * dVar18 + (double)(float)(dVar16 * dVar19)) + 0.001 <
-            (float)((double)(fVar2 - local_11c) * dVar18 +
-                   (double)(float)((double)(fVar1 - local_120) * dVar19))) goto LAB_82285888;
+        fVar1 = (float)((double)(float)((double)local_110 - (double)*pfVar6) * dVar7 +
+                       (double)*pfVar6);
+        *pfVar6 = fVar1;
+        fVar2 = (float)((double)(float)((double)local_10c - (double)param_2->origin[1]) * dVar7 +
+                       (double)param_2->origin[1]);
+        param_2->origin[1] = fVar2;
+        param_2->origin[2] =
+             (float)((double)(float)((double)local_108 - (double)param_2->origin[2]) * dVar7 +
+                    (double)param_2->origin[2]);
+        if ((float)(dVar10 * dVar13 + (double)(float)(dVar11 * dVar14)) + 0.001 <
+            (float)((double)(fVar2 - local_11c) * dVar13 +
+                   (double)(float)((double)(fVar1 - local_120) * dVar14))) {
+          return;
+        }
       }
     }
-    *pfVar11 = (float)dVar26;
-    pVVar3->origin[1] = (float)dVar25;
-    pVVar3->origin[2] = (float)dVar23;
-    *pfVar10 = (float)dVar22;
-    pVVar3->velocity[1] = (float)dVar21;
-    pVVar3->velocity[2] = (float)dVar20;
+    *pfVar6 = (float)dVar21;
+    param_2->origin[1] = (float)dVar20;
+    param_2->origin[2] = (float)dVar18;
+    *pfVar5 = (float)dVar17;
+    param_2->velocity[1] = (float)dVar16;
+    param_2->velocity[2] = (float)dVar15;
   }
-  if (pGVar9->hasGround != 0) {
-    local_110 = *pfVar11;
-    local_108 = (float)((double)pVVar3->origin[2] - dVar14);
-    local_10c = pVVar3->origin[1];
-    BG_TraceCapsule(ppVar4->handler,local_f0,pfVar11,&local_110,&pVVar3->bounds,pVVar3->entity,
-                    pVVar3->clipmask);
-    dVar12 = (double)local_f0[0].fraction;
-    if (dVar12 < dVar13) {
-      *pfVar11 = (float)((double)(float)((double)local_110 - (double)*pfVar11) * dVar12 +
-                        (double)*pfVar11);
-      pVVar3->origin[1] =
-           (float)((double)(float)((double)local_10c - (double)pVVar3->origin[1]) * dVar12 +
-                  (double)pVVar3->origin[1]);
-      pVVar3->origin[2] =
-           (float)((double)(float)((double)local_108 - (double)pVVar3->origin[2]) * dVar12 +
-                  (double)pVVar3->origin[2]);
+  if (param_3->hasGround != 0) {
+    local_110 = *pfVar6;
+    local_108 = (float)((double)param_2->origin[2] - dVar9);
+    local_10c = param_2->origin[1];
+    BG_TraceCapsule(param_1->handler,local_f0,pfVar6,&local_110,&param_2->bounds,param_2->entity,
+                    param_2->clipmask);
+    dVar7 = (double)local_f0[0].fraction;
+    if (dVar7 < dVar8) {
+      *pfVar6 = (float)((double)(float)((double)local_110 - (double)*pfVar6) * dVar7 +
+                       (double)*pfVar6);
+      param_2->origin[1] =
+           (float)((double)(float)((double)local_10c - (double)param_2->origin[1]) * dVar7 +
+                  (double)param_2->origin[1]);
+      param_2->origin[2] =
+           (float)((double)(float)((double)local_108 - (double)param_2->origin[2]) * dVar7 +
+                  (double)param_2->origin[2]);
     }
   }
-LAB_82285888:
-  __restfpr_18();
-  __restgprlr_25();
   return;
 }
 
 
 // 822858C0  BG_VehicleGroundMove  (bgame/bg_vehicle.cpp:751)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
 void BG_VehicleGroundMove
@@ -1105,57 +1039,47 @@ void BG_VehicleGroundMove
   float fVar4;
   float fVar5;
   float fVar6;
-  VehicleState *pVVar7;
-  pmove_t *ppVar8;
-  float *pfVar9;
-  ulonglong uVar10;
-  ulonglong uVar11;
-  double extraout_f1;
-  double dVar12;
-  double dVar13;
-  double dVar14;
+  float *pfVar7;
+  double dVar8;
+  double dVar9;
+  double dVar10;
   
-  uVar11 = (ulonglong)(int)param_3;
-  uVar10 = (ulonglong)(int)param_2;
-  ppVar8 = (pmove_t *)__savegprlr_26((double)param_5,param_1);
-  dVar12 = extraout_f1;
-  if (ppVar8 == (pmove_t *)0x0) {
+  dVar8 = (double)param_5;
+  if (param_1 == (pmove_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_vehicle.cpp",0x2f3,0,
                     "%s");
   }
-  if ((uVar10 & 0xffffffff) == 0) {
+  if (param_2 == (VehicleState *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_vehicle.cpp",0x2f4,0,
                     "%s");
   }
-  if ((uVar11 & 0xffffffff) == 0) {
+  if (param_3 == (GroundTrace *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_vehicle.cpp",0x2f5,0,
                     "%s");
   }
-  pVVar7 = (VehicleState *)uVar10;
-  fVar1 = pVVar7->velocity[0];
-  fVar2 = pVVar7->velocity[1];
-  fVar3 = pVVar7->velocity[2];
-  pfVar9 = pVVar7->velocity;
-  dVar14 = 0.0;
-  fVar5 = pVVar7->groundNormal[2] * fVar3 +
-          pVVar7->groundNormal[1] * fVar2 + pVVar7->groundNormal[0] * fVar1;
-  dVar13 = (double)SQRT(fVar2 * fVar2 + fVar1 * fVar1);
+  fVar1 = param_2->velocity[0];
+  fVar2 = param_2->velocity[1];
+  fVar3 = param_2->velocity[2];
+  pfVar7 = param_2->velocity;
+  dVar10 = 0.0;
+  fVar5 = param_2->groundNormal[2] * fVar3 +
+          param_2->groundNormal[1] * fVar2 + param_2->groundNormal[0] * fVar1;
+  dVar9 = (double)SQRT(fVar2 * fVar2 + fVar1 * fVar1);
   fVar5 = ABS(fVar5) * (bg_vehicle_overclip->current).value - fVar5;
-  fVar4 = pVVar7->groundNormal[0] * fVar5 + fVar1;
-  pVVar7->velocity[0] = fVar4;
-  fVar6 = pVVar7->groundNormal[1] * fVar5 + fVar2;
-  pVVar7->velocity[1] = fVar6;
-  fVar5 = pVVar7->groundNormal[2] * fVar5 + fVar3;
-  pVVar7->velocity[2] = fVar5;
+  fVar4 = param_2->groundNormal[0] * fVar5 + fVar1;
+  param_2->velocity[0] = fVar4;
+  fVar6 = param_2->groundNormal[1] * fVar5 + fVar2;
+  param_2->velocity[1] = fVar6;
+  fVar5 = param_2->groundNormal[2] * fVar5 + fVar3;
+  param_2->velocity[2] = fVar5;
   if (0.0 < fVar5 * fVar3 + fVar4 * fVar1 + fVar2 * fVar6) {
-    Vec2Normalize(pfVar9);
-    *pfVar9 = (float)((double)*pfVar9 * dVar13);
-    pVVar7->velocity[1] = (float)(dVar13 * (double)pVVar7->velocity[1]);
+    Vec2Normalize(pfVar7);
+    *pfVar7 = (float)((double)*pfVar7 * dVar9);
+    param_2->velocity[1] = (float)(dVar9 * (double)param_2->velocity[1]);
   }
-  if ((((double)*pfVar9 != dVar14) || ((double)pVVar7->velocity[1] != dVar14)) || (param_4 != 0)) {
-    BG_VehicleStepSlideMove(ppVar8,pVVar7,(GroundTrace *)uVar11,param_4,(float)dVar12);
+  if ((((double)*pfVar7 != dVar10) || ((double)param_2->velocity[1] != dVar10)) || (param_4 != 0)) {
+    BG_VehicleStepSlideMove(param_1,param_2,param_3,param_4,(float)dVar8);
   }
-  __restgprlr_26();
   return;
 }
 
@@ -1278,6 +1202,10 @@ LAB_82285b10:
 
 // 82285C18  BG_VehicleGroundPlant  (bgame/bg_vehicle.cpp:826)
 
+/* WARNING: Function: __savegprlr_18 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_18 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
 
@@ -1289,26 +1217,25 @@ int BG_VehicleGroundPlant
   float fVar1;
   float fVar2;
   uint uVar3;
-  int *piVar4;
-  uint *puVar5;
-  int *piVar6;
+  uint *puVar4;
+  int *piVar5;
+  float fVar6;
   float fVar7;
   float fVar8;
-  float fVar9;
-  ulonglong uVar10;
-  pmove_t *ppVar11;
-  VehicleDef *pVVar12;
-  int iVar13;
-  int iVar14;
-  int iVar15;
-  ulonglong uVar16;
-  ulonglong uVar17;
-  ulonglong uVar18;
-  float *pfVar19;
-  longlong lVar20;
-  longlong lVar21;
+  ulonglong uVar9;
+  VehicleDef *pVVar10;
+  int iVar11;
+  int iVar12;
+  ulonglong uVar13;
+  ulonglong uVar14;
+  float *pfVar15;
+  longlong lVar16;
+  int iVar17;
+  longlong lVar18;
+  double dVar19;
+  double dVar20;
+  double dVar21;
   double dVar22;
-  double extraout_f1;
   double dVar23;
   double dVar24;
   double dVar25;
@@ -1316,11 +1243,8 @@ int BG_VehicleGroundPlant
   double dVar27;
   double dVar28;
   double dVar29;
-  double dVar30;
-  double dVar31;
-  double dVar32;
-  float fVar33;
-  float fVar34;
+  float fVar30;
+  float fVar31;
   float local_280;
   float local_27c;
   float local_278;
@@ -1355,284 +1279,278 @@ int BG_VehicleGroundPlant
   trace_t local_160;
   float local_120 [72];
   
-  uVar17 = (ulonglong)(int)param_3;
-  uVar16 = (ulonglong)(int)param_2;
-  uVar10 = ZEXT48(&stack0x00000000);
-  __savegprlr_18((double)param_5,param_1,uVar16,uVar17,param_4);
-  ppVar11 = (pmove_t *)__savefpr_23();
-  dVar26 = extraout_f1;
-  if (ppVar11 == (pmove_t *)0x0) {
+  dVar20 = (double)param_5;
+  uVar9 = ZEXT48(&stack0x00000000);
+  if (param_1 == (pmove_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_vehicle.cpp",0x350,0,
                     "%s");
   }
-  if ((uVar16 & 0xffffffff) == 0) {
+  if (param_2 == (VehicleState *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_vehicle.cpp",0x351,0,
                     "%s");
   }
-  if ((uVar17 & 0xffffffff) == 0) {
+  if (param_3 == (GroundTrace *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_vehicle.cpp",0x352,0,
                     "%s");
   }
-  pVVar12 = BG_GetVehicleDef(ppVar11);
-  piVar4 = (int *)uVar16;
-  local_21c = (float)piVar4[1];
-  local_218 = (float)piVar4[2];
-  uVar3 = piVar4[0x20];
-  local_214 = (float)piVar4[0xf];
-  dVar31 = (double)(SQRT((float)piVar4[0x1d] * (float)piVar4[0x1d] +
-                         (float)piVar4[0x1e] * (float)piVar4[0x1e]) * 2.0);
-  YawToAxis((float)piVar4[5],(float (*) [3])pVVar12);
-  lVar21 = uVar10 - 0x1e4;
-  iVar15 = 0;
-  dVar32 = 1.0;
-  iVar14 = 0;
-  dVar28 = 0.0;
+  pVVar10 = BG_GetVehicleDef(param_1);
+  fVar30 = (param_2->bounds).halfSize[1];
+  fVar1 = (param_2->bounds).halfSize[0];
+  local_21c = param_2->origin[0];
+  local_218 = param_2->origin[1];
+  uVar3 = param_2->clipmask;
+  local_214 = param_2->previousOrigin[2];
+  dVar28 = (double)(SQRT(fVar1 * fVar1 + fVar30 * fVar30) * 2.0);
+  YawToAxis(param_2->angles[1],(float (*) [3])pVVar10);
+  lVar18 = uVar9 - 0x1e4;
+  iVar17 = 0;
+  dVar29 = 1.0;
+  iVar12 = 0;
+  dVar25 = 0.0;
   do {
-    pfVar19 = local_1c0 + iVar14 * 3;
-    local_1c0[iVar14 * 3] = (float)dVar28;
-    local_1c0[iVar14 * 3 + 1] = (float)dVar28;
-    local_1c0[iVar14 * 3 + 2] = (float)dVar28;
-    if ((iVar14 == 6) || (iVar13 = BG_GetWheelOrigin(ppVar11,iVar14,pfVar19), iVar13 != 0)) {
-      lVar21 = lVar21 + 4;
-      *(int *)lVar21 = iVar14;
-      iVar15 = iVar15 + 1;
+    pfVar15 = local_1c0 + iVar12 * 3;
+    local_1c0[iVar12 * 3] = (float)dVar25;
+    local_1c0[iVar12 * 3 + 1] = (float)dVar25;
+    local_1c0[iVar12 * 3 + 2] = (float)dVar25;
+    if ((iVar12 == 6) || (iVar11 = BG_GetWheelOrigin(param_1,iVar12,pfVar15), iVar11 != 0)) {
+      lVar18 = lVar18 + 4;
+      *(int *)lVar18 = iVar12;
+      iVar17 = iVar17 + 1;
       fVar1 = local_21c;
       fVar2 = local_218;
-      fVar33 = local_214;
-      if (iVar14 != 6) {
-        MatrixTransformVector43(pfVar19,(float (*) [3])&local_240,&local_200);
+      fVar30 = local_214;
+      if (iVar12 != 6) {
+        MatrixTransformVector43(pfVar15,(float (*) [3])&local_240,&local_200);
         fVar1 = local_200;
         fVar2 = local_1fc;
-        fVar33 = local_1f8;
+        fVar30 = local_1f8;
       }
-      local_258 = (float)((double)(bg_vehicle_stepsize->current).value + (double)fVar33);
-      local_278 = (float)((double)fVar33 - dVar31);
+      local_258 = (float)((double)(bg_vehicle_stepsize->current).value + (double)fVar30);
+      local_278 = (float)((double)fVar30 - dVar28);
       local_280 = fVar1;
       local_27c = fVar2;
       local_260 = fVar1;
       local_25c = fVar2;
-      BG_TraceCapsule(ppVar11->handler,&local_160,&local_260,&local_280,&bounds_origin,*piVar4,
-                      uVar3 & 0xfd7fffff);
-      dVar22 = (double)local_160.fraction;
-      if (dVar32 <= dVar22) {
-        *pfVar19 = local_280;
-        local_120[iVar14 * 3] = (float)dVar28;
-        local_120[iVar14 * 3 + 1] = (float)dVar28;
-        local_120[iVar14 * 3 + 2] = (float)dVar32;
-        fVar33 = local_27c;
+      BG_TraceCapsule(param_1->handler,&local_160,&local_260,&local_280,&bounds_origin,
+                      param_2->entity,uVar3 & 0xfd7fffff);
+      dVar19 = (double)local_160.fraction;
+      if (dVar29 <= dVar19) {
+        *pfVar15 = local_280;
+        local_120[iVar12 * 3] = (float)dVar25;
+        local_120[iVar12 * 3 + 1] = (float)dVar25;
+        local_120[iVar12 * 3 + 2] = (float)dVar29;
+        fVar30 = local_27c;
         fVar1 = local_278;
       }
       else {
-        local_120[iVar14 * 3] = local_160.normal[0];
-        local_120[iVar14 * 3 + 1] = local_160.normal[1];
-        local_120[iVar14 * 3 + 2] = local_160.normal[2];
-        *pfVar19 = (float)((double)(float)((double)local_280 - (double)local_260) * dVar22 +
+        local_120[iVar12 * 3] = local_160.normal[0];
+        local_120[iVar12 * 3 + 1] = local_160.normal[1];
+        local_120[iVar12 * 3 + 2] = local_160.normal[2];
+        *pfVar15 = (float)((double)(float)((double)local_280 - (double)local_260) * dVar19 +
                           (double)local_260);
-        fVar33 = (float)((double)(float)((double)local_27c - (double)local_25c) * dVar22 +
+        fVar30 = (float)((double)(float)((double)local_27c - (double)local_25c) * dVar19 +
                         (double)local_25c);
-        fVar1 = (float)((double)(float)((double)local_278 - (double)local_258) * dVar22 +
+        fVar1 = (float)((double)(float)((double)local_278 - (double)local_258) * dVar19 +
                        (double)local_258);
       }
-      local_1c0[iVar14 * 3 + 2] = fVar1;
-      local_1c0[iVar14 * 3 + 1] = fVar33;
+      local_1c0[iVar12 * 3 + 2] = fVar1;
+      local_1c0[iVar12 * 3 + 1] = fVar30;
     }
-    iVar14 = iVar14 + 1;
-  } while (iVar14 < 7);
-  if (iVar15 < 1) {
+    iVar12 = iVar12 + 1;
+  } while (iVar12 < 7);
+  if (iVar17 < 1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_vehicle.cpp",0x38a,0,
                     "%s");
   }
-  uVar16 = 1;
-  if (1 < iVar15) {
-    lVar21 = uVar10 - 0x1e4;
+  uVar13 = 1;
+  if (1 < iVar17) {
+    lVar18 = uVar9 - 0x1e4;
     do {
-      uVar18 = uVar16;
-      if (3 < (int)uVar16) {
-        lVar20 = lVar21 + 8;
+      uVar14 = uVar13;
+      if (3 < (int)uVar13) {
+        lVar16 = lVar18 + 8;
         do {
-          puVar5 = (uint *)lVar20;
-          uVar3 = *puVar5;
+          puVar4 = (uint *)lVar16;
+          uVar3 = *puVar4;
           if (*(float *)((int)local_1c0 +
                         (int)(((ulonglong)uVar3 + ((ulonglong)uVar3 & 0x7fffffff) * 2 & 0xffffffff)
-                             << 2) + 8) <= local_1c0[puVar5[-1] * 3 + 2]) goto LAB_82286020;
-          *puVar5 = puVar5[-1];
-          puVar5[-1] = uVar3;
-          fVar33 = *(float *)((int)local_1c0 +
+                             << 2) + 8) <= local_1c0[puVar4[-1] * 3 + 2]) goto LAB_82286020;
+          *puVar4 = puVar4[-1];
+          puVar4[-1] = uVar3;
+          fVar30 = *(float *)((int)local_1c0 +
                              (int)(((ulonglong)uVar3 + ((ulonglong)uVar3 & 0x7fffffff) * 2 &
                                    0xffffffff) << 2) + 8);
-          if (fVar33 <= local_1c0[puVar5[-2] * 3 + 2]) goto LAB_82286020;
-          puVar5[-1] = puVar5[-2];
-          puVar5[-2] = uVar3;
-          if (fVar33 <= local_1c0[puVar5[-3] * 3 + 2]) goto LAB_82286020;
-          puVar5[-2] = puVar5[-3];
-          puVar5[-3] = uVar3;
-          if (fVar33 <= local_1c0[puVar5[-4] * 3 + 2]) goto LAB_82286020;
-          uVar18 = uVar18 - 4;
-          puVar5[-3] = puVar5[-4];
-          lVar20 = lVar20 + -0x10;
-          *(uint *)lVar20 = uVar3;
-        } while (3 < (int)uVar18);
+          if (fVar30 <= local_1c0[puVar4[-2] * 3 + 2]) goto LAB_82286020;
+          puVar4[-1] = puVar4[-2];
+          puVar4[-2] = uVar3;
+          if (fVar30 <= local_1c0[puVar4[-3] * 3 + 2]) goto LAB_82286020;
+          puVar4[-2] = puVar4[-3];
+          puVar4[-3] = uVar3;
+          if (fVar30 <= local_1c0[puVar4[-4] * 3 + 2]) goto LAB_82286020;
+          uVar14 = uVar14 - 4;
+          puVar4[-3] = puVar4[-4];
+          lVar16 = lVar16 + -0x10;
+          *(uint *)lVar16 = uVar3;
+        } while (3 < (int)uVar14);
       }
-      if (0 < (int)uVar18) {
-        lVar20 = (uVar18 & 0x3fffffff) * 4 + (uVar10 - 0x1e0);
+      if (0 < (int)uVar14) {
+        lVar16 = (uVar14 & 0x3fffffff) * 4 + (uVar9 - 0x1e0);
         do {
-          piVar6 = (int *)lVar20;
-          iVar14 = *piVar6;
-          if (local_1c0[iVar14 * 3 + 2] <= local_1c0[piVar6[-1] * 3 + 2]) break;
-          *piVar6 = piVar6[-1];
-          uVar18 = uVar18 - 1;
-          lVar20 = lVar20 + -4;
-          *(int *)lVar20 = iVar14;
-        } while (0 < (longlong)uVar18);
+          piVar5 = (int *)lVar16;
+          iVar12 = *piVar5;
+          if (local_1c0[iVar12 * 3 + 2] <= local_1c0[piVar5[-1] * 3 + 2]) break;
+          *piVar5 = piVar5[-1];
+          uVar14 = uVar14 - 1;
+          lVar16 = lVar16 + -4;
+          *(int *)lVar16 = iVar12;
+        } while (0 < (longlong)uVar14);
       }
 LAB_82286020:
-      uVar16 = uVar16 + 1;
-      lVar21 = lVar21 + 4;
-    } while ((int)uVar16 < iVar15);
+      uVar13 = uVar13 + 1;
+      lVar18 = lVar18 + 4;
+    } while ((int)uVar13 < iVar17);
   }
-  uVar16 = (ulonglong)local_1e0[0];
-  lVar21 = (uVar16 + ((ulonglong)local_1e0[0] & 0x7fffffff) * 2 & 0x3fffffff) * 4;
-  if ((bg_vehicle_stepsize->current).value + pVVar12->suspensionTravel <=
-      *(float *)((int)uVar17 + 0x3c) - *(float *)((int)local_1c0 + (int)lVar21 + 8)) {
-    __restfpr_23(0);
-    iVar15 = __restgprlr_18();
-    return iVar15;
+  uVar13 = (ulonglong)local_1e0[0];
+  lVar18 = (uVar13 + ((ulonglong)local_1e0[0] & 0x7fffffff) * 2 & 0x3fffffff) * 4;
+  if ((bg_vehicle_stepsize->current).value + pVVar10->suspensionTravel <=
+      param_3->location[2] - *(float *)((int)local_1c0 + (int)lVar18 + 8)) {
+    return 0;
   }
-  uVar17 = (ulonglong)local_1e0[1];
-  iVar13 = 2;
-  lVar21 = lVar21 + (uVar10 - 0x1c0);
-  iVar14 = (int)((uVar17 + ((ulonglong)local_1e0[1] & 0x7fffffff) * 2 & 0x3fffffff) << 2);
-  pfVar19 = (float *)lVar21;
-  local_210 = *pfVar19 - *(float *)((int)local_1c0 + iVar14);
-  local_20c = pfVar19[1] - *(float *)((int)local_1c0 + iVar14 + 4);
-  local_208 = pfVar19[2] - *(float *)((int)local_1c0 + iVar14 + 8);
-  if (2 < iVar15) {
-    lVar20 = uVar10 - 0x1d8;
+  uVar14 = (ulonglong)local_1e0[1];
+  iVar11 = 2;
+  lVar18 = lVar18 + (uVar9 - 0x1c0);
+  iVar12 = (int)((uVar14 + ((ulonglong)local_1e0[1] & 0x7fffffff) * 2 & 0x3fffffff) << 2);
+  pfVar15 = (float *)lVar18;
+  local_210 = *pfVar15 - *(float *)((int)local_1c0 + iVar12);
+  local_20c = pfVar15[1] - *(float *)((int)local_1c0 + iVar12 + 4);
+  local_208 = pfVar15[2] - *(float *)((int)local_1c0 + iVar12 + 8);
+  if (2 < iVar17) {
+    lVar16 = uVar9 - 0x1d8;
     do {
-      iVar14 = BG_VehicleWheelsCollinear((int)uVar16,(int)uVar17,*(int *)lVar20);
-      if (iVar14 == 0) {
-        pfVar19 = (float *)lVar21;
-        uVar3 = local_1e0[iVar13];
-        local_1f0 = local_1c0[uVar3 * 3] - *pfVar19;
-        local_1ec = local_1c0[uVar3 * 3 + 1] - pfVar19[1];
-        local_1e8 = local_1c0[uVar3 * 3 + 2] - pfVar19[2];
+      iVar12 = BG_VehicleWheelsCollinear((int)uVar13,(int)uVar14,*(int *)lVar16);
+      if (iVar12 == 0) {
+        pfVar15 = (float *)lVar18;
+        uVar3 = local_1e0[iVar11];
+        local_1f0 = local_1c0[uVar3 * 3] - *pfVar15;
+        local_1ec = local_1c0[uVar3 * 3 + 1] - pfVar15[1];
+        local_1e8 = local_1c0[uVar3 * 3 + 2] - pfVar15[2];
         Vec3Cross(&local_210,&local_1f0,&local_270);
-        if (iVar13 < iVar15) goto LAB_8228618c;
+        if (iVar11 < iVar17) goto LAB_8228618c;
         break;
       }
-      iVar13 = iVar13 + 1;
-      lVar20 = lVar20 + 4;
-    } while (iVar13 < iVar15);
+      iVar11 = iVar11 + 1;
+      lVar16 = lVar16 + 4;
+    } while (iVar11 < iVar17);
   }
   MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_vehicle.cpp",0x3a8,0,
                   "%s");
 LAB_8228618c:
-  dVar22 = (double)SQRT(local_268 * local_268 + local_26c * local_26c + local_270 * local_270);
-  dVar31 = dVar32;
-  if (-dVar22 < 0.0) {
-    dVar31 = dVar22;
+  dVar19 = (double)SQRT(local_268 * local_268 + local_26c * local_26c + local_270 * local_270);
+  dVar28 = dVar29;
+  if (-dVar19 < 0.0) {
+    dVar28 = dVar19;
   }
-  fVar33 = (float)(dVar32 / dVar31);
-  local_268 = fVar33 * local_268;
-  local_270 = local_270 * fVar33;
-  local_26c = local_26c * fVar33;
-  if ((double)local_268 < dVar28) {
+  fVar30 = (float)(dVar29 / dVar28);
+  local_268 = fVar30 * local_268;
+  local_270 = local_270 * fVar30;
+  local_26c = local_26c * fVar30;
+  if ((double)local_268 < dVar25) {
     local_270 = -local_270;
     local_26c = -local_26c;
     local_268 = (float)-(double)local_268;
   }
   Vec3Cross(&local_270,&local_240,&local_234);
-  dVar31 = (double)SQRT(local_22c * local_22c + local_234 * local_234 + local_230 * local_230);
-  dVar28 = dVar32;
-  if (-dVar31 < 0.0) {
-    dVar28 = dVar31;
+  dVar28 = (double)SQRT(local_22c * local_22c + local_234 * local_234 + local_230 * local_230);
+  dVar25 = dVar29;
+  if (-dVar28 < 0.0) {
+    dVar25 = dVar28;
   }
-  fVar33 = (float)(dVar32 / dVar28);
-  local_234 = local_234 * fVar33;
-  local_230 = local_230 * fVar33;
-  local_22c = local_22c * fVar33;
+  fVar30 = (float)(dVar29 / dVar25);
+  local_234 = local_234 * fVar30;
+  local_230 = local_230 * fVar30;
+  local_22c = local_22c * fVar30;
   Vec3Cross(&local_234,&local_270,&local_240);
-  dVar31 = (double)SQRT(local_240 * local_240 + local_238 * local_238 + local_23c * local_23c);
-  dVar28 = dVar32;
-  if (-dVar31 < 0.0) {
-    dVar28 = dVar31;
+  dVar28 = (double)SQRT(local_240 * local_240 + local_238 * local_238 + local_23c * local_23c);
+  dVar25 = dVar29;
+  if (-dVar28 < 0.0) {
+    dVar25 = dVar28;
   }
-  fVar33 = (float)(dVar32 / dVar28);
-  local_240 = local_240 * fVar33;
-  local_23c = local_23c * fVar33;
-  local_238 = local_238 * fVar33;
+  fVar30 = (float)(dVar29 / dVar25);
+  local_240 = local_240 * fVar30;
+  local_23c = local_23c * fVar30;
+  local_238 = local_238 * fVar30;
   AxisToAngles((float (*) [3])&local_240,local_250);
-  dVar31 = (double)(bg_vehicle_pitch_track->current).value;
-  dVar28 = (double)(bg_vehicle_roll_track->current).value;
-  fVar33 = DiffTrackAngle(local_250[0],(float)piVar4[4],(bg_vehicle_pitch_track->current).value,
-                          (float)dVar26);
-  piVar4[4] = (int)fVar33;
-  fVar34 = DiffTrackAngle(local_248,(float)piVar4[6],(float)dVar28,(float)dVar26);
-  piVar4[6] = (int)fVar34;
-  fVar33 = (float)piVar4[4];
+  dVar28 = (double)(bg_vehicle_pitch_track->current).value;
+  dVar25 = (double)(bg_vehicle_roll_track->current).value;
+  fVar30 = DiffTrackAngle(local_250[0],param_2->angles[0],(bg_vehicle_pitch_track->current).value,
+                          (float)dVar20);
+  param_2->angles[0] = fVar30;
+  fVar31 = DiffTrackAngle(local_248,param_2->angles[2],(float)dVar25,(float)dVar20);
+  param_2->angles[2] = fVar31;
+  fVar30 = param_2->angles[0];
   fVar1 = (bg_vehicle_max_roll->current).value;
   fVar2 = (bg_vehicle_max_pitch->current).value;
   fVar7 = fVar2;
-  if (fVar33 - fVar2 < 0.0) {
-    fVar7 = fVar33;
+  if (fVar30 - fVar2 < 0.0) {
+    fVar7 = fVar30;
   }
-  fVar9 = fVar1;
-  if (fVar34 - fVar1 < 0.0) {
-    fVar9 = fVar34;
+  fVar6 = fVar1;
+  if (fVar31 - fVar1 < 0.0) {
+    fVar6 = fVar31;
   }
   fVar8 = -fVar2;
-  if (-fVar2 - fVar33 < 0.0) {
+  if (-fVar2 - fVar30 < 0.0) {
     fVar8 = fVar7;
   }
-  piVar4[4] = (int)fVar8;
-  fVar33 = -fVar1;
-  if (-fVar1 - fVar34 < 0.0) {
-    fVar33 = fVar9;
+  param_2->angles[0] = fVar8;
+  fVar30 = -fVar1;
+  if (-fVar1 - fVar31 < 0.0) {
+    fVar30 = fVar6;
   }
-  piVar4[6] = (int)fVar33;
-  if (pVVar12->fakeBodyStabilizer != 0) {
-    dVar29 = 0.0027777778450399637;
-    dVar22 = (double)(local_250[0] * 0.0027777778);
-    dVar27 = 0.5;
-    dVar25 = (double)(bg_vehicle_max_body_pitch->current).value;
-    dVar24 = (double)(bg_vehicle_max_body_roll->current).value;
-    dVar32 = floor((double)(float)(dVar22 + 0.5));
-    dVar29 = (double)(float)((double)local_248 * dVar29);
-    dVar30 = 360.0;
-    dVar22 = (double)((float)(dVar22 - (double)(float)dVar32) * 360.0);
-    dVar32 = dVar25;
-    if ((float)(dVar22 - dVar25) < 0.0) {
-      dVar32 = dVar22;
+  param_2->angles[2] = fVar30;
+  if (pVVar10->fakeBodyStabilizer != 0) {
+    dVar26 = 0.0027777778450399637;
+    dVar19 = (double)(local_250[0] * 0.0027777778);
+    dVar24 = 0.5;
+    dVar23 = (double)(bg_vehicle_max_body_pitch->current).value;
+    dVar22 = (double)(bg_vehicle_max_body_roll->current).value;
+    dVar29 = floor((double)(float)(dVar19 + 0.5));
+    dVar26 = (double)(float)((double)local_248 * dVar26);
+    dVar27 = 360.0;
+    dVar19 = (double)((float)(dVar19 - (double)(float)dVar29) * 360.0);
+    dVar29 = dVar23;
+    if ((float)(dVar19 - dVar23) < 0.0) {
+      dVar29 = dVar19;
     }
-    dVar23 = -dVar25;
-    if ((float)(-dVar25 - dVar22) < 0.0) {
-      dVar23 = dVar32;
+    dVar21 = -dVar23;
+    if ((float)(-dVar23 - dVar19) < 0.0) {
+      dVar21 = dVar29;
     }
-    local_250[0] = (float)dVar23;
-    dVar32 = floor((double)(float)(dVar29 + dVar27));
-    dVar22 = (double)(float)((double)(float)(dVar29 - (double)(float)dVar32) * dVar30);
-    dVar32 = dVar24;
-    if ((float)(dVar22 - dVar24) < 0.0) {
-      dVar32 = dVar22;
+    local_250[0] = (float)dVar21;
+    dVar29 = floor((double)(float)(dVar26 + dVar24));
+    dVar19 = (double)(float)((double)(float)(dVar26 - (double)(float)dVar29) * dVar27);
+    dVar29 = dVar22;
+    if ((float)(dVar19 - dVar22) < 0.0) {
+      dVar29 = dVar19;
     }
-    dVar29 = -dVar24;
-    if ((float)(-dVar24 - dVar22) < 0.0) {
-      dVar29 = dVar32;
+    dVar26 = -dVar22;
+    if ((float)(-dVar22 - dVar19) < 0.0) {
+      dVar26 = dVar29;
     }
-    local_248 = (float)dVar29;
-    fVar33 = DiffTrackAngle(-local_250[0],(float)piVar4[0x16],(float)dVar31,(float)dVar26);
-    piVar4[0x16] = (int)fVar33;
-    fVar33 = DiffTrackAngle(-local_248,(float)piVar4[0x17],(float)dVar28,(float)dVar26);
-    piVar4[0x17] = (int)fVar33;
+    local_248 = (float)dVar26;
+    fVar30 = DiffTrackAngle(-local_250[0],param_2->tilt[0],(float)dVar28,(float)dVar20);
+    param_2->tilt[0] = fVar30;
+    fVar30 = DiffTrackAngle(-local_248,param_2->tilt[1],(float)dVar25,(float)dVar20);
+    param_2->tilt[1] = fVar30;
   }
-  __restfpr_23(1);
-  iVar15 = __restgprlr_18();
-  return iVar15;
+  return 1;
 }
 
 
 // 82286420  BG_VehicleSteerMove  (bgame/bg_vehicle.cpp:978)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
 
@@ -1641,19 +1559,17 @@ void BG_VehicleSteerMove(pmove_t *param_1,pml_t *param_2)
 {
   char cVar1;
   playerState_s *ppVar2;
-  pmove_t *ppVar3;
-  VehicleDef *pVVar4;
-  IMAGE_DOS_HEADER *pIVar5;
-  int iVar6;
+  VehicleDef *pVVar3;
+  IMAGE_DOS_HEADER *pIVar4;
   char *in_r6;
-  uint uVar7;
-  uint uVar8;
+  uint uVar5;
+  uint uVar6;
+  double dVar7;
+  double dVar8;
   double dVar9;
   double dVar10;
   double dVar11;
-  double dVar12;
-  double dVar13;
-  float fVar14;
+  float fVar12;
   float local_1a0;
   float local_19c;
   float local_198;
@@ -1672,19 +1588,18 @@ void BG_VehicleSteerMove(pmove_t *param_1,pml_t *param_2)
   float local_ac;
   GroundTrace aGStack_a0 [2];
   
-  ppVar3 = (pmove_t *)__savegprlr_26(param_1);
-  if (ppVar3 == (pmove_t *)0x0) {
+  if (param_1 == (pmove_t *)0x0) {
     in_r6 = "%s";
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_vehicle.cpp",0x3e2,0,
                     "%s");
   }
-  if (ppVar3->ps == (playerState_s *)0x0) {
+  if (param_1->ps == (playerState_s *)0x0) {
     in_r6 = "%s";
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_vehicle.cpp",0x3e3,0,
                     "%s");
   }
-  ppVar2 = ppVar3->ps;
-  pVVar4 = BG_GetVehicleDef(ppVar3);
+  ppVar2 = param_1->ps;
+  pVVar3 = BG_GetVehicleDef(param_1);
   local_140.entity = (ppVar2->vehicleState).entity;
   local_140.clipmask = 0x2810211;
   local_140.origin[0] = (ppVar2->vehicleState).origin[0];
@@ -1701,58 +1616,58 @@ void BG_VehicleSteerMove(pmove_t *param_1,pml_t *param_2)
   local_140.velocity[2] = (ppVar2->vehicleState).velocity[2];
   local_140.tilt[0] = (ppVar2->vehicleState).tilt[0];
   local_140.tilt[1] = (ppVar2->vehicleState).tilt[1];
-  BG_GetVehicleBounds(ppVar3,&local_140.bounds);
-  BG_VehicleGroundTrace(ppVar3,&local_140,aGStack_a0,param_2->frametime);
+  BG_GetVehicleBounds(param_1,&local_140.bounds);
+  BG_VehicleGroundTrace(param_1,&local_140,aGStack_a0,param_2->frametime);
   if (aGStack_a0[0].onGround == 0) {
     AnglesToAxis(local_140.angles,(float (*) [3])&local_170);
     local_140.groundNormal[0] = local_158;
     local_140.groundNormal[1] = local_154;
     local_140.groundNormal[2] = local_150;
-    BG_VehicleAirMove(ppVar3,&local_140,aGStack_a0,param_2->frametime);
-    uVar8 = (ppVar2->vehicleState).flags | 2;
+    BG_VehicleAirMove(param_1,&local_140,aGStack_a0,param_2->frametime);
+    uVar6 = (ppVar2->vehicleState).flags | 2;
   }
   else {
-    local_180 = (longlong)(ppVar3->cmd).rightmove;
-    pIVar5 = &IMAGE_DOS_HEADER_82000000;
-    dVar13 = (double)((float)(longlong)(ppVar3->cmd).forwardmove * 0.007874016 * pVVar4->topSpeed);
-    dVar12 = (double)(-(pVVar4->rotRate * (float)local_180 * 0.007874016 * param_2->frametime -
+    local_180 = (longlong)(param_1->cmd).rightmove;
+    pIVar4 = &IMAGE_DOS_HEADER_82000000;
+    dVar11 = (double)((float)(longlong)(param_1->cmd).forwardmove * 0.007874016 * pVVar3->topSpeed);
+    dVar10 = (double)(-(pVVar3->rotRate * (float)local_180 * 0.007874016 * param_2->frametime -
                        local_140.angles[1]) * 0.0027777778);
-    dVar9 = floor((double)(float)(dVar12 + 0.5));
-    local_140.angles[1] = (float)(dVar12 - (double)(float)dVar9) * 360.0;
-    YawVectors(local_140.angles[1],(float *)pIVar5,&local_190);
+    dVar7 = floor((double)(float)(dVar10 + 0.5));
+    local_140.angles[1] = (float)(dVar10 - (double)(float)dVar7) * 360.0;
+    YawVectors(local_140.angles[1],(float *)pIVar4,&local_190);
     AnglesToAxis(local_140.angles,(float (*) [3])&local_170);
-    local_b0 = (float)((double)(float)((double)local_190 * dVar13) - (double)local_140.velocity[0]);
-    local_ac = (float)((double)(float)((double)local_18c * dVar13) - (double)local_140.velocity[1]);
-    dVar12 = (double)(float)((double)local_18c * (double)local_140.velocity[1] +
+    local_b0 = (float)((double)(float)((double)local_190 * dVar11) - (double)local_140.velocity[0]);
+    local_ac = (float)((double)(float)((double)local_18c * dVar11) - (double)local_140.velocity[1]);
+    dVar10 = (double)(float)((double)local_18c * (double)local_140.velocity[1] +
                             (double)(float)((double)local_190 * (double)local_140.velocity[0]));
-    fVar14 = Vec2Normalize(&local_b0);
-    dVar9 = (double)fVar14;
-    cVar1 = (ppVar3->cmd).forwardmove;
-    dVar13 = 0.0;
+    fVar12 = Vec2Normalize(&local_b0);
+    dVar7 = (double)fVar12;
+    cVar1 = (param_1->cmd).forwardmove;
+    dVar11 = 0.0;
     if (cVar1 == '\0') {
-      uVar8 = (ppVar2->vehicleState).flags;
-      uVar7 = uVar8 | 8;
-      dVar10 = (double)((pVVar4->vehPhysDef).frictionBraking * pVVar4->accel * param_2->frametime);
-      if ((float)(dVar9 - dVar10) < 0.0) {
-        dVar10 = dVar9;
+      uVar6 = (ppVar2->vehicleState).flags;
+      uVar5 = uVar6 | 8;
+      dVar8 = (double)((pVVar3->vehPhysDef).frictionBraking * pVVar3->accel * param_2->frametime);
+      if ((float)(dVar7 - dVar8) < 0.0) {
+        dVar8 = dVar7;
       }
-      dVar11 = -dVar10;
-      if (dVar12 < 0.0) {
-        dVar11 = dVar10;
+      dVar9 = -dVar8;
+      if (dVar10 < 0.0) {
+        dVar9 = dVar8;
       }
-      if (dVar11 == 0.0) {
-        uVar7 = uVar8 & 0xfffffff7;
+      if (dVar9 == 0.0) {
+        uVar5 = uVar6 & 0xfffffff7;
       }
-      (ppVar2->vehicleState).flags = uVar7;
-      (ppVar2->vehicleState).flags = uVar7 & 0xfffffffb;
+      (ppVar2->vehicleState).flags = uVar5;
+      (ppVar2->vehicleState).flags = uVar5 & 0xfffffffb;
     }
     else {
-      dVar11 = (double)(pVVar4->accel * param_2->frametime);
-      if ((float)(dVar9 - dVar11) < 0.0) {
-        dVar11 = dVar9;
+      dVar9 = (double)(pVVar3->accel * param_2->frametime);
+      if ((float)(dVar7 - dVar9) < 0.0) {
+        dVar9 = dVar7;
       }
       if (cVar1 < '\0') {
-        dVar11 = -dVar11;
+        dVar9 = -dVar9;
       }
       (ppVar2->vehicleState).flags = (ppVar2->vehicleState).flags & 0xfffffff3U | 4;
     }
@@ -1760,75 +1675,78 @@ void BG_VehicleSteerMove(pmove_t *param_1,pml_t *param_2)
     local_140.groundNormal[0] = local_158;
     local_140.groundNormal[1] = local_154;
     if ((bg_vehicle_slide_min_normal->current).value <= local_150) {
-      dVar12 = (double)(float)(dVar11 + dVar12);
-      dVar13 = (double)pVVar4->topSpeed;
+      dVar10 = (double)(float)(dVar9 + dVar10);
+      dVar11 = (double)pVVar3->topSpeed;
       local_140.velocity[2] = 0.0;
-      dVar9 = dVar13;
-      if ((float)(dVar12 - dVar13) < 0.0) {
-        dVar9 = dVar12;
+      dVar7 = dVar11;
+      if ((float)(dVar10 - dVar11) < 0.0) {
+        dVar7 = dVar10;
       }
-      dVar11 = -dVar13;
-      if ((float)(-dVar13 - dVar12) < 0.0) {
-        dVar11 = dVar9;
+      dVar9 = -dVar11;
+      if ((float)(-dVar11 - dVar10) < 0.0) {
+        dVar9 = dVar7;
       }
-      local_140.velocity[0] = (float)((double)local_190 * dVar11);
-      local_140.velocity[1] = (float)((double)local_18c * dVar11);
+      local_140.velocity[0] = (float)((double)local_190 * dVar9);
+      local_140.velocity[1] = (float)((double)local_18c * dVar9);
     }
     else {
-      local_140.velocity[0] = (float)((double)local_190 * dVar11 + (double)local_140.velocity[0]);
-      local_140.velocity[1] = (float)((double)local_18c * dVar11 + (double)local_140.velocity[1]);
-      dVar9 = (double)(local_140.velocity[1] * local_140.velocity[1] +
+      local_140.velocity[0] = (float)((double)local_190 * dVar9 + (double)local_140.velocity[0]);
+      local_140.velocity[1] = (float)((double)local_18c * dVar9 + (double)local_140.velocity[1]);
+      dVar7 = (double)(local_140.velocity[1] * local_140.velocity[1] +
                       local_140.velocity[0] * local_140.velocity[0]);
-      if ((double)(pVVar4->topSpeed * pVVar4->topSpeed) < dVar9) {
-        if (dVar9 == 0.0) {
+      if ((double)(pVVar3->topSpeed * pVVar3->topSpeed) < dVar7) {
+        if (dVar7 == 0.0) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_vehicle.cpp",
                           0x42e,0,"%s");
         }
-        fVar14 = pVVar4->topSpeed / (float)SQRT(dVar9);
-        local_140.velocity[0] = fVar14 * local_140.velocity[0];
-        local_140.velocity[1] = local_140.velocity[1] * fVar14;
+        fVar12 = pVVar3->topSpeed / (float)SQRT(dVar7);
+        local_140.velocity[0] = fVar12 * local_140.velocity[0];
+        local_140.velocity[1] = local_140.velocity[1] * fVar12;
       }
-      local_1a0 = (float)dVar13;
-      local_19c = (float)dVar13;
+      local_1a0 = (float)dVar11;
+      local_19c = (float)dVar11;
       local_198 = -1.0;
       Vec3Cross(&local_158,&local_1a0,afStack_164);
       Vec3Cross(afStack_164,&local_158,&local_170);
-      local_1a0 = (float)dVar13;
-      local_19c = (float)dVar13;
+      local_1a0 = (float)dVar11;
+      local_19c = (float)dVar11;
       local_198 = -((bg_vehicle_gravity->current).value * param_2->frametime);
-      fVar14 = (float)((double)(local_16c + local_170) * dVar13 + (double)(local_168 * local_198));
-      local_140.velocity[0] = local_170 * fVar14 + local_140.velocity[0];
-      local_140.velocity[1] = local_16c * fVar14 + local_140.velocity[1];
-      local_140.velocity[2] = local_168 * fVar14 + local_140.velocity[2];
+      fVar12 = (float)((double)(local_16c + local_170) * dVar11 + (double)(local_168 * local_198));
+      local_140.velocity[0] = local_170 * fVar12 + local_140.velocity[0];
+      local_140.velocity[1] = local_16c * fVar12 + local_140.velocity[1];
+      local_140.velocity[2] = local_168 * fVar12 + local_140.velocity[2];
     }
     in_r6 = (char *)0x0;
-    BG_VehicleGroundMove(ppVar3,&local_140,aGStack_a0,0,param_2->frametime);
-    uVar8 = (ppVar2->vehicleState).flags & 0xfffffffd;
+    BG_VehicleGroundMove(param_1,&local_140,aGStack_a0,0,param_2->frametime);
+    uVar6 = (ppVar2->vehicleState).flags & 0xfffffffd;
   }
-  (ppVar2->vehicleState).flags = uVar8;
-  iVar6 = BG_VehicleGroundPlant(ppVar3,&local_140,aGStack_a0,(int)in_r6,param_2->frametime);
-  ppVar2 = ppVar3->ps;
+  (ppVar2->vehicleState).flags = uVar6;
+  BG_VehicleGroundPlant(param_1,&local_140,aGStack_a0,(int)in_r6,param_2->frametime);
+  ppVar2 = param_1->ps;
   (ppVar2->vehicleState).origin[0] = local_140.origin[0];
   (ppVar2->vehicleState).origin[1] = local_140.origin[1];
   (ppVar2->vehicleState).origin[2] = local_140.origin[2];
-  ppVar2 = ppVar3->ps;
+  ppVar2 = param_1->ps;
   (ppVar2->vehicleState).angles[0] = local_140.angles[0];
   (ppVar2->vehicleState).angles[1] = local_140.angles[1];
   (ppVar2->vehicleState).angles[2] = local_140.angles[2];
-  ppVar2 = ppVar3->ps;
+  ppVar2 = param_1->ps;
   (ppVar2->vehicleState).velocity[0] = local_140.velocity[0];
   (ppVar2->vehicleState).velocity[1] = local_140.velocity[1];
   (ppVar2->vehicleState).velocity[2] = local_140.velocity[2];
-  ppVar2 = ppVar3->ps;
+  ppVar2 = param_1->ps;
   (ppVar2->vehicleState).tilt[0] = local_140.tilt[0];
   (ppVar2->vehicleState).tilt[1] = local_140.tilt[1];
-  __restgprlr_26(iVar6);
   return;
 }
 
 
 // 82286940  BG_VehicleStrafeMove  (bgame/bg_vehicle.cpp:1130)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
 
@@ -1838,13 +1756,13 @@ void BG_VehicleStrafeMove(pmove_t *param_1,pml_t *param_2)
   playerState_s *ppVar1;
   playerState_s *ppVar2;
   float fVar3;
-  pmove_t *ppVar4;
-  VehicleDef *pVVar5;
-  float *pfVar6;
-  int iVar7;
+  VehicleDef *pVVar4;
+  float *pfVar5;
+  int iVar6;
   char *in_r6;
+  uint uVar7;
   uint uVar8;
-  uint uVar9;
+  double dVar9;
   double dVar10;
   double dVar11;
   double dVar12;
@@ -1853,8 +1771,7 @@ void BG_VehicleStrafeMove(pmove_t *param_1,pml_t *param_2)
   double dVar15;
   double dVar16;
   double dVar17;
-  double dVar18;
-  float fVar19;
+  float fVar18;
   float local_210;
   float local_20c;
   float local_208;
@@ -1878,20 +1795,18 @@ void BG_VehicleStrafeMove(pmove_t *param_1,pml_t *param_2)
   float local_f0;
   GroundTrace aGStack_e0 [2];
   
-  __savegprlr_24(param_1);
-  ppVar4 = (pmove_t *)__savefpr_24();
-  if (ppVar4 == (pmove_t *)0x0) {
+  if (param_1 == (pmove_t *)0x0) {
     in_r6 = "%s";
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_vehicle.cpp",0x47d,0,
                     "%s");
   }
-  if (ppVar4->ps == (playerState_s *)0x0) {
+  if (param_1->ps == (playerState_s *)0x0) {
     in_r6 = "%s";
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_vehicle.cpp",0x47e,0,
                     "%s");
   }
-  ppVar1 = ppVar4->ps;
-  pVVar5 = BG_GetVehicleDef(ppVar4);
+  ppVar1 = param_1->ps;
+  pVVar4 = BG_GetVehicleDef(param_1);
   AnglesToAxis((ppVar1->vehicleState).angles,(float (*) [3])afStack_110);
   local_1e0.entity = (ppVar1->vehicleState).entity;
   local_1e0.clipmask = 0x2810211;
@@ -1912,180 +1827,180 @@ void BG_VehicleStrafeMove(pmove_t *param_1,pml_t *param_2)
   local_1e0.groundNormal[0] = local_f8;
   local_1e0.groundNormal[1] = local_f4;
   local_1e0.groundNormal[2] = local_f0;
-  BG_GetVehicleBounds(ppVar4,&local_1e0.bounds);
-  BG_VehicleGroundTrace(ppVar4,&local_1e0,aGStack_e0,param_2->frametime);
+  BG_GetVehicleBounds(param_1,&local_1e0.bounds);
+  BG_VehicleGroundTrace(param_1,&local_1e0,aGStack_e0,param_2->frametime);
   if ((aGStack_e0[0].onGround == 0) || (((ppVar1->vehicleState).flags & 2U) != 0)) {
-    BG_VehicleAirMove(ppVar4,&local_1e0,aGStack_e0,param_2->frametime);
+    BG_VehicleAirMove(param_1,&local_1e0,aGStack_e0,param_2->frametime);
     goto LAB_82286e90;
   }
-  local_200 = (longlong)(ppVar4->cmd).forwardmove;
-  dVar14 = 0.0;
+  local_200 = (longlong)(param_1->cmd).forwardmove;
+  dVar13 = 0.0;
   local_1f0 = 0;
-  pfVar6 = &local_1f8;
-  local_1f4 = (float)(longlong)(ppVar4->cmd).rightmove * 0.007874016;
+  pfVar5 = &local_1f8;
+  local_1f4 = (float)(longlong)(param_1->cmd).rightmove * 0.007874016;
   local_1f8 = (float)local_200 * 0.007874016;
-  fVar19 = Vec2Normalize(pfVar6);
-  dVar15 = (double)(fVar19 * pVVar5->topSpeed);
-  YawVectors(ppVar1->viewangles[1],pfVar6,&local_140);
-  local_128 = (float)dVar14;
-  local_124 = (float)dVar14;
-  dVar13 = 1.0;
+  fVar18 = Vec2Normalize(pfVar5);
+  dVar14 = (double)(fVar18 * pVVar4->topSpeed);
+  YawVectors(ppVar1->viewangles[1],pfVar5,&local_140);
+  local_128 = (float)dVar13;
+  local_124 = (float)dVar13;
+  dVar12 = 1.0;
   local_120 = 0x3f800000;
   Vec3Rotate(&local_1f8,(float (*) [3])&local_140,&local_210);
-  pfVar6 = &local_210;
-  fVar19 = vectosignedyaw(pfVar6);
-  dVar11 = (double)fVar19;
-  dVar17 = 0.0027777778450399637;
-  dVar18 = 0.5;
-  dVar12 = (double)((float)(dVar11 - (double)local_1e0.angles[1]) * 0.0027777778);
-  dVar10 = floor((double)(float)(dVar12 + 0.5));
-  dVar16 = 360.0;
-  fVar19 = (float)(dVar12 - (double)(float)dVar10) * 360.0;
-  if (90.0 < ABS(fVar19)) {
-    dVar10 = (double)(float)(dVar11 * dVar17 + dVar18);
-    dVar11 = floor((double)(float)(dVar10 + dVar18));
-    dVar11 = (double)(float)((double)(float)(dVar10 - (double)(float)dVar11) * dVar16);
-    dVar12 = (double)(float)((double)(float)(dVar11 - (double)local_1e0.angles[1]) * dVar17);
-    dVar10 = floor((double)(float)(dVar12 + dVar18));
-    fVar19 = (float)((double)(float)(dVar12 - (double)(float)dVar10) * dVar16);
+  pfVar5 = &local_210;
+  fVar18 = vectosignedyaw(pfVar5);
+  dVar10 = (double)fVar18;
+  dVar16 = 0.0027777778450399637;
+  dVar17 = 0.5;
+  dVar11 = (double)((float)(dVar10 - (double)local_1e0.angles[1]) * 0.0027777778);
+  dVar9 = floor((double)(float)(dVar11 + 0.5));
+  dVar15 = 360.0;
+  fVar18 = (float)(dVar11 - (double)(float)dVar9) * 360.0;
+  if (90.0 < ABS(fVar18)) {
+    dVar9 = (double)(float)(dVar10 * dVar16 + dVar17);
+    dVar10 = floor((double)(float)(dVar9 + dVar17));
+    dVar10 = (double)(float)((double)(float)(dVar9 - (double)(float)dVar10) * dVar15);
+    dVar11 = (double)(float)((double)(float)(dVar10 - (double)local_1e0.angles[1]) * dVar16);
+    dVar9 = floor((double)(float)(dVar11 + dVar17));
+    fVar18 = (float)((double)(float)(dVar11 - (double)(float)dVar9) * dVar15);
   }
-  if (pVVar5->rotRate * param_2->frametime < ABS(fVar19)) {
-    fVar3 = pVVar5->rotRate * param_2->frametime;
-    if (fVar19 < 0.0) {
+  if (pVVar4->rotRate * param_2->frametime < ABS(fVar18)) {
+    fVar3 = pVVar4->rotRate * param_2->frametime;
+    if (fVar18 < 0.0) {
       fVar3 = -fVar3;
     }
-    dVar10 = (double)(float)((double)(fVar3 + local_1e0.angles[1]) * dVar17);
-    dVar11 = floor((double)(float)(dVar10 + dVar18));
-    fVar19 = (float)((double)(float)(dVar10 - (double)(float)dVar11) * dVar16);
-    dVar11 = (double)fVar19;
-    YawVectors(fVar19,pfVar6,&local_150);
+    dVar9 = (double)(float)((double)(fVar3 + local_1e0.angles[1]) * dVar16);
+    dVar10 = floor((double)(float)(dVar9 + dVar17));
+    fVar18 = (float)((double)(float)(dVar9 - (double)(float)dVar10) * dVar15);
+    dVar10 = (double)fVar18;
+    YawVectors(fVar18,pfVar5,&local_150);
     fVar3 = local_20c;
-    fVar19 = local_150 * local_210;
+    fVar18 = local_150 * local_210;
     local_210 = local_150;
     local_20c = local_14c;
     local_208 = local_148;
-    dVar15 = (double)((fVar3 * local_14c + fVar19) * pVVar5->topSpeed);
+    dVar14 = (double)((fVar3 * local_14c + fVar18) * pVVar4->topSpeed);
   }
-  if (dVar15 == dVar14) {
+  if (dVar14 == dVar13) {
     local_210 = local_140;
     local_20c = local_13c;
     local_208 = local_138;
   }
   else {
-    local_1e0.angles[1] = (float)dVar11;
+    local_1e0.angles[1] = (float)dVar10;
   }
-  dVar10 = (double)(local_20c * local_1e0.velocity[1] + local_210 * local_1e0.velocity[0]);
-  dVar11 = (double)(float)(dVar15 - dVar10);
-  if (dVar15 == dVar14) {
+  dVar9 = (double)(local_20c * local_1e0.velocity[1] + local_210 * local_1e0.velocity[0]);
+  dVar10 = (double)(float)(dVar14 - dVar9);
+  if (dVar14 == dVar13) {
 LAB_82286d10:
-    dVar13 = dVar11;
+    dVar12 = dVar10;
     if ((bg_vehicle_slide_min_normal->current).value < local_f0) {
-      dVar15 = (double)((pVVar5->vehPhysDef).frictionBraking * pVVar5->accel * param_2->frametime);
-      dVar12 = dVar15;
-      if ((float)(dVar11 - dVar15) < 0.0) {
+      dVar14 = (double)((pVVar4->vehPhysDef).frictionBraking * pVVar4->accel * param_2->frametime);
+      dVar11 = dVar14;
+      if ((float)(dVar10 - dVar14) < 0.0) {
+        dVar11 = dVar10;
+      }
+      dVar12 = -dVar14;
+      if ((float)(-dVar14 - dVar10) < 0.0) {
         dVar12 = dVar11;
       }
-      dVar13 = -dVar15;
-      if ((float)(-dVar15 - dVar11) < 0.0) {
-        dVar13 = dVar12;
-      }
     }
-    uVar9 = (ppVar1->vehicleState).flags;
-    uVar8 = uVar9 | 8;
-    if (dVar13 == dVar14) {
-      uVar8 = uVar9 & 0xfffffff7;
+    uVar8 = (ppVar1->vehicleState).flags;
+    uVar7 = uVar8 | 8;
+    if (dVar12 == dVar13) {
+      uVar7 = uVar8 & 0xfffffff7;
     }
-    (ppVar1->vehicleState).flags = uVar8;
-    (ppVar1->vehicleState).flags = uVar8 & 0xfffffffb;
+    (ppVar1->vehicleState).flags = uVar7;
+    (ppVar1->vehicleState).flags = uVar7 & 0xfffffffb;
   }
   else {
-    if (dVar10 != dVar14) {
-      dVar12 = dVar13;
-      if (dVar15 < 0.0) {
+    if (dVar9 != dVar13) {
+      dVar11 = dVar12;
+      if (dVar14 < 0.0) {
+        dVar11 = -1.0;
+      }
+      if (dVar9 < 0.0) {
         dVar12 = -1.0;
       }
-      if (dVar10 < 0.0) {
-        dVar13 = -1.0;
-      }
-      if (dVar12 != dVar13) goto LAB_82286d10;
+      if (dVar11 != dVar12) goto LAB_82286d10;
     }
-    dVar15 = (double)(pVVar5->accel * param_2->frametime);
+    dVar14 = (double)(pVVar4->accel * param_2->frametime);
     (ppVar1->vehicleState).flags = (ppVar1->vehicleState).flags & 0xfffffff3U | 4;
-    dVar12 = dVar15;
-    if ((float)(dVar11 - dVar15) < 0.0) {
-      dVar12 = dVar11;
+    dVar11 = dVar14;
+    if ((float)(dVar10 - dVar14) < 0.0) {
+      dVar11 = dVar10;
     }
-    dVar13 = -dVar15;
-    if ((float)(-dVar15 - dVar11) < 0.0) {
-      dVar13 = dVar12;
+    dVar12 = -dVar14;
+    if ((float)(-dVar14 - dVar10) < 0.0) {
+      dVar12 = dVar11;
     }
   }
   if ((bg_vehicle_slide_min_normal->current).value <= local_f0) {
-    dVar11 = (double)(float)(dVar13 + dVar10);
-    dVar10 = (double)pVVar5->topSpeed;
-    local_1e0.velocity[2] = (float)dVar14;
-    dVar13 = dVar10;
-    if ((float)(dVar11 - dVar10) < 0.0) {
-      dVar13 = dVar11;
+    dVar10 = (double)(float)(dVar12 + dVar9);
+    dVar9 = (double)pVVar4->topSpeed;
+    local_1e0.velocity[2] = (float)dVar13;
+    dVar12 = dVar9;
+    if ((float)(dVar10 - dVar9) < 0.0) {
+      dVar12 = dVar10;
     }
-    dVar12 = -dVar10;
-    if ((float)(-dVar10 - dVar11) < 0.0) {
-      dVar12 = dVar13;
+    dVar11 = -dVar9;
+    if ((float)(-dVar9 - dVar10) < 0.0) {
+      dVar11 = dVar12;
     }
-    local_1e0.velocity[0] = (float)((double)local_210 * dVar12);
-    local_1e0.velocity[1] = (float)((double)local_20c * dVar12);
+    local_1e0.velocity[0] = (float)((double)local_210 * dVar11);
+    local_1e0.velocity[1] = (float)((double)local_20c * dVar11);
   }
   else {
-    local_1e0.velocity[0] = (float)((double)local_210 * dVar13 + (double)local_1e0.velocity[0]);
-    local_1e0.velocity[1] = (float)((double)local_20c * dVar13 + (double)local_1e0.velocity[1]);
-    dVar13 = (double)(local_1e0.velocity[1] * local_1e0.velocity[1] +
+    local_1e0.velocity[0] = (float)((double)local_210 * dVar12 + (double)local_1e0.velocity[0]);
+    local_1e0.velocity[1] = (float)((double)local_20c * dVar12 + (double)local_1e0.velocity[1]);
+    dVar12 = (double)(local_1e0.velocity[1] * local_1e0.velocity[1] +
                      local_1e0.velocity[0] * local_1e0.velocity[0]);
-    if ((double)(pVVar5->topSpeed * pVVar5->topSpeed) < dVar13) {
-      if (dVar13 == dVar14) {
+    if ((double)(pVVar4->topSpeed * pVVar4->topSpeed) < dVar12) {
+      if (dVar12 == dVar13) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_vehicle.cpp",
                         0x4e4,0,"%s");
       }
-      fVar19 = pVVar5->topSpeed / (float)SQRT(dVar13);
-      local_1e0.velocity[0] = fVar19 * local_1e0.velocity[0];
-      local_1e0.velocity[1] = local_1e0.velocity[1] * fVar19;
+      fVar18 = pVVar4->topSpeed / (float)SQRT(dVar12);
+      local_1e0.velocity[0] = fVar18 * local_1e0.velocity[0];
+      local_1e0.velocity[1] = local_1e0.velocity[1] * fVar18;
     }
   }
   if ((local_f0 < (bg_vehicle_slide_min_normal->current).value) ||
      (in_r6 = (char *)0x0, aGStack_e0[0].validGroundNormal == 0)) {
     in_r6 = (char *)0x1;
   }
-  BG_VehicleGroundMove(ppVar4,&local_1e0,aGStack_e0,(int)in_r6,param_2->frametime);
+  BG_VehicleGroundMove(param_1,&local_1e0,aGStack_e0,(int)in_r6,param_2->frametime);
 LAB_82286e90:
-  iVar7 = BG_VehicleGroundPlant(ppVar4,&local_1e0,aGStack_e0,(int)in_r6,param_2->frametime);
-  if ((iVar7 == 0) && (aGStack_e0[0].onGround == 0)) {
-    uVar9 = (ppVar1->vehicleState).flags | 2;
+  iVar6 = BG_VehicleGroundPlant(param_1,&local_1e0,aGStack_e0,(int)in_r6,param_2->frametime);
+  if ((iVar6 == 0) && (aGStack_e0[0].onGround == 0)) {
+    uVar8 = (ppVar1->vehicleState).flags | 2;
   }
   else {
-    uVar9 = (ppVar1->vehicleState).flags & 0xfffffffd;
+    uVar8 = (ppVar1->vehicleState).flags & 0xfffffffd;
   }
-  (ppVar1->vehicleState).flags = uVar9;
-  ppVar2 = ppVar4->ps;
+  (ppVar1->vehicleState).flags = uVar8;
+  ppVar2 = param_1->ps;
   (ppVar2->vehicleState).origin[0] = local_1e0.origin[0];
   (ppVar2->vehicleState).origin[1] = local_1e0.origin[1];
   (ppVar2->vehicleState).origin[2] = local_1e0.origin[2];
-  ppVar2 = ppVar4->ps;
+  ppVar2 = param_1->ps;
   (ppVar2->vehicleState).angles[0] = local_1e0.angles[0];
   (ppVar2->vehicleState).angles[1] = local_1e0.angles[1];
   (ppVar2->vehicleState).angles[2] = local_1e0.angles[2];
-  ppVar2 = ppVar4->ps;
+  ppVar2 = param_1->ps;
   (ppVar2->vehicleState).velocity[0] = local_1e0.velocity[0];
   (ppVar2->vehicleState).velocity[1] = local_1e0.velocity[1];
   (ppVar2->vehicleState).velocity[2] = local_1e0.velocity[2];
   (ppVar1->vehicleState).tilt[0] = local_1e0.tilt[0];
   (ppVar1->vehicleState).tilt[1] = local_1e0.tilt[1];
-  __restfpr_24();
-  __restgprlr_24();
   return;
 }
 
 
 // 82286F48  BG_VehicleMove  (bgame/bg_vehicle.cpp:1295)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
 
@@ -2093,39 +2008,38 @@ void BG_VehicleMove(pmove_t *param_1,pml_t *param_2)
 
 {
   VehicleType VVar1;
-  pmove_t *ppVar2;
-  VehicleDef *pVVar3;
+  VehicleDef *pVVar2;
   
-  ppVar2 = (pmove_t *)__savegprlr_29(param_1);
-  if (ppVar2 == (pmove_t *)0x0) {
+  if (param_1 == (pmove_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_vehicle.cpp",0x512,0,
                     "%s");
   }
-  pVVar3 = BG_GetVehicleDef(ppVar2);
-  if ((pVVar3->vehPhysDef).physicsEnabled != 0) {
+  pVVar2 = BG_GetVehicleDef(param_1);
+  if ((pVVar2->vehPhysDef).physicsEnabled != 0) {
     Com_PrintError(1,
                    "BG_VehicleMove: Physics needs to be turned off for client predicted vehicles. This value is set in the corresponding GDT.\n"
                   );
   }
-  VVar1 = pVVar3->type;
+  VVar1 = pVVar2->type;
   if (VVar1 == VEH_WHEELS_4) {
-    BG_VehicleSteerMove(ppVar2,param_2);
+    BG_VehicleSteerMove(param_1,param_2);
   }
   else if (VVar1 == VEH_TANK) {
-    BG_VehicleStrafeMove(ppVar2,param_2);
+    BG_VehicleStrafeMove(param_1,param_2);
   }
   else if (VVar1 == VEH_HELICOPTER) {
-    BG_VehicleHelicopterMove(ppVar2,param_2);
+    BG_VehicleHelicopterMove(param_1,param_2);
   }
-  (ppVar2->ps->vehicleState).flags = (ppVar2->ps->vehicleState).flags | 1;
-  (ppVar2->ps->vehicleState).flags = (ppVar2->ps->vehicleState).flags | 0x40;
-  __restgprlr_29();
+  (param_1->ps->vehicleState).flags = (param_1->ps->vehicleState).flags | 1;
+  (param_1->ps->vehicleState).flags = (param_1->ps->vehicleState).flags | 0x40;
   return;
 }
 
 
 // 82287020  BG_PlayerStateToVehicleState  (bgame/bg_vehicle.cpp:1341)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 
@@ -2134,56 +2048,46 @@ void BG_PlayerStateToVehicleState
 
 {
   int iVar1;
-  int iVar2;
-  int iVar3;
-  longlong lVar4;
-  ulonglong uVar5;
   
-  uVar5 = (ulonglong)(char)param_4;
-  lVar4 = (longlong)(int)param_2;
-  iVar2 = __savegprlr_27(param_1,lVar4,param_3);
-  if (1 < (uVar5 & 0xff)) {
+  if (1 < param_4) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_vehicle.cpp",0x54e,0,
                     "handler doesn\'t index PMOVE_HANDLER_COUNT\n\t%i not in [0, %i)");
   }
-  iVar1 = (int)(uVar5 & 0xff) + ((uint)uVar5 & 0xff) * 2;
-  if ((&PTR_CG_GetVehicleDef_82961794)[iVar1] == (undefined *)0x0) {
+  if ((&PTR_CG_GetVehicleDef_82961794)[(uint)param_4 * 3] == (undefined *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_vehicle.cpp",0x54f,0,
                     "%s");
   }
-  iVar3 = (*(code *)(&PTR_CG_GetVehicleDef_82961794)[iVar1])(iVar2);
-  iVar1 = (int)lVar4;
-  *(undefined4 *)(iVar1 + 0x14) = 0;
-  *(undefined4 *)(iVar1 + 0xc) = 1;
-  *(undefined4 *)(iVar1 + 0x10) = 0;
-  *(undefined4 *)(iVar1 + 0x24) = 0;
-  *(undefined4 *)(iVar1 + 0x28) = 0;
-  *(undefined4 *)(iVar1 + 0x2c) = 0;
-  *(undefined4 *)(iVar1 + 0x18) = *(undefined4 *)(iVar2 + 0xb4);
-  *(undefined4 *)(iVar1 + 0x1c) = *(undefined4 *)(iVar2 + 0xb8);
-  *(undefined4 *)(iVar1 + 0x20) = *(undefined4 *)(iVar2 + 0xbc);
-  *(undefined4 *)(iVar1 + 0x30) = 1;
-  *(undefined4 *)(iVar1 + 0x38) = 0;
-  *(undefined4 *)(iVar1 + 0x34) = 0;
-  *(undefined4 *)(iVar1 + 0x48) = 0;
-  *(undefined4 *)(iVar1 + 0x4c) = 0;
-  *(undefined4 *)(iVar1 + 0x50) = 0;
-  *(undefined4 *)(iVar1 + 0x3c) = *(undefined4 *)(iVar2 + 0xc0);
-  *(undefined4 *)(iVar1 + 0x40) = *(undefined4 *)(iVar2 + 0xc4);
-  *(undefined4 *)(iVar1 + 0x44) = *(undefined4 *)(iVar2 + 200);
-  if (*(int *)(iVar3 + 0x30) == 0) {
-    *(undefined4 *)(iVar1 + 0x5c) = 0;
-    *(undefined4 *)(iVar1 + 0x60) = 0;
+  iVar1 = (*(code *)(&PTR_CG_GetVehicleDef_82961794)[(uint)param_4 * 3])(param_1);
+  (param_2->lerp).pos.trDuration = 0;
+  (param_2->lerp).pos.trType = TR_INTERPOLATE;
+  (param_2->lerp).pos.trTime = 0;
+  (param_2->lerp).pos.trDelta[0] = 0.0;
+  (param_2->lerp).pos.trDelta[1] = 0.0;
+  (param_2->lerp).pos.trDelta[2] = 0.0;
+  (param_2->lerp).pos.trBase[0] = (param_1->vehicleState).origin[0];
+  (param_2->lerp).pos.trBase[1] = (param_1->vehicleState).origin[1];
+  (param_2->lerp).pos.trBase[2] = (param_1->vehicleState).origin[2];
+  (param_2->lerp).apos.trType = TR_INTERPOLATE;
+  (param_2->lerp).apos.trDuration = 0;
+  (param_2->lerp).apos.trTime = 0;
+  (param_2->lerp).apos.trDelta[0] = 0.0;
+  (param_2->lerp).apos.trDelta[1] = 0.0;
+  (param_2->lerp).apos.trDelta[2] = 0.0;
+  (param_2->lerp).apos.trBase[0] = (param_1->vehicleState).angles[0];
+  (param_2->lerp).apos.trBase[1] = (param_1->vehicleState).angles[1];
+  (param_2->lerp).apos.trBase[2] = (param_1->vehicleState).angles[2];
+  if (*(int *)(iVar1 + 0x30) == 0) {
+    (param_2->lerp).u.turret.gunAngles[2] = 0.0;
+    (param_2->lerp).u.turret.lastBarrelRotChangeTime = 0;
   }
   else {
-    *(undefined4 *)(iVar1 + 0x5c) = *(undefined4 *)(iVar2 + 0xe4);
-    *(undefined4 *)(iVar1 + 0x60) = *(undefined4 *)(iVar2 + 0xe8);
+    (param_2->lerp).u.turret.gunAngles[2] = (param_1->vehicleState).tilt[0];
+    (param_2->lerp).u.turret.lastBarrelRotChangeTime = (int)(param_1->vehicleState).tilt[1];
   }
-  *(undefined4 *)(iVar1 + 0x6c) = 0;
-  *(undefined4 *)(iVar1 + 100) = 0;
-  *(undefined4 *)(iVar1 + 0x68) = 0;
-  *(undefined4 *)(iVar1 + 0x58) = *(undefined4 *)(iVar2 + 0xb0);
-  __restgprlr_27();
+  (param_2->lerp).u.vehicle.gunYaw = 0.0;
+  (param_2->lerp).u.primaryLight.cosHalfFovInner = 0.0;
+  (param_2->lerp).u.turret.lastHeatChangeTime = 0;
+  (param_2->lerp).u.turret.gunAngles[1] = (float)(param_1->vehicleState).flags;
   return;
 }
 

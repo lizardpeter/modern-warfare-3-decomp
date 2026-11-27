@@ -2,39 +2,35 @@
 
 // 82924610  _mtinitlocks  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/mlock.c:143)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 int _mtinitlocks(void)
 
 {
-  int iVar2;
-  undefined8 uVar1;
+  int iVar1;
+  _RTL_CRITICAL_SECTION *p_Var2;
   int iVar3;
-  _RTL_CRITICAL_SECTION *p_Var4;
-  <unnamed_tag_0001493F> *p<Var5;
+  <unnamed_tag_0001493F> *p<Var4;
   
-  __savegprlr_28();
-  p<Var5 = _locktable;
-  p_Var4 = lclcritsects;
+  p<Var4 = _locktable;
+  p_Var2 = lclcritsects;
   iVar3 = 0;
   do {
-    if (p<Var5->kind == lkPrealloc) {
-      p<Var5->lock = p_Var4;
-      iVar2 = __crtInitCritSecAndSpinCount(p_Var4,4000);
-      p_Var4 = p_Var4 + 1;
-      if (iVar2 == 0) {
-        uVar1 = 0;
+    if (p<Var4->kind == lkPrealloc) {
+      p<Var4->lock = p_Var2;
+      iVar1 = __crtInitCritSecAndSpinCount(p_Var2,4000);
+      p_Var2 = p_Var2 + 1;
+      if (iVar1 == 0) {
         _locktable[iVar3].lock = (_RTL_CRITICAL_SECTION *)0x0;
-        goto LAB_82924674;
+        return 0;
       }
     }
-    p<Var5 = p<Var5 + 1;
+    p<Var4 = p<Var4 + 1;
     iVar3 = iVar3 + 1;
-  } while ((int)p<Var5 < -0x7d64f5a0);
-  uVar1 = 1;
-LAB_82924674:
-  iVar3 = __restgprlr_28(uVar1);
-  return iVar3;
+  } while ((int)p<Var4 < -0x7d64f5a0);
+  return 1;
 }
 
 
@@ -61,48 +57,49 @@ void _mtdeletelocks(void)
 
 // 82924698  _mtinitlocknum  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/mlock.c:265)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 int _mtinitlocknum(int param_1)
 
 {
-  int iVar1;
-  void *pvVar2;
-  _RTL_CRITICAL_SECTION *p_Var3;
-  int *piVar4;
-  int iVar5;
-  undefined4 local_30;
+  void *pvVar1;
+  _RTL_CRITICAL_SECTION *p_Var2;
+  int *piVar3;
+  int iVar4;
+  int local_30;
   
-  iVar1 = __savegprlr_28(param_1);
   local_30 = 1;
-  pvVar2 = GetProcessHeap();
-  if (pvVar2 == (void *)0x0) {
+  pvVar1 = GetProcessHeap();
+  if (pvVar1 == (void *)0x0) {
     _FF_MSGBANNER();
     _NMSG_WRITE(0x1e);
                     /* WARNING: Subroutine does not return */
     __crtExitProcess(0xff);
   }
-  if (_locktable[iVar1].lock == (_RTL_CRITICAL_SECTION *)0x0) {
-    p_Var3 = malloc(0x1c);
-    if (p_Var3 == (_RTL_CRITICAL_SECTION *)0x0) {
-      piVar4 = _errno();
+  if (_locktable[param_1].lock == (_RTL_CRITICAL_SECTION *)0x0) {
+    p_Var2 = malloc(0x1c);
+    if (p_Var2 == (_RTL_CRITICAL_SECTION *)0x0) {
+      piVar3 = _errno();
       local_30 = 0;
-      *piVar4 = 0xc;
+      *piVar3 = 0xc;
     }
     else {
       _lock(10);
-      if (_locktable[iVar1].lock == (_RTL_CRITICAL_SECTION *)0x0) {
-        iVar5 = __crtInitCritSecAndSpinCount(p_Var3,4000);
-        if (iVar5 == 0) {
-          free(p_Var3);
-          piVar4 = _errno();
-          *piVar4 = 0xc;
+      if (_locktable[param_1].lock == (_RTL_CRITICAL_SECTION *)0x0) {
+        iVar4 = __crtInitCritSecAndSpinCount(p_Var2,4000);
+        if (iVar4 == 0) {
+          free(p_Var2);
+          piVar3 = _errno();
+          *piVar3 = 0xc;
           local_30 = 0;
         }
         else {
-          _locktable[iVar1].lock = p_Var3;
+          _locktable[param_1].lock = p_Var2;
         }
       }
       else {
-        free(p_Var3);
+        free(p_Var2);
       }
       FUN_829247a8();
     }
@@ -110,8 +107,7 @@ int _mtinitlocknum(int param_1)
   else {
     local_30 = 1;
   }
-  iVar1 = __restgprlr_28(local_30);
-  return iVar1;
+  return local_30;
 }
 
 

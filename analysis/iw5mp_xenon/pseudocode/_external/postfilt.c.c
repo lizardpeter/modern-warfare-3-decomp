@@ -2,23 +2,25 @@
 
 // 828CCFB0  PostFilter  (<external>/Xenon/mar09/core/private/xam/codecs/nci/cmn/src/postfilt.c:111)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void PostFilter(float *param_1,float param_2,float *param_3)
 
 {
   float *pfVar1;
+  float *in_r5;
   float *pfVar2;
-  longlong in_r5;
   uint uVar3;
-  float *pfVar4;
+  int iVar4;
   longlong lVar5;
-  int iVar6;
-  longlong lVar7;
-  double extraout_f1;
+  double dVar6;
+  double dVar7;
   double dVar8;
   double dVar9;
-  double dVar10;
-  double dVar11;
-  float fVar12;
+  float fVar10;
   float local_90;
   float local_8c;
   int iStack_88;
@@ -27,72 +29,68 @@ void PostFilter(float *param_1,float param_2,float *param_3)
   undefined8 local_78;
   float local_70 [28];
   
-  __savegprlr_27((double)param_2,param_1,param_3);
-  pfVar2 = (float *)__savefpr_28();
-  dVar9 = extraout_f1;
-  FindMaxValueFlt(pfVar2,0x40,&iStack_88,&local_90);
-  dVar10 = 1.0;
-  lVar7 = 0xb;
-  lVar5 = in_r5;
-  dVar8 = dVar10;
+  dVar7 = (double)param_2;
+  FindMaxValueFlt(param_1,0x40,&iStack_88,&local_90);
+  dVar8 = 1.0;
+  lVar5 = 0xb;
+  dVar6 = dVar8;
+  pfVar2 = in_r5;
   do {
-    lVar5 = lVar5 + 4;
-    fVar12 = (float)(-(double)(*(float *)lVar5 * *(float *)lVar5 - 1.0) * dVar8);
-    dVar8 = (double)fVar12;
-    lVar7 = lVar7 + -1;
-  } while (lVar7 != 0);
-  fVar12 = NellyLog2(fVar12);
-  dVar8 = (double)*(float *)in_r5;
-  dVar10 = (double)(float)(dVar8 * dVar8 + dVar10);
-  iVar6 = 0;
-  pfVar4 = (float *)((int)&local_78 + 4);
-  dVar11 = 0.5;
+    pfVar2 = pfVar2 + 1;
+    fVar10 = (float)(-(double)(*pfVar2 * *pfVar2 - 1.0) * dVar6);
+    dVar6 = (double)fVar10;
+    lVar5 = lVar5 + -1;
+  } while (lVar5 != 0);
+  fVar10 = NellyLog2(fVar10);
+  dVar6 = (double)*in_r5;
+  dVar8 = (double)(float)(dVar6 * dVar6 + dVar8);
+  iVar4 = 0;
+  pfVar2 = (float *)((int)&local_78 + 4);
+  dVar9 = 0.5;
   lVar5 = 5;
-  dVar9 = -(double)(float)((double)fVar12 * 0.5 - dVar9);
-  dVar8 = (double)(float)(dVar8 * -2.0);
+  dVar7 = -(double)(float)((double)fVar10 * 0.5 - dVar7);
+  dVar6 = (double)(float)(dVar6 * -2.0);
   do {
-    pfVar1 = (float *)(iVar6 + (int)cosTBL_32);
-    iVar6 = iVar6 + 0x80;
-    fVar12 = NellyLog2((float)((double)*pfVar1 * dVar8 + dVar10));
-    pfVar4 = pfVar4 + 1;
-    *pfVar4 = -(float)((double)fVar12 * dVar11 - dVar9);
+    pfVar1 = (float *)(iVar4 + (int)cosTBL_32);
+    iVar4 = iVar4 + 0x80;
+    fVar10 = NellyLog2((float)((double)*pfVar1 * dVar6 + dVar8));
+    pfVar2 = pfVar2 + 1;
+    *pfVar2 = -(float)((double)fVar10 * dVar9 - dVar7);
     lVar5 = lVar5 + -1;
   } while (lVar5 != 0);
   uVar3 = 1;
   lVar5 = 0x3f;
-  pfVar4 = pfVar2;
+  pfVar2 = param_1;
   do {
     local_80 = (ulonglong)uVar3 & 0xf;
-    pfVar1 = pfVar4 + 1;
-    fVar12 = (float)((double)(*pfVar1 -
+    pfVar1 = pfVar2 + 1;
+    fVar10 = (float)((double)(*pfVar1 -
                              ((local_70[((int)uVar3 >> 4) + 1] - local_70[(int)uVar3 >> 4]) *
-                              (float)local_80 * 0.0625 + local_70[(int)uVar3 >> 4])) * dVar11);
-    if (0.2630344 < fVar12) {
-      fVar12 = 0.2630344;
+                              (float)local_80 * 0.0625 + local_70[(int)uVar3 >> 4])) * dVar9);
+    if (0.2630344 < fVar10) {
+      fVar10 = 0.2630344;
     }
-    if (fVar12 <= -1.0) {
-      fVar12 = -1.0;
+    if (fVar10 <= -1.0) {
+      fVar10 = -1.0;
     }
     if ((int)uVar3 < 0x10) {
       local_78 = (longlong)(int)uVar3;
-      fVar12 = (float)local_78 * 0.0625 * fVar12;
+      fVar10 = (float)local_78 * 0.0625 * fVar10;
     }
-    pfVar4 = pfVar4 + 1;
-    *pfVar4 = *pfVar1 + fVar12;
+    pfVar2 = pfVar2 + 1;
+    *pfVar2 = *pfVar1 + fVar10;
     uVar3 = uVar3 + 1;
     lVar5 = lVar5 + -1;
   } while (lVar5 != 0);
-  FindMaxValueFlt(pfVar2,0x40,&iStack_84,&local_8c);
-  pfVar2 = pfVar2 + -1;
+  FindMaxValueFlt(param_1,0x40,&iStack_84,&local_8c);
+  pfVar2 = param_1 + -1;
   lVar5 = 0x40;
   do {
-    pfVar4 = pfVar2 + 1;
+    pfVar1 = pfVar2 + 1;
     pfVar2 = pfVar2 + 1;
-    *pfVar2 = *pfVar4 + (local_90 - local_8c);
+    *pfVar2 = *pfVar1 + (local_90 - local_8c);
     lVar5 = lVar5 + -1;
   } while (lVar5 != 0);
-  __restfpr_28();
-  __restgprlr_27();
   return;
 }
 

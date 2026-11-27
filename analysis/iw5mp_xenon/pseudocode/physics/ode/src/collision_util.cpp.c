@@ -2,6 +2,9 @@
 
 // 8268BD98  dCollideSpheres  (physics/ode/src/collision_util.cpp:39)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 int dCollideSpheres(float *param_1,float param_2,float *param_3,float param_4,dContactGeom *param_5)
 
 {
@@ -12,40 +15,33 @@ int dCollideSpheres(float *param_1,float param_2,float *param_3,float param_4,dC
   float fVar5;
   float fVar6;
   float fVar7;
-  float *pfVar8;
-  int iVar9;
   float *in_r7;
-  double extraout_f1;
-  double dVar10;
   
-  dVar10 = (double)param_4;
-  pfVar8 = (float *)__savegprlr_28((double)param_2,param_1,param_3);
-  fVar1 = (float)(extraout_f1 + dVar10);
-  fVar2 = pfVar8[1] - param_5->pos[1];
-  fVar5 = *pfVar8 - param_5->pos[0];
-  fVar3 = pfVar8[2] - param_5->pos[2];
-  fVar2 = SQRT(fVar3 * fVar3 + fVar5 * fVar5 + fVar2 * fVar2);
+  fVar1 = param_2 + param_4;
+  fVar2 = param_1[1] - param_5->pos[1];
+  fVar4 = *param_1 - param_5->pos[0];
+  fVar3 = param_1[2] - param_5->pos[2];
+  fVar2 = SQRT(fVar3 * fVar3 + fVar4 * fVar4 + fVar2 * fVar2);
   if (fVar1 < fVar2) {
-    iVar9 = __restgprlr_28(0);
-    return iVar9;
+    return 0;
   }
   if (0.0 < fVar2) {
-    fVar4 = 1.0 / fVar2;
-    in_r7[3] = fVar5 * fVar4;
-    fVar6 = (pfVar8[1] - param_5->pos[1]) * fVar4;
-    in_r7[4] = fVar6;
-    fVar3 = ((float)(dVar10 - extraout_f1) - fVar2) * 0.5;
-    fVar7 = (pfVar8[2] - param_5->pos[2]) * fVar4;
-    in_r7[5] = fVar7;
-    *in_r7 = fVar5 * fVar4 * fVar3 + *pfVar8;
-    in_r7[1] = fVar6 * fVar3 + pfVar8[1];
-    in_r7[2] = fVar7 * fVar3 + pfVar8[2];
+    fVar3 = 1.0 / fVar2;
+    in_r7[3] = fVar4 * fVar3;
+    fVar5 = (param_1[1] - param_5->pos[1]) * fVar3;
+    in_r7[4] = fVar5;
+    fVar7 = ((param_4 - param_2) - fVar2) * 0.5;
+    fVar6 = (param_1[2] - param_5->pos[2]) * fVar3;
+    in_r7[5] = fVar6;
+    *in_r7 = fVar4 * fVar3 * fVar7 + *param_1;
+    in_r7[1] = fVar5 * fVar7 + param_1[1];
+    in_r7[2] = fVar6 * fVar7 + param_1[2];
     in_r7[6] = fVar1 - fVar2;
   }
   else {
-    *in_r7 = *pfVar8;
-    in_r7[1] = pfVar8[1];
-    in_r7[2] = pfVar8[2];
+    *in_r7 = *param_1;
+    in_r7[1] = param_1[1];
+    in_r7[2] = param_1[2];
     in_r7[3] = 1.0;
     in_r7[4] = 0.0;
     in_r7[5] = 0.0;
@@ -62,31 +58,32 @@ int dCollideSpheres(float *param_1,float param_2,float *param_3,float param_4,dC
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\collision_util.cpp"
                     ,0x44,0,"%s");
   }
-  iVar9 = __restgprlr_28(1);
-  return iVar9;
+  return 1;
 }
 
 
 // 8268BFA0  dLineClosestApproach  (physics/ode/src/collision_util.cpp:76)
+
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
 
 void dLineClosestApproach
                (float *param_1,float *param_2,float *param_3,float *param_4,float *param_5,
                float *param_6)
 
 {
-  float *pfVar1;
+  double dVar1;
   double dVar2;
   double dVar3;
   double dVar4;
   double dVar5;
   double dVar6;
-  double dVar7;
   
-  __savegprlr_23(param_1);
-  pfVar1 = (float *)__savefpr_27();
-  if (((((uint)*pfVar1 & 0x7f800000) == 0x7f800000) ||
-      (((uint)pfVar1[1] & 0x7f800000) == 0x7f800000)) ||
-     (((uint)pfVar1[2] & 0x7f800000) == 0x7f800000)) {
+  if (((((uint)*param_1 & 0x7f800000) == 0x7f800000) ||
+      (((uint)param_1[1] & 0x7f800000) == 0x7f800000)) ||
+     (((uint)param_1[2] & 0x7f800000) == 0x7f800000)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\collision_util.cpp"
                     ,0x4f,0,"%s");
   }
@@ -108,25 +105,25 @@ void dLineClosestApproach
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\collision_util.cpp"
                     ,0x52,0,"%s");
   }
-  dVar4 = 1.0;
-  dVar7 = (double)(*param_4 * *param_2 + param_4[1] * param_2[1] + param_4[2] * param_2[2]);
-  dVar5 = -(double)(float)(dVar7 * dVar7 - 1.0);
-  dVar3 = (double)(*param_2 * (*param_3 - *pfVar1) +
-                  param_2[1] * (param_3[1] - pfVar1[1]) + param_2[2] * (param_3[2] - pfVar1[2]));
-  dVar2 = -(double)(*param_4 * (*param_3 - *pfVar1) +
-                   param_4[1] * (param_3[1] - pfVar1[1]) + param_4[2] * (param_3[2] - pfVar1[2]));
-  if (9.999999747378752e-05 < dVar5) {
-    if (dVar5 <= 0.0) {
+  dVar3 = 1.0;
+  dVar6 = (double)(*param_4 * *param_2 + param_4[1] * param_2[1] + param_4[2] * param_2[2]);
+  dVar4 = -(double)(float)(dVar6 * dVar6 - 1.0);
+  dVar2 = (double)(*param_2 * (*param_3 - *param_1) +
+                  param_2[1] * (param_3[1] - param_1[1]) + param_2[2] * (param_3[2] - param_1[2]));
+  dVar1 = -(double)(*param_4 * (*param_3 - *param_1) +
+                   param_4[1] * (param_3[1] - param_1[1]) + param_4[2] * (param_3[2] - param_1[2]));
+  if (9.999999747378752e-05 < dVar4) {
+    if (dVar4 <= 0.0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\collision_util.cpp"
                       ,99,0,"%s");
     }
-    dVar6 = (double)(float)(dVar4 / dVar5);
-    if (((uint)(float)(dVar4 / dVar5) & 0x7f800000) == 0x7f800000) {
+    dVar5 = (double)(float)(dVar3 / dVar4);
+    if (((uint)(float)(dVar3 / dVar4) & 0x7f800000) == 0x7f800000) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\collision_util.cpp"
                       ,0x65,0,"%s");
     }
-    *param_5 = (float)((double)(float)(dVar2 * dVar7 + dVar3) * dVar6);
-    *param_6 = (float)((double)(float)(dVar3 * dVar7 + dVar2) * dVar6);
+    *param_5 = (float)((double)(float)(dVar1 * dVar6 + dVar2) * dVar5);
+    *param_6 = (float)((double)(float)(dVar2 * dVar6 + dVar1) * dVar5);
   }
   else {
     *param_5 = 0.0;
@@ -140,13 +137,14 @@ void dLineClosestApproach
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\collision_util.cpp"
                     ,0x6a,0,"%s");
   }
-  __restfpr_27();
-  __restgprlr_23();
   return;
 }
 
 
 // 8268C318  dClosestLineBoxPoints  (physics/ode/src/collision_util.cpp:135)
+
+/* WARNING: Function: __savefpr_19 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_19 replaced with injection: xenon_save_restore */
 
 void dClosestLineBoxPoints
                (float *param_1,float *param_2,float *param_3,float *param_4,float *param_5,
@@ -168,13 +166,9 @@ void dClosestLineBoxPoints
   float fVar13;
   float fVar14;
   float fVar15;
-  float fVar16;
-  float fVar17;
-  float fVar18;
-  float *pfVar19;
-  int iVar20;
-  int iVar21;
-  longlong lVar22;
+  int iVar16;
+  int iVar17;
+  longlong lVar18;
   uint local_f0 [4];
   float local_e0 [4];
   float local_d0 [4];
@@ -183,154 +177,150 @@ void dClosestLineBoxPoints
   float local_a0 [4];
   float local_90 [30];
   
-  pfVar19 = (float *)__savefpr_19(param_1);
-  fVar4 = pfVar19[2] - param_3[2];
-  fVar5 = pfVar19[1] - param_3[1];
-  fVar1 = *pfVar19;
-  iVar21 = 0;
-  fVar7 = param_2[2] - pfVar19[2];
-  fVar11 = param_2[1] - pfVar19[1];
-  fVar13 = *param_2 - fVar1;
-  lVar22 = 3;
+  fVar4 = param_1[2] - param_3[2];
+  fVar5 = param_1[1] - param_3[1];
+  fVar1 = *param_1;
+  iVar17 = 0;
+  fVar7 = param_2[2] - param_1[2];
+  fVar11 = param_2[1] - param_1[1];
+  fVar12 = *param_2 - fVar1;
+  lVar18 = 3;
   fVar6 = fVar1 - *param_3;
-  iVar20 = 0;
-  local_a0[0] = fVar13;
+  iVar16 = 0;
+  local_a0[0] = fVar12;
   local_a0[1] = fVar11;
   local_a0[2] = fVar7;
   fVar2 = 0.0;
   local_b0[1] = param_4[1] * fVar6 + param_4[5] * fVar5 + param_4[9] * fVar4;
   local_b0[0] = param_4[8] * fVar4 + *param_4 * fVar6 + param_4[4] * fVar5;
-  fVar15 = param_4[1] * fVar13 + param_4[5] * fVar11 + param_4[9] * fVar7;
   fVar3 = 1.0;
-  local_c0[1] = fVar15;
-  fVar12 = param_4[8] * fVar7 + *param_4 * fVar13 + param_4[4] * fVar11;
-  local_c0[0] = fVar12;
-  fVar14 = param_4[2] * fVar13 + param_4[6] * fVar11 + param_4[10] * fVar7;
+  local_c0[1] = param_4[1] * fVar12 + param_4[5] * fVar11 + param_4[9] * fVar7;
+  local_c0[0] = param_4[8] * fVar7 + *param_4 * fVar12 + param_4[4] * fVar11;
   local_b0[2] = param_4[2] * fVar6 + param_4[6] * fVar5 + param_4[10] * fVar4;
-  local_c0[2] = fVar14;
+  local_c0[2] = param_4[2] * fVar12 + param_4[6] * fVar11 + param_4[10] * fVar7;
   do {
-    if (0.0 <= *(float *)((int)local_c0 + iVar20)) {
-      *(undefined4 *)((int)local_90 + iVar20) = 0x3f800000;
+    if (0.0 <= *(float *)((int)local_c0 + iVar16)) {
+      *(undefined4 *)((int)local_90 + iVar16) = 0x3f800000;
     }
     else {
-      *(float *)((int)local_c0 + iVar20) = -*(float *)((int)local_c0 + iVar20);
-      *(undefined4 *)((int)local_90 + iVar20) = 0xbf800000;
-      *(float *)((int)local_b0 + iVar20) = -*(float *)((int)local_b0 + iVar20);
+      *(float *)((int)local_c0 + iVar16) = -*(float *)((int)local_c0 + iVar16);
+      *(undefined4 *)((int)local_90 + iVar16) = 0xbf800000;
+      *(float *)((int)local_b0 + iVar16) = -*(float *)((int)local_b0 + iVar16);
     }
-    iVar20 = iVar20 + 4;
-    lVar22 = lVar22 + -1;
-  } while (lVar22 != 0);
+    iVar16 = iVar16 + 4;
+    lVar18 = lVar18 + -1;
+  } while (lVar18 != 0);
   fVar4 = *param_5;
   fVar5 = param_5[1];
   fVar6 = param_5[2];
-  iVar20 = 0;
-  lVar22 = 3;
+  iVar16 = 0;
+  lVar18 = 3;
   local_d0[0] = fVar4 * 0.5;
   local_d0[1] = fVar5 * 0.5;
   local_d0[2] = fVar6 * 0.5;
   do {
-    fVar8 = *(float *)((int)local_c0 + iVar20);
+    fVar8 = *(float *)((int)local_c0 + iVar16);
     if (fVar8 <= 0.0) {
-      *(undefined4 *)((int)local_f0 + iVar20) = 0;
-      *(undefined4 *)((int)local_e0 + iVar20) = 0x40000000;
+      *(undefined4 *)((int)local_f0 + iVar16) = 0;
+      *(undefined4 *)((int)local_e0 + iVar16) = 0x40000000;
     }
     else {
-      fVar9 = *(float *)((int)local_d0 + iVar20);
-      fVar10 = *(float *)((int)local_b0 + iVar20);
+      fVar9 = *(float *)((int)local_d0 + iVar16);
+      fVar10 = *(float *)((int)local_b0 + iVar16);
       if (-fVar9 <= fVar10) {
-        *(uint *)((int)local_f0 + iVar20) = (uint)(fVar9 < fVar10);
-        *(float *)((int)local_e0 + iVar20) = (fVar9 - fVar10) / fVar8;
+        *(uint *)((int)local_f0 + iVar16) = (uint)(fVar9 < fVar10);
+        *(float *)((int)local_e0 + iVar16) = (fVar9 - fVar10) / fVar8;
       }
       else {
-        *(undefined4 *)((int)local_f0 + iVar20) = 0xffffffff;
-        *(float *)((int)local_e0 + iVar20) = (-fVar9 - fVar10) / fVar8;
+        *(undefined4 *)((int)local_f0 + iVar16) = 0xffffffff;
+        *(float *)((int)local_e0 + iVar16) = (-fVar9 - fVar10) / fVar8;
       }
     }
-    iVar20 = iVar20 + 4;
-    lVar22 = lVar22 + -1;
-  } while (lVar22 != 0);
+    iVar16 = iVar16 + 4;
+    lVar18 = lVar18 + -1;
+  } while (lVar18 != 0);
   fVar8 = fVar2;
   if (local_f0[0] != 0) {
-    fVar8 = fVar12 * fVar12;
+    fVar8 = local_c0[0] * local_c0[0];
   }
   fVar9 = fVar2;
   if (local_f0[1] != 0) {
-    fVar9 = fVar15 * fVar15;
+    fVar9 = local_c0[1] * local_c0[1];
   }
   fVar10 = fVar2;
   if (local_f0[2] != 0) {
-    fVar10 = fVar14 * fVar14;
+    fVar10 = local_c0[2] * local_c0[2];
   }
   fVar10 = -(fVar10 * local_e0[2] - -(fVar9 * local_e0[1] - -(fVar8 * local_e0[0])));
   fVar8 = fVar2;
   fVar9 = fVar2;
   if (fVar10 < 0.0) {
     do {
-      fVar16 = fVar3;
+      fVar13 = fVar3;
       if ((fVar9 < local_e0[0]) && (local_e0[0] < 1.0)) {
-        fVar16 = local_e0[0];
+        fVar13 = local_e0[0];
       }
-      if (((fVar9 < local_e0[1]) && (local_e0[1] < 1.0)) && (local_e0[1] < fVar16)) {
-        fVar16 = local_e0[1];
+      if (((fVar9 < local_e0[1]) && (local_e0[1] < 1.0)) && (local_e0[1] < fVar13)) {
+        fVar13 = local_e0[1];
       }
-      if (((fVar9 < local_e0[2]) && (local_e0[2] < 1.0)) && (local_e0[2] < fVar16)) {
-        fVar16 = local_e0[2];
+      if (((fVar9 < local_e0[2]) && (local_e0[2] < 1.0)) && (local_e0[2] < fVar13)) {
+        fVar13 = local_e0[2];
       }
       fVar8 = fVar2;
       if (local_f0[0] != 0) {
-        fVar8 = fVar12 * fVar12;
+        fVar8 = local_c0[0] * local_c0[0];
       }
-      fVar18 = fVar2;
+      fVar15 = fVar2;
       if (local_f0[1] != 0) {
-        fVar18 = fVar15 * fVar15;
+        fVar15 = local_c0[1] * local_c0[1];
       }
-      fVar17 = fVar2;
+      fVar14 = fVar2;
       if (local_f0[2] != 0) {
-        fVar17 = fVar14 * fVar14;
+        fVar14 = local_c0[2] * local_c0[2];
       }
-      fVar18 = (fVar16 - local_e0[2]) * fVar17 +
-               (fVar16 - local_e0[1]) * fVar18 + (fVar16 - local_e0[0]) * fVar8;
-      if (0.0 <= fVar18) {
-        fVar8 = fVar9 - fVar10 / ((fVar18 - fVar10) / (fVar16 - fVar9));
+      fVar15 = (fVar13 - local_e0[2]) * fVar14 +
+               (fVar13 - local_e0[1]) * fVar15 + (fVar13 - local_e0[0]) * fVar8;
+      if (0.0 <= fVar15) {
+        fVar8 = fVar9 - fVar10 / ((fVar15 - fVar10) / (fVar13 - fVar9));
         break;
       }
-      if (local_e0[0] == fVar16) {
+      if (local_e0[0] == fVar13) {
         local_f0[0] = local_f0[0] + 1;
-        local_e0[0] = (fVar4 * 0.5 - local_b0[0]) / fVar12;
+        local_e0[0] = (fVar4 * 0.5 - local_b0[0]) / local_c0[0];
       }
-      if (local_e0[1] == fVar16) {
+      if (local_e0[1] == fVar13) {
         local_f0[1] = local_f0[1] + 1;
-        local_e0[1] = (fVar5 * 0.5 - local_b0[1]) / fVar15;
+        local_e0[1] = (fVar5 * 0.5 - local_b0[1]) / local_c0[1];
       }
-      if (local_e0[2] == fVar16) {
+      if (local_e0[2] == fVar13) {
         local_f0[2] = local_f0[2] + 1;
-        local_e0[2] = (fVar6 * 0.5 - local_b0[2]) / fVar14;
+        local_e0[2] = (fVar6 * 0.5 - local_b0[2]) / local_c0[2];
       }
       fVar8 = fVar3;
-      fVar9 = fVar16;
-      fVar10 = fVar18;
-    } while (fVar16 < 1.0);
+      fVar9 = fVar13;
+      fVar10 = fVar15;
+    } while (fVar13 < 1.0);
   }
-  *param_6 = fVar8 * fVar13 + fVar1;
-  param_6[1] = fVar8 * fVar11 + pfVar19[1];
-  param_6[2] = fVar8 * fVar7 + pfVar19[2];
-  lVar22 = 3;
+  *param_6 = fVar8 * fVar12 + fVar1;
+  param_6[1] = fVar8 * fVar11 + param_1[1];
+  param_6[2] = fVar8 * fVar7 + param_1[2];
+  lVar18 = 3;
   do {
-    fVar1 = *(float *)((int)local_d0 + iVar21);
-    fVar2 = (*(float *)((int)local_c0 + iVar21) * fVar8 + *(float *)((int)local_b0 + iVar21)) *
-            *(float *)((int)local_90 + iVar21);
-    *(float *)((int)local_a0 + iVar21) = fVar2;
+    fVar1 = *(float *)((int)local_d0 + iVar17);
+    fVar2 = (*(float *)((int)local_c0 + iVar17) * fVar8 + *(float *)((int)local_b0 + iVar17)) *
+            *(float *)((int)local_90 + iVar17);
+    *(float *)((int)local_a0 + iVar17) = fVar2;
     if (-fVar1 <= fVar2) {
       if (fVar1 < fVar2) {
-        *(float *)((int)local_a0 + iVar21) = fVar1;
+        *(float *)((int)local_a0 + iVar17) = fVar1;
       }
     }
     else {
-      *(float *)((int)local_a0 + iVar21) = -fVar1;
+      *(float *)((int)local_a0 + iVar17) = -fVar1;
     }
-    iVar21 = iVar21 + 4;
-    lVar22 = lVar22 + -1;
-  } while (lVar22 != 0);
+    iVar17 = iVar17 + 4;
+    lVar18 = lVar18 + -1;
+  } while (lVar18 != 0);
   fVar1 = param_4[5];
   fVar2 = param_4[9];
   fVar3 = param_4[6];
@@ -341,12 +331,14 @@ void dClosestLineBoxPoints
   ;
   param_7[1] = fVar7 * local_a0[0] + fVar3 * local_a0[2] + fVar1 * local_a0[1] + param_3[1];
   param_7[2] = param_3[2] + fVar5 * local_a0[0] + fVar4 * local_a0[2] + fVar2 * local_a0[1];
-  __restfpr_19();
   return;
 }
 
 
 // 8268C808  dBoxTouchesBox  (physics/ode/src/collision_util.cpp:260)
+
+/* WARNING: Function: __savefpr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr replaced with injection: xenon_save_restore */
 
 int dBoxTouchesBox(float *param_1,float *param_2,float *param_3,float *param_4,float *param_5,
                   float *param_6)
@@ -390,10 +382,7 @@ int dBoxTouchesBox(float *param_1,float *param_2,float *param_3,float *param_4,f
   float fVar36;
   float fVar37;
   float fVar38;
-  int iVar39;
-  uint uVar40;
   
-  __savefpr();
   fVar1 = param_2[4];
   fVar2 = param_5[5];
   fVar3 = *param_2;
@@ -467,16 +456,12 @@ int dBoxTouchesBox(float *param_1,float *param_2,float *param_3,float *param_4,f
             fVar35 * fVar31 + fVar36 * fVar29 + fVar14 * fVar30 + fVar33 * fVar27)) &&
           (ABS(fVar23 * fVar26 - fVar20 * fVar3) <=
            fVar34 * fVar31 + fVar17 * fVar29 + fVar12 * fVar30 + fVar33 * fVar28)))) {
-        uVar40 = (uint)(ABS(fVar23 * fVar25 - fVar22 * fVar3) <=
-                       fVar2 * fVar31 + fVar15 * fVar29 + fVar12 * fVar27 + fVar14 * fVar28);
-        __restfpr();
-        return uVar40;
+        return (int)(ABS(fVar23 * fVar25 - fVar22 * fVar3) <=
+                    fVar2 * fVar31 + fVar15 * fVar29 + fVar12 * fVar27 + fVar14 * fVar28);
       }
     }
   }
-  iVar39 = 0;
-  __restfpr();
-  return iVar39;
+  return 0;
 }
 
 

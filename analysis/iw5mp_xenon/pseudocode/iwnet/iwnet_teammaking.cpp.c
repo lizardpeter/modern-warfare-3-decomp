@@ -46,35 +46,34 @@ void TeamMaking_Init(void)
 
 // 826E3F70  TeamMaking_InitRequest  (iwnet/iwnet_teammaking.cpp:271)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void TeamMaking_InitRequest
                (TeamMakingRequest *param_1,SubpartyInfo *param_2,int param_3,int param_4,int param_5
                ,bool param_6)
 
 {
-  int iVar1;
-  undefined4 *puVar2;
+  int *piVar1;
+  int *piVar2;
   longlong lVar3;
-  longlong lVar4;
   
-  lVar4 = (longlong)param_3;
-  lVar3 = (longlong)(int)param_2;
-  iVar1 = __savegprlr_27(param_1);
+  lVar3 = (longlong)param_3;
   memset();
-  *(int *)(iVar1 + 0x90) = (int)lVar4;
-  if (0 < (int)lVar4) {
-    puVar2 = (undefined4 *)(iVar1 + -8);
-    lVar3 = lVar3 + -0xc;
+  param_1->partyCount = param_3;
+  if (0 < param_3) {
+    piVar1 = &param_1[-1].maxCountDiff;
+    piVar2 = &param_2[-1].skill;
     do {
-      puVar2[3] = *(undefined4 *)((int)lVar3 + 0x54);
-      lVar3 = lVar3 + 0x58;
-      puVar2 = puVar2 + 2;
-      *puVar2 = *(undefined4 *)lVar3;
-      *(int *)(iVar1 + 0x94) = param_4;
-      *(int *)(iVar1 + 0x98) = param_5;
-      lVar4 = lVar4 + -1;
-    } while (lVar4 != 0);
+      piVar1[3] = piVar2[0x15];
+      piVar2 = piVar2 + 0x16;
+      piVar1 = piVar1 + 2;
+      *piVar1 = *piVar2;
+      param_1->totalSkill = param_4;
+      param_1->maxCountDiff = param_5;
+      lVar3 = lVar3 + -1;
+    } while (lVar3 != 0);
   }
-  __restgprlr_27();
   return;
 }
 
@@ -130,6 +129,9 @@ void TeamMaking_DefaultTeamsToAllies(SubpartyInfo *param_1,int param_2)
 
 // 826E4020  TeamMaking_FindTeams  (iwnet/iwnet_teammaking.cpp:304)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 int TeamMaking_FindTeams
               (int param_1,SubpartyInfo *param_2,int param_3,int param_4,int param_5,int param_6,
               bool param_7)
@@ -138,55 +140,46 @@ int TeamMaking_FindTeams
   uchar *puVar1;
   int iVar2;
   bool bVar3;
-  int iVar4;
-  ulonglong uVar5;
+  int *piVar4;
+  longlong lVar5;
   longlong lVar6;
-  longlong lVar7;
-  longlong lVar8;
-  longlong lVar9;
   TeamMakingResponse local_f0;
   TeamMakingRequest TStack_d0;
   
-  uVar5 = (ulonglong)param_7;
-  lVar9 = (longlong)param_3;
-  lVar6 = (longlong)(int)param_2;
-  __savegprlr_28(param_1);
-  iVar4 = (int)lVar9;
-  TeamMaking_InitRequest(&TStack_d0,(SubpartyInfo *)lVar6,iVar4,param_5,param_6,SUB41(param_6,0));
+  lVar6 = (longlong)param_3;
+  TeamMaking_InitRequest(&TStack_d0,param_2,param_3,param_5,param_6,SUB41(param_6,0));
   iVar2 = TeamMaking_GetMemberCount(&TStack_d0);
   if (param_4 != iVar2) {
     TeamMaking_GetMemberCount(&TStack_d0);
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\iwnet\\iwnet_teammaking.cpp",
                     0x135,0,"memberCount == TeamMaking_GetMemberCount( &request )\n\t%i, %i");
   }
-  if (0 < iVar4) {
-    lVar7 = lVar6 + -4;
-    lVar8 = lVar9;
+  if (0 < param_3) {
+    piVar4 = &param_2[-1].team;
+    lVar5 = lVar6;
     do {
-      lVar7 = lVar7 + 0x58;
-      *(undefined4 *)lVar7 = 2;
-      lVar8 = lVar8 + -1;
-    } while (lVar8 != 0);
+      piVar4 = piVar4 + 0x16;
+      *piVar4 = 2;
+      lVar5 = lVar5 + -1;
+    } while (lVar5 != 0);
   }
   bVar3 = TeamMaking_FindTeamsImmediate(&TStack_d0,&local_f0);
   if (bVar3) {
-    if ((uVar5 & 0xff) != 0) {
+    if (param_7) {
       iVar2 = 0;
-      if (0 < iVar4) {
-        lVar6 = lVar6 + -4;
+      if (0 < param_3) {
+        piVar4 = &param_2[-1].team;
         do {
           puVar1 = local_f0.teams + iVar2;
           iVar2 = iVar2 + 1;
-          lVar6 = lVar6 + 0x58;
-          *(uint *)lVar6 = (uint)*puVar1;
-          lVar9 = lVar9 + -1;
-        } while (lVar9 != 0);
+          piVar4 = piVar4 + 0x16;
+          *piVar4 = (uint)*puVar1;
+          lVar6 = lVar6 + -1;
+        } while (lVar6 != 0);
       }
     }
-    iVar2 = __restgprlr_28(2);
-    return iVar2;
+    return 2;
   }
-  iVar2 = __restgprlr_28(0);
-  return iVar2;
+  return 0;
 }
 

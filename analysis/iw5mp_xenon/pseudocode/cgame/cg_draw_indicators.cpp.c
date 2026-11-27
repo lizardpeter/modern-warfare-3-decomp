@@ -68,6 +68,8 @@ bool CG_ShouldDrawDamageDirectionIndicators(LocalClientNum_t param_1,cg_s *param
 
 // 822B9790  CG_DrawDamageDirectionIndicators  (cgame/cg_draw_indicators.cpp:98)
 
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -76,21 +78,20 @@ void CG_DrawDamageDirectionIndicators(LocalClientNum_t param_1)
 
 {
   int iVar1;
-  LocalClientNum_t LVar2;
-  cg_s *pcVar3;
-  bool bVar5;
-  ScreenPlacement *pSVar4;
-  longlong lVar6;
-  undefined8 uVar7;
+  cg_s *pcVar2;
+  bool bVar4;
+  ScreenPlacement *pSVar3;
+  longlong lVar5;
+  undefined8 uVar6;
+  longlong lVar7;
   longlong lVar8;
-  longlong lVar9;
-  int iVar10;
-  viewDamage_t *pvVar11;
+  int iVar9;
+  viewDamage_t *pvVar10;
+  double dVar11;
   double dVar12;
   double dVar13;
   double dVar14;
-  double dVar15;
-  float fVar16;
+  float fVar15;
   float local_c0;
   float local_bc;
   longlong local_b8;
@@ -106,82 +107,84 @@ void CG_DrawDamageDirectionIndicators(LocalClientNum_t param_1)
   float local_78;
   float local_74;
   
-  LVar2 = __savegprlr_22(param_1);
-  pcVar3 = CG_GetLocalClientGlobals(LVar2);
-  bVar5 = CG_ShouldDrawDamageDirectionIndicators(LVar2,pcVar3);
-  if (bVar5) {
-    pSVar4 = ScrPlace_GetActivePlacement(LVar2);
-    lVar6 = 0;
-    bVar5 = CG_GetWeapReticleZoom(pcVar3,(float *)0x0);
-    if (bVar5) {
+  pcVar2 = CG_GetLocalClientGlobals(param_1);
+  bVar4 = CG_ShouldDrawDamageDirectionIndicators(param_1,pcVar2);
+  if (bVar4) {
+    pSVar3 = ScrPlace_GetActivePlacement(param_1);
+    lVar5 = 0;
+    bVar4 = CG_GetWeapReticleZoom(pcVar2,(float *)0x0);
+    if (bVar4) {
       if ((cg_hudDamageIconInScope->current).enabled == false) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_draw_indicators.cpp"
                         ,0x7a,0,"%s");
       }
-      lVar6 = ZEXT48(&stack0x00000000) - 0xbc;
-      CG_CalcCrosshairPosition(pcVar3,(float *)lVar6,&local_c0);
-      local_bc = ScrPlace_ApplyX(pSVar4,local_bc,(int)lVar6);
-      dVar12 = (double)local_c0;
+      lVar5 = ZEXT48(&stack0x00000000) - 0xbc;
+      CG_CalcCrosshairPosition(pcVar2,(float *)lVar5,&local_c0);
+      local_bc = ScrPlace_ApplyX(pSVar3,local_bc,(int)lVar5);
+      dVar11 = (double)local_c0;
     }
     else {
-      dVar12 = 0.0;
-      local_bc = ScrPlace_ApplyX(pSVar4,0.0,(int)lVar6);
+      dVar11 = 0.0;
+      local_bc = ScrPlace_ApplyX(pSVar3,0.0,(int)lVar5);
     }
-    uVar7 = 2;
-    local_c0 = ScrPlace_ApplyY(pSVar4,(float)dVar12,(int)lVar6);
-    dVar12 = (double)((cg_hudDamageIconWidth->current).value * cg_hudSplitscreenScale);
-    fVar16 = ScrPlace_HiResGetScaleX();
-    dVar15 = (double)((cg_hudDamageIconHeight->current).value * cg_hudSplitscreenScale);
-    dVar14 = (double)(pSVar4->scaleVirtualToReal[0] * (float)((double)fVar16 * dVar12) * 0.5);
-    fVar16 = ScrPlace_HiResGetScaleY();
-    dVar15 = (double)(pSVar4->scaleVirtualToReal[1] * (float)((double)fVar16 * dVar15));
-    dVar12 = (double)((cg_hudDamageIconOffset->current).value * cg_hudSplitscreenScale);
-    fVar16 = ScrPlace_HiResGetScaleY();
-    local_90._0_4_ = (undefined4)dVar14;
-    local_78 = (float)dVar14;
-    local_88.packed._0_4_ = (undefined4)-dVar14;
-    local_80 = (float)-dVar14;
+    uVar6 = 2;
+    local_c0 = ScrPlace_ApplyY(pSVar3,(float)dVar11,(int)lVar5);
+    dVar11 = (double)((cg_hudDamageIconWidth->current).value * cg_hudSplitscreenScale);
+    fVar15 = ScrPlace_HiResGetScaleX();
+    dVar14 = (double)((cg_hudDamageIconHeight->current).value * cg_hudSplitscreenScale);
+    dVar13 = (double)(pSVar3->scaleVirtualToReal[0] * (float)((double)fVar15 * dVar11) * 0.5);
+    fVar15 = ScrPlace_HiResGetScaleY();
+    dVar14 = (double)(pSVar3->scaleVirtualToReal[1] * (float)((double)fVar15 * dVar14));
+    dVar11 = (double)((cg_hudDamageIconOffset->current).value * cg_hudSplitscreenScale);
+    fVar15 = ScrPlace_HiResGetScaleY();
+    local_90._0_4_ = (undefined4)dVar13;
+    local_78 = (float)dVar13;
+    local_88.packed._0_4_ = (undefined4)-dVar13;
+    local_80 = (float)-dVar13;
     local_a0 = 1.0;
-    local_7c = pSVar4->scaleVirtualToReal[1] * (float)((double)fVar16 * dVar12);
-    dVar12 = 1.0;
-    pvVar11 = pcVar3->viewDamage;
+    local_7c = pSVar3->scaleVirtualToReal[1] * (float)((double)fVar15 * dVar11);
+    dVar11 = 1.0;
+    pvVar10 = pcVar2->viewDamage;
     local_9c = 1.0;
-    lVar8 = 0xc;
+    lVar7 = 0xc;
     local_98 = 1.0;
     local_94 = 1.0;
-    local_90._4_4_ = (undefined4)((double)local_7c + dVar15);
-    dVar14 = 2.0;
+    local_90._4_4_ = (undefined4)((double)local_7c + dVar14);
+    dVar13 = 2.0;
     local_88.packed._4_4_ = local_90._4_4_;
     local_74 = local_7c;
     do {
-      iVar1 = pvVar11->duration;
-      lVar9 = (ulonglong)(uint)pcVar3->time - (ulonglong)(uint)pvVar11->time;
-      if ((0 < lVar9) && (iVar10 = (int)lVar9, iVar10 < iVar1)) {
-        fVar16 = vectoyaw((pcVar3->refdef).view.axis[0]);
+      iVar1 = pvVar10->duration;
+      lVar8 = (ulonglong)(uint)pcVar2->time - (ulonglong)(uint)pvVar10->time;
+      if ((0 < lVar8) && (iVar9 = (int)lVar8, iVar9 < iVar1)) {
+        fVar15 = vectoyaw((pcVar2->refdef).view.axis[0]);
         local_b8 = (longlong)iVar1;
-        local_b0 = (longlong)iVar10;
-        dVar13 = (double)(float)(dVar14 - (double)((float)((double)local_b0 * dVar14) /
+        local_b0 = (longlong)iVar9;
+        dVar12 = (double)(float)(dVar13 - (double)((float)((double)local_b0 * dVar13) /
                                                   (float)local_b8));
-        dVar15 = dVar12;
-        if ((float)(dVar13 - dVar12) < 0.0) {
-          dVar15 = dVar13;
+        dVar14 = dVar11;
+        if ((float)(dVar12 - dVar11) < 0.0) {
+          dVar14 = dVar12;
         }
-        local_94 = (float)dVar15;
+        local_94 = (float)dVar14;
         CG_DrawRotatedQuadPic
-                  (pSVar4,local_bc,local_c0,(float (*) [2])lVar6,fVar16 - pvVar11->yaw,
-                   (float *)uVar7,(Material *)local_90);
+                  (pSVar3,local_bc,local_c0,(float (*) [2])lVar5,fVar15 - pvVar10->yaw,
+                   (float *)uVar6,(Material *)local_90);
       }
-      lVar8 = lVar8 + -1;
-      pvVar11 = pvVar11 + 1;
-    } while (lVar8 != 0);
+      lVar7 = lVar7 + -1;
+      pvVar10 = pvVar10 + 1;
+    } while (lVar7 != 0);
   }
-  __restgprlr_22();
   return;
 }
 
 
 // 822B9A48  DrawGrenadePointer  (cgame/cg_draw_indicators.cpp:162)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -190,11 +193,10 @@ void DrawGrenadePointer(LocalClientNum_t param_1,float param_2,float param_3,flo
                        float *param_5)
 
 {
-  LocalClientNum_t LVar1;
-  cg_s *pcVar2;
-  ScreenPlacement *pSVar3;
+  cg_s *pcVar1;
+  ScreenPlacement *pSVar2;
   float *in_r6;
-  double extraout_f1;
+  double dVar3;
   double dVar4;
   double dVar5;
   double dVar6;
@@ -205,8 +207,7 @@ void DrawGrenadePointer(LocalClientNum_t param_1,float param_2,float param_3,flo
   double dVar11;
   double dVar12;
   double dVar13;
-  double dVar14;
-  float fVar15;
+  float fVar14;
   undefined1 local_a0 [8];
   GfxDrawSurf local_98;
   float local_90;
@@ -214,60 +215,60 @@ void DrawGrenadePointer(LocalClientNum_t param_1,float param_2,float param_3,flo
   char *local_88;
   float local_84;
   
-  dVar6 = (double)param_3;
-  __savegprlr_28((double)param_2,param_1,param_4,param_5);
-  LVar1 = __savefpr_22();
-  dVar12 = extraout_f1;
-  pcVar2 = CG_GetLocalClientGlobals(LVar1);
-  pSVar3 = ScrPlace_GetActivePlacement(LVar1);
-  dVar14 = (double)(cg_hudGrenadePointerWidth->current).value;
-  dVar10 = (double)(cg_hudGrenadePointerPivot->current).value;
-  dVar13 = (double)(cg_hudGrenadePointerHeight->current).value;
-  dVar11 = (double)(cg_hudGrenadeIconOffset->current).value;
-  dVar9 = (double)(cg_hudGrenadePointerPivot->current).vector[1];
-  fVar15 = vectoyaw(in_r6);
-  fVar15 = AngleNormalize360(fVar15 - (pcVar2->predictedPlayerState).viewangles[1]);
-  dVar4 = (double)fVar15;
-  dVar8 = (double)(float)(dVar4 * 0.01745329238474369);
-  dVar5 = sin(dVar8);
-  dVar7 = (double)(float)dVar5;
-  dVar5 = cos(dVar8);
-  dVar8 = (double)(float)dVar5;
-  dVar5 = (double)((float)(dVar7 * dVar11) * cg_hudSplitscreenScale);
-  fVar15 = ScrPlace_HiResGetScaleX();
-  dVar7 = -(double)(float)((double)pSVar3->scaleVirtualToReal[0] *
-                           (double)(float)((double)fVar15 * dVar5) - dVar12);
-  dVar12 = (double)((float)(dVar8 * dVar11) * cg_hudSplitscreenScale);
-  fVar15 = ScrPlace_HiResGetScaleY();
-  dVar5 = -(double)(float)((double)(float)((double)fVar15 * dVar12) *
-                           (double)pSVar3->scaleVirtualToReal[1] - dVar6);
-  dVar12 = (double)(float)(-dVar10 * (double)cg_hudSplitscreenScale);
-  fVar15 = ScrPlace_HiResGetScaleX();
-  local_a0._0_4_ = pSVar3->scaleVirtualToReal[0] * (float)((double)fVar15 * dVar12);
-  dVar12 = (double)((float)(dVar14 - dVar10) * cg_hudSplitscreenScale);
+  dVar5 = (double)param_3;
+  dVar11 = (double)param_2;
+  pcVar1 = CG_GetLocalClientGlobals(param_1);
+  pSVar2 = ScrPlace_GetActivePlacement(param_1);
+  dVar13 = (double)(cg_hudGrenadePointerWidth->current).value;
+  dVar9 = (double)(cg_hudGrenadePointerPivot->current).value;
+  dVar12 = (double)(cg_hudGrenadePointerHeight->current).value;
+  dVar10 = (double)(cg_hudGrenadeIconOffset->current).value;
+  dVar8 = (double)(cg_hudGrenadePointerPivot->current).vector[1];
+  fVar14 = vectoyaw(in_r6);
+  fVar14 = AngleNormalize360(fVar14 - (pcVar1->predictedPlayerState).viewangles[1]);
+  dVar3 = (double)fVar14;
+  dVar7 = (double)(float)(dVar3 * 0.01745329238474369);
+  dVar4 = sin(dVar7);
+  dVar6 = (double)(float)dVar4;
+  dVar4 = cos(dVar7);
+  dVar7 = (double)(float)dVar4;
+  dVar4 = (double)((float)(dVar6 * dVar10) * cg_hudSplitscreenScale);
+  fVar14 = ScrPlace_HiResGetScaleX();
+  dVar6 = -(double)(float)((double)pSVar2->scaleVirtualToReal[0] *
+                           (double)(float)((double)fVar14 * dVar4) - dVar11);
+  dVar11 = (double)((float)(dVar7 * dVar10) * cg_hudSplitscreenScale);
+  fVar14 = ScrPlace_HiResGetScaleY();
+  dVar4 = -(double)(float)((double)(float)((double)fVar14 * dVar11) *
+                           (double)pSVar2->scaleVirtualToReal[1] - dVar5);
+  dVar11 = (double)(float)(-dVar9 * (double)cg_hudSplitscreenScale);
+  fVar14 = ScrPlace_HiResGetScaleX();
+  local_a0._0_4_ = pSVar2->scaleVirtualToReal[0] * (float)((double)fVar14 * dVar11);
+  dVar11 = (double)((float)(dVar13 - dVar9) * cg_hudSplitscreenScale);
   local_88 = (char *)local_a0._0_4_;
-  fVar15 = ScrPlace_HiResGetScaleX();
-  local_98.packed._0_4_ = pSVar3->scaleVirtualToReal[0] * (float)((double)fVar15 * dVar12);
-  dVar12 = (double)(float)(-dVar9 * (double)cg_hudSplitscreenScale);
+  fVar14 = ScrPlace_HiResGetScaleX();
+  local_98.packed._0_4_ = pSVar2->scaleVirtualToReal[0] * (float)((double)fVar14 * dVar11);
+  dVar11 = (double)(float)(-dVar8 * (double)cg_hudSplitscreenScale);
   local_90 = (float)local_98.packed._0_4_;
-  fVar15 = ScrPlace_HiResGetScaleY();
-  local_a0._4_4_ = (float)((double)fVar15 * dVar12) * pSVar3->scaleVirtualToReal[1];
-  dVar12 = (double)((float)(dVar13 - dVar9) * cg_hudSplitscreenScale);
+  fVar14 = ScrPlace_HiResGetScaleY();
+  local_a0._4_4_ = (float)((double)fVar14 * dVar11) * pSVar2->scaleVirtualToReal[1];
+  dVar11 = (double)((float)(dVar12 - dVar8) * cg_hudSplitscreenScale);
   local_98.packed._4_4_ = local_a0._4_4_;
-  fVar15 = ScrPlace_HiResGetScaleY();
-  local_8c = (float)((double)fVar15 * dVar12) * pSVar3->scaleVirtualToReal[1];
+  fVar14 = ScrPlace_HiResGetScaleY();
+  local_8c = (float)((double)fVar14 * dVar11) * pSVar2->scaleVirtualToReal[1];
   local_84 = local_8c;
   CG_DrawRotatedQuadPic
-            (pSVar3,(float)dVar7,(float)dVar5,(float (*) [2])&cgMedia,(float)-dVar4,
+            (pSVar2,(float)dVar6,(float)dVar4,(float (*) [2])&cgMedia,(float)-dVar3,
              (float *)(g_mdlprv.model.clones[0x18].objBuf + 4),(Material *)local_a0);
-  __restfpr_22();
-  __restgprlr_28();
   return;
 }
 
 
 // 822B9BF8  DrawGrenadeIcon  (cgame/cg_draw_indicators.cpp:202)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -276,12 +277,11 @@ void DrawGrenadeIcon(LocalClientNum_t param_1,float param_2,float param_3,float 
                     float *param_5,Material *param_6)
 
 {
-  LocalClientNum_t LVar1;
-  cg_s *pcVar2;
-  ScreenPlacement *pSVar3;
+  cg_s *pcVar1;
+  ScreenPlacement *pSVar2;
   float *in_r7;
   Material *in_r8;
-  double extraout_f1;
+  double dVar3;
   double dVar4;
   double dVar5;
   double dVar6;
@@ -290,8 +290,7 @@ void DrawGrenadeIcon(LocalClientNum_t param_1,float param_2,float param_3,float 
   double dVar9;
   double dVar10;
   double dVar11;
-  double dVar12;
-  float fVar13;
+  float fVar12;
   float local_a0;
   float local_9c;
   float local_98;
@@ -301,50 +300,46 @@ void DrawGrenadeIcon(LocalClientNum_t param_1,float param_2,float param_3,float 
   float local_88;
   float local_84;
   
-  dVar5 = (double)param_3;
-  __savegprlr_27((double)param_2,param_1,param_4,param_5);
-  LVar1 = __savefpr_23();
-  dVar10 = extraout_f1;
-  pcVar2 = CG_GetLocalClientGlobals(LVar1);
-  pSVar3 = ScrPlace_GetActivePlacement(LVar1);
-  dVar9 = (double)(cg_hudGrenadeIconWidth->current).value;
-  dVar8 = (double)(cg_hudGrenadeIconHeight->current).value;
-  dVar7 = (double)(cg_hudGrenadeIconOffset->current).value;
-  fVar13 = vectoyaw((float *)param_6);
-  fVar13 = AngleNormalize360(fVar13 - (pcVar2->predictedPlayerState).viewangles[1]);
-  dVar11 = (double)(fVar13 * 0.017453292);
-  dVar4 = sin(dVar11);
-  dVar6 = (double)(float)dVar4;
-  dVar4 = cos(dVar11);
-  dVar11 = (double)(float)(dVar6 * dVar7);
-  dVar6 = (double)(float)dVar4;
-  dVar12 = 0.5;
-  dVar9 = (double)(float)(dVar9 * 0.5);
-  dVar4 = (double)((float)(-dVar9 - dVar11) * cg_hudSplitscreenScale);
-  fVar13 = ScrPlace_HiResGetScaleX();
-  local_a0 = (float)((double)(float)((double)fVar13 * dVar4) * (double)pSVar3->scaleVirtualToReal[0]
-                    + dVar10);
-  dVar4 = (double)((float)(dVar9 - dVar11) * cg_hudSplitscreenScale);
+  dVar9 = (double)param_2;
+  dVar4 = (double)param_3;
+  pcVar1 = CG_GetLocalClientGlobals(param_1);
+  pSVar2 = ScrPlace_GetActivePlacement(param_1);
+  dVar8 = (double)(cg_hudGrenadeIconWidth->current).value;
+  dVar7 = (double)(cg_hudGrenadeIconHeight->current).value;
+  dVar6 = (double)(cg_hudGrenadeIconOffset->current).value;
+  fVar12 = vectoyaw((float *)param_6);
+  fVar12 = AngleNormalize360(fVar12 - (pcVar1->predictedPlayerState).viewangles[1]);
+  dVar10 = (double)(fVar12 * 0.017453292);
+  dVar3 = sin(dVar10);
+  dVar5 = (double)(float)dVar3;
+  dVar3 = cos(dVar10);
+  dVar10 = (double)(float)(dVar5 * dVar6);
+  dVar5 = (double)(float)dVar3;
+  dVar11 = 0.5;
+  dVar8 = (double)(float)(dVar8 * 0.5);
+  dVar3 = (double)((float)(-dVar8 - dVar10) * cg_hudSplitscreenScale);
+  fVar12 = ScrPlace_HiResGetScaleX();
+  local_a0 = (float)((double)(float)((double)fVar12 * dVar3) * (double)pSVar2->scaleVirtualToReal[0]
+                    + dVar9);
+  dVar3 = (double)((float)(dVar8 - dVar10) * cg_hudSplitscreenScale);
   local_88 = local_a0;
-  fVar13 = ScrPlace_HiResGetScaleX();
-  dVar11 = (double)(float)(dVar8 * dVar12);
-  dVar6 = (double)(float)(dVar6 * dVar7);
-  local_98 = (float)((double)(float)((double)fVar13 * dVar4) * (double)pSVar3->scaleVirtualToReal[0]
-                    + dVar10);
-  dVar10 = (double)((float)(-dVar11 - dVar6) * cg_hudSplitscreenScale);
+  fVar12 = ScrPlace_HiResGetScaleX();
+  dVar10 = (double)(float)(dVar7 * dVar11);
+  dVar5 = (double)(float)(dVar5 * dVar6);
+  local_98 = (float)((double)(float)((double)fVar12 * dVar3) * (double)pSVar2->scaleVirtualToReal[0]
+                    + dVar9);
+  dVar9 = (double)((float)(-dVar10 - dVar5) * cg_hudSplitscreenScale);
   local_90 = local_98;
-  fVar13 = ScrPlace_HiResGetScaleY();
-  local_9c = (float)((double)pSVar3->scaleVirtualToReal[1] *
-                     (double)(float)((double)fVar13 * dVar10) + dVar5);
-  dVar10 = (double)((float)(dVar11 - dVar6) * cg_hudSplitscreenScale);
+  fVar12 = ScrPlace_HiResGetScaleY();
+  local_9c = (float)((double)pSVar2->scaleVirtualToReal[1] * (double)(float)((double)fVar12 * dVar9)
+                    + dVar4);
+  dVar9 = (double)((float)(dVar10 - dVar5) * cg_hudSplitscreenScale);
   local_94 = local_9c;
-  fVar13 = ScrPlace_HiResGetScaleY();
-  local_8c = (float)((double)pSVar3->scaleVirtualToReal[1] *
-                     (double)(float)((double)fVar13 * dVar10) + dVar5);
+  fVar12 = ScrPlace_HiResGetScaleY();
+  local_8c = (float)((double)pSVar2->scaleVirtualToReal[1] * (double)(float)((double)fVar12 * dVar9)
+                    + dVar4);
   local_84 = local_8c;
   R_AddCmdDrawQuadPic((float (*) [2])&local_a0,in_r7,in_r8);
-  __restfpr_23();
-  __restgprlr_27();
   return;
 }
 
@@ -365,6 +360,10 @@ void CG_ClearHudGrenades(cg_s *param_1)
 
 // 822B9D80  CG_AddHudGrenade_PositionCheck  (cgame/cg_draw_indicators.cpp:244)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
@@ -377,89 +376,77 @@ bool CG_AddHudGrenade_PositionCheck
   WeapStickinessType WVar1;
   WeaponDef *pWVar2;
   float fVar3;
-  int iVar5;
-  Weapon WVar6;
-  weapProjExposion_t wVar7;
-  int iVar8;
-  undefined1 uVar9;
-  undefined8 uVar4;
-  ulonglong uVar10;
-  ulonglong uVar11;
-  double dVar12;
-  double dVar13;
-  double dVar14;
-  double dVar15;
-  double dVar16;
+  Weapon WVar4;
+  weapProjExposion_t wVar5;
+  int iVar6;
+  double dVar7;
+  double dVar8;
+  double dVar9;
+  double dVar10;
+  double dVar11;
   
-  uVar11 = (ulonglong)(int)param_5;
-  uVar10 = (ulonglong)(int)param_2;
-  __savegprlr_24(param_1);
-  iVar5 = __savefpr_28();
-  if ((uVar10 & 0xffffffff) == 0) {
+  if (param_2 == (centity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_draw_indicators.cpp",
                     0xfe,0,"%s");
   }
-  iVar8 = (int)uVar10;
-  dVar15 = (double)(*(float *)(iVar8 + 0x14) - *(float *)(iVar5 + 0x1c));
-  dVar14 = (double)(*(float *)(iVar8 + 0x18) - *(float *)(iVar5 + 0x20));
-  dVar16 = (double)(*(float *)(iVar8 + 0x1c) - *(float *)(iVar5 + 0x24));
-  WVar6 = BG_GetAlternateWeapon(param_3,param_4);
-  pWVar2 = bg_weaponDefs[WVar6.data & 0xff];
-  wVar7 = BG_ProjExplosionType(param_3,param_4);
-  dVar13 = 0.0;
-  dVar12 = dVar13;
-  if ((wVar7 == WEAPPROJEXP_GRENADE) || (wVar7 == WEAPPROJEXP_HEAVY)) {
+  dVar10 = (double)((param_2->pose).origin[0] - (param_1->predictedPlayerState).origin[0]);
+  dVar9 = (double)((param_2->pose).origin[1] - (param_1->predictedPlayerState).origin[1]);
+  dVar11 = (double)((param_2->pose).origin[2] - (param_1->predictedPlayerState).origin[2]);
+  WVar4 = BG_GetAlternateWeapon(param_3,param_4);
+  pWVar2 = bg_weaponDefs[WVar4.data & 0xff];
+  wVar5 = BG_ProjExplosionType(param_3,param_4);
+  dVar8 = 0.0;
+  dVar7 = dVar8;
+  if ((wVar5 == WEAPPROJEXP_GRENADE) || (wVar5 == WEAPPROJEXP_HEAVY)) {
     if ((cg_hudGrenadeIconMaxRangeFrag->current).value != 0.0) {
-      iVar8 = BG_ExplosionRadius(param_3,param_4);
+      iVar6 = BG_ExplosionRadius(param_3,param_4);
       fVar3 = (cg_hudGrenadeIconMaxRangeFrag->current).value;
-      if ((cg_hudGrenadeIconMaxRangeFrag->current).value - (float)(longlong)iVar8 < 0.0) {
-        fVar3 = (float)(longlong)iVar8;
+      if ((cg_hudGrenadeIconMaxRangeFrag->current).value - (float)(longlong)iVar6 < 0.0) {
+        fVar3 = (float)(longlong)iVar6;
       }
-      dVar13 = (double)(fVar3 + 23.0);
+      dVar8 = (double)(fVar3 + 23.0);
     }
   }
   else {
-    if (wVar7 != WEAPPROJEXP_FLASHBANG) {
+    if (wVar5 != WEAPPROJEXP_FLASHBANG) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_draw_indicators.cpp"
                       ,0x113,0,"%s");
-      dVar12 = dVar13;
+      dVar7 = dVar8;
     }
-    dVar13 = (double)(cg_hudGrenadeIconMaxRangeFlash->current).value;
+    dVar8 = (double)(cg_hudGrenadeIconMaxRangeFlash->current).value;
   }
-  if ((uVar11 & 0xffffffff) != 0) {
-    *(float *)uVar11 = (float)dVar13;
+  if (param_5 != (float *)0x0) {
+    *param_5 = (float)dVar8;
   }
-  if ((float)(dVar13 * dVar13) <
-      (float)(dVar16 * dVar16 + (double)(float)(dVar14 * dVar14 + (double)(float)(dVar15 * dVar15)))
-     ) {
-LAB_822b9f10:
-    __restfpr_28(0);
-    uVar9 = __restgprlr_24();
-    return (bool)uVar9;
-  }
-  if (dVar12 <= dVar16) {
-    WVar1 = pWVar2->stickiness;
-    if (((WVar1 != WEAPSTICKINESS_ALL) && (WVar1 != WEAPSTICKINESS_ALL_ORIENT)) &&
-       (WVar1 != WEAPSTICKINESS_KNIFE)) {
-      uVar4 = 0;
-      dVar12 = (double)((cg_hudGrenadeIconMaxHeight->current).value + *(float *)(iVar5 + 0x168));
-      if ((float)((double)*(float *)(iVar5 + 0x6b9ac) - dVar12) < 0.0) {
-        dVar12 = (double)*(float *)(iVar5 + 0x6b9ac);
+  if ((float)(dVar11 * dVar11 + (double)(float)(dVar9 * dVar9 + (double)(float)(dVar10 * dVar10)))
+      <= (float)(dVar8 * dVar8)) {
+    if (dVar7 <= dVar11) {
+      WVar1 = pWVar2->stickiness;
+      if (((WVar1 != WEAPSTICKINESS_ALL) && (WVar1 != WEAPSTICKINESS_ALL_ORIENT)) &&
+         (WVar1 != WEAPSTICKINESS_KNIFE)) {
+        dVar7 = (double)((cg_hudGrenadeIconMaxHeight->current).value +
+                        (param_1->predictedPlayerState).viewHeightCurrent);
+        if ((float)((double)param_1->heightToCeiling - dVar7) < 0.0) {
+          dVar7 = (double)param_1->heightToCeiling;
+        }
+        if (dVar7 < dVar11) {
+          return false;
+        }
       }
-      if (dVar12 < dVar16) goto LAB_822b9f78;
     }
+    else if (dVar11 < -(double)(cg_hudGrenadeIconMaxHeight->current).value) {
+      return false;
+    }
+    return true;
   }
-  else if (dVar16 < -(double)(cg_hudGrenadeIconMaxHeight->current).value) goto LAB_822b9f10;
-  uVar4 = 1;
-LAB_822b9f78:
-  __restfpr_28(uVar4);
-  uVar9 = __restgprlr_24();
-  return (bool)uVar9;
+  return false;
 }
 
 
 // 822B9F88  CG_AddHudGrenade  (cgame/cg_draw_indicators.cpp:317)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
@@ -473,20 +460,18 @@ void CG_AddHudGrenade(cg_s *param_1,centity_s *param_2)
   float fVar3;
   uint uVar4;
   WeaponDef *pWVar5;
-  cg_s *pcVar6;
-  Weapon WVar7;
-  weapProjExposion_t wVar8;
-  weapType_t wVar9;
-  bool bVar10;
-  Material *pMVar11;
-  uint *puVar12;
+  Weapon WVar6;
+  weapProjExposion_t wVar7;
+  weapType_t wVar8;
+  bool bVar9;
+  Material *pMVar10;
+  uint *puVar11;
+  double dVar12;
   double dVar13;
   double dVar14;
   double dVar15;
-  double dVar16;
   float local_60 [24];
   
-  pcVar6 = (cg_s *)__savegprlr_25(param_1);
   if ((param_2->nextState).eType != 4) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_draw_indicators.cpp",
                     0x14a,0,"%s\n\t(state->eType) = %i");
@@ -500,79 +485,83 @@ void CG_AddHudGrenade(cg_s *param_1,centity_s *param_2)
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_draw_indicators.cpp",
                     0x14c,0,"%s");
   }
-  WVar7 = BG_GetAlternateWeapon
+  WVar6 = BG_GetAlternateWeapon
                     ((param_2->nextState).weapon,
                      (bool)('\x01' - ((param_2->nextState).inAltWeaponMode == 0)));
-  pWVar5 = bg_weaponDefs[WVar7.data & 0xff];
-  wVar8 = BG_ProjExplosionType
+  pWVar5 = bg_weaponDefs[WVar6.data & 0xff];
+  wVar7 = BG_ProjExplosionType
                     ((param_2->nextState).weapon,
                      (bool)('\x01' - ((param_2->nextState).inAltWeaponMode == 0)));
-  wVar9 = BG_GetWeaponType((param_2->nextState).weapon,
+  wVar8 = BG_GetWeaponType((param_2->nextState).weapon,
                            (bool)('\x01' - ((param_2->nextState).inAltWeaponMode == 0)));
-  if ((wVar9 == WEAPTYPE_GRENADE) &&
-     ((((wVar8 == WEAPPROJEXP_GRENADE || (wVar8 == WEAPPROJEXP_FLASHBANG)) ||
-       (wVar8 == WEAPPROJEXP_HEAVY)) &&
+  if ((wVar8 == WEAPTYPE_GRENADE) &&
+     ((((wVar7 == WEAPPROJEXP_GRENADE || (wVar7 == WEAPPROJEXP_FLASHBANG)) ||
+       (wVar7 == WEAPPROJEXP_HEAVY)) &&
       ((pWVar5->timedDetonation != false &&
-       (bVar10 = CG_AddHudGrenade_PositionCheck
-                           (pcVar6,param_2,(param_2->nextState).weapon,
-                            (bool)('\x01' - ((param_2->nextState).inAltWeaponMode == 0)),local_60),
-       bVar10)))))) {
-    dVar14 = 1.0;
-    if ((wVar8 == WEAPPROJEXP_GRENADE) || (dVar15 = dVar14, wVar8 == WEAPPROJEXP_HEAVY)) {
-      dVar15 = (double)((bg_maxGrenadeIndicatorSpeed->current).value *
+       (bVar9 = CG_AddHudGrenade_PositionCheck
+                          (param_1,param_2,(param_2->nextState).weapon,
+                           (bool)('\x01' - ((param_2->nextState).inAltWeaponMode == 0)),local_60),
+       bVar9)))))) {
+    dVar13 = 1.0;
+    if ((wVar7 == WEAPPROJEXP_GRENADE) || (dVar14 = dVar13, wVar7 == WEAPPROJEXP_HEAVY)) {
+      dVar14 = (double)((bg_maxGrenadeIndicatorSpeed->current).value *
                        (bg_maxGrenadeIndicatorSpeed->current).value);
     }
     fVar1 = (param_2->nextState).lerp.pos.trDelta[1];
     fVar2 = (param_2->nextState).lerp.pos.trDelta[0];
     fVar3 = (param_2->nextState).lerp.pos.trDelta[2];
-    if (((double)(fVar3 * fVar3 + fVar2 * fVar2 + fVar1 * fVar1) <= dVar15) &&
-       (puVar12 = &pcVar6->hudGrenadeCount, *puVar12 < 0x20)) {
-      if ((wVar8 == WEAPPROJEXP_GRENADE) || (wVar8 == WEAPPROJEXP_HEAVY)) {
-        pMVar11 = cgMedia.grenadeIconFrag;
-        if (((pcVar6->predictedPlayerState).cursorHint == 5) &&
-           ((pcVar6->predictedPlayerState).cursorHintEntIndex == (param_2->nextState).number)) {
-          pMVar11 = cgMedia.grenadeIconThrowBack;
+    if (((double)(fVar3 * fVar3 + fVar2 * fVar2 + fVar1 * fVar1) <= dVar14) &&
+       (puVar11 = &param_1->hudGrenadeCount, *puVar11 < 0x20)) {
+      if ((wVar7 == WEAPPROJEXP_GRENADE) || (wVar7 == WEAPPROJEXP_HEAVY)) {
+        pMVar10 = cgMedia.grenadeIconFrag;
+        if (((param_1->predictedPlayerState).cursorHint == 5) &&
+           ((param_1->predictedPlayerState).cursorHintEntIndex == (param_2->nextState).number)) {
+          pMVar10 = cgMedia.grenadeIconThrowBack;
         }
       }
       else {
-        if (wVar8 != WEAPPROJEXP_FLASHBANG) {
+        if (wVar7 != WEAPPROJEXP_FLASHBANG) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_draw_indicators.cpp"
                           ,0x175,0,"%s\n\t(projExplosionType) = %i");
         }
-        pMVar11 = cgMedia.grenadeIconFlash;
-        if ((cg_hudGrenadeIconEnabledFlash->current).enabled == false) goto LAB_822ba320;
+        pMVar10 = cgMedia.grenadeIconFlash;
+        if ((cg_hudGrenadeIconEnabledFlash->current).enabled == false) {
+          return;
+        }
       }
-      dVar15 = (double)local_60[0];
-      pcVar6->hudGrenades[*puVar12].lerpColorAmount = (float)dVar14;
-      fVar3 = (param_2->pose).origin[1] - (pcVar6->predictedPlayerState).origin[1];
-      fVar1 = (param_2->pose).origin[2] - (pcVar6->predictedPlayerState).origin[2];
-      fVar2 = (param_2->pose).origin[0] - (pcVar6->predictedPlayerState).origin[0];
-      dVar16 = (double)SQRT(fVar2 * fVar2 + fVar1 * fVar1 + fVar3 * fVar3);
-      if (dVar15 < dVar16) {
+      dVar14 = (double)local_60[0];
+      param_1->hudGrenades[*puVar11].lerpColorAmount = (float)dVar13;
+      fVar3 = (param_2->pose).origin[1] - (param_1->predictedPlayerState).origin[1];
+      fVar1 = (param_2->pose).origin[2] - (param_1->predictedPlayerState).origin[2];
+      fVar2 = (param_2->pose).origin[0] - (param_1->predictedPlayerState).origin[0];
+      dVar15 = (double)SQRT(fVar2 * fVar2 + fVar1 * fVar1 + fVar3 * fVar3);
+      if (dVar14 < dVar15) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_draw_indicators.cpp"
                         ,0x182,0,"maxOffset >= grenadeOffsetLength\n\t%g, %g");
       }
-      dVar13 = (double)(cg_hudGrenadeDangerCloseDistance->current).value;
-      if (dVar13 < dVar16) {
-        pcVar6->hudGrenades[*puVar12].lerpColorAmount =
-             (float)(dVar14 - (double)((float)(dVar16 - dVar13) / (float)(dVar15 - dVar13)));
+      dVar12 = (double)(cg_hudGrenadeDangerCloseDistance->current).value;
+      if (dVar12 < dVar15) {
+        param_1->hudGrenades[*puVar11].lerpColorAmount =
+             (float)(dVar13 - (double)((float)(dVar15 - dVar12) / (float)(dVar14 - dVar12)));
       }
-      uVar4 = *puVar12;
-      pcVar6->hudGrenades[uVar4].origin[0] = (param_2->pose).origin[0];
-      pcVar6->hudGrenades[uVar4].origin[1] = (param_2->pose).origin[1];
-      pcVar6->hudGrenades[uVar4].origin[2] = (param_2->pose).origin[2];
-      pcVar6->hudGrenades[*puVar12].material = pMVar11;
-      *puVar12 = *puVar12 + 1;
+      uVar4 = *puVar11;
+      param_1->hudGrenades[uVar4].origin[0] = (param_2->pose).origin[0];
+      param_1->hudGrenades[uVar4].origin[1] = (param_2->pose).origin[1];
+      param_1->hudGrenades[uVar4].origin[2] = (param_2->pose).origin[2];
+      param_1->hudGrenades[*puVar11].material = pMVar10;
+      *puVar11 = *puVar11 + 1;
     }
   }
-LAB_822ba320:
-  __restgprlr_25();
   return;
 }
 
 
 // 822BA338  CG_DrawGrenadeIndicators  (cgame/cg_draw_indicators.cpp:402)
 
+/* WARNING: Function: __savegprlr_21 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_21 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -581,22 +570,21 @@ void CG_DrawGrenadeIndicators(LocalClientNum_t param_1)
 
 {
   float fVar1;
-  LocalClientNum_t LVar2;
-  bool bVar5;
-  cg_s *pcVar3;
-  ScreenPlacement *pSVar4;
-  longlong lVar6;
-  undefined8 uVar7;
-  uint *puVar8;
-  uint uVar9;
-  hudElemSoundInfo_t *phVar10;
+  bool bVar4;
+  cg_s *pcVar2;
+  ScreenPlacement *pSVar3;
+  longlong lVar5;
+  undefined8 uVar6;
+  uint *puVar7;
+  uint uVar8;
+  hudElemSoundInfo_t *phVar9;
+  double dVar10;
   double dVar11;
   double dVar12;
   double dVar13;
   double dVar14;
   double dVar15;
   double dVar16;
-  double dVar17;
   float local_c0;
   float local_bc;
   longlong local_b8;
@@ -607,89 +595,83 @@ void CG_DrawGrenadeIndicators(LocalClientNum_t param_1)
   float local_98;
   float local_94;
   
-  __savegprlr_21(param_1);
-  LVar2 = __savefpr_26();
-  bVar5 = CL_Demo_IsFollowCamera(LVar2);
-  if ((!bVar5) && (bVar5 = CL_Demo_IsFreeCamera(LVar2), !bVar5)) {
-    pcVar3 = CG_GetLocalClientGlobals(LVar2);
-    if (((pcVar3->nextSnap != (snapshot_s *)0x0) &&
-        (((uVar9 = (pcVar3->predictedPlayerState).otherFlags, (uVar9 & 2) == 0 &&
-          (((pcVar3->predictedPlayerState).linkFlags & 4U) == 0)) &&
-         ((pcVar3->predictedPlayerState).pm_type != 5)))) &&
-       (((uVar9 & 0x800) == 0 && (puVar8 = &pcVar3->hudGrenadeCount, *puVar8 != 0)))) {
-      pSVar4 = ScrPlace_GetActivePlacement(LVar2);
-      lVar6 = 0;
-      bVar5 = CG_GetWeapReticleZoom(pcVar3,(float *)0x0);
-      dVar14 = 0.0;
-      if (bVar5) {
-        if ((cg_hudGrenadeIconInScope->current).enabled == false) goto LAB_822ba5f0;
-        lVar6 = ZEXT48(&stack0x00000000) - 0xbc;
-        CG_CalcCrosshairPosition(pcVar3,(float *)lVar6,&local_c0);
-        dVar15 = dVar14;
-        local_bc = ScrPlace_ApplyX(pSVar4,local_bc,(int)lVar6);
-        dVar14 = (double)local_c0;
+  bVar4 = CL_Demo_IsFollowCamera(param_1);
+  if (((((!bVar4) && (bVar4 = CL_Demo_IsFreeCamera(param_1), !bVar4)) &&
+       (pcVar2 = CG_GetLocalClientGlobals(param_1), pcVar2->nextSnap != (snapshot_s *)0x0)) &&
+      ((uVar8 = (pcVar2->predictedPlayerState).otherFlags, (uVar8 & 2) == 0 &&
+       (((pcVar2->predictedPlayerState).linkFlags & 4U) == 0)))) &&
+     (((pcVar2->predictedPlayerState).pm_type != 5 &&
+      (((uVar8 & 0x800) == 0 && (puVar7 = &pcVar2->hudGrenadeCount, *puVar7 != 0)))))) {
+    pSVar3 = ScrPlace_GetActivePlacement(param_1);
+    lVar5 = 0;
+    bVar4 = CG_GetWeapReticleZoom(pcVar2,(float *)0x0);
+    dVar13 = 0.0;
+    if (bVar4) {
+      if ((cg_hudGrenadeIconInScope->current).enabled == false) {
+        return;
       }
-      else {
-        local_bc = ScrPlace_ApplyX(pSVar4,0.0,(int)lVar6);
-        dVar15 = dVar14;
-      }
-      uVar7 = 2;
-      local_c0 = ScrPlace_ApplyY(pSVar4,(float)dVar14,(int)lVar6);
-      uVar9 = 0;
-      if (*puVar8 != 0) {
-        dVar17 = 1.0;
-        dVar14 = 0.0062831854447722435;
-        dVar16 = 0.5;
-        phVar10 = pcVar3->hudElemSound + 0x1e;
-        do {
-          local_b0._0_4_ =
-               ((HudGrenade *)(phVar10 + 2))->origin[0] - (pcVar3->predictedPlayerState).origin[0];
-          local_b0._4_4_ = *(float *)(phVar10 + 3) - (pcVar3->predictedPlayerState).origin[1];
-          local_a8.packed._0_4_ = *(float *)(phVar10 + 4) - (pcVar3->predictedPlayerState).origin[2]
-          ;
-          fVar1 = *(float *)(phVar10 + 6);
-          local_a0 = ((cg_hudGrenadeColorDangerClose->current).value -
-                     (cg_hudGrenadeColorInProximity->current).value) * fVar1 +
-                     (cg_hudGrenadeColorInProximity->current).value;
-          local_9c = ((cg_hudGrenadeColorDangerClose->current).vector[1] -
-                     (cg_hudGrenadeColorInProximity->current).vector[1]) * fVar1 +
-                     (cg_hudGrenadeColorInProximity->current).vector[1];
-          local_98 = ((cg_hudGrenadeColorDangerClose->current).vector[2] -
-                     (cg_hudGrenadeColorInProximity->current).vector[2]) * fVar1 +
-                     (cg_hudGrenadeColorInProximity->current).vector[2];
-          local_94 = ((cg_hudGrenadeColorDangerClose->current).vector[3] -
-                     (cg_hudGrenadeColorInProximity->current).vector[3]) * fVar1 +
-                     (cg_hudGrenadeColorInProximity->current).vector[3];
-          local_b8 = (longlong)pcVar3->time;
-          dVar13 = (double)(float)((double)(float)((double)(cg_hudGrenadePointerPulseMax->current).
-                                                           value -
-                                                  (double)(cg_hudGrenadePointerPulseMin->current).
-                                                          value) * dVar16);
-          dVar12 = (double)(float)((double)(cg_hudGrenadePointerPulseMin->current).value + dVar13);
-          dVar11 = sin((double)(float)((double)((cg_hudGrenadePointerPulseFreq->current).value *
-                                               (float)local_b8) * dVar14));
-          dVar12 = (double)(float)((double)(float)dVar11 * dVar13 + dVar12);
-          dVar11 = dVar17;
-          if ((float)(dVar12 - dVar17) < 0.0) {
-            dVar11 = dVar12;
-          }
-          dVar13 = dVar15;
-          if (-dVar12 < 0.0) {
-            dVar13 = dVar11;
-          }
-          local_94 = (float)dVar13;
-          DrawGrenadePointer(LVar2,local_bc,local_c0,(float *)lVar6,(float *)uVar7);
-          phVar10 = phVar10 + 5;
-          DrawGrenadeIcon(LVar2,local_bc,local_c0,(float *)lVar6,(float *)uVar7,(Material *)local_b0
-                         );
-          uVar9 = uVar9 + 1;
-        } while (uVar9 < *puVar8);
-      }
+      lVar5 = ZEXT48(&stack0x00000000) - 0xbc;
+      CG_CalcCrosshairPosition(pcVar2,(float *)lVar5,&local_c0);
+      dVar14 = dVar13;
+      local_bc = ScrPlace_ApplyX(pSVar3,local_bc,(int)lVar5);
+      dVar13 = (double)local_c0;
+    }
+    else {
+      local_bc = ScrPlace_ApplyX(pSVar3,0.0,(int)lVar5);
+      dVar14 = dVar13;
+    }
+    uVar6 = 2;
+    local_c0 = ScrPlace_ApplyY(pSVar3,(float)dVar13,(int)lVar5);
+    uVar8 = 0;
+    if (*puVar7 != 0) {
+      dVar16 = 1.0;
+      dVar13 = 0.0062831854447722435;
+      dVar15 = 0.5;
+      phVar9 = pcVar2->hudElemSound + 0x1e;
+      do {
+        local_b0._0_4_ =
+             ((HudGrenade *)(phVar9 + 2))->origin[0] - (pcVar2->predictedPlayerState).origin[0];
+        local_b0._4_4_ = *(float *)(phVar9 + 3) - (pcVar2->predictedPlayerState).origin[1];
+        local_a8.packed._0_4_ = *(float *)(phVar9 + 4) - (pcVar2->predictedPlayerState).origin[2];
+        fVar1 = *(float *)(phVar9 + 6);
+        local_a0 = ((cg_hudGrenadeColorDangerClose->current).value -
+                   (cg_hudGrenadeColorInProximity->current).value) * fVar1 +
+                   (cg_hudGrenadeColorInProximity->current).value;
+        local_9c = ((cg_hudGrenadeColorDangerClose->current).vector[1] -
+                   (cg_hudGrenadeColorInProximity->current).vector[1]) * fVar1 +
+                   (cg_hudGrenadeColorInProximity->current).vector[1];
+        local_98 = ((cg_hudGrenadeColorDangerClose->current).vector[2] -
+                   (cg_hudGrenadeColorInProximity->current).vector[2]) * fVar1 +
+                   (cg_hudGrenadeColorInProximity->current).vector[2];
+        local_94 = ((cg_hudGrenadeColorDangerClose->current).vector[3] -
+                   (cg_hudGrenadeColorInProximity->current).vector[3]) * fVar1 +
+                   (cg_hudGrenadeColorInProximity->current).vector[3];
+        local_b8 = (longlong)pcVar2->time;
+        dVar12 = (double)(float)((double)(float)((double)(cg_hudGrenadePointerPulseMax->current).
+                                                         value -
+                                                (double)(cg_hudGrenadePointerPulseMin->current).
+                                                        value) * dVar15);
+        dVar11 = (double)(float)((double)(cg_hudGrenadePointerPulseMin->current).value + dVar12);
+        dVar10 = sin((double)(float)((double)((cg_hudGrenadePointerPulseFreq->current).value *
+                                             (float)local_b8) * dVar13));
+        dVar11 = (double)(float)((double)(float)dVar10 * dVar12 + dVar11);
+        dVar10 = dVar16;
+        if ((float)(dVar11 - dVar16) < 0.0) {
+          dVar10 = dVar11;
+        }
+        dVar12 = dVar14;
+        if (-dVar11 < 0.0) {
+          dVar12 = dVar10;
+        }
+        local_94 = (float)dVar12;
+        DrawGrenadePointer(param_1,local_bc,local_c0,(float *)lVar5,(float *)uVar6);
+        phVar9 = phVar9 + 5;
+        DrawGrenadeIcon(param_1,local_bc,local_c0,(float *)lVar5,(float *)uVar6,(Material *)local_b0
+                       );
+        uVar8 = uVar8 + 1;
+      } while (uVar8 < *puVar7);
     }
   }
-LAB_822ba5f0:
-  __restfpr_26();
-  __restgprlr_21();
   return;
 }
 

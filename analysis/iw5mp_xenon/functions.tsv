@@ -436,9 +436,9 @@ va	size	ghidra_name	pdb_name	map_name	source	line	thunk_of	instructions	bytes_sh
 822781E8	136	PM_trace	PM_trace	?PM_trace@@YAXPBUpmove_t@@PAUtrace_t@@QBM2PBUBounds@@HH@Z	bgame/bg_pmove.cpp	302		34	35cb9abe8b5430008c167a88dcdbf682dddb296aaa799749f0f113f6264f7ebe	ok
 82278220	140	PM_traceHandler	PM_traceHandler	?PM_traceHandler@@YAXEPAUtrace_t@@QBM1PBUBounds@@HH@Z	bgame/bg_pmove.cpp	308		35	b82c49ce8a6fd86ad6328951be86bb2bbcb7c248ff211d46575f39b5fd98f563	ok
 822782B0	64	PM_debugLine	PM_debugLine	?PM_debugLine@@YAXEQBM00HH@Z	bgame/bg_pmove.cpp	347		16	146ee8b90ec0270e7685caedb40bcd41c3ec8062171ae4b76f0cf526cd0a115c	ok
-822782F8	80	PM_getPlayerTurretWeapon	PM_getPlayerTurretWeapon	?PM_getPlayerTurretWeapon@@YA?ATWeapon@@EPBUplayerState_s@@@Z	bgame/bg_pmove.cpp	359		20	9cdd67fbdb929d3607b1ea91d28871f8404900d1a702fcb172380f089dbdb802	ok
+822782F8	164	PM_getPlayerTurretWeapon	PM_getPlayerTurretWeapon	?PM_getPlayerTurretWeapon@@YA?ATWeapon@@EPBUplayerState_s@@@Z	bgame/bg_pmove.cpp	359		41	6e0186c566907cc4ded74bcf76c4491d0b0020d60cdc7f29f26e4a494ad48547	ok
 82278348	72	PM_getEntityOrigin	PM_getEntityOrigin	?PM_getEntityOrigin@@YAHEHQAM@Z	bgame/bg_pmove.cpp	374		18	3c0b8bf8c2f717edc428b735eca6db93b8ec8e78413668741856601969deb49c	ok
-82278390	460	PM_getEntityVelocity	PM_getEntityVelocity	?PM_getEntityVelocity@@YAHEHQAM@Z	bgame/bg_pmove.cpp	386		115	6927dfae9735475749f00fc94c6eee04688f95bebb1f1fa1ea68ebcde6938783	ok
+82278390	376	PM_getEntityVelocity	PM_getEntityVelocity	?PM_getEntityVelocity@@YAHEHQAM@Z	bgame/bg_pmove.cpp	386		94	82d03836677cad374b7527a7403ee41d953f4798791a5ec6c327bde742633b86	ok
 822783D8	20	PM_AddEvent	PM_AddEvent	?PM_AddEvent@@YAXPAUplayerState_s@@I@Z	bgame/bg_pmove.cpp	401		5	c9d5c59f80e6bbc0af2f4524100b7eea2102ff54e08ecb781c2948e8c38270d5	ok
 822783F0	188	PM_AddTouchEnt	PM_AddTouchEnt	?PM_AddTouchEnt@@YAXPAUpmove_t@@H@Z	bgame/bg_pmove.cpp	407		47	c735f9a82d454e73b53dd545aac5ebeb7341f65ab0597bdd68bcbffb7a81a2c4	ok
 822784B0	96	PM_ClipVelocity	PM_ClipVelocity	?PM_ClipVelocity@@YAXQBM0QAM@Z	bgame/bg_pmove.cpp	441		24	3081433033d71dc43a19251ff3a525230d530ec013e092807c7b840bc65121e8	ok

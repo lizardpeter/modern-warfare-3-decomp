@@ -57,25 +57,18 @@ HINSTANCE__ * LoadLibraryA(char *param_1)
 
 // 828AB008  XGetModuleSection  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/loader.c:144)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 int XGetModuleSection(void *param_1,char *param_2,void **param_3,ulong *param_4)
 
 {
-  undefined8 uVar1;
-  long lVar2;
-  int iVar3;
-  longlong lVar4;
-  longlong lVar5;
-  longlong lVar6;
+  long lVar1;
   
-  lVar6 = (longlong)(int)param_4;
-  lVar5 = (longlong)(int)param_3;
-  lVar4 = (longlong)(int)param_2;
-  uVar1 = __savegprlr_28(param_1,lVar4,lVar5,lVar6);
-  lVar2 = XexGetModuleSection(uVar1,lVar4,lVar5,lVar6);
-  if (-1 >= lVar2) {
-    XapiSetLastNTError(lVar2);
+  lVar1 = XexGetModuleSection(param_1,param_2,param_3,param_4);
+  if (-1 >= lVar1) {
+    XapiSetLastNTError(lVar1);
   }
-  iVar3 = __restgprlr_28(-1 < lVar2);
-  return iVar3;
+  return (int)(-1 < lVar1);
 }
 

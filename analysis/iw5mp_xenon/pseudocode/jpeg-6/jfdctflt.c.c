@@ -2,6 +2,9 @@
 
 // 827C5618  jpeg_fdct_float  (jpeg-6/jfdctflt.c:60)
 
+/* WARNING: Function: __savefpr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr replaced with injection: xenon_save_restore */
+
 void jpeg_fdct_float(float *param_1)
 
 {
@@ -40,7 +43,6 @@ void jpeg_fdct_float(float *param_1)
   float fVar33;
   float fVar34;
   
-  __savefpr();
   fVar5 = param_1[2] - param_1[5];
   fVar6 = param_1[2] + param_1[5];
   fVar1 = *param_1 - param_1[7];
@@ -476,7 +478,6 @@ void jpeg_fdct_float(float *param_1)
   param_1[0x1f] = fVar4 - fVar1;
   param_1[0xf] = fVar3 + fVar2;
   param_1[0x3f] = fVar3 - fVar2;
-  __restfpr();
   return;
 }
 

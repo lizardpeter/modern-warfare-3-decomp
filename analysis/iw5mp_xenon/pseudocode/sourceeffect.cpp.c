@@ -107,28 +107,26 @@ XAUDIO::CSourceEffect::Initialize
 
 // 828D3698  CompletePacket  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/sourceeffect.cpp:225)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 XAUDIOPACKETCTX * __thiscall
 XAUDIO::CSourceEffect::CompletePacket
-          (CSourceEffect *this,XAUDIOPACKETCTX *param_1,undefined4 param_2)
+          (CSourceEffect *this,XAUDIOPACKETCTX *param_1,T_HRESULT param_2)
 
 {
-  CSourceStream *this_00;
   XAUDIOPACKETCTX *pXVar1;
-  undefined4 local_30;
+  _func___cdecl_void_XAUDIOSOURCEFXPACKETCALLBACK_ptr *local_30;
   void *local_2c;
   undefined4 local_28;
   
-  this_00 = (CSourceStream *)__savegprlr_29(this);
-  pXVar1 = CSourceStream::CompletePacket(this_00,param_1,param_2);
-  if ((pXVar1 != (XAUDIOPACKETCTX *)0x0) && ((code *)this_00[1]._padding_ != (code *)0x0)) {
-    local_30._0_1_ = this_00[-0xffffffff00000001].m_State;
-    local_30._1_1_ = this_00[-0xffffffff00000001].m_Flags;
-    local_30._2_2_ = this_00[-0xffffffff00000001].m_VolumeFadeFrameRemaining;
+  pXVar1 = CSourceStream::CompletePacket((CSourceStream *)this,param_1,param_2);
+  if ((pXVar1 != (XAUDIOPACKETCTX *)0x0) && ((code *)this->_padding_ != (code *)0x0)) {
+    local_30 = this[-1].m_pfnPacketLoopCallback;
     local_2c = (pXVar1->Packet).pContext;
     local_28 = param_2;
-    (*(code *)this_00[1]._padding_)(&local_30);
+    (*(code *)this->_padding_)(&local_30);
   }
-  pXVar1 = (XAUDIOPACKETCTX *)__restgprlr_29(pXVar1);
   return pXVar1;
 }
 

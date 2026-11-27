@@ -96,33 +96,33 @@ int Glass_RandomInt(int param_1)
 
 // 82426DD8  Glass_PackVertex  (EffectsCore/fx_glass_crack_types.h:166)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void Glass_PackVertex(float *param_1,FxGlassVertex *param_2)
 
 {
-  float *pfVar1;
-  short sVar2;
+  short sVar1;
+  double dVar2;
   double dVar3;
   double dVar4;
-  double dVar5;
   
-  pfVar1 = (float *)__savegprlr_27(param_1);
-  dVar5 = 32.0;
-  dVar4 = 0.5;
-  dVar3 = floor((double)(*pfVar1 * 32.0 + 0.5));
-  sVar2 = (short)(int)dVar3;
-  if ((int)dVar3 != (int)sVar2) {
+  dVar4 = 32.0;
+  dVar3 = 0.5;
+  dVar2 = floor((double)(*param_1 * 32.0 + 0.5));
+  sVar1 = (short)(int)dVar2;
+  if ((int)dVar2 != (int)sVar1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\../universal/assertive.h"
                     ,0x1ce,0,"i == static_cast< Type >( i )\n\t%i, %i");
   }
-  param_2->x = sVar2;
-  dVar3 = floor((double)(float)((double)pfVar1[1] * dVar5 + dVar4));
-  sVar2 = (short)(int)dVar3;
-  if ((int)dVar3 != (int)sVar2) {
+  param_2->x = sVar1;
+  dVar2 = floor((double)(float)((double)param_1[1] * dVar4 + dVar3));
+  sVar1 = (short)(int)dVar2;
+  if ((int)dVar2 != (int)sVar1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\../universal/assertive.h"
                     ,0x1ce,0,"i == static_cast< Type >( i )\n\t%i, %i");
   }
-  param_2->y = sVar2;
-  __restgprlr_27();
+  param_2->y = sVar1;
   return;
 }
 
@@ -175,34 +175,32 @@ void Glass_QuantizeVertex(float *param_1)
 
 // 8241FF80  Glass_FreeCrackEdge  (EffectsCore/fx_glass_crack.cpp:180)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void Glass_FreeCrackEdge(FxGlassCrackWork *param_1,FxGlassCrackEdge *param_2)
 
 {
-  int iVar1;
-  ulonglong uVar2;
-  longlong lVar3;
-  longlong lVar4;
+  FxGlassCrackEdge **ppFVar1;
+  longlong lVar2;
   
-  uVar2 = (ulonglong)(int)param_2;
-  iVar1 = __savegprlr_28(param_1);
-  if ((uVar2 & 0xffffffff) == 0) {
+  if (param_2 == (FxGlassCrackEdge *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_glass_crack.cpp"
                     ,0xb5,0,"%s");
   }
-  if (iVar1 == 0) {
+  if (param_1 == (FxGlassCrackWork *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_glass_crack.cpp"
                     ,0xb6,0,"%s");
   }
-  lVar3 = uVar2 - 4;
-  lVar4 = 6;
+  ppFVar1 = &param_2[-1].field0_0x0._s_0.next;
+  lVar2 = 6;
   do {
-    lVar3 = lVar3 + 4;
-    *(undefined4 *)lVar3 = 0xffffffff;
-    lVar4 = lVar4 + -1;
-  } while (lVar4 != 0);
-  *(undefined4 *)uVar2 = *(undefined4 *)(iVar1 + 0x3bfc);
-  *(undefined4 **)(iVar1 + 0x3bfc) = (undefined4 *)uVar2;
-  __restgprlr_28();
+    ppFVar1 = ppFVar1 + 1;
+    *ppFVar1 = (FxGlassCrackEdge *)0xffffffff;
+    lVar2 = lVar2 + -1;
+  } while (lVar2 != 0);
+  (param_2->field0_0x0).nextFree = param_1->firstFreeEdge;
+  param_1->firstFreeEdge = param_2;
   return;
 }
 
@@ -234,41 +232,35 @@ FxGlassCrackEdge * Glass_GetFreeEdge(FxGlassCrackWork *param_1)
 
 // 824200B8  Glass_AllocCrackEdge  (EffectsCore/fx_glass_crack.cpp:214)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 FxGlassCrackEdge *
 Glass_AllocCrackEdge(FxGlassCrackWork *param_1,uint param_2,uint param_3,uint param_4,uchar param_5)
 
 {
-  FxGlassCrackWork *pFVar1;
-  FxGlassCrackEdge *pFVar2;
-  ulonglong uVar3;
-  ulonglong uVar4;
-  uchar uVar5;
+  FxGlassCrackEdge *pFVar1;
   
-  uVar5 = (uchar)param_4;
-  uVar4 = (ulonglong)(int)param_3;
-  uVar3 = (ulonglong)(int)param_2;
-  pFVar1 = (FxGlassCrackWork *)__savegprlr_26(param_1);
-  if ((uVar3 & 0xffffffff) == (uVar4 & 0xffffffff)) {
+  if (param_2 == param_3) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_glass_crack.cpp"
                     ,0xd9,0,"%s");
   }
-  if ((ulonglong)pFVar1->ptCount <= (uVar3 & 0xffffffff)) {
+  if (param_1->ptCount <= param_2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_glass_crack.cpp"
                     ,0xda,0,"i0 doesn\'t index work->ptCount\n\t%i not in [0, %i)");
   }
-  if ((ulonglong)pFVar1->ptCount <= (uVar4 & 0xffffffff)) {
+  if (param_1->ptCount <= param_3) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_glass_crack.cpp"
                     ,0xdb,0,"i1 doesn\'t index work->ptCount\n\t%i not in [0, %i)");
   }
-  pFVar2 = Glass_GetFreeEdge(pFVar1);
-  (pFVar2->field0_0x0)._s_0.i0 = (uchar)uVar3;
-  (pFVar2->field0_0x0)._s_0.i1 = (uchar)uVar4;
-  (pFVar2->field0_0x0)._s_0.loopIndex = uVar5;
-  (pFVar2->field0_0x0)._s_0.type = param_5;
-  (pFVar2->field0_0x0)._s_0.twin = (FxGlassCrackEdge *)0x0;
-  Glass_SetCrackEdgeDelta(pFVar1,pFVar2);
-  pFVar2 = (FxGlassCrackEdge *)__restgprlr_26(pFVar2);
-  return pFVar2;
+  pFVar1 = Glass_GetFreeEdge(param_1);
+  (pFVar1->field0_0x0)._s_0.i0 = (uchar)param_2;
+  (pFVar1->field0_0x0)._s_0.i1 = (uchar)param_3;
+  (pFVar1->field0_0x0)._s_0.loopIndex = (uchar)param_4;
+  (pFVar1->field0_0x0)._s_0.type = param_5;
+  (pFVar1->field0_0x0)._s_0.twin = (FxGlassCrackEdge *)0x0;
+  Glass_SetCrackEdgeDelta(param_1,pFVar1);
+  return pFVar1;
 }
 
 
@@ -295,61 +287,56 @@ FxGlassCrackEdge * Glass_AllocCrackEdgeTwin(FxGlassCrackWork *param_1,FxGlassCra
 
 // 82420210  Glass_FreeLoopEdges  (EffectsCore/fx_glass_crack.cpp:260)
 
+/* WARNING: Function: __savegprlr_20 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_20 replaced with injection: xenon_save_restore */
+
 void Glass_FreeLoopEdges(FxGlassCrackWork *param_1,FxGlassCrackEdge **param_2,uint param_3)
 
 {
-  undefined4 *puVar1;
-  undefined4 uVar2;
-  ulonglong uVar3;
-  int iVar4;
-  undefined4 *puVar5;
-  ulonglong uVar6;
-  int *piVar8;
-  longlong lVar7;
-  undefined4 *puVar9;
-  longlong lVar10;
+  FxGlassCrackEdge *pFVar1;
+  FxGlassCrackEdge *pFVar2;
+  FxGlassCrackEdge **ppFVar3;
+  longlong lVar4;
+  FxGlassCrackEdge *pFVar5;
+  longlong lVar6;
   
-  uVar6 = (ulonglong)(int)param_3;
-  lVar7 = (longlong)(int)param_2;
-  iVar4 = __savegprlr_20(param_1);
-  uVar3 = uVar6 & 0xffffffff;
-  while (uVar3 != 0) {
-    piVar8 = (int *)lVar7;
-    if (*piVar8 == 0) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_glass_crack.cpp"
-                      ,0x10b,0,"%s");
-    }
-    puVar9 = (undefined4 *)*piVar8;
+  lVar4 = (longlong)(int)param_3;
+  if (param_3 != 0) {
     do {
-      if (puVar9 == (undefined4 *)0x0) {
+      if (*param_2 == (FxGlassCrackEdge *)0x0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_glass_crack.cpp"
-                        ,0x10f,0,"%s");
+                        ,0x10b,0,"%s");
       }
-      if (puVar9[5] == 0) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_glass_crack.cpp"
-                        ,0x110,0,"%s");
-      }
-      puVar1 = (undefined4 *)puVar9[5];
-      if (iVar4 == 0) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_glass_crack.cpp"
-                        ,0xb6,0,"%s");
-      }
-      puVar5 = puVar9 + -1;
-      lVar10 = 6;
+      pFVar5 = *param_2;
       do {
-        puVar5 = puVar5 + 1;
-        *puVar5 = 0xffffffff;
-        lVar10 = lVar10 + -1;
-      } while (lVar10 != 0);
-      uVar2 = *(undefined4 *)(iVar4 + 0x3bfc);
-      *(undefined4 **)(iVar4 + 0x3bfc) = puVar9;
-      *puVar9 = uVar2;
-    } while ((puVar1 != (undefined4 *)0x0) && (puVar9 = puVar1, puVar1 != (undefined4 *)*piVar8));
-    lVar7 = lVar7 + 4;
-    uVar6 = uVar6 - 1;
-    uVar3 = uVar6;
+        if (pFVar5 == (FxGlassCrackEdge *)0x0) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_glass_crack.cpp"
+                          ,0x10f,0,"%s");
+        }
+        if ((pFVar5->field0_0x0)._s_0.next == (FxGlassCrackEdge *)0x0) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_glass_crack.cpp"
+                          ,0x110,0,"%s");
+        }
+        pFVar1 = (pFVar5->field0_0x0)._s_0.next;
+        if (param_1 == (FxGlassCrackWork *)0x0) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_glass_crack.cpp"
+                          ,0xb6,0,"%s");
+        }
+        ppFVar3 = &pFVar5[-1].field0_0x0._s_0.next;
+        lVar6 = 6;
+        do {
+          ppFVar3 = ppFVar3 + 1;
+          *ppFVar3 = (FxGlassCrackEdge *)0xffffffff;
+          lVar6 = lVar6 + -1;
+        } while (lVar6 != 0);
+        pFVar2 = param_1->firstFreeEdge;
+        param_1->firstFreeEdge = pFVar5;
+        (pFVar5->field0_0x0).nextFree = pFVar2;
+      } while ((pFVar1 != (FxGlassCrackEdge *)0x0) && (pFVar5 = pFVar1, pFVar1 != *param_2));
+      lVar4 = lVar4 + -1;
+      param_2 = param_2 + 1;
+    } while (lVar4 != 0);
   }
-  __restgprlr_20();
   return;
 }
 
@@ -407,105 +394,101 @@ float Glass_GetAngleMetricForDirs(float *param_1,float *param_2)
 
 // 82420480  Glass_FindExistingEdgeBeforeNewEdge  (EffectsCore/fx_glass_crack.cpp:335)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
+
 FxGlassCrackEdge *
 Glass_FindExistingEdgeBeforeNewEdge(FxGlassCrackWork *param_1,uint param_2,uint param_3)
 
 {
   float fVar1;
   float fVar2;
-  int iVar3;
-  int iVar4;
-  int iVar5;
-  int iVar6;
-  float fVar7;
-  float fVar8;
+  float fVar3;
+  float fVar4;
+  FxGlassCrackEdge *pFVar5;
+  float fVar6;
+  FxGlassCrackLoop *pFVar7;
+  uint uVar8;
   int iVar9;
   FxGlassCrackEdge *pFVar10;
-  ulonglong uVar11;
-  ulonglong uVar12;
-  int *piVar13;
-  int iVar14;
-  int iVar15;
-  int iVar16;
-  double dVar17;
-  double dVar18;
-  double dVar19;
+  FxGlassCrackEdge *pFVar11;
+  double dVar12;
+  double dVar13;
+  double dVar14;
   float local_70;
   float local_6c;
   
-  uVar12 = (ulonglong)(int)param_3;
-  uVar11 = (ulonglong)(int)param_2;
-  iVar9 = __savegprlr_23(param_1);
-  iVar14 = *(int *)(iVar9 + 0x3c00);
-  iVar15 = 0;
+  uVar8 = param_1->loopCount;
+  iVar9 = 0;
   fVar1 = 3.4028235e+38;
-  iVar16 = 0;
-  if (iVar14 != 0) {
-    dVar19 = 1.0;
-    piVar13 = (int *)(iVar14 * 0x14 + iVar9 + 0x3c04);
-    dVar18 = -1.0;
-    fVar7 = local_6c;
-    fVar8 = local_70;
+  pFVar11 = (FxGlassCrackEdge *)0x0;
+  if (uVar8 != 0) {
+    dVar14 = 1.0;
+    pFVar7 = param_1->loops + uVar8;
+    dVar13 = -1.0;
+    fVar2 = local_6c;
+    fVar6 = local_70;
     do {
-      piVar13 = piVar13 + -5;
-      iVar4 = *piVar13;
-      iVar14 = iVar14 + -1;
-      iVar3 = iVar4;
+      pFVar7 = pFVar7 + -1;
+      pFVar5 = pFVar7->firstEdge;
+      uVar8 = uVar8 - 1;
+      pFVar10 = pFVar5;
       do {
-        if ((ulonglong)*(byte *)(iVar3 + 1) == (uVar11 & 0xffffffff)) {
-          if (iVar15 == 0) {
-            iVar15 = 1;
-            iVar16 = iVar3;
+        if ((pFVar10->field0_0x0)._s_0.i1 == param_2) {
+          if (iVar9 == 0) {
+            iVar9 = 1;
+            pFVar11 = pFVar10;
           }
           else {
-            if (iVar15 == 1) {
-              iVar5 = (int)((uVar11 & 0xffffffff) << 3) + iVar9;
-              iVar6 = (int)((uVar12 & 0xffffffff) << 3) + iVar9;
-              local_70 = *(float *)(iVar6 + 0x3fc) - *(float *)(iVar5 + 0x3fc);
-              local_6c = *(float *)(iVar6 + 0x400) - *(float *)(iVar5 + 0x400);
+            if (iVar9 == 1) {
+              local_70 = param_1->pts[param_3].xy[0] - param_1->pts[param_2].xy[0];
+              local_6c = param_1->pts[param_3].xy[1] - param_1->pts[param_2].xy[1];
               Vec2Normalize(&local_70);
-              dVar17 = dVar19;
-              if (*(float *)(iVar16 + 0xc) * local_70 - *(float *)(iVar16 + 8) * local_6c < 0.0) {
-                dVar17 = dVar18;
+              fVar1 = (pFVar11->field0_0x0)._s_0.dir[1];
+              fVar2 = (pFVar11->field0_0x0)._s_0.dir[0];
+              dVar12 = dVar14;
+              if (fVar1 * local_70 - fVar2 * local_6c < 0.0) {
+                dVar12 = dVar13;
               }
-              fVar1 = (float)(dVar17 * (double)(float)((double)(*(float *)(iVar16 + 8) * local_70 +
-                                                               *(float *)(iVar16 + 0xc) * local_6c)
-                                                      - dVar19));
-              fVar7 = local_6c;
-              fVar8 = local_70;
+              fVar1 = (float)(dVar12 * (double)(float)((double)(fVar2 * local_70 + fVar1 * local_6c)
+                                                      - dVar14));
+              fVar2 = local_6c;
+              fVar6 = local_70;
             }
-            dVar17 = dVar19;
-            if (*(float *)(iVar3 + 0xc) * fVar8 - *(float *)(iVar3 + 8) * fVar7 < 0.0) {
-              dVar17 = dVar18;
+            fVar3 = (pFVar10->field0_0x0)._s_0.dir[1];
+            fVar4 = (pFVar10->field0_0x0)._s_0.dir[0];
+            dVar12 = dVar14;
+            if (fVar3 * fVar6 - fVar4 * fVar2 < 0.0) {
+              dVar12 = dVar13;
             }
-            fVar2 = (float)(dVar17 * (double)(float)((double)(*(float *)(iVar3 + 8) * fVar8 +
-                                                             *(float *)(iVar3 + 0xc) * fVar7) -
-                                                    dVar19));
-            if (fVar2 < fVar1) {
-              fVar1 = fVar2;
-              iVar16 = iVar3;
+            fVar3 = (float)(dVar12 * (double)(float)((double)(fVar4 * fVar6 + fVar3 * fVar2) -
+                                                    dVar14));
+            if (fVar3 < fVar1) {
+              fVar1 = fVar3;
+              pFVar11 = pFVar10;
             }
-            iVar15 = iVar15 + 1;
+            iVar9 = iVar9 + 1;
           }
         }
-        iVar3 = *(int *)(iVar3 + 0x14);
-      } while (iVar3 != iVar4);
-      if (iVar16 != 0) {
-        pFVar10 = (FxGlassCrackEdge *)__restgprlr_23(iVar16);
-        return pFVar10;
+        pFVar10 = (pFVar10->field0_0x0)._s_0.next;
+      } while (pFVar10 != pFVar5);
+      if (pFVar11 != (FxGlassCrackEdge *)0x0) {
+        return pFVar11;
       }
-    } while (iVar14 != 0);
+    } while (uVar8 != 0);
   }
   if (alwaysfails == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_glass_crack.cpp"
                     ,0x183,1,"inconceivable");
   }
-  pFVar10 = (FxGlassCrackEdge *)__restgprlr_23(0);
-  return pFVar10;
+  return (FxGlassCrackEdge *)0x0;
 }
 
 
 // 82420630  Glass_MakeOuterPieceLoop  (EffectsCore/fx_glass_crack.cpp:393)
+
+/* WARNING: Function: __savegprlr_20 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_20 replaced with injection: xenon_save_restore */
 
 void Glass_MakeOuterPieceLoop(FxGlassCrackWork *param_1)
 
@@ -513,70 +496,70 @@ void Glass_MakeOuterPieceLoop(FxGlassCrackWork *param_1)
   byte bVar1;
   FxGlassPieceState *pFVar2;
   uint uVar3;
-  FxGlassCrackWork *pFVar4;
+  FxGlassCrackEdge *pFVar4;
   FxGlassCrackEdge *pFVar5;
-  FxGlassCrackEdge *pFVar6;
-  bool bVar7;
+  bool bVar6;
+  FxGlassCrackLoop *pFVar7;
   FxGlassCrackLoop *pFVar8;
-  FxGlassCrackLoop *pFVar9;
-  FxGlassGeometryData *pFVar10;
-  uint *puVar11;
-  ulonglong uVar12;
+  FxGlassGeometryData *pFVar9;
+  uint *puVar10;
+  ulonglong uVar11;
+  uint uVar12;
   uint uVar13;
-  uint uVar14;
   
-  pFVar4 = (FxGlassCrackWork *)__savegprlr_20(param_1);
-  pFVar2 = pFVar4->pieceState;
-  pFVar4->ptCount = 0;
+  pFVar2 = param_1->pieceState;
+  param_1->ptCount = 0;
   bVar1 = pFVar2->vertCount;
-  pFVar10 = pFVar4->glassSys->geoData + pFVar2->geoDataStart;
-  for (uVar12 = (ulonglong)bVar1; uVar12 != 0; uVar12 = uVar12 - 1) {
-    Glass_UnpackAndAddVertex(pFVar4,pFVar10->vert);
-    pFVar10 = pFVar10 + 1;
+  pFVar9 = param_1->glassSys->geoData + pFVar2->geoDataStart;
+  for (uVar11 = (ulonglong)bVar1; uVar11 != 0; uVar11 = uVar11 - 1) {
+    Glass_UnpackAndAddVertex(param_1,pFVar9->vert);
+    pFVar9 = pFVar9 + 1;
   }
-  pFVar8 = pFVar4->loops;
-  pFVar4->loopCount = 1;
-  uVar12 = (ulonglong)bVar1 - 1;
-  uVar13 = 0;
-  puVar11 = (uint *)&g_bitShift;
-  pFVar9 = pFVar8;
-  if (uVar12 != 0) {
+  pFVar7 = param_1->loops;
+  param_1->loopCount = 1;
+  uVar11 = (ulonglong)bVar1 - 1;
+  uVar12 = 0;
+  puVar10 = (uint *)&g_bitShift;
+  pFVar8 = pFVar7;
+  if (uVar11 != 0) {
     uVar3 = pFVar2->supportMask;
-    uVar14 = uVar13;
+    uVar13 = uVar12;
     do {
-      if (0x20 < uVar14) {
+      if (0x20 < uVar13) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_math.h",
                         0x475,0,"count doesn\'t index 33\n\t%i not in [0, %i)");
       }
-      uVar13 = uVar14 + 1;
-      pFVar5 = Glass_AllocCrackEdge(pFVar4,uVar14,uVar13,0,(*puVar11 & uVar3) == 0);
-      pFVar9->firstEdge = pFVar5;
-      pFVar9 = (FxGlassCrackLoop *)&(pFVar5->field0_0x0)._s_0.next;
-      puVar11 = puVar11 + 1;
-      uVar14 = uVar13;
-    } while ((ulonglong)uVar13 < (uVar12 & 0xffffffff));
+      uVar12 = uVar13 + 1;
+      pFVar4 = Glass_AllocCrackEdge(param_1,uVar13,uVar12,0,(*puVar10 & uVar3) == 0);
+      pFVar8->firstEdge = pFVar4;
+      pFVar8 = (FxGlassCrackLoop *)((int)&pFVar4->field0_0x0 + 0x14);
+      puVar10 = puVar10 + 1;
+      uVar13 = uVar12;
+    } while ((ulonglong)uVar12 < (uVar11 & 0xffffffff));
   }
   uVar3 = pFVar2->supportMask;
-  if (0x20 < uVar13) {
+  if (0x20 < uVar12) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_math.h",0x475,0,
                     "count doesn\'t index 33\n\t%i not in [0, %i)");
   }
-  pFVar6 = Glass_AllocCrackEdge
-                     (pFVar4,uVar13,0,0,(*(uint *)(&g_bitShift + uVar13 * 4) & uVar3) == 0);
-  pFVar9->firstEdge = pFVar6;
-  pFVar5 = pFVar8->firstEdge;
-  (pFVar6->field0_0x0)._s_0.next = pFVar5;
-  bVar7 = Glass_IsEdgeLoopBackwards(pFVar4,pFVar5);
-  if (bVar7) {
+  pFVar5 = Glass_AllocCrackEdge
+                     (param_1,uVar12,0,0,(*(uint *)(&g_bitShift + uVar12 * 4) & uVar3) == 0);
+  pFVar8->firstEdge = pFVar5;
+  pFVar4 = pFVar7->firstEdge;
+  (pFVar5->field0_0x0)._s_0.next = pFVar4;
+  bVar6 = Glass_IsEdgeLoopBackwards(param_1,pFVar4);
+  if (bVar6) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_glass_crack.cpp"
                     ,0x1a5,0,"%s");
   }
-  __restgprlr_20();
   return;
 }
 
 
 // 824207C8  Glass_MakeHolePieceLoops  (EffectsCore/fx_glass_crack.cpp:426)
+
+/* WARNING: Function: __savegprlr_15 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_15 replaced with injection: xenon_save_restore */
 
 void Glass_MakeHolePieceLoops(FxGlassCrackWork *param_1)
 
@@ -588,108 +571,105 @@ void Glass_MakeHolePieceLoops(FxGlassCrackWork *param_1)
   uint uVar5;
   uint uVar6;
   FxGlassCrackEdge **ppFVar7;
-  FxGlassCrackWork *pFVar8;
+  FxGlassCrackEdge *pFVar8;
   FxGlassCrackEdge *pFVar9;
+  bool bVar11;
   FxGlassCrackEdge *pFVar10;
-  bool bVar12;
-  FxGlassCrackEdge *pFVar11;
-  int iVar13;
-  longlong lVar14;
-  uint uVar15;
-  FxGlassGeometryData *pFVar16;
-  FxGlassCrackLoop *pFVar17;
+  int iVar12;
+  longlong lVar13;
+  uint uVar14;
+  FxGlassGeometryData *pFVar15;
+  FxGlassCrackLoop *pFVar16;
+  uint uVar17;
   uint uVar18;
-  uint uVar19;
   
-  pFVar8 = (FxGlassCrackWork *)__savegprlr_15(param_1);
-  pFVar3 = pFVar8->pieceState;
+  pFVar3 = param_1->pieceState;
   bVar1 = pFVar3->holeDataCount;
   if (bVar1 != 0) {
-    uVar18 = 0;
-    iVar13 = (uint)pFVar3->vertCount + (uint)pFVar3->geoDataStart;
-    pFVar4 = pFVar8->glassSys->geoData;
+    uVar17 = 0;
+    iVar12 = (uint)pFVar3->vertCount + (uint)pFVar3->geoDataStart;
+    pFVar4 = param_1->glassSys->geoData;
     do {
-      if (0x1f < pFVar8->loopCount) {
+      if (0x1f < param_1->loopCount) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_glass_crack.cpp"
                         ,0x1c5,0,
                         "work->loopCount doesn\'t index ARRAY_COUNT( work->loops )\n\t%i not in [0, %i)"
                        );
       }
-      uVar5 = pFVar8->ptCount;
-      uVar15 = (uint)pFVar4[iVar13 + uVar18].hole.uniqueVertCount;
-      if (uVar15 != 0) {
-        pFVar16 = pFVar4 + iVar13 + uVar18 + 1;
-        uVar19 = uVar15;
+      uVar5 = param_1->ptCount;
+      uVar14 = (uint)pFVar4[iVar12 + uVar17].hole.uniqueVertCount;
+      if (uVar14 != 0) {
+        pFVar15 = pFVar4 + iVar12 + uVar17 + 1;
+        uVar18 = uVar14;
         do {
-          Glass_UnpackAndAddVertex(pFVar8,pFVar16->vert);
-          uVar19 = uVar19 - 1;
-          pFVar16 = pFVar16 + 1;
-        } while (uVar19 != 0);
+          Glass_UnpackAndAddVertex(param_1,pFVar15->vert);
+          uVar18 = uVar18 - 1;
+          pFVar15 = pFVar15 + 1;
+        } while (uVar18 != 0);
       }
-      bVar2 = (&pFVar4->hole)[iVar13 + uVar18].touchVert;
+      bVar2 = (&pFVar4->hole)[iVar12 + uVar17].touchVert;
       if (bVar2 == 0xff) {
-        pFVar17 = pFVar8->loops + pFVar8->loopCount;
-        uVar19 = uVar5;
-        uVar6 = uVar15;
+        pFVar16 = param_1->loops + param_1->loopCount;
+        uVar18 = uVar5;
+        uVar6 = uVar14;
         while( true ) {
           uVar6 = uVar6 - 1;
           if (uVar6 == 0) break;
-          pFVar11 = Glass_AllocCrackEdge(pFVar8,uVar19,uVar19 + 1,pFVar8->loopCount,'\x01');
-          pFVar17->firstEdge = pFVar11;
-          pFVar17 = (FxGlassCrackLoop *)&(pFVar11->field0_0x0)._s_0.next;
-          uVar19 = uVar19 + 1;
+          pFVar10 = Glass_AllocCrackEdge(param_1,uVar18,uVar18 + 1,param_1->loopCount,'\x01');
+          pFVar16->firstEdge = pFVar10;
+          pFVar16 = (FxGlassCrackLoop *)&(pFVar10->field0_0x0)._s_0.next;
+          uVar18 = uVar18 + 1;
         }
-        pFVar9 = Glass_AllocCrackEdge(pFVar8,uVar19,uVar5,pFVar8->loopCount,'\x01');
-        pFVar17->firstEdge = pFVar9;
-        pFVar11 = pFVar8->loops[pFVar8->loopCount].firstEdge;
-        (pFVar9->field0_0x0)._s_0.next = pFVar11;
-        bVar12 = Glass_IsEdgeLoopBackwards(pFVar8,pFVar11);
-        if (!bVar12) {
+        pFVar8 = Glass_AllocCrackEdge(param_1,uVar18,uVar5,param_1->loopCount,'\x01');
+        pFVar16->firstEdge = pFVar8;
+        pFVar10 = param_1->loops[param_1->loopCount].firstEdge;
+        (pFVar8->field0_0x0)._s_0.next = pFVar10;
+        bVar11 = Glass_IsEdgeLoopBackwards(param_1,pFVar10);
+        if (!bVar11) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_glass_crack.cpp"
                           ,0x1f6,0,"%s");
         }
-        pFVar8->loopCount = pFVar8->loopCount + 1;
+        param_1->loopCount = param_1->loopCount + 1;
       }
       else {
-        if (pFVar8->ptCount <= (uint)bVar2) {
+        if (param_1->ptCount <= (uint)bVar2) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_glass_crack.cpp"
                           ,0x1d0,0,
                           "hole->touchVert doesn\'t index work->ptCount\n\t%i not in [0, %i)");
         }
-        pFVar9 = Glass_FindExistingEdgeBeforeNewEdge(pFVar8,(uint)bVar2,uVar5);
-        pFVar11 = (pFVar9->field0_0x0)._s_0.next;
-        pFVar10 = Glass_AllocCrackEdge
-                            (pFVar8,(uint)bVar2,uVar5,(uint)(pFVar9->field0_0x0)._s_0.loopIndex,
-                             '\x01');
-        (pFVar9->field0_0x0)._s_0.next = pFVar10;
-        uVar19 = uVar15;
+        pFVar8 = Glass_FindExistingEdgeBeforeNewEdge(param_1,(uint)bVar2,uVar5);
+        pFVar10 = (pFVar8->field0_0x0)._s_0.next;
+        pFVar9 = Glass_AllocCrackEdge
+                           (param_1,(uint)bVar2,uVar5,(uint)(pFVar8->field0_0x0)._s_0.loopIndex,
+                            '\x01');
+        (pFVar8->field0_0x0)._s_0.next = pFVar9;
+        uVar18 = uVar14;
         while( true ) {
-          uVar19 = uVar19 - 1;
-          ppFVar7 = &(pFVar10->field0_0x0)._s_0.next;
-          if (uVar19 == 0) break;
-          pFVar10 = Glass_AllocCrackEdge
-                              (pFVar8,uVar5,uVar5 + 1,(uint)(pFVar9->field0_0x0)._s_0.loopIndex,
-                               '\x01');
-          *ppFVar7 = pFVar10;
+          uVar18 = uVar18 - 1;
+          ppFVar7 = &(pFVar9->field0_0x0)._s_0.next;
+          if (uVar18 == 0) break;
+          pFVar9 = Glass_AllocCrackEdge
+                             (param_1,uVar5,uVar5 + 1,(uint)(pFVar8->field0_0x0)._s_0.loopIndex,
+                              '\x01');
+          *ppFVar7 = pFVar9;
           uVar5 = uVar5 + 1;
         }
-        pFVar9 = Glass_AllocCrackEdge
-                           (pFVar8,uVar5,(uint)bVar2,(uint)(pFVar9->field0_0x0)._s_0.loopIndex,
+        pFVar8 = Glass_AllocCrackEdge
+                           (param_1,uVar5,(uint)bVar2,(uint)(pFVar8->field0_0x0)._s_0.loopIndex,
                             '\x01');
-        uVar5 = pFVar8->loopCount;
-        *ppFVar7 = pFVar9;
-        (pFVar9->field0_0x0)._s_0.next = pFVar11;
-        bVar12 = Glass_IsEdgeLoopBackwards(pFVar8,pFVar8->loops[uVar5 - 1].firstEdge);
-        lVar14 = (ulonglong)pFVar8->loopCount - 1;
-        if ((uint)bVar12 != (int)lVar14 - ((pFVar8->loopCount - 2) + (uint)(lVar14 == 0))) {
+        uVar5 = param_1->loopCount;
+        *ppFVar7 = pFVar8;
+        (pFVar8->field0_0x0)._s_0.next = pFVar10;
+        bVar11 = Glass_IsEdgeLoopBackwards(param_1,param_1->loops[uVar5 - 1].firstEdge);
+        lVar13 = (ulonglong)param_1->loopCount - 1;
+        if ((uint)bVar11 != (int)lVar13 - ((param_1->loopCount - 2) + (uint)(lVar13 == 0))) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_glass_crack.cpp"
                           ,0x1e4,0,"%s");
         }
       }
-      uVar18 = uVar15 + uVar18 + 1;
-    } while (uVar18 != bVar1);
+      uVar17 = uVar14 + uVar17 + 1;
+    } while (uVar17 != bVar1);
   }
-  __restgprlr_15();
   return;
 }
 
@@ -729,6 +709,9 @@ void Glass_RenumberLoop(FxGlassCrackEdge *param_1,uchar param_2)
 
 // 82420B08  Glass_MakeCrackPieceLoops  (EffectsCore/fx_glass_crack.cpp:525)
 
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
+
 void Glass_MakeCrackPieceLoops(FxGlassCrackWork *param_1)
 
 {
@@ -742,34 +725,28 @@ void Glass_MakeCrackPieceLoops(FxGlassCrackWork *param_1)
   float fVar8;
   ushort uVar9;
   FxGlassPieceState *pFVar10;
-  uint uVar11;
-  FxGlassCrackWork *pFVar12;
-  FxGlassGeometryData *pFVar13;
-  longlong lVar14;
-  FxGlassCrackEdge *pFVar15;
+  FxGlassGeometryData *pFVar11;
+  FxGlassCrackEdge *pFVar12;
+  FxGlassCrackEdge *pFVar13;
+  FxGlassCrackEdge *pFVar14;
+  float *pfVar15;
   FxGlassCrackEdge *pFVar16;
-  FxGlassCrackEdge *pFVar17;
+  float *pfVar17;
   FxGlassCrackEdge *pFVar18;
   uint uVar19;
-  FxGlassCrackEdge *pFVar22;
-  longlong lVar20;
-  longlong lVar21;
-  uint uVar23;
-  FxGlassCrackEdge **ppFVar24;
-  ulonglong uVar25;
-  ulonglong uVar26;
-  FxGlassCrackEdge *pFVar27;
-  ulonglong uVar28;
-  uint uVar29;
-  int iVar30;
+  FxGlassCrackEdge **ppFVar20;
+  FxGlassCrackEdge *pFVar21;
+  uint uVar22;
+  int iVar23;
+  uint uVar24;
+  uint uVar25;
+  uint uVar26;
+  uint uVar27;
+  uint uVar28;
+  FxGlassGeometryData *pFVar29;
+  uint uVar30;
   uint uVar31;
-  uint uVar32;
-  uint uVar33;
-  FxGlassGeometryData *pFVar35;
-  ulonglong uVar34;
-  uint uVar36;
-  uint uVar37;
-  longlong lVar38;
+  longlong lVar32;
   FxGlassCrackEdge *local_d0;
   FxGlassGeometryData *local_cc;
   char *local_c8;
@@ -782,309 +759,298 @@ void Glass_MakeCrackPieceLoops(FxGlassCrackWork *param_1)
   char *local_ac;
   uint local_a8;
   
-  lVar14 = (longlong)(int)param_1;
-  __savegprlr();
-  pFVar12 = (FxGlassCrackWork *)lVar14;
-  pFVar10 = pFVar12->pieceState;
+  pFVar10 = param_1->pieceState;
   local_a8 = (uint)pFVar10->crackDataCount;
   if (pFVar10->crackDataCount != 0) {
     local_b0 = "afterEdge->loopIndex == loopIndex\n\t%i, %i";
     local_b8 = "backTail->i1 == afterEdge->next->i0\n\t%i, %i";
-    local_cc = pFVar12->glassSys->geoData +
+    local_cc = param_1->glassSys->geoData +
                (uint)pFVar10->holeDataCount + (uint)pFVar10->vertCount + (uint)pFVar10->geoDataStart
     ;
     local_bc = "backHead";
     local_ac = "beforeEdge->loopIndex != loopIndex\n\t%i, %i";
     local_b4 = "afterEdge->i1 == frontHead->i0\n\t%i, %i";
     local_c0 = "frontHead";
-    uVar33 = 0;
+    uVar28 = 0;
     local_c4 = "work->loopCount doesn\'t index ARRAY_COUNT( work->loops )\n\t%i not in [0, %i)";
     local_c8 = "crack->endVertIndex == GLASS_VERT_INDEX_NONE";
     do {
-      pFVar13 = local_cc;
-      uVar11 = pFVar12->ptCount;
-      uVar9 = local_cc[uVar33].hole.uniqueVertCount;
-      uVar23 = (uint)uVar9;
-      if (uVar23 != 0) {
-        pFVar35 = local_cc + uVar33 + 1;
-        uVar29 = uVar23;
+      pFVar11 = local_cc;
+      uVar27 = param_1->ptCount;
+      uVar9 = local_cc[uVar28].hole.uniqueVertCount;
+      uVar19 = (uint)uVar9;
+      if (uVar19 != 0) {
+        pFVar29 = local_cc + uVar28 + 1;
+        uVar25 = uVar19;
         do {
-          Glass_UnpackAndAddVertex(pFVar12,pFVar35->vert);
-          uVar29 = uVar29 - 1;
-          pFVar35 = pFVar35 + 1;
-        } while (uVar29 != 0);
+          Glass_UnpackAndAddVertex(param_1,pFVar29->vert);
+          uVar25 = uVar25 - 1;
+          pFVar29 = pFVar29 + 1;
+        } while (uVar25 != 0);
       }
-      bVar1 = (&pFVar13->hole)[uVar33].touchVert;
-      uVar29 = (uint)bVar1;
-      uVar31 = (uint)bVar1;
-      if (uVar29 == 0xff) {
-        uVar34 = (ulonglong)pFVar12->loopCount;
-        uVar37 = 1;
-        pFVar15 = (FxGlassCrackEdge *)0x0;
-        uVar19 = uVar11;
+      bVar1 = (&pFVar11->hole)[uVar28].touchVert;
+      uVar22 = (uint)bVar1;
+      uVar25 = (uint)bVar1;
+      if (uVar22 == 0xff) {
+        uVar30 = param_1->loopCount;
+        uVar31 = 1;
+        pFVar12 = (FxGlassCrackEdge *)0x0;
+        uVar24 = uVar27;
       }
       else {
-        uVar37 = 0;
-        uVar19 = uVar11;
-        if (uVar23 == 0) {
-          uVar19 = (uint)(&pFVar13->hole)[uVar33].pad[0];
+        uVar31 = 0;
+        uVar30 = uVar27;
+        if (uVar19 == 0) {
+          uVar30 = (uint)(&pFVar11->hole)[uVar28].pad[0];
         }
-        pFVar15 = Glass_FindExistingEdgeBeforeNewEdge(pFVar12,(uint)bVar1,uVar19);
-        uVar34 = (ulonglong)(pFVar15->field0_0x0)._s_0.loopIndex;
-        uVar19 = uVar29;
+        pFVar12 = Glass_FindExistingEdgeBeforeNewEdge(param_1,(uint)bVar1,uVar30);
+        uVar30 = (uint)(pFVar12->field0_0x0)._s_0.loopIndex;
+        uVar24 = uVar22;
       }
-      uVar36 = (uint)uVar34;
-      ppFVar24 = &local_d0;
+      ppFVar20 = &local_d0;
       local_d0 = (FxGlassCrackEdge *)0x0;
-      uVar25 = 0;
-      uVar28 = 0;
-      if (uVar37 < uVar23) {
-        iVar30 = uVar23 - uVar37;
-        uVar26 = uVar25;
-        uVar37 = uVar37 + uVar11;
+      pFVar16 = (FxGlassCrackEdge *)0x0;
+      pFVar21 = (FxGlassCrackEdge *)0x0;
+      if (uVar31 < uVar19) {
+        iVar23 = uVar19 - uVar31;
+        uVar31 = uVar31 + uVar27;
+        pFVar18 = pFVar16;
         do {
-          uVar32 = uVar37;
-          pFVar16 = Glass_AllocCrackEdge(pFVar12,uVar19,uVar32,uVar36,'\x01');
-          uVar25 = ZEXT48(pFVar12->firstFreeEdge);
-          if (uVar25 == 0) {
-            if (0x1ff < pFVar12->edgeCount) {
+          uVar26 = uVar31;
+          pFVar13 = Glass_AllocCrackEdge(param_1,uVar24,uVar26,uVar30,'\x01');
+          pFVar16 = param_1->firstFreeEdge;
+          if (pFVar16 == (FxGlassCrackEdge *)0x0) {
+            if (0x1ff < param_1->edgeCount) {
               MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_glass_crack.cpp"
                               ,0xcc,0,
                               "work->edgeCount doesn\'t index ARRAY_COUNT( work->edges )\n\t%i not in [0, %i)"
                              );
             }
-            uVar19 = pFVar12->edgeCount;
-            pFVar12->edgeCount = uVar19 + 1;
-            uVar25 = ((ulonglong)uVar19 + ((ulonglong)uVar19 & 0x7fffffff) * 2 & 0x1fffffff) * 8 +
-                     lVar14 + 0xbf8;
+            uVar31 = param_1->edgeCount;
+            param_1->edgeCount = uVar31 + 1;
+            pFVar16 = param_1->edges + uVar31;
           }
           else {
-            pFVar12->firstFreeEdge = (pFVar12->firstFreeEdge->field0_0x0).nextFree;
+            param_1->firstFreeEdge = (pFVar16->field0_0x0).nextFree;
           }
-          pFVar22 = (FxGlassCrackEdge *)uVar25;
-          (pFVar16->field0_0x0)._s_0.twin = pFVar22;
-          fVar7 = (pFVar16->field0_0x0)._s_0.dir[0];
-          uVar2 = (pFVar16->field0_0x0)._s_0.i1;
-          uVar3 = (pFVar16->field0_0x0)._s_0.i0;
-          fVar8 = (pFVar16->field0_0x0)._s_0.dir[1];
-          uVar4 = (pFVar16->field0_0x0)._s_0.loopIndex;
-          (pFVar22->field0_0x0)._s_0.len = (pFVar16->field0_0x0)._s_0.len;
-          uVar5 = (pFVar16->field0_0x0)._s_0.type;
-          (pFVar22->field0_0x0)._s_0.twin = pFVar16;
-          (pFVar22->field0_0x0)._s_0.i0 = uVar2;
-          (pFVar22->field0_0x0)._s_0.i1 = uVar3;
-          (pFVar22->field0_0x0)._s_0.loopIndex = uVar4;
-          (pFVar22->field0_0x0)._s_0.type = uVar5;
-          (pFVar22->field0_0x0)._s_0.dir[0] = -fVar7;
-          (pFVar22->field0_0x0)._s_0.dir[1] = -fVar8;
-          *ppFVar24 = pFVar16;
-          (pFVar22->field0_0x0)._s_0.next = (FxGlassCrackEdge *)uVar26;
-          ppFVar24 = &(pFVar16->field0_0x0)._s_0.next;
-          if ((uVar28 & 0xffffffff) == 0) {
-            uVar28 = uVar25;
+          (pFVar13->field0_0x0)._s_0.twin = pFVar16;
+          fVar7 = (pFVar13->field0_0x0)._s_0.dir[0];
+          uVar2 = (pFVar13->field0_0x0)._s_0.i1;
+          uVar3 = (pFVar13->field0_0x0)._s_0.i0;
+          fVar8 = (pFVar13->field0_0x0)._s_0.dir[1];
+          uVar4 = (pFVar13->field0_0x0)._s_0.loopIndex;
+          (pFVar16->field0_0x0)._s_0.len = (pFVar13->field0_0x0)._s_0.len;
+          uVar5 = (pFVar13->field0_0x0)._s_0.type;
+          (pFVar16->field0_0x0)._s_0.twin = pFVar13;
+          (pFVar16->field0_0x0)._s_0.i0 = uVar2;
+          (pFVar16->field0_0x0)._s_0.i1 = uVar3;
+          (pFVar16->field0_0x0)._s_0.loopIndex = uVar4;
+          (pFVar16->field0_0x0)._s_0.type = uVar5;
+          (pFVar16->field0_0x0)._s_0.dir[0] = -fVar7;
+          (pFVar16->field0_0x0)._s_0.dir[1] = -fVar8;
+          *ppFVar20 = pFVar13;
+          (pFVar16->field0_0x0)._s_0.next = pFVar18;
+          ppFVar20 = &(pFVar13->field0_0x0)._s_0.next;
+          if (pFVar21 == (FxGlassCrackEdge *)0x0) {
+            pFVar21 = pFVar16;
           }
-          iVar30 = iVar30 + -1;
-          uVar26 = uVar25;
-          uVar37 = uVar32 + 1;
-          uVar19 = uVar32;
-        } while (iVar30 != 0);
+          iVar23 = iVar23 + -1;
+          uVar31 = uVar26 + 1;
+          uVar24 = uVar26;
+          pFVar18 = pFVar16;
+        } while (iVar23 != 0);
       }
-      pFVar22 = local_d0;
-      pFVar27 = (FxGlassCrackEdge *)uVar25;
-      pFVar16 = (FxGlassCrackEdge *)uVar28;
-      if (uVar29 == 0xff) {
-        if ((&pFVar13->hole)[uVar33].pad[0] != 0xff) {
+      pFVar18 = local_d0;
+      if (uVar22 == 0xff) {
+        if ((&pFVar11->hole)[uVar28].pad[0] != 0xff) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_glass_crack.cpp"
                           ,0x25f,0,"%s");
         }
-        if (0x1f < pFVar12->loopCount) {
+        if (0x1f < param_1->loopCount) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_glass_crack.cpp"
                           ,0x260,0,local_c4);
         }
-        if (pFVar22 == (FxGlassCrackEdge *)0x0) {
+        if (pFVar18 == (FxGlassCrackEdge *)0x0) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_glass_crack.cpp"
                           ,0x261,0,"%s");
         }
-        if ((uVar25 & 0xffffffff) == 0) {
+        if (pFVar16 == (FxGlassCrackEdge *)0x0) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_glass_crack.cpp"
                           ,0x262,0,"%s");
         }
-        *ppFVar24 = pFVar27;
-        (pFVar16->field0_0x0)._s_0.next = local_d0;
-        pFVar12->loops[pFVar12->loopCount].firstEdge = local_d0;
-        pFVar12->loopCount = pFVar12->loopCount + 1;
+        *ppFVar20 = pFVar16;
+        (pFVar21->field0_0x0)._s_0.next = local_d0;
+        param_1->loops[param_1->loopCount].firstEdge = local_d0;
+        param_1->loopCount = param_1->loopCount + 1;
       }
       else {
-        bVar1 = (&pFVar13->hole)[uVar33].pad[0];
+        bVar1 = (&pFVar11->hole)[uVar28].pad[0];
         if (bVar1 == 0xff) {
-          if ((pFVar16->field0_0x0)._s_0.i1 !=
-              (((pFVar15->field0_0x0)._s_0.next)->field0_0x0)._s_0.i0) {
+          if ((pFVar21->field0_0x0)._s_0.i1 !=
+              (((pFVar12->field0_0x0)._s_0.next)->field0_0x0)._s_0.i0) {
             MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_glass_crack.cpp"
                             ,0x26b,0,local_b8);
           }
-          if ((pFVar15->field0_0x0)._s_0.i1 != (pFVar22->field0_0x0)._s_0.i0) {
+          if ((pFVar12->field0_0x0)._s_0.i1 != (pFVar18->field0_0x0)._s_0.i0) {
             MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_glass_crack.cpp"
                             ,0x26c,0,local_b4);
           }
-          *ppFVar24 = pFVar27;
-          pFVar22 = (pFVar15->field0_0x0)._s_0.next;
-          (pFVar15->field0_0x0)._s_0.next = local_d0;
-          (pFVar16->field0_0x0)._s_0.next = pFVar22;
+          *ppFVar20 = pFVar16;
+          pFVar16 = (pFVar12->field0_0x0)._s_0.next;
+          (pFVar12->field0_0x0)._s_0.next = local_d0;
+          (pFVar21->field0_0x0)._s_0.next = pFVar16;
         }
         else {
-          if (uVar23 != 0) {
-            uVar31 = (uVar11 + uVar9) - 1;
+          if (uVar19 != 0) {
+            uVar25 = (uVar27 + uVar9) - 1;
           }
-          pFVar17 = Glass_FindExistingEdgeBeforeNewEdge(pFVar12,(uint)bVar1,uVar31);
-          if ((pFVar15->field0_0x0)._s_0.loopIndex != uVar34) {
+          pFVar13 = Glass_FindExistingEdgeBeforeNewEdge(param_1,(uint)bVar1,uVar25);
+          if ((pFVar12->field0_0x0)._s_0.loopIndex != uVar30) {
             MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_glass_crack.cpp"
                             ,0x275,0,local_b0);
           }
-          if ((pFVar17->field0_0x0)._s_0.loopIndex == uVar34) {
+          if ((pFVar13->field0_0x0)._s_0.loopIndex == uVar30) {
             MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_glass_crack.cpp"
                             ,0x276,0,local_ac);
           }
-          bVar6 = (pFVar17->field0_0x0)._s_0.loopIndex;
-          uVar25 = (ulonglong)bVar6;
-          if ((uVar25 <= uVar34) &&
-             (uVar25 = uVar34, uVar36 = (uint)bVar6, pFVar22 != (FxGlassCrackEdge *)0x0)) {
-            *ppFVar24 = pFVar27;
-            (pFVar16->field0_0x0)._s_0.next = local_d0;
+          bVar6 = (pFVar13->field0_0x0)._s_0.loopIndex;
+          uVar22 = (uint)bVar6;
+          uVar27 = uVar30;
+          if ((uVar22 <= uVar30) &&
+             (uVar27 = (uint)bVar6, uVar22 = uVar30, pFVar18 != (FxGlassCrackEdge *)0x0)) {
+            *ppFVar20 = pFVar16;
+            (pFVar21->field0_0x0)._s_0.next = local_d0;
             Glass_RenumberLoop(local_d0,bVar6);
           }
-          lVar20 = (uVar25 + (uVar25 & 0x3fffffff) * 4 & 0x3fffffff) * 4 + lVar14;
-          iVar30 = (int)lVar20;
-          Glass_RenumberLoop(*(FxGlassCrackEdge **)(iVar30 + 0x3c04),(uchar)uVar36);
-          uVar34 = (ulonglong)pFVar12->loopCount - 1;
-          pFVar12->loopCount = (uint)uVar34;
-          if ((uVar34 & 0xffffffff) != uVar25) {
-            lVar20 = lVar20 + 0x3c00;
-            lVar38 = 5;
-            lVar21 = (uVar34 + (uVar34 & 0x3fffffff) * 4 & 0x3fffffff) * 4 + lVar14 + 0x3c00;
+          Glass_RenumberLoop(param_1->loops[uVar22].firstEdge,(uchar)uVar27);
+          uVar30 = param_1->loopCount;
+          param_1->loopCount = uVar30 - 1;
+          if (uVar30 - 1 != uVar22) {
+            pfVar15 = param_1->loops[uVar22 - 1].maxs + 1;
+            lVar32 = 5;
+            pfVar17 = (float *)((int)&param_1->edges[0x1ff].field0_0x0 + uVar30 * 0x14 + 0xc);
             do {
-              lVar21 = lVar21 + 4;
-              lVar20 = lVar20 + 4;
-              *(undefined4 *)lVar20 = *(undefined4 *)lVar21;
-              lVar38 = lVar38 + -1;
-            } while (lVar38 != 0);
-            Glass_RenumberLoop(*(FxGlassCrackEdge **)(iVar30 + 0x3c04),(uchar)uVar25);
+              pfVar17 = pfVar17 + 1;
+              pfVar15 = pfVar15 + 1;
+              *pfVar15 = *pfVar17;
+              lVar32 = lVar32 + -1;
+            } while (lVar32 != 0);
+            Glass_RenumberLoop(param_1->loops[uVar22].firstEdge,(uchar)uVar22);
           }
-          pFVar18 = Glass_AllocCrackEdge(pFVar12,uVar31,(uint)bVar1,uVar36,'\x01');
-          pFVar22 = pFVar12->firstFreeEdge;
-          if (pFVar22 == (FxGlassCrackEdge *)0x0) {
-            if (0x1ff < pFVar12->edgeCount) {
+          pFVar14 = Glass_AllocCrackEdge(param_1,uVar25,(uint)bVar1,uVar27,'\x01');
+          pFVar18 = param_1->firstFreeEdge;
+          if (pFVar18 == (FxGlassCrackEdge *)0x0) {
+            if (0x1ff < param_1->edgeCount) {
               MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_glass_crack.cpp"
                               ,0xcc,0,
                               "work->edgeCount doesn\'t index ARRAY_COUNT( work->edges )\n\t%i not in [0, %i)"
                              );
             }
-            uVar11 = pFVar12->edgeCount;
-            pFVar12->edgeCount = uVar11 + 1;
-            pFVar22 = pFVar12->edges + uVar11;
+            uVar27 = param_1->edgeCount;
+            param_1->edgeCount = uVar27 + 1;
+            pFVar18 = param_1->edges + uVar27;
           }
           else {
-            pFVar12->firstFreeEdge = (pFVar22->field0_0x0).nextFree;
+            param_1->firstFreeEdge = (pFVar18->field0_0x0).nextFree;
           }
-          (pFVar18->field0_0x0)._s_0.twin = pFVar22;
-          fVar7 = (pFVar18->field0_0x0)._s_0.dir[0];
-          uVar2 = (pFVar18->field0_0x0)._s_0.i1;
-          uVar3 = (pFVar18->field0_0x0)._s_0.i0;
-          fVar8 = (pFVar18->field0_0x0)._s_0.dir[1];
-          uVar4 = (pFVar18->field0_0x0)._s_0.loopIndex;
-          (pFVar22->field0_0x0)._s_0.len = (pFVar18->field0_0x0)._s_0.len;
-          uVar5 = (pFVar18->field0_0x0)._s_0.type;
-          (pFVar22->field0_0x0)._s_0.twin = pFVar18;
-          (pFVar22->field0_0x0)._s_0.i0 = uVar2;
-          (pFVar22->field0_0x0)._s_0.i1 = uVar3;
-          (pFVar22->field0_0x0)._s_0.loopIndex = uVar4;
-          (pFVar22->field0_0x0)._s_0.type = uVar5;
-          (pFVar22->field0_0x0)._s_0.dir[0] = -fVar7;
-          (pFVar22->field0_0x0)._s_0.dir[1] = -fVar8;
-          *ppFVar24 = pFVar18;
-          (pFVar22->field0_0x0)._s_0.next = pFVar27;
-          if ((uVar28 & 0xffffffff) == 0) {
-            pFVar16 = pFVar22;
+          (pFVar14->field0_0x0)._s_0.twin = pFVar18;
+          fVar7 = (pFVar14->field0_0x0)._s_0.dir[0];
+          uVar2 = (pFVar14->field0_0x0)._s_0.i1;
+          uVar3 = (pFVar14->field0_0x0)._s_0.i0;
+          fVar8 = (pFVar14->field0_0x0)._s_0.dir[1];
+          uVar4 = (pFVar14->field0_0x0)._s_0.loopIndex;
+          (pFVar18->field0_0x0)._s_0.len = (pFVar14->field0_0x0)._s_0.len;
+          uVar5 = (pFVar14->field0_0x0)._s_0.type;
+          (pFVar18->field0_0x0)._s_0.twin = pFVar14;
+          (pFVar18->field0_0x0)._s_0.i0 = uVar2;
+          (pFVar18->field0_0x0)._s_0.i1 = uVar3;
+          (pFVar18->field0_0x0)._s_0.loopIndex = uVar4;
+          (pFVar18->field0_0x0)._s_0.type = uVar5;
+          (pFVar18->field0_0x0)._s_0.dir[0] = -fVar7;
+          (pFVar18->field0_0x0)._s_0.dir[1] = -fVar8;
+          *ppFVar20 = pFVar14;
+          (pFVar18->field0_0x0)._s_0.next = pFVar16;
+          if (pFVar21 == (FxGlassCrackEdge *)0x0) {
+            pFVar21 = pFVar18;
           }
-          pFVar27 = (pFVar15->field0_0x0)._s_0.next;
-          (pFVar15->field0_0x0)._s_0.next = local_d0;
-          (pFVar18->field0_0x0)._s_0.next = (pFVar17->field0_0x0)._s_0.next;
-          (pFVar16->field0_0x0)._s_0.next = pFVar27;
-          (pFVar17->field0_0x0)._s_0.next = pFVar22;
+          pFVar16 = (pFVar12->field0_0x0)._s_0.next;
+          (pFVar12->field0_0x0)._s_0.next = local_d0;
+          (pFVar14->field0_0x0)._s_0.next = (pFVar13->field0_0x0)._s_0.next;
+          (pFVar21->field0_0x0)._s_0.next = pFVar16;
+          (pFVar13->field0_0x0)._s_0.next = pFVar18;
         }
       }
-      uVar33 = uVar23 + uVar33 + 1;
-    } while (uVar33 != local_a8);
+      uVar28 = uVar19 + uVar28 + 1;
+    } while (uVar28 != local_a8);
   }
-  __restgprlr();
   return;
 }
 
 
 // 824210D0  Glass_CalcLoopBounds  (EffectsCore/fx_glass_crack.cpp:678)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void Glass_CalcLoopBounds(FxGlassCrackWork *param_1,FxGlassCrackLoop *param_2)
 
 {
-  float fVar1;
-  FxGlassCrackEdge *pFVar2;
-  int iVar3;
-  int iVar4;
-  FxGlassCrackEdge *pFVar5;
+  byte bVar1;
+  float fVar2;
+  FxGlassCrackEdge *pFVar3;
+  FxGlassCrackEdge *pFVar4;
   
-  iVar4 = __savegprlr_27(param_1);
-  pFVar2 = param_2->firstEdge;
-  iVar3 = (uint)(pFVar2->field0_0x0)._s_0.i0 * 8 + iVar4;
-  fVar1 = *(float *)(iVar3 + 0x400);
-  param_2->mins[0] = *(float *)(iVar3 + 0x3fc);
-  param_2->mins[1] = fVar1;
-  iVar3 = (uint)(pFVar2->field0_0x0)._s_0.i0 * 8 + iVar4;
-  fVar1 = *(float *)(iVar3 + 0x400);
-  param_2->maxs[0] = *(float *)(iVar3 + 0x3fc);
-  param_2->maxs[1] = fVar1;
-  pFVar5 = (pFVar2->field0_0x0)._s_0.next;
+  pFVar3 = param_2->firstEdge;
+  bVar1 = (pFVar3->field0_0x0)._s_0.i0;
+  fVar2 = param_1->pts[bVar1].xy[1];
+  param_2->mins[0] = param_1->pts[bVar1].xy[0];
+  param_2->mins[1] = fVar2;
+  bVar1 = (pFVar3->field0_0x0)._s_0.i0;
+  fVar2 = param_1->pts[bVar1].xy[1];
+  param_2->maxs[0] = param_1->pts[bVar1].xy[0];
+  param_2->maxs[1] = fVar2;
+  pFVar4 = (pFVar3->field0_0x0)._s_0.next;
   do {
-    AddPointToBounds2D((float *)((uint)(pFVar5->field0_0x0)._s_0.i0 * 8 + iVar4 + 0x3fc),
-                       param_2->mins,param_2->maxs);
-    pFVar5 = (pFVar5->field0_0x0)._s_0.next;
-  } while (pFVar5 != pFVar2);
-  __restgprlr_27();
+    AddPointToBounds2D(param_1->pts[(pFVar4->field0_0x0)._s_0.i0].xy,param_2->mins,param_2->maxs);
+    pFVar4 = (pFVar4->field0_0x0)._s_0.next;
+  } while (pFVar4 != pFVar3);
   return;
 }
 
 
 // 82421160  Glass_CalcAllLoopBounds  (EffectsCore/fx_glass_crack.cpp:695)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 void Glass_CalcAllLoopBounds(FxGlassCrackWork *param_1)
 
 {
-  byte *pbVar1;
-  int iVar2;
-  int iVar3;
-  uint uVar4;
-  byte *pbVar5;
-  float *pfVar6;
+  byte bVar1;
+  FxGlassCrackEdge *pFVar2;
+  uint uVar3;
+  FxGlassCrackEdge *pFVar4;
+  float *pfVar5;
   
-  iVar3 = __savegprlr_26(param_1);
-  uVar4 = 0;
-  if (*(int *)(iVar3 + 0x3c00) != 0) {
-    pfVar6 = (float *)(iVar3 + 0x3c10);
+  uVar3 = 0;
+  if (param_1->loopCount != 0) {
+    pfVar5 = param_1->loops[0].maxs;
     do {
-      pbVar1 = (byte *)pfVar6[-3];
-      pbVar5 = *(byte **)(pbVar1 + 0x14);
-      iVar2 = (uint)*pbVar1 * 8 + iVar3;
-      pfVar6[-2] = *(float *)(iVar2 + 0x3fc);
-      pfVar6[-1] = *(float *)(iVar2 + 0x400);
-      *pfVar6 = *(float *)(iVar2 + 0x3fc);
-      pfVar6[1] = *(float *)(iVar2 + 0x400);
+      pFVar2 = ((FxGlassCrackLoop *)(pfVar5 + -3))->firstEdge;
+      bVar1 = (pFVar2->field0_0x0)._s_0.i0;
+      pFVar4 = (pFVar2->field0_0x0)._s_0.next;
+      pfVar5[-2] = param_1->pts[bVar1].xy[0];
+      pfVar5[-1] = param_1->pts[bVar1].xy[1];
+      *pfVar5 = param_1->pts[bVar1].xy[0];
+      pfVar5[1] = param_1->pts[bVar1].xy[1];
       do {
-        AddPointToBounds2D((float *)((uint)*pbVar5 * 8 + iVar3 + 0x3fc),pfVar6 + -2,pfVar6);
-        pbVar5 = *(byte **)(pbVar5 + 0x14);
-      } while (pbVar5 != pbVar1);
-      uVar4 = uVar4 + 1;
-      pfVar6 = pfVar6 + 5;
-    } while (uVar4 < *(uint *)(iVar3 + 0x3c00));
+        AddPointToBounds2D(param_1->pts[(pFVar4->field0_0x0)._s_0.i0].xy,pfVar5 + -2,pfVar5);
+        pFVar4 = (pFVar4->field0_0x0)._s_0.next;
+      } while (pFVar4 != pFVar2);
+      uVar3 = uVar3 + 1;
+      pfVar5 = pfVar5 + 5;
+    } while (uVar3 < param_1->loopCount);
   }
-  __restgprlr_26();
   return;
 }
 
@@ -1207,54 +1173,48 @@ void Glass_GetVertWorldPos(FxGlassVertex param_1,float *param_2,float (*param_3)
 
 // 82421498  Glass_AddHingeVert  (EffectsCore/fx_glass_crack.cpp:798)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 uint Glass_AddHingeVert(float *param_1,float (*param_2) [3],uint param_3)
 
 {
   float fVar1;
   float fVar2;
   float fVar3;
-  float *pfVar4;
-  uint uVar5;
-  ulonglong uVar6;
   
-  uVar6 = (ulonglong)(int)param_3;
-  pfVar4 = (float *)__savegprlr_29(param_1);
-  if (2 < (uVar6 & 0xffffffff)) {
+  if (2 < param_3) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_glass_crack.cpp"
                     ,799,0,"hingeCount not in [0, 2]\n\t%i not in [0, %i]");
   }
-  if ((uVar6 & 0xffffffff) == 0) {
-    fVar1 = pfVar4[1];
-    fVar2 = pfVar4[2];
-    (*param_2)[0] = *pfVar4;
+  if (param_3 == 0) {
+    fVar1 = param_1[1];
+    fVar2 = param_1[2];
+    (*param_2)[0] = *param_1;
     (*param_2)[1] = fVar1;
     (*param_2)[2] = fVar2;
-    uVar5 = __restgprlr_29(1);
-    return uVar5;
+    return 1;
   }
-  fVar1 = pfVar4[2];
+  fVar1 = param_1[2];
   if (fVar1 < (*param_2)[2]) {
     param_2[1][0] = (*param_2)[0];
     param_2[1][1] = (*param_2)[1];
-    fVar2 = *pfVar4;
-    fVar3 = pfVar4[1];
+    fVar2 = *param_1;
+    fVar3 = param_1[1];
     param_2[1][2] = (*param_2)[2];
     (*param_2)[0] = fVar2;
     (*param_2)[1] = fVar3;
     (*param_2)[2] = fVar1;
-    uVar5 = __restgprlr_29(2);
-    return uVar5;
+    return 2;
   }
-  if (((uVar6 & 0xffffffff) != 1) && ((*param_2)[2] <= fVar1)) {
-    uVar5 = __restgprlr_29(uVar6);
-    return uVar5;
+  if ((param_3 != 1) && ((*param_2)[2] <= fVar1)) {
+    return param_3;
   }
-  fVar2 = pfVar4[1];
-  param_2[1][0] = *pfVar4;
+  fVar2 = param_1[1];
+  param_2[1][0] = *param_1;
   param_2[1][1] = fVar2;
   param_2[1][2] = fVar1;
-  uVar5 = __restgprlr_29(2);
-  return uVar5;
+  return 2;
 }
 
 
@@ -1277,6 +1237,10 @@ bool Glass_ShouldMakeHingeJoint(float *param_1,float *param_2,float param_3,floa
 
 // 82421610  Glass_CreatePieceJoint  (EffectsCore/fx_glass_crack.cpp:840)
 
+/* WARNING: Function: __savegprlr_16 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_16 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PhysWorld": Some values do not have unique names */
 
 void Glass_CreatePieceJoint(FxGlassSystem *param_1,uint param_2)
@@ -1285,22 +1249,24 @@ void Glass_CreatePieceJoint(FxGlassSystem *param_1,uint param_2)
   float fVar1;
   float fVar2;
   byte bVar3;
-  uint uVar4;
-  undefined4 uVar5;
-  int iVar6;
-  int iVar7;
-  int iVar8;
-  int iVar9;
-  float *pfVar10;
-  bool bVar12;
-  int iVar11;
-  float *pfVar13;
-  uint uVar14;
-  ulonglong uVar15;
-  double dVar16;
-  double dVar17;
+  ushort uVar4;
+  FxGlassPieceDynamics *pFVar5;
+  FxGlassPieceState *pFVar6;
+  FxGlassGeometryData *pFVar7;
+  uint uVar8;
+  undefined4 uVar9;
+  int iVar10;
+  float *pfVar11;
+  bool bVar13;
+  int iVar12;
+  float *pfVar14;
+  uint uVar15;
+  FxGlassPiecePlace *pFVar16;
+  ulonglong uVar17;
   double dVar18;
   double dVar19;
+  double dVar20;
+  double dVar21;
   short local_140;
   short sStack_13e;
   float local_118;
@@ -1322,70 +1288,67 @@ void Glass_CreatePieceJoint(FxGlassSystem *param_1,uint param_2)
   float local_c0;
   float local_bc;
   
-  uVar15 = (ulonglong)(int)param_2;
-  __savegprlr_16(param_1);
-  iVar9 = __savefpr_28();
-  iVar8 = (int)uVar15 * 0x20;
-  iVar6 = *(int *)(iVar9 + 0x3c) + (int)((uVar15 + (uVar15 & 0x1fffffff) * 8 & 0xffffffff) << 2);
-  pfVar10 = (float *)(*(int *)(iVar9 + 0x34) + iVar8);
-  iVar8 = *(int *)(iVar9 + 0x38) + iVar8;
-  iVar11 = *(int *)(iVar6 + 4);
-  if (iVar11 == 0) {
+  pFVar5 = param_1->pieceDynamics;
+  pFVar6 = param_1->pieceStates;
+  pFVar16 = param_1->piecePlaces + param_2;
+  iVar12 = pFVar5[param_2].physObjId;
+  if (iVar12 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_glass_crack.cpp"
                     ,0x35a,0,"%s");
   }
-  UnitQuatToAxis(pfVar10,(float (*) [3])&local_d0);
-  uVar4 = *(uint *)(iVar8 + 8);
-  bVar3 = *(byte *)(iVar8 + 0x16);
-  iVar9 = (uint)*(ushort *)(iVar8 + 0xe) * 4 + *(int *)(iVar9 + 0x40);
-  dVar19 = 0.03125;
-  dVar18 = (double)pfVar10[4];
-  dVar17 = (double)pfVar10[5];
-  dVar16 = (double)pfVar10[6];
-  uVar14 = uVar4;
-  pfVar10 = (float *)0x0;
+  UnitQuatToAxis((float *)&pFVar16->nextFree,(float (*) [3])&local_d0);
+  uVar4 = pFVar6[param_2].geoDataStart;
+  pFVar7 = param_1->geoData;
+  uVar8 = pFVar6[param_2].supportMask;
+  bVar3 = pFVar6[param_2].vertCount;
+  dVar21 = 0.03125;
+  dVar20 = (double)(pFVar16->_s_0).frame.origin[0];
+  dVar19 = (double)(pFVar16->_s_0).frame.origin[1];
+  dVar18 = (double)(pFVar16->_s_0).frame.origin[2];
+  uVar15 = uVar8;
+  pfVar11 = (float *)0x0;
   do {
-    pfVar13 = pfVar10;
-    uVar15 = LZCOUNT(uVar14);
-    if (0x20 < uVar15) {
+    pfVar14 = pfVar11;
+    uVar17 = LZCOUNT(uVar15);
+    if (0x20 < uVar17) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_math.h",0x475,
                       0,"count doesn\'t index 33\n\t%i not in [0, %i)");
     }
-    iVar7 = (int)(uVar15 << 2);
-    uVar5 = *(undefined4 *)(iVar7 + iVar9);
-    uVar14 = uVar14 & ~*(uint *)(&g_bitShift + iVar7);
-    sStack_13e = (short)uVar5;
-    local_140 = (short)((uint)uVar5 >> 0x10);
-    fVar1 = (float)((double)(longlong)local_140 * dVar19);
-    fVar2 = (float)((double)(longlong)sStack_13e * dVar19);
-    local_118 = (float)((double)(local_c4 * fVar2 + local_d0 * fVar1) + dVar18);
-    local_114 = (float)((double)(local_c0 * fVar2 + fVar1 * local_cc) + dVar17);
-    local_110 = (float)((double)(local_bc * fVar2 + local_c8 * fVar1) + dVar16);
-    pfVar10 = (float *)Glass_AddHingeVert(&local_118,(float (*) [3])&local_f0,(uint)pfVar13);
+    iVar10 = (int)(uVar17 << 2);
+    uVar9 = *(undefined4 *)((int)pFVar7 + iVar10 + (uint)uVar4 * 4);
+    uVar15 = uVar15 & ~*(uint *)(&g_bitShift + iVar10);
+    sStack_13e = (short)uVar9;
+    local_140 = (short)((uint)uVar9 >> 0x10);
+    fVar1 = (float)((double)(longlong)local_140 * dVar21);
+    fVar2 = (float)((double)(longlong)sStack_13e * dVar21);
+    local_118 = (float)((double)(local_c4 * fVar2 + local_d0 * fVar1) + dVar20);
+    local_114 = (float)((double)(local_c0 * fVar2 + fVar1 * local_cc) + dVar19);
+    local_110 = (float)((double)(local_bc * fVar2 + local_c8 * fVar1) + dVar18);
+    pfVar11 = (float *)Glass_AddHingeVert(&local_118,(float (*) [3])&local_f0,(uint)pfVar14);
     trapWord(6,(ulonglong)bVar3,0);
-    uVar15 = (uVar15 + 1) -
-             (longlong)(int)((uVar15 + 1) / (ulonglong)bVar3) * (longlong)(int)(uint)bVar3;
-    if (0x20 < (uVar15 & 0xffffffff)) {
-      pfVar13 = (float *)0x0;
+    uVar17 = (uVar17 + 1) -
+             (longlong)(int)((uVar17 + 1) / (ulonglong)bVar3) * (longlong)(int)(uint)bVar3;
+    if (0x20 < (uVar17 & 0xffffffff)) {
+      pfVar14 = (float *)0x0;
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_math.h",0x475,
                       0,"count doesn\'t index 33\n\t%i not in [0, %i)");
     }
-    iVar7 = (int)((uVar15 & 0xffffffff) << 2);
-    if ((*(uint *)(&g_bitShift + iVar7) & uVar4) == 0) {
-      uVar5 = *(undefined4 *)(iVar7 + iVar9);
-      sStack_13e = (short)uVar5;
-      local_140 = (short)((uint)uVar5 >> 0x10);
-      fVar1 = (float)((double)(longlong)local_140 * dVar19);
-      fVar2 = (float)((double)(longlong)sStack_13e * dVar19);
-      local_118 = (float)((double)(local_c4 * fVar2 + fVar1 * local_d0) + dVar18);
-      local_114 = (float)((double)(local_c0 * fVar2 + fVar1 * local_cc) + dVar17);
-      local_110 = (float)((double)(local_bc * fVar2 + local_c8 * fVar1) + dVar16);
-      pfVar13 = pfVar10;
-      pfVar10 = (float *)Glass_AddHingeVert(&local_118,(float (*) [3])&local_f0,(uint)pfVar10);
+    iVar10 = (int)((uVar17 & 0xffffffff) << 2);
+    if ((*(uint *)(&g_bitShift + iVar10) & uVar8) == 0) {
+      uVar9 = *(undefined4 *)((int)pFVar7 + iVar10 + (uint)uVar4 * 4);
+      sStack_13e = (short)uVar9;
+      local_140 = (short)((uint)uVar9 >> 0x10);
+      fVar1 = (float)((double)(longlong)local_140 * dVar21);
+      fVar2 = (float)((double)(longlong)sStack_13e * dVar21);
+      local_118 = (float)((double)(local_c4 * fVar2 + fVar1 * local_d0) + dVar20);
+      local_114 = (float)((double)(local_c0 * fVar2 + fVar1 * local_cc) + dVar19);
+      local_110 = (float)((double)(local_bc * fVar2 + local_c8 * fVar1) + dVar18);
+      pfVar14 = pfVar11;
+      pfVar11 = (float *)Glass_AddHingeVert(&local_118,(float (*) [3])&local_f0,(uint)pfVar11);
     }
-  } while (uVar14 != 0);
-  if (pfVar10 != (float *)0x2) {
-    pfVar13 = (float *)0x0;
+  } while (uVar15 != 0);
+  if (pfVar11 != (float *)0x2) {
+    pfVar14 = (float *)0x0;
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_glass_crack.cpp"
                     ,0x36e,0,"%s");
   }
@@ -1401,31 +1364,32 @@ void Glass_CreatePieceJoint(FxGlassSystem *param_1,uint param_2)
   local_108 = fVar1 * local_108;
   local_104 = local_e0 * fVar1;
   local_100 = local_100 * fVar1;
-  bVar12 = Glass_ShouldMakeHingeJoint(&local_f0,&local_108,fVar2,pfVar13);
-  if (bVar12) {
-    iVar11 = Phys_CreateHinge(PHYS_WORLD_FX,iVar11,0,&local_f0,&local_108,0.0,
+  bVar13 = Glass_ShouldMakeHingeJoint(&local_f0,&local_108,fVar2,pfVar14);
+  if (bVar13) {
+    iVar12 = Phys_CreateHinge(PHYS_WORLD_FX,iVar12,0,&local_f0,&local_108,0.0,
                               (glass_hinge_friction->current).value,-0.7853982,0.7853982);
-    *(int *)(iVar6 + 8) = iVar11;
+    pFVar5[param_2].physJointId = iVar12;
   }
-  *(undefined4 *)(iVar8 + 8) = 0;
-  __restfpr_28();
-  __restgprlr_16();
+  pFVar6[param_2].supportMask = 0;
   return;
 }
 
 
 // 824219A0  Glass_RotatePieceAroundEdge  (EffectsCore/fx_glass_crack.cpp:895)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 void Glass_RotatePieceAroundEdge
                (FxGlassCrackWork *param_1,FxGlassShard *param_2,FxGlassPiecePlace *param_3,
                FxGlassCrackEdge *param_4)
 
 {
-  float fVar1;
+  byte bVar1;
   float fVar2;
   float fVar3;
-  float *pfVar4;
-  int iVar5;
+  float fVar4;
+  float (*pafVar5) [3];
   float (*pafVar6) [3];
   double dVar7;
   double dVar8;
@@ -1443,58 +1407,56 @@ void Glass_RotatePieceAroundEdge
   float afStack_b0 [12];
   float afStack_80 [32];
   
-  iVar5 = __savegprlr_26(param_1);
   fVar10 = param_2->areaX2;
-  fVar1 = 2048.0;
+  fVar2 = 2048.0;
   if (fVar10 - 2048.0 < 0.0) {
-    fVar1 = fVar10;
+    fVar2 = fVar10;
   }
-  fVar2 = 128.0;
+  fVar3 = 128.0;
   if (128.0 - fVar10 < 0.0) {
-    fVar2 = fVar1;
+    fVar3 = fVar2;
   }
-  fVar10 = I_rsqrt(fVar2);
+  fVar10 = I_rsqrt(fVar3);
   dVar8 = (double)(fVar10 * 11.313708);
   if ((param_4->field0_0x0)._s_0.type != '\0') {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_glass_crack.cpp"
                     ,0x38c,0,"%s");
   }
-  pfVar4 = *(float **)(iVar5 + 0x3ec4);
+  pafVar5 = param_1->axis;
   fVar10 = (param_4->field0_0x0)._s_0.dir[1];
-  fVar1 = (param_4->field0_0x0)._s_0.dir[0];
+  fVar2 = (param_4->field0_0x0)._s_0.dir[0];
   pafVar6 = (float (*) [3])
             ((int)g_fxMarkPoints + (0x3390 - ((s_glassRandSeed != 0x1de) + 0x83330000)));
-  local_e0 = *pfVar4 * fVar1 + pfVar4[3] * fVar10;
+  local_e0 = (*pafVar5)[0] * fVar2 + pafVar5[1][0] * fVar10;
   s_glassRandSeed = (uint)pafVar6 & s_glassRandSeed + 1U;
-  local_dc = pfVar4[1] * fVar1 + pfVar4[4] * fVar10;
-  local_d8 = pfVar4[2] * fVar1 + pfVar4[5] * fVar10;
+  local_dc = (*pafVar5)[1] * fVar2 + pafVar5[1][1] * fVar10;
+  local_d8 = (*pafVar5)[2] * fVar2 + pafVar5[1][2] * fVar10;
   RotationMatrix(&local_e0,
                  (float)((double)((((glass_edge_angle->current).vector[1] -
                                    (glass_edge_angle->current).value) *
                                    *(float *)(&fx_randomTable + s_glassRandSeed * 4) +
-                                  (glass_edge_angle->current).value) * *(float *)(iVar5 + 0x3ec8)) *
-                        dVar8) * 0.017453292,pafVar6);
-  MatrixMultiply(*(float (**) [3])(iVar5 + 0x3ec4),(float (*) [3])afStack_b0,
-                 (float (*) [3])afStack_80);
+                                  (glass_edge_angle->current).value) * param_1->angleSign) * dVar8)
+                 * 0.017453292,pafVar6);
+  MatrixMultiply(param_1->axis,(float (*) [3])afStack_b0,(float (*) [3])afStack_80);
   AxisToQuat((float (*) [3])afStack_80,(float *)&param_3->nextFree);
   fVar10 = (param_3->_s_0).frame.quat[1];
-  fVar1 = (param_3->_s_0).frame.quat[0];
-  fVar2 = (param_3->_s_0).frame.quat[2];
-  fVar3 = (param_3->_s_0).frame.quat[3];
-  if (0.002 <= ABS((fVar3 * fVar3 + fVar2 * fVar2 + fVar1 * fVar1 + fVar10 * fVar10) - 1.0)) {
+  fVar2 = (param_3->_s_0).frame.quat[0];
+  fVar3 = (param_3->_s_0).frame.quat[2];
+  fVar4 = (param_3->_s_0).frame.quat[3];
+  if (0.002 <= ABS((fVar4 * fVar4 + fVar3 * fVar3 + fVar2 * fVar2 + fVar10 * fVar10) - 1.0)) {
     va("%g %g %g %g");
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_glass_crack.cpp"
                     ,0x392,0,"%s\n\t%s");
   }
-  pfVar4 = *(float **)(iVar5 + 0x3ec4);
-  iVar5 = (uint)(param_4->field0_0x0)._s_0.i0 * 8 + iVar5;
-  fVar10 = *(float *)(iVar5 + 0x400) - param_2->centroid[1];
-  fVar1 = *(float *)(iVar5 + 0x3fc) - param_2->centroid[0];
-  local_d0 = *pfVar4 * fVar1 + pfVar4[3] * fVar10;
+  bVar1 = (param_4->field0_0x0)._s_0.i0;
+  pafVar5 = param_1->axis;
+  fVar10 = param_1->pts[bVar1].xy[1] - param_2->centroid[1];
+  fVar2 = param_1->pts[bVar1].xy[0] - param_2->centroid[0];
+  local_d0 = (*pafVar5)[0] * fVar2 + pafVar5[1][0] * fVar10;
   dVar9 = (double)local_d0;
-  local_cc = pfVar4[1] * fVar1 + pfVar4[4] * fVar10;
+  local_cc = (*pafVar5)[1] * fVar2 + pafVar5[1][1] * fVar10;
   dVar7 = (double)local_cc;
-  local_c8 = pfVar4[2] * fVar1 + pfVar4[5] * fVar10;
+  local_c8 = (*pafVar5)[2] * fVar2 + pafVar5[1][2] * fVar10;
   dVar8 = (double)local_c8;
   MatrixTransformVector(&local_d0,(float (*) [3])afStack_b0,&local_c0);
   (param_3->_s_0).frame.origin[0] =
@@ -1503,13 +1465,14 @@ void Glass_RotatePieceAroundEdge
        (param_3->_s_0).frame.origin[1] + (float)(dVar7 - (double)local_bc);
   (param_3->_s_0).frame.origin[2] =
        (param_3->_s_0).frame.origin[2] + (float)(dVar8 - (double)local_b8);
-  __restgprlr_26();
   return;
 }
 
 
 // 82421C60  Glass_SetupPieceFall  (EffectsCore/fx_glass_crack.cpp:925)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PhysWorld": Some values do not have unique names */
 
 void Glass_SetupPieceFall(FxGlassSystem *param_1,uint param_2,float *param_3,float *param_4)
@@ -1517,119 +1480,102 @@ void Glass_SetupPieceFall(FxGlassSystem *param_1,uint param_2,float *param_3,flo
 {
   byte bVar1;
   FxGlassDef *pFVar2;
-  FxGlassPieceDynamics *pFVar3;
-  float *pfVar4;
-  float *pfVar5;
-  FxGlassSystem *pFVar6;
-  int iVar7;
-  ulonglong uVar8;
-  ulonglong uVar9;
-  ulonglong uVar10;
-  longlong lVar11;
-  longlong lVar12;
-  ulonglong uVar13;
-  ulonglong uVar14;
+  int iVar3;
+  FxGlassPiecePlace *pFVar4;
+  FxGlassPieceState *pFVar5;
+  FxGlassPieceDynamics *pFVar6;
   char in_RESERVE;
-  byte bVar15;
+  byte bVar7;
   float afStack_80 [32];
   
-  uVar10 = (ulonglong)(int)param_4;
-  uVar9 = (ulonglong)(int)param_3;
-  uVar8 = (ulonglong)(int)param_2;
-  pFVar6 = (FxGlassSystem *)__savegprlr_23(param_1);
-  if (pFVar6 == (FxGlassSystem *)0x0) {
+  if (param_1 == (FxGlassSystem *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_glass_crack.cpp"
                     ,0x3a2,0,"%s");
   }
-  if ((uVar9 & 0xffffffff) == 0) {
+  if (param_3 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_glass_crack.cpp"
                     ,0x3a3,0,"%s");
   }
-  if ((uVar10 & 0xffffffff) == 0) {
+  if (param_4 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_glass_crack.cpp"
                     ,0x3a4,0,"%s");
   }
-  if ((ulonglong)pFVar6->pieceLimit <= (uVar8 & 0xffffffff)) {
+  if (param_1->pieceLimit <= param_2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_glass_crack.cpp"
                     ,0x3a5,0,"pieceIndex doesn\'t index glassSys->pieceLimit\n\t%i not in [0, %i)");
   }
-  lVar11 = (uVar8 & 0x7ffffff) * 0x20;
-  lVar12 = ZEXT48(pFVar6->piecePlaces) + lVar11;
-  bVar15 = (lVar12 == 0) << 1;
-  uVar13 = ZEXT48(pFVar6->pieceStates) + lVar11;
-  uVar14 = ZEXT48(pFVar6->pieceDynamics) + (uVar8 + (uVar8 & 0x1fffffff) * 8 & 0x3fffffff) * 4;
-  if (lVar12 == 0) {
+  pFVar4 = param_1->piecePlaces + param_2;
+  bVar7 = (pFVar4 == (FxGlassPiecePlace *)0x0) << 1;
+  pFVar5 = param_1->pieceStates + param_2;
+  pFVar6 = param_1->pieceDynamics + param_2;
+  if (pFVar4 == (FxGlassPiecePlace *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_glass_crack.cpp"
                     ,0x3ab,0,"%s");
   }
-  if ((uVar13 & 0xffffffff) == 0) {
+  if (pFVar5 == (FxGlassPieceState *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_glass_crack.cpp"
                     ,0x3ac,0,"%s");
   }
-  if ((uVar14 & 0xffffffff) == 0) {
+  if (pFVar6 == (FxGlassPieceDynamics *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_glass_crack.cpp"
                     ,0x3ad,0,"%s");
   }
-  iVar7 = (int)uVar13;
-  *(undefined4 *)(iVar7 + 8) = 0;
+  pFVar5->supportMask = 0;
   s_glassRandSeed = -(uint)(s_glassRandSeed != 0x1de) & s_glassRandSeed + 1U;
-  pfVar4 = (float *)uVar9;
-  pfVar5 = (float *)uVar10;
-  pFVar3 = (FxGlassPieceDynamics *)uVar14;
-  if ((*(ushort *)(iVar7 + 0x1a) & 4) != 0 ||
-      (*(ushort *)(iVar7 + 0x1a) & 8) == 0 &&
+  if ((pFVar5->flags & 4) != 0 ||
+      (pFVar5->flags & 8) == 0 &&
       (glass_physics_chance->current).value < *(float *)(&fx_randomTable + s_glassRandSeed * 4)) {
-    pFVar3->fallTime = pFVar6->time;
-    if (pFVar3->physObjId != 0) {
-      Glass_FreePiecePhysicsObject(pFVar3);
+    pFVar6->fallTime = param_1->time;
+    if (pFVar6->physObjId != 0) {
+      Glass_FreePiecePhysicsObject(pFVar6);
     }
-    pFVar3->vel[0] = *pfVar4;
-    pFVar3->vel[1] = pfVar4[1];
-    pFVar3->vel[2] = pfVar4[2];
-    pFVar3->avel[0] = *pfVar5;
-    pFVar3->avel[1] = pfVar5[1];
-    pFVar3->avel[2] = pfVar5[2];
-    __restgprlr_23();
+    pFVar6->vel[0] = *param_3;
+    pFVar6->vel[1] = param_3[1];
+    pFVar6->vel[2] = param_3[2];
+    pFVar6->avel[0] = *param_4;
+    pFVar6->avel[1] = param_4[1];
+    pFVar6->avel[2] = param_4[2];
     return;
   }
-  pFVar2 = pFVar6->defs;
-  pFVar3->fallTime = 0x7fffffff;
-  bVar1 = *(byte *)(iVar7 + 0x10);
-  UnitQuatToAxis((float *)lVar12,(float (*) [3])afStack_80);
-  if (pFVar3->physObjId == 0) {
-    iVar7 = Phys_ObjCreateAxis(PHYS_WORLD_FX,(float *)lVar12 + 4,(float (*) [3])afStack_80,pfVar4,
-                               pFVar2[bVar1].physPreset);
-    pFVar3->physObjId = iVar7;
-    if (iVar7 != 0) {
+  pFVar2 = param_1->defs;
+  pFVar6->fallTime = 0x7fffffff;
+  bVar1 = pFVar5->defIndex;
+  UnitQuatToAxis((float *)&pFVar4->nextFree,(float (*) [3])afStack_80);
+  if (pFVar6->physObjId == 0) {
+    iVar3 = Phys_ObjCreateAxis(PHYS_WORLD_FX,(pFVar4->_s_0).frame.origin,(float (*) [3])afStack_80,
+                               param_3,pFVar2[bVar1].physPreset);
+    pFVar6->physObjId = iVar3;
+    if (iVar3 != 0) {
       do {
         if (in_RESERVE != '\0') {
           g_glassPhysObjCount =
                storeWordConditionalIndexed
                          ((ulonglong)(uint)g_glassPhysObjCount + 1,0,0xffffffff8427b920);
-          bVar15 = 2;
+          bVar7 = 2;
         }
-      } while (!(bool)(bVar15 >> 1 & 1));
-      Phys_ObjSetAutoDisableFaster(pFVar3->physObjId);
+      } while (!(bool)(bVar7 >> 1 & 1));
+      Phys_ObjSetAutoDisableFaster(pFVar6->physObjId);
     }
-    pFVar3->physJointId = 0;
-    Glass_AddPiecePhysicsObject(pFVar6,(uint)uVar8,pFVar2 + bVar1,false);
+    pFVar6->physJointId = 0;
+    Glass_AddPiecePhysicsObject(param_1,param_2,pFVar2 + bVar1,false);
   }
   else {
-    Phys_ObjSetVelocity(pFVar3->physObjId,pfVar4);
+    Phys_ObjSetVelocity(pFVar6->physObjId,param_3);
   }
-  if (pFVar3->physJointId != 0) {
-    Glass_FreePiecePhysicsJoint(pFVar3);
+  if (pFVar6->physJointId != 0) {
+    Glass_FreePiecePhysicsJoint(pFVar6);
   }
-  if (pFVar3->physObjId != 0) {
-    Phys_ObjSetAngularVelocityRaw(pFVar3->physObjId,pfVar5);
+  if (pFVar6->physObjId != 0) {
+    Phys_ObjSetAngularVelocityRaw(pFVar6->physObjId,param_4);
   }
-  __restgprlr_23();
   return;
 }
 
 
 // 82421F68  Glass_StartImmediateFall  (EffectsCore/fx_glass_crack.cpp:1007)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PhysWorld": Some values do not have unique names */
 
 void Glass_StartImmediateFall(FxGlassCrackWork *param_1,uint param_2,uint param_3)
@@ -1638,19 +1584,18 @@ void Glass_StartImmediateFall(FxGlassCrackWork *param_1,uint param_2,uint param_
   float fVar1;
   float fVar2;
   float fVar3;
-  int iVar4;
-  FxGlassDef *pFVar5;
-  FxGlassSystem *pFVar6;
-  int iVar7;
-  int *piVar8;
+  FxGlassSystem *pFVar4;
+  FxGlassPieceState *pFVar5;
+  FxGlassPiecePlace *pFVar6;
+  FxGlassPieceDynamics *pFVar7;
+  FxGlassDef *pFVar8;
   int iVar9;
-  int iVar10;
-  ulonglong uVar11;
+  FxGlassPieceDynamics *pFVar10;
   char in_RESERVE;
   byte in_cr0;
+  double dVar11;
   double dVar12;
-  double dVar13;
-  float fVar14;
+  float fVar13;
   float local_90;
   float local_8c;
   float local_88;
@@ -1664,85 +1609,81 @@ void Glass_StartImmediateFall(FxGlassCrackWork *param_1,uint param_2,uint param_
   float local_5c;
   float local_58;
   
-  uVar11 = (ulonglong)(int)param_3;
-  iVar9 = __savegprlr_25(param_1);
-  iVar10 = *(int *)(iVar9 + 0x3e94);
-  iVar7 = *(int *)(iVar10 + 0x38) + param_2 * 0x20;
-  iVar4 = *(int *)(iVar10 + 0x3c);
-  fVar14 = *(float *)(iVar7 + 0x1c);
-  iVar10 = *(int *)(iVar10 + 0x34) + param_2 * 0x20;
-  piVar8 = (int *)(param_2 * 0x24 + iVar4);
+  pFVar4 = param_1->glassSys;
+  pFVar5 = pFVar4->pieceStates;
+  pFVar6 = pFVar4->piecePlaces;
+  pFVar7 = pFVar4->pieceDynamics;
+  fVar13 = pFVar5[param_2].areaX2;
+  pFVar10 = pFVar7 + param_2;
   fVar1 = 2048.0;
-  if (fVar14 - 2048.0 < 0.0) {
-    fVar1 = fVar14;
+  if (fVar13 - 2048.0 < 0.0) {
+    fVar1 = fVar13;
   }
   fVar2 = 128.0;
-  if (128.0 - fVar14 < 0.0) {
+  if (128.0 - fVar13 < 0.0) {
     fVar2 = fVar1;
   }
-  fVar14 = I_rsqrt(fVar2);
-  iVar4 = *(int *)((int)((uVar11 + (uVar11 & 0x1fffffff) * 8 & 0xffffffff) << 2) + iVar4 + 4);
-  dVar12 = 0.0;
-  dVar13 = (double)(fVar14 * 11.313708);
-  if (iVar4 == 0) {
+  fVar13 = I_rsqrt(fVar2);
+  iVar9 = pFVar7[param_3].physObjId;
+  dVar11 = 0.0;
+  dVar12 = (double)(fVar13 * 11.313708);
+  if (iVar9 == 0) {
     local_70 = 0.0;
     local_6c = 0.0;
     local_68 = 0.0;
   }
   else {
-    Phys_ObjGetVelocity(iVar4,&local_70);
+    Phys_ObjGetVelocity(iVar9,&local_70);
   }
-  fVar1 = *(float *)(iVar9 + 0x3ebc);
-  fVar2 = *(float *)(iVar9 + 0x3ec0);
-  fVar3 = *(float *)(iVar9 + 0x3eb8);
+  fVar1 = param_1->impactDir[1];
+  fVar2 = param_1->impactDir[2];
+  fVar3 = param_1->impactDir[0];
   s_glassRandSeed = -(uint)(s_glassRandSeed != 0x1de) & s_glassRandSeed + 1U;
-  fVar14 = (float)((double)(((glass_linear_vel->current).vector[1] -
+  fVar13 = (float)((double)(((glass_linear_vel->current).vector[1] -
                             (glass_linear_vel->current).value) *
                             *(float *)(&fx_randomTable + s_glassRandSeed * 4) +
-                           (glass_linear_vel->current).value) * dVar13);
-  local_80 = fVar3 * fVar14 + local_70;
-  local_7c = fVar1 * fVar14 + local_6c;
-  local_78 = fVar2 * fVar14 + local_68;
-  if ((double)(fVar3 * fVar3 + fVar2 * fVar2 + fVar1 * fVar1) == dVar12) {
+                           (glass_linear_vel->current).value) * dVar12);
+  local_80 = fVar3 * fVar13 + local_70;
+  local_7c = fVar1 * fVar13 + local_6c;
+  local_78 = fVar2 * fVar13 + local_68;
+  if ((double)(fVar3 * fVar3 + fVar2 * fVar2 + fVar1 * fVar1) == dVar11) {
     Glass_RandomSmallAngularVelocity(&local_90);
-    local_90 = (float)((double)local_90 * dVar13);
-    local_8c = (float)((double)local_8c * dVar13);
-    local_88 = (float)((double)local_88 * dVar13);
+    local_90 = (float)((double)local_90 * dVar12);
+    local_8c = (float)((double)local_8c * dVar12);
+    local_88 = (float)((double)local_88 * dVar12);
   }
   else {
-    local_60 = (fVar14 / *(float *)(iVar9 + 0x3ea8)) * 0.5;
-    local_5c = (*(float *)(iVar10 + 0x14) - *(float *)(iVar9 + 0x3eb0)) * local_60;
-    local_58 = (*(float *)(iVar10 + 0x18) - *(float *)(iVar9 + 0x3eb4)) * local_60;
-    local_60 = local_60 * (*(float *)(iVar10 + 0x10) - *(float *)(iVar9 + 0x3eac));
+    local_60 = (fVar13 / param_1->originalRadius) * 0.5;
+    local_5c = ((&pFVar6->_s_0)[param_2].frame.origin[1] - param_1->impactPos[1]) * local_60;
+    local_58 = ((&pFVar6->_s_0)[param_2].frame.origin[2] - param_1->impactPos[2]) * local_60;
+    local_60 = local_60 * ((&pFVar6->_s_0)[param_2].frame.origin[0] - param_1->impactPos[0]);
     local_7c = local_5c + local_7c;
     local_80 = local_60 + local_80;
     local_78 = local_58 + local_78;
     fVar1 = SQRT(local_60 * local_60 + local_58 * local_58 + local_5c * local_5c);
-    fVar14 = 1.0;
+    fVar13 = 1.0;
     if (-fVar1 < 0.0) {
-      fVar14 = fVar1;
+      fVar13 = fVar1;
     }
-    fVar14 = 1.0 / fVar14;
-    local_60 = fVar14 * local_60;
-    local_5c = local_5c * fVar14;
-    local_58 = local_58 * fVar14;
-    Vec3Cross((float *)(*(int *)(iVar9 + 0x3ec4) + 0x18),&local_60,&local_90);
+    fVar13 = 1.0 / fVar13;
+    local_60 = fVar13 * local_60;
+    local_5c = local_5c * fVar13;
+    local_58 = local_58 * fVar13;
+    Vec3Cross(param_1->axis[2],&local_60,&local_90);
     s_glassRandSeed = -(uint)(s_glassRandSeed != 0x1de) & s_glassRandSeed + 1U;
-    fVar14 = (float)((double)((((glass_angular_vel->current).vector[1] -
+    fVar13 = (float)((double)((((glass_angular_vel->current).vector[1] -
                                (glass_angular_vel->current).value) *
                                *(float *)(&fx_randomTable + s_glassRandSeed * 4) +
-                              (glass_angular_vel->current).value) * *(float *)(iVar9 + 0x3ec8)) *
-                    dVar13);
-    local_90 = local_90 * fVar14;
-    local_8c = local_8c * fVar14;
-    local_88 = local_88 * fVar14;
+                              (glass_angular_vel->current).value) * param_1->angleSign) * dVar12);
+    local_90 = local_90 * fVar13;
+    local_8c = local_8c * fVar13;
+    local_88 = local_88 * fVar13;
   }
-  if (*(int *)(iVar7 + 8) != 0) {
-    iVar10 = Phys_ObjCreateAxis(PHYS_WORLD_FX,(float *)(iVar10 + 0x10),
-                                *(float (**) [3])(iVar9 + 0x3ec4),&local_80,
-                                *(PhysPreset **)(*(int *)(iVar9 + 0x3e90) + 0x20));
-    piVar8[1] = iVar10;
-    if (iVar10 != 0) {
+  if (pFVar5[param_2].supportMask != 0) {
+    iVar9 = Phys_ObjCreateAxis(PHYS_WORLD_FX,(&pFVar6->_s_0)[param_2].frame.origin,param_1->axis,
+                               &local_80,param_1->def->physPreset);
+    pFVar10->physObjId = iVar9;
+    if (iVar9 != 0) {
       do {
         if (in_RESERVE != '\0') {
           g_glassPhysObjCount =
@@ -1751,30 +1692,31 @@ void Glass_StartImmediateFall(FxGlassCrackWork *param_1,uint param_2,uint param_
           in_cr0 = 2;
         }
       } while (!(bool)(in_cr0 >> 1 & 1));
-      Phys_ObjSetAutoDisableFaster(piVar8[1]);
+      Phys_ObjSetAutoDisableFaster(pFVar10->physObjId);
     }
-    pFVar5 = *(FxGlassDef **)(iVar9 + 0x3e90);
-    pFVar6 = *(FxGlassSystem **)(iVar9 + 0x3e94);
-    piVar8[2] = 0;
-    Glass_AddPiecePhysicsObject(pFVar6,param_2,pFVar5,false);
-    if (piVar8[1] != 0) {
-      Phys_ObjSetAngularVelocityRaw(piVar8[1],&local_90);
-      if (*piVar8 == 0x7fffffff) {
+    pFVar8 = param_1->def;
+    pFVar4 = param_1->glassSys;
+    pFVar10->physJointId = 0;
+    Glass_AddPiecePhysicsObject(pFVar4,param_2,pFVar8,false);
+    if (pFVar10->physObjId != 0) {
+      Phys_ObjSetAngularVelocityRaw(pFVar10->physObjId,&local_90);
+      if (pFVar10->fallTime == 0x7fffffff) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_glass_crack.cpp"
                         ,0x436,0,"%s");
       }
-      Glass_CreatePieceJoint(*(FxGlassSystem **)(iVar9 + 0x3e94),param_2);
-      __restgprlr_25();
+      Glass_CreatePieceJoint(param_1->glassSys,param_2);
       return;
     }
   }
-  Glass_SetupPieceFall(*(FxGlassSystem **)(iVar9 + 0x3e94),param_2,&local_80,&local_90);
-  __restgprlr_25();
+  Glass_SetupPieceFall(param_1->glassSys,param_2,&local_80,&local_90);
   return;
 }
 
 
 // 82422300  Glass_SetupDynamics  (EffectsCore/fx_glass_crack.cpp:1090)
+
+/* WARNING: Function: __savegprlr_20 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_20 replaced with injection: xenon_save_restore */
 
 void Glass_SetupDynamics(FxGlassCrackWork *param_1,FxGlassShard *param_2,uint param_3,uint param_4,
                         FxGlassCrackEdge *param_5)
@@ -1783,70 +1725,62 @@ void Glass_SetupDynamics(FxGlassCrackWork *param_1,FxGlassShard *param_2,uint pa
   FxGlassSystem *pFVar1;
   FxGlassPieceDynamics *pFVar2;
   FxGlassPieceState *pFVar3;
-  FxGlassPieceDynamics *pFVar4;
+  float fVar4;
   float fVar5;
-  FxGlassPiecePlace *pFVar6;
-  float fVar7;
-  float fVar8;
-  FxGlassCrackWork *pFVar9;
-  bool bVar10;
-  ulonglong uVar11;
-  ulonglong uVar12;
+  float fVar6;
+  bool bVar7;
+  FxGlassPiecePlace *pFVar8;
+  FxGlassPieceDynamics *pFVar9;
   
-  uVar12 = (ulonglong)(int)param_5;
-  uVar11 = (ulonglong)(int)param_4;
-  pFVar9 = (FxGlassCrackWork *)__savegprlr_20(param_1);
-  pFVar1 = pFVar9->glassSys;
+  pFVar1 = param_1->glassSys;
   pFVar2 = pFVar1->pieceDynamics;
-  pFVar4 = pFVar2 + param_3;
+  pFVar9 = pFVar2 + param_3;
   pFVar3 = pFVar1->pieceStates;
-  pFVar6 = pFVar1->piecePlaces + param_3;
-  if (pFVar4->physObjId != 0) {
+  pFVar8 = pFVar1->piecePlaces + param_3;
+  if (pFVar9->physObjId != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_glass_crack.cpp"
                     ,0x450,1,"%s");
   }
-  if (pFVar4->physJointId != 0) {
+  if (pFVar9->physJointId != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_glass_crack.cpp"
                     ,0x451,1,"%s");
   }
-  fVar5 = (pFVar6->_s_0).frame.origin[2] - pFVar9->playerOrigin[2];
-  fVar7 = (pFVar6->_s_0).frame.origin[0] - pFVar9->playerOrigin[0];
-  fVar8 = (pFVar6->_s_0).frame.origin[1] - pFVar9->playerOrigin[1];
+  fVar4 = (pFVar8->_s_0).frame.origin[2] - param_1->playerOrigin[2];
+  fVar5 = (pFVar8->_s_0).frame.origin[0] - param_1->playerOrigin[0];
+  fVar6 = (pFVar8->_s_0).frame.origin[1] - param_1->playerOrigin[1];
   if ((glass_physics_maxdist->current).value * (glass_physics_maxdist->current).value <
-      fVar8 * fVar8 + fVar7 * fVar7 + fVar5 * fVar5) {
+      fVar6 * fVar6 + fVar5 * fVar5 + fVar4 * fVar4) {
     pFVar3[param_3].flags = pFVar3[param_3].flags | 4;
   }
   if (pFVar3[param_3].supportMask != 0) {
-    bVar10 = Glass_SchedulePieceToFall(pFVar9,param_2,pFVar4);
-    if (!bVar10) {
-      if ((uVar12 & 0xffffffff) != 0) {
-        Glass_RotatePieceAroundEdge(pFVar9,param_2,pFVar6,(FxGlassCrackEdge *)uVar12);
+    bVar7 = Glass_SchedulePieceToFall(param_1,param_2,pFVar9);
+    if (!bVar7) {
+      if (param_5 != (FxGlassCrackEdge *)0x0) {
+        Glass_RotatePieceAroundEdge(param_1,param_2,pFVar8,param_5);
       }
-      Glass_LinkPiece_Static(pFVar9->glassSys,param_3);
-      __restgprlr_20();
+      Glass_LinkPiece_Static(param_1->glassSys,param_3);
       return;
     }
-    if (*(int *)((int)pFVar2->vel +
-                (int)((uVar11 + (uVar11 & 0x1fffffff) * 8 & 0xffffffff) << 2) + -8) != 0) {
+    if (pFVar2[param_4].physObjId != 0) {
       pFVar3[param_3].supportMask = 0;
     }
   }
-  if (pFVar9->glassSys->time == 0) {
-    Glass_FreePiece(pFVar9->glassSys,param_3);
-    __restgprlr_20();
+  if (param_1->glassSys->time == 0) {
+    Glass_FreePiece(param_1->glassSys,param_3);
     return;
   }
-  if (((*(ushort *)(pFVar3->pad + (int)((uVar11 & 0xffffffff) << 5) + 9) & 8) != 0) &&
-     (pFVar3[param_3].supportMask == 0)) {
+  if (((pFVar3[param_4].flags & 8) != 0) && (pFVar3[param_3].supportMask == 0)) {
     pFVar3[param_3].flags = pFVar3[param_3].flags | 8;
   }
-  Glass_StartImmediateFall(pFVar9,param_3,(uint)uVar11);
-  __restgprlr_20();
+  Glass_StartImmediateFall(param_1,param_3,param_4);
   return;
 }
 
 
 // 824224E8  Glass_StartDelayedFall  (EffectsCore/fx_glass_crack.cpp:1139)
+
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 
 void Glass_StartDelayedFall(FxGlassSystem *param_1,uint param_2)
 
@@ -1854,79 +1788,68 @@ void Glass_StartDelayedFall(FxGlassSystem *param_1,uint param_2)
   ushort uVar1;
   FxGlassPieceDynamics *pFVar2;
   int iVar3;
-  FxGlassSystem *pFVar4;
-  ulonglong uVar5;
   float afStack_40 [4];
   float afStack_30 [12];
   
-  uVar5 = (ulonglong)(int)param_2;
-  pFVar4 = (FxGlassSystem *)__savegprlr_29(param_1);
-  iVar3 = (int)((uVar5 & 0xffffffff) << 5);
-  pFVar2 = pFVar4->pieceDynamics;
-  uVar1 = *(ushort *)(pFVar4->pieceStates->pad + iVar3 + 9);
+  pFVar2 = param_1->pieceDynamics;
+  uVar1 = param_1->pieceStates[param_2].flags;
   if ((uVar1 & 4) == 0) {
-    *(ushort *)(pFVar4->pieceStates->pad + iVar3 + 9) = uVar1 | 8;
+    param_1->pieceStates[param_2].flags = uVar1 | 8;
   }
-  iVar3 = *(int *)((int)pFVar2->vel +
-                  (int)((uVar5 + (uVar5 & 0x1fffffff) * 8 & 0xffffffff) << 2) + -8);
+  iVar3 = pFVar2[param_2].physObjId;
   if (iVar3 != 0) {
     Phys_ObjGetVelocity(iVar3,afStack_30);
     Phys_ObjGetAngularVelocityRaw(iVar3,afStack_40);
-    Glass_SetupPieceFall(pFVar4,(uint)uVar5,afStack_30,afStack_40);
-    __restgprlr_29();
+    Glass_SetupPieceFall(param_1,param_2,afStack_30,afStack_40);
     return;
   }
   Glass_RandomSmallAngularVelocity(afStack_30);
-  Glass_SetupPieceFall(pFVar4,(uint)uVar5,vec3_origin,afStack_30);
-  __restgprlr_29();
+  Glass_SetupPieceFall(param_1,param_2,vec3_origin,afStack_30);
   return;
 }
 
 
 // 82424A40  Glass_ConsiderBreakingPiece  (EffectsCore/fx_glass_crack.cpp:1182)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void Glass_ConsiderBreakingPiece(FxGlassCrackWork *param_1,uint param_2)
 
 {
   float fVar1;
-  int iVar2;
-  int iVar3;
-  int iVar4;
-  int iVar5;
-  ushort uVar6;
-  ulonglong uVar7;
-  bool bVar8;
+  FxGlassPieceState *pFVar2;
+  FxGlassPieceDynamics *pFVar3;
+  bool bVar4;
+  ushort uVar5;
   
-  uVar7 = (ulonglong)(int)param_2;
-  iVar5 = __savegprlr_27(param_1);
-  iVar4 = (int)uVar7;
-  bVar8 = false;
-  iVar2 = *(int *)(*(int *)(iVar5 + 0x3e94) + 0x3c);
-  iVar3 = *(int *)(*(int *)(iVar5 + 0x3e94) + 0x38) + iVar4 * 0x20;
-  if (((*(float *)(iVar5 + 0x435c) < *(float *)(iVar3 + 0x1c)) ||
-      ((*(int *)(iVar3 + 8) != 0 && (*(float *)(iVar5 + 0x4360) < *(float *)(iVar3 + 0x1c))))) &&
-     (*(uint *)(iVar5 + 0x43a4) < 0x20)) {
-    uVar6 = truncate_cast<unsigned_short>(iVar4);
-    bVar8 = true;
-    *(ushort *)((*(int *)(iVar5 + 0x43a4) + 0x21b2) * 2 + iVar5) = uVar6;
-    *(int *)(iVar5 + 0x43a4) = *(int *)(iVar5 + 0x43a4) + 1;
+  pFVar2 = param_1->glassSys->pieceStates;
+  bVar4 = false;
+  pFVar3 = param_1->glassSys->pieceDynamics;
+  if (((param_1->maxPieceArea < pFVar2[param_2].areaX2) ||
+      ((pFVar2[param_2].supportMask != 0 && (param_1->maxEdgePieceArea < pFVar2[param_2].areaX2))))
+     && (param_1->pieceStackLevel < 0x20)) {
+    uVar5 = truncate_cast<unsigned_short>(param_2);
+    bVar4 = true;
+    param_1->pieceStack[param_1->pieceStackLevel] = uVar5;
+    param_1->pieceStackLevel = param_1->pieceStackLevel + 1;
   }
-  if ((!bVar8) && (*(int *)(iVar3 + 8) != 0)) {
-    if ((*(int *)(iVar2 + (int)((uVar7 + (uVar7 & 0x1fffffff) * 8 & 0xffffffff) << 2)) == 0x7fffffff
-        ) && (*(uint *)(iVar5 + 0x43e8) < 0x20)) {
-      uVar6 = truncate_cast<unsigned_short>(iVar4);
-      fVar1 = *(float *)(iVar3 + 0x1c);
-      *(ushort *)((*(int *)(iVar5 + 0x43e8) + 0x21d4) * 2 + iVar5) = uVar6;
-      *(float *)(iVar5 + 0x43ec) = *(float *)(iVar5 + 0x43ec) + fVar1;
-      *(int *)(iVar5 + 0x43e8) = *(int *)(iVar5 + 0x43e8) + 1;
-    }
+  if ((((!bVar4) && (pFVar2[param_2].supportMask != 0)) && (pFVar3[param_2].fallTime == 0x7fffffff))
+     && (param_1->fringePieceCount < 0x20)) {
+    uVar5 = truncate_cast<unsigned_short>(param_2);
+    fVar1 = pFVar2[param_2].areaX2;
+    param_1->fringePieces[param_1->fringePieceCount] = uVar5;
+    param_1->fringeAreaX2 = param_1->fringeAreaX2 + fVar1;
+    param_1->fringePieceCount = param_1->fringePieceCount + 1;
   }
-  __restgprlr_27();
   return;
 }
 
 
 // 82424B48  Glass_FinalizeShard  (EffectsCore/fx_glass_crack.cpp:1238)
+
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
 
 void Glass_FinalizeShard(FxGlassCrackWork *param_1,FxGlassShard *param_2)
 
@@ -1942,18 +1865,16 @@ void Glass_FinalizeShard(FxGlassCrackWork *param_1,FxGlassShard *param_2)
   float (*pafVar9) [3];
   FxGlassSystem *pFVar10;
   FxGlassDef *pFVar11;
-  FxGlassCrackWork *pFVar12;
-  uint uVar13;
-  FxGlassPieceState *pFVar14;
-  FxGlassPiecePlace *pFVar15;
-  FxGlassPieceState *pFVar16;
-  FxGlassPiecePlace *pFVar17;
+  uint uVar12;
+  FxGlassPieceState *pFVar13;
+  FxGlassPiecePlace *pFVar14;
+  FxGlassPieceState *pFVar15;
+  FxGlassPiecePlace *pFVar16;
   
-  pFVar12 = (FxGlassCrackWork *)__savegprlr_23(param_1);
-  uVar13 = param_2->holeDataCount;
+  uVar12 = param_2->holeDataCount;
   uVar4 = param_2->loops[0].vertCount;
-  uVar6 = pFVar12->pieceIndex;
-  if (uVar13 != (uVar13 & 0xff)) {
+  uVar6 = param_1->pieceIndex;
+  if (uVar12 != (uVar12 & 0xff)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\../universal/assertive.h"
                     ,0x1ce,0,"i == static_cast< Type >( i )\n\t%i, %i");
   }
@@ -1967,73 +1888,72 @@ void Glass_FinalizeShard(FxGlassCrackWork *param_1,FxGlassShard *param_2)
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\../universal/assertive.h"
                     ,0x1ce,0,"i == static_cast< Type >( i )\n\t%i, %i");
   }
-  if (0x80 < (((uVar7 & 0xff) - param_2->crackCount) - param_2->loopCount) + (uVar13 & 0xff) +
+  if (0x80 < (((uVar7 & 0xff) - param_2->crackCount) - param_2->loopCount) + (uVar12 & 0xff) +
              (uVar4 & 0xff) + 1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_glass_crack.cpp"
                     ,0x4ed,0,"%s");
   }
-  uVar13 = Glass_AllocPiece(pFVar12->glassSys,(uchar)uVar4,(uchar)uVar13,(uchar)uVar7,(uchar)uVar8);
-  if (uVar13 != 0xffff) {
-    pFVar16 = pFVar12->glassSys->pieceStates + uVar13;
-    pFVar17 = pFVar12->glassSys->piecePlaces + uVar13;
-    if ((ushort)pFVar16->vertCount != param_2->loops[0].vertCount) {
+  uVar12 = Glass_AllocPiece(param_1->glassSys,(uchar)uVar4,(uchar)uVar12,(uchar)uVar7,(uchar)uVar8);
+  if (uVar12 != 0xffff) {
+    pFVar15 = param_1->glassSys->pieceStates + uVar12;
+    pFVar16 = param_1->glassSys->piecePlaces + uVar12;
+    if ((ushort)pFVar15->vertCount != param_2->loops[0].vertCount) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_glass_crack.cpp"
                       ,0x4f6,1,"newPieceState->vertCount == shard->loops[0].vertCount\n\t%i, %i");
     }
-    pafVar9 = pFVar12->axis;
+    pafVar9 = param_1->axis;
     fVar1 = param_2->centroid[1];
-    pFVar10 = pFVar12->glassSys;
+    pFVar10 = param_1->glassSys;
     fVar2 = param_2->centroid[0];
     fVar3 = param_2->radius;
-    pFVar15 = pFVar10->piecePlaces + uVar6;
-    pFVar14 = pFVar10->pieceStates + uVar6;
-    (pFVar17->_s_0).frame.origin[0] =
-         (*pafVar9)[0] * fVar2 + pafVar9[1][0] * fVar1 + (pFVar15->_s_0).frame.origin[0];
-    (pFVar17->_s_0).frame.origin[1] =
-         (*pafVar9)[1] * fVar2 + pafVar9[1][1] * fVar1 + (pFVar15->_s_0).frame.origin[1];
-    (pFVar17->_s_0).frame.origin[2] =
-         (*pafVar9)[2] * fVar2 + pafVar9[1][2] * fVar1 + (pFVar15->_s_0).frame.origin[2];
-    (pFVar17->_s_0).frame.quat[0] = (pFVar15->_s_0).frame.quat[0];
-    (pFVar17->_s_0).frame.quat[1] = (pFVar15->_s_0).frame.quat[1];
-    (pFVar17->_s_0).frame.quat[2] = (pFVar15->_s_0).frame.quat[2];
-    (pFVar17->_s_0).frame.quat[3] = (pFVar15->_s_0).frame.quat[3];
-    (pFVar17->_s_0).radius = fVar3;
-    if ((pFVar14->flags & 1) == 0) {
-      pFVar11 = pFVar12->def;
+    pFVar14 = pFVar10->piecePlaces + uVar6;
+    pFVar13 = pFVar10->pieceStates + uVar6;
+    (pFVar16->_s_0).frame.origin[0] =
+         (*pafVar9)[0] * fVar2 + pafVar9[1][0] * fVar1 + (pFVar14->_s_0).frame.origin[0];
+    (pFVar16->_s_0).frame.origin[1] =
+         (*pafVar9)[1] * fVar2 + pafVar9[1][1] * fVar1 + (pFVar14->_s_0).frame.origin[1];
+    (pFVar16->_s_0).frame.origin[2] =
+         (*pafVar9)[2] * fVar2 + pafVar9[1][2] * fVar1 + (pFVar14->_s_0).frame.origin[2];
+    (pFVar16->_s_0).frame.quat[0] = (pFVar14->_s_0).frame.quat[0];
+    (pFVar16->_s_0).frame.quat[1] = (pFVar14->_s_0).frame.quat[1];
+    (pFVar16->_s_0).frame.quat[2] = (pFVar14->_s_0).frame.quat[2];
+    (pFVar16->_s_0).frame.quat[3] = (pFVar14->_s_0).frame.quat[3];
+    (pFVar16->_s_0).radius = fVar3;
+    if ((pFVar13->flags & 1) == 0) {
+      pFVar11 = param_1->def;
       fVar1 = (float)(longlong)(param_2->packedCentroid).y;
       fVar2 = (float)(longlong)(param_2->packedCentroid).x;
-      pFVar16->texCoordOrigin[0] =
+      pFVar15->texCoordOrigin[0] =
            pFVar11->texVecs[0][1] * fVar1 + pFVar11->texVecs[0][0] * fVar2 +
-           pFVar14->texCoordOrigin[0];
-      pFVar16->texCoordOrigin[1] =
+           pFVar13->texCoordOrigin[0];
+      pFVar15->texCoordOrigin[1] =
            pFVar11->texVecs[1][1] * fVar1 + pFVar11->texVecs[1][0] * fVar2 +
-           pFVar14->texCoordOrigin[1];
+           pFVar13->texCoordOrigin[1];
     }
     else {
       sVar5 = (param_2->packedCentroid).y;
-      pFVar16->texCoordOrigin[0] =
+      pFVar15->texCoordOrigin[0] =
            ((float)(longlong)(param_2->packedCentroid).x / (glass_shattered_scale->current).value) *
-           0.03125 + pFVar14->texCoordOrigin[0];
-      pFVar16->texCoordOrigin[1] =
+           0.03125 + pFVar13->texCoordOrigin[0];
+      pFVar15->texCoordOrigin[1] =
            ((float)(longlong)sVar5 / (glass_shattered_scale->current).value) * 0.03125 +
-           pFVar14->texCoordOrigin[1];
+           pFVar13->texCoordOrigin[1];
     }
     fVar1 = param_2->areaX2;
-    pFVar16->supportMask = param_2->supportMask;
-    pFVar16->initIndex = pFVar14->initIndex;
-    pFVar16->defIndex = pFVar14->defIndex;
-    uVar4 = pFVar14->flags;
-    pFVar16->areaX2 = fVar1;
-    pFVar16->flags = uVar4 & 0xfff9 | 2;
-    pFVar10->halfThickness[uVar13] = pFVar10->halfThickness[uVar6];
+    pFVar15->supportMask = param_2->supportMask;
+    pFVar15->initIndex = pFVar13->initIndex;
+    pFVar15->defIndex = pFVar13->defIndex;
+    uVar4 = pFVar13->flags;
+    pFVar15->areaX2 = fVar1;
+    pFVar15->flags = uVar4 & 0xfff9 | 2;
+    pFVar10->halfThickness[uVar12] = pFVar10->halfThickness[uVar6];
     memcpy();
-    Glass_SetupDynamics(pFVar12,param_2,uVar13,uVar6,(FxGlassCrackEdge *)0x0);
-    if ((*(uint *)((uVar13 >> 3 & 0x1ffffffc) + (int)pFVar12->glassSys->isInUse) &
-        *(uint *)(&g_bitShift + (uVar13 & 0x1f) * 4)) != 0) {
-      Glass_ConsiderBreakingPiece(pFVar12,uVar13);
+    Glass_SetupDynamics(param_1,param_2,uVar12,uVar6,(FxGlassCrackEdge *)0x0);
+    if ((*(uint *)((uVar12 >> 3 & 0x1ffffffc) + (int)param_1->glassSys->isInUse) &
+        *(uint *)(&g_bitShift + (uVar12 & 0x1f) * 4)) != 0) {
+      Glass_ConsiderBreakingPiece(param_1,uVar12);
     }
   }
-  __restgprlr_23();
   return;
 }
 
@@ -2078,46 +1998,40 @@ void Glass_AssertDirIsInArc(float *param_1,float *param_2,float *param_3)
 
 // 82422650  Glass_PushCrackBranch  (EffectsCore/fx_glass_crack.cpp:1324)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void Glass_PushCrackBranch
                (FxGlassCrackWork *param_1,FxGlassCrackEdge *param_2,float *param_3,float param_4,
                float *param_5,float param_6,float param_7)
 
 {
-  int iVar1;
-  int iVar2;
-  longlong lVar3;
-  longlong lVar4;
-  undefined4 *in_r7;
-  double extraout_f1;
-  double dVar5;
-  double dVar6;
-  double dVar7;
+  uint uVar1;
+  float *in_r7;
+  double dVar2;
+  double dVar3;
+  double dVar4;
   
-  dVar6 = (double)param_7;
-  dVar5 = (double)param_6;
-  lVar4 = (longlong)(int)param_3;
-  lVar3 = (longlong)(int)param_2;
-  iVar2 = __savegprlr_28((double)param_4,param_1,lVar3,lVar4,param_5);
-  dVar7 = extraout_f1;
-  if (0x1f < *(uint *)(iVar2 + 0x4358)) {
+  dVar4 = (double)param_7;
+  dVar3 = (double)param_6;
+  dVar2 = (double)param_4;
+  if (0x1f < param_1->branchStackLevel) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_glass_crack.cpp"
                     ,0x52f,0,
                     "work->branchStackLevel doesn\'t index GLASS_CRACK_STACK_SIZE\n\t%i not in [0, %i)"
                    );
   }
-  iVar1 = *(int *)(iVar2 + 0x4358);
-  *(int *)(iVar2 + 0x4358) = iVar1 + 1;
-  iVar2 = iVar1 * 0x24 + iVar2;
-  *(int *)(iVar2 + 0x3ed8) = (int)lVar3;
-  *(uint *)(iVar2 + 0x3edc) = (uint)*(byte *)((int)lVar3 + 1);
-  *(undefined4 *)(iVar2 + 0x3ee0) = *(undefined4 *)lVar4;
-  *(undefined4 *)(iVar2 + 0x3ee4) = ((undefined4 *)lVar4)[1];
-  *(float *)(iVar2 + 0x3ee8) = (float)dVar7;
-  *(undefined4 *)(iVar2 + 0x3eec) = *in_r7;
-  *(undefined4 *)(iVar2 + 0x3ef0) = in_r7[1];
-  *(float *)(iVar2 + 0x3ef4) = (float)dVar5;
-  *(float *)(iVar2 + 0x3ef8) = (float)dVar6;
-  __restgprlr_28();
+  uVar1 = param_1->branchStackLevel;
+  param_1->branchStackLevel = uVar1 + 1;
+  param_1->branchStack[uVar1].afterEdge = param_2;
+  param_1->branchStack[uVar1].startIndex = (uint)(param_2->field0_0x0)._s_0.i1;
+  param_1->branchStack[uVar1].dir[0] = *param_3;
+  param_1->branchStack[uVar1].dir[1] = param_3[1];
+  param_1->branchStack[uVar1].len = (float)dVar2;
+  param_1->branchStack[uVar1].baseDir[0] = *in_r7;
+  param_1->branchStack[uVar1].baseDir[1] = in_r7[1];
+  param_1->branchStack[uVar1].deflectLimit = (float)dVar3;
+  param_1->branchStack[uVar1].priorCrackLength = (float)dVar4;
   return;
 }
 
@@ -2231,78 +2145,69 @@ void Glass_DeflectVector(float param_1,float param_2,float *param_3,float *param
 
 // 824229D0  Glass_DoesSegmentIntersectEitherEdge  (EffectsCore/fx_glass_crack.cpp:1403)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
+
 bool Glass_DoesSegmentIntersectEitherEdge
                (FxGlassCrackWork *param_1,float *param_2,float *param_3,FxGlassCrackEdge *param_4,
                FxGlassCrackEdge *param_5)
 
 {
-  float fVar1;
+  byte bVar1;
   float fVar2;
   float fVar3;
   float fVar4;
   float fVar5;
   float fVar6;
-  byte *pbVar7;
-  int iVar8;
+  float fVar7;
+  float fVar8;
   float fVar9;
   float fVar10;
-  int iVar12;
-  undefined1 uVar13;
-  undefined8 uVar11;
-  ulonglong uVar14;
-  ulonglong uVar15;
-  byte *pbVar16;
+  float fVar11;
+  bool bVar12;
   
-  uVar15 = (ulonglong)(int)param_5;
-  uVar14 = (ulonglong)(int)param_4;
-  iVar12 = __savegprlr_25(param_1);
-  if ((uVar14 & 0xffffffff) == 0) {
+  if (param_4 == (FxGlassCrackEdge *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_glass_crack.cpp"
                     ,0x583,0,"%s");
   }
-  if ((uVar15 & 0xffffffff) == 0) {
+  if (param_5 == (FxGlassCrackEdge *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_glass_crack.cpp"
                     ,0x584,0,"%s");
   }
-  pbVar7 = (byte *)uVar14;
-  pbVar16 = (byte *)uVar15;
-  if (pbVar7[1] != *pbVar16) {
+  if ((param_4->field0_0x0)._s_0.i1 != (param_5->field0_0x0)._s_0.i0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_glass_crack.cpp"
                     ,0x585,0,"edgePrev->i1 == edge->i0\n\t%i, %i");
   }
-  fVar1 = param_2[1];
-  fVar2 = param_3[1];
-  fVar3 = *param_2;
-  iVar8 = (uint)*pbVar16 * 8 + iVar12;
-  fVar4 = *param_3;
-  fVar5 = *(float *)(iVar8 + 0x400);
-  fVar6 = *(float *)(iVar8 + 0x3fc);
-  fVar9 = fVar2 - fVar5;
-  fVar5 = fVar1 - fVar5;
-  fVar10 = fVar3 - fVar6;
-  fVar6 = fVar4 - fVar6;
-  if ((*(float *)(pbVar16 + 0xc) * fVar10 - *(float *)(pbVar16 + 8) * fVar5) *
-      (*(float *)(pbVar16 + 0xc) * fVar6 - *(float *)(pbVar16 + 8) * fVar9) < 0.0) {
-    iVar8 = (uint)pbVar16[1] * 8 + iVar12;
-    if (((*(float *)(iVar8 + 0x3fc) - fVar3) * (fVar2 - fVar1) -
-        (*(float *)(iVar8 + 0x400) - fVar1) * (fVar4 - fVar3)) *
-        ((fVar4 - fVar3) * fVar5 - (fVar2 - fVar1) * fVar10) < 0.0) {
-      uVar13 = __restgprlr_25(1);
-      return (bool)uVar13;
-    }
+  bVar1 = (param_5->field0_0x0)._s_0.i0;
+  fVar2 = param_2[1];
+  fVar3 = param_3[1];
+  fVar4 = (param_5->field0_0x0)._s_0.dir[0];
+  fVar5 = *param_2;
+  fVar6 = *param_3;
+  fVar7 = (param_5->field0_0x0)._s_0.dir[1];
+  fVar8 = param_1->pts[bVar1].xy[1];
+  fVar9 = param_1->pts[bVar1].xy[0];
+  fVar10 = fVar3 - fVar8;
+  fVar8 = fVar2 - fVar8;
+  fVar11 = fVar5 - fVar9;
+  fVar9 = fVar6 - fVar9;
+  if (((fVar7 * fVar11 - fVar4 * fVar8) * (fVar7 * fVar9 - fVar4 * fVar10) < 0.0) &&
+     (bVar1 = (param_5->field0_0x0)._s_0.i1,
+     ((param_1->pts[bVar1].xy[0] - fVar5) * (fVar3 - fVar2) -
+     (param_1->pts[bVar1].xy[1] - fVar2) * (fVar6 - fVar5)) *
+     ((fVar6 - fVar5) * fVar8 - (fVar3 - fVar2) * fVar11) < 0.0)) {
+    return true;
   }
-  if ((*(float *)(pbVar7 + 0xc) * fVar6 - *(float *)(pbVar7 + 8) * fVar9) *
-      (*(float *)(pbVar7 + 0xc) * fVar10 - *(float *)(pbVar7 + 8) * fVar5) < 0.0) {
-    uVar11 = 1;
-    iVar12 = (uint)*pbVar7 * 8 + iVar12;
-    if (((*(float *)(iVar12 + 0x3fc) - fVar3) * (fVar2 - fVar1) -
-        (*(float *)(iVar12 + 0x400) - fVar1) * (fVar4 - fVar3)) *
-        ((fVar4 - fVar3) * fVar5 - (fVar2 - fVar1) * fVar10) < 0.0) goto LAB_82422b9c;
+  fVar4 = (param_4->field0_0x0)._s_0.dir[0];
+  fVar7 = (param_4->field0_0x0)._s_0.dir[1];
+  if ((0.0 <= (fVar7 * fVar9 - fVar4 * fVar10) * (fVar7 * fVar11 - fVar4 * fVar8)) ||
+     (bVar1 = (param_4->field0_0x0)._s_0.i0, bVar12 = true,
+     0.0 <= ((param_1->pts[bVar1].xy[0] - fVar5) * (fVar3 - fVar2) -
+            (param_1->pts[bVar1].xy[1] - fVar2) * (fVar6 - fVar5)) *
+            ((fVar6 - fVar5) * fVar8 - (fVar3 - fVar2) * fVar11))) {
+    bVar12 = false;
   }
-  uVar11 = 0;
-LAB_82422b9c:
-  uVar13 = __restgprlr_25(uVar11);
-  return (bool)uVar13;
+  return bVar12;
 }
 
 
@@ -2366,6 +2271,11 @@ bool Glass_UseDeflection(FxGlassCrackWork *param_1,FxGlassClipSegment *param_2,u
 
 // 82422D10  Glass_TraceCrackAgainstEdge  (EffectsCore/fx_glass_crack.cpp:1508)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
+
 void Glass_TraceCrackAgainstEdge
                (FxGlassCrackWork *param_1,FxGlassClipSegment *param_2,float *param_3,
                FxGlassCrackEdge *param_4,FxGlassCrackEdge *param_5)
@@ -2377,150 +2287,161 @@ void Glass_TraceCrackAgainstEdge
   float fVar4;
   float fVar5;
   float fVar6;
-  FxGlassCrackEdge *pFVar7;
+  float fVar7;
   float fVar8;
-  float fVar9;
-  FxGlassCrackWork *pFVar10;
-  bool bVar11;
-  ulonglong uVar12;
-  uint uVar13;
-  FxGlassCrackEdge *pFVar14;
-  int iVar15;
+  bool bVar9;
+  uint uVar10;
+  FxGlassCrackEdge *pFVar11;
+  int iVar12;
+  double dVar13;
+  double dVar14;
+  double dVar15;
   double dVar16;
   double dVar17;
   double dVar18;
   double dVar19;
   double dVar20;
   double dVar21;
-  double dVar22;
-  double dVar23;
-  double dVar24;
-  float fVar25;
+  float fVar22;
   float local_a0;
   float local_9c;
   float local_98;
   float local_94;
   
-  uVar12 = (ulonglong)(int)param_4;
-  __savegprlr_24(param_1);
-  pFVar10 = (FxGlassCrackWork *)__savefpr_24();
-  pFVar7 = (FxGlassCrackEdge *)uVar12;
-  fVar25 = (pFVar7->field0_0x0)._s_0.dir[1];
-  fVar2 = (pFVar7->field0_0x0)._s_0.dir[0];
-  dVar21 = 0.0;
-  dVar22 = (double)(fVar2 * param_2->dir[1] - fVar25 * param_2->dir[0]);
-  if (dVar22 <= 0.0) goto LAB_82422e2c;
-  bVar1 = (pFVar7->field0_0x0)._s_0.i0;
-  fVar3 = param_3[1];
-  fVar4 = *param_3;
-  local_94 = fVar3 - pFVar10->pts[bVar1].xy[1];
-  local_98 = fVar4 - pFVar10->pts[bVar1].xy[0];
-  dVar20 = (double)(fVar25 * local_98 - fVar2 * local_94);
-  if (dVar20 <= 0.0) goto LAB_82422e2c;
-  dVar17 = -(double)(float)((double)param_2->len * dVar22 - dVar20);
-  dVar18 = (double)(float)(dVar22 * 0.009999999776482582);
-  if (dVar18 < dVar17) goto LAB_82422e2c;
-  dVar24 = (double)(float)(dVar22 * 4.0);
-  dVar16 = (double)(param_2->dir[1] * local_98 - param_2->dir[0] * local_94);
-  if ((dVar16 < -dVar24) ||
-     (dVar19 = (double)(float)((double)(pFVar7->field0_0x0)._s_0.len * dVar22),
-     (double)(float)(dVar19 + dVar24) < dVar16)) goto LAB_82422e2c;
-  dVar23 = 0.5;
-  dVar19 = (double)(float)(dVar19 * 0.5);
-  dVar16 = (double)(float)(dVar16 - dVar19);
-  dVar19 = (double)(float)(dVar19 - ABS(dVar16));
-  if (dVar19 < dVar24) {
-    if (ABS(dVar19) <= dVar18) {
-      iVar15 = 0;
+  fVar22 = (param_4->field0_0x0)._s_0.dir[1];
+  fVar2 = (param_4->field0_0x0)._s_0.dir[0];
+  dVar18 = 0.0;
+  dVar19 = (double)(fVar2 * param_2->dir[1] - fVar22 * param_2->dir[0]);
+  if (dVar19 <= 0.0) {
+    return;
+  }
+  bVar1 = (param_4->field0_0x0)._s_0.i0;
+  local_9c = param_3[1];
+  local_a0 = *param_3;
+  local_94 = local_9c - param_1->pts[bVar1].xy[1];
+  local_98 = local_a0 - param_1->pts[bVar1].xy[0];
+  dVar17 = (double)(fVar22 * local_98 - fVar2 * local_94);
+  if (dVar17 <= 0.0) {
+    return;
+  }
+  dVar14 = -(double)(float)((double)param_2->len * dVar19 - dVar17);
+  dVar15 = (double)(float)(dVar19 * 0.009999999776482582);
+  if (dVar15 < dVar14) {
+    return;
+  }
+  dVar21 = (double)(float)(dVar19 * 4.0);
+  dVar13 = (double)(param_2->dir[1] * local_98 - param_2->dir[0] * local_94);
+  if (dVar13 < -dVar21) {
+    return;
+  }
+  dVar16 = (double)(float)((double)(param_4->field0_0x0)._s_0.len * dVar19);
+  if ((double)(float)(dVar16 + dVar21) < dVar13) {
+    return;
+  }
+  dVar20 = 0.5;
+  dVar16 = (double)(float)(dVar16 * 0.5);
+  dVar13 = (double)(float)(dVar13 - dVar16);
+  dVar16 = (double)(float)(dVar16 - ABS(dVar13));
+  if (dVar16 < dVar21) {
+    if (ABS(dVar16) <= dVar15) {
+      iVar12 = 0;
       if (param_2->hitAtVertex != 0) {
-        if (dVar16 <= 0.0) {
-          pFVar14 = param_2->hitEdge;
+        if (dVar13 <= 0.0) {
+          pFVar11 = param_2->hitEdge;
         }
         else {
-          pFVar14 = param_2->hitEdgePrev;
+          pFVar11 = param_2->hitEdgePrev;
         }
-        if ((uVar12 & 0xffffffff) == ZEXT48(pFVar14)) goto LAB_82422e2c;
-        if ((double)(float)(dVar18 * -2.0) < dVar17) {
-          pFVar14 = pFVar7;
-          if (0.0 < dVar16) {
-            pFVar14 = (pFVar7->field0_0x0)._s_0.next;
+        if (param_4 == pFVar11) {
+          return;
+        }
+        if ((double)(float)(dVar15 * -2.0) < dVar14) {
+          pFVar11 = param_4;
+          if (0.0 < dVar13) {
+            pFVar11 = (param_4->field0_0x0)._s_0.next;
           }
-          fVar25 = param_2->dir[0];
-          fVar2 = (pFVar14->field0_0x0)._s_0.dir[1];
+          fVar22 = param_2->dir[0];
+          fVar2 = (pFVar11->field0_0x0)._s_0.dir[1];
           fVar3 = param_2->dir[1];
-          fVar4 = (pFVar14->field0_0x0)._s_0.dir[0];
+          fVar4 = (pFVar11->field0_0x0)._s_0.dir[0];
           fVar5 = (param_2->hitEdge->field0_0x0)._s_0.dir[1];
           fVar6 = (param_2->hitEdge->field0_0x0)._s_0.dir[0];
           fVar8 = 1.0;
-          if (fVar3 * fVar4 - fVar25 * fVar2 < 0.0) {
+          if (fVar3 * fVar4 - fVar22 * fVar2 < 0.0) {
             fVar8 = -1.0;
           }
-          fVar9 = 1.0;
-          if (fVar6 * fVar3 - fVar25 * fVar5 < 0.0) {
-            fVar9 = -1.0;
+          fVar7 = 1.0;
+          if (fVar6 * fVar3 - fVar22 * fVar5 < 0.0) {
+            fVar7 = -1.0;
           }
-          if (((fVar25 * fVar6 + fVar5 * fVar3) - 1.0) * fVar9 <
-              ((fVar25 * fVar4 + fVar3 * fVar2) - 1.0) * fVar8) goto LAB_82422e2c;
+          if (((fVar22 * fVar6 + fVar5 * fVar3) - 1.0) * fVar7 <
+              ((fVar22 * fVar4 + fVar3 * fVar2) - 1.0) * fVar8) {
+            return;
+          }
         }
       }
     }
     else {
-      iVar15 = 1;
-      if ((param_2->wasDeflected == 0) && ((double)(float)(dVar18 * -0.5) <= dVar19)) {
+      iVar12 = 1;
+      if ((param_2->wasDeflected == 0) && ((double)(float)(dVar15 * -0.5) <= dVar16)) {
         param_2->hitAtVertex = 0;
         param_2->isBad = 1;
       }
-      if (0.0 < dVar16) {
-        bVar1 = (pFVar7->field0_0x0)._s_0.i1;
+      if (0.0 < dVar13) {
+        bVar1 = (param_4->field0_0x0)._s_0.i1;
       }
-      uVar13 = (uint)bVar1;
-      local_a0 = pFVar10->pts[uVar13].xy[0] - fVar4;
-      local_9c = pFVar10->pts[uVar13].xy[1] - fVar3;
-      fVar25 = Vec2Normalize(&local_a0);
-      dVar17 = (double)fVar25;
-      if ((((double)param_2->len < dVar17) && (dVar19 <= dVar21)) ||
-         (bVar11 = Glass_UseDeflection(pFVar10,param_2,uVar13,pFVar7,&local_98,(float)dVar20,fVar25)
-         , !bVar11)) goto LAB_82422e2c;
+      uVar10 = (uint)bVar1;
+      local_a0 = param_1->pts[uVar10].xy[0] - local_a0;
+      local_9c = param_1->pts[uVar10].xy[1] - local_9c;
+      fVar22 = Vec2Normalize(&local_a0);
+      dVar14 = (double)fVar22;
+      if (((double)param_2->len < dVar14) && (dVar16 <= dVar18)) {
+        return;
+      }
+      bVar9 = Glass_UseDeflection(param_1,param_2,uVar10,param_4,&local_98,(float)dVar17,fVar22);
+      if (!bVar9) {
+        return;
+      }
       if (param_2->baseDir[1] * local_9c + param_2->baseDir[0] * local_a0 < param_2->deflectLimit) {
-        if (dVar19 <= dVar21) goto LAB_82422e2c;
-        param_2->len = (float)(dVar20 / dVar22);
-        param_2->isBad = (uint)(dVar19 < (double)(float)(dVar24 * dVar23));
+        if (dVar16 <= dVar18) {
+          return;
+        }
+        param_2->len = (float)(dVar17 / dVar19);
+        param_2->isBad = (uint)(dVar16 < (double)(float)(dVar21 * dVar20));
         goto LAB_82422e1c;
       }
-      param_2->deflectLen = (float)dVar17;
+      param_2->deflectLen = (float)dVar14;
       param_2->deflectDir[0] = local_a0;
       param_2->deflectDir[1] = local_9c;
     }
-    param_2->len = (float)(dVar20 / dVar22);
+    param_2->len = (float)(dVar17 / dVar19);
     param_2->isBad = 0;
     param_2->hitAtVertex = 1;
-    param_2->wasDeflected = iVar15;
-    if (dVar21 < dVar16) {
-      pFVar14 = (pFVar7->field0_0x0)._s_0.next;
-      param_2->hitEdgePrev = pFVar7;
-      param_2->hitEdge = pFVar14;
-      __restfpr_24();
-      __restgprlr_24();
+    param_2->wasDeflected = iVar12;
+    if (dVar18 < dVar13) {
+      pFVar11 = (param_4->field0_0x0)._s_0.next;
+      param_2->hitEdgePrev = param_4;
+      param_2->hitEdge = pFVar11;
       return;
     }
   }
   else {
-    param_2->len = (float)(dVar20 / dVar22);
+    param_2->len = (float)(dVar17 / dVar19);
     param_2->isBad = 0;
 LAB_82422e1c:
     param_2->hitAtVertex = 0;
     param_2->wasDeflected = 0;
   }
-  param_2->hitEdge = pFVar7;
+  param_2->hitEdge = param_4;
   param_2->hitEdgePrev = param_5;
-LAB_82422e2c:
-  __restfpr_24();
-  __restgprlr_24();
   return;
 }
 
 
 // 82423060  Glass_ClipSegmentWithinEdgeLoop  (EffectsCore/fx_glass_crack.cpp:1645)
+
+/* WARNING: Function: __savegprlr_21 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_21 replaced with injection: xenon_save_restore */
 
 void Glass_ClipSegmentWithinEdgeLoop
                (FxGlassCrackWork *param_1,FxGlassClipSegment *param_2,FxGlassCrackEdge *param_3)
@@ -2529,70 +2450,62 @@ void Glass_ClipSegmentWithinEdgeLoop
   uint uVar1;
   FxGlassCrackEdge *pFVar2;
   FxGlassCrackEdge *pFVar3;
-  FxGlassCrackWork *pFVar4;
-  FxGlassClipSegment *pFVar5;
-  ulonglong uVar6;
-  ulonglong uVar7;
   
-  uVar6 = (ulonglong)(int)param_3;
-  uVar7 = (ulonglong)(int)param_2;
-  pFVar4 = (FxGlassCrackWork *)__savegprlr_21(param_1);
-  if (pFVar4 == (FxGlassCrackWork *)0x0) {
+  if (param_1 == (FxGlassCrackWork *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_glass_crack.cpp"
                     ,0x672,0,"%s");
   }
-  if ((uVar7 & 0xffffffff) == 0) {
+  if (param_2 == (FxGlassClipSegment *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_glass_crack.cpp"
                     ,0x673,0,"%s");
   }
-  if ((uVar6 & 0xffffffff) == 0) {
+  if (param_3 == (FxGlassCrackEdge *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_glass_crack.cpp"
                     ,0x674,0,"%s");
   }
-  if (pFVar4->edgeCount <= (uint)((((int)uVar6 - (int)pFVar4) + -0xbf8) / 0x18)) {
+  if (param_1->edgeCount <= (uint)(((int)param_3 + (-0xbf8 - (int)param_1)) / 0x18)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_glass_crack.cpp"
                     ,0x675,0,
                     "edgeLoop - work->edges doesn\'t index work->edgeCount\n\t%i not in [0, %i)");
   }
-  pFVar5 = (FxGlassClipSegment *)uVar7;
-  uVar1 = pFVar5->startIndex;
-  uVar7 = uVar6;
+  uVar1 = param_2->startIndex;
+  pFVar3 = param_3;
   do {
-    pFVar3 = (FxGlassCrackEdge *)uVar7;
     pFVar2 = (pFVar3->field0_0x0)._s_0.next;
-    uVar7 = ZEXT48(pFVar2);
-    if (uVar7 == 0) {
+    if (pFVar2 == (FxGlassCrackEdge *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_glass_crack.cpp"
                       ,0x67d,0,"%s");
     }
-    if (pFVar4->edgeCount <= (uint)(((int)pFVar2 + (-0xbf8 - (int)pFVar4)) / 0x18)) {
+    if (param_1->edgeCount <= (uint)(((int)pFVar2 + (-0xbf8 - (int)param_1)) / 0x18)) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_glass_crack.cpp"
                       ,0x67e,0,
                       "edgeIter - work->edges doesn\'t index work->edgeCount\n\t%i not in [0, %i)");
     }
-    if (((uint)(pFVar2->field0_0x0)._s_0.i0 != pFVar5->startIndex) &&
-       ((uint)(pFVar2->field0_0x0)._s_0.i1 != pFVar5->startIndex)) {
-      Glass_TraceCrackAgainstEdge(pFVar4,pFVar5,pFVar4->pts[uVar1].xy,pFVar2,pFVar3);
+    if (((uint)(pFVar2->field0_0x0)._s_0.i0 != param_2->startIndex) &&
+       ((uint)(pFVar2->field0_0x0)._s_0.i1 != param_2->startIndex)) {
+      Glass_TraceCrackAgainstEdge(param_1,param_2,param_1->pts[uVar1].xy,pFVar2,pFVar3);
     }
-  } while (ZEXT48(pFVar2) != (uVar6 & 0xffffffff));
-  __restgprlr_21();
+    pFVar3 = pFVar2;
+  } while (pFVar2 != param_3);
   return;
 }
 
 
 // 824231E8  Glass_ClipSegment  (EffectsCore/fx_glass_crack.cpp:1670)
 
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
+
 void Glass_ClipSegment(FxGlassCrackWork *param_1,FxGlassClipSegment *param_2)
 
 {
   uint uVar1;
-  FxGlassCrackWork *pFVar2;
-  int iVar3;
+  int iVar2;
+  uint uVar3;
   uint uVar4;
-  uint uVar5;
-  float *pfVar6;
+  float *pfVar5;
+  double dVar6;
   double dVar7;
-  double dVar8;
   float local_80;
   float local_7c;
   float local_78;
@@ -2600,88 +2513,82 @@ void Glass_ClipSegment(FxGlassCrackWork *param_1,FxGlassClipSegment *param_2)
   float local_70;
   float local_6c;
   
-  pFVar2 = (FxGlassCrackWork *)__savegprlr_22(param_1);
   uVar1 = param_2->startIndex;
-  dVar7 = 4.0;
-  dVar8 = 0.009999999776482582;
+  dVar6 = 4.0;
+  dVar7 = 0.009999999776482582;
   param_2->len = param_2->len + 4.0;
   param_2->isBad = 0;
-  uVar4 = 0;
+  uVar3 = 0;
   while( true ) {
     param_2->wasDeflected = 0;
-    Glass_ClipSegmentWithinEdgeLoop(pFVar2,param_2,pFVar2->loops[0].firstEdge);
-    if (1 < pFVar2->loopCount) {
-      local_80 = pFVar2->pts[uVar1].xy[0];
-      local_7c = pFVar2->pts[uVar1].xy[1];
+    Glass_ClipSegmentWithinEdgeLoop(param_1,param_2,param_1->loops[0].firstEdge);
+    if (1 < param_1->loopCount) {
+      local_80 = param_1->pts[uVar1].xy[0];
+      local_7c = param_1->pts[uVar1].xy[1];
       local_70 = param_2->len * param_2->dir[0] + local_80;
       local_6c = param_2->dir[1] * param_2->len + local_7c;
       local_78 = local_80;
       local_74 = local_7c;
       AddPointToBounds2D(&local_70,&local_78,&local_80);
-      uVar5 = 1;
-      pfVar6 = pFVar2->loops[1].mins;
+      uVar4 = 1;
+      pfVar5 = param_1->loops[1].mins;
       do {
-        iVar3 = BoundsOverlap2D(&local_78,&local_80,pfVar6,pfVar6 + 2);
-        if (iVar3 != 0) {
+        iVar2 = BoundsOverlap2D(&local_78,&local_80,pfVar5,pfVar5 + 2);
+        if (iVar2 != 0) {
           Glass_ClipSegmentWithinEdgeLoop
-                    (pFVar2,param_2,((FxGlassCrackLoop *)(pfVar6 + -1))->firstEdge);
+                    (param_1,param_2,((FxGlassCrackLoop *)(pfVar5 + -1))->firstEdge);
         }
-        uVar5 = uVar5 + 1;
-        pfVar6 = pfVar6 + 5;
-      } while (uVar5 < pFVar2->loopCount);
+        uVar4 = uVar4 + 1;
+        pfVar5 = pfVar5 + 5;
+      } while (uVar4 < param_1->loopCount);
     }
     if (param_2->wasDeflected == 0) break;
     if (param_2->hitAtVertex == 0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_glass_crack.cpp"
                       ,0x6b0,0,"%s");
     }
-    uVar4 = uVar4 + 1;
+    uVar3 = uVar3 + 1;
     param_2->dir[0] = param_2->deflectDir[0];
     param_2->dir[1] = param_2->deflectDir[1];
-    param_2->len = (float)((double)param_2->deflectLen + dVar8);
-    if (pFVar2->ptCount < uVar4) {
+    param_2->len = (float)((double)param_2->deflectLen + dVar7);
+    if (param_1->ptCount < uVar3) {
       param_2->isBad = 1;
-LAB_82423360:
-      __restgprlr_22();
       return;
     }
   }
-  if (param_2->hitEdge == (FxGlassCrackEdge *)0x0) {
-    param_2->len = (float)((double)param_2->len - dVar7);
-    __restgprlr_22();
+  if (param_2->hitEdge != (FxGlassCrackEdge *)0x0) {
     return;
   }
-  goto LAB_82423360;
+  param_2->len = (float)((double)param_2->len - dVar6);
+  return;
 }
 
 
 // 82423398  Glass_SplitTwin  (EffectsCore/fx_glass_crack.cpp:1732)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void Glass_SplitTwin(FxGlassCrackWork *param_1,FxGlassCrackEdge *param_2,FxGlassCrackEdge *param_3)
 
 {
   FxGlassCrackEdge *pFVar1;
-  FxGlassCrackEdge_u_0 *pFVar2;
-  FxGlassCrackWork *pFVar3;
+  FxGlassCrackEdge *pFVar2;
+  FxGlassCrackEdge_u_0 *pFVar3;
   FxGlassCrackEdge *pFVar4;
-  ulonglong uVar5;
-  FxGlassCrackEdge *pFVar6;
-  FxGlassCrackEdge *pFVar7;
+  FxGlassCrackEdge *pFVar5;
   
-  uVar5 = (ulonglong)(int)param_3;
-  pFVar3 = (FxGlassCrackWork *)__savegprlr_27(param_1);
-  pFVar6 = (FxGlassCrackEdge *)uVar5;
-  if ((ZEXT48((param_2->field0_0x0)._s_0.next) != (uVar5 & 0xffffffff)) ||
-     ((param_2->field0_0x0)._s_0.i1 != (pFVar6->field0_0x0)._s_0.i0)) {
+  if (((param_2->field0_0x0)._s_0.next != param_3) ||
+     ((param_2->field0_0x0)._s_0.i1 != (param_3->field0_0x0)._s_0.i0)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_glass_crack.cpp"
                     ,0x6c9,0,"%s");
   }
   if (((param_2->field0_0x0)._s_0.twin != (FxGlassCrackEdge *)0x0) ||
-     ((pFVar6->field0_0x0)._s_0.twin == (FxGlassCrackEdge *)0x0)) {
+     ((param_3->field0_0x0)._s_0.twin == (FxGlassCrackEdge *)0x0)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_glass_crack.cpp"
                     ,0x6ca,0,"%s");
   }
-  pFVar1 = (pFVar6->field0_0x0)._s_0.twin;
+  pFVar1 = (param_3->field0_0x0)._s_0.twin;
   if ((pFVar1->field0_0x0)._s_0.i1 != (param_2->field0_0x0)._s_0.i0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_glass_crack.cpp"
                     ,0x6cd,0,"twin10->i1 == edge01->i0\n\t%i, %i");
@@ -2692,32 +2599,34 @@ void Glass_SplitTwin(FxGlassCrackWork *param_1,FxGlassCrackEdge *param_2,FxGlass
   (pFVar1->field0_0x0)._s_0.dir[1] = -(param_2->field0_0x0)._s_0.dir[1];
   (pFVar1->field0_0x0)._s_0.twin = param_2;
   (param_2->field0_0x0)._s_0.twin = pFVar1;
-  pFVar4 = Glass_AllocCrackEdgeTwin(pFVar3,pFVar6);
+  pFVar4 = Glass_AllocCrackEdgeTwin(param_1,param_3);
   (pFVar4->field0_0x0)._s_0.next = pFVar1;
-  pFVar6 = (((pFVar6->field0_0x0)._s_0.next)->field0_0x0)._s_0.twin;
-  if ((pFVar6 != (FxGlassCrackEdge *)0x0) && ((pFVar6->field0_0x0)._s_0.next == pFVar1)) {
-    (pFVar6->field0_0x0)._s_0.next = pFVar4;
-    __restgprlr_27();
+  pFVar2 = (((param_3->field0_0x0)._s_0.next)->field0_0x0)._s_0.twin;
+  if ((pFVar2 != (FxGlassCrackEdge *)0x0) && ((pFVar2->field0_0x0)._s_0.next == pFVar1)) {
+    (pFVar2->field0_0x0)._s_0.next = pFVar4;
     return;
   }
-  pFVar6 = (pFVar1->field0_0x0)._s_0.next;
-  pFVar7 = (pFVar6->field0_0x0)._s_0.next;
-  if (pFVar7 != pFVar1) {
+  pFVar2 = (pFVar1->field0_0x0)._s_0.next;
+  pFVar5 = (pFVar2->field0_0x0)._s_0.next;
+  if (pFVar5 != pFVar1) {
     do {
-      pFVar2 = &pFVar7->field0_0x0;
-      pFVar7 = (pFVar7->field0_0x0)._s_0.next;
-    } while (pFVar7 != pFVar1);
-    (pFVar2->_s_0).next = pFVar4;
-    __restgprlr_27();
+      pFVar3 = &pFVar5->field0_0x0;
+      pFVar5 = (pFVar5->field0_0x0)._s_0.next;
+    } while (pFVar5 != pFVar1);
+    (pFVar3->_s_0).next = pFVar4;
     return;
   }
-  (pFVar6->field0_0x0)._s_0.next = pFVar4;
-  __restgprlr_27();
+  (pFVar2->field0_0x0)._s_0.next = pFVar4;
   return;
 }
 
 
 // 82424EF8  Glass_DoCrackWalk  (EffectsCore/fx_glass_crack.cpp:1764)
+
+/* WARNING: Function: __savegprlr_15 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_15 replaced with injection: xenon_save_restore */
 
 bool Glass_DoCrackWalk(FxGlassCrackWork *param_1,FxGlassCrackWalk *param_2)
 
@@ -2726,22 +2635,22 @@ bool Glass_DoCrackWalk(FxGlassCrackWork *param_1,FxGlassCrackWalk *param_2)
   uint uVar2;
   FxGlassVertex FVar3;
   FxGlassCrackEdge *pFVar4;
-  FxGlassCrackWork *pFVar5;
+  FxGlassCrackEdge *pFVar5;
   FxGlassCrackEdge *pFVar6;
-  FxGlassCrackEdge *pFVar7;
-  FxGlassCrackWork *pFVar8;
-  undefined1 uVar10;
-  FxGlassCrackEdge *pFVar9;
-  uchar uVar11;
-  FxGlassClipSegment *pFVar12;
-  float *pfVar13;
-  float *pfVar14;
+  FxGlassCrackWork *pFVar7;
+  FxGlassCrackEdge *pFVar8;
+  uchar uVar9;
+  FxGlassClipSegment *pFVar10;
+  float *pfVar11;
+  float *pfVar12;
+  ulonglong uVar13;
+  int iVar14;
   ulonglong uVar15;
-  int iVar16;
-  ulonglong uVar17;
-  uint uVar18;
-  uint uVar19;
-  FxGlassCrackPoint *pFVar20;
+  uint uVar16;
+  uint uVar17;
+  FxGlassCrackPoint *pFVar18;
+  double dVar19;
+  double dVar20;
   double dVar21;
   double dVar22;
   double dVar23;
@@ -2749,389 +2658,368 @@ bool Glass_DoCrackWalk(FxGlassCrackWork *param_1,FxGlassCrackWalk *param_2)
   double dVar25;
   double dVar26;
   double dVar27;
-  double dVar28;
-  double dVar29;
   short local_100;
   short sStack_fe;
   float afStack_f8 [2];
   longlong local_f0;
   longlong local_e8;
   
-  __savegprlr_15(param_1);
-  pFVar5 = (FxGlassCrackWork *)__savefpr_23();
-  pFVar12 = &param_2->clip;
+  pFVar10 = &param_2->clip;
   param_2->frontHead = (FxGlassCrackEdge *)0x0;
   param_2->backHead = (FxGlassCrackEdge *)0x0;
   param_2->frontTail = (FxGlassCrackEdge *)0x0;
-  uVar18 = 0;
+  uVar16 = 0;
   param_2->backTail = (FxGlassCrackEdge *)0x0;
   (param_2->clip).hitEdge = (FxGlassCrackEdge *)0x0;
   (param_2->clip).hitAtVertex = 0;
-  Glass_ClipSegment(pFVar5,pFVar12);
+  Glass_ClipSegment(param_1,pFVar10);
   if ((param_2->clip).isBad == 0) {
-    dVar23 = 0.5;
-    dVar24 = 1.0;
-    dVar25 = -1.0;
-    dVar29 = 0.9659258127212524;
-    dVar28 = 0.7071067690849304;
-    dVar26 = 1.53125;
-    dVar27 = 0.4375;
-    dVar22 = 0.03125;
+    dVar21 = 0.5;
+    dVar22 = 1.0;
+    dVar23 = -1.0;
+    dVar27 = 0.9659258127212524;
+    dVar26 = 0.7071067690849304;
+    dVar24 = 1.53125;
+    dVar25 = 0.4375;
+    dVar20 = 0.03125;
     do {
-      pFVar9 = (param_2->clip).hitEdge;
-      if (((pFVar9 != (FxGlassCrackEdge *)0x0) &&
-          ((uint)(pFVar9->field0_0x0)._s_0.loopIndex == param_2->loopIndex)) &&
-         (0x1f < pFVar5->loopCount)) break;
+      pFVar8 = (param_2->clip).hitEdge;
+      if (((pFVar8 != (FxGlassCrackEdge *)0x0) &&
+          ((uint)(pFVar8->field0_0x0)._s_0.loopIndex == param_2->loopIndex)) &&
+         (0x1f < param_1->loopCount)) {
+        return false;
+      }
       if ((param_2->clip).hitAtVertex == 0) {
-        if (0xfe < pFVar5->ptCount) {
+        if (0xfe < param_1->ptCount) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_glass_crack.cpp"
                           ,0x70a,0,
                           "work->ptCount doesn\'t index ARRAY_COUNT( work->pts )\n\t%i not in [0, %i)"
                          );
         }
-        uVar19 = pFVar5->ptCount;
-        pFVar5->ptCount = uVar19 + 1;
+        uVar17 = param_1->ptCount;
+        param_1->ptCount = uVar17 + 1;
         fVar1 = (param_2->clip).len;
-        uVar2 = pFVar12->startIndex;
-        pFVar20 = pFVar5->pts + uVar19;
-        pFVar20->xy[0] = (param_2->clip).dir[0] * fVar1 + pFVar5->pts[uVar2].xy[0];
-        pFVar5->pts[uVar19].xy[1] = (param_2->clip).dir[1] * fVar1 + pFVar5->pts[uVar2].xy[1];
-        Glass_PackVertex(pFVar20->xy,pFVar5->packedPts + uVar19);
-        FVar3 = pFVar5->packedPts[uVar19];
+        uVar2 = pFVar10->startIndex;
+        pFVar18 = param_1->pts + uVar17;
+        pFVar18->xy[0] = (param_2->clip).dir[0] * fVar1 + param_1->pts[uVar2].xy[0];
+        param_1->pts[uVar17].xy[1] = (param_2->clip).dir[1] * fVar1 + param_1->pts[uVar2].xy[1];
+        Glass_PackVertex(pFVar18->xy,param_1->packedPts + uVar17);
+        FVar3 = param_1->packedPts[uVar17];
         local_100 = FVar3.x;
         sStack_fe = FVar3.y;
         local_e8 = (longlong)sStack_fe;
         local_f0 = (longlong)local_100;
-        pFVar20->xy[0] = (float)((double)local_f0 * dVar22);
-        pFVar5->pts[uVar19].xy[1] = (float)((double)local_e8 * dVar22);
+        pFVar18->xy[0] = (float)((double)local_f0 * dVar20);
+        param_1->pts[uVar17].xy[1] = (float)((double)local_e8 * dVar20);
       }
       else {
-        if (pFVar9 == (FxGlassCrackEdge *)0x0) {
+        if (pFVar8 == (FxGlassCrackEdge *)0x0) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_glass_crack.cpp"
                           ,0x705,0,"%s");
         }
-        uVar19 = (uint)(((param_2->clip).hitEdge)->field0_0x0)._s_0.i0;
+        uVar17 = (uint)(((param_2->clip).hitEdge)->field0_0x0)._s_0.i0;
       }
-      AddPointToBounds2D(pFVar5->pts[uVar19].xy,pFVar5->loops[param_2->loopIndex].mins,
-                         pFVar5->loops[param_2->loopIndex].maxs);
-      pfVar13 = (float *)pFVar12->startIndex;
-      pFVar6 = Glass_AllocCrackEdge(pFVar5,(uint)pfVar13,uVar19,param_2->loopIndex,'\x01');
-      pFVar7 = Glass_GetFreeEdge(pFVar5);
-      (pFVar7->field0_0x0)._s_0.i0 = (pFVar6->field0_0x0)._s_0.i1;
-      (pFVar7->field0_0x0)._s_0.i1 = (pFVar6->field0_0x0)._s_0.i0;
-      (pFVar7->field0_0x0)._s_0.loopIndex = (pFVar6->field0_0x0)._s_0.loopIndex;
-      (pFVar7->field0_0x0)._s_0.type = (pFVar6->field0_0x0)._s_0.type;
-      (pFVar7->field0_0x0)._s_0.twin = pFVar6;
-      (pFVar6->field0_0x0)._s_0.twin = pFVar7;
-      (pFVar7->field0_0x0)._s_0.len = (pFVar6->field0_0x0)._s_0.len;
-      (pFVar7->field0_0x0)._s_0.dir[0] = -(pFVar6->field0_0x0)._s_0.dir[0];
-      (pFVar7->field0_0x0)._s_0.dir[1] = -(pFVar6->field0_0x0)._s_0.dir[1];
-      pFVar9 = pFVar7;
+      AddPointToBounds2D(param_1->pts[uVar17].xy,param_1->loops[param_2->loopIndex].mins,
+                         param_1->loops[param_2->loopIndex].maxs);
+      pfVar11 = (float *)pFVar10->startIndex;
+      pFVar5 = Glass_AllocCrackEdge(param_1,(uint)pfVar11,uVar17,param_2->loopIndex,'\x01');
+      pFVar6 = Glass_GetFreeEdge(param_1);
+      (pFVar6->field0_0x0)._s_0.i0 = (pFVar5->field0_0x0)._s_0.i1;
+      (pFVar6->field0_0x0)._s_0.i1 = (pFVar5->field0_0x0)._s_0.i0;
+      (pFVar6->field0_0x0)._s_0.loopIndex = (pFVar5->field0_0x0)._s_0.loopIndex;
+      (pFVar6->field0_0x0)._s_0.type = (pFVar5->field0_0x0)._s_0.type;
+      (pFVar6->field0_0x0)._s_0.twin = pFVar5;
+      (pFVar5->field0_0x0)._s_0.twin = pFVar6;
+      (pFVar6->field0_0x0)._s_0.len = (pFVar5->field0_0x0)._s_0.len;
+      (pFVar6->field0_0x0)._s_0.dir[0] = -(pFVar5->field0_0x0)._s_0.dir[0];
+      (pFVar6->field0_0x0)._s_0.dir[1] = -(pFVar5->field0_0x0)._s_0.dir[1];
+      pFVar8 = pFVar6;
       if (param_2->frontHead == (FxGlassCrackEdge *)0x0) {
-        param_2->frontHead = pFVar6;
-        param_2->backTail = pFVar7;
+        param_2->frontHead = pFVar5;
+        param_2->backTail = pFVar6;
       }
       else {
-        if ((param_2->frontTail->field0_0x0)._s_0.i1 != (pFVar6->field0_0x0)._s_0.i0) {
-          pfVar13 = (float *)0x717;
-          pFVar9 = (FxGlassCrackEdge *)
+        if ((param_2->frontTail->field0_0x0)._s_0.i1 != (pFVar5->field0_0x0)._s_0.i0) {
+          pfVar11 = (float *)0x717;
+          pFVar8 = (FxGlassCrackEdge *)
                    "c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_glass_crack.cpp"
           ;
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_glass_crack.cpp"
                           ,0x717,0,"%s");
         }
-        if ((pFVar7->field0_0x0)._s_0.i1 != (param_2->backHead->field0_0x0)._s_0.i0) {
-          pfVar13 = (float *)0x718;
-          pFVar9 = (FxGlassCrackEdge *)
+        if ((pFVar6->field0_0x0)._s_0.i1 != (param_2->backHead->field0_0x0)._s_0.i0) {
+          pfVar11 = (float *)0x718;
+          pFVar8 = (FxGlassCrackEdge *)
                    "c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_glass_crack.cpp"
           ;
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_glass_crack.cpp"
                           ,0x718,0,"%s");
         }
-        (param_2->frontTail->field0_0x0)._s_0.next = pFVar6;
-        (pFVar7->field0_0x0)._s_0.next = param_2->backHead;
+        (param_2->frontTail->field0_0x0)._s_0.next = pFVar5;
+        (pFVar6->field0_0x0)._s_0.next = param_2->backHead;
       }
       pFVar4 = (param_2->clip).hitEdge;
-      param_2->frontTail = pFVar6;
-      param_2->backHead = pFVar7;
+      param_2->frontTail = pFVar5;
+      param_2->backHead = pFVar6;
       if (pFVar4 != (FxGlassCrackEdge *)0x0) {
-        if ((param_2->clip).hitAtVertex != 0) {
-          param_2->clippedEdge = (param_2->clip).hitEdgePrev;
-          __restfpr_23(1);
-          uVar10 = __restgprlr_15();
-          return (bool)uVar10;
+        if ((param_2->clip).hitAtVertex == 0) {
+          pFVar8 = Glass_AllocCrackEdge
+                             (param_1,(uint)(pFVar4->field0_0x0)._s_0.i0,uVar17,
+                              (uint)(pFVar4->field0_0x0)._s_0.loopIndex,
+                              (pFVar4->field0_0x0)._s_0.type);
+          param_2->clippedEdge = pFVar8;
+          if ((((param_2->clip).hitEdgePrev)->field0_0x0)._s_0.i1 != (pFVar8->field0_0x0)._s_0.i0) {
+            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_glass_crack.cpp"
+                            ,0x72e,0,"%s");
+          }
+          (((param_2->clip).hitEdgePrev)->field0_0x0)._s_0.next = param_2->clippedEdge;
+          (param_2->clippedEdge->field0_0x0)._s_0.next = (param_2->clip).hitEdge;
+          uVar9 = truncate_cast<unsigned_char>(uVar17);
+          (((param_2->clip).hitEdge)->field0_0x0)._s_0.i0 = uVar9;
+          Glass_SetCrackEdgeDelta(param_1,(param_2->clip).hitEdge);
+          pFVar8 = (param_2->clip).hitEdge;
+          if ((pFVar8->field0_0x0)._s_0.twin != (FxGlassCrackEdge *)0x0) {
+            Glass_SplitTwin(param_1,param_2->clippedEdge,pFVar8);
+          }
+          return true;
         }
-        pFVar9 = Glass_AllocCrackEdge
-                           (pFVar5,(uint)(pFVar4->field0_0x0)._s_0.i0,uVar19,
-                            (uint)(pFVar4->field0_0x0)._s_0.loopIndex,(pFVar4->field0_0x0)._s_0.type
-                           );
-        param_2->clippedEdge = pFVar9;
-        if ((((param_2->clip).hitEdgePrev)->field0_0x0)._s_0.i1 != (pFVar9->field0_0x0)._s_0.i0) {
-          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_glass_crack.cpp"
-                          ,0x72e,0,"%s");
-        }
-        (((param_2->clip).hitEdgePrev)->field0_0x0)._s_0.next = param_2->clippedEdge;
-        (param_2->clippedEdge->field0_0x0)._s_0.next = (param_2->clip).hitEdge;
-        uVar11 = truncate_cast<unsigned_char>(uVar19);
-        (((param_2->clip).hitEdge)->field0_0x0)._s_0.i0 = uVar11;
-        Glass_SetCrackEdgeDelta(pFVar5,(param_2->clip).hitEdge);
-        pFVar9 = (param_2->clip).hitEdge;
-        if ((pFVar9->field0_0x0)._s_0.twin != (FxGlassCrackEdge *)0x0) {
-          Glass_SplitTwin(pFVar5,param_2->clippedEdge,pFVar9);
-        }
-        __restfpr_23(1);
-        uVar10 = __restgprlr_15();
-        return (bool)uVar10;
+        param_2->clippedEdge = (param_2->clip).hitEdgePrev;
+        return true;
       }
-      uVar18 = uVar18 + 1;
+      uVar16 = uVar16 + 1;
       fVar1 = (param_2->clip).len;
       param_2->totalCrackLength = fVar1 + param_2->totalCrackLength;
-      uVar17 = (ulonglong)(uint)s_glassRandSeed;
-      if (pFVar5->branchStackLevel == 0x20) {
-        uVar15 = 0;
+      uVar15 = (ulonglong)(uint)s_glassRandSeed;
+      if (param_1->branchStackLevel == 0x20) {
+        uVar13 = 0;
       }
       else {
-        uVar15 = (ulonglong)(uint)(1 << (uVar18 & 0x3f));
-        uVar17 = -(ulonglong)(uVar17 != 0x1de) & uVar17 + 1;
-        pfVar13 = (float *)((uVar17 & 0x3fffffff) << 2);
-        pFVar9 = (FxGlassCrackEdge *)(uint)*(ushort *)((int)pfVar13 + -0x7df99536);
-        uVar15 = ((~uVar15 & 0xffffffff) >> 0x1f) +
+        uVar13 = (ulonglong)(uint)(1 << (uVar16 & 0x3f));
+        uVar15 = -(ulonglong)(uVar15 != 0x1de) & uVar15 + 1;
+        pfVar11 = (float *)((uVar15 & 0x3fffffff) << 2);
+        pFVar8 = (FxGlassCrackEdge *)(uint)*(ushort *)((int)pfVar11 + -0x7df99536);
+        uVar13 = ((~uVar13 & 0xffffffff) >> 0x1f) +
                  (ulonglong)
-                 (uVar15 <=
+                 (uVar13 <=
                  (ulonglong)
-                 (longlong)((int)((uint)*(ushort *)((int)pfVar13 + -0x7df99536) << 4) >> 0x10)) & 1;
+                 (longlong)((int)((uint)*(ushort *)((int)pfVar11 + -0x7df99536) << 4) >> 0x10)) & 1;
       }
-      uVar17 = -(ulonglong)(uVar17 != 0x1de) & uVar17 + 1;
-      iVar16 = (int)((uVar17 & 0x3fffffff) << 2);
-      if (uVar15 == 0) {
+      uVar15 = -(ulonglong)(uVar15 != 0x1de) & uVar15 + 1;
+      iVar14 = (int)((uVar15 & 0x3fffffff) << 2);
+      if (uVar13 == 0) {
         (param_2->clip).baseDir[0] = (param_2->clip).dir[0];
-        uVar15 = -(ulonglong)(uVar17 - 0x1de != 0) & uVar17 + 1;
-        s_glassRandSeed = (int)uVar15;
+        uVar13 = -(ulonglong)(uVar15 - 0x1de != 0) & uVar15 + 1;
+        s_glassRandSeed = (int)uVar13;
         (param_2->clip).baseDir[1] = (param_2->clip).dir[1];
-        pFVar12->startIndex = uVar19;
-        (param_2->clip).deflectLimit = (float)dVar28;
+        pFVar10->startIndex = uVar17;
+        (param_2->clip).deflectLimit = (float)dVar26;
         (param_2->clip).len =
-             (float)((double)*(float *)(&fx_randomTable + iVar16) * dVar27 + dVar26) *
+             (float)((double)*(float *)(&fx_randomTable + iVar14) * dVar25 + dVar24) *
              (param_2->clip).len;
-        dVar21 = dVar24;
-        if ((float)((double)*(float *)(&fx_randomTable + (int)((uVar15 & 0xffffffff) << 2)) - dVar23
+        dVar19 = dVar22;
+        if ((float)((double)*(float *)(&fx_randomTable + (int)((uVar13 & 0xffffffff) << 2)) - dVar21
                    ) < 0.0) {
-          dVar21 = dVar25;
+          dVar19 = dVar23;
         }
         Glass_DeflectVectorWithSign
-                  ((float)dVar28,(float)dVar29,(float)dVar21,(float *)pFVar9,
-                   (float *)-(int)(uVar17 - 0x1de));
+                  ((float)dVar26,(float)dVar27,(float)dVar19,(float *)pFVar8,
+                   (float *)-(int)(uVar15 - 0x1de));
       }
       else {
-        s_glassRandSeed = (int)uVar17;
-        pfVar14 = (param_2->clip).dir;
-        uVar18 = 0;
-        dVar21 = (double)((float)((double)*(float *)(&fx_randomTable + iVar16) * dVar27 + dVar26) *
+        s_glassRandSeed = (int)uVar15;
+        pfVar12 = (param_2->clip).dir;
+        uVar16 = 0;
+        dVar19 = (double)((float)((double)*(float *)(&fx_randomTable + iVar14) * dVar25 + dVar24) *
                          fVar1);
         Glass_DeflectVectorWithSign
-                  ((float)dVar28,(float)dVar29,(float)dVar25,(float *)pFVar9,pfVar13);
-        pFVar8 = pFVar5;
+                  ((float)dVar26,(float)dVar27,(float)dVar23,(float *)pFVar8,pfVar11);
+        pFVar7 = param_1;
         Glass_PushCrackBranch
-                  (pFVar5,param_2->frontTail,afStack_f8,(float)dVar21,pfVar14,(float)dVar29,
+                  (param_1,param_2->frontTail,afStack_f8,(float)dVar19,pfVar12,(float)dVar27,
                    param_2->totalCrackLength);
-        pFVar12->startIndex = uVar19;
-        iVar16 = s_glassRandSeed + -0x1de;
-        s_glassRandSeed = -(uint)(iVar16 != 0) & s_glassRandSeed + 1U;
+        pFVar10->startIndex = uVar17;
+        iVar14 = s_glassRandSeed + -0x1de;
+        s_glassRandSeed = -(uint)(iVar14 != 0) & s_glassRandSeed + 1U;
         (param_2->clip).len =
-             (float)((double)*(float *)(&fx_randomTable + s_glassRandSeed * 4) * dVar27 + dVar26) *
+             (float)((double)*(float *)(&fx_randomTable + s_glassRandSeed * 4) * dVar25 + dVar24) *
              (param_2->clip).len;
         Glass_DeflectVectorWithSign
-                  ((float)dVar28,(float)dVar29,(float)dVar24,(float *)pFVar8,(float *)-iVar16);
+                  ((float)dVar26,(float)dVar27,(float)dVar22,(float *)pFVar7,(float *)-iVar14);
         (param_2->clip).baseDir[0] = (param_2->clip).dir[0];
         (param_2->clip).baseDir[1] = (param_2->clip).dir[1];
-        (param_2->clip).deflectLimit = (float)dVar29;
+        (param_2->clip).deflectLimit = (float)dVar27;
       }
-      Glass_ClipSegment(pFVar5,pFVar12);
+      Glass_ClipSegment(param_1,pFVar10);
     } while ((param_2->clip).isBad == 0);
   }
-  __restfpr_23(0);
-  uVar10 = __restgprlr_15();
-  return (bool)uVar10;
+  return false;
 }
 
 
 // 824234F8  Glass_MakeFinalPiece  (EffectsCore/fx_glass_crack.cpp:1883)
+
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 
 void Glass_MakeFinalPiece(FxGlassCrackWork *param_1)
 
 {
   FxGlassCrackEdge *pFVar1;
   FxGlassCrackEdge *pFVar2;
-  FxGlassCrackWork *pFVar3;
-  uint uVar4;
-  FxGlassCrackEdge *pFVar5;
-  uint uVar6;
-  FxGlassCrackLoop *pFVar7;
-  int *piVar8;
+  uint uVar3;
+  FxGlassCrackEdge *pFVar4;
+  uint uVar5;
+  FxGlassCrackLoop *pFVar6;
+  int *piVar7;
   FxGlassCrackEdge *local_d0;
   int local_cc [51];
   
-  pFVar3 = (FxGlassCrackWork *)__savegprlr_24(param_1);
-  pFVar1 = pFVar3->loops[0].firstEdge;
-  pFVar5 = (pFVar1->field0_0x0)._s_0.twin;
+  pFVar1 = param_1->loops[0].firstEdge;
+  pFVar4 = (pFVar1->field0_0x0)._s_0.twin;
   local_d0 = pFVar1;
-  while (pFVar5 != (FxGlassCrackEdge *)0x0) {
+  while (pFVar4 != (FxGlassCrackEdge *)0x0) {
     pFVar2 = (local_d0->field0_0x0)._s_0.next;
     if (pFVar2 == pFVar1) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_glass_crack.cpp"
                       ,0x766,0,"%s");
     }
     local_d0 = pFVar2;
-    pFVar5 = (pFVar2->field0_0x0)._s_0.twin;
+    pFVar4 = (pFVar2->field0_0x0)._s_0.twin;
   }
-  uVar4 = pFVar3->loopCount;
-  uVar6 = 1;
-  if (1 < uVar4) {
-    piVar8 = local_cc;
-    pFVar7 = pFVar3->loops;
+  uVar3 = param_1->loopCount;
+  uVar5 = 1;
+  if (1 < uVar3) {
+    piVar7 = local_cc;
+    pFVar6 = param_1->loops;
     do {
-      pFVar7 = pFVar7 + 1;
-      pFVar1 = pFVar7->firstEdge;
-      *piVar8 = 0;
-      pFVar5 = pFVar1;
+      pFVar6 = pFVar6 + 1;
+      pFVar1 = pFVar6->firstEdge;
+      *piVar7 = 0;
+      pFVar4 = pFVar1;
       do {
-        if ((pFVar5->field0_0x0)._s_0.twin == (FxGlassCrackEdge *)0x0) {
-          *piVar8 = (int)pFVar5;
+        if ((pFVar4->field0_0x0)._s_0.twin == (FxGlassCrackEdge *)0x0) {
+          *piVar7 = (int)pFVar4;
           break;
         }
-        if ((((pFVar5->field0_0x0)._s_0.next)->field0_0x0)._s_0.i1 == (pFVar5->field0_0x0)._s_0.i0)
+        if ((((pFVar4->field0_0x0)._s_0.next)->field0_0x0)._s_0.i1 == (pFVar4->field0_0x0)._s_0.i0)
         {
-          *piVar8 = (int)pFVar5;
+          *piVar7 = (int)pFVar4;
         }
-        pFVar5 = (pFVar5->field0_0x0)._s_0.next;
-      } while (pFVar5 != pFVar1);
-      if (*piVar8 == 0) {
+        pFVar4 = (pFVar4->field0_0x0)._s_0.next;
+      } while (pFVar4 != pFVar1);
+      if (*piVar7 == 0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_glass_crack.cpp"
                         ,0x77c,0,"%s");
       }
-      uVar4 = pFVar3->loopCount;
-      uVar6 = uVar6 + 1;
-      piVar8 = piVar8 + 1;
-    } while (uVar6 < uVar4);
+      uVar3 = param_1->loopCount;
+      uVar5 = uVar5 + 1;
+      piVar7 = piVar7 + 1;
+    } while (uVar5 < uVar3);
   }
-  Glass_ConvertLoopsToPiece(pFVar3,&local_d0,uVar4);
-  __restgprlr_24();
+  Glass_ConvertLoopsToPiece(param_1,&local_d0,uVar3);
   return;
 }
 
 
 // 82423620  Glass_MakePiece  (EffectsCore/fx_glass_crack.cpp:1924)
 
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
+
 void Glass_MakePiece(FxGlassCrackWork *param_1,FxGlassCrackEdge **param_2,uint param_3)
 
 {
   uchar uVar1;
-  char cVar2;
+  FxGlassCrackEdge *pFVar2;
   FxGlassCrackEdge *pFVar3;
-  char *pcVar4;
-  int iVar5;
-  FxGlassCrackWork *pFVar6;
-  FxGlassCrackEdge **ppFVar7;
-  ulonglong uVar8;
-  char *pcVar9;
-  char *pcVar10;
-  longlong lVar11;
-  FxGlassCrackEdge *pFVar12;
-  FxGlassCrackEdge *pFVar13;
-  char *pcVar14;
-  FxGlassCrackEdge *pFVar16;
-  ulonglong uVar15;
-  undefined4 *puVar17;
+  longlong lVar4;
+  FxGlassCrackEdge *pFVar5;
+  FxGlassCrackEdge *pFVar6;
+  FxGlassCrackEdge *pFVar7;
+  FxGlassCrackEdge **ppFVar8;
   
-  uVar8 = (ulonglong)(int)param_3;
-  uVar15 = (ulonglong)(int)param_2;
-  pFVar6 = (FxGlassCrackWork *)__savegprlr_22(param_1);
-  if (pFVar6 == (FxGlassCrackWork *)0x0) {
+  if (param_1 == (FxGlassCrackWork *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_glass_crack.cpp"
                     ,0x78c,0,"%s");
   }
-  if ((uVar15 & 0xffffffff) == 0) {
+  if (param_2 == (FxGlassCrackEdge **)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_glass_crack.cpp"
                     ,0x78d,0,"%s");
   }
-  if ((uVar8 & 0xffffffff) == 0) {
+  if (param_3 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_glass_crack.cpp"
                     ,0x78e,0,"%s");
   }
-  ppFVar7 = (FxGlassCrackEdge **)uVar15;
-  pFVar16 = *ppFVar7;
-  if (pFVar16 == (FxGlassCrackEdge *)0x0) {
+  pFVar7 = *param_2;
+  if (pFVar7 == (FxGlassCrackEdge *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_glass_crack.cpp"
                     ,0x793,0,"%s");
   }
-  uVar1 = (pFVar16->field0_0x0)._s_0.loopIndex;
-  pFVar12 = (FxGlassCrackEdge *)0x0;
+  uVar1 = (pFVar7->field0_0x0)._s_0.loopIndex;
+  pFVar6 = (FxGlassCrackEdge *)0x0;
   do {
-    pFVar3 = (pFVar16->field0_0x0)._s_0.twin;
-    pFVar13 = pFVar16;
-    if ((pFVar3 != (FxGlassCrackEdge *)0x0) &&
-       (pFVar13 = pFVar12, (pFVar3->field0_0x0)._s_0.loopIndex != uVar1)) {
-      (pFVar3->field0_0x0)._s_0.twin = (FxGlassCrackEdge *)0x0;
-      (pFVar16->field0_0x0)._s_0.twin = (FxGlassCrackEdge *)0x0;
-      pFVar13 = pFVar16;
+    pFVar2 = (pFVar7->field0_0x0)._s_0.twin;
+    pFVar5 = pFVar7;
+    if ((pFVar2 != (FxGlassCrackEdge *)0x0) &&
+       (pFVar5 = pFVar6, (pFVar2->field0_0x0)._s_0.loopIndex != uVar1)) {
+      (pFVar2->field0_0x0)._s_0.twin = (FxGlassCrackEdge *)0x0;
+      (pFVar7->field0_0x0)._s_0.twin = (FxGlassCrackEdge *)0x0;
+      pFVar5 = pFVar7;
     }
-    if ((pFVar16->field0_0x0)._s_0.next == (FxGlassCrackEdge *)0x0) {
+    if ((pFVar7->field0_0x0)._s_0.next == (FxGlassCrackEdge *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_glass_crack.cpp"
                       ,0x7a2,0,"%s");
     }
-    pFVar16 = (pFVar16->field0_0x0)._s_0.next;
-    pFVar12 = pFVar13;
-  } while (pFVar16 != *ppFVar7);
-  if (pFVar13 == (FxGlassCrackEdge *)0x0) {
+    pFVar7 = (pFVar7->field0_0x0)._s_0.next;
+    pFVar6 = pFVar5;
+  } while (pFVar7 != *param_2);
+  if (pFVar5 == (FxGlassCrackEdge *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_glass_crack.cpp"
                     ,0x7a6,0,"%s");
   }
-  *ppFVar7 = pFVar13;
-  if (1 < (uVar8 & 0xffffffff)) {
-    lVar11 = uVar8 - 1;
+  *param_2 = pFVar5;
+  if (1 < param_3) {
+    lVar4 = (longlong)(int)param_3 + -1;
+    ppFVar8 = param_2;
     do {
-      uVar15 = uVar15 + 4;
-      puVar17 = (undefined4 *)uVar15;
-      pcVar4 = (char *)*puVar17;
-      pcVar14 = (char *)0x0;
-      cVar2 = pcVar4[2];
-      pcVar9 = (char *)0x0;
+      ppFVar8 = ppFVar8 + 1;
+      pFVar7 = *ppFVar8;
+      pFVar6 = (FxGlassCrackEdge *)0x0;
+      uVar1 = (pFVar7->field0_0x0)._s_0.loopIndex;
+      pFVar2 = (FxGlassCrackEdge *)0x0;
       do {
-        iVar5 = *(int *)(pcVar4 + 0x10);
-        pcVar10 = pcVar4;
-        if (iVar5 != 0) {
-          if (*(char *)(iVar5 + 2) == cVar2) {
-            pcVar10 = pcVar9;
-            if (*(char *)(*(int *)(pcVar4 + 0x14) + 1) == *pcVar4) {
-              pcVar14 = pcVar4;
+        pFVar5 = (pFVar7->field0_0x0)._s_0.twin;
+        pFVar3 = pFVar7;
+        if (pFVar5 != (FxGlassCrackEdge *)0x0) {
+          if ((pFVar5->field0_0x0)._s_0.loopIndex == uVar1) {
+            pFVar3 = pFVar2;
+            if ((((pFVar7->field0_0x0)._s_0.next)->field0_0x0)._s_0.i1 ==
+                (pFVar7->field0_0x0)._s_0.i0) {
+              pFVar6 = pFVar7;
             }
           }
           else {
-            *(undefined4 *)(iVar5 + 0x10) = 0;
-            pcVar4[0x10] = '\0';
-            pcVar4[0x11] = '\0';
-            pcVar4[0x12] = '\0';
-            pcVar4[0x13] = '\0';
+            (pFVar5->field0_0x0)._s_0.twin = (FxGlassCrackEdge *)0x0;
+            (pFVar7->field0_0x0)._s_0.twin = (FxGlassCrackEdge *)0x0;
           }
         }
-        pcVar4 = *(char **)(pcVar4 + 0x14);
-        pcVar9 = pcVar10;
-      } while (pcVar4 != (char *)*puVar17);
-      if (pcVar10 == (char *)0x0) {
-        if (pcVar14 == (char *)0x0) {
+        pFVar7 = (pFVar7->field0_0x0)._s_0.next;
+        pFVar2 = pFVar3;
+      } while (pFVar7 != *ppFVar8);
+      if (pFVar3 == (FxGlassCrackEdge *)0x0) {
+        if (pFVar6 == (FxGlassCrackEdge *)0x0) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_glass_crack.cpp"
                           ,0x7c2,0,"%s");
         }
-        *puVar17 = pcVar14;
+        *ppFVar8 = pFVar6;
       }
       else {
-        *puVar17 = pcVar10;
+        *ppFVar8 = pFVar3;
       }
-      lVar11 = lVar11 + -1;
-    } while (lVar11 != 0);
+      lVar4 = lVar4 + -1;
+    } while (lVar4 != 0);
   }
-  Glass_ConvertLoopsToPiece(pFVar6,ppFVar7,(uint)uVar8);
-  __restgprlr_22();
+  Glass_ConvertLoopsToPiece(param_1,param_2,param_3);
   return;
 }
 
@@ -3238,110 +3126,101 @@ bool Glass_DoesLoopContainLoop
 
 // 82423A68  Glass_MakePieceForOuterLoop  (EffectsCore/fx_glass_crack.cpp:2077)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
+
 void Glass_MakePieceForOuterLoop(FxGlassCrackWork *param_1,uint param_2)
 
 {
   FxGlassCrackEdge *pFVar1;
-  FxGlassCrackWork *pFVar2;
-  int iVar3;
-  longlong lVar4;
-  bool bVar5;
-  bool bVar6;
-  ulonglong uVar7;
-  FxGlassCrackLoop *pFVar8;
-  FxGlassCrackLoop *pFVar9;
-  ulonglong uVar10;
-  longlong lVar11;
+  int iVar2;
+  bool bVar3;
+  bool bVar4;
+  FxGlassCrackLoop *pFVar5;
+  ulonglong uVar6;
+  longlong lVar7;
+  longlong lVar8;
+  longlong lVar9;
+  uint uVar10;
+  uint uVar11;
   longlong lVar12;
-  longlong lVar13;
-  ulonglong uVar14;
-  uint uVar15;
-  longlong lVar16;
-  FxGlassCrackEdge **ppFVar17;
-  uint uVar18;
-  longlong lVar19;
+  FxGlassCrackEdge **ppFVar13;
+  longlong lVar14;
   FxGlassCrackEdge *local_d0;
   FxGlassCrackEdge *local_cc [51];
   
-  uVar7 = (ulonglong)(int)param_2;
-  lVar4 = __savegprlr_23(param_1);
-  pFVar2 = (FxGlassCrackWork *)lVar4;
-  uVar10 = (ulonglong)pFVar2->loopCount;
-  pFVar9 = (FxGlassCrackLoop *)
-           ((int)pFVar2->loops[0].mins +
-           (int)((uVar7 + (uVar7 & 0x3fffffff) * 4 & 0xffffffff) << 2) + -4);
-  iVar3 = (int)((uVar10 + ((ulonglong)pFVar2->loopCount & 0x3fffffff) * 4 & 0xffffffff) << 2);
-  uVar15 = 1;
-  pFVar8 = (FxGlassCrackLoop *)((int)pFVar2->loops[0].mins + iVar3 + -4);
-  local_d0 = *(FxGlassCrackEdge **)((int)pFVar2->loops[0].mins + iVar3 + -4);
-  bVar5 = Glass_DoesLoopContainLoop(pFVar2,pFVar8,pFVar9);
-  uVar14 = 1;
-  if (1 < (uVar10 & 0xffffffff)) {
-    lVar16 = lVar4 + 0x3c18;
-    ppFVar17 = &local_d0;
-    lVar11 = lVar16;
+  uVar6 = (ulonglong)param_1->loopCount;
+  iVar2 = (int)((uVar6 + ((ulonglong)param_1->loopCount & 0x3fffffff) * 4 & 0xffffffff) << 2);
+  uVar11 = 1;
+  pFVar5 = (FxGlassCrackLoop *)((int)param_1->loops[0].mins + iVar2 + -4);
+  local_d0 = *(FxGlassCrackEdge **)((int)param_1->loops[0].mins + iVar2 + -4);
+  bVar3 = Glass_DoesLoopContainLoop(param_1,pFVar5,param_1->loops + param_2);
+  uVar10 = 1;
+  if (1 < (uVar6 & 0xffffffff)) {
+    lVar12 = (longlong)(int)param_1 + 0x3c18;
+    ppFVar13 = &local_d0;
+    lVar7 = lVar12;
     do {
-      if ((((uVar14 & 0xffffffff) == (uVar7 & 0xffffffff)) ||
-          (bVar6 = Glass_DoesLoopContainLoop(pFVar2,pFVar8,(FxGlassCrackLoop *)lVar11), !bVar6)) ||
-         ((bVar5 && (bVar6 = Glass_DoesLoopContainLoop(pFVar2,pFVar9,(FxGlassCrackLoop *)lVar11),
-                    bVar6)))) {
-        uVar14 = uVar14 + 1;
-        lVar11 = lVar11 + 0x14;
+      if (((uVar10 == param_2) ||
+          (bVar4 = Glass_DoesLoopContainLoop(param_1,pFVar5,(FxGlassCrackLoop *)lVar7), !bVar4)) ||
+         ((bVar3 && (bVar4 = Glass_DoesLoopContainLoop
+                                       (param_1,param_1->loops + param_2,(FxGlassCrackLoop *)lVar7),
+                    bVar4)))) {
+        uVar10 = uVar10 + 1;
+        lVar7 = lVar7 + 0x14;
       }
       else {
-        pFVar1 = (FxGlassCrackEdge *)*(undefined4 *)lVar11;
-        uVar15 = uVar15 + 1;
-        uVar10 = (ulonglong)pFVar2->loopCount - 1;
-        lVar12 = lVar11 + -4;
-        pFVar2->loopCount = (uint)uVar10;
-        lVar19 = 5;
-        ppFVar17 = ppFVar17 + 1;
-        *ppFVar17 = pFVar1;
-        lVar13 = (uVar10 + (uVar10 & 0x3fffffff) * 4 & 0x3fffffff) * 4 + lVar4 + 0x3c00;
+        pFVar1 = (FxGlassCrackEdge *)*(undefined4 *)lVar7;
+        uVar11 = uVar11 + 1;
+        uVar6 = (ulonglong)param_1->loopCount - 1;
+        lVar8 = lVar7 + -4;
+        param_1->loopCount = (uint)uVar6;
+        lVar14 = 5;
+        ppFVar13 = ppFVar13 + 1;
+        *ppFVar13 = pFVar1;
+        lVar9 = (uVar6 + (uVar6 & 0x3fffffff) * 4 & 0x3fffffff) * 4 + (longlong)(int)param_1 +
+                0x3c00;
         do {
-          lVar13 = lVar13 + 4;
-          lVar12 = lVar12 + 4;
-          *(undefined4 *)lVar12 = *(undefined4 *)lVar13;
-          lVar19 = lVar19 + -1;
-        } while (lVar19 != 0);
+          lVar9 = lVar9 + 4;
+          lVar8 = lVar8 + 4;
+          *(undefined4 *)lVar8 = *(undefined4 *)lVar9;
+          lVar14 = lVar14 + -1;
+        } while (lVar14 != 0);
       }
-    } while ((uVar14 & 0xffffffff) < (ulonglong)pFVar2->loopCount);
-    if ((uVar15 != 1) && (uVar18 = 1, 1 < pFVar2->loopCount)) {
+    } while (uVar10 < param_1->loopCount);
+    if ((uVar11 != 1) && (uVar10 = 1, 1 < param_1->loopCount)) {
       do {
-        if ((((FxGlassCrackEdge *)*(undefined4 *)lVar16)->field0_0x0)._s_0.loopIndex != uVar18) {
-          Glass_RenumberLoop((FxGlassCrackEdge *)*(undefined4 *)lVar16,(uchar)uVar18);
+        if ((((FxGlassCrackEdge *)*(undefined4 *)lVar12)->field0_0x0)._s_0.loopIndex != uVar10) {
+          Glass_RenumberLoop((FxGlassCrackEdge *)*(undefined4 *)lVar12,(uchar)uVar10);
         }
-        uVar18 = uVar18 + 1;
-        lVar16 = lVar16 + 0x14;
-      } while (uVar18 < pFVar2->loopCount);
+        uVar10 = uVar10 + 1;
+        lVar12 = lVar12 + 0x14;
+      } while (uVar10 < param_1->loopCount);
     }
   }
-  Glass_MakePiece(pFVar2,&local_d0,uVar15);
-  Glass_FreeLoopEdges(pFVar2,&local_d0,uVar15);
-  __restgprlr_23();
+  Glass_MakePiece(param_1,&local_d0,uVar11);
+  Glass_FreeLoopEdges(param_1,&local_d0,uVar11);
   return;
 }
 
 
 // 82423C00  Glass_SplitLoop  (EffectsCore/fx_glass_crack.cpp:2136)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 void Glass_SplitLoop(FxGlassCrackWork *param_1,FxGlassCrackEdge *param_2,FxGlassCrackEdge *param_3,
                     uint param_4)
 
 {
   byte bVar1;
-  int iVar2;
-  FxGlassCrackWork *pFVar3;
-  ulonglong uVar4;
   
-  uVar4 = (ulonglong)(int)param_4;
-  pFVar3 = (FxGlassCrackWork *)__savegprlr_26(param_1);
-  if (0x1f < (uVar4 & 0xffffffff)) {
+  if (0x1f < param_4) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_glass_crack.cpp"
                     ,0x85c,0,
                     "loopIndex1 doesn\'t index ARRAY_COUNT( work->loops )\n\t%i not in [0, %i)");
   }
-  if ((uVar4 & 0xffffffff) == (ulonglong)(param_3->field0_0x0)._s_0.loopIndex) {
+  if (param_4 == (param_3->field0_0x0)._s_0.loopIndex) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_glass_crack.cpp"
                     ,0x85d,0,"%s");
   }
@@ -3350,67 +3229,66 @@ void Glass_SplitLoop(FxGlassCrackWork *param_1,FxGlassCrackEdge *param_2,FxGlass
                     ,0x85e,0,"%s");
   }
   bVar1 = (param_2->field0_0x0)._s_0.loopIndex;
-  pFVar3->loops[bVar1].firstEdge = param_2;
-  Glass_CalcLoopBounds(pFVar3,pFVar3->loops + bVar1);
-  iVar2 = (int)((uVar4 + (uVar4 & 0x3fffffff) * 4 & 0xffffffff) << 2);
-  *(FxGlassCrackEdge **)((int)pFVar3->loops[0].mins + iVar2 + -4) = param_3;
-  Glass_RenumberLoop(param_3,(uchar)uVar4);
-  Glass_CalcLoopBounds(pFVar3,(FxGlassCrackLoop *)((int)pFVar3->loops[0].mins + iVar2 + -4));
-  __restgprlr_26();
+  param_1->loops[bVar1].firstEdge = param_2;
+  Glass_CalcLoopBounds(param_1,param_1->loops + bVar1);
+  param_1->loops[param_4].firstEdge = param_3;
+  Glass_RenumberLoop(param_3,(uchar)param_4);
+  Glass_CalcLoopBounds(param_1,param_1->loops + param_4);
   return;
 }
 
 
 // 824254D8  Glass_ProcessCrack  (EffectsCore/fx_glass_crack.cpp:2156)
 
+/* WARNING: Function: __savegprlr_19 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_19 replaced with injection: xenon_save_restore */
+
 void Glass_ProcessCrack(FxGlassCrackWork *param_1,FxGlassCrackBranch *param_2)
 
 {
-  FxGlassCrackWork *pFVar1;
+  int iVar1;
   int iVar2;
-  int iVar3;
-  longlong lVar4;
-  bool bVar6;
-  FxGlassCrackEdge *pFVar5;
-  byte bVar7;
-  uint uVar8;
-  ulonglong uVar9;
-  longlong lVar10;
-  FxGlassCrackEdge *pFVar11;
+  bool bVar4;
+  FxGlassCrackEdge *pFVar3;
+  byte bVar5;
+  uint uVar6;
+  ulonglong uVar7;
+  longlong lVar8;
+  longlong lVar9;
+  FxGlassCrackEdge *pFVar10;
+  ulonglong uVar11;
   ulonglong uVar12;
-  ulonglong uVar13;
-  longlong lVar14;
+  longlong lVar13;
   FxGlassCrackWalk local_d0 [2];
   
-  lVar4 = __savegprlr_19(param_1);
-  uVar8 = param_2->startIndex;
-  pFVar1 = (FxGlassCrackWork *)lVar4;
-  local_d0[0].clip.startIndex = uVar8;
-  if (uVar8 == pFVar1->breakOrgIndex) {
+  lVar9 = (longlong)(int)param_1;
+  uVar6 = param_2->startIndex;
+  local_d0[0].clip.startIndex = uVar6;
+  if (uVar6 == param_1->breakOrgIndex) {
     if (param_2->afterEdge != (FxGlassCrackEdge *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_glass_crack.cpp"
                       ,0x878,1,"%s");
     }
-    pFVar11 = pFVar1->breakOrgLoop;
-    if (pFVar11 != (FxGlassCrackEdge *)0x0) {
-      if ((pFVar11->field0_0x0)._s_0.i1 != uVar8) {
+    pFVar10 = param_1->breakOrgLoop;
+    if (pFVar10 != (FxGlassCrackEdge *)0x0) {
+      if ((pFVar10->field0_0x0)._s_0.i1 != uVar6) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_glass_crack.cpp"
                         ,0x882,1,"%s");
       }
       goto LAB_824255d0;
     }
-    uVar8 = pFVar1->breakOrgIndex;
-    local_d0[0].loopIndex = pFVar1->loopCount;
-    pFVar1->loops[local_d0[0].loopIndex].mins[0] = pFVar1->pts[uVar8].xy[0];
-    pFVar1->loops[local_d0[0].loopIndex].mins[1] = pFVar1->pts[uVar8].xy[1];
-    uVar8 = pFVar1->breakOrgIndex;
-    pFVar1->loops[local_d0[0].loopIndex].maxs[0] = pFVar1->pts[uVar8].xy[0];
-    pFVar1->loops[local_d0[0].loopIndex].maxs[1] = pFVar1->pts[uVar8].xy[1];
+    uVar6 = param_1->breakOrgIndex;
+    local_d0[0].loopIndex = param_1->loopCount;
+    param_1->loops[local_d0[0].loopIndex].mins[0] = param_1->pts[uVar6].xy[0];
+    param_1->loops[local_d0[0].loopIndex].mins[1] = param_1->pts[uVar6].xy[1];
+    uVar6 = param_1->breakOrgIndex;
+    param_1->loops[local_d0[0].loopIndex].maxs[0] = param_1->pts[uVar6].xy[0];
+    param_1->loops[local_d0[0].loopIndex].maxs[1] = param_1->pts[uVar6].xy[1];
   }
   else {
-    pFVar11 = param_2->afterEdge;
+    pFVar10 = param_2->afterEdge;
 LAB_824255d0:
-    local_d0[0].loopIndex = (uint)(pFVar11->field0_0x0)._s_0.loopIndex;
+    local_d0[0].loopIndex = (uint)(pFVar10->field0_0x0)._s_0.loopIndex;
   }
   local_d0[0].clip.len = param_2->len;
   local_d0[0].clip.baseDir[0] = param_2->baseDir[0];
@@ -3421,32 +3299,22 @@ LAB_824255d0:
   local_d0[0].totalCrackLength = param_2->priorCrackLength;
   s_glassRandSeed = -(uint)(s_glassRandSeed != 0x1de) & s_glassRandSeed + 1U;
   local_d0[0].cutoffCrackLength =
-       (pFVar1->crackLengthMax - pFVar1->crackLengthMin) *
-       *(float *)(&fx_randomTable + s_glassRandSeed * 4) + pFVar1->crackLengthMin;
-  if (pFVar11 != (FxGlassCrackEdge *)0x0) {
+       (param_1->crackLengthMax - param_1->crackLengthMin) *
+       *(float *)(&fx_randomTable + s_glassRandSeed * 4) + param_1->crackLengthMin;
+  if (pFVar10 != (FxGlassCrackEdge *)0x0) {
     Glass_AssertDirIsInArc
-              (param_2->dir,(pFVar11->field0_0x0)._s_0.dir,
-               (((pFVar11->field0_0x0)._s_0.next)->field0_0x0)._s_0.dir);
+              (param_2->dir,(pFVar10->field0_0x0)._s_0.dir,
+               (((pFVar10->field0_0x0)._s_0.next)->field0_0x0)._s_0.dir);
   }
-  bVar6 = Glass_DoCrackWalk(pFVar1,local_d0);
-  uVar8 = local_d0[0].loopIndex;
-  if (!bVar6) {
-    if (local_d0[0].frontHead != (FxGlassCrackEdge *)0x0) {
-      if (pFVar11 == (FxGlassCrackEdge *)0x0) {
-        if (local_d0[0].loopIndex != pFVar1->loopCount) {
-          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_glass_crack.cpp"
-                          ,0x904,0,"%s");
-        }
-        pFVar1->loopCount = pFVar1->loopCount + 1;
-        ((local_d0[0].frontTail)->field0_0x0)._s_0.next = local_d0[0].backHead;
-        ((local_d0[0].backTail)->field0_0x0)._s_0.next = local_d0[0].frontHead;
-        pFVar1->loops[uVar8].firstEdge = local_d0[0].frontHead;
-        pFVar1->breakOrgLoop = local_d0[0].backTail;
-        __restgprlr_19();
-        return;
-      }
+  bVar4 = Glass_DoCrackWalk(param_1,local_d0);
+  uVar6 = local_d0[0].loopIndex;
+  if (!bVar4) {
+    if (local_d0[0].frontHead == (FxGlassCrackEdge *)0x0) {
+      return;
+    }
+    if (pFVar10 != (FxGlassCrackEdge *)0x0) {
       if (((local_d0[0].backTail)->field0_0x0)._s_0.i1 !=
-          (((pFVar11->field0_0x0)._s_0.next)->field0_0x0)._s_0.i0) {
+          (((pFVar10->field0_0x0)._s_0.next)->field0_0x0)._s_0.i0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_glass_crack.cpp"
                         ,0x90d,0,"%s");
       }
@@ -3455,30 +3323,40 @@ LAB_824255d0:
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_glass_crack.cpp"
                         ,0x90e,0,"%s");
       }
-      if ((pFVar11->field0_0x0)._s_0.i1 != ((local_d0[0].frontHead)->field0_0x0)._s_0.i0) {
+      if ((pFVar10->field0_0x0)._s_0.i1 != ((local_d0[0].frontHead)->field0_0x0)._s_0.i0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_glass_crack.cpp"
                         ,0x90f,0,"%s");
       }
-      ((local_d0[0].backTail)->field0_0x0)._s_0.next = (pFVar11->field0_0x0)._s_0.next;
+      ((local_d0[0].backTail)->field0_0x0)._s_0.next = (pFVar10->field0_0x0)._s_0.next;
       ((local_d0[0].frontTail)->field0_0x0)._s_0.next = local_d0[0].backHead;
-      (pFVar11->field0_0x0)._s_0.next = local_d0[0].frontHead;
+      (pFVar10->field0_0x0)._s_0.next = local_d0[0].frontHead;
+      return;
     }
-    goto LAB_82425ba8;
+    if (local_d0[0].loopIndex != param_1->loopCount) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_glass_crack.cpp"
+                      ,0x904,0,"%s");
+    }
+    param_1->loopCount = param_1->loopCount + 1;
+    ((local_d0[0].frontTail)->field0_0x0)._s_0.next = local_d0[0].backHead;
+    ((local_d0[0].backTail)->field0_0x0)._s_0.next = local_d0[0].frontHead;
+    param_1->loops[uVar6].firstEdge = local_d0[0].frontHead;
+    param_1->breakOrgLoop = local_d0[0].backTail;
+    return;
   }
   if (local_d0[0].clippedEdge == (FxGlassCrackEdge *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_glass_crack.cpp"
                     ,0x899,0,"%s");
   }
-  uVar8 = local_d0[0].loopIndex;
-  uVar12 = (ulonglong)local_d0[0].loopIndex;
-  if (((local_d0[0].clippedEdge)->field0_0x0)._s_0.loopIndex == uVar12) {
-    if (0x1f < pFVar1->loopCount) {
+  uVar6 = local_d0[0].loopIndex;
+  uVar11 = (ulonglong)local_d0[0].loopIndex;
+  if (((local_d0[0].clippedEdge)->field0_0x0)._s_0.loopIndex == uVar11) {
+    if (0x1f < param_1->loopCount) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_glass_crack.cpp"
                       ,0x8d0,0,
                       "work->loopCount doesn\'t index ARRAY_COUNT( work->loops )\n\t%i not in [0, %i)"
                      );
     }
-    if (pFVar11 == (FxGlassCrackEdge *)0x0) {
+    if (pFVar10 == (FxGlassCrackEdge *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_glass_crack.cpp"
                       ,0x8d3,0,"%s");
     }
@@ -3488,13 +3366,13 @@ LAB_824255d0:
                       ,0x8d4,0,"%s");
     }
     if (((local_d0[0].backTail)->field0_0x0)._s_0.i1 !=
-        (((pFVar11->field0_0x0)._s_0.next)->field0_0x0)._s_0.i0) {
+        (((pFVar10->field0_0x0)._s_0.next)->field0_0x0)._s_0.i0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_glass_crack.cpp"
                       ,0x8d5,0,"%s");
     }
     ((local_d0[0].clippedEdge)->field0_0x0)._s_0.next = local_d0[0].backHead;
-    ((local_d0[0].backTail)->field0_0x0)._s_0.next = (pFVar11->field0_0x0)._s_0.next;
-    if ((pFVar11->field0_0x0)._s_0.i1 != ((local_d0[0].frontHead)->field0_0x0)._s_0.i0) {
+    ((local_d0[0].backTail)->field0_0x0)._s_0.next = (pFVar10->field0_0x0)._s_0.next;
+    if ((pFVar10->field0_0x0)._s_0.i1 != ((local_d0[0].frontHead)->field0_0x0)._s_0.i0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_glass_crack.cpp"
                       ,0x8da,0,"%s");
     }
@@ -3503,38 +3381,37 @@ LAB_824255d0:
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_glass_crack.cpp"
                       ,0x8db,0,"%s");
     }
-    (pFVar11->field0_0x0)._s_0.next = local_d0[0].frontHead;
+    (pFVar10->field0_0x0)._s_0.next = local_d0[0].frontHead;
     ((local_d0[0].frontTail)->field0_0x0)._s_0.next = local_d0[0].clip.hitEdge;
-    pFVar5 = local_d0[0].clippedEdge;
-    if (uVar12 == 0) {
-      uVar8 = pFVar1->loopCount;
-      local_d0[0].clippedEdge = pFVar11;
+    pFVar3 = local_d0[0].clippedEdge;
+    if (uVar11 == 0) {
+      uVar6 = param_1->loopCount;
+      local_d0[0].clippedEdge = pFVar10;
     }
     else {
-      bVar6 = Glass_IsEdgeLoopBackwards(pFVar1,pFVar11);
-      if (bVar6) {
-        uVar8 = pFVar1->loopCount;
-        local_d0[0].clippedEdge = pFVar11;
+      bVar4 = Glass_IsEdgeLoopBackwards(param_1,pFVar10);
+      if (bVar4) {
+        uVar6 = param_1->loopCount;
+        local_d0[0].clippedEdge = pFVar10;
       }
       else {
-        Glass_RenumberLoop(pFVar1->loops[0].firstEdge,(uchar)pFVar1->loopCount);
-        lVar10 = lVar4 + 0x3c00;
-        lVar14 = 5;
-        lVar4 = ((ulonglong)pFVar1->loopCount + ((ulonglong)pFVar1->loopCount & 0x3fffffff) * 4 &
-                0x3fffffff) * 4 + lVar4 + 0x3c00;
+        Glass_RenumberLoop(param_1->loops[0].firstEdge,(uchar)param_1->loopCount);
+        lVar8 = lVar9 + 0x3c00;
+        lVar13 = 5;
+        lVar9 = ((ulonglong)param_1->loopCount + ((ulonglong)param_1->loopCount & 0x3fffffff) * 4 &
+                0x3fffffff) * 4 + lVar9 + 0x3c00;
         do {
-          lVar10 = lVar10 + 4;
-          lVar4 = lVar4 + 4;
-          *(undefined4 *)lVar4 = *(undefined4 *)lVar10;
-          lVar14 = lVar14 + -1;
-        } while (lVar14 != 0);
-        uVar8 = 0;
-        pFVar5 = pFVar11;
+          lVar8 = lVar8 + 4;
+          lVar9 = lVar9 + 4;
+          *(undefined4 *)lVar9 = *(undefined4 *)lVar8;
+          lVar13 = lVar13 + -1;
+        } while (lVar13 != 0);
+        uVar6 = 0;
+        pFVar3 = pFVar10;
       }
     }
-    Glass_SplitLoop(pFVar1,local_d0[0].clippedEdge,pFVar5,uVar8);
-    Glass_MakePieceForOuterLoop(pFVar1,(uint)(pFVar11->field0_0x0)._s_0.loopIndex);
-    __restgprlr_19();
+    Glass_SplitLoop(param_1,local_d0[0].clippedEdge,pFVar3,uVar6);
+    Glass_MakePieceForOuterLoop(param_1,(uint)(pFVar10->field0_0x0)._s_0.loopIndex);
     return;
   }
   if (((local_d0[0].clippedEdge)->field0_0x0)._s_0.i1 !=
@@ -3552,69 +3429,64 @@ LAB_824255d0:
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_glass_crack.cpp"
                     ,0x89f,0,"%s");
   }
-  bVar7 = ((local_d0[0].clippedEdge)->field0_0x0)._s_0.loopIndex;
-  uVar9 = (ulonglong)bVar7;
-  if (uVar12 < uVar9) {
-    pFVar5 = pFVar1->loops[bVar7].firstEdge;
-    uVar13 = uVar9;
-    uVar9 = uVar12;
-    bVar7 = (byte)uVar8;
-LAB_824257c8:
-    Glass_RenumberLoop(pFVar5,bVar7);
-    uVar12 = uVar13;
+  bVar5 = ((local_d0[0].clippedEdge)->field0_0x0)._s_0.loopIndex;
+  uVar7 = (ulonglong)bVar5;
+  if (uVar11 < uVar7) {
+    pFVar3 = param_1->loops[bVar5].firstEdge;
+    uVar12 = uVar7;
+    uVar7 = uVar11;
+    bVar5 = (byte)uVar6;
   }
   else {
     ((local_d0[0].frontTail)->field0_0x0)._s_0.next = local_d0[0].backHead;
     ((local_d0[0].backTail)->field0_0x0)._s_0.next = local_d0[0].frontHead;
-    Glass_RenumberLoop(local_d0[0].frontHead,bVar7);
-    if (uVar12 < pFVar1->loopCount) {
-      pFVar5 = *(FxGlassCrackEdge **)
-                ((int)pFVar1->loops[0].mins +
-                (int)((uVar12 + ((ulonglong)uVar8 & 0x3fffffff) * 4 & 0xffffffff) << 2) + -4);
-      uVar13 = uVar12;
-      goto LAB_824257c8;
-    }
+    Glass_RenumberLoop(local_d0[0].frontHead,bVar5);
+    if (param_1->loopCount <= uVar11) goto LAB_824257cc;
+    pFVar3 = *(FxGlassCrackEdge **)
+              ((int)param_1->loops[0].mins +
+              (int)((uVar11 + ((ulonglong)uVar6 & 0x3fffffff) * 4 & 0xffffffff) << 2) + -4);
+    uVar12 = uVar11;
   }
-  iVar3 = (int)((uVar9 + (uVar9 & 0x3fffffff) * 4 & 0xffffffff) << 2);
-  lVar10 = (uVar12 + (uVar12 & 0x3fffffff) * 4 & 0x3fffffff) * 4 + lVar4;
-  iVar2 = (int)lVar10;
-  ExpandBounds2D((float *)(iVar2 + 0x3c08),(float *)(iVar2 + 0x3c10),
-                 (float *)((int)pFVar1->loops[0].mins + iVar3),
-                 (float *)((int)pFVar1->loops[0].maxs + iVar3));
-  if (pFVar11 == (FxGlassCrackEdge *)0x0) {
+  Glass_RenumberLoop(pFVar3,bVar5);
+  uVar11 = uVar12;
+LAB_824257cc:
+  iVar2 = (int)((uVar7 + (uVar7 & 0x3fffffff) * 4 & 0xffffffff) << 2);
+  lVar8 = (uVar11 + (uVar11 & 0x3fffffff) * 4 & 0x3fffffff) * 4 + lVar9;
+  iVar1 = (int)lVar8;
+  ExpandBounds2D((float *)(iVar1 + 0x3c08),(float *)(iVar1 + 0x3c10),
+                 (float *)((int)param_1->loops[0].mins + iVar2),
+                 (float *)((int)param_1->loops[0].maxs + iVar2));
+  if (pFVar10 == (FxGlassCrackEdge *)0x0) {
     ((local_d0[0].backTail)->field0_0x0)._s_0.next = local_d0[0].frontHead;
-    pFVar1->breakOrgLoop = local_d0[0].backTail;
+    param_1->breakOrgLoop = local_d0[0].backTail;
   }
   else {
-    uVar9 = (ulonglong)pFVar1->loopCount - 1;
-    pFVar1->loopCount = (uint)uVar9;
-    if (uVar12 != (uVar9 & 0xffffffff)) {
-      lVar10 = lVar10 + 0x3c00;
-      lVar14 = 5;
-      lVar4 = (uVar9 + (uVar9 & 0x3fffffff) * 4 & 0x3fffffff) * 4 + lVar4 + 0x3c00;
+    uVar7 = (ulonglong)param_1->loopCount - 1;
+    param_1->loopCount = (uint)uVar7;
+    if (uVar11 != (uVar7 & 0xffffffff)) {
+      lVar8 = lVar8 + 0x3c00;
+      lVar13 = 5;
+      lVar9 = (uVar7 + (uVar7 & 0x3fffffff) * 4 & 0x3fffffff) * 4 + lVar9 + 0x3c00;
       do {
-        lVar4 = lVar4 + 4;
-        lVar10 = lVar10 + 4;
-        *(undefined4 *)lVar10 = *(undefined4 *)lVar4;
-        lVar14 = lVar14 + -1;
-      } while (lVar14 != 0);
-      Glass_RenumberLoop(*(FxGlassCrackEdge **)(iVar2 + 0x3c04),(uchar)uVar12);
+        lVar9 = lVar9 + 4;
+        lVar8 = lVar8 + 4;
+        *(undefined4 *)lVar8 = *(undefined4 *)lVar9;
+        lVar13 = lVar13 + -1;
+      } while (lVar13 != 0);
+      Glass_RenumberLoop(*(FxGlassCrackEdge **)(iVar1 + 0x3c04),(uchar)uVar11);
     }
-    ((local_d0[0].backTail)->field0_0x0)._s_0.next = (pFVar11->field0_0x0)._s_0.next;
-    (pFVar11->field0_0x0)._s_0.next = local_d0[0].frontHead;
+    ((local_d0[0].backTail)->field0_0x0)._s_0.next = (pFVar10->field0_0x0)._s_0.next;
+    (pFVar10->field0_0x0)._s_0.next = local_d0[0].frontHead;
   }
-  pFVar11 = pFVar1->breakOrgLoop;
-  uVar8 = pFVar1->breakOrgIndex;
+  pFVar10 = param_1->breakOrgLoop;
+  uVar6 = param_1->breakOrgIndex;
   ((local_d0[0].clippedEdge)->field0_0x0)._s_0.next = local_d0[0].backHead;
   ((local_d0[0].frontTail)->field0_0x0)._s_0.next = local_d0[0].clip.hitEdge;
-  if ((pFVar11->field0_0x0)._s_0.i1 != uVar8) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_glass_crack.cpp"
-                    ,0x8cb,1,"%s");
-    __restgprlr_19();
+  if ((pFVar10->field0_0x0)._s_0.i1 == uVar6) {
     return;
   }
-LAB_82425ba8:
-  __restgprlr_19();
+  MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_glass_crack.cpp",
+                  0x8cb,1,"%s");
   return;
 }
 
@@ -3664,84 +3536,74 @@ void Glass_EvaluateSeedDirToEdge
 
 // 82425BB0  Glass_SnapSeedDirToEdge  (EffectsCore/fx_glass_crack.cpp:2375)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 FxGlassCrackEdge *
 Glass_SnapSeedDirToEdge
           (FxGlassCrackWork *param_1,FxGlassCrackEdge *param_2,float param_3,float param_4,
           float *param_5,float *param_6)
 
 {
-  FxGlassCrackWork *pFVar1;
-  longlong lVar2;
-  FxGlassCrackEdge *pFVar3;
-  FxGlassCrackEdge *pFVar4;
-  uchar uVar5;
-  longlong lVar6;
-  ulonglong uVar7;
-  float *pfVar8;
+  FxGlassCrackEdge *pFVar1;
+  FxGlassCrackEdge *pFVar2;
+  uchar uVar3;
   float *in_r7;
+  double dVar4;
+  double dVar5;
+  double dVar6;
+  double dVar7;
+  double dVar8;
   double dVar9;
-  double extraout_f1;
-  double dVar10;
-  double dVar11;
-  double dVar12;
-  double dVar13;
   
-  uVar7 = (ulonglong)(int)param_6;
-  lVar6 = (longlong)(int)param_2;
-  lVar2 = __savegprlr_27((double)param_3,(double)param_4,param_1,lVar6,param_5);
-  pFVar3 = *(FxGlassCrackEdge **)((int)lVar6 + 0x14);
-  dVar9 = (double)(pFVar3->field0_0x0)._s_0.len;
-  dVar10 = (double)(float)(dVar9 * 0.5);
-  dVar12 = 0.0;
-  dVar11 = (double)(float)(extraout_f1 - dVar10);
-  dVar13 = extraout_f1;
-  if ((float)(dVar10 - ABS(dVar11)) < 1.0) {
-    dVar13 = dVar9;
-    if (dVar11 < 0.0) {
-      dVar13 = dVar12;
+  dVar5 = (double)param_3;
+  pFVar1 = (param_2->field0_0x0)._s_0.next;
+  dVar4 = (double)(pFVar1->field0_0x0)._s_0.len;
+  dVar6 = (double)(float)(dVar4 * 0.5);
+  dVar8 = 0.0;
+  dVar7 = (double)(float)(dVar5 - dVar6);
+  dVar9 = dVar5;
+  if ((float)(dVar6 - ABS(dVar7)) < 1.0) {
+    dVar9 = dVar4;
+    if (dVar7 < 0.0) {
+      dVar9 = dVar8;
     }
-    *in_r7 = (pFVar3->field0_0x0)._s_0.dir[0] * (float)(extraout_f1 - dVar13) + *in_r7;
-    in_r7[1] = (pFVar3->field0_0x0)._s_0.dir[1] * (float)(extraout_f1 - dVar13) + in_r7[1];
+    *in_r7 = (pFVar1->field0_0x0)._s_0.dir[0] * (float)(dVar5 - dVar9) + *in_r7;
+    in_r7[1] = (pFVar1->field0_0x0)._s_0.dir[1] * (float)(dVar5 - dVar9) + in_r7[1];
   }
-  pfVar8 = (float *)uVar7;
-  *pfVar8 = *pfVar8 - *in_r7;
-  pfVar8[1] = pfVar8[1] - in_r7[1];
-  pFVar1 = (FxGlassCrackWork *)lVar2;
-  if (pFVar1->breakOrgIndex != pFVar1->ptCount - 1) {
+  *param_6 = *param_6 - *in_r7;
+  param_6[1] = param_6[1] - in_r7[1];
+  if (param_1->breakOrgIndex != param_1->ptCount - 1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_glass_crack.cpp"
                     ,0x95f,1,"work->breakOrgIndex == work->ptCount - 1\n\t%i, %i");
   }
-  if ((uVar7 & 0xffffffff) !=
-      (((ulonglong)pFVar1->breakOrgIndex & 0x1fffffff) * 8 + lVar2 + 0x3fc & 0xffffffff)) {
+  if ((FxGlassCrackPoint *)param_6 != param_1->pts + param_1->breakOrgIndex) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_glass_crack.cpp"
                     ,0x960,1,"%s");
   }
-  Glass_QuantizeVertex(pfVar8);
-  Glass_PackVertex(pfVar8,pFVar1->packedPts + pFVar1->breakOrgIndex);
-  if (dVar13 == dVar12) {
-    pFVar1->ptCount = pFVar1->ptCount - 1;
-    pFVar3 = (FxGlassCrackEdge *)__restgprlr_27(lVar6);
-    return pFVar3;
+  Glass_QuantizeVertex(param_6);
+  Glass_PackVertex(param_6,param_1->packedPts + param_1->breakOrgIndex);
+  if (dVar9 == dVar8) {
+    param_1->ptCount = param_1->ptCount - 1;
+    return param_2;
   }
-  if (dVar13 == (double)(pFVar3->field0_0x0)._s_0.len) {
-    pFVar1->ptCount = pFVar1->ptCount - 1;
-    pFVar3 = (FxGlassCrackEdge *)__restgprlr_27(pFVar3);
-    return pFVar3;
+  if (dVar9 == (double)(pFVar1->field0_0x0)._s_0.len) {
+    param_1->ptCount = param_1->ptCount - 1;
+    return pFVar1;
   }
-  pFVar4 = Glass_AllocCrackEdge
-                     (pFVar1,(uint)(pFVar3->field0_0x0)._s_0.i0,pFVar1->breakOrgIndex,
-                      (uint)(pFVar3->field0_0x0)._s_0.loopIndex,(pFVar3->field0_0x0)._s_0.type);
-  uVar5 = truncate_cast<unsigned_char>(pFVar1->breakOrgIndex);
-  (pFVar3->field0_0x0)._s_0.i0 = uVar5;
-  (pFVar4->field0_0x0)._s_0.next = pFVar3;
-  *(FxGlassCrackEdge **)((int)lVar6 + 0x14) = pFVar4;
-  Glass_SetCrackEdgeDelta(pFVar1,pFVar4);
-  Glass_SetCrackEdgeDelta(pFVar1,pFVar3);
-  if ((pFVar3->field0_0x0)._s_0.twin != (FxGlassCrackEdge *)0x0) {
-    Glass_SplitTwin(pFVar1,pFVar4,pFVar3);
+  pFVar2 = Glass_AllocCrackEdge
+                     (param_1,(uint)(pFVar1->field0_0x0)._s_0.i0,param_1->breakOrgIndex,
+                      (uint)(pFVar1->field0_0x0)._s_0.loopIndex,(pFVar1->field0_0x0)._s_0.type);
+  uVar3 = truncate_cast<unsigned_char>(param_1->breakOrgIndex);
+  (pFVar1->field0_0x0)._s_0.i0 = uVar3;
+  (pFVar2->field0_0x0)._s_0.next = pFVar1;
+  (param_2->field0_0x0)._s_0.next = pFVar2;
+  Glass_SetCrackEdgeDelta(param_1,pFVar2);
+  Glass_SetCrackEdgeDelta(param_1,pFVar1);
+  if ((pFVar1->field0_0x0)._s_0.twin != (FxGlassCrackEdge *)0x0) {
+    Glass_SplitTwin(param_1,pFVar2,pFVar1);
   }
-  pFVar3 = (FxGlassCrackEdge *)__restgprlr_27(pFVar4);
-  return pFVar3;
+  return pFVar2;
 }
 
 
@@ -3806,6 +3668,8 @@ void Glass_PickSeedDirForLoop
 
 // 82426D48  _Push_heap<unsigned_short_*,int,unsigned_short,bool_(__cdecl*)(unsigned_short_const_&,unsigned_short_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2455)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void std::
@@ -3814,81 +3678,78 @@ void std::
                _func___cdecl_bool_ushort_ptr_ushort_ptr *param_5)
 
 {
-  int iVar1;
+  ulonglong uVar1;
   ulonglong uVar2;
-  ushort *puVar3;
-  ulonglong uVar4;
-  int iVar5;
-  bool bVar6;
-  ulonglong uVar7;
-  uint uVar8;
+  ulonglong uVar3;
+  bool bVar4;
+  uint uVar5;
   
-  uVar7 = (ulonglong)param_2;
-  iVar5 = __savegprlr_25(param_1);
-  iVar1 = (int)uVar7;
-  uVar8 = iVar1 - 1;
-  uVar4 = (longlong)((int)uVar8 >> 1) + (ulonglong)((int)uVar8 < 0 && (uVar8 & 1) != 0);
-  while (uVar2 = uVar4, param_3 < iVar1) {
-    iVar1 = (int)uVar2;
-    puVar3 = (ushort *)(iVar1 * 2 + iVar5);
-    bVar6 = (*param_5)(puVar3,param_4);
-    if (!bVar6) break;
-    uVar8 = iVar1 - 1;
-    *(ushort *)((int)((uVar7 & 0xffffffff) << 1) + iVar5) = *puVar3;
-    uVar4 = (longlong)((int)uVar8 >> 1) + (ulonglong)((int)uVar8 < 0 && (uVar8 & 1) != 0);
-    uVar7 = uVar2;
+  uVar5 = param_2 - 1;
+  uVar3 = (longlong)((int)uVar5 >> 1) + (ulonglong)((int)uVar5 < 0 && (uVar5 & 1) != 0);
+  uVar2 = (longlong)param_2;
+  while (uVar1 = uVar3, param_3 < param_2) {
+    param_2 = (int)uVar1;
+    bVar4 = (*param_5)(param_1 + param_2,param_4);
+    if (!bVar4) break;
+    uVar5 = param_2 - 1;
+    *(ushort *)((int)((uVar2 & 0xffffffff) << 1) + (int)param_1) = param_1[param_2];
+    uVar3 = (longlong)((int)uVar5 >> 1) + (ulonglong)((int)uVar5 < 0 && (uVar5 & 1) != 0);
+    uVar2 = uVar1;
   }
-  *(ushort *)((int)((uVar7 & 0xffffffff) << 1) + iVar5) = *param_4;
-  __restgprlr_25();
+  *(ushort *)((int)((uVar2 & 0xffffffff) << 1) + (int)param_1) = *param_4;
   return;
 }
 
 
 // 82425DB8  Glass_PickSeedDir  (EffectsCore/fx_glass_crack.cpp:2468)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 FxGlassCrackEdge * Glass_PickSeedDir(FxGlassCrackWork *param_1,float *param_2)
 
 {
   uint uVar1;
-  longlong lVar2;
-  FxGlassCrackEdge *pFVar3;
-  longlong lVar4;
+  float fVar2;
+  longlong lVar3;
+  FxGlassCrackEdge *pFVar4;
   longlong lVar5;
-  uint uVar6;
+  longlong lVar6;
+  uint uVar7;
   double in_f2;
   FxGlassSeedDirResults local_30 [3];
   
-  lVar2 = __savegprlr_29(param_1);
-  uVar1 = *(uint *)((int)lVar2 + 0xbf4);
-  uVar6 = 0;
+  lVar3 = (longlong)(int)param_1;
+  uVar1 = param_1->ptCount;
+  uVar7 = 0;
   *param_2 = 0.0;
   local_30[0].hitEdgePrev = (FxGlassCrackEdge *)0x0;
   param_2[1] = 0.0;
-  lVar4 = ((ulonglong)uVar1 & 0x1fffffff) * 8 + lVar2 + 0x3f4;
+  lVar5 = ((ulonglong)uVar1 & 0x1fffffff) * 8 + lVar3 + 0x3f4;
   local_30[0].minDistSq = 3.4028235e+38;
   local_30[0].hitEdgeLen = 0.0;
-  local_30[0].seedDir = param_2;
-  if (*(int *)((int)lVar2 + 0x3c00) != 0) {
-    lVar5 = lVar2 + 0x3bf0;
+  fVar2 = 3.4028235e+38;
+  if (param_1->loopCount != 0) {
+    lVar6 = lVar3 + 0x3bf0;
+    local_30[0].seedDir = param_2;
     do {
-      lVar5 = lVar5 + 0x14;
+      lVar6 = lVar6 + 0x14;
       Glass_PickSeedDirForLoop
-                ((FxGlassCrackWork *)lVar2,(FxGlassCrackEdge *)*(undefined4 *)lVar5,(float *)lVar4,
+                ((FxGlassCrackWork *)lVar3,(FxGlassCrackEdge *)*(undefined4 *)lVar6,(float *)lVar5,
                  local_30);
-      uVar6 = uVar6 + 1;
-    } while (uVar6 < ((FxGlassCrackWork *)lVar2)->loopCount);
+      uVar7 = uVar7 + 1;
+    } while (uVar7 < ((FxGlassCrackWork *)lVar3)->loopCount);
+    fVar2 = local_30[0].minDistSq;
     if (local_30[0].minDistSq <= 1.0) {
-      pFVar3 = Glass_SnapSeedDirToEdge
-                         ((FxGlassCrackWork *)lVar2,local_30[0].hitEdgePrev,local_30[0].hitEdgeLen,
-                          (float)in_f2,(float *)lVar4,(float *)lVar4);
-      pFVar3 = (FxGlassCrackEdge *)__restgprlr_29(pFVar3);
-      return pFVar3;
+      pFVar4 = Glass_SnapSeedDirToEdge
+                         ((FxGlassCrackWork *)lVar3,local_30[0].hitEdgePrev,local_30[0].hitEdgeLen,
+                          (float)in_f2,(float *)lVar5,(float *)lVar5);
+      return pFVar4;
     }
   }
-  *param_2 = *param_2 * (-1.0 / SQRT(local_30[0].minDistSq));
-  param_2[1] = (-1.0 / SQRT(local_30[0].minDistSq)) * param_2[1];
-  pFVar3 = (FxGlassCrackEdge *)__restgprlr_29(0);
-  return pFVar3;
+  *param_2 = *param_2 * (-1.0 / SQRT(fVar2));
+  param_2[1] = (-1.0 / SQRT(fVar2)) * param_2[1];
+  return (FxGlassCrackEdge *)0x0;
 }
 
 
@@ -3933,24 +3794,29 @@ float Glass_GetCornerInteriorAngle(float *param_1,float *param_2)
 
 // 82425E98  Glass_CreateCracks  (EffectsCore/fx_glass_crack.cpp:2535)
 
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_21 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_21 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
+
 bool Glass_CreateCracks(FxGlassCrackWork *param_1)
 
 {
-  uint uVar1;
+  float fVar1;
   float fVar2;
   float fVar3;
   float fVar4;
-  float fVar5;
-  FxGlassCrackEdge *pFVar6;
+  FxGlassCrackEdge *pFVar5;
+  uint uVar6;
   float *pfVar7;
-  FxGlassCrackWork *pFVar8;
-  FxGlassCrackEdge *pFVar9;
-  undefined1 uVar10;
-  uint uVar11;
+  FxGlassCrackEdge *pFVar8;
+  uint uVar9;
+  ulonglong uVar10;
+  ulonglong uVar11;
   ulonglong uVar12;
-  ulonglong uVar13;
-  ulonglong uVar14;
-  uint *puVar15;
+  uint *puVar13;
+  double dVar14;
+  double dVar15;
   double dVar16;
   double dVar17;
   double dVar18;
@@ -3961,131 +3827,124 @@ bool Glass_CreateCracks(FxGlassCrackWork *param_1)
   double dVar23;
   double dVar24;
   double dVar25;
-  double dVar26;
-  double dVar27;
   float local_c0;
   float local_bc;
   ulonglong local_b8;
   
-  __savegprlr_22(param_1);
-  pFVar8 = (FxGlassCrackWork *)__savefpr_21();
-  pFVar9 = Glass_PickSeedDir(pFVar8,&local_c0);
-  dVar27 = 1.0;
-  dVar19 = 0.0;
-  if (pFVar9 == (FxGlassCrackEdge *)0x0) {
+  pFVar8 = Glass_PickSeedDir(param_1,&local_c0);
+  dVar25 = 1.0;
+  dVar17 = 0.0;
+  if (pFVar8 == (FxGlassCrackEdge *)0x0) {
     s_glassRandSeed = -(uint)(s_glassRandSeed != 0x1de) & s_glassRandSeed + 1U;
-    uVar14 = ((longlong)(*(float *)(&fx_randomTable + s_glassRandSeed * 4) * 3.0) & 0xffffffffU) + 3
+    uVar12 = ((longlong)(*(float *)(&fx_randomTable + s_glassRandSeed * 4) * 3.0) & 0xffffffffU) + 3
     ;
-    local_b8 = uVar14 & 0xffffffff;
-    fVar2 = 6.2831855 / (float)local_b8;
+    local_b8 = uVar12 & 0xffffffff;
+    fVar1 = 6.2831855 / (float)local_b8;
   }
   else {
-    pFVar8->breakOrgIndex = (uint)(pFVar9->field0_0x0)._s_0.i1;
-    fVar2 = (pFVar9->field0_0x0)._s_0.dir[1];
-    pFVar6 = (pFVar9->field0_0x0)._s_0.next;
-    fVar3 = (pFVar9->field0_0x0)._s_0.dir[0];
-    fVar4 = (pFVar6->field0_0x0)._s_0.dir[1];
-    fVar5 = (pFVar6->field0_0x0)._s_0.dir[0];
-    dVar17 = atan2((double)(fVar2 * fVar5 - fVar3 * fVar4),-(double)(fVar2 * fVar4 + fVar3 * fVar5))
+    param_1->breakOrgIndex = (uint)(pFVar8->field0_0x0)._s_0.i1;
+    fVar1 = (pFVar8->field0_0x0)._s_0.dir[1];
+    pFVar5 = (pFVar8->field0_0x0)._s_0.next;
+    fVar2 = (pFVar8->field0_0x0)._s_0.dir[0];
+    fVar3 = (pFVar5->field0_0x0)._s_0.dir[1];
+    fVar4 = (pFVar5->field0_0x0)._s_0.dir[0];
+    dVar15 = atan2((double)(fVar1 * fVar4 - fVar2 * fVar3),-(double)(fVar1 * fVar3 + fVar2 * fVar4))
     ;
-    dVar16 = dVar19;
-    if ((double)(float)dVar17 < 0.0) {
-      dVar16 = 6.2831854820251465;
+    dVar14 = dVar17;
+    if ((double)(float)dVar15 < 0.0) {
+      dVar14 = 6.2831854820251465;
     }
     s_glassRandSeed = -(uint)(s_glassRandSeed != 0x1de) & s_glassRandSeed + 1U;
-    fVar2 = (float)(dVar16 + (double)(float)dVar17);
-    uVar1 = (uint)((float)((double)*(float *)(&fx_randomTable + s_glassRandSeed * 4) + dVar27) * 3.0
-                   * fVar2 * 0.15915494);
-    local_b8 = (ulonglong)(int)uVar1;
-    uVar14 = (ulonglong)uVar1;
-    if (uVar14 == 0) {
-      if (fVar2 <= 1.0461504) {
-        __restfpr_21(0);
-        uVar10 = __restgprlr_22();
-        return (bool)uVar10;
+    fVar1 = (float)(dVar14 + (double)(float)dVar15);
+    uVar12 = (ulonglong)
+             (uint)(int)((float)((double)*(float *)(&fx_randomTable + s_glassRandSeed * 4) + dVar25)
+                         * 3.0 * fVar1 * 0.15915494);
+    if (uVar12 == 0) {
+      if (fVar1 <= 1.0461504) {
+        return false;
       }
-      uVar14 = 1;
+      uVar12 = 1;
     }
-    local_c0 = -(pFVar9->field0_0x0)._s_0.dir[0];
-    local_b8 = uVar14 + 1 & 0xffffffff;
-    local_bc = -(pFVar9->field0_0x0)._s_0.dir[1];
-    fVar2 = fVar2 / (float)local_b8;
+    local_c0 = -(pFVar8->field0_0x0)._s_0.dir[0];
+    local_b8 = uVar12 + 1 & 0xffffffff;
+    local_bc = -(pFVar8->field0_0x0)._s_0.dir[1];
+    fVar1 = fVar1 / (float)local_b8;
   }
-  dVar16 = (double)fVar2;
-  pFVar8->breakOrgLoop = pFVar9;
-  uVar1 = pFVar8->branchStackLevel;
-  dVar17 = sin(dVar16);
-  dVar17 = (double)(float)dVar17;
-  dVar16 = cos(dVar16);
-  dVar16 = (double)(float)dVar16;
-  dVar24 = 0.25;
-  pFVar8->branchStackLevel = pFVar8->branchStackLevel + (int)uVar14;
-  dVar26 = (double)(float)(dVar16 * 0.25 + 0.75);
-  if ((uVar14 & 0xffffffff) != 0) {
-    dVar25 = 0.5;
-    puVar15 = &pFVar8->branchStack[uVar1].startIndex;
-    dVar21 = -1.0;
-    dVar20 = (double)((float)(dVar26 + dVar27) * 0.5);
-    dVar22 = 4.0;
-    dVar23 = 0.875;
-    uVar11 = uVar1;
+  dVar14 = (double)fVar1;
+  param_1->breakOrgLoop = pFVar8;
+  uVar6 = param_1->branchStackLevel;
+  dVar15 = sin(dVar14);
+  dVar15 = (double)(float)dVar15;
+  dVar14 = cos(dVar14);
+  dVar14 = (double)(float)dVar14;
+  dVar22 = 0.25;
+  param_1->branchStackLevel = param_1->branchStackLevel + (int)uVar12;
+  dVar24 = (double)(float)(dVar14 * 0.25 + 0.75);
+  if ((uVar12 & 0xffffffff) != 0) {
+    dVar23 = 0.5;
+    puVar13 = &param_1->branchStack[uVar6].startIndex;
+    dVar19 = -1.0;
+    dVar18 = (double)((float)(dVar24 + dVar25) * 0.5);
+    dVar20 = 4.0;
+    dVar21 = 0.875;
+    uVar9 = uVar6;
     do {
-      dVar18 = (double)local_c0;
-      local_c0 = (float)(dVar18 * dVar16 - (double)(float)((double)local_bc * dVar17));
-      local_bc = (float)(dVar18 * dVar17 + (double)(float)((double)local_bc * dVar16));
-      if (0x1f < uVar11) {
+      dVar16 = (double)local_c0;
+      local_c0 = (float)(dVar16 * dVar14 - (double)(float)((double)local_bc * dVar15));
+      local_bc = (float)(dVar16 * dVar15 + (double)(float)((double)local_bc * dVar14));
+      if (0x1f < uVar9) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_glass_crack.cpp"
                         ,0xa1e,0,
                         "initialBranchStackLevel + angleIter doesn\'t index ARRAY_COUNT( work->branchStack )\n\t%i not in [0, %i)"
                        );
       }
-      ((FxGlassCrackBranch *)(puVar15 + -1))->afterEdge = (FxGlassCrackEdge *)0x0;
-      *puVar15 = pFVar8->breakOrgIndex;
-      uVar12 = -(ulonglong)((ulonglong)(uint)s_glassRandSeed != 0x1de) &
+      ((FxGlassCrackBranch *)(puVar13 + -1))->afterEdge = (FxGlassCrackEdge *)0x0;
+      *puVar13 = param_1->breakOrgIndex;
+      uVar10 = -(ulonglong)((ulonglong)(uint)s_glassRandSeed != 0x1de) &
                (ulonglong)(uint)s_glassRandSeed + 1;
-      pfVar7 = (float *)((uVar12 & 0xffffffff) << 2);
-      puVar15[3] = (uint)(float)((double)(float)((double)pfVar7[-0x1f7e654e] * dVar24 + dVar23) *
-                                dVar22);
-      uVar13 = -(ulonglong)(uVar12 - 0x1de != 0) & uVar12 + 1;
-      s_glassRandSeed = (int)uVar13;
-      dVar18 = dVar27;
-      if ((float)((double)*(float *)(&fx_randomTable + (int)((uVar13 & 0xffffffff) << 2)) - dVar25)
+      pfVar7 = (float *)((uVar10 & 0xffffffff) << 2);
+      puVar13[3] = (uint)(float)((double)(float)((double)pfVar7[-0x1f7e654e] * dVar22 + dVar21) *
+                                dVar20);
+      uVar11 = -(ulonglong)(uVar10 - 0x1de != 0) & uVar10 + 1;
+      s_glassRandSeed = (int)uVar11;
+      dVar16 = dVar25;
+      if ((float)((double)*(float *)(&fx_randomTable + (int)((uVar11 & 0xffffffff) << 2)) - dVar23)
           < 0.0) {
-        dVar18 = dVar21;
+        dVar16 = dVar19;
       }
       Glass_DeflectVectorWithSign
-                ((float)dVar20,(float)dVar27,(float)dVar18,(float *)-(int)(uVar12 - 0x1de),pfVar7);
-      uVar14 = uVar14 - 1;
-      puVar15[4] = (uint)local_c0;
-      uVar11 = uVar11 + 1;
-      puVar15[5] = (uint)local_bc;
-      puVar15[6] = (uint)(float)dVar26;
-      puVar15[7] = (uint)(float)dVar19;
-      puVar15 = puVar15 + 9;
-    } while (uVar14 != 0);
+                ((float)dVar18,(float)dVar25,(float)dVar16,(float *)-(int)(uVar10 - 0x1de),pfVar7);
+      uVar12 = uVar12 - 1;
+      puVar13[4] = (uint)local_c0;
+      uVar9 = uVar9 + 1;
+      puVar13[5] = (uint)local_bc;
+      puVar13[6] = (uint)(float)dVar24;
+      puVar13[7] = (uint)(float)dVar17;
+      puVar13 = puVar13 + 9;
+    } while (uVar12 != 0);
   }
-  uVar11 = pFVar8->branchStackLevel;
-  while (uVar1 < uVar11) {
-    uVar11 = pFVar8->branchStackLevel - 1;
-    pFVar8->branchStackLevel = uVar11;
-    if (0x1f < uVar11) {
+  uVar9 = param_1->branchStackLevel;
+  while (uVar6 < uVar9) {
+    uVar9 = param_1->branchStackLevel - 1;
+    param_1->branchStackLevel = uVar9;
+    if (0x1f < uVar9) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_glass_crack.cpp"
                       ,0x540,0,
                       "work->branchStackLevel doesn\'t index GLASS_CRACK_STACK_SIZE\n\t%i not in [0, %i)"
                      );
     }
-    Glass_ProcessCrack(pFVar8,pFVar8->branchStack + pFVar8->branchStackLevel);
-    uVar11 = pFVar8->branchStackLevel;
+    Glass_ProcessCrack(param_1,param_1->branchStack + param_1->branchStackLevel);
+    uVar9 = param_1->branchStackLevel;
   }
-  Glass_MakeFinalPiece(pFVar8);
-  __restfpr_21(1);
-  uVar10 = __restgprlr_22();
-  return (bool)uVar10;
+  Glass_MakeFinalPiece(param_1);
+  return true;
 }
 
 
 // 82426EB0  _Adjust_heap<unsigned_short_*,int,unsigned_short,bool_(__cdecl*)(unsigned_short_const_&,unsigned_short_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2565)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void std::
@@ -4094,57 +3953,47 @@ void std::
                _func___cdecl_bool_ushort_ptr_ushort_ptr *param_5)
 
 {
-  ushort *puVar1;
-  int iVar2;
-  bool bVar3;
+  bool bVar1;
+  longlong lVar2;
+  uint uVar3;
   ulonglong uVar4;
   ulonglong uVar5;
-  longlong lVar6;
-  uint uVar7;
-  ulonglong uVar8;
-  ulonglong uVar9;
-  int iVar11;
-  ulonglong uVar10;
+  int iVar7;
+  ulonglong uVar6;
   
-  uVar5 = (ulonglong)param_3;
-  uVar4 = (ulonglong)param_2;
-  iVar2 = __savegprlr_25(param_1);
-  uVar9 = (uVar4 + 1 & 0x7fffffff) << 1;
-  iVar11 = (int)uVar9;
-  uVar8 = uVar4;
-  while (uVar10 = uVar9, iVar11 < (int)uVar5) {
-    puVar1 = (ushort *)((int)uVar10 * 2 + iVar2);
-    bVar3 = (*param_5)(puVar1,puVar1 + -1);
-    if (bVar3) {
-      uVar10 = uVar10 - 1;
+  uVar5 = ((longlong)param_2 + 1U & 0x7fffffff) << 1;
+  iVar7 = (int)uVar5;
+  uVar4 = (longlong)param_2;
+  while (uVar6 = uVar5, iVar7 < param_3) {
+    bVar1 = (*param_5)(param_1 + (int)uVar6,param_1 + (int)uVar6 + -1);
+    if (bVar1) {
+      uVar6 = uVar6 - 1;
     }
-    lVar6 = (uVar10 & 0x7fffffff) * 2;
-    uVar9 = lVar6 + 2;
-    *(undefined2 *)((int)((uVar8 & 0xffffffff) << 1) + iVar2) = *(undefined2 *)((int)lVar6 + iVar2);
-    iVar11 = (int)uVar9;
-    uVar8 = uVar10;
+    lVar2 = (uVar6 & 0x7fffffff) * 2;
+    uVar5 = lVar2 + 2;
+    *(undefined2 *)((int)((uVar4 & 0xffffffff) << 1) + (int)param_1) =
+         *(undefined2 *)((int)lVar2 + (int)param_1);
+    iVar7 = (int)uVar5;
+    uVar4 = uVar6;
   }
-  if (iVar11 == (int)uVar5) {
-    uVar9 = uVar8 & 0xffffffff;
-    uVar8 = uVar5 - 1;
-    *(undefined2 *)((int)(uVar9 << 1) + iVar2) =
-         *(undefined2 *)((int)((uVar5 & 0xffffffff) << 1) + iVar2 + -2);
+  if (iVar7 == param_3) {
+    uVar5 = uVar4 & 0xffffffff;
+    uVar4 = (longlong)param_3 - 1;
+    *(ushort *)((int)(uVar5 << 1) + (int)param_1) = param_1[param_3 + -1];
   }
-  iVar11 = (int)uVar8;
-  uVar7 = iVar11 - 1;
-  uVar9 = (longlong)((int)uVar7 >> 1) + (ulonglong)((int)uVar7 < 0 && (uVar7 & 1) != 0);
-  while (uVar5 = uVar9, (int)uVar4 < iVar11) {
-    iVar11 = (int)uVar5;
-    puVar1 = (ushort *)(iVar11 * 2 + iVar2);
-    bVar3 = (*param_5)(puVar1,param_4);
-    if (!bVar3) break;
-    uVar7 = iVar11 - 1;
-    *(ushort *)((int)((uVar8 & 0xffffffff) << 1) + iVar2) = *puVar1;
-    uVar9 = (longlong)((int)uVar7 >> 1) + (ulonglong)((int)uVar7 < 0 && (uVar7 & 1) != 0);
-    uVar8 = uVar5;
+  iVar7 = (int)uVar4;
+  uVar3 = iVar7 - 1;
+  uVar5 = (longlong)((int)uVar3 >> 1) + (ulonglong)((int)uVar3 < 0 && (uVar3 & 1) != 0);
+  while (uVar6 = uVar5, param_2 < iVar7) {
+    iVar7 = (int)uVar6;
+    bVar1 = (*param_5)(param_1 + iVar7,param_4);
+    if (!bVar1) break;
+    uVar3 = iVar7 - 1;
+    *(ushort *)((int)((uVar4 & 0xffffffff) << 1) + (int)param_1) = param_1[iVar7];
+    uVar5 = (longlong)((int)uVar3 >> 1) + (ulonglong)((int)uVar3 < 0 && (uVar3 & 1) != 0);
+    uVar4 = uVar6;
   }
-  *(ushort *)((int)((uVar8 & 0xffffffff) << 1) + iVar2) = *param_4;
-  __restgprlr_25();
+  *(ushort *)((int)((uVar4 & 0xffffffff) << 1) + (int)param_1) = *param_4;
   return;
 }
 
@@ -4165,35 +4014,31 @@ void Glass_PrintCrackAssertFloat(float param_1,char *param_2)
 
 // 82424010  Glass_PrintCrackAssertArray  (EffectsCore/fx_glass_crack.cpp:2623)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 FxGlassGeometryData *
 Glass_PrintCrackAssertArray(char *param_1,uint param_2,FxGlassGeometryData *param_3)
 
 {
-  ulonglong uVar1;
-  char *pcVar2;
-  FxGlassGeometryData *pFVar3;
-  ulonglong uVar4;
-  longlong lVar5;
-  ulonglong uVar6;
+  longlong lVar1;
   
-  lVar5 = (longlong)(int)param_3;
-  uVar4 = (ulonglong)(int)param_2;
-  pcVar2 = (char *)__savegprlr_27(param_1);
-  Com_Printf(1,pcVar2);
-  uVar6 = uVar4;
-  uVar1 = uVar4 & 0xffffffff;
-  while (uVar1 != 0) {
-    Com_Printf(1,"\t\t{ %i, %i },\n");
-    uVar6 = uVar6 - 1;
-    uVar1 = uVar6;
+  lVar1 = (longlong)(int)param_2;
+  Com_Printf(1,param_1);
+  if (param_2 != 0) {
+    do {
+      Com_Printf(1,"\t\t{ %i, %i },\n");
+      lVar1 = lVar1 + -1;
+    } while (lVar1 != 0);
   }
-  pFVar3 = (FxGlassGeometryData *)__restgprlr_27((uVar4 & 0x3fffffff) * 4 + lVar5);
-  return pFVar3;
+  return param_3 + param_2;
 }
 
 
 // 82424080  Glass_PrintCrackPieceAssertReproData  (EffectsCore/fx_glass_crack.cpp:2635)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void Glass_PrintCrackPieceAssertReproData(void)
@@ -4205,7 +4050,6 @@ void Glass_PrintCrackPieceAssertReproData(void)
   FxGlassPiecePlace *pFVar4;
   FxGlassGeometryData *pFVar5;
   
-  __savegprlr_23();
   pFVar2 = s_glassCrackAssert.work;
   uVar1 = (s_glassCrackAssert.work)->pieceState->geoDataStart;
   pFVar5 = (s_glassCrackAssert.work)->glassSys->geoData;
@@ -4263,13 +4107,14 @@ void Glass_PrintCrackPieceAssertReproData(void)
   Glass_PrintCrackAssertArray("\n\t\t// fans\n",(uint)pFVar2->pieceState->fanDataCount,pFVar5);
   Com_Printf(1,"\t};\n");
   Com_Printf(1,"---------------------------------------------------------------\n");
-  __restgprlr_23();
   return;
 }
 
 
 // 82426FC0  _Make_heap<unsigned_short_*,int,unsigned_short,bool_(__cdecl*)(unsigned_short_const_&,unsigned_short_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2658)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void std::
@@ -4280,135 +4125,121 @@ void std::
 {
   uint uVar1;
   ulonglong uVar2;
-  ushort *puVar3;
-  bool bVar4;
-  longlong lVar5;
+  bool bVar3;
+  longlong lVar4;
+  ulonglong uVar5;
+  ulonglong uVar6;
   int iVar7;
-  longlong lVar6;
   ulonglong uVar8;
   ulonglong uVar9;
-  ulonglong uVar10;
-  ulonglong uVar11;
-  uint uVar12;
+  uint uVar10;
   ushort local_50 [40];
   
-  lVar5 = (longlong)(int)param_3;
-  lVar6 = (longlong)(int)param_2;
-  puVar3 = (ushort *)__savegprlr_24(param_1,lVar6,lVar5,param_4,param_5);
-  iVar7 = (int)lVar6 - (int)puVar3;
-  uVar1 = iVar7 >> 1;
-  uVar9 = (longlong)(iVar7 >> 2) + (ulonglong)((int)uVar1 < 0 && (uVar1 & 1) != 0);
-  if (0 < (longlong)uVar9) {
-    uVar8 = (uVar9 + 1 & 0x7fffffff) << 1;
+  uVar1 = (int)param_2 - (int)param_1 >> 1;
+  uVar6 = (longlong)((int)param_2 - (int)param_1 >> 2) +
+          (ulonglong)((int)uVar1 < 0 && (uVar1 & 1) != 0);
+  if (0 < (longlong)uVar6) {
+    uVar5 = (uVar6 + 1 & 0x7fffffff) << 1;
     do {
-      uVar8 = uVar8 - 2;
-      uVar9 = uVar9 - 1;
-      uVar12 = (uint)uVar8;
-      local_50[0] = *(ushort *)((int)puVar3 + (uVar12 - 2));
-      uVar11 = uVar8;
-      uVar2 = uVar9;
-      while (uVar10 = uVar11, (int)uVar12 < (int)uVar1) {
-        bVar4 = (*(_func___cdecl_bool_ushort_ptr_ushort_ptr *)lVar5)
-                          (puVar3 + (int)uVar10,puVar3 + (int)uVar10 + -1);
-        if (bVar4) {
-          uVar10 = uVar10 - 1;
+      uVar5 = uVar5 - 2;
+      uVar6 = uVar6 - 1;
+      uVar10 = (uint)uVar5;
+      local_50[0] = *(ushort *)((int)param_1 + (uVar10 - 2));
+      uVar9 = uVar5;
+      uVar2 = uVar6;
+      while (uVar8 = uVar9, (int)uVar10 < (int)uVar1) {
+        bVar3 = (*param_3)(param_1 + (int)uVar8,param_1 + (int)uVar8 + -1);
+        if (bVar3) {
+          uVar8 = uVar8 - 1;
         }
-        lVar6 = (uVar10 & 0x7fffffff) * 2;
-        uVar11 = lVar6 + 2;
-        *(undefined2 *)((int)((uVar2 & 0xffffffff) << 1) + (int)puVar3) =
-             *(undefined2 *)((int)lVar6 + (int)puVar3);
-        uVar12 = (uint)uVar11;
-        uVar2 = uVar10;
+        lVar4 = (uVar8 & 0x7fffffff) * 2;
+        uVar9 = lVar4 + 2;
+        *(undefined2 *)((int)((uVar2 & 0xffffffff) << 1) + (int)param_1) =
+             *(undefined2 *)((int)lVar4 + (int)param_1);
+        uVar10 = (uint)uVar9;
+        uVar2 = uVar8;
       }
       iVar7 = (int)uVar2;
-      if (uVar12 == uVar1) {
+      if (uVar10 == uVar1) {
         iVar7 = uVar1 - 1;
-        *(ushort *)((int)((uVar2 & 0xffffffff) << 1) + (int)puVar3) = puVar3[uVar1 - 1];
+        *(ushort *)((int)((uVar2 & 0xffffffff) << 1) + (int)param_1) = param_1[uVar1 - 1];
       }
       _Push_heap<unsigned_short_*,int,unsigned_short,bool_(__cdecl*)(unsigned_short_const_&,unsigned_short_const_&)>
-                (puVar3,iVar7,(int)uVar9,local_50,(_func___cdecl_bool_ushort_ptr_ushort_ptr *)lVar5)
-      ;
-    } while (0 < (int)uVar9);
+                (param_1,iVar7,(int)uVar6,local_50,param_3);
+    } while (0 < (int)uVar6);
   }
-  __restgprlr_24();
   return;
 }
 
 
 // 82426260  Glass_CrackPiece  (EffectsCore/fx_glass_crack.cpp:2696)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void Glass_CrackPiece(FxGlassCrackWork *param_1,FxGlassSystem *param_2,uint param_3,
                      float (*param_4) [3],FxGlassVertex param_5,float *param_6,float param_7)
 
 {
   byte bVar1;
-  FxGlassDef *pFVar2;
-  int iVar3;
+  FxGlassPieceState *pFVar2;
+  FxGlassDef *pFVar3;
   float fVar4;
-  FxGlassCrackWork *pFVar5;
-  uint uVar6;
-  bool bVar7;
-  ulonglong uVar8;
-  uint uVar9;
-  FxGlassPieceState *pFVar10;
-  double extraout_f1;
+  uint uVar5;
+  bool bVar6;
   
-  uVar8 = (ulonglong)(int)param_3;
-  pFVar5 = (FxGlassCrackWork *)__savegprlr_27((double)param_7,param_1);
-  pFVar5->glassSys = param_2;
-  uVar9 = (uint)uVar8;
-  pFVar5->pieceIndex = uVar9;
-  pFVar5->ptCount = 0;
-  pFVar5->edgeCount = 0;
-  pFVar5->firstFreeEdge = (FxGlassCrackEdge *)0x0;
-  pFVar5->branchStackLevel = 0;
-  iVar3 = (int)((uVar8 & 0x7ffffff) << 5);
-  pFVar5->piecePlace = (FxGlassPiecePlace *)((int)param_2->piecePlaces + iVar3);
-  pFVar10 = (FxGlassPieceState *)((int)param_2->pieceStates->texCoordOrigin + iVar3);
-  pFVar5->pieceState = pFVar10;
-  pFVar2 = param_2->defs;
-  bVar1 = pFVar10->defIndex;
-  pFVar5->crackLengthMin = (float)(extraout_f1 * 0.75);
-  pFVar5->crackLengthMax = (float)extraout_f1;
+  param_1->glassSys = param_2;
+  param_1->pieceIndex = param_3;
+  param_1->ptCount = 0;
+  param_1->edgeCount = 0;
+  param_1->firstFreeEdge = (FxGlassCrackEdge *)0x0;
+  param_1->branchStackLevel = 0;
+  param_1->piecePlace = param_2->piecePlaces + param_3;
+  pFVar2 = param_2->pieceStates;
+  param_1->pieceState = pFVar2 + param_3;
+  pFVar3 = param_2->defs;
+  bVar1 = pFVar2[param_3].defIndex;
+  param_1->crackLengthMin = param_7 * 0.75;
+  param_1->crackLengthMax = param_7;
   s_glassCrackAssert.randSeed = s_glassRandSeed;
-  pFVar5->def = pFVar2 + bVar1;
-  pFVar5->impactDir[0] = *param_6;
-  pFVar5->impactDir[1] = param_6[1];
-  pFVar5->impactDir[2] = param_6[2];
-  pFVar5->axis = param_4;
+  param_1->def = pFVar3 + bVar1;
+  param_1->impactDir[0] = *param_6;
+  param_1->impactDir[1] = param_6[1];
+  param_1->impactDir[2] = param_6[2];
+  param_1->axis = param_4;
   fVar4 = 1.0;
   if (param_4[2][2] * param_6[2] + param_4[2][1] * param_6[1] + *param_6 * param_4[2][0] < 0.0) {
     fVar4 = -1.0;
   }
-  pFVar5->angleSign = fVar4;
-  s_glassCrackAssert.avgCrackLength = (float)extraout_f1;
-  s_glassCrackAssert.work = pFVar5;
+  param_1->angleSign = fVar4;
+  s_glassCrackAssert.work = param_1;
   s_glassCrackAssert.breakOrg = param_5;
+  s_glassCrackAssert.avgCrackLength = param_7;
   SetAssertCallbackHandler(Glass_PrintCrackPieceAssertReproData);
   if ((glass_spam->current).enabled != false) {
     Glass_PrintCrackPieceAssertReproData();
   }
-  Glass_MakeOuterPieceLoop(pFVar5);
-  Glass_MakeHolePieceLoops(pFVar5);
-  Glass_MakeCrackPieceLoops(pFVar5);
-  Glass_CalcAllLoopBounds(pFVar5);
-  uVar6 = Glass_UnpackAndAddVertex(pFVar5,param_5);
-  pFVar5->breakOrgIndex = uVar6;
-  bVar7 = Glass_CreateCracks(pFVar5);
+  Glass_MakeOuterPieceLoop(param_1);
+  Glass_MakeHolePieceLoops(param_1);
+  Glass_MakeCrackPieceLoops(param_1);
+  Glass_CalcAllLoopBounds(param_1);
+  uVar5 = Glass_UnpackAndAddVertex(param_1,param_5);
+  param_1->breakOrgIndex = uVar5;
+  bVar6 = Glass_CreateCracks(param_1);
   SetAssertCallbackHandler((_func___cdecl_void *)0x0);
-  if (bVar7) {
-    Glass_FreePiece(param_2,uVar9);
-    __restgprlr_27();
+  if (bVar6) {
+    Glass_FreePiece(param_2,param_3);
     return;
   }
-  Glass_ConsiderBreakingPiece(pFVar5,uVar9);
-  __restgprlr_27();
+  Glass_ConsiderBreakingPiece(param_1,param_3);
   return;
 }
 
 
 // 82427558  _Sort_heap<unsigned_short_*,bool_(__cdecl*)(unsigned_short_const_&,unsigned_short_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2700)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void std::
@@ -4416,27 +4247,17 @@ void std::
                (ushort *param_1,ushort *param_2,_func___cdecl_bool_ushort_ptr_ushort_ptr *param_3)
 
 {
-  int iVar1;
-  ushort *puVar2;
-  longlong lVar3;
-  longlong lVar4;
+  uint uVar1;
   ushort local_30 [24];
   
-  lVar4 = (longlong)(int)param_2;
-  lVar3 = __savegprlr_28(param_1);
-  lVar4 = lVar4 - lVar3;
-  if (2 < (int)((uint)lVar4 & 0xfffffffe)) {
-    puVar2 = (ushort *)lVar3;
-    do {
-      iVar1 = (int)lVar4;
-      local_30[0] = *(ushort *)((int)puVar2 + iVar1 + -2);
-      lVar4 = lVar4 + -2;
-      *(ushort *)((int)puVar2 + iVar1 + -2) = *puVar2;
-      _Adjust_heap<unsigned_short_*,int,unsigned_short,bool_(__cdecl*)(unsigned_short_const_&,unsigned_short_const_&)>
-                (puVar2,0,(int)(uint)lVar4 >> 1,local_30,param_3);
-    } while (2 < (int)((uint)lVar4 & 0xfffffffe));
+  uVar1 = (int)param_2 - (int)param_1;
+  while (2 < (int)(uVar1 & 0xfffffffe)) {
+    local_30[0] = *(ushort *)((int)param_1 + (uVar1 - 2));
+    *(ushort *)((int)param_1 + (uVar1 - 2)) = *param_1;
+    _Adjust_heap<unsigned_short_*,int,unsigned_short,bool_(__cdecl*)(unsigned_short_const_&,unsigned_short_const_&)>
+              (param_1,0,(int)(uVar1 - 2) >> 1,local_30,param_3);
+    uVar1 = uVar1 - 2;
   }
-  __restgprlr_28();
   return;
 }
 
@@ -4464,112 +4285,98 @@ bool Glass_GetRandomVertex
 
 // 82424480  Glass_GetVertexForPos  (EffectsCore/fx_glass_crack.cpp:2778)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void Glass_GetVertexForPos
                (FxGlassSystem *param_1,uint param_2,float *param_3,float (*param_4) [3],int *param_5
                )
 
 {
-  int iVar1;
-  ulonglong uVar2;
+  FxGlassPiecePlace *pFVar1;
+  double dVar2;
   double dVar3;
   double dVar4;
   double dVar5;
   double dVar6;
   double dVar7;
-  double dVar8;
   
-  uVar2 = (ulonglong)(int)param_5;
-  __savegprlr_27(param_1);
-  iVar1 = __savefpr_27();
-  if ((uVar2 & 0xffffffff) == 0) {
+  if (param_5 == (int *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_glass_crack.cpp"
                     ,0xade,0,"%s");
   }
-  iVar1 = *(int *)(iVar1 + 0x34) + param_2 * 0x20;
-  dVar6 = (double)(*param_3 - *(float *)(iVar1 + 0x10));
-  dVar5 = (double)(param_3[1] - *(float *)(iVar1 + 0x14));
-  dVar4 = (double)(param_3[2] - *(float *)(iVar1 + 0x18));
-  dVar8 = 32.0;
-  dVar7 = 0.5;
-  dVar3 = floor((double)((float)((double)(*param_4)[2] * dVar4 +
-                                (double)(float)((double)(*param_4)[1] * dVar5 +
-                                               (double)(float)((double)(*param_4)[0] * dVar6))) *
+  pFVar1 = param_1->piecePlaces;
+  dVar5 = (double)(*param_3 - (&pFVar1->_s_0)[param_2].frame.origin[0]);
+  dVar4 = (double)(param_3[1] - (&pFVar1->_s_0)[param_2].frame.origin[1]);
+  dVar3 = (double)(param_3[2] - (&pFVar1->_s_0)[param_2].frame.origin[2]);
+  dVar7 = 32.0;
+  dVar6 = 0.5;
+  dVar2 = floor((double)((float)((double)(*param_4)[2] * dVar3 +
+                                (double)(float)((double)(*param_4)[1] * dVar4 +
+                                               (double)(float)((double)(*param_4)[0] * dVar5))) *
                          32.0 + 0.5));
-  *(int *)uVar2 = (int)dVar3;
-  dVar3 = floor((double)(float)((double)(float)((double)param_4[1][2] * dVar4 +
-                                               (double)(float)((double)param_4[1][1] * dVar5 +
+  *param_5 = (int)dVar2;
+  dVar2 = floor((double)(float)((double)(float)((double)param_4[1][2] * dVar3 +
+                                               (double)(float)((double)param_4[1][1] * dVar4 +
                                                               (double)(float)((double)param_4[1][0]
-                                                                             * dVar6))) * dVar8 +
-                               dVar7));
-  ((int *)uVar2)[1] = (int)dVar3;
-  __restfpr_27();
-  __restgprlr_27();
+                                                                             * dVar5))) * dVar7 +
+                               dVar6));
+  param_5[1] = (int)dVar2;
   return;
 }
 
 
 // 824263E8  Glass_GetVertexForImpact  (EffectsCore/fx_glass_crack.cpp:2794)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 bool Glass_GetVertexForImpact
                (FxGlassSystem *param_1,uint param_2,float (*param_3) [3],FxGlassVertex *param_4)
 
 {
-  FxGlassPieceState *pFVar1;
-  int iVar2;
-  int iVar3;
+  int iVar1;
+  ushort uVar2;
+  FxGlassGeometryData *pFVar3;
   bool bVar4;
-  undefined1 uVar5;
-  ulonglong uVar6;
-  ulonglong uVar7;
-  short *psVar8;
-  short sVar9;
-  int iVar10;
+  short sVar5;
   int local_40;
   int local_3c;
-  longlong local_38;
   
-  uVar7 = (ulonglong)(int)param_3;
-  uVar6 = (ulonglong)(int)param_2;
-  iVar3 = __savegprlr_27(param_1,uVar6,uVar7,param_4);
-  psVar8 = (short *)uVar7;
-  if ((uVar7 & 0xffffffff) == 0) {
+  if (param_3 == (float (*) [3])0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_glass_crack.cpp"
-                    ,0xaf1,(int)psVar8,"%s");
+                    ,0xaf1,0,"%s");
   }
-  local_40 = (int)*psVar8;
-  iVar2 = (int)((uVar6 & 0x7ffffff) << 5);
-  pFVar1 = (FxGlassPieceState *)(iVar2 + *(int *)(iVar3 + 0x38));
-  local_3c = (int)psVar8[1];
+  local_40 = (int)*(short *)*param_3;
+  local_3c = (int)*(short *)((int)*param_3 + 2);
   bVar4 = Glass_DoesPieceContainPoint
-                    (pFVar1,(FxGlassGeometryData *)
-                            ((uint)pFVar1->geoDataStart * 4 + *(int *)(iVar3 + 0x40)),&local_40);
+                    (param_1->pieceStates + param_2,
+                     param_1->geoData + param_1->pieceStates[param_2].geoDataStart,&local_40);
   if (!bVar4) {
-    iVar2 = iVar2 + *(int *)(iVar3 + 0x38);
-    iVar10 = (uint)*(ushort *)(iVar2 + 0xe) * 4 + *(int *)(iVar3 + 0x40);
+    pFVar3 = param_1->geoData;
+    uVar2 = param_1->pieceStates[param_2].geoDataStart;
     s_glassRandSeed = -(uint)(s_glassRandSeed != 0x1de) & s_glassRandSeed + 1U;
-    iVar3 = (int)(*(float *)(&fx_randomTable + s_glassRandSeed * 4) * (float)*(byte *)(iVar2 + 0x16)
-                 );
-    local_38 = (longlong)iVar3;
-    iVar3 = iVar3 * 4;
-    *psVar8 = *(short *)(iVar3 + iVar10);
-    psVar8[1] = *(short *)(iVar3 + iVar10 + 2);
-    uVar5 = __restgprlr_27(1);
-    return (bool)uVar5;
+    iVar1 = (int)(*(float *)(&fx_randomTable + s_glassRandSeed * 4) *
+                 (float)param_1->pieceStates[param_2].vertCount);
+    *(short *)*param_3 = pFVar3[(uint)uVar2 + iVar1].vert.x;
+    *(short *)((int)*param_3 + 2) = (&pFVar3->vert)[(uint)uVar2 + iVar1].y;
+    return true;
   }
-  sVar9 = (short)local_40;
-  if (local_40 != sVar9) {
+  sVar5 = (short)local_40;
+  if (local_40 != sVar5) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\../universal/assertive.h"
                     ,0x1ce,0,"i == static_cast< Type >( i )\n\t%i, %i");
   }
-  *psVar8 = sVar9;
-  sVar9 = (short)local_3c;
-  if (local_3c != sVar9) {
+  *(short *)*param_3 = sVar5;
+  sVar5 = (short)local_3c;
+  if (local_3c != sVar5) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\../universal/assertive.h"
                     ,0x1ce,0,"i == static_cast< Type >( i )\n\t%i, %i");
   }
-  psVar8[1] = sVar9;
-  uVar5 = __restgprlr_27(1);
-  return (bool)uVar5;
+  *(short *)((int)*param_3 + 2) = sVar5;
+  return true;
 }
 
 
@@ -4598,6 +4405,9 @@ void Glass_PlaySingleShatterEffect
 
 // 82424640  Glass_PlayShatterEffects  (EffectsCore/fx_glass_crack.cpp:2830)
 
+/* WARNING: Function: __savegprlr_17 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_17 replaced with injection: xenon_save_restore */
+
 void Glass_PlayShatterEffects
                (FxGlassSystem *param_1,uint param_2,float (*param_3) [3],float *param_4,
                float param_5)
@@ -4605,17 +4415,17 @@ void Glass_PlayShatterEffects
 {
   short sVar1;
   short sVar2;
-  FxGlassPieceState *pFVar3;
+  FxGlassPiecePlace *pFVar3;
   FxGlassGeometryData *pFVar4;
-  int iVar5;
-  ulonglong uVar6;
-  int iVar7;
-  bool bVar9;
-  FxEffectDef *pFVar8;
-  longlong lVar10;
-  longlong lVar11;
-  int iVar12;
-  longlong lVar13;
+  ulonglong uVar5;
+  bool bVar7;
+  FxEffectDef *pFVar6;
+  longlong lVar8;
+  longlong lVar9;
+  int iVar10;
+  int iVar11;
+  longlong lVar12;
+  FxGlassPieceState *pFVar13;
   FxGlassGeometryData *pFVar14;
   ulonglong uVar15;
   int iVar17;
@@ -4625,17 +4435,16 @@ void Glass_PlayShatterEffects
   uint uVar21;
   ulonglong uVar20;
   int iVar22;
-  double extraout_f1;
   double dVar23;
   double dVar24;
   double dVar25;
-  undefined8 local_b0;
+  ulonglong local_b0;
   longlong local_a8;
   float local_a0;
   float local_9c;
   float local_98;
   
-  iVar7 = __savegprlr_17((double)param_5,param_1);
+  dVar23 = (double)param_5;
   local_a0 = param_3[2][0];
   local_9c = param_3[2][1];
   local_98 = param_3[2][2];
@@ -4644,40 +4453,39 @@ void Glass_PlayShatterEffects
     local_9c = local_9c * -1.0;
     local_98 = local_98 * -1.0;
   }
-  pFVar3 = (FxGlassPieceState *)(*(int *)(iVar7 + 0x38) + param_2 * 0x20);
-  iVar5 = *(int *)(iVar7 + 0x34) + param_2 * 0x20;
-  if (2048.0 <= pFVar3->areaX2) {
-    iVar12 = (uint)pFVar3->geoDataStart * 4;
-    pFVar14 = (FxGlassGeometryData *)(iVar12 + *(int *)(iVar7 + 0x40));
-    iVar7 = (int)*(short *)(iVar12 + *(int *)(iVar7 + 0x40));
-    lVar11 = (longlong)(pFVar14->vert).y;
-    lVar13 = lVar11;
-    iVar12 = iVar7;
-    if (1 < pFVar3->vertCount) {
-      lVar10 = (ulonglong)pFVar3->vertCount - 1;
+  pFVar3 = param_1->piecePlaces;
+  pFVar13 = param_1->pieceStates + param_2;
+  if (2048.0 <= pFVar13->areaX2) {
+    pFVar14 = param_1->geoData + pFVar13->geoDataStart;
+    iVar10 = (int)param_1->geoData[pFVar13->geoDataStart].vert.x;
+    lVar9 = (longlong)(pFVar14->vert).y;
+    lVar12 = lVar9;
+    iVar11 = iVar10;
+    if (1 < pFVar13->vertCount) {
+      lVar8 = (ulonglong)pFVar13->vertCount - 1;
       pFVar4 = pFVar14;
       do {
         sVar1 = pFVar4[1].vert.x;
-        if (sVar1 < iVar7) {
-          iVar7 = (int)sVar1;
+        if (sVar1 < iVar10) {
+          iVar10 = (int)sVar1;
         }
         sVar2 = *(short *)((int)pFVar4 + 6);
-        if ((int)sVar2 < (int)lVar13) {
-          lVar13 = (longlong)sVar2;
+        if ((int)sVar2 < (int)lVar12) {
+          lVar12 = (longlong)sVar2;
         }
-        if (iVar12 < sVar1) {
-          iVar12 = (int)sVar1;
+        if (iVar11 < sVar1) {
+          iVar11 = (int)sVar1;
         }
-        if ((int)lVar11 < (int)sVar2) {
-          lVar11 = (longlong)sVar2;
+        if ((int)lVar9 < (int)sVar2) {
+          lVar9 = (longlong)sVar2;
         }
-        lVar10 = lVar10 + -1;
+        lVar8 = lVar8 + -1;
         pFVar4 = pFVar4 + 1;
-      } while (lVar10 != 0);
+      } while (lVar8 != 0);
     }
-    uVar15 = lVar11 - lVar13;
+    uVar15 = lVar9 - lVar12;
     uVar19 = (uint)((float)(longlong)(int)uVar15 * 0.00048828125);
-    uVar21 = (uint)((float)(longlong)(iVar12 - iVar7) * 0.00048828125);
+    uVar21 = (uint)((float)(longlong)(iVar11 - iVar10) * 0.00048828125);
     if ((int)uVar21 < 1) {
       uVar21 = 1;
     }
@@ -4685,19 +4493,20 @@ void Glass_PlayShatterEffects
       uVar19 = 1;
     }
     iVar17 = uVar19 * uVar21;
-    local_b0 = (longlong)iVar17;
-    if (extraout_f1 < (double)local_b0) {
-      dVar25 = extraout_f1;
-      dVar23 = floor(extraout_f1);
-      iVar18 = (int)dVar23;
+    local_b0 = (ulonglong)iVar17;
+    if (dVar23 < (double)(longlong)local_b0) {
+      dVar24 = floor(dVar23);
+      iVar18 = (int)dVar24;
       local_a8 = (longlong)iVar18;
       s_glassRandSeed = -(uint)(s_glassRandSeed != 0x1de) & s_glassRandSeed + 1U;
-      dVar24 = (double)*(float *)(&fx_randomTable + s_glassRandSeed * 4);
-      dVar23 = floor(dVar25);
-      if (dVar24 < (double)(float)(dVar25 - (double)(float)dVar23)) {
+      dVar25 = (double)*(float *)(&fx_randomTable + s_glassRandSeed * 4);
+      dVar24 = floor(dVar23);
+      if (dVar25 < (double)(float)(dVar23 - (double)(float)dVar24)) {
         iVar18 = iVar18 + 1;
       }
-      if (iVar18 < 1) goto LAB_824249e8;
+      if (iVar18 < 1) {
+        return;
+      }
       while (iVar18 < iVar17) {
         if (1 < (int)uVar21) {
           uVar21 = uVar21 - 1;
@@ -4711,51 +4520,53 @@ void Glass_PlayShatterEffects
     uVar16 = ((ulonglong)uVar19 & 0x7fffffff) * 2;
     iVar17 = 0;
     if (1 < (int)uVar16) {
-      uVar6 = uVar15 & 0x7fffffff;
+      uVar5 = uVar15 & 0x7fffffff;
       uVar20 = ((ulonglong)uVar21 & 0x7fffffff) << 1;
-      lVar11 = ((uVar16 - 2 & 0xffffffff) >> 1) + 1;
+      lVar9 = ((uVar16 - 2 & 0xffffffff) >> 1) + 1;
       do {
         trapWord(6,uVar16,0);
-        local_b0 = CONCAT44(local_b0._0_4_,(int)uVar15 / (int)uVar16 + (int)lVar13);
+        local_b0 = (ulonglong)(uint)((int)uVar15 / (int)uVar16 + (int)lVar12);
         iVar18 = 1;
         trapWord(5,uVar16 & ~(((uVar15 & 0x7fffffff) << 1 | (uVar15 & 0xffffffff) >> 0x1f) - 1),
                  0xffff);
         iVar22 = (int)uVar20;
         if (1 < iVar22) {
           do {
-            uVar19 = (iVar12 - iVar7) * iVar18;
-            local_b0 = CONCAT44((int)uVar19 / iVar22 + iVar7,local_b0._4_4_);
+            uVar19 = (iVar11 - iVar10) * iVar18;
+            local_b0 = CONCAT44((int)uVar19 / iVar22 + iVar10,local_b0._4_4_);
             trapWord(6,uVar20,0);
             trapWord(5,uVar20 & ~((((ulonglong)uVar19 & 0x7fffffff) << 1 |
                                   (ulonglong)(uVar19 >> 0x1f)) - 1),0xffff);
-            bVar9 = Glass_DoesPieceContainPoint(pFVar3,pFVar14,(int *)&local_b0);
-            if (bVar9) {
+            bVar7 = Glass_DoesPieceContainPoint(pFVar13,pFVar14,(int *)&local_b0);
+            if (bVar7) {
               Glass_PlaySingleShatterEffect
-                        (cgMedia.glassShatter,(float *)(iVar5 + 0x10),param_3,&local_a0,
-                         (int *)&local_b0);
+                        (cgMedia.glassShatter,(&pFVar3->_s_0)[param_2].frame.origin,param_3,
+                         &local_a0,(int *)&local_b0);
               iVar17 = iVar17 + 1;
             }
             iVar18 = iVar18 + 2;
           } while (iVar18 < iVar22);
         }
-        lVar11 = lVar11 + -1;
-        uVar15 = uVar6 * 2 + uVar15;
-      } while (lVar11 != 0);
-      if (iVar17 != 0) goto LAB_824249e8;
+        lVar9 = lVar9 + -1;
+        uVar15 = uVar5 * 2 + uVar15;
+      } while (lVar9 != 0);
+      if (iVar17 != 0) {
+        return;
+      }
     }
     local_b0 = 1;
-    pFVar8 = cgMedia.glassShatter;
+    pFVar6 = cgMedia.glassShatter;
   }
   else {
-    pFVar8 = cgMedia.glassShatterSmall;
-    if ((extraout_f1 < 0.5) &&
+    pFVar6 = cgMedia.glassShatterSmall;
+    if ((dVar23 < 0.5) &&
        (s_glassRandSeed = -(uint)(s_glassRandSeed != 0x1de) & s_glassRandSeed + 1U,
-       extraout_f1 < (double)(*(float *)(&fx_randomTable + s_glassRandSeed * 4) * 0.5)))
-    goto LAB_824249e8;
+       dVar23 < (double)(*(float *)(&fx_randomTable + s_glassRandSeed * 4) * 0.5))) {
+      return;
+    }
   }
-  Glass_PlaySingleShatterEffect(pFVar8,(float *)(iVar5 + 0x10),param_3,&local_a0,(int *)&local_b0);
-LAB_824249e8:
-  __restgprlr_17();
+  Glass_PlaySingleShatterEffect
+            (pFVar6,(&pFVar3->_s_0)[param_2].frame.origin,param_3,&local_a0,(int *)&local_b0);
   return;
 }
 
@@ -4774,6 +4585,8 @@ bool CompareFringePieceArea(ushort *param_1,ushort *param_2)
 
 // 82426740  Glass_DestroyPiece  (EffectsCore/fx_glass_crack.cpp:2947)
 
+/* WARNING: Function: __savegprlr_19 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_19 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void Glass_DestroyPiece(FxGlassSystem *param_1,uint param_2,float *param_3,float *param_4,
@@ -4787,56 +4600,54 @@ void Glass_DestroyPiece(FxGlassSystem *param_1,uint param_2,float *param_3,float
   float fVar5;
   undefined8 uVar6;
   int iVar7;
-  FxGlassSystem *pFVar8;
+  bool bVar8;
   bool bVar9;
-  bool bVar10;
-  longlong lVar11;
-  short sVar12;
+  longlong lVar10;
+  short sVar11;
+  uint uVar12;
   uint uVar13;
-  uint uVar14;
-  LocalClientNum_t LVar15;
-  uint uVar16;
-  uint uVar18;
-  longlong lVar17;
+  LocalClientNum_t LVar14;
+  uint uVar15;
+  uint uVar17;
+  longlong lVar16;
+  double dVar18;
   double dVar19;
-  double dVar20;
   FxGlassGeometryData local_44b0;
   int iStack_44ac;
   ulonglong local_44a8;
   float afStack_44a0 [12];
   FxGlassCrackWork FStack_4470;
   
-  lVar17 = (longlong)(int)param_4;
-  pFVar8 = (FxGlassSystem *)__savegprlr_19(param_1);
+  lVar16 = (longlong)(int)param_4;
   PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffff,"Glass_DestroyPiece");
-  pFVar2 = pFVar8->piecePlaces;
-  pFVar3 = pFVar8->pieceStates;
+  pFVar2 = param_1->piecePlaces;
+  pFVar3 = param_1->pieceStates;
   UnitQuatToAxis((float *)&pFVar2[param_2].nextFree,(float (*) [3])afStack_44a0);
-  if (((pFVar3[param_2].flags & 2) == 0) && (LVar15 = LOCAL_CLIENT_0, 0 < cl_maxLocalClients)) {
+  if (((pFVar3[param_2].flags & 2) == 0) && (LVar14 = LOCAL_CLIENT_0, 0 < cl_maxLocalClients)) {
     do {
-      bVar9 = CL_IsLocalClientActive(LVar15);
-      if (bVar9) {
-        FX_MarkGlassDetachAll(LVar15,param_2);
+      bVar8 = CL_IsLocalClientActive(LVar14);
+      if (bVar8) {
+        FX_MarkGlassDetachAll(LVar14,param_2);
       }
-      LVar15 = LVar15 + LOCAL_CLIENT_1;
-    } while ((int)LVar15 < cl_maxLocalClients);
+      LVar14 = LVar14 + LOCAL_CLIENT_1;
+    } while ((int)LVar14 < cl_maxLocalClients);
   }
   pFVar3[param_2].flags = pFVar3[param_2].flags | 2;
-  dVar20 = 0.0;
+  dVar19 = 0.0;
   FStack_4470.pieceStackLevel = 0;
   FStack_4470.fringeAreaX2 = 0.0;
   FStack_4470.fringePieceCount = 0;
-  dVar19 = (double)pFVar3[param_2].areaX2;
+  dVar18 = (double)pFVar3[param_2].areaX2;
   Glass_GetVertexForPos
-            (pFVar8,param_2,param_3,(float (*) [3])afStack_44a0,(int *)local_44b0.anonymous);
-  sVar12 = (short)((ulonglong)_local_44b0 >> 0x20);
-  if (local_44b0 != (FxGlassGeometryData)(int)sVar12) {
+            (param_1,param_2,param_3,(float (*) [3])afStack_44a0,(int *)local_44b0.anonymous);
+  sVar11 = (short)((ulonglong)_local_44b0 >> 0x20);
+  if (local_44b0 != (FxGlassGeometryData)(int)sVar11) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\../universal/assertive.h"
                     ,0x1ce,0,"i == static_cast< Type >( i )\n\t%i, %i");
   }
   uVar6 = _local_44b0;
   iVar7 = iStack_44ac;
-  _local_44b0 = CONCAT26(sVar12,stack0xffffbb52);
+  _local_44b0 = CONCAT26(sVar11,stack0xffffbb52);
   if (iVar7 != (short)uVar6) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\../universal/assertive.h"
                     ,0x1ce,0,"i == static_cast< Type >( i )\n\t%i, %i");
@@ -4855,8 +4666,8 @@ void Glass_DestroyPiece(FxGlassSystem *param_1,uint param_2,float *param_3,float
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\../universal/assertive.h"
                     ,0x1ce,0,"i == static_cast< Type >( i )\n\t%i, %i");
   }
-  pfVar4 = (float *)lVar17;
-  bVar9 = true;
+  FStack_4470.pieceStack[0] = (ushort)param_2;
+  bVar8 = true;
   fVar5 = (glass_shard_maxsize->current).value * 2.0;
   FStack_4470.maxEdgePieceArea = (glass_fringe_maxsize->current).value * 2.0;
   local_44a8 = (ulonglong)(glass_max_pieces_per_frame->current).integer;
@@ -4864,129 +4675,124 @@ void Glass_DestroyPiece(FxGlassSystem *param_1,uint param_2,float *param_3,float
   if (FStack_4470.maxPieceArea - fVar5 < 0.0) {
     FStack_4470.maxPieceArea = fVar5;
   }
-  lVar11 = -0x7dff0000;
-  FStack_4470.pieceStack[0] = (ushort)param_2;
-  if (dVar20 < (double)(pfVar4[2] * pfVar4[2] + *pfVar4 * *pfVar4 + pfVar4[1] * pfVar4[1])) {
+  lVar10 = -0x7dff0000;
+  if (dVar19 < (double)(param_4[2] * param_4[2] + *param_4 * *param_4 + param_4[1] * param_4[1])) {
     local_44a8 = (ulonglong)(glass_max_shatter_fx_per_frame->current).integer;
     Glass_PlayShatterEffects
-              (pFVar8,param_2,(float (*) [3])afStack_44a0,pfVar4,
+              (param_1,param_2,(float (*) [3])afStack_44a0,param_4,
                ((float)(longlong)local_44a8 / param_5->totalAreaX2) * pFVar3[param_2].areaX2);
-    lVar11 = lVar17;
+    lVar10 = lVar16;
   }
-  uVar16 = 0xffffffff;
-  uVar14 = 0;
+  uVar15 = 0xffffffff;
+  uVar13 = 0;
   if (FStack_4470.pieceStackLevel != 0) {
-    dVar20 = 8.0;
+    dVar19 = 8.0;
     do {
-      uVar13 = FStack_4470.pieceStackLevel - 1;
+      uVar12 = FStack_4470.pieceStackLevel - 1;
       uVar1 = FStack_4470.pieceStack[FStack_4470.pieceStackLevel - 1];
-      uVar18 = (uint)uVar1;
-      FStack_4470.pieceStackLevel = uVar13;
-      if (uVar18 == uVar16) {
-        uVar14 = uVar14 + 1;
-        if ((uVar14 < 0xb) || (uVar14 <= (uint)pFVar8->pieceStates[uVar1].vertCount << 1))
+      uVar17 = (uint)uVar1;
+      FStack_4470.pieceStackLevel = uVar12;
+      if (uVar17 == uVar15) {
+        uVar13 = uVar13 + 1;
+        if ((uVar13 < 0xb) || (uVar13 <= (uint)param_1->pieceStates[uVar1].vertCount << 1))
         goto LAB_82426a68;
       }
       else {
-        uVar14 = 0;
+        uVar13 = 0;
 LAB_82426a68:
-        if (bVar9) {
-          bVar9 = false;
-          bVar10 = Glass_GetVertexForImpact
-                             (pFVar8,(uint)uVar1,(float (*) [3])&local_44b0,(FxGlassVertex *)lVar11)
+        if (bVar8) {
+          bVar8 = false;
+          bVar9 = Glass_GetVertexForImpact
+                            (param_1,(uint)uVar1,(float (*) [3])&local_44b0,(FxGlassVertex *)lVar10)
           ;
-          if (!bVar10) {
+          if (!bVar9) {
             Com_PrintWarning(0x15,"Could not find impact vertex for initial piece of glass %i.");
             break;
           }
         }
         else {
-          local_44a8 = (ulonglong)pFVar8->pieceStates[uVar18].vertCount;
+          local_44a8 = (ulonglong)param_1->pieceStates[uVar17].vertCount;
           s_glassRandSeed = -(uint)(s_glassRandSeed != 0x1de) & s_glassRandSeed + 1U;
-          _local_44b0 = CONCAT44(pFVar8->geoData
-                                 [(uint)pFVar8->pieceStates[uVar18].geoDataStart +
+          _local_44b0 = CONCAT44(param_1->geoData
+                                 [(uint)param_1->pieceStates[uVar17].geoDataStart +
                                   (int)(*(float *)(&fx_randomTable + s_glassRandSeed * 4) *
                                        (float)local_44a8)],
                                  (int)(*(float *)(&fx_randomTable + s_glassRandSeed * 4) *
                                       (float)local_44a8));
         }
-        lVar11 = ZEXT48(&stack0x00000000) - 0x44a0;
-        Glass_CrackPiece(&FStack_4470,pFVar8,(uint)uVar1,(float (*) [3])lVar11,local_44b0.vert,
-                         pfVar4,(float)dVar20);
-        uVar16 = uVar18;
+        lVar10 = ZEXT48(&stack0x00000000) - 0x44a0;
+        Glass_CrackPiece(&FStack_4470,param_1,(uint)uVar1,(float (*) [3])lVar10,local_44b0.vert,
+                         param_4,(float)dVar19);
+        uVar15 = uVar17;
       }
     } while (FStack_4470.pieceStackLevel != 0);
   }
-  if ((float)((double)(glass_fringe_maxcoverage->current).value * dVar19) < FStack_4470.fringeAreaX2
+  if ((float)((double)(glass_fringe_maxcoverage->current).value * dVar18) < FStack_4470.fringeAreaX2
      ) {
     s_fringePieceSortWork = &FStack_4470;
     std::_Sort<unsigned_short_*,int,bool_(__cdecl*)(unsigned_short_const_&,unsigned_short_const_&)>
               (FStack_4470.fringePieces,FStack_4470.fringePieces + FStack_4470.fringePieceCount,
                (int)(FStack_4470.fringePieces + FStack_4470.fringePieceCount) -
                (int)FStack_4470.fringePieces >> 1,CompareFringePieceArea);
-    uVar16 = 0;
+    uVar15 = 0;
     if (FStack_4470.fringePieceCount != 0) {
-      lVar17 = ZEXT48(&stack0x00000000) - 200;
+      lVar16 = ZEXT48(&stack0x00000000) - 200;
       do {
-        uVar1 = *(ushort *)lVar17;
-        FStack_4470.fringeAreaX2 = FStack_4470.fringeAreaX2 - pFVar8->pieceStates[uVar1].areaX2;
-        pFVar8->pieceStates[uVar1].supportMask = 0;
+        uVar1 = *(ushort *)lVar16;
+        FStack_4470.fringeAreaX2 = FStack_4470.fringeAreaX2 - param_1->pieceStates[uVar1].areaX2;
+        param_1->pieceStates[uVar1].supportMask = 0;
         Glass_StartImmediateFall(&FStack_4470,(uint)uVar1,(uint)uVar1);
         if (FStack_4470.fringeAreaX2 <=
-            (float)((double)(glass_fringe_maxcoverage->current).value * dVar19)) break;
-        uVar16 = uVar16 + 1;
-        lVar17 = lVar17 + 2;
-      } while (uVar16 < FStack_4470.fringePieceCount);
+            (float)((double)(glass_fringe_maxcoverage->current).value * dVar18)) break;
+        uVar15 = uVar15 + 1;
+        lVar16 = lVar16 + 2;
+      } while (uVar15 < FStack_4470.fringePieceCount);
     }
   }
-  Glass_CompactData(pFVar8);
+  Glass_CompactData(param_1);
   PIXEndNamedEvent();
-  __restgprlr_19();
   return;
 }
 
 
 // 82426578  Glass_DestroySimplePiece  (EffectsCore/fx_glass_crack.cpp:3099)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
+
 void Glass_DestroySimplePiece
                (FxGlassSystem *param_1,uint param_2,float *param_3,float *param_4,float *param_5)
 
 {
-  FxGlassSystem *pFVar1;
-  float *pfVar2;
-  bool bVar3;
-  ulonglong uVar4;
-  uint uVar5;
-  FxGlassVertex *pFVar6;
-  short sVar7;
+  FxGlassPiecePlace *pFVar1;
+  bool bVar2;
+  FxGlassVertex *pFVar3;
+  short sVar4;
   FxGlassVertex local_4480;
   uint local_447c;
   FxGlassVertex aFStack_4470 [12];
   FxGlassCrackWork FStack_4440;
   
-  uVar4 = (ulonglong)(int)param_2;
-  pFVar1 = (FxGlassSystem *)__savegprlr_23(param_1);
-  pfVar2 = (float *)((int)pFVar1->piecePlaces + (int)((uVar4 & 0xffffffff) << 5));
-  UnitQuatToAxis(pfVar2,(float (*) [3])aFStack_4470);
+  pFVar1 = param_1->piecePlaces;
+  UnitQuatToAxis((float *)&pFVar1[param_2].nextFree,(float (*) [3])aFStack_4470);
   FStack_4440.impactPos[0] = *param_3;
   FStack_4440.impactPos[1] = param_3[1];
-  pFVar6 = aFStack_4470;
+  pFVar3 = aFStack_4470;
   FStack_4440.impactPos[2] = param_3[2];
-  uVar5 = (uint)uVar4;
-  Glass_GetVertexForPos(pFVar1,uVar5,param_3,(float (*) [3])pFVar6,(int *)&local_4480);
-  sVar7 = local_4480.y;
-  if (local_4480 != (FxGlassVertex)(int)sVar7) {
-    pFVar6 = (FxGlassVertex *)"i == static_cast< Type >( i )\n\t%i, %i";
+  Glass_GetVertexForPos(param_1,param_2,param_3,(float (*) [3])pFVar3,(int *)&local_4480);
+  sVar4 = local_4480.y;
+  if (local_4480 != (FxGlassVertex)(int)sVar4) {
+    pFVar3 = (FxGlassVertex *)"i == static_cast< Type >( i )\n\t%i, %i";
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\../universal/assertive.h"
                     ,0x1ce,0,"i == static_cast< Type >( i )\n\t%i, %i");
   }
   if (local_447c != (int)(short)local_447c) {
-    pFVar6 = (FxGlassVertex *)"i == static_cast< Type >( i )\n\t%i, %i";
-    local_4480.x = sVar7;
+    pFVar3 = (FxGlassVertex *)"i == static_cast< Type >( i )\n\t%i, %i";
+    local_4480.x = sVar4;
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\../universal/assertive.h"
                     ,0x1ce,0,"i == static_cast< Type >( i )\n\t%i, %i");
   }
-  FStack_4440.originalRadius = pfVar2[7];
+  FStack_4440.originalRadius = pFVar1[param_2]._s_0.radius;
   FStack_4440.playerOrigin[0] = *param_5;
   local_4480 = (FxGlassVertex)(local_447c & 0xffff);
   FStack_4440.pieceStackLevel = 0;
@@ -4994,27 +4800,25 @@ void Glass_DestroySimplePiece
   FStack_4440.playerOrigin[2] = param_5[2];
   FStack_4440.maxPieceArea = 3.4028235e+38;
   FStack_4440.maxEdgePieceArea = 3.4028235e+38;
-  if (0.0 < (float)*(FxGlassVertex *)(param_4 + 2) * (float)*(FxGlassVertex *)(param_4 + 2) +
-            *param_4 * *param_4 +
-            (float)*(FxGlassVertex *)(param_4 + 1) * (float)*(FxGlassVertex *)(param_4 + 1)) {
-    pFVar6 = (FxGlassVertex *)param_4;
-    Glass_PlayShatterEffects(pFVar1,uVar5,(float (*) [3])aFStack_4470,param_4,1.0);
+  if (0.0 < param_4[2] * param_4[2] + *param_4 * *param_4 + param_4[1] * param_4[1]) {
+    pFVar3 = (FxGlassVertex *)param_4;
+    Glass_PlayShatterEffects(param_1,param_2,(float (*) [3])aFStack_4470,param_4,1.0);
   }
-  bVar3 = Glass_GetVertexForImpact(pFVar1,uVar5,(float (*) [3])&local_4480,pFVar6);
-  if (!bVar3) {
+  bVar2 = Glass_GetVertexForImpact(param_1,param_2,(float (*) [3])&local_4480,pFVar3);
+  if (!bVar2) {
     Com_PrintWarning(0x15,"Could not find impact vertex for piece of glass %i.");
-    __restgprlr_23();
     return;
   }
-  Glass_CrackPiece(&FStack_4440,pFVar1,uVar5,(float (*) [3])aFStack_4470,local_4480,param_4,8.0);
-  Glass_CompactData(pFVar1);
-  __restgprlr_23();
+  Glass_CrackPiece(&FStack_4440,param_1,param_2,(float (*) [3])aFStack_4470,local_4480,param_4,8.0);
+  Glass_CompactData(param_1);
   return;
 }
 
 
 // 824270A0  _Insertion_sort1<unsigned_short_*,bool_(__cdecl*)(unsigned_short_const_&,unsigned_short_const_&),unsigned_short>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3650)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void std::
@@ -5023,54 +4827,46 @@ void std::
                ushort *param_4)
 
 {
-  ulonglong uVar1;
-  ulonglong uVar2;
-  ulonglong uVar3;
-  ulonglong uVar4;
-  char cVar5;
-  ulonglong uVar6;
-  longlong lVar7;
-  code *pcVar8;
-  ulonglong uVar9;
-  ulonglong uVar10;
-  undefined2 local_50 [40];
+  ushort *puVar1;
+  ushort *puVar2;
+  ushort *puVar3;
+  ushort *puVar4;
+  bool bVar5;
+  ushort local_50 [40];
   
-  lVar7 = (longlong)(int)param_3;
-  uVar6 = (ulonglong)(int)param_2;
-  uVar4 = __savegprlr_24(param_1,uVar6,lVar7,param_4);
-  if (((uVar4 & 0xffffffff) != (uVar6 & 0xffffffff)) &&
-     (uVar10 = uVar4 + 2, uVar9 = uVar4, (uVar10 & 0xffffffff) != (uVar6 & 0xffffffff))) {
-    do {
-      local_50[0] = *(undefined2 *)uVar10;
-      pcVar8 = (code *)lVar7;
-      cVar5 = (*pcVar8)(local_50,uVar4);
-      if (cVar5 == '\0') {
-        cVar5 = (*pcVar8)(local_50,uVar9);
-        uVar3 = uVar9;
-        uVar2 = uVar10;
-        while (uVar1 = uVar3, cVar5 != '\0') {
-          *(undefined2 *)uVar2 = *(undefined2 *)uVar1;
-          cVar5 = (*pcVar8)(local_50,uVar1 - 2);
-          uVar3 = uVar1 - 2;
-          uVar2 = uVar1;
-        }
-        *(undefined2 *)uVar2 = local_50[0];
+  puVar3 = param_1;
+  puVar4 = param_1;
+  if (param_1 != param_2) {
+    while (puVar4 = puVar4 + 1, puVar4 != param_2) {
+      local_50[0] = *puVar4;
+      bVar5 = (*param_3)(local_50,param_1);
+      if (bVar5) {
+        memmove();
+        *param_1 = local_50[0];
       }
       else {
-        memmove();
-        *(undefined2 *)uVar4 = local_50[0];
+        bVar5 = (*param_3)(local_50,puVar3);
+        puVar1 = puVar4;
+        puVar2 = puVar3;
+        while (bVar5 != false) {
+          *puVar1 = *puVar2;
+          bVar5 = (*param_3)(local_50,puVar2 + -1);
+          puVar1 = puVar2;
+          puVar2 = puVar2 + -1;
+        }
+        *puVar1 = local_50[0];
       }
-      uVar10 = uVar10 + 2;
-      uVar9 = uVar9 + 2;
-    } while ((uVar10 & 0xffffffff) != (uVar6 & 0xffffffff));
+      puVar3 = puVar3 + 1;
+    }
   }
-  __restgprlr_24();
   return;
 }
 
 
 // 82427190  _Med3<unsigned_short_*,bool_(__cdecl*)(unsigned_short_const_&,unsigned_short_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3683)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void std::_Med3<unsigned_short_*,bool_(__cdecl*)(unsigned_short_const_&,unsigned_short_const_&)>
@@ -5079,35 +4875,34 @@ void std::_Med3<unsigned_short_*,bool_(__cdecl*)(unsigned_short_const_&,unsigned
 
 {
   ushort uVar1;
-  ushort *puVar2;
-  bool bVar3;
+  bool bVar2;
   
-  puVar2 = (ushort *)__savegprlr_28(param_1);
-  bVar3 = (*param_4)(param_2,puVar2);
-  if (bVar3) {
+  bVar2 = (*param_4)(param_2,param_1);
+  if (bVar2) {
     uVar1 = *param_2;
-    *param_2 = *puVar2;
-    *puVar2 = uVar1;
+    *param_2 = *param_1;
+    *param_1 = uVar1;
   }
-  bVar3 = (*param_4)(param_3,param_2);
-  if (bVar3) {
+  bVar2 = (*param_4)(param_3,param_2);
+  if (bVar2) {
     uVar1 = *param_3;
     *param_3 = *param_2;
     *param_2 = uVar1;
   }
-  bVar3 = (*param_4)(param_2,puVar2);
-  if (bVar3) {
+  bVar2 = (*param_4)(param_2,param_1);
+  if (bVar2) {
     uVar1 = *param_2;
-    *param_2 = *puVar2;
-    *puVar2 = uVar1;
+    *param_2 = *param_1;
+    *param_1 = uVar1;
   }
-  __restgprlr_28();
   return;
 }
 
 
 // 82427238  _Median<unsigned_short_*,bool_(__cdecl*)(unsigned_short_const_&,unsigned_short_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3695)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void std::_Median<unsigned_short_*,bool_(__cdecl*)(unsigned_short_const_&,unsigned_short_const_&)>
@@ -5117,37 +4912,35 @@ void std::_Median<unsigned_short_*,bool_(__cdecl*)(unsigned_short_const_&,unsign
 {
   int iVar1;
   int iVar2;
-  ushort *puVar3;
-  uint uVar5;
-  ulonglong uVar4;
+  uint uVar4;
+  ulonglong uVar3;
   
-  puVar3 = (ushort *)__savegprlr_26(param_1);
-  iVar1 = (int)param_3 - (int)puVar3 >> 1;
+  iVar1 = (int)param_3 - (int)param_1 >> 1;
   if (0x28 < iVar1) {
-    uVar5 = iVar1 + 1;
-    uVar4 = (longlong)((int)uVar5 >> 3) + (ulonglong)((int)uVar5 < 0 && (uVar5 & 7) != 0);
-    iVar2 = (int)((uVar4 & 0xffffffff) << 2);
-    iVar1 = (int)((uVar4 & 0x7fffffff) << 1);
+    uVar4 = iVar1 + 1;
+    uVar3 = (longlong)((int)uVar4 >> 3) + (ulonglong)((int)uVar4 < 0 && (uVar4 & 7) != 0);
+    iVar2 = (int)((uVar3 & 0xffffffff) << 2);
+    iVar1 = (int)((uVar3 & 0x7fffffff) << 1);
     _Med3<unsigned_short_*,bool_(__cdecl*)(unsigned_short_const_&,unsigned_short_const_&)>
-              (puVar3,(ushort *)(iVar1 + (int)puVar3),(ushort *)(iVar2 + (int)puVar3),param_4);
+              (param_1,(ushort *)(iVar1 + (int)param_1),(ushort *)(iVar2 + (int)param_1),param_4);
     _Med3<unsigned_short_*,bool_(__cdecl*)(unsigned_short_const_&,unsigned_short_const_&)>
               ((ushort *)((int)param_2 - iVar1),param_2,(ushort *)(iVar1 + (int)param_2),param_4);
     _Med3<unsigned_short_*,bool_(__cdecl*)(unsigned_short_const_&,unsigned_short_const_&)>
               ((ushort *)((int)param_3 - iVar2),(ushort *)((int)param_3 - iVar1),param_3,param_4);
     _Med3<unsigned_short_*,bool_(__cdecl*)(unsigned_short_const_&,unsigned_short_const_&)>
-              ((ushort *)(iVar1 + (int)puVar3),param_2,(ushort *)((int)param_3 - iVar1),param_4);
-    __restgprlr_26();
+              ((ushort *)(iVar1 + (int)param_1),param_2,(ushort *)((int)param_3 - iVar1),param_4);
     return;
   }
   _Med3<unsigned_short_*,bool_(__cdecl*)(unsigned_short_const_&,unsigned_short_const_&)>
-            (puVar3,param_2,param_3,param_4);
-  __restgprlr_26();
+            (param_1,param_2,param_3,param_4);
   return;
 }
 
 
 // 824272E0  _Unguarded_partition<unsigned_short_*,bool_(__cdecl*)(unsigned_short_const_&,unsigned_short_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3712)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 pair<unsigned_short_*,unsigned_short_*>
@@ -5157,143 +4950,114 @@ _Unguarded_partition<unsigned_short_*,bool_(__cdecl*)(unsigned_short_const_&,uns
 
 {
   ushort uVar1;
-  undefined2 uVar2;
-  uint uVar3;
-  ushort *puVar4;
-  undefined4 *puVar6;
-  bool bVar7;
-  pair<unsigned_short_*,unsigned_short_*> pVar5;
-  ulonglong uVar8;
-  ulonglong uVar9;
+  uint uVar2;
+  _func___cdecl_bool_ushort_ptr_ushort_ptr *p_Var3;
+  bool bVar4;
   _func___cdecl_bool_ushort_ptr_ushort_ptr *in_r6;
-  int iVar10;
-  ulonglong uVar11;
-  ulonglong uVar12;
-  undefined2 *puVar13;
-  ulonglong uVar14;
-  undefined2 *puVar15;
-  ulonglong uVar16;
-  ulonglong uVar17;
-  undefined2 *puVar18;
+  _func___cdecl_bool_ushort_ptr_ushort_ptr *p_Var5;
+  _func___cdecl_bool_ushort_ptr_ushort_ptr *p_Var6;
+  _func___cdecl_bool_ushort_ptr_ushort_ptr *p_Var7;
+  _func___cdecl_bool_ushort_ptr_ushort_ptr *p_Var8;
+  _func___cdecl_bool_ushort_ptr_ushort_ptr *p_Var9;
   
-  uVar9 = (ulonglong)(int)param_3;
-  uVar8 = (ulonglong)(int)param_2;
-  puVar6 = (undefined4 *)__savegprlr_23(param_1);
-  iVar10 = (int)uVar9 - (int)(ushort *)uVar8;
-  uVar3 = iVar10 >> 1;
-  uVar17 = ((longlong)(iVar10 >> 2) + (ulonglong)((int)uVar3 < 0 && (uVar3 & 1) != 0) & 0x7fffffff)
-           * 2 + uVar8;
+  uVar2 = (int)param_3 - (int)param_2 >> 1;
+  p_Var6 = (_func___cdecl_bool_ushort_ptr_ushort_ptr *)
+           (param_2 +
+           ((int)param_3 - (int)param_2 >> 2) + (uint)((int)uVar2 < 0 && (uVar2 & 1) != 0));
   _Median<unsigned_short_*,bool_(__cdecl*)(unsigned_short_const_&,unsigned_short_const_&)>
-            ((ushort *)uVar8,(ushort *)uVar17,(ushort *)((int)uVar9 + -2),in_r6);
-  uVar11 = uVar17 + 2;
-  if ((uVar8 & 0xffffffff) < (uVar17 & 0xffffffff)) {
-    do {
-      uVar16 = uVar17 - 2;
-      bVar7 = (*in_r6)((ushort *)uVar16,(ushort *)uVar17);
-      if ((bVar7) || (bVar7 = (*in_r6)((ushort *)uVar17,(ushort *)uVar16), bVar7)) break;
-      uVar17 = uVar16;
-    } while ((uVar8 & 0xffffffff) < (uVar16 & 0xffffffff));
-  }
-  uVar14 = uVar11;
-  uVar16 = uVar17;
-  if ((uVar11 & 0xffffffff) < (uVar9 & 0xffffffff)) {
-    do {
-      bVar7 = (*in_r6)((ushort *)uVar11,(ushort *)uVar17);
-      uVar14 = uVar11;
-      if ((bVar7) || (bVar7 = (*in_r6)((ushort *)uVar17,(ushort *)uVar11), bVar7)) break;
-      uVar11 = uVar11 + 2;
-      uVar14 = uVar11;
-    } while ((uVar11 & 0xffffffff) < (uVar9 & 0xffffffff));
+            (param_2,(ushort *)p_Var6,(ushort *)(param_3 + -2),in_r6);
+  p_Var7 = p_Var6;
+  while (p_Var9 = p_Var7, param_2 < p_Var9) {
+    p_Var7 = p_Var9 + -2;
+    bVar4 = (*in_r6)((ushort *)p_Var7,(ushort *)p_Var9);
+    if ((bVar4) || (bVar4 = (*in_r6)((ushort *)p_Var9,(ushort *)p_Var7), bVar4)) break;
   }
   do {
-    uVar12 = uVar11;
-    if ((uVar14 & 0xffffffff) < (uVar9 & 0xffffffff)) {
-      do {
-        puVar4 = (ushort *)uVar14;
-        bVar7 = (*in_r6)((ushort *)uVar16,puVar4);
-        uVar11 = uVar12;
-        if (!bVar7) {
-          bVar7 = (*in_r6)(puVar4,(ushort *)uVar16);
-          if (bVar7) break;
-          uVar11 = uVar12 + 2;
-          uVar1 = *(ushort *)uVar12;
-          *(ushort *)uVar12 = *puVar4;
-          *puVar4 = uVar1;
-        }
-        uVar14 = uVar14 + 2;
-        uVar12 = uVar11;
-      } while ((uVar14 & 0xffffffff) < (uVar9 & 0xffffffff));
-    }
-    bVar7 = (uVar17 & 0xffffffff) == (uVar8 & 0xffffffff);
-    uVar12 = uVar17;
-    if ((uVar8 & 0xffffffff) < (uVar17 & 0xffffffff)) {
-      do {
-        puVar4 = (ushort *)(uVar12 - 2);
-        bVar7 = (*in_r6)(puVar4,(ushort *)uVar16);
-        if (!bVar7) {
-          bVar7 = (*in_r6)((ushort *)uVar16,puVar4);
-          if (bVar7) break;
-          uVar16 = uVar16 - 2;
-          uVar1 = *(ushort *)uVar16;
-          *(ushort *)uVar16 = *puVar4;
-          *puVar4 = uVar1;
-        }
-        uVar17 = uVar17 - 2;
-        uVar12 = uVar12 - 2;
-      } while ((uVar8 & 0xffffffff) < (uVar17 & 0xffffffff));
-      bVar7 = (uVar17 & 0xffffffff) == (uVar8 & 0xffffffff);
-    }
-    puVar15 = (undefined2 *)uVar14;
-    if (bVar7) {
-      puVar13 = (undefined2 *)uVar11;
-      puVar18 = (undefined2 *)uVar16;
-      if ((uVar14 & 0xffffffff) == (uVar9 & 0xffffffff)) {
-        *puVar6 = puVar18;
-        puVar6[1] = puVar13;
-        pVar5 = (pair<unsigned_short_*,unsigned_short_*>)__restgprlr_23(puVar6);
-        return pVar5;
+    p_Var6 = p_Var6 + 2;
+    p_Var7 = p_Var6;
+    p_Var8 = p_Var9;
+    if (param_3 <= p_Var6) break;
+    bVar4 = (*in_r6)((ushort *)p_Var6,(ushort *)p_Var9);
+    if ((bVar4) || (bVar4 = (*in_r6)((ushort *)p_Var9,(ushort *)p_Var6), bVar4)) break;
+  } while( true );
+joined_r0x824273d0:
+  p_Var3 = p_Var8;
+  if (param_3 <= p_Var7) {
+joined_r0x82427434:
+    for (; param_2 < p_Var3; p_Var3 = p_Var3 + -2) {
+      p_Var8 = p_Var8 + -2;
+      bVar4 = (*in_r6)((ushort *)p_Var8,(ushort *)p_Var9);
+      if (!bVar4) {
+        bVar4 = (*in_r6)((ushort *)p_Var9,(ushort *)p_Var8);
+        if (bVar4) break;
+        p_Var9 = p_Var9 + -2;
+        uVar1 = *(ushort *)p_Var9;
+        *(ushort *)p_Var9 = *(ushort *)p_Var8;
+        *(ushort *)p_Var8 = uVar1;
       }
-      if ((uVar11 & 0xffffffff) != (uVar14 & 0xffffffff)) {
-        uVar2 = *puVar18;
-        *puVar18 = *puVar13;
-        *puVar13 = uVar2;
+    }
+    if (p_Var3 == (_func___cdecl_bool_ushort_ptr_ushort_ptr *)param_2) {
+      if (p_Var7 == param_3) {
+        *(_func___cdecl_bool_ushort_ptr_ushort_ptr **)param_1 = p_Var9;
+        *(_func___cdecl_bool_ushort_ptr_ushort_ptr **)(param_1 + 2) = p_Var6;
+        return (pair<unsigned_short_*,unsigned_short_*>)(longlong)(int)param_1;
       }
-      uVar11 = uVar11 + 2;
-      uVar2 = *puVar18;
-      *puVar18 = *puVar15;
-      *puVar15 = uVar2;
-      uVar14 = uVar14 + 2;
-      uVar16 = uVar16 + 2;
+      if (p_Var6 != p_Var7) {
+        uVar1 = *(ushort *)p_Var9;
+        *(ushort *)p_Var9 = *(ushort *)p_Var6;
+        *(ushort *)p_Var6 = uVar1;
+      }
+      p_Var6 = p_Var6 + 2;
+      uVar1 = *(ushort *)p_Var9;
+      *(ushort *)p_Var9 = *(ushort *)p_Var7;
+      *(ushort *)p_Var7 = uVar1;
+      p_Var7 = p_Var7 + 2;
+      p_Var9 = p_Var9 + 2;
+      p_Var8 = p_Var3;
     }
     else {
-      uVar17 = uVar17 - 2;
-      puVar13 = (undefined2 *)uVar17;
-      if ((uVar14 & 0xffffffff) == (uVar9 & 0xffffffff)) {
-        uVar16 = uVar16 - 2;
-        puVar15 = (undefined2 *)uVar16;
-        if ((uVar17 & 0xffffffff) != (uVar16 & 0xffffffff)) {
-          uVar2 = *puVar13;
-          *puVar13 = *puVar15;
-          *puVar15 = uVar2;
+      p_Var8 = p_Var3 + -2;
+      if (p_Var7 == param_3) {
+        p_Var9 = p_Var9 + -2;
+        if (p_Var8 != p_Var9) {
+          uVar1 = *(ushort *)p_Var8;
+          *(ushort *)p_Var8 = *(ushort *)p_Var9;
+          *(ushort *)p_Var9 = uVar1;
         }
-        uVar11 = uVar11 - 2;
-        uVar2 = *puVar15;
-        *puVar15 = *(undefined2 *)uVar11;
-        *(undefined2 *)uVar11 = uVar2;
+        p_Var6 = p_Var6 + -2;
+        uVar1 = *(ushort *)p_Var9;
+        *(ushort *)p_Var9 = *(ushort *)p_Var6;
+        *(ushort *)p_Var6 = uVar1;
       }
       else {
-        uVar2 = *puVar15;
-        *puVar15 = *puVar13;
-        *puVar13 = uVar2;
-        uVar14 = uVar14 + 2;
+        uVar1 = *(ushort *)p_Var7;
+        *(ushort *)p_Var7 = *(ushort *)p_Var8;
+        *(ushort *)p_Var8 = uVar1;
+        p_Var7 = p_Var7 + 2;
       }
     }
-  } while( true );
+    goto joined_r0x824273d0;
+  }
+  bVar4 = (*in_r6)((ushort *)p_Var9,(ushort *)p_Var7);
+  p_Var5 = p_Var6;
+  if (!bVar4) {
+    bVar4 = (*in_r6)((ushort *)p_Var7,(ushort *)p_Var9);
+    if (bVar4) goto joined_r0x82427434;
+    p_Var5 = p_Var6 + 2;
+    uVar1 = *(ushort *)p_Var6;
+    *(ushort *)p_Var6 = *(ushort *)p_Var7;
+    *(ushort *)p_Var7 = uVar1;
+  }
+  p_Var6 = p_Var5;
+  p_Var7 = p_Var7 + 2;
+  goto joined_r0x824273d0;
 }
 
 
 // 824275C8  _Sort<unsigned_short_*,int,bool_(__cdecl*)(unsigned_short_const_&,unsigned_short_const_&)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3771)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void std::_Sort<unsigned_short_*,int,bool_(__cdecl*)(unsigned_short_const_&,unsigned_short_const_&)>
@@ -5302,67 +5066,54 @@ void std::_Sort<unsigned_short_*,int,bool_(__cdecl*)(unsigned_short_const_&,unsi
 
 {
   ushort *puVar1;
-  ushort *puVar2;
-  ulonglong uVar3;
-  int iVar5;
-  ulonglong uVar4;
-  ulonglong uVar6;
-  int iVar7;
-  _func___cdecl_bool_ushort_ptr_ushort_ptr *p_Var8;
-  ushort *local_40;
+  int iVar2;
+  uint uVar3;
+  _func___cdecl_bool_ushort_ptr_ushort_ptr *p_Var4;
+  _func___cdecl_bool_ushort_ptr_ushort_ptr *local_40;
   ushort *local_3c;
   
-  uVar4 = (ulonglong)param_3;
-  uVar3 = (ulonglong)(int)param_2;
-  puVar2 = (ushort *)__savegprlr_26(param_1);
-  p_Var8 = (_func___cdecl_bool_ushort_ptr_ushort_ptr *)uVar3;
-  iVar5 = (int)p_Var8 - (int)puVar2;
+  iVar2 = (int)param_2 - (int)param_1;
   do {
-    iVar5 = iVar5 >> 1;
-    if (iVar5 < 0x21) {
+    iVar2 = iVar2 >> 1;
+    if (iVar2 < 0x21) {
 LAB_82427680:
-      if (1 < iVar5) {
+      if (1 < iVar2) {
         _Insertion_sort1<unsigned_short_*,bool_(__cdecl*)(unsigned_short_const_&,unsigned_short_const_&),unsigned_short>
-                  (puVar2,(ushort *)p_Var8,param_4,(ushort *)0x0);
+                  (param_1,param_2,param_4,(ushort *)0x0);
       }
-      __restgprlr_26();
       return;
     }
-    p_Var8 = (_func___cdecl_bool_ushort_ptr_ushort_ptr *)uVar3;
-    iVar7 = (int)uVar4;
-    if (iVar7 < 1) {
-      if (0x20 < iVar5) {
-        if (1 < iVar5) {
+    if (param_3 < 1) {
+      if (0x20 < iVar2) {
+        if (1 < iVar2) {
           _Make_heap<unsigned_short_*,int,unsigned_short,bool_(__cdecl*)(unsigned_short_const_&,unsigned_short_const_&)>
-                    (puVar2,(ushort *)p_Var8,param_4,(int *)0x0,(ushort *)0x0);
+                    (param_1,param_2,param_4,(int *)0x0,(ushort *)0x0);
         }
         _Sort_heap<unsigned_short_*,bool_(__cdecl*)(unsigned_short_const_&,unsigned_short_const_&)>
-                  (puVar2,(ushort *)p_Var8,param_4);
-        __restgprlr_26();
+                  (param_1,param_2,param_4);
         return;
       }
       goto LAB_82427680;
     }
     _Unguarded_partition<unsigned_short_*,bool_(__cdecl*)(unsigned_short_const_&,unsigned_short_const_&)>
-              ((ushort *)&local_40,puVar2,p_Var8);
+              ((ushort *)&local_40,param_1,(_func___cdecl_bool_ushort_ptr_ushort_ptr *)param_2);
     puVar1 = local_3c;
-    uVar4 = (longlong)(iVar7 >> 1) + (ulonglong)(iVar7 < 0 && (uVar4 & 1) != 0);
-    uVar4 = (longlong)((int)uVar4 >> 1) + (ulonglong)((int)uVar4 < 0 && (uVar4 & 1) != 0) + uVar4;
-    uVar6 = ZEXT48(local_40);
-    if ((int)((int)local_40 - (int)puVar2 & 0xfffffffeU) <
-        (int)((int)p_Var8 - (int)local_3c & 0xfffffffeU)) {
+    p_Var4 = local_40;
+    uVar3 = (param_3 >> 1) + (uint)(param_3 < 0 && (param_3 & 1U) != 0);
+    param_3 = ((int)uVar3 >> 1) + (uint)((int)uVar3 < 0 && (uVar3 & 1) != 0) + uVar3;
+    if ((int)((int)local_40 - (int)param_1 & 0xfffffffeU) <
+        (int)((int)param_2 - (int)local_3c & 0xfffffffeU)) {
       _Sort<unsigned_short_*,int,bool_(__cdecl*)(unsigned_short_const_&,unsigned_short_const_&)>
-                (puVar2,local_40,(int)uVar4,param_4);
-      uVar6 = uVar3;
-      puVar2 = puVar1;
+                (param_1,(ushort *)local_40,param_3,param_4);
+      p_Var4 = (_func___cdecl_bool_ushort_ptr_ushort_ptr *)param_2;
+      param_1 = puVar1;
     }
     else {
       _Sort<unsigned_short_*,int,bool_(__cdecl*)(unsigned_short_const_&,unsigned_short_const_&)>
-                (local_3c,(ushort *)p_Var8,(int)uVar4,param_4);
+                (local_3c,param_2,param_3,param_4);
     }
-    p_Var8 = (_func___cdecl_bool_ushort_ptr_ushort_ptr *)uVar6;
-    iVar5 = (int)p_Var8 - (int)puVar2;
-    uVar3 = uVar6;
+    iVar2 = (int)p_Var4 - (int)param_1;
+    param_2 = (ushort *)p_Var4;
   } while( true );
 }
 

@@ -66,17 +66,20 @@ void R_ShutdownLightDefs(void)
 
 // 8274B480  R_LightImportanceGreaterEqual  (gfx_d3d/r_light.cpp:155)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 bool R_LightImportanceGreaterEqual(GfxLight *param_1,GfxLight *param_2)
 
 {
   float fVar1;
   float fVar2;
   float fVar3;
-  uchar *puVar4;
-  undefined1 uVar5;
+  float fVar4;
+  float fVar5;
+  float fVar6;
   
-  puVar4 = (uchar *)__savegprlr_28(param_1);
-  if ((*puVar4 != '\x03') && (*puVar4 != '\x02')) {
+  if ((param_1->type != '\x03') && (param_1->type != '\x02')) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_light.cpp",0x9f,1,
                     "%s");
   }
@@ -84,38 +87,35 @@ bool R_LightImportanceGreaterEqual(GfxLight *param_1,GfxLight *param_2)
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_light.cpp",0xa0,1,
                     "%s");
   }
-  if (*puVar4 != param_2->type) {
-    uVar5 = __restgprlr_28(*puVar4 == '\x02');
-    return (bool)uVar5;
+  if (param_1->type != param_2->type) {
+    return param_1->type == '\x02';
   }
-  fVar1 = rg.viewOrg[2] - param_2->origin[2];
-  fVar2 = rg.viewOrg[0] - param_2->origin[0];
-  fVar3 = rg.viewOrg[1] - param_2->origin[1];
-  uVar5 = __restgprlr_28(((rg.viewOrg[1] - *(float *)(puVar4 + 0x2c)) *
-                          (rg.viewOrg[1] - *(float *)(puVar4 + 0x2c)) +
-                         (rg.viewOrg[0] - *(float *)(puVar4 + 0x28)) *
-                         (rg.viewOrg[0] - *(float *)(puVar4 + 0x28)) +
-                         (rg.viewOrg[2] - *(float *)(puVar4 + 0x30)) *
-                         (rg.viewOrg[2] - *(float *)(puVar4 + 0x30))) *
-                         param_2->radius * param_2->radius <=
-                         (fVar3 * fVar3 + fVar2 * fVar2 + fVar1 * fVar1) *
-                         *(float *)(puVar4 + 0x34) * *(float *)(puVar4 + 0x34));
-  return (bool)uVar5;
+  fVar1 = rg.viewOrg[2] - param_1->origin[2];
+  fVar2 = rg.viewOrg[2] - param_2->origin[2];
+  fVar3 = rg.viewOrg[0] - param_1->origin[0];
+  fVar4 = rg.viewOrg[0] - param_2->origin[0];
+  fVar5 = rg.viewOrg[1] - param_1->origin[1];
+  fVar6 = rg.viewOrg[1] - param_2->origin[1];
+  return (fVar5 * fVar5 + fVar3 * fVar3 + fVar1 * fVar1) * param_2->radius * param_2->radius <=
+         (fVar6 * fVar6 + fVar4 * fVar4 + fVar2 * fVar2) * param_1->radius * param_1->radius;
 }
 
 
 // 8274B5B8  R_MostImportantLights  (gfx_d3d/r_light.cpp:175)
+
+/* WARNING: Function: __savegprlr_20 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_20 replaced with injection: xenon_save_restore */
 
 void R_MostImportantLights(GfxLight **param_1,int param_2,int param_3)
 
 {
   GfxLight *pGVar1;
   undefined4 uVar2;
-  longlong lVar3;
-  bool bVar4;
-  longlong lVar5;
-  ulonglong uVar6;
+  bool bVar3;
+  longlong lVar4;
+  ulonglong uVar5;
   undefined4 *puVar7;
+  longlong lVar6;
   longlong lVar8;
   int iVar10;
   ulonglong uVar9;
@@ -123,46 +123,46 @@ void R_MostImportantLights(GfxLight **param_1,int param_2,int param_3)
   ulonglong uVar12;
   int iVar13;
   
-  lVar5 = (longlong)param_3;
-  uVar11 = (ulonglong)param_2;
-  lVar3 = __savegprlr_20(param_1);
-  if ((int)uVar11 <= (int)lVar5) {
+  lVar4 = (longlong)param_3;
+  lVar6 = (longlong)(int)param_1;
+  if (param_2 <= param_3) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_light.cpp",0xb5,0,
                     "%s");
   }
-  if ((int)lVar5 < 1) {
+  uVar11 = (longlong)param_2;
+  if (param_3 < 1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_light.cpp",0xb6,0,
                     "%s");
   }
 LAB_8274b640:
-  uVar6 = uVar11;
-  puVar7 = (undefined4 *)lVar3;
+  uVar5 = uVar11;
+  puVar7 = (undefined4 *)lVar6;
   pGVar1 = (GfxLight *)*puVar7;
   uVar11 = 0;
-  uVar9 = uVar6;
+  uVar9 = uVar5;
   do {
     iVar10 = (int)uVar9;
     if (iVar10 < (int)uVar11) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_light.cpp",0xc3,1,
                       "%s");
     }
-    lVar8 = (uVar11 & 0x3fffffff) * 4 + lVar3;
+    lVar8 = (uVar11 & 0x3fffffff) * 4 + lVar6;
     do {
       uVar12 = uVar11;
       uVar11 = uVar12 + 1;
       lVar8 = lVar8 + 4;
       iVar13 = (int)uVar11;
       if (iVar10 <= iVar13) break;
-      bVar4 = R_LightImportanceGreaterEqual((GfxLight *)*(undefined4 *)lVar8,pGVar1);
-    } while (bVar4);
+      bVar3 = R_LightImportanceGreaterEqual((GfxLight *)*(undefined4 *)lVar8,pGVar1);
+    } while (bVar3);
     if (iVar10 < iVar13) break;
-    lVar8 = (uVar9 & 0x3fffffff) * 4 + lVar3;
+    lVar8 = (uVar9 & 0x3fffffff) * 4 + lVar6;
     do {
       uVar9 = uVar9 - 1;
       lVar8 = lVar8 + -4;
       if ((int)uVar9 < iVar13) goto LAB_8274b6f8;
-      bVar4 = R_LightImportanceGreaterEqual(pGVar1,(GfxLight *)*(undefined4 *)lVar8);
-    } while (bVar4);
+      bVar3 = R_LightImportanceGreaterEqual(pGVar1,(GfxLight *)*(undefined4 *)lVar8);
+    } while (bVar3);
     if ((int)uVar9 < iVar13) break;
     iVar10 = (int)((uVar9 & 0xffffffff) << 2);
     iVar13 = (int)((uVar11 & 0xffffffff) << 2);
@@ -175,7 +175,7 @@ LAB_8274b6f8:
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_light.cpp",0xd9,1,
                     "%s");
   }
-  if (iVar13 == (int)uVar6) {
+  if (iVar13 == (int)uVar5) {
     iVar10 = (int)((uVar9 & 0xffffffff) << 2);
     uVar2 = *puVar7;
     *puVar7 = *(undefined4 *)(iVar10 + (int)puVar7);
@@ -183,18 +183,17 @@ LAB_8274b6f8:
     uVar11 = uVar12;
   }
   iVar10 = (int)uVar11;
-  if (iVar10 == (int)lVar5) {
-    __restgprlr_20();
+  if (iVar10 == (int)lVar4) {
     return;
   }
-  if ((int)uVar6 <= iVar10) {
+  if ((int)uVar5 <= iVar10) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_light.cpp",0xe9,1,
                     "%s");
   }
-  if (iVar10 < (int)lVar5) {
-    lVar3 = (uVar11 & 0x3fffffff) * 4 + lVar3;
-    lVar5 = lVar5 - uVar11;
-    uVar11 = uVar6 - uVar11;
+  if (iVar10 < (int)lVar4) {
+    lVar6 = (uVar11 & 0x3fffffff) * 4 + lVar6;
+    lVar4 = lVar4 - uVar11;
+    uVar11 = uVar5 - uVar11;
   }
   goto LAB_8274b640;
 }
@@ -202,26 +201,26 @@ LAB_8274b6f8:
 
 // 8274B790  R_ChooseVisibleDynamicLights  (gfx_d3d/r_light.cpp:250)
 
+/* WARNING: Function: __savegprlr_19 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_19 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 uint R_ChooseVisibleDynamicLights(GfxViewInfo *param_1)
 
 {
-  GfxViewInfo *pGVar1;
+  uint uVar1;
   uint uVar2;
-  uint uVar3;
-  int iVar4;
-  int *piVar5;
-  GfxDrawSurf *pGVar6;
-  float *pfVar7;
-  GfxLight **ppGVar8;
-  int iVar9;
-  uint uVar10;
+  int iVar3;
+  int *piVar4;
+  GfxDrawSurf *pGVar5;
+  float *pfVar6;
+  GfxLight **ppGVar7;
+  int iVar8;
+  uint uVar9;
   int iStack_104;
   GfxLight *local_100 [64];
   
-  pGVar1 = (GfxViewInfo *)__savegprlr_19(param_1);
   if (1 < scene.addedSpotLightCount) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_light.cpp",0x105,1,
                     "%s\n\t(scene.addedSpotLightCount) = %i");
@@ -234,80 +233,79 @@ uint R_ChooseVisibleDynamicLights(GfxViewInfo *param_1)
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_light.cpp",0x107,0,
                     "%s");
   }
-  uVar3 = 0;
-  iVar4 = 0;
+  uVar2 = 0;
+  iVar3 = 0;
   if (0 < scene.addedSpotLightCount) {
-    piVar5 = &iStack_104;
-    iVar9 = -0x7b84693c;
-    pfVar7 = (float *)scene.isAddedSpotLightCulled;
+    piVar4 = &iStack_104;
+    iVar8 = -0x7b84693c;
+    pfVar6 = (float *)scene.isAddedSpotLightCulled;
     do {
-      if (*pfVar7 == 0.0) {
-        if (0x21 < uVar3) {
+      if (*pfVar6 == 0.0) {
+        if (0x21 < uVar2) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_light.cpp",
                           0x10f,1,"%s\n\t(visibleCount) = %i");
         }
-        piVar5 = piVar5 + 1;
-        *piVar5 = iVar9;
-        uVar3 = uVar3 + 1;
+        piVar4 = piVar4 + 1;
+        *piVar4 = iVar8;
+        uVar2 = uVar2 + 1;
       }
-      iVar4 = iVar4 + 1;
-      pfVar7 = pfVar7 + 1;
-      iVar9 = iVar9 + 0x4c;
-    } while (iVar4 < scene.addedSpotLightCount);
+      iVar3 = iVar3 + 1;
+      pfVar6 = pfVar6 + 1;
+      iVar8 = iVar8 + 0x4c;
+    } while (iVar3 < scene.addedSpotLightCount);
   }
-  iVar4 = 0;
+  iVar3 = 0;
   if (0 < scene.addedLightCount) {
-    iVar9 = -0x7b8468e0;
-    piVar5 = &iStack_104 + uVar3;
+    iVar8 = -0x7b8468e0;
+    piVar4 = &iStack_104 + uVar2;
     do {
-      if (scene.isAddedLightCulled[iVar4] == false) {
-        if (0x21 < uVar3) {
+      if (scene.isAddedLightCulled[iVar3] == false) {
+        if (0x21 < uVar2) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_light.cpp",
                           0x119,1,"%s\n\t(visibleCount) = %i");
         }
-        piVar5 = piVar5 + 1;
-        *piVar5 = iVar9;
-        uVar3 = uVar3 + 1;
+        piVar4 = piVar4 + 1;
+        *piVar4 = iVar8;
+        uVar2 = uVar2 + 1;
       }
-      iVar4 = iVar4 + 1;
-      iVar9 = iVar9 + 0x4c;
-    } while (iVar4 < scene.addedLightCount);
+      iVar3 = iVar3 + 1;
+      iVar8 = iVar8 + 0x4c;
+    } while (iVar3 < scene.addedLightCount);
   }
-  iVar4 = scene.dlightLimit;
+  iVar3 = scene.dlightLimit;
   if (4 < (uint)scene.dlightLimit) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_light.cpp",0x120,0,
                     "%s\n\t(visibleLimit) = %i");
   }
-  if ((uint)iVar4 < uVar3) {
-    R_MostImportantLights(local_100,uVar3,iVar4);
-    uVar3 = iVar4;
+  if ((uint)iVar3 < uVar2) {
+    R_MostImportantLights(local_100,uVar2,iVar3);
+    uVar2 = iVar3;
   }
-  uVar10 = 0;
-  if (uVar3 != 0) {
-    pGVar6 = scene.drawSurfsSpotShadow3 + 0x1b7;
-    iVar4 = 0;
-    ppGVar8 = local_100;
+  uVar9 = 0;
+  if (uVar2 != 0) {
+    pGVar5 = scene.drawSurfsSpotShadow3 + 0x1b7;
+    iVar3 = 0;
+    ppGVar7 = local_100;
     do {
-      if (((*ppGVar8)->type != '\x02') &&
-         (uVar2 = R_AddDynamicSceneLight(pGVar1,*ppGVar8),
-         uVar2 != (rgp.world)->primaryLightCount + uVar10)) {
+      if (((*ppGVar7)->type != '\x02') &&
+         (uVar1 = R_AddDynamicSceneLight(param_1,*ppGVar7),
+         uVar1 != (rgp.world)->primaryLightCount + uVar9)) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_light.cpp",0x136
                         ,0,
                         "sceneLightIndex == rgp.world->primaryLightCount + dynLightIndex\n\t%i, %i")
         ;
       }
       R_InitDrawList((GfxDrawList *)
-                     ((int)frontEndDataOut->dynLightDrawList[0].smodelSurfList + iVar4 + -0x10),0,
+                     ((int)frontEndDataOut->dynLightDrawList[0].smodelSurfList + iVar3 + -0x10),0,
                      "dyn light");
-      uVar10 = uVar10 + 1;
-      pGVar6 = pGVar6 + 0x401;
-      *(undefined4 *)pGVar6 = 0;
-      ppGVar8 = ppGVar8 + 1;
-      iVar4 = iVar4 + 0x1f8;
-    } while (uVar10 < uVar3);
+      uVar9 = uVar9 + 1;
+      pGVar5 = pGVar5 + 0x401;
+      *(undefined4 *)pGVar5 = 0;
+      ppGVar7 = ppGVar7 + 1;
+      iVar3 = iVar3 + 0x1f8;
+    } while (uVar9 < uVar2);
   }
-  uVar3 = __restgprlr_19(uVar3);
-  return uVar3;
+  return uVar2;
 }
 
 
@@ -405,6 +403,9 @@ void R_CalcPlaneFromPointDir(float *param_1,float *param_2,float *param_3)
 
 // 8274BC38  R_ComputeSpotLightCrossDirs  (gfx_d3d/r_light.cpp:400)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void R_ComputeSpotLightCrossDirs(GfxLight *param_1,float (*param_2) [3])
 
 {
@@ -412,51 +413,48 @@ void R_ComputeSpotLightCrossDirs(GfxLight *param_1,float (*param_2) [3])
   float fVar2;
   float fVar3;
   float fVar4;
-  int iVar5;
-  uint uVar6;
-  bool bVar7;
+  uint uVar5;
+  bool bVar6;
+  double dVar7;
   double dVar8;
   double dVar9;
-  double dVar10;
   
-  iVar5 = __savegprlr_29(param_1);
-  bVar7 = ABS(*(float *)(iVar5 + 0x14)) < ABS(*(float *)(iVar5 + 0x10));
-  uVar6 = (uint)bVar7;
-  if (ABS(*(float *)(iVar5 + 0x18)) < ABS(*(float *)((bVar7 + 4) * 4 + iVar5))) {
-    uVar6 = 2;
+  bVar6 = ABS(param_1->dir[1]) < ABS(param_1->dir[0]);
+  uVar5 = (uint)bVar6;
+  if (ABS(param_1->dir[2]) < ABS(param_1->dir[bVar6])) {
+    uVar5 = 2;
   }
-  dVar10 = 1.0;
+  dVar9 = 1.0;
   (*param_2)[0] = 0.0;
   (*param_2)[1] = 0.0;
   (*param_2)[2] = 0.0;
-  (*param_2)[uVar6] = 1.0;
-  Vec3Cross((float *)(iVar5 + 0x10),*param_2,param_2[1]);
+  (*param_2)[uVar5] = 1.0;
+  Vec3Cross(param_1->dir,*param_2,param_2[1]);
   fVar2 = param_2[1][1];
   fVar3 = param_2[1][0];
   fVar4 = param_2[1][2];
-  dVar9 = (double)SQRT(fVar4 * fVar4 + fVar3 * fVar3 + fVar2 * fVar2);
-  dVar8 = dVar10;
-  if (-dVar9 < 0.0) {
-    dVar8 = dVar9;
+  dVar8 = (double)SQRT(fVar4 * fVar4 + fVar3 * fVar3 + fVar2 * fVar2);
+  dVar7 = dVar9;
+  if (-dVar8 < 0.0) {
+    dVar7 = dVar8;
   }
-  fVar1 = (float)(dVar10 / dVar8);
+  fVar1 = (float)(dVar9 / dVar7);
   param_2[1][0] = fVar3 * fVar1;
   param_2[1][1] = fVar2 * fVar1;
   param_2[1][2] = fVar4 * fVar1;
-  Vec3Cross(param_2[1],(float *)(iVar5 + 0x10),*param_2);
+  Vec3Cross(param_2[1],param_1->dir,*param_2);
   fVar2 = (*param_2)[1];
   fVar3 = (*param_2)[0];
   fVar4 = (*param_2)[2];
-  dVar9 = (double)SQRT(fVar4 * fVar4 + fVar3 * fVar3 + fVar2 * fVar2);
-  dVar8 = dVar10;
-  if (-dVar9 < 0.0) {
-    dVar8 = dVar9;
+  dVar8 = (double)SQRT(fVar4 * fVar4 + fVar3 * fVar3 + fVar2 * fVar2);
+  dVar7 = dVar9;
+  if (-dVar8 < 0.0) {
+    dVar7 = dVar8;
   }
-  fVar1 = (float)(dVar10 / dVar8);
+  fVar1 = (float)(dVar9 / dVar7);
   (*param_2)[0] = fVar3 * fVar1;
   (*param_2)[1] = fVar2 * fVar1;
   (*param_2)[2] = fVar4 * fVar1;
-  __restgprlr_29();
   return;
 }
 
@@ -487,6 +485,10 @@ void R_CalcPlaneFromCosSinPointDirs
 
 // 8274BDD0  R_CalcSpotLightPlanes  (gfx_d3d/r_light.cpp:430)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void R_CalcSpotLightPlanes(GfxLight *param_1,float (*param_2) [4])
@@ -498,11 +500,10 @@ void R_CalcSpotLightPlanes(GfxLight *param_1,float (*param_2) [4])
   float fVar4;
   float fVar5;
   float fVar6;
-  GfxLight *pGVar7;
+  double dVar7;
   double dVar8;
   double dVar9;
   double dVar10;
-  double dVar11;
   float local_60;
   float local_5c;
   float local_58;
@@ -510,25 +511,23 @@ void R_CalcSpotLightPlanes(GfxLight *param_1,float (*param_2) [4])
   float local_50;
   float local_4c;
   
-  __savegprlr_29(param_1);
-  pGVar7 = (GfxLight *)__savefpr_28();
-  dVar11 = (double)(pGVar7->dir[0] * -1.0);
-  dVar10 = (double)(pGVar7->dir[1] * -1.0);
-  dVar9 = (double)(pGVar7->dir[2] * -1.0);
-  (*param_2)[0] = (float)(dVar11 * -1.0);
-  (*param_2)[1] = (float)(dVar10 * -1.0);
-  (*param_2)[2] = (float)(dVar9 * -1.0);
-  dVar8 = (double)scene.dynamicSpotLightNearPlaneOffset;
+  dVar10 = (double)(param_1->dir[0] * -1.0);
+  dVar9 = (double)(param_1->dir[1] * -1.0);
+  dVar8 = (double)(param_1->dir[2] * -1.0);
+  (*param_2)[0] = (float)(dVar10 * -1.0);
+  (*param_2)[1] = (float)(dVar9 * -1.0);
+  (*param_2)[2] = (float)(dVar8 * -1.0);
+  dVar7 = (double)scene.dynamicSpotLightNearPlaneOffset;
   (*param_2)[3] =
-       -((float)(dVar9 * -1.0) * (float)(dVar9 * dVar8 + (double)pGVar7->origin[2]) +
-        (float)(dVar10 * -1.0) * (float)(dVar8 * dVar10 + (double)pGVar7->origin[1]) +
-        (float)(dVar11 * -1.0) * (float)(dVar8 * dVar11 + (double)pGVar7->origin[0]));
-  R_ComputeSpotLightCrossDirs(pGVar7,(float (*) [3])&local_60);
-  fVar4 = pGVar7->cosHalfFovOuter;
-  dVar8 = -(double)SQRT(-(fVar4 * fVar4 - 1.0));
-  fVar1 = (float)(dVar8 * dVar10);
-  fVar2 = (float)(dVar8 * dVar11);
-  fVar3 = (float)(dVar8 * dVar9);
+       -((float)(dVar8 * -1.0) * (float)(dVar8 * dVar7 + (double)param_1->origin[2]) +
+        (float)(dVar9 * -1.0) * (float)(dVar7 * dVar9 + (double)param_1->origin[1]) +
+        (float)(dVar10 * -1.0) * (float)(dVar7 * dVar10 + (double)param_1->origin[0]));
+  R_ComputeSpotLightCrossDirs(param_1,(float (*) [3])&local_60);
+  fVar4 = param_1->cosHalfFovOuter;
+  dVar7 = -(double)SQRT(-(fVar4 * fVar4 - 1.0));
+  fVar1 = (float)(dVar7 * dVar9);
+  fVar2 = (float)(dVar7 * dVar10);
+  fVar3 = (float)(dVar7 * dVar8);
   fVar6 = local_5c * fVar4 + fVar1;
   param_2[1][1] = fVar6;
   fVar5 = local_60 * fVar4 + fVar2;
@@ -536,8 +535,8 @@ void R_CalcSpotLightPlanes(GfxLight *param_1,float (*param_2) [4])
   fVar4 = local_58 * fVar4 + fVar3;
   param_2[1][2] = fVar4;
   param_2[1][3] =
-       -(pGVar7->origin[2] * fVar4 + fVar5 * pGVar7->origin[0] + fVar6 * pGVar7->origin[1]);
-  fVar4 = pGVar7->cosHalfFovOuter;
+       -(param_1->origin[2] * fVar4 + fVar5 * param_1->origin[0] + fVar6 * param_1->origin[1]);
+  fVar4 = param_1->cosHalfFovOuter;
   fVar5 = local_54 * fVar4 + fVar2;
   fVar6 = local_50 * fVar4 + fVar1;
   param_2[2][1] = fVar6;
@@ -545,8 +544,8 @@ void R_CalcSpotLightPlanes(GfxLight *param_1,float (*param_2) [4])
   param_2[2][2] = fVar4;
   param_2[2][0] = fVar5;
   param_2[2][3] =
-       -(fVar4 * pGVar7->origin[2] + fVar5 * pGVar7->origin[0] + fVar6 * pGVar7->origin[1]);
-  fVar5 = -pGVar7->cosHalfFovOuter;
+       -(fVar4 * param_1->origin[2] + fVar5 * param_1->origin[0] + fVar6 * param_1->origin[1]);
+  fVar5 = -param_1->cosHalfFovOuter;
   fVar4 = fVar5 * local_60 + fVar2;
   param_2[3][0] = fVar4;
   fVar6 = local_5c * fVar5 + fVar1;
@@ -554,8 +553,8 @@ void R_CalcSpotLightPlanes(GfxLight *param_1,float (*param_2) [4])
   fVar5 = local_58 * fVar5 + fVar3;
   param_2[3][2] = fVar5;
   param_2[3][3] =
-       -(fVar5 * pGVar7->origin[2] + fVar4 * pGVar7->origin[0] + fVar6 * pGVar7->origin[1]);
-  fVar4 = -pGVar7->cosHalfFovOuter;
+       -(fVar5 * param_1->origin[2] + fVar4 * param_1->origin[0] + fVar6 * param_1->origin[1]);
+  fVar4 = -param_1->cosHalfFovOuter;
   fVar1 = local_50 * fVar4 + fVar1;
   param_2[4][1] = fVar1;
   fVar2 = local_54 * fVar4 + fVar2;
@@ -563,21 +562,19 @@ void R_CalcSpotLightPlanes(GfxLight *param_1,float (*param_2) [4])
   fVar3 = local_4c * fVar4 + fVar3;
   param_2[4][2] = fVar3;
   param_2[4][3] =
-       -(fVar3 * pGVar7->origin[2] + fVar2 * pGVar7->origin[0] + fVar1 * pGVar7->origin[1]);
-  fVar1 = pGVar7->origin[0];
-  fVar2 = pGVar7->origin[1];
-  fVar3 = pGVar7->origin[2];
-  dVar8 = (double)(scene.dynamicSpotLightLength + scene.dynamicSpotLightNearPlaneOffset);
-  param_2[5][0] = (float)dVar11;
-  param_2[5][1] = (float)dVar10;
-  param_2[5][2] = (float)dVar9;
+       -(fVar3 * param_1->origin[2] + fVar2 * param_1->origin[0] + fVar1 * param_1->origin[1]);
+  fVar1 = param_1->origin[0];
+  fVar2 = param_1->origin[1];
+  fVar3 = param_1->origin[2];
+  dVar7 = (double)(scene.dynamicSpotLightLength + scene.dynamicSpotLightNearPlaneOffset);
+  param_2[5][0] = (float)dVar10;
+  param_2[5][1] = (float)dVar9;
+  param_2[5][2] = (float)dVar8;
   param_2[5][3] =
-       -(float)((double)(float)(dVar8 * dVar9 + (double)fVar3) * dVar9 +
-               (double)(float)((double)(float)(dVar8 * dVar10 + (double)fVar2) * dVar10 +
-                              (double)(float)((double)(float)(dVar8 * dVar11 + (double)fVar1) *
-                                             dVar11)));
-  __restfpr_28();
-  __restgprlr_29();
+       -(float)((double)(float)(dVar7 * dVar8 + (double)fVar3) * dVar8 +
+               (double)(float)((double)(float)(dVar7 * dVar9 + (double)fVar2) * dVar9 +
+                              (double)(float)((double)(float)(dVar7 * dVar10 + (double)fVar1) *
+                                             dVar10)));
   return;
 }
 
@@ -593,6 +590,8 @@ int R_AllowBspOmniLight(int param_1,void *param_2)
 
 // 8274C000  R_GetBspOmniLightSurfs  (gfx_d3d/r_light.cpp:470)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
@@ -600,30 +599,29 @@ void R_GetBspOmniLightSurfs
                (GfxLight *param_1,Sphere *param_2,uint *param_3,uint param_4,GfxDrawList *param_5)
 
 {
-  Sphere *pSVar1;
   GfxDrawSurf *local_40;
   uchar *local_3c;
   uint local_38 [2];
   GfxBspSurfListOut local_30 [6];
   
-  pSVar1 = (Sphere *)__savegprlr_29(param_1);
   local_3c = ((rgp.world)->dpvs).surfaceVisData[0];
   local_40 = scene.visLight[(int)param_3].drawSurfs + 0x200;
-  R_SphereSurfaces(pSVar1,(uint *)param_2,allowSurf,&local_3c,(GfxSurface ***)&local_40,0x400,
-                   local_38,1);
+  R_SphereSurfaces((Sphere *)param_1,(uint *)param_2,allowSurf,&local_3c,(GfxSurface ***)&local_40,
+                   0x400,local_38,1);
   scene.visLight[(int)param_3].drawSurfCount = 0;
   if (local_38[0] != 0) {
     local_30[0].dataLimit = 0x800;
     local_30[0].bspSurfList = (GfxBspSurfList *)param_4;
     R_GetSortedBspSurfListIndirect((GfxSurface **)local_40,local_38[0],local_30);
   }
-  __restgprlr_29();
   return;
 }
 
 
 // 8274C0A0  R_GetBspSpotLightSurfs  (gfx_d3d/r_light.cpp:504)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
@@ -632,11 +630,7 @@ void R_GetBspSpotLightSurfs
                GfxDrawList *param_6)
 
 {
-  int iVar1;
-  GfxLight *pGVar2;
-  ulonglong uVar3;
-  ulonglong uVar4;
-  uint uVar5;
+  uint uVar1;
   GfxBspSurfListOut local_d0;
   GfxDrawSurf *local_c8;
   GfxDrawSurf *local_c4;
@@ -645,41 +639,36 @@ void R_GetBspSpotLightSurfs
   uchar *local_b0;
   float afStack_ac [43];
   
-  uVar4 = (ulonglong)(int)param_6;
-  uVar3 = (ulonglong)(int)param_4;
-  pGVar2 = (GfxLight *)__savegprlr_25(param_1);
-  if ((uVar3 & 0xffffffff) != 0) {
+  if (param_4 != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_light.cpp",0x202,0,
                     "dynLightIndex doesn\'t index MAX_VISIBLE_SHADOWABLE_DLIGHTS\n\t%i not in [0, %i)"
                    );
   }
-  iVar1 = (int)uVar3;
-  local_c8 = scene.visLight[iVar1].drawSurfs + 0x200;
-  local_c4 = scene.visLightShadow[iVar1].drawSurfs + 0x200;
+  local_c8 = scene.visLight[param_4].drawSurfs + 0x200;
+  local_c4 = scene.visLightShadow[param_4].drawSurfs + 0x200;
   local_b0 = ((rgp.world)->dpvs).surfaceVisData[0];
-  R_CalcSpotLightPlanes(pGVar2,(float (*) [4])afStack_ac);
-  if ((uVar4 & 0xffffffff) == 0) {
-    uVar5 = 1;
+  R_CalcSpotLightPlanes(param_1,(float (*) [4])afStack_ac);
+  if (param_6 == (GfxDrawList *)0x0) {
+    uVar1 = 1;
     local_bc = 0;
   }
   else {
-    uVar5 = 2;
+    uVar1 = 2;
   }
   R_SphereSurfaces(param_2,param_3,allowSurf,&local_b0,(GfxSurface ***)&local_c8,0x400,&local_c0,
-                   uVar5);
-  scene.visLight[iVar1].drawSurfCount = 0;
+                   uVar1);
+  scene.visLight[param_4].drawSurfCount = 0;
   if (local_c0 != 0) {
     local_d0.dataLimit = 0x800;
     local_d0.bspSurfList = &param_5->bspSurfList;
     R_GetSortedBspSurfListIndirect((GfxSurface **)local_c8,local_c0,&local_d0);
   }
-  scene.visLightShadow[iVar1].drawSurfCount = 0;
+  scene.visLightShadow[param_4].drawSurfCount = 0;
   if (local_bc != 0) {
-    local_d0.bspSurfList = (GfxBspSurfList *)uVar4;
     local_d0.dataLimit = 0x600;
+    local_d0.bspSurfList = &param_6->bspSurfList;
     R_GetSortedBspSurfListIndirect((GfxSurface **)local_c4,local_bc,&local_d0);
   }
-  __restgprlr_25();
   return;
 }
 
@@ -729,6 +718,10 @@ int R_AllowStaticModelSpotLight(int param_1,void *param_2)
 
 // 8274C320  R_CalcBoundingSphereForSpotLight  (gfx_d3d/r_light.cpp:611)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_18 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_18 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void R_CalcBoundingSphereForSpotLight(Sphere *param_1,GfxLight *param_2)
@@ -736,7 +729,7 @@ void R_CalcBoundingSphereForSpotLight(Sphere *param_1,GfxLight *param_2)
 {
   float fVar1;
   float fVar2;
-  float *pfVar3;
+  double dVar3;
   double dVar4;
   double dVar5;
   double dVar6;
@@ -751,96 +744,91 @@ void R_CalcBoundingSphereForSpotLight(Sphere *param_1,GfxLight *param_2)
   double dVar15;
   double dVar16;
   double dVar17;
-  double dVar18;
   
-  __savegprlr_27(param_1);
-  pfVar3 = (float *)__savefpr_18();
   if (param_2->type != '\x02') {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_light.cpp",0x26b,0,
                     "%s");
   }
-  dVar5 = (double)scene.dynamicSpotLightNearPlaneOffset;
-  dVar4 = (double)scene.dynamicSpotLightLength;
-  if (param_2->radius < (float)(dVar5 + dVar4)) {
+  dVar4 = (double)scene.dynamicSpotLightNearPlaneOffset;
+  dVar3 = (double)scene.dynamicSpotLightLength;
+  if (param_2->radius < (float)(dVar4 + dVar3)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_light.cpp",0x26c,0,
                     "%s");
-    dVar4 = (double)scene.dynamicSpotLightLength;
-    dVar5 = (double)scene.dynamicSpotLightNearPlaneOffset;
+    dVar3 = (double)scene.dynamicSpotLightLength;
+    dVar4 = (double)scene.dynamicSpotLightNearPlaneOffset;
   }
   fVar1 = param_2->cosHalfFovOuter;
-  dVar13 = (double)(param_2->dir[0] * -1.0);
-  dVar12 = (double)(param_2->dir[1] * -1.0);
-  dVar11 = (double)(param_2->dir[2] * -1.0);
-  dVar6 = 0.0;
-  dVar16 = (double)(float)(dVar5 * dVar13 + (double)param_2->origin[0]);
-  dVar15 = (double)(float)(dVar5 * dVar12 + (double)param_2->origin[1]);
-  dVar14 = (double)(float)(dVar5 * dVar11 + (double)param_2->origin[2]);
+  dVar12 = (double)(param_2->dir[0] * -1.0);
+  dVar11 = (double)(param_2->dir[1] * -1.0);
+  dVar10 = (double)(param_2->dir[2] * -1.0);
+  dVar5 = 0.0;
+  dVar15 = (double)(float)(dVar4 * dVar12 + (double)param_2->origin[0]);
+  dVar14 = (double)(float)(dVar4 * dVar11 + (double)param_2->origin[1]);
+  dVar13 = (double)(float)(dVar4 * dVar10 + (double)param_2->origin[2]);
   fVar2 = SQRT(-(fVar1 * fVar1 - 1.0));
-  dVar17 = (double)((float)((double)(1.0 / fVar1) * dVar5) * fVar2);
-  dVar9 = (double)(float)(dVar4 * dVar13 + dVar16);
-  dVar8 = (double)(float)(dVar4 * dVar12 + dVar15);
-  dVar7 = (double)(float)(dVar4 * dVar11 + dVar14);
-  dVar5 = (double)((float)((double)(float)(dVar5 + dVar4) * (double)(1.0 / fVar1)) * fVar2);
-  if (dVar4 <= 0.0) {
+  dVar16 = (double)((float)((double)(1.0 / fVar1) * dVar4) * fVar2);
+  dVar8 = (double)(float)(dVar3 * dVar12 + dVar15);
+  dVar7 = (double)(float)(dVar3 * dVar11 + dVar14);
+  dVar6 = (double)(float)(dVar3 * dVar10 + dVar13);
+  dVar4 = (double)((float)((double)(float)(dVar4 + dVar3) * (double)(1.0 / fVar1)) * fVar2);
+  if (dVar3 <= 0.0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_light.cpp",0x276,0,
                     "%s");
-    dVar4 = (double)scene.dynamicSpotLightLength;
+    dVar3 = (double)scene.dynamicSpotLightLength;
   }
-  dVar17 = (double)(float)(dVar17 * dVar17);
-  dVar10 = (double)(float)(dVar5 * dVar5);
-  dVar18 = (double)((float)((double)(float)((double)(float)(dVar10 - dVar17) / dVar4) + dVar4) * 0.5
-                   );
-  if (dVar18 <= dVar6) {
+  dVar16 = (double)(float)(dVar16 * dVar16);
+  dVar9 = (double)(float)(dVar4 * dVar4);
+  dVar17 = (double)((float)((double)(float)((double)(float)(dVar9 - dVar16) / dVar3) + dVar3) * 0.5)
+  ;
+  if (dVar17 <= dVar5) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_light.cpp",0x27a,0,
                     "%s");
-    dVar4 = (double)scene.dynamicSpotLightLength;
+    dVar3 = (double)scene.dynamicSpotLightLength;
   }
-  if (dVar18 < dVar4) {
-    dVar5 = (double)(float)(dVar12 * dVar18 + dVar15);
-    dVar4 = (double)(float)(dVar11 * dVar18 + dVar14);
-    dVar11 = (double)(float)(dVar13 * dVar18 + dVar16);
-    dVar12 = (double)(float)((double)((float)(dVar16 - dVar11) * (float)(dVar16 - dVar11) +
-                                     (float)(dVar14 - dVar4) * (float)(dVar14 - dVar4) +
-                                     (float)(dVar15 - dVar5) * (float)(dVar15 - dVar5)) + dVar17);
-    fVar1 = (float)((double)(float)(dVar10 + (double)((float)(dVar9 - dVar11) *
-                                                      (float)(dVar9 - dVar11) +
-                                                     (float)(dVar7 - dVar4) * (float)(dVar7 - dVar4)
-                                                     + (float)(dVar8 - dVar5) *
-                                                       (float)(dVar8 - dVar5))) - dVar12);
-    if ((fVar1 < (float)(dVar12 * -9.999999747378752e-05)) ||
-       ((float)(dVar12 * 9.999999747378752e-05) < fVar1)) {
+  if (dVar17 < dVar3) {
+    dVar4 = (double)(float)(dVar11 * dVar17 + dVar14);
+    dVar3 = (double)(float)(dVar10 * dVar17 + dVar13);
+    dVar10 = (double)(float)(dVar12 * dVar17 + dVar15);
+    dVar11 = (double)(float)((double)((float)(dVar15 - dVar10) * (float)(dVar15 - dVar10) +
+                                     (float)(dVar13 - dVar3) * (float)(dVar13 - dVar3) +
+                                     (float)(dVar14 - dVar4) * (float)(dVar14 - dVar4)) + dVar16);
+    fVar1 = (float)((double)(float)(dVar9 + (double)((float)(dVar8 - dVar10) *
+                                                     (float)(dVar8 - dVar10) +
+                                                    (float)(dVar6 - dVar3) * (float)(dVar6 - dVar3)
+                                                    + (float)(dVar7 - dVar4) *
+                                                      (float)(dVar7 - dVar4))) - dVar11);
+    if ((fVar1 < (float)(dVar11 * -9.999999747378752e-05)) ||
+       ((float)(dVar11 * 9.999999747378752e-05) < fVar1)) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_light.cpp",0x286,0
                       ,
                       "dist2 + farRadius * farRadius - radius2 not in [-radius2 * 0.0001f, radius2 * 0.0001f]\n\t%g not in [%g, %g]"
                      );
     }
-    if (dVar12 <= dVar6) {
+    if (dVar11 <= dVar5) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_light.cpp",0x289,0
                       ,"%s");
     }
-    fVar1 = (float)SQRT(dVar12);
-    *pfVar3 = (float)dVar11;
-    pfVar3[1] = (float)dVar5;
-    pfVar3[2] = (float)dVar4;
-    pfVar3[3] = fVar1;
-    pfVar3[4] = fVar1 * fVar1;
-    __restfpr_18();
-    __restgprlr_27();
+    fVar1 = (float)SQRT(dVar11);
+    param_1->origin[0] = (float)dVar10;
+    param_1->origin[1] = (float)dVar4;
+    param_1->origin[2] = (float)dVar3;
+    param_1->radius = fVar1;
+    param_1->radiusSq = fVar1 * fVar1;
     return;
   }
-  *pfVar3 = (float)dVar9;
-  pfVar3[1] = (float)dVar8;
-  pfVar3[2] = (float)dVar7;
-  pfVar3[3] = (float)dVar5;
-  pfVar3[4] = (float)dVar10;
-  __restfpr_18();
-  __restgprlr_27();
+  param_1->origin[0] = (float)dVar8;
+  param_1->origin[1] = (float)dVar7;
+  param_1->origin[2] = (float)dVar6;
+  param_1->radius = (float)dVar4;
+  param_1->radiusSq = (float)dVar9;
   return;
 }
 
 
 // 8274C5F8  R_GetStaticGeoDynamicLightSurfs  (gfx_d3d/r_light.cpp:661)
 
+/* WARNING: Function: __savegprlr_19 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_19 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
@@ -850,14 +838,13 @@ void R_GetStaticGeoDynamicLightSurfs(GfxViewInfo *param_1)
   uchar uVar1;
   uint *puVar2;
   GfxDrawList *pGVar3;
-  GfxViewInfo *pGVar4;
-  uint uVar5;
-  GfxLight *pGVar6;
-  code *pcVar7;
-  ulonglong uVar8;
-  GfxDrawList *pGVar9;
-  longlong lVar10;
-  ulonglong uVar11;
+  uint uVar4;
+  GfxLight *pGVar5;
+  code *pcVar6;
+  ulonglong uVar7;
+  GfxDrawList *pGVar8;
+  longlong lVar9;
+  ulonglong uVar10;
   bool local_4920 [16];
   undefined1 local_4910 [12];
   float local_4904;
@@ -868,8 +855,7 @@ void R_GetStaticGeoDynamicLightSurfs(GfxViewInfo *param_1)
   Sphere aSStack_4070 [409];
   uint auStack_2070 [2076];
   
-  pGVar4 = (GfxViewInfo *)__savegprlr_19(param_1);
-  if (pGVar4 == (GfxViewInfo *)0x0) {
+  if (param_1 == (GfxViewInfo *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_light.cpp",0x2a1,0,
                     "%s");
   }
@@ -877,7 +863,7 @@ void R_GetStaticGeoDynamicLightSurfs(GfxViewInfo *param_1)
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_light.cpp",0x2a2,0,
                     "%s");
   }
-  if (pGVar4->sceneLightCount <= (rgp.world)->primaryLightCount) {
+  if (param_1->sceneLightCount <= (rgp.world)->primaryLightCount) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_light.cpp",0x2a3,0,
                     "%s");
   }
@@ -886,76 +872,77 @@ void R_GetStaticGeoDynamicLightSurfs(GfxViewInfo *param_1)
                     "%s");
   }
   g_staticModelLightCallback.smodelVisData = ((rgp.world)->dpvs).smodelVisData[0];
-  uVar8 = (ulonglong)pGVar4->sceneLightCount;
+  uVar7 = (ulonglong)param_1->sceneLightCount;
   local_4920[0] = (sm_dynlightAllSModels->current).enabled;
-  uVar11 = (ulonglong)(rgp.world)->primaryLightCount;
-  if (uVar11 < uVar8) {
-    lVar10 = (uVar11 + 0x1d00) * 0x4c;
+  uVar10 = (ulonglong)(rgp.world)->primaryLightCount;
+  if (uVar10 < uVar7) {
+    lVar9 = (uVar10 + 0x1d00) * 0x4c;
     do {
-      pGVar9 = (GfxDrawList *)uVar8;
-      pGVar6 = (GfxLight *)(frontEndDataOut->sceneLightTechType[0] + (int)lVar10);
-      uVar8 = uVar11 - (rgp.world)->primaryLightCount;
-      uVar1 = frontEndDataOut->sceneLightTechType[0][(int)lVar10];
+      pGVar8 = (GfxDrawList *)uVar7;
+      pGVar5 = (GfxLight *)(frontEndDataOut->sceneLightTechType[0] + (int)lVar9);
+      uVar7 = uVar10 - (rgp.world)->primaryLightCount;
+      uVar1 = frontEndDataOut->sceneLightTechType[0][(int)lVar9];
       if ((uVar1 != '\x03') && (uVar1 != '\x02')) {
-        pGVar9 = (GfxDrawList *)
+        pGVar8 = (GfxDrawList *)
                  "light->type == GFX_LIGHT_TYPE_OMNI || light->type == GFX_LIGHT_TYPE_SPOT";
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_light.cpp",0x2ae
                         ,0,"%s");
       }
-      puVar2 = (uint *)uVar8;
+      puVar2 = (uint *)uVar7;
       pGVar3 = frontEndDataOut->dynLightDrawList;
       if (uVar1 == '\x02') {
-        R_CalcBoundingSphereForSpotLight((Sphere *)(local_4910 + 8),pGVar6);
+        R_CalcBoundingSphereForSpotLight((Sphere *)(local_4910 + 8),pGVar5);
       }
       else {
-        local_48fc = pGVar6->radius;
-        local_4910._8_4_ = pGVar6->origin[0];
+        local_48fc = pGVar5->radius;
+        local_4910._8_4_ = pGVar5->origin[0];
         local_48f8 = local_48fc * local_48fc;
-        local_4904 = pGVar6->origin[1];
-        local_4900 = pGVar6->origin[2];
+        local_4904 = pGVar5->origin[1];
+        local_4900 = pGVar5->origin[2];
       }
       local_4910._0_4_ = aSStack_4070;
       local_4910._4_4_ = auStack_2070;
       R_SetupSphereStaticGeo((R_CollInfo *)local_4910);
-      if (pGVar6->type == '\x03') {
+      if (pGVar5->type == '\x03') {
         R_GetBspOmniLightSurfs
                   ((GfxLight *)(local_4910 + 8),aSStack_4070,puVar2,(uint)(pGVar3 + (int)puVar2),
-                   pGVar9);
-        pcVar7 = R_AllowStaticModelOmniLight;
+                   pGVar8);
+        pcVar6 = R_AllowStaticModelOmniLight;
       }
       else {
-        if ((uVar8 & 0xffffffff) != 0) {
+        if ((uVar7 & 0xffffffff) != 0) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_light.cpp",
                           0x2c9,0,"%s");
         }
         R_GetBspSpotLightSurfs
-                  (pGVar6,(Sphere *)(local_4910 + 8),(uint *)aSStack_4070,(uint)puVar2,
+                  (pGVar5,(Sphere *)(local_4910 + 8),(uint *)aSStack_4070,(uint)puVar2,
                    pGVar3 + (int)puVar2,
                    *(GfxDrawList **)
                     (frontEndDataOut->sceneLightTechType[0] +
-                    (int)((uVar8 + 0x8f9 & 0xffffffff) << 2)));
-        R_CalcSpotLightPlanes(pGVar6,g_staticModelLightCallback.planes);
-        pcVar7 = R_AllowStaticModelSpotLight;
+                    (int)((uVar7 + 0x8f9 & 0xffffffff) << 2)));
+        R_CalcSpotLightPlanes(pGVar5,g_staticModelLightCallback.planes);
+        pcVar6 = R_AllowStaticModelSpotLight;
       }
-      uVar5 = R_SphereStaticModels
-                        ((Sphere *)(local_4910 + 8),auStack_2070,pcVar7,local_4920,auStack_4870,
+      uVar4 = R_SphereStaticModels
+                        ((Sphere *)(local_4910 + 8),auStack_2070,pcVar6,local_4920,auStack_4870,
                          0x400);
-      if (uVar5 == 0x400) {
+      if (uVar4 == 0x400) {
         R_WarnOncePerFrame(R_WARN_DLIGHT_SMODEL_LIMIT);
       }
-      uVar8 = (ulonglong)local_4920[0];
-      R_AddAllStaticModelSurfacesDynLight(pGVar4,(uint)uVar11,auStack_4870,uVar5,local_4920[0]);
-      uVar11 = uVar11 + 1;
-      lVar10 = lVar10 + 0x4c;
-    } while ((uVar11 & 0xffffffff) < (ulonglong)pGVar4->sceneLightCount);
+      uVar7 = (ulonglong)local_4920[0];
+      R_AddAllStaticModelSurfacesDynLight(param_1,(uint)uVar10,auStack_4870,uVar4,local_4920[0]);
+      uVar10 = uVar10 + 1;
+      lVar9 = lVar9 + 0x4c;
+    } while ((uVar10 & 0xffffffff) < (ulonglong)param_1->sceneLightCount);
   }
-  __restgprlr_19();
   return;
 }
 
 
 // 8274C8C0  R_GetSceneEntDynamicLightSurfs  (gfx_d3d/r_light.cpp:730)
 
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
@@ -972,7 +959,7 @@ void R_GetSceneEntDynamicLightSurfs(GfxViewInfo *param_1)
   float fVar8;
   DynEntityPose *pDVar9;
   long lVar10;
-  int iVar11;
+  GfxViewInfo *pGVar11;
   int iVar12;
   int iVar13;
   GfxDrawSurf *pGVar14;
@@ -995,15 +982,12 @@ void R_GetSceneEntDynamicLightSurfs(GfxViewInfo *param_1)
   double dVar31;
   double dVar32;
   double dVar33;
-  int iStack00000014;
+  GfxViewInfo *pGStack00000014;
   DObj *local_230 [4];
   float afStack_220 [136];
   
-  uVar18 = (ulonglong)(int)param_1;
-  __savegprlr();
-  iVar11 = (int)uVar18;
-  iStack00000014 = iVar11;
-  if ((uVar18 & 0xffffffff) == 0) {
+  pGStack00000014 = param_1;
+  if (param_1 == (GfxViewInfo *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_light.cpp",0x301,0,
                     "%s");
   }
@@ -1011,8 +995,8 @@ void R_GetSceneEntDynamicLightSurfs(GfxViewInfo *param_1)
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_light.cpp",0x302,0,
                     "%s");
   }
-  if ((*(uint *)(iVar11 + 0x1b0) < (rgp.world)->primaryLightCount + 1) ||
-     ((rgp.world)->primaryLightCount + 4 < *(uint *)(iVar11 + 0x1b0))) {
+  if ((param_1->sceneLightCount < (rgp.world)->primaryLightCount + 1) ||
+     ((rgp.world)->primaryLightCount + 4 < param_1->sceneLightCount)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_light.cpp",0x303,0,
                     "viewInfo->sceneLightCount not in [rgp.world->primaryLightCount + 1, rgp.world->primaryLightCount + MAX_VISIBLE_DLIGHTS]\n\t%i not in [%i, %i]"
                    );
@@ -1021,14 +1005,14 @@ void R_GetSceneEntDynamicLightSurfs(GfxViewInfo *param_1)
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_light.cpp",0x304,0,
                     "%s");
   }
-  if (3 < *(uint *)(iVar11 + 0x930)) {
+  if (LOCAL_CLIENT_3 < param_1->clientIndex) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_light.cpp",0x307,0,
                     "viewInfo->clientIndex doesn\'t index GFX_MAX_CLIENT_VIEWS\n\t%i not in [0, %i)"
                    );
   }
-  iVar12 = FX_GetSpotLightDobj(*(LocalClientNum_t *)(iVar11 + 0x930),local_230);
+  iVar12 = FX_GetSpotLightDobj(param_1->clientIndex,local_230);
   uVar27 = (rgp.world)->primaryLightCount;
-  if (uVar27 < *(uint *)(iVar11 + 0x1b0)) {
+  if (uVar27 < param_1->sceneLightCount) {
     iVar28 = (uVar27 + 0x1d00) * 0x4c;
     do {
       if (frontEndDataOut->sceneLightTechType[0][iVar28] == '\x02') {
@@ -1038,7 +1022,7 @@ void R_GetSceneEntDynamicLightSurfs(GfxViewInfo *param_1)
       }
       uVar27 = uVar27 + 1;
       iVar28 = iVar28 + 0x4c;
-    } while (uVar27 < *(uint *)(iVar11 + 0x1b0));
+    } while (uVar27 < param_1->sceneLightCount);
   }
   iVar28 = scene.sceneDObjCount;
   dVar33 = 0.0;
@@ -1052,7 +1036,7 @@ void R_GetSceneEntDynamicLightSurfs(GfxViewInfo *param_1)
                           0x31e,0,"sceneEnt->cull.state >= CULL_STATE_BOUNDED\n\t%i, %i");
         }
         uVar23 = (rgp.world)->primaryLightCount;
-        if (uVar23 < *(uint *)(iVar11 + 0x1b0)) {
+        if (uVar23 < param_1->sceneLightCount) {
           iVar15 = (uVar23 + 0x1d00) * 0x4c;
           do {
             puVar3 = frontEndDataOut->sceneLightTechType[0] + iVar15;
@@ -1126,7 +1110,7 @@ LAB_8274cc38:
             }
             uVar23 = uVar23 + 1;
             iVar15 = iVar15 + 0x4c;
-          } while (uVar23 < *(uint *)(iVar11 + 0x1b0));
+          } while (uVar23 < param_1->sceneLightCount);
         }
       }
       uVar27 = uVar27 + 1;
@@ -1144,7 +1128,7 @@ LAB_8274cc38:
     do {
       if (scene.sceneModelVisData[0][uVar27] == '\x01') {
         uVar23 = (rgp.world)->primaryLightCount;
-        if (uVar23 < *(uint *)(iVar11 + 0x1b0)) {
+        if (uVar23 < param_1->sceneLightCount) {
           iVar12 = (uVar23 + 0x1d00) * 0x4c;
           do {
             puVar3 = frontEndDataOut->sceneLightTechType[0] + iVar12;
@@ -1196,7 +1180,7 @@ LAB_8274ce98:
             }
             uVar23 = uVar23 + 1;
             iVar12 = iVar12 + 0x4c;
-          } while (uVar23 < *(uint *)(iVar11 + 0x1b0));
+          } while (uVar23 < param_1->sceneLightCount);
         }
       }
       uVar27 = uVar27 + 1;
@@ -1206,9 +1190,9 @@ LAB_8274ce98:
   puVar3 = ((rgp.world)->dpvsDyn).dynEntVisData[0][0];
   uVar18 = (ulonglong)scene.sceneDynModelCount;
   if (uVar18 != 0) {
-    iVar11 = 0;
+    iVar12 = 0;
     do {
-      pXVar21 = (XModelDrawInfo *)(&((rgp.world)->sceneDynModel->info).hasGfxEntIndex + iVar11);
+      pXVar21 = (XModelDrawInfo *)(&((rgp.world)->sceneDynModel->info).hasGfxEntIndex + iVar12);
       uVar2._0_1_ = pXVar21[1].hasGfxEntIndex;
       uVar2._1_1_ = pXVar21[1].lod;
       uVar27 = (uint)uVar2;
@@ -1221,13 +1205,13 @@ LAB_8274ce98:
         }
         pDVar9 = cm.dynEntPoseList[0];
         uVar23 = (rgp.world)->primaryLightCount;
-        if (uVar23 < *(uint *)(iStack00000014 + 0x1b0)) {
+        if (uVar23 < pGStack00000014->sceneLightCount) {
           pfVar22 = cm.dynEntPoseList[0][uVar27].pose.origin;
-          iVar12 = (uVar23 + 0x1d00) * 0x4c;
+          iVar28 = (uVar23 + 0x1d00) * 0x4c;
           do {
-            puVar5 = frontEndDataOut->sceneLightTechType[0] + iVar12;
-            uVar1 = frontEndDataOut->sceneLightTechType[0][iVar12];
-            iVar28 = uVar23 - (rgp.world)->primaryLightCount;
+            puVar5 = frontEndDataOut->sceneLightTechType[0] + iVar28;
+            uVar1 = frontEndDataOut->sceneLightTechType[0][iVar28];
+            iVar15 = uVar23 - (rgp.world)->primaryLightCount;
             if (uVar1 == '\x03') {
               fVar4 = pDVar9[uVar27].pose.origin[1] - *(float *)(puVar5 + 0x2c);
               fVar6 = pDVar9[uVar27].pose.origin[2] - *(float *)(puVar5 + 0x30);
@@ -1235,9 +1219,9 @@ LAB_8274ce98:
               fVar7 = *pfVar22 - *(float *)(puVar5 + 0x28);
               if (fVar7 * fVar7 + fVar6 * fVar6 + fVar4 * fVar4 <= fVar8 * fVar8) {
 LAB_8274d120:
-                iVar17 = iVar28 * 0x2008;
-                piVar29 = (int *)((int)&scene + iVar17 + 0x57ec0);
-                iVar15 = *(int *)((int)&scene + iVar17 + 0x57ec0);
+                iVar13 = iVar15 * 0x2008;
+                piVar29 = (int *)((int)&scene + iVar13 + 0x57ec0);
+                iVar17 = *(int *)((int)&scene + iVar13 + 0x57ec0);
                 if (cm.dynEntCount[0] <= uVar2) {
                   MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\../DynEntity/DynEntity_load_obj.h"
                                   ,0x3d,0,
@@ -1246,19 +1230,19 @@ LAB_8274d120:
                 }
                 pGVar14 = R_AddXModelSurfaces(pXVar21,cm.dynEntDefList[0][uVar27].xModel,
                                               TECHNIQUE_LIGHT_OMNI,
-                                              (GfxDrawSurf *)(piVar29 + (iVar15 + 1) * 2),
-                                              (GfxDrawSurf *)((int)&scene + iVar17 + 0x59ec8));
-                *piVar29 = ((int)pGVar14 - (int)(piVar29 + (iVar15 + 1) * 2) >> 3) + *piVar29;
+                                              (GfxDrawSurf *)(piVar29 + (iVar17 + 1) * 2),
+                                              (GfxDrawSurf *)((int)&scene + iVar13 + 0x59ec8));
+                *piVar29 = ((int)pGVar14 - (int)(piVar29 + (iVar17 + 1) * 2) >> 3) + *piVar29;
                 if (((*puVar5 == '\x02') && ((r_spotLightShadows->current).enabled != false)) &&
                    ((r_spotLightEntityShadows->current).enabled != false)) {
-                  if (iVar28 != 0) {
+                  if (iVar15 != 0) {
                     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_light.cpp"
                                     ,0x3bc,0,
                                     "dynLightIndex doesn\'t index MAX_VISIBLE_SHADOWABLE_DLIGHTS\n\t%i not in [0, %i)"
                                    );
                   }
-                  piVar29 = (int *)((int)&scene + iVar17 + 0x5fee0);
-                  iVar28 = *(int *)((int)&scene + iVar17 + 0x5fee0);
+                  piVar29 = (int *)((int)&scene + iVar13 + 0x5fee0);
+                  iVar15 = *(int *)((int)&scene + iVar13 + 0x5fee0);
                   if (cm.dynEntCount[0] <= uVar2) {
                     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\../DynEntity/DynEntity_load_obj.h"
                                     ,0x3d,0,
@@ -1267,9 +1251,9 @@ LAB_8274d120:
                   }
                   pGVar14 = R_AddXModelSurfaces(pXVar21,cm.dynEntDefList[0][uVar27].xModel,
                                                 TECHNIQUE_LIGHT_OMNI,
-                                                (GfxDrawSurf *)(piVar29 + (iVar28 + 1) * 2),
-                                                (GfxDrawSurf *)((int)&scene + iVar17 + 0x61ee8));
-                  *piVar29 = ((int)pGVar14 - (int)(piVar29 + (iVar28 + 1) * 2) >> 3) + *piVar29;
+                                                (GfxDrawSurf *)(piVar29 + (iVar15 + 1) * 2),
+                                                (GfxDrawSurf *)((int)&scene + iVar13 + 0x61ee8));
+                  *piVar29 = ((int)pGVar14 - (int)(piVar29 + (iVar15 + 1) * 2) >> 3) + *piVar29;
                 }
               }
             }
@@ -1278,20 +1262,20 @@ LAB_8274d120:
                 MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_light.cpp"
                                 ,0x3ac,0,"%s");
               }
-              iVar15 = R_SphereInPlanes((float (*) [4])(afStack_220 + iVar28 * 0x18),pfVar22,
+              iVar17 = R_SphereInPlanes((float (*) [4])(afStack_220 + iVar15 * 0x18),pfVar22,
                                         pDVar9[uVar27].radius);
-              if (iVar15 != 0) goto LAB_8274d120;
+              if (iVar17 != 0) goto LAB_8274d120;
             }
             uVar23 = uVar23 + 1;
-            iVar12 = iVar12 + 0x4c;
-          } while (uVar23 < *(uint *)(iStack00000014 + 0x1b0));
+            iVar28 = iVar28 + 0x4c;
+          } while (uVar23 < pGStack00000014->sceneLightCount);
         }
       }
       uVar18 = uVar18 - 1;
-      iVar11 = iVar11 + 6;
+      iVar12 = iVar12 + 6;
     } while (uVar18 != 0);
   }
-  iVar11 = iStack00000014;
+  pGVar11 = pGStack00000014;
   lVar10 = scene.sceneBrushCount;
   uVar27 = 0;
   if (scene.sceneBrushCount != 0) {
@@ -1300,7 +1284,7 @@ LAB_8274d120:
       if (scene.sceneBrushVisData[0][uVar27] == '\x01') {
         pGVar16 = *ppGVar25;
         uVar23 = (rgp.world)->primaryLightCount;
-        if (uVar23 < *(uint *)(iVar11 + 0x1b0)) {
+        if (uVar23 < pGVar11->sceneLightCount) {
           iVar12 = (uVar23 + 0x1d00) * 0x4c;
           do {
             puVar3 = frontEndDataOut->sceneLightTechType[0] + iVar12;
@@ -1366,7 +1350,7 @@ LAB_8274d3e0:
             }
             uVar23 = uVar23 + 1;
             iVar12 = iVar12 + 0x4c;
-          } while (uVar23 < *(uint *)(iVar11 + 0x1b0));
+          } while (uVar23 < pGVar11->sceneLightCount);
         }
       }
       uVar27 = uVar27 + 1;
@@ -1389,7 +1373,7 @@ LAB_8274d3e0:
         }
         pGVar16 = R_GetBrushModel((uint)cm.dynEntDefList[1][uVar2].brushModel);
         uVar27 = (rgp.world)->primaryLightCount;
-        if (uVar27 < *(uint *)(iVar11 + 0x1b0)) {
+        if (uVar27 < pGVar11->sceneLightCount) {
           iVar28 = (uVar27 + 0x1d00) * 0x4c;
           do {
             puVar5 = frontEndDataOut->sceneLightTechType[0] + iVar28;
@@ -1453,66 +1437,61 @@ LAB_8274d674:
             }
             uVar27 = uVar27 + 1;
             iVar28 = iVar28 + 0x4c;
-          } while (uVar27 < *(uint *)(iVar11 + 0x1b0));
+          } while (uVar27 < pGVar11->sceneLightCount);
         }
       }
       uVar18 = uVar18 - 1;
       iVar12 = iVar12 + 4;
     } while (uVar18 != 0);
   }
-  __restgprlr();
   return;
 }
 
 
 // 8274D790  R_GetTechniqueForDynamicLightType  (gfx_d3d/r_light.cpp:1081)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 MaterialTechniqueType R_GetTechniqueForDynamicLightType(GfxLight *param_1,GfxViewInfo *param_2)
 
 {
-  char *pcVar1;
-  MaterialTechniqueType MVar2;
-  int iVar3;
-  ulonglong uVar4;
+  int iVar1;
   
-  uVar4 = (ulonglong)(int)param_2;
-  pcVar1 = (char *)__savegprlr_27(param_1);
-  if ((uVar4 & 0xffffffff) == 0) {
+  if (param_2 == (GfxViewInfo *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_light.cpp",0x43f,0,
                     "%s");
   }
-  if (*pcVar1 != '\x02') {
-    if (*pcVar1 != '\x03') {
+  if (param_1->type != '\x02') {
+    if (param_1->type != '\x03') {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_light.cpp",0x469,0
                       ,"light->type == GFX_LIGHT_TYPE_OMNI\n\t%i, %i");
     }
-    MVar2 = __restgprlr_27(0x1a);
-    return MVar2;
+    return TECHNIQUE_LIGHT_OMNI;
   }
   if (frontEndDataOut->emissiveSpotLightCount != 1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_light.cpp",0x45a,0,
                     "%s");
   }
-  if (((*(char *)((int)uVar4 + 0x924) != '\0') && ((r_spotLightShadows->current).enabled != false))
-     && (iVar3 = Com_BitCheckAssert(frontEndDataOut->sceneLightHasShadowMap,
-                                    (rgp.world)->primaryLightCount,0x20), iVar3 != 0)) {
-    if (*(int *)(pcVar1 + 0x48) == 0) {
+  if (((param_2->useShadows != false) && ((r_spotLightShadows->current).enabled != false)) &&
+     (iVar1 = Com_BitCheckAssert(frontEndDataOut->sceneLightHasShadowMap,
+                                 (rgp.world)->primaryLightCount,0x20), iVar1 != 0)) {
+    if (param_1->def == (GfxLightDef *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_light.cpp",0x45e,0
                       ,"%s");
     }
-    MVar2 = __restgprlr_27((*(int *)(*(int *)(pcVar1 + 0x48) + 0xc) != 0) + '\x1b');
-    return MVar2;
+    return ((uint)LZCOUNT((param_1->def->cucoloris).image) >> 5 ^ 1) + TECHNIQUE_LIGHT_SPOT_SHADOW;
   }
-  MVar2 = __restgprlr_27(0x19);
-  return MVar2;
+  return TECHNIQUE_LIGHT_SPOT;
 }
 
 
 // 8274D8E0  R_EmitDynamicLightSurfs  (gfx_d3d/r_light.cpp:1136)
 
+/* WARNING: Function: __savegprlr_18 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_18 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
@@ -1522,45 +1501,42 @@ void R_EmitDynamicLightSurfs(GfxViewInfo *param_1,float *param_2)
   uint uVar1;
   uchar (*pauVar2) [256];
   GfxBackEndData *pGVar3;
-  GfxViewInfo *pGVar4;
-  MaterialTechniqueType MVar5;
-  GfxDrawList *pGVar6;
+  MaterialTechniqueType MVar4;
+  GfxDrawList *pGVar5;
+  int iVar6;
   int iVar7;
-  int iVar8;
-  GfxDrawSurf *pGVar9;
-  uint uVar10;
+  GfxDrawSurf *pGVar8;
+  uint uVar9;
   
-  pGVar4 = (GfxViewInfo *)__savegprlr_18(param_1);
   if (frontEndDataOut == (GfxBackEndData *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_light.cpp",0x479,0,
                     "%s");
   }
-  uVar10 = (rgp.world)->primaryLightCount;
-  if (uVar10 < pGVar4->sceneLightCount) {
-    iVar7 = (uVar10 + 0x1d00) * 0x4c;
+  uVar9 = (rgp.world)->primaryLightCount;
+  if (uVar9 < param_1->sceneLightCount) {
+    iVar6 = (uVar9 + 0x1d00) * 0x4c;
     do {
-      iVar8 = uVar10 - (rgp.world)->primaryLightCount;
-      uVar1 = *(uint *)((int)&scene + iVar8 * 0x2008 + 0x57ec0);
-      pGVar9 = (GfxDrawSurf *)((int)&scene + iVar8 * 0x2008 + 0x57ec8);
+      iVar7 = uVar9 - (rgp.world)->primaryLightCount;
+      uVar1 = *(uint *)((int)&scene + iVar7 * 0x2008 + 0x57ec0);
+      pGVar8 = (GfxDrawSurf *)((int)&scene + iVar7 * 0x2008 + 0x57ec8);
       pauVar2 = frontEndDataOut->sceneLightTechType;
-      R_SortDrawSurfs(pGVar9,uVar1);
+      R_SortDrawSurfs(pGVar8,uVar1);
       pGVar3 = frontEndDataOut;
-      pGVar6 = (GfxDrawList *)((int)frontEndDataOut + iVar8 * 0x1f8 + 0x1c00);
-      MVar5 = R_GetTechniqueForDynamicLightType((GfxLight *)(*pauVar2 + iVar7),pGVar4);
-      *(MaterialTechniqueType *)((int)pGVar3 + iVar8 * 0x1f8 + 0x1c50) = MVar5;
-      *(GfxViewInfo **)((int)pGVar3 + iVar8 * 0x1f8 + 0x1c54) = pGVar4;
-      *(float *)((int)pGVar3 + iVar8 * 0x1f8 + 0x1c58) = *param_2;
-      *(float *)((int)pGVar3 + iVar8 * 0x1f8 + 0x1c5c) = param_2[1];
-      *(float *)((int)pGVar3 + iVar8 * 0x1f8 + 0x1c60) = param_2[2];
-      *(uint *)((int)pGVar3 + iVar8 * 0x1f8 + 0x1c64) = uVar10;
-      *(undefined4 *)((int)pGVar3 + iVar8 * 0x1f8 + 0x1c68) = 1;
-      *(undefined4 *)((int)pGVar3 + iVar8 * 0x1f8 + 0x1c6c) = 0;
-      R_EmitDrawSurfList(pGVar9,uVar1,pGVar6);
-      uVar10 = uVar10 + 1;
-      iVar7 = iVar7 + 0x4c;
-    } while (uVar10 < pGVar4->sceneLightCount);
+      pGVar5 = (GfxDrawList *)((int)frontEndDataOut + iVar7 * 0x1f8 + 0x1c00);
+      MVar4 = R_GetTechniqueForDynamicLightType((GfxLight *)(*pauVar2 + iVar6),param_1);
+      *(MaterialTechniqueType *)((int)pGVar3 + iVar7 * 0x1f8 + 0x1c50) = MVar4;
+      *(GfxViewInfo **)((int)pGVar3 + iVar7 * 0x1f8 + 0x1c54) = param_1;
+      *(float *)((int)pGVar3 + iVar7 * 0x1f8 + 0x1c58) = *param_2;
+      *(float *)((int)pGVar3 + iVar7 * 0x1f8 + 0x1c5c) = param_2[1];
+      *(float *)((int)pGVar3 + iVar7 * 0x1f8 + 0x1c60) = param_2[2];
+      *(uint *)((int)pGVar3 + iVar7 * 0x1f8 + 0x1c64) = uVar9;
+      *(undefined4 *)((int)pGVar3 + iVar7 * 0x1f8 + 0x1c68) = 1;
+      *(undefined4 *)((int)pGVar3 + iVar7 * 0x1f8 + 0x1c6c) = 0;
+      R_EmitDrawSurfList(pGVar8,uVar1,pGVar5);
+      uVar9 = uVar9 + 1;
+      iVar6 = iVar6 + 0x4c;
+    } while (uVar9 < param_1->sceneLightCount);
   }
-  __restgprlr_18();
   return;
 }
 

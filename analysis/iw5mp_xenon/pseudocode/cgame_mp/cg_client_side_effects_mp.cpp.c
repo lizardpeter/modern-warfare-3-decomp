@@ -45,34 +45,29 @@ char * CG_SkipWhiteSpace(char *param_1)
 
 // 822A6200  CG_SkipText  (cgame_mp/cg_client_side_effects_mp.cpp:62)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 char * CG_SkipText(char *param_1,char *param_2)
 
 {
-  longlong lVar1;
+  char cVar1;
   int iVar2;
   char *pcVar3;
-  longlong lVar4;
-  longlong lVar5;
-  ulonglong uVar6;
   char acStack_a0 [160];
   
-  lVar4 = (longlong)(int)param_2;
-  lVar1 = __savegprlr_29(param_1);
-  lVar5 = lVar4;
+  pcVar3 = param_2;
   do {
-    pcVar3 = (char *)lVar5;
-    lVar5 = lVar5 + 1;
-  } while (*pcVar3 != '\0');
-  uVar6 = (lVar5 - lVar4) - 1;
-  iVar2 = I_strncmp((char *)lVar4,(char *)lVar1,(int)uVar6);
+    cVar1 = *pcVar3;
+    pcVar3 = pcVar3 + 1;
+  } while (cVar1 != '\0');
+  iVar2 = I_strncmp(param_2,param_1,(int)(pcVar3 + (-1 - (int)param_2)));
   if (iVar2 != 0) {
-    I_strncpyz(acStack_a0,(char *)lVar1,0x80);
+    I_strncpyz(acStack_a0,param_1,0x80);
     Com_PrintError(1,"Unexpected text \'%s\' when trying to find \'%s\' in map\'s effect file\n");
-    pcVar3 = (char *)__restgprlr_29(0);
-    return pcVar3;
+    return (char *)0x0;
   }
-  pcVar3 = (char *)__restgprlr_29((uVar6 & 0xffffffff) + lVar1);
-  return pcVar3;
+  return param_1 + (int)(pcVar3 + (-1 - (int)param_2));
 }
 
 
@@ -205,44 +200,32 @@ char * CG_ParseVec3Finish(char *param_1,float *param_2)
 
 // 822A6560  CG_ParseString  (cgame_mp/cg_client_side_effects_mp.cpp:150)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 char * CG_ParseString(char *param_1,char *param_2,uint param_3)
 
 {
-  bool bVar1;
-  char cVar2;
-  longlong lVar3;
-  char *pcVar4;
-  ulonglong uVar5;
-  ulonglong uVar6;
+  char cVar1;
+  uint uVar2;
   char acStack_a0 [160];
   
-  uVar5 = (ulonglong)(int)param_3;
-  lVar3 = __savegprlr_29(param_1);
-  pcVar4 = (char *)lVar3;
-  if (*pcVar4 != '\"') {
-    I_strncpyz(acStack_a0,pcVar4,0x80);
+  if (*param_1 != '\"') {
+    I_strncpyz(acStack_a0,param_1,0x80);
     Com_PrintError(1,"Expected a quoted string instead of \'%s\'\n");
   }
-  uVar6 = 0;
-  cVar2 = pcVar4[1];
-  while ((cVar2 != '\"' && (cVar2 != '\0'))) {
-    bVar1 = (uVar6 & 0xffffffff) == (uVar5 & 0xffffffff);
-    if ((uVar5 & 0xffffffff) <= (uVar6 & 0xffffffff)) goto LAB_822a65ec;
-    param_2[(int)uVar6] = cVar2;
-    uVar6 = uVar6 + 1;
-    cVar2 = pcVar4[(int)uVar6 + 1];
+  cVar1 = param_1[1];
+  for (uVar2 = 0; ((cVar1 != '\"' && (cVar1 != '\0')) && (uVar2 < param_3)); uVar2 = uVar2 + 1) {
+    param_2[uVar2] = cVar1;
+    cVar1 = param_1[uVar2 + 2];
   }
-  bVar1 = (uVar6 & 0xffffffff) == (uVar5 & 0xffffffff);
-LAB_822a65ec:
-  if (!bVar1) {
-    param_2[(int)uVar6] = '\0';
-    pcVar4 = (char *)__restgprlr_29(uVar6 + lVar3 + 2);
-    return pcVar4;
+  if (uVar2 == param_3) {
+    I_strncpyz(acStack_a0,param_1,0x80);
+    Com_PrintError(1,"String was longer than expected \'%s\'\n");
+    return (char *)0x0;
   }
-  I_strncpyz(acStack_a0,pcVar4,0x80);
-  Com_PrintError(1,"String was longer than expected \'%s\'\n");
-  pcVar4 = (char *)__restgprlr_29(0);
-  return pcVar4;
+  param_2[uVar2] = '\0';
+  return param_1 + uVar2 + 2;
 }
 
 
@@ -270,55 +253,60 @@ char * CG_ParseStringFinish(char *param_1,char *param_2,uint param_3)
 
 // 822A66A8  CG_ParseSound  (cgame_mp/cg_client_side_effects_mp.cpp:193)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 char * CG_ParseSound(LocalClientNum_t param_1,char *param_2)
 
 {
-  int iVar1;
-  char *pcVar2;
-  int iVar3;
+  char *pcVar1;
+  int iVar2;
   float afStack_140 [4];
   float afStack_130 [4];
   char acStack_120 [288];
   
-  iVar1 = __savegprlr_29(param_1);
-  pcVar2 = CG_SkipText(param_2,"ent = createLoopSound();");
-  if ((pcVar2 != (char *)0x0) && (pcVar2 = CG_SkipWhiteSpace(pcVar2), pcVar2 != (char *)0x0)) {
-    iVar3 = I_strncmp("ent set_origin_and_angles( ",pcVar2,0x1b);
-    if (iVar3 == 0) {
-      pcVar2 = CG_SkipText(pcVar2,"ent set_origin_and_angles( ");
-      if ((pcVar2 == (char *)0x0) ||
-         (pcVar2 = CG_ParseVec3x2Finish(pcVar2,afStack_140,afStack_130), pcVar2 == (char *)0x0))
-      goto LAB_822a6728;
+  pcVar1 = CG_SkipText(param_2,"ent = createLoopSound();");
+  if ((pcVar1 != (char *)0x0) && (pcVar1 = CG_SkipWhiteSpace(pcVar1), pcVar1 != (char *)0x0)) {
+    iVar2 = I_strncmp("ent set_origin_and_angles( ",pcVar1,0x1b);
+    if (iVar2 == 0) {
+      pcVar1 = CG_SkipText(pcVar1,"ent set_origin_and_angles( ");
+      if (pcVar1 == (char *)0x0) {
+        return (char *)0x0;
+      }
+      pcVar1 = CG_ParseVec3x2Finish(pcVar1,afStack_140,afStack_130);
+      if (pcVar1 == (char *)0x0) {
+        return (char *)0x0;
+      }
     }
     else {
-      pcVar2 = CG_SkipText(pcVar2,"ent.v[ \"origin\" ] = (");
-      if (((pcVar2 == (char *)0x0) ||
-          (pcVar2 = CG_ParseVec3Finish(pcVar2,afStack_140), pcVar2 == (char *)0x0)) ||
-         (pcVar2 = CG_SkipText(pcVar2,"ent.v[ \"angles\" ] = ("), pcVar2 == (char *)0x0))
-      goto LAB_822a6728;
-      pcVar2 = CG_ParseVec3Finish(pcVar2,afStack_130);
-      if (pcVar2 == (char *)0x0) {
-        pcVar2 = (char *)__restgprlr_29();
-        return pcVar2;
+      pcVar1 = CG_SkipText(pcVar1,"ent.v[ \"origin\" ] = (");
+      if (pcVar1 == (char *)0x0) {
+        return (char *)0x0;
+      }
+      pcVar1 = CG_ParseVec3Finish(pcVar1,afStack_140);
+      if (pcVar1 == (char *)0x0) {
+        return (char *)0x0;
+      }
+      pcVar1 = CG_SkipText(pcVar1,"ent.v[ \"angles\" ] = (");
+      if (pcVar1 == (char *)0x0) {
+        return (char *)0x0;
+      }
+      pcVar1 = CG_ParseVec3Finish(pcVar1,afStack_130);
+      if (pcVar1 == (char *)0x0) {
+        return (char *)0x0;
       }
     }
-    pcVar2 = CG_SkipText(pcVar2,"ent.v[ \"soundalias\" ] = ");
-    if (pcVar2 != (char *)0x0) {
-      pcVar2 = CG_ParseStringFinish(pcVar2,acStack_120,0x100);
-      if (pcVar2 != (char *)0x0) {
-        if (iVar1 == 0) {
-          CG_AddClientEntSound(afStack_140,acStack_120);
-        }
-        pcVar2 = (char *)__restgprlr_29(pcVar2);
-        return pcVar2;
+    pcVar1 = CG_SkipText(pcVar1,"ent.v[ \"soundalias\" ] = ");
+    if ((pcVar1 != (char *)0x0) &&
+       (pcVar1 = CG_ParseStringFinish(pcVar1,acStack_120,0x100), pcVar1 != (char *)0x0)) {
+      if (param_1 == LOCAL_CLIENT_0) {
+        CG_AddClientEntSound(afStack_140,acStack_120);
       }
+      return pcVar1;
     }
   }
-LAB_822a6728:
-  pcVar2 = (char *)__restgprlr_29(0);
-  return pcVar2;
+  return (char *)0x0;
 }
 
 
@@ -350,47 +338,46 @@ char * CG_ParseFloatFinish(char *param_1,float *param_2)
 
 // 822A6888  CG_FindFileName  (cgame_mp/cg_client_side_effects_mp.cpp:263)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 bool CG_FindFileName(char *param_1,char *param_2,int param_3)
 
 {
-  char *pcVar1;
-  int iVar2;
-  undefined1 uVar3;
-  EffectDefMap *pEVar4;
-  int iVar5;
+  int iVar1;
+  EffectDefMap *pEVar2;
+  int iVar3;
   
-  pcVar1 = (char *)__savegprlr_26(param_1);
-  pEVar4 = g_effectDefMap;
-  iVar5 = 0;
+  pEVar2 = g_effectDefMap;
+  iVar3 = 0;
   if (0 < g_effectDefMapEntries) {
     do {
-      iVar2 = I_strcmp(pEVar4->name,pcVar1);
-      if (iVar2 == 0) {
-        I_strncpyz(param_2,g_effectDefMap[iVar5].filename,param_3);
-        uVar3 = __restgprlr_26(1);
-        return (bool)uVar3;
+      iVar1 = I_strcmp(pEVar2->name,param_1);
+      if (iVar1 == 0) {
+        I_strncpyz(param_2,g_effectDefMap[iVar3].filename,param_3);
+        return true;
       }
-      iVar5 = iVar5 + 1;
-      pEVar4 = pEVar4 + 1;
-    } while (iVar5 < g_effectDefMapEntries);
+      iVar3 = iVar3 + 1;
+      pEVar2 = pEVar2 + 1;
+    } while (iVar3 < g_effectDefMapEntries);
   }
   Com_PrintError(1,"Couldn\'t find \'%s\' in _fx.gsc map.\n");
-  uVar3 = __restgprlr_26(0);
-  return (bool)uVar3;
+  return false;
 }
 
 
 // 822A6928  CG_ParseEffect  (cgame_mp/cg_client_side_effects_mp.cpp:279)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 char * CG_ParseEffect(LocalClientNum_t param_1,char *param_2)
 
 {
-  LocalClientNum_t LVar1;
-  char *pcVar2;
-  bool bVar4;
-  FxEffectDef *pFVar3;
+  char *pcVar1;
+  bool bVar3;
+  FxEffectDef *pFVar2;
   float local_2c0 [2];
   float afStack_2b8 [4];
   float afStack_2a8 [4];
@@ -400,140 +387,145 @@ char * CG_ParseEffect(LocalClientNum_t param_1,char *param_2)
   char acStack_220 [256];
   char acStack_120 [288];
   
-  LVar1 = __savegprlr_29(param_1);
-  pcVar2 = CG_SkipText(param_2,"ent = createOneshotEffect( ");
-  if ((pcVar2 != (char *)0x0) &&
-     (pcVar2 = CG_ParseStringFinish(pcVar2,acStack_220,0x100), pcVar2 != (char *)0x0)) {
-    bVar4 = CG_MatchLineStartingWith(pcVar2,"ent set_origin_and_angles( ");
-    if (bVar4) {
-      pcVar2 = CG_SkipText(pcVar2,"ent set_origin_and_angles( ");
-      if ((pcVar2 == (char *)0x0) ||
-         (pcVar2 = CG_ParseVec3x2Finish(pcVar2,afStack_2b8,afStack_2a8), pcVar2 == (char *)0x0))
-      goto LAB_822a69b0;
+  pcVar1 = CG_SkipText(param_2,"ent = createOneshotEffect( ");
+  if ((pcVar1 != (char *)0x0) &&
+     (pcVar1 = CG_ParseStringFinish(pcVar1,acStack_220,0x100), pcVar1 != (char *)0x0)) {
+    bVar3 = CG_MatchLineStartingWith(pcVar1,"ent set_origin_and_angles( ");
+    if (bVar3) {
+      pcVar1 = CG_SkipText(pcVar1,"ent set_origin_and_angles( ");
+      if (pcVar1 == (char *)0x0) {
+        return (char *)0x0;
+      }
+      pcVar1 = CG_ParseVec3x2Finish(pcVar1,afStack_2b8,afStack_2a8);
+      if (pcVar1 == (char *)0x0) {
+        return (char *)0x0;
+      }
     }
     else {
-      pcVar2 = CG_SkipText(pcVar2,"ent.v[ \"origin\" ] = (");
-      if (((pcVar2 == (char *)0x0) ||
-          (pcVar2 = CG_ParseVec3Finish(pcVar2,afStack_2b8), pcVar2 == (char *)0x0)) ||
-         (pcVar2 = CG_SkipText(pcVar2,"ent.v[ \"angles\" ] = ("), pcVar2 == (char *)0x0))
-      goto LAB_822a69b0;
-      pcVar2 = CG_ParseVec3Finish(pcVar2,afStack_2a8);
-      if (pcVar2 == (char *)0x0) goto LAB_822a6a9c;
+      pcVar1 = CG_SkipText(pcVar1,"ent.v[ \"origin\" ] = (");
+      if (pcVar1 == (char *)0x0) {
+        return (char *)0x0;
+      }
+      pcVar1 = CG_ParseVec3Finish(pcVar1,afStack_2b8);
+      if (pcVar1 == (char *)0x0) {
+        return (char *)0x0;
+      }
+      pcVar1 = CG_SkipText(pcVar1,"ent.v[ \"angles\" ] = (");
+      if (pcVar1 == (char *)0x0) {
+        return (char *)0x0;
+      }
+      pcVar1 = CG_ParseVec3Finish(pcVar1,afStack_2a8);
+      if (pcVar1 == (char *)0x0) {
+        return (char *)0x0;
+      }
     }
-    bVar4 = CG_MatchLineStartingWith(pcVar2,"ent.v[ \"fxid\" ] = ");
-    if ((!bVar4) ||
-       ((pcVar2 = CG_SkipText(pcVar2,"ent.v[ \"fxid\" ] = "), pcVar2 != (char *)0x0 &&
-        (pcVar2 = CG_ParseStringFinish(pcVar2,acStack_220,0x100), pcVar2 != (char *)0x0)))) {
-      bVar4 = CG_MatchLineStartingWith(pcVar2,"ent.v[ \"delay\" ] = ");
-      if (bVar4) {
-        pcVar2 = CG_SkipText(pcVar2,"ent.v[ \"delay\" ] = ");
-        if (pcVar2 == (char *)0x0) goto LAB_822a69b0;
-        pcVar2 = CG_ParseFloatFinish(pcVar2,local_2c0);
-        if (pcVar2 == (char *)0x0) {
-LAB_822a6a9c:
-          pcVar2 = (char *)__restgprlr_29(0);
-          return pcVar2;
+    bVar3 = CG_MatchLineStartingWith(pcVar1,"ent.v[ \"fxid\" ] = ");
+    if ((!bVar3) ||
+       ((pcVar1 = CG_SkipText(pcVar1,"ent.v[ \"fxid\" ] = "), pcVar1 != (char *)0x0 &&
+        (pcVar1 = CG_ParseStringFinish(pcVar1,acStack_220,0x100), pcVar1 != (char *)0x0)))) {
+      bVar3 = CG_MatchLineStartingWith(pcVar1,"ent.v[ \"delay\" ] = ");
+      if (bVar3) {
+        pcVar1 = CG_SkipText(pcVar1,"ent.v[ \"delay\" ] = ");
+        if (pcVar1 == (char *)0x0) {
+          return (char *)0x0;
+        }
+        pcVar1 = CG_ParseFloatFinish(pcVar1,local_2c0);
+        if (pcVar1 == (char *)0x0) {
+          return (char *)0x0;
         }
       }
       else {
         local_2c0[0] = -15.0;
       }
-      bVar4 = CG_MatchLineStartingWith(pcVar2,"ent.v[ \"soundalias\" ] = ");
-      if (!bVar4) {
-LAB_822a6b14:
-        bVar4 = CG_FindFileName(acStack_220,acStack_260,0x40);
-        if (bVar4) {
-          pFVar3 = FX_Register(acStack_260);
-          AnglesToAxis(afStack_2a8,(float (*) [3])afStack_290);
-          local_298 = (longlong)(int)(local_2c0[0] * 1000.0);
-          FX_PlayOrientedEffect
-                    (LVar1,pFVar3,(int)(local_2c0[0] * 1000.0),afStack_2b8,
-                     (float (*) [3])afStack_290);
+      bVar3 = CG_MatchLineStartingWith(pcVar1,"ent.v[ \"soundalias\" ] = ");
+      if (bVar3) {
+        pcVar1 = CG_SkipText(pcVar1,"ent.v[ \"soundalias\" ] = ");
+        if (pcVar1 == (char *)0x0) {
+          return (char *)0x0;
         }
-        pcVar2 = (char *)__restgprlr_29(pcVar2);
-        return pcVar2;
-      }
-      pcVar2 = CG_SkipText(pcVar2,"ent.v[ \"soundalias\" ] = ");
-      if (pcVar2 != (char *)0x0) {
-        pcVar2 = CG_ParseStringFinish(pcVar2,acStack_120,0x100);
-        if (pcVar2 != (char *)0x0) {
-          if (LVar1 == LOCAL_CLIENT_0) {
-            CG_AddClientEntSound(afStack_2b8,acStack_120);
-          }
-          goto LAB_822a6b14;
+        pcVar1 = CG_ParseStringFinish(pcVar1,acStack_120,0x100);
+        if (pcVar1 == (char *)0x0) {
+          return (char *)0x0;
+        }
+        if (param_1 == LOCAL_CLIENT_0) {
+          CG_AddClientEntSound(afStack_2b8,acStack_120);
         }
       }
+      bVar3 = CG_FindFileName(acStack_220,acStack_260,0x40);
+      if (bVar3) {
+        pFVar2 = FX_Register(acStack_260);
+        AnglesToAxis(afStack_2a8,(float (*) [3])afStack_290);
+        local_298 = (longlong)(int)(local_2c0[0] * 1000.0);
+        FX_PlayOrientedEffect
+                  (param_1,pFVar2,(int)(local_2c0[0] * 1000.0),afStack_2b8,
+                   (float (*) [3])afStack_290);
+      }
+      return pcVar1;
     }
   }
-LAB_822a69b0:
-  pcVar2 = (char *)__restgprlr_29(0);
-  return pcVar2;
+  return (char *)0x0;
 }
 
 
 // 822A6B88  CG_ParseClientEffects  (cgame_mp/cg_client_side_effects_mp.cpp:380)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void CG_ParseClientEffects(LocalClientNum_t param_1,char *param_2)
 
 {
-  LocalClientNum_t LVar1;
-  char *pcVar2;
-  bool bVar3;
+  char *pcVar1;
+  bool bVar2;
   char acStack_b0 [176];
   
-  LVar1 = __savegprlr_28(param_1);
-  pcVar2 = CG_SkipText(param_2,"//_createfx generated. Do not touch!!");
-  if ((((((pcVar2 != (char *)0x0) && (pcVar2 = CG_SkipWhiteSpace(pcVar2), pcVar2 != (char *)0x0)) &&
-        (pcVar2 = CG_SkipText(pcVar2,"#include common_scripts\\utility;"), pcVar2 != (char *)0x0))
-       && ((pcVar2 = CG_SkipWhiteSpace(pcVar2), pcVar2 != (char *)0x0 &&
-           (pcVar2 = CG_SkipText(pcVar2,"#include common_scripts\\_createfx;"),
-           pcVar2 != (char *)0x0)))) &&
-      ((pcVar2 = CG_SkipWhiteSpace(pcVar2), pcVar2 != (char *)0x0 &&
-       ((pcVar2 = CG_SkipText(pcVar2,"main()"), pcVar2 != (char *)0x0 &&
-        (pcVar2 = CG_SkipWhiteSpace(pcVar2), pcVar2 != (char *)0x0)))))) &&
-     ((pcVar2 = CG_SkipText(pcVar2,"{"), pcVar2 != (char *)0x0 &&
-      (pcVar2 = CG_SkipWhiteSpace(pcVar2), pcVar2 != (char *)0x0)))) {
-    bVar3 = CG_MatchLineStartingWith(pcVar2,"//");
-    if (bVar3) {
-      pcVar2 = CG_SkipLineStartingWith(pcVar2,"//");
+  pcVar1 = CG_SkipText(param_2,"//_createfx generated. Do not touch!!");
+  if ((((((pcVar1 != (char *)0x0) && (pcVar1 = CG_SkipWhiteSpace(pcVar1), pcVar1 != (char *)0x0)) &&
+        (pcVar1 = CG_SkipText(pcVar1,"#include common_scripts\\utility;"), pcVar1 != (char *)0x0))
+       && ((pcVar1 = CG_SkipWhiteSpace(pcVar1), pcVar1 != (char *)0x0 &&
+           (pcVar1 = CG_SkipText(pcVar1,"#include common_scripts\\_createfx;"),
+           pcVar1 != (char *)0x0)))) &&
+      ((pcVar1 = CG_SkipWhiteSpace(pcVar1), pcVar1 != (char *)0x0 &&
+       ((pcVar1 = CG_SkipText(pcVar1,"main()"), pcVar1 != (char *)0x0 &&
+        (pcVar1 = CG_SkipWhiteSpace(pcVar1), pcVar1 != (char *)0x0)))))) &&
+     ((pcVar1 = CG_SkipText(pcVar1,"{"), pcVar1 != (char *)0x0 &&
+      (pcVar1 = CG_SkipWhiteSpace(pcVar1), pcVar1 != (char *)0x0)))) {
+    bVar2 = CG_MatchLineStartingWith(pcVar1,"//");
+    if (bVar2) {
+      pcVar1 = CG_SkipLineStartingWith(pcVar1,"//");
     }
-    if (pcVar2 != (char *)0x0) {
-      while ((*pcVar2 != '}' && (*pcVar2 != '\0'))) {
-        bVar3 = CG_MatchLineStartingWith(pcVar2,"ent = createLoopSound();");
-        if (bVar3) {
-          pcVar2 = CG_ParseSound(LVar1,pcVar2);
-          if (pcVar2 == (char *)0x0) {
-            __restgprlr_28();
+    if (pcVar1 != (char *)0x0) {
+      while ((*pcVar1 != '}' && (*pcVar1 != '\0'))) {
+        bVar2 = CG_MatchLineStartingWith(pcVar1,"ent = createLoopSound();");
+        if (bVar2) {
+          pcVar1 = CG_ParseSound(param_1,pcVar1);
+          if (pcVar1 == (char *)0x0) {
             return;
           }
         }
         else {
-          bVar3 = CG_MatchLineStartingWith(pcVar2,"ent = createOneshotEffect( ");
-          if (!bVar3) {
-            I_strncpyz(acStack_b0,pcVar2,0x80);
+          bVar2 = CG_MatchLineStartingWith(pcVar1,"ent = createOneshotEffect( ");
+          if (!bVar2) {
+            I_strncpyz(acStack_b0,pcVar1,0x80);
             Com_PrintError(1,
                            "Expected \'ent = createLoopSound();\' or \'ent = createOneshotEffect\' instead of \'%s\' in map\'s effect file\n"
                           );
-            __restgprlr_28();
             return;
           }
-          pcVar2 = CG_ParseEffect(LVar1,pcVar2);
-          if (pcVar2 == (char *)0x0) {
-            __restgprlr_28();
+          pcVar1 = CG_ParseEffect(param_1,pcVar1);
+          if (pcVar1 == (char *)0x0) {
             return;
           }
         }
       }
     }
-    pcVar2 = CG_SkipLineStartingWith(pcVar2,"}");
-    if ((pcVar2 != (char *)0x0) && (*pcVar2 != '\0')) {
-      I_strncpyz(acStack_b0,pcVar2,0x80);
+    pcVar1 = CG_SkipLineStartingWith(pcVar1,"}");
+    if ((pcVar1 != (char *)0x0) && (*pcVar1 != '\0')) {
+      I_strncpyz(acStack_b0,pcVar1,0x80);
       Com_PrintError(1,"Unexpected data after parsing \'%s\' map\'s effect file\n");
     }
   }
-  __restgprlr_28();
   return;
 }
 
@@ -564,50 +556,50 @@ void CG_LoadClientEffects_FastFile(LocalClientNum_t param_1,char *param_2)
 
 // 822A6E28  CG_AddPairToMap  (cgame_mp/cg_client_side_effects_mp.cpp:485)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void CG_AddPairToMap(char *param_1,char *param_2)
 
 {
-  char *pcVar1;
+  int iVar1;
   int iVar2;
-  int iVar3;
-  EffectDefMap *pEVar4;
+  EffectDefMap *pEVar3;
   
-  pcVar1 = (char *)__savegprlr_27(param_1);
-  pEVar4 = g_effectDefMap;
-  iVar3 = 0;
+  pEVar3 = g_effectDefMap;
+  iVar2 = 0;
   if (0 < g_effectDefMapEntries) {
     do {
-      iVar2 = I_strcmp(pEVar4->name,pcVar1);
-      if (iVar2 == 0) {
-        iVar3 = I_strcmp(g_effectDefMap[iVar3].filename,param_2);
-        if (iVar3 != 0) {
-          Com_PrintError(1,"Tried to remap \'%s\' to \'%s\' previously mapped to \'%s\'\n");
-          __restgprlr_27();
+      iVar1 = I_strcmp(pEVar3->name,param_1);
+      if (iVar1 == 0) {
+        iVar2 = I_strcmp(g_effectDefMap[iVar2].filename,param_2);
+        if (iVar2 == 0) {
           return;
         }
-        goto LAB_822a6f28;
+        Com_PrintError(1,"Tried to remap \'%s\' to \'%s\' previously mapped to \'%s\'\n");
+        return;
       }
-      iVar3 = iVar3 + 1;
-      pEVar4 = pEVar4 + 1;
-    } while (iVar3 < g_effectDefMapEntries);
+      iVar2 = iVar2 + 1;
+      pEVar3 = pEVar3 + 1;
+    } while (iVar2 < g_effectDefMapEntries);
   }
-  if (g_effectDefMapEntries == 0x20) {
-    Com_PrintError(1,
-                   "Failed to added mapping from \'%s\' to \'%s\'.  Increase MAX_CLIENT_EFFECT_DEFS.\n"
-                  );
-    __restgprlr_27();
+  if (g_effectDefMapEntries != 0x20) {
+    I_strncpyz(g_effectDefMap[g_effectDefMapEntries].name,param_1,0x40);
+    I_strncpyz(g_effectDefMap[g_effectDefMapEntries].filename,param_2,0x40);
+    g_effectDefMapEntries = g_effectDefMapEntries + 1;
     return;
   }
-  I_strncpyz(g_effectDefMap[g_effectDefMapEntries].name,pcVar1,0x40);
-  I_strncpyz(g_effectDefMap[g_effectDefMapEntries].filename,param_2,0x40);
-  g_effectDefMapEntries = g_effectDefMapEntries + 1;
-LAB_822a6f28:
-  __restgprlr_27();
+  Com_PrintError(1,
+                 "Failed to added mapping from \'%s\' to \'%s\'.  Increase MAX_CLIENT_EFFECT_DEFS.\n"
+                );
   return;
 }
 
 
 // 822A6F30  CG_ParseClientEffectMapping  (cgame_mp/cg_client_side_effects_mp.cpp:510)
+
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 
 void CG_ParseClientEffectMapping(char *param_1)
 
@@ -619,87 +611,94 @@ void CG_ParseClientEffectMapping(char *param_1)
   char acStack_c0 [64];
   char acStack_80 [128];
   
-  pcVar2 = (char *)__savegprlr_26(param_1);
   g_effectDefMapEntries = 0;
-  pcVar2 = CG_SkipWhiteSpace(pcVar2);
+  pcVar2 = CG_SkipWhiteSpace(param_1);
   if (pcVar2 != (char *)0x0) {
     while (*pcVar2 != '\0') {
       iVar3 = I_strncmp("level._effect[",pcVar2,0xe);
       if (iVar3 == 0) {
         iVar3 = I_strncmp("level._effect[",pcVar2,0xe);
-        if (iVar3 == 0) {
-          if (pcVar2 + 0xe == (char *)0x0) break;
-          pcVar2 = CG_SkipWhiteSpace(pcVar2 + 0xe);
-          pcVar2 = CG_ParseString(pcVar2,acStack_c0,0x40);
-          if (pcVar2 == (char *)0x0) break;
-          pcVar2 = CG_SkipWhiteSpace(pcVar2);
-          iVar3 = I_strncmp("]",pcVar2,1);
-          if (iVar3 == 0) {
-            if ((longlong)(int)pcVar2 + 1 == 0) break;
-            pcVar2 = CG_SkipWhiteSpace((char *)((longlong)(int)pcVar2 + 1));
-            iVar3 = I_strncmp("=",pcVar2,1);
-            if (iVar3 == 0) {
-              if ((longlong)(int)pcVar2 + 1 == 0) break;
-              pcVar2 = CG_SkipWhiteSpace((char *)((longlong)(int)pcVar2 + 1));
-              iVar3 = I_strncmp("loadfx",pcVar2,6);
-              if (iVar3 == 0) {
-                if ((longlong)(int)pcVar2 + 6 == 0) break;
-                pcVar2 = CG_SkipWhiteSpace((char *)((longlong)(int)pcVar2 + 6));
-                iVar3 = I_strncmp("(",pcVar2,1);
-                if (iVar3 == 0) {
-                  if ((longlong)(int)pcVar2 + 1 != 0) {
-                    pcVar2 = CG_SkipWhiteSpace((char *)((longlong)(int)pcVar2 + 1));
-                    pcVar2 = CG_ParseString(pcVar2,acStack_80,0x40);
-                    if (pcVar2 != (char *)0x0) {
-                      cVar1 = *pcVar2;
-                      while (((cVar1 != '\n' && (cVar1 != '\r')) && (cVar1 != '\0'))) {
-                        pcVar2 = pcVar2 + 1;
-                        cVar1 = *pcVar2;
-                      }
-                      pcVar2 = CG_SkipWhiteSpace(pcVar2);
-                      if (pcVar2 != (char *)0x0) {
-                        CG_AddPairToMap(acStack_c0,acStack_80);
-                        goto LAB_822a7120;
-                      }
-                    }
-                  }
-                  break;
-                }
-                I_strncpyz(acStack_140,pcVar2,0x80);
-              }
-              else {
-                I_strncpyz(acStack_140,pcVar2,0x80);
-              }
-            }
-            else {
-              I_strncpyz(acStack_140,pcVar2,0x80);
-            }
-          }
-          else {
-            I_strncpyz(acStack_140,pcVar2,0x80);
-          }
-        }
-        else {
+        if (iVar3 != 0) {
           I_strncpyz(acStack_140,pcVar2,0x80);
+LAB_822a71a4:
+          Com_PrintError(1,
+                         "Unexpected text \'%s\' when trying to find \'%s\' in map\'s effect file\n"
+                        );
+          return;
         }
-        Com_PrintError(1,"Unexpected text \'%s\' when trying to find \'%s\' in map\'s effect file\n"
-                      );
-        break;
-      }
-      cVar1 = *pcVar2;
-      while (((cVar1 != '\n' && (cVar1 != '\r')) && (cVar1 != '\0'))) {
-        pcVar2 = pcVar2 + 1;
+        if (pcVar2 + 0xe == (char *)0x0) {
+          return;
+        }
+        pcVar2 = CG_SkipWhiteSpace(pcVar2 + 0xe);
+        pcVar2 = CG_ParseString(pcVar2,acStack_c0,0x40);
+        if (pcVar2 == (char *)0x0) {
+          return;
+        }
+        pcVar2 = CG_SkipWhiteSpace(pcVar2);
+        iVar3 = I_strncmp("]",pcVar2,1);
+        if (iVar3 != 0) {
+          I_strncpyz(acStack_140,pcVar2,0x80);
+          goto LAB_822a71a4;
+        }
+        if ((longlong)(int)pcVar2 + 1 == 0) {
+          return;
+        }
+        pcVar2 = CG_SkipWhiteSpace((char *)((longlong)(int)pcVar2 + 1));
+        iVar3 = I_strncmp("=",pcVar2,1);
+        if (iVar3 != 0) {
+          I_strncpyz(acStack_140,pcVar2,0x80);
+          goto LAB_822a71a4;
+        }
+        if ((longlong)(int)pcVar2 + 1 == 0) {
+          return;
+        }
+        pcVar2 = CG_SkipWhiteSpace((char *)((longlong)(int)pcVar2 + 1));
+        iVar3 = I_strncmp("loadfx",pcVar2,6);
+        if (iVar3 != 0) {
+          I_strncpyz(acStack_140,pcVar2,0x80);
+          goto LAB_822a71a4;
+        }
+        if ((longlong)(int)pcVar2 + 6 == 0) {
+          return;
+        }
+        pcVar2 = CG_SkipWhiteSpace((char *)((longlong)(int)pcVar2 + 6));
+        iVar3 = I_strncmp("(",pcVar2,1);
+        if (iVar3 != 0) {
+          I_strncpyz(acStack_140,pcVar2,0x80);
+          goto LAB_822a71a4;
+        }
+        if ((longlong)(int)pcVar2 + 1 == 0) {
+          return;
+        }
+        pcVar2 = CG_SkipWhiteSpace((char *)((longlong)(int)pcVar2 + 1));
+        pcVar2 = CG_ParseString(pcVar2,acStack_80,0x40);
+        if (pcVar2 == (char *)0x0) {
+          return;
+        }
         cVar1 = *pcVar2;
+        while (((cVar1 != '\n' && (cVar1 != '\r')) && (cVar1 != '\0'))) {
+          pcVar2 = pcVar2 + 1;
+          cVar1 = *pcVar2;
+        }
+        pcVar2 = CG_SkipWhiteSpace(pcVar2);
+        if (pcVar2 == (char *)0x0) {
+          return;
+        }
+        CG_AddPairToMap(acStack_c0,acStack_80);
       }
-      pcVar2 = CG_SkipWhiteSpace(pcVar2);
-LAB_822a7120:
+      else {
+        cVar1 = *pcVar2;
+        while (((cVar1 != '\n' && (cVar1 != '\r')) && (cVar1 != '\0'))) {
+          pcVar2 = pcVar2 + 1;
+          cVar1 = *pcVar2;
+        }
+        pcVar2 = CG_SkipWhiteSpace(pcVar2);
+      }
       if (pcVar2 == (char *)0x0) {
-        __restgprlr_26();
         return;
       }
     }
   }
-  __restgprlr_26();
   return;
 }
 
@@ -728,36 +727,35 @@ void CG_LoadClientEffectMapping_FastFile(char *param_1)
 
 // 822A7248  CG_StartClientSideEffects  (cgame_mp/cg_client_side_effects_mp.cpp:613)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void CG_StartClientSideEffects(LocalClientNum_t param_1)
 
 {
-  LocalClientNum_t LVar1;
-  char *pcVar2;
+  char *pcVar1;
   char acStack_130 [304];
   
-  LVar1 = __savegprlr_28(param_1);
   if (cg_clientSideEffects == (dvar_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_client_side_effects_mp.cpp"
                     ,0x269,0,"%s");
   }
-  if ((LVar1 == LOCAL_CLIENT_0) && (g_clientEntSoundCount != 0)) {
+  if ((param_1 == LOCAL_CLIENT_0) && (g_clientEntSoundCount != 0)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_client_side_effects_mp.cpp"
                     ,0x26d,0,"%s\n\t(g_clientEntSoundCount) = %i");
   }
   if ((cg_clientSideEffects->current).enabled != false) {
-    pcVar2 = Dvar_GetString("mapname");
-    if ((pcVar2 == (char *)0x0) || (*pcVar2 == '\0')) {
+    pcVar1 = Dvar_GetString("mapname");
+    if ((pcVar1 == (char *)0x0) || (*pcVar1 == '\0')) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_client_side_effects_mp.cpp"
                       ,0x274,0,"%s");
     }
     Com_sprintf(acStack_130,0x100,"maps/mp/%s_fx.gsc");
     CG_LoadClientEffectMapping_FastFile(acStack_130);
     Com_sprintf(acStack_130,0x100,"maps/createfx/%s_fx.gsc");
-    CG_LoadClientEffects_FastFile(LVar1,acStack_130);
+    CG_LoadClientEffects_FastFile(param_1,acStack_130);
   }
-  __restgprlr_28();
   return;
 }
 
@@ -789,78 +787,71 @@ void CG_ClientSideEffectsRegisterDvars(void)
 
 // 822A73C8  CG_AddClientSideSound  (cgame_mp/cg_client_side_effects_mp.cpp:652)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void CG_AddClientSideSound(LocalClientNum_t param_1,int param_2,ClientEntSound *param_3)
 
 {
-  LocalClientNum_t LVar1;
-  int iVar2;
-  
-  LVar1 = __savegprlr_29(param_1);
   if (0xbff < param_2 + 0x800) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_client_side_effects_mp.cpp"
                     ,0x292,0,"%s");
   }
-  iVar2 = CG_PlaySoundAlias(LVar1,param_2 + 0x800,param_3->origin,param_3->aliasList);
-  __restgprlr_29(iVar2);
+  CG_PlaySoundAlias(param_1,param_2 + 0x800,param_3->origin,param_3->aliasList);
   return;
 }
 
 
 // 822A7428  CG_AddClientSideSounds  (cgame_mp/cg_client_side_effects_mp.cpp:665)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void CG_AddClientSideSounds(LocalClientNum_t param_1)
 
 {
-  LocalClientNum_t LVar1;
-  LocalClientNum_t LVar2;
+  int iVar1;
+  ClientEntSound *pCVar2;
   int iVar3;
-  ClientEntSound *pCVar4;
-  int iVar5;
   
-  LVar1 = __savegprlr_25(param_1);
-  pCVar4 = g_clientEntSounds;
-  LVar2 = LVar1;
+  pCVar2 = g_clientEntSounds;
   if (0 < g_clientEntSoundCount) {
-    iVar5 = 0x800;
+    iVar3 = 0x800;
     do {
-      if (0xbff < iVar5) {
+      if (0xbff < iVar3) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_client_side_effects_mp.cpp"
                         ,0x292,0,"%s");
       }
-      LVar2 = CG_PlaySoundAlias(LVar1,iVar5,pCVar4->origin,pCVar4->aliasList);
-      pCVar4 = pCVar4 + 1;
-      iVar3 = iVar5 + -0x7ff;
-      iVar5 = iVar5 + 1;
-    } while (iVar3 < g_clientEntSoundCount);
+      CG_PlaySoundAlias(param_1,iVar3,pCVar2->origin,pCVar2->aliasList);
+      pCVar2 = pCVar2 + 1;
+      iVar1 = iVar3 + -0x7ff;
+      iVar3 = iVar3 + 1;
+    } while (iVar1 < g_clientEntSoundCount);
   }
-  __restgprlr_25(LVar2);
   return;
 }
 
 
 // 822A74C0  CG_CopyClientSideSoundEntityOrientation  (cgame_mp/cg_client_side_effects_mp.cpp:672)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void CG_CopyClientSideSoundEntityOrientation(int param_1,float *param_2,float (*param_3) [3])
 
 {
-  uint uVar1;
-  
-  uVar1 = __savegprlr_28(param_1);
-  if ((uint)g_clientEntSoundCount <= uVar1) {
+  if ((uint)g_clientEntSoundCount <= (uint)param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_client_side_effects_mp.cpp"
                     ,0x2a3,0,
                     "clientSoundEntIndex doesn\'t index g_clientEntSoundCount\n\t%i not in [0, %i)")
     ;
   }
   AnglesToAxis(zeroVec3,param_3);
-  *param_2 = g_clientEntSounds[uVar1].origin[0];
-  param_2[1] = g_clientEntSounds[uVar1].origin[1];
-  param_2[2] = g_clientEntSounds[uVar1].origin[2];
-  __restgprlr_28();
+  *param_2 = g_clientEntSounds[param_1].origin[0];
+  param_2[1] = g_clientEntSounds[param_1].origin[1];
+  param_2[2] = g_clientEntSounds[param_1].origin[2];
   return;
 }
 

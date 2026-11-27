@@ -2,41 +2,41 @@
 
 // 822594D8  mp_to_unsigned_bin  (line unknown)
 
-void mp_to_unsigned_bin(undefined8 param_1,int param_2)
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
+undefined8 mp_to_unsigned_bin(undefined8 param_1,int param_2)
 
 {
   undefined1 uVar1;
   uint uVar2;
   undefined4 *puVar3;
   undefined8 uVar4;
-  undefined8 uVar5;
+  uint *puVar5;
   uint *puVar6;
-  uint *puVar7;
-  int iVar8;
-  longlong lVar9;
-  ulonglong uVar10;
-  uint uVar11;
-  ulonglong uVar12;
+  int iVar7;
+  longlong lVar8;
+  ulonglong uVar9;
+  uint uVar10;
+  ulonglong uVar11;
   uint local_50 [2];
   uint local_48;
   undefined4 *local_44;
   undefined1 auStack_40 [64];
   
-  uVar4 = __savegprlr_28();
-  uVar5 = mp_init(local_50);
-  if (((int)uVar5 == 0) && (uVar5 = mp_copy(uVar4,local_50), (int)uVar5 == 0)) {
-    lVar9 = 0;
+  uVar4 = mp_init(local_50);
+  if (((int)uVar4 == 0) && (uVar4 = mp_copy(param_1,local_50), (int)uVar4 == 0)) {
+    lVar8 = 0;
     puVar3 = local_44;
-    uVar11 = local_50[0];
-    while (uVar11 != 0) {
-      *(char *)((int)lVar9 + param_2) = (char)*puVar3;
-      lVar9 = lVar9 + 1;
+    uVar10 = local_50[0];
+    while (uVar10 != 0) {
+      *(char *)((int)lVar8 + param_2) = (char)*puVar3;
+      lVar8 = lVar8 + 1;
       uVar4 = mp_init(auStack_40);
       if ((int)uVar4 != 0) {
 LAB_82259638:
         mp_clear(local_50);
-        __restgprlr_28(uVar4);
-        return;
+        return uVar4;
       }
       uVar4 = mp_copy(local_50,local_50);
       puVar3 = local_44;
@@ -44,47 +44,46 @@ LAB_82259638:
         mp_clear(auStack_40);
         goto LAB_82259638;
       }
-      uVar10 = (ulonglong)local_50[0];
-      puVar6 = local_44 + local_50[0];
-      uVar11 = 0;
-      uVar12 = uVar10;
-      puVar7 = puVar6;
-      if (-1 < (longlong)(uVar10 - 1)) {
+      uVar9 = (ulonglong)local_50[0];
+      puVar5 = local_44 + local_50[0];
+      uVar10 = 0;
+      uVar11 = uVar9;
+      puVar6 = puVar5;
+      if (-1 < (longlong)(uVar9 - 1)) {
         do {
-          uVar2 = uVar11 << 0x14;
-          uVar11 = puVar7[-1] & 0xff;
-          puVar7[-1] = puVar7[-1] >> 8 | uVar2;
-          uVar12 = uVar12 - 1;
-          puVar7 = puVar7 + -1;
-        } while (uVar12 != 0);
+          uVar2 = uVar10 << 0x14;
+          uVar10 = puVar6[-1] & 0xff;
+          puVar6[-1] = puVar6[-1] >> 8 | uVar2;
+          uVar11 = uVar11 - 1;
+          puVar6 = puVar6 + -1;
+        } while (uVar11 != 0);
       }
       if (0 < (int)local_50[0]) {
         do {
-          puVar6 = puVar6 + -1;
-          if (*puVar6 != 0) break;
-          uVar10 = uVar10 - 1;
-        } while (0 < (longlong)uVar10);
-        local_50[0] = (uint)uVar10;
+          puVar5 = puVar5 + -1;
+          if (*puVar5 != 0) break;
+          uVar9 = uVar9 - 1;
+        } while (0 < (longlong)uVar9);
+        local_50[0] = (uint)uVar9;
       }
-      local_48 = -(uint)(uVar10 != 0) & local_48;
+      local_48 = -(uint)(uVar9 != 0) & local_48;
       mp_clear(auStack_40);
-      uVar11 = (uint)uVar10;
+      uVar10 = (uint)uVar9;
     }
-    lVar9 = lVar9 + -1;
-    iVar8 = 0;
-    if (0 < lVar9) {
+    lVar8 = lVar8 + -1;
+    iVar7 = 0;
+    if (0 < lVar8) {
       do {
-        uVar1 = *(undefined1 *)(iVar8 + param_2);
-        *(undefined1 *)(iVar8 + param_2) = *(undefined1 *)((int)lVar9 + param_2);
-        iVar8 = iVar8 + 1;
-        *(undefined1 *)((int)lVar9 + param_2) = uVar1;
-        lVar9 = lVar9 + -1;
-      } while (iVar8 < (int)lVar9);
+        uVar1 = *(undefined1 *)(iVar7 + param_2);
+        *(undefined1 *)(iVar7 + param_2) = *(undefined1 *)((int)lVar8 + param_2);
+        iVar7 = iVar7 + 1;
+        *(undefined1 *)((int)lVar8 + param_2) = uVar1;
+        lVar8 = lVar8 + -1;
+      } while (iVar7 < (int)lVar8);
     }
     mp_clear(local_50);
-    uVar5 = 0;
+    uVar4 = 0;
   }
-  __restgprlr_28(uVar5);
-  return;
+  return uVar4;
 }
 

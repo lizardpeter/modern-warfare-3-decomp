@@ -2,6 +2,8 @@
 
 // 82354570  CL_GetClientState  (client_mp/cl_ui_mp.cpp:32)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
@@ -10,20 +12,17 @@
 void CL_GetClientState(LocalClientNum_t param_1,uiClientState_s *param_2)
 
 {
-  LocalClientNum_t LVar1;
-  clientConnection_t *pcVar2;
+  clientConnection_t *pcVar1;
   
-  LVar1 = __savegprlr_29(param_1);
-  pcVar2 = CL_GetLocalClientConnection(LVar1);
-  param_2->connectPacketCount = pcVar2->connectPacketCount;
-  if (LOCAL_CLIENT_3 < LVar1) {
+  pcVar1 = CL_GetLocalClientConnection(param_1);
+  param_2->connectPacketCount = pcVar1->connectPacketCount;
+  if (LOCAL_CLIENT_3 < param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\client_mp.h",0x4aa,0
                     ,"localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)");
   }
-  param_2->connState = clientUIActives[LVar1].connectionState;
+  param_2->connState = clientUIActives[param_1].connectionState;
   I_strncpyz(param_2->servername,cls.servername,0x400);
-  I_strncpyz(param_2->messageString,pcVar2->serverMessage,0x400);
-  __restgprlr_29();
+  I_strncpyz(param_2->messageString,pcVar1->serverMessage,0x400);
   return;
 }
 
@@ -115,26 +114,23 @@ int LAN_WaitServerResponse(int param_1)
 
 // 82354778  LAN_GetServerInfo  (client_mp/cl_ui_mp.cpp:161)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void LAN_GetServerInfo(int param_1,int param_2,char *param_3,int param_4)
 
 {
   int iVar1;
   char *pcVar2;
-  ulonglong uVar3;
-  char *pcVar4;
-  longlong lVar5;
+  longlong lVar3;
   char local_430 [1072];
   
-  uVar3 = (ulonglong)(int)param_3;
-  lVar5 = (longlong)param_2;
-  iVar1 = __savegprlr_28(param_1);
   local_430[0] = '\0';
-  pcVar4 = (char *)uVar3;
-  if ((((iVar1 == 0) && (-1 < (int)lVar5)) && ((int)lVar5 < 0x10)) &&
-     (lVar5 = lVar5 * 0xd0 + -0x7d55e3a8, lVar5 != 0)) {
-    if ((uVar3 & 0xffffffff) != 0) {
-      *pcVar4 = '\0';
-      iVar1 = (int)lVar5;
+  if ((((param_1 == 0) && (-1 < param_2)) && (param_2 < 0x10)) &&
+     (lVar3 = (longlong)param_2 * 0xd0 + -0x7d55e3a8, lVar3 != 0)) {
+    if (param_3 != (char *)0x0) {
+      *param_3 = '\0';
+      iVar1 = (int)lVar3;
       Info_SetValueForKey(local_430,"hostname",(char *)(iVar1 + 0x68));
       Info_SetValueForKey(local_430,"mapname",(char *)(iVar1 + 0x88));
       pcVar2 = va("%i");
@@ -161,15 +157,13 @@ void LAN_GetServerInfo(int param_1,int param_2,char *param_3,int param_4)
       Info_SetValueForKey(local_430,"hw",pcVar2);
       pcVar2 = va("%i");
       Info_SetValueForKey(local_430,"mod",pcVar2);
-      I_strncpyz(pcVar4,local_430,param_4);
-      __restgprlr_28();
+      I_strncpyz(param_3,local_430,param_4);
       return;
     }
   }
-  else if ((uVar3 & 0xffffffff) != 0) {
-    *pcVar4 = '\0';
+  else if (param_3 != (char *)0x0) {
+    *param_3 = '\0';
   }
-  __restgprlr_28();
   return;
 }
 
@@ -206,31 +200,26 @@ serverInfo_t * LAN_GetServerPtr(int param_1,int param_2)
 
 // 82354A50  LAN_CleanHostname  (client_mp/cl_ui_mp.cpp:301)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void LAN_CleanHostname(char *param_1,char *param_2)
 
 {
   byte bVar1;
-  byte *pbVar2;
-  int iVar3;
-  undefined1 *puVar4;
-  longlong lVar5;
+  int iVar2;
   
-  lVar5 = (longlong)(int)param_2;
-  pbVar2 = (byte *)__savegprlr_29(param_1);
-  puVar4 = (undefined1 *)lVar5;
-  bVar1 = *pbVar2;
+  bVar1 = *param_1;
   while (bVar1 != 0) {
-    iVar3 = isalpha((uint)bVar1);
-    if (iVar3 != 0) {
-      *(byte *)lVar5 = bVar1;
-      lVar5 = lVar5 + 1;
+    iVar2 = isalpha((uint)bVar1);
+    if (iVar2 != 0) {
+      *param_2 = bVar1;
+      param_2 = param_2 + 1;
     }
-    puVar4 = (undefined1 *)lVar5;
-    pbVar2 = pbVar2 + 1;
-    bVar1 = *pbVar2;
+    param_1 = param_1 + 1;
+    bVar1 = *param_1;
   }
-  *puVar4 = 0;
-  __restgprlr_29();
+  *param_2 = 0;
   return;
 }
 
@@ -256,91 +245,79 @@ int LAN_CompareHostname(char *param_1,char *param_2)
 
 // 82354B10  LAN_CompareServers  (client_mp/cl_ui_mp.cpp:333)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
 int LAN_CompareServers(int param_1,int param_2,int param_3,int param_4,int param_5)
 
 {
-  bool bVar1;
+  longlong lVar1;
   int iVar2;
-  int iVar4;
-  longlong lVar3;
+  char *pcVar3;
+  char *pcVar4;
   int iVar5;
-  char *pcVar6;
-  char *pcVar7;
-  ulonglong uVar8;
-  longlong lVar9;
-  ulonglong uVar10;
-  ulonglong uVar11;
+  int iVar6;
   
-  lVar9 = (longlong)param_5;
-  lVar3 = (longlong)param_4;
-  uVar8 = (ulonglong)param_2;
-  iVar4 = __savegprlr_28(param_1);
-  if (((iVar4 == 0) && (-1 < (int)lVar3)) && ((int)lVar3 < 0x10)) {
-    uVar10 = lVar3 * 0xd0 - 0x7d55e3a8;
+  if (((param_1 == 0) && (-1 < param_4)) && (param_4 < 0x10)) {
+    iVar5 = param_4 * 0xd0 + -0x7d55e3a8;
 LAB_82354b5c:
-    if (((int)lVar9 < 0) || (0xf < (int)lVar9)) goto LAB_82354b7c;
-    uVar11 = lVar9 * 0xd0 - 0x7d55e3a8;
+    if ((param_5 < 0) || (0xf < param_5)) goto LAB_82354b7c;
+    iVar6 = param_5 * 0xd0 + -0x7d55e3a8;
   }
   else {
-    uVar10 = 0;
-    if (iVar4 == 0) goto LAB_82354b5c;
+    iVar5 = 0;
+    if (param_1 == 0) goto LAB_82354b5c;
 LAB_82354b7c:
-    uVar11 = 0;
+    iVar6 = 0;
   }
-  if (((uVar10 & 0xffffffff) == 0) || ((uVar11 & 0xffffffff) == 0)) {
-    lVar3 = 0;
-    goto LAB_82354c80;
+  if ((iVar5 == 0) || (iVar6 == 0)) {
+    return 0;
   }
-  lVar3 = 0;
-  if ((uVar8 & 0xffffffff) < 5) {
-    bVar1 = (int)uVar8 != 0;
-    iVar4 = (int)uVar10;
-    iVar2 = (int)uVar11;
-    if (uVar8 == 1 && bVar1) {
-      pcVar6 = UI_GetMapDisplayName((char *)(iVar2 + 0x88));
-      pcVar7 = UI_GetMapDisplayName((char *)(iVar4 + 0x88));
-      iVar5 = I_stricmp(pcVar7,pcVar6);
+  lVar1 = 0;
+  if (4 < (uint)param_2) goto LAB_82354c68;
+  if (param_2 == 1) {
+    pcVar3 = UI_GetMapDisplayName((char *)(iVar6 + 0x88));
+    pcVar4 = UI_GetMapDisplayName((char *)(iVar5 + 0x88));
+    iVar2 = I_stricmp(pcVar4,pcVar3);
+    goto joined_r0x82354c28;
+  }
+  if (param_2 == 2) {
+    lVar1 = (ulonglong)*(byte *)(iVar5 + 0x59) - (ulonglong)*(byte *)(iVar6 + 0x59);
+    if (lVar1 != 0) goto LAB_82354c68;
+LAB_82354c2c:
+    param_3 = 0;
+  }
+  else {
+    if (param_2 == 3) {
+      pcVar3 = UI_GetGameTypeDisplayName((char *)(iVar6 + 0xc0));
+      pcVar4 = UI_GetGameTypeDisplayName((char *)(iVar5 + 0xc0));
+      iVar2 = I_stricmp(pcVar4,pcVar3);
+joined_r0x82354c28:
+      lVar1 = (longlong)iVar2;
+      if (iVar2 != 0) goto LAB_82354c68;
+      goto LAB_82354c2c;
+    }
+    if (param_2 == 0) {
+      iVar2 = LAN_CompareHostname((char *)(iVar5 + 0x68),(char *)(iVar6 + 0x68));
       goto joined_r0x82354c28;
     }
-    if (uVar8 == 2 && bVar1) {
-      lVar3 = (ulonglong)*(byte *)(iVar4 + 0x59) - (ulonglong)*(byte *)(iVar2 + 0x59);
-      if (lVar3 != 0) goto LAB_82354c68;
-LAB_82354c2c:
-      param_3 = 0;
-    }
-    else {
-      if (uVar8 == 3 && bVar1) {
-        pcVar6 = UI_GetGameTypeDisplayName((char *)(iVar2 + 0xc0));
-        pcVar7 = UI_GetGameTypeDisplayName((char *)(iVar4 + 0xc0));
-        iVar5 = I_stricmp(pcVar7,pcVar6);
-joined_r0x82354c28:
-        lVar3 = (longlong)iVar5;
-        if (iVar5 != 0) goto LAB_82354c68;
-        goto LAB_82354c2c;
-      }
-      if (!bVar1) {
-        iVar5 = LAN_CompareHostname((char *)(iVar4 + 0x68),(char *)(iVar2 + 0x68));
-        goto joined_r0x82354c28;
-      }
-    }
-    lVar3 = (longlong)*(short *)(iVar4 + 0x66) - (longlong)*(short *)(iVar2 + 0x66);
-    if (lVar3 == 0) {
-      iVar5 = I_stricmp((char *)(iVar4 + 0xc0),(char *)(iVar2 + 0xc0));
-      lVar3 = (longlong)iVar5;
-      if (iVar5 == 0) {
-        iVar4 = LAN_CompareHostname((char *)(iVar4 + 0x68),(char *)(iVar2 + 0x68));
-        lVar3 = (longlong)iVar4;
-      }
+  }
+  lVar1 = (longlong)*(short *)(iVar5 + 0x66) - (longlong)*(short *)(iVar6 + 0x66);
+  if (lVar1 == 0) {
+    iVar2 = I_stricmp((char *)(iVar5 + 0xc0),(char *)(iVar6 + 0xc0));
+    lVar1 = (longlong)iVar2;
+    if (iVar2 == 0) {
+      iVar5 = LAN_CompareHostname((char *)(iVar5 + 0x68),(char *)(iVar6 + 0x68));
+      lVar1 = (longlong)iVar5;
     }
   }
 LAB_82354c68:
-  if (param_3 != 0) {
-    iVar4 = __restgprlr_28(-lVar3);
-    return iVar4;
+  if (param_3 == 0) {
+    return (int)lVar1;
   }
-LAB_82354c80:
-  iVar4 = __restgprlr_28(lVar3);
-  return iVar4;
+  return -(int)lVar1;
 }
 
 
@@ -412,6 +389,8 @@ void Key_KeynumToStringBuf(int param_1,char *param_2,int param_3)
 
 // 82354D78  CL_GetClientNameColorize  (client_mp/cl_ui_mp.cpp:549)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
@@ -422,117 +401,105 @@ int CL_GetClientNameColorize
 
 {
   uint uVar1;
-  LocalClientNum_t LVar2;
-  int iVar3;
-  bool bVar8;
-  PartyData *pPVar4;
-  PartyMember *pPVar5;
-  char *pcVar6;
-  clientActive_t *pcVar7;
-  ulonglong uVar9;
-  longlong lVar10;
-  clientState_s *pcVar11;
+  int iVar2;
+  bool bVar7;
+  PartyData *pPVar3;
+  PartyMember *pPVar4;
+  char *pcVar5;
+  clientActive_t *pcVar6;
+  ulonglong uVar8;
+  longlong lVar9;
+  clientState_s *pcVar10;
   
-  LVar2 = __savegprlr_25(param_1);
   *param_3 = '\0';
-  iVar3 = CL_IsLocalClientInGame(LVar2);
-  if (iVar3 == 0) {
-    bVar8 = Lobby_IsInLobby();
-    if (bVar8) {
-      pPVar4 = Lobby_GetPartyData();
-      iVar3 = Party_IsMemberIndexDataAvailable(pPVar4,param_2);
-      if (iVar3 != 0) {
-        pPVar5 = Lobby_GetMember(param_2);
-        if (((pPVar5->info).clanAbbrev[0] != '\0') &&
-           (pPVar5 = Lobby_GetMember(param_2), (pPVar5->info).use_elite_clan_tag == false)) {
-          pPVar4 = Lobby_GetPartyData();
-          Party_GetMemberName(pPVar4,param_2);
+  iVar2 = CL_IsLocalClientInGame(param_1);
+  if (iVar2 == 0) {
+    bVar7 = Lobby_IsInLobby();
+    if (bVar7) {
+      pPVar3 = Lobby_GetPartyData();
+      iVar2 = Party_IsMemberIndexDataAvailable(pPVar3,param_2);
+      if (iVar2 != 0) {
+        pPVar4 = Lobby_GetMember(param_2);
+        if (((pPVar4->info).clanAbbrev[0] != '\0') &&
+           (pPVar4 = Lobby_GetMember(param_2), (pPVar4->info).use_elite_clan_tag == false)) {
+          pPVar3 = Lobby_GetPartyData();
+          Party_GetMemberName(pPVar3,param_2);
           Lobby_GetMember(param_2);
           _snprintf(param_3,param_4,"[%s]%s");
-          param_3[param_4 - 1] = '\0';
-          iVar3 = __restgprlr_25(1);
-          return iVar3;
+          param_3[param_4 + -1] = '\0';
+          return 1;
         }
-        pPVar5 = Lobby_GetMember(param_2);
-        if (((pPVar5->info).elite_clan_tag_text[0] != '\0') &&
-           (pPVar5 = Lobby_GetMember(param_2), (pPVar5->info).use_elite_clan_tag == true)) {
-          pPVar4 = Lobby_GetPartyData();
-          Party_GetMemberName(pPVar4,param_2);
+        pPVar4 = Lobby_GetMember(param_2);
+        if (((pPVar4->info).elite_clan_tag_text[0] != '\0') &&
+           (pPVar4 = Lobby_GetMember(param_2), (pPVar4->info).use_elite_clan_tag == true)) {
+          pPVar3 = Lobby_GetPartyData();
+          Party_GetMemberName(pPVar3,param_2);
           Lobby_GetMember(param_2);
           _snprintf(param_3,param_4,"[^3%s^%c]%s");
-          param_3[param_4 - 1] = '\0';
-          iVar3 = __restgprlr_25(1);
-          return iVar3;
+          param_3[param_4 + -1] = '\0';
+          return 1;
         }
-        pPVar4 = Lobby_GetPartyData();
-        pcVar6 = Party_GetMemberName(pPVar4,param_2);
-        I_strncpyz(param_3,pcVar6,param_4);
-        iVar3 = __restgprlr_25(1);
-        return iVar3;
+        pPVar3 = Lobby_GetPartyData();
+        pcVar5 = Party_GetMemberName(pPVar3,param_2);
+        I_strncpyz(param_3,pcVar5,param_4);
+        return 1;
       }
     }
     else if ((g_partyData.inParty != 0) &&
-            (iVar3 = Party_IsMemberIndexDataAvailable(&g_partyData,param_2), iVar3 != 0)) {
+            (iVar2 = Party_IsMemberIndexDataAvailable(&g_partyData,param_2), iVar2 != 0)) {
       if ((g_partyData.partyMembers[param_2].info.clanAbbrev[0] != '\0') &&
          (g_partyData.partyMembers[param_2].info.use_elite_clan_tag == false)) {
         Party_GetMemberName(&g_partyData,param_2);
         _snprintf(param_3,param_4,"[%s]%s");
-        param_3[param_4 - 1] = '\0';
-        iVar3 = __restgprlr_25(1);
-        return iVar3;
+        param_3[param_4 + -1] = '\0';
+        return 1;
       }
       if ((g_partyData.partyMembers[param_2].info.elite_clan_tag_text[0] != '\0') &&
          (g_partyData.partyMembers[param_2].info.use_elite_clan_tag == true)) {
         Party_GetMemberName(&g_partyData,param_2);
         _snprintf(param_3,param_4,"[^3%s^%c]%s");
-        param_3[param_4 - 1] = '\0';
-        iVar3 = __restgprlr_25(1);
-        return iVar3;
+        param_3[param_4 + -1] = '\0';
+        return 1;
       }
-      pcVar6 = Party_GetMemberName(&g_partyData,param_2);
-      I_strncpyz(param_3,pcVar6,param_4);
-      iVar3 = __restgprlr_25(1);
-      return iVar3;
+      pcVar5 = Party_GetMemberName(&g_partyData,param_2);
+      I_strncpyz(param_3,pcVar5,param_4);
+      return 1;
     }
   }
   else {
-    pcVar7 = CL_GetLocalClientGlobals(LVar2);
-    if ((pcVar7->snap).valid != 0) {
-      iVar3 = (pcVar7->snap).numClients;
-      lVar10 = 0;
-      if (0 < iVar3) {
-        uVar1 = pcVar7->parseClientsCount;
+    pcVar6 = CL_GetLocalClientGlobals(param_1);
+    if ((pcVar6->snap).valid != 0) {
+      iVar2 = (pcVar6->snap).numClients;
+      lVar9 = 0;
+      if (0 < iVar2) {
+        uVar1 = pcVar6->parseClientsCount;
         do {
-          uVar9 = (ulonglong)(uint)(pcVar7->snap).parseClientsIndex + lVar10;
+          uVar8 = (ulonglong)(uint)(pcVar6->snap).parseClientsIndex + lVar9;
           trapWord(6,(ulonglong)uVar1,0);
-          pcVar11 = pcVar7->parseClients + ((int)uVar9 - ((int)uVar9 / (int)uVar1) * uVar1);
+          pcVar10 = pcVar6->parseClients + ((int)uVar8 - ((int)uVar8 / (int)uVar1) * uVar1);
           trapWord(5,(ulonglong)uVar1 &
-                     ~(((uVar9 & 0x7fffffff) << 1 | (uVar9 & 0xffffffff) >> 0x1f) - 1),0xffff);
-          if (pcVar11->clientIndex == param_2) {
-            if ((pcVar11->clanAbbrev[0] != '\0') && (pcVar11->use_elite_clan_tag == 0)) {
+                     ~(((uVar8 & 0x7fffffff) << 1 | (uVar8 & 0xffffffff) >> 0x1f) - 1),0xffff);
+          if (pcVar10->clientIndex == param_2) {
+            if ((pcVar10->clanAbbrev[0] != '\0') && (pcVar10->use_elite_clan_tag == 0)) {
               _snprintf(param_3,param_4,"[%s]%s");
-              param_3[param_4 - 1] = '\0';
-              iVar3 = __restgprlr_25(1);
-              return iVar3;
+              param_3[param_4 + -1] = '\0';
+              return 1;
             }
-            if ((pcVar11->elite_clan_tag_text[0] != '\0') && (pcVar11->use_elite_clan_tag == 1)) {
+            if ((pcVar10->elite_clan_tag_text[0] != '\0') && (pcVar10->use_elite_clan_tag == 1)) {
               _snprintf(param_3,param_4,"[^3%s^%c]%s");
-              param_3[param_4 - 1] = '\0';
-              iVar3 = __restgprlr_25(1);
-              return iVar3;
+              param_3[param_4 + -1] = '\0';
+              return 1;
             }
             _snprintf(param_3,param_4,"%s");
-            param_3[param_4 - 1] = '\0';
-            iVar3 = __restgprlr_25(1);
-            return iVar3;
+            param_3[param_4 + -1] = '\0';
+            return 1;
           }
-          lVar10 = lVar10 + 1;
-        } while ((int)lVar10 < iVar3);
+          lVar9 = lVar9 + 1;
+        } while ((int)lVar9 < iVar2);
       }
     }
   }
-  iVar3 = __restgprlr_25(0);
-  return iVar3;
+  return 0;
 }
 
 

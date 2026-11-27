@@ -2,10 +2,12 @@
 
 // 8281BCA0  vp8_machine_specific_config  (WebM_atvi_opt/vpx/vp8/common/generic/systemdependent.c:34)
 
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
+
 void vp8_machine_specific_config(VP8Common *param_1)
 
 {
-  __savegprlr();
   (param_1->rtcd).idct.idct1 = vp8_short_idct4x4llm_1_c;
   (param_1->rtcd).idct.idct16 = vp8_short_idct4x4llm_c;
   (param_1->rtcd).idct.idct1_scalar_add = vp8_dc_only_idct_add_c;
@@ -44,7 +46,6 @@ void vp8_machine_specific_config(VP8Common *param_1)
   (param_1->rtcd).postproc.blend_b = vp8_blend_b_c;
   vp8_build_intra_predictors_mby_ptr = vp8_build_intra_predictors_mby;
   vp8_build_intra_predictors_mby_s_ptr = vp8_build_intra_predictors_mby_s;
-  __restgprlr();
   return;
 }
 

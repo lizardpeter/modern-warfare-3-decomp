@@ -17,6 +17,8 @@ void TRACK_rb_state(void)
 
 // 827AC850  RB_SetInitialState  (gfx_d3d/rb_state.cpp:38)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
@@ -28,7 +30,6 @@ void RB_SetInitialState(void)
   D3DDevice *pDVar1;
   D3DDevice **ppDVar2;
   
-  __savegprlr_26();
   memset();
   R_InitCmdBufSourceState(&gfxCmdBufSourceState,&gfxCmdBufInput,0);
   gfxCmdBufState.prim.device = dx.device;
@@ -116,7 +117,6 @@ void RB_SetInitialState(void)
     D3DDevice_ReleaseThreadOwnership(pDVar1);
     ppDVar2 = ppDVar2 + 1;
   } while ((int)ppDVar2 < -0x7b9e98d0);
-  __restgprlr_26();
   return;
 }
 
@@ -167,6 +167,8 @@ void RB_InitSceneViewport(void)
 
 // 827AC808  RB_InitImages  (gfx_d3d/rb_state.cpp:190)
 
+/* WARNING: Function: __savegprlr_20 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_20 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
@@ -175,7 +177,6 @@ void RB_InitSceneViewport(void)
 void RB_InitImages(void)
 
 {
-  __savegprlr_20();
   rg.codeImageNames[6] = "shadowmapSamplerSun";
   gfxCmdBufInput.codeImageSamplerStates[0] = '\x01';
   gfxCmdBufInput.codeImageSamplerStates[1] = '\x01';
@@ -231,7 +232,6 @@ void RB_InitImages(void)
   gfxCmdBufInput.codeImages[0x1d] = rgp.streamingLoadingImage;
   gfxCmdBufInput.codeImageSamplerStates[0x1d] = '\x01';
   rg.codeImageNames[0x1d] = (char *)0x0;
-  __restgprlr_20();
   return;
 }
 

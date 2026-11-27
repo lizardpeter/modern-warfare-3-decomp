@@ -8227,11 +8227,11 @@ LAB_82552f00:
   82552F24  7C0903A6             mtspr CTR,r0
 switchD:
   82552F28  4E800420             bctr
-caseD_2:
+caseD_5d:
   82552F7C  81740004             lwz r11,0x4(r20)
   82552F80  2F0B0001             cmpwi cr6,r11,0x1
   82552F84  409A0068             bne cr6,0x82552fec
-caseD_0:
+caseD_5b:
   82552F88  81720008             lwz r11,0x8(r18)
   82552F8C  2F0B0020             cmpwi cr6,r11,0x20
   82552F90  4098005C             bge cr6,0x82552fec
@@ -8248,11 +8248,11 @@ caseD_0:
   82552FBC  7C6BFA14             add r3,r11,r31
   82552FC0  382100F0             addi r1,r1,0xf0
   82552FC4  483C370C             b 0x829166d0
-caseD_f:
+caseD_6a:
   82552FC8  8174FFFC             lwz r11,-0x4(r20)
   82552FCC  2F0B0001             cmpwi cr6,r11,0x1
   82552FD0  409A001C             bne cr6,0x82552fec
-caseD_e:
+caseD_69:
   82552FD4  81740004             lwz r11,0x4(r20)
   82552FD8  2F0B0009             cmpwi cr6,r11,0x9
   82552FDC  409A0010             bne cr6,0x82552fec

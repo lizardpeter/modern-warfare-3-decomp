@@ -26,56 +26,53 @@ void __thiscall bdTeamInfo::~bdTeamInfo(bdTeamInfo *this)
 
 // 82909700  deserialize  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdteams/bdteaminfo.cpp:26)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 bool __thiscall bdTeamInfo::deserialize(bdTeamInfo *this,bdReference<bdByteBuffer> param_1)
 
 {
-  int iVar1;
+  bool bVar1;
   bool bVar2;
-  bool bVar3;
-  undefined1 uVar4;
-  longlong lVar5;
-  bdByteBuffer *pbStack0000001c;
+  bdReference<bdByteBuffer> bStack0000001c;
   
-  iVar1 = __savegprlr_29(this);
-  pbStack0000001c = param_1.m_ptr;
-  bVar2 = bdByteBuffer::readUInt64
-                    ((bdByteBuffer *)(param_1.m_ptr)->_padding_,(ulong64 *)(iVar1 + 8));
-  if (bVar2) {
-    bVar3 = bdByteBuffer::readString
-                      ((bdByteBuffer *)(param_1.m_ptr)->_padding_,(char *)(iVar1 + 0x18),0x40);
-    bVar2 = true;
-    if (!bVar3) goto LAB_8290974c;
+  bStack0000001c.m_ptr = param_1.m_ptr;
+  bVar1 = bdByteBuffer::readUInt64((bdByteBuffer *)(param_1.m_ptr)->_padding_,&this->m_teamID);
+  if (bVar1) {
+    bVar2 = bdByteBuffer::readString
+                      ((bdByteBuffer *)(param_1.m_ptr)->_padding_,this->m_teamName,0x40);
+    bVar1 = true;
+    if (!bVar2) goto LAB_8290974c;
   }
   else {
 LAB_8290974c:
-    bVar2 = false;
+    bVar1 = false;
   }
-  if (bVar2) {
-    bVar3 = bdByteBuffer::readUInt64
-                      ((bdByteBuffer *)(param_1.m_ptr)->_padding_,(ulong64 *)(iVar1 + 0x10));
-    bVar2 = true;
-    if (!bVar3) goto LAB_82909770;
+  if (bVar1) {
+    bVar2 = bdByteBuffer::readUInt64
+                      ((bdByteBuffer *)(param_1.m_ptr)->_padding_,&this->m_ownerUserID);
+    bVar1 = true;
+    if (!bVar2) goto LAB_82909770;
   }
   else {
 LAB_82909770:
-    bVar2 = false;
+    bVar1 = false;
   }
-  if (bVar2) {
+  if (bVar1) {
     bVar2 = bdByteBuffer::readUByte8
-                      ((bdByteBuffer *)(param_1.m_ptr)->_padding_,(uchar *)(iVar1 + 0x58));
-    lVar5 = 1;
+                      ((bdByteBuffer *)(param_1.m_ptr)->_padding_,&this->m_memberStatus);
+    bVar1 = true;
     if (bVar2) goto LAB_82909798;
   }
-  lVar5 = 0;
+  bVar1 = false;
 LAB_82909798:
-  if (lVar5 == 0) {
+  if (!bVar1) {
     bdLogMessage(BD_LOG_ERROR,"err/","teamInfo",
                  "c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdLobby\\bdTeams\\bdTeamInfo.cpp"
                  ,"bdTeamInfo::deserialize",0x21,"Deserialization failed");
   }
   bdReference<bdByteBuffer>::~bdReference<bdByteBuffer>((bdReference<bdByteBuffer> *)param_1.m_ptr);
-  uVar4 = __restgprlr_29(lVar5);
-  return (bool)uVar4;
+  return bVar1;
 }
 
 

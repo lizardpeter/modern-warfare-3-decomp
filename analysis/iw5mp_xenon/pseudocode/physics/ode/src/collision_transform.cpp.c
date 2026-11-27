@@ -56,74 +56,73 @@ void __thiscall dxGeomTransform::~dxGeomTransform(dxGeomTransform *this)
 
 // 82688658  computeAABB  (physics/ode/src/collision_transform.cpp:75)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void __thiscall dxGeomTransform::computeAABB(dxGeomTransform *this)
 
 {
   float *pfVar1;
   float *pfVar2;
-  dxGeomTransform *this_00;
   int *piVar3;
   dxSpace **ppdVar4;
   longlong lVar5;
   
-  this_00 = (dxGeomTransform *)__savegprlr_29(this);
-  if (this_00->obj == (dxGeom *)0x0) {
-    dSetZero((float *)&this_00->_padding_,6);
-    __restgprlr_29();
+  if (this->obj == (dxGeom *)0x0) {
+    dSetZero((float *)&this->_padding_,6);
     return;
   }
-  pfVar1 = this_00->obj->pos;
-  pfVar2 = this_00->obj->R;
-  computeFinalTx(this_00);
-  this_00->obj->pos = this_00->finalPos;
-  this_00->obj->R = this_00->finalR;
-  (**(code **)(this_00->obj->_padding_ + 4))();
-  piVar3 = &this_00->_padding_;
+  pfVar1 = this->obj->pos;
+  pfVar2 = this->obj->R;
+  computeFinalTx(this);
+  this->obj->pos = this->finalPos;
+  this->obj->R = this->finalR;
+  (**(code **)(this->obj->_padding_ + 4))();
+  piVar3 = &this->_padding_;
   lVar5 = 6;
-  ppdVar4 = &this_00->obj->parent_space;
+  ppdVar4 = &this->obj->parent_space;
   do {
     ppdVar4 = ppdVar4 + 1;
     piVar3 = piVar3 + 1;
     *piVar3 = (int)*ppdVar4;
     lVar5 = lVar5 + -1;
   } while (lVar5 != 0);
-  this_00->obj->pos = pfVar1;
-  this_00->obj->R = pfVar2;
-  __restgprlr_29();
+  this->obj->pos = pfVar1;
+  this->obj->R = pfVar2;
   return;
 }
 
 
 // 82688708  ODE_GeomTransformGetAAContainedBox  (physics/ode/src/collision_transform.cpp:103)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void ODE_GeomTransformGetAAContainedBox(dxGeom *param_1,Bounds *param_2)
 
 {
   float fVar1;
   float fVar2;
-  dxGeomTransform *this;
   
-  this = (dxGeomTransform *)__savegprlr_28(param_1);
-  if (this->_padding_ != 1) {
+  if (param_1->type != 1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\collision_transform.cpp"
                     ,0x6a,0,"%s");
   }
-  if (this->obj == (dxGeom *)0x0) {
+  if (*(int *)&param_1->field_0x4c == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\collision_transform.cpp"
                     ,0x6e,0,"%s");
   }
-  if ((this->_padding_ & 2U) != 0) {
-    dxGeomTransform::computeFinalTx(this);
+  if ((param_1->gflags & 2U) != 0) {
+    dxGeomTransform::computeFinalTx((dxGeomTransform *)param_1);
   }
-  this->obj->pos = this->finalPos;
-  this->obj->R = this->finalR;
+  *(dxGeom ****)(*(int *)&param_1->field_0x4c + 0x18) = &param_1[2].tome;
+  *(ulong **)(*(int *)&param_1->field_0x4c + 0x1c) = &param_1[1].category_bits;
   fVar1 = param_2->midPoint[1];
   fVar2 = param_2->midPoint[2];
-  param_2->midPoint[0] = this->localPos[0] + param_2->midPoint[0];
-  param_2->midPoint[1] = this->localPos[1] + fVar1;
-  param_2->midPoint[2] = this->localPos[2] + fVar2;
-  ODE_GeomGetAAContainedBoxInternal(this->obj,param_2);
-  __restgprlr_28();
+  param_2->midPoint[0] = param_1[1].aabb[3] + param_2->midPoint[0];
+  param_2->midPoint[1] = param_1[1].aabb[4] + fVar1;
+  param_2->midPoint[2] = param_1[1].aabb[5] + fVar2;
+  ODE_GeomGetAAContainedBoxInternal(*(dxGeom **)&param_1->field_0x4c,param_2);
   return;
 }
 
@@ -156,88 +155,81 @@ void __thiscall dxGeomTransform::computeFinalTx(dxGeomTransform *this)
 
 // 82688438  dCollideTransform  (physics/ode/src/collision_transform.cpp:142)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
+
 int dCollideTransform(dxGeom *param_1,dxGeom *param_2,int param_3,dContactGeom *param_4,int param_5)
 
 {
-  dxGeom *pdVar1;
-  float *pfVar2;
-  float *pfVar3;
-  dxBody *pdVar4;
-  dxGeomTransform *this;
-  int iVar5;
+  undefined4 uVar1;
+  undefined4 uVar2;
+  undefined4 uVar3;
+  int iVar4;
   
-  this = (dxGeomTransform *)__savegprlr_24(param_1);
   if (param_5 < 0x20) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\collision_transform.cpp"
                     ,0x8f,0,"%s");
   }
-  if (this->_padding_ != 1) {
+  if (param_1->type != 1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\collision_transform.cpp"
                     ,0x90,0,"%s");
   }
-  if (this->obj == (dxGeom *)0x0) {
-    iVar5 = __restgprlr_24(0);
-    return iVar5;
+  if (*(int *)&param_1->field_0x4c == 0) {
+    return 0;
   }
-  if (this->obj->parent_space != (dxSpace *)0x0) {
+  if (*(int *)(*(int *)&param_1->field_0x4c + 0x28) != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\collision_transform.cpp"
                     ,0x95,0,"%s\n\t%s");
   }
-  pdVar1 = this->obj;
-  pfVar2 = pdVar1->pos;
-  pfVar3 = pdVar1->R;
-  pdVar4 = pdVar1->body;
-  if ((this->_padding_ & 2U) != 0) {
-    dxGeomTransform::computeFinalTx(this);
+  iVar4 = *(int *)&param_1->field_0x4c;
+  uVar1 = *(undefined4 *)(iVar4 + 0x18);
+  uVar2 = *(undefined4 *)(iVar4 + 0x1c);
+  uVar3 = *(undefined4 *)(iVar4 + 0x10);
+  if ((param_1->gflags & 2U) != 0) {
+    dxGeomTransform::computeFinalTx((dxGeomTransform *)param_1);
   }
-  this->obj->pos = this->finalPos;
-  this->obj->R = this->finalR;
-  this->obj->body = (dxBody *)this->_padding_;
-  iVar5 = dCollide(this->obj,param_2,param_3,param_4,param_5);
-  this->obj->pos = pfVar2;
-  this->obj->R = pfVar3;
-  this->obj->body = pdVar4;
-  iVar5 = __restgprlr_24(iVar5);
-  return iVar5;
+  *(dxGeom ****)(*(int *)&param_1->field_0x4c + 0x18) = &param_1[2].tome;
+  *(ulong **)(*(int *)&param_1->field_0x4c + 0x1c) = &param_1[1].category_bits;
+  *(dxBody **)(*(int *)&param_1->field_0x4c + 0x10) = param_1->body;
+  iVar4 = dCollide(*(dxGeom **)&param_1->field_0x4c,param_2,param_3,param_4,param_5);
+  *(undefined4 *)(*(int *)&param_1->field_0x4c + 0x18) = uVar1;
+  *(undefined4 *)(*(int *)&param_1->field_0x4c + 0x1c) = uVar2;
+  *(undefined4 *)(*(int *)&param_1->field_0x4c + 0x10) = uVar3;
+  return iVar4;
 }
 
 
 // 82687D40  ODE_GeomTransformInit  (physics/ode/src/collision_transform.cpp:181)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void ODE_GeomTransformInit(dxGeom *param_1,dxSpace *param_2,dxBody *param_3)
 
 {
-  dxSpace *pdVar1;
-  dxGeomTransform *this;
-  ulonglong uVar2;
-  
-  uVar2 = (ulonglong)(int)param_2;
-  this = (dxGeomTransform *)__savegprlr_27(param_1);
-  if (this == (dxGeomTransform *)0x0) {
+  if (param_1 == (dxGeom *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\collision_transform.cpp"
                     ,0xb8,0,"%s");
   }
   Sys_EnterCriticalSection(CRITSECT_PHYSICS);
-  if ((uVar2 & 0xffffffff) == 0) {
+  if (param_2 == (dxSpace *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\collision_transform.cpp"
                     ,0xbf,0,"%s");
   }
-  pdVar1 = (dxSpace *)uVar2;
-  if (pdVar1->hasUpdateLock != 0) {
+  if (param_2->hasUpdateLock != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\collision_transform.cpp"
                     ,0xc0,0,"%s");
   }
-  pdVar1->hasUpdateLock = 1;
-  if (this != (dxGeomTransform *)0x0) {
-    dxGeomTransform::dxGeomTransform(this,pdVar1,param_3);
+  param_2->hasUpdateLock = 1;
+  if (param_1 != (dxGeom *)0x0) {
+    dxGeomTransform::dxGeomTransform((dxGeomTransform *)param_1,param_2,param_3);
   }
-  if (pdVar1->hasUpdateLock == 0) {
+  if (param_2->hasUpdateLock == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\collision_transform.cpp"
                     ,199,0,"%s");
   }
-  pdVar1->hasUpdateLock = 0;
+  param_2->hasUpdateLock = 0;
   Sys_LeaveCriticalSection(CRITSECT_PHYSICS);
-  __restgprlr_27();
   return;
 }
 
@@ -262,250 +254,235 @@ void dMULTIPLY0_333<float,float,float>(float *param_1,float *param_2,float *para
 
 // 82687E40  dGeomTransformSetGeom  (physics/ode/src/collision_transform.cpp:210)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void dGeomTransformSetGeom(dxGeom *param_1,dxGeom *param_2)
 
 {
   undefined4 *puVar1;
-  dxGeom *this;
-  int iVar2;
-  ulonglong uVar3;
   
-  uVar3 = (ulonglong)(int)param_2;
-  iVar2 = __savegprlr_28(param_1);
-  if (iVar2 == 0) {
+  if (param_1 == (dxGeom *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\collision_transform.cpp"
                     ,0xd3,0,"%s");
   }
-  if (*(int *)(iVar2 + 4) != 1) {
+  if (param_1->type != 1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\collision_transform.cpp"
                     ,0xd4,0,"%s");
   }
-  if ((uVar3 & 0xffffffff) == 0) {
+  if (param_2 == (dxGeom *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\collision_transform.cpp"
                     ,0xd5,0,"%s");
   }
-  puVar1 = *(undefined4 **)(iVar2 + 0x4c);
-  if ((puVar1 != (undefined4 *)0x0) && (*(int *)(iVar2 + 0x50) != 0)) {
+  puVar1 = *(undefined4 **)&param_1->field_0x4c;
+  if ((puVar1 != (undefined4 *)0x0) && (param_1[1]._padding_ != 0)) {
     (**(code **)*puVar1)(puVar1,1);
   }
-  this = (dxGeom *)uVar3;
-  dSpaceRemove(this->parent_space,this);
-  dxGeom::bodyRemove(this);
-  *(dxGeom **)(iVar2 + 0x4c) = this;
-  __restgprlr_28();
+  dSpaceRemove(param_2->parent_space,param_2);
+  dxGeom::bodyRemove(param_2);
+  *(dxGeom **)&param_1->field_0x4c = param_2;
   return;
 }
 
 
 // 82687F20  dGeomTransformGetGeom  (physics/ode/src/collision_transform.cpp:226)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 dxGeom * dGeomTransformGetGeom(dxGeom *param_1)
 
 {
-  int iVar1;
-  dxGeom *pdVar2;
-  
-  iVar1 = __savegprlr_29(param_1);
-  if (iVar1 == 0) {
+  if (param_1 == (dxGeom *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\collision_transform.cpp"
                     ,0xe3,0,"%s");
   }
-  if (*(int *)(iVar1 + 4) != 1) {
+  if (param_1->type != 1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\collision_transform.cpp"
                     ,0xe4,0,"%s");
   }
-  pdVar2 = (dxGeom *)__restgprlr_29(*(undefined4 *)(iVar1 + 0x4c));
-  return pdVar2;
+  return *(dxGeom **)&param_1->field_0x4c;
 }
 
 
 // 82687F98  dGeomTransformSetCleanup  (physics/ode/src/collision_transform.cpp:236)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void dGeomTransformSetCleanup(dxGeom *param_1,int param_2)
 
 {
-  int iVar1;
-  
-  iVar1 = __savegprlr_28(param_1);
-  if (iVar1 == 0) {
+  if (param_1 == (dxGeom *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\collision_transform.cpp"
                     ,0xed,0,"%s");
   }
-  if (*(int *)(iVar1 + 4) != 1) {
+  if (param_1->type != 1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\collision_transform.cpp"
                     ,0xee,0,"%s");
   }
-  *(int *)(iVar1 + 0x50) = param_2;
-  __restgprlr_28();
+  param_1[1]._padding_ = param_2;
   return;
 }
 
 
 // 82688018  dGeomTransformGetCleanup  (physics/ode/src/collision_transform.cpp:246)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 int dGeomTransformGetCleanup(dxGeom *param_1)
 
 {
-  int iVar1;
-  
-  iVar1 = __savegprlr_29(param_1);
-  if (iVar1 == 0) {
+  if (param_1 == (dxGeom *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\collision_transform.cpp"
                     ,0xf7,0,"%s");
   }
-  if (*(int *)(iVar1 + 4) != 1) {
+  if (param_1->type != 1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\collision_transform.cpp"
                     ,0xf8,0,"%s");
   }
-  iVar1 = __restgprlr_29(*(undefined4 *)(iVar1 + 0x50));
-  return iVar1;
+  return param_1[1]._padding_;
 }
 
 
 // 82688090  dGeomTransformSetInfo  (physics/ode/src/collision_transform.cpp:256)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void dGeomTransformSetInfo(dxGeom *param_1,int param_2)
 
 {
-  int iVar1;
-  
-  iVar1 = __savegprlr_28(param_1);
-  if (iVar1 == 0) {
+  if (param_1 == (dxGeom *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\collision_transform.cpp"
                     ,0x101,0,"%s");
   }
-  if (*(int *)(iVar1 + 4) != 1) {
+  if (param_1->type != 1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\collision_transform.cpp"
                     ,0x102,0,"%s");
   }
-  *(int *)(iVar1 + 0x54) = param_2;
-  __restgprlr_28();
+  param_1[1].type = param_2;
   return;
 }
 
 
 // 82688110  dGeomTransformGetInfo  (physics/ode/src/collision_transform.cpp:266)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 int dGeomTransformGetInfo(dxGeom *param_1)
 
 {
-  int iVar1;
-  
-  iVar1 = __savegprlr_29(param_1);
-  if (iVar1 == 0) {
+  if (param_1 == (dxGeom *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\collision_transform.cpp"
                     ,0x10b,0,"%s");
   }
-  if (*(int *)(iVar1 + 4) != 1) {
+  if (param_1->type != 1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\collision_transform.cpp"
                     ,0x10c,0,"%s");
   }
-  iVar1 = __restgprlr_29(*(undefined4 *)(iVar1 + 0x54));
-  return iVar1;
+  return param_1[1].type;
 }
 
 
 // 82688188  ODE_GeomTransformSetRotation  (physics/ode/src/collision_transform.cpp:276)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void ODE_GeomTransformSetRotation(dxGeom *param_1,float *param_2,float (*param_3) [3])
 
 {
-  int iVar1;
-  
-  iVar1 = __savegprlr_27(param_1);
-  if (iVar1 == 0) {
+  if (param_1 == (dxGeom *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\collision_transform.cpp"
                     ,0x117,0,"%s");
   }
-  if (*(int *)(iVar1 + 4) != 1) {
+  if (param_1->type != 1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\collision_transform.cpp"
                     ,0x118,0,"%s");
   }
-  Phys_AxisToOdeMatrix3(param_3,(float *)(iVar1 + 0x58));
-  *(float *)(iVar1 + 0x88) = *param_2;
-  *(float *)(iVar1 + 0x8c) = param_2[1];
-  *(float *)(iVar1 + 0x90) = param_2[2];
-  __restgprlr_27();
+  Phys_AxisToOdeMatrix3(param_3,(float *)&param_1[1].gflags);
+  param_1[1].aabb[3] = *param_2;
+  param_1[1].aabb[4] = param_2[1];
+  param_1[1].aabb[5] = param_2[2];
   return;
 }
 
 
 // 82688228  ODE_GeomTransformSetOffset  (physics/ode/src/collision_transform.cpp:289)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void ODE_GeomTransformSetOffset(dxGeom *param_1,float *param_2)
 
 {
-  int iVar1;
-  
-  iVar1 = __savegprlr_28(param_1);
-  if (iVar1 == 0) {
+  if (param_1 == (dxGeom *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\collision_transform.cpp"
                     ,0x124,0,"%s");
   }
-  if (*(int *)(iVar1 + 4) != 1) {
+  if (param_1->type != 1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\collision_transform.cpp"
                     ,0x125,0,"%s");
   }
-  *(float *)(iVar1 + 0x88) = *param_2;
-  *(float *)(iVar1 + 0x8c) = param_2[1];
-  *(float *)(iVar1 + 0x90) = param_2[2];
-  __restgprlr_28();
+  param_1[1].aabb[3] = *param_2;
+  param_1[1].aabb[4] = param_2[1];
+  param_1[1].aabb[5] = param_2[2];
   return;
 }
 
 
 // 826882B8  ODE_GeomTransformGetOffset  (physics/ode/src/collision_transform.cpp:301)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void ODE_GeomTransformGetOffset(dxGeom *param_1,float *param_2)
 
 {
-  int iVar1;
-  
-  iVar1 = __savegprlr_28(param_1);
-  if (iVar1 == 0) {
+  if (param_1 == (dxGeom *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\collision_transform.cpp"
                     ,0x130,0,"%s");
   }
-  if (*(int *)(iVar1 + 4) != 1) {
+  if (param_1->type != 1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\collision_transform.cpp"
                     ,0x131,0,"%s");
   }
-  *param_2 = *(float *)(iVar1 + 0x88);
-  param_2[1] = *(float *)(iVar1 + 0x8c);
-  param_2[2] = *(float *)(iVar1 + 0x90);
-  __restgprlr_28();
+  *param_2 = param_1[1].aabb[3];
+  param_2[1] = param_1[1].aabb[4];
+  param_2[2] = param_1[1].aabb[5];
   return;
 }
 
 
 // 82688588  ODE_GeomTransformUpdateGeomOrientation  (physics/ode/src/collision_transform.cpp:313)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 dxGeom * ODE_GeomTransformUpdateGeomOrientation(dxGeom *param_1)
 
 {
-  dxGeomTransform *this;
-  dxGeom *pdVar1;
-  
-  this = (dxGeomTransform *)__savegprlr_29(param_1);
-  if (this == (dxGeomTransform *)0x0) {
+  if (param_1 == (dxGeom *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\collision_transform.cpp"
                     ,0x13c,0,"%s");
   }
-  if (this->_padding_ != 1) {
+  if (param_1->type != 1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\collision_transform.cpp"
                     ,0x13d,0,"%s");
   }
-  if (this->obj == (dxGeom *)0x0) {
+  if (*(int *)&param_1->field_0x4c == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\collision_transform.cpp"
                     ,0x141,0,"%s");
   }
-  if ((this->_padding_ & 2U) != 0) {
-    dxGeomTransform::computeFinalTx(this);
+  if ((param_1->gflags & 2U) != 0) {
+    dxGeomTransform::computeFinalTx((dxGeomTransform *)param_1);
   }
-  this->obj->pos = this->finalPos;
-  this->obj->R = this->finalR;
-  pdVar1 = (dxGeom *)__restgprlr_29(this->obj);
-  return pdVar1;
+  *(dxGeom ****)(*(int *)&param_1->field_0x4c + 0x18) = &param_1[2].tome;
+  *(ulong **)(*(int *)&param_1->field_0x4c + 0x1c) = &param_1[1].category_bits;
+  return *(dxGeom **)&param_1->field_0x4c;
 }
 
 

@@ -24,89 +24,70 @@ void D3D::InvalidateConstants(D3DDevice *param_1)
 
 // 828689B0  BeginRingBig  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/ring.cpp:211)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 
 ulong * __thiscall D3D::CDevice::BeginRingBig(CDevice *this,ulong param_1)
 
 {
-  CDevice *this_00;
-  ulong *puVar1;
-  undefined4 uVar2;
-  ulonglong uVar3;
-  longlong lVar4;
+  int iVar1;
+  ulong *puVar2;
   
-  uVar3 = (ulonglong)(int)param_1;
-  this_00 = (CDevice *)__savegprlr_29(this);
-  lVar4 = (uVar3 & 0x3fffffff) * 4;
-  if (((((ulonglong)*(uint *)&this_00->field_0x34 <
-         (lVar4 + (ulonglong)*(uint *)&this_00->field_0x30 & 0xffffffff)) &&
-       (KickOff(this_00),
-       (ulonglong)*(uint *)&this_00->field_0x34 <
-       (lVar4 + (ulonglong)*(uint *)&this_00->field_0x30 & 0xffffffff))) &&
-      (puVar1 = StartNewSegment(this_00,(ulong)uVar3), puVar1 == (ulong *)0x0)) &&
-     ((ulonglong)*(uint *)&this_00->field_0x34 <
-      (lVar4 + (ulonglong)*(uint *)&this_00->field_0x30 & 0xffffffff))) {
-    uVar2 = 0;
+  iVar1 = param_1 * 4;
+  if ((((*(uint *)&this->field_0x34 < (uint)(iVar1 + *(int *)&this->field_0x30)) &&
+       (KickOff(this), *(uint *)&this->field_0x34 < (uint)(iVar1 + *(int *)&this->field_0x30))) &&
+      (puVar2 = StartNewSegment(this,param_1), puVar2 == (ulong *)0x0)) &&
+     (*(uint *)&this->field_0x34 < (uint)(iVar1 + *(int *)&this->field_0x30))) {
+    puVar2 = (ulong *)0x0;
   }
   else {
-    uVar2 = *(undefined4 *)&this_00->field_0x30;
+    puVar2 = *(ulong **)&this->field_0x30;
   }
-  puVar1 = (ulong *)__restgprlr_29(uVar2);
-  return puVar1;
+  return puVar2;
 }
 
 
 // 82866CA0  PutPix  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/ring.cpp:425)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 
 void __thiscall
 D3D::CDevice::PutPix(CDevice *this,ulong **param_1,PIXMeta param_2,void *param_3,ulong param_4)
 
 {
-  undefined4 *puVar1;
-  int iVar2;
-  longlong lVar3;
-  int *piVar4;
-  longlong lVar5;
-  ulonglong uVar6;
+  PIXMeta *pPVar1;
+  ulong *puVar2;
   
-  uVar6 = (ulonglong)(int)param_4;
-  lVar5 = (longlong)(int)param_2;
-  lVar3 = (longlong)(int)param_1;
-  __savegprlr_28(this,lVar3,lVar5,param_3);
-  piVar4 = (int *)lVar3;
-  iVar2 = *piVar4;
-  *(uint *)(iVar2 + 4) = (uint)((uVar6 & 0xffffffff) << 0xe) & 0xffff0000 | 0x857e;
-  puVar1 = (undefined4 *)(iVar2 + 8);
-  *puVar1 = (int)lVar5;
-  *piVar4 = (int)puVar1;
+  puVar2 = *param_1;
+  puVar2[1] = (param_4 & 0x3fffc) << 0xe | 0x857e;
+  pPVar1 = puVar2 + 2;
+  *pPVar1 = param_2;
+  *param_1 = pPVar1;
   memcpy();
-  *piVar4 = *piVar4 + ((uint)uVar6 & 0xfffffffc);
-  __restgprlr_28();
+  *param_1 = (ulong *)((int)*param_1 + (param_4 & 0xfffffffc));
   return;
 }
 
 
 // 828684B0  Initialize  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/ring.cpp:445)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 
 void __thiscall D3D::CRingAllocList::Initialize(CRingAllocList *this,CDevice *param_1,ulong param_2)
 
 {
-  CRingAllocList *this_00;
-  ulong *puVar1;
-  
-  this_00 = (CRingAllocList *)__savegprlr_29(this);
-  this_00->m_pDevice = param_1;
-  this_00->m_ChunkSize = param_2;
-  this_00->m_pChunk = (RingAllocChunk *)0x0;
-  this_00->m_pData = (ulong *)0x0;
-  this_00->m_pDataLimit = (ulong *)0x0;
-  this_00->m_pFirstChunk = (RingAllocChunk *)0x0;
-  puVar1 = MakeSpace(this_00);
-  __restgprlr_29(puVar1);
+  this->m_pDevice = param_1;
+  this->m_ChunkSize = param_2;
+  this->m_pChunk = (RingAllocChunk *)0x0;
+  this->m_pData = (ulong *)0x0;
+  this->m_pDataLimit = (ulong *)0x0;
+  this->m_pFirstChunk = (RingAllocChunk *)0x0;
+  MakeSpace(this);
   return;
 }
 
@@ -131,117 +112,109 @@ void __thiscall D3D::CRingAllocList::Finalize(CRingAllocList *this)
 
 // 82867640  MakeSpace  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/ring.cpp:506)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 
 ulong * __thiscall D3D::CRingAllocList::MakeSpace(CRingAllocList *this)
 
 {
-  undefined4 *puVar1;
-  ulong *puVar2;
-  void *pvVar3;
-  ulonglong uVar4;
+  RingAllocChunk *pRVar1;
+  void *pvVar2;
+  ulonglong uVar3;
   
-  puVar1 = (undefined4 *)__savegprlr_29(this);
-  if ((int *)puVar1[1] != (int *)0x0) {
-    *(int *)puVar1[1] =
-         (((uint)puVar1[3] >> 0x14) + 0x200 & 0x1000) + (puVar1[3] & 0x1fffffff) + -0x40000000;
+  if (this->m_pChunk != (RingAllocChunk *)0x0) {
+    this->m_pChunk->dwEnd =
+         (((uint)this->m_pData >> 0x14) + 0x200 & 0x1000) + ((uint)this->m_pData & 0x1fffffff) +
+         0xc0000000;
   }
-  puVar2 = CDevice::BeginRingAlloc((CDevice *)puVar1[5],(uint)puVar1[2] >> 2,0x80);
-  uVar4 = (ulonglong)(int)puVar2;
-  if (uVar4 == 0) {
-    uVar4 = (ulonglong)*(uint *)(puVar1[5] + 0x4284);
-    *puVar1 = 0;
+  pRVar1 = (RingAllocChunk *)CDevice::BeginRingAlloc(this->m_pDevice,this->m_ChunkSize >> 2,0x80);
+  if ((longlong)(int)pRVar1 == 0) {
+    pRVar1 = (RingAllocChunk *)this->m_pDevice->m_pRingOutOfMemoryBuffer;
+    this->m_pFirstChunk = (RingAllocChunk *)0x0;
   }
   else {
-    *puVar2 = ((int)((uVar4 + 4 & 0xffffffff) >> 0x14) + 0x200U & 0x1000) +
-              ((uint)(uVar4 + 4) & 0x1fffffff) + 0xc0000000;
-    if ((int *)puVar1[3] == (int *)0x0) {
-      *puVar1 = puVar2;
+    uVar3 = (longlong)(int)pRVar1 + 4;
+    pRVar1->dwEnd =
+         ((int)((uVar3 & 0xffffffff) >> 0x14) + 0x200U & 0x1000) + ((uint)uVar3 & 0x1fffffff) +
+         0xc0000000;
+    if (this->m_pData == (ulong *)0x0) {
+      this->m_pFirstChunk = pRVar1;
     }
     else {
-      *(int *)puVar1[3] =
-           (((uint)puVar2 >> 0x14) + 0x200 & 0x1000) + ((uint)puVar2 & 0x1fffffff) + -0x40000000;
+      *this->m_pData =
+           (((uint)pRVar1 >> 0x14) + 0x200 & 0x1000) + ((uint)pRVar1 & 0x1fffffff) + 0xc0000000;
     }
-    pvVar3 = (void *)((((uint)puVar2 >> 0x14) + 0x200 & 0x1000) + ((uint)puVar2 & 0x1fffffff) +
+    pvVar2 = (void *)((((uint)pRVar1 >> 0x14) + 0x200 & 0x1000) + ((uint)pRVar1 & 0x1fffffff) +
                      -0x40000000);
-    FlushCachedMemory(pvVar3,(void *)(puVar1[2] + (int)pvVar3),0);
+    FlushCachedMemory(pvVar2,(void *)(this->m_ChunkSize + (int)pvVar2),0);
   }
-  puVar1[1] = (int)uVar4;
-  puVar1[3] = (int)(uVar4 + 4);
-  puVar1[4] = (puVar1[2] - 4 & 0xfffffffc) + (int)uVar4;
-  puVar2 = (ulong *)__restgprlr_29(uVar4 + 4);
-  return puVar2;
+  this->m_pChunk = pRVar1;
+  this->m_pData = pRVar1->Data;
+  this->m_pDataLimit = (ulong *)((int)pRVar1->Data + ((this->m_ChunkSize - 4 & 0xfffffffc) - 4));
+  return pRVar1->Data;
 }
 
 
 // 82867760  AddChunkNode  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/ring.cpp:615)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 
 void __thiscall
 D3D::CRingAllocList::AddChunkNode(CRingAllocList *this,RingAllocChunk *param_1,ulong *param_2)
 
 {
-  undefined4 *puVar1;
-  undefined4 *puVar2;
-  int iVar3;
-  void *pvVar4;
-  ulonglong uVar5;
-  void *pvVar6;
-  ulonglong uVar7;
-  int iVar8;
+  ulong *puVar1;
+  void *pvVar2;
+  void *pvVar3;
+  int iVar4;
   
-  uVar7 = (ulonglong)(int)param_2;
-  uVar5 = (ulonglong)(int)param_1;
-  iVar3 = __savegprlr_28(this);
-  puVar1 = *(undefined4 **)(iVar3 + 0xc);
-  puVar2 = (undefined4 *)uVar5;
-  pvVar6 = (void *)(((int)((uVar7 & 0xffffffff) >> 0x14) + 0x200U & 0x1000) +
-                    ((uint)uVar7 & 0x1fffffff) + -0x40000000);
-  *puVar2 = pvVar6;
-  iVar8 = (((uint)puVar1 >> 0x14) + 0x200 & 0x1000) + ((uint)puVar1 & 0x1fffffff);
-  *(undefined4 **)(iVar3 + 4) = puVar2;
-  pvVar4 = (void *)(((int)((uVar5 & 0xffffffff) >> 0x14) + 0x200U & 0x1000) +
-                    ((uint)puVar2 & 0x1fffffff) + -0x40000000);
-  *(uint *)(iVar3 + 0xc) = (uint)uVar7 - 4;
+  puVar1 = this->m_pData;
+  pvVar3 = (void *)((((uint)param_2 >> 0x14) + 0x200 & 0x1000) + ((uint)param_2 & 0x1fffffff) +
+                   -0x40000000);
+  param_1->dwEnd = (ulong)pvVar3;
+  iVar4 = (((uint)puVar1 >> 0x14) + 0x200 & 0x1000) + ((uint)puVar1 & 0x1fffffff);
+  this->m_pChunk = param_1;
+  pvVar2 = (void *)((((uint)param_1 >> 0x14) + 0x200 & 0x1000) + ((uint)param_1 & 0x1fffffff) +
+                   -0x40000000);
+  this->m_pData = param_2 + -1;
   enforceInOrderExecutionIO();
-  FlushCachedMemory(pvVar4,pvVar6,0);
-  *puVar1 = pvVar4;
+  FlushCachedMemory(pvVar2,pvVar3,0);
+  *puVar1 = (ulong)pvVar2;
   enforceInOrderExecutionIO();
-  FlushCachedMemory((void *)(iVar8 + -0x40000000),(void *)(iVar8 + -0x3ffffff0),0);
-  __restgprlr_28();
+  FlushCachedMemory((void *)(iVar4 + -0x40000000),(void *)(iVar4 + -0x3ffffff0),0);
   return;
 }
 
 
 // 82867810  AppendArrayData  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/ring.cpp:674)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 
 void __thiscall
 D3D::CRingAllocList::AppendArrayData(CRingAllocList *this,void *param_1,ulong param_2,ulong param_3)
 
 {
-  CRingAllocList *this_00;
-  longlong lVar1;
+  ulonglong uVar1;
   ulonglong uVar2;
-  ulonglong uVar3;
   
-  lVar1 = (longlong)(int)param_3;
-  this_00 = (CRingAllocList *)__savegprlr_26(this,param_1);
-  uVar3 = (longlong)(int)param_2 * (longlong)(int)lVar1;
+  uVar2 = (longlong)(int)param_2 * (longlong)(int)param_3;
   while( true ) {
-    uVar2 = (longlong)((int)this_00->m_pDataLimit - (int)this_00->m_pData >> 2) & ~(lVar1 - 1U);
-    if ((uVar3 & 0xffffffff) < (uVar2 & 0xffffffff)) {
-      uVar2 = uVar3;
+    uVar1 = (longlong)((int)this->m_pDataLimit - (int)this->m_pData >> 2) &
+            ~((longlong)(int)param_3 - 1U);
+    if ((uVar2 & 0xffffffff) < (uVar1 & 0xffffffff)) {
+      uVar1 = uVar2;
     }
     memcpy();
-    uVar3 = uVar3 - uVar2;
-    this_00->m_pData = (ulong *)((int)this_00->m_pData + (int)((uVar2 & 0xffffffff) << 2));
-    if (uVar3 == 0) break;
-    MakeSpace(this_00);
+    uVar2 = uVar2 - uVar1;
+    this->m_pData = (ulong *)((int)this->m_pData + (int)((uVar1 & 0xffffffff) << 2));
+    if (uVar2 == 0) break;
+    MakeSpace(this);
   }
-  __restgprlr_26();
   return;
 }
 
@@ -275,386 +248,350 @@ void __thiscall D3D::CDevice::MarkAsOutOfMemory(CDevice *this)
 
 // 82866828  IsPastStopPoint  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/ring.cpp:804)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 
 int __thiscall D3D::CDevice::IsPastStopPoint(CDevice *this,ulong *param_1,ulong param_2)
 
 {
-  int iVar2;
-  undefined8 uVar1;
-  ulonglong uVar3;
+  int iVar1;
   
-  uVar3 = (ulonglong)(int)param_1;
-  iVar2 = __savegprlr_29(this);
-  if ((ulonglong)*(uint *)(iVar2 + 0x34a0) != 0) {
-    if ((*(ulong *)(iVar2 + 0x34a4) - param_2 == -1) ||
-       ((*(ulong *)(iVar2 + 0x34a4) == param_2 &&
-        ((ulonglong)*(uint *)(iVar2 + 0x34a0) < (uVar3 & 0xffffffff))))) {
-      uVar1 = 1;
-      goto LAB_82866884;
-    }
+  if ((this->m_pStopPoint == (ulong *)0x0) ||
+     ((this->m_StopWrap - param_2 != -1 &&
+      ((this->m_StopWrap != param_2 || (param_1 <= this->m_pStopPoint)))))) {
+    iVar1 = 0;
   }
-  uVar1 = 0;
-LAB_82866884:
-  iVar2 = __restgprlr_29(uVar1);
-  return iVar2;
+  else {
+    iVar1 = 1;
+  }
+  return iVar1;
 }
 
 
 // 82866890  IsSecondaryMemoryBusy  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/ring.cpp:840)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 
 int __thiscall D3D::CDevice::IsSecondaryMemoryBusy(CDevice *this,ulong *param_1,ulong param_2)
 
 {
   uint uVar1;
-  ulonglong uVar2;
-  int iVar4;
-  undefined8 uVar3;
-  ulonglong uVar5;
-  longlong lVar6;
+  uint uVar2;
+  int iVar3;
   
-  lVar6 = (longlong)(int)param_2;
-  uVar5 = (ulonglong)(int)param_1;
-  iVar4 = __savegprlr_29(this);
-  uVar1 = *(uint *)(*(int *)(iVar4 + 0x2b10) + 4);
-  uVar2 = lVar6 - (ulonglong)uVar1 & 3;
-  if ((uVar2 == 0) || ((uVar2 == 1 && ((uVar5 & 0xffffffff) <= ((ulonglong)uVar1 & 0xfffffffc))))) {
-    uVar3 = 0;
+  uVar1 = this->m_pWriteBacks->GpuPosition;
+  uVar2 = param_2 - uVar1 & 3;
+  if ((uVar2 == 0) || ((uVar2 == 1 && (param_1 <= (ulong *)(uVar1 & 0xfffffffc))))) {
+    iVar3 = 0;
   }
   else {
-    uVar3 = 1;
+    iVar3 = 1;
   }
-  iVar4 = __restgprlr_29(uVar3);
-  return iVar4;
+  return iVar3;
 }
 
 
 // 828668F0  BlockOnSecondaryPosition  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/ring.cpp:891)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 
 void __thiscall D3D::CDevice::BlockOnSecondaryPosition(CDevice *this,ulong *param_1,ulong param_2)
 
 {
   uint uVar1;
-  CDevice *this_00;
   int iVar2;
   CBlocker aCStack_40 [2];
   
-  this_00 = (CDevice *)__savegprlr_29(this);
-  iVar2 = IsSecondaryMemoryBusy(this_00,param_1,param_2);
+  iVar2 = IsSecondaryMemoryBusy(this,param_1,param_2);
   if (iVar2 != 0) {
-    uVar1 = *(uint *)&(this_00->m_CpuDrPix).field_0x4;
-    (this_00->m_CpuDrPix).SecondaryRingBufferOverruns = (uVar1 & 0xffffff00) + 0x100 >> 8;
-    CBlocker::CBlocker(aCStack_40,this_00,D3DBLOCKTYPE_SECONDARY_OVERRUN);
+    uVar1 = *(uint *)&(this->m_CpuDrPix).field_0x4;
+    (this->m_CpuDrPix).SecondaryRingBufferOverruns = (uVar1 & 0xffffff00) + 0x100 >> 8;
+    CBlocker::CBlocker(aCStack_40,this,D3DBLOCKTYPE_SECONDARY_OVERRUN);
     do {
       iVar2 = CBlocker::Check(aCStack_40);
       if (iVar2 == 0) break;
-      iVar2 = IsSecondaryMemoryBusy(this_00,param_1,param_2);
+      iVar2 = IsSecondaryMemoryBusy(this,param_1,param_2);
     } while (iVar2 != 0);
     CBlocker::~CBlocker(aCStack_40);
   }
-  __restgprlr_29();
   return;
 }
 
 
 // 82866D88  RingBufferDeviceAllocate  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/ring.cpp:916)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 
 void * D3D::RingBufferDeviceAllocate(CDevice *param_1,ulong param_2,ulong *param_3,ulong param_4)
 
 {
-  CDevice *this;
   int iVar1;
-  void *pvVar2;
-  longlong lVar3;
-  uint uVar4;
+  longlong lVar2;
+  uint uVar3;
+  ulonglong uVar4;
   ulonglong uVar5;
-  ulong uVar6;
-  ulonglong uVar7;
-  ulonglong uVar8;
-  ulonglong uVar9;
-  ulong *puVar10;
+  ulonglong uVar6;
+  ulong uVar7;
+  void *pvVar8;
+  ulong *puVar9;
   
-  lVar3 = (longlong)(int)param_4;
-  uVar7 = (ulonglong)(int)param_2;
-  this = (CDevice *)__savegprlr_25(param_1);
-  uVar8 = (ulonglong)(*param_3 >> 2);
-  uVar5 = ZEXT48(this->m_pRingAlloc);
-  if ((uVar7 & 1) == 0) {
-    if (uVar5 == 0) {
-      uVar5 = (ulonglong)*(uint *)&this->field_0x30 + 4;
+  lVar2 = (longlong)(int)param_4;
+  uVar6 = (ulonglong)(*param_3 >> 2);
+  uVar4 = ZEXT48(param_1->m_pRingAlloc);
+  if ((param_2 & 1) == 0) {
+    if (uVar4 == 0) {
+      uVar4 = (ulonglong)*(uint *)&param_1->field_0x30 + 4;
     }
-    uVar7 = uVar5 + 0x1f & 0xffffffe0;
-    if (uVar8 == 0) {
-      uVar8 = 0x38;
+    uVar4 = uVar4 + 0x1f & 0xffffffe0;
+    pvVar8 = (void *)uVar4;
+    if (uVar6 == 0) {
+      uVar6 = 0x38;
     }
-    uVar5 = (ulonglong)(this->m_SegmentSize >> 2);
-    if (uVar5 < uVar8) {
-      uVar5 = uVar8;
+    uVar5 = (ulonglong)(param_1->m_SegmentSize >> 2);
+    if (uVar5 < uVar6) {
+      uVar5 = uVar6;
     }
-    uVar9 = uVar5 * 4 + uVar7;
-    puVar10 = (ulong *)uVar9;
-    if (ZEXT48(this->m_pSecondaryRingBufferLimit) < (uVar9 & 0xffffffff)) {
-      puVar10 = this->m_pSecondaryRingBufferLimit;
+    uVar4 = uVar5 * 4 + uVar4;
+    puVar9 = (ulong *)uVar4;
+    if (ZEXT48(param_1->m_pSecondaryRingBufferLimit) < (uVar4 & 0xffffffff)) {
+      puVar9 = param_1->m_pSecondaryRingBufferLimit;
     }
-    uVar9 = (ulonglong)((int)puVar10 - (int)uVar7 >> 2);
-    uVar4 = (int)((~uVar9 & 0xffffffff) >> 0x1f) + (uint)(uVar8 <= uVar9) & 1;
-    if (this->m_SegmentAllocLimit <
-        (uint)(((int)this->m_pNextSecondaryStart - (int)this->m_pSecondaryRingBuffer >> 2) << 2)) {
-      uVar4 = 1;
+    uVar4 = (ulonglong)((int)puVar9 - (int)pvVar8 >> 2);
+    uVar3 = (int)((~uVar4 & 0xffffffff) >> 0x1f) + (uint)(uVar6 <= uVar4) & 1;
+    if (param_1->m_SegmentAllocLimit <
+        (uint)(((int)param_1->m_pNextSecondaryStart - (int)param_1->m_pSecondaryRingBuffer >> 2) <<
+              2)) {
+      uVar3 = 1;
     }
-    if (uVar4 != 0) {
-      uVar7 = ZEXT48(this->m_pNextSecondaryStart) + 0x1f & 0xffffffe0;
-      this->m_pNextSecondaryStart = this->m_pSecondaryRingBuffer;
-      this->m_RingWrap = this->m_RingWrap + 1;
-      puVar10 = (ulong *)((int)(uVar5 * 4) + (int)uVar7);
-      this->m_FlushVertexCacheAtKickOff = true;
+    if (uVar3 != 0) {
+      pvVar8 = (void *)((int)param_1->m_pNextSecondaryStart + 0x1fU & 0xffffffe0);
+      param_1->m_pNextSecondaryStart = param_1->m_pSecondaryRingBuffer;
+      param_1->m_RingWrap = param_1->m_RingWrap + 1;
+      puVar9 = (ulong *)((int)(uVar5 * 4) + (int)pvVar8);
+      param_1->m_FlushVertexCacheAtKickOff = true;
     }
-    uVar6 = this->m_RingWrap;
-    iVar1 = CDevice::IsPastStopPoint(this,puVar10,uVar6);
+    uVar7 = param_1->m_RingWrap;
+    iVar1 = CDevice::IsPastStopPoint(param_1,puVar9,uVar7);
     if ((iVar1 == 0) ||
-       ((puVar10 = this->m_pStopPoint, uVar6 == this->m_StopWrap &&
-        ((int)uVar8 <= (int)puVar10 - (int)uVar7 >> 2)))) {
-      CDevice::BlockOnSecondaryPosition(this,puVar10,uVar6);
-      *param_3 = ((int)puVar10 - (int)uVar7 >> 2) << 2;
-      goto LAB_82866f94;
+       ((puVar9 = param_1->m_pStopPoint, uVar7 == param_1->m_StopWrap &&
+        ((int)uVar6 <= (int)puVar9 - (int)pvVar8 >> 2)))) {
+      CDevice::BlockOnSecondaryPosition(param_1,puVar9,uVar7);
+      *param_3 = ((int)puVar9 - (int)pvVar8 >> 2) << 2;
+      return pvVar8;
     }
   }
   else {
-    if (uVar5 == 0) {
-      uVar5 = (ulonglong)*(uint *)&this->field_0x34 + 0x44;
+    if (uVar4 == 0) {
+      uVar4 = (ulonglong)*(uint *)&param_1->field_0x34 + 0x44;
     }
-    uVar6 = this->m_RingWrap;
-    uVar7 = (uVar5 + lVar3) - 1 & ~(lVar3 - 1U);
-    uVar5 = uVar8 * 4 + uVar7;
-    puVar10 = (ulong *)uVar5;
-    if (ZEXT48(this->m_pSecondaryRingBufferLimit) < (uVar5 & 0xffffffff)) {
-      uVar6 = uVar6 + 1;
-      uVar7 = (lVar3 + ZEXT48(this->m_pNextSecondaryStart)) - 1 & ~(lVar3 - 1U);
-      uVar8 = uVar8 * 4 + uVar7;
-      puVar10 = (ulong *)uVar8;
-      iVar1 = CDevice::IsPastStopPoint(this,puVar10,uVar6);
-      if ((iVar1 == 0) && ((uVar8 & 0xffffffff) <= ZEXT48(this->m_pSegmentStart))) {
-        this->m_pNextSecondaryStart = puVar10;
+    uVar7 = param_1->m_RingWrap;
+    uVar4 = (uVar4 + lVar2) - 1 & ~(lVar2 - 1U);
+    pvVar8 = (void *)uVar4;
+    uVar4 = uVar6 * 4 + uVar4;
+    puVar9 = (ulong *)uVar4;
+    if (ZEXT48(param_1->m_pSecondaryRingBufferLimit) < (uVar4 & 0xffffffff)) {
+      uVar7 = uVar7 + 1;
+      uVar4 = (lVar2 + ZEXT48(param_1->m_pNextSecondaryStart)) - 1 & ~(lVar2 - 1U);
+      pvVar8 = (void *)uVar4;
+      uVar4 = uVar6 * 4 + uVar4;
+      puVar9 = (ulong *)uVar4;
+      iVar1 = CDevice::IsPastStopPoint(param_1,puVar9,uVar7);
+      if ((iVar1 == 0) && ((uVar4 & 0xffffffff) <= ZEXT48(param_1->m_pSegmentStart))) {
+        param_1->m_pNextSecondaryStart = puVar9;
         goto LAB_82866e60;
       }
     }
     else {
-      iVar1 = CDevice::IsPastStopPoint(this,puVar10,uVar6);
+      iVar1 = CDevice::IsPastStopPoint(param_1,puVar9,uVar7);
       if (iVar1 == 0) {
-        this->m_pRingAlloc = puVar10;
+        param_1->m_pRingAlloc = puVar9;
 LAB_82866e60:
-        CDevice::BlockOnSecondaryPosition(this,puVar10,uVar6);
-        goto LAB_82866f94;
+        CDevice::BlockOnSecondaryPosition(param_1,puVar9,uVar7);
+        return pvVar8;
       }
     }
   }
-  uVar7 = 0;
-LAB_82866f94:
-  pvVar2 = (void *)__restgprlr_25(uVar7);
-  return pvVar2;
+  return (void *)0x0;
 }
 
 
 // 82866FA0  BeginRingAlloc  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/ring.cpp:1157)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 
 ulong * __thiscall D3D::CDevice::BeginRingAlloc(CDevice *this,ulong param_1,ulong param_2)
 
 {
   CCommandBuffer *this_00;
-  CDevice *pCVar2;
-  ulonglong uVar1;
-  void *pvVar3;
-  ulong *puVar4;
-  uint uVar5;
+  ulong *puVar1;
+  uint uVar2;
   ulong local_30 [12];
   
-  uVar1 = (ulonglong)(int)param_1;
-  pCVar2 = (CDevice *)__savegprlr_29(this);
-  if (pCVar2->m_OutOfMemory) {
-    uVar1 = 0;
+  if (this->m_OutOfMemory) {
+    puVar1 = (ulong *)0x0;
   }
   else {
-    this_00 = pCVar2->m_pCommandBuffer;
-    local_30[0] = (ulong)((uVar1 & 0xffffffff) << 2);
+    this_00 = this->m_pCommandBuffer;
+    local_30[0] = param_1 << 2;
     if (this_00 == (CCommandBuffer *)0x0) {
-      pvVar3 = RingBufferDeviceAllocate(pCVar2,1,local_30,param_2);
-      uVar1 = (ulonglong)(int)pvVar3;
+      puVar1 = RingBufferDeviceAllocate(this,1,local_30,param_2);
     }
     else if (this_00->m_dwPhysical == 0) {
-      puVar4 = CCommandBuffer::GrowableAllocate(this_00,1,local_30,param_2);
-      uVar1 = (ulonglong)(int)puVar4;
+      puVar1 = CCommandBuffer::GrowableAllocate(this_00,1,local_30,param_2);
     }
     else {
-      pvVar3 = CommandBufferDeviceAllocate(pCVar2,1,local_30,param_2);
-      uVar1 = (ulonglong)(int)pvVar3;
+      puVar1 = CommandBufferDeviceAllocate(this,1,local_30,param_2);
     }
-    uVar5 = pCVar2->m_TotalSegmentAllocs + local_30[0];
-    pCVar2->m_TotalSegmentAllocs = uVar5;
-    if ((pCVar2->m_SegmentAllocLimit < uVar5) && (pCVar2->m_pStopPoint == (ulong *)0x0)) {
-      *(int *)&pCVar2->field_0x34 = *(int *)&pCVar2->field_0x30 + 0xa0;
-      *(int *)&pCVar2->field_0x38 = *(int *)&pCVar2->field_0x30;
-      if (pCVar2->m_pNextSecondaryStart != pCVar2->m_pSecondaryRingBuffer) {
-        pCVar2->m_pRingAlloc = pCVar2->m_pSecondaryRingBufferLimit;
+    uVar2 = this->m_TotalSegmentAllocs + local_30[0];
+    this->m_TotalSegmentAllocs = uVar2;
+    if ((this->m_SegmentAllocLimit < uVar2) && (this->m_pStopPoint == (ulong *)0x0)) {
+      *(int *)&this->field_0x34 = *(int *)&this->field_0x30 + 0xa0;
+      *(int *)&this->field_0x38 = *(int *)&this->field_0x30;
+      if (this->m_pNextSecondaryStart != this->m_pSecondaryRingBuffer) {
+        this->m_pRingAlloc = this->m_pSecondaryRingBufferLimit;
       }
     }
-    if ((uVar1 & 0xffffffff) == 0) {
-      pCVar2->m_OutOfMemory = true;
+    if (puVar1 == (ulong *)0x0) {
+      this->m_OutOfMemory = true;
     }
   }
-  puVar4 = (ulong *)__restgprlr_29(uVar1);
-  return puVar4;
+  return puVar1;
 }
 
 
 // 828678A0  StartNewSegment  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/ring.cpp:1278)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 
 ulong * __thiscall D3D::CDevice::StartNewSegment(CDevice *this,ulong param_1)
 
 {
   CCommandBuffer *this_00;
-  CDevice *this_01;
-  ulonglong uVar1;
-  void *pvVar2;
-  ulong *puVar3;
+  ulong *puVar1;
+  ulong *puVar2;
   uint local_30 [12];
   
-  uVar1 = (ulonglong)(int)param_1;
-  this_01 = (CDevice *)__savegprlr_29(this);
-  if (this_01->m_OutOfMemory) {
-    MarkAsOutOfMemory(this_01);
-    uVar1 = 0;
+  if (this->m_OutOfMemory) {
+    MarkAsOutOfMemory(this);
+    puVar1 = (ulong *)0x0;
   }
   else {
-    if ((uVar1 & 0xffffffff) == 0) {
-      uVar1 = 0;
+    if (param_1 == 0) {
+      local_30[0] = 0;
     }
     else {
-      uVar1 = (uVar1 + 0x10 & 0x3fffffff) << 2;
+      local_30[0] = (param_1 + 0x10) * 4;
     }
-    local_30[0] = (uint)uVar1;
-    this_00 = this_01->m_pCommandBuffer;
+    this_00 = this->m_pCommandBuffer;
     if (((this_00 != (CCommandBuffer *)0x0) && (this_00->m_dwGrowableAllocateCallback != 0)) &&
-       (uVar1 <= this_01->m_SegmentSize)) {
-      local_30[0] = this_01->m_SegmentSize;
+       (local_30[0] <= this->m_SegmentSize)) {
+      local_30[0] = this->m_SegmentSize;
     }
     if (this_00 == (CCommandBuffer *)0x0) {
-      pvVar2 = RingBufferDeviceAllocate(this_01,2,local_30,0x20);
-      uVar1 = (ulonglong)(int)pvVar2;
+      puVar1 = RingBufferDeviceAllocate(this,2,local_30,0x20);
     }
     else if (this_00->m_dwPhysical == 0) {
-      puVar3 = CCommandBuffer::GrowableAllocate(this_00,2,local_30,0x20);
-      uVar1 = (ulonglong)(int)puVar3;
+      puVar1 = CCommandBuffer::GrowableAllocate(this_00,2,local_30,0x20);
     }
     else {
-      pvVar2 = CommandBufferDeviceAllocate(this_01,2,local_30,0x20);
-      uVar1 = (ulonglong)(int)pvVar2;
+      puVar1 = CommandBufferDeviceAllocate(this,2,local_30,0x20);
     }
-    if ((uVar1 & 0xffffffff) == 0) {
-      MarkAsOutOfMemory(this_01);
+    if (puVar1 == (ulong *)0x0) {
+      MarkAsOutOfMemory(this);
     }
     else {
-      puVar3 = (ulong *)uVar1 + -1;
-      this_01->m_pSegmentStart = (ulong *)uVar1;
-      *(ulong **)&this_01->field_0x30 = puVar3;
-      this_01->m_pRingAlloc = (ulong *)0x0;
-      this_01->m_TotalSegmentAllocs = 0;
-      *(ulong **)&this_01->field_0x34 = puVar3 + ((local_30[0] >> 2) - 0x10);
-      *(ulong **)&this_01->field_0x38 = puVar3 + ((local_30[0] >> 2) - 0x10) + -0x28;
+      puVar2 = puVar1 + -1;
+      this->m_pSegmentStart = puVar1;
+      *(ulong **)&this->field_0x30 = puVar2;
+      this->m_pRingAlloc = (ulong *)0x0;
+      this->m_TotalSegmentAllocs = 0;
+      *(ulong **)&this->field_0x34 = puVar2 + ((local_30[0] >> 2) - 0x10);
+      *(ulong **)&this->field_0x38 = puVar2 + ((local_30[0] >> 2) - 0x10) + -0x28;
     }
-    if (((this_01->m_CreateDeviceFlags & 1) == 0) && (this_01->m_Throttle != 0)) {
-      BlockOnFence(this_01,this_01->m_Throttle,D3DBLOCKTYPE_SWAP_THROTTLE,(D3DResource *)0x0,false);
-      this_01->m_Throttle = 0;
+    if (((this->m_CreateDeviceFlags & 1) == 0) && (this->m_Throttle != 0)) {
+      BlockOnFence(this,this->m_Throttle,D3DBLOCKTYPE_SWAP_THROTTLE,(D3DResource *)0x0,false);
+      this->m_Throttle = 0;
     }
   }
-  puVar3 = (ulong *)__restgprlr_29(uVar1);
-  return puVar3;
+  return puVar1;
 }
 
 
 // 82866988  IsPrimaryMemoryBusy  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/ring.cpp:1379)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 
 int __thiscall D3D::CDevice::IsPrimaryMemoryBusy(CDevice *this,ulong param_1,ulong param_2)
 
 {
   uint uVar1;
-  int iVar3;
-  undefined8 uVar2;
-  ulonglong uVar4;
-  ulonglong uVar5;
+  int iVar2;
   
-  uVar5 = (ulonglong)(int)param_2;
-  uVar4 = (ulonglong)(int)param_1;
-  iVar3 = __savegprlr_29(this);
-  uVar1 = *(uint *)(*(int *)(iVar3 + 0x2b10) + 0x3c);
-  if ((uVar4 & 0xffffffff) < (uVar5 & 0xffffffff)) {
-    if ((uVar4 & 0xffffffff) < (ulonglong)uVar1) {
+  uVar1 = this->m_pWriteBacks->PrimaryRingBufferReadIndex;
+  if (param_1 < param_2) {
+    if (param_1 < uVar1) {
 LAB_828669bc:
-      if ((ulonglong)uVar1 <= (uVar5 & 0xffffffff)) goto LAB_828669c4;
+      if (uVar1 <= param_2) goto LAB_828669c4;
     }
-    uVar2 = 0;
+    iVar2 = 0;
   }
   else {
-    if ((ulonglong)uVar1 <= (uVar4 & 0xffffffff)) goto LAB_828669bc;
+    if (uVar1 <= param_1) goto LAB_828669bc;
 LAB_828669c4:
-    uVar2 = 1;
+    iVar2 = 1;
   }
-  iVar3 = __restgprlr_29(uVar2);
-  return iVar3;
+  return iVar2;
 }
 
 
 // 828669F0  BlockOnPrimaryRange  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/ring.cpp:1413)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 
 ulong __thiscall D3D::CDevice::BlockOnPrimaryRange(CDevice *this,ulong param_1,ulong param_2)
 
 {
   uint uVar1;
-  CDevice *this_00;
   int iVar2;
-  ulong uVar3;
-  longlong lVar4;
-  longlong lVar5;
-  ulonglong uVar6;
+  uint uVar3;
   CBlocker aCStack_40 [2];
   
-  lVar5 = (longlong)(int)param_2;
-  lVar4 = (longlong)(int)param_1;
-  this_00 = (CDevice *)__savegprlr_29(this);
-  uVar6 = lVar4 + lVar5 & (ulonglong)this_00->m_PrimaryBufferWriteMask;
-  uVar3 = (ulong)uVar6;
-  iVar2 = IsPrimaryMemoryBusy(this_00,(ulong)lVar4,uVar3);
+  uVar3 = param_1 + param_2 & this->m_PrimaryBufferWriteMask;
+  iVar2 = IsPrimaryMemoryBusy(this,param_1,uVar3);
   if (iVar2 != 0) {
-    uVar1 = *(uint *)&(this_00->m_CpuDrPix).field_0x4;
-    (this_00->m_CpuDrPix).PrimaryRingBufferOverruns = (uVar1 & 0xfffffff0) + 0x10 >> 4;
-    CBlocker::CBlocker(aCStack_40,this_00,D3DBLOCKTYPE_PRIMARY_OVERRUN);
+    uVar1 = *(uint *)&(this->m_CpuDrPix).field_0x4;
+    (this->m_CpuDrPix).PrimaryRingBufferOverruns = (uVar1 & 0xfffffff0) + 0x10 >> 4;
+    CBlocker::CBlocker(aCStack_40,this,D3DBLOCKTYPE_PRIMARY_OVERRUN);
     do {
       iVar2 = CBlocker::Check(aCStack_40);
       if (iVar2 == 0) break;
-      iVar2 = IsPrimaryMemoryBusy(this_00,(ulong)lVar4,uVar3);
+      iVar2 = IsPrimaryMemoryBusy(this,param_1,uVar3);
     } while (iVar2 != 0);
     CBlocker::~CBlocker(aCStack_40);
   }
-  uVar3 = __restgprlr_29(uVar6);
   return uVar3;
 }
 
 
 // 828679E8  AddCommandsToPrimaryBuffer  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/ring.cpp:1457)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 /* WARNING: Enum "ERareInstruction": Some values do not have unique names */
 
@@ -664,100 +601,96 @@ void __thiscall D3D::CDevice::AddCommandsToPrimaryBuffer(CDevice *this,ulong *pa
   uint uVar1;
   ulong *puVar2;
   CRTPM4RingManager *pCVar3;
-  CDevice *this_00;
   CCapture *pCVar4;
   int iVar5;
   ulonglong uVar6;
-  ulonglong uVar7;
-  uint uVar9;
-  uint uVar10;
-  longlong lVar8;
+  uint uVar7;
+  uint uVar8;
+  ulong *puVar9;
+  ulong uVar10;
   ulong uVar11;
-  ulong uVar12;
-  ulonglong uVar13;
+  longlong lVar12;
   CRTPM4RingManager *local_50;
   NonSnoopedWriteBacks *local_4c;
   
-  uVar13 = (ulonglong)(int)param_2;
-  uVar6 = (ulonglong)(int)param_1;
-  this_00 = (CDevice *)__savegprlr_24(this);
-  pCVar4 = this_00->m_pCapture;
+  lVar12 = (longlong)(int)param_2;
+  pCVar4 = this->m_pCapture;
   if ((pCVar4 != (CCapture *)0x0) &&
-     ((D3D__UseRTModificationsForPIX == 0 || (this_00->m_RTTrackMipUsage == false)))) {
-    pCVar4 = (CCapture *)(**(code **)(pCVar4->_padding_ + 0x18))(pCVar4,uVar6,uVar13,0,0);
+     ((D3D__UseRTModificationsForPIX == 0 || (this->m_RTTrackMipUsage == false)))) {
+    pCVar4 = (CCapture *)(**(code **)(pCVar4->_padding_ + 0x18))(pCVar4,param_1,lVar12,0,0);
   }
-  uVar1 = this_00->m_PrimaryBufferWriteMask;
-  puVar2 = this_00->m_pPrimaryRingBuffer;
-  uVar11 = (this_00->m_XpsGlobal)._padding_;
-  if (this_00->m_RTTrackTextures != false) {
+  uVar1 = this->m_PrimaryBufferWriteMask;
+  puVar2 = this->m_pPrimaryRingBuffer;
+  uVar10 = (this->m_XpsGlobal)._padding_;
+  if (this->m_RTTrackTextures != false) {
     if ((g_RTGlobal.m_GracefulShutdownData & 0x80000000U) != 0) {
       if ((g_RTGlobal.m_GracefulShutdownData & 0x80000000U) == 0) {
-        uVar7 = 0;
+        uVar6 = 0;
       }
       else {
-        uVar7 = (-((ulonglong)(uint)g_RTGlobal.m_GracefulShutdownData & 0x7fffffff) &
+        uVar6 = (-((ulonglong)(uint)g_RTGlobal.m_GracefulShutdownData & 0x7fffffff) &
                  ~((ulonglong)(uint)g_RTGlobal.m_GracefulShutdownData & 0x7fffffff) & 0xffffffff) >>
                 0x1f;
       }
-      if (uVar7 == 0) {
-        this_00->m_RTTrackTextures = false;
-        this_00->m_RTTrackMipUsage = false;
+      if (uVar6 == 0) {
+        this->m_RTTrackTextures = false;
+        this->m_RTTrackMipUsage = false;
         pCVar4 = (CCapture *)CRTGlobalData::DisableTextureTracking(&g_RTGlobal);
       }
     }
   }
-  if ((this_00->m_RTTrackMipUsage != false) && (iVar5 = KeGetCurrentProcessType(pCVar4), iVar5 != 2)
-     ) {
+  if ((this->m_RTTrackMipUsage != false) && (iVar5 = KeGetCurrentProcessType(pCVar4), iVar5 != 2)) {
     pCVar3 = (g_RTGlobal.m_pCommandBufferHacker)->m_pRingManager;
     if (pCVar3 != (CRTPM4RingManager *)0x0) {
       pCVar3->m_SegmentID = pCVar3->m_SegmentID + 1;
     }
     CRTCommandBufferHacker::RunInstrumentation
               ((CRTCommandBufferHacker *)&local_50,(ulong *)g_RTGlobal.m_pCommandBufferHacker,
-               (ulong)uVar6,(ulong)uVar13,1);
-    pCVar4 = this_00->m_pCapture;
+               (ulong)param_1,param_2,1);
+    pCVar4 = this->m_pCapture;
     if ((pCVar4 != (CCapture *)0x0) && (D3D__UseRTModificationsForPIX != 0)) {
       (**(code **)(pCVar4->_padding_ + 0x18))(pCVar4,local_50,local_4c,0,0);
     }
-    if (ZEXT48(local_50) != (uVar6 & 0xffffffff)) {
+    if (local_50 != (CRTPM4RingManager *)param_1) {
       CRTCommandBufferHacker::ArchiveCachedShaders(g_RTGlobal.m_pCommandBufferHacker);
       if (local_4c != (NonSnoopedWriteBacks *)0x0) {
-        BlockOnPrimaryRange(this_00,uVar11,3);
-        uVar9 = uVar11 + 1 & uVar1;
-        uVar10 = uVar9 + 1 & uVar1;
-        puVar2[uVar11] = 0xc0013f00;
-        puVar2[uVar9] = (((uint)local_50 >> 0x14) + 0x200 & 0x1000) + ((uint)local_50 & 0x1fffffff);
-        uVar11 = uVar10 + 1 & uVar1;
-        puVar2[uVar10] = (ulong)local_4c;
+        BlockOnPrimaryRange(this,uVar10,3);
+        uVar7 = uVar10 + 1 & uVar1;
+        uVar8 = uVar7 + 1 & uVar1;
+        puVar2[uVar10] = 0xc0013f00;
+        puVar2[uVar7] = (((uint)local_50 >> 0x14) + 0x200 & 0x1000) + ((uint)local_50 & 0x1fffffff);
+        uVar10 = uVar8 + 1 & uVar1;
+        puVar2[uVar8] = (ulong)local_4c;
       }
       goto LAB_82867bf4;
     }
   }
-  BlockOnPrimaryRange(this_00,uVar11,(ulong)uVar13);
-  if ((uVar13 & 0xffffffff) != 0) {
-    lVar8 = uVar6 - 4;
-    uVar12 = uVar11;
+  BlockOnPrimaryRange(this,uVar10,param_2);
+  if (param_2 != 0) {
+    puVar9 = param_1 + -1;
+    uVar11 = uVar10;
     do {
-      lVar8 = lVar8 + 4;
-      uVar11 = uVar12 + 1 & uVar1;
-      puVar2[uVar12] = *(ulong *)lVar8;
-      uVar13 = uVar13 - 1;
-      uVar12 = uVar11;
-    } while (uVar13 != 0);
+      puVar9 = puVar9 + 1;
+      uVar10 = uVar11 + 1 & uVar1;
+      puVar2[uVar11] = *puVar9;
+      lVar12 = lVar12 + -1;
+      uVar11 = uVar10;
+    } while (lVar12 != 0);
   }
 LAB_82867bf4:
-  pCVar4 = this_00->m_pCapture;
-  (this_00->m_XpsGlobal)._padding_ = uVar11;
+  pCVar4 = this->m_pCapture;
+  (this->m_XpsGlobal)._padding_ = uVar10;
   if (pCVar4 != (CCapture *)0x0) {
     (**(code **)(pCVar4->_padding_ + 0x1c))();
   }
-  __restgprlr_24();
   return;
 }
 
 
 // 82867C20  AddCallsToPrimaryBuffer  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/ring.cpp:1680)
 
+/* WARNING: Function: __savegprlr_18 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_18 replaced with injection: xenon_save_restore */
 /* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 /* WARNING: Enum "ERareInstruction": Some values do not have unique names */
@@ -771,7 +704,6 @@ D3D::CDevice::AddCallsToPrimaryBuffer(CDevice *this,SegmentCall *param_1,ulong p
   code *pcVar3;
   CCapture *pCVar4;
   bool bVar5;
-  CDevice *this_00;
   int iVar6;
   void *pvVar7;
   CCapture *pCVar8;
@@ -780,55 +712,54 @@ D3D::CDevice::AddCallsToPrimaryBuffer(CDevice *this,SegmentCall *param_1,ulong p
   NonSnoopedWriteBacks *pNVar11;
   ulong uVar12;
   ulong uVar13;
-  uint *puVar14;
+  SegmentCall *pSVar14;
   uint uVar15;
   uint uVar16;
-  ulonglong uVar17;
-  ulong uVar18;
-  longlong lVar19;
+  uint uVar17;
+  longlong lVar18;
+  ulong uVar19;
   CRTPM4RingManager *local_80;
   NonSnoopedWriteBacks *local_7c;
   
-  uVar17 = (ulonglong)(int)param_2;
-  lVar19 = (longlong)(int)param_1;
-  this_00 = (CDevice *)__savegprlr_18(this);
-  uVar1 = this_00->m_PrimaryBufferWriteMask;
-  puVar2 = this_00->m_pPrimaryRingBuffer;
-  bVar5 = *(char *)lVar19 == -0x71;
-  if (this_00->m_NullHardware) {
-    if (this_00->m_pCapture != (CCapture *)0x0) {
-      uVar10 = uVar17 & 0xffffffff;
-      while (uVar10 != 0) {
-        uVar18 = ((uint *)lVar19)[1];
-        pNVar11 = (NonSnoopedWriteBacks *)(*(uint *)lVar19 & 0xffffff);
-        if (((this_00->m_RTTrackMipUsage == false) || (D3D__UseRTModificationsForPIX == 0)) ||
-           (iVar6 = KeGetCurrentProcessType(), iVar6 == 2)) {
-          pCVar8 = this_00->m_pCapture;
+  lVar18 = (longlong)(int)param_2;
+  uVar1 = this->m_PrimaryBufferWriteMask;
+  puVar2 = this->m_pPrimaryRingBuffer;
+  bVar5 = param_1->m_QueueCommand == 0x8f;
+  if (this->m_NullHardware) {
+    if ((this->m_pCapture != (CCapture *)0x0) && (param_2 != 0)) {
+      do {
+        uVar1._0_1_ = param_1->m_QueueCommand;
+        uVar1._1_3_ = param_1->m_Count;
+        uVar19 = param_1->m_Address;
+        pNVar11 = (NonSnoopedWriteBacks *)(uVar1 & 0xffffff);
+        if ((this->m_RTTrackMipUsage == false) ||
+           ((D3D__UseRTModificationsForPIX == 0 || (iVar6 = KeGetCurrentProcessType(), iVar6 == 2)))
+           ) {
+          pCVar8 = this->m_pCapture;
           iVar6 = pCVar8->_padding_;
-          pvVar7 = GetCPUAddress(uVar18);
+          pvVar7 = GetCPUAddress(uVar19);
           uVar10 = (ulonglong)(int)pvVar7;
           pcVar3 = *(code **)(iVar6 + 0x18);
         }
         else {
-          pvVar7 = GetCPUAddress(uVar18);
+          pvVar7 = GetCPUAddress(uVar19);
           CRTCommandBufferHacker::RunInstrumentation
                     ((CRTCommandBufferHacker *)&local_80,(ulong *)g_RTGlobal.m_pCommandBufferHacker,
                      (ulong)pvVar7,(int)pNVar11,1);
-          pCVar8 = this_00->m_pCapture;
+          pCVar8 = this->m_pCapture;
           uVar10 = ZEXT48(local_80);
           pcVar3 = *(code **)(pCVar8->_padding_ + 0x18);
           pNVar11 = local_7c;
         }
         (*pcVar3)(pCVar8,uVar10,pNVar11,1,bVar5);
-        (**(code **)(this_00->m_pCapture->_padding_ + 0x1c))();
-        lVar19 = lVar19 + 8;
-        uVar17 = uVar17 - 1;
-        uVar10 = uVar17;
-      }
+        (**(code **)(this->m_pCapture->_padding_ + 0x1c))();
+        lVar18 = lVar18 + -1;
+        param_1 = param_1 + 1;
+      } while (lVar18 != 0);
     }
   }
   else {
-    if ((this_00->m_RTTrackTextures != false) &&
+    if ((this->m_RTTrackTextures != false) &&
        ((g_RTGlobal.m_GracefulShutdownData & 0x80000000U) != 0)) {
       if ((g_RTGlobal.m_GracefulShutdownData & 0x80000000U) == 0) {
         uVar10 = 0;
@@ -839,92 +770,97 @@ D3D::CDevice::AddCallsToPrimaryBuffer(CDevice *this,SegmentCall *param_1,ulong p
                  >> 0x1f;
       }
       if (uVar10 == 0) {
-        this_00->m_RTTrackTextures = false;
-        this_00->m_RTTrackMipUsage = false;
+        this->m_RTTrackTextures = false;
+        this->m_RTTrackMipUsage = false;
         CRTGlobalData::DisableTextureTracking(&g_RTGlobal);
       }
     }
-    if ((this_00->m_RTTrackMipUsage != false) &&
+    if ((this->m_RTTrackMipUsage != false) &&
        (pCVar9 = (g_RTGlobal.m_pCommandBufferHacker)->m_pRingManager,
        pCVar9 != (CRTPM4RingManager *)0x0)) {
       pCVar9->m_SegmentID = pCVar9->m_SegmentID + 1;
     }
-    uVar18 = (this_00->m_XpsGlobal)._padding_;
+    uVar19 = (this->m_XpsGlobal)._padding_;
     if (bVar5) {
-      uVar12 = (int)uVar17 * 3 + 1;
+      uVar12 = param_2 * 3 + 1;
     }
     else {
-      uVar12 = (int)uVar17 * 3;
+      uVar12 = param_2 * 3;
     }
-    pCVar8 = (CCapture *)BlockOnPrimaryRange(this_00,uVar18,uVar12);
-    uVar10 = 0;
-    if ((uVar17 & 0xffffffff) != 0) {
+    pCVar8 = (CCapture *)BlockOnPrimaryRange(this,uVar19,uVar12);
+    uVar17 = 0;
+    if (param_2 != 0) {
       do {
-        pCVar4 = this_00->m_pCapture;
-        puVar14 = (uint *)((char *)lVar19 + (int)((uVar10 & 0xffffffff) << 3));
-        uVar12 = puVar14[1];
-        pNVar11 = (NonSnoopedWriteBacks *)(*puVar14 & 0xffffff);
+        pCVar4 = this->m_pCapture;
+        pSVar14 = param_1 + uVar17;
+        uVar15._0_1_ = pSVar14->m_QueueCommand;
+        uVar15._1_3_ = pSVar14->m_Count;
+        uVar12 = pSVar14->m_Address;
+        pNVar11 = (NonSnoopedWriteBacks *)(uVar15 & 0xffffff);
         if ((pCVar4 != (CCapture *)0x0) &&
-           ((D3D__UseRTModificationsForPIX == 0 || (this_00->m_RTTrackMipUsage == false)))) {
+           ((D3D__UseRTModificationsForPIX == 0 || (this->m_RTTrackMipUsage == false)))) {
           iVar6 = pCVar4->_padding_;
           pvVar7 = GetCPUAddress(uVar12);
           pCVar8 = (CCapture *)(**(code **)(iVar6 + 0x18))(pCVar4,pvVar7,pNVar11,1,bVar5);
         }
-        if ((this_00->m_RTTrackMipUsage != false) &&
-           (pCVar8 = (CCapture *)KeGetCurrentProcessType(pCVar8), pCVar8 != (CCapture *)0x2)) {
-          pCVar9 = GetCPUAddress(uVar12);
-          CRTCommandBufferHacker::RunInstrumentation
-                    ((CRTCommandBufferHacker *)&local_80,(ulong *)g_RTGlobal.m_pCommandBufferHacker,
-                     (ulong)pCVar9,(int)pNVar11,1);
-          if (local_80 != pCVar9) {
-            uVar12 = (((uint)local_80 >> 0x14) + 0x200 & 0x1000) + ((uint)local_80 & 0x1fffffff);
-            pNVar11 = local_7c;
-          }
-          pCVar8 = this_00->m_pCapture;
-          if ((pCVar8 != (CCapture *)0x0) && (D3D__UseRTModificationsForPIX != 0)) {
-            pCVar8 = (CCapture *)(**(code **)(pCVar8->_padding_ + 0x18))();
+        if (this->m_RTTrackMipUsage != false) {
+          pCVar8 = (CCapture *)KeGetCurrentProcessType(pCVar8);
+          if (pCVar8 != (CCapture *)0x2) {
+            pCVar9 = GetCPUAddress(uVar12);
+            CRTCommandBufferHacker::RunInstrumentation
+                      ((CRTCommandBufferHacker *)&local_80,
+                       (ulong *)g_RTGlobal.m_pCommandBufferHacker,(ulong)pCVar9,(int)pNVar11,1);
+            if (local_80 != pCVar9) {
+              uVar12 = (((uint)local_80 >> 0x14) + 0x200 & 0x1000) + ((uint)local_80 & 0x1fffffff);
+              pNVar11 = local_7c;
+            }
+            pCVar8 = this->m_pCapture;
+            if ((pCVar8 != (CCapture *)0x0) && (D3D__UseRTModificationsForPIX != 0)) {
+              pCVar8 = (CCapture *)(**(code **)(pCVar8->_padding_ + 0x18))();
+            }
           }
         }
         if (pNVar11 != (NonSnoopedWriteBacks *)0x0) {
           if (bVar5) {
-            if ((uVar10 & 0xffffffff) == 0) {
-              puVar2[uVar18] = 0x80000000;
-              uVar18 = uVar18 + 1 & uVar1;
+            if (uVar17 == 0) {
+              puVar2[uVar19] = 0x80000000;
+              uVar19 = uVar19 + 1 & uVar1;
             }
             uVar13 = 0xc0013700;
           }
           else {
             uVar13 = 0xc0013f00;
           }
-          uVar15 = uVar18 + 1 & uVar1;
+          uVar15 = uVar19 + 1 & uVar1;
           uVar16 = uVar15 + 1 & uVar1;
-          puVar2[uVar18] = uVar13;
+          puVar2[uVar19] = uVar13;
           puVar2[uVar15] = uVar12;
-          uVar18 = uVar16 + 1 & uVar1;
+          uVar19 = uVar16 + 1 & uVar1;
           puVar2[uVar16] = (ulong)pNVar11;
         }
-        uVar10 = uVar10 + 1;
-      } while ((uVar10 & 0xffffffff) < (uVar17 & 0xffffffff));
+        uVar17 = uVar17 + 1;
+      } while (uVar17 < param_2);
     }
-    if (this_00->m_RTTrackMipUsage != false) {
+    if (this->m_RTTrackMipUsage != false) {
       CRTCommandBufferHacker::ArchiveCachedShaders(g_RTGlobal.m_pCommandBufferHacker);
     }
-    (this_00->m_XpsGlobal)._padding_ = uVar18;
+    (this->m_XpsGlobal)._padding_ = uVar19;
     sync(0);
     enforceInOrderExecutionIO();
     sync(0);
-    _DAT_7fc80714 = uVar18;
-    if (this_00->m_pCapture != (CCapture *)0x0) {
-      (**(code **)(this_00->m_pCapture->_padding_ + 0x1c))();
+    _DAT_7fc80714 = uVar19;
+    if (this->m_pCapture != (CCapture *)0x0) {
+      (**(code **)(this->m_pCapture->_padding_ + 0x1c))();
     }
   }
-  __restgprlr_18();
   return;
 }
 
 
 // 82867FD0  CreateInvalidateBuffer  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/ring.cpp:1900)
 
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 
 void __thiscall D3D::CDevice::CreateInvalidateBuffer(CDevice *this,ulong *param_1,ulong *param_2)
@@ -935,23 +871,21 @@ void __thiscall D3D::CDevice::CreateInvalidateBuffer(CDevice *this,ulong *param_
   ulong *puVar3;
   uint uVar4;
   undefined1 uVar5;
-  CDevice *this_00;
   ulong *puVar6;
   ulong uVar7;
   ulong *puVar8;
   ulong local_60;
   uint local_5c [23];
   
-  this_00 = (CDevice *)__savegprlr_22(this);
-  bVar1 = this_00->m_AsynchronousInvalidateRange != 0xffffffff;
-  uVar7 = (this_00->m_FlushVertexCacheAtKickOff + (uint)bVar1) * 0xb;
-  if ((uVar7 == 0) || (puVar6 = BeginRingAlloc(this_00,uVar7,0x20), puVar6 == (ulong *)0x0)) {
+  bVar1 = this->m_AsynchronousInvalidateRange != 0xffffffff;
+  uVar7 = (this->m_FlushVertexCacheAtKickOff + (uint)bVar1) * 0xb;
+  if ((uVar7 == 0) || (puVar6 = BeginRingAlloc(this,uVar7,0x20), puVar6 == (ulong *)0x0)) {
     *param_2 = 0;
   }
   else {
     puVar8 = puVar6 + -1;
     if (bVar1) {
-      GetAsynchronousInvalidateRange(&this_00->m_AsynchronousInvalidateRange,local_5c,&local_60);
+      GetAsynchronousInvalidateRange(&this->m_AsynchronousInvalidateRange,local_5c,&local_60);
       *puVar6 = 0xa31;
       puVar6[1] = 0x3000000;
       puVar6[2] = 0x10a2f;
@@ -965,9 +899,9 @@ void __thiscall D3D::CDevice::CreateInvalidateBuffer(CDevice *this,ulong *param_
       puVar8 = puVar6 + 10;
       *puVar8 = 8;
     }
-    if (this_00->m_FlushVertexCacheAtKickOff) {
-      puVar2 = this_00->m_pSecondaryRingBufferLimit;
-      puVar3 = this_00->m_pSecondaryRingBuffer;
+    if (this->m_FlushVertexCacheAtKickOff) {
+      puVar2 = this->m_pSecondaryRingBufferLimit;
+      puVar3 = this->m_pSecondaryRingBuffer;
       puVar8[1] = 0xa31;
       puVar8[2] = 0x1000000;
       uVar4 = (((uint)puVar3 >> 0x14) + 0x200 & 0x1000) + ((uint)puVar3 & 0x1fffffff) & 0xfffff000;
@@ -985,13 +919,14 @@ void __thiscall D3D::CDevice::CreateInvalidateBuffer(CDevice *this,ulong *param_
     *param_1 = (((uint)puVar6 >> 0x14) + 0x200 & 0x1000) + ((uint)puVar6 & 0x1fffffff);
     *param_2 = uVar7;
   }
-  __restgprlr_22();
   return;
 }
 
 
 // 82867098  SetFence  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/ring.cpp:1990)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 
 ulong * __thiscall D3D::CDevice::SetFence(CDevice *this,ulong *param_1)
@@ -999,135 +934,121 @@ ulong * __thiscall D3D::CDevice::SetFence(CDevice *this,ulong *param_1)
 {
   ulong uVar1;
   WriteBacks *pWVar2;
-  CDevice *pCVar3;
-  int iVar4;
-  ulong *puVar5;
-  longlong lVar6;
-  uint uVar7;
+  int iVar3;
+  uint uVar4;
   
-  lVar6 = (longlong)(int)param_1;
-  pCVar3 = (CDevice *)__savegprlr_28(this);
-  uVar1 = pCVar3->m_CpuFence;
-  pWVar2 = pCVar3->m_pWriteBacks;
-  pCVar3->m_FenceWrap = pCVar3->m_RingWrap;
-  uVar7 = pCVar3->m_RingWrap & 3 | (uint)*(ulong **)&pCVar3->field_0x30;
-  pCVar3->m_pFencePoint = *(ulong **)&pCVar3->field_0x30;
-  iVar4 = (int)lVar6;
-  *(undefined4 *)(iVar4 + 4) = 0xc0003b00;
-  *(undefined4 *)(iVar4 + 8) = 0x7fff;
-  if (pCVar3->m_WaitUntilIdleRequired) {
-    *(undefined4 *)(iVar4 + 0xc) = 0x5c8;
-    *(undefined4 *)(iVar4 + 0x10) = 0x20000;
-    *(ulonglong *)&pCVar3->field_0x20 = *(ulonglong *)&pCVar3->field_0x20 & 0x7fffffffffffffff;
-    pCVar3->m_WaitUntilIdleBeforeNextZPassDoubleDepth = false;
-    pCVar3->m_WaitUntilIdleBeforeNextDoubleDepth = false;
-    pCVar3->m_WaitUntilIdleRequired = false;
+  uVar1 = this->m_CpuFence;
+  pWVar2 = this->m_pWriteBacks;
+  this->m_FenceWrap = this->m_RingWrap;
+  uVar4 = this->m_RingWrap & 3 | (uint)*(ulong **)&this->field_0x30;
+  this->m_pFencePoint = *(ulong **)&this->field_0x30;
+  param_1[1] = 0xc0003b00;
+  param_1[2] = 0x7fff;
+  if (this->m_WaitUntilIdleRequired) {
+    param_1[3] = 0x5c8;
+    param_1[4] = 0x20000;
+    *(ulonglong *)&this->field_0x20 = *(ulonglong *)&this->field_0x20 & 0x7fffffffffffffff;
+    this->m_WaitUntilIdleBeforeNextZPassDoubleDepth = false;
+    this->m_WaitUntilIdleBeforeNextDoubleDepth = false;
+    this->m_WaitUntilIdleRequired = false;
   }
   else {
-    *(undefined4 *)(iVar4 + 0xc) = 0xc0001000;
-    *(undefined4 *)(iVar4 + 0x10) = 0x77777777;
+    param_1[3] = 0xc0001000;
+    param_1[4] = 0x77777777;
   }
-  *(undefined4 *)(iVar4 + 0x14) = 0xc0025800;
-  *(undefined4 *)(iVar4 + 0x18) = 3;
-  *(uint *)(iVar4 + 0x1c) =
-       (((uint)&pWVar2->GpuPosition >> 0x14) + 0x200 & 0x1000) +
-       ((uint)&pWVar2->GpuPosition & 0x1fffffff) | 2;
-  *(uint *)(iVar4 + 0x20) = uVar7;
-  *(undefined4 *)(iVar4 + 0x24) = 0xc0025800;
-  *(undefined4 *)(iVar4 + 0x28) = 3;
-  *(uint *)(iVar4 + 0x2c) =
-       (((uint)pWVar2 >> 0x14) + 0x200 & 0x1000) + ((uint)pWVar2 & 0x1fffffff) | 2;
-  *(ulong *)(lVar6 + 0x30) = uVar1;
-  iVar4 = CommandBufferWillBeProcessed(pCVar3);
-  if (iVar4 == 0) {
-    pCVar3->m_pWriteBacks->GpuFence = uVar1;
-    pCVar3->m_pWriteBacks->GpuPosition = uVar7;
+  param_1[5] = 0xc0025800;
+  param_1[6] = 3;
+  param_1[7] = (((uint)&pWVar2->GpuPosition >> 0x14) + 0x200 & 0x1000) +
+               ((uint)&pWVar2->GpuPosition & 0x1fffffff) | 2;
+  param_1[8] = uVar4;
+  param_1[9] = 0xc0025800;
+  param_1[10] = 3;
+  param_1[0xb] = (((uint)pWVar2 >> 0x14) + 0x200 & 0x1000) + ((uint)pWVar2 & 0x1fffffff) | 2;
+  param_1[0xc] = uVar1;
+  iVar3 = CommandBufferWillBeProcessed(this);
+  if (iVar3 == 0) {
+    this->m_pWriteBacks->GpuFence = uVar1;
+    this->m_pWriteBacks->GpuPosition = uVar4;
   }
-  pCVar3->m_CpuFence = uVar1 + 2;
-  puVar5 = (ulong *)__restgprlr_28(lVar6 + 0x30);
-  return puVar5;
+  this->m_CpuFence = uVar1 + 2;
+  return param_1 + 0xc;
 }
 
 
 // 82868500  KickOffSegment  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/ring.cpp:2084)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 
 void __thiscall D3D::CDevice::KickOffSegment(CDevice *this)
 
 {
   ulong *puVar1;
-  uint uVar2;
-  CDevice *this_00;
-  CDevice *pCVar3;
-  CDevice *pCVar4;
-  ulong *puVar5;
-  CDevice *pCVar6;
+  SegmentCall *pSVar2;
+  ulong *puVar3;
+  ulong *puVar4;
+  uint uVar5;
   
-  this_00 = (CDevice *)__savegprlr_28(this);
-  puVar1 = this_00->m_pSegmentStart;
-  this_00->m_HasKickedOffSinceLastSwap = true;
-  pCVar6 = (CDevice *)(*(ulong **)&this_00->field_0x30 + 1);
-  pCVar3 = this_00;
-  if (!this_00->m_OutOfMemory) {
-    if (this_00->m_CommandBufferDevice) {
-      if (((this_00->m_pCommandBuffer != (CCommandBuffer *)0x0) &&
-          (this_00->m_pCommandBuffer->m_dwPhysical == 0)) &&
-         (uVar2 = (int)pCVar6 - (int)puVar1 >> 2, uVar2 != 0)) {
-        pCVar3 = (CDevice *)this_00->m_pSegmentCall;
-        if ((CDevice *)this_00->m_pSegmentCallEnd <= pCVar3) {
-          pCVar3 = (CDevice *)MakeSegmentCallSpace(this_00);
+  puVar1 = this->m_pSegmentStart;
+  this->m_HasKickedOffSinceLastSwap = true;
+  puVar4 = *(ulong **)&this->field_0x30 + 1;
+  if (!this->m_OutOfMemory) {
+    if (this->m_CommandBufferDevice) {
+      if (((this->m_pCommandBuffer != (CCommandBuffer *)0x0) &&
+          (this->m_pCommandBuffer->m_dwPhysical == 0)) &&
+         (uVar5 = (int)puVar4 - (int)puVar1 >> 2, uVar5 != 0)) {
+        pSVar2 = this->m_pSegmentCall;
+        if (this->m_pSegmentCallEnd <= pSVar2) {
+          pSVar2 = MakeSegmentCallSpace(this);
         }
-        *(uint *)pCVar3 = uVar2 | 0x81000000;
-        *(uint *)&pCVar3->field_0x4 =
-             (((uint)puVar1 >> 0x14) + 0x200 & 0x1000) + ((uint)puVar1 & 0x1fffffff);
-        this_00->m_pSegmentCall = (SegmentCall *)&pCVar3->field_0x8;
+        uVar5 = uVar5 | 0x81000000;
+        pSVar2->m_QueueCommand = (char)(uVar5 >> 0x18);
+        pSVar2->m_Count = (int3)uVar5;
+        pSVar2->m_Address = (((uint)puVar1 >> 0x14) + 0x200 & 0x1000) + ((uint)puVar1 & 0x1fffffff);
+        this->m_pSegmentCall = pSVar2 + 1;
       }
     }
-    else if (this_00->m_pStopPoint == (ulong *)0x0) {
-      puVar5 = SetFence(this_00,*(ulong **)&this_00->field_0x30);
-      pCVar3 = (CDevice *)
-               QueueIndirectBuffer(this_00,puVar5 + 1,
+    else if (this->m_pStopPoint == (ulong *)0x0) {
+      puVar4 = SetFence(this,*(ulong **)&this->field_0x30);
+      puVar4 = QueueIndirectBuffer(this,puVar4 + 1,
                                    (((uint)puVar1 >> 0x14) + 0x200 & 0x1000) +
-                                   ((uint)puVar1 & 0x1fffffff),(int)(puVar5 + 1) - (int)puVar1 >> 2,
-                                   0,&this_00->m_Queue,0);
-      pCVar6 = pCVar3;
+                                   ((uint)puVar1 & 0x1fffffff),(int)(puVar4 + 1) - (int)puVar1 >> 2,
+                                   0,&this->m_Queue,0);
     }
     else {
-      uVar2 = (int)pCVar6 - (int)puVar1 >> 2;
-      if (uVar2 != 0) {
-        pCVar4 = (CDevice *)(this_00->m_Queue).m_pData;
-        pCVar3 = (CDevice *)&this_00->m_Queue;
-        if ((this_00->m_Queue).m_pDataLimit < &pCVar4->field_0x8) {
-          pCVar4 = (CDevice *)CRingAllocList::MakeSpace(&this_00->m_Queue);
-          pCVar3 = pCVar4;
+      uVar5 = (int)puVar4 - (int)puVar1 >> 2;
+      if (uVar5 != 0) {
+        puVar3 = (this->m_Queue).m_pData;
+        if ((this->m_Queue).m_pDataLimit < puVar3 + 2) {
+          puVar3 = CRingAllocList::MakeSpace(&this->m_Queue);
         }
-        *(uint *)&pCVar4->field_0x4 =
-             (((uint)puVar1 >> 0x14) + 0x200 & 0x1000) + ((uint)puVar1 & 0x1fffffff);
-        *(uint *)pCVar4 = uVar2 | 0x81000000;
-        (this_00->m_Queue).m_pData = (ulong *)&pCVar4->field_0x8;
+        puVar3[1] = (((uint)puVar1 >> 0x14) + 0x200 & 0x1000) + ((uint)puVar1 & 0x1fffffff);
+        *puVar3 = uVar5 | 0x81000000;
+        (this->m_Queue).m_pData = puVar3 + 2;
       }
     }
   }
-  if (*(uint *)&this_00->field_0x38 < ((uint)&pCVar6->field_0x1f & 0xffffffe0)) {
-    *(undefined1 **)&this_00->field_0x30 = &pCVar6[-1].field_0x5f7c;
-    pCVar3 = (CDevice *)StartNewSegment(this_00,0);
+  if (*(uint *)&this->field_0x38 < ((int)puVar4 + 0x1fU & 0xffffffe0)) {
+    *(ulong **)&this->field_0x30 = puVar4 + -1;
+    StartNewSegment(this,0);
   }
   else {
-    puVar1 = (ulong *)((uint)&pCVar6->field_0x1f & 0xffffffe0);
-    this_00->m_pSegmentStart = puVar1;
-    *(ulong **)&this_00->field_0x30 = puVar1 + -1;
-    if ((this_00->m_pCapture != (CCapture *)0x0) && (this_00->m_pRingAlloc != (ulong *)0x0)) {
-      this_00->m_pRingAlloc = (ulong *)((int)this_00->m_pRingAlloc + 0xfffU & 0xfffff000);
+    puVar1 = (ulong *)((int)puVar4 + 0x1fU & 0xffffffe0);
+    this->m_pSegmentStart = puVar1;
+    *(ulong **)&this->field_0x30 = puVar1 + -1;
+    if ((this->m_pCapture != (CCapture *)0x0) && (this->m_pRingAlloc != (ulong *)0x0)) {
+      this->m_pRingAlloc = (ulong *)((int)this->m_pRingAlloc + 0xfffU & 0xfffff000);
     }
   }
-  __restgprlr_28(pCVar3);
   return;
 }
 
 
 // 82868198  QueueIndirectBuffer  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/ring.cpp:2226)
 
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 /* WARNING: Enum "Queue_Commands": Some values do not have unique names */
 
@@ -1138,124 +1059,101 @@ D3D::CDevice::QueueIndirectBuffer
 
 {
   bool bVar1;
-  CDevice *this_00;
   undefined8 uVar2;
-  ulong *puVar3;
-  RingAllocChunk *pRVar4;
-  Queue_Commands QVar5;
-  longlong lVar6;
-  uint uVar7;
-  int iVar8;
-  longlong lVar9;
+  Queue_Commands QVar3;
+  uint uVar4;
   SegmentCall local_60 [12];
   
-  lVar6 = (longlong)param_6;
-  lVar9 = (longlong)(int)param_1;
-  this_00 = (CDevice *)__savegprlr_22(this);
   bVar1 = false;
-  if (this_00->m_pStopPoint != (ulong *)0x0) {
-    local_60[0]._0_4_ = ((-(uint)(lVar6 != 0) & 0xe) - 0x7f) * 0x1000000 | param_3 & 0xffffff;
-    local_60[0].m_Address = param_2;
-    CRingAllocList::AppendArrayData(&this_00->m_Queue,local_60,1,2);
-    goto LAB_828683b0;
+  local_60[0].m_Address = param_2;
+  if (this->m_pStopPoint != (ulong *)0x0) {
+    local_60[0]._0_4_ = ((-(uint)(param_6 != 0) & 0xe) - 0x7f) * 0x1000000 | param_3 & 0xffffff;
+    CRingAllocList::AppendArrayData(&this->m_Queue,local_60,1,2);
+    return param_1;
   }
-  iVar8 = (int)lVar6;
-  if ((this_00->m_XpsGlobal).Queues != 0) {
-    puVar3 = &(this_00->m_XpsGlobal).QueueLock;
-    uVar2 = KfAcquireSpinLock(puVar3);
-    if ((this_00->m_XpsGlobal).Queues != 0) {
-      DEBUG_ADDLOG(0xeeee0001,(this_00->m_XpsGlobal).Queues,param_4);
-      pRVar4 = (RingAllocChunk *)lVar9;
-      DEBUG_ADDLOG(0xeeee0002,(ulong)pRVar4,0);
-      uVar7 = 0x8f000000;
-      if (iVar8 == 0) {
-        uVar7 = 0x81000000;
+  if ((this->m_XpsGlobal).Queues != 0) {
+    uVar2 = KfAcquireSpinLock((longlong)(int)this + 0x2b88);
+    if ((this->m_XpsGlobal).Queues != 0) {
+      DEBUG_ADDLOG(0xeeee0001,(this->m_XpsGlobal).Queues,param_4);
+      DEBUG_ADDLOG(0xeeee0002,(ulong)param_1,0);
+      uVar4 = 0x8f000000;
+      if (param_6 == 0) {
+        uVar4 = 0x81000000;
       }
-      pRVar4->Data[0] = uVar7 | param_3;
-      pRVar4->Data[1] = param_2;
-      pRVar4->Data[2] = 0xc0000000;
-      lVar9 = lVar9 + 0x10;
-      CRingAllocList::AddChunkNode(param_5,pRVar4,(ulong *)lVar9);
+      param_1[1] = uVar4 | param_3;
+      param_1[2] = param_2;
+      param_1[3] = 0xc0000000;
+      CRingAllocList::AddChunkNode(param_5,(RingAllocChunk *)param_1,param_1 + 4);
       bVar1 = true;
-      (this_00->m_XpsGlobal).Queues = (this_00->m_XpsGlobal).Queues + param_4;
+      (this->m_XpsGlobal).Queues = (this->m_XpsGlobal).Queues + param_4;
+      param_1 = param_1 + 4;
     }
-    KfReleaseSpinLock(puVar3,uVar2);
-    if (bVar1) goto LAB_828683b0;
+    KfReleaseSpinLock((longlong)(int)this + 0x2b88,uVar2);
+    if (bVar1) {
+      return param_1;
+    }
   }
-  uVar7 = ~this_00->m_CreateDeviceFlags >> 8 & 1;
-  if ((this_00->m_pCapture != (CCapture *)0x0) ||
-     (bVar1 = false, this_00->m_RTTrackMipUsage != false)) {
+  uVar4 = ~this->m_CreateDeviceFlags >> 8 & 1;
+  if ((this->m_pCapture != (CCapture *)0x0) || (bVar1 = false, this->m_RTTrackMipUsage != false)) {
     bVar1 = true;
   }
-  if (this_00->m_RTTrackMipUsage == false) {
-LAB_82868300:
-    if (((uVar7 == 0) || (iVar8 == 0)) || (!bVar1)) {
-LAB_82868364:
-      DEBUG_ADDLOG(0xeeee0004,(this_00->m_XpsGlobal).Queues,param_4);
-      local_60[0]._0_4_ = ((-(uint)(lVar6 != 0) & 0xe) - 0x7f) * 0x1000000 | param_3 & 0xffffff;
-      (this_00->m_XpsGlobal).Queues = (this_00->m_XpsGlobal).Queues + param_4;
-      local_60[0].m_Address = param_2;
-      AddCallsToPrimaryBuffer(this_00,local_60,1);
-      goto LAB_828683b0;
+  if (this->m_RTTrackMipUsage != false) {
+    if (uVar4 == 0) goto LAB_82868364;
+    if (this->m_PixRenderingNestCount == 0) goto LAB_82868318;
+  }
+  if (((uVar4 != 0) && (param_6 != 0)) && (bVar1)) {
+LAB_82868318:
+    DEBUG_ADDLOG(0xeeee0003,(this->m_XpsGlobal).Queues,param_4);
+    QVar3 = Queue_IndirectBuffer1PFD;
+    (this->m_XpsGlobal).Queues = (this->m_XpsGlobal).Queues + param_4 + 1;
+    if (param_6 == 0) {
+      QVar3 = Queue_IndirectBuffer1;
     }
+    KickOffOnWorkerQueue(this,param_2,param_3,param_5,QVar3);
+    return param_1;
   }
-  else {
-    if (uVar7 == 0) goto LAB_82868364;
-    if (this_00->m_PixRenderingNestCount != 0) goto LAB_82868300;
-  }
-  DEBUG_ADDLOG(0xeeee0003,(this_00->m_XpsGlobal).Queues,param_4);
-  QVar5 = Queue_IndirectBuffer1PFD;
-  (this_00->m_XpsGlobal).Queues = (this_00->m_XpsGlobal).Queues + param_4 + 1;
-  if (iVar8 == 0) {
-    QVar5 = Queue_IndirectBuffer1;
-  }
-  KickOffOnWorkerQueue(this_00,param_2,param_3,param_5,QVar5);
-LAB_828683b0:
-  puVar3 = (ulong *)__restgprlr_22(lVar9);
-  return puVar3;
+LAB_82868364:
+  DEBUG_ADDLOG(0xeeee0004,(this->m_XpsGlobal).Queues,param_4);
+  local_60[0]._0_4_ = ((-(uint)(param_6 != 0) & 0xe) - 0x7f) * 0x1000000 | param_3 & 0xffffff;
+  (this->m_XpsGlobal).Queues = (this->m_XpsGlobal).Queues + param_4;
+  AddCallsToPrimaryBuffer(this,local_60,1);
+  return param_1;
 }
 
 
 // 828683C0  QueueIndirectBuffers  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/ring.cpp:2375)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 
 void __thiscall D3D::CDevice::QueueIndirectBuffers(CDevice *this,SegmentCall *param_1,ulong param_2)
 
 {
   bool bVar1;
-  int iVar2;
-  CDevice *this_00;
-  RingAllocChunk *pRVar4;
-  undefined8 uVar3;
-  ulonglong uVar5;
-  ulong *puVar6;
+  RingAllocChunk *pRVar3;
+  undefined8 uVar2;
   
-  uVar5 = (ulonglong)(int)param_2;
-  this_00 = (CDevice *)__savegprlr_24(this);
-  if (this_00->m_pStopPoint == (ulong *)0x0) {
-    if ((this_00->m_XpsGlobal).Queues != 0) {
-      pRVar4 = (RingAllocChunk *)BeginRingAlloc(this_00,(int)((uVar5 & 0xffffffff) << 1) + 2,4);
-      iVar2 = (int)((uVar5 & 0xffffffff) << 3);
+  if (this->m_pStopPoint == (ulong *)0x0) {
+    if ((this->m_XpsGlobal).Queues != 0) {
+      pRVar3 = (RingAllocChunk *)BeginRingAlloc(this,param_2 * 2 + 2,4);
       memcpy();
-      puVar6 = &(this_00->m_XpsGlobal).QueueLock;
-      *(undefined4 *)((int)pRVar4->Data + iVar2) = 0xc0000000;
-      uVar3 = KfAcquireSpinLock(puVar6);
-      bVar1 = (this_00->m_XpsGlobal).Queues != 0;
+      pRVar3->Data[param_2 * 2] = 0xc0000000;
+      uVar2 = KfAcquireSpinLock((longlong)(int)this + 0x2b88);
+      bVar1 = (this->m_XpsGlobal).Queues != 0;
       if (bVar1) {
-        CRingAllocList::AddChunkNode
-                  (&this_00->m_Queue,pRVar4,(ulong *)((int)pRVar4->Data + iVar2 + 4));
+        CRingAllocList::AddChunkNode(&this->m_Queue,pRVar3,pRVar3->Data + param_2 * 2 + 1);
       }
-      KfReleaseSpinLock(puVar6,uVar3);
-      if (bVar1) goto LAB_828684a0;
+      KfReleaseSpinLock((longlong)(int)this + 0x2b88,uVar2);
+      if (bVar1) {
+        return;
+      }
     }
-    AddCallsToPrimaryBuffer(this_00,param_1,(ulong)uVar5);
+    AddCallsToPrimaryBuffer(this,param_1,param_2);
   }
   else {
-    CRingAllocList::AppendArrayData(&this_00->m_Queue,param_1,(ulong)uVar5,2);
+    CRingAllocList::AppendArrayData(&this->m_Queue,param_1,param_2,2);
   }
-LAB_828684a0:
-  __restgprlr_24();
   return;
 }
 
@@ -1298,6 +1196,8 @@ ulong * __thiscall D3D::CDevice::KickOff(CDevice *this)
 
 // 828671F0  BlockOnFence  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/ring.cpp:2805)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 
 void __thiscall
@@ -1305,122 +1205,109 @@ D3D::CDevice::BlockOnFence
           (CDevice *this,ulong param_1,_D3DBLOCKTYPE param_2,D3DResource *param_3,bool param_4)
 
 {
-  undefined8 uVar1;
+  ulong uVar1;
   undefined8 uVar2;
-  CDevice *this_00;
-  int iVar3;
-  ulonglong uVar4;
-  longlong lVar5;
-  ulonglong uVar6;
-  ulonglong uVar7;
+  undefined8 uVar3;
+  int iVar4;
+  uint uVar5;
+  uint uVar6;
   CBlocker aCStack_40 [2];
   
-  uVar6 = (ulonglong)param_4;
-  lVar5 = (longlong)(int)param_2;
-  uVar4 = (ulonglong)(int)param_1;
-  this_00 = (CDevice *)__savegprlr_28(this,uVar4,lVar5,param_3);
-  if (((uVar4 & 0xffffffff) != 0) &&
-     (uVar7 = (ulonglong)this_00->m_CpuFence,
-     (uVar7 - uVar4 & 0xffffffff) < (uVar7 - this_00->m_pWriteBacks->GpuFence & 0xffffffff))) {
-    if (((uVar6 & 0xff) == 0) && ((uVar4 & 0xffffffff) == uVar7)) {
-      if (this_00->m_pStopPoint != (ulong *)0x0) goto LAB_828672f8;
-      KickOff(this_00);
-    }
-    if ((this_00->m_CpuFence - uVar4 & 0xffffffff) <
-        ((ulonglong)this_00->m_CpuFence - (ulonglong)this_00->m_pWriteBacks->GpuFence & 0xffffffff))
-    {
-      CBlocker::CBlocker(aCStack_40,this_00,(_D3DBLOCKTYPE)lVar5);
-      uVar1 = TBLr;
-      uVar7 = (ulonglong)this_00->m_CpuFence - (ulonglong)this_00->m_pWriteBacks->GpuFence;
-      uVar6 = this_00->m_CpuFence - uVar4;
-      while ((uVar6 & 0xffffffff) < (uVar7 & 0xffffffff)) {
-        iVar3 = CBlocker::Check(aCStack_40);
-        if (iVar3 == 0) goto LAB_828672f0;
-        uVar7 = (ulonglong)this_00->m_CpuFence - (ulonglong)this_00->m_pWriteBacks->GpuFence;
-        uVar6 = this_00->m_CpuFence - uVar4;
+  if ((param_1 != 0) &&
+     (uVar1 = this->m_CpuFence, uVar1 - param_1 < uVar1 - this->m_pWriteBacks->GpuFence)) {
+    if ((!param_4) && (param_1 == uVar1)) {
+      if (this->m_pStopPoint != (ulong *)0x0) {
+        return;
       }
-      if (6 < (int)(_D3DBLOCKTYPE)lVar5) {
-        uVar2 = TBLr;
-        (this_00->m_CpuDrPix).CpuBlockTime =
-             ((this_00->m_CpuDrPix).CpuBlockTime - (int)uVar1) + (int)uVar2;
+      KickOff(this);
+    }
+    if (this->m_CpuFence - param_1 < this->m_CpuFence - this->m_pWriteBacks->GpuFence) {
+      CBlocker::CBlocker(aCStack_40,this,param_2);
+      uVar2 = TBLr;
+      uVar6 = this->m_CpuFence - this->m_pWriteBacks->GpuFence;
+      uVar5 = this->m_CpuFence - param_1;
+      while (uVar5 < uVar6) {
+        iVar4 = CBlocker::Check(aCStack_40);
+        if (iVar4 == 0) goto LAB_828672f0;
+        uVar6 = this->m_CpuFence - this->m_pWriteBacks->GpuFence;
+        uVar5 = this->m_CpuFence - param_1;
+      }
+      if (6 < (int)param_2) {
+        uVar3 = TBLr;
+        (this->m_CpuDrPix).CpuBlockTime =
+             ((this->m_CpuDrPix).CpuBlockTime - (int)uVar2) + (int)uVar3;
       }
 LAB_828672f0:
       CBlocker::~CBlocker(aCStack_40);
     }
   }
-LAB_828672f8:
-  __restgprlr_28();
   return;
 }
 
 
 // 82866A98  AddAsynchronousInvalidateRange  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/ring.cpp:2893)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void D3D::AddAsynchronousInvalidateRange(ulong64 *param_1,ulong param_2,ulong param_3)
 
 {
-  undefined8 uVar1;
-  ulonglong *puVar2;
+  ulong64 uVar1;
+  ulonglong uVar2;
   ulonglong uVar3;
   ulonglong uVar4;
-  ulonglong uVar5;
-  ulonglong uVar6;
-  ulonglong uVar7;
   
-  uVar4 = (ulonglong)(int)param_3;
-  uVar3 = (ulonglong)(int)param_2;
-  uVar1 = __savegprlr_29(param_1);
   while( true ) {
-    puVar2 = (ulonglong *)uVar1;
-    uVar7 = *puVar2;
-    uVar6 = uVar7 & 0xffffffff;
-    if ((uVar3 & 0xffffffff) < (uVar7 & 0xffffffff)) {
-      uVar6 = uVar3;
+    uVar4 = *param_1;
+    uVar3 = uVar4 & 0xffffffff;
+    if ((ulonglong)param_2 < (uVar4 & 0xffffffff)) {
+      uVar3 = (longlong)(int)param_2;
     }
-    uVar5 = uVar7 >> 0x20;
-    if (uVar7 >> 0x20 < (uVar4 & 0xffffffff)) {
-      uVar5 = uVar4;
+    uVar2 = uVar4 >> 0x20;
+    if (uVar4 >> 0x20 < (ulonglong)param_3) {
+      uVar2 = (longlong)(int)param_3;
     }
-    if (*puVar2 == uVar7) break;
-    uVar6 = storeDoubleWordConditionalIndexed(*puVar2,0,uVar1);
-    *puVar2 = uVar6;
+    if (*param_1 == uVar4) break;
+    uVar1 = storeDoubleWordConditionalIndexed(*param_1,0,(longlong)(int)param_1);
+    *param_1 = uVar1;
   }
-  uVar3 = storeDoubleWordConditionalIndexed(uVar5 << 0x20 | uVar6 & 0xffffffff,0,uVar1);
-  *puVar2 = uVar3;
-  __restgprlr_29();
+  uVar1 = storeDoubleWordConditionalIndexed
+                    (uVar2 << 0x20 | uVar3 & 0xffffffff,0,(longlong)(int)param_1);
+  *param_1 = uVar1;
   return;
 }
 
 
 // 82866B28  GetAsynchronousInvalidateRange  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/ring.cpp:2918)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void D3D::GetAsynchronousInvalidateRange(ulong64 *param_1,ulong *param_2,ulong *param_3)
 
 {
-  longlong lVar1;
-  undefined8 uVar2;
-  longlong *plVar3;
-  longlong lVar4;
+  ulong64 uVar1;
+  ulong64 uVar2;
   
-  uVar2 = __savegprlr_29(param_1);
   while( true ) {
-    plVar3 = (longlong *)uVar2;
-    lVar4 = *plVar3;
-    if (*plVar3 == lVar4) break;
-    lVar4 = storeDoubleWordConditionalIndexed(*plVar3,0,uVar2);
-    *plVar3 = lVar4;
+    uVar2 = *param_1;
+    if (*param_1 == uVar2) break;
+    uVar2 = storeDoubleWordConditionalIndexed(*param_1,0,(longlong)(int)param_1);
+    *param_1 = uVar2;
   }
-  lVar1 = storeDoubleWordConditionalIndexed(0xffffffff,0,uVar2);
-  *plVar3 = lVar1;
-  *param_2 = (ulong)lVar4;
-  *param_3 = (ulong)((ulonglong)lVar4 >> 0x20);
-  __restgprlr_29();
+  uVar1 = storeDoubleWordConditionalIndexed(0xffffffff,0,(longlong)(int)param_1);
+  *param_1 = uVar1;
+  *param_2 = (ulong)uVar2;
+  *param_3 = (ulong)(uVar2 >> 0x20);
   return;
 }
 
 
 // 82867308  InsertCallback  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/ring.cpp:2940)
 
+/* WARNING: Function: __savegprlr_21 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_21 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 
 ulong * D3D::InsertCallback(CDevice *param_1,ulong *param_2,ulong param_3,
@@ -1430,93 +1317,82 @@ ulong * D3D::InsertCallback(CDevice *param_1,ulong *param_2,ulong param_3,
   int *piVar1;
   uint uVar2;
   int iVar3;
-  int iVar4;
-  ulong *puVar5;
-  longlong lVar6;
-  ulonglong uVar7;
-  ulonglong uVar8;
-  undefined4 uVar9;
+  uint uVar4;
   
-  uVar7 = (ulonglong)(int)param_3;
-  lVar6 = (longlong)(int)param_2;
-  iVar3 = __savegprlr_21(param_1);
-  uVar8 = (uVar7 & 0xffffffff) >> 0x18 & 0x3f;
-  uVar9 = (undefined4)uVar8;
-  iVar4 = KeGetCurrentProcessType();
-  if (iVar4 == 2) {
+  uVar4 = param_3 >> 0x18 & 0x3f;
+  iVar3 = KeGetCurrentProcessType();
+  if (iVar3 == 2) {
     piVar1 = (int *)&DAT_000001bf;
   }
   else {
     piVar1 = (int *)&DAT_000001be;
   }
   uVar2 = *(uint *)(*piVar1 + 0x2b14);
-  *(short *)(iVar3 + 0x55d4) = *(short *)(iVar3 + 0x55d4) + 1;
-  if ((uVar7 & 6) == 0) {
-    uVar7 = uVar7 | 6;
+  (param_1->m_CpuDrPix).CallbackInterrupts = (param_1->m_CpuDrPix).CallbackInterrupts + 1;
+  if ((param_3 & 6) == 0) {
+    param_3 = param_3 | 6;
   }
-  if ((uVar7 & 2) != 0) {
-    if (((uVar7 & 1) == 0) || ((*(byte *)(iVar3 + 0x2b40) & 0x80) != 0)) {
-      *(undefined4 *)((int)lVar6 + 4) = 0x5c8;
-      lVar6 = lVar6 + 8;
-      *(undefined4 *)lVar6 = 0x20000;
-      *(ulonglong *)(iVar3 + 0x20) = *(ulonglong *)(iVar3 + 0x20) & 0x7fffffffffffffff;
-      *(byte *)(iVar3 + 0x2b3f) = *(byte *)(iVar3 + 0x2b3f) & 0xfc;
-      *(byte *)(iVar3 + 0x2b40) = *(byte *)(iVar3 + 0x2b40) & 0x7f;
+  if ((param_3 & 2) != 0) {
+    if (((param_3 & 1) == 0) || (param_1->m_WaitUntilIdleRequired)) {
+      param_2[1] = 0x5c8;
+      param_2 = param_2 + 2;
+      *param_2 = 0x20000;
+      *(ulonglong *)&param_1->field_0x20 = *(ulonglong *)&param_1->field_0x20 & 0x7fffffffffffffff;
+      param_1->m_WaitUntilIdleBeforeNextZPassDoubleDepth = false;
+      param_1->m_WaitUntilIdleBeforeNextDoubleDepth = false;
+      param_1->m_WaitUntilIdleRequired = false;
     }
-    iVar4 = (int)lVar6;
-    *(undefined4 *)(iVar4 + 4) = 0x1057c;
-    *(_func___cdecl_void_ulong **)(iVar4 + 8) = param_4;
-    *(ulong *)(iVar4 + 0xc) = param_5;
-    if (uVar8 == 0) {
-      uVar9 = 4;
+    param_2[1] = 0x1057c;
+    param_2[2] = (ulong)param_4;
+    param_2[3] = param_5;
+    if (uVar4 == 0) {
+      uVar4 = 4;
     }
-    *(undefined4 *)(iVar4 + 0x10) = 0x578;
-    *(undefined4 *)(iVar4 + 0x14) = uVar9;
-    *(uint *)(iVar4 + 0x18) = *(uint *)(iVar3 + 0x32a4) | 0xc0043c00;
-    *(undefined4 *)(iVar4 + 0x1c) = 0x13;
-    *(uint *)(iVar4 + 0x20) = ((uVar2 >> 0x14) + 0x200 & 0x1000) + (uVar2 & 0x1fffffff) | 2;
-    *(undefined4 *)(iVar4 + 0x24) = uVar9;
-    *(undefined4 *)(iVar4 + 0x28) = 0xffffffff;
-    *(undefined4 *)(iVar4 + 0x2c) = 0x100;
-    *(uint *)(iVar4 + 0x30) = *(uint *)(iVar3 + 0x32a4) | 0xc0043c00;
-    *(undefined4 *)(iVar4 + 0x34) = 0x13;
-    *(uint *)(iVar4 + 0x38) =
-         ((uVar2 + 0x14 >> 0x14) + 0x200 & 0x1000) + (uVar2 + 0x14 & 0x1fffffff) | 2;
-    *(ulong *)(iVar4 + 0x3c) = param_5;
-    *(undefined4 *)(iVar4 + 0x40) = 0xffffffff;
-    *(undefined4 *)(iVar4 + 0x44) = 0x100;
-    *(uint *)(iVar4 + 0x48) = *(uint *)(iVar3 + 0x32a4) | 0xc0043c00;
-    *(undefined4 *)(iVar4 + 0x4c) = 0x13;
-    *(uint *)(iVar4 + 0x50) =
-         ((uVar2 + 0x10 >> 0x14) + 0x200 & 0x1000) + (uVar2 + 0x10 & 0x1fffffff) | 2;
-    *(_func___cdecl_void_ulong **)(iVar4 + 0x54) = param_4;
-    *(undefined4 *)(iVar4 + 0x58) = 0xffffffff;
-    *(undefined4 *)(iVar4 + 0x5c) = 0x100;
-    *(uint *)(iVar4 + 0x60) = *(uint *)(iVar3 + 0x32a4) | 0xc0005400;
-    *(undefined4 *)(iVar4 + 100) = uVar9;
-    *(undefined4 *)(iVar4 + 0x68) = 0x45e;
-    lVar6 = lVar6 + 0x6c;
-    *(undefined4 *)lVar6 = uVar9;
+    param_2[4] = 0x578;
+    param_2[5] = uVar4;
+    param_2[6] = param_1->m_GpuPacket3Predication | 0xc0043c00;
+    param_2[7] = 0x13;
+    param_2[8] = ((uVar2 >> 0x14) + 0x200 & 0x1000) + (uVar2 & 0x1fffffff) | 2;
+    param_2[9] = uVar4;
+    param_2[10] = 0xffffffff;
+    param_2[0xb] = 0x100;
+    param_2[0xc] = param_1->m_GpuPacket3Predication | 0xc0043c00;
+    param_2[0xd] = 0x13;
+    param_2[0xe] = ((uVar2 + 0x14 >> 0x14) + 0x200 & 0x1000) + (uVar2 + 0x14 & 0x1fffffff) | 2;
+    param_2[0xf] = param_5;
+    param_2[0x10] = 0xffffffff;
+    param_2[0x11] = 0x100;
+    param_2[0x12] = param_1->m_GpuPacket3Predication | 0xc0043c00;
+    param_2[0x13] = 0x13;
+    param_2[0x14] = ((uVar2 + 0x10 >> 0x14) + 0x200 & 0x1000) + (uVar2 + 0x10 & 0x1fffffff) | 2;
+    param_2[0x15] = (ulong)param_4;
+    param_2[0x16] = 0xffffffff;
+    param_2[0x17] = 0x100;
+    param_2[0x18] = param_1->m_GpuPacket3Predication | 0xc0005400;
+    param_2[0x19] = uVar4;
+    param_2[0x1a] = 0x45e;
+    param_2 = param_2 + 0x1b;
+    *param_2 = uVar4;
   }
-  if ((uVar7 & 4) != 0) {
-    iVar4 = (int)lVar6;
-    *(uint *)(iVar4 + 4) = *(uint *)(iVar3 + 0x32a4) | 0xc0043c00;
-    *(undefined4 *)(iVar4 + 8) = 0x13;
-    *(uint *)(iVar4 + 0xc) = ((uVar2 >> 0x14) + 0x200 & 0x1000) + (uVar2 & 0x1fffffff) | 2;
-    *(undefined4 *)(iVar4 + 0x10) = 0;
-    *(undefined4 *)(iVar4 + 0x14) = 0xffffffff;
-    *(undefined4 *)(iVar4 + 0x18) = 0x100;
-    *(undefined4 *)(iVar4 + 0x1c) = 0x57c;
-    lVar6 = lVar6 + 0x20;
-    *(undefined4 *)lVar6 = 0xbadf00d;
+  if ((param_3 & 4) != 0) {
+    param_2[1] = param_1->m_GpuPacket3Predication | 0xc0043c00;
+    param_2[2] = 0x13;
+    param_2[3] = ((uVar2 >> 0x14) + 0x200 & 0x1000) + (uVar2 & 0x1fffffff) | 2;
+    param_2[4] = 0;
+    param_2[5] = 0xffffffff;
+    param_2[6] = 0x100;
+    param_2[7] = 0x57c;
+    param_2 = param_2 + 8;
+    *param_2 = 0xbadf00d;
   }
-  puVar5 = (ulong *)__restgprlr_21(lVar6);
-  return puVar5;
+  return param_2;
 }
 
 
 // 82866BA8  InterruptCallback  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/ring.cpp:3112)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 
@@ -1526,29 +1402,22 @@ void D3D::InterruptCallback(ulong param_1,CDevice *param_2)
   byte bVar1;
   code *pcVar2;
   NonSnoopedWriteBacks *pNVar3;
-  CDevice *pCVar4;
-  int iVar5;
-  longlong lVar6;
   int in_r13;
   
-  lVar6 = (longlong)(int)param_2;
-  iVar5 = __savegprlr_29(param_1);
-  pCVar4 = (CDevice *)lVar6;
-  if (iVar5 == 1) {
-    pcVar2 = (code *)pCVar4->m_pNonSnoopedWriteBacks->CallbackAddress;
+  if (param_1 == 1) {
+    pcVar2 = (code *)param_2->m_pNonSnoopedWriteBacks->CallbackAddress;
     if (pcVar2 != (code *)0x0) {
-      (*pcVar2)(pCVar4->m_pNonSnoopedWriteBacks->CallbackContext);
+      (*pcVar2)(param_2->m_pNonSnoopedWriteBacks->CallbackContext);
     }
     bVar1 = *(byte *)(in_r13 + 0x10c);
-    pNVar3 = pCVar4->m_pNonSnoopedWriteBacks;
-    KeAcquireSpinLockAtRaisedIrql(lVar6 + 0x2b18);
+    pNVar3 = param_2->m_pNonSnoopedWriteBacks;
+    KeAcquireSpinLockAtRaisedIrql((longlong)(int)param_2 + 0x2b18);
     pNVar3->CallbackSemaphore = pNVar3->CallbackSemaphore & ~(1 << (bVar1 & 0x3f)) & 0x3f;
-    KeReleaseSpinLockFromRaisedIrql(lVar6 + 0x2b18);
+    KeReleaseSpinLockFromRaisedIrql((longlong)(int)param_2 + 0x2b18);
   }
-  else if ((iVar5 == 0) && ((_DAT_7fc86544 & 1) != 0)) {
-    VerticalBlankInterrupt(pCVar4);
+  else if ((param_1 == 0) && ((_DAT_7fc86544 & 1) != 0)) {
+    VerticalBlankInterrupt(param_2);
   }
-  __restgprlr_29();
   return;
 }
 
@@ -1685,56 +1554,58 @@ int D3DResource_IsBusy(D3DResource *param_1)
 
 // 82868AC8  D3DDevice_InsertCallback  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/ring.cpp:3458)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 
 void D3DDevice_InsertCallback
                (D3DDevice *param_1,ulong param_2,_func___cdecl_void_ulong *param_3,ulong param_4)
 
 {
-  CDevice *this;
   ulong *puVar1;
   GPUTimingMarkerFull local_30 [6];
   
-  this = (CDevice *)__savegprlr_28(param_1);
   local_30[0].m_EventID = PIXOP_InsertCallback;
-  local_30[0].m_pDevice = this;
-  if (this->m_TimingCaptureActive != 0) {
+  local_30[0].m_pDevice = (CDevice *)param_1;
+  if ((param_1[1].m_MiscPacket.SampleCountAddress & 0x80000000) != 0) {
     PIXAddPixOpWithData(0x900050,0,(void *)0x0);
   }
-  puVar1 = *(ulong **)&this->field_0x30;
-  if (*(ulong **)&this->field_0x38 < puVar1) {
-    puVar1 = D3D::CDevice::KickOff(this);
+  puVar1 = param_1->m_pRing;
+  if (param_1->m_pRingGuarantee < puVar1) {
+    puVar1 = D3D::CDevice::KickOff((CDevice *)param_1);
   }
-  puVar1 = D3D::InsertCallback(this,puVar1,param_2,param_3,param_4);
-  *(ulong **)&this->field_0x30 = puVar1;
+  puVar1 = D3D::InsertCallback((CDevice *)param_1,puVar1,param_2,param_3,param_4);
+  param_1->m_pRing = puVar1;
   D3D::GPUTimingMarkerFull::~GPUTimingMarkerFull(local_30);
-  __restgprlr_28();
   return;
 }
 
 
 // 82868B60  D3DDevice_SetRingBufferParameters  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/ring.cpp:3574)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 
 undefined4 D3DDevice_SetRingBufferParameters(D3DDevice *param_1,_D3DRING_BUFFER_PARAMETERS *param_2)
 
 {
-  int iVar1;
+  uint uVar1;
   uint uVar2;
-  CDevice *this;
-  undefined8 uVar3;
-  ulong *puVar4;
-  ulong uVar5;
-  ulong *puVar6;
-  undefined4 uVar7;
-  ulonglong uVar8;
+  int iVar3;
+  void *pvVar5;
+  ulong uVar6;
+  void *pvVar7;
+  undefined8 uVar4;
+  ulong *puVar8;
   ulonglong uVar9;
-  ulonglong uVar10;
-  ulong uVar11;
+  ulong *puVar10;
+  ulonglong uVar11;
   ulonglong uVar12;
-  ulonglong uVar13;
-  longlong lVar14;
+  ulong uVar13;
+  ulonglong uVar14;
+  ulonglong uVar15;
+  longlong lVar16;
   ulong local_f0 [12];
   undefined2 local_c0;
   undefined2 local_be;
@@ -1745,112 +1616,112 @@ undefined4 D3DDevice_SetRingBufferParameters(D3DDevice *param_1,_D3DRING_BUFFER_
   undefined4 local_ac;
   undefined4 local_a8;
   
-  uVar12 = (ulonglong)(int)param_2;
-  this = (CDevice *)__savegprlr_23(param_1);
-  if ((this->m_CpuFence != 0) && (*(int *)&this->field_0x30 != 0)) {
-    D3DDevice_BlockUntilIdle((D3DDevice *)this);
-    while ((this->m_XpsGlobal)._padding_ != (this->m_XpsGlobal)._padding_) {
+  if ((*(int *)((int)param_1[1].m_Pending.m_Mask + 0x1c) != 0) && (param_1->m_pRing != (ulong *)0x0)
+     ) {
+    D3DDevice_BlockUntilIdle(param_1);
+    while (param_1[1].m_SetRenderStateCall[0xc] != param_1[1].m_SetRenderStateCall[0xb]) {
       Sleep(1);
     }
   }
-  puVar6 = this->m_pSecondaryRingBuffer;
-  if (puVar6 != (ulong *)0x0) {
+  uVar1 = *(uint *)((int)&param_1[1].m_Constants.field1_0x300 + 0x8e0);
+  if (uVar1 != 0) {
+    uVar2 = *(uint *)((int)&param_1[1].m_Constants.field1_0x300 + 0x8e4);
     D3D::FlushCachedMemory
-              ((void *)((((uint)puVar6 >> 0x14) + 0x200 & 0x1000) + ((uint)puVar6 & 0x1fffffff) +
-                       -0x40000000),
-               (void *)((((uint)this->m_pSecondaryRingBufferLimit >> 0x14) + 0x200 & 0x1000) +
-                        ((uint)this->m_pSecondaryRingBufferLimit & 0x1fffffff) + -0x40000000),0);
+              ((void *)(((uVar1 >> 0x14) + 0x200 & 0x1000) + (uVar1 & 0x1fffffff) + -0x40000000),
+               (void *)(((uVar2 >> 0x14) + 0x200 & 0x1000) + (uVar2 & 0x1fffffff) + -0x40000000),0);
   }
-  XMemFree(this->m_pAutoPrimaryRingBuffer,0xb1800000);
-  XMemFree(this->m_pAutoSecondaryRingBuffer,0xb1800000);
-  this->m_pAutoPrimaryRingBuffer = (ulong *)0x0;
-  this->m_pAutoSecondaryRingBuffer = (ulong *)0x0;
-  *(undefined4 *)&this->field_0x30 = 0;
-  *(undefined4 *)&this->field_0x34 = 0;
+  XMemFree(*(void **)((int)&param_1[1].m_Constants.field1_0x300 + 0x89c),0xb1800000);
+  XMemFree(*(void **)((int)&param_1[1].m_Constants.field1_0x300 + 0x8a0),0xb1800000);
+  *(undefined4 *)((int)&param_1[1].m_Constants.field1_0x300 + 0x89c) = 0;
+  *(undefined4 *)((int)&param_1[1].m_Constants.field1_0x300 + 0x8a0) = 0;
+  param_1->m_pRing = (ulong *)0x0;
+  param_1->m_pRingLimit = (ulong *)0x0;
   VdSetSystemCommandBufferGpuIdentifierAddress(0);
-  if ((uVar12 & 0xffffffff) != 0) {
-    iVar1 = (int)uVar12;
-    uVar11 = *(ulong *)(iVar1 + 4);
-    uVar12 = (ulonglong)*(uint *)(iVar1 + 8);
-    uVar13 = (ulonglong)*(uint *)(iVar1 + 0xc);
-    puVar6 = *(ulong **)(iVar1 + 0x10);
-    uVar9 = (ulonglong)*(uint *)(iVar1 + 0x14);
-    if (uVar11 == 0) {
-      uVar11 = 0x8000;
-    }
+  if (param_2 != (_D3DRING_BUFFER_PARAMETERS *)0x0) {
+    uVar13 = param_2->PrimarySize;
+    uVar14 = ZEXT48(param_2->pPrimary);
+    uVar15 = (ulonglong)param_2->SecondarySize;
+    pvVar7 = param_2->pSecondary;
+    uVar11 = (ulonglong)param_2->SegmentCount;
     if (uVar13 == 0) {
-      uVar13 = 0x200000;
+      uVar13 = 0x8000;
     }
-    if (uVar9 == 0) {
-      uVar9 = 0x20;
+    if (uVar15 == 0) {
+      uVar15 = 0x200000;
     }
-    trapWord(6,uVar9,0);
-    if (uVar12 == 0) {
-      D3D::g_DrPixMemAllocPhysicalCount = D3D::g_DrPixMemAllocPhysicalCount + 1;
-      puVar4 = XMemAlloc(uVar11,0xb5800000);
-      uVar12 = (ulonglong)(int)puVar4;
-      this->m_pAutoPrimaryRingBuffer = puVar4;
-    }
-    uVar5 = (ulong)uVar13;
-    if (puVar6 == (ulong *)0x0) {
-      D3D::g_DrPixMemAllocPhysicalCount = D3D::g_DrPixMemAllocPhysicalCount + 1;
-      puVar6 = XMemAlloc(uVar5,(-(uint)(uVar13 < 0x80000) & 3) << 0x1c | 0x87800000);
-      this->m_pAutoSecondaryRingBuffer = puVar6;
-    }
-    if (((uVar12 & 0xffffffff) == 0) || (puVar6 == (ulong *)0x0)) {
-      uVar3 = 0xffffffff8007000e;
-      goto LAB_82868f4c;
-    }
-    uVar3 = MmGetPhysicalAddress(uVar12);
-    VdInitializeRingBuffer(uVar3,0x1c - LZCOUNT(uVar11));
-    uVar8 = 0x1f - LZCOUNT(uVar11 >> 9);
-    if (0x13 < (uVar8 & 0xffffffff)) {
-      uVar8 = 0x13;
-    }
-    uVar10 = ZEXT48(this->m_pWriteBacks) + 0x3c;
-    VdEnableRingBufferRPtrWriteBack
-              ((((uVar10 & 0xffffffff) >> 0x14) + 0x200 & 0x1000) + (uVar10 & 0x1fffffff),uVar8);
-    uVar2 = (uint)(uVar13 / uVar9);
-    *(undefined4 *)((int)puVar6 + ((uVar5 & 0xfffffffc) - 4)) = 0xbadf00d;
-    iVar1 = (uVar2 & 0xfffffffc) + (int)puVar6;
-    this->m_pSecondaryRingBufferLimit = (ulong *)((int)puVar6 + ((uVar5 & 0xfffffffc) - 4));
-    this->m_SegmentAllocLimit = uVar5 >> 2;
-    this->m_pPrimaryRingBuffer = (ulong *)uVar12;
-    this->m_pSecondaryRingBuffer = puVar6;
-    this->m_pNextSecondaryStart = puVar6;
-    this->m_pSegmentStart = puVar6;
-    this->m_SegmentSize = uVar2;
-    this->m_PrimaryBufferWriteMask = (uVar11 >> 2) - 1;
-    this->m_pWriteBacks->PrimaryRingBufferReadIndex = 0;
-    uVar11 = this->m_CpuFence;
-    (this->m_XpsGlobal)._padding_ = 0;
-    *(ulong **)&this->field_0x30 = puVar6 + -1;
-    *(int *)&this->field_0x34 = iVar1;
-    *(int *)&this->field_0x38 = iVar1 + -0xa0;
-    this->m_pRingAlloc = (ulong *)0x0;
     if (uVar11 == 0) {
-      this->m_CpuFence = 3;
+      uVar11 = 0x20;
     }
-    this->m_pWriteBacks->GpuFence = this->m_CpuFence - 2;
-    this->m_pWriteBacks->GpuPosition = this->m_RingWrap & 3 | *(uint *)&this->field_0x30;
-    VdSetSystemCommandBufferGpuIdentifierAddress(ZEXT48(this->m_pWriteBacks) + 8);
+    trapWord(6,uVar11,0);
+    if (uVar14 == 0) {
+      D3D::g_DrPixMemAllocPhysicalCount = D3D::g_DrPixMemAllocPhysicalCount + 1;
+      pvVar5 = XMemAlloc(uVar13,0xb5800000);
+      uVar14 = (ulonglong)(int)pvVar5;
+      *(void **)((int)&param_1[1].m_Constants.field1_0x300 + 0x89c) = pvVar5;
+    }
+    uVar6 = (ulong)uVar15;
+    if (pvVar7 == (void *)0x0) {
+      D3D::g_DrPixMemAllocPhysicalCount = D3D::g_DrPixMemAllocPhysicalCount + 1;
+      pvVar7 = XMemAlloc(uVar6,(-(uint)(uVar15 < 0x80000) & 3) << 0x1c | 0x87800000);
+      *(void **)((int)&param_1[1].m_Constants.field1_0x300 + 0x8a0) = pvVar7;
+    }
+    if (((uVar14 & 0xffffffff) == 0) || (pvVar7 == (void *)0x0)) {
+      return 0x8007000e;
+    }
+    uVar4 = MmGetPhysicalAddress(uVar14);
+    VdInitializeRingBuffer(uVar4,0x1c - LZCOUNT(uVar13));
+    uVar9 = 0x1f - LZCOUNT(uVar13 >> 9);
+    if (0x13 < (uVar9 & 0xffffffff)) {
+      uVar9 = 0x13;
+    }
+    uVar12 = (ulonglong)*(uint *)(param_1[1].m_Pending.m_Mask + 2) + 0x3c;
+    VdEnableRingBufferRPtrWriteBack
+              ((((uVar12 & 0xffffffff) >> 0x14) + 0x200 & 0x1000) + (uVar12 & 0x1fffffff),uVar9);
+    uVar1 = (uint)(uVar15 / uVar11);
+    *(undefined4 *)((int)pvVar7 + ((uVar6 & 0xfffffffc) - 4)) = 0xbadf00d;
+    puVar8 = (ulong *)((uVar1 & 0xfffffffc) + (int)pvVar7);
+    *(ulong *)((int)&param_1[1].m_Constants.field1_0x300 + 0x8e4) =
+         (int)pvVar7 + ((uVar6 & 0xfffffffc) - 4);
+    *(ulong *)((int)&param_1[1].m_Constants.field1_0x300 + 0x900) = uVar6 >> 2;
+    *(int *)((int)&param_1[1].m_Constants.field1_0x300 + 0x8d8) = (int)uVar14;
+    *(void **)((int)&param_1[1].m_Constants.field1_0x300 + 0x8e0) = pvVar7;
+    *(void **)((int)&param_1[1].m_Constants.field1_0x300 + 0x8f4) = pvVar7;
+    *(void **)((int)&param_1[1].m_Constants.field1_0x300 + 0x8f8) = pvVar7;
+    *(uint *)((int)&param_1[1].m_Constants.field1_0x300 + 0x8e8) = uVar1;
+    *(ulong *)((int)&param_1[1].m_Constants.field1_0x300 + 0x8dc) = (uVar13 >> 2) - 1;
+    *(undefined4 *)(*(int *)(param_1[1].m_Pending.m_Mask + 2) + 0x3c) = 0;
+    iVar3 = *(int *)((int)param_1[1].m_Pending.m_Mask + 0x1c);
+    param_1[1].m_SetRenderStateCall[3] = (_func___cdecl_void_D3DDevice_ptr_ulong *)0x0;
+    param_1->m_pRing = (ulong *)((int)pvVar7 + -4);
+    param_1->m_pRingLimit = puVar8;
+    param_1->m_pRingGuarantee = puVar8 + -0x28;
+    *(undefined4 *)((int)&param_1[1].m_Constants.field1_0x300 + 0x8ec) = 0;
+    if (iVar3 == 0) {
+      *(undefined4 *)((int)param_1[1].m_Pending.m_Mask + 0x1c) = 3;
+    }
+    **(int **)(param_1[1].m_Pending.m_Mask + 2) =
+         *(int *)((int)param_1[1].m_Pending.m_Mask + 0x1c) + -2;
+    *(uint *)(*(int *)(param_1[1].m_Pending.m_Mask + 2) + 4) =
+         *(uint *)((int)&param_1[1].m_Constants.field1_0x300 + 0x8f0) & 3 | (uint)param_1->m_pRing;
+    VdSetSystemCommandBufferGpuIdentifierAddress
+              ((ulonglong)*(uint *)(param_1[1].m_Pending.m_Mask + 2) + 8);
     local_f0[2] = 0;
-    lVar14 = 8;
-    puVar4 = local_f0 + 3;
+    lVar16 = 8;
+    puVar10 = local_f0 + 3;
     local_f0[0] = 0xc0114800;
     local_f0[1] = 0x3ff;
-    puVar6 = (ulong *)(D3D::g_FormatTable + 0x3e);
+    puVar8 = (ulong *)(D3D::g_FormatTable + 0x3e);
     local_f0[3] = 0;
     do {
-      puVar6 = puVar6 + 1;
-      puVar4 = puVar4 + 1;
-      *puVar4 = *puVar6;
-      lVar14 = lVar14 + -1;
-    } while (lVar14 != 0);
+      puVar8 = puVar8 + 1;
+      puVar10 = puVar10 + 1;
+      *puVar10 = *puVar8;
+      lVar16 = lVar16 + -1;
+    } while (lVar16 != 0);
     local_b8 = 0;
     local_b4 = 0;
-    (this->m_ShaderStoreManagement)._s_0.VertexBase = 1;
-    (this->m_ShaderStoreManagement)._s_0.PixelBase = 0x800;
+    *(undefined2 *)((int)&param_1[1].m_Predicated_PendingMask2 + 4) = 1;
+    *(undefined2 *)((int)&param_1[1].m_Predicated_PendingMask2 + 6) = 0x800;
     local_be = 0x800;
     local_c0 = 1;
     local_bc = 7;
@@ -1858,29 +1729,26 @@ undefined4 D3DDevice_SetRingBufferParameters(D3DDevice *param_1,_D3DRING_BUFFER_
     local_ac = 0;
     local_a8 = 0;
     VdVerifyMEInitCommand(local_f0,0x13);
-    D3D::CDevice::AddCommandsToPrimaryBuffer(this,local_f0,0x13);
-    puVar6 = *(ulong **)&this->field_0x30;
-    if (*(ulong **)&this->field_0x38 < puVar6) {
-      puVar6 = D3D::CDevice::KickOff(this);
+    D3D::CDevice::AddCommandsToPrimaryBuffer((CDevice *)param_1,local_f0,0x13);
+    puVar8 = param_1->m_pRing;
+    if (param_1->m_pRingGuarantee < puVar8) {
+      puVar8 = D3D::CDevice::KickOff((CDevice *)param_1);
     }
-    puVar6[1] = 0xd02;
-    puVar6[2] = 0x10800;
-    puVar6[3] = 0x30a02;
-    puVar6[4] = 0xc0100000;
-    puVar6[5] = 0x7f00000;
-    puVar6[6] = 0xc0000000;
-    puVar6[7] = 0x100000;
-    puVar6[8] = 0x1dd;
-    puVar6[9] = (((uint)this->m_pNonSnoopedWriteBacks >> 0x14) + 0x200 & 0x1000) +
-                ((uint)this->m_pNonSnoopedWriteBacks & 0x1fffffff);
-    puVar6[10] = 0x1dc;
-    puVar6[0xb] = 0x20037;
-    *(ulong **)&this->field_0x30 = puVar6 + 0xb;
-    D3D::InvalidateConstants((D3DDevice *)this);
+    puVar8[1] = 0xd02;
+    puVar8[2] = 0x10800;
+    puVar8[3] = 0x30a02;
+    puVar8[4] = 0xc0100000;
+    puVar8[5] = 0x7f00000;
+    puVar8[6] = 0xc0000000;
+    puVar8[7] = 0x100000;
+    puVar8[8] = 0x1dd;
+    uVar1 = *(uint *)((int)param_1[1].m_Pending.m_Mask + 0x14);
+    puVar8[9] = ((uVar1 >> 0x14) + 0x200 & 0x1000) + (uVar1 & 0x1fffffff);
+    puVar8[10] = 0x1dc;
+    puVar8[0xb] = 0x20037;
+    param_1->m_pRing = puVar8 + 0xb;
+    D3D::InvalidateConstants(param_1);
   }
-  uVar3 = 0;
-LAB_82868f4c:
-  uVar7 = __restgprlr_23(uVar3);
-  return uVar7;
+  return 0;
 }
 

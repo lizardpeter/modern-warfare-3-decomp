@@ -2,68 +2,66 @@
 
 // 8225EF58  mp_dr_reduce  (line unknown)
 
-void mp_dr_reduce(undefined8 param_1,undefined8 param_2,ulonglong param_3)
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
+
+undefined8 mp_dr_reduce(int *param_1,uint *param_2,ulonglong param_3)
 
 {
   uint uVar1;
-  int *piVar3;
   undefined8 uVar2;
-  int iVar4;
-  uint *puVar5;
-  ulonglong uVar6;
-  uint *puVar8;
-  longlong lVar7;
-  longlong lVar9;
-  ulonglong uVar10;
+  int iVar3;
+  uint *puVar4;
+  ulonglong uVar5;
+  uint *puVar7;
+  longlong lVar6;
+  longlong lVar8;
+  ulonglong uVar9;
   
-  piVar3 = (int *)__savegprlr_25();
-  uVar1 = *(uint *)param_2;
-  if (((int)(uVar1 << 1) <= piVar3[1]) || (uVar2 = mp_grow(), (int)uVar2 == 0)) {
-    lVar9 = (ulonglong)uVar1 + 1;
-    do {
-      puVar8 = (uint *)piVar3[3];
-      uVar6 = 0;
-      if (0 < (int)uVar1) {
-        puVar5 = puVar8 + (uVar1 - 1);
-        uVar10 = (ulonglong)uVar1;
-        do {
-          puVar5 = puVar5 + 1;
-          uVar6 = (ulonglong)*puVar5 * (param_3 & 0xffffffff) + (ulonglong)*puVar8 + uVar6;
-          *puVar8 = (uint)uVar6 & 0xfffffff;
-          puVar8 = puVar8 + 1;
-          uVar6 = uVar6 >> 0x1c & 0xffffffff;
-          uVar10 = uVar10 - 1;
-        } while (uVar10 != 0);
-      }
-      *puVar8 = (uint)uVar6;
-      lVar7 = lVar9;
-      if ((int)lVar9 < *piVar3) {
-        do {
-          puVar8 = puVar8 + 1;
-          *puVar8 = 0;
-          lVar7 = lVar7 + 1;
-        } while ((int)lVar7 < *piVar3);
-      }
-      if (0 < *piVar3) {
-        do {
-          if (*(int *)(*piVar3 * 4 + piVar3[3] + -4) != 0) break;
-          iVar4 = *piVar3 + -1;
-          *piVar3 = iVar4;
-        } while (0 < iVar4);
-      }
-      if (*piVar3 == 0) {
-        piVar3[2] = 0;
-      }
-      iVar4 = mp_cmp_mag(piVar3,param_2);
-      if (iVar4 == -1) goto LAB_8225f090;
-      s_mp_sub(piVar3);
-    } while( true );
+  uVar1 = *param_2;
+  if ((param_1[1] < (int)(uVar1 << 1)) && (uVar2 = mp_grow(), (int)uVar2 != 0)) {
+    return uVar2;
   }
-LAB_8225f094:
-  __restgprlr_25(uVar2);
-  return;
-LAB_8225f090:
-  uVar2 = 0;
-  goto LAB_8225f094;
+  lVar8 = (ulonglong)uVar1 + 1;
+  do {
+    puVar7 = (uint *)param_1[3];
+    uVar5 = 0;
+    if (0 < (int)uVar1) {
+      puVar4 = puVar7 + (uVar1 - 1);
+      uVar9 = (ulonglong)uVar1;
+      do {
+        puVar4 = puVar4 + 1;
+        uVar5 = (ulonglong)*puVar4 * (param_3 & 0xffffffff) + (ulonglong)*puVar7 + uVar5;
+        *puVar7 = (uint)uVar5 & 0xfffffff;
+        puVar7 = puVar7 + 1;
+        uVar5 = uVar5 >> 0x1c & 0xffffffff;
+        uVar9 = uVar9 - 1;
+      } while (uVar9 != 0);
+    }
+    *puVar7 = (uint)uVar5;
+    lVar6 = lVar8;
+    if ((int)lVar8 < *param_1) {
+      do {
+        puVar7 = puVar7 + 1;
+        *puVar7 = 0;
+        lVar6 = lVar6 + 1;
+      } while ((int)lVar6 < *param_1);
+    }
+    if (0 < *param_1) {
+      do {
+        if (*(int *)(*param_1 * 4 + param_1[3] + -4) != 0) break;
+        iVar3 = *param_1 + -1;
+        *param_1 = iVar3;
+      } while (0 < iVar3);
+    }
+    if (*param_1 == 0) {
+      param_1[2] = 0;
+    }
+    iVar3 = mp_cmp_mag(param_1,param_2);
+    if (iVar3 == -1) {
+      return 0;
+    }
+    s_mp_sub(param_1);
+  } while( true );
 }
 

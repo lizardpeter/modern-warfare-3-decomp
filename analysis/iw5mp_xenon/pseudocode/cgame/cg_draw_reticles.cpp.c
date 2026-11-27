@@ -2,6 +2,8 @@
 
 // 822C0320  CG_CalcCrosshairPosition  (cgame/cg_draw_reticles.cpp:21)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
@@ -11,43 +13,41 @@ void CG_CalcCrosshairPosition(cg_s *param_1,float *param_2,float *param_3)
 {
   float fVar1;
   float fVar2;
-  int iVar3;
   float local_40;
-  undefined4 local_3c;
-  undefined4 local_38;
+  float local_3c;
+  float local_38;
   float local_30;
   float local_2c;
   float local_28;
   
-  iVar3 = __savegprlr_29(param_1);
-  local_40 = *(float *)(iVar3 + 0x797a0);
-  local_3c = *(undefined4 *)(iVar3 + 0x797a4);
-  local_38 = *(undefined4 *)(iVar3 + 0x704e4);
+  local_40 = param_1->gunPitch;
+  local_3c = param_1->gunYaw;
+  local_38 = param_1->refdefViewAngles[2];
   AngleVectors(&local_40,&local_30,(float *)0x0,(float *)0x0);
-  fVar2 = *(float *)(iVar3 + 0x6b9dc) * local_28 +
-          *(float *)(iVar3 + 0x6b9d8) * local_2c + *(float *)(iVar3 + 0x6b9d4) * local_30;
-  if (0.0 < fVar2) {
-    fVar1 = *(float *)(iVar3 + 0x6b9c0);
-    if ((0.0 < fVar1) && (0.0 < fVar1)) {
-      *param_2 = ((*(float *)(iVar3 + 0x6b9e8) * local_28 +
-                  *(float *)(iVar3 + 0x6b9e4) * local_2c + *(float *)(iVar3 + 0x6b9e0) * local_30) /
-                 (fVar1 * fVar2)) * -320.0;
-      *param_3 = ((*(float *)(iVar3 + 0x6b9f4) * local_28 +
-                  *(float *)(iVar3 + 0x6b9f0) * local_2c + *(float *)(iVar3 + 0x6b9ec) * local_30) /
-                 (*(float *)(iVar3 + 0x6b9c4) * fVar2)) * -240.0;
-      __restgprlr_29();
-      return;
-    }
+  fVar2 = (param_1->refdef).view.axis[0][2] * local_28 +
+          (param_1->refdef).view.axis[0][1] * local_2c +
+          (param_1->refdef).view.axis[0][0] * local_30;
+  if (((0.0 < fVar2) && (fVar1 = (param_1->refdef).view.tanHalfFovX, 0.0 < fVar1)) && (0.0 < fVar1))
+  {
+    *param_2 = (((param_1->refdef).view.axis[1][2] * local_28 +
+                (param_1->refdef).view.axis[1][1] * local_2c +
+                (param_1->refdef).view.axis[1][0] * local_30) / (fVar1 * fVar2)) * -320.0;
+    *param_3 = (((param_1->refdef).view.axis[2][2] * local_28 +
+                (param_1->refdef).view.axis[2][1] * local_2c +
+                (param_1->refdef).view.axis[2][0] * local_30) /
+               ((param_1->refdef).view.tanHalfFovY * fVar2)) * -240.0;
+    return;
   }
   *param_2 = 0.0;
   *param_3 = 0.0;
-  __restgprlr_29();
   return;
 }
 
 
 // 822C0468  CG_GetWeapReticleZoom  (cgame/cg_draw_reticles.cpp:43)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
@@ -57,53 +57,49 @@ bool CG_GetWeapReticleZoom(cg_s *param_1,float *param_2)
 
 {
   WeaponDef *pWVar1;
-  cg_s *pcVar2;
+  Weapon WVar2;
   Weapon WVar3;
-  Weapon WVar4;
-  ADSOverlay *pAVar5;
-  weapClass_t wVar6;
-  undefined1 uVar7;
-  ulonglong uVar8;
-  bool bVar9;
-  float fVar10;
+  ADSOverlay *pAVar4;
+  weapClass_t wVar5;
+  bool bVar6;
+  float fVar7;
   
-  uVar8 = (ulonglong)(int)param_2;
-  pcVar2 = (cg_s *)__savegprlr_26(param_1);
-  WVar3 = BG_GetViewmodelWeapon((playerState_s *)pcVar2);
-  if ((pcVar2 == (cg_s *)0x0) ||
-     (bVar9 = true, ((pcVar2->predictedPlayerState).weapCommon.weapFlags & 0x8000U) == 0)) {
-    bVar9 = false;
+  WVar2 = BG_GetViewmodelWeapon(&param_1->predictedPlayerState);
+  if ((param_1 == (cg_s *)0x0) ||
+     (bVar6 = true, ((param_1->predictedPlayerState).weapCommon.weapFlags & 0x8000U) == 0)) {
+    bVar6 = false;
   }
-  WVar4 = BG_GetAlternateWeapon(WVar3,bVar9);
-  pWVar1 = bg_weaponDefs[WVar4.data & 0xff];
+  WVar3 = BG_GetAlternateWeapon(WVar2,bVar6);
+  pWVar1 = bg_weaponDefs[WVar3.data & 0xff];
   if (pWVar1 == (WeaponDef *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_draw_reticles.cpp",
                     0x36,0,"%s");
   }
-  pAVar5 = BG_GetOverlay(WVar3,bVar9);
-  wVar6 = BG_GetWeaponClass(WVar3,bVar9);
-  if ((wVar6 != WEAPCLASS_TURRET) ||
-     (bVar9 = true, pWVar1->overlayInterface != WEAPOVERLAYINTERFACE_TURRETSCOPE)) {
-    bVar9 = false;
+  pAVar4 = BG_GetOverlay(WVar2,bVar6);
+  wVar5 = BG_GetWeaponClass(WVar2,bVar6);
+  if ((wVar5 != WEAPCLASS_TURRET) ||
+     (bVar6 = true, pWVar1->overlayInterface != WEAPOVERLAYINTERFACE_TURRETSCOPE)) {
+    bVar6 = false;
   }
-  if (((!bVar9) && (pAVar5->shader == (Material *)0x0)) &&
-     (pAVar5->reticle == WEAPOVERLAYRETICLE_NONE)) {
-    if ((uVar8 & 0xffffffff) != 0) {
-      *(float *)uVar8 = 0.0;
+  if (((!bVar6) && (pAVar4->shader == (Material *)0x0)) &&
+     (pAVar4->reticle == WEAPOVERLAYRETICLE_NONE)) {
+    if (param_2 != (float *)0x0) {
+      *param_2 = 0.0;
     }
-    uVar7 = __restgprlr_26(0);
-    return (bool)uVar7;
+    return false;
   }
-  fVar10 = CG_GetWeaponZoom(pcVar2,WVar3);
-  if ((uVar8 & 0xffffffff) != 0) {
-    *(float *)uVar8 = fVar10;
+  fVar7 = CG_GetWeaponZoom(param_1,WVar2);
+  if (param_2 != (float *)0x0) {
+    *param_2 = fVar7;
   }
-  uVar7 = __restgprlr_26(0.01 < fVar10);
-  return (bool)uVar7;
+  return 0.01 < fVar7;
 }
 
 
 // 822C05A8  CG_DrawFrameOverlay  (cgame/cg_draw_reticles.cpp:81)
+
+/* WARNING: Function: __savefpr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_24 replaced with injection: xenon_save_restore */
 
 void CG_DrawFrameOverlay(float param_1,float param_2,float param_3,float param_4,float *param_5,
                         Material *param_6)
@@ -127,7 +123,7 @@ void CG_DrawFrameOverlay(float param_1,float param_2,float param_3,float param_4
   dVar6 = (double)param_4;
   dVar5 = (double)param_3;
   dVar4 = (double)param_2;
-  dVar3 = (double)__savefpr_24((double)param_1,param_5,param_6);
+  dVar3 = (double)param_1;
   pMVar2 = (Material *)local_70;
   pfVar1 = &local_6c;
   CL_GetScreenDimensions((int *)pfVar1,(int *)pMVar2,afStack_68);
@@ -155,7 +151,6 @@ void CG_DrawFrameOverlay(float param_1,float param_2,float param_3,float param_4
               ((float)dVar3,(float)dVar6,(float)(dVar4 - dVar3),(float)(dVar8 - dVar6),(float)dVar10
                ,(float)dVar10,(float)dVar9,(float)dVar10,pfVar1,pMVar2);
   }
-  __restfpr_24();
   return;
 }
 
@@ -204,81 +199,84 @@ bool UsingLowResViewPort(ScreenPlacement *param_1)
 
 // 822C0858  CG_UpdateScissorViewport  (cgame/cg_draw_reticles.cpp:153)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void CG_UpdateScissorViewport(refdef_t *param_1,float *param_2,float *param_3)
 
 {
   float fVar1;
-  int *piVar2;
+  int iVar2;
   int iVar3;
   int iVar4;
   int iVar5;
   int iVar6;
   int iVar7;
-  int iVar8;
   
-  piVar2 = (int *)__savegprlr_27(param_1);
-  if (piVar2 == (int *)0x0) {
+  if (param_1 == (refdef_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_draw_reticles.cpp",
                     0x9e,0,"%s");
   }
-  if (*(char *)(piVar2 + 0x12c8) != '\0') {
+  if (param_1->useScissorViewport != false) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_draw_reticles.cpp",
                     0x9f,0,"%s");
   }
-  *(undefined1 *)(piVar2 + 0x12c8) = 1;
-  piVar2[0x12c4] = (int)*param_2 + *piVar2;
-  iVar4 = piVar2[0x12c4];
-  piVar2[0x12c5] = (int)param_2[1] + piVar2[1];
-  piVar2[0x12c6] = (int)*param_3;
+  iVar3 = (param_1->displayViewport).x;
+  param_1->useScissorViewport = true;
+  (param_1->scissorViewport).x = (int)*param_2 + iVar3;
+  iVar3 = (param_1->scissorViewport).x;
+  (param_1->scissorViewport).y = (int)param_2[1] + (param_1->displayViewport).y;
+  (param_1->scissorViewport).width = (int)*param_3;
   fVar1 = param_3[1];
-  iVar6 = piVar2[0x12c5];
-  piVar2[0x12c7] = (int)fVar1;
-  iVar3 = iVar6 + (int)fVar1;
-  iVar5 = *piVar2;
-  iVar7 = iVar4;
-  if (piVar2[2] + iVar5 <= iVar4) {
-    iVar7 = piVar2[2] + iVar5;
+  iVar7 = (param_1->scissorViewport).y;
+  (param_1->scissorViewport).height = (int)fVar1;
+  iVar2 = iVar7 + (int)fVar1;
+  iVar4 = (param_1->scissorViewport).width + iVar3;
+  iVar5 = (param_1->displayViewport).x;
+  iVar6 = (param_1->displayViewport).width + iVar5;
+  if (iVar6 <= iVar3) {
+    iVar3 = iVar6;
   }
-  if (iVar5 < iVar7) {
-    iVar5 = iVar7;
+  if (iVar5 < iVar3) {
+    iVar5 = iVar3;
   }
-  piVar2[0x12c4] = iVar5;
-  iVar7 = piVar2[1];
-  iVar8 = piVar2[3] + iVar7;
-  if (iVar6 < piVar2[3] + iVar7) {
-    iVar8 = iVar6;
+  (param_1->scissorViewport).x = iVar5;
+  iVar3 = (param_1->displayViewport).y;
+  iVar6 = (param_1->displayViewport).height + iVar3;
+  if (iVar7 < iVar6) {
+    iVar6 = iVar7;
   }
-  if (iVar7 < iVar8) {
-    iVar7 = iVar8;
+  if (iVar3 < iVar6) {
+    iVar3 = iVar6;
   }
-  piVar2[0x12c5] = iVar7;
-  iVar6 = *piVar2;
-  iVar8 = piVar2[2] + iVar6;
-  if (piVar2[0x12c6] + iVar4 < piVar2[2] + iVar6) {
-    iVar8 = piVar2[0x12c6] + iVar4;
+  (param_1->scissorViewport).y = iVar3;
+  iVar7 = (param_1->displayViewport).x;
+  iVar6 = (param_1->displayViewport).width + iVar7;
+  if (iVar4 < iVar6) {
+    iVar6 = iVar4;
   }
-  if (iVar6 < iVar8) {
-    iVar6 = iVar8;
+  if (iVar7 < iVar6) {
+    iVar7 = iVar6;
   }
-  iVar4 = piVar2[1];
-  iVar8 = piVar2[3] + iVar4;
-  if (iVar3 < piVar2[3] + iVar4) {
-    iVar8 = iVar3;
+  iVar4 = (param_1->displayViewport).y;
+  iVar6 = (param_1->displayViewport).height + iVar4;
+  if (iVar2 < iVar6) {
+    iVar6 = iVar2;
   }
-  if (iVar4 < iVar8) {
-    iVar4 = iVar8;
+  if (iVar4 < iVar6) {
+    iVar4 = iVar6;
   }
-  piVar2[0x12c6] = iVar6 - iVar5;
-  piVar2[0x12c7] = iVar4 - iVar7;
-  __restgprlr_27();
+  (param_1->scissorViewport).width = iVar7 - iVar5;
+  (param_1->scissorViewport).height = iVar4 - iVar3;
   return;
 }
 
 
 // 822C0A00  CG_GetWeapOverlayMaterial  (cgame/cg_draw_reticles.cpp:183)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 Material *
@@ -286,36 +284,34 @@ CG_GetWeapOverlayMaterial
           (LocalClientNum_t param_1,Weapon param_2,bool param_3,ScreenPlacement *param_4)
 
 {
-  LocalClientNum_t LVar1;
+  bool bVar3;
   bool bVar4;
-  bool bVar5;
-  ADSOverlay *pAVar2;
-  Material *pMVar3;
+  ADSOverlay *pAVar1;
+  Material *pMVar2;
   
-  LVar1 = __savegprlr_27(param_1);
-  bVar4 = UsingLowResViewPort(param_4);
-  bVar5 = CG_IsEMPJammed(LVar1);
-  pAVar2 = BG_GetOverlay(param_2,param_3);
-  if (((bVar4) && ((splitscreen->current).enabled != false)) &&
-     (480.0 <= param_4->realViewportSize[1] * 0.0020833334 * pAVar2->heightSplitscreen)) {
-    bVar4 = false;
+  bVar3 = UsingLowResViewPort(param_4);
+  bVar4 = CG_IsEMPJammed(param_1);
+  pAVar1 = BG_GetOverlay(param_2,param_3);
+  if (((bVar3) && ((splitscreen->current).enabled != false)) &&
+     (480.0 <= param_4->realViewportSize[1] * 0.0020833334 * pAVar1->heightSplitscreen)) {
+    bVar3 = false;
   }
-  if ((bVar5) && (pMVar3 = pAVar2->shaderEMP, pMVar3 != (Material *)0x0)) {
-    if ((bVar4 != false) && (pAVar2->shaderEMPLowRes != (Material *)0x0)) {
-      pMVar3 = (Material *)__restgprlr_27(pAVar2->shaderEMPLowRes);
-      return pMVar3;
+  if ((bVar4) && (pMVar2 = pAVar1->shaderEMP, pMVar2 != (Material *)0x0)) {
+    if ((bVar3 != false) && (pAVar1->shaderEMPLowRes != (Material *)0x0)) {
+      return pAVar1->shaderEMPLowRes;
     }
   }
-  else if ((bVar4 == false) || (pMVar3 = pAVar2->shaderLowRes, pMVar3 == (Material *)0x0)) {
-    pMVar3 = pAVar2->shader;
+  else if ((bVar3 == false) || (pMVar2 = pAVar1->shaderLowRes, pMVar2 == (Material *)0x0)) {
+    pMVar2 = pAVar1->shader;
   }
-  pMVar3 = (Material *)__restgprlr_27(pMVar3);
-  return pMVar3;
+  return pMVar2;
 }
 
 
 // 822C0AF0  CG_DrawAdsOverlay  (cgame/cg_draw_reticles.cpp:221)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void CG_DrawAdsOverlay(LocalClientNum_t param_1,Weapon param_2,bool param_3,float *param_4,
@@ -324,95 +320,90 @@ void CG_DrawAdsOverlay(LocalClientNum_t param_1,Weapon param_2,bool param_3,floa
 {
   float fVar1;
   float fVar2;
-  LocalClientNum_t LVar3;
-  ADSOverlay *pAVar4;
-  ScreenPlacement *pSVar5;
-  Material *pMVar6;
-  int iVar7;
-  ScreenPlacement *pSVar8;
-  Material *pMVar9;
+  ADSOverlay *pAVar3;
+  ScreenPlacement *pSVar4;
+  Material *pMVar5;
+  int iVar6;
+  ScreenPlacement *pSVar7;
+  Material *pMVar8;
+  double dVar9;
   double dVar10;
-  double dVar11;
   undefined1 local_60 [4];
   float local_5c;
   undefined8 local_58;
   
-  iVar7 = (int)param_3;
-  LVar3 = __savegprlr_25(param_1);
-  pMVar9 = (Material *)param_5;
-  pAVar4 = BG_GetOverlay(param_2,SUB41(iVar7,0));
-  pSVar5 = ScrPlace_GetActivePlacement(LVar3);
-  pSVar8 = pSVar5;
-  pMVar6 = CG_GetWeapOverlayMaterial(LVar3,param_2,SUB41(iVar7,0),pSVar5);
-  if (pMVar6 != (Material *)0x0) {
+  iVar6 = (int)param_3;
+  pMVar8 = (Material *)param_5;
+  pAVar3 = BG_GetOverlay(param_2,param_3);
+  pSVar4 = ScrPlace_GetActivePlacement(param_1);
+  pSVar7 = pSVar4;
+  pMVar5 = CG_GetWeapOverlayMaterial(param_1,param_2,param_3,pSVar4);
+  if (pMVar5 != (Material *)0x0) {
     if ((splitscreen->current).enabled == false) {
-      local_58._0_4_ = pAVar4->width;
-      local_58._4_4_ = pAVar4->height;
+      local_58._0_4_ = pAVar3->width;
+      local_58._4_4_ = pAVar3->height;
     }
     else {
-      local_58._0_4_ = pAVar4->widthSplitscreen;
-      local_58._4_4_ = pAVar4->heightSplitscreen;
+      local_58._0_4_ = pAVar3->widthSplitscreen;
+      local_58._4_4_ = pAVar3->heightSplitscreen;
     }
     if ((320.0 < (float)local_58._0_4_) || (240.0 < (float)local_58._4_4_)) {
-      local_60 = (undefined1  [4])
-                 -((float)local_58._0_4_ * 0.5 - (float)(((Material *)param_5)->info).name);
-      local_5c = -((float)local_58._4_4_ * 0.5 - *(float *)&(((Material *)param_5)->info).gameFlags)
-      ;
+      local_60 = (undefined1  [4])-((float)local_58._0_4_ * 0.5 - *param_5);
+      local_5c = -((float)local_58._4_4_ * 0.5 - param_5[1]);
       if ((cg_debug_overlay_viewport->current).enabled == false) {
-        CL_DrawStretchPic(pSVar5,(float)local_60,local_5c,(float)local_58._0_4_,
-                          (float)local_58._4_4_,param_2.data,iVar7,0.0,0.0,1.0,1.0,
-                          pSVar8->scaleVirtualToReal,pMVar9);
+        CL_DrawStretchPic(pSVar4,(float)local_60,local_5c,(float)local_58._0_4_,
+                          (float)local_58._4_4_,param_2.data,iVar6,0.0,0.0,1.0,1.0,
+                          pSVar7->scaleVirtualToReal,pMVar8);
       }
-      pMVar9 = (Material *)local_60;
-      ScrPlace_ApplyRect(pSVar5,(float *)pMVar9,&local_5c,(float *)&local_58,
+      pMVar8 = (Material *)local_60;
+      ScrPlace_ApplyRect(pSVar4,(float *)pMVar8,&local_5c,(float *)&local_58,
                          (float *)((int)&local_58 + 4),2,2);
-      if ((cg_debug_overlay_viewport->current).enabled != false) goto LAB_822c0de8;
+      if ((cg_debug_overlay_viewport->current).enabled != false) {
+        return;
+      }
       fVar2 = local_5c + (float)local_58._4_4_;
       fVar1 = (float)local_60 + (float)local_58._0_4_;
     }
     else {
-      local_60 = (undefined1  [4])
-                 ((float)(((Material *)param_5)->info).name - (float)local_58._0_4_);
-      local_5c = *(float *)&(((Material *)param_5)->info).gameFlags - (float)local_58._4_4_;
-      dVar11 = 1.0;
-      dVar10 = 0.0;
-      CL_DrawStretchPic(pSVar5,(float)local_60,local_5c,(float)local_58._0_4_,(float)local_58._4_4_,
-                        param_2.data,iVar7,0.0,0.0,1.0,1.0,pSVar8->scaleVirtualToReal,pMVar9);
-      local_60 = (undefined1  [4])(((Material *)param_5)->info).name;
-      local_5c = *(float *)&(((Material *)param_5)->info).gameFlags - (float)local_58._4_4_;
-      CL_DrawStretchPic(pSVar5,(float)local_60,local_5c,(float)local_58._0_4_,(float)local_58._4_4_,
-                        param_2.data,iVar7,(float)dVar11,(float)dVar10,(float)dVar10,(float)dVar11,
-                        pSVar8->scaleVirtualToReal,pMVar9);
-      local_5c = *(float *)&(((Material *)param_5)->info).gameFlags;
-      local_60 = (undefined1  [4])
-                 ((float)(((Material *)param_5)->info).name - (float)local_58._0_4_);
-      CL_DrawStretchPic(pSVar5,(float)local_60,local_5c,(float)local_58._0_4_,(float)local_58._4_4_,
-                        param_2.data,iVar7,(float)dVar10,(float)dVar11,(float)dVar11,(float)dVar10,
-                        pSVar8->scaleVirtualToReal,pMVar9);
-      local_60 = (undefined1  [4])(((Material *)param_5)->info).name;
-      local_5c = *(float *)&(((Material *)param_5)->info).gameFlags;
-      CL_DrawStretchPic(pSVar5,(float)local_60,local_5c,(float)local_58._0_4_,(float)local_58._4_4_,
-                        param_2.data,iVar7,(float)dVar11,(float)dVar11,(float)dVar10,(float)dVar10,
-                        pSVar8->scaleVirtualToReal,pMVar9);
-      pMVar9 = (Material *)local_60;
-      local_60 = (undefined1  [4])
-                 ((float)(((Material *)param_5)->info).name - (float)local_58._0_4_);
-      local_5c = *(float *)&(((Material *)param_5)->info).gameFlags - (float)local_58._4_4_;
-      ScrPlace_ApplyRect(pSVar5,(float *)pMVar9,&local_5c,(float *)&local_58,
+      local_60 = (undefined1  [4])(*param_5 - (float)local_58._0_4_);
+      local_5c = param_5[1] - (float)local_58._4_4_;
+      dVar10 = 1.0;
+      dVar9 = 0.0;
+      CL_DrawStretchPic(pSVar4,(float)local_60,local_5c,(float)local_58._0_4_,(float)local_58._4_4_,
+                        param_2.data,iVar6,0.0,0.0,1.0,1.0,pSVar7->scaleVirtualToReal,pMVar8);
+      local_60 = (undefined1  [4])*param_5;
+      local_5c = param_5[1] - (float)local_58._4_4_;
+      CL_DrawStretchPic(pSVar4,(float)local_60,local_5c,(float)local_58._0_4_,(float)local_58._4_4_,
+                        param_2.data,iVar6,(float)dVar10,(float)dVar9,(float)dVar9,(float)dVar10,
+                        pSVar7->scaleVirtualToReal,pMVar8);
+      local_5c = param_5[1];
+      local_60 = (undefined1  [4])(*param_5 - (float)local_58._0_4_);
+      CL_DrawStretchPic(pSVar4,(float)local_60,local_5c,(float)local_58._0_4_,(float)local_58._4_4_,
+                        param_2.data,iVar6,(float)dVar9,(float)dVar10,(float)dVar10,(float)dVar9,
+                        pSVar7->scaleVirtualToReal,pMVar8);
+      local_60 = (undefined1  [4])*param_5;
+      local_5c = param_5[1];
+      CL_DrawStretchPic(pSVar4,(float)local_60,local_5c,(float)local_58._0_4_,(float)local_58._4_4_,
+                        param_2.data,iVar6,(float)dVar10,(float)dVar10,(float)dVar9,(float)dVar9,
+                        pSVar7->scaleVirtualToReal,pMVar8);
+      pMVar8 = (Material *)local_60;
+      local_60 = (undefined1  [4])(*param_5 - (float)local_58._0_4_);
+      local_5c = param_5[1] - (float)local_58._4_4_;
+      ScrPlace_ApplyRect(pSVar4,(float *)pMVar8,&local_5c,(float *)&local_58,
                          (float *)((int)&local_58 + 4),2,2);
       fVar1 = (float)local_58._0_4_ * 2.0 + (float)local_60;
       fVar2 = (float)local_58._4_4_ * 2.0 + local_5c;
     }
-    CG_DrawFrameOverlay((float)local_60,fVar1,local_5c,fVar2,pSVar5->scaleVirtualToReal,pMVar9);
+    CG_DrawFrameOverlay((float)local_60,fVar1,local_5c,fVar2,pSVar4->scaleVirtualToReal,pMVar8);
   }
-LAB_822c0de8:
-  __restgprlr_25();
   return;
 }
 
 
 // 822C0DF8  CG_DrawWeapReticle  (cgame/cg_draw_reticles.cpp:302)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -420,49 +411,47 @@ LAB_822c0de8:
 float CG_DrawWeapReticle(LocalClientNum_t param_1)
 
 {
-  LocalClientNum_t LVar1;
-  cg_s *pcVar2;
+  cg_s *pcVar1;
+  bool bVar3;
+  Weapon WVar2;
   bool bVar4;
-  Weapon WVar3;
-  bool bVar5;
+  double dVar5;
   double dVar6;
-  double dVar7;
   float local_60;
   float afStack_5c [3];
   float local_50 [20];
   
-  LVar1 = __savegprlr_28(param_1);
-  pcVar2 = CG_GetLocalClientGlobals(LVar1);
-  if ((pcVar2 == (cg_s *)0x0) ||
-     (bVar5 = true, ((pcVar2->predictedPlayerState).weapCommon.weapFlags & 0x8000U) == 0)) {
-    bVar5 = false;
+  pcVar1 = CG_GetLocalClientGlobals(param_1);
+  if ((pcVar1 == (cg_s *)0x0) ||
+     (bVar4 = true, ((pcVar1->predictedPlayerState).weapCommon.weapFlags & 0x8000U) == 0)) {
+    bVar4 = false;
   }
-  bVar4 = CG_GetWeapReticleZoom(pcVar2,&local_60);
-  if (!bVar4) {
-    dVar6 = (double)__restgprlr_28(0x3ff0000000000000);
-    return (float)dVar6;
+  bVar3 = CG_GetWeapReticleZoom(pcVar1,&local_60);
+  if (!bVar3) {
+    return 1.0;
   }
-  WVar3 = BG_GetViewmodelWeapon(&pcVar2->predictedPlayerState);
-  dVar6 = (double)local_60;
+  WVar2 = BG_GetViewmodelWeapon(&pcVar1->predictedPlayerState);
+  dVar5 = (double)local_60;
   local_50[3] = local_60;
-  dVar7 = 1.0;
+  dVar6 = 1.0;
   local_50[0] = 1.0;
   local_50[1] = 1.0;
   local_50[2] = 1.0;
-  CG_CalcCrosshairPosition(pcVar2,&local_60,afStack_5c);
-  CG_DrawAdsOverlay(LVar1,WVar3,bVar5,local_50,&local_60);
-  dVar6 = (double)(float)(dVar7 - dVar6);
-  if ((dVar6 < 0.0) || (dVar7 < dVar6)) {
+  CG_CalcCrosshairPosition(pcVar1,&local_60,afStack_5c);
+  CG_DrawAdsOverlay(param_1,WVar2,bVar4,local_50,&local_60);
+  dVar5 = (double)(float)(dVar6 - dVar5);
+  if ((dVar5 < 0.0) || (dVar6 < dVar5)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_draw_reticles.cpp",
                     0x14d,1,"%s\n\t(crossHairAlpha) = %g");
   }
-  dVar6 = (double)__restgprlr_28(dVar6);
-  return (float)dVar6;
+  return (float)dVar5;
 }
 
 
 // 822C0F18  CG_CalcCrosshairColor  (cgame/cg_draw_reticles.cpp:339)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -473,18 +462,15 @@ void CG_CalcCrosshairColor(LocalClientNum_t param_1,float param_2,float *param_3
 {
   uint uVar1;
   WeaponDef *pWVar2;
-  LocalClientNum_t LVar3;
-  cg_s *pcVar4;
-  Weapon WVar5;
-  int iVar6;
-  bool bVar8;
-  cgs_t *pcVar7;
+  cg_s *pcVar3;
+  Weapon WVar4;
+  int iVar5;
+  bool bVar7;
+  cgs_t *pcVar6;
   float *in_r5;
-  double extraout_f1;
-  double dVar9;
+  double dVar8;
   
-  LVar3 = __savegprlr_24((double)param_2,param_1,param_3);
-  dVar9 = extraout_f1;
+  dVar8 = (double)param_2;
   if (cg_crosshairAlpha == (dvar_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_draw_reticles.cpp",
                     0x15d,0,"%s");
@@ -493,28 +479,28 @@ void CG_CalcCrosshairColor(LocalClientNum_t param_1,float param_2,float *param_3
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_draw_reticles.cpp",
                     0x15e,0,"%s");
   }
-  if ((dVar9 < 0.0) || (1.0 < dVar9)) {
+  if ((dVar8 < 0.0) || (1.0 < dVar8)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_draw_reticles.cpp",
                     0x15f,0,"%s\n\t(alpha) = %g");
   }
-  pcVar4 = CG_GetLocalClientGlobals(LVar3);
-  if ((pcVar4 == (cg_s *)0x0) ||
-     (bVar8 = true, ((pcVar4->predictedPlayerState).weapCommon.weapFlags & 0x8000U) == 0)) {
-    bVar8 = false;
+  pcVar3 = CG_GetLocalClientGlobals(param_1);
+  if ((pcVar3 == (cg_s *)0x0) ||
+     (bVar7 = true, ((pcVar3->predictedPlayerState).weapCommon.weapFlags & 0x8000U) == 0)) {
+    bVar7 = false;
   }
-  WVar5 = BG_GetAlternateWeapon((pcVar4->predictedPlayerState).weapCommon.weapon,bVar8);
-  pWVar2 = bg_weaponDefs[WVar5.data & 0xff];
+  WVar4 = BG_GetAlternateWeapon((pcVar3->predictedPlayerState).weapCommon.weapon,bVar7);
+  pWVar2 = bg_weaponDefs[WVar4.data & 0xff];
   if (pWVar2 == (WeaponDef *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_draw_reticles.cpp",
                     0x166,0,"%s");
   }
   if (pWVar2->crosshairColorChange != false) {
-    iVar6 = CL_ControllerIndexFromClientNum(LVar3);
-    bVar8 = GamerProfile_IsColorBlind(iVar6);
-    pcVar7 = CG_GetLocalClientStaticGlobals(LVar3);
-    uVar1 = (pcVar4->predictedPlayerState).weapCommon.weapFlags;
+    iVar5 = CL_ControllerIndexFromClientNum(param_1);
+    bVar7 = GamerProfile_IsColorBlind(iVar5);
+    pcVar6 = CG_GetLocalClientStaticGlobals(param_1);
+    uVar1 = (pcVar3->predictedPlayerState).weapCommon.weapFlags;
     if ((uVar1 & 8) != 0) {
-      if (bVar8) {
+      if (bVar7) {
         Dvar_GetUnpackedColorByName("cg_ColorBlind_MyTeam",in_r5);
       }
       else {
@@ -522,9 +508,9 @@ void CG_CalcCrosshairColor(LocalClientNum_t param_1,float param_2,float *param_3
       }
       goto LAB_822c1130;
     }
-    if ((((uVar1 & 0x10) != 0) && (pcVar7->redCrosshair != 0)) &&
+    if ((((uVar1 & 0x10) != 0) && (pcVar6->redCrosshair != 0)) &&
        ((cg_crosshairEnemyColor->current).enabled != false)) {
-      if (bVar8) {
+      if (bVar7) {
         Dvar_GetUnpackedColorByName("cg_ColorBlind_EnemyTeam",in_r5);
       }
       else {
@@ -537,14 +523,17 @@ void CG_CalcCrosshairColor(LocalClientNum_t param_1,float param_2,float *param_3
   in_r5[1] = 1.0;
   in_r5[2] = 1.0;
 LAB_822c1130:
-  in_r5[3] = (float)((double)(cg_crosshairAlpha->current).value * dVar9);
-  __restgprlr_24();
+  in_r5[3] = (float)((double)(cg_crosshairAlpha->current).value * dVar8);
   return;
 }
 
 
 // 822C1150  CG_DrawTurretCrossHair  (cgame/cg_draw_reticles.cpp:422)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -553,25 +542,22 @@ void CG_DrawTurretCrossHair(LocalClientNum_t param_1)
 
 {
   Weapon WVar1;
-  LocalClientNum_t LVar2;
-  cg_s *pcVar3;
-  centity_s *pcVar4;
-  bool bVar6;
-  ScreenPlacement *pSVar5;
+  cg_s *pcVar2;
+  centity_s *pcVar3;
+  bool bVar5;
+  ScreenPlacement *pSVar4;
+  float *pfVar6;
   float *pfVar7;
-  float *pfVar8;
+  double dVar8;
   double dVar9;
   double dVar10;
   double dVar11;
-  double dVar12;
-  float fVar13;
+  float fVar12;
   Material *local_80;
   int local_7c;
   longlong local_78;
   float afStack_70 [28];
   
-  __savegprlr_25(param_1);
-  LVar2 = __savefpr_28();
   if (cg_drawTurretCrosshair == (dvar_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_draw_reticles.cpp",
                     0x1b5,0,"%s");
@@ -590,51 +576,51 @@ void CG_DrawTurretCrossHair(LocalClientNum_t param_1)
   }
   if (((cg_drawTurretCrosshair->current).enabled != false) &&
      (((cg_paused->current).integer == 0 || ((cg_drawpaused->current).enabled == false)))) {
-    pcVar3 = CG_GetLocalClientGlobals(LVar2);
-    if ((pcVar3 == (cg_s *)0x0) ||
-       (pfVar7 = (float *)0x1, ((pcVar3->predictedPlayerState).weapCommon.weapFlags & 0x8000U) == 0)
+    pcVar2 = CG_GetLocalClientGlobals(param_1);
+    if ((pcVar2 == (cg_s *)0x0) ||
+       (pfVar6 = (float *)0x1, ((pcVar2->predictedPlayerState).weapCommon.weapFlags & 0x8000U) == 0)
        ) {
-      pfVar7 = (float *)0x0;
+      pfVar6 = (float *)0x0;
     }
-    if ((pcVar3->predictedPlayerState).viewlocked_entNum == 0x7ff) {
+    if ((pcVar2->predictedPlayerState).viewlocked_entNum == 0x7ff) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_draw_reticles.cpp",
                       0x1c0,0,"%s");
     }
-    pcVar4 = CG_GetEntity(LVar2,(pcVar3->predictedPlayerState).viewlocked_entNum);
-    if ((pcVar4->nextState).eType != 0xb) {
+    pcVar3 = CG_GetEntity(param_1,(pcVar2->predictedPlayerState).viewlocked_entNum);
+    if ((pcVar3->nextState).eType != 0xb) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_draw_reticles.cpp",
                       0x1c2,0,"%s");
     }
-    WVar1 = (pcVar4->nextState).weapon;
+    WVar1 = (pcVar3->nextState).weapon;
     if ((((WVar1.data & 0xff) != 0) &&
-        (BG_GetCenterReticle(WVar1,SUB41(pfVar7,0),&local_80,&local_7c), local_80 != (Material *)0x0
+        (BG_GetCenterReticle(WVar1,SUB41(pfVar6,0),&local_80,&local_7c), local_80 != (Material *)0x0
         )) && (0.01 <= (cg_crosshairAlpha->current).value)) {
-      pfVar8 = afStack_70;
-      dVar11 = 1.0;
-      CG_CalcCrosshairColor(LVar2,1.0,pfVar7);
+      pfVar7 = afStack_70;
+      dVar10 = 1.0;
+      CG_CalcCrosshairColor(param_1,1.0,pfVar6);
       local_78 = (longlong)local_7c;
-      dVar12 = (double)local_78;
-      bVar6 = CL_IsRenderingSplitScreen();
-      if (bVar6) {
-        dVar12 = (double)(float)(dVar12 * 2.0);
+      dVar11 = (double)local_78;
+      bVar5 = CL_IsRenderingSplitScreen();
+      if (bVar5) {
+        dVar11 = (double)(float)(dVar11 * 2.0);
       }
-      dVar10 = (double)(float)(dVar12 * -0.5);
-      fVar13 = CG_GetCrosshairVerticalOffset(&pcVar3->predictedPlayerState);
-      dVar9 = -(double)(float)((double)fVar13 * 240.0 - dVar10);
-      pSVar5 = ScrPlace_GetActivePlacement(LVar2);
-      CL_DrawStretchPic(pSVar5,(float)dVar10,(float)dVar9,(float)dVar12,(float)dVar12,(int)pfVar7,
-                        (int)pfVar8,0.0,0.0,(float)dVar11,(float)dVar11,afStack_70,
+      dVar9 = (double)(float)(dVar11 * -0.5);
+      fVar12 = CG_GetCrosshairVerticalOffset(&pcVar2->predictedPlayerState);
+      dVar8 = -(double)(float)((double)fVar12 * 240.0 - dVar9);
+      pSVar4 = ScrPlace_GetActivePlacement(param_1);
+      CL_DrawStretchPic(pSVar4,(float)dVar9,(float)dVar8,(float)dVar11,(float)dVar11,(int)pfVar6,
+                        (int)pfVar7,0.0,0.0,(float)dVar10,(float)dVar10,afStack_70,
                         (Material *)&IMAGE_DOS_HEADER_82000000);
     }
   }
-  __restfpr_28();
-  __restgprlr_25();
   return;
 }
 
 
 // 822C13F0  CG_DrawVehicleCrossHair  (cgame/cg_draw_reticles.cpp:485)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -643,53 +629,50 @@ void CG_DrawVehicleCrossHair(LocalClientNum_t param_1)
 
 {
   int iVar1;
-  LocalClientNum_t LVar2;
-  cg_s *pcVar3;
-  centity_s *pcVar4;
-  ScreenPlacement *pSVar5;
+  cg_s *pcVar2;
+  centity_s *pcVar3;
+  ScreenPlacement *pSVar4;
+  float *pfVar5;
   float *pfVar6;
-  float *pfVar7;
+  double dVar7;
   double dVar8;
   double dVar9;
-  double dVar10;
   Material *local_70;
   int local_6c;
   longlong local_68;
   float afStack_60 [24];
   
-  LVar2 = __savegprlr_26(param_1);
-  pcVar3 = CG_GetLocalClientGlobals(LVar2);
+  pcVar2 = CG_GetLocalClientGlobals(param_1);
   if (cg_crosshairAlpha == (dvar_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_draw_reticles.cpp",
                     0x1f5,0,"%s");
   }
-  if (((pcVar3->predictedPlayerState).eFlags & 0x200000U) == 0) {
+  if (((pcVar2->predictedPlayerState).eFlags & 0x200000U) == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_draw_reticles.cpp",
                     0x1f6,0,"%s");
   }
-  pcVar4 = CG_GetEntity(LVar2,(pcVar3->predictedPlayerState).viewlocked_entNum);
-  iVar1 = (pcVar4->nextState).eType;
+  pcVar3 = CG_GetEntity(param_1,(pcVar2->predictedPlayerState).viewlocked_entNum);
+  iVar1 = (pcVar3->nextState).eType;
   if ((iVar1 != 0xe) && (iVar1 != 0xc)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_draw_reticles.cpp",
                     0x1fd,0,"%s");
   }
-  if ((pcVar4->nextState).weapon._s_0.weaponIdx != 0) {
-    pfVar6 = (float *)((uint)(pcVar3->predictedPlayerState).weapCommon.weapFlags >> 0xf & 1);
-    BG_GetCenterReticle((pcVar4->nextState).weapon,SUB41(pfVar6,0),&local_70,&local_6c);
+  if ((pcVar3->nextState).weapon._s_0.weaponIdx != 0) {
+    pfVar5 = (float *)((uint)(pcVar2->predictedPlayerState).weapCommon.weapFlags >> 0xf & 1);
+    BG_GetCenterReticle((pcVar3->nextState).weapon,SUB41(pfVar5,0),&local_70,&local_6c);
     if ((local_70 != (Material *)0x0) && (0.01 <= (cg_crosshairAlpha->current).value)) {
-      pfVar7 = afStack_60;
-      dVar10 = 1.0;
-      CG_CalcCrosshairColor(LVar2,1.0,pfVar6);
+      pfVar6 = afStack_60;
+      dVar9 = 1.0;
+      CG_CalcCrosshairColor(param_1,1.0,pfVar5);
       local_68 = (longlong)local_6c;
-      dVar9 = (double)local_68;
-      dVar8 = (double)(float)(dVar9 * -0.5);
-      pSVar5 = ScrPlace_GetActivePlacement(LVar2);
-      CL_DrawStretchPic(pSVar5,(float)dVar8,(float)dVar8,(float)dVar9,(float)dVar9,(int)pfVar6,
-                        (int)pfVar7,0.0,0.0,(float)dVar10,(float)dVar10,afStack_60,
+      dVar8 = (double)local_68;
+      dVar7 = (double)(float)(dVar8 * -0.5);
+      pSVar4 = ScrPlace_GetActivePlacement(param_1);
+      CL_DrawStretchPic(pSVar4,(float)dVar7,(float)dVar7,(float)dVar8,(float)dVar8,(int)pfVar5,
+                        (int)pfVar6,0.0,0.0,(float)dVar9,(float)dVar9,afStack_60,
                         (Material *)&IMAGE_DOS_HEADER_82000000);
     }
   }
-  __restgprlr_26();
   return;
 }
 
@@ -712,6 +695,8 @@ bool CG_IsReticleTurnedOff(LocalClientNum_t param_1)
 
 // 822C15F0  AllowedToDrawCrosshair  (cgame/cg_draw_reticles.cpp:552)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
@@ -720,12 +705,9 @@ bool AllowedToDrawCrosshair(LocalClientNum_t param_1,playerState_s *param_2)
 {
   int iVar1;
   bool bVar2;
-  int iVar3;
-  bool bVar4;
-  undefined1 uVar5;
+  bool bVar3;
   
-  iVar3 = __savegprlr_28(param_1,param_2);
-  if (iVar3 == 0) {
+  if (param_1 == LOCAL_CLIENT_0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_draw_reticles.cpp",
                     0x229,0,"%s");
   }
@@ -733,37 +715,37 @@ bool AllowedToDrawCrosshair(LocalClientNum_t param_1,playerState_s *param_2)
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_draw_reticles.cpp",
                     0x22a,0,"%s");
   }
-  if (((cg_paused->current).integer != 0) && ((cg_drawpaused->current).enabled != false))
-  goto LAB_822c16f8;
-  if ((cg_drawCrosshair->current).enabled == false) {
-LAB_822c16ac:
-    bVar2 = true;
+  if (((cg_paused->current).integer != 0) && ((cg_drawpaused->current).enabled != false)) {
+    return false;
   }
-  else {
-    bVar4 = UI_ShouldDrawCrosshair();
+  if ((cg_drawCrosshair->current).enabled != false) {
+    bVar3 = UI_ShouldDrawCrosshair();
     bVar2 = false;
-    if (!bVar4) goto LAB_822c16ac;
+    if (bVar3) goto LAB_822c16b0;
   }
-  if ((((!bVar2) && (iVar1 = *(int *)(iVar3 + 0x24c), iVar1 != 0xd)) && (iVar1 != 0xe)) &&
+  bVar2 = true;
+LAB_822c16b0:
+  if ((((!bVar2) && (iVar1 = *(int *)(param_1 + 0x24c), iVar1 != 0xd)) && (iVar1 != 0xe)) &&
      (iVar1 != 0xf)) {
     if (iVar1 == 8) {
-      if ((*(int *)(iVar3 + 0x390) == 1) && (*(int *)(iVar3 + 0x268) != 8)) {
-LAB_822c172c:
-        uVar5 = __restgprlr_28(1);
-        return (bool)uVar5;
+      if ((*(int *)(param_1 + 0x390) == 1) && (*(int *)(param_1 + 0x268) != 8)) {
+        return true;
       }
     }
-    else if (((iVar1 != 1) && (iVar1 != 2)) && ((iVar1 != 3 && ((iVar1 != 4 && (iVar1 != 5))))))
-    goto LAB_822c172c;
+    else if (((iVar1 != 1) && (iVar1 != 2)) && ((iVar1 != 3 && ((iVar1 != 4 && (iVar1 != 5)))))) {
+      return true;
+    }
   }
-LAB_822c16f8:
-  uVar5 = __restgprlr_28(0);
-  return (bool)uVar5;
+  return false;
 }
 
 
 // 822C1738  CG_DrawAdsAimIndicator  (cgame/cg_draw_reticles.cpp:589)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void CG_DrawAdsAimIndicator
@@ -771,54 +753,50 @@ void CG_DrawAdsAimIndicator
                float param_6,float param_7)
 
 {
-  LocalClientNum_t LVar1;
-  ScreenPlacement *pSVar2;
-  int iVar3;
-  Material **ppMVar4;
-  longlong lVar5;
-  double extraout_f1;
+  ScreenPlacement *pSVar1;
+  int iVar2;
+  Material **ppMVar3;
+  longlong lVar4;
+  double dVar5;
   double dVar6;
   double dVar7;
   double dVar8;
   double dVar9;
-  double dVar10;
   Material *local_70;
   int local_6c;
   longlong local_68;
   
   dVar6 = (double)param_7;
   dVar7 = (double)param_6;
-  iVar3 = (int)param_3;
-  __savegprlr_27((double)param_5,param_1);
-  LVar1 = __savefpr_27();
-  dVar8 = extraout_f1;
+  dVar5 = (double)param_5;
+  iVar2 = (int)param_3;
   if (cg_drawGun == (dvar_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_draw_reticles.cpp",
                     0x255,0,"%s");
   }
-  if (((cg_drawGun->current).enabled == false) && (dVar10 = 1.0, dVar6 < 1.0)) {
-    ppMVar4 = &local_70;
-    BG_GetCenterReticle(param_2,SUB41(iVar3,0),ppMVar4,&local_6c);
+  if (((cg_drawGun->current).enabled == false) && (dVar9 = 1.0, dVar6 < 1.0)) {
+    ppMVar3 = &local_70;
+    BG_GetCenterReticle(param_2,param_3,ppMVar3,&local_6c);
     if (local_70 != (Material *)0x0) {
-      lVar5 = (longlong)local_6c;
-      dVar9 = (double)((float)(1.5 - dVar6) * (float)lVar5);
-      dVar6 = (double)(float)(dVar9 * 0.5);
+      lVar4 = (longlong)local_6c;
+      dVar8 = (double)((float)(1.5 - dVar6) * (float)lVar4);
+      dVar6 = (double)(float)(dVar8 * 0.5);
       dVar7 = (double)(float)(dVar7 - dVar6);
-      local_68 = lVar5;
-      pSVar2 = ScrPlace_GetActivePlacement(LVar1);
-      CL_DrawStretchPic(pSVar2,(float)(dVar8 - dVar6),(float)dVar7,(float)dVar9,(float)dVar9,iVar3,
-                        (int)ppMVar4,0.0,0.0,(float)dVar10,(float)dVar10,
-                        (float *)&IMAGE_DOS_HEADER_82000000,(Material *)lVar5);
+      local_68 = lVar4;
+      pSVar1 = ScrPlace_GetActivePlacement(param_1);
+      CL_DrawStretchPic(pSVar1,(float)(dVar5 - dVar6),(float)dVar7,(float)dVar8,(float)dVar8,iVar2,
+                        (int)ppMVar3,0.0,0.0,(float)dVar9,(float)dVar9,
+                        (float *)&IMAGE_DOS_HEADER_82000000,(Material *)lVar4);
     }
   }
-  __restfpr_27();
-  __restgprlr_27();
   return;
 }
 
 
 // 822C1868  CG_TransitionToAds  (cgame/cg_draw_reticles.cpp:628)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
@@ -826,79 +804,82 @@ void CG_DrawAdsAimIndicator
 void CG_TransitionToAds(cg_s *param_1,Weapon param_2,float param_3,float *param_4,float *param_5)
 
 {
-  int iVar1;
-  longlong lVar2;
-  ulonglong uVar3;
-  ulonglong in_r7;
-  bool bVar4;
-  double extraout_f1;
+  float *in_r7;
+  bool bVar1;
+  float *pfVar2;
+  double dVar3;
+  double dVar4;
   double dVar5;
   double dVar6;
-  double dVar7;
-  double dVar8;
-  float fVar9;
+  float fVar7;
   float local_60;
   float local_5c [23];
   
-  uVar3 = (ulonglong)(int)param_5;
-  lVar2 = (longlong)(int)param_2.data;
-  iVar1 = __savegprlr_26((double)param_3,param_1,lVar2,param_4);
-  dVar7 = extraout_f1;
-  if (iVar1 == 0) {
+  dVar5 = (double)param_3;
+  if (param_1 == (cg_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_draw_reticles.cpp",
                     0x279,0,"%s");
   }
-  if ((uVar3 & 0xffffffff) == 0) {
+  if (param_5 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_draw_reticles.cpp",
                     0x27a,0,"%s");
   }
-  if ((in_r7 & 0xffffffff) == 0) {
+  if (in_r7 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_draw_reticles.cpp",
                     0x27b,0,"%s");
   }
-  if ((iVar1 == 0) || (bVar4 = true, (*(uint *)(iVar1 + 0x374) & 0x8000) == 0)) {
-    bVar4 = false;
+  if ((param_1 == (cg_s *)0x0) ||
+     (bVar1 = true, ((param_1->predictedPlayerState).weapCommon.weapFlags & 0x8000U) == 0)) {
+    bVar1 = false;
   }
-  BG_GetADSCrosshairFracs((Weapon)(uint)lVar2,bVar4,&local_60,local_5c);
-  dVar8 = 0.0;
-  dVar6 = 1.0;
-  if (*(int *)(iVar1 + 0x3304) == 0) {
-    dVar5 = (double)local_5c[0];
-    dVar7 = (double)(float)(dVar7 - (double)(float)(1.0 - dVar5));
-    if (dVar7 <= 0.0) goto LAB_822c1a8c;
-    if (dVar5 == 0.0) {
+  BG_GetADSCrosshairFracs(param_2,bVar1,&local_60,local_5c);
+  dVar6 = 0.0;
+  dVar4 = 1.0;
+  if ((param_1->playerEntity).bPositionToADS == 0) {
+    dVar3 = (double)local_5c[0];
+    dVar5 = (double)(float)(dVar5 - (double)(float)(1.0 - dVar3));
+    if (dVar5 <= 0.0) {
+      return;
+    }
+    if (dVar3 == 0.0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_draw_reticles.cpp",
                       0x290,0,"%s\n\t(adsCrosshairOutFrac) = %g");
-      dVar5 = (double)local_5c[0];
+      dVar3 = (double)local_5c[0];
     }
   }
   else {
-    dVar5 = (double)local_60;
-    dVar7 = (double)(float)(dVar7 - (double)(float)(1.0 - dVar5));
-    if (dVar7 <= 0.0) goto LAB_822c1a8c;
-    if (dVar5 == 0.0) {
+    dVar3 = (double)local_60;
+    dVar5 = (double)(float)(dVar5 - (double)(float)(1.0 - dVar3));
+    if (dVar5 <= 0.0) {
+      return;
+    }
+    if (dVar3 == 0.0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_draw_reticles.cpp",
                       0x287,0,"%s\n\t(adsCrosshairInFrac) = %g");
-      dVar5 = (double)local_60;
+      dVar3 = (double)local_60;
     }
   }
-  dVar7 = (double)(float)(dVar7 / dVar5);
-  if ((double)*(float *)(iVar1 + 0x6b9c4) == dVar8) {
+  dVar5 = (double)(float)(dVar5 / dVar3);
+  pfVar2 = &(param_1->refdef).view.tanHalfFovY;
+  if ((double)*pfVar2 == dVar6) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_draw_reticles.cpp",
                     0x294,0,"%s\n\t(cgameGlob->refdef.view.tanHalfFovY) = %g");
   }
-  *(float *)uVar3 = -(float)(dVar7 * 0.5 - dVar6);
-  fVar9 = BG_ADSAimPitch((Weapon)(uint)lVar2,(bool)((byte)(*(uint *)(iVar1 + 0x374) >> 0xf) & 1));
-  dVar6 = tan((double)(fVar9 * 0.017453292));
-  *(float *)in_r7 = (float)((double)((float)dVar6 / *(float *)(iVar1 + 0x6b9c4)) * dVar7) * 240.0;
-LAB_822c1a8c:
-  __restgprlr_26();
+  *param_5 = -(float)(dVar5 * 0.5 - dVar4);
+  fVar7 = BG_ADSAimPitch(param_2,(bool)((byte)((uint)(param_1->predictedPlayerState).weapCommon.
+                                                     weapFlags >> 0xf) & 1));
+  dVar4 = tan((double)(fVar7 * 0.017453292));
+  *in_r7 = (float)((double)((float)dVar4 / *pfVar2) * dVar5) * 240.0;
   return;
 }
 
 
 // 822C1AA0  CG_DrawReticleCenter  (cgame/cg_draw_reticles.cpp:669)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -911,72 +892,67 @@ void CG_DrawReticleCenter
 {
   int iVar1;
   WeaponDef *pWVar2;
-  LocalClientNum_t LVar3;
-  Weapon WVar4;
-  weapType_t wVar5;
-  cg_s *pcVar6;
-  bool bVar8;
-  ScreenPlacement *pSVar7;
-  int iVar9;
-  Material **ppMVar10;
-  float *pfVar11;
-  double extraout_f1;
+  Weapon WVar3;
+  weapType_t wVar4;
+  cg_s *pcVar5;
+  bool bVar7;
+  ScreenPlacement *pSVar6;
+  int iVar8;
+  Material **ppMVar9;
+  float *pfVar10;
+  double dVar11;
   double dVar12;
   double dVar13;
   double dVar14;
-  double dVar15;
   Material *local_60;
   float local_5c;
   longlong local_58;
   
-  dVar15 = (double)param_7;
+  dVar14 = (double)param_7;
   dVar12 = (double)param_6;
-  iVar9 = (int)param_3;
-  __savegprlr_27((double)param_5,param_1);
-  LVar3 = __savefpr_28();
-  bVar8 = SUB41(iVar9,0);
-  dVar13 = extraout_f1;
-  WVar4 = BG_GetAlternateWeapon(param_2,bVar8);
-  pfVar11 = &local_5c;
-  ppMVar10 = &local_60;
-  pWVar2 = bg_weaponDefs[WVar4.data & 0xff];
-  BG_GetCenterReticle(param_2,bVar8,ppMVar10,(int *)pfVar11);
+  dVar11 = (double)param_5;
+  iVar8 = (int)param_3;
+  WVar3 = BG_GetAlternateWeapon(param_2,param_3);
+  pfVar10 = &local_5c;
+  ppMVar9 = &local_60;
+  pWVar2 = bg_weaponDefs[WVar3.data & 0xff];
+  BG_GetCenterReticle(param_2,param_3,ppMVar9,(int *)pfVar10);
   if (local_60 != (Material *)0x0) {
     local_58 = (longlong)(int)local_5c;
-    dVar14 = (double)local_58;
-    wVar5 = BG_GetWeaponType(param_2,bVar8);
-    if ((wVar5 == WEAPTYPE_GRENADE) && (pWVar2->bCookOffHold != false)) {
-      pcVar6 = CG_GetLocalClientGlobals(LVar3);
-      iVar1 = (pcVar6->predictedPlayerState).grenadeTimeLeft;
+    dVar13 = (double)local_58;
+    wVar4 = BG_GetWeaponType(param_2,param_3);
+    if ((wVar4 == WEAPTYPE_GRENADE) && (pWVar2->bCookOffHold != false)) {
+      pcVar5 = CG_GetLocalClientGlobals(param_1);
+      iVar1 = (pcVar5->predictedPlayerState).grenadeTimeLeft;
       if (iVar1 != 0) {
-        iVar9 = iVar1 / 1000 + (iVar1 >> 0x1f);
-        pfVar11 = (float *)(iVar9 - (iVar9 >> 0x1f));
-        ppMVar10 = (Material **)((int)pfVar11 * 1000);
-        iVar9 = iVar1 + (int)pfVar11 * -1000;
-        local_58 = (longlong)iVar9;
-        dVar14 = (double)(float)((double)local_58 * 0.009999999776482582 + dVar14);
+        iVar8 = iVar1 / 1000 + (iVar1 >> 0x1f);
+        pfVar10 = (float *)(iVar8 - (iVar8 >> 0x1f));
+        ppMVar9 = (Material **)((int)pfVar10 * 1000);
+        iVar8 = iVar1 + (int)pfVar10 * -1000;
+        local_58 = (longlong)iVar8;
+        dVar13 = (double)(float)((double)local_58 * 0.009999999776482582 + dVar13);
       }
     }
-    dVar15 = (double)(float)(dVar14 * dVar15);
-    bVar8 = CL_IsRenderingSplitScreen();
-    if (bVar8) {
-      dVar15 = (double)(float)(dVar15 * 2.0);
+    dVar14 = (double)(float)(dVar13 * dVar14);
+    bVar7 = CL_IsRenderingSplitScreen();
+    if (bVar7) {
+      dVar14 = (double)(float)(dVar14 * 2.0);
     }
-    dVar14 = (double)(float)(dVar15 * 0.5);
-    dVar12 = (double)(float)(dVar12 - dVar14);
-    pSVar7 = ScrPlace_GetActivePlacement(LVar3);
-    CL_DrawStretchPic(pSVar7,(float)(dVar13 - dVar14),(float)dVar12,(float)dVar15,(float)dVar15,
-                      iVar9,(int)ppMVar10,0.0,0.0,1.0,1.0,pfVar11,
+    dVar13 = (double)(float)(dVar14 * 0.5);
+    dVar12 = (double)(float)(dVar12 - dVar13);
+    pSVar6 = ScrPlace_GetActivePlacement(param_1);
+    CL_DrawStretchPic(pSVar6,(float)(dVar11 - dVar13),(float)dVar12,(float)dVar14,(float)dVar14,
+                      iVar8,(int)ppMVar9,0.0,0.0,1.0,1.0,pfVar10,
                       (Material *)&IMAGE_DOS_HEADER_82000000);
   }
-  __restfpr_28();
-  __restgprlr_27();
   return;
 }
 
 
 // 822C1C20  CG_CalcReticleSpread  (cgame/cg_draw_reticles.cpp:711)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
@@ -988,47 +964,48 @@ void CG_CalcReticleSpread
 
 {
   WeaponDef *pWVar1;
-  playerState_s *ppVar2;
-  Weapon WVar3;
-  bool bVar5;
-  weapClass_t wVar4;
+  Weapon WVar2;
+  bool bVar4;
+  weapClass_t wVar3;
   float *in_r8;
-  double extraout_f1;
-  double dVar6;
-  float fVar7;
+  double dVar5;
+  float fVar6;
   float local_50;
-  float local_4c;
-  longlong local_48;
+  float local_4c [19];
   
-  ppVar2 = (playerState_s *)__savegprlr_26((double)param_5,param_1);
-  dVar6 = extraout_f1;
-  WVar3 = BG_GetAlternateWeapon(param_2,param_3);
-  pWVar1 = bg_weaponDefs[WVar3.data & 0xff];
-  BG_GetSpreadForWeapon(ppVar2,param_2,&local_50,&local_4c);
-  bVar5 = BG_IsThirdPersonMode(ppVar2);
-  if ((bVar5) && (wVar4 = BG_GetWeaponClass(param_2,param_3), wVar4 == WEAPCLASS_SNIPER)) {
-    if ((ppVar2 == (playerState_s *)0x0) ||
-       (bVar5 = true, ((ppVar2->weapCommon).weapFlags & 0x8000U) == 0)) {
-      bVar5 = false;
+  dVar5 = (double)param_5;
+  WVar2 = BG_GetAlternateWeapon(param_2,param_3);
+  pWVar1 = bg_weaponDefs[WVar2.data & 0xff];
+  BG_GetSpreadForWeapon(&param_1->predictedPlayerState,param_2,&local_50,local_4c);
+  bVar4 = BG_IsThirdPersonMode(&param_1->predictedPlayerState);
+  if ((bVar4) && (wVar3 = BG_GetWeaponClass(param_2,param_3), wVar3 == WEAPCLASS_SNIPER)) {
+    if ((param_1 == (cg_s *)0x0) ||
+       (bVar4 = true, ((param_1->predictedPlayerState).weapCommon.weapFlags & 0x8000U) == 0)) {
+      bVar4 = false;
     }
-    fVar7 = BG_ADSSpread(param_2,bVar5);
-    local_50 = (fVar7 - local_50) * (ppVar2->weapCommon).fWeaponPosFrac + local_50;
+    fVar6 = BG_ADSSpread(param_2,bVar4);
+    local_50 = (fVar6 - local_50) * (param_1->predictedPlayerState).weapCommon.fWeaponPosFrac +
+               local_50;
   }
-  dVar6 = tan((double)((float)((double)((ppVar2->weapCommon).aimSpreadScale * 0.003921569 *
-                                        (local_4c - local_50) + local_50) * dVar6) * 0.017453292));
-  local_48 = (longlong)pWVar1->iReticleMinOfs;
-  fVar7 = ((float)dVar6 / (float)ppVar2[0x21].hud.archival[0xc].time) * 240.0;
-  if (fVar7 < (float)local_48) {
-    fVar7 = (float)local_48;
+  dVar5 = tan((double)((float)((double)((param_1->predictedPlayerState).weapCommon.aimSpreadScale *
+                                        0.003921569 * (local_4c[0] - local_50) + local_50) * dVar5)
+                      * 0.017453292));
+  fVar6 = ((float)dVar5 / (param_1->refdef).view.tanHalfFovY) * 240.0;
+  if (fVar6 < (float)(longlong)pWVar1->iReticleMinOfs) {
+    fVar6 = (float)(longlong)pWVar1->iReticleMinOfs;
   }
-  *in_r8 = -(pWVar1->fHipReticleSidePos * *param_4 - fVar7);
-  in_r8[1] = -(param_4[1] * pWVar1->fHipReticleSidePos - fVar7);
-  __restgprlr_26();
+  *in_r8 = -(pWVar1->fHipReticleSidePos * *param_4 - fVar6);
+  in_r8[1] = -(param_4[1] * pWVar1->fHipReticleSidePos - fVar6);
   return;
 }
 
 
 // 822C1D88  CG_CalcReticleColor  (cgame/cg_draw_reticles.cpp:737)
+
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 
 void CG_CalcReticleColor(float *param_1,float param_2,float param_3,float *param_4)
 
@@ -1036,18 +1013,14 @@ void CG_CalcReticleColor(float *param_1,float param_2,float param_3,float *param
   float fVar1;
   dvar_t *pdVar2;
   dvar_t *pdVar3;
-  undefined4 *puVar4;
-  undefined4 *in_r6;
-  double extraout_f1;
+  float *in_r6;
+  double dVar4;
   double dVar5;
   double dVar6;
   double dVar7;
-  double dVar8;
   
   dVar5 = (double)param_3;
-  __savegprlr_26((double)param_2,param_1,param_4);
-  puVar4 = (undefined4 *)__savefpr_28();
-  dVar8 = extraout_f1;
+  dVar4 = (double)param_2;
   if (cg_crosshairAlpha == (dvar_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_draw_reticles.cpp",
                     0x2e2,0,"%s");
@@ -1058,27 +1031,25 @@ void CG_CalcReticleColor(float *param_1,float param_2,float param_3,float *param
   }
   dVar6 = 0.0;
   dVar7 = 1.0;
-  if ((dVar8 < 0.0) || (1.0 < dVar8)) {
+  if ((dVar4 < 0.0) || (1.0 < dVar4)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_draw_reticles.cpp",
                     0x2e4,0,"%s\n\t(alpha) = %g");
   }
-  *in_r6 = *puVar4;
+  *in_r6 = *param_1;
   pdVar3 = cg_crosshairAlphaMin;
   pdVar2 = cg_crosshairAlpha;
-  in_r6[1] = puVar4[1];
-  in_r6[2] = puVar4[2];
+  in_r6[1] = param_1[1];
+  in_r6[2] = param_1[2];
   fVar1 = (float)((double)(-(float)(dVar5 * 0.003921568859368563 - dVar7) * (pdVar2->current).value)
-                 * dVar8);
+                 * dVar4);
   in_r6[3] = fVar1;
   if (fVar1 < (pdVar3->current).value) {
     in_r6[3] = (pdVar3->current).value;
   }
-  if (((double)(float)in_r6[3] < dVar6) || (dVar7 < (double)(float)in_r6[3])) {
+  if (((double)in_r6[3] < dVar6) || (dVar7 < (double)in_r6[3])) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_draw_reticles.cpp",
                     0x2eb,1,"%s\n\t(reticleColor[3]) = %g");
   }
-  __restfpr_28();
-  __restgprlr_26();
   return;
 }
 
@@ -1096,6 +1067,10 @@ void CG_CalcReticleImageOffset(float *param_1,float *param_2)
 
 // 822C1F20  CG_DrawReticleSides  (cgame/cg_draw_reticles.cpp:759)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -1104,16 +1079,15 @@ void CG_DrawReticleSides(LocalClientNum_t param_1,Weapon param_2,bool param_3,fl
                         float param_5,float param_6,float param_7,float param_8)
 
 {
-  LocalClientNum_t LVar1;
-  cg_s *pcVar2;
-  bool bVar4;
-  ScreenPlacement *pSVar3;
-  float *pfVar5;
+  cg_s *pcVar1;
+  bool bVar3;
+  ScreenPlacement *pSVar2;
+  float *pfVar4;
+  IMAGE_DOS_HEADER *pIVar5;
   IMAGE_DOS_HEADER *pIVar6;
-  IMAGE_DOS_HEADER *pIVar7;
   float *in_r7;
-  Material *pMVar8;
-  double extraout_f1;
+  Material *pMVar7;
+  double dVar8;
   double dVar9;
   double dVar10;
   double dVar11;
@@ -1122,8 +1096,7 @@ void CG_DrawReticleSides(LocalClientNum_t param_1,Weapon param_2,bool param_3,fl
   double dVar14;
   double dVar15;
   double dVar16;
-  double dVar17;
-  float fVar18;
+  float fVar17;
   Material *local_b0;
   int local_ac;
   float local_a8;
@@ -1132,66 +1105,63 @@ void CG_DrawReticleSides(LocalClientNum_t param_1,Weapon param_2,bool param_3,fl
   float afStack_90 [3];
   float local_84;
   
-  dVar17 = (double)param_8;
+  dVar16 = (double)param_8;
   dVar10 = (double)param_7;
   dVar9 = (double)param_6;
-  pfVar5 = (float *)(int)param_3;
-  __savegprlr_27((double)param_5,param_1);
-  LVar1 = __savefpr_23();
-  bVar4 = SUB41(pfVar5,0);
-  dVar14 = extraout_f1;
-  BG_GetSideReticle(param_2,bVar4,&local_b0,&local_ac);
+  dVar8 = (double)param_5;
+  pfVar4 = (float *)(int)param_3;
+  BG_GetSideReticle(param_2,param_3,&local_b0,&local_ac);
   if (local_b0 != (Material *)0x0) {
-    pcVar2 = CG_GetLocalClientGlobals(LVar1);
-    fVar18 = CG_DrawWeapReticle(LVar1);
-    CG_CalcReticleColor(param_4,fVar18,(pcVar2->predictedPlayerState).weapCommon.aimSpreadScale,
-                        pfVar5);
+    pcVar1 = CG_GetLocalClientGlobals(param_1);
+    fVar17 = CG_DrawWeapReticle(param_1);
+    CG_CalcReticleColor(param_4,fVar17,(pcVar1->predictedPlayerState).weapCommon.aimSpreadScale,
+                        pfVar4);
     if (0.01 <= local_84) {
       local_a0 = (longlong)local_ac;
-      local_a8 = (float)((double)local_a0 * dVar17);
-      dVar17 = (double)local_a8;
+      local_a8 = (float)((double)local_a0 * dVar16);
+      dVar16 = (double)local_a8;
       local_a4 = local_a8;
-      CG_CalcReticleSpread(pcVar2,param_2,bVar4,&local_a8,(float)dVar10,in_r7);
-      bVar4 = CL_IsRenderingSplitScreen();
-      if (bVar4) {
-        dVar17 = (double)(float)(dVar17 * 2.0);
+      CG_CalcReticleSpread(pcVar1,param_2,param_3,&local_a8,(float)dVar10,in_r7);
+      bVar3 = CL_IsRenderingSplitScreen();
+      if (bVar3) {
+        dVar16 = (double)(float)(dVar16 * 2.0);
       }
-      pSVar3 = ScrPlace_GetActivePlacement(LVar1);
+      pSVar2 = ScrPlace_GetActivePlacement(param_1);
       dVar13 = (double)local_a0._4_4_;
-      pIVar7 = &IMAGE_DOS_HEADER_82000000;
-      pfVar5 = afStack_90;
-      dVar15 = 0.5;
-      dVar12 = (double)(float)(dVar17 * 0.125);
-      dVar11 = -(double)(float)(dVar17 * 0.5 - dVar14);
-      dVar10 = (double)(float)(dVar17 * 0.125);
-      pMVar8 = local_b0;
-      CG_DrawRotatedPic(pSVar3,(float)dVar11,
-                        (float)((double)(float)((double)(float)(dVar9 - dVar17) - dVar13) - dVar12),
-                        (float)dVar17,(float)dVar17,param_2.data,(int)pfVar5,0.0,
-                        (float *)&IMAGE_DOS_HEADER_82000000,local_b0);
-      dVar16 = -(double)(float)(dVar17 * dVar15 - dVar9);
       pIVar6 = &IMAGE_DOS_HEADER_82000000;
-      dVar15 = (double)local_a0._0_4_;
-      CG_DrawRotatedPic(pSVar3,(float)(dVar15 + dVar14),(float)dVar16,(float)dVar17,(float)dVar17,
-                        -0x7e000000,(int)pfVar5,90.0,(float *)pIVar7,pMVar8);
-      pIVar7 = &IMAGE_DOS_HEADER_82000000;
-      pfVar5 = afStack_90;
-      CG_DrawRotatedPic(pSVar3,(float)(dVar11 - dVar10),(float)(dVar13 + dVar9),(float)dVar17,
-                        (float)dVar17,(int)pIVar6,(int)local_b0,180.0,pfVar5,
+      pfVar4 = afStack_90;
+      dVar14 = 0.5;
+      dVar12 = (double)(float)(dVar16 * 0.125);
+      dVar11 = -(double)(float)(dVar16 * 0.5 - dVar8);
+      dVar10 = (double)(float)(dVar16 * 0.125);
+      pMVar7 = local_b0;
+      CG_DrawRotatedPic(pSVar2,(float)dVar11,
+                        (float)((double)(float)((double)(float)(dVar9 - dVar16) - dVar13) - dVar12),
+                        (float)dVar16,(float)dVar16,param_2.data,(int)pfVar4,0.0,
+                        (float *)&IMAGE_DOS_HEADER_82000000,local_b0);
+      dVar15 = -(double)(float)(dVar16 * dVar14 - dVar9);
+      pIVar5 = &IMAGE_DOS_HEADER_82000000;
+      dVar14 = (double)local_a0._0_4_;
+      CG_DrawRotatedPic(pSVar2,(float)(dVar14 + dVar8),(float)dVar15,(float)dVar16,(float)dVar16,
+                        -0x7e000000,(int)pfVar4,90.0,(float *)pIVar6,pMVar7);
+      pIVar6 = &IMAGE_DOS_HEADER_82000000;
+      pfVar4 = afStack_90;
+      CG_DrawRotatedPic(pSVar2,(float)(dVar11 - dVar10),(float)(dVar13 + dVar9),(float)dVar16,
+                        (float)dVar16,(int)pIVar5,(int)local_b0,180.0,pfVar4,
                         (Material *)&IMAGE_DOS_HEADER_82000000);
-      CG_DrawRotatedPic(pSVar3,(float)((double)(float)((double)(float)(dVar14 - dVar17) - dVar15) -
-                                      dVar10),(float)(dVar16 - dVar12),(float)dVar17,(float)dVar17,
-                        -0x7dff0000,(int)local_b0,270.0,pfVar5,(Material *)pIVar7);
+      CG_DrawRotatedPic(pSVar2,(float)((double)(float)((double)(float)(dVar8 - dVar16) - dVar14) -
+                                      dVar10),(float)(dVar15 - dVar12),(float)dVar16,(float)dVar16,
+                        -0x7dff0000,(int)local_b0,270.0,pfVar4,(Material *)pIVar6);
     }
   }
-  __restfpr_23();
-  __restgprlr_27();
   return;
 }
 
 
 // 822C2138  CG_UpdateScissorForWeaponDef  (cgame/cg_draw_reticles.cpp:827)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -1200,45 +1170,44 @@ void CG_UpdateScissorForWeaponDef
                (LocalClientNum_t param_1,Weapon param_2,bool param_3,float *param_4)
 
 {
-  LocalClientNum_t LVar1;
-  ADSOverlay *pAVar2;
-  ScreenPlacement *pSVar3;
-  Material *pMVar4;
-  cg_s *pcVar5;
+  ADSOverlay *pAVar1;
+  ScreenPlacement *pSVar2;
+  Material *pMVar3;
+  cg_s *pcVar4;
   float local_50;
   float local_4c;
   float local_48;
   float local_44 [17];
   
-  LVar1 = __savegprlr_26(param_1);
-  pAVar2 = BG_GetOverlay(param_2,param_3);
-  pSVar3 = ScrPlace_GetActivePlacement(LVar1);
-  pMVar4 = CG_GetWeapOverlayMaterial(LVar1,param_2,param_3,pSVar3);
-  if ((pMVar4 != (Material *)0x0) &&
-     (pcVar5 = CG_GetLocalClientGlobals(LVar1), (pcVar5->shellshock).wantSavedScreen == 0)) {
-    (pcVar5->shellshock).hasScissor = 1;
+  pAVar1 = BG_GetOverlay(param_2,param_3);
+  pSVar2 = ScrPlace_GetActivePlacement(param_1);
+  pMVar3 = CG_GetWeapOverlayMaterial(param_1,param_2,param_3,pSVar2);
+  if ((pMVar3 != (Material *)0x0) &&
+     (pcVar4 = CG_GetLocalClientGlobals(param_1), (pcVar4->shellshock).wantSavedScreen == 0)) {
+    (pcVar4->shellshock).hasScissor = 1;
     if ((splitscreen->current).enabled == false) {
-      local_50 = pAVar2->width;
-      local_4c = pAVar2->height;
+      local_50 = pAVar1->width;
+      local_4c = pAVar1->height;
     }
     else {
-      local_50 = pAVar2->widthSplitscreen;
-      local_4c = pAVar2->heightSplitscreen;
+      local_50 = pAVar1->widthSplitscreen;
+      local_4c = pAVar1->heightSplitscreen;
     }
     if ((320.0 < local_50) || (240.0 < local_4c)) {
       local_48 = -(local_50 * 0.5 - *param_4);
       local_44[0] = -(local_4c * 0.5 - param_4[1]);
-      ScrPlace_ApplyRect(pSVar3,&local_48,local_44,&local_50,&local_4c,2,2);
-      CG_UpdateScissorViewport(&pcVar5->refdef,&local_48,&local_50);
+      ScrPlace_ApplyRect(pSVar2,&local_48,local_44,&local_50,&local_4c,2,2);
+      CG_UpdateScissorViewport(&pcVar4->refdef,&local_48,&local_50);
     }
   }
-  __restgprlr_26();
   return;
 }
 
 
 // 822C2270  CG_UpdateWeapReticleScissor  (cgame/cg_draw_reticles.cpp:878)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -1247,16 +1216,14 @@ void CG_UpdateWeapReticleScissor(LocalClientNum_t param_1)
 
 {
   uint uVar1;
-  LocalClientNum_t LVar2;
-  cg_s *pcVar3;
-  Weapon WVar4;
-  bool bVar5;
-  float *pfVar6;
+  cg_s *pcVar2;
+  Weapon WVar3;
+  bool bVar4;
+  float *pfVar5;
   float local_30;
   float afStack_2c [11];
   
-  LVar2 = __savegprlr_28(param_1);
-  pcVar3 = CG_GetLocalClientGlobals(LVar2);
+  pcVar2 = CG_GetLocalClientGlobals(param_1);
   if (cg_drawGun == (dvar_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_draw_reticles.cpp",
                     0x378,0,"%s");
@@ -1265,34 +1232,48 @@ void CG_UpdateWeapReticleScissor(LocalClientNum_t param_1)
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_draw_reticles.cpp",
                     0x379,0,"%s");
   }
-  if (pcVar3->renderingThirdPerson == 0) {
-    uVar1 = (pcVar3->predictedPlayerState).eFlags;
+  if (pcVar2->renderingThirdPerson == 0) {
+    uVar1 = (pcVar2->predictedPlayerState).eFlags;
     if ((uVar1 & 0x3800) == 0) {
-      if (((((uVar1 & 0x200000) != 0) ||
-           (WVar4 = BG_GetViewmodelWeapon(&pcVar3->predictedPlayerState), (WVar4.data & 0xff) == 0))
-          || (bVar5 = CG_GetWeapReticleZoom(pcVar3,&local_30), !bVar5)) || (local_30 < 0.99))
-      goto LAB_822c23b4;
-      CG_CalcCrosshairPosition(pcVar3,&local_30,afStack_2c);
-      pfVar6 = &local_30;
+      if ((uVar1 & 0x200000) != 0) {
+        return;
+      }
+      WVar3 = BG_GetViewmodelWeapon(&pcVar2->predictedPlayerState);
+      if ((WVar3.data & 0xff) == 0) {
+        return;
+      }
+      bVar4 = CG_GetWeapReticleZoom(pcVar2,&local_30);
+      if (!bVar4) {
+        return;
+      }
+      if (local_30 < 0.99) {
+        return;
+      }
+      CG_CalcCrosshairPosition(pcVar2,&local_30,afStack_2c);
+      pfVar5 = &local_30;
     }
     else {
-      WVar4 = CG_PlayerTurretWeapon(&pcVar3->predictedPlayerState,LVar2);
-      if ((WVar4.data & 0xff) == 0) goto LAB_822c23b4;
-      pfVar6 = vec2_origin;
+      WVar3 = CG_PlayerTurretWeapon(&pcVar2->predictedPlayerState,param_1);
+      if ((WVar3.data & 0xff) == 0) {
+        return;
+      }
+      pfVar5 = vec2_origin;
     }
     CG_UpdateScissorForWeaponDef
-              (LVar2,WVar4,
-               (bool)((byte)((uint)(pcVar3->predictedPlayerState).weapCommon.weapFlags >> 0xf) & 1),
-               pfVar6);
+              (param_1,WVar3,
+               (bool)((byte)((uint)(pcVar2->predictedPlayerState).weapCommon.weapFlags >> 0xf) & 1),
+               pfVar5);
   }
-LAB_822c23b4:
-  __restgprlr_28();
   return;
 }
 
 
 // 822C23C0  CG_DrawCrosshair  (cgame/cg_draw_reticles.cpp:933)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -1302,32 +1283,29 @@ void CG_DrawCrosshair(LocalClientNum_t param_1)
 {
   uint uVar1;
   bool bVar2;
-  LocalClientNum_t LVar3;
-  cg_s *pcVar4;
+  cg_s *pcVar3;
+  bool bVar7;
   bool bVar8;
   bool bVar9;
-  bool bVar10;
-  Weapon WVar5;
-  ADSOverlay *pAVar6;
-  int iVar7;
+  Weapon WVar4;
+  ADSOverlay *pAVar5;
+  int iVar6;
   playerState_s *in_r4;
-  float *pfVar11;
+  float *pfVar10;
+  double dVar11;
   double dVar12;
   double dVar13;
   double dVar14;
   double dVar15;
   double dVar16;
-  double dVar17;
-  float fVar18;
+  float fVar17;
   float local_a0;
   float local_9c;
   float local_98 [2];
   float afStack_90 [3];
   float local_84;
   
-  __savegprlr_24(param_1);
-  LVar3 = __savefpr_26();
-  pcVar4 = CG_GetLocalClientGlobals(LVar3);
+  pcVar3 = CG_GetLocalClientGlobals(param_1);
   if (cg_drawGun == (dvar_t *)0x0) {
     in_r4 = (playerState_s *)0x3b8;
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_draw_reticles.cpp",
@@ -1338,90 +1316,82 @@ void CG_DrawCrosshair(LocalClientNum_t param_1)
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_draw_reticles.cpp",
                     0x3b9,0,"%s");
   }
-  bVar8 = CG_IsEMPJammed(LVar3);
-  if (pcVar4->renderingThirdPerson == 0) {
-    bVar9 = BG_IsThirdPersonMode(&pcVar4->predictedPlayerState);
-    bVar10 = CG_ShouldDrawHud(LVar3);
-    uVar1 = (pcVar4->predictedPlayerState).eFlags;
-    dVar15 = (double)(pcVar4->predictedPlayerState).weapCommon.fWeaponPosFrac;
-    dVar13 = 1.0;
-    dVar12 = 0.0;
+  bVar7 = CG_IsEMPJammed(param_1);
+  if (pcVar3->renderingThirdPerson == 0) {
+    bVar8 = BG_IsThirdPersonMode(&pcVar3->predictedPlayerState);
+    bVar9 = CG_ShouldDrawHud(param_1);
+    uVar1 = (pcVar3->predictedPlayerState).eFlags;
+    dVar14 = (double)(pcVar3->predictedPlayerState).weapCommon.fWeaponPosFrac;
+    dVar12 = 1.0;
+    dVar11 = 0.0;
     local_a0 = 1.0;
     local_98[0] = 0.0;
     if ((uVar1 & 0x3800) == 0) {
       if ((uVar1 & 0x200000) != 0) {
-        CG_DrawVehicleCrossHair(LVar3);
-        __restfpr_26();
-        __restgprlr_24();
+        CG_DrawVehicleCrossHair(param_1);
         return;
       }
-      dVar14 = dVar13;
-      WVar5 = BG_GetViewmodelWeapon(&pcVar4->predictedPlayerState);
-      if ((WVar5.data & 0xff) != 0) {
-        bVar2 = (bool)((byte)((uint)(pcVar4->predictedPlayerState).weapCommon.weapFlags >> 0xf) & 1)
+      dVar13 = dVar12;
+      WVar4 = BG_GetViewmodelWeapon(&pcVar3->predictedPlayerState);
+      if ((WVar4.data & 0xff) != 0) {
+        bVar2 = (bool)((byte)((uint)(pcVar3->predictedPlayerState).weapCommon.weapFlags >> 0xf) & 1)
         ;
-        fVar18 = CG_DrawWeapReticle(LVar3);
-        dVar17 = (double)fVar18;
-        iVar7 = CG_GetFlashbangedRemainingTime(LVar3);
-        if (((((iVar7 == 0) && ((-!bVar8 & bVar10) != 0)) &&
-             (CG_CalcCrosshairColor(LVar3,(float)dVar17,(float *)in_r4), 0.01 <= local_84)) &&
-            (((dVar15 != dVar13 || ((cg_drawGun->current).enabled == false)) || (bVar9)))) &&
-           (bVar8 = AllowedToDrawCrosshair((LocalClientNum_t)pcVar4,in_r4), bVar8)) {
-          pfVar11 = &local_9c;
-          CG_CalcCrosshairPosition(pcVar4,local_98,pfVar11);
-          dVar16 = (double)local_9c;
-          dVar17 = (double)local_98[0];
-          if (dVar15 != dVar12) {
-            CG_TransitionToAds(pcVar4,WVar5,(float)dVar15,pfVar11,&local_a0);
-            dVar14 = (double)local_a0;
+        fVar17 = CG_DrawWeapReticle(param_1);
+        dVar16 = (double)fVar17;
+        iVar6 = CG_GetFlashbangedRemainingTime(param_1);
+        if (((((iVar6 == 0) && ((-!bVar7 & bVar9) != 0)) &&
+             (CG_CalcCrosshairColor(param_1,(float)dVar16,(float *)in_r4), 0.01 <= local_84)) &&
+            (((dVar14 != dVar12 || ((cg_drawGun->current).enabled == false)) || (bVar8)))) &&
+           (bVar7 = AllowedToDrawCrosshair((LocalClientNum_t)pcVar3,in_r4), bVar7)) {
+          pfVar10 = &local_9c;
+          CG_CalcCrosshairPosition(pcVar3,local_98,pfVar10);
+          dVar15 = (double)local_9c;
+          dVar16 = (double)local_98[0];
+          if (dVar14 != dVar11) {
+            CG_TransitionToAds(pcVar3,WVar4,(float)dVar14,pfVar10,&local_a0);
+            dVar13 = (double)local_a0;
             CG_DrawAdsAimIndicator
-                      (LVar3,WVar5,bVar2,afStack_90,(float)dVar17,(float)dVar16,local_a0);
+                      (param_1,WVar4,bVar2,afStack_90,(float)dVar16,(float)dVar15,local_a0);
           }
-          if (((dVar15 != dVar13) || ((cg_drawGun->current).enabled != false)) || (bVar9)) {
+          if (((dVar14 != dVar12) || ((cg_drawGun->current).enabled != false)) || (bVar8)) {
             if ((cg_crosshairDynamic->current).enabled == false) {
-              fVar18 = CG_GetCrosshairVerticalOffset(&pcVar4->predictedPlayerState);
-              dVar16 = (double)(fVar18 * -240.0);
-              dVar17 = dVar12;
+              fVar17 = CG_GetCrosshairVerticalOffset(&pcVar3->predictedPlayerState);
+              dVar15 = (double)(fVar17 * -240.0);
+              dVar16 = dVar11;
             }
-            if (bVar9) {
+            if (bVar8) {
               CG_DrawReticleCenter
-                        (LVar3,WVar5,bVar2,afStack_90,(float)dVar17,(float)dVar16,(float)dVar13);
+                        (param_1,WVar4,bVar2,afStack_90,(float)dVar16,(float)dVar15,(float)dVar12);
             }
             else {
-              dVar13 = dVar14;
+              dVar12 = dVar13;
               CG_DrawReticleCenter
-                        (LVar3,WVar5,bVar2,afStack_90,(float)dVar17,(float)dVar16,(float)dVar14);
-              dVar14 = dVar13;
+                        (param_1,WVar4,bVar2,afStack_90,(float)dVar16,(float)dVar15,(float)dVar13);
+              dVar13 = dVar12;
             }
-            CG_DrawReticleSides(LVar3,WVar5,bVar2,afStack_90,(float)dVar17,(float)dVar16,
-                                (float)dVar14,(float)dVar13);
+            CG_DrawReticleSides(param_1,WVar4,bVar2,afStack_90,(float)dVar16,(float)dVar15,
+                                (float)dVar13,(float)dVar12);
           }
         }
       }
     }
     else {
-      WVar5 = CG_PlayerTurretWeapon(&pcVar4->predictedPlayerState,LVar3);
-      if (((WVar5.data & 0xff) != 0) &&
-         ((pAVar6 = BG_GetOverlay(WVar5,false), pAVar6->shader != (Material *)0x0 ||
-          ((bVar8 && (pAVar6->shaderEMP != (Material *)0x0)))))) {
-        CG_DrawAdsOverlay(LVar3,WVar5,false,colorWhite,vec2_origin);
-        __restfpr_26();
-        __restgprlr_24();
+      WVar4 = CG_PlayerTurretWeapon(&pcVar3->predictedPlayerState,param_1);
+      if (((WVar4.data & 0xff) != 0) &&
+         ((pAVar5 = BG_GetOverlay(WVar4,false), pAVar5->shader != (Material *)0x0 ||
+          ((bVar7 && (pAVar5->shaderEMP != (Material *)0x0)))))) {
+        CG_DrawAdsOverlay(param_1,WVar4,false,colorWhite,vec2_origin);
         return;
       }
-      iVar7 = CG_GetFlashbangedRemainingTime(LVar3);
-      if ((iVar7 == 0) &&
-         (((-!bVar8 & bVar10) != 0 && ((pcVar4->predictedPlayerState).viewlocked_entNum != 0x7ff))))
+      iVar6 = CG_GetFlashbangedRemainingTime(param_1);
+      if ((iVar6 == 0) &&
+         (((-!bVar7 & bVar9) != 0 && ((pcVar3->predictedPlayerState).viewlocked_entNum != 0x7ff))))
       {
-        CG_DrawTurretCrossHair(LVar3);
-        __restfpr_26();
-        __restgprlr_24();
+        CG_DrawTurretCrossHair(param_1);
         return;
       }
     }
   }
-  __restfpr_26();
-  __restgprlr_24();
   return;
 }
 

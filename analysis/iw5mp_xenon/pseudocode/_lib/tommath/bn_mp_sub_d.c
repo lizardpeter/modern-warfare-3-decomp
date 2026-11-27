@@ -2,89 +2,86 @@
 
 // 82257808  mp_sub_d  (line unknown)
 
-void mp_sub_d(undefined8 param_1,ulonglong param_2,undefined8 param_3)
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
+undefined8 mp_sub_d(uint *param_1,ulonglong param_2,uint *param_3)
 
 {
   uint uVar1;
   uint uVar2;
-  uint *puVar3;
-  uint *puVar5;
-  undefined8 uVar4;
+  undefined8 uVar3;
+  uint *puVar4;
+  longlong lVar5;
   uint *puVar6;
-  longlong lVar7;
-  uint *puVar8;
   
-  puVar5 = (uint *)__savegprlr_29();
-  puVar3 = (uint *)param_3;
-  if (((int)(*puVar5 + 1) <= (int)puVar3[1]) || (uVar4 = mp_grow(param_3), (int)uVar4 == 0)) {
-    if (puVar5[2] == 1) {
-      puVar5[2] = 0;
-      uVar4 = mp_add_d(puVar5,param_2,param_3);
-      puVar3[2] = 1;
-      puVar5[2] = 1;
+  if (((int)(*param_1 + 1) <= (int)param_3[1]) || (uVar3 = mp_grow(param_3), (int)uVar3 == 0)) {
+    if (param_1[2] == 1) {
+      param_1[2] = 0;
+      uVar3 = mp_add_d(param_1,param_2,param_3);
+      param_3[2] = 1;
+      param_1[2] = 1;
       mp_clamp(param_3);
-      __restgprlr_29(uVar4);
-      return;
+      return uVar3;
     }
-    uVar1 = *puVar5;
-    puVar6 = (uint *)puVar5[3];
-    uVar2 = *puVar3;
-    puVar8 = (uint *)puVar3[3];
-    if (((uVar1 == 1) && ((ulonglong)*puVar6 <= (param_2 & 0xffffffff))) || (uVar1 == 0)) {
+    uVar1 = *param_1;
+    puVar4 = (uint *)param_1[3];
+    uVar2 = *param_3;
+    puVar6 = (uint *)param_3[3];
+    if (((uVar1 == 1) && ((ulonglong)*puVar4 <= (param_2 & 0xffffffff))) || (uVar1 == 0)) {
       if (uVar1 == 1) {
-        lVar7 = 1;
-        *puVar8 = (uint)param_2 - *puVar6;
-        puVar8 = puVar8 + 1;
-        *puVar3 = 1;
-        puVar3[2] = 1;
+        lVar5 = 1;
+        *puVar6 = (uint)param_2 - *puVar4;
+        puVar6 = puVar6 + 1;
+        *param_3 = 1;
+        param_3[2] = 1;
       }
       else {
-        lVar7 = 1;
-        *puVar8 = (uint)param_2;
-        puVar8 = puVar8 + 1;
-        *puVar3 = 1;
-        puVar3[2] = 1;
+        lVar5 = 1;
+        *puVar6 = (uint)param_2;
+        puVar6 = puVar6 + 1;
+        *param_3 = 1;
+        param_3[2] = 1;
       }
     }
     else {
-      puVar3[2] = 0;
-      lVar7 = 1;
-      *puVar3 = *puVar5;
-      param_2 = *puVar6 - param_2;
-      *puVar8 = (uint)param_2;
-      *puVar8 = (uint)param_2 & 0xfffffff;
-      puVar8 = puVar8 + 1;
-      if (1 < (int)*puVar5) {
+      param_3[2] = 0;
+      lVar5 = 1;
+      *param_3 = *param_1;
+      param_2 = *puVar4 - param_2;
+      *puVar6 = (uint)param_2;
+      *puVar6 = (uint)param_2 & 0xfffffff;
+      puVar6 = puVar6 + 1;
+      if (1 < (int)*param_1) {
         do {
+          puVar4 = puVar4 + 1;
+          lVar5 = lVar5 + 1;
+          param_2 = (ulonglong)*puVar4 - ((param_2 & 0xffffffff) >> 0x1f);
+          *puVar6 = (uint)param_2;
+          *puVar6 = (uint)param_2 & 0xfffffff;
           puVar6 = puVar6 + 1;
-          lVar7 = lVar7 + 1;
-          param_2 = (ulonglong)*puVar6 - ((param_2 & 0xffffffff) >> 0x1f);
-          *puVar8 = (uint)param_2;
-          *puVar8 = (uint)param_2 & 0xfffffff;
-          puVar8 = puVar8 + 1;
-        } while ((int)lVar7 < (int)*puVar5);
+        } while ((int)lVar5 < (int)*param_1);
       }
     }
-    if ((int)lVar7 < (int)uVar2) {
-      puVar8 = puVar8 + -1;
-      for (lVar7 = (ulonglong)uVar2 - lVar7; lVar7 != 0; lVar7 = lVar7 + -1) {
-        puVar8 = puVar8 + 1;
-        *puVar8 = 0;
+    if ((int)lVar5 < (int)uVar2) {
+      puVar6 = puVar6 + -1;
+      for (lVar5 = (ulonglong)uVar2 - lVar5; lVar5 != 0; lVar5 = lVar5 + -1) {
+        puVar6 = puVar6 + 1;
+        *puVar6 = 0;
       }
     }
-    if (0 < (int)*puVar3) {
+    if (0 < (int)*param_3) {
       do {
-        uVar1 = *puVar3;
-        if (*(int *)(uVar1 * 4 + puVar3[3] + -4) != 0) break;
-        *puVar3 = uVar1 - 1;
+        uVar1 = *param_3;
+        if (*(int *)(uVar1 * 4 + param_3[3] + -4) != 0) break;
+        *param_3 = uVar1 - 1;
       } while (0 < (int)(uVar1 - 1));
     }
-    if (*puVar3 == 0) {
-      puVar3[2] = 0;
+    if (*param_3 == 0) {
+      param_3[2] = 0;
     }
-    uVar4 = 0;
+    uVar3 = 0;
   }
-  __restgprlr_29(uVar4);
-  return;
+  return uVar3;
 }
 

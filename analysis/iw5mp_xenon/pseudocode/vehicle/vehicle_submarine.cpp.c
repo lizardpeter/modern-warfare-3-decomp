@@ -2,6 +2,10 @@
 
 // 826C9FB8  Submarine_CalcAccel  (vehicle/vehicle_submarine.cpp:36)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
@@ -12,11 +16,12 @@ void Submarine_CalcAccel(gentity_s *param_1,char *param_2,float *param_3,float *
   char cVar2;
   float fVar3;
   float fVar4;
-  dvar_t *pdVar5;
-  float fVar7;
+  Vehicle *pVVar5;
+  dvar_t *pdVar6;
   float fVar8;
-  uint uVar9;
-  int iVar10;
+  float fVar9;
+  uint uVar10;
+  EntHandle *this;
   int iVar11;
   gentity_s *pgVar12;
   longlong lVar13;
@@ -26,10 +31,10 @@ void Submarine_CalcAccel(gentity_s *param_1,char *param_2,float *param_3,float *
   double dVar17;
   double dVar18;
   undefined8 local_e8;
-  undefined4 local_e0;
+  float local_e0;
   float local_d8;
-  undefined4 local_d4;
-  undefined4 local_d0;
+  float local_d4;
+  float local_d0;
   float local_c8;
   float local_c4;
   float local_c0;
@@ -44,40 +49,39 @@ void Submarine_CalcAccel(gentity_s *param_1,char *param_2,float *param_3,float *
   float local_7c;
   float local_74;
   float local_70;
-  dvar_t *pdVar6;
+  dvar_t *pdVar7;
   
-  __savegprlr_25(param_1);
-  iVar10 = __savefpr_28();
-  iVar11 = EntHandle::isDefined((EntHandle *)(iVar10 + 0x150));
+  this = &(param_1->r).ownerNum;
+  iVar11 = EntHandle::isDefined(this);
   if (iVar11 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_submarine.cpp"
                     ,0x38,0,"%s");
   }
-  pgVar12 = EntHandle::ent((EntHandle *)(iVar10 + 0x150));
+  pgVar12 = EntHandle::ent(this);
   if (pgVar12->client == (gclient_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_submarine.cpp"
                     ,0x3c,0,"%s");
   }
-  iVar10 = *(int *)(iVar10 + 0x160);
+  pVVar5 = param_1->vehicle;
   dVar17 = 0.007874015718698502;
   dVar15 = 0.0;
   if (param_2[2] < 0) {
-    *(undefined4 *)(iVar10 + 0x3d4) = 0;
+    pVVar5->throttle = 0.0;
   }
   else {
-    *(float *)(iVar10 + 0x3d4) = (float)((double)(longlong)(int)param_2[2] * 0.007874015718698502);
+    pVVar5->throttle = (float)((double)(longlong)(int)param_2[2] * 0.007874015718698502);
   }
   if (param_2[2] < '\x01') {
-    *(float *)(iVar10 + 0x3d8) = (float)((double)(longlong)-(int)param_2[2] * 0.007874015718698502);
+    pVVar5->brake = (float)((double)(longlong)-(int)param_2[2] * 0.007874015718698502);
   }
   else {
-    *(undefined4 *)(iVar10 + 0x3d8) = 0;
+    pVVar5->brake = 0.0;
   }
-  local_d4 = *(undefined4 *)(iVar10 + 0xfc);
-  local_d8 = *(float *)(iVar10 + 0xf8);
-  local_d0 = *(undefined4 *)(iVar10 + 0x100);
+  local_d4 = (pVVar5->phys).prevAngles[1];
+  local_d8 = (pVVar5->phys).prevAngles[0];
+  local_d0 = (pVVar5->phys).prevAngles[2];
   AngleVectors(&local_d8,&local_c8,&local_b8,&local_a8);
-  pdVar6 = vehSubmarineStoppedVel;
+  pdVar7 = vehSubmarineStoppedVel;
   iVar11 = (int)param_2[2];
   if (iVar11 < 1) {
     fVar3 = (float)((double)(longlong)iVar11 * dVar17) *
@@ -99,41 +103,41 @@ void Submarine_CalcAccel(gentity_s *param_1,char *param_2,float *param_3,float *
   param_3[1] = (float)((double)(local_b4 + local_b8) * dVar15 + (double)(local_b0 * fVar4));
   param_3[2] = (float)((double)(local_a4 + local_a8) * dVar15 + (double)(local_a0 * fVar4));
   *param_3 = (float)((double)(local_c4 + local_c8) * dVar15 + (double)(local_c0 * fVar4)) + fVar3;
-  fVar3 = *(float *)(iVar10 + 0x128);
-  fVar4 = (pdVar6->current).value;
+  fVar3 = (pVVar5->phys).bodyVel[0];
+  fVar4 = (pdVar7->current).value;
   if (fVar3 <= fVar4) {
     if (fVar3 < -fVar4) {
       local_e8 = (longlong)*param_2;
       fVar1 = (float)((double)(longlong)param_2[1] * dVar17);
-      fVar7 = (vehSubmarineMaxReverseYawAccel->current).value * fVar1;
-      fVar8 = (float)((double)local_e8 * dVar17) * (vehSubmarineMaxReversePitchAccel->current).value
+      fVar8 = (vehSubmarineMaxReverseYawAccel->current).value * fVar1;
+      fVar9 = (float)((double)local_e8 * dVar17) * (vehSubmarineMaxReversePitchAccel->current).value
       ;
       goto LAB_826ca324;
     }
     cVar2 = *param_2;
     lVar13 = (longlong)param_2[1];
-    pdVar5 = vehSubmarineMaxStoppedPitchAccel;
-    pdVar6 = vehSubmarineMaxStoppedYawAccel;
+    pdVar6 = vehSubmarineMaxStoppedPitchAccel;
+    pdVar7 = vehSubmarineMaxStoppedYawAccel;
     local_e8 = lVar13;
   }
   else {
     cVar2 = *param_2;
     lVar13 = (longlong)param_2[1];
-    pdVar5 = vehSubmarineMaxForwardPitchAccel;
-    pdVar6 = vehSubmarineMaxForwardYawAccel;
+    pdVar6 = vehSubmarineMaxForwardPitchAccel;
+    pdVar7 = vehSubmarineMaxForwardYawAccel;
   }
   fVar1 = (float)((double)lVar13 * dVar17);
-  fVar7 = (pdVar6->current).value * fVar1;
-  fVar8 = (float)((double)(longlong)cVar2 * dVar17) * (pdVar5->current).value;
+  fVar8 = (pdVar7->current).value * fVar1;
+  fVar9 = (float)((double)(longlong)cVar2 * dVar17) * (pdVar6->current).value;
 LAB_826ca324:
-  dVar18 = (double)fVar8;
-  dVar16 = -(double)fVar7;
+  dVar18 = (double)fVar9;
+  dVar16 = -(double)fVar8;
   dVar17 = dVar15;
   if (fVar4 < fVar3) {
     dVar17 = (double)((vehSubmarineMaxRollAccel->current).value * fVar1);
   }
   if (dVar15 < (double)(vehSubmarineRollDrivenYaw->current).value) {
-    dVar14 = (double)(float)((double)(ABS(*(float *)(iVar10 + 0xf4)) /
+    dVar14 = (double)(float)((double)(ABS((pVVar5->phys).angles[2]) /
                                      (vehSubmarineMaxRoll->current).value) *
                             (double)(vehSubmarineRollDrivenYaw->current).value);
     if (1.0 < dVar14) {
@@ -141,12 +145,12 @@ LAB_826ca324:
     }
     dVar16 = (double)(float)(dVar14 * dVar16);
   }
-  uVar9 = (vehSubmarineBodyRelRotation->current).unsignedInt & 3;
-  if (uVar9 != 0) {
-    local_e0 = *(undefined4 *)(iVar10 + 0xf4);
+  uVar10 = (vehSubmarineBodyRelRotation->current).unsignedInt & 3;
+  if (uVar10 != 0) {
+    local_e0 = (pVVar5->phys).angles[2];
     local_e8 = CONCAT44((float)dVar15,(float)dVar15);
     AnglesToAxis((float *)&local_e8,(float (*) [3])afStack_90);
-    if (uVar9 == 1) {
+    if (uVar10 == 1) {
       dVar15 = (double)local_7c * dVar16;
       dVar16 = (double)(float)((double)local_80 * dVar16 +
                               -(double)(float)((double)local_74 * dVar18));
@@ -155,7 +159,7 @@ LAB_826ca324:
     else {
       dVar15 = (double)(float)((double)local_74 * dVar18);
       dVar18 = (double)(float)((double)local_70 * dVar18);
-      if (uVar9 == 2) {
+      if (uVar10 == 2) {
         dVar16 = -dVar15;
       }
       else {
@@ -178,14 +182,16 @@ LAB_826ca324:
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_submarine.cpp"
                     ,0xbb,0,"%s");
   }
-  __restfpr_28();
-  __restgprlr_25();
   return;
 }
 
 
 // 826CA500  Submarine_CalcCollisionAccel  (vehicle/vehicle_submarine.cpp:191)
 
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
@@ -310,8 +316,6 @@ void Submarine_CalcCollisionAccel(gentity_s *param_1,Bounds *param_2,float *para
   float local_234;
   trace_t local_230 [10];
   
-  __savegprlr();
-  __savefpr();
   local_2f0[0] = param_2->halfSize[0];
   this = &(param_1->r).ownerNum;
   local_2f0[4] = local_2f0[0] * 2.0;
@@ -583,8 +587,6 @@ void Submarine_CalcCollisionAccel(gentity_s *param_1,Bounds *param_2,float *para
     local_380 = local_3e8 - (float)((double)local_3c8 * dVar23);
     G_DebugLine(&local_388,&local_400,colorBlack,1);
   }
-  __restfpr();
-  __restgprlr();
   return;
 }
 
@@ -615,6 +617,8 @@ void VEH_Sub_ClipVelocity(float *param_1,float *param_2,float *param_3)
 
 // 826CAFB0  VEH_Sub_SlideMove  (vehicle/vehicle_submarine.cpp:452)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
@@ -622,25 +626,13 @@ int VEH_Sub_SlideMove(gentity_s *param_1,float *param_2,float *param_3,Bounds *p
                      float param_6,uint *param_7,bool *param_8)
 
 {
-  int *piVar1;
-  bool bVar3;
-  int iVar2;
-  longlong lVar4;
-  ulonglong uVar5;
-  double extraout_f1;
+  bool bVar1;
   float local_60 [4];
   G_StepSlideMoveParams local_50;
   
-  uVar5 = (ulonglong)(int)param_8;
-  lVar4 = (longlong)param_5;
-  local_50.origin = param_2;
-  local_50.velocity = param_3;
-  local_50.bounds = param_4;
-  piVar1 = (int *)__savegprlr_29((double)param_6,param_1);
-  local_50.passEntityNum = *piVar1;
-  local_50.clipMask = piVar1[99];
-  local_50.deltaTime = (float)extraout_f1;
-  local_50.gravity = (bool)('\x01' - (lVar4 == 0));
+  local_50.passEntityNum = (param_1->s).number;
+  local_50.clipMask = param_1->clipmask;
+  local_50.gravity = (bool)('\x01' - (param_5 == 0));
   local_60[0] = 0.0;
   local_50.groundNormal = local_60;
   local_60[1] = 0.0;
@@ -648,17 +640,22 @@ int VEH_Sub_SlideMove(gentity_s *param_1,float *param_2,float *param_3,Bounds *p
   local_50.hasGround = false;
   local_50.zerog = true;
   local_50.clipVelocityFunc = VEH_Sub_ClipVelocity;
-  bVar3 = G_SlideMove(&local_50);
-  if ((uVar5 & 0xffffffff) != 0) {
-    *(int *)uVar5 = local_50.bumpEntityNum;
+  local_50.deltaTime = param_6;
+  local_50.origin = param_2;
+  local_50.velocity = param_3;
+  local_50.bounds = param_4;
+  bVar1 = G_SlideMove(&local_50);
+  if (param_8 != (bool *)0x0) {
+    *(int *)param_8 = local_50.bumpEntityNum;
   }
-  iVar2 = __restgprlr_29(bVar3);
-  return iVar2;
+  return (uint)bVar1;
 }
 
 
 // 826CB058  VEH_Sub_CheckForPredictedCrash  (vehicle/vehicle_submarine.cpp:484)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
@@ -668,22 +665,20 @@ void VEH_Sub_CheckForPredictedCrash(gentity_s *param_1)
   float fVar1;
   float fVar2;
   Vehicle *pVVar3;
-  gentity_s *pgVar4;
   float local_70;
   float local_6c;
   float local_68;
   trace_t local_60;
   
-  pgVar4 = (gentity_s *)__savegprlr_29(param_1);
-  if (pgVar4 == (gentity_s *)0x0) {
+  if (param_1 == (gentity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_submarine.cpp"
                     ,0x1ea,0,"%s");
   }
-  if (pgVar4->vehicle == (Vehicle *)0x0) {
+  if (param_1->vehicle == (Vehicle *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_submarine.cpp"
                     ,0x1eb,0,"%s");
   }
-  pVVar3 = pgVar4->vehicle;
+  pVVar3 = param_1->vehicle;
   fVar1 = (vehHelicopterLookaheadTime->current).value;
   if (fVar1 != 0.0) {
     fVar2 = (pVVar3->phys).vel[0];
@@ -692,21 +687,24 @@ void VEH_Sub_CheckForPredictedCrash(gentity_s *param_1)
       local_6c = (pVVar3->phys).vel[1] * fVar1 + (pVVar3->phys).origin[1];
       local_68 = (pVVar3->phys).vel[2] * fVar1 + (pVVar3->phys).origin[2];
       G_TraceCapsule(&local_60,(pVVar3->phys).origin,&local_70,&(pVVar3->phys).bounds,
-                     (pgVar4->s).number,pgVar4->clipmask);
+                     (param_1->s).number,param_1->clipmask);
       if (local_60.fraction < 1.0) {
         Scr_AddVector(local_60.normal);
         Scr_AddVector((pVVar3->phys).vel);
-        Scr_Notify(pgVar4,scr_const.veh_predictedcollision,2);
+        Scr_Notify(param_1,scr_const.veh_predictedcollision,2);
       }
     }
   }
-  __restgprlr_29();
   return;
 }
 
 
 // 826CB198  Submarine_UpdatePlayerMove  (vehicle/vehicle_submarine.cpp:631)
 
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
@@ -715,19 +713,19 @@ void Submarine_UpdatePlayerMove(Vehicle *param_1)
 {
   float fVar1;
   float fVar2;
-  gentity_s *pgVar3;
-  Vehicle *pVVar4;
-  float fVar5;
-  uint uVar6;
-  bool bVar7;
-  dvar_t *pdVar8;
+  float fVar3;
+  gentity_s *pgVar4;
+  Vehicle *pVVar5;
+  float fVar6;
+  uint uVar7;
+  bool bVar8;
   dvar_t *pdVar9;
-  undefined4 *puVar10;
-  float *pfVar11;
-  ushort uVar12;
-  bool bVar13;
+  dvar_t *pdVar10;
+  ushort uVar11;
+  bool bVar12;
+  float *pfVar13;
   float *pfVar14;
-  float *pfVar15;
+  vehicle_physic_t *pvVar15;
   double dVar16;
   double dVar17;
   double dVar18;
@@ -766,8 +764,8 @@ void Submarine_UpdatePlayerMove(Vehicle *param_1)
   float local_174;
   float local_170;
   float local_168;
-  undefined4 local_164;
-  undefined4 local_160;
+  float local_164;
+  float local_160;
   float local_158;
   float local_154;
   float local_150;
@@ -780,8 +778,6 @@ void Submarine_UpdatePlayerMove(Vehicle *param_1)
   float local_e4;
   trace_t local_e0 [4];
   
-  __savegprlr_22(param_1);
-  puVar10 = (undefined4 *)__savefpr_23();
   dVar17 = 0.0;
   local_198[0] = 30.0;
   local_198[1] = 0.0;
@@ -790,114 +786,127 @@ void Submarine_UpdatePlayerMove(Vehicle *param_1)
   local_1b0.midPoint[0] = 0.0;
   local_220[0] = false;
   local_1b0.midPoint[1] = 0.0;
-  bVar7 = false;
+  bVar8 = false;
   local_1b0.midPoint[2] = 0.0;
   local_1b0.halfSize[0] = 12.0;
   local_1b0.halfSize[1] = 12.0;
   local_1b0.halfSize[2] = 12.0;
-  if (puVar10 == (undefined4 *)0x0) {
+  if (param_1 == (Vehicle *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_submarine.cpp"
                     ,0x29c,0,"%s");
   }
-  pgVar3 = (gentity_s *)*puVar10;
-  pfVar15 = (float *)(puVar10 + 0x35);
-  if (pgVar3 == (gentity_s *)0x0) {
+  pgVar4 = param_1->ent;
+  pvVar15 = &param_1->phys;
+  if (pgVar4 == (gentity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_submarine.cpp"
                     ,0x2a3,0,"%s");
   }
-  Submarine_CalcAccel(pgVar3,(char *)&local_21c,&local_1c8,&local_208);
-  Submarine_CalcCollisionAccel(pgVar3,&local_1b0,&local_1c8,&local_208);
-  pdVar9 = vehSubmarinePitchDampening;
-  pdVar8 = vehSubmarineRollDampening;
+  Submarine_CalcAccel(pgVar4,(char *)&local_21c,&local_1c8,&local_208);
+  Submarine_CalcCollisionAccel(pgVar4,&local_1b0,&local_1c8,&local_208);
+  pdVar10 = vehSubmarinePitchDampening;
+  pdVar9 = vehSubmarineRollDampening;
+  fVar1 = (param_1->phys).rotVel[0];
+  fVar2 = (param_1->phys).prevAngles[1];
   dVar24 = 0.05000000074505806;
+  fVar3 = (param_1->phys).rotVel[2];
   dVar22 = (double)local_208;
   dVar20 = (double)local_200;
-  fVar1 = (vehSubmarineYawDampening->current).value * (float)puVar10[0x54] + local_204 * 0.05;
-  puVar10[0x54] = fVar1;
-  puVar10[0x53] =
-       (pdVar9->current).value * (float)puVar10[0x53] + (float)(dVar22 * 0.05000000074505806);
-  puVar10[0x55] =
-       (pdVar8->current).value * (float)puVar10[0x55] + (float)(dVar20 * 0.05000000074505806);
-  dVar18 = (double)((fVar1 * 0.05 + (float)puVar10[0x3f]) * 0.0027777778);
+  fVar6 = (vehSubmarineYawDampening->current).value * (param_1->phys).rotVel[1] + local_204 * 0.05;
+  (param_1->phys).rotVel[1] = fVar6;
+  (param_1->phys).rotVel[0] =
+       (pdVar10->current).value * fVar1 + (float)(dVar22 * 0.05000000074505806);
+  (param_1->phys).rotVel[2] =
+       (pdVar9->current).value * fVar3 + (float)(dVar20 * 0.05000000074505806);
+  dVar18 = (double)((fVar6 * 0.05 + fVar2) * 0.0027777778);
   dVar16 = floor((double)(float)(dVar18 + 0.5));
-  fVar1 = (float)((double)(float)puVar10[0x53] * dVar24 + (double)(float)puVar10[0x3e]);
-  puVar10[0x3b] = fVar1;
-  pdVar8 = vehSubmarineMaxUpPitch;
-  fVar5 = (float)(dVar18 - (double)(float)dVar16) * 360.0;
-  puVar10[0x3c] = fVar5;
-  fVar2 = (pdVar8->current).value;
+  fVar1 = (float)((double)(param_1->phys).rotVel[0] * dVar24 + (double)(param_1->phys).prevAngles[0]
+                 );
+  (param_1->phys).angles[0] = fVar1;
+  pdVar9 = vehSubmarineMaxUpPitch;
+  fVar3 = (float)(dVar18 - (double)(float)dVar16) * 360.0;
+  (param_1->phys).angles[1] = fVar3;
+  fVar2 = (pdVar9->current).value;
   if ((fVar2 < fVar1) || (fVar2 = -(vehSubmarineMaxDownPitch->current).value, fVar1 < fVar2)) {
-    puVar10[0x53] = (float)dVar17;
-    puVar10[0x3b] = fVar2;
+    (param_1->phys).rotVel[0] = (float)dVar17;
+    (param_1->phys).angles[0] = fVar2;
   }
-  fVar1 = (float)((double)(float)puVar10[0x55] * dVar24 + (double)(float)puVar10[0x40]);
-  puVar10[0x3d] = fVar1;
+  fVar1 = (float)((double)(param_1->phys).rotVel[2] * dVar24 + (double)(param_1->phys).prevAngles[2]
+                 );
+  (param_1->phys).angles[2] = fVar1;
   fVar2 = (vehSubmarineMaxRoll->current).value;
   if ((fVar2 < fVar1) || (fVar2 = -fVar2, fVar1 < fVar2)) {
-    puVar10[0x55] = (float)dVar17;
-    puVar10[0x3d] = fVar2;
+    (param_1->phys).rotVel[2] = (float)dVar17;
+    (param_1->phys).angles[2] = fVar2;
   }
-  if ((dVar22 == dVar17) && ((float)puVar10[0x4a] < (vehSubmarineMinVelNoRestore->current).value)) {
-    puVar10[0x3b] = (vehSubmarinePitchRestore->current).value * (float)puVar10[0x3b];
+  if ((dVar22 == dVar17) &&
+     ((param_1->phys).bodyVel[0] < (vehSubmarineMinVelNoRestore->current).value)) {
+    (param_1->phys).angles[0] =
+         (vehSubmarinePitchRestore->current).value * (param_1->phys).angles[0];
   }
   if (dVar20 == dVar17) {
-    puVar10[0x3d] = (vehSubmarineRollRestore->current).value * (float)puVar10[0x3d];
+    (param_1->phys).angles[2] = (vehSubmarineRollRestore->current).value * (param_1->phys).angles[2]
+    ;
   }
-  local_21c = (float)puVar10[0x3b];
-  if ((((puVar10[0x3b] & 0x7f800000) == 0x7f800000) ||
-      (local_21c = fVar5, ((uint)fVar5 & 0x7f800000) == 0x7f800000)) ||
-     (local_21c = (float)puVar10[0x3d], ((uint)local_21c & 0x7f800000) == 0x7f800000)) {
+  local_21c = (param_1->phys).angles[0];
+  if (((((uint)local_21c & 0x7f800000) == 0x7f800000) ||
+      (local_21c = fVar3, ((uint)fVar3 & 0x7f800000) == 0x7f800000)) ||
+     (local_21c = (param_1->phys).angles[2], ((uint)local_21c & 0x7f800000) == 0x7f800000)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_submarine.cpp"
                     ,0x2e6,0,"%s");
   }
-  local_168 = (float)puVar10[0x3b];
-  local_164 = puVar10[0x3c];
-  local_160 = puVar10[0x3d];
+  local_168 = (param_1->phys).angles[0];
+  local_164 = (param_1->phys).angles[1];
+  local_160 = (param_1->phys).angles[2];
   AngleVectors(&local_168,afStack_110,afStack_104,afStack_f8);
   local_ec = (float)dVar17;
   local_e8 = (float)dVar17;
   local_e4 = (float)dVar17;
   MatrixTransformVector(&local_1c8,&afStack_110,&local_208);
-  pfVar11 = (float *)(puVar10 + 0x47);
-  puVar10[0x47] = (float)((double)local_208 * dVar24 + (double)(float)puVar10[0x47]);
-  pfVar14 = (float *)(puVar10 + 0x4a);
-  puVar10[0x48] = (float)((double)local_204 * dVar24 + (double)(float)puVar10[0x48]);
-  puVar10[0x49] = (float)((double)local_200 * dVar24 + (double)(float)puVar10[0x49]);
-  MatrixTransposeTransformVector43(pfVar11,&afStack_110,pfVar14);
-  puVar10[0x4a] = (vehSubmarineForwardDampening->current).value * (float)puVar10[0x4a];
-  pdVar9 = vehSubmarineMinForwardVel;
-  pdVar8 = vehSubmarineLateralDampening;
-  puVar10[0x4b] = (float)puVar10[0x4b] * (vehSubmarineLateralDampening->current).value;
-  puVar10[0x4c] = (pdVar8->current).value * (float)puVar10[0x4c];
-  dVar16 = (double)(pdVar9->current).value;
-  if ((dVar17 < dVar16) && ((double)*pfVar14 < dVar16)) {
-    *pfVar14 = (pdVar9->current).value;
+  pfVar14 = (param_1->phys).vel;
+  (param_1->phys).vel[0] = (float)((double)local_208 * dVar24 + (double)(param_1->phys).vel[0]);
+  pfVar13 = (param_1->phys).bodyVel;
+  (param_1->phys).vel[1] = (float)((double)local_204 * dVar24 + (double)(param_1->phys).vel[1]);
+  (param_1->phys).vel[2] = (float)((double)local_200 * dVar24 + (double)(param_1->phys).vel[2]);
+  MatrixTransposeTransformVector43(pfVar14,&afStack_110,pfVar13);
+  fVar1 = (param_1->phys).bodyVel[1];
+  fVar2 = (param_1->phys).bodyVel[2];
+  (param_1->phys).bodyVel[0] =
+       (vehSubmarineForwardDampening->current).value * (param_1->phys).bodyVel[0];
+  pdVar10 = vehSubmarineMinForwardVel;
+  pdVar9 = vehSubmarineLateralDampening;
+  (param_1->phys).bodyVel[1] = fVar1 * (vehSubmarineLateralDampening->current).value;
+  (param_1->phys).bodyVel[2] = (pdVar9->current).value * fVar2;
+  dVar16 = (double)(pdVar10->current).value;
+  if ((dVar17 < dVar16) && ((double)*pfVar13 < dVar16)) {
+    *pfVar13 = (pdVar10->current).value;
   }
   fVar1 = (vehSubmarineMaxForwardVel->current).value;
-  if ((fVar1 < *pfVar14) || (fVar1 = -(vehSubmarineMaxReverseVel->current).value, *pfVar14 < fVar1))
+  if ((fVar1 < *pfVar13) || (fVar1 = -(vehSubmarineMaxReverseVel->current).value, *pfVar13 < fVar1))
   {
-    *pfVar14 = fVar1;
+    *pfVar13 = fVar1;
   }
-  pdVar8 = vehSubmarineMaxLateralVel;
-  fVar1 = (vehSubmarineMaxLateralVel->current).value;
-  if ((fVar1 < (float)puVar10[0x4b]) || (fVar1 = -fVar1, (float)puVar10[0x4b] < fVar1)) {
-    puVar10[0x4b] = fVar1;
+  pdVar9 = vehSubmarineMaxLateralVel;
+  fVar1 = (param_1->phys).bodyVel[1];
+  fVar2 = (vehSubmarineMaxLateralVel->current).value;
+  if ((fVar2 < fVar1) || (fVar2 = -fVar2, fVar1 < fVar2)) {
+    (param_1->phys).bodyVel[1] = fVar2;
   }
-  fVar1 = (pdVar8->current).value;
-  if ((fVar1 < (float)puVar10[0x4c]) || (fVar1 = -fVar1, (float)puVar10[0x4c] < fVar1)) {
-    puVar10[0x4c] = fVar1;
+  fVar1 = (param_1->phys).bodyVel[2];
+  fVar2 = (pdVar9->current).value;
+  if ((fVar2 < fVar1) || (fVar2 = -fVar2, fVar1 < fVar2)) {
+    (param_1->phys).bodyVel[2] = fVar2;
   }
-  MatrixTransformVector(pfVar14,&afStack_110,pfVar11);
-  if (((*pfVar11 == 0.0) && ((float)puVar10[0x48] == 0.0)) && ((float)puVar10[0x49] == 0.0))
+  MatrixTransformVector(pfVar13,&afStack_110,pfVar14);
+  if (((*pfVar14 == 0.0) && ((param_1->phys).vel[1] == 0.0)) && ((param_1->phys).vel[2] == 0.0))
   goto LAB_826cb9a0;
   MatrixTransformVector43(local_198,&afStack_110,&local_1e8);
-  local_210 = (float)puVar10[0x49];
-  local_218 = *pfVar11;
-  local_214 = (float)puVar10[0x48];
-  dVar16 = (double)(float)puVar10[0x37];
-  dVar20 = (double)*pfVar15;
+  local_210 = (param_1->phys).vel[2];
+  local_218 = *pfVar14;
+  local_214 = (param_1->phys).vel[1];
+  dVar16 = (double)(param_1->phys).origin[2];
+  dVar20 = (double)pvVar15->origin[0];
   local_1f0 = (float)((double)local_1e0 + dVar16);
-  dVar18 = (double)(float)puVar10[0x36];
+  dVar18 = (double)(param_1->phys).origin[1];
   local_1f8 = (float)((double)local_1e8 + dVar20);
   local_1f4 = (float)((double)local_1e4 + dVar18);
   local_180 = (float)((double)local_210 * dVar24 + (double)local_1f0);
@@ -906,7 +915,7 @@ void Submarine_UpdatePlayerMove(Vehicle *param_1)
   local_1d8 = local_218;
   local_1d4 = local_214;
   local_1d0 = local_210;
-  G_TraceCapsule(local_e0,&local_1f8,&local_188,&local_1b0,(pgVar3->s).number,pgVar3->clipmask);
+  G_TraceCapsule(local_e0,&local_1f8,&local_188,&local_1b0,(pgVar4->s).number,pgVar4->clipmask);
   dVar22 = 1.0;
   if (1.0 <= local_e0[0].fraction) {
 LAB_826cb758:
@@ -915,20 +924,20 @@ LAB_826cb758:
     dVar19 = (double)local_1c8;
   }
   else {
-    uVar12 = Trace_GetEntityHitId(local_e0);
-    uVar6 = (uint)uVar12;
-    if ((uVar6 == 0x7ff) || (uVar6 == 0x7fe)) goto LAB_826cb758;
-    pVVar4 = g_entities[uVar6].vehicle;
-    if (pVVar4 == (Vehicle *)0x0) goto LAB_826cb758;
-    dVar19 = (double)(pVVar4->phys).vel[0];
-    bVar7 = true;
-    dVar21 = (double)(pVVar4->phys).vel[1];
-    dVar23 = (double)(pVVar4->phys).vel[2];
+    uVar11 = Trace_GetEntityHitId(local_e0);
+    uVar7 = (uint)uVar11;
+    if ((uVar7 == 0x7ff) || (uVar7 == 0x7fe)) goto LAB_826cb758;
+    pVVar5 = g_entities[uVar7].vehicle;
+    if (pVVar5 == (Vehicle *)0x0) goto LAB_826cb758;
+    dVar19 = (double)(pVVar5->phys).vel[0];
+    bVar8 = true;
+    dVar21 = (double)(pVVar5->phys).vel[1];
+    dVar23 = (double)(pVVar5->phys).vel[2];
     local_218 = (float)((double)local_218 - dVar19);
     local_214 = (float)((double)local_214 - dVar21);
     local_210 = (float)((double)local_210 - dVar23);
   }
-  VEH_ClearGround(pgVar3);
+  VEH_ClearGround(pgVar4);
   local_140.origin = &local_1f8;
   local_178 = (float)dVar17;
   local_174 = (float)dVar17;
@@ -942,33 +951,35 @@ LAB_826cb758:
   local_140.hasGround = false;
   local_140.zerog = true;
   local_140.clipVelocityFunc = VEH_Sub_ClipVelocity;
-  local_140.clipMask = pgVar3->clipmask;
-  local_140.passEntityNum = (pgVar3->s).number;
-  bVar13 = G_SlideMove(&local_140);
-  *pfVar15 = local_1f8 - local_1e8;
-  puVar10[0x36] = local_1f4 - local_1e4;
-  puVar10[0x37] = local_1f0 - local_1e0;
-  if ((bVar7) && (local_220[0] == false)) {
+  local_140.clipMask = pgVar4->clipmask;
+  local_140.passEntityNum = (pgVar4->s).number;
+  bVar12 = G_SlideMove(&local_140);
+  pvVar15->origin[0] = local_1f8 - local_1e8;
+  (param_1->phys).origin[1] = local_1f4 - local_1e4;
+  (param_1->phys).origin[2] = local_1f0 - local_1e0;
+  if ((bVar8) && (local_220[0] == false)) {
     local_218 = (float)(dVar19 + (double)local_218);
-    *pfVar15 = (float)(dVar19 * dVar24 + (double)(local_1f8 - local_1e8));
+    pvVar15->origin[0] = (float)(dVar19 * dVar24 + (double)(local_1f8 - local_1e8));
     local_214 = (float)(dVar21 + (double)local_214);
-    puVar10[0x36] = (float)(dVar21 * dVar24 + (double)(local_1f4 - local_1e4));
+    (param_1->phys).origin[1] = (float)(dVar21 * dVar24 + (double)(local_1f4 - local_1e4));
     local_210 = (float)(dVar23 + (double)local_210);
-    puVar10[0x37] = (float)(dVar23 * dVar24 + (double)(local_1f0 - local_1e0));
+    (param_1->phys).origin[2] = (float)(dVar23 * dVar24 + (double)(local_1f0 - local_1e0));
   }
-  puVar10[0x48] = local_214;
-  *pfVar11 = local_218;
-  pdVar8 = vehSubmarineAllowInSolid;
-  puVar10[0x49] = local_210;
-  if (((pdVar8->current).enabled != false) && (local_220[0] != false)) {
-    *pfVar15 = (float)((double)local_218 * dVar24 + (double)*pfVar15);
-    puVar10[0x36] = (float)((double)(float)puVar10[0x48] * dVar24 + (double)(float)puVar10[0x36]);
-    puVar10[0x37] = (float)((double)(float)puVar10[0x49] * dVar24 + (double)(float)puVar10[0x37]);
+  (param_1->phys).vel[1] = local_214;
+  *pfVar14 = local_218;
+  pdVar9 = vehSubmarineAllowInSolid;
+  (param_1->phys).vel[2] = local_210;
+  if (((pdVar9->current).enabled != false) && (local_220[0] != false)) {
+    fVar1 = (param_1->phys).origin[1];
+    pvVar15->origin[0] = (float)((double)local_218 * dVar24 + (double)pvVar15->origin[0]);
+    fVar2 = (param_1->phys).origin[2];
+    (param_1->phys).origin[1] = (float)((double)(param_1->phys).vel[1] * dVar24 + (double)fVar1);
+    (param_1->phys).origin[2] = (float)((double)(param_1->phys).vel[2] * dVar24 + (double)fVar2);
   }
-  if (bVar13) {
-    local_150 = (float)puVar10[0x37] - (float)((double)local_1d0 * dVar24 + dVar16);
-    local_158 = *pfVar15 - (float)((double)local_1d8 * dVar24 + dVar20);
-    local_154 = (float)puVar10[0x36] - (float)((double)local_1d4 * dVar24 + dVar18);
+  if (bVar12) {
+    local_150 = (param_1->phys).origin[2] - (float)((double)local_1d0 * dVar24 + dVar16);
+    local_158 = pvVar15->origin[0] - (float)((double)local_1d8 * dVar24 + dVar20);
+    local_154 = (param_1->phys).origin[1] - (float)((double)local_1d4 * dVar24 + dVar18);
     dVar18 = (double)SQRT(local_154 * local_154 + local_158 * local_158 + local_150 * local_150);
     dVar16 = dVar22;
     if (-dVar18 < 0.0) {
@@ -987,22 +998,20 @@ LAB_826cb758:
       }
       Scr_AddVector(&local_158);
       Scr_AddVector(&local_1d8);
-      Scr_Notify(pgVar3,scr_const.veh_collision,3);
+      Scr_Notify(pgVar4,scr_const.veh_collision,3);
     }
   }
 LAB_826cb9a0:
-  VEH_Sub_CheckForPredictedCrash(pgVar3);
-  MatrixTransposeTransformVector43(pfVar11,&afStack_110,pfVar14);
-  fVar1 = SQRT(*pfVar11 * *pfVar11 +
-               (float)puVar10[0x48] * (float)puVar10[0x48] +
-               (float)puVar10[0x49] * (float)puVar10[0x49]);
-  puVar10[0xbe] = fVar1;
+  VEH_Sub_CheckForPredictedCrash(pgVar4);
+  MatrixTransposeTransformVector43(pfVar14,&afStack_110,pfVar13);
+  fVar1 = (param_1->phys).vel[2];
+  fVar2 = (param_1->phys).vel[1];
+  fVar1 = SQRT(*pfVar14 * *pfVar14 + fVar2 * fVar2 + fVar1 * fVar1);
+  param_1->speed = fVar1;
   if ((double)fVar1 < dVar17) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_submarine.cpp"
                     ,0x356,0,"%s");
   }
-  __restfpr_23();
-  __restgprlr_22();
   return;
 }
 

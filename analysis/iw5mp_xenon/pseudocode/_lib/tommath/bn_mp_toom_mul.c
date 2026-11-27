@@ -2,15 +2,17 @@
 
 // 8225D040  mp_toom_mul  (line unknown)
 
-void mp_toom_mul(undefined8 param_1,undefined8 param_2,undefined8 param_3)
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
+
+undefined8 mp_toom_mul(int *param_1,int *param_2,undefined8 param_3)
 
 {
   uint uVar1;
-  int *piVar3;
   undefined8 uVar2;
-  int iVar4;
+  int iVar3;
+  longlong lVar4;
   longlong lVar5;
-  longlong lVar6;
   undefined1 auStack_110 [16];
   undefined1 auStack_100 [16];
   undefined1 auStack_f0 [16];
@@ -25,32 +27,31 @@ void mp_toom_mul(undefined8 param_1,undefined8 param_2,undefined8 param_3)
   undefined1 auStack_60 [16];
   undefined1 auStack_50 [80];
   
-  piVar3 = (int *)__savegprlr_25();
   uVar2 = mp_init_multi(auStack_50,auStack_d0,auStack_f0,auStack_e0,auStack_a0,auStack_60,auStack_c0
                         ,auStack_90);
   if ((int)uVar2 == 0) {
-    iVar4 = *piVar3;
-    if (*(int *)param_2 <= *piVar3) {
-      iVar4 = *(int *)param_2;
+    iVar3 = *param_1;
+    if (*param_2 <= *param_1) {
+      iVar3 = *param_2;
     }
-    uVar1 = iVar4 / 3;
-    lVar5 = (longlong)(int)uVar1;
-    lVar6 = lVar5 * 0x1c;
-    uVar2 = mp_mod_2d(piVar3,lVar6,auStack_60);
-    if (((int)uVar2 == 0) && (uVar2 = mp_copy(piVar3,auStack_c0), (int)uVar2 == 0)) {
-      mp_rshd(auStack_c0,lVar5);
-      mp_mod_2d(auStack_c0,lVar6,auStack_c0);
-      uVar2 = mp_copy(piVar3,auStack_90);
+    uVar1 = iVar3 / 3;
+    lVar4 = (longlong)(int)uVar1;
+    lVar5 = lVar4 * 0x1c;
+    uVar2 = mp_mod_2d(param_1,lVar5,auStack_60);
+    if (((int)uVar2 == 0) && (uVar2 = mp_copy(param_1,auStack_c0), (int)uVar2 == 0)) {
+      mp_rshd(auStack_c0,lVar4);
+      mp_mod_2d(auStack_c0,lVar5,auStack_c0);
+      uVar2 = mp_copy(param_1,auStack_90);
       if ((int)uVar2 == 0) {
-        iVar4 = uVar1 << 1;
-        mp_rshd(auStack_90,iVar4);
-        uVar2 = mp_mod_2d(param_2,lVar6,auStack_70);
+        iVar3 = uVar1 << 1;
+        mp_rshd(auStack_90,iVar3);
+        uVar2 = mp_mod_2d(param_2,lVar5,auStack_70);
         if (((int)uVar2 == 0) && (uVar2 = mp_copy(param_2,auStack_b0), (int)uVar2 == 0)) {
-          mp_rshd(auStack_b0,lVar5);
-          mp_mod_2d(auStack_b0,lVar6,auStack_b0);
+          mp_rshd(auStack_b0,lVar4);
+          mp_mod_2d(auStack_b0,lVar5,auStack_b0);
           uVar2 = mp_copy(param_2,auStack_80);
           if ((int)uVar2 == 0) {
-            mp_rshd(auStack_80,iVar4);
+            mp_rshd(auStack_80,iVar3);
             uVar2 = mp_mul(auStack_60,auStack_70,auStack_50);
             if ((((((int)uVar2 == 0) &&
                   (uVar2 = mp_mul(auStack_90,auStack_80,auStack_a0), (int)uVar2 == 0)) &&
@@ -96,9 +97,9 @@ void mp_toom_mul(undefined8 param_1,undefined8 param_2,undefined8 param_3)
                          (uVar2 = mp_sub(auStack_e0,auStack_f0,auStack_e0), (int)uVar2 == 0)) &&
                         ((uVar2 = mp_div_3(auStack_d0,auStack_d0,0), (int)uVar2 == 0 &&
                          (uVar2 = mp_div_3(auStack_e0,auStack_e0,0), (int)uVar2 == 0)))))))) &&
-                     (((uVar2 = mp_lshd(auStack_d0,lVar5), (int)uVar2 == 0 &&
-                       (((uVar2 = mp_lshd(auStack_f0,iVar4), (int)uVar2 == 0 &&
-                         (uVar2 = mp_lshd(auStack_e0,lVar5 + ((ulonglong)uVar1 & 0x7fffffff) * 2),
+                     (((uVar2 = mp_lshd(auStack_d0,lVar4), (int)uVar2 == 0 &&
+                       (((uVar2 = mp_lshd(auStack_f0,iVar3), (int)uVar2 == 0 &&
+                         (uVar2 = mp_lshd(auStack_e0,lVar4 + ((ulonglong)uVar1 & 0x7fffffff) * 2),
                          (int)uVar2 == 0)) &&
                         (uVar2 = mp_lshd(auStack_a0,uVar1 << 2), (int)uVar2 == 0)))) &&
                       (((uVar2 = mp_add(auStack_50,auStack_d0,param_3), (int)uVar2 == 0 &&
@@ -114,7 +115,6 @@ void mp_toom_mul(undefined8 param_1,undefined8 param_2,undefined8 param_3)
     mp_clear_multi(auStack_50,auStack_d0,auStack_f0,auStack_e0,auStack_a0,auStack_60,auStack_c0,
                    auStack_90);
   }
-  __restgprlr_25(uVar2);
-  return;
+  return uVar2;
 }
 

@@ -2,152 +2,152 @@
 
 // 825E63F8  Com_Filter  (universal/com_shared.cpp:19)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
+
 bool Com_Filter(char *param_1,char *param_2,int param_3)
 
 {
   bool bVar1;
   bool bVar2;
   char cVar3;
-  ulonglong uVar4;
-  char *pcVar5;
+  char *pcVar4;
+  int iVar5;
+  char cVar7;
   char *pcVar6;
-  int iVar7;
-  undefined1 uVar8;
-  longlong lVar9;
-  char cVar12;
-  char *pcVar11;
-  longlong lVar10;
-  int iVar13;
+  int iVar8;
+  char cStack_441;
   char local_440 [1088];
   
-  lVar10 = (longlong)(int)param_2;
-  uVar4 = ZEXT48(&stack0x00000000);
-  pcVar5 = (char *)__savegprlr_25(param_1);
-  iVar13 = (int)*pcVar5;
-  if (*pcVar5 != '\0') {
+  iVar8 = (int)*param_1;
+  if (*param_1 != '\0') {
     do {
-      pcVar6 = (char *)lVar10;
-      if (iVar13 == 0x2a) {
-        pcVar5 = pcVar5 + 1;
-        cVar12 = *pcVar5;
-        iVar13 = 0;
-        if (cVar12 != '\0') {
-          lVar9 = uVar4 - 0x441;
+      if (iVar8 == 0x2a) {
+        param_1 = param_1 + 1;
+        cVar7 = *param_1;
+        iVar8 = 0;
+        if (cVar7 != '\0') {
+          pcVar4 = &cStack_441;
           do {
-            if ((cVar12 == '*') || (cVar12 == '?')) break;
-            lVar9 = lVar9 + 1;
-            *(char *)lVar9 = cVar12;
-            iVar13 = iVar13 + 1;
-            pcVar5 = pcVar5 + 1;
-            cVar12 = *pcVar5;
-          } while (cVar12 != '\0');
+            if ((cVar7 == '*') || (cVar7 == '?')) break;
+            pcVar4 = pcVar4 + 1;
+            *pcVar4 = cVar7;
+            iVar8 = iVar8 + 1;
+            param_1 = param_1 + 1;
+            cVar7 = *param_1;
+          } while (cVar7 != '\0');
         }
-        local_440[iVar13] = '\0';
-        lVar9 = uVar4 - 0x440;
+        local_440[iVar8] = '\0';
+        pcVar4 = local_440;
         do {
-          pcVar11 = (char *)lVar9;
-          lVar9 = lVar9 + 1;
-        } while (*pcVar11 != '\0');
-        if (((lVar9 - (uVar4 - 0x440)) - 1 & 0xffffffff) != 0) {
+          cVar7 = *pcVar4;
+          pcVar4 = pcVar4 + 1;
+        } while (cVar7 != '\0');
+        if ((int)pcVar4 - (int)local_440 != 1) {
           if (param_3 == 0) {
-            pcVar6 = I_stristr(pcVar6,local_440);
+            pcVar4 = I_stristr(param_2,local_440);
           }
           else {
-            pcVar6 = strstr(pcVar6,local_440);
+            pcVar4 = strstr(param_2,local_440);
           }
-          if (pcVar6 == (char *)0x0) goto LAB_825e66bc;
-          lVar10 = uVar4 - 0x440;
+          if (pcVar4 == (char *)0x0) {
+            return false;
+          }
+          pcVar6 = local_440;
           do {
-            pcVar11 = (char *)lVar10;
-            lVar10 = lVar10 + 1;
-          } while (*pcVar11 != '\0');
-          lVar10 = ((lVar10 - (uVar4 - 0x440)) - 1 & 0xffffffff) + (longlong)(int)pcVar6;
+            cVar7 = *pcVar6;
+            pcVar6 = pcVar6 + 1;
+          } while (cVar7 != '\0');
+          param_2 = pcVar4 + (int)(pcVar6 + (-1 - (int)local_440));
         }
       }
       else {
-        if (iVar13 == 0x3f) {
+        if (iVar8 == 0x3f) {
 LAB_825e6698:
-          lVar10 = lVar10 + 1;
+          param_2 = param_2 + 1;
         }
         else {
-          if (iVar13 != 0x5b) {
+          if (iVar8 != 0x5b) {
             if (param_3 == 0) {
-              iVar7 = toupper((int)*pcVar6);
-              iVar13 = toupper(iVar13);
-              bVar2 = iVar13 == iVar7;
+              iVar5 = toupper((int)*param_2);
+              iVar8 = toupper(iVar8);
+              bVar2 = iVar8 == iVar5;
             }
             else {
-              bVar2 = iVar13 == *pcVar6;
+              bVar2 = iVar8 == *param_2;
             }
-            if (!bVar2) goto LAB_825e66bc;
+            if (!bVar2) {
+              return false;
+            }
             goto LAB_825e6698;
           }
-          if (pcVar5[1] != '[') {
-            pcVar5 = pcVar5 + 1;
+          if (param_1[1] != '[') {
+            param_1 = param_1 + 1;
             bVar2 = false;
-            iVar13 = (int)*pcVar5;
-            if (*pcVar5 == '\0') {
-LAB_825e66bc:
-              uVar8 = __restgprlr_25(0);
-              return (bool)uVar8;
+            iVar8 = (int)*param_1;
+            if (*param_1 == '\0') {
+              return false;
             }
             do {
               if (bVar2) goto joined_r0x825e6638;
-              if ((iVar13 == 0x5d) && (pcVar5[1] != ']')) goto LAB_825e66bc;
-              if (((pcVar5[1] == '-') && (cVar12 = pcVar5[2], cVar12 != '\0')) &&
-                 ((cVar12 != ']' || (pcVar5[3] == ']')))) {
-                cVar3 = *pcVar6;
+              if ((iVar8 == 0x5d) && (param_1[1] != ']')) {
+                return false;
+              }
+              if (((param_1[1] == '-') && (cVar7 = param_1[2], cVar7 != '\0')) &&
+                 ((cVar7 != ']' || (param_1[3] == ']')))) {
+                cVar3 = *param_2;
                 if (param_3 == 0) {
-                  iVar7 = toupper((int)cVar3);
-                  iVar13 = toupper(iVar13);
-                  if (iVar13 <= iVar7) {
-                    iVar13 = toupper((int)*pcVar6);
-                    iVar7 = toupper((int)pcVar5[2]);
-                    bVar1 = iVar7 < iVar13;
+                  iVar5 = toupper((int)cVar3);
+                  iVar8 = toupper(iVar8);
+                  if (iVar8 <= iVar5) {
+                    iVar8 = toupper((int)*param_2);
+                    iVar5 = toupper((int)param_1[2]);
+                    bVar1 = iVar5 < iVar8;
                     goto LAB_825e65d0;
                   }
                 }
-                else if (iVar13 <= cVar3) {
-                  bVar1 = (int)cVar12 < (int)cVar3;
+                else if (iVar8 <= cVar3) {
+                  bVar1 = (int)cVar7 < (int)cVar3;
 LAB_825e65d0:
                   if (!bVar1) {
                     bVar2 = true;
                   }
                 }
-                pcVar5 = pcVar5 + 3;
+                param_1 = param_1 + 3;
               }
               else {
                 if (param_3 == 0) {
-                  iVar7 = toupper((int)*pcVar6);
-                  iVar13 = toupper(iVar13);
-                  bVar1 = iVar13 == iVar7;
+                  iVar5 = toupper((int)*param_2);
+                  iVar8 = toupper(iVar8);
+                  bVar1 = iVar8 == iVar5;
                 }
                 else {
-                  bVar1 = iVar13 == *pcVar6;
+                  bVar1 = iVar8 == *param_2;
                 }
                 if (bVar1) {
                   bVar2 = true;
                 }
-                pcVar5 = pcVar5 + 1;
+                param_1 = param_1 + 1;
               }
-              iVar13 = (int)*pcVar5;
-            } while (iVar13 != 0);
-            if (!bVar2) goto LAB_825e66bc;
+              iVar8 = (int)*param_1;
+            } while (iVar8 != 0);
+            if (!bVar2) {
+              return false;
+            }
 joined_r0x825e6638:
-            while ((iVar13 != 0 && ((iVar13 != 0x5d || (pcVar5[1] == ']'))))) {
-              pcVar5 = pcVar5 + 1;
-              iVar13 = (int)*pcVar5;
+            while ((iVar8 != 0 && ((iVar8 != 0x5d || (param_1[1] == ']'))))) {
+              param_1 = param_1 + 1;
+              iVar8 = (int)*param_1;
             }
             goto LAB_825e6698;
           }
         }
-        pcVar5 = pcVar5 + 1;
+        param_1 = param_1 + 1;
       }
-      iVar13 = (int)*pcVar5;
-    } while (iVar13 != 0);
+      iVar8 = (int)*param_1;
+    } while (iVar8 != 0);
   }
-  uVar8 = __restgprlr_25(1);
-  return (bool)uVar8;
+  return true;
 }
 
 
@@ -193,6 +193,9 @@ long64 time(long64 *param_1)
 
 // 825E66C8  Com_FilterPath  (universal/com_shared.cpp:131)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
+
 bool Com_FilterPath(char *param_1,char *param_2,int param_3)
 
 {
@@ -200,177 +203,176 @@ bool Com_FilterPath(char *param_1,char *param_2,int param_3)
   bool bVar2;
   char cVar3;
   char *pcVar4;
-  char *pcVar5;
+  int iVar5;
   int iVar6;
-  undefined1 uVar7;
-  int iVar8;
-  longlong lVar9;
-  char cVar11;
-  char *pcVar10;
-  int iVar12;
+  char cVar8;
+  char *pcVar7;
+  char *pcVar9;
+  int iVar10;
   char local_4d0 [64];
-  char acStack_490 [63];
-  char cStack_451;
+  char acStack_490 [64];
   char local_450 [1104];
   
-  lVar9 = (longlong)(int)param_2;
-  pcVar4 = (char *)__savegprlr_24(param_1);
-  iVar6 = 0;
-  iVar12 = -(int)pcVar4;
+  iVar5 = 0;
+  iVar10 = -(int)param_1;
   do {
-    cVar11 = *pcVar4;
-    if (cVar11 == '\0') break;
-    if ((cVar11 == '\\') || (cVar11 == ':')) {
-      local_4d0[(int)(pcVar4 + iVar12)] = '/';
+    cVar8 = *param_1;
+    if (cVar8 == '\0') break;
+    if ((cVar8 == '\\') || (cVar8 == ':')) {
+      param_1[(int)(local_4d0 + iVar10)] = '/';
     }
     else {
-      local_4d0[(int)(pcVar4 + iVar12)] = cVar11;
+      param_1[(int)(local_4d0 + iVar10)] = cVar8;
+    }
+    iVar5 = iVar5 + 1;
+    param_1 = param_1 + 1;
+  } while (iVar5 < 0x3f);
+  iVar6 = 0;
+  iVar10 = -(int)param_2;
+  local_4d0[iVar5] = '\0';
+  do {
+    cVar8 = *param_2;
+    if (cVar8 == '\0') break;
+    if ((cVar8 == '\\') || (cVar8 == ':')) {
+      param_2[(int)(acStack_490 + iVar10)] = '/';
+    }
+    else {
+      param_2[(int)(acStack_490 + iVar10)] = cVar8;
     }
     iVar6 = iVar6 + 1;
-    pcVar4 = pcVar4 + 1;
+    param_2 = param_2 + 1;
   } while (iVar6 < 0x3f);
-  iVar8 = 0;
-  iVar12 = (int)lVar9;
-  local_4d0[iVar6] = '\0';
-  do {
-    pcVar4 = (char *)lVar9;
-    cVar11 = *pcVar4;
-    if (cVar11 == '\0') break;
-    if ((cVar11 == '\\') || (cVar11 == ':')) {
-      pcVar4[(int)(acStack_490 + -iVar12)] = '/';
-    }
-    else {
-      pcVar4[(int)(acStack_490 + -iVar12)] = cVar11;
-    }
-    iVar8 = iVar8 + 1;
-    lVar9 = lVar9 + 1;
-  } while (iVar8 < 0x3f);
-  pcVar5 = acStack_490;
-  pcVar4 = local_4d0;
-  acStack_490[iVar8] = '\0';
+  pcVar4 = acStack_490;
+  pcVar9 = local_4d0;
+  acStack_490[iVar6] = '\0';
   do {
     if (local_4d0[0] == '\0') {
-      uVar7 = __restgprlr_24(1);
-      return (bool)uVar7;
+      return true;
     }
-    cVar11 = *pcVar4;
-    if (cVar11 == '*') {
-      pcVar4 = pcVar4 + 1;
-      cVar11 = *pcVar4;
-      iVar12 = 0;
-      if (cVar11 != '\0') {
-        pcVar10 = &cStack_451;
+    cVar8 = *pcVar9;
+    if (cVar8 == '*') {
+      pcVar9 = pcVar9 + 1;
+      cVar8 = *pcVar9;
+      iVar10 = 0;
+      if (cVar8 != '\0') {
+        pcVar7 = acStack_490 + 0x3f;
         do {
-          if ((cVar11 == '*') || (cVar11 == '?')) break;
-          pcVar10 = pcVar10 + 1;
-          *pcVar10 = cVar11;
-          iVar12 = iVar12 + 1;
-          pcVar4 = pcVar4 + 1;
-          cVar11 = *pcVar4;
-        } while (cVar11 != '\0');
+          if ((cVar8 == '*') || (cVar8 == '?')) break;
+          pcVar7 = pcVar7 + 1;
+          *pcVar7 = cVar8;
+          iVar10 = iVar10 + 1;
+          pcVar9 = pcVar9 + 1;
+          cVar8 = *pcVar9;
+        } while (cVar8 != '\0');
       }
-      local_450[iVar12] = '\0';
-      pcVar10 = local_450;
+      local_450[iVar10] = '\0';
+      pcVar7 = local_450;
       do {
-        cVar11 = *pcVar10;
-        pcVar10 = pcVar10 + 1;
-      } while (cVar11 != '\0');
-      if ((int)pcVar10 - (int)local_450 != 1) {
+        cVar8 = *pcVar7;
+        pcVar7 = pcVar7 + 1;
+      } while (cVar8 != '\0');
+      if ((int)pcVar7 - (int)local_450 != 1) {
         if (param_3 == 0) {
-          pcVar5 = I_stristr(pcVar5,local_450);
+          pcVar4 = I_stristr(pcVar4,local_450);
         }
         else {
-          pcVar5 = strstr(pcVar5,local_450);
+          pcVar4 = strstr(pcVar4,local_450);
         }
-        if (pcVar5 == (char *)0x0) goto LAB_825e6a34;
-        pcVar10 = local_450;
+        if (pcVar4 == (char *)0x0) {
+          return false;
+        }
+        pcVar7 = local_450;
         do {
-          cVar11 = *pcVar10;
-          pcVar10 = pcVar10 + 1;
-        } while (cVar11 != '\0');
-        pcVar5 = pcVar5 + (int)(pcVar10 + (-1 - (int)local_450));
+          cVar8 = *pcVar7;
+          pcVar7 = pcVar7 + 1;
+        } while (cVar8 != '\0');
+        pcVar4 = pcVar4 + (int)(pcVar7 + (-1 - (int)local_450));
       }
     }
     else {
-      if (cVar11 == '?') {
+      if (cVar8 == '?') {
 LAB_825e6a14:
-        pcVar5 = pcVar5 + 1;
+        pcVar4 = pcVar4 + 1;
       }
       else {
-        if (cVar11 != '[') {
+        if (cVar8 != '[') {
           if (param_3 == 0) {
-            iVar12 = toupper((int)*pcVar5);
-            iVar6 = toupper((int)cVar11);
-            bVar2 = iVar6 == iVar12;
+            iVar10 = toupper((int)*pcVar4);
+            iVar5 = toupper((int)cVar8);
+            bVar2 = iVar5 == iVar10;
           }
           else {
-            bVar2 = cVar11 == *pcVar5;
+            bVar2 = cVar8 == *pcVar4;
           }
-          if (!bVar2) goto LAB_825e6a34;
+          if (!bVar2) {
+            return false;
+          }
           goto LAB_825e6a14;
         }
-        if (pcVar4[1] != '[') {
-          pcVar4 = pcVar4 + 1;
+        if (pcVar9[1] != '[') {
+          pcVar9 = pcVar9 + 1;
           bVar2 = false;
-          iVar12 = (int)*pcVar4;
-          if (*pcVar4 == '\0') {
-LAB_825e6a34:
-            uVar7 = __restgprlr_24(0);
-            return (bool)uVar7;
+          iVar10 = (int)*pcVar9;
+          if (*pcVar9 == '\0') {
+            return false;
           }
           do {
             if (bVar2) goto joined_r0x825e69b4;
-            if ((iVar12 == 0x5d) && (pcVar4[1] != ']')) goto LAB_825e6a34;
-            if (((pcVar4[1] == '-') && (cVar11 = pcVar4[2], cVar11 != '\0')) &&
-               ((cVar11 != ']' || (pcVar4[3] == ']')))) {
-              cVar3 = *pcVar5;
+            if ((iVar10 == 0x5d) && (pcVar9[1] != ']')) {
+              return false;
+            }
+            if (((pcVar9[1] == '-') && (cVar8 = pcVar9[2], cVar8 != '\0')) &&
+               ((cVar8 != ']' || (pcVar9[3] == ']')))) {
+              cVar3 = *pcVar4;
               if (param_3 == 0) {
-                iVar6 = toupper((int)cVar3);
-                iVar12 = toupper(iVar12);
-                if (iVar12 <= iVar6) {
-                  iVar12 = toupper((int)*pcVar5);
-                  iVar6 = toupper((int)cVar11);
-                  bVar1 = iVar6 < iVar12;
+                iVar5 = toupper((int)cVar3);
+                iVar10 = toupper(iVar10);
+                if (iVar10 <= iVar5) {
+                  iVar10 = toupper((int)*pcVar4);
+                  iVar5 = toupper((int)cVar8);
+                  bVar1 = iVar5 < iVar10;
                   goto LAB_825e694c;
                 }
               }
-              else if (iVar12 <= cVar3) {
-                bVar1 = (int)cVar11 < (int)cVar3;
+              else if (iVar10 <= cVar3) {
+                bVar1 = (int)cVar8 < (int)cVar3;
 LAB_825e694c:
                 if (!bVar1) {
                   bVar2 = true;
                 }
               }
-              pcVar4 = pcVar4 + 3;
+              pcVar9 = pcVar9 + 3;
             }
             else {
               if (param_3 == 0) {
-                iVar6 = toupper((int)*pcVar5);
-                iVar12 = toupper(iVar12);
-                bVar1 = iVar12 == iVar6;
+                iVar5 = toupper((int)*pcVar4);
+                iVar10 = toupper(iVar10);
+                bVar1 = iVar10 == iVar5;
               }
               else {
-                bVar1 = iVar12 == *pcVar5;
+                bVar1 = iVar10 == *pcVar4;
               }
               if (bVar1) {
                 bVar2 = true;
               }
-              pcVar4 = pcVar4 + 1;
+              pcVar9 = pcVar9 + 1;
             }
-            iVar12 = (int)*pcVar4;
-          } while (iVar12 != 0);
-          if (!bVar2) goto LAB_825e6a34;
+            iVar10 = (int)*pcVar9;
+          } while (iVar10 != 0);
+          if (!bVar2) {
+            return false;
+          }
 joined_r0x825e69b4:
-          while ((iVar12 != 0 && ((iVar12 != 0x5d || (pcVar4[1] == ']'))))) {
-            pcVar4 = pcVar4 + 1;
-            iVar12 = (int)*pcVar4;
+          while ((iVar10 != 0 && ((iVar10 != 0x5d || (pcVar9[1] == ']'))))) {
+            pcVar9 = pcVar9 + 1;
+            iVar10 = (int)*pcVar9;
           }
           goto LAB_825e6a14;
         }
       }
-      pcVar4 = pcVar4 + 1;
+      pcVar9 = pcVar9 + 1;
     }
-    local_4d0[0] = *pcVar4;
+    local_4d0[0] = *pcVar9;
   } while( true );
 }
 
@@ -435,6 +437,9 @@ int Com_RealTime(int param_1,qtime_s *param_2)
 
 // 825E6B60  Com_Memcpy  (universal/com_shared.cpp:225)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 void Com_Memcpy(void *param_1,void *param_2,int param_3)
 
 {
@@ -443,18 +448,18 @@ void Com_Memcpy(void *param_1,void *param_2,int param_3)
   undefined4 *puVar3;
   undefined4 *puVar4;
   undefined8 in_r0;
-  longlong lVar5;
-  undefined8 *puVar6;
-  ulonglong uVar7;
-  ulonglong uVar8;
-  longlong lVar9;
+  ulonglong uVar5;
+  ulonglong uVar6;
+  longlong lVar7;
+  longlong lVar8;
+  ulonglong uVar9;
   ulonglong uVar10;
   ulonglong uVar11;
   ulonglong uVar12;
-  ulonglong uVar13;
-  int iVar14;
-  longlong lVar15;
-  undefined1 auVar16 [16];
+  int iVar13;
+  longlong lVar14;
+  undefined1 auVar15 [16];
+  undefined4 uVar16;
   undefined4 uVar17;
   undefined4 uVar18;
   undefined4 uVar19;
@@ -485,265 +490,258 @@ void Com_Memcpy(void *param_1,void *param_2,int param_3)
   undefined4 uVar44;
   undefined4 uVar45;
   undefined4 uVar46;
-  undefined4 uVar47;
-  undefined1 auVar48 [16];
+  undefined1 auVar47 [16];
   
-  uVar12 = (ulonglong)param_3;
-  uVar13 = (ulonglong)(int)param_2;
-  lVar5 = __savegprlr_26(param_1);
-  puVar6 = (undefined8 *)uVar13;
-  if ((uVar12 & 0xffffffff) < 0x10) {
-    lVar15 = lVar5;
-    if ((7 < (uVar12 & 0xffffffff)) && ((uVar13 & 7) == 0)) {
-      lVar15 = lVar5 + 8;
-      uVar13 = uVar13 + 8;
-      uVar12 = uVar12 - 8;
-      *(undefined8 *)lVar5 = *puVar6;
+  uVar11 = (ulonglong)param_3;
+  uVar12 = (ulonglong)(int)param_2;
+  lVar14 = (longlong)(int)param_1;
+  if ((uint)param_3 < 0x10) {
+    if ((7 < (uint)param_3) && (((uint)param_2 & 7) == 0)) {
+      lVar14 = lVar14 + 8;
+      uVar12 = uVar12 + 8;
+      uVar11 = uVar11 - 8;
+      *(undefined8 *)param_1 = *(undefined8 *)param_2;
     }
-    iVar14 = (int)uVar13;
-    if (((uVar13 & 3) == 0) && (3 < (uVar12 & 0xffffffff))) {
-      uVar13 = (uVar12 & 0xffffffff) >> 2;
+    iVar13 = (int)uVar12;
+    if (((uVar12 & 3) == 0) && (3 < (uVar11 & 0xffffffff))) {
+      uVar12 = (uVar11 & 0xffffffff) >> 2;
       _blkmov();
-      lVar15 = (uVar12 & 0xfffffffc) + lVar15;
-      iVar14 = (int)(uVar12 & 0xfffffffc) + iVar14;
+      lVar14 = (uVar11 & 0xfffffffc) + lVar14;
+      iVar13 = (int)(uVar11 & 0xfffffffc) + iVar13;
       do {
-        uVar13 = uVar13 - 1;
-        uVar12 = uVar12 - 4;
-      } while (uVar13 != 0);
-    }
-    if ((uVar12 & 0xffffffff) != 0) {
-      iVar1 = (int)lVar15;
-      uVar13 = (ulonglong)(uint)s_1;
-      do {
-        uVar12 = uVar12 - uVar13;
-        *(undefined1 *)lVar15 = ((undefined1 *)lVar15)[iVar14 - iVar1];
-        lVar15 = lVar15 + 1;
+        uVar12 = uVar12 - 1;
+        uVar11 = uVar11 - 4;
       } while (uVar12 != 0);
-      __restgprlr_26(lVar5);
+    }
+    if ((uVar11 & 0xffffffff) != 0) {
+      iVar1 = (int)lVar14;
+      uVar12 = (ulonglong)(uint)s_1;
+      do {
+        uVar11 = uVar11 - uVar12;
+        *(undefined1 *)lVar14 = ((undefined1 *)lVar14)[iVar13 - iVar1];
+        lVar14 = lVar14 + 1;
+      } while (uVar11 != 0);
       return;
     }
   }
   else {
-    uVar10 = -lVar5 & 0xf;
-    uVar7 = (ulonglong)(uint)((int)-lVar5 >> 4) & 7;
-    uVar8 = uVar12;
-    if (0x3ff < (uVar12 & 0xffffffff)) {
-      uVar8 = 0x400;
+    uVar9 = -lVar14 & 0xf;
+    uVar5 = (ulonglong)(uint)((int)-lVar14 >> 4) & 7;
+    uVar6 = uVar11;
+    if (0x3ff < (uint)param_3) {
+      uVar6 = 0x400;
     }
-    lVar15 = 0;
-    if ((uVar8 & 0xffffffff) != 0) {
-      lVar9 = ((uVar8 - 1 & 0xffffffff) >> 7) + 1;
+    lVar8 = 0;
+    if ((uVar6 & 0xffffffff) != 0) {
+      lVar7 = ((uVar6 - 1 & 0xffffffff) >> 7) + 1;
       do {
-        dataCacheBlockTouch(lVar15 + uVar13);
-        lVar15 = lVar15 + 0x80;
-        lVar9 = lVar9 + -1;
-      } while (lVar9 != 0);
+        dataCacheBlockTouch(lVar8 + uVar12);
+        lVar8 = lVar8 + 0x80;
+        lVar7 = lVar7 + -1;
+      } while (lVar7 != 0);
     }
-    uVar8 = uVar13;
-    lVar15 = lVar5;
-    if (uVar10 != 0) {
-      uVar8 = uVar10 + uVar13;
-      uVar12 = uVar12 - uVar10;
-      auVar16 = loadVectorForShiftLeft(in_r0,uVar13);
-      lVar15 = uVar10 + lVar5;
-      auVar16 = vectorPermute128(*(undefined1 (*) [16])((uint)puVar6 & 0xfffffff0),
-                                 *(undefined1 (*) [16])((int)puVar6 + 0xfU & 0xfffffff0),auVar16);
-      storeVectorLeftIndexed(auVar16,lVar5);
+    uVar6 = uVar12;
+    lVar8 = lVar14;
+    if (uVar9 != 0) {
+      uVar6 = uVar9 + uVar12;
+      uVar11 = uVar11 - uVar9;
+      auVar15 = loadVectorForShiftLeft(in_r0,uVar12);
+      lVar8 = uVar9 + lVar14;
+      auVar15 = vectorPermute128(*(undefined1 (*) [16])((uint)param_2 & 0xfffffff0),
+                                 *(undefined1 (*) [16])((int)param_2 + 0xfU & 0xfffffff0),auVar15);
+      storeVectorLeftIndexed(auVar15,lVar14);
     }
-    uVar13 = (uVar12 & 0xffffffff) >> 4;
-    if (uVar13 < uVar7) {
-      uVar7 = uVar13;
+    uVar12 = (uVar11 & 0xffffffff) >> 4;
+    if (uVar12 < uVar5) {
+      uVar5 = uVar12;
     }
-    uVar13 = uVar12 + uVar7 * -0x10 & 0xffffff80;
-    uVar10 = uVar13;
-    if (0x7f < uVar13) {
-      uVar10 = 0x80;
+    uVar12 = uVar11 + uVar5 * -0x10 & 0xffffff80;
+    uVar9 = uVar12;
+    if (0x7f < uVar12) {
+      uVar9 = 0x80;
     }
-    uVar11 = 0;
-    if (uVar10 != 0) {
+    uVar10 = 0;
+    if (uVar9 != 0) {
       do {
-        dataCacheBlockClearToZero128(uVar11 + lVar15 + 0x7f);
-        uVar11 = uVar11 + 0x80;
-      } while ((uVar11 & 0xffffffff) < uVar10);
+        dataCacheBlockClearToZero128(uVar10 + lVar8 + 0x7f);
+        uVar10 = uVar10 + 0x80;
+      } while ((uVar10 & 0xffffffff) < uVar9);
     }
-    auVar16 = loadVectorForShiftLeft(in_r0,uVar8);
-    for (uVar10 = uVar7; uVar10 != 0; uVar10 = uVar10 - 1) {
-      uVar2 = (uint)uVar8;
-      uVar8 = uVar8 + 0x10;
-      auVar48 = vectorPermute128(*(undefined1 (*) [16])(uVar2 & 0xfffffff0),
-                                 *(undefined1 (*) [16])(uVar2 + 0xf & 0xfffffff0),auVar16);
-      *(undefined1 (*) [16])((uint)lVar15 & 0xfffffff0) = auVar48;
-      lVar15 = lVar15 + 0x10;
+    auVar15 = loadVectorForShiftLeft(in_r0,uVar6);
+    for (uVar9 = uVar5; uVar9 != 0; uVar9 = uVar9 - 1) {
+      uVar2 = (uint)uVar6;
+      uVar6 = uVar6 + 0x10;
+      auVar47 = vectorPermute128(*(undefined1 (*) [16])(uVar2 & 0xfffffff0),
+                                 *(undefined1 (*) [16])(uVar2 + 0xf & 0xfffffff0),auVar15);
+      *(undefined1 (*) [16])((uint)lVar8 & 0xfffffff0) = auVar47;
+      lVar8 = lVar8 + 0x10;
     }
-    uVar12 = uVar12 + uVar7 * -0x10;
-    if ((uVar8 & 0xf) == 0) {
-      if (0x7f < (uVar12 & 0xffffffff)) {
-        uVar13 = (uVar12 & 0xffffffff) >> 7;
+    uVar11 = uVar11 + uVar5 * -0x10;
+    if ((uVar6 & 0xf) == 0) {
+      if (0x7f < (uVar11 & 0xffffffff)) {
+        uVar12 = (uVar11 & 0xffffffff) >> 7;
         do {
-          if (0x400 < (uVar12 & 0xffffffff)) {
-            dataCacheBlockTouch(uVar8 + 0x400);
+          if (0x400 < (uVar11 & 0xffffffff)) {
+            dataCacheBlockTouch(uVar6 + 0x400);
           }
-          if (0x100 < (uVar12 & 0xffffffff)) {
-            dataCacheBlockClearToZero128(lVar15 + 0x80);
+          if (0x100 < (uVar11 & 0xffffffff)) {
+            dataCacheBlockClearToZero128(lVar8 + 0x80);
           }
-          uVar2 = (uint)uVar8;
+          uVar2 = (uint)uVar6;
           puVar3 = (undefined4 *)(uVar2 & 0xfffffff0);
-          uVar45 = puVar3[1];
-          uVar46 = puVar3[2];
-          uVar47 = puVar3[3];
-          uVar12 = uVar12 - 0x80;
+          uVar44 = puVar3[1];
+          uVar45 = puVar3[2];
+          uVar46 = puVar3[3];
+          uVar11 = uVar11 - 0x80;
           puVar4 = (undefined4 *)(uVar2 + 0x10 & 0xfffffff0);
-          uVar41 = *puVar4;
-          uVar42 = puVar4[1];
-          uVar43 = puVar4[2];
-          uVar44 = puVar4[3];
+          uVar40 = *puVar4;
+          uVar41 = puVar4[1];
+          uVar42 = puVar4[2];
+          uVar43 = puVar4[3];
           puVar4 = (undefined4 *)(uVar2 + 0x20 & 0xfffffff0);
-          uVar37 = *puVar4;
-          uVar38 = puVar4[1];
-          uVar39 = puVar4[2];
-          uVar40 = puVar4[3];
+          uVar36 = *puVar4;
+          uVar37 = puVar4[1];
+          uVar38 = puVar4[2];
+          uVar39 = puVar4[3];
           puVar4 = (undefined4 *)(uVar2 + 0x30 & 0xfffffff0);
-          uVar33 = *puVar4;
-          uVar34 = puVar4[1];
-          uVar35 = puVar4[2];
-          uVar36 = puVar4[3];
+          uVar32 = *puVar4;
+          uVar33 = puVar4[1];
+          uVar34 = puVar4[2];
+          uVar35 = puVar4[3];
           puVar4 = (undefined4 *)(uVar2 + 0x40 & 0xfffffff0);
-          uVar29 = *puVar4;
-          uVar30 = puVar4[1];
-          uVar31 = puVar4[2];
-          uVar32 = puVar4[3];
+          uVar28 = *puVar4;
+          uVar29 = puVar4[1];
+          uVar30 = puVar4[2];
+          uVar31 = puVar4[3];
           puVar4 = (undefined4 *)(uVar2 + 0x50 & 0xfffffff0);
-          uVar25 = *puVar4;
-          uVar26 = puVar4[1];
-          uVar27 = puVar4[2];
-          uVar28 = puVar4[3];
+          uVar24 = *puVar4;
+          uVar25 = puVar4[1];
+          uVar26 = puVar4[2];
+          uVar27 = puVar4[3];
           puVar4 = (undefined4 *)(uVar2 + 0x60 & 0xfffffff0);
-          uVar21 = *puVar4;
-          uVar22 = puVar4[1];
-          uVar23 = puVar4[2];
-          uVar24 = puVar4[3];
+          uVar20 = *puVar4;
+          uVar21 = puVar4[1];
+          uVar22 = puVar4[2];
+          uVar23 = puVar4[3];
           puVar4 = (undefined4 *)(uVar2 + 0x70 & 0xfffffff0);
-          uVar17 = *puVar4;
-          uVar18 = puVar4[1];
-          uVar19 = puVar4[2];
-          uVar20 = puVar4[3];
-          uVar8 = uVar8 + 0x80;
-          uVar2 = (uint)lVar15;
+          uVar16 = *puVar4;
+          uVar17 = puVar4[1];
+          uVar18 = puVar4[2];
+          uVar19 = puVar4[3];
+          uVar6 = uVar6 + 0x80;
+          uVar2 = (uint)lVar8;
           puVar4 = (undefined4 *)(uVar2 & 0xfffffff0);
           *puVar4 = *puVar3;
-          puVar4[1] = uVar45;
-          puVar4[2] = uVar46;
-          puVar4[3] = uVar47;
+          puVar4[1] = uVar44;
+          puVar4[2] = uVar45;
+          puVar4[3] = uVar46;
           puVar3 = (undefined4 *)(uVar2 + 0x10 & 0xfffffff0);
-          *puVar3 = uVar41;
-          puVar3[1] = uVar42;
-          puVar3[2] = uVar43;
-          puVar3[3] = uVar44;
+          *puVar3 = uVar40;
+          puVar3[1] = uVar41;
+          puVar3[2] = uVar42;
+          puVar3[3] = uVar43;
           puVar3 = (undefined4 *)(uVar2 + 0x20 & 0xfffffff0);
-          *puVar3 = uVar37;
-          puVar3[1] = uVar38;
-          puVar3[2] = uVar39;
-          puVar3[3] = uVar40;
+          *puVar3 = uVar36;
+          puVar3[1] = uVar37;
+          puVar3[2] = uVar38;
+          puVar3[3] = uVar39;
           puVar3 = (undefined4 *)(uVar2 + 0x30 & 0xfffffff0);
-          *puVar3 = uVar33;
-          puVar3[1] = uVar34;
-          puVar3[2] = uVar35;
-          puVar3[3] = uVar36;
+          *puVar3 = uVar32;
+          puVar3[1] = uVar33;
+          puVar3[2] = uVar34;
+          puVar3[3] = uVar35;
           puVar3 = (undefined4 *)(uVar2 + 0x40 & 0xfffffff0);
-          *puVar3 = uVar29;
-          puVar3[1] = uVar30;
-          puVar3[2] = uVar31;
-          puVar3[3] = uVar32;
+          *puVar3 = uVar28;
+          puVar3[1] = uVar29;
+          puVar3[2] = uVar30;
+          puVar3[3] = uVar31;
           puVar3 = (undefined4 *)(uVar2 + 0x50 & 0xfffffff0);
-          *puVar3 = uVar25;
-          puVar3[1] = uVar26;
-          puVar3[2] = uVar27;
-          puVar3[3] = uVar28;
+          *puVar3 = uVar24;
+          puVar3[1] = uVar25;
+          puVar3[2] = uVar26;
+          puVar3[3] = uVar27;
           puVar3 = (undefined4 *)(uVar2 + 0x60 & 0xfffffff0);
-          *puVar3 = uVar21;
-          puVar3[1] = uVar22;
-          puVar3[2] = uVar23;
-          puVar3[3] = uVar24;
+          *puVar3 = uVar20;
+          puVar3[1] = uVar21;
+          puVar3[2] = uVar22;
+          puVar3[3] = uVar23;
           puVar3 = (undefined4 *)(uVar2 + 0x70 & 0xfffffff0);
-          *puVar3 = uVar17;
-          puVar3[1] = uVar18;
-          puVar3[2] = uVar19;
-          puVar3[3] = uVar20;
-          lVar15 = lVar15 + 0x80;
-          uVar13 = uVar13 - 1;
-        } while (uVar13 != 0);
+          *puVar3 = uVar16;
+          puVar3[1] = uVar17;
+          puVar3[2] = uVar18;
+          puVar3[3] = uVar19;
+          lVar8 = lVar8 + 0x80;
+          uVar12 = uVar12 - 1;
+        } while (uVar12 != 0);
       }
     }
     else {
       CopyMisalignedCachelines();
-      lVar15 = uVar13 + lVar15;
-      uVar8 = uVar13 + uVar8;
-      uVar12 = uVar12 - uVar13;
+      lVar8 = uVar12 + lVar8;
+      uVar6 = uVar12 + uVar6;
+      uVar11 = uVar11 - uVar12;
     }
-    if (0xf < (uVar12 & 0xffffffff)) {
-      uVar13 = (uVar12 & 0xffffffff) >> 4;
+    if (0xf < (uVar11 & 0xffffffff)) {
+      uVar12 = (uVar11 & 0xffffffff) >> 4;
       do {
-        uVar2 = (uint)uVar8;
-        uVar12 = uVar12 - 0x10;
-        uVar8 = uVar8 + 0x10;
-        auVar48 = vectorPermute128(*(undefined1 (*) [16])(uVar2 & 0xfffffff0),
-                                   *(undefined1 (*) [16])(uVar2 + 0xf & 0xfffffff0),auVar16);
-        *(undefined1 (*) [16])((uint)lVar15 & 0xfffffff0) = auVar48;
-        lVar15 = lVar15 + 0x10;
-        uVar13 = uVar13 - 1;
-      } while (uVar13 != 0);
+        uVar2 = (uint)uVar6;
+        uVar11 = uVar11 - 0x10;
+        uVar6 = uVar6 + 0x10;
+        auVar47 = vectorPermute128(*(undefined1 (*) [16])(uVar2 & 0xfffffff0),
+                                   *(undefined1 (*) [16])(uVar2 + 0xf & 0xfffffff0),auVar15);
+        *(undefined1 (*) [16])((uint)lVar8 & 0xfffffff0) = auVar47;
+        lVar8 = lVar8 + 0x10;
+        uVar12 = uVar12 - 1;
+      } while (uVar12 != 0);
     }
-    if ((uVar12 & 0xffffffff) != 0) {
-      auVar16 = loadVectorForShiftLeft(uVar8,uVar12);
-      auVar16 = vectorPermute128(*(undefined1 (*) [16])((uint)uVar8 & 0xfffffff0),
+    if ((uVar11 & 0xffffffff) != 0) {
+      auVar15 = loadVectorForShiftLeft(uVar6,uVar11);
+      auVar15 = vectorPermute128(*(undefined1 (*) [16])((uint)uVar6 & 0xfffffff0),
                                  *(undefined1 (*) [16])
-                                  (((uint)uVar8 + (int)uVar12) - 1 & 0xfffffff0),auVar16);
-      storeVectorRightIndexed(auVar16,lVar15 + uVar12);
+                                  (((uint)uVar6 + (int)uVar11) - 1 & 0xfffffff0),auVar15);
+      storeVectorRightIndexed(auVar15,lVar8 + uVar11);
     }
   }
-  __restgprlr_26(lVar5);
   return;
 }
 
 
 // 825E6B68  Com_Memcpy128  (universal/com_shared.cpp:230)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void Com_Memcpy128(void *param_1,void *param_2,int param_3)
 
 {
-  void *pvVar1;
-  ulonglong uVar2;
-  ulonglong uVar3;
-  
-  uVar3 = (ulonglong)param_3;
-  uVar2 = (ulonglong)(int)param_2;
-  pvVar1 = (void *)__savegprlr_27(param_1);
-  if ((uVar3 & 0x7f) != 0) {
+  if ((param_3 & 0x7fU) != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_shared.cpp",0xe7
                     ,0,"%s");
   }
-  if ((uVar2 & 0xf) != 0) {
+  if (((uint)param_2 & 0xf) != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_shared.cpp",0xe8
                     ,0,"%s");
   }
-  if (((uint)pvVar1 & 0x7f) != 0) {
+  if (((uint)param_1 & 0x7f) != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_shared.cpp",0xe9
                     ,0,"%s");
   }
-  pvVar1 = XMemCpy128(pvVar1,(void *)uVar2,(ulong)uVar3);
-  __restgprlr_27(pvVar1);
+  XMemCpy128(param_1,param_2,param_3);
   return;
 }
 
 
 // 825E6C20  Com_Memset  (universal/com_shared.cpp:239)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void Com_Memset(void *param_1,int param_2,int param_3)
 
 {
   uint uVar1;
   undefined8 in_r0;
-  longlong lVar2;
+  ulonglong uVar2;
   ulonglong uVar3;
   ulonglong uVar4;
   longlong lVar5;
@@ -751,101 +749,96 @@ void Com_Memset(void *param_1,int param_2,int param_3)
   int iVar7;
   ulonglong uVar8;
   ulonglong uVar9;
-  ulonglong uVar10;
+  undefined1 auVar10 [16];
   undefined1 auVar11 [16];
   undefined1 auVar12 [16];
-  undefined1 auVar13 [16];
   
   uVar8 = (ulonglong)param_3;
-  uVar10 = (ulonglong)param_2;
-  lVar2 = __savegprlr_29(param_1);
-  if ((uVar8 & 0xffffffff) < 0x10) {
+  lVar6 = (longlong)(int)param_1;
+  if ((uint)param_3 < 0x10) {
     iVar7 = 0;
-    if ((uVar8 & 0xffffffff) != 0) {
+    if (param_3 != 0) {
       do {
-        *(char *)(iVar7 + (int)lVar2) = (char)uVar10;
+        *(char *)(iVar7 + (int)param_1) = (char)param_2;
         iVar7 = iVar7 + 1;
         uVar8 = uVar8 - 1;
       } while (uVar8 != 0);
     }
   }
   else {
-    auVar11 = vectorSplatImmediateSignedByte(4);
-    auVar13 = loadVectorForShiftLeft(in_r0,uVar10);
-    uVar9 = -lVar2 & 0xf;
-    auVar12 = loadVectorForShiftLeft(in_r0,(longlong)((int)uVar10 >> 4));
-    uVar4 = (ulonglong)(uint)((int)-lVar2 >> 4) & 7;
-    auVar11 = vectorShiftLeftIntegerByte(auVar12,auVar11);
-    auVar11 = (auVar13 | auVar11) >> 0x78;
-    auVar11 = auVar11 & (undefined1  [16])0xff | auVar11 << 8 | auVar11 << 0x10 | auVar11 << 0x18 |
-              auVar11 << 0x20 | auVar11 << 0x28 | auVar11 << 0x30 | auVar11 << 0x38 |
-              auVar11 << 0x40 | auVar11 << 0x48 | auVar11 << 0x50 | auVar11 << 0x58 |
-              auVar11 << 0x60 | auVar11 << 0x68 | auVar11 << 0x70 | auVar11 << 0x78;
-    lVar6 = lVar2;
+    auVar10 = vectorSplatImmediateSignedByte(4);
+    auVar12 = loadVectorForShiftLeft(in_r0,(longlong)param_2);
+    uVar9 = -lVar6 & 0xf;
+    auVar11 = loadVectorForShiftLeft(in_r0,(longlong)(param_2 >> 4));
+    uVar3 = (ulonglong)(uint)((int)-lVar6 >> 4) & 7;
+    auVar10 = vectorShiftLeftIntegerByte(auVar11,auVar10);
+    auVar10 = (auVar12 | auVar10) >> 0x78;
+    auVar10 = auVar10 & (undefined1  [16])0xff | auVar10 << 8 | auVar10 << 0x10 | auVar10 << 0x18 |
+              auVar10 << 0x20 | auVar10 << 0x28 | auVar10 << 0x30 | auVar10 << 0x38 |
+              auVar10 << 0x40 | auVar10 << 0x48 | auVar10 << 0x50 | auVar10 << 0x58 |
+              auVar10 << 0x60 | auVar10 << 0x68 | auVar10 << 0x70 | auVar10 << 0x78;
     if (uVar9 != 0) {
-      storeVectorLeftIndexed(auVar11,lVar2);
+      storeVectorLeftIndexed(auVar10,lVar6);
       uVar8 = uVar8 - uVar9;
-      lVar6 = uVar9 + lVar2;
+      lVar6 = uVar9 + lVar6;
     }
     uVar9 = (uVar8 & 0xffffffff) >> 4;
-    if (uVar9 < uVar4) {
-      uVar4 = uVar9;
+    if (uVar9 < uVar3) {
+      uVar3 = uVar9;
     }
-    uVar3 = (ulonglong)(uint)s_16;
-    for (uVar9 = uVar4; uVar9 != 0; uVar9 = uVar9 - 1) {
-      *(undefined1 (*) [16])((uint)lVar6 & 0xfffffff0) = auVar11;
-      lVar6 = uVar3 + lVar6;
+    uVar2 = (ulonglong)(uint)s_16;
+    for (uVar9 = uVar3; uVar9 != 0; uVar9 = uVar9 - 1) {
+      *(undefined1 (*) [16])((uint)lVar6 & 0xfffffff0) = auVar10;
+      lVar6 = uVar2 + lVar6;
     }
-    uVar8 = uVar8 + uVar4 * -0x10;
+    uVar8 = uVar8 + uVar3 * -0x10;
     uVar9 = (uVar8 & 0xffffffff) >> 7;
-    uVar4 = uVar9;
-    if ((uVar10 & 0xff) == 0) {
-      for (; uVar4 != 0; uVar4 = uVar4 - 1) {
+    uVar3 = uVar9;
+    if ((param_2 & 0xffU) == 0) {
+      for (; uVar3 != 0; uVar3 = uVar3 - 1) {
         dataCacheBlockClearToZero128(lVar6);
         lVar6 = lVar6 + 0x80;
       }
     }
     else {
-      uVar10 = uVar9;
       if (3 < uVar9) {
-        uVar10 = 4;
+        uVar3 = 4;
       }
       uVar4 = 0;
-      for (; uVar10 != 0; uVar10 = uVar10 - 1) {
+      for (; uVar3 != 0; uVar3 = uVar3 - 1) {
         dataCacheBlockClearToZero128((uVar4 & 0x1ffffff) * 0x80 + lVar6);
         uVar4 = uVar4 + 1;
       }
       lVar5 = 0;
-      for (uVar10 = uVar9; uVar10 != 0; uVar10 = uVar10 - 1) {
+      for (uVar3 = uVar9; uVar3 != 0; uVar3 = uVar3 - 1) {
         if ((lVar5 + 4U & 0xffffffff) < uVar9) {
           dataCacheBlockClearToZero128(lVar6 + 0x200);
         }
         uVar1 = (uint)lVar6;
-        *(undefined1 (*) [16])(uVar1 & 0xfffffff0) = auVar11;
-        *(undefined1 (*) [16])(uVar1 + 0x10 & 0xfffffff0) = auVar11;
-        *(undefined1 (*) [16])(uVar1 + 0x20 & 0xfffffff0) = auVar11;
-        *(undefined1 (*) [16])(uVar1 + 0x30 & 0xfffffff0) = auVar11;
+        *(undefined1 (*) [16])(uVar1 & 0xfffffff0) = auVar10;
+        *(undefined1 (*) [16])(uVar1 + 0x10 & 0xfffffff0) = auVar10;
+        *(undefined1 (*) [16])(uVar1 + 0x20 & 0xfffffff0) = auVar10;
+        *(undefined1 (*) [16])(uVar1 + 0x30 & 0xfffffff0) = auVar10;
         lVar5 = lVar5 + 1;
-        *(undefined1 (*) [16])(uVar1 + 0x40 & 0xfffffff0) = auVar11;
-        *(undefined1 (*) [16])(uVar1 + 0x50 & 0xfffffff0) = auVar11;
-        *(undefined1 (*) [16])(uVar1 + 0x60 & 0xfffffff0) = auVar11;
-        *(undefined1 (*) [16])(uVar1 + 0x70 & 0xfffffff0) = auVar11;
+        *(undefined1 (*) [16])(uVar1 + 0x40 & 0xfffffff0) = auVar10;
+        *(undefined1 (*) [16])(uVar1 + 0x50 & 0xfffffff0) = auVar10;
+        *(undefined1 (*) [16])(uVar1 + 0x60 & 0xfffffff0) = auVar10;
+        *(undefined1 (*) [16])(uVar1 + 0x70 & 0xfffffff0) = auVar10;
         lVar6 = lVar6 + 0x80;
       }
     }
     uVar8 = uVar8 + uVar9 * -0x80;
     if (0xf < (uVar8 & 0xffffffff)) {
-      uVar10 = (uVar8 & 0xffffffff) >> 4;
+      uVar9 = (uVar8 & 0xffffffff) >> 4;
       do {
-        *(undefined1 (*) [16])((uint)lVar6 & 0xfffffff0) = auVar11;
-        lVar6 = uVar3 + lVar6;
+        *(undefined1 (*) [16])((uint)lVar6 & 0xfffffff0) = auVar10;
+        lVar6 = uVar2 + lVar6;
         uVar8 = uVar8 - 0x10;
-        uVar10 = uVar10 - 1;
-      } while (uVar10 != 0);
+        uVar9 = uVar9 - 1;
+      } while (uVar9 != 0);
     }
-    storeVectorRightIndexed(auVar11,lVar6 + uVar8);
+    storeVectorRightIndexed(auVar10,lVar6 + uVar8);
   }
-  __restgprlr_29(lVar2);
   return;
 }
 

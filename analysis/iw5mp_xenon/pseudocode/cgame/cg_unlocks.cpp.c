@@ -2,352 +2,336 @@
 
 // 823079D8  SetNew  (cgame/cg_unlocks.cpp:35)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 bool SetNew(StructuredDataBuffer *param_1,char *param_2,char *param_3,char *param_4,int param_5)
 
 {
   bool bVar1;
-  StructuredDataBuffer *pSVar2;
-  StructuredDataDef *pSVar3;
-  LookupState LVar4;
-  undefined1 uVar7;
-  LookupResultDataType LVar5;
-  StructuredData_SetResult SVar6;
+  StructuredDataDef *pSVar2;
+  LookupState LVar3;
+  LookupResultDataType LVar4;
+  StructuredData_SetResult SVar5;
   StructuredDataLookup aSStack_40 [4];
   
-  pSVar2 = (StructuredDataBuffer *)__savegprlr_27(param_1);
   *param_4 = '\0';
-  pSVar3 = StructuredDataDef_GetAsset("mp/playerdata.def",0x2ffc);
-  StructuredData_InitializeLookup(pSVar3,aSStack_40);
+  pSVar2 = StructuredDataDef_GetAsset("mp/playerdata.def",0x2ffc);
+  StructuredData_InitializeLookup(pSVar2,aSStack_40);
   StructuredData_LookupWithString(aSStack_40,param_2);
-  LVar4 = StructuredData_GetLookupState(aSStack_40);
-  if (LVar4 == LOOKUP_IN_PROGRESS) {
+  LVar3 = StructuredData_GetLookupState(aSStack_40);
+  if (LVar3 == LOOKUP_IN_PROGRESS) {
     StructuredData_LookupWithString(aSStack_40,param_3);
-    LVar4 = StructuredData_GetLookupState(aSStack_40);
-    if (LVar4 == LOOKUP_ERROR) {
+    LVar3 = StructuredData_GetLookupState(aSStack_40);
+    if (LVar3 == LOOKUP_ERROR) {
       StructuredData_GetLookupError(aSStack_40);
       Com_sprintf(param_4,param_5,
                   "Could not look up \"%s\" entry of \"%s\" array in playerdata.def: %s");
-      uVar7 = __restgprlr_27(0);
-      return (bool)uVar7;
+      return false;
     }
-    LVar4 = StructuredData_GetLookupState(aSStack_40);
-    if ((LVar4 == LOOKUP_FINISHED) &&
-       (LVar5 = StructuredData_GetLookupResultType(aSStack_40), LVar5 == LOOKUP_RESULT_BOOL)) {
-      SVar6 = StructuredData_SetBool(aSStack_40,pSVar2,true);
-      if ((SVar6 == SETRESULT_SUCCESS_CHANGED) ||
-         (bVar1 = false, SVar6 == SETRESULT_SUCCESS_NOCHANGE)) {
+    LVar3 = StructuredData_GetLookupState(aSStack_40);
+    if ((LVar3 == LOOKUP_FINISHED) &&
+       (LVar4 = StructuredData_GetLookupResultType(aSStack_40), LVar4 == LOOKUP_RESULT_BOOL)) {
+      SVar5 = StructuredData_SetBool(aSStack_40,param_1,true);
+      if ((SVar5 == SETRESULT_SUCCESS_CHANGED) ||
+         (bVar1 = false, SVar5 == SETRESULT_SUCCESS_NOCHANGE)) {
         bVar1 = true;
       }
       if (!bVar1) {
         Com_sprintf(param_4,param_5,"Could not set element of \"%s\" playerdata array to true: %s");
-        uVar7 = __restgprlr_27(0);
-        return (bool)uVar7;
+        return false;
       }
-      uVar7 = __restgprlr_27(SVar6 == SETRESULT_SUCCESS_CHANGED);
-      return (bool)uVar7;
+      return SVar5 == SETRESULT_SUCCESS_CHANGED;
     }
   }
   Com_sprintf(param_4,param_5,"Expected \"%s\" to be an array of bools in playerdata.def");
-  uVar7 = __restgprlr_27(0);
-  return (bool)uVar7;
+  return false;
 }
 
 
 // 82307B48  SetNew_LocalClient  (cgame/cg_unlocks.cpp:78)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void SetNew_LocalClient(LocalClientNum_t param_1,char *param_2,char *param_3)
 
 {
-  LocalClientNum_t LVar1;
-  int iVar2;
-  bool bVar3;
+  int iVar1;
+  bool bVar2;
   StructuredDataBuffer aSStack_430 [2];
   char local_420 [1056];
   
-  LVar1 = __savegprlr_29(param_1);
-  iVar2 = CL_ControllerIndexFromClientNum(LVar1);
-  bVar3 = LiveStorage_GetPlayerUnlockDataBuffer(aSStack_430,iVar2);
-  if (!bVar3) {
+  iVar1 = CL_ControllerIndexFromClientNum(param_1);
+  bVar2 = LiveStorage_GetPlayerUnlockDataBuffer(aSStack_430,iVar1);
+  if (!bVar2) {
     Com_Printf(0xe,"Cannot set item as new: we have not downloaded player stats\n");
-    __restgprlr_29();
     return;
   }
-  bVar3 = SetNew(aSStack_430,param_2,param_3,local_420,0x400);
+  bVar2 = SetNew(aSStack_430,param_2,param_3,local_420,0x400);
   if (local_420[0] != '\0') {
     Com_Error(ERR_DROP,local_420);
   }
-  if (bVar3) {
-    iVar2 = CL_ControllerIndexFromClientNum(LVar1);
-    LiveStorage_StatsWriteNeeded(iVar2);
+  if (bVar2) {
+    iVar1 = CL_ControllerIndexFromClientNum(param_1);
+    LiveStorage_StatsWriteNeeded(iVar1);
   }
-  __restgprlr_29();
   return;
 }
 
 
 // 82307BE8  SetWeaponPartNew  (cgame/cg_unlocks.cpp:99)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 bool SetWeaponPartNew(StructuredDataBuffer *param_1,char *param_2,char *param_3,char *param_4,
                      char *param_5,int param_6)
 
 {
   bool bVar1;
-  StructuredDataBuffer *pSVar2;
-  StructuredDataDef *pSVar3;
-  LookupState LVar4;
-  undefined1 uVar7;
-  LookupResultDataType LVar5;
-  StructuredData_SetResult SVar6;
+  StructuredDataDef *pSVar2;
+  LookupState LVar3;
+  LookupResultDataType LVar4;
+  StructuredData_SetResult SVar5;
   StructuredDataLookup aSStack_50 [5];
   
-  pSVar2 = (StructuredDataBuffer *)__savegprlr_26(param_1);
   *param_5 = '\0';
-  pSVar3 = StructuredDataDef_GetAsset("mp/playerdata.def",0x2ffc);
-  StructuredData_InitializeLookup(pSVar3,aSStack_50);
+  pSVar2 = StructuredDataDef_GetAsset("mp/playerdata.def",0x2ffc);
+  StructuredData_InitializeLookup(pSVar2,aSStack_50);
   StructuredData_LookupWithString(aSStack_50,param_2);
-  LVar4 = StructuredData_GetLookupState(aSStack_50);
-  if (LVar4 == LOOKUP_IN_PROGRESS) {
+  LVar3 = StructuredData_GetLookupState(aSStack_50);
+  if (LVar3 == LOOKUP_IN_PROGRESS) {
     StructuredData_LookupWithString(aSStack_50,param_3);
-    LVar4 = StructuredData_GetLookupState(aSStack_50);
-    if (LVar4 == LOOKUP_ERROR) {
+    LVar3 = StructuredData_GetLookupState(aSStack_50);
+    if (LVar3 == LOOKUP_ERROR) {
 LAB_82307c68:
       StructuredData_GetLookupError(aSStack_50);
       Com_sprintf(param_5,param_6,
                   "Could not look up \"%s\" \"%s\" entry of \"%s\" array in playerdata.def: %s");
-      uVar7 = __restgprlr_26(0);
-      return (bool)uVar7;
+      return false;
     }
-    LVar4 = StructuredData_GetLookupState(aSStack_50);
-    if (LVar4 == LOOKUP_IN_PROGRESS) {
+    LVar3 = StructuredData_GetLookupState(aSStack_50);
+    if (LVar3 == LOOKUP_IN_PROGRESS) {
       StructuredData_LookupWithString(aSStack_50,param_4);
-      LVar4 = StructuredData_GetLookupState(aSStack_50);
-      if (LVar4 == LOOKUP_ERROR) goto LAB_82307c68;
-      LVar4 = StructuredData_GetLookupState(aSStack_50);
-      if ((LVar4 == LOOKUP_FINISHED) &&
-         (LVar5 = StructuredData_GetLookupResultType(aSStack_50), LVar5 == LOOKUP_RESULT_BOOL)) {
-        SVar6 = StructuredData_SetBool(aSStack_50,pSVar2,true);
-        if ((SVar6 == SETRESULT_SUCCESS_CHANGED) ||
-           (bVar1 = false, SVar6 == SETRESULT_SUCCESS_NOCHANGE)) {
+      LVar3 = StructuredData_GetLookupState(aSStack_50);
+      if (LVar3 == LOOKUP_ERROR) goto LAB_82307c68;
+      LVar3 = StructuredData_GetLookupState(aSStack_50);
+      if ((LVar3 == LOOKUP_FINISHED) &&
+         (LVar4 = StructuredData_GetLookupResultType(aSStack_50), LVar4 == LOOKUP_RESULT_BOOL)) {
+        SVar5 = StructuredData_SetBool(aSStack_50,param_1,true);
+        if ((SVar5 == SETRESULT_SUCCESS_CHANGED) ||
+           (bVar1 = false, SVar5 == SETRESULT_SUCCESS_NOCHANGE)) {
           bVar1 = true;
         }
         if (!bVar1) {
           Com_sprintf(param_5,param_6,"Could not set element of \"%s\" playerdata array to true: %s"
                      );
-          uVar7 = __restgprlr_26(0);
-          return (bool)uVar7;
+          return false;
         }
-        uVar7 = __restgprlr_26(SVar6 == SETRESULT_SUCCESS_CHANGED);
-        return (bool)uVar7;
+        return SVar5 == SETRESULT_SUCCESS_CHANGED;
       }
     }
   }
   Com_sprintf(param_5,param_6,
               "Expected \"%s\" to be an array of an array of bools in playerdata.def");
-  uVar7 = __restgprlr_26(0);
-  return (bool)uVar7;
+  return false;
 }
 
 
 // 82307D90  SetWeaponPartNew_FullName  (cgame/cg_unlocks.cpp:153)
+
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 
 bool SetWeaponPartNew_FullName
                (StructuredDataBuffer *param_1,char *param_2,char *param_3,char *param_4,int param_5)
 
 {
   char cVar1;
-  StructuredDataBuffer *pSVar2;
-  int iVar3;
-  bool bVar4;
-  undefined1 uVar5;
-  char *pcVar6;
-  int iVar7;
+  int iVar2;
+  bool bVar3;
+  char *pcVar4;
+  int iVar5;
   char acStack_60 [96];
   
-  pSVar2 = (StructuredDataBuffer *)__savegprlr_25(param_1);
   cVar1 = *param_3;
-  iVar7 = 0;
-  while ((cVar1 != '\0' && (iVar3 = isspace((int)param_3[iVar7]), iVar3 == 0))) {
-    iVar7 = iVar7 + 1;
-    cVar1 = param_3[iVar7];
+  iVar5 = 0;
+  while ((cVar1 != '\0' && (iVar2 = isspace((int)param_3[iVar5]), iVar2 == 0))) {
+    iVar5 = iVar5 + 1;
+    cVar1 = param_3[iVar5];
   }
-  iVar3 = iVar7 + 1;
-  if (0x20 < iVar3) {
-    iVar3 = 0x20;
+  iVar2 = iVar5 + 1;
+  if (0x20 < iVar2) {
+    iVar2 = 0x20;
   }
-  I_strncpyz(acStack_60,param_3,iVar3);
-  pcVar6 = param_3 + iVar7;
-  iVar3 = isspace((int)param_3[iVar7]);
-  while (iVar3 != 0) {
-    iVar7 = iVar7 + 1;
-    pcVar6 = param_3 + iVar7;
-    iVar3 = isspace((int)*pcVar6);
+  I_strncpyz(acStack_60,param_3,iVar2);
+  pcVar4 = param_3 + iVar5;
+  iVar2 = isspace((int)param_3[iVar5]);
+  while (iVar2 != 0) {
+    iVar5 = iVar5 + 1;
+    pcVar4 = param_3 + iVar5;
+    iVar2 = isspace((int)*pcVar4);
   }
-  bVar4 = SetWeaponPartNew(pSVar2,param_2,acStack_60,pcVar6,param_4,param_5);
-  uVar5 = __restgprlr_25(bVar4);
-  return (bool)uVar5;
+  bVar3 = SetWeaponPartNew(param_1,param_2,acStack_60,pcVar4,param_4,param_5);
+  return bVar3;
 }
 
 
 // 82307E58  SetWeaponPartNew_LocalClient  (cgame/cg_unlocks.cpp:176)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void SetWeaponPartNew_LocalClient(LocalClientNum_t param_1,char *param_2,char *param_3)
 
 {
-  LocalClientNum_t LVar1;
-  int iVar2;
-  bool bVar3;
+  int iVar1;
+  bool bVar2;
   StructuredDataBuffer aSStack_430 [2];
   char local_420 [1056];
   
-  LVar1 = __savegprlr_29(param_1);
-  iVar2 = CL_ControllerIndexFromClientNum(LVar1);
-  bVar3 = LiveStorage_GetPlayerUnlockDataBuffer(aSStack_430,iVar2);
-  if (!bVar3) {
+  iVar1 = CL_ControllerIndexFromClientNum(param_1);
+  bVar2 = LiveStorage_GetPlayerUnlockDataBuffer(aSStack_430,iVar1);
+  if (!bVar2) {
     Com_Printf(0xe,"Cannot set item as new: we have not downloaded player stats\n");
-    __restgprlr_29();
     return;
   }
-  bVar3 = SetWeaponPartNew_FullName(aSStack_430,param_2,param_3,local_420,0x400);
+  bVar2 = SetWeaponPartNew_FullName(aSStack_430,param_2,param_3,local_420,0x400);
   if (local_420[0] != '\0') {
     Com_Error(ERR_DROP,local_420);
   }
-  if (bVar3) {
-    iVar2 = CL_ControllerIndexFromClientNum(LVar1);
-    LiveStorage_StatsWriteNeeded(iVar2);
+  if (bVar2) {
+    iVar1 = CL_ControllerIndexFromClientNum(param_1);
+    LiveStorage_StatsWriteNeeded(iVar1);
   }
-  __restgprlr_29();
   return;
 }
 
 
 // 82307EF8  GetChallengeTier  (cgame/cg_unlocks.cpp:198)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 int GetChallengeTier(char *param_1,char *param_2,int param_3)
 
 {
   char cVar1;
-  char *pcVar3;
-  int iVar4;
+  int iVar3;
   ulonglong uVar2;
-  char *pcVar5;
+  char *pcVar4;
+  int iVar5;
   int iVar6;
-  int iVar7;
   StringTable *local_40;
   StringTable *local_3c [15];
   
-  pcVar3 = (char *)__savegprlr_26(param_1);
-  iVar4 = I_strncmp(pcVar3,"tier_",5);
-  if (iVar4 == 0) {
-    cVar1 = pcVar3[5];
-    iVar4 = 5;
+  iVar3 = I_strncmp(param_1,"tier_",5);
+  if (iVar3 == 0) {
+    cVar1 = param_1[5];
+    iVar6 = 5;
+    iVar3 = 0;
     uVar2 = 0;
     if (cVar1 != '\0') {
-      while (cVar1 != '_') {
-        if (5 < iVar4) {
+      while( true ) {
+        iVar3 = (int)uVar2;
+        if (cVar1 == '_') break;
+        if (5 < iVar6) {
           uVar2 = (uVar2 + (uVar2 & 0x3fffffff) * 4 & 0x7fffffff) << 1;
         }
-        iVar4 = iVar4 + 1;
+        iVar6 = iVar6 + 1;
         uVar2 = ((longlong)cVar1 + uVar2) - 0x30;
-        cVar1 = pcVar3[iVar4];
+        cVar1 = param_1[iVar6];
         if (cVar1 == '\0') {
-          iVar4 = __restgprlr_26();
-          return iVar4;
+          return (int)uVar2;
         }
       }
     }
   }
   else {
     StringTable_GetAsset("mp/challengeTable.csv",&local_40);
-    iVar4 = StringTable_GetRowCount(local_40);
-    iVar7 = 0;
-    if (0 < iVar4) {
+    iVar3 = StringTable_GetRowCount(local_40);
+    iVar6 = 0;
+    if (0 < iVar3) {
       do {
-        pcVar5 = StringTable_GetColumnValueForRow(local_40,iVar7,0);
-        iVar6 = atoi(pcVar5);
-        pcVar5 = StringTable_GetColumnValueForRow(local_40,iVar7,4);
-        if (*pcVar5 != '\0') {
-          StringTable_GetAsset(pcVar5,local_3c);
-          pcVar5 = StringTable_Lookup(local_3c[0],0,pcVar3,0);
-          if (*pcVar5 != '\0') {
-            iVar4 = __restgprlr_26(iVar6);
-            return iVar4;
+        pcVar4 = StringTable_GetColumnValueForRow(local_40,iVar6,0);
+        iVar5 = atoi(pcVar4);
+        pcVar4 = StringTable_GetColumnValueForRow(local_40,iVar6,4);
+        if (*pcVar4 != '\0') {
+          StringTable_GetAsset(pcVar4,local_3c);
+          pcVar4 = StringTable_Lookup(local_3c[0],0,param_1,0);
+          if (*pcVar4 != '\0') {
+            return iVar5;
           }
         }
-        iVar7 = iVar7 + 1;
-      } while (iVar7 < iVar4);
+        iVar6 = iVar6 + 1;
+      } while (iVar6 < iVar3);
     }
     Com_sprintf(param_2,param_3,"Could not determine challenge tier for challenge \"%s\"\n");
-    uVar2 = 0;
+    iVar3 = 0;
   }
-  iVar4 = __restgprlr_26(uVar2);
-  return iVar4;
+  return iVar3;
 }
 
 
 // 82308040  SetChallengeTierNew  (cgame/cg_unlocks.cpp:245)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 bool SetChallengeTierNew(StructuredDataBuffer *param_1,char *param_2,char *param_3,int param_4)
 
 {
   bool bVar1;
-  StructuredDataBuffer *pSVar2;
-  int iVar3;
-  StructuredDataDef *pSVar4;
-  LookupState LVar5;
-  undefined1 uVar8;
-  LookupResultDataType LVar6;
-  StructuredData_SetResult SVar7;
+  int iVar2;
+  StructuredDataDef *pSVar3;
+  LookupState LVar4;
+  LookupResultDataType LVar5;
+  StructuredData_SetResult SVar6;
   StructuredDataLookup aSStack_40 [4];
   
-  pSVar2 = (StructuredDataBuffer *)__savegprlr_27(param_1);
   *param_3 = '\0';
-  iVar3 = GetChallengeTier(param_2,param_3,param_4);
+  iVar2 = GetChallengeTier(param_2,param_3,param_4);
   if (*param_3 == '\0') {
-    if (pSVar2 != (StructuredDataBuffer *)0x0) {
+    if (param_1 != (StructuredDataBuffer *)0x0) {
       Com_Printf(0xe,"Marking challenge tier %i as new because \"%s\" was unlocked\n");
     }
-    pSVar4 = StructuredDataDef_GetAsset("mp/playerdata.def",0x2ffc);
-    StructuredData_InitializeLookup(pSVar4,aSStack_40);
+    pSVar3 = StructuredDataDef_GetAsset("mp/playerdata.def",0x2ffc);
+    StructuredData_InitializeLookup(pSVar3,aSStack_40);
     StructuredData_LookupWithString(aSStack_40,"challengeTierNew");
-    LVar5 = StructuredData_GetLookupState(aSStack_40);
-    if (LVar5 == LOOKUP_IN_PROGRESS) {
-      StructuredData_LookupWithInt(aSStack_40,iVar3);
-      LVar5 = StructuredData_GetLookupState(aSStack_40);
-      if (LVar5 == LOOKUP_ERROR) {
+    LVar4 = StructuredData_GetLookupState(aSStack_40);
+    if (LVar4 == LOOKUP_IN_PROGRESS) {
+      StructuredData_LookupWithInt(aSStack_40,iVar2);
+      LVar4 = StructuredData_GetLookupState(aSStack_40);
+      if (LVar4 == LOOKUP_ERROR) {
         StructuredData_GetLookupError(aSStack_40);
         Com_sprintf(param_3,param_4,
                     "Could not look up entry %i of \"challengeTierNew\" array in playerdata.def: %s"
                    );
-        uVar8 = __restgprlr_27(0);
-        return (bool)uVar8;
+        return false;
       }
-      LVar5 = StructuredData_GetLookupState(aSStack_40);
-      if ((LVar5 == LOOKUP_FINISHED) &&
-         (LVar6 = StructuredData_GetLookupResultType(aSStack_40), LVar6 == LOOKUP_RESULT_BOOL)) {
-        SVar7 = StructuredData_SetBool(aSStack_40,pSVar2,true);
-        if ((SVar7 == SETRESULT_SUCCESS_CHANGED) ||
-           (bVar1 = false, SVar7 == SETRESULT_SUCCESS_NOCHANGE)) {
+      LVar4 = StructuredData_GetLookupState(aSStack_40);
+      if ((LVar4 == LOOKUP_FINISHED) &&
+         (LVar5 = StructuredData_GetLookupResultType(aSStack_40), LVar5 == LOOKUP_RESULT_BOOL)) {
+        SVar6 = StructuredData_SetBool(aSStack_40,param_1,true);
+        if ((SVar6 == SETRESULT_SUCCESS_CHANGED) ||
+           (bVar1 = false, SVar6 == SETRESULT_SUCCESS_NOCHANGE)) {
           bVar1 = true;
         }
         if (!bVar1) {
           Com_sprintf(param_3,param_4,
                       "Could not set element of \"challengeTierNew\" playerdata array to true: %s");
-          uVar8 = __restgprlr_27(0);
-          return (bool)uVar8;
+          return false;
         }
-        uVar8 = __restgprlr_27(SVar7 == SETRESULT_SUCCESS_CHANGED);
-        return (bool)uVar8;
+        return SVar6 == SETRESULT_SUCCESS_CHANGED;
       }
     }
     Com_sprintf(param_3,param_4,
                 "Expected \"challengeTierNew\" to be an array of bools in playerdata.def");
   }
-  uVar8 = __restgprlr_27(0);
-  return (bool)uVar8;
+  return false;
 }
 
 
@@ -384,42 +368,40 @@ void SetChallengeTierNew_LocalClient(LocalClientNum_t param_1,char *param_2)
 
 // 82308298  MarkItemForceUnlocked  (cgame/cg_unlocks.cpp:316)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void MarkItemForceUnlocked
                (LocalClientNum_t param_1,char *param_2,char *param_3,char *param_4,int param_5)
 
 {
-  LocalClientNum_t LVar1;
-  int iVar2;
+  int iVar1;
   
-  LVar1 = __savegprlr_28(param_1);
-  iVar2 = CL_ControllerIndexFromClientNum(LVar1);
-  LiveStorage_SetPlayerCardItemFieldByName(iVar2,param_3,param_2,param_4,param_5,true);
-  __restgprlr_28();
+  iVar1 = CL_ControllerIndexFromClientNum(param_1);
+  LiveStorage_SetPlayerCardItemFieldByName(iVar1,param_3,param_2,param_4,param_5,true);
   return;
 }
 
 
 // 823082D8  MarkProfileItem  (cgame/cg_unlocks.cpp:329)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void MarkProfileItem(LocalClientNum_t param_1,char *param_2,char *param_3,char *param_4,int param_5)
 
 {
-  LocalClientNum_t LVar1;
-  int iVar2;
-  StatsSource SVar3;
-  int iVar4;
+  int iVar1;
+  StatsSource SVar2;
+  int iVar3;
   StringTable *local_40 [16];
   
-  LVar1 = __savegprlr_26(param_1);
-  iVar2 = CL_ControllerIndexFromClientNum(LVar1);
-  SVar3 = LiveStorage_GetActiveStatsSource(iVar2);
-  if (SVar3 != STATS_ONLINE) {
-    SetNew_LocalClient(LVar1,"featureNew",param_4);
-    __restgprlr_26();
+  iVar1 = CL_ControllerIndexFromClientNum(param_1);
+  SVar2 = LiveStorage_GetActiveStatsSource(iVar1);
+  if (SVar2 != STATS_ONLINE) {
+    SetNew_LocalClient(param_1,"featureNew",param_4);
     return;
   }
   StringTable_GetAsset(param_2,local_40);
@@ -427,153 +409,147 @@ void MarkProfileItem(LocalClientNum_t param_1,char *param_2,char *param_3,char *
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_unlocks.cpp",0x15a,0,
                     "%s");
   }
-  iVar4 = StringTable_LookupRowNumForValue(local_40[0],param_5,param_4);
-  if (-1 < iVar4) {
-    GamerProfile_SetBit(iVar2,iVar4,param_3);
+  iVar3 = StringTable_LookupRowNumForValue(local_40[0],param_5,param_4);
+  if (-1 < iVar3) {
+    GamerProfile_SetBit(iVar1,iVar3,param_3);
   }
-  __restgprlr_26();
   return;
 }
 
 
 // 82308398  CheckValidItem  (cgame/cg_unlocks.cpp:358)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
+
 bool CheckValidItem(StringTable *param_1,int param_2,int param_3)
 
 {
   char cVar1;
   char cVar2;
-  StringTable *pSVar3;
+  char *pcVar3;
   char *pcVar4;
   char *pcVar5;
-  undefined1 uVar6;
-  char *pcVar7;
-  char *pcVar8;
-  bool bVar9;
-  longlong lVar10;
-  int iVar11;
+  char *pcVar6;
+  bool bVar7;
   char local_440 [1088];
   
-  lVar10 = (longlong)param_2;
-  pSVar3 = (StringTable *)__savegprlr_25(param_1);
-  pcVar4 = StringTable_GetColumnValueForRow(pSVar3,(int)lVar10,0);
-  pcVar5 = StringTable_GetColumnValueForRow(pSVar3,(int)lVar10,1);
-  pcVar7 = "feature";
+  pcVar3 = StringTable_GetColumnValueForRow(param_1,param_2,0);
+  pcVar4 = StringTable_GetColumnValueForRow(param_1,param_2,1);
+  pcVar5 = "feature";
   local_440[0] = '\0';
-  pcVar8 = pcVar5;
+  pcVar6 = pcVar4;
   do {
-    cVar1 = *pcVar8;
-    cVar2 = *pcVar7;
+    cVar1 = *pcVar6;
+    cVar2 = *pcVar5;
     if (cVar1 == '\0') break;
-    pcVar8 = pcVar8 + 1;
-    pcVar7 = pcVar7 + 1;
+    pcVar6 = pcVar6 + 1;
+    pcVar5 = pcVar5 + 1;
   } while (cVar1 == cVar2);
   if (cVar1 == cVar2) {
-    SetNew((StructuredDataBuffer *)0x0,"featureNew",pcVar4,local_440,0x400);
+    SetNew((StructuredDataBuffer *)0x0,"featureNew",pcVar3,local_440,0x400);
   }
   else {
-    pcVar7 = "weapon";
-    pcVar8 = pcVar5;
+    pcVar5 = "weapon";
+    pcVar6 = pcVar4;
     do {
-      cVar1 = *pcVar8;
-      cVar2 = *pcVar7;
+      cVar1 = *pcVar6;
+      cVar2 = *pcVar5;
       if (cVar1 == '\0') break;
-      pcVar8 = pcVar8 + 1;
-      pcVar7 = pcVar7 + 1;
+      pcVar6 = pcVar6 + 1;
+      pcVar5 = pcVar5 + 1;
     } while (cVar1 == cVar2);
     if (cVar1 == cVar2) {
-      SetNew((StructuredDataBuffer *)0x0,"weaponNew",pcVar4,local_440,0x400);
+      SetNew((StructuredDataBuffer *)0x0,"weaponNew",pcVar3,local_440,0x400);
     }
     else {
-      pcVar7 = "perk";
-      pcVar8 = pcVar5;
+      pcVar5 = "perk";
+      pcVar6 = pcVar4;
       do {
-        cVar1 = *pcVar8;
-        cVar2 = *pcVar7;
+        cVar1 = *pcVar6;
+        cVar2 = *pcVar5;
         if (cVar1 == '\0') break;
-        pcVar8 = pcVar8 + 1;
-        pcVar7 = pcVar7 + 1;
+        pcVar6 = pcVar6 + 1;
+        pcVar5 = pcVar5 + 1;
       } while (cVar1 == cVar2);
       if (cVar1 == cVar2) {
-        SetNew((StructuredDataBuffer *)0x0,"perkNew",pcVar4,local_440,0x400);
+        SetNew((StructuredDataBuffer *)0x0,"perkNew",pcVar3,local_440,0x400);
       }
       else {
-        pcVar7 = "challenge";
-        pcVar8 = pcVar5;
+        pcVar5 = "challenge";
+        pcVar6 = pcVar4;
         do {
-          cVar1 = *pcVar8;
-          cVar2 = *pcVar7;
+          cVar1 = *pcVar6;
+          cVar2 = *pcVar5;
           if (cVar1 == '\0') break;
-          pcVar8 = pcVar8 + 1;
-          pcVar7 = pcVar7 + 1;
+          pcVar6 = pcVar6 + 1;
+          pcVar5 = pcVar5 + 1;
         } while (cVar1 == cVar2);
         if (cVar1 == cVar2) {
-          SetChallengeTierNew((StructuredDataBuffer *)0x0,pcVar4,local_440,0x400);
+          SetChallengeTierNew((StructuredDataBuffer *)0x0,pcVar3,local_440,0x400);
         }
         else {
-          pcVar7 = "weaponAttachment";
-          pcVar8 = pcVar5;
+          pcVar5 = "weaponAttachment";
+          pcVar6 = pcVar4;
           do {
-            cVar1 = *pcVar8;
-            cVar2 = *pcVar7;
+            cVar1 = *pcVar6;
+            cVar2 = *pcVar5;
             if (cVar1 == '\0') break;
-            pcVar8 = pcVar8 + 1;
-            pcVar7 = pcVar7 + 1;
+            pcVar6 = pcVar6 + 1;
+            pcVar5 = pcVar5 + 1;
           } while (cVar1 == cVar2);
           if (cVar1 == cVar2) {
-            pcVar8 = "attachmentNew";
+            pcVar6 = "attachmentNew";
           }
           else {
-            pcVar8 = "weaponCamo";
+            pcVar6 = "weaponCamo";
             do {
-              cVar1 = *pcVar5;
-              cVar2 = *pcVar8;
+              cVar1 = *pcVar4;
+              cVar2 = *pcVar6;
               if (cVar1 == '\0') break;
-              pcVar5 = pcVar5 + 1;
-              pcVar8 = pcVar8 + 1;
+              pcVar4 = pcVar4 + 1;
+              pcVar6 = pcVar6 + 1;
             } while (cVar1 == cVar2);
             if (cVar1 != cVar2) goto LAB_823085c4;
-            pcVar8 = "camoNew";
+            pcVar6 = "camoNew";
           }
-          SetWeaponPartNew_FullName((StructuredDataBuffer *)0x0,pcVar8,pcVar4,local_440,0x400);
+          SetWeaponPartNew_FullName((StructuredDataBuffer *)0x0,pcVar6,pcVar3,local_440,0x400);
         }
       }
     }
   }
 LAB_823085c4:
-  bVar9 = local_440[0] == '\0';
-  if (!bVar9) {
+  bVar7 = local_440[0] == '\0';
+  if (!bVar7) {
     Com_PrintError(0xe,"Cannot set unlockable \"%s\" (row %i of mp/unlocktable.csv) as new: %s\n");
   }
-  lVar10 = lVar10 + 1;
-  iVar11 = (int)lVar10;
   do {
-    if (param_3 <= iVar11) {
-      uVar6 = __restgprlr_25(bVar9);
-      return (bool)uVar6;
+    param_2 = param_2 + 1;
+    if (param_3 <= param_2) {
+      return bVar7;
     }
-    pcVar5 = StringTable_GetColumnValueForRow(pSVar3,(int)lVar10,0);
-    pcVar8 = pcVar4;
+    pcVar4 = StringTable_GetColumnValueForRow(param_1,param_2,0);
+    pcVar6 = pcVar3;
     do {
-      cVar1 = *pcVar8;
-      cVar2 = *pcVar5;
+      cVar1 = *pcVar6;
+      cVar2 = *pcVar4;
       if (cVar1 == '\0') break;
-      pcVar8 = pcVar8 + 1;
-      pcVar5 = pcVar5 + 1;
+      pcVar6 = pcVar6 + 1;
+      pcVar4 = pcVar4 + 1;
     } while (cVar1 == cVar2);
     if (cVar1 == cVar2) {
       Com_PrintError(0xe,
                      "Unlockable \"%s\" (row %i of mp/unlocktable.csv) is duplicated in row %i\n");
-      bVar9 = false;
+      bVar7 = false;
     }
-    lVar10 = lVar10 + 1;
-    iVar11 = (int)lVar10;
   } while( true );
 }
 
 
 // 82308680  CG_CheckForUnlockErrors  (cgame/cg_unlocks.cpp:413)
 
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void CG_CheckForUnlockErrors(void)
@@ -595,7 +571,6 @@ void CG_CheckForUnlockErrors(void)
   char *local_4a4;
   char local_4a0 [1184];
   
-  __savegprlr();
   StringTable_GetAsset("mp/unlocktable.csv",&local_4a8);
   iVar6 = StringTable_GetRowCount(local_4a8);
   if (0xa00 < iVar6) {
@@ -723,72 +698,72 @@ LAB_82308950:
               "Errors were found in mp/unlocktable.csv. See console.\n (To see errors from all channels, make sure Remote Console > Show Channels is checked in IWLauncher)"
              );
   }
-  __restgprlr();
   return;
 }
 
 
 // 82308A48  CG_InitItemsUnlocked  (cgame/cg_unlocks.cpp:446)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void CG_InitItemsUnlocked(LocalClientNum_t param_1)
 
 {
-  LocalClientNum_t LVar1;
-  int iVar2;
-  StatsSource SVar3;
-  bool bVar4;
-  uint uVar5;
+  int iVar1;
+  StatsSource SVar2;
+  bool bVar3;
+  uint uVar4;
   StringTable *local_40 [2];
   StructuredDataBuffer local_38 [7];
   
-  LVar1 = __savegprlr_27(param_1);
   CG_CheckForUnlockErrors();
-  if (LOCAL_CLIENT_3 < LVar1) {
+  if (LOCAL_CLIENT_3 < param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\../client_mp/client_mp.h"
                     ,0x47f,0,
                     "localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)");
   }
   memset();
-  uVar5 = 0;
-  clientUIActives[LVar1].itemsUnlockedLocalClientNum = LVar1;
-  clientUIActives[LVar1].itemsUnlockedLastGameDirty = true;
-  clientUIActives[LVar1].itemsUnlockedLastGameCount = 0;
-  clientUIActives[LVar1].itemsUnlockedInited = true;
-  iVar2 = CL_ControllerIndexFromClientNum(LVar1);
-  clientUIActives[LVar1].itemsUnlockedControllerIndex = iVar2;
-  LiveStorage_GetPlayerUnlockDataBuffer(local_38,iVar2);
-  iVar2 = clientUIActives[LVar1].itemsUnlockedControllerIndex;
-  clientUIActives[LVar1].itemsUnlockedBuffer = local_38[0].data;
-  SVar3 = LiveStorage_GetActiveStatsSource(iVar2);
-  clientUIActives[LVar1].itemsUnlockedStatsSource = SVar3;
-  bVar4 = LiveStorage_PersistentDataEnabled();
-  if (bVar4) {
+  uVar4 = 0;
+  clientUIActives[param_1].itemsUnlockedLocalClientNum = param_1;
+  clientUIActives[param_1].itemsUnlockedLastGameDirty = true;
+  clientUIActives[param_1].itemsUnlockedLastGameCount = 0;
+  clientUIActives[param_1].itemsUnlockedInited = true;
+  iVar1 = CL_ControllerIndexFromClientNum(param_1);
+  clientUIActives[param_1].itemsUnlockedControllerIndex = iVar1;
+  LiveStorage_GetPlayerUnlockDataBuffer(local_38,iVar1);
+  iVar1 = clientUIActives[param_1].itemsUnlockedControllerIndex;
+  clientUIActives[param_1].itemsUnlockedBuffer = local_38[0].data;
+  SVar2 = LiveStorage_GetActiveStatsSource(iVar1);
+  clientUIActives[param_1].itemsUnlockedStatsSource = SVar2;
+  bVar3 = LiveStorage_PersistentDataEnabled();
+  if (bVar3) {
     StringTable_GetAsset("mp/unlocktable.csv",local_40);
-    iVar2 = StringTable_GetRowCount(local_40[0]);
-    if (0xa00 < iVar2) {
+    iVar1 = StringTable_GetRowCount(local_40[0]);
+    if (0xa00 < iVar1) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_unlocks.cpp",0x1e4,
                       0,"%s");
     }
-    if (0 < iVar2) {
+    if (0 < iVar1) {
       do {
-        bVar4 = LiveStorage_IsItemUnlockedFromTable_LocalClient(LVar1,local_40[0],uVar5);
-        if (bVar4) {
-          clientUIActives[LVar1].itemsUnlocked[uVar5 >> 3] =
-               (byte)(1 << (uVar5 & 7)) | clientUIActives[LVar1].itemsUnlocked[uVar5 >> 3];
+        bVar3 = LiveStorage_IsItemUnlockedFromTable_LocalClient(param_1,local_40[0],uVar4);
+        if (bVar3) {
+          clientUIActives[param_1].itemsUnlocked[uVar4 >> 3] =
+               (byte)(1 << (uVar4 & 7)) | clientUIActives[param_1].itemsUnlocked[uVar4 >> 3];
         }
-        uVar5 = uVar5 + 1;
-      } while ((int)uVar5 < iVar2);
+        uVar4 = uVar4 + 1;
+      } while ((int)uVar4 < iVar1);
     }
   }
-  __restgprlr_27();
   return;
 }
 
 
 // 82308BA0  CG_FindItemsUnlockedLastGame  (cgame/cg_unlocks.cpp:495)
 
+/* WARNING: Function: __savegprlr_17 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_17 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void CG_FindItemsUnlockedLastGame(LocalClientNum_t param_1)
@@ -796,117 +771,116 @@ void CG_FindItemsUnlockedLastGame(LocalClientNum_t param_1)
 {
   char cVar1;
   char cVar2;
-  LocalClientNum_t LVar3;
-  bool bVar8;
-  int iVar4;
+  bool bVar7;
+  int iVar3;
+  char *pcVar4;
   char *pcVar5;
-  char *pcVar6;
-  int iVar7;
-  char *pcVar9;
-  uint uVar10;
+  int iVar6;
+  char *pcVar8;
+  uint uVar9;
   StringTable *local_90 [36];
   
-  LVar3 = __savegprlr_17(param_1);
-  if (LOCAL_CLIENT_3 < LVar3) {
+  if (LOCAL_CLIENT_3 < param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\../client_mp/client_mp.h"
                     ,0x47f,0,
                     "localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)");
   }
-  if (clientUIActives[LVar3].itemsUnlockedLastGameDirty != false) {
-    iVar4 = clientUIActives[LVar3].itemsUnlockedLastGameCount;
-    clientUIActives[LVar3].itemsUnlockedLastGameDirty = false;
-    if (iVar4 != 0) {
+  if (clientUIActives[param_1].itemsUnlockedLastGameDirty != false) {
+    iVar3 = clientUIActives[param_1].itemsUnlockedLastGameCount;
+    clientUIActives[param_1].itemsUnlockedLastGameDirty = false;
+    if (iVar3 != 0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_unlocks.cpp",0x1fe,
                       0,"%s");
     }
-    if (clientUIActives[LVar3].itemsUnlockedInited == false) {
+    if (clientUIActives[param_1].itemsUnlockedInited == false) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_unlocks.cpp",0x200,
                       0,"%s");
     }
-    bVar8 = LiveStorage_PersistentDataEnabled();
-    if (bVar8) {
-      iVar4 = CL_ControllerIndexFromClientNum(LVar3);
-      bVar8 = LiveStorage_DoWeHaveStats(iVar4);
-      if (bVar8) {
+    bVar7 = LiveStorage_PersistentDataEnabled();
+    if (bVar7) {
+      iVar3 = CL_ControllerIndexFromClientNum(param_1);
+      bVar7 = LiveStorage_DoWeHaveStats(iVar3);
+      if (bVar7) {
         StringTable_GetAsset("mp/unlocktable.csv",local_90);
-        iVar4 = StringTable_GetRowCount(local_90[0]);
-        if (0xa00 < iVar4) {
+        iVar3 = StringTable_GetRowCount(local_90[0]);
+        if (0xa00 < iVar3) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_unlocks.cpp",
                           0x20b,0,"%s");
         }
-        uVar10 = 0;
-        if (0 < iVar4) {
+        uVar9 = 0;
+        if (0 < iVar3) {
           do {
-            bVar8 = LiveStorage_IsItemUnlockedFromTable_LocalClient(LVar3,local_90[0],uVar10);
-            if (bVar8) {
-              if (((1 << (uVar10 & 7) & (uint)clientUIActives[LVar3].itemsUnlocked[uVar10 >> 3]) ==
-                   0) && (clientUIActives[LVar3].itemsUnlockedLastGameCount < 0x10)) {
-                clientUIActives[LVar3].itemsUnlockedLastGame
-                [clientUIActives[LVar3].itemsUnlockedLastGameCount] = (ushort)uVar10;
-                clientUIActives[LVar3].itemsUnlockedLastGameCount =
-                     clientUIActives[LVar3].itemsUnlockedLastGameCount + 1;
+            bVar7 = LiveStorage_IsItemUnlockedFromTable_LocalClient(param_1,local_90[0],uVar9);
+            if (bVar7) {
+              if (((1 << (uVar9 & 7) & (uint)clientUIActives[param_1].itemsUnlocked[uVar9 >> 3]) ==
+                   0) && (clientUIActives[param_1].itemsUnlockedLastGameCount < 0x10)) {
+                clientUIActives[param_1].itemsUnlockedLastGame
+                [clientUIActives[param_1].itemsUnlockedLastGameCount] = (ushort)uVar9;
+                clientUIActives[param_1].itemsUnlockedLastGameCount =
+                     clientUIActives[param_1].itemsUnlockedLastGameCount + 1;
               }
-              pcVar5 = StringTable_GetColumnValueForRow(local_90[0],uVar10,1);
-              pcVar6 = "title";
-              pcVar9 = pcVar5;
+              pcVar4 = StringTable_GetColumnValueForRow(local_90[0],uVar9,1);
+              pcVar5 = "title";
+              pcVar8 = pcVar4;
               do {
-                cVar1 = *pcVar9;
-                cVar2 = *pcVar6;
+                cVar1 = *pcVar8;
+                cVar2 = *pcVar5;
                 if (cVar1 == '\0') break;
-                pcVar9 = pcVar9 + 1;
-                pcVar6 = pcVar6 + 1;
+                pcVar8 = pcVar8 + 1;
+                pcVar5 = pcVar5 + 1;
               } while (cVar1 == cVar2);
-              pcVar6 = "icon";
-              pcVar9 = pcVar5;
+              pcVar5 = "icon";
+              pcVar8 = pcVar4;
               if (cVar1 == cVar2) {
-                pcVar6 = StringTable_GetColumnValueForRow(local_90[0],uVar10,0);
-                iVar7 = CL_ControllerIndexFromClientNum(LVar3);
+                pcVar5 = StringTable_GetColumnValueForRow(local_90[0],uVar9,0);
+                iVar6 = CL_ControllerIndexFromClientNum(param_1);
                 LiveStorage_SetPlayerCardItemFieldByName
-                          (iVar7,"titleUnlocked","mp/cardTitleTable.csv",pcVar6,0,true);
+                          (iVar6,"titleUnlocked","mp/cardTitleTable.csv",pcVar5,0,true);
               }
               else {
                 do {
-                  cVar1 = *pcVar9;
-                  cVar2 = *pcVar6;
+                  cVar1 = *pcVar8;
+                  cVar2 = *pcVar5;
                   if (cVar1 == '\0') break;
-                  pcVar6 = pcVar6 + 1;
-                  pcVar9 = pcVar9 + 1;
+                  pcVar5 = pcVar5 + 1;
+                  pcVar8 = pcVar8 + 1;
                 } while (cVar1 == cVar2);
-                pcVar6 = "profileFeature";
+                pcVar5 = "profileFeature";
                 if (cVar1 == cVar2) {
-                  pcVar6 = StringTable_GetColumnValueForRow(local_90[0],uVar10,0);
-                  iVar7 = CL_ControllerIndexFromClientNum(LVar3);
+                  pcVar5 = StringTable_GetColumnValueForRow(local_90[0],uVar9,0);
+                  iVar6 = CL_ControllerIndexFromClientNum(param_1);
                   LiveStorage_SetPlayerCardItemFieldByName
-                            (iVar7,"iconUnlocked","mp/cardIconTable.csv",pcVar6,0,true);
+                            (iVar6,"iconUnlocked","mp/cardIconTable.csv",pcVar5,0,true);
                 }
                 else {
                   do {
-                    cVar1 = *pcVar5;
-                    cVar2 = *pcVar6;
+                    cVar1 = *pcVar4;
+                    cVar2 = *pcVar5;
                     if (cVar1 == '\0') break;
+                    pcVar4 = pcVar4 + 1;
                     pcVar5 = pcVar5 + 1;
-                    pcVar6 = pcVar6 + 1;
                   } while (cVar1 == cVar2);
                   if (cVar1 == cVar2) {
-                    pcVar6 = StringTable_GetColumnValueForRow(local_90[0],uVar10,0);
-                    MarkProfileItem(LVar3,"mp/profileUnlockTable.csv","unlock",pcVar6,0);
+                    pcVar5 = StringTable_GetColumnValueForRow(local_90[0],uVar9,0);
+                    MarkProfileItem(param_1,"mp/profileUnlockTable.csv","unlock",pcVar5,0);
                   }
                 }
               }
             }
-            uVar10 = uVar10 + 1;
-          } while ((int)uVar10 < iVar4);
+            uVar9 = uVar9 + 1;
+          } while ((int)uVar9 < iVar3);
         }
       }
     }
   }
-  __restgprlr_17();
   return;
 }
 
 
 // 82308ED8  CG_MarkUnlockedItemsNew  (cgame/cg_unlocks.cpp:565)
 
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void CG_MarkUnlockedItemsNew(LocalClientNum_t param_1)
@@ -914,18 +888,17 @@ void CG_MarkUnlockedItemsNew(LocalClientNum_t param_1)
 {
   char cVar1;
   char cVar2;
-  uint uVar3;
-  ulonglong uVar4;
-  LocalClientNum_t LVar5;
-  bool bVar11;
+  LocalClientNum_t LVar3;
+  uint uVar4;
+  bool bVar10;
+  int iVar5;
   int iVar6;
-  int iVar7;
-  StatsSource SVar8;
+  StatsSource SVar7;
+  char *pcVar8;
   char *pcVar9;
-  char *pcVar10;
-  uchar *puVar12;
+  uchar *puVar11;
+  char *pcVar12;
   char *pcVar13;
-  char *pcVar14;
   LocalClientNum_t LStack00000014;
   StringTable *local_f0;
   int local_ec;
@@ -947,74 +920,65 @@ void CG_MarkUnlockedItemsNew(LocalClientNum_t param_1)
   StructuredDataBuffer local_a8;
   int local_a0;
   
-  uVar4 = (ulonglong)(int)param_1;
-  __savegprlr();
-  LVar5 = (LocalClientNum_t)uVar4;
-  LStack00000014 = LVar5;
-  if (3 < (uVar4 & 0xffffffff)) {
+  LStack00000014 = param_1;
+  if (LOCAL_CLIENT_3 < param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\../client_mp/client_mp.h"
                     ,0x47f,0,
                     "localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)");
   }
-  local_e4 = clientUIActives + LVar5;
-  if (clientUIActives[LVar5].itemsUnlockedInited == false) {
+  local_e4 = clientUIActives + param_1;
+  if (clientUIActives[param_1].itemsUnlockedInited == false) {
     Com_Printf(0xe,
                "Not setting unlocked items as new because we have not initialized itemsUnlocked. This should only happen after a map load error.\n"
               );
-    __restgprlr();
     return;
   }
-  clientUIActives[LVar5].itemsUnlockedInited = false;
-  bVar11 = LiveStorage_PersistentDataEnabled();
-  if (!bVar11) {
+  clientUIActives[param_1].itemsUnlockedInited = false;
+  bVar10 = LiveStorage_PersistentDataEnabled();
+  if (!bVar10) {
     Com_Printf(0xe,
                "Not setting unlocked items as new because LiveStorage_PersistentDataEnabled returned false.\n"
               );
-    __restgprlr();
     return;
   }
-  iVar6 = CL_ControllerIndexFromClientNum(LVar5);
-  bVar11 = LiveStorage_DoWeHaveStats(iVar6);
-  if (!bVar11) {
+  iVar5 = CL_ControllerIndexFromClientNum(param_1);
+  bVar10 = LiveStorage_DoWeHaveStats(iVar5);
+  if (!bVar10) {
     Com_Printf(0x10,"Not setting unlocked items as new because we do not have stats.\n");
-    __restgprlr();
     return;
   }
   if ((unlockAllItems->current).enabled != false) {
     Com_Printf(0xe,"Not setting unlocked items as new because unlockAllItems is set to true.\n");
-    __restgprlr();
     return;
   }
   if ((lockAllItems->current).enabled != false) {
     Com_Printf(0xe,"Not setting unlocked items as new because lockAllItems is set to true.\n");
-    __restgprlr();
     return;
   }
-  iVar6 = CL_ControllerIndexFromClientNum(LVar5);
-  local_ec = iVar6;
+  iVar5 = CL_ControllerIndexFromClientNum(param_1);
+  local_ec = iVar5;
   StringTable_GetAsset("mp/unlocktable.csv",&local_f0);
-  iVar7 = StringTable_GetRowCount(local_f0);
+  iVar6 = StringTable_GetRowCount(local_f0);
   local_e0 = "c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_unlocks.cpp";
-  local_a0 = iVar7;
-  if (0xa00 < iVar7) {
+  local_a0 = iVar6;
+  if (0xa00 < iVar6) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_unlocks.cpp",0x266,0,
                     "%s");
   }
-  SVar8 = LiveStorage_GetActiveStatsSource(iVar6);
+  SVar7 = LiveStorage_GetActiveStatsSource(iVar5);
   LiveStorage_GetPlayerUnlockDataBuffer
-            (&local_a8,clientUIActives[LVar5].itemsUnlockedControllerIndex);
-  if (SVar8 != clientUIActives[LVar5].itemsUnlockedStatsSource ||
-      (iVar6 != clientUIActives[LVar5].itemsUnlockedControllerIndex ||
-      (LVar5 != clientUIActives[LVar5].itemsUnlockedLocalClientNum ||
-      local_a8.data != clientUIActives[LVar5].itemsUnlockedBuffer))) {
+            (&local_a8,clientUIActives[param_1].itemsUnlockedControllerIndex);
+  if (SVar7 != clientUIActives[param_1].itemsUnlockedStatsSource ||
+      (iVar5 != clientUIActives[param_1].itemsUnlockedControllerIndex ||
+      (param_1 != clientUIActives[param_1].itemsUnlockedLocalClientNum ||
+      local_a8.data != clientUIActives[param_1].itemsUnlockedBuffer))) {
     Com_Error(ERR_DROP,
               "Mismatch in unlocked item data. Buffer changed from 0x%x to 0x%x, localClientNum %i to %i, controllerIndex %i to %i, statsSource %i to %i"
              );
-    __restgprlr();
     return;
   }
   local_e8 = 0;
-  if (0 < iVar7) {
+  if (0 < iVar6) {
     local_c4 = "title";
     local_c8 = "iconNew";
     local_cc = "mp/cardIconTable.csv";
@@ -1029,134 +993,134 @@ void CG_MarkUnlockedItemsNew(LocalClientNum_t param_1)
     local_d4 = "unlockNew";
     local_d8 = "profileFeature";
     do {
-      uVar3 = local_e8;
-      LVar5 = LStack00000014;
+      uVar4 = local_e8;
+      LVar3 = LStack00000014;
       if (((1 << (local_e8 & 7) & (uint)local_e4->itemsUnlocked[local_e8 >> 3]) == 0) &&
-         (bVar11 = LiveStorage_IsItemUnlockedFromTable_LocalClient(LStack00000014,local_f0,local_e8)
-         , bVar11)) {
-        pcVar9 = StringTable_GetColumnValueForRow(local_f0,uVar3,0);
-        pcVar10 = StringTable_GetColumnValueForRow(local_f0,uVar3,1);
-        pcVar13 = "feature";
-        pcVar14 = pcVar10;
+         (bVar10 = LiveStorage_IsItemUnlockedFromTable_LocalClient(LStack00000014,local_f0,local_e8)
+         , bVar10)) {
+        pcVar8 = StringTable_GetColumnValueForRow(local_f0,uVar4,0);
+        pcVar9 = StringTable_GetColumnValueForRow(local_f0,uVar4,1);
+        pcVar12 = "feature";
+        pcVar13 = pcVar9;
         if ((xblive_privatematch->current).enabled != false) {
-          LiveStorage_IsItemUnlockedFromTable_LocalClient(LVar5,local_f0,uVar3);
+          LiveStorage_IsItemUnlockedFromTable_LocalClient(LVar3,local_f0,uVar4);
           va("%s: %s, %s");
           MyAssertHandler(local_e0,0x29a,0,"%s\n\t%s");
         }
         do {
-          cVar1 = *pcVar14;
-          cVar2 = *pcVar13;
+          cVar1 = *pcVar13;
+          cVar2 = *pcVar12;
           if (cVar1 == '\0') break;
+          pcVar12 = pcVar12 + 1;
           pcVar13 = pcVar13 + 1;
-          pcVar14 = pcVar14 + 1;
         } while (cVar1 == cVar2);
-        pcVar13 = "weapon";
-        pcVar14 = pcVar10;
+        pcVar12 = "weapon";
+        pcVar13 = pcVar9;
         if (cVar1 == cVar2) {
-          SetNew_LocalClient(LVar5,"featureNew",pcVar9);
+          SetNew_LocalClient(LVar3,"featureNew",pcVar8);
         }
         else {
           do {
-            cVar1 = *pcVar14;
-            cVar2 = *pcVar13;
+            cVar1 = *pcVar13;
+            cVar2 = *pcVar12;
             if (cVar1 == '\0') break;
+            pcVar12 = pcVar12 + 1;
             pcVar13 = pcVar13 + 1;
-            pcVar14 = pcVar14 + 1;
           } while (cVar1 == cVar2);
-          pcVar13 = "perk";
-          pcVar14 = pcVar10;
+          pcVar12 = "perk";
+          pcVar13 = pcVar9;
           if (cVar1 == cVar2) {
-            SetNew_LocalClient(LVar5,local_dc,pcVar9);
+            SetNew_LocalClient(LVar3,local_dc,pcVar8);
           }
           else {
             do {
-              cVar1 = *pcVar14;
-              cVar2 = *pcVar13;
+              cVar1 = *pcVar13;
+              cVar2 = *pcVar12;
               if (cVar1 == '\0') break;
+              pcVar12 = pcVar12 + 1;
               pcVar13 = pcVar13 + 1;
-              pcVar14 = pcVar14 + 1;
             } while (cVar1 == cVar2);
-            pcVar13 = local_d8;
-            pcVar14 = pcVar10;
+            pcVar12 = local_d8;
+            pcVar13 = pcVar9;
             if (cVar1 == cVar2) {
-              SetNew_LocalClient(LVar5,"perkNew",pcVar9);
+              SetNew_LocalClient(LVar3,"perkNew",pcVar8);
             }
             else {
               do {
-                cVar1 = *pcVar14;
-                cVar2 = *pcVar13;
+                cVar1 = *pcVar13;
+                cVar2 = *pcVar12;
                 if (cVar1 == '\0') break;
+                pcVar12 = pcVar12 + 1;
                 pcVar13 = pcVar13 + 1;
-                pcVar14 = pcVar14 + 1;
               } while (cVar1 == cVar2);
-              pcVar13 = local_d0;
-              pcVar14 = pcVar10;
+              pcVar12 = local_d0;
+              pcVar13 = pcVar9;
               if (cVar1 == cVar2) {
-                MarkProfileItem(LVar5,"mp/profileUnlockTable.csv",local_d4,pcVar9,0);
+                MarkProfileItem(LVar3,"mp/profileUnlockTable.csv",local_d4,pcVar8,0);
               }
               else {
                 do {
-                  cVar1 = *pcVar14;
-                  cVar2 = *pcVar13;
+                  cVar1 = *pcVar13;
+                  cVar2 = *pcVar12;
                   if (cVar1 == '\0') break;
+                  pcVar12 = pcVar12 + 1;
                   pcVar13 = pcVar13 + 1;
-                  pcVar14 = pcVar14 + 1;
                 } while (cVar1 == cVar2);
-                pcVar13 = local_c4;
-                pcVar14 = pcVar10;
+                pcVar12 = local_c4;
+                pcVar13 = pcVar9;
                 if (cVar1 == cVar2) {
-                  LiveStorage_SetPlayerCardItemFieldByName(local_ec,local_c8,local_cc,pcVar9,0,true)
+                  LiveStorage_SetPlayerCardItemFieldByName(local_ec,local_c8,local_cc,pcVar8,0,true)
                   ;
                 }
                 else {
                   do {
-                    cVar1 = *pcVar14;
-                    cVar2 = *pcVar13;
+                    cVar1 = *pcVar13;
+                    cVar2 = *pcVar12;
                     if (cVar1 == '\0') break;
+                    pcVar12 = pcVar12 + 1;
                     pcVar13 = pcVar13 + 1;
-                    pcVar14 = pcVar14 + 1;
                   } while (cVar1 == cVar2);
-                  pcVar13 = local_b8;
-                  pcVar14 = pcVar10;
+                  pcVar12 = local_b8;
+                  pcVar13 = pcVar9;
                   if (cVar1 == cVar2) {
                     LiveStorage_SetPlayerCardItemFieldByName
-                              (local_ec,local_bc,local_c0,pcVar9,0,true);
+                              (local_ec,local_bc,local_c0,pcVar8,0,true);
                   }
                   else {
                     do {
-                      cVar1 = *pcVar14;
-                      cVar2 = *pcVar13;
+                      cVar1 = *pcVar13;
+                      cVar2 = *pcVar12;
                       if (cVar1 == '\0') break;
+                      pcVar12 = pcVar12 + 1;
                       pcVar13 = pcVar13 + 1;
-                      pcVar14 = pcVar14 + 1;
                     } while (cVar1 == cVar2);
-                    pcVar13 = local_b4;
-                    pcVar14 = pcVar10;
+                    pcVar12 = local_b4;
+                    pcVar13 = pcVar9;
                     if (cVar1 == cVar2) {
-                      SetChallengeTierNew_LocalClient(LVar5,pcVar9);
+                      SetChallengeTierNew_LocalClient(LVar3,pcVar8);
                     }
                     else {
                       do {
-                        cVar1 = *pcVar14;
-                        cVar2 = *pcVar13;
+                        cVar1 = *pcVar13;
+                        cVar2 = *pcVar12;
                         if (cVar1 == '\0') break;
+                        pcVar12 = pcVar12 + 1;
                         pcVar13 = pcVar13 + 1;
-                        pcVar14 = pcVar14 + 1;
                       } while (cVar1 == cVar2);
-                      puVar12 = local_b0;
-                      pcVar13 = "weaponCamo";
+                      puVar11 = local_b0;
+                      pcVar12 = "weaponCamo";
                       if (cVar1 != cVar2) {
                         do {
-                          cVar1 = *pcVar10;
-                          cVar2 = *pcVar13;
+                          cVar1 = *pcVar9;
+                          cVar2 = *pcVar12;
                           if (cVar1 == '\0') break;
-                          pcVar10 = pcVar10 + 1;
-                          pcVar13 = pcVar13 + 1;
+                          pcVar9 = pcVar9 + 1;
+                          pcVar12 = pcVar12 + 1;
                         } while (cVar1 == cVar2);
-                        puVar12 = local_a8.data;
+                        puVar11 = local_a8.data;
                         if (cVar1 != cVar2) goto LAB_8230957c;
                       }
-                      SetWeaponPartNew_LocalClient(LVar5,(char *)puVar12,pcVar9);
+                      SetWeaponPartNew_LocalClient(LVar3,(char *)puVar11,pcVar8);
                     }
                   }
                 }
@@ -1166,10 +1130,9 @@ void CG_MarkUnlockedItemsNew(LocalClientNum_t param_1)
         }
       }
 LAB_8230957c:
-      local_e8 = uVar3 + 1;
+      local_e8 = uVar4 + 1;
     } while ((int)local_e8 < local_a0);
   }
-  __restgprlr();
   return;
 }
 

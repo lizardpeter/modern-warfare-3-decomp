@@ -2,79 +2,73 @@
 
 // 8291BD08  fseek  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/fseek.c:96)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 int fseek(_iobuf *param_1,long param_2,int param_3)
 
 {
-  longlong lVar1;
-  _iobuf *p_Var3;
-  int *piVar4;
-  ulonglong uVar2;
-  uint uVar5;
-  int iVar6;
+  int *piVar1;
+  int iVar2;
   _iobuf *p_Stack00000014;
   
-  lVar1 = __savegprlr_28(param_1);
-  p_Var3 = (_iobuf *)lVar1;
-  p_Stack00000014 = p_Var3;
-  if ((lVar1 == 0) || (((param_3 != 0 && (param_3 != 1)) && (param_3 != 2)))) {
-    piVar4 = _errno();
-    *piVar4 = 0x16;
+  p_Stack00000014 = param_1;
+  if ((param_1 == (_iobuf *)0x0) || (((param_3 != 0 && (param_3 != 1)) && (param_3 != 2)))) {
+    piVar1 = _errno();
+    *piVar1 = 0x16;
     _invalid_parameter_noinfo();
-    uVar2 = 0xffffffffffffffff;
+    iVar2 = -1;
   }
   else {
-    _lock_file(p_Var3);
-    uVar5 = _fseek_nolock(p_Var3,param_2,param_3);
+    _lock_file(param_1);
+    iVar2 = _fseek_nolock(param_1,param_2,param_3);
     FUN_8291bdbc();
-    uVar2 = (ulonglong)uVar5;
   }
-  iVar6 = __restgprlr_28(uVar2);
-  return iVar6;
+  return iVar2;
 }
 
 
 // 8291BC38  _fseek_nolock  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/fseek.c:136)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 int _fseek_nolock(_iobuf *param_1,long param_2,int param_3)
 
 {
   uint uVar1;
-  _iobuf *p_Var3;
-  int *piVar4;
-  longlong lVar2;
-  long lVar5;
-  int iVar6;
+  int *piVar2;
+  long lVar3;
+  int iVar4;
   
-  p_Var3 = (_iobuf *)__savegprlr_29(param_1);
-  if ((p_Var3->_flag & 0x83U) == 0) {
-    piVar4 = _errno();
-    lVar2 = -1;
-    *piVar4 = 0x16;
+  if ((param_1->_flag & 0x83U) == 0) {
+    piVar2 = _errno();
+    iVar4 = -1;
+    *piVar2 = 0x16;
   }
   else {
-    p_Var3->_flag = p_Var3->_flag & 0xffffffef;
+    param_1->_flag = param_1->_flag & 0xffffffef;
     if (param_3 == 1) {
-      lVar5 = _ftell_nolock(p_Var3);
-      param_2 = lVar5 + param_2;
+      lVar3 = _ftell_nolock(param_1);
+      param_2 = lVar3 + param_2;
       param_3 = 0;
     }
-    _flush(p_Var3);
-    uVar1 = p_Var3->_flag;
+    _flush(param_1);
+    uVar1 = param_1->_flag;
     if ((uVar1 & 0x80) == 0) {
       if ((uVar1 & 1) != 0) {
         if (((uVar1 & 8) != 0) && ((uVar1 & 0x400) == 0)) {
-          p_Var3->_bufsiz = 0x200;
+          param_1->_bufsiz = 0x200;
         }
       }
     }
     else {
-      p_Var3->_flag = uVar1 & 0xfffffffc;
+      param_1->_flag = uVar1 & 0xfffffffc;
     }
-    iVar6 = _fileno(p_Var3);
-    lVar5 = _lseek(iVar6,param_2,param_3);
-    lVar2 = -(ulonglong)(lVar5 == -1);
+    iVar4 = _fileno(param_1);
+    lVar3 = _lseek(iVar4,param_2,param_3);
+    iVar4 = -(uint)(lVar3 == -1);
   }
-  iVar6 = __restgprlr_29(lVar2);
-  return iVar6;
+  return iVar4;
 }
 

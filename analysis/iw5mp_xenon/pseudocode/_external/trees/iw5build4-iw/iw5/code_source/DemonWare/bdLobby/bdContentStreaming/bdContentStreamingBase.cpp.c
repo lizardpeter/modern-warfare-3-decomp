@@ -2,57 +2,56 @@
 
 // 828FDCD8  bdContentStreamingBase  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdcontentstreaming/bdcontentstreamingbase.cpp:48)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 bdContentStreamingBase * __thiscall
 bdContentStreamingBase::bdContentStreamingBase
           (bdContentStreamingBase *this,bdRemoteTaskManager *param_1)
 
 {
-  undefined4 *puVar1;
-  bdContentStreamingBase *pbVar2;
-  undefined4 *puVar3;
-  undefined4 *puVar4;
-  longlong lVar5;
-  undefined4 *puStack00000014;
+  char *pcVar1;
+  bdURL *pbVar2;
+  longlong lVar3;
+  bdContentStreamingBase *pbStack00000014;
   
-  puVar1 = (undefined4 *)__savegprlr_27(this);
-  puVar1[2] = 0;
-  *puVar1 = &_vftable_;
-  puVar1[3] = 0;
-  puStack00000014 = puVar1;
-  bdFileMetaData::bdFileMetaData((bdFileMetaData *)(puVar1 + 6));
-  puVar1[0x1ea] = 0;
-  puVar1[0x1eb] = 0;
-  puVar4 = puVar1 + 0x1ec;
-  _eh_vector_constructor_iterator_(puVar4,0x210,3,bdURL::bdURL,bdURL::~bdURL);
-  puVar1[0x378] = 0;
-  puVar1[0x379] = 0;
-  *(undefined1 *)((int)puVar1 + 0xdea) = 0;
-  puVar1[900] = 0;
-  puVar1[0x385] = 0;
-  puVar1[0x386] = 0;
-  puVar1[0x387] = 0;
-  puVar1[0x388] = 0;
+  this->m_operation = 0;
+  this->_padding_ = (int)&_vftable_;
+  this->m_state = READY;
+  pbStack00000014 = this;
+  bdFileMetaData::bdFileMetaData(&this->m_taskData);
+  this->m_uploadData = (void *)0x0;
+  this->m_uploadFileID = (bdFileID *)0x0;
+  pbVar2 = this->m_URLs;
+  _eh_vector_constructor_iterator_(pbVar2,0x210,3,bdURL::bdURL,bdURL::~bdURL);
+  this->m_thumbData = (void *)0x0;
+  this->m_thumbDataSize = 0;
+  this->m_sendChecksum = false;
+  this->m_downloadMetaData = (bdFileMetaData *)0x0;
+  this->m_downloadData = (void *)0x0;
+  this->m_downloadDataSize = 0;
+  this->m_startByte = 0;
+  this->m_endByte = 0;
   _eh_vector_constructor_iterator_
-            (puVar1 + 0x389,0x18c,3,bdPreCopyResult::bdPreCopyResult,
+            (this->m_preCopyResults,0x18c,3,bdPreCopyResult::bdPreCopyResult,
              bdPreCopyResult::~bdPreCopyResult);
-  *(undefined1 *)(puVar1 + 0x4b2) = 0;
-  bdSummaryMetaHandler::bdSummaryMetaHandler((bdSummaryMetaHandler *)(puVar1 + 0x4b4));
-  puVar1[0x698] = 0;
-  puVar1[0x699] = 0;
-  bdHTTPWrapper::bdHTTPWrapper((bdHTTPWrapper *)(puVar1 + 0x69a));
-  puVar1[0x83d] = param_1;
-  puVar3 = puVar1 + 0x327;
-  *(undefined1 *)(puVar1 + 0x83c) = 1;
-  lVar5 = 3;
+  this->m_uploadSummary = false;
+  bdSummaryMetaHandler::bdSummaryMetaHandler(&this->m_summaryMeta);
+  (this->m_overallTask).m_ptr = (bdRemoteTask *)0x0;
+  (this->m_remoteTask).m_ptr = (bdRemoteTask *)0x0;
+  bdHTTPWrapper::bdHTTPWrapper(&this->m_http);
+  this->m_remoteTaskManager = param_1;
+  pcVar1 = this->m_URLs[2].m_url + 200;
+  this->m_finalizeOnComplete = true;
+  lVar3 = 3;
   do {
-    puVar3 = puVar3 + 99;
-    *puVar3 = puVar4;
-    puVar4 = puVar4 + 0x84;
-    lVar5 = lVar5 + -1;
-  } while (lVar5 != 0);
+    pcVar1 = pcVar1 + 0x18c;
+    *(bdURL **)pcVar1 = pbVar2;
+    pbVar2 = pbVar2 + 1;
+    lVar3 = lVar3 + -1;
+  } while (lVar3 != 0);
   memset();
-  pbVar2 = (bdContentStreamingBase *)__restgprlr_27(puVar1);
-  return pbVar2;
+  return this;
 }
 
 
@@ -114,6 +113,9 @@ bool __thiscall bdContentStreamingBase::ready(bdContentStreamingBase *this)
 
 // 828FE538  initUpload  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdcontentstreaming/bdcontentstreamingbase.cpp:111)
 
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
+
 bool __thiscall
 bdContentStreamingBase::initUpload
           (bdContentStreamingBase *this,ushort param_1,void *param_2,bdUploadInterceptor *param_3,
@@ -121,85 +123,75 @@ bdContentStreamingBase::initUpload
           bdTag *param_10,bdFileID *param_11,uint param_12,bool param_13)
 
 {
-  bdContentStreamingBase *this_00;
-  uint uVar2;
-  undefined8 uVar1;
-  bool bVar3;
-  undefined1 uVar4;
-  ulonglong uVar5;
-  ulong64 *puVar6;
-  ulong64 uVar7;
-  ulong64 *puVar8;
-  ulonglong uVar9;
+  uint uVar1;
+  bool bVar2;
+  ulong64 *puVar3;
+  ulong64 uVar4;
+  ulong64 *puVar5;
+  ulonglong uVar6;
   uint in_stack_00000054;
   uint in_stack_0000005c;
   int in_stack_00000064;
   bdFileID *in_stack_0000006c;
   bool in_stack_0000007f;
   
-  uVar5 = (ulonglong)(int)param_5;
-  this_00 = (bdContentStreamingBase *)__savegprlr_22(this);
-  uVar2 = (**(code **)(this_00->_padding_ + 0x10))();
-  if (uVar2 < in_stack_00000054) {
-    (**(code **)(this_00->_padding_ + 0x10))(this_00);
+  uVar1 = (**(code **)(this->_padding_ + 0x10))();
+  if (uVar1 < in_stack_00000054) {
+    (**(code **)(this->_padding_ + 0x10))(this);
     bdLogMessage(BD_LOG_ERROR,"err/","lobby/contentStreamingBase",
                  "c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdLobby\\bdContentStreaming\\bdContentStreamingBase.cpp"
                  ,"bdContentStreamingBase::initUpload",0x72,
                  "Failed to init upload of meta data size %d (max %d)");
   }
   else {
-    bVar3 = ready(this_00);
-    if (bVar3) {
-      uVar9 = (ulonglong)in_stack_0000005c;
-      this_00->m_uploadData = param_2;
-      this_00->m_uploadHandler = param_3;
-      this_00->m_uploadFileID = in_stack_0000006c;
-      this_00->m_thumbData = param_7;
-      this_00->m_uploadSummary = in_stack_0000007f;
-      this_00->m_thumbDataSize = in_stack_00000054;
-      (this_00->m_taskData).m_fileSlot = param_1;
-      (this_00->m_taskData).m_fileSize = param_4;
-      (this_00->m_taskData).m_category = param_6;
-      (this_00->m_taskData).m_numTags = in_stack_0000005c;
+    bVar2 = ready(this);
+    if (bVar2) {
+      uVar6 = (ulonglong)in_stack_0000005c;
+      this->m_uploadData = param_2;
+      this->m_uploadHandler = param_3;
+      this->m_uploadFileID = in_stack_0000006c;
+      this->m_thumbData = param_7;
+      this->m_uploadSummary = in_stack_0000007f;
+      this->m_thumbDataSize = in_stack_00000054;
+      (this->m_taskData).m_fileSlot = param_1;
+      (this->m_taskData).m_fileSize = param_4;
+      (this->m_taskData).m_category = param_6;
+      (this->m_taskData).m_numTags = in_stack_0000005c;
       if (in_stack_0000006c == (bdFileID *)0x0) {
-        uVar7 = 0;
+        uVar4 = 0;
       }
       else {
-        uVar7 = in_stack_0000006c->m_fileID;
+        uVar4 = in_stack_0000006c->m_fileID;
       }
-      (this_00->m_taskData).m_fileID = uVar7;
-      if ((uVar5 & 0xffffffff) == 0) {
-        (this_00->m_taskData).m_fileName[0] = '\0';
+      (this->m_taskData).m_fileID = uVar4;
+      if (param_5 == (char *)0x0) {
+        (this->m_taskData).m_fileName[0] = '\0';
       }
       else {
-        uVar2 = bdStrnlen((char *)uVar5,0x80);
-        bdStrlcpy((this_00->m_taskData).m_fileName,(char *)uVar5,uVar2 + 1);
+        uVar1 = bdStrnlen(param_5,0x80);
+        bdStrlcpy((this->m_taskData).m_fileName,param_5,uVar1 + 1);
       }
       if (in_stack_0000005c != 0) {
-        puVar6 = (ulong64 *)&(this_00->m_taskData).m_metaDataSize;
-        puVar8 = (ulong64 *)(in_stack_00000064 + -8);
+        puVar3 = (ulong64 *)&(this->m_taskData).m_metaDataSize;
+        puVar5 = (ulong64 *)(in_stack_00000064 + -8);
         do {
-          puVar6[2] = puVar8[2];
-          puVar8 = puVar8 + 3;
-          puVar6 = puVar6 + 3;
-          *puVar6 = *puVar8;
-          uVar9 = uVar9 - 1;
-        } while (uVar9 != 0);
+          puVar3[2] = puVar5[2];
+          puVar5 = puVar5 + 3;
+          puVar3 = puVar3 + 3;
+          *puVar3 = *puVar5;
+          uVar6 = uVar6 - 1;
+        } while (uVar6 != 0);
       }
-      this_00->m_sendChecksum = false;
-      uVar1 = 1;
-      this_00->m_httpSite = 0;
-      goto LAB_828fe6d4;
+      this->m_sendChecksum = false;
+      this->m_httpSite = 0;
+      return true;
     }
     bdLogMessage(BD_LOG_ERROR,"err/","lobby/contentStreamingBase",
                  "c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdLobby\\bdContentStreaming\\bdContentStreamingBase.cpp"
                  ,"bdContentStreamingBase::initUpload",0x79,
                  "BD_CONTENTSTREAMING_FAILED_TO_START_HTTP");
   }
-  uVar1 = 0;
-LAB_828fe6d4:
-  uVar4 = __restgprlr_22(uVar1);
-  return (bool)uVar4;
+  return false;
 }
 
 
@@ -256,54 +248,56 @@ bdContentStreamingBase::startDelete(bdContentStreamingBase *this)
 
 // 828FE6E8  start  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdcontentstreaming/bdcontentstreamingbase.cpp:205)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 bdReference<bdRemoteTask> __thiscall
 bdContentStreamingBase::start(bdContentStreamingBase *this,ushort param_1)
 
 {
   uint uVar1;
-  uint *puVar2;
-  bdRemoteTask *pbVar3;
-  bdContentStreamingBase *this_00;
+  bdRemoteTask *pbVar2;
   uint in_r5;
-  longlong lVar4;
-  uint *puVar5;
+  longlong lVar3;
+  uint *puVar4;
   char in_RESERVE;
-  byte bVar6;
+  byte bVar5;
   
-  this_00 = (bdContentStreamingBase *)(int)(short)param_1;
-  puVar2 = (uint *)__savegprlr_29(this);
-  this_00->m_operation = in_r5 & 0xffff;
-  bdHTTPWrapper::resetTransferStats(&this_00->m_http);
-  pbVar3 = bdMemory::allocate(0x40);
-  bVar6 = (pbVar3 == (bdRemoteTask *)0x0) << 1;
-  if (pbVar3 == (bdRemoteTask *)0x0) {
-    pbVar3 = (bdRemoteTask *)0x0;
+  *(uint *)((short)param_1 + 8) = in_r5 & 0xffff;
+  bdHTTPWrapper::resetTransferStats((bdHTTPWrapper *)((short)param_1 + 0x1a68));
+  pbVar2 = bdMemory::allocate(0x40);
+  bVar5 = (pbVar2 == (bdRemoteTask *)0x0) << 1;
+  if (pbVar2 == (bdRemoteTask *)0x0) {
+    pbVar2 = (bdRemoteTask *)0x0;
   }
   else {
-    pbVar3 = bdRemoteTask::bdRemoteTask(pbVar3);
+    pbVar2 = bdRemoteTask::bdRemoteTask(pbVar2);
   }
-  bdReference<bdRemoteTask>::operator=(&this_00->m_overallTask,pbVar3);
-  ((this_00->m_overallTask).m_ptr)->m_status = BD_PENDING;
-  setState(this_00,PRE_HTTP_OPERATION,BD_NO_ERROR);
-  pbVar3 = (this_00->m_overallTask).m_ptr;
-  *puVar2 = (uint)pbVar3;
-  if (ZEXT48(pbVar3) != 0) {
-    lVar4 = ZEXT48(pbVar3) + 4;
+  bdReference<bdRemoteTask>::operator=
+            ((bdReference<bdRemoteTask> *)((short)param_1 + 0x1a60),pbVar2);
+  *(undefined4 *)(*(int *)((short)param_1 + 0x1a60) + 0x14) = 1;
+  setState((bdContentStreamingBase *)(int)(short)param_1,PRE_HTTP_OPERATION,BD_NO_ERROR);
+  uVar1 = *(uint *)((short)param_1 + 0x1a60);
+  this->_padding_ = uVar1;
+  if ((ulonglong)uVar1 != 0) {
+    lVar3 = (ulonglong)uVar1 + 4;
     do {
-      puVar5 = (uint *)lVar4;
+      puVar4 = (uint *)lVar3;
       if (in_RESERVE != '\0') {
-        uVar1 = storeWordConditionalIndexed((ulonglong)*puVar5 + 1,0,lVar4);
-        *puVar5 = uVar1;
-        bVar6 = 2;
+        uVar1 = storeWordConditionalIndexed((ulonglong)*puVar4 + 1,0,lVar3);
+        *puVar4 = uVar1;
+        bVar5 = 2;
       }
-    } while (!(bool)(bVar6 >> 1 & 1));
+    } while (!(bool)(bVar5 >> 1 & 1));
   }
-  pbVar3 = (bdRemoteTask *)__restgprlr_29(puVar2);
-  return (bdReference<bdRemoteTask>)pbVar3;
+  return (bdReference<bdRemoteTask>)(bdRemoteTask *)this;
 }
 
 
 // 828FDB70  initDownload  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdcontentstreaming/bdcontentstreamingbase.cpp:219)
+
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 
 bool __thiscall
 bdContentStreamingBase::initDownload
@@ -311,19 +305,16 @@ bdContentStreamingBase::initDownload
           bdFileMetaData *param_4,uint param_5,uint param_6)
 
 {
-  bdContentStreamingBase *this_00;
   bool bVar1;
-  undefined1 uVar2;
   
-  this_00 = (bdContentStreamingBase *)__savegprlr_25(this);
-  bVar1 = ready(this_00);
+  bVar1 = ready(this);
   if (bVar1) {
-    this_00->m_downloadData = param_1;
-    this_00->m_downloadDataSize = param_2;
-    this_00->m_downloadHandler = param_3;
-    this_00->m_downloadMetaData = param_4;
-    this_00->m_startByte = param_5;
-    this_00->m_endByte = param_6;
+    this->m_downloadData = param_1;
+    this->m_downloadDataSize = param_2;
+    this->m_downloadHandler = param_3;
+    this->m_downloadMetaData = param_4;
+    this->m_startByte = param_5;
+    this->m_endByte = param_6;
   }
   else {
     bdLogMessage(BD_LOG_ERROR,"err/","lobby/contentStreamingBase",
@@ -331,8 +322,7 @@ bdContentStreamingBase::initDownload
                  ,"bdContentStreamingBase::initDownload",0xdf,
                  "BD_CONTENTSTREAMING_FAILED_TO_START_HTTP");
   }
-  uVar2 = __restgprlr_25(bVar1);
-  return (bool)uVar2;
+  return bVar1;
 }
 
 
@@ -405,12 +395,14 @@ LAB_828ff170:
 
 // 828FE7D0  handlePreHTTPComplete  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdcontentstreaming/bdcontentstreamingbase.cpp:323)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void __thiscall bdContentStreamingBase::handlePreHTTPComplete(bdContentStreamingBase *this)
 
 {
   ushort uVar1;
   uint uVar2;
-  bdContentStreamingBase *this_00;
   uint uVar4;
   ulong64 uVar3;
   bdStatus bVar5;
@@ -422,38 +414,37 @@ void __thiscall bdContentStreamingBase::handlePreHTTPComplete(bdContentStreaming
   bdDownloadInterceptor *pbVar11;
   uchar *puVar12;
   
-  this_00 = (bdContentStreamingBase *)__savegprlr_27(this);
-  uVar4 = this_00->m_operation;
+  uVar4 = this->m_operation;
   bVar5 = BD_EMPTY;
   if (uVar4 == 0x65) {
-    uVar4 = bdRemoteTask::getNumResults((this_00->m_remoteTask).m_ptr);
+    uVar4 = bdRemoteTask::getNumResults((this->m_remoteTask).m_ptr);
     if (uVar4 == 0) {
-      setState(this_00,DONE,BD_NO_ERROR);
+      setState(this,DONE,BD_NO_ERROR);
     }
     else {
       bdLogMessage(BD_LOG_INFO,"info/","lobby/contentStreamingBase",
                    "c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdLobby\\bdContentStreaming\\bdContentStreamingBase.cpp"
                    ,"bdContentStreamingBase::handlePreHTTPComplete",0x15a,"HTTP PUT %s");
-      pbVar9 = this_00->m_uploadHandler;
-      (this_00->m_taskData).m_fileID = this_00->m_URLs[this_00->m_httpSite].m_fileID;
+      pbVar9 = this->m_uploadHandler;
+      (this->m_taskData).m_fileID = this->m_URLs[this->m_httpSite].m_fileID;
       if (pbVar9 == (bdUploadInterceptor *)0x0) {
-        puVar12 = this_00->m_checksum;
-        if (this_00->m_sendChecksum == false) {
+        puVar12 = this->m_checksum;
+        if (this->m_sendChecksum == false) {
           puVar12 = (uchar *)0x0;
         }
-        uVar3 = bdRemoteTask::getTransactionID((this_00->m_remoteTask).m_ptr);
-        pvVar7 = this_00->m_uploadData;
+        uVar3 = bdRemoteTask::getTransactionID((this->m_remoteTask).m_ptr);
+        pvVar7 = this->m_uploadData;
         pbVar9 = (bdUploadInterceptor *)0x0;
       }
       else {
-        uVar3 = bdRemoteTask::getTransactionID((this_00->m_remoteTask).m_ptr);
-        pbVar9 = this_00->m_uploadHandler;
+        uVar3 = bdRemoteTask::getTransactionID((this->m_remoteTask).m_ptr);
+        pbVar9 = this->m_uploadHandler;
         puVar12 = (uchar *)0x0;
         pvVar7 = (void *)0x0;
       }
       bVar5 = bdHTTPWrapper::_startUpload
-                        (&this_00->m_http,this_00->m_URLs[this_00->m_httpSite].m_url,pvVar7,pbVar9,
-                         (this_00->m_taskData).m_fileSize,uVar3,(char *)puVar12);
+                        (&this->m_http,this->m_URLs[this->m_httpSite].m_url,pvVar7,pbVar9,
+                         (this->m_taskData).m_fileSize,uVar3,(char *)puVar12);
     }
   }
   else if (uVar4 == 0x68) {
@@ -463,72 +454,73 @@ void __thiscall bdContentStreamingBase::handlePreHTTPComplete(bdContentStreaming
     bdLogMessage(BD_LOG_INFO,"info/","lobby/contentStreamingBase",
                  "c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdLobby\\bdContentStreaming\\bdContentStreamingBase.cpp"
                  ,"bdContentStreamingBase::handlePreHTTPComplete",0x170,"HTTP COPY to %s");
-    uVar1 = this_00->m_httpSite;
-    uVar3 = bdRemoteTask::getTransactionID((this_00->m_remoteTask).m_ptr);
+    uVar1 = this->m_httpSite;
+    uVar3 = bdRemoteTask::getTransactionID((this->m_remoteTask).m_ptr);
     bVar5 = bdHTTPWrapper::startCopy
-                      (&this_00->m_http,(this_00->m_preCopyResults[uVar1].m_source)->m_url,
-                       this_00->m_preCopyResults[uVar1].m_destination,uVar3);
+                      (&this->m_http,(this->m_preCopyResults[uVar1].m_source)->m_url,
+                       this->m_preCopyResults[uVar1].m_destination,uVar3);
   }
   else if (uVar4 == 0x66) {
-    if (this_00->m_downloadHandler == (bdDownloadInterceptor *)0x0) {
+    if (this->m_downloadHandler == (bdDownloadInterceptor *)0x0) {
       bdLogMessage(BD_LOG_INFO,"info/","lobby/contentStreamingBase",
                    "c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdLobby\\bdContentStreaming\\bdContentStreamingBase.cpp"
                    ,"bdContentStreamingBase::handlePreHTTPComplete",0x183,"HTTP GET %s");
-      uVar4 = this_00->m_endByte;
-      uVar2 = this_00->m_startByte;
-      uVar3 = bdRemoteTask::getTransactionID((this_00->m_remoteTask).m_ptr);
-      uVar10 = this_00->m_downloadDataSize;
+      uVar4 = this->m_endByte;
+      uVar2 = this->m_startByte;
+      uVar3 = bdRemoteTask::getTransactionID((this->m_remoteTask).m_ptr);
+      uVar10 = this->m_downloadDataSize;
       pbVar11 = (bdDownloadInterceptor *)0x0;
-      pvVar7 = this_00->m_downloadData;
+      pvVar7 = this->m_downloadData;
     }
     else {
       bdLogMessage(BD_LOG_INFO,"info/","lobby/contentStreamingBase",
                    "c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdLobby\\bdContentStreaming\\bdContentStreamingBase.cpp"
                    ,"bdContentStreamingBase::handlePreHTTPComplete",0x17a,"HTTP GET %s");
-      uVar4 = this_00->m_endByte;
-      uVar2 = this_00->m_startByte;
-      uVar3 = bdRemoteTask::getTransactionID((this_00->m_remoteTask).m_ptr);
-      pbVar11 = this_00->m_downloadHandler;
+      uVar4 = this->m_endByte;
+      uVar2 = this->m_startByte;
+      uVar3 = bdRemoteTask::getTransactionID((this->m_remoteTask).m_ptr);
+      pbVar11 = this->m_downloadHandler;
       uVar10 = 0;
       pvVar7 = (void *)0x0;
     }
     bVar5 = bdHTTPWrapper::_startDownload
-                      (&this_00->m_http,this_00->m_downloadMetaData->m_url,pvVar7,uVar10,pbVar11,
-                       uVar3,uVar2,uVar4);
+                      (&this->m_http,this->m_downloadMetaData->m_url,pvVar7,uVar10,pbVar11,uVar3,
+                       uVar2,uVar4);
   }
   else if (uVar4 == 0x67) {
     bdLogMessage(BD_LOG_INFO,"info/","lobby/contentStreamingBase",
                  "c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdLobby\\bdContentStreaming\\bdContentStreamingBase.cpp"
                  ,"bdContentStreamingBase::handlePreHTTPComplete",399,"HTTP DELETE %s");
-    uVar3 = bdRemoteTask::getTransactionID((this_00->m_remoteTask).m_ptr);
-    bVar5 = bdHTTPWrapper::startDelete
-                      (&this_00->m_http,this_00->m_URLs[this_00->m_httpSite].m_url,uVar3);
+    uVar3 = bdRemoteTask::getTransactionID((this->m_remoteTask).m_ptr);
+    bVar5 = bdHTTPWrapper::startDelete(&this->m_http,this->m_URLs[this->m_httpSite].m_url,uVar3);
   }
-  if (this_00->m_state != DONE) {
+  if (this->m_state != DONE) {
     if ((bVar5 == BD_PENDING) || (bVar5 == BD_DONE)) {
       bVar8 = BD_NO_ERROR;
       bVar6 = HTTP_OPERATION;
     }
     else {
-      if (this_00->m_state == DONE) goto LAB_828feb08;
+      if (this->m_state == DONE) {
+        return;
+      }
       bVar8 = BD_CONTENTSTREAMING_FAILED_TO_START_HTTP;
       bVar6 = FAILED;
     }
-    setState(this_00,bVar6,bVar8);
+    setState(this,bVar6,bVar8);
   }
-LAB_828feb08:
-  __restgprlr_27();
   return;
 }
 
 
 // 828FEB18  handleHTTPComplete  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdcontentstreaming/bdcontentstreamingbase.cpp:414)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void __thiscall bdContentStreamingBase::handleHTTPComplete(bdContentStreamingBase *this)
 
 {
   bdRemoteTask *pbVar1;
-  bdContentStreamingBase *this_00;
   bdReference<bdRemoteTask> bVar2;
   uint uVar3;
   bdReference<bdRemoteTask> *pbVar4;
@@ -536,87 +528,87 @@ void __thiscall bdContentStreamingBase::handleHTTPComplete(bdContentStreamingBas
   ushort uVar6;
   bdReference<bdRemoteTask> abStack_30 [12];
   
-  this_00 = (bdContentStreamingBase *)__savegprlr_28(this);
-  uVar3 = this_00->m_operation;
+  uVar3 = this->m_operation;
   if (uVar3 == 0x65) {
-    bdHTTPWrapper::getTransferSpeed(&this_00->m_http);
+    bdHTTPWrapper::getTransferSpeed(&this->m_http);
     bdLogMessage(BD_LOG_INFO,"info/","lobby/contentStreamingBase",
                  "c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdLobby\\bdContentStreaming\\bdContentStreamingBase.cpp"
                  ,"bdContentStreamingBase::handleHTTPComplete",0x1a2,
                  "Uploaded: \"%s\" @ %.2f KB/sec");
     bVar2 = _postUpload((bdContentStreamingBase *)abStack_30);
     bdReference<bdRemoteTask>::operator=
-              (&this_00->m_remoteTask,(bdReference<bdRemoteTask> *)bVar2.m_ptr);
+              (&this->m_remoteTask,(bdReference<bdRemoteTask> *)bVar2.m_ptr);
     bdReference<bdRemoteTask>::~bdReference<bdRemoteTask>(abStack_30);
-    pbVar1 = (this_00->m_remoteTask).m_ptr;
-LAB_828febb0:
-    bVar5 = (-(uint)(pbVar1 != (bdRemoteTask *)0x0) & 0xfffffffe) + FAILED;
-  }
-  else if (uVar3 == 0x68) {
-    pbVar1 = (this_00->m_remoteTask).m_ptr;
-    uVar6 = this_00->m_httpSite + 1;
-    this_00->m_httpSite = uVar6;
-    uVar3 = bdRemoteTask::getNumResults(pbVar1);
-    if ((uVar3 <= uVar6) || (2 < uVar6)) {
-      pbVar4 = (bdReference<bdRemoteTask> *)
-               (**(code **)(this_00->_padding_ + 0xc))(abStack_30,this_00);
-      bdReference<bdRemoteTask>::operator=(&this_00->m_remoteTask,pbVar4);
-      bdReference<bdRemoteTask>::~bdReference<bdRemoteTask>(abStack_30);
-      pbVar1 = (this_00->m_remoteTask).m_ptr;
-      goto LAB_828febb0;
-    }
-    bVar5 = PRE_HTTP_OPERATION;
+    pbVar1 = (this->m_remoteTask).m_ptr;
   }
   else {
-    if (uVar3 == 0x66) {
-      bdHTTPWrapper::getTransferProgress(&this_00->m_http);
-      bdHTTPWrapper::getTransferSpeed(&this_00->m_http);
-      bdLogMessage(BD_LOG_INFO,"info/","lobby/contentStreamingBase",
-                   "c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdLobby\\bdContentStreaming\\bdContentStreamingBase.cpp"
-                   ,"bdContentStreamingBase::handleHTTPComplete",0x1b9,
-                   "Transfered: %d KB @ %0.2f KB/sec");
-      setState(this_00,DONE,BD_NO_ERROR);
-      ((this_00->m_overallTask).m_ptr)->m_numResults = 1;
-      goto LAB_828fed00;
+    if (uVar3 != 0x68) {
+      if (uVar3 == 0x66) {
+        bdHTTPWrapper::getTransferProgress(&this->m_http);
+        bdHTTPWrapper::getTransferSpeed(&this->m_http);
+        bdLogMessage(BD_LOG_INFO,"info/","lobby/contentStreamingBase",
+                     "c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdLobby\\bdContentStreaming\\bdContentStreamingBase.cpp"
+                     ,"bdContentStreamingBase::handleHTTPComplete",0x1b9,
+                     "Transfered: %d KB @ %0.2f KB/sec");
+        setState(this,DONE,BD_NO_ERROR);
+        ((this->m_overallTask).m_ptr)->m_numResults = 1;
+        return;
+      }
+      if (uVar3 != 0x67) {
+        return;
+      }
+      pbVar1 = (this->m_remoteTask).m_ptr;
+      uVar6 = this->m_httpSite + 1;
+      this->m_httpSite = uVar6;
+      uVar3 = bdRemoteTask::getNumResults(pbVar1);
+      if ((uVar3 <= uVar6) || (bVar5 = PRE_HTTP_OPERATION, 2 < uVar6)) {
+        bVar5 = DONE;
+      }
+      goto LAB_828fecf4;
     }
-    if (uVar3 != 0x67) goto LAB_828fed00;
-    pbVar1 = (this_00->m_remoteTask).m_ptr;
-    uVar6 = this_00->m_httpSite + 1;
-    this_00->m_httpSite = uVar6;
+    pbVar1 = (this->m_remoteTask).m_ptr;
+    uVar6 = this->m_httpSite + 1;
+    this->m_httpSite = uVar6;
     uVar3 = bdRemoteTask::getNumResults(pbVar1);
-    if ((uVar3 <= uVar6) || (bVar5 = PRE_HTTP_OPERATION, 2 < uVar6)) {
-      bVar5 = DONE;
+    if ((uVar6 < uVar3) && (uVar6 < 3)) {
+      bVar5 = PRE_HTTP_OPERATION;
+      goto LAB_828fecf4;
     }
+    pbVar4 = (bdReference<bdRemoteTask> *)(**(code **)(this->_padding_ + 0xc))(abStack_30,this);
+    bdReference<bdRemoteTask>::operator=(&this->m_remoteTask,pbVar4);
+    bdReference<bdRemoteTask>::~bdReference<bdRemoteTask>(abStack_30);
+    pbVar1 = (this->m_remoteTask).m_ptr;
   }
-  setState(this_00,bVar5,BD_NO_ERROR);
-LAB_828fed00:
-  __restgprlr_28();
+  bVar5 = (-(uint)(pbVar1 != (bdRemoteTask *)0x0) & 0xfffffffe) + FAILED;
+LAB_828fecf4:
+  setState(this,bVar5,BD_NO_ERROR);
   return;
 }
 
 
 // 828FED58  handleHTTPFailed  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdcontentstreaming/bdcontentstreamingbase.cpp:463)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 void __thiscall bdContentStreamingBase::handleHTTPFailed(bdContentStreamingBase *this)
 
 {
   bdRemoteTask *pbVar1;
-  bdContentStreamingBase *this_00;
   uint uVar2;
   bdStatus bVar3;
   bdLobbyErrorCode bVar4;
   char *pcVar5;
   ushort uVar6;
   
-  this_00 = (bdContentStreamingBase *)__savegprlr_26(this);
-  uVar2 = this_00->m_operation;
+  uVar2 = this->m_operation;
   if (uVar2 == 0x65) {
     bdLogMessage(BD_LOG_ERROR,"err/","lobby/contentStreamingBase",
                  "c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdLobby\\bdContentStreaming\\bdContentStreamingBase.cpp"
                  ,"bdContentStreamingBase::handleHTTPFailed",0x1d4,"HTTP PUT failed for site %s");
-    pbVar1 = (this_00->m_remoteTask).m_ptr;
-    uVar6 = this_00->m_httpSite + 1;
-    this_00->m_httpSite = uVar6;
+    pbVar1 = (this->m_remoteTask).m_ptr;
+    uVar6 = this->m_httpSite + 1;
+    this->m_httpSite = uVar6;
     uVar2 = bdRemoteTask::getNumResults(pbVar1);
     if ((uVar6 < uVar2) && (uVar6 < 3)) {
 LAB_828fee34:
@@ -633,7 +625,7 @@ LAB_828fef34:
       bVar3 = FAILED;
       bVar4 = BD_CONTENTSTREAMING_HTTP_ERROR;
     }
-    setState(this_00,bVar3,bVar4);
+    setState(this,bVar3,bVar4);
   }
   else {
     if (uVar2 == 0x66) {
@@ -646,9 +638,9 @@ LAB_828fef34:
                      "c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdLobby\\bdContentStreaming\\bdContentStreamingBase.cpp"
                      ,"bdContentStreamingBase::handleHTTPFailed",0x1ef,
                      "HTTP DELETE failed for site %s");
-        pbVar1 = (this_00->m_remoteTask).m_ptr;
-        uVar6 = this_00->m_httpSite + 1;
-        this_00->m_httpSite = uVar6;
+        pbVar1 = (this->m_remoteTask).m_ptr;
+        uVar6 = this->m_httpSite + 1;
+        this->m_httpSite = uVar6;
         uVar2 = bdRemoteTask::getNumResults(pbVar1);
         if ((uVar2 <= uVar6) || (2 < uVar6)) {
           uVar2 = 0x1f5;
@@ -657,18 +649,18 @@ LAB_828fef34:
         }
         goto LAB_828fee34;
       }
-      if (uVar2 != 0x68) goto LAB_828fef5c;
+      if (uVar2 != 0x68) {
+        return;
+      }
       pcVar5 = "HTTP COPY failed for site %s";
       uVar2 = 0x201;
     }
     bdLogMessage(BD_LOG_ERROR,"err/","lobby/contentStreamingBase",
                  "c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdLobby\\bdContentStreaming\\bdContentStreamingBase.cpp"
                  ,"bdContentStreamingBase::handleHTTPFailed",uVar2,pcVar5);
-    setState(this_00,FAILED,BD_CONTENTSTREAMING_HTTP_ERROR);
-    ((this_00->m_overallTask).m_ptr)->m_numResults = 0;
+    setState(this,FAILED,BD_CONTENTSTREAMING_HTTP_ERROR);
+    ((this->m_overallTask).m_ptr)->m_numResults = 0;
   }
-LAB_828fef5c:
-  __restgprlr_26();
   return;
 }
 
@@ -696,58 +688,56 @@ bool __thiscall bdContentStreamingBase::initDelete(bdContentStreamingBase *this)
 
 // 828FE0F0  _postUpload  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdcontentstreaming/bdcontentstreamingbase.cpp:534)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 bdReference<bdRemoteTask> __thiscall
 bdContentStreamingBase::_postUpload(bdContentStreamingBase *this)
 
 {
   bool bVar1;
-  int *piVar2;
-  uint *puVar3;
-  uint uVar4;
-  bdStatus bVar5;
-  uint *puVar6;
-  bdRemoteTask *pbVar7;
-  undefined8 in_r4;
-  longlong lVar8;
+  uint uVar2;
+  bdStatus bVar3;
+  uint *puVar4;
+  int *in_r4;
+  longlong lVar5;
   char in_RESERVE;
-  byte bVar9;
-  uint *puStack00000014;
+  byte bVar6;
+  bdContentStreamingBase *pbStack00000014;
   bdReference<bdRemoteTask> bStack_4c;
   bdReference<bdRemoteTask> abStack_48 [18];
   
-  puVar3 = (uint *)__savegprlr_26(this);
-  piVar2 = (int *)in_r4;
-  puStack00000014 = puVar3;
-  uVar4 = bdHTTPWrapper::getTransferProgress((bdHTTPWrapper *)(piVar2 + 0x69a));
-  if (((piVar2[0xc] != 0) && (piVar2[0xc] != uVar4)) &&
-     (bVar5 = bdHTTPWrapperBase::getStatus((bdHTTPWrapperBase *)(piVar2 + 0x69a)), bVar5 == BD_DONE)
-     ) {
+  pbStack00000014 = this;
+  uVar2 = bdHTTPWrapper::getTransferProgress((bdHTTPWrapper *)(in_r4 + 0x69a));
+  if (((in_r4[0xc] != 0) && (in_r4[0xc] != uVar2)) &&
+     (bVar3 = bdHTTPWrapperBase::getStatus((bdHTTPWrapperBase *)(in_r4 + 0x69a)), bVar3 == BD_DONE))
+  {
     bdLogMessage(BD_LOG_WARNING,"warn/","sim",
                  "c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdLobby\\bdContentStreaming\\bdContentStreamingBase.cpp"
                  ,"bdContentStreamingBase::_postUpload",0x21b,
                  "Upload completed with %d bytes sent. Expected %d");
   }
-  piVar2[0xc] = uVar4;
-  bVar1 = *(char *)(piVar2 + 0x4b2) == '\0';
-  bVar9 = bVar1 << 1;
+  in_r4[0xc] = uVar2;
+  bVar1 = *(char *)(in_r4 + 0x4b2) == '\0';
+  bVar6 = bVar1 << 1;
   if (bVar1) {
-    puVar6 = (uint *)(**(code **)(*piVar2 + 4))(&bStack_4c,in_r4);
+    puVar4 = (uint *)(**(code **)(*in_r4 + 4))(&bStack_4c,in_r4);
   }
   else {
-    puVar6 = (uint *)(**(code **)(*piVar2 + 8))(abStack_48);
+    puVar4 = (uint *)(**(code **)(*in_r4 + 8))(abStack_48);
   }
-  uVar4 = *puVar6;
-  *puVar3 = uVar4;
-  if ((ulonglong)uVar4 != 0) {
-    lVar8 = (ulonglong)uVar4 + 4;
+  uVar2 = *puVar4;
+  this->_padding_ = uVar2;
+  if ((ulonglong)uVar2 != 0) {
+    lVar5 = (ulonglong)uVar2 + 4;
     do {
-      puVar6 = (uint *)lVar8;
+      puVar4 = (uint *)lVar5;
       if (in_RESERVE != '\0') {
-        uVar4 = storeWordConditionalIndexed((ulonglong)*puVar6 + 1,0,lVar8);
-        *puVar6 = uVar4;
-        bVar9 = 2;
+        uVar2 = storeWordConditionalIndexed((ulonglong)*puVar4 + 1,0,lVar5);
+        *puVar4 = uVar2;
+        bVar6 = 2;
       }
-    } while (!(bool)(bVar9 >> 1 & 1));
+    } while (!(bool)(bVar6 >> 1 & 1));
   }
   if (bVar1) {
     bdReference<bdRemoteTask>::~bdReference<bdRemoteTask>(&bStack_4c);
@@ -755,9 +745,8 @@ bdContentStreamingBase::_postUpload(bdContentStreamingBase *this)
   else {
     bdReference<bdRemoteTask>::~bdReference<bdRemoteTask>(abStack_48);
   }
-  *(undefined1 *)(piVar2 + 0x4b2) = 0;
-  pbVar7 = (bdRemoteTask *)__restgprlr_26(puVar3);
-  return (bdReference<bdRemoteTask>)pbVar7;
+  *(undefined1 *)(in_r4 + 0x4b2) = 0;
+  return (bdReference<bdRemoteTask>)(bdRemoteTask *)this;
 }
 
 
@@ -830,20 +819,20 @@ void __thiscall bdContentStreamingBase::abortHTTPOperation(bdContentStreamingBas
 
 // 828FDC90  checkProgress  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdcontentstreaming/bdcontentstreamingbase.cpp:610)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void __thiscall
 bdContentStreamingBase::checkProgress(bdContentStreamingBase *this,uint *param_1,float *param_2)
 
 {
-  int iVar1;
-  uint uVar2;
-  float fVar3;
+  uint uVar1;
+  float fVar2;
   
-  iVar1 = __savegprlr_29(this);
-  uVar2 = bdHTTPWrapper::getTransferProgress((bdHTTPWrapper *)(iVar1 + 0x1a68));
-  *param_1 = uVar2;
-  fVar3 = bdHTTPWrapper::getTransferSpeed((bdHTTPWrapper *)(iVar1 + 0x1a68));
-  *param_2 = fVar3;
-  __restgprlr_29();
+  uVar1 = bdHTTPWrapper::getTransferProgress(&this->m_http);
+  *param_1 = uVar1;
+  fVar2 = bdHTTPWrapper::getTransferSpeed(&this->m_http);
+  *param_2 = fVar2;
   return;
 }
 

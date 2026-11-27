@@ -21,172 +21,172 @@ void __thiscall bdAntiCheat::~bdAntiCheat(bdAntiCheat *this)
 
 // 8290DB38  answerChallenges  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdanticheat/bdanticheat.cpp:27)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 bdReference<bdRemoteTask> __thiscall
 bdAntiCheat::answerChallenges(bdAntiCheat *this,bdAntiCheatResponses *param_1)
 
 {
   uint uVar1;
-  bdReference<bdRemoteTask> *pbVar3;
-  bdTaskByteBuffer *pbVar4;
+  bdTaskByteBuffer *pbVar3;
   ulonglong uVar2;
-  bool bVar7;
-  bool bVar8;
-  bdLobbyErrorCode bVar5;
-  bdRemoteTask *pbVar6;
+  bool bVar5;
+  bool bVar6;
+  bdLobbyErrorCode bVar4;
   bdAntiCheatResponses *in_r5;
-  uint *puVar9;
+  uint *puVar7;
   char in_RESERVE;
-  byte bVar10;
-  bdReference<bdRemoteTask> *pbStack00000014;
+  byte bVar8;
+  bdAntiCheat *pbStack00000014;
   bdReference<bdTaskByteBuffer> local_40;
   undefined4 local_3c;
   bdTaskByteBuffer *local_38;
   
-  pbVar3 = (bdReference<bdRemoteTask> *)__savegprlr_27(this);
-  pbVar3->m_ptr = (bdRemoteTask *)0x0;
+  this->m_remoteTaskManager = (bdRemoteTaskManager *)0x0;
   local_3c = 1;
-  pbStack00000014 = pbVar3;
+  pbStack00000014 = this;
   local_38 = bdMemory::allocate(0x2c);
-  bVar10 = (local_38 == (bdTaskByteBuffer *)0x0) << 1;
+  bVar8 = (local_38 == (bdTaskByteBuffer *)0x0) << 1;
   if (local_38 == (bdTaskByteBuffer *)0x0) {
     uVar2 = 0;
   }
   else {
-    pbVar4 = bdTaskByteBuffer::bdTaskByteBuffer(local_38,0,true);
-    uVar2 = (ulonglong)(int)pbVar4;
+    pbVar3 = bdTaskByteBuffer::bdTaskByteBuffer(local_38,0,true);
+    uVar2 = (ulonglong)(int)pbVar3;
   }
   local_40.m_ptr = (bdTaskByteBuffer *)uVar2;
   if ((uVar2 & 0xffffffff) != 0) {
     do {
-      puVar9 = (uint *)(uVar2 + 4);
+      puVar7 = (uint *)(uVar2 + 4);
       if (in_RESERVE != '\0') {
-        uVar1 = storeWordConditionalIndexed((ulonglong)*puVar9 + 1,0,uVar2 + 4);
-        *puVar9 = uVar1;
-        bVar10 = 2;
+        uVar1 = storeWordConditionalIndexed((ulonglong)*puVar7 + 1,0,uVar2 + 4);
+        *puVar7 = uVar1;
+        bVar8 = 2;
       }
-    } while (!(bool)(bVar10 >> 1 & 1));
+    } while (!(bool)(bVar8 >> 1 & 1));
   }
-  bVar7 = bdAntiCheatResponses::serialize(in_r5,(bdByteBuffer *)local_40.m_ptr);
-  if (bVar7) {
-    bVar8 = bdByteBuffer::write((bdByteBuffer *)local_40.m_ptr,(void *)0x0,0x40);
-    bVar7 = true;
-    if (bVar8) goto LAB_8290dc04;
+  bVar5 = bdAntiCheatResponses::serialize(in_r5,(bdByteBuffer *)local_40.m_ptr);
+  if (bVar5) {
+    bVar6 = bdByteBuffer::write((bdByteBuffer *)local_40.m_ptr,(void *)0x0,0x40);
+    bVar5 = true;
+    if (bVar6) goto LAB_8290dc04;
   }
-  bVar7 = false;
+  bVar5 = false;
 LAB_8290dc04:
-  bVar8 = false;
-  if (bVar7) {
+  bVar6 = false;
+  if (bVar5) {
     (**(code **)((local_40.m_ptr)->_padding_ + 4))();
     bdRemoteTaskManager::initTaskBuffer(&local_40,'&','\x02');
-    bVar8 = bdAntiCheatResponses::serialize(in_r5,(bdByteBuffer *)local_40.m_ptr);
+    bVar6 = bdAntiCheatResponses::serialize(in_r5,(bdByteBuffer *)local_40.m_ptr);
   }
-  if (bVar8 == false) {
+  if (bVar6 == false) {
     bdLogMessage(BD_LOG_WARNING,"warn/","anticheat",
                  "c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdLobby\\bdAntiCheat\\bdAntiCheat.cpp"
                  ,"bdAntiCheat::answerChallenges",0x38,"Failed to write param into buffer");
   }
   else {
-    bVar5 = bdRemoteTaskManager::startTask
-                      ((bdRemoteTaskManager *)param_1->_padding_,pbVar3,&local_40);
-    if (bVar5 != BD_NO_ERROR) {
+    bVar4 = bdRemoteTaskManager::startTask
+                      ((bdRemoteTaskManager *)param_1->_padding_,(bdReference<bdRemoteTask> *)this,
+                       &local_40);
+    if (bVar4 != BD_NO_ERROR) {
       bdLogMessage(BD_LOG_WARNING,"warn/","anticheat",
                    "c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdLobby\\bdAntiCheat\\bdAntiCheat.cpp"
                    ,"bdAntiCheat::answerChallenges",0x33,"Failed to start task: Error %i");
     }
   }
   bdReference<bdTaskByteBuffer>::~bdReference<bdTaskByteBuffer>(&local_40);
-  pbVar6 = (bdRemoteTask *)__restgprlr_27(pbVar3);
-  return (bdReference<bdRemoteTask>)pbVar6;
+  return (bdReference<bdRemoteTask>)(bdRemoteTask *)this;
 }
 
 
 // 8290DD88  reportConsoleID  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdanticheat/bdanticheat.cpp:63)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 bdReference<bdRemoteTask> __thiscall
 bdAntiCheat::reportConsoleID(bdAntiCheat *this,bdConsoleID *param_1)
 
 {
-  bdReference<bdRemoteTask> *pbVar2;
-  bdTaskByteBuffer *pbVar3;
+  bdTaskByteBuffer *pbVar2;
   ulonglong uVar1;
-  bool bVar6;
-  bool bVar7;
-  bdLobbyErrorCode bVar4;
-  bdRemoteTask *pbVar5;
-  ulonglong in_r5;
-  uint uVar8;
-  char *pcVar9;
-  uint *puVar10;
+  bool bVar4;
+  bool bVar5;
+  bdLobbyErrorCode bVar3;
+  int in_r5;
+  uint uVar6;
+  char *pcVar7;
+  uint *puVar8;
   char in_RESERVE;
-  byte bVar11;
-  bdReference<bdRemoteTask> *pbStack00000014;
+  byte bVar9;
+  bdAntiCheat *pbStack00000014;
   bdReference<bdTaskByteBuffer> local_60;
   undefined4 local_5c;
   bdTaskByteBuffer *local_58;
   bdConsoleID abStack_50 [6];
   
-  pbVar2 = (bdReference<bdRemoteTask> *)__savegprlr_26(this);
-  pbVar2->m_ptr = (bdRemoteTask *)0x0;
-  bVar6 = true;
+  this->m_remoteTaskManager = (bdRemoteTaskManager *)0x0;
+  bVar4 = true;
   local_5c = 1;
-  pbStack00000014 = pbVar2;
+  pbStack00000014 = this;
   local_58 = bdMemory::allocate(0x2c);
-  bVar11 = (local_58 == (bdTaskByteBuffer *)0x0) << 1;
+  bVar9 = (local_58 == (bdTaskByteBuffer *)0x0) << 1;
   if (local_58 == (bdTaskByteBuffer *)0x0) {
     uVar1 = 0;
   }
   else {
-    pbVar3 = bdTaskByteBuffer::bdTaskByteBuffer(local_58,0x4d,true);
-    uVar1 = (ulonglong)(int)pbVar3;
+    pbVar2 = bdTaskByteBuffer::bdTaskByteBuffer(local_58,0x4d,true);
+    uVar1 = (ulonglong)(int)pbVar2;
   }
   local_60.m_ptr = (bdTaskByteBuffer *)uVar1;
   if ((uVar1 & 0xffffffff) != 0) {
     do {
-      puVar10 = (uint *)(uVar1 + 4);
+      puVar8 = (uint *)(uVar1 + 4);
       if (in_RESERVE != '\0') {
-        uVar8 = storeWordConditionalIndexed((ulonglong)*puVar10 + 1,0,uVar1 + 4);
-        *puVar10 = uVar8;
-        bVar11 = 2;
+        uVar6 = storeWordConditionalIndexed((ulonglong)*puVar8 + 1,0,uVar1 + 4);
+        *puVar8 = uVar6;
+        bVar9 = 2;
       }
-    } while (!(bool)(bVar11 >> 1 & 1));
+    } while (!(bool)(bVar9 >> 1 & 1));
   }
   bdRemoteTaskManager::initTaskBuffer(&local_60,'&','\x03');
-  if ((in_r5 & 0xffffffff) == 0) {
+  if (in_r5 == 0) {
     bdConsoleID::bdConsoleID(abStack_50);
-    bVar6 = bdConsoleID::readConsoleID(abStack_50);
-    bVar7 = false;
-    if (bVar6) {
-      bVar7 = bdByteBuffer::writeBlob((bdByteBuffer *)local_60.m_ptr,abStack_50[0].m_id,8);
+    bVar4 = bdConsoleID::readConsoleID(abStack_50);
+    bVar5 = false;
+    if (bVar4) {
+      bVar5 = bdByteBuffer::writeBlob((bdByteBuffer *)local_60.m_ptr,abStack_50[0].m_id,8);
     }
     bdConsoleID::~bdConsoleID(abStack_50);
   }
   else {
-    bVar7 = bdByteBuffer::writeBlob((bdByteBuffer *)local_60.m_ptr,(void *)((int)in_r5 + 4),8);
+    bVar5 = bdByteBuffer::writeBlob((bdByteBuffer *)local_60.m_ptr,(void *)(in_r5 + 4),8);
   }
-  if (bVar7 == false) {
-    if (bVar6 == false) {
-      uVar8 = 0x69;
-      pcVar9 = "Failed to read console ID";
+  if (bVar5 == false) {
+    if (bVar4 == false) {
+      uVar6 = 0x69;
+      pcVar7 = "Failed to read console ID";
     }
     else {
-      uVar8 = 0x65;
-      pcVar9 = "Failed to write param into buffer";
+      uVar6 = 0x65;
+      pcVar7 = "Failed to write param into buffer";
     }
     bdLogMessage(BD_LOG_WARNING,"warn/","anticheat",
                  "c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdLobby\\bdAntiCheat\\bdAntiCheat.cpp"
-                 ,"bdAntiCheat::reportConsoleID",uVar8,pcVar9);
+                 ,"bdAntiCheat::reportConsoleID",uVar6,pcVar7);
   }
   else {
-    bVar4 = bdRemoteTaskManager::startTask
-                      ((bdRemoteTaskManager *)param_1->_padding_,pbVar2,&local_60);
-    if (bVar4 != BD_NO_ERROR) {
+    bVar3 = bdRemoteTaskManager::startTask
+                      ((bdRemoteTaskManager *)param_1->_padding_,(bdReference<bdRemoteTask> *)this,
+                       &local_60);
+    if (bVar3 != BD_NO_ERROR) {
       bdLogMessage(BD_LOG_WARNING,"warn/","anticheat",
                    "c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdLobby\\bdAntiCheat\\bdAntiCheat.cpp"
                    ,"bdAntiCheat::reportConsoleID",0x60,"Failed to start task: Error %i");
     }
   }
   bdReference<bdTaskByteBuffer>::~bdReference<bdTaskByteBuffer>(&local_60);
-  pbVar5 = (bdRemoteTask *)__restgprlr_26(pbVar2);
-  return (bdReference<bdRemoteTask>)pbVar5;
+  return (bdReference<bdRemoteTask>)(bdRemoteTask *)this;
 }
 

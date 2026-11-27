@@ -2,6 +2,8 @@
 
 // 82733EC0  R_DrawEmissiveCallback  (gfx_d3d/r_draw_emissive.cpp:182)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 
@@ -11,13 +13,11 @@ void R_DrawEmissiveCallback(void *param_1,GfxCmdBufContext param_2)
   int iVar1;
   GfxDrawList *pGVar2;
   GfxCmdBufSourceState *pGVar3;
-  int *piVar4;
   GfxCmdBufSourceState *pGStack00000018;
   GfxCmdBufState *pGStack0000001c;
   
-  piVar4 = (int *)__savegprlr_28(param_1);
-  iVar1 = *piVar4;
-  pGVar2 = (GfxDrawList *)piVar4[1];
+  iVar1 = *(int *)param_1;
+  pGVar2 = *(GfxDrawList **)((int)param_1 + 4);
   _pGStack00000018 = param_2;
   R_SetRenderTarget(param_2,*(GfxRenderTargetId *)(iVar1 + 0x920));
   pGVar3 = pGStack00000018;
@@ -50,13 +50,14 @@ void R_DrawEmissiveCallback(void *param_1,GfxCmdBufContext param_2)
   R_ShowTris(param_2,(GfxDrawList *)(iVar1 + 0x24e8));
   R_ShowTris(param_2,(GfxDrawList *)(iVar1 + 0x2ec0));
   R_HW_DisableScissor(pGStack0000001c);
-  __restgprlr_28();
   return;
 }
 
 
 // 82734040  R_DrawEmissivePreWeave  (gfx_d3d/r_draw_emissive.cpp:341)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 
@@ -65,39 +66,33 @@ void R_DrawEmissivePreWeave
                _func___cdecl_void_void_ptr_GfxCmdBufContext *param_4)
 
 {
-  GfxViewParms *pGVar1;
-  GfxViewParms *local_1790;
+  GfxViewInfo *local_1790;
   GfxDrawList *local_178c;
   GfxCmdBufSourceState GStack_1780;
   
+  local_1790 = param_1;
   local_178c = param_2;
-  pGVar1 = (GfxViewParms *)__savegprlr_29(param_1);
-  local_1790 = pGVar1;
-  R_InitCmdBufSourceState(&GStack_1780,(GfxCmdBufInput *)(pGVar1[2].viewProjectionMatrix.m + 1),1);
-  R_SetRenderTargetSize(&GStack_1780,(GfxRenderTargetId)pGVar1[6].camera.tanHalfFovX);
-  R_SetViewportStruct(&GStack_1780,(GfxViewport *)(pGVar1 + 1));
-  R_DrawCall(param_4,&local_1790,&GStack_1780,(GfxSceneDef *)(pGVar1[1].viewMatrix.m + 3),pGVar1,
-             param_3);
-  __restgprlr_29();
+  R_InitCmdBufSourceState(&GStack_1780,&param_1->input,1);
+  R_SetRenderTargetSize(&GStack_1780,param_1->renderTargetId);
+  R_SetViewportStruct(&GStack_1780,&param_1->sceneViewport);
+  R_DrawCall(param_4,&local_1790,&GStack_1780,&param_1->sceneDef,&param_1->viewParms,param_3);
   return;
 }
 
 
 // 827340B0  R_DrawEmissive  (gfx_d3d/r_draw_emissive.cpp:378)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void R_DrawEmissive(GfxViewInfo *param_1,GfxDrawList *param_2,GfxDrawCallOutput *param_3)
 
 {
-  GfxViewInfo *pGVar1;
-  
-  pGVar1 = (GfxViewInfo *)__savegprlr_29(param_1);
   PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffff,"Emissive");
-  R_DrawEmissivePreWeave(pGVar1,param_2,param_3,R_DrawEmissiveCallback);
+  R_DrawEmissivePreWeave(param_1,param_2,param_3,R_DrawEmissiveCallback);
   PIXEndNamedEvent();
-  __restgprlr_29();
   return;
 }
 

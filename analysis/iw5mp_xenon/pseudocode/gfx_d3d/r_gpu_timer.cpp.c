@@ -73,76 +73,119 @@ float R_GPU_ConvertTimeToMsec(uint param_1)
 
 // 827407E8  R_GPU_CalcDerivedTimers  (gfx_d3d/r_gpu_timer.cpp:454)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "GPUTimerId": Some values do not have unique names */
 
 void R_GPU_CalcDerivedTimers(GPUTimerFrame *param_1)
 
 {
-  GPUTimerId GVar1;
-  undefined4 uVar2;
+  int iVar1;
+  int iVar2;
   int iVar3;
-  GPUTimerId *pGVar4;
-  int iVar5;
-  int *piVar6;
-  longlong lVar7;
+  int iVar4;
+  GPUTimerId GVar5;
+  int iVar6;
+  int iVar7;
+  int iVar8;
+  int iVar9;
+  int iVar10;
+  int iVar11;
+  int iVar12;
+  int iVar13;
+  int iVar14;
+  int iVar15;
+  int iVar16;
+  int iVar17;
+  int iVar18;
+  int iVar19;
+  int iVar20;
+  undefined4 uVar21;
+  undefined4 uVar22;
+  int iVar23;
+  int iVar24;
+  GPUTimerId *pGVar25;
+  uint uVar26;
+  int *piVar27;
+  longlong lVar28;
   
-  iVar3 = __savegprlr_29(param_1);
   if ((r_gpuTimersShowPrepass->current).enabled == false) {
-    *(int *)(iVar3 + 0x118) = *(int *)(iVar3 + 0x118) + *(int *)(iVar3 + 0xdc);
-    *(undefined4 *)(iVar3 + 0xdc) = 0;
-    *(undefined1 *)(iVar3 + 0xea) = 1;
-    *(int *)(iVar3 + 300) = *(int *)(iVar3 + 300) + *(int *)(iVar3 + 0xf0);
-    *(undefined4 *)(iVar3 + 0xf0) = 0;
-    *(undefined1 *)(iVar3 + 0xfe) = 1;
-    *(int *)(iVar3 + 0x140) = *(int *)(iVar3 + 0x140) + *(int *)(iVar3 + 0x104);
-    *(undefined4 *)(iVar3 + 0x104) = 0;
-    *(undefined1 *)(iVar3 + 0x112) = 1;
+    iVar1 = *(int *)&param_1->timers[0xe].field_0x4;
+    iVar2 = *(int *)&param_1->timers[0xb].field_0x4;
+    iVar3 = *(int *)&param_1->timers[0xf].field_0x4;
+    iVar4 = *(int *)&param_1->timers[0xc].field_0x4;
+    *(int *)&param_1->timers[0xd].field_0x4 =
+         *(int *)&param_1->timers[0xd].field_0x4 + *(int *)&param_1->timers[10].field_0x4;
+    *(undefined4 *)&param_1->timers[10].field_0x4 = 0;
+    param_1->timers[10].field_0x12 = 1;
+    *(int *)&param_1->timers[0xe].field_0x4 = iVar1 + iVar2;
+    *(undefined4 *)&param_1->timers[0xb].field_0x4 = 0;
+    param_1->timers[0xb].field_0x12 = 1;
+    *(int *)&param_1->timers[0xf].field_0x4 = iVar3 + iVar4;
+    *(undefined4 *)&param_1->timers[0xc].field_0x4 = 0;
+    param_1->timers[0xc].field_0x12 = 1;
   }
-  pGVar4 = s_timerOrder;
-  lVar7 = 0x17;
+  pGVar25 = s_timerOrder;
+  lVar28 = 0x17;
   do {
-    GVar1 = *pGVar4;
-    pGVar4 = pGVar4 + 1;
-    iVar5 = GVar1 * 0x14 + iVar3;
-    *(int *)(*pGVar4 * 0x14 + iVar3 + 0x10) = *(int *)(iVar5 + 0x14) + *(int *)(iVar5 + 0x10);
-    lVar7 = lVar7 + -1;
-  } while (lVar7 != 0);
-  piVar6 = &s_callbackIndex;
-  lVar7 = 4;
-  uVar2 = *(undefined4 *)(s_timerOrder[0] * 0x14 + iVar3 + 0x10);
-  *(undefined4 *)(iVar3 + 8) = 0;
-  *(undefined4 *)(iVar3 + 4) = uVar2;
+    GVar5 = *pGVar25;
+    pGVar25 = pGVar25 + 1;
+    *(int *)(param_1->timers + *pGVar25) =
+         *(int *)&param_1->timers[GVar5].field_0x4 + *(int *)(param_1->timers + GVar5);
+    lVar28 = lVar28 + -1;
+  } while (lVar28 != 0);
+  piVar27 = &s_callbackIndex;
+  lVar28 = 4;
+  uVar26 = *(uint *)(param_1->timers + s_timerOrder[0]);
+  param_1->totalTime = 0;
+  param_1->beginTime = uVar26;
   do {
-    iVar5 = *(int *)((piVar6[1] + 1) * 0x14 + iVar3) + *(int *)(iVar3 + 8);
-    *(int *)(iVar3 + 8) = iVar5;
-    iVar5 = *(int *)((piVar6[2] + 1) * 0x14 + iVar3) + iVar5;
-    *(int *)(iVar3 + 8) = iVar5;
-    iVar5 = *(int *)((piVar6[3] + 1) * 0x14 + iVar3) + iVar5;
-    *(int *)(iVar3 + 8) = iVar5;
-    iVar5 = *(int *)((piVar6[4] + 1) * 0x14 + iVar3) + iVar5;
-    *(int *)(iVar3 + 8) = iVar5;
-    iVar5 = *(int *)((piVar6[5] + 1) * 0x14 + iVar3) + iVar5;
-    *(int *)(iVar3 + 8) = iVar5;
-    piVar6 = piVar6 + 6;
-    *(int *)(iVar3 + 8) = *(int *)((*piVar6 + 1) * 0x14 + iVar3) + iVar5;
-    lVar7 = lVar7 + -1;
-  } while (lVar7 != 0);
-  s_totalTime = *(uint *)(iVar3 + 8);
-  *(undefined4 *)(iVar3 + 0x10) = *(undefined4 *)(iVar3 + 0x24);
-  *(undefined4 *)(iVar3 + 0x9c) = *(undefined4 *)(iVar3 + 0xb0);
-  *(undefined4 *)(iVar3 + 0x150) = *(undefined4 *)(iVar3 + 0x164);
-  *(int *)(iVar3 + 0x14) =
-       *(int *)(iVar3 + 0x8c) + *(int *)(iVar3 + 0x78) + *(int *)(iVar3 + 100) +
-       *(int *)(iVar3 + 0x50) + *(int *)(iVar3 + 0x3c) + *(int *)(iVar3 + 0x28);
-  *(int *)(iVar3 + 0xa0) =
-       *(int *)(iVar3 + 0x140) + *(int *)(iVar3 + 300) + *(int *)(iVar3 + 0x118) +
-       *(int *)(iVar3 + 0x104) + *(int *)(iVar3 + 0xf0) + *(int *)(iVar3 + 0xdc) +
-       *(int *)(iVar3 + 200) + *(int *)(iVar3 + 0xb4);
-  *(int *)(iVar3 + 0x154) =
-       *(int *)(iVar3 + 0x1e0) + *(int *)(iVar3 + 0x1cc) + *(int *)(iVar3 + 0x1b8) +
-       *(int *)(iVar3 + 0x1a4) + *(int *)(iVar3 + 400) + *(int *)(iVar3 + 0x17c) +
-       *(int *)(iVar3 + 0x168);
-  __restgprlr_29();
+    uVar26 = *(int *)&param_1->timers[piVar27[1]].field_0x4 + param_1->totalTime;
+    param_1->totalTime = uVar26;
+    uVar26 = *(int *)&param_1->timers[piVar27[2]].field_0x4 + uVar26;
+    param_1->totalTime = uVar26;
+    uVar26 = *(int *)&param_1->timers[piVar27[3]].field_0x4 + uVar26;
+    param_1->totalTime = uVar26;
+    uVar26 = *(int *)&param_1->timers[piVar27[4]].field_0x4 + uVar26;
+    param_1->totalTime = uVar26;
+    uVar26 = *(int *)&param_1->timers[piVar27[5]].field_0x4 + uVar26;
+    param_1->totalTime = uVar26;
+    piVar27 = piVar27 + 6;
+    param_1->totalTime = *(int *)&param_1->timers[*piVar27].field_0x4 + uVar26;
+    lVar28 = lVar28 + -1;
+  } while (lVar28 != 0);
+  iVar1 = *(int *)&param_1->timers[0xf].field_0x4;
+  iVar2 = *(int *)&param_1->timers[0xe].field_0x4;
+  iVar3 = *(int *)&param_1->timers[0xd].field_0x4;
+  iVar4 = *(int *)&param_1->timers[0x16].field_0x4;
+  iVar6 = *(int *)&param_1->timers[0x17].field_0x4;
+  iVar7 = *(int *)&param_1->timers[5].field_0x4;
+  iVar8 = *(int *)&param_1->timers[6].field_0x4;
+  iVar9 = *(int *)&param_1->timers[0xc].field_0x4;
+  iVar10 = *(int *)&param_1->timers[0x15].field_0x4;
+  iVar11 = *(int *)&param_1->timers[4].field_0x4;
+  iVar12 = *(int *)&param_1->timers[0xb].field_0x4;
+  iVar13 = *(int *)&param_1->timers[0x14].field_0x4;
+  iVar14 = *(int *)&param_1->timers[3].field_0x4;
+  iVar15 = *(int *)&param_1->timers[10].field_0x4;
+  iVar16 = *(int *)&param_1->timers[0x13].field_0x4;
+  iVar17 = *(int *)&param_1->timers[2].field_0x4;
+  iVar18 = *(int *)&param_1->timers[9].field_0x4;
+  iVar19 = *(int *)&param_1->timers[0x12].field_0x4;
+  s_totalTime = param_1->totalTime;
+  iVar20 = *(int *)&param_1->timers[1].field_0x4;
+  uVar21 = *(undefined4 *)(param_1->timers + 8);
+  uVar22 = *(undefined4 *)(param_1->timers + 0x11);
+  iVar23 = *(int *)&param_1->timers[8].field_0x4;
+  iVar24 = *(int *)&param_1->timers[0x11].field_0x4;
+  *(undefined4 *)param_1->timers = *(undefined4 *)(param_1->timers + 1);
+  *(undefined4 *)(param_1->timers + 7) = uVar21;
+  *(undefined4 *)(param_1->timers + 0x10) = uVar22;
+  *(int *)&param_1->timers[0].field_0x4 = iVar8 + iVar7 + iVar11 + iVar14 + iVar17 + iVar20;
+  *(int *)&param_1->timers[7].field_0x4 =
+       iVar1 + iVar2 + iVar3 + iVar9 + iVar12 + iVar15 + iVar18 + iVar23;
+  *(int *)&param_1->timers[0x10].field_0x4 =
+       iVar6 + iVar4 + iVar10 + iVar13 + iVar16 + iVar19 + iVar24;
   return;
 }
 
@@ -188,6 +231,8 @@ void R_GPU_AddPaddingCallback(ulong param_1)
 
 // 82740AD8  R_GPU_InitTimers  (gfx_d3d/r_gpu_timer.cpp:628)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void R_GPU_InitTimers(void)
@@ -202,7 +247,6 @@ void R_GPU_InitTimers(void)
   undefined4 *puVar7;
   longlong lVar8;
   
-  __savegprlr_28();
   R_Perf_InitTimerFrameHistory((PerfTimerFrameHistory *)&DAT_845b3958,0x40);
   iVar1 = 0;
   lVar3 = 0x40;
@@ -252,7 +296,6 @@ void R_GPU_InitTimers(void)
   r_gpuTimers = Dvar_RegisterEnum("r_gpuTimers",s_displayModeNames,0,0,"GPU Timers to display");
   r_gpuTimersShowPrepass =
        Dvar_RegisterBool("r_gpuTimersShowPrepass",false,0,"Show prepass in GPU Timers");
-  __restgprlr_28();
   return;
 }
 
@@ -327,6 +370,8 @@ void R_GPU_BeginFrame(void)
 
 // 82740E10  R_GPU_EndFrame  (gfx_d3d/r_gpu_timer.cpp:733)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void R_GPU_EndFrame(void)
@@ -335,7 +380,6 @@ void R_GPU_EndFrame(void)
   int iVar1;
   uint uVar2;
   
-  __savegprlr_28();
   if (s_displayMode != GPU_TIMER_DISPLAY_MODE_DISABLED) {
     if (s_currentTimer != (GPUTimer *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_gpu_timer.cpp",
@@ -352,55 +396,55 @@ void R_GPU_EndFrame(void)
                            -0x40;
     R_HW_InsertCallback(R_GPU_EndFrameCallback,0);
   }
-  __restgprlr_28();
   return;
 }
 
 
 // 82740EF0  R_GPU_BeginTimer  (gfx_d3d/r_gpu_timer.cpp:755)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "GPUTimerId": Some values do not have unique names */
 
 void R_GPU_BeginTimer(GPUTimerId param_1)
 
 {
   int iVar1;
-  ulong uVar2;
-  GPUTimer *pGVar3;
+  GPUTimer *pGVar2;
   
-  uVar2 = __savegprlr_26(param_1);
   iVar1 = s_writeIndex;
   if (s_displayMode != GPU_TIMER_DISPLAY_MODE_DISABLED) {
     if (s_timerFrames[s_writeIndex].isCurrent == false) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_gpu_timer.cpp",
                       0x2fd,0,"%s");
     }
-    if (((int)uVar2 < 0) || (0x1b < uVar2)) {
+    if (((int)param_1 < 0) || (GPU_TIMER_END_RESOLVE < param_1)) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_gpu_timer.cpp",
                       0x2fe,0,"%s");
     }
-    pGVar3 = s_timerFrames[iVar1].timers + uVar2;
+    pGVar2 = s_timerFrames[iVar1].timers + param_1;
     if (s_currentTimer != (GPUTimer *)0x0) {
-      if (s_currentTimer == pGVar3) {
+      if (s_currentTimer == pGVar2) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_gpu_timer.cpp",
                         0x303,0,"%s");
       }
       s_currentTimer->field_0x10 = 1;
     }
-    *(GPUTimer **)&s_timerFrames[iVar1].timers[uVar2].field_0x8 = s_currentTimer;
-    s_timerFrames[iVar1].timers[uVar2].field_0x11 = 1;
-    s_timerFrames[iVar1].timers[uVar2].field_0x10 = 0;
-    s_timerFrames[iVar1].timers[uVar2].field_0x13 = 0;
-    s_currentTimer = pGVar3;
-    R_HW_InsertCallback(R_GPU_BeginTimerCallback,uVar2);
+    *(GPUTimer **)&s_timerFrames[iVar1].timers[param_1].field_0x8 = s_currentTimer;
+    s_timerFrames[iVar1].timers[param_1].field_0x11 = 1;
+    s_timerFrames[iVar1].timers[param_1].field_0x10 = 0;
+    s_timerFrames[iVar1].timers[param_1].field_0x13 = 0;
+    s_currentTimer = pGVar2;
+    R_HW_InsertCallback(R_GPU_BeginTimerCallback,param_1);
   }
-  __restgprlr_26();
   return;
 }
 
 
 // 82741018  R_GPU_EndTimer  (gfx_d3d/r_gpu_timer.cpp:794)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void R_GPU_EndTimer(void)
@@ -408,7 +452,6 @@ void R_GPU_EndTimer(void)
 {
   GPUTimerFrame *pGVar1;
   
-  __savegprlr_28();
   if (s_displayMode != GPU_TIMER_DISPLAY_MODE_DISABLED) {
     if (s_currentTimer == (GPUTimer *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_gpu_timer.cpp",
@@ -423,13 +466,14 @@ void R_GPU_EndTimer(void)
     ;
     s_currentTimer = *(GPUTimer **)&s_currentTimer->field_0x8;
   }
-  __restgprlr_28();
   return;
 }
 
 
 // 827410F0  R_GPU_AddPaddingCount  (gfx_d3d/r_gpu_timer.cpp:825)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 
 void R_GPU_AddPaddingCount(uint param_1)
@@ -439,9 +483,8 @@ void R_GPU_AddPaddingCount(uint param_1)
   int iVar2;
   ulonglong uVar3;
   
-  uVar1 = __savegprlr_27(param_1);
   if (s_displayMode != GPU_TIMER_DISPLAY_MODE_DISABLED) {
-    uVar1 = uVar1 + (uVar1 & 0x3fffffff) * 4 & 0xfffffff;
+    uVar1 = (longlong)(int)param_1 + ((ulonglong)param_1 & 0x3fffffff) * 4 & 0xfffffff;
     uVar3 = uVar1 << 4;
     while (uVar1 != 0) {
       iVar2 = R_HasDeviceOwnership();
@@ -454,13 +497,14 @@ void R_GPU_AddPaddingCount(uint param_1)
       uVar1 = uVar3;
     }
   }
-  __restgprlr_27();
   return;
 }
 
 
 // 82741190  R_GPU_DrawTimers  (gfx_d3d/r_gpu_timer.cpp:842)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void R_GPU_DrawTimers(void)
@@ -468,7 +512,6 @@ void R_GPU_DrawTimers(void)
 {
   int iVar1;
   
-  __savegprlr_29();
   iVar1 = s_readIndex;
   if (s_displayMode != GPU_TIMER_DISPLAY_MODE_DISABLED) {
     R_GPU_CalcDerivedTimers(s_timerFrames + s_readIndex);
@@ -479,7 +522,6 @@ void R_GPU_DrawTimers(void)
     *(uint *)(&DAT_845b3964 + DAT_845b3958 * 0x148) = s_timerFrames[iVar1].totalTime;
     R_Perf_DrawTimers((PerfTimerFrameHistory *)&DAT_845b3958,&s_gpuTimerStyle);
   }
-  __restgprlr_29();
   return;
 }
 
@@ -518,110 +560,109 @@ ulong64 R_GPU_GetMicroseconds(void)
 
 // 827412B0  R_GPU_GetLastFrameTimesUSec  (gfx_d3d/r_gpu_timer.cpp:900)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 uint R_GPU_GetLastFrameTimesUSec(uint *param_1,uint param_2)
 
 {
   int iVar1;
   ulonglong uVar2;
-  uint uVar3;
+  ulonglong uVar3;
   ulonglong uVar4;
   ulonglong uVar5;
-  ulonglong uVar6;
-  ulonglong uVar7;
-  longlong lVar8;
-  longlong lVar9;
-  ulonglong uVar10;
-  ulonglong uVar11;
+  longlong lVar6;
+  longlong lVar7;
+  ulonglong uVar8;
+  ulonglong uVar9;
   undefined4 uStack_44;
   undefined4 uStack_34;
   
-  uVar11 = (ulonglong)(int)param_2;
-  uVar2 = __savegprlr_29(param_1);
-  if ((uVar2 & 0xffffffff) == 0) {
+  uVar9 = (ulonglong)(int)param_2;
+  if (param_1 == (uint *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_gpu_timer.cpp",0x389
                     ,0,"%s");
   }
-  if (0x40 < (uVar11 + 1 & 0xffffffff)) {
-    uVar11 = 0x3f;
+  if (0x40 < (uVar9 + 1 & 0xffffffff)) {
+    uVar9 = 0x3f;
   }
-  uVar7 = (ulonglong)s_frameIndex;
-  if ((uVar7 < (uVar11 + 1 & 0xffffffff)) && (uVar11 = uVar7 - 1, uVar7 == 0)) {
-    uVar11 = 0;
+  uVar5 = (ulonglong)s_frameIndex;
+  if ((uVar5 < (uVar9 + 1 & 0xffffffff)) && (uVar9 = uVar5 - 1, uVar5 == 0)) {
+    uVar9 = 0;
   }
-  uVar4 = (ulonglong)(uint)s_readIndex;
-  uVar7 = 0;
-  if (3 < (int)uVar11) {
-    lVar8 = uVar2 - 4;
-    uVar10 = uVar4 + 0x3e;
+  uVar2 = (ulonglong)(uint)s_readIndex;
+  uVar5 = 0;
+  if (3 < (int)uVar9) {
+    lVar6 = (longlong)(int)param_1 + -4;
+    uVar8 = uVar2 + 0x3e;
     do {
-      uVar5 = uVar10 - 0x3e;
-      if ((longlong)uVar5 < 0) {
-        uVar5 = uVar10 + 2;
+      uVar3 = uVar8 - 0x3e;
+      if ((longlong)uVar3 < 0) {
+        uVar3 = uVar8 + 2;
       }
-      uVar6 = uVar10 - 0x3f;
+      uVar4 = uVar8 - 0x3f;
       uStack_44 = (undefined4)
                   (longlong)
                   ((double)*(uint *)((int)s_timerFrames[0].timers +
-                                    (int)((uVar5 + (uVar5 & 0x1fffffff) * 8 & 0xffffffff) << 6) + -8
+                                    (int)((uVar3 + (uVar3 & 0x1fffffff) * 8 & 0xffffffff) << 6) + -8
                                     ) * usecPerRawTimerTick);
-      iVar1 = (int)lVar8;
+      iVar1 = (int)lVar6;
       *(undefined4 *)(iVar1 + 4) = uStack_44;
-      if ((longlong)uVar6 < 0) {
-        uVar6 = uVar10 + 1;
+      if ((longlong)uVar4 < 0) {
+        uVar4 = uVar8 + 1;
       }
       uStack_44 = (undefined4)
                   (longlong)
                   ((double)*(uint *)((int)s_timerFrames[0].timers +
-                                    (int)((uVar6 + (uVar6 & 0x1fffffff) * 8 & 0xffffffff) << 6) + -8
+                                    (int)((uVar4 + (uVar4 & 0x1fffffff) * 8 & 0xffffffff) << 6) + -8
                                     ) * usecPerRawTimerTick);
       *(undefined4 *)(iVar1 + 8) = uStack_44;
-      uVar5 = uVar10 - 0x40;
-      if ((longlong)(uVar10 - 0x40) < 0) {
-        uVar5 = uVar10;
+      uVar3 = uVar8 - 0x40;
+      if ((longlong)(uVar8 - 0x40) < 0) {
+        uVar3 = uVar8;
       }
-      uVar6 = uVar10 - 0x41;
+      uVar4 = uVar8 - 0x41;
       uStack_44 = (undefined4)
                   (longlong)
                   ((double)*(uint *)((int)s_timerFrames[0].timers +
-                                    (int)((uVar5 + (uVar5 & 0x1fffffff) * 8 & 0xffffffff) << 6) + -8
+                                    (int)((uVar3 + (uVar3 & 0x1fffffff) * 8 & 0xffffffff) << 6) + -8
                                     ) * usecPerRawTimerTick);
       *(undefined4 *)(iVar1 + 0xc) = uStack_44;
-      if ((longlong)uVar6 < 0) {
-        uVar6 = uVar10 - 1;
+      if ((longlong)uVar4 < 0) {
+        uVar4 = uVar8 - 1;
       }
-      uVar7 = uVar7 + 4;
-      uVar10 = uVar10 - 4;
+      uVar5 = uVar5 + 4;
+      uVar8 = uVar8 - 4;
       uStack_44 = (undefined4)
                   (longlong)
                   ((double)*(uint *)((int)s_timerFrames[0].timers +
-                                    (int)((uVar6 + (uVar6 & 0x1fffffff) * 8 & 0xffffffff) << 6) + -8
+                                    (int)((uVar4 + (uVar4 & 0x1fffffff) * 8 & 0xffffffff) << 6) + -8
                                     ) * usecPerRawTimerTick);
-      lVar8 = lVar8 + 0x10;
-      *(undefined4 *)lVar8 = uStack_44;
-    } while ((uVar7 & 0xffffffff) < (uVar11 - 3 & 0xffffffff));
+      lVar6 = lVar6 + 0x10;
+      *(undefined4 *)lVar6 = uStack_44;
+    } while ((uVar5 & 0xffffffff) < (uVar9 - 3 & 0xffffffff));
   }
-  if ((uVar7 & 0xffffffff) < (uVar11 & 0xffffffff)) {
-    lVar9 = uVar11 - uVar7;
-    uVar4 = uVar4 - uVar7;
-    lVar8 = (uVar7 & 0x3fffffff) * 4 + uVar2 + -4;
-    uVar7 = lVar9 + uVar7;
+  if ((uVar5 & 0xffffffff) < (uVar9 & 0xffffffff)) {
+    lVar7 = uVar9 - uVar5;
+    uVar2 = uVar2 - uVar5;
+    lVar6 = (uVar5 & 0x3fffffff) * 4 + (longlong)(int)param_1 + -4;
+    uVar5 = lVar7 + uVar5;
     do {
-      uVar2 = uVar4;
-      if ((int)uVar4 < 0) {
-        uVar2 = uVar4 + 0x40;
+      uVar9 = uVar2;
+      if ((int)uVar2 < 0) {
+        uVar9 = uVar2 + 0x40;
       }
-      uVar4 = uVar4 - 1;
+      uVar2 = uVar2 - 1;
       uStack_34 = (undefined4)
                   (longlong)
                   ((double)*(uint *)((int)s_timerFrames[0].timers +
-                                    (int)((uVar2 + (uVar2 & 0x1fffffff) * 8 & 0xffffffff) << 6) + -8
+                                    (int)((uVar9 + (uVar9 & 0x1fffffff) * 8 & 0xffffffff) << 6) + -8
                                     ) * usecPerRawTimerTick);
-      lVar8 = lVar8 + 4;
-      *(undefined4 *)lVar8 = uStack_34;
-      lVar9 = lVar9 + -1;
-    } while (lVar9 != 0);
+      lVar6 = lVar6 + 4;
+      *(undefined4 *)lVar6 = uStack_34;
+      lVar7 = lVar7 + -1;
+    } while (lVar7 != 0);
   }
-  uVar3 = __restgprlr_29(uVar7);
-  return uVar3;
+  return (uint)uVar5;
 }
 

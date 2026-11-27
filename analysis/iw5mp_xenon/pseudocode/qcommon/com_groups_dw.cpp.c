@@ -125,6 +125,8 @@ bool GameMode_IsOnlineGame(void)
 
 // 824DC018  ComGroups_Init  (qcommon/com_groups_dw.cpp:124)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void ComGroups_Init(void)
@@ -135,7 +137,6 @@ void ComGroups_Init(void)
   int iVar3;
   int *piVar4;
   
-  __savegprlr_26();
   memset();
   s_groupSetCount = 0;
   s_groupCount = 0;
@@ -180,7 +181,6 @@ LAB_824dc0f0:
   groupDownloadInterval =
        Dvar_RegisterInt("groupDownloadInterval",900,0,0x7fffffff,0,
                         "Minimum interval to wait before getting new group counts");
-  __restgprlr_26();
   return;
 }
 
@@ -219,36 +219,34 @@ void ComGroups_DeInit(void)
 
 // 824DC1F0  ComGroups_UpdateGroupMemberships  (qcommon/com_groups_dw.cpp:169)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void ComGroups_UpdateGroupMemberships(int param_1)
 
 {
   bool bVar1;
-  int iVar2;
-  char *pcVar3;
-  longlong lVar4;
+  char *pcVar2;
+  longlong lVar3;
   
-  iVar2 = __savegprlr_28(param_1);
   if ((((onlinegame == (dvar_t *)0x0) || ((onlinegame->current).enabled == false)) ||
       (xblive_privatematch == (dvar_t *)0x0)) ||
      (bVar1 = true, (xblive_privatematch->current).enabled == false)) {
     bVar1 = false;
   }
   if (bVar1) {
-    ComGroups_JoinGroup(iVar2,"matchtype/private");
-    __restgprlr_28();
+    ComGroups_JoinGroup(param_1,"matchtype/private");
     return;
   }
   if ((onlinegame == (dvar_t *)0x0) || (bVar1 = true, (onlinegame->current).enabled == false)) {
     bVar1 = false;
   }
   if (bVar1) {
-    ComGroups_JoinGroup(iVar2,"matchtype/online");
-    __restgprlr_28();
+    ComGroups_JoinGroup(param_1,"matchtype/online");
     return;
   }
   if ((systemlink != (dvar_t *)0x0) && ((systemlink->current).enabled != false)) {
-    ComGroups_JoinGroup(iVar2,"matchtype/systemlink");
-    __restgprlr_28();
+    ComGroups_JoinGroup(param_1,"matchtype/systemlink");
     return;
   }
   if ((splitscreen != (dvar_t *)0x0) && ((splitscreen->current).enabled != false)) {
@@ -256,24 +254,24 @@ void ComGroups_UpdateGroupMemberships(int param_1)
       bVar1 = false;
     }
     if ((!bVar1) && ((systemlink == (dvar_t *)0x0 || ((systemlink->current).enabled == false)))) {
-      ComGroups_JoinGroup(iVar2,"matchtype/splitscreen");
-      __restgprlr_28();
+      ComGroups_JoinGroup(param_1,"matchtype/splitscreen");
       return;
     }
   }
-  lVar4 = 4;
+  lVar3 = 4;
   do {
-    pcVar3 = va("matchtype/%s");
-    ComGroups_LeaveGroup(iVar2,pcVar3);
-    lVar4 = lVar4 + -1;
-  } while (lVar4 != 0);
-  __restgprlr_28();
+    pcVar2 = va("matchtype/%s");
+    ComGroups_LeaveGroup(param_1,pcVar2);
+    lVar3 = lVar3 + -1;
+  } while (lVar3 != 0);
   return;
 }
 
 
 // 824DC9A8  ComGroups_CheckOngoingGroupTasks  (qcommon/com_groups_dw.cpp:201)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void ComGroups_CheckOngoingGroupTasks(void)
@@ -283,7 +281,6 @@ void ComGroups_CheckOngoingGroupTasks(void)
   int iVar2;
   int *piVar3;
   
-  __savegprlr_26();
   iVar2 = 0;
   piVar3 = &groupTasks.tasks[0].type;
   do {
@@ -303,147 +300,147 @@ void ComGroups_CheckOngoingGroupTasks(void)
     piVar3 = piVar3 + 0x28;
     iVar2 = iVar2 + 1;
   } while ((int)piVar3 < -0x7c9fa1c8);
-  __restgprlr_26();
   return;
 }
 
 
 // 824DC388  ComGroups_SetGroupsComplete  (qcommon/com_groups_dw.cpp:229)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void ComGroups_SetGroupsComplete(int param_1)
 
 {
   byte bVar1;
   int iVar2;
-  int iVar3;
-  bdLobbyErrorCode bVar4;
-  taskCompleteResults tVar5;
-  longlong lVar6;
+  bdLobbyErrorCode bVar3;
+  taskCompleteResults tVar4;
+  longlong lVar5;
   
-  iVar2 = __savegprlr_29(param_1);
-  if (groupTasks.tasks[iVar2].active == false) {
+  if (groupTasks.tasks[param_1].active == false) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_groups_dw.cpp",
                     0xed,0,"%s");
   }
-  if (groupTasks.tasks[iVar2].type != 0) {
+  if (groupTasks.tasks[param_1].type != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_groups_dw.cpp",
                     0xee,0,"%s");
   }
-  if (3 < groupTasks.tasks[iVar2].controllerIndex) {
+  if (3 < groupTasks.tasks[param_1].controllerIndex) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_groups_dw.cpp",
                     0xef,0,
                     "task->controllerIndex doesn\'t index MAX_GPAD_COUNT\n\t%i not in [0, %i)");
   }
-  iVar3 = (**(code **)((groupTasks.tasks[iVar2].u.remoteTask.m_ptr)->_padding_ + 4))();
-  if (iVar3 == 2) {
-    bVar4 = bdRemoteTask::getErrorCode(groupTasks.tasks[iVar2].u.remoteTask.m_ptr);
-    tVar5 = dwTaskStatusConvert(BD_DONE,bVar4);
-    if (tVar5 == TASK_COMPLETE) {
-      bVar1 = groupTasks.tasks[iVar2].controllerIndex;
-      lVar6 = (ulonglong)(uint)s_groupMembership[bVar1].dirty - 1;
-      s_groupMembership[bVar1].dirty = (int)lVar6;
-      if (lVar6 < 0) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_groups_dw.cpp"
-                        ,0xfb,0,"%s");
-        TaskManager_ClearTask(groupTasks.tasks + iVar2);
-        __restgprlr_29();
-        return;
-      }
+  iVar2 = (**(code **)((groupTasks.tasks[param_1].u.remoteTask.m_ptr)->_padding_ + 4))();
+  if (iVar2 == 2) {
+    bVar3 = bdRemoteTask::getErrorCode(groupTasks.tasks[param_1].u.remoteTask.m_ptr);
+    tVar4 = dwTaskStatusConvert(BD_DONE,bVar3);
+    if ((tVar4 == TASK_COMPLETE) &&
+       (bVar1 = groupTasks.tasks[param_1].controllerIndex,
+       lVar5 = (ulonglong)(uint)s_groupMembership[bVar1].dirty - 1,
+       s_groupMembership[bVar1].dirty = (int)lVar5, lVar5 < 0)) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_groups_dw.cpp",
+                      0xfb,0,"%s");
+      TaskManager_ClearTask(groupTasks.tasks + param_1);
+      return;
     }
   }
   else {
-    if (iVar3 != 3) goto LAB_824dc4ec;
-    bdRemoteTask::getErrorCode(groupTasks.tasks[iVar2].u.remoteTask.m_ptr);
+    if (iVar2 != 3) {
+      return;
+    }
+    bdRemoteTask::getErrorCode(groupTasks.tasks[param_1].u.remoteTask.m_ptr);
     Com_Printf(0x19,"Warning: Set groups task failed with %d\n");
   }
-  TaskManager_ClearTask(groupTasks.tasks + iVar2);
-LAB_824dc4ec:
-  __restgprlr_29();
+  TaskManager_ClearTask(groupTasks.tasks + param_1);
   return;
 }
 
 
 // 824DC4F8  ComGroups_SetGroups  (qcommon/com_groups_dw.cpp:267)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
+
 void ComGroups_SetGroups(int param_1)
 
 {
   uint uVar1;
-  uint uVar3;
-  bdGroup *pbVar4;
+  bdGroup *pbVar3;
   long64 lVar2;
-  bool bVar7;
-  overlappedTask *poVar5;
-  bdReference<bdRemoteTask> bVar6;
-  uint *puVar8;
+  bool bVar6;
+  overlappedTask *poVar4;
+  bdReference<bdRemoteTask> bVar5;
+  uint *puVar7;
+  ulonglong uVar8;
   ulonglong uVar9;
-  ulonglong uVar10;
-  uint uVar11;
+  uint uVar10;
   bdReference<bdRemoteTask> abStack_1050 [3];
   uint uStack_1044;
   uint local_1040 [1040];
   
-  uVar3 = __savegprlr_25(param_1);
-  if (3 < uVar3) {
+  if (3 < (uint)param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_groups_dw.cpp",
                     0x10c,0,
                     "localControllerIndex doesn\'t index MAX_GPAD_COUNT\n\t%i not in [0, %i)");
   }
-  pbVar4 = dwGetGroup(uVar3);
+  pbVar3 = dwGetGroup(param_1);
   lVar2 = _time64((long64 *)0x0);
-  bVar7 = Live_IsUserSignedInToLive(uVar3);
-  if ((((bVar7) && (bVar7 = Live_IsUserSignedInToDemonware(uVar3), bVar7)) &&
-      (pbVar4 != (bdGroup *)0x0)) &&
-     ((groupUploadInterval->current).integer < (int)lVar2 - s_groupMembership[uVar3].updateTime)) {
-    bVar7 = TaskManager_TaskIsInProgressForController(&groupTasks,0,uVar3);
-    if (bVar7) {
+  bVar6 = Live_IsUserSignedInToLive(param_1);
+  if ((((bVar6) && (bVar6 = Live_IsUserSignedInToDemonware(param_1), bVar6)) &&
+      (pbVar3 != (bdGroup *)0x0)) &&
+     ((groupUploadInterval->current).integer < (int)lVar2 - s_groupMembership[param_1].updateTime))
+  {
+    bVar6 = TaskManager_TaskIsInProgressForController(&groupTasks,0,param_1);
+    if (bVar6) {
       Com_Printf(0xe,"Set groups task already in progress for controller, earlying out (cont %i)\n")
       ;
-      __restgprlr_25();
       return;
     }
-    ComGroups_UpdateGroupMemberships(uVar3);
-    if (0 < s_groupMembership[uVar3].dirty) {
-      poVar5 = TaskManager_GetOpenTaskSlot(&groupTasks,uVar3,0);
-      if (poVar5 == (overlappedTask *)0x0) {
+    ComGroups_UpdateGroupMemberships(param_1);
+    if (0 < s_groupMembership[param_1].dirty) {
+      poVar4 = TaskManager_GetOpenTaskSlot(&groupTasks,param_1,0);
+      if (poVar4 == (overlappedTask *)0x0) {
         Com_PrintWarning(0x10,"Couldn\'t allocate task for storage upload");
-        __restgprlr_25();
         return;
       }
-      uVar10 = (ulonglong)s_groupCount;
-      uVar9 = 1;
-      s_groupMembership[uVar3].updateTime = (int)lVar2;
-      uVar11 = 0;
-      s_groupMembership[uVar3].dirty = 1;
-      if (uVar10 != 0) {
-        puVar8 = &uStack_1044;
+      uVar9 = (ulonglong)s_groupCount;
+      uVar8 = 1;
+      s_groupMembership[param_1].updateTime = (int)lVar2;
+      uVar10 = 0;
+      s_groupMembership[param_1].dirty = 1;
+      if (uVar9 != 0) {
+        puVar7 = &uStack_1044;
         uVar1 = 0;
         do {
-          if ((*(uint *)((int)s_groupMembership[uVar3].bits + (uVar1 & 0x1ffffffc)) & uVar9) != 0) {
-            puVar8 = puVar8 + 1;
-            *puVar8 = uVar11;
+          if ((*(uint *)((int)s_groupMembership[param_1].bits + (uVar1 & 0x1ffffffc)) & uVar8) != 0)
+          {
+            puVar7 = puVar7 + 1;
+            *puVar7 = uVar10;
           }
-          uVar11 = uVar11 + 1;
-          uVar9 = (uVar9 & 0x7fffffff) << 1 | uVar9 >> 0x1f;
-          uVar1 = uVar11 >> 3;
-          uVar10 = uVar10 - 1;
-        } while (uVar10 != 0);
+          uVar10 = uVar10 + 1;
+          uVar8 = (uVar8 & 0x7fffffff) << 1 | uVar8 >> 0x1f;
+          uVar1 = uVar10 >> 3;
+          uVar9 = uVar9 - 1;
+        } while (uVar9 != 0);
       }
-      bVar6 = bdGroup::setGroups((bdGroup *)abStack_1050,(uint *)pbVar4,(uint)local_1040);
+      bVar5 = bdGroup::setGroups((bdGroup *)abStack_1050,(uint *)pbVar3,(uint)local_1040);
       bdReference<bdRemoteTask>::operator=
-                (&(poVar5->u).remoteTask,(bdReference<bdRemoteTask> *)bVar6.m_ptr);
+                (&(poVar4->u).remoteTask,(bdReference<bdRemoteTask> *)bVar5.m_ptr);
       bdReference<bdRemoteTask>::~bdReference<bdRemoteTask>(abStack_1050);
-      if ((poVar5->u).remoteTask.m_ptr == (bdRemoteTask *)0x0) {
-        TaskManager_ClearTask(poVar5);
+      if ((poVar4->u).remoteTask.m_ptr == (bdRemoteTask *)0x0) {
+        TaskManager_ClearTask(poVar4);
       }
     }
   }
-  __restgprlr_25();
   return;
 }
 
 
 // 824DC6D8  ComGroups_GetGroupCountsComplete  (qcommon/com_groups_dw.cpp:336)
+
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 
 void ComGroups_GetGroupCountsComplete(int param_1)
 
@@ -451,375 +448,355 @@ void ComGroups_GetGroupCountsComplete(int param_1)
   bdRemoteTask *this;
   bool *pbVar1;
   int iVar2;
-  int iVar3;
-  bdLobbyErrorCode bVar4;
-  taskCompleteResults tVar5;
+  bdLobbyErrorCode bVar3;
+  taskCompleteResults tVar4;
+  uint uVar5;
   uint uVar6;
-  uint uVar7;
-  bool *pbVar8;
+  bool *pbVar7;
   
-  iVar2 = __savegprlr_28(param_1);
-  if (groupTasks.tasks[iVar2].active == false) {
+  if (groupTasks.tasks[param_1].active == false) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_groups_dw.cpp",
                     0x158,0,"%s");
   }
-  if (groupTasks.tasks[iVar2].type != 1) {
+  if (groupTasks.tasks[param_1].type != 1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_groups_dw.cpp",
                     0x159,0,"%s");
   }
-  iVar3 = (**(code **)((groupTasks.tasks[iVar2].u.remoteTask.m_ptr)->_padding_ + 4))();
-  if (iVar3 == 2) {
-    bVar4 = bdRemoteTask::getErrorCode(groupTasks.tasks[iVar2].u.remoteTask.m_ptr);
-    tVar5 = dwTaskStatusConvert(BD_DONE,bVar4);
-    if (tVar5 == TASK_COMPLETE) {
+  iVar2 = (**(code **)((groupTasks.tasks[param_1].u.remoteTask.m_ptr)->_padding_ + 4))();
+  if (iVar2 == 2) {
+    bVar3 = bdRemoteTask::getErrorCode(groupTasks.tasks[param_1].u.remoteTask.m_ptr);
+    tVar4 = dwTaskStatusConvert(BD_DONE,bVar3);
+    if (tVar4 == TASK_COMPLETE) {
       memset();
-      uVar7 = 0;
-      uVar6 = bdRemoteTask::getNumResults(groupTasks.tasks[iVar2].u.remoteTask.m_ptr);
-      if (uVar6 != 0) {
-        pbVar8 = &s_touchedCounts;
+      uVar6 = 0;
+      uVar5 = bdRemoteTask::getNumResults(groupTasks.tasks[param_1].u.remoteTask.m_ptr);
+      if (uVar5 != 0) {
+        pbVar7 = &s_touchedCounts;
         do {
-          pbVar1 = pbVar8 + 8;
-          uVar7 = uVar7 + 1;
-          pbVar8 = pbVar8 + 0xc;
-          this = groupTasks.tasks[iVar2].u.remoteTask.m_ptr;
-          s_groupCounts[*(uint *)pbVar1] = *(uint *)pbVar8;
-          uVar6 = bdRemoteTask::getNumResults(this);
-        } while (uVar7 < uVar6);
-        TaskManager_ClearTask(groupTasks.tasks + iVar2);
-        __restgprlr_28();
+          pbVar1 = pbVar7 + 8;
+          uVar6 = uVar6 + 1;
+          pbVar7 = pbVar7 + 0xc;
+          this = groupTasks.tasks[param_1].u.remoteTask.m_ptr;
+          s_groupCounts[*(uint *)pbVar1] = *(uint *)pbVar7;
+          uVar5 = bdRemoteTask::getNumResults(this);
+        } while (uVar6 < uVar5);
+        TaskManager_ClearTask(groupTasks.tasks + param_1);
         return;
       }
     }
   }
   else {
-    if (iVar3 != 3) goto LAB_824dc830;
-    bdRemoteTask::getErrorCode(groupTasks.tasks[iVar2].u.remoteTask.m_ptr);
+    if (iVar2 != 3) {
+      return;
+    }
+    bdRemoteTask::getErrorCode(groupTasks.tasks[param_1].u.remoteTask.m_ptr);
     Com_Printf(0x19,"Warning: Get groups task failed with %d\n");
   }
-  TaskManager_ClearTask(groupTasks.tasks + iVar2);
-LAB_824dc830:
-  __restgprlr_28();
+  TaskManager_ClearTask(groupTasks.tasks + param_1);
   return;
 }
 
 
 // 824DC838  ComGroups_GetCounts  (qcommon/com_groups_dw.cpp:376)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void ComGroups_GetCounts(int param_1)
 
 {
-  int iVar2;
-  bdGroup *pbVar3;
+  bdGroup *pbVar2;
   long64 lVar1;
-  bool bVar6;
-  overlappedTask *poVar4;
-  bdReference<bdRemoteTask> bVar5;
-  ulonglong uVar7;
-  int *piVar8;
+  bool bVar5;
+  overlappedTask *poVar3;
+  bdReference<bdRemoteTask> bVar4;
+  ulonglong uVar6;
+  int *piVar7;
+  int iVar8;
   bdReference<bdRemoteTask> abStack_1040 [3];
   int iStack_1034;
   int local_1030 [1036];
   
-  iVar2 = __savegprlr_27(param_1);
-  pbVar3 = dwGetGroup(iVar2);
+  pbVar2 = dwGetGroup(param_1);
   lVar1 = _time64((long64 *)0x0);
-  bVar6 = Live_IsUserSignedInToLive(iVar2);
-  if ((((bVar6) && (bVar6 = Live_IsUserSignedInToDemonware(iVar2), bVar6)) &&
-      (bVar6 = Live_IsInLiveGame(), !bVar6)) &&
-     (((pbVar3 != (bdGroup *)0x0 && (s_touchedCounts != false)) &&
+  bVar5 = Live_IsUserSignedInToLive(param_1);
+  if ((((bVar5) && (bVar5 = Live_IsUserSignedInToDemonware(param_1), bVar5)) &&
+      (bVar5 = Live_IsInLiveGame(), !bVar5)) &&
+     (((pbVar2 != (bdGroup *)0x0 && (s_touchedCounts != false)) &&
       (((groupDownloadInterval->current).integer < (int)lVar1 - s_groupUpdateTime &&
-       (bVar6 = TaskManager_TaskIsInProgress(&groupTasks,1), !bVar6)))))) {
-    poVar4 = TaskManager_GetOpenTaskSlot(&groupTasks,iVar2,1);
-    if (poVar4 == (overlappedTask *)0x0) {
+       (bVar5 = TaskManager_TaskIsInProgress(&groupTasks,1), !bVar5)))))) {
+    poVar3 = TaskManager_GetOpenTaskSlot(&groupTasks,param_1,1);
+    if (poVar3 == (overlappedTask *)0x0) {
       Com_PrintWarning(0x10,"Couldn\'t allocate task for storage upload");
-      __restgprlr_27();
       return;
     }
-    uVar7 = (ulonglong)s_groupCount;
-    iVar2 = 0;
+    uVar6 = (ulonglong)s_groupCount;
+    iVar8 = 0;
     s_touchedCounts = false;
-    if (uVar7 != 0) {
-      piVar8 = &iStack_1034;
+    if (uVar6 != 0) {
+      piVar7 = &iStack_1034;
       do {
-        piVar8 = piVar8 + 1;
-        *piVar8 = iVar2;
-        iVar2 = iVar2 + 1;
-        uVar7 = uVar7 - 1;
-      } while (uVar7 != 0);
+        piVar7 = piVar7 + 1;
+        *piVar7 = iVar8;
+        iVar8 = iVar8 + 1;
+        uVar6 = uVar6 - 1;
+      } while (uVar6 != 0);
     }
     s_groupUpdateTime = (int)lVar1;
-    bVar5 = bdGroup::getGroupCounts
-                      ((bdGroup *)abStack_1040,(uint *)pbVar3,(uint)local_1030,
+    bVar4 = bdGroup::getGroupCounts
+                      ((bdGroup *)abStack_1040,(uint *)pbVar2,(uint)local_1030,
                        (bdGroupCount *)s_groupCount,0x836019a0);
     bdReference<bdRemoteTask>::operator=
-              (&(poVar4->u).remoteTask,(bdReference<bdRemoteTask> *)bVar5.m_ptr);
+              (&(poVar3->u).remoteTask,(bdReference<bdRemoteTask> *)bVar4.m_ptr);
     bdReference<bdRemoteTask>::~bdReference<bdRemoteTask>(abStack_1040);
-    if ((poVar4->u).remoteTask.m_ptr == (bdRemoteTask *)0x0) {
-      TaskManager_ClearTask(poVar4);
+    if ((poVar3->u).remoteTask.m_ptr == (bdRemoteTask *)0x0) {
+      TaskManager_ClearTask(poVar3);
     }
   }
-  __restgprlr_27();
   return;
 }
 
 
 // 824DB728  ComGroups_GetGroupID  (qcommon/com_groups_dw.cpp:425)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
+
 bool ComGroups_GetGroupID(char *param_1,int *param_2,GroupSet **param_3)
 
 {
   ulonglong uVar1;
-  ulonglong uVar2;
-  char *pcVar3;
-  int iVar4;
-  undefined1 uVar6;
-  int iVar5;
-  ulonglong uVar7;
-  int *piVar8;
-  ulonglong uVar9;
-  int *piVar10;
-  char *pcVar11;
-  ulonglong uVar12;
-  GroupSet *pGVar13;
-  int iVar14;
+  int iVar2;
+  int iVar3;
+  char *pcVar5;
+  ulonglong uVar4;
+  ulonglong uVar6;
+  GroupSet *pGVar7;
+  int iVar8;
   
-  uVar9 = (ulonglong)(int)param_3;
-  uVar7 = (ulonglong)(int)param_2;
-  uVar1 = __savegprlr_23(param_1);
-  if ((uVar1 & 0xffffffff) == 0) {
+  uVar4 = (ulonglong)(int)param_1;
+  if (param_1 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_groups_dw.cpp",
                     0x1aa,0,"%s");
   }
-  if ((uVar7 & 0xffffffff) == 0) {
+  if (param_2 == (int *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_groups_dw.cpp",
                     0x1ab,0,"%s");
   }
-  if ((uVar9 & 0xffffffff) == 0) {
+  if (param_3 == (GroupSet **)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_groups_dw.cpp",
                     0x1ac,0,"%s");
   }
-  uVar12 = 0;
-  uVar2 = uVar1;
+  uVar6 = 0;
+  uVar1 = uVar4;
   strchr();
-  pcVar3 = (char *)uVar1;
-  if ((uVar2 & 0xffffffff) == 0) {
+  if ((uVar1 & 0xffffffff) == 0) {
     do {
-      pcVar11 = (char *)uVar1;
-      uVar1 = uVar1 + 1;
-    } while (*pcVar11 != '\0');
-    iVar5 = ((int)uVar1 - (int)pcVar3) + -1;
+      pcVar5 = (char *)uVar4;
+      uVar4 = uVar4 + 1;
+    } while (*pcVar5 != '\0');
+    iVar3 = ((int)uVar4 - (int)param_1) + -1;
   }
   else {
-    iVar5 = (int)uVar2 - (int)pcVar3;
-    uVar12 = -(ulonglong)(*(char *)((int)uVar2 + 1) != '\0') & uVar2 + 1;
+    iVar3 = (int)uVar1 - (int)param_1;
+    uVar6 = -(ulonglong)(*(char *)((int)uVar1 + 1) != '\0') & uVar1 + 1;
   }
-  iVar14 = 0;
+  iVar8 = 0;
   if (0 < s_groupSetCount) {
-    pGVar13 = s_groupSets;
+    pGVar7 = s_groupSets;
     do {
-      iVar4 = I_strnicmp(pcVar3,pGVar13->name,iVar5);
-      if (iVar4 == 0) {
-        piVar10 = (int *)uVar9;
-        *piVar10 = (int)(s_groupSets + iVar14);
-        piVar8 = (int *)uVar7;
-        if ((uVar12 & 0xffffffff) == 0) {
-          *piVar8 = -1;
-          uVar6 = __restgprlr_23(1);
-          return (bool)uVar6;
+      iVar2 = I_strnicmp(param_1,pGVar7->name,iVar3);
+      if (iVar2 == 0) {
+        *param_3 = s_groupSets + iVar8;
+        if ((uVar6 & 0xffffffff) == 0) {
+          *param_2 = -1;
+          return true;
         }
-        if (s_groupSets[iVar14].groupNames == (char **)0x0) {
-          iVar5 = atoi((char *)uVar12);
-          *piVar8 = iVar5;
-          if (*(int *)(*piVar10 + 0xc) < iVar5) {
+        if (s_groupSets[iVar8].groupNames == (char **)0x0) {
+          iVar3 = atoi((char *)uVar6);
+          *param_2 = iVar3;
+          if ((*param_3)->capacity < iVar3) {
             Com_PrintError(1,"Group ID \'%d\' out of bounds for set \'%s\'\n");
-            uVar6 = __restgprlr_23(0);
-            return (bool)uVar6;
+            return false;
           }
         }
         else {
-          iVar5 = 0;
-          if (s_groupSets[iVar14].capacity < 1) goto LAB_824db940;
-          iVar14 = 0;
-          while (iVar4 = I_stricmp((char *)uVar12,*(char **)(*(int *)(*piVar10 + 8) + iVar14)),
-                iVar4 != 0) {
-            iVar5 = iVar5 + 1;
-            iVar14 = iVar14 + 4;
-            if (*(int *)(*piVar10 + 0xc) <= iVar5) {
+          iVar3 = 0;
+          if (s_groupSets[iVar8].capacity < 1) goto LAB_824db940;
+          iVar8 = 0;
+          while (iVar2 = I_stricmp((char *)uVar6,*(char **)((int)(*param_3)->groupNames + iVar8)),
+                iVar2 != 0) {
+            iVar3 = iVar3 + 1;
+            iVar8 = iVar8 + 4;
+            if ((*param_3)->capacity <= iVar3) {
 LAB_824db940:
               Com_PrintError(1,"Group \'%s\' not found in set \'%s\'\n");
-              uVar6 = __restgprlr_23(0);
-              return (bool)uVar6;
+              return false;
             }
           }
-          *piVar8 = iVar5;
+          *param_2 = iVar3;
         }
-        uVar6 = __restgprlr_23(1);
-        return (bool)uVar6;
+        return true;
       }
-      iVar14 = iVar14 + 1;
-      pGVar13 = pGVar13 + 1;
-    } while (iVar14 < s_groupSetCount);
+      iVar8 = iVar8 + 1;
+      pGVar7 = pGVar7 + 1;
+    } while (iVar8 < s_groupSetCount);
   }
   Com_PrintError(1,"Group \'%s\' not found\n");
-  uVar6 = __restgprlr_23(0);
-  return (bool)uVar6;
+  return false;
 }
 
 
 // 824DB978  ComGroups_JoinGroup  (qcommon/com_groups_dw.cpp:494)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void ComGroups_JoinGroup(int param_1,char *param_2)
 
 {
-  uint uVar1;
+  ulonglong uVar1;
   uint uVar2;
   bool bVar3;
   ulonglong uVar4;
-  ulonglong uVar5;
-  longlong lVar6;
-  GroupMembership *pGVar7;
-  ulonglong uVar8;
-  uint uVar9;
-  uint *puVar10;
+  longlong lVar5;
+  GroupMembership *pGVar6;
+  ulonglong uVar7;
+  uint uVar8;
+  uint *puVar9;
   GroupSet *local_b0;
   int local_ac [3];
   uint local_a0 [32];
   uint auStack_20 [8];
   
-  uVar4 = (ulonglong)(int)param_2;
-  uVar2 = __savegprlr_29(param_1);
   local_b0 = (GroupSet *)0x0;
-  if ((uVar4 & 0xffffffff) == 0) {
+  if (param_2 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_groups_dw.cpp",500
                     ,0,"%s");
   }
-  if (3 < uVar2) {
+  if (3 < (uint)param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_groups_dw.cpp",
                     0x1f5,0,
                     "localControllerIndex doesn\'t index MAX_GPAD_COUNT\n\t%i not in [0, %i)");
   }
-  bVar3 = ComGroups_GetGroupID((char *)uVar4,local_ac,&local_b0);
+  bVar3 = ComGroups_GetGroupID(param_2,local_ac,&local_b0);
   if (bVar3) {
-    pGVar7 = s_groupMembership + uVar2;
+    pGVar6 = s_groupMembership + param_1;
     memcpy();
     if (local_b0->exclusive != false) {
-      uVar8 = (ulonglong)local_b0->start;
-      uVar5 = (uint)local_b0->capacity + uVar8;
-      uVar4 = 0x100000001 << (uVar8 & 0x1f) | 0x100000001U >> 0x40 - (uVar8 & 0x1f);
-      if (uVar8 < (uVar5 & 0xffffffff)) {
-        lVar6 = uVar5 - uVar8;
+      uVar7 = (ulonglong)local_b0->start;
+      uVar4 = (uint)local_b0->capacity + uVar7;
+      uVar1 = 0x100000001 << (uVar7 & 0x1f) | 0x100000001U >> 0x40 - (uVar7 & 0x1f);
+      if (uVar7 < (uVar4 & 0xffffffff)) {
+        lVar5 = uVar4 - uVar7;
         do {
-          uVar1 = (uint)((uVar8 & 0xffffffff) >> 3) & 0x1ffffffc;
-          uVar8 = uVar8 + 1;
-          uVar9 = (uint)uVar4;
-          uVar4 = (uVar4 & 0xffffffff) << 1 | (uVar4 & 0xffffffff) >> 0x1f;
-          *(uint *)((int)local_a0 + uVar1) = *(uint *)((int)local_a0 + uVar1) & ~uVar9;
-          lVar6 = lVar6 + -1;
-        } while (lVar6 != 0);
+          uVar2 = (uint)((uVar7 & 0xffffffff) >> 3) & 0x1ffffffc;
+          uVar7 = uVar7 + 1;
+          uVar8 = (uint)uVar1;
+          uVar1 = (uVar1 & 0xffffffff) << 1 | (uVar1 & 0xffffffff) >> 0x1f;
+          *(uint *)((int)local_a0 + uVar2) = *(uint *)((int)local_a0 + uVar2) & ~uVar8;
+          lVar5 = lVar5 + -1;
+        } while (lVar5 != 0);
       }
     }
     if (-1 < local_ac[0]) {
-      uVar9 = local_b0->start + local_ac[0];
-      uVar1 = uVar9 >> 3 & 0x1ffffffc;
-      *(uint *)((int)local_a0 + uVar1) = 1 << (uVar9 & 0x1f) | *(uint *)((int)local_a0 + uVar1);
+      uVar8 = local_b0->start + local_ac[0];
+      uVar2 = uVar8 >> 3 & 0x1ffffffc;
+      *(uint *)((int)local_a0 + uVar2) = 1 << (uVar8 & 0x1f) | *(uint *)((int)local_a0 + uVar2);
     }
-    puVar10 = local_a0;
+    puVar9 = local_a0;
     do {
-      lVar6 = (ulonglong)*(byte *)puVar10 - (ulonglong)*(byte *)pGVar7->bits;
-      if (lVar6 != 0) break;
-      puVar10 = (uint *)((int)puVar10 + 1);
-      pGVar7 = (GroupMembership *)((int)pGVar7->bits + 1);
-    } while (puVar10 != auStack_20);
-    if ((int)lVar6 != 0) {
-      s_groupMembership[uVar2].dirty = s_groupMembership[uVar2].dirty + 1;
+      lVar5 = (ulonglong)*(byte *)puVar9 - (ulonglong)*(byte *)pGVar6->bits;
+      if (lVar5 != 0) break;
+      puVar9 = (uint *)((int)puVar9 + 1);
+      pGVar6 = (GroupMembership *)((int)pGVar6->bits + 1);
+    } while (puVar9 != auStack_20);
+    if ((int)lVar5 != 0) {
+      s_groupMembership[param_1].dirty = s_groupMembership[param_1].dirty + 1;
       memcpy();
-      __restgprlr_29();
       return;
     }
   }
   else {
     Com_PrintError(1,"Could not find group %s\n");
   }
-  __restgprlr_29();
   return;
 }
 
 
 // 824DBB20  ComGroups_LeaveGroup  (qcommon/com_groups_dw.cpp:537)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void ComGroups_LeaveGroup(int param_1,char *param_2)
 
 {
-  uint uVar1;
+  ulonglong uVar1;
   uint uVar2;
   bool bVar3;
   ulonglong uVar4;
-  ulonglong uVar5;
-  longlong lVar6;
-  GroupMembership *pGVar7;
-  uint uVar9;
-  ulonglong uVar8;
-  uint *puVar10;
+  longlong lVar5;
+  GroupMembership *pGVar6;
+  uint uVar8;
+  ulonglong uVar7;
+  uint *puVar9;
   GroupSet *local_b0;
   int local_ac [3];
   uint local_a0 [32];
   uint auStack_20 [8];
   
-  uVar4 = (ulonglong)(int)param_2;
-  uVar2 = __savegprlr_29(param_1);
   local_b0 = (GroupSet *)0x0;
-  if ((uVar4 & 0xffffffff) == 0) {
+  if (param_2 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_groups_dw.cpp",
                     0x21f,0,"%s");
   }
-  if (3 < uVar2) {
+  if (3 < (uint)param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_groups_dw.cpp",
                     0x220,0,
                     "localControllerIndex doesn\'t index MAX_GPAD_COUNT\n\t%i not in [0, %i)");
   }
-  bVar3 = ComGroups_GetGroupID((char *)uVar4,local_ac,&local_b0);
+  bVar3 = ComGroups_GetGroupID(param_2,local_ac,&local_b0);
   if (bVar3) {
-    pGVar7 = s_groupMembership + uVar2;
+    pGVar6 = s_groupMembership + param_1;
     memcpy();
     if (local_ac[0] < 0) {
-      uVar8 = (ulonglong)local_b0->start;
-      uVar5 = (uint)local_b0->capacity + uVar8;
-      uVar4 = 0x100000001 << (uVar8 & 0x1f) | 0x100000001U >> 0x40 - (uVar8 & 0x1f);
-      if (uVar8 < (uVar5 & 0xffffffff)) {
-        lVar6 = uVar5 - uVar8;
+      uVar7 = (ulonglong)local_b0->start;
+      uVar4 = (uint)local_b0->capacity + uVar7;
+      uVar1 = 0x100000001 << (uVar7 & 0x1f) | 0x100000001U >> 0x40 - (uVar7 & 0x1f);
+      if (uVar7 < (uVar4 & 0xffffffff)) {
+        lVar5 = uVar4 - uVar7;
         do {
-          uVar1 = (uint)((uVar8 & 0xffffffff) >> 3) & 0x1ffffffc;
-          uVar8 = uVar8 + 1;
-          uVar9 = (uint)uVar4;
-          uVar4 = (uVar4 & 0xffffffff) << 1 | (uVar4 & 0xffffffff) >> 0x1f;
-          *(uint *)((int)local_a0 + uVar1) = *(uint *)((int)local_a0 + uVar1) & ~uVar9;
-          lVar6 = lVar6 + -1;
-        } while (lVar6 != 0);
+          uVar2 = (uint)((uVar7 & 0xffffffff) >> 3) & 0x1ffffffc;
+          uVar7 = uVar7 + 1;
+          uVar8 = (uint)uVar1;
+          uVar1 = (uVar1 & 0xffffffff) << 1 | (uVar1 & 0xffffffff) >> 0x1f;
+          *(uint *)((int)local_a0 + uVar2) = *(uint *)((int)local_a0 + uVar2) & ~uVar8;
+          lVar5 = lVar5 + -1;
+        } while (lVar5 != 0);
       }
     }
     else {
-      uVar9 = local_b0->start + local_ac[0];
-      uVar1 = uVar9 >> 3 & 0x1ffffffc;
-      *(uint *)((int)local_a0 + uVar1) = *(uint *)((int)local_a0 + uVar1) & ~(1 << (uVar9 & 0x1f));
+      uVar8 = local_b0->start + local_ac[0];
+      uVar2 = uVar8 >> 3 & 0x1ffffffc;
+      *(uint *)((int)local_a0 + uVar2) = *(uint *)((int)local_a0 + uVar2) & ~(1 << (uVar8 & 0x1f));
     }
-    puVar10 = local_a0;
+    puVar9 = local_a0;
     do {
-      lVar6 = (ulonglong)*(byte *)puVar10 - (ulonglong)*(byte *)pGVar7->bits;
-      if (lVar6 != 0) break;
-      puVar10 = (uint *)((int)puVar10 + 1);
-      pGVar7 = (GroupMembership *)((int)pGVar7->bits + 1);
-    } while (puVar10 != auStack_20);
-    if ((int)lVar6 != 0) {
-      s_groupMembership[uVar2].dirty = s_groupMembership[uVar2].dirty + 1;
+      lVar5 = (ulonglong)*(byte *)puVar9 - (ulonglong)*(byte *)pGVar6->bits;
+      if (lVar5 != 0) break;
+      puVar9 = (uint *)((int)puVar9 + 1);
+      pGVar6 = (GroupMembership *)((int)pGVar6->bits + 1);
+    } while (puVar9 != auStack_20);
+    if ((int)lVar5 != 0) {
+      s_groupMembership[param_1].dirty = s_groupMembership[param_1].dirty + 1;
       memcpy();
-      __restgprlr_29();
       return;
     }
   }
   else {
     Com_PrintError(1,"Could not find group %s\n");
   }
-  __restgprlr_29();
   return;
 }
 
@@ -930,6 +907,8 @@ void ComGroups_LeaveGroup_f(void)
 
 // 824DBE90  ComGroups_Dump_f  (qcommon/com_groups_dw.cpp:637)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void ComGroups_Dump_f(void)
@@ -944,7 +923,6 @@ void ComGroups_Dump_f(void)
   GroupSet *local_60;
   int local_5c [23];
   
-  __savegprlr_23();
   if (s_groupSets[0].name != (char *)0x0) {
     piVar6 = &s_groupSets[0].capacity;
     do {
@@ -980,55 +958,54 @@ void ComGroups_Dump_f(void)
       piVar6 = piVar6 + 5;
     } while (*piVar1 != 0);
   }
-  __restgprlr_23();
   return;
 }
 
 
 // 824DCB88  ~OverlappedTaskSet  (line unknown)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void __thiscall OverlappedTaskSet::~OverlappedTaskSet(OverlappedTaskSet *this)
 
 {
   undefined4 *puVar1;
-  uint uVar2;
+  TaskSubsystem TVar2;
   uint uVar3;
-  int iVar4;
-  longlong lVar5;
-  uint *puVar6;
-  longlong lVar7;
-  uint *puVar8;
+  longlong lVar4;
+  uint *puVar5;
+  longlong lVar6;
+  overlappedTask *poVar7;
   char in_RESERVE;
   byte in_cr0;
   
-  iVar4 = __savegprlr_29(this);
-  lVar7 = 0x1f;
-  puVar8 = (uint *)(iVar4 + 0x1410);
+  lVar6 = 0x1f;
+  poVar7 = this[1].tasks;
   do {
-    puVar8 = puVar8 + -0x28;
-    uVar2 = *puVar8;
-    if ((ulonglong)uVar2 != 0) {
-      lVar5 = (ulonglong)uVar2 + 4;
+    poVar7 = poVar7 + -1;
+    TVar2 = poVar7->subsystem;
+    if ((ulonglong)TVar2 != 0) {
+      lVar4 = (ulonglong)TVar2 + 4;
       do {
-        puVar6 = (uint *)lVar5;
+        puVar5 = (uint *)lVar4;
         if (in_RESERVE != '\0') {
-          uVar3 = storeWordConditionalIndexed((ulonglong)*puVar6 - 1,0,lVar5);
-          *puVar6 = uVar3;
+          uVar3 = storeWordConditionalIndexed((ulonglong)*puVar5 - 1,0,lVar4);
+          *puVar5 = uVar3;
           in_cr0 = 2;
         }
       } while (!(bool)(in_cr0 >> 1 & 1));
-      if (*(int *)(uVar2 + 4) == 0) {
-        puVar1 = (undefined4 *)*puVar8;
+      if (*(int *)(TVar2 + 4) == 0) {
+        puVar1 = (undefined4 *)poVar7->subsystem;
         if (puVar1 != (undefined4 *)0x0) {
           (**(code **)*puVar1)(puVar1,1);
         }
-        *puVar8 = 0;
+        poVar7->subsystem = TASKSUBSYSTEM_INVALID;
       }
     }
-    lVar7 = lVar7 + -1;
-    in_cr0 = (lVar7 == 0) << 1;
-  } while (-1 < lVar7);
-  __restgprlr_29();
+    lVar6 = lVar6 + -1;
+    in_cr0 = (lVar6 == 0) << 1;
+  } while (-1 < lVar6);
   return;
 }
 

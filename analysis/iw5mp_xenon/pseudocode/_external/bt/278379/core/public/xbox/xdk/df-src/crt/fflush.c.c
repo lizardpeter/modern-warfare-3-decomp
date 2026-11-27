@@ -58,46 +58,46 @@ int _fflush_nolock(_iobuf *param_1)
 
 // 8291B480  _flush  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/fflush.c:145)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 int _flush(_iobuf *param_1)
 
 {
   char *pcVar1;
-  _iobuf *p_Var2;
-  int iVar3;
+  int iVar2;
+  uint uVar3;
   uint uVar4;
   uint uVar5;
-  uint uVar6;
-  undefined8 uVar7;
-  longlong lVar8;
+  int iVar6;
+  longlong lVar7;
   
-  p_Var2 = (_iobuf *)__savegprlr_28(param_1);
-  uVar7 = 0;
-  if ((p_Var2->_flag & 3U) == 2) {
-    if ((p_Var2->_flag & 0x108U) != 0) {
-      pcVar1 = p_Var2->_base;
-      lVar8 = ZEXT48(p_Var2->_ptr) - ZEXT48(pcVar1);
-      if (0 < lVar8) {
-        iVar3 = _fileno(p_Var2);
-        uVar5 = (uint)lVar8;
-        uVar4 = _write(iVar3,pcVar1,uVar5);
-        uVar6 = p_Var2->_flag;
-        if (uVar4 == uVar5) {
-          if ((uVar6 & 0x80) == 0) goto LAB_8291b4f8;
-          uVar6 = uVar6 & 0xfffffffd;
+  iVar6 = 0;
+  if ((param_1->_flag & 3U) == 2) {
+    if ((param_1->_flag & 0x108U) != 0) {
+      pcVar1 = param_1->_base;
+      lVar7 = ZEXT48(param_1->_ptr) - ZEXT48(pcVar1);
+      if (0 < lVar7) {
+        iVar2 = _fileno(param_1);
+        uVar4 = (uint)lVar7;
+        uVar3 = _write(iVar2,pcVar1,uVar4);
+        uVar5 = param_1->_flag;
+        if (uVar3 == uVar4) {
+          if ((uVar5 & 0x80) == 0) goto LAB_8291b4f8;
+          uVar5 = uVar5 & 0xfffffffd;
         }
         else {
-          uVar7 = 0xffffffffffffffff;
-          uVar6 = uVar6 | 0x20;
+          iVar6 = -1;
+          uVar5 = uVar5 | 0x20;
         }
-        p_Var2->_flag = uVar6;
+        param_1->_flag = uVar5;
       }
     }
   }
 LAB_8291b4f8:
-  p_Var2->_cnt = 0;
-  p_Var2->_ptr = p_Var2->_base;
-  iVar3 = __restgprlr_28(uVar7);
-  return iVar3;
+  param_1->_cnt = 0;
+  param_1->_ptr = param_1->_base;
+  return iVar6;
 }
 
 
@@ -117,41 +117,42 @@ int _flushall(void)
 
 // 8291B598  flsall  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/fflush.c:231)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 int flsall(int param_1)
 
 {
   void *pvVar1;
   _iobuf *p_Var2;
   int iVar3;
-  int iVar4;
-  ulonglong uVar5;
-  int iVar6;
+  ulonglong uVar4;
+  int iVar5;
   int iStack00000014;
   int local_3c;
   int local_38;
   
-  iVar3 = __savegprlr_27(param_1);
   local_3c = 0;
   local_38 = 0;
-  iStack00000014 = iVar3;
+  iStack00000014 = param_1;
   _lock(1);
-  uVar5 = 0xffffffff84897ec4;
-  for (iVar6 = 0; iVar6 < *(int *)uVar5; iVar6 = iVar6 + 1) {
-    pvVar1 = __piob[iVar6];
+  uVar4 = 0xffffffff84897ec4;
+  for (iVar5 = 0; iVar5 < *(int *)uVar4; iVar5 = iVar5 + 1) {
+    pvVar1 = __piob[iVar5];
     if ((pvVar1 != (void *)0x0) && ((*(uint *)((int)pvVar1 + 0xc) & 0x83) != 0)) {
-      _lock_file2(iVar6,pvVar1);
-      p_Var2 = __piob[iVar6];
-      uVar5 = (ulonglong)(uint)p_Var2->_flag & 0x83;
-      if ((int)uVar5 != 0) {
-        if (iVar3 == 1) {
-          iVar4 = _fflush_nolock(p_Var2);
-          if (iVar4 != -1) {
+      _lock_file2(iVar5,pvVar1);
+      p_Var2 = __piob[iVar5];
+      uVar4 = (ulonglong)(uint)p_Var2->_flag & 0x83;
+      if ((int)uVar4 != 0) {
+        if (param_1 == 1) {
+          iVar3 = _fflush_nolock(p_Var2);
+          if (iVar3 != -1) {
             local_3c = local_3c + 1;
           }
         }
-        else if ((iVar3 == 0) && ((p_Var2->_flag & 2U) != 0)) {
-          iVar4 = _fflush_nolock(p_Var2);
-          if (iVar4 == -1) {
+        else if ((param_1 == 0) && ((p_Var2->_flag & 2U) != 0)) {
+          iVar3 = _fflush_nolock(p_Var2);
+          if (iVar3 == -1) {
             local_38 = -1;
           }
         }
@@ -163,7 +164,6 @@ int flsall(int param_1)
   if (iStack00000014 != 1) {
     local_3c = local_38;
   }
-  iVar3 = __restgprlr_27(local_3c);
-  return iVar3;
+  return local_3c;
 }
 

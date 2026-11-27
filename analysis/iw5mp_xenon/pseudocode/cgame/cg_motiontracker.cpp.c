@@ -47,6 +47,8 @@ void CG_MotionTrackerInit(void)
 
 // 822E3998  CG_MotionTrackerRegisterDvars  (cgame/cg_motiontracker.cpp:151)
 
+/* WARNING: Function: __savefpr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void CG_MotionTrackerRegisterDvars(void)
@@ -63,7 +65,6 @@ void CG_MotionTrackerRegisterDvars(void)
   double dVar7;
   double dVar8;
   
-  __savefpr_27();
   dVar8 = 3.4028234663852886e+38;
   dVar7 = 0.0;
   motionTrackerPingFadeTime =
@@ -111,7 +112,6 @@ void CG_MotionTrackerRegisterDvars(void)
   motionTrackerPingPitchAddPerEnemy =
        Dvar_RegisterFloat("motionTrackerPingPitchAddPerEnemy",(float)dVar7,-3.4028235e+38,
                           (float)dVar8,uVar1,pIVar3->e_magic);
-  __restfpr_27();
   return;
 }
 
@@ -159,6 +159,9 @@ bool PointInCircle2D(float *param_1,float *param_2,float param_3)
 
 // 822E3D60  WorldPosToMotionTracker  (cgame/cg_motiontracker.cpp:205)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void WorldPosToMotionTracker
                (float *param_1,float *param_2,float *param_3,float *param_4,float *param_5,
                float param_6)
@@ -172,15 +175,10 @@ void WorldPosToMotionTracker
   dvar_t *pdVar6;
   dvar_t *pdVar7;
   dvar_t *pdVar8;
-  float *pfVar9;
-  ulonglong uVar10;
-  double extraout_f1;
-  double dVar11;
+  double dVar9;
   
-  uVar10 = (ulonglong)(int)param_5;
-  pfVar9 = (float *)__savegprlr_27((double)param_6,param_1);
-  dVar11 = extraout_f1;
-  if ((uVar10 & 0xffffffff) == 0) {
+  dVar9 = (double)param_6;
+  if (param_5 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_motiontracker.cpp",
                     0xcf,0,"%s");
   }
@@ -188,18 +186,16 @@ void WorldPosToMotionTracker
   pdVar7 = motionTrackerRange;
   pdVar6 = motionTrackerCenterX;
   fVar2 = *param_4;
-  fVar3 = *pfVar9;
+  fVar3 = *param_1;
   fVar4 = param_4[1];
-  fVar5 = pfVar9[1];
+  fVar5 = param_1[1];
   fVar1 = (float)((double)((param_3[1] * (fVar4 - fVar5) + *param_3 * (fVar2 - fVar3)) /
-                          (motionTrackerRange->current).value) / dVar11);
-  pfVar9 = (float *)uVar10;
-  *pfVar9 = fVar1;
-  *pfVar9 = (pdVar6->current).value + fVar1;
+                          (motionTrackerRange->current).value) / dVar9);
+  *param_5 = fVar1;
+  *param_5 = (pdVar6->current).value + fVar1;
   fVar1 = (param_2[1] * (fVar4 - fVar5) + *param_2 * (fVar2 - fVar3)) / (pdVar7->current).value;
-  pfVar9[1] = fVar1;
-  pfVar9[1] = (pdVar8->current).value + fVar1;
-  __restgprlr_27();
+  param_5[1] = fVar1;
+  param_5[1] = (pdVar8->current).value + fVar1;
   return;
 }
 
@@ -257,6 +253,8 @@ bool MotionTrackerScreenPosOnScreen(float *param_1)
 
 // 822E52C8  CG_MotionTrackerDetectActor  (cgame/cg_motiontracker.cpp:249)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
@@ -269,106 +267,98 @@ void CG_MotionTrackerDetectActor
   float fVar1;
   float fVar2;
   float fVar3;
-  float *pfVar4;
-  char *pcVar5;
-  float *pfVar6;
-  bool bVar8;
-  int iVar7;
-  longlong lVar9;
-  float *pfVar10;
-  longlong lVar11;
-  longlong lVar12;
-  longlong lVar13;
-  double dVar14;
-  double dVar15;
-  float fVar16;
+  char *pcVar4;
+  bool bVar6;
+  int iVar5;
+  int *piVar7;
+  int *piVar8;
+  float *pfVar9;
+  longlong lVar10;
+  double dVar11;
+  double dVar12;
+  float fVar13;
   float local_70;
   float local_6c;
   float afStack_68 [2];
   float afStack_60 [2];
   longlong local_58 [11];
   
-  lVar11 = (longlong)(int)param_5;
-  lVar9 = (longlong)(int)param_4;
-  lVar12 = (longlong)(int)param_3;
-  pfVar4 = (float *)__savegprlr_25(param_1);
-  pcVar5 = (char *)pfVar4;
-  if (lVar12 == -0x3c) {
-    pcVar5 = "c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\../bgame/bg_perks.h";
+  pcVar4 = (char *)param_1;
+  if (param_3 == (CompassActor *)0xffffffc4) {
+    pcVar4 = "c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\../bgame/bg_perks.h";
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\../bgame/bg_perks.h",
                     0x4f,0,"%s");
   }
-  iVar7 = (int)lVar12;
-  if ((*(uint *)(iVar7 + 0x40) & 0x40) == 0) {
-    YawVectors2D(param_2->refdefViewAngles[1],(float *)pcVar5,afStack_60);
-    lVar12 = lVar9 + -4;
-    lVar11 = lVar11 + -4;
-    lVar13 = 5;
+  if ((param_3->perks[1] & 0x40) == 0) {
+    YawVectors2D(param_2->refdefViewAngles[1],(float *)pcVar4,afStack_60);
+    piVar8 = &param_4[-1].beginFadeTime;
+    piVar7 = &param_5[-1].beginFadeTime;
+    lVar10 = 5;
     do {
-      lVar12 = lVar12 + 4;
-      lVar11 = lVar11 + 4;
-      *(undefined4 *)lVar11 = *(undefined4 *)lVar12;
-      lVar13 = lVar13 + -1;
-    } while (lVar13 != 0);
-    dVar15 = 1.0;
-    if (motionTrackerStates[(int)pfVar4].aspectRatio == 0.0) {
-      motionTrackerStates[(int)pfVar4].aspectRatio = 1.0;
+      piVar8 = piVar8 + 1;
+      piVar7 = piVar7 + 1;
+      *piVar7 = *piVar8;
+      lVar10 = lVar10 + -1;
+    } while (lVar10 != 0);
+    dVar12 = 1.0;
+    if (motionTrackerStates[param_1].aspectRatio == 0.0) {
+      motionTrackerStates[param_1].aspectRatio = 1.0;
     }
-    pfVar6 = (param_2->refdef).view.org;
+    pfVar9 = (param_2->refdef).view.org;
     WorldPosToMotionTracker
-              (pfVar6,afStack_60,afStack_68,(float *)(iVar7 + 4),(float *)local_58,
-               motionTrackerStates[(int)pfVar4].aspectRatio);
-    local_70 = *(float *)(iVar7 + 4) - *pfVar6;
-    local_6c = *(float *)(iVar7 + 8) - (param_2->refdef).view.org[1];
-    pfVar10 = (float *)lVar9;
-    *pfVar10 = SQRT(local_6c * local_6c + local_70 * local_70);
-    fVar16 = vectoyaw(&local_70);
-    pfVar10[1] = fVar16;
-    fVar16 = AngleNormalize360(fVar16 - param_2->refdefViewAngles[1]);
-    pfVar10[2] = fVar16;
-    pfVar10[3] = fVar16;
-    pfVar10[4] = (float)param_2->time;
-    if (((motionTrackerStates[(int)pfVar4].playedPingSoundThisSweep == false) &&
-        ((*(uint *)(iVar7 + 0x38) & 1) != 0)) &&
-       (bVar8 = MotionTrackerScreenPosOnScreen((float *)local_58), bVar8)) {
+              (pfVar9,afStack_60,afStack_68,param_3->lastPos,(float *)local_58,
+               motionTrackerStates[param_1].aspectRatio);
+    local_70 = param_3->lastPos[0] - *pfVar9;
+    local_6c = param_3->lastPos[1] - (param_2->refdef).view.org[1];
+    param_4->dist = SQRT(local_6c * local_6c + local_70 * local_70);
+    fVar13 = vectoyaw(&local_70);
+    param_4->yaw = fVar13;
+    fVar13 = AngleNormalize360(fVar13 - param_2->refdefViewAngles[1]);
+    param_4->displayYawMin = fVar13;
+    param_4->displayYawMax = fVar13;
+    param_4->beginFadeTime = param_2->time;
+    if (((motionTrackerStates[param_1].playedPingSoundThisSweep == false) &&
+        ((param_3->flags & 1U) != 0)) &&
+       (bVar6 = MotionTrackerScreenPosOnScreen((float *)local_58), bVar6)) {
       fVar1 = 0.5 - (motionTrackerCenterX->current).value;
-      fVar16 = (motionTrackerCenterX->current).value + 0.5;
+      fVar13 = (motionTrackerCenterX->current).value + 0.5;
       fVar2 = 0.5 - (motionTrackerCenterY->current).value;
       fVar3 = (motionTrackerCenterY->current).value + 0.5;
-      if (fVar16 - fVar1 < 0.0) {
-        fVar16 = fVar1;
+      if (fVar13 - fVar1 < 0.0) {
+        fVar13 = fVar1;
       }
       if (fVar3 - fVar2 < 0.0) {
         fVar3 = fVar2;
       }
-      fVar16 = fVar16 * motionTrackerStates[(int)pfVar4].aspectRatio;
-      dVar14 = (double)(*pfVar10 /
-                       (SQRT(fVar3 * fVar3 + fVar16 * fVar16) * (motionTrackerRange->current).value)
+      fVar13 = fVar13 * motionTrackerStates[param_1].aspectRatio;
+      dVar11 = (double)(param_4->dist /
+                       (SQRT(fVar3 * fVar3 + fVar13 * fVar13) * (motionTrackerRange->current).value)
                        );
-      dVar14 = (double)((float)(dVar15 - dVar14) * (motionTrackerPingPitchNearby->current).value +
-                       (float)((double)(motionTrackerPingPitchBase->current).value * dVar14));
-      iVar7 = MotionTrackerEstimateVisibleEnemyCount
-                        ((LocalClientNum_t)pfVar4,motionTrackerStates[(int)pfVar4].aspectRatio);
-      if (iVar7 < 1) {
+      dVar11 = (double)((float)(dVar12 - dVar11) * (motionTrackerPingPitchNearby->current).value +
+                       (float)((double)(motionTrackerPingPitchBase->current).value * dVar11));
+      iVar5 = MotionTrackerEstimateVisibleEnemyCount
+                        (param_1,motionTrackerStates[param_1].aspectRatio);
+      if (iVar5 < 1) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_motiontracker.cpp"
                         ,0x128,0,"%s\n\t(enemyCount) = %i");
       }
-      local_58[0] = (longlong)(iVar7 + -1);
+      local_58[0] = (longlong)(iVar5 + -1);
       CG_PlaySoundAliasWithPitch
-                ((LocalClientNum_t)pfVar4,0x7fe,pfVar6,motionTrackerMedia.motionTrackerPong,
+                (param_1,0x7fe,pfVar9,motionTrackerMedia.motionTrackerPong,
                  (float)((double)(float)((double)local_58[0] *
                                          (double)(motionTrackerPingPitchAddPerEnemy->current).value
-                                        + dVar15) * dVar14));
-      motionTrackerStates[(int)pfVar4].playedPingSoundThisSweep = true;
+                                        + dVar12) * dVar11));
+      motionTrackerStates[param_1].playedPingSoundThisSweep = true;
     }
   }
-  __restgprlr_25();
   return;
 }
 
 
 // 822E5570  CG_MotionTrackerUpdateActor  (cgame/cg_motiontracker.cpp:312)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -376,55 +366,46 @@ void CG_MotionTrackerDetectActor
 void CG_MotionTrackerUpdateActor(LocalClientNum_t param_1,int param_2,float *param_3)
 
 {
-  int iVar1;
-  int iVar2;
-  longlong lVar3;
-  cg_s *pcVar4;
-  ulonglong uVar5;
-  float *pfVar6;
-  double dVar7;
-  double dVar8;
-  float fVar9;
+  cg_s *pcVar1;
+  float *pfVar2;
+  double dVar3;
+  double dVar4;
+  float fVar5;
   float local_70;
   float local_6c;
   float local_68;
   float local_64;
   
-  uVar5 = (ulonglong)param_2;
-  lVar3 = __savegprlr_24(param_1);
-  pcVar4 = CG_GetLocalClientGlobals((LocalClientNum_t)lVar3);
-  if (pcVar4 == (cg_s *)0x0) {
+  pcVar1 = CG_GetLocalClientGlobals(param_1);
+  if (pcVar1 == (cg_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_motiontracker.cpp",
                     0x143,0,"%s");
   }
-  if (0x19 < (uVar5 & 0xffffffff)) {
+  if (0x19 < (uint)param_2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_motiontracker.cpp",
                     0x146,0,
                     "actorIndex doesn\'t index ARRAY_COUNT( s_compassActors[ localClientNum ] )\n\t%i not in [0, %i)"
                    );
   }
-  uVar5 = lVar3 * 0x1a + uVar5;
-  iVar1 = (int)((uVar5 + (uVar5 & 0x3fffffff) * 4 & 0xffffffff) << 2);
-  fVar9 = pcVar4->motionTrackerProgress * (motionTrackerSweepInterval->current).value *
+  fVar5 = pcVar1->motionTrackerProgress * (motionTrackerSweepInterval->current).value *
           (motionTrackerSweepSpeed->current).value;
-  iVar2 = (int)uVar5;
-  dVar8 = (double)(fVar9 * fVar9);
-  dVar7 = cos((double)(motionTrackerSweepAngle->current).value * 0.01745327777777778);
-  dVar7 = (double)(float)dVar7;
-  YawVectors2D(pcVar4->refdefViewAngles[1],(float *)0x704e0,&local_68);
-  pfVar6 = (pcVar4->refdef).view.org;
-  local_70 = s_compassActors[0][iVar2].lastPos[0] - *pfVar6;
-  local_6c = s_compassActors[0][iVar2].lastPos[1] - (pcVar4->refdef).view.org[1];
+  dVar4 = (double)(fVar5 * fVar5);
+  dVar3 = cos((double)(motionTrackerSweepAngle->current).value * 0.01745327777777778);
+  dVar3 = (double)(float)dVar3;
+  YawVectors2D(pcVar1->refdefViewAngles[1],(float *)0x704e0,&local_68);
+  pfVar2 = (pcVar1->refdef).view.org;
+  local_70 = s_compassActors[param_1][param_2].lastPos[0] - *pfVar2;
+  local_6c = s_compassActors[param_1][param_2].lastPos[1] - (pcVar1->refdef).view.org[1];
   Vec2Normalize(&local_70);
-  if (((dVar7 <= (double)(local_68 * local_70 + local_64 * local_6c)) &&
-      (fVar9 = Vec2DistanceSq(param_3,pfVar6), dVar8 < (double)fVar9)) &&
-     (fVar9 = Vec2DistanceSq(s_compassActors[0][iVar2].lastPos,pfVar6), (double)fVar9 <= dVar8)) {
+  if (((dVar3 <= (double)(local_68 * local_70 + local_64 * local_6c)) &&
+      (fVar5 = Vec2DistanceSq(param_3,pfVar2), dVar4 < (double)fVar5)) &&
+     (fVar5 = Vec2DistanceSq(s_compassActors[param_1][param_2].lastPos,pfVar2),
+     (double)fVar5 <= dVar4)) {
     CG_MotionTrackerDetectActor
-              ((LocalClientNum_t)lVar3,pcVar4,s_compassActors[0] + iVar2,
-               (MotionTrackerDisplayPos *)((int)&motionTrackerActorsPos[0][0].dist + iVar1),
-               (MotionTrackerDisplayPos *)((int)&motionTrackerActorsPosPrev[0][0].dist + iVar1));
+              (param_1,pcVar1,s_compassActors[param_1] + param_2,
+               motionTrackerActorsPos[param_1] + param_2,
+               motionTrackerActorsPosPrev[param_1] + param_2);
   }
-  __restgprlr_24();
   return;
 }
 
@@ -471,6 +452,8 @@ bool CG_MotionTrackerActive(LocalClientNum_t param_1)
 
 // 822E4040  MotionTrackerEstimateVisibleEnemyCount  (cgame/cg_motiontracker.cpp:391)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -478,27 +461,24 @@ bool CG_MotionTrackerActive(LocalClientNum_t param_1)
 int MotionTrackerEstimateVisibleEnemyCount(LocalClientNum_t param_1,float param_2)
 
 {
-  bool bVar1;
-  LocalClientNum_t LVar2;
+  int iVar1;
+  bool bVar2;
   cg_s *pcVar3;
   char *pcVar4;
   int iVar5;
   longlong lVar6;
-  longlong lVar7;
-  CompassActor *pCVar8;
-  double extraout_f1;
+  CompassActor *pCVar7;
+  double dVar8;
   double dVar9;
   double dVar10;
-  double dVar11;
   float local_70;
   float local_6c;
   float afStack_68 [2];
   float afStack_60 [24];
   
-  LVar2 = __savegprlr_26((double)param_2,param_1);
-  lVar6 = 0;
-  dVar9 = extraout_f1;
-  pcVar3 = CG_GetLocalClientGlobals(LVar2);
+  dVar8 = (double)param_2;
+  iVar5 = 0;
+  pcVar3 = CG_GetLocalClientGlobals(param_1);
   pcVar4 = (char *)pcVar3;
   if (pcVar3 == (cg_s *)0x0) {
     pcVar4 = "c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_motiontracker.cpp";
@@ -506,36 +486,39 @@ int MotionTrackerEstimateVisibleEnemyCount(LocalClientNum_t param_1,float param_
                     0x193,0,"%s");
   }
   YawVectors2D(pcVar3->refdefViewAngles[1],(float *)pcVar4,afStack_60);
-  pCVar8 = s_compassActors[LVar2];
-  lVar7 = 0x1a;
-  dVar10 = 0.5;
-  dVar11 = -0.5;
+  pCVar7 = s_compassActors[param_1];
+  lVar6 = 0x1a;
+  dVar9 = 0.5;
+  dVar10 = -0.5;
   do {
-    if (((((pCVar8->flags & 1U) != 0) &&
-         (iVar5 = ((CompassActor *)&pCVar8->lastUpdate)->lastUpdate, iVar5 != 0)) &&
-        (pcVar3->time + -500 <= iVar5)) && ((pCVar8->flags & 2U) == 0)) {
+    if (((((pCVar7->flags & 1U) != 0) &&
+         (iVar1 = ((CompassActor *)&pCVar7->lastUpdate)->lastUpdate, iVar1 != 0)) &&
+        (pcVar3->time + -500 <= iVar1)) && ((pCVar7->flags & 2U) == 0)) {
       WorldPosToMotionTracker
-                ((pcVar3->refdef).view.org,afStack_60,afStack_68,pCVar8->lastPos,&local_70,
-                 (float)dVar9);
-      bVar1 = false;
-      if (((dVar11 <= (double)local_70) && ((double)local_70 <= dVar10)) &&
-         ((dVar11 <= (double)local_6c && ((double)local_6c <= dVar10)))) {
-        bVar1 = true;
+                ((pcVar3->refdef).view.org,afStack_60,afStack_68,pCVar7->lastPos,&local_70,
+                 (float)dVar8);
+      bVar2 = false;
+      if (((dVar10 <= (double)local_70) && ((double)local_70 <= dVar9)) &&
+         ((dVar10 <= (double)local_6c && ((double)local_6c <= dVar9)))) {
+        bVar2 = true;
       }
-      if (bVar1) {
-        lVar6 = lVar6 + 1;
+      if (bVar2) {
+        iVar5 = iVar5 + 1;
       }
     }
-    lVar7 = lVar7 + -1;
-    pCVar8 = pCVar8 + 1;
-  } while (lVar7 != 0);
-  iVar5 = __restgprlr_26(lVar6);
+    lVar6 = lVar6 + -1;
+    pCVar7 = pCVar7 + 1;
+  } while (lVar6 != 0);
   return iVar5;
 }
 
 
 // 822E5760  CG_MotionTrackerPingEnemyPlayers  (cgame/cg_motiontracker.cpp:440)
 
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -545,87 +528,85 @@ void CG_MotionTrackerPingEnemyPlayers(LocalClientNum_t param_1,float param_2,flo
 {
   float fVar1;
   int iVar2;
-  LocalClientNum_t LVar3;
+  cg_s *pcVar3;
   cg_s *pcVar4;
-  cg_s *pcVar5;
-  float *pfVar6;
-  longlong lVar7;
-  MotionTrackerDisplayPos *pMVar8;
-  float *pfVar9;
-  CompassActor *pCVar10;
-  double extraout_f1;
+  float *pfVar5;
+  longlong lVar6;
+  MotionTrackerDisplayPos *pMVar7;
+  float *pfVar8;
+  CompassActor *pCVar9;
+  double dVar10;
   double dVar11;
   double dVar12;
   double dVar13;
   double dVar14;
-  double dVar15;
-  float fVar16;
+  float fVar15;
   float local_90;
   float local_8c;
   float local_88;
   float local_84;
   
+  dVar10 = (double)param_2;
   dVar12 = (double)param_3;
-  __savegprlr_22((double)param_2,param_1);
-  LVar3 = __savefpr_27();
-  dVar15 = extraout_f1;
-  pcVar4 = CG_GetLocalClientGlobals(LVar3);
-  pcVar5 = pcVar4;
-  if (pcVar4 == (cg_s *)0x0) {
-    pcVar5 = (cg_s *)"c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_motiontracker.cpp";
+  pcVar3 = CG_GetLocalClientGlobals(param_1);
+  pcVar4 = pcVar3;
+  if (pcVar3 == (cg_s *)0x0) {
+    pcVar4 = (cg_s *)"c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_motiontracker.cpp";
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_motiontracker.cpp",
                     0x1c7,0,"%s");
   }
-  pfVar6 = (pcVar4->refdef).view.org;
-  fVar16 = (float)((double)((motionTrackerSweepSpeed->current).value *
+  pfVar5 = (pcVar3->refdef).view.org;
+  fVar15 = (float)((double)((motionTrackerSweepSpeed->current).value *
                            (motionTrackerSweepInterval->current).value) * dVar12);
   fVar1 = (float)((double)((motionTrackerSweepSpeed->current).value *
-                          (motionTrackerSweepInterval->current).value) * dVar15);
-  dVar14 = (double)(fVar16 * fVar16);
+                          (motionTrackerSweepInterval->current).value) * dVar10);
+  dVar14 = (double)(fVar15 * fVar15);
   dVar13 = (double)(fVar1 * fVar1);
   dVar11 = cos((double)(motionTrackerSweepAngle->current).value * 0.01745327777777778);
   dVar11 = (double)(float)dVar11;
-  YawVectors2D(pcVar4->refdefViewAngles[1],(float *)pcVar5,&local_88);
-  if (LOCAL_CLIENT_3 < LVar3) {
+  YawVectors2D(pcVar3->refdefViewAngles[1],(float *)pcVar4,&local_88);
+  if (LOCAL_CLIENT_3 < param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_motiontracker.cpp",
                     0x1d4,0,
                     "localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)");
   }
-  pCVar10 = s_compassActors[LVar3];
-  pMVar8 = motionTrackerActorsPos[LVar3];
-  iVar2 = LVar3 * 0x208 - (int)pMVar8;
-  pfVar9 = (float *)(LVar3 * 0xe38 + -0x7d5e55a4);
-  lVar7 = 0x1a;
+  pCVar9 = s_compassActors[param_1];
+  pMVar7 = motionTrackerActorsPos[param_1];
+  iVar2 = param_1 * 0x208 - (int)pMVar7;
+  pfVar8 = s_compassActors[param_1][0].lastPos;
+  lVar6 = 0x1a;
   do {
-    if ((((pCVar10->lastUpdate != 0) && (pcVar4->time + -500 <= pCVar10->lastUpdate)) &&
-        (((uint)pfVar9[0xd] & 2) == 0)) &&
-       ((fVar16 = Vec2DistanceSq(pfVar9,pfVar6), (double)fVar16 <= dVar14 &&
-        ((dVar12 < dVar15 ||
-         (fVar16 = Vec2DistanceSq(pfVar9,pcVar4->motionTrackerPrevCenter), dVar13 < (double)fVar16))
+    if ((((pCVar9->lastUpdate != 0) && (pcVar3->time + -500 <= pCVar9->lastUpdate)) &&
+        (((uint)pfVar8[0xd] & 2) == 0)) &&
+       ((fVar15 = Vec2DistanceSq(pfVar8,pfVar5), (double)fVar15 <= dVar14 &&
+        ((dVar12 < dVar10 ||
+         (fVar15 = Vec2DistanceSq(pfVar8,pcVar3->motionTrackerPrevCenter), dVar13 < (double)fVar15))
         )))) {
-      local_90 = *pfVar9 - *pfVar6;
-      local_8c = pfVar9[1] - (pcVar4->refdef).view.org[1];
+      local_90 = *pfVar8 - *pfVar5;
+      local_8c = pfVar8[1] - (pcVar3->refdef).view.org[1];
       Vec2Normalize(&local_90);
       if (dVar11 <= (double)(local_88 * local_90 + local_84 * local_8c)) {
         CG_MotionTrackerDetectActor
-                  (LVar3,pcVar4,pCVar10,pMVar8,
+                  (param_1,pcVar3,pCVar9,pMVar7,
                    (MotionTrackerDisplayPos *)
-                   ((int)motionTrackerActorsPosPrev + (int)pMVar8 + iVar2));
+                   ((int)motionTrackerActorsPosPrev + iVar2 + (int)pMVar7));
       }
     }
-    lVar7 = lVar7 + -1;
-    pCVar10 = pCVar10 + 1;
-    pfVar9 = pfVar9 + 0x23;
-    pMVar8 = pMVar8 + 1;
-  } while (lVar7 != 0);
-  __restfpr_27();
-  __restgprlr_22();
+    lVar6 = lVar6 + -1;
+    pCVar9 = pCVar9 + 1;
+    pfVar8 = pfVar8 + 0x23;
+    pMVar7 = pMVar7 + 1;
+  } while (lVar6 != 0);
   return;
 }
 
 
 // 822E41A0  MotionTrackerUpdatePlayerPosition  (cgame/cg_motiontracker.cpp:508)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -633,54 +614,49 @@ void CG_MotionTrackerPingEnemyPlayers(LocalClientNum_t param_1,float param_2,flo
 void MotionTrackerUpdatePlayerPosition(LocalClientNum_t param_1)
 
 {
-  LocalClientNum_t LVar1;
-  cg_s *pcVar2;
-  CompassActor *pCVar3;
-  longlong lVar4;
-  float *pfVar5;
+  cg_s *pcVar1;
+  CompassActor *pCVar2;
+  longlong lVar3;
+  float *pfVar4;
+  double dVar5;
   double dVar6;
   double dVar7;
   double dVar8;
-  double dVar9;
-  float fVar10;
+  float fVar9;
   
-  __savegprlr_27(param_1);
-  LVar1 = __savefpr_28();
-  pcVar2 = CG_GetLocalClientGlobals(LVar1);
-  if (pcVar2 == (cg_s *)0x0) {
+  pcVar1 = CG_GetLocalClientGlobals(param_1);
+  if (pcVar1 == (cg_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_motiontracker.cpp",
                     0x206,0,"%s");
   }
-  pfVar5 = (float *)(LVar1 * 0x208 + -0x7d5b3ee8);
-  pCVar3 = s_compassActors[LVar1];
-  lVar4 = 0x1a;
+  pfVar4 = &motionTrackerActorsPos[param_1][0].displayYawMin;
+  pCVar2 = s_compassActors[param_1];
+  lVar3 = 0x1a;
   do {
-    if (((CompassActor *)&pCVar3->lastUpdate)->lastUpdate != 0) {
-      fVar10 = AngleNormalize360(pfVar5[-1] - pcVar2->refdefViewAngles[1]);
-      dVar6 = (double)fVar10;
-      dVar8 = (double)*pfVar5;
-      dVar9 = (double)pfVar5[1];
-      fVar10 = AngleNormalize360((float)(dVar6 - dVar8));
-      dVar7 = (double)fVar10;
-      fVar10 = AngleNormalize360((float)(dVar9 - dVar8));
-      if ((double)fVar10 <= dVar7) {
-        fVar10 = AngleNormalize360((float)((double)*pfVar5 - dVar6));
-        dVar7 = (double)fVar10;
-        fVar10 = AngleNormalize360((float)(dVar6 - (double)pfVar5[1]));
-        if ((double)fVar10 <= dVar7) {
-          pfVar5[1] = (float)((double)pfVar5[1] + (double)fVar10);
+    if (((CompassActor *)&pCVar2->lastUpdate)->lastUpdate != 0) {
+      fVar9 = AngleNormalize360(pfVar4[-1] - pcVar1->refdefViewAngles[1]);
+      dVar5 = (double)fVar9;
+      dVar7 = (double)*pfVar4;
+      dVar8 = (double)pfVar4[1];
+      fVar9 = AngleNormalize360((float)(dVar5 - dVar7));
+      dVar6 = (double)fVar9;
+      fVar9 = AngleNormalize360((float)(dVar8 - dVar7));
+      if ((double)fVar9 <= dVar6) {
+        fVar9 = AngleNormalize360((float)((double)*pfVar4 - dVar5));
+        dVar6 = (double)fVar9;
+        fVar9 = AngleNormalize360((float)(dVar5 - (double)pfVar4[1]));
+        if ((double)fVar9 <= dVar6) {
+          pfVar4[1] = (float)((double)pfVar4[1] + (double)fVar9);
         }
         else {
-          *pfVar5 = (float)((double)*pfVar5 - dVar7);
+          *pfVar4 = (float)((double)*pfVar4 - dVar6);
         }
       }
     }
-    lVar4 = lVar4 + -1;
-    pCVar3 = pCVar3 + 1;
-    pfVar5 = pfVar5 + 5;
-  } while (lVar4 != 0);
-  __restfpr_28();
-  __restgprlr_27();
+    lVar3 = lVar3 + -1;
+    pCVar2 = pCVar2 + 1;
+    pfVar4 = pfVar4 + 5;
+  } while (lVar3 != 0);
   return;
 }
 
@@ -719,6 +695,8 @@ void MotionTrackerStopFX(LocalClientNum_t param_1)
 
 // 822E59A0  CG_MotionTrackerIncreaseRadarTime  (cgame/cg_motiontracker.cpp:585)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -727,68 +705,68 @@ void CG_MotionTrackerIncreaseRadarTime(LocalClientNum_t param_1)
 
 {
   float fVar1;
-  LocalClientNum_t LVar2;
-  cg_s *pcVar3;
-  bool bVar4;
-  MotionTrackerState *pMVar5;
-  float *pfVar6;
+  cg_s *pcVar2;
+  bool bVar3;
+  MotionTrackerState *pMVar4;
+  float *pfVar5;
+  double dVar6;
   double dVar7;
-  double dVar8;
   
-  LVar2 = __savegprlr_25(param_1);
-  pcVar3 = CG_GetLocalClientGlobals(LVar2);
-  if (pcVar3 == (cg_s *)0x0) {
+  pcVar2 = CG_GetLocalClientGlobals(param_1);
+  if (pcVar2 == (cg_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_motiontracker.cpp",
                     0x24f,0,"%s");
   }
-  if (0 < pcVar3->frametime) {
-    pfVar6 = &pcVar3->motionTrackerProgress;
-    pMVar5 = motionTrackerStates + LVar2;
-    dVar7 = (double)*pfVar6;
-    bVar4 = CG_MotionTrackerActive(LVar2);
-    dVar8 = 0.0;
-    if (bVar4) {
-      if (pMVar5->on == 0) {
-        pMVar5->on = 1;
-        motionTrackerStates[LVar2].stateChangeTime = pcVar3->time;
-        *pfVar6 = 0.0;
+  if (0 < pcVar2->frametime) {
+    pfVar5 = &pcVar2->motionTrackerProgress;
+    pMVar4 = motionTrackerStates + param_1;
+    dVar6 = (double)*pfVar5;
+    bVar3 = CG_MotionTrackerActive(param_1);
+    dVar7 = 0.0;
+    if (bVar3) {
+      if (pMVar4->on == 0) {
+        pMVar4->on = 1;
+        motionTrackerStates[param_1].stateChangeTime = pcVar2->time;
+        *pfVar5 = 0.0;
         MotionTrackerLoadMedia();
-        MotionTrackerStartFX(LVar2);
+        MotionTrackerStartFX(param_1);
       }
     }
     else {
-      if (pMVar5->on != 0) {
-        pMVar5->on = 0;
-        motionTrackerStates[LVar2].stateChangeTime = pcVar3->time;
+      if (pMVar4->on != 0) {
+        pMVar4->on = 0;
+        motionTrackerStates[param_1].stateChangeTime = pcVar2->time;
         MotionTrackerLoadMedia();
-        MotionTrackerStopFX(LVar2);
+        MotionTrackerStopFX(param_1);
       }
-      if ((500 < pcVar3->time - motionTrackerStates[LVar2].stateChangeTime) ||
-         ((double)*pfVar6 == dVar8)) goto LAB_822e5bac;
-    }
-    MotionTrackerLoadMedia();
-    MotionTrackerUpdatePlayerPosition(LVar2);
-    fVar1 = (float)(longlong)pcVar3->frametime /
-            ((motionTrackerSweepInterval->current).value * 1000.0) + *pfVar6;
-    *pfVar6 = fVar1;
-    if (1.0 <= fVar1) {
-      bVar4 = CG_MotionTrackerActive(LVar2);
-      if (!bVar4) {
-        *pfVar6 = (float)dVar8;
-        __restgprlr_25();
+      if (500 < pcVar2->time - motionTrackerStates[param_1].stateChangeTime) {
         return;
       }
-      motionTrackerStates[LVar2].playedPingSoundThisSweep = false;
-      dVar8 = floor((double)*pfVar6);
-      *pfVar6 = *pfVar6 - (float)dVar8;
-      CG_PlaySoundAlias(LVar2,0x7fe,(pcVar3->refdef).view.org,motionTrackerMedia.motionTrackerPing);
+      if ((double)*pfVar5 == dVar7) {
+        return;
+      }
     }
-    CG_MotionTrackerPingEnemyPlayers(LVar2,(float)dVar7,*pfVar6);
-    pcVar3->motionTrackerPrevCenter[0] = (pcVar3->refdef).view.org[0];
-    pcVar3->motionTrackerPrevCenter[1] = (pcVar3->refdef).view.org[1];
+    MotionTrackerLoadMedia();
+    MotionTrackerUpdatePlayerPosition(param_1);
+    fVar1 = (float)(longlong)pcVar2->frametime /
+            ((motionTrackerSweepInterval->current).value * 1000.0) + *pfVar5;
+    *pfVar5 = fVar1;
+    if (1.0 <= fVar1) {
+      bVar3 = CG_MotionTrackerActive(param_1);
+      if (!bVar3) {
+        *pfVar5 = (float)dVar7;
+        return;
+      }
+      motionTrackerStates[param_1].playedPingSoundThisSweep = false;
+      dVar7 = floor((double)*pfVar5);
+      *pfVar5 = *pfVar5 - (float)dVar7;
+      CG_PlaySoundAlias(param_1,0x7fe,(pcVar2->refdef).view.org,motionTrackerMedia.motionTrackerPing
+                       );
+    }
+    CG_MotionTrackerPingEnemyPlayers(param_1,(float)dVar6,*pfVar5);
+    pcVar2->motionTrackerPrevCenter[0] = (pcVar2->refdef).view.org[0];
+    pcVar2->motionTrackerPrevCenter[1] = (pcVar2->refdef).view.org[1];
   }
-LAB_822e5bac:
-  __restgprlr_25();
   return;
 }
 
@@ -807,6 +785,8 @@ int MotionTrackerGetTagPos_CheckIfExists(cpose_t *param_1,DObj *param_2,uint par
 
 // 822E43A0  MotionTracker_GetTagMatrix  (cgame/cg_motiontracker.cpp:669)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -822,11 +802,10 @@ int MotionTracker_GetTagMatrix
   float fVar4;
   float fVar5;
   float fVar6;
-  LocalClientNum_t LVar7;
-  cg_s *pcVar8;
-  WeaponHand *pWVar9;
-  cpose_t *pcVar10;
-  int iVar11;
+  cg_s *pcVar7;
+  WeaponHand *pWVar8;
+  cpose_t *pcVar9;
+  int iVar10;
   float local_80;
   float local_7c;
   float local_78;
@@ -837,30 +816,28 @@ int MotionTracker_GetTagMatrix
   float local_64;
   float local_60;
   
-  LVar7 = __savegprlr_23(param_1);
-  pcVar8 = CG_GetLocalClientGlobals(LVar7);
-  if (pcVar8->nextSnap == (snapshot_s *)0x0) {
+  pcVar7 = CG_GetLocalClientGlobals(param_1);
+  if (pcVar7->nextSnap == (snapshot_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_motiontracker.cpp",
                     0x2a4,0,"%s");
   }
-  pWVar9 = CG_GetLocalClientViewModelHand(LVar7,0);
-  if (pWVar9 == (WeaponHand *)0x0) {
+  pWVar8 = CG_GetLocalClientViewModelHand(param_1,0);
+  if (pWVar8 == (WeaponHand *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_motiontracker.cpp",
                     0x2a7,0,"%s");
   }
-  pDVar1 = pWVar9->viewModelDObj;
+  pDVar1 = pWVar8->viewModelDObj;
   if (pDVar1 == (DObj *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_motiontracker.cpp",
                     0x2a9,0,"%s");
   }
-  pcVar10 = &pcVar8->viewModelPose;
-  iVar11 = CG_DObjGetWorldTagPos(pcVar10,pDVar1,(uint)scr_const.tag_motion_tracker_tl,&local_80);
-  if (((iVar11 != 0) &&
-      (iVar11 = CG_DObjGetWorldTagPos
-                          (pcVar10,pDVar1,(uint)scr_const.tag_motion_tracker_bl,&local_74),
-      iVar11 != 0)) &&
-     (iVar11 = CG_DObjGetWorldTagPos(pcVar10,pDVar1,(uint)scr_const.tag_motion_tracker_br,&local_68)
-     , iVar11 != 0)) {
+  pcVar9 = &pcVar7->viewModelPose;
+  iVar10 = CG_DObjGetWorldTagPos(pcVar9,pDVar1,(uint)scr_const.tag_motion_tracker_tl,&local_80);
+  if (((iVar10 != 0) &&
+      (iVar10 = CG_DObjGetWorldTagPos(pcVar9,pDVar1,(uint)scr_const.tag_motion_tracker_bl,&local_74)
+      , iVar10 != 0)) &&
+     (iVar10 = CG_DObjGetWorldTagPos(pcVar9,pDVar1,(uint)scr_const.tag_motion_tracker_br,&local_68),
+     iVar10 != 0)) {
     fVar2 = local_7c - local_70;
     fVar3 = local_80 - local_74;
     fVar4 = local_78 - local_6c;
@@ -897,11 +874,9 @@ int MotionTracker_GetTagMatrix
     *param_2 = (local_68 + local_80) * 0.5;
     param_2[1] = (local_64 + local_7c) * 0.5;
     param_2[2] = (local_60 + local_78) * 0.5;
-    iVar11 = __restgprlr_23(1);
-    return iVar11;
+    return 1;
   }
-  iVar11 = __restgprlr_23(0);
-  return iVar11;
+  return 0;
 }
 
 
@@ -949,6 +924,10 @@ bool ShouldDrawMotionTrackerActor(MotionTrackerDisplayPos *param_1,int param_2)
 
 // 822E46E0  MotionTrackerDrawActor_InWorld  (cgame/cg_motiontracker.cpp:737)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_18 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_18 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -959,16 +938,15 @@ void MotionTrackerDrawActor_InWorld
                float param_9,Material *param_10)
 
 {
-  LocalClientNum_t LVar2;
-  cg_s *pcVar3;
+  cg_s *pcVar2;
   longlong lVar1;
-  bool bVar4;
-  longlong lVar5;
-  int iVar6;
-  undefined8 uVar7;
-  undefined8 uVar8;
-  int iVar9;
-  double extraout_f1;
+  bool bVar3;
+  int iVar4;
+  undefined8 uVar5;
+  undefined8 uVar6;
+  int iVar7;
+  double dVar8;
+  double dVar9;
   double dVar10;
   double dVar11;
   double dVar12;
@@ -981,9 +959,7 @@ void MotionTrackerDrawActor_InWorld
   double dVar19;
   double dVar20;
   double dVar21;
-  double dVar22;
-  double dVar23;
-  float fVar24;
+  float fVar22;
   ushort local_110 [2];
   r_double_index_t *local_10c;
   undefined8 local_108;
@@ -997,143 +973,143 @@ void MotionTrackerDrawActor_InWorld
   undefined4 local_c8;
   float local_c4;
   
-  dVar19 = (double)param_9;
-  dVar12 = (double)param_8;
-  lVar5 = (longlong)(int)param_2;
-  __savegprlr_24((double)param_7,param_1);
-  LVar2 = __savefpr_18();
-  dVar11 = extraout_f1;
-  pcVar3 = CG_GetLocalClientGlobals(LVar2);
-  lVar1 = (longlong)(int)pcVar3;
-  iVar6 = param_3->beginFadeTime;
-  if (iVar6 == 0) {
-    bVar4 = false;
+  dVar17 = (double)param_9;
+  dVar9 = (double)param_7;
+  dVar10 = (double)param_8;
+  pcVar2 = CG_GetLocalClientGlobals(param_1);
+  lVar1 = (longlong)(int)pcVar2;
+  iVar4 = param_3->beginFadeTime;
+  if (iVar4 == 0) {
+    bVar3 = false;
   }
   else {
-    bVar4 = false;
-    local_108 = (longlong)(pcVar3->time - iVar6);
-    if ((float)local_108 < (motionTrackerPingFadeTime->current).value * 1000.0) {
-      bVar4 = true;
+    bVar3 = false;
+    if ((float)(longlong)(pcVar2->time - iVar4) <
+        (motionTrackerPingFadeTime->current).value * 1000.0) {
+      bVar3 = true;
     }
   }
-  if (bVar4) {
-    dVar17 = 1.0;
+  if (bVar3) {
+    dVar15 = 1.0;
     local_c8 = 0x3f800000;
     local_cc = 0x3f800000;
     local_d0 = 0x3f800000;
-    iVar6 = pcVar3->time - iVar6;
-    local_108 = (longlong)iVar6;
-    dVar19 = (double)(float)((double)(1.0 - (float)((double)local_108 /
+    iVar4 = pcVar2->time - iVar4;
+    local_108 = (longlong)iVar4;
+    dVar17 = (double)(float)((double)(1.0 - (float)((double)local_108 /
                                                    (double)((motionTrackerPingFadeTime->current).
-                                                            value * 1000.0))) * dVar19);
-    if (iVar6 < 100) {
-      dVar19 = (double)((float)((double)local_108 * dVar19) * 0.01);
+                                                            value * 1000.0))) * dVar17);
+    if (iVar4 < 100) {
+      dVar17 = (double)((float)((double)local_108 * dVar17) * 0.01);
     }
-    if (pcVar3->nextSnap == (snapshot_s *)0x0) {
+    if (pcVar2->nextSnap == (snapshot_s *)0x0) {
       lVar1 = -0x7dfdfec0;
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_motiontracker.cpp",
                       0x304,0,"%s");
     }
-    dVar20 = (double)(motionTrackerPingSize->current).value;
-    dVar13 = (double)(float)(dVar20 * dVar12);
-    fVar24 = AngleNormalize360(param_3->displayYawMax - param_3->displayYawMin);
-    dVar10 = (double)fVar24;
-    dVar12 = (double)(float)(dVar11 / dVar12);
-    uVar7 = 0xffffffff82000000;
-    dVar15 = 0.5;
-    dVar22 = (double)((float)((double)(param_3->dist / (motionTrackerRange->current).value) * dVar10
-                             ) * 0.017453292);
-    dVar11 = floor((double)((float)(dVar22 / (double)(float)(dVar20 * 0.25)) + 0.5));
-    iVar6 = (int)dVar11;
-    if (iVar6 < 1) {
-      iVar6 = 1;
+    dVar18 = (double)(motionTrackerPingSize->current).value;
+    dVar11 = (double)(float)(dVar18 * dVar10);
+    fVar22 = AngleNormalize360(param_3->displayYawMax - param_3->displayYawMin);
+    dVar8 = (double)fVar22;
+    dVar10 = (double)(float)(dVar9 / dVar10);
+    uVar5 = 0xffffffff82000000;
+    dVar13 = 0.5;
+    dVar20 = (double)((float)((double)(param_3->dist / (motionTrackerRange->current).value) * dVar8)
+                     * 0.017453292);
+    dVar9 = floor((double)((float)(dVar20 / (double)(float)(dVar18 * 0.25)) + 0.5));
+    iVar4 = (int)dVar9;
+    if (iVar4 < 1) {
+      iVar4 = 1;
     }
-    dVar11 = 0.0;
-    if ((0.0 < dVar22) && (iVar6 < 3)) {
-      iVar6 = 3;
+    dVar9 = 0.0;
+    if ((0.0 < dVar20) && (iVar4 < 3)) {
+      iVar4 = 3;
     }
-    if (param_4 < iVar6) {
-      iVar6 = param_4;
+    if (param_4 < iVar4) {
+      iVar4 = param_4;
     }
-    local_108 = (longlong)iVar6;
-    uVar8 = 0xffffffff82000000;
-    fVar24 = 0.3;
-    dVar14 = (double)local_108;
-    if (dVar22 < 0.15000000596046448) {
-      fVar24 = (float)(dVar22 * 2.0);
+    local_108 = (longlong)iVar4;
+    uVar6 = 0xffffffff82000000;
+    fVar22 = 0.3;
+    dVar12 = (double)local_108;
+    if (dVar20 < 0.15000000596046448) {
+      fVar22 = (float)(dVar20 * 2.0);
     }
-    dVar16 = (double)fVar24;
-    dVar22 = (double)(float)(dVar17 - dVar16);
-    dVar19 = (double)(float)((double)(float)(dVar19 / dVar14) / dVar22);
-    if (dVar17 < dVar19) {
-      dVar19 = dVar17;
+    dVar14 = (double)fVar22;
+    dVar20 = (double)(float)(dVar15 - dVar14);
+    dVar17 = (double)(float)((double)(float)(dVar17 / dVar12) / dVar20);
+    if (dVar15 < dVar17) {
+      dVar17 = dVar15;
     }
-    iVar9 = 0;
-    if (0 < iVar6) {
-      dVar20 = (double)(float)(dVar20 + dVar15);
+    iVar7 = 0;
+    if (0 < iVar4) {
+      dVar18 = (double)(float)(dVar18 + dVar13);
       do {
-        local_100 = (longlong)iVar9;
-        dVar23 = (double)(float)((double)(float)((double)local_100 + dVar15) / dVar14);
+        local_100 = (longlong)iVar7;
+        dVar21 = (double)(float)((double)(float)((double)local_100 + dVar13) / dVar12);
         DistYawToMotionTracker
-                  (param_3->dist,(float)(dVar23 * dVar10 + (double)param_3->displayYawMin),
-                   (float *)lVar1,(float)dVar12);
-        dVar21 = (double)local_108._0_4_;
-        if ((((dVar21 <= dVar20) && (-dVar20 <= dVar21)) &&
-            (dVar18 = (double)local_108._4_4_, dVar18 <= dVar20)) && (-dVar20 <= dVar18)) {
-          bVar4 = MotionTrackerGetBuffers((GfxCodeSurfGlob *)lVar5,local_110,&local_10c);
-          lVar1 = (longlong)bVar4;
-          if (lVar1 == 0) break;
-          motionTrackerBuffers.quadIndex = motionTrackerBuffers.quadIndex + 1;
-          if (motionTrackerBuffers.reserveOnly == false) {
-            local_c4 = (float)dVar19;
-            if (dVar16 <= dVar23) {
-              if (dVar22 < dVar23) {
-                local_c4 = (float)((double)(float)((double)(float)(dVar17 - dVar23) / dVar16) *
-                                  dVar19);
+                  (param_3->dist,(float)(dVar21 * dVar8 + (double)param_3->displayYawMin),
+                   (float *)lVar1,(float)dVar10);
+        dVar19 = (double)local_108._0_4_;
+        if ((dVar19 <= dVar18) && (-dVar18 <= dVar19)) {
+          dVar16 = (double)local_108._4_4_;
+          if ((dVar16 <= dVar18) && (-dVar18 <= dVar16)) {
+            bVar3 = MotionTrackerGetBuffers(param_2,local_110,&local_10c);
+            lVar1 = (longlong)bVar3;
+            if (lVar1 == 0) {
+              return;
+            }
+            motionTrackerBuffers.quadIndex = motionTrackerBuffers.quadIndex + 1;
+            if (motionTrackerBuffers.reserveOnly == false) {
+              local_c4 = (float)dVar17;
+              if (dVar14 <= dVar21) {
+                if (dVar20 < dVar21) {
+                  local_c4 = (float)((double)(float)((double)(float)(dVar15 - dVar21) / dVar14) *
+                                    dVar17);
+                }
               }
+              else {
+                local_c4 = (float)((double)(float)(dVar21 / dVar14) * dVar17);
+              }
+              local_f8 = (float)dVar9;
+              local_f4 = (float)-dVar19;
+              local_f0 = (float)dVar16;
+              MatrixTransformVector43(&local_f8,param_6,afStack_e8);
+              lVar1 = (longlong)(int)param_2;
+              R_AddCode3DQuadSurf(param_2,local_110[0],local_10c,afStack_e8,param_5,(float)dVar11,
+                                  (float)dVar11,(float)dVar9,(float)dVar9,(float)dVar15,
+                                  (float)dVar15,(float *)uVar5,(Material *)uVar6);
             }
-            else {
-              local_c4 = (float)((double)(float)(dVar23 / dVar16) * dVar19);
-            }
-            local_f8 = (float)dVar11;
-            local_f4 = (float)-dVar21;
-            local_f0 = (float)dVar18;
-            MatrixTransformVector43(&local_f8,param_6,afStack_e8);
-            lVar1 = lVar5;
-            R_AddCode3DQuadSurf((GfxCodeSurfGlob *)lVar5,local_110[0],local_10c,afStack_e8,param_5,
-                                (float)dVar13,(float)dVar13,(float)dVar11,(float)dVar11,
-                                (float)dVar17,(float)dVar17,(float *)uVar7,(Material *)uVar8);
           }
         }
-        iVar9 = iVar9 + 1;
-      } while (iVar9 < iVar6);
+        iVar7 = iVar7 + 1;
+      } while (iVar7 < iVar4);
     }
   }
-  __restfpr_18();
-  __restgprlr_24();
   return;
 }
 
 
 // 822E4A70  CG_MotionTrackerDrawSweep_InWorld  (cgame/cg_motiontracker.cpp:843)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void CG_MotionTrackerDrawSweep_InWorld
                (GfxCodeSurfGlob *param_1,float param_2,float (*param_3) [3],float param_4,
                float param_5,float (*param_6) [3],float *param_7,float param_8)
 
 {
-  GfxCodeSurfGlob *pGVar1;
-  bool bVar2;
-  longlong lVar3;
-  float (*pafVar4) [3];
+  bool bVar1;
   float (*in_r8) [3];
   float *in_r9;
-  double extraout_f1;
+  double dVar2;
+  double dVar3;
+  double dVar4;
   double dVar5;
   double dVar6;
-  double dVar7;
-  double dVar8;
-  double dVar9;
   ushort local_80 [2];
   r_double_index_t *local_7c;
   float local_78;
@@ -1141,44 +1117,42 @@ void CG_MotionTrackerDrawSweep_InWorld
   float local_70;
   float local_60 [24];
   
-  dVar8 = (double)param_8;
-  dVar5 = (double)param_5;
-  dVar7 = (double)param_4;
-  lVar3 = (longlong)(int)param_6;
-  __savegprlr_27((double)param_2,param_1,param_3,lVar3,param_7);
-  pafVar4 = (float (*) [3])lVar3;
-  pGVar1 = (GfxCodeSurfGlob *)__savefpr_28();
-  dVar6 = extraout_f1;
-  bVar2 = MotionTrackerGetBuffers(pGVar1,local_80,&local_7c);
-  if ((bVar2) &&
+  dVar5 = (double)param_8;
+  dVar2 = (double)param_5;
+  dVar4 = (double)param_4;
+  dVar3 = (double)param_2;
+  bVar1 = MotionTrackerGetBuffers(param_1,local_80,&local_7c);
+  if ((bVar1) &&
      (motionTrackerBuffers.quadIndex = motionTrackerBuffers.quadIndex + 1,
      motionTrackerBuffers.reserveOnly == false)) {
-    local_60[3] = (float)dVar8;
-    dVar9 = 1.0;
+    local_60[3] = (float)dVar5;
+    dVar6 = 1.0;
     local_60[0] = 1.0;
     local_60[1] = 1.0;
     local_60[2] = 1.0;
-    dVar6 = (double)(float)((double)(((motionTrackerSweepInterval->current).value /
+    dVar3 = (double)(float)((double)(((motionTrackerSweepInterval->current).value /
                                      (motionTrackerRange->current).value) *
-                                    (motionTrackerSweepSpeed->current).value) * dVar6);
-    dVar8 = 0.0;
+                                    (motionTrackerSweepSpeed->current).value) * dVar3);
+    dVar5 = 0.0;
     local_78 = 0.0;
-    local_74 = (motionTrackerCenterX->current).value / (float)(dVar7 / dVar5);
-    dVar7 = (double)(float)(dVar6 * dVar5);
-    local_70 = (float)(dVar6 * 0.5 + (double)(motionTrackerCenterY->current).value);
+    local_74 = (motionTrackerCenterX->current).value / (float)(dVar4 / dVar2);
+    dVar4 = (double)(float)(dVar3 * dVar2);
+    local_70 = (float)(dVar3 * 0.5 + (double)(motionTrackerCenterY->current).value);
     MatrixTransformVector43(&local_78,in_r8,in_r9);
-    R_AddCode3DQuadSurf(pGVar1,local_80[0],local_7c,in_r9,pafVar4,(float)(dVar7 * 2.0),(float)dVar7,
-                        (float)dVar8,(float)dVar8,(float)dVar9,(float)dVar9,local_60,
+    R_AddCode3DQuadSurf(param_1,local_80[0],local_7c,in_r9,param_6,(float)(dVar4 * 2.0),(float)dVar4
+                        ,(float)dVar5,(float)dVar5,(float)dVar6,(float)dVar6,local_60,
                         (Material *)&motionTrackerMedia);
   }
-  __restfpr_28();
-  __restgprlr_27();
   return;
 }
 
 
 // 822E4BD8  MotionTrackerDraw  (cgame/cg_motiontracker.cpp:874)
 
+/* WARNING: Function: __savegprlr_20 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_20 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -1186,27 +1160,25 @@ void CG_MotionTrackerDrawSweep_InWorld
 void MotionTrackerDraw(LocalClientNum_t param_1)
 
 {
-  LocalClientNum_t LVar1;
-  cg_s *pcVar2;
+  cg_s *pcVar1;
+  int iVar2;
+  bool bVar4;
   int iVar3;
-  bool bVar5;
-  int iVar4;
-  GfxCodeSurfGlob *pGVar6;
-  ulonglong uVar7;
-  float *pfVar8;
-  int *piVar9;
-  float *pfVar10;
-  int *piVar11;
-  Material *pMVar12;
-  uint *puVar13;
-  MotionTrackerDisplayPos *pMVar14;
-  int *piVar15;
-  longlong lVar16;
+  GfxCodeSurfGlob *pGVar5;
+  ulonglong uVar6;
+  float *pfVar7;
+  int *piVar8;
+  float *pfVar9;
+  int *piVar10;
+  Material *pMVar11;
+  int *piVar12;
+  MotionTrackerDisplayPos *pMVar13;
+  longlong lVar14;
+  double dVar15;
+  double dVar16;
   double dVar17;
   double dVar18;
   double dVar19;
-  double dVar20;
-  double dVar21;
   GfxCodeSurfGlob *local_180;
   ushort local_17c [2];
   longlong local_178;
@@ -1238,10 +1210,8 @@ void MotionTrackerDraw(LocalClientNum_t param_1)
   undefined4 local_98;
   undefined4 local_94;
   
-  __savegprlr_20(param_1);
-  LVar1 = __savefpr_27();
-  pcVar2 = CG_GetLocalClientGlobals(LVar1);
-  if (pcVar2->nextSnap == (snapshot_s *)0x0) {
+  pcVar1 = CG_GetLocalClientGlobals(param_1);
+  if (pcVar1->nextSnap == (snapshot_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_motiontracker.cpp",
                     900,0,"%s");
   }
@@ -1251,40 +1221,40 @@ void MotionTrackerDraw(LocalClientNum_t param_1)
   }
   motionTrackerBuffers.reservedQuads =
        -(uint)(motionTrackerBuffers.reserveOnly == false) & motionTrackerBuffers.reservedQuads;
-  iVar3 = MotionTracker_GetTagMatrix
-                    (LVar1,(float *)&local_170,(float *)&local_160,(float *)&local_178,
+  iVar2 = MotionTracker_GetTagMatrix
+                    (param_1,(float *)&local_170,(float *)&local_160,(float *)&local_178,
                      (float (*) [3])afStack_f0);
-  if ((iVar3 != 0) &&
-     (iVar3 = R_BeginCodeSurfs(GFX_CODE_SURF_USER_COMPASS,GFX_CODE_SURFLIST_TRANS,&local_180),
-     iVar3 != 0)) {
+  if ((iVar2 != 0) &&
+     (iVar2 = R_BeginCodeSurfs(GFX_CODE_SURF_USER_COMPASS,GFX_CODE_SURFLIST_TRANS,&local_180),
+     iVar2 != 0)) {
     if (local_180 == (GfxCodeSurfGlob *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_motiontracker.cpp",
                       0x393,0,"%s");
     }
-    dVar18 = (double)local_160._0_4_;
+    dVar16 = (double)local_160._0_4_;
     local_100 = local_178._0_4_;
-    dVar17 = (double)local_178._0_4_;
-    piVar15 = &pcVar2->time;
+    dVar15 = (double)local_178._0_4_;
+    piVar12 = &pcVar1->time;
     motionTrackerBuffers.quadIndex = 0;
-    iVar3 = motionTrackerStates[LVar1].stateChangeTime;
-    motionTrackerStates[LVar1].aspectRatio = (float)(dVar18 / dVar17);
-    dVar20 = 1.0;
-    pfVar10 = (float *)*piVar15;
-    iVar3 = (int)pfVar10 - iVar3;
-    dVar19 = dVar20;
-    if (iVar3 < 500) {
-      local_178 = (longlong)iVar3;
-      dVar19 = (double)((float)local_178 * 0.002);
+    iVar2 = motionTrackerStates[param_1].stateChangeTime;
+    motionTrackerStates[param_1].aspectRatio = (float)(dVar16 / dVar15);
+    dVar18 = 1.0;
+    pfVar9 = (float *)*piVar12;
+    iVar2 = (int)pfVar9 - iVar2;
+    dVar17 = dVar18;
+    if (iVar2 < 500) {
+      local_178 = (longlong)iVar2;
+      dVar17 = (double)((float)local_178 * 0.002);
     }
-    if (motionTrackerStates[LVar1].on == 0) {
-      dVar19 = (double)(float)(1.0 - dVar19);
+    if (motionTrackerStates[param_1].on == 0) {
+      dVar17 = (double)(float)(1.0 - dVar17);
     }
     local_130 = 0x3f800000;
     local_12c = 0x3f800000;
     local_128 = 0x3f800000;
-    local_124 = (float)dVar19;
+    local_124 = (float)dVar17;
     local_120 = 1.0;
-    dVar21 = 0.0;
+    dVar19 = 0.0;
     local_11c = 0.0;
     local_118 = 0.0;
     local_114 = 0;
@@ -1296,122 +1266,121 @@ void MotionTrackerDraw(LocalClientNum_t param_1)
     local_9c = local_170._0_4_;
     local_98 = local_170._4_4_;
     local_94 = local_168;
-    local_148 = (float)dVar21;
-    local_144 = (float)dVar21;
-    local_140 = (float)dVar21;
+    local_148 = (float)dVar19;
+    local_144 = (float)dVar19;
+    local_140 = (float)dVar19;
     MatrixTransformVector43(&local_148,(float (*) [3])afStack_c0,afStack_158);
-    bVar5 = MotionTrackerGetBuffers(local_180,local_17c,&local_164);
-    if (bVar5) {
+    bVar4 = MotionTrackerGetBuffers(local_180,local_17c,&local_164);
+    if (bVar4) {
       motionTrackerBuffers.quadIndex = motionTrackerBuffers.quadIndex + 1;
       motionTrackerBuffers.baseVertex = local_17c[0];
       motionTrackerBuffers.baseIndices = local_164;
       if (motionTrackerBuffers.reserveOnly == false) {
         R_AddCode3DQuadSurf(local_180,local_17c[0],local_164,afStack_158,(float (*) [3])afStack_f0,
-                            (float)dVar18,(float)dVar17,(float)dVar21,(float)dVar21,(float)dVar20,
-                            (float)dVar20,pfVar10,(Material *)0x0);
+                            (float)dVar16,(float)dVar15,(float)dVar19,(float)dVar19,(float)dVar18,
+                            (float)dVar18,pfVar9,(Material *)0x0);
       }
-      iVar3 = LVar1 * 0x208;
-      pMVar14 = motionTrackerActorsPos[LVar1];
-      lVar16 = 0xd;
-      uVar7 = 0;
-      piVar9 = (int *)(iVar3 + -0x7d5b3ecc);
-      piVar11 = (int *)(iVar3 + -0x7d5b3654);
+      pMVar13 = motionTrackerActorsPos[param_1];
+      lVar14 = 0xd;
+      uVar6 = 0;
+      piVar8 = &motionTrackerActorsPos[param_1][1].beginFadeTime;
+      piVar10 = &motionTrackerActorsPosPrev[param_1][1].beginFadeTime;
       do {
-        bVar5 = false;
-        if (piVar9[-5] != 0) {
-          bVar5 = false;
-          local_178 = (longlong)(*piVar15 - piVar9[-5]);
+        bVar4 = false;
+        if (piVar8[-5] != 0) {
+          bVar4 = false;
+          local_178 = (longlong)(*piVar12 - piVar8[-5]);
           if ((float)local_178 < (motionTrackerPingFadeTime->current).value * 1000.0) {
-            bVar5 = true;
+            bVar4 = true;
           }
         }
-        if (bVar5) {
-          uVar7 = uVar7 + 1;
+        if (bVar4) {
+          uVar6 = uVar6 + 1;
         }
-        bVar5 = false;
-        if (piVar11[-5] != 0) {
-          bVar5 = false;
-          local_160 = (longlong)(*piVar15 - piVar11[-5]);
+        bVar4 = false;
+        if (piVar10[-5] != 0) {
+          bVar4 = false;
+          local_160 = (longlong)(*piVar12 - piVar10[-5]);
           if ((float)local_160 < (motionTrackerPingFadeTime->current).value * 1000.0) {
-            bVar5 = true;
+            bVar4 = true;
           }
         }
-        if (bVar5) {
-          uVar7 = uVar7 + 1;
+        if (bVar4) {
+          uVar6 = uVar6 + 1;
         }
-        bVar5 = false;
-        if (*piVar9 != 0) {
-          bVar5 = false;
-          local_f8 = (longlong)(*piVar15 - *piVar9);
+        bVar4 = false;
+        if (*piVar8 != 0) {
+          bVar4 = false;
+          local_f8 = (longlong)(*piVar12 - *piVar8);
           if ((float)local_f8 < (motionTrackerPingFadeTime->current).value * 1000.0) {
-            bVar5 = true;
+            bVar4 = true;
           }
         }
-        if (bVar5) {
-          uVar7 = uVar7 + 1;
+        if (bVar4) {
+          uVar6 = uVar6 + 1;
         }
-        bVar5 = false;
-        if (*piVar11 != 0) {
-          bVar5 = false;
-          local_170 = (longlong)(*piVar15 - *piVar11);
+        bVar4 = false;
+        if (*piVar10 != 0) {
+          bVar4 = false;
+          local_170 = (longlong)(*piVar12 - *piVar10);
           if ((float)local_170 < (motionTrackerPingFadeTime->current).value * 1000.0) {
-            bVar5 = true;
+            bVar4 = true;
           }
         }
-        if (bVar5) {
-          uVar7 = uVar7 + 1;
+        if (bVar4) {
+          uVar6 = uVar6 + 1;
         }
-        piVar9 = piVar9 + 10;
-        piVar11 = piVar11 + 10;
-        lVar16 = lVar16 + -1;
-      } while (lVar16 != 0);
-      if ((int)((uVar7 & 0xffffffff) << 5) < 0x27b) {
-        pfVar10 = (float *)0x20;
+        piVar8 = piVar8 + 10;
+        piVar10 = piVar10 + 10;
+        lVar14 = lVar14 + -1;
+      } while (lVar14 != 0);
+      if ((int)((uVar6 & 0xffffffff) << 5) < 0x27b) {
+        pfVar9 = (float *)0x20;
       }
       else {
-        trapWord(6,uVar7,0);
-        pfVar10 = (float *)(0x27a / (int)uVar7);
+        trapWord(6,uVar6,0);
+        pfVar9 = (float *)(0x27a / (int)uVar6);
       }
-      iVar3 = iVar3 - (int)pMVar14;
-      lVar16 = 0x1a;
-      puVar13 = (uint *)(LVar1 * 0xe38 + -0x7d5e5570);
+      iVar2 = param_1 * 0x208 - (int)pMVar13;
+      lVar14 = 0x1a;
+      piVar12 = &s_compassActors[param_1][0].flags;
       do {
-        iVar4 = CL_ControllerIndexFromClientNum(LVar1);
-        bVar5 = GamerProfile_IsColorBlind(iVar4);
-        pMVar12 = (Material *)(*puVar13 & 1);
-        if (pMVar12 == (Material *)0x0) {
-          if ((bVar5) && (motionTrackerMedia.pingMedia[1].friendly_blip != (Material *)0x0)) {
+        iVar3 = CL_ControllerIndexFromClientNum(param_1);
+        bVar4 = GamerProfile_IsColorBlind(iVar3);
+        pMVar11 = (Material *)(*piVar12 & 1);
+        if (pMVar11 == (Material *)0x0) {
+          if ((bVar4) && (motionTrackerMedia.pingMedia[1].friendly_blip != (Material *)0x0)) {
             Material_IsDefault(motionTrackerMedia.pingMedia[1].friendly_blip);
           }
         }
-        else if ((bVar5) && (motionTrackerMedia.pingMedia[1].enemy_blip != (Material *)0x0)) {
+        else if ((bVar4) && (motionTrackerMedia.pingMedia[1].enemy_blip != (Material *)0x0)) {
           Material_IsDefault(motionTrackerMedia.pingMedia[1].enemy_blip);
         }
         MotionTrackerDrawActor_InWorld
-                  (LVar1,local_180,pMVar14,(int)pfVar10,(float (*) [3])afStack_f0,
-                   (float (*) [3])afStack_c0,(float)dVar18,(float)dVar17,(float)dVar19,pMVar12);
-        pGVar6 = local_180;
-        pfVar8 = pfVar10;
+                  (param_1,local_180,pMVar13,(int)pfVar9,(float (*) [3])afStack_f0,
+                   (float (*) [3])afStack_c0,(float)dVar16,(float)dVar15,(float)dVar17,pMVar11);
+        pGVar5 = local_180;
+        pfVar7 = pfVar9;
         MotionTrackerDrawActor_InWorld
-                  (LVar1,local_180,
+                  (param_1,local_180,
                    (MotionTrackerDisplayPos *)
-                   ((int)motionTrackerActorsPosPrev + (int)pMVar14 + iVar3),(int)pfVar10,
-                   (float (*) [3])afStack_f0,(float (*) [3])afStack_c0,(float)dVar18,(float)dVar17,
-                   (float)dVar19,pMVar12);
-        lVar16 = lVar16 + -1;
-        puVar13 = puVar13 + 0x23;
-        pMVar14 = pMVar14 + 1;
-      } while (lVar16 != 0);
-      dVar21 = (double)pcVar2->motionTrackerProgress;
-      if (dVar21 < 0.25) {
+                   ((int)motionTrackerActorsPosPrev + iVar2 + (int)pMVar13),(int)pfVar9,
+                   (float (*) [3])afStack_f0,(float (*) [3])afStack_c0,(float)dVar16,(float)dVar15,
+                   (float)dVar17,pMVar11);
+        lVar14 = lVar14 + -1;
+        piVar12 = piVar12 + 0x23;
+        pMVar13 = pMVar13 + 1;
+      } while (lVar14 != 0);
+      dVar19 = (double)pcVar1->motionTrackerProgress;
+      if (dVar19 < 0.25) {
         CG_MotionTrackerDrawSweep_InWorld
-                  (local_180,(float)(dVar21 + dVar20),(float (*) [3])pGVar6,(float)dVar18,
-                   (float)dVar17,(float (*) [3])afStack_f0,pfVar8,
-                   (float)(-(double)(float)(dVar21 * 4.0 - dVar20) * dVar19));
+                  (local_180,(float)(dVar19 + dVar18),(float (*) [3])pGVar5,(float)dVar16,
+                   (float)dVar15,(float (*) [3])afStack_f0,pfVar7,
+                   (float)(-(double)(float)(dVar19 * 4.0 - dVar18) * dVar17));
       }
       CG_MotionTrackerDrawSweep_InWorld
-                (local_180,pcVar2->motionTrackerProgress,(float (*) [3])pGVar6,(float)dVar18,
-                 (float)dVar17,(float (*) [3])afStack_f0,pfVar8,(float)dVar19);
+                (local_180,pcVar1->motionTrackerProgress,(float (*) [3])pGVar5,(float)dVar16,
+                 (float)dVar15,(float (*) [3])afStack_f0,pfVar7,(float)dVar17);
       if (motionTrackerBuffers.reserveOnly == false) {
         if ((motionTrackerBuffers.reservedQuads != 0x280) &&
            (motionTrackerBuffers.reservedQuads != motionTrackerBuffers.quadIndex)) {
@@ -1425,8 +1394,6 @@ void MotionTrackerDraw(LocalClientNum_t param_1)
     }
     R_EndCodeSurfs(local_180,GFX_CODE_SURF_USER_COMPASS);
   }
-  __restfpr_27();
-  __restgprlr_20();
   return;
 }
 

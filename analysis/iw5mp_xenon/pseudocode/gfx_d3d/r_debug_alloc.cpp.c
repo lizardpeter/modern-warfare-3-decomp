@@ -2,37 +2,35 @@
 
 // 82725AF0  R_DebugAlloc  (gfx_d3d/r_debug_alloc.cpp:7)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void R_DebugAlloc(void **param_1,int param_2,char *param_3)
 
 {
-  int *piVar1;
-  void *pvVar2;
-  ulonglong uVar3;
+  void *pvVar1;
   
-  uVar3 = (ulonglong)param_2;
-  piVar1 = (int *)__savegprlr_27(param_1);
-  if (piVar1 == (int *)0x0) {
+  if (param_1 == (void **)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_debug_alloc.cpp",8,0
                     ,"%s");
   }
-  if (*piVar1 != 0) {
+  if (*param_1 != (void *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_debug_alloc.cpp",9,0
                     ,"%s");
   }
-  if ((int)uVar3 < 1) {
+  if (param_2 < 1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_debug_alloc.cpp",10,
                     0,"%s");
   }
-  if ((uVar3 & 3) != 0) {
+  if ((param_2 & 3U) != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_debug_alloc.cpp",0xb
                     ,0,"%s");
   }
-  pvVar2 = Z_TryVirtualAlloc((int)uVar3,param_3,0);
-  *piVar1 = (int)pvVar2;
-  if (pvVar2 == (void *)0x0) {
+  pvVar1 = Z_TryVirtualAlloc(param_2,param_3,0);
+  *param_1 = pvVar1;
+  if (pvVar1 == (void *)0x0) {
     R_WarnOncePerFrame(R_WARN_DEBUG_ALLOC);
   }
-  __restgprlr_27();
   return;
 }
 

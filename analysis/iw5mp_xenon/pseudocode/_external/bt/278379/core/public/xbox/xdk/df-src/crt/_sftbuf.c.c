@@ -2,58 +2,56 @@
 
 // 82921E68  _stbuf  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/_sftbuf.c:59)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 int _stbuf(_iobuf *param_1)
 
 {
   char *pcVar1;
+  int iVar2;
   _iobuf *p_Var3;
-  int iVar4;
-  _iobuf *p_Var5;
-  void *pvVar6;
-  undefined8 uVar2;
+  void *pvVar4;
   
-  p_Var3 = (_iobuf *)__savegprlr_29(param_1);
-  iVar4 = _fileno(p_Var3);
-  iVar4 = _isatty(iVar4);
-  if (iVar4 != 0) {
-    p_Var5 = __iob_func();
-    if (p_Var3 == p_Var5 + 1) {
-      iVar4 = 0;
+  iVar2 = _fileno(param_1);
+  iVar2 = _isatty(iVar2);
+  if (iVar2 == 0) {
+    return 0;
+  }
+  p_Var3 = __iob_func();
+  if (param_1 == p_Var3 + 1) {
+    iVar2 = 0;
+  }
+  else {
+    p_Var3 = __iob_func();
+    if (param_1 != p_Var3 + 2) {
+      return 0;
     }
-    else {
-      p_Var5 = __iob_func();
-      if (p_Var3 != p_Var5 + 2) goto LAB_82921f48;
-      iVar4 = 1;
-    }
-    _cflush = _cflush + 1;
-    if ((p_Var3->_flag & 0x10cU) == 0) {
-      if (_stdbuf[iVar4] == (void *)0x0) {
-        pvVar6 = malloc(0x1000);
-        _stdbuf[iVar4] = pvVar6;
-        if (pvVar6 != (void *)0x0) goto LAB_82921f1c;
-        p_Var3->_bufsiz = 2;
-        p_Var3->_base = (char *)&p_Var3->_charbuf;
-        p_Var3->_ptr = (char *)&p_Var3->_charbuf;
-        p_Var3->_cnt = 2;
-      }
-      else {
-LAB_82921f1c:
-        pcVar1 = _stdbuf[iVar4];
-        p_Var3->_bufsiz = 0x1000;
-        p_Var3->_cnt = 0x1000;
-        p_Var3->_base = pcVar1;
-        p_Var3->_ptr = pcVar1;
-      }
-      uVar2 = 1;
-      p_Var3->_flag = p_Var3->_flag | 0x1102;
-      goto LAB_82921f4c;
+    iVar2 = 1;
+  }
+  _cflush = _cflush + 1;
+  if ((param_1->_flag & 0x10cU) != 0) {
+    return 0;
+  }
+  if (_stdbuf[iVar2] == (void *)0x0) {
+    pvVar4 = malloc(0x1000);
+    _stdbuf[iVar2] = pvVar4;
+    if (pvVar4 == (void *)0x0) {
+      param_1->_bufsiz = 2;
+      param_1->_base = (char *)&param_1->_charbuf;
+      param_1->_ptr = (char *)&param_1->_charbuf;
+      param_1->_cnt = 2;
+      goto LAB_82921f34;
     }
   }
-LAB_82921f48:
-  uVar2 = 0;
-LAB_82921f4c:
-  iVar4 = __restgprlr_29(uVar2);
-  return iVar4;
+  pcVar1 = _stdbuf[iVar2];
+  param_1->_bufsiz = 0x1000;
+  param_1->_cnt = 0x1000;
+  param_1->_base = pcVar1;
+  param_1->_ptr = pcVar1;
+LAB_82921f34:
+  param_1->_flag = param_1->_flag | 0x1102;
+  return 1;
 }
 
 

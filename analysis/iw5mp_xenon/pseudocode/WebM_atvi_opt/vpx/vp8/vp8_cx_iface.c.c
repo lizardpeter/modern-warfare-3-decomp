@@ -342,30 +342,29 @@ uint VP8E_SET_STATIC_THRESHOLD__value(char *param_1)
 
 // 8280FDF0  set_vp8e_config  (WebM_atvi_opt/vpx/vp8/vp8_cx_iface.c:250)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "vpx_kf_mode": Some values do not have unique names */
 
 vpx_codec_err_t set_vp8e_config(VP8_CONFIG *param_1,vpx_codec_enc_cfg param_2,vp8_extracfg param_3)
 
 {
-  vpx_enc_pass *pvVar1;
-  vpx_codec_err_t vVar2;
-  vpx_enc_pass in_r4;
+  int in_r4;
   undefined8 in_r5;
   undefined8 in_r6;
   undefined8 in_r7;
   undefined8 in_r8;
   undefined8 in_r9;
   undefined8 in_r10;
-  vpx_enc_pass vVar3;
-  vpx_enc_pass in_stack_000000b0;
-  vpx_enc_pass in_stack_000000b4;
-  vpx_enc_pass in_stack_000000b8;
-  vpx_enc_pass in_stack_000000bc;
-  vpx_enc_pass in_stack_000000c0;
-  vpx_enc_pass in_stack_000000c4;
-  vpx_enc_pass in_stack_000000c8;
+  int iVar1;
+  int in_stack_000000b0;
+  int in_stack_000000b4;
+  int in_stack_000000b8;
+  int in_stack_000000bc;
+  int in_stack_000000c0;
+  int in_stack_000000c4;
+  int in_stack_000000c8;
   
-  pvVar1 = (vpx_enc_pass *)__savegprlr_26(param_1);
   param_2.g_pass = (vpx_enc_pass)((ulonglong)in_r5 >> 0x20);
   param_2.g_lag_in_frames = (uint)in_r5;
   param_2.rc_dropframe_thresh = (uint)((ulonglong)in_r6 >> 0x20);
@@ -378,86 +377,84 @@ vpx_codec_err_t set_vp8e_config(VP8_CONFIG *param_1,vpx_codec_enc_cfg param_2,vp
   param_2.rc_target_bitrate = (uint)in_r9;
   param_2.rc_min_quantizer = (uint)((ulonglong)in_r10 >> 0x20);
   param_2.rc_max_quantizer = (uint)in_r10;
-  pvVar1[2] = param_2.rc_dropframe_thresh;
-  *(double *)(pvVar1 + 4) =
+  param_1->Height = param_2.rc_dropframe_thresh;
+  param_1->frame_rate =
        (double)(longlong)(int)param_2.rc_resize_up_thresh /
        (double)(longlong)(int)param_2.rc_resize_allowed;
-  pvVar1[0x24] = in_r4;
-  *pvVar1 = param_2.g_pass;
-  pvVar1[1] = param_2.g_lag_in_frames;
+  param_1->multi_threaded = in_r4;
+  param_1->Version = param_2.g_pass;
+  param_1->Width = param_2.g_lag_in_frames;
   if (180.0 < (double)(longlong)(int)param_2.rc_resize_up_thresh /
               (double)(longlong)(int)param_2.rc_resize_allowed) {
-    pvVar1[4] = 0x403e0000;
-    pvVar1[5] = VPX_RC_ONE_PASS;
+    param_1->frame_rate = 30.0;
   }
-  pvVar1[0x27] = param_2.rc_resize_down_thresh;
+  param_1->error_resilient_mode = param_2.rc_resize_down_thresh;
   if (param_2.rc_end_usage == VPX_VBR) {
-    vVar3 = VPX_RC_LAST_PASS;
+    iVar1 = 2;
 LAB_8280feac:
-    pvVar1[10] = vVar3;
+    param_1->Mode = iVar1;
   }
   else {
     if (param_2.rc_end_usage == VPX_CBR) {
-      pvVar1[0xd] = VPX_RC_ONE_PASS;
-      pvVar1[0xe] = VPX_RC_ONE_PASS;
-      pvVar1[10] = VPX_RC_LAST_PASS|VPX_RC_FIRST_PASS;
+      param_1->allow_lag = 0;
+      param_1->lag_in_frames = 0;
+      param_1->Mode = 3;
       goto LAB_8280fec4;
     }
     if (param_2.rc_end_usage < 3) {
-      vVar3 = 5;
+      iVar1 = 5;
       goto LAB_8280feac;
     }
     if (param_2.rc_end_usage == VPX_CBR) {
-      pvVar1[0xd] = VPX_RC_ONE_PASS;
-      pvVar1[0xe] = VPX_RC_ONE_PASS;
+      param_1->allow_lag = 0;
+      param_1->lag_in_frames = 0;
       goto LAB_8280fec4;
     }
   }
-  pvVar1[0xe] = (vpx_enc_pass)param_2.rc_twopass_stats_in.buf;
-  pvVar1[0xd] = (uint)(param_2.rc_twopass_stats_in.buf != (void *)0x0);
+  param_1->lag_in_frames = (int)param_2.rc_twopass_stats_in.buf;
+  param_1->allow_lag = (uint)(param_2.rc_twopass_stats_in.buf != (void *)0x0);
 LAB_8280fec4:
-  pvVar1[0x1b] = param_2.rc_twopass_stats_in.sz;
-  pvVar1[0x1a] = (uint)(param_2.rc_twopass_stats_in.sz != 0);
-  pvVar1[0x17] = param_2.rc_target_bitrate;
-  pvVar1[0x19] = param_2.rc_min_quantizer;
-  pvVar1[0x18] = param_2.rc_max_quantizer;
+  param_1->drop_frames_water_mark = param_2.rc_twopass_stats_in.sz;
+  param_1->allow_df = (uint)(param_2.rc_twopass_stats_in.sz != 0);
+  param_1->allow_spatial_resampling = param_2.rc_target_bitrate;
+  param_1->resample_up_water_mark = param_2.rc_min_quantizer;
+  param_1->resample_down_water_mark = param_2.rc_max_quantizer;
   if (param_2.rc_undershoot_pct == 0) {
-    pvVar1[0xf] = VPX_RC_FIRST_PASS;
+    param_1->end_usage = 1;
   }
   else if (param_2.rc_undershoot_pct == 1) {
-    pvVar1[0xf] = VPX_RC_ONE_PASS;
+    param_1->end_usage = 0;
   }
-  pvVar1[6] = param_2.rc_buf_initial_sz;
-  pvVar1[0x16] = param_2.rc_buf_optimal_sz;
-  pvVar1[0x15] = param_2.rc_2pass_vbr_bias_pct;
-  pvVar1[0x14] = ~VPX_RC_ONE_PASS;
-  pvVar1[0x10] = param_2.rc_2pass_vbr_minsection_pct;
-  pvVar1[0x13] = param_2.kf_mode;
-  pvVar1[0x11] = param_2.kf_min_dist;
-  pvVar1[0x12] = param_2.kf_max_dist;
-  pvVar1[0x1c] = (vpx_enc_pass)param_3.pkt_list;
-  pvVar1[0x1d] = param_3.encoding_mode;
-  pvVar1[0x1e] = param_3.cpu_used;
+  param_1->target_bandwidth = param_2.rc_buf_initial_sz;
+  param_1->best_allowed_q = param_2.rc_buf_optimal_sz;
+  param_1->worst_allowed_q = param_2.rc_2pass_vbr_bias_pct;
+  param_1->fixed_q = -1;
+  param_1->under_shoot_pct = param_2.rc_2pass_vbr_minsection_pct;
+  param_1->maximum_buffer_size = param_2.kf_mode;
+  param_1->starting_buffer_level = param_2.kf_min_dist;
+  param_1->optimal_buffer_level = param_2.kf_max_dist;
+  param_1->two_pass_vbrbias = (int)param_3.pkt_list;
+  param_1->two_pass_vbrmin_section = param_3.encoding_mode;
+  param_1->two_pass_vbrmax_section = param_3.cpu_used;
   if ((param_3.enable_auto_alt_ref != 1) ||
-     (vVar3 = VPX_RC_FIRST_PASS, param_3.noise_sensitivity == param_3.Sharpness)) {
-    vVar3 = VPX_RC_ONE_PASS;
+     (iVar1 = 1, param_3.noise_sensitivity == param_3.Sharpness)) {
+    iVar1 = 0;
   }
-  pvVar1[0xb] = vVar3;
-  pvVar1[0xc] = param_3.Sharpness;
-  pvVar1[9] = param_3.arnr_strength;
-  pvVar1[0x26] = in_stack_000000b8;
-  pvVar1[0x1f] = param_3.arnr_type;
-  pvVar1[7] = in_stack_000000b0;
-  pvVar1[8] = in_stack_000000b4;
-  pvVar1[0x25] = in_stack_000000bc;
-  pvVar1[0x2b] = param_2.rc_overshoot_pct;
-  pvVar1[0x2c] = param_2.rc_buf_sz;
-  pvVar1[0x2d] = param_3.token_partitions;
-  pvVar1[0x28] = in_stack_000000c0;
-  pvVar1[0x29] = in_stack_000000c4;
-  pvVar1[0x2a] = in_stack_000000c8;
-  vVar2 = __restgprlr_26(0);
-  return vVar2;
+  param_1->auto_key = iVar1;
+  param_1->key_freq = param_3.Sharpness;
+  param_1->cpu_used = param_3.arnr_strength;
+  param_1->encode_breakout = in_stack_000000b8;
+  param_1->play_alternate = param_3.arnr_type;
+  param_1->noise_sensitivity = in_stack_000000b0;
+  param_1->Sharpness = in_stack_000000b4;
+  param_1->token_partitions = in_stack_000000bc;
+  (param_1->two_pass_stats_in).buf = (void *)param_2.rc_overshoot_pct;
+  (param_1->two_pass_stats_in).sz = param_2.rc_buf_sz;
+  param_1->output_pkt_list = (vpx_codec_pkt_list *)param_3.token_partitions;
+  param_1->arnr_max_frames = in_stack_000000c0;
+  param_1->arnr_strength = in_stack_000000c4;
+  param_1->arnr_type = in_stack_000000c8;
+  return VPX_CODEC_OK;
 }
 
 
@@ -517,37 +514,34 @@ int * VP8E_GET_LAST_QUANTIZER_64__convert(void *param_1)
 
 // 82810028  vp8e_set_config  (WebM_atvi_opt/vpx/vp8/vp8_cx_iface.c:384)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "vpx_kf_mode": Some values do not have unique names */
 
 vpx_codec_err_t vp8e_set_config(vpx_codec_alg_priv *param_1,vpx_codec_enc_cfg *param_2)
 
 {
-  vpx_codec_alg_priv *pvVar1;
-  vpx_codec_err_t vVar2;
+  vpx_codec_err_t vVar1;
   vpx_codec_enc_cfg in_stack_ffffff08;
   vp8_extracfg in_stack_ffffff84;
   
-  pvVar1 = (vpx_codec_alg_priv *)__savegprlr_28(param_1);
-  if ((param_2->g_w == (pvVar1->cfg).g_w) && (param_2->g_h == (pvVar1->cfg).g_h)) {
-    if ((pvVar1->cfg).g_lag_in_frames < param_2->g_lag_in_frames) {
-      (pvVar1->base).err_detail = "Cannot increase lag_in_frames";
-      vVar2 = __restgprlr_28(8);
-      return vVar2;
+  if ((param_2->g_w == (param_1->cfg).g_w) && (param_2->g_h == (param_1->cfg).g_h)) {
+    if ((param_1->cfg).g_lag_in_frames < param_2->g_lag_in_frames) {
+      (param_1->base).err_detail = "Cannot increase lag_in_frames";
+      return VPX_CODEC_INVALID_PARAM;
     }
-    vVar2 = validate_config(pvVar1,param_2,&pvVar1->vp8_cfg);
-    if (vVar2 == VPX_CODEC_OK) {
+    vVar1 = validate_config(param_1,param_2,&param_1->vp8_cfg);
+    if (vVar1 == VPX_CODEC_OK) {
       memcpy();
       memcpy();
       memcpy();
-      set_vp8e_config(&pvVar1->oxcf,in_stack_ffffff08,in_stack_ffffff84);
-      vp8_change_config(pvVar1->cpi,&pvVar1->oxcf);
+      set_vp8e_config(&param_1->oxcf,in_stack_ffffff08,in_stack_ffffff84);
+      vp8_change_config(param_1->cpi,&param_1->oxcf);
     }
-    vVar2 = __restgprlr_28(vVar2);
-    return vVar2;
+    return vVar1;
   }
-  (pvVar1->base).err_detail = "Cannot change width or height after initialization";
-  vVar2 = __restgprlr_28(8);
-  return vVar2;
+  (param_1->base).err_detail = "Cannot change width or height after initialization";
+  return VPX_CODEC_INVALID_PARAM;
 }
 
 
@@ -582,65 +576,66 @@ vpx_codec_err_t get_param(vpx_codec_alg_priv *param_1,int param_2,char *param_3)
 
 // 828101B0  set_param  (WebM_atvi_opt/vpx/vp8/vp8_cx_iface.c:439)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "vpx_kf_mode": Some values do not have unique names */
 
 vpx_codec_err_t set_param(vpx_codec_alg_priv *param_1,int param_2,char *param_3)
 
 {
-  vpx_codec_alg_priv *pvVar1;
-  vpx_codec_err_t vVar2;
+  vpx_codec_err_t vVar1;
   vpx_codec_enc_cfg in_stack_fffffed8;
   vp8_extracfg in_stack_ffffff54;
   vp8_extracfg avStack_60 [2];
   
-  pvVar1 = (vpx_codec_alg_priv *)__savegprlr_27(param_1);
   memcpy();
-  switch(param_2 + -0xc) {
-  case 0:
-    pvVar1->deprecated_mode = *(int *)(((uint)(param_3 + 7) & 0xfffffff8) + 4);
+  switch(param_2) {
+  case 0xc:
+    param_1->deprecated_mode = *(int *)(((uint)(param_3 + 7) & 0xfffffff8) + 4);
     break;
-  case 1:
+  case 0xd:
     avStack_60[0].cpu_used = *(int *)(((uint)(param_3 + 7) & 0xfffffff8) + 4);
     break;
-  case 2:
+  case 0xe:
     avStack_60[0].enable_auto_alt_ref = *(uint *)(((uint)(param_3 + 7) & 0xfffffff8) + 4);
     break;
-  case 3:
+  case 0xf:
     avStack_60[0].noise_sensitivity = *(uint *)(((uint)(param_3 + 7) & 0xfffffff8) + 4);
     break;
-  case 4:
+  case 0x10:
     avStack_60[0].Sharpness = *(uint *)(((uint)(param_3 + 7) & 0xfffffff8) + 4);
     break;
-  case 5:
+  case 0x11:
     avStack_60[0].static_thresh = *(uint *)(((uint)(param_3 + 7) & 0xfffffff8) + 4);
     break;
-  case 6:
+  case 0x12:
     avStack_60[0].token_partitions = *(uint *)(((uint)(param_3 + 7) & 0xfffffff8) + 4);
     break;
-  case 9:
+  case 0x15:
     avStack_60[0].arnr_max_frames = *(uint *)(((uint)(param_3 + 7) & 0xfffffff8) + 4);
     break;
-  case 10:
+  case 0x16:
     avStack_60[0].arnr_strength = *(uint *)(((uint)(param_3 + 7) & 0xfffffff8) + 4);
     break;
-  case 0xb:
+  case 0x17:
     avStack_60[0].arnr_type = *(uint *)(((uint)(param_3 + 7) & 0xfffffff8) + 4);
   }
-  vVar2 = validate_config(pvVar1,&pvVar1->cfg,avStack_60);
-  if (vVar2 == VPX_CODEC_OK) {
+  vVar1 = validate_config(param_1,&param_1->cfg,avStack_60);
+  if (vVar1 == VPX_CODEC_OK) {
     memcpy();
     memcpy();
     memcpy();
-    set_vp8e_config(&pvVar1->oxcf,in_stack_fffffed8,in_stack_ffffff54);
-    vp8_change_config(pvVar1->cpi,&pvVar1->oxcf);
+    set_vp8e_config(&param_1->oxcf,in_stack_fffffed8,in_stack_ffffff54);
+    vp8_change_config(param_1->cpi,&param_1->oxcf);
   }
-  vVar2 = __restgprlr_27(vVar2);
-  return vVar2;
+  return vVar1;
 }
 
 
 // 82810388  vp8e_init  (WebM_atvi_opt/vpx/vp8/vp8_cx_iface.c:474)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "vpx_kf_mode": Some values do not have unique names */
 
 vpx_codec_err_t vp8e_init(vpx_codec_ctx *param_1)
@@ -648,57 +643,52 @@ vpx_codec_err_t vp8e_init(vpx_codec_ctx *param_1)
 {
   uint uVar1;
   uint uVar2;
-  int iVar3;
-  int iVar4;
-  vpx_codec_alg_priv *pvVar5;
-  uchar *puVar6;
-  vpx_codec_err_t vVar7;
-  int *piVar8;
+  vpx_codec_alg_priv *pvVar3;
+  uchar *puVar4;
+  vpx_codec_err_t vVar5;
+  int *piVar6;
   vpx_codec_enc_cfg in_stack_ffffff18;
   vp8_extracfg in_stack_ffffff94;
   
-  iVar4 = __savegprlr_29(param_1);
-  vVar7 = VPX_CODEC_OK;
-  if ((*(int *)(iVar4 + 0x18) == 0) &&
-     (pvVar5 = vpx_calloc(1,0x2530), pvVar5 != (vpx_codec_alg_priv *)0x0)) {
-    *(vpx_codec_alg_priv **)(iVar4 + 0x18) = pvVar5;
-    (pvVar5->base).sz = 200;
-    *(undefined4 *)(*(int *)(iVar4 + 0x18) + 4) = *(undefined4 *)(iVar4 + 4);
-    *(vpx_codec_alg_priv **)(*(int *)(iVar4 + 0x18) + 8) = pvVar5;
-    *(undefined4 *)(*(int *)(iVar4 + 0x18) + 0x10) = *(undefined4 *)(iVar4 + 0x10);
-    if (*(int *)(iVar4 + 0x14) != 0) {
+  vVar5 = VPX_CODEC_OK;
+  if ((param_1->priv == (vpx_codec_priv *)0x0) &&
+     (pvVar3 = vpx_calloc(1,0x2530), pvVar3 != (vpx_codec_alg_priv *)0x0)) {
+    param_1->priv = &pvVar3->base;
+    (pvVar3->base).sz = 200;
+    param_1->priv->iface = param_1->iface;
+    param_1->priv->alg_priv = pvVar3;
+    param_1->priv->init_flags = param_1->init_flags;
+    if ((param_1->config).dec != (vpx_codec_dec_cfg *)0x0) {
       memcpy();
-      *(int *)(iVar4 + 0x14) = *(int *)(*(int *)(iVar4 + 0x18) + 8) + 200;
+      (param_1->config).dec = (vpx_codec_dec_cfg *)&param_1->priv->alg_priv->cfg;
     }
     memcpy();
-    uVar1 = (pvVar5->cfg).g_h;
-    uVar2 = (pvVar5->cfg).g_w;
-    (pvVar5->vp8_cfg).pkt_list = (vpx_codec_pkt_list *)&pvVar5->pkt_list;
+    uVar1 = (pvVar3->cfg).g_h;
+    uVar2 = (pvVar3->cfg).g_w;
+    (pvVar3->vp8_cfg).pkt_list = (vpx_codec_pkt_list *)&pvVar3->pkt_list;
     uVar1 = uVar1 * uVar2 * 3 & 0xfffffffe;
-    pvVar5->cx_data_sz = uVar1;
+    pvVar3->cx_data_sz = uVar1;
     if (uVar1 < 0x1000) {
-      pvVar5->cx_data_sz = 0x1000;
+      pvVar3->cx_data_sz = 0x1000;
     }
-    puVar6 = vpx_malloc(pvVar5->cx_data_sz);
-    pvVar5->cx_data = puVar6;
-    pvVar5->deprecated_mode = 0xff;
+    puVar4 = vpx_malloc(pvVar3->cx_data_sz);
+    pvVar3->cx_data = puVar4;
+    pvVar3->deprecated_mode = 0xff;
     vp8_initialize();
-    vVar7 = validate_config(pvVar5,&pvVar5->cfg,&pvVar5->vp8_cfg);
-    if (vVar7 == VPX_CODEC_OK) {
-      iVar3 = *(int *)(*(int *)(iVar4 + 0x18) + 8);
+    vVar5 = validate_config(pvVar3,&pvVar3->cfg,&pvVar3->vp8_cfg);
+    if (vVar5 == VPX_CODEC_OK) {
+      pvVar3 = param_1->priv->alg_priv;
       memcpy();
       memcpy();
-      set_vp8e_config((VP8_CONFIG *)(iVar3 + 0x170),in_stack_ffffff18,in_stack_ffffff94);
-      piVar8 = vp8_create_compressor((VP8_CONFIG *)(*(int *)(*(int *)(iVar4 + 0x18) + 8) + 0x170));
-      if (piVar8 == (int *)0x0) {
-        vVar7 = __restgprlr_29(2);
-        return vVar7;
+      set_vp8e_config(&pvVar3->oxcf,in_stack_ffffff18,in_stack_ffffff94);
+      piVar6 = vp8_create_compressor(&param_1->priv->alg_priv->oxcf);
+      if (piVar6 == (int *)0x0) {
+        return VPX_CODEC_MEM_ERROR;
       }
-      *(int **)(*(int *)(*(int *)(iVar4 + 0x18) + 8) + 0x228) = piVar8;
+      param_1->priv->alg_priv->cpi = piVar6;
     }
   }
-  vVar7 = __restgprlr_29(vVar7);
-  return vVar7;
+  return vVar5;
 }
 
 
@@ -782,6 +772,8 @@ void pick_quickcompress_mode(vpx_codec_alg_priv *param_1,ulong param_2,ulong par
 
 // 82810690  vp8e_encode  (WebM_atvi_opt/vpx/vp8/vp8_cx_iface.c:636)
 
+/* WARNING: Function: __savegprlr_20 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_20 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "vpx_kf_mode": Some values do not have unique names */
 
 vpx_codec_err_t
@@ -790,24 +782,20 @@ vp8e_encode(vpx_codec_alg_priv *param_1,vpx_image *param_2,long64 param_3,ulong 
 
 {
   int *piVar1;
-  vpx_codec_alg_priv *pvVar3;
-  vpx_codec_err_t vVar4;
-  int iVar5;
+  vpx_codec_err_t vVar3;
+  int iVar4;
   ulonglong uVar2;
-  vpx_image *pvVar7;
-  vpx_image *pvVar8;
-  uint uVar9;
-  ulonglong uVar6;
-  longlong lVar10;
-  ulonglong uVar11;
-  longlong lVar12;
-  uint uVar14;
-  ulonglong uVar13;
-  ulonglong uVar15;
-  longlong lVar16;
-  longlong lVar17;
-  uint uVar18;
-  uchar *puVar19;
+  vpx_image *pvVar6;
+  uint uVar7;
+  ulonglong uVar5;
+  long64 lVar8;
+  longlong lVar9;
+  ulonglong uVar10;
+  longlong lVar11;
+  uint uVar12;
+  longlong lVar13;
+  longlong lVar14;
+  uchar *puVar15;
   uint local_150;
   ulong local_14c;
   longlong local_148;
@@ -815,143 +803,137 @@ vp8e_encode(vpx_codec_alg_priv *param_1,vpx_image *param_2,long64 param_3,ulong 
   vpx_codec_cx_pkt local_130;
   YV12_BUFFER_CONFIG aYStack_a0 [3];
   
-  uVar13 = (ulonglong)param_5;
-  uVar6 = (ulonglong)(int)param_4;
-  uVar2 = (ulonglong)(int)param_2;
-  pvVar3 = (vpx_codec_alg_priv *)__savegprlr_20(param_1);
-  uVar18 = (uint)uVar13;
-  pvVar7 = (vpx_image *)uVar2;
-  uVar15 = 0;
-  lVar12 = param_3;
-  pvVar8 = pvVar7;
-  if ((uVar2 & 0xffffffff) != 0) {
-    vVar4 = validate_img(pvVar3,pvVar7);
-    uVar15 = (ulonglong)(int)vVar4;
+  vVar3 = VPX_CODEC_OK;
+  lVar8 = param_3;
+  pvVar6 = param_2;
+  if (param_2 != (vpx_image *)0x0) {
+    vVar3 = validate_img(param_1,param_2);
   }
-  pick_quickcompress_mode(pvVar3,(ulong)pvVar8,(ulong)lVar12);
-  (pvVar3->pkt_list).head.cnt = 0;
-  (pvVar3->pkt_list).head.max = 0x40;
-  if ((((uVar13 & 0x400000) != 0) && ((uVar13 & 0x80000) != 0)) ||
-     (((uVar13 & 0x800000) != 0 && ((uVar13 & 0x1000000) != 0)))) {
-    (pvVar3->base).err_detail = "Conflicting flags.";
-    vVar4 = __restgprlr_20(8);
-    return vVar4;
-  }
-  if ((uVar13 & 0x230000) != 0) {
-    uVar9 = 7;
-    if ((uVar13 & 0x10000) != 0) {
-      uVar9 = 6;
-    }
-    if ((uVar13 & 0x20000) != 0) {
-      uVar9 = uVar9 ^ 2;
-    }
-    if ((uVar13 & 0x200000) != 0) {
-      uVar9 = uVar9 ^ 4;
-    }
-    vp8_use_as_reference(pvVar3->cpi,uVar9);
-  }
-  if ((uVar13 & 0x1cc0000) != 0) {
-    uVar9 = 7;
-    if ((uVar13 & 0x40000) != 0) {
-      uVar9 = 6;
-    }
-    if ((uVar13 & 0x400000) != 0) {
-      uVar9 = uVar9 ^ 2;
-    }
-    if ((uVar13 & 0x800000) != 0) {
-      uVar9 = uVar9 ^ 4;
-    }
-    vp8_update_reference(pvVar3->cpi,uVar9);
-  }
-  if ((uVar13 & 0x100000) != 0) {
-    vp8_update_entropy(pvVar3->cpi,0);
-  }
-  if ((((pvVar3->cfg).kf_mode == VPX_KF_AUTO) &&
-      (uVar9 = (pvVar3->cfg).kf_min_dist, uVar9 == (pvVar3->cfg).kf_max_dist)) &&
-     (uVar14 = pvVar3->fixed_kf_cntr + 1, pvVar3->fixed_kf_cntr = uVar14, uVar9 < uVar14)) {
-    uVar18 = uVar18 | 1;
-    pvVar3->fixed_kf_cntr = 0;
-  }
-  if (((int)uVar15 == 0) && (pvVar3->cpi != (int *)0x0)) {
-    if (((pvVar3->base).init_flags & 0x10000U) != 0) {
-      pvVar3->cpi[0xc382] = 1;
-    }
-    lVar10 = (longlong)(pvVar3->cfg).g_timebase.num;
-    lVar12 = lVar10 * param_3;
-    lVar10 = ((uVar6 & 0xffffffff) + param_3) * lVar10;
-    uVar6 = lVar12 * 10000000;
-    uVar13 = lVar10 * 10000000;
-    uVar11 = (ulonglong)(pvVar3->cfg).g_timebase.den;
-    lVar17 = (longlong)uVar6 / (longlong)uVar11;
-    lVar16 = (longlong)uVar13 / (longlong)uVar11;
-    trapDoubleWordImmediate(6,uVar11,0);
-    trapDoubleWordImmediate(6,uVar11,0);
-    trapDoubleWordImmediate(5,uVar11 & ~((lVar12 * 20000000 | uVar6 >> 0x3f) - 1),0xffff);
-    trapDoubleWordImmediate(5,uVar11 & ~((lVar10 * 20000000 | uVar13 >> 0x3f) - 1),0xffff);
-    local_148 = lVar17;
-    local_140[0] = lVar16;
-    if ((uVar2 & 0xffffffff) != 0) {
-      local_150 = uVar18 & 1;
-      vVar4 = image2yuvconfig(pvVar7,aYStack_a0);
-      uVar15 = (ulonglong)(int)vVar4;
-      iVar5 = vp8_receive_raw_frame
-                        (pvVar3->cpi,pvVar3->next_frame_flag | uVar18 & 1,aYStack_a0,lVar17,lVar16);
-      if (iVar5 != 0) {
-        piVar1 = pvVar3->cpi;
-        uVar15 = (ulonglong)(uint)piVar1[0x6bf8];
-        if (piVar1[0x6bf8] != 0) {
-          (pvVar3->base).err_detail =
-               (char *)(-(uint)(piVar1[0x6bf9] != 0) & (uint)(piVar1 + 0x6bfa));
-        }
+  pick_quickcompress_mode(param_1,(ulong)pvVar6,(ulong)lVar8);
+  (param_1->pkt_list).head.cnt = 0;
+  (param_1->pkt_list).head.max = 0x40;
+  if ((((param_5 & 0x400000U) == 0) || ((param_5 & 0x80000U) == 0)) &&
+     (((param_5 & 0x800000U) == 0 || ((param_5 & 0x1000000U) == 0)))) {
+    if ((param_5 & 0x230000U) != 0) {
+      uVar7 = 7;
+      if ((param_5 & 0x10000U) != 0) {
+        uVar7 = 6;
       }
-      pvVar3->next_frame_flag = 0;
+      if ((param_5 & 0x20000U) != 0) {
+        uVar7 = uVar7 ^ 2;
+      }
+      if ((param_5 & 0x200000U) != 0) {
+        uVar7 = uVar7 ^ 4;
+      }
+      vp8_use_as_reference(param_1->cpi,uVar7);
     }
-    uVar18 = pvVar3->cx_data_sz;
-    puVar19 = pvVar3->cx_data;
-    local_150 = 0;
-    if (uVar18 >> 1 <= uVar18) {
-      do {
-        iVar5 = vp8_get_compressed_data
-                          (pvVar3->cpi,&local_150,&local_14c,puVar19,&local_148,local_140,
-                           (uint)LZCOUNT(pvVar7) >> 5);
-        if (iVar5 == -1) break;
-        if (local_14c != 0) {
-          iVar5 = (pvVar3->cfg).g_timebase.num;
-          local_130.data.frame.sz = local_14c;
-          local_130.kind = VPX_CODEC_CX_FRAME_PKT;
-          lVar10 = (longlong)(pvVar3->cfg).g_timebase.den;
-          lVar12 = (longlong)((iVar5 * 1000000 >> 1) + -1);
-          uVar13 = (ulonglong)iVar5;
-          uVar6 = lVar10 * local_148 + lVar12;
-          uVar2 = (local_140[0] - local_148) * lVar10 + lVar12;
-          local_130.data.frame.duration = (ulong)(((longlong)uVar2 / (longlong)uVar13) / 10000000);
-          local_130.data.frame.pts = ((longlong)uVar6 / (longlong)uVar13) / 10000000;
-          local_130.data.frame.flags = local_150 << 0x10;
-          trapDoubleWordImmediate(6,uVar13,0);
-          trapDoubleWordImmediate(6,uVar13,0);
-          trapDoubleWordImmediate(5,uVar13 & ~((uVar6 * 2 | uVar6 >> 0x3f) - 1),0xffff);
-          trapDoubleWordImmediate(5,uVar13 & ~((uVar2 * 2 | uVar2 >> 0x3f) - 1),0xffff);
-          if ((local_150 & 1) != 0) {
-            local_130.data.frame.flags = local_130.data.frame.flags | 1;
+    if ((param_5 & 0x1cc0000U) != 0) {
+      uVar7 = 7;
+      if ((param_5 & 0x40000U) != 0) {
+        uVar7 = 6;
+      }
+      if ((param_5 & 0x400000U) != 0) {
+        uVar7 = uVar7 ^ 2;
+      }
+      if ((param_5 & 0x800000U) != 0) {
+        uVar7 = uVar7 ^ 4;
+      }
+      vp8_update_reference(param_1->cpi,uVar7);
+    }
+    if ((param_5 & 0x100000U) != 0) {
+      vp8_update_entropy(param_1->cpi,0);
+    }
+    if ((((param_1->cfg).kf_mode == VPX_KF_AUTO) &&
+        (uVar7 = (param_1->cfg).kf_min_dist, uVar7 == (param_1->cfg).kf_max_dist)) &&
+       (uVar12 = param_1->fixed_kf_cntr + 1, param_1->fixed_kf_cntr = uVar12, uVar7 < uVar12)) {
+      param_5 = param_5 | 1;
+      param_1->fixed_kf_cntr = 0;
+    }
+    if ((vVar3 == VPX_CODEC_OK) && (param_1->cpi != (int *)0x0)) {
+      if (((param_1->base).init_flags & 0x10000U) != 0) {
+        param_1->cpi[0xc382] = 1;
+      }
+      lVar9 = (longlong)(param_1->cfg).g_timebase.num;
+      lVar11 = lVar9 * param_3;
+      lVar9 = ((ulonglong)param_4 + param_3) * lVar9;
+      uVar2 = lVar11 * 10000000;
+      uVar5 = lVar9 * 10000000;
+      uVar10 = (ulonglong)(param_1->cfg).g_timebase.den;
+      lVar14 = (longlong)uVar2 / (longlong)uVar10;
+      lVar13 = (longlong)uVar5 / (longlong)uVar10;
+      trapDoubleWordImmediate(6,uVar10,0);
+      trapDoubleWordImmediate(6,uVar10,0);
+      trapDoubleWordImmediate(5,uVar10 & ~((lVar11 * 20000000 | uVar2 >> 0x3f) - 1),0xffff);
+      trapDoubleWordImmediate(5,uVar10 & ~((lVar9 * 20000000 | uVar5 >> 0x3f) - 1),0xffff);
+      local_148 = lVar14;
+      local_140[0] = lVar13;
+      if (param_2 != (vpx_image *)0x0) {
+        local_150 = param_5 & 1U;
+        vVar3 = image2yuvconfig(param_2,aYStack_a0);
+        iVar4 = vp8_receive_raw_frame
+                          (param_1->cpi,param_1->next_frame_flag | param_5 & 1U,aYStack_a0,lVar14,
+                           lVar13);
+        if (iVar4 != 0) {
+          piVar1 = param_1->cpi;
+          vVar3 = piVar1[0x6bf8];
+          if (vVar3 != VPX_CODEC_OK) {
+            (param_1->base).err_detail =
+                 (char *)(-(uint)(piVar1[0x6bf9] != 0) & (uint)(piVar1 + 0x6bfa));
           }
-          if (pvVar3->cpi[0x79bf] == 0) {
-            local_130.data.frame.flags = local_130.data.frame.flags | 4;
-            trapDoubleWordImmediate(6,uVar13,0);
-            uVar2 = *(longlong *)(pvVar3->cpi + 0x9bd4) * lVar10 + lVar12;
-            local_130.data.frame.duration = 0;
-            local_130.data.frame.pts = ((longlong)uVar2 / (longlong)uVar13) / 10000000 + 1;
-            trapDoubleWordImmediate(5,uVar13 & ~((uVar2 * 2 | uVar2 >> 0x3f) - 1),0xffff);
-          }
-          local_130.data.frame.buf = puVar19;
-          vpx_codec_pkt_list_add(&(pvVar3->pkt_list).head,&local_130);
-          puVar19 = puVar19 + local_14c;
-          uVar18 = uVar18 - local_14c;
         }
-      } while (pvVar3->cx_data_sz >> 1 <= uVar18);
+        param_1->next_frame_flag = 0;
+      }
+      uVar7 = param_1->cx_data_sz;
+      puVar15 = param_1->cx_data;
+      local_150 = 0;
+      if (uVar7 >> 1 <= uVar7) {
+        do {
+          iVar4 = vp8_get_compressed_data
+                            (param_1->cpi,&local_150,&local_14c,puVar15,&local_148,local_140,
+                             (uint)LZCOUNT(param_2) >> 5);
+          if (iVar4 == -1) {
+            return vVar3;
+          }
+          if (local_14c != 0) {
+            iVar4 = (param_1->cfg).g_timebase.num;
+            local_130.data.frame.sz = local_14c;
+            local_130.kind = VPX_CODEC_CX_FRAME_PKT;
+            lVar9 = (longlong)(param_1->cfg).g_timebase.den;
+            lVar11 = (longlong)((iVar4 * 1000000 >> 1) + -1);
+            uVar10 = (ulonglong)iVar4;
+            uVar5 = lVar9 * local_148 + lVar11;
+            uVar2 = (local_140[0] - local_148) * lVar9 + lVar11;
+            local_130.data.frame.duration = (ulong)(((longlong)uVar2 / (longlong)uVar10) / 10000000)
+            ;
+            local_130.data.frame.pts = ((longlong)uVar5 / (longlong)uVar10) / 10000000;
+            local_130.data.frame.flags = local_150 << 0x10;
+            trapDoubleWordImmediate(6,uVar10,0);
+            trapDoubleWordImmediate(6,uVar10,0);
+            trapDoubleWordImmediate(5,uVar10 & ~((uVar5 * 2 | uVar5 >> 0x3f) - 1),0xffff);
+            trapDoubleWordImmediate(5,uVar10 & ~((uVar2 * 2 | uVar2 >> 0x3f) - 1),0xffff);
+            if ((local_150 & 1) != 0) {
+              local_130.data.frame.flags = local_130.data.frame.flags | 1;
+            }
+            if (param_1->cpi[0x79bf] == 0) {
+              local_130.data.frame.flags = local_130.data.frame.flags | 4;
+              trapDoubleWordImmediate(6,uVar10,0);
+              uVar2 = *(longlong *)(param_1->cpi + 0x9bd4) * lVar9 + lVar11;
+              local_130.data.frame.duration = 0;
+              local_130.data.frame.pts = ((longlong)uVar2 / (longlong)uVar10) / 10000000 + 1;
+              trapDoubleWordImmediate(5,uVar10 & ~((uVar2 * 2 | uVar2 >> 0x3f) - 1),0xffff);
+            }
+            local_130.data.frame.buf = puVar15;
+            vpx_codec_pkt_list_add(&(param_1->pkt_list).head,&local_130);
+            puVar15 = puVar15 + local_14c;
+            uVar7 = uVar7 - local_14c;
+          }
+        } while (param_1->cx_data_sz >> 1 <= uVar7);
+      }
     }
+    return vVar3;
   }
-  vVar4 = __restgprlr_20(uVar15);
-  return vVar4;
+  (param_1->base).err_detail = "Conflicting flags.";
+  return VPX_CODEC_INVALID_PARAM;
 }
 
 

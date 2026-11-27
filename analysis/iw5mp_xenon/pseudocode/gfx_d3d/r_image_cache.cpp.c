@@ -48,6 +48,8 @@ ulong GPU_CONVERT_CPU_TO_GPU_ADDRESS(void *param_1)
 
 // 82745938  ImageCache_Init  (gfx_d3d/r_image_cache.cpp:158)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void ImageCache_Init(void)
@@ -58,7 +60,6 @@ void ImageCache_Init(void)
   uchar *puVar3;
   uint uVar4;
   
-  __savegprlr_26();
   do {
     g_dmaVertexDecl = D3DDevice_CreateVertexDeclaration(g_dmaVertexElements);
     uVar4 = -(uint)(g_dmaVertexDecl == (D3DVertexDeclaration *)0x0) & 0x8007000e;
@@ -105,7 +106,6 @@ void ImageCache_Init(void)
   *puVar2 = '\0';
   *puVar3 = '\0';
   Cmd_AddCommandInternal("image_cache_info",ImageCache_ProfileMemory,&ImageCache_ProfileMemory_VAR);
-  __restgprlr_26();
   return;
 }
 
@@ -121,26 +121,24 @@ uchar * GetImageEntryEnd(GfxImageEntry *param_1)
 
 // 82741EF8  SetImageEntryEnd  (gfx_d3d/r_image_cache.cpp:201)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void SetImageEntryEnd(GfxImageEntry *param_1,uchar *param_2)
 
 {
-  uint *puVar1;
-  ulonglong uVar2;
-  ulonglong uVar3;
+  uint uVar1;
   
-  uVar2 = (ulonglong)(int)param_2;
-  puVar1 = (uint *)__savegprlr_28(param_1);
-  if ((uVar2 - *puVar1 & 0xfff) != 0) {
+  if (((int)param_2 - (int)param_1->begin & 0xfffU) != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image_cache.cpp",
                     0xca,0,"%s");
   }
-  uVar3 = uVar2 - *puVar1;
-  puVar1[1] = (uint)((uVar3 & 0x3ffff000) << 2) | puVar1[1] & 0x3fff;
-  if (((uVar3 & 0x3ffff000) + (ulonglong)*puVar1 & 0xffffffff) != (uVar2 & 0xffffffff)) {
+  uVar1 = (int)param_2 - (int)param_1->begin;
+  param_1->endOffset = uVar1 >> 0xc;
+  if (param_1->begin + (uVar1 & 0x3ffff000) != param_2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image_cache.cpp",
                     0xcc,0,"%s");
   }
-  __restgprlr_28();
   return;
 }
 
@@ -243,26 +241,24 @@ void D3DVECTOR4_SetW(__vector4 *param_1,float param_2)
 
 // 82742058  SetImageEntryTotalBegin  (gfx_d3d/r_image_cache.cpp:245)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void SetImageEntryTotalBegin(GfxImageEntry *param_1,uchar *param_2)
 
 {
   ulonglong uVar1;
-  uint *puVar2;
-  ulonglong uVar3;
   
-  uVar3 = (ulonglong)(int)param_2;
-  puVar2 = (uint *)__savegprlr_28(param_1);
-  if ((uVar3 - *puVar2 & 0xfff) != 0) {
+  if (((longlong)(int)param_2 - ZEXT48(param_1->begin) & 0xfff) != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image_cache.cpp",
                     0xf6,0,"%s");
   }
-  uVar1 = (*puVar2 - uVar3 & 0xffffffff) >> 0xc;
-  *(short *)(puVar2 + 2) = (short)uVar1;
-  if (((ulonglong)*puVar2 + (uVar1 & 0xffff) * -0x1000 & 0xffffffff) != (uVar3 & 0xffffffff)) {
+  uVar1 = (ZEXT48(param_1->begin) - (longlong)(int)param_2 & 0xffffffff) >> 0xc;
+  param_1->totalBeginOffset = (ushort)uVar1;
+  if ((ZEXT48(param_1->begin) + (uVar1 & 0xffff) * -0x1000 & 0xffffffff) != ZEXT48(param_2)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image_cache.cpp",
                     0xf8,0,"%s");
   }
-  __restgprlr_28();
   return;
 }
 
@@ -278,26 +274,24 @@ uchar * GetImageEntryTotalEnd(GfxImageEntry *param_1)
 
 // 82742108  SetImageEntryTotalEnd  (gfx_d3d/r_image_cache.cpp:259)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void SetImageEntryTotalEnd(GfxImageEntry *param_1,uchar *param_2)
 
 {
   ulonglong uVar1;
-  uint *puVar2;
-  ulonglong uVar3;
   
-  uVar3 = (ulonglong)(int)param_2;
-  puVar2 = (uint *)__savegprlr_28(param_1);
-  if ((uVar3 - *puVar2 & 0xfff) != 0) {
+  if (((longlong)(int)param_2 - ZEXT48(param_1->begin) & 0xfff) != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image_cache.cpp",
                     0x104,0,"%s");
   }
-  uVar1 = (uVar3 - *puVar2 & 0xffffffff) >> 0xc;
-  *(short *)((int)puVar2 + 10) = (short)uVar1;
-  if (((uVar1 & 0xffff) * 0x1000 + (ulonglong)*puVar2 & 0xffffffff) != (uVar3 & 0xffffffff)) {
+  uVar1 = ((longlong)(int)param_2 - ZEXT48(param_1->begin) & 0xffffffff) >> 0xc;
+  param_1->totalEndOffset = (ushort)uVar1;
+  if (((uVar1 & 0xffff) * 0x1000 + ZEXT48(param_1->begin) & 0xffffffff) != ZEXT48(param_2)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image_cache.cpp",
                     0x106,0,"%s");
   }
-  __restgprlr_28();
   return;
 }
 
@@ -348,87 +342,80 @@ int ImageCache_Validate(void)
 
 // 82742240  ImageCache_GiveMemoryInternal  (gfx_d3d/r_image_cache.cpp:307)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
+
 void ImageCache_GiveMemoryInternal(uchar *param_1,uchar *param_2)
 
 {
   uint uVar1;
-  ulonglong uVar2;
-  int iVar3;
-  ulonglong uVar4;
+  int iVar2;
+  uint uVar3;
+  uint uVar4;
   uint uVar5;
-  uchar *puVar6;
-  uint uVar7;
-  uint uVar8;
   
-  uVar4 = (ulonglong)(int)param_2;
-  uVar2 = __savegprlr_23(param_1);
-  if ((uVar2 & 0xffffffff) == 0) {
+  if (param_1 == (uchar *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image_cache.cpp",
                     0x139,0,"%s");
   }
-  if ((uVar4 & 0xffffffff) <= (uVar2 & 0xffffffff)) {
+  if (param_2 <= param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image_cache.cpp",
                     0x13a,0,"%s");
   }
-  uVar7 = 0xffffffff;
-  uVar5 = g_imageCache.unusedEntryCount - 1;
-  uVar8 = g_imageCache.unusedEntryCount;
-  if (-1 < (int)uVar5) {
+  uVar4 = 0xffffffff;
+  uVar3 = g_imageCache.unusedEntryCount - 1;
+  uVar5 = g_imageCache.unusedEntryCount;
+  if (-1 < (int)uVar3) {
     do {
-      uVar5 = (int)(uVar8 + uVar7) >> 1;
-      uVar1 = uVar5;
-      if (((uVar2 & 0xffffffff) < ZEXT48(g_imageCache.unusedEntries[uVar5].end)) &&
-         (uVar1 = uVar7, uVar8 = uVar5,
-         ZEXT48(g_imageCache.unusedEntries[uVar5].begin) <= (uVar2 & 0xffffffff))) {
+      uVar3 = (int)(uVar5 + uVar4) >> 1;
+      uVar1 = uVar3;
+      if ((param_1 < g_imageCache.unusedEntries[uVar3].end) &&
+         (uVar1 = uVar4, uVar5 = uVar3, g_imageCache.unusedEntries[uVar3].begin <= param_1)) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image_cache.cpp"
                         ,0x146,0,"%s");
       }
-      uVar7 = uVar1;
-      uVar5 = uVar8 - 1;
-    } while ((int)uVar7 < (int)uVar5);
+      uVar4 = uVar1;
+      uVar3 = uVar5 - 1;
+    } while ((int)uVar4 < (int)uVar3);
   }
-  if (uVar7 != uVar5) {
+  if (uVar4 != uVar3) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image_cache.cpp",
                     0x14f,0,"%s");
   }
-  uVar8 = g_imageCache.unusedEntryCount;
-  iVar3 = ImageCache_Validate();
-  if (iVar3 == 0) {
+  uVar5 = g_imageCache.unusedEntryCount;
+  iVar2 = ImageCache_Validate();
+  if (iVar2 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image_cache.cpp",
                     0x151,0,"%s");
-    uVar8 = g_imageCache.unusedEntryCount;
+    uVar5 = g_imageCache.unusedEntryCount;
   }
-  puVar6 = (uchar *)uVar4;
-  if (((int)uVar7 < 0) || (ZEXT48(g_imageCache.unusedEntries[uVar7].end) != (uVar2 & 0xffffffff))) {
-    if ((uVar8 <= uVar7 + 1) ||
-       (ZEXT48(g_imageCache.unusedEntries[uVar7 + 1].begin) != (uVar4 & 0xffffffff))) {
-      if (0x14bf < uVar8) {
+  if (((int)uVar4 < 0) || (g_imageCache.unusedEntries[uVar4].end != param_1)) {
+    if ((uVar5 <= uVar4 + 1) || (g_imageCache.unusedEntries[uVar4 + 1].begin != param_2)) {
+      if (0x14bf < uVar5) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image_cache.cpp"
                         ,0x16c,0,"%s");
       }
       memmove();
       g_imageCache.unusedEntryCount = g_imageCache.unusedEntryCount + 1;
-      g_imageCache.unusedEntries[uVar7 + 1].end = puVar6;
+      g_imageCache.unusedEntries[uVar4 + 1].end = param_2;
     }
-    g_imageCache.unusedEntries[uVar7 + 1].begin = (uchar *)uVar2;
+    g_imageCache.unusedEntries[uVar4 + 1].begin = param_1;
   }
   else {
-    g_imageCache.unusedEntries[uVar7].end = puVar6;
-    if ((uVar7 < g_imageCache.unusedEntryCount - 1) &&
-       (ZEXT48(g_imageCache.unusedEntries[uVar7 + 1].begin) == (uVar4 & 0xffffffff))) {
-      g_imageCache.unusedEntries[uVar7].end = g_imageCache.unusedEntries[uVar7 + 1].end;
+    g_imageCache.unusedEntries[uVar4].end = param_2;
+    if ((uVar4 < g_imageCache.unusedEntryCount - 1) &&
+       (g_imageCache.unusedEntries[uVar4 + 1].begin == param_2)) {
+      g_imageCache.unusedEntries[uVar4].end = g_imageCache.unusedEntries[uVar4 + 1].end;
       g_imageCache.unusedEntryCount = g_imageCache.unusedEntryCount - 1;
       memmove();
     }
   }
-  iVar3 = ImageCache_Validate();
-  if (iVar3 == 0) {
+  iVar2 = ImageCache_Validate();
+  if (iVar2 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image_cache.cpp",
                     0x175,0,"%s");
   }
-  g_imageCache.unusedMemorySize =
-       (uint)(puVar6 + (g_imageCache.unusedMemorySize - (int)(uchar *)uVar2));
-  __restgprlr_23();
+  g_imageCache.unusedMemorySize = (uint)(param_2 + (g_imageCache.unusedMemorySize - (int)param_1));
   return;
 }
 
@@ -458,149 +445,146 @@ void ImageCache_GiveMemoryDelayedAlreadyStreaming(uchar *param_1,uchar *param_2)
 
 // 827425D8  ImageCache_GiveMemoryDelayed  (gfx_d3d/r_image_cache.cpp:396)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void ImageCache_GiveMemoryDelayed(uchar *param_1,uchar *param_2)
 
 {
-  uchar *puVar1;
-  int iVar2;
+  int iVar1;
   
-  puVar1 = (uchar *)__savegprlr_29(param_1);
-  iVar2 = DB_EnterStreaming();
-  ImageCache_GiveMemoryInternal(puVar1,param_2);
+  iVar1 = DB_EnterStreaming();
+  ImageCache_GiveMemoryInternal(param_1,param_2);
   g_imageCache.waitImageFence = 1;
-  g_imageCache.totalMemorySize = (uint)(param_2 + (g_imageCache.totalMemorySize - (int)puVar1));
+  g_imageCache.totalMemorySize = (uint)(param_2 + (g_imageCache.totalMemorySize - (int)param_1));
   DB_LeaveStreaming();
-  if (iVar2 != 0) {
+  if (iVar1 != 0) {
     R_AcquireDeviceOwnership();
   }
-  __restgprlr_29();
   return;
 }
 
 
 // 82742650  ImageCache_GetImageEntry  (gfx_d3d/r_image_cache.cpp:433)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 GfxImageEntry * ImageCache_GetImageEntry(uchar *param_1)
 
 {
-  uint uVar1;
-  uint uVar2;
-  GfxImageEntry *pGVar3;
+  uchar *puVar1;
+  int iVar2;
+  ulonglong uVar3;
   ulonglong uVar4;
   ulonglong uVar5;
-  ulonglong uVar6;
-  longlong lVar7;
-  longlong lVar8;
   
-  uVar2 = __savegprlr_28(param_1);
-  if (uVar2 == 0) {
+  if (param_1 == (uchar *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image_cache.cpp",
                     0x1b7,0,"%s");
   }
-  uVar6 = 0;
-  uVar4 = (ulonglong)g_imageCache.imageEntryCount;
+  uVar5 = 0;
+  uVar3 = (ulonglong)g_imageCache.imageEntryCount;
   if ((ulonglong)g_imageCache.imageEntryCount != 0) {
     do {
-      uVar5 = (uVar4 + uVar6 & 0xffffffff) >> 1;
-      lVar7 = (uVar5 * 3 & 0x3fffffff) * 4;
-      lVar8 = lVar7 + -0x7ba46e80;
-      uVar1 = *(uint *)((int)&g_imageCache.imageEntries[0].begin + (int)lVar7);
-      if (uVar1 <= uVar2) {
-        if (uVar2 < (*(uint *)((int)lVar8 + 4) >> 2 & 0x3ffff000) + uVar1) {
-          if (uVar1 != uVar2) {
+      uVar4 = (uVar3 + uVar5 & 0xffffffff) >> 1;
+      iVar2 = (int)((uVar4 * 3 & 0x3fffffff) << 2);
+      puVar1 = *(uchar **)((int)&g_imageCache.imageEntries[0].begin + iVar2);
+      if (puVar1 <= param_1) {
+        if (param_1 < puVar1 + (*(uint *)(&g_imageCache.imageEntries[0].field_0x4 + iVar2) >> 2 &
+                               0x3ffff000)) {
+          if (puVar1 != param_1) {
             MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image_cache.cpp"
                             ,0x1ce,0,"%s");
           }
-          pGVar3 = (GfxImageEntry *)__restgprlr_28(lVar8);
-          return pGVar3;
+          return (GfxImageEntry *)((int)&g_imageCache.imageEntries[0].begin + iVar2);
         }
-        uVar6 = uVar5 + 1;
-        uVar5 = uVar4;
+        uVar5 = uVar4 + 1;
+        uVar4 = uVar3;
       }
-      uVar4 = uVar5;
-    } while (uVar6 < uVar5);
+      uVar3 = uVar4;
+    } while (uVar5 < uVar4);
   }
   if (alwaysfails == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image_cache.cpp",
                     0x1d2,0,"unreachable");
   }
-  pGVar3 = (GfxImageEntry *)__restgprlr_28(0);
-  return pGVar3;
+  return (GfxImageEntry *)0x0;
 }
 
 
 // 82742768  ImageCache_FreeEntry  (gfx_d3d/r_image_cache.cpp:472)
+
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 
 void ImageCache_FreeEntry(GfxImageEntry *param_1)
 
 {
   uint uVar1;
   uchar *puVar2;
-  undefined4 *puVar3;
-  int iVar4;
+  int iVar3;
   
-  puVar3 = (undefined4 *)__savegprlr_25(param_1);
-  uVar1 = puVar3[1];
-  puVar2 = (uchar *)*puVar3;
-  iVar4 = ImageCache_Validate();
-  if (iVar4 == 0) {
+  uVar1 = *(uint *)&param_1->field_0x4;
+  puVar2 = param_1->begin;
+  iVar3 = ImageCache_Validate();
+  if (iVar3 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image_cache.cpp",
                     0x1df,0,"%s");
   }
   g_imageCache.imageEntryCount = g_imageCache.imageEntryCount - 1;
   memmove();
-  iVar4 = ImageCache_Validate();
-  if (iVar4 == 0) {
+  iVar3 = ImageCache_Validate();
+  if (iVar3 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image_cache.cpp",
                     0x1e4,0,"%s");
   }
   ImageCache_GiveMemoryInternal(puVar2,puVar2 + (uVar1 >> 2 & 0x3ffff000));
   g_imageCache.waitImageFence = 1;
-  __restgprlr_25();
   return;
 }
 
 
 // 82742868  ImageCache_ReleaseImageMemory  (gfx_d3d/r_image_cache.cpp:492)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void ImageCache_ReleaseImageMemory(GfxImage *param_1)
 
 {
   uint uVar1;
-  int iVar2;
-  GfxImageEntry *pGVar3;
+  GfxImageEntry *pGVar2;
+  uchar *puVar3;
   uchar *puVar4;
-  uchar *puVar5;
   
-  iVar2 = __savegprlr_28(param_1);
-  if (*(char *)(iVar2 + 0x47) == '\0') {
+  if (param_1->cached == '\0') {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image_cache.cpp",500
                     ,0,"%s");
   }
-  puVar4 = *(uchar **)(iVar2 + 0x48);
-  if (puVar4 == (uchar *)0x0) {
+  puVar3 = param_1->pixels;
+  if (puVar3 == (uchar *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image_cache.cpp",
                     0x1f8,0,"%s");
   }
-  *(undefined4 *)(iVar2 + 0x48) = 0;
-  pGVar3 = ImageCache_GetImageEntry(puVar4);
-  if (pGVar3 == (GfxImageEntry *)0x0) {
+  param_1->pixels = (uchar *)0x0;
+  pGVar2 = ImageCache_GetImageEntry(puVar3);
+  if (pGVar2 == (GfxImageEntry *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image_cache.cpp",
                     0x1fc,0,"%s");
   }
-  puVar4 = pGVar3->begin;
-  uVar1 = *(uint *)&pGVar3->field_0x4;
-  puVar5 = puVar4 + (uint)pGVar3->totalEndOffset * 0x1000;
-  ImageCache_FreeEntry(pGVar3);
-  if (puVar4 + (uVar1 >> 2 & 0x3ffff000) != puVar5) {
-    puVar4 = pGVar3->begin + (*(uint *)&pGVar3->field_0x4 >> 2 & 0x3ffff000);
-    while (puVar4 != puVar5) {
-      puVar4 = pGVar3[1].begin + (*(uint *)&pGVar3[1].field_0x4 >> 2 & 0x3ffff000);
-      pGVar3 = pGVar3 + 1;
+  puVar3 = pGVar2->begin;
+  uVar1 = *(uint *)&pGVar2->field_0x4;
+  puVar4 = puVar3 + (uint)pGVar2->totalEndOffset * 0x1000;
+  ImageCache_FreeEntry(pGVar2);
+  if (puVar3 + (uVar1 >> 2 & 0x3ffff000) != puVar4) {
+    puVar3 = pGVar2->begin + (*(uint *)&pGVar2->field_0x4 >> 2 & 0x3ffff000);
+    while (puVar3 != puVar4) {
+      puVar3 = pGVar2[1].begin + (*(uint *)&pGVar2[1].field_0x4 >> 2 & 0x3ffff000);
+      pGVar2 = pGVar2 + 1;
     }
-    ImageCache_FreeEntry(pGVar3);
+    ImageCache_FreeEntry(pGVar2);
   }
-  __restgprlr_28();
   return;
 }
 
@@ -633,33 +617,33 @@ void ImageCache_ReleaseImage(GfxImage *param_1)
 
 // 82742980  ImageCache_ReleaseImageMemoryBase  (gfx_d3d/r_image_cache.cpp:559)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void ImageCache_ReleaseImageMemoryBase(GfxImage *param_1)
 
 {
   uchar *puVar1;
-  GfxImage *pGVar2;
-  uint uVar3;
-  GfxImageEntry *pGVar4;
+  uint uVar2;
+  GfxImageEntry *pGVar3;
   
-  pGVar2 = (GfxImage *)__savegprlr_28(param_1);
-  if (pGVar2->cached == '\0') {
+  if (param_1->cached == '\0') {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image_cache.cpp",
                     0x235,0,"%s");
   }
-  uVar3 = DB_GetGfxImageIndex(pGVar2);
-  puVar1 = g_stream.imageStream[uVar3].basePixels;
+  uVar2 = DB_GetGfxImageIndex(param_1);
+  puVar1 = g_stream.imageStream[uVar2].basePixels;
   if (puVar1 == (uchar *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image_cache.cpp",
                     0x23c,0,"%s");
   }
-  g_stream.imageStream[uVar3].basePixels = (uchar *)0x0;
-  pGVar4 = ImageCache_GetImageEntry(puVar1);
-  if (pGVar4 == (GfxImageEntry *)0x0) {
+  g_stream.imageStream[uVar2].basePixels = (uchar *)0x0;
+  pGVar3 = ImageCache_GetImageEntry(puVar1);
+  if (pGVar3 == (GfxImageEntry *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image_cache.cpp",
                     0x240,0,"%s");
   }
-  ImageCache_FreeEntry(pGVar4);
-  __restgprlr_28();
+  ImageCache_FreeEntry(pGVar3);
   return;
 }
 
@@ -703,46 +687,44 @@ void ImageCache_ImageUpdateDelayed(GfxImage *param_1)
 
 // 82742B58  ImageCache_CheckSparePixels  (gfx_d3d/r_image_cache.cpp:613)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 int ImageCache_CheckSparePixels(uchar *param_1)
 
 {
   uchar *puVar1;
-  uchar *puVar2;
-  int iVar3;
+  uint uVar2;
+  uint uVar3;
   uint uVar4;
   uint uVar5;
-  uint uVar6;
-  uint uVar7;
   
-  puVar2 = (uchar *)__savegprlr_29(param_1);
-  if (puVar2 == (uchar *)0x0) {
+  if (param_1 == (uchar *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image_cache.cpp",
                     0x26b,0,"%s");
   }
-  uVar5 = 0xffffffff;
-  uVar7 = g_imageCache.imageEntryCount - 1;
-  uVar6 = g_imageCache.imageEntryCount;
-  uVar4 = uVar5;
-  if (-1 < (int)uVar7) {
+  uVar2 = 0xffffffff;
+  uVar5 = g_imageCache.imageEntryCount - 1;
+  uVar4 = g_imageCache.imageEntryCount;
+  uVar3 = 0xffffffff;
+  if (-1 < (int)uVar5) {
     do {
-      uVar7 = (int)(uVar6 + uVar4) >> 1;
-      puVar1 = g_imageCache.imageEntries[uVar7].begin;
-      uVar5 = uVar7;
-      if ((puVar2 < puVar1 + (*(uint *)&g_imageCache.imageEntries[uVar7].field_0x4 >> 2 & 0x3ffff000
-                             )) && (uVar5 = uVar4, uVar6 = uVar7, puVar1 <= puVar2)) {
-        iVar3 = __restgprlr_29(0);
-        return iVar3;
+      uVar5 = (int)(uVar4 + uVar3) >> 1;
+      puVar1 = g_imageCache.imageEntries[uVar5].begin;
+      uVar2 = uVar5;
+      if ((param_1 < puVar1 + (*(uint *)&g_imageCache.imageEntries[uVar5].field_0x4 >> 2 &
+                              0x3ffff000)) && (uVar2 = uVar3, uVar4 = uVar5, puVar1 <= param_1)) {
+        return 0;
       }
-      uVar7 = uVar6 - 1;
-      uVar4 = uVar5;
-    } while ((int)uVar5 < (int)uVar7);
+      uVar5 = uVar4 - 1;
+      uVar3 = uVar2;
+    } while ((int)uVar2 < (int)uVar5);
   }
-  if (uVar5 != uVar7) {
+  if (uVar2 != uVar5) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image_cache.cpp",
                     0x281,0,"%s");
   }
-  iVar3 = __restgprlr_29(1);
-  return iVar3;
+  return 1;
 }
 
 
@@ -794,53 +776,71 @@ void D3DTagCollection_Set(_D3DTAGCOLLECTION *param_1,ulong param_2,ulong64 param
 
 // 82742C50  ImageCache_AllocEntry  (gfx_d3d/r_image_cache.cpp:648)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
+
 GfxImageEntry * ImageCache_AllocEntry(uchar *param_1)
 
 {
   uchar *puVar1;
-  uchar *puVar2;
-  GfxImageEntry *pGVar3;
-  uint uVar4;
-  uint uVar5;
-  uint uVar6;
-  uint uVar7;
+  uint uVar2;
+  int iVar3;
+  ulonglong uVar4;
+  ulonglong uVar5;
+  ulonglong uVar6;
+  int iVar7;
+  ulonglong uVar8;
+  ulonglong uVar9;
+  GfxImageEntry *pGVar10;
   
-  puVar2 = (uchar *)__savegprlr_24(param_1);
-  uVar6 = 0xffffffff;
-  uVar5 = 0xffffffff;
-  uVar4 = g_imageCache.imageEntryCount - 1;
-  uVar7 = g_imageCache.imageEntryCount;
-  if (-1 < (int)uVar4) {
+  uVar4 = (ulonglong)g_imageCache.imageEntryCount;
+  uVar5 = 0xffffffffffffffff;
+  iVar7 = -1;
+  iVar3 = g_imageCache.imageEntryCount - 1;
+  uVar8 = uVar4;
+  if (-1 < iVar3) {
     do {
-      uVar4 = (int)(uVar7 + uVar6) >> 1;
-      puVar1 = g_imageCache.imageEntries[uVar4].begin;
-      uVar5 = uVar4;
-      if ((puVar2 < puVar1 + (*(uint *)&g_imageCache.imageEntries[uVar4].field_0x4 >> 2 & 0x3ffff000
-                             )) && (uVar5 = uVar6, uVar7 = uVar4, puVar1 <= puVar2)) {
+      uVar2 = (int)uVar4 + (int)uVar5 >> 1;
+      uVar9 = (ulonglong)(int)uVar2;
+      iVar3 = (int)((uVar9 + ((ulonglong)uVar2 & 0x7fffffff) * 2 & 0xffffffff) << 2);
+      puVar1 = *(uchar **)((int)&g_imageCache.imageEntries[0].begin + iVar3);
+      uVar6 = uVar9;
+      uVar8 = uVar4;
+      if ((param_1 < puVar1 + (*(uint *)(&g_imageCache.imageEntries[0].field_0x4 + iVar3) >> 2 &
+                              0x3ffff000)) && (uVar6 = uVar5, uVar8 = uVar9, puVar1 <= param_1)) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image_cache.cpp"
                         ,0x298,0,"%s");
       }
-      uVar4 = uVar7 - 1;
-      uVar6 = uVar5;
-    } while ((int)uVar5 < (int)uVar4);
+      iVar3 = (int)uVar8 + -1;
+      iVar7 = (int)uVar6;
+      uVar5 = uVar6;
+      uVar4 = uVar8;
+    } while (iVar7 < iVar3);
+    uVar4 = (ulonglong)g_imageCache.imageEntryCount;
   }
-  if (uVar5 != uVar4) {
+  if (iVar7 != iVar3) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image_cache.cpp",
                     0x2a1,0,"%s");
+    uVar4 = (ulonglong)g_imageCache.imageEntryCount;
   }
-  if (0x3e3f < g_imageCache.imageEntryCount) {
+  pGVar10 = (GfxImageEntry *)
+            ((int)&g_imageCache.imageEntries[0].begin +
+            (int)((uVar8 + (uVar8 & 0x7fffffff) * 2 & 0xffffffff) << 2));
+  if (0x3e3f < uVar4) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image_cache.cpp",
                     0x2a5,0,"%s");
   }
   memmove();
   g_imageCache.imageEntryCount = g_imageCache.imageEntryCount + 1;
-  g_imageCache.imageEntries[uVar7].begin = puVar2;
-  pGVar3 = (GfxImageEntry *)__restgprlr_24(g_imageCache.imageEntries + uVar7);
-  return pGVar3;
+  pGVar10->begin = param_1;
+  return pGVar10;
 }
 
 
 // 82742DD0  ImageCache_SetImageMemory  (gfx_d3d/r_image_cache.cpp:688)
+
+/* WARNING: Function: __savegprlr_19 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_19 replaced with injection: xenon_save_restore */
 
 void ImageCache_SetImageMemory
                (GfxImage *param_1,GfxImage *param_2,uchar *param_3,ImageAllocInfo param_4)
@@ -850,62 +850,59 @@ void ImageCache_SetImageMemory
   int iVar2;
   GfxImageEntry *pGVar3;
   uint uVar4;
-  ulonglong uVar5;
+  longlong lVar5;
   ulonglong in_r6;
   undefined8 in_r7;
-  uchar *puVar6;
-  ulonglong uVar7;
+  ulonglong uVar6;
   ulonglong uStack00000030;
   int iStack00000038;
   
   iStack00000038 = (int)((ulonglong)in_r7 >> 0x20);
-  uVar5 = (ulonglong)(int)param_3;
-  iVar2 = __savegprlr_19(param_1);
+  lVar5 = (longlong)(int)param_3;
   uStack00000030 = in_r6;
-  if (*(char *)(iVar2 + 0x47) == '\0') {
+  if (param_1->cached == '\0') {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image_cache.cpp",
                     0x2b6,0,"%s");
   }
-  if ((uVar5 & 0xffffffff) == 0) {
+  if (param_3 == (uchar *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image_cache.cpp",
                     0x2b7,0,"%s");
   }
-  uVar7 = uStack00000030 >> 0x20;
-  if (uVar7 == 0) {
+  uVar6 = uStack00000030 >> 0x20;
+  if (uVar6 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image_cache.cpp",
                     0x2b8,0,"%s");
   }
-  if (*(int *)(iVar2 + 0x48) != 0) {
+  if (param_1->pixels != (uchar *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image_cache.cpp",
                     0x2ba,0,"%s");
   }
-  puVar6 = (uchar *)uVar5;
-  *(uchar **)(iVar2 + 0x48) = puVar6;
+  param_1->pixels = param_3;
   iVar2 = ImageCache_Validate();
   if (iVar2 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image_cache.cpp",
                     0x2bd,0,"%s");
   }
-  pGVar3 = ImageCache_AllocEntry(puVar6);
-  SetImageEntryEnd(pGVar3,puVar6 + uStack00000030._4_4_);
-  if ((uVar5 - ZEXT48(pGVar3->begin) & 0xfff) != 0) {
+  pGVar3 = ImageCache_AllocEntry(param_3);
+  SetImageEntryEnd(pGVar3,param_3 + uStack00000030._4_4_);
+  if ((lVar5 - ZEXT48(pGVar3->begin) & 0xfff) != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image_cache.cpp",
                     0xf6,0,"%s");
   }
-  uVar1 = (ZEXT48(pGVar3->begin) - uVar5 & 0xffffffff) >> 0xc;
+  uVar1 = (ZEXT48(pGVar3->begin) - lVar5 & 0xffffffff) >> 0xc;
   pGVar3->totalBeginOffset = (ushort)uVar1;
-  if ((ZEXT48(pGVar3->begin) + (uVar1 & 0xffff) * -0x1000 & 0xffffffff) != (uVar5 & 0xffffffff)) {
+  if (pGVar3->begin + -(int)((uVar1 & 0xffff) << 0xc) != param_3) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image_cache.cpp",
                     0xf8,0,"%s");
   }
-  uVar7 = uVar7 + uVar5;
-  if ((uVar7 - ZEXT48(pGVar3->begin) & 0xfff) != 0) {
+  uVar6 = uVar6 + lVar5;
+  if ((uVar6 - ZEXT48(pGVar3->begin) & 0xfff) != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image_cache.cpp",
                     0x104,0,"%s");
   }
-  uVar1 = (uVar7 - ZEXT48(pGVar3->begin) & 0xffffffff) >> 0xc;
+  uVar1 = (uVar6 - ZEXT48(pGVar3->begin) & 0xffffffff) >> 0xc;
   pGVar3->totalEndOffset = (ushort)uVar1;
-  if (((uVar1 & 0xffff) * 0x1000 + ZEXT48(pGVar3->begin) & 0xffffffff) != (uVar7 & 0xffffffff)) {
+  if (((uVar1 & 0xffff) * 0x1000 + ZEXT48(pGVar3->begin) & 0xffffffff) != (uVar6 & 0xffffffff)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image_cache.cpp",
                     0x106,0,"%s");
   }
@@ -921,25 +918,25 @@ void ImageCache_SetImageMemory
                     0x2cb,0,"%s");
   }
   if (iStack00000038 != 0) {
-    pGVar3 = ImageCache_AllocEntry(puVar6 + iStack00000038);
-    SetImageEntryEnd(pGVar3,(uchar *)uVar7);
-    if ((uVar5 - ZEXT48(pGVar3->begin) & 0xfff) != 0) {
+    pGVar3 = ImageCache_AllocEntry(param_3 + iStack00000038);
+    SetImageEntryEnd(pGVar3,(uchar *)uVar6);
+    if ((lVar5 - ZEXT48(pGVar3->begin) & 0xfff) != 0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image_cache.cpp",
                       0xf6,0,"%s");
     }
-    uVar1 = (ZEXT48(pGVar3->begin) - uVar5 & 0xffffffff) >> 0xc;
+    uVar1 = (ZEXT48(pGVar3->begin) - lVar5 & 0xffffffff) >> 0xc;
     pGVar3->totalBeginOffset = (ushort)uVar1;
-    if ((ZEXT48(pGVar3->begin) + (uVar1 & 0xffff) * -0x1000 & 0xffffffff) != (uVar5 & 0xffffffff)) {
+    if ((ZEXT48(pGVar3->begin) + (uVar1 & 0xffff) * -0x1000 & 0xffffffff) != ZEXT48(param_3)) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image_cache.cpp",
                       0xf8,0,"%s");
     }
-    if ((uVar7 - ZEXT48(pGVar3->begin) & 0xfff) != 0) {
+    if ((uVar6 - ZEXT48(pGVar3->begin) & 0xfff) != 0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image_cache.cpp",
                       0x104,0,"%s");
     }
-    uVar5 = (uVar7 - ZEXT48(pGVar3->begin) & 0xffffffff) >> 0xc;
-    pGVar3->totalEndOffset = (ushort)uVar5;
-    if (((uVar5 & 0xffff) * 0x1000 + ZEXT48(pGVar3->begin) & 0xffffffff) != (uVar7 & 0xffffffff)) {
+    uVar1 = (uVar6 - ZEXT48(pGVar3->begin) & 0xffffffff) >> 0xc;
+    pGVar3->totalEndOffset = (ushort)uVar1;
+    if (((uVar1 & 0xffff) * 0x1000 + ZEXT48(pGVar3->begin) & 0xffffffff) != (uVar6 & 0xffffffff)) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image_cache.cpp",
                       0x106,0,"%s");
     }
@@ -956,86 +953,84 @@ void ImageCache_SetImageMemory
     }
   }
   ImageCache_ImageUpdateDelayed(param_2);
-  __restgprlr_19();
   return;
 }
 
 
 // 82743190  ImageCache_SetImageMemoryBase  (gfx_d3d/r_image_cache.cpp:737)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
+
 void ImageCache_SetImageMemoryBase(GfxImage *param_1,uchar *param_2,uint param_3)
 
 {
   ulonglong uVar1;
-  GfxImage *pGVar2;
-  uint uVar3;
-  int iVar4;
-  GfxImageEntry *pGVar5;
+  uint uVar2;
+  int iVar3;
+  GfxImageEntry *pGVar4;
+  longlong lVar5;
   ulonglong uVar6;
-  ulonglong uVar7;
   
-  uVar7 = (ulonglong)(int)param_3;
-  uVar6 = (ulonglong)(int)param_2;
-  pGVar2 = (GfxImage *)__savegprlr_25(param_1);
-  if (pGVar2->cached == '\0') {
+  lVar5 = (longlong)(int)param_2;
+  if (param_1->cached == '\0') {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image_cache.cpp",
                     0x2e6,0,"%s");
   }
-  if ((uVar6 & 0xffffffff) == 0) {
+  if (param_2 == (uchar *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image_cache.cpp",
                     0x2e7,0,"%s");
   }
-  if ((uVar7 & 0xffffffff) == 0) {
+  if (param_3 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image_cache.cpp",
                     0x2e8,0,"%s");
   }
-  uVar3 = DB_GetGfxImageIndex(pGVar2);
-  if (g_stream.imageStream[uVar3].basePixels != (uchar *)0x0) {
+  uVar2 = DB_GetGfxImageIndex(param_1);
+  if (g_stream.imageStream[uVar2].basePixels != (uchar *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image_cache.cpp",
                     0x2ed,0,"%s");
   }
-  g_stream.imageStream[uVar3].basePixels = (uchar *)uVar6;
-  iVar4 = ImageCache_Validate();
-  if (iVar4 == 0) {
+  g_stream.imageStream[uVar2].basePixels = param_2;
+  iVar3 = ImageCache_Validate();
+  if (iVar3 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image_cache.cpp",
                     0x2f0,0,"%s");
   }
-  pGVar5 = ImageCache_AllocEntry((uchar *)uVar6);
-  uVar7 = uVar6 + uVar7;
-  SetImageEntryEnd(pGVar5,(uchar *)uVar7);
-  if ((uVar6 - ZEXT48(pGVar5->begin) & 0xfff) != 0) {
+  pGVar4 = ImageCache_AllocEntry(param_2);
+  uVar6 = lVar5 + (int)param_3;
+  SetImageEntryEnd(pGVar4,(uchar *)uVar6);
+  if ((lVar5 - ZEXT48(pGVar4->begin) & 0xfff) != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image_cache.cpp",
                     0xf6,0,"%s");
   }
-  uVar1 = (ZEXT48(pGVar5->begin) - uVar6 & 0xffffffff) >> 0xc;
-  pGVar5->totalBeginOffset = (ushort)uVar1;
-  if ((ZEXT48(pGVar5->begin) + (uVar1 & 0xffff) * -0x1000 & 0xffffffff) != (uVar6 & 0xffffffff)) {
+  uVar1 = (ZEXT48(pGVar4->begin) - lVar5 & 0xffffffff) >> 0xc;
+  pGVar4->totalBeginOffset = (ushort)uVar1;
+  if (pGVar4->begin + -(int)((uVar1 & 0xffff) << 0xc) != param_2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image_cache.cpp",
                     0xf8,0,"%s");
   }
-  if ((uVar7 - ZEXT48(pGVar5->begin) & 0xfff) != 0) {
+  if ((uVar6 - ZEXT48(pGVar4->begin) & 0xfff) != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image_cache.cpp",
                     0x104,0,"%s");
   }
-  uVar6 = (uVar7 - ZEXT48(pGVar5->begin) & 0xffffffff) >> 0xc;
-  pGVar5->totalEndOffset = (ushort)uVar6;
-  if (((uVar6 & 0xffff) * 0x1000 + ZEXT48(pGVar5->begin) & 0xffffffff) != (uVar7 & 0xffffffff)) {
+  uVar1 = (uVar6 - ZEXT48(pGVar4->begin) & 0xffffffff) >> 0xc;
+  pGVar4->totalEndOffset = (ushort)uVar1;
+  if (((uVar1 & 0xffff) * 0x1000 + ZEXT48(pGVar4->begin) & 0xffffffff) != (uVar6 & 0xffffffff)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image_cache.cpp",
                     0x106,0,"%s");
   }
-  uVar3 = DB_GetGfxImageIndex(pGVar2);
-  if (0x3fff < uVar3) {
+  uVar2 = DB_GetGfxImageIndex(param_1);
+  if (0x3fff < uVar2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image_cache.cpp",
                     0xe7,0,"%s");
   }
-  pGVar5->imageIndex = uVar3;
-  iVar4 = ImageCache_Validate();
-  if (iVar4 == 0) {
+  pGVar4->imageIndex = uVar2;
+  iVar3 = ImageCache_Validate();
+  if (iVar3 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image_cache.cpp",
                     0x2fd,0,"%s");
   }
-  ImageCache_ImageUpdateDelayed(pGVar2);
-  __restgprlr_25();
+  ImageCache_ImageUpdateDelayed(param_1);
   return;
 }
 
@@ -1113,23 +1108,22 @@ void ImageCache_GiveMemoryAllocInfo(uchar *param_1,ImageAllocInfo param_2)
 
 // 82744978  ImageCache_FreeImage  (gfx_d3d/r_image_cache.cpp:815)
 
+/* WARNING: Function: __savegprlr_17 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_17 replaced with injection: xenon_save_restore */
+
 uchar * ImageCache_FreeImage
                   (GfxImage *param_1,GfxImage *param_2,uint param_3,ImageAllocInfo param_4)
 
 {
-  bool bVar1;
-  uchar *puVar2;
+  uchar *puVar1;
+  uint uVar2;
   uint uVar3;
-  GfxImage *pGVar4;
-  uint uVar5;
-  int iVar6;
-  uchar *puVar7;
+  int iVar4;
   undefined8 in_r6;
   undefined8 in_r7;
-  ulonglong uVar8;
-  int iVar9;
-  ulonglong uVar10;
-  GfxImageStream *pGVar11;
+  uint uVar5;
+  GfxImageStream *pGVar6;
+  uchar *puVar7;
   uint uStack00000030;
   int iStack00000034;
   int iStack00000038;
@@ -1139,149 +1133,145 @@ uchar * ImageCache_FreeImage
   ImageAllocInfo local_a0;
   ImageAllocInfo local_90 [12];
   
-  uVar10 = (ulonglong)(int)param_3;
-  pGVar4 = (GfxImage *)__savegprlr_17(param_1);
-  uVar3 = (uint)((uVar10 & 0xffffffff) >> 3) & 0x1ffffffc;
-  iVar6 = (int)((uVar10 & 0x1f) << 2);
+  iVar4 = (param_3 & 0x1f) * 4;
+  uVar2 = param_3 >> 3 & 0x1ffffffc;
   _uStack00000030 = in_r6;
   _iStack00000038 = in_r7;
-  if ((*(uint *)((int)g_stream.alwaysLoaded + uVar3) & *(uint *)(&g_bitShift + iVar6)) != 0) {
+  if ((*(uint *)((int)g_stream.alwaysLoaded + uVar2) & *(uint *)(&g_bitShift + iVar4)) != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image_cache.cpp",
                     0x345,0,"%s");
   }
-  if (0x52ff < (uVar10 & 0xffffffff)) {
+  if (0x52ff < param_3) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image_cache.cpp",
                     0x349,0,"%s");
   }
-  uVar8 = (uVar10 & 0xffffffff) / 0x14c0;
-  if (pGVar4->cached == '\0') {
+  uVar5 = param_3 / 0x14c0;
+  if (param_1->cached == '\0') {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image_cache.cpp",
                     0x34d,0,"%s");
   }
-  if ((*(uint *)((int)g_stream2.inuse + uVar3) & *(uint *)(&g_bitShift + iVar6)) == 0) {
+  if ((*(uint *)((int)g_stream2.inuse + uVar2) & *(uint *)(&g_bitShift + iVar4)) == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image_cache.cpp",
                     0x34f,0,"%s");
   }
-  iVar9 = (int)uVar8;
-  if (3 < uVar8) goto LAB_82744b0c;
-  bVar1 = iVar9 != 0;
-  if (uVar8 == 1 && bVar1) {
+  if (3 < uVar5) goto LAB_82744b0c;
+  if (uVar5 == 1) {
 LAB_82744ac4:
-    uVar5 = (uint)((uVar10 + 0x2980 & 0xffffffff) >> 3) & 0x1ffffffc;
-    *(uint *)((int)g_stream2.inuse + uVar5) =
-         *(uint *)((int)g_stream2.inuse + uVar5) &
-         ~*(uint *)(&g_bitShift + ((uint)((uVar10 + 0x2980 & 0xffffffff) << 2) & 0x7c));
+    uVar3 = param_3 + 0x2980 >> 3 & 0x1ffffffc;
+    *(uint *)((int)g_stream2.inuse + uVar3) =
+         *(uint *)((int)g_stream2.inuse + uVar3) &
+         ~*(uint *)(&g_bitShift + ((param_3 + 0x2980) * 4 & 0x7c));
 LAB_82744ae0:
-    uVar5 = (uint)((uVar10 + 0x14c0 & 0xffffffff) >> 3) & 0x1ffffffc;
-    *(uint *)((int)g_stream2.inuse + uVar5) =
-         *(uint *)((int)g_stream2.inuse + uVar5) &
-         ~*(uint *)(&g_bitShift + ((uint)((uVar10 + 0x14c0 & 0xffffffff) << 2) & 0x7c));
+    uVar3 = param_3 + 0x14c0 >> 3 & 0x1ffffffc;
+    *(uint *)((int)g_stream2.inuse + uVar3) =
+         *(uint *)((int)g_stream2.inuse + uVar3) &
+         ~*(uint *)(&g_bitShift + ((param_3 + 0x14c0) * 4 & 0x7c));
   }
   else {
-    if (uVar8 == 2 && bVar1) goto LAB_82744ae0;
-    if (!bVar1) {
-      uVar5 = (uint)((uVar10 + 0x3e40 & 0xffffffff) >> 3) & 0x1ffffffc;
-      *(uint *)((int)g_stream2.inuse + uVar5) =
-           *(uint *)((int)g_stream2.inuse + uVar5) &
-           ~*(uint *)(&g_bitShift + ((uint)((uVar10 + 0x3e40 & 0xffffffff) << 2) & 0x7c));
+    if (uVar5 == 2) goto LAB_82744ae0;
+    if (uVar5 == 0) {
+      uVar3 = param_3 + 0x3e40 >> 3 & 0x1ffffffc;
+      *(uint *)((int)g_stream2.inuse + uVar3) =
+           *(uint *)((int)g_stream2.inuse + uVar3) &
+           ~*(uint *)(&g_bitShift + ((param_3 + 0x3e40) * 4 & 0x7c));
       goto LAB_82744ac4;
     }
   }
-  *(uint *)((int)g_stream2.inuse + uVar3) =
-       *(uint *)((int)g_stream2.inuse + uVar3) & ~*(uint *)(&g_bitShift + iVar6);
+  *(uint *)((int)g_stream2.inuse + uVar2) =
+       *(uint *)((int)g_stream2.inuse + uVar2) & ~*(uint *)(&g_bitShift + iVar4);
 LAB_82744b0c:
-  puVar7 = pGVar4->pixels;
+  puVar7 = param_1->pixels;
   if (puVar7 == (uchar *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image_cache.cpp",
                     0x368,0,"%s");
   }
-  uVar5 = DB_GetGfxImageIndex(pGVar4);
-  pGVar11 = g_stream.imageStream + uVar5;
-  DB_GetImageAllocInfoCached(pGVar11,local_90);
-  DB_GetImageBaseInfoCached(pGVar11,&local_a8);
-  uVar3 = uStack00000030;
+  uVar3 = DB_GetGfxImageIndex(param_1);
+  pGVar6 = g_stream.imageStream + uVar3;
+  DB_GetImageAllocInfoCached(pGVar6,local_90);
+  DB_GetImageBaseInfoCached(pGVar6,&local_a8);
+  uVar2 = uStack00000030;
   if ((local_a8.size == 0) || (local_a8.size < uStack00000030)) {
-    if (uVar8 != 0) {
+    if (uVar5 != 0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image_cache.cpp",
                       0x3c8,0,"%s\n\t(imagePartIndex) = %i");
     }
-    ImageCache_ReleaseImage(pGVar4);
+    ImageCache_ReleaseImage(param_1);
     ImageCache_ImageUpdateDelayed(param_2);
     if (uStack00000030 != 0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image_cache.cpp",
                       0x3d6,0,"%s");
     }
-    puVar7 = (uchar *)__restgprlr_17(puVar7);
     return puVar7;
   }
-  puVar2 = g_stream.imageStream[uVar5].basePixels;
-  if (puVar2 == (uchar *)0x0) {
+  puVar1 = g_stream.imageStream[uVar3].basePixels;
+  if (puVar1 == (uchar *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image_cache.cpp",
                     0x37f,0,"%s");
   }
-  if (uVar8 != 0) {
-    local_a0.size = pGVar4->streams[iVar9 + -1].pixelSize & 0x3ffffff;
+  if (uVar5 != 0) {
+    local_a0.size = param_1->streams[uVar5 - 1].pixelSize & 0x3ffffff;
     if (local_a0.size == 0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image_cache.cpp",
                       0x392,0,"%s");
     }
-    DB_GetImageAllocInfo(pGVar4,&local_a0);
-    DB_GetImageBaseInfo(pGVar4,iVar9 - 1U,&local_a0,&local_b0);
-    ImageCache_ReleaseImage(pGVar4);
+    DB_GetImageAllocInfo(param_1,&local_a0);
+    DB_GetImageBaseInfo(param_1,uVar5 - 1,&local_a0,&local_b0);
+    ImageCache_ReleaseImage(param_1);
     if (local_90[0].size < local_a0.size) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image_cache.cpp",
                       0x39c,0,"%s");
     }
     puVar7 = puVar7 + (local_90[0].size - local_a0.size);
-    DB_SetImageAllocInfoCached(pGVar11,&local_a0);
-    DB_SetImageBaseInfoCached(pGVar11,&local_b0);
-    ImageCache_InitImage(pGVar4,iVar9 - 1U);
+    DB_SetImageAllocInfoCached(pGVar6,&local_a0);
+    DB_SetImageBaseInfoCached(pGVar6,&local_b0);
+    ImageCache_InitImage(param_1,uVar5 - 1);
     ImageCache_FreeMemoryAllocInfo(puVar7,in_stack_ffffff08);
-    ImageCache_SetImageMemory(pGVar4,param_2,puVar7,in_stack_ffffff08);
+    ImageCache_SetImageMemory(param_1,param_2,puVar7,in_stack_ffffff08);
     if (local_b0.size != 0) {
       puVar7 = puVar7 + (-local_b0.size - local_b0.sizeReduction);
       ImageCache_FreeMemoryInternal(puVar7,puVar7 + local_b0.size);
-      ImageCache_SetImageMemoryBase(pGVar4,puVar7,local_b0.size);
+      ImageCache_SetImageMemoryBase(param_1,puVar7,local_b0.size);
     }
     do {
-      uVar10 = uVar10 - 0x14c0;
-      if ((*(uint *)((int)g_stream2.inuse + ((uint)uVar10 >> 3 & 0x1ffffffc)) &
-          *(uint *)(&g_bitShift + ((uint)((uVar10 & 0xffffffff) << 2) & 0x7c))) == 0) {
+      param_3 = param_3 - 0x14c0;
+      if ((*(uint *)((int)g_stream2.inuse + (param_3 >> 3 & 0x1ffffffc)) &
+          *(uint *)(&g_bitShift + (param_3 * 4 & 0x7c))) == 0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image_cache.cpp"
                         ,0x3b9,0,"%s");
       }
-      uVar8 = uVar8 - 1;
-    } while (uVar8 != 0);
-    if (uVar3 != 0) {
-      ImageCache_FreeMemoryInternal(puVar2,puVar2 + iStack00000034);
+      uVar5 = uVar5 - 1;
+    } while (uVar5 != 0);
+    if (uVar2 != 0) {
+      ImageCache_FreeMemoryInternal(puVar1,puVar1 + iStack00000034);
       if (iStack00000038 != 0) {
-        ImageCache_FreeMemoryInternal(puVar2 + iStack00000038,puVar2 + uVar3);
+        ImageCache_FreeMemoryInternal(puVar1 + iStack00000038,puVar1 + uVar2);
       }
-      iVar6 = ImageCache_CheckSparePixels(puVar2);
-      if (iVar6 == 0) {
+      iVar4 = ImageCache_CheckSparePixels(puVar1);
+      if (iVar4 == 0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image_cache.cpp"
                         ,0x3c0,0,"%s");
       }
     }
-    puVar7 = (uchar *)__restgprlr_17(puVar2);
-    return puVar7;
+    return puVar1;
   }
-  ImageCache_ReleaseImage(pGVar4);
+  ImageCache_ReleaseImage(param_1);
   ImageCache_ImageUpdateDelayed(param_2);
-  if (uVar3 != 0) {
-    ImageCache_FreeMemoryAllocInfo(puVar2,in_stack_ffffff08);
-    iVar6 = ImageCache_CheckSparePixels(puVar2);
-    if (iVar6 == 0) {
+  if (uVar2 != 0) {
+    ImageCache_FreeMemoryAllocInfo(puVar1,in_stack_ffffff08);
+    iVar4 = ImageCache_CheckSparePixels(puVar1);
+    if (iVar4 == 0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image_cache.cpp",
                       0x389,0,"%s");
     }
   }
-  puVar7 = (uchar *)__restgprlr_17(puVar2);
-  return puVar7;
+  return puVar1;
 }
 
 
 // 82744E50  ImageCache_AttemptFreeImage  (gfx_d3d/r_image_cache.cpp:1060)
+
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
 
 uchar * ImageCache_AttemptFreeImage(ImageAllocInfo param_1,int param_2,int *param_3)
 
@@ -1292,12 +1282,11 @@ uchar * ImageCache_AttemptFreeImage(ImageAllocInfo param_1,int param_2,int *para
   GfxImage *pGVar4;
   GfxImageStream *pGVar5;
   uchar *puVar6;
-  longlong lVar7;
   int in_r5;
   undefined4 *in_r6;
-  ulonglong uVar8;
-  longlong lVar9;
-  undefined4 uStack00000014;
+  ulonglong uVar7;
+  longlong lVar8;
+  int iStack00000014;
   longlong lStack00000018;
   int iStack00000024;
   undefined4 *puStack0000002c;
@@ -1307,24 +1296,21 @@ uchar * ImageCache_AttemptFreeImage(ImageAllocInfo param_1,int param_2,int *para
   ImageBaseInfo local_b8;
   ImageAllocInfo aIStack_b0 [14];
   
-  lVar7 = (longlong)(int)param_3;
-  lVar9 = (longlong)param_2;
-  __savegprlr();
-  param_1.secondOffset = (uint)((ulonglong)lVar9 >> 0x20);
-  uStack00000014 = (undefined4)lVar9;
+  lStack00000018 = (longlong)(int)param_3;
+  param_1.secondOffset = param_2 >> 0x1f;
   local_c0 = 0xffffffff;
-  uVar8 = (ulonglong)g_stream2.sortCount - 1;
-  local_bc = (uint)uVar8;
-  lStack00000018 = lVar7;
-  if (-1 < (longlong)uVar8) {
-    lVar9 = (uVar8 & 0x7fffffff) * 2 + -0x7b9f7000;
+  uVar7 = (ulonglong)g_stream2.sortCount - 1;
+  local_bc = (uint)uVar7;
+  if (-1 < (longlong)uVar7) {
+    lVar8 = (uVar7 & 0x7fffffff) * 2 + -0x7b9f7000;
+    iStack00000014 = param_2;
     iStack00000024 = in_r5;
     puStack0000002c = in_r6;
     do {
-      uVar1 = *(ushort *)lVar9;
-      uVar8 = (ulonglong)uVar1;
+      uVar1 = *(ushort *)lVar8;
+      uVar7 = (ulonglong)uVar1;
       uVar3 = uVar1 >> 3 & 0x1ffffffc;
-      iVar2 = (int)((uVar8 & 0x1f) << 2);
+      iVar2 = (int)((uVar7 & 0x1f) << 2);
       if ((*(uint *)((int)g_stream.alwaysLoaded + uVar3) & *(uint *)(&g_bitShift + iVar2)) != 0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image_cache.cpp"
                         ,0x43b,0,"%s");
@@ -1335,42 +1321,41 @@ uchar * ImageCache_AttemptFreeImage(ImageAllocInfo param_1,int param_2,int *para
                           ,0x441,0,"%s\n\t(g_stream2.priority[index]) = %i");
         }
         if (g_stream2.priority[uVar1] <= iStack00000024) break;
-        if (0x52ff < uVar8) {
+        if (0x52ff < uVar7) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image_cache.cpp"
                           ,0x446,0,"%s");
         }
-        pGVar4 = DB_GetGfxImageAtIndex((uint)(uVar8 % 0x14c0));
+        pGVar4 = DB_GetGfxImageAtIndex((uint)(uVar7 % 0x14c0));
         if (pGVar4->cached == '\0') {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image_cache.cpp"
                           ,0x44d,0,"%s");
         }
         pGVar5 = (GfxImageStream *)
-                 ((int)&g_stream.imageStream[0].part[0].fileOffset + (int)(uVar8 % 0x14c0 << 6));
+                 ((int)&g_stream.imageStream[0].part[0].fileOffset + (int)(uVar7 % 0x14c0 << 6));
         DB_GetImageAllocInfoCached(pGVar5,aIStack_b0);
         DB_GetImageBaseInfoCached(pGVar5,&local_b8);
         if (local_b8.size == 0) {
-          if (uVar8 / 0x14c0 != 0) {
+          if (uVar7 / 0x14c0 != 0) {
             MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image_cache.cpp"
                             ,0x469,0,"%s\n\t(imagePartIndex) = %i");
           }
         }
         else if (param_1.secondOffset <= local_b8.size) {
-          if (param_1.secondOffset == 0) {
+          if (-1 < param_2) {
             MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image_cache.cpp"
                             ,0x49d,0,"%s");
           }
           puVar6 = ImageCache_FreeImage(pGVar4,pGVar4,(uint)uVar1,in_stack_fffffef8);
-          __restgprlr();
           return puVar6;
         }
         if (local_c0 == 0xffffffff) {
           local_c0 = (uint)uVar1;
         }
       }
-      uVar8 = (ulonglong)local_bc;
-      lVar9 = lVar9 + -2;
-      local_bc = (uint)(uVar8 - 1);
-    } while (-1 < (longlong)(uVar8 - 1));
+      uVar7 = (ulonglong)local_bc;
+      lVar8 = lVar8 + -2;
+      local_bc = (uint)(uVar7 - 1);
+    } while (-1 < (longlong)(uVar7 - 1));
     if (local_c0 != 0xffffffff) {
       if (0x52ff < local_c0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image_cache.cpp"
@@ -1381,14 +1366,12 @@ uchar * ImageCache_AttemptFreeImage(ImageAllocInfo param_1,int param_2,int *para
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image_cache.cpp"
                         ,0x4ab,0,"%s");
       }
-      uStack00000014 = 0;
+      iStack00000014 = 0;
       ImageCache_FreeImage(pGVar4,pGVar4,local_c0,in_stack_fffffef8);
       *puStack0000002c = 1;
     }
   }
-  puVar6 = (uchar *)0x0;
-  __restgprlr();
-  return puVar6;
+  return (uchar *)0x0;
 }
 
 
@@ -1425,142 +1408,132 @@ GfxImageEntry * ImageCache_GetImageToMove(uchar *param_1,uchar *param_2)
 
 // 82745168  ImageCache_GiveSpareMemory  (gfx_d3d/r_image_cache.cpp:1247)
 
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
+
 void ImageCache_GiveSpareMemory(uchar *param_1,uchar *param_2)
 
 {
-  ulonglong uVar1;
-  uchar *puVar2;
-  GfxImageCache *pGVar3;
-  int iVar4;
-  ulonglong uVar5;
-  ulonglong uVar6;
-  ulonglong uVar7;
-  GfxImageCache *pGVar8;
-  GfxImageCache *pGVar9;
+  GfxImageCache *pGVar1;
+  int iVar2;
+  uchar *puVar3;
+  GfxImageCache *pGVar4;
+  uchar *puVar5;
+  GfxImageCache *pGVar6;
   
-  uVar5 = (ulonglong)(int)param_2;
-  uVar1 = __savegprlr_22(param_1);
-  puVar2 = (uchar *)uVar1;
-  ImageCache_FreeMemoryInternal(puVar2,(uchar *)uVar5);
-  pGVar3 = (GfxImageCache *)ImageCache_GetImageToMove(puVar2,(uchar *)uVar5);
-  if (pGVar3 == (GfxImageCache *)0x0) {
-    iVar4 = ImageCache_CheckSparePixels(puVar2);
-    if (iVar4 == 0) {
+  ImageCache_FreeMemoryInternal(param_1,param_2);
+  pGVar1 = (GfxImageCache *)ImageCache_GetImageToMove(param_1,param_2);
+  if (pGVar1 == (GfxImageCache *)0x0) {
+    iVar2 = ImageCache_CheckSparePixels(param_1);
+    if (iVar2 == 0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image_cache.cpp",
                       0x4ea,0,"%s");
     }
-LAB_827451cc:
-    __restgprlr_22();
-    return;
   }
-  if ((uVar1 & 0xffffffff) < ZEXT48(pGVar3->imageEntries[0].begin)) {
-    do {
-      pGVar3 = (GfxImageCache *)&pGVar3[-1].field_0x3a7f4;
-      if (pGVar3 < &g_imageCache) break;
-    } while ((uVar1 & 0xffffffff) < (ulonglong)*(uint *)pGVar3);
+  else {
+    puVar3 = pGVar1->imageEntries[0].begin;
+    while ((param_1 < puVar3 &&
+           (pGVar1 = (GfxImageCache *)&pGVar1[-1].field_0x3a7f4, (undefined1 *)0x845b917f < pGVar1))
+          ) {
+      puVar3 = *(uchar **)pGVar1;
+    }
+    pGVar4 = (GfxImageCache *)(g_imageCache.imageEntries + g_imageCache.imageEntryCount);
+    while( true ) {
+      pGVar6 = (GfxImageCache *)(pGVar1->imageEntries + 1);
+      if ((pGVar6 == &g_imageCache) ||
+         (puVar3 = pGVar1->imageEntries[0].begin +
+                   (*(uint *)&pGVar1->imageEntries[0].field_0x4 >> 2 & 0x3ffff000),
+         puVar3 <= param_1)) {
+        puVar3 = param_1;
+      }
+      if ((pGVar6 == pGVar4) || (puVar5 = pGVar6->imageEntries[0].begin, param_2 <= puVar5)) {
+        puVar5 = param_2;
+      }
+      if (puVar3 < puVar5) {
+        ImageCache_GiveMemoryInternal(puVar3,puVar5);
+      }
+      if ((pGVar6 == pGVar4) ||
+         (param_2 <=
+          pGVar6->imageEntries[0].begin +
+          (*(uint *)&pGVar1->imageEntries[1].field_0x4 >> 2 & 0x3ffff000))) break;
+      pGVar1 = pGVar6;
+      if (puVar5 < puVar3) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image_cache.cpp"
+                        ,0x509,0,"%s");
+      }
+    }
   }
-  pGVar8 = (GfxImageCache *)(g_imageCache.imageEntries + g_imageCache.imageEntryCount);
-  do {
-    pGVar9 = (GfxImageCache *)(pGVar3->imageEntries + 1);
-    if (pGVar9 == &g_imageCache) {
-LAB_8274525c:
-      uVar6 = uVar1;
-    }
-    else {
-      uVar6 = ((ulonglong)(*(uint *)&pGVar3->imageEntries[0].field_0x4 >> 2) & 0x3ffff000) +
-              ZEXT48(pGVar3->imageEntries[0].begin);
-      if ((uVar6 & 0xffffffff) <= (uVar1 & 0xffffffff)) goto LAB_8274525c;
-    }
-    if ((pGVar9 == pGVar8) ||
-       (uVar7 = ZEXT48(pGVar9->imageEntries[0].begin), (uVar5 & 0xffffffff) <= uVar7)) {
-      uVar7 = uVar5;
-    }
-    if ((uVar6 & 0xffffffff) < (uVar7 & 0xffffffff)) {
-      ImageCache_GiveMemoryInternal((uchar *)uVar6,(uchar *)uVar7);
-    }
-    if ((pGVar9 == pGVar8) ||
-       ((uVar5 & 0xffffffff) <=
-        (((ulonglong)(*(uint *)&pGVar3->imageEntries[1].field_0x4 >> 2) & 0x3ffff000) +
-         ZEXT48(pGVar9->imageEntries[0].begin) & 0xffffffff))) goto LAB_827451cc;
-    pGVar3 = pGVar9;
-    if ((uVar7 & 0xffffffff) < (uVar6 & 0xffffffff)) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image_cache.cpp",
-                      0x509,0,"%s");
-    }
-  } while( true );
+  return;
 }
 
 
 // 827435B0  ImageCache_GetEntrySize  (gfx_d3d/r_image_cache.cpp:1295)
+
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 
 ImageAllocInfo *
 ImageCache_GetEntrySize(ImageAllocInfo *__return_storage_ptr__,GfxImageEntry *param_1)
 
 {
   ushort uVar1;
-  int iVar2;
+  uchar *puVar2;
   uint uVar3;
-  int *piVar4;
+  GfxImage *pGVar4;
   GfxImage *pGVar5;
-  GfxImage *pGVar6;
-  ImageAllocInfo *pIVar7;
-  longlong lVar8;
-  int iVar9;
-  int *piVar10;
-  int *piVar11;
+  uchar *puVar6;
+  GfxImageEntry *pGVar7;
+  GfxImageEntry *pGVar8;
   
-  lVar8 = (longlong)(int)param_1;
-  piVar4 = (int *)__savegprlr_27(__return_storage_ptr__);
-  piVar11 = (int *)lVar8;
-  iVar2 = *piVar11;
-  iVar9 = iVar2 + (uint)*(ushort *)(piVar11 + 2) * -0x1000;
-  piVar10 = piVar11;
-  if (iVar2 == iVar9) {
-    iVar9 = ((uint)piVar11[1] >> 2 & 0x3ffff000) + iVar2;
-    while (iVar9 != (uint)*(ushort *)((int)piVar11 + 10) * 0x1000 + iVar2) {
-      piVar10 = (int *)(lVar8 + 0xc);
-      iVar9 = (*(uint *)((int)lVar8 + 0x10) >> 2 & 0x3ffff000) + *piVar10;
-      lVar8 = lVar8 + 0xc;
+  puVar2 = param_1->begin;
+  pGVar8 = param_1;
+  pGVar7 = param_1;
+  if (puVar2 == puVar2 + (uint)param_1->totalBeginOffset * -0x1000) {
+    puVar6 = puVar2 + (*(uint *)&param_1->field_0x4 >> 2 & 0x3ffff000);
+    while (puVar6 != puVar2 + (uint)param_1->totalEndOffset * 0x1000) {
+      puVar6 = pGVar7[1].begin + (*(uint *)&pGVar7[1].field_0x4 >> 2 & 0x3ffff000);
+      pGVar7 = pGVar7 + 1;
     }
   }
   else {
     do {
-      lVar8 = lVar8 + -0xc;
-      piVar11 = (int *)lVar8;
-    } while (*piVar11 != iVar9);
+      pGVar8 = pGVar8 + -1;
+    } while (pGVar8->begin != puVar2 + (uint)param_1->totalBeginOffset * -0x1000);
   }
-  pGVar5 = DB_GetGfxImageAtIndex(piVar11[1] & 0x3fff);
-  pGVar6 = DB_GetGfxImageAtIndex(piVar10[1] & 0x3fff);
-  if (pGVar5 != pGVar6) {
+  pGVar4 = DB_GetGfxImageAtIndex(pGVar8->imageIndex);
+  pGVar5 = DB_GetGfxImageAtIndex(pGVar7->imageIndex);
+  if (pGVar4 != pGVar5) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image_cache.cpp",
                     0x52b,0,"%s");
   }
-  if (*piVar11 != *piVar11 + (uint)*(ushort *)(piVar11 + 2) * -0x1000) {
+  if (pGVar8->begin != pGVar8->begin + (uint)pGVar8->totalBeginOffset * -0x1000) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image_cache.cpp",
                     0x52c,0,"%s");
   }
-  if (((uint)piVar10[1] >> 2 & 0x3ffff000) + *piVar10 !=
-      (uint)*(ushort *)((int)piVar11 + 10) * 0x1000 + *piVar11) {
+  if (pGVar7->begin + (*(uint *)&pGVar7->field_0x4 >> 2 & 0x3ffff000) !=
+      pGVar8->begin + (uint)pGVar8->totalEndOffset * 0x1000) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image_cache.cpp",
                     0x52d,0,"%s");
   }
-  uVar1 = *(ushort *)((int)piVar11 + 10);
-  uVar3 = piVar11[1];
-  iVar2 = *piVar10;
-  iVar9 = *piVar11;
-  *piVar4 = (uint)uVar1 << 0xc;
-  piVar4[1] = uVar3 >> 2 & 0x3ffff000;
-  piVar4[2] = iVar2 - iVar9;
+  uVar1 = pGVar8->totalEndOffset;
+  uVar3 = *(uint *)&pGVar8->field_0x4;
+  puVar2 = pGVar7->begin;
+  puVar6 = pGVar8->begin;
+  __return_storage_ptr__->size = (uint)uVar1 << 0xc;
+  __return_storage_ptr__->firstSize = uVar3 >> 2 & 0x3ffff000;
+  __return_storage_ptr__->secondOffset = (int)puVar2 - (int)puVar6;
   if (uVar1 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image_cache.cpp",
                     0x536,0,"%s");
   }
-  pIVar7 = (ImageAllocInfo *)__restgprlr_27(piVar4);
-  return pIVar7;
+  return __return_storage_ptr__;
 }
 
 
 // 82745AF0  ImageCache_MoveImage  (gfx_d3d/r_image_cache.cpp:1340)
+
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
 
 void ImageCache_MoveImage(GfxImageEntry *param_1,GfxUnusedEntry *param_2)
 
@@ -1569,33 +1542,31 @@ void ImageCache_MoveImage(GfxImageEntry *param_1,GfxUnusedEntry *param_2)
   uint uVar2;
   uint uVar3;
   uchar *puVar4;
-  GfxImageEntry *pGVar5;
-  GfxImage *pGVar6;
-  ImageAllocInfo *pIVar7;
+  GfxImage *pGVar5;
+  ImageAllocInfo *pIVar6;
   char in_RESERVE;
   byte in_cr0;
   ImageAllocInfo in_stack_ffffff48;
   ImageAllocInfo local_70 [9];
   
-  pGVar5 = (GfxImageEntry *)__savegprlr_22(param_1);
-  if (pGVar5->begin < param_2->end) {
+  if (param_1->begin < param_2->end) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image_cache.cpp",
                     0x543,0,"%s");
   }
-  if (pGVar5->begin != pGVar5->begin + (uint)pGVar5->totalBeginOffset * -0x1000) {
+  if (param_1->begin != param_1->begin + (uint)param_1->totalBeginOffset * -0x1000) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image_cache.cpp",
                     0x544,0,"%s");
   }
-  pGVar6 = DB_GetGfxImageAtIndex(pGVar5->imageIndex);
-  if (pGVar6->cached == '\0') {
+  pGVar5 = DB_GetGfxImageAtIndex(param_1->imageIndex);
+  if (pGVar5->cached == '\0') {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image_cache.cpp",
                     0x54b,0,"%s");
   }
   puVar4 = (uchar *)((uint)(param_2->begin + 0xfff) & 0xfffff000);
-  pIVar7 = ImageCache_GetEntrySize(local_70,pGVar5);
-  uVar1 = pIVar7->size;
-  uVar2 = pIVar7->firstSize;
-  uVar3 = pIVar7->secondOffset;
+  pIVar6 = ImageCache_GetEntrySize(local_70,param_1);
+  uVar1 = pIVar6->size;
+  uVar2 = pIVar6->firstSize;
+  uVar3 = pIVar6->secondOffset;
   local_70[0].size = uVar1;
   local_70[0].firstSize = uVar2;
   Profile2_UpdateEntry(2);
@@ -1607,7 +1578,7 @@ void ImageCache_MoveImage(GfxImageEntry *param_1,GfxUnusedEntry *param_2)
       in_cr0 = 2;
     }
   } while (!(bool)(in_cr0 >> 1 & 1));
-  ImageCache_DmaCopyDelayed(puVar4,pGVar5->begin,in_stack_ffffff48);
+  ImageCache_DmaCopyDelayed(puVar4,param_1->begin,in_stack_ffffff48);
   Profile2_UpdateEntry(2);
   do {
     if (in_RESERVE != '\0') {
@@ -1617,32 +1588,33 @@ void ImageCache_MoveImage(GfxImageEntry *param_1,GfxUnusedEntry *param_2)
       in_cr0 = 2;
     }
   } while (!(bool)(in_cr0 >> 1 & 1));
-  if (pGVar6->pixels == pGVar5->begin) {
-    ImageCache_ReleaseImageMemory(pGVar6);
+  if (pGVar5->pixels == param_1->begin) {
+    ImageCache_ReleaseImageMemory(pGVar5);
     ImageCache_FreeMemoryInternal(puVar4,puVar4 + uVar2);
     if (uVar3 != 0) {
       ImageCache_FreeMemoryInternal(puVar4 + uVar3,puVar4 + uVar1);
     }
-    ImageCache_SetImageMemory(pGVar6,pGVar6,puVar4,in_stack_ffffff48);
-    __restgprlr_22();
+    ImageCache_SetImageMemory(pGVar5,pGVar5,puVar4,in_stack_ffffff48);
     return;
   }
   if (uVar3 != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image_cache.cpp",
                     0x56c,0,"%s");
   }
-  ImageCache_ReleaseImageMemoryBase(pGVar6);
+  ImageCache_ReleaseImageMemoryBase(pGVar5);
   ImageCache_FreeMemoryInternal(puVar4,puVar4 + uVar2);
   if (uVar3 != 0) {
     ImageCache_FreeMemoryInternal(puVar4 + uVar3,puVar4 + uVar1);
   }
-  ImageCache_SetImageMemoryBase(pGVar6,puVar4,uVar1);
-  __restgprlr_22();
+  ImageCache_SetImageMemoryBase(pGVar5,puVar4,uVar1);
   return;
 }
 
 
 // 82746AF0  ImageCache_MoveImages  (gfx_d3d/r_image_cache.cpp:1400)
+
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
 
 uchar * ImageCache_MoveImages(uchar *param_1,uchar *param_2,int param_3)
 
@@ -1652,20 +1624,14 @@ uchar * ImageCache_MoveImages(uchar *param_1,uchar *param_2,int param_3)
   uchar *puVar3;
   uint uVar4;
   uint uVar5;
-  ulonglong uVar6;
-  uchar *puVar7;
-  GfxImageEntry *pGVar8;
-  GfxImage *pGVar9;
-  ImageAllocInfo *pIVar10;
-  undefined4 uVar11;
-  uchar *puVar12;
-  uint uVar13;
-  int iVar14;
-  ulonglong uVar15;
-  uchar *puVar16;
-  ulonglong uVar17;
-  ulonglong uVar18;
-  uint uVar19;
+  uint uVar6;
+  GfxImageEntry *pGVar7;
+  GfxImage *pGVar8;
+  ImageAllocInfo *pIVar9;
+  undefined4 uVar10;
+  uchar *puVar11;
+  uint uVar12;
+  int iVar13;
   ImageAllocInfo in_stack_fffffed8;
   ImageBaseInfo local_d8;
   ImageAllocInfo local_d0;
@@ -1673,132 +1639,116 @@ uchar * ImageCache_MoveImages(uchar *param_1,uchar *param_2,int param_3)
   uint uStack_bc;
   ImageAllocInfo aIStack_b0 [14];
   
-  uVar15 = (ulonglong)(int)param_2;
-  uVar6 = (ulonglong)(int)param_1;
-  __savegprlr();
-  puVar7 = (uchar *)uVar6;
-  puVar16 = (uchar *)uVar15;
-  ImageCache_FreeMemoryInternal(puVar7,puVar16);
-  pGVar8 = ImageCache_GetImageToMove(puVar7,puVar16);
+  ImageCache_FreeMemoryInternal(param_1,param_2);
+  pGVar7 = ImageCache_GetImageToMove(param_1,param_2);
   do {
-    if (pGVar8 == (GfxImageEntry *)0x0) {
-      iVar14 = ImageCache_CheckSparePixels(puVar7);
-      if (iVar14 == 0) {
+    if (pGVar7 == (GfxImageEntry *)0x0) {
+      iVar13 = ImageCache_CheckSparePixels(param_1);
+      if (iVar13 == 0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image_cache.cpp"
                         ,0x58f,0,"%s");
       }
-      __restgprlr();
-      return puVar7;
+      return param_1;
     }
-    pGVar9 = DB_GetGfxImageAtIndex(pGVar8->imageIndex);
-    if (pGVar9->cached == '\0') {
+    pGVar8 = DB_GetGfxImageAtIndex(pGVar7->imageIndex);
+    if (pGVar8->cached == '\0') {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image_cache.cpp",
                       0x595,0,"%s");
     }
-    uVar1 = pGVar8->totalBeginOffset;
-    puVar2 = pGVar8->begin;
-    puVar3 = pGVar9->pixels;
-    pIVar10 = ImageCache_GetEntrySize(aIStack_b0,pGVar8);
-    uVar19 = pIVar10->secondOffset;
-    uVar4 = pIVar10->size;
-    uVar5 = pIVar10->firstSize;
-    uVar11 = pIVar10->firstSize;
-    local_c0 = uVar4;
-    uStack_bc = uVar5;
-    puVar12 = ImageCache_AllocMemory(in_stack_fffffed8,uVar11);
-    if (puVar12 == (uchar *)0x0) {
+    uVar1 = pGVar7->totalBeginOffset;
+    puVar2 = pGVar7->begin;
+    puVar3 = pGVar8->pixels;
+    pIVar9 = ImageCache_GetEntrySize(aIStack_b0,pGVar7);
+    uVar4 = pIVar9->secondOffset;
+    uVar5 = pIVar9->size;
+    uVar6 = pIVar9->firstSize;
+    uVar10 = pIVar9->firstSize;
+    local_c0 = uVar5;
+    uStack_bc = uVar6;
+    puVar11 = ImageCache_AllocMemory(in_stack_fffffed8,uVar10);
+    if (puVar11 == (uchar *)0x0) {
 LAB_82746f10:
-      ImageCache_GiveSpareMemory(puVar7,puVar16);
-      puVar7 = (uchar *)0x0;
-      __restgprlr();
-      return puVar7;
+      ImageCache_GiveSpareMemory(param_1,param_2);
+      return (uchar *)0x0;
     }
     if ((param_3 != -0x200000) && (g_imageCache.imageDmaEntryCount == 0x100)) {
-      ImageCache_GiveMemoryAllocInfo(puVar12,in_stack_fffffed8);
+      ImageCache_GiveMemoryAllocInfo(puVar11,in_stack_fffffed8);
       goto LAB_82746f10;
     }
-    if ((pGVar9->cardMemory).platform[0] == 0) {
-      if (uVar4 == 0) {
+    if ((pGVar8->cardMemory).platform[0] == 0) {
+      if (uVar5 == 0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image_cache.cpp"
                         ,0x321,0,"%s");
       }
-      ImageCache_GiveMemoryInternal(puVar12,puVar12 + uVar5);
-      if (uVar19 != 0) {
-        ImageCache_GiveMemoryInternal(puVar12 + uVar19,puVar12 + uVar4);
+      ImageCache_GiveMemoryInternal(puVar11,puVar11 + uVar6);
+      if (uVar4 != 0) {
+        ImageCache_GiveMemoryInternal(puVar11 + uVar4,puVar11 + uVar5);
       }
     }
     else {
-      uVar13 = DB_GetGfxImageIndex(pGVar9);
-      DB_GetImageAllocInfoCached(g_stream.imageStream + uVar13,&local_d0);
-      DB_GetImageBaseInfoCached(g_stream.imageStream + uVar13,&local_d8);
-      if (pGVar9->pixels == (uchar *)0x0) {
+      uVar12 = DB_GetGfxImageIndex(pGVar8);
+      DB_GetImageAllocInfoCached(g_stream.imageStream + uVar12,&local_d0);
+      DB_GetImageBaseInfoCached(g_stream.imageStream + uVar12,&local_d8);
+      if (pGVar8->pixels == (uchar *)0x0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image_cache.cpp"
                         ,0x5c9,0,"%s");
       }
       if ((uint)LZCOUNT(puVar2 + ((uint)uVar1 * -0x1000 - (int)puVar3)) >> 5 == 0) {
-        uVar18 = (ulonglong)local_d8.size;
-        if (uVar4 < uVar18) {
+        if (uVar5 < local_d8.size) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image_cache.cpp"
                           ,0x5f6,0,"%s");
-          uVar18 = (ulonglong)local_d8.size;
         }
-        if ((((uVar18 == 0) ||
-             (uVar17 = ZEXT48(g_stream.imageStream[uVar13].basePixels),
-             (uVar15 & 0xffffffff) <= uVar17)) ||
-            ((uVar17 + uVar18 & 0xffffffff) <= (uVar6 & 0xffffffff))) ||
-           ((ZEXT48(puVar12) < (uVar15 & 0xffffffff) &&
-            ((uVar6 & 0xffffffff) < ZEXT48(puVar12 + uVar4))))) goto LAB_82746e94;
-        uVar19 = (uint)uVar18;
-        if (uVar18 != uVar4) {
-          ImageCache_GiveMemoryInternal(puVar12 + (uint)uVar18,puVar12 + uVar4);
-          uVar19 = local_d8.size;
+        if ((((local_d8.size == 0) ||
+             (puVar2 = g_stream.imageStream[uVar12].basePixels, param_2 <= puVar2)) ||
+            (puVar2 + local_d8.size <= param_1)) ||
+           ((puVar11 < param_2 && (param_1 < puVar11 + uVar5)))) goto LAB_82746e94;
+        if (local_d8.size != uVar5) {
+          ImageCache_GiveMemoryInternal(puVar11 + local_d8.size,puVar11 + uVar5);
         }
         local_d0.secondOffset = 0;
-        local_d0.size = uVar19;
-        local_d0.firstSize = uVar19;
+        local_d0.size = local_d8.size;
         Profile2_End(2);
-        ImageCache_DmaCopyDelayed(puVar12,g_stream.imageStream[uVar13].basePixels,in_stack_fffffed8)
+        ImageCache_DmaCopyDelayed(puVar11,g_stream.imageStream[uVar12].basePixels,in_stack_fffffed8)
         ;
         Profile2_Begin(2);
-        ImageCache_ReleaseImageMemoryBase(pGVar9);
-        ImageCache_SetImageMemoryBase(pGVar9,puVar12,local_d0.size);
+        ImageCache_ReleaseImageMemoryBase(pGVar8);
+        ImageCache_SetImageMemoryBase(pGVar8,puVar11,local_d0.size);
       }
       else {
-        if (uVar4 < local_d0.size) {
+        if (uVar5 < local_d0.size) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image_cache.cpp"
                           ,0x5cf,0,"%s");
         }
-        if ((((ZEXT48(pGVar9->pixels) < (uVar15 & 0xffffffff)) &&
-             ((uVar6 & 0xffffffff) < ZEXT48(pGVar9->pixels + local_d0.size))) &&
-            (((uVar15 & 0xffffffff) <= ZEXT48(puVar12) ||
-             (ZEXT48(puVar12 + uVar5) <= (uVar6 & 0xffffffff))))) &&
-           (((uVar15 & 0xffffffff) <= ZEXT48(puVar12 + uVar19) ||
-            (ZEXT48(puVar12 + uVar4) <= (uVar6 & 0xffffffff))))) {
-          if (local_d0.size != uVar4) {
-            ImageCache_GiveMemoryAllocInfo(puVar12,in_stack_fffffed8);
-            puVar12 = puVar12 + (uVar4 - local_d0.size);
-            ImageCache_FreeMemoryAllocInfo(puVar12,in_stack_fffffed8);
+        if ((((pGVar8->pixels < param_2) && (param_1 < pGVar8->pixels + local_d0.size)) &&
+            ((param_2 <= puVar11 || (puVar11 + uVar6 <= param_1)))) &&
+           ((param_2 <= puVar11 + uVar4 || (puVar11 + uVar5 <= param_1)))) {
+          if (local_d0.size != uVar5) {
+            ImageCache_GiveMemoryAllocInfo(puVar11,in_stack_fffffed8);
+            puVar11 = puVar11 + (uVar5 - local_d0.size);
+            ImageCache_FreeMemoryAllocInfo(puVar11,in_stack_fffffed8);
           }
           Profile2_End(2);
-          ImageCache_DmaCopyDelayed(puVar12,pGVar9->pixels,in_stack_fffffed8);
+          ImageCache_DmaCopyDelayed(puVar11,pGVar8->pixels,in_stack_fffffed8);
           Profile2_Begin(2);
-          ImageCache_ReleaseImageMemory(pGVar9);
-          ImageCache_SetImageMemory(pGVar9,pGVar9,puVar12,in_stack_fffffed8);
+          ImageCache_ReleaseImageMemory(pGVar8);
+          ImageCache_SetImageMemory(pGVar8,pGVar8,puVar11,in_stack_fffffed8);
         }
         else {
 LAB_82746e94:
-          ImageCache_GiveMemoryAllocInfo(puVar12,in_stack_fffffed8);
+          ImageCache_GiveMemoryAllocInfo(puVar11,in_stack_fffffed8);
         }
       }
     }
-    ImageCache_FreeMemoryInternal(puVar7,puVar16);
-    pGVar8 = ImageCache_GetImageToMove(puVar7,puVar16);
+    ImageCache_FreeMemoryInternal(param_1,param_2);
+    pGVar7 = ImageCache_GetImageToMove(param_1,param_2);
   } while( true );
 }
 
 
 // 82745D08  ImageCache_AllocMemory  (gfx_d3d/r_image_cache.cpp:1555)
 
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
 /* WARNING: Removing unreachable block (ram,0x82746280) */
 /* WARNING: Removing unreachable block (ram,0x8274622c) */
 /* WARNING: Removing unreachable block (ram,0x827462ac) */
@@ -1810,30 +1760,29 @@ uchar * ImageCache_AllocMemory(ImageAllocInfo param_1,int param_2)
   bool bVar2;
   bool bVar3;
   bool bVar4;
-  longlong lVar5;
-  int iVar6;
+  int iVar5;
+  uchar *puVar6;
   uchar *puVar7;
-  uchar *puVar8;
   ulonglong in_r4;
   int in_r5;
+  ulonglong uVar8;
   ulonglong uVar9;
   ulonglong uVar10;
   ulonglong uVar11;
   ulonglong uVar12;
-  ulonglong uVar13;
+  uint uVar13;
   uint uVar14;
   uint uVar15;
-  uint uVar16;
-  ulonglong uVar17;
-  uint uVar18;
-  ulonglong uVar19;
+  ulonglong uVar16;
+  uint uVar17;
+  ulonglong uVar18;
+  uint uVar19;
   uint uVar20;
-  uint uVar21;
-  uchar **ppuVar22;
-  GfxImageEntry *pGVar23;
-  uint *puVar24;
-  GfxImageEntry *pGVar26;
-  ulonglong uVar25;
+  uchar **ppuVar21;
+  GfxImageEntry *pGVar22;
+  uint *puVar23;
+  GfxImageEntry *pGVar25;
+  ulonglong uVar24;
   char in_RESERVE;
   byte in_cr0;
   uint uStack00000014;
@@ -1847,13 +1796,11 @@ uchar * ImageCache_AllocMemory(ImageAllocInfo param_1,int param_2)
   uint local_104;
   uint local_100;
   
-  lVar5 = (longlong)param_2;
-  __savegprlr();
-  param_1.secondOffset = (uint)((ulonglong)lVar5 >> 0x20);
-  uStack00000014 = (uint)lVar5;
+  param_1.secondOffset = param_2 >> 0x1f;
+  uStack00000014 = param_2;
   _uStack00000018 = in_r4;
   iStack00000024 = in_r5;
-  if (param_1.secondOffset == 0) {
+  if (-1 < param_2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image_cache.cpp",
                     0x62e,0,"%s");
   }
@@ -1885,59 +1832,57 @@ LAB_82745d88:
       in_cr0 = 2;
     }
   } while (!(bool)(in_cr0 >> 1 & 1));
-  iVar6 = ImageCache_Validate();
-  if (iVar6 == 0) {
+  iVar5 = ImageCache_Validate();
+  if (iVar5 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image_cache.cpp",
                     0x63d,0,"%s");
   }
 LAB_82745f3c:
-  uVar13 = 0xffffffffffffffff;
+  uVar12 = 0xffffffffffffffff;
   local_114 = (uchar *)0x0;
   local_11c = 0;
   bVar3 = false;
-  uVar20 = 0;
+  uVar19 = 0;
   local_104 = 0xffffffff;
   local_100 = 0xffffffff;
   bVar4 = false;
   local_10c = 0xffffffff;
   local_108 = 0xffffffff;
-  uVar15 = 0;
+  uVar14 = 0;
 LAB_82745f68:
-  uVar21 = uVar20;
-  uVar14 = uVar15;
+  uVar20 = uVar19;
+  uVar13 = uVar14;
   bVar2 = false;
 LAB_82745f6c:
   bVar1 = bVar2;
-  uVar20 = uVar21;
-  iVar6 = iStack00000024;
-  if (g_imageCache.imageEntryCount <= uVar14) {
-    pGVar26 = (GfxImageEntry *)0x0;
+  uVar19 = uVar20;
+  iVar5 = iStack00000024;
+  if (g_imageCache.imageEntryCount <= uVar13) {
+    pGVar25 = (GfxImageEntry *)0x0;
     bVar1 = false;
-    uVar10 = 0;
-    uVar19 = 0;
-    uVar17 = 0;
+    uVar9 = 0;
+    uVar18 = 0;
+    uVar16 = 0;
   }
   else {
-    pGVar26 = g_imageCache.imageEntries + uVar14;
-    uVar10 = ZEXT48(g_imageCache.imageEntries[uVar14].begin);
-    uVar19 = ((ulonglong)(*(uint *)&g_imageCache.imageEntries[uVar14].field_0x4 >> 2) & 0x3ffff000)
-             + uVar10;
-    uVar17 = ((ulonglong)g_imageCache.imageEntries[uVar14].totalEndOffset +
-             (ulonglong)g_imageCache.imageEntries[uVar14].totalBeginOffset) * 0x1000;
+    pGVar25 = g_imageCache.imageEntries + uVar13;
+    uVar9 = ZEXT48(g_imageCache.imageEntries[uVar13].begin);
+    uVar18 = ((ulonglong)(*(uint *)&g_imageCache.imageEntries[uVar13].field_0x4 >> 2) & 0x3ffff000)
+             + uVar9;
+    uVar16 = ((ulonglong)g_imageCache.imageEntries[uVar13].totalEndOffset +
+             (ulonglong)g_imageCache.imageEntries[uVar13].totalBeginOffset) * 0x1000;
   }
-  uVar16 = (uint)(g_imageCache.imageEntryCount > uVar14);
-  uVar21 = uVar20;
+  uVar15 = (uint)(g_imageCache.imageEntryCount > uVar13);
+  uVar20 = uVar19;
   bVar2 = bVar1;
-  if (g_imageCache.unusedEntryCount <= uVar20) {
-    if (uVar10 == 0) {
+  if (g_imageCache.unusedEntryCount <= uVar19) {
+    if (uVar9 == 0) {
       if (local_114 == (uchar *)0x0) {
-        puVar7 = ImageCache_AttemptFreeImage(in_stack_fffffe98,uStack00000014,(int *)0x0);
-        if (puVar7 != (uchar *)0x0) {
-LAB_82746a50:
-          __restgprlr();
-          return puVar7;
+        puVar6 = ImageCache_AttemptFreeImage(in_stack_fffffe98,uStack00000014,(int *)0x0);
+        if (puVar6 != (uchar *)0x0) {
+          return puVar6;
         }
-        if ((bVar4) && ((iVar6 == -0x200000 || (g_imageCache.imageDmaEntryCount != 0x100)))) {
+        if ((bVar4) && ((iVar5 == -0x200000 || (g_imageCache.imageDmaEntryCount != 0x100)))) {
           if (0x3e3f < local_10c) {
             MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image_cache.cpp"
                             ,0x783,0,
@@ -1953,7 +1898,7 @@ LAB_82746a50:
           ImageCache_MoveImage
                     (g_imageCache.imageEntries + local_10c,g_imageCache.unusedEntries + local_108);
         }
-        if (iVar6 == -0x200000) {
+        if (iVar5 == -0x200000) {
           if (!bVar4) {
             DB_ReportImageMemory();
             ImageCache_ProfileMemory(IC_PROFILE_ALLOCATION_SIZES);
@@ -1988,341 +1933,336 @@ LAB_82746a50:
             MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image_cache.cpp"
                             ,0x7aa,0,"%s");
           }
-          if ((iStack00000024 != -0x200000) && (g_imageCache.imageDmaEntryCount == 0x100))
-          goto LAB_827469e0;
+          if ((iStack00000024 != -0x200000) && (g_imageCache.imageDmaEntryCount == 0x100)) {
+            return (uchar *)0x0;
+          }
           ImageCache_MoveImage
                     (g_imageCache.imageEntries + local_104,g_imageCache.unusedEntries + local_100);
         }
-        else if ((ulonglong)param_1.secondOffset <= (uVar13 & 0xffffffff)) {
+        else if ((ulonglong)param_1.secondOffset <= (uVar12 & 0xffffffff)) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image_cache.cpp"
                           ,0x7b6,0,"%s");
         }
-        uVar15 = uStack00000014;
-        puVar7 = ImageCache_MoveImages(local_114,local_114 + uStack00000014,iStack00000024);
-        if (puVar7 != (uchar *)0x0) {
+        uVar14 = uStack00000014;
+        puVar6 = ImageCache_MoveImages(local_114,local_114 + uStack00000014,iStack00000024);
+        if (puVar6 != (uchar *)0x0) {
           if ((uStack00000018 == 0) ||
-             (puVar8 = ImageCache_MoveImages
-                                 (puVar7 + uStack00000018,puVar7 + param_1.secondOffset,
-                                  iStack00000024), puVar8 != (uchar *)0x0)) {
-            __restgprlr();
-            return puVar7;
+             (puVar7 = ImageCache_MoveImages
+                                 (puVar6 + uStack00000018,puVar6 + param_1.secondOffset,
+                                  iStack00000024), puVar7 != (uchar *)0x0)) {
+            return puVar6;
           }
-          ImageCache_GiveMemoryInternal(puVar7,puVar7 + uVar15);
+          ImageCache_GiveMemoryInternal(puVar6,puVar6 + uVar14);
         }
       }
-LAB_827469e0:
-      puVar7 = (uchar *)0x0;
-      __restgprlr();
-      return puVar7;
+      return (uchar *)0x0;
     }
 LAB_82746400:
-    uVar15 = uVar14 + 1;
+    uVar14 = uVar13 + 1;
     if (!bVar1) goto code_r0x82746410;
     goto LAB_82745f68;
   }
-  uVar25 = ZEXT48(g_imageCache.unusedEntries[uVar20].begin) + 0xfff & 0xfffff000;
-  if (ZEXT48(g_imageCache.unusedEntries[uVar20].end) < uVar25) {
+  uVar24 = ZEXT48(g_imageCache.unusedEntries[uVar19].begin) + 0xfff & 0xfffff000;
+  if (ZEXT48(g_imageCache.unusedEntries[uVar19].end) < uVar24) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image_cache.cpp",
                     0x673,0,"%s");
   }
-  uVar11 = ZEXT48(g_imageCache.unusedEntries[uVar20].end);
-  uVar15 = uVar14;
-  if (uVar11 == uVar25) {
-    uVar20 = uVar20 + 1;
+  uVar10 = ZEXT48(g_imageCache.unusedEntries[uVar19].end);
+  uVar14 = uVar13;
+  if (uVar10 == uVar24) {
+    uVar19 = uVar19 + 1;
     goto LAB_82745f68;
   }
-  if ((uVar10 != 0) && (uVar10 <= uVar25)) goto LAB_82746400;
-  if (!bVar1) {
-    if (uVar10 == 0) {
-      uVar21 = uVar20 + 1;
-    }
-    else {
-      bVar2 = true;
-    }
-    uVar16 = 0;
-    uVar17 = 0;
-    uVar20 = uVar20 + 1;
-    uVar10 = uVar25;
-    uVar19 = uVar11;
-    goto LAB_82746438;
-  }
-  uVar21 = uVar20 + 1;
-  bVar2 = false;
-  if (uVar11 != uVar10) goto LAB_82745f6c;
-  if (pGVar26 == (GfxImageEntry *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image_cache.cpp",
-                    0x686,0,"%s");
-  }
-  if (uVar10 != (ZEXT48(pGVar26->begin) + (ulonglong)pGVar26->totalBeginOffset * -0x1000 &
-                0xffffffff)) goto LAB_82745f6c;
-  if (uVar16 != 1) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image_cache.cpp",
-                    0x68d,0,"%s\n\t(maxImageCount) = %i");
-  }
-  if (uVar17 == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image_cache.cpp",
-                    0x68e,0,"%s");
-  }
-  uVar10 = uVar25 + uVar17;
-  if ((uVar19 & 0xffffffff) !=
-      (((ulonglong)(*(uint *)&pGVar26->field_0x4 >> 2) & 0x3ffff000) + ZEXT48(pGVar26->begin) &
-      0xffffffff)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image_cache.cpp",
-                    0x692,0,"%s");
-  }
-  if (((ulonglong)pGVar26->totalEndOffset * 0x1000 + ZEXT48(pGVar26->begin) & 0xffffffff) <=
-      (uVar10 & 0xffffffff)) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image_cache.cpp",
-                    0x695,0,"%s");
-  }
-  uVar15 = uVar20;
-  uVar18 = uVar14;
-  if ((uVar19 & 0xffffffff) <= (uVar10 & 0xffffffff)) {
-    if (((ulonglong)pGVar26->totalEndOffset * 0x1000 + ZEXT48(pGVar26->begin) & 0xffffffff) <=
-        (uVar19 & 0xffffffff)) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image_cache.cpp",
-                      0x699,0,"%s");
-    }
-    pGVar23 = pGVar26 + 1;
-    if (pGVar26[1].begin + (*(uint *)&pGVar26[1].field_0x4 >> 2 & 0x3ffff000) !=
-        pGVar26->begin + (uint)pGVar26->totalEndOffset * 0x1000) {
-      if ((!bVar4) &&
-         (uVar25 <= (ZEXT48(pGVar23->begin) + (ulonglong)pGVar26[1].totalBeginOffset * -0x1000 &
-                    0xffffffff))) {
-        if (pGVar23 != g_imageCache.imageEntries + uVar14 + 1) {
-          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image_cache.cpp"
-                          ,0x6a7,0,"%s");
-        }
-        if ((int)(((uint)pGVar26[1].totalEndOffset + (uint)pGVar26[1].totalBeginOffset) * 0x1000) <=
-            (int)g_imageCache.unusedEntries[uVar20].end - (int)uVar25) {
-          bVar4 = true;
-          local_10c = uVar14 + 1;
-          local_108 = uVar20;
-        }
+  if ((uVar9 != 0) && (uVar9 <= uVar24)) goto LAB_82746400;
+  if (bVar1) {
+    uVar20 = uVar19 + 1;
+    bVar2 = false;
+    if (uVar10 == uVar9) {
+      if (pGVar25 == (GfxImageEntry *)0x0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image_cache.cpp"
+                        ,0x686,0,"%s");
       }
-      goto LAB_82745f6c;
+      if (uVar9 == (ZEXT48(pGVar25->begin) + (ulonglong)pGVar25->totalBeginOffset * -0x1000 &
+                   0xffffffff)) {
+        if (uVar15 != 1) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image_cache.cpp"
+                          ,0x68d,0,"%s\n\t(maxImageCount) = %i");
+        }
+        if (uVar16 == 0) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image_cache.cpp"
+                          ,0x68e,0,"%s");
+        }
+        uVar9 = uVar24 + uVar16;
+        if ((uVar18 & 0xffffffff) !=
+            (((ulonglong)(*(uint *)&pGVar25->field_0x4 >> 2) & 0x3ffff000) + ZEXT48(pGVar25->begin)
+            & 0xffffffff)) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image_cache.cpp"
+                          ,0x692,0,"%s");
+        }
+        if (((ulonglong)pGVar25->totalEndOffset * 0x1000 + ZEXT48(pGVar25->begin) & 0xffffffff) <=
+            (uVar9 & 0xffffffff)) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image_cache.cpp"
+                          ,0x695,0,"%s");
+        }
+        uVar14 = uVar19;
+        uVar17 = uVar13;
+        if ((uVar18 & 0xffffffff) <= (uVar9 & 0xffffffff)) {
+          if (((ulonglong)pGVar25->totalEndOffset * 0x1000 + ZEXT48(pGVar25->begin) & 0xffffffff) <=
+              (uVar18 & 0xffffffff)) {
+            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image_cache.cpp"
+                            ,0x699,0,"%s");
+          }
+          pGVar22 = pGVar25 + 1;
+          if (pGVar25[1].begin + (*(uint *)&pGVar25[1].field_0x4 >> 2 & 0x3ffff000) !=
+              pGVar25->begin + (uint)pGVar25->totalEndOffset * 0x1000) {
+            if ((!bVar4) &&
+               (uVar24 <= (ZEXT48(pGVar22->begin) + (ulonglong)pGVar25[1].totalBeginOffset * -0x1000
+                          & 0xffffffff))) {
+              if (pGVar22 != g_imageCache.imageEntries + uVar13 + 1) {
+                MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image_cache.cpp"
+                                ,0x6a7,0,"%s");
+              }
+              if ((int)(((uint)pGVar25[1].totalEndOffset + (uint)pGVar25[1].totalBeginOffset) *
+                       0x1000) <= (int)g_imageCache.unusedEntries[uVar19].end - (int)uVar24) {
+                bVar4 = true;
+                local_10c = uVar13 + 1;
+                local_108 = uVar19;
+              }
+            }
+            goto LAB_82745f6c;
+          }
+          if (((g_imageCache.unusedEntryCount <= uVar20) ||
+              (g_imageCache.unusedEntries[uVar19 + 1].begin !=
+               pGVar25->begin + (*(uint *)&pGVar25->field_0x4 >> 2 & 0x3ffff000))) ||
+             (g_imageCache.unusedEntries[uVar19 + 1].end != pGVar22->begin)) goto LAB_82745f6c;
+          if (g_imageCache.unusedEntries + uVar19 + 1 != g_imageCache.unusedEntries + uVar19 + 1) {
+            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image_cache.cpp"
+                            ,0x6be,0,"%s");
+          }
+          uVar17 = uVar13 + 1;
+          if (pGVar22 != g_imageCache.imageEntries + uVar13 + 1) {
+            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image_cache.cpp"
+                            ,0x6c1,0,"%s");
+          }
+          uVar18 = (ulonglong)pGVar25->totalEndOffset * 0x1000 + ZEXT48(pGVar25->begin);
+          uVar14 = uVar20;
+          if ((uVar18 & 0xffffffff) <= (uVar9 & 0xffffffff)) {
+            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image_cache.cpp"
+                            ,0x6c7,0,"%s");
+          }
+        }
+        if (!bVar4) {
+          bVar4 = true;
+          local_10c = uVar13;
+          local_108 = uVar19;
+        }
+        uVar19 = uVar14 + 1;
+        uVar14 = uVar17 + 1;
+        goto LAB_82746438;
+      }
     }
-    if (((g_imageCache.unusedEntryCount <= uVar21) ||
-        (g_imageCache.unusedEntries[uVar20 + 1].begin !=
-         pGVar26->begin + (*(uint *)&pGVar26->field_0x4 >> 2 & 0x3ffff000))) ||
-       (g_imageCache.unusedEntries[uVar20 + 1].end != pGVar23->begin)) goto LAB_82745f6c;
-    if (g_imageCache.unusedEntries + uVar20 + 1 != g_imageCache.unusedEntries + uVar20 + 1) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image_cache.cpp",
-                      0x6be,0,"%s");
-    }
-    uVar18 = uVar14 + 1;
-    if (pGVar23 != g_imageCache.imageEntries + uVar14 + 1) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image_cache.cpp",
-                      0x6c1,0,"%s");
-    }
-    uVar19 = (ulonglong)pGVar26->totalEndOffset * 0x1000 + ZEXT48(pGVar26->begin);
-    uVar15 = uVar21;
-    if ((uVar19 & 0xffffffff) <= (uVar10 & 0xffffffff)) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image_cache.cpp",
-                      0x6c7,0,"%s");
-    }
+    goto LAB_82745f6c;
   }
-  if (!bVar4) {
-    bVar4 = true;
-    local_10c = uVar14;
-    local_108 = uVar20;
+  if (uVar9 == 0) {
+    uVar20 = uVar19 + 1;
   }
-  uVar20 = uVar15 + 1;
-  uVar15 = uVar18 + 1;
+  else {
+    bVar2 = true;
+  }
+  uVar15 = 0;
+  uVar16 = 0;
+  uVar19 = uVar19 + 1;
+  uVar9 = uVar24;
+  uVar18 = uVar10;
 LAB_82746438:
-  puVar7 = (uchar *)uVar10;
-  if ((uVar10 & 0xffffffff) == 0) {
+  puVar6 = (uchar *)uVar9;
+  if ((uVar9 & 0xffffffff) == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image_cache.cpp",
                     0x6fc,0,"%s");
   }
-  if ((uVar19 & 0xffffffff) == 0) {
+  if ((uVar18 & 0xffffffff) == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image_cache.cpp",
                     0x6fd,0,"%s");
   }
-  if (uVar17 <= (uVar13 & 0xffffffff)) {
-    if ((uVar16 < local_11c) || (uVar17 != (uVar13 & 0xffffffff))) {
-      ppuVar22 = &g_imageCache.unusedEntries[uVar20 - 1].end;
-      puVar24 = (uint *)(uVar15 * 0xc + -0x7ba46e88);
+  if (uVar16 <= (uVar12 & 0xffffffff)) {
+    if ((uVar15 < local_11c) || (uVar16 != (uVar12 & 0xffffffff))) {
+      ppuVar21 = &g_imageCache.unusedEntries[uVar19 - 1].end;
+      puVar23 = (uint *)(uVar14 * 0xc + -0x7ba46e88);
 LAB_827464b8:
       while( true ) {
-        if (((uVar13 & 0xffffffff) <= uVar17) &&
-           ((uVar17 != (uVar13 & 0xffffffff) || (local_11c <= uVar16)))) {
+        if (((uVar12 & 0xffffffff) <= uVar16) &&
+           ((uVar16 != (uVar12 & 0xffffffff) || (local_11c <= uVar15)))) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image_cache.cpp"
                           ,0x707,0,"%s");
         }
-        uVar25 = uVar19 - uVar10;
-        if ((ulonglong)param_1.secondOffset <= (uVar25 & 0xffffffff)) {
-          if (uVar17 != 0) {
-            local_100 = uVar21 - 1;
-            uVar13 = uVar17;
-            local_11c = uVar16;
-            local_114 = puVar7;
-            local_104 = uVar14;
-            bVar3 = bVar1;
-            goto LAB_82745f6c;
-          }
-          ImageCache_FreeMemoryInternal(puVar7,puVar7 + uStack00000014);
-          if (uStack00000018 != 0) {
-            ImageCache_FreeMemoryInternal(puVar7 + uStack00000018,puVar7 + param_1.secondOffset);
-          }
-          iVar6 = ImageCache_CheckSparePixels(puVar7);
-          if (iVar6 == 0) {
+        uVar24 = uVar18 - uVar9;
+        if ((ulonglong)param_1.secondOffset <= (uVar24 & 0xffffffff)) {
+          if (uVar16 == 0) {
+            ImageCache_FreeMemoryInternal(puVar6,puVar6 + uStack00000014);
+            if (uStack00000018 != 0) {
+              ImageCache_FreeMemoryInternal(puVar6 + uStack00000018,puVar6 + param_1.secondOffset);
+            }
+            iVar5 = ImageCache_CheckSparePixels(puVar6);
+            if (iVar5 != 0) {
+              return puVar6;
+            }
             MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image_cache.cpp"
                             ,0x711,0,"%s");
+            return puVar6;
           }
-          goto LAB_82746a50;
+          local_100 = uVar20 - 1;
+          uVar12 = uVar16;
+          local_11c = uVar15;
+          local_114 = puVar6;
+          local_104 = uVar13;
+          bVar3 = bVar1;
+          goto LAB_82745f6c;
         }
-        uVar11 = uVar19;
-        if (uVar15 < g_imageCache.imageEntryCount) break;
+        uVar10 = uVar18;
+        if (uVar14 < g_imageCache.imageEntryCount) break;
 LAB_82746600:
-        if (g_imageCache.unusedEntryCount <= uVar20) goto LAB_82745f6c;
-        if (((uVar25 & 0xffffffff) < (ulonglong)uStack00000014) ||
-           ((uVar10 + (_uStack00000018 >> 0x20) & 0xffffffff) < ZEXT48(ppuVar22[1]))) {
-          if (ZEXT48(ppuVar22[1]) < (uVar11 & 0xffffffff)) {
+        if (g_imageCache.unusedEntryCount <= uVar19) goto LAB_82745f6c;
+        if (((uVar24 & 0xffffffff) < (ulonglong)uStack00000014) ||
+           ((uVar9 + (_uStack00000018 >> 0x20) & 0xffffffff) < ZEXT48(ppuVar21[1]))) {
+          if (ZEXT48(ppuVar21[1]) < (uVar10 & 0xffffffff)) {
             MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image_cache.cpp"
                             ,0x76a,0,"%s");
           }
-          if (ZEXT48(ppuVar22[1]) != (uVar11 & 0xffffffff)) goto LAB_82745f6c;
-          ppuVar22 = ppuVar22 + 2;
-          uVar19 = ZEXT48(*ppuVar22);
-          uVar20 = uVar20 + 1;
+          if (ZEXT48(ppuVar21[1]) != (uVar10 & 0xffffffff)) goto LAB_82745f6c;
+          ppuVar21 = ppuVar21 + 2;
+          uVar18 = ZEXT48(*ppuVar21);
+          uVar19 = uVar19 + 1;
         }
         else {
-          uVar19 = uVar11;
-          if ((uVar11 & 0xffffffff) <= ZEXT48(ppuVar22[2])) {
-            uVar19 = ZEXT48(ppuVar22[2]);
+          uVar18 = uVar10;
+          if ((uVar10 & 0xffffffff) <= ZEXT48(ppuVar21[2])) {
+            uVar18 = ZEXT48(ppuVar21[2]);
           }
-          uVar20 = uVar20 + 1;
-          ppuVar22 = ppuVar22 + 2;
+          uVar19 = uVar19 + 1;
+          ppuVar21 = ppuVar21 + 2;
         }
       }
-      if ((ulonglong)puVar24[2] < (uVar19 & 0xffffffff)) {
+      if ((ulonglong)puVar23[2] < (uVar18 & 0xffffffff)) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image_cache.cpp"
                         ,0x721,0,"%s");
       }
-      if ((ulonglong)uStack00000014 <= (uVar25 & 0xffffffff)) {
-        uVar12 = (ulonglong)puVar24[2];
-        uVar9 = uVar10 + (_uStack00000018 >> 0x20);
-        if (((uVar9 & 0xffffffff) < uVar12) ||
-           (uVar19 = ((ulonglong)(puVar24[3] >> 2) & 0x3ffff000) + uVar12, uVar11 = uVar12,
-           (uVar9 & 0xffffffff) < (uVar19 & 0xffffffff))) goto LAB_82746574;
-        uVar15 = uVar15 + 1;
-        puVar24 = puVar24 + 3;
+      if ((ulonglong)uStack00000014 <= (uVar24 & 0xffffffff)) {
+        uVar11 = (ulonglong)puVar23[2];
+        uVar8 = uVar9 + (_uStack00000018 >> 0x20);
+        if (((uVar8 & 0xffffffff) < uVar11) ||
+           (uVar18 = ((ulonglong)(puVar23[3] >> 2) & 0x3ffff000) + uVar11, uVar10 = uVar11,
+           (uVar8 & 0xffffffff) < (uVar18 & 0xffffffff))) goto LAB_82746574;
+        uVar14 = uVar14 + 1;
+        puVar23 = puVar23 + 3;
         goto LAB_827464b8;
       }
 LAB_82746574:
-      uVar19 = (ulonglong)puVar24[2];
-      if (uVar19 != (uVar11 & 0xffffffff)) goto LAB_82746600;
-      uVar25 = ((ulonglong)*(ushort *)((int)puVar24 + 0x12) + (ulonglong)*(ushort *)(puVar24 + 4)) *
+      uVar18 = (ulonglong)puVar23[2];
+      if (uVar18 != (uVar10 & 0xffffffff)) goto LAB_82746600;
+      uVar24 = ((ulonglong)*(ushort *)((int)puVar23 + 0x12) + (ulonglong)*(ushort *)(puVar23 + 4)) *
                0x1000;
-      if (param_1.secondOffset <= uVar25) {
-        uVar14 = uVar15;
+      if (param_1.secondOffset <= uVar24) {
+        uVar13 = uVar14;
         bVar2 = true;
         goto LAB_82745f6c;
       }
-      if (uVar17 < uVar25) {
-        if ((uVar13 & 0xffffffff) < uVar25) goto LAB_82745f6c;
-        if ((local_11c < 2) && (uVar25 == (uVar13 & 0xffffffff))) {
-          if (1 < local_11c) {
+      if (uVar24 <= uVar16) {
+        if (((uVar16 == uVar24) && (uVar15 = uVar15 + 1, local_11c <= uVar15)) &&
+           (uVar24 == (uVar12 & 0xffffffff))) {
+          if (uVar16 < (uVar12 & 0xffffffff)) {
             MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image_cache.cpp"
-                            ,0x744,0,"%s");
+                            ,0x751,0,"%s");
           }
           goto LAB_82745f6c;
         }
-        puVar24 = puVar24 + 3;
-        uVar16 = 1;
-        uVar15 = uVar15 + 1;
-        uVar19 = ((ulonglong)(*puVar24 >> 2) & 0x3ffff000) + uVar19;
-        uVar17 = uVar25;
+        puVar23 = puVar23 + 3;
+        uVar14 = uVar14 + 1;
+        uVar18 = ((ulonglong)(*puVar23 >> 2) & 0x3ffff000) + uVar18;
         goto LAB_827464b8;
       }
-      if (((uVar17 != uVar25) || (uVar16 = uVar16 + 1, uVar16 < local_11c)) ||
-         (uVar25 != (uVar13 & 0xffffffff))) {
-        puVar24 = puVar24 + 3;
-        uVar15 = uVar15 + 1;
-        uVar19 = ((ulonglong)(*puVar24 >> 2) & 0x3ffff000) + uVar19;
+      if ((uVar12 & 0xffffffff) < uVar24) goto LAB_82745f6c;
+      if ((1 < local_11c) || (uVar24 != (uVar12 & 0xffffffff))) {
+        puVar23 = puVar23 + 3;
+        uVar15 = 1;
+        uVar14 = uVar14 + 1;
+        uVar18 = ((ulonglong)(*puVar23 >> 2) & 0x3ffff000) + uVar18;
+        uVar16 = uVar24;
         goto LAB_827464b8;
       }
-      if (uVar17 < (uVar13 & 0xffffffff)) {
+      if (1 < local_11c) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image_cache.cpp"
-                        ,0x751,0,"%s");
+                        ,0x744,0,"%s");
       }
     }
-    else if (uVar16 < local_11c) {
+    else if (uVar15 < local_11c) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image_cache.cpp",
                       0x701,0,"%s");
     }
   }
   goto LAB_82745f6c;
 code_r0x82746410:
-  uVar14 = uVar15;
-  if ((uVar10 != (ZEXT48(pGVar26->begin) + (ulonglong)pGVar26->totalBeginOffset * -0x1000 &
-                 0xffffffff)) || (param_1.secondOffset <= uVar17)) goto LAB_82745f6c;
+  uVar13 = uVar14;
+  if ((uVar9 != (ZEXT48(pGVar25->begin) + (ulonglong)pGVar25->totalBeginOffset * -0x1000 &
+                0xffffffff)) || (param_1.secondOffset <= uVar16)) goto LAB_82745f6c;
   goto LAB_82746438;
 }
 
 
 // 82743750  ImageCache_FreeMemoryInternal  (gfx_d3d/r_image_cache.cpp:1999)
 
+/* WARNING: Function: __savegprlr_18 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_18 replaced with injection: xenon_save_restore */
+
 void ImageCache_FreeMemoryInternal(uchar *param_1,uchar *param_2)
 
 {
-  ulonglong uVar1;
+  uchar *puVar1;
   int iVar2;
   ulonglong uVar3;
   ulonglong uVar4;
   longlong lVar5;
   ulonglong uVar6;
-  ulonglong uVar7;
-  uint uVar8;
-  uint uVar9;
-  longlong lVar10;
-  uint *puVar11;
-  ulonglong uVar12;
+  longlong lVar7;
+  uint *puVar8;
+  ulonglong uVar9;
   
-  uVar3 = (ulonglong)(int)param_2;
-  uVar1 = __savegprlr_18(param_1);
-  if ((uVar1 & 0xffffffff) == 0) {
+  if (param_1 == (uchar *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image_cache.cpp",
                     0x7d6,0,"%s");
   }
-  if ((uVar3 & 0xffffffff) <= (uVar1 & 0xffffffff)) {
+  if (param_2 <= param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image_cache.cpp",
                     0x7d7,0,"%s");
   }
   uVar4 = 0;
-  uVar12 = (ulonglong)g_imageCache.unusedEntryCount;
-  uVar7 = uVar12;
-  if (uVar12 != 0) {
-    do {
-      uVar6 = (uVar7 + uVar4 & 0xffffffff) >> 1;
-      iVar2 = (int)(uVar6 << 3);
-      if ((ulonglong)*(uint *)((int)&g_imageCache.unusedEntries[0].begin + iVar2) <
-          (uVar3 & 0xffffffff)) {
-        if ((uVar1 & 0xffffffff) <
-            (ulonglong)*(uint *)((int)&g_imageCache.unusedEntries[0].end + iVar2)) {
-          uVar6 = uVar6 - 1;
-          if ((longlong)uVar6 < 0) goto LAB_8274385c;
-          lVar5 = (uVar6 & 0x1fffffff) * 8 + -0x7ba1837c;
-          goto LAB_82743844;
-        }
-        uVar4 = uVar6 + 1;
-        uVar6 = uVar7;
-      }
-      uVar7 = uVar6;
-      if (uVar6 <= uVar4) {
-        __restgprlr_18();
-        return;
-      }
-    } while( true );
+  uVar9 = (ulonglong)g_imageCache.unusedEntryCount;
+  uVar3 = uVar9;
+  if (uVar9 == 0) {
+    return;
   }
-  goto LAB_82743ac8;
+  do {
+    uVar6 = (uVar3 + uVar4 & 0xffffffff) >> 1;
+    iVar2 = (int)(uVar6 << 3);
+    if (*(uchar **)((int)&g_imageCache.unusedEntries[0].begin + iVar2) < param_2) {
+      if (param_1 < *(uchar **)((int)&g_imageCache.unusedEntries[0].end + iVar2)) {
+        uVar6 = uVar6 - 1;
+        if ((longlong)uVar6 < 0) goto LAB_8274385c;
+        lVar5 = (uVar6 & 0x1fffffff) * 8 + -0x7ba1837c;
+        break;
+      }
+      uVar4 = uVar6 + 1;
+      uVar6 = uVar3;
+    }
+    uVar3 = uVar6;
+    if (uVar6 <= uVar4) {
+      return;
+    }
+  } while( true );
   while( true ) {
     uVar6 = uVar6 - 1;
     lVar5 = lVar5 + -8;
     if ((longlong)uVar6 < 0) break;
-LAB_82743844:
-    if ((ulonglong)*(uint *)lVar5 <= (uVar1 & 0xffffffff)) break;
+    if ((uchar *)*(uint *)lVar5 <= param_1) break;
   }
 LAB_8274385c:
   uVar6 = uVar6 + 1;
@@ -2330,62 +2270,63 @@ LAB_8274385c:
   if (iVar2 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image_cache.cpp",
                     0x7f5,0,"%s");
-    uVar12 = (ulonglong)g_imageCache.unusedEntryCount;
+    uVar9 = (ulonglong)g_imageCache.unusedEntryCount;
   }
-  if ((uVar6 & 0xffffffff) < uVar12) {
+  if ((uVar6 & 0xffffffff) < uVar9) {
     lVar5 = (uVar6 & 0x1fffffff) * 8;
-    lVar10 = lVar5 + -0x7ba18380;
+    lVar7 = lVar5 + -0x7ba18380;
     lVar5 = lVar5 + -0x7ba18378;
     do {
-      puVar11 = (uint *)lVar10;
-      uVar7 = (ulonglong)*puVar11;
-      if ((uVar3 & 0xffffffff) <= uVar7) break;
-      uVar9 = (uint)uVar3;
-      if (uVar7 < (uVar1 & 0xffffffff)) {
-        if ((ulonglong)puVar11[1] <= (uVar1 & 0xffffffff)) {
+      puVar8 = (uint *)lVar7;
+      puVar1 = (uchar *)*puVar8;
+      if (param_2 <= puVar1) break;
+      if (puVar1 < param_1) {
+        if ((uchar *)puVar8[1] <= param_1) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image_cache.cpp"
                           ,0x803,0,"%s");
         }
-        uVar8 = (uint)uVar1;
-        if ((uVar3 & 0xffffffff) < (ulonglong)puVar11[1]) {
-          g_imageCache.unusedMemorySize = (uVar8 - uVar9) + g_imageCache.unusedMemorySize;
+        if (param_2 < (uchar *)puVar8[1]) {
+          g_imageCache.unusedMemorySize =
+               (uint)(param_1 + (g_imageCache.unusedMemorySize - (int)param_2));
           if (0x14bf < g_imageCache.unusedEntryCount) {
             MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image_cache.cpp"
                             ,0x80f,0,"%s");
           }
           memmove();
-          puVar11[1] = uVar8;
-          if ((uVar3 & 0xffffffff) < (ulonglong)*(uint *)lVar5) {
+          puVar8[1] = (uint)param_1;
+          if (param_2 < (uchar *)*(uint *)lVar5) {
             MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image_cache.cpp"
                             ,0x815,0,"%s");
           }
-          *(uint *)lVar5 = uVar9;
+          *(uint *)lVar5 = (uint)param_2;
           uVar6 = uVar6 + 2;
-          lVar10 = lVar10 + 0x10;
+          lVar7 = lVar7 + 0x10;
           lVar5 = lVar5 + 0x10;
           g_imageCache.unusedEntryCount = g_imageCache.unusedEntryCount + 1;
         }
         else {
           uVar6 = uVar6 + 1;
-          g_imageCache.unusedMemorySize = (uVar8 - puVar11[1]) + g_imageCache.unusedMemorySize;
+          g_imageCache.unusedMemorySize =
+               (uint)(param_1 + (g_imageCache.unusedMemorySize - (int)puVar8[1]));
           lVar5 = lVar5 + 8;
-          puVar11[1] = uVar8;
-          lVar10 = lVar10 + 8;
+          puVar8[1] = (uint)param_1;
+          lVar7 = lVar7 + 8;
         }
       }
-      else if ((uVar3 & 0xffffffff) < (ulonglong)puVar11[1]) {
-        if ((uVar3 & 0xffffffff) <= uVar7) {
+      else if (param_2 < (uchar *)puVar8[1]) {
+        if (param_2 <= puVar1) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image_cache.cpp"
                           ,0x822,0,"%s");
         }
         uVar6 = uVar6 + 1;
         lVar5 = lVar5 + 8;
-        g_imageCache.unusedMemorySize = (*puVar11 - uVar9) + g_imageCache.unusedMemorySize;
-        *puVar11 = uVar9;
-        lVar10 = lVar10 + 8;
+        g_imageCache.unusedMemorySize = (*puVar8 - (int)param_2) + g_imageCache.unusedMemorySize;
+        *puVar8 = (uint)param_2;
+        lVar7 = lVar7 + 8;
       }
       else {
-        g_imageCache.unusedMemorySize = (*puVar11 - puVar11[1]) + g_imageCache.unusedMemorySize;
+        g_imageCache.unusedMemorySize =
+             (uint)(puVar1 + (g_imageCache.unusedMemorySize - (int)puVar8[1]));
         g_imageCache.unusedEntryCount = g_imageCache.unusedEntryCount - 1;
         memmove();
       }
@@ -2396,29 +2337,26 @@ LAB_8274385c:
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image_cache.cpp",
                     0x833,0,"%s");
   }
-LAB_82743ac8:
-  __restgprlr_18();
   return;
 }
 
 
 // 82746F28  ImageCache_FreeMemoryAlreadyStreaming  (gfx_d3d/r_image_cache.cpp:2108)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void ImageCache_FreeMemoryAlreadyStreaming(uchar *param_1,uchar *param_2)
 
 {
-  ulonglong uVar1;
-  ulonglong uVar2;
   char in_RESERVE;
   byte in_cr0;
   
-  uVar2 = (ulonglong)(int)param_2;
-  uVar1 = __savegprlr_28(param_1);
-  if ((uVar1 & 0xffffffff) == 0) {
+  if (param_1 == (uchar *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image_cache.cpp",
                     0x83d,0,"%s");
   }
-  if ((uVar2 & 0xffffffff) <= (uVar1 & 0xffffffff)) {
+  if (param_2 <= param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image_cache.cpp",
                     0x83e,0,"%s");
   }
@@ -2431,7 +2369,7 @@ void ImageCache_FreeMemoryAlreadyStreaming(uchar *param_1,uchar *param_2)
       in_cr0 = 2;
     }
   } while (!(bool)(in_cr0 >> 1 & 1));
-  ImageCache_MoveImages((uchar *)uVar1,(uchar *)uVar2,-0x200000);
+  ImageCache_MoveImages(param_1,param_2,-0x200000);
   Profile2_UpdateEntry(2);
   do {
     if (in_RESERVE != '\0') {
@@ -2443,29 +2381,27 @@ void ImageCache_FreeMemoryAlreadyStreaming(uchar *param_1,uchar *param_2)
   } while (!(bool)(in_cr0 >> 1 & 1));
   ImageCache_UpdateGPU();
   ImageCache_WaitFence();
-  g_imageCache.totalMemorySize =
-       (uint)((uchar *)uVar1 + (g_imageCache.totalMemorySize - (int)(uchar *)uVar2));
-  __restgprlr_28();
+  g_imageCache.totalMemorySize = (uint)(param_1 + (g_imageCache.totalMemorySize - (int)param_2));
   return;
 }
 
 
 // 82747030  ImageCache_FreeMemory  (gfx_d3d/r_image_cache.cpp:2123)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void ImageCache_FreeMemory(uchar *param_1,uchar *param_2)
 
 {
-  uchar *puVar1;
-  int iVar2;
+  int iVar1;
   
-  puVar1 = (uchar *)__savegprlr_29(param_1);
-  iVar2 = DB_EnterStreaming();
-  ImageCache_FreeMemoryAlreadyStreaming(puVar1,param_2);
+  iVar1 = DB_EnterStreaming();
+  ImageCache_FreeMemoryAlreadyStreaming(param_1,param_2);
   DB_LeaveStreaming();
-  if (iVar2 != 0) {
+  if (iVar1 != 0) {
     R_AcquireDeviceOwnership();
   }
-  __restgprlr_29();
   return;
 }
 
@@ -2496,25 +2432,21 @@ void ImageCache_Shutdown(void)
 
 // 82743B70  ImageCache_DmaCopy  (gfx_d3d/r_image_cache.cpp:2158)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 
 void ImageCache_DmaCopy(uchar *param_1,uchar *param_2,uint param_3,int param_4)
 
 {
-  uint uVar1;
-  D3DDevice *pDVar2;
-  ulonglong uVar3;
-  D3DVertexDeclaration *pDVar4;
-  D3DVertexBuffer *pDVar5;
-  ulonglong uVar6;
-  ulonglong uVar7;
-  void *pvVar8;
-  void *pvVar9;
+  D3DDevice *pDVar1;
+  D3DVertexDeclaration *pDVar2;
+  D3DVertexBuffer *pDVar3;
   D3DVertexShader *local_c0;
   D3DPixelShader *local_bc;
   uint local_b8;
   uint local_b4;
-  undefined4 local_b0;
+  uint local_b0;
   undefined4 local_ac;
   uint local_a8;
   uint local_a4;
@@ -2525,35 +2457,31 @@ void ImageCache_DmaCopy(uchar *param_1,uchar *param_2,uint param_3,int param_4)
   D3DVertexBuffer DStack_90;
   D3DVertexBuffer aDStack_70 [3];
   
-  uVar7 = (ulonglong)(int)param_3;
-  uVar6 = (ulonglong)(int)param_2;
-  uVar3 = __savegprlr_23(param_1);
-  if ((uVar7 & 0xffffffff) == 0) {
+  if (param_3 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image_cache.cpp",
                     0x87b,0,"%s");
   }
-  else if (0xffffff < (uVar7 & 0xffffffff)) {
+  else if (0xffffff < param_3) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image_cache.cpp",
                     0x87c,0,"%s\n\t(size) = %i");
   }
-  pvVar9 = (void *)uVar6;
-  if (uVar6 != ((longlong)((int)pvVar9 >> 6) + (ulonglong)((int)pvVar9 < 0 && (uVar6 & 0x3f) != 0) &
-               0x3ffffff) << 6) {
+  if ((longlong)(int)param_2 !=
+      ((longlong)((int)param_2 >> 6) + (ulonglong)((int)param_2 < 0 && ((uint)param_2 & 0x3f) != 0)
+      & 0x3ffffff) << 6) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image_cache.cpp",
                     0x87d,0,"%s");
   }
-  pvVar8 = (void *)uVar3;
-  if (uVar3 != ((longlong)((int)pvVar8 >> 6) + (ulonglong)((int)pvVar8 < 0 && (uVar3 & 0x3f) != 0) &
-               0x3ffffff) << 6) {
+  if ((longlong)(int)param_1 !=
+      ((longlong)((int)param_1 >> 6) + (ulonglong)((int)param_1 < 0 && ((uint)param_1 & 0x3f) != 0)
+      & 0x3ffffff) << 6) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image_cache.cpp",
                     0x87e,0,"%s");
   }
-  if ((uVar7 & 0x3f) != 0) {
+  if ((param_3 & 0x3f) != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image_cache.cpp",
                     0x87f,0,"%s\n\t(size) = %i");
   }
-  uVar1 = (uint)uVar7;
-  PIXBeginNamedEvent_Copy_Int(0xffffffff,"image copy (%d KB)",uVar1 >> 10);
+  PIXBeginNamedEvent_Copy_Int(0xffffffff,"image copy (%d KB)",param_3 >> 10);
   do {
     D3DDevice_GetVertexShader(dx.device,&local_c0);
   } while (alwaysfails != 0);
@@ -2567,41 +2495,42 @@ void ImageCache_DmaCopy(uchar *param_1,uchar *param_2,uint param_3,int param_4)
     D3DDevice_SetPixelShader(dx.device,g_dmaDummyPS);
   } while (alwaysfails != 0);
   do {
-    pDVar4 = D3DDevice_GetVertexDeclaration(dx.device);
+    pDVar2 = D3DDevice_GetVertexDeclaration(dx.device);
   } while (alwaysfails != 0);
   do {
     D3DDevice_SetVertexDeclaration(dx.device,g_dmaVertexDecl);
   } while (alwaysfails != 0);
-  XGSetVertexBufferHeader(uVar1,0,0,0,aDStack_70);
-  XGOffsetResourceAddress((D3DResource *)aDStack_70,pvVar9);
+  XGSetVertexBufferHeader(param_3,0,0,0,aDStack_70);
+  XGOffsetResourceAddress((D3DResource *)aDStack_70,param_2);
   do {
-    pDVar5 = D3DDevice_GetStreamSource(dx.device,0,&local_b4,&local_b8);
+    pDVar3 = D3DDevice_GetStreamSource(dx.device,0,&local_b4,&local_b8);
   } while (alwaysfails != 0);
   do {
     D3DDevice_SetStreamSource(dx.device,0,aDStack_70,0,0x40,1);
   } while (alwaysfails != 0);
   local_a8 = local_a8 & 0xc0f8 | 0x4b021a01;
-  local_b0 = 0x40000000;
+  local_b0 = (((uint)param_1 >> 0x14) + 0x200 & 0x1000) + ((uint)param_1 & 0x1ffffffc) >> 2 |
+             0x40000000;
   local_ac = 0x4b000000;
-  local_a4 = uVar1 >> 3 & 0x7fffff | 0x4b000000;
+  local_a4 = param_3 >> 3 & 0x7fffff | 0x4b000000;
   do {
     D3DDevice_GetVertexShaderConstantF(dx.device,0,&local_a0,1);
   } while (alwaysfails != 0);
   do {
-    pDVar2 = dx.device;
-    *(undefined4 *)&((dx.device)->m_Constants).field1_0x300 = local_b0;
-    *(undefined4 *)((int)&(pDVar2->m_Constants).field1_0x300 + 4) = local_ac;
-    *(uint *)((int)&(pDVar2->m_Constants).field1_0x300 + 8) = local_a8;
-    *(uint *)((int)&(pDVar2->m_Constants).field1_0x300 + 0xc) = local_a4;
-    (pDVar2->m_Pending).m_Mask[0] = (pDVar2->m_Pending).m_Mask[0] | 0x8000000000000000;
+    pDVar1 = dx.device;
+    *(uint *)&((dx.device)->m_Constants).field1_0x300 = local_b0;
+    *(undefined4 *)((int)&(pDVar1->m_Constants).field1_0x300 + 4) = local_ac;
+    *(uint *)((int)&(pDVar1->m_Constants).field1_0x300 + 8) = local_a8;
+    *(uint *)((int)&(pDVar1->m_Constants).field1_0x300 + 0xc) = local_a4;
+    (pDVar1->m_Pending).m_Mask[0] = (pDVar1->m_Pending).m_Mask[0] | 0x8000000000000000;
   } while (alwaysfails != 0);
-  XGSetVertexBufferHeader(uVar1,0,0,0,&DStack_90);
-  XGOffsetResourceAddress((D3DResource *)&DStack_90,pvVar8);
+  XGSetVertexBufferHeader(param_3,0,0,0,&DStack_90);
+  XGOffsetResourceAddress((D3DResource *)&DStack_90,param_1);
   do {
     D3DDevice_BeginExport(dx.device,0,(D3DResource *)&DStack_90,0);
   } while (alwaysfails != 0);
   do {
-    D3DDevice_DrawVertices(dx.device,D3DPT_POINTLIST,0,uVar1 >> 6);
+    D3DDevice_DrawVertices(dx.device,D3DPT_POINTLIST,0,param_3 >> 6);
   } while (alwaysfails != 0);
   do {
     D3DDevice_EndExport(dx.device,0,(D3DResource *)&DStack_90,(uint)LZCOUNT(param_4) >> 5);
@@ -2613,21 +2542,20 @@ void ImageCache_DmaCopy(uchar *param_1,uchar *param_2,uint param_3,int param_4)
     D3DDevice_SetPixelShader(dx.device,local_bc);
   } while (alwaysfails != 0);
   do {
-    D3DDevice_SetVertexDeclaration(dx.device,pDVar4);
+    D3DDevice_SetVertexDeclaration(dx.device,pDVar2);
   } while (alwaysfails != 0);
   do {
-    D3DDevice_SetStreamSource(dx.device,0,pDVar5,local_b4,local_b8,1);
+    D3DDevice_SetStreamSource(dx.device,0,pDVar3,local_b4,local_b8,1);
   } while (alwaysfails != 0);
   do {
-    pDVar2 = dx.device;
+    pDVar1 = dx.device;
     *(float *)&((dx.device)->m_Constants).field1_0x300 = local_a0;
-    *(undefined4 *)((int)&(pDVar2->m_Constants).field1_0x300 + 4) = local_9c;
-    *(undefined4 *)((int)&(pDVar2->m_Constants).field1_0x300 + 8) = local_98;
-    *(undefined4 *)((int)&(pDVar2->m_Constants).field1_0x300 + 0xc) = local_94;
-    (pDVar2->m_Pending).m_Mask[0] = (pDVar2->m_Pending).m_Mask[0] | 0x8000000000000000;
+    *(undefined4 *)((int)&(pDVar1->m_Constants).field1_0x300 + 4) = local_9c;
+    *(undefined4 *)((int)&(pDVar1->m_Constants).field1_0x300 + 8) = local_98;
+    *(undefined4 *)((int)&(pDVar1->m_Constants).field1_0x300 + 0xc) = local_94;
+    (pDVar1->m_Pending).m_Mask[0] = (pDVar1->m_Pending).m_Mask[0] | 0x8000000000000000;
   } while (alwaysfails != 0);
   PIXEndNamedEvent();
-  __restgprlr_23();
   return;
 }
 
@@ -2662,6 +2590,8 @@ int ImageCache_RequireUpdateGPU(void)
 
 // 827452D8  ImageCache_UpdateGPU  (gfx_d3d/r_image_cache.cpp:2292)
 
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void ImageCache_UpdateGPU(void)
@@ -2669,7 +2599,6 @@ void ImageCache_UpdateGPU(void)
 {
   int iVar1;
   
-  __savegprlr_22();
   if ((g_allowDeviceOwnershipInUpdateGPU == 0) && (iVar1 = R_HasDeviceOwnership(), iVar1 != 0)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image_cache.cpp",
                     0x8fa,0,"%s");
@@ -2722,13 +2651,14 @@ LAB_827454b0:
     }
     Sys_ResumeWorkerCmd();
   }
-  __restgprlr_22();
   return;
 }
 
 
 // 82744048  ImageCache_ForceUpdateGPU  (gfx_d3d/r_image_cache.cpp:2355)
 
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
 /* WARNING: Restarted to delay deadcode elimination for space: ram */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
@@ -2748,7 +2678,6 @@ void ImageCache_ForceUpdateGPU(void)
   byte in_cr0;
   byte bVar9;
   
-  __savegprlr();
   iVar3 = R_HasDeviceOwnership();
   if (iVar3 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image_cache.cpp",
@@ -2868,28 +2797,27 @@ void ImageCache_ForceUpdateGPU(void)
                     0x9be,0,"%s");
   }
   PIXEndNamedEvent();
-  __restgprlr();
   return;
 }
 
 
 // 82744470  ImageCache_WaitFence  (gfx_d3d/r_image_cache.cpp:2502)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 int ImageCache_WaitFence(void)
 
 {
   int iVar1;
-  undefined8 uVar2;
+  int iVar2;
   
-  __savegprlr_27();
   if (DAT_845b9104 == 0) {
-    iVar1 = __restgprlr_27(0);
-    return iVar1;
+    return 0;
   }
   DAT_845b9104 = 0;
-  uVar2 = 0;
+  iVar2 = 0;
   while( true ) {
     if (g_imageCacheFence == 0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_fence_xbox.h",0xf,
@@ -2897,31 +2825,29 @@ int ImageCache_WaitFence(void)
     }
     iVar1 = D3DDevice_IsFencePending(g_imageCacheFence);
     if (iVar1 == 0) break;
-    uVar2 = 1;
+    iVar2 = 1;
     Sys_Sleep(1);
   }
-  iVar1 = __restgprlr_27(uVar2);
-  return iVar1;
+  return iVar2;
 }
 
 
 // 82746A58  ImageCache_AllocMemory2  (gfx_d3d/r_image_cache.cpp:2522)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void ImageCache_AllocMemory2(ImageAllocInfo param_1,int param_2,uchar **param_3)
 
 {
-  int iVar1;
-  uchar *puVar2;
-  longlong lVar3;
+  uchar *puVar1;
   undefined4 *in_r6;
   char in_RESERVE;
   byte in_cr0;
   longlong lStack00000018;
   ImageAllocInfo in_stack_ffffff88;
   
-  lVar3 = (longlong)(int)param_3;
-  iVar1 = __savegprlr_28(param_2);
-  lStack00000018 = lVar3;
+  lStack00000018 = (longlong)(int)param_3;
   Profile2_UpdateEntry(2);
   do {
     if (in_RESERVE != '\0') {
@@ -2931,8 +2857,8 @@ void ImageCache_AllocMemory2(ImageAllocInfo param_1,int param_2,uchar **param_3)
       in_cr0 = 2;
     }
   } while (!(bool)(in_cr0 >> 1 & 1));
-  puVar2 = ImageCache_AllocMemory(in_stack_ffffff88,iVar1);
-  *in_r6 = puVar2;
+  puVar1 = ImageCache_AllocMemory(in_stack_ffffff88,param_2);
+  *in_r6 = puVar1;
   Profile2_UpdateEntry(2);
   do {
     if (in_RESERVE != '\0') {
@@ -2942,20 +2868,20 @@ void ImageCache_AllocMemory2(ImageAllocInfo param_1,int param_2,uchar **param_3)
       in_cr0 = 2;
     }
   } while (!(bool)(in_cr0 >> 1 & 1));
-  __restgprlr_28();
   return;
 }
 
 
 // 827454F0  ImageCache_DmaCopyDelayed  (gfx_d3d/r_image_cache.cpp:2553)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void ImageCache_DmaCopyDelayed(uchar *param_1,uchar *param_2,ImageAllocInfo param_3)
 
 {
   uint uVar1;
   uint uVar2;
-  uchar *puVar3;
-  ulonglong uVar4;
   undefined8 in_r5;
   undefined8 in_r6;
   uint uStack00000020;
@@ -2963,14 +2889,12 @@ void ImageCache_DmaCopyDelayed(uchar *param_1,uchar *param_2,ImageAllocInfo para
   uint uStack00000028;
   
   uStack00000028 = (uint)((ulonglong)in_r6 >> 0x20);
-  uVar4 = (ulonglong)(int)param_2;
-  puVar3 = (uchar *)__savegprlr_27(param_1);
   _uStack00000020 = in_r5;
-  if (puVar3 == (uchar *)0x0) {
+  if (param_1 == (uchar *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image_cache.cpp",
                     0x9fa,0,"%s");
   }
-  if ((uVar4 & 0xffffffff) == 0) {
+  if (param_2 == (uchar *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image_cache.cpp",
                     0x9fb,0,"%s");
   }
@@ -2982,19 +2906,21 @@ void ImageCache_DmaCopyDelayed(uchar *param_1,uchar *param_2,ImageAllocInfo para
   if (g_imageCache.imageDmaEntryCount == 0x100) {
     ImageCache_UpdateGPU();
   }
-  g_imageCache.imageDmaEntries[g_imageCache.imageDmaEntryCount].src = (uchar *)uVar4;
-  g_imageCache.imageDmaEntries[g_imageCache.imageDmaEntryCount].dst = puVar3;
+  g_imageCache.imageDmaEntries[g_imageCache.imageDmaEntryCount].src = param_2;
+  g_imageCache.imageDmaEntries[g_imageCache.imageDmaEntryCount].dst = param_1;
   uVar1 = g_imageCache.imageDmaEntryCount;
   g_imageCache.imageDmaEntries[g_imageCache.imageDmaEntryCount].allocInfo.size = uVar2;
   g_imageCache.imageDmaEntries[uVar1].allocInfo.firstSize = uStack00000024;
   g_imageCache.imageDmaEntries[uVar1].allocInfo.secondOffset = uStack00000028;
   g_imageCache.imageDmaEntryCount = g_imageCache.imageDmaEntryCount + 1;
-  __restgprlr_27();
   return;
 }
 
 
 // 82744510  ImageCache_GiveImageMemory  (gfx_d3d/r_image_cache.cpp:2618)
+
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 
 void ImageCache_GiveImageMemory(GfxImage *param_1)
 
@@ -3002,17 +2928,16 @@ void ImageCache_GiveImageMemory(GfxImage *param_1)
   uchar *puVar1;
   int iVar2;
   
-  iVar2 = __savegprlr_28(param_1);
-  if (iVar2 == 0) {
+  if (param_1 == (GfxImage *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image_cache.cpp",
                     0xa3e,0,"%s");
   }
-  puVar1 = *(uchar **)(iVar2 + 0x48);
+  puVar1 = param_1->pixels;
   if (puVar1 == (uchar *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image_cache.cpp",
                     0xa41,0,"%s");
   }
-  iVar2 = *(int *)(iVar2 + 0x3c);
+  iVar2 = (param_1->cardMemory).platform[0];
   if (iVar2 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image_cache.cpp",
                     0xa44,0,"%s");
@@ -3021,12 +2946,14 @@ void ImageCache_GiveImageMemory(GfxImage *param_1)
   g_imageCache.waitImageFence = 1;
   g_imageCache.totalMemorySize =
        (uint)(puVar1 + iVar2 + (g_imageCache.totalMemorySize - (int)puVar1));
-  __restgprlr_28();
   return;
 }
 
 
 // 82747070  ImageCache_FreeImageMemory  (gfx_d3d/r_image_cache.cpp:2635)
+
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 
 void ImageCache_FreeImageMemory(GfxImage *param_1)
 
@@ -3034,17 +2961,16 @@ void ImageCache_FreeImageMemory(GfxImage *param_1)
   uchar *puVar1;
   int iVar2;
   
-  iVar2 = __savegprlr_27(param_1);
-  if (iVar2 == 0) {
+  if (param_1 == (GfxImage *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image_cache.cpp",
                     0xa4f,0,"%s");
   }
-  puVar1 = *(uchar **)(iVar2 + 0x48);
+  puVar1 = param_1->pixels;
   if (puVar1 == (uchar *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image_cache.cpp",
                     0xa52,0,"%s");
   }
-  iVar2 = *(int *)(iVar2 + 0x3c);
+  iVar2 = (param_1->cardMemory).platform[0];
   if (iVar2 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image_cache.cpp",
                     0xa55,0,"%s");
@@ -3060,7 +2986,6 @@ void ImageCache_FreeImageMemory(GfxImage *param_1)
                     0xa5e,0,"%s");
   }
   g_allowDeviceOwnershipInUpdateGPU = 0;
-  __restgprlr_27();
   return;
 }
 
@@ -3078,65 +3003,64 @@ uint ImageCache_GetTotalMemorySize(void)
 
 // 82744610  CoallateProfileEntry<GfxUnusedEntry>  (gfx_d3d/r_image_cache.cpp:2680)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void CoallateProfileEntry<GfxUnusedEntry>
                (GfxUnusedEntry *param_1,ImageCacheProfileSet *param_2,uint *param_3,uint param_4)
 
 {
   uint uVar1;
-  int *piVar2;
+  ulonglong uVar2;
   ulonglong uVar3;
   ulonglong uVar4;
-  ulonglong uVar5;
-  ulonglong uVar6;
-  ImageCacheProfileSet *pIVar7;
-  uint uVar8;
-  ulonglong uVar9;
-  uint *puVar10;
+  ImageCacheProfileSet *pIVar5;
+  uint uVar6;
+  ulonglong uVar7;
+  uint *puVar8;
   
-  uVar3 = (ulonglong)(int)param_4;
-  piVar2 = (int *)__savegprlr_28(param_1);
-  uVar4 = (ulonglong)*param_3;
-  uVar9 = 0;
-  uVar8 = piVar2[1] - *piVar2;
-  uVar5 = uVar4;
-  if (uVar4 != 0) {
+  uVar2 = (ulonglong)*param_3;
+  uVar7 = 0;
+  uVar6 = (int)param_1->end - (int)param_1->begin;
+  uVar3 = uVar2;
+  if (uVar2 != 0) {
     do {
-      uVar6 = ((uVar5 - uVar9 & 0xffffffff) >> 1) + uVar9;
-      if (*(uint *)((int)&param_2->size + (int)((uVar6 & 0xffffffff) << 3)) < uVar8) {
-        uVar9 = uVar6 + 1;
-        uVar6 = uVar5;
+      uVar4 = ((uVar3 - uVar7 & 0xffffffff) >> 1) + uVar7;
+      if (*(uint *)((int)&param_2->size + (int)((uVar4 & 0xffffffff) << 3)) < uVar6) {
+        uVar7 = uVar4 + 1;
+        uVar4 = uVar3;
       }
-      uVar5 = uVar6;
-    } while ((uVar9 & 0xffffffff) < (uVar6 & 0xffffffff));
+      uVar3 = uVar4;
+    } while ((uVar7 & 0xffffffff) < (uVar4 & 0xffffffff));
   }
-  if (((uVar9 & 0xffffffff) < uVar4) && (pIVar7 = param_2 + (int)uVar9, pIVar7->size == uVar8)) {
-    pIVar7->count = pIVar7->count + 1;
-    __restgprlr_28();
+  if (((uVar7 & 0xffffffff) < uVar2) && (pIVar5 = param_2 + (int)uVar7, pIVar5->size == uVar6)) {
+    pIVar5->count = pIVar5->count + 1;
     return;
   }
-  if ((uVar3 & 0xffffffff) <= uVar4) {
+  if (param_4 <= uVar2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image_cache.cpp",
                     0xa93,0,"%s");
   }
   uVar1 = *param_3;
-  if ((uVar9 & 0xffffffff) != (ulonglong)uVar1) {
-    puVar10 = (uint *)((int)&param_2->size + (int)((uVar9 & 0xffffffff) << 3));
+  if ((uVar7 & 0xffffffff) != (ulonglong)uVar1) {
+    puVar8 = (uint *)((int)&param_2->size + (int)((uVar7 & 0xffffffff) << 3));
     memmove();
     *param_3 = *param_3 + 1;
-    *puVar10 = uVar8;
-    puVar10[1] = 1;
-    __restgprlr_28();
+    *puVar8 = uVar6;
+    puVar8[1] = 1;
     return;
   }
   *param_3 = uVar1 + 1;
-  param_2[uVar1].size = uVar8;
+  param_2[uVar1].size = uVar6;
   param_2[uVar1].count = 1;
-  __restgprlr_28();
   return;
 }
 
 
 // 82744740  CoallateProfileEntry<GfxImageEntry>  (gfx_d3d/r_image_cache.cpp:2680)
+
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 
 void CoallateProfileEntry<GfxImageEntry>
                (GfxImageEntry *param_1,ImageCacheProfileSet *param_2,uint *param_3,uint param_4)
@@ -3144,131 +3068,124 @@ void CoallateProfileEntry<GfxImageEntry>
 {
   uint uVar1;
   uint uVar2;
-  int iVar3;
+  ulonglong uVar3;
   ulonglong uVar4;
   ulonglong uVar5;
-  ulonglong uVar6;
+  ImageCacheProfileSet *pIVar6;
   ulonglong uVar7;
-  ImageCacheProfileSet *pIVar8;
-  ulonglong uVar9;
-  uint *puVar10;
+  uint *puVar8;
   
-  uVar4 = (ulonglong)(int)param_4;
-  iVar3 = __savegprlr_28(param_1);
-  uVar5 = (ulonglong)*param_3;
-  uVar9 = 0;
-  uVar2 = *(uint *)(iVar3 + 4) >> 2 & 0x3ffff000;
-  uVar6 = uVar5;
-  if (uVar5 != 0) {
+  uVar3 = (ulonglong)*param_3;
+  uVar7 = 0;
+  uVar2 = *(uint *)&param_1->field_0x4 >> 2 & 0x3ffff000;
+  uVar4 = uVar3;
+  if (uVar3 != 0) {
     do {
-      uVar7 = ((uVar6 - uVar9 & 0xffffffff) >> 1) + uVar9;
-      if (*(uint *)((int)&param_2->size + (int)((uVar7 & 0xffffffff) << 3)) < uVar2) {
-        uVar9 = uVar7 + 1;
-        uVar7 = uVar6;
+      uVar5 = ((uVar4 - uVar7 & 0xffffffff) >> 1) + uVar7;
+      if (*(uint *)((int)&param_2->size + (int)((uVar5 & 0xffffffff) << 3)) < uVar2) {
+        uVar7 = uVar5 + 1;
+        uVar5 = uVar4;
       }
-      uVar6 = uVar7;
-    } while ((uVar9 & 0xffffffff) < (uVar7 & 0xffffffff));
+      uVar4 = uVar5;
+    } while ((uVar7 & 0xffffffff) < (uVar5 & 0xffffffff));
   }
-  if (((uVar9 & 0xffffffff) < uVar5) && (pIVar8 = param_2 + (int)uVar9, pIVar8->size == uVar2)) {
-    pIVar8->count = pIVar8->count + 1;
-    __restgprlr_28();
+  if (((uVar7 & 0xffffffff) < uVar3) && (pIVar6 = param_2 + (int)uVar7, pIVar6->size == uVar2)) {
+    pIVar6->count = pIVar6->count + 1;
     return;
   }
-  if ((uVar4 & 0xffffffff) <= uVar5) {
+  if (param_4 <= uVar3) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image_cache.cpp",
                     0xa93,0,"%s");
   }
   uVar1 = *param_3;
-  if ((uVar9 & 0xffffffff) != (ulonglong)uVar1) {
-    puVar10 = (uint *)((int)&param_2->size + (int)((uVar9 & 0xffffffff) << 3));
+  if ((uVar7 & 0xffffffff) != (ulonglong)uVar1) {
+    puVar8 = (uint *)((int)&param_2->size + (int)((uVar7 & 0xffffffff) << 3));
     memmove();
     *param_3 = *param_3 + 1;
-    *puVar10 = uVar2;
-    puVar10[1] = 1;
-    __restgprlr_28();
+    *puVar8 = uVar2;
+    puVar8[1] = 1;
     return;
   }
   *param_3 = uVar1 + 1;
   param_2[uVar1].size = uVar2;
   param_2[uVar1].count = 1;
-  __restgprlr_28();
   return;
 }
 
 
 // 82745650  ImageCache_ProfileMemory  (gfx_d3d/r_image_cache.cpp:2725)
 
+/* WARNING: Function: __savegprlr_15 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_15 replaced with injection: xenon_save_restore */
+
 void ImageCache_ProfileMemory(ImageCacheProfileMemoryFlags param_1)
 
 {
-  ulonglong uVar1;
-  GfxImage *pGVar2;
-  uint uVar3;
-  ulonglong uVar4;
-  uint uVar5;
-  GfxUnusedEntry *pGVar6;
-  GfxImageCache *pGVar7;
+  GfxImage *pGVar1;
+  uint uVar2;
+  ulonglong uVar3;
+  uint uVar4;
+  GfxUnusedEntry *pGVar5;
+  GfxImageCache *pGVar6;
   uint local_8a0 [4];
   ImageCacheProfileSet aIStack_890 [274];
   
-  uVar1 = __savegprlr_15(param_1);
   local_8a0[0] = 0;
   Com_Printf(8,"ImageCache_ProfileMemory:\n");
-  pGVar7 = &g_imageCache;
+  pGVar6 = &g_imageCache;
   if (g_imageCache.unusedEntryCount != 0) {
-    uVar5 = 0;
-    pGVar6 = g_imageCache.unusedEntries;
-    uVar3 = g_imageCache.unusedEntryCount;
+    uVar4 = 0;
+    pGVar5 = g_imageCache.unusedEntries;
+    uVar2 = g_imageCache.unusedEntryCount;
     do {
-      if ((uVar1 & 2) != 0) {
+      if ((param_1 & IC_PROFILE_INDIVIDUAL_ALLOCATIONS) != IC_PROFILE_DEFAULT) {
         Com_Printf(8,"Unused %d : 0x%08x -> 0x%08x %d bytes\n");
-        uVar3 = g_imageCache.unusedEntryCount;
+        uVar2 = g_imageCache.unusedEntryCount;
       }
-      if ((uVar1 & 1) != 0) {
-        CoallateProfileEntry<GfxUnusedEntry>(pGVar6,aIStack_890,local_8a0,0x100);
-        uVar3 = g_imageCache.unusedEntryCount;
+      if ((param_1 & IC_PROFILE_ALLOCATION_SIZES) != IC_PROFILE_DEFAULT) {
+        CoallateProfileEntry<GfxUnusedEntry>(pGVar5,aIStack_890,local_8a0,0x100);
+        uVar2 = g_imageCache.unusedEntryCount;
       }
-      uVar5 = uVar5 + 1;
-      pGVar6 = pGVar6 + 1;
-    } while (uVar5 < uVar3);
-    uVar4 = (ulonglong)local_8a0[0];
+      uVar4 = uVar4 + 1;
+      pGVar5 = pGVar5 + 1;
+    } while (uVar4 < uVar2);
+    uVar3 = (ulonglong)local_8a0[0];
     Com_Printf(8,"\tUnused : %9d bytes total in %4d fragments\n");
-    if ((uVar1 & 1) != 0) {
-      while (uVar4 = uVar4 - 1, -1 < (longlong)uVar4) {
+    if ((param_1 & IC_PROFILE_ALLOCATION_SIZES) != IC_PROFILE_DEFAULT) {
+      while (uVar3 = uVar3 - 1, -1 < (longlong)uVar3) {
         Com_Printf(8,"\t\t[%2d] : %9d bytes : %3d blocks : %9d bytes total\n");
       }
     }
   }
   if (g_imageCache.imageEntryCount != 0) {
     local_8a0[0] = 0;
-    uVar5 = 0;
-    uVar3 = g_imageCache.imageEntryCount;
+    uVar4 = 0;
+    uVar2 = g_imageCache.imageEntryCount;
     do {
-      if ((uVar1 & 2) != 0) {
-        DB_GetGfxImageAtIndex(pGVar7->imageEntries[0].imageIndex);
-        pGVar2 = DB_GetGfxImageAtIndex(pGVar7->imageEntries[0].imageIndex);
-        DB_GetGfxImageIndex(pGVar2);
+      if ((param_1 & IC_PROFILE_INDIVIDUAL_ALLOCATIONS) != IC_PROFILE_DEFAULT) {
+        DB_GetGfxImageAtIndex(pGVar6->imageEntries[0].imageIndex);
+        pGVar1 = DB_GetGfxImageAtIndex(pGVar6->imageEntries[0].imageIndex);
+        DB_GetGfxImageIndex(pGVar1);
         Com_Printf(8,"Image %d : %d : %s : 0x%08x -> 0x%08x %d bytes : 0x%08x -> 0x%08x %d bytes\n")
         ;
-        uVar3 = g_imageCache.imageEntryCount;
+        uVar2 = g_imageCache.imageEntryCount;
       }
-      if ((uVar1 & 1) != 0) {
-        CoallateProfileEntry<GfxImageEntry>(pGVar7->imageEntries,aIStack_890,local_8a0,0x100);
-        uVar3 = g_imageCache.imageEntryCount;
+      if ((param_1 & IC_PROFILE_ALLOCATION_SIZES) != IC_PROFILE_DEFAULT) {
+        CoallateProfileEntry<GfxImageEntry>(pGVar6->imageEntries,aIStack_890,local_8a0,0x100);
+        uVar2 = g_imageCache.imageEntryCount;
       }
-      uVar5 = uVar5 + 1;
-      pGVar7 = (GfxImageCache *)(pGVar7->imageEntries + 1);
-    } while (uVar5 < uVar3);
-    uVar4 = (ulonglong)local_8a0[0];
+      uVar4 = uVar4 + 1;
+      pGVar6 = (GfxImageCache *)(pGVar6->imageEntries + 1);
+    } while (uVar4 < uVar2);
+    uVar3 = (ulonglong)local_8a0[0];
     Com_Printf(8,"\tImages : %9d bytes total in %4d images\n");
-    if ((uVar1 & 1) != 0) {
-      while (uVar4 = uVar4 - 1, -1 < (longlong)uVar4) {
+    if ((param_1 & IC_PROFILE_ALLOCATION_SIZES) != IC_PROFILE_DEFAULT) {
+      while (uVar3 = uVar3 - 1, -1 < (longlong)uVar3) {
         Com_Printf(8,"\t\t[%2d] : %9d bytes : %3d blocks : %9d bytes total\n");
       }
     }
   }
   Com_Printf(8,"ImageCache_ProfileMemory : Total : %9d bytes\n");
-  __restgprlr_15();
   return;
 }
 

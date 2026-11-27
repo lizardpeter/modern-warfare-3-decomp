@@ -87,29 +87,24 @@ bool IWSocketSetNotBlocking(uint param_1)
 
 // 825112A8  IWSocketIPFromAddr  (qcommon/net_debugsockets_host.cpp:297)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void IWSocketIPFromAddr(sockaddr_in *param_1,uchar *param_2)
 
 {
-  int iVar1;
-  ulonglong uVar2;
-  undefined1 *puVar3;
-  
-  uVar2 = (ulonglong)(int)param_2;
-  iVar1 = __savegprlr_28(param_1);
-  if (iVar1 == 0) {
+  if (param_1 == (sockaddr_in *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\net_debugsockets_host.cpp"
                     ,0x12a,0,"%s");
   }
-  if ((uVar2 & 0xffffffff) == 0) {
+  if (param_2 == (uchar *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\net_debugsockets_host.cpp"
                     ,299,0,"%s");
   }
-  puVar3 = (undefined1 *)uVar2;
-  *puVar3 = *(undefined1 *)(iVar1 + 4);
-  puVar3[1] = *(undefined1 *)(iVar1 + 5);
-  puVar3[2] = *(undefined1 *)(iVar1 + 6);
-  puVar3[3] = *(undefined1 *)(iVar1 + 7);
-  __restgprlr_28();
+  *param_2 = (param_1->sin_addr).S_un.S_un_b.s_b1;
+  param_2[1] = (param_1->sin_addr).S_un.S_un_b.s_b2;
+  param_2[2] = (param_1->sin_addr).S_un.S_un_b.s_b3;
+  param_2[3] = (param_1->sin_addr).S_un.S_un_b.s_b4;
   return;
 }
 
@@ -163,17 +158,16 @@ bool IWSocketTransferResultIsValid(int param_1)
 
 // 8250D138  IWSocketDataSend  (qcommon/net_debugsockets_host.cpp:406)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
+
 int IWSocketDataSend(uint param_1,void *param_2,int param_3,int param_4,int param_5)
 
 {
-  uint uVar2;
-  int iVar3;
-  longlong lVar1;
-  ulonglong uVar4;
+  int iVar1;
+  longlong lVar2;
   
-  uVar4 = (ulonglong)(int)param_2;
-  uVar2 = __savegprlr_25(param_1);
-  if ((uVar4 & 0xffffffff) == 0) {
+  if (param_2 == (void *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\net_debugsockets_host.cpp"
                     ,0x199,0,"%s");
   }
@@ -185,39 +179,35 @@ int IWSocketDataSend(uint param_1,void *param_2,int param_3,int param_4,int para
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\net_debugsockets_host.cpp"
                     ,0x19b,0,"%s");
   }
-  iVar3 = send(uVar2,(char *)((int)uVar4 + param_4),param_5 - param_4,0);
-  lVar1 = (longlong)iVar3;
-  if (((lVar1 + 1) - (lVar1 + (ulonglong)(lVar1 + 1 == 0)) & 0xff) == 0) {
-    iVar3 = WSAGetLastError();
-    if (iVar3 == 0x2733) {
-      iVar3 = __restgprlr_25(0);
-      return iVar3;
+  iVar1 = send(param_1,(char *)((int)param_2 + param_4),param_5 - param_4,0);
+  lVar2 = (longlong)iVar1 + 1;
+  if ((lVar2 - ((longlong)iVar1 + (ulonglong)(lVar2 == 0)) & 0xff) == 0) {
+    iVar1 = WSAGetLastError();
+    if (iVar1 == 0x2733) {
+      return 0;
     }
-    iVar3 = WSAGetLastError();
-    iVar3 = __restgprlr_25((ulonglong)(iVar3 != 0x2746) - 3);
-    return iVar3;
+    iVar1 = WSAGetLastError();
+    return ((uint)LZCOUNT((uint)LZCOUNT(iVar1 + -0x2746) >> 5) >> 5) - 3;
   }
-  if (iVar3 == 0) {
-    lVar1 = -3;
+  if (iVar1 == 0) {
+    iVar1 = -3;
   }
-  iVar3 = __restgprlr_25(lVar1);
-  return iVar3;
+  return iVar1;
 }
 
 
 // 8250D260  IWSocketDataRecv  (qcommon/net_debugsockets_host.cpp:432)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
+
 int IWSocketDataRecv(uint param_1,void *param_2,int param_3,int param_4,int param_5)
 
 {
-  uint uVar2;
-  int iVar3;
-  longlong lVar1;
-  ulonglong uVar4;
+  int iVar1;
+  longlong lVar2;
   
-  uVar4 = (ulonglong)(int)param_2;
-  uVar2 = __savegprlr_25(param_1);
-  if ((uVar4 & 0xffffffff) == 0) {
+  if (param_2 == (void *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\net_debugsockets_host.cpp"
                     ,0x1b3,0,"%s");
   }
@@ -229,68 +219,52 @@ int IWSocketDataRecv(uint param_1,void *param_2,int param_3,int param_4,int para
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\net_debugsockets_host.cpp"
                     ,0x1b5,0,"%s");
   }
-  iVar3 = recv(uVar2,(char *)((int)uVar4 + param_4),param_5 - param_4,0);
-  lVar1 = (longlong)iVar3;
-  if (((lVar1 + 1) - (lVar1 + (ulonglong)(lVar1 + 1 == 0)) & 0xff) == 0) {
-    iVar3 = WSAGetLastError();
-    if (iVar3 == 0x2733) {
-      iVar3 = __restgprlr_25(0);
-      return iVar3;
+  iVar1 = recv(param_1,(char *)((int)param_2 + param_4),param_5 - param_4,0);
+  lVar2 = (longlong)iVar1 + 1;
+  if ((lVar2 - ((longlong)iVar1 + (ulonglong)(lVar2 == 0)) & 0xff) == 0) {
+    iVar1 = WSAGetLastError();
+    if (iVar1 == 0x2733) {
+      return 0;
     }
-    iVar3 = WSAGetLastError();
-    iVar3 = __restgprlr_25((ulonglong)(iVar3 != 0x2746) - 3);
-    return iVar3;
+    iVar1 = WSAGetLastError();
+    return ((uint)LZCOUNT((uint)LZCOUNT(iVar1 + -0x2746) >> 5) >> 5) - 3;
   }
-  if (iVar3 == 0) {
-    lVar1 = -3;
+  if (iVar1 == 0) {
+    iVar1 = -3;
   }
-  iVar3 = __restgprlr_25(lVar1);
-  return iVar3;
+  return iVar1;
 }
 
 
 // 8250D388  SocketData__BLOCKING  (qcommon/net_debugsockets_host.cpp:459)
+
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
 
 bool SocketData__BLOCKING
                (_func___cdecl_int_uint_void_ptr_int_int_int *param_1,uint param_2,void *param_3,
                int param_4,int param_5)
 
 {
-  code *pcVar2;
-  longlong lVar1;
-  int iVar3;
-  undefined1 uVar4;
-  longlong lVar5;
-  longlong lVar6;
-  longlong lVar7;
-  longlong lVar8;
-  longlong lVar9;
+  int iVar1;
+  int iVar2;
   
-  lVar8 = (longlong)param_5;
-  lVar7 = (longlong)param_4;
-  lVar6 = (longlong)(int)param_3;
-  lVar5 = (longlong)(int)param_2;
-  pcVar2 = (code *)__savegprlr_23(param_1,lVar5,lVar6,lVar7);
-  lVar9 = 0;
-  lVar1 = (*pcVar2)(lVar5,lVar6,lVar7,0);
-  iVar3 = (int)lVar1;
+  iVar2 = 0;
+  iVar1 = (*param_1)(param_2,param_3,param_4,0,param_5);
   while( true ) {
-    if (iVar3 < 0) {
-      uVar4 = __restgprlr_23(0);
-      return (bool)uVar4;
+    if (iVar1 < 0) {
+      return false;
     }
-    lVar9 = lVar1 + lVar9;
-    if ((int)lVar8 < (int)lVar9) {
+    iVar2 = iVar1 + iVar2;
+    if (param_5 < iVar2) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\net_debugsockets_host.cpp"
                       ,0x1d8,0,"%s");
     }
-    if ((int)lVar9 == (int)lVar8) break;
+    if (iVar2 == param_5) break;
     Sys_Sleep(1);
-    lVar1 = (*pcVar2)(lVar5,lVar6,lVar7,lVar9,lVar8);
-    iVar3 = (int)lVar1;
+    iVar1 = (*param_1)(param_2,param_3,param_4,iVar2,param_5);
   }
-  uVar4 = __restgprlr_23(1);
-  return (bool)uVar4;
+  return true;
 }
 
 
@@ -308,22 +282,21 @@ bool IWSocketDataSendBLOCKING(uint param_1,void *param_2,int param_3,int param_4
 
 // 8250D478  CreateHostSocket  (qcommon/net_debugsockets_host.cpp:497)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 uint CreateHostSocket(ushort param_1)
 
 {
-  undefined2 uVar4;
-  uint uVar2;
-  int iVar3;
-  longlong lVar1;
-  longlong lVar5;
+  uint uVar1;
+  int iVar2;
+  longlong lVar3;
   ulong local_40 [4];
   sockaddr local_30 [3];
   
-  uVar4 = __savegprlr_29(param_1);
-  uVar2 = socket(2,1,0);
-  lVar1 = (longlong)(int)uVar2;
-  lVar5 = -lVar1 + -1;
-  if ((lVar5 + (-(ulonglong)(lVar5 == 0) - (-lVar1 + -2)) & 0xff) != 0) {
+  uVar1 = socket(2,1,0);
+  lVar3 = -(longlong)(int)uVar1 + -1;
+  if ((lVar3 + (-(ulonglong)(lVar3 == 0) - (-(longlong)(int)uVar1 + -2)) & 0xff) != 0) {
     local_30[0].sa_data[6] = '\0';
     local_30[0].sa_data[7] = '\0';
     local_30[0].sa_data[8] = '\0';
@@ -332,32 +305,29 @@ uint CreateHostSocket(ushort param_1)
     local_30[0].sa_data[0xb] = '\0';
     local_30[0].sa_data[0xc] = '\0';
     local_30[0].sa_data[0xd] = '\0';
-    local_30[0]._0_8_ = (ulonglong)CONCAT22(2,uVar4) << 0x20;
-    iVar3 = bind(uVar2,local_30,0x10);
-    if (-1 < iVar3) {
-      iVar3 = listen(uVar2,4);
-      if (iVar3 < 0) {
+    local_30[0]._0_8_ = (ulonglong)CONCAT22(2,param_1) << 0x20;
+    iVar2 = bind(uVar1,local_30,0x10);
+    if (-1 < iVar2) {
+      iVar2 = listen(uVar1,4);
+      if (iVar2 < 0) {
         NET_ErrorString();
         Com_PrintError(1,"listen %d failed: %s\n");
-        closesocket(uVar2);
-        uVar2 = __restgprlr_29(0xffffffffffffffff);
-        return uVar2;
+        closesocket(uVar1);
+        return 0xffffffff;
       }
       local_40[0] = 1;
-      iVar3 = ioctlsocket(uVar2,-0x7ffb9982,local_40);
-      if (iVar3 != 0) {
-        closesocket(uVar2);
-        lVar1 = 0;
+      iVar2 = ioctlsocket(uVar1,-0x7ffb9982,local_40);
+      if (iVar2 != 0) {
+        closesocket(uVar1);
+        uVar1 = 0;
       }
-      uVar2 = __restgprlr_29(lVar1);
-      return uVar2;
+      return uVar1;
     }
     NET_ErrorString();
     Com_PrintError(1,"bind %d failed: %s\n");
-    closesocket(uVar2);
+    closesocket(uVar1);
   }
-  uVar2 = __restgprlr_29(0xffffffffffffffff);
-  return uVar2;
+  return 0xffffffff;
 }
 
 
@@ -377,29 +347,28 @@ void ClientPrintIP(rdbgClientInfo *param_1)
 
 // 8250D618  ClientDisconnect  (qcommon/net_debugsockets_host.cpp:545)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void ClientDisconnect(rdbgClientInfo *param_1)
 
 {
-  rdbgClientInfo *prVar1;
-  
-  prVar1 = (rdbgClientInfo *)__savegprlr_29(param_1);
-  if (prVar1 == (rdbgClientInfo *)0x0) {
+  if (param_1 == (rdbgClientInfo *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\net_debugsockets_host.cpp"
                     ,0x222,0,"%s");
   }
-  if (prVar1->state == RDBG_CSTATE_DISCONNECTED) {
+  if (param_1->state == RDBG_CSTATE_DISCONNECTED) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\net_debugsockets_host.cpp"
                     ,0x223,0,"%s");
   }
   Com_Printf(0x10,"Disconnected debug-client #%i (");
-  ClientPrintIP(prVar1);
+  ClientPrintIP(param_1);
   Com_Printf(0x10,").\n");
-  closesocket(prVar1->socketID);
-  if (prVar1->type == RDBG_CLIENTTYPE_LIGHTEDIT) {
-    LightEdit_Disconnect(prVar1);
+  closesocket(param_1->socketID);
+  if (param_1->type == RDBG_CLIENTTYPE_LIGHTEDIT) {
+    LightEdit_Disconnect(param_1);
   }
   memset();
-  __restgprlr_29();
   return;
 }
 
@@ -430,75 +399,69 @@ rdbgClientInfo * ClientGetEmpty(void)
 
 // 8250D728  ClientStateSet_Idle  (qcommon/net_debugsockets_host.cpp:584)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void ClientStateSet_Idle(rdbgClientInfo *param_1)
 
 {
-  int iVar1;
-  
-  iVar1 = __savegprlr_29(param_1);
-  if (iVar1 == 0) {
+  if (param_1 == (rdbgClientInfo *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\net_debugsockets_host.cpp"
                     ,0x249,0,"%s");
   }
-  if (*(int *)(iVar1 + 8) == 0) {
+  if (param_1->state == RDBG_CSTATE_DISCONNECTED) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\net_debugsockets_host.cpp"
                     ,0x24a,0,"%s");
-    *(undefined4 *)(iVar1 + 8) = 3;
-    __restgprlr_29();
+    param_1->state = RDBG_CSTATE_IDLE;
     return;
   }
-  *(undefined4 *)(iVar1 + 8) = 3;
-  __restgprlr_29();
+  param_1->state = RDBG_CSTATE_IDLE;
   return;
 }
 
 
 // 8250D7B8  ClientStateSet_FatalError  (qcommon/net_debugsockets_host.cpp:592)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void ClientStateSet_FatalError(rdbgClientInfo *param_1,char *param_2)
 
 {
-  int iVar1;
-  
-  iVar1 = __savegprlr_29(param_1,param_2);
-  if (iVar1 == 0) {
+  if (param_1 == (rdbgClientInfo *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\net_debugsockets_host.cpp"
                     ,0x251,0,"%s");
   }
-  if (*(int *)(iVar1 + 8) == 0) {
+  if (param_1->state == RDBG_CSTATE_DISCONNECTED) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\net_debugsockets_host.cpp"
                     ,0x252,0,"%s");
-    *(undefined4 *)(iVar1 + 8) = 1;
-    __restgprlr_29();
+    param_1->state = RDBG_CSTATE_FATALERROR;
     return;
   }
-  *(undefined4 *)(iVar1 + 8) = 1;
-  __restgprlr_29();
+  param_1->state = RDBG_CSTATE_FATALERROR;
   return;
 }
 
 
 // 8250D848  ClientStateSet_Leaving  (qcommon/net_debugsockets_host.cpp:605)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void ClientStateSet_Leaving(rdbgClientInfo *param_1)
 
 {
-  int iVar1;
-  
-  iVar1 = __savegprlr_29(param_1);
-  if (iVar1 == 0) {
+  if (param_1 == (rdbgClientInfo *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\net_debugsockets_host.cpp"
                     ,0x25e,0,"%s");
   }
-  if (*(int *)(iVar1 + 8) == 0) {
+  if (param_1->state == RDBG_CSTATE_DISCONNECTED) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\net_debugsockets_host.cpp"
                     ,0x25f,0,"%s");
-    *(undefined4 *)(iVar1 + 8) = 2;
-    __restgprlr_29();
+    param_1->state = RDBG_CSTATE_LEAVING;
     return;
   }
-  *(undefined4 *)(iVar1 + 8) = 2;
-  __restgprlr_29();
+  param_1->state = RDBG_CSTATE_LEAVING;
   return;
 }
 
@@ -519,13 +482,13 @@ void HeaderInit(rdbgMsgHeader_t *param_1,rdbgMsgType_t param_2,ulong param_3)
 
 // 8250D900  ClientHeaderInit  (qcommon/net_debugsockets_host.cpp:625)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void ClientHeaderInit(rdbgClientInfo *param_1,rdbgMsgType_t param_2,ulong param_3)
 
 {
-  int iVar1;
-  
-  iVar1 = __savegprlr_27(param_1);
-  if (iVar1 == 0) {
+  if (param_1 == (rdbgClientInfo *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\net_debugsockets_host.cpp"
                     ,0x272,0,"%s");
   }
@@ -533,13 +496,12 @@ void ClientHeaderInit(rdbgClientInfo *param_1,rdbgMsgType_t param_2,ulong param_
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\net_debugsockets_host.cpp"
                     ,0x273,0,"%s");
   }
-  *(ulong *)(iVar1 + 0x28) = param_3;
-  *(char *)(iVar1 + 0x26) = (char)param_2;
-  *(undefined1 *)(iVar1 + 0x27) = 0;
-  *(undefined1 *)(iVar1 + 0x24) = 0x49;
-  *(undefined1 *)(iVar1 + 0x25) = 0x57;
-  *(undefined4 *)(iVar1 + 0x2c) = 0;
-  __restgprlr_27();
+  (param_1->msgData).header.bodyLength = param_3;
+  (param_1->msgData).header.messageType = (uchar)param_2;
+  (param_1->msgData).header.messageFlags = '\0';
+  (param_1->msgData).header.keyA = 'I';
+  (param_1->msgData).header.keyB = 'W';
+  (param_1->msgData).headerXferCnt = 0;
   return;
 }
 
@@ -591,156 +553,148 @@ bool HeaderXferIsFinished(rdbgClientInfo *param_1)
 
 // 8250DAF0  HeaderRecieveFragments  (qcommon/net_debugsockets_host.cpp:668)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 bool HeaderRecieveFragments(rdbgClientInfo *param_1)
 
 {
-  rdbgClientInfo *prVar1;
-  int iVar2;
-  undefined1 uVar3;
-  bool bVar4;
-  rdbgClientMessageInfo_t *prVar5;
+  int iVar1;
+  bool bVar2;
+  rdbgClientMessageInfo_t *prVar3;
   
-  prVar1 = (rdbgClientInfo *)__savegprlr_28(param_1);
-  if (prVar1 == (rdbgClientInfo *)0x0) {
+  if (param_1 == (rdbgClientInfo *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\net_debugsockets_host.cpp"
                     ,0x29d,0,"%s");
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\net_debugsockets_host.cpp"
                     ,0x2a0,0,"%s");
   }
-  if ((prVar1->state != RDBG_CSTATE_IDLE) && (prVar1->state != RDBG_CSTATE_HEADER_RECV)) {
+  if ((param_1->state != RDBG_CSTATE_IDLE) && (param_1->state != RDBG_CSTATE_HEADER_RECV)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\net_debugsockets_host.cpp"
                     ,0x2a1,0,"%s");
   }
-  if (prVar1->state == RDBG_CSTATE_IDLE) {
-    (prVar1->msgData).headerXferCnt = 0;
+  if (param_1->state == RDBG_CSTATE_IDLE) {
+    (param_1->msgData).headerXferCnt = 0;
   }
   else {
-    bVar4 = HeaderXferIsFinished(prVar1);
-    if (bVar4) {
-      uVar3 = __restgprlr_28(1);
-      return (bool)uVar3;
+    bVar2 = HeaderXferIsFinished(param_1);
+    if (bVar2) {
+      return true;
     }
   }
-  prVar5 = &prVar1->msgData;
-  iVar2 = IWSocketDataRecv(prVar1->socketID,prVar5,8,(prVar1->msgData).headerXferCnt,8);
-  if (iVar2 < 0) {
-    ClientStateSet_FatalError(prVar1,(char *)prVar5);
+  prVar3 = &param_1->msgData;
+  iVar1 = IWSocketDataRecv(param_1->socketID,prVar3,8,(param_1->msgData).headerXferCnt,8);
+  if (iVar1 < 0) {
+    ClientStateSet_FatalError(param_1,(char *)prVar3);
   }
-  else if (iVar2 != 0) {
-    prVar1->state = RDBG_CSTATE_HEADER_RECV;
-    (prVar1->msgData).headerXferCnt = (prVar1->msgData).headerXferCnt + iVar2;
-    bVar4 = HeaderXferIsFinished(prVar1);
-    uVar3 = __restgprlr_28(bVar4);
-    return (bool)uVar3;
+  else if (iVar1 != 0) {
+    param_1->state = RDBG_CSTATE_HEADER_RECV;
+    (param_1->msgData).headerXferCnt = (param_1->msgData).headerXferCnt + iVar1;
+    bVar2 = HeaderXferIsFinished(param_1);
+    return (bool)('\x01' - !bVar2);
   }
-  uVar3 = __restgprlr_28(0);
-  return (bool)uVar3;
+  return false;
 }
 
 
 // 8250DC20  HeaderSendFragments  (qcommon/net_debugsockets_host.cpp:705)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 bool HeaderSendFragments(rdbgClientInfo *param_1)
 
 {
-  rdbgClientInfo *prVar1;
-  undefined1 uVar3;
-  int iVar2;
-  bool bVar4;
-  rdbgClientMessageInfo_t *prVar5;
+  int iVar1;
+  bool bVar2;
+  rdbgClientMessageInfo_t *prVar3;
   
-  prVar1 = (rdbgClientInfo *)__savegprlr_28(param_1);
-  if (prVar1 == (rdbgClientInfo *)0x0) {
+  if (param_1 == (rdbgClientInfo *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\net_debugsockets_host.cpp"
                     ,0x2c4,0,"%s");
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\net_debugsockets_host.cpp"
                     ,0x293,0,"%s");
   }
-  iVar2 = (prVar1->msgData).headerXferCnt;
-  if (iVar2 == 8) {
-    uVar3 = __restgprlr_28(1);
-    return (bool)uVar3;
+  iVar1 = (param_1->msgData).headerXferCnt;
+  if (iVar1 == 8) {
+    return true;
   }
-  prVar5 = &prVar1->msgData;
-  iVar2 = IWSocketDataSend(prVar1->socketID,prVar5,8,iVar2,8);
-  if (iVar2 < 0) {
-    ClientStateSet_FatalError(prVar1,(char *)prVar5);
-    uVar3 = __restgprlr_28(0);
-    return (bool)uVar3;
+  prVar3 = &param_1->msgData;
+  iVar1 = IWSocketDataSend(param_1->socketID,prVar3,8,iVar1,8);
+  if (iVar1 < 0) {
+    ClientStateSet_FatalError(param_1,(char *)prVar3);
+    return false;
   }
-  (prVar1->msgData).headerXferCnt = (prVar1->msgData).headerXferCnt + iVar2;
-  bVar4 = HeaderXferIsFinished(prVar1);
-  uVar3 = __restgprlr_28(bVar4);
-  return (bool)uVar3;
+  (param_1->msgData).headerXferCnt = (param_1->msgData).headerXferCnt + iVar1;
+  bVar2 = HeaderXferIsFinished(param_1);
+  return (bool)('\x01' - !bVar2);
 }
 
 
 // 8250DD00  HeaderRecieve  (qcommon/net_debugsockets_host.cpp:729)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 bool HeaderRecieve(rdbgClientInfo *param_1)
 
 {
-  rdbgClientInfo *prVar1;
-  bool bVar2;
-  undefined1 uVar3;
+  bool bVar1;
   
-  prVar1 = (rdbgClientInfo *)__savegprlr_29(param_1);
-  if (prVar1 == (rdbgClientInfo *)0x0) {
+  if (param_1 == (rdbgClientInfo *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\net_debugsockets_host.cpp"
                     ,0x2dd,0,"%s");
   }
-  if ((prVar1->state != RDBG_CSTATE_IDLE) && (prVar1->state != RDBG_CSTATE_HEADER_RECV)) {
+  if ((param_1->state != RDBG_CSTATE_IDLE) && (param_1->state != RDBG_CSTATE_HEADER_RECV)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\net_debugsockets_host.cpp"
                     ,0x2de,0,"%s");
   }
-  bVar2 = HeaderRecieveFragments(prVar1);
-  if (bVar2) {
-    if (prVar1->state != RDBG_CSTATE_HEADER_RECV) {
+  bVar1 = HeaderRecieveFragments(param_1);
+  if (bVar1) {
+    if (param_1->state != RDBG_CSTATE_HEADER_RECV) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\net_debugsockets_host.cpp"
                       ,0x2e4,0,"%s");
     }
-    if (&prVar1->msgData == (rdbgClientMessageInfo_t *)0x0) {
+    if ((longlong)(int)param_1 + 0x24 == 0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\net_debugsockets_host.cpp"
                       ,0x28a,0,"%s");
     }
-    bVar2 = HeaderIsValid(&(prVar1->msgData).header);
-    if (!bVar2) {
+    bVar1 = HeaderIsValid((rdbgMsgHeader_t *)((longlong)(int)param_1 + 0x24));
+    if (!bVar1) {
       Com_Printf(0x10,"Processing of header msg failed.\n");
-      uVar3 = __restgprlr_29(0);
-      return (bool)uVar3;
+      return false;
     }
   }
-  uVar3 = __restgprlr_29(1);
-  return (bool)uVar3;
+  return true;
 }
 
 
 // 8250DE10  HeaderOnlySendHandler  (qcommon/net_debugsockets_host.cpp:753)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void HeaderOnlySendHandler(rdbgClientInfo *param_1)
 
 {
-  rdbgClientInfo *prVar1;
-  bool bVar2;
+  bool bVar1;
   
-  prVar1 = (rdbgClientInfo *)__savegprlr_29(param_1);
-  if (prVar1 == (rdbgClientInfo *)0x0) {
+  if (param_1 == (rdbgClientInfo *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\net_debugsockets_host.cpp"
                     ,0x2f4,0,"%s");
   }
-  if (prVar1->state != RDBG_CSTATE_HEADERONLY_SEND) {
+  if (param_1->state != RDBG_CSTATE_HEADERONLY_SEND) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\net_debugsockets_host.cpp"
                     ,0x2f5,0,"%s");
   }
-  if ((prVar1->msgData).headerXferCnt == 8) {
+  if ((param_1->msgData).headerXferCnt == 8) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\net_debugsockets_host.cpp"
                     ,0x2f6,0,"%s");
   }
-  bVar2 = HeaderSendFragments(prVar1);
-  if (bVar2) {
-    ClientStateSet_Idle(prVar1);
+  bVar1 = HeaderSendFragments(param_1);
+  if (bVar1) {
+    ClientStateSet_Idle(param_1);
   }
-  __restgprlr_29();
   return;
 }
 
@@ -760,97 +714,95 @@ bool GeneralSendIsFinished(rdbgClientInfo *param_1)
 
 // 8250DF40  GeneralReceiveIsFinished  (qcommon/net_debugsockets_host.cpp:777)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 bool GeneralReceiveIsFinished(rdbgClientInfo *param_1)
 
 {
-  int iVar1;
-  int iVar2;
-  undefined1 uVar3;
+  rdbgClientState_t rVar1;
   
-  iVar2 = __savegprlr_29(param_1);
-  if (iVar2 == 0) {
+  if (param_1 == (rdbgClientInfo *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\net_debugsockets_host.cpp"
                     ,0x30a,0,"%s");
   }
-  iVar1 = *(int *)(iVar2 + 8);
-  if ((((iVar1 != 8) && (iVar1 != 9)) && (iVar1 != 0xd)) && (iVar1 != 0xf)) {
+  rVar1 = param_1->state;
+  if ((((rVar1 != RDBG_CSTATE_COMMAND_RECV) && (rVar1 != RDBG_CSTATE_TABCOMPLETE_RECV)) &&
+      (rVar1 != RDBG_CSTATE_DVARREQ_RECV)) && (rVar1 != RDBG_CSTATE_LIGHTEDIT_HOST_RECV)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\net_debugsockets_host.cpp"
                     ,0x30b,0,"%s");
   }
-  if (*(uint *)(iVar2 + 0x30) < *(uint *)(iVar2 + 0x34)) {
+  if ((param_1->msgData).un.general.bodyLength < (param_1->msgData).un.general.bodyXferCnt) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\net_debugsockets_host.cpp"
                     ,0x30c,0,"%s");
   }
-  uVar3 = __restgprlr_29(*(int *)(iVar2 + 0x30) == *(int *)(iVar2 + 0x34));
-  return (bool)uVar3;
+  return (param_1->msgData).un.general.bodyLength == (param_1->msgData).un.general.bodyXferCnt;
 }
 
 
 // 8250E010  GeneralRecieveGetFragments  (qcommon/net_debugsockets_host.cpp:790)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 bool GeneralRecieveGetFragments(rdbgClientInfo *param_1)
 
 {
   rdbgClientState_t rVar1;
-  rdbgClientInfo *prVar2;
-  bool bVar4;
-  undefined1 uVar5;
-  int iVar3;
-  char *pcVar6;
+  bool bVar3;
+  int iVar2;
+  char *pcVar4;
   
-  prVar2 = (rdbgClientInfo *)__savegprlr_29(param_1);
-  if (prVar2 == (rdbgClientInfo *)0x0) {
+  if (param_1 == (rdbgClientInfo *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\net_debugsockets_host.cpp"
                     ,0x319,0,"%s");
   }
-  rVar1 = prVar2->state;
+  rVar1 = param_1->state;
   if ((((rVar1 != RDBG_CSTATE_COMMAND_RECV) && (rVar1 != RDBG_CSTATE_TABCOMPLETE_RECV)) &&
       (rVar1 != RDBG_CSTATE_DVARREQ_RECV)) && (rVar1 != RDBG_CSTATE_LIGHTEDIT_HOST_RECV)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\net_debugsockets_host.cpp"
                     ,0x31a,0,"%s");
   }
-  if (0xfff < (prVar2->msgData).un.general.bodyLength) {
+  if (0xfff < (param_1->msgData).un.general.bodyLength) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\net_debugsockets_host.cpp"
                     ,0x31b,0,"%s");
   }
-  if (0xffe < (prVar2->msgData).un.general.bodyXferCnt) {
+  if (0xffe < (param_1->msgData).un.general.bodyXferCnt) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\net_debugsockets_host.cpp"
                     ,0x31c,0,"%s");
   }
-  bVar4 = GeneralReceiveIsFinished(prVar2);
-  if (bVar4) {
-    uVar5 = __restgprlr_29(1);
-    return (bool)uVar5;
+  bVar3 = GeneralReceiveIsFinished(param_1);
+  if (bVar3) {
+    return true;
   }
-  pcVar6 = (prVar2->msgData).un.general.buffer;
-  iVar3 = IWSocketDataRecv(prVar2->socketID,pcVar6,0xfff,(prVar2->msgData).un.log.currentGen,
-                           (prVar2->msgData).un.log.currentPos);
-  if (iVar3 < 0) {
-    ClientStateSet_FatalError(prVar2,pcVar6);
-    uVar5 = __restgprlr_29(0);
-    return (bool)uVar5;
+  pcVar4 = (param_1->msgData).un.general.buffer;
+  iVar2 = IWSocketDataRecv(param_1->socketID,pcVar4,0xfff,(param_1->msgData).un.log.currentGen,
+                           (param_1->msgData).un.log.currentPos);
+  if (iVar2 < 0) {
+    ClientStateSet_FatalError(param_1,pcVar4);
+    return false;
   }
-  (prVar2->msgData).un.general.bodyXferCnt = iVar3 + (prVar2->msgData).un.general.bodyXferCnt;
-  bVar4 = GeneralReceiveIsFinished(prVar2);
-  uVar5 = __restgprlr_29(bVar4);
-  return (bool)uVar5;
+  (param_1->msgData).un.general.bodyXferCnt = iVar2 + (param_1->msgData).un.general.bodyXferCnt;
+  bVar3 = GeneralReceiveIsFinished(param_1);
+  return (bool)('\x01' - !bVar3);
 }
 
 
 // 8250E160  GeneralRecieveSetup  (qcommon/net_debugsockets_host.cpp:817)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 bool GeneralRecieveSetup(rdbgClientInfo *param_1,rdbgClientState_t param_2)
 
 {
-  int iVar1;
-  undefined1 uVar2;
+  uint uVar1;
   
-  iVar1 = __savegprlr_28(param_1);
-  if (iVar1 == 0) {
+  if (param_1 == (rdbgClientInfo *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\net_debugsockets_host.cpp"
                     ,0x332,0,"%s");
   }
-  if (*(int *)(iVar1 + 8) != 6) {
+  if (param_1->state != RDBG_CSTATE_HEADER_RECV) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\net_debugsockets_host.cpp"
                     ,0x333,0,"%s");
   }
@@ -859,90 +811,86 @@ bool GeneralRecieveSetup(rdbgClientInfo *param_1,rdbgClientState_t param_2)
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\net_debugsockets_host.cpp"
                     ,0x337,0,"%s");
   }
-  if (0xfff < *(uint *)(iVar1 + 0x28)) {
+  uVar1 = (param_1->msgData).header.bodyLength;
+  if (0xfff < uVar1) {
     Com_Printf(0x10,"Debugsockets: Incoming command of length %li is too long for our buffer.\n");
-    uVar2 = __restgprlr_28(0);
-    return (bool)uVar2;
+    return false;
   }
-  *(rdbgClientState_t *)(iVar1 + 8) = param_2;
-  *(uint *)(iVar1 + 0x30) = *(uint *)(iVar1 + 0x28);
-  *(undefined4 *)(iVar1 + 0x34) = 0;
-  uVar2 = __restgprlr_28(1);
-  return (bool)uVar2;
+  param_1->state = param_2;
+  (param_1->msgData).un.general.bodyLength = uVar1;
+  (param_1->msgData).un.general.bodyXferCnt = 0;
+  return true;
 }
 
 
 // 8250E250  UnknownMsgRecvHandler  (qcommon/net_debugsockets_host.cpp:838)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void UnknownMsgRecvHandler(rdbgClientInfo *param_1)
 
 {
   uint uVar1;
-  rdbgClientInfo *prVar2;
-  char *pcVar3;
-  int iVar4;
-  uint uVar5;
+  char *pcVar2;
+  int iVar3;
+  uint uVar4;
   
-  prVar2 = (rdbgClientInfo *)__savegprlr_29(param_1);
-  if (prVar2 == (rdbgClientInfo *)0x0) {
+  if (param_1 == (rdbgClientInfo *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\net_debugsockets_host.cpp"
                     ,0x34a,0,"%s");
   }
-  if (prVar2->state != RDBG_CSTATE_UNKNOWNMSG_RECV) {
+  if (param_1->state != RDBG_CSTATE_UNKNOWNMSG_RECV) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\net_debugsockets_host.cpp"
                     ,0x34b,0,"%s");
   }
-  iVar4 = (prVar2->msgData).un.general.bodyLength - (prVar2->msgData).un.general.bodyXferCnt;
-  if (0x1000 < iVar4) {
-    iVar4 = 0x1000;
+  iVar3 = (param_1->msgData).un.general.bodyLength - (param_1->msgData).un.general.bodyXferCnt;
+  if (0x1000 < iVar3) {
+    iVar3 = 0x1000;
   }
-  pcVar3 = (prVar2->msgData).un.general.buffer;
-  iVar4 = IWSocketDataRecv(prVar2->socketID,pcVar3,0x1000,0,iVar4);
-  if (iVar4 < 0) {
-    ClientStateSet_FatalError(prVar2,pcVar3);
-    __restgprlr_29();
+  pcVar2 = (param_1->msgData).un.general.buffer;
+  iVar3 = IWSocketDataRecv(param_1->socketID,pcVar2,0x1000,0,iVar3);
+  if (iVar3 < 0) {
+    ClientStateSet_FatalError(param_1,pcVar2);
     return;
   }
-  uVar1 = (prVar2->msgData).un.general.bodyLength;
-  uVar5 = (prVar2->msgData).un.general.bodyXferCnt + iVar4;
-  (prVar2->msgData).un.general.bodyXferCnt = uVar5;
-  if (uVar5 == uVar1) {
-    ClientStateSet_Idle(prVar2);
+  uVar1 = (param_1->msgData).un.general.bodyLength;
+  uVar4 = (param_1->msgData).un.general.bodyXferCnt + iVar3;
+  (param_1->msgData).un.general.bodyXferCnt = uVar4;
+  if (uVar4 == uVar1) {
+    ClientStateSet_Idle(param_1);
   }
-  __restgprlr_29();
   return;
 }
 
 
 // 8250E328  UnknownMsgRecvSetup  (qcommon/net_debugsockets_host.cpp:863)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 bool UnknownMsgRecvSetup(rdbgClientInfo *param_1)
 
 {
   ulong uVar1;
-  rdbgClientInfo *prVar2;
-  undefined1 uVar3;
   
-  prVar2 = (rdbgClientInfo *)__savegprlr_29(param_1);
-  if (prVar2 == (rdbgClientInfo *)0x0) {
+  if (param_1 == (rdbgClientInfo *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\net_debugsockets_host.cpp"
                     ,0x360,0,"%s");
   }
-  if (prVar2->state != RDBG_CSTATE_HEADER_RECV) {
+  if (param_1->state != RDBG_CSTATE_HEADER_RECV) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\net_debugsockets_host.cpp"
                     ,0x361,0,"%s");
   }
-  uVar1 = (prVar2->msgData).header.bodyLength;
+  uVar1 = (param_1->msgData).header.bodyLength;
   if (uVar1 == 0) {
-    ClientStateSet_Idle(prVar2);
-    uVar3 = __restgprlr_29(1);
-    return (bool)uVar3;
+    ClientStateSet_Idle(param_1);
+    return true;
   }
-  (prVar2->msgData).un.general.bodyLength = uVar1;
-  prVar2->state = RDBG_CSTATE_UNKNOWNMSG_RECV;
-  (prVar2->msgData).un.general.bodyXferCnt = 0;
-  uVar3 = __restgprlr_29(1);
-  return (bool)uVar3;
+  (param_1->msgData).un.general.bodyLength = uVar1;
+  param_1->state = RDBG_CSTATE_UNKNOWNMSG_RECV;
+  (param_1->msgData).un.general.bodyXferCnt = 0;
+  return true;
 }
 
 
@@ -970,33 +918,32 @@ void TabCompletePrepareMatching(char *param_1)
 
 // 8250E428  TabCompleteSearchCallback  (qcommon/net_debugsockets_host.cpp:892)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void TabCompleteSearchCallback(char *param_1)
 
 {
-  char *pcVar1;
-  int iVar2;
+  int iVar1;
   
-  pcVar1 = (char *)__savegprlr_28(param_1);
   if (g_tabComplete.matchCnt < 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\net_debugsockets_host.cpp"
                     ,0x37d,0,"%s");
   }
-  if (pcVar1 == (char *)0x0) {
+  if (param_1 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\net_debugsockets_host.cpp"
                     ,0x37e,0,"%s");
   }
   g_tabComplete.totalSearched = g_tabComplete.totalSearched + 1;
   if (g_tabComplete.matchCnt == 0x100) {
     g_tabComplete.overflowed = true;
-    __restgprlr_28();
     return;
   }
-  iVar2 = I_strnicmp(g_tabComplete.prefix,pcVar1,g_tabComplete.prefixLen);
-  if (iVar2 == 0) {
-    g_tabComplete.matches[g_tabComplete.matchCnt] = pcVar1;
+  iVar1 = I_strnicmp(g_tabComplete.prefix,param_1,g_tabComplete.prefixLen);
+  if (iVar1 == 0) {
+    g_tabComplete.matches[g_tabComplete.matchCnt] = param_1;
     g_tabComplete.matchCnt = g_tabComplete.matchCnt + 1;
   }
-  __restgprlr_28();
   return;
 }
 
@@ -1015,35 +962,37 @@ int TabCompleteQsortFunc(void *param_1,void *param_2)
 
 // 8250E510  TabCompleteSendSetup  (qcommon/net_debugsockets_host.cpp:919)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
+
 bool TabCompleteSendSetup(rdbgClientInfo *param_1)
 
 {
   char cVar1;
-  int iVar2;
-  undefined1 uVar3;
-  int iVar4;
+  uchar uVar2;
+  int iVar3;
+  char *pcVar4;
   char **ppcVar5;
   char *pcVar6;
   char *pcVar7;
   int iVar8;
   
-  iVar2 = __savegprlr_25(param_1);
-  if (iVar2 == 0) {
+  if (param_1 == (rdbgClientInfo *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\net_debugsockets_host.cpp"
                     ,0x39b,0,"%s");
   }
-  if (*(int *)(iVar2 + 8) != 3) {
+  if (param_1->state != RDBG_CSTATE_IDLE) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\net_debugsockets_host.cpp"
                     ,0x39c,0,"%s");
   }
   Dvar_ForEachName_UNSAFE_LockBegin();
-  pcVar7 = (char *)(iVar2 + 0x1038);
-  pcVar6 = pcVar7;
+  pcVar7 = param_1->tabCompletePrefix;
+  pcVar4 = pcVar7;
   do {
-    cVar1 = *pcVar6;
-    pcVar6 = pcVar6 + 1;
+    cVar1 = *pcVar4;
+    pcVar4 = pcVar4 + 1;
   } while (cVar1 != '\0');
-  g_tabComplete.prefixLen = (int)(pcVar6 + (-1 - (int)pcVar7));
+  g_tabComplete.prefixLen = (int)(pcVar4 + (-1 - (int)pcVar7));
   g_tabComplete.matchCnt = 0;
   g_tabComplete.overflowed = false;
   g_tabComplete.totalSearched = 0;
@@ -1067,139 +1016,138 @@ bool TabCompleteSendSetup(rdbgClientInfo *param_1)
     }
     iVar8 = 0;
     do {
-      cVar1 = g_tabComplete.matches[0][iVar8];
-      if (cVar1 == '\0') break;
-      iVar4 = 0;
-      *(char *)(iVar8 + iVar2 + 0x38) = cVar1;
+      uVar2 = g_tabComplete.matches[0][iVar8];
+      if (uVar2 == '\0') break;
+      iVar3 = 0;
+      param_1->remoteIP[iVar8 + 0x24] = uVar2;
       if (0 < g_tabComplete.matchCnt) {
         ppcVar5 = g_tabComplete.matches;
         do {
-          if (cVar1 != (*ppcVar5)[iVar8]) {
-            *(undefined1 *)(iVar8 + iVar2 + 0x38) = 0;
+          if (uVar2 != (*ppcVar5)[iVar8]) {
+            param_1->remoteIP[iVar8 + 0x24] = '\0';
             break;
           }
-          iVar4 = iVar4 + 1;
+          iVar3 = iVar3 + 1;
           ppcVar5 = ppcVar5 + 1;
-        } while (iVar4 < g_tabComplete.matchCnt);
+        } while (iVar3 < g_tabComplete.matchCnt);
       }
       iVar8 = iVar8 + 1;
     } while (iVar8 < 0xfff);
-    *(undefined1 *)(iVar8 + iVar2 + 0x38) = 0;
-    *(undefined4 *)(iVar2 + 8) = 10;
-    pcVar6 = (char *)(iVar2 + 0x38);
+    pcVar6 = (param_1->msgData).un.general.buffer;
+    param_1->remoteIP[iVar8 + 0x24] = '\0';
+    param_1->state = RDBG_CSTATE_TABCOMPLETE_SEND;
+    pcVar4 = pcVar6;
     do {
-      cVar1 = *pcVar6;
-      pcVar6 = pcVar6 + 1;
+      cVar1 = *pcVar4;
+      pcVar4 = pcVar4 + 1;
     } while (cVar1 != '\0');
-    *(undefined4 *)(iVar2 + 0x34) = 0;
-    *(char **)(iVar2 + 0x30) = pcVar6 + (-1 - (iVar2 + 0x38));
-    *(undefined1 *)(iVar2 + 0x24) = 0x49;
-    *(undefined1 *)(iVar2 + 0x25) = 0x57;
-    *(undefined1 *)(iVar2 + 0x26) = 6;
-    *(undefined1 *)(iVar2 + 0x27) = 0;
-    *(char **)(iVar2 + 0x28) = pcVar6 + (-1 - (iVar2 + 0x38));
-    *(undefined4 *)(iVar2 + 0x2c) = 0;
+    (param_1->msgData).un.general.bodyXferCnt = 0;
+    (param_1->msgData).un.general.bodyLength = (uint)(pcVar4 + (-1 - (int)pcVar6));
+    (param_1->msgData).header.keyA = 'I';
+    (param_1->msgData).header.keyB = 'W';
+    (param_1->msgData).header.messageType = '\x06';
+    (param_1->msgData).header.messageFlags = '\0';
+    (param_1->msgData).header.bodyLength = (ulong)(pcVar4 + (-1 - (int)pcVar6));
+    (param_1->msgData).headerXferCnt = 0;
     if (g_tabComplete.matchCnt == 1) {
-      *(byte *)(iVar2 + 0x27) = *(byte *)(iVar2 + 0x27) | 1;
+      (param_1->msgData).header.messageFlags = (param_1->msgData).header.messageFlags | 1;
     }
   }
   *pcVar7 = '\0';
   Dvar_ForEachName_UNSAFE_LockEnd();
-  uVar3 = __restgprlr_25(1);
-  return (bool)uVar3;
+  return true;
 }
 
 
 // 8250E770  TabCompleteRecvHandler  (qcommon/net_debugsockets_host.cpp:980)
+
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 
 void TabCompleteRecvHandler(rdbgClientInfo *param_1)
 
 {
   char cVar1;
   uint uVar2;
-  rdbgClientInfo *prVar3;
+  int iVar3;
   bool bVar4;
   char *pcVar5;
-  char *pcVar6;
   
-  prVar3 = (rdbgClientInfo *)__savegprlr_29(param_1);
-  if (prVar3 == (rdbgClientInfo *)0x0) {
+  if (param_1 == (rdbgClientInfo *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\net_debugsockets_host.cpp"
                     ,0x3d7,0,"%s");
   }
-  if (prVar3->state != RDBG_CSTATE_TABCOMPLETE_RECV) {
+  if (param_1->state != RDBG_CSTATE_TABCOMPLETE_RECV) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\net_debugsockets_host.cpp"
                     ,0x3d8,0,"%s");
   }
-  bVar4 = GeneralRecieveGetFragments(prVar3);
+  bVar4 = GeneralRecieveGetFragments(param_1);
   if (bVar4) {
-    uVar2 = (prVar3->msgData).un.general.bodyLength;
+    uVar2 = (param_1->msgData).un.general.bodyLength;
     if (0x1f < uVar2) {
       Com_PrintWarning(0x10,
                        "Client #%i sent a tab-complete request %i chars long, which is too long (by %i) to have a reply processed.\n"
                       );
-      ClientStateSet_Idle(prVar3);
-      __restgprlr_29();
+      ClientStateSet_Idle(param_1);
       return;
     }
-    pcVar5 = (prVar3->msgData).un.general.buffer;
-    prVar3->remoteIP[uVar2 + 0x24] = '\0';
-    pcVar6 = pcVar5;
+    pcVar5 = (param_1->msgData).un.general.buffer;
+    param_1->remoteIP[uVar2 + 0x24] = '\0';
+    iVar3 = 0x1038 - (int)pcVar5;
     do {
-      cVar1 = *pcVar6;
-      (pcVar6 + (0x1038 - (int)pcVar5))[(int)(prVar3->remoteIP + -0x14)] = cVar1;
-      pcVar6 = pcVar6 + 1;
+      cVar1 = *pcVar5;
+      pcVar5[(int)param_1 + iVar3] = cVar1;
+      pcVar5 = pcVar5 + 1;
     } while (cVar1 != '\0');
-    ClientStateSet_Idle(prVar3);
+    ClientStateSet_Idle(param_1);
   }
-  __restgprlr_29();
   return;
 }
 
 
 // 8250E868  TabCompleteSendHandler  (qcommon/net_debugsockets_host.cpp:1004)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void TabCompleteSendHandler(rdbgClientInfo *param_1)
 
 {
-  rdbgClientInfo *prVar1;
-  bool bVar3;
-  int iVar2;
-  char *pcVar4;
+  bool bVar2;
+  int iVar1;
+  char *pcVar3;
   
-  prVar1 = (rdbgClientInfo *)__savegprlr_29(param_1);
-  if (prVar1 == (rdbgClientInfo *)0x0) {
+  if (param_1 == (rdbgClientInfo *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\net_debugsockets_host.cpp"
                     ,0x3f0,0,"%s");
   }
-  if (prVar1->state != RDBG_CSTATE_TABCOMPLETE_SEND) {
+  if (param_1->state != RDBG_CSTATE_TABCOMPLETE_SEND) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\net_debugsockets_host.cpp"
                     ,0x3f1,0,"%s");
   }
-  bVar3 = HeaderSendFragments(prVar1);
-  if (bVar3) {
-    if ((prVar1->msgData).un.general.bodyLength != 0) {
-      bVar3 = GeneralSendIsFinished(prVar1);
-      if (bVar3) {
+  bVar2 = HeaderSendFragments(param_1);
+  if (bVar2) {
+    if ((param_1->msgData).un.general.bodyLength != 0) {
+      bVar2 = GeneralSendIsFinished(param_1);
+      if (bVar2) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\net_debugsockets_host.cpp"
                         ,0x3fd,0,"%s");
       }
-      pcVar4 = (prVar1->msgData).un.general.buffer;
-      iVar2 = IWSocketDataSend(prVar1->socketID,pcVar4,0xfff,(prVar1->msgData).un.log.currentGen,
-                               (prVar1->msgData).un.log.currentPos);
-      if (iVar2 < 0) {
-        ClientStateSet_FatalError(prVar1,pcVar4);
-        __restgprlr_29();
+      pcVar3 = (param_1->msgData).un.general.buffer;
+      iVar1 = IWSocketDataSend(param_1->socketID,pcVar3,0xfff,(param_1->msgData).un.log.currentGen,
+                               (param_1->msgData).un.log.currentPos);
+      if (iVar1 < 0) {
+        ClientStateSet_FatalError(param_1,pcVar3);
         return;
       }
-      (prVar1->msgData).un.general.bodyXferCnt = (prVar1->msgData).un.general.bodyXferCnt + iVar2;
-      bVar3 = GeneralSendIsFinished(prVar1);
-      if (!bVar3) goto LAB_8250e97c;
+      (param_1->msgData).un.general.bodyXferCnt = (param_1->msgData).un.general.bodyXferCnt + iVar1;
+      bVar2 = GeneralSendIsFinished(param_1);
+      if (!bVar2) {
+        return;
+      }
     }
-    ClientStateSet_Idle(prVar1);
+    ClientStateSet_Idle(param_1);
   }
-LAB_8250e97c:
-  __restgprlr_29();
   return;
 }
 
@@ -1223,133 +1171,131 @@ char * GetDvarValueAsString(char *param_1)
 
 // 8250E9D0  DvarSendSetup  (qcommon/net_debugsockets_host.cpp:1048)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 bool DvarSendSetup(rdbgClientInfo *param_1)
 
 {
   char cVar1;
-  int iVar2;
-  dvar_t *pdVar3;
-  undefined1 uVar4;
-  char *pcVar5;
-  char *pcVar6;
+  dvar_t *pdVar2;
+  char *pcVar3;
+  char *pcVar4;
   
-  iVar2 = __savegprlr_29(param_1);
-  pdVar3 = Dvar_FindVar((char *)(iVar2 + 0x1058));
-  if (pdVar3 != (dvar_t *)0x0) {
-    Dvar_DisplayableValue(pdVar3);
+  pdVar2 = Dvar_FindVar(param_1->dvarRequest);
+  if (pdVar2 != (dvar_t *)0x0) {
+    Dvar_DisplayableValue(pdVar2);
   }
-  pcVar6 = (char *)(iVar2 + 0x38);
-  Com_sprintf(pcVar6,0x1000,"%s,%s");
-  *(undefined4 *)(iVar2 + 8) = 0xc;
-  pcVar5 = pcVar6;
+  pcVar4 = (param_1->msgData).un.general.buffer;
+  Com_sprintf(pcVar4,0x1000,"%s,%s");
+  param_1->state = RDBG_CSTATE_DVAR_SEND;
+  pcVar3 = pcVar4;
   do {
-    cVar1 = *pcVar5;
-    pcVar5 = pcVar5 + 1;
+    cVar1 = *pcVar3;
+    pcVar3 = pcVar3 + 1;
   } while (cVar1 != '\0');
-  *(undefined4 *)(iVar2 + 0x34) = 0;
-  *(char **)(iVar2 + 0x30) = pcVar5 + (-1 - (int)pcVar6);
-  *(undefined1 *)(iVar2 + 0x24) = 0x49;
-  *(undefined1 *)(iVar2 + 0x25) = 0x57;
-  *(undefined1 *)(iVar2 + 0x26) = 7;
-  *(undefined1 *)(iVar2 + 0x27) = 0;
-  *(char **)(iVar2 + 0x28) = pcVar5 + (-1 - (int)pcVar6);
-  *(undefined4 *)(iVar2 + 0x2c) = 0;
-  *(char *)(iVar2 + 0x1058) = '\0';
-  uVar4 = __restgprlr_29(1);
-  return (bool)uVar4;
+  (param_1->msgData).un.general.bodyXferCnt = 0;
+  (param_1->msgData).un.general.bodyLength = (uint)(pcVar3 + (-1 - (int)pcVar4));
+  (param_1->msgData).header.keyA = 'I';
+  (param_1->msgData).header.keyB = 'W';
+  (param_1->msgData).header.messageType = '\a';
+  (param_1->msgData).header.messageFlags = '\0';
+  (param_1->msgData).header.bodyLength = (ulong)(pcVar3 + (-1 - (int)pcVar4));
+  (param_1->msgData).headerXferCnt = 0;
+  param_1->dvarRequest[0] = '\0';
+  return true;
 }
 
 
 // 8250EA90  DVarRequestRecvHandler  (qcommon/net_debugsockets_host.cpp:1064)
+
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 
 void DVarRequestRecvHandler(rdbgClientInfo *param_1)
 
 {
   char cVar1;
   uint uVar2;
-  rdbgClientInfo *prVar3;
+  int iVar3;
   bool bVar4;
   char *pcVar5;
-  char *pcVar6;
   
-  prVar3 = (rdbgClientInfo *)__savegprlr_29(param_1);
-  if (prVar3 == (rdbgClientInfo *)0x0) {
+  if (param_1 == (rdbgClientInfo *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\net_debugsockets_host.cpp"
                     ,0x42b,0,"%s");
   }
-  if (prVar3->state != RDBG_CSTATE_DVARREQ_RECV) {
+  if (param_1->state != RDBG_CSTATE_DVARREQ_RECV) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\net_debugsockets_host.cpp"
                     ,0x42c,0,"%s");
   }
-  bVar4 = GeneralRecieveGetFragments(prVar3);
+  bVar4 = GeneralRecieveGetFragments(param_1);
   if (bVar4) {
-    uVar2 = (prVar3->msgData).un.general.bodyLength;
+    uVar2 = (param_1->msgData).un.general.bodyLength;
     if (0x1f < uVar2) {
       Com_PrintWarning(0x10,
                        "Client #%i\'s dvar request is too long at (%i) chars.  Max supported is (%i) chars.\n"
                       );
-      ClientStateSet_Idle(prVar3);
-      __restgprlr_29();
+      ClientStateSet_Idle(param_1);
       return;
     }
-    pcVar5 = (prVar3->msgData).un.general.buffer;
-    prVar3->remoteIP[uVar2 + 0x24] = '\0';
-    pcVar6 = pcVar5;
+    pcVar5 = (param_1->msgData).un.general.buffer;
+    param_1->remoteIP[uVar2 + 0x24] = '\0';
+    iVar3 = 0x1058 - (int)pcVar5;
     do {
-      cVar1 = *pcVar6;
-      (pcVar6 + (0x1058 - (int)pcVar5))[(int)(prVar3->remoteIP + -0x14)] = cVar1;
-      pcVar6 = pcVar6 + 1;
+      cVar1 = *pcVar5;
+      pcVar5[(int)param_1 + iVar3] = cVar1;
+      pcVar5 = pcVar5 + 1;
     } while (cVar1 != '\0');
-    ClientStateSet_Idle(prVar3);
+    ClientStateSet_Idle(param_1);
   }
-  __restgprlr_29();
   return;
 }
 
 
 // 8250EB88  DvarSendHandler  (qcommon/net_debugsockets_host.cpp:1088)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void DvarSendHandler(rdbgClientInfo *param_1)
 
 {
-  rdbgClientInfo *prVar1;
-  bool bVar3;
-  int iVar2;
-  char *pcVar4;
+  bool bVar2;
+  int iVar1;
+  char *pcVar3;
   
-  prVar1 = (rdbgClientInfo *)__savegprlr_29(param_1);
-  if (prVar1 == (rdbgClientInfo *)0x0) {
+  if (param_1 == (rdbgClientInfo *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\net_debugsockets_host.cpp"
                     ,0x444,0,"%s");
   }
-  if (prVar1->state != RDBG_CSTATE_DVAR_SEND) {
+  if (param_1->state != RDBG_CSTATE_DVAR_SEND) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\net_debugsockets_host.cpp"
                     ,0x445,0,"%s");
   }
-  bVar3 = HeaderSendFragments(prVar1);
-  if (bVar3) {
-    if ((prVar1->msgData).un.general.bodyLength != 0) {
-      bVar3 = GeneralSendIsFinished(prVar1);
-      if (bVar3) {
+  bVar2 = HeaderSendFragments(param_1);
+  if (bVar2) {
+    if ((param_1->msgData).un.general.bodyLength != 0) {
+      bVar2 = GeneralSendIsFinished(param_1);
+      if (bVar2) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\net_debugsockets_host.cpp"
                         ,0x451,0,"%s");
       }
-      pcVar4 = (prVar1->msgData).un.general.buffer;
-      iVar2 = IWSocketDataSend(prVar1->socketID,pcVar4,0xfff,(prVar1->msgData).un.log.currentGen,
-                               (prVar1->msgData).un.log.currentPos);
-      if (iVar2 < 0) {
-        ClientStateSet_FatalError(prVar1,pcVar4);
-        __restgprlr_29();
+      pcVar3 = (param_1->msgData).un.general.buffer;
+      iVar1 = IWSocketDataSend(param_1->socketID,pcVar3,0xfff,(param_1->msgData).un.log.currentGen,
+                               (param_1->msgData).un.log.currentPos);
+      if (iVar1 < 0) {
+        ClientStateSet_FatalError(param_1,pcVar3);
         return;
       }
-      (prVar1->msgData).un.general.bodyXferCnt = (prVar1->msgData).un.general.bodyXferCnt + iVar2;
-      bVar3 = GeneralSendIsFinished(prVar1);
-      if (!bVar3) goto LAB_8250ec9c;
+      (param_1->msgData).un.general.bodyXferCnt = (param_1->msgData).un.general.bodyXferCnt + iVar1;
+      bVar2 = GeneralSendIsFinished(param_1);
+      if (!bVar2) {
+        return;
+      }
     }
-    ClientStateSet_Idle(prVar1);
+    ClientStateSet_Idle(param_1);
   }
-LAB_8250ec9c:
-  __restgprlr_29();
   return;
 }
 
@@ -1372,49 +1318,44 @@ void TextPool_Init(rdbgTextPool_t *param_1)
 
 // 8250ED10  TextPool_AddText  (qcommon/net_debugsockets_host.cpp:1128)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void TextPool_AddText(rdbgTextPool_t *param_1,char *param_2)
 
 {
-  int iVar1;
-  rdbgTextPool_t *prVar2;
-  ulonglong uVar3;
-  char *pcVar5;
-  ulonglong uVar4;
+  char cVar1;
+  char *pcVar2;
   
-  uVar3 = (ulonglong)(int)param_2;
-  prVar2 = (rdbgTextPool_t *)__savegprlr_27(param_1);
-  if (prVar2 == (rdbgTextPool_t *)0x0) {
+  if (param_1 == (rdbgTextPool_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\net_debugsockets_host.cpp"
                     ,0x469,0,"%s");
   }
-  uVar4 = uVar3;
-  if ((uVar3 & 0xffffffff) == 0) {
+  pcVar2 = param_2;
+  if (param_2 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\net_debugsockets_host.cpp"
                     ,0x46a,0,"%s");
   }
   do {
-    pcVar5 = (char *)uVar4;
-    uVar4 = uVar4 + 1;
-  } while (*pcVar5 != '\0');
-  iVar1 = ((int)uVar4 - (int)uVar3) + -1;
-  if (iVar1 < 0x40001) {
-    if (0x3ffff < prVar2->pos + iVar1) {
-      if (prVar2->pos != 0x40000) {
+    cVar1 = *pcVar2;
+    pcVar2 = pcVar2 + 1;
+  } while (cVar1 != '\0');
+  pcVar2 = pcVar2 + (-1 - (int)param_2);
+  if ((int)pcVar2 < 0x40001) {
+    if (0x3ffff < (int)(pcVar2 + param_1->pos)) {
+      if (param_1->pos != 0x40000) {
         memcpy();
       }
       memcpy();
-      prVar2->gen = prVar2->gen + 1;
-      prVar2->pos = prVar2->pos + iVar1 + -0x40000;
-      __restgprlr_27();
+      param_1->gen = param_1->gen + 1;
+      param_1->pos = (int)(pcVar2 + param_1->pos + -0x40000);
       return;
     }
     memcpy();
-    prVar2->pos = prVar2->pos + iVar1;
-    __restgprlr_27();
+    param_1->pos = (int)(pcVar2 + param_1->pos);
     return;
   }
-  TextPool_Init(prVar2);
-  __restgprlr_27();
+  TextPool_Init(param_1);
   return;
 }
 
@@ -1495,15 +1436,15 @@ void ConsoleLogAssertShieldUp(void)
 
 // 8250EF60  ConsoleLogIsUpToDate  (qcommon/net_debugsockets_host.cpp:1210)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 bool ConsoleLogIsUpToDate(rdbgClientInfo *param_1)
 
 {
-  int iVar2;
-  undefined8 uVar1;
-  undefined1 uVar3;
+  bool bVar1;
   
-  iVar2 = __savegprlr_29(param_1);
-  if (iVar2 == 0) {
+  if (param_1 == (rdbgClientInfo *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\net_debugsockets_host.cpp"
                     ,0x4bb,0,"%s");
   }
@@ -1511,14 +1452,10 @@ bool ConsoleLogIsUpToDate(rdbgClientInfo *param_1)
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\net_debugsockets_host.cpp"
                     ,0x4b5,0,"%s");
   }
-  if (g_log.gen == *(int *)(iVar2 + 0x20)) {
-    uVar1 = 1;
-    if (g_log.pos == *(int *)(iVar2 + 0x1c)) goto LAB_8250f000;
+  if ((g_log.gen != param_1->logGen) || (bVar1 = true, g_log.pos != param_1->logPos)) {
+    bVar1 = false;
   }
-  uVar1 = 0;
-LAB_8250f000:
-  uVar3 = __restgprlr_29(uVar1);
-  return (bool)uVar3;
+  return bVar1;
 }
 
 
@@ -1561,15 +1498,16 @@ bool ConsoleLogIsInValidState(rdbgClientInfo *param_1)
 
 // 8250F128  ConsoleLogResetMarkers  (qcommon/net_debugsockets_host.cpp:1247)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void ConsoleLogResetMarkers(rdbgClientInfo *param_1)
 
 {
-  int iVar1;
-  bool bVar2;
-  int iVar3;
+  bool bVar1;
+  int iVar2;
   
-  iVar1 = __savegprlr_29(param_1);
-  if (iVar1 == 0) {
+  if (param_1 == (rdbgClientInfo *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\net_debugsockets_host.cpp"
                     ,0x4e0,0,"%s");
   }
@@ -1578,42 +1516,37 @@ void ConsoleLogResetMarkers(rdbgClientInfo *param_1)
                     ,0x4b5,0,"%s");
   }
   if (g_log.gen == 0) {
-    *(undefined4 *)(iVar1 + 0x20) = 0;
-    iVar3 = 0;
+    param_1->logGen = 0;
+    iVar2 = 0;
   }
   else {
-    *(int *)(iVar1 + 0x20) = g_log.gen;
-    iVar3 = g_log.pos;
+    param_1->logGen = g_log.gen;
+    iVar2 = g_log.pos;
   }
-  *(int *)(iVar1 + 0x1c) = iVar3;
-  bVar2 = ConsoleLogPosIsValid(*(int *)(iVar1 + 0x20),iVar3);
-  if (!bVar2) {
+  param_1->logPos = iVar2;
+  bVar1 = ConsoleLogPosIsValid(param_1->logGen,iVar2);
+  if (!bVar1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\net_debugsockets_host.cpp"
                     ,0x4ee,0,"%s");
   }
-  __restgprlr_29();
   return;
 }
 
 
 // 8250F210  ConsoleLogGetLength  (qcommon/net_debugsockets_host.cpp:1267)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 int ConsoleLogGetLength(int param_1,int param_2,int param_3,int param_4)
 
 {
-  longlong lVar1;
-  int iVar2;
-  longlong lVar3;
-  
-  lVar3 = (longlong)param_3;
-  lVar1 = __savegprlr_26(param_1);
   if (param_2 == param_4) {
-    if ((int)lVar3 <= (int)lVar1) {
+    if (param_3 <= param_1) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\net_debugsockets_host.cpp"
                       ,0x4f8,0,"%s");
     }
-    iVar2 = __restgprlr_26(lVar3 - lVar1);
-    return iVar2;
+    return param_3 - param_1;
   }
   if (param_4 <= param_2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\net_debugsockets_host.cpp"
@@ -1623,24 +1556,25 @@ int ConsoleLogGetLength(int param_1,int param_2,int param_3,int param_4)
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\net_debugsockets_host.cpp"
                     ,0x4ff,0,"%s");
   }
-  iVar2 = __restgprlr_26((lVar3 - lVar1) + 0x40000);
-  return iVar2;
+  return (param_3 - param_1) + 0x40000;
 }
 
 
 // 8250F2D8  ConsoleLogSendSegment  (qcommon/net_debugsockets_host.cpp:1288)
+
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 
 int ConsoleLogSendSegment(rdbgClientInfo *param_1,int param_2,int param_3)
 
 {
   int iVar1;
   
-  iVar1 = __savegprlr_26(param_1);
-  if (iVar1 == 0) {
+  if (param_1 == (rdbgClientInfo *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\net_debugsockets_host.cpp"
                     ,0x50b,0,"%s");
   }
-  if (*(int *)(iVar1 + 8) != 0xb) {
+  if (param_1->state != RDBG_CSTATE_CONSOLELOG_SEND) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\net_debugsockets_host.cpp"
                     ,0x50c,0,"%s");
   }
@@ -1656,40 +1590,39 @@ int ConsoleLogSendSegment(rdbgClientInfo *param_1,int param_2,int param_3)
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\net_debugsockets_host.cpp"
                     ,0x4b5,0,"%s");
   }
-  iVar1 = IWSocketDataSend(*(uint *)(iVar1 + 0xc),g_log.text + param_2,0x40000 - param_2,0,param_3);
-  iVar1 = __restgprlr_26(iVar1);
+  iVar1 = IWSocketDataSend(param_1->socketID,g_log.text + param_2,0x40000 - param_2,0,param_3);
   return iVar1;
 }
 
 
 // 8250F3F8  ConsoleLogSendSetup  (qcommon/net_debugsockets_host.cpp:1303)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 bool ConsoleLogSendSetup(rdbgClientInfo *param_1)
 
 {
   int iVar1;
   int iVar2;
-  rdbgClientInfo *prVar3;
-  bool bVar5;
-  ulong uVar4;
-  undefined1 uVar6;
+  bool bVar4;
+  ulong uVar3;
   
-  prVar3 = (rdbgClientInfo *)__savegprlr_29(param_1);
-  if (prVar3 == (rdbgClientInfo *)0x0) {
+  if (param_1 == (rdbgClientInfo *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\net_debugsockets_host.cpp"
                     ,0x51a,0,"%s");
   }
-  if (prVar3->state != RDBG_CSTATE_IDLE) {
+  if (param_1->state != RDBG_CSTATE_IDLE) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\net_debugsockets_host.cpp"
                     ,0x51b,0,"%s");
   }
-  bVar5 = ConsoleLogPosIsValid(prVar3->logGen,prVar3->logPos);
-  if (!bVar5) {
+  bVar4 = ConsoleLogPosIsValid(param_1->logGen,param_1->logPos);
+  if (!bVar4) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\net_debugsockets_host.cpp"
                     ,0x51c,0,"%s");
   }
-  bVar5 = ConsoleLogIsUpToDate(prVar3);
-  if (bVar5) {
+  bVar4 = ConsoleLogIsUpToDate(param_1);
+  if (bVar4) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\net_debugsockets_host.cpp"
                     ,0x51d,0,"%s");
   }
@@ -1697,41 +1630,39 @@ bool ConsoleLogSendSetup(rdbgClientInfo *param_1)
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\net_debugsockets_host.cpp"
                     ,0x4b5,0,"%s");
   }
-  iVar1 = prVar3->logPos;
-  iVar2 = prVar3->logGen;
-  prVar3->state = RDBG_CSTATE_CONSOLELOG_SEND;
-  (prVar3->msgData).un.log.currentPos = iVar1;
-  (prVar3->msgData).un.log.currentGen = iVar2;
-  (prVar3->msgData).un.log.endPos = g_log.pos;
-  (prVar3->msgData).un.log.endGen = g_log.gen;
-  uVar4 = ConsoleLogGetLength(iVar1,iVar2,g_log.pos,g_log.gen);
-  (prVar3->msgData).header.bodyLength = uVar4;
-  (prVar3->msgData).header.messageFlags = '\0';
-  (prVar3->msgData).header.keyA = 'I';
-  (prVar3->msgData).header.keyB = 'W';
-  (prVar3->msgData).header.messageType = '\x04';
-  (prVar3->msgData).headerXferCnt = 0;
-  prVar3->logPos = g_log.pos;
-  prVar3->logGen = g_log.gen;
-  uVar6 = __restgprlr_29(1);
-  return (bool)uVar6;
+  iVar1 = param_1->logPos;
+  iVar2 = param_1->logGen;
+  param_1->state = RDBG_CSTATE_CONSOLELOG_SEND;
+  (param_1->msgData).un.log.currentPos = iVar1;
+  (param_1->msgData).un.log.currentGen = iVar2;
+  (param_1->msgData).un.log.endPos = g_log.pos;
+  (param_1->msgData).un.log.endGen = g_log.gen;
+  uVar3 = ConsoleLogGetLength(iVar1,iVar2,g_log.pos,g_log.gen);
+  (param_1->msgData).header.bodyLength = uVar3;
+  (param_1->msgData).header.messageFlags = '\0';
+  (param_1->msgData).header.keyA = 'I';
+  (param_1->msgData).header.keyB = 'W';
+  (param_1->msgData).header.messageType = '\x04';
+  (param_1->msgData).headerXferCnt = 0;
+  param_1->logPos = g_log.pos;
+  param_1->logGen = g_log.gen;
+  return true;
 }
 
 
 // 8250F580  ConsoleLogSendIsFinished  (qcommon/net_debugsockets_host.cpp:1329)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 bool ConsoleLogSendIsFinished(rdbgClientInfo *param_1)
 
 {
-  int iVar1;
-  undefined1 uVar2;
-  
-  iVar1 = __savegprlr_29(param_1);
-  if (iVar1 == 0) {
+  if (param_1 == (rdbgClientInfo *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\net_debugsockets_host.cpp"
                     ,0x532,0,"%s");
   }
-  if (*(int *)(iVar1 + 8) != 0xb) {
+  if (param_1->state != RDBG_CSTATE_CONSOLELOG_SEND) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\net_debugsockets_host.cpp"
                     ,0x533,0,"%s");
   }
@@ -1739,37 +1670,36 @@ bool ConsoleLogSendIsFinished(rdbgClientInfo *param_1)
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\net_debugsockets_host.cpp"
                     ,0x4b5,0,"%s");
   }
-  if (*(int *)(iVar1 + 0x30) != *(int *)(iVar1 + 0x38)) {
-    uVar2 = __restgprlr_29(0);
-    return (bool)uVar2;
+  if ((param_1->msgData).un.general.bodyLength != (param_1->msgData).un.log.endPos) {
+    return false;
   }
-  uVar2 = __restgprlr_29(*(int *)(iVar1 + 0x3c) == *(int *)(iVar1 + 0x34));
-  return (bool)uVar2;
+  return (param_1->msgData).un.log.endGen == (param_1->msgData).un.general.bodyXferCnt;
 }
 
 
 // 8250F650  ConsoleLogSendChunks  (qcommon/net_debugsockets_host.cpp:1344)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 int ConsoleLogSendChunks(rdbgClientInfo *param_1)
 
 {
   uint uVar1;
-  rdbgClientInfo *prVar2;
-  bool bVar4;
-  int iVar3;
-  int iVar5;
+  bool bVar3;
+  int iVar2;
+  int iVar4;
   
-  prVar2 = (rdbgClientInfo *)__savegprlr_28(param_1);
-  if (prVar2 == (rdbgClientInfo *)0x0) {
+  if (param_1 == (rdbgClientInfo *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\net_debugsockets_host.cpp"
                     ,0x549,0,"%s");
   }
-  if (prVar2->state != RDBG_CSTATE_CONSOLELOG_SEND) {
+  if (param_1->state != RDBG_CSTATE_CONSOLELOG_SEND) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\net_debugsockets_host.cpp"
                     ,0x54a,0,"%s");
   }
-  bVar4 = ConsoleLogSendIsFinished(prVar2);
-  if (bVar4) {
+  bVar3 = ConsoleLogSendIsFinished(param_1);
+  if (bVar3) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\net_debugsockets_host.cpp"
                     ,0x54b,0,"%s");
   }
@@ -1777,68 +1707,64 @@ int ConsoleLogSendChunks(rdbgClientInfo *param_1)
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\net_debugsockets_host.cpp"
                     ,0x4b5,0,"%s");
   }
-  bVar4 = ConsoleLogPosIsValid
-                    ((prVar2->msgData).un.log.currentGen,(prVar2->msgData).un.log.currentPos);
-  if (!bVar4) {
-    iVar3 = __restgprlr_28(0xffffffffffffffff);
-    return iVar3;
+  bVar3 = ConsoleLogPosIsValid
+                    ((param_1->msgData).un.log.currentGen,(param_1->msgData).un.log.currentPos);
+  if (!bVar3) {
+    return -1;
   }
-  if ((prVar2->msgData).un.general.bodyXferCnt == (prVar2->msgData).un.log.endGen - 1U) {
-    iVar3 = (prVar2->msgData).un.log.currentPos;
-    iVar5 = 0x40000 - iVar3;
-    iVar3 = ConsoleLogSendSegment(prVar2,iVar3,iVar5);
-    if (iVar3 < 0) goto LAB_8250f774;
-    if (iVar3 == iVar5) {
-      uVar1 = (prVar2->msgData).un.general.bodyXferCnt;
-      (prVar2->msgData).un.general.bodyLength = 0;
-      (prVar2->msgData).un.general.bodyXferCnt = uVar1 + 1;
-      bVar4 = ConsoleLogSendIsFinished(prVar2);
-      if (bVar4) goto LAB_8250f834;
-      goto LAB_8250f7b0;
+  if ((param_1->msgData).un.general.bodyXferCnt == (param_1->msgData).un.log.endGen - 1U) {
+    iVar2 = (param_1->msgData).un.log.currentPos;
+    iVar4 = 0x40000 - iVar2;
+    iVar2 = ConsoleLogSendSegment(param_1,iVar2,iVar4);
+    if (iVar2 < 0) {
+      return iVar2;
     }
-  }
-  else {
-LAB_8250f7b0:
-    if ((prVar2->msgData).un.general.bodyXferCnt != (prVar2->msgData).un.log.endGen) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\net_debugsockets_host.cpp"
-                      ,0x564,0,"%s");
-    }
-    if ((prVar2->msgData).un.general.bodyLength == (prVar2->msgData).un.log.endPos) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\net_debugsockets_host.cpp"
-                      ,0x565,0,"%s");
-    }
-    iVar3 = (prVar2->msgData).un.log.currentPos;
-    iVar3 = ConsoleLogSendSegment(prVar2,iVar3,(prVar2->msgData).un.log.endPos - iVar3);
-    if (iVar3 < 0) {
-LAB_8250f774:
-      iVar3 = __restgprlr_28(iVar3);
-      return iVar3;
+    if (iVar2 != iVar4) goto LAB_8250f828;
+    uVar1 = (param_1->msgData).un.general.bodyXferCnt;
+    (param_1->msgData).un.general.bodyLength = 0;
+    (param_1->msgData).un.general.bodyXferCnt = uVar1 + 1;
+    bVar3 = ConsoleLogSendIsFinished(param_1);
+    if (bVar3) {
+      return 1;
     }
   }
-  (prVar2->msgData).un.general.bodyLength = (prVar2->msgData).un.general.bodyLength + iVar3;
-LAB_8250f834:
-  iVar3 = __restgprlr_28(1);
-  return iVar3;
+  if ((param_1->msgData).un.general.bodyXferCnt != (param_1->msgData).un.log.endGen) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\net_debugsockets_host.cpp"
+                    ,0x564,0,"%s");
+  }
+  if ((param_1->msgData).un.general.bodyLength == (param_1->msgData).un.log.endPos) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\net_debugsockets_host.cpp"
+                    ,0x565,0,"%s");
+  }
+  iVar2 = (param_1->msgData).un.log.currentPos;
+  iVar2 = ConsoleLogSendSegment(param_1,iVar2,(param_1->msgData).un.log.endPos - iVar2);
+  if (iVar2 < 0) {
+    return iVar2;
+  }
+LAB_8250f828:
+  (param_1->msgData).un.general.bodyLength = (param_1->msgData).un.general.bodyLength + iVar2;
+  return 1;
 }
 
 
 // 8250F840  ConsoleLogSendHandler  (qcommon/net_debugsockets_host.cpp:1399)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void ConsoleLogSendHandler(rdbgClientInfo *param_1)
 
 {
-  rdbgClientInfo *prVar1;
-  bool bVar3;
-  int iVar2;
+  bool bVar2;
+  int iVar1;
   char *in_r4;
   
-  prVar1 = (rdbgClientInfo *)__savegprlr_29(param_1);
-  if (prVar1 == (rdbgClientInfo *)0x0) {
+  if (param_1 == (rdbgClientInfo *)0x0) {
     in_r4 = (char *)0x57b;
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\net_debugsockets_host.cpp"
                     ,0x57b,0,"%s");
   }
-  if (prVar1->state != RDBG_CSTATE_CONSOLELOG_SEND) {
+  if (param_1->state != RDBG_CSTATE_CONSOLELOG_SEND) {
     in_r4 = (char *)0x57c;
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\net_debugsockets_host.cpp"
                     ,0x57c,0,"%s");
@@ -1848,26 +1774,24 @@ void ConsoleLogSendHandler(rdbgClientInfo *param_1)
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\net_debugsockets_host.cpp"
                     ,0x4b5,0,"%s");
   }
-  bVar3 = HeaderSendFragments(prVar1);
-  if (bVar3) {
-    bVar3 = ConsoleLogSendIsFinished(prVar1);
-    if (bVar3) {
+  bVar2 = HeaderSendFragments(param_1);
+  if (bVar2) {
+    bVar2 = ConsoleLogSendIsFinished(param_1);
+    if (bVar2) {
       in_r4 = (char *)0x583;
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\net_debugsockets_host.cpp"
                       ,0x583,0,"%s");
     }
-    iVar2 = ConsoleLogSendChunks(prVar1);
-    if (iVar2 < 0) {
-      ClientStateSet_FatalError(prVar1,in_r4);
-      __restgprlr_29();
+    iVar1 = ConsoleLogSendChunks(param_1);
+    if (iVar1 < 0) {
+      ClientStateSet_FatalError(param_1,in_r4);
       return;
     }
-    bVar3 = ConsoleLogSendIsFinished(prVar1);
-    if (bVar3) {
-      ClientStateSet_Idle(prVar1);
+    bVar2 = ConsoleLogSendIsFinished(param_1);
+    if (bVar2) {
+      ClientStateSet_Idle(param_1);
     }
   }
-  __restgprlr_29();
   return;
 }
 
@@ -1890,224 +1814,221 @@ bool CommandShouldEcho(char *param_1)
 
 // 8250F9D0  CommandRecvHandler  (qcommon/net_debugsockets_host.cpp:1432)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void CommandRecvHandler(rdbgClientInfo *param_1)
 
 {
   uint uVar1;
-  char *pcVar2;
-  rdbgClientInfo *prVar3;
-  bool bVar4;
+  bool bVar2;
+  char *pcVar3;
   
-  prVar3 = (rdbgClientInfo *)__savegprlr_27(param_1);
-  if (prVar3 == (rdbgClientInfo *)0x0) {
+  if (param_1 == (rdbgClientInfo *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\net_debugsockets_host.cpp"
                     ,0x59d,0,"%s");
   }
-  if (prVar3->state != RDBG_CSTATE_COMMAND_RECV) {
+  if (param_1->state != RDBG_CSTATE_COMMAND_RECV) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\net_debugsockets_host.cpp"
                     ,0x59e,0,"%s");
   }
-  bVar4 = GeneralRecieveGetFragments(prVar3);
-  if (bVar4) {
-    uVar1 = (prVar3->msgData).un.general.bodyLength;
-    pcVar2 = (prVar3->msgData).un.general.buffer;
+  bVar2 = GeneralRecieveGetFragments(param_1);
+  if (bVar2) {
+    uVar1 = (param_1->msgData).un.general.bodyLength;
+    pcVar3 = (param_1->msgData).un.general.buffer;
     if (0xfff < uVar1) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\net_debugsockets_host.cpp"
                       ,0x5a7,0,"%s");
     }
-    pcVar2[uVar1] = '\0';
-    bVar4 = CommandShouldEcho(pcVar2);
-    if (bVar4) {
+    pcVar3[uVar1] = '\0';
+    bVar2 = CommandShouldEcho(pcVar3);
+    if (bVar2) {
       Com_Printf(0x10,"]%s\n");
     }
-    Cbuf_AddText(LOCAL_CLIENT_0,pcVar2);
-    ClientStateSet_Idle(prVar3);
+    Cbuf_AddText(LOCAL_CLIENT_0,pcVar3);
+    ClientStateSet_Idle(param_1);
   }
-  __restgprlr_27();
   return;
 }
 
 
 // 8250FAC8  LightEditRecvHandler  (qcommon/net_debugsockets_host.cpp:1461)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void LightEditRecvHandler(rdbgClientInfo *param_1)
 
 {
   uint uVar1;
-  char *pcVar2;
-  rdbgClientInfo *prVar3;
-  bool bVar4;
+  bool bVar2;
+  char *pcVar3;
   
-  prVar3 = (rdbgClientInfo *)__savegprlr_27(param_1);
-  if (prVar3 == (rdbgClientInfo *)0x0) {
+  if (param_1 == (rdbgClientInfo *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\net_debugsockets_host.cpp"
                     ,0x5ba,0,"%s");
   }
-  if (prVar3->state != RDBG_CSTATE_LIGHTEDIT_HOST_RECV) {
+  if (param_1->state != RDBG_CSTATE_LIGHTEDIT_HOST_RECV) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\net_debugsockets_host.cpp"
                     ,0x5bb,0,"%s");
   }
-  bVar4 = GeneralRecieveGetFragments(prVar3);
-  if (bVar4) {
-    uVar1 = (prVar3->msgData).un.general.bodyLength;
-    pcVar2 = (prVar3->msgData).un.general.buffer;
+  bVar2 = GeneralRecieveGetFragments(param_1);
+  if (bVar2) {
+    uVar1 = (param_1->msgData).un.general.bodyLength;
+    pcVar3 = (param_1->msgData).un.general.buffer;
     if (0xfff < uVar1) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\net_debugsockets_host.cpp"
                       ,0x5c4,0,"%s");
     }
-    pcVar2[uVar1] = '\0';
-    LightEdit_ProcessMessage(prVar3,(uchar *)pcVar2,(prVar3->msgData).un.general.bodyLength);
-    ClientStateSet_Idle(prVar3);
+    pcVar3[uVar1] = '\0';
+    LightEdit_ProcessMessage(param_1,(uchar *)pcVar3,(param_1->msgData).un.general.bodyLength);
+    ClientStateSet_Idle(param_1);
   }
-  __restgprlr_27();
   return;
 }
 
 
 // 8250FBA0  KeepAliveSendSetup  (qcommon/net_debugsockets_host.cpp:1487)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void KeepAliveSendSetup(rdbgClientInfo *param_1)
 
 {
-  int iVar1;
-  ulong uVar2;
+  ulong uVar1;
   
-  iVar1 = __savegprlr_29(param_1);
-  if (iVar1 == 0) {
+  if (param_1 == (rdbgClientInfo *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\net_debugsockets_host.cpp"
                     ,0x5d3,0,"%s");
   }
-  if (*(int *)(iVar1 + 8) != 3) {
+  if (param_1->state != RDBG_CSTATE_IDLE) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\net_debugsockets_host.cpp"
                     ,0x5d4,0,"%s");
   }
-  uVar2 = GetTickCount();
-  if (((ulonglong)*(uint *)(iVar1 + 0x10) + 5 & 0xffffffff) <= (ulonglong)uVar2 / 1000) {
-    *(int *)(iVar1 + 0x10) = (int)((ulonglong)uVar2 / 1000);
-    *(undefined1 *)(iVar1 + 0x26) = 0;
-    *(undefined1 *)(iVar1 + 0x24) = 0x49;
-    *(undefined1 *)(iVar1 + 0x25) = 0x57;
-    *(undefined1 *)(iVar1 + 0x27) = 0;
-    *(undefined4 *)(iVar1 + 0x28) = 0;
-    *(undefined4 *)(iVar1 + 0x2c) = 0;
-    *(undefined4 *)(iVar1 + 8) = 7;
+  uVar1 = GetTickCount();
+  if ((ulonglong)(param_1->timeStamp + 5) <= (ulonglong)uVar1 / 1000) {
+    param_1->timeStamp = (uint)((ulonglong)uVar1 / 1000);
+    (param_1->msgData).header.messageType = '\0';
+    (param_1->msgData).header.keyA = 'I';
+    (param_1->msgData).header.keyB = 'W';
+    (param_1->msgData).header.messageFlags = '\0';
+    (param_1->msgData).header.bodyLength = 0;
+    (param_1->msgData).headerXferCnt = 0;
+    param_1->state = RDBG_CSTATE_HEADERONLY_SEND;
   }
-  __restgprlr_29();
   return;
 }
 
 
 // 8250FC60  SetStateFromNewHeader  (qcommon/net_debugsockets_host.cpp:1505)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 bool SetStateFromNewHeader(rdbgClientInfo *param_1)
 
 {
   uint uVar1;
-  rdbgClientInfo *prVar2;
-  bool bVar3;
-  undefined1 uVar4;
+  bool bVar2;
   
-  prVar2 = (rdbgClientInfo *)__savegprlr_28(param_1);
-  if (prVar2 == (rdbgClientInfo *)0x0) {
+  if (param_1 == (rdbgClientInfo *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\net_debugsockets_host.cpp"
                     ,0x5e2,0,"%s");
   }
-  if (prVar2->state != RDBG_CSTATE_HEADER_RECV) {
+  if (param_1->state != RDBG_CSTATE_HEADER_RECV) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\net_debugsockets_host.cpp"
                     ,0x5e3,0,"%s");
   }
-  if ((prVar2->msgData).headerXferCnt != 8) {
+  if ((param_1->msgData).headerXferCnt != 8) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\net_debugsockets_host.cpp"
                     ,0x5e4,0,"%s");
   }
-  switch((prVar2->msgData).header.messageType) {
+  switch((param_1->msgData).header.messageType) {
   case '\0':
-    ClientStateSet_Idle(prVar2);
-    uVar4 = __restgprlr_28(1);
-    return (bool)uVar4;
+    ClientStateSet_Idle(param_1);
+    return true;
   default:
     Com_Printf(0x10,"Unhandled msg type \'%i\' from client %i.  Throwing next %i bytes away.\n");
-    bVar3 = UnknownMsgRecvSetup(prVar2);
-    uVar4 = __restgprlr_28(bVar3);
-    return (bool)uVar4;
+    bVar2 = UnknownMsgRecvSetup(param_1);
+    return bVar2;
   case '\x02':
-    ClientStateSet_Leaving(prVar2);
-    uVar4 = __restgprlr_28(1);
-    return (bool)uVar4;
+    ClientStateSet_Leaving(param_1);
+    return true;
   case '\x03':
-    bVar3 = GeneralRecieveSetup(prVar2,RDBG_CSTATE_COMMAND_RECV);
-    uVar4 = __restgprlr_28(bVar3);
-    return (bool)uVar4;
+    bVar2 = GeneralRecieveSetup(param_1,RDBG_CSTATE_COMMAND_RECV);
+    return bVar2;
   case '\x05':
-    bVar3 = GeneralRecieveSetup(prVar2,RDBG_CSTATE_TABCOMPLETE_RECV);
-    uVar4 = __restgprlr_28(bVar3);
-    return (bool)uVar4;
+    bVar2 = GeneralRecieveSetup(param_1,RDBG_CSTATE_TABCOMPLETE_RECV);
+    return bVar2;
   case '\b':
-    if (prVar2->state != RDBG_CSTATE_HEADER_RECV) {
+    if (param_1->state != RDBG_CSTATE_HEADER_RECV) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\net_debugsockets_host.cpp"
                       ,0x333,0,"%s");
     }
-    uVar1 = (prVar2->msgData).header.bodyLength;
+    uVar1 = (param_1->msgData).header.bodyLength;
     if (uVar1 < 0x1000) {
-      (prVar2->msgData).un.general.bodyLength = uVar1;
-      prVar2->state = RDBG_CSTATE_DVARREQ_RECV;
-      (prVar2->msgData).un.general.bodyXferCnt = 0;
-      uVar4 = __restgprlr_28(1);
-      return (bool)uVar4;
+      (param_1->msgData).un.general.bodyLength = uVar1;
+      param_1->state = RDBG_CSTATE_DVARREQ_RECV;
+      (param_1->msgData).un.general.bodyXferCnt = 0;
+      return true;
     }
     break;
   case '\n':
-    if (prVar2->state != RDBG_CSTATE_HEADER_RECV) {
+    if (param_1->state != RDBG_CSTATE_HEADER_RECV) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\net_debugsockets_host.cpp"
                       ,0x333,0,"%s");
     }
-    uVar1 = (prVar2->msgData).header.bodyLength;
+    uVar1 = (param_1->msgData).header.bodyLength;
     if (uVar1 < 0x1000) {
-      (prVar2->msgData).un.general.bodyLength = uVar1;
-      prVar2->state = RDBG_CSTATE_LIGHTEDIT_HOST_RECV;
-      (prVar2->msgData).un.general.bodyXferCnt = 0;
-      uVar4 = __restgprlr_28(1);
-      return (bool)uVar4;
+      (param_1->msgData).un.general.bodyLength = uVar1;
+      param_1->state = RDBG_CSTATE_LIGHTEDIT_HOST_RECV;
+      (param_1->msgData).un.general.bodyXferCnt = 0;
+      return true;
     }
   }
   Com_Printf(0x10,"Debugsockets: Incoming command of length %li is too long for our buffer.\n");
-  uVar4 = __restgprlr_28(0);
-  return (bool)uVar4;
+  return false;
 }
 
 
 // 8250FE88  ClientFrame_Console  (qcommon/net_debugsockets_host.cpp:1538)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 bool ClientFrame_Console(rdbgClientInfo *param_1)
 
 {
-  rdbgClientInfo *prVar1;
-  bool bVar2;
-  undefined1 uVar3;
-  int iVar4;
+  bool bVar1;
+  int iVar2;
   
-  prVar1 = (rdbgClientInfo *)__savegprlr_28(param_1);
-  if (prVar1 == (rdbgClientInfo *)0x0) {
+  if (param_1 == (rdbgClientInfo *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\net_debugsockets_host.cpp"
                     ,0x607,0,"%s");
   }
-  if (prVar1->type != RDBG_CLIENTTYPE_CONSOLE) {
+  if (param_1->type != RDBG_CLIENTTYPE_CONSOLE) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\net_debugsockets_host.cpp"
                     ,0x608,0,"%s");
   }
-  if (prVar1->state == RDBG_CSTATE_DISCONNECTED) {
+  if (param_1->state == RDBG_CSTATE_DISCONNECTED) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\net_debugsockets_host.cpp"
                     ,0x609,0,"%s");
   }
-  iVar4 = 0;
+  iVar2 = 0;
   do {
-    if (((prVar1->state == RDBG_CSTATE_IDLE) || (prVar1->state == RDBG_CSTATE_HEADER_RECV)) &&
-       ((bVar2 = HeaderRecieve(prVar1), !bVar2 ||
-        (((prVar1->msgData).headerXferCnt == 8 && (bVar2 = SetStateFromNewHeader(prVar1), !bVar2))))
-       )) goto switchD_8250ff98_caseD_1;
-    switch(prVar1->state) {
+    if ((param_1->state == RDBG_CSTATE_IDLE) || (param_1->state == RDBG_CSTATE_HEADER_RECV)) {
+      bVar1 = HeaderRecieve(param_1);
+      if (!bVar1) {
+        return false;
+      }
+      if (((param_1->msgData).headerXferCnt == 8) &&
+         (bVar1 = SetStateFromNewHeader(param_1), !bVar1)) {
+        return false;
+      }
+    }
+    switch(param_1->state) {
     case RDBG_CSTATE_FATALERROR:
       goto switchD_8250ff98_caseD_1;
     default:
@@ -2115,82 +2036,76 @@ bool ClientFrame_Console(rdbgClientInfo *param_1)
     case RDBG_CSTATE_HEADER_RECV:
       goto switchD_8250ff98_caseD_6;
     case RDBG_CSTATE_HEADERONLY_SEND:
-      HeaderOnlySendHandler(prVar1);
+      HeaderOnlySendHandler(param_1);
       goto switchD_8250ff98_caseD_2;
     case RDBG_CSTATE_COMMAND_RECV:
-      CommandRecvHandler(prVar1);
-      if ((prVar1->state != RDBG_CSTATE_IDLE) || (iVar4 = iVar4 + 1, 0x13 < iVar4))
+      CommandRecvHandler(param_1);
+      if ((param_1->state != RDBG_CSTATE_IDLE) || (iVar2 = iVar2 + 1, 0x13 < iVar2))
       goto switchD_8250ff98_caseD_2;
       break;
     case RDBG_CSTATE_TABCOMPLETE_RECV:
-      TabCompleteRecvHandler(prVar1);
+      TabCompleteRecvHandler(param_1);
       goto switchD_8250ff98_caseD_2;
     case RDBG_CSTATE_TABCOMPLETE_SEND:
-      TabCompleteSendHandler(prVar1);
+      TabCompleteSendHandler(param_1);
       goto switchD_8250ff98_caseD_2;
     case RDBG_CSTATE_CONSOLELOG_SEND:
       ConsoleLogThreadShieldUp();
-      ConsoleLogSendHandler(prVar1);
+      ConsoleLogSendHandler(param_1);
       ConsoleLogThreadShieldDown();
-      if (prVar1->state == RDBG_CSTATE_IDLE) {
-        uVar3 = __restgprlr_28(1);
-        return (bool)uVar3;
+      if (param_1->state == RDBG_CSTATE_IDLE) {
+        return true;
       }
       goto switchD_8250ff98_caseD_2;
     case RDBG_CSTATE_DVAR_SEND:
-      DvarSendHandler(prVar1);
+      DvarSendHandler(param_1);
       goto switchD_8250ff98_caseD_2;
     case RDBG_CSTATE_DVARREQ_RECV:
-      DVarRequestRecvHandler(prVar1);
+      DVarRequestRecvHandler(param_1);
       goto switchD_8250ff98_caseD_2;
     case RDBG_CSTATE_UNKNOWNMSG_RECV:
-      UnknownMsgRecvHandler(prVar1);
+      UnknownMsgRecvHandler(param_1);
 switchD_8250ff98_caseD_2:
-      if (prVar1->state != RDBG_CSTATE_FATALERROR) {
-        if (prVar1->state == RDBG_CSTATE_IDLE) {
-          if (prVar1->tabCompletePrefix[0] != '\0') {
-            bVar2 = TabCompleteSendSetup(prVar1);
-            if (prVar1->tabCompletePrefix[0] != '\0') {
-              MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\net_debugsockets_host.cpp"
-                              ,0x652,0,"%s");
-            }
-            uVar3 = __restgprlr_28(bVar2);
-            return (bool)uVar3;
-          }
-          if (prVar1->dvarRequest[0] != '\0') {
-            bVar2 = DvarSendSetup(prVar1);
-            if (prVar1->dvarRequest[0] != '\0') {
-              MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\net_debugsockets_host.cpp"
-                              ,0x659,0,"%s");
-            }
-            uVar3 = __restgprlr_28(bVar2);
-            return (bool)uVar3;
-          }
-          ConsoleLogThreadShieldUp();
-          bVar2 = ConsoleLogIsInValidState(prVar1);
-          if (!bVar2) {
-            ConsoleLogResetMarkers(prVar1);
-            ConsoleLogThreadShieldDown();
-            Com_Printf(0x10,"Log position reset for client #%i.\n");
-            ConsoleLogThreadShieldUp();
-          }
-          bVar2 = ConsoleLogIsUpToDate(prVar1);
-          if (!bVar2) {
-            bVar2 = ConsoleLogSendSetup(prVar1);
-            ConsoleLogThreadShieldDown();
-            uVar3 = __restgprlr_28(bVar2);
-            return (bool)uVar3;
-          }
-          ConsoleLogThreadShieldDown();
-          KeepAliveSendSetup(prVar1);
-        }
-switchD_8250ff98_caseD_6:
-        uVar3 = __restgprlr_28(1);
-        return (bool)uVar3;
-      }
+      if (param_1->state == RDBG_CSTATE_FATALERROR) {
 switchD_8250ff98_caseD_1:
-      uVar3 = __restgprlr_28(0);
-      return (bool)uVar3;
+        return false;
+      }
+      if (param_1->state == RDBG_CSTATE_IDLE) {
+        if (param_1->tabCompletePrefix[0] != '\0') {
+          bVar1 = TabCompleteSendSetup(param_1);
+          if (param_1->tabCompletePrefix[0] != '\0') {
+            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\net_debugsockets_host.cpp"
+                            ,0x652,0,"%s");
+          }
+          return bVar1;
+        }
+        if (param_1->dvarRequest[0] != '\0') {
+          bVar1 = DvarSendSetup(param_1);
+          if (param_1->dvarRequest[0] != '\0') {
+            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\net_debugsockets_host.cpp"
+                            ,0x659,0,"%s");
+          }
+          return bVar1;
+        }
+        ConsoleLogThreadShieldUp();
+        bVar1 = ConsoleLogIsInValidState(param_1);
+        if (!bVar1) {
+          ConsoleLogResetMarkers(param_1);
+          ConsoleLogThreadShieldDown();
+          Com_Printf(0x10,"Log position reset for client #%i.\n");
+          ConsoleLogThreadShieldUp();
+        }
+        bVar1 = ConsoleLogIsUpToDate(param_1);
+        if (!bVar1) {
+          bVar1 = ConsoleLogSendSetup(param_1);
+          ConsoleLogThreadShieldDown();
+          return bVar1;
+        }
+        ConsoleLogThreadShieldDown();
+        KeepAliveSendSetup(param_1);
+      }
+switchD_8250ff98_caseD_6:
+      return true;
     }
   } while( true );
 }
@@ -2198,35 +2113,41 @@ switchD_8250ff98_caseD_1:
 
 // 825101A0  ClientFrame_LightEdit  (qcommon/net_debugsockets_host.cpp:1654)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 bool ClientFrame_LightEdit(rdbgClientInfo *param_1)
 
 {
   rdbgClientState_t rVar1;
-  rdbgClientInfo *prVar2;
-  bool bVar3;
-  undefined1 uVar4;
-  int iVar5;
+  bool bVar2;
+  int iVar3;
   
-  prVar2 = (rdbgClientInfo *)__savegprlr_29(param_1);
-  if (prVar2 == (rdbgClientInfo *)0x0) {
+  if (param_1 == (rdbgClientInfo *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\net_debugsockets_host.cpp"
                     ,0x67b,0,"%s");
   }
-  if (prVar2->type != RDBG_CLIENTTYPE_LIGHTEDIT) {
+  if (param_1->type != RDBG_CLIENTTYPE_LIGHTEDIT) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\net_debugsockets_host.cpp"
                     ,0x67c,0,"%s");
   }
-  if (prVar2->state == RDBG_CSTATE_DISCONNECTED) {
+  if (param_1->state == RDBG_CSTATE_DISCONNECTED) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\net_debugsockets_host.cpp"
                     ,0x67d,0,"%s");
   }
-  iVar5 = 0;
+  iVar3 = 0;
   do {
-    if (((prVar2->state == RDBG_CSTATE_IDLE) || (prVar2->state == RDBG_CSTATE_HEADER_RECV)) &&
-       ((bVar3 = HeaderRecieve(prVar2), !bVar3 ||
-        (((prVar2->msgData).headerXferCnt == 8 && (bVar3 = SetStateFromNewHeader(prVar2), !bVar3))))
-       )) goto switchD_825102b0_caseD_1;
-    switch(prVar2->state) {
+    if ((param_1->state == RDBG_CSTATE_IDLE) || (param_1->state == RDBG_CSTATE_HEADER_RECV)) {
+      bVar2 = HeaderRecieve(param_1);
+      if (!bVar2) {
+        return false;
+      }
+      if (((param_1->msgData).headerXferCnt == 8) &&
+         (bVar2 = SetStateFromNewHeader(param_1), !bVar2)) {
+        return false;
+      }
+    }
+    switch(param_1->state) {
     case RDBG_CSTATE_FATALERROR:
       goto switchD_825102b0_caseD_1;
     default:
@@ -2234,32 +2155,30 @@ bool ClientFrame_LightEdit(rdbgClientInfo *param_1)
     case RDBG_CSTATE_HEADER_RECV:
       goto switchD_825102b0_caseD_6;
     case RDBG_CSTATE_HEADERONLY_SEND:
-      HeaderOnlySendHandler(prVar2);
+      HeaderOnlySendHandler(param_1);
       goto switchD_825102b0_caseD_2;
     case RDBG_CSTATE_COMMAND_RECV:
-      CommandRecvHandler(prVar2);
-      rVar1 = prVar2->state;
+      CommandRecvHandler(param_1);
+      rVar1 = param_1->state;
       break;
     case RDBG_CSTATE_UNKNOWNMSG_RECV:
-      UnknownMsgRecvHandler(prVar2);
+      UnknownMsgRecvHandler(param_1);
 switchD_825102b0_caseD_2:
       LightEdit_Frame();
-      if (prVar2->state != RDBG_CSTATE_FATALERROR) {
-        if (prVar2->state == RDBG_CSTATE_IDLE) {
-          KeepAliveSendSetup(prVar2);
-        }
-switchD_825102b0_caseD_6:
-        uVar4 = __restgprlr_29(1);
-        return (bool)uVar4;
-      }
+      if (param_1->state == RDBG_CSTATE_FATALERROR) {
 switchD_825102b0_caseD_1:
-      uVar4 = __restgprlr_29(0);
-      return (bool)uVar4;
+        return false;
+      }
+      if (param_1->state == RDBG_CSTATE_IDLE) {
+        KeepAliveSendSetup(param_1);
+      }
+switchD_825102b0_caseD_6:
+      return true;
     case RDBG_CSTATE_LIGHTEDIT_HOST_RECV:
-      LightEditRecvHandler(prVar2);
-      rVar1 = prVar2->state;
+      LightEditRecvHandler(param_1);
+      rVar1 = param_1->state;
     }
-    if ((rVar1 != RDBG_CSTATE_IDLE) || (iVar5 = iVar5 + 1, 0x13 < iVar5))
+    if ((rVar1 != RDBG_CSTATE_IDLE) || (iVar3 = iVar3 + 1, 0x13 < iVar3))
     goto switchD_825102b0_caseD_2;
   } while( true );
 }
@@ -2267,135 +2186,134 @@ switchD_825102b0_caseD_1:
 
 // 82510388  ClientFrame_Connecting  (qcommon/net_debugsockets_host.cpp:1734)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 bool ClientFrame_Connecting(rdbgClientInfo *param_1)
 
 {
-  rdbgClientInfo *prVar1;
-  int iVar2;
-  bool bVar3;
-  undefined1 uVar4;
-  uint uVar5;
+  int iVar1;
+  bool bVar2;
+  uint uVar3;
   char local_30 [48];
   
-  prVar1 = (rdbgClientInfo *)__savegprlr_28(param_1);
-  if (prVar1 == (rdbgClientInfo *)0x0) {
+  if (param_1 == (rdbgClientInfo *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\net_debugsockets_host.cpp"
                     ,0x6c7,0,"%s");
   }
-  if (prVar1->state == RDBG_CSTATE_IDLE) {
-    (prVar1->msgData).un.general.bodyLength = 0;
-    prVar1->state = RDBG_CSTATE_WELCOME_SEND;
+  if (param_1->state == RDBG_CSTATE_IDLE) {
+    (param_1->msgData).un.general.bodyLength = 0;
+    param_1->state = RDBG_CSTATE_WELCOME_SEND;
   }
-  if (prVar1->state == RDBG_CSTATE_WELCOME_SEND) {
-    iVar2 = IWSocketDataSend(prVar1->socketID,&g_WelcomePacket,8,(prVar1->msgData).un.log.currentPos
-                             ,8);
-    if (iVar2 < 0) goto LAB_82510490;
-    uVar5 = (prVar1->msgData).un.general.bodyLength + iVar2;
-    (prVar1->msgData).un.general.bodyLength = uVar5;
-    if (uVar5 == 8) {
-      (prVar1->msgData).headerXferCnt = 0;
-      prVar1->state = RDBG_CSTATE_HEADER_RECV;
+  if (param_1->state == RDBG_CSTATE_WELCOME_SEND) {
+    iVar1 = IWSocketDataSend(param_1->socketID,&g_WelcomePacket,8,
+                             (param_1->msgData).un.log.currentPos,8);
+    if (iVar1 < 0) {
+      return false;
+    }
+    uVar3 = (param_1->msgData).un.general.bodyLength + iVar1;
+    (param_1->msgData).un.general.bodyLength = uVar3;
+    if (uVar3 == 8) {
+      (param_1->msgData).headerXferCnt = 0;
+      param_1->state = RDBG_CSTATE_HEADER_RECV;
     }
   }
-  if (prVar1->state == RDBG_CSTATE_HEADER_RECV) {
-    bVar3 = HeaderRecieve(prVar1);
-    if (!bVar3) goto LAB_82510490;
-    bVar3 = HeaderXferIsFinished(prVar1);
-    if (bVar3) {
-      if ((prVar1->msgData).header.messageType != '\x01') {
+  if (param_1->state == RDBG_CSTATE_HEADER_RECV) {
+    bVar2 = HeaderRecieve(param_1);
+    if (!bVar2) {
+      return false;
+    }
+    bVar2 = HeaderXferIsFinished(param_1);
+    if (bVar2) {
+      if ((param_1->msgData).header.messageType != '\x01') {
         Com_PrintError(0x10,
                        "Remote debug-client #%i sent initial message of type (%i); this host was expecting (%i).\n"
                       );
-        goto LAB_82510490;
+        return false;
       }
-      prVar1->state = RDBG_CSTATE_CLIENTTYPE_RECV;
+      param_1->state = RDBG_CSTATE_CLIENTTYPE_RECV;
     }
   }
-  if (prVar1->state == RDBG_CSTATE_CLIENTTYPE_RECV) {
-    iVar2 = IWSocketDataRecv(prVar1->socketID,local_30,1,0,1);
-    if (1 < iVar2) {
+  if (param_1->state == RDBG_CSTATE_CLIENTTYPE_RECV) {
+    iVar1 = IWSocketDataRecv(param_1->socketID,local_30,1,0,1);
+    if (1 < iVar1) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\net_debugsockets_host.cpp"
                       ,0x6fd,0,"%s");
     }
-    if (iVar2 < 0) {
-LAB_82510490:
-      uVar4 = __restgprlr_28(0);
-      return (bool)uVar4;
+    if (iVar1 < 0) {
+      return false;
     }
-    if (iVar2 == 1) {
+    if (iVar1 == 1) {
       if (local_30[0] == '\x01') {
-        prVar1->type = RDBG_CLIENTTYPE_CONSOLE;
+        param_1->type = RDBG_CLIENTTYPE_CONSOLE;
       }
       else {
         if (local_30[0] != '\x02') {
           Com_PrintError(0x10,
                          "Remote debug-client #%i requested being set to an unrecognized client type (%i).\n"
                         );
-          uVar4 = __restgprlr_28(0);
-          return (bool)uVar4;
+          return false;
         }
-        prVar1->type = RDBG_CLIENTTYPE_LIGHTEDIT;
-        LightEdit_Connect(prVar1);
+        param_1->type = RDBG_CLIENTTYPE_LIGHTEDIT;
+        LightEdit_Connect(param_1);
       }
-      ClientStateSet_Idle(prVar1);
+      ClientStateSet_Idle(param_1);
       Com_Printf(0,"Debug-client #%i: client type set to 0x%x.\n");
     }
   }
-  uVar4 = __restgprlr_28(1);
-  return (bool)uVar4;
+  return true;
 }
 
 
 // 82510580  ClientFrame  (qcommon/net_debugsockets_host.cpp:1821)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 bool ClientFrame(rdbgClientInfo *param_1)
 
 {
   rdbgClientType_t rVar1;
-  rdbgClientInfo *prVar2;
-  undefined1 uVar3;
-  bool bVar4;
+  bool bVar2;
   
-  prVar2 = (rdbgClientInfo *)__savegprlr_29(param_1);
-  if (prVar2 == (rdbgClientInfo *)0x0) {
+  if (param_1 == (rdbgClientInfo *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\net_debugsockets_host.cpp"
                     ,0x720,0,"%s");
   }
-  if (prVar2->state == RDBG_CSTATE_DISCONNECTED) {
+  if (param_1->state == RDBG_CSTATE_DISCONNECTED) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\net_debugsockets_host.cpp"
                     ,0x721,0,"%s");
   }
-  if (prVar2->state == RDBG_CSTATE_LEAVING) {
+  if (param_1->state == RDBG_CSTATE_LEAVING) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\net_debugsockets_host.cpp"
                     ,0x722,0,"%s");
   }
-  if (prVar2->state == RDBG_CSTATE_FATALERROR) {
+  if (param_1->state == RDBG_CSTATE_FATALERROR) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\net_debugsockets_host.cpp"
                     ,0x723,0,"%s");
   }
-  rVar1 = prVar2->type;
+  rVar1 = param_1->type;
   if (rVar1 == RDBG_CLIENTTYPE_UNSPECIFIED) {
-    bVar4 = ClientFrame_Connecting(prVar2);
-    uVar3 = __restgprlr_29(bVar4);
-    return (bool)uVar3;
+    bVar2 = ClientFrame_Connecting(param_1);
+    return bVar2;
   }
   if (rVar1 == RDBG_CLIENTTYPE_CONSOLE) {
-    bVar4 = ClientFrame_Console(prVar2);
-    uVar3 = __restgprlr_29(bVar4);
-    return (bool)uVar3;
+    bVar2 = ClientFrame_Console(param_1);
+    return bVar2;
   }
   if (RDBG_CLIENTTYPE_LIGHTEDIT < rVar1) {
     Com_Printf(0x10,"Client is unhandled type \'%i\'.\n");
-    uVar3 = __restgprlr_29(0);
-    return (bool)uVar3;
+    return false;
   }
-  bVar4 = ClientFrame_LightEdit(prVar2);
-  uVar3 = __restgprlr_29(bVar4);
-  return (bool)uVar3;
+  bVar2 = ClientFrame_LightEdit(param_1);
+  return bVar2;
 }
 
 
 // 825106A0  ClientsAcceptNew  (qcommon/net_debugsockets_host.cpp:1853)
+
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 
 bool ClientsAcceptNew(uint param_1)
 
@@ -2403,74 +2321,70 @@ bool ClientsAcceptNew(uint param_1)
   char cVar1;
   uint uVar2;
   int iVar3;
-  undefined1 uVar5;
   ulong uVar4;
-  longlong lVar6;
-  char *pcVar7;
-  rdbgClientInfo *prVar8;
+  longlong lVar5;
+  char *pcVar6;
+  rdbgClientInfo *prVar7;
   ulong local_40 [4];
   sockaddr_in asStack_30 [3];
   
-  uVar2 = __savegprlr_29(param_1);
-  uVar2 = IWSocketAccept(uVar2,asStack_30);
-  lVar6 = -(longlong)(int)uVar2 + -1;
-  if ((lVar6 + (-(ulonglong)(lVar6 == 0) - (-(longlong)(int)uVar2 + -2)) & 0xff) == 0) {
+  uVar2 = IWSocketAccept(param_1,asStack_30);
+  lVar5 = -(longlong)(int)uVar2 + -1;
+  if ((lVar5 + (-(ulonglong)(lVar5 == 0) - (-(longlong)(int)uVar2 + -2)) & 0xff) == 0) {
     iVar3 = WSAGetLastError();
     if (iVar3 != 0x2733) {
       NET_ErrorString();
       Com_Printf(0x10,"Socket accept attempt returned error: %s\n");
     }
-    uVar5 = __restgprlr_29(0);
-    return (bool)uVar5;
+    return false;
   }
   local_40[0] = 1;
   iVar3 = ioctlsocket(uVar2,-0x7ffb9982,local_40);
   if (iVar3 == 0) {
-    prVar8 = g_clients;
+    prVar7 = g_clients;
     iVar3 = 0;
     do {
-      if (prVar8->state == RDBG_CSTATE_DISCONNECTED) {
-        prVar8->clientNum = iVar3;
-        prVar8->socketID = uVar2;
-        IWSocketIPFromAddr(asStack_30,prVar8->remoteIP);
-        prVar8->remotePort = asStack_30[0].sin_port;
+      if (prVar7->state == RDBG_CSTATE_DISCONNECTED) {
+        prVar7->clientNum = iVar3;
+        prVar7->socketID = uVar2;
+        IWSocketIPFromAddr(asStack_30,prVar7->remoteIP);
+        prVar7->remotePort = asStack_30[0].sin_port;
         uVar4 = GetTickCount();
-        prVar8->type = RDBG_CLIENTTYPE_UNSPECIFIED;
-        prVar8->tabCompletePrefix[0] = '\0';
-        prVar8->dvarRequest[0] = '\0';
-        prVar8->timeStamp = uVar4 / 1000;
+        prVar7->type = RDBG_CLIENTTYPE_UNSPECIFIED;
+        prVar7->tabCompletePrefix[0] = '\0';
+        prVar7->dvarRequest[0] = '\0';
+        prVar7->timeStamp = uVar4 / 1000;
         ConsoleLogThreadShieldUp();
-        ConsoleLogResetMarkers(prVar8);
+        ConsoleLogResetMarkers(prVar7);
         ConsoleLogThreadShieldDown();
-        prVar8->state = RDBG_CSTATE_IDLE;
+        prVar7->state = RDBG_CSTATE_IDLE;
         Com_Printf(0x10,"Client #%i connected from: ");
-        ClientPrintIP(prVar8);
+        ClientPrintIP(prVar7);
         Com_Printf(0x10,"\n");
-        uVar5 = __restgprlr_29(1);
-        return (bool)uVar5;
+        return true;
       }
-      prVar8 = prVar8 + 1;
+      prVar7 = prVar7 + 1;
       iVar3 = iVar3 + 1;
-      pcVar7 = MY_REJECTREASON;
-    } while ((int)prVar8 < -0x7c902600);
+      pcVar6 = MY_REJECTREASON;
+    } while ((int)prVar7 < -0x7c902600);
     do {
-      cVar1 = *pcVar7;
-      pcVar7 = pcVar7 + 1;
+      cVar1 = *pcVar6;
+      pcVar6 = pcVar6 + 1;
     } while (cVar1 != '\0');
-    send(uVar2,MY_REJECTREASON,(int)(pcVar7 + (-1 - (int)MY_REJECTREASON)),0);
+    send(uVar2,MY_REJECTREASON,(int)(pcVar6 + (-1 - (int)MY_REJECTREASON)),0);
     closesocket(uVar2);
     Com_Printf(0x10,"Rejected incoming connection.  No more client slots left.\n");
-    uVar5 = __restgprlr_29(0);
-    return (bool)uVar5;
+    return false;
   }
   closesocket(uVar2);
-  uVar5 = __restgprlr_29(0);
-  return (bool)uVar5;
+  return false;
 }
 
 
 // 82510868  ClientsFrame  (qcommon/net_debugsockets_host.cpp:1907)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 bool ClientsFrame(void)
@@ -2478,34 +2392,30 @@ bool ClientsFrame(void)
 {
   rdbgClientState_t rVar1;
   bool bVar2;
-  undefined1 uVar3;
-  rdbgClientInfo *prVar4;
+  rdbgClientInfo *prVar3;
   
-  __savegprlr_29();
-  prVar4 = g_clients;
+  prVar3 = g_clients;
   do {
-    rVar1 = prVar4->state;
+    rVar1 = prVar3->state;
     if (rVar1 != RDBG_CSTATE_DISCONNECTED) {
       if (rVar1 == RDBG_CSTATE_LEAVING) {
-        ClientDisconnect(prVar4);
+        ClientDisconnect(prVar3);
       }
       else if (rVar1 == RDBG_CSTATE_FATALERROR) {
         Com_Printf(0x10,"Client #%i force-disconnected due to error.");
-        ClientDisconnect(prVar4);
+        ClientDisconnect(prVar3);
       }
       else {
-        bVar2 = ClientFrame(prVar4);
+        bVar2 = ClientFrame(prVar3);
         if (!bVar2) {
-          ClientStateSet_Leaving(prVar4);
-          uVar3 = __restgprlr_29(0);
-          return (bool)uVar3;
+          ClientStateSet_Leaving(prVar3);
+          return false;
         }
       }
     }
-    prVar4 = prVar4 + 1;
-  } while ((int)prVar4 < -0x7c902600);
-  uVar3 = __restgprlr_29(1);
-  return (bool)uVar3;
+    prVar3 = prVar3 + 1;
+  } while ((int)prVar3 < -0x7c902600);
+  return true;
 }
 
 
@@ -2576,76 +2486,71 @@ bool FlushSendForAssert(rdbgClientInfo *param_1)
 
 // 82510A80  ClientAssertHandler  (qcommon/net_debugsockets_host.cpp:2019)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 bool ClientAssertHandler(rdbgClientInfo *param_1,char *param_2)
 
 {
-  rdbgClientState_t rVar1;
-  int iVar2;
-  rdbgClientInfo *prVar3;
-  undefined1 uVar4;
-  longlong lVar5;
-  char *pcVar7;
-  longlong lVar6;
-  bool bVar8;
+  char cVar1;
+  rdbgClientState_t rVar2;
+  char *pcVar3;
+  bool bVar4;
   undefined1 local_30;
   undefined1 local_2f;
   undefined1 local_2e;
   undefined1 local_2d;
-  int local_2c;
+  char *local_2c;
   
-  lVar5 = (longlong)(int)param_2;
-  prVar3 = (rdbgClientInfo *)__savegprlr_29(param_1);
-  if (prVar3 == (rdbgClientInfo *)0x0) {
-    bVar8 = true;
+  if (param_1 == (rdbgClientInfo *)0x0) {
+    bVar4 = true;
   }
   else {
-    rVar1 = prVar3->state;
-    if (rVar1 == RDBG_CSTATE_DISCONNECTED) {
-      bVar8 = true;
+    rVar2 = param_1->state;
+    if (rVar2 == RDBG_CSTATE_DISCONNECTED) {
+      bVar4 = true;
     }
     else {
-      bVar8 = true;
-      if (rVar1 != RDBG_CSTATE_FATALERROR) {
-        if (rVar1 == RDBG_CSTATE_LEAVING) {
-          bVar8 = true;
+      bVar4 = true;
+      if (rVar2 != RDBG_CSTATE_FATALERROR) {
+        if (rVar2 == RDBG_CSTATE_LEAVING) {
+          bVar4 = true;
         }
         else {
-          bVar8 = rVar1 == RDBG_CSTATE_WELCOME_SEND;
+          bVar4 = rVar2 == RDBG_CSTATE_WELCOME_SEND;
         }
       }
     }
   }
-  if (!bVar8) {
-    rVar1 = prVar3->state;
-    if ((((rVar1 == RDBG_CSTATE_HEADERONLY_SEND) || (rVar1 == RDBG_CSTATE_TABCOMPLETE_SEND)) ||
-        (rVar1 == RDBG_CSTATE_DVAR_SEND)) || (rVar1 == RDBG_CSTATE_CONSOLELOG_SEND)) {
-      bVar8 = (prVar3->msgData).headerXferCnt != 0;
+  if (!bVar4) {
+    rVar2 = param_1->state;
+    if ((((rVar2 == RDBG_CSTATE_HEADERONLY_SEND) || (rVar2 == RDBG_CSTATE_TABCOMPLETE_SEND)) ||
+        (rVar2 == RDBG_CSTATE_DVAR_SEND)) || (rVar2 == RDBG_CSTATE_CONSOLELOG_SEND)) {
+      bVar4 = (param_1->msgData).headerXferCnt != 0;
     }
     else {
-      bVar8 = false;
+      bVar4 = false;
     }
-    lVar6 = lVar5;
-    if ((!bVar8) || (bVar8 = FlushSendForAssert(prVar3), bVar8)) {
+    pcVar3 = param_2;
+    if ((!bVar4) || (bVar4 = FlushSendForAssert(param_1), bVar4)) {
       do {
-        pcVar7 = (char *)lVar6;
-        lVar6 = lVar6 + 1;
-      } while (*pcVar7 != '\0');
-      iVar2 = ((int)lVar6 - (int)(void *)lVar5) + -1;
+        cVar1 = *pcVar3;
+        pcVar3 = pcVar3 + 1;
+      } while (cVar1 != '\0');
+      pcVar3 = pcVar3 + (-1 - (int)param_2);
       local_30 = 0x49;
       local_2f = 0x57;
       local_2e = 9;
       local_2d = 0;
-      local_2c = iVar2;
-      bVar8 = SocketData__BLOCKING(IWSocketDataSend,prVar3->socketID,&local_30,8,8);
-      if (bVar8) {
-        SocketData__BLOCKING(IWSocketDataSend,prVar3->socketID,(void *)lVar5,iVar2,iVar2);
-        uVar4 = __restgprlr_29(1);
-        return (bool)uVar4;
+      local_2c = pcVar3;
+      bVar4 = SocketData__BLOCKING(IWSocketDataSend,param_1->socketID,&local_30,8,8);
+      if (bVar4) {
+        SocketData__BLOCKING(IWSocketDataSend,param_1->socketID,param_2,(int)pcVar3,(int)pcVar3);
+        return true;
       }
     }
   }
-  uVar4 = __restgprlr_29(0);
-  return (bool)uVar4;
+  return false;
 }
 
 
@@ -2727,55 +2632,56 @@ bool NET_RemoteDbgHostFrame(void)
 
 // 82510DE8  NET_RemoteDbgHostShutdownSockets  (qcommon/net_debugsockets_host.cpp:2107)
 
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 bool NET_RemoteDbgHostShutdownSockets(void)
 
 {
-  undefined1 uVar1;
-  int iVar2;
+  int iVar1;
   
-  __savegprlr_22();
   Sys_EnterCriticalSection(CRITSECT_DBGSOCKETS_FRAME);
   g_rdbgInitializedSockets = false;
-  iVar2 = -0x7c9067c8;
+  iVar1 = -0x7c9067c8;
   do {
-    if (*(int *)(iVar2 + -0x10) != 0) {
-      if (iVar2 == 0x18) {
+    if (*(int *)(iVar1 + -0x10) != 0) {
+      if (iVar1 == 0x18) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\net_debugsockets_host.cpp"
                         ,0x222,0,"%s");
       }
-      if (*(int *)(iVar2 + -0x10) == 0) {
+      if (*(int *)(iVar1 + -0x10) == 0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\net_debugsockets_host.cpp"
                         ,0x223,0,"%s");
       }
       Com_Printf(0x10,"Disconnected debug-client #%i (");
       Com_Printf(0x10,"%d.%d.%d.%d:%d");
       Com_Printf(0x10,").\n");
-      closesocket(*(uint *)(iVar2 + -0xc));
-      if (*(int *)(iVar2 + -0x14) == 2) {
-        LightEdit_Disconnect((void *)(iVar2 + -0x18));
+      closesocket(*(uint *)(iVar1 + -0xc));
+      if (*(int *)(iVar1 + -0x14) == 2) {
+        LightEdit_Disconnect((void *)(iVar1 + -0x18));
       }
       memset();
     }
-    iVar2 = iVar2 + 0x1078;
-  } while (iVar2 < -0x7c9025e8);
+    iVar1 = iVar1 + 0x1078;
+  } while (iVar1 < -0x7c9025e8);
   closesocket(g_hostSocket);
   Sys_LeaveCriticalSection(CRITSECT_DBGSOCKETS_FRAME);
   LightEdit_Shutdown();
-  uVar1 = __restgprlr_22(1);
-  return (bool)uVar1;
+  return true;
 }
 
 
 // 82510F40  NET_RemoteDbgHostWriteToLog  (qcommon/net_debugsockets_host.cpp:2132)
+
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 
 void NET_RemoteDbgHostWriteToLog(int param_1,char *param_2)
 
 {
   char acStack_30 [48];
   
-  __savegprlr_29(param_1);
   Sys_EnterCriticalSection(CRITSECT_DBGSOCKETS_HOST_LOGBUFFER);
   if (g_logShield != false) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\net_debugsockets_host.cpp"
@@ -2788,13 +2694,14 @@ void NET_RemoteDbgHostWriteToLog(int param_1,char *param_2)
     TextPool_AddText(&g_log,param_2);
   }
   ConsoleLogThreadShieldDown();
-  __restgprlr_29();
   return;
 }
 
 
 // 82511000  NET_RemoteDbgHostWaitForStableConsoleConnection  (qcommon/net_debugsockets_host.cpp:2153)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void NET_RemoteDbgHostWaitForStableConsoleConnection(void)
@@ -2804,7 +2711,6 @@ void NET_RemoteDbgHostWaitForStableConsoleConnection(void)
   int iVar2;
   longlong lVar3;
   
-  __savegprlr_29();
   lVar3 = 10;
   do {
     ClientsFrame();
@@ -2817,64 +2723,63 @@ void NET_RemoteDbgHostWaitForStableConsoleConnection(void)
     ClientsAcceptNew(g_hostSocket);
     prVar1 = &g_clients[0].state;
     do {
-      if ((prVar1[-1] == RDBG_CLIENTTYPE_CONSOLE) && (*prVar1 == RDBG_CSTATE_IDLE))
-      goto LAB_82511080;
+      if ((prVar1[-1] == RDBG_CLIENTTYPE_CONSOLE) && (*prVar1 == RDBG_CSTATE_IDLE)) {
+        return;
+      }
       prVar1 = prVar1 + 0x41e;
     } while ((int)prVar1 < -0x7c9025f8);
     Sys_Sleep(0x32);
     iVar2 = iVar2 + 1;
-  } while (iVar2 < 10);
-LAB_82511080:
-  __restgprlr_29();
-  return;
+    if (9 < iVar2) {
+      return;
+    }
+  } while( true );
 }
 
 
 // 82511088  NET_RemoteDbgHostAssertHandler  (qcommon/net_debugsockets_host.cpp:2179)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 bool NET_RemoteDbgHostAssertHandler(char *param_1)
 
 {
-  char *pcVar1;
-  undefined1 uVar2;
-  bool bVar3;
-  undefined8 uVar4;
-  rdbgClientInfo *prVar5;
+  bool bVar1;
+  bool bVar2;
+  rdbgClientInfo *prVar3;
   
-  pcVar1 = (char *)__savegprlr_28(param_1);
   Sys_EnterCriticalSection(CRITSECT_DBGSOCKETS_FRAME);
   if ((g_rdbgInitializedSockets != false) && (g_insideCommFrame == false)) {
     NET_RemoteDbgHostWaitForStableConsoleConnection();
-    uVar4 = 0;
-    prVar5 = g_clients;
+    bVar2 = false;
+    prVar3 = g_clients;
     do {
-      bVar3 = ClientAssertHandler(prVar5,pcVar1);
-      if (bVar3) {
-        uVar4 = 1;
+      bVar1 = ClientAssertHandler(prVar3,param_1);
+      if (bVar1) {
+        bVar2 = true;
       }
-      prVar5 = prVar5 + 1;
-    } while ((int)prVar5 < -0x7c902600);
+      prVar3 = prVar3 + 1;
+    } while ((int)prVar3 < -0x7c902600);
     Sys_LeaveCriticalSection(CRITSECT_DBGSOCKETS_FRAME);
-    uVar2 = __restgprlr_28(uVar4);
-    return (bool)uVar2;
+    return bVar2;
   }
   Sys_LeaveCriticalSection(CRITSECT_DBGSOCKETS_FRAME);
-  uVar2 = __restgprlr_28(0);
-  return (bool)uVar2;
+  return false;
 }
 
 
 // 82511128  NET_RemoteDbgSendMessageBlocking  (qcommon/net_debugsockets_host.cpp:2213)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 bool NET_RemoteDbgSendMessageBlocking(void *param_1,int param_2,uchar *param_3,uint param_4)
 
 {
-  rdbgClientInfo *prVar1;
-  bool bVar2;
-  undefined1 uVar3;
+  bool bVar1;
   
-  prVar1 = (rdbgClientInfo *)__savegprlr_26(param_1);
-  if (prVar1 == (rdbgClientInfo *)0x0) {
+  if (param_1 == (void *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\net_debugsockets_host.cpp"
                     ,0x8a9,0,"%s");
   }
@@ -2882,18 +2787,18 @@ bool NET_RemoteDbgSendMessageBlocking(void *param_1,int param_2,uchar *param_3,u
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\net_debugsockets_host.cpp"
                     ,0x8ab,0,"%s");
   }
-  ClientHeaderInit(prVar1,param_2,param_4);
-  bVar2 = SocketData__BLOCKING(IWSocketDataSend,prVar1->socketID,&prVar1->msgData,8,8);
-  if (bVar2) {
-    bVar2 = SocketData__BLOCKING(IWSocketDataSend,prVar1->socketID,param_3,param_4,param_4);
-    if (bVar2) {
-      uVar3 = __restgprlr_26(1);
-      return (bool)uVar3;
-    }
+  ClientHeaderInit(param_1,param_2,param_4);
+  bVar1 = SocketData__BLOCKING
+                    (IWSocketDataSend,*(uint *)((int)param_1 + 0xc),(void *)((int)param_1 + 0x24),8,
+                     8);
+  if ((bVar1) &&
+     (bVar1 = SocketData__BLOCKING
+                        (IWSocketDataSend,*(uint *)((int)param_1 + 0xc),param_3,param_4,param_4),
+     bVar1)) {
+    return true;
   }
-  ClientDisconnect(prVar1);
-  uVar3 = __restgprlr_26(0);
-  return (bool)uVar3;
+  ClientDisconnect(param_1);
+  return false;
 }
 
 

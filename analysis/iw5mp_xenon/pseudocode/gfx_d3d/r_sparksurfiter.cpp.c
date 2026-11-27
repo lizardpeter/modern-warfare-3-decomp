@@ -2,29 +2,29 @@
 
 // 8277B768  SkipToNextDrawGroup  (gfx_d3d/r_sparksurfiter.cpp:6)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void GfxSparkSurfIter::SkipToNextDrawGroup(GfxSparkSurfIter *param_1)
 
 {
-  uint uVar1;
-  short sVar2;
-  uint *puVar3;
-  undefined4 *puVar4;
-  short local_40;
+  GfxSparkSurf *pGVar1;
+  ushort uVar2;
+  GfxSparkSurf *pGVar3;
+  ushort local_40;
   
-  puVar3 = (uint *)__savegprlr_27(param_1);
-  local_40 = (short)((uint)*(undefined4 *)*puVar3 >> 0x10);
-  sVar2 = local_40;
+  local_40 = (param_1->current->fields).materialSortedIndex;
+  uVar2 = local_40;
   do {
-    if (puVar3[1] <= *puVar3) {
+    if (param_1->end <= param_1->current) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_sparksurfiter_inline.h"
                       ,0x55,0,"%s");
     }
-    uVar1 = *puVar3;
-    puVar4 = (undefined4 *)(uVar1 + 4);
-    *puVar3 = (uint)puVar4;
-  } while ((uVar1 + 4 != puVar3[1]) &&
-          (local_40 = (short)((uint)*puVar4 >> 0x10), local_40 == sVar2));
-  __restgprlr_27();
+    pGVar1 = param_1->current;
+    pGVar3 = pGVar1 + 1;
+    param_1->current = pGVar3;
+  } while ((pGVar1 + 1 != param_1->end) &&
+          (local_40 = (pGVar3->fields).materialSortedIndex, local_40 == uVar2));
   return;
 }
 

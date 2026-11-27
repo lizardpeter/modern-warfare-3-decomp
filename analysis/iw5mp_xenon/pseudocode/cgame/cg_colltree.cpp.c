@@ -97,222 +97,188 @@ void CG_ClearEntityCollWorld(LocalClientNum_t param_1)
 
 // 822A77B0  CG_GetEntityCollSector  (cgame/cg_colltree.cpp:165)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 CgEntCollSector * CG_GetEntityCollSector(LocalClientNum_t param_1,ushort param_2)
 
 {
-  ulonglong uVar1;
-  CgEntCollSector *pCVar2;
-  ulonglong uVar3;
-  
-  uVar3 = (ulonglong)(short)param_2;
-  uVar1 = __savegprlr_29(param_1);
-  if (3 < (uVar1 & 0xffffffff)) {
+  if (LOCAL_CLIENT_3 < param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_colltree.cpp",0xa8,0,
                     "localClientNum doesn\'t index COLL_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)");
   }
-  if ((uVar3 & 0xffff) == 0) {
+  if (param_2 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_colltree.cpp",0xa9,0,
                     "%s");
   }
-  if (0x3ff < (uVar3 & 0xffff)) {
+  if (0x3ff < param_2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_colltree.cpp",0xaa,0,
                     "%s\n\t(sectorIndex) = %i");
   }
-  pCVar2 = (CgEntCollSector *)__restgprlr_29(uVar1 * 0x401c + (uVar3 & 0xffff) * 0x10 + -0x7d5fa264)
-  ;
-  return pCVar2;
+  return cgEntCollWorld[param_1].sectors + param_2;
 }
 
 
 // 822A7870  CG_GetCollNode  (cgame/cg_colltree.cpp:182)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 CgEntCollNode * CG_GetCollNode(LocalClientNum_t param_1,int param_2)
 
 {
-  ulonglong uVar1;
-  CgEntCollNode *pCVar2;
-  ulonglong uVar3;
-  
-  uVar3 = (ulonglong)param_2;
-  uVar1 = __savegprlr_29(param_1);
-  if (3 < (uVar1 & 0xffffffff)) {
+  if (LOCAL_CLIENT_3 < param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_colltree.cpp",0xb7,0,
                     "localClientNum doesn\'t index COLL_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)");
   }
-  if (0x7ff < (uVar3 & 0xffffffff)) {
+  if (0x7ff < (uint)param_2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_colltree.cpp",0xb8,0,
                     "entIndex doesn\'t index MAX_GENTITIES\n\t%i not in [0, %i)");
   }
-  uVar3 = (uVar1 & 0x1fffff) * 0x800 + uVar3;
-  pCVar2 = (CgEntCollNode *)
-           __restgprlr_29((uVar3 + (uVar3 & 0x3fffffff) * 4 & 0x3fffffff) * 4 + -0x7d622280);
-  return pCVar2;
+  return cgEntCollNodes[param_1].nodes + param_2;
 }
 
 
 // 822A7908  CG_GetEntityCollNode  (cgame/cg_colltree.cpp:194)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* struct CgEntCollNode const * __cdecl CG_GetEntityCollNode(enum LocalClientNum_t,int) */
 
 CgEntCollNode * CG_GetEntityCollNode(LocalClientNum_t param_1,int param_2)
 
 {
-  ulonglong uVar1;
-  CgEntCollNode *pCVar2;
-  ulonglong uVar3;
-  
-  uVar3 = (ulonglong)param_2;
-  uVar1 = __savegprlr_29(param_1);
-  if (3 < (uVar1 & 0xffffffff)) {
+  if (LOCAL_CLIENT_3 < param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_colltree.cpp",0xb7,0,
                     "localClientNum doesn\'t index COLL_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)");
   }
-  if (0x7ff < (uVar3 & 0xffffffff)) {
+  if (0x7ff < (uint)param_2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_colltree.cpp",0xb8,0,
                     "entIndex doesn\'t index MAX_GENTITIES\n\t%i not in [0, %i)");
   }
-  uVar3 = (uVar1 & 0x1fffff) * 0x800 + uVar3;
-  pCVar2 = (CgEntCollNode *)
-           __restgprlr_29((uVar3 + (uVar3 & 0x3fffffff) * 4 & 0x3fffffff) * 4 + -0x7d622280);
-  return pCVar2;
+  return cgEntCollNodes[param_1].nodes + param_2;
 }
 
 
 // 822A7910  CG_AddEntityToCollSector  (cgame/cg_colltree.cpp:203)
 
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void CG_AddEntityToCollSector(LocalClientNum_t param_1,int param_2,ushort param_3)
 
 {
-  ulonglong uVar1;
-  CgEntCollNode *pCVar2;
-  ulonglong uVar3;
-  ulonglong uVar4;
-  longlong lVar5;
-  ushort *puVar6;
-  ulonglong uVar7;
+  ushort uVar1;
+  uint uVar2;
+  CgEntCollNode *pCVar3;
+  ushort *puVar4;
   
-  uVar4 = (ulonglong)(short)param_3;
-  uVar3 = (ulonglong)param_2;
-  uVar1 = __savegprlr_22(param_1);
-  if (3 < (uVar1 & 0xffffffff)) {
+  if (LOCAL_CLIENT_3 < param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_colltree.cpp",0xd3,0,
                     "localClientNum doesn\'t index COLL_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)");
   }
-  if (0x7ff < (uVar3 & 0xffffffff)) {
+  if (0x7ff < (uint)param_2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_colltree.cpp",0xd4,0,
                     "entIndex doesn\'t index MAX_GENTITIES\n\t%i not in [0, %i)");
   }
-  if ((uVar4 & 0xffff) == 0) {
+  uVar2 = (uint)param_3;
+  if (uVar2 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_colltree.cpp",0xd5,0,
                     "%s");
   }
-  if (0x3ff < (uVar4 & 0xffff)) {
+  if (0x3ff < uVar2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_colltree.cpp",0xd6,0,
                     "%s\n\t(sectorIndex) = %i");
   }
-  pCVar2 = CG_GetCollNode((LocalClientNum_t)uVar1,(int)uVar3);
-  lVar5 = uVar1 * 0x401c + (uVar4 & 0xffff) * 0x10 + -0x7d5fa258;
-  puVar6 = (ushort *)lVar5;
-  if (((ulonglong)*puVar6 - 1 & 0xffffffff) <= (uVar3 & 0xffffffff)) {
-    do {
-      uVar7 = (ulonglong)*(ushort *)lVar5 - 1;
-      if (3 < (uVar1 & 0xffffffff)) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_colltree.cpp",
-                        0xb7,0,
-                        "localClientNum doesn\'t index COLL_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)")
-        ;
-      }
-      if (0x7ff < (uVar7 & 0xffffffff)) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_colltree.cpp",
-                        0xb8,0,"entIndex doesn\'t index MAX_GENTITIES\n\t%i not in [0, %i)");
-      }
-      uVar7 = (uVar1 & 0x1fffff) * 0x800 + uVar7;
-      lVar5 = (uVar7 + (uVar7 & 0x3fffffff) * 4 & 0x3fffffff) * 4 + -0x7d62227e;
-      puVar6 = (ushort *)lVar5;
-    } while (((ulonglong)*puVar6 - 1 & 0xffffffff) <= (uVar3 & 0xffffffff));
+  pCVar3 = CG_GetCollNode(param_1,param_2);
+  puVar4 = &cgEntCollWorld[param_1].sectors[uVar2].entListHead;
+  uVar1 = *puVar4;
+  while (uVar1 - 1 <= (uint)param_2) {
+    uVar1 = *puVar4;
+    if (LOCAL_CLIENT_3 < param_1) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_colltree.cpp",0xb7,
+                      0,"localClientNum doesn\'t index COLL_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)")
+      ;
+    }
+    if (0x7ff < uVar1 - 1) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_colltree.cpp",0xb8,
+                      0,"entIndex doesn\'t index MAX_GENTITIES\n\t%i not in [0, %i)");
+    }
+    puVar4 = &cgEntCollNodes[param_1].nodes[uVar1 - 1].nextEntInSector;
+    uVar1 = *puVar4;
   }
-  pCVar2->sector = (ushort)uVar4;
-  pCVar2->nextEntInSector = *puVar6;
-  *puVar6 = (short)uVar3 + 1;
-  __restgprlr_22();
+  pCVar3->sector = param_3;
+  pCVar3->nextEntInSector = *puVar4;
+  *puVar4 = (short)param_2 + 1;
   return;
 }
 
 
 // 822A7AC0  CG_AllocEntityCollSector  (cgame/cg_colltree.cpp:244)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 ushort CG_AllocEntityCollSector(LocalClientNum_t param_1,float *param_2,float *param_3)
 
 {
   ushort uVar1;
-  uint uVar2;
-  ushort uVar3;
-  ulonglong uVar4;
-  float *pfVar5;
-  ulonglong uVar6;
-  float *pfVar7;
-  bool bVar8;
+  ushort uVar2;
+  uint uVar3;
+  bool bVar4;
   float local_60 [24];
   
-  uVar6 = (ulonglong)(int)param_3;
-  uVar4 = (ulonglong)(int)param_2;
-  uVar2 = __savegprlr_23(param_1);
-  if (3 < uVar2) {
+  if (LOCAL_CLIENT_3 < param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_colltree.cpp",0xfb,0,
                     "localClientNum doesn\'t index COLL_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)");
   }
-  if ((uVar4 & 0xffffffff) == 0) {
+  if (param_2 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_colltree.cpp",0xfc,0,
                     "%s");
   }
-  if ((uVar6 & 0xffffffff) == 0) {
+  if (param_3 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_colltree.cpp",0xfd,0,
                     "%s");
   }
-  uVar3 = cgEntCollWorld[uVar2].freeHead;
+  uVar1 = cgEntCollWorld[param_1].freeHead;
+  uVar3 = (uint)uVar1;
   if (uVar3 != 0) {
-    pfVar5 = (float *)uVar4;
-    pfVar7 = (float *)uVar6;
-    local_60[0] = *pfVar7 - *pfVar5;
-    local_60[1] = pfVar7[1] - pfVar5[1];
-    bVar8 = local_60[0] <= local_60[1];
-    if (512.0 < local_60[bVar8]) {
-      if (cgEntCollWorld[uVar2].sectors[uVar3].entListHead != 0) {
+    local_60[0] = *param_3 - *param_2;
+    local_60[1] = param_3[1] - param_2[1];
+    bVar4 = *param_3 - *param_2 <= param_3[1] - param_2[1];
+    if (512.0 < local_60[bVar4]) {
+      if (cgEntCollWorld[param_1].sectors[uVar3].entListHead != 0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_colltree.cpp",
                         0x10d,0,"%s");
       }
-      cgEntCollWorld[uVar2].freeHead = (ushort)cgEntCollWorld[uVar2].sectors[uVar3].tree.u;
-      uVar1 = cgEntCollWorld[uVar2].sectors[uVar3].tree.child[0];
-      cgEntCollWorld[uVar2].sectors[uVar3].tree.axis = (ushort)bVar8;
-      cgEntCollWorld[uVar2].sectors[uVar3].tree.dist = (pfVar5[bVar8] + pfVar7[bVar8]) * 0.5;
-      if (uVar1 != 0) {
+      cgEntCollWorld[param_1].freeHead = (ushort)cgEntCollWorld[param_1].sectors[uVar3].tree.u;
+      uVar2 = cgEntCollWorld[param_1].sectors[uVar3].tree.child[0];
+      cgEntCollWorld[param_1].sectors[uVar3].tree.axis = (ushort)bVar4;
+      cgEntCollWorld[param_1].sectors[uVar3].tree.dist = (param_2[bVar4] + param_3[bVar4]) * 0.5;
+      if (uVar2 != 0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_colltree.cpp",
                         0x114,0,"%s");
       }
-      if (cgEntCollWorld[uVar2].sectors[uVar3].tree.child[1] != 0) {
+      if (cgEntCollWorld[param_1].sectors[uVar3].tree.child[1] != 0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_colltree.cpp",
                         0x115,0,"%s");
       }
-      uVar3 = __restgprlr_23(uVar3);
-      return uVar3;
+      return uVar1;
     }
   }
-  uVar3 = __restgprlr_23(0);
-  return uVar3;
+  return 0;
 }
 
 
 // 822A7C88  CG_SortEntityCollSector  (cgame/cg_colltree.cpp:287)
 
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void CG_SortEntityCollSector(LocalClientNum_t param_1,ushort param_2,float *param_3,float *param_4)
@@ -321,131 +287,120 @@ void CG_SortEntityCollSector(LocalClientNum_t param_1,ushort param_2,float *para
   ushort uVar1;
   ushort uVar2;
   uint uVar3;
-  LocalClientNum_t LVar4;
-  ulonglong uVar5;
-  ushort uVar7;
-  CgEntCollNode *pCVar6;
-  ulonglong uVar8;
-  int iVar9;
-  ulonglong uVar10;
-  ulonglong uVar11;
-  uint uVar12;
-  ulonglong uVar13;
-  ulonglong uVar14;
-  ulonglong uVar15;
-  double dVar16;
+  ushort uVar5;
+  CgEntCollNode *pCVar4;
+  int iVar6;
+  uint uVar7;
+  uint uVar8;
+  CgEntCollNode *pCVar9;
+  CgEntCollNode *pCVar10;
+  uint uVar11;
+  double dVar12;
   float *pfStack0000002c;
   
-  uVar11 = (ulonglong)(int)param_4;
-  uVar10 = (ulonglong)(int)param_3;
-  uVar8 = (ulonglong)(short)param_2;
-  uVar5 = (ulonglong)(int)param_1;
-  __savegprlr();
-  pfStack0000002c = (float *)uVar11;
-  if (3 < (uVar5 & 0xffffffff)) {
+  pfStack0000002c = param_4;
+  if (LOCAL_CLIENT_3 < param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_colltree.cpp",0x12a,0
                     ,"localClientNum doesn\'t index COLL_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)");
   }
-  if ((uVar8 & 0xffff) == 0) {
+  uVar3 = (uint)param_2;
+  if (uVar3 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_colltree.cpp",299,0,
                     "%s");
   }
-  if (0x3ff < (uVar8 & 0xffff)) {
+  if (0x3ff < uVar3) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_colltree.cpp",300,0,
                     "%s\n\t(sectorIndex) = %i");
   }
-  if ((uVar10 & 0xffffffff) == 0) {
+  if (param_3 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_colltree.cpp",0x12d,0
                     ,"%s");
   }
-  if ((uVar11 & 0xffffffff) == 0) {
+  if (param_4 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_colltree.cpp",0x12e,0
                     ,"%s");
   }
-  LVar4 = (LocalClientNum_t)uVar5;
-  uVar3 = (uint)uVar8 & 0xffff;
-  uVar11 = (ulonglong)cgEntCollWorld[LVar4].sectors[uVar3].entListHead;
-  dVar16 = (double)cgEntCollWorld[LVar4].sectors[uVar3].tree.dist;
-  uVar1 = cgEntCollWorld[LVar4].sectors[uVar3].tree.axis;
-  if (uVar11 != 0) {
-    uVar13 = 0;
+  uVar7 = (uint)cgEntCollWorld[param_1].sectors[uVar3].entListHead;
+  dVar12 = (double)cgEntCollWorld[param_1].sectors[uVar3].tree.dist;
+  uVar1 = cgEntCollWorld[param_1].sectors[uVar3].tree.axis;
+  if (uVar7 != 0) {
+    pCVar9 = (CgEntCollNode *)0x0;
     do {
-      uVar14 = uVar11 - 1;
-      if (3 < (uVar5 & 0xffffffff)) {
+      uVar11 = uVar7 - 1;
+      if (LOCAL_CLIENT_3 < param_1) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_colltree.cpp",
                         0xb7,0,
                         "localClientNum doesn\'t index COLL_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)")
         ;
       }
-      if (0x7ff < (uVar14 & 0xffffffff)) {
+      if (0x7ff < uVar11) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_colltree.cpp",
                         0xb8,0,"entIndex doesn\'t index MAX_GENTITIES\n\t%i not in [0, %i)");
       }
-      uVar11 = (uVar5 & 0x1fffff) * 0x800 + uVar14;
-      uVar15 = (uVar11 + (uVar11 & 0x3fffffff) * 4 & 0x3fffffff) * 4 - 0x7d622280;
-      iVar9 = (int)uVar15;
-      if ((double)*(float *)((uVar1 + 1) * 4 + iVar9) <= dVar16) {
-        if ((double)*(float *)((uVar1 + 3) * 4 + iVar9) < dVar16) {
-          uVar7 = cgEntCollWorld[LVar4].sectors[uVar3].tree.child[1];
-          if (uVar7 != 0) goto LAB_822a7ee8;
-          uVar7 = CG_AllocEntityCollSector(LVar4,(float *)uVar10,pfStack0000002c);
-          uVar12 = (uint)uVar7;
-          if (uVar12 != 0) {
-            cgEntCollWorld[LVar4].sectors[uVar3].tree.child[1] = uVar7;
+      pCVar10 = cgEntCollNodes[param_1].nodes + (uVar7 - 1);
+      if ((double)pCVar10->linkMins[uVar1] <= dVar12) {
+        if ((double)pCVar10->linkMaxs[uVar1] < dVar12) {
+          uVar5 = cgEntCollWorld[param_1].sectors[uVar3].tree.child[1];
+          if (uVar5 != 0) goto LAB_822a7ee8;
+          uVar5 = CG_AllocEntityCollSector(param_1,param_3,pfStack0000002c);
+          uVar8 = (uint)uVar5;
+          if (uVar8 != 0) {
+            cgEntCollWorld[param_1].sectors[uVar3].tree.child[1] = uVar5;
             goto LAB_822a7edc;
           }
         }
 LAB_822a7f6c:
-        uVar11 = (ulonglong)*(ushort *)(iVar9 + 2);
+        uVar7 = (uint)cgEntCollNodes[param_1].nodes[uVar7 - 1].nextEntInSector;
       }
       else {
-        uVar7 = cgEntCollWorld[LVar4].sectors[uVar3].tree.child[0];
-        if (uVar7 == 0) {
-          uVar7 = CG_AllocEntityCollSector(LVar4,(float *)uVar10,pfStack0000002c);
-          uVar12 = (uint)uVar7;
-          if (uVar12 == 0) goto LAB_822a7f6c;
-          cgEntCollWorld[LVar4].sectors[uVar3].tree.child[0] = uVar7;
+        uVar5 = cgEntCollWorld[param_1].sectors[uVar3].tree.child[0];
+        if (uVar5 == 0) {
+          uVar5 = CG_AllocEntityCollSector(param_1,param_3,pfStack0000002c);
+          uVar8 = (uint)uVar5;
+          if (uVar8 == 0) goto LAB_822a7f6c;
+          cgEntCollWorld[param_1].sectors[uVar3].tree.child[0] = uVar5;
 LAB_822a7edc:
-          cgEntCollWorld[LVar4].sectors[uVar12].tree.u.parent = (ushort)uVar8;
+          cgEntCollWorld[param_1].sectors[uVar8].tree.u.parent = param_2;
         }
 LAB_822a7ee8:
-        uVar2 = *(ushort *)(iVar9 + 2);
-        uVar11 = (ulonglong)uVar2;
-        if ((uVar13 & 0xffffffff) == 0) {
-          pCVar6 = CG_GetCollNode(LVar4,cgEntCollWorld[LVar4].sectors[uVar3].entListHead - 1);
-          if (ZEXT48(pCVar6) != (uVar15 & 0xffffffff)) {
-            iVar9 = 0x162;
+        uVar2 = cgEntCollNodes[param_1].nodes[uVar7 - 1].nextEntInSector;
+        uVar7 = (uint)uVar2;
+        if (pCVar9 == (CgEntCollNode *)0x0) {
+          pCVar4 = CG_GetCollNode(param_1,cgEntCollWorld[param_1].sectors[uVar3].entListHead - 1);
+          if (pCVar4 != pCVar10) {
+            iVar6 = 0x162;
 LAB_822a7f34:
             MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_colltree.cpp"
-                            ,iVar9,0,"%s");
+                            ,iVar6,0,"%s");
           }
         }
         else {
-          pCVar6 = CG_GetCollNode(LVar4,*(ushort *)((int)uVar13 + 2) - 1);
-          if (ZEXT48(pCVar6) != (uVar15 & 0xffffffff)) {
-            iVar9 = 0x163;
+          pCVar4 = CG_GetCollNode(param_1,pCVar9->nextEntInSector - 1);
+          if (pCVar4 != pCVar10) {
+            iVar6 = 0x163;
             goto LAB_822a7f34;
           }
         }
-        CG_AddEntityToCollSector(LVar4,(int)uVar14,uVar7);
-        uVar15 = uVar13;
-        if ((uVar13 & 0xffffffff) == 0) {
-          cgEntCollWorld[LVar4].sectors[uVar3].entListHead = uVar2;
+        CG_AddEntityToCollSector(param_1,uVar11,uVar5);
+        pCVar10 = pCVar9;
+        if (pCVar9 == (CgEntCollNode *)0x0) {
+          cgEntCollWorld[param_1].sectors[uVar3].entListHead = uVar2;
         }
         else {
-          *(ushort *)((int)uVar13 + 2) = uVar2;
+          pCVar9->nextEntInSector = uVar2;
         }
       }
-      uVar13 = uVar15;
-    } while (uVar11 != 0);
+      pCVar9 = pCVar10;
+    } while (uVar7 != 0);
   }
-  __restgprlr();
   return;
 }
 
 
 // 822A7F90  CG_UnlinkEntityColl  (cgame/cg_colltree.cpp:371)
 
+/* WARNING: Function: __savegprlr_20 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_20 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void CG_UnlinkEntityColl(LocalClientNum_t param_1,int param_2)
@@ -453,93 +408,92 @@ void CG_UnlinkEntityColl(LocalClientNum_t param_1,int param_2)
 {
   ushort uVar1;
   CgEntCollTree *pCVar2;
-  LocalClientNum_t LVar3;
+  CgEntCollNode *pCVar3;
   CgEntCollNode *pCVar4;
   CgEntCollNode *pCVar5;
   CgEntCollNode *pCVar6;
-  CgEntCollNode *pCVar7;
-  ulonglong uVar8;
-  int iVar9;
+  int iVar7;
+  uint uVar8;
+  CgEntCollSector *pCVar9;
   uint uVar10;
-  CgEntCollSector *pCVar11;
-  uint uVar12;
   
-  uVar8 = (ulonglong)param_2;
-  LVar3 = __savegprlr_20(param_1);
-  if (LOCAL_CLIENT_3 < LVar3) {
+  if (LOCAL_CLIENT_3 < param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_colltree.cpp",0x17c,0
                     ,"localClientNum doesn\'t index COLL_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)");
   }
-  if (0x7ff < (uVar8 & 0xffffffff)) {
+  if (0x7ff < (uint)param_2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_colltree.cpp",0x17d,0
                     ,"entIndex doesn\'t index MAX_GENTITIES\n\t%i not in [0, %i)");
   }
-  pCVar4 = CG_GetCollNode(LVar3,(int)uVar8);
-  uVar10 = (uint)pCVar4->sector;
-  if (uVar10 != 0) {
-    pCVar4->sector = 0;
-    pCVar11 = cgEntCollWorld[LVar3].sectors + uVar10;
-    if (cgEntCollWorld[LVar3].sectors[uVar10].entListHead == 0) {
+  pCVar3 = CG_GetCollNode(param_1,param_2);
+  uVar8 = (uint)pCVar3->sector;
+  if (uVar8 != 0) {
+    pCVar3->sector = 0;
+    pCVar9 = cgEntCollWorld[param_1].sectors + uVar8;
+    if (cgEntCollWorld[param_1].sectors[uVar8].entListHead == 0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_colltree.cpp",0x189
                       ,0,"%s");
     }
-    iVar9 = cgEntCollWorld[LVar3].sectors[uVar10].entListHead - 1;
-    if (iVar9 == (int)uVar8) {
-      cgEntCollWorld[LVar3].sectors[uVar10].entListHead = pCVar4->nextEntInSector;
+    iVar7 = cgEntCollWorld[param_1].sectors[uVar8].entListHead - 1;
+    if (iVar7 == param_2) {
+      cgEntCollWorld[param_1].sectors[uVar8].entListHead = pCVar3->nextEntInSector;
     }
     else {
-      pCVar5 = CG_GetCollNode(LVar3,iVar9);
-      pCVar6 = CG_GetCollNode(LVar3,pCVar5->nextEntInSector - 1);
-      while (pCVar6 != pCVar4) {
-        if (pCVar5->nextEntInSector == 0) {
+      pCVar4 = CG_GetCollNode(param_1,iVar7);
+      pCVar5 = CG_GetCollNode(param_1,pCVar4->nextEntInSector - 1);
+      while (pCVar5 != pCVar3) {
+        if (pCVar4->nextEntInSector == 0) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_colltree.cpp",
                           0x19b,0,"%s");
         }
-        pCVar7 = CG_GetCollNode(LVar3,pCVar6->nextEntInSector - 1);
+        pCVar6 = CG_GetCollNode(param_1,pCVar5->nextEntInSector - 1);
+        pCVar4 = pCVar5;
         pCVar5 = pCVar6;
-        pCVar6 = pCVar7;
       }
-      pCVar5->nextEntInSector = pCVar4->nextEntInSector;
+      pCVar4->nextEntInSector = pCVar3->nextEntInSector;
     }
-    uVar1 = cgEntCollWorld[LVar3].sectors[uVar10].entListHead;
+    uVar1 = cgEntCollWorld[param_1].sectors[uVar8].entListHead;
     while( true ) {
-      if (((uVar1 != 0) || ((pCVar11->tree).child[0] != 0)) || ((pCVar11->tree).child[1] != 0))
+      if (((uVar1 != 0) || ((pCVar9->tree).child[0] != 0)) || ((pCVar9->tree).child[1] != 0))
       goto LAB_822a81dc;
-      uVar12 = (uint)(pCVar11->tree).u.parent;
-      pCVar2 = &pCVar11->tree;
-      if (uVar12 == 0) break;
-      pCVar11 = cgEntCollWorld[LVar3].sectors + uVar12;
-      pCVar2->u = (<unnamed_type_u>)cgEntCollWorld[LVar3].freeHead;
-      cgEntCollWorld[LVar3].freeHead = (ushort)uVar10;
-      if (cgEntCollWorld[LVar3].sectors[uVar12].tree.child[0] == uVar10) {
-        cgEntCollWorld[LVar3].sectors[uVar12].tree.child[0] = 0;
+      uVar10 = (uint)(pCVar9->tree).u.parent;
+      pCVar2 = &pCVar9->tree;
+      if (uVar10 == 0) break;
+      pCVar9 = cgEntCollWorld[param_1].sectors + uVar10;
+      pCVar2->u = (<unnamed_type_u>)cgEntCollWorld[param_1].freeHead;
+      cgEntCollWorld[param_1].freeHead = (ushort)uVar8;
+      if (cgEntCollWorld[param_1].sectors[uVar10].tree.child[0] == uVar8) {
+        cgEntCollWorld[param_1].sectors[uVar10].tree.child[0] = 0;
       }
       else {
-        if (cgEntCollWorld[LVar3].sectors[uVar12].tree.child[1] != uVar10) {
+        if (cgEntCollWorld[param_1].sectors[uVar10].tree.child[1] != uVar8) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_colltree.cpp",
                           0x1b4,0,"%s");
         }
-        cgEntCollWorld[LVar3].sectors[uVar12].tree.child[1] = 0;
+        cgEntCollWorld[param_1].sectors[uVar10].tree.child[1] = 0;
       }
-      uVar1 = cgEntCollWorld[LVar3].sectors[uVar12].entListHead;
-      uVar10 = uVar12;
+      uVar1 = cgEntCollWorld[param_1].sectors[uVar10].entListHead;
+      uVar8 = uVar10;
     }
-    if (uVar10 != 1) {
+    if (uVar8 != 1) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_colltree.cpp",0x1a3
                       ,0,"%s");
     }
 LAB_822a81dc:
-    for (uVar1 = (pCVar11->tree).u.parent; uVar1 != 0;
-        uVar1 = cgEntCollWorld[LVar3].sectors[uVar1].tree.u.parent) {
+    for (uVar1 = (pCVar9->tree).u.parent; uVar1 != 0;
+        uVar1 = cgEntCollWorld[param_1].sectors[uVar1].tree.u.parent) {
     }
   }
-  __restgprlr_20();
   return;
 }
 
 
 // 822A8208  CG_LinkEntityColl  (cgame/cg_colltree.cpp:458)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void CG_LinkEntityColl(LocalClientNum_t param_1,int param_2,Bounds *param_3)
@@ -547,96 +501,85 @@ void CG_LinkEntityColl(LocalClientNum_t param_1,int param_2,Bounds *param_3)
 {
   float fVar1;
   float fVar2;
-  LocalClientNum_t LVar3;
-  CgEntCollNode *pCVar4;
-  ulonglong uVar5;
-  int iVar6;
+  CgEntCollNode *pCVar3;
+  uint uVar4;
+  uint uVar5;
+  CgEntCollWorld *pCVar6;
   uint uVar7;
-  uint uVar8;
-  CgEntCollWorld *pCVar9;
-  uint uVar10;
+  double dVar8;
+  double dVar9;
+  double dVar10;
   double dVar11;
-  double dVar12;
-  double dVar13;
-  double dVar14;
   float local_80 [4];
   float local_70;
   float local_6c;
   float local_68;
   float local_64;
   
-  uVar5 = (ulonglong)param_2;
-  __savegprlr_26(param_1);
-  LVar3 = __savefpr_28();
-  if (LOCAL_CLIENT_3 < LVar3) {
+  if (LOCAL_CLIENT_3 < param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_colltree.cpp",0x1d6,0
                     ,"localClientNum doesn\'t index COLL_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)");
   }
-  if (0x7ff < (uVar5 & 0xffffffff)) {
+  if (0x7ff < (uint)param_2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_colltree.cpp",0x1d7,0
                     ,"entIndex doesn\'t index MAX_GENTITIES\n\t%i not in [0, %i)");
   }
-  pCVar9 = cgEntCollWorld + LVar3;
-  iVar6 = (int)uVar5;
-  pCVar4 = CG_GetCollNode(LVar3,iVar6);
+  pCVar6 = cgEntCollWorld + param_1;
+  pCVar3 = CG_GetCollNode(param_1,param_2);
   local_70 = param_3->midPoint[0] - param_3->halfSize[0];
-  dVar14 = (double)local_70;
+  dVar11 = (double)local_70;
   local_68 = param_3->halfSize[0] + param_3->midPoint[0];
-  dVar13 = (double)local_68;
+  dVar10 = (double)local_68;
   local_6c = param_3->midPoint[1] - param_3->halfSize[1];
-  dVar12 = (double)local_6c;
+  dVar9 = (double)local_6c;
   local_64 = param_3->halfSize[1] + param_3->midPoint[1];
-  dVar11 = (double)local_64;
+  dVar8 = (double)local_64;
   do {
-    fVar1 = (pCVar9->box).midPoint[0];
-    local_80[0] = cgEntCollWorld[LVar3].box.halfSize[0];
-    fVar2 = cgEntCollWorld[LVar3].box.midPoint[1];
+    fVar1 = (pCVar6->box).midPoint[0];
+    local_80[0] = cgEntCollWorld[param_1].box.halfSize[0];
+    fVar2 = cgEntCollWorld[param_1].box.midPoint[1];
     local_80[2] = fVar1 - local_80[0];
-    local_80[1] = cgEntCollWorld[LVar3].box.halfSize[1];
+    local_80[1] = cgEntCollWorld[param_1].box.halfSize[1];
     local_80[0] = local_80[0] + fVar1;
     local_80[3] = fVar2 - local_80[1];
     local_80[1] = local_80[1] + fVar2;
-    uVar8 = 1;
+    uVar5 = 1;
     do {
       while( true ) {
-        uVar10 = uVar8;
-        uVar7 = (uint)pCVar9->sectors[uVar10].tree.axis;
-        fVar1 = pCVar9->sectors[uVar10].tree.dist;
-        if (local_80[uVar7 + 4] <= fVar1) break;
-        uVar8 = (uint)pCVar9->sectors[uVar10].tree.child[0];
-        local_80[uVar7 + 2] = fVar1;
-        if (uVar8 == 0) goto LAB_822a8384;
+        uVar7 = uVar5;
+        uVar4 = (uint)pCVar6->sectors[uVar7].tree.axis;
+        fVar1 = pCVar6->sectors[uVar7].tree.dist;
+        if (local_80[uVar4 + 4] <= fVar1) break;
+        uVar5 = (uint)pCVar6->sectors[uVar7].tree.child[0];
+        local_80[uVar4 + 2] = fVar1;
+        if (uVar5 == 0) goto LAB_822a8384;
       }
-      if (fVar1 <= local_80[uVar7 + 6]) {
-        if (uVar10 == pCVar4->sector) {
-          pCVar4->linkMins[0] = (float)dVar14;
-          pCVar4->linkMins[1] = (float)dVar12;
-          pCVar4->linkMaxs[0] = (float)dVar13;
-          pCVar4->linkMaxs[1] = (float)dVar11;
-          __restfpr_28();
-          __restgprlr_26();
+      if (fVar1 <= local_80[uVar4 + 6]) {
+        if (uVar7 == pCVar3->sector) {
+          pCVar3->linkMins[0] = (float)dVar11;
+          pCVar3->linkMins[1] = (float)dVar9;
+          pCVar3->linkMaxs[0] = (float)dVar10;
+          pCVar3->linkMaxs[1] = (float)dVar8;
           return;
         }
         break;
       }
-      uVar8 = (uint)pCVar9->sectors[uVar10].tree.child[1];
-      local_80[uVar7] = fVar1;
-    } while (uVar8 != 0);
+      uVar5 = (uint)pCVar6->sectors[uVar7].tree.child[1];
+      local_80[uVar4] = fVar1;
+    } while (uVar5 != 0);
 LAB_822a8384:
-    if (pCVar4->sector == 0) {
-      CG_AddEntityToCollSector(LVar3,iVar6,(ushort)uVar10);
+    if (pCVar3->sector == 0) {
+      CG_AddEntityToCollSector(param_1,param_2,(ushort)uVar7);
 LAB_822a83d8:
-      pCVar4->linkMins[0] = (float)dVar14;
-      pCVar4->linkMins[1] = (float)dVar12;
-      pCVar4->linkMaxs[0] = (float)dVar13;
-      pCVar4->linkMaxs[1] = (float)dVar11;
-      CG_SortEntityCollSector(LVar3,(ushort)uVar10,local_80 + 2,local_80);
-      __restfpr_28();
-      __restgprlr_26();
+      pCVar3->linkMins[0] = (float)dVar11;
+      pCVar3->linkMins[1] = (float)dVar9;
+      pCVar3->linkMaxs[0] = (float)dVar10;
+      pCVar3->linkMaxs[1] = (float)dVar8;
+      CG_SortEntityCollSector(param_1,(ushort)uVar7,local_80 + 2,local_80);
       return;
     }
-    if (uVar10 == pCVar4->sector) goto LAB_822a83d8;
-    CG_UnlinkEntityColl(LVar3,iVar6);
+    if (uVar7 == pCVar3->sector) goto LAB_822a83d8;
+    CG_UnlinkEntityColl(param_1,param_2);
   } while( true );
 }
 

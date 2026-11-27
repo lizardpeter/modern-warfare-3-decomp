@@ -16,6 +16,8 @@ void TRACK_profile(void)
 
 // 82607E08  Profile_Init  (universal/profile.cpp:316)
 
+/* WARNING: Function: __savegprlr_21 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_21 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void Profile_Init(void)
@@ -29,7 +31,6 @@ void Profile_Init(void)
   char **ppcVar6;
   undefined4 *puVar7;
   
-  __savegprlr_21();
   puVar7 = (undefined4 *)&s_profileArrays;
   iVar5 = 0;
   ppcVar6 = prof_pageNames + 8;
@@ -91,7 +92,6 @@ void Profile_Init(void)
       profile_thread =
            Dvar_RegisterEnum("profile_thread",g_profile_thread_values,0xe,0,"Thread being profiled")
       ;
-      __restgprlr_21();
       return;
     }
   } while( true );
@@ -100,84 +100,81 @@ void Profile_Init(void)
 
 // 826089F8  Profile_InitContext  (universal/profile.cpp:353)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void Profile_InitContext(int param_1)
 
 {
   uint uVar1;
   ulonglong uVar2;
   ulonglong uVar3;
-  int iVar4;
-  undefined4 *puVar5;
-  longlong lVar6;
-  ulonglong uVar7;
-  double extraout_f1;
-  double dVar8;
+  profile_t *ppVar4;
+  longlong lVar5;
+  ulonglong uVar6;
+  double in_f1;
   
-  iVar4 = __savegprlr_27(param_1);
-  dVar8 = extraout_f1;
-  Sys_SetValue(0,g_prof_stack + iVar4);
-  g_prof_stack[iVar4].prof_pStack[0] = &g_prof_stack[iVar4].prof_root;
-  g_prof_stack[iVar4].prof_ppStack = (profile_t **)(iVar4 * 0x4ac4 + -0x7bebccf8);
-  g_prof_stack[iVar4].prof_overhead_internal.value[0] = 0;
-  g_prof_stack[iVar4].prof_overhead_external.value[0] = 0;
-  g_prof_stack[iVar4].prof_guardpos = 0;
-  g_prof_stack[iVar4].prof_timescale = 0.0;
+  Sys_SetValue(0,g_prof_stack + param_1);
+  g_prof_stack[param_1].prof_pStack[0] = &g_prof_stack[param_1].prof_root;
+  g_prof_stack[param_1].prof_ppStack = (profile_t **)(param_1 * 0x4ac4 + -0x7bebccf8);
+  g_prof_stack[param_1].prof_overhead_internal.value[0] = 0;
+  g_prof_stack[param_1].prof_overhead_external.value[0] = 0;
+  g_prof_stack[param_1].prof_guardpos = 0;
+  g_prof_stack[param_1].prof_timescale = 0.0;
   Profile_Begin(0);
   Profile_EndInternal((double *)0x0);
-  g_prof_stack[iVar4].prof_array[0].write.total.value[0] = 0;
-  g_prof_stack[iVar4].prof_root.write.total.value[0] = 0;
-  g_prof_stack[iVar4].prof_root.write.child.value[0] = 0;
-  lVar6 = 1000;
-  uVar7 = 0;
+  g_prof_stack[param_1].prof_array[0].write.total.value[0] = 0;
+  g_prof_stack[param_1].prof_root.write.total.value[0] = 0;
+  g_prof_stack[param_1].prof_root.write.child.value[0] = 0;
+  lVar5 = 1000;
+  uVar6 = 0;
   do {
     uVar2 = TBLr;
     Profile_Begin(0);
     Profile_EndInternal((double *)0x0);
     uVar3 = TBLr;
-    lVar6 = lVar6 + -1;
-    uVar7 = ((uVar3 & 0xffffffff) - (uVar2 & 0xffffffff)) + uVar7;
-  } while (lVar6 != 0);
-  uVar1 = g_prof_stack[iVar4].prof_array[0].write.total.value[0];
-  g_prof_stack[iVar4].prof_overhead_external.value[0] = (uint)((uVar7 & 0xffffffff) / 1000);
-  g_prof_stack[iVar4].prof_overhead_internal.value[0] = uVar1 / 1000;
+    lVar5 = lVar5 + -1;
+    uVar6 = ((uVar3 & 0xffffffff) - (uVar2 & 0xffffffff)) + uVar6;
+  } while (lVar5 != 0);
+  uVar1 = g_prof_stack[param_1].prof_array[0].write.total.value[0];
+  g_prof_stack[param_1].prof_overhead_external.value[0] = (uint)((uVar6 & 0xffffffff) / 1000);
+  g_prof_stack[param_1].prof_overhead_internal.value[0] = uVar1 / 1000;
   __u64tod();
-  puVar5 = (undefined4 *)(iVar4 * 0x4ac4 + -0x7bebc91c);
-  lVar6 = 0x1bd;
-  g_prof_stack[iVar4].prof_timescale = (float)(msecPerRawTimerTick * dVar8);
+  ppVar4 = (profile_t *)(g_prof_stack[param_1].prof_pStack + 0xf7);
+  lVar5 = 0x1bd;
+  g_prof_stack[param_1].prof_timescale = (float)(msecPerRawTimerTick * in_f1);
   do {
-    puVar5 = puVar5 + 10;
-    *puVar5 = 0xffffffff;
-    lVar6 = lVar6 + -1;
-  } while (lVar6 != 0);
-  __restgprlr_27();
+    ppVar4 = ppVar4 + 1;
+    (ppVar4->write).nesting = -1;
+    lVar5 = lVar5 + -1;
+  } while (lVar5 != 0);
   return;
 }
 
 
 // 82608100  Profile_GetProbeIndexFromName  (universal/profile.cpp:417)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 int Profile_GetProbeIndexFromName(char *param_1)
 
 {
-  char *pcVar1;
-  int iVar2;
-  ulonglong uVar3;
-  undefined **ppuVar4;
+  int iVar1;
+  uint uVar2;
+  undefined **ppuVar3;
   
-  pcVar1 = (char *)__savegprlr_29(param_1);
-  uVar3 = 1;
-  ppuVar4 = &PTR_s_Probe1_8299303c;
+  uVar2 = 1;
+  ppuVar3 = &PTR_s_Probe1_8299303c;
   do {
-    iVar2 = I_stricmp(*ppuVar4,pcVar1);
-    if (iVar2 == 0) {
-      iVar2 = __restgprlr_29(uVar3);
-      return iVar2;
+    iVar1 = I_stricmp(*ppuVar3,param_1);
+    if (iVar1 == 0) {
+      return uVar2;
     }
-    uVar3 = uVar3 + 1;
-    ppuVar4 = ppuVar4 + 1;
-  } while ((uVar3 & 0xffffffff) < 0x1bd);
-  iVar2 = __restgprlr_29(0);
-  return iVar2;
+    uVar2 = uVar2 + 1;
+    ppuVar3 = ppuVar3 + 1;
+  } while (uVar2 < 0x1bd);
+  return 0;
 }
 
 
@@ -236,58 +233,60 @@ void Profile_ResetCountersForContext(int param_1,int param_2)
 
 // 82608B88  Profile_ResetCounters  (universal/profile.cpp:493)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
+
 void Profile_ResetCounters(int param_1)
 
 {
-  int iVar2;
-  void *pvVar3;
-  int iVar4;
+  void *pvVar2;
+  int iVar3;
   longlong lVar1;
-  long *plVar5;
-  int *piVar6;
-  uint uVar7;
+  long *plVar4;
+  int *piVar5;
+  uint uVar6;
   
-  iVar2 = __savegprlr_24(param_1);
   if ((profile->current).integer != 0) {
-    pvVar3 = Sys_GetValue(0);
-    uVar7 = 0;
-    if (*(int *)((int)pvVar3 + 0x428) != (int)pvVar3 + 0x28) {
-      plVar5 = g_prof2_total + 0xe;
+    pvVar2 = Sys_GetValue(0);
+    uVar6 = 0;
+    if (*(int *)((int)pvVar2 + 0x428) != (int)pvVar2 + 0x28) {
+      plVar4 = g_prof2_total + 0xe;
       do {
-        if (0xff < uVar7) {
+        if (0xff < uVar6) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\profile.cpp",
                           0x1fa,0,
                           "profileStackPos doesn\'t index ARRAY_COUNT( g_profileStack )\n\t%i not in [0, %i)"
                          );
         }
-        iVar4 = Profile_EndInternal((double *)0x0);
-        plVar5 = plVar5 + 1;
-        *plVar5 = iVar4;
-        uVar7 = uVar7 + 1;
-      } while (*(int *)((int)pvVar3 + 0x428) != (int)pvVar3 + 0x28);
+        iVar3 = Profile_EndInternal((double *)0x0);
+        plVar4 = plVar4 + 1;
+        *plVar4 = iVar3;
+        uVar6 = uVar6 + 1;
+      } while (*(int *)((int)pvVar2 + 0x428) != (int)pvVar2 + 0x28);
     }
     lVar1 = 0;
     do {
-      Profile_ResetCountersForContext((int)lVar1,iVar2);
+      Profile_ResetCountersForContext((int)lVar1,param_1);
       lVar1 = lVar1 + 1;
     } while ((int)lVar1 < 0xe);
-    if (uVar7 != 0) {
-      piVar6 = g_profileStack + uVar7;
+    if (uVar6 != 0) {
+      piVar5 = g_profileStack + uVar6;
       do {
-        piVar6 = piVar6 + -1;
-        uVar7 = uVar7 - 1;
-        Profile_Begin(*piVar6);
-      } while (uVar7 != 0);
+        piVar5 = piVar5 + -1;
+        uVar6 = uVar6 - 1;
+        Profile_Begin(*piVar5);
+      } while (uVar6 != 0);
     }
-    prof_parity[iVar2] = prof_parity[iVar2] + 1;
+    prof_parity[param_1] = prof_parity[param_1] + 1;
   }
-  __restgprlr_24();
   return;
 }
 
 
 // 82608198  Profile_ResetScriptCounters  (universal/profile.cpp:530)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void Profile_ResetScriptCounters(void)
@@ -297,7 +296,6 @@ void Profile_ResetScriptCounters(void)
   uint *puVar2;
   uint *puVar3;
   
-  __savegprlr_28();
   puVar3 = profileScript.totalTime;
   puVar2 = &profileScript.write[0].totalTime;
   do {
@@ -313,7 +311,6 @@ void Profile_ResetScriptCounters(void)
     puVar3 = puVar3 + 1;
   } while ((int)puVar2 < -0x7be7af00);
   memset();
-  __restgprlr_28();
   return;
 }
 
@@ -359,6 +356,8 @@ int Profile_GetEnumParity(int param_1)
 
 // 82608308  Profile_MissingEnd  (universal/profile.cpp:571)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 char * Profile_MissingEnd(void)
@@ -370,7 +369,6 @@ char * Profile_MissingEnd(void)
   longlong lVar4;
   undefined4 *puVar5;
   
-  __savegprlr_28();
   pvVar1 = Sys_GetValue(0);
   pcVar2 = (char *)0x0;
   puVar5 = (undefined4 *)&prof_enumNames;
@@ -391,42 +389,40 @@ char * Profile_MissingEnd(void)
   } while (lVar4 != 0);
   if (pcVar2 != (char *)0x0) {
     pcVar2 = va("probes missing PROF_END: %s");
-    pcVar2 = (char *)__restgprlr_28(pcVar2);
     return pcVar2;
   }
-  pcVar2 = (char *)__restgprlr_28(0xffffffff8217ffe4);
-  return pcVar2;
+  return "no probes missing PROF_END detected";
 }
 
 
 // 826083A0  Profile_Unguard  (universal/profile.cpp:601)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void Profile_Unguard(int param_1)
 
 {
-  int iVar1;
-  void *pvVar2;
-  int iVar3;
+  void *pvVar1;
+  int iVar2;
   
-  iVar1 = __savegprlr_28(param_1);
-  pvVar2 = Sys_GetValue(0);
-  if (*(int *)((int)pvVar2 + 0x4abc) < 1) {
+  pvVar1 = Sys_GetValue(0);
+  if (*(int *)((int)pvVar1 + 0x4abc) < 1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\profile.cpp",0x25e,0
                     ,"%s");
   }
-  iVar3 = *(int *)((int)pvVar2 + 0x4abc) + -1;
-  *(int *)((int)pvVar2 + 0x4abc) = iVar3;
-  if (*(int *)((int)pvVar2 + iVar3 * 8 + 0x49bc) != iVar1) {
+  iVar2 = *(int *)((int)pvVar1 + 0x4abc) + -1;
+  *(int *)((int)pvVar1 + 0x4abc) = iVar2;
+  if (*(int *)((int)pvVar1 + iVar2 * 8 + 0x49bc) != param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\profile.cpp",0x262,0
                     ,"%s");
   }
-  if (*(int *)((*(int *)((int)pvVar2 + 0x4abc) + 0x938) * 8 + (int)pvVar2) !=
-      *(int *)((int)pvVar2 + 0x428)) {
+  if (*(int *)((*(int *)((int)pvVar1 + 0x4abc) + 0x938) * 8 + (int)pvVar1) !=
+      *(int *)((int)pvVar1 + 0x428)) {
     Profile_MissingEnd();
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\profile.cpp",0x263,0
                     ,"%s\n\t(Profile_MissingEnd()) = %s");
   }
-  __restgprlr_28();
   return;
 }
 
@@ -453,6 +449,9 @@ ProfileScript * Profile_GetScript(void)
 
 // 826084A8  Profile_BeginScripts  (universal/profile.cpp:643)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 void Profile_BeginScripts(uint param_1)
 
 {
@@ -464,8 +463,8 @@ void Profile_BeginScripts(uint param_1)
   int iVar6;
   ProfileScript *pPVar7;
   
-  uVar5 = __savegprlr_26(param_1);
-  if ((uVar5 & 0xffffffff) == 0) {
+  uVar5 = (ulonglong)(int)param_1;
+  if (param_1 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\profile.cpp",0x286,0
                     ,"%s");
   }
@@ -502,7 +501,6 @@ LAB_82608550:
     pPVar7 = pPVar4;
     iVar6 = iVar3;
     if (uVar5 == 0) {
-      __restgprlr_26();
       return;
     }
   } while( true );
@@ -510,6 +508,9 @@ LAB_82608550:
 
 
 // 826085A0  Profile_EndScripts  (universal/profile.cpp:679)
+
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 
 void Profile_EndScripts(uint param_1)
 
@@ -523,8 +524,8 @@ void Profile_EndScripts(uint param_1)
   int iVar7;
   ProfileScript *pPVar8;
   
-  uVar5 = __savegprlr_25(param_1);
-  if ((uVar5 & 0xffffffff) == 0) {
+  uVar5 = (ulonglong)(int)param_1;
+  if (param_1 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\profile.cpp",0x2aa,0
                     ,"%s");
   }
@@ -563,7 +564,6 @@ LAB_82608654:
     pPVar8 = pPVar4;
     iVar7 = iVar3;
     if (uVar5 == 0) {
-      __restgprlr_25();
       return;
     }
   } while( true );
@@ -572,39 +572,37 @@ LAB_82608654:
 
 // 826086A8  Profile_AddScriptName  (universal/profile.cpp:715)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 int Profile_AddScriptName(char *param_1)
 
 {
-  char *pcVar1;
-  int iVar2;
+  int iVar1;
+  uint uVar2;
   int iVar3;
-  uint uVar4;
-  char (*pacVar5) [20];
+  char (*pacVar4) [20];
   
-  pcVar1 = (char *)__savegprlr_26(param_1);
   iVar3 = 0;
-  uVar4 = 0;
-  pacVar5 = profileScript.profileScriptNames;
+  uVar2 = 0;
+  pacVar4 = profileScript.profileScriptNames;
   while( true ) {
-    iVar2 = I_strnicmp(pcVar1,*pacVar5,0x13);
-    if (iVar2 == 0) {
-      iVar3 = __restgprlr_26(iVar3);
+    iVar1 = I_strnicmp(param_1,*pacVar4,0x13);
+    if (iVar1 == 0) {
       return iVar3;
     }
-    if ((*pacVar5)[0] == '\0') break;
-    uVar4 = uVar4 + 0x14;
+    if ((*pacVar4)[0] == '\0') break;
+    uVar2 = uVar2 + 0x14;
     iVar3 = iVar3 + 1;
-    pacVar5 = pacVar5 + 1;
-    if (0x27f < uVar4) {
-      iVar3 = __restgprlr_26(0xffffffffffffffff);
-      return iVar3;
+    pacVar4 = pacVar4 + 1;
+    if (0x27f < uVar2) {
+      return -1;
     }
   }
-  I_strncpyz(*pacVar5,pcVar1,0x14);
+  I_strncpyz(*pacVar4,param_1,0x14);
   profileScript.avgTime[iVar3] = 0;
   profileScript.maxTime[iVar3] = 0;
   profileScript.cumulative[iVar3] = 0.0;
-  iVar3 = __restgprlr_26(iVar3);
   return iVar3;
 }
 
@@ -639,67 +637,68 @@ int Profile_GetDisplayThread(void)
 
 // 82608810  Profile_Recover  (universal/profile.cpp:806)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
+
 void Profile_Recover(int param_1)
 
 {
   int iVar1;
-  int iVar2;
-  void *pvVar3;
-  int iVar4;
-  uint uVar5;
+  void *pvVar2;
+  int iVar3;
+  uint uVar4;
   
-  iVar2 = __savegprlr_25(param_1);
-  pvVar3 = Sys_GetValue(0);
-  if (*(int *)((int)pvVar3 + 0x4abc) < 1) {
+  pvVar2 = Sys_GetValue(0);
+  if (*(int *)((int)pvVar2 + 0x4abc) < 1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\profile.cpp",0x32b,0
                     ,"%s");
   }
-  iVar4 = *(int *)((int)pvVar3 + 0x4abc);
+  iVar3 = *(int *)((int)pvVar2 + 0x4abc);
   do {
-    iVar1 = iVar4;
+    iVar1 = iVar3;
     if (iVar1 < 1) {
-      if (alwaysfails == 0) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\profile.cpp",
-                        0x33e,0,"Profile_Recover: id not found");
+      if (alwaysfails != 0) {
+        return;
       }
-      goto LAB_826088c0;
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\profile.cpp",0x33e
+                      ,0,"Profile_Recover: id not found");
+      return;
     }
-    iVar4 = iVar1 + -1;
-    *(int *)((int)pvVar3 + 0x4abc) = iVar4;
-  } while (*(int *)((int)pvVar3 + iVar4 * 8 + 0x49bc) != iVar2);
-  if (*(int *)((int)pvVar3 + 0x428) != *(int *)((iVar1 + 0x937) * 8 + (int)pvVar3)) {
-    do {
-      if (2 < *(uint *)**(undefined4 **)((int)pvVar3 + 0x428)) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\profile.cpp",
-                        0x334,0,
-                        "(*prof_stack->prof_ppStack)->write.nesting doesn\'t index ARRAY_COUNT( (*prof_stack->prof_ppStack)->write.start )\n\t%i not in [0, %i)"
-                       );
-      }
-      if (*(uint *)((int)pvVar3 + 0x428) <= (int)pvVar3 + 0x28U) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\profile.cpp",
-                        0x335,0,"%s");
-      }
-      *(int *)**(undefined4 **)((int)pvVar3 + 0x428) =
-           *(int *)**(undefined4 **)((int)pvVar3 + 0x428) + -1;
-      uVar5 = *(int *)((int)pvVar3 + 0x428) - 4;
-      *(uint *)((int)pvVar3 + 0x428) = uVar5;
-      if (uVar5 < (int)pvVar3 + 0x28U) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\profile.cpp",
-                        0x338,0,"%s");
-      }
-    } while (*(int *)((int)pvVar3 + 0x428) !=
-             *(int *)((*(int *)((int)pvVar3 + 0x4abc) + 0x938) * 8 + (int)pvVar3));
-    __restgprlr_25();
+    iVar3 = iVar1 + -1;
+    *(int *)((int)pvVar2 + 0x4abc) = iVar3;
+  } while (*(int *)((int)pvVar2 + iVar3 * 8 + 0x49bc) != param_1);
+  if (*(int *)((int)pvVar2 + 0x428) == *(int *)((iVar1 + 0x937) * 8 + (int)pvVar2)) {
     return;
   }
-LAB_826088c0:
-  __restgprlr_25();
+  do {
+    if (2 < *(uint *)**(undefined4 **)((int)pvVar2 + 0x428)) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\profile.cpp",0x334
+                      ,0,
+                      "(*prof_stack->prof_ppStack)->write.nesting doesn\'t index ARRAY_COUNT( (*prof_stack->prof_ppStack)->write.start )\n\t%i not in [0, %i)"
+                     );
+    }
+    if (*(uint *)((int)pvVar2 + 0x428) <= (int)pvVar2 + 0x28U) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\profile.cpp",0x335
+                      ,0,"%s");
+    }
+    *(int *)**(undefined4 **)((int)pvVar2 + 0x428) =
+         *(int *)**(undefined4 **)((int)pvVar2 + 0x428) + -1;
+    uVar4 = *(int *)((int)pvVar2 + 0x428) - 4;
+    *(uint *)((int)pvVar2 + 0x428) = uVar4;
+    if (uVar4 < (int)pvVar2 + 0x28U) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\profile.cpp",0x338
+                      ,0,"%s");
+    }
+  } while (*(int *)((int)pvVar2 + 0x428) !=
+           *(int *)((*(int *)((int)pvVar2 + 0x4abc) + 0x938) * 8 + (int)pvVar2));
   return;
 }
 
 
 // 82608C88  Profile2_Update  (universal/profile.cpp:922)
 
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 int Profile2_Update(void)
@@ -723,67 +722,62 @@ int Profile2_Update(void)
   char in_RESERVE;
   byte in_cr0;
   
-  __savegprlr_22();
   iVar8 = DAT_841849b0;
-  if ((profile2->current).integer != 0) {
-    g_prof2_inc = g_prof2_inc + 1;
-    if ((profile2_frames->current).integer <= g_prof2_inc) {
-      g_prof2_inc = 0;
-      uVar6 = TBLr;
-      iVar14 = 0;
-      uVar15 = 0;
+  if (((profile2->current).integer != 0) &&
+     (g_prof2_inc = g_prof2_inc + 1, (profile2_frames->current).integer <= g_prof2_inc)) {
+    g_prof2_inc = 0;
+    uVar6 = TBLr;
+    iVar14 = 0;
+    uVar15 = 0;
+    do {
+      iVar13 = *(int *)((int)g_prof2_begin_count + (int)uVar15);
+      if (iVar13 < 0) {
+        Profile2_ClearEntry(iVar14);
+        iVar13 = 0;
+      }
+      sync(1);
+      uVar7 = TBLr;
       do {
-        iVar13 = *(int *)((int)g_prof2_begin_count + (int)uVar15);
-        if (iVar13 < 0) {
-          Profile2_ClearEntry(iVar14);
-          iVar13 = 0;
+        piVar9 = (int *)(uVar15 - 0x7bebcd5c);
+        iVar1 = *piVar9;
+        if (in_RESERVE != '\0') {
+          iVar3 = storeWordConditionalIndexed(uVar7 & 0xffffffff,0,uVar15 - 0x7bebcd5c);
+          *piVar9 = iVar3;
+          in_cr0 = 2;
         }
-        sync(1);
-        uVar7 = TBLr;
+      } while (!(bool)(in_cr0 >> 1 & 1));
+      lVar12 = (longlong)((int)uVar7 - iVar1) * (longlong)iVar13;
+      in_cr0 = (lVar12 == 0) << 1;
+      if (0 < lVar12) {
         do {
-          piVar9 = (int *)(uVar15 - 0x7bebcd5c);
-          iVar1 = *piVar9;
+          puVar10 = (uint *)(uVar15 - 0x7be7b644);
           if (in_RESERVE != '\0') {
-            iVar3 = storeWordConditionalIndexed(uVar7 & 0xffffffff,0,uVar15 - 0x7bebcd5c);
-            *piVar9 = iVar3;
-            in_cr0 = 2;
-          }
-        } while (!(bool)(in_cr0 >> 1 & 1));
-        lVar12 = (longlong)((int)uVar7 - iVar1) * (longlong)iVar13;
-        in_cr0 = (lVar12 == 0) << 1;
-        if (0 < lVar12) {
-          do {
-            puVar10 = (uint *)(uVar15 - 0x7be7b644);
-            if (in_RESERVE != '\0') {
-              uVar4 = storeWordConditionalIndexed
-                                (lVar12 + (ulonglong)*puVar10,0,uVar15 - 0x7be7b644);
-              *puVar10 = uVar4;
-              in_cr0 = 2;
-            }
-          } while (!(bool)(in_cr0 >> 1));
-        }
-        sync(1);
-        do {
-          puVar11 = (undefined4 *)(uVar15 - 0x7be7b644);
-          uVar2 = *puVar11;
-          if (in_RESERVE != '\0') {
-            uVar5 = storeWordConditionalIndexed(0,0,uVar15 - 0x7be7b644);
-            *puVar11 = uVar5;
+            uVar4 = storeWordConditionalIndexed(lVar12 + (ulonglong)*puVar10,0,uVar15 - 0x7be7b644);
+            *puVar10 = uVar4;
             in_cr0 = 2;
           }
         } while (!(bool)(in_cr0 >> 1));
-        iVar14 = iVar14 + 1;
-        *(undefined4 *)((int)g_prof2_history[iVar8] + (int)uVar15) = uVar2;
-        uVar15 = uVar15 + 4;
-      } while ((uVar15 & 0xffffffff) < 0x3c);
-      g_prof2_history_update_times[iVar8] = (int)uVar6;
+      }
       sync(1);
-      iVar13 = iVar8 + 1;
-      iVar14 = iVar13 / 5 + (iVar13 >> 0x1f);
-      DAT_841849b0 = iVar13 + (iVar14 - (iVar14 >> 0x1f)) * -5;
-    }
+      do {
+        puVar11 = (undefined4 *)(uVar15 - 0x7be7b644);
+        uVar2 = *puVar11;
+        if (in_RESERVE != '\0') {
+          uVar5 = storeWordConditionalIndexed(0,0,uVar15 - 0x7be7b644);
+          *puVar11 = uVar5;
+          in_cr0 = 2;
+        }
+      } while (!(bool)(in_cr0 >> 1));
+      iVar14 = iVar14 + 1;
+      *(undefined4 *)((int)g_prof2_history[iVar8] + (int)uVar15) = uVar2;
+      uVar15 = uVar15 + 4;
+    } while ((uVar15 & 0xffffffff) < 0x3c);
+    g_prof2_history_update_times[iVar8] = (int)uVar6;
+    sync(1);
+    iVar13 = iVar8 + 1;
+    iVar14 = iVar13 / 5 + (iVar13 >> 0x1f);
+    DAT_841849b0 = iVar13 + (iVar14 - (iVar14 >> 0x1f)) * -5;
   }
-  iVar8 = __restgprlr_22(iVar8);
   return iVar8;
 }
 

@@ -97,198 +97,209 @@ void RB_DrawSunFlareCore(float param_1,float param_2)
 
 // 827AB6F0  RB_DrawSunFlare  (gfx_d3d/rb_sky.cpp:92)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 void RB_DrawSunFlare(SunFlareDynamic *param_1,int param_2)
 
 {
   float fVar1;
   float fVar2;
-  float *pfVar3;
-  float *pfVar4;
+  SunFlareDynamic *pSVar3;
+  double dVar4;
   double dVar5;
   double dVar6;
-  double dVar7;
-  float fVar8;
+  float fVar7;
   
-  pfVar3 = (float *)__savegprlr_26(param_1);
-  pfVar4 = pfVar3;
-  if (pfVar3 == (float *)0x0) {
+  pSVar3 = param_1;
+  if (param_1 == (SunFlareDynamic *)0x0) {
     param_2 = 0x61;
-    pfVar4 = (float *)"c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_sky.cpp";
+    pSVar3 = (SunFlareDynamic *)
+             "c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_sky.cpp";
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_sky.cpp",0x61,0,
                     "%s");
   }
   if ((((rgp.world)->sun).flareMaterial != (Material *)0x0) &&
-     (fVar8 = pfVar3[5], ((rgp.world)->sun).flareMinDot < fVar8)) {
+     (fVar7 = param_1->lastDot, ((rgp.world)->sun).flareMinDot < fVar7)) {
     fVar1 = ((rgp.world)->sun).flareMaxDot;
-    dVar6 = 0.0;
-    if (fVar8 < fVar1) {
+    dVar5 = 0.0;
+    if (fVar7 < fVar1) {
       fVar2 = ((rgp.world)->sun).flareMinDot;
-      dVar7 = (double)((fVar8 - fVar2) / (fVar1 - fVar2));
-      if ((dVar7 < 0.0) || (1.0 < dVar7)) {
+      dVar6 = (double)((fVar7 - fVar2) / (fVar1 - fVar2));
+      if ((dVar6 < 0.0) || (1.0 < dVar6)) {
         param_2 = 0x6e;
-        pfVar4 = (float *)"c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_sky.cpp";
+        pSVar3 = (SunFlareDynamic *)
+                 "c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_sky.cpp";
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_sky.cpp",0x6e,1
                         ,"%s\n\t(lerp) = %g");
       }
     }
     else {
-      dVar7 = 1.0;
+      dVar6 = 1.0;
     }
-    if ((double)((rgp.world)->sun).flareMaxAlpha < dVar6) {
+    if ((double)((rgp.world)->sun).flareMaxAlpha < dVar5) {
       param_2 = 0x6f;
-      pfVar4 = (float *)"c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_sky.cpp";
+      pSVar3 = (SunFlareDynamic *)
+               "c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_sky.cpp";
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_sky.cpp",0x6f,1,
                       "%s\n\t(rgp.world->sun.flareMaxAlpha) = %g");
     }
-    dVar5 = (double)(float)((double)((rgp.world)->sun).flareMaxAlpha * dVar7);
-    dVar7 = (double)(float)((double)((rgp.world)->sun).flareMaxSize * dVar7 +
+    dVar4 = (double)(float)((double)((rgp.world)->sun).flareMaxAlpha * dVar6);
+    dVar6 = (double)(float)((double)((rgp.world)->sun).flareMaxSize * dVar6 +
                            (double)((rgp.world)->sun).flareMinSize);
-    if ((double)*pfVar3 < dVar6) {
+    if ((double)param_1->flareIntensity < dVar5) {
       param_2 = 0x74;
-      pfVar4 = (float *)"c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_sky.cpp";
+      pSVar3 = (SunFlareDynamic *)
+               "c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_sky.cpp";
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_sky.cpp",0x74,0,
                       "%s\n\t(sunFlare->flareIntensity) = %g");
     }
-    if ((double)pfVar3[4] < dVar6) {
+    if ((double)param_1->lastVisibility < dVar5) {
       param_2 = 0x75;
-      pfVar4 = (float *)"c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_sky.cpp";
+      pSVar3 = (SunFlareDynamic *)
+               "c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_sky.cpp";
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_sky.cpp",0x75,0,
                       "%s\n\t(sunFlare->lastVisibility) = %g");
     }
-    fVar8 = R_UpdateOverTime(*pfVar3,pfVar3[4],(int)pfVar4,param_2,
+    fVar7 = R_UpdateOverTime(param_1->flareIntensity,param_1->lastVisibility,(int)pSVar3,param_2,
                              ((rgp.world)->sun).flareFadeInTime);
-    *pfVar3 = fVar8;
-    if ((double)fVar8 < dVar6) {
+    param_1->flareIntensity = fVar7;
+    if ((double)fVar7 < dVar5) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_sky.cpp",0x79,0,
                       "%s\n\t(sunFlare->flareIntensity) = %g");
     }
-    if (dVar5 < dVar6) {
+    if (dVar4 < dVar5) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_sky.cpp",0x7a,0,
                       "%s\n\t(alpha) = %g");
     }
-    RB_DrawSunFlareCore((float)((double)*pfVar3 * dVar5),(float)dVar7);
+    RB_DrawSunFlareCore((float)((double)param_1->flareIntensity * dVar4),(float)dVar6);
   }
-  __restgprlr_26();
   return;
 }
 
 
 // 827AB940  RB_CalcSunBlind  (gfx_d3d/rb_sky.cpp:129)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 
 void RB_CalcSunBlind(SunFlareDynamic *param_1,int param_2,float *param_3,float *param_4)
 
 {
-  char *pcVar1;
-  char *pcVar2;
+  SunFlareDynamic *pSVar1;
+  double dVar2;
   double dVar3;
   double dVar4;
   double dVar5;
   double dVar6;
-  double dVar7;
-  float fVar8;
+  float fVar7;
   
-  __savegprlr_23(param_1);
-  pcVar1 = (char *)__savefpr_28();
-  pcVar2 = pcVar1;
-  if (pcVar1 == (char *)0x0) {
+  pSVar1 = param_1;
+  if (param_1 == (SunFlareDynamic *)0x0) {
     param_2 = 0x86;
-    pcVar2 = "c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_sky.cpp";
+    pSVar1 = (SunFlareDynamic *)
+             "c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_sky.cpp";
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_sky.cpp",0x86,0,
                     "%s");
   }
   if (rgp.world == (GfxWorld *)0x0) {
     param_2 = 0x87;
-    pcVar2 = "c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_sky.cpp";
+    pSVar1 = (SunFlareDynamic *)
+             "c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_sky.cpp";
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_sky.cpp",0x87,0,
                     "%s");
   }
-  dVar7 = 0.0;
-  dVar5 = 1.0;
-  dVar6 = (double)(((rgp.world)->sun).sunFxPosition[2] *
+  dVar6 = 0.0;
+  dVar4 = 1.0;
+  dVar5 = (double)(((rgp.world)->sun).sunFxPosition[2] *
                    ((gfxCmdBufSourceState.viewParms3D)->camera).axis[0][2] +
                   ((rgp.world)->sun).sunFxPosition[1] *
                   ((gfxCmdBufSourceState.viewParms3D)->camera).axis[0][1] +
                   ((rgp.world)->sun).sunFxPosition[0] *
                   ((gfxCmdBufSourceState.viewParms3D)->camera).axis[0][0]);
   if (0.0 < ((rgp.world)->sun).blindMaxDarken) {
-    dVar4 = dVar7;
-    if (((double)((rgp.world)->sun).blindMinDot < dVar6) &&
-       (dVar3 = (double)((rgp.world)->sun).blindMaxDot, dVar4 = dVar5, dVar6 < dVar3)) {
-      dVar4 = (double)((rgp.world)->sun).blindMinDot;
-      dVar4 = (double)((float)(dVar6 - dVar4) / (float)(dVar3 - dVar4));
-      if (dVar4 < 0.0) {
+    dVar3 = dVar6;
+    if (((double)((rgp.world)->sun).blindMinDot < dVar5) &&
+       (dVar2 = (double)((rgp.world)->sun).blindMaxDot, dVar3 = dVar4, dVar5 < dVar2)) {
+      dVar3 = (double)((rgp.world)->sun).blindMinDot;
+      dVar3 = (double)((float)(dVar5 - dVar3) / (float)(dVar2 - dVar3));
+      if (dVar3 < 0.0) {
         param_2 = 0x97;
-        pcVar2 = "c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_sky.cpp";
+        pSVar1 = (SunFlareDynamic *)
+                 "c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_sky.cpp";
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_sky.cpp",0x97,0
                         ,"%s\n\t(blindLerp) = %g");
       }
-      if (dVar5 < dVar4) {
+      if (dVar4 < dVar3) {
         param_2 = 0x98;
-        pcVar2 = "c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_sky.cpp";
+        pSVar1 = (SunFlareDynamic *)
+                 "c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_sky.cpp";
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_sky.cpp",0x98,0
                         ,"%s\n\t(blindLerp) = %g");
       }
     }
-    dVar4 = (double)(float)((double)*(float *)(pcVar1 + 0x10) * dVar4);
-    if (dVar4 < dVar7) {
+    dVar3 = (double)(float)((double)param_1->lastVisibility * dVar3);
+    if (dVar3 < dVar6) {
       param_2 = 0x9a;
-      pcVar2 = "c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_sky.cpp";
+      pSVar1 = (SunFlareDynamic *)
+               "c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_sky.cpp";
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_sky.cpp",0x9a,0,
                       "%s\n\t(blindLerp) = %g");
     }
-    if (dVar5 < dVar4) {
+    if (dVar4 < dVar3) {
       param_2 = 0x9b;
-      pcVar2 = "c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_sky.cpp";
+      pSVar1 = (SunFlareDynamic *)
+               "c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_sky.cpp";
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_sky.cpp",0x9b,0,
                       "%s\n\t(blindLerp) = %g");
     }
-    fVar8 = R_UpdateOverTime(*(float *)(pcVar1 + 4),(float)dVar4,(int)pcVar2,param_2,
+    fVar7 = R_UpdateOverTime(param_1->currentBlind,(float)dVar3,(int)pSVar1,param_2,
                              ((rgp.world)->sun).blindFadeInTime);
-    *(float *)(pcVar1 + 4) = fVar8;
-    if ((double)fVar8 < dVar7) {
+    param_1->currentBlind = fVar7;
+    if ((double)fVar7 < dVar6) {
       param_2 = 0x9d;
-      pcVar2 = "c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_sky.cpp";
+      pSVar1 = (SunFlareDynamic *)
+               "c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_sky.cpp";
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_sky.cpp",0x9d,0,
                       "%s\n\t(sunFlare->currentBlind) = %g");
     }
-    if (dVar5 < (double)*(float *)(pcVar1 + 4)) {
+    if (dVar4 < (double)param_1->currentBlind) {
       param_2 = 0x9e;
-      pcVar2 = "c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_sky.cpp";
+      pSVar1 = (SunFlareDynamic *)
+               "c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_sky.cpp";
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_sky.cpp",0x9e,0,
                       "%s\n\t(sunFlare->currentBlind) = %g");
     }
-    *param_3 = ((rgp.world)->sun).blindMaxDarken * *(float *)(pcVar1 + 4);
+    *param_3 = ((rgp.world)->sun).blindMaxDarken * param_1->currentBlind;
   }
   else {
     *param_3 = 0.0;
   }
-  if (dVar7 < (double)((rgp.world)->sun).glareMaxLighten) {
-    if (((double)((rgp.world)->sun).glareMinDot < dVar6) &&
-       (dVar4 = (double)((rgp.world)->sun).glareMaxDot, dVar7 = dVar5, dVar6 < dVar4)) {
-      dVar7 = (double)((rgp.world)->sun).glareMinDot;
-      dVar7 = (double)((float)(dVar6 - dVar7) / (float)(dVar4 - dVar7));
+  if (dVar6 < (double)((rgp.world)->sun).glareMaxLighten) {
+    if (((double)((rgp.world)->sun).glareMinDot < dVar5) &&
+       (dVar3 = (double)((rgp.world)->sun).glareMaxDot, dVar6 = dVar4, dVar5 < dVar3)) {
+      dVar6 = (double)((rgp.world)->sun).glareMinDot;
+      dVar6 = (double)((float)(dVar5 - dVar6) / (float)(dVar3 - dVar6));
     }
-    fVar8 = R_UpdateOverTime(*(float *)(pcVar1 + 8),
-                             (float)((double)*(float *)(pcVar1 + 0x10) * dVar7),(int)pcVar2,param_2,
-                             ((rgp.world)->sun).glareFadeInTime);
-    *(float *)(pcVar1 + 8) = fVar8;
-    *param_4 = ((rgp.world)->sun).glareMaxLighten * fVar8;
-    __restfpr_28();
-    __restgprlr_23();
+    fVar7 = R_UpdateOverTime(param_1->currentGlare,(float)((double)param_1->lastVisibility * dVar6),
+                             (int)pSVar1,param_2,((rgp.world)->sun).glareFadeInTime);
+    param_1->currentGlare = fVar7;
+    *param_4 = ((rgp.world)->sun).glareMaxLighten * fVar7;
     return;
   }
-  *param_4 = (float)dVar7;
-  __restfpr_28();
-  __restgprlr_23();
+  *param_4 = (float)dVar6;
   return;
 }
 
 
 // 827ABC68  RB_AddSunEffects  (gfx_d3d/rb_sky.cpp:182)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 
@@ -296,14 +307,12 @@ void RB_AddSunEffects(SunFlareDynamic *param_1)
 
 {
   float fVar1;
-  int iVar2;
   
-  iVar2 = __savegprlr_28(param_1);
   if (rgp.world == (GfxWorld *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_sky.cpp",0xb7,0,
                     "%s");
   }
-  if (iVar2 == 0) {
+  if (param_1 == (SunFlareDynamic *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_sky.cpp",0xb8,0,
                     "%s");
   }
@@ -313,11 +322,10 @@ void RB_AddSunEffects(SunFlareDynamic *param_1)
           ((gfxCmdBufSourceState.viewParms3D)->camera).axis[0][1] +
           ((rgp.world)->sun).sunFxPosition[0] *
           ((gfxCmdBufSourceState.viewParms3D)->camera).axis[0][0];
-  *(float *)(iVar2 + 0x14) = fVar1;
+  param_1->lastDot = fVar1;
   if (0.0 < fVar1) {
     RB_DrawSunSprite();
   }
-  __restgprlr_28();
   return;
 }
 
@@ -356,42 +364,44 @@ void RB_DrawBlindAndGlare(SunFlareDynamic *param_1,int param_2)
 
 // 827ABE10  RB_DrawSun  (gfx_d3d/rb_sky.cpp:217)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void RB_DrawSun(int param_1)
 
 {
-  uint uVar1;
-  float fVar2;
+  float fVar1;
   
-  uVar1 = __savegprlr_28(param_1);
   if (rgp.world == (GfxWorld *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_sky.cpp",0xdc,0,
                     "%s");
   }
-  if (gfxCfg.maxClientRenderViews <= uVar1) {
+  if (gfxCfg.maxClientRenderViews <= (uint)param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_sky.cpp",0xdd,0,
                     "localClientNum doesn\'t index gfxCfg.maxClientRenderViews\n\t%i not in [0, %i)"
                    );
   }
   if (((r_drawSun->current).enabled != false) && (((rgp.world)->sun).hasValidData != false)) {
     RB_SetIdentity();
-    if (sunFlareArray[uVar1].occlusionQueryHandle == 0xffff) {
+    if (sunFlareArray[param_1].occlusionQueryHandle == 0xffff) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_sky.cpp",0xec,0,
                       "%s");
     }
     RB_SetOcclusionQueryPosition
-              (sunFlareArray[uVar1].occlusionQueryHandle,((rgp.world)->sun).sunFxPosition);
-    fVar2 = RB_GetOcclusionQueryVisibility(sunFlareArray[uVar1].occlusionQueryHandle);
-    sunFlareArray[uVar1].lastVisibility = fVar2;
-    RB_AddSunEffects(sunFlareArray + uVar1);
+              (sunFlareArray[param_1].occlusionQueryHandle,((rgp.world)->sun).sunFxPosition);
+    fVar1 = RB_GetOcclusionQueryVisibility(sunFlareArray[param_1].occlusionQueryHandle);
+    sunFlareArray[param_1].lastVisibility = fVar1;
+    RB_AddSunEffects(sunFlareArray + param_1);
     RB_EndSurfaceIfNeeded();
   }
-  __restgprlr_28();
   return;
 }
 
 
 // 827ABF20  RB_DrawSunPostEffects  (gfx_d3d/rb_sky.cpp:249)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 
@@ -399,39 +409,38 @@ void RB_DrawSunPostEffects(int param_1)
 
 {
   int iVar1;
-  uint uVar2;
-  int iVar3;
+  int iVar2;
   
-  uVar2 = __savegprlr_28(param_1);
-  if (gfxCfg.maxClientRenderViews <= uVar2) {
+  if (gfxCfg.maxClientRenderViews <= (uint)param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_sky.cpp",0xfd,0,
                     "localClientNum doesn\'t index gfxCfg.maxClientRenderViews\n\t%i not in [0, %i)"
                    );
   }
-  iVar1 = sunFlareArray[uVar2].lastTime;
+  iVar1 = sunFlareArray[param_1].lastTime;
   if ((iVar1 == 0) ||
-     (iVar3 = gfxCmdBufSourceState.sceneDef.time - iVar1, gfxCmdBufSourceState.sceneDef.time < iVar1
+     (iVar2 = gfxCmdBufSourceState.sceneDef.time - iVar1, gfxCmdBufSourceState.sceneDef.time < iVar1
      )) {
-    iVar3 = 10;
+    iVar2 = 10;
   }
-  sunFlareArray[uVar2].lastTime = gfxCmdBufSourceState.sceneDef.time;
+  sunFlareArray[param_1].lastTime = gfxCmdBufSourceState.sceneDef.time;
   if ((r_drawSun->current).enabled != false) {
     if (rgp.world == (GfxWorld *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_sky.cpp",0x10d,0,
                       "%s");
     }
     if (((rgp.world)->sun).hasValidData != false) {
-      RB_DrawSunFlare(sunFlareArray + uVar2,iVar3);
-      RB_DrawBlindAndGlare(sunFlareArray + uVar2,iVar3);
+      RB_DrawSunFlare(sunFlareArray + param_1,iVar2);
+      RB_DrawBlindAndGlare(sunFlareArray + param_1,iVar2);
     }
   }
-  __restgprlr_28();
   return;
 }
 
 
 // 827AC020  RB_AllocSunSpriteQueries  (gfx_d3d/rb_sky.cpp:279)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
@@ -444,7 +453,6 @@ void RB_AllocSunSpriteQueries(void)
   LocalClientNum_t LVar4;
   double dVar5;
   
-  __savegprlr_28();
   if (4 < gfxCfg.maxClientRenderViews) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_sky.cpp",0x11b,0,
                     "%s\n\t(gfxCfg.maxClientRenderViews) = %i");
@@ -466,7 +474,6 @@ void RB_AllocSunSpriteQueries(void)
     } while (LVar4 < uVar1);
   }
   sunQueryInited = true;
-  __restgprlr_28();
   return;
 }
 

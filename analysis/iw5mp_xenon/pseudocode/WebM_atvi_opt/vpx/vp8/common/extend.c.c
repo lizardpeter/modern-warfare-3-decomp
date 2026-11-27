@@ -2,82 +2,65 @@
 
 // 82811E40  extend_plane_borders  (WebM_atvi_opt/vpx/vp8/common/extend.c:31)
 
+/* WARNING: Function: __savegprlr_19 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_19 replaced with injection: xenon_save_restore */
+
 void extend_plane_borders
                (uchar *param_1,int param_2,int param_3,int param_4,int param_5,int param_6,
                int param_7,int param_8)
 
 {
-  byte *pbVar1;
-  longlong lVar2;
-  longlong lVar3;
+  longlong lVar1;
+  uchar *puVar2;
+  uint uVar3;
+  uchar *puVar4;
+  byte *pbVar6;
   longlong lVar5;
-  longlong lVar6;
-  uint uVar7;
-  longlong lVar8;
-  longlong lVar9;
-  longlong lVar10;
-  longlong lVar11;
-  longlong lVar12;
-  longlong lVar13;
-  int iVar14;
-  uint uVar17;
-  longlong lVar15;
-  longlong lVar16;
-  void *pvVar4;
+  uchar *puVar8;
+  longlong lVar7;
   
-  lVar16 = (longlong)param_7;
-  lVar15 = (longlong)param_6;
-  lVar13 = (longlong)param_5;
-  lVar8 = (longlong)param_4;
-  lVar6 = (longlong)param_3;
-  lVar5 = (longlong)param_2;
-  lVar2 = __savegprlr_19(param_1);
-  lVar10 = lVar2 - lVar15;
-  lVar9 = lVar6 + 1;
-  uVar17 = (uint)lVar15;
-  lVar3 = lVar2;
-  if (0 < lVar9) {
-    lVar12 = lVar10 + lVar8 + lVar15 + -1;
-    lVar11 = lVar10;
+  lVar7 = (longlong)param_7;
+  lVar5 = (longlong)param_5;
+  puVar2 = param_1 + -param_6;
+  lVar1 = (longlong)param_3 + 1;
+  if (0 < lVar1) {
+    pbVar6 = puVar2 + param_6 + param_4 + -1;
+    puVar4 = puVar2;
     do {
-      pbVar1 = (byte *)lVar12;
-      if (uVar17 != 0) {
-        vpx_memset((void *)lVar11,(uint)pbVar1[1 - (int)lVar8],uVar17);
+      if (param_6 != 0) {
+        vpx_memset(puVar4,(uint)pbVar6[1 - param_4],param_6);
       }
-      pvVar4 = vpx_memset(pbVar1 + 1,(uint)*pbVar1,param_8);
-      lVar3 = (longlong)(int)pvVar4;
-      lVar9 = lVar9 + -1;
-      lVar11 = lVar11 + lVar5;
-      lVar12 = lVar12 + lVar5;
-    } while (lVar9 != 0);
+      vpx_memset(pbVar6 + 1,(uint)*pbVar6,param_8);
+      lVar1 = lVar1 + -1;
+      puVar4 = puVar4 + param_2;
+      pbVar6 = pbVar6 + param_2;
+    } while (lVar1 != 0);
   }
-  iVar14 = (int)lVar5;
-  lVar9 = ((longlong)iVar14 * (longlong)(int)lVar6 - lVar15) + lVar2;
-  lVar15 = (lVar2 - (longlong)iVar14 * (longlong)(int)lVar13) - lVar15;
-  uVar7 = (int)lVar8 + uVar17 + param_8 + 1;
-  if (0 < (int)lVar13) {
+  puVar4 = param_1 + (param_2 * param_3 - param_6);
+  puVar8 = param_1 + (-param_6 - param_2 * param_5);
+  uVar3 = param_4 + param_6 + param_8 + 1;
+  if (0 < param_5) {
     do {
-      pvVar4 = vpx_memcpy((void *)lVar15,(void *)lVar10,uVar7);
-      lVar3 = (longlong)(int)pvVar4;
-      lVar13 = lVar13 + -1;
-      lVar15 = lVar15 + lVar5;
-    } while (lVar13 != 0);
+      vpx_memcpy(puVar8,puVar2,uVar3);
+      lVar5 = lVar5 + -1;
+      puVar8 = puVar8 + param_2;
+    } while (lVar5 != 0);
   }
-  if (0 < (int)lVar16) {
+  if (0 < param_7) {
     do {
-      pvVar4 = vpx_memcpy((void *)lVar9,(void *)((((int)lVar6 + -1) * iVar14 - uVar17) + (int)lVar2)
-                          ,uVar7);
-      lVar3 = (longlong)(int)pvVar4;
-      lVar16 = lVar16 + -1;
-      lVar9 = lVar9 + lVar5;
-    } while (lVar16 != 0);
+      vpx_memcpy(puVar4,param_1 + ((param_3 + -1) * param_2 - param_6),uVar3);
+      lVar7 = lVar7 + -1;
+      puVar4 = puVar4 + param_2;
+    } while (lVar7 != 0);
   }
-  __restgprlr_19(lVar3);
   return;
 }
 
 
 // 82811F58  vp8_extend_to_multiple_of16  (WebM_atvi_opt/vpx/vp8/common/extend.c:80)
+
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 
 void vp8_extend_to_multiple_of16(YV12_BUFFER_CONFIG *param_1,int param_2,int param_3)
 
@@ -86,25 +69,20 @@ void vp8_extend_to_multiple_of16(YV12_BUFFER_CONFIG *param_1,int param_2,int par
   int iVar2;
   uint uVar3;
   uint uVar4;
-  int iVar5;
   
-  iVar5 = __savegprlr_27(param_1);
   if (((-param_2 & 0xfU) != 0) || ((-param_3 & 0xfU) != 0)) {
     extend_plane_borders
-              (*(uchar **)(iVar5 + 0x18),*(int *)(iVar5 + 8),param_3,param_2,0,0,-param_3 & 0xfU,
+              (param_1->y_buffer,param_1->y_stride,param_3,param_2,0,0,-param_3 & 0xfU,
                -param_2 & 0xfU);
     iVar1 = param_3 + 1 >> 1;
     iVar2 = param_2 + 1 >> 1;
     uVar3 = -iVar1 & 7;
     uVar4 = -iVar2 & 7;
     if ((uVar4 != 0) || (uVar3 != 0)) {
-      extend_plane_borders
-                (*(uchar **)(iVar5 + 0x1c),*(int *)(iVar5 + 0x14),iVar1,iVar2,0,0,uVar3,uVar4);
-      extend_plane_borders
-                (*(uchar **)(iVar5 + 0x20),*(int *)(iVar5 + 0x14),iVar1,iVar2,0,0,uVar3,uVar4);
+      extend_plane_borders(param_1->u_buffer,param_1->uv_stride,iVar1,iVar2,0,0,uVar3,uVar4);
+      extend_plane_borders(param_1->v_buffer,param_1->uv_stride,iVar1,iVar2,0,0,uVar3,uVar4);
     }
   }
-  __restgprlr_27();
   return;
 }
 

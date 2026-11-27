@@ -28,6 +28,10 @@ void R_DecodeFogColor(uchar *param_1,float *param_2,float *param_3)
 
 // 827A0888  R_SetFrameFog  (gfx_d3d/rb_fog.cpp:26)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Removing unreachable block (ram,0x827a0bfc) */
 /* WARNING: Removing unreachable block (ram,0x827a0b7c) */
 /* WARNING: Removing unreachable block (ram,0x827a09dc) */
@@ -46,108 +50,102 @@ void R_SetFrameFog(GfxCmdBufInput *param_1)
   float fVar2;
   float fVar3;
   float fVar4;
-  int iVar5;
-  int iVar6;
+  GfxBackEndData *pGVar5;
+  double dVar6;
   double dVar7;
   double dVar8;
   double dVar9;
   double dVar10;
   double dVar11;
   double dVar12;
-  double dVar13;
   float local_a0;
-  undefined4 local_9c;
-  undefined4 local_98;
-  undefined4 local_94;
+  float local_9c;
+  float local_98;
+  float local_94;
   float local_90;
-  undefined4 local_8c;
-  undefined4 local_88;
-  undefined4 local_84;
+  float local_8c;
+  float local_88;
+  float local_84;
   
-  __savegprlr_25(param_1);
-  iVar6 = __savefpr_24();
   if ((r_fog->current).enabled == false) {
-    *(undefined4 *)(iVar6 + 0x290) = 0;
-    *(undefined4 *)(iVar6 + 0x294) = 0x3f800000;
-    *(undefined4 *)(iVar6 + 0x298) = 0;
-    *(undefined4 *)(iVar6 + 0x29c) = 0;
-    __restfpr_24();
-    __restgprlr_25();
+    param_1->consts[0x29][0] = 0.0;
+    param_1->consts[0x29][1] = 1.0;
+    param_1->consts[0x29][2] = 0.0;
+    param_1->consts[0x29][3] = 0.0;
     return;
   }
-  iVar5 = *(int *)(iVar6 + 0x5ec);
-  if (iVar5 == 0) {
+  pGVar5 = param_1->data;
+  if (pGVar5 == (GfxBackEndData *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_fog.cpp",0x2c,0,
                     "%s");
   }
-  R_DecodeFogColor((uchar *)(iVar5 + 0x1588),&local_a0,&local_90);
-  *(float *)(iVar6 + 0x2a0) = local_a0;
-  *(undefined4 *)(iVar6 + 0x2a4) = local_9c;
-  *(undefined4 *)(iVar6 + 0x2a8) = local_98;
-  *(undefined4 *)(iVar6 + 0x2ac) = local_94;
-  *(undefined4 *)(iVar6 + 0x2b4) = local_8c;
-  dVar8 = 0.0;
-  *(undefined4 *)(iVar6 + 0x2b8) = local_88;
-  *(undefined4 *)(iVar6 + 700) = local_84;
-  *(float *)(iVar6 + 0x2b0) = local_90;
-  dVar13 = 1.0;
-  if ((*(float *)(iVar5 + 0x1594) < 0.0) || (1.0 < *(float *)(iVar5 + 0x1594))) {
+  R_DecodeFogColor((pGVar5->fogSettings).color.array,&local_a0,&local_90);
+  param_1->consts[0x2a][0] = local_a0;
+  param_1->consts[0x2a][1] = local_9c;
+  param_1->consts[0x2a][2] = local_98;
+  param_1->consts[0x2a][3] = local_94;
+  param_1->consts[0x2b][1] = local_8c;
+  dVar7 = 0.0;
+  param_1->consts[0x2b][2] = local_88;
+  param_1->consts[0x2b][3] = local_84;
+  param_1->consts[0x2b][0] = local_90;
+  fVar2 = (pGVar5->fogSettings).fogMaxOpacity;
+  dVar12 = 1.0;
+  if ((fVar2 < 0.0) || (1.0 < fVar2)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_fog.cpp",0x33,0,
                     "fog->fogMaxOpacity not in [0.0f, 1.0f]\n\t%g not in [%g, %g]");
   }
-  fVar2 = *(float *)(iVar5 + 0x1590);
-  fVar3 = *(float *)(iVar5 + 0x1594);
-  dVar11 = -(double)fVar2;
-  fVar4 = *(float *)(iVar5 + 0x158c);
-  *(float *)(iVar6 + 0x290) = (float)dVar8;
-  *(float *)(iVar6 + 0x294) = (float)(dVar13 - (double)fVar3);
-  *(float *)(iVar6 + 0x298) = (float)dVar11;
-  *(float *)(iVar6 + 0x29c) = (float)((double)fVar4 * (double)fVar2);
+  dVar6 = (double)(pGVar5->fogSettings).density;
+  fVar2 = (pGVar5->fogSettings).fogMaxOpacity;
+  dVar10 = -dVar6;
+  fVar3 = (pGVar5->fogSettings).fogStart;
+  param_1->consts[0x29][0] = (float)dVar7;
+  param_1->consts[0x29][1] = (float)(dVar12 - (double)fVar2);
+  param_1->consts[0x29][2] = (float)dVar10;
+  param_1->consts[0x29][3] = (float)((double)fVar3 * dVar6);
   if (rg.useSunDirFog != false) {
-    dVar10 = 0.01745329238474369;
-    dVar7 = cos((double)(*(float *)(iVar5 + 0x15ac) * 0.017453292));
-    dVar12 = (double)(float)dVar7;
-    dVar7 = cos((double)(float)((double)*(float *)(iVar5 + 0x15b0) * dVar10));
-    dVar7 = (double)(float)dVar7;
-    if (dVar12 <= dVar7) {
+    dVar9 = 0.01745329238474369;
+    dVar6 = cos((double)((pGVar5->fogSettings).sunBeginFadeAngle * 0.017453292));
+    dVar11 = (double)(float)dVar6;
+    dVar6 = cos((double)(float)((double)(pGVar5->fogSettings).sunEndFadeAngle * dVar9));
+    dVar6 = (double)(float)dVar6;
+    if (dVar11 <= dVar6) {
       fVar2 = 100.0;
     }
     else {
-      fVar2 = (float)(dVar13 / (double)(float)(dVar12 - dVar7));
+      fVar2 = (float)(dVar12 / (double)(float)(dVar11 - dVar6));
     }
-    dVar9 = (double)fVar2;
-    fVar2 = *(float *)(iVar5 + 0x15a4);
-    fVar3 = *(float *)(iVar5 + 0x15a0);
-    fVar4 = *(float *)(iVar5 + 0x15a8);
-    dVar12 = (double)SQRT(fVar4 * fVar4 + fVar3 * fVar3 + fVar2 * fVar2);
-    dVar10 = dVar13;
-    if (-dVar12 < 0.0) {
-      dVar10 = dVar12;
+    dVar8 = (double)fVar2;
+    fVar2 = (pGVar5->fogSettings).sunDir[1];
+    fVar3 = (pGVar5->fogSettings).sunDir[0];
+    fVar4 = (pGVar5->fogSettings).sunDir[2];
+    dVar11 = (double)SQRT(fVar4 * fVar4 + fVar3 * fVar3 + fVar2 * fVar2);
+    dVar9 = dVar12;
+    if (-dVar11 < 0.0) {
+      dVar9 = dVar11;
     }
-    fVar1 = (float)(dVar13 / dVar10);
-    dVar12 = (double)(fVar1 * fVar3);
-    dVar10 = (double)(fVar1 * fVar2);
-    dVar13 = (double)(fVar1 * fVar4);
-    R_DecodeFogColor((uchar *)(iVar5 + 0x159c),&local_a0,&local_90);
-    *(float *)(iVar6 + 0x2c0) = (float)((double)*(float *)(iVar5 + 0x15b4) * dVar11);
-    *(float *)(iVar6 + 0x2c4) = (float)dVar7;
-    *(float *)(iVar6 + 0x2c8) = (float)dVar9;
-    *(float *)(iVar6 + 0x2cc) = (float)dVar11;
-    *(undefined4 *)(iVar6 + 0x2d4) = local_9c;
-    *(undefined4 *)(iVar6 + 0x2d8) = local_98;
-    *(undefined4 *)(iVar6 + 0x2dc) = local_94;
-    *(float *)(iVar6 + 0x2d0) = local_a0;
-    *(float *)(iVar6 + 0x2e0) = local_90;
-    *(undefined4 *)(iVar6 + 0x2e8) = local_88;
-    *(undefined4 *)(iVar6 + 0x2ec) = local_84;
-    *(undefined4 *)(iVar6 + 0x2e4) = local_8c;
-    *(float *)(iVar6 + 0x2f0) = (float)dVar12;
-    *(float *)(iVar6 + 0x2f4) = (float)dVar10;
-    *(float *)(iVar6 + 0x2f8) = (float)dVar13;
-    *(float *)(iVar6 + 0x2fc) = (float)dVar8;
+    fVar1 = (float)(dVar12 / dVar9);
+    dVar11 = (double)(fVar1 * fVar3);
+    dVar9 = (double)(fVar1 * fVar2);
+    dVar12 = (double)(fVar1 * fVar4);
+    R_DecodeFogColor((pGVar5->fogSettings).sunColor.array,&local_a0,&local_90);
+    param_1->consts[0x2c][0] = (float)((double)(pGVar5->fogSettings).sunFogScale * dVar10);
+    param_1->consts[0x2c][1] = (float)dVar6;
+    param_1->consts[0x2c][2] = (float)dVar8;
+    param_1->consts[0x2c][3] = (float)dVar10;
+    param_1->consts[0x2d][1] = local_9c;
+    param_1->consts[0x2d][2] = local_98;
+    param_1->consts[0x2d][3] = local_94;
+    param_1->consts[0x2d][0] = local_a0;
+    param_1->consts[0x2e][0] = local_90;
+    param_1->consts[0x2e][2] = local_88;
+    param_1->consts[0x2e][3] = local_84;
+    param_1->consts[0x2e][1] = local_8c;
+    param_1->consts[0x2f][0] = (float)dVar11;
+    param_1->consts[0x2f][1] = (float)dVar9;
+    param_1->consts[0x2f][2] = (float)dVar12;
+    param_1->consts[0x2f][3] = (float)dVar7;
   }
-  __restfpr_24();
-  __restgprlr_25();
   return;
 }
 

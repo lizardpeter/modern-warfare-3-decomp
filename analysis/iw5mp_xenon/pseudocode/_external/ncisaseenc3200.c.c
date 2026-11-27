@@ -2,66 +2,59 @@
 
 // 828C3C58  nciEncodeSase3200  (<external>/Xenon/mar09/core/private/xam/codecs/nci/enc/src/ncisaseenc3200.c:150)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 ushort nciEncodeSase3200(void *param_1,NCI_CODEC_IO_BLOCK *param_2)
 
 {
-  undefined4 *puVar1;
-  int *piVar3;
-  undefined8 uVar2;
-  ushort uVar4;
-  ulonglong uVar5;
+  ushort uVar1;
   undefined1 auStack_c0 [80];
   int aiStack_70 [28];
   
-  uVar5 = (ulonglong)(int)param_2;
-  piVar3 = (int *)__savegprlr_28(param_1);
-  if ((uVar5 & 0xffffffff) == 0) {
-    uVar2 = 0x181a;
+  if (param_2 == (NCI_CODEC_IO_BLOCK *)0x0) {
+    uVar1 = 0x181a;
   }
-  else {
-    puVar1 = (undefined4 *)uVar5;
-    if (puVar1[2] == 0) {
-      uVar2 = 0x17f2;
-    }
-    else if ((short *)*puVar1 == (short *)0x0) {
-      uVar2 = 0x17ed;
-    }
-    else if (*(ushort *)((int)puVar1 + 0xe) < *(ushort *)(puVar1 + 3)) {
-      if (*(ushort *)((int)puVar1 + 0x12) < *(ushort *)(puVar1 + 3)) {
-        if (*(byte *)(puVar1 + 4) < 8) {
-          if (*(byte *)(puVar1 + 5) < 8) {
-            if ((piVar3 == (int *)0x0) || (*piVar3 != 0xface)) {
-              uVar2 = 0x17d4;
-            }
-            else if (*(char *)(piVar3 + 3) == '\n') {
-              NellyEncodeSC((short *)*puVar1,(void *)piVar3[4],auStack_c0);
-              NellyQuantSC3(aiStack_70,(void *)piVar3[4],auStack_c0);
-              NellyPackSC3(aiStack_70,(uchar *)puVar1[2],(ushort *)((int)puVar1 + 0x12),
-                           (uchar *)(puVar1 + 5),(uint)*(ushort *)(puVar1 + 3),0);
-              uVar2 = 0;
-            }
-            else {
-              uVar2 = 0x17de;
-            }
+  else if (param_2->pNellyBuffer == (uchar *)0x0) {
+    uVar1 = 0x17f2;
+  }
+  else if (param_2->pPCMBuffer == (short *)0x0) {
+    uVar1 = 0x17ed;
+  }
+  else if (param_2->wNellyBufferReadByteOffset < param_2->wNellyBufferSize) {
+    if (param_2->wNellyBufferWriteByteOffset < param_2->wNellyBufferSize) {
+      if (param_2->chNellyBufferReadBitOffset < 8) {
+        if (param_2->chNellyBufferWriteBitOffset < 8) {
+          if ((param_1 == (void *)0x0) || (*(int *)param_1 != 0xface)) {
+            uVar1 = 0x17d4;
+          }
+          else if (*(char *)((int)param_1 + 0xc) == '\n') {
+            NellyEncodeSC(param_2->pPCMBuffer,*(void **)((int)param_1 + 0x10),auStack_c0);
+            NellyQuantSC3(aiStack_70,*(void **)((int)param_1 + 0x10),auStack_c0);
+            NellyPackSC3(aiStack_70,param_2->pNellyBuffer,&param_2->wNellyBufferWriteByteOffset,
+                         &param_2->chNellyBufferWriteBitOffset,(uint)param_2->wNellyBufferSize,0);
+            uVar1 = 0;
           }
           else {
-            uVar2 = 0x17fc;
+            uVar1 = 0x17de;
           }
         }
         else {
-          uVar2 = 0x17f7;
+          uVar1 = 0x17fc;
         }
       }
       else {
-        uVar2 = 0x1806;
+        uVar1 = 0x17f7;
       }
     }
     else {
-      uVar2 = 0x1801;
+      uVar1 = 0x1806;
     }
   }
-  uVar4 = __restgprlr_28(uVar2);
-  return uVar4;
+  else {
+    uVar1 = 0x1801;
+  }
+  return uVar1;
 }
 
 
@@ -153,20 +146,20 @@ ushort nciInitEncode(void **param_1)
 
 // 828C3E20  nciFreeEncodeSase3200  (<external>/Xenon/mar09/core/private/xam/codecs/nci/enc/src/ncisaseenc3200.c:345)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 ushort nciFreeEncodeSase3200(void **param_1)
 
 {
   int *piVar1;
-  undefined4 *puVar3;
-  undefined8 uVar2;
-  ushort uVar4;
+  ushort uVar2;
   
-  puVar3 = (undefined4 *)__savegprlr_28(param_1);
-  if (puVar3 == (undefined4 *)0x0) {
+  if (param_1 == (void **)0x0) {
     uVar2 = 0x181a;
   }
   else {
-    piVar1 = (int *)*puVar3;
+    piVar1 = *param_1;
     if ((piVar1 == (int *)0x0) || (*piVar1 != 0xface)) {
       uVar2 = 0x17d4;
     }
@@ -183,13 +176,12 @@ ushort nciFreeEncodeSase3200(void **param_1)
       }
       (*freefunc)(piVar1);
       uVar2 = 0;
-      *puVar3 = 0;
+      *param_1 = (void *)0x0;
     }
     else {
       uVar2 = 0x17e3;
     }
   }
-  uVar4 = __restgprlr_28(uVar2);
-  return uVar4;
+  return uVar2;
 }
 

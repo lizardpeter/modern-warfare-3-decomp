@@ -12782,7 +12782,7 @@ LAB_825cfc8c:
   825CFCB4  7C0903A6             mtspr CTR,r0
 switchD:
   825CFCB8  4E800420             bctr
-caseD_0:
+caseD_14:
   825CFCE4  817B01C0             lwz r11,0x1c0(r27)
   825CFCE8  2F0B0000             cmpwi cr6,r11,0x0
   825CFCEC  419A035C             beq cr6,0x825d0048
@@ -12797,7 +12797,7 @@ LAB_825cfcf0:
   825CFD0C  38600001             li r3,0x1
   825CFD10  382100A0             addi r1,r1,0xa0
   825CFD14  483469E4             b 0x829166f8
-caseD_1:
+caseD_15:
   825CFD18  817B01C0             lwz r11,0x1c0(r27)
   825CFD1C  2F0B0000             cmpwi cr6,r11,0x0
   825CFD20  419A0330             beq cr6,0x825d0050
@@ -12819,7 +12819,7 @@ LAB_825cfd4c:
   825CFD58  419A02F0             beq cr6,0x825d0048
   825CFD5C  2F1900BD             cmpwi cr6,r25,0xbd
   825CFD60  419A02F0             beq cr6,0x825d0050
-caseD_2:
+caseD_16:
   825CFD64  3979FFFF             subi r11,r25,0x1
   825CFD68  7D6A0034             cntlzw r10,r11
   825CFD6C  5549DFFE             rlwinm r9,r10,0x1b,0x1f,0x1f
@@ -13023,10 +13023,10 @@ LAB_825d002c:
   825D003C  38600001             li r3,0x1
   825D0040  382100A0             addi r1,r1,0xa0
   825D0044  483466B4             b 0x829166f8
-caseD_8:
+caseD_1c:
   825D0048  3900FFFF             li r8,-0x1
   825D004C  48000008             b 0x825d0054
-caseD_9:
+caseD_1d:
   825D0050  39000001             li r8,0x1
 LAB_825d0054:
   825D0054  7FA7EB78             or r7,r29,r29

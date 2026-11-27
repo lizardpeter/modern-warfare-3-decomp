@@ -147,19 +147,19 @@ sval_u node1(int param_1,sval_u param_2)
 
 // 8253EF08  node2  (script/scr_parsetree.cpp:144)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 sval_u node2(int param_1,sval_u param_2,sval_u param_3)
 
 {
-  int iVar1;
-  sval_u *psVar2;
+  sval_u *psVar1;
   
-  iVar1 = __savegprlr_29(param_1);
-  psVar2 = Scr_AllocNode(3);
-  psVar2->type = iVar1;
-  psVar2[1] = param_2;
-  psVar2[2] = param_3;
-  iVar1 = __restgprlr_29();
-  return (sval_u)iVar1;
+  psVar1 = Scr_AllocNode(3);
+  psVar1->type = param_1;
+  psVar1[1] = param_2;
+  psVar1[2] = param_3;
+  return (sval_u)((scr_block_t *)psVar1).type;
 }
 
 
@@ -179,171 +179,171 @@ sval_u node2_(sval_u param_1,sval_u param_2)
 
 // 8253EF88  node3  (script/scr_parsetree.cpp:167)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 sval_u node3(int param_1,sval_u param_2,sval_u param_3,sval_u param_4)
 
 {
-  int iVar1;
-  sval_u *psVar2;
+  sval_u *psVar1;
   
-  iVar1 = __savegprlr_28(param_1);
-  psVar2 = Scr_AllocNode(4);
-  psVar2->type = iVar1;
-  psVar2[1] = param_2;
-  psVar2[2] = param_3;
-  psVar2[3] = param_4;
-  iVar1 = __restgprlr_28();
-  return (sval_u)iVar1;
+  psVar1 = Scr_AllocNode(4);
+  psVar1->type = param_1;
+  psVar1[1] = param_2;
+  psVar1[2] = param_3;
+  psVar1[3] = param_4;
+  return (sval_u)((scr_block_t *)psVar1).type;
 }
 
 
 // 8253EFC8  node3_  (script/scr_parsetree.cpp:180)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 sval_u node3_(sval_u param_1,sval_u param_2,sval_u param_3)
 
 {
-  int iVar1;
-  sval_u *psVar2;
+  sval_u *psVar1;
   
-  iVar1 = __savegprlr_29(param_1.type);
-  psVar2 = Scr_AllocNode(3);
-  psVar2->type = iVar1;
-  psVar2[1] = param_2;
-  psVar2[2] = param_3;
-  iVar1 = __restgprlr_29();
-  return (sval_u)iVar1;
+  psVar1 = Scr_AllocNode(3);
+  *psVar1 = param_1;
+  psVar1[1] = param_2;
+  psVar1[2] = param_3;
+  return (sval_u)psVar1.type;
 }
 
 
 // 8253F000  node4  (script/scr_parsetree.cpp:192)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 sval_u node4(int param_1,sval_u param_2,sval_u param_3,sval_u param_4,sval_u param_5)
 
 {
-  int iVar1;
-  sval_u *psVar2;
+  sval_u *psVar1;
   
-  iVar1 = __savegprlr_27(param_1);
-  psVar2 = Scr_AllocNode(5);
-  psVar2->type = iVar1;
-  psVar2[1] = param_2;
-  psVar2[2] = param_3;
-  psVar2[3] = param_4;
-  psVar2[4] = param_5;
-  iVar1 = __restgprlr_27();
-  return (sval_u)iVar1;
+  psVar1 = Scr_AllocNode(5);
+  psVar1->type = param_1;
+  psVar1[1] = param_2;
+  psVar1[2] = param_3;
+  psVar1[3] = param_4;
+  psVar1[4] = param_5;
+  return (sval_u)((scr_block_t *)psVar1).type;
 }
 
 
 // 8253F048  node4_  (script/scr_parsetree.cpp:206)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 sval_u node4_(sval_u param_1,sval_u param_2,sval_u param_3,sval_u param_4)
 
 {
-  int iVar1;
-  sval_u *psVar2;
+  sval_u *psVar1;
   
-  iVar1 = __savegprlr_28(param_1.type);
-  psVar2 = Scr_AllocNode(4);
-  psVar2->type = iVar1;
-  psVar2[1] = param_2;
-  psVar2[2] = param_3;
-  psVar2[3] = param_4;
-  iVar1 = __restgprlr_28();
-  return (sval_u)iVar1;
+  psVar1 = Scr_AllocNode(4);
+  *psVar1 = param_1;
+  psVar1[1] = param_2;
+  psVar1[2] = param_3;
+  psVar1[3] = param_4;
+  return (sval_u)psVar1.type;
 }
 
 
 // 8253F088  node5  (script/scr_parsetree.cpp:219)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 sval_u node5(int param_1,sval_u param_2,sval_u param_3,sval_u param_4,sval_u param_5,sval_u param_6)
 
 {
-  int iVar1;
-  sval_u *psVar2;
+  sval_u *psVar1;
   
-  iVar1 = __savegprlr_26(param_1);
-  psVar2 = Scr_AllocNode(6);
-  psVar2->type = iVar1;
-  psVar2[1] = param_2;
-  psVar2[2] = param_3;
-  psVar2[3] = param_4;
-  psVar2[4] = param_5;
-  psVar2[5] = param_6;
-  iVar1 = __restgprlr_26();
-  return (sval_u)iVar1;
+  psVar1 = Scr_AllocNode(6);
+  psVar1->type = param_1;
+  psVar1[1] = param_2;
+  psVar1[2] = param_3;
+  psVar1[3] = param_4;
+  psVar1[4] = param_5;
+  psVar1[5] = param_6;
+  return (sval_u)((scr_block_t *)psVar1).type;
 }
 
 
 // 8253F0D8  node6  (script/scr_parsetree.cpp:234)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
+
 sval_u node6(int param_1,sval_u param_2,sval_u param_3,sval_u param_4,sval_u param_5,sval_u param_6,
             sval_u param_7)
 
 {
-  int iVar1;
-  sval_u *psVar2;
+  sval_u *psVar1;
   
-  iVar1 = __savegprlr_25(param_1);
-  psVar2 = Scr_AllocNode(7);
-  psVar2->type = iVar1;
-  psVar2[1] = param_2;
-  psVar2[2] = param_3;
-  psVar2[3] = param_4;
-  psVar2[4] = param_5;
-  psVar2[5] = param_6;
-  psVar2[6] = param_7;
-  iVar1 = __restgprlr_25();
-  return (sval_u)iVar1;
+  psVar1 = Scr_AllocNode(7);
+  psVar1->type = param_1;
+  psVar1[1] = param_2;
+  psVar1[2] = param_3;
+  psVar1[3] = param_4;
+  psVar1[4] = param_5;
+  psVar1[5] = param_6;
+  psVar1[6] = param_7;
+  return (sval_u)((scr_block_t *)psVar1).type;
 }
 
 
 // 8253F130  node7  (script/scr_parsetree.cpp:250)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
+
 sval_u node7(int param_1,sval_u param_2,sval_u param_3,sval_u param_4,sval_u param_5,sval_u param_6,
             sval_u param_7,sval_u param_8)
 
 {
-  int iVar1;
-  sval_u *psVar2;
+  sval_u *psVar1;
   
-  iVar1 = __savegprlr_24(param_1);
-  psVar2 = Scr_AllocNode(8);
-  psVar2->type = iVar1;
-  psVar2[1] = param_2;
-  psVar2[2] = param_3;
-  psVar2[3] = param_4;
-  psVar2[4] = param_5;
-  psVar2[5] = param_6;
-  psVar2[6] = param_7;
-  psVar2[7] = param_8;
-  iVar1 = __restgprlr_24();
-  return (sval_u)iVar1;
+  psVar1 = Scr_AllocNode(8);
+  psVar1->type = param_1;
+  psVar1[1] = param_2;
+  psVar1[2] = param_3;
+  psVar1[3] = param_4;
+  psVar1[4] = param_5;
+  psVar1[5] = param_6;
+  psVar1[6] = param_7;
+  psVar1[7] = param_8;
+  return (sval_u)((scr_block_t *)psVar1).type;
 }
 
 
 // 8253F190  node8  (script/scr_parsetree.cpp:267)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
+
 sval_u node8(int param_1,sval_u param_2,sval_u param_3,sval_u param_4,sval_u param_5,sval_u param_6,
             sval_u param_7,sval_u param_8,sval_u param_9)
 
 {
-  int iVar1;
-  sval_u *psVar2;
+  sval_u *psVar1;
   sval_u in_stack_00000054;
   
-  iVar1 = __savegprlr_24(param_1);
-  psVar2 = Scr_AllocNode(9);
-  psVar2->type = iVar1;
-  psVar2[1] = param_2;
-  psVar2[2] = param_3;
-  psVar2[3] = param_4;
-  psVar2[4] = param_5;
-  psVar2[5] = param_6;
-  psVar2[6] = param_7;
-  psVar2[7] = param_8;
-  psVar2[8] = in_stack_00000054;
-  iVar1 = __restgprlr_24();
-  return (sval_u)iVar1;
+  psVar1 = Scr_AllocNode(9);
+  psVar1->type = param_1;
+  psVar1[1] = param_2;
+  psVar1[2] = param_3;
+  psVar1[3] = param_4;
+  psVar1[4] = param_5;
+  psVar1[5] = param_6;
+  psVar1[6] = param_7;
+  psVar1[7] = param_8;
+  psVar1[8] = in_stack_00000054;
+  return (sval_u)((scr_block_t *)psVar1).type;
 }
 
 
@@ -473,65 +473,60 @@ void Scr_ClearDebugExpr(debugger_sval_s *param_1)
 
 // 8253F438  Scr_AllocDebugExpr  (script/scr_parsetree.cpp:413)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 sval_u Scr_AllocDebugExpr(int param_1,int param_2,char *param_3)
 
 {
   debugger_sval_s *pdVar1;
-  debugger_sval_s *pdVar2;
-  int iVar3;
-  longlong lVar4;
   
-  lVar4 = (longlong)param_2;
-  pdVar1 = (debugger_sval_s *)__savegprlr_27(param_1,lVar4,param_3);
   if (g_debugExprMem == (void *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_parsetree.cpp",
                     0x1a2,0,"%s");
   }
-  pdVar2 = RtlAllocateHeap(g_debugExprMem,0,(int)lVar4 + 4);
-  if (pdVar2 == (debugger_sval_s *)0x0) {
+  pdVar1 = RtlAllocateHeap(g_debugExprMem,0,param_2 + 4);
+  if (pdVar1 == (debugger_sval_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_parsetree.cpp",
                     0x1a4,0,"%s");
   }
-  pdVar2->next = g_debugExprHead;
-  g_debugExprHead = pdVar2;
-  pdVar2[1].next = pdVar1;
-  iVar3 = __restgprlr_27((longlong)(int)pdVar2 + 4);
-  return (sval_u)iVar3;
+  pdVar1->next = g_debugExprHead;
+  g_debugExprHead = pdVar1;
+  pdVar1[1].next = (debugger_sval_s *)param_1;
+  return ((sval_u *)(pdVar1 + 1)).type;
 }
 
 
 // 8253F4E0  Scr_FreeDebugExpr  (script/scr_parsetree.cpp:441)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 void Scr_FreeDebugExpr(ScriptExpression_t *param_1)
 
 {
-  int *piVar1;
-  int iVar2;
-  ulong uVar3;
-  int *piVar4;
+  debugger_sval_s *pdVar1;
+  debugger_sval_s *pdVar2;
   
-  iVar2 = __savegprlr_26(param_1);
-  if (*(int *)(iVar2 + 4) != 0) {
+  if (param_1->breakonExpr != 0) {
     scrVmDebugPub.checkBreakon = scrVmDebugPub.checkBreakon + -1;
   }
-  piVar4 = *(int **)(iVar2 + 8);
-  if (piVar4 != (int *)0x0) {
+  pdVar2 = param_1->exprHead;
+  if (pdVar2 != (debugger_sval_s *)0x0) {
     do {
-      Scr_FreeDebugExprValue((sval_u *)(piVar4 + 1));
-      piVar1 = (int *)*piVar4;
+      Scr_FreeDebugExprValue((sval_u *)(pdVar2 + 1));
+      pdVar1 = pdVar2->next;
       if (g_debugExprMem == (void *)0x0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_parsetree.cpp",
                         0x1cb,0,"%s");
       }
-      uVar3 = RtlFreeHeap(g_debugExprMem,0,piVar4);
-      piVar4 = piVar1;
-    } while (piVar1 != (int *)0x0);
-    __restgprlr_26(uVar3);
+      RtlFreeHeap(g_debugExprMem,0,pdVar2);
+      pdVar2 = pdVar1;
+    } while (pdVar1 != (debugger_sval_s *)0x0);
     return;
   }
   MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_parsetree.cpp",0x1c2,
                   0,"%s");
-  __restgprlr_26();
   return;
 }
 
@@ -589,151 +584,147 @@ sval_u debugger_node2(int param_1,sval_u param_2,sval_u param_3)
 
 // 8253F6B0  debugger_node3  (script/scr_parsetree.cpp:546)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 sval_u debugger_node3(int param_1,sval_u param_2,sval_u param_3,sval_u param_4)
 
 {
-  int iVar1;
-  sval_u sVar2;
+  sval_u sVar1;
   
-  iVar1 = __savegprlr_29(param_1);
-  sVar2 = Scr_AllocDebugExpr(iVar1,0x10,"debugger_node3");
-  (sVar2.block)->localVarsCreateCount = (int)param_2;
-  (sVar2.block)->localVarsPublicCount = (int)param_3;
-  (sVar2.block)->localVarsCount = (int)param_4;
-  iVar1 = __restgprlr_29();
-  return (sval_u)iVar1;
+  sVar1 = Scr_AllocDebugExpr(param_1,0x10,"debugger_node3");
+  (sVar1.block)->localVarsCreateCount = (int)param_2;
+  (sVar1.block)->localVarsPublicCount = (int)param_3;
+  (sVar1.block)->localVarsCount = (int)param_4;
+  return (sval_u)sVar1.type;
 }
 
 
 // 8253F6F0  debugger_node4  (script/scr_parsetree.cpp:564)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 sval_u debugger_node4(int param_1,sval_u param_2,sval_u param_3,sval_u param_4,sval_u param_5)
 
 {
-  int iVar1;
-  sval_u sVar2;
+  sval_u sVar1;
   
-  iVar1 = __savegprlr_28(param_1);
-  sVar2 = Scr_AllocDebugExpr(iVar1,0x14,"debugger_node4");
-  (sVar2.block)->localVarsCreateCount = (int)param_2;
-  (sVar2.block)->localVarsPublicCount = (int)param_3;
-  (sVar2.block)->localVarsCount = (int)param_4;
-  *(sval_u *)(sVar2.block)->localVarsInitBits = param_5;
-  iVar1 = __restgprlr_28();
-  return (sval_u)iVar1;
+  sVar1 = Scr_AllocDebugExpr(param_1,0x14,"debugger_node4");
+  (sVar1.block)->localVarsCreateCount = (int)param_2;
+  (sVar1.block)->localVarsPublicCount = (int)param_3;
+  (sVar1.block)->localVarsCount = (int)param_4;
+  *(sval_u *)(sVar1.block)->localVarsInitBits = param_5;
+  return (sval_u)sVar1.type;
 }
 
 
 // 8253F738  debugger_node5  (script/scr_parsetree.cpp:583)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 sval_u debugger_node5(int param_1,sval_u param_2,sval_u param_3,sval_u param_4,sval_u param_5,
                      sval_u param_6)
 
 {
-  int iVar1;
-  sval_u sVar2;
+  sval_u sVar1;
   
-  iVar1 = __savegprlr_27(param_1);
-  sVar2 = Scr_AllocDebugExpr(iVar1,0x18,"debugger_node5");
-  (sVar2.block)->localVarsCreateCount = (int)param_2;
-  (sVar2.block)->localVarsPublicCount = (int)param_3;
-  (sVar2.block)->localVarsCount = (int)param_4;
-  *(sval_u *)(sVar2.block)->localVarsInitBits = param_5;
-  *(sval_u *)((sVar2.block)->localVarsInitBits + 4) = param_6;
-  iVar1 = __restgprlr_27();
-  return (sval_u)iVar1;
+  sVar1 = Scr_AllocDebugExpr(param_1,0x18,"debugger_node5");
+  (sVar1.block)->localVarsCreateCount = (int)param_2;
+  (sVar1.block)->localVarsPublicCount = (int)param_3;
+  (sVar1.block)->localVarsCount = (int)param_4;
+  *(sval_u *)(sVar1.block)->localVarsInitBits = param_5;
+  *(sval_u *)((sVar1.block)->localVarsInitBits + 4) = param_6;
+  return (sval_u)sVar1.type;
 }
 
 
 // 8253F788  debugger_node6  (script/scr_parsetree.cpp:603)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 sval_u debugger_node6(int param_1,sval_u param_2,sval_u param_3,sval_u param_4,sval_u param_5,
                      sval_u param_6,sval_u param_7)
 
 {
-  int iVar1;
-  sval_u sVar2;
+  sval_u sVar1;
   
-  iVar1 = __savegprlr_26(param_1);
-  sVar2 = Scr_AllocDebugExpr(iVar1,0x1c,"debugger_node5");
-  (sVar2.block)->localVarsCreateCount = (int)param_2;
-  (sVar2.block)->localVarsPublicCount = (int)param_3;
-  (sVar2.block)->localVarsCount = (int)param_4;
-  *(sval_u *)(sVar2.block)->localVarsInitBits = param_5;
-  *(sval_u *)((sVar2.block)->localVarsInitBits + 4) = param_6;
-  (sVar2.block)->localVars[0].canonicalStr = (uint)param_7;
-  iVar1 = __restgprlr_26();
-  return (sval_u)iVar1;
+  sVar1 = Scr_AllocDebugExpr(param_1,0x1c,"debugger_node5");
+  (sVar1.block)->localVarsCreateCount = (int)param_2;
+  (sVar1.block)->localVarsPublicCount = (int)param_3;
+  (sVar1.block)->localVarsCount = (int)param_4;
+  *(sval_u *)(sVar1.block)->localVarsInitBits = param_5;
+  *(sval_u *)((sVar1.block)->localVarsInitBits + 4) = param_6;
+  (sVar1.block)->localVars[0].canonicalStr = (uint)param_7;
+  return (sval_u)sVar1.type;
 }
 
 
 // 8253F7E0  debugger_prepend_node  (script/scr_parsetree.cpp:624)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 sval_u debugger_prepend_node(sval_u param_1,sval_u param_2)
 
 {
-  int iVar1;
+  sval_u sVar1;
   sval_u sVar2;
-  int iVar3;
-  longlong lVar4;
   
-  lVar4 = (longlong)param_2.type;
-  iVar1 = __savegprlr_29(param_1.type);
-  iVar3 = *(int *)lVar4;
+  sVar1 = *param_2.node;
   sVar2 = Scr_AllocDebugExpr(0,0xc,"debugger_node2");
-  (sVar2.block)->localVarsCreateCount = iVar1;
-  (sVar2.block)->localVarsPublicCount = iVar3;
-  *(int *)lVar4 = (int)&(sVar2.block)->localVarsCreateCount;
-  iVar3 = __restgprlr_29(lVar4);
-  return (sval_u)iVar3;
+  (sVar2.block)->localVarsCreateCount = (int)param_1;
+  (sVar2.block)->localVarsPublicCount = (int)sVar1;
+  (param_2.block)->abortLevel = (int)&(sVar2.block)->localVarsCreateCount;
+  return (sval_u)param_2.type;
 }
 
 
 // 8253F828  debugger_buffer  (script/scr_parsetree.cpp:645)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 sval_u debugger_buffer(int param_1,char *param_2,int param_3,int param_4)
 
 {
-  uint uVar1;
-  int iVar2;
-  sval_u sVar3;
+  sval_u sVar1;
+  uint uVar2;
   
-  iVar2 = __savegprlr_28(param_1,param_2);
-  uVar1 = param_4 - 1;
-  if ((uVar1 & param_4) != 0) {
+  uVar2 = param_4 - 1;
+  if ((uVar2 & param_4) != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\script\\scr_parsetree.cpp",
                     0x289,0,"%s");
   }
-  sVar3 = Scr_AllocDebugExpr(iVar2,param_3 + uVar1 + 8,"debugger_buffer");
+  sVar1 = Scr_AllocDebugExpr(param_1,param_3 + uVar2 + 8,"debugger_buffer");
   memcpy();
-  (sVar3.block)->localVarsCreateCount = sVar3.stringValue + param_4 + 7U & ~uVar1;
-  iVar2 = __restgprlr_28(sVar3.type);
-  return (sval_u)iVar2;
+  (sVar1.block)->localVarsCreateCount = sVar1.stringValue + param_4 + 7 & ~uVar2;
+  return (sval_u)sVar1.type;
 }
 
 
 // 8253F8C0  debugger_string  (script/scr_parsetree.cpp:666)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 sval_u debugger_string(int param_1,char *param_2)
 
 {
-  int iVar1;
+  char cVar1;
   sval_u sVar2;
-  longlong lVar3;
-  char *pcVar5;
-  longlong lVar4;
+  char *pcVar3;
   
-  lVar3 = (longlong)(int)param_2;
-  iVar1 = __savegprlr_29(param_1);
-  lVar4 = lVar3;
+  pcVar3 = param_2;
   do {
-    pcVar5 = (char *)lVar4;
-    lVar4 = lVar4 + 1;
-  } while (*pcVar5 != '\0');
-  sVar2 = Scr_AllocDebugExpr(iVar1,((int)lVar4 - (int)lVar3) + 8,"debugger_buffer");
+    cVar1 = *pcVar3;
+    pcVar3 = pcVar3 + 1;
+  } while (cVar1 != '\0');
+  sVar2 = Scr_AllocDebugExpr(param_1,pcVar3 + (8 - (int)param_2),"debugger_buffer");
   memcpy();
   (sVar2.block)->localVarsCreateCount = (int)&(sVar2.block)->localVarsPublicCount;
-  iVar1 = __restgprlr_29(sVar2.type);
-  return (sval_u)iVar1;
+  return (sval_u)sVar2.type;
 }
 

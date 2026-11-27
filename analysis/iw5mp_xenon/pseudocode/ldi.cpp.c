@@ -88,182 +88,166 @@ int XCOMPRESS::ResetDecompressionContextLzx(_LZXDECOMPRESSION_CONTEXT_HEADER *pa
 
 // 828B5510  DecompressStreamLzx  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/compression/codec/lzx/decoder/ldi.cpp:491)
 
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
+
 int XCOMPRESS::DecompressStreamLzx
               (_LZXDECOMPRESSION_CONTEXT_HEADER *param_1,void *param_2,ulong *param_3,void *param_4,
               ulong *param_5)
 
 {
   char cVar1;
-  ulong uVar2;
-  uint uVar3;
-  int iVar4;
-  longlong lVar5;
-  ulonglong uVar6;
-  ulonglong uVar7;
-  ulonglong uVar8;
-  uint uVar9;
-  ulonglong uVar10;
-  ulonglong uVar11;
-  longlong lVar12;
-  ulonglong uVar13;
-  int iVar14;
-  char *pcVar15;
-  ulonglong uVar16;
-  ulonglong uVar17;
-  ushort *puVar18;
-  ulonglong uVar19;
-  ulonglong uVar20;
+  uint uVar2;
+  ulong uVar3;
+  uint uVar4;
+  ulong uVar5;
+  uint uVar6;
+  ulong uVar7;
+  int iVar8;
+  int iVar9;
+  ushort *puVar10;
+  ushort *puVar11;
+  uint uVar12;
+  uint uVar13;
+  uchar *puVar14;
+  uint uVar15;
   uint local_a0 [40];
   
-  uVar6 = (ulonglong)(int)param_4;
-  lVar5 = (longlong)(int)param_2;
-  __savegprlr();
-  uVar7 = (ulonglong)*param_3;
-  uVar11 = 0;
-  uVar8 = 0;
-  uVar10 = 0;
+  uVar2 = *param_3;
+  uVar7 = 0;
+  uVar4 = 0;
+  uVar5 = 0;
   if (*(undefined1 *)&param_1[0x267].Common.CodecType == XMEMCODEC_DEFAULT) {
-    uVar10 = (ulonglong)*param_5;
+    uVar5 = *param_5;
   }
-  uVar9 = param_1[0x266].LzxFlags;
-  uVar16 = (ulonglong)uVar9;
-  if (uVar16 != 0) {
-    uVar8 = uVar16;
-    if (uVar7 <= uVar16) {
-      uVar8 = uVar7;
+  uVar6 = param_1[0x266].LzxFlags;
+  if (uVar6 != 0) {
+    uVar4 = uVar6;
+    if (uVar2 <= uVar6) {
+      uVar4 = uVar2;
     }
-    uVar2 = param_1[0x266].Common.Flags;
+    uVar3 = param_1[0x266].Common.Flags;
     memcpy();
-    param_1[0x266].LzxFlags = uVar9 - (int)uVar8;
-    param_1[0x266].Common.Flags = uVar2 + (int)uVar8;
+    param_1[0x266].LzxFlags = uVar6 - uVar4;
+    param_1[0x266].Common.Flags = uVar3 + uVar4;
   }
-  uVar9 = (uint)uVar8;
-  if ((uVar10 != 0) || (1 < param_1[0x267].Common.Identifier)) {
-    uVar3 = param_1[0x267].Common.Identifier;
-    uVar13 = (ulonglong)uVar3;
-    uVar16 = uVar6;
-    uVar19 = uVar10;
-    if (uVar13 != 0) {
-      puVar18 = (ushort *)param_1[0x266].WindowSize;
-      uVar16 = ZEXT48(puVar18);
-      if (*(char *)puVar18 == -1) {
-        uVar17 = 5;
-        lVar12 = 5;
-        puVar18 = (ushort *)((int)puVar18 + 3);
+  if ((uVar5 != 0) || (1 < param_1[0x267].Common.Identifier)) {
+    uVar6 = param_1[0x267].Common.Identifier;
+    puVar10 = param_4;
+    uVar15 = uVar5;
+    if (uVar6 != 0) {
+      puVar10 = (ushort *)param_1[0x266].WindowSize;
+      if (*(char *)puVar10 == -1) {
+        uVar13 = 5;
+        iVar8 = 5;
+        puVar11 = (ushort *)((int)puVar10 + 3);
       }
       else {
-        uVar17 = 2;
-        lVar12 = 0;
+        uVar13 = 2;
+        iVar8 = 0;
+        puVar11 = puVar10;
       }
-      if (uVar13 < uVar17) {
-        uVar11 = uVar17 - uVar13;
-        if (uVar10 <= (uVar17 - uVar13 & 0xffffffff)) {
-          uVar11 = uVar10;
+      uVar12 = uVar5;
+      if (uVar6 < uVar13) {
+        uVar7 = uVar13 - uVar6;
+        if (uVar5 <= uVar13 - uVar6) {
+          uVar7 = uVar5;
         }
         memcpy();
-        param_1[0x267].Common.Identifier = uVar3 + (int)uVar11;
-        uVar19 = uVar10 - uVar11;
+        param_1[0x267].Common.Identifier = uVar6 + uVar7;
+        uVar12 = uVar5 - uVar7;
       }
-      if ((uVar19 & 0xffffffff) != 0) {
-        uVar13 = (ulonglong)param_1[0x267].Common.Identifier;
-        uVar17 = (ulonglong)*puVar18 + lVar12 + uVar17;
-        uVar19 = uVar17 - uVar13;
-        if ((uVar10 - uVar11 & 0xffffffff) <= (uVar19 & 0xffffffff)) {
-          uVar19 = uVar10 - uVar11;
+      uVar15 = 0;
+      if (uVar12 != 0) {
+        uVar3 = param_1[0x267].Common.Identifier;
+        uVar13 = (uint)*puVar11 + iVar8 + uVar13;
+        uVar6 = uVar13 - uVar3;
+        if (uVar5 - uVar7 <= uVar6) {
+          uVar6 = uVar5 - uVar7;
         }
         memcpy();
-        uVar13 = uVar13 + uVar19;
-        uVar11 = uVar19 + uVar11;
-        param_1[0x267].Common.Identifier = (ulong)uVar13;
-        uVar19 = -(ulonglong)(uVar17 <= uVar13) & uVar17;
+        uVar15 = uVar3 + uVar6;
+        uVar7 = uVar6 + uVar7;
+        param_1[0x267].Common.Identifier = uVar15;
+        uVar15 = -(uint)(uVar13 <= uVar15) & uVar13;
       }
     }
-    if (param_1[0x266].LzxFlags == 0) {
-      uVar13 = (ulonglong)local_a0[0];
-      do {
-        uVar9 = (uint)uVar8;
-        if ((uVar19 & 0xffffffff) == 0) break;
-        local_a0[0] = 0;
-        pcVar15 = (char *)uVar16;
-        cVar1 = *pcVar15;
-        if (cVar1 == -1) {
-          iVar14 = 5;
-          iVar4 = 5;
-          if ((uVar19 & 0xffffffff) < 5) {
-            uVar17 = 5;
-          }
-          else {
-            uVar13 = (ulonglong)*(ushort *)(pcVar15 + 1);
-            uVar17 = (ulonglong)*(ushort *)(pcVar15 + 3) + 10;
-          }
+    uVar3 = param_1[0x266].LzxFlags;
+    uVar6 = local_a0[0];
+    while ((uVar3 == 0 && (uVar15 != 0))) {
+      local_a0[0] = 0;
+      cVar1 = *(char *)puVar10;
+      if (cVar1 == -1) {
+        iVar9 = 5;
+        iVar8 = 5;
+        if (uVar15 < 5) {
+          uVar13 = 5;
         }
         else {
-          iVar14 = 2;
-          iVar4 = 0;
-          if ((uVar19 & 0xffffffff) < 2) {
-            uVar17 = 2;
-          }
-          else {
-            uVar13 = 0x8000;
-            uVar17 = (ulonglong)CONCAT11(cVar1,pcVar15[1]) + 2;
-          }
+          uVar6 = (uint)*(ushort *)((int)puVar10 + 1);
+          uVar13 = *(ushort *)((int)puVar10 + 3) + 10;
         }
-        if ((uVar19 & 0xffffffff) < uVar17) {
+      }
+      else {
+        iVar9 = 2;
+        iVar8 = 0;
+        if (uVar15 < 2) {
+          uVar13 = 2;
+        }
+        else {
+          uVar6 = 0x8000;
+          uVar13 = CONCAT11(cVar1,(char)*puVar10) + 2;
+        }
+      }
+      if (uVar15 < uVar13) {
+        memcpy();
+        param_1[0x267].Common.Identifier = uVar15;
+        uVar7 = uVar15 + uVar7;
+        uVar15 = 0;
+      }
+      else {
+        if (((uVar15 < uVar13 + 5) &&
+            (puVar11 = (ushort *)param_1[0x266].WindowSize, puVar10 != puVar11)) && (iVar8 == 0)) {
           memcpy();
-          param_1[0x267].Common.Identifier = (ulong)uVar19;
-          uVar11 = uVar19 + uVar11;
-          uVar19 = 0;
+          uVar7 = uVar13 + uVar7;
+          param_1[0x267].Common.Identifier = uVar13;
+          puVar10 = puVar11;
+        }
+        uVar15 = uVar2 - uVar4;
+        if (uVar15 < uVar6) {
+          puVar14 = (uchar *)param_1[0x266].Common.CodecType;
         }
         else {
-          if ((((uVar19 & 0xffffffff) < uVar17 + 5) &&
-              (uVar9 = param_1[0x266].WindowSize, (uVar16 & 0xffffffff) != (ulonglong)uVar9)) &&
-             (iVar4 == 0)) {
-            memcpy();
-            uVar11 = uVar17 + uVar11;
-            param_1[0x267].Common.Identifier = (ulong)uVar17;
-            uVar16 = (ulonglong)uVar9;
-          }
-          uVar19 = uVar7 - uVar8;
-          if ((uVar19 & 0xffffffff) < uVar13) {
-            uVar20 = (ulonglong)param_1[0x266].Common.CodecType;
-          }
-          else {
-            uVar20 = uVar8 + lVar5;
-          }
-          LZX_Decode((t_decoder_context *)(param_1 + 1),(long)uVar13,(uchar *)(iVar14 + (int)uVar16)
-                     ,((ulong)uVar17 - iVar4) - iVar14,(uchar *)uVar20,(long)uVar13,(long *)local_a0
-                    );
-          if ((uVar20 & 0xffffffff) == (ulonglong)param_1[0x266].Common.CodecType) {
-            memcpy();
-            param_1[0x266].Common.Flags = (ulong)uVar19;
-            param_1[0x266].LzxFlags = local_a0[0] - (ulong)uVar19;
-          }
-          else {
-            uVar19 = (ulonglong)local_a0[0];
-          }
-          uVar8 = uVar19 + uVar8;
-          if ((uVar16 & 0xffffffff) == (ulonglong)param_1[0x266].WindowSize) {
-            uVar16 = uVar11 + uVar6;
-            param_1[0x267].Common.Identifier = 0;
-          }
-          else {
-            uVar16 = uVar17 + uVar16;
-            uVar11 = uVar17 + uVar11;
-          }
-          if (cVar1 == -1) {
-            *(undefined1 *)&param_1[0x267].Common.CodecType = XMEMCODEC_LZX;
-            uVar10 = uVar11;
-          }
-          uVar19 = uVar10 - uVar11;
+          puVar14 = (uchar *)(uVar4 + (int)param_2);
         }
-        uVar9 = (uint)uVar8;
-      } while (param_1[0x266].LzxFlags == 0);
+        LZX_Decode((t_decoder_context *)(param_1 + 1),uVar6,(uchar *)(iVar9 + (int)puVar10),
+                   (uVar13 - iVar8) - iVar9,puVar14,uVar6,(long *)local_a0);
+        if (puVar14 == (uchar *)param_1[0x266].Common.CodecType) {
+          memcpy();
+          param_1[0x266].Common.Flags = uVar15;
+          param_1[0x266].LzxFlags = local_a0[0] - uVar15;
+          local_a0[0] = uVar15;
+        }
+        uVar4 = local_a0[0] + uVar4;
+        if (puVar10 == (ushort *)param_1[0x266].WindowSize) {
+          puVar10 = (ushort *)(uVar7 + (int)param_4);
+          param_1[0x267].Common.Identifier = 0;
+        }
+        else {
+          puVar10 = (ushort *)(uVar13 + (int)puVar10);
+          uVar7 = uVar13 + uVar7;
+        }
+        if (cVar1 == -1) {
+          *(undefined1 *)&param_1[0x267].Common.CodecType = XMEMCODEC_LZX;
+          uVar5 = uVar7;
+        }
+        uVar15 = uVar5 - uVar7;
+      }
+      uVar3 = param_1[0x266].LzxFlags;
     }
   }
-  *param_3 = uVar9;
-  iVar4 = 0;
-  *param_5 = (uint)uVar11;
-  __restgprlr();
-  return iVar4;
+  *param_3 = uVar4;
+  *param_5 = uVar7;
+  return 0;
 }
 

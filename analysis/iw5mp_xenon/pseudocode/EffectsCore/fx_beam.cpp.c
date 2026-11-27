@@ -119,14 +119,16 @@ void Float4x4InfinitePerspectiveMatrix(vector4 *param_1,float param_2,float para
 
 // 824158C8  CreateClipMatrix  (EffectsCore/fx_beam.cpp:147)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void CreateClipMatrix(vector4 *param_1,float *param_2,float (*param_3) [3])
 
 {
-  uint uVar1;
-  double dVar2;
+  double dVar1;
+  undefined1 auVar2 [16];
   undefined1 auVar3 [16];
   undefined1 auVar4 [16];
   undefined1 auVar5 [16];
@@ -144,68 +146,65 @@ void CreateClipMatrix(vector4 *param_1,float *param_2,float (*param_3) [3])
   undefined1 auVar17 [16];
   undefined1 auVar18 [16];
   undefined1 auVar19 [16];
-  undefined1 auVar20 [16];
   undefined1 local_80 [16];
   undefined1 local_70 [16];
   undefined1 local_60 [16];
-  __vector4 local_50;
+  __vector4_u_0 local_50;
   
-  uVar1 = __savegprlr_26(param_1);
-  dVar2 = 0.0;
+  dVar1 = 0.0;
   if ((g_activeRefDef->view).tanHalfFovX <= 0.0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_beam.cpp",0x97,
                     0,"%s");
   }
-  if ((double)(g_activeRefDef->view).tanHalfFovY <= dVar2) {
+  if ((double)(g_activeRefDef->view).tanHalfFovY <= dVar1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_beam.cpp",0x98,
                     0,"%s");
   }
   Float4x4ForViewer((vector4 *)local_80,param_2,param_3);
-  auVar20 = vectorSplatWord(local_80,0);
-  auVar19 = vectorSplatWord(local_70,0);
-  auVar18 = vectorSplatWord(local_60,0);
-  auVar17 = vectorSplatWord((undefined1  [16])local_50.field0_0x0,0);
-  auVar13 = vectorSplatWord(local_80,1);
-  auVar6 = vectorSplatWord(local_80,2);
-  auVar10 = vectorSplatWord(local_80,3);
-  auVar14 = vectorSplatWord(local_70,1);
-  auVar16 = vectorSplatWord(local_60,1);
-  auVar4 = vectorSplatWord((undefined1  [16])local_50.field0_0x0,1);
-  auVar7 = vectorSplatWord(local_70,2);
-  auVar5._0_4_ = (float)dVar2;
-  auVar5._4_4_ = 1.0 / (g_activeRefDef->view).tanHalfFovY;
-  auVar5._8_4_ = (float)dVar2;
-  auVar5._12_4_ = (float)dVar2;
-  auVar8 = vectorSplatWord(local_60,2);
-  auVar9 = vectorSplatWord((undefined1  [16])local_50.field0_0x0,2);
-  auVar3._0_4_ = 1.0 / (g_activeRefDef->view).tanHalfFovX;
-  auVar3._4_4_ = (float)dVar2;
-  auVar3._8_4_ = (float)dVar2;
-  auVar3._12_4_ = (float)dVar2;
-  auVar12 = vectorMultiplyFloatingPoint(auVar20,auVar3);
-  auVar15 = vectorMultiplyFloatingPoint(auVar19,auVar3);
-  auVar19 = vectorSplatWord(local_70,3);
-  auVar18 = vectorMultiplyFloatingPoint(auVar18,auVar3);
-  auVar20 = vectorSplatWord(local_60,3);
-  auVar17 = vectorMultiplyFloatingPoint(auVar17,auVar3);
-  auVar11 = vectorSplatWord((undefined1  [16])local_50.field0_0x0,3);
-  auVar12 = vectorMultiplyAddFloatingPoint(auVar13,auVar5,auVar12);
-  auVar13 = vectorMultiplyAddFloatingPoint(auVar14,auVar5,auVar15);
-  auVar3 = vectorMultiplyAddFloatingPoint(auVar16,auVar5,auVar18);
-  auVar5 = vectorMultiplyAddFloatingPoint(auVar4,auVar5,auVar17);
-  auVar18 = vectorMultiplyAddFloatingPoint(auVar6,___vmx_0000000000000000000000003f800000,auVar12);
-  auVar4 = vectorMultiplyAddFloatingPoint(auVar7,___vmx_0000000000000000000000003f800000,auVar13);
-  auVar17 = vectorMultiplyAddFloatingPoint(auVar8,___vmx_0000000000000000000000003f800000,auVar3);
-  auVar5 = vectorMultiplyAddFloatingPoint(auVar9,___vmx_0000000000000000000000003f800000,auVar5);
-  auVar3 = vectorMultiplyAddFloatingPoint(auVar10,___vmx_00000000000000003f80000000000000,auVar18);
-  auVar18 = vectorMultiplyAddFloatingPoint(auVar19,___vmx_00000000000000003f80000000000000,auVar4);
-  auVar4 = vectorMultiplyAddFloatingPoint(auVar20,___vmx_00000000000000003f80000000000000,auVar17);
-  auVar5 = vectorMultiplyAddFloatingPoint(auVar11,___vmx_00000000000000003f80000000000000,auVar5);
-  *(undefined1 (*) [16])(uVar1 & 0xfffffff0) = auVar3;
-  *(undefined1 (*) [16])(uVar1 + 0x10 & 0xfffffff0) = auVar18;
-  *(undefined1 (*) [16])(uVar1 + 0x20 & 0xfffffff0) = auVar4;
-  *(undefined1 (*) [16])(uVar1 + 0x30 & 0xfffffff0) = auVar5;
-  __restgprlr_26();
+  auVar19 = vectorSplatWord(local_80,0);
+  auVar18 = vectorSplatWord(local_70,0);
+  auVar17 = vectorSplatWord(local_60,0);
+  auVar16 = vectorSplatWord((undefined1  [16])local_50,0);
+  auVar12 = vectorSplatWord(local_80,1);
+  auVar5 = vectorSplatWord(local_80,2);
+  auVar9 = vectorSplatWord(local_80,3);
+  auVar13 = vectorSplatWord(local_70,1);
+  auVar15 = vectorSplatWord(local_60,1);
+  auVar3 = vectorSplatWord((undefined1  [16])local_50,1);
+  auVar6 = vectorSplatWord(local_70,2);
+  auVar4._0_4_ = (float)dVar1;
+  auVar4._4_4_ = 1.0 / (g_activeRefDef->view).tanHalfFovY;
+  auVar4._8_4_ = (float)dVar1;
+  auVar4._12_4_ = (float)dVar1;
+  auVar7 = vectorSplatWord(local_60,2);
+  auVar8 = vectorSplatWord((undefined1  [16])local_50,2);
+  auVar2._0_4_ = 1.0 / (g_activeRefDef->view).tanHalfFovX;
+  auVar2._4_4_ = (float)dVar1;
+  auVar2._8_4_ = (float)dVar1;
+  auVar2._12_4_ = (float)dVar1;
+  auVar11 = vectorMultiplyFloatingPoint(auVar19,auVar2);
+  auVar14 = vectorMultiplyFloatingPoint(auVar18,auVar2);
+  auVar18 = vectorSplatWord(local_70,3);
+  auVar17 = vectorMultiplyFloatingPoint(auVar17,auVar2);
+  auVar19 = vectorSplatWord(local_60,3);
+  auVar16 = vectorMultiplyFloatingPoint(auVar16,auVar2);
+  auVar10 = vectorSplatWord((undefined1  [16])local_50,3);
+  auVar11 = vectorMultiplyAddFloatingPoint(auVar12,auVar4,auVar11);
+  auVar12 = vectorMultiplyAddFloatingPoint(auVar13,auVar4,auVar14);
+  auVar2 = vectorMultiplyAddFloatingPoint(auVar15,auVar4,auVar17);
+  auVar4 = vectorMultiplyAddFloatingPoint(auVar3,auVar4,auVar16);
+  auVar17 = vectorMultiplyAddFloatingPoint(auVar5,___vmx_0000000000000000000000003f800000,auVar11);
+  auVar3 = vectorMultiplyAddFloatingPoint(auVar6,___vmx_0000000000000000000000003f800000,auVar12);
+  auVar16 = vectorMultiplyAddFloatingPoint(auVar7,___vmx_0000000000000000000000003f800000,auVar2);
+  auVar4 = vectorMultiplyAddFloatingPoint(auVar8,___vmx_0000000000000000000000003f800000,auVar4);
+  auVar2 = vectorMultiplyAddFloatingPoint(auVar9,___vmx_00000000000000003f80000000000000,auVar17);
+  auVar17 = vectorMultiplyAddFloatingPoint(auVar18,___vmx_00000000000000003f80000000000000,auVar3);
+  auVar3 = vectorMultiplyAddFloatingPoint(auVar19,___vmx_00000000000000003f80000000000000,auVar16);
+  auVar4 = vectorMultiplyAddFloatingPoint(auVar10,___vmx_00000000000000003f80000000000000,auVar4);
+  *(undefined1 (*) [16])((uint)param_1 & 0xfffffff0) = auVar2;
+  *(undefined1 (*) [16])((uint)&param_1->_padding_ & 0xfffffff0) = auVar17;
+  *(undefined1 (*) [16])((uint)&param_1->_padding_ & 0xfffffff0) = auVar3;
+  *(undefined1 (*) [16])((uint)&param_1->w & 0xfffffff0) = auVar4;
   return;
 }
 
@@ -317,18 +316,19 @@ bool Vec4HomogenousClipBothZ(__vector4 *param_1,__vector4 *param_2)
 
 // 82415C20  FX_GenerateBeam_GetFlatDelta  (EffectsCore/fx_beam.cpp:220)
 
-/* WARNING: Restarted to delay deadcode elimination for space: stack */
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 
 bool FX_GenerateBeam_GetFlatDelta
                (vector4 *param_1,vector4 *param_2,__vector4 param_3,__vector4 param_4,
                __vector4 *param_5)
 
 {
-  uint uVar1;
-  bool bVar2;
-  undefined1 uVar3;
+  bool bVar1;
   undefined1 in_vs33 [16];
   undefined1 in_vs34 [16];
+  undefined1 auVar2 [16];
+  undefined1 auVar3 [16];
   undefined1 auVar4 [16];
   undefined1 auVar5 [16];
   undefined1 auVar6 [16];
@@ -338,96 +338,97 @@ bool FX_GenerateBeam_GetFlatDelta
   undefined1 auVar10 [16];
   undefined1 auVar11 [16];
   undefined1 auVar12 [16];
-  undefined1 auVar13 [16];
-  undefined1 auVar14 [16];
   __vector4_u_0 local_50;
-  __vector4 local_40 [4];
+  __vector4_u_0 local_40 [4];
   
-  uVar1 = __savegprlr_27(param_1);
-  auVar14 = *(undefined1 (*) [16])(uVar1 + 0x20 & 0xfffffff0);
-  auVar13 = *(undefined1 (*) [16])(uVar1 + 0x30 & 0xfffffff0);
-  auVar11 = vectorMergeHighWord128(*(undefined1 (*) [16])(uVar1 & 0xfffffff0),auVar14);
-  auVar12 = *(undefined1 (*) [16])(uVar1 + 0x10 & 0xfffffff0);
-  auVar10 = vectorMergeLowWord128(*(undefined1 (*) [16])(uVar1 & 0xfffffff0),auVar14);
-  auVar14 = vectorMergeHighWord128(auVar12,auVar13);
-  auVar9 = vectorAddFloatingPoint128(in_vs33,(undefined1  [16])g_unit.field0_0x0);
-  auVar12 = vectorMergeLowWord128(auVar12,auVar13);
-  auVar8 = vectorAddFloatingPoint128(in_vs34,(undefined1  [16])g_unit.field0_0x0);
-  auVar6 = vectorMergeHighWord128(auVar11,auVar14);
-  auVar5 = vectorMergeLowWord128(auVar11,auVar14);
-  auVar4 = vectorMergeHighWord128(auVar10,auVar12);
-  auVar13 = vectorMergeLowWord128(auVar10,auVar12);
-  auVar7 = vectorMergeHighWord128(auVar11,auVar14);
-  auVar11 = vectorMergeLowWord128(auVar11,auVar14);
-  auVar14 = vectorMergeHighWord128(auVar10,auVar12);
-  auVar12 = vectorMergeLowWord128(auVar10,auVar12);
-  auVar7 = vectorMultiplySum4FloatingPoint(auVar9,auVar7);
-  auVar11 = vectorMultiplySum4FloatingPoint(auVar9,auVar11);
-  auVar14 = vectorMultiplySum4FloatingPoint(auVar9,auVar14);
-  auVar12 = vectorMultiplySum4FloatingPoint(auVar9,auVar12);
-  auVar6 = vectorMultiplySum4FloatingPoint(auVar8,auVar6);
-  auVar5 = vectorMultiplySum4FloatingPoint(auVar8,auVar5);
-  auVar4 = vectorMultiplySum4FloatingPoint(auVar8,auVar4);
-  auVar13 = vectorMultiplySum4FloatingPoint(auVar8,auVar13);
-  auVar14 = vectorMergeHighWord128(auVar7,auVar14);
-  auVar12 = vectorMergeHighWord128(auVar11,auVar12);
-  auVar4 = vectorMergeHighWord128(auVar6,auVar4);
-  auVar13 = vectorMergeHighWord128(auVar5,auVar13);
-  auVar14 = vectorMergeHighWord128(auVar14,auVar12);
-  auVar12 = vectorMergeHighWord128(auVar4,auVar13);
-  bVar2 = Vec4HomogenousClipBothZ((__vector4 *)&local_50._s_2,local_40);
-  if (bVar2) {
-    auVar5 = *(undefined1 (*) [16])((uint)&param_2->_padding_ & 0xfffffff0);
-    auVar4 = *(undefined1 (*) [16])((uint)&param_2->w & 0xfffffff0);
-    auVar13 = *(undefined1 (*) [16])((uint)&param_2->_padding_ & 0xfffffff0);
-    auVar11 = vectorMergeHighWord128(*(undefined1 (*) [16])((uint)param_2 & 0xfffffff0),auVar5);
-    auVar8 = vectorMergeLowWord128(*(undefined1 (*) [16])((uint)param_2 & 0xfffffff0),auVar5);
-    auVar6 = vectorMergeHighWord128(auVar13,auVar4);
-    auVar5 = vectorMergeLowWord128(auVar13,auVar4);
-    auVar4 = vectorSplatWord(auVar14,3);
-    auVar13 = vectorSplatWord(auVar12,3);
-    auVar7 = vectorMergeHighWord128(auVar11,auVar6);
-    auVar11 = vectorMergeLowWord128(auVar11,auVar6);
-    auVar4 = vectorReciprocalEstimateFloatingPoint128(auVar4);
-    auVar6 = vectorMergeHighWord128(auVar8,auVar5);
-    auVar13 = vectorReciprocalEstimateFloatingPoint128(auVar13);
-    auVar5 = vectorMergeLowWord128(auVar8,auVar5);
-    auVar14 = vectorMultiplyFloatingPoint(auVar14,auVar4);
-    auVar12 = vectorMultiplyFloatingPoint(auVar12,auVar13);
-    auVar12 = vectorSubtractFloatingPoint128(auVar12,auVar14);
-    auVar12 = auVar12 & (undefined1  [16])g_keepXYW.field0_0x0;
-    auVar4 = vectorMultiplySum4FloatingPoint(auVar12,auVar7);
-    auVar13 = vectorMultiplySum4FloatingPoint(auVar12,auVar11);
-    auVar14 = vectorMultiplySum4FloatingPoint(auVar12,auVar6);
-    auVar12 = vectorMultiplySum4FloatingPoint(auVar12,auVar5);
-    auVar14 = vectorMergeHighWord128(auVar4,auVar14);
-    auVar12 = vectorMergeHighWord128(auVar13,auVar12);
-    auVar12 = vectorMergeHighWord128(auVar14,auVar12);
-    auVar12 = auVar12 & (undefined1  [16])g_keepXYZ.field0_0x0;
-    local_50.vector4_u32[3] = auVar12._12_4_;
-    local_50.vector4_u32[0] = auVar12._0_4_;
-    local_50.vector4_u32[2] = auVar12._8_4_;
-    local_50.vector4_u32[1] = auVar12._4_4_;
-    *(undefined1 (*) [16])((uint)param_5 & 0xfffffff0) = auVar12;
+  auVar12 = *(undefined1 (*) [16])((uint)&param_1->_padding_ & 0xfffffff0);
+  auVar11 = *(undefined1 (*) [16])((uint)&param_1->w & 0xfffffff0);
+  auVar9 = vectorMergeHighWord128(*(undefined1 (*) [16])((uint)param_1 & 0xfffffff0),auVar12);
+  auVar10 = *(undefined1 (*) [16])((uint)&param_1->_padding_ & 0xfffffff0);
+  auVar8 = vectorMergeLowWord128(*(undefined1 (*) [16])((uint)param_1 & 0xfffffff0),auVar12);
+  auVar12 = vectorMergeHighWord128(auVar10,auVar11);
+  auVar7 = vectorAddFloatingPoint128(in_vs33,(undefined1  [16])g_unit.field0_0x0);
+  auVar10 = vectorMergeLowWord128(auVar10,auVar11);
+  auVar6 = vectorAddFloatingPoint128(in_vs34,(undefined1  [16])g_unit.field0_0x0);
+  auVar4 = vectorMergeHighWord128(auVar9,auVar12);
+  auVar3 = vectorMergeLowWord128(auVar9,auVar12);
+  auVar2 = vectorMergeHighWord128(auVar8,auVar10);
+  auVar11 = vectorMergeLowWord128(auVar8,auVar10);
+  auVar5 = vectorMergeHighWord128(auVar9,auVar12);
+  auVar9 = vectorMergeLowWord128(auVar9,auVar12);
+  auVar12 = vectorMergeHighWord128(auVar8,auVar10);
+  auVar10 = vectorMergeLowWord128(auVar8,auVar10);
+  auVar5 = vectorMultiplySum4FloatingPoint(auVar7,auVar5);
+  auVar9 = vectorMultiplySum4FloatingPoint(auVar7,auVar9);
+  auVar12 = vectorMultiplySum4FloatingPoint(auVar7,auVar12);
+  auVar10 = vectorMultiplySum4FloatingPoint(auVar7,auVar10);
+  auVar4 = vectorMultiplySum4FloatingPoint(auVar6,auVar4);
+  auVar3 = vectorMultiplySum4FloatingPoint(auVar6,auVar3);
+  auVar2 = vectorMultiplySum4FloatingPoint(auVar6,auVar2);
+  auVar11 = vectorMultiplySum4FloatingPoint(auVar6,auVar11);
+  auVar12 = vectorMergeHighWord128(auVar5,auVar12);
+  auVar10 = vectorMergeHighWord128(auVar9,auVar10);
+  auVar2 = vectorMergeHighWord128(auVar4,auVar2);
+  auVar11 = vectorMergeHighWord128(auVar3,auVar11);
+  local_50 = (__vector4_u_0)vectorMergeHighWord128(auVar12,auVar10);
+  local_40[0] = (__vector4_u_0)vectorMergeHighWord128(auVar2,auVar11);
+  bVar1 = Vec4HomogenousClipBothZ((__vector4 *)&local_50._s_2,(__vector4 *)&local_40[0]._s_2);
+  if (bVar1) {
+    auVar11 = *(undefined1 (*) [16])((uint)&param_2->_padding_ & 0xfffffff0);
+    auVar12 = *(undefined1 (*) [16])((uint)&param_2->w & 0xfffffff0);
+    auVar10 = *(undefined1 (*) [16])((uint)&param_2->_padding_ & 0xfffffff0);
+    auVar4 = vectorMergeHighWord128(*(undefined1 (*) [16])((uint)param_2 & 0xfffffff0),auVar11);
+    auVar9 = vectorMergeLowWord128(*(undefined1 (*) [16])((uint)param_2 & 0xfffffff0),auVar11);
+    auVar11 = vectorMergeHighWord128(auVar10,auVar12);
+    auVar3 = vectorMergeLowWord128(auVar10,auVar12);
+    auVar12 = vectorSplatWord((undefined1  [16])local_50,3);
+    auVar10 = vectorSplatWord((undefined1  [16])local_40[0],3);
+    auVar2 = vectorMergeHighWord128(auVar4,auVar11);
+    auVar11 = vectorMergeLowWord128(auVar4,auVar11);
+    auVar12 = vectorReciprocalEstimateFloatingPoint128(auVar12);
+    auVar4 = vectorMergeHighWord128(auVar9,auVar3);
+    auVar10 = vectorReciprocalEstimateFloatingPoint128(auVar10);
+    auVar3 = vectorMergeLowWord128(auVar9,auVar3);
+    auVar12 = vectorMultiplyFloatingPoint((undefined1  [16])local_50,auVar12);
+    auVar10 = vectorMultiplyFloatingPoint((undefined1  [16])local_40[0],auVar10);
+    auVar10 = vectorSubtractFloatingPoint128(auVar10,auVar12);
+    auVar10 = auVar10 & (undefined1  [16])g_keepXYW.field0_0x0;
+    auVar2 = vectorMultiplySum4FloatingPoint(auVar10,auVar2);
+    auVar11 = vectorMultiplySum4FloatingPoint(auVar10,auVar11);
+    auVar12 = vectorMultiplySum4FloatingPoint(auVar10,auVar4);
+    auVar10 = vectorMultiplySum4FloatingPoint(auVar10,auVar3);
+    auVar12 = vectorMergeHighWord128(auVar2,auVar12);
+    auVar10 = vectorMergeHighWord128(auVar11,auVar10);
+    auVar10 = vectorMergeHighWord128(auVar12,auVar10);
+    auVar10 = auVar10 & (undefined1  [16])g_keepXYZ.field0_0x0;
+    local_50.vector4_u32[3] = auVar10._12_4_;
+    local_50.vector4_u32[0] = auVar10._0_4_;
+    local_50.vector4_u32[2] = auVar10._8_4_;
+    local_50.vector4_u32[1] = auVar10._4_4_;
+    *(undefined1 (*) [16])((uint)param_5 & 0xfffffff0) = auVar10;
     if (2e-06 <= local_50.vector4_f32[0] * local_50.vector4_f32[0] +
                  local_50.vector4_f32[3] * local_50.vector4_f32[3] +
                  local_50.vector4_f32[1] * local_50.vector4_f32[1] +
                  local_50.vector4_f32[2] * local_50.vector4_f32[2]) {
-      auVar14 = vectorMultiplySum4FloatingPoint(auVar12,auVar12);
-      auVar14 = vectorReciprocalSquareRootEstimateFloatingPoint128(auVar14);
-      auVar12 = vectorMultiplyFloatingPoint(auVar12,auVar14);
-      *(undefined1 (*) [16])((uint)param_5 & 0xfffffff0) = auVar12;
-      uVar3 = __restgprlr_27(1);
-      return (bool)uVar3;
+      auVar12 = vectorMultiplySum4FloatingPoint(auVar10,auVar10);
+      auVar12 = vectorReciprocalSquareRootEstimateFloatingPoint128(auVar12);
+      auVar10 = vectorMultiplyFloatingPoint(auVar10,auVar12);
+      *(undefined1 (*) [16])((uint)param_5 & 0xfffffff0) = auVar10;
+      return true;
     }
   }
-  uVar3 = __restgprlr_27(0);
-  return (bool)uVar3;
+  return false;
 }
 
 
 // 82415E00  FX_Beam_GenerateVerts  (EffectsCore/fx_beam.cpp:262)
 
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savevmx_119 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restvmx_119 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
 /* WARNING: Removing unreachable block (ram,0x824160ec) */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
@@ -437,45 +438,45 @@ void FX_Beam_GenerateVerts(GfxCodeSurfGlob *param_1,FxGenerateVertsCmd *param_2)
   int iVar1;
   byte bVar2;
   byte bVar3;
-  GfxColor GVar4;
-  float fVar5;
-  _XMMATRIX _Var6;
-  GfxCodeSurfGlob *pGVar7;
-  undefined4 uVar8;
-  ulonglong uVar9;
-  bool bVar12;
-  float (*pafVar10) [4];
-  GfxPackedVertex *pGVar11;
-  short sVar13;
-  short sVar14;
-  int iVar15;
-  r_double_index_t *prVar16;
+  byte bVar4;
+  FxBeamInfo *pFVar5;
+  GfxColor GVar6;
+  FxBeam_u_60 FVar7;
+  _XMMATRIX _Var8;
+  GfxCodeSurfGlob *pGVar9;
+  undefined4 uVar10;
+  ulonglong uVar11;
+  bool bVar14;
+  float (*pafVar12) [4];
+  GfxPackedVertex *pGVar13;
+  short sVar15;
+  short sVar16;
   int iVar17;
-  int iVar18;
-  int iVar19;
-  ulonglong uVar20;
-  float *pfVar21;
-  float *pfVar22;
+  r_double_index_t *prVar18;
+  float *pfVar19;
+  int iVar20;
+  int iVar21;
+  int iVar22;
   ulonglong uVar23;
-  uint uVar24;
-  uint uVar25;
-  uint uVar26;
-  __vector4 *p_Var27;
-  char *pcVar28;
-  float *pfVar29;
-  longlong lVar30;
-  longlong lVar31;
-  double dVar32;
-  double dVar33;
-  double dVar34;
+  FxBeam_u_60 *pFVar24;
+  FxBeam_u_60 *pFVar25;
+  ulonglong uVar26;
+  uint uVar27;
+  uint uVar28;
+  uint uVar29;
+  __vector4 *p_Var30;
+  char *pcVar31;
+  FxBeam_u_60 *pFVar32;
+  longlong lVar33;
+  longlong lVar34;
   double dVar35;
   double dVar36;
   double dVar37;
   double dVar38;
   double dVar39;
-  undefined1 auVar40 [16];
-  undefined1 auVar41 [16];
-  undefined1 auVar42 [16];
+  double dVar40;
+  double dVar41;
+  double dVar42;
   undefined1 auVar43 [16];
   undefined1 auVar44 [16];
   undefined1 auVar45 [16];
@@ -483,10 +484,13 @@ void FX_Beam_GenerateVerts(GfxCodeSurfGlob *param_1,FxGenerateVertsCmd *param_2)
   undefined1 auVar47 [16];
   undefined1 auVar48 [16];
   undefined1 auVar49 [16];
-  __vector4_u_0 _Var50;
+  undefined1 auVar50 [16];
   undefined1 auVar51 [16];
   undefined1 auVar52 [16];
-  undefined1 auVar53 [16];
+  __vector4_u_0 _Var53;
+  undefined1 auVar54 [16];
+  undefined1 auVar55 [16];
+  undefined1 auVar56 [16];
   GfxCodeSurfGlob *pGStack00000014;
   __vector4_u_0 in_stack_fffffc78;
   __vector4_u_0 in_stack_fffffc88;
@@ -496,11 +500,11 @@ void FX_Beam_GenerateVerts(GfxCodeSurfGlob *param_1,FxGenerateVertsCmd *param_2)
   undefined8 in_stack_fffffcb0;
   undefined4 local_330;
   ushort local_32c [2];
-  float local_328;
+  FxBeam_u_60 local_328;
   undefined4 local_324;
   float local_320;
   int iStack_31c;
-  float *local_318;
+  FxBeam_u_60 *local_318;
   uint local_314;
   char *local_310;
   float local_30c;
@@ -542,360 +546,360 @@ void FX_Beam_GenerateVerts(GfxCodeSurfGlob *param_1,FxGenerateVertsCmd *param_2)
   vector4 local_200;
   _XMMATRIX a_Stack_1c0 [7];
   
-  uVar20 = (ulonglong)(int)param_2;
-  uVar9 = ZEXT48(&stack0x00000000);
-  __savegprlr();
-  __savefpr_22();
-  pGStack00000014 = (GfxCodeSurfGlob *)__savevmx_119();
+  uVar11 = ZEXT48(&stack0x00000000);
   local_310 = "%s";
-  if ((uVar20 & 0xffffffff) == 0) {
+  pGStack00000014 = param_1;
+  if (param_2 == (FxGenerateVertsCmd *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_beam.cpp",0x121
                     ,0,"%s");
   }
-  iVar17 = (int)uVar20;
-  if (*(int *)(iVar17 + 4) == 0) {
+  if (param_2->beamInfo == (FxBeamInfo *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_beam.cpp",0x122
                     ,0,"%s");
   }
-  iVar18 = *(int *)(iVar17 + 4);
-  CreateClipMatrix(&local_200,(float *)(iVar17 + 0x18),(float (*) [3])(uVar20 + 0x24));
+  lVar33 = (longlong)(int)param_2 + 0x24;
+  pFVar5 = param_2->beamInfo;
+  CreateClipMatrix(&local_200,param_2->vieworg,(float (*) [3])lVar33);
   memcpy();
-  _Var6.field0_0x0.r[0].field0_0x0 = (__vector4)(__vector4)in_stack_fffffc78;
-  _Var6.field0_0x0.r[1].field0_0x0 = (__vector4)(__vector4)in_stack_fffffc88;
-  _Var6.field0_0x0._32_8_ = in_stack_fffffc98;
-  _Var6.field0_0x0._40_8_ = in_stack_fffffca0;
-  _Var6.field0_0x0._48_8_ = in_stack_fffffca8;
-  _Var6.field0_0x0._56_8_ = in_stack_fffffcb0;
-  XMMatrixInverse(a_Stack_1c0,&local_270,_Var6);
-  auVar49 = loadVectorLeftIndexed(uVar20 + 0x24);
-  local_2e8 = (int *)(iVar18 + 0xc00);
-  auVar48 = loadVectorRightIndexed(uVar20 + 0x34);
+  _Var8.field0_0x0.r[0].field0_0x0 = (__vector4)(__vector4)in_stack_fffffc78;
+  _Var8.field0_0x0.r[1].field0_0x0 = (__vector4)(__vector4)in_stack_fffffc88;
+  _Var8.field0_0x0._32_8_ = in_stack_fffffc98;
+  _Var8.field0_0x0._40_8_ = in_stack_fffffca0;
+  _Var8.field0_0x0._48_8_ = in_stack_fffffca8;
+  _Var8.field0_0x0._56_8_ = in_stack_fffffcb0;
+  XMMatrixInverse(a_Stack_1c0,&local_270,_Var8);
+  auVar52 = loadVectorLeftIndexed(lVar33);
+  local_2e8 = &pFVar5->beamCount;
+  auVar51 = loadVectorRightIndexed((longlong)(int)param_2 + 0x34);
   local_2fc = &g_keepXYZ;
   local_304 = 0;
-  auVar48 = (auVar49 | auVar48) & (undefined1  [16])g_keepXYZ.field0_0x0;
-  if (*local_2e8 != 0) {
-    local_318 = (float *)(iVar18 + 0x3c);
-    dVar34 = 0.0;
-    dVar36 = 1.0;
-    local_2e4 = "(colorCount >= 2)";
-    local_2d8 = "lerpBlendFact not in [0.0f, 1.0f]\n\t%g not in [%g, %g]";
-    local_2e0 = "alpha not in [lerpMinAlpha, lerpMaxAlpha]\n\t%g not in [%g, %g]";
-    local_2bc = "lerpMaxAlpha > lerpMinAlpha";
-    local_2cc = "colorIndex + 1 doesn\'t index colorCount\n\t%i not in [0, %i)";
-    local_2f8 = "colorIndex doesn\'t index colorCount\n\t%i not in [0, %i)";
-    local_2b0 = "(colorCount <= 5)";
-    local_2d4 = "alpha not in [0.0f, 1.0f]\n\t%g not in [%g, %g]";
-    local_2c4 = wiggle;
-    pcVar28 = "%s\n\t(colorCount) = %i";
-    local_308 = COLOR_SEGMENTS;
-    local_2dc = "colorSegmentCount <= sizeof(COLOR_SEGMENTS)";
-    local_2f4 = "%s\n\t(colorCount) = %i";
-    local_2b8 = "\x05\x02";
-    p_Var27 = &g_zero;
-    local_2ec = "beam->type doesn\'t index BEAMTYPE_COUNT\n\t%i not in [0, %i)";
-    local_2c0 = "Beam";
-    local_2f0 = &g_zero;
-    local_2c8 = "%s\n\t(segCount) = %i";
-    local_2b4 = "(segCount >= 0)";
-    _Var50 = g_keepXYZ.field0_0x0;
-    do {
-      pfVar21 = local_318;
-      uVar20 = ZEXT48(local_318);
-      pfVar22 = local_318 + -0xf;
-      dVar33 = (double)local_318[-3];
-      dVar37 = dVar33;
-      if (*(char *)(local_318 + -0xf) == '\x01') {
-        dVar37 = (double)*local_318;
+  auVar51 = (auVar52 | auVar51) & (undefined1  [16])g_keepXYZ.field0_0x0;
+  if (*local_2e8 == 0) {
+                    /* WARNING: Read-only address (ram,0x8217a040) is written */
+    return;
+  }
+  local_318 = &pFVar5->beams[0].field7_0x3c;
+  dVar37 = 0.0;
+  dVar39 = 1.0;
+  local_2e4 = "(colorCount >= 2)";
+  local_2d8 = "lerpBlendFact not in [0.0f, 1.0f]\n\t%g not in [%g, %g]";
+  local_2e0 = "alpha not in [lerpMinAlpha, lerpMaxAlpha]\n\t%g not in [%g, %g]";
+  local_2bc = "lerpMaxAlpha > lerpMinAlpha";
+  local_2cc = "colorIndex + 1 doesn\'t index colorCount\n\t%i not in [0, %i)";
+  local_2f8 = "colorIndex doesn\'t index colorCount\n\t%i not in [0, %i)";
+  local_2b0 = "(colorCount <= 5)";
+  local_2d4 = "alpha not in [0.0f, 1.0f]\n\t%g not in [%g, %g]";
+  local_2c4 = wiggle;
+  pcVar31 = "%s\n\t(colorCount) = %i";
+  local_308 = COLOR_SEGMENTS;
+  local_2dc = "colorSegmentCount <= sizeof(COLOR_SEGMENTS)";
+  local_2f4 = "%s\n\t(colorCount) = %i";
+  local_2b8 = "\x05\x02";
+  p_Var30 = &g_zero;
+  local_2ec = "beam->type doesn\'t index BEAMTYPE_COUNT\n\t%i not in [0, %i)";
+  local_2c0 = "Beam";
+  local_2f0 = &g_zero;
+  local_2c8 = "%s\n\t(segCount) = %i";
+  local_2b4 = "(segCount >= 0)";
+  _Var53 = g_keepXYZ.field0_0x0;
+  while( true ) {
+    pFVar24 = local_318;
+    uVar23 = ZEXT48(local_318);
+    pFVar25 = local_318 + -0xf;
+    dVar36 = (double)*(float *)(local_318 + -3);
+    dVar40 = dVar36;
+    if (((FxBeam *)(local_318 + -0xf))->type == '\x01') {
+      dVar40 = (double)(float)*local_318;
+    }
+    bVar2 = *(byte *)(local_318 + -1);
+    uVar26 = (ulonglong)bVar2;
+    local_30c = (float)dVar40;
+    auVar52 = *(undefined1 (*) [16])((uint)p_Var30 & 0xfffffff0);
+    auVar50 = loadVectorLeftIndexed(uVar23 - 0x38);
+    auVar49 = loadVectorLeftIndexed(uVar23 - 0x2c);
+    auVar48 = loadVectorRightIndexed(uVar23 - 0x28);
+    auVar47 = loadVectorRightIndexed(uVar23 - 0x1c);
+    auVar48 = (auVar50 | auVar48) & (undefined1  [16])_Var53;
+    auVar47 = (auVar49 | auVar47) & (undefined1  [16])_Var53;
+    bVar14 = FX_GenerateBeam_GetFlatDelta
+                       (&local_200,&local_250,(__vector4)in_stack_fffffc78._s_2,
+                        (__vector4)in_stack_fffffc88._s_2,&local_270);
+    pGVar9 = pGStack00000014;
+    if (bVar14) {
+      uVar28 = (bVar2 + 1) * 6;
+      bVar14 = R_ReserveCodeSurfBuffers
+                         (pGStack00000014,(bVar2 + 2) * 2,uVar28,2,local_32c,&local_300,&local_314);
+      if (!bVar14) {
+        return;
       }
-      bVar2 = *(byte *)(local_318 + -1);
-      uVar23 = (ulonglong)bVar2;
-      local_30c = (float)dVar37;
-      auVar49 = *(undefined1 (*) [16])((uint)p_Var27 & 0xfffffff0);
-      auVar47 = loadVectorLeftIndexed(uVar20 - 0x38);
-      auVar46 = loadVectorLeftIndexed(uVar20 - 0x2c);
-      auVar45 = loadVectorRightIndexed(uVar20 - 0x28);
-      auVar44 = loadVectorRightIndexed(uVar20 - 0x1c);
-      auVar45 = (auVar47 | auVar45) & (undefined1  [16])_Var50;
-      auVar44 = (auVar46 | auVar44) & (undefined1  [16])_Var50;
-      bVar12 = FX_GenerateBeam_GetFlatDelta
-                         (&local_200,&local_250,(__vector4)in_stack_fffffc78._s_2,
-                          (__vector4)in_stack_fffffc88._s_2,&local_270);
-      pGVar7 = pGStack00000014;
-      if (bVar12) {
-        uVar25 = (bVar2 + 1) * 6;
-        bVar12 = R_ReserveCodeSurfBuffers
-                           (pGStack00000014,(bVar2 + 2) * 2,uVar25,2,local_32c,&local_300,&local_314
-                           );
-        if (!bVar12) break;
-        prVar16 = local_300 + 1;
-        local_330 = CONCAT22(local_32c[0],local_32c[0] + 2);
-        *(uint *)local_300->value = local_330;
-        if (bVar2 != 0) {
-          sVar14 = 0;
-          do {
-            sVar13 = local_32c[0] + sVar14;
-            sVar14 = sVar14 + 2;
-            local_330 = (uint)(ushort)(sVar13 + 2);
-            uVar24 = local_330;
-            local_330 = CONCAT22(sVar13 + 4,sVar13 + 1);
-            uVar8 = local_330;
-            local_330 = CONCAT22(sVar13 + 1,sVar13 + 4);
-            *(uint *)prVar16->value = uVar24;
-            *(undefined4 *)prVar16[1].value = uVar8;
-            *(uint *)prVar16[2].value = local_330;
-            prVar16 = prVar16 + 3;
-            uVar23 = uVar23 - 1;
-          } while (uVar23 != 0);
+      prVar18 = local_300 + 1;
+      local_330 = CONCAT22(local_32c[0],local_32c[0] + 2);
+      *(uint *)local_300->value = local_330;
+      if (bVar2 != 0) {
+        sVar16 = 0;
+        do {
+          sVar15 = local_32c[0] + sVar16;
+          sVar16 = sVar16 + 2;
+          local_330 = (uint)(ushort)(sVar15 + 2);
+          uVar27 = local_330;
+          local_330 = CONCAT22(sVar15 + 4,sVar15 + 1);
+          uVar10 = local_330;
+          local_330 = CONCAT22(sVar15 + 1,sVar15 + 4);
+          *(uint *)prVar18->value = uVar27;
+          *(undefined4 *)prVar18[1].value = uVar10;
+          *(uint *)prVar18[2].value = local_330;
+          prVar18 = prVar18 + 3;
+          uVar26 = uVar26 - 1;
+        } while (uVar26 != 0);
+      }
+      sVar16 = (bVar2 - 1) * 2 + local_32c[0];
+      local_330 = (uint)(ushort)(sVar16 + 3);
+      uVar27 = local_330;
+      local_330 = CONCAT22(sVar16 + 4,sVar16 + 5);
+      *(uint *)prVar18->value = uVar27;
+      *(uint *)prVar18[1].value = local_330;
+      R_AddCodeSurf(pGVar9,(Material *)pFVar24[-2],local_300,uVar28,local_314,2,local_2c0);
+      auVar46 = vectorPermuteWordImmediate(auVar51,0x87);
+      auVar56 = vectorSubtractFloatingPoint128(auVar47,auVar48);
+      auVar49 = vectorPermuteWordImmediate(auVar51,99);
+      auVar50 = vectorPermuteWordImmediate(auVar52,99);
+      auVar43 = vectorPermuteWordImmediate(auVar52,0x87);
+      auVar45 = vectorSplatImmediateSignedWord(0);
+      auVar54 = vectorSplatImmediateSignedWord(0xff);
+      auVar50 = vectorMultiplyFloatingPoint(auVar50,auVar46);
+      auVar44 = vectorMultiplySum3FloatingPoint(auVar56,auVar56);
+      auVar49 = vectorNegativeMultiplySubtractFloatingPoint(auVar43,auVar49,auVar50);
+      auVar50 = vectorReciprocalSquareRootEstimateFloatingPoint128(auVar44);
+      auVar55 = vectorCompareEqualFloatingPoint128(auVar44,auVar45);
+      auVar46 = vectorMultiplySum3FloatingPoint(auVar49,auVar49);
+      auVar50 = vectorMultiplyFloatingPoint(auVar56,auVar50);
+      auVar43 = vectorReciprocalSquareRootEstimateFloatingPoint128(auVar46);
+      auVar45 = vectorCompareEqualFloatingPoint128(auVar46,auVar45);
+      auVar44 = auVar50 & ~auVar55 | auVar44 & auVar55;
+      auVar49 = vectorMultiplyFloatingPoint(auVar49,auVar43);
+      auVar46 = auVar49 & ~auVar45 | auVar46 & auVar45;
+      pafVar12 = R_CodeSurfArgsIter_Begin(pGVar9,local_314);
+      auVar50 = vectorMultiplySum3FloatingPoint(auVar48,auVar44);
+      auVar49 = vectorShiftLeftWord128(auVar54,auVar54);
+      local_328 = (FxBeam_u_60)(float)-dVar36;
+      auVar49 = vectorPermute128(auVar44,auVar50 ^ auVar49,(undefined1  [16])g_XYZx.field0_0x0);
+      *(undefined1 (*) [16])((uint)pafVar12 & 0xfffffff0) = auVar49;
+      auVar49 = vectorAddFloatingPoint128((undefined1  [16])g_unit.field0_0x0,auVar48);
+      *(undefined1 (*) [16])((uint)(pafVar12 + 1) & 0xfffffff0) = auVar49;
+      pGVar13 = R_CodeSurfVertIter_Begin(pGVar9,local_32c[0]);
+      lVar33 = (longlong)(int)pGVar13;
+      auVar49 = loadVectorLeftIndexed(uVar11 - 0x328);
+      uVar28 = 0;
+      auVar49 = vectorSplatWord(auVar49,0);
+      auVar49 = vectorMultiplyAddFloatingPoint128(auVar52,auVar49,auVar48);
+      auVar50 = vectorSplatWord(auVar49,0);
+      auVar43 = vectorSplatWord(auVar49,1);
+      auVar49 = vectorSplatWord(auVar49,2);
+      storeVectorElementWordIndexed(auVar50,lVar33);
+      storeVectorElementWordIndexed(auVar43,lVar33 + 4);
+      storeVectorElementWordIndexed(auVar49,lVar33 + 8);
+      GVar6 = *(GfxColor *)(pFVar24 + -8);
+      pGVar13->binormalSign = (float)dVar39;
+      (pGVar13->texCoord).packed = 0;
+      pGVar13->color = GVar6;
+      (pGVar13->normal).packed = 0x1ff00000;
+      (pGVar13->tangent).packed = 0x1ff;
+      if (*(byte *)pFVar25 == 0) {
+        local_328 = *pFVar24;
+      }
+      else {
+        local_328 = (FxBeam_u_60)(float)dVar37;
+      }
+      if (1 < *(byte *)pFVar25) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_beam.cpp",
+                        0x1b4,0,local_2ec);
+      }
+      bVar4 = local_2b8[*(byte *)pFVar25];
+      uVar27 = (uint)bVar4;
+      if (uVar27 < 2) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_beam.cpp",
+                        0x1bb,0,pcVar31);
+      }
+      if (5 < uVar27) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_beam.cpp",
+                        0x1bc,0,pcVar31);
+      }
+      if (0xc < uVar27 - 2) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_beam.cpp",
+                        0x1c2,1,local_310);
+      }
+      uVar29 = 0;
+      dVar41 = dVar39;
+      if (uVar27 != 2) {
+        dVar41 = (double)*local_308;
+      }
+      local_324 = 0xffffffff;
+      local_2a8 = (longlong)(int)(uint)bVar2;
+      dVar38 = (double)(float)(dVar40 - dVar36);
+      auVar49 = loadVectorLeftIndexed(uVar11 - 0x328);
+      auVar49 = vectorSplatWord(auVar49,0);
+      dVar35 = (double)local_2a8;
+      dVar40 = dVar37;
+      do {
+        lVar34 = lVar33;
+        local_298 = (longlong)(int)uVar28;
+        auVar50 = vectorMultiplyFloatingPoint
+                            (auVar49,*(undefined1 (*) [16])
+                                      ((uint)(local_2c4 + (uVar28 & 7)) & 0xfffffff0));
+        auVar43 = vectorSplatWord(auVar50,0);
+        auVar50 = vectorSplatWord(auVar50,1);
+        local_328 = (FxBeam_u_60)(float)((double)local_298 / dVar35);
+        dVar42 = (double)(float)local_328;
+        if ((dVar42 < dVar37) || (dVar39 < dVar42)) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_beam.cpp"
+                          ,0x1dc,1,local_2d4);
         }
-        sVar14 = (bVar2 - 1) * 2 + local_32c[0];
-        local_330 = (uint)(ushort)(sVar14 + 3);
-        uVar24 = local_330;
-        local_330 = CONCAT22(sVar14 + 4,sVar14 + 5);
-        *(uint *)prVar16->value = uVar24;
-        *(uint *)prVar16[1].value = local_330;
-        R_AddCodeSurf(pGVar7,(Material *)pfVar21[-2],local_300,uVar25,local_314,2,local_2c0);
-        auVar43 = vectorPermuteWordImmediate(auVar48,0x87);
-        auVar53 = vectorSubtractFloatingPoint128(auVar44,auVar45);
-        auVar46 = vectorPermuteWordImmediate(auVar48,99);
-        auVar47 = vectorPermuteWordImmediate(auVar49,99);
-        auVar40 = vectorPermuteWordImmediate(auVar49,0x87);
-        auVar42 = vectorSplatImmediateSignedWord(0);
-        auVar51 = vectorSplatImmediateSignedWord(0xff);
-        auVar47 = vectorMultiplyFloatingPoint(auVar47,auVar43);
-        auVar41 = vectorMultiplySum3FloatingPoint(auVar53,auVar53);
-        auVar46 = vectorNegativeMultiplySubtractFloatingPoint(auVar40,auVar46,auVar47);
-        auVar47 = vectorReciprocalSquareRootEstimateFloatingPoint128(auVar41);
-        auVar52 = vectorCompareEqualFloatingPoint128(auVar41,auVar42);
-        auVar43 = vectorMultiplySum3FloatingPoint(auVar46,auVar46);
-        auVar47 = vectorMultiplyFloatingPoint(auVar53,auVar47);
-        auVar40 = vectorReciprocalSquareRootEstimateFloatingPoint128(auVar43);
-        auVar42 = vectorCompareEqualFloatingPoint128(auVar43,auVar42);
-        auVar41 = auVar47 & ~auVar52 | auVar41 & auVar52;
-        auVar46 = vectorMultiplyFloatingPoint(auVar46,auVar40);
-        auVar43 = auVar46 & ~auVar42 | auVar43 & auVar42;
-        pafVar10 = R_CodeSurfArgsIter_Begin(pGVar7,local_314);
-        auVar47 = vectorMultiplySum3FloatingPoint(auVar45,auVar41);
-        auVar46 = vectorShiftLeftWord128(auVar51,auVar51);
-        local_328 = (float)-dVar33;
-        auVar46 = vectorPermute128(auVar41,auVar47 ^ auVar46,(undefined1  [16])g_XYZx.field0_0x0);
-        *(undefined1 (*) [16])((uint)pafVar10 & 0xfffffff0) = auVar46;
-        auVar46 = vectorAddFloatingPoint128((undefined1  [16])g_unit.field0_0x0,auVar45);
-        *(undefined1 (*) [16])((uint)(pafVar10 + 1) & 0xfffffff0) = auVar46;
-        pGVar11 = R_CodeSurfVertIter_Begin(pGVar7,local_32c[0]);
-        lVar31 = (longlong)(int)pGVar11;
-        auVar46 = loadVectorLeftIndexed(uVar9 - 0x328);
-        uVar25 = 0;
-        auVar46 = vectorSplatWord(auVar46,0);
-        auVar46 = vectorMultiplyAddFloatingPoint128(auVar49,auVar46,auVar45);
-        auVar47 = vectorSplatWord(auVar46,0);
-        auVar40 = vectorSplatWord(auVar46,1);
-        auVar46 = vectorSplatWord(auVar46,2);
-        storeVectorElementWordIndexed(auVar47,lVar31);
-        storeVectorElementWordIndexed(auVar40,lVar31 + 4);
-        storeVectorElementWordIndexed(auVar46,lVar31 + 8);
-        GVar4 = *(GfxColor *)(pfVar21 + -8);
-        pGVar11->binormalSign = (float)dVar36;
-        (pGVar11->texCoord).packed = 0;
-        pGVar11->color = GVar4;
-        (pGVar11->normal).packed = 0x1ff00000;
-        (pGVar11->tangent).packed = 0x1ff;
-        if (*(byte *)pfVar22 == 0) {
-          local_328 = *pfVar21;
+        if (dVar41 < dVar42) {
+          pfVar19 = local_308 + uVar29;
+          do {
+            dVar40 = dVar41;
+            uVar29 = uVar29 + 1;
+            pfVar19 = pfVar19 + 1;
+            dVar41 = dVar39;
+            if (uVar29 < uVar27 - 2) {
+              dVar41 = (double)*pfVar19;
+            }
+          } while (dVar41 < dVar42);
+        }
+        if (uVar27 <= uVar29) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_beam.cpp"
+                          ,0x1e6,1,local_2f8);
+        }
+        if (uVar27 <= uVar29 + 1) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_beam.cpp"
+                          ,0x1e7,1,local_2cc);
+        }
+        if (dVar41 <= dVar40) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_beam.cpp"
+                          ,0x1e8,1,local_310);
+        }
+        pFVar32 = pFVar25 + uVar29 + 7;
+        pFVar24 = pFVar25 + uVar29 + 8;
+        if ((dVar42 < dVar40) || (dVar41 < dVar42)) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_beam.cpp"
+                          ,0x1ef,1,local_2e0);
+        }
+        dVar42 = (double)((float)(dVar42 - dVar40) / (float)(dVar41 - dVar40));
+        if ((dVar42 < dVar37) || (dVar39 < dVar42)) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_beam.cpp"
+                          ,0x1f6,1,local_2d8);
+        }
+        local_260 = (ulonglong)*(byte *)pFVar32;
+        local_288 = (longlong)(int)((uint)*(byte *)pFVar24 - (uint)*(byte *)pFVar32);
+        iVar20 = (int)((double)local_288 * dVar42 + (double)local_260);
+        if (iVar20 < 0) {
+          iVar20 = 0;
+        }
+        else if (0xff < iVar20) {
+          iVar20 = 0xff;
+        }
+        bVar3 = *(byte *)((int)&(pFVar32->tracer).wiggleDist + 1);
+        local_208 = (ulonglong)bVar3;
+        local_278 = (longlong)
+                    (int)((uint)*(byte *)((int)&(pFVar24->tracer).wiggleDist + 1) - (uint)bVar3);
+        iVar21 = (int)((double)local_278 * dVar42 + (double)local_208);
+        if (iVar21 < 0) {
+          iVar21 = 0;
+        }
+        else if (0xff < iVar21) {
+          iVar21 = 0xff;
+        }
+        bVar3 = *(byte *)((int)&(pFVar32->tracer).wiggleDist + 2);
+        local_210 = (ulonglong)bVar3;
+        local_2a0 = (longlong)
+                    (int)((uint)*(byte *)((int)&(pFVar24->tracer).wiggleDist + 2) - (uint)bVar3);
+        iVar22 = (int)((double)local_2a0 * dVar42 + (double)local_210);
+        if (iVar22 < 0) {
+          iVar22 = 0;
+        }
+        else if (0xff < iVar22) {
+          iVar22 = 0xff;
+        }
+        bVar3 = *(byte *)((int)&(pFVar32->tracer).wiggleDist + 3);
+        local_290 = (ulonglong)bVar3;
+        local_280 = (longlong)
+                    (int)((uint)*(byte *)((int)&(pFVar24->tracer).wiggleDist + 3) - (uint)bVar3);
+        iVar1 = (int)((double)local_280 * dVar42 + (double)local_290);
+        if (iVar1 < 0) {
+          iVar17 = 0;
         }
         else {
-          local_328 = (float)dVar34;
-        }
-        if (1 < *(byte *)pfVar22) {
-          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_beam.cpp"
-                          ,0x1b4,0,local_2ec);
-        }
-        bVar3 = local_2b8[*(byte *)pfVar22];
-        uVar24 = (uint)bVar3;
-        if (uVar24 < 2) {
-          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_beam.cpp"
-                          ,0x1bb,0,pcVar28);
-        }
-        if (5 < uVar24) {
-          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_beam.cpp"
-                          ,0x1bc,0,pcVar28);
-        }
-        if (0xc < uVar24 - 2) {
-          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_beam.cpp"
-                          ,0x1c2,1,local_310);
-        }
-        uVar26 = 0;
-        dVar38 = dVar36;
-        if (uVar24 != 2) {
-          dVar38 = (double)*local_308;
-        }
-        local_324 = 0xffffffff;
-        local_2a8 = (longlong)(int)(uint)bVar2;
-        dVar35 = (double)(float)(dVar37 - dVar33);
-        auVar46 = loadVectorLeftIndexed(uVar9 - 0x328);
-        auVar46 = vectorSplatWord(auVar46,0);
-        dVar32 = (double)local_2a8;
-        dVar37 = dVar34;
-        do {
-          lVar30 = lVar31;
-          local_298 = (longlong)(int)uVar25;
-          auVar47 = vectorMultiplyFloatingPoint
-                              (auVar46,*(undefined1 (*) [16])
-                                        ((uint)(local_2c4 + (uVar25 & 7)) & 0xfffffff0));
-          auVar40 = vectorSplatWord(auVar47,0);
-          auVar47 = vectorSplatWord(auVar47,1);
-          local_328 = (float)((double)local_298 / dVar32);
-          dVar39 = (double)local_328;
-          if ((dVar39 < dVar34) || (dVar36 < dVar39)) {
-            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_beam.cpp"
-                            ,0x1dc,1,local_2d4);
-          }
-          if (dVar38 < dVar39) {
-            pfVar21 = local_308 + uVar26;
-            do {
-              dVar37 = dVar38;
-              uVar26 = uVar26 + 1;
-              pfVar21 = pfVar21 + 1;
-              dVar38 = dVar36;
-              if (uVar26 < uVar24 - 2) {
-                dVar38 = (double)*pfVar21;
-              }
-            } while (dVar38 < dVar39);
-          }
-          if (uVar24 <= uVar26) {
-            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_beam.cpp"
-                            ,0x1e6,1,local_2f8);
-          }
-          if (uVar24 <= uVar26 + 1) {
-            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_beam.cpp"
-                            ,0x1e7,1,local_2cc);
-          }
-          if (dVar38 <= dVar37) {
-            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_beam.cpp"
-                            ,0x1e8,1,local_310);
-          }
-          pfVar29 = pfVar22 + uVar26 + 7;
-          pfVar21 = pfVar22 + uVar26 + 8;
-          if ((dVar39 < dVar37) || (dVar38 < dVar39)) {
-            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_beam.cpp"
-                            ,0x1ef,1,local_2e0);
-          }
-          dVar39 = (double)((float)(dVar39 - dVar37) / (float)(dVar38 - dVar37));
-          if ((dVar39 < dVar34) || (dVar36 < dVar39)) {
-            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_beam.cpp"
-                            ,0x1f6,1,local_2d8);
-          }
-          local_260 = (ulonglong)*(byte *)pfVar29;
-          local_288 = (longlong)(int)((uint)*(byte *)pfVar21 - (uint)*(byte *)pfVar29);
-          iVar17 = (int)((double)local_288 * dVar39 + (double)local_260);
-          if (iVar17 < 0) {
-            iVar17 = 0;
-          }
-          else if (0xff < iVar17) {
+          iVar17 = iVar1;
+          if (0xff < iVar1) {
             iVar17 = 0xff;
           }
-          local_208 = (ulonglong)*(byte *)((int)pfVar29 + 1);
-          local_278 = (longlong)
-                      (int)((uint)*(byte *)((int)pfVar21 + 1) - (uint)*(byte *)((int)pfVar29 + 1));
-          iVar18 = (int)((double)local_278 * dVar39 + (double)local_208);
-          if (iVar18 < 0) {
-            iVar18 = 0;
-          }
-          else if (0xff < iVar18) {
-            iVar18 = 0xff;
-          }
-          local_210 = (ulonglong)*(byte *)((int)pfVar29 + 2);
-          local_2a0 = (longlong)
-                      (int)((uint)*(byte *)((int)pfVar21 + 2) - (uint)*(byte *)((int)pfVar29 + 2));
-          iVar19 = (int)((double)local_2a0 * dVar39 + (double)local_210);
-          if (iVar19 < 0) {
-            iVar19 = 0;
-          }
-          else if (0xff < iVar19) {
-            iVar19 = 0xff;
-          }
-          local_290 = (ulonglong)*(byte *)((int)pfVar29 + 3);
-          local_280 = (longlong)
-                      (int)((uint)*(byte *)((int)pfVar21 + 3) - (uint)*(byte *)((int)pfVar29 + 3));
-          iVar1 = (int)((double)local_280 * dVar39 + (double)local_290);
-          if (iVar1 < 0) {
-            iVar15 = 0;
-          }
-          else {
-            iVar15 = iVar1;
-            if (0xff < iVar1) {
-              iVar15 = 0xff;
-            }
-          }
-          local_2d0 = (float)(dVar35 * dVar39 + dVar33);
-          auVar41 = loadVectorLeftIndexed(uVar9 - 0x328);
-          local_324 = CONCAT31(CONCAT21(CONCAT11((char)iVar17,(char)iVar18),(char)iVar19),
-                               (char)iVar15);
-          auVar41 = vectorSplatWord(auVar41,0);
-          uVar25 = uVar25 + 1;
-          _local_320 = CONCAT44(-local_2d0,iVar1);
-          auVar41 = vectorMultiplyAddFloatingPoint128(auVar53,auVar41,auVar45);
-          auVar40 = vectorMultiplyAddFloatingPoint128(auVar40,auVar43,auVar41);
-          auVar41 = loadVectorLeftIndexed(uVar9 - 800);
-          auVar41 = vectorSplatWord(auVar41,0);
-          auVar47 = vectorMultiplyAddFloatingPoint128(auVar47,auVar49,auVar40);
-          auVar40 = vectorMultiplyAddFloatingPoint128(auVar43,auVar41,auVar47);
-          auVar42 = vectorSplatWord(auVar40,0);
-          auVar41 = vectorSplatWord(auVar40,1);
-          auVar40 = vectorSplatWord(auVar40,2);
-          storeVectorElementWordIndexed(auVar42,lVar30 + 0x20);
-          storeVectorElementWordIndexed(auVar41,lVar30 + 0x24);
-          storeVectorElementWordIndexed(auVar40,lVar30 + 0x28);
-          iVar17 = (int)lVar30;
-          *(undefined4 *)(iVar17 + 0x30) = local_324;
-          *(float *)(iVar17 + 0x2c) = (float)dVar36;
-          *(undefined4 *)(iVar17 + 0x38) = 0x1ff00000;
-          *(undefined4 *)(iVar17 + 0x3c) = 0x1ff;
-          *(undefined4 *)(iVar17 + 0x34) = 0x3c00;
-          lVar31 = lVar30 + 0x40;
-          auVar40 = loadVectorLeftIndexed(uVar9 - 0x2d0);
-          auVar40 = vectorSplatWord(auVar40,0);
-          auVar47 = vectorMultiplyAddFloatingPoint128(auVar40,auVar43,auVar47);
-          auVar41 = vectorSplatWord(auVar47,0);
-          auVar40 = vectorSplatWord(auVar47,1);
-          auVar47 = vectorSplatWord(auVar47,2);
-          storeVectorElementWordIndexed(auVar41,lVar31);
-          storeVectorElementWordIndexed(auVar40,lVar30 + 0x44);
-          storeVectorElementWordIndexed(auVar47,lVar30 + 0x48);
-          *(undefined4 *)(iVar17 + 0x50) = local_324;
-          *(float *)(iVar17 + 0x4c) = (float)dVar36;
-          *(undefined4 *)(iVar17 + 0x58) = 0x1ff00000;
-          *(undefined4 *)(iVar17 + 0x5c) = 0x1ff;
-          *(undefined4 *)(iVar17 + 0x54) = 0x3c000000;
-        } while ((int)uVar25 <= (int)(uint)bVar2);
-        auVar45 = loadVectorLeftIndexed(uVar9 - 0x30c);
-        auVar45 = vectorSplatWord(auVar45,0);
-        auVar49 = vectorMultiplyAddFloatingPoint128(auVar49,auVar45,auVar44);
-        auVar45 = vectorSplatWord(auVar49,0);
-        auVar44 = vectorSplatWord(auVar49,1);
-        auVar49 = vectorSplatWord(auVar49,2);
-        storeVectorElementWordIndexed(auVar45,lVar30 + 0x60);
-        storeVectorElementWordIndexed(auVar44,lVar30 + 100);
-        storeVectorElementWordIndexed(auVar49,lVar30 + 0x68);
-        fVar5 = pfVar22[bVar3 + 6];
-        iVar17 = (int)lVar31;
-        *(float *)(iVar17 + 0x2c) = (float)dVar36;
-        *(undefined4 *)(iVar17 + 0x38) = 0x1ff00000;
-        *(undefined4 *)(iVar17 + 0x3c) = 0x1ff;
-        *(undefined4 *)(iVar17 + 0x34) = 0x3c003c00;
-        *(float *)(iVar17 + 0x30) = fVar5;
-        pcVar28 = local_2f4;
-        pfVar21 = local_318;
-        p_Var27 = local_2f0;
-      }
-      local_318 = pfVar21 + 0x10;
-      local_304 = local_304 + 1;
-      if (local_304 == *local_2e8) break;
-      _Var50 = *(__vector4_u_0 *)((uint)local_2fc & 0xfffffff0);
-    } while( true );
+        }
+        local_2d0 = (float)(dVar38 * dVar42 + dVar36);
+        auVar44 = loadVectorLeftIndexed(uVar11 - 0x328);
+        local_324 = CONCAT31(CONCAT21(CONCAT11((char)iVar20,(char)iVar21),(char)iVar22),(char)iVar17
+                            );
+        auVar44 = vectorSplatWord(auVar44,0);
+        uVar28 = uVar28 + 1;
+        _local_320 = CONCAT44(-local_2d0,iVar1);
+        auVar44 = vectorMultiplyAddFloatingPoint128(auVar56,auVar44,auVar48);
+        auVar43 = vectorMultiplyAddFloatingPoint128(auVar43,auVar46,auVar44);
+        auVar44 = loadVectorLeftIndexed(uVar11 - 800);
+        auVar44 = vectorSplatWord(auVar44,0);
+        auVar50 = vectorMultiplyAddFloatingPoint128(auVar50,auVar52,auVar43);
+        auVar43 = vectorMultiplyAddFloatingPoint128(auVar46,auVar44,auVar50);
+        auVar45 = vectorSplatWord(auVar43,0);
+        auVar44 = vectorSplatWord(auVar43,1);
+        auVar43 = vectorSplatWord(auVar43,2);
+        storeVectorElementWordIndexed(auVar45,lVar34 + 0x20);
+        storeVectorElementWordIndexed(auVar44,lVar34 + 0x24);
+        storeVectorElementWordIndexed(auVar43,lVar34 + 0x28);
+        iVar20 = (int)lVar34;
+        *(undefined4 *)(iVar20 + 0x30) = local_324;
+        *(float *)(iVar20 + 0x2c) = (float)dVar39;
+        *(undefined4 *)(iVar20 + 0x38) = 0x1ff00000;
+        *(undefined4 *)(iVar20 + 0x3c) = 0x1ff;
+        *(undefined4 *)(iVar20 + 0x34) = 0x3c00;
+        lVar33 = lVar34 + 0x40;
+        auVar43 = loadVectorLeftIndexed(uVar11 - 0x2d0);
+        auVar43 = vectorSplatWord(auVar43,0);
+        auVar50 = vectorMultiplyAddFloatingPoint128(auVar43,auVar46,auVar50);
+        auVar44 = vectorSplatWord(auVar50,0);
+        auVar43 = vectorSplatWord(auVar50,1);
+        auVar50 = vectorSplatWord(auVar50,2);
+        storeVectorElementWordIndexed(auVar44,lVar33);
+        storeVectorElementWordIndexed(auVar43,lVar34 + 0x44);
+        storeVectorElementWordIndexed(auVar50,lVar34 + 0x48);
+        *(undefined4 *)(iVar20 + 0x50) = local_324;
+        *(float *)(iVar20 + 0x4c) = (float)dVar39;
+        *(undefined4 *)(iVar20 + 0x58) = 0x1ff00000;
+        *(undefined4 *)(iVar20 + 0x5c) = 0x1ff;
+        *(undefined4 *)(iVar20 + 0x54) = 0x3c000000;
+      } while ((int)uVar28 <= (int)(uint)bVar2);
+      auVar48 = loadVectorLeftIndexed(uVar11 - 0x30c);
+      auVar48 = vectorSplatWord(auVar48,0);
+      auVar52 = vectorMultiplyAddFloatingPoint128(auVar52,auVar48,auVar47);
+      auVar48 = vectorSplatWord(auVar52,0);
+      auVar47 = vectorSplatWord(auVar52,1);
+      auVar52 = vectorSplatWord(auVar52,2);
+      storeVectorElementWordIndexed(auVar48,lVar34 + 0x60);
+      storeVectorElementWordIndexed(auVar47,lVar34 + 100);
+      storeVectorElementWordIndexed(auVar52,lVar34 + 0x68);
+      FVar7 = pFVar25[bVar4 + 6];
+      iVar20 = (int)lVar33;
+      *(float *)(iVar20 + 0x2c) = (float)dVar39;
+      *(undefined4 *)(iVar20 + 0x38) = 0x1ff00000;
+      *(undefined4 *)(iVar20 + 0x3c) = 0x1ff;
+      *(undefined4 *)(iVar20 + 0x34) = 0x3c003c00;
+      *(FxBeam_u_60 *)(iVar20 + 0x30) = FVar7;
+      pcVar31 = local_2f4;
+      pFVar24 = local_318;
+      p_Var30 = local_2f0;
+    }
+    local_318 = pFVar24 + 0x10;
+    local_304 = local_304 + 1;
+    if (local_304 == *local_2e8) break;
+    _Var53 = *(__vector4_u_0 *)((uint)local_2fc & 0xfffffff0);
   }
-  __restvmx_119();
-  __restfpr_22();
-  __restgprlr();
   return;
 }
 

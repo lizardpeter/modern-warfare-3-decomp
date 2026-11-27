@@ -2,28 +2,24 @@
 
 // 82813A58  vp8_loop_filter_mbh_c  (WebM_atvi_opt/vpx/vp8/common/loopfilter.c:33)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void vp8_loop_filter_mbh_c
                (uchar *param_1,uchar *param_2,uchar *param_3,int param_4,int param_5,
                loop_filter_info *param_6,int param_7)
 
 {
-  uchar *puVar1;
-  ulonglong uVar2;
-  ulonglong uVar3;
-  
-  uVar3 = (ulonglong)(int)param_3;
-  uVar2 = (ulonglong)(int)param_2;
-  puVar1 = (uchar *)__savegprlr_28(param_1);
-  vp8_mbloop_filter_horizontal_edge_c(puVar1,param_4,param_6->mbflim,param_6->lim,param_6->mbthr,2);
-  if ((uVar2 & 0xffffffff) != 0) {
+  vp8_mbloop_filter_horizontal_edge_c(param_1,param_4,param_6->mbflim,param_6->lim,param_6->mbthr,2)
+  ;
+  if (param_2 != (uchar *)0x0) {
     vp8_mbloop_filter_horizontal_edge_c
-              ((uchar *)uVar2,param_5,param_6->uvmbflim,param_6->uvlim,param_6->uvmbthr,1);
+              (param_2,param_5,param_6->uvmbflim,param_6->uvlim,param_6->uvmbthr,1);
   }
-  if ((uVar3 & 0xffffffff) != 0) {
+  if (param_3 != (uchar *)0x0) {
     vp8_mbloop_filter_horizontal_edge_c
-              ((uchar *)uVar3,param_5,param_6->uvmbflim,param_6->uvlim,param_6->uvmbthr,1);
+              (param_3,param_5,param_6->uvmbflim,param_6->uvlim,param_6->uvmbthr,1);
   }
-  __restgprlr_28();
   return;
 }
 
@@ -43,28 +39,23 @@ void vp8_loop_filter_mbhs_c
 
 // 82813AF8  vp8_loop_filter_mbv_c  (WebM_atvi_opt/vpx/vp8/common/loopfilter.c:57)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void vp8_loop_filter_mbv_c
                (uchar *param_1,uchar *param_2,uchar *param_3,int param_4,int param_5,
                loop_filter_info *param_6,int param_7)
 
 {
-  uchar *puVar1;
-  ulonglong uVar2;
-  ulonglong uVar3;
-  
-  uVar3 = (ulonglong)(int)param_3;
-  uVar2 = (ulonglong)(int)param_2;
-  puVar1 = (uchar *)__savegprlr_28(param_1);
-  vp8_mbloop_filter_vertical_edge_c(puVar1,param_4,param_6->mbflim,param_6->lim,param_6->mbthr,2);
-  if ((uVar2 & 0xffffffff) != 0) {
+  vp8_mbloop_filter_vertical_edge_c(param_1,param_4,param_6->mbflim,param_6->lim,param_6->mbthr,2);
+  if (param_2 != (uchar *)0x0) {
     vp8_mbloop_filter_vertical_edge_c
-              ((uchar *)uVar2,param_5,param_6->uvmbflim,param_6->uvlim,param_6->uvmbthr,1);
+              (param_2,param_5,param_6->uvmbflim,param_6->uvlim,param_6->uvmbthr,1);
   }
-  if ((uVar3 & 0xffffffff) != 0) {
+  if (param_3 != (uchar *)0x0) {
     vp8_mbloop_filter_vertical_edge_c
-              ((uchar *)uVar3,param_5,param_6->uvmbflim,param_6->uvlim,param_6->uvmbthr,1);
+              (param_3,param_5,param_6->uvmbflim,param_6->uvlim,param_6->uvmbthr,1);
   }
-  __restgprlr_28();
   return;
 }
 
@@ -84,53 +75,38 @@ void vp8_loop_filter_mbvs_c
 
 // 82813B98  vp8_loop_filter_bh_c  (WebM_atvi_opt/vpx/vp8/common/loopfilter.c:81)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
+
 void vp8_loop_filter_bh_c
                (uchar *param_1,uchar *param_2,uchar *param_3,int param_4,int param_5,
                loop_filter_info *param_6,int param_7)
 
 {
-  int iVar1;
-  ulonglong uVar2;
-  int iVar3;
-  ulonglong uVar4;
-  char *pcVar5;
-  ulonglong uVar6;
-  ulonglong uVar7;
-  char *pcVar8;
+  char *pcVar1;
+  char *pcVar2;
   
-  uVar7 = (ulonglong)param_5;
-  uVar6 = (ulonglong)param_4;
-  uVar4 = (ulonglong)(int)param_3;
-  uVar2 = (ulonglong)(int)param_2;
-  iVar1 = __savegprlr_24(param_1);
-  pcVar8 = param_6->thr;
-  pcVar5 = param_6->flim;
-  iVar3 = (int)uVar6;
-  vp8_loop_filter_horizontal_edge_c
-            ((uchar *)((int)((uVar6 & 0xffffffff) << 2) + iVar1),iVar3,pcVar5,param_6->lim,pcVar8,2)
-  ;
-  vp8_loop_filter_horizontal_edge_c
-            ((uchar *)((int)((uVar6 & 0xffffffff) << 3) + iVar1),iVar3,pcVar5,param_6->lim,pcVar8,2)
-  ;
-  vp8_loop_filter_horizontal_edge_c
-            ((uchar *)((int)((uVar6 + (uVar6 & 0x7fffffff) * 2 & 0xffffffff) << 2) + iVar1),iVar3,
-             pcVar5,param_6->lim,pcVar8,2);
-  if ((uVar2 & 0xffffffff) != 0) {
+  pcVar2 = param_6->thr;
+  pcVar1 = param_6->flim;
+  vp8_loop_filter_horizontal_edge_c(param_1 + param_4 * 4,param_4,pcVar1,param_6->lim,pcVar2,2);
+  vp8_loop_filter_horizontal_edge_c(param_1 + param_4 * 8,param_4,pcVar1,param_6->lim,pcVar2,2);
+  vp8_loop_filter_horizontal_edge_c(param_1 + param_4 * 0xc,param_4,pcVar1,param_6->lim,pcVar2,2);
+  if (param_2 != (uchar *)0x0) {
     vp8_loop_filter_horizontal_edge_c
-              ((uchar *)((int)((uVar7 & 0xffffffff) << 2) + (int)uVar2),(int)uVar7,param_6->uvflim,
-               param_6->uvlim,param_6->uvthr,1);
+              (param_2 + param_5 * 4,param_5,param_6->uvflim,param_6->uvlim,param_6->uvthr,1);
   }
-  if ((uVar4 & 0xffffffff) != 0) {
+  if (param_3 != (uchar *)0x0) {
     vp8_loop_filter_horizontal_edge_c
-              ((uchar *)((int)((uVar7 & 0xffffffff) << 2) + (int)uVar4),(int)uVar7,param_6->uvflim,
-               param_6->uvlim,param_6->uvthr,1);
+              (param_3 + param_5 * 4,param_5,param_6->uvflim,param_6->uvlim,param_6->uvthr,1);
   }
-  __restgprlr_24();
   return;
 }
 
 
 // 82813C88  vp8_loop_filter_bhs_c  (WebM_atvi_opt/vpx/vp8/common/loopfilter.c:96)
+
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 
 void vp8_loop_filter_bhs_c
                (uchar *param_1,uchar *param_2,uchar *param_3,int param_4,int param_5,
@@ -138,67 +114,54 @@ void vp8_loop_filter_bhs_c
 
 {
   char *pcVar1;
-  int iVar2;
-  int iVar3;
-  char *pcVar4;
-  ulonglong uVar5;
-  char *pcVar6;
-  longlong lVar7;
+  char *pcVar2;
   
-  lVar7 = (longlong)(int)param_6;
-  uVar5 = (ulonglong)param_4;
-  iVar2 = __savegprlr_27(param_1,param_2,param_3,uVar5,param_5,lVar7,param_7);
-  pcVar1 = (char *)lVar7;
-  pcVar6 = pcVar1 + 0x20;
-  pcVar4 = pcVar1 + 0x10;
-  iVar3 = (int)uVar5;
+  pcVar2 = param_6->thr;
+  pcVar1 = param_6->flim;
   vp8_loop_filter_simple_horizontal_edge_c
-            ((uchar *)((int)((uVar5 & 0xffffffff) << 2) + iVar2),iVar3,pcVar4,pcVar1,pcVar6,2);
+            (param_1 + param_4 * 4,param_4,pcVar1,param_6->lim,pcVar2,2);
   vp8_loop_filter_simple_horizontal_edge_c
-            ((uchar *)((int)((uVar5 & 0xffffffff) << 3) + iVar2),iVar3,pcVar4,pcVar1,pcVar6,2);
+            (param_1 + param_4 * 8,param_4,pcVar1,param_6->lim,pcVar2,2);
   vp8_loop_filter_simple_horizontal_edge_c
-            ((uchar *)((int)((uVar5 + (uVar5 & 0x7fffffff) * 2 & 0xffffffff) << 2) + iVar2),iVar3,
-             pcVar4,pcVar1,pcVar6,2);
-  __restgprlr_27();
+            (param_1 + param_4 * 0xc,param_4,pcVar1,param_6->lim,pcVar2,2);
   return;
 }
 
 
 // 82813D18  vp8_loop_filter_bv_c  (WebM_atvi_opt/vpx/vp8/common/loopfilter.c:109)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
+
 void vp8_loop_filter_bv_c
                (uchar *param_1,uchar *param_2,uchar *param_3,int param_4,int param_5,
                loop_filter_info *param_6,int param_7)
 
 {
-  int iVar1;
-  ulonglong uVar2;
-  ulonglong uVar3;
-  char *pcVar4;
-  char *pcVar5;
+  char *pcVar1;
+  char *pcVar2;
   
-  uVar3 = (ulonglong)(int)param_3;
-  uVar2 = (ulonglong)(int)param_2;
-  iVar1 = __savegprlr_24(param_1);
-  pcVar5 = param_6->thr;
-  pcVar4 = param_6->flim;
-  vp8_loop_filter_vertical_edge_c((uchar *)(iVar1 + 4),param_4,pcVar4,param_6->lim,pcVar5,2);
-  vp8_loop_filter_vertical_edge_c((uchar *)(iVar1 + 8),param_4,pcVar4,param_6->lim,pcVar5,2);
-  vp8_loop_filter_vertical_edge_c((uchar *)(iVar1 + 0xc),param_4,pcVar4,param_6->lim,pcVar5,2);
-  if ((uVar2 & 0xffffffff) != 0) {
+  pcVar2 = param_6->thr;
+  pcVar1 = param_6->flim;
+  vp8_loop_filter_vertical_edge_c(param_1 + 4,param_4,pcVar1,param_6->lim,pcVar2,2);
+  vp8_loop_filter_vertical_edge_c(param_1 + 8,param_4,pcVar1,param_6->lim,pcVar2,2);
+  vp8_loop_filter_vertical_edge_c(param_1 + 0xc,param_4,pcVar1,param_6->lim,pcVar2,2);
+  if (param_2 != (uchar *)0x0) {
     vp8_loop_filter_vertical_edge_c
-              ((uchar *)((int)uVar2 + 4),param_5,param_6->uvflim,param_6->uvlim,param_6->uvthr,1);
+              (param_2 + 4,param_5,param_6->uvflim,param_6->uvlim,param_6->uvthr,1);
   }
-  if ((uVar3 & 0xffffffff) != 0) {
+  if (param_3 != (uchar *)0x0) {
     vp8_loop_filter_vertical_edge_c
-              ((uchar *)((int)uVar3 + 4),param_5,param_6->uvflim,param_6->uvlim,param_6->uvthr,1);
+              (param_3 + 4,param_5,param_6->uvflim,param_6->uvlim,param_6->uvthr,1);
   }
-  __restgprlr_24();
   return;
 }
 
 
 // 82813DE8  vp8_loop_filter_bvs_c  (WebM_atvi_opt/vpx/vp8/common/loopfilter.c:124)
+
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 
 void vp8_loop_filter_bvs_c
                (uchar *param_1,uchar *param_2,uchar *param_3,int param_4,int param_5,
@@ -206,126 +169,115 @@ void vp8_loop_filter_bvs_c
 
 {
   char *pcVar1;
-  int iVar2;
-  int iVar3;
-  char *pcVar4;
-  longlong lVar5;
-  char *pcVar6;
-  longlong lVar7;
+  char *pcVar2;
   
-  lVar7 = (longlong)(int)param_6;
-  lVar5 = (longlong)param_4;
-  iVar2 = __savegprlr_27(param_1,param_2,param_3,lVar5,param_5,lVar7,param_7);
-  pcVar1 = (char *)lVar7;
-  pcVar6 = pcVar1 + 0x20;
-  pcVar4 = pcVar1 + 0x10;
-  iVar3 = (int)lVar5;
-  vp8_loop_filter_simple_vertical_edge_c((uchar *)(iVar2 + 4),iVar3,pcVar4,pcVar1,pcVar6,2);
-  vp8_loop_filter_simple_vertical_edge_c((uchar *)(iVar2 + 8),iVar3,pcVar4,pcVar1,pcVar6,2);
-  vp8_loop_filter_simple_vertical_edge_c((uchar *)(iVar2 + 0xc),iVar3,pcVar4,pcVar1,pcVar6,2);
-  __restgprlr_27();
+  pcVar2 = param_6->thr;
+  pcVar1 = param_6->flim;
+  vp8_loop_filter_simple_vertical_edge_c(param_1 + 4,param_4,pcVar1,param_6->lim,pcVar2,2);
+  vp8_loop_filter_simple_vertical_edge_c(param_1 + 8,param_4,pcVar1,param_6->lim,pcVar2,2);
+  vp8_loop_filter_simple_vertical_edge_c(param_1 + 0xc,param_4,pcVar1,param_6->lim,pcVar2,2);
   return;
 }
 
 
 // 82813E68  vp8_init_loop_filter  (WebM_atvi_opt/vpx/vp8/common/loopfilter.c:135)
 
+/* WARNING: Function: __savegprlr_21 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_21 replaced with injection: xenon_save_restore */
+
 void vp8_init_loop_filter(VP8Common *param_1)
 
 {
   bool bVar1;
-  int iVar2;
+  LOOPFILTERTYPE LVar2;
   uint uVar3;
-  int iVar4;
-  char cVar5;
-  int iVar6;
-  int iVar7;
-  int iVar8;
-  int iVar9;
-  int iVar10;
-  char cVar11;
-  longlong lVar12;
-  int iVar13;
-  int iVar14;
-  ulonglong uVar15;
-  ulonglong uVar16;
-  int iVar17;
-  longlong lVar18;
+  FRAME_TYPE FVar4;
+  _func___cdecl_void_uchar_ptr_uchar_ptr_uchar_ptr_int_int_loop_filter_info_ptr_int *p_Var5;
+  _func___cdecl_void_uchar_ptr_uchar_ptr_uchar_ptr_int_int_loop_filter_info_ptr_int *p_Var6;
+  _func___cdecl_void_uchar_ptr_uchar_ptr_uchar_ptr_int_int_loop_filter_info_ptr_int *p_Var7;
+  char cVar8;
+  char cVar9;
+  longlong lVar10;
+  loop_filter_info *plVar11;
+  loop_filter_info *plVar12;
+  ulonglong uVar13;
+  ulonglong uVar14;
+  int iVar15;
+  longlong lVar16;
   
-  iVar10 = __savegprlr_21(param_1);
-  iVar2 = *(int *)(iVar10 + 0x377c);
-  iVar13 = iVar10 + 0x3780;
-  uVar3 = *(uint *)(iVar10 + 0x5f98);
-  uVar15 = (ulonglong)uVar3;
-  uVar16 = 0;
-  iVar4 = *(int *)(iVar10 + 0x3718);
+  LVar2 = param_1->filter_type;
+  plVar12 = param_1->lf_info;
+  uVar3 = param_1->sharpness_level;
+  uVar13 = (ulonglong)uVar3;
+  uVar14 = 0;
+  FVar4 = param_1->frame_type;
   do {
-    iVar17 = (int)uVar16;
-    if (iVar4 == 0) {
-      bVar1 = iVar17 < 0x28;
+    iVar15 = (int)uVar14;
+    if (FVar4 == KEY_FRAME) {
+      bVar1 = iVar15 < 0x28;
 LAB_82813ea8:
       if (bVar1) {
-        cVar11 = ((char)(uVar16 >> 0x18) >> 7) + (0xe < uVar16);
+        cVar9 = ((char)(uVar14 >> 0x18) >> 7) + (0xe < uVar14);
       }
       else {
-        cVar11 = '\x02';
+        cVar9 = '\x02';
       }
     }
     else {
-      if (iVar17 < 0x28) {
-        bVar1 = iVar17 < 0x14;
+      if (iVar15 < 0x28) {
+        bVar1 = iVar15 < 0x14;
         goto LAB_82813ea8;
       }
-      cVar11 = '\x03';
+      cVar9 = '\x03';
     }
-    iVar17 = (iVar17 >> ((-uVar3 & ~uVar3) >> 0x1f)) >>
-             ((int)((~uVar15 & 0xffffffff) >> 0x1f) + (uint)(uVar15 < 5) & 1);
-    lVar12 = (longlong)iVar17;
-    if ((0 < (int)uVar3) && ((int)(9 - uVar15) < iVar17)) {
-      lVar12 = 9 - uVar15;
+    iVar15 = (iVar15 >> ((-uVar3 & ~uVar3) >> 0x1f)) >>
+             ((int)((~uVar13 & 0xffffffff) >> 0x1f) + (uint)(uVar13 < 5) & 1);
+    lVar10 = (longlong)iVar15;
+    if ((0 < (int)uVar3) && ((int)(9 - uVar13) < iVar15)) {
+      lVar10 = 9 - uVar13;
     }
-    if ((int)lVar12 < 1) {
-      lVar12 = 1;
+    if ((int)lVar10 < 1) {
+      lVar10 = 1;
     }
-    cVar5 = (char)uVar16;
-    iVar14 = 0;
-    lVar18 = 0x10;
-    iVar17 = iVar13;
+    cVar8 = (char)uVar14;
+    lVar16 = 0x10;
+    plVar11 = plVar12;
+    iVar15 = 0;
     do {
-      iVar6 = iVar13 + iVar14;
-      *(char *)(iVar13 + iVar14) = (char)lVar12;
-      iVar7 = iVar13 + iVar14;
-      *(char *)(iVar13 + 0x70 + iVar14) = cVar11;
-      iVar8 = iVar13 + iVar14;
-      *(char *)(iVar17 + 0x30) = cVar5 + '\x02';
-      iVar9 = iVar13 + iVar14;
-      *(char *)(iVar17 + 0x40) = cVar11;
-      iVar14 = iVar14 + 1;
-      *(char *)(iVar17 + 0x10) = cVar5;
-      *(char *)(iVar17 + 0x20) = cVar11;
-      *(char *)(iVar6 + 0x50) = (char)lVar12;
-      iVar17 = iVar13 + iVar14;
-      *(char *)(iVar7 + 0x80) = cVar5 + '\x02';
-      *(char *)(iVar8 + 0x90) = cVar11;
-      *(char *)(iVar9 + 0x60) = cVar5;
-      lVar18 = lVar18 + -1;
-    } while (lVar18 != 0);
-    uVar16 = uVar16 + 1;
-    iVar13 = iVar13 + 0xa0;
-    if (0x3f < (int)uVar16) {
-      if (iVar2 == 0) {
-        *(undefined4 *)(iVar10 + 0x5f80) = *(undefined4 *)(iVar10 + 0x6cdc);
-        *(undefined4 *)(iVar10 + 0x5f88) = *(undefined4 *)(iVar10 + 0x6ce0);
-        *(undefined4 *)(iVar10 + 0x5f84) = *(undefined4 *)(iVar10 + 0x6ce4);
-        *(undefined4 *)(iVar10 + 0x5f8c) = *(undefined4 *)(iVar10 + 0x6ce8);
-        __restgprlr_21();
+      plVar12->lim[iVar15] = (char)lVar10;
+      plVar12->uvthr[iVar15] = cVar9;
+      plVar11->mbflim[0] = cVar8 + '\x02';
+      plVar11->mbthr[0] = cVar9;
+      plVar11->flim[0] = cVar8;
+      plVar11->thr[0] = cVar9;
+      plVar12->uvlim[iVar15] = (char)lVar10;
+      plVar11 = (loop_filter_info *)(plVar12->lim + iVar15 + 1);
+      plVar12->uvmbflim[iVar15] = cVar8 + '\x02';
+      plVar12->uvmbthr[iVar15] = cVar9;
+      plVar12->uvflim[iVar15] = cVar8;
+      lVar16 = lVar16 + -1;
+      iVar15 = iVar15 + 1;
+    } while (lVar16 != 0);
+    uVar14 = uVar14 + 1;
+    plVar12 = plVar12 + 1;
+    if (0x3f < (int)uVar14) {
+      if (LVar2 == NORMAL_LOOPFILTER) {
+        p_Var5 = (param_1->rtcd).loopfilter.normal_b_v;
+        p_Var6 = (param_1->rtcd).loopfilter.normal_mb_h;
+        p_Var7 = (param_1->rtcd).loopfilter.normal_b_h;
+        param_1->lf_mbv = (param_1->rtcd).loopfilter.normal_mb_v;
+        param_1->lf_bv = p_Var5;
+        param_1->lf_mbh = p_Var6;
+        param_1->lf_bh = p_Var7;
         return;
       }
-      *(undefined4 *)(iVar10 + 0x5f80) = *(undefined4 *)(iVar10 + 0x6cec);
-      *(undefined4 *)(iVar10 + 0x5f88) = *(undefined4 *)(iVar10 + 0x6cf0);
-      *(undefined4 *)(iVar10 + 0x5f84) = *(undefined4 *)(iVar10 + 0x6cf4);
-      *(undefined4 *)(iVar10 + 0x5f8c) = *(undefined4 *)(iVar10 + 0x6cf8);
-      __restgprlr_21();
+      p_Var5 = (param_1->rtcd).loopfilter.simple_b_v;
+      p_Var6 = (param_1->rtcd).loopfilter.simple_mb_h;
+      p_Var7 = (param_1->rtcd).loopfilter.simple_b_h;
+      param_1->lf_mbv = (param_1->rtcd).loopfilter.simple_mb_v;
+      param_1->lf_bv = p_Var5;
+      param_1->lf_mbh = p_Var6;
+      param_1->lf_bh = p_Var7;
       return;
     }
   } while( true );
@@ -429,6 +381,9 @@ LAB_82814128:
 
 // 82814158  vp8_loop_filter_frame  (WebM_atvi_opt/vpx/vp8/common/loopfilter.c:316)
 
+/* WARNING: Function: __savegprlr_21 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_21 replaced with injection: xenon_save_restore */
+
 void vp8_loop_filter_frame(VP8Common *param_1,MACROBLOCKD *param_2,int param_3)
 
 {
@@ -438,32 +393,30 @@ void vp8_loop_filter_frame(VP8Common *param_1,MACROBLOCKD *param_2,int param_3)
   YV12_BUFFER_CONFIG *pYVar4;
   FRAME_TYPE FVar5;
   int iVar6;
-  VP8Common *pVVar7;
+  loop_filter_info *plVar7;
   longlong lVar8;
   longlong lVar9;
   uint uVar10;
   int iVar11;
   int iVar12;
   int iVar13;
-  loop_filter_info *plVar14;
+  uchar *puVar14;
   uchar *puVar15;
   uchar *puVar16;
-  uchar *puVar17;
   uint local_80 [4];
   uint local_70 [28];
   
   lVar9 = (longlong)param_3;
-  pVVar7 = (VP8Common *)__savegprlr_21(param_1);
   uVar1 = param_2->segmentation_enabled;
-  pYVar4 = pVVar7->frame_to_show;
-  plVar14 = pVVar7->lf_info;
-  FVar5 = pVVar7->frame_type;
-  param_2->mode_info_context = pVVar7->mi;
+  pYVar4 = param_1->frame_to_show;
+  plVar7 = param_1->lf_info;
+  FVar5 = param_1->frame_type;
+  param_2->mode_info_context = param_1->mi;
   if (uVar1 == '\0') {
-    local_70[0] = (uint)lVar9;
-    local_70[1] = local_70[0];
-    local_70[2] = local_70[0];
-    local_70[3] = local_70[0];
+    local_70[0] = param_3;
+    local_70[1] = param_3;
+    local_70[2] = param_3;
+    local_70[3] = param_3;
   }
   else {
     uVar2 = param_2->mb_segement_abs_delta;
@@ -493,7 +446,7 @@ void vp8_loop_filter_frame(VP8Common *param_1,MACROBLOCKD *param_2,int param_3)
       else if (0x3f < (int)lVar8) {
         lVar8 = 0x3f;
       }
-      local_70[1] = (uint)lVar8;
+      local_70[1] = (int)lVar8;
     }
     cVar3 = param_2->segment_feature_data[1][2];
     if (uVar2 == '\x01') {
@@ -507,7 +460,7 @@ void vp8_loop_filter_frame(VP8Common *param_1,MACROBLOCKD *param_2,int param_3)
       else if (0x3f < (int)lVar8) {
         lVar8 = 0x3f;
       }
-      local_70[2] = (uint)lVar8;
+      local_70[2] = (int)lVar8;
     }
     cVar3 = param_2->segment_feature_data[1][3];
     if (uVar2 == '\x01') {
@@ -522,27 +475,27 @@ void vp8_loop_filter_frame(VP8Common *param_1,MACROBLOCKD *param_2,int param_3)
         local_70[3] = 0x3f;
         goto LAB_8281429c;
       }
-      local_70[3] = (uint)lVar9;
+      local_70[3] = (int)lVar9;
     }
   }
 LAB_8281429c:
-  if ((pVVar7->last_filter_type == pVVar7->filter_type) &&
-     (pVVar7->last_sharpness_level == pVVar7->sharpness_level)) {
-    if (FVar5 != pVVar7->last_frame_type) {
-      vp8_frame_init_loop_filter(plVar14,FVar5);
+  if ((param_1->last_filter_type == param_1->filter_type) &&
+     (param_1->last_sharpness_level == param_1->sharpness_level)) {
+    if (FVar5 != param_1->last_frame_type) {
+      vp8_frame_init_loop_filter(plVar7,FVar5);
     }
   }
   else {
-    vp8_init_loop_filter(pVVar7);
+    vp8_init_loop_filter(param_1);
   }
   iVar12 = 0;
-  puVar17 = pYVar4->y_buffer;
-  puVar16 = pYVar4->u_buffer;
-  puVar15 = pYVar4->v_buffer;
-  if (0 < pVVar7->mb_rows) {
+  puVar16 = pYVar4->y_buffer;
+  puVar15 = pYVar4->u_buffer;
+  puVar14 = pYVar4->v_buffer;
+  if (0 < param_1->mb_rows) {
     do {
       iVar13 = 0;
-      if (0 < pVVar7->mb_cols) {
+      if (0 < param_1->mb_cols) {
         do {
           if (uVar1 == '\0') {
             uVar10 = 0;
@@ -555,45 +508,47 @@ LAB_8281429c:
           uVar10 = local_80[0];
           if (local_80[0] != 0) {
             if (0 < iVar13) {
-              (*pVVar7->lf_mbv)(puVar17,puVar16,puVar15,pYVar4->y_stride,pYVar4->uv_stride,
-                                plVar14 + local_80[0],pVVar7->simpler_lpf);
+              (*param_1->lf_mbv)(puVar16,puVar15,puVar14,pYVar4->y_stride,pYVar4->uv_stride,
+                                 plVar7 + local_80[0],param_1->simpler_lpf);
             }
             if ((param_2->mode_info_context->mbmi).dc_diff != '\0') {
-              (*pVVar7->lf_bv)(puVar17,puVar16,puVar15,pYVar4->y_stride,pYVar4->uv_stride,
-                               plVar14 + uVar10,pVVar7->simpler_lpf);
+              (*param_1->lf_bv)(puVar16,puVar15,puVar14,pYVar4->y_stride,pYVar4->uv_stride,
+                                plVar7 + uVar10,param_1->simpler_lpf);
             }
             if (0 < iVar12) {
-              (*pVVar7->lf_mbh)(puVar17,puVar16,puVar15,pYVar4->y_stride,pYVar4->uv_stride,
-                                plVar14 + uVar10,pVVar7->simpler_lpf);
+              (*param_1->lf_mbh)(puVar16,puVar15,puVar14,pYVar4->y_stride,pYVar4->uv_stride,
+                                 plVar7 + uVar10,param_1->simpler_lpf);
             }
             if ((param_2->mode_info_context->mbmi).dc_diff != '\0') {
-              (*pVVar7->lf_bh)(puVar17,puVar16,puVar15,pYVar4->y_stride,pYVar4->uv_stride,
-                               plVar14 + uVar10,pVVar7->simpler_lpf);
+              (*param_1->lf_bh)(puVar16,puVar15,puVar14,pYVar4->y_stride,pYVar4->uv_stride,
+                                plVar7 + uVar10,param_1->simpler_lpf);
             }
           }
           iVar13 = iVar13 + 1;
-          puVar17 = puVar17 + 0x10;
-          puVar16 = puVar16 + 8;
-          param_2->mode_info_context = param_2->mode_info_context + 1;
+          puVar16 = puVar16 + 0x10;
           puVar15 = puVar15 + 8;
-        } while (iVar13 < pVVar7->mb_cols);
+          param_2->mode_info_context = param_2->mode_info_context + 1;
+          puVar14 = puVar14 + 8;
+        } while (iVar13 < param_1->mb_cols);
       }
       iVar13 = pYVar4->y_stride;
       iVar12 = iVar12 + 1;
       iVar6 = pYVar4->y_width;
       iVar11 = pYVar4->uv_stride * 8 - pYVar4->uv_width;
       param_2->mode_info_context = param_2->mode_info_context + 1;
-      puVar17 = puVar17 + (iVar13 * 0x10 - iVar6);
-      puVar16 = puVar16 + iVar11;
+      puVar16 = puVar16 + (iVar13 * 0x10 - iVar6);
       puVar15 = puVar15 + iVar11;
-    } while (iVar12 < pVVar7->mb_rows);
+      puVar14 = puVar14 + iVar11;
+    } while (iVar12 < param_1->mb_rows);
   }
-  __restgprlr_21();
   return;
 }
 
 
 // 828144C0  vp8_loop_filter_frame_yonly  (WebM_atvi_opt/vpx/vp8/common/loopfilter.c:421)
+
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
 
 void vp8_loop_filter_frame_yonly(VP8Common *param_1,MACROBLOCKD *param_2,int param_3,int param_4)
 
@@ -604,241 +559,238 @@ void vp8_loop_filter_frame_yonly(VP8Common *param_1,MACROBLOCKD *param_2,int par
   YV12_BUFFER_CONFIG *pYVar4;
   FRAME_TYPE FVar5;
   int iVar6;
-  MACROBLOCKD *pMVar7;
-  VP8Common *pVVar8;
+  loop_filter_info *plVar7;
+  longlong lVar8;
   longlong lVar9;
-  longlong lVar10;
-  uint uVar11;
+  uint uVar10;
+  int iVar11;
   int iVar12;
-  int iVar13;
-  loop_filter_info *plVar14;
-  uchar *puVar15;
+  uchar *puVar13;
   uint local_70 [4];
   uint local_60 [24];
   
-  lVar10 = (longlong)param_3;
-  lVar9 = (longlong)(int)param_2;
-  pVVar8 = (VP8Common *)__savegprlr_23(param_1,lVar9,lVar10,param_4);
-  pMVar7 = (MACROBLOCKD *)lVar9;
-  uVar1 = pMVar7->segmentation_enabled;
-  pYVar4 = pVVar8->frame_to_show;
-  plVar14 = pVVar8->lf_info;
-  FVar5 = pVVar8->frame_type;
-  pMVar7->mode_info_context = pVVar8->mi;
+  lVar9 = (longlong)param_3;
+  uVar1 = param_2->segmentation_enabled;
+  pYVar4 = param_1->frame_to_show;
+  plVar7 = param_1->lf_info;
+  FVar5 = param_1->frame_type;
+  param_2->mode_info_context = param_1->mi;
   if (uVar1 == '\0') {
-    local_60[0] = (uint)lVar10;
-    local_60[1] = local_60[0];
-    local_60[2] = local_60[0];
-    local_60[3] = local_60[0];
+    local_60[0] = param_3;
+    local_60[1] = param_3;
+    local_60[2] = param_3;
+    local_60[3] = param_3;
   }
   else {
-    uVar2 = pMVar7->mb_segement_abs_delta;
-    cVar3 = pMVar7->segment_feature_data[1][0];
+    uVar2 = param_2->mb_segement_abs_delta;
+    cVar3 = param_2->segment_feature_data[1][0];
     if (uVar2 == '\x01') {
       local_60[0] = (int)cVar3;
     }
     else {
-      lVar9 = cVar3 + lVar10;
-      if (lVar9 < 0) {
-        lVar9 = 0;
+      lVar8 = cVar3 + lVar9;
+      if (lVar8 < 0) {
+        lVar8 = 0;
       }
-      else if (0x3f < (int)lVar9) {
-        lVar9 = 0x3f;
+      else if (0x3f < (int)lVar8) {
+        lVar8 = 0x3f;
       }
-      local_60[0] = (uint)lVar9;
+      local_60[0] = (uint)lVar8;
     }
-    cVar3 = pMVar7->segment_feature_data[1][1];
+    cVar3 = param_2->segment_feature_data[1][1];
     if (uVar2 == '\x01') {
       local_60[1] = (int)cVar3;
     }
     else {
-      lVar9 = cVar3 + lVar10;
-      if (lVar9 < 0) {
-        lVar9 = 0;
+      lVar8 = cVar3 + lVar9;
+      if (lVar8 < 0) {
+        lVar8 = 0;
       }
-      else if (0x3f < (int)lVar9) {
-        lVar9 = 0x3f;
+      else if (0x3f < (int)lVar8) {
+        lVar8 = 0x3f;
       }
-      local_60[1] = (uint)lVar9;
+      local_60[1] = (int)lVar8;
     }
-    cVar3 = pMVar7->segment_feature_data[1][2];
+    cVar3 = param_2->segment_feature_data[1][2];
     if (uVar2 == '\x01') {
       local_60[2] = (int)cVar3;
     }
     else {
-      lVar9 = cVar3 + lVar10;
-      if (lVar9 < 0) {
-        lVar9 = 0;
+      lVar8 = cVar3 + lVar9;
+      if (lVar8 < 0) {
+        lVar8 = 0;
       }
-      else if (0x3f < (int)lVar9) {
-        lVar9 = 0x3f;
+      else if (0x3f < (int)lVar8) {
+        lVar8 = 0x3f;
       }
-      local_60[2] = (uint)lVar9;
+      local_60[2] = (int)lVar8;
     }
-    cVar3 = pMVar7->segment_feature_data[1][3];
+    cVar3 = param_2->segment_feature_data[1][3];
     if (uVar2 == '\x01') {
       local_60[3] = (int)cVar3;
     }
     else {
-      lVar10 = cVar3 + lVar10;
-      if (lVar10 < 0) {
-        lVar10 = 0;
+      lVar9 = cVar3 + lVar9;
+      if (lVar9 < 0) {
+        lVar9 = 0;
       }
-      else if (0x3f < (int)lVar10) {
+      else if (0x3f < (int)lVar9) {
         local_60[3] = 0x3f;
         goto LAB_82814604;
       }
-      local_60[3] = (uint)lVar10;
+      local_60[3] = (int)lVar9;
     }
   }
 LAB_82814604:
-  if ((pVVar8->last_filter_type == pVVar8->filter_type) &&
-     (pVVar8->last_sharpness_level == pVVar8->sharpness_level)) {
-    if (FVar5 != pVVar8->last_frame_type) {
-      vp8_frame_init_loop_filter(plVar14,FVar5);
+  if ((param_1->last_filter_type == param_1->filter_type) &&
+     (param_1->last_sharpness_level == param_1->sharpness_level)) {
+    if (FVar5 != param_1->last_frame_type) {
+      vp8_frame_init_loop_filter(plVar7,FVar5);
     }
   }
   else {
-    vp8_init_loop_filter(pVVar8);
+    vp8_init_loop_filter(param_1);
   }
-  iVar12 = 0;
-  puVar15 = pYVar4->y_buffer;
-  if (0 < pVVar8->mb_rows) {
+  iVar11 = 0;
+  puVar13 = pYVar4->y_buffer;
+  if (0 < param_1->mb_rows) {
     do {
-      iVar13 = 0;
-      if (0 < pVVar8->mb_cols) {
+      iVar12 = 0;
+      if (0 < param_1->mb_cols) {
         do {
           if (uVar1 == '\0') {
-            uVar11 = 0;
+            uVar10 = 0;
           }
           else {
-            uVar11 = (uint)(pMVar7->mode_info_context->mbmi).segment_id;
+            uVar10 = (uint)(param_2->mode_info_context->mbmi).segment_id;
           }
-          local_70[0] = local_60[uVar11];
-          vp8_adjust_mb_lf_value(pMVar7,(int *)local_70);
-          uVar11 = local_70[0];
+          local_70[0] = local_60[uVar10];
+          vp8_adjust_mb_lf_value(param_2,(int *)local_70);
+          uVar10 = local_70[0];
           if (local_70[0] != 0) {
-            if (0 < iVar13) {
-              (*pVVar8->lf_mbv)(puVar15,(uchar *)0x0,(uchar *)0x0,pYVar4->y_stride,0,
-                                plVar14 + local_70[0],0);
-            }
-            if ((pMVar7->mode_info_context->mbmi).dc_diff != '\0') {
-              (*pVVar8->lf_bv)(puVar15,(uchar *)0x0,(uchar *)0x0,pYVar4->y_stride,0,plVar14 + uVar11
-                               ,0);
-            }
             if (0 < iVar12) {
-              (*pVVar8->lf_mbh)(puVar15,(uchar *)0x0,(uchar *)0x0,pYVar4->y_stride,0,
-                                plVar14 + uVar11,0);
+              (*param_1->lf_mbv)(puVar13,(uchar *)0x0,(uchar *)0x0,pYVar4->y_stride,0,
+                                 plVar7 + local_70[0],0);
             }
-            if ((pMVar7->mode_info_context->mbmi).dc_diff != '\0') {
-              (*pVVar8->lf_bh)(puVar15,(uchar *)0x0,(uchar *)0x0,pYVar4->y_stride,0,plVar14 + uVar11
-                               ,0);
+            if ((param_2->mode_info_context->mbmi).dc_diff != '\0') {
+              (*param_1->lf_bv)(puVar13,(uchar *)0x0,(uchar *)0x0,pYVar4->y_stride,0,plVar7 + uVar10
+                                ,0);
+            }
+            if (0 < iVar11) {
+              (*param_1->lf_mbh)(puVar13,(uchar *)0x0,(uchar *)0x0,pYVar4->y_stride,0,
+                                 plVar7 + uVar10,0);
+            }
+            if ((param_2->mode_info_context->mbmi).dc_diff != '\0') {
+              (*param_1->lf_bh)(puVar13,(uchar *)0x0,(uchar *)0x0,pYVar4->y_stride,0,plVar7 + uVar10
+                                ,0);
             }
           }
-          iVar13 = iVar13 + 1;
-          puVar15 = puVar15 + 0x10;
-          pMVar7->mode_info_context = pMVar7->mode_info_context + 1;
-        } while (iVar13 < pVVar8->mb_cols);
+          iVar12 = iVar12 + 1;
+          puVar13 = puVar13 + 0x10;
+          param_2->mode_info_context = param_2->mode_info_context + 1;
+        } while (iVar12 < param_1->mb_cols);
       }
-      iVar13 = pYVar4->y_stride;
-      iVar12 = iVar12 + 1;
+      iVar12 = pYVar4->y_stride;
+      iVar11 = iVar11 + 1;
       iVar6 = pYVar4->y_width;
-      pMVar7->mode_info_context = pMVar7->mode_info_context + 1;
-      puVar15 = puVar15 + (iVar13 * 0x10 - iVar6);
-    } while (iVar12 < pVVar8->mb_rows);
+      param_2->mode_info_context = param_2->mode_info_context + 1;
+      puVar13 = puVar13 + (iVar12 * 0x10 - iVar6);
+    } while (iVar11 < param_1->mb_rows);
   }
-  __restgprlr_23();
   return;
 }
 
 
 // 82814800  vp8_loop_filter_partial_frame  (WebM_atvi_opt/vpx/vp8/common/loopfilter.c:518)
 
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
+
 void vp8_loop_filter_partial_frame
                (VP8Common *param_1,MACROBLOCKD *param_2,int param_3,int param_4,int param_5)
 
 {
-  char cVar1;
-  char cVar2;
-  YV12_BUFFER_CONFIG *pYVar3;
-  FRAME_TYPE FVar4;
-  int iVar5;
+  uchar uVar1;
+  uchar uVar2;
+  char cVar3;
+  YV12_BUFFER_CONFIG *pYVar4;
+  FRAME_TYPE FVar5;
   int iVar6;
-  VP8Common *pVVar7;
+  longlong lVar7;
   longlong lVar8;
-  longlong lVar9;
-  uint uVar10;
-  int iVar11;
-  loop_filter_info *plVar12;
-  uchar *puVar13;
+  uint uVar9;
+  int iVar10;
+  loop_filter_info *plVar11;
+  uchar *puVar12;
   uint local_70 [28];
   
   lVar8 = (longlong)param_3;
-  lVar9 = (longlong)(int)param_2;
-  pVVar7 = (VP8Common *)__savegprlr_22(param_1,lVar9,lVar8,param_4);
-  pYVar3 = pVVar7->frame_to_show;
-  FVar4 = pVVar7->frame_type;
-  plVar12 = pVVar7->lf_info;
-  iVar5 = pYVar3->y_width >> 4;
-  iVar6 = (int)lVar9;
-  cVar1 = *(char *)(iVar6 + 0x115c);
-  *(MODE_INFO **)(iVar6 + 0x1140) = pVVar7->mi + (pYVar3->y_height >> 5) * (iVar5 + 1);
-  uVar10 = pYVar3->y_height >> (param_5 + 4U & 0x3f);
-  if ((int)uVar10 < 1) {
-    uVar10 = 1;
+  pYVar4 = param_1->frame_to_show;
+  FVar5 = param_1->frame_type;
+  plVar11 = param_1->lf_info;
+  iVar6 = pYVar4->y_width >> 4;
+  uVar1 = param_2->segmentation_enabled;
+  param_2->mode_info_context = param_1->mi + (pYVar4->y_height >> 5) * (iVar6 + 1);
+  uVar9 = pYVar4->y_height >> (param_5 + 4U & 0x3f);
+  if ((int)uVar9 < 1) {
+    uVar9 = 1;
   }
-  if (cVar1 == '\0') {
-    local_70[0] = (uint)lVar8;
-    local_70[1] = local_70[0];
-    local_70[2] = local_70[0];
-    local_70[3] = local_70[0];
+  if (uVar1 == '\0') {
+    local_70[0] = param_3;
+    local_70[1] = param_3;
+    local_70[2] = param_3;
+    local_70[3] = param_3;
   }
   else {
-    cVar2 = *(char *)(iVar6 + 0x115f);
-    if (cVar2 == '\x01') {
-      local_70[0] = (int)*(char *)(iVar6 + 0x1167);
+    uVar2 = param_2->mb_segement_abs_delta;
+    cVar3 = param_2->segment_feature_data[1][0];
+    if (uVar2 == '\x01') {
+      local_70[0] = (int)cVar3;
     }
     else {
-      lVar9 = *(char *)(iVar6 + 0x1167) + lVar8;
-      if (lVar9 < 0) {
-        lVar9 = 0;
+      lVar7 = cVar3 + lVar8;
+      if (lVar7 < 0) {
+        lVar7 = 0;
       }
-      else if (0x3f < (int)lVar9) {
-        lVar9 = 0x3f;
+      else if (0x3f < (int)lVar7) {
+        lVar7 = 0x3f;
       }
-      local_70[0] = (uint)lVar9;
+      local_70[0] = (uint)lVar7;
     }
-    if (cVar2 == '\x01') {
-      local_70[1] = (int)*(char *)(iVar6 + 0x1168);
-    }
-    else {
-      lVar9 = *(char *)(iVar6 + 0x1168) + lVar8;
-      if (lVar9 < 0) {
-        lVar9 = 0;
-      }
-      else if (0x3f < (int)lVar9) {
-        lVar9 = 0x3f;
-      }
-      local_70[1] = (uint)lVar9;
-    }
-    if (cVar2 == '\x01') {
-      local_70[2] = (int)*(char *)(iVar6 + 0x1169);
+    cVar3 = param_2->segment_feature_data[1][1];
+    if (uVar2 == '\x01') {
+      local_70[1] = (int)cVar3;
     }
     else {
-      lVar9 = *(char *)(iVar6 + 0x1169) + lVar8;
-      if (lVar9 < 0) {
-        lVar9 = 0;
+      lVar7 = cVar3 + lVar8;
+      if (lVar7 < 0) {
+        lVar7 = 0;
       }
-      else if (0x3f < (int)lVar9) {
-        lVar9 = 0x3f;
+      else if (0x3f < (int)lVar7) {
+        lVar7 = 0x3f;
       }
-      local_70[2] = (uint)lVar9;
+      local_70[1] = (int)lVar7;
     }
-    if (cVar2 == '\x01') {
-      local_70[3] = (int)*(char *)(iVar6 + 0x116a);
+    cVar3 = param_2->segment_feature_data[1][2];
+    if (uVar2 == '\x01') {
+      local_70[2] = (int)cVar3;
     }
     else {
-      lVar8 = *(char *)(iVar6 + 0x116a) + lVar8;
+      lVar7 = cVar3 + lVar8;
+      if (lVar7 < 0) {
+        lVar7 = 0;
+      }
+      else if (0x3f < (int)lVar7) {
+        lVar7 = 0x3f;
+      }
+      local_70[2] = (int)lVar7;
+    }
+    cVar3 = param_2->segment_feature_data[1][3];
+    if (uVar2 == '\x01') {
+      local_70[3] = (int)cVar3;
+    }
+    else {
+      lVar8 = cVar3 + lVar8;
       if (lVar8 < 0) {
         lVar8 = 0;
       }
@@ -846,60 +798,59 @@ void vp8_loop_filter_partial_frame
         local_70[3] = 0x3f;
         goto LAB_82814980;
       }
-      local_70[3] = (uint)lVar8;
+      local_70[3] = (int)lVar8;
     }
   }
 LAB_82814980:
-  if ((pVVar7->last_filter_type == pVVar7->filter_type) &&
-     (pVVar7->last_sharpness_level == pVVar7->sharpness_level)) {
-    if (FVar4 != pVVar7->last_frame_type) {
-      vp8_frame_init_loop_filter(plVar12,FVar4);
+  if ((param_1->last_filter_type == param_1->filter_type) &&
+     (param_1->last_sharpness_level == param_1->sharpness_level)) {
+    if (FVar5 != param_1->last_frame_type) {
+      vp8_frame_init_loop_filter(plVar11,FVar5);
     }
   }
   else {
-    vp8_init_loop_filter(pVVar7);
+    vp8_init_loop_filter(param_1);
   }
-  lVar9 = (longlong)((int)(uVar10 << 4 | uVar10 >> 0x1c) >> 4);
-  puVar13 = pYVar3->y_buffer + (pYVar3->y_height >> 5) * pYVar3->y_stride * 0x10;
-  if (0 < lVar9) {
+  lVar8 = (longlong)((int)(uVar9 << 4 | uVar9 >> 0x1c) >> 4);
+  puVar12 = pYVar4->y_buffer + (pYVar4->y_height >> 5) * pYVar4->y_stride * 0x10;
+  if (0 < lVar8) {
     do {
-      iVar11 = 0;
-      if (0 < iVar5) {
+      iVar10 = 0;
+      if (0 < iVar6) {
         do {
-          if (cVar1 == '\0') {
-            uVar10 = 0;
+          if (uVar1 == '\0') {
+            uVar9 = 0;
           }
           else {
-            uVar10 = (uint)*(byte *)(*(int *)(iVar6 + 0x1140) + 0x14);
+            uVar9 = (uint)(param_2->mode_info_context->mbmi).segment_id;
           }
-          uVar10 = local_70[uVar10];
-          if (uVar10 != 0) {
-            if (0 < iVar11) {
-              (*pVVar7->lf_mbv)(puVar13,(uchar *)0x0,(uchar *)0x0,pYVar3->y_stride,0,
-                                plVar12 + uVar10,0);
+          uVar9 = local_70[uVar9];
+          if (uVar9 != 0) {
+            if (0 < iVar10) {
+              (*param_1->lf_mbv)(puVar12,(uchar *)0x0,(uchar *)0x0,pYVar4->y_stride,0,
+                                 plVar11 + uVar9,0);
             }
-            if (*(char *)(*(int *)(iVar6 + 0x1140) + 0x12) != '\0') {
-              (*pVVar7->lf_bv)(puVar13,(uchar *)0x0,(uchar *)0x0,pYVar3->y_stride,0,plVar12 + uVar10
-                               ,0);
+            if ((param_2->mode_info_context->mbmi).dc_diff != '\0') {
+              (*param_1->lf_bv)(puVar12,(uchar *)0x0,(uchar *)0x0,pYVar4->y_stride,0,plVar11 + uVar9
+                                ,0);
             }
-            (*pVVar7->lf_mbh)(puVar13,(uchar *)0x0,(uchar *)0x0,pYVar3->y_stride,0,plVar12 + uVar10,
-                              0);
-            if (*(char *)(*(int *)(iVar6 + 0x1140) + 0x12) != '\0') {
-              (*pVVar7->lf_bh)(puVar13,(uchar *)0x0,(uchar *)0x0,pYVar3->y_stride,0,plVar12 + uVar10
-                               ,0);
+            (*param_1->lf_mbh)(puVar12,(uchar *)0x0,(uchar *)0x0,pYVar4->y_stride,0,plVar11 + uVar9,
+                               0);
+            if ((param_2->mode_info_context->mbmi).dc_diff != '\0') {
+              (*param_1->lf_bh)(puVar12,(uchar *)0x0,(uchar *)0x0,pYVar4->y_stride,0,plVar11 + uVar9
+                                ,0);
             }
           }
-          iVar11 = iVar11 + 1;
-          puVar13 = puVar13 + 0x10;
-          *(int *)(iVar6 + 0x1140) = *(int *)(iVar6 + 0x1140) + 0x98;
-        } while (iVar11 < iVar5);
+          iVar10 = iVar10 + 1;
+          puVar12 = puVar12 + 0x10;
+          param_2->mode_info_context = param_2->mode_info_context + 1;
+        } while (iVar10 < iVar6);
       }
-      lVar9 = lVar9 + -1;
-      puVar13 = puVar13 + (pYVar3->y_stride * 0x10 - pYVar3->y_width);
-      *(int *)(iVar6 + 0x1140) = *(int *)(iVar6 + 0x1140) + 0x98;
-    } while (lVar9 != 0);
+      lVar8 = lVar8 + -1;
+      puVar12 = puVar12 + (pYVar4->y_stride * 0x10 - pYVar4->y_width);
+      param_2->mode_info_context = param_2->mode_info_context + 1;
+    } while (lVar8 != 0);
   }
-  __restgprlr_22();
   return;
 }
 

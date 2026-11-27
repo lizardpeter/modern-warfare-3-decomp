@@ -2,39 +2,37 @@
 
 // 8276AF18  AssertUninitializedRenderTarget  (gfx_d3d/r_rendertarget.cpp:195)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 
 void AssertUninitializedRenderTarget(GfxRenderTarget *param_1)
 
 {
-  int *piVar1;
-  
-  piVar1 = (int *)__savegprlr_29(param_1);
-  if (piVar1 == (int *)0x0) {
+  if (param_1 == (GfxRenderTarget *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendertarget.cpp",
                     0xc4,0,"%s");
   }
-  if (*piVar1 != 0) {
+  if (param_1->image != (GfxImage *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendertarget.cpp",
                     0xc5,0,"%s");
   }
-  if (piVar1[1] != 0) {
+  if ((param_1->surface).color != (D3DSurface *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendertarget.cpp",
                     199,0,"%s");
   }
-  if (piVar1[2] != 0) {
+  if ((param_1->surface).depthStencil != (D3DSurface *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendertarget.cpp",
                     200,0,"%s");
   }
-  if (piVar1[3] != 0) {
+  if (param_1->width != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendertarget.cpp",
                     0xca,0,"%s");
   }
-  if (piVar1[4] != 0) {
+  if (param_1->height != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendertarget.cpp",
                     0xcb,0,"%s");
   }
-  __restgprlr_29();
   return;
 }
 
@@ -97,77 +95,72 @@ _D3DFORMAT R_GetDepthStencilFormat(_D3DFORMAT param_1)
 
 // 8276B040  R_GetFullScreenRes  (gfx_d3d/r_rendertarget.cpp:571)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void R_GetFullScreenRes(FullscreenType param_1,int *param_2,int *param_3)
 
 {
   uint uVar1;
-  int iVar2;
   
-  iVar2 = __savegprlr_29(param_1);
   uVar1 = vidConfig.displayWidth;
-  if (((iVar2 != 0) && (uVar1 = vidConfig.sceneWidth, iVar2 != 1)) && (iVar2 != 2)) {
+  if (((param_1 != FULLSCREEN_DISPLAY) &&
+      (uVar1 = vidConfig.sceneWidth, param_1 != FULLSCREEN_MIXED)) && (param_1 != FULLSCREEN_SCENE))
+  {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendertarget.cpp",
                     599,0,"%s\n\t(screenType) = %i");
     uVar1 = vidConfig.sceneWidth;
   }
   *param_2 = uVar1;
-  if (iVar2 != 2) {
+  if (param_1 != FULLSCREEN_SCENE) {
     *param_3 = vidConfig.displayHeight;
-    __restgprlr_29();
     return;
   }
   *param_3 = vidConfig.sceneHeight;
-  __restgprlr_29();
   return;
 }
 
 
 // 8276B0E0  R_ShareRenderTarget  (gfx_d3d/r_rendertarget.cpp:607)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 
 void R_ShareRenderTarget(GfxRenderTargetId param_1,GfxRenderTargetId param_2)
 
 {
-  D3DResource *pDVar1;
-  int iVar2;
-  int iVar3;
-  ulong uVar4;
-  ulonglong uVar5;
-  undefined4 *puVar6;
-  longlong lVar7;
-  longlong lVar8;
+  D3DSurface *pDVar1;
+  undefined4 *puVar2;
+  undefined4 *puVar3;
+  longlong lVar4;
   
-  uVar5 = (ulonglong)(int)param_2;
-  iVar3 = __savegprlr_28(param_1);
-  lVar7 = (uVar5 + (uVar5 & 0x3fffffff) * 4 & 0x3fffffff) * 4;
-  iVar2 = (int)lVar7;
-  AssertUninitializedRenderTarget((GfxRenderTarget *)((int)&gfxRenderTargets[0].image + iVar2));
-  lVar7 = lVar7 + -0x7b89df84;
-  lVar8 = 5;
-  puVar6 = (undefined4 *)(iVar3 * 0x14 + -0x7b89df84);
+  AssertUninitializedRenderTarget(gfxRenderTargets + param_2);
+  puVar2 = (undefined4 *)(param_2 * 0x14 + -0x7b89df84);
+  lVar4 = 5;
+  puVar3 = (undefined4 *)(param_1 * 0x14 + -0x7b89df84);
   do {
-    puVar6 = puVar6 + 1;
-    lVar7 = lVar7 + 4;
-    *(undefined4 *)lVar7 = *puVar6;
-    lVar8 = lVar8 + -1;
-  } while (lVar8 != 0);
-  pDVar1 = *(D3DResource **)((int)&gfxRenderTargets[0].surface.color + iVar2);
-  if (pDVar1 != (D3DResource *)0x0) {
-    D3DResource_AddRef(pDVar1);
+    puVar3 = puVar3 + 1;
+    puVar2 = puVar2 + 1;
+    *puVar2 = *puVar3;
+    lVar4 = lVar4 + -1;
+  } while (lVar4 != 0);
+  pDVar1 = gfxRenderTargets[param_2].surface.color;
+  if (pDVar1 != (D3DSurface *)0x0) {
+    D3DResource_AddRef((D3DResource *)pDVar1);
   }
-  pDVar1 = *(D3DResource **)((int)&gfxRenderTargets[0].surface.depthStencil + iVar2);
-  uVar4 = 0;
-  if (pDVar1 != (D3DResource *)0x0) {
-    uVar4 = D3DResource_AddRef(pDVar1);
+  pDVar1 = gfxRenderTargets[param_2].surface.depthStencil;
+  if (pDVar1 != (D3DSurface *)0x0) {
+    D3DResource_AddRef((D3DResource *)pDVar1);
   }
-  __restgprlr_28(uVar4);
   return;
 }
 
 
 // 8276B170  R_AssignDepthStencilSurfaceByBase  (gfx_d3d/r_rendertarget.cpp:626)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 
 D3DSurface *
@@ -175,70 +168,65 @@ R_AssignDepthStencilSurfaceByBase
           (FullscreenType param_1,ushort param_2,ushort param_3,ulong param_4,ulong param_5)
 
 {
-  uint uVar1;
-  D3DSurface *pDVar2;
-  uint uVar3;
-  uint uVar4;
+  D3DSurface *pDVar1;
+  uint uVar2;
   _D3DSURFACE_PARAMETERS local_50 [5];
   
   local_50[0].Base = (ulong)(short)param_3;
-  uVar4 = (uint)(short)param_2;
-  local_50[0].HierarchicalZBase = param_4;
-  uVar1 = __savegprlr_26(param_1);
   local_50[0].ColorExpBias = 0;
   local_50[0].HiZFunc = D3DHIZFUNC_DEFAULT;
+  local_50[0].HierarchicalZBase = param_4;
   do {
-    pDVar2 = D3DDevice_CreateSurface
-                       (uVar1 & 0xffff,uVar4 & 0xffff,dx.depthStencilFormat,D3DMULTISAMPLE_NONE,
+    pDVar1 = D3DDevice_CreateSurface
+                       (param_1 & 0xffff,(uint)param_2,dx.depthStencilFormat,D3DMULTISAMPLE_NONE,
                         local_50);
-    uVar3 = -(uint)(pDVar2 == (D3DSurface *)0x0) & 0x8007000e;
+    uVar2 = -(uint)(pDVar1 == (D3DSurface *)0x0) & 0x8007000e;
   } while (alwaysfails != 0);
-  if ((int)uVar3 < 0) {
-    R_ErrorDescription(uVar3);
+  if ((int)uVar2 < 0) {
+    R_ErrorDescription(uVar2);
     Com_Error(ERR_FATAL,"Couldn\'t create a %i x %i depth-stencil surface: %s\n");
   }
-  if (pDVar2 == (D3DSurface *)0x0) {
+  if (pDVar1 == (D3DSurface *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendertarget.cpp",
                     0x280,0,"%s");
   }
-  pDVar2 = (D3DSurface *)__restgprlr_26(pDVar2);
-  return pDVar2;
+  return pDVar1;
 }
 
 
 // 8276B240  R_AssignSingleSampleDepthStencilSurface  (gfx_d3d/r_rendertarget.cpp:649)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 
 D3DSurface * R_AssignSingleSampleDepthStencilSurface(FullscreenType param_1)
 
 {
   _D3DFORMAT _Var1;
-  FullscreenType FVar3;
-  D3DSurface *pDVar4;
   ulonglong uVar2;
-  int iVar5;
-  uint uVar6;
+  D3DSurface *pDVar3;
+  int iVar4;
+  uint uVar5;
   ulong local_50;
   ulong local_4c [3];
   _D3DSURFACE_PARAMETERS local_40 [4];
   
-  FVar3 = __savegprlr_27(param_1);
   if ((dx.singleSampleDepthStencilSurface == (D3DSurface *)0x0) &&
      ((dx.multiSampleType != D3DMULTISAMPLE_NONE ||
       (dx.singleSampleDepthStencilSurface = gfxRenderTargets[1].surface.depthStencil,
       gfxRenderTargets[1].surface.depthStencil == (D3DSurface *)0x0)))) {
-    R_GetFullScreenRes(FVar3,(int *)&local_50,(int *)local_4c);
-    iVar5 = 4;
+    R_GetFullScreenRes(param_1,(int *)&local_50,(int *)local_4c);
+    iVar4 = 4;
     _Var1 = dx.depthStencilFormat & 0x3f;
-    uVar6 = local_4c[0] + 0xf >> 4;
+    uVar5 = local_4c[0] + 0xf >> 4;
     if ((_Var1 == 0x15) || ((_Var1 == 0x20 || (_Var1 == 0x25)))) {
-      iVar5 = 8;
+      iVar4 = 8;
     }
     local_40[0].Base =
-         0x800 - (int)(((longlong)(int)(uVar6 * 0x10 * ((local_50 + 0x4f) / 0x50) * 0x50) *
-                        (longlong)iVar5 & 0xffffffffU) / 0x1400);
-    local_40[0].HierarchicalZBase = 0xe10 - ((local_50 + 0x1f >> 5) * uVar6 & 0x7fffff);
+         0x800 - (int)(((longlong)(int)(uVar5 * 0x10 * ((local_50 + 0x4f) / 0x50) * 0x50) *
+                        (longlong)iVar4 & 0xffffffffU) / 0x1400);
+    local_40[0].HierarchicalZBase = 0xe10 - ((local_50 + 0x1f >> 5) * uVar5 & 0x7fffff);
     local_40[0].ColorExpBias = 0;
     local_40[0].HiZFunc = D3DHIZFUNC_DEFAULT;
     do {
@@ -246,24 +234,23 @@ D3DSurface * R_AssignSingleSampleDepthStencilSurface(FullscreenType param_1)
            D3DDevice_CreateSurface
                      (local_50,local_4c[0],dx.depthStencilFormat,D3DMULTISAMPLE_NONE,local_40);
       uVar2 = (ulonglong)(int)dx.singleSampleDepthStencilSurface;
-      uVar6 = -(uint)(uVar2 == 0) & 0x8007000e;
+      uVar5 = -(uint)(uVar2 == 0) & 0x8007000e;
     } while (alwaysfails != 0);
-    if ((int)uVar6 < 0) {
-      R_ErrorDescription(uVar6);
+    if ((int)uVar5 < 0) {
+      R_ErrorDescription(uVar5);
       Com_Error(ERR_FATAL,"Couldn\'t create a %i x %i depth-stencil surface: %s\n");
       uVar2 = ZEXT48(dx.singleSampleDepthStencilSurface);
     }
+    pDVar3 = (D3DSurface *)uVar2;
     if ((uVar2 & 0xffffffff) == 0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendertarget.cpp",
                       0x2ac,0,"%s");
-      uVar2 = ZEXT48(dx.singleSampleDepthStencilSurface);
+      pDVar3 = dx.singleSampleDepthStencilSurface;
     }
-    pDVar4 = (D3DSurface *)__restgprlr_27(uVar2);
-    return pDVar4;
+    return pDVar3;
   }
   D3DResource_AddRef((D3DResource *)dx.singleSampleDepthStencilSurface);
-  pDVar4 = (D3DSurface *)__restgprlr_27(dx.singleSampleDepthStencilSurface);
-  return pDVar4;
+  return dx.singleSampleDepthStencilSurface;
 }
 
 
@@ -284,6 +271,8 @@ void R_AssignImageToRenderTargetColor(GfxRenderTargetSurface *param_1,GfxImage *
 
 // 8276B418  R_InitRenderTargetImage  (gfx_d3d/r_rendertarget.cpp:836)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 
 void R_InitRenderTargetImage
@@ -292,50 +281,43 @@ void R_InitRenderTargetImage
 
 {
   uint uVar1;
-  int iVar2;
-  GfxImage *pGVar3;
-  D3DSurface *pDVar4;
-  ulonglong uVar5;
-  ulonglong uVar6;
+  GfxImage *pGVar2;
+  D3DSurface *pDVar3;
   
-  uVar6 = (ulonglong)(short)param_3;
-  uVar5 = (ulonglong)(short)param_2;
-  iVar2 = __savegprlr_23(param_1);
   AssertUninitializedRenderTarget((GfxRenderTarget *)param_5);
-  if ((uVar5 & 0xffff) == 0) {
+  if (param_2 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendertarget.cpp",
                     0x348,0,"%s\n\t(width) = %i");
   }
-  if ((uVar6 & 0xffff) == 0) {
+  if (param_3 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendertarget.cpp",
                     0x349,0,"%s\n\t(height) = %i");
   }
-  uVar1 = (int)&((GfxRenderTarget *)(param_5 + 0x7b89df70))->height / 0x14;
+  uVar1 = (int)(param_5 + 0x7b89df80) / 0x14;
   if (0xe < uVar1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendertarget.cpp",
                     0x34c,0,
                     "renderTargetId doesn\'t index R_RENDERTARGET_COUNT\n\t%i not in [0, %i)");
   }
-  pGVar3 = Image_AllocProg(iVar2,'\x06','\0');
-  ((GfxRenderTarget *)param_5)->image = pGVar3;
-  if (pGVar3 == (GfxImage *)0x0) {
+  pGVar2 = Image_AllocProg(param_1,'\x06','\0');
+  *(GfxImage **)param_5 = pGVar2;
+  if (pGVar2 == (GfxImage *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendertarget.cpp",
                     0x34f,1,"%s");
   }
-  Image_SetupRenderTarget
-            (((GfxRenderTarget *)param_5)->image,(ushort)uVar5,(ushort)uVar6,param_4,
-             s_renderTargetNames[uVar1]);
-  pDVar4 = Image_GetSurface(((GfxRenderTarget *)param_5)->image);
-  (((GfxRenderTarget *)param_5)->surface).color = pDVar4;
-  ((GfxRenderTarget *)param_5)->width = (uint)(uVar5 & 0xffff);
-  ((GfxRenderTarget *)param_5)->height = (uint)(uVar6 & 0xffff);
-  __restgprlr_23();
+  Image_SetupRenderTarget(*(GfxImage **)param_5,param_2,param_3,param_4,s_renderTargetNames[uVar1]);
+  pDVar3 = Image_GetSurface(*(GfxImage **)param_5);
+  *(D3DSurface **)(param_5 + RENDERTARGET_USAGE_RENDER_ADJACENT_DEPTH) = pDVar3;
+  *(uint *)(param_5 + 0xc) = (uint)param_2;
+  *(uint *)(param_5 + 0x10) = (uint)param_3;
   return;
 }
 
 
 // 8276B568  R_InitFullscreenRenderTargetImage  (gfx_d3d/r_rendertarget.cpp:877)
 
+/* WARNING: Function: __savegprlr_18 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_18 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 
 void R_InitFullscreenRenderTargetImage
@@ -346,72 +328,69 @@ void R_InitFullscreenRenderTargetImage
   ulonglong uVar1;
   uint uVar2;
   _D3DFORMAT _Var3;
-  int iVar4;
-  ulong uVar5;
-  D3DSurface *pDVar6;
-  GfxRenderTarget *pGVar7;
-  uint uVar8;
+  D3DSurface *pDVar4;
+  GfxRenderTarget *pGVar5;
+  uint uVar6;
+  int iVar7;
+  ulonglong uVar8;
   int iVar9;
-  ulonglong uVar10;
-  uint uVar11;
+  uint uVar10;
   int local_a0;
   int local_9c [3];
   _D3DSURFACE_PARAMETERS local_90 [9];
   
-  iVar4 = __savegprlr_18(param_1);
-  pGVar7 = param_6;
+  pGVar5 = param_6;
   R_GetFullScreenRes(param_2,&local_a0,local_9c);
-  iVar9 = local_a0 >> (param_3 & 0x3fU);
-  uVar10 = (ulonglong)iVar9;
-  if (iVar9 < 2) {
-    uVar10 = 1;
-  }
-  uVar1 = uVar10 & 0xffff;
-  uVar8 = local_9c[0] >> (param_3 & 0x3fU);
-  if ((int)uVar8 < 2) {
+  iVar7 = local_a0 >> (param_3 & 0x3fU);
+  uVar8 = (ulonglong)iVar7;
+  if (iVar7 < 2) {
     uVar8 = 1;
   }
-  uVar2 = uVar8 & 0xffff;
+  uVar1 = uVar8 & 0xffff;
+  uVar6 = local_9c[0] >> (param_3 & 0x3fU);
+  if ((int)uVar6 < 2) {
+    uVar6 = 1;
+  }
+  uVar2 = uVar6 & 0xffff;
   R_InitRenderTargetImage
-            (iVar4,(ushort)uVar10,(ushort)uVar8,param_4,(RenderTargetUsage)param_6,pGVar7);
+            (param_1,(ushort)uVar8,(ushort)uVar6,param_4,(RenderTargetUsage)param_6,pGVar5);
   if (param_5 == RENDERTARGET_USAGE_RENDER_SHARE_SCENE) {
     if (gfxRenderTargets[2].surface.depthStencil == (D3DSurface *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendertarget.cpp",
                       0x389,0,"%s");
     }
-    pDVar6 = gfxRenderTargets[2].surface.depthStencil;
+    pDVar4 = gfxRenderTargets[2].surface.depthStencil;
     (param_6->surface).depthStencil = gfxRenderTargets[2].surface.depthStencil;
-    D3DResource_AddRef((D3DResource *)pDVar6);
+    D3DResource_AddRef((D3DResource *)pDVar4);
     if (gfxRenderTargets[2].surface.color == (D3DSurface *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendertarget.cpp",
                       0x38d,0,"%s");
     }
-    pDVar6 = gfxRenderTargets[2].surface.color;
+    pDVar4 = gfxRenderTargets[2].surface.color;
     (param_6->surface).color = gfxRenderTargets[2].surface.color;
-    uVar5 = D3DResource_AddRef((D3DResource *)pDVar6);
-    __restgprlr_18(uVar5);
+    D3DResource_AddRef((D3DResource *)pDVar4);
     return;
   }
   if ((param_5 == RENDERTARGET_USAGE_RENDER) ||
      (param_5 == RENDERTARGET_USAGE_RENDER_ADJACENT_DEPTH)) {
     if (param_3 == 0) {
-      iVar9 = 4;
+      iVar7 = 4;
       _Var3 = dx.depthStencilFormat & 0x3f;
       if (((_Var3 == 0x15) || (_Var3 == 0x20)) || (_Var3 == 0x25)) {
-        iVar9 = 8;
+        iVar7 = 8;
       }
       _Var3 = param_4 & 0x3f;
-      iVar4 = 4;
+      iVar9 = 4;
       if (((_Var3 == 0x15) || (_Var3 == 0x20)) || (_Var3 == 0x25)) {
-        iVar4 = 8;
+        iVar9 = 8;
       }
       local_90[0].Base =
            (0x800 - (int)(((longlong)
                            (int)((local_9c[0] + 0xfU & 0xfffffff0) *
-                                ((local_a0 + 0x4fU) / 0x50) * 0x50) * (longlong)iVar9 & 0xffffffffU)
+                                ((local_a0 + 0x4fU) / 0x50) * 0x50) * (longlong)iVar7 & 0xffffffffU)
                          / 0x1400)) -
            (int)(((longlong)(int)((uVar2 + 0xf & 0xfffffff0) * (int)((uVar1 + 0x4f) / 0x50) * 0x50)
-                  * (longlong)iVar4 & 0xffffffffU) / 0x1400);
+                  * (longlong)iVar9 & 0xffffffffU) / 0x1400);
     }
     else {
       local_90[0].Base = 0;
@@ -420,12 +399,12 @@ void R_InitFullscreenRenderTargetImage
     local_90[0].ColorExpBias = 0;
     local_90[0].HiZFunc = D3DHIZFUNC_DEFAULT;
     do {
-      pDVar6 = D3DDevice_CreateSurface
+      pDVar4 = D3DDevice_CreateSurface
                          ((FullscreenType)uVar1,uVar2,param_4,D3DMULTISAMPLE_NONE,local_90);
-      (param_6->surface).color = pDVar6;
-      uVar11 = -(uint)(pDVar6 == (D3DSurface *)0x0) & 0x8007000e;
-      if ((int)uVar11 < 0) {
-        R_ErrorDescription(uVar11);
+      (param_6->surface).color = pDVar4;
+      uVar10 = -(uint)(pDVar4 == (D3DSurface *)0x0) & 0x8007000e;
+      if ((int)uVar10 < 0) {
+        R_ErrorDescription(uVar10);
                     /* WARNING: Subroutine does not return */
         Sys_Error(
                  "c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendertarget.cpp (%i) dx.device->CreateRenderTarget( width, height, format, D3DMULTISAMPLE_NONE, 0, 0, &renderTarget->surface.color, &surfaceParameters ) failed: %s\n"
@@ -437,9 +416,8 @@ void R_InitFullscreenRenderTargetImage
                       0x3a4,1,"%s");
     }
     if (param_5 != RENDERTARGET_USAGE_RENDER_ADJACENT_DEPTH) {
-      pDVar6 = R_AssignSingleSampleDepthStencilSurface(param_2);
-      (param_6->surface).depthStencil = pDVar6;
-      __restgprlr_18();
+      pDVar4 = R_AssignSingleSampleDepthStencilSurface(param_2);
+      (param_6->surface).depthStencil = pDVar4;
       return;
     }
     if (param_3 == 0) {
@@ -447,71 +425,66 @@ void R_InitFullscreenRenderTargetImage
                       0x3ab,0,"%s");
     }
     _Var3 = param_4 & 0x3f;
-    iVar9 = 4;
+    iVar7 = 4;
     if (((_Var3 == 0x15) || (_Var3 == 0x20)) || (_Var3 == 0x25)) {
-      iVar9 = 8;
+      iVar7 = 8;
     }
-    pDVar6 = R_AssignDepthStencilSurfaceByBase
-                       ((FullscreenType)uVar1,(ushort)uVar8,
+    pDVar4 = R_AssignDepthStencilSurfaceByBase
+                       ((FullscreenType)uVar1,(ushort)uVar6,
                         (ushort)(((longlong)
                                   (int)((uVar2 + 0xf & 0xfffffff0) *
-                                       (int)((uVar1 + 0x4f) / 0x50) * 0x50) * (longlong)iVar9 &
+                                       (int)((uVar1 + 0x4f) / 0x50) * 0x50) * (longlong)iVar7 &
                                  0xffffffffU) / 0x1400),0,uVar2 + 0xf);
-    (param_6->surface).depthStencil = pDVar6;
+    (param_6->surface).depthStencil = pDVar4;
   }
-  __restgprlr_18();
   return;
 }
 
 
 // 8276B8D0  R_InitShadowmapRenderTarget  (gfx_d3d/r_rendertarget.cpp:957)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 
 void R_InitShadowmapRenderTarget(int param_1,ushort param_2,ushort param_3,GfxRenderTarget *param_4)
 
 {
   GfxRenderTarget *pGVar1;
-  GfxRenderTarget *pGVar2;
-  int iVar3;
-  D3DSurface *pDVar4;
-  uint uVar5;
-  GfxRenderTarget *pGVar6;
-  uint uVar7;
+  D3DSurface *pDVar2;
+  GfxRenderTarget *pGVar3;
+  uint uVar4;
+  GfxRenderTarget *pGVar5;
   _D3DSURFACE_PARAMETERS local_60 [6];
   
-  uVar5 = (uint)(short)param_3;
-  uVar7 = (uint)(short)param_2;
-  iVar3 = __savegprlr_24(param_1);
   AssertUninitializedRenderTarget(param_4);
-  pGVar2 = (GfxRenderTarget *)(uVar7 & 0xffff);
-  uVar5 = (uVar5 & 0xffff) * (int)pGVar2;
-  pGVar1 = (GfxRenderTarget *)(uVar5 & 0xffff);
-  pGVar6 = (GfxRenderTarget *)0x0;
-  if (((uint)((int)&pGVar2[-1].height + 3U) & (uint)pGVar2) != 0) {
-    pGVar6 = pGVar2;
+  pGVar5 = (GfxRenderTarget *)(uint)param_2;
+  pGVar1 = (GfxRenderTarget *)((uint)param_3 * (int)pGVar5 & 0xffff);
+  pGVar3 = (GfxRenderTarget *)0x0;
+  if ((param_2 - 1 & param_2) != 0) {
+    pGVar3 = pGVar5;
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendertarget.cpp",
                     0x3d0,0,"%s\n\t(totalWidth) = %i");
   }
-  if (((uint)((int)&pGVar1[-1].height + 3U) & (uint)pGVar1) != 0) {
-    pGVar6 = pGVar1;
+  if (((uint)((int)&pGVar1[-1].height + 3) & (uint)pGVar1) != 0) {
+    pGVar3 = pGVar1;
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendertarget.cpp",
                     0x3d1,0,"%s\n\t(totalHeight) = %i");
   }
   R_InitRenderTargetImage
-            (iVar3,(ushort)uVar7,(ushort)uVar5,dx.depthStencilFormat,(RenderTargetUsage)param_4,
-             pGVar6);
+            (param_1,param_2,(ushort)((uint)param_3 * (int)pGVar5),dx.depthStencilFormat,
+             (RenderTargetUsage)param_4,pGVar3);
   local_60[0].Base = 0;
   local_60[0].HierarchicalZBase = 0;
   local_60[0].ColorExpBias = 0;
   local_60[0].HiZFunc = D3DHIZFUNC_DEFAULT;
   do {
-    pDVar4 = D3DDevice_CreateSurface
-                       ((ulong)pGVar2,(ulong)pGVar1,D3DFMT_A8R8G8B8,D3DMULTISAMPLE_NONE,local_60);
-    (param_4->surface).color = pDVar4;
-    uVar7 = -(uint)(pDVar4 == (D3DSurface *)0x0) & 0x8007000e;
-    if ((int)uVar7 < 0) {
-      R_ErrorDescription(uVar7);
+    pDVar2 = D3DDevice_CreateSurface
+                       ((ulong)pGVar5,(ulong)pGVar1,D3DFMT_A8R8G8B8,D3DMULTISAMPLE_NONE,local_60);
+    (param_4->surface).color = pDVar2;
+    uVar4 = -(uint)(pDVar2 == (D3DSurface *)0x0) & 0x8007000e;
+    if ((int)uVar4 < 0) {
+      R_ErrorDescription(uVar4);
                     /* WARNING: Subroutine does not return */
       Sys_Error(
                "c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendertarget.cpp (%i) dx.device->CreateRenderTarget( totalWidth, totalHeight, D3DFMT_A8R8G8B8, D3DMULTISAMPLE_NONE, 0, 0, &renderTarget->surface.color, &surfaceParameters ) failed: %s\n"
@@ -519,26 +492,27 @@ void R_InitShadowmapRenderTarget(int param_1,ushort param_2,ushort param_3,GfxRe
     }
   } while (alwaysfails != 0);
   do {
-    pDVar4 = D3DDevice_CreateSurface
-                       ((ulong)pGVar2,(ulong)pGVar2,dx.depthStencilFormat,D3DMULTISAMPLE_NONE,
+    pDVar2 = D3DDevice_CreateSurface
+                       ((ulong)pGVar5,(ulong)pGVar5,dx.depthStencilFormat,D3DMULTISAMPLE_NONE,
                         local_60);
-    (param_4->surface).depthStencil = pDVar4;
-    uVar7 = -(uint)(pDVar4 == (D3DSurface *)0x0) & 0x8007000e;
-    if ((int)uVar7 < 0) {
-      R_ErrorDescription(uVar7);
+    (param_4->surface).depthStencil = pDVar2;
+    uVar4 = -(uint)(pDVar2 == (D3DSurface *)0x0) & 0x8007000e;
+    if ((int)uVar4 < 0) {
+      R_ErrorDescription(uVar4);
                     /* WARNING: Subroutine does not return */
       Sys_Error(
                "c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendertarget.cpp (%i) dx.device->CreateDepthStencilSurface( tileRes, tileRes, dx.depthStencilFormat, D3DMULTISAMPLE_NONE, 0, 0, &renderTarget->surface.depthStencil, &surfaceParameters ) failed: %s\n"
                );
     }
   } while (alwaysfails != 0);
-  __restgprlr_24();
   return;
 }
 
 
 // 8276BAA0  R_InitFrameBufferRenderTarget_Xbox360  (gfx_d3d/r_rendertarget.cpp:1098)
 
+/* WARNING: Function: __savegprlr_20 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_20 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 
 void R_InitFrameBufferRenderTarget_Xbox360
@@ -547,143 +521,124 @@ void R_InitFrameBufferRenderTarget_Xbox360
 
 {
   _D3DFORMAT _Var1;
-  int iVar2;
-  D3DSurface *pDVar3;
-  ulong uVar4;
-  ulonglong uVar5;
-  ulong uVar6;
-  int iVar7;
-  ulong uVar8;
-  ulonglong uVar9;
-  ulong uVar11;
-  ulonglong uVar10;
-  uint uVar12;
+  D3DSurface *pDVar2;
+  int iVar3;
+  int iVar4;
+  int iVar5;
+  uint uVar6;
   _D3DSURFACE_PARAMETERS local_80 [8];
   
-  uVar5 = (ulonglong)param_3;
-  uVar10 = (ulonglong)param_2;
-  iVar2 = __savegprlr_20(param_1);
-  uVar4 = (ulong)uVar10;
-  *(ulong *)(iVar2 + 0xc) = uVar4;
-  uVar6 = (ulong)uVar5;
-  *(ulong *)(iVar2 + 0x10) = uVar6;
-  iVar7 = 4;
+  param_1->width = param_2;
+  param_1->height = param_3;
+  iVar3 = 4;
   _Var1 = dx.depthStencilFormat & 0x3f;
-  uVar8 = uVar6;
+  iVar4 = param_3;
   if (0 < (int)param_4) {
-    uVar8 = (ulong)((uVar5 & 0xffffffff) << 1);
+    iVar4 = param_3 << 1;
   }
-  uVar9 = uVar10;
+  iVar5 = param_2;
   if (param_4 == D3DMULTISAMPLE_4_SAMPLES) {
-    uVar9 = (uVar10 & 0x7fffffff) << 1;
+    iVar5 = param_2 << 1;
   }
   if (((_Var1 == 0x15) || (_Var1 == 0x20)) || (_Var1 == 0x25)) {
-    iVar7 = 8;
+    iVar3 = 8;
   }
   local_80[0].Base =
-       0x800 - (int)(((longlong)
-                      (int)((uVar8 + 0xf & 0xfffffff0) *
-                           (int)((uVar9 + 0x4f & 0xffffffff) / 0x50) * 0x50) * (longlong)iVar7 &
-                     0xffffffffU) / 0x1400);
-  uVar8 = uVar6;
+       0x800 - (int)(((longlong)(int)((iVar4 + 0xfU & 0xfffffff0) * ((iVar5 + 0x4fU) / 0x50) * 0x50)
+                      * (longlong)iVar3 & 0xffffffffU) / 0x1400);
+  iVar4 = param_3;
   if (0 < (int)param_4) {
-    uVar8 = (ulong)((uVar5 & 0x7fffffff) << 1);
+    iVar4 = param_3 << 1;
   }
-  uVar11 = uVar4;
+  iVar3 = param_2;
   if (param_4 == D3DMULTISAMPLE_4_SAMPLES) {
-    uVar11 = (ulong)((uVar10 & 0x7fffffff) << 1);
+    iVar3 = param_2 << 1;
   }
   local_80[0].ColorExpBias = 0;
   local_80[0].HiZFunc = D3DHIZFUNC_DEFAULT;
-  local_80[0].HierarchicalZBase = 0xe10 - ((uVar8 + 0xf >> 4) * (uVar11 + 0x1f >> 5) & 0x7fffff);
+  local_80[0].HierarchicalZBase = 0xe10 - ((iVar4 + 0xfU >> 4) * (iVar3 + 0x1fU >> 5) & 0x7fffff);
   do {
-    pDVar3 = D3DDevice_CreateSurface(uVar4,uVar6,dx.depthStencilFormat,param_4,local_80);
-    *(D3DSurface **)(iVar2 + 8) = pDVar3;
-    uVar12 = -(uint)(pDVar3 == (D3DSurface *)0x0) & 0x8007000e;
-    if ((int)uVar12 < 0) {
-      R_ErrorDescription(uVar12);
+    pDVar2 = D3DDevice_CreateSurface(param_2,param_3,dx.depthStencilFormat,param_4,local_80);
+    (param_1->surface).depthStencil = pDVar2;
+    uVar6 = -(uint)(pDVar2 == (D3DSurface *)0x0) & 0x8007000e;
+    if ((int)uVar6 < 0) {
+      R_ErrorDescription(uVar6);
                     /* WARNING: Subroutine does not return */
       Sys_Error(
                "c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendertarget.cpp (%i) dx.device->CreateDepthStencilSurface( width, height, dx.depthStencilFormat, multiSampleType, multiSampleQuality, 0, &renderTarget->surface.depthStencil, &surfaceParameters ) failed: %s\n"
                );
     }
   } while (alwaysfails != 0);
-  if (*(int *)(iVar2 + 8) == 0) {
+  if ((param_1->surface).depthStencil == (D3DSurface *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendertarget.cpp",
                     0x455,1,"%s");
   }
-  uVar8 = uVar6;
+  iVar4 = param_3;
   if (0 < (int)param_4) {
-    uVar8 = (ulong)((uVar5 & 0xffffffff) << 1);
+    iVar4 = param_3 << 1;
   }
+  iVar3 = param_2;
   if (param_4 == D3DMULTISAMPLE_4_SAMPLES) {
-    uVar10 = (uVar10 & 0x7fffffff) << 1;
+    iVar3 = param_2 << 1;
   }
   local_80[0].HierarchicalZBase = 0;
   local_80[0].ColorExpBias = 0;
   local_80[0].HiZFunc = D3DHIZFUNC_DEFAULT;
   local_80[0].Base =
        local_80[0].Base -
-       (int)((((longlong)(int)(uVar8 + 0xf & 0xfffffff0) *
-               (longlong)((int)((uVar10 + 0x4f & 0xffffffff) / 0x50) * 0x50) & 0x3fffffffU) << 2) /
-            0x1400);
+       (int)((((longlong)(int)(iVar4 + 0xfU & 0xfffffff0) *
+               (longlong)(int)(((iVar3 + 0x4fU) / 0x50) * 0x50) & 0x3fffffffU) << 2) / 0x1400);
   do {
-    pDVar3 = D3DDevice_CreateSurface(uVar4,uVar6,D3DFMT_A8R8G8B8,param_4,local_80);
-    *(D3DSurface **)(iVar2 + 4) = pDVar3;
-    uVar12 = -(uint)(pDVar3 == (D3DSurface *)0x0) & 0x8007000e;
-    if ((int)uVar12 < 0) {
-      R_ErrorDescription(uVar12);
+    pDVar2 = D3DDevice_CreateSurface(param_2,param_3,D3DFMT_A8R8G8B8,param_4,local_80);
+    (param_1->surface).color = pDVar2;
+    uVar6 = -(uint)(pDVar2 == (D3DSurface *)0x0) & 0x8007000e;
+    if ((int)uVar6 < 0) {
+      R_ErrorDescription(uVar6);
                     /* WARNING: Subroutine does not return */
       Sys_Error(
                "c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendertarget.cpp (%i) dx.device->CreateRenderTarget( width, height, D3DFMT_A8R8G8B8, multiSampleType, multiSampleQuality, 0, &renderTarget->surface.color, &surfaceParameters ) failed: %s\n"
                );
     }
   } while (alwaysfails != 0);
-  if (*(int *)(iVar2 + 4) == 0) {
+  if ((param_1->surface).color == (D3DSurface *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendertarget.cpp",
                     0x45c,1,"%s");
   }
-  __restgprlr_20();
   return;
 }
 
 
 // 8276BD48  R_ShareRenderTargetAsGamma  (gfx_d3d/r_rendertarget.cpp:1164)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 
 void R_ShareRenderTargetAsGamma(GfxRenderTargetId param_1,GfxRenderTargetId param_2,int param_3)
 
 {
-  GfxRenderTargetId GVar1;
-  GfxImage *pGVar2;
-  ulonglong uVar3;
+  GfxImage *pGVar1;
   
-  uVar3 = (ulonglong)(int)param_2;
-  GVar1 = __savegprlr_29(param_1);
-  R_ShareRenderTarget(GVar1,(GfxRenderTargetId)uVar3);
-  pGVar2 = Image_CopyProg(gfxRenderTargets[GVar1].image,param_3);
-  *(GfxImage **)
-   ((int)&gfxRenderTargets[0].image + (int)((uVar3 + (uVar3 & 0x3fffffff) * 4 & 0xffffffff) << 2)) =
-       pGVar2;
-  Image_SetSrgbTexture(pGVar2,true);
-  __restgprlr_29();
+  R_ShareRenderTarget(param_1,param_2);
+  pGVar1 = Image_CopyProg(gfxRenderTargets[param_1].image,param_3);
+  gfxRenderTargets[param_2].image = pGVar1;
+  Image_SetSrgbTexture(pGVar1,true);
   return;
 }
 
 
 // 8276BDA8  R_InitFrameBufferRenderTarget  (gfx_d3d/r_rendertarget.cpp:1174)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 
 _D3DFORMAT R_InitFrameBufferRenderTarget(void)
 
 {
-  _D3DFORMAT _Var1;
   ulong in_r7;
   
-  __savegprlr_28();
   R_InitFrameBufferRenderTarget_Xbox360
             (gfxRenderTargets + 1,vidConfig.displayWidth,vidConfig.displayHeight,D3DMULTISAMPLE_NONE
              ,in_r7);
@@ -712,13 +667,14 @@ _D3DFORMAT R_InitFrameBufferRenderTarget(void)
   ((gfxRenderTargets[3].surface.color)->field6_0x18)._s_0._u_4 =
        (D3DSurface_u_24_s_0_u_4)
        ((uint)((gfxRenderTargets[3].surface.color)->field6_0x18)._s_0._u_4 & 0xfff0ffff | 0x10000);
-  _Var1 = __restgprlr_28(0x18280186);
-  return _Var1;
+  return D3DFMT_A8R8G8B8;
 }
 
 
 // 8276BEE8  R_InitRenderTargets_Xbox360  (gfx_d3d/r_rendertarget.cpp:1398)
 
+/* WARNING: Function: __savegprlr_18 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_18 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
@@ -742,7 +698,6 @@ void R_InitRenderTargets_Xbox360(void)
   _D3DSURFACE_PARAMETERS local_a0;
   _D3DSURFACE_PARAMETERS local_90 [9];
   
-  __savegprlr_18();
   _Var2 = R_InitFrameBufferRenderTarget();
   if (g_allocateMinimalResources == false) {
     uVar9 = vidConfig.sceneWidth;
@@ -931,7 +886,6 @@ void R_InitRenderTargets_Xbox360(void)
     R_DrawBlankScreenOnStartup();
     PMem_FillInMemoryHoles();
   }
-  __restgprlr_18();
   return;
 }
 

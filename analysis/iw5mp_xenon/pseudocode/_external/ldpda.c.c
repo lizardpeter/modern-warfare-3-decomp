@@ -43,96 +43,93 @@ int FindBaseBand(float *param_1,int param_2)
 
 // 828C84F0  CalcMaskEnvelope  (<external>/Xenon/mar09/core/private/xam/codecs/nci/enc/src/ldpda.c:377)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void CalcMaskEnvelope(float *param_1,int param_2,float *param_3,int param_4)
 
 {
   float fVar1;
-  float *pfVar2;
-  undefined4 *puVar3;
-  uint uVar4;
-  int iVar5;
-  longlong lVar6;
-  float *pfVar7;
-  longlong lVar8;
-  ulonglong uVar9;
-  float *pfVar10;
-  int iVar11;
+  int iVar2;
+  float *pfVar3;
+  undefined4 *puVar4;
+  uint uVar5;
+  float *pfVar6;
+  ulonglong uVar7;
+  float *pfVar8;
+  int iVar9;
+  ulonglong uVar10;
+  float *pfVar11;
   ulonglong uVar12;
-  float *pfVar13;
-  ulonglong uVar14;
-  double dVar15;
-  double dVar16;
+  double dVar13;
+  double dVar14;
   float local_250 [68];
   float local_140 [80];
   
-  lVar8 = (longlong)param_4;
-  lVar6 = (longlong)(int)param_3;
-  iVar5 = __savegprlr_27(param_1);
-  iVar11 = param_2 + 1 >> 1;
-  uVar12 = (ulonglong)iVar11;
-  pfVar10 = local_250;
-  pfVar13 = local_140;
-  uVar9 = 0;
-  if (0 < (longlong)uVar12) {
-    pfVar7 = (float *)(iVar5 + -4);
-    uVar14 = uVar12;
+  iVar9 = param_2 + 1 >> 1;
+  uVar10 = (ulonglong)iVar9;
+  pfVar8 = local_250;
+  pfVar11 = local_140;
+  uVar7 = 0;
+  if (0 < (longlong)uVar10) {
+    pfVar6 = param_1 + -1;
+    uVar12 = uVar10;
     do {
-      pfVar2 = pfVar7 + 1;
-      pfVar7 = pfVar7 + 2;
-      fVar1 = *pfVar7;
-      *pfVar10 = *pfVar2;
-      pfVar10 = pfVar10 + 1;
-      *pfVar13 = fVar1;
-      pfVar13 = pfVar13 + 1;
-      uVar14 = uVar14 - 1;
-      uVar9 = uVar12;
-    } while (uVar14 != 0);
+      pfVar3 = pfVar6 + 1;
+      pfVar6 = pfVar6 + 2;
+      fVar1 = *pfVar6;
+      *pfVar8 = *pfVar3;
+      pfVar8 = pfVar8 + 1;
+      *pfVar11 = fVar1;
+      pfVar11 = pfVar11 + 1;
+      uVar12 = uVar12 - 1;
+      uVar7 = uVar10;
+    } while (uVar12 != 0);
   }
-  dVar16 = 0.0;
-  if (iVar11 << 1 != param_2 + 1) {
-    uVar12 = uVar9 & 0xffffffff;
-    *pfVar13 = 0.0;
-    pfVar13 = pfVar13 + 1;
-    uVar9 = uVar9 + 1;
-    *pfVar10 = *(float *)((int)(uVar12 << 3) + iVar5);
-    pfVar10 = pfVar10 + 1;
+  dVar14 = 0.0;
+  if (iVar9 << 1 != param_2 + 1) {
+    uVar10 = uVar7 & 0xffffffff;
+    *pfVar11 = 0.0;
+    pfVar11 = pfVar11 + 1;
+    uVar7 = uVar7 + 1;
+    *pfVar8 = *(float *)((int)(uVar10 << 3) + (int)param_1);
+    pfVar8 = pfVar8 + 1;
   }
-  uVar4 = (uint)((0x41 - uVar9 & 0x3fffffff) << 2);
-  (*memsetfunc)(pfVar10,0,uVar4);
-  (*memsetfunc)(pfVar13,0,uVar4);
+  uVar5 = (uint)((0x41 - uVar7 & 0x3fffffff) << 2);
+  (*memsetfunc)(pfVar8,0,uVar5);
+  (*memsetfunc)(pfVar11,0,uVar5);
   realFft(local_250,local_140,0x80);
-  dVar15 = (double)((64.0 / (float)(longlong)(int)lVar8) * 32768.0);
-  if (dVar15 <= dVar16) {
-    dVar15 = dVar15 - 0.5;
+  dVar13 = (double)((64.0 / (float)(longlong)param_4) * 32768.0);
+  if (dVar13 <= dVar14) {
+    dVar13 = dVar13 - 0.5;
   }
   else {
-    dVar15 = dVar15 + 0.5;
+    dVar13 = dVar13 + 0.5;
   }
-  uVar12 = lVar8 - 1;
-  uVar9 = 0;
-  if (0 < (longlong)uVar12) {
-    lVar8 = lVar6 + -4;
-    iVar11 = 0x4000;
-    uVar14 = uVar12;
+  uVar10 = (longlong)param_4 - 1;
+  uVar7 = 0;
+  if (0 < (longlong)uVar10) {
+    pfVar8 = param_3 + -1;
+    iVar9 = 0x4000;
+    uVar12 = uVar10;
     do {
-      iVar5 = iVar11 >> 0xf;
-      iVar11 = iVar11 + (int)dVar15;
-      lVar8 = lVar8 + 4;
-      *(float *)lVar8 = local_140[iVar5] * local_140[iVar5] + local_250[iVar5] * local_250[iVar5];
-      uVar14 = uVar14 - 1;
-      uVar9 = uVar12;
-    } while (uVar14 != 0);
+      iVar2 = iVar9 >> 0xf;
+      iVar9 = iVar9 + (int)dVar13;
+      pfVar8 = pfVar8 + 1;
+      *pfVar8 = local_140[iVar2] * local_140[iVar2] + local_250[iVar2] * local_250[iVar2];
+      uVar12 = uVar12 - 1;
+      uVar7 = uVar10;
+    } while (uVar12 != 0);
   }
-  iVar11 = (int)dVar15 * (int)uVar9 + 0x4000 >> 0xf;
-  if (iVar11 < 0x40) {
-    *(float *)((int)((uVar9 & 0xffffffff) << 2) + (int)lVar6) =
-         local_140[iVar11] * local_140[iVar11] + local_250[iVar11] * local_250[iVar11];
+  iVar9 = (int)dVar13 * (int)uVar7 + 0x4000 >> 0xf;
+  if (iVar9 < 0x40) {
+    *(float *)((int)((uVar7 & 0xffffffff) << 2) + (int)param_3) =
+         local_140[iVar9] * local_140[iVar9] + local_250[iVar9] * local_250[iVar9];
   }
   else {
-    puVar3 = (undefined4 *)((int)((uVar9 & 0xffffffff) << 2) + (int)lVar6);
-    *puVar3 = puVar3[-1];
+    puVar4 = (undefined4 *)((int)((uVar7 & 0xffffffff) << 2) + (int)param_3);
+    *puVar4 = puVar4[-1];
   }
-  __restgprlr_27();
   return;
 }
 
@@ -200,19 +197,19 @@ void CalcRSbyPower(float *param_1,int param_2,float *param_3,int param_4)
 
 // 828C8828  SelectPeaks  (<external>/Xenon/mar09/core/private/xam/codecs/nci/enc/src/ldpda.c:567)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void SelectPeaks(float *param_1,int param_2,int *param_3,int *param_4,float param_5)
 
 {
   int iVar1;
-  float *pfVar2;
-  int *piVar4;
-  longlong lVar3;
-  longlong lVar5;
-  int iVar6;
-  int iVar7;
-  double extraout_f1;
-  double dVar8;
-  double dVar9;
+  int *piVar2;
+  int *piVar3;
+  int iVar4;
+  int iVar5;
+  double dVar6;
+  double dVar7;
   float local_210 [2];
   longlong local_208;
   float afStack_200 [8];
@@ -220,55 +217,55 @@ void SelectPeaks(float *param_1,int param_2,int *param_3,int *param_4,float para
   float afStack_1c0 [8];
   float afStack_1a0 [104];
   
-  lVar5 = (longlong)(int)param_3;
-  pfVar2 = (float *)__savegprlr_27((double)param_5,param_1);
-  piVar4 = (int *)lVar5;
-  dVar9 = extraout_f1;
-  PeakPick(pfVar2,0,0x57,0x2b,piVar4,param_4);
+  dVar6 = (double)param_5;
+  PeakPick(param_1,0,0x57,0x2b,param_3,param_4);
   local_208 = (longlong)param_2;
-  dVar8 = ceil((double)((float)local_208 * 0.058139537));
-  iVar7 = (int)dVar8;
-  local_208 = (longlong)iVar7;
-  if (7 < iVar7) {
-    iVar7 = 7;
+  dVar7 = ceil((double)((float)local_208 * 0.058139537));
+  iVar5 = (int)dVar7;
+  local_208 = (longlong)iVar5;
+  if (7 < iVar5) {
+    iVar5 = 7;
   }
-  CalcRSbyPower(pfVar2,param_2,local_1e0,iVar7);
+  CalcRSbyPower(param_1,param_2,local_1e0,iVar5);
   local_1e0[0] = local_1e0[0] * 1.000001;
-  NellyDurbin(local_1e0,iVar7,afStack_200,afStack_1c0,local_210);
-  BandExpand(afStack_200,afStack_200,iVar7,0.98);
-  CalcMaskEnvelope(afStack_200,iVar7,afStack_1a0,param_2);
-  iVar6 = 0;
-  iVar7 = 0;
+  NellyDurbin(local_1e0,iVar5,afStack_200,afStack_1c0,local_210);
+  BandExpand(afStack_200,afStack_200,iVar5,0.98);
+  CalcMaskEnvelope(afStack_200,iVar5,afStack_1a0,param_2);
+  iVar4 = 0;
+  iVar5 = 0;
   if (0 < *param_4) {
-    lVar3 = lVar5 + -4;
+    piVar2 = param_3 + -1;
+    piVar3 = param_3;
     do {
-      iVar1 = *(int *)lVar5;
-      if (((iVar1 < param_2) && (local_210[0] * 0.2 <= afStack_1a0[iVar1] * pfVar2[iVar1])) &&
-         ((float)(dVar9 * 0.0006553599960170686) < pfVar2[iVar1])) {
-        lVar3 = lVar3 + 4;
-        *(int *)lVar3 = iVar1;
-        iVar6 = iVar6 + 1;
+      iVar1 = *piVar3;
+      if (((iVar1 < param_2) && (local_210[0] * 0.2 <= afStack_1a0[iVar1] * param_1[iVar1])) &&
+         ((float)(dVar6 * 0.0006553599960170686) < param_1[iVar1])) {
+        piVar2 = piVar2 + 1;
+        *piVar2 = iVar1;
+        iVar4 = iVar4 + 1;
       }
-      iVar7 = iVar7 + 1;
-      lVar5 = lVar5 + 4;
-    } while (iVar7 < *param_4);
+      iVar5 = iVar5 + 1;
+      piVar3 = piVar3 + 1;
+    } while (iVar5 < *param_4);
   }
-  piVar4[iVar6] = 0x7fff;
-  (piVar4 + iVar6)[1] = 0x7fff;
-  piVar4[iVar6 + 2] = 0x7fff;
-  piVar4[iVar6 + 3] = 0x7fff;
-  *param_4 = iVar6;
-  __restgprlr_27();
+  param_3[iVar4] = 0x7fff;
+  (param_3 + iVar4)[1] = 0x7fff;
+  param_3[iVar4 + 2] = 0x7fff;
+  param_3[iVar4 + 3] = 0x7fff;
+  *param_4 = iVar4;
   return;
 }
 
 
 // 828C89D0  NellyLDPDA  (<external>/Xenon/mar09/core/private/xam/codecs/nci/enc/src/ldpda.c:701)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 float NellyLDPDA(float *param_1,float *param_2,void *param_3)
 
 {
-  float *pfVar1;
+  undefined4 uVar1;
   int iVar2;
   int iVar3;
   int *in_r9;
@@ -276,8 +273,7 @@ float NellyLDPDA(float *param_1,float *param_2,void *param_3)
   longlong lVar5;
   ulonglong uVar6;
   longlong lVar7;
-  double dVar8;
-  float fVar9;
+  float fVar8;
   uint local_2a0;
   float local_29c;
   float local_298 [3];
@@ -288,8 +284,7 @@ float NellyLDPDA(float *param_1,float *param_2,void *param_3)
   float afStack_260 [92];
   int aiStack_f0 [60];
   
-  pfVar1 = (float *)__savegprlr_27(param_1);
-  NellyMagSq(pfVar1,param_2,0x5c,afStack_260);
+  NellyMagSq(param_1,param_2,0x5c,afStack_260);
   FindMaxValueFlt(afStack_260,0x5c,(int *)&local_2a0,&local_29c);
   iVar2 = FindBaseBand(afStack_260,0x56);
   lVar7 = (longlong)iVar2;
@@ -318,9 +313,9 @@ float NellyLDPDA(float *param_1,float *param_2,void *param_3)
   uVar6 = (longlong)iVar3 - 1;
   uVar4 = uVar6;
   while (local_2a0 = (uint)uVar4, -1 < (longlong)uVar4) {
-    fVar9 = VoicingLD(*(float *)((int)afStack_284 + (int)((uVar4 & 0xffffffff) << 2) + 4),
-                      (float *)lVar7,pfVar1,(int)param_2);
-    local_298[local_2a0] = fVar9;
+    fVar8 = VoicingLD(*(float *)((int)afStack_284 + (int)((uVar4 & 0xffffffff) << 2) + 4),
+                      (float *)lVar7,param_1,(int)param_2);
+    local_298[local_2a0] = fVar8;
     uVar4 = (ulonglong)local_2a0 - 1;
   }
   uVar4 = 0;
@@ -335,11 +330,11 @@ float NellyLDPDA(float *param_1,float *param_2,void *param_3)
   uVar4 = uVar6;
 LAB_828c8bc4:
   iVar2 = (int)((uVar4 & 0xffffffff) << 2);
-  fVar9 = *(float *)((int)local_270 + iVar2);
-  *(float *)param_3 = *(float *)((int)afStack_284 + iVar2 + 4);
-  *(float *)((int)param_3 + 4) = fVar9;
-  dVar8 = (double)__restgprlr_27();
-  return (float)dVar8;
+  fVar8 = *(float *)((int)afStack_284 + iVar2 + 4);
+  uVar1 = *(undefined4 *)((int)local_270 + iVar2);
+  *(float *)param_3 = fVar8;
+  *(undefined4 *)((int)param_3 + 4) = uVar1;
+  return fVar8;
 }
 
 

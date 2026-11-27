@@ -55,6 +55,8 @@ void G_InitTurrets(void)
 
 // 824C39A8  G_FreeTurret  (game/turret.cpp:259)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
@@ -62,47 +64,46 @@ void G_FreeTurret(gentity_s *param_1)
 
 {
   Turret *pTVar1;
-  gentity_s *pgVar2;
   EntHandle *this;
-  int iVar3;
-  gentity_s *pgVar4;
+  int iVar2;
+  gentity_s *pgVar3;
   
-  pgVar2 = (gentity_s *)__savegprlr_27(param_1);
-  this = &(pgVar2->r).ownerNum;
-  iVar3 = EntHandle::isDefined(this);
-  if (iVar3 == 0) {
-    pgVar4 = g_entities + 0x7ff;
+  this = &(param_1->r).ownerNum;
+  iVar2 = EntHandle::isDefined(this);
+  if (iVar2 == 0) {
+    pgVar3 = g_entities + 0x7ff;
   }
   else {
-    pgVar4 = EntHandle::ent(this);
+    pgVar3 = EntHandle::ent(this);
   }
-  pTVar1 = pgVar2->turret;
+  pTVar1 = param_1->turret;
   if (pTVar1 == (Turret *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\turret.cpp",0x10a,0,"%s")
     ;
   }
-  if (pgVar4->client != (gclient_s *)0x0) {
-    G_ClientStopUsingTurret(pgVar2);
+  if (pgVar3->client != (gclient_s *)0x0) {
+    G_ClientStopUsingTurret(param_1);
   }
-  G_DeactivateTurret(pgVar2);
-  if (pgVar2->turret == (Turret *)0x0) {
+  G_DeactivateTurret(param_1);
+  if (param_1->turret == (Turret *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\turret.cpp",0xe36,0,"%s")
     ;
   }
-  pgVar2->turret = (Turret *)0x0;
-  (pgVar2->s).otherEntityNum = 0x7ff;
+  param_1->turret = (Turret *)0x0;
+  (param_1->s).otherEntityNum = 0x7ff;
   pTVar1->inuse = false;
   pTVar1->manualTargetOffset[0] = 0.0;
   pTVar1->manualTargetOffset[1] = 0.0;
   pTVar1->manualTargetOffset[2] = 0.0;
   Scr_FreeTurretFields(pTVar1);
-  __restgprlr_27();
   return;
 }
 
 
 // 824BD0E8  Turret_FillWeaponParms  (game/turret.cpp:290)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
@@ -111,9 +112,8 @@ void Turret_FillWeaponParms(gentity_s *param_1,gentity_s *param_2,weaponParms *p
 
 {
   float fVar1;
-  gentity_s *pgVar2;
-  int iVar3;
-  bool bVar4;
+  int iVar2;
+  bool bVar3;
   float local_110;
   float local_10c;
   undefined4 local_108;
@@ -138,17 +138,16 @@ void Turret_FillWeaponParms(gentity_s *param_1,gentity_s *param_2,weaponParms *p
   float afStack_90 [12];
   float afStack_60 [24];
   
-  pgVar2 = (gentity_s *)__savegprlr_27(param_1);
-  iVar3 = G_DObjGetWorldTagMatrix(pgVar2,(uint)scr_const.tag_aim,(float (*) [3])&local_c0);
-  if (iVar3 == 0) {
-    SL_ConvertToString((uint)pgVar2->classname);
+  iVar2 = G_DObjGetWorldTagMatrix(param_1,(uint)scr_const.tag_aim,(float (*) [3])&local_c0);
+  if (iVar2 == 0) {
+    SL_ConvertToString((uint)param_1->classname);
     SL_ConvertToStringSafe((uint)scr_const.tag_aim);
     Com_Error(ERR_DROP,"\x15Couldn\'t find tag \"%s\" on turret (entity %d, classname \'%s\').\n");
   }
   if (param_2->client != (gclient_s *)0x0) {
     G_GetPlayerViewOrigin(&param_2->client->ps,&local_100);
-    bVar4 = BG_IsThirdPersonMode(&param_2->client->ps);
-    if (bVar4) {
+    bVar3 = BG_IsThirdPersonMode(&param_2->client->ps);
+    if (bVar3) {
       local_110 = param_2->client->fGunPitch;
       local_10c = param_2->client->fGunYaw;
       local_108 = 0;
@@ -166,13 +165,12 @@ void Turret_FillWeaponParms(gentity_s *param_1,gentity_s *param_2,weaponParms *p
     param_3->muzzleTrace[0] = param_3->forward[0] * fVar1 + local_100;
     param_3->muzzleTrace[1] = fVar1 * param_3->forward[1] + local_fc;
     param_3->muzzleTrace[2] = param_3->forward[2] * fVar1 + local_f8;
-    __restgprlr_27();
     return;
   }
-  AnglesToAxis((pgVar2->r).currentAngles,(float (*) [3])afStack_60);
-  local_10c = (pgVar2->s).lerp.u.turret.gunAngles[1];
+  AnglesToAxis((param_1->r).currentAngles,(float (*) [3])afStack_60);
+  local_10c = (param_1->s).lerp.u.turret.gunAngles[1];
   local_108 = 0;
-  local_110 = (pgVar2->s).lerp.u.turret.gunAngles[0];
+  local_110 = (param_1->s).lerp.u.turret.gunAngles[0];
   AnglesToAxis(&local_110,(float (*) [3])afStack_90);
   MatrixMultiply((float (*) [3])afStack_90,(float (*) [3])afStack_60,(float (*) [3])&local_f0);
   param_3->forward[0] = local_f0;
@@ -190,7 +188,6 @@ void Turret_FillWeaponParms(gentity_s *param_1,gentity_s *param_2,weaponParms *p
   param_3->muzzleTrace[0] = local_9c;
   param_3->muzzleTrace[1] = local_98;
   param_3->muzzleTrace[2] = local_94;
-  __restgprlr_27();
   return;
 }
 
@@ -213,6 +210,8 @@ int Turret_GetRemainingConvergenceTime(Turret *param_1,int param_2)
 
 // 824BD388  Turret_GetTargetEyePosition  (game/turret.cpp:407)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
@@ -220,42 +219,36 @@ void Turret_GetTargetEyePosition(gentity_s *param_1,float *param_2)
 
 {
   float fVar1;
-  int iVar2;
-  ulonglong uVar3;
-  float *pfVar4;
   
-  uVar3 = (ulonglong)(int)param_2;
-  iVar2 = __savegprlr_28(param_1);
-  if (iVar2 == 0) {
+  if (param_1 == (gentity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\turret.cpp",0x198,0,"%s")
     ;
   }
-  if ((uVar3 & 0xffffffff) == 0) {
+  if (param_2 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\turret.cpp",0x199,0,"%s")
     ;
   }
-  if (*(int *)(iVar2 + 0x158) == 0) {
+  if (param_1->client == (gclient_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\turret.cpp",0x19c,0,"%s")
     ;
   }
-  pfVar4 = (float *)uVar3;
-  if (((*(playerState_s **)(iVar2 + 0x158))->eFlags & 0x3800U) != 0) {
-    *pfVar4 = *(float *)(iVar2 + 0x138);
-    pfVar4[1] = *(float *)(iVar2 + 0x13c);
-    fVar1 = *(float *)(iVar2 + 0x140);
-    pfVar4[2] = fVar1;
-    pfVar4[2] = *(float *)(*(int *)(iVar2 + 0x158) + 0x168) + fVar1;
-    __restgprlr_28();
+  if (((param_1->client->ps).eFlags & 0x3800U) != 0) {
+    *param_2 = (param_1->r).currentOrigin[0];
+    param_2[1] = (param_1->r).currentOrigin[1];
+    fVar1 = (param_1->r).currentOrigin[2];
+    param_2[2] = fVar1;
+    param_2[2] = (param_1->client->ps).viewHeightCurrent + fVar1;
     return;
   }
-  G_GetPlayerEyePosition(*(playerState_s **)(iVar2 + 0x158),pfVar4);
-  __restgprlr_28();
+  G_GetPlayerEyePosition(&param_1->client->ps,param_2);
   return;
 }
 
 
 // 824BD470  Turret_GetEnemyHeightOffset  (game/turret.cpp:436)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
@@ -263,72 +256,60 @@ void Turret_GetEnemyHeightOffset(gentity_s *param_1,gentity_s *param_2,float *pa
 
 {
   float fVar1;
-  gentity_s *pgVar2;
+  Turret *pTVar2;
   bool bVar3;
-  int iVar4;
-  ulonglong uVar5;
-  double dVar6;
-  double dVar7;
-  double dVar8;
-  double dVar9;
+  double dVar4;
   float local_50;
   float local_4c;
   float local_48;
   
-  uVar5 = (ulonglong)(int)param_2;
-  iVar4 = __savegprlr_27(param_1);
-  if (iVar4 == 0) {
+  if (param_1 == (gentity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\turret.cpp",0x1ba,0,"%s")
     ;
   }
-  if ((uVar5 & 0xffffffff) == 0) {
+  if (param_2 == (gentity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\turret.cpp",0x1bb,0,"%s")
     ;
   }
-  iVar4 = *(int *)(iVar4 + 0x15c);
-  if (iVar4 == 0) {
+  pTVar2 = param_1->turret;
+  if (pTVar2 == (Turret *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\turret.cpp",0x1be,0,"%s")
     ;
   }
-  fVar1 = *(float *)(iVar4 + 0x80);
-  dVar9 = 1.0;
-  pgVar2 = (gentity_s *)uVar5;
-  if ((1.0 <= fVar1) || (bVar3 = true, pgVar2->client == (gclient_s *)0x0)) {
+  fVar1 = pTVar2->convergenceHeightPercent;
+  dVar4 = 1.0;
+  if ((1.0 <= fVar1) || (bVar3 = true, param_2->client == (gclient_s *)0x0)) {
     bVar3 = false;
   }
-  if ((*(int *)(iVar4 + 0x3c) == 1) && (bVar3)) {
+  if (((uint)LZCOUNT(pTVar2->state + -1) >> 5 != 0) && (bVar3)) {
     if ((fVar1 < 0.0) || (1.0 < fVar1)) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\turret.cpp",0x1cb,0,
                       "turret->convergenceHeightPercent not in [0.f, 1.f]\n\t%g not in [%g, %g]");
     }
-    Turret_GetTargetEyePosition(pgVar2,&local_50);
-    local_50 = (pgVar2->r).currentOrigin[0] - local_50;
-    dVar8 = (double)local_50;
+    Turret_GetTargetEyePosition(param_2,&local_50);
+    local_50 = (param_2->r).currentOrigin[0] - local_50;
     *param_3 = local_50;
-    local_4c = (pgVar2->r).currentOrigin[1] - local_4c;
-    dVar7 = (double)local_4c;
+    local_4c = (param_2->r).currentOrigin[1] - local_4c;
     param_3[1] = local_4c;
-    local_48 = (pgVar2->r).currentOrigin[2] - local_48;
-    dVar6 = (double)local_48;
+    local_48 = (param_2->r).currentOrigin[2] - local_48;
     param_3[2] = local_48;
-    fVar1 = *(float *)(iVar4 + 0x80);
-    dVar9 = (double)(float)(dVar9 - (double)fVar1);
-    *param_3 = (float)(dVar8 * dVar9);
-    param_3[1] = (float)(dVar9 * dVar7);
-    param_3[2] = (float)(dVar6 * dVar9);
-    __restgprlr_27(dVar9,(double)fVar1,dVar8,dVar6,dVar7);
+    fVar1 = (float)(dVar4 - (double)pTVar2->convergenceHeightPercent);
+    *param_3 = local_50 * fVar1;
+    param_3[1] = fVar1 * local_4c;
+    param_3[2] = local_48 * fVar1;
     return;
   }
   *param_3 = 0.0;
   param_3[2] = 0.0;
   param_3[1] = 0.0;
-  __restgprlr_27();
   return;
 }
 
 
 // 824BD640  Turret_FireLead  (game/turret.cpp:477)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
@@ -337,78 +318,76 @@ void Turret_FireLead(gentity_s *param_1,gentity_s *param_2,bool param_3)
 
 {
   Turret *pTVar1;
-  gentity_s *pgVar2;
-  Weapon WVar3;
-  weapType_t wVar4;
-  int iVar5;
-  ulonglong uVar6;
-  weaponParms *pwVar7;
-  uint uVar8;
-  weaponParms *pwVar9;
-  uint uVar10;
-  gentity_s *pgVar11;
+  Weapon WVar2;
+  weapType_t wVar3;
+  weaponParms *pwVar4;
+  uint uVar5;
+  weaponParms *pwVar6;
+  uint uVar7;
+  gentity_s *pgVar8;
   weaponParms wStack_90;
   
-  uVar6 = (ulonglong)(int)param_2;
-  pgVar2 = (gentity_s *)__savegprlr_26(param_1,uVar6,param_3);
   Profile_Begin(0xe9);
-  if ((uVar6 & 0xffffffff) == 0) {
+  if (param_2 == (gentity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\turret.cpp",0x1e4,0,"%s")
     ;
   }
-  pgVar11 = (gentity_s *)uVar6;
-  if ((uVar6 & 0xffffffff) == 0x834b3400) {
-    pgVar11 = pgVar2;
+  pgVar8 = param_2;
+  if (param_2 == g_entities + 0x7ff) {
+    pgVar8 = param_1;
   }
-  Turret_FillWeaponParms(pgVar2,pgVar11,&wStack_90);
-  wStack_90.weapon = (pgVar2->s).weapon;
+  Turret_FillWeaponParms(param_1,pgVar8,&wStack_90);
+  wStack_90.weapon = (param_1->s).weapon;
   wStack_90.isAlternate = false;
-  WVar3 = BG_GetAlternateWeapon(wStack_90.weapon,false);
-  wStack_90.weapDef = bg_weaponDefs[WVar3.data & 0xff];
-  WVar3 = BG_GetAlternateWeapon((pgVar2->s).weapon,false);
-  pwVar9 = (weaponParms *)((WVar3.data & 0xff) * 4);
-  pTVar1 = pgVar2->turret;
-  wStack_90.weapCompleteDef = (WeaponCompleteDef *)pwVar9[-0x1a65941].muzzleTrace[0];
+  WVar2 = BG_GetAlternateWeapon(wStack_90.weapon,false);
+  wStack_90.weapDef = bg_weaponDefs[WVar2.data & 0xff];
+  WVar2 = BG_GetAlternateWeapon((param_1->s).weapon,false);
+  pwVar6 = (weaponParms *)((WVar2.data & 0xff) * 4);
+  pTVar1 = param_1->turret;
+  wStack_90.weapCompleteDef = (WeaponCompleteDef *)pwVar6[-0x1a65941].muzzleTrace[0];
   if (pTVar1 == (Turret *)0x0) {
-    pwVar9 = (weaponParms *)0x0;
+    pwVar6 = (weaponParms *)0x0;
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\turret.cpp",0x1f0,0,"%s")
     ;
   }
-  pwVar7 = (weaponParms *)(uint)wStack_90.isAlternate;
-  wVar4 = BG_GetWeaponType(wStack_90.weapon,wStack_90.isAlternate);
-  if (wVar4 == WEAPTYPE_BULLET) {
-    Bullet_Fire(pgVar11,pTVar1->playerSpread,pwVar7,(gentity_s *)&wStack_90,(PlayerHandIndex)pgVar2,
+  pwVar4 = (weaponParms *)(uint)wStack_90.isAlternate;
+  wVar3 = BG_GetWeaponType(wStack_90.weapon,wStack_90.isAlternate);
+  if (wVar3 == WEAPTYPE_BULLET) {
+    Bullet_Fire(pgVar8,pTVar1->playerSpread,pwVar4,(gentity_s *)&wStack_90,(PlayerHandIndex)param_1,
                 0);
   }
   else {
-    wVar4 = BG_GetWeaponType(wStack_90.weapon,wStack_90.isAlternate);
-    WVar3 = (pgVar2->s).weapon;
-    if (wVar4 == WEAPTYPE_GRENADE) {
-      Weapon_GrenadeLauncher_Fire(pgVar2,WVar3,&wStack_90);
+    wVar3 = BG_GetWeaponType(wStack_90.weapon,wStack_90.isAlternate);
+    WVar2 = (param_1->s).weapon;
+    if (wVar3 == WEAPTYPE_GRENADE) {
+      Weapon_GrenadeLauncher_Fire(param_1,WVar2,&wStack_90);
     }
     else {
       Weapon_RocketLauncher_Fire
-                (pgVar2,WVar3,0.0,pwVar9,wStack_90.forward,(missileFireParms *)vec3_origin,false);
+                (param_1,WVar2,0.0,pwVar6,wStack_90.forward,(missileFireParms *)vec3_origin,false);
     }
   }
-  if (((gentity_s *)uVar6)->client == (gclient_s *)0x0) {
-    uVar10 = 0;
-    uVar8 = 0x38;
+  if (param_2->client == (gclient_s *)0x0) {
+    uVar7 = 0;
+    uVar5 = 0x38;
   }
   else {
-    uVar10 = (pgVar11->s).number;
-    uVar8 = 0x37;
+    uVar7 = (pgVar8->s).number;
+    uVar5 = 0x37;
   }
-  G_AddEvent(pgVar2,uVar8,uVar10);
-  Scr_Notify(pgVar2,scr_const.turret_fire,0);
-  iVar5 = Profile_EndInternal((double *)0x0);
-  __restgprlr_26(iVar5);
+  G_AddEvent(param_1,uVar5,uVar7);
+  Scr_Notify(param_1,scr_const.turret_fire,0);
+  Profile_EndInternal((double *)0x0);
   return;
 }
 
 
 // 824BD808  Turret_ClientAim  (game/turret.cpp:605)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
@@ -416,114 +395,115 @@ void Turret_ClientAim(gentity_s *param_1,gentity_s *param_2)
 
 {
   float fVar1;
-  int iVar2;
-  int iVar3;
+  Turret *pTVar2;
+  gclient_s *pgVar3;
   float fVar4;
   float fVar5;
-  undefined4 *puVar6;
+  float fVar6;
+  EntHandle *this;
   int iVar7;
   gentity_s *pgVar8;
-  ulonglong uVar9;
+  double dVar9;
   double dVar10;
   double dVar11;
   double dVar12;
   double dVar13;
-  double dVar14;
   
-  uVar9 = (ulonglong)(int)param_2;
-  __savegprlr_25(param_1);
-  puVar6 = (undefined4 *)__savefpr_28();
-  if (puVar6 == (undefined4 *)0x0) {
+  if (param_1 == (gentity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\turret.cpp",0x261,0,"%s")
     ;
   }
-  if (puVar6[1] != 0xb) {
+  if ((param_1->s).eType != 0xb) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\turret.cpp",0x262,0,"%s")
     ;
   }
-  iVar2 = puVar6[0x57];
-  if (iVar2 == 0) {
+  pTVar2 = param_1->turret;
+  if (pTVar2 == (Turret *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\turret.cpp",0x265,0,"%s")
     ;
   }
-  if ((uVar9 & 0xffffffff) == 0) {
+  if (param_2 == (gentity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\turret.cpp",0x267,0,"%s")
     ;
   }
-  if (*(int *)((int)uVar9 + 0x158) == 0) {
+  if (param_2->client == (gclient_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\turret.cpp",0x268,0,"%s")
     ;
   }
-  iVar3 = *(int *)((int)uVar9 + 0x158);
-  if (*(char *)(puVar6 + 0x5b) == '\0') {
+  pgVar3 = param_2->client;
+  if (param_1->active == '\0') {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\turret.cpp",0x26c,0,"%s")
     ;
   }
-  iVar7 = EntHandle::isDefined((EntHandle *)(puVar6 + 0x54));
+  this = &(param_1->r).ownerNum;
+  iVar7 = EntHandle::isDefined(this);
   if (iVar7 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\turret.cpp",0x26d,0,"%s")
     ;
   }
-  pgVar8 = EntHandle::ent((EntHandle *)(puVar6 + 0x54));
-  if (ZEXT48(pgVar8) != (uVar9 & 0xffffffff)) {
+  pgVar8 = EntHandle::ent(this);
+  if (pgVar8 != param_2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\turret.cpp",0x26e,0,"%s")
     ;
   }
-  *(undefined4 *)(iVar3 + 0x1b8) = 1;
-  *(undefined4 *)(iVar3 + 0x1bc) = *puVar6;
-  dVar14 = 0.0027777778450399637;
-  dVar13 = 0.5;
-  if ((*(uint *)(iVar3 + 0xf8) & 0x2000) == 0) {
-    dVar11 = (double)((*(float *)(iVar3 + 0x158) - (float)puVar6[0x51]) * 0.0027777778);
-    dVar10 = floor((double)(float)(dVar11 + 0.5));
-    dVar12 = 360.0;
-    fVar5 = (float)(dVar11 - (double)(float)dVar10) * 360.0;
-    puVar6[0x15] = fVar5;
-    fVar1 = *(float *)(iVar2 + 0x14);
-    if (fVar5 - *(float *)(iVar2 + 0x14) < 0.0) {
-      fVar1 = fVar5;
+  fVar1 = (pgVar3->ps).viewangles[0];
+  (pgVar3->ps).viewlocked = PLAYERVIEWLOCK_FULL;
+  (pgVar3->ps).viewlocked_entNum = (param_1->s).number;
+  dVar13 = 0.0027777778450399637;
+  dVar12 = 0.5;
+  if (((pgVar3->ps).eFlags & 0x2000U) == 0) {
+    dVar10 = (double)((fVar1 - (param_1->r).currentAngles[0]) * 0.0027777778);
+    dVar9 = floor((double)(float)(dVar10 + 0.5));
+    fVar1 = (param_1->r).currentAngles[1];
+    dVar11 = 360.0;
+    fVar6 = (float)(dVar10 - (double)(float)dVar9) * 360.0;
+    (param_1->s).lerp.u.turret.gunAngles[0] = fVar6;
+    fVar4 = pTVar2->arcmax[0];
+    if (fVar6 - pTVar2->arcmax[0] < 0.0) {
+      fVar4 = fVar6;
     }
-    fVar4 = *(float *)(iVar2 + 0xc);
-    if (*(float *)(iVar2 + 0xc) - fVar5 < 0.0) {
+    fVar5 = pTVar2->arcmin[0];
+    if (pTVar2->arcmin[0] - fVar6 < 0.0) {
+      fVar5 = fVar4;
+    }
+    (param_1->s).lerp.u.turret.gunAngles[0] = fVar5;
+    dVar13 = (double)(float)((double)((pgVar3->ps).viewangles[1] - fVar1) * dVar13);
+    dVar12 = floor((double)(float)(dVar13 + dVar12));
+    fVar1 = (float)((double)(float)(dVar13 - (double)(float)dVar12) * dVar11);
+    (param_1->s).lerp.u.turret.gunAngles[1] = fVar1;
+    fVar4 = pTVar2->arcmax[1];
+    if (fVar1 - pTVar2->arcmax[1] < 0.0) {
       fVar4 = fVar1;
     }
-    puVar6[0x15] = fVar4;
-    dVar14 = (double)(float)((double)(*(float *)(iVar3 + 0x15c) - (float)puVar6[0x52]) * dVar14);
-    dVar13 = floor((double)(float)(dVar14 + dVar13));
-    fVar1 = (float)((double)(float)(dVar14 - (double)(float)dVar13) * dVar12);
-    puVar6[0x16] = fVar1;
-    fVar5 = *(float *)(iVar2 + 0x18);
-    if (fVar1 - *(float *)(iVar2 + 0x18) < 0.0) {
-      fVar5 = fVar1;
+    fVar6 = pTVar2->arcmin[1];
+    if (pTVar2->arcmin[1] - fVar1 < 0.0) {
+      fVar6 = fVar4;
     }
-    fVar4 = *(float *)(iVar2 + 0x10);
-    if (*(float *)(iVar2 + 0x10) - fVar1 < 0.0) {
-      fVar4 = fVar5;
-    }
-    puVar6[0x16] = fVar4;
+    (param_1->s).lerp.u.turret.gunAngles[1] = fVar6;
   }
   else {
-    dVar11 = (double)(*(float *)(iVar3 + 0x158) * 0.0027777778);
-    dVar10 = floor((double)(float)(dVar11 + 0.5));
-    dVar12 = 360.0;
-    puVar6[0x15] = (float)(dVar11 - (double)(float)dVar10) * 360.0;
-    dVar14 = (double)(float)((double)*(float *)(iVar3 + 0x15c) * dVar14);
-    dVar13 = floor((double)(float)(dVar14 + dVar13));
-    puVar6[0x16] = (float)((double)(float)(dVar14 - (double)(float)dVar13) * dVar12);
+    dVar10 = (double)(fVar1 * 0.0027777778);
+    dVar9 = floor((double)(float)(dVar10 + 0.5));
+    dVar11 = 360.0;
+    (param_1->s).lerp.u.turret.gunAngles[0] = (float)(dVar10 - (double)(float)dVar9) * 360.0;
+    dVar13 = (double)(float)((double)(pgVar3->ps).viewangles[1] * dVar13);
+    dVar12 = floor((double)(float)(dVar13 + dVar12));
+    (param_1->s).lerp.u.turret.gunAngles[1] =
+         (float)((double)(float)(dVar13 - (double)(float)dVar12) * dVar11);
   }
-  puVar6[0x17] = 0;
-  if ((*(uint *)(iVar2 + 4) & 1) != 0) {
-    *(uint *)(iVar2 + 4) = *(uint *)(iVar2 + 4) & 0xfffffffe;
-    puVar6[2] = puVar6[2] ^ 2;
+  (param_1->s).lerp.u.turret.gunAngles[2] = 0.0;
+  if ((pTVar2->flags & 1U) != 0) {
+    pTVar2->flags = pTVar2->flags & 0xfffffffe;
+    (param_1->s).lerp.eFlags = (param_1->s).lerp.eFlags ^ 2;
   }
-  __restfpr_28();
-  __restgprlr_25();
   return;
 }
 
 
 // 824BDAC8  Turret_CanShoot  (game/turret.cpp:654)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
@@ -531,88 +511,78 @@ void Turret_ClientAim(gentity_s *param_1,gentity_s *param_2)
 int Turret_CanShoot(gentity_s *param_1)
 
 {
-  int iVar1;
+  Turret *pTVar1;
   WeaponDef *pWVar2;
+  Weapon WVar3;
   int iVar4;
-  Weapon WVar5;
-  undefined8 uVar3;
   
-  iVar4 = __savegprlr_28(param_1);
-  if (iVar4 == 0) {
+  if (param_1 == (gentity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\turret.cpp",0x292,0,"%s")
     ;
   }
-  if (*(int *)(iVar4 + 0x15c) == 0) {
+  if (param_1->turret == (Turret *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\turret.cpp",0x293,0,"%s")
     ;
   }
-  iVar1 = *(int *)(iVar4 + 0x15c);
-  if ((*(uint *)(iVar1 + 4) & 2) == 0) {
-    WVar5 = BG_GetAlternateWeapon(*(Weapon *)(iVar4 + 200),false);
-    pWVar2 = bg_weaponDefs[WVar5.data & 0xff];
+  pTVar1 = param_1->turret;
+  if ((pTVar1->flags & 2U) == 0) {
+    WVar3 = BG_GetAlternateWeapon((param_1->s).weapon,false);
+    pWVar2 = bg_weaponDefs[WVar3.data & 0xff];
     if (pWVar2 == (WeaponDef *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\turret.cpp",0x29a,1,
                       "%s");
     }
-    if (*(int *)(iVar1 + 0xb0) <= level.time) {
-      if ((pWVar2->turretBarrelSpinEnabled == false) || (uVar3 = 0, 1.0 <= *(float *)(iVar1 + 0xb4))
-         ) {
-        uVar3 = 1;
+    if (pTVar1->heatPenaltyEndTime <= level.time) {
+      if ((pWVar2->turretBarrelSpinEnabled == false) || (iVar4 = 0, 1.0 <= pTVar1->barrelRollRate))
+      {
+        iVar4 = 1;
       }
-      iVar4 = __restgprlr_28(uVar3);
       return iVar4;
     }
   }
-  iVar4 = __restgprlr_28(0);
-  return iVar4;
+  return 0;
 }
 
 
 // 824BDBE0  Turret_Shoot_internal  (game/turret.cpp:686)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
 void Turret_Shoot_internal(gentity_s *param_1,gentity_s *param_2)
 
 {
-  gentity_s *pgVar1;
-  gentity_s *pgVar2;
-  int iVar3;
-  ulonglong uVar4;
-  bool bVar5;
+  int iVar1;
+  bool bVar2;
   int local_30;
   int aiStack_2c [11];
   
-  uVar4 = (ulonglong)(int)param_2;
-  pgVar2 = (gentity_s *)__savegprlr_28(param_1);
-  if (pgVar2 == (gentity_s *)0x0) {
+  if (param_1 == (gentity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\turret.cpp",0x2b2,0,"%s")
     ;
   }
-  if (pgVar2->turret == (Turret *)0x0) {
+  if (param_1->turret == (Turret *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\turret.cpp",0x2b3,0,"%s")
     ;
   }
-  if ((uVar4 & 0xffffffff) == 0) {
+  if (param_2 == (gentity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\turret.cpp",0x2b4,0,"%s")
     ;
   }
-  iVar3 = Turret_CanShoot(pgVar2);
-  if (iVar3 != 0) {
-    bVar5 = false;
-    BG_GetFireTime((pgVar2->s).weapon,false,false,&local_30,aiStack_2c);
-    pgVar2->turret->fireSndDelay = local_30 * 3;
-    pgVar1 = (gentity_s *)uVar4;
-    if (pgVar1->client != (gclient_s *)0x0) {
-      Turret_FireLead(pgVar2,pgVar1,bVar5);
-      (pgVar1->client->ps).viewlocked = PLAYERVIEWLOCK_WEAPONJITTER;
-      __restgprlr_28();
+  iVar1 = Turret_CanShoot(param_1);
+  if (iVar1 != 0) {
+    bVar2 = false;
+    BG_GetFireTime((param_1->s).weapon,false,false,&local_30,aiStack_2c);
+    param_1->turret->fireSndDelay = local_30 * 3;
+    if (param_2->client != (gclient_s *)0x0) {
+      Turret_FireLead(param_1,param_2,bVar2);
+      (param_2->client->ps).viewlocked = PLAYERVIEWLOCK_WEAPONJITTER;
       return;
     }
-    Turret_FireLead(pgVar2,pgVar1,bVar5);
+    Turret_FireLead(param_1,param_2,bVar2);
   }
-  __restgprlr_28();
   return;
 }
 
@@ -644,6 +614,10 @@ void Turret_Shoot(gentity_s *param_1)
 
 // 824BDD58  G_PlayerTurretPositionAndBlend  (game/turret.cpp:730)
 
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
@@ -665,24 +639,24 @@ void G_PlayerTurretPositionAndBlend(gentity_s *param_1,gentity_s *param_2)
   float fVar11;
   float fVar12;
   scr_animtree_t sVar13;
-  gentity_s *pgVar14;
-  DObjAnimMat *pDVar15;
-  DObj *pDVar16;
-  Weapon WVar17;
-  weapClass_t wVar18;
-  int iVar19;
-  uint uVar20;
-  int iVar21;
+  DObjAnimMat *pDVar14;
+  DObj *pDVar15;
+  Weapon WVar16;
+  weapClass_t wVar17;
+  int iVar18;
+  uint uVar19;
+  int iVar20;
+  uint uVar21;
   uint uVar22;
   uint uVar23;
-  uint uVar24;
-  float (*pafVar25) [3];
+  float (*pafVar24) [3];
+  float *pfVar25;
   float *pfVar26;
-  float *pfVar27;
-  ulonglong uVar28;
-  char *pcVar29;
-  uint uVar30;
-  int iVar31;
+  ulonglong uVar27;
+  char *pcVar28;
+  uint uVar29;
+  int iVar30;
+  double dVar31;
   double dVar32;
   double dVar33;
   double dVar34;
@@ -692,8 +666,7 @@ void G_PlayerTurretPositionAndBlend(gentity_s *param_1,gentity_s *param_2)
   double dVar38;
   double dVar39;
   double dVar40;
-  double dVar41;
-  float fVar42;
+  float fVar41;
   float local_268;
   float local_264;
   float local_260;
@@ -737,9 +710,7 @@ void G_PlayerTurretPositionAndBlend(gentity_s *param_1,gentity_s *param_2)
   float afStack_140 [12];
   trace_t local_110 [5];
   
-  __savegprlr();
-  pgVar14 = (gentity_s *)__savefpr_24();
-  uVar4 = (pgVar14->s).number;
+  uVar4 = (param_1->s).number;
   local_24c = "c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\turret.cpp";
   if (0x11 < uVar4) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\turret.cpp",0x304,0,
@@ -749,234 +720,236 @@ void G_PlayerTurretPositionAndBlend(gentity_s *param_1,gentity_s *param_2)
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\turret.cpp",0x306,0,"%s")
     ;
   }
-  if (((level_bgs.clientinfo[uVar4].legs.animationNumber == 0) ||
-      (paVar5 = level_bgs.clientinfo[uVar4].legs.animation, paVar5 == (animation_s *)0x0)) ||
-     ((paVar5->flags & 4U) == 0)) goto LAB_824be618;
-  pDVar15 = G_DObjGetLocalTagMatrix(param_2,(uint)scr_const.tag_weapon);
-  if (pDVar15 == (DObjAnimMat *)0x0) {
+  if (level_bgs.clientinfo[uVar4].legs.animationNumber == 0) {
+    return;
+  }
+  paVar5 = level_bgs.clientinfo[uVar4].legs.animation;
+  if (paVar5 == (animation_s *)0x0) {
+    return;
+  }
+  if ((paVar5->flags & 4U) == 0) {
+    return;
+  }
+  pDVar14 = G_DObjGetLocalTagMatrix(param_2,(uint)scr_const.tag_weapon);
+  if (pDVar14 == (DObjAnimMat *)0x0) {
     Com_PrintWarning(0x11,
                      "WARNING: aborting player positioning on turret since \'tag_weapon\' does not exist\n"
                     );
-    __restfpr_24();
-    __restgprlr();
     return;
   }
-  pDVar16 = Com_GetServerDObjForEnt(pgVar14);
-  if (pDVar16 == (DObj *)0x0) goto LAB_824be618;
+  pDVar15 = Com_GetServerDObjForEnt(param_1);
+  if (pDVar15 == (DObj *)0x0) {
+    return;
+  }
   if ((param_2->s).weapon._s_0.weaponIdx == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\turret.cpp",0x318,0,"%s")
     ;
   }
-  WVar17 = BG_GetAlternateWeapon((param_2->s).weapon,false);
-  pWVar8 = bg_weaponDefs[WVar17.data & 0xff];
-  wVar18 = BG_GetWeaponClass((param_2->s).weapon,false);
-  if (wVar18 != WEAPCLASS_TURRET) {
+  WVar16 = BG_GetAlternateWeapon((param_2->s).weapon,false);
+  pWVar8 = bg_weaponDefs[WVar16.data & 0xff];
+  wVar17 = BG_GetWeaponClass((param_2->s).weapon,false);
+  if (wVar17 != WEAPCLASS_TURRET) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\turret.cpp",0x31a,0,"%s")
     ;
   }
-  dVar40 = 0.0;
+  dVar39 = 0.0;
   if (pWVar8->fAnimHorRotateInc == 0.0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\turret.cpp",0x31b,0,"%s")
     ;
   }
   sVar13.anims = level_bgs.animScriptData.animTree.anims;
   pXVar6 = level_bgs.clientinfo[uVar4].pXAnimTree;
-  uVar28 = (ulonglong)(uint)pDVar15->quat[0] & 0x7f800000;
+  uVar27 = (ulonglong)(uint)pDVar14->quat[0] & 0x7f800000;
   uVar4 = level_bgs.clientinfo[uVar4].legs.animationNumber & 0xfffffdff;
-  if ((((int)uVar28 == 0x7f800000) || (((uint)pDVar15->quat[1] & 0x7f800000) == 0x7f800000)) ||
-     ((((uint)pDVar15->quat[2] & 0x7f800000) == 0x7f800000 ||
-      (((uint)pDVar15->quat[3] & 0x7f800000) == 0x7f800000)))) {
-    uVar28 = 0xffffffff820159f0;
+  if (((((int)uVar27 == 0x7f800000) || (((uint)pDVar14->quat[1] & 0x7f800000) == 0x7f800000)) ||
+      (((uint)pDVar14->quat[2] & 0x7f800000) == 0x7f800000)) ||
+     (((uint)pDVar14->quat[3] & 0x7f800000) == 0x7f800000)) {
+    uVar27 = 0xffffffff820159f0;
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\../xanim/xanim_public.h"
                     ,0x205,0,"%s");
   }
-  if (((uint)pDVar15->transWeight & 0x7f800000) == 0x7f800000) {
-    uVar28 = 0xffffffff820159d4;
+  if (((uint)pDVar14->transWeight & 0x7f800000) == 0x7f800000) {
+    uVar27 = 0xffffffff820159d4;
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\../xanim/xanim_public.h"
                     ,0x206,0,"%s");
   }
-  fVar42 = pDVar15->quat[2];
-  fVar1 = pDVar15->transWeight;
-  fVar2 = pDVar15->quat[1];
+  fVar41 = pDVar14->quat[2];
+  fVar1 = pDVar14->transWeight;
+  fVar2 = pDVar14->quat[1];
   fVar11 = fVar2 * fVar1;
-  fVar12 = pDVar15->quat[0] * fVar1;
-  fVar3 = pDVar15->quat[3];
-  dVar38 = 1.0;
-  fVar9 = fVar42 * fVar42 * fVar1;
-  fVar10 = pDVar15->quat[0] * fVar12;
-  local_1f4 = fVar3 * fVar42 * fVar1;
-  local_1ec = fVar42 * fVar11 + fVar3 * fVar12;
+  fVar12 = pDVar14->quat[0] * fVar1;
+  fVar3 = pDVar14->quat[3];
+  dVar37 = 1.0;
+  fVar9 = fVar41 * fVar41 * fVar1;
+  fVar10 = pDVar14->quat[0] * fVar12;
+  local_1f4 = fVar3 * fVar41 * fVar1;
+  local_1ec = fVar41 * fVar11 + fVar3 * fVar12;
   local_1fc = local_1f4 + fVar2 * fVar12;
-  local_1f8 = fVar42 * fVar12 - fVar3 * fVar11;
+  local_1f8 = fVar41 * fVar12 - fVar3 * fVar11;
   local_1f4 = fVar2 * fVar12 - local_1f4;
-  local_1e8 = fVar3 * fVar11 + fVar42 * fVar12;
-  local_1e4 = fVar42 * fVar11 - fVar3 * fVar12;
+  local_1e8 = fVar3 * fVar11 + fVar41 * fVar12;
+  local_1e4 = fVar41 * fVar11 - fVar3 * fVar12;
   local_200 = 1.0 - (fVar9 + fVar2 * fVar11);
   local_1f0 = 1.0 - (fVar9 + fVar10);
   local_1e0 = 1.0 - (fVar2 * fVar11 + fVar10);
-  fVar42 = vectosignedyaw(&local_200);
-  dVar41 = (double)fVar42;
+  fVar41 = vectosignedyaw(&local_200);
+  dVar40 = (double)fVar41;
   AnglesToAxis((param_2->r).currentAngles,(float (*) [3])afStack_1a0);
   local_178 = (param_2->r).currentOrigin[1];
   local_17c = (param_2->r).currentOrigin[0];
   local_174 = (param_2->r).currentOrigin[2];
-  dVar34 = (double)((local_180 * ((pgVar14->r).currentOrigin[2] - local_174) +
-                    local_188 * ((pgVar14->r).currentOrigin[0] - local_17c) +
-                    local_184 * ((pgVar14->r).currentOrigin[1] - local_178)) - pDVar15->trans[2]);
-  iVar19 = XAnimGetNumChildren(sVar13.anims,uVar4);
-  uVar23 = 0;
-  dVar32 = dVar40;
-  dVar39 = dVar40;
-  if (iVar19 == 0) {
+  dVar33 = (double)((local_180 * ((param_1->r).currentOrigin[2] - local_174) +
+                    local_188 * ((param_1->r).currentOrigin[0] - local_17c) +
+                    local_184 * ((param_1->r).currentOrigin[1] - local_178)) - pDVar14->trans[2]);
+  iVar18 = XAnimGetNumChildren(sVar13.anims,uVar4);
+  uVar22 = 0;
+  dVar31 = dVar39;
+  dVar38 = dVar39;
+  if (iVar18 == 0) {
     XAnimGetAnimDebugName(sVar13.anims,uVar4);
     Com_Error(ERR_DROP,"\x15Player anim \'%s\' has no children");
   }
-  iVar31 = 0;
-  dVar35 = 0.5;
-  uVar30 = 0;
+  iVar30 = 0;
+  dVar34 = 0.5;
+  uVar29 = 0;
   do {
-    uVar20 = XAnimGetChildAt(sVar13.anims,uVar4,(iVar19 - iVar31) - 1);
-    iVar21 = XAnimGetNumChildren(sVar13.anims,uVar20);
-    dVar36 = dVar40;
-    dVar37 = dVar32;
-    if (iVar21 == 0) {
-      XAnimGetAnimDebugName(sVar13.anims,uVar20);
+    uVar19 = XAnimGetChildAt(sVar13.anims,uVar4,(iVar18 - iVar30) - 1);
+    iVar20 = XAnimGetNumChildren(sVar13.anims,uVar19);
+    dVar35 = dVar39;
+    dVar36 = dVar31;
+    if (iVar20 == 0) {
+      XAnimGetAnimDebugName(sVar13.anims,uVar19);
       Com_Error(ERR_DROP,"\x15Player anim \'%s\' has no children");
-      dVar36 = dVar40;
-      dVar37 = dVar32;
+      dVar35 = dVar39;
+      dVar36 = dVar31;
     }
-    dVar33 = (double)(longlong)(iVar21 + -1);
-    dVar32 = (double)(float)(dVar33 * dVar35 +
-                            (double)(float)(dVar41 / (double)pWVar8->fAnimHorRotateInc));
-    dVar40 = dVar39;
-    if ((dVar39 <= dVar32) && (dVar40 = dVar32, dVar33 <= dVar32)) {
-      dVar40 = dVar33;
+    dVar32 = (double)(longlong)(iVar20 + -1);
+    dVar31 = (double)(float)(dVar32 * dVar34 +
+                            (double)(float)(dVar40 / (double)pWVar8->fAnimHorRotateInc));
+    dVar39 = dVar38;
+    if ((dVar38 <= dVar31) && (dVar39 = dVar31, dVar32 <= dVar31)) {
+      dVar39 = dVar32;
     }
-    uVar24 = (uint)dVar40;
-    local_220 = (longlong)(int)uVar24;
-    local_228 = (longlong)(int)uVar24;
-    dVar40 = (double)(float)(dVar40 - (double)local_228);
-    uVar22 = XAnimGetChildAt(sVar13.anims,uVar20,uVar24);
-    pfVar27 = &local_268;
-    pfVar26 = afStack_210;
-    XAnimGetAbsDelta(sVar13.anims,uVar22,pfVar26,pfVar27,(float)dVar39);
-    if (dVar40 != dVar39) {
-      uVar23 = XAnimGetChildAt(sVar13.anims,uVar20,uVar24 + 1);
-      pfVar27 = &local_238;
-      pfVar26 = afStack_210;
-      XAnimGetAbsDelta(sVar13.anims,uVar23,pfVar26,pfVar27,(float)dVar39);
-      local_268 = (float)((double)(float)((double)local_238 - (double)local_268) * dVar40 +
+    uVar23 = (uint)dVar39;
+    local_220 = (longlong)(int)uVar23;
+    local_228 = (longlong)(int)uVar23;
+    dVar39 = (double)(float)(dVar39 - (double)local_228);
+    uVar21 = XAnimGetChildAt(sVar13.anims,uVar19,uVar23);
+    pfVar26 = &local_268;
+    pfVar25 = afStack_210;
+    XAnimGetAbsDelta(sVar13.anims,uVar21,pfVar25,pfVar26,(float)dVar38);
+    if (dVar39 != dVar38) {
+      uVar22 = XAnimGetChildAt(sVar13.anims,uVar19,uVar23 + 1);
+      pfVar26 = &local_238;
+      pfVar25 = afStack_210;
+      XAnimGetAbsDelta(sVar13.anims,uVar22,pfVar25,pfVar26,(float)dVar38);
+      local_268 = (float)((double)(float)((double)local_238 - (double)local_268) * dVar39 +
                          (double)local_268);
-      local_264 = (float)((double)(float)((double)local_234 - (double)local_264) * dVar40 +
+      local_264 = (float)((double)(float)((double)local_234 - (double)local_264) * dVar39 +
                          (double)local_264);
-      local_260 = (float)((double)(float)((double)local_230 - (double)local_260) * dVar40 +
+      local_260 = (float)((double)(float)((double)local_230 - (double)local_260) * dVar39 +
                          (double)local_260);
     }
-    pcVar29 = (char *)uVar28;
-    dVar32 = (double)local_260;
-  } while ((dVar32 < dVar34) &&
-          (iVar31 = iVar31 + 1, dVar36 = dVar40, dVar37 = dVar32, uVar30 = uVar24, iVar31 < iVar19))
+    pcVar28 = (char *)uVar27;
+    dVar31 = (double)local_260;
+  } while ((dVar31 < dVar33) &&
+          (iVar30 = iVar30 + 1, dVar35 = dVar39, dVar36 = dVar31, uVar29 = uVar23, iVar30 < iVar18))
   ;
-  XAnimClearTreeGoalWeightsStrict(pXVar6,uVar4,(float)dVar39);
-  XAnimSetGoalWeight(pDVar16,uVar22,(float)(dVar38 - dVar40),(float)dVar39,(float)dVar38,
-                     (uint)pfVar26,(uint)pfVar27,(int)pcVar29);
-  if (dVar40 != dVar39) {
-    XAnimSetGoalWeight(pDVar16,uVar23,(float)dVar40,(float)dVar39,(float)dVar38,(uint)pfVar26,
-                       (uint)pfVar27,(int)pcVar29);
+  XAnimClearTreeGoalWeightsStrict(pXVar6,uVar4,(float)dVar38);
+  XAnimSetGoalWeight(pDVar15,uVar21,(float)(dVar37 - dVar39),(float)dVar38,(float)dVar37,
+                     (uint)pfVar25,(uint)pfVar26,(int)pcVar28);
+  if (dVar39 != dVar38) {
+    XAnimSetGoalWeight(pDVar15,uVar22,(float)dVar39,(float)dVar38,(float)dVar37,(uint)pfVar25,
+                       (uint)pfVar26,(int)pcVar28);
   }
-  dVar40 = dVar38;
-  if ((iVar31 == 0) || (iVar31 == iVar19)) {
-LAB_824be438:
-    XAnimSetGoalWeight(pDVar16,uVar20,(float)dVar38,(float)dVar39,(float)dVar40,(uint)pfVar26,
-                       (uint)pfVar27,(int)pcVar29);
-  }
-  else {
-    if ((double)(float)((double)local_260 - dVar37) == dVar39) {
-      pcVar29 = "trans[2] - fPrevTransZ";
-      pfVar26 = (float *)0x0;
-      pfVar27 = (float *)"%s";
+  dVar39 = dVar37;
+  if ((iVar30 != 0) && (iVar30 != iVar18)) {
+    if ((double)(float)((double)local_260 - dVar36) == dVar38) {
+      pcVar28 = "trans[2] - fPrevTransZ";
+      pfVar25 = (float *)0x0;
+      pfVar26 = (float *)"%s";
       MyAssertHandler(local_24c,0x368,0,"%s");
-      dVar40 = dVar38;
+      dVar39 = dVar37;
     }
-    dVar38 = dVar36;
-    fVar42 = (float)(dVar34 - dVar37) / (float)((double)local_260 - dVar37);
-    dVar32 = (double)fVar42;
-    XAnimSetGoalWeight(pDVar16,uVar20,fVar42,(float)dVar39,(float)dVar40,(uint)pfVar26,(uint)pfVar27
-                       ,(int)pcVar29);
-    uVar23 = iVar19 - iVar31;
-    uVar20 = XAnimGetChildAt(sVar13.anims,uVar4,uVar23);
-    XAnimSetGoalWeight(pDVar16,uVar20,(float)(dVar40 - dVar32),(float)dVar39,(float)dVar40,uVar23,
-                       (uint)pfVar27,(int)pcVar29);
-    uVar23 = uVar30;
-    uVar24 = XAnimGetChildAt(sVar13.anims,uVar20,uVar30);
-    XAnimSetGoalWeight(pDVar16,uVar24,(float)(dVar40 - dVar38),(float)dVar39,(float)dVar40,uVar23,
-                       (uint)pfVar27,(int)pcVar29);
-    if (dVar38 != dVar39) {
-      pfVar26 = (float *)(uVar30 + 1);
-      uVar20 = XAnimGetChildAt(sVar13.anims,uVar20,(uint)pfVar26);
-      goto LAB_824be438;
-    }
+    dVar37 = dVar35;
+    fVar41 = (float)(dVar33 - dVar36) / (float)((double)local_260 - dVar36);
+    dVar31 = (double)fVar41;
+    XAnimSetGoalWeight(pDVar15,uVar19,fVar41,(float)dVar38,(float)dVar39,(uint)pfVar25,(uint)pfVar26
+                       ,(int)pcVar28);
+    uVar22 = iVar18 - iVar30;
+    uVar19 = XAnimGetChildAt(sVar13.anims,uVar4,uVar22);
+    XAnimSetGoalWeight(pDVar15,uVar19,(float)(dVar39 - dVar31),(float)dVar38,(float)dVar39,uVar22,
+                       (uint)pfVar26,(int)pcVar28);
+    uVar22 = uVar29;
+    uVar23 = XAnimGetChildAt(sVar13.anims,uVar19,uVar29);
+    XAnimSetGoalWeight(pDVar15,uVar23,(float)(dVar39 - dVar37),(float)dVar38,(float)dVar39,uVar22,
+                       (uint)pfVar26,(int)pcVar28);
+    if (dVar37 == dVar38) goto LAB_824be450;
+    pfVar25 = (float *)(uVar29 + 1);
+    uVar19 = XAnimGetChildAt(sVar13.anims,uVar19,(uint)pfVar25);
   }
-  XAnimCalcAbsDelta(pDVar16,uVar4,afStack_210,&local_268);
-  VectorAngleMultiply(&local_268,(float)dVar41);
-  local_14c = local_268 + pDVar15->trans[0];
-  local_148 = pDVar15->trans[1] + local_264;
-  local_144 = pDVar15->trans[2] + local_260;
+  XAnimSetGoalWeight(pDVar15,uVar19,(float)dVar37,(float)dVar38,(float)dVar39,(uint)pfVar25,
+                     (uint)pfVar26,(int)pcVar28);
+LAB_824be450:
+  XAnimCalcAbsDelta(pDVar15,uVar4,afStack_210,&local_268);
+  VectorAngleMultiply(&local_268,(float)dVar40);
+  local_14c = local_268 + pDVar14->trans[0];
+  local_148 = pDVar14->trans[1] + local_264;
+  local_144 = pDVar14->trans[2] + local_260;
   QuatToAxis(afStack_210,(float (*) [3])afStack_140);
-  pafVar25 = (float (*) [3])afStack_140;
-  fVar42 = vectoyaw((float *)pafVar25);
-  YawToAxis((float)((double)fVar42 + dVar41),pafVar25);
+  pafVar24 = (float (*) [3])afStack_140;
+  fVar41 = vectoyaw((float *)pafVar24);
+  YawToAxis((float)((double)fVar41 + dVar40),pafVar24);
   MatrixMultiply43((float (*) [3])afStack_170,(float (*) [3])afStack_1a0,(float (*) [3])afStack_1d0)
   ;
-  (pgVar14->r).currentOrigin[0] = local_1ac;
-  (pgVar14->r).currentOrigin[1] = local_1a8;
-  (pgVar14->r).currentOrigin[2] = local_1a4;
-  pgVar7 = pgVar14->client;
+  (param_1->r).currentOrigin[0] = local_1ac;
+  (param_1->r).currentOrigin[1] = local_1a8;
+  (param_1->r).currentOrigin[2] = local_1a4;
+  pgVar7 = param_1->client;
   (pgVar7->ps).origin[0] = local_1ac;
   (pgVar7->ps).origin[1] = local_1a8;
   (pgVar7->ps).origin[2] = local_1a4;
-  AxisToAngles((float (*) [3])afStack_1d0,(pgVar14->r).currentAngles);
-  (pgVar14->s).lerp.apos.trBase[0] = (pgVar14->r).currentAngles[0];
-  (pgVar14->s).lerp.apos.trBase[1] = (pgVar14->r).currentAngles[1];
-  (pgVar14->s).lerp.apos.trBase[2] = (pgVar14->r).currentAngles[2];
+  AxisToAngles((float (*) [3])afStack_1d0,(param_1->r).currentAngles);
+  (param_1->s).lerp.apos.trBase[0] = (param_1->r).currentAngles[0];
+  (param_1->s).lerp.apos.trBase[1] = (param_1->r).currentAngles[1];
+  (param_1->s).lerp.apos.trBase[2] = (param_1->r).currentAngles[2];
   MatrixMultiply((float (*) [3])afStack_140,(float (*) [3])&local_200,(float (*) [3])afStack_1d0);
-  pgVar7 = pgVar14->client;
-  dVar41 = (double)(pgVar7->ps).viewangles[0];
-  dVar39 = (double)(pgVar7->ps).viewangles[1];
-  dVar32 = (double)(pgVar7->ps).viewangles[2];
+  pgVar7 = param_1->client;
+  dVar40 = (double)(pgVar7->ps).viewangles[0];
+  dVar38 = (double)(pgVar7->ps).viewangles[1];
+  dVar31 = (double)(pgVar7->ps).viewangles[2];
   AxisToAngles((float (*) [3])afStack_1d0,(pgVar7->ps).viewangles);
-  pgVar7 = pgVar14->client;
-  pfVar27 = (pgVar7->ps).origin;
+  pgVar7 = param_1->client;
+  pfVar26 = (pgVar7->ps).origin;
   local_240 = (param_2->r).currentOrigin[2];
-  local_258 = *pfVar27;
+  local_258 = *pfVar26;
   local_254 = (pgVar7->ps).origin[1];
   local_250 = local_240 - 11.0;
   local_240 = local_240 - 60.0;
-  local_248 = *pfVar27;
+  local_248 = *pfVar26;
   local_244 = (pgVar7->ps).origin[1];
-  G_TraceCapsule(local_110,&local_258,&local_248,&bounds_origin,(pgVar14->s).number,0x810011);
-  if ((double)local_110[0].fraction < dVar40) {
-    pgVar7 = pgVar14->client;
-    fVar42 = (float)((double)(float)((double)local_240 - (double)local_250) *
+  G_TraceCapsule(local_110,&local_258,&local_248,&bounds_origin,(param_1->s).number,0x810011);
+  if ((double)local_110[0].fraction < dVar39) {
+    pgVar7 = param_1->client;
+    fVar41 = (float)((double)(float)((double)local_240 - (double)local_250) *
                      (double)local_110[0].fraction + (double)local_250);
-    (pgVar14->r).currentOrigin[2] = fVar42;
-    (pgVar7->ps).origin[2] = fVar42;
+    (param_1->r).currentOrigin[2] = fVar41;
+    (pgVar7->ps).origin[2] = fVar41;
   }
-  BG_PlayerStateToEntityState(&pgVar14->client->ps,(entityState_s *)pgVar14,1);
-  pgVar7 = pgVar14->client;
-  (pgVar7->ps).viewangles[0] = (float)dVar41;
-  (pgVar7->ps).viewangles[1] = (float)dVar39;
-  (pgVar7->ps).viewangles[2] = (float)dVar32;
-  SV_LinkEntity(pgVar14);
-LAB_824be618:
-  __restfpr_24();
-  __restgprlr();
+  BG_PlayerStateToEntityState(&param_1->client->ps,&param_1->s,1);
+  pgVar7 = param_1->client;
+  (pgVar7->ps).viewangles[0] = (float)dVar40;
+  (pgVar7->ps).viewangles[1] = (float)dVar38;
+  (pgVar7->ps).viewangles[2] = (float)dVar31;
+  SV_LinkEntity(param_1);
   return;
 }
 
 
 // 824C32B0  Turret_UpdateBarrelRotation  (game/turret.cpp:965)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
@@ -986,73 +959,70 @@ void Turret_UpdateBarrelRotation(gentity_s *param_1,gentity_s *param_2)
 {
   bool bVar1;
   Turret *pTVar2;
-  int iVar3;
+  gclient_s *pgVar3;
   WeaponDef *pWVar4;
-  gentity_s *pgVar5;
-  Weapon WVar6;
-  bool bVar7;
-  ulonglong uVar8;
-  float fVar9;
+  Weapon WVar5;
+  bool bVar6;
+  float fVar7;
   ushort uStack_3a;
   
-  uVar8 = (ulonglong)(int)param_2;
-  pgVar5 = (gentity_s *)__savegprlr_26(param_1);
-  if (pgVar5 == (gentity_s *)0x0) {
+  if (param_1 == (gentity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\turret.cpp",0x3cb,0,"%s")
     ;
   }
-  if ((uVar8 & 0xffffffff) == 0) {
+  if (param_2 == (gentity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\turret.cpp",0x3cc,0,"%s")
     ;
   }
-  WVar6 = BG_GetAlternateWeapon((pgVar5->s).weapon,false);
-  pWVar4 = bg_weaponDefs[WVar6.data & 0xff];
+  WVar5 = BG_GetAlternateWeapon((param_1->s).weapon,false);
+  pWVar4 = bg_weaponDefs[WVar5.data & 0xff];
   if (pWVar4 == (WeaponDef *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\turret.cpp",0x3cf,1,"%s")
     ;
   }
   if (pWVar4->turretBarrelSpinEnabled != false) {
-    pTVar2 = pgVar5->turret;
+    pTVar2 = param_1->turret;
     if (pTVar2 == (Turret *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\turret.cpp",0x3d5,1,
                       "%s");
     }
-    iVar3 = *(int *)((int)uVar8 + 0x158);
-    bVar1 = (pgVar5->s).lerp.u.turret.isBarrelRotating;
-    if (iVar3 == 0) {
-      (pgVar5->s).lerp.u.turret.isBarrelRotating = false;
-      bVar7 = Turret_IsFiring(pgVar5);
-      if ((bVar7) || ((pTVar2->flags & 0x100010U) != 0)) {
-        (pgVar5->s).lerp.u.turret.isBarrelRotating = true;
+    pgVar3 = param_2->client;
+    bVar1 = (param_1->s).lerp.u.turret.isBarrelRotating;
+    if (pgVar3 == (gclient_s *)0x0) {
+      (param_1->s).lerp.u.turret.isBarrelRotating = false;
+      bVar6 = Turret_IsFiring(param_1);
+      if ((bVar6) || ((pTVar2->flags & 0x100010U) != 0)) {
+        (param_1->s).lerp.u.turret.isBarrelRotating = true;
         pTVar2->lastAutoRotationRequestTime = level.time;
       }
       else if ((0 < pTVar2->lastAutoRotationRequestTime) &&
               (level.time <= pTVar2->autoRotationStopDelay + pTVar2->lastAutoRotationRequestTime)) {
-        (pgVar5->s).lerp.u.turret.isBarrelRotating = true;
+        (param_1->s).lerp.u.turret.isBarrelRotating = true;
       }
     }
     else {
-      if (((*(uint *)(iVar3 + 0xc) & 0x800) != 0) ||
-         (bVar7 = true, (*(uint *)(iVar3 + 0x3608) & 0x801) == 0)) {
-        bVar7 = false;
+      if ((((pgVar3->ps).pm_flags & 0x800U) != 0) || (bVar6 = true, (pgVar3->buttons & 0x801U) == 0)
+         ) {
+        bVar6 = false;
       }
-      (pgVar5->s).lerp.u.turret.isBarrelRotating = bVar7;
+      (param_1->s).lerp.u.turret.isBarrelRotating = bVar6;
     }
-    if (bVar1 != (pgVar5->s).lerp.u.turret.isBarrelRotating) {
-      (pgVar5->s).lerp.u.turret.lastBarrelRotChangeTime = level.time;
+    if (bVar1 != (param_1->s).lerp.u.turret.isBarrelRotating) {
+      (param_1->s).lerp.u.turret.lastBarrelRotChangeTime = level.time;
       uStack_3a = (ushort)(longlong)(pTVar2->barrelRollRate * 65535.0);
-      (pgVar5->s).lerp.u.turret.lastBarrelRotChangeRate = uStack_3a;
+      (param_1->s).lerp.u.turret.lastBarrelRotChangeRate = uStack_3a;
     }
-    fVar9 = BG_Turret_ComputeBarrelSpinRate(pWVar4,&(pgVar5->s).lerp.u.turret,level.time);
-    pTVar2->barrelRollRate = fVar9;
+    fVar7 = BG_Turret_ComputeBarrelSpinRate(pWVar4,&(param_1->s).lerp.u.turret,level.time);
+    pTVar2->barrelRollRate = fVar7;
   }
-  __restgprlr_26();
   return;
 }
 
 
 // 824BE628  Turret_UpdateHeat  (game/turret.cpp:1016)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
@@ -1060,62 +1030,61 @@ void Turret_UpdateBarrelRotation(gentity_s *param_1,gentity_s *param_2)
 void Turret_UpdateHeat(gentity_s *param_1)
 
 {
-  char cVar1;
-  int iVar2;
+  bool bVar1;
+  Turret *pTVar2;
   WeaponDef *pWVar3;
-  int iVar4;
-  Weapon WVar5;
-  char cVar6;
-  double dVar7;
-  float fVar8;
-  undefined2 uStack_3a;
+  Weapon WVar4;
+  bool bVar5;
+  double dVar6;
+  float fVar7;
+  ushort uStack_3a;
   
-  iVar4 = __savegprlr_27(param_1);
-  if (iVar4 == 0) {
+  if (param_1 == (gentity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\turret.cpp",0x3fe,0,"%s")
     ;
   }
-  WVar5 = BG_GetAlternateWeapon(*(Weapon *)(iVar4 + 200),false);
-  pWVar3 = bg_weaponDefs[WVar5.data & 0xff];
+  WVar4 = BG_GetAlternateWeapon((param_1->s).weapon,false);
+  pWVar3 = bg_weaponDefs[WVar4.data & 0xff];
   if (pWVar3 == (WeaponDef *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\turret.cpp",0x401,0,"%s")
     ;
   }
   if ((0.0 < pWVar3->turretOverheatUpRate) && (0.0 < pWVar3->turretOverheatDownRate)) {
-    iVar2 = *(int *)(iVar4 + 0x15c);
-    if (iVar2 == 0) {
+    pTVar2 = param_1->turret;
+    if (pTVar2 == (Turret *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\turret.cpp",0x408,0,
                       "%s");
     }
-    cVar1 = *(char *)(iVar4 + 0x6e);
-    dVar7 = 1.0;
-    if (((*(uint *)(iVar4 + 8) & 0x800000) == 0) ||
-       (((pWVar3->turretBarrelSpinEnabled != false && (*(float *)(iVar2 + 0xb4) < 1.0)) ||
-        (cVar6 = '\x01', level.time < *(int *)(iVar2 + 0xb0))))) {
-      cVar6 = '\0';
+    bVar1 = (param_1->s).lerp.u.turret.isHeatingUp;
+    dVar6 = 1.0;
+    if ((((param_1->s).lerp.eFlags & 0x800000U) == 0) ||
+       (((pWVar3->turretBarrelSpinEnabled != false && (pTVar2->barrelRollRate < 1.0)) ||
+        (bVar5 = true, level.time < pTVar2->heatPenaltyEndTime)))) {
+      bVar5 = false;
     }
-    *(char *)(iVar4 + 0x6e) = cVar6;
-    if (cVar1 != cVar6) {
-      *(int *)(iVar4 + 0x68) = level.time;
-      uStack_3a = (undefined2)(longlong)(*(float *)(iVar2 + 0xac) * 65535.0);
-      *(undefined2 *)(iVar4 + 0x66) = uStack_3a;
+    (param_1->s).lerp.u.turret.isHeatingUp = bVar5;
+    if (bVar1 != bVar5) {
+      (param_1->s).lerp.u.turret.lastHeatChangeTime = level.time;
+      uStack_3a = (ushort)(longlong)(pTVar2->heatLevel * 65535.0);
+      (param_1->s).lerp.u.turret.lastHeatChangeLevel = uStack_3a;
     }
-    fVar8 = BG_Turret_ComputeHeatLevel(pWVar3,(LerpEntityStateTurret *)(iVar4 + 0x54),level.time);
-    *(float *)(iVar2 + 0xac) = fVar8;
-    if (dVar7 <= (double)fVar8) {
-      *(int *)(iVar2 + 0xb0) = level.time - (int)(pWVar3->turretOverheatPenalty * -1000.0);
+    fVar7 = BG_Turret_ComputeHeatLevel(pWVar3,&(param_1->s).lerp.u.turret,level.time);
+    pTVar2->heatLevel = fVar7;
+    if (dVar6 <= (double)fVar7) {
+      pTVar2->heatPenaltyEndTime = level.time - (int)(pWVar3->turretOverheatPenalty * -1000.0);
     }
-    *(char *)(iVar4 + 0x6d) =
-         ((char)((int)*(uint *)(iVar2 + 0xb0) >> 0x1f) - (char)(level.time >> 0x1f)) +
-         ((uint)level.time <= *(uint *)(iVar2 + 0xb0));
+    (param_1->s).lerp.u.turret.isOverheat =
+         (bool)(((char)(pTVar2->heatPenaltyEndTime >> 0x1f) - (char)(level.time >> 0x1f)) +
+               ((uint)level.time <= (uint)pTVar2->heatPenaltyEndTime));
   }
-  __restgprlr_27();
   return;
 }
 
 
 // 824BE7F8  Turret_Track  (game/turret.cpp:1063)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
@@ -1125,64 +1094,58 @@ void Turret_Track(gentity_s *param_1,gentity_s *param_2)
 {
   Turret *pTVar1;
   uint uVar2;
-  gentity_s *pgVar3;
   EntHandle *this;
-  int iVar4;
-  gentity_s *pgVar5;
-  weapFireType_t wVar6;
-  ulonglong uVar7;
-  longlong lVar8;
+  int iVar3;
+  gentity_s *pgVar4;
+  weapFireType_t wVar5;
+  longlong lVar6;
   int local_40;
   int aiStack_3c [15];
   
-  uVar7 = (ulonglong)(int)param_2;
-  pgVar3 = (gentity_s *)__savegprlr_26(param_1);
-  pTVar1 = pgVar3->turret;
+  pTVar1 = param_1->turret;
   if (pTVar1 == (Turret *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\turret.cpp",0x42f,0,"%s")
     ;
   }
-  if (pgVar3->active == '\0') {
+  if (param_1->active == '\0') {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\turret.cpp",0x431,0,"%s")
     ;
   }
-  this = &(pgVar3->r).ownerNum;
-  iVar4 = EntHandle::isDefined(this);
-  if (iVar4 == 0) {
+  this = &(param_1->r).ownerNum;
+  iVar3 = EntHandle::isDefined(this);
+  if (iVar3 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\turret.cpp",0x432,0,"%s")
     ;
   }
-  pgVar5 = EntHandle::ent(this);
-  if (ZEXT48(pgVar5) != (uVar7 & 0xffffffff)) {
+  pgVar4 = EntHandle::ent(this);
+  if (pgVar4 != param_2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\turret.cpp",0x433,0,"%s")
     ;
   }
-  pgVar5 = (gentity_s *)uVar7;
-  if (pgVar5->client == (gclient_s *)0x0) {
+  if (param_2->client == (gclient_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\turret.cpp",0x434,0,"%s")
     ;
   }
-  Turret_ClientAim(pgVar3,pgVar5);
-  uVar2 = (pgVar3->s).lerp.eFlags;
+  Turret_ClientAim(param_1,param_2);
+  uVar2 = (param_1->s).lerp.eFlags;
   if (((uVar2 & 0x3800) != 0) && ((uVar2 & 0x2000) == 0)) {
-    G_PlayerTurretPositionAndBlend(pgVar5,pgVar3);
+    G_PlayerTurretPositionAndBlend(param_2,param_1);
   }
-  wVar6 = BG_GetWeaponFireType((pgVar3->s).weapon,false);
-  uVar2 = pgVar5->client->buttons;
-  (pgVar3->s).lerp.eFlags = (pgVar3->s).lerp.eFlags & 0xff7fffff;
-  lVar8 = (ulonglong)(uint)pTVar1->fireTime - 0x32;
-  pTVar1->fireTime = (int)lVar8;
-  if (lVar8 < 1) {
+  wVar5 = BG_GetWeaponFireType((param_1->s).weapon,false);
+  uVar2 = param_2->client->buttons;
+  (param_1->s).lerp.eFlags = (param_1->s).lerp.eFlags & 0xff7fffff;
+  lVar6 = (ulonglong)(uint)pTVar1->fireTime - 0x32;
+  pTVar1->fireTime = (int)lVar6;
+  if (lVar6 < 1) {
     pTVar1->fireTime = 0;
-    if (((((pgVar5->client->ps).pm_flags & 0x800U) == 0) && ((uVar2 & 0x100000) == 0)) &&
+    if (((((param_2->client->ps).pm_flags & 0x800U) == 0) && ((uVar2 & 0x100000) == 0)) &&
        ((uVar2 & 1) != 0)) {
-      if ((wVar6 != WEAPON_FIRETYPE_SINGLESHOT) || (pTVar1->triggerDown == false)) {
+      if ((wVar5 != WEAPON_FIRETYPE_SINGLESHOT) || (pTVar1->triggerDown == false)) {
         pTVar1->triggerDown = true;
-        BG_GetFireTime((pgVar3->s).weapon,false,false,&local_40,aiStack_3c);
+        BG_GetFireTime((param_1->s).weapon,false,false,&local_40,aiStack_3c);
         pTVar1->fireTime = local_40;
-        Turret_Shoot_internal(pgVar3,pgVar5);
-        (pgVar3->s).lerp.eFlags = (pgVar3->s).lerp.eFlags | 0x800000;
-        __restgprlr_26();
+        Turret_Shoot_internal(param_1,param_2);
+        (param_1->s).lerp.eFlags = (param_1->s).lerp.eFlags | 0x800000;
         return;
       }
     }
@@ -1190,13 +1153,14 @@ void Turret_Track(gentity_s *param_1,gentity_s *param_2)
       pTVar1->triggerDown = false;
     }
   }
-  __restgprlr_26();
   return;
 }
 
 
 // 824BE9F0  Turret_UpdateSound  (game/turret.cpp:1119)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
@@ -1205,43 +1169,41 @@ void Turret_UpdateSound(gentity_s *param_1)
 {
   ushort uVar1;
   Turret *pTVar2;
-  gentity_s *pgVar3;
-  longlong lVar4;
+  longlong lVar3;
   
-  pgVar3 = (gentity_s *)__savegprlr_28(param_1);
-  if (pgVar3 == (gentity_s *)0x0) {
+  if (param_1 == (gentity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\turret.cpp",0x464,0,"%s")
     ;
   }
-  pTVar2 = pgVar3->turret;
+  pTVar2 = param_1->turret;
   if (pTVar2 == (Turret *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\turret.cpp",0x467,0,"%s")
     ;
   }
-  (pgVar3->s).loopSound = 0;
+  (param_1->s).loopSound = 0;
   if (pTVar2->fireSndDelay < 1) {
     if (((pTVar2->flags & 8U) != 0) && (0.0 < pTVar2->scanSpeed)) {
-      (pgVar3->s).loopSound = (uint)pTVar2->scanSnd;
+      (param_1->s).loopSound = (uint)pTVar2->scanSnd;
     }
   }
   else {
-    (pgVar3->s).loopSound = (uint)pTVar2->fireSnd;
-    lVar4 = (ulonglong)(uint)pTVar2->fireSndDelay - 0x32;
-    pTVar2->fireSndDelay = (int)lVar4;
-    if ((lVar4 < 1) && (uVar1 = pTVar2->stopSnd, uVar1 != 0)) {
-      (pgVar3->s).loopSound = 0;
-      G_PlaySoundAlias(pgVar3,uVar1);
-      __restgprlr_28();
+    (param_1->s).loopSound = (uint)pTVar2->fireSnd;
+    lVar3 = (ulonglong)(uint)pTVar2->fireSndDelay - 0x32;
+    pTVar2->fireSndDelay = (int)lVar3;
+    if ((lVar3 < 1) && (uVar1 = pTVar2->stopSnd, uVar1 != 0)) {
+      (param_1->s).loopSound = 0;
+      G_PlaySoundAlias(param_1,uVar1);
       return;
     }
   }
-  __restgprlr_28();
   return;
 }
 
 
 // 824C34A0  G_ClientStopUsingTurret  (game/turret.cpp:1170)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
@@ -1251,117 +1213,114 @@ void G_ClientStopUsingTurret(gentity_s *param_1)
   Turret *pTVar1;
   gclient_s *pgVar2;
   uint uVar3;
-  gentity_s *pgVar4;
   EntHandle *this;
-  int iVar5;
-  gentity_s *pgVar6;
-  uint uVar7;
+  int iVar4;
+  gentity_s *pgVar5;
+  uint uVar6;
   
-  pgVar4 = (gentity_s *)__savegprlr_26(param_1);
-  pTVar1 = pgVar4->turret;
+  pTVar1 = param_1->turret;
   if (pTVar1 == (Turret *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\turret.cpp",0x498,0,"%s")
     ;
   }
-  this = &(pgVar4->r).ownerNum;
-  iVar5 = EntHandle::isDefined(this);
-  if (iVar5 == 0) {
+  this = &(param_1->r).ownerNum;
+  iVar4 = EntHandle::isDefined(this);
+  if (iVar4 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\turret.cpp",0x49a,0,"%s")
     ;
   }
-  pgVar6 = EntHandle::ent(this);
-  if (pgVar6->client == (gclient_s *)0x0) {
+  pgVar5 = EntHandle::ent(this);
+  if (pgVar5->client == (gclient_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\turret.cpp",0x49c,0,"%s")
     ;
   }
   pTVar1->fireSndDelay = 0;
-  (pgVar4->s).loopSound = 0;
-  iVar5 = pTVar1->prevStance;
-  if (iVar5 != -1) {
-    pgVar2 = pgVar6->client;
-    if (iVar5 == 2) {
+  (param_1->s).loopSound = 0;
+  iVar4 = pTVar1->prevStance;
+  if (iVar4 != -1) {
+    pgVar2 = pgVar5->client;
+    if (iVar4 == 2) {
       (pgVar2->ps).viewHeightTarget = 0xb;
-      uVar7 = 8;
+      uVar6 = 8;
       (pgVar2->ps).pm_flags = (pgVar2->ps).pm_flags & 0xfffffffcU | 1;
     }
     else {
       uVar3 = (pgVar2->ps).pm_flags;
-      if (iVar5 == 1) {
+      if (iVar4 == 1) {
         (pgVar2->ps).viewHeightTarget = 0x28;
-        uVar7 = 7;
+        uVar6 = 7;
         (pgVar2->ps).pm_flags = uVar3 & 0xfffffffc | 2;
       }
       else {
         (pgVar2->ps).viewHeightTarget = 0x3c;
-        uVar7 = 6;
+        uVar6 = 6;
         (pgVar2->ps).pm_flags = uVar3 & 0xfffffffc;
       }
     }
-    G_AddEvent(pgVar6,uVar7,0);
+    G_AddEvent(pgVar5,uVar6,0);
     pTVar1->prevStance = -1;
   }
-  TeleportPlayer(pgVar6,pTVar1->userOrigin,(pgVar6->r).currentAngles);
-  (pgVar6->client->ps).eFlags = (pgVar6->client->ps).eFlags & 0xffffc7ff;
-  (pgVar6->client->ps).viewlocked = PLAYERVIEWLOCK_NONE;
-  (pgVar6->client->ps).viewlocked_entNum = 0x7ff;
-  pgVar6->active = '\0';
-  (pgVar6->s).otherEntityNum = 0x7ff;
-  (pgVar4->s).lerp.eFlags = (pgVar4->s).lerp.eFlags & 0xffffc7ff;
-  G_DeactivateTurret(pgVar4);
+  TeleportPlayer(pgVar5,pTVar1->userOrigin,(pgVar5->r).currentAngles);
+  (pgVar5->client->ps).eFlags = (pgVar5->client->ps).eFlags & 0xffffc7ff;
+  (pgVar5->client->ps).viewlocked = PLAYERVIEWLOCK_NONE;
+  (pgVar5->client->ps).viewlocked_entNum = 0x7ff;
+  pgVar5->active = '\0';
+  (pgVar5->s).otherEntityNum = 0x7ff;
+  (param_1->s).lerp.eFlags = (param_1->s).lerp.eFlags & 0xffffc7ff;
+  G_DeactivateTurret(param_1);
   EntHandle::setEnt(this,(gentity_s *)0x0);
   pTVar1->flags = pTVar1->flags & 0xfffffffe;
-  Scr_Notify(pgVar4,scr_const.turretownerchange,0);
-  __restgprlr_26();
+  Scr_Notify(param_1,scr_const.turretownerchange,0);
   return;
 }
 
 
 // 824C3668  Turret_Think_Client  (game/turret.cpp:1239)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
 void Turret_Think_Client(gentity_s *param_1)
 
 {
-  gentity_s *pgVar1;
   EntHandle *this;
-  int iVar2;
-  gentity_s *pgVar3;
+  int iVar1;
+  gentity_s *pgVar2;
   
-  pgVar1 = (gentity_s *)__savegprlr_28(param_1);
-  this = &(pgVar1->r).ownerNum;
-  iVar2 = EntHandle::isDefined(this);
-  if (iVar2 == 0) {
+  this = &(param_1->r).ownerNum;
+  iVar1 = EntHandle::isDefined(this);
+  if (iVar1 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\turret.cpp",0x4da,0,"%s")
     ;
   }
-  pgVar3 = EntHandle::ent(this);
-  if (pgVar3->client == (gclient_s *)0x0) {
+  pgVar2 = EntHandle::ent(this);
+  if (pgVar2->client == (gclient_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\turret.cpp",0x4de,0,"%s")
     ;
   }
-  if (((pgVar3->active == '\x01') && ((pgVar3->client->sess).sessionState == SESS_STATE_PLAYING)) &&
-     ((pgVar3->client->ps).pm_type != 7)) {
-    if (pgVar1->active == '\0') {
+  if (((pgVar2->active == '\x01') && ((pgVar2->client->sess).sessionState == SESS_STATE_PLAYING)) &&
+     ((pgVar2->client->ps).pm_type != 7)) {
+    if (param_1->active == '\0') {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\turret.cpp",0x4ea,0,
                       "%s");
     }
-    Turret_Track(pgVar1,pgVar3);
-    Turret_UpdateBarrelRotation(pgVar1,pgVar3);
-    Turret_UpdateHeat(pgVar1);
-    Turret_UpdateSound(pgVar1);
-    __restgprlr_28();
+    Turret_Track(param_1,pgVar2);
+    Turret_UpdateBarrelRotation(param_1,pgVar2);
+    Turret_UpdateHeat(param_1);
+    Turret_UpdateSound(param_1);
     return;
   }
-  G_ClientStopUsingTurret(pgVar1);
-  __restgprlr_28();
+  G_ClientStopUsingTurret(param_1);
   return;
 }
 
 
 // 824BEAE0  Turret_ScanStart  (game/turret.cpp:1276)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -1369,49 +1328,40 @@ void Turret_Think_Client(gentity_s *param_1)
 void Turret_ScanStart(Turret *param_1,WeaponDef *param_2,float param_3)
 
 {
-  int iVar1;
-  float fVar2;
-  int iVar3;
-  ulonglong uVar4;
-  double extraout_f1;
-  double dVar5;
-  double dVar6;
+  float fVar1;
+  double dVar2;
+  double dVar3;
   
-  uVar4 = (ulonglong)(int)param_2;
-  iVar3 = __savegprlr_28((double)param_3,param_1);
-  dVar5 = extraout_f1;
-  if (iVar3 == 0) {
+  dVar2 = (double)param_3;
+  if (param_1 == (Turret *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\turret.cpp",0x4ff,0,"%s")
     ;
   }
-  if ((*(uint *)(iVar3 + 4) & 0x80) != 0) {
+  if ((param_1->flags & 0x80U) != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\turret.cpp",0x500,0,"%s")
     ;
   }
-  if ((uVar4 & 0xffffffff) == 0) {
+  if (param_2 == (WeaponDef *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\turret.cpp",0x502,0,"%s")
     ;
   }
-  iVar1 = (int)uVar4;
-  dVar6 = 0.0;
-  if (*(float *)(iVar1 + 0x684) <= 0.0) {
+  dVar3 = 0.0;
+  if (param_2->scanSpeed <= 0.0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\turret.cpp",0x503,0,"%s")
     ;
   }
-  if ((double)*(float *)(iVar1 + 0x688) <= dVar6) {
+  if ((double)param_2->scanAccel <= dVar3) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\turret.cpp",0x504,0,"%s")
     ;
   }
-  *(float *)(iVar3 + 0x9c) = (float)dVar6;
-  *(uint *)(iVar3 + 4) = *(uint *)(iVar3 + 4) | 0x80;
-  *(int *)(iVar3 + 0xa4) = *(int *)(iVar1 + 0x68c) + level.time;
-  fVar2 = (*(float *)(iVar1 + 0x684) * *(float *)(iVar1 + 0x684)) /
-          (*(float *)(iVar1 + 0x688) * 2.0);
-  *(float *)(iVar3 + 0xa0) = fVar2;
-  if ((float)(dVar5 * 0.5) < fVar2) {
-    *(float *)(iVar3 + 0xa0) = (float)(dVar5 * 0.5);
+  param_1->scanSpeed = (float)dVar3;
+  param_1->flags = param_1->flags | 0x80;
+  param_1->scanPauseTime = param_2->scanPauseTime + level.time;
+  fVar1 = (param_2->scanSpeed * param_2->scanSpeed) / (param_2->scanAccel * 2.0);
+  param_1->scanDecelYaw = fVar1;
+  if ((float)(dVar2 * 0.5) < fVar1) {
+    param_1->scanDecelYaw = (float)(dVar2 * 0.5);
   }
-  __restgprlr_28();
   return;
 }
 
@@ -1435,6 +1385,10 @@ void Turret_ScanStop(Turret *param_1)
 
 // 824BECD0  Turret_ScanForEnemies  (game/turret.cpp:1320)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
@@ -1442,164 +1396,157 @@ void Turret_ScanStop(Turret *param_1)
 void Turret_ScanForEnemies(gentity_s *param_1)
 
 {
-  Turret *pTVar1;
-  WeaponDef *pWVar2;
-  float fVar3;
-  int iVar4;
-  Weapon WVar5;
+  float fVar1;
+  Turret *pTVar2;
+  WeaponDef *pWVar3;
+  Weapon WVar4;
+  LerpEntityStateTypeUnion *pLVar5;
   double dVar6;
   double dVar7;
   double dVar8;
   double dVar9;
   float fVar10;
   
-  __savegprlr_27(param_1);
-  iVar4 = __savefpr_28();
-  if (iVar4 == 0) {
+  if (param_1 == (gentity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\turret.cpp",0x530,0,"%s")
     ;
   }
-  if (*(int *)(iVar4 + 0x15c) == 0) {
+  if (param_1->turret == (Turret *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\turret.cpp",0x531,0,"%s")
     ;
   }
-  pTVar1 = *(Turret **)(iVar4 + 0x15c);
-  WVar5 = BG_GetAlternateWeapon(*(Weapon *)(iVar4 + 200),false);
-  pWVar2 = bg_weaponDefs[WVar5.data & 0xff];
+  pTVar2 = param_1->turret;
+  WVar4 = BG_GetAlternateWeapon((param_1->s).weapon,false);
+  pWVar3 = bg_weaponDefs[WVar4.data & 0xff];
   dVar6 = 0.0;
-  if (pWVar2->scanSpeed <= 0.0) {
+  if (pWVar3->scanSpeed <= 0.0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\turret.cpp",0x536,0,"%s")
     ;
   }
-  if ((double)pWVar2->scanAccel <= dVar6) {
+  if ((double)pWVar3->scanAccel <= dVar6) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\turret.cpp",0x537,0,"%s")
     ;
   }
+  pLVar5 = &(param_1->s).lerp.u;
   dVar8 = 0.05000000074505806;
-  fVar10 = LinearTrackAngle((float)dVar6,*(float *)(iVar4 + 0x54),pWVar2->scanSpeed,0.05);
-  *(float *)(iVar4 + 0x54) = fVar10;
-  if ((pTVar1->flags & 0x100U) == 0) {
-    fVar3 = pTVar1->arcmax[1] - *(float *)(iVar4 + 0x58);
-    fVar10 = 1.0;
+  fVar10 = LinearTrackAngle((float)dVar6,(pLVar5->turret).gunAngles[0],pWVar3->scanSpeed,0.05);
+  (pLVar5->turret).gunAngles[0] = fVar10;
+  fVar10 = (param_1->s).lerp.u.turret.gunAngles[1];
+  if ((pTVar2->flags & 0x100U) == 0) {
+    fVar10 = pTVar2->arcmax[1] - fVar10;
+    fVar1 = 1.0;
   }
   else {
-    fVar3 = *(float *)(iVar4 + 0x58) - pTVar1->arcmin[1];
-    fVar10 = -1.0;
+    fVar10 = fVar10 - pTVar2->arcmin[1];
+    fVar1 = -1.0;
   }
-  dVar9 = (double)fVar3;
-  dVar7 = (double)fVar10;
-  if ((pTVar1->flags & 0x80U) == 0) {
-    Turret_ScanStart(pTVar1,pWVar2,fVar3);
+  dVar9 = (double)fVar10;
+  dVar7 = (double)fVar1;
+  if ((pTVar2->flags & 0x80U) == 0) {
+    Turret_ScanStart(pTVar2,pWVar3,fVar10);
   }
-  if (pTVar1->scanPauseTime <= level.time) {
-    if (dVar9 < (double)pTVar1->scanDecelYaw) {
-      dVar9 = -(double)(float)((double)pWVar2->scanAccel * dVar8 - (double)pTVar1->scanSpeed);
-      pTVar1->scanSpeed = (float)dVar9;
+  if (pTVar2->scanPauseTime <= level.time) {
+    if (dVar9 < (double)pTVar2->scanDecelYaw) {
+      dVar9 = -(double)(float)((double)pWVar3->scanAccel * dVar8 - (double)pTVar2->scanSpeed);
+      pTVar2->scanSpeed = (float)dVar9;
       if (dVar9 <= dVar6) {
-        Turret_ScanStop(pTVar1);
-        __restfpr_28();
-        __restgprlr_27();
+        Turret_ScanStop(pTVar2);
         return;
       }
-      *(float *)(iVar4 + 0x58) =
-           (float)((double)(float)(dVar9 * dVar7) * dVar8 + (double)*(float *)(iVar4 + 0x58));
-      __restfpr_28();
-      __restgprlr_27();
+      (param_1->s).lerp.u.turret.gunAngles[1] =
+           (float)((double)(float)(dVar9 * dVar7) * dVar8 +
+                  (double)(param_1->s).lerp.u.turret.gunAngles[1]);
       return;
     }
-    fVar10 = (float)((double)pWVar2->scanAccel * dVar8 + (double)pTVar1->scanSpeed);
-    pTVar1->scanSpeed = fVar10;
-    if (pWVar2->scanSpeed <= fVar10) {
-      pTVar1->scanSpeed = pWVar2->scanSpeed;
+    fVar10 = (float)((double)pWVar3->scanAccel * dVar8 + (double)pTVar2->scanSpeed);
+    pTVar2->scanSpeed = fVar10;
+    if (pWVar3->scanSpeed <= fVar10) {
+      pTVar2->scanSpeed = pWVar3->scanSpeed;
     }
-    *(float *)(iVar4 + 0x58) =
-         (float)((double)(float)((double)pTVar1->scanSpeed * dVar7) * dVar8 +
-                (double)*(float *)(iVar4 + 0x58));
+    (param_1->s).lerp.u.turret.gunAngles[1] =
+         (float)((double)(float)((double)pTVar2->scanSpeed * dVar7) * dVar8 +
+                (double)(param_1->s).lerp.u.turret.gunAngles[1]);
   }
-  __restfpr_28();
-  __restgprlr_27();
   return;
 }
 
 
 // 824BEEE8  Turret_CalculateConvergenceAngularVelocity  (game/turret.cpp:1383)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
 void Turret_CalculateConvergenceAngularVelocity(gentity_s *param_1,float *param_2,float *param_3)
 
 {
-  float fVar1;
+  Turret *pTVar1;
   float fVar2;
-  int iVar3;
-  ulonglong uVar4;
-  float *pfVar5;
+  float fVar3;
+  float fVar4;
+  int iVar5;
   int iVar6;
   int iVar7;
-  int iVar8;
+  double dVar8;
   double dVar9;
   double dVar10;
   double dVar11;
   double dVar12;
-  double dVar13;
-  double dVar14;
   
-  uVar4 = (ulonglong)(int)param_3;
-  __savegprlr_24(param_1);
-  iVar3 = __savefpr_28();
-  iVar6 = *(int *)(iVar3 + 0x15c);
-  if (iVar6 == 0) {
+  pTVar1 = param_1->turret;
+  if (pTVar1 == (Turret *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\turret.cpp",0x570,0,"%s")
     ;
   }
-  if ((uVar4 & 0xffffffff) == 0) {
+  if (param_3 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\turret.cpp",0x571,0,"%s")
     ;
   }
-  iVar8 = (*(int *)(iVar6 + 0x7c) - level.time) + *(int *)(iVar6 + 0x60);
-  iVar7 = (*(int *)(iVar6 + 0x78) - level.time) + *(int *)(iVar6 + 0x60);
-  if (*(int *)(iVar6 + 0x3c) == 1) {
-    if (level.time < *(int *)(iVar6 + 100)) {
+  iVar7 = (pTVar1->convergenceTime[1] - level.time) + pTVar1->targetTime;
+  iVar6 = (pTVar1->convergenceTime[0] - level.time) + pTVar1->targetTime;
+  if (pTVar1->state == 1) {
+    if (level.time < pTVar1->stateChangeTime) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\turret.cpp",0x579,0,
                       "turret->stateChangeTime <= level.time\n\t%i, %i");
     }
-    iVar6 = (*(int *)(iVar6 + 100) - level.time) + 0x5dc;
-    if (iVar7 < iVar6) {
-      iVar7 = iVar6;
+    iVar5 = (pTVar1->stateChangeTime - level.time) + 0x5dc;
+    if (iVar6 < iVar5) {
+      iVar6 = iVar5;
     }
   }
-  iVar6 = *(int *)(iVar3 + 0x198) - level.time;
-  dVar13 = 0.0027777778450399637;
-  dVar12 = 0.5;
-  dVar10 = (double)((*(float *)(iVar3 + 0x54) - *param_2) * 0.0027777778);
-  dVar9 = floor((double)(float)(dVar10 + 0.5));
-  dVar11 = 360.0;
-  dVar14 = (double)(float)((double)(*(float *)(iVar3 + 0x58) - param_2[1]) * dVar13);
-  dVar13 = ABS((double)((float)(dVar10 - (double)(float)dVar9) * 360.0));
-  dVar10 = floor((double)(float)(dVar14 + dVar12));
-  dVar9 = (double)(longlong)iVar6;
-  fVar1 = (float)((double)(float)(dVar13 * 1000.0) / dVar9);
-  pfVar5 = (float *)uVar4;
-  *pfVar5 = fVar1;
-  fVar2 = (float)((double)(ABS((float)((double)(float)(dVar14 - (double)(float)dVar10) * dVar11)) *
-                          1000.0) / dVar9);
-  pfVar5[1] = fVar2;
-  if ((0 < iVar8) && (iVar6 < iVar8)) {
-    pfVar5[1] = (float)(dVar9 / (double)(longlong)iVar8) * fVar2;
+  iVar5 = param_1->nextthink - level.time;
+  dVar12 = 0.0027777778450399637;
+  dVar11 = 0.5;
+  dVar9 = (double)(((param_1->s).lerp.u.turret.gunAngles[0] - *param_2) * 0.0027777778);
+  dVar8 = floor((double)(float)(dVar9 + 0.5));
+  dVar10 = 360.0;
+  dVar12 = (double)(float)((double)((param_1->s).lerp.u.turret.gunAngles[1] - param_2[1]) * dVar12);
+  dVar9 = ABS((double)((float)(dVar9 - (double)(float)dVar8) * 360.0));
+  dVar8 = floor((double)(float)(dVar12 + dVar11));
+  fVar2 = (float)(longlong)iVar5;
+  fVar3 = (float)(dVar9 * 1000.0) / fVar2;
+  *param_3 = fVar3;
+  fVar4 = (ABS((float)((double)(float)(dVar12 - (double)(float)dVar8) * dVar10)) * 1000.0) / fVar2;
+  param_3[1] = fVar4;
+  if ((0 < iVar7) && (iVar5 < iVar7)) {
+    param_3[1] = (fVar2 / (float)(longlong)iVar7) * fVar4;
   }
-  if ((0 < iVar7) && (iVar6 < iVar7)) {
-    *pfVar5 = (float)(dVar9 / (double)(longlong)iVar7) * fVar1;
+  if ((0 < iVar6) && (iVar5 < iVar6)) {
+    *param_3 = (fVar2 / (float)(longlong)iVar6) * fVar3;
   }
-  __restfpr_28();
-  __restgprlr_24();
   return;
 }
 
 
 // 824BF0F0  Turret_UpdateTargetAngles  (game/turret.cpp:1430)
 
-/* WARNING: Type propagation algorithm not settling */
+/* WARNING: Function: __savegprlr_20 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_20 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
@@ -1612,16 +1559,16 @@ bool Turret_UpdateTargetAngles(gentity_s *param_1,float *param_2,bool param_3)
   WeaponDef *pWVar3;
   float *pfVar4;
   bool bVar5;
-  gentity_s *pgVar6;
-  Weapon WVar7;
-  int iVar8;
-  undefined1 uVar9;
-  ulonglong uVar10;
-  undefined8 uVar11;
-  LerpEntityStateTypeUnion *pLVar12;
-  float *pfVar13;
-  float *pfVar14;
-  longlong lVar15;
+  Weapon WVar6;
+  int iVar7;
+  bool bVar8;
+  LerpEntityStateTypeUnion *pLVar9;
+  float *pfVar10;
+  float *pfVar11;
+  longlong lVar12;
+  double dVar13;
+  double dVar14;
+  double dVar15;
   double dVar16;
   double dVar17;
   double dVar18;
@@ -1629,38 +1576,28 @@ bool Turret_UpdateTargetAngles(gentity_s *param_1,float *param_2,bool param_3)
   double dVar20;
   double dVar21;
   double dVar22;
-  double dVar23;
-  double dVar24;
-  double dVar25;
   float local_c0 [48];
   
-  uVar10 = (ulonglong)param_3;
-  __savegprlr_20(param_1);
-  pgVar6 = (gentity_s *)__savefpr_23();
-  if ((pgVar6->s).eType != 0xb) {
+  if ((param_1->s).eType != 0xb) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\turret.cpp",0x5a2,0,"%s")
     ;
   }
-  pTVar2 = pgVar6->turret;
+  pTVar2 = param_1->turret;
   if (pTVar2 == (Turret *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\turret.cpp",0x5a5,0,"%s")
     ;
   }
   Turret_ScanStop(pTVar2);
-  uVar11 = 1;
+  bVar8 = true;
   bVar5 = true;
-  WVar7 = BG_GetAlternateWeapon((pgVar6->s).weapon,false);
-  dVar18 = (double)(pgVar6->s).lerp.u.turret.gunAngles[0];
-  pLVar12 = &(pgVar6->s).lerp.u;
-  pWVar3 = bg_weaponDefs[WVar7.data & 0xff];
-  (pgVar6->s).lerp.u.turret.gunAngles[0] =
-       (float)((double)(pgVar6->s).lerp.u.turret.gunAngles[2] + dVar18);
-  Turret_CalculateConvergenceAngularVelocity(pgVar6,param_2,local_c0);
-  if ((uVar10 & 0xff) == 0) {
-    local_c0[0] = 200.0;
-    local_c0[1] = 200.0;
-  }
-  else {
+  WVar6 = BG_GetAlternateWeapon((param_1->s).weapon,false);
+  dVar15 = (double)(param_1->s).lerp.u.turret.gunAngles[0];
+  pLVar9 = &(param_1->s).lerp.u;
+  pWVar3 = bg_weaponDefs[WVar6.data & 0xff];
+  (param_1->s).lerp.u.turret.gunAngles[0] =
+       (float)((double)(param_1->s).lerp.u.turret.gunAngles[2] + dVar15);
+  Turret_CalculateConvergenceAngularVelocity(param_1,param_2,local_c0);
+  if (param_3) {
     if (pWVar3->maxTurnSpeed[0] - local_c0[0] < 0.0) {
       local_c0[0] = pWVar3->maxTurnSpeed[0];
     }
@@ -1674,59 +1611,61 @@ bool Turret_UpdateTargetAngles(gentity_s *param_1,float *param_2,bool param_3)
       local_c0[1] = pWVar3->minTurnSpeed[1];
     }
   }
-  dVar22 = 360.0;
-  dVar21 = 5.0;
-  dVar23 = 0.5;
-  pfVar13 = local_c0;
-  dVar24 = 0.0027777778450399637;
-  pfVar14 = (pgVar6->s).lerp.apos.trDelta + 2;
-  dVar19 = 0.05000000074505806;
-  lVar15 = 2;
-  dVar20 = 0.0;
+  else {
+    local_c0[0] = 200.0;
+    local_c0[1] = 200.0;
+  }
+  dVar19 = 360.0;
+  dVar18 = 5.0;
+  dVar20 = 0.5;
+  pfVar10 = local_c0;
+  dVar21 = 0.0027777778450399637;
+  pfVar11 = (param_1->s).lerp.apos.trDelta + 2;
+  dVar16 = 0.05000000074505806;
+  lVar12 = 2;
+  dVar17 = 0.0;
   do {
-    dVar25 = (double)(float)((double)*pfVar13 * dVar19);
-    *pfVar13 = (float)((double)*pfVar13 * dVar19);
-    if (dVar25 <= dVar20) {
+    dVar22 = (double)(float)((double)*pfVar10 * dVar16);
+    *pfVar10 = (float)((double)*pfVar10 * dVar16);
+    if (dVar22 <= dVar17) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\turret.cpp",0x5cd,0,
                       "%s");
     }
-    dVar17 = (double)(float)((double)(*(float *)(((int)param_2 - (int)local_c0) + (int)pfVar13) -
-                                     pfVar14[1]) * dVar24);
-    dVar16 = floor((double)(float)(dVar17 + dVar23));
-    dVar16 = (double)(float)((double)(float)(dVar17 - (double)(float)dVar16) * dVar22);
-    if (dVar21 < ABS(dVar16)) {
+    dVar14 = (double)(float)((double)(*(float *)(((int)param_2 - (int)local_c0) + (int)pfVar10) -
+                                     pfVar11[1]) * dVar21);
+    dVar13 = floor((double)(float)(dVar14 + dVar20));
+    dVar13 = (double)(float)((double)(float)(dVar14 - (double)(float)dVar13) * dVar19);
+    if (dVar18 < ABS(dVar13)) {
       bVar5 = false;
     }
-    if ((dVar25 < dVar16) || (dVar25 = -dVar25, dVar16 < dVar25)) {
-      uVar11 = 0;
-      dVar16 = dVar25;
+    if ((dVar22 < dVar13) || (dVar22 = -dVar22, dVar13 < dVar22)) {
+      bVar8 = false;
+      dVar13 = dVar22;
     }
-    pfVar4 = pfVar14 + 1;
-    lVar15 = lVar15 + -1;
-    pfVar14 = pfVar14 + 1;
-    *pfVar14 = (float)((double)*pfVar4 + dVar16);
-    pfVar13 = pfVar13 + 1;
-  } while (lVar15 != 0);
-  fVar1 = (pLVar12->turret).gunAngles[0];
-  (pgVar6->s).lerp.u.turret.gunAngles[2] = fVar1;
-  dVar20 = (double)(float)((double)(float)((double)fVar1 - dVar18) * dVar24);
-  dVar19 = floor((double)(float)(dVar20 + dVar23));
-  dVar21 = (double)local_c0[0];
-  dVar20 = (double)(float)((double)(float)(dVar20 - (double)(float)dVar19) * dVar22);
-  dVar19 = dVar21;
-  if ((dVar21 < dVar20) || (dVar19 = -dVar21, dVar20 < -dVar21)) {
-    dVar20 = dVar19;
-    uVar11 = 0;
+    pfVar4 = pfVar11 + 1;
+    lVar12 = lVar12 + -1;
+    pfVar11 = pfVar11 + 1;
+    *pfVar11 = (float)((double)*pfVar4 + dVar13);
+    pfVar10 = pfVar10 + 1;
+  } while (lVar12 != 0);
+  fVar1 = (pLVar9->turret).gunAngles[0];
+  (param_1->s).lerp.u.turret.gunAngles[2] = fVar1;
+  dVar17 = (double)(float)((double)(float)((double)fVar1 - dVar15) * dVar21);
+  dVar16 = floor((double)(float)(dVar17 + dVar20));
+  dVar18 = (double)local_c0[0];
+  dVar17 = (double)(float)((double)(float)(dVar17 - (double)(float)dVar16) * dVar19);
+  dVar16 = dVar18;
+  if ((dVar18 < dVar17) || (dVar16 = -dVar18, dVar17 < -dVar18)) {
+    dVar17 = dVar16;
+    bVar8 = false;
   }
-  fVar1 = (pgVar6->s).lerp.u.turret.gunAngles[2];
-  (pLVar12->turret).gunAngles[0] = (float)(dVar20 + dVar18);
-  (pgVar6->s).lerp.u.turret.gunAngles[2] = fVar1 - (float)(dVar20 + dVar18);
-  if ((bVar5) && (iVar8 = EntHandle::isDefined(&pTVar2->target), iVar8 != 0)) {
-    Scr_Notify(pgVar6,scr_const.turret_on_target,0);
+  fVar1 = (param_1->s).lerp.u.turret.gunAngles[2];
+  (pLVar9->turret).gunAngles[0] = (float)(dVar17 + dVar15);
+  (param_1->s).lerp.u.turret.gunAngles[2] = fVar1 - (float)(dVar17 + dVar15);
+  if ((bVar5) && (iVar7 = EntHandle::isDefined(&pTVar2->target), iVar7 != 0)) {
+    Scr_Notify(param_1,scr_const.turret_on_target,0);
   }
-  __restfpr_23(uVar11);
-  uVar9 = __restgprlr_20();
-  return (bool)uVar9;
+  return bVar8;
 }
 
 
@@ -1760,6 +1699,8 @@ bool Turret_IsFiring(gentity_s *param_1)
 
 // 824BF418  Turret_SetState  (game/turret.cpp:1577)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
@@ -1768,31 +1709,25 @@ void Turret_SetState(gentity_s *param_1,int param_2)
 {
   Turret *pTVar1;
   Turret *pTVar2;
-  gentity_s *pgVar3;
-  longlong lVar4;
   
-  lVar4 = (longlong)param_2;
-  pgVar3 = (gentity_s *)__savegprlr_25(param_1);
-  pTVar1 = pgVar3->turret;
+  pTVar1 = param_1->turret;
   if (pTVar1 == (Turret *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\turret.cpp",0x62d,0,"%s")
     ;
   }
-  pTVar2 = pgVar3->turret;
+  pTVar2 = param_1->turret;
   if (pTVar2 == (Turret *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\turret.cpp",0x61f,0,"%s")
     ;
   }
-  if ((pTVar2->state != 0) != (lVar4 != 0)) {
-    Scr_Notify(pgVar3,scr_const.turretstatechange,0);
-    pTVar1->state = (int)lVar4;
+  if ((pTVar2->state != 0) != (param_2 != 0)) {
+    Scr_Notify(param_1,scr_const.turretstatechange,0);
+    pTVar1->state = param_2;
     pTVar1->stateChangeTime = level.time;
-    __restgprlr_25();
     return;
   }
-  pTVar1->state = (int)lVar4;
+  pTVar1->state = param_2;
   pTVar1->stateChangeTime = level.time;
-  __restgprlr_25();
   return;
 }
 
@@ -1824,6 +1759,8 @@ void Turret_ClearTargetEnt(gentity_s *param_1)
 
 // 824BF590  Turret_ReturnToDefaultPos  (game/turret.cpp:1613)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
@@ -1831,66 +1768,59 @@ bool Turret_ReturnToDefaultPos(gentity_s *param_1,bool param_2)
 
 {
   Turret *pTVar1;
-  gentity_s *pgVar2;
-  bool bVar3;
-  undefined1 uVar4;
-  ulonglong uVar5;
+  bool bVar2;
   float local_30 [12];
   
-  uVar5 = (ulonglong)param_2;
-  pgVar2 = (gentity_s *)__savegprlr_29(param_1);
-  pTVar1 = pgVar2->turret;
+  pTVar1 = param_1->turret;
   if (pTVar1 == (Turret *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\turret.cpp",0x652,0,"%s")
     ;
   }
-  if ((uVar5 & 0xff) == 0) {
-    local_30[0] = pTVar1->dropPitch;
-  }
-  else {
+  if (param_2) {
     local_30[0] = 0.0;
   }
+  else {
+    local_30[0] = pTVar1->dropPitch;
+  }
   local_30[1] = 0.0;
-  Turret_SetState(pgVar2,0);
-  bVar3 = Turret_UpdateTargetAngles(pgVar2,local_30,SUB81(uVar5,0));
-  uVar4 = __restgprlr_29(bVar3);
-  return (bool)uVar4;
+  Turret_SetState(param_1,0);
+  bVar2 = Turret_UpdateTargetAngles(param_1,local_30,param_2);
+  return bVar2;
 }
 
 
 // 824BF620  Turret_SetDefaultDropPitch  (game/turret.cpp:1633)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
 void Turret_SetDefaultDropPitch(gentity_s *param_1,float param_2)
 
 {
-  int iVar1;
-  double extraout_f1;
-  double dVar2;
+  double dVar1;
   
-  iVar1 = __savegprlr_29((double)param_2,param_1);
-  dVar2 = extraout_f1;
-  if (iVar1 == 0) {
+  dVar1 = (double)param_2;
+  if (param_1 == (gentity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\turret.cpp",0x662,0,"%s")
     ;
   }
-  if (*(int *)(iVar1 + 0x15c) == 0) {
+  if (param_1->turret == (Turret *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\turret.cpp",0x663,0,"%s")
     ;
-    *(float *)(*(int *)(iVar1 + 0x15c) + 0x1c) = (float)dVar2;
-    __restgprlr_29();
+    param_1->turret->dropPitch = (float)dVar1;
     return;
   }
-  *(float *)(*(int *)(iVar1 + 0x15c) + 0x1c) = (float)dVar2;
-  __restgprlr_29();
+  param_1->turret->dropPitch = (float)dVar1;
   return;
 }
 
 
 // 824BF6C0  Turret_RestoreDefaultDropPitch  (game/turret.cpp:1650)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
@@ -1898,13 +1828,12 @@ void Turret_RestoreDefaultDropPitch(gentity_s *param_1)
 
 {
   Turret *pTVar1;
-  gentity_s *pgVar2;
+  DObjAnimMat *pDVar2;
   DObjAnimMat *pDVar3;
-  DObjAnimMat *pDVar4;
-  int iVar5;
+  int iVar4;
+  double dVar5;
   double dVar6;
   double dVar7;
-  double dVar8;
   float local_140;
   float local_13c;
   float local_138;
@@ -1924,58 +1853,56 @@ void Turret_RestoreDefaultDropPitch(gentity_s *param_1)
   float afStack_b0 [12];
   trace_t local_80 [2];
   
-  pgVar2 = (gentity_s *)__savegprlr_27(param_1);
-  pTVar1 = pgVar2->turret;
+  pTVar1 = param_1->turret;
   if (pTVar1 == (Turret *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\turret.cpp",0x67b,0,"%s")
     ;
   }
-  pDVar3 = G_DObjGetLocalTagMatrix(pgVar2,(uint)scr_const.tag_aim);
-  if ((pDVar3 != (DObjAnimMat *)0x0) &&
-     (pDVar4 = G_DObjGetLocalTagMatrix(pgVar2,(uint)scr_const.tag_butt),
-     pDVar4 != (DObjAnimMat *)0x0)) {
-    AnglesToAxis((pgVar2->r).currentAngles,(float (*) [3])afStack_e0);
-    local_bc = (pgVar2->r).currentOrigin[0];
-    local_b8 = (pgVar2->r).currentOrigin[1];
-    local_b4 = (pgVar2->r).currentOrigin[2];
-    local_118 = pDVar4->trans[2] - pDVar3->trans[2];
-    local_11c = pDVar4->trans[1] - pDVar3->trans[1];
-    local_120 = pDVar4->trans[0] - pDVar3->trans[0];
-    MatrixTransformVector43(pDVar3->trans,(float (*) [3])afStack_e0,afStack_f8);
-    iVar5 = 0;
-    dVar6 = 1.0;
-    dVar8 = 0.0;
-    dVar7 = -3.0;
+  pDVar2 = G_DObjGetLocalTagMatrix(param_1,(uint)scr_const.tag_aim);
+  if ((pDVar2 != (DObjAnimMat *)0x0) &&
+     (pDVar3 = G_DObjGetLocalTagMatrix(param_1,(uint)scr_const.tag_butt),
+     pDVar3 != (DObjAnimMat *)0x0)) {
+    AnglesToAxis((param_1->r).currentAngles,(float (*) [3])afStack_e0);
+    local_bc = (param_1->r).currentOrigin[0];
+    local_b8 = (param_1->r).currentOrigin[1];
+    local_b4 = (param_1->r).currentOrigin[2];
+    local_118 = pDVar3->trans[2] - pDVar2->trans[2];
+    local_11c = pDVar3->trans[1] - pDVar2->trans[1];
+    local_120 = pDVar3->trans[0] - pDVar2->trans[0];
+    MatrixTransformVector43(pDVar2->trans,(float (*) [3])afStack_e0,afStack_f8);
+    iVar4 = 0;
+    dVar5 = 1.0;
+    dVar7 = 0.0;
+    dVar6 = -3.0;
     while( true ) {
-      local_110 = (longlong)iVar5;
-      local_12c = (float)dVar8;
-      local_128 = (float)dVar8;
-      local_130 = (float)((double)local_110 * dVar7);
+      local_110 = (longlong)iVar4;
+      local_12c = (float)dVar7;
+      local_128 = (float)dVar7;
+      local_130 = (float)((double)local_110 * dVar6);
       AnglesToAxis(&local_130,(float (*) [3])afStack_b0);
       MatrixTransformVector(&local_120,(float (*) [3])afStack_b0,&local_140);
-      local_140 = pDVar3->trans[0] + local_140;
-      local_13c = pDVar3->trans[1] + local_13c;
-      local_138 = pDVar3->trans[2] + local_138;
+      local_140 = pDVar2->trans[0] + local_140;
+      local_13c = pDVar2->trans[1] + local_13c;
+      local_138 = pDVar2->trans[2] + local_138;
       MatrixTransformVector43(&local_140,(float (*) [3])afStack_e0,afStack_108);
-      G_LocationalTrace(local_80,afStack_f8,afStack_108,(pgVar2->s).number,0x800811,
+      G_LocationalTrace(local_80,afStack_f8,afStack_108,(param_1->s).number,0x800811,
                         &bulletPriorityMap);
-      if ((double)local_80[0].fraction < dVar6) break;
-      iVar5 = iVar5 + 1;
-      if (0x1e < iVar5) {
-        __restgprlr_27();
+      if ((double)local_80[0].fraction < dVar5) break;
+      iVar4 = iVar4 + 1;
+      if (0x1e < iVar4) {
         return;
       }
     }
-    pTVar1->dropPitch = (pgVar2->s).lerp.u.turret.gunAngles[0] + local_130;
+    pTVar1->dropPitch = (param_1->s).lerp.u.turret.gunAngles[0] + local_130;
   }
-  __restgprlr_27();
   return;
 }
 
 
 // 824BF8C0  Turret_Think_Init  (game/turret.cpp:1702)
 
-/* WARNING: Type propagation algorithm not settling */
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
@@ -1983,38 +1910,37 @@ void Turret_Think_Init(gentity_s *param_1)
 
 {
   tagInfo_s *ptVar1;
-  gentity_s *pgVar2;
   
-  pgVar2 = (gentity_s *)__savegprlr_29(param_1);
-  if (pgVar2 == (gentity_s *)0x0) {
+  if (param_1 == (gentity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\turret.cpp",0x6a7,0,"%s")
     ;
   }
-  if (pgVar2->handler != '\x0e') {
+  if (param_1->handler != '\x0e') {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\turret.cpp",0x6a8,0,"%s")
     ;
   }
-  ptVar1 = pgVar2->tagInfo;
-  pgVar2->handler = '\x0f';
-  pgVar2->nextthink = level.time + 0x32;
-  (pgVar2->s).lerp.u.turret.gunAngles[2] = 0.0;
+  ptVar1 = param_1->tagInfo;
+  param_1->handler = '\x0f';
+  param_1->nextthink = level.time + 0x32;
+  (param_1->s).lerp.u.turret.gunAngles[2] = 0.0;
   if (ptVar1 != (tagInfo_s *)0x0) {
-    G_GeneralLink(pgVar2);
+    G_GeneralLink(param_1);
   }
-  if (pgVar2->turret == (Turret *)0x0) {
+  if (param_1->turret == (Turret *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\turret.cpp",0x6b2,0,"%s")
     ;
   }
-  if (pgVar2->turret->dropPitch == -90.0) {
-    Turret_RestoreDefaultDropPitch(pgVar2);
+  if (param_1->turret->dropPitch == -90.0) {
+    Turret_RestoreDefaultDropPitch(param_1);
   }
-  __restgprlr_29();
   return;
 }
 
 
 // 824BF9B8  Turret_CanTargetPoint  (game/turret.cpp:1724)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
@@ -2022,64 +1948,60 @@ bool Turret_CanTargetPoint(gentity_s *param_1,float *param_2,float *param_3,floa
 
 {
   Turret *pTVar1;
-  gentity_s *pgVar2;
-  int iVar3;
-  undefined1 uVar4;
-  float *pfVar5;
-  float *pfVar6;
+  int iVar2;
+  float *pfVar3;
+  float *pfVar4;
   float local_90;
   float fStack_8c;
   float local_88;
   float local_84;
   float local_80;
-  float local_78;
-  float local_74;
+  float local_78 [6];
   float afStack_60 [9];
   float local_3c;
   float local_38;
   float local_34;
   
-  pgVar2 = (gentity_s *)__savegprlr_28(param_1);
-  iVar3 = G_DObjGetWorldTagPos(pgVar2,(uint)scr_const.tag_aim,param_3);
-  if (iVar3 != 0) {
-    AnglesToAxis((pgVar2->r).currentAngles,(float (*) [3])afStack_60);
+  iVar2 = G_DObjGetWorldTagPos(param_1,(uint)scr_const.tag_aim,param_3);
+  if (iVar2 != 0) {
+    AnglesToAxis((param_1->r).currentAngles,(float (*) [3])afStack_60);
     local_3c = *param_3;
     local_38 = param_3[1];
     local_34 = param_3[2];
     MatrixTransposeTransformVector43(param_2,(float (*) [3])afStack_60,&local_88);
-    iVar3 = BG_GetMinDamage((pgVar2->s).weapon,false);
-    if ((iVar3 != 0) ||
-       (BG_GetDamageRange((pgVar2->s).weapon,false,&local_90,&fStack_8c),
+    iVar2 = BG_GetMinDamage((param_1->s).weapon,false);
+    if ((iVar2 != 0) ||
+       (BG_GetDamageRange((param_1->s).weapon,false,&local_90,&fStack_8c),
        local_80 * local_80 + local_84 * local_84 + local_88 * local_88 < local_90 * local_90)) {
-      vectosignedangles(&local_88,&local_78);
-      pTVar1 = pgVar2->turret;
+      vectosignedangles(&local_88,local_78);
+      pTVar1 = param_1->turret;
       if (pTVar1 == (Turret *)0x0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\turret.cpp",0x6db,0,
                         "%s");
       }
-      iVar3 = 0;
-      pfVar5 = &local_78;
-      pfVar6 = pTVar1->arcmin;
-      while ((*pfVar5 <= pfVar6[2] && (*pfVar6 <= *pfVar5))) {
-        iVar3 = iVar3 + 1;
-        pfVar5 = pfVar5 + 1;
-        pfVar6 = pfVar6 + 1;
-        if (1 < iVar3) {
-          *param_4 = local_78;
-          param_4[1] = local_74;
-          uVar4 = __restgprlr_28(1);
-          return (bool)uVar4;
+      iVar2 = 0;
+      pfVar3 = local_78;
+      pfVar4 = pTVar1->arcmin;
+      while ((*pfVar3 <= pfVar4[2] && (*pfVar4 <= *pfVar3))) {
+        iVar2 = iVar2 + 1;
+        pfVar3 = pfVar3 + 1;
+        pfVar4 = pfVar4 + 1;
+        if (1 < iVar2) {
+          *param_4 = local_78[0];
+          param_4[1] = local_78[1];
+          return true;
         }
       }
     }
   }
-  uVar4 = __restgprlr_28(0);
-  return (bool)uVar4;
+  return false;
 }
 
 
 // 824BFB10  Turret_CanTargetSentient_GetTargetPosInternal  (game/turret.cpp:1772)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
@@ -2088,70 +2010,55 @@ float Turret_CanTargetSentient_GetTargetPosInternal
                 float *param_6)
 
 {
-  float *pfVar1;
-  float *pfVar2;
-  gentity_s *pgVar3;
-  ulonglong uVar4;
-  ulonglong uVar5;
-  ulonglong uVar6;
-  ulonglong uVar7;
-  double dVar8;
   float local_70;
   float local_6c;
   float local_68;
   float local_60;
   float local_5c;
   
-  uVar7 = (ulonglong)(int)param_6;
-  uVar6 = (ulonglong)(int)param_5;
-  uVar5 = (ulonglong)(int)param_3;
-  uVar4 = (ulonglong)(int)param_2;
-  pgVar3 = (gentity_s *)__savegprlr_24(param_1);
-  if (pgVar3 == (gentity_s *)0x0) {
+  if (param_1 == (gentity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\turret.cpp",0x6f0,0,"%s")
     ;
   }
-  if ((uVar4 & 0xffffffff) == 0) {
+  if (param_2 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\turret.cpp",0x6f1,0,"%s")
     ;
   }
-  if ((uVar5 & 0xffffffff) == 0) {
+  if (param_3 == (float (*) [3])0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\turret.cpp",0x6f2,0,"%s")
     ;
   }
-  if ((uVar6 & 0xffffffff) == 0) {
+  if (param_5 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\turret.cpp",0x6f3,0,"%s")
     ;
   }
-  if ((uVar7 & 0xffffffff) == 0) {
+  if (param_6 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\turret.cpp",0x6f4,0,"%s")
     ;
   }
-  pfVar2 = (float *)uVar6;
-  pfVar1 = (float *)uVar4;
   if (param_4 == 0) {
-    *pfVar2 = *pfVar1 + (pgVar3->r).currentOrigin[0];
-    pfVar2[1] = (pgVar3->r).currentOrigin[1] + pfVar1[1];
-    pfVar2[2] = (pgVar3->r).currentOrigin[2] + pfVar1[2] + 2.0;
+    *param_5 = *param_2 + (param_1->r).currentOrigin[0];
+    param_5[1] = (param_1->r).currentOrigin[1] + param_2[1];
+    param_5[2] = (param_1->r).currentOrigin[2] + param_2[2] + 2.0;
   }
   else {
-    Turret_GetTargetEyePosition(pgVar3,pfVar2);
-    *pfVar2 = *pfVar1 + *pfVar2;
-    pfVar2[1] = pfVar1[1] + pfVar2[1];
-    pfVar2[2] = pfVar1[2] + pfVar2[2];
+    Turret_GetTargetEyePosition(param_1,param_5);
+    *param_5 = *param_2 + *param_5;
+    param_5[1] = param_2[1] + param_5[1];
+    param_5[2] = param_2[2] + param_5[2];
   }
-  MatrixTransposeTransformVector43(pfVar2,(float (*) [3])uVar5,&local_70);
+  MatrixTransposeTransformVector43(param_5,param_3,&local_70);
   vectosignedangles(&local_70,&local_60);
-  *(float *)uVar7 = local_60;
-  ((float *)uVar7)[1] = local_5c;
-  dVar8 = (double)__restgprlr_24((double)(local_70 * local_70 +
-                                         local_6c * local_6c + local_68 * local_68));
-  return (float)dVar8;
+  *param_6 = local_60;
+  param_6[1] = local_5c;
+  return local_70 * local_70 + local_6c * local_6c + local_68 * local_68;
 }
 
 
 // 824BFCC8  Turret_CanTargetSentient  (game/turret.cpp:1812)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
@@ -2163,17 +2070,12 @@ bool Turret_CanTargetSentient
   float fVar1;
   float fVar2;
   Turret *pTVar3;
-  gentity_s *pgVar4;
-  uint uVar5;
-  gentity_s *pgVar6;
-  int iVar7;
-  bool bVar8;
-  undefined1 uVar9;
-  ulonglong uVar10;
-  gclient_s *pgVar11;
-  double dVar12;
-  float fVar13;
-  float fVar14;
+  uint uVar4;
+  int iVar5;
+  bool bVar6;
+  gclient_s *pgVar7;
+  double dVar8;
+  float fVar9;
   int local_a0;
   float local_9c;
   int iStack_98;
@@ -2183,78 +2085,91 @@ bool Turret_CanTargetSentient
   float local_68;
   float local_64;
   
-  uVar10 = (ulonglong)(int)param_2;
-  pgVar6 = (gentity_s *)__savegprlr_23(param_1);
-  iVar7 = G_DObjGetWorldTagPos(pgVar6,(uint)scr_const.tag_aim,param_5);
-  if (iVar7 == 0) goto LAB_824bff98;
-  if ((uVar10 & 0xffffffff) == 0) {
+  iVar5 = G_DObjGetWorldTagPos(param_1,(uint)scr_const.tag_aim,param_5);
+  if (iVar5 == 0) {
+    return false;
+  }
+  if (param_2 == (gentity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\turret.cpp",0x722,0,"%s")
     ;
   }
-  pgVar4 = (gentity_s *)uVar10;
-  pgVar11 = pgVar4->client;
-  if ((pgVar11 != (gclient_s *)0x0) &&
-     ((((iVar7 = (pgVar11->ps).vehicleState.entity, iVar7 == 0x7ff ||
-        (g_entities[iVar7].s.eType != 0xe)) &&
-       ((bVar8 = BG_HasPerk((pgVar11->ps).perks,0x25), bVar8 ||
-        (pgVar11 = pgVar4->client, ((pgVar11->ps).eFlags & 0x20U) != 0)))) ||
-      (((pgVar11->ps).otherFlags & 0x800U) != 0)))) goto LAB_824bff98;
-  pTVar3 = pgVar6->turret;
+  pgVar7 = param_2->client;
+  if (pgVar7 != (gclient_s *)0x0) {
+    iVar5 = (pgVar7->ps).vehicleState.entity;
+    if ((iVar5 == 0x7ff) || (g_entities[iVar5].s.eType != 0xe)) {
+      bVar6 = BG_HasPerk((pgVar7->ps).perks,0x25);
+      if (bVar6) {
+        return false;
+      }
+      pgVar7 = param_2->client;
+      if (((pgVar7->ps).eFlags & 0x20U) != 0) {
+        return false;
+      }
+    }
+    if (((pgVar7->ps).otherFlags & 0x800U) != 0) {
+      return false;
+    }
+  }
+  pTVar3 = param_1->turret;
   if (pTVar3 == (Turret *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\turret.cpp",0x739,0,"%s")
     ;
   }
-  AnglesToAxis((pgVar6->r).currentAngles,(float (*) [3])afStack_90);
+  AnglesToAxis((param_1->r).currentAngles,(float (*) [3])afStack_90);
   local_6c = *param_5;
   local_68 = param_5[1];
   local_64 = param_5[2];
-  uVar5 = (uint)LZCOUNT(pTVar3->state + -1) >> 5;
-  fVar13 = Turret_CanTargetSentient_GetTargetPosInternal
-                     (pgVar4,param_3,(float (*) [3])afStack_90,uVar5,param_4,param_6);
-  dVar12 = (double)fVar13;
-  if ((pTVar3->arcmax[1] < param_6[1]) || (param_6[1] < pTVar3->arcmin[1])) goto LAB_824bff98;
-  BG_GetPlayerDamage((pgVar6->s).weapon,false,&iStack_98,&local_a0);
-  if (pgVar4->client == (gclient_s *)0x0) {
+  uVar4 = (uint)LZCOUNT(pTVar3->state + -1) >> 5;
+  fVar9 = Turret_CanTargetSentient_GetTargetPosInternal
+                    (param_2,param_3,(float (*) [3])afStack_90,uVar4,param_4,param_6);
+  dVar8 = (double)fVar9;
+  if (pTVar3->arcmax[1] < param_6[1]) {
+    return false;
+  }
+  if (param_6[1] < pTVar3->arcmin[1]) {
+    return false;
+  }
+  BG_GetPlayerDamage((param_1->s).weapon,false,&iStack_98,&local_a0);
+  if (param_2->client == (gclient_s *)0x0) {
 LAB_824bfe84:
-    iVar7 = BG_GetMinDamage((pgVar6->s).weapon,false);
-    if (iVar7 == 0) {
-LAB_824bfe98:
-      BG_GetDamageRange((pgVar6->s).weapon,false,&local_9c,&fStack_94);
-      if ((double)(local_9c * local_9c) <= dVar12) goto LAB_824bff98;
-    }
+    iVar5 = BG_GetMinDamage((param_1->s).weapon,false);
+    if (iVar5 != 0) goto LAB_824bfebc;
   }
-  else {
-    if (local_a0 == 0) goto LAB_824bfe98;
-    if (pgVar4->client == (gclient_s *)0x0) goto LAB_824bfe84;
+  else if (local_a0 != 0) {
+    if (param_2->client != (gclient_s *)0x0) goto LAB_824bfebc;
+    goto LAB_824bfe84;
   }
-  fVar13 = *param_6;
-  if ((pTVar3->arcmin[0] <= fVar13) && (fVar13 <= pTVar3->arcmax[0])) {
-LAB_824bfed8:
-    uVar9 = __restgprlr_23(1);
-    return (bool)uVar9;
+  BG_GetDamageRange((param_1->s).weapon,false,&local_9c,&fStack_94);
+  if ((double)(local_9c * local_9c) <= dVar8) {
+    return false;
+  }
+LAB_824bfebc:
+  fVar9 = *param_6;
+  if ((pTVar3->arcmin[0] <= fVar9) && (fVar9 <= pTVar3->arcmax[0])) {
+    return true;
   }
   fVar1 = pTVar3->arcmax[0];
-  fVar14 = Turret_CanTargetSentient_GetTargetPosInternal
-                     (pgVar4,param_3,(float (*) [3])afStack_90,(uint)LZCOUNT(uVar5) >> 5,param_4,
-                      param_6);
+  Turret_CanTargetSentient_GetTargetPosInternal
+            (param_2,param_3,(float (*) [3])afStack_90,(uint)LZCOUNT(uVar4) >> 5,param_4,param_6);
   if ((param_6[1] <= pTVar3->arcmax[1]) && (pTVar3->arcmin[1] <= param_6[1])) {
     fVar2 = *param_6;
-    if ((fVar2 <= pTVar3->arcmax[0]) && (pTVar3->arcmin[0] <= fVar2)) goto LAB_824bfed8;
-    if (fVar1 < fVar13 != pTVar3->arcmax[0] < fVar2) {
+    if ((fVar2 <= pTVar3->arcmax[0]) && (pTVar3->arcmin[0] <= fVar2)) {
+      return true;
+    }
+    if (fVar1 < fVar9 != pTVar3->arcmax[0] < fVar2) {
       *param_6 = 0.0;
       param_4[2] = param_5[2];
-      uVar9 = __restgprlr_23((double)fVar14,1);
-      return (bool)uVar9;
+      return true;
     }
   }
-LAB_824bff98:
-  uVar9 = __restgprlr_23(0);
-  return (bool)uVar9;
+  return false;
 }
 
 
 // 824BFFA8  Turret_UpdateShootingState  (game/turret.cpp:1909)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
@@ -2263,51 +2178,51 @@ void Turret_UpdateShootingState(gentity_s *param_1,int param_2,float *param_3)
 {
   Turret *pTVar1;
   int iVar2;
-  gentity_s *pgVar3;
-  int iVar4;
-  double dVar5;
-  float fVar6;
+  int iVar3;
+  double dVar4;
+  float fVar5;
   
-  pgVar3 = (gentity_s *)__savegprlr_28(param_1);
-  pTVar1 = pgVar3->turret;
+  pTVar1 = param_1->turret;
   if (pTVar1 == (Turret *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\turret.cpp",0x77a,0,"%s")
     ;
   }
   if (param_2 == 0) {
-    Turret_SetState(pgVar3,0);
+    Turret_SetState(param_1,0);
   }
   else {
     iVar2 = pTVar1->targetTime;
-    iVar4 = pTVar1->convergenceTime[1] - level.time;
+    iVar3 = pTVar1->convergenceTime[1] - level.time;
     if (pTVar1->state == 0) {
       if (level.time < iVar2 + 0xfa) {
-        fVar6 = AngleSubtract((pgVar3->s).lerp.u.turret.gunAngles[0],*param_3);
-        dVar5 = 5.0;
-        if ((5.0 <= ABS(fVar6)) ||
-           (fVar6 = AngleSubtract((pgVar3->s).lerp.u.turret.gunAngles[1],param_3[1]),
-           dVar5 <= ABS((double)fVar6))) goto LAB_824c00b4;
+        fVar5 = AngleSubtract((param_1->s).lerp.u.turret.gunAngles[0],*param_3);
+        dVar4 = 5.0;
+        if (5.0 <= ABS(fVar5)) {
+          return;
+        }
+        fVar5 = AngleSubtract((param_1->s).lerp.u.turret.gunAngles[1],param_3[1]);
+        if (dVar4 <= ABS((double)fVar5)) {
+          return;
+        }
       }
-      Turret_SetState(pgVar3,2);
+      Turret_SetState(param_1,2);
     }
     else if (pTVar1->state != 2) {
-      __restgprlr_28();
       return;
     }
-    if (iVar4 + iVar2 < 1) {
-      Turret_SetState(pgVar3,1);
-      __restgprlr_28();
+    if (iVar3 + iVar2 < 1) {
+      Turret_SetState(param_1,1);
       return;
     }
   }
-LAB_824c00b4:
-  __restgprlr_28();
   return;
 }
 
 
 // 824C00C0  Turret_AimAtVector_Internal  (game/turret.cpp:1952)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
@@ -2315,84 +2230,77 @@ void Turret_AimAtVector_Internal(gentity_s *param_1,float *param_2,int param_3,f
 
 {
   Turret *pTVar1;
-  gentity_s *pgVar2;
   
-  pgVar2 = (gentity_s *)__savegprlr_27(param_1);
-  pTVar1 = pgVar2->turret;
+  pTVar1 = param_1->turret;
   if (pTVar1 == (Turret *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\turret.cpp",0x7a4,0,"%s")
     ;
   }
-  Turret_UpdateShootingState(pgVar2,param_3,param_4);
+  Turret_UpdateShootingState(param_1,param_3,param_4);
   pTVar1->flags = pTVar1->flags | 0x20;
   pTVar1->targetPos[0] = *param_2;
   pTVar1->targetPos[1] = param_2[1];
   pTVar1->targetPos[2] = param_2[2];
-  __restgprlr_27();
   return;
 }
 
 
 // 824C0148  Turret_AimAtVector  (game/turret.cpp:1969)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
 bool Turret_AimAtVector(gentity_s *param_1,float *param_2,int param_3,float *param_4)
 
 {
-  gentity_s *pgVar1;
-  bool bVar2;
-  undefined1 uVar3;
+  bool bVar1;
   float afStack_40 [16];
   
-  pgVar1 = (gentity_s *)__savegprlr_28(param_1);
-  bVar2 = Turret_CanTargetPoint(pgVar1,param_2,afStack_40,param_4);
-  if (!bVar2) {
-    if (pgVar1->turret == (Turret *)0x0) {
+  bVar1 = Turret_CanTargetPoint(param_1,param_2,afStack_40,param_4);
+  if (!bVar1) {
+    if (param_1->turret == (Turret *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\turret.cpp",0x7b7,0,
                       "%s");
     }
-    pgVar1->turret->flags = pgVar1->turret->flags & 0xffffffdf;
-    Turret_UpdateShootingState(pgVar1,param_3,param_4);
-    uVar3 = __restgprlr_28(0);
-    return (bool)uVar3;
+    param_1->turret->flags = param_1->turret->flags & 0xffffffdf;
+    Turret_UpdateShootingState(param_1,param_3,param_4);
+    return false;
   }
-  Turret_AimAtVector_Internal(pgVar1,param_2,param_3,param_4);
-  uVar3 = __restgprlr_28(1);
-  return (bool)uVar3;
+  Turret_AimAtVector_Internal(param_1,param_2,param_3,param_4);
+  return true;
 }
 
 
 // 824C01F8  Turret_SetTargetEnt  (game/turret.cpp:1990)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
 void Turret_SetTargetEnt(gentity_s *param_1,gentity_s *param_2,float *param_3)
 
 {
-  float fVar1;
+  Turret *pTVar1;
   float fVar2;
   float fVar3;
-  int iVar4;
+  float fVar4;
   EntHandle *this;
   int iVar5;
   gentity_s *pgVar6;
-  ulonglong uVar7;
   
-  uVar7 = (ulonglong)(int)param_2;
-  iVar4 = __savegprlr_27(param_1);
-  iVar4 = *(int *)(iVar4 + 0x15c);
-  if ((uVar7 & 0xffffffff) == 0) {
+  pTVar1 = param_1->turret;
+  if (param_2 == (gentity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\turret.cpp",0x7cc,0,"%s")
     ;
   }
-  if (iVar4 == 0) {
+  if (pTVar1 == (Turret *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\turret.cpp",0x7cd,0,"%s")
     ;
   }
-  this = (EntHandle *)(iVar4 + 0x40);
+  this = &pTVar1->target;
   iVar5 = EntHandle::isDefined(this);
   if (iVar5 == 0) {
     pgVar6 = (gentity_s *)0x0;
@@ -2400,46 +2308,44 @@ void Turret_SetTargetEnt(gentity_s *param_1,gentity_s *param_2,float *param_3)
   else {
     pgVar6 = EntHandle::ent(this);
   }
-  if (ZEXT48(pgVar6) == (uVar7 & 0xffffffff)) {
-    fVar3 = param_3[2] - *(float *)(iVar4 + 0x4c);
-    fVar1 = *param_3 - *(float *)(iVar4 + 0x44);
-    fVar2 = param_3[1] - *(float *)(iVar4 + 0x48);
-    if (fVar2 * fVar2 + fVar1 * fVar1 + fVar3 * fVar3 <= 0.001) goto LAB_824c0314;
+  if ((pgVar6 != param_2) ||
+     (fVar2 = param_3[2] - pTVar1->targetOffset[2], fVar3 = *param_3 - pTVar1->targetOffset[0],
+     fVar4 = param_3[1] - pTVar1->targetOffset[1],
+     0.001 < fVar4 * fVar4 + fVar3 * fVar3 + fVar2 * fVar2)) {
+    EntHandle::setEnt(this,param_2);
+    iVar5 = level.time;
+    pTVar1->flags = pTVar1->flags & 0xffffffbf;
+    pTVar1->targetTime = iVar5;
+    pTVar1->targetOffset[0] = *param_3;
+    pTVar1->targetOffset[1] = param_3[1];
+    pTVar1->targetOffset[2] = param_3[2];
   }
-  EntHandle::setEnt(this,(gentity_s *)uVar7);
-  iVar5 = level.time;
-  *(uint *)(iVar4 + 4) = *(uint *)(iVar4 + 4) & 0xffffffbf;
-  *(int *)(iVar4 + 0x60) = iVar5;
-  *(float *)(iVar4 + 0x44) = *param_3;
-  *(float *)(iVar4 + 0x48) = param_3[1];
-  *(float *)(iVar4 + 0x4c) = param_3[2];
-LAB_824c0314:
-  __restgprlr_27();
   return;
 }
 
 
 // 824C0320  Turret_SightTrace  (game/turret.cpp:2014)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 int Turret_SightTrace(float *param_1,float *param_2,int param_3,int param_4)
 
 {
-  float *pfVar1;
-  int iVar2;
   int local_30 [12];
   
-  pfVar1 = (float *)__savegprlr_28(param_1);
   local_30[0] = 0;
   Profile_Begin(0xe8);
-  SV_SightTrace(local_30,pfVar1,param_2,&bounds_origin,param_3,param_4,0x801803);
+  SV_SightTrace(local_30,param_1,param_2,&bounds_origin,param_3,param_4,0x801803);
   Profile_EndInternal((double *)0x0);
-  iVar2 = __restgprlr_28(local_30[0]);
-  return iVar2;
+  return local_30[0];
 }
 
 
 // 824C0388  Turret_CanConvergeOnHeadOffset  (game/turret.cpp:2059)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
@@ -2447,10 +2353,7 @@ int Turret_CanConvergeOnHeadOffset(gentity_s *param_1,gentity_s *param_2,float *
 
 {
   Turret *pTVar1;
-  gentity_s *pgVar2;
-  gentity_s *pgVar3;
-  int iVar4;
-  ulonglong uVar5;
+  int iVar2;
   float local_70;
   float local_6c;
   float local_68;
@@ -2459,57 +2362,53 @@ int Turret_CanConvergeOnHeadOffset(gentity_s *param_1,gentity_s *param_2,float *
   float local_58;
   float afStack_50 [20];
   
-  uVar5 = (ulonglong)(int)param_2;
-  pgVar2 = (gentity_s *)__savegprlr_26(param_1);
-  if (pgVar2 == (gentity_s *)0x0) {
+  if (param_1 == (gentity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\turret.cpp",0x816,0,"%s")
     ;
   }
-  if ((uVar5 & 0xffffffff) == 0) {
+  if (param_2 == (gentity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\turret.cpp",0x817,0,"%s")
     ;
   }
-  pTVar1 = pgVar2->turret;
+  pTVar1 = param_1->turret;
   if (pTVar1 == (Turret *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\turret.cpp",0x81a,0,"%s")
     ;
   }
-  if ((pTVar1->state == 1) && (pTVar1->convergenceHeightPercent < 1.0)) {
-    pgVar3 = (gentity_s *)uVar5;
-    Turret_GetTargetEyePosition(pgVar3,&local_60);
+  if (((uint)LZCOUNT(pTVar1->state + -1) >> 5 != 0) && (pTVar1->convergenceHeightPercent < 1.0)) {
+    Turret_GetTargetEyePosition(param_2,&local_60);
     local_70 = *param_3 + local_60;
     local_6c = param_3[1] + local_5c;
     local_68 = param_3[2] + local_58;
-    iVar4 = G_DObjGetWorldTagPos(pgVar2,(uint)scr_const.tag_aim,afStack_50);
-    if (iVar4 == 0) {
-      SL_ConvertToString((uint)pgVar2->classname);
+    iVar2 = G_DObjGetWorldTagPos(param_1,(uint)scr_const.tag_aim,afStack_50);
+    if (iVar2 == 0) {
+      SL_ConvertToString((uint)param_1->classname);
       SL_ConvertToStringSafe((uint)scr_const.tag_aim);
       Com_Error(ERR_DROP,"\x15Couldn\'t find tag \"%s\" on turret (entity %d, classname \'%s\').\n")
       ;
     }
-    iVar4 = Turret_SightTrace(afStack_50,&local_70,(pgVar2->s).number,(pgVar3->s).number);
+    iVar2 = Turret_SightTrace(afStack_50,&local_70,(param_1->s).number,(param_2->s).number);
     if ((turretConvergenceHeightDebug->current).enabled != false) {
-      if (0 < iVar4) {
+      if (0 < iVar2) {
         G_DebugLineWithDuration(afStack_50,&local_70,colorRed,0,0x19);
         local_70 = local_60;
         local_6c = local_5c;
         local_68 = local_58;
-        G_DebugLineWithDuration((pgVar3->r).currentOrigin,&local_70,colorRed,0,0x19);
-        iVar4 = __restgprlr_26(iVar4 == 0);
-        return iVar4;
+        G_DebugLineWithDuration((param_2->r).currentOrigin,&local_70,colorRed,0,0x19);
+        return (uint)LZCOUNT(iVar2) >> 5;
       }
-      G_DebugLine((pgVar3->r).currentOrigin,&local_70,colorLtGreen,0);
+      G_DebugLine((param_2->r).currentOrigin,&local_70,colorLtGreen,0);
     }
-    iVar4 = __restgprlr_26(iVar4 == 0);
-    return iVar4;
+    return (uint)LZCOUNT(iVar2) >> 5;
   }
-  iVar4 = __restgprlr_26(0);
-  return iVar4;
+  return 0;
 }
 
 
 // 824C05B0  Turret_AimAtSentient_Internal  (game/turret.cpp:2117)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
@@ -2520,17 +2419,11 @@ bool Turret_AimAtSentient_Internal
 {
   float fVar1;
   Turret *pTVar2;
-  gentity_s *pgVar3;
-  float fVar4;
-  gentity_s *pgVar5;
-  int iVar6;
-  bool bVar7;
-  undefined1 uVar8;
-  ulonglong uVar9;
-  double dVar10;
-  double dVar11;
-  double dVar12;
-  double dVar13;
+  float fVar3;
+  int iVar4;
+  bool bVar5;
+  double dVar6;
+  double dVar7;
   float local_f0;
   float local_ec;
   undefined8 local_e8;
@@ -2550,18 +2443,15 @@ bool Turret_AimAtSentient_Internal
   float local_6c;
   float local_68;
   
-  uVar9 = (ulonglong)(int)param_2;
-  pgVar5 = (gentity_s *)__savegprlr_24(param_1);
-  if (pgVar5 == (gentity_s *)0x0) {
+  if (param_1 == (gentity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\turret.cpp",0x854,0,"%s")
     ;
   }
-  if ((uVar9 & 0xffffffff) == 0) {
+  if (param_2 == (gentity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\turret.cpp",0x855,0,"%s")
     ;
   }
-  pgVar3 = (gentity_s *)uVar9;
-  if (pgVar3->client == (gclient_s *)0x0) {
+  if (param_2->client == (gclient_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\turret.cpp",0x857,0,"%s")
     ;
   }
@@ -2569,10 +2459,10 @@ bool Turret_AimAtSentient_Internal
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\turret.cpp",0x85c,0,"%s")
     ;
   }
-  Turret_SetTargetEnt(pgVar5,pgVar3,param_3);
-  Turret_GetEnemyHeightOffset(pgVar5,pgVar3,(float *)&local_e8);
-  iVar6 = Turret_CanConvergeOnHeadOffset(pgVar5,pgVar3,(float *)&local_e8);
-  if (iVar6 == 0) {
+  Turret_SetTargetEnt(param_1,param_2,param_3);
+  Turret_GetEnemyHeightOffset(param_1,param_2,(float *)&local_e8);
+  iVar4 = Turret_CanConvergeOnHeadOffset(param_1,param_2,(float *)&local_e8);
+  if (iVar4 == 0) {
     local_e0 = param_3[2];
     local_e8 = *(longlong *)param_3;
   }
@@ -2580,32 +2470,32 @@ bool Turret_AimAtSentient_Internal
     local_e0 = param_3[2] + local_e0;
     local_e8 = CONCAT44(*param_3 + local_e8._0_4_,param_3[1] + local_e8._4_4_);
   }
-  dVar12 = (double)local_e0;
-  pTVar2 = pgVar5->turret;
+  dVar6 = (double)local_e0;
+  pTVar2 = param_1->turret;
   if (pTVar2 == (Turret *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\turret.cpp",0x86b,0,"%s")
     ;
   }
-  bVar7 = Turret_CanTargetSentient(pgVar5,pgVar3,(float *)&local_e8,&local_d8,afStack_a8,param_6);
-  if (!bVar7) {
+  bVar5 = Turret_CanTargetSentient(param_1,param_2,(float *)&local_e8,&local_d8,afStack_a8,param_6);
+  if (!bVar5) {
     pTVar2->flags = pTVar2->flags & 0xffffffdf;
-    Turret_UpdateShootingState(pgVar5,param_4,param_6);
-LAB_824c0764:
-    uVar8 = __restgprlr_24(0);
-    return (bool)uVar8;
+    Turret_UpdateShootingState(param_1,param_4,param_6);
+    return false;
   }
   if (0 < (longlong)
           (((ulonglong)(uint)pTVar2->convergenceTime[1] - (ulonglong)(uint)level.time) +
           (ulonglong)(uint)pTVar2->targetTime)) {
     if ((pTVar2->flags & 0x40U) == 0) {
       pTVar2->flags = pTVar2->flags | 0x40;
-      iVar6 = G_DObjGetWorldTagMatrix(pgVar5,(uint)scr_const.tag_aim,(float (*) [3])&local_90);
-      if (iVar6 == 0) goto LAB_824c0764;
+      iVar4 = G_DObjGetWorldTagMatrix(param_1,(uint)scr_const.tag_aim,(float (*) [3])&local_90);
+      if (iVar4 == 0) {
+        return false;
+      }
       local_f0 = local_d4 - local_68;
       local_ec = local_6c - local_d8;
       Vec2Normalize(&local_f0);
       local_f0 = local_f0 * 63.0;
-      dVar13 = 0.0;
+      dVar7 = 0.0;
       local_ec = local_ec * 63.0;
       if (local_8c * local_ec + local_90 * local_f0 < 0.0) {
         local_c8 = local_d8 - local_f0;
@@ -2615,52 +2505,49 @@ LAB_824c0764:
         local_c8 = local_d8 + local_f0;
         local_c4 = local_ec + local_d4;
       }
-      local_c0 = (float)((double)(pgVar3->r).currentOrigin[2] + dVar12);
-      bVar7 = Turret_AimAtVector(pgVar5,&local_c8,param_4,param_6);
-      if (bVar7) {
-        local_d8 = local_c8 - local_d8;
-        pTVar2->missOffsetNormalized[0] = local_d8;
-        local_d4 = local_c4 - local_d4;
-        pTVar2->missOffsetNormalized[1] = local_d4;
-        local_d0 = local_c0 - local_d0;
-        pTVar2->missOffsetNormalized[2] = local_d0;
-        fVar4 = SQRT(local_d0 * local_d0 + local_d8 * local_d8 + local_d4 * local_d4);
+      local_c0 = (float)((double)(param_2->r).currentOrigin[2] + dVar6);
+      bVar5 = Turret_AimAtVector(param_1,&local_c8,param_4,param_6);
+      if (bVar5) {
+        local_c8 = local_c8 - local_d8;
+        pTVar2->missOffsetNormalized[0] = local_c8;
+        local_c4 = local_c4 - local_d4;
+        pTVar2->missOffsetNormalized[1] = local_c4;
+        local_c0 = local_c0 - local_d0;
+        pTVar2->missOffsetNormalized[2] = local_c0;
+        fVar3 = SQRT(local_c0 * local_c0 + local_c8 * local_c8 + local_c4 * local_c4);
         fVar1 = 1.0;
-        if (-fVar4 < 0.0) {
-          fVar1 = fVar4;
+        if (-fVar3 < 0.0) {
+          fVar1 = fVar3;
         }
         fVar1 = 1.0 / fVar1;
-        pTVar2->missOffsetNormalized[0] = local_d8 * fVar1;
-        pTVar2->missOffsetNormalized[1] = local_d4 * fVar1;
-        pTVar2->missOffsetNormalized[2] = local_d0 * fVar1;
-        uVar8 = __restgprlr_24(1);
-        return (bool)uVar8;
+        pTVar2->missOffsetNormalized[0] = local_c8 * fVar1;
+        pTVar2->missOffsetNormalized[1] = local_c4 * fVar1;
+        pTVar2->missOffsetNormalized[2] = local_c0 * fVar1;
+        return true;
       }
       local_c0 = local_d0;
-      bVar7 = Turret_AimAtVector(pgVar5,&local_c8,param_4,param_6);
-      if (bVar7) {
-        dVar11 = (double)(local_c8 - local_d8);
-        pTVar2->missOffsetNormalized[0] = local_c8 - local_d8;
-        dVar13 = (double)(local_c4 - local_d4);
-        pTVar2->missOffsetNormalized[1] = local_c4 - local_d4;
-        dVar12 = (double)(local_c0 - local_d0);
-        pTVar2->missOffsetNormalized[2] = local_c0 - local_d0;
-        fVar4 = SQRT((float)(dVar12 * dVar12 +
-                            (double)(float)(dVar11 * dVar11 + (double)(float)(dVar13 * dVar13))));
+      bVar5 = Turret_AimAtVector(param_1,&local_c8,param_4,param_6);
+      if (bVar5) {
+        local_c8 = local_c8 - local_d8;
+        pTVar2->missOffsetNormalized[0] = local_c8;
+        local_c4 = local_c4 - local_d4;
+        pTVar2->missOffsetNormalized[1] = local_c4;
+        local_c0 = local_c0 - local_d0;
+        pTVar2->missOffsetNormalized[2] = local_c0;
+        fVar3 = SQRT(local_c0 * local_c0 + local_c8 * local_c8 + local_c4 * local_c4);
         fVar1 = 1.0;
-        if (-fVar4 < 0.0) {
-          fVar1 = fVar4;
+        if (-fVar3 < 0.0) {
+          fVar1 = fVar3;
         }
-        dVar10 = (double)(1.0 / fVar1);
-        pTVar2->missOffsetNormalized[0] = (float)(dVar11 * dVar10);
-        pTVar2->missOffsetNormalized[1] = (float)(dVar13 * dVar10);
-        pTVar2->missOffsetNormalized[2] = (float)(dVar12 * dVar10);
-        uVar8 = __restgprlr_24(dVar12,1);
-        return (bool)uVar8;
+        fVar1 = 1.0 / fVar1;
+        pTVar2->missOffsetNormalized[0] = local_c8 * fVar1;
+        pTVar2->missOffsetNormalized[1] = local_c4 * fVar1;
+        pTVar2->missOffsetNormalized[2] = local_c0 * fVar1;
+        return true;
       }
-      pTVar2->missOffsetNormalized[0] = (float)dVar13;
-      pTVar2->missOffsetNormalized[1] = (float)dVar13;
-      pTVar2->missOffsetNormalized[2] = (float)dVar13;
+      pTVar2->missOffsetNormalized[0] = (float)dVar7;
+      pTVar2->missOffsetNormalized[1] = (float)dVar7;
+      pTVar2->missOffsetNormalized[2] = (float)dVar7;
     }
     else {
       if (param_5 < 1) {
@@ -2677,19 +2564,21 @@ LAB_824c0764:
                  local_d4;
       local_b0 = pTVar2->missOffsetNormalized[2] * 33.0 + pTVar2->missOffsetNormalized[2] * fVar1 +
                  local_d0;
-      bVar7 = Turret_AimAtVector(pgVar5,&local_b8,param_4,param_6);
-      if (bVar7) goto LAB_824c0ac4;
+      bVar5 = Turret_AimAtVector(param_1,&local_b8,param_4,param_6);
+      if (bVar5) {
+        return true;
+      }
     }
   }
-  Turret_AimAtVector_Internal(pgVar5,&local_d8,param_4,param_6);
-LAB_824c0ac4:
-  uVar8 = __restgprlr_24(1);
-  return (bool)uVar8;
+  Turret_AimAtVector_Internal(param_1,&local_d8,param_4,param_6);
+  return true;
 }
 
 
 // 824C0AD8  Turret_AimAtSentient  (game/turret.cpp:2232)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
@@ -2697,73 +2586,63 @@ int Turret_AimAtSentient
               (gentity_s *param_1,gentity_s *param_2,float *param_3,int param_4,int param_5)
 
 {
-  gentity_s *pgVar1;
-  bool bVar3;
-  int iVar2;
-  ulonglong uVar4;
+  bool bVar1;
   float afStack_50 [20];
   
-  uVar4 = (ulonglong)(int)param_2;
-  pgVar1 = (gentity_s *)__savegprlr_25(param_1);
-  if (pgVar1 == (gentity_s *)0x0) {
+  if (param_1 == (gentity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\turret.cpp",0x8bb,0,"%s")
     ;
   }
-  if ((uVar4 & 0xffffffff) == 0) {
+  if (param_2 == (gentity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\turret.cpp",0x8bc,0,"%s")
     ;
   }
-  if (((gentity_s *)uVar4)->client == (gclient_s *)0x0) {
+  if (param_2->client == (gclient_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\turret.cpp",0x8be,0,"%s")
     ;
   }
-  bVar3 = Turret_AimAtSentient_Internal
-                    (pgVar1,(gentity_s *)uVar4,param_3,param_4,param_5,afStack_50);
-  if (!bVar3) {
-    iVar2 = __restgprlr_25(0);
-    return iVar2;
+  bVar1 = Turret_AimAtSentient_Internal(param_1,param_2,param_3,param_4,param_5,afStack_50);
+  if (!bVar1) {
+    return 0;
   }
-  Turret_UpdateTargetAngles(pgVar1,afStack_50,true);
-  iVar2 = __restgprlr_25(1);
-  return iVar2;
+  Turret_UpdateTargetAngles(param_1,afStack_50,true);
+  return 1;
 }
 
 
 // 824C0BC8  Turret_AimAtEntity  (game/turret.cpp:2255)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
 bool Turret_AimAtEntity(gentity_s *param_1,gentity_s *param_2,float *param_3,int param_4)
 
 {
-  gentity_s *pgVar1;
-  bool bVar2;
-  undefined1 uVar3;
+  bool bVar1;
   float afStack_40 [2];
   float local_38;
   float local_34;
   float local_30;
   
-  pgVar1 = (gentity_s *)__savegprlr_28(param_1);
-  Turret_SetTargetEnt(pgVar1,param_2,param_3);
+  Turret_SetTargetEnt(param_1,param_2,param_3);
   local_38 = *param_3 + (param_2->r).currentOrigin[0];
   local_34 = (param_2->r).currentOrigin[1] + param_3[1];
   local_30 = (param_2->r).currentOrigin[2] + param_3[2];
-  bVar2 = Turret_AimAtVector(pgVar1,&local_38,param_4,afStack_40);
-  if (bVar2) {
-    Turret_UpdateTargetAngles(pgVar1,afStack_40,true);
-    uVar3 = __restgprlr_28(1);
-    return (bool)uVar3;
+  bVar1 = Turret_AimAtVector(param_1,&local_38,param_4,afStack_40);
+  if (bVar1) {
+    Turret_UpdateTargetAngles(param_1,afStack_40,true);
+    return true;
   }
-  uVar3 = __restgprlr_28(0);
-  return (bool)uVar3;
+  return false;
 }
 
 
 // 824C0C60  GScr_Turret_SnapToTarget  (game/turret.cpp:2276)
 
-/* WARNING: Type propagation algorithm not settling */
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
@@ -2773,11 +2652,10 @@ void GScr_Turret_SnapToTarget(gentity_s *param_1)
   Turret *pTVar1;
   uint uVar2;
   byte bVar3;
-  gentity_s *pgVar4;
-  int iVar5;
-  gentity_s *pgVar6;
-  bool bVar8;
-  DObj *pDVar7;
+  int iVar4;
+  gentity_s *pgVar5;
+  bool bVar7;
+  DObj *pDVar6;
   byte local_90 [8];
   float local_88;
   float local_84;
@@ -2787,39 +2665,38 @@ void GScr_Turret_SnapToTarget(gentity_s *param_1)
   float afStack_68 [6];
   uint local_50 [20];
   
-  pgVar4 = (gentity_s *)__savegprlr_27(param_1);
-  if (pgVar4 == (gentity_s *)0x0) {
+  if (param_1 == (gentity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\turret.cpp",0x8ef,0,"%s")
     ;
   }
-  if ((pgVar4->s).eType != 0xb) {
+  if ((param_1->s).eType != 0xb) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\turret.cpp",0x8f0,0,"%s")
     ;
   }
-  if (pgVar4->turret == (Turret *)0x0) {
+  if (param_1->turret == (Turret *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\turret.cpp",0x8f1,0,"%s")
     ;
   }
-  pTVar1 = pgVar4->turret;
-  iVar5 = EntHandle::isDefined(&pTVar1->manualTarget);
-  if (iVar5 == 0) {
+  pTVar1 = param_1->turret;
+  iVar4 = EntHandle::isDefined(&pTVar1->manualTarget);
+  if (iVar4 == 0) {
     Scr_Error("turret not defined");
   }
-  pgVar6 = EntHandle::ent(&pTVar1->manualTarget);
+  pgVar5 = EntHandle::ent(&pTVar1->manualTarget);
   uVar2 = pTVar1->flags;
-  Turret_SetTargetEnt(pgVar4,pgVar6,pTVar1->manualTargetOffset);
-  local_88 = (pgVar6->r).currentOrigin[0] + pTVar1->manualTargetOffset[0];
-  local_84 = pTVar1->manualTargetOffset[1] + (pgVar6->r).currentOrigin[1];
-  local_80 = pTVar1->manualTargetOffset[2] + (pgVar6->r).currentOrigin[2];
-  bVar8 = Turret_CanTargetPoint(pgVar4,&local_88,afStack_68,&local_78);
-  if (!bVar8) {
+  Turret_SetTargetEnt(param_1,pgVar5,pTVar1->manualTargetOffset);
+  local_88 = (pgVar5->r).currentOrigin[0] + pTVar1->manualTargetOffset[0];
+  local_84 = pTVar1->manualTargetOffset[1] + (pgVar5->r).currentOrigin[1];
+  local_80 = pTVar1->manualTargetOffset[2] + (pgVar5->r).currentOrigin[2];
+  bVar7 = Turret_CanTargetPoint(param_1,&local_88,afStack_68,&local_78);
+  if (!bVar7) {
     Scr_Error("turret cannot point at target");
   }
-  Turret_AimAtVector_Internal(pgVar4,afStack_68,uVar2 >> 4 & 1,&local_78);
-  (pgVar4->s).lerp.u.turret.gunAngles[0] = local_78;
-  (pgVar4->s).lerp.u.turret.gunAngles[1] = local_74;
-  (pgVar4->s).lerp.u.turret.gunAngles[2] = 0.0;
-  pDVar7 = Com_GetServerDObjForEnt(pgVar4);
+  Turret_AimAtVector_Internal(param_1,afStack_68,uVar2 >> 4 & 1,&local_78);
+  (param_1->s).lerp.u.turret.gunAngles[0] = local_78;
+  (param_1->s).lerp.u.turret.gunAngles[1] = local_74;
+  (param_1->s).lerp.u.turret.gunAngles[2] = 0.0;
+  pDVar6 = Com_GetServerDObjForEnt(param_1);
   local_90[0] = 0xfe;
   local_50[0] = 0;
   local_50[1] = 0;
@@ -2827,31 +2704,32 @@ void GScr_Turret_SnapToTarget(gentity_s *param_1)
   local_50[3] = 0;
   local_50[4] = 0;
   local_50[5] = 0;
-  iVar5 = DObjGetBoneIndex(pDVar7,(uint)scr_const.tag_aim,local_90);
-  if (iVar5 == 0) {
+  iVar4 = DObjGetBoneIndex(pDVar6,(uint)scr_const.tag_aim,local_90);
+  if (iVar4 == 0) {
     Scr_Error("\'tag_aim\' bone not found on turret");
   }
-  DObjClearBoneSetBit(pDVar7,(uint)local_90[0]);
+  DObjClearBoneSetBit(pDVar6,(uint)local_90[0]);
   bVar3 = local_90[0];
   local_90[0] = 0xfe;
   uVar2 = bVar3 >> 3 & 0x1ffffffc;
   *(uint *)((int)local_50 + uVar2) =
        *(uint *)(&g_bitShift + (bVar3 & 0x1f) * 4) | *(uint *)((int)local_50 + uVar2);
-  iVar5 = DObjGetBoneIndex(pDVar7,(uint)scr_const.tag_aim_animated,local_90);
-  if (iVar5 != 0) {
-    DObjClearBoneSetBit(pDVar7,(uint)local_90[0]);
+  iVar4 = DObjGetBoneIndex(pDVar6,(uint)scr_const.tag_aim_animated,local_90);
+  if (iVar4 != 0) {
+    DObjClearBoneSetBit(pDVar6,(uint)local_90[0]);
     uVar2 = local_90[0] >> 3 & 0x1ffffffc;
     *(uint *)((int)local_50 + uVar2) =
          *(uint *)(&g_bitShift + (local_90[0] & 0x1f) * 4) | *(uint *)((int)local_50 + uVar2);
   }
-  G_DObjCalcPose(pgVar4,(int *)local_50);
-  __restgprlr_27();
+  G_DObjCalcPose(param_1,(int *)local_50);
   return;
 }
 
 
 // 824C0EA8  Turret_IsTargetVisible  (game/turret.cpp:2389)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
@@ -2859,84 +2737,72 @@ bool Turret_IsTargetVisible(gentity_s *param_1,gentity_s *param_2,float *param_3
 
 {
   Turret *pTVar1;
-  gentity_s *pgVar2;
+  float fVar2;
   float fVar3;
   float fVar4;
-  float fVar5;
-  gentity_s *pgVar6;
-  undefined1 uVar8;
-  bool bVar9;
-  int iVar7;
-  ulonglong uVar10;
-  ulonglong uVar11;
-  float *pfVar12;
-  ulonglong uVar13;
-  double dVar14;
+  bool bVar6;
+  int iVar5;
+  double dVar7;
   float local_80;
   float local_7c;
   float local_78;
   float afStack_70 [4];
   float afStack_60 [24];
   
-  uVar13 = (ulonglong)(int)param_4;
-  uVar11 = (ulonglong)(int)param_3;
-  uVar10 = (ulonglong)(int)param_2;
-  pgVar6 = (gentity_s *)__savegprlr_25(param_1);
-  if ((uVar10 & 0xffffffff) == 0) {
+  if (param_2 == (gentity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\turret.cpp",0x961,0,"%s")
     ;
   }
-  if ((uVar11 & 0xffffffff) == 0) {
+  if (param_3 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\turret.cpp",0x962,0,"%s")
     ;
   }
-  if (pgVar6 == (gentity_s *)0x0) {
+  if (param_1 == (gentity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\turret.cpp",0x963,0,"%s")
     ;
   }
-  pTVar1 = pgVar6->turret;
+  pTVar1 = param_1->turret;
   if (pTVar1 == (Turret *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\turret.cpp",0x966,0,"%s")
     ;
   }
-  pgVar2 = (gentity_s *)uVar10;
-  pfVar12 = (float *)uVar11;
-  local_80 = (pgVar2->r).currentOrigin[0] + *pfVar12;
-  local_78 = (pgVar2->r).currentOrigin[2] + pfVar12[2];
-  local_7c = (pgVar2->r).currentOrigin[1] + pfVar12[1];
-  fVar3 = local_80 - (pgVar6->r).currentOrigin[0];
-  fVar4 = local_78 - (pgVar6->r).currentOrigin[2];
-  fVar5 = local_7c - (pgVar6->r).currentOrigin[1];
-  dVar14 = (double)(fVar5 * fVar5 + fVar4 * fVar4 + fVar3 * fVar3);
-  if (dVar14 < (double)pTVar1->maxRangeSquared) {
-    if (pgVar2->client == (gclient_s *)0x0) {
-      bVar9 = Turret_CanTargetPoint(pgVar6,&local_80,afStack_70,afStack_60);
-      if (!bVar9) goto LAB_824c0fd0;
-      local_80 = (pgVar2->r).currentOrigin[0] + *pfVar12;
-      local_7c = (pgVar2->r).currentOrigin[1] + pfVar12[1];
-      local_78 = (pgVar2->r).currentOrigin[2] + pfVar12[2];
+  local_80 = (param_2->r).currentOrigin[0] + *param_3;
+  local_78 = (param_2->r).currentOrigin[2] + param_3[2];
+  local_7c = (param_2->r).currentOrigin[1] + param_3[1];
+  fVar2 = local_80 - (param_1->r).currentOrigin[0];
+  fVar3 = local_78 - (param_1->r).currentOrigin[2];
+  fVar4 = local_7c - (param_1->r).currentOrigin[1];
+  dVar7 = (double)(fVar4 * fVar4 + fVar3 * fVar3 + fVar2 * fVar2);
+  if (dVar7 < (double)pTVar1->maxRangeSquared) {
+    if (param_2->client == (gclient_s *)0x0) {
+      bVar6 = Turret_CanTargetPoint(param_1,&local_80,afStack_70,afStack_60);
+      if (!bVar6) {
+        return false;
+      }
+      local_80 = (param_2->r).currentOrigin[0] + *param_3;
+      local_7c = (param_2->r).currentOrigin[1] + param_3[1];
+      local_78 = (param_2->r).currentOrigin[2] + param_3[2];
     }
     else {
-      bVar9 = Turret_CanTargetSentient(pgVar6,pgVar2,pfVar12,&local_80,afStack_70,afStack_60);
-      if (!bVar9) goto LAB_824c0fd0;
-      Turret_GetTargetEyePosition(pgVar2,&local_80);
-      local_80 = *pfVar12 + local_80;
-      local_7c = pfVar12[1] + local_7c;
-      local_78 = pfVar12[2] + local_78;
-    }
-    if ((((pgVar2->s).lerp.eFlags & 0x20U) == 0) &&
-       (iVar7 = Turret_SightTrace(afStack_70,&local_80,(pgVar6->s).number,(pgVar2->s).number),
-       iVar7 == 0)) {
-      if ((uVar13 & 0xffffffff) != 0) {
-        *(float *)uVar13 = (float)dVar14;
+      bVar6 = Turret_CanTargetSentient(param_1,param_2,param_3,&local_80,afStack_70,afStack_60);
+      if (!bVar6) {
+        return false;
       }
-      uVar8 = __restgprlr_25(1);
-      return (bool)uVar8;
+      Turret_GetTargetEyePosition(param_2,&local_80);
+      local_80 = *param_3 + local_80;
+      local_7c = param_3[1] + local_7c;
+      local_78 = param_3[2] + local_78;
+    }
+    if ((((param_2->s).lerp.eFlags & 0x20U) == 0) &&
+       (iVar5 = Turret_SightTrace(afStack_70,&local_80,(param_1->s).number,(param_2->s).number),
+       iVar5 == 0)) {
+      if (param_4 != (float *)0x0) {
+        *param_4 = (float)dVar7;
+      }
+      return true;
     }
   }
-LAB_824c0fd0:
-  uVar8 = __restgprlr_25(0);
-  return (bool)uVar8;
+  return false;
 }
 
 
@@ -2961,6 +2827,8 @@ int Turret_GetEnemyTeamFlags(Turret *param_1)
 
 // 824C1170  Turret_NextTarget  (game/turret.cpp:2510)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
@@ -2968,54 +2836,48 @@ gentity_s * Turret_NextTarget(gentity_s *param_1)
 
 {
   Turret *pTVar1;
-  uint uVar2;
-  int iVar3;
-  int iVar4;
-  gclient_s *pgVar5;
-  gentity_s *pgVar6;
+  int iVar2;
+  gclient_s *pgVar3;
   
-  iVar3 = __savegprlr_27(param_1);
-  if (iVar3 == 0) {
+  if (param_1 == (gentity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\turret.cpp",0x9d2,0,"%s")
     ;
   }
-  pTVar1 = *(Turret **)(iVar3 + 0x15c);
+  pTVar1 = param_1->turret;
   if (pTVar1 == (Turret *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\turret.cpp",0x9d4,0,"%s")
     ;
   }
-  iVar4 = Turret_GetEnemyTeamFlags(pTVar1);
-  if (((pTVar1->flags & 8U) != 0) && (*(int *)(iVar3 + 0x78) == 0x7ff)) {
+  iVar2 = Turret_GetEnemyTeamFlags(pTVar1);
+  if (((pTVar1->flags & 8U) != 0) && ((param_1->s).otherEntityNum == 0x7ff)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\turret.cpp",0x9dc,0,"%s")
     ;
   }
   if (pTVar1->prevTargetIndex < 0) {
-    pgVar5 = (gclient_s *)0x0;
+    pgVar3 = (gclient_s *)0x0;
   }
   else {
-    pgVar5 = level.clients + pTVar1->prevTargetIndex;
+    pgVar3 = level.clients + pTVar1->prevTargetIndex;
   }
-  pgVar5 = G_GetNextClient(pgVar5,CON_CONNECTED,SESS_STATE_PLAYING,iVar4,*(int *)(iVar3 + 0x78));
-  if (pgVar5 != (gclient_s *)0x0) {
-    pTVar1->prevTargetIndex = ((int)pgVar5 - (int)level.clients) / 0x3980;
-    if (0x7ff < (uint)(pgVar5->ps).clientNum) {
+  pgVar3 = G_GetNextClient(pgVar3,CON_CONNECTED,SESS_STATE_PLAYING,iVar2,(param_1->s).otherEntityNum
+                          );
+  if (pgVar3 != (gclient_s *)0x0) {
+    pTVar1->prevTargetIndex = ((int)pgVar3 - (int)level.clients) / 0x3980;
+    if (0x7ff < (uint)(pgVar3->ps).clientNum) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\turret.cpp",0x9e6,0,
                       "newTarget->ps.clientNum doesn\'t index MAX_GENTITIES\n\t%i not in [0, %i)");
     }
-    uVar2 = (pgVar5->ps).clientNum;
-    pgVar6 = (gentity_s *)
-             __restgprlr_27(((ulonglong)uVar2 + ((ulonglong)uVar2 & 0x3fffffff) * 4 & 0x1ffffff) *
-                            0x80 + -0x7cc8c980);
-    return pgVar6;
+    return g_entities + (pgVar3->ps).clientNum;
   }
   pTVar1->prevTargetIndex = -1;
-  pgVar6 = (gentity_s *)__restgprlr_27(0);
-  return pgVar6;
+  return (gentity_s *)0x0;
 }
 
 
 // 824C12D8  Turret_FindBestTarget  (game/turret.cpp:2561)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
@@ -3026,187 +2888,174 @@ gentity_s * Turret_FindBestTarget(gentity_s *param_1,float *param_2)
   float fVar2;
   float fVar3;
   float fVar4;
-  gentity_s *pgVar5;
   EntHandle *this;
-  int iVar6;
+  int iVar5;
+  gentity_s *pgVar6;
   gentity_s *pgVar7;
-  gentity_s *pgVar8;
-  bool bVar9;
+  bool bVar8;
+  double dVar9;
   double dVar10;
   double dVar11;
-  double dVar12;
   float local_70 [2];
   float local_68;
   float local_64;
   float local_60;
   
-  pgVar5 = (gentity_s *)__savegprlr_25(param_1);
-  if (pgVar5 == (gentity_s *)0x0) {
+  if (param_1 == (gentity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\turret.cpp",0xa0a,0,"%s")
     ;
   }
-  pTVar1 = pgVar5->turret;
+  pTVar1 = param_1->turret;
   if (pTVar1 == (Turret *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\turret.cpp",0xa0d,0,"%s")
     ;
   }
-  if (((pTVar1->flags & 8U) != 0) && ((pgVar5->s).otherEntityNum == 0x7ff)) {
+  if (((pTVar1->flags & 8U) != 0) && ((param_1->s).otherEntityNum == 0x7ff)) {
     Com_PrintWarning(0x11,
                      "WARNING: Sentry turret %i has no owner ent set but is running its think/targeting sequence. must be set from script first through setSentryOwner()\n"
                     );
     *param_2 = 0.0;
     param_2[1] = 0.0;
     param_2[2] = 0.0;
-    pgVar5 = (gentity_s *)__restgprlr_25(0);
-    return pgVar5;
+    return (gentity_s *)0x0;
   }
-  pgVar8 = (gentity_s *)0x0;
+  pgVar7 = (gentity_s *)0x0;
   if ((pTVar1->flags & 0x20U) == 0) {
 LAB_824c14b4:
-    dVar12 = (double)local_60;
-    dVar11 = (double)local_64;
-    dVar10 = (double)local_68;
+    dVar11 = (double)local_60;
+    dVar10 = (double)local_64;
+    dVar9 = (double)local_68;
   }
   else {
     this = &pTVar1->target;
-    iVar6 = EntHandle::isDefined(this);
-    if (((iVar6 == 0) || (pgVar7 = EntHandle::ent(this), pgVar7->client == (gclient_s *)0x0)) ||
-       (pgVar7 = EntHandle::ent(this), (pgVar7->s).eType != 1)) goto LAB_824c14b4;
-    pgVar8 = EntHandle::ent(this);
-    if (pgVar8 == (gentity_s *)0x0) {
+    iVar5 = EntHandle::isDefined(this);
+    if (((iVar5 == 0) || (pgVar6 = EntHandle::ent(this), pgVar6->client == (gclient_s *)0x0)) ||
+       (pgVar6 = EntHandle::ent(this), (pgVar6->s).eType != 1)) goto LAB_824c14b4;
+    pgVar7 = EntHandle::ent(this);
+    if (pgVar7 == (gentity_s *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\turret.cpp",0xa2a,1,
                       "%s");
     }
     local_68 = pTVar1->targetOffset[0];
-    dVar10 = (double)local_68;
+    dVar9 = (double)local_68;
     local_64 = pTVar1->targetOffset[1];
-    dVar11 = (double)local_64;
+    dVar10 = (double)local_64;
     local_60 = pTVar1->targetOffset[2];
-    dVar12 = (double)local_60;
-    bVar9 = Turret_IsTargetVisible(pgVar5,pgVar8,&local_68,local_70);
-    if (bVar9) {
-      if ((pgVar8 != (gentity_s *)0x0) && (level.time <= pTVar1->targetTime + 4000))
+    dVar11 = (double)local_60;
+    bVar8 = Turret_IsTargetVisible(param_1,pgVar7,&local_68,local_70);
+    if (bVar8) {
+      if ((pgVar7 != (gentity_s *)0x0) && (level.time <= pTVar1->targetTime + 4000))
       goto LAB_824c1490;
     }
     else {
-      pgVar8 = (gentity_s *)0x0;
+      pgVar7 = (gentity_s *)0x0;
     }
   }
-  pgVar7 = Turret_NextTarget(pgVar5);
-  if (pgVar7 != (gentity_s *)0x0) {
-    bVar9 = Turret_IsTargetVisible(pgVar5,pgVar7,vec3_origin,local_70);
-    if ((bVar9) &&
-       ((pgVar8 == (gentity_s *)0x0 ||
-        (fVar2 = (float)((double)(pgVar8->r).currentOrigin[1] + dVar11) -
-                 (pgVar5->r).currentOrigin[1],
-        fVar3 = (float)((double)(pgVar8->r).currentOrigin[2] + dVar12) -
-                (pgVar5->r).currentOrigin[2],
-        fVar4 = (float)((double)(pgVar8->r).currentOrigin[0] + dVar10) -
-                (pgVar5->r).currentOrigin[0],
-        local_70[0] < fVar4 * fVar4 + fVar3 * fVar3 + fVar2 * fVar2)))) {
-      param_2[2] = 0.0;
-      param_2[1] = 0.0;
-      *param_2 = 0.0;
-      pgVar5 = (gentity_s *)__restgprlr_25(pgVar7);
-      return pgVar5;
-    }
+  pgVar6 = Turret_NextTarget(param_1);
+  if (((pgVar6 != (gentity_s *)0x0) &&
+      (bVar8 = Turret_IsTargetVisible(param_1,pgVar6,vec3_origin,local_70), bVar8)) &&
+     ((pgVar7 == (gentity_s *)0x0 ||
+      (fVar2 = (float)((double)(pgVar7->r).currentOrigin[1] + dVar10) -
+               (param_1->r).currentOrigin[1],
+      fVar3 = (float)((double)(pgVar7->r).currentOrigin[2] + dVar11) - (param_1->r).currentOrigin[2]
+      , fVar4 = (float)((double)(pgVar7->r).currentOrigin[0] + dVar9) -
+                (param_1->r).currentOrigin[0],
+      local_70[0] < fVar4 * fVar4 + fVar3 * fVar3 + fVar2 * fVar2)))) {
+    param_2[2] = 0.0;
+    param_2[1] = 0.0;
+    *param_2 = 0.0;
+    return pgVar6;
   }
 LAB_824c1490:
-  param_2[2] = (float)dVar12;
-  param_2[1] = (float)dVar11;
-  *param_2 = (float)dVar10;
-  pgVar5 = (gentity_s *)__restgprlr_25(pgVar8);
-  return pgVar5;
+  param_2[2] = (float)dVar11;
+  param_2[1] = (float)dVar10;
+  *param_2 = (float)dVar9;
+  return pgVar7;
 }
 
 
 // 824C1578  Turret_ModeChangeClear  (game/turret.cpp:2672)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
 void Turret_ModeChangeClear(gentity_s *param_1)
 
 {
-  int iVar1;
-  
-  iVar1 = __savegprlr_29(param_1);
-  if (iVar1 == 0) {
+  if (param_1 == (gentity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\turret.cpp",0xa71,0,"%s")
     ;
   }
-  if (*(int *)(iVar1 + 0x15c) == 0) {
+  if (param_1->turret == (Turret *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\turret.cpp",0xa72,0,"%s")
     ;
   }
-  *(undefined4 *)(*(int *)(iVar1 + 0x15c) + 0x68) = 0;
-  __restgprlr_29();
+  param_1->turret->modeChangeTime = 0;
   return;
 }
 
 
 // 824C15F8  Turret_ModeChangeNotify  (game/turret.cpp:2684)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
 void Turret_ModeChangeNotify(gentity_s *param_1)
 
 {
-  int iVar1;
-  
-  iVar1 = __savegprlr_29(param_1);
-  if (iVar1 == 0) {
+  if (param_1 == (gentity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\turret.cpp",0xa7d,0,"%s")
     ;
   }
-  if (*(int *)(iVar1 + 0x15c) == 0) {
+  if (param_1->turret == (Turret *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\turret.cpp",0xa7e,0,"%s")
     ;
-    *(int *)(*(int *)(iVar1 + 0x15c) + 0x68) = level.time;
-    __restgprlr_29();
+    param_1->turret->modeChangeTime = level.time;
     return;
   }
-  *(int *)(*(int *)(iVar1 + 0x15c) + 0x68) = level.time;
-  __restgprlr_29();
+  param_1->turret->modeChangeTime = level.time;
   return;
 }
 
 
 // 824C16A0  Turret_ModeChangeWait  (game/turret.cpp:2697)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
 int Turret_ModeChangeWait(gentity_s *param_1)
 
 {
+  Turret *pTVar1;
   int iVar2;
-  undefined8 uVar1;
   
-  iVar2 = __savegprlr_29(param_1);
-  if (iVar2 == 0) {
+  if (param_1 == (gentity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\turret.cpp",0xa8c,0,"%s")
     ;
   }
-  iVar2 = *(int *)(iVar2 + 0x15c);
-  if (iVar2 == 0) {
+  pTVar1 = param_1->turret;
+  if (pTVar1 == (Turret *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\turret.cpp",0xa8e,0,"%s")
     ;
   }
-  if (((*(uint *)(iVar2 + 4) & 0x200000) != 0) && (0 < *(int *)(iVar2 + 0x68))) {
-    uVar1 = 1;
-    if (level.time < *(int *)(iVar2 + 0x68) + 500) goto LAB_824c1748;
+  if ((((pTVar1->flags & 0x200000U) == 0) || (pTVar1->modeChangeTime < 1)) ||
+     (iVar2 = 1, pTVar1->modeChangeTime + 500 <= level.time)) {
+    iVar2 = 0;
   }
-  uVar1 = 0;
-LAB_824c1748:
-  iVar2 = __restgprlr_29(uVar1);
   return iVar2;
 }
 
 
 // 824C1750  Turret_Think_Auto_NonAI  (game/turret.cpp:2715)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
@@ -3214,82 +3063,76 @@ void Turret_Think_Auto_NonAI(gentity_s *param_1)
 
 {
   Turret *pTVar1;
+  int iVar2;
+  bool bVar5;
   gentity_s *pgVar3;
-  int iVar4;
-  bool bVar7;
-  gentity_s *pgVar5;
-  gentity_s *pgVar6;
-  longlong lVar2;
+  gentity_s *pgVar4;
   float afStack_40 [16];
   
-  pgVar3 = (gentity_s *)__savegprlr_28(param_1);
-  if (pgVar3 == (gentity_s *)0x0) {
+  if (param_1 == (gentity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\turret.cpp",0xaa1,0,"%s")
     ;
   }
-  pTVar1 = pgVar3->turret;
+  pTVar1 = param_1->turret;
   if (pTVar1 == (Turret *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\turret.cpp",0xaa4,0,"%s")
     ;
   }
-  iVar4 = Turret_ModeChangeWait(pgVar3);
-  if (iVar4 != 0) {
-    Turret_ClearTargetEnt(pgVar3);
-    bVar7 = Turret_ReturnToDefaultPos(pgVar3,true);
-    lVar2 = 0;
-    if (!bVar7) goto LAB_824c190c;
-    Turret_ModeChangeClear(pgVar3);
+  iVar2 = Turret_ModeChangeWait(param_1);
+  if (iVar2 != 0) {
+    Turret_ClearTargetEnt(param_1);
+    bVar5 = Turret_ReturnToDefaultPos(param_1,true);
+    if (!bVar5) {
+      return;
+    }
+    Turret_ModeChangeClear(param_1);
   }
-  pgVar5 = Turret_FindBestTarget(pgVar3,afStack_40);
-  iVar4 = EntHandle::isDefined(&pTVar1->manualTarget);
-  if (iVar4 == 0) {
-    pgVar6 = (gentity_s *)0x0;
+  pgVar3 = Turret_FindBestTarget(param_1,afStack_40);
+  iVar2 = EntHandle::isDefined(&pTVar1->manualTarget);
+  if (iVar2 == 0) {
+    pgVar4 = (gentity_s *)0x0;
   }
   else {
-    pgVar6 = EntHandle::ent(&pTVar1->manualTarget);
+    pgVar4 = EntHandle::ent(&pTVar1->manualTarget);
   }
-  if (pgVar5 == (gentity_s *)0x0) {
-LAB_824c185c:
-    if (pgVar6 != (gentity_s *)0x0) {
-      if (pgVar6->client == (gclient_s *)0x0) {
-        bVar7 = Turret_AimAtEntity(pgVar3,pgVar6,pTVar1->manualTargetOffset,1);
-        lVar2 = (longlong)bVar7;
-        bVar7 = lVar2 == 0;
-      }
-      else {
-        bVar7 = Turret_IsTargetVisible(pgVar3,pgVar6,pTVar1->manualTargetOffset,(float *)0x0);
-        if (!bVar7) goto LAB_824c18cc;
-        iVar4 = Turret_AimAtSentient
-                          (pgVar3,pgVar6,pTVar1->manualTargetOffset,1,pTVar1->convergenceTime[1]);
-        lVar2 = (longlong)iVar4;
-        bVar7 = iVar4 == 0;
-      }
-      if (!bVar7) goto LAB_824c190c;
+  if (pgVar3 != (gentity_s *)0x0) {
+    iVar2 = Turret_AimAtSentient(param_1,pgVar3,afStack_40,1,pTVar1->convergenceTime[1]);
+    if (iVar2 != 0) {
+      return;
+    }
+    if (pgVar4 == pgVar3) goto LAB_824c18cc;
+  }
+  if (pgVar4 != (gentity_s *)0x0) {
+    if (pgVar4->client == (gclient_s *)0x0) {
+      bVar5 = Turret_AimAtEntity(param_1,pgVar4,pTVar1->manualTargetOffset,1);
+      bVar5 = !bVar5;
+    }
+    else {
+      bVar5 = Turret_IsTargetVisible(param_1,pgVar4,pTVar1->manualTargetOffset,(float *)0x0);
+      if (!bVar5) goto LAB_824c18cc;
+      iVar2 = Turret_AimAtSentient
+                        (param_1,pgVar4,pTVar1->manualTargetOffset,1,pTVar1->convergenceTime[1]);
+      bVar5 = iVar2 == 0;
+    }
+    if (!bVar5) {
+      return;
     }
   }
-  else {
-    iVar4 = Turret_AimAtSentient(pgVar3,pgVar5,afStack_40,1,pTVar1->convergenceTime[1]);
-    lVar2 = (longlong)iVar4;
-    if (iVar4 != 0) goto LAB_824c190c;
-    if (pgVar6 != pgVar5) goto LAB_824c185c;
-  }
 LAB_824c18cc:
-  Turret_ClearTargetEnt(pgVar3);
+  Turret_ClearTargetEnt(param_1);
   if (((pTVar1->flags & 8U) != 0) && ((pTVar1->flags & 0x400U) == 0)) {
-    Turret_ScanForEnemies(pgVar3);
-    __restgprlr_28();
+    Turret_ScanForEnemies(param_1);
     return;
   }
-  bVar7 = Turret_ReturnToDefaultPos(pgVar3,true);
-  lVar2 = (longlong)bVar7;
-LAB_824c190c:
-  __restgprlr_28(lVar2);
+  Turret_ReturnToDefaultPos(param_1,true);
   return;
 }
 
 
 // 824C1918  Turret_Think_Manual  (game/turret.cpp:3056)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
@@ -3300,46 +3143,44 @@ bool Turret_Think_Manual(gentity_s *param_1)
   float fVar2;
   float fVar3;
   float fVar4;
-  gentity_s *pgVar5;
-  int iVar6;
-  gentity_s *pgVar7;
-  undefined1 uVar8;
-  uint uVar9;
+  int iVar5;
+  gentity_s *pgVar6;
+  uint uVar7;
   
-  pgVar5 = (gentity_s *)__savegprlr_28(param_1);
-  pTVar1 = pgVar5->turret;
+  pTVar1 = param_1->turret;
   if (pTVar1 == (Turret *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\turret.cpp",0xbf7,0,"%s")
     ;
   }
-  uVar9 = (uint)pTVar1->flags >> 4 & 1;
-  iVar6 = EntHandle::isDefined(&pTVar1->manualTarget);
-  if (((iVar6 != 0) && (pgVar7 = EntHandle::ent(&pTVar1->manualTarget), pgVar7 != (gentity_s *)0x0))
-     && (fVar2 = (pTVar1->manualTargetOffset[2] + (pgVar7->r).currentOrigin[2]) -
-                 (pgVar5->r).currentOrigin[2],
-        fVar3 = (pTVar1->manualTargetOffset[0] + (pgVar7->r).currentOrigin[0]) -
-                (pgVar5->r).currentOrigin[0],
-        fVar4 = (pTVar1->manualTargetOffset[1] + (pgVar7->r).currentOrigin[1]) -
-                (pgVar5->r).currentOrigin[1],
+  uVar7 = (uint)pTVar1->flags >> 4 & 1;
+  iVar5 = EntHandle::isDefined(&pTVar1->manualTarget);
+  if (((iVar5 != 0) && (pgVar6 = EntHandle::ent(&pTVar1->manualTarget), pgVar6 != (gentity_s *)0x0))
+     && (fVar2 = (pTVar1->manualTargetOffset[2] + (pgVar6->r).currentOrigin[2]) -
+                 (param_1->r).currentOrigin[2],
+        fVar3 = (pTVar1->manualTargetOffset[0] + (pgVar6->r).currentOrigin[0]) -
+                (param_1->r).currentOrigin[0],
+        fVar4 = (pTVar1->manualTargetOffset[1] + (pgVar6->r).currentOrigin[1]) -
+                (param_1->r).currentOrigin[1],
         fVar4 * fVar4 + fVar3 * fVar3 + fVar2 * fVar2 < pTVar1->maxRangeSquared)) {
-    if (pgVar7->client == (gclient_s *)0x0) {
-      Turret_AimAtEntity(pgVar5,pgVar7,pTVar1->manualTargetOffset,uVar9);
-      uVar8 = __restgprlr_28(1);
-      return (bool)uVar8;
+    if (pgVar6->client == (gclient_s *)0x0) {
+      Turret_AimAtEntity(param_1,pgVar6,pTVar1->manualTargetOffset,uVar7);
+      return true;
     }
-    iVar6 = Turret_AimAtSentient(pgVar5,pgVar7,pTVar1->manualTargetOffset,uVar9,0);
-    if (iVar6 != 0) goto LAB_824c1a28;
+    iVar5 = Turret_AimAtSentient(param_1,pgVar6,pTVar1->manualTargetOffset,uVar7,0);
+    if (iVar5 != 0) {
+      return true;
+    }
   }
-  Turret_ClearTargetEnt(pgVar5);
-  Turret_ReturnToDefaultPos(pgVar5,false);
-LAB_824c1a28:
-  uVar8 = __restgprlr_28(1);
-  return (bool)uVar8;
+  Turret_ClearTargetEnt(param_1);
+  Turret_ReturnToDefaultPos(param_1,false);
+  return true;
 }
 
 
 // 824C3780  Turret_Think  (game/turret.cpp:3141)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
@@ -3348,96 +3189,83 @@ void Turret_Think(gentity_s *param_1)
 {
   Turret *pTVar1;
   tagInfo_s *ptVar2;
-  gentity_s *pgVar4;
   EntHandle *this;
-  int iVar5;
-  longlong lVar3;
-  gentity_s *pgVar7;
-  bool bVar8;
-  gentity_s *pgVar6;
+  int iVar3;
+  gentity_s *pgVar4;
+  bool bVar5;
   
-  pgVar4 = (gentity_s *)__savegprlr_29(param_1);
-  pTVar1 = pgVar4->turret;
+  pTVar1 = param_1->turret;
   if (pTVar1 == (Turret *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\turret.cpp",0xc4a,0,"%s")
     ;
   }
-  iVar5 = level.time;
-  ptVar2 = pgVar4->tagInfo;
-  (pgVar4->s).lerp.u.turret.gunAngles[2] = 0.0;
-  pgVar4->nextthink = iVar5 + 0x32;
+  iVar3 = level.time;
+  ptVar2 = param_1->tagInfo;
+  (param_1->s).lerp.u.turret.gunAngles[2] = 0.0;
+  param_1->nextthink = iVar3 + 0x32;
   if (ptVar2 != (tagInfo_s *)0x0) {
-    G_GeneralLink(pgVar4);
+    G_GeneralLink(param_1);
   }
-  this = &(pgVar4->r).ownerNum;
-  iVar5 = EntHandle::isDefined(this);
-  if (iVar5 == 0) {
-    pgVar6 = g_entities + 0x7ff;
-    pgVar7 = (gentity_s *)0x0;
+  this = &(param_1->r).ownerNum;
+  iVar3 = EntHandle::isDefined(this);
+  if (iVar3 == 0) {
+    pgVar4 = g_entities + 0x7ff;
   }
   else {
-    pgVar6 = EntHandle::ent(this);
-    pgVar7 = pgVar6;
+    pgVar4 = EntHandle::ent(this);
   }
-  lVar3 = (longlong)(int)pgVar7;
-  if (pgVar6->client == (gclient_s *)0x0) {
-    Turret_UpdateBarrelRotation(pgVar4,pgVar6);
-    Turret_UpdateHeat(pgVar4);
-    Turret_UpdateSound(pgVar4);
-    (pgVar4->s).lerp.eFlags = (pgVar4->s).lerp.eFlags & 0xff7fffff;
+  if (pgVar4->client == (gclient_s *)0x0) {
+    Turret_UpdateBarrelRotation(param_1,pgVar4);
+    Turret_UpdateHeat(param_1);
+    Turret_UpdateSound(param_1);
+    (param_1->s).lerp.eFlags = (param_1->s).lerp.eFlags & 0xff7fffff;
     if ((pTVar1->flags & 4U) != 0) {
-      Turret_Think_Auto_NonAI(pgVar4);
-      __restgprlr_29();
+      Turret_Think_Auto_NonAI(param_1);
       return;
     }
-    bVar8 = Turret_Think_Manual(pgVar4);
-    lVar3 = (longlong)bVar8;
-    if (lVar3 == 0) {
-      bVar8 = Turret_ReturnToDefaultPos(pgVar4,false);
-      lVar3 = (longlong)bVar8;
+    bVar5 = Turret_Think_Manual(param_1);
+    if (!bVar5) {
+      Turret_ReturnToDefaultPos(param_1,false);
     }
   }
-  __restgprlr_29(lVar3);
   return;
 }
 
 
 // 824C1A38  Turret_IsOperable  (game/turret.cpp:3222)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
 int Turret_IsOperable(gentity_s *param_1)
 
 {
-  int iVar1;
-  
-  iVar1 = __savegprlr_29(param_1);
-  if (iVar1 == 0) {
+  if (param_1 == (gentity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\turret.cpp",0xc99,0,"%s")
     ;
   }
-  if (*(int *)(iVar1 + 0x15c) == 0) {
+  if (param_1->turret == (Turret *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\turret.cpp",0xc9a,0,"%s")
     ;
   }
-  iVar1 = __restgprlr_29((~(ulonglong)*(uint *)(*(int *)(iVar1 + 0x15c) + 4) & 0xffffffff) >> 9 & 1)
-  ;
-  return iVar1;
+  return (uint)~param_1->turret->flags >> 9 & 1;
 }
 
 
 // 824C1AC0  Turret_Controller  (game/turret.cpp:3398)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
 void Turret_Controller(gentity_s *param_1,int *param_2)
 
 {
-  gentity_s *pgVar1;
-  DObj *pDVar2;
-  double dVar3;
+  DObj *pDVar1;
+  double dVar2;
   byte local_140 [8];
   float local_138;
   float local_134;
@@ -3450,165 +3278,160 @@ void Turret_Controller(gentity_s *param_1,int *param_2)
   float afStack_b0 [12];
   float afStack_80 [32];
   
-  pgVar1 = (gentity_s *)__savegprlr_24(param_1);
-  if ((pgVar1->s).eType != 0xb) {
+  if ((param_1->s).eType != 0xb) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\turret.cpp",0xd4c,0,"%s")
     ;
   }
-  pDVar2 = Com_GetServerDObjForEnt(pgVar1);
-  if (pDVar2 == (DObj *)0x0) {
+  pDVar1 = Com_GetServerDObjForEnt(param_1);
+  if (pDVar1 == (DObj *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\turret.cpp",0xd4f,0,"%s")
     ;
   }
-  local_128 = (pgVar1->s).lerp.u.turret.gunAngles[0];
-  dVar3 = 0.0;
+  local_128 = (param_1->s).lerp.u.turret.gunAngles[0];
+  dVar2 = 0.0;
   local_120 = 0;
-  if (((pgVar1->s).lerp.eFlags & 0x2000U) == 0) {
-    local_124 = (pgVar1->s).lerp.u.turret.gunAngles[1];
-    local_128 = local_128 - (pgVar1->s).lerp.u.turret.gunAngles[2];
+  if (((param_1->s).lerp.eFlags & 0x2000U) == 0) {
+    local_124 = (param_1->s).lerp.u.turret.gunAngles[1];
+    local_128 = local_128 - (param_1->s).lerp.u.turret.gunAngles[2];
   }
   else {
-    local_124 = (pgVar1->s).lerp.u.turret.gunAngles[1];
-    AnglesToAxis((pgVar1->r).currentAngles,(float (*) [3])afStack_110);
+    local_124 = (param_1->s).lerp.u.turret.gunAngles[1];
+    AnglesToAxis((param_1->r).currentAngles,(float (*) [3])afStack_110);
     AnglesToAxis(&local_128,(float (*) [3])afStack_e0);
     MatrixTranspose((float (*) [3])afStack_110,(float (*) [3])afStack_b0);
     MatrixMultiply((float (*) [3])afStack_e0,(float (*) [3])afStack_b0,(float (*) [3])afStack_80);
     AxisToAngles((float (*) [3])afStack_80,&local_128);
   }
-  local_138 = (float)dVar3;
-  local_130 = (float)dVar3;
+  local_138 = (float)dVar2;
+  local_130 = (float)dVar2;
   local_140[0] = 0xfe;
   local_134 = local_124;
-  DObjGetBoneIndex(pDVar2,(uint)scr_const.tag_aim_pivot,local_140);
+  DObjGetBoneIndex(pDVar1,(uint)scr_const.tag_aim_pivot,local_140);
   if (local_140[0] != 0xff) {
     if (local_140[0] == 0xfe) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\turret.cpp",0xd74,0,
                       "%s");
     }
-    DObjSetLocalTag(pDVar2,param_2,(uint)local_140[0],vec3_origin,&local_138);
-    local_134 = (float)dVar3;
+    DObjSetLocalTag(pDVar1,param_2,(uint)local_140[0],vec3_origin,&local_138);
+    local_134 = (float)dVar2;
   }
   local_140[0] = 0xfe;
   local_138 = local_128;
-  DObjGetBoneIndex(pDVar2,(uint)scr_const.tag_aim,local_140);
-  DObjSetLocalTag(pDVar2,param_2,(uint)local_140[0],vec3_origin,&local_138);
+  DObjGetBoneIndex(pDVar1,(uint)scr_const.tag_aim,local_140);
+  DObjSetLocalTag(pDVar1,param_2,(uint)local_140[0],vec3_origin,&local_138);
   local_140[0] = 0xfe;
-  DObjGetBoneIndex(pDVar2,(uint)scr_const.tag_aim_animated,local_140);
-  DObjSetLocalTag(pDVar2,param_2,(uint)local_140[0],vec3_origin,&local_138);
-  local_138 = (pgVar1->s).lerp.u.turret.gunAngles[2];
-  local_134 = (float)dVar3;
+  DObjGetBoneIndex(pDVar1,(uint)scr_const.tag_aim_animated,local_140);
+  DObjSetLocalTag(pDVar1,param_2,(uint)local_140[0],vec3_origin,&local_138);
+  local_138 = (param_1->s).lerp.u.turret.gunAngles[2];
+  local_134 = (float)dVar2;
   local_140[0] = 0xfe;
-  DObjGetBoneIndex(pDVar2,(uint)scr_const.tag_flash,local_140);
-  DObjSetLocalTag(pDVar2,param_2,(uint)local_140[0],vec3_origin,&local_138);
-  __restgprlr_24();
+  DObjGetBoneIndex(pDVar1,(uint)scr_const.tag_flash,local_140);
+  DObjSetLocalTag(pDVar1,param_2,(uint)local_140[0],vec3_origin,&local_138);
   return;
 }
 
 
 // 824C1CF0  Turret_IsBehind  (game/turret.cpp:3505)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
 int Turret_IsBehind(gentity_s *param_1,gentity_s *param_2)
 
 {
-  float fVar1;
+  Turret *pTVar1;
   float fVar2;
   float fVar3;
   float fVar4;
-  float *pfVar5;
+  float fVar5;
   char *pcVar6;
-  int iVar7;
+  double dVar7;
   double dVar8;
   double dVar9;
-  double dVar10;
-  float fVar11;
+  float fVar10;
   float local_40;
   float local_3c;
   float local_38;
   
-  pfVar5 = (float *)__savegprlr_29(param_1);
-  fVar11 = pfVar5[0x57];
-  pcVar6 = (char *)pfVar5;
+  pTVar1 = param_1->turret;
+  pcVar6 = (char *)param_1;
   if (param_2->client == (gclient_s *)0x0) {
     pcVar6 = "c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\turret.cpp";
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\turret.cpp",0xdb7,0,"%s")
     ;
   }
-  fVar1 = *(float *)((int)fVar11 + 0x10);
-  dVar10 = (double)((ABS(*(float *)((int)fVar11 + 0x18)) + ABS(fVar1)) * 0.5);
-  dVar9 = (double)((float)((double)(pfVar5[0x52] + fVar1) + dVar10) * 0.0027777778);
-  dVar8 = floor((double)(float)(dVar9 + 0.5));
-  YawVectors((float)(dVar9 - (double)(float)dVar8) * 360.0,(float *)pcVar6,&local_40);
-  fVar11 = pfVar5[0x4e] - (param_2->r).currentOrigin[0];
-  fVar1 = pfVar5[0x4f] - (param_2->r).currentOrigin[1];
-  fVar3 = SQRT(local_3c * local_3c + local_38 * local_38 + local_40 * local_40);
-  fVar4 = SQRT(fVar1 * fVar1 + fVar11 * fVar11);
-  fVar2 = 1.0;
-  if (-fVar3 < 0.0) {
-    fVar2 = fVar3;
-  }
+  fVar10 = pTVar1->arcmin[1];
+  dVar9 = (double)((ABS(pTVar1->arcmax[1]) + ABS(fVar10)) * 0.5);
+  dVar8 = (double)((float)((double)((param_1->r).currentAngles[1] + fVar10) + dVar9) * 0.0027777778)
+  ;
+  dVar7 = floor((double)(float)(dVar8 + 0.5));
+  YawVectors((float)(dVar8 - (double)(float)dVar7) * 360.0,(float *)pcVar6,&local_40);
+  fVar10 = (param_1->r).currentOrigin[0] - (param_2->r).currentOrigin[0];
+  fVar2 = (param_1->r).currentOrigin[1] - (param_2->r).currentOrigin[1];
+  fVar4 = SQRT(local_3c * local_3c + local_38 * local_38 + local_40 * local_40);
+  fVar5 = SQRT(fVar2 * fVar2 + fVar10 * fVar10);
   fVar3 = 1.0;
   if (-fVar4 < 0.0) {
     fVar3 = fVar4;
   }
-  fVar2 = 1.0 / fVar2;
+  fVar4 = 1.0;
+  if (-fVar5 < 0.0) {
+    fVar4 = fVar5;
+  }
   fVar3 = 1.0 / fVar3;
-  local_3c = fVar2 * local_3c;
-  local_40 = local_40 * fVar2;
-  local_38 = local_38 * fVar2;
-  fVar11 = Q_acos(local_38 * fVar3 * 0.0 + fVar3 * fVar11 * local_40 + fVar1 * fVar3 * local_3c);
-  iVar7 = __restgprlr_29((double)(fVar11 * 57.295776) <= dVar10);
-  return iVar7;
+  fVar4 = 1.0 / fVar4;
+  local_3c = fVar3 * local_3c;
+  local_40 = local_40 * fVar3;
+  local_38 = local_38 * fVar3;
+  fVar10 = Q_acos(local_38 * fVar4 * 0.0 + fVar4 * fVar10 * local_40 + fVar2 * fVar4 * local_3c);
+  return (int)((double)(fVar10 * 57.295776) <= dVar9);
 }
 
 
 // 824C1E68  Turret_IsSentryUsageRestricted  (game/turret.cpp:3539)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
 int Turret_IsSentryUsageRestricted(gentity_s *param_1,gentity_s *param_2)
 
 {
-  int iVar1;
+  Turret *pTVar1;
+  int iVar2;
   int iVar3;
-  undefined8 uVar2;
-  ulonglong uVar4;
   
-  uVar4 = (ulonglong)(int)param_2;
-  iVar3 = __savegprlr_27(param_1);
-  if (iVar3 == 0) {
+  if (param_1 == (gentity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\turret.cpp",0xdd6,0,"%s")
     ;
   }
-  if ((uVar4 & 0xffffffff) == 0) {
+  if (param_2 == (gentity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\turret.cpp",0xdd7,0,"%s")
     ;
   }
-  iVar1 = *(int *)(iVar3 + 0x15c);
-  if (iVar1 == 0) {
+  pTVar1 = param_1->turret;
+  if (pTVar1 == (Turret *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\turret.cpp",0xdda,0,"%s")
     ;
   }
-  if ((*(uint *)(iVar1 + 4) & 8) == 0) {
-    iVar3 = __restgprlr_27(0);
-    return iVar3;
+  if ((pTVar1->flags & 8U) == 0) {
+    return 0;
   }
-  if (*(int *)(iVar3 + 0x78) != 0x7ff) {
-    uVar2 = 0;
-    if (*(int *)(iVar3 + 0x78) == *(int *)uVar4) goto LAB_824c1f38;
+  iVar2 = (param_1->s).otherEntityNum;
+  if ((iVar2 == 0x7ff) || (iVar3 = 0, iVar2 != (param_2->s).number)) {
+    iVar3 = 1;
   }
-  uVar2 = 1;
-LAB_824c1f38:
-  iVar3 = __restgprlr_27(uVar2);
   return iVar3;
 }
 
 
 // 824C1F40  G_IsTurretUsable  (game/turret.cpp:3568)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
@@ -3616,42 +3439,33 @@ bool G_IsTurretUsable(gentity_s *param_1,gentity_s *param_2)
 
 {
   gclient_s *pgVar1;
-  gentity_s *pgVar2;
-  gentity_s *pgVar3;
-  undefined1 uVar5;
-  int iVar4;
-  ulonglong uVar6;
-  longlong lVar7;
+  uint uVar2;
+  int iVar3;
+  longlong lVar4;
   
-  uVar6 = (ulonglong)(int)param_2;
-  pgVar3 = (gentity_s *)__savegprlr_28(param_1);
-  if (pgVar3 == (gentity_s *)0x0) {
+  if (param_1 == (gentity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\turret.cpp",0xdf3,0,"%s")
     ;
   }
-  if ((uVar6 & 0xffffffff) == 0) {
+  if (param_2 == (gentity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\turret.cpp",0xdf4,0,"%s")
     ;
   }
-  pgVar2 = (gentity_s *)uVar6;
-  if (pgVar2->client == (gclient_s *)0x0) {
+  if (param_2->client == (gclient_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\turret.cpp",0xdf5,0,"%s")
     ;
   }
-  if (((((pgVar3->r).contents & 0x200000U) != 0) && (pgVar3->active == '\0')) &&
-     ((pgVar2->r).currentOrigin[2] <= (pgVar3->r).currentOrigin[2] + 16.0)) {
-    iVar4 = Turret_IsBehind(pgVar3,pgVar2);
-    if (((iVar4 != 0) && (iVar4 = Turret_IsSentryUsageRestricted(pgVar3,pgVar2), iVar4 == 0)) &&
-       ((pgVar1 = pgVar2->client, (pgVar1->ps).grenadeTimeLeft == 0 &&
-        ((pgVar1->ps).groundEntityNum != 0x7ff)))) {
-      uVar6 = (ulonglong)(uint)(pgVar1->ps).pm_type;
-      lVar7 = uVar6 - 7;
-      uVar5 = __restgprlr_28(lVar7 - ((uVar6 - 8) + (ulonglong)(lVar7 == 0)));
-      return (bool)uVar5;
-    }
+  if ((((((param_1->r).contents & 0x200000U) != 0) && (param_1->active == '\0')) &&
+      ((param_2->r).currentOrigin[2] <= (param_1->r).currentOrigin[2] + 16.0)) &&
+     (((iVar3 = Turret_IsBehind(param_1,param_2), iVar3 != 0 &&
+       (iVar3 = Turret_IsSentryUsageRestricted(param_1,param_2), iVar3 == 0)) &&
+      ((pgVar1 = param_2->client, (pgVar1->ps).grenadeTimeLeft == 0 &&
+       ((pgVar1->ps).groundEntityNum != 0x7ff)))))) {
+    uVar2 = (pgVar1->ps).pm_type;
+    lVar4 = (ulonglong)uVar2 - 7;
+    return (bool)((char)lVar4 - ((char)uVar2 + -8 + (lVar4 == 0)));
   }
-  uVar5 = __restgprlr_28(0);
-  return (bool)uVar5;
+  return false;
 }
 
 
@@ -3681,6 +3495,8 @@ void G_DeactivateTurret(gentity_s *param_1)
 
 // 824C2128  Turret_SetSentryOwner  (game/turret.cpp:3636)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
@@ -3688,114 +3504,104 @@ void Turret_SetSentryOwner(gentity_s *param_1,gentity_s *param_2)
 
 {
   int iVar1;
-  ulonglong uVar2;
   
-  uVar2 = (ulonglong)(int)param_2;
-  iVar1 = __savegprlr_28(param_1);
-  if (iVar1 == 0) {
+  if (param_1 == (gentity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\turret.cpp",0xe35,0,"%s")
     ;
   }
-  if (*(int *)(iVar1 + 0x15c) == 0) {
+  if (param_1->turret == (Turret *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\turret.cpp",0xe36,0,"%s")
     ;
   }
-  if ((uVar2 & 0xffffffff) != 0) {
-    if ((*(int *)(iVar1 + 0x78) != 0x7ff) && (*(int *)uVar2 != *(int *)(iVar1 + 0x78))) {
+  if (param_2 != (gentity_s *)0x0) {
+    iVar1 = (param_1->s).otherEntityNum;
+    if ((iVar1 != 0x7ff) && ((param_2->s).number != iVar1)) {
       Com_PrintWarning(0x11,
                        "WARNING: sentry owner ent has been set while there was already another owner ( %i => %i )\n"
                       );
     }
-    *(int *)(iVar1 + 0x78) = *(int *)uVar2;
-    __restgprlr_28();
+    (param_1->s).otherEntityNum = (param_2->s).number;
     return;
   }
-  *(undefined4 *)(iVar1 + 0x78) = 0x7ff;
-  __restgprlr_28();
+  (param_1->s).otherEntityNum = 0x7ff;
   return;
 }
 
 
 // 824C21E8  Turret_ScrSetSentryCarrier  (game/turret.cpp:3660)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
 void Turret_ScrSetSentryCarrier(gentity_s *param_1,gentity_s *param_2)
 
 {
-  int iVar1;
-  ulonglong uVar2;
-  
-  uVar2 = (ulonglong)(int)param_2;
-  iVar1 = __savegprlr_28(param_1);
-  if (iVar1 == 0) {
+  if (param_1 == (gentity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\turret.cpp",0xe4d,0,"%s")
     ;
   }
-  if (*(int *)(iVar1 + 0x78) == 0x7ff) {
+  if ((param_1->s).otherEntityNum == 0x7ff) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\turret.cpp",0xe4e,0,"%s")
     ;
   }
-  if ((uVar2 & 0xffffffff) == 0) {
-    *(undefined1 *)(iVar1 + 0x70) = 0;
-    __restgprlr_28();
+  if (param_2 == (gentity_s *)0x0) {
+    (param_1->s).staticState.turret.isBeingCarried = false;
     return;
   }
-  if (*(int *)(iVar1 + 0x78) != *(int *)uVar2) {
+  if ((param_1->s).otherEntityNum != (param_2->s).number) {
     Scr_ParamError(0,"Only the sentry\'s owner is allowed to carry it");
   }
-  *(undefined1 *)(iVar1 + 0x70) = 1;
-  __restgprlr_28();
+  (param_1->s).staticState.turret.isBeingCarried = true;
   return;
 }
 
 
 // 824C22A0  Turret_SetMinimapVisible  (game/turret.cpp:3689)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
 void Turret_SetMinimapVisible(gentity_s *param_1,int param_2,char *param_3)
 
 {
-  int iVar1;
+  uint uVar1;
   int iVar2;
-  ulonglong uVar3;
   
-  uVar3 = (ulonglong)(int)param_3;
-  iVar1 = __savegprlr_29(param_1);
-  if (iVar1 == 0) {
+  if (param_1 == (gentity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\turret.cpp",0xe6a,0,"%s")
     ;
   }
+  uVar1 = (param_1->s).lerp.eFlags;
   if (param_2 == 0) {
-    *(uint *)(iVar1 + 8) = *(uint *)(iVar1 + 8) & 0xfffffdff;
+    (param_1->s).lerp.eFlags = uVar1 & 0xfffffdff;
   }
   else {
-    *(uint *)(iVar1 + 8) = *(uint *)(iVar1 + 8) | 0x200;
-    if ((uVar3 & 0xffffffff) != 0) {
-      iVar2 = I_stricmp((char *)uVar3,"mg_turret");
+    (param_1->s).lerp.eFlags = uVar1 | 0x200;
+    if (param_3 != (char *)0x0) {
+      iVar2 = I_stricmp(param_3,"mg_turret");
       if (iVar2 == 0) {
-        *(uint *)(iVar1 + 8) = *(uint *)(iVar1 + 8) | 0x4000000;
-        __restgprlr_29();
+        (param_1->s).lerp.eFlags = (param_1->s).lerp.eFlags | 0x4000000;
         return;
       }
-      iVar2 = I_stricmp((char *)uVar3,"sam_turret");
+      iVar2 = I_stricmp(param_3,"sam_turret");
       if (iVar2 == 0) {
-        *(uint *)(iVar1 + 8) = *(uint *)(iVar1 + 8) | 0x10000000;
-        __restgprlr_29();
+        (param_1->s).lerp.eFlags = (param_1->s).lerp.eFlags | 0x10000000;
         return;
       }
     }
   }
-  __restgprlr_29();
   return;
 }
 
 
 // 824C2368  Turret_SetMode  (game/turret.cpp:3721)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
@@ -3803,126 +3609,113 @@ void Turret_SetMode(gentity_s *param_1,int param_2)
 
 {
   Turret *pTVar1;
-  gentity_s *pgVar2;
-  ulonglong uVar3;
   
-  uVar3 = (ulonglong)param_2;
-  pgVar2 = (gentity_s *)__savegprlr_27(param_1);
-  if (pgVar2 == (gentity_s *)0x0) {
+  if (param_1 == (gentity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\turret.cpp",0xe8d,0,"%s")
     ;
   }
-  pTVar1 = pgVar2->turret;
+  pTVar1 = param_1->turret;
   if (pTVar1 == (Turret *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\turret.cpp",0xe8f,0,"%s")
     ;
   }
-  if ((uVar3 & 0xfffffbf3) != 0) {
+  if ((param_2 & 0xfffffbf3U) != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\turret.cpp",0xe96,0,"%s")
     ;
   }
-  pTVar1->flags = pTVar1->flags & 0xfffffbf3U | (uint)uVar3;
-  Turret_ModeChangeNotify(pgVar2);
-  __restgprlr_27();
+  pTVar1->flags = pTVar1->flags & 0xfffffbf3U | param_2;
+  Turret_ModeChangeNotify(param_1);
   return;
 }
 
 
 // 824C2428  Turret_SetAutoRotationStopDelay  (game/turret.cpp:3770)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
 void Turret_SetAutoRotationStopDelay(gentity_s *param_1,int param_2)
 
 {
-  int iVar1;
-  
-  iVar1 = __savegprlr_28(param_1);
-  if (iVar1 == 0) {
+  if (param_1 == (gentity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\turret.cpp",0xebb,0,"%s")
     ;
   }
-  if (*(int *)(iVar1 + 0x15c) == 0) {
+  if (param_1->turret == (Turret *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\turret.cpp",0xebc,0,"%s")
     ;
   }
   if (param_2 < 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\turret.cpp",0xebd,0,"%s")
     ;
-    *(int *)(*(int *)(iVar1 + 0x15c) + 0xb8) = param_2;
-    __restgprlr_28();
+    param_1->turret->autoRotationStopDelay = param_2;
     return;
   }
-  *(int *)(*(int *)(iVar1 + 0x15c) + 0xb8) = param_2;
-  __restgprlr_28();
+  param_1->turret->autoRotationStopDelay = param_2;
   return;
 }
 
 
 // 824C24E0  Turret_SetManualSpinning  (game/turret.cpp:3783)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
 void Turret_SetManualSpinning(gentity_s *param_1,int param_2)
 
 {
-  int iVar1;
-  int iVar2;
+  Turret *pTVar1;
   
-  iVar2 = __savegprlr_28(param_1);
-  if (iVar2 == 0) {
+  if (param_1 == (gentity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\turret.cpp",0xec8,0,"%s")
     ;
   }
-  if (*(int *)(iVar2 + 0x15c) == 0) {
+  if (param_1->turret == (Turret *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\turret.cpp",0xec9,0,"%s")
     ;
   }
-  iVar1 = *(int *)(iVar2 + 0x15c);
+  pTVar1 = param_1->turret;
   if (param_2 != 0) {
-    *(uint *)(iVar1 + 4) = *(uint *)(iVar1 + 4) | 0x100000;
-    __restgprlr_28();
+    pTVar1->flags = pTVar1->flags | 0x100000;
     return;
   }
-  *(uint *)(iVar1 + 4) = *(uint *)(iVar1 + 4) & 0xffefffff;
-  *(undefined4 *)(*(int *)(iVar2 + 0x15c) + 0xbc) = 0;
-  __restgprlr_28();
+  pTVar1->flags = pTVar1->flags & 0xffefffff;
+  param_1->turret->lastAutoRotationRequestTime = 0;
   return;
 }
 
 
 // 824C2590  Turret_GetBarrelSpinRate  (game/turret.cpp:3803)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
 float Turret_GetBarrelSpinRate(gentity_s *param_1)
 
 {
-  int iVar1;
-  double dVar2;
-  
-  iVar1 = __savegprlr_29(param_1);
-  if (iVar1 == 0) {
+  if (param_1 == (gentity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\turret.cpp",0xedc,0,"%s")
     ;
   }
-  if (*(int *)(iVar1 + 0x15c) == 0) {
+  if (param_1->turret == (Turret *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\turret.cpp",0xedd,0,"%s")
     ;
-    dVar2 = (double)__restgprlr_29((double)*(float *)(*(int *)(iVar1 + 0x15c) + 0xb4));
-    return (float)dVar2;
+    return param_1->turret->barrelRollRate;
   }
-  dVar2 = (double)__restgprlr_29((double)*(float *)(*(int *)(iVar1 + 0x15c) + 0xb4));
-  return (float)dVar2;
+  return param_1->turret->barrelRollRate;
 }
 
 
 // 824C2620  Turret_Use  (game/turret.cpp:3817)
 
-/* WARNING: Type propagation algorithm not settling */
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
@@ -3933,132 +3726,129 @@ void Turret_Use(gentity_s *param_1,gentity_s *param_2,gentity_s *param_3)
   Turret *pTVar2;
   gclient_s *pgVar3;
   uint uVar4;
-  gentity_s *pgVar5;
-  float fVar6;
-  gentity_s *pgVar7;
-  int iVar8;
-  ulonglong uVar9;
-  double dVar10;
-  float fVar11;
-  float fVar12;
+  float fVar5;
+  int iVar6;
+  double dVar7;
+  float fVar8;
+  float fVar9;
   
-  uVar9 = (ulonglong)(int)param_2;
-  pgVar7 = (gentity_s *)__savegprlr_27(param_1,uVar9,param_3);
-  if (pgVar7 == (gentity_s *)0x0) {
+  if (param_1 == (gentity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\turret.cpp",0xeed,0,"%s")
     ;
   }
-  if ((pgVar7->s).eType != 0xb) {
+  if ((param_1->s).eType != 0xb) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\turret.cpp",0xeee,0,"%s")
     ;
   }
-  pTVar2 = pgVar7->turret;
+  pTVar2 = param_1->turret;
   if (pTVar2 == (Turret *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\turret.cpp",0xef1,0,"%s")
     ;
   }
-  iVar8 = Turret_IsOperable(pgVar7);
-  if (iVar8 == 0) goto LAB_824c2930;
-  if ((uVar9 & 0xffffffff) == 0) {
+  iVar6 = Turret_IsOperable(param_1);
+  if (iVar6 == 0) {
+    return;
+  }
+  if (param_2 == (gentity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\turret.cpp",0xef6,0,"%s")
     ;
   }
-  pgVar5 = (gentity_s *)uVar9;
-  if (pgVar5->client == (gclient_s *)0x0) {
+  if (param_2->client == (gclient_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\turret.cpp",0xef7,0,"%s")
     ;
   }
-  if (level.maxclients <= (pgVar5->s).number) {
+  if (level.maxclients <= (param_2->s).number) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\turret.cpp",0xef8,0,"%s")
     ;
   }
-  pgVar3 = pgVar5->client;
-  if ((pgVar3->flags & 4U) != 0) goto LAB_824c2930;
-  pgVar5->active = '\x01';
-  pgVar7->active = '\x01';
-  EntHandle::setEnt(&(pgVar7->r).ownerNum,pgVar5);
+  pgVar3 = param_2->client;
+  if ((pgVar3->flags & 4U) != 0) {
+    return;
+  }
+  param_2->active = '\x01';
+  param_1->active = '\x01';
+  EntHandle::setEnt(&(param_1->r).ownerNum,param_2);
   (pgVar3->ps).viewlocked = PLAYERVIEWLOCK_FULL;
-  (pgVar3->ps).viewlocked_entNum = (pgVar7->s).number;
+  (pgVar3->ps).viewlocked_entNum = (param_1->s).number;
   pTVar2->flags = pTVar2->flags | 1;
-  pTVar2->userOrigin[0] = (pgVar5->r).currentOrigin[0];
-  pTVar2->userOrigin[1] = (pgVar5->r).currentOrigin[1];
-  pTVar2->userOrigin[2] = (pgVar5->r).currentOrigin[2];
-  (pgVar5->s).otherEntityNum = (pgVar7->s).number;
+  pTVar2->userOrigin[0] = (param_2->r).currentOrigin[0];
+  pTVar2->userOrigin[1] = (param_2->r).currentOrigin[1];
+  pTVar2->userOrigin[2] = (param_2->r).currentOrigin[2];
+  (param_2->s).otherEntityNum = (param_1->s).number;
   uVar4 = (pgVar3->ps).pm_flags;
   if ((uVar4 & 1) == 0) {
-    if ((uVar4 & 2) == 0) {
-      iVar8 = 0;
-      goto LAB_824c27e0;
+    if ((uVar4 & 2) != 0) {
+      pTVar2->prevStance = 1;
+      goto LAB_824c27e4;
     }
-    pTVar2->prevStance = 1;
+    iVar6 = 0;
   }
   else {
-    iVar8 = 2;
-LAB_824c27e0:
-    pTVar2->prevStance = iVar8;
+    iVar6 = 2;
   }
+  pTVar2->prevStance = iVar6;
+LAB_824c27e4:
   if (pTVar2->stance == 2) {
     (pgVar3->ps).eFlags = (pgVar3->ps).eFlags & 0xffffe7ffU | 0x800;
-    (pgVar7->s).lerp.eFlags = (pgVar7->s).lerp.eFlags & 0xffffe7ffU | 0x800;
+    (param_1->s).lerp.eFlags = (param_1->s).lerp.eFlags & 0xffffe7ffU | 0x800;
   }
   else {
     uVar4 = (pgVar3->ps).eFlags;
     if (pTVar2->stance == 1) {
       (pgVar3->ps).eFlags = uVar4 & 0xffffe7ff | 0x1000;
-      (pgVar7->s).lerp.eFlags = (pgVar7->s).lerp.eFlags & 0xffffe7ffU | 0x1000;
+      (param_1->s).lerp.eFlags = (param_1->s).lerp.eFlags & 0xffffe7ffU | 0x1000;
     }
     else {
       (pgVar3->ps).eFlags = uVar4 | 0x1800;
-      (pgVar7->s).lerp.eFlags = (pgVar7->s).lerp.eFlags | 0x1800;
+      (param_1->s).lerp.eFlags = (param_1->s).lerp.eFlags | 0x1800;
     }
   }
-  fVar11 = AngleSubtract((pgVar3->ps).viewangles[0],(pgVar7->r).currentAngles[0]);
-  (pgVar7->s).lerp.u.turret.gunAngles[0] = fVar11;
-  fVar12 = pTVar2->arcmax[0];
-  if (fVar11 - pTVar2->arcmax[0] < 0.0) {
-    fVar12 = fVar11;
+  fVar8 = AngleSubtract((pgVar3->ps).viewangles[0],(param_1->r).currentAngles[0]);
+  (param_1->s).lerp.u.turret.gunAngles[0] = fVar8;
+  fVar9 = pTVar2->arcmax[0];
+  if (fVar8 - pTVar2->arcmax[0] < 0.0) {
+    fVar9 = fVar8;
   }
-  fVar1 = (pgVar7->r).currentAngles[1];
-  fVar6 = pTVar2->arcmin[0];
-  if (pTVar2->arcmin[0] - fVar11 < 0.0) {
-    fVar6 = fVar12;
+  fVar1 = (param_1->r).currentAngles[1];
+  fVar5 = pTVar2->arcmin[0];
+  if (pTVar2->arcmin[0] - fVar8 < 0.0) {
+    fVar5 = fVar9;
   }
-  (pgVar7->s).lerp.u.turret.gunAngles[0] = fVar6;
-  fVar11 = AngleSubtract((pgVar3->ps).viewangles[1],fVar1);
-  (pgVar7->s).lerp.u.turret.gunAngles[1] = fVar11;
-  fVar12 = pTVar2->arcmax[1];
-  if (fVar11 - pTVar2->arcmax[1] < 0.0) {
-    fVar12 = fVar11;
+  (param_1->s).lerp.u.turret.gunAngles[0] = fVar5;
+  fVar8 = AngleSubtract((pgVar3->ps).viewangles[1],fVar1);
+  (param_1->s).lerp.u.turret.gunAngles[1] = fVar8;
+  fVar9 = pTVar2->arcmax[1];
+  if (fVar8 - pTVar2->arcmax[1] < 0.0) {
+    fVar9 = fVar8;
   }
   fVar1 = pTVar2->arcmin[1];
-  if (pTVar2->arcmin[1] - fVar11 < 0.0) {
-    fVar1 = fVar12;
+  if (pTVar2->arcmin[1] - fVar8 < 0.0) {
+    fVar1 = fVar9;
   }
-  (pgVar7->s).lerp.u.turret.gunAngles[2] = 0.0;
-  (pgVar7->s).lerp.u.turret.gunAngles[1] = fVar1;
-  dVar10 = 0.5;
-  fVar11 = (pTVar2->arcmax[0] - pTVar2->arcmin[0]) * 0.5;
-  (pgVar3->ps).viewAngleClampRange[0] = fVar11;
-  fVar12 = (pgVar7->r).currentAngles[0] + pTVar2->arcmax[0];
-  (pgVar3->ps).viewAngleClampBase[0] = fVar12;
-  fVar12 = AngleNormalize360(fVar12 - fVar11);
-  (pgVar3->ps).viewAngleClampBase[0] = fVar12;
-  fVar12 = (float)((double)(pTVar2->arcmax[1] - pTVar2->arcmin[1]) * dVar10);
-  (pgVar3->ps).viewAngleClampRange[1] = fVar12;
-  fVar11 = (pgVar7->r).currentAngles[1] + pTVar2->arcmax[1];
-  (pgVar3->ps).viewAngleClampBase[1] = fVar11;
-  fVar12 = AngleNormalize360(fVar11 - fVar12);
-  (pgVar3->ps).viewAngleClampBase[1] = fVar12;
-  Scr_Notify(pgVar7,scr_const.turretownerchange,0);
-LAB_824c2930:
-  __restgprlr_27();
+  (param_1->s).lerp.u.turret.gunAngles[2] = 0.0;
+  (param_1->s).lerp.u.turret.gunAngles[1] = fVar1;
+  dVar7 = 0.5;
+  fVar8 = (pTVar2->arcmax[0] - pTVar2->arcmin[0]) * 0.5;
+  (pgVar3->ps).viewAngleClampRange[0] = fVar8;
+  fVar9 = (param_1->r).currentAngles[0] + pTVar2->arcmax[0];
+  (pgVar3->ps).viewAngleClampBase[0] = fVar9;
+  fVar9 = AngleNormalize360(fVar9 - fVar8);
+  (pgVar3->ps).viewAngleClampBase[0] = fVar9;
+  fVar9 = (float)((double)(pTVar2->arcmax[1] - pTVar2->arcmin[1]) * dVar7);
+  (pgVar3->ps).viewAngleClampRange[1] = fVar9;
+  fVar8 = (param_1->r).currentAngles[1] + pTVar2->arcmax[1];
+  (pgVar3->ps).viewAngleClampBase[1] = fVar8;
+  fVar9 = AngleNormalize360(fVar8 - fVar9);
+  (pgVar3->ps).viewAngleClampBase[1] = fVar9;
+  Scr_Notify(param_1,scr_const.turretownerchange,0);
   return;
 }
 
 
 // 824C2940  Turret_ScrRemoteUse  (game/turret.cpp:3918)
 
-/* WARNING: Type propagation algorithm not settling */
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
@@ -4067,105 +3857,95 @@ void Turret_ScrRemoteUse(gentity_s *param_1,gentity_s *param_2)
 {
   gclient_s *pgVar1;
   uint uVar2;
-  gentity_s *pgVar3;
-  gentity_s *pgVar4;
-  int iVar5;
-  ulonglong uVar6;
-  double dVar7;
-  double dVar8;
-  float fVar9;
+  int iVar3;
+  double dVar4;
+  double dVar5;
+  float fVar6;
   
-  uVar6 = (ulonglong)(int)param_2;
-  pgVar4 = (gentity_s *)__savegprlr_28(param_1);
-  if (pgVar4 == (gentity_s *)0x0) {
+  if (param_1 == (gentity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\turret.cpp",0xf53,0,"%s")
     ;
   }
-  if ((pgVar4->s).eType != 0xb) {
+  if ((param_1->s).eType != 0xb) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\turret.cpp",0xf54,0,"%s")
     ;
   }
-  iVar5 = Turret_IsOperable(pgVar4);
-  if (iVar5 != 0) {
-    if ((uVar6 & 0xffffffff) == 0) {
+  iVar3 = Turret_IsOperable(param_1);
+  if (iVar3 != 0) {
+    if (param_2 == (gentity_s *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\turret.cpp",0xf59,0,
                       "%s");
     }
-    pgVar3 = (gentity_s *)uVar6;
-    if (pgVar3->client == (gclient_s *)0x0) {
+    if (param_2->client == (gclient_s *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\turret.cpp",0xf5a,0,
                       "%s");
     }
-    if (level.maxclients <= (pgVar3->s).number) {
+    if (level.maxclients <= (param_2->s).number) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\turret.cpp",0xf5b,0,
                       "%s");
     }
-    pgVar1 = pgVar3->client;
+    pgVar1 = param_2->client;
     if ((pgVar1->flags & 4U) == 0) {
-      dVar8 = (double)(pgVar4->r).currentAngles[0];
-      dVar7 = (double)(pgVar4->r).currentAngles[1];
-      Turret_Use(pgVar4,pgVar3,(gentity_s *)0x0);
+      dVar5 = (double)(param_1->r).currentAngles[0];
+      dVar4 = (double)(param_1->r).currentAngles[1];
+      Turret_Use(param_1,param_2,(gentity_s *)0x0);
       (pgVar1->ps).otherFlags = (pgVar1->ps).otherFlags | 0x80000;
       (pgVar1->ps).eFlags = (pgVar1->ps).eFlags | 0x2000;
-      (pgVar4->s).lerp.u.turret.gunAngles[0] = (float)dVar8;
-      uVar2 = (pgVar4->s).lerp.eFlags;
-      (pgVar4->s).lerp.u.turret.gunAngles[1] = (float)dVar7;
-      (pgVar4->s).lerp.eFlags = uVar2 | 0x2000;
-      fVar9 = AngleSubtract((float)dVar7,(pgVar1->ps).viewangles[1]);
-      (pgVar1->ps).delta_angles[1] = fVar9 + (pgVar1->ps).delta_angles[1];
-      fVar9 = AngleSubtract((float)dVar8,(pgVar1->ps).viewangles[0]);
-      (pgVar1->ps).delta_angles[0] = fVar9 + (pgVar1->ps).delta_angles[0];
-      (pgVar1->ps).viewangles[0] = (float)dVar8;
-      (pgVar1->ps).viewangles[1] = (float)dVar7;
+      (param_1->s).lerp.u.turret.gunAngles[0] = (float)dVar5;
+      uVar2 = (param_1->s).lerp.eFlags;
+      (param_1->s).lerp.u.turret.gunAngles[1] = (float)dVar4;
+      (param_1->s).lerp.eFlags = uVar2 | 0x2000;
+      fVar6 = AngleSubtract((float)dVar4,(pgVar1->ps).viewangles[1]);
+      (pgVar1->ps).delta_angles[1] = fVar6 + (pgVar1->ps).delta_angles[1];
+      fVar6 = AngleSubtract((float)dVar5,(pgVar1->ps).viewangles[0]);
+      (pgVar1->ps).delta_angles[0] = fVar6 + (pgVar1->ps).delta_angles[0];
+      (pgVar1->ps).viewangles[0] = (float)dVar5;
+      (pgVar1->ps).viewangles[1] = (float)dVar4;
     }
   }
-  __restgprlr_28();
   return;
 }
 
 
 // 824C38A0  Turret_ScrStopRemoteUse  (game/turret.cpp:3959)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
 void Turret_ScrStopRemoteUse(gentity_s *param_1,gentity_s *param_2)
 
 {
-  int iVar1;
-  gentity_s *pgVar2;
+  gclient_s *pgVar1;
   EntHandle *this;
-  int iVar3;
-  gentity_s *pgVar4;
-  ulonglong uVar5;
+  int iVar2;
+  gentity_s *pgVar3;
   
-  uVar5 = (ulonglong)(int)param_2;
-  pgVar2 = (gentity_s *)__savegprlr_28(param_1);
-  if (pgVar2 == (gentity_s *)0x0) {
+  if (param_1 == (gentity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\turret.cpp",0xf7a,0,"%s")
     ;
   }
-  if ((pgVar2->s).eType != 0xb) {
+  if ((param_1->s).eType != 0xb) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\turret.cpp",0xf7b,0,"%s")
     ;
   }
-  if ((uVar5 & 0xffffffff) == 0) {
+  if (param_2 == (gentity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\turret.cpp",0xf7d,0,"%s")
     ;
   }
-  if (*(int *)((int)uVar5 + 0x158) == 0) {
+  if (param_2->client == (gclient_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\turret.cpp",0xf7e,0,"%s")
     ;
   }
-  this = &(pgVar2->r).ownerNum;
-  iVar1 = *(int *)((int)uVar5 + 0x158);
-  iVar3 = EntHandle::isDefined(this);
-  if ((iVar3 != 0) && (pgVar4 = EntHandle::ent(this), ZEXT48(pgVar4) == (uVar5 & 0xffffffff))) {
-    G_ClientStopUsingTurret(pgVar2);
+  this = &(param_1->r).ownerNum;
+  pgVar1 = param_2->client;
+  iVar2 = EntHandle::isDefined(this);
+  if ((iVar2 != 0) && (pgVar3 = EntHandle::ent(this), pgVar3 == param_2)) {
+    G_ClientStopUsingTurret(param_1);
   }
-  *(undefined4 *)(iVar1 + 0x50) = 0x7ff;
-  *(uint *)(iVar1 + 0x10) = *(uint *)(iVar1 + 0x10) & 0xfff7ffff;
-  __restgprlr_28();
+  (pgVar1->ps).remoteTurretEnt = 0x7ff;
+  (pgVar1->ps).otherFlags = (pgVar1->ps).otherFlags & 0xfff7ffff;
   return;
 }
 
@@ -4192,69 +3972,68 @@ bool G_CanSpawnTurret(void)
 
 // 824C2B20  Turret_SoundAliasIndex  (game/turret.cpp:4001)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "ConfigString": Some values do not have unique names */
 
 ushort Turret_SoundAliasIndex(char *param_1)
 
 {
-  char *pcVar1;
-  ushort uVar5;
+  uint uVar1;
   uint uVar2;
-  uint uVar3;
-  char *pcVar4;
-  uint uVar6;
+  char *pcVar3;
+  int iVar4;
   
-  pcVar1 = (char *)__savegprlr_25(param_1);
-  if (pcVar1 == (char *)0x0) {
+  if (param_1 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_utils_mp.cpp",0x1a9,
                     0,"%s");
   }
-  else if (*pcVar1 != '\0') {
-    uVar2 = SL_FindLowercaseString(pcVar1);
-    uVar6 = 1;
+  else if (*param_1 != '\0') {
+    uVar1 = SL_FindLowercaseString(param_1);
+    iVar4 = 1;
     do {
-      if (0x6c6 < (int)uVar6) {
+      if (0x6c6 < iVar4) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\../bgame/bg_public.h"
                         ,0x285,0,"%s");
       }
-      uVar3 = SV_GetConfigstringConst(uVar6 + CS_SOUNDALIASES);
-      if (uVar3 == scr_const._) break;
-      if (uVar3 == uVar2) goto LAB_824afaec;
-      uVar6 = uVar6 + 1;
-    } while ((int)uVar6 < 0x180);
-    if (uVar6 == 0x180) {
+      uVar2 = SV_GetConfigstringConst(iVar4 + CS_SOUNDALIASES);
+      if (uVar2 == scr_const._) break;
+      if (uVar2 == uVar1) goto LAB_824afaec;
+      iVar4 = iVar4 + 1;
+    } while (iVar4 < 0x180);
+    if (iVar4 == 0x180) {
       Com_Printf(0xf,"G_FindConfigstringIndex: overflow...\n");
       Com_Printf(0xf,"Dumping these %i Config Strings:\n");
-      uVar6 = 1;
+      iVar4 = 1;
       do {
-        if (0xeea < (int)(uVar6 + CS_SOUNDALIASES)) {
+        if (0xeea < (int)(iVar4 + CS_SOUNDALIASES)) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\../bgame/bg_public.h"
                           ,0x285,0,"%s");
         }
-        uVar2 = SV_GetConfigstringConst(uVar6 + CS_SOUNDALIASES);
-        SL_ConvertToString(uVar2);
+        uVar1 = SV_GetConfigstringConst(iVar4 + CS_SOUNDALIASES);
+        SL_ConvertToString(uVar1);
         Com_Printf(0xf,"%i: %s\n");
-        uVar6 = uVar6 + 1;
-      } while ((int)uVar6 < 0x180);
-      pcVar4 = va("\x15G_FindConfigstringIndex: overflow (%d): \'%s\'");
-      Com_Error(ERR_DROP,pcVar4);
+        iVar4 = iVar4 + 1;
+      } while (iVar4 < 0x180);
+      pcVar3 = va("\x15G_FindConfigstringIndex: overflow (%d): \'%s\'");
+      Com_Error(ERR_DROP,pcVar3);
     }
-    if (0xeea < (int)(uVar6 + CS_SOUNDALIASES)) {
+    if (0xeea < (int)(iVar4 + CS_SOUNDALIASES)) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\../bgame/bg_public.h"
                       ,0x285,0,"%s");
     }
-    SV_SetConfigstring(uVar6 + CS_SOUNDALIASES,pcVar1);
+    SV_SetConfigstring(iVar4 + CS_SOUNDALIASES,param_1);
 LAB_824afaec:
-    uVar5 = __restgprlr_25(uVar6 & 0xffff);
-    return uVar5;
+    return (ushort)iVar4;
   }
-  uVar5 = __restgprlr_25(0);
-  return uVar5;
+  return 0;
 }
 
 
 // 824C2B28  G_SpawnTurret  (game/turret.cpp:4013)
 
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
@@ -4265,256 +4044,253 @@ void G_SpawnTurret(gentity_s *param_1,char *param_2,int param_3)
   bool bVar1;
   float fVar2;
   WeaponDef *pWVar3;
-  gentity_s *pgVar4;
-  Weapon WVar5;
-  weapClass_t wVar6;
-  char *pcVar7;
-  ushort uVar9;
-  int iVar8;
-  Turret *pTVar10;
-  uint uVar11;
-  float *pfVar12;
-  Turret *pTVar13;
+  Weapon WVar4;
+  weapClass_t wVar5;
+  char *pcVar6;
+  ushort uVar8;
+  int iVar7;
+  Turret *pTVar9;
+  uint uVar10;
+  float *pfVar11;
+  Turret *pTVar12;
+  double dVar13;
   double dVar14;
   double dVar15;
   double dVar16;
-  double dVar17;
   float local_80;
   float local_7c [31];
   
-  pgVar4 = (gentity_s *)__savegprlr_22(param_1);
-  iVar8 = 0;
-  pTVar10 = turretArray + 1;
+  iVar7 = 0;
+  pTVar9 = turretArray + 1;
   do {
-    pTVar13 = pTVar10 + -1;
-    if (pTVar10[-1].inuse == false) break;
-    if (pTVar10->inuse == false) {
-      iVar8 = iVar8 + 1;
-      pTVar13 = pTVar10;
+    pTVar12 = pTVar9 + -1;
+    if (pTVar9[-1].inuse == false) break;
+    if (pTVar9->inuse == false) {
+      iVar7 = iVar7 + 1;
+      pTVar12 = pTVar9;
       break;
     }
-    if (pTVar10[1].inuse == false) {
-      iVar8 = iVar8 + 2;
-      pTVar13 = pTVar10 + 1;
+    if (pTVar9[1].inuse == false) {
+      iVar7 = iVar7 + 2;
+      pTVar12 = pTVar9 + 1;
       break;
     }
-    pTVar13 = pTVar10 + 2;
-    if (pTVar10[2].inuse == false) {
-      iVar8 = iVar8 + 3;
+    pTVar12 = pTVar9 + 2;
+    if (pTVar9[2].inuse == false) {
+      iVar7 = iVar7 + 3;
       break;
     }
-    pTVar10 = pTVar10 + 4;
-    iVar8 = iVar8 + 4;
-  } while ((int)pTVar10 < -0x7ca5d78c);
-  if (iVar8 == 0x20) {
+    pTVar9 = pTVar9 + 4;
+    iVar7 = iVar7 + 4;
+  } while ((int)pTVar9 < -0x7ca5d78c);
+  if (iVar7 == 0x20) {
     Com_Error(ERR_DROP,"\x15G_SpawnTurret: max number of turrets (%d) exceeded");
   }
   memset();
-  pgVar4->turret = pTVar13;
-  pTVar13->inuse = true;
-  WVar5 = G_GetWeaponForName(param_2);
-  (pgVar4->s).weapon = WVar5;
-  if ((WVar5.data & 0xff) == 0) {
+  param_1->turret = pTVar12;
+  pTVar12->inuse = true;
+  WVar4 = G_GetWeaponForName(param_2);
+  (param_1->s).weapon = WVar4;
+  if ((WVar4.data & 0xff) == 0) {
     Com_Error(ERR_DROP,
               "\x15Bad weaponinfo \"%s\" specified for turret.  It likely needs to be precached in script."
              );
   }
-  WVar5 = BG_GetAlternateWeapon((pgVar4->s).weapon,false);
-  pWVar3 = bg_weaponDefs[WVar5.data & 0xff];
-  wVar6 = BG_GetWeaponClass((pgVar4->s).weapon,false);
-  if (wVar6 != WEAPCLASS_TURRET) {
-    pcVar7 = va(
+  WVar4 = BG_GetAlternateWeapon((param_1->s).weapon,false);
+  pWVar3 = bg_weaponDefs[WVar4.data & 0xff];
+  wVar5 = BG_GetWeaponClass((param_1->s).weapon,false);
+  if (wVar5 != WEAPCLASS_TURRET) {
+    pcVar6 = va(
                "G_SpawnTurret: weapon \'%s\' isn\'t a turret. This usually indicates that the weapon failed to load."
                );
-    Scr_Error(pcVar7);
+    Scr_Error(pcVar6);
   }
-  if ((level.initializing == 0) && ((pgVar4->s).weapon._s_0.weaponIdx == 0)) {
-    pcVar7 = va("turret \'%s\' not precached");
-    Scr_Error(pcVar7);
+  if ((level.initializing == 0) && ((param_1->s).weapon._s_0.weaponIdx == 0)) {
+    pcVar6 = va("turret \'%s\' not precached");
+    Scr_Error(pcVar6);
   }
-  pTVar13->fireTime = 0;
-  pTVar13->stance = pWVar3->stance;
-  pTVar13->prevStance = -1;
-  pTVar13->fireSndDelay = 0;
+  pTVar12->fireTime = 0;
+  pTVar12->stance = pWVar3->stance;
+  pTVar12->prevStance = -1;
+  pTVar12->fireSndDelay = 0;
   if (pWVar3->fireLoopSound == (snd_alias_list_t *)0x0) {
-    pTVar13->fireSnd = 0;
+    pTVar12->fireSnd = 0;
   }
   else {
-    uVar9 = G_SoundAliasIndex(pWVar3->fireLoopSound->aliasName);
-    pTVar13->fireSnd = uVar9;
+    uVar8 = G_SoundAliasIndex(pWVar3->fireLoopSound->aliasName);
+    pTVar12->fireSnd = uVar8;
   }
   if (pWVar3->fireLoopSoundPlayer == (snd_alias_list_t *)0x0) {
-    pTVar13->fireSndPlayer = 0;
+    pTVar12->fireSndPlayer = 0;
   }
   else {
-    uVar9 = G_SoundAliasIndex(pWVar3->fireLoopSoundPlayer->aliasName);
-    pTVar13->fireSndPlayer = uVar9;
+    uVar8 = G_SoundAliasIndex(pWVar3->fireLoopSoundPlayer->aliasName);
+    pTVar12->fireSndPlayer = uVar8;
   }
   if (pWVar3->fireStopSound == (snd_alias_list_t *)0x0) {
-    pTVar13->stopSnd = 0;
+    pTVar12->stopSnd = 0;
   }
   else {
-    uVar9 = G_SoundAliasIndex(pWVar3->fireStopSound->aliasName);
-    pTVar13->stopSnd = uVar9;
+    uVar8 = G_SoundAliasIndex(pWVar3->fireStopSound->aliasName);
+    pTVar12->stopSnd = uVar8;
   }
   if (pWVar3->fireStopSoundPlayer == (snd_alias_list_t *)0x0) {
-    pTVar13->stopSndPlayer = 0;
+    pTVar12->stopSndPlayer = 0;
   }
   else {
-    uVar9 = G_SoundAliasIndex(pWVar3->fireStopSoundPlayer->aliasName);
-    pTVar13->stopSndPlayer = uVar9;
+    uVar8 = G_SoundAliasIndex(pWVar3->fireStopSoundPlayer->aliasName);
+    pTVar12->stopSndPlayer = uVar8;
   }
   if (pWVar3->scanSound == (snd_alias_list_t *)0x0) {
-    pTVar13->scanSnd = 0;
+    pTVar12->scanSnd = 0;
   }
   else {
-    uVar9 = G_SoundAliasIndex(pWVar3->scanSound->aliasName);
-    pTVar13->scanSnd = uVar9;
+    uVar8 = G_SoundAliasIndex(pWVar3->scanSound->aliasName);
+    pTVar12->scanSnd = uVar8;
   }
   if ((level.spawnVar.spawnVarsValid == false) ||
-     (iVar8 = G_SpawnFloat(0x318,"",pTVar13->arcmin + 1), iVar8 == 0)) {
-    pTVar13->arcmin[1] = pWVar3->rightArc;
+     (iVar7 = G_SpawnFloat(0x318,"",pTVar12->arcmin + 1), iVar7 == 0)) {
+    pTVar12->arcmin[1] = pWVar3->rightArc;
   }
-  pfVar12 = pTVar13->arcmin + 1;
-  fVar2 = *pfVar12;
-  dVar15 = -1.0;
-  dVar17 = 0.0;
-  *pfVar12 = fVar2 * -1.0;
+  pfVar11 = pTVar12->arcmin + 1;
+  fVar2 = *pfVar11;
+  dVar14 = -1.0;
+  dVar16 = 0.0;
+  *pfVar11 = fVar2 * -1.0;
   if (0.0 < fVar2 * -1.0) {
-    *pfVar12 = 0.0;
+    *pfVar11 = 0.0;
   }
   if ((level.spawnVar.spawnVarsValid == false) ||
-     (iVar8 = G_SpawnFloat(0x319,"",pTVar13->arcmax + 1), iVar8 == 0)) {
-    pTVar13->arcmax[1] = pWVar3->leftArc;
+     (iVar7 = G_SpawnFloat(0x319,"",pTVar12->arcmax + 1), iVar7 == 0)) {
+    pTVar12->arcmax[1] = pWVar3->leftArc;
   }
-  if ((double)pTVar13->arcmax[1] < dVar17) {
-    pTVar13->arcmax[1] = (float)dVar17;
-  }
-  if ((level.spawnVar.spawnVarsValid == false) ||
-     (iVar8 = G_SpawnFloat(0x31a,"",pTVar13->arcmin), iVar8 == 0)) {
-    pTVar13->arcmin[0] = pWVar3->topArc;
-  }
-  pfVar12 = pTVar13->arcmin;
-  fVar2 = *pfVar12;
-  *pfVar12 = (float)((double)fVar2 * dVar15);
-  if (dVar17 < (double)(float)((double)fVar2 * dVar15)) {
-    *pfVar12 = (float)dVar17;
+  if ((double)pTVar12->arcmax[1] < dVar16) {
+    pTVar12->arcmax[1] = (float)dVar16;
   }
   if ((level.spawnVar.spawnVarsValid == false) ||
-     (iVar8 = G_SpawnFloat(0x31b,"",pTVar13->arcmax), iVar8 == 0)) {
-    pTVar13->arcmax[0] = pWVar3->bottomArc;
+     (iVar7 = G_SpawnFloat(0x31a,"",pTVar12->arcmin), iVar7 == 0)) {
+    pTVar12->arcmin[0] = pWVar3->topArc;
   }
-  if ((double)pTVar13->arcmax[0] < dVar17) {
-    pTVar13->arcmax[0] = (float)dVar17;
+  pfVar11 = pTVar12->arcmin;
+  fVar2 = *pfVar11;
+  *pfVar11 = (float)((double)fVar2 * dVar14);
+  if (dVar16 < (double)(float)((double)fVar2 * dVar14)) {
+    *pfVar11 = (float)dVar16;
+  }
+  if ((level.spawnVar.spawnVarsValid == false) ||
+     (iVar7 = G_SpawnFloat(0x31b,"",pTVar12->arcmax), iVar7 == 0)) {
+    pTVar12->arcmax[0] = pWVar3->bottomArc;
+  }
+  if ((double)pTVar12->arcmax[0] < dVar16) {
+    pTVar12->arcmax[0] = (float)dVar16;
   }
   if (((level.spawnVar.spawnVarsValid == false) ||
-      (iVar8 = G_SpawnFloat(0x31c,"",&local_80), iVar8 == 0)) &&
+      (iVar7 = G_SpawnFloat(0x31c,"",&local_80), iVar7 == 0)) &&
      ((level.spawnVar.spawnVarsValid == false ||
-      (iVar8 = G_SpawnFloat(0x323,"",&local_80), iVar8 == 0)))) {
+      (iVar7 = G_SpawnFloat(0x323,"",&local_80), iVar7 == 0)))) {
     local_80 = pWVar3->yawConvergenceTime;
   }
-  dVar15 = (double)local_80;
-  if ((double)local_80 < dVar17) {
-    local_80 = (float)dVar17;
-    dVar15 = dVar17;
+  dVar14 = (double)local_80;
+  if ((double)local_80 < dVar16) {
+    local_80 = (float)dVar16;
+    dVar14 = dVar16;
   }
   bVar1 = level.spawnVar.spawnVarsValid == false;
-  dVar16 = 1000.0;
-  dVar14 = 0.5;
-  pTVar13->convergenceTime[1] = (int)(dVar15 * 1000.0 + 0.5);
-  if ((bVar1) || (iVar8 = G_SpawnFloat(0x31d,"",&local_80), iVar8 == 0)) {
+  dVar15 = 1000.0;
+  dVar13 = 0.5;
+  pTVar12->convergenceTime[1] = (int)(dVar14 * 1000.0 + 0.5);
+  if ((bVar1) || (iVar7 = G_SpawnFloat(0x31d,"",&local_80), iVar7 == 0)) {
     local_80 = pWVar3->pitchConvergenceTime;
   }
-  dVar15 = (double)local_80;
-  if ((double)local_80 < dVar17) {
-    local_80 = (float)dVar17;
-    dVar15 = dVar17;
+  dVar14 = (double)local_80;
+  if ((double)local_80 < dVar16) {
+    local_80 = (float)dVar16;
+    dVar14 = dVar16;
   }
   bVar1 = level.spawnVar.spawnVarsValid == false;
-  pTVar13->convergenceHeightPercent = 1.0;
-  pTVar13->convergenceTime[0] = (int)(dVar15 * dVar16 + dVar14);
-  if ((bVar1) || (iVar8 = G_SpawnFloat(799,"",local_7c), iVar8 == 0)) {
+  pTVar12->convergenceHeightPercent = 1.0;
+  pTVar12->convergenceTime[0] = (int)(dVar14 * dVar15 + dVar13);
+  if ((bVar1) || (iVar7 = G_SpawnFloat(799,"",local_7c), iVar7 == 0)) {
     local_7c[0] = pWVar3->maxRange;
   }
-  dVar15 = (double)local_7c[0];
-  if (dVar15 <= dVar17) {
+  dVar14 = (double)local_7c[0];
+  if (dVar14 <= dVar16) {
     fVar2 = 3.4028235e+38;
   }
   else {
-    fVar2 = (float)(dVar15 * dVar15);
+    fVar2 = (float)(dVar14 * dVar14);
   }
-  pTVar13->maxRangeSquared = fVar2;
-  pTVar13->dropPitch = -90.0;
-  if (pgVar4->health == 0) {
-    pgVar4->health = 100;
-  }
-  if ((level.spawnVar.spawnVarsValid == false) ||
-     (iVar8 = G_SpawnInt(0x321,"0",&pgVar4->damage), iVar8 == 0)) {
-    iVar8 = BG_GetDamage((pgVar4->s).weapon,false);
-    pgVar4->damage = iVar8;
-  }
-  if (pgVar4->damage < 0) {
-    pgVar4->damage = 0;
+  pTVar12->maxRangeSquared = fVar2;
+  pTVar12->dropPitch = -90.0;
+  if (param_1->health == 0) {
+    param_1->health = 100;
   }
   if ((level.spawnVar.spawnVarsValid == false) ||
-     (iVar8 = G_SpawnFloat(0x322,"1",&pTVar13->playerSpread), iVar8 == 0)) {
-    pTVar13->playerSpread = pWVar3->playerSpread;
+     (iVar7 = G_SpawnInt(0x321,"0",&param_1->damage), iVar7 == 0)) {
+    iVar7 = BG_GetDamage((param_1->s).weapon,false);
+    param_1->damage = iVar7;
   }
-  if ((double)pTVar13->playerSpread < dVar17) {
-    pTVar13->playerSpread = (float)dVar17;
+  if (param_1->damage < 0) {
+    param_1->damage = 0;
   }
-  pTVar13->state = 0;
-  pTVar13->prevTargetIndex = -1;
-  pTVar13->flags = 0;
-  pTVar13->eTeam = TEAM_FREE;
-  pTVar13->modeChangeTime = 0;
-  pgVar4->clipmask = 1;
-  (pgVar4->r).contents = 0x200000;
-  (pgVar4->r).svFlags = '\0';
-  (pgVar4->s).eType = 0xb;
-  (pgVar4->s).un1.eventParm2 = 0xff;
-  pgVar4->flags = pgVar4->flags | 0x1000;
-  (pgVar4->r).box.midPoint[0] = (float)dVar17;
-  (pgVar4->r).box.midPoint[1] = (float)dVar17;
-  (pgVar4->r).box.midPoint[2] = 28.0;
-  (pgVar4->r).box.halfSize[0] = 32.0;
-  (pgVar4->r).box.halfSize[1] = 32.0;
-  (pgVar4->r).box.halfSize[2] = 28.0;
-  G_SetOrigin(pgVar4,(pgVar4->r).currentOrigin);
-  G_SetAngle(pgVar4,(pgVar4->r).currentAngles);
-  (pgVar4->s).lerp.u.turret.gunAngles[0] = (float)dVar17;
-  (pgVar4->s).lerp.u.turret.gunAngles[1] = (float)dVar17;
-  (pgVar4->s).lerp.u.turret.gunAngles[2] = (float)dVar17;
+  if ((level.spawnVar.spawnVarsValid == false) ||
+     (iVar7 = G_SpawnFloat(0x322,"1",&pTVar12->playerSpread), iVar7 == 0)) {
+    pTVar12->playerSpread = pWVar3->playerSpread;
+  }
+  if ((double)pTVar12->playerSpread < dVar16) {
+    pTVar12->playerSpread = (float)dVar16;
+  }
+  pTVar12->state = 0;
+  pTVar12->prevTargetIndex = -1;
+  pTVar12->flags = 0;
+  pTVar12->eTeam = TEAM_FREE;
+  pTVar12->modeChangeTime = 0;
+  param_1->clipmask = 1;
+  (param_1->r).contents = 0x200000;
+  (param_1->r).svFlags = '\0';
+  (param_1->s).eType = 0xb;
+  (param_1->s).un1.eventParm2 = 0xff;
+  param_1->flags = param_1->flags | 0x1000;
+  (param_1->r).box.midPoint[0] = (float)dVar16;
+  (param_1->r).box.midPoint[1] = (float)dVar16;
+  (param_1->r).box.midPoint[2] = 28.0;
+  (param_1->r).box.halfSize[0] = 32.0;
+  (param_1->r).box.halfSize[1] = 32.0;
+  (param_1->r).box.halfSize[2] = 28.0;
+  G_SetOrigin(param_1,(param_1->r).currentOrigin);
+  G_SetAngle(param_1,(param_1->r).currentAngles);
+  (param_1->s).lerp.u.turret.gunAngles[0] = (float)dVar16;
+  (param_1->s).lerp.u.turret.gunAngles[1] = (float)dVar16;
+  (param_1->s).lerp.u.turret.gunAngles[2] = (float)dVar16;
   if (param_3 != 0) {
-    (pgVar4->s).lerp.u.turret.gunAngles[0] = pTVar13->dropPitch;
+    (param_1->s).lerp.u.turret.gunAngles[0] = pTVar12->dropPitch;
   }
-  pTVar13->barrelRollRate = (float)dVar17;
-  pTVar13->heatLevel = (float)dVar17;
-  pTVar13->autoRotationStopDelay = 1000;
-  pTVar13->heatPenaltyEndTime = 0;
-  pTVar13->lastAutoRotationRequestTime = 0;
-  pgVar4->handler = '\x0e';
-  pTVar10 = pgVar4->turret;
-  iVar8 = level.time + 0x32;
-  (pgVar4->s).lerp.apos.trType = TR_LINEAR_STOP;
-  pgVar4->takedamage = '\0';
-  pgVar4->nextthink = iVar8;
-  if (pTVar10 == (Turret *)0x0) {
+  pTVar12->barrelRollRate = (float)dVar16;
+  pTVar12->heatLevel = (float)dVar16;
+  pTVar12->autoRotationStopDelay = 1000;
+  pTVar12->heatPenaltyEndTime = 0;
+  pTVar12->lastAutoRotationRequestTime = 0;
+  param_1->handler = '\x0e';
+  pTVar9 = param_1->turret;
+  iVar7 = level.time + 0x32;
+  (param_1->s).lerp.apos.trType = TR_LINEAR_STOP;
+  param_1->takedamage = '\0';
+  param_1->nextthink = iVar7;
+  if (pTVar9 == (Turret *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\turret.cpp",0xe36,0,"%s")
     ;
   }
-  (pgVar4->s).otherEntityNum = 0x7ff;
-  uVar11 = (uint)(pgVar4->r).ownerNum.number;
-  if ((uVar11 != 0) && (*(char *)((int)&g_dummyHudCurrent + uVar11 * 0x280 + 0xb) == '\0')) {
+  (param_1->s).otherEntityNum = 0x7ff;
+  uVar10 = (uint)(param_1->r).ownerNum.number;
+  if ((uVar10 != 0) && (*(char *)((int)&g_dummyHudCurrent + uVar10 * 0x280 + 0xb) == '\0')) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_public_mp.h",0x186,0
                     ,"%s\n\t(number - 1) = %i");
   }
-  if ((pgVar4->r).ownerNum.number != 0) {
+  if ((param_1->r).ownerNum.number != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\turret.cpp",0x107f,0,"%s"
                    );
   }
-  G_DObjUpdate(pgVar4,1);
-  __restgprlr_22();
+  G_DObjUpdate(param_1,1);
   return;
 }
 

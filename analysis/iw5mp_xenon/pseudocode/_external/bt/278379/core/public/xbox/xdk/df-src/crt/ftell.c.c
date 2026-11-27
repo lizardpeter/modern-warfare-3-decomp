@@ -27,114 +27,110 @@ long ftell(_iobuf *param_1)
 
 // 8291BDF8  _ftell_nolock  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/ftell.c:82)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
+
 long _ftell_nolock(_iobuf *param_1)
 
 {
   uint uVar1;
-  int iVar2;
-  bool bVar3;
-  _iobuf *p_Var5;
-  int *piVar6;
-  longlong lVar4;
-  uint uVar7;
-  long lVar8;
-  long lVar9;
-  ulonglong uVar10;
-  ulonglong uVar11;
-  longlong lVar12;
-  ulonglong uVar13;
-  longlong lVar14;
-  int iVar15;
+  bool bVar2;
+  char *pcVar3;
+  int *piVar4;
+  uint uVar5;
+  long lVar6;
+  long lVar7;
+  int iVar8;
+  char *pcVar9;
+  int iVar10;
+  int iVar11;
+  char *pcVar12;
   
-  p_Var5 = (_iobuf *)__savegprlr_24(param_1);
-  if (p_Var5 == (_iobuf *)0x0) {
-    piVar6 = _errno();
-    *piVar6 = 0x16;
+  if (param_1 == (_iobuf *)0x0) {
+    piVar4 = _errno();
+    *piVar4 = 0x16;
     _invalid_parameter_noinfo();
   }
   else {
-    uVar7 = _fileno(p_Var5);
-    if (p_Var5->_cnt < 0) {
-      p_Var5->_cnt = 0;
+    uVar5 = _fileno(param_1);
+    if (param_1->_cnt < 0) {
+      param_1->_cnt = 0;
     }
-    lVar9 = _lseek(uVar7,0,1);
-    lVar14 = (longlong)lVar9;
-    if (-1 < lVar14) {
-      uVar1 = p_Var5->_flag;
+    lVar6 = _lseek(uVar5,0,1);
+    if (-1 < lVar6) {
+      uVar1 = param_1->_flag;
       if ((uVar1 & 0x108) == 0) {
-        lVar4 = lVar14 - (ulonglong)(uint)p_Var5->_cnt;
-        goto LAB_8291c010;
+        return lVar6 - param_1->_cnt;
       }
-      uVar10 = ZEXT48(p_Var5->_ptr);
-      uVar13 = ZEXT48(p_Var5->_base);
-      lVar4 = uVar10 - uVar13;
+      pcVar12 = param_1->_ptr;
+      pcVar9 = param_1->_base;
+      iVar10 = (int)pcVar12 - (int)pcVar9;
       if ((uVar1 & 3) == 0) {
         if ((uVar1 & 0x80) == 0) {
-          piVar6 = _errno();
-          lVar4 = -1;
-          *piVar6 = 0x16;
-          goto LAB_8291c010;
+          piVar4 = _errno();
+          *piVar4 = 0x16;
+          return -1;
         }
       }
-      else if (((*(byte *)(*(int *)(&__pioinfo + ((int)uVar7 >> 5) * 4) + (uVar7 & 0x1f) * 0x48 + 4)
-                & 0x80) != 0) && (uVar13 < uVar10)) {
-        uVar11 = uVar13;
-        do {
-          if (*(char *)uVar11 == '\n') {
-            lVar4 = lVar4 + 1;
-          }
-          uVar11 = uVar11 + 1;
-        } while ((uVar11 & 0xffffffff) < ZEXT48(p_Var5->_ptr));
-      }
-      if (lVar9 == 0) goto LAB_8291c010;
-      if ((uVar1 & 1) != 0) {
-        if (p_Var5->_cnt == 0) {
-          lVar4 = 0;
-        }
-        else {
-          iVar2 = ((int)uVar7 >> 5) * 4;
-          uVar10 = (uVar10 - uVar13) + (ulonglong)(uint)p_Var5->_cnt;
-          iVar15 = (uVar7 & 0x1f) * 0x48;
-          if ((*(byte *)(*(int *)(&__pioinfo + iVar2) + iVar15 + 4) & 0x80) != 0) {
-            lVar8 = _lseek(uVar7,0,2);
-            if (lVar8 == lVar9) {
-              uVar13 = ZEXT48(p_Var5->_base);
-              if (uVar13 < (uVar13 + uVar10 & 0xffffffff)) {
-                lVar12 = (uVar13 + uVar10) - uVar13;
-                do {
-                  if (*(char *)uVar13 == '\n') {
-                    uVar10 = uVar10 + 1;
-                  }
-                  uVar13 = uVar13 + 1;
-                  lVar12 = lVar12 + -1;
-                } while (lVar12 != 0);
-              }
-              bVar3 = (p_Var5->_flag & 0x2000U) == 0;
-            }
-            else {
-              lVar9 = _lseek(uVar7,lVar9,0);
-              if (lVar9 < 0) goto LAB_8291be20;
-              if (((0x200 < (uVar10 & 0xffffffff)) || ((p_Var5->_flag & 8U) == 0)) ||
-                 (uVar10 = 0x200, (p_Var5->_flag & 0x400U) != 0)) {
-                uVar10 = (ulonglong)(uint)p_Var5->_bufsiz;
-              }
-              bVar3 = (*(byte *)(*(int *)(&__pioinfo + iVar2) + iVar15 + 4) & 4) == 0;
-            }
-            if (!bVar3) {
-              uVar10 = uVar10 + 1;
+      else {
+        pcVar3 = pcVar9;
+        if ((*(byte *)(*(int *)(&__pioinfo + ((int)uVar5 >> 5) * 4) + (uVar5 & 0x1f) * 0x48 + 4) &
+            0x80) != 0) {
+          for (; pcVar3 < pcVar12; pcVar3 = pcVar3 + 1) {
+            if (*pcVar3 == '\n') {
+              iVar10 = iVar10 + 1;
             }
           }
-          lVar14 = lVar14 - uVar10;
         }
       }
-      lVar4 = lVar4 + lVar14;
-      goto LAB_8291c010;
+      if (lVar6 != 0) {
+        if ((uVar1 & 1) != 0) {
+          if (param_1->_cnt == 0) {
+            iVar10 = 0;
+          }
+          else {
+            iVar8 = ((int)uVar5 >> 5) * 4;
+            pcVar12 = pcVar12 + (param_1->_cnt - (int)pcVar9);
+            iVar11 = (uVar5 & 0x1f) * 0x48;
+            if ((*(byte *)(*(int *)(&__pioinfo + iVar8) + iVar11 + 4) & 0x80) != 0) {
+              lVar7 = _lseek(uVar5,0,2);
+              if (lVar7 == lVar6) {
+                pcVar9 = param_1->_base;
+                if (pcVar9 < pcVar9 + (int)pcVar12) {
+                  iVar8 = (int)(pcVar9 + (int)pcVar12) - (int)pcVar9;
+                  do {
+                    if (*pcVar9 == '\n') {
+                      pcVar12 = pcVar12 + 1;
+                    }
+                    pcVar9 = pcVar9 + 1;
+                    iVar8 = iVar8 + -1;
+                  } while (iVar8 != 0);
+                }
+                bVar2 = (param_1->_flag & 0x2000U) == 0;
+              }
+              else {
+                lVar7 = _lseek(uVar5,lVar6,0);
+                if (lVar7 < 0) {
+                  return -1;
+                }
+                if ((((char *)0x200 < pcVar12) || ((param_1->_flag & 8U) == 0)) ||
+                   (pcVar12 = (char *)0x200, (param_1->_flag & 0x400U) != 0)) {
+                  pcVar12 = (char *)param_1->_bufsiz;
+                }
+                bVar2 = (*(byte *)(*(int *)(&__pioinfo + iVar8) + iVar11 + 4) & 4) == 0;
+              }
+              if (!bVar2) {
+                pcVar12 = pcVar12 + 1;
+              }
+            }
+            lVar6 = lVar6 - (int)pcVar12;
+          }
+        }
+        return iVar10 + lVar6;
+      }
+      return iVar10;
     }
   }
-LAB_8291be20:
-  lVar4 = -1;
-LAB_8291c010:
-  lVar9 = __restgprlr_24(lVar4);
-  return lVar9;
+  return -1;
 }
 

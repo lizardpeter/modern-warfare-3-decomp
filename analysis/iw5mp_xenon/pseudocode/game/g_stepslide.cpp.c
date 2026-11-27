@@ -2,286 +2,288 @@
 
 // 824AC1D0  G_SlideMove  (game/g_stepslide.cpp:18)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
+
 bool G_SlideMove(G_StepSlideMoveParams *param_1)
 
 {
-  bool bVar1;
+  float fVar1;
   float fVar2;
-  float fVar3;
-  char cVar4;
+  bool bVar3;
+  float fVar4;
   float fVar5;
   float fVar6;
   float fVar7;
   float fVar8;
-  float fVar9;
-  undefined4 *puVar10;
-  Bounds *pBVar11;
-  int iVar12;
+  float *pfVar9;
+  Bounds *pBVar10;
+  int iVar11;
+  float *pfVar12;
   uint uVar13;
   ulonglong uVar14;
-  float *pfVar15;
-  ushort uVar16;
-  undefined1 uVar17;
-  longlong lVar18;
+  ushort uVar15;
+  longlong lVar16;
+  longlong lVar17;
+  int iVar18;
   longlong lVar19;
-  int iVar20;
-  longlong lVar21;
+  longlong lVar20;
+  int iVar21;
   longlong lVar22;
-  ulonglong uVar23;
-  longlong lVar24;
-  int iVar25;
-  float *pfVar26;
-  int iVar28;
-  longlong lVar27;
-  float *pfVar29;
+  int iVar23;
+  int iVar24;
+  float *pfVar25;
+  double dVar26;
+  double dVar27;
+  double dVar28;
+  double dVar29;
   double dVar30;
   double dVar31;
   double dVar32;
-  double dVar33;
-  double dVar34;
-  double dVar35;
-  double dVar36;
+  float local_140 [4];
+  float local_130 [4];
+  float local_120 [13];
+  float local_ec [15];
   float local_b0 [44];
   
   uVar14 = ZEXT48(&stack0x00000000);
-  __savegprlr_24(param_1);
-  pfVar15 = (float *)__savefpr_27();
-  iVar12 = (int)(uVar14 - 400);
-  *(BADSPACEBASE **)iVar12 = register0x0000000c;
-  puVar10 = (undefined4 *)pfVar15[2];
-  cVar4 = *(char *)(pfVar15 + 4);
-  dVar30 = (double)*pfVar15;
-  pfVar15[10] = 2.86846e-42;
-  *(undefined4 *)(iVar12 + 0x50) = *puVar10;
-  *(undefined4 *)(iVar12 + 0x54) = puVar10[1];
-  fVar5 = (float)puVar10[2];
-  *(float *)(iVar12 + 0x58) = fVar5;
-  if (cVar4 != '\0') {
-    fVar5 = -(float)(dVar30 * 800.0 - (double)fVar5);
-    *(float *)(iVar12 + 0x58) = fVar5;
-    puVar10[2] = ((float)puVar10[2] + fVar5) * 0.5;
-    if (*(char *)((int)pfVar15 + 0x11) != '\0') {
-      (*(code *)pfVar15[9])(pfVar15[2],pfVar15[6],pfVar15[2]);
+  iVar11 = (int)(uVar14 - 400);
+  *(BADSPACEBASE **)iVar11 = register0x0000000c;
+  pfVar25 = param_1->velocity;
+  bVar3 = param_1->gravity;
+  dVar26 = (double)param_1->deltaTime;
+  param_1->bumpEntityNum = 0x7ff;
+  *(float *)(iVar11 + 0x50) = *pfVar25;
+  *(float *)(iVar11 + 0x54) = pfVar25[1];
+  fVar4 = pfVar25[2];
+  *(float *)(iVar11 + 0x58) = fVar4;
+  if (bVar3 != false) {
+    fVar4 = -(float)(dVar26 * 800.0 - (double)fVar4);
+    *(float *)(iVar11 + 0x58) = fVar4;
+    pfVar25[2] = (pfVar25[2] + fVar4) * 0.5;
+    if (param_1->hasGround != false) {
+      (*param_1->clipVelocityFunc)(param_1->velocity,param_1->groundNormal,param_1->velocity);
     }
   }
-  bVar1 = *(char *)((int)pfVar15 + 0x11) != '\0';
-  if (bVar1) {
-    puVar10 = (undefined4 *)pfVar15[6];
-    *(undefined4 *)(iVar12 + 0xe0) = *puVar10;
-    *(undefined4 *)(iVar12 + 0xe4) = puVar10[1];
-    *(undefined4 *)(iVar12 + 0xe8) = puVar10[2];
+  bVar3 = param_1->hasGround != false;
+  if (bVar3) {
+    pfVar25 = param_1->groundNormal;
+    *(float *)(iVar11 + 0xe0) = *pfVar25;
+    *(float *)(iVar11 + 0xe4) = pfVar25[1];
+    *(float *)(iVar11 + 0xe8) = pfVar25[2];
   }
-  pfVar29 = (float *)pfVar15[2];
-  lVar24 = (ulonglong)bVar1 + 1;
-  uVar13 = (uint)bVar1;
-  fVar5 = *pfVar29;
-  dVar35 = 1.0;
-  lVar21 = 0;
-  lVar22 = lVar24 * 0xc + (uVar14 - 400) + 0xdc;
-  dVar34 = 0.0;
-  dVar33 = 0.9900000095367432;
-  dVar32 = (double)SQRT(pfVar29[2] * pfVar29[2] + fVar5 * fVar5 + pfVar29[1] * pfVar29[1]);
-  dVar36 = dVar35;
-  if (-dVar32 < 0.0) {
-    dVar36 = dVar32;
+  pfVar25 = param_1->velocity;
+  lVar22 = (ulonglong)bVar3 + 1;
+  uVar13 = (uint)bVar3;
+  fVar4 = *pfVar25;
+  dVar31 = 1.0;
+  lVar19 = 0;
+  lVar20 = lVar22 * 0xc + (uVar14 - 400) + 0xdc;
+  dVar30 = 0.0;
+  dVar29 = 0.9900000095367432;
+  dVar28 = (double)SQRT(pfVar25[2] * pfVar25[2] + fVar4 * fVar4 + pfVar25[1] * pfVar25[1]);
+  dVar32 = dVar31;
+  if (-dVar28 < 0.0) {
+    dVar32 = dVar28;
   }
-  fVar2 = (float)(1.0 / dVar36);
-  local_b0[uVar13 * 3] = fVar5 * fVar2;
-  local_b0[uVar13 * 3 + 1] = pfVar29[1] * fVar2;
-  local_b0[uVar13 * 3 + 2] = pfVar29[2] * fVar2;
-  dVar36 = 0.10000000149011612;
+  fVar1 = (float)(1.0 / dVar32);
+  local_b0[uVar13 * 3] = fVar4 * fVar1;
+  local_b0[uVar13 * 3 + 1] = pfVar25[1] * fVar1;
+  local_b0[uVar13 * 3 + 2] = pfVar25[2] * fVar1;
+  dVar32 = 0.10000000149011612;
   do {
-    pfVar29 = (float *)pfVar15[1];
-    pfVar26 = (float *)pfVar15[2];
-    fVar5 = pfVar15[8];
-    fVar2 = pfVar15[7];
-    pBVar11 = (Bounds *)pfVar15[3];
-    *(float *)(iVar12 + 0x80) = (float)((double)*pfVar26 * dVar30 + (double)*pfVar29);
-    *(float *)(iVar12 + 0x84) = (float)((double)pfVar26[1] * dVar30 + (double)pfVar29[1]);
-    *(float *)(iVar12 + 0x88) = (float)((double)pfVar26[2] * dVar30 + (double)pfVar29[2]);
-    G_TraceCapsule((trace_t *)(iVar12 + 0xa0),pfVar29,(float *)(iVar12 + 0x80),pBVar11,(int)fVar2,
-                   (int)fVar5);
-    if (*(char *)(iVar12 + 0xce) != '\0') {
-      if (*(char *)((int)pfVar15 + 0x12) == '\0') {
-        *(float *)((int)pfVar15[2] + 8) = (float)dVar34;
+    pfVar25 = param_1->origin;
+    pfVar9 = param_1->velocity;
+    iVar23 = param_1->clipMask;
+    iVar24 = param_1->passEntityNum;
+    pBVar10 = param_1->bounds;
+    *(float *)(iVar11 + 0x80) = (float)((double)*pfVar9 * dVar26 + (double)*pfVar25);
+    *(float *)(iVar11 + 0x84) = (float)((double)pfVar9[1] * dVar26 + (double)pfVar25[1]);
+    *(float *)(iVar11 + 0x88) = (float)((double)pfVar9[2] * dVar26 + (double)pfVar25[2]);
+    G_TraceCapsule((trace_t *)(iVar11 + 0xa0),pfVar25,(float *)(iVar11 + 0x80),pBVar10,iVar24,iVar23
+                  );
+    if (*(char *)(iVar11 + 0xce) != '\0') {
+      if (param_1->zerog == false) {
+        param_1->velocity[2] = (float)dVar30;
       }
-      if ((undefined1 *)pfVar15[5] != (undefined1 *)0x0) {
-        *(undefined1 *)pfVar15[5] = 1;
+      if (param_1->inSolid != (bool *)0x0) {
+        *param_1->inSolid = true;
       }
-      __restfpr_27(1);
-      uVar17 = __restgprlr_24();
-      return (bool)uVar17;
+      return true;
     }
-    dVar32 = (double)*(float *)(iVar12 + 0xa0);
-    if (dVar34 < dVar32) {
-      pfVar29 = (float *)pfVar15[1];
-      *pfVar29 = (float)((double)(float)((double)*(float *)(iVar12 + 0x80) - (double)*pfVar29) *
-                         dVar32 + (double)*pfVar29);
-      pfVar29[1] = (float)((double)(float)((double)*(float *)(iVar12 + 0x84) - (double)pfVar29[1]) *
-                           dVar32 + (double)pfVar29[1]);
-      pfVar29[2] = (float)((double)(float)((double)*(float *)(iVar12 + 0x88) - (double)pfVar29[2]) *
-                           dVar32 + (double)pfVar29[2]);
-      dVar32 = (double)*(float *)(iVar12 + 0xa0);
+    dVar28 = (double)*(float *)(iVar11 + 0xa0);
+    if (dVar30 < dVar28) {
+      pfVar25 = param_1->origin;
+      *pfVar25 = (float)((double)(float)((double)*(float *)(iVar11 + 0x80) - (double)*pfVar25) *
+                         dVar28 + (double)*pfVar25);
+      pfVar25[1] = (float)((double)(float)((double)*(float *)(iVar11 + 0x84) - (double)pfVar25[1]) *
+                           dVar28 + (double)pfVar25[1]);
+      pfVar25[2] = (float)((double)(float)((double)*(float *)(iVar11 + 0x88) - (double)pfVar25[2]) *
+                           dVar28 + (double)pfVar25[2]);
+      dVar28 = (double)*(float *)(iVar11 + 0xa0);
     }
-    if (dVar32 == dVar35) break;
-    dVar30 = -(double)(float)(dVar32 * dVar30 - dVar30);
-    if ((int)lVar21 == 0) {
-      uVar16 = Trace_GetEntityHitId((trace_t *)(iVar12 + 0xa0));
-      pfVar15[10] = (float)(uint)uVar16;
+    if (dVar28 == dVar31) break;
+    dVar26 = -(double)(float)(dVar28 * dVar26 - dVar26);
+    if ((int)lVar19 == 0) {
+      uVar15 = Trace_GetEntityHitId((trace_t *)(iVar11 + 0xa0));
+      param_1->bumpEntityNum = (uint)uVar15;
     }
-    iVar25 = (int)lVar24;
-    if (4 < iVar25) {
-      pfVar15 = (float *)pfVar15[2];
-      *pfVar15 = (float)dVar34;
-      pfVar15[1] = (float)dVar34;
-      pfVar15[2] = (float)dVar34;
-      __restfpr_27(1);
-      uVar17 = __restgprlr_24();
-      return (bool)uVar17;
+    iVar23 = (int)lVar22;
+    if (4 < iVar23) {
+      pfVar25 = param_1->velocity;
+      *pfVar25 = (float)dVar30;
+      pfVar25[1] = (float)dVar30;
+      pfVar25[2] = (float)dVar30;
+      return true;
     }
-    iVar28 = 0;
-    if (iVar25 < 1) {
+    iVar24 = 0;
+    if (iVar23 < 1) {
 LAB_824ac4c0:
-      fVar5 = *(float *)(iVar12 + 0xac);
-      fVar2 = *(float *)(iVar12 + 0xa8);
-      fVar6 = *(float *)(iVar12 + 0xa4);
+      fVar4 = *(float *)(iVar11 + 0xac);
+      fVar1 = *(float *)(iVar11 + 0xa8);
+      fVar5 = *(float *)(iVar11 + 0xa4);
     }
     else {
-      fVar5 = *(float *)(iVar12 + 0xac);
-      lVar19 = uVar14 - 0xa8;
-      fVar2 = *(float *)(iVar12 + 0xa8);
-      fVar6 = *(float *)(iVar12 + 0xa4);
+      fVar4 = *(float *)(iVar11 + 0xac);
+      lVar17 = uVar14 - 0xa8;
+      fVar1 = *(float *)(iVar11 + 0xa8);
+      fVar5 = *(float *)(iVar11 + 0xa4);
       do {
-        pfVar29 = (float *)lVar19;
-        if (dVar33 < (double)(*pfVar29 * fVar5 + pfVar29[-1] * fVar2 + pfVar29[-2] * fVar6)) {
-          (*(code *)pfVar15[9])(pfVar15[2],uVar14 - 0xec,pfVar15[2]);
-          pfVar29 = (float *)pfVar15[2];
-          *pfVar29 = *(float *)(iVar12 + 0xa4) + *pfVar29;
-          pfVar29[1] = pfVar29[1] + *(float *)(iVar12 + 0xa8);
-          pfVar29[2] = pfVar29[2] + *(float *)(iVar12 + 0xac);
-          if (iVar28 < iVar25) goto LAB_824ac740;
+        pfVar25 = (float *)lVar17;
+        if (dVar29 < (double)(*pfVar25 * fVar4 + pfVar25[-1] * fVar1 + pfVar25[-2] * fVar5)) {
+          (*param_1->clipVelocityFunc)
+                    (param_1->velocity,(float *)(&stack0x00000000 + -0xec),param_1->velocity);
+          pfVar25 = param_1->velocity;
+          *pfVar25 = *(float *)(iVar11 + 0xa4) + *pfVar25;
+          pfVar25[1] = pfVar25[1] + *(float *)(iVar11 + 0xa8);
+          pfVar25[2] = pfVar25[2] + *(float *)(iVar11 + 0xac);
+          if (iVar24 < iVar23) goto LAB_824ac740;
           goto LAB_824ac4c0;
         }
-        iVar28 = iVar28 + 1;
-        lVar19 = lVar19 + 0xc;
-      } while (iVar28 < iVar25);
+        iVar24 = iVar24 + 1;
+        lVar17 = lVar17 + 0xc;
+      } while (iVar24 < iVar23);
     }
-    *(float *)((int)lVar22 + 4) = fVar6;
-    lVar24 = lVar24 + 1;
-    *(float *)((int)lVar22 + 8) = fVar2;
-    uVar23 = 0;
-    lVar22 = lVar22 + 0xc;
-    *(float *)lVar22 = fVar5;
-    if (0 < lVar24) {
-      pfVar29 = (float *)pfVar15[2];
-      lVar19 = uVar14 - 0xa8;
+    *(float *)((int)lVar20 + 4) = fVar5;
+    lVar22 = lVar22 + 1;
+    *(float *)((int)lVar20 + 8) = fVar1;
+    iVar23 = 0;
+    lVar20 = lVar20 + 0xc;
+    *(float *)lVar20 = fVar4;
+    if (0 < lVar22) {
+      pfVar25 = param_1->velocity;
+      lVar17 = uVar14 - 0xa8;
 LAB_824ac4f8:
-      pfVar26 = (float *)lVar19;
-      iVar25 = (int)lVar24;
-      if (dVar36 <= (double)(pfVar29[2] * *pfVar26 +
-                            *pfVar29 * pfVar26[-2] + pfVar29[1] * pfVar26[-1]))
-      goto code_r0x824ac518;
-      lVar19 = (uVar23 + (uVar23 & 0x7fffffff) * 2 & 0x3fffffff) * 4 + (uVar14 - 0xb0);
-      (*(code *)pfVar15[9])(pfVar29,lVar19,uVar14 - 0x130);
-      (*(code *)pfVar15[9])(uVar14 - 0x140,lVar19,uVar14 - 0x120);
-      fVar5 = *(float *)(iVar12 + 0x68);
-      iVar28 = 0;
-      fVar2 = *(float *)(iVar12 + 100);
-      lVar27 = uVar14 - 0xb0;
-      fVar6 = *(float *)(iVar12 + 0x60);
+      pfVar9 = (float *)lVar17;
+      iVar24 = (int)lVar22;
+      if (dVar32 <= (double)(pfVar25[2] * *pfVar9 + *pfVar25 * pfVar9[-2] + pfVar25[1] * pfVar9[-1])
+         ) goto code_r0x824ac518;
+      pfVar9 = (float *)(&stack0x00000000 + iVar23 * 0xc + -0xb0);
+      (*param_1->clipVelocityFunc)(pfVar25,pfVar9,(float *)(&stack0x00000000 + -0x130));
+      (*param_1->clipVelocityFunc)
+                ((float *)(&stack0x00000000 + -0x140),pfVar9,(float *)(&stack0x00000000 + -0x120));
+      fVar4 = *(float *)(iVar11 + 0x68);
+      iVar21 = 0;
+      fVar1 = *(float *)(iVar11 + 100);
+      lVar17 = uVar14 - 0xb0;
+      fVar5 = *(float *)(iVar11 + 0x60);
       do {
-        if ((iVar28 != (int)uVar23) &&
-           (pfVar29 = (float *)lVar27,
-           (double)(pfVar29[2] * fVar5 + pfVar29[1] * fVar2 + fVar6 * *pfVar29) < dVar36)) {
-          (*(code *)pfVar15[9])(uVar14 - 0x130,lVar27,uVar14 - 0x130);
-          (*(code *)pfVar15[9])(uVar14 - 0x120,lVar27,uVar14 - 0x120);
-          fVar6 = *(float *)(iVar12 + 0x60);
-          pfVar26 = (float *)lVar19;
-          fVar2 = *(float *)(iVar12 + 100);
-          fVar5 = *(float *)(iVar12 + 0x68);
-          if ((double)(pfVar26[2] * fVar5 + pfVar26[1] * fVar2 + *pfVar26 * fVar6) < dVar34) {
-            Vec3Cross(pfVar26,pfVar29,(float *)(iVar12 + 0x90));
-            fVar7 = *(float *)(iVar12 + 0x94);
-            fVar8 = *(float *)(iVar12 + 0x98);
-            fVar9 = *(float *)(iVar12 + 0x90);
-            pfVar29 = (float *)pfVar15[2];
-            iVar20 = 0;
-            lVar18 = uVar14 - 0xa8;
-            fVar5 = *pfVar29;
-            fVar2 = pfVar29[1];
-            fVar6 = pfVar29[2];
-            dVar31 = (double)SQRT(fVar9 * fVar9 + fVar8 * fVar8 + fVar7 * fVar7);
-            dVar32 = dVar35;
-            if (-dVar31 < 0.0) {
-              dVar32 = dVar31;
+        if ((iVar21 != iVar23) &&
+           (pfVar25 = (float *)lVar17,
+           (double)(pfVar25[2] * fVar4 + pfVar25[1] * fVar1 + fVar5 * *pfVar25) < dVar32)) {
+          (*param_1->clipVelocityFunc)
+                    ((float *)(&stack0x00000000 + -0x130),pfVar25,
+                     (float *)(&stack0x00000000 + -0x130));
+          (*param_1->clipVelocityFunc)
+                    ((float *)(&stack0x00000000 + -0x120),pfVar25,
+                     (float *)(&stack0x00000000 + -0x120));
+          fVar5 = *(float *)(iVar11 + 0x60);
+          fVar1 = *(float *)(iVar11 + 100);
+          fVar4 = *(float *)(iVar11 + 0x68);
+          if ((double)(pfVar9[2] * fVar4 + pfVar9[1] * fVar1 + *pfVar9 * fVar5) < dVar30) {
+            Vec3Cross(pfVar9,pfVar25,(float *)(iVar11 + 0x90));
+            fVar6 = *(float *)(iVar11 + 0x94);
+            fVar7 = *(float *)(iVar11 + 0x98);
+            fVar8 = *(float *)(iVar11 + 0x90);
+            pfVar25 = param_1->velocity;
+            iVar18 = 0;
+            lVar16 = uVar14 - 0xa8;
+            fVar4 = *pfVar25;
+            fVar1 = pfVar25[1];
+            fVar5 = pfVar25[2];
+            dVar27 = (double)SQRT(fVar8 * fVar8 + fVar7 * fVar7 + fVar6 * fVar6);
+            dVar28 = dVar31;
+            if (-dVar27 < 0.0) {
+              dVar28 = dVar27;
             }
-            fVar3 = (float)(dVar35 / dVar32);
-            fVar9 = fVar9 * fVar3;
-            *(float *)(iVar12 + 0x90) = fVar9;
-            fVar7 = fVar7 * fVar3;
-            *(float *)(iVar12 + 0x94) = fVar7;
-            fVar8 = fVar8 * fVar3;
-            *(float *)(iVar12 + 0x98) = fVar8;
-            fVar5 = fVar6 * fVar8 + fVar2 * fVar7 + fVar5 * fVar9;
-            fVar3 = fVar8 * *(float *)(iVar12 + 0x58) +
-                    fVar7 * *(float *)(iVar12 + 0x54) + fVar9 * *(float *)(iVar12 + 0x50);
-            fVar6 = fVar9 * fVar5;
-            *(float *)(iVar12 + 0x60) = fVar6;
-            fVar2 = fVar7 * fVar5;
-            *(float *)(iVar12 + 100) = fVar2;
-            fVar5 = fVar8 * fVar5;
-            *(float *)(iVar12 + 0x68) = fVar5;
-            *(float *)(iVar12 + 0x70) = fVar9 * fVar3;
-            *(float *)(iVar12 + 0x74) = fVar7 * fVar3;
-            *(float *)(iVar12 + 0x78) = fVar8 * fVar3;
+            fVar2 = (float)(dVar31 / dVar28);
+            fVar8 = fVar8 * fVar2;
+            *(float *)(iVar11 + 0x90) = fVar8;
+            fVar6 = fVar6 * fVar2;
+            *(float *)(iVar11 + 0x94) = fVar6;
+            fVar7 = fVar7 * fVar2;
+            *(float *)(iVar11 + 0x98) = fVar7;
+            fVar4 = fVar5 * fVar7 + fVar1 * fVar6 + fVar4 * fVar8;
+            fVar2 = fVar7 * *(float *)(iVar11 + 0x58) +
+                    fVar6 * *(float *)(iVar11 + 0x54) + fVar8 * *(float *)(iVar11 + 0x50);
+            fVar5 = fVar8 * fVar4;
+            *(float *)(iVar11 + 0x60) = fVar5;
+            fVar1 = fVar6 * fVar4;
+            *(float *)(iVar11 + 100) = fVar1;
+            fVar4 = fVar7 * fVar4;
+            *(float *)(iVar11 + 0x68) = fVar4;
+            *(float *)(iVar11 + 0x70) = fVar8 * fVar2;
+            *(float *)(iVar11 + 0x74) = fVar6 * fVar2;
+            *(float *)(iVar11 + 0x78) = fVar7 * fVar2;
             do {
-              if (((iVar20 != (int)uVar23) && (iVar20 != iVar28)) &&
-                 (pfVar26 = (float *)lVar18,
-                 (double)(*pfVar26 * fVar5 + pfVar26[-2] * fVar6 + pfVar26[-1] * fVar2) < dVar36)) {
-                *pfVar29 = (float)dVar34;
-                pfVar29[1] = (float)dVar34;
-                pfVar29[2] = (float)dVar34;
-                __restfpr_27(1);
-                uVar17 = __restgprlr_24();
-                return (bool)uVar17;
+              if (((iVar18 != iVar23) && (iVar18 != iVar21)) &&
+                 (pfVar12 = (float *)lVar16,
+                 (double)(*pfVar12 * fVar4 + pfVar12[-2] * fVar5 + pfVar12[-1] * fVar1) < dVar32)) {
+                *pfVar25 = (float)dVar30;
+                pfVar25[1] = (float)dVar30;
+                pfVar25[2] = (float)dVar30;
+                return true;
               }
-              iVar20 = iVar20 + 1;
-              lVar18 = lVar18 + 0xc;
-            } while (iVar20 < iVar25);
+              iVar18 = iVar18 + 1;
+              lVar16 = lVar16 + 0xc;
+            } while (iVar18 < iVar24);
           }
         }
-        iVar28 = iVar28 + 1;
-        lVar27 = lVar27 + 0xc;
-      } while (iVar28 < iVar25);
-      pfVar29 = (float *)pfVar15[2];
-      *pfVar29 = fVar6;
-      pfVar29[1] = *(float *)(iVar12 + 100);
-      pfVar29[2] = *(float *)(iVar12 + 0x68);
-      *(undefined4 *)(iVar12 + 0x58) = *(undefined4 *)(iVar12 + 0x78);
-      *(undefined4 *)(iVar12 + 0x50) = *(undefined4 *)(iVar12 + 0x70);
-      *(undefined4 *)(iVar12 + 0x54) = *(undefined4 *)(iVar12 + 0x74);
+        iVar21 = iVar21 + 1;
+        lVar17 = lVar17 + 0xc;
+      } while (iVar21 < iVar24);
+      pfVar25 = param_1->velocity;
+      *pfVar25 = fVar5;
+      pfVar25[1] = *(float *)(iVar11 + 100);
+      pfVar25[2] = *(float *)(iVar11 + 0x68);
+      *(undefined4 *)(iVar11 + 0x58) = *(undefined4 *)(iVar11 + 0x78);
+      *(undefined4 *)(iVar11 + 0x50) = *(undefined4 *)(iVar11 + 0x70);
+      *(undefined4 *)(iVar11 + 0x54) = *(undefined4 *)(iVar11 + 0x74);
     }
 LAB_824ac740:
-    lVar21 = lVar21 + 1;
-  } while ((int)lVar21 < 4);
-  if (*(char *)(pfVar15 + 4) != '\0') {
-    puVar10 = (undefined4 *)pfVar15[2];
-    *puVar10 = *(undefined4 *)(iVar12 + 0x50);
-    puVar10[1] = *(undefined4 *)(iVar12 + 0x54);
-    puVar10[2] = *(undefined4 *)(iVar12 + 0x58);
+    lVar19 = lVar19 + 1;
+  } while ((int)lVar19 < 4);
+  if (param_1->gravity != false) {
+    pfVar25 = param_1->velocity;
+    *pfVar25 = *(float *)(iVar11 + 0x50);
+    pfVar25[1] = *(float *)(iVar11 + 0x54);
+    pfVar25[2] = *(float *)(iVar11 + 0x58);
   }
-  __restfpr_27(lVar21 != 0);
-  uVar17 = __restgprlr_24();
-  return (bool)uVar17;
+  return (bool)('\x01' - (lVar19 == 0));
 code_r0x824ac518:
-  uVar23 = uVar23 + 1;
-  lVar19 = lVar19 + 0xc;
-  if (iVar25 <= (int)uVar23) goto LAB_824ac740;
+  iVar23 = iVar23 + 1;
+  lVar17 = lVar17 + 0xc;
+  if (iVar24 <= iVar23) goto LAB_824ac740;
   goto LAB_824ac4f8;
 }
 
 
 // 824AC810  G_StepSlideMove  (game/g_stepslide.cpp:185)
+
+/* WARNING: Function: __savefpr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_27 replaced with injection: xenon_save_restore */
 
 void G_StepSlideMove(G_StepSlideMoveParams *param_1)
 
@@ -289,13 +291,12 @@ void G_StepSlideMove(G_StepSlideMoveParams *param_1)
   float *pfVar1;
   float *pfVar2;
   float fVar3;
-  G_StepSlideMoveParams *pGVar4;
-  bool bVar5;
+  bool bVar4;
+  double dVar5;
   double dVar6;
   double dVar7;
   double dVar8;
   double dVar9;
-  double dVar10;
   float local_a0;
   float local_9c;
   float local_98;
@@ -307,62 +308,60 @@ void G_StepSlideMove(G_StepSlideMoveParams *param_1)
   float local_78;
   trace_t local_70;
   
-  pGVar4 = (G_StepSlideMoveParams *)__savefpr_27(param_1);
-  pfVar1 = pGVar4->origin;
-  pfVar2 = pGVar4->velocity;
+  pfVar1 = param_1->origin;
+  pfVar2 = param_1->velocity;
   local_a0 = *pfVar1;
   local_9c = pfVar1[1];
   local_98 = pfVar1[2];
-  dVar8 = (double)*pfVar2;
-  dVar7 = (double)pfVar2[1];
-  dVar10 = (double)pfVar2[2];
-  bVar5 = G_SlideMove(pGVar4);
-  if (bVar5) {
+  dVar7 = (double)*pfVar2;
+  dVar6 = (double)pfVar2[1];
+  dVar9 = (double)pfVar2[2];
+  bVar4 = G_SlideMove(param_1);
+  if (bVar4) {
     local_90 = local_a0;
     local_8c = local_9c;
-    dVar9 = 18.0;
+    dVar8 = 18.0;
     local_88 = local_98 - 18.0;
-    G_TraceCapsule(&local_70,&local_a0,&local_90,pGVar4->bounds,pGVar4->passEntityNum,
-                   pGVar4->clipMask);
-    dVar6 = 1.0;
-    if ((dVar10 <= 0.0) || ((local_70.fraction != 1.0 && ((float)0x3f333333 <= local_70.normal[2])))
-       ) {
-      local_78 = (float)((double)local_98 + dVar9);
+    G_TraceCapsule(&local_70,&local_a0,&local_90,param_1->bounds,param_1->passEntityNum,
+                   param_1->clipMask);
+    dVar5 = 1.0;
+    if ((dVar9 <= 0.0) || ((local_70.fraction != 1.0 && ((float)0x3f333333 <= local_70.normal[2]))))
+    {
+      local_78 = (float)((double)local_98 + dVar8);
       local_80 = local_a0;
       local_7c = local_9c;
-      G_TraceCapsule(&local_70,&local_a0,&local_80,pGVar4->bounds,pGVar4->passEntityNum,
-                     pGVar4->clipMask);
+      G_TraceCapsule(&local_70,&local_a0,&local_80,param_1->bounds,param_1->passEntityNum,
+                     param_1->clipMask);
       if (local_70.startsolid == false) {
-        pfVar1 = pGVar4->origin;
+        pfVar1 = param_1->origin;
         *pfVar1 = (local_80 - local_a0) * local_70.fraction + local_a0;
         pfVar1[1] = (local_7c - local_9c) * local_70.fraction + local_9c;
         fVar3 = (local_78 - local_98) * local_70.fraction + local_98;
-        dVar9 = (double)fVar3;
+        dVar8 = (double)fVar3;
         pfVar1[2] = fVar3;
-        pfVar1 = pGVar4->velocity;
-        *pfVar1 = (float)dVar8;
-        pfVar1[1] = (float)dVar7;
-        pfVar1[2] = (float)dVar10;
-        G_SlideMove(pGVar4);
-        pfVar1 = pGVar4->origin;
+        pfVar1 = param_1->velocity;
+        *pfVar1 = (float)dVar7;
+        pfVar1[1] = (float)dVar6;
+        pfVar1[2] = (float)dVar9;
+        G_SlideMove(param_1);
+        pfVar1 = param_1->origin;
         local_90 = *pfVar1;
         local_8c = pfVar1[1];
-        local_88 = (float)((double)local_98 - dVar9) + pfVar1[2];
-        G_TraceCapsule(&local_70,pfVar1,&local_90,pGVar4->bounds,pGVar4->passEntityNum,
-                       pGVar4->clipMask);
+        local_88 = (float)((double)local_98 - dVar8) + pfVar1[2];
+        G_TraceCapsule(&local_70,pfVar1,&local_90,param_1->bounds,param_1->passEntityNum,
+                       param_1->clipMask);
         if (local_70.startsolid == false) {
-          pfVar1 = pGVar4->origin;
+          pfVar1 = param_1->origin;
           *pfVar1 = (local_90 - *pfVar1) * local_70.fraction + *pfVar1;
           pfVar1[1] = (local_8c - pfVar1[1]) * local_70.fraction + pfVar1[1];
           pfVar1[2] = (local_88 - pfVar1[2]) * local_70.fraction + pfVar1[2];
         }
-        if ((double)local_70.fraction < dVar6) {
-          (*pGVar4->clipVelocityFunc)(pGVar4->velocity,local_70.normal,pGVar4->velocity);
+        if ((double)local_70.fraction < dVar5) {
+          (*param_1->clipVelocityFunc)(param_1->velocity,local_70.normal,param_1->velocity);
         }
       }
     }
   }
-  __restfpr_27();
   return;
 }
 

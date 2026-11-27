@@ -2,6 +2,8 @@
 
 // 8274AB60  RB_HW_AllocOcclusionQuery  (gfx_d3d/rb_query_d3d.h:9)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 
@@ -11,7 +13,6 @@ D3DQuery * RB_HW_AllocOcclusionQuery(void)
   D3DQuery *pDVar1;
   uint uVar2;
   
-  __savegprlr_28();
   do {
     pDVar1 = D3DDevice_CreateQueryTiled(dx.device,D3DQUERYTYPE_OCCLUSION,1);
     uVar2 = -(uint)(pDVar1 == (D3DQuery *)0x0) & 0x8007000e;
@@ -21,7 +22,6 @@ D3DQuery * RB_HW_AllocOcclusionQuery(void)
     Com_Printf(8,"Occlusion query creation failed: %s (0x%08x)\n");
     pDVar1 = (D3DQuery *)0x0;
   }
-  pDVar1 = (D3DQuery *)__restgprlr_28(pDVar1);
   return pDVar1;
 }
 
@@ -489,103 +489,98 @@ void R_CreateRingBuffers(void)
 
 // 82748780  R_SetD3DPresentParameters  (gfx_d3d/r_init.cpp:439)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 
 void R_SetD3DPresentParameters(_D3DPRESENT_PARAMETERS_ *param_1,GfxWindowParms *param_2)
 
 {
   bool bVar1;
-  int iVar2;
+  uint uVar2;
   _D3DFORMAT _Var3;
-  int *piVar4;
-  GfxWindowParms *pGVar5;
-  ulonglong uVar6;
-  ulong *puVar7;
-  _D3DRING_BUFFER_PARAMETERS *p_Var8;
-  longlong lVar9;
+  _D3DRING_BUFFER_PARAMETERS *p_Var4;
+  _D3DRING_BUFFER_PARAMETERS *p_Var5;
+  longlong lVar6;
   
-  uVar6 = (ulonglong)(int)param_2;
-  piVar4 = (int *)__savegprlr_28(param_1);
-  if (piVar4 == (int *)0x0) {
+  if (param_1 == (_D3DPRESENT_PARAMETERS_ *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_init.cpp",0x1b8,0,
                     "%s");
   }
-  if ((uVar6 & 0xffffffff) == 0) {
+  if (param_2 == (GfxWindowParms *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_init.cpp",0x1b9,0,
                     "%s");
   }
-  pGVar5 = (GfxWindowParms *)uVar6;
-  R_SetupAntiAliasing(pGVar5);
+  R_SetupAntiAliasing(param_2);
   memset();
-  lVar9 = 6;
-  p_Var8 = (_D3DRING_BUFFER_PARAMETERS *)&dx.mipBias;
-  puVar7 = (ulong *)(piVar4 + 0x11);
-  *piVar4 = pGVar5->displayWidth;
-  iVar2 = pGVar5->displayHeight;
-  piVar4[2] = 0x18280186;
-  piVar4[1] = iVar2;
-  piVar4[3] = 1;
-  piVar4[4] = dx.multiSampleType;
-  piVar4[5] = dx.multiSampleQuality;
-  piVar4[6] = 1;
-  piVar4[9] = 0;
+  lVar6 = 6;
+  p_Var5 = (_D3DRING_BUFFER_PARAMETERS *)&dx.mipBias;
+  p_Var4 = (_D3DRING_BUFFER_PARAMETERS *)&param_1->FrontBufferColorSpace;
+  param_1->BackBufferWidth = param_2->displayWidth;
+  uVar2 = param_2->displayHeight;
+  param_1->BackBufferFormat = D3DFMT_A8R8G8B8;
+  param_1->BackBufferHeight = uVar2;
+  param_1->BackBufferCount = 1;
+  param_1->MultiSampleType = dx.multiSampleType;
+  param_1->MultiSampleQuality = dx.multiSampleQuality;
+  param_1->SwapEffect = D3DSWAPEFFECT_DISCARD;
+  param_1->EnableAutoDepthStencil = 0;
   _Var3 = dx.depthStencilFormat;
-  piVar4[0xd] = 1;
-  piVar4[7] = 0;
-  piVar4[10] = _Var3;
-  bVar1 = pGVar5->isWideScreen;
-  piVar4[8] = 0;
-  piVar4[0xc] = 0;
-  piVar4[0xb] = (uint)(bVar1 == false);
-  piVar4[0xe] = 1;
-  piVar4[0xf] = 1;
-  piVar4[0x10] = 0x28280106;
+  param_1->PresentationInterval = 1;
+  param_1->hDeviceWindow = (HWND__ *)0x0;
+  param_1->AutoDepthStencilFormat = _Var3;
+  bVar1 = param_2->isWideScreen;
+  param_1->Windowed = 0;
+  param_1->FullScreen_RefreshRateInHz = 0;
+  param_1->Flags = (uint)LZCOUNT((uint)bVar1) >> 5;
+  param_1->DisableAutoBackBuffer = 1;
+  param_1->DisableAutoFrontBuffer = 1;
+  param_1->FrontBufferFormat = D3DFMT_LE_X8R8G8B8;
   do {
-    p_Var8 = (_D3DRING_BUFFER_PARAMETERS *)&p_Var8->PrimarySize;
-    puVar7 = puVar7 + 1;
-    *puVar7 = p_Var8->Flags;
-    lVar9 = lVar9 + -1;
-  } while (lVar9 != 0);
-  __restgprlr_28();
+    p_Var5 = (_D3DRING_BUFFER_PARAMETERS *)&p_Var5->PrimarySize;
+    p_Var4 = (_D3DRING_BUFFER_PARAMETERS *)&p_Var4->PrimarySize;
+    p_Var4->Flags = p_Var5->Flags;
+    lVar6 = lVar6 + -1;
+  } while (lVar6 != 0);
   return;
 }
 
 
 // 827488B0  R_StoreWindowSettings  (gfx_d3d/r_init.cpp:519)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void R_StoreWindowSettings(GfxWindowParms *param_1)
 
 {
-  char *pcVar1;
+  double dVar1;
   double dVar2;
-  double dVar3;
   
-  pcVar1 = (char *)__savegprlr_29(param_1);
-  vidConfig.sceneWidth = *(uint *)(pcVar1 + 8);
-  vidConfig.sceneHeight = *(uint *)(pcVar1 + 0xc);
-  dVar3 = 1.3333333730697632;
-  vidConfig.displayWidth = *(uint *)(pcVar1 + 0x10);
-  vidConfig.displayHeight = *(uint *)(pcVar1 + 0x14);
-  vidConfig.isHiDef = (int)(byte)pcVar1[1];
-  dVar2 = dVar3;
-  if (*pcVar1 != '\0') {
-    dVar2 = 1.7777777910232544;
+  vidConfig.sceneWidth = param_1->sceneWidth;
+  vidConfig.sceneHeight = param_1->sceneHeight;
+  dVar2 = 1.3333333730697632;
+  vidConfig.displayWidth = param_1->displayWidth;
+  vidConfig.displayHeight = param_1->displayHeight;
+  vidConfig.isHiDef = (int)param_1->isHiDef;
+  dVar1 = dVar2;
+  if (param_1->isWideScreen != false) {
+    dVar1 = 1.7777777910232544;
   }
-  vidConfig.aspectRatioWindow = (float)dVar2;
+  vidConfig.aspectRatioWindow = (float)dVar1;
   if (com_wideScreen == (dvar_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_init.cpp",0x24a,0,
                     "%s");
-    dVar2 = (double)vidConfig.aspectRatioWindow;
+    dVar1 = (double)vidConfig.aspectRatioWindow;
   }
-  Dvar_SetBool(com_wideScreen,dVar2 != dVar3);
+  Dvar_SetBool(com_wideScreen,dVar1 != dVar2);
   vidConfig.isFullscreen = 1;
-  vidConfig.displayFrequency = *(float *)(pcVar1 + 4);
+  vidConfig.displayFrequency = param_1->hz;
   vidConfig.aspectRatioDisplayPixel =
        ((float)vidConfig.displayHeight * vidConfig.aspectRatioWindow) /
        (float)vidConfig.displayWidth;
   vidConfig.aspectRatioScenePixel =
        ((float)vidConfig.sceneHeight * vidConfig.aspectRatioWindow) / (float)vidConfig.sceneWidth;
-  __restgprlr_29();
   return;
 }
 
@@ -666,13 +661,18 @@ void R_InitGamma(void)
 
 // 82748AF8  R_CalcGammaRamp  (gfx_d3d/r_init.cpp:870)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void R_CalcGammaRamp(GfxGammaRamp *param_1)
 
 {
-  int iVar1;
-  int iVar2;
-  short sVar3;
-  uint uVar4;
+  uint uVar1;
+  ushort uVar2;
+  uint uVar3;
+  double dVar4;
   double dVar5;
   double dVar6;
   double dVar7;
@@ -683,69 +683,64 @@ void R_CalcGammaRamp(GfxGammaRamp *param_1)
   double dVar12;
   double dVar13;
   double dVar14;
-  double dVar15;
   
-  __savegprlr_27(param_1);
-  iVar2 = __savefpr_23();
-  if (iVar2 == 0) {
+  if (param_1 == (GfxGammaRamp *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_init.cpp",0x36a,0,
                     "%s");
   }
-  dVar14 = 0.0;
+  dVar13 = 0.0;
   if ((r_gamma->current).value <= 0.0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_init.cpp",0x36b,0,
                     "%s\n\t(r_gamma->current.value) = %g");
   }
-  dVar15 = 1.0;
+  dVar14 = 1.0;
   if ((r_blacklevel->current).value == 1.0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_init.cpp",0x36c,0,
                     "%s\n\t(r_blacklevel->current.value) = %g");
   }
-  dVar13 = (double)(r_blacklevel->current).value;
-  dVar9 = 0.5;
-  uVar4 = 0;
-  dVar10 = 65535.0;
-  dVar12 = (double)(float)(dVar15 / (double)(r_gamma->current).value);
-  dVar8 = 1.0000076293945312;
-  dVar11 = 0.003921568859368563;
+  dVar12 = (double)(r_blacklevel->current).value;
+  dVar8 = 0.5;
+  dVar9 = 65535.0;
+  dVar11 = (double)(float)(dVar14 / (double)(r_gamma->current).value);
+  dVar7 = 1.0000076293945312;
+  dVar10 = 0.003921568859368563;
+  uVar3 = 0;
   do {
-    if ((dVar12 == dVar15) && (dVar13 == dVar14)) {
-      sVar3 = (short)uVar4 * 0x101;
+    if ((dVar11 == dVar14) && (dVar12 == dVar13)) {
+      uVar2 = (short)uVar3 * 0x101;
     }
     else {
-      dVar7 = (double)((float)((double)(longlong)(int)uVar4 * dVar11 - dVar13) /
-                      (float)(dVar15 - dVar13));
-      dVar5 = dVar15;
-      if ((float)(dVar7 - dVar15) < 0.0) {
-        dVar5 = dVar7;
+      dVar6 = (double)((float)((double)(longlong)(int)uVar3 * dVar10 - dVar12) /
+                      (float)(dVar14 - dVar12));
+      dVar4 = dVar14;
+      if ((float)(dVar6 - dVar14) < 0.0) {
+        dVar4 = dVar6;
       }
-      dVar6 = dVar14;
-      if (-dVar7 < 0.0) {
-        dVar6 = dVar5;
-      }
-      dVar5 = dVar15;
-      if ((float)(dVar6 - dVar15) < 0.0) {
-        dVar5 = dVar6;
-      }
-      dVar7 = dVar14;
+      dVar5 = dVar13;
       if (-dVar6 < 0.0) {
-        dVar7 = dVar5;
+        dVar5 = dVar4;
       }
-      dVar5 = pow(dVar7,dVar12);
-      dVar5 = (double)(float)dVar5;
-      if ((dVar5 < dVar14) || (dVar8 <= dVar5)) {
+      dVar4 = dVar14;
+      if ((float)(dVar5 - dVar14) < 0.0) {
+        dVar4 = dVar5;
+      }
+      dVar6 = dVar13;
+      if (-dVar5 < 0.0) {
+        dVar6 = dVar4;
+      }
+      dVar4 = pow(dVar6,dVar11);
+      dVar4 = (double)(float)dVar4;
+      if ((dVar4 < dVar13) || (dVar7 <= dVar4)) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_init.cpp",0x37e,
                         0,"%s\n\t(unitScaleValue) = %g");
       }
-      dVar5 = floor((double)(float)(dVar5 * dVar10 + dVar9));
-      sVar3 = (short)(int)dVar5;
+      dVar4 = floor((double)(float)(dVar4 * dVar9 + dVar8));
+      uVar2 = (ushort)(int)dVar4;
     }
-    iVar1 = uVar4 * 2;
-    uVar4 = uVar4 + 1 & 0xffff;
-    *(short *)(iVar1 + iVar2) = sVar3;
-  } while (uVar4 < 0x100);
-  __restfpr_23();
-  __restgprlr_27();
+    uVar1 = uVar3 + 1 & 0xffff;
+    param_1->entries[uVar3] = uVar2;
+    uVar3 = uVar1;
+  } while (uVar1 < 0x100);
   return;
 }
 
@@ -769,6 +764,8 @@ void R_SetColorMappings(void)
 
 // 82748D30  R_GammaCorrect  (gfx_d3d/r_init.cpp:918)
 
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
 /* WARNING: Removing unreachable block (ram,0x82748de4) */
 /* WARNING: Removing unreachable block (ram,0x82748e08) */
 
@@ -776,13 +773,11 @@ void R_GammaCorrect(uchar *param_1,int param_2)
 
 {
   byte *pbVar1;
-  int iVar2;
-  undefined1 *puVar3;
-  int iVar4;
+  uchar *puVar2;
+  int iVar3;
   GfxGammaRamp GStack_260;
   
-  iVar2 = __savegprlr_22(param_1);
-  if (iVar2 == 0) {
+  if (param_1 == (uchar *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_init.cpp",0x39c,0,
                     "%s");
   }
@@ -791,17 +786,16 @@ void R_GammaCorrect(uchar *param_1,int param_2)
                     "%s\n\t(bufSize) = %i");
   }
   R_CalcGammaRamp(&GStack_260);
-  iVar4 = 0;
+  iVar3 = 0;
   if (0 < param_2) {
     do {
-      pbVar1 = (byte *)(iVar4 + iVar2);
-      puVar3 = (undefined1 *)(iVar4 + iVar2);
-      iVar4 = iVar4 + 1;
-      *puVar3 = (char)((int)((uint)GStack_260.entries[*pbVar1] * 0x100 -
-                            (uint)GStack_260.entries[*pbVar1]) / 0xffff);
-    } while (iVar4 < param_2);
+      pbVar1 = param_1 + iVar3;
+      puVar2 = param_1 + iVar3;
+      iVar3 = iVar3 + 1;
+      *puVar2 = (uchar)((int)((uint)GStack_260.entries[*pbVar1] * 0x100 -
+                             (uint)GStack_260.entries[*pbVar1]) / 0xffff);
+    } while (iVar3 < param_2);
   }
-  __restgprlr_22();
   return;
 }
 
@@ -903,22 +897,21 @@ _D3DDEVTYPE R_GetDeviceType(void)
 
 // 82748F98  R_CreateDeviceInternal  (gfx_d3d/r_init.cpp:1554)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 
 undefined4 R_CreateDeviceInternal(HWND__ *param_1,ulong param_2,_D3DPRESENT_PARAMETERS_ *param_3)
 
 {
-  void *pvVar1;
-  T_HRESULT TVar2;
-  undefined4 uVar3;
+  T_HRESULT TVar1;
   
-  pvVar1 = (void *)__savegprlr_27(param_1);
   Com_Printf(8,"Creating Direct3D device...\n");
   do {
-    TVar2 = Direct3D_CreateDevice(dx.adapterIndex,D3DDEVTYPE_HAL,pvVar1,param_2,param_3,&dx.device);
+    TVar1 = Direct3D_CreateDevice(dx.adapterIndex,D3DDEVTYPE_HAL,param_1,param_2,param_3,&dx.device)
+    ;
   } while (alwaysfails != 0);
-  uVar3 = __restgprlr_27(TVar2);
-  return uVar3;
+  return TVar1;
 }
 
 
@@ -979,6 +972,11 @@ bool CompareFrameCounts(float param_1,float param_2)
 
 // 8274A840  R_AdjustFrametimeForGpu  (gfx_d3d/r_init.cpp:1985)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 float R_AdjustFrametimeForGpu(float param_1)
 
 {
@@ -986,105 +984,97 @@ float R_AdjustFrametimeForGpu(float param_1)
   uint uVar2;
   ulonglong uVar3;
   ulonglong uVar4;
-  undefined8 uVar5;
+  double dVar5;
   double dVar6;
   double dVar7;
   double dVar8;
   double dVar9;
   double dVar10;
   double dVar11;
-  double dVar12;
   _LARGE_INTEGER local_78;
   float local_70;
   float local_6c;
   undefined4 local_68;
   float afStack_64 [25];
   
-  __savegprlr_28((double)param_1);
-  uVar5 = __savefpr_26();
-  if ((r_vsync->current).enabled != false) {
-    iVar1 = CL_GetLocalClientActiveCount();
-    if (iVar1 == 1) {
-      dVar10 = (double)vidConfig.displayFrequency;
-      uVar4 = (ulonglong)(uint)g_gpuSwapFrame;
-      if (dVar10 == 0.0) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_init.cpp",0x7db,
-                        0,"%s");
-      }
-      uVar3 = uVar4 - 1 & 7;
-      dVar12 = 1.0;
-      dVar9 = (double)(float)(1.0 / dVar10);
-      dVar8 = (double)((float)*(uint *)(&DAT_84617910 + (int)(uVar3 << 2)) * 0.01);
-      QueryPerformanceFrequency(&local_78);
-      dVar6 = (double)((float)(*(longlong *)((int)g_swapTime + (int)(uVar3 << 3)) -
-                              *(longlong *)
-                               ((int)g_swapTime + ((uint)((uVar4 - 2 & 0xffffffff) << 3) & 0x38))) /
-                      (float)local_78.QuadPart);
-      dVar7 = 0.10000000149011612;
-      if ((float)(dVar6 - 0.10000000149011612) < 0.0) {
-        dVar7 = dVar6;
-      }
-      dVar11 = dVar9;
-      if ((float)(dVar9 - dVar6) < 0.0) {
-        dVar11 = dVar7;
-      }
-      dVar6 = (double)(float)(dVar11 * dVar10);
-      dVar10 = ceil(dVar8);
-      dVar7 = (double)(float)dVar10;
-      dVar10 = ceil((double)(float)(dVar8 - dVar6));
-      uVar3 = (ulonglong)(uint)g_frontEndSwapFrame;
-      uVar2 = DAT_84617874 % 3;
-      DAT_84617874 = DAT_84617874 + 1;
-      (&DAT_84618190)[uVar2] = (float)(dVar7 - (double)(float)dVar10);
-      iVar1 = (int)(uVar3 - uVar4);
-      if (((longlong)(uVar3 - uVar4) < 0) || (1 < iVar1)) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_init.cpp",0x7ef,
-                        0,"%s\n\t(outstandingFrames) = %i");
-      }
-      dVar7 = (double)(float)((double)(longlong)iVar1 * dVar6 + dVar8);
-      dVar6 = (double)(float)(dVar6 + dVar7);
-      dVar10 = ceil(dVar7);
-      dVar11 = 0.6669999957084656;
-      dVar8 = 0.3330000042915344;
-      dVar7 = (double)((float)dVar10 * 0.333 + (float)(dVar7 * 0.6669999957084656));
-      dVar10 = ceil(dVar6);
-      local_6c = DAT_84618194;
-      local_68 = DAT_84618198;
-      local_70 = DAT_84618190;
-      dVar6 = (double)(float)((double)(float)dVar10 * dVar8 + (double)(float)(dVar6 * dVar11));
-      std::_Sort<float_*,int,bool_(__cdecl*)(float,float)>
-                (&local_70,afStack_64,3,CompareFrameCounts);
-      dVar10 = (double)local_6c;
-      if ((float)((double)local_6c - 2.0) < 0.0) {
-        dVar10 = 2.0;
-      }
-      dVar8 = (double)(float)(dVar6 - dVar7);
-      if ((float)(dVar10 - (double)(float)(dVar6 - dVar7)) < 0.0) {
-        dVar8 = dVar10;
-      }
-      if ((float)(dVar8 - dVar12) < 0.0) {
-        dVar8 = dVar12;
-      }
-      __restfpr_26((double)(float)(dVar8 * dVar9));
-      dVar10 = (double)__restgprlr_28();
-      return (float)dVar10;
+  dVar9 = (double)param_1;
+  if (((r_vsync->current).enabled != false) && (iVar1 = CL_GetLocalClientActiveCount(), iVar1 == 1))
+  {
+    dVar9 = (double)vidConfig.displayFrequency;
+    uVar4 = (ulonglong)(uint)g_gpuSwapFrame;
+    if (dVar9 == 0.0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_init.cpp",0x7db,0,
+                      "%s");
     }
+    uVar3 = uVar4 - 1 & 7;
+    dVar11 = 1.0;
+    dVar8 = (double)(float)(1.0 / dVar9);
+    dVar7 = (double)((float)*(uint *)(&DAT_84617910 + (int)(uVar3 << 2)) * 0.01);
+    QueryPerformanceFrequency(&local_78);
+    dVar5 = (double)((float)(*(longlong *)((int)g_swapTime + (int)(uVar3 << 3)) -
+                            *(longlong *)
+                             ((int)g_swapTime + ((uint)((uVar4 - 2 & 0xffffffff) << 3) & 0x38))) /
+                    (float)local_78.QuadPart);
+    dVar6 = 0.10000000149011612;
+    if ((float)(dVar5 - 0.10000000149011612) < 0.0) {
+      dVar6 = dVar5;
+    }
+    dVar10 = dVar8;
+    if ((float)(dVar8 - dVar5) < 0.0) {
+      dVar10 = dVar6;
+    }
+    dVar5 = (double)(float)(dVar10 * dVar9);
+    dVar9 = ceil(dVar7);
+    dVar6 = (double)(float)dVar9;
+    dVar9 = ceil((double)(float)(dVar7 - dVar5));
+    uVar3 = (ulonglong)(uint)g_frontEndSwapFrame;
+    uVar2 = DAT_84617874 % 3;
+    DAT_84617874 = DAT_84617874 + 1;
+    (&DAT_84618190)[uVar2] = (float)(dVar6 - (double)(float)dVar9);
+    iVar1 = (int)(uVar3 - uVar4);
+    if (((longlong)(uVar3 - uVar4) < 0) || (1 < iVar1)) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_init.cpp",0x7ef,0,
+                      "%s\n\t(outstandingFrames) = %i");
+    }
+    dVar6 = (double)(float)((double)(longlong)iVar1 * dVar5 + dVar7);
+    dVar5 = (double)(float)(dVar5 + dVar6);
+    dVar9 = ceil(dVar6);
+    dVar10 = 0.6669999957084656;
+    dVar7 = 0.3330000042915344;
+    dVar6 = (double)((float)dVar9 * 0.333 + (float)(dVar6 * 0.6669999957084656));
+    dVar9 = ceil(dVar5);
+    local_6c = DAT_84618194;
+    local_68 = DAT_84618198;
+    local_70 = DAT_84618190;
+    dVar5 = (double)(float)((double)(float)dVar9 * dVar7 + (double)(float)(dVar5 * dVar10));
+    std::_Sort<float_*,int,bool_(__cdecl*)(float,float)>(&local_70,afStack_64,3,CompareFrameCounts);
+    dVar9 = (double)local_6c;
+    if ((float)((double)local_6c - 2.0) < 0.0) {
+      dVar9 = 2.0;
+    }
+    dVar7 = (double)(float)(dVar5 - dVar6);
+    if ((float)(dVar9 - (double)(float)(dVar5 - dVar6)) < 0.0) {
+      dVar7 = dVar9;
+    }
+    if ((float)(dVar7 - dVar11) < 0.0) {
+      dVar7 = dVar11;
+    }
+    return (float)(dVar7 * dVar8);
   }
-  __restfpr_26(uVar5);
-  dVar10 = (double)__restgprlr_28();
-  return (float)dVar10;
+  return (float)dVar9;
 }
 
 
 // 82749110  R_FlushSwap  (gfx_d3d/r_init.cpp:2059)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 
 void R_FlushSwap(void)
 
 {
-  __savegprlr_27();
   D3DDevice_InsertFence(dx.device);
   D3DDevice_BlockUntilIdle(dx.device);
   Sys_Sleep(0x32);
@@ -1107,13 +1097,14 @@ void R_FlushSwap(void)
     Sys_Error("(g_frontEndSwapFrame - g_backEndSwapFrame >= 0) failed");
   }
   g_backEndSwapFrame = g_frontEndSwapFrame;
-  __restgprlr_27();
   return;
 }
 
 
 // 82749208  R_CreateDevice  (gfx_d3d/r_init.cpp:2098)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
@@ -1121,14 +1112,11 @@ void R_FlushSwap(void)
 bool R_CreateDevice(GfxWindowParms *param_1)
 
 {
-  GfxWindowParms *pGVar1;
-  int iVar2;
-  undefined1 uVar3;
-  D3DDevice **ppDVar4;
+  int iVar1;
+  D3DDevice **ppDVar2;
   _D3DPRESENT_PARAMETERS_ _Stack_b0;
   
-  pGVar1 = (GfxWindowParms *)__savegprlr_27(param_1);
-  if (pGVar1 == (GfxWindowParms *)0x0) {
+  if (param_1 == (GfxWindowParms *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_init.cpp",0x838,0,
                     "%s");
   }
@@ -1137,11 +1125,11 @@ bool R_CreateDevice(GfxWindowParms *param_1)
                     "%s");
   }
   dx.depthStencilFormat = R_GetDepthStencilFormat(D3DFMT_A8R8G8B8);
-  R_SetD3DPresentParameters(&_Stack_b0,pGVar1);
-  iVar2 = R_CreateDeviceInternal((HWND__ *)0x0,0x105,&_Stack_b0);
+  R_SetD3DPresentParameters(&_Stack_b0,param_1);
+  iVar1 = R_CreateDeviceInternal((HWND__ *)0x0,0x105,&_Stack_b0);
   UpdateMemStats();
   r_glob.mainThreadHasOwnership = true;
-  if (-1 < iVar2) {
+  if (-1 < iVar1) {
     if (dx.device == (D3DDevice *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_init.cpp",0x866,1,
                       "%s");
@@ -1149,39 +1137,38 @@ bool R_CreateDevice(GfxWindowParms *param_1)
     do {
       D3DDevice_SetSwapCallback(dx.device,R_SwapCallback);
     } while (alwaysfails != 0);
-    ppDVar4 = dx.cmdBufDevice;
+    ppDVar2 = dx.cmdBufDevice;
     do {
-      iVar2 = Direct3D_CreateDevice
+      iVar1 = Direct3D_CreateDevice
                         (0,D3DDEVTYPE_COMMAND_BUFFER,(void *)0x0,0,(_D3DPRESENT_PARAMETERS_ *)0x0,
-                         ppDVar4);
-      if (iVar2 < 0) {
-        DXGetErrorDescription9A(iVar2);
+                         ppDVar2);
+      if (iVar1 < 0) {
+        DXGetErrorDescription9A(iVar1);
                     /* WARNING: Subroutine does not return */
         Sys_Error(
                  "c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_init.cpp (%i) dx.d3d9->CreateDevice( 0, D3DDEVTYPE_COMMAND_BUFFER, 0, 0, 0, &dx.cmdBufDevice[bufIndex] ) failed: %s\n"
                  );
       }
-    } while ((alwaysfails != 0) || (ppDVar4 = ppDVar4 + 1, (int)ppDVar4 < -0x7b9e98d0));
-    uVar3 = __restgprlr_27(1);
-    return (bool)uVar3;
+    } while ((alwaysfails != 0) || (ppDVar2 = ppDVar2 + 1, (int)ppDVar2 < -0x7b9e98d0));
+    return true;
   }
-  DXGetErrorDescription9A(iVar2);
+  DXGetErrorDescription9A(iVar1);
   Com_Printf(8,"Couldn\'t create a Direct3D device: %s\n");
-  uVar3 = __restgprlr_27(0);
-  return (bool)uVar3;
+  return false;
 }
 
 
 // 827493B8  R_InitHardware  (gfx_d3d/r_init.cpp:2208)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 bool R_InitHardware(GfxWindowParms *param_1)
 
 {
-  undefined1 uVar1;
-  uint uVar2;
-  dvar_t **ppdVar3;
+  uint uVar1;
+  dvar_t **ppdVar2;
   
-  __savegprlr_27(param_1);
   RB_InitSceneViewport();
   RB_InitCodeConstants();
   R_Cinematic_Init();
@@ -1196,27 +1183,28 @@ bool R_InitHardware(GfxWindowParms *param_1)
   R_InitDebug();
   RB_ProfileInit();
   R_GPU_InitTimers();
-  ppdVar3 = r_smp_worker_thread;
-  uVar2 = 0;
+  ppdVar2 = r_smp_worker_thread;
+  uVar1 = 0;
   do {
-    if (*ppdVar3 == (dvar_t *)0x0) {
+    if (*ppdVar2 == (dvar_t *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_init.cpp",0x8de,0,
                       "%s");
     }
-    Dvar_ClearModified(*ppdVar3);
-    if (((*ppdVar3)->current).enabled != false) {
-      Sys_ResumeThread(uVar2 + 2);
+    Dvar_ClearModified(*ppdVar2);
+    if (((*ppdVar2)->current).enabled != false) {
+      Sys_ResumeThread(uVar1 + 2);
     }
-    uVar2 = uVar2 + 1;
-    ppdVar3 = ppdVar3 + 1;
-  } while (uVar2 < 3);
-  uVar1 = __restgprlr_27(1);
-  return (bool)uVar1;
+    uVar1 = uVar1 + 1;
+    ppdVar2 = ppdVar2 + 1;
+  } while (uVar1 < 3);
+  return true;
 }
 
 
 // 8274AAD0  _Push_heap<float_*,int,float,bool_(__cdecl*)(float,float)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2455)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void std::_Push_heap<float_*,int,float,bool_(__cdecl*)(float,float)>
@@ -1224,36 +1212,31 @@ void std::_Push_heap<float_*,int,float,bool_(__cdecl*)(float,float)>
                _func___cdecl_bool_float_float *param_5)
 
 {
-  int iVar1;
+  ulonglong uVar1;
   ulonglong uVar2;
   ulonglong uVar3;
-  ulonglong uVar4;
-  float fVar5;
-  float fVar6;
-  ulonglong uVar8;
-  uint uVar9;
-  bool bVar7;
+  float *pfVar4;
+  ulonglong uVar6;
+  uint uVar7;
+  bool bVar5;
   
-  uVar8 = (ulonglong)param_2;
-  fVar5 = (float)__savegprlr_25(param_1);
-  iVar1 = (int)uVar8;
-  uVar9 = iVar1 - 1;
-  uVar4 = (longlong)((int)uVar9 >> 1) + (ulonglong)((int)uVar9 < 0 && (uVar9 & 1) != 0);
-  uVar3 = uVar8;
-  fVar6 = fVar5;
-  while (uVar2 = uVar4, param_3 < iVar1) {
-    bVar7 = (*param_5)(fVar6,(float)uVar8);
-    fVar6 = (float)(int)bVar7;
-    if (fVar6 == 0.0) break;
-    iVar1 = (int)uVar2;
-    uVar9 = iVar1 - 1;
-    *(undefined4 *)((int)((uVar3 & 0xffffffff) << 2) + (int)fVar5) =
-         *(undefined4 *)((int)((uVar2 & 0xffffffff) << 2) + (int)fVar5);
-    uVar4 = (longlong)((int)uVar9 >> 1) + (ulonglong)((int)uVar9 < 0 && (uVar9 & 1) != 0);
-    uVar3 = uVar2;
+  uVar6 = (ulonglong)param_2;
+  uVar7 = param_2 - 1;
+  uVar3 = (longlong)((int)uVar7 >> 1) + (ulonglong)((int)uVar7 < 0 && (uVar7 & 1) != 0);
+  pfVar4 = param_1;
+  uVar2 = uVar6;
+  while (uVar1 = uVar3, param_3 < param_2) {
+    bVar5 = (*param_5)((float)pfVar4,(float)uVar6);
+    pfVar4 = (float *)(int)bVar5;
+    if (pfVar4 == (float *)0x0) break;
+    param_2 = (int)uVar1;
+    uVar7 = param_2 - 1;
+    *(undefined4 *)((int)((uVar2 & 0xffffffff) << 2) + (int)param_1) =
+         *(undefined4 *)((int)((uVar1 & 0xffffffff) << 2) + (int)param_1);
+    uVar3 = (longlong)((int)uVar7 >> 1) + (ulonglong)((int)uVar7 < 0 && (uVar7 & 1) != 0);
+    uVar2 = uVar1;
   }
-  *(float *)((int)((uVar3 & 0xffffffff) << 2) + (int)fVar5) = *param_4;
-  __restgprlr_25();
+  *(float *)((int)((uVar2 & 0xffffffff) << 2) + (int)param_1) = *param_4;
   return;
 }
 
@@ -1308,33 +1291,33 @@ void R_SetWndParms(GfxWindowParms *param_1)
 
 // 827495A0  R_GetDisplayResolution  (gfx_d3d/r_init.cpp:2492)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void R_GetDisplayResolution(int *param_1,int *param_2)
 
 {
-  int *piVar1;
-  ulonglong uVar2;
   GfxWindowParms aGStack_50 [2];
   
-  uVar2 = (ulonglong)(int)param_2;
-  piVar1 = (int *)__savegprlr_28(param_1);
-  if (piVar1 == (int *)0x0) {
+  if (param_1 == (int *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_init.cpp",0x9bf,0,
                     "%s");
   }
-  if ((uVar2 & 0xffffffff) == 0) {
+  if (param_2 == (int *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_init.cpp",0x9c0,0,
                     "%s");
   }
   R_SetWndParms(aGStack_50);
-  *piVar1 = aGStack_50[0].displayWidth;
-  *(int *)uVar2 = aGStack_50[0].displayHeight;
-  __restgprlr_28();
+  *param_1 = aGStack_50[0].displayWidth;
+  *param_2 = aGStack_50[0].displayHeight;
   return;
 }
 
 
 // 8274ABE0  _Adjust_heap<float_*,int,float,bool_(__cdecl*)(float,float)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2565)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void std::_Adjust_heap<float_*,int,float,bool_(__cdecl*)(float,float)>
@@ -1342,66 +1325,60 @@ void std::_Adjust_heap<float_*,int,float,bool_(__cdecl*)(float,float)>
                _func___cdecl_bool_float_float *param_5)
 
 {
-  float fVar1;
-  float fVar2;
-  ulonglong uVar4;
+  float *pfVar1;
+  ulonglong uVar3;
+  uint uVar4;
   ulonglong uVar5;
   ulonglong uVar6;
-  uint uVar7;
-  ulonglong uVar8;
-  ulonglong uVar9;
-  int iVar11;
-  ulonglong uVar10;
-  bool bVar3;
+  int iVar8;
+  ulonglong uVar7;
+  bool bVar2;
   
-  uVar6 = (ulonglong)param_3;
-  uVar4 = (ulonglong)param_2;
-  fVar1 = (float)__savegprlr_25(param_1);
-  uVar9 = (uVar4 + 1 & 0x7fffffff) << 1;
-  iVar11 = (int)uVar9;
-  uVar5 = uVar4;
-  uVar8 = uVar4;
-  fVar2 = fVar1;
-  while (uVar10 = uVar9, iVar11 < (int)uVar6) {
-    bVar3 = (*param_5)(fVar2,(float)uVar5);
-    fVar2 = (float)(int)bVar3;
-    if (fVar2 != 0.0) {
-      uVar10 = uVar10 - 1;
+  uVar3 = (ulonglong)param_2;
+  uVar6 = (uVar3 + 1 & 0x7fffffff) << 1;
+  iVar8 = (int)uVar6;
+  pfVar1 = param_1;
+  uVar5 = uVar3;
+  while (uVar7 = uVar6, iVar8 < param_3) {
+    bVar2 = (*param_5)((float)pfVar1,(float)uVar3);
+    pfVar1 = (float *)(int)bVar2;
+    if (pfVar1 != (float *)0x0) {
+      uVar7 = uVar7 - 1;
     }
-    uVar9 = (uVar10 + 1 & 0x7fffffff) << 1;
-    *(undefined4 *)((int)((uVar8 & 0xffffffff) << 2) + (int)fVar1) =
-         *(undefined4 *)((int)((uVar10 & 0xffffffff) << 2) + (int)fVar1);
-    iVar11 = (int)uVar9;
-    uVar8 = uVar10;
+    uVar6 = (uVar7 + 1 & 0x7fffffff) << 1;
+    *(undefined4 *)((int)((uVar5 & 0xffffffff) << 2) + (int)param_1) =
+         *(undefined4 *)((int)((uVar7 & 0xffffffff) << 2) + (int)param_1);
+    iVar8 = (int)uVar6;
+    uVar5 = uVar7;
   }
-  if (iVar11 == (int)uVar6) {
-    uVar9 = uVar8 & 0xffffffff;
-    uVar8 = uVar6 - 1;
-    *(undefined4 *)((int)(uVar9 << 2) + (int)fVar1) =
-         *(undefined4 *)((int)((uVar6 & 0xffffffff) << 2) + (int)fVar1 + -4);
+  if (iVar8 == param_3) {
+    uVar6 = uVar5 & 0xffffffff;
+    uVar5 = (longlong)param_3 - 1;
+    *(float *)((int)(uVar6 << 2) + (int)param_1) = param_1[param_3 + -1];
   }
-  iVar11 = (int)uVar8;
-  uVar7 = iVar11 - 1;
-  uVar9 = (longlong)((int)uVar7 >> 1) + (ulonglong)((int)uVar7 < 0 && (uVar7 & 1) != 0);
-  while (uVar6 = uVar9, (int)uVar4 < iVar11) {
-    bVar3 = (*param_5)(fVar2,(float)uVar5);
-    fVar2 = (float)(int)bVar3;
-    if (fVar2 == 0.0) break;
-    iVar11 = (int)uVar6;
-    uVar7 = iVar11 - 1;
-    *(undefined4 *)((int)((uVar8 & 0xffffffff) << 2) + (int)fVar1) =
-         *(undefined4 *)((int)((uVar6 & 0xffffffff) << 2) + (int)fVar1);
-    uVar9 = (longlong)((int)uVar7 >> 1) + (ulonglong)((int)uVar7 < 0 && (uVar7 & 1) != 0);
-    uVar8 = uVar6;
+  iVar8 = (int)uVar5;
+  uVar4 = iVar8 - 1;
+  uVar6 = (longlong)((int)uVar4 >> 1) + (ulonglong)((int)uVar4 < 0 && (uVar4 & 1) != 0);
+  while (uVar7 = uVar6, param_2 < iVar8) {
+    bVar2 = (*param_5)((float)pfVar1,(float)uVar3);
+    pfVar1 = (float *)(int)bVar2;
+    if (pfVar1 == (float *)0x0) break;
+    iVar8 = (int)uVar7;
+    uVar4 = iVar8 - 1;
+    *(undefined4 *)((int)((uVar5 & 0xffffffff) << 2) + (int)param_1) =
+         *(undefined4 *)((int)((uVar7 & 0xffffffff) << 2) + (int)param_1);
+    uVar6 = (longlong)((int)uVar4 >> 1) + (ulonglong)((int)uVar4 < 0 && (uVar4 & 1) != 0);
+    uVar5 = uVar7;
   }
-  *(float *)((int)((uVar8 & 0xffffffff) << 2) + (int)fVar1) = *param_4;
-  __restgprlr_25();
+  *(float *)((int)((uVar5 & 0xffffffff) << 2) + (int)param_1) = *param_4;
   return;
 }
 
 
 // 8274ACF0  _Make_heap<float_*,int,float,bool_(__cdecl*)(float,float)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2658)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void std::_Make_heap<float_*,int,float,bool_(__cdecl*)(float,float)>
@@ -1410,64 +1387,58 @@ void std::_Make_heap<float_*,int,float,bool_(__cdecl*)(float,float)>
 
 {
   uint uVar1;
-  float *pfVar2;
+  longlong lVar2;
   longlong lVar3;
-  longlong lVar4;
-  ulonglong uVar6;
-  longlong lVar7;
-  int iVar8;
-  longlong lVar9;
+  ulonglong uVar5;
+  longlong lVar6;
+  ulonglong uVar7;
+  ulonglong uVar8;
+  ulonglong uVar9;
   ulonglong uVar10;
   ulonglong uVar11;
-  ulonglong uVar12;
-  ulonglong uVar13;
-  ulonglong uVar14;
-  uint uVar15;
+  uint uVar12;
   float local_50 [20];
-  bool bVar5;
+  bool bVar4;
   
-  lVar7 = (longlong)(int)param_3;
-  uVar12 = (ulonglong)(int)param_2;
-  lVar3 = __savegprlr_24(param_1,uVar12,lVar7,param_4,param_5);
-  pfVar2 = (float *)lVar3;
-  iVar8 = (int)uVar12 - (int)pfVar2;
-  uVar1 = iVar8 >> 2;
-  uVar11 = (longlong)(iVar8 >> 3) + (ulonglong)((int)uVar1 < 0 && (uVar1 & 1) != 0);
-  if (0 < (longlong)uVar11) {
-    uVar10 = (uVar11 + 1 & 0x7fffffff) << 1;
-    lVar9 = (uVar11 & 0x3fffffff) * 4 + lVar3;
-    lVar4 = lVar3;
+  uVar9 = (ulonglong)(int)param_2;
+  lVar2 = (longlong)(int)param_1;
+  uVar1 = (int)param_2 - (int)param_1 >> 2;
+  uVar8 = (longlong)((int)param_2 - (int)param_1 >> 3) +
+          (ulonglong)((int)uVar1 < 0 && (uVar1 & 1) != 0);
+  if (0 < (longlong)uVar8) {
+    uVar7 = (uVar8 + 1 & 0x7fffffff) << 1;
+    lVar6 = (uVar8 & 0x3fffffff) * 4 + lVar2;
+    lVar3 = lVar2;
     do {
-      uVar10 = uVar10 - 2;
-      lVar9 = lVar9 + -4;
-      local_50[0] = *(float *)lVar9;
-      uVar11 = uVar11 - 1;
-      uVar15 = (uint)uVar10;
-      uVar14 = uVar10;
-      uVar13 = uVar11;
-      uVar6 = uVar12;
-      while (uVar12 = uVar13, uVar13 = uVar14, (int)uVar15 < (int)uVar1) {
-        bVar5 = (*(_func___cdecl_bool_float_float *)lVar7)((float)lVar4,(float)uVar6);
-        lVar4 = (longlong)bVar5;
-        if (lVar4 != 0) {
-          uVar13 = uVar13 - 1;
+      uVar7 = uVar7 - 2;
+      lVar6 = lVar6 + -4;
+      local_50[0] = *(float *)lVar6;
+      uVar8 = uVar8 - 1;
+      uVar12 = (uint)uVar7;
+      uVar11 = uVar7;
+      uVar10 = uVar8;
+      uVar5 = uVar9;
+      while (uVar9 = uVar10, uVar10 = uVar11, (int)uVar12 < (int)uVar1) {
+        bVar4 = (*param_3)((float)lVar3,(float)uVar5);
+        lVar3 = (longlong)bVar4;
+        if (lVar3 != 0) {
+          uVar10 = uVar10 - 1;
         }
-        uVar14 = (uVar13 + 1 & 0x7fffffff) << 1;
-        *(undefined4 *)((int)((uVar12 & 0xffffffff) << 2) + (int)pfVar2) =
-             *(undefined4 *)((int)((uVar13 & 0xffffffff) << 2) + (int)pfVar2);
-        uVar15 = (uint)uVar14;
+        uVar11 = (uVar10 + 1 & 0x7fffffff) << 1;
+        *(undefined4 *)((int)((uVar9 & 0xffffffff) << 2) + (int)param_1) =
+             *(undefined4 *)((int)((uVar10 & 0xffffffff) << 2) + (int)param_1);
+        uVar12 = (uint)uVar11;
       }
-      if (uVar15 == uVar1) {
-        uVar13 = uVar12 & 0xffffffff;
-        uVar12 = (longlong)(int)uVar1 - 1;
-        *(float *)((int)(uVar13 << 2) + (int)pfVar2) = pfVar2[uVar1 - 1];
+      if (uVar12 == uVar1) {
+        uVar10 = uVar9 & 0xffffffff;
+        uVar9 = (longlong)(int)uVar1 - 1;
+        *(float *)((int)(uVar10 << 2) + (int)param_1) = param_1[uVar1 - 1];
       }
-      lVar4 = lVar3;
+      lVar3 = lVar2;
       _Push_heap<float_*,int,float,bool_(__cdecl*)(float,float)>
-                (pfVar2,(int)uVar12,(int)uVar11,local_50,(_func___cdecl_bool_float_float *)lVar7);
-    } while (0 < (int)uVar11);
+                (param_1,(int)uVar9,(int)uVar8,local_50,param_3);
+    } while (0 < (int)uVar8);
   }
-  __restgprlr_24();
   return;
 }
 
@@ -1516,33 +1487,25 @@ void R_InitDevice(void)
 
 // 8274B288  _Sort_heap<float_*,bool_(__cdecl*)(float,float)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:2700)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void std::_Sort_heap<float_*,bool_(__cdecl*)(float,float)>
                (float *param_1,float *param_2,_func___cdecl_bool_float_float *param_3)
 
 {
-  int iVar1;
-  float *pfVar2;
-  longlong lVar3;
-  longlong lVar4;
+  uint uVar1;
   float local_30 [12];
   
-  lVar4 = (longlong)(int)param_2;
-  lVar3 = __savegprlr_28(param_1);
-  lVar4 = lVar4 - lVar3;
-  if (4 < (int)((uint)lVar4 & 0xfffffffc)) {
-    pfVar2 = (float *)lVar3;
-    do {
-      iVar1 = (int)lVar4;
-      local_30[0] = *(float *)((int)pfVar2 + iVar1 + -4);
-      lVar4 = lVar4 + -4;
-      *(float *)((int)pfVar2 + iVar1 + -4) = *pfVar2;
-      _Adjust_heap<float_*,int,float,bool_(__cdecl*)(float,float)>
-                (pfVar2,0,(int)(uint)lVar4 >> 2,local_30,param_3);
-    } while (4 < (int)((uint)lVar4 & 0xfffffffc));
+  uVar1 = (int)param_2 - (int)param_1;
+  while (4 < (int)(uVar1 & 0xfffffffc)) {
+    local_30[0] = *(float *)((int)param_1 + (uVar1 - 4));
+    *(float *)((int)param_1 + (uVar1 - 4)) = *param_1;
+    _Adjust_heap<float_*,int,float,bool_(__cdecl*)(float,float)>
+              (param_1,0,(int)(uVar1 - 4) >> 2,local_30,param_3);
+    uVar1 = uVar1 - 4;
   }
-  __restgprlr_28();
   return;
 }
 
@@ -1597,6 +1560,8 @@ void R_AllocateMinimalResources(void)
 
 // 82749708  R_PersistFrontBuffer  (gfx_d3d/r_init.cpp:3038)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 
@@ -1605,7 +1570,6 @@ void R_PersistFrontBuffer(void)
 {
   int iVar1;
   
-  __savegprlr_28();
   if (dx.device == (D3DDevice *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_init.cpp",0xbe1,0,
                     "%s");
@@ -1626,13 +1590,14 @@ void R_PersistFrontBuffer(void)
     DXGetErrorDescription9A(iVar1);
     Com_PrintError(1,"Event query creation failed: %s (0x%08x)\n");
   }
-  __restgprlr_28();
   return;
 }
 
 
 // 82749808  R_ShutdownDirect3D  (gfx_d3d/r_init.cpp:3057)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 
@@ -1641,7 +1606,6 @@ void R_ShutdownDirect3D(void)
 {
   int iVar1;
   
-  __savegprlr_29();
   if (dx.device == (D3DDevice *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_init.cpp",0xbf2,0,
                     "%s");
@@ -1657,7 +1621,6 @@ void R_ShutdownDirect3D(void)
   } while (alwaysfails != 0);
   R_PersistFrontBuffer();
   dx.frontBufferTextureIndex = dx.frontBufferTextureIndex ^ 1;
-  __restgprlr_29();
   return;
 }
 
@@ -1677,6 +1640,8 @@ void R_Register(void)
 
 // 8274A6A8  R_DrawBlankScreenOnStartup  (gfx_d3d/r_init.cpp:3101)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
@@ -1694,8 +1659,7 @@ void R_DrawBlankScreenOnStartup(void)
   ulong in_stack_ffffff78;
   _D3DRESOLVE_PARAMETERS *in_stack_ffffff7c;
   
-  __savegprlr_29();
-  if ((r_glob.startedRenderThread == false) && (uVar1 = PIXGetCaptureState(), uVar1 == 0)) {
+  if ((!r_glob.startedRenderThread) && (uVar1 = PIXGetCaptureState(), uVar1 == 0)) {
     bVar2 = Sys_IsMainThread();
     if (!bVar2) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_init.cpp",0xc26,0,
@@ -1734,7 +1698,6 @@ void R_DrawBlankScreenOnStartup(void)
     } while (alwaysfails != 0);
     Sys_DidSwap();
   }
-  __restgprlr_29();
   return;
 }
 
@@ -1896,6 +1859,8 @@ void R_UnloadWorld(void)
 
 // 82749C18  R_BeginRegistration  (gfx_d3d/r_init.cpp:3363)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
@@ -1903,15 +1868,12 @@ void R_UnloadWorld(void)
 void R_BeginRegistration(vidConfig_t *param_1)
 
 {
-  int iVar1;
-  
-  iVar1 = __savegprlr_29(param_1);
   R_Init();
   if ((dx.d3d9 == (Direct3D *)0x0) || (dx.device == (D3DDevice *)0x0)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_init.cpp",0xd2b,0,
                     "%s");
   }
-  if (iVar1 == 0) {
+  if (param_1 == (vidConfig_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_init.cpp",0xd37,0,
                     "%s");
   }
@@ -1922,7 +1884,6 @@ void R_BeginRegistration(vidConfig_t *param_1)
   }
   r_glob.startedRenderThread = true;
   R_ReleaseThreadOwnership();
-  __restgprlr_29();
   return;
 }
 
@@ -2019,25 +1980,26 @@ int R_FinishGpuSync(void)
 
 // 82749E58  R_SyncGpu  (gfx_d3d/r_init.cpp:3498)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void R_SyncGpu(_func___cdecl_int_ulong64 *param_1)
 
 {
-  int iVar1;
   bool bVar4;
+  int iVar1;
   int iVar2;
   int iVar3;
   uint uVar5;
   uint uVar6;
   
-  iVar1 = __savegprlr_23(param_1);
   bVar4 = Sys_IsMainThread();
   if (!bVar4) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_init.cpp",0xdb1,0,
                     "%s");
   }
-  if (iVar1 != 0) {
+  if (param_1 != (_func___cdecl_int_ulong64 *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_init.cpp",0xdb3,0,
                     "%s");
   }
@@ -2098,7 +2060,6 @@ void R_SyncGpu(_func___cdecl_int_ulong64 *param_1)
       PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffff,"wait renderer3");
       R_ProcessWorkerCmdsWithTimeout(R_FinishWaitRenderer,1);
       PIXEndNamedEvent();
-      __restgprlr_23();
       return;
     }
                     /* WARNING: Subroutine does not return */
@@ -2111,6 +2072,8 @@ void R_SyncGpu(_func___cdecl_int_ulong64 *param_1)
 
 // 8274A138  R_RegistedRenderFrame  (gfx_d3d/r_init.cpp:3620)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
@@ -2122,7 +2085,6 @@ void R_RegistedRenderFrame(void)
   int iVar2;
   char in_RESERVE;
   
-  __savegprlr_23();
   if ((longlong)((ulonglong)(uint)g_frontEndSwapFrame - (ulonglong)(uint)g_backEndSwapFrame) < 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_init.cpp",0xe26,0,
                     "%s");
@@ -2180,13 +2142,14 @@ void R_RegistedRenderFrame(void)
   if (frontEndDataOut != (GfxBackEndData *)0x0) {
     frontEndDataOut->endSwapFrame = g_frontEndSwapFrame;
   }
-  __restgprlr_23();
   return;
 }
 
 
 // 8274ADE0  _Insertion_sort1<float_*,bool_(__cdecl*)(float,float),float>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3650)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void std::_Insertion_sort1<float_*,bool_(__cdecl*)(float,float),float>
@@ -2195,64 +2158,59 @@ void std::_Insertion_sort1<float_*,bool_(__cdecl*)(float,float),float>
 
 {
   ulonglong uVar1;
-  ulonglong uVar2;
-  ulonglong uVar3;
-  ulonglong uVar4;
-  char cVar5;
+  longlong lVar2;
+  bool bVar4;
+  longlong lVar3;
+  longlong lVar5;
   ulonglong uVar6;
-  longlong lVar7;
-  code *pcVar8;
-  ulonglong uVar9;
-  float *pfVar10;
-  double dVar11;
+  float *pfVar7;
+  double dVar8;
   
-  lVar7 = (longlong)(int)param_3;
-  uVar6 = (ulonglong)(int)param_2;
-  uVar4 = __savegprlr_25(param_1,uVar6,lVar7,param_4);
-  if (((uVar4 & 0xffffffff) != (uVar6 & 0xffffffff)) &&
-     (uVar9 = uVar4 + 4, (uVar9 & 0xffffffff) != (uVar6 & 0xffffffff))) {
+  lVar5 = (longlong)(int)param_2;
+  lVar2 = (longlong)(int)param_1;
+  if ((param_1 != param_2) && (uVar6 = lVar2 + 4, (float *)uVar6 != param_2)) {
+    lVar3 = lVar2;
     do {
-      pfVar10 = (float *)uVar9;
-      dVar11 = (double)*pfVar10;
-      pcVar8 = (code *)lVar7;
-      cVar5 = (*pcVar8)(dVar11,(double)*(float *)uVar4);
-      if (cVar5 == '\0') {
-        cVar5 = (*pcVar8)(dVar11,(double)pfVar10[-1]);
-        uVar3 = uVar9 - 4;
-        uVar2 = uVar9;
-        while (uVar1 = uVar3, cVar5 != '\0') {
-          pfVar10 = (float *)uVar1;
-          *(float *)uVar2 = *pfVar10;
-          cVar5 = (*pcVar8)(dVar11,(double)*(float *)(uVar1 - 4));
-          uVar3 = uVar1 - 4;
-          uVar2 = uVar1;
-        }
-        *pfVar10 = (float)dVar11;
+      pfVar7 = (float *)uVar6;
+      dVar8 = (double)*pfVar7;
+      bVar4 = (*param_3)((float)lVar3,(float)lVar5);
+      if (bVar4) {
+        lVar3 = uVar6 + ((ulonglong)(uint)((int)pfVar7 - (int)param_1 >> 2) & 0x3fffffff) * -4 + 4;
+        lVar5 = lVar2;
+        memmove();
+        *param_1 = (float)dVar8;
       }
       else {
-        memmove();
-        *(float *)uVar4 = (float)dVar11;
+        bVar4 = (*param_3)((float)(int)bVar4,(float)lVar5);
+        uVar1 = uVar6;
+        while (bVar4 != false) {
+          pfVar7 = (float *)(uVar1 - 4);
+          *(float *)uVar1 = *pfVar7;
+          bVar4 = (*param_3)((float)(int)bVar4,(float)lVar5);
+          uVar1 = uVar1 - 4;
+        }
+        *pfVar7 = (float)dVar8;
+        lVar3 = 0;
       }
-      uVar9 = uVar9 + 4;
-    } while ((uVar9 & 0xffffffff) != (uVar6 & 0xffffffff));
+      uVar6 = uVar6 + 4;
+    } while ((uVar6 & 0xffffffff) != ZEXT48(param_2));
   }
-  __restgprlr_25();
   return;
 }
 
 
 // 8274A350  R_UpdateTeamColors  (gfx_d3d/r_init.cpp:3674)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void R_UpdateTeamColors(float *param_1,float *param_2,float *param_3)
 
 {
-  float *pfVar1;
-  
-  pfVar1 = (float *)__savegprlr_28(param_1);
-  rg.colorMyTeam.array[0] = ByteFromFloatColor(*pfVar1);
-  rg.colorMyTeam.array[1] = ByteFromFloatColor(pfVar1[1]);
-  rg.colorMyTeam.array[2] = ByteFromFloatColor(pfVar1[2]);
-  rg.colorMyTeam.array[3] = ByteFromFloatColor(pfVar1[3]);
+  rg.colorMyTeam.array[0] = ByteFromFloatColor(*param_1);
+  rg.colorMyTeam.array[1] = ByteFromFloatColor(param_1[1]);
+  rg.colorMyTeam.array[2] = ByteFromFloatColor(param_1[2]);
+  rg.colorMyTeam.array[3] = ByteFromFloatColor(param_1[3]);
   rg.colorEnemyTeam.array[0] = ByteFromFloatColor(*param_2);
   rg.colorEnemyTeam.array[1] = ByteFromFloatColor(param_2[1]);
   rg.colorEnemyTeam.array[2] = ByteFromFloatColor(param_2[2]);
@@ -2261,7 +2219,6 @@ void R_UpdateTeamColors(float *param_1,float *param_2,float *param_3)
   rg.colorMyParty.array[1] = ByteFromFloatColor(param_3[1]);
   rg.colorMyParty.array[2] = ByteFromFloatColor(param_3[2]);
   rg.colorMyParty.array[3] = ByteFromFloatColor(param_3[3]);
-  __restgprlr_28();
   return;
 }
 
@@ -2280,6 +2237,8 @@ void R_ConfigureRenderer(GfxConfiguration *param_1)
 
 // 8274AEC8  _Med3<float_*,bool_(__cdecl*)(float,float)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3683)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void std::_Med3<float_*,bool_(__cdecl*)(float,float)>
@@ -2288,37 +2247,36 @@ void std::_Med3<float_*,bool_(__cdecl*)(float,float)>
 
 {
   float fVar1;
-  float *pfVar2;
-  bool bVar3;
-  float *pfVar4;
+  bool bVar2;
+  float *pfVar3;
   
-  pfVar2 = (float *)__savegprlr_28(param_1);
-  pfVar4 = param_2;
-  bVar3 = (*param_4)((float)pfVar2,(float)param_2);
-  if (bVar3) {
+  pfVar3 = param_2;
+  bVar2 = (*param_4)((float)param_1,(float)param_2);
+  if (bVar2) {
     fVar1 = *param_2;
-    *param_2 = *pfVar2;
-    *pfVar2 = fVar1;
+    *param_2 = *param_1;
+    *param_1 = fVar1;
   }
-  bVar3 = (*param_4)((float)(int)bVar3,(float)pfVar4);
-  if (bVar3) {
+  bVar2 = (*param_4)((float)(int)bVar2,(float)pfVar3);
+  if (bVar2) {
     fVar1 = *param_3;
     *param_3 = *param_2;
     *param_2 = fVar1;
   }
-  bVar3 = (*param_4)((float)(int)bVar3,(float)pfVar4);
-  if (bVar3) {
+  bVar2 = (*param_4)((float)(int)bVar2,(float)pfVar3);
+  if (bVar2) {
     fVar1 = *param_2;
-    *param_2 = *pfVar2;
-    *pfVar2 = fVar1;
+    *param_2 = *param_1;
+    *param_1 = fVar1;
   }
-  __restgprlr_28();
   return;
 }
 
 
 // 8274AF70  _Median<float_*,bool_(__cdecl*)(float,float)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3695)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void std::_Median<float_*,bool_(__cdecl*)(float,float)>
@@ -2328,36 +2286,34 @@ void std::_Median<float_*,bool_(__cdecl*)(float,float)>
 {
   int iVar1;
   int iVar2;
-  float *pfVar3;
-  uint uVar5;
-  ulonglong uVar4;
+  uint uVar4;
+  ulonglong uVar3;
   
-  pfVar3 = (float *)__savegprlr_26(param_1);
-  iVar1 = (int)param_3 - (int)pfVar3 >> 2;
+  iVar1 = (int)param_3 - (int)param_1 >> 2;
   if (0x28 < iVar1) {
-    uVar5 = iVar1 + 1;
-    uVar4 = (longlong)((int)uVar5 >> 3) + (ulonglong)((int)uVar5 < 0 && (uVar5 & 7) != 0);
-    iVar2 = (int)((uVar4 & 0xffffffff) << 3);
-    iVar1 = (int)((uVar4 & 0x3fffffff) << 2);
+    uVar4 = iVar1 + 1;
+    uVar3 = (longlong)((int)uVar4 >> 3) + (ulonglong)((int)uVar4 < 0 && (uVar4 & 7) != 0);
+    iVar2 = (int)((uVar3 & 0xffffffff) << 3);
+    iVar1 = (int)((uVar3 & 0x3fffffff) << 2);
     _Med3<float_*,bool_(__cdecl*)(float,float)>
-              (pfVar3,(float *)(iVar1 + (int)pfVar3),(float *)(iVar2 + (int)pfVar3),param_4);
+              (param_1,(float *)(iVar1 + (int)param_1),(float *)(iVar2 + (int)param_1),param_4);
     _Med3<float_*,bool_(__cdecl*)(float,float)>
               ((float *)((int)param_2 - iVar1),param_2,(float *)(iVar1 + (int)param_2),param_4);
     _Med3<float_*,bool_(__cdecl*)(float,float)>
               ((float *)((int)param_3 - iVar2),(float *)((int)param_3 - iVar1),param_3,param_4);
     _Med3<float_*,bool_(__cdecl*)(float,float)>
-              ((float *)(iVar1 + (int)pfVar3),param_2,(float *)((int)param_3 - iVar1),param_4);
-    __restgprlr_26();
+              ((float *)(iVar1 + (int)param_1),param_2,(float *)((int)param_3 - iVar1),param_4);
     return;
   }
-  _Med3<float_*,bool_(__cdecl*)(float,float)>(pfVar3,param_2,param_3,param_4);
-  __restgprlr_26();
+  _Med3<float_*,bool_(__cdecl*)(float,float)>(param_1,param_2,param_3,param_4);
   return;
 }
 
 
 // 8274B018  _Unguarded_partition<float_*,bool_(__cdecl*)(float,float)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3712)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 pair<float_*,float_*>
@@ -2367,148 +2323,139 @@ std::_Unguarded_partition<float_*,bool_(__cdecl*)(float,float)>
 {
   undefined4 uVar1;
   uint uVar2;
-  undefined4 *puVar5;
-  ulonglong uVar3;
-  pair<float_*,float_*> pVar4;
-  ulonglong uVar7;
-  ulonglong uVar8;
-  ulonglong uVar9;
+  bool bVar4;
+  longlong lVar3;
+  longlong lVar5;
+  ulonglong uVar6;
   _func___cdecl_bool_float_float *in_r6;
-  int iVar10;
+  ulonglong uVar7;
+  undefined4 *puVar8;
+  ulonglong uVar9;
+  undefined4 *puVar10;
   ulonglong uVar11;
-  undefined4 *puVar12;
+  ulonglong uVar12;
   ulonglong uVar13;
   undefined4 *puVar14;
-  ulonglong uVar15;
-  ulonglong uVar16;
-  undefined4 *puVar18;
-  ulonglong uVar17;
-  bool bVar6;
   
-  uVar9 = (ulonglong)(int)param_3;
-  uVar7 = (ulonglong)(int)param_2;
-  puVar5 = (undefined4 *)__savegprlr_23(param_1);
-  iVar10 = (int)uVar9 - (int)(float *)uVar7;
-  uVar2 = iVar10 >> 2;
-  uVar16 = ((longlong)(iVar10 >> 3) + (ulonglong)((int)uVar2 < 0 && (uVar2 & 1) != 0) & 0x3fffffff)
-           * 4 + uVar7;
-  uVar3 = uVar7;
-  uVar8 = uVar16;
+  lVar5 = (longlong)(int)param_2;
+  uVar2 = (int)param_3 - (int)param_2 >> 2;
+  uVar13 = ((longlong)((int)param_3 - (int)param_2 >> 3) +
+            (ulonglong)((int)uVar2 < 0 && (uVar2 & 1) != 0) & 0x3fffffff) * 4 + lVar5;
+  uVar6 = uVar13;
   _Median<float_*,bool_(__cdecl*)(float,float)>
-            ((float *)uVar7,(float *)uVar16,(float *)((int)uVar9 + -4),in_r6);
-  uVar11 = uVar16 + 4;
-  uVar17 = uVar3;
-  if ((uVar7 & 0xffffffff) < (uVar16 & 0xffffffff)) {
+            (param_2,(float *)uVar13,(float *)(param_3 + -4),in_r6);
+  uVar7 = uVar13 + 4;
+  lVar3 = lVar5;
+  if (ZEXT48(param_2) < (uVar13 & 0xffffffff)) {
     while( true ) {
-      uVar15 = uVar16 - 4;
-      bVar6 = (*in_r6)((float)uVar17,(float)uVar8);
-      uVar3 = (ulonglong)bVar6;
-      if (uVar3 != 0) break;
-      bVar6 = (*in_r6)((float)(int)bVar6,(float)uVar8);
-      uVar3 = (ulonglong)bVar6;
-      if ((uVar3 != 0) ||
-         (uVar17 = 0, uVar16 = uVar15, (uVar15 & 0xffffffff) <= (uVar7 & 0xffffffff))) break;
+      uVar11 = uVar13 - 4;
+      bVar4 = (*in_r6)((float)lVar3,(float)uVar6);
+      lVar5 = (longlong)bVar4;
+      if (lVar5 != 0) break;
+      bVar4 = (*in_r6)((float)(int)bVar4,(float)uVar6);
+      lVar5 = (longlong)bVar4;
+      if ((lVar5 != 0) || (lVar3 = 0, uVar13 = uVar11, (uVar11 & 0xffffffff) <= ZEXT48(param_2)))
+      break;
     }
   }
-  uVar15 = uVar3;
-  uVar13 = uVar11;
-  uVar17 = uVar16;
-  if ((uVar11 & 0xffffffff) < (uVar9 & 0xffffffff)) {
+  lVar3 = lVar5;
+  uVar9 = uVar7;
+  uVar11 = uVar13;
+  if ((uVar7 & 0xffffffff) < ZEXT48(param_3)) {
     do {
-      bVar6 = (*in_r6)((float)uVar15,(float)uVar8);
-      uVar3 = (ulonglong)bVar6;
-      uVar13 = uVar11;
-      if (uVar3 != 0) break;
-      bVar6 = (*in_r6)((float)(int)bVar6,(float)uVar8);
-      uVar3 = (ulonglong)bVar6;
-      if (uVar3 != 0) break;
-      uVar11 = uVar11 + 4;
-      uVar15 = 0;
-      uVar13 = uVar11;
-    } while ((uVar11 & 0xffffffff) < (uVar9 & 0xffffffff));
+      bVar4 = (*in_r6)((float)lVar3,(float)uVar6);
+      lVar5 = (longlong)bVar4;
+      uVar9 = uVar7;
+      if (lVar5 != 0) break;
+      bVar4 = (*in_r6)((float)(int)bVar4,(float)uVar6);
+      lVar5 = (longlong)bVar4;
+      if (lVar5 != 0) break;
+      uVar7 = uVar7 + 4;
+      lVar3 = 0;
+      uVar9 = uVar7;
+    } while ((uVar7 & 0xffffffff) < ZEXT48(param_3));
   }
   do {
-    uVar15 = uVar11;
-    if ((uVar13 & 0xffffffff) < (uVar9 & 0xffffffff)) {
+    uVar12 = uVar7;
+    if ((uVar9 & 0xffffffff) < ZEXT48(param_3)) {
       do {
-        bVar6 = (*in_r6)((float)uVar3,(float)uVar8);
-        uVar3 = (ulonglong)bVar6;
-        uVar11 = uVar15;
-        if (uVar3 == 0) {
-          bVar6 = (*in_r6)((float)(int)bVar6,(float)uVar8);
-          uVar3 = (ulonglong)bVar6;
-          if (uVar3 != 0) break;
-          uVar11 = uVar15 + 4;
-          uVar1 = *(undefined4 *)uVar15;
-          *(undefined4 *)uVar15 = *(undefined4 *)uVar13;
-          *(undefined4 *)uVar13 = uVar1;
+        bVar4 = (*in_r6)((float)lVar5,(float)uVar6);
+        lVar5 = (longlong)bVar4;
+        uVar7 = uVar12;
+        if (lVar5 == 0) {
+          bVar4 = (*in_r6)((float)(int)bVar4,(float)uVar6);
+          lVar5 = (longlong)bVar4;
+          if (lVar5 != 0) break;
+          uVar7 = uVar12 + 4;
+          uVar1 = *(undefined4 *)uVar12;
+          *(undefined4 *)uVar12 = *(undefined4 *)uVar9;
+          *(undefined4 *)uVar9 = uVar1;
         }
-        uVar13 = uVar13 + 4;
-        uVar15 = uVar11;
-      } while ((uVar13 & 0xffffffff) < (uVar9 & 0xffffffff));
+        uVar9 = uVar9 + 4;
+        uVar12 = uVar7;
+      } while ((uVar9 & 0xffffffff) < ZEXT48(param_3));
     }
-    bVar6 = (uVar16 & 0xffffffff) == (uVar7 & 0xffffffff);
-    if ((uVar7 & 0xffffffff) < (uVar16 & 0xffffffff)) {
+    bVar4 = (uVar13 & 0xffffffff) == ZEXT48(param_2);
+    if (ZEXT48(param_2) < (uVar13 & 0xffffffff)) {
       do {
-        uVar15 = uVar16 - 4;
-        bVar6 = (*in_r6)((float)uVar3,(float)uVar8);
-        uVar3 = (ulonglong)bVar6;
-        if (uVar3 == 0) {
-          bVar6 = (*in_r6)((float)(int)bVar6,(float)uVar8);
-          uVar3 = (ulonglong)bVar6;
-          if (uVar3 != 0) break;
-          uVar17 = uVar17 - 4;
-          uVar1 = *(undefined4 *)uVar17;
-          *(undefined4 *)uVar17 = *(undefined4 *)uVar15;
-          *(undefined4 *)uVar15 = uVar1;
+        uVar12 = uVar13 - 4;
+        bVar4 = (*in_r6)((float)lVar5,(float)uVar6);
+        lVar5 = (longlong)bVar4;
+        if (lVar5 == 0) {
+          bVar4 = (*in_r6)((float)(int)bVar4,(float)uVar6);
+          lVar5 = (longlong)bVar4;
+          if (lVar5 != 0) break;
+          uVar11 = uVar11 - 4;
+          uVar1 = *(undefined4 *)uVar11;
+          *(undefined4 *)uVar11 = *(undefined4 *)uVar12;
+          *(undefined4 *)uVar12 = uVar1;
         }
-        uVar16 = uVar15;
-      } while ((uVar7 & 0xffffffff) < (uVar15 & 0xffffffff));
-      bVar6 = (uVar16 & 0xffffffff) == (uVar7 & 0xffffffff);
+        uVar13 = uVar12;
+      } while (ZEXT48(param_2) < (uVar12 & 0xffffffff));
+      bVar4 = (uVar13 & 0xffffffff) == ZEXT48(param_2);
     }
-    puVar14 = (undefined4 *)uVar13;
-    if (bVar6) {
-      puVar18 = (undefined4 *)uVar17;
-      puVar12 = (undefined4 *)uVar11;
-      if ((uVar13 & 0xffffffff) == (uVar9 & 0xffffffff)) {
-        *puVar5 = puVar18;
-        puVar5[1] = puVar12;
-        pVar4 = (pair<float_*,float_*>)__restgprlr_23(puVar5);
-        return pVar4;
+    puVar10 = (undefined4 *)uVar9;
+    if (bVar4) {
+      puVar14 = (undefined4 *)uVar11;
+      puVar8 = (undefined4 *)uVar7;
+      if ((uVar9 & 0xffffffff) == ZEXT48(param_3)) {
+        *param_1 = (float)puVar14;
+        param_1[1] = (float)puVar8;
+        return (pair<float_*,float_*>)(longlong)(int)param_1;
       }
-      if ((uVar11 & 0xffffffff) != (uVar13 & 0xffffffff)) {
-        uVar1 = *puVar18;
-        *puVar18 = *puVar12;
-        *puVar12 = uVar1;
+      if ((uVar7 & 0xffffffff) != (uVar9 & 0xffffffff)) {
+        uVar1 = *puVar14;
+        *puVar14 = *puVar8;
+        *puVar8 = uVar1;
       }
+      uVar7 = uVar7 + 4;
+      uVar1 = *puVar14;
+      *puVar14 = *puVar10;
+      *puVar10 = uVar1;
+      uVar9 = uVar9 + 4;
       uVar11 = uVar11 + 4;
-      uVar1 = *puVar18;
-      *puVar18 = *puVar14;
-      *puVar14 = uVar1;
-      uVar13 = uVar13 + 4;
-      uVar17 = uVar17 + 4;
     }
     else {
-      uVar16 = uVar16 - 4;
-      puVar12 = (undefined4 *)uVar16;
-      if ((uVar13 & 0xffffffff) == (uVar9 & 0xffffffff)) {
-        uVar17 = uVar17 - 4;
-        puVar14 = (undefined4 *)uVar17;
-        if ((uVar16 & 0xffffffff) != (uVar17 & 0xffffffff)) {
-          uVar1 = *puVar12;
-          *puVar12 = *puVar14;
-          *puVar14 = uVar1;
-        }
-        uVar1 = *puVar14;
+      uVar13 = uVar13 - 4;
+      puVar8 = (undefined4 *)uVar13;
+      if ((uVar9 & 0xffffffff) == ZEXT48(param_3)) {
         uVar11 = uVar11 - 4;
-        *puVar14 = *(undefined4 *)uVar11;
-        *(undefined4 *)uVar11 = uVar1;
+        puVar10 = (undefined4 *)uVar11;
+        if ((uVar13 & 0xffffffff) != (uVar11 & 0xffffffff)) {
+          uVar1 = *puVar8;
+          *puVar8 = *puVar10;
+          *puVar10 = uVar1;
+        }
+        uVar1 = *puVar10;
+        uVar7 = uVar7 - 4;
+        *puVar10 = *(undefined4 *)uVar7;
+        *(undefined4 *)uVar7 = uVar1;
       }
       else {
-        uVar1 = *puVar14;
-        *puVar14 = *puVar12;
-        *puVar12 = uVar1;
-        uVar13 = uVar13 + 4;
+        uVar1 = *puVar10;
+        *puVar10 = *puVar8;
+        *puVar8 = uVar1;
+        uVar9 = uVar9 + 4;
       }
     }
   } while( true );
@@ -2517,6 +2464,8 @@ std::_Unguarded_partition<float_*,bool_(__cdecl*)(float,float)>
 
 // 8274B2F8  _Sort<float_*,int,bool_(__cdecl*)(float,float)>  (<external>/Program Files (x86)/Microsoft Xbox 360 SDK/include/xbox/algorithm:3771)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void std::_Sort<float_*,int,bool_(__cdecl*)(float,float)>
@@ -2524,97 +2473,83 @@ void std::_Sort<float_*,int,bool_(__cdecl*)(float,float)>
 
 {
   float *pfVar1;
-  float *pfVar2;
-  ulonglong uVar3;
-  int iVar5;
-  ulonglong uVar4;
-  ulonglong uVar6;
-  int iVar7;
-  float *pfVar8;
+  int iVar2;
+  uint uVar3;
+  float *pfVar4;
   float *local_40;
   float *local_3c;
   
-  uVar4 = (ulonglong)param_3;
-  uVar3 = (ulonglong)(int)param_2;
-  pfVar2 = (float *)__savegprlr_26(param_1);
-  pfVar8 = (float *)uVar3;
-  iVar5 = (int)pfVar8 - (int)pfVar2;
+  iVar2 = (int)param_2 - (int)param_1;
   do {
-    iVar5 = iVar5 >> 2;
-    if (iVar5 < 0x21) {
+    iVar2 = iVar2 >> 2;
+    if (iVar2 < 0x21) {
 LAB_8274b3b0:
-      if (1 < iVar5) {
+      if (1 < iVar2) {
         _Insertion_sort1<float_*,bool_(__cdecl*)(float,float),float>
-                  (pfVar2,pfVar8,param_4,(float *)0x0);
+                  (param_1,param_2,param_4,(float *)0x0);
       }
-      __restgprlr_26();
       return;
     }
-    pfVar8 = (float *)uVar3;
-    iVar7 = (int)uVar4;
-    if (iVar7 < 1) {
-      if (0x20 < iVar5) {
-        if (1 < iVar5) {
+    if (param_3 < 1) {
+      if (0x20 < iVar2) {
+        if (1 < iVar2) {
           _Make_heap<float_*,int,float,bool_(__cdecl*)(float,float)>
-                    (pfVar2,pfVar8,param_4,(int *)0x0,(float *)0x0);
+                    (param_1,param_2,param_4,(int *)0x0,(float *)0x0);
         }
-        _Sort_heap<float_*,bool_(__cdecl*)(float,float)>(pfVar2,pfVar8,param_4);
-        __restgprlr_26();
+        _Sort_heap<float_*,bool_(__cdecl*)(float,float)>(param_1,param_2,param_4);
         return;
       }
       goto LAB_8274b3b0;
     }
     _Unguarded_partition<float_*,bool_(__cdecl*)(float,float)>
-              ((float *)&local_40,pfVar2,(_func___cdecl_bool_float_float *)pfVar8);
+              ((float *)&local_40,param_1,(_func___cdecl_bool_float_float *)param_2);
     pfVar1 = local_3c;
-    uVar4 = (longlong)(iVar7 >> 1) + (ulonglong)(iVar7 < 0 && (uVar4 & 1) != 0);
-    uVar4 = (longlong)((int)uVar4 >> 1) + (ulonglong)((int)uVar4 < 0 && (uVar4 & 1) != 0) + uVar4;
-    uVar6 = ZEXT48(local_40);
-    if ((int)((int)local_40 - (int)pfVar2 & 0xfffffffcU) <
-        (int)((int)pfVar8 - (int)local_3c & 0xfffffffcU)) {
-      _Sort<float_*,int,bool_(__cdecl*)(float,float)>(pfVar2,local_40,(int)uVar4,param_4);
-      uVar6 = uVar3;
-      pfVar2 = pfVar1;
+    pfVar4 = local_40;
+    uVar3 = (param_3 >> 1) + (uint)(param_3 < 0 && (param_3 & 1U) != 0);
+    param_3 = ((int)uVar3 >> 1) + (uint)((int)uVar3 < 0 && (uVar3 & 1) != 0) + uVar3;
+    if ((int)((int)local_40 - (int)param_1 & 0xfffffffcU) <
+        (int)((int)param_2 - (int)local_3c & 0xfffffffcU)) {
+      _Sort<float_*,int,bool_(__cdecl*)(float,float)>(param_1,local_40,param_3,param_4);
+      pfVar4 = param_2;
+      param_1 = pfVar1;
     }
     else {
-      _Sort<float_*,int,bool_(__cdecl*)(float,float)>(local_3c,pfVar8,(int)uVar4,param_4);
+      _Sort<float_*,int,bool_(__cdecl*)(float,float)>(local_3c,param_2,param_3,param_4);
     }
-    pfVar8 = (float *)uVar6;
-    iVar5 = (int)pfVar8 - (int)pfVar2;
-    uVar3 = uVar6;
+    iVar2 = (int)pfVar4 - (int)param_1;
+    param_2 = pfVar4;
   } while( true );
 }
 
 
 // 8274A430  R_ComErrorCleanup  (gfx_d3d/r_init.cpp:3929)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 
 void R_ComErrorCleanup(int param_1)
 
 {
-  int iVar1;
-  bool bVar2;
+  bool bVar1;
   
-  iVar1 = __savegprlr_28(param_1);
-  bVar2 = Sys_IsMainThread();
-  if (!bVar2) {
+  bVar1 = Sys_IsMainThread();
+  if (!bVar1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_init.cpp",0xf5a,0,
                     "%s");
   }
-  if ((iVar1 != 0) ||
+  if ((param_1 != 0) ||
      ((frontEndDataOut != (GfxBackEndData *)0x0 && (frontEndDataOut->abortReady != 0)))) {
     R_AbortRenderCommands();
     R_SyncRenderThread();
-    bVar2 = Sys_IsMainThread();
-    if (!bVar2) {
+    bVar1 = Sys_IsMainThread();
+    if (!bVar1) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_init.cpp",0xf71,0,
                       "%s");
     }
     R_FlushSwap();
   }
-  __restgprlr_28();
   return;
 }
 

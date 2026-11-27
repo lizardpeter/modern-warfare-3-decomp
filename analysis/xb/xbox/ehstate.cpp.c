@@ -2,58 +2,54 @@
 
 // 82926960  __StateFromControlPc  (<external>/bt/278379/vctools/crt/xb/xbox/ehstate.cpp:17)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 int __StateFromControlPc(_s_FuncInfo *param_1,ulong param_2)
 
 {
   uint uVar1;
-  int iVar3;
-  ulonglong uVar2;
-  uint uVar4;
-  int iVar5;
-  int iVar6;
+  uint uVar2;
+  uint uVar3;
+  int iVar4;
+  IptoStateMapEntry *pIVar5;
   
-  uVar2 = (ulonglong)(int)param_2;
-  iVar3 = __savegprlr_29(param_1);
-  if (iVar3 == 0) {
+  if (param_1 == (_s_FuncInfo *)0x0) {
                     /* WARNING: Subroutine does not return */
     _inconsistency();
   }
-  uVar1 = *(uint *)(iVar3 + 0x14);
+  uVar1 = param_1->nIPMapEntries;
   if (uVar1 == 0) {
                     /* WARNING: Subroutine does not return */
     _inconsistency();
   }
-  if (*(int *)(iVar3 + 0x18) == 0) {
+  if (param_1->pIPtoStateMap == (IptoStateMapEntry *)0x0) {
                     /* WARNING: Subroutine does not return */
     _inconsistency();
   }
-  uVar4 = 0;
+  uVar3 = 0;
   if (uVar1 != 0) {
-    iVar6 = *(int *)(iVar3 + 0x18);
-    iVar5 = 0;
+    pIVar5 = param_1->pIPtoStateMap;
+    iVar4 = 0;
     do {
-      if ((uVar2 & 0xffffffff) == (ulonglong)*(uint *)(iVar5 + iVar6)) {
-        uVar2 = (ulonglong)*(uint *)(uVar4 * 8 + iVar6 + 4);
-        goto LAB_829269e4;
+      uVar2 = *(uint *)((int)&pIVar5->Ip + iVar4);
+      if (param_2 == uVar2) {
+        return pIVar5[uVar3].State;
       }
-      if ((uVar2 & 0xffffffff) < (ulonglong)*(uint *)(iVar5 + iVar6)) {
-        if (uVar4 == 0) {
-          uVar2 = 0xffffffffffffffff;
-          goto LAB_829269e4;
+      if (param_2 < uVar2) {
+        if (uVar3 == 0) {
+          return -1;
         }
-        iVar6 = uVar4 * 8 + iVar6;
+        pIVar5 = pIVar5 + uVar3;
         goto LAB_829269e0;
       }
-      uVar4 = uVar4 + 1;
-      iVar5 = iVar5 + 8;
-    } while (uVar4 < uVar1);
+      uVar3 = uVar3 + 1;
+      iVar4 = iVar4 + 8;
+    } while (uVar3 < uVar1);
   }
-  iVar6 = uVar1 * 8 + *(int *)(iVar3 + 0x18);
+  pIVar5 = param_1->pIPtoStateMap + uVar1;
 LAB_829269e0:
-  uVar2 = (ulonglong)*(uint *)(iVar6 + -4);
-LAB_829269e4:
-  iVar3 = __restgprlr_29(uVar2);
-  return iVar3;
+  return pIVar5[-1].State;
 }
 
 

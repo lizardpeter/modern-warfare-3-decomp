@@ -15,6 +15,8 @@ void TRACK_devgui(void)
 
 // 82403EB8  DevGui_RegisterDvars  (devgui/devgui.cpp:98)
 
+/* WARNING: Function: __savefpr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void DevGui_RegisterDvars(void)
@@ -33,7 +35,6 @@ void DevGui_RegisterDvars(void)
   double dVar9;
   double dVar10;
   
-  __savefpr_26();
   dVar7 = 0.4000000059604645;
   dVar9 = 0.0;
   dVar6 = 0.75;
@@ -93,7 +94,6 @@ void DevGui_RegisterDvars(void)
   devgui_colorGraphKnotEditing =
        Dvar_RegisterColor("devgui_colorGraphKnotEditing",(float)dVar10,(float)dVar9,(float)dVar10,
                           (float)dVar10,uVar1,"_CreatePhysObj: Unable to create physic object.");
-  __restfpr_26();
   return;
 }
 
@@ -202,33 +202,30 @@ bool DevGui_MenuItemDisabled(DevMenuItem *param_1)
 
 // 824043C8  DevGui_CompareMenus  (devgui/devgui.cpp:175)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 int DevGui_CompareMenus(DevMenuItem *param_1,DevMenuItem *param_2)
 
 {
-  char *pcVar2;
   longlong lVar1;
-  int iVar3;
-  ulonglong uVar4;
+  int iVar2;
   
-  uVar4 = (ulonglong)(int)param_2;
-  pcVar2 = (char *)__savegprlr_28(param_1);
-  if (pcVar2 == (char *)0x0) {
+  if (param_1 == (DevMenuItem *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\devgui\\devgui.cpp",0xb0,0,"%s"
                    );
   }
-  if ((uVar4 & 0xffffffff) == 0) {
+  if (param_2 == (DevMenuItem *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\devgui\\devgui.cpp",0xb1,0,"%s"
                    );
   }
-  lVar1 = (longlong)*(short *)(pcVar2 + 0x1c) - (longlong)*(short *)((char *)uVar4 + 0x1c);
+  lVar1 = (longlong)param_1->sortKey - (longlong)param_2->sortKey;
   if (lVar1 == 0) {
-    iVar3 = I_stricmp(pcVar2,(char *)uVar4);
-    lVar1 = (longlong)iVar3;
+    iVar2 = I_stricmp(param_1->label,param_2->label);
+    lVar1 = (longlong)iVar2;
   }
-  iVar3 = __restgprlr_28(lVar1);
-  return iVar3;
+  return (int)lVar1;
 }
 
 
@@ -269,52 +266,52 @@ void DevGui_FreeMenu_r(ushort param_1)
 
 // 82404570  DevGui_CreateMenu  (devgui/devgui.cpp:218)
 
+/* WARNING: Function: __savegprlr_21 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_21 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 ushort DevGui_CreateMenu(ushort param_1,char *param_2,short param_3)
 
 {
   char cVar1;
-  ushort uVar5;
+  ushort uVar2;
   ushort uVar6;
-  DevMenuItem *pDVar2;
-  int iVar3;
-  DevMenuItem *pDVar4;
+  DevMenuItem *pDVar3;
+  int iVar4;
+  DevMenuItem *pDVar5;
   longlong lVar7;
   ushort uVar8;
   DevMenuChild *pDVar9;
   uint uVar10;
   dvar_t **ppdVar11;
   
-  lVar7 = (longlong)(int)param_2;
-  uVar5 = __savegprlr_21(param_1);
-  pDVar4 = devguiGlob.nextFreeMenu;
+  pDVar5 = devguiGlob.nextFreeMenu;
   if (devguiGlob.nextFreeMenu == (DevMenuItem *)0x0) {
     Com_Error(ERR_DROP,"Too many devgui entries (more than %i)");
   }
-  devguiGlob.nextFreeMenu = *(DevMenuItem **)pDVar4->label;
-  uVar6 = DevGui_GetMenuHandle(pDVar4);
-  iVar3 = (int)lVar7;
+  devguiGlob.nextFreeMenu = *(DevMenuItem **)pDVar5->label;
+  uVar6 = DevGui_GetMenuHandle(pDVar5);
+  iVar4 = (int)pDVar5 - (int)param_2;
   do {
-    cVar1 = *(char *)lVar7;
-    ((char *)lVar7)[(int)pDVar4 - iVar3] = cVar1;
-    lVar7 = lVar7 + 1;
+    cVar1 = *param_2;
+    param_2[iVar4] = cVar1;
+    param_2 = param_2 + 1;
   } while (cVar1 != '\0');
-  pDVar4->parent = uVar5;
-  pDVar4->sortKey = param_3;
-  pDVar4->childType = '\0';
-  pDVar4->childMenuMemory = '\0';
-  (pDVar4->child).menu = 0;
-  if (uVar5 == 0) {
-    pDVar2 = &devguiGlob.topmostMenu;
+  pDVar5->parent = param_1;
+  pDVar5->sortKey = param_3;
+  pDVar5->childType = '\0';
+  pDVar5->childMenuMemory = '\0';
+  (pDVar5->child).menu = 0;
+  if (param_1 == 0) {
+    pDVar3 = &devguiGlob.topmostMenu;
   }
   else {
-    pDVar2 = DevGui_GetMenu(uVar5);
+    pDVar3 = DevGui_GetMenu(param_1);
   }
-  pDVar9 = &pDVar2->child;
+  pDVar9 = &pDVar3->child;
   uVar8 = 0;
-  uVar5 = (pDVar2->child).menu;
-  while (uVar5 != 0) {
+  uVar2 = (pDVar3->child).menu;
+  while (uVar2 != 0) {
     uVar10 = (uint)pDVar9->menu;
     if ((uVar10 == 0) || (2000 < uVar10)) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\devgui\\devgui.cpp",0x77,0,
@@ -325,35 +322,34 @@ ushort DevGui_CreateMenu(ushort param_1,char *param_2,short param_3)
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\devgui\\devgui.cpp",0xb0,0,
                       "%s");
     }
-    lVar7 = (longlong)*(short *)(&devgui_colorBgndSel + uVar10 * 10) - (longlong)pDVar4->sortKey;
+    lVar7 = (longlong)*(short *)(&devgui_colorBgndSel + uVar10 * 10) - (longlong)pDVar5->sortKey;
     if (lVar7 == 0) {
-      iVar3 = I_stricmp((char *)ppdVar11,pDVar4->label);
-      lVar7 = (longlong)iVar3;
+      iVar4 = I_stricmp((char *)ppdVar11,pDVar5->label);
+      lVar7 = (longlong)iVar4;
     }
     if ((int)lVar7 == 0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\devgui\\devgui.cpp",0xfc,0,
                       "%s");
     }
-    lVar7 = (longlong)*(short *)(&devgui_colorBgndSel + uVar10 * 10) - (longlong)pDVar4->sortKey;
+    lVar7 = (longlong)*(short *)(&devgui_colorBgndSel + uVar10 * 10) - (longlong)pDVar5->sortKey;
     if (lVar7 == 0) {
-      iVar3 = I_stricmp((char *)ppdVar11,pDVar4->label);
-      lVar7 = (longlong)iVar3;
+      iVar4 = I_stricmp((char *)ppdVar11,pDVar5->label);
+      lVar7 = (longlong)iVar4;
     }
     if (0 < (int)lVar7) break;
     uVar8 = pDVar9->menu;
     pDVar9 = (DevMenuChild *)((int)&devgui_colorBgndSel + uVar10 * 0x28 + 2);
-    uVar5 = *(ushort *)((int)&devgui_colorBgndSel + uVar10 * 0x28 + 2);
+    uVar2 = *(ushort *)((int)&devgui_colorBgndSel + uVar10 * 0x28 + 2);
   }
-  uVar5 = pDVar9->menu;
-  pDVar4->prevSibling = uVar8;
-  pDVar4->nextSibling = uVar5;
+  uVar2 = pDVar9->menu;
+  pDVar5->prevSibling = uVar8;
+  pDVar5->nextSibling = uVar2;
   pDVar9->menu = uVar6;
-  if (pDVar4->nextSibling != 0) {
-    pDVar4 = DevGui_GetMenu(pDVar4->nextSibling);
-    pDVar4->prevSibling = uVar6;
+  if (pDVar5->nextSibling != 0) {
+    pDVar5 = DevGui_GetMenu(pDVar5->nextSibling);
+    pDVar5->prevSibling = uVar6;
   }
-  uVar5 = __restgprlr_21(uVar6);
-  return uVar5;
+  return uVar6;
 }
 
 
@@ -378,595 +374,571 @@ void Byte4PackRgba(float *param_1,uchar *param_2)
 
 // 82404790  DevGui_FindMenu  (devgui/devgui.cpp:270)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 ushort DevGui_FindMenu(ushort param_1,char *param_2)
 
 {
-  uint uVar1;
-  ushort uVar4;
-  DevMenuItem *pDVar2;
-  int iVar3;
+  ushort uVar1;
+  uint uVar2;
+  DevMenuItem *pDVar3;
+  int iVar4;
   
-  uVar4 = __savegprlr_24(param_1);
-  if (uVar4 == 0) {
-    pDVar2 = &devguiGlob.topmostMenu;
+  if (param_1 == 0) {
+    pDVar3 = &devguiGlob.topmostMenu;
   }
   else {
-    pDVar2 = DevGui_GetMenu(uVar4);
+    pDVar3 = DevGui_GetMenu(param_1);
   }
-  if (pDVar2->childType != '\0') {
+  if (pDVar3->childType != '\0') {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\devgui\\devgui.cpp",0x117,0,
                     "%s\n\t(parentMenu->childType) = %i");
   }
-  uVar4 = (pDVar2->child).menu;
+  uVar1 = (pDVar3->child).menu;
   while( true ) {
-    uVar1 = (uint)uVar4;
-    if (uVar1 == 0) {
-      uVar4 = __restgprlr_24(0);
-      return uVar4;
+    uVar2 = (uint)uVar1;
+    if (uVar2 == 0) {
+      return 0;
     }
-    if ((uVar1 == 0) || (2000 < uVar1)) {
+    if ((uVar2 == 0) || (2000 < uVar2)) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\devgui\\devgui.cpp",0x77,0,
                       "handle not in [1, ARRAY_COUNT( devguiGlob.menus )]\n\t%i not in [%i, %i]");
     }
-    if (&devgui_colorTextGray + uVar1 * 10 == (dvar_t **)0x0) {
+    if (&devgui_colorTextGray + uVar2 * 10 == (dvar_t **)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\devgui\\devgui.cpp",0x11c,0,
                       "%s");
     }
-    iVar3 = I_stricmp(param_2,(char *)(&devgui_colorTextGray + uVar1 * 10));
-    if (iVar3 == 0) break;
-    uVar4 = *(ushort *)((int)&devgui_colorBgndSel + uVar1 * 0x28 + 2);
+    iVar4 = I_stricmp(param_2,(char *)(&devgui_colorTextGray + uVar2 * 10));
+    if (iVar4 == 0) break;
+    uVar1 = *(ushort *)((int)&devgui_colorBgndSel + uVar2 * 0x28 + 2);
   }
-  uVar4 = __restgprlr_24(uVar1);
-  return uVar4;
+  return uVar1;
 }
 
 
 // 824048C0  DevGui_RegisterMenu  (devgui/devgui.cpp:294)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 ushort DevGui_RegisterMenu(ushort param_1,char *param_2,short param_3)
 
 {
   ushort uVar1;
-  ushort uVar2;
   
-  uVar1 = __savegprlr_29(param_1);
-  uVar2 = DevGui_FindMenu(uVar1,param_2);
-  if (uVar2 == 0) {
-    uVar2 = DevGui_CreateMenu(uVar1,param_2,param_3);
+  uVar1 = DevGui_FindMenu(param_1,param_2);
+  if (uVar1 == 0) {
+    uVar1 = DevGui_CreateMenu(param_1,param_2,param_3);
   }
-  uVar1 = __restgprlr_29(uVar2);
   return uVar1;
 }
 
 
 // 82404900  DevGui_PathToken  (devgui/devgui.cpp:305)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 DevGuiTokenResult DevGui_PathToken(char **param_1,char *param_2,short *param_3)
 
 {
   bool bVar1;
   char cVar2;
-  int iVar3;
-  short sVar4;
-  int *piVar5;
-  DevGuiTokenResult DVar6;
-  ulonglong uVar7;
-  ulonglong uVar8;
-  int iVar9;
-  short sVar10;
-  short sVar11;
-  char cVar12;
-  char *pcVar13;
-  char *pcVar14;
-  char *pcVar15;
+  short sVar3;
+  int iVar4;
+  short sVar5;
+  short sVar6;
+  char cVar7;
+  char *pcVar8;
+  char *pcVar9;
+  char *pcVar10;
   
-  uVar8 = (ulonglong)(int)param_3;
-  uVar7 = (ulonglong)(int)param_2;
-  piVar5 = (int *)__savegprlr_27(param_1);
-  if (piVar5 == (int *)0x0) {
+  if (param_1 == (char **)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\devgui\\devgui.cpp",0x137,0,
                     "%s");
   }
-  if (*piVar5 == 0) {
+  if (*param_1 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\devgui\\devgui.cpp",0x138,0,
                     "%s");
   }
-  if ((uVar7 & 0xffffffff) == 0) {
+  if (param_2 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\devgui\\devgui.cpp",0x139,0,
                     "%s");
   }
-  if ((uVar8 & 0xffffffff) == 0) {
+  if (param_3 == (short *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\devgui\\devgui.cpp",0x13a,0,
                     "%s");
   }
-  pcVar15 = (char *)*piVar5;
-  *(short *)uVar8 = 0x7fff;
-  iVar9 = 0;
-  cVar12 = *pcVar15;
-  if (cVar12 != '\0') {
+  pcVar10 = *param_1;
+  *param_3 = 0x7fff;
+  iVar4 = 0;
+  cVar7 = *pcVar10;
+  if (cVar7 != '\0') {
     do {
-      iVar3 = (int)uVar7;
-      if (cVar12 == ':') {
-        *(undefined1 *)(iVar9 + iVar3) = 0;
-        sVar11 = 0;
-        pcVar13 = pcVar15 + 1;
-        sVar10 = 1;
-        if (*pcVar13 == '-') {
-          sVar4 = -1;
+      if (cVar7 == ':') {
+        param_2[iVar4] = '\0';
+        sVar6 = 0;
+        pcVar8 = pcVar10 + 1;
+        sVar5 = 1;
+        if (*pcVar8 == '-') {
+          sVar3 = -1;
 LAB_82404a14:
-          sVar10 = sVar4;
-          pcVar13 = pcVar15 + 2;
+          sVar5 = sVar3;
+          pcVar8 = pcVar10 + 2;
         }
         else {
-          sVar4 = 1;
-          if (*pcVar13 == '+') goto LAB_82404a14;
+          sVar3 = 1;
+          if (*pcVar8 == '+') goto LAB_82404a14;
         }
-        cVar12 = *pcVar13;
-        if ((cVar12 < '0') || ('9' < cVar12)) goto LAB_82404aec;
+        cVar7 = *pcVar8;
+        if (cVar7 < '0') {
+          return DEVGUI_TOKEN_ERROR;
+        }
+        if ('9' < cVar7) {
+          return DEVGUI_TOKEN_ERROR;
+        }
         do {
-          pcVar14 = pcVar13;
-          pcVar15 = pcVar14 + 1;
-          cVar2 = *pcVar15;
-          sVar11 = sVar11 * 10 + (short)cVar12 + -0x30;
+          pcVar9 = pcVar8;
+          pcVar10 = pcVar9 + 1;
+          cVar2 = *pcVar10;
+          sVar6 = sVar6 * 10 + (short)cVar7 + -0x30;
           if (cVar2 < '0') break;
-          pcVar13 = pcVar15;
-          cVar12 = cVar2;
+          pcVar8 = pcVar10;
+          cVar7 = cVar2;
         } while (cVar2 < ':');
-        *(short *)uVar8 = sVar10 * sVar11;
-        if (*pcVar15 != '\0') {
-          if (*pcVar15 == '/') {
-            bVar1 = pcVar14[2] == '/';
-            goto LAB_82404abc;
+        *param_3 = sVar5 * sVar6;
+        if (*pcVar10 != '\0') {
+          if (*pcVar10 != '/') {
+            return DEVGUI_TOKEN_ERROR;
           }
-          goto LAB_82404aec;
+          bVar1 = pcVar9[2] == '/';
+          goto LAB_82404abc;
         }
       }
       else {
-        if (cVar12 == '/') {
-          pcVar15 = pcVar15 + 1;
-          cVar12 = *pcVar15;
-          if (cVar12 != '/') {
-            *(undefined1 *)(iVar9 + iVar3) = 0;
-            *piVar5 = (int)pcVar15;
-            DVar6 = __restgprlr_27(1);
-            return DVar6;
+        if (cVar7 == '/') {
+          pcVar10 = pcVar10 + 1;
+          cVar7 = *pcVar10;
+          if (cVar7 != '/') {
+            param_2[iVar4] = '\0';
+            *param_1 = pcVar10;
+            return DEVGUI_TOKEN_MORE;
           }
         }
-        *(char *)(iVar9 + iVar3) = cVar12;
-        iVar9 = iVar9 + 1;
-        pcVar15 = pcVar15 + 1;
-        bVar1 = iVar9 == 0x1a;
+        param_2[iVar4] = cVar7;
+        iVar4 = iVar4 + 1;
+        pcVar10 = pcVar10 + 1;
+        bVar1 = iVar4 == 0x1a;
 LAB_82404abc:
-        if (bVar1) goto LAB_82404aec;
+        if (bVar1) {
+          return DEVGUI_TOKEN_ERROR;
+        }
       }
-      cVar12 = *pcVar15;
-    } while (cVar12 != '\0');
-    if (iVar9 != 0) {
-      *piVar5 = (int)pcVar15;
-      *(undefined1 *)(iVar9 + iVar3) = 0;
-      DVar6 = __restgprlr_27(2);
-      return DVar6;
+      cVar7 = *pcVar10;
+    } while (cVar7 != '\0');
+    if (iVar4 != 0) {
+      *param_1 = pcVar10;
+      param_2[iVar4] = '\0';
+      return DEVGUI_TOKEN_LAST;
     }
   }
-LAB_82404aec:
-  DVar6 = __restgprlr_27(0);
-  return DVar6;
+  return DEVGUI_TOKEN_ERROR;
 }
 
 
 // 82404B10  DevGui_ConstructPath_r  (devgui/devgui.cpp:386)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 ushort DevGui_ConstructPath_r(ushort param_1,char *param_2)
 
 {
-  ushort uVar2;
   DevGuiTokenResult DVar1;
-  ushort uVar3;
+  ushort uVar2;
   char *pcStack0000001c;
   short local_60 [8];
   char acStack_50 [80];
   
   pcStack0000001c = param_2;
-  uVar2 = __savegprlr_27(param_1);
   do {
     DVar1 = DevGui_PathToken(&stack0x0000001c,acStack_50,local_60);
     if (DVar1 == DEVGUI_TOKEN_ERROR) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\devgui\\devgui.cpp",0x18a,0,
                       "%s");
     }
-    uVar3 = DevGui_FindMenu(uVar2,acStack_50);
-    if (uVar3 == 0) {
-      uVar3 = DevGui_CreateMenu(uVar2,acStack_50,local_60[0]);
+    uVar2 = DevGui_FindMenu(param_1,acStack_50);
+    if (uVar2 == 0) {
+      uVar2 = DevGui_CreateMenu(param_1,acStack_50,local_60[0]);
     }
-    uVar2 = uVar3;
+    param_1 = uVar2;
   } while (DVar1 != DEVGUI_TOKEN_LAST);
-  uVar2 = __restgprlr_27();
-  return uVar2;
+  return param_1;
 }
 
 
 // 82404BB0  DevGui_IsValidPath  (devgui/devgui.cpp:403)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 bool DevGui_IsValidPath(char *param_1)
 
 {
   bool bVar1;
-  char *pcVar2;
-  undefined1 uVar4;
-  DevGuiTokenResult DVar3;
-  char *pcVar5;
-  int iVar6;
-  char cVar7;
+  DevGuiTokenResult DVar2;
+  char *pcVar3;
+  int iVar4;
+  char cVar5;
+  char *pcVar6;
+  char *pcVar7;
   char *pcVar8;
   char *pcVar9;
-  char *pcVar10;
   char *pcStack00000014;
   short asStack_70 [7];
   char cStack_61;
   char local_60 [96];
   
-  pcVar2 = (char *)__savegprlr_26(param_1);
-  pcStack00000014 = pcVar2;
-  pcVar10 = pcVar2;
-  if (pcVar2 == (char *)0x0) {
+  pcVar9 = param_1;
+  pcStack00000014 = param_1;
+  if (param_1 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\devgui\\devgui.cpp",0x199,0,
                     "%s");
   }
   do {
-    cVar7 = *pcVar10;
-    pcVar10 = pcVar10 + 1;
-  } while (cVar7 != '\0');
-  if ((char *)0x78 < pcVar10 + (-1 - (int)pcVar2)) {
+    cVar5 = *pcVar9;
+    pcVar9 = pcVar9 + 1;
+  } while (cVar5 != '\0');
+  if ((char *)0x78 < pcVar9 + (-1 - (int)param_1)) {
     do {
-      cVar7 = *pcVar2;
-      pcVar2 = pcVar2 + 1;
-    } while (cVar7 != '\0');
+      cVar5 = *param_1;
+      param_1 = param_1 + 1;
+    } while (cVar5 != '\0');
     Com_Printf(0xb,"Path \'%s\' must be no longer than %i characters (currently %i).\n");
-    uVar4 = __restgprlr_26(0);
-    return (bool)uVar4;
+    return false;
   }
-  DVar3 = DevGui_PathToken(&stack0x00000014,local_60,asStack_70);
-  pcVar10 = pcStack00000014;
-  if (DVar3 == DEVGUI_TOKEN_LAST) {
+  DVar2 = DevGui_PathToken(&stack0x00000014,local_60,asStack_70);
+  pcVar9 = pcStack00000014;
+  if (DVar2 == DEVGUI_TOKEN_LAST) {
     Com_Printf(0xb,"Path \'%s\' must have at least one menu separator (\'/\' character).\n");
-    uVar4 = __restgprlr_26(0);
-    return (bool)uVar4;
+    return false;
   }
 LAB_82404cac:
   do {
-    if (DVar3 == DEVGUI_TOKEN_ERROR) {
+    if (DVar2 == DEVGUI_TOKEN_ERROR) {
       Com_Printf(0xb,
                  "path \'%s\' is invalid.  Format is \'menu name:sortkey/submenu/...\', where \'sortkey\' is any (possibly signed) integer.\n"
                 );
-      uVar4 = __restgprlr_26(0);
-      return (bool)uVar4;
+      return false;
     }
-    if (pcVar10 == (char *)0x0) {
+    if (pcVar9 == (char *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\devgui\\devgui.cpp",0x138,0,
                       "%s");
     }
-    iVar6 = 0;
-    if (*pcVar10 != '\0') {
-      pcVar5 = &cStack_61;
-      pcVar2 = pcVar10;
+    iVar4 = 0;
+    if (*pcVar9 != '\0') {
+      pcVar3 = &cStack_61;
+      pcVar8 = pcVar9;
       do {
-        cVar7 = *pcVar2;
-        if (cVar7 == ':') {
-          pcVar8 = pcVar2 + 1;
-          cVar7 = *pcVar8;
-          pcVar5[1] = '\0';
-          if ((cVar7 == '-') || (cVar7 == '+')) {
-            pcVar8 = pcVar2 + 2;
+        cVar5 = *pcVar8;
+        if (cVar5 == ':') {
+          pcVar6 = pcVar8 + 1;
+          cVar5 = *pcVar6;
+          pcVar3[1] = '\0';
+          if ((cVar5 == '-') || (cVar5 == '+')) {
+            pcVar6 = pcVar8 + 2;
           }
-          if ((*pcVar8 < '0') || ('9' < *pcVar8)) goto LAB_82404da8;
+          if ((*pcVar6 < '0') || ('9' < *pcVar6)) goto LAB_82404da8;
           do {
-            pcVar9 = pcVar8;
-            pcVar2 = pcVar9 + 1;
-            cVar7 = *pcVar2;
-            if (cVar7 < '0') break;
-            pcVar8 = pcVar2;
-          } while (cVar7 < ':');
-          if (cVar7 != '\0') {
-            if (cVar7 == '/') {
-              bVar1 = pcVar9[2] == '/';
+            pcVar7 = pcVar6;
+            pcVar8 = pcVar7 + 1;
+            cVar5 = *pcVar8;
+            if (cVar5 < '0') break;
+            pcVar6 = pcVar8;
+          } while (cVar5 < ':');
+          if (cVar5 != '\0') {
+            if (cVar5 == '/') {
+              bVar1 = pcVar7[2] == '/';
               goto LAB_82404d90;
             }
             goto LAB_82404da8;
           }
         }
         else {
-          if (cVar7 == '/') {
-            pcVar2 = pcVar2 + 1;
-            cVar7 = *pcVar2;
-            if (cVar7 != '/') {
-              DVar3 = DEVGUI_TOKEN_MORE;
-              local_60[iVar6] = '\0';
-              pcVar10 = pcVar2;
+          if (cVar5 == '/') {
+            pcVar8 = pcVar8 + 1;
+            cVar5 = *pcVar8;
+            if (cVar5 != '/') {
+              DVar2 = DEVGUI_TOKEN_MORE;
+              local_60[iVar4] = '\0';
+              pcVar9 = pcVar8;
               goto LAB_82404cac;
             }
           }
-          iVar6 = iVar6 + 1;
-          pcVar5 = pcVar5 + 1;
-          *pcVar5 = cVar7;
-          pcVar2 = pcVar2 + 1;
-          bVar1 = iVar6 == 0x1a;
+          iVar4 = iVar4 + 1;
+          pcVar3 = pcVar3 + 1;
+          *pcVar3 = cVar5;
+          pcVar8 = pcVar8 + 1;
+          bVar1 = iVar4 == 0x1a;
 LAB_82404d90:
           if (bVar1) goto LAB_82404da8;
         }
-      } while (*pcVar2 != '\0');
-      if (iVar6 != 0) {
-        local_60[iVar6] = '\0';
-        uVar4 = __restgprlr_26(1);
-        return (bool)uVar4;
+      } while (*pcVar8 != '\0');
+      if (iVar4 != 0) {
+        local_60[iVar4] = '\0';
+        return true;
       }
     }
 LAB_82404da8:
-    DVar3 = DEVGUI_TOKEN_ERROR;
+    DVar2 = DEVGUI_TOKEN_ERROR;
   } while( true );
 }
 
 
 // 82404DF8  DevGui_AddDvar  (devgui/devgui.cpp:440)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void DevGui_AddDvar(char *param_1,dvar_t *param_2)
 
 {
-  char *pcVar1;
-  bool bVar4;
-  ushort uVar3;
-  DevMenuItem *pDVar2;
-  ulonglong uVar5;
+  bool bVar3;
+  ushort uVar2;
+  DevMenuItem *pDVar1;
   
-  uVar5 = (ulonglong)(int)param_2;
-  pcVar1 = (char *)__savegprlr_27(param_1);
-  if (pcVar1 == (char *)0x0) {
+  if (param_1 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\devgui\\devgui.cpp",0x1bc,0,
                     "%s");
   }
-  if ((uVar5 & 0xffffffff) == 0) {
+  if (param_2 == (dvar_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\devgui\\devgui.cpp",0x1bd,0,
                     "%s");
   }
-  bVar4 = DevGui_IsValidPath(pcVar1);
-  if (bVar4) {
-    uVar3 = DevGui_ConstructPath_r(0,pcVar1);
-    pDVar2 = DevGui_GetMenu(uVar3);
-    if (pDVar2 == (DevMenuItem *)0x0) {
+  bVar3 = DevGui_IsValidPath(param_1);
+  if (bVar3) {
+    uVar2 = DevGui_ConstructPath_r(0,param_1);
+    pDVar1 = DevGui_GetMenu(uVar2);
+    if (pDVar1 == (DevMenuItem *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\devgui\\devgui.cpp",0x1c4,0,
                       "%s");
     }
-    if (((pDVar2->childType == '\0') && ((pDVar2->child).menu == 0)) ||
-       ((pDVar2->childType == '\x01' && ((ulonglong)(uint)pDVar2->child == (uVar5 & 0xffffffff)))))
-    {
-      pDVar2->child = SUB84(uVar5,0);
-      pDVar2->childType = '\x01';
-      __restgprlr_27();
+    if (((pDVar1->childType == '\0') && ((pDVar1->child).menu == 0)) ||
+       ((pDVar1->childType == '\x01' && ((dvar_t *)(pDVar1->child).command == param_2)))) {
+      (pDVar1->child).dvar = param_2;
+      pDVar1->childType = '\x01';
       return;
     }
     Com_Printf(0xb,
                "Path \'%s\' can\'t be used for dvar \'%s\' because it is already used for something else.\n"
               );
   }
-  __restgprlr_27();
   return;
 }
 
 
 // 82404F10  DevGui_AddCommand  (devgui/devgui.cpp:465)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void DevGui_AddCommand(char *param_1,char *param_2)
 
 {
-  char *pcVar1;
   bool bVar4;
   ushort uVar3;
-  DevMenuItem *pDVar2;
-  ulonglong uVar5;
+  DevMenuItem *pDVar1;
+  char *pcVar2;
   
-  uVar5 = (ulonglong)(int)param_2;
-  pcVar1 = (char *)__savegprlr_27(param_1);
-  if (pcVar1 == (char *)0x0) {
+  if (param_1 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\devgui\\devgui.cpp",0x1d5,0,
                     "%s");
   }
-  if ((uVar5 & 0xffffffff) == 0) {
+  if (param_2 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\devgui\\devgui.cpp",0x1d6,0,
                     "%s");
   }
-  bVar4 = DevGui_IsValidPath(pcVar1);
+  bVar4 = DevGui_IsValidPath(param_1);
   if (bVar4) {
-    uVar3 = DevGui_ConstructPath_r(0,pcVar1);
-    pDVar2 = DevGui_GetMenu(uVar3);
-    if (pDVar2 == (DevMenuItem *)0x0) {
+    uVar3 = DevGui_ConstructPath_r(0,param_1);
+    pDVar1 = DevGui_GetMenu(uVar3);
+    if (pDVar1 == (DevMenuItem *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\devgui\\devgui.cpp",0x1dd,0,
                       "%s");
     }
-    if (((pDVar2->childType == '\0') && ((pDVar2->child).menu == 0)) ||
-       ((pDVar2->childType == '\x02' && ((ulonglong)(uint)pDVar2->child == (uVar5 & 0xffffffff)))))
-    {
-      pDVar2->childType = '\x02';
-      pcVar1 = CopyString((char *)uVar5,"DevGui_AddCommand",0);
-      (pDVar2->child).command = pcVar1;
-      __restgprlr_27();
+    if (((pDVar1->childType == '\0') && ((pDVar1->child).menu == 0)) ||
+       ((pDVar1->childType == '\x02' && ((pDVar1->child).command == param_2)))) {
+      pDVar1->childType = '\x02';
+      pcVar2 = CopyString(param_2,"DevGui_AddCommand",0);
+      (pDVar1->child).command = pcVar2;
       return;
     }
     Com_Printf(0xb,
                "Path \'%s\' can\'t be used for command \'%s\' because it is already used for something else.\n"
               );
   }
-  __restgprlr_27();
   return;
 }
 
 
 // 82405040  DevGui_AddGraph  (devgui/devgui.cpp:490)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void DevGui_AddGraph(char *param_1,DevGraph *param_2)
 
 {
-  char *pcVar1;
-  bool bVar4;
-  ushort uVar3;
-  DevMenuItem *pDVar2;
-  ulonglong uVar5;
-  DevGraph *pDVar6;
+  bool bVar3;
+  ushort uVar2;
+  DevMenuItem *pDVar1;
   
-  uVar5 = (ulonglong)(int)param_2;
-  pcVar1 = (char *)__savegprlr_27(param_1);
-  if ((uVar5 & 0xffffffff) == 0) {
+  if (param_2 == (DevGraph *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\devgui\\devgui.cpp",0x1ee,0,
                     "%s");
   }
-  pDVar6 = (DevGraph *)uVar5;
-  if (pDVar6->knots == (float (*) [2])0x0) {
+  if (param_2->knots == (float (*) [2])0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\devgui\\devgui.cpp",0x1ee,0,
                     "%s");
   }
-  if (pDVar6->knotCount == (ushort *)0x0) {
+  if (param_2->knotCount == (ushort *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\devgui\\devgui.cpp",0x1ee,0,
                     "%s");
   }
-  if (pDVar6->knotCountMax == 0) {
+  if (param_2->knotCountMax == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\devgui\\devgui.cpp",0x1ee,0,
                     "%s");
   }
-  if (pcVar1 == (char *)0x0) {
+  if (param_1 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\devgui\\devgui.cpp",0x1ef,0,
                     "%s");
   }
-  if ((*pDVar6->knotCount < 2) || (pDVar6->knotCountMax < *pDVar6->knotCount)) {
+  if ((*param_2->knotCount < 2) || (param_2->knotCountMax < *param_2->knotCount)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\devgui\\devgui.cpp",0x1f1,0,
                     "%s");
   }
-  bVar4 = DevGui_IsValidPath(pcVar1);
-  if (bVar4) {
-    uVar3 = DevGui_ConstructPath_r(0,pcVar1);
-    pDVar2 = DevGui_GetMenu(uVar3);
-    if (pDVar2 == (DevMenuItem *)0x0) {
+  bVar3 = DevGui_IsValidPath(param_1);
+  if (bVar3) {
+    uVar2 = DevGui_ConstructPath_r(0,param_1);
+    pDVar1 = DevGui_GetMenu(uVar2);
+    if (pDVar1 == (DevMenuItem *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\devgui\\devgui.cpp",0x1f8,0,
                       "%s");
     }
-    if (((pDVar2->childType == '\0') && ((pDVar2->child).menu == 0)) ||
-       ((pDVar2->childType == '\x03' && ((ulonglong)(uint)pDVar2->child == (uVar5 & 0xffffffff)))))
-    {
-      (pDVar2->child).graph = pDVar6;
-      pDVar2->childType = '\x03';
-      __restgprlr_27();
+    if (((pDVar1->childType == '\0') && ((pDVar1->child).menu == 0)) ||
+       ((pDVar1->childType == '\x03' && ((DevGraph *)(pDVar1->child).command == param_2)))) {
+      (pDVar1->child).graph = param_2;
+      pDVar1->childType = '\x03';
       return;
     }
     Com_Printf(0xb,
                "Path \'%s\' can\'t be added for this graph because it is already used for something else.\n"
               );
   }
-  __restgprlr_27();
   return;
 }
 
 
 // 82405208  DevGui_DoesMenuExist  (devgui/devgui.cpp:517)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 bool DevGui_DoesMenuExist(char *param_1)
 
 {
-  char *pcVar1;
-  bool bVar4;
-  undefined1 uVar5;
-  DevGuiTokenResult DVar2;
-  ushort uVar3;
+  bool bVar3;
+  DevGuiTokenResult DVar1;
+  ushort uVar2;
   char *pcStack00000014;
   short asStack_60 [8];
   char acStack_50 [80];
   
-  pcVar1 = (char *)__savegprlr_27(param_1);
-  pcStack00000014 = pcVar1;
-  if (pcVar1 == (char *)0x0) {
+  pcStack00000014 = param_1;
+  if (param_1 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\devgui\\devgui.cpp",0x20b,0,
                     "%s");
   }
-  bVar4 = DevGui_IsValidPath(pcVar1);
-  if (bVar4) {
-    uVar3 = 0;
+  bVar3 = DevGui_IsValidPath(param_1);
+  if (bVar3) {
+    uVar2 = 0;
     while( true ) {
-      DVar2 = DevGui_PathToken(&stack0x00000014,acStack_50,asStack_60);
-      if (DVar2 == DEVGUI_TOKEN_ERROR) {
+      DVar1 = DevGui_PathToken(&stack0x00000014,acStack_50,asStack_60);
+      if (DVar1 == DEVGUI_TOKEN_ERROR) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\devgui\\devgui.cpp",0x215,0
                         ,"%s");
       }
-      uVar3 = DevGui_FindMenu(uVar3,acStack_50);
-      if (uVar3 == 0) break;
-      if (DVar2 == DEVGUI_TOKEN_LAST) {
-        uVar5 = __restgprlr_27(1);
-        return (bool)uVar5;
+      uVar2 = DevGui_FindMenu(uVar2,acStack_50);
+      if (uVar2 == 0) break;
+      if (DVar1 == DEVGUI_TOKEN_LAST) {
+        return true;
       }
     }
   }
-  uVar5 = __restgprlr_27(0);
-  return (bool)uVar5;
+  return false;
 }
 
 
 // 824052E0  DevGui_InitGraphData  (devgui/devgui.cpp:545)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void DevGui_InitGraphData(DevGraph *param_1)
 
 {
-  int *piVar1;
+  int iVar1;
   int iVar2;
-  int iVar3;
   
-  piVar1 = (int *)__savegprlr_29(param_1);
-  if (piVar1 == (int *)0x0) {
+  if (param_1 == (DevGraph *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\devgui\\devgui.cpp",0x224,0,
                     "%s");
   }
-  if (*piVar1 == 0) {
+  if (param_1->knots == (float (*) [2])0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\devgui\\devgui.cpp",0x224,0,
                     "%s");
   }
-  if (piVar1[1] == 0) {
+  if (param_1->knotCount == (ushort *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\devgui\\devgui.cpp",0x224,0,
                     "%s");
   }
-  if (*(short *)(piVar1 + 2) == 0) {
+  if (param_1->knotCountMax == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\devgui\\devgui.cpp",0x224,0,
                     "%s");
   }
-  iVar2 = 2;
-  *(undefined4 *)*piVar1 = 0;
-  *(undefined4 *)(*piVar1 + 4) = 0;
-  *(undefined4 *)(*piVar1 + 8) = 0x3f800000;
-  *(undefined4 *)(*piVar1 + 0xc) = 0x3f800000;
-  *(undefined2 *)piVar1[1] = 2;
-  if (2 < *(ushort *)(piVar1 + 2)) {
-    iVar3 = 0x10;
+  iVar1 = 2;
+  (*param_1->knots)[0] = 0.0;
+  (*param_1->knots)[1] = 0.0;
+  param_1->knots[1][0] = 1.0;
+  param_1->knots[1][1] = 1.0;
+  *param_1->knotCount = 2;
+  if (2 < param_1->knotCountMax) {
+    iVar2 = 0x10;
     do {
-      iVar2 = iVar2 + 1;
-      *(undefined4 *)(iVar3 + *piVar1) = 0xbf800000;
-      *(undefined4 *)(iVar3 + *piVar1 + 4) = 0xbf800000;
-      iVar3 = iVar3 + 8;
-    } while (iVar2 < (int)(uint)*(ushort *)(piVar1 + 2));
+      iVar1 = iVar1 + 1;
+      *(undefined4 *)((int)*param_1->knots + iVar2) = 0xbf800000;
+      *(undefined4 *)((int)*param_1->knots + iVar2 + 4) = 0xbf800000;
+      iVar2 = iVar2 + 8;
+    } while (iVar1 < (int)(uint)param_1->knotCountMax);
   }
-  piVar1[3] = 0;
-  piVar1[5] = 0;
-  piVar1[4] = 0;
-  piVar1[6] = 0;
-  __restgprlr_29();
+  param_1->selectedKnot = 0;
+  param_1->textCallback = (_func___cdecl_void_DevGraph_ptr_float_float_char_ptr_int *)0x0;
+  param_1->eventCallback = (_func___cdecl_void_DevGraph_ptr_DevEventType_LocalClientNum_t *)0x0;
+  param_1->data = (void *)0x0;
   return;
 }
 
 
 // 82405438  DevGui_RemoveMenu  (devgui/devgui.cpp:570)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void DevGui_RemoveMenu(char *param_1)
@@ -981,8 +953,8 @@ void DevGui_RemoveMenu(char *param_1)
   short asStack_70 [8];
   char acStack_60 [96];
   
-  pcStack00000014 = (char *)__savegprlr_26(param_1);
-  bVar5 = DevGui_IsValidPath(pcStack00000014);
+  pcStack00000014 = param_1;
+  bVar5 = DevGui_IsValidPath(param_1);
   if (bVar5) {
     uVar4 = 0;
     do {
@@ -992,7 +964,9 @@ void DevGui_RemoveMenu(char *param_1)
                         ,"%s");
       }
       uVar4 = DevGui_FindMenu(uVar4,acStack_60);
-      if (uVar4 == 0) goto LAB_824055e0;
+      if (uVar4 == 0) {
+        return;
+      }
     } while (DVar1 != DEVGUI_TOKEN_LAST);
     pDVar2 = DevGui_GetMenu(uVar4);
     if (pDVar2 == (DevMenuItem *)0x0) {
@@ -1028,14 +1002,14 @@ void DevGui_RemoveMenu(char *param_1)
     pDVar2->prevSibling = 0;
     DevGui_FreeMenu_r(uVar4);
   }
-LAB_824055e0:
-  __restgprlr_26();
   return;
 }
 
 
 // 824055E8  DevGui_OpenMenu  (devgui/devgui.cpp:623)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void DevGui_OpenMenu(char *param_1)
@@ -1050,8 +1024,8 @@ void DevGui_OpenMenu(char *param_1)
   short asStack_60 [8];
   char acStack_50 [80];
   
-  pcStack00000014 = (char *)__savegprlr_27(param_1);
-  bVar4 = DevGui_IsValidPath(pcStack00000014);
+  pcStack00000014 = param_1;
+  bVar4 = DevGui_IsValidPath(param_1);
   if (bVar4) {
     uVar3 = 0;
     do {
@@ -1061,12 +1035,13 @@ void DevGui_OpenMenu(char *param_1)
                         ,"%s");
       }
       uVar3 = DevGui_FindMenu(uVar3,acStack_50);
-      if (uVar3 == 0) goto LAB_82405714;
+      if (uVar3 == 0) {
+        return;
+      }
     } while (DVar1 != DEVGUI_TOKEN_LAST);
     pDVar2 = DevGui_GetMenu(uVar3);
     if (pDVar2->childType == '\x02') {
       Cbuf_InsertText(LOCAL_CLIENT_0,(pDVar2->child).command);
-      __restgprlr_27();
       return;
     }
     pdVar5 = &devguiGlob;
@@ -1079,8 +1054,6 @@ void DevGui_OpenMenu(char *param_1)
     }
     pdVar5->selRow = 0;
   }
-LAB_82405714:
-  __restgprlr_27();
   return;
 }
 
@@ -1103,6 +1076,8 @@ int DevGui_SubMenuTextWidth(void)
 
 // 82405740  DevGui_MenuItemWidth  (devgui/devgui.cpp:671)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -1110,24 +1085,22 @@ int DevGui_SubMenuTextWidth(void)
 int DevGui_MenuItemWidth(DevMenuItem *param_1)
 
 {
-  char *pcVar1;
+  int iVar1;
   int iVar2;
-  int iVar3;
   
-  pcVar1 = (char *)__savegprlr_29(param_1);
-  iVar2 = R_TextWidth(pcVar1,0,cls.consoleFont);
-  if ((pcVar1[0x1a] == '\0') && (*(short *)(pcVar1 + 0x24) != 0)) {
-    iVar3 = R_TextWidth(" >",0,cls.consoleFont);
-    iVar2 = __restgprlr_29((longlong)iVar3 + (longlong)iVar2 + 8);
-    return iVar2;
+  iVar1 = R_TextWidth(param_1->label,0,cls.consoleFont);
+  if ((param_1->childType == '\0') && ((param_1->child).menu != 0)) {
+    iVar2 = R_TextWidth(" >",0,cls.consoleFont);
+    return iVar2 + iVar1 + 8;
   }
-  iVar2 = __restgprlr_29((longlong)iVar2 + 8);
-  return iVar2;
+  return iVar1 + 8;
 }
 
 
 // 824057B0  DevGui_MaxChildMenuWidth  (devgui/devgui.cpp:682)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -1137,51 +1110,50 @@ int DevGui_MaxChildMenuWidth(DevMenuItem *param_1)
 {
   ushort uVar1;
   uint uVar2;
-  char *pcVar3;
+  int iVar3;
   int iVar4;
-  longlong lVar5;
-  longlong lVar6;
+  int iVar5;
   
-  pcVar3 = (char *)__savegprlr_24(param_1);
-  if (pcVar3 == (char *)0x0) {
+  if (param_1 == (DevMenuItem *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\devgui\\devgui.cpp",0x2b0,0,
                     "%s");
   }
-  if (pcVar3[0x1a] != '\0') {
+  if (param_1->childType != '\0') {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\devgui\\devgui.cpp",0x2b1,0,
                     "%s");
   }
-  iVar4 = R_TextWidth(pcVar3,0,cls.consoleFont);
-  lVar5 = (longlong)iVar4 + 8;
-  if ((pcVar3[0x1a] == '\0') && (*(short *)(pcVar3 + 0x24) != 0)) {
+  iVar3 = R_TextWidth(param_1->label,0,cls.consoleFont);
+  iVar3 = iVar3 + 8;
+  if ((param_1->childType == '\0') && ((param_1->child).menu != 0)) {
     iVar4 = R_TextWidth(" >",0,cls.consoleFont);
-    lVar5 = iVar4 + lVar5;
+    iVar3 = iVar4 + iVar3;
   }
-  uVar1 = *(ushort *)(pcVar3 + 0x24);
+  uVar1 = (param_1->child).menu;
   while (uVar2 = (uint)uVar1, uVar2 != 0) {
     if ((uVar2 == 0) || (2000 < uVar2)) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\devgui\\devgui.cpp",0x77,0,
                       "handle not in [1, ARRAY_COUNT( devguiGlob.menus )]\n\t%i not in [%i, %i]");
     }
     iVar4 = R_TextWidth((char *)(&devgui_colorTextGray + uVar2 * 10),0,cls.consoleFont);
-    lVar6 = (longlong)iVar4 + 8;
+    iVar4 = iVar4 + 8;
     if ((*(char *)((int)&devgui_bevelShade + uVar2 * 0x28 + 2) == '\0') &&
        (*(short *)(&devgui_colorTextGraySel + uVar2 * 10) != 0)) {
-      iVar4 = R_TextWidth(" >",0,cls.consoleFont);
-      lVar6 = iVar4 + lVar6;
+      iVar5 = R_TextWidth(" >",0,cls.consoleFont);
+      iVar4 = iVar5 + iVar4;
     }
-    if ((int)lVar5 < (int)lVar6) {
-      lVar5 = lVar6;
+    if (iVar3 < iVar4) {
+      iVar3 = iVar4;
     }
     uVar1 = *(ushort *)((int)&devgui_colorBgndSel + uVar2 * 0x28 + 2);
   }
-  iVar4 = __restgprlr_24(lVar5);
-  return iVar4;
+  return iVar3;
 }
 
 
 // 82405938  DevGui_DrawMenuVertically  (devgui/devgui.cpp:704)
 
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -1197,9 +1169,10 @@ void DevGui_DrawMenuVertically(DevMenuItem *param_1,ushort param_2,int *param_3)
   dvar_t *pdVar6;
   int iVar8;
   int iVar9;
-  int iVar11;
-  bool bVar12;
-  ulonglong uVar13;
+  int iVar10;
+  bool bVar11;
+  ulonglong uVar12;
+  uint uVar13;
   ulonglong uVar14;
   int iVar15;
   ulonglong uVar16;
@@ -1218,74 +1191,69 @@ void DevGui_DrawMenuVertically(DevMenuItem *param_1,ushort param_2,int *param_3)
   char *local_a8;
   int local_a4;
   dvar_t *pdVar7;
-  DevMenuItem *pDVar10;
   
-  uVar18 = (ulonglong)(short)param_2;
-  uVar13 = (ulonglong)(int)param_1;
-  __savegprlr();
-  uStack0000001e = (ushort)uVar18;
   local_b4 = "c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\devgui\\devgui.cpp";
+  uStack0000001e = param_2;
   piStack00000024 = param_3;
-  if ((uVar13 & 0xffffffff) == 0) {
+  if (param_1 == (DevMenuItem *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\devgui\\devgui.cpp",0x2d0,0,
                     "%s");
   }
   iVar4 = *param_3;
   uVar5 = param_3[1];
   uVar16 = (ulonglong)uVar5;
-  pDVar10 = (DevMenuItem *)uVar13;
-  iVar9 = DevGui_MaxChildMenuWidth(pDVar10);
+  iVar9 = DevGui_MaxChildMenuWidth(param_1);
   local_ac = iVar9;
-  iVar11 = R_TextHeight(cls.consoleFont);
-  uVar14 = (longlong)iVar11 + 8;
+  iVar10 = R_TextHeight(cls.consoleFont);
+  uVar14 = (longlong)iVar10 + 8;
   local_a8 = " >";
   local_b0 = iVar9 + iVar4;
-  iVar11 = R_TextWidth(" >",0,cls.consoleFont);
-  uVar13 = (ulonglong)(pDVar10->child).menu;
-  local_a4 = ((iVar9 + iVar4) - iVar11) + -4;
+  iVar10 = R_TextWidth(" >",0,cls.consoleFont);
+  uVar13 = (uint)(param_1->child).menu;
+  local_a4 = ((iVar9 + iVar4) - iVar10) + -4;
   iVar19 = 0;
   local_b8 = "handle not in [1, ARRAY_COUNT( devguiGlob.menus )]\n\t%i not in [%i, %i]";
-  iVar11 = 0;
+  iVar10 = 0;
   if (uVar13 != 0) {
     iVar19 = 0;
-    iVar11 = 0;
+    iVar10 = 0;
     do {
       if ((uVar13 == 0) || (2000 < uVar13)) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\devgui\\devgui.cpp",0x77,0,
                         "handle not in [1, ARRAY_COUNT( devguiGlob.menus )]\n\t%i not in [%i, %i]");
       }
-      if (uVar13 == (uVar18 & 0xffff)) {
-        iVar11 = iVar19;
+      if (uVar13 == param_2) {
+        iVar10 = iVar19;
       }
-      uVar13 = (ulonglong)*(ushort *)((int)&devgui_colorBgndSel + (int)uVar13 * 0x28 + 2);
+      uVar13 = (uint)*(ushort *)((int)&devgui_colorBgndSel + uVar13 * 0x28 + 2);
       iVar19 = iVar19 + 1;
     } while (uVar13 != 0);
   }
   trapWord(6,uVar14,0);
-  uVar13 = ((ulonglong)(uint)devguiGlob.bottom + (uVar14 & 0x7fffffff) * -2) - uVar16;
+  uVar12 = ((ulonglong)(uint)devguiGlob.bottom + (uVar14 & 0x7fffffff) * -2) - uVar16;
   iVar15 = (int)uVar14;
-  iVar1 = (int)(uchar *)uVar13 / iVar15;
-  trapWord(5,uVar14 & ~(((uVar13 & 0x7fffffff) << 1 | (uVar13 & 0xffffffff) >> 0x1f) - 1),0xffff);
-  if ((iVar1 < iVar19) && (iVar1 < iVar11)) {
+  iVar1 = (int)(uchar *)uVar12 / iVar15;
+  trapWord(5,uVar14 & ~(((uVar12 & 0x7fffffff) << 1 | (uVar12 & 0xffffffff) >> 0x1f) - 1),0xffff);
+  if ((iVar1 < iVar19) && (iVar1 < iVar10)) {
     local_bc = (devgui_colorBgnd->current).integer;
     local_c0 = (devgui_colorText->current).integer;
-    DevGui_DrawBevelBox(iVar4,uVar5,iVar9,iVar15,(devgui_bevelShade->current).value,(uchar *)uVar13)
+    DevGui_DrawBevelBox(iVar4,uVar5,iVar9,iVar15,(devgui_bevelShade->current).value,(uchar *)uVar12)
     ;
     DevGui_DrawFont(iVar4 + 4,uVar5 + 4,(uchar *)&local_c0,"...");
     uVar16 = uVar14 + uVar16;
   }
-  uVar18 = (ulonglong)(pDVar10->child).menu;
+  uVar18 = (ulonglong)(param_1->child).menu;
   iVar19 = 0;
   if (uVar18 != 0) {
     dVar20 = 2.0;
     do {
       if ((uVar18 == 0) || (2000 < uVar18)) {
-        uVar13 = uVar18;
+        uVar12 = uVar18;
         MyAssertHandler(local_b4,0x77,0,local_b8);
       }
       iVar8 = (int)uVar18;
       iVar9 = iVar8 * 0x28;
-      if (iVar11 - iVar1 <= iVar19) {
+      if (iVar10 - iVar1 <= iVar19) {
         iVar17 = (int)uVar16;
         if (uVar18 == uStack0000001e) {
           piStack00000024[1] = iVar17;
@@ -1293,51 +1261,51 @@ void DevGui_DrawMenuVertically(DevMenuItem *param_1,ushort param_2,int *param_3)
           if (*(char *)((int)&devgui_bevelShade + iVar9 + 2) == '\x01') {
             uVar3 = (&devgui_colorTextGraySel)[iVar8 * 10]->type;
             if (uVar3 == '\a') {
-              bVar12 = false;
+              bVar11 = false;
             }
             else if ((uVar3 != '\x06') ||
-                    (bVar12 = false,
+                    (bVar11 = false,
                     ((&devgui_colorTextGraySel)[iVar8 * 10]->domain).enumeration.stringCount != 0))
             {
-              bVar12 = true;
+              bVar11 = true;
             }
-            bVar12 = !bVar12;
+            bVar11 = !bVar11;
           }
           else {
-            bVar12 = false;
+            bVar11 = false;
           }
           pdVar6 = devgui_colorTextSel;
           pdVar7 = devgui_colorBgndSel;
-          if (bVar12) {
+          if (bVar11) {
             pdVar6 = devgui_colorTextGraySel;
             pdVar7 = devgui_colorBgndGraySel;
           }
           local_bc = (pdVar7->current).integer;
           local_c0 = (pdVar6->current).integer;
           if ((uVar18 != devguiGlob.selectedMenu) ||
-             (bVar12 = DevGui_IsButtonDown(INPUT_ACCEPT), !bVar12)) goto LAB_82405cf4;
+             (bVar11 = DevGui_IsButtonDown(INPUT_ACCEPT), !bVar11)) goto LAB_82405cf4;
           fVar2 = (float)(dVar20 - (double)(devgui_bevelShade->current).value);
         }
         else {
           if (*(char *)((int)&devgui_bevelShade + iVar9 + 2) == '\x01') {
             uVar3 = (&devgui_colorTextGraySel)[iVar8 * 10]->type;
             if (uVar3 == '\a') {
-              bVar12 = false;
+              bVar11 = false;
             }
             else if ((uVar3 != '\x06') ||
-                    (bVar12 = false,
+                    (bVar11 = false,
                     ((&devgui_colorTextGraySel)[iVar8 * 10]->domain).enumeration.stringCount != 0))
             {
-              bVar12 = true;
+              bVar11 = true;
             }
-            bVar12 = !bVar12;
+            bVar11 = !bVar11;
           }
           else {
-            bVar12 = false;
+            bVar11 = false;
           }
           pdVar6 = devgui_colorText;
           pdVar7 = devgui_colorBgnd;
-          if (bVar12) {
+          if (bVar11) {
             pdVar6 = devgui_colorTextGray;
             pdVar7 = devgui_colorBgndGray;
           }
@@ -1346,7 +1314,7 @@ void DevGui_DrawMenuVertically(DevMenuItem *param_1,ushort param_2,int *param_3)
 LAB_82405cf4:
           fVar2 = (devgui_bevelShade->current).value;
         }
-        DevGui_DrawBevelBox(iVar4,iVar17,local_ac,iVar15,fVar2,(uchar *)uVar13);
+        DevGui_DrawBevelBox(iVar4,iVar17,local_ac,iVar15,fVar2,(uchar *)uVar12);
         DevGui_DrawFont(iVar4 + 4,iVar17 + 4,(uchar *)&local_c0,
                         (char *)(&devgui_colorTextGray + iVar8 * 10));
         if ((*(char *)((int)&devgui_bevelShade + iVar9 + 2) == '\0') &&
@@ -1359,7 +1327,6 @@ LAB_82405cf4:
       iVar19 = iVar19 + 1;
     } while (uVar18 != 0);
   }
-  __restgprlr();
   return;
 }
 
@@ -1379,6 +1346,8 @@ int Vec4Compare(float *param_1,float *param_2)
 
 // 82405D80  DevGui_DrawMenuHorizontally  (devgui/devgui.cpp:814)
 
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -1391,36 +1360,32 @@ void DevGui_DrawMenuHorizontally(DevMenuItem *param_1,ushort param_2,int *param_
   int iVar3;
   int iVar4;
   int iVar5;
-  ulonglong uVar6;
   ulonglong in_r7;
-  int iVar7;
-  char *pcVar8;
-  ulonglong uVar9;
+  int iVar6;
+  char *pcVar7;
+  ulonglong uVar8;
   int local_ac;
   char *local_a8;
   
-  uVar6 = (ulonglong)(short)param_2;
-  uVar9 = (ulonglong)(int)param_1;
-  __savegprlr();
   local_a8 = "c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\devgui\\devgui.cpp";
-  if ((uVar9 & 0xffffffff) == 0) {
+  if (param_1 == (DevMenuItem *)0x0) {
     in_r7 = 0xffffffff82058cb8;
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\devgui\\devgui.cpp",0x338,0,
                     "%s");
   }
-  iVar7 = *param_3;
+  iVar6 = *param_3;
   iVar1 = param_3[1];
   iVar3 = R_TextHeight(cls.consoleFont);
-  uVar9 = (ulonglong)*(ushort *)((int)uVar9 + 0x24);
-  if (uVar9 != 0) {
-    pcVar8 = "c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\devgui\\devgui.cpp";
+  uVar8 = (ulonglong)(param_1->child).menu;
+  if (uVar8 != 0) {
+    pcVar7 = "c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\devgui\\devgui.cpp";
     do {
-      if ((uVar9 == 0) || (2000 < uVar9)) {
-        in_r7 = uVar9;
-        MyAssertHandler(pcVar8,0x77,0,
+      if ((uVar8 == 0) || (2000 < uVar8)) {
+        in_r7 = uVar8;
+        MyAssertHandler(pcVar7,0x77,0,
                         "handle not in [1, ARRAY_COUNT( devguiGlob.menus )]\n\t%i not in [%i, %i]");
       }
-      iVar2 = (int)uVar9;
+      iVar2 = (int)uVar8;
       iVar4 = R_TextWidth((char *)(&devgui_colorTextGray + iVar2 * 10),0,cls.consoleFont);
       iVar4 = iVar4 + 8;
       if ((*(char *)((int)&devgui_bevelShade + iVar2 * 0x28 + 2) == '\0') &&
@@ -1428,66 +1393,62 @@ void DevGui_DrawMenuHorizontally(DevMenuItem *param_1,ushort param_2,int *param_
         iVar5 = R_TextWidth(" >",0,cls.consoleFont);
         iVar4 = iVar5 + iVar4;
       }
-      if (uVar9 == (uVar6 & 0xffff)) {
-        *param_3 = iVar7;
+      if (uVar8 == param_2) {
+        *param_3 = iVar6;
         param_3[1] = iVar3 + 8 + iVar1;
         local_ac = (devgui_colorTextSel->current).integer;
       }
       else {
         local_ac = (devgui_colorText->current).integer;
       }
-      DevGui_DrawBevelBox(iVar7,iVar1,iVar4,iVar3 + 8,(devgui_bevelShade->current).value,
+      DevGui_DrawBevelBox(iVar6,iVar1,iVar4,iVar3 + 8,(devgui_bevelShade->current).value,
                           (uchar *)in_r7);
-      DevGui_DrawFont(iVar7 + 4,iVar1 + 4,(uchar *)&local_ac,
+      DevGui_DrawFont(iVar6 + 4,iVar1 + 4,(uchar *)&local_ac,
                       (char *)(&devgui_colorTextGray + iVar2 * 10));
-      uVar9 = (ulonglong)*(ushort *)((int)&devgui_colorBgndSel + iVar2 * 0x28 + 2);
-      iVar7 = iVar4 + iVar7;
-      pcVar8 = local_a8;
-    } while (uVar9 != 0);
+      uVar8 = (ulonglong)*(ushort *)((int)&devgui_colorBgndSel + iVar2 * 0x28 + 2);
+      iVar6 = iVar4 + iVar6;
+      pcVar7 = local_a8;
+    } while (uVar8 != 0);
   }
-  __restgprlr();
   return;
 }
 
 
 // 82405F50  DevGui_DrawMenu  (devgui/devgui.cpp:856)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void DevGui_DrawMenu(ushort param_1,ushort param_2,int *param_3)
 
 {
-  ushort uVar2;
   DevMenuItem *pDVar1;
-  ulonglong uVar3;
-  int *piVar4;
   
-  uVar3 = (ulonglong)(int)param_3;
-  uVar2 = __savegprlr_26(param_1);
-  if ((uVar3 & 0xffffffff) == 0) {
+  if (param_3 == (int *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\devgui\\devgui.cpp",0x35b,0,
                     "%s");
   }
-  pDVar1 = DevGui_GetMenu(uVar2);
+  pDVar1 = DevGui_GetMenu(param_1);
   if (pDVar1 == (DevMenuItem *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\devgui\\devgui.cpp",0x35e,0,
                     "%s");
   }
-  piVar4 = (int *)uVar3;
   if (pDVar1->parent == 0) {
-    DevGui_DrawMenuHorizontally(&devguiGlob.topmostMenu,uVar2,piVar4);
+    DevGui_DrawMenuHorizontally(&devguiGlob.topmostMenu,param_1,param_3);
   }
   else {
-    DevGui_DrawMenu(pDVar1->parent,uVar2,piVar4);
+    DevGui_DrawMenu(pDVar1->parent,param_1,param_3);
   }
-  DevGui_DrawMenuVertically(pDVar1,param_2,piVar4);
-  __restgprlr_26();
+  DevGui_DrawMenuVertically(pDVar1,param_2,param_3);
   return;
 }
 
 
 // 82406018  DevGui_ChooseOrigin  (devgui/devgui.cpp:872)
 
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -1497,18 +1458,16 @@ void DevGui_ChooseOrigin(int *param_1)
 {
   ushort uVar1;
   uint uVar2;
-  int *piVar3;
-  uint uVar4;
-  DevMenuItem *pDVar5;
+  uint uVar3;
+  DevMenuItem *pDVar4;
+  int iVar5;
   int iVar6;
   int iVar7;
-  int iVar8;
   
-  piVar3 = (int *)__savegprlr_22(param_1);
-  iVar8 = 0;
-  uVar4 = (uint)devguiGlob.selectedMenu;
-  pDVar5 = DevGui_GetMenu(devguiGlob.selectedMenu);
-  uVar1 = pDVar5->parent;
+  iVar7 = 0;
+  uVar3 = (uint)devguiGlob.selectedMenu;
+  pDVar4 = DevGui_GetMenu(devguiGlob.selectedMenu);
+  uVar1 = pDVar4->parent;
   while (uVar2 = (uint)uVar1, uVar1 = devguiGlob.topmostMenu.child.menu, uVar2 != 0) {
     if ((uVar2 == 0) || (2000 < uVar2)) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\devgui\\devgui.cpp",0x77,0,
@@ -1518,77 +1477,73 @@ void DevGui_ChooseOrigin(int *param_1)
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\devgui\\devgui.cpp",0x376,0,
                       "%s");
     }
-    iVar6 = DevGui_MaxChildMenuWidth((DevMenuItem *)(&devgui_colorTextGray + uVar2 * 10));
-    iVar8 = iVar6 + iVar8;
-    uVar4 = uVar2;
+    iVar5 = DevGui_MaxChildMenuWidth((DevMenuItem *)(&devgui_colorTextGray + uVar2 * 10));
+    iVar7 = iVar5 + iVar7;
+    uVar3 = uVar2;
     uVar1 = *(ushort *)((int)&devgui_colorGraphKnotEditing + uVar2 * 0x28 + 2);
   }
-  while (uVar2 = (uint)uVar1, uVar2 != uVar4) {
+  while (uVar2 = (uint)uVar1, uVar2 != uVar3) {
     if ((uVar2 == 0) || (2000 < uVar2)) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\devgui\\devgui.cpp",0x77,0,
                       "handle not in [1, ARRAY_COUNT( devguiGlob.menus )]\n\t%i not in [%i, %i]");
     }
-    iVar6 = R_TextWidth((char *)(&devgui_colorTextGray + uVar2 * 10),0,cls.consoleFont);
-    iVar6 = iVar6 + 8;
+    iVar5 = R_TextWidth((char *)(&devgui_colorTextGray + uVar2 * 10),0,cls.consoleFont);
+    iVar5 = iVar5 + 8;
     if ((*(char *)((int)&devgui_bevelShade + uVar2 * 0x28 + 2) == '\0') &&
        (*(short *)(&devgui_colorTextGraySel + uVar2 * 10) != 0)) {
-      iVar7 = R_TextWidth(" >",0,cls.consoleFont);
-      iVar6 = iVar7 + iVar6;
+      iVar6 = R_TextWidth(" >",0,cls.consoleFont);
+      iVar5 = iVar6 + iVar5;
     }
-    iVar8 = iVar6 + iVar8;
+    iVar7 = iVar5 + iVar7;
     uVar1 = *(ushort *)((int)&devgui_colorBgndSel + uVar2 * 0x28 + 2);
   }
-  *piVar3 = devguiGlob.left;
-  piVar3[1] = devguiGlob.top;
-  if (devguiGlob.right - devguiGlob.left < iVar8) {
-    *piVar3 = ((*piVar3 - devguiGlob.left) - iVar8) + devguiGlob.right;
+  *param_1 = devguiGlob.left;
+  param_1[1] = devguiGlob.top;
+  if (devguiGlob.right - devguiGlob.left < iVar7) {
+    *param_1 = ((*param_1 - devguiGlob.left) - iVar7) + devguiGlob.right;
   }
-  __restgprlr_22();
   return;
 }
 
 
 // 82406218  DevGui_GetSliderPath  (devgui/devgui.cpp:906)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 int DevGui_GetSliderPath(ushort param_1,char *param_2,int param_3)
 
 {
-  ushort uVar4;
-  longlong lVar1;
-  int iVar3;
-  char *pcVar6;
-  longlong lVar5;
-  longlong lVar7;
+  char *pcVar1;
   DevMenuItem *pDVar2;
+  int iVar3;
+  DevMenuItem *pDVar4;
+  char *pcVar5;
   
-  lVar7 = (longlong)param_3;
-  uVar4 = __savegprlr_26(param_1);
-  pDVar2 = DevGui_GetMenu(uVar4);
-  lVar1 = (longlong)(int)pDVar2;
+  pDVar2 = DevGui_GetMenu(param_1);
   if (pDVar2 == (DevMenuItem *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\devgui\\devgui.cpp",0x38f,0,
                     "%s");
   }
-  lVar5 = lVar1;
+  pDVar4 = pDVar2;
   if (pDVar2->parent != 0) {
-    iVar3 = DevGui_GetSliderPath(pDVar2->parent,param_2,(int)lVar7);
-    lVar7 = (longlong)iVar3 + 1;
+    iVar3 = DevGui_GetSliderPath(pDVar2->parent,param_2,param_3);
+    param_3 = iVar3 + 1;
     param_2[iVar3] = '/';
   }
   do {
-    pcVar6 = (char *)lVar5;
-    lVar5 = lVar5 + 1;
-  } while (*pcVar6 != '\0');
-  lVar7 = ((lVar5 - lVar1) - 1U & 0xffffffff) + lVar7;
-  if (0x78 < (int)lVar7) {
+    pcVar5 = pDVar4->label;
+    pcVar1 = pDVar4->label;
+    pDVar4 = (DevMenuItem *)(pcVar1 + 1);
+  } while (*pcVar5 != '\0');
+  pcVar5 = (char *)((int)(pcVar1 + 1) + param_3 + (-1 - (int)pDVar2));
+  if (0x78 < (int)pcVar5) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\devgui\\devgui.cpp",0x398,0,
                     "%s\n\t(path + pathLen) = %s");
   }
   memcpy();
-  iVar3 = __restgprlr_26(lVar7);
-  return iVar3;
+  return (int)pcVar5;
 }
 
 
@@ -1609,53 +1564,52 @@ void DevGui_DrawSliderPath(int param_1,int param_2)
 
 // 82406368  DevGui_DrawSingleSlider  (devgui/devgui.cpp:936)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 void DevGui_DrawSingleSlider
                (int param_1,int param_2,int param_3,int param_4,float param_5,uchar *param_6)
 
 {
-  int iVar1;
-  longlong lVar2;
-  double extraout_f1;
-  double dVar3;
+  longlong lVar1;
+  double dVar2;
   
-  iVar1 = __savegprlr_26((double)param_5,param_1);
-  dVar3 = extraout_f1;
-  DevGui_DrawBevelBox(iVar1,param_2,param_3,param_4,(devgui_bevelShade->current).value,param_6);
-  lVar2 = (longlong)(param_3 + -8);
-  dVar3 = floor((double)((float)((double)lVar2 * dVar3 + (double)(longlong)iVar1) + 0.5));
-  DevGui_DrawBevelBox((int)dVar3,param_2,8,param_4,(devgui_bevelShade->current).value,(uchar *)lVar2
+  dVar2 = (double)param_5;
+  DevGui_DrawBevelBox(param_1,param_2,param_3,param_4,(devgui_bevelShade->current).value,param_6);
+  lVar1 = (longlong)(param_3 + -8);
+  dVar2 = floor((double)((float)((double)lVar1 * dVar2 + (double)(longlong)param_1) + 0.5));
+  DevGui_DrawBevelBox((int)dVar2,param_2,8,param_4,(devgui_bevelShade->current).value,(uchar *)lVar1
                      );
-  __restgprlr_26();
   return;
 }
 
 
 // 82406428  DevGui_DrawDvarValue  (devgui/devgui.cpp:949)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void DevGui_DrawDvarValue(int param_1,int param_2,dvar_t *param_3)
 
 {
-  int iVar1;
-  char *pcVar2;
+  char *pcVar1;
   
-  iVar1 = __savegprlr_29(param_1);
   if (param_3->type == '\0') {
     if ((param_3->latched).enabled == false) {
-      pcVar2 = "Off";
+      pcVar1 = "Off";
     }
     else {
-      pcVar2 = "On";
+      pcVar1 = "On";
     }
   }
   else if (param_3->type == '\x06') {
     Dvar_DisplayableLatchedValue(param_3);
-    pcVar2 = va("%i: %s");
+    pcVar1 = va("%i: %s");
   }
   else {
-    pcVar2 = Dvar_DisplayableLatchedValue(param_3);
+    pcVar1 = Dvar_DisplayableLatchedValue(param_3);
   }
-  DevGui_DrawFont(iVar1,param_2,(devgui_colorText->current).color,pcVar2);
-  __restgprlr_29();
+  DevGui_DrawFont(param_1,param_2,(devgui_colorText->current).color,pcVar1);
   return;
 }
 
@@ -1697,75 +1651,76 @@ int DevGui_DvarRowCount(dvar_t *param_1)
 
 // 82406520  DevGui_Vec3ToHSV  (devgui/devgui.cpp:987)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void DevGui_Vec3ToHSV(float *param_1,float *param_2,float param_3)
 
 {
   float fVar1;
   float fVar2;
-  float *pfVar3;
-  double extraout_f1;
+  double dVar3;
   double dVar4;
   double dVar5;
   double dVar6;
   double dVar7;
   double dVar8;
   double dVar9;
-  double dVar10;
   
-  __savegprlr_29((double)param_3,param_1);
-  pfVar3 = (float *)__savefpr_25();
+  dVar3 = (double)param_3;
   dVar4 = 0.0;
-  dVar7 = extraout_f1;
-  if (extraout_f1 <= 0.0) {
+  if (dVar3 <= 0.0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\devgui\\devgui.cpp",0x3df,0,
                     "%s\n\t(scale) = %g");
   }
-  fVar2 = *pfVar3;
+  fVar2 = *param_1;
   dVar5 = 1.0;
-  fVar1 = (float)(1.0 / dVar7);
-  dVar9 = (double)(fVar2 * fVar1);
-  dVar10 = (double)(pfVar3[1] * fVar1);
-  dVar8 = (double)(pfVar3[2] * fVar1);
-  dVar7 = dVar10;
-  if (dVar9 < dVar10) {
-    dVar7 = dVar9;
+  fVar1 = (float)(1.0 / dVar3);
+  dVar8 = (double)(fVar2 * fVar1);
+  dVar9 = (double)(param_1[1] * fVar1);
+  dVar7 = (double)(param_1[2] * fVar1);
+  dVar3 = dVar9;
+  if (dVar8 < dVar9) {
+    dVar3 = dVar8;
   }
-  if (dVar8 < dVar7) {
-    dVar7 = dVar8;
+  if (dVar7 < dVar3) {
+    dVar3 = dVar7;
   }
   dVar6 = 1.0;
-  if ((dVar9 == dVar10) && (dVar10 == dVar8)) {
+  if ((dVar8 == dVar9) && (dVar9 == dVar7)) {
     *param_2 = (float)dVar4;
     param_2[2] = fVar2 * fVar1;
   }
-  else if ((dVar9 < dVar10) || (dVar9 < dVar8)) {
-    if ((dVar10 < dVar9) || (dVar10 < dVar8)) {
-      if ((dVar8 < dVar9) || (dVar8 < dVar10)) {
+  else if ((dVar8 < dVar9) || (dVar8 < dVar7)) {
+    if ((dVar9 < dVar8) || (dVar9 < dVar7)) {
+      if ((dVar7 < dVar8) || (dVar7 < dVar9)) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\devgui\\devgui.cpp",0x3f7,0
                         ,"%s");
       }
-      dVar9 = fmod((double)(float)((double)((float)(dVar9 - dVar10) / (float)(dVar8 - dVar7) + 4.0)
-                                   * 0.1666666716337204 + dVar5),dVar6);
-      param_2[2] = (float)dVar8;
+      dVar8 = fmod((double)(float)((double)((float)(dVar8 - dVar9) / (float)(dVar7 - dVar3) + 4.0) *
+                                   0.1666666716337204 + dVar5),dVar6);
+      param_2[2] = (float)dVar7;
     }
     else {
-      dVar9 = fmod((double)(((float)(dVar8 - dVar9) / (float)(dVar10 - dVar7) + 2.0) * 0.16666667 +
+      dVar8 = fmod((double)(((float)(dVar7 - dVar8) / (float)(dVar9 - dVar3) + 2.0) * 0.16666667 +
                            1.0),1.0);
-      param_2[2] = (float)dVar10;
+      param_2[2] = (float)dVar9;
     }
-    *param_2 = (float)dVar9;
+    *param_2 = (float)dVar8;
   }
   else {
-    dVar8 = fmod((double)(((float)(dVar10 - dVar8) / (float)(dVar9 - dVar7)) * 0.16666667 + 1.0),1.0
-                );
-    *param_2 = (float)dVar8;
-    param_2[2] = (float)dVar9;
+    dVar7 = fmod((double)(((float)(dVar9 - dVar7) / (float)(dVar8 - dVar3)) * 0.16666667 + 1.0),1.0)
+    ;
+    *param_2 = (float)dVar7;
+    param_2[2] = (float)dVar8;
   }
   if ((double)param_2[2] == dVar4) {
     param_2[1] = (float)dVar4;
   }
   else {
-    param_2[1] = (float)(dVar5 - (double)(float)(dVar7 / (double)param_2[2]));
+    param_2[1] = (float)(dVar5 - (double)(float)(dVar3 / (double)param_2[2]));
   }
   if (((double)*param_2 < dVar4) || (dVar5 < (double)*param_2)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\devgui\\devgui.cpp",0x401,0,
@@ -1779,13 +1734,16 @@ void DevGui_Vec3ToHSV(float *param_1,float *param_2,float param_3)
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\devgui\\devgui.cpp",0x403,0,
                     "hsv[2] not in [0.0f, 1.0f]\n\t%g not in [%g, %g]");
   }
-  __restfpr_25();
-  __restgprlr_29();
   return;
 }
 
 
 // 824067F0  DevGui_Vec3FromHSV  (devgui/devgui.cpp:1032)
+
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 
 void DevGui_Vec3FromHSV(float *param_1,float *param_2,float param_3)
 
@@ -1793,95 +1751,91 @@ void DevGui_Vec3FromHSV(float *param_1,float *param_2,float param_3)
   float fVar1;
   float fVar2;
   float fVar3;
-  float *pfVar4;
-  double extraout_f1;
+  double dVar4;
   double dVar5;
   double dVar6;
   double dVar7;
-  double dVar8;
   
-  __savegprlr_29((double)param_3,param_1);
-  pfVar4 = (float *)__savefpr_27();
-  dVar7 = 0.0;
-  dVar6 = extraout_f1;
-  if (extraout_f1 <= 0.0) {
+  dVar4 = (double)param_3;
+  dVar6 = 0.0;
+  if (dVar4 <= 0.0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\devgui\\devgui.cpp",0x40d,0,
                     "%s\n\t(scale) = %g");
   }
-  dVar8 = 1.0;
-  if (((double)*param_2 < dVar7) || (1.0 < (double)*param_2)) {
+  dVar7 = 1.0;
+  if (((double)*param_2 < dVar6) || (1.0 < (double)*param_2)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\devgui\\devgui.cpp",0x40e,0,
                     "hsv[0] not in [0.0f, 1.0f]\n\t%g not in [%g, %g]");
   }
-  if (((double)param_2[1] < dVar7) || (dVar8 < (double)param_2[1])) {
+  if (((double)param_2[1] < dVar6) || (dVar7 < (double)param_2[1])) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\devgui\\devgui.cpp",0x40f,0,
                     "hsv[1] not in [0.0f, 1.0f]\n\t%g not in [%g, %g]");
   }
-  if (((double)param_2[2] < dVar7) || (dVar8 < (double)param_2[2])) {
+  if (((double)param_2[2] < dVar6) || (dVar7 < (double)param_2[2])) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\devgui\\devgui.cpp",0x410,0,
                     "hsv[2] not in [0.0f, 1.0f]\n\t%g not in [%g, %g]");
   }
   dVar5 = (double)param_2[1];
-  dVar7 = (double)(*param_2 * 6.0);
-  fVar3 = (float)(dVar8 - dVar5) * param_2[2];
-  if (dVar8 <= dVar7) {
-    if (2.0 <= dVar7) {
-      if (3.0 <= dVar7) {
-        if (4.0 <= dVar7) {
-          if (5.0 <= dVar7) {
+  dVar6 = (double)(*param_2 * 6.0);
+  fVar3 = (float)(dVar7 - dVar5) * param_2[2];
+  if (dVar7 <= dVar6) {
+    if (2.0 <= dVar6) {
+      if (3.0 <= dVar6) {
+        if (4.0 <= dVar6) {
+          if (5.0 <= dVar6) {
             fVar1 = param_2[2];
-            pfVar4[1] = fVar3;
-            *pfVar4 = fVar1;
-            fVar3 = -(float)((double)(float)(dVar7 - 5.0) * (double)param_2[1] - dVar8) * param_2[2]
+            param_1[1] = fVar3;
+            *param_1 = fVar1;
+            fVar3 = -(float)((double)(float)(dVar6 - 5.0) * (double)param_2[1] - dVar7) * param_2[2]
             ;
           }
           else {
             fVar1 = param_2[2];
-            pfVar4[1] = fVar3;
-            *pfVar4 = -(float)((double)(float)(dVar8 - (double)(float)(dVar7 - 4.0)) * dVar5 - dVar8
-                              ) * fVar1;
+            param_1[1] = fVar3;
+            *param_1 = -(float)((double)(float)(dVar7 - (double)(float)(dVar6 - 4.0)) * dVar5 -
+                               dVar7) * fVar1;
             fVar3 = param_2[2];
           }
-          pfVar4[2] = fVar3;
+          param_1[2] = fVar3;
         }
         else {
-          *pfVar4 = fVar3;
-          pfVar4[1] = -(float)((double)(float)(dVar7 - 3.0) * (double)param_2[1] - dVar8) *
-                      param_2[2];
-          pfVar4[2] = param_2[2];
+          *param_1 = fVar3;
+          param_1[1] = -(float)((double)(float)(dVar6 - 3.0) * (double)param_2[1] - dVar7) *
+                       param_2[2];
+          param_1[2] = param_2[2];
         }
       }
       else {
-        *pfVar4 = fVar3;
-        pfVar4[1] = param_2[2];
-        pfVar4[2] = -(float)((double)(float)(dVar8 - (double)(float)(dVar7 - 2.0)) *
-                             (double)param_2[1] - dVar8) * param_2[2];
+        *param_1 = fVar3;
+        param_1[1] = param_2[2];
+        param_1[2] = -(float)((double)(float)(dVar7 - (double)(float)(dVar6 - 2.0)) *
+                              (double)param_2[1] - dVar7) * param_2[2];
       }
     }
     else {
-      *pfVar4 = -(float)((double)(float)(dVar7 - dVar8) * dVar5 - dVar8) * param_2[2];
-      pfVar4[1] = param_2[2];
-      pfVar4[2] = fVar3;
+      *param_1 = -(float)((double)(float)(dVar6 - dVar7) * dVar5 - dVar7) * param_2[2];
+      param_1[1] = param_2[2];
+      param_1[2] = fVar3;
     }
   }
   else {
-    *pfVar4 = param_2[2];
+    *param_1 = param_2[2];
     fVar1 = param_2[2];
     fVar2 = param_2[1];
-    pfVar4[2] = fVar3;
-    pfVar4[1] = -(float)((double)(float)(dVar8 - dVar7) * (double)fVar2 - dVar8) * fVar1;
+    param_1[2] = fVar3;
+    param_1[1] = -(float)((double)(float)(dVar7 - dVar6) * (double)fVar2 - dVar7) * fVar1;
   }
-  *pfVar4 = (float)((double)*pfVar4 * dVar6);
-  pfVar4[1] = (float)((double)pfVar4[1] * dVar6);
-  pfVar4[2] = (float)(dVar6 * (double)pfVar4[2]);
-  __restfpr_27();
-  __restgprlr_29();
+  *param_1 = (float)((double)*param_1 * dVar4);
+  param_1[1] = (float)((double)param_1[1] * dVar4);
+  param_1[2] = (float)(dVar4 * (double)param_1[2]);
   return;
 }
 
 
 // 82406AD0  DevGui_DrawFloat3ColorSliders  (devgui/devgui.cpp:1093)
 
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void DevGui_DrawFloat3ColorSliders
@@ -1889,101 +1843,98 @@ void DevGui_DrawFloat3ColorSliders
 
 {
   dvar_t *pdVar1;
-  int iVar2;
-  float fVar3;
+  float fVar2;
+  int iVar3;
   int iVar4;
   int iVar5;
   longlong lVar6;
-  int iVar7;
-  longlong lVar8;
-  char **ppcVar9;
-  longlong lVar10;
+  char **ppcVar8;
+  longlong lVar7;
+  DvarValue *pDVar9;
+  int iVar10;
   int iVar11;
-  int iVar12;
+  double dVar12;
   double dVar13;
   double dVar14;
-  double dVar15;
   float local_c0 [48];
   
-  lVar6 = (longlong)(int)param_3;
-  __savegprlr();
-  iVar2 = (int)lVar6;
-  dVar15 = 0.0;
-  if (*(float *)(iVar2 + 0x3c) != 0.0) {
+  dVar14 = 0.0;
+  if ((param_3->domain).value.min != 0.0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\devgui\\devgui.cpp",0x450,0,
                     "%s\n\t(dvar->domain.vector.min) = %g");
   }
-  if ((double)*(float *)(iVar2 + 0x40) <= dVar15) {
+  if ((double)(param_3->domain).value.max <= dVar14) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\devgui\\devgui.cpp",0x451,0,
                     "%s\n\t(dvar->domain.vector.max) = %g");
   }
-  fVar3 = 1.0 / *(float *)(iVar2 + 0x40);
-  dVar14 = (double)(*(float *)(iVar2 + 0x20) * fVar3);
-  dVar13 = (double)(*(float *)(iVar2 + 0x24) * fVar3);
-  ByteFromFloatColor(*(float *)(iVar2 + 0x1c) * fVar3);
-  ByteFromFloatColor((float)dVar14);
+  fVar2 = 1.0 / (param_3->domain).value.max;
+  dVar13 = (double)((param_3->latched).vector[1] * fVar2);
+  dVar12 = (double)((param_3->latched).vector[2] * fVar2);
+  ByteFromFloatColor((param_3->latched).value * fVar2);
   ByteFromFloatColor((float)dVar13);
+  ByteFromFloatColor((float)dVar12);
   ByteFromFloatColor(local_c0[3]);
-  lVar8 = ZEXT48(&stack0x00000000) - 0xe0;
-  iVar4 = *param_2 + param_5 + 2;
-  *param_2 = iVar4;
-  DevGui_DrawBox(*param_1,iVar4,param_4,param_5,(uchar *)lVar8);
-  iVar4 = DevGui_GetFontWidth(labels[0]);
-  iVar7 = param_4 + iVar4 * -2;
-  iVar11 = 0;
-  ppcVar9 = demoExeModeNames + 5;
-  lVar10 = lVar6 + 0x1c;
+  lVar6 = ZEXT48(&stack0x00000000) - 0xe0;
+  iVar3 = *param_2 + param_5 + 2;
+  *param_2 = iVar3;
+  DevGui_DrawBox(*param_1,iVar3,param_4,param_5,(uchar *)lVar6);
+  iVar3 = DevGui_GetFontWidth(labels[0]);
+  iVar5 = param_4 + iVar3 * -2;
+  iVar10 = 0;
+  ppcVar8 = demoExeModeNames + 5;
+  pDVar9 = &param_3->latched;
   do {
     *param_2 = *param_2 + param_5 + 2;
-    if ((double)*(float *)(iVar2 + 0x3c) != dVar15) {
-      lVar8 = -0x7dfa0c60;
+    if ((double)(param_3->domain).value.min != dVar14) {
+      lVar6 = -0x7dfa0c60;
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\devgui\\devgui.cpp",0x460,0,
                       "%s\n\t(dvar->domain.vector.min) = %g");
     }
-    if ((double)*(float *)(iVar2 + 0x40) <= dVar15) {
-      lVar8 = -0x7dfa0ca8;
+    if ((double)(param_3->domain).value.max <= dVar14) {
+      lVar6 = -0x7dfa0ca8;
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\devgui\\devgui.cpp",0x461,0,
                       "%s\n\t(dvar->domain.vector.max) = %g");
     }
     pdVar1 = devgui_colorTextGray;
-    if (iVar11 == devguiGlob.selRow) {
+    if (iVar10 == devguiGlob.selRow) {
       pdVar1 = devgui_colorTextSel;
     }
     DevGui_DrawSingleSlider
-              (*param_1 + iVar4 * 2,*param_2,iVar7,param_5,
-               *(float *)lVar10 / *(float *)(iVar2 + 0x40),(uchar *)lVar8);
-    ppcVar9 = ppcVar9 + 1;
-    DevGui_DrawFont(*param_1,*param_2,(pdVar1->current).color,*ppcVar9);
-    iVar11 = iVar11 + 1;
-    lVar10 = lVar10 + 4;
-  } while (iVar11 < 3);
-  iVar11 = 3;
-  iVar12 = 0;
-  lVar10 = 3;
+              (*param_1 + iVar3 * 2,*param_2,iVar5,param_5,
+               pDVar9->value / (param_3->domain).value.max,(uchar *)lVar6);
+    ppcVar8 = ppcVar8 + 1;
+    DevGui_DrawFont(*param_1,*param_2,(pdVar1->current).color,*ppcVar8);
+    iVar10 = iVar10 + 1;
+    pDVar9 = (DvarValue *)((int)pDVar9 + 4);
+  } while (iVar10 < 3);
+  iVar10 = 3;
+  iVar11 = 0;
+  lVar7 = 3;
   do {
-    DevGui_Vec3ToHSV((float *)(lVar6 + 0x1c),local_c0,*(float *)(iVar2 + 0x40));
-    iVar5 = *param_2 + param_5 + 2;
-    *param_2 = iVar5;
+    DevGui_Vec3ToHSV(&(param_3->latched).value,local_c0,(param_3->domain).value.max);
+    iVar4 = *param_2 + param_5 + 2;
+    *param_2 = iVar4;
     pdVar1 = devgui_colorTextGray;
-    if (iVar11 == devguiGlob.selRow) {
+    if (iVar10 == devguiGlob.selRow) {
       pdVar1 = devgui_colorTextSel;
     }
     DevGui_DrawSingleSlider
-              (*param_1 + iVar4 * 2,iVar5,iVar7,param_5,*(float *)((int)local_c0 + iVar12),
-               (uchar *)lVar8);
-    DevGui_DrawFont(*param_1,*param_2,(pdVar1->current).color,*(char **)((int)labels + iVar12 + 0xc)
+              (*param_1 + iVar3 * 2,iVar4,iVar5,param_5,*(float *)((int)local_c0 + iVar11),
+               (uchar *)lVar6);
+    DevGui_DrawFont(*param_1,*param_2,(pdVar1->current).color,*(char **)((int)labels + iVar11 + 0xc)
                    );
-    lVar10 = lVar10 + -1;
-    iVar12 = iVar12 + 4;
-    iVar11 = iVar11 + 1;
-  } while (lVar10 != 0);
-  __restgprlr();
+    lVar7 = lVar7 + -1;
+    iVar11 = iVar11 + 4;
+    iVar10 = iVar10 + 1;
+  } while (lVar7 != 0);
   return;
 }
 
 
 // 82406E20  DevGui_DrawSliders  (devgui/devgui.cpp:1147)
 
+/* WARNING: Function: __savegprlr_19 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_19 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void DevGui_DrawSliders(DevMenuItem *param_1)
@@ -2012,13 +1963,12 @@ void DevGui_DrawSliders(DevMenuItem *param_1)
   longlong local_108;
   char acStack_100 [256];
   
-  iVar6 = __savegprlr_19(param_1);
-  if (*(char *)(iVar6 + 0x1a) != '\x01') {
+  if (param_1->childType != '\x01') {
     va("menu %s type %i");
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\devgui\\devgui.cpp",0x488,0,
                     "%s\n\t%s");
   }
-  pdVar3 = *(dvar_t **)(iVar6 + 0x24);
+  pdVar3 = (param_1->child).dvar;
   uVar15 = ZEXT48(pdVar3);
   if (uVar15 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\devgui\\devgui.cpp",0x48a,0,
@@ -2171,13 +2121,14 @@ LAB_824072c0:
     pcVar9 = Dvar_DisplayableLatchedValue(pdVar3);
   }
   DevGui_DrawFont(iVar8,iVar18 + iVar7 + 2,(devgui_colorText->current).color,pcVar9);
-  __restgprlr_19();
   return;
 }
 
 
 // 82407348  DevGui_DrawBindNextKey  (devgui/devgui.cpp:1254)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
@@ -2190,7 +2141,6 @@ void DevGui_DrawBindNextKey(void)
   uint uVar4;
   uchar local_30 [48];
   
-  __savegprlr_29();
   local_30[0] = '\0';
   local_30[1] = '\0';
   local_30[2] = '\0';
@@ -2208,30 +2158,33 @@ void DevGui_DrawBindNextKey(void)
   DevGui_DrawFont(((int)uVar4 >> 1) + (uint)((int)uVar4 < 0 && (uVar4 & 1) != 0),
                   ((int)uVar3 >> 1) + (uint)((int)uVar3 < 0 && (uVar3 & 1) != 0),local_30 + 4,
                   "Press key to bind (ESC to cancel)...");
-  __restgprlr_29();
   return;
 }
 
 
 // 82407428  DevGui_DrawGraph  (devgui/devgui.cpp:1277)
 
+/* WARNING: Function: __savegprlr_18 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_18 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void DevGui_DrawGraph(DevMenuItem *param_1,LocalClientNum_t param_2)
 
 {
   ushort uVar1;
-  int *piVar2;
+  DevGraph *pDVar2;
   int iVar3;
-  int iVar4;
-  longlong lVar5;
-  uint uVar6;
+  float *pfVar4;
+  uint uVar5;
+  DvarValue *pDVar6;
   int iVar7;
   int iVar8;
   uchar *puVar9;
-  dvar_t *pdVar10;
-  float *pfVar11;
-  int iVar12;
+  float *pfVar10;
+  dvar_t *pdVar11;
+  float *pfVar12;
   int iVar13;
   int iVar14;
   uchar *puVar15;
@@ -2248,76 +2201,77 @@ void DevGui_DrawGraph(DevMenuItem *param_1,LocalClientNum_t param_2)
   char acStack_220 [128];
   char acStack_1a0 [416];
   
-  lVar5 = (longlong)(int)param_2;
-  __savegprlr_18(param_1,lVar5);
-  iVar3 = __savefpr_28();
-  if (*(char *)(iVar3 + 0x1a) != '\x03') {
+  if (param_1->childType != '\x03') {
     va("menu %s type %i");
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\devgui\\devgui.cpp",0x50f,0,
                     "%s\n\t%s");
   }
-  piVar2 = *(int **)(iVar3 + 0x24);
-  if (piVar2 == (int *)0x0) {
+  pDVar2 = (param_1->child).graph;
+  if (pDVar2 == (DevGraph *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\devgui\\devgui.cpp",0x512,0,
                     "%s");
   }
-  if (*piVar2 == 0) {
+  if (pDVar2->knots == (float (*) [2])0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\devgui\\devgui.cpp",0x512,0,
                     "%s");
   }
-  if (piVar2[1] == 0) {
+  if (pDVar2->knotCount == (ushort *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\devgui\\devgui.cpp",0x512,0,
                     "%s");
   }
-  if (*(short *)(piVar2 + 2) == 0) {
+  if (pDVar2->knotCountMax == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\devgui\\devgui.cpp",0x512,0,
                     "%s");
   }
-  iVar12 = devguiGlob.sliderWidth;
-  iVar4 = DevGui_GetFontHeight();
-  iVar12 = iVar12 + 8;
-  uVar6 = (devguiGlob.right - devguiGlob.left) - iVar12;
-  iVar3 = iVar4 * 3 + 0x10;
-  puVar9 = (uchar *)(((int)uVar6 >> 1) + (uint)((int)uVar6 < 0 && (uVar6 & 1) != 0));
-  iVar13 = devguiGlob.bottom - iVar3;
+  iVar13 = devguiGlob.sliderWidth;
+  iVar3 = DevGui_GetFontHeight();
+  iVar13 = iVar13 + 8;
+  uVar5 = (devguiGlob.right - devguiGlob.left) - iVar13;
+  iVar7 = iVar3 * 3 + 0x10;
+  puVar9 = (uchar *)(((int)uVar5 >> 1) + (uint)((int)uVar5 < 0 && (uVar5 & 1) != 0));
+  iVar16 = devguiGlob.bottom - iVar7;
   puVar15 = puVar9 + devguiGlob.left;
-  DevGui_DrawBevelBox((int)puVar15,iVar13,iVar12,iVar3,(devgui_bevelShade->current).value,puVar9);
-  iVar3 = (int)((float)(longlong)iVar13 * (float)0x3f733333);
-  DevGui_DrawBox((int)puVar15,iVar3,iVar12,2,(devgui_colorBgndSel->current).color);
+  DevGui_DrawBevelBox((int)puVar15,iVar16,iVar13,iVar7,(devgui_bevelShade->current).value,puVar9);
+  iVar7 = (int)((float)(longlong)iVar16 * (float)0x3f733333);
+  DevGui_DrawBox((int)puVar15,iVar7,iVar13,2,(devgui_colorBgndSel->current).color);
   puVar15 = puVar15 + 4;
+  pfVar12 = (float *)(iVar16 + 6);
   DevGui_GetSliderPath(devguiGlob.selectedMenu,acStack_220,0);
-  DevGui_DrawFont((int)puVar15,iVar13 + 6,(devgui_colorText->current).color,acStack_220);
+  pDVar6 = &devgui_colorText->current;
+  pfVar4 = pfVar12;
+  DevGui_DrawFont((int)puVar15,(int)pfVar12,pDVar6->color,acStack_220);
   iVar16 = 0;
   uVar1 = 0;
-  if (*(short *)piVar2[1] != 0) {
+  if (*pDVar2->knotCount != 0) {
     iVar14 = 0;
-    dVar19 = (double)(longlong)iVar12;
-    dVar17 = (double)(longlong)(iVar3 + -0x30);
+    dVar19 = (double)(longlong)iVar13;
+    dVar17 = (double)(longlong)(iVar7 + -0x30);
     do {
-      if (iVar16 == piVar2[3]) {
+      pfVar10 = (float *)((int)*pDVar2->knots + iVar14);
+      pfVar4 = (float *)(iVar7 - (int)(dVar17 * (double)pfVar10[1]));
+      if (iVar16 == pDVar2->selectedKnot) {
         if (devguiGlob.editingKnot == false) {
           iVar8 = 0x10;
-          iVar7 = 0x10;
-          pdVar10 = devgui_colorGraphKnotSelected;
+          pDVar6 = (DvarValue *)&DAT_00000010;
+          pdVar11 = devgui_colorGraphKnotSelected;
         }
         else {
           iVar8 = 0x13;
-          iVar7 = 0x13;
-          pdVar10 = devgui_colorGraphKnotEditing;
+          pDVar6 = (DvarValue *)0x13;
+          pdVar11 = devgui_colorGraphKnotEditing;
         }
       }
       else {
         iVar8 = 0xc;
-        iVar7 = 0xc;
-        pdVar10 = devgui_colorGraphKnotNormal;
+        pDVar6 = (DvarValue *)&DAT_0000000c;
+        pdVar11 = devgui_colorGraphKnotNormal;
       }
       DevGui_DrawBoxCentered
-                ((int)(puVar15 + (int)(dVar19 * (double)*(float *)(iVar14 + *piVar2))),
-                 iVar3 - (int)(dVar17 * (double)((float *)(iVar14 + *piVar2))[1]),iVar7,iVar8,
-                 (pdVar10->current).color);
+                ((int)(puVar15 + (int)(dVar19 * (double)*pfVar10)),(int)pfVar4,(int)pDVar6,iVar8,
+                 (pdVar11->current).color);
       iVar16 = iVar16 + 1;
       iVar14 = iVar14 + 8;
-      uVar1 = *(ushort *)piVar2[1];
+      uVar1 = *pDVar2->knotCount;
     } while (iVar16 < (int)(uint)uVar1);
   }
   iVar16 = 0;
@@ -2325,123 +2279,126 @@ void DevGui_DrawGraph(DevMenuItem *param_1,LocalClientNum_t param_2)
     local_228 = (longlong)(int)puVar15;
     iVar14 = 0;
     dVar18 = (double)local_228;
-    dVar19 = (double)(longlong)iVar3;
-    dVar20 = (double)(longlong)iVar12;
-    dVar17 = (double)(longlong)(iVar3 + -0x30);
+    dVar19 = (double)(longlong)iVar7;
+    dVar20 = (double)(longlong)iVar13;
+    dVar17 = (double)(longlong)(iVar7 + -0x30);
     do {
-      pfVar11 = (float *)(iVar14 + *piVar2);
-      local_230 = (float)(dVar20 * (double)*pfVar11 + dVar18);
-      local_22c = -(float)(dVar17 * (double)pfVar11[1] - dVar19);
-      local_238 = (float)(dVar20 * (double)pfVar11[2] + dVar18);
-      local_234 = -(float)(dVar17 * (double)pfVar11[3] - dVar19);
-      DevGui_DrawLine(&local_230,&local_238,2,(devgui_colorGraphKnotNormal->current).color);
+      pDVar6 = (DvarValue *)0x2;
+      pfVar4 = &local_238;
+      pfVar10 = (float *)((int)*pDVar2->knots + iVar14);
+      local_230 = (float)(dVar20 * (double)*pfVar10 + dVar18);
+      local_22c = -(float)(dVar17 * (double)pfVar10[1] - dVar19);
+      local_238 = (float)(dVar20 * (double)pfVar10[2] + dVar18);
+      local_234 = -(float)(dVar17 * (double)pfVar10[3] - dVar19);
+      DevGui_DrawLine(&local_230,pfVar4,2,(devgui_colorGraphKnotNormal->current).color);
       iVar16 = iVar16 + 1;
       iVar14 = iVar14 + 8;
-    } while (iVar16 < (int)(*(ushort *)piVar2[1] - 1));
+    } while (iVar16 < (int)(*pDVar2->knotCount - 1));
   }
-  iVar3 = iVar13 + 6 + iVar4 + 2;
-  if ((code *)piVar2[5] == (code *)0x0) {
+  iVar7 = (int)pfVar12 + iVar3 + 2;
+  if (pDVar2->textCallback == (_func___cdecl_void_DevGraph_ptr_float_float_char_ptr_int *)0x0) {
     sprintf(acStack_1a0,"X: %.4f, Y: %.4f");
   }
   else {
-    (*(code *)piVar2[5])(piVar2);
+    (*pDVar2->textCallback)(pDVar2,(float)pfVar4,(float)pDVar6,acStack_1a0,0x100);
   }
-  DevGui_DrawFont((int)puVar15,iVar3,(devgui_colorText->current).color,acStack_1a0);
-  DevGui_DrawFont((int)puVar15,iVar3 + iVar4 + 2,(devgui_colorText->current).color,MYINSTRUCTIONS);
-  if ((code *)piVar2[4] != (code *)0x0) {
-    (*(code *)piVar2[4])(piVar2,4,lVar5);
+  DevGui_DrawFont((int)puVar15,iVar7,(devgui_colorText->current).color,acStack_1a0);
+  DevGui_DrawFont((int)puVar15,iVar7 + iVar3 + 2,(devgui_colorText->current).color,MYINSTRUCTIONS);
+  if (pDVar2->eventCallback != (_func___cdecl_void_DevGraph_ptr_DevEventType_LocalClientNum_t *)0x0)
+  {
+    (*pDVar2->eventCallback)(pDVar2,EVENT_DRAW,param_2);
   }
-  __restfpr_28();
-  __restgprlr_18();
   return;
 }
 
 
 // 824078E0  DevGui_Draw  (devgui/devgui.cpp:1379)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void DevGui_Draw(LocalClientNum_t param_1)
 
 {
   ushort uVar1;
-  LocalClientNum_t LVar2;
-  DevMenuItem *pDVar3;
+  DevMenuItem *pDVar2;
   int local_30;
   int local_2c;
   
-  LVar2 = __savegprlr_29(param_1);
-  if (devguiGlob.isActive != false) {
-    pDVar3 = DevGui_GetMenu(devguiGlob.selectedMenu);
+  if (devguiGlob.isActive) {
+    pDVar2 = DevGui_GetMenu(devguiGlob.selectedMenu);
     if (devguiGlob.editingMenuItem == false) {
       local_30 = devguiGlob.left;
       local_2c = devguiGlob.top;
-      pDVar3 = DevGui_GetMenu(devguiGlob.selectedMenu);
-      uVar1 = pDVar3->parent;
+      pDVar2 = DevGui_GetMenu(devguiGlob.selectedMenu);
+      uVar1 = pDVar2->parent;
       DevGui_ChooseOrigin(&local_30);
       DevGui_DrawMenu(uVar1,devguiGlob.selectedMenu,&local_30);
     }
     else {
-      if ((pDVar3->childType != '\x03') && (pDVar3->childType != '\x01')) {
+      if ((pDVar2->childType != '\x03') && (pDVar2->childType != '\x01')) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\devgui\\devgui.cpp",0x56f,0
                         ,"%s\n\t(menuItem->childType) = %i");
       }
-      if (pDVar3->childType == '\x01') {
-        DevGui_DrawSliders(pDVar3);
+      if (pDVar2->childType == '\x01') {
+        DevGui_DrawSliders(pDVar2);
       }
       else {
-        DevGui_DrawGraph(pDVar3,LVar2);
+        DevGui_DrawGraph(pDVar2,param_1);
       }
     }
     if (devguiGlob.bindNextKey != false) {
       DevGui_DrawBindNextKey();
     }
   }
-  __restgprlr_29();
   return;
 }
 
 
 // 82407A08  DevGui_AdvanceChildNum  (devgui/devgui.cpp:1414)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void DevGui_AdvanceChildNum(int param_1)
 
 {
   ushort uVar1;
-  int iVar2;
-  uint uVar3;
-  int iVar4;
+  uint uVar2;
+  int iVar3;
   
-  iVar2 = __savegprlr_26(param_1);
-  iVar4 = 0;
-  if (iVar2 != 0) {
-    uVar3 = (uint)devguiGlob.selectedMenu;
+  iVar3 = 0;
+  if (param_1 != 0) {
+    uVar2 = (uint)devguiGlob.selectedMenu;
     do {
-      if ((uVar3 == 0) || (2000 < uVar3)) {
+      if ((uVar2 == 0) || (2000 < uVar2)) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\devgui\\devgui.cpp",0x77,0,
                         "handle not in [1, ARRAY_COUNT( devguiGlob.menus )]\n\t%i not in [%i, %i]");
       }
-      uVar1 = *(ushort *)((int)&devgui_colorBgndSel + uVar3 * 0x28 + 2);
-      uVar3 = (uint)uVar1;
-      if (uVar3 == 0) break;
+      uVar1 = *(ushort *)((int)&devgui_colorBgndSel + uVar2 * 0x28 + 2);
+      uVar2 = (uint)uVar1;
+      if (uVar2 == 0) {
+        return;
+      }
       devguiGlob.selectedMenu = uVar1;
-      if ((uVar3 == 0) || (2000 < uVar3)) {
+      if ((uVar2 == 0) || (2000 < uVar2)) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\devgui\\devgui.cpp",0x77,0,
                         "handle not in [1, ARRAY_COUNT( devguiGlob.menus )]\n\t%i not in [%i, %i]");
-        uVar3 = (uint)devguiGlob.selectedMenu;
+        uVar2 = (uint)devguiGlob.selectedMenu;
       }
-      iVar4 = iVar4 + 1;
-    } while (iVar4 != iVar2);
+      iVar3 = iVar3 + 1;
+    } while (iVar3 != param_1);
   }
-  __restgprlr_26();
   return;
 }
 
 
 // 82407AF8  DevGui_SelectTopLevelChild  (devgui/devgui.cpp:1432)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
@@ -2450,7 +2407,6 @@ void DevGui_SelectTopLevelChild(void)
 {
   DevMenuItem *pDVar1;
   
-  __savegprlr_28();
   pDVar1 = DevGui_GetMenu(devguiGlob.selectedMenu);
   if (pDVar1 == (DevMenuItem *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\devgui\\devgui.cpp",0x59c,0,
@@ -2468,13 +2424,14 @@ void DevGui_SelectTopLevelChild(void)
     devguiGlob.selectedMenu = (pDVar1->child).menu;
     DevGui_AdvanceChildNum((uint)pDVar1->childMenuMemory);
   }
-  __restgprlr_28();
   return;
 }
 
 
 // 82407BD8  DevGui_SelectPrevMenuItem  (devgui/devgui.cpp:1449)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
@@ -2487,7 +2444,6 @@ void DevGui_SelectPrevMenuItem(void)
   uint uVar4;
   ushort *puVar5;
   
-  __savegprlr_27();
   if (devguiGlob.selectedMenu == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\devgui\\devgui.cpp",0x5ad,0,
                     "%s");
@@ -2505,7 +2461,6 @@ void DevGui_SelectPrevMenuItem(void)
     }
     devguiGlob.selectedMenu = pDVar2->prevSibling;
     DevGui_SelectTopLevelChild();
-    __restgprlr_27();
     return;
   }
   if (pDVar3 != (DevMenuItem *)0x0) {
@@ -2527,13 +2482,14 @@ void DevGui_SelectPrevMenuItem(void)
     uVar1 = *puVar5;
   }
   DevGui_SelectTopLevelChild();
-  __restgprlr_27();
   return;
 }
 
 
 // 82407D48  DevGui_SelectNextMenuItem  (devgui/devgui.cpp:1485)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
@@ -2545,7 +2501,6 @@ void DevGui_SelectNextMenuItem(void)
   DevMenuItem *pDVar3;
   DevMenuItem *pDVar4;
   
-  __savegprlr_28();
   if (devguiGlob.selectedMenu == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\devgui\\devgui.cpp",0x5d0,0,
                     "%s");
@@ -2563,7 +2518,6 @@ void DevGui_SelectNextMenuItem(void)
   if (pDVar3->nextSibling != 0) {
     devguiGlob.selectedMenu = pDVar3->nextSibling;
     DevGui_SelectTopLevelChild();
-    __restgprlr_28();
     return;
   }
   uVar1 = devguiGlob.selectedMenu;
@@ -2578,13 +2532,14 @@ void DevGui_SelectNextMenuItem(void)
   }
   devguiGlob.selectedMenu = uVar1;
   DevGui_SelectTopLevelChild();
-  __restgprlr_28();
   return;
 }
 
 
 // 82407E88  DevGui_MoveLeft  (devgui/devgui.cpp:1521)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
@@ -2595,7 +2550,6 @@ void DevGui_MoveLeft(void)
   uint uVar2;
   DevMenuItem *pDVar3;
   
-  __savegprlr_28();
   if (devguiGlob.selectedMenu == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\devgui\\devgui.cpp",0x5f4,0,
                     "%s");
@@ -2613,13 +2567,14 @@ void DevGui_MoveLeft(void)
   }
   devguiGlob.selectedMenu = uVar1;
   DevGui_SelectPrevMenuItem();
-  __restgprlr_28();
   return;
 }
 
 
 // 82407F70  DevGui_MoveRight  (devgui/devgui.cpp:1536)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
@@ -2631,7 +2586,6 @@ void DevGui_MoveRight(void)
   uint uVar3;
   ushort *puVar4;
   
-  __savegprlr_28();
   if (devguiGlob.selectedMenu == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\devgui\\devgui.cpp",0x603,0,
                     "%s");
@@ -2650,13 +2604,14 @@ void DevGui_MoveRight(void)
     uVar1 = *puVar4;
   }
   DevGui_SelectNextMenuItem();
-  __restgprlr_28();
   return;
 }
 
 
 // 82408060  DevGui_MoveUp  (devgui/devgui.cpp:1555)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
@@ -2665,7 +2620,6 @@ void DevGui_MoveUp(void)
 {
   DevMenuItem *pDVar1;
   
-  __savegprlr_29();
   if (devguiGlob.selectedMenu == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\devgui\\devgui.cpp",0x616,0,
                     "%s");
@@ -2680,13 +2634,14 @@ void DevGui_MoveUp(void)
     DevGui_GetMenu(devguiGlob.selectedMenu);
   }
   DevGui_SelectPrevMenuItem();
-  __restgprlr_29();
   return;
 }
 
 
 // 82408120  DevGui_MoveDown  (devgui/devgui.cpp:1572)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
@@ -2695,7 +2650,6 @@ void DevGui_MoveDown(void)
 {
   DevMenuItem *pDVar1;
   
-  __savegprlr_29();
   if (devguiGlob.selectedMenu == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\devgui\\devgui.cpp",0x627,0,
                     "%s");
@@ -2710,7 +2664,6 @@ void DevGui_MoveDown(void)
     DevGui_GetMenu(devguiGlob.selectedMenu);
   }
   DevGui_SelectNextMenuItem();
-  __restgprlr_29();
   return;
 }
 
@@ -2785,59 +2738,55 @@ void DevGui_MoveSelectionVertically(void)
 
 // 824082B0  DevGui_Accept  (devgui/devgui.cpp:1625)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void DevGui_Accept(LocalClientNum_t param_1)
 
 {
   byte bVar1;
-  LocalClientNum_t LVar2;
-  DevMenuItem *pDVar3;
-  bool bVar4;
-  char cVar5;
+  DevMenuItem *pDVar2;
+  bool bVar3;
+  char cVar4;
   
-  LVar2 = __savegprlr_28(param_1);
-  pDVar3 = DevGui_GetMenu(devguiGlob.selectedMenu);
-  if (pDVar3 == (DevMenuItem *)0x0) {
+  pDVar2 = DevGui_GetMenu(devguiGlob.selectedMenu);
+  if (pDVar2 == (DevMenuItem *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\devgui\\devgui.cpp",0x65d,0,
                     "%s");
   }
-  bVar1 = pDVar3->childType;
+  bVar1 = pDVar2->childType;
   if (bVar1 < 4) {
     if (bVar1 == 1) {
-      bVar4 = DevGui_EditableMenuItem(pDVar3);
-      if (bVar4) {
-        cVar5 = '\0';
+      bVar3 = DevGui_EditableMenuItem(pDVar2);
+      if (bVar3) {
+        cVar4 = '\0';
         if (devguiGlob.editingMenuItem != false) {
-          Dvar_MakeLatchedValueCurrent((pDVar3->child).dvar);
-          Dvar_SetModified((pDVar3->child).dvar);
-          cVar5 = devguiGlob.editingMenuItem;
+          Dvar_MakeLatchedValueCurrent((pDVar2->child).dvar);
+          Dvar_SetModified((pDVar2->child).dvar);
+          cVar4 = devguiGlob.editingMenuItem;
         }
-        devguiGlob.editingMenuItem = cVar5 == '\0';
         devguiGlob.selRow = 0;
-        __restgprlr_28();
+        devguiGlob.editingMenuItem = cVar4 == '\0';
         return;
       }
     }
     else {
       if (bVar1 == 2) {
-        Cbuf_InsertText(LOCAL_CLIENT_0,(pDVar3->child).command);
-        __restgprlr_28();
+        Cbuf_InsertText(LOCAL_CLIENT_0,(pDVar2->child).command);
         return;
       }
       if (bVar1 == 0) {
-        devguiGlob.selectedMenu = (pDVar3->child).menu;
-        DevGui_AdvanceChildNum((uint)pDVar3->childMenuMemory);
-        __restgprlr_28();
+        devguiGlob.selectedMenu = (pDVar2->child).menu;
+        DevGui_AdvanceChildNum((uint)pDVar2->childMenuMemory);
         return;
       }
       devguiGlob.selRow = 0;
       devguiGlob.editingMenuItem = devguiGlob.editingMenuItem == false;
-      if (((pDVar3->child).graph != (DevGraph *)0x0) &&
-         (((pDVar3->child).graph)->eventCallback !=
+      if (((pDVar2->child).graph != (DevGraph *)0x0) &&
+         (((pDVar2->child).graph)->eventCallback !=
           (_func___cdecl_void_DevGraph_ptr_DevEventType_LocalClientNum_t *)0x0)) {
-        (*((pDVar3->child).graph)->eventCallback)((pDVar3->child).graph,EVENT_ACTIVATE,LVar2);
-        __restgprlr_28();
+        (*((pDVar2->child).graph)->eventCallback)((pDVar2->child).graph,EVENT_ACTIVATE,param_1);
         return;
       }
     }
@@ -2846,7 +2795,6 @@ void DevGui_Accept(LocalClientNum_t param_1)
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\devgui\\devgui.cpp",0x67f,1,
                     "unhandled case");
   }
-  __restgprlr_28();
   return;
 }
 
@@ -2882,6 +2830,8 @@ void DevGui_Reject(void)
 
 // 82408550  DevGui_Init  (devgui/devgui.cpp:1689)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
@@ -2896,7 +2846,6 @@ void DevGui_Init(void)
   devguiGlob_t *pdVar6;
   longlong lVar7;
   
-  __savegprlr_26();
   DevGui_RegisterDvars();
   pSVar2 = ScrPlace_GetFullPlacement();
   iVar3 = DevGui_GetScreenXPad(pSVar2);
@@ -2932,24 +2881,23 @@ void DevGui_Init(void)
   uVar1 = (devguiGlob.right - devguiGlob.left) * 3;
   devguiGlob.sliderWidth = ((int)uVar1 >> 2) + (uint)((int)uVar1 < 0 && (uVar1 & 3) != 0);
   DevGui_InputInit();
-  __restgprlr_26();
   return;
 }
 
 
 // 824086D0  DevGui_SelectedDvar  (devgui/devgui.cpp:1728)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 dvar_t * DevGui_SelectedDvar(void)
 
 {
-  char *pcVar1;
+  dvar_t *pdVar1;
   DevMenuItem *pDVar2;
-  dvar_t *pdVar3;
   
-  __savegprlr_29();
   pDVar2 = DevGui_GetMenu(devguiGlob.selectedMenu);
   if (pDVar2 == (DevMenuItem *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\devgui\\devgui.cpp",0x6c5,0,
@@ -2960,18 +2908,19 @@ dvar_t * DevGui_SelectedDvar(void)
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\devgui\\devgui.cpp",0x6c6,0,
                     "%s\n\t%s");
   }
-  pcVar1 = (pDVar2->child).command;
-  if (pcVar1 == (char *)0x0) {
+  pdVar1 = (pDVar2->child).dvar;
+  if (pdVar1 == (dvar_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\devgui\\devgui.cpp",0x6c8,0,
                     "%s\n\t(menu->label) = %s");
   }
-  pdVar3 = (dvar_t *)__restgprlr_29(pcVar1);
-  return pdVar3;
+  return pdVar1;
 }
 
 
 // 824087A8  DevGui_ScrollUpInternal  (devgui/devgui.cpp:1742)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
@@ -2983,7 +2932,6 @@ void DevGui_ScrollUpInternal(void)
   bool bVar3;
   uint uVar4;
   
-  __savegprlr_28();
   do {
     DevGui_MoveUp();
     uVar4 = (uint)devguiGlob.selectedMenu;
@@ -3010,7 +2958,6 @@ LAB_82408868:
       bVar3 = false;
     }
     if (bVar3) {
-      __restgprlr_28();
       return;
     }
   } while( true );
@@ -3019,6 +2966,8 @@ LAB_82408868:
 
 // 82408880  DevGui_ScrollUp  (devgui/devgui.cpp:1754)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
@@ -3030,7 +2979,6 @@ void DevGui_ScrollUp(void)
   int iVar3;
   uint uVar4;
   
-  __savegprlr_28();
   pDVar1 = DevGui_GetMenu(devguiGlob.selectedMenu);
   if (pDVar1->childType != '\x03') {
     if (pDVar1->childType != '\x01') {
@@ -3065,23 +3013,22 @@ void DevGui_ScrollUp(void)
 LAB_8240896c:
       if (devguiGlob.selRow == 0) {
         devguiGlob.selRow = iVar3 + -1;
-        __restgprlr_28();
         return;
       }
       devguiGlob.selRow = devguiGlob.selRow + -1;
-      __restgprlr_28();
       return;
     }
   }
 LAB_824088b0:
   DevGui_ScrollUpInternal();
-  __restgprlr_28();
   return;
 }
 
 
 // 824089B0  DevGui_ScrollDownInternal  (devgui/devgui.cpp:1785)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
@@ -3093,7 +3040,6 @@ void DevGui_ScrollDownInternal(void)
   bool bVar3;
   uint uVar4;
   
-  __savegprlr_28();
   do {
     DevGui_MoveDown();
     uVar4 = (uint)devguiGlob.selectedMenu;
@@ -3120,7 +3066,6 @@ LAB_82408a70:
       bVar3 = false;
     }
     if (bVar3) {
-      __restgprlr_28();
       return;
     }
   } while( true );
@@ -3129,6 +3074,8 @@ LAB_82408a70:
 
 // 82408A88  DevGui_ScrollDown  (devgui/devgui.cpp:1797)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
@@ -3140,7 +3087,6 @@ void DevGui_ScrollDown(void)
   longlong lVar3;
   uint uVar4;
   
-  __savegprlr_28();
   pDVar1 = DevGui_GetMenu(devguiGlob.selectedMenu);
   if (pDVar1->childType != '\x03') {
     if (pDVar1->childType != '\x01') {
@@ -3176,13 +3122,11 @@ LAB_82408b74:
       devguiGlob.selRow =
            -(uint)(lVar3 != (ulonglong)(uint)devguiGlob.selRow + 1) &
            (uint)((ulonglong)(uint)devguiGlob.selRow + 1);
-      __restgprlr_28();
       return;
     }
   }
 LAB_82408ab8:
   DevGui_ScrollDownInternal();
-  __restgprlr_28();
   return;
 }
 
@@ -3223,6 +3167,9 @@ void DevGui_UpdateSelection(void)
 
 // 82408C10  DevGui_PickFloatScrollStep  (devgui/devgui.cpp:1846)
 
+/* WARNING: Function: __savefpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_28 replaced with injection: xenon_save_restore */
+
 float DevGui_PickFloatScrollStep(float param_1,float param_2)
 
 {
@@ -3233,36 +3180,39 @@ float DevGui_PickFloatScrollStep(float param_1,float param_2)
   double dVar5;
   
   dVar3 = (double)param_2;
-  dVar1 = (double)__savefpr_28((double)param_1);
-  dVar5 = (double)(float)(dVar3 - dVar1);
+  dVar2 = (double)param_1;
+  dVar5 = (double)(float)(dVar3 - dVar2);
   dVar4 = 0.5;
-  dVar2 = floor((double)(float)(dVar3 + 0.5));
-  if ((dVar3 == (double)(longlong)(int)dVar2) &&
-     (dVar2 = floor((double)(float)(dVar1 + dVar4)), dVar1 == (double)(longlong)(int)dVar2)) {
-    dVar1 = 1.0;
+  dVar1 = floor((double)(float)(dVar3 + 0.5));
+  if ((dVar3 == (double)(longlong)(int)dVar1) &&
+     (dVar1 = floor((double)(float)(dVar2 + dVar4)), dVar2 == (double)(longlong)(int)dVar1)) {
+    dVar2 = 1.0;
     if (100.0 < dVar5) {
       do {
-        dVar1 = (double)(float)(dVar1 * 2.0);
-      } while ((double)(float)(dVar1 * 100.0) < dVar5);
+        dVar2 = (double)(float)(dVar2 * 2.0);
+      } while ((double)(float)(dVar2 * 100.0) < dVar5);
     }
-    for (; dVar5 < (double)(float)(dVar1 * 100.0); dVar1 = (double)(float)(dVar1 * dVar4)) {
+    for (; dVar5 < (double)(float)(dVar2 * 100.0); dVar2 = (double)(float)(dVar2 * dVar4)) {
     }
   }
   else {
-    dVar2 = (double)(float)(dVar5 * 0.009999999776482582);
-    dVar1 = floor((double)(float)(dVar2 + dVar4));
-    dVar1 = (double)(longlong)(int)dVar1;
-    if ((dVar1 == 0.0) || (0.1 <= ABS((float)(dVar1 - dVar2)))) {
-      dVar1 = dVar2;
+    dVar1 = (double)(float)(dVar5 * 0.009999999776482582);
+    dVar2 = floor((double)(float)(dVar1 + dVar4));
+    dVar2 = (double)(longlong)(int)dVar2;
+    if ((dVar2 == 0.0) || (0.1 <= ABS((float)(dVar2 - dVar1)))) {
+      dVar2 = dVar1;
     }
   }
-  dVar1 = (double)__restfpr_28(dVar1);
-  return (float)dVar1;
+  return (float)dVar2;
 }
 
 
 // 82408D70  DevGui_UpdateDvar  (devgui/devgui.cpp:1873)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void DevGui_UpdateDvar(float param_1)
@@ -3285,8 +3235,7 @@ void DevGui_UpdateDvar(float param_1)
   float afStack_70 [4];
   float local_60 [24];
   
-  __savegprlr_27((double)param_1);
-  dVar9 = (double)__savefpr_28();
+  dVar9 = (double)param_1;
   pdVar2 = DevGui_SelectedDvar();
   pdVar3 = pdVar2;
   if (pdVar2 == (dvar_t *)0x0) {
@@ -3305,8 +3254,6 @@ void DevGui_UpdateDvar(float param_1)
                        SCROLL_YAXIS);
     if ((iVar4 != 0) != (pdVar2->latched).enabled) {
       Dvar_SetBoolFromSource(pdVar2,iVar4 != 0,DVAR_SOURCE_DEVGUI);
-      __restfpr_28();
-      __restgprlr_27();
       return;
     }
     break;
@@ -3317,8 +3264,6 @@ void DevGui_UpdateDvar(float param_1)
                         (pdVar2->domain).value.max,fVar14,(DevGuiInputAxis)pdVar3,0.0);
     if (fVar14 != (pdVar2->latched).value) {
       Dvar_SetFloatFromSource(pdVar2,fVar14,DVar6);
-      __restfpr_28();
-      __restgprlr_27();
       return;
     }
     break;
@@ -3333,8 +3278,6 @@ void DevGui_UpdateDvar(float param_1)
     local_60[devguiGlob.selRow] = fVar13;
     if ((fVar14 != local_60[0]) || ((pdVar2->latched).vector[1] != local_60[1])) {
       Dvar_SetVec2FromSource(pdVar2,local_60[0],local_60[1],0x10000);
-      __restfpr_28();
-      __restgprlr_27();
       return;
     }
     break;
@@ -3351,8 +3294,6 @@ void DevGui_UpdateDvar(float param_1)
     if (((fVar14 != local_60[0]) || ((pdVar2->latched).vector[1] != local_60[1])) ||
        ((pdVar2->latched).vector[2] != local_60[2])) {
       Dvar_SetVec3FromSource(pdVar2,local_60[0],local_60[1],local_60[2],0x10000);
-      __restfpr_28();
-      __restgprlr_27();
       return;
     }
     break;
@@ -3371,8 +3312,6 @@ void DevGui_UpdateDvar(float param_1)
     if (iVar4 == 0) {
       Dvar_SetVec4FromSource
                 (pdVar2,local_60[0],local_60[1],local_60[2],local_60[3],(DvarSetSource)pfVar7);
-      __restfpr_28();
-      __restgprlr_27();
       return;
     }
     break;
@@ -3382,8 +3321,6 @@ void DevGui_UpdateDvar(float param_1)
                        (pdVar2->domain).enumeration.stringCount,(pdVar2->domain).integer.max);
     if (iVar4 != (pdVar2->latched).integer) {
       Dvar_SetIntFromSource(pdVar2,iVar4,DVAR_SOURCE_DEVGUI);
-      __restfpr_28();
-      __restgprlr_27();
       return;
     }
     break;
@@ -3393,8 +3330,6 @@ void DevGui_UpdateDvar(float param_1)
                        (pdVar2->domain).enumeration.stringCount - SCROLL_YAXIS);
     if (iVar4 != (pdVar2->latched).integer) {
       Dvar_SetIntFromSource(pdVar2,iVar4,DVAR_SOURCE_DEVGUI);
-      __restfpr_28();
-      __restgprlr_27();
       return;
     }
     break;
@@ -3416,8 +3351,6 @@ void DevGui_UpdateDvar(float param_1)
     if (dVar11 != (double)fVar14) {
       Dvar_SetColorFromSource
                 (pdVar2,local_60[0],local_60[1],local_60[2],local_60[3],(DvarSetSource)pIVar8);
-      __restfpr_28();
-      __restgprlr_27();
       return;
     }
     break;
@@ -3465,19 +3398,17 @@ void DevGui_UpdateDvar(float param_1)
     if ((((pdVar2->latched).value != local_60[0]) || ((pdVar2->latched).vector[1] != local_60[1]))
        || ((pdVar2->latched).vector[2] != local_60[2])) {
       Dvar_SetVec3FromSource(pdVar2,local_60[0],local_60[1],local_60[2],(DvarSetSource)pfVar7);
-      __restfpr_28();
-      __restgprlr_27();
       return;
     }
   }
-  __restfpr_28();
-  __restgprlr_27();
   return;
 }
 
 
 // 82409478  DevGui_AddGraphKnot  (devgui/devgui.cpp:1979)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void DevGui_AddGraphKnot(DevGraph *param_1,LocalClientNum_t param_2)
@@ -3488,95 +3419,89 @@ void DevGui_AddGraphKnot(DevGraph *param_1,LocalClientNum_t param_2)
   float fVar3;
   float fVar4;
   int iVar5;
-  int *piVar6;
-  longlong lVar7;
-  int iVar8;
-  uint uVar9;
-  int iVar10;
-  float *pfVar11;
-  undefined4 *puVar12;
-  int iVar13;
+  uint uVar6;
+  int iVar7;
+  float (*pafVar8) [2];
+  float (*pafVar9) [2];
+  undefined4 *puVar10;
   
-  lVar7 = (longlong)(int)param_2;
-  piVar6 = (int *)__savegprlr_28(param_1,lVar7);
-  if (piVar6 == (int *)0x0) {
+  if (param_1 == (DevGraph *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\devgui\\devgui.cpp",0x7c1,0,
                     "%s");
   }
-  if (*piVar6 == 0) {
+  if (param_1->knots == (float (*) [2])0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\devgui\\devgui.cpp",0x7c1,0,
                     "%s");
   }
-  if (piVar6[1] == 0) {
+  if (param_1->knotCount == (ushort *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\devgui\\devgui.cpp",0x7c1,0,
                     "%s");
   }
-  if (*(short *)(piVar6 + 2) == 0) {
+  if (param_1->knotCountMax == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\devgui\\devgui.cpp",0x7c1,0,
                     "%s");
   }
-  if (piVar6[3] < 0) {
+  if (param_1->selectedKnot < 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\devgui\\devgui.cpp",0x7c2,0,
                     "%s");
   }
-  if ((int)(uint)*(ushort *)piVar6[1] <= piVar6[3]) {
+  if ((int)(uint)*param_1->knotCount <= param_1->selectedKnot) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\devgui\\devgui.cpp",0x7c3,0,
                     "%s");
   }
-  uVar9 = (uint)*(ushort *)piVar6[1];
-  if (uVar9 == *(ushort *)(piVar6 + 2)) {
+  uVar6 = (uint)*param_1->knotCount;
+  if (uVar6 == param_1->knotCountMax) {
     Com_Printf(0xb,"^3Maximum number of knots have reached for this graph\n");
-    __restgprlr_28();
     return;
   }
-  iVar8 = piVar6[3];
-  if (iVar8 + 1 < (int)(uint)*(ushort *)piVar6[1]) {
-    pfVar11 = (float *)(iVar8 * 8 + *piVar6);
-    iVar10 = uVar9 - 1;
-    fVar1 = pfVar11[2];
-    fVar2 = *pfVar11;
-    fVar3 = pfVar11[3];
-    fVar4 = pfVar11[1];
-    if (iVar8 <= iVar10) {
-      iVar8 = iVar10 * 8;
+  iVar5 = param_1->selectedKnot;
+  if (iVar5 + 1 < (int)(uint)*param_1->knotCount) {
+    pafVar9 = param_1->knots + iVar5;
+    iVar7 = uVar6 - 1;
+    fVar1 = pafVar9[1][0];
+    fVar2 = (*pafVar9)[0];
+    fVar3 = pafVar9[1][1];
+    fVar4 = (*pafVar9)[1];
+    if (iVar5 <= iVar7) {
+      iVar5 = iVar7 * 8;
       do {
-        iVar10 = iVar10 + -1;
-        puVar12 = (undefined4 *)(iVar8 + *piVar6);
-        iVar8 = iVar8 + -8;
-        puVar12[2] = *puVar12;
-        puVar12[3] = puVar12[1];
-      } while (piVar6[3] <= iVar10);
+        iVar7 = iVar7 + -1;
+        puVar10 = (undefined4 *)((int)*param_1->knots + iVar5);
+        iVar5 = iVar5 + -8;
+        puVar10[2] = *puVar10;
+        puVar10[3] = puVar10[1];
+      } while (param_1->selectedKnot <= iVar7);
     }
-    *(float *)((piVar6[3] + 1) * 8 + *piVar6) = (fVar1 + fVar2) * 0.5;
-    *(float *)(piVar6[3] * 8 + *piVar6 + 0xc) = (fVar3 + fVar4) * 0.5;
-    piVar6[3] = piVar6[3] + 1;
-    *(short *)piVar6[1] = *(short *)piVar6[1] + 1;
+    param_1->knots[param_1->selectedKnot + 1][0] = (fVar1 + fVar2) * 0.5;
+    param_1->knots[param_1->selectedKnot + 1][1] = (fVar3 + fVar4) * 0.5;
+    param_1->selectedKnot = param_1->selectedKnot + 1;
+    *param_1->knotCount = *param_1->knotCount + 1;
   }
   else {
-    iVar5 = uVar9 * 8;
-    iVar10 = *piVar6;
-    iVar13 = iVar5 + iVar10;
-    pfVar11 = (float *)(iVar8 * 8 + iVar10);
-    fVar1 = pfVar11[-2];
-    fVar2 = *pfVar11;
-    fVar3 = pfVar11[-1];
-    fVar4 = pfVar11[1];
-    *(undefined4 *)(iVar5 + iVar10) = *(undefined4 *)(iVar13 + -8);
-    *(undefined4 *)(iVar13 + 4) = *(undefined4 *)(iVar13 + -4);
-    *(float *)(iVar5 + *piVar6 + -8) = (fVar1 + fVar2) * 0.5;
-    *(float *)(iVar5 + *piVar6 + -4) = (fVar3 + fVar4) * 0.5;
-    *(short *)piVar6[1] = *(short *)piVar6[1] + 1;
+    pafVar9 = param_1->knots;
+    pafVar8 = pafVar9 + iVar5;
+    fVar1 = pafVar8[-1][0];
+    fVar2 = (*pafVar8)[0];
+    fVar3 = pafVar8[-1][1];
+    fVar4 = (*pafVar8)[1];
+    pafVar9[uVar6][0] = pafVar9[uVar6 - 1][0];
+    pafVar9[uVar6][1] = pafVar9[uVar6 - 1][1];
+    param_1->knots[uVar6 - 1][0] = (fVar1 + fVar2) * 0.5;
+    param_1->knots[uVar6 - 1][1] = (fVar3 + fVar4) * 0.5;
+    *param_1->knotCount = *param_1->knotCount + 1;
   }
-  if ((code *)piVar6[4] != (code *)0x0) {
-    (*(code *)piVar6[4])(piVar6,3,lVar7);
+  if (param_1->eventCallback != (_func___cdecl_void_DevGraph_ptr_DevEventType_LocalClientNum_t *)0x0
+     ) {
+    (*param_1->eventCallback)(param_1,EVENT_UPDATE,param_2);
   }
-  __restgprlr_28();
   return;
 }
 
 
 // 82409720  DevGui_RemoveGraphKnot  (devgui/devgui.cpp:2031)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void DevGui_RemoveGraphKnot(DevGraph *param_1,LocalClientNum_t param_2)
@@ -3584,98 +3509,97 @@ void DevGui_RemoveGraphKnot(DevGraph *param_1,LocalClientNum_t param_2)
 {
   ushort uVar1;
   uint uVar2;
-  int iVar3;
+  float (*pafVar3) [2];
   int iVar4;
   int iVar5;
-  int *piVar6;
-  longlong lVar7;
-  int iVar8;
-  undefined4 *puVar9;
-  ulonglong uVar10;
-  longlong lVar11;
-  longlong lVar12;
+  undefined4 *puVar6;
+  ulonglong uVar7;
+  longlong lVar8;
+  longlong lVar9;
   
-  lVar7 = (longlong)(int)param_2;
-  piVar6 = (int *)__savegprlr_28(param_1,lVar7);
-  if (piVar6 == (int *)0x0) {
+  if (param_1 == (DevGraph *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\devgui\\devgui.cpp",0x7f3,0,
                     "%s");
   }
-  if (*piVar6 == 0) {
+  if (param_1->knots == (float (*) [2])0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\devgui\\devgui.cpp",0x7f3,0,
                     "%s");
   }
-  if (piVar6[1] == 0) {
+  if (param_1->knotCount == (ushort *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\devgui\\devgui.cpp",0x7f3,0,
                     "%s");
   }
-  if (*(short *)(piVar6 + 2) == 0) {
+  if (param_1->knotCountMax == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\devgui\\devgui.cpp",0x7f3,0,
                     "%s");
   }
-  if (piVar6[3] < 0) {
+  if (param_1->selectedKnot < 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\devgui\\devgui.cpp",0x7f5,0,
                     "%s");
   }
-  if ((int)(uint)*(ushort *)piVar6[1] <= piVar6[3]) {
+  if ((int)(uint)*param_1->knotCount <= param_1->selectedKnot) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\devgui\\devgui.cpp",0x7f6,0,
                     "%s");
   }
-  uVar2 = piVar6[3];
-  uVar10 = (ulonglong)uVar2;
-  uVar1 = *(ushort *)piVar6[1];
+  uVar2 = param_1->selectedKnot;
+  uVar7 = (ulonglong)uVar2;
+  uVar1 = *param_1->knotCount;
   if ((uVar2 != 0) && (uVar2 + 1 != (uint)uVar1)) {
-    iVar8 = (int)((ulonglong)uVar1 - 1);
-    if ((int)uVar2 < iVar8) {
-      if (3 < (int)(iVar8 - uVar2)) {
-        lVar11 = (uVar10 + 3 & 0x1fffffff) << 3;
+    iVar5 = (int)((ulonglong)uVar1 - 1);
+    if ((int)uVar2 < iVar5) {
+      if (3 < (int)(iVar5 - uVar2)) {
+        lVar8 = (uVar7 + 3 & 0x1fffffff) << 3;
         do {
-          iVar5 = (int)lVar11;
-          iVar4 = iVar5 + -8;
-          puVar9 = (undefined4 *)(iVar5 + -0x18 + *piVar6);
-          uVar10 = uVar10 + 4;
-          *puVar9 = puVar9[2];
-          puVar9[1] = puVar9[3];
-          puVar9 = (undefined4 *)(iVar4 + *piVar6);
-          iVar3 = iVar5 + -0x18 + *piVar6;
-          *(undefined4 *)(iVar3 + 8) = *puVar9;
-          *(undefined4 *)(iVar3 + 0xc) = puVar9[1];
-          iVar3 = *piVar6;
-          *(undefined4 *)(iVar4 + iVar3) = *(undefined4 *)(iVar5 + iVar3);
-          *(undefined4 *)(iVar4 + iVar3 + 4) = *(undefined4 *)(iVar5 + iVar3 + 4);
-          iVar3 = iVar5 + *piVar6;
-          puVar9 = (undefined4 *)(iVar5 + *piVar6);
-          lVar11 = lVar11 + 0x20;
-          *puVar9 = *(undefined4 *)(iVar3 + 8);
-          puVar9[1] = *(undefined4 *)(iVar3 + 0xc);
-        } while ((int)uVar10 < (int)(uVar1 - 4));
+          iVar4 = (int)lVar8;
+          puVar6 = (undefined4 *)((int)param_1->knots[-3] + iVar4);
+          uVar7 = uVar7 + 4;
+          *puVar6 = puVar6[2];
+          puVar6[1] = puVar6[3];
+          pafVar3 = param_1->knots;
+          puVar6 = (undefined4 *)((int)pafVar3[-1] + iVar4);
+          *(undefined4 *)((int)pafVar3[-2] + iVar4) = *puVar6;
+          *(undefined4 *)((int)pafVar3[-2] + iVar4 + 4) = puVar6[1];
+          pafVar3 = param_1->knots;
+          *(undefined4 *)((int)pafVar3[-1] + iVar4) = *(undefined4 *)((int)*pafVar3 + iVar4);
+          *(undefined4 *)((int)pafVar3[-1] + iVar4 + 4) = *(undefined4 *)((int)*pafVar3 + iVar4 + 4)
+          ;
+          pafVar3 = param_1->knots;
+          puVar6 = (undefined4 *)((int)*pafVar3 + iVar4);
+          lVar8 = lVar8 + 0x20;
+          *puVar6 = *(undefined4 *)((int)pafVar3[1] + iVar4);
+          puVar6[1] = *(undefined4 *)((int)pafVar3[1] + iVar4 + 4);
+        } while ((int)uVar7 < (int)(uVar1 - 4));
       }
-      if ((int)uVar10 < iVar8) {
-        lVar12 = ((ulonglong)uVar1 - 1) - uVar10;
-        lVar11 = (uVar10 & 0x1fffffff) << 3;
+      if ((int)uVar7 < iVar5) {
+        lVar9 = ((ulonglong)uVar1 - 1) - uVar7;
+        lVar8 = (uVar7 & 0x1fffffff) << 3;
         do {
-          puVar9 = (undefined4 *)((int)lVar11 + *piVar6);
-          lVar11 = lVar11 + 8;
-          *puVar9 = puVar9[2];
-          puVar9[1] = puVar9[3];
-          lVar12 = lVar12 + -1;
-        } while (lVar12 != 0);
+          puVar6 = (undefined4 *)((int)*param_1->knots + (int)lVar8);
+          lVar8 = lVar8 + 8;
+          *puVar6 = puVar6[2];
+          puVar6[1] = puVar6[3];
+          lVar9 = lVar9 + -1;
+        } while (lVar9 != 0);
       }
     }
-    *(undefined4 *)((uint)uVar1 * 8 + *piVar6 + -8) = 0xbf800000;
-    *(undefined4 *)((uint)uVar1 * 8 + *piVar6 + -4) = 0xbf800000;
-    *(short *)piVar6[1] = *(short *)piVar6[1] + -1;
-    if ((code *)piVar6[4] != (code *)0x0) {
-      (*(code *)piVar6[4])(piVar6,3,lVar7);
+    param_1->knots[uVar1 - 1][0] = -1.0;
+    param_1->knots[uVar1 - 1][1] = -1.0;
+    *param_1->knotCount = *param_1->knotCount - 1;
+    if (param_1->eventCallback !=
+        (_func___cdecl_void_DevGraph_ptr_DevEventType_LocalClientNum_t *)0x0) {
+      (*param_1->eventCallback)(param_1,EVENT_UPDATE,param_2);
     }
   }
-  __restgprlr_28();
   return;
 }
 
 
 // 82409998  DevGui_UpdateGraph  (devgui/devgui.cpp:2058)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void DevGui_UpdateGraph(LocalClientNum_t param_1,float param_2)
@@ -3685,41 +3609,37 @@ void DevGui_UpdateGraph(LocalClientNum_t param_1,float param_2)
   DevGraph *pDVar2;
   float fVar3;
   float fVar4;
-  LocalClientNum_t LVar5;
-  DevMenuItem *pDVar6;
-  bool bVar9;
-  DevGuiInputAxis DVar7;
-  short sVar8;
-  float (*pafVar10) [2];
-  int iVar11;
-  uint uVar12;
-  double extraout_f1;
+  DevMenuItem *pDVar5;
+  bool bVar8;
+  DevGuiInputAxis DVar6;
+  short sVar7;
+  float (*pafVar9) [2];
+  int iVar10;
+  uint uVar11;
+  double dVar12;
   double dVar13;
   double dVar14;
   double dVar15;
   double dVar16;
   double dVar17;
   double dVar18;
-  double dVar19;
-  float fVar20;
+  float fVar19;
   
-  __savegprlr_26((double)param_2,param_1);
-  LVar5 = __savefpr_25();
-  dVar14 = extraout_f1;
-  pDVar6 = DevGui_GetMenu(devguiGlob.selectedMenu);
-  if (pDVar6 == (DevMenuItem *)0x0) {
+  dVar13 = (double)param_2;
+  pDVar5 = DevGui_GetMenu(devguiGlob.selectedMenu);
+  if (pDVar5 == (DevMenuItem *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\devgui\\devgui.cpp",0x81a,0,
                     "%s");
   }
-  if (pDVar6->childType != '\x03') {
+  if (pDVar5->childType != '\x03') {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\devgui\\devgui.cpp",0x81b,0,
                     "%s");
   }
-  if ((pDVar6->child).command == (char *)0x0) {
+  if ((pDVar5->child).command == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\devgui\\devgui.cpp",0x81c,0,
                     "%s");
   }
-  pDVar2 = (pDVar6->child).graph;
+  pDVar2 = (pDVar5->child).graph;
   if (pDVar2 == (DevGraph *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\devgui\\devgui.cpp",0x820,0,
                     "%s");
@@ -3741,145 +3661,132 @@ void DevGui_UpdateGraph(LocalClientNum_t param_1,float param_2)
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\devgui\\devgui.cpp",0x823,0,
                     "%s");
   }
-  uVar12 = (uint)uVar1;
-  if ((pDVar2->selectedKnot < 0) || ((int)uVar12 <= pDVar2->selectedKnot)) {
+  uVar11 = (uint)uVar1;
+  if ((pDVar2->selectedKnot < 0) || ((int)uVar11 <= pDVar2->selectedKnot)) {
     pDVar2->selectedKnot = 0;
   }
-  bVar9 = DevGui_IsButtonPressed(INPUT_GRAPH_EDIT);
-  if (bVar9) {
+  bVar8 = DevGui_IsButtonPressed(INPUT_GRAPH_EDIT);
+  if (bVar8) {
     devguiGlob.editingKnot = devguiGlob.editingKnot == false;
   }
-  bVar9 = DevGui_IsButtonPressed(INPUT_GRAPH_ADD);
-  if (bVar9) {
-    DevGui_AddGraphKnot(pDVar2,LVar5);
+  bVar8 = DevGui_IsButtonPressed(INPUT_GRAPH_ADD);
+  if (bVar8) {
+    DevGui_AddGraphKnot(pDVar2,param_1);
     devguiGlob.editingKnot = false;
-    __restfpr_25();
-    __restgprlr_26();
     return;
   }
-  bVar9 = DevGui_IsButtonPressed(INPUT_GRAPH_REMOVE);
-  if (bVar9) {
-    DevGui_RemoveGraphKnot(pDVar2,LVar5);
+  bVar8 = DevGui_IsButtonPressed(INPUT_GRAPH_REMOVE);
+  if (bVar8) {
+    DevGui_RemoveGraphKnot(pDVar2,param_1);
     devguiGlob.editingKnot = false;
-    __restfpr_25();
-    __restgprlr_26();
     return;
   }
-  bVar9 = DevGui_IsButtonPressed(INPUT_GRAPH_SAVE);
-  if (bVar9) {
-    if (pDVar2->eventCallback !=
+  bVar8 = DevGui_IsButtonPressed(INPUT_GRAPH_SAVE);
+  if (bVar8) {
+    if (pDVar2->eventCallback ==
         (_func___cdecl_void_DevGraph_ptr_DevEventType_LocalClientNum_t *)0x0) {
-      (*pDVar2->eventCallback)(pDVar2,EVENT_SAVE,LVar5);
-      __restfpr_25();
-      __restgprlr_26();
       return;
     }
-    goto LAB_82409f5c;
+    (*pDVar2->eventCallback)(pDVar2,EVENT_SAVE,param_1);
+    return;
   }
-  bVar9 = DevGui_IsButtonPressed(INPUT_ACCEPT);
-  if (bVar9) {
-    if (pDVar2->eventCallback !=
+  bVar8 = DevGui_IsButtonPressed(INPUT_ACCEPT);
+  if (bVar8) {
+    if (pDVar2->eventCallback ==
         (_func___cdecl_void_DevGraph_ptr_DevEventType_LocalClientNum_t *)0x0) {
-      (*pDVar2->eventCallback)(pDVar2,EVENT_ACCEPT,LVar5);
-      __restfpr_25();
-      __restgprlr_26();
       return;
     }
-    goto LAB_82409f5c;
+    (*pDVar2->eventCallback)(pDVar2,EVENT_ACCEPT,param_1);
+    return;
   }
-  bVar9 = DevGui_IsButtonPressed(INPUT_REJECT);
-  DVar7 = (DevGuiInputAxis)bVar9;
-  if (bVar9) {
+  bVar8 = DevGui_IsButtonPressed(INPUT_REJECT);
+  DVar6 = (DevGuiInputAxis)bVar8;
+  if (bVar8) {
     if (pDVar2->eventCallback !=
         (_func___cdecl_void_DevGraph_ptr_DevEventType_LocalClientNum_t *)0x0) {
-      (*pDVar2->eventCallback)(pDVar2,EVENT_DEACTIVATE,LVar5);
+      (*pDVar2->eventCallback)(pDVar2,EVENT_DEACTIVATE,param_1);
     }
     devguiGlob.editingMenuItem = false;
-    __restfpr_25();
-    __restgprlr_26();
     return;
   }
   if (devguiGlob.editingKnot != false) {
-    dVar19 = 0.0;
-    dVar16 = 0.029999999329447746;
-    dVar18 = 1.0;
-    fVar20 = pDVar2->knots[pDVar2->selectedKnot][0];
-    dVar15 = (double)fVar20;
-    dVar17 = (double)pDVar2->knots[pDVar2->selectedKnot][1];
-    fVar20 = DevGui_UpdateFloatScroll((float)dVar14,fVar20,0.0,1.0,0.03,SCROLL_XAXIS,0.0);
-    dVar13 = (double)fVar20;
-    fVar20 = DevGui_UpdateFloatScroll
-                       ((float)dVar14,(float)dVar17,(float)dVar19,(float)dVar18,(float)dVar16,DVar7,
-                        (float)dVar19);
-    iVar11 = pDVar2->selectedKnot;
-    if ((iVar11 < 1) || ((int)uVar12 <= iVar11 + 1)) {
+    dVar18 = 0.0;
+    dVar15 = 0.029999999329447746;
+    dVar17 = 1.0;
+    fVar19 = pDVar2->knots[pDVar2->selectedKnot][0];
+    dVar14 = (double)fVar19;
+    dVar16 = (double)pDVar2->knots[pDVar2->selectedKnot][1];
+    fVar19 = DevGui_UpdateFloatScroll((float)dVar13,fVar19,0.0,1.0,0.03,SCROLL_XAXIS,0.0);
+    dVar12 = (double)fVar19;
+    fVar19 = DevGui_UpdateFloatScroll
+                       ((float)dVar13,(float)dVar16,(float)dVar18,(float)dVar17,(float)dVar15,DVar6,
+                        (float)dVar18);
+    iVar10 = pDVar2->selectedKnot;
+    if ((iVar10 < 1) || ((int)uVar11 <= iVar10 + 1)) {
       if (pDVar2->disableEditingEndPoints == false) {
-        fVar20 = (float)((double)fVar20 - dVar17);
-        bVar9 = 1e-06 < ABS(fVar20);
-        pDVar2->knots[iVar11][1] = fVar20 * 4.0 + pDVar2->knots[iVar11][1];
-        dVar14 = (double)pDVar2->knots[pDVar2->selectedKnot][1];
-        if ((float)(dVar14 - dVar18) < 0.0) {
-          dVar18 = dVar14;
+        fVar19 = (float)((double)fVar19 - dVar16);
+        bVar8 = 1e-06 < ABS(fVar19);
+        pDVar2->knots[iVar10][1] = fVar19 * 4.0 + pDVar2->knots[iVar10][1];
+        dVar13 = (double)pDVar2->knots[pDVar2->selectedKnot][1];
+        if ((float)(dVar13 - dVar17) < 0.0) {
+          dVar17 = dVar13;
         }
-        if (-dVar14 < 0.0) {
-          dVar19 = dVar18;
+        if (-dVar13 < 0.0) {
+          dVar18 = dVar17;
         }
-        pDVar2->knots[pDVar2->selectedKnot][1] = (float)dVar19;
+        pDVar2->knots[pDVar2->selectedKnot][1] = (float)dVar18;
       }
       else {
-        bVar9 = false;
+        bVar8 = false;
       }
     }
     else {
-      fVar20 = (float)((double)fVar20 - dVar17);
-      if ((1e-06 < ABS((float)(dVar13 - dVar15))) || (bVar9 = false, 1e-06 < ABS(fVar20))) {
-        bVar9 = true;
+      fVar19 = (float)((double)fVar19 - dVar16);
+      if ((1e-06 < ABS((float)(dVar12 - dVar14))) || (bVar8 = false, 1e-06 < ABS(fVar19))) {
+        bVar8 = true;
       }
-      pDVar2->knots[iVar11][0] = (float)(dVar13 - dVar15) * 3.0 + pDVar2->knots[iVar11][0];
-      pDVar2->knots[pDVar2->selectedKnot][1] = fVar20 * 4.0 + pDVar2->knots[pDVar2->selectedKnot][1]
+      pDVar2->knots[iVar10][0] = (float)(dVar12 - dVar14) * 3.0 + pDVar2->knots[iVar10][0];
+      pDVar2->knots[pDVar2->selectedKnot][1] = fVar19 * 4.0 + pDVar2->knots[pDVar2->selectedKnot][1]
       ;
-      pafVar10 = pDVar2->knots + pDVar2->selectedKnot;
-      fVar20 = (*pafVar10)[0];
-      fVar3 = pafVar10[1][0] - 0.005;
-      fVar4 = pafVar10[-1][0] + 0.005;
-      if (fVar20 - fVar3 < 0.0) {
-        fVar3 = fVar20;
+      pafVar9 = pDVar2->knots + pDVar2->selectedKnot;
+      fVar19 = (*pafVar9)[0];
+      fVar3 = pafVar9[1][0] - 0.005;
+      fVar4 = pafVar9[-1][0] + 0.005;
+      if (fVar19 - fVar3 < 0.0) {
+        fVar3 = fVar19;
       }
-      if (fVar4 - fVar20 < 0.0) {
+      if (fVar4 - fVar19 < 0.0) {
         fVar4 = fVar3;
       }
-      (*pafVar10)[0] = fVar4;
-      dVar14 = (double)pDVar2->knots[pDVar2->selectedKnot][1];
-      if ((float)(dVar14 - dVar18) < 0.0) {
-        dVar18 = dVar14;
+      (*pafVar9)[0] = fVar4;
+      dVar13 = (double)pDVar2->knots[pDVar2->selectedKnot][1];
+      if ((float)(dVar13 - dVar17) < 0.0) {
+        dVar17 = dVar13;
       }
-      if (-dVar14 < 0.0) {
-        dVar19 = dVar18;
+      if (-dVar13 < 0.0) {
+        dVar18 = dVar17;
       }
-      pDVar2->knots[pDVar2->selectedKnot][1] = (float)dVar19;
+      pDVar2->knots[pDVar2->selectedKnot][1] = (float)dVar18;
     }
-    if ((bVar9) &&
-       (pDVar2->eventCallback !=
-        (_func___cdecl_void_DevGraph_ptr_DevEventType_LocalClientNum_t *)0x0)) {
-      (*pDVar2->eventCallback)(pDVar2,EVENT_UPDATE,LVar5);
-      __restfpr_25();
-      __restgprlr_26();
+    if (!bVar8) {
       return;
     }
-    goto LAB_82409f5c;
+    if (pDVar2->eventCallback ==
+        (_func___cdecl_void_DevGraph_ptr_DevEventType_LocalClientNum_t *)0x0) {
+      return;
+    }
+    (*pDVar2->eventCallback)(pDVar2,EVENT_UPDATE,param_1);
+    return;
   }
-  sVar8 = DevGui_GetMenuScroll(SCROLL_XAXIS);
-  if ((sVar8 < 0) && (0 < pDVar2->selectedKnot)) {
-    iVar11 = pDVar2->selectedKnot + -1;
-LAB_82409f54:
-    pDVar2->selectedKnot = iVar11;
+  sVar7 = DevGui_GetMenuScroll(SCROLL_XAXIS);
+  if ((sVar7 < 0) && (0 < pDVar2->selectedKnot)) {
+    iVar10 = pDVar2->selectedKnot + -1;
   }
-  else if ((0 < sVar8) && (iVar11 = pDVar2->selectedKnot + 1, iVar11 < (int)uVar12))
-  goto LAB_82409f54;
+  else if ((sVar7 < 1) || (iVar10 = pDVar2->selectedKnot + 1, (int)uVar11 <= iVar10))
+  goto LAB_82409f58;
+  pDVar2->selectedKnot = iVar10;
+LAB_82409f58:
   DevGui_UpdateSelection();
-LAB_82409f5c:
-  __restfpr_25();
-  __restgprlr_26();
   return;
 }
 
@@ -3913,105 +3820,106 @@ void DevGui_Shutdown(void)
 
 // 82409FC0  DevGui_KeyPressed  (devgui/devgui.cpp:2209)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void DevGui_KeyPressed(int param_1)
 
 {
-  int iVar1;
-  DevMenuItem *pDVar2;
-  char *pcVar3;
-  ushort uVar4;
+  DevMenuItem *pDVar1;
+  char *pcVar2;
+  ushort uVar3;
   char acStack_c0 [192];
   
-  iVar1 = __savegprlr_26(param_1);
-  uVar4 = devguiGlob.selectedMenu;
-  if ((devguiGlob.bindNextKey != false) && (devguiGlob.bindNextKey = false, iVar1 != 0x1b)) {
-    if ((iVar1 != 9) && (iVar1 != 0xa7)) {
+  uVar3 = devguiGlob.selectedMenu;
+  if ((devguiGlob.bindNextKey) && (devguiGlob.bindNextKey = false, param_1 != 0x1b)) {
+    if ((param_1 != 9) && (param_1 != 0xa7)) {
       if (devguiGlob.selectedMenu == 0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\devgui\\devgui.cpp",0x8b3,0
                         ,"%s");
       }
-      pDVar2 = DevGui_GetMenu(uVar4);
-      if (pDVar2 == (DevMenuItem *)0x0) {
+      pDVar1 = DevGui_GetMenu(uVar3);
+      if (pDVar1 == (DevMenuItem *)0x0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\devgui\\devgui.cpp",0x8b5,0
                         ,"%s");
       }
-      if ((pDVar2->parent != 0) &&
-         ((pDVar2->childType == '\0' ||
-          ((pDVar2->childType == '\x01' && (devguiGlob.editingMenuItem == false)))))) {
-        uVar4 = pDVar2->parent;
+      if ((pDVar1->parent != 0) &&
+         ((pDVar1->childType == '\0' ||
+          ((pDVar1->childType == '\x01' && (devguiGlob.editingMenuItem == false)))))) {
+        uVar3 = pDVar1->parent;
       }
-      DevGui_GetSliderPath(uVar4,acStack_c0,0);
-      pcVar3 = va("devgui_open \"%s\"");
-      Key_SetBindingCheat(LOCAL_CLIENT_0,iVar1,pcVar3);
-      __restgprlr_26();
+      DevGui_GetSliderPath(uVar3,acStack_c0,0);
+      pcVar2 = va("devgui_open \"%s\"");
+      Key_SetBindingCheat(LOCAL_CLIENT_0,param_1,pcVar2);
       return;
     }
     Com_Printf(0xb,"Can\'t rebind \'tab\' or \'F1\'\n");
   }
-  __restgprlr_26();
   return;
 }
 
 
 // 8240A110  DevGui_Update  (devgui/devgui.cpp:2244)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void DevGui_Update(LocalClientNum_t param_1,float param_2)
 
 {
-  LocalClientNum_t LVar1;
-  bool bVar3;
-  DevMenuItem *pDVar2;
-  double extraout_f1;
-  double dVar4;
+  bool bVar2;
+  DevMenuItem *pDVar1;
+  double dVar3;
   
-  LVar1 = __savegprlr_27((double)param_2,param_1);
-  if (((devguiGlob.isActive == false) || (devguiGlob.bindNextKey != false)) ||
-     (dVar4 = extraout_f1, bVar3 = DevGui_InputUpdate(LVar1,(float)extraout_f1), !bVar3))
-  goto LAB_8240a2a0;
-  bVar3 = DevGui_IsButtonReleased(INPUT_BIND);
-  if ((bVar3) && (devguiGlob.selectedMenu != 0)) {
-    devguiGlob.bindNextKey = true;
-    __restgprlr_27();
+  dVar3 = (double)param_2;
+  if (!devguiGlob.isActive) {
     return;
   }
-  pDVar2 = DevGui_GetMenu(devguiGlob.selectedMenu);
-  if (pDVar2 == (DevMenuItem *)0x0) {
+  if (devguiGlob.bindNextKey) {
+    return;
+  }
+  bVar2 = DevGui_InputUpdate(param_1,param_2);
+  if (!bVar2) {
+    return;
+  }
+  bVar2 = DevGui_IsButtonReleased(INPUT_BIND);
+  if ((bVar2) && (devguiGlob.selectedMenu != 0)) {
+    devguiGlob.bindNextKey = true;
+    return;
+  }
+  pDVar1 = DevGui_GetMenu(devguiGlob.selectedMenu);
+  if (pDVar1 == (DevMenuItem *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\devgui\\devgui.cpp",0x8d7,0,
                     "%s");
   }
-  if (devguiGlob.editingMenuItem == false) {
-LAB_8240a264:
-    DevGui_MoveSelectionHorizontally();
-    DevGui_MoveSelectionVertically();
-  }
-  else {
-    if (pDVar2->childType == '\x03') {
-      DevGui_UpdateGraph(LVar1,(float)dVar4);
-      __restgprlr_27();
+  if (devguiGlob.editingMenuItem != false) {
+    if (pDVar1->childType == '\x03') {
+      DevGui_UpdateGraph(param_1,(float)dVar3);
       return;
     }
-    if (devguiGlob.editingMenuItem == false) goto LAB_8240a264;
-    if (pDVar2->childType != '\x01') {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\devgui\\devgui.cpp",0x8e2,0,
-                      "%s");
+    if (devguiGlob.editingMenuItem != false) {
+      if (pDVar1->childType != '\x01') {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\devgui\\devgui.cpp",0x8e2,0
+                        ,"%s");
+      }
+      DevGui_UpdateDvar((float)dVar3);
+      DevGui_UpdateSelection();
+      goto LAB_8240a26c;
     }
-    DevGui_UpdateDvar((float)dVar4);
-    DevGui_UpdateSelection();
   }
-  bVar3 = DevGui_IsButtonReleased(INPUT_ACCEPT);
-  if (bVar3) {
-    DevGui_Accept(LVar1);
+  DevGui_MoveSelectionHorizontally();
+  DevGui_MoveSelectionVertically();
+LAB_8240a26c:
+  bVar2 = DevGui_IsButtonReleased(INPUT_ACCEPT);
+  if (bVar2) {
+    DevGui_Accept(param_1);
   }
-  bVar3 = DevGui_IsButtonReleased(INPUT_REJECT);
-  if (bVar3) {
+  bVar2 = DevGui_IsButtonReleased(INPUT_REJECT);
+  if (bVar2) {
     DevGui_Reject();
   }
-LAB_8240a2a0:
-  __restgprlr_27();
   return;
 }
 

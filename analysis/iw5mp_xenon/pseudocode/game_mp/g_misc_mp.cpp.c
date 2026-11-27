@@ -15,16 +15,17 @@ void SP_info_notnull(gentity_s *param_1)
 
 // 8247D2D0  SP_light  (game_mp/g_misc_mp.cpp:19)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
 void SP_light(gentity_s *param_1)
 
 {
-  gentity_s *pgVar1;
-  int iVar2;
-  ComPrimaryLight *pCVar3;
-  float fVar4;
+  int iVar1;
+  ComPrimaryLight *pCVar2;
+  float fVar3;
   uint local_60 [2];
   float local_58;
   float local_54;
@@ -32,58 +33,57 @@ void SP_light(gentity_s *param_1)
   float afStack_48 [4];
   float afStack_38 [14];
   
-  pgVar1 = (gentity_s *)__savegprlr_28(param_1);
-  if (level.spawnVar.spawnVarsValid == false) {
+  if (!level.spawnVar.spawnVarsValid) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_misc_mp.cpp",0x1a,0,
                     "%s");
   }
-  iVar2 = G_SpawnInt(1,"0",(int *)local_60);
-  if (iVar2 == 0) {
-    G_FreeEntity(pgVar1);
-    __restgprlr_28();
+  iVar1 = G_SpawnInt(1,"0",(int *)local_60);
+  if (iVar1 == 0) {
+    G_FreeEntity(param_1);
     return;
   }
-  pCVar3 = Com_GetPrimaryLight(local_60[0]);
-  (pgVar1->s).index.brushModel = local_60[0] & 0xffff;
+  pCVar2 = Com_GetPrimaryLight(local_60[0]);
+  (param_1->s).index.brushModel = local_60[0] & 0xffff;
   if ((local_60[0] & 0xffff) != local_60[0]) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_misc_mp.cpp",0x24,1,
                     "self->s.index.primaryLight == primaryLightIndex\n\t%i, %i");
   }
-  fVar4 = ColorNormalize(pCVar3->color,afStack_48);
-  (pgVar1->s).lerp.u.turret.gunAngles[1] = fVar4;
-  Byte4PackRgba(afStack_48,(uchar *)&(pgVar1->s).lerp.u);
-  (pgVar1->s).lerp.u.primaryLight.colorAndExp[3] = pCVar3->exponent;
-  (pgVar1->s).lerp.u.turret.gunAngles[2] = pCVar3->radius;
-  (pgVar1->s).lerp.u.turret.lastBarrelRotChangeTime = (int)pCVar3->cosHalfFovOuter;
-  (pgVar1->s).lerp.u.primaryLight.cosHalfFovInner = pCVar3->cosHalfFovInner;
-  local_58 = -pCVar3->dir[0];
-  local_54 = -pCVar3->dir[1];
-  local_50 = -pCVar3->dir[2];
+  fVar3 = ColorNormalize(pCVar2->color,afStack_48);
+  (param_1->s).lerp.u.turret.gunAngles[1] = fVar3;
+  Byte4PackRgba(afStack_48,(uchar *)&(param_1->s).lerp.u);
+  (param_1->s).lerp.u.primaryLight.colorAndExp[3] = pCVar2->exponent;
+  (param_1->s).lerp.u.turret.gunAngles[2] = pCVar2->radius;
+  (param_1->s).lerp.u.turret.lastBarrelRotChangeTime = (int)pCVar2->cosHalfFovOuter;
+  (param_1->s).lerp.u.primaryLight.cosHalfFovInner = pCVar2->cosHalfFovInner;
+  local_58 = -pCVar2->dir[0];
+  local_54 = -pCVar2->dir[1];
+  local_50 = -pCVar2->dir[2];
   vectoangles(&local_58,afStack_38);
-  G_SetAngle(pgVar1,afStack_38);
-  G_SetOrigin(pgVar1,pCVar3->origin);
-  fVar4 = pCVar3->radius;
-  (pgVar1->r).box.midPoint[0] = 0.0;
-  (pgVar1->r).box.midPoint[1] = 0.0;
-  (pgVar1->r).box.midPoint[2] = 0.0;
-  (pgVar1->r).box.halfSize[0] = fVar4;
-  (pgVar1->r).box.halfSize[1] = fVar4;
-  (pgVar1->r).box.halfSize[2] = fVar4;
-  iVar2 = (pgVar1->r).contents;
-  (pgVar1->s).eType = 10;
-  if (iVar2 != 0) {
+  G_SetAngle(param_1,afStack_38);
+  G_SetOrigin(param_1,pCVar2->origin);
+  fVar3 = pCVar2->radius;
+  (param_1->r).box.midPoint[0] = 0.0;
+  (param_1->r).box.midPoint[1] = 0.0;
+  (param_1->r).box.midPoint[2] = 0.0;
+  (param_1->r).box.halfSize[0] = fVar3;
+  (param_1->r).box.halfSize[1] = fVar3;
+  (param_1->r).box.halfSize[2] = fVar3;
+  iVar1 = (param_1->r).contents;
+  (param_1->s).eType = 10;
+  if (iVar1 != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_misc_mp.cpp",0x36,1,
                     "%s");
   }
-  pgVar1->handler = '\x13';
-  SV_LinkEntity(pgVar1);
-  __restgprlr_28();
+  param_1->handler = '\x13';
+  SV_LinkEntity(param_1);
   return;
 }
 
 
 // 8247D478  TeleportPlayer  (game_mp/g_misc_mp.cpp:68)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
@@ -91,36 +91,33 @@ void TeleportPlayer(gentity_s *param_1,float *param_2,float *param_3)
 
 {
   gclient_s *pgVar1;
-  gentity_s *pgVar2;
   
-  pgVar2 = (gentity_s *)__savegprlr_27(param_1);
-  if (pgVar2->client == (gclient_s *)0x0) {
+  if (param_1->client == (gclient_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_misc_mp.cpp",0x45,0,
                     "%s");
   }
-  if ((pgVar2->client->sess).connected == CON_DISCONNECTED) {
+  if ((param_1->client->sess).connected == CON_DISCONNECTED) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_misc_mp.cpp",0x46,0,
                     "%s");
   }
-  pgVar1 = pgVar2->client;
+  pgVar1 = param_1->client;
   (pgVar1->ps).origin[0] = *param_2;
   (pgVar1->ps).origin[1] = param_2[1];
   (pgVar1->ps).origin[2] = param_2[2];
-  (pgVar2->client->ps).origin[2] = (pgVar2->client->ps).origin[2] + 1.0;
-  (pgVar2->client->ps).eFlags = (pgVar2->client->ps).eFlags ^ 2;
-  SetClientViewAngle(pgVar2,param_3);
-  if (pgVar2->tagInfo == (tagInfo_s *)0x0) {
-    (pgVar2->r).currentAngles[0] = 0.0;
+  (param_1->client->ps).origin[2] = (param_1->client->ps).origin[2] + 1.0;
+  (param_1->client->ps).eFlags = (param_1->client->ps).eFlags ^ 2;
+  SetClientViewAngle(param_1,param_3);
+  if (param_1->tagInfo == (tagInfo_s *)0x0) {
+    (param_1->r).currentAngles[0] = 0.0;
   }
-  BG_PlayerStateToEntityState(&pgVar2->client->ps,(entityState_s *)pgVar2,1);
-  pgVar1 = pgVar2->client;
-  (pgVar2->r).currentOrigin[0] = (pgVar1->ps).origin[0];
-  (pgVar2->r).currentOrigin[1] = (pgVar1->ps).origin[1];
-  (pgVar2->r).currentOrigin[2] = (pgVar1->ps).origin[2];
-  if ((pgVar2->r).isLinked != '\0') {
-    SV_LinkEntity(pgVar2);
+  BG_PlayerStateToEntityState(&param_1->client->ps,&param_1->s,1);
+  pgVar1 = param_1->client;
+  (param_1->r).currentOrigin[0] = (pgVar1->ps).origin[0];
+  (param_1->r).currentOrigin[1] = (pgVar1->ps).origin[1];
+  (param_1->r).currentOrigin[2] = (pgVar1->ps).origin[2];
+  if ((param_1->r).isLinked != '\0') {
+    SV_LinkEntity(param_1);
   }
-  __restgprlr_27();
   return;
 }
 

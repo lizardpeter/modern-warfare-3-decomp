@@ -12,28 +12,21 @@ void D3D::_dynamic_initializer_for__g_RTGlobal__(void)
 
 // 8287E208  RTMemDebugAllocPhysical  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtcommon.cpp:70)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void * D3D::RTMemDebugAllocPhysical(ulong param_1,ulong param_2,ulong param_3)
 
 {
-  undefined8 uVar1;
-  void *pvVar2;
-  ulonglong uVar3;
-  uint uVar4;
-  ulonglong uVar5;
+  void *pvVar1;
   
-  uVar5 = (ulonglong)(int)param_3;
-  uVar3 = (ulonglong)(int)param_2;
-  uVar1 = __savegprlr_29(param_1);
-  uVar4 = (uint)uVar3;
-  if ((uVar3 & 0xffffffff) == 0) {
-    uVar4 = 0xc;
+  if (param_2 == 0) {
+    param_2 = 0xc;
   }
-  uVar1 = MmAllocatePhysicalMemoryEx
-                    (3,uVar1,*(undefined4 *)
-                              ((int)XapiProtectTypeToFlags + (int)((uVar5 & 0xffffffff) << 2)),0,
-                     0xffffffffffffffff,1 << (uVar4 & 0x3f));
-  pvVar2 = (void *)__restgprlr_29(uVar1);
-  return pvVar2;
+  pvVar1 = (void *)MmAllocatePhysicalMemoryEx
+                             (3,param_1,XapiProtectTypeToFlags[param_3],0,0xffffffffffffffff,
+                              1 << (param_2 & 0x3f));
+  return pvVar1;
 }
 
 
@@ -81,6 +74,9 @@ void D3D::RT_XMCORE_MemFree(void *param_1,void *param_2)
 
 // 8287E720  Destroy  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtcommon.hpp:226)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void __thiscall
 D3D::
 CTSSortedList<D3D::CVertexShaderHashEntry,unsigned___int64,&D3D::RTDebugMemAlloc,&D3D::RTDebugMemFree>
@@ -89,10 +85,8 @@ CTSSortedList<D3D::CVertexShaderHashEntry,unsigned___int64,&D3D::RTDebugMemAlloc
 {
   undefined4 *puVar1;
   undefined4 *puVar2;
-  undefined4 *puVar3;
   
-  puVar3 = (undefined4 *)__savegprlr_29(this);
-  puVar2 = (undefined4 *)*puVar3;
+  puVar2 = *(undefined4 **)this;
   while (puVar2 != (undefined4 *)0x0) {
     puVar1 = (undefined4 *)*puVar2;
     if (g_AllocDebugHeap == 0) {
@@ -104,8 +98,7 @@ CTSSortedList<D3D::CVertexShaderHashEntry,unsigned___int64,&D3D::RTDebugMemAlloc
       puVar2 = puVar1;
     }
   }
-  *puVar3 = 0;
-  __restgprlr_29();
+  *(undefined4 *)this = 0;
   return;
 }
 
@@ -146,49 +139,49 @@ CRTTextureTracker * __thiscall D3D::CRTTextureTracker::CRTTextureTracker(CRTText
 
 // 8287EC40  RTEnableTextureTracking  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtcommon.cpp:362)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 /* WARNING: Enum "ERareInstruction": Some values do not have unique names */
 
-undefined4 __thiscall D3D::CDevice::RTEnableTextureTracking(CDevice *this)
+int __thiscall D3D::CDevice::RTEnableTextureTracking(CDevice *this)
 
 {
   bool bVar1;
-  D3DDevice *pDVar2;
-  int iVar3;
-  undefined4 uVar4;
+  int iVar2;
   
-  pDVar2 = (D3DDevice *)__savegprlr_29(this);
-  iVar3 = 0;
-  if ((((*(char *)((int)&pDVar2[1].m_Constants.field1_0x300 + 0x367) == '\0') &&
-       (*(char *)((int)&pDVar2[1].m_Constants.field1_0x300 + 0x365) == '\0')) &&
-      (*(char *)((int)&pDVar2[1].m_Constants.field1_0x300 + 0x364) == '\0')) &&
-     ((*(char *)((int)&pDVar2[1].m_Constants.field1_0x300 + 0x366) == '\0' &&
-      (*(char *)((int)&pDVar2[1].m_Constants.field1_0x300 + 0x368) == '\0')))) {
+  iVar2 = 0;
+  if ((((this->m_RTEndResourceCaptureAtNextSwap == false) &&
+       (this->m_RTDisableTextureTrackingAtNextSwap == false)) &&
+      (this->m_RTEnableTextureTrackingAtNextSwap == false)) &&
+     ((this->m_RTBeginResourceCaptureAtNextSwap == false &&
+      (this->m_RTBeginPixGuiResourceCapture == false)))) {
     bVar1 = false;
-    if (*(char *)((int)&pDVar2[1].m_Constants.field1_0x300 + 0x369) == '\0') goto LAB_8287ecac;
+    if (this->m_RTEndPixGuiResourceCapture == false) goto LAB_8287ecac;
   }
   bVar1 = true;
 LAB_8287ecac:
   if (bVar1) {
-    if ((*(char *)((int)&pDVar2[1].m_Constants.field1_0x300 + 0x360) == '\0') ||
-       (*(char *)((int)&pDVar2[1].m_Constants.field1_0x300 + 0x365) != '\0')) {
-      *(undefined1 *)((int)&pDVar2[1].m_Constants.field1_0x300 + 0x364) = 1;
+    if ((this->m_RTTrackTextures == false) || (this->m_RTDisableTextureTrackingAtNextSwap != false))
+    {
+      this->m_RTEnableTextureTrackingAtNextSwap = true;
     }
   }
   else {
-    D3DDevice_BlockUntilIdle(pDVar2);
-    iVar3 = CRTGlobalData::EnableTextureTracking(&g_RTGlobal);
-    if (-1 < iVar3) {
-      *(undefined1 *)((int)&pDVar2[1].m_Constants.field1_0x300 + 0x360) = 1;
+    D3DDevice_BlockUntilIdle((D3DDevice *)this);
+    iVar2 = CRTGlobalData::EnableTextureTracking(&g_RTGlobal);
+    if (-1 < iVar2) {
+      this->m_RTTrackTextures = true;
     }
   }
-  uVar4 = __restgprlr_29(iVar3);
-  return uVar4;
+  return iVar2;
 }
 
 
 // 8287F540  RTOnSwap  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtcommon.cpp:543)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 /* WARNING: Enum "ERareInstruction": Some values do not have unique names */
@@ -197,39 +190,34 @@ undefined4 __thiscall D3D::CDevice::RTOnSwap(CDevice *this)
 
 {
   bool bVar1;
-  char cVar2;
-  void *pvVar3;
-  long lVar4;
-  long lVar5;
-  D3DDevice *pDVar6;
-  int iVar7;
-  int iVar8;
-  undefined4 uVar9;
-  ulonglong uVar10;
+  long lVar2;
+  long lVar3;
+  int iVar4;
+  int iVar5;
+  ulonglong uVar6;
   char in_RESERVE;
   RTGracefulShutdownThreadScoped local_60 [8];
   int local_58;
   ulong local_54;
   uint local_50;
   
-  pDVar6 = (D3DDevice *)__savegprlr_25(this);
-  cVar2 = *(char *)((int)&pDVar6[1].m_Constants.field1_0x300 + 0x367);
-  *(undefined1 *)((int)&pDVar6[1].m_Constants.field1_0x300 + 0x362) = 0;
-  iVar7 = 0;
-  *(undefined1 *)((int)&pDVar6[1].m_Constants.field1_0x300 + 0x363) = 0;
-  if ((((cVar2 != '\0') || (*(char *)((int)&pDVar6[1].m_Constants.field1_0x300 + 0x365) != '\0')) ||
-      (*(char *)((int)&pDVar6[1].m_Constants.field1_0x300 + 0x364) != '\0')) ||
-     (((*(char *)((int)&pDVar6[1].m_Constants.field1_0x300 + 0x366) != '\0' ||
-       (*(char *)((int)&pDVar6[1].m_Constants.field1_0x300 + 0x368) != '\0')) ||
-      (*(char *)((int)&pDVar6[1].m_Constants.field1_0x300 + 0x369) != '\0')))) {
+  this->m_HasKickedOffSinceLastSwap = false;
+  iVar4 = 0;
+  this->m_RTHasTrackedTexturesSinceLastSwap = false;
+  if ((((this->m_RTEndResourceCaptureAtNextSwap != false) ||
+       (this->m_RTDisableTextureTrackingAtNextSwap != false)) ||
+      (this->m_RTEnableTextureTrackingAtNextSwap != false)) ||
+     (((this->m_RTBeginResourceCaptureAtNextSwap != false ||
+       (this->m_RTBeginPixGuiResourceCapture != false)) ||
+      (this->m_RTEndPixGuiResourceCapture != false)))) {
     do {
-      lVar5 = g_RTGlobal.m_GracefulShutdownData;
-      uVar10 = (ulonglong)(uint)g_RTGlobal.m_GracefulShutdownData;
+      lVar3 = g_RTGlobal.m_GracefulShutdownData;
+      uVar6 = (ulonglong)(uint)g_RTGlobal.m_GracefulShutdownData;
       bVar1 = (g_RTGlobal.m_GracefulShutdownData & 0x80000000U) == 0;
       if (!bVar1) goto LAB_8287f658;
       do {
-        lVar4 = g_RTGlobal.m_GracefulShutdownData;
-        if (g_RTGlobal.m_GracefulShutdownData != lVar5) {
+        lVar2 = g_RTGlobal.m_GracefulShutdownData;
+        if (g_RTGlobal.m_GracefulShutdownData != lVar3) {
           if (in_RESERVE != '\0') {
             g_RTGlobal.m_GracefulShutdownData =
                  storeWordConditionalIndexed
@@ -241,12 +229,12 @@ undefined4 __thiscall D3D::CDevice::RTOnSwap(CDevice *this)
         }
         if (in_RESERVE != '\0') {
           g_RTGlobal.m_GracefulShutdownData =
-               storeWordConditionalIndexed(uVar10 + 1,0,0xffffffff829a7000);
+               storeWordConditionalIndexed(uVar6 + 1,0,0xffffffff829a7000);
           bVar1 = true;
         }
       } while (!bVar1);
       sync(1);
-    } while (lVar4 != lVar5);
+    } while (lVar2 != lVar3);
     if (g_RTGlobal.m_TrackTextures == 0) {
       sync(1);
       do {
@@ -264,59 +252,54 @@ LAB_8287f658:
     else {
       local_60[0].m_Ok = true;
     }
-    if (((g_RTGlobal.m_TrackTextures == 0) ||
-        (*(char *)((int)&pDVar6[1].m_Constants.field1_0x300 + 0x367) != '\0')) ||
-       ((*(char *)((int)&pDVar6[1].m_Constants.field1_0x300 + 0x369) != '\0' ||
-        ((*(char *)((int)&pDVar6[1].m_Constants.field1_0x300 + 0x365) != '\0' || (local_60[0].m_Ok))
-        )))) {
-      D3DDevice_BlockUntilIdle(pDVar6);
-      if ((*(char *)((int)&pDVar6[1].m_Constants.field1_0x300 + 0x367) != '\0') &&
-         (cVar2 = *(char *)((int)&pDVar6[1].m_Constants.field1_0x300 + 0x361),
-         *(undefined1 *)((int)&pDVar6[1].m_Constants.field1_0x300 + 0x367) = 0, cVar2 != '\0')) {
-        iVar7 = CRTGlobalData::EndResourceCapture(&g_RTGlobal,false,true);
-        *(undefined1 *)((int)&pDVar6[1].m_Constants.field1_0x300 + 0x361) = 0;
+    if (((g_RTGlobal.m_TrackTextures == 0) || (this->m_RTEndResourceCaptureAtNextSwap != false)) ||
+       ((this->m_RTEndPixGuiResourceCapture != false ||
+        ((this->m_RTDisableTextureTrackingAtNextSwap != false || (local_60[0].m_Ok)))))) {
+      D3DDevice_BlockUntilIdle((D3DDevice *)this);
+      if ((this->m_RTEndResourceCaptureAtNextSwap != false) &&
+         (this->m_RTEndResourceCaptureAtNextSwap = false, this->m_RTTrackMipUsage != false)) {
+        iVar4 = CRTGlobalData::EndResourceCapture(&g_RTGlobal,false,true);
+        this->m_RTTrackMipUsage = false;
       }
-      if (*(char *)((int)&pDVar6[1].m_Constants.field1_0x300 + 0x369) != '\0') {
-        cVar2 = *(char *)((int)&pDVar6[1].m_Constants.field1_0x300 + 0x361);
-        *(undefined1 *)((int)&pDVar6[1].m_Constants.field1_0x300 + 0x369) = 0;
-        if (cVar2 == '\0') {
+      if (this->m_RTEndPixGuiResourceCapture != false) {
+        this->m_RTEndPixGuiResourceCapture = false;
+        if (this->m_RTTrackMipUsage == false) {
           if (_DAT_00000059 != 0) {
             (**(code **)(_DAT_00000059 + 0x18))(0x1b,0xffffffff821f6d90);
           }
         }
         else {
-          iVar8 = CRTGlobalData::EndResourceCapture(&g_RTGlobal,false,true);
-          if (-1 < iVar7) {
-            iVar7 = iVar8;
+          iVar5 = CRTGlobalData::EndResourceCapture(&g_RTGlobal,false,true);
+          if (-1 < iVar4) {
+            iVar4 = iVar5;
           }
-          *(undefined1 *)((int)&pDVar6[1].m_Constants.field1_0x300 + 0x361) = 0;
+          this->m_RTTrackMipUsage = false;
         }
       }
-      if ((*(char *)((int)&pDVar6[1].m_Constants.field1_0x300 + 0x365) != '\0') &&
-         (cVar2 = *(char *)((int)&pDVar6[1].m_Constants.field1_0x300 + 0x360),
-         *(undefined1 *)((int)&pDVar6[1].m_Constants.field1_0x300 + 0x365) = 0, cVar2 != '\0')) {
-        iVar8 = CRTGlobalData::DisableTextureTracking(&g_RTGlobal);
-        if (-1 < iVar7) {
-          iVar7 = iVar8;
+      if ((this->m_RTDisableTextureTrackingAtNextSwap != false) &&
+         (this->m_RTDisableTextureTrackingAtNextSwap = false, this->m_RTTrackTextures != false)) {
+        iVar5 = CRTGlobalData::DisableTextureTracking(&g_RTGlobal);
+        if (-1 < iVar4) {
+          iVar4 = iVar5;
         }
-        *(undefined1 *)((int)&pDVar6[1].m_Constants.field1_0x300 + 0x360) = 0;
-        *(undefined1 *)((int)&pDVar6[1].m_Constants.field1_0x300 + 0x361) = 0;
+        this->m_RTTrackTextures = false;
+        this->m_RTTrackMipUsage = false;
       }
-      if ((((*(char *)((int)&pDVar6[1].m_Constants.field1_0x300 + 0x364) != '\0') &&
-           (*(undefined1 *)((int)&pDVar6[1].m_Constants.field1_0x300 + 0x364) = 0, -1 < iVar7)) &&
-          (*(char *)((int)&pDVar6[1].m_Constants.field1_0x300 + 0x360) == '\0')) &&
-         (iVar7 = CRTGlobalData::EnableTextureTracking(&g_RTGlobal), -1 < iVar7)) {
-        *(undefined1 *)((int)&pDVar6[1].m_Constants.field1_0x300 + 0x360) = 1;
+      if ((((this->m_RTEnableTextureTrackingAtNextSwap != false) &&
+           (this->m_RTEnableTextureTrackingAtNextSwap = false, -1 < iVar4)) &&
+          (this->m_RTTrackTextures == false)) &&
+         (iVar4 = CRTGlobalData::EnableTextureTracking(&g_RTGlobal), -1 < iVar4)) {
+        this->m_RTTrackTextures = true;
       }
-      if (*(char *)((int)&pDVar6[1].m_Constants.field1_0x300 + 0x368) != '\0') {
-        *(undefined1 *)((int)&pDVar6[1].m_Constants.field1_0x300 + 0x368) = 0;
+      if (this->m_RTBeginPixGuiResourceCapture != false) {
+        this->m_RTBeginPixGuiResourceCapture = false;
         if (_DAT_00000059 == 0) {
-          iVar7 = 0;
+          iVar4 = 0;
         }
         else {
-          iVar7 = (**(code **)(_DAT_00000059 + 0x18))(0x87,&local_58);
+          iVar4 = (**(code **)(_DAT_00000059 + 0x18))(0x87,&local_58);
         }
-        if (iVar7 == 0) {
+        if (iVar4 == 0) {
           local_58 = 0x10;
           local_54 = 0x10;
           local_50 = 5;
@@ -327,196 +310,199 @@ LAB_8287f658:
         if (99 < local_50) {
           g_RTGlobal.m_InitParameters.m_SoftCompareThreshold = 99;
         }
-        iVar7 = CRTGlobalData::BeginResourceCapture
-                          (&g_RTGlobal,"unnamedR.pix2",
-                           *(NonSnoopedWriteBacks **)((int)pDVar6[1].m_Pending.m_Mask + 0x14),true,
-                           local_60);
-        if (iVar7 < 0) {
-          *(undefined1 *)((int)&pDVar6[1].m_Constants.field1_0x300 + 0x361) = 0;
+        iVar4 = CRTGlobalData::BeginResourceCapture
+                          (&g_RTGlobal,"unnamedR.pix2",this->m_pNonSnoopedWriteBacks,true,local_60);
+        if (iVar4 < 0) {
+          this->m_RTTrackMipUsage = false;
         }
         else {
-          *(undefined1 *)((int)&pDVar6[1].m_Constants.field1_0x300 + 0x361) = 1;
+          this->m_RTTrackMipUsage = true;
         }
       }
-      if (*(char *)((int)&pDVar6[1].m_Constants.field1_0x300 + 0x366) != '\0') {
-        *(undefined1 *)((int)&pDVar6[1].m_Constants.field1_0x300 + 0x366) = 0;
-        if ((-1 < iVar7) && (*(char *)((int)&pDVar6[1].m_Constants.field1_0x300 + 0x361) == '\0')) {
-          iVar7 = CRTGlobalData::BeginResourceCapture
-                            (&g_RTGlobal,
-                             *(char **)((int)&pDVar6[1].m_Constants.field1_0x300 + 0x36c),
-                             *(NonSnoopedWriteBacks **)((int)pDVar6[1].m_Pending.m_Mask + 0x14),
-                             false,local_60);
-          *(byte *)((int)&pDVar6[1].m_Constants.field1_0x300 + 0x361) =
-               (byte)((uint)iVar7 >> 0x1f) ^ 1;
+      if (this->m_RTBeginResourceCaptureAtNextSwap != false) {
+        this->m_RTBeginResourceCaptureAtNextSwap = false;
+        if ((-1 < iVar4) && (this->m_RTTrackMipUsage == false)) {
+          iVar4 = CRTGlobalData::BeginResourceCapture
+                            (&g_RTGlobal,this->m_pRTPendingResourceCaptureFilename,
+                             this->m_pNonSnoopedWriteBacks,false,local_60);
+          this->m_RTTrackMipUsage = (bool)((byte)((uint)iVar4 >> 0x1f) ^ 1);
         }
-        pvVar3 = *(void **)((int)&pDVar6[1].m_Constants.field1_0x300 + 0x36c);
         if (g_AllocDebugHeap == 0) {
-          XMemFree(pvVar3,0x24800000);
+          XMemFree(this->m_pRTPendingResourceCaptureFilename,0x24800000);
         }
         else {
-          DmDebugFree(pvVar3);
+          DmDebugFree(this->m_pRTPendingResourceCaptureFilename);
         }
-        *(undefined4 *)((int)&pDVar6[1].m_Constants.field1_0x300 + 0x36c) = 0;
+        this->m_pRTPendingResourceCaptureFilename = (char *)0x0;
       }
-      bVar1 = local_60[0].m_Ok == false;
-      if (!bVar1) {
-        sync(1);
-        do {
-          if (in_RESERVE != '\0') {
-            g_RTGlobal.m_GracefulShutdownData =
-                 storeWordConditionalIndexed
-                           ((ulonglong)(uint)g_RTGlobal.m_GracefulShutdownData - 1,0,
-                            0xffffffff829a7000);
-            bVar1 = true;
-          }
-        } while (!bVar1);
+      if (local_60[0].m_Ok == false) {
+        return iVar4;
       }
-      goto LAB_8287f914;
+      sync(1);
+      bVar1 = false;
+      do {
+        if (in_RESERVE != '\0') {
+          g_RTGlobal.m_GracefulShutdownData =
+               storeWordConditionalIndexed
+                         ((ulonglong)(uint)g_RTGlobal.m_GracefulShutdownData - 1,0,
+                          0xffffffff829a7000);
+          bVar1 = true;
+        }
+      } while (!bVar1);
+      return iVar4;
     }
   }
-  iVar7 = 0;
-LAB_8287f914:
-  uVar9 = __restgprlr_25(iVar7);
-  return uVar9;
+  return 0;
 }
 
 
 // 8287E9B0  EnableTextureTracking  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtcommon.cpp:718)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "ERareInstruction": Some values do not have unique names */
 
 undefined4 __thiscall D3D::CRTGlobalData::EnableTextureTracking(CRTGlobalData *this)
 
 {
   bool bVar1;
-  int *piVar2;
+  _func___cdecl_void_int_char_ptr *p_Var2;
   void *pvVar3;
   HINSTANCE__ *pHVar4;
-  _func___cdecl_int *p_Var5;
+  _func___cdecl_T_HRESULT__XLOCKFREE_CREATE_ptr_ulong_ptr *p_Var5;
+  _func___cdecl_void_ulong *p_Var6;
+  _func___cdecl_T_HRESULT_ulong_void_ptr *p_Var7;
+  _func___cdecl_T_HRESULT_ulong_void_ptr_ptr *p_Var8;
+  _func___cdecl_int_ulong *p_Var9;
   CRTTextureTracker *this_00;
-  char *pcVar6;
-  int iVar7;
-  undefined4 uVar8;
+  char *pcVar10;
+  int iVar11;
   char in_RESERVE;
   
-  piVar2 = (int *)__savegprlr_29(this);
-  piVar2[0x4f] = 0;
-  piVar2[99] = piVar2[0x56];
+  p_Var2 = (this->m_InitParameters).m_pfnErrorCallback;
+  this->m_EnableTextureTrackingAtDeviceCreation = 0;
+  this->m_pfnErrorCallback = p_Var2;
   pvVar3 = CreateEventA((void *)0x0,1,0,"D3DCollectorDoneSavingEvent");
-  piVar2[0x4c] = (int)pvVar3;
-  if (pvVar3 != (void *)0x0) {
-    pvVar3 = CreateEventA((void *)0x0,1,0,"D3DCollectorThrottleEvent");
-    piVar2[0x4e] = (int)pvVar3;
-    bVar1 = pvVar3 == (void *)0x0;
-    if (!bVar1) {
-      if ((*piVar2 == 0) && (piVar2[0x57] == 0)) {
-        pHVar4 = LoadLibraryA("xbdm.xex");
-        piVar2[0x41] = (int)pHVar4;
-        if (pHVar4 != (HINSTANCE__ *)0x0) {
-          p_Var5 = GetProcAddress(pHVar4,(char *)0x130);
-          piVar2[0x5e] = (int)p_Var5;
-          p_Var5 = GetProcAddress((HINSTANCE__ *)piVar2[0x41],(char *)0x131);
-          piVar2[0x5f] = (int)p_Var5;
-          p_Var5 = GetProcAddress((HINSTANCE__ *)piVar2[0x41],(char *)0x12e);
-          piVar2[0x60] = (int)p_Var5;
-          p_Var5 = GetProcAddress((HINSTANCE__ *)piVar2[0x41],(char *)0x134);
-          piVar2[0x61] = (int)p_Var5;
-          p_Var5 = GetProcAddress((HINSTANCE__ *)piVar2[0x41],(char *)0x133);
-          piVar2[0x62] = (int)p_Var5;
-          if ((((piVar2[0x5e] != 0) && (piVar2[0x5f] != 0)) && (piVar2[0x60] != 0)) &&
-             ((piVar2[0x61] != 0 && (p_Var5 != (_func___cdecl_int *)0x0)))) {
-            if (g_AllocDebugHeap == 0) {
-              this_00 = XMemAlloc(0x7c24,0x64800000);
-              if (this_00 == (CRTTextureTracker *)0x0) {
-                pcVar6 = "Out of Title Memory";
-                goto LAB_8287eb44;
-              }
-            }
-            else {
-              this_00 = DmDebugAlloc(0x7c24);
-              if (this_00 == (CRTTextureTracker *)0x0) {
-                pcVar6 = "Out of Debug Memory";
-LAB_8287eb44:
-                DefaultTextureTrackerErrorCallback(pcVar6);
-              }
-            }
-            piVar2[0x57] = (int)this_00;
-            if (this_00 == (CRTTextureTracker *)0x0) goto LAB_8287e9f8;
-            CRTTextureTracker::CRTTextureTracker(this_00);
-            iVar7 = CRTTextureTracker::Initialize((CRTTextureTracker *)piVar2[0x57]);
-            bVar1 = iVar7 == 0;
-            if (iVar7 < 0) goto LAB_8287ebc4;
-            *piVar2 = 1;
-            goto LAB_8287eb80;
-          }
-          piVar2[0x5e] = 0;
-          piVar2[0x5f] = 0;
-          piVar2[0x60] = 0;
-          piVar2[0x61] = 0;
-          piVar2[0x62] = 0;
-          FreeLibrary((HINSTANCE__ *)piVar2[0x41]);
-        }
-        iVar7 = -0x7fffbffb;
-      }
-      else {
-LAB_8287eb80:
-        piVar2[0x42] = 0;
-        piVar2[0x43] = 0;
-        piVar2[0x44] = 0;
-        sync(1);
-        do {
-          if (in_RESERVE != '\0') {
-            g_RTGlobal.m_GracefulShutdownData =
-                 storeWordConditionalIndexed
-                           ((ulonglong)(uint)g_RTGlobal.m_GracefulShutdownData & 0x7fffffff,0,
-                            0xffffffff829a7000);
-            bVar1 = true;
-          }
-        } while (!bVar1);
-        iVar7 = 0;
-      }
-      goto LAB_8287ebc4;
-    }
-    CloseHandle((void *)piVar2[0x4c]);
-    piVar2[0x4c] = 0;
+  this->m_CollectorDoneSavingEvent = pvVar3;
+  if (pvVar3 == (void *)0x0) {
+    return 0x8007000e;
   }
-LAB_8287e9f8:
-  iVar7 = -0x7ff8fff2;
-LAB_8287ebc4:
-  uVar8 = __restgprlr_29(iVar7);
-  return uVar8;
+  pvVar3 = CreateEventA((void *)0x0,1,0,"D3DCollectorThrottleEvent");
+  this->m_CollectorThrottleEvent = pvVar3;
+  if (pvVar3 == (void *)0x0) {
+    CloseHandle(this->m_CollectorDoneSavingEvent);
+    this->m_CollectorDoneSavingEvent = (void *)0x0;
+    return 0x8007000e;
+  }
+  bVar1 = false;
+  if ((this->m_TrackTextures != 0) || (this->m_pTextureTracker != (CRTTextureTracker *)0x0))
+  goto LAB_8287eb80;
+  pHVar4 = LoadLibraryA("xbdm.xex");
+  this->m_hXbdmLibrary = pHVar4;
+  if (pHVar4 == (HINSTANCE__ *)0x0) {
+    return 0x80004005;
+  }
+  p_Var5 = (_func___cdecl_T_HRESULT__XLOCKFREE_CREATE_ptr_ulong_ptr *)
+           GetProcAddress(pHVar4,(char *)0x130);
+  this->m_pfnDmQueueCreate = p_Var5;
+  p_Var6 = (_func___cdecl_void_ulong *)GetProcAddress(this->m_hXbdmLibrary,(char *)0x131);
+  this->m_pfnDmQueueDestroy = p_Var6;
+  p_Var7 = (_func___cdecl_T_HRESULT_ulong_void_ptr *)
+           GetProcAddress(this->m_hXbdmLibrary,(char *)0x12e);
+  this->m_pfnDmQueueAdd = p_Var7;
+  p_Var8 = (_func___cdecl_T_HRESULT_ulong_void_ptr_ptr *)
+           GetProcAddress(this->m_hXbdmLibrary,(char *)0x134);
+  this->m_pfnDmQueueRemove = p_Var8;
+  p_Var9 = (_func___cdecl_int_ulong *)GetProcAddress(this->m_hXbdmLibrary,(char *)0x133);
+  this->m_pfnDmQueueIsEmpty = p_Var9;
+  if ((((this->m_pfnDmQueueCreate == (_func___cdecl_T_HRESULT__XLOCKFREE_CREATE_ptr_ulong_ptr *)0x0)
+       || (this->m_pfnDmQueueDestroy == (_func___cdecl_void_ulong *)0x0)) ||
+      (this->m_pfnDmQueueAdd == (_func___cdecl_T_HRESULT_ulong_void_ptr *)0x0)) ||
+     ((this->m_pfnDmQueueRemove == (_func___cdecl_T_HRESULT_ulong_void_ptr_ptr *)0x0 ||
+      (p_Var9 == (_func___cdecl_int_ulong *)0x0)))) {
+    this->m_pfnDmQueueCreate = (_func___cdecl_T_HRESULT__XLOCKFREE_CREATE_ptr_ulong_ptr *)0x0;
+    this->m_pfnDmQueueDestroy = (_func___cdecl_void_ulong *)0x0;
+    this->m_pfnDmQueueAdd = (_func___cdecl_T_HRESULT_ulong_void_ptr *)0x0;
+    this->m_pfnDmQueueRemove = (_func___cdecl_T_HRESULT_ulong_void_ptr_ptr *)0x0;
+    this->m_pfnDmQueueIsEmpty = (_func___cdecl_int_ulong *)0x0;
+    FreeLibrary(this->m_hXbdmLibrary);
+    return 0x80004005;
+  }
+  if (g_AllocDebugHeap == 0) {
+    this_00 = XMemAlloc(0x7c24,0x64800000);
+    if (this_00 == (CRTTextureTracker *)0x0) {
+      pcVar10 = "Out of Title Memory";
+      goto LAB_8287eb44;
+    }
+  }
+  else {
+    this_00 = DmDebugAlloc(0x7c24);
+    if (this_00 == (CRTTextureTracker *)0x0) {
+      pcVar10 = "Out of Debug Memory";
+LAB_8287eb44:
+      DefaultTextureTrackerErrorCallback(pcVar10);
+    }
+  }
+  this->m_pTextureTracker = this_00;
+  if (this_00 == (CRTTextureTracker *)0x0) {
+    return 0x8007000e;
+  }
+  CRTTextureTracker::CRTTextureTracker(this_00);
+  iVar11 = CRTTextureTracker::Initialize(this->m_pTextureTracker);
+  bVar1 = iVar11 == 0;
+  if (iVar11 < 0) {
+    return iVar11;
+  }
+  this->m_TrackTextures = 1;
+LAB_8287eb80:
+  (this->m_Statistics).m_numThumbnailGenerated = 0;
+  (this->m_Statistics).m_numBaseTextureInfo = 0;
+  (this->m_Statistics).m_numBaseTextureInfoAllocation = 0;
+  sync(1);
+  do {
+    if (in_RESERVE != '\0') {
+      g_RTGlobal.m_GracefulShutdownData =
+           storeWordConditionalIndexed
+                     ((ulonglong)(uint)g_RTGlobal.m_GracefulShutdownData & 0x7fffffff,0,
+                      0xffffffff829a7000);
+      bVar1 = true;
+    }
+  } while (!bVar1);
+  return 0;
 }
 
 
 // 8287E380  CRTCommandBufferHacker  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtpm4instrumentation.hpp:777)
+
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 
 CRTCommandBufferHacker * __thiscall
 D3D::CRTCommandBufferHacker::CRTCommandBufferHacker
           (CRTCommandBufferHacker *this,NonSnoopedWriteBacks *param_1)
 
 {
-  CRTCommandBufferHacker *pCVar1;
-  
-  pCVar1 = (CRTCommandBufferHacker *)__savegprlr_29(this);
-  pCVar1->m_bHasInsertedStuffSinceLastFence = 0;
-  pCVar1->m_pBeginExportVertexShader = (ulong *)0x0;
-  pCVar1->m_pEndExportVertexShader = (ulong *)0x0;
-  pCVar1->m_pEndExportPixelShader = (ulong *)0x0;
-  pCVar1->m_pTextureThumbnailVertexShader = (ulong *)0x0;
-  pCVar1->m_pTextureSamplingVertexShader = (ulong *)0x0;
-  pCVar1->m_pTextureChannelCheckVertexShader = (ulong *)0x0;
-  pCVar1->m_pVideoCaptureVertexShader = (ulong *)0x0;
-  SetNonSnoopedPointerFromCpu(pCVar1,param_1);
-  pCVar1->m_NumTimesSpewedInvalidMipWarning = 0;
-  pCVar1->m_bInstrumentEnable = true;
-  pCVar1->m_bHideNextPfd = false;
-  pCVar1->m_bHasHiddenAPfd = false;
-  pCVar1 = (CRTCommandBufferHacker *)__restgprlr_29(pCVar1);
-  return pCVar1;
+  this->m_bHasInsertedStuffSinceLastFence = 0;
+  this->m_pBeginExportVertexShader = (ulong *)0x0;
+  this->m_pEndExportVertexShader = (ulong *)0x0;
+  this->m_pEndExportPixelShader = (ulong *)0x0;
+  this->m_pTextureThumbnailVertexShader = (ulong *)0x0;
+  this->m_pTextureSamplingVertexShader = (ulong *)0x0;
+  this->m_pTextureChannelCheckVertexShader = (ulong *)0x0;
+  this->m_pVideoCaptureVertexShader = (ulong *)0x0;
+  SetNonSnoopedPointerFromCpu(this,param_1);
+  this->m_NumTimesSpewedInvalidMipWarning = 0;
+  this->m_bInstrumentEnable = true;
+  this->m_bHideNextPfd = false;
+  this->m_bHasHiddenAPfd = false;
+  return this;
 }
 
 
 // 8287E788  Destroy  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtpm4instrumentation.hpp:808)
+
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 
 undefined4 __thiscall D3D::CRTCommandBufferHacker::Destroy(CRTCommandBufferHacker *this)
 
@@ -526,24 +512,21 @@ undefined4 __thiscall D3D::CRTCommandBufferHacker::Destroy(CRTCommandBufferHacke
   RTPerfCounterMipResultsBuffer *pRVar3;
   RTResolveTargetUsageBuffer *pRVar4;
   void *pvVar5;
-  CRTCommandBufferHacker *this_00;
   T_HRESULT TVar6;
-  undefined4 uVar7;
-  longlong lVar8;
-  RTBasicTextureInfo **ppRVar9;
+  longlong lVar7;
+  RTBasicTextureInfo **ppRVar8;
   
-  this_00 = (CRTCommandBufferHacker *)__savegprlr_28(this);
-  ppRVar9 = (RTBasicTextureInfo **)&this_00->m_pPixelShaderTextureUsage;
-  lVar8 = 0x20;
+  ppRVar8 = (RTBasicTextureInfo **)&this->m_pPixelShaderTextureUsage;
+  lVar7 = 0x20;
   do {
-    if (ppRVar9[1] != (RTBasicTextureInfo *)0x0) {
-      RTBasicTextureInfo::Release(ppRVar9[1]);
+    if (ppRVar8[1] != (RTBasicTextureInfo *)0x0) {
+      RTBasicTextureInfo::Release(ppRVar8[1]);
     }
-    lVar8 = lVar8 + -1;
-    ppRVar9 = ppRVar9 + 1;
-    *ppRVar9 = (RTBasicTextureInfo *)0x0;
-  } while (lVar8 != 0);
-  puVar1 = this_00->m_pShadowShaders;
+    lVar7 = lVar7 + -1;
+    ppRVar8 = ppRVar8 + 1;
+    *ppRVar8 = (RTBasicTextureInfo *)0x0;
+  } while (lVar7 != 0);
+  puVar1 = this->m_pShadowShaders;
   if (puVar1 != (ulong *)0x0) {
     if (g_AllocDebugHeap == 0) {
       XMemFree(puVar1,0xa1800000);
@@ -552,25 +535,25 @@ undefined4 __thiscall D3D::CRTCommandBufferHacker::Destroy(CRTCommandBufferHacke
       MmFreePhysicalMemory(3,puVar1);
     }
   }
-  this_00->m_pShadowShaders = (ulong *)0x0;
+  this->m_pShadowShaders = (ulong *)0x0;
   if (g_AllocDebugHeap == 0) {
-    XMemFree(this_00->m_pShadowState,0x24800000);
+    XMemFree(this->m_pShadowState,0x24800000);
   }
   else {
-    DmDebugFree(this_00->m_pShadowState);
+    DmDebugFree(this->m_pShadowState);
   }
-  this_00->m_pShadowState = (ulong *)0x0;
-  if (this_00->m_pRingManager != (CRTPM4RingManager *)0x0) {
-    CRTPM4RingManager::Destroy(this_00->m_pRingManager);
+  this->m_pShadowState = (ulong *)0x0;
+  if (this->m_pRingManager != (CRTPM4RingManager *)0x0) {
+    CRTPM4RingManager::Destroy(this->m_pRingManager);
     if (g_AllocDebugHeap == 0) {
-      XMemFree(this_00->m_pRingManager,0x24800000);
+      XMemFree(this->m_pRingManager,0x24800000);
     }
     else {
-      DmDebugFree(this_00->m_pRingManager);
+      DmDebugFree(this->m_pRingManager);
     }
-    this_00->m_pRingManager = (CRTPM4RingManager *)0x0;
+    this->m_pRingManager = (CRTPM4RingManager *)0x0;
   }
-  pRVar2 = this_00->m_pMipResultsDescriptor;
+  pRVar2 = this->m_pMipResultsDescriptor;
   if (pRVar2 != (RTPerfCounterMipResultsDescription *)0x0) {
     if (g_AllocDebugHeap == 0) {
       XMemFree(pRVar2,0x24800000);
@@ -578,9 +561,9 @@ undefined4 __thiscall D3D::CRTCommandBufferHacker::Destroy(CRTCommandBufferHacke
     else {
       DmDebugFree(pRVar2);
     }
-    this_00->m_pMipResultsDescriptor = (RTPerfCounterMipResultsDescription *)0x0;
+    this->m_pMipResultsDescriptor = (RTPerfCounterMipResultsDescription *)0x0;
   }
-  pRVar3 = this_00->m_pMipResultsBuffer;
+  pRVar3 = this->m_pMipResultsBuffer;
   if (pRVar3 != (RTPerfCounterMipResultsBuffer *)0x0) {
     if (g_AllocDebugHeap == 0) {
       XMemFree(pRVar3,0xa1800000);
@@ -588,9 +571,9 @@ undefined4 __thiscall D3D::CRTCommandBufferHacker::Destroy(CRTCommandBufferHacke
     else {
       MmFreePhysicalMemory(3,pRVar3);
     }
-    this_00->m_pMipResultsBuffer = (RTPerfCounterMipResultsBuffer *)0x0;
+    this->m_pMipResultsBuffer = (RTPerfCounterMipResultsBuffer *)0x0;
   }
-  pRVar4 = this_00->m_pResolveTargetUsageBuffer;
+  pRVar4 = this->m_pResolveTargetUsageBuffer;
   if (pRVar4 != (RTResolveTargetUsageBuffer *)0x0) {
     if (g_AllocDebugHeap == 0) {
       XMemFree(pRVar4,0x24800000);
@@ -598,9 +581,9 @@ undefined4 __thiscall D3D::CRTCommandBufferHacker::Destroy(CRTCommandBufferHacke
     else {
       DmDebugFree(pRVar4);
     }
-    this_00->m_pResolveTargetUsageBuffer = (RTResolveTargetUsageBuffer *)0x0;
+    this->m_pResolveTargetUsageBuffer = (RTResolveTargetUsageBuffer *)0x0;
   }
-  pvVar5 = this_00->m_pRareOp4Buffer;
+  pvVar5 = this->m_pRareOp4Buffer;
   if (pvVar5 != (void *)0x0) {
     if (g_AllocDebugHeap == 0) {
       XMemFree(pvVar5,0xb1800000);
@@ -608,16 +591,17 @@ undefined4 __thiscall D3D::CRTCommandBufferHacker::Destroy(CRTCommandBufferHacke
     else {
       MmFreePhysicalMemory(3,pvVar5);
     }
-    this_00->m_pRareOp4Buffer = (void *)0x0;
+    this->m_pRareOp4Buffer = (void *)0x0;
   }
-  TVar6 = CleanUpThumbAndExport(this_00);
-  uVar7 = __restgprlr_28(TVar6);
-  return uVar7;
+  TVar6 = CleanUpThumbAndExport(this);
+  return TVar6;
 }
 
 
 // 8287EE60  DisableTextureTracking  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtcommon.cpp:845)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "ERareInstruction": Some values do not have unique names */
 
 undefined4 __thiscall D3D::CRTGlobalData::DisableTextureTracking(CRTGlobalData *this)
@@ -627,24 +611,21 @@ undefined4 __thiscall D3D::CRTGlobalData::DisableTextureTracking(CRTGlobalData *
   CRTTextureTracker *this_01;
   CPixelShaderHashTable *this_02;
   CVertexShaderHashTable *this_03;
-  CRTGlobalData *this_04;
-  undefined4 uVar1;
   
-  this_04 = (CRTGlobalData *)__savegprlr_25(this);
-  this_04->m_EnableTextureTrackingAtDeviceCreation = 0;
-  if (this_04->m_TrackMipUsage != 0) {
-    EndResourceCapture(this_04,false,this_04->m_GuiOwnsCapture != false);
+  this->m_EnableTextureTrackingAtDeviceCreation = 0;
+  if (this->m_TrackMipUsage != 0) {
+    EndResourceCapture(this,false,this->m_GuiOwnsCapture != false);
   }
-  if (this_04->m_TrackTextures != 0) {
-    this_00 = this_04->m_pCommandBufferHacker;
-    this_01 = this_04->m_pTextureTracker;
-    this_02 = this_04->m_pPixelShaderTracker;
-    this_03 = this_04->m_pVertexShaderTracker;
-    this_04->m_TrackTextures = 0;
-    this_04->m_pTextureTracker = (CRTTextureTracker *)0x0;
-    this_04->m_pPixelShaderTracker = (CPixelShaderHashTable *)0x0;
-    this_04->m_pVertexShaderTracker = (CVertexShaderHashTable *)0x0;
-    this_04->m_pCommandBufferHacker = (CRTCommandBufferHacker *)0x0;
+  if (this->m_TrackTextures != 0) {
+    this_00 = this->m_pCommandBufferHacker;
+    this_01 = this->m_pTextureTracker;
+    this_02 = this->m_pPixelShaderTracker;
+    this_03 = this->m_pVertexShaderTracker;
+    this->m_TrackTextures = 0;
+    this->m_pTextureTracker = (CRTTextureTracker *)0x0;
+    this->m_pPixelShaderTracker = (CPixelShaderHashTable *)0x0;
+    this->m_pVertexShaderTracker = (CVertexShaderHashTable *)0x0;
+    this->m_pCommandBufferHacker = (CRTCommandBufferHacker *)0x0;
     if (this_00 != (CRTCommandBufferHacker *)0x0) {
       CRTCommandBufferHacker::Destroy(this_00);
       if (g_AllocDebugHeap == 0) {
@@ -682,189 +663,175 @@ undefined4 __thiscall D3D::CRTGlobalData::DisableTextureTracking(CRTGlobalData *
         DmDebugFree(this_01);
       }
     }
-    this_04->m_pfnDmQueueCreate = (_func___cdecl_T_HRESULT__XLOCKFREE_CREATE_ptr_ulong_ptr *)0x0;
-    this_04->m_pfnDmQueueDestroy = (_func___cdecl_void_ulong *)0x0;
-    this_04->m_pfnDmQueueAdd = (_func___cdecl_T_HRESULT_ulong_void_ptr *)0x0;
-    this_04->m_pfnDmQueueRemove = (_func___cdecl_T_HRESULT_ulong_void_ptr_ptr *)0x0;
-    this_04->m_pfnDmQueueIsEmpty = (_func___cdecl_int_ulong *)0x0;
-    if (this_04->m_hXbdmLibrary != (HINSTANCE__ *)0x0) {
-      FreeLibrary(this_04->m_hXbdmLibrary);
-      this_04->m_hXbdmLibrary = (HINSTANCE__ *)0x0;
+    this->m_pfnDmQueueCreate = (_func___cdecl_T_HRESULT__XLOCKFREE_CREATE_ptr_ulong_ptr *)0x0;
+    this->m_pfnDmQueueDestroy = (_func___cdecl_void_ulong *)0x0;
+    this->m_pfnDmQueueAdd = (_func___cdecl_T_HRESULT_ulong_void_ptr *)0x0;
+    this->m_pfnDmQueueRemove = (_func___cdecl_T_HRESULT_ulong_void_ptr_ptr *)0x0;
+    this->m_pfnDmQueueIsEmpty = (_func___cdecl_int_ulong *)0x0;
+    if (this->m_hXbdmLibrary != (HINSTANCE__ *)0x0) {
+      FreeLibrary(this->m_hXbdmLibrary);
+      this->m_hXbdmLibrary = (HINSTANCE__ *)0x0;
     }
-    if (this_04->m_CollectorThrottleEvent != (void *)0x0) {
-      CloseHandle(this_04->m_CollectorThrottleEvent);
-      this_04->m_CollectorThrottleEvent = (void *)0x0;
+    if (this->m_CollectorThrottleEvent != (void *)0x0) {
+      CloseHandle(this->m_CollectorThrottleEvent);
+      this->m_CollectorThrottleEvent = (void *)0x0;
     }
-    if (this_04->m_CollectorDoneSavingEvent != (void *)0x0) {
-      CloseHandle(this_04->m_CollectorDoneSavingEvent);
-      this_04->m_CollectorDoneSavingEvent = (void *)0x0;
+    if (this->m_CollectorDoneSavingEvent != (void *)0x0) {
+      CloseHandle(this->m_CollectorDoneSavingEvent);
+      this->m_CollectorDoneSavingEvent = (void *)0x0;
     }
   }
-  uVar1 = __restgprlr_25(0);
-  return uVar1;
+  return 0;
 }
 
 
 // 8287E3F0  CleanUpThumbAndExport  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtpm4instrumentation.hpp:855)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 undefined4 __thiscall
 D3D::CRTCommandBufferHacker::CleanUpThumbAndExport(CRTCommandBufferHacker *this)
 
 {
-  void *pvVar1;
-  int iVar2;
-  undefined4 uVar3;
+  ulong *puVar1;
   
-  iVar2 = __savegprlr_29(this);
-  pvVar1 = *(void **)(iVar2 + 0x174);
-  if (pvVar1 != (void *)0x0) {
+  puVar1 = this->m_pTextureThumbnailVertexShader;
+  if (puVar1 != (ulong *)0x0) {
     if (g_AllocDebugHeap == 0) {
-      XMemFree(pvVar1,0xb1800000);
+      XMemFree(puVar1,0xb1800000);
     }
     else {
-      MmFreePhysicalMemory(3,pvVar1);
+      MmFreePhysicalMemory(3,puVar1);
     }
-    *(undefined4 *)(iVar2 + 0x174) = 0;
+    this->m_pTextureThumbnailVertexShader = (ulong *)0x0;
   }
-  pvVar1 = *(void **)(iVar2 + 0x178);
-  if (pvVar1 != (void *)0x0) {
+  puVar1 = this->m_pTextureSamplingVertexShader;
+  if (puVar1 != (ulong *)0x0) {
     if (g_AllocDebugHeap == 0) {
-      XMemFree(pvVar1,0xb1800000);
+      XMemFree(puVar1,0xb1800000);
     }
     else {
-      MmFreePhysicalMemory(3,pvVar1);
+      MmFreePhysicalMemory(3,puVar1);
     }
-    *(undefined4 *)(iVar2 + 0x178) = 0;
+    this->m_pTextureSamplingVertexShader = (ulong *)0x0;
   }
-  pvVar1 = *(void **)(iVar2 + 0x17c);
-  if (pvVar1 != (void *)0x0) {
+  puVar1 = this->m_pTextureChannelCheckVertexShader;
+  if (puVar1 != (ulong *)0x0) {
     if (g_AllocDebugHeap == 0) {
-      XMemFree(pvVar1,0xb1800000);
+      XMemFree(puVar1,0xb1800000);
     }
     else {
-      MmFreePhysicalMemory(3,pvVar1);
+      MmFreePhysicalMemory(3,puVar1);
     }
-    *(undefined4 *)(iVar2 + 0x17c) = 0;
+    this->m_pTextureChannelCheckVertexShader = (ulong *)0x0;
   }
-  pvVar1 = *(void **)(iVar2 + 0x180);
-  if (pvVar1 != (void *)0x0) {
+  puVar1 = this->m_pVideoCaptureVertexShader;
+  if (puVar1 != (ulong *)0x0) {
     if (g_AllocDebugHeap == 0) {
-      XMemFree(pvVar1,0xb1800000);
+      XMemFree(puVar1,0xb1800000);
     }
     else {
-      MmFreePhysicalMemory(3,pvVar1);
+      MmFreePhysicalMemory(3,puVar1);
     }
-    *(undefined4 *)(iVar2 + 0x180) = 0;
+    this->m_pVideoCaptureVertexShader = (ulong *)0x0;
   }
-  pvVar1 = *(void **)(iVar2 + 0x168);
-  if (pvVar1 != (void *)0x0) {
+  puVar1 = this->m_pBeginExportVertexShader;
+  if (puVar1 != (ulong *)0x0) {
     if (g_AllocDebugHeap == 0) {
-      XMemFree(pvVar1,0xb1800000);
+      XMemFree(puVar1,0xb1800000);
     }
     else {
-      MmFreePhysicalMemory(3,pvVar1);
+      MmFreePhysicalMemory(3,puVar1);
     }
-    *(undefined4 *)(iVar2 + 0x168) = 0;
+    this->m_pBeginExportVertexShader = (ulong *)0x0;
   }
-  pvVar1 = *(void **)(iVar2 + 0x16c);
-  if (pvVar1 != (void *)0x0) {
+  puVar1 = this->m_pEndExportVertexShader;
+  if (puVar1 != (ulong *)0x0) {
     if (g_AllocDebugHeap == 0) {
-      XMemFree(pvVar1,0xb1800000);
+      XMemFree(puVar1,0xb1800000);
     }
     else {
-      MmFreePhysicalMemory(3,pvVar1);
+      MmFreePhysicalMemory(3,puVar1);
     }
-    *(undefined4 *)(iVar2 + 0x16c) = 0;
+    this->m_pEndExportVertexShader = (ulong *)0x0;
   }
-  pvVar1 = *(void **)(iVar2 + 0x170);
-  if (pvVar1 != (void *)0x0) {
+  puVar1 = this->m_pEndExportPixelShader;
+  if (puVar1 != (ulong *)0x0) {
     if (g_AllocDebugHeap == 0) {
-      XMemFree(pvVar1,0xb1800000);
+      XMemFree(puVar1,0xb1800000);
     }
     else {
-      MmFreePhysicalMemory(3,pvVar1);
+      MmFreePhysicalMemory(3,puVar1);
     }
-    *(undefined4 *)(iVar2 + 0x170) = 0;
+    this->m_pEndExportPixelShader = (ulong *)0x0;
   }
-  uVar3 = __restgprlr_29(0);
-  return uVar3;
+  return 0;
 }
 
 
 // 8287F000  BeginResourceCapture  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtcommon.cpp:938)
 
+/* WARNING: Function: __savegprlr_20 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_20 replaced with injection: xenon_save_restore */
 /* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 /* WARNING: Enum "ERareInstruction": Some values do not have unique names */
 
-undefined4 __thiscall
+int __thiscall
 D3D::CRTGlobalData::BeginResourceCapture
           (CRTGlobalData *this,char *param_1,NonSnoopedWriteBacks *param_2,bool param_3,
           RTGracefulShutdownThreadScoped *param_4)
 
 {
-  ulonglong uVar1;
-  CRTGlobalData *this_00;
-  CPixelShaderHashTable *pCVar2;
-  char *pcVar3;
-  CVertexShaderHashTable *pCVar4;
-  CRTCommandBufferHacker *this_01;
-  int iVar5;
-  CRTResultsTracker *pCVar6;
-  int iVar7;
-  undefined4 uVar8;
-  longlong lVar9;
-  bool bVar10;
-  ulonglong uVar11;
-  ulonglong uVar12;
-  _LIST_ENTRY *p_Var13;
+  CPixelShaderHashTable *pCVar1;
+  char *pcVar2;
+  CVertexShaderHashTable *pCVar3;
+  CRTCommandBufferHacker *this_00;
+  int iVar4;
+  CRTResultsTracker *pCVar5;
+  int iVar6;
+  bool bVar7;
+  _LIST_ENTRY *p_Var8;
   char in_RESERVE;
-  undefined4 local_180;
-  uint local_17c;
+  char *local_180;
+  int local_17c;
   char acStack_170 [255];
   undefined1 local_71;
   
-  uVar12 = (ulonglong)(int)param_4;
-  uVar11 = (ulonglong)param_3;
-  lVar9 = (longlong)(int)param_1;
-  this_00 = (CRTGlobalData *)__savegprlr_20(this);
-  iVar5 = 0;
-  if (this_00->m_TrackMipUsage != 0) {
-    uVar1 = uVar11 & 0xff;
-    if ((uVar1 == 0) && (this_00->m_GuiOwnsCapture != false)) {
-      iVar5 = 1;
-      goto LAB_8287f538;
+  iVar4 = 0;
+  if (this->m_TrackMipUsage != 0) {
+    if ((!param_3) && (this->m_GuiOwnsCapture != false)) {
+      return 1;
     }
-    if (uVar1 == 0) {
-LAB_8287f07c:
-      if (this_00->m_GuiOwnsCapture == false) goto LAB_8287f098;
-LAB_8287f088:
-      bVar10 = false;
-    }
-    else {
-      if (this_00->m_GuiOwnsCapture == false) {
-        if (uVar1 == 0) goto LAB_8287f07c;
+    if (param_3) {
+      if (this->m_GuiOwnsCapture == false) {
+        if (!param_3) goto LAB_8287f07c;
         goto LAB_8287f088;
       }
-      bVar10 = true;
+      bVar7 = true;
     }
-    EndResourceCapture(this_00,false,bVar10);
+    else {
+LAB_8287f07c:
+      if (this->m_GuiOwnsCapture == false) goto LAB_8287f098;
+LAB_8287f088:
+      bVar7 = false;
+    }
+    EndResourceCapture(this,false,bVar7);
   }
 LAB_8287f098:
   if ((g_RTGlobal.m_GracefulShutdownData & 0x80000000U) != 0) {
-    if (((uVar11 & 0xff) != 0) && (_DAT_00000059 != 0)) {
+    if ((param_3) && (_DAT_00000059 != 0)) {
       (**(code **)(_DAT_00000059 + 0x18))(0x1b,0xffffffff821f6d58);
     }
-    iVar5 = -0x7fffbffc;
-    goto LAB_8287f538;
+    return 0x80004004;
   }
-  if (this_00->m_TrackTextures == 0) {
-    if (((uVar11 & 0xff) != 0) && (_DAT_00000059 != 0)) {
+  if (this->m_TrackTextures == 0) {
+    if ((param_3) && (_DAT_00000059 != 0)) {
       (**(code **)(_DAT_00000059 + 0x18))(0x1b,0xffffffff821f6d28);
     }
-    iVar5 = -0x7ff8ffa9;
-    goto LAB_8287f538;
+    return 0x80070057;
   }
-  this_00->m_GuiOwnsCapture = SUB81(uVar11,0);
+  this->m_GuiOwnsCapture = param_3;
   g_RTGlobal.m_FramesToThrottle = g_RTGlobal.m_InitParameters.m_FramesBetweenAutoSave << 1;
   if ((uint)g_RTGlobal.m_FramesToThrottle < 0x29) {
     if ((uint)g_RTGlobal.m_FramesToThrottle < 3) {
@@ -876,282 +843,266 @@ LAB_8287f098:
 LAB_8287f16c:
     g_RTGlobal.m_FramesToThrottle = 0x28;
   }
-  if (this_00->m_pPixelShaderTracker == (CPixelShaderHashTable *)0x0) {
+  if (this->m_pPixelShaderTracker == (CPixelShaderHashTable *)0x0) {
     if (g_AllocDebugHeap == 0) {
-      pCVar2 = XMemAlloc(0x40c,0x64800000);
-      if (pCVar2 == (CPixelShaderHashTable *)0x0) {
-        pcVar3 = "Out of Title Memory";
+      pCVar1 = XMemAlloc(0x40c,0x64800000);
+      if (pCVar1 == (CPixelShaderHashTable *)0x0) {
+        pcVar2 = "Out of Title Memory";
         goto LAB_8287f1cc;
       }
     }
     else {
-      pCVar2 = DmDebugAlloc(0x40c);
-      if (pCVar2 == (CPixelShaderHashTable *)0x0) {
-        pcVar3 = "Out of Debug Memory";
+      pCVar1 = DmDebugAlloc(0x40c);
+      if (pCVar1 == (CPixelShaderHashTable *)0x0) {
+        pcVar2 = "Out of Debug Memory";
 LAB_8287f1cc:
-        DefaultTextureTrackerErrorCallback(pcVar3);
+        DefaultTextureTrackerErrorCallback(pcVar2);
       }
     }
-    this_00->m_pPixelShaderTracker = pCVar2;
-    if (pCVar2 != (CPixelShaderHashTable *)0x0) goto LAB_8287f1dc;
-LAB_8287f3e0:
-    iVar5 = -0x7ff8fff2;
+    this->m_pPixelShaderTracker = pCVar1;
+    if (pCVar1 != (CPixelShaderHashTable *)0x0) goto LAB_8287f1dc;
   }
   else {
 LAB_8287f1dc:
-    if (this_00->m_pVertexShaderTracker == (CVertexShaderHashTable *)0x0) {
+    if (this->m_pVertexShaderTracker == (CVertexShaderHashTable *)0x0) {
       if (g_AllocDebugHeap == 0) {
-        pCVar4 = XMemAlloc(0x400,0x64800000);
-        if (pCVar4 == (CVertexShaderHashTable *)0x0) {
-          pcVar3 = "Out of Title Memory";
+        pCVar3 = XMemAlloc(0x400,0x64800000);
+        if (pCVar3 == (CVertexShaderHashTable *)0x0) {
+          pcVar2 = "Out of Title Memory";
           goto LAB_8287f220;
         }
       }
       else {
-        pCVar4 = DmDebugAlloc(0x400);
-        if (pCVar4 == (CVertexShaderHashTable *)0x0) {
-          pcVar3 = "Out of Debug Memory";
+        pCVar3 = DmDebugAlloc(0x400);
+        if (pCVar3 == (CVertexShaderHashTable *)0x0) {
+          pcVar2 = "Out of Debug Memory";
 LAB_8287f220:
-          DefaultTextureTrackerErrorCallback(pcVar3);
+          DefaultTextureTrackerErrorCallback(pcVar2);
         }
       }
-      this_00->m_pVertexShaderTracker = pCVar4;
-      if (pCVar4 == (CVertexShaderHashTable *)0x0) goto LAB_8287f3e0;
+      this->m_pVertexShaderTracker = pCVar3;
+      if (pCVar3 == (CVertexShaderHashTable *)0x0) goto LAB_8287f3e0;
     }
-    if (this_00->m_pCommandBufferHacker == (CRTCommandBufferHacker *)0x0) {
+    if (this->m_pCommandBufferHacker == (CRTCommandBufferHacker *)0x0) {
       if (g_AllocDebugHeap == 0) {
-        this_01 = XMemAlloc(0x1f8,0x64800000);
-        if (this_01 == (CRTCommandBufferHacker *)0x0) {
-          pcVar3 = "Out of Title Memory";
+        this_00 = XMemAlloc(0x1f8,0x64800000);
+        if (this_00 == (CRTCommandBufferHacker *)0x0) {
+          pcVar2 = "Out of Title Memory";
           goto LAB_8287f274;
         }
       }
       else {
-        this_01 = DmDebugAlloc(0x1f8);
-        if (this_01 == (CRTCommandBufferHacker *)0x0) {
-          pcVar3 = "Out of Debug Memory";
+        this_00 = DmDebugAlloc(0x1f8);
+        if (this_00 == (CRTCommandBufferHacker *)0x0) {
+          pcVar2 = "Out of Debug Memory";
 LAB_8287f274:
-          DefaultTextureTrackerErrorCallback(pcVar3);
+          DefaultTextureTrackerErrorCallback(pcVar2);
         }
       }
-      this_00->m_pCommandBufferHacker = this_01;
-      if (this_01 == (CRTCommandBufferHacker *)0x0) goto LAB_8287f3e0;
-      CRTCommandBufferHacker::CRTCommandBufferHacker(this_01,param_2);
-      iVar5 = CRTCommandBufferHacker::Initialize
-                        (this_00->m_pCommandBufferHacker,
-                         (this_00->m_InitParameters).m_FramesBetweenScreenCapture,
-                         (this_00->m_InitParameters).m_RingManagerBufferSize,
-                         (this_00->m_InitParameters).m_SoftCompareThreshold);
-      if (-1 < iVar5) goto LAB_8287f2ac;
+      this->m_pCommandBufferHacker = this_00;
+      if (this_00 == (CRTCommandBufferHacker *)0x0) goto LAB_8287f3e0;
+      CRTCommandBufferHacker::CRTCommandBufferHacker(this_00,param_2);
+      iVar4 = CRTCommandBufferHacker::Initialize
+                        (this->m_pCommandBufferHacker,
+                         (this->m_InitParameters).m_FramesBetweenScreenCapture,
+                         (this->m_InitParameters).m_RingManagerBufferSize,
+                         (this->m_InitParameters).m_SoftCompareThreshold);
+      if (iVar4 < 0) goto LAB_8287f3e8;
     }
-    else {
-LAB_8287f2ac:
-      if (this_00->m_pResultsTracker == (CRTResultsTracker *)0x0) {
-        if (g_AllocDebugHeap == 0) {
-          pCVar6 = XMemAlloc(0x184c,0x64800000);
-          if (pCVar6 == (CRTResultsTracker *)0x0) {
-            pcVar3 = "Out of Title Memory";
-            goto LAB_8287f2f0;
-          }
-        }
-        else {
-          pCVar6 = DmDebugAlloc(0x184c);
-          if (pCVar6 == (CRTResultsTracker *)0x0) {
-            pcVar3 = "Out of Debug Memory";
-LAB_8287f2f0:
-            DefaultTextureTrackerErrorCallback(pcVar3);
-          }
-        }
-        this_00->m_pResultsTracker = pCVar6;
-        if (pCVar6 != (CRTResultsTracker *)0x0) {
-          pCVar6->m_bEndCapture_Now = 0;
-          pCVar6->m_bEndCapture_WhenDone = 0;
-          p_Var13 = &(pCVar6->m_CollectorWakeUpEvent).Header.WaitListHead;
-          pCVar6->m_WorkerCollectorQueue = 0;
-          pCVar6->m_UnusedTextureQueue = 0;
-          pCVar6->m_GpuFence = 0;
-          (pCVar6->m_CollectorWakeUpEvent).Header.Type = '\0';
-          (pCVar6->m_CollectorWakeUpEvent).Header.SignalState = 0;
-          (pCVar6->m_CollectorWakeUpEvent).Header.WaitListHead.Flink = p_Var13;
-          (pCVar6->m_CollectorWakeUpEvent).Header.WaitListHead.Blink = p_Var13;
-          if (this_00->m_CollectorThread != (void *)0x0) {
-            CloseHandle(this_00->m_CollectorThread);
-            this_00->m_CollectorThread = (void *)0x0;
-          }
-          iVar5 = CRTResultsTracker::Initialize
-                            (this_00->m_pResultsTracker,
-                             (this_00->m_InitParameters).m_FramesBetweenAutoSave,
-                             (this_00->m_InitParameters).m_CollectorHwThread,
-                             &this_00->m_CollectorThread,
-                             (uint)((this_00->m_InitParameters).m_SoftCompareThreshold != 0));
-          if (iVar5 < 0) goto LAB_8287f3e8;
-          goto LAB_8287f370;
+    if (this->m_pResultsTracker == (CRTResultsTracker *)0x0) {
+      if (g_AllocDebugHeap == 0) {
+        pCVar5 = XMemAlloc(0x184c,0x64800000);
+        if (pCVar5 == (CRTResultsTracker *)0x0) {
+          pcVar2 = "Out of Title Memory";
+          goto LAB_8287f2f0;
         }
       }
       else {
-LAB_8287f370:
-        local_180 = (undefined4)lVar9;
-        local_17c = (uint)uVar11 & 0xff;
-        if (_DAT_00000059 == 0) {
-          iVar7 = 0;
+        pCVar5 = DmDebugAlloc(0x184c);
+        if (pCVar5 == (CRTResultsTracker *)0x0) {
+          pcVar2 = "Out of Debug Memory";
+LAB_8287f2f0:
+          DefaultTextureTrackerErrorCallback(pcVar2);
         }
-        else {
-          iVar7 = (**(code **)(_DAT_00000059 + 0x18))(0x83,&local_180);
-        }
-        if (iVar7 != 0) {
-          this_00->m_TrackMipUsage = 1;
-          iVar5 = 0;
-          goto LAB_8287f538;
-        }
-        RtlSnprintf(acStack_170,0x100,0xffffffff821f6cfc,lVar9);
-        local_71 = 0;
-        DefaultTextureTrackerErrorCallback(acStack_170);
       }
-      if (-1 < iVar5) goto LAB_8287f3e0;
-    }
-  }
-LAB_8287f3e8:
-  if ((uVar12 & 0xffffffff) != 0) {
-    bVar10 = *(char *)uVar12 == '\0';
-    if (!bVar10) {
-      sync(1);
-      do {
-        if (in_RESERVE != '\0') {
-          g_RTGlobal.m_GracefulShutdownData =
-               storeWordConditionalIndexed
-                         ((ulonglong)(uint)g_RTGlobal.m_GracefulShutdownData - 1,0,
-                          0xffffffff829a7000);
-          bVar10 = true;
+      this->m_pResultsTracker = pCVar5;
+      if (pCVar5 != (CRTResultsTracker *)0x0) {
+        pCVar5->m_bEndCapture_Now = 0;
+        pCVar5->m_bEndCapture_WhenDone = 0;
+        p_Var8 = &(pCVar5->m_CollectorWakeUpEvent).Header.WaitListHead;
+        pCVar5->m_WorkerCollectorQueue = 0;
+        pCVar5->m_UnusedTextureQueue = 0;
+        pCVar5->m_GpuFence = 0;
+        (pCVar5->m_CollectorWakeUpEvent).Header.Type = '\0';
+        (pCVar5->m_CollectorWakeUpEvent).Header.SignalState = 0;
+        (pCVar5->m_CollectorWakeUpEvent).Header.WaitListHead.Flink = p_Var8;
+        (pCVar5->m_CollectorWakeUpEvent).Header.WaitListHead.Blink = p_Var8;
+        if (this->m_CollectorThread != (void *)0x0) {
+          CloseHandle(this->m_CollectorThread);
+          this->m_CollectorThread = (void *)0x0;
         }
-      } while (!bVar10);
-      *(char *)uVar12 = '\0';
-    }
-  }
-  if (this_00->m_pResultsTracker != (CRTResultsTracker *)0x0) {
-    if (this_00->m_CollectorThread != (void *)0x0) {
-      CRTResultsTracker::EndCapture_Now(this_00->m_pResultsTracker);
-      WaitForSingleObject(this_00->m_CollectorThread,0xffffffff);
-      CloseHandle(this_00->m_CollectorThread);
-      this_00->m_CollectorThread = (void *)0x0;
-    }
-    if (g_AllocDebugHeap == 0) {
-      XMemFree(this_00->m_pResultsTracker,0x24800000);
+        iVar4 = CRTResultsTracker::Initialize
+                          (this->m_pResultsTracker,(this->m_InitParameters).m_FramesBetweenAutoSave,
+                           (this->m_InitParameters).m_CollectorHwThread,&this->m_CollectorThread,
+                           (uint)((this->m_InitParameters).m_SoftCompareThreshold != 0));
+        if (iVar4 < 0) goto LAB_8287f3e8;
+        goto LAB_8287f370;
+      }
     }
     else {
-      DmDebugFree(this_00->m_pResultsTracker);
+LAB_8287f370:
+      local_17c = (int)param_3;
+      local_180 = param_1;
+      if (_DAT_00000059 == 0) {
+        iVar6 = 0;
+      }
+      else {
+        iVar6 = (**(code **)(_DAT_00000059 + 0x18))(0x83,&local_180);
+      }
+      if (iVar6 != 0) {
+        this->m_TrackMipUsage = 1;
+        return 0;
+      }
+      RtlSnprintf(acStack_170,0x100,0xffffffff821f6cfc,param_1);
+      local_71 = 0;
+      DefaultTextureTrackerErrorCallback(acStack_170);
     }
-    this_00->m_pResultsTracker = (CRTResultsTracker *)0x0;
+    if (iVar4 < 0) goto LAB_8287f3e8;
   }
-  if (this_00->m_pPixelShaderTracker != (CPixelShaderHashTable *)0x0) {
-    CPixelShaderHashTable::Destroy(this_00->m_pPixelShaderTracker);
+LAB_8287f3e0:
+  iVar4 = -0x7ff8fff2;
+LAB_8287f3e8:
+  if ((param_4 != (RTGracefulShutdownThreadScoped *)0x0) && (bVar7 = param_4->m_Ok == false, !bVar7)
+     ) {
+    sync(1);
+    do {
+      if (in_RESERVE != '\0') {
+        g_RTGlobal.m_GracefulShutdownData =
+             storeWordConditionalIndexed
+                       ((ulonglong)(uint)g_RTGlobal.m_GracefulShutdownData - 1,0,0xffffffff829a7000)
+        ;
+        bVar7 = true;
+      }
+    } while (!bVar7);
+    param_4->m_Ok = false;
+  }
+  if (this->m_pResultsTracker != (CRTResultsTracker *)0x0) {
+    if (this->m_CollectorThread != (void *)0x0) {
+      CRTResultsTracker::EndCapture_Now(this->m_pResultsTracker);
+      WaitForSingleObject(this->m_CollectorThread,0xffffffff);
+      CloseHandle(this->m_CollectorThread);
+      this->m_CollectorThread = (void *)0x0;
+    }
     if (g_AllocDebugHeap == 0) {
-      XMemFree(this_00->m_pPixelShaderTracker,0x24800000);
+      XMemFree(this->m_pResultsTracker,0x24800000);
     }
     else {
-      DmDebugFree(this_00->m_pPixelShaderTracker);
+      DmDebugFree(this->m_pResultsTracker);
     }
-    this_00->m_pPixelShaderTracker = (CPixelShaderHashTable *)0x0;
+    this->m_pResultsTracker = (CRTResultsTracker *)0x0;
   }
-  if (this_00->m_pVertexShaderTracker != (CVertexShaderHashTable *)0x0) {
+  if (this->m_pPixelShaderTracker != (CPixelShaderHashTable *)0x0) {
+    CPixelShaderHashTable::Destroy(this->m_pPixelShaderTracker);
+    if (g_AllocDebugHeap == 0) {
+      XMemFree(this->m_pPixelShaderTracker,0x24800000);
+    }
+    else {
+      DmDebugFree(this->m_pPixelShaderTracker);
+    }
+    this->m_pPixelShaderTracker = (CPixelShaderHashTable *)0x0;
+  }
+  if (this->m_pVertexShaderTracker != (CVertexShaderHashTable *)0x0) {
     CTSHashTable<D3D::CVertexShaderHashEntry,D3D::HashParams_DB,&D3D::RTDebugMemAlloc,&D3D::RTDebugMemFree>
-    ::Destroy(this_00->m_pVertexShaderTracker);
+    ::Destroy(this->m_pVertexShaderTracker);
     if (g_AllocDebugHeap == 0) {
-      XMemFree(this_00->m_pVertexShaderTracker,0x24800000);
+      XMemFree(this->m_pVertexShaderTracker,0x24800000);
     }
     else {
-      DmDebugFree(this_00->m_pVertexShaderTracker);
+      DmDebugFree(this->m_pVertexShaderTracker);
     }
-    this_00->m_pVertexShaderTracker = (CVertexShaderHashTable *)0x0;
+    this->m_pVertexShaderTracker = (CVertexShaderHashTable *)0x0;
   }
-  if (this_00->m_pCommandBufferHacker != (CRTCommandBufferHacker *)0x0) {
-    CRTCommandBufferHacker::Destroy(this_00->m_pCommandBufferHacker);
+  if (this->m_pCommandBufferHacker != (CRTCommandBufferHacker *)0x0) {
+    CRTCommandBufferHacker::Destroy(this->m_pCommandBufferHacker);
     if (g_AllocDebugHeap == 0) {
-      XMemFree(this_00->m_pCommandBufferHacker,0x24800000);
+      XMemFree(this->m_pCommandBufferHacker,0x24800000);
     }
     else {
-      DmDebugFree(this_00->m_pCommandBufferHacker);
+      DmDebugFree(this->m_pCommandBufferHacker);
     }
-    this_00->m_pCommandBufferHacker = (CRTCommandBufferHacker *)0x0;
+    this->m_pCommandBufferHacker = (CRTCommandBufferHacker *)0x0;
   }
-LAB_8287f538:
-  uVar8 = __restgprlr_20(iVar5);
-  return uVar8;
+  return iVar4;
 }
 
 
 // 8287ED08  EndResourceCapture  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtcommon.cpp:1156)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "ERareInstruction": Some values do not have unique names */
 
 undefined4 __thiscall
 D3D::CRTGlobalData::EndResourceCapture(CRTGlobalData *this,bool param_1,bool param_2)
 
 {
-  int iVar2;
-  undefined8 uVar1;
-  undefined4 uVar3;
-  ulonglong uVar4;
-  ulonglong uVar5;
+  undefined4 uVar1;
   
-  uVar5 = (ulonglong)param_2;
-  uVar4 = (ulonglong)param_1;
-  iVar2 = __savegprlr_28(this);
   KeGetCurrentProcessType();
-  if (*(int *)(iVar2 + 4) == 0) {
-    uVar1 = 0xffffffff80004005;
+  if (this->m_TrackMipUsage == 0) {
+    uVar1 = 0x80004005;
   }
   else {
-    if ((uVar4 & 0xff) == 0) {
-      CRTTextureTracker::OnEndingCapture(*(CRTTextureTracker **)(iVar2 + 0x15c));
-      CRTResultsTracker::EndCapture_WhenDone(*(CRTResultsTracker **)(iVar2 + 0x16c));
-      WaitForSingleObject(*(void **)(iVar2 + 0x130),0xffffffff);
-      ResetEvent(*(void **)(iVar2 + 0x130));
-      WaitForSingleObject(*(void **)(iVar2 + 0x134),0xffffffff);
-      CloseHandle(*(void **)(iVar2 + 0x134));
-      *(undefined4 *)(iVar2 + 0x134) = 0;
-      if (*(CRTCommandBufferHacker **)(iVar2 + 0x168) != (CRTCommandBufferHacker *)0x0) {
-        CRTCommandBufferHacker::Destroy(*(CRTCommandBufferHacker **)(iVar2 + 0x168));
-        if (g_AllocDebugHeap == 0) {
-          XMemFree(*(void **)(iVar2 + 0x168),0x24800000);
-        }
-        else {
-          DmDebugFree(*(void **)(iVar2 + 0x168));
-        }
-        *(undefined4 *)(iVar2 + 0x168) = 0;
-      }
-      if (*(CPixelShaderHashTable **)(iVar2 + 0x160) != (CPixelShaderHashTable *)0x0) {
-        CPixelShaderHashTable::Destroy(*(CPixelShaderHashTable **)(iVar2 + 0x160));
-        if (g_AllocDebugHeap == 0) {
-          XMemFree(*(void **)(iVar2 + 0x160),0x24800000);
-        }
-        else {
-          DmDebugFree(*(void **)(iVar2 + 0x160));
-        }
-        *(undefined4 *)(iVar2 + 0x160) = 0;
-      }
-      if (*(void **)(iVar2 + 0x164) != (void *)0x0) {
-        CTSHashTable<D3D::CVertexShaderHashEntry,D3D::HashParams_DB,&D3D::RTDebugMemAlloc,&D3D::RTDebugMemFree>
-        ::Destroy(*(void **)(iVar2 + 0x164));
-        if (g_AllocDebugHeap == 0) {
-          XMemFree(*(void **)(iVar2 + 0x164),0x24800000);
-        }
-        else {
-          DmDebugFree(*(void **)(iVar2 + 0x164));
-        }
-        *(undefined4 *)(iVar2 + 0x164) = 0;
-      }
+    if (param_1) {
+      CRTResultsTracker::EndCapture_Now(this->m_pResultsTracker);
     }
     else {
-      CRTResultsTracker::EndCapture_Now(*(CRTResultsTracker **)(iVar2 + 0x16c));
+      CRTTextureTracker::OnEndingCapture(this->m_pTextureTracker);
+      CRTResultsTracker::EndCapture_WhenDone(this->m_pResultsTracker);
+      WaitForSingleObject(this->m_CollectorDoneSavingEvent,0xffffffff);
+      ResetEvent(this->m_CollectorDoneSavingEvent);
+      WaitForSingleObject(this->m_CollectorThread,0xffffffff);
+      CloseHandle(this->m_CollectorThread);
+      this->m_CollectorThread = (void *)0x0;
+      if (this->m_pCommandBufferHacker != (CRTCommandBufferHacker *)0x0) {
+        CRTCommandBufferHacker::Destroy(this->m_pCommandBufferHacker);
+        if (g_AllocDebugHeap == 0) {
+          XMemFree(this->m_pCommandBufferHacker,0x24800000);
+        }
+        else {
+          DmDebugFree(this->m_pCommandBufferHacker);
+        }
+        this->m_pCommandBufferHacker = (CRTCommandBufferHacker *)0x0;
+      }
+      if (this->m_pPixelShaderTracker != (CPixelShaderHashTable *)0x0) {
+        CPixelShaderHashTable::Destroy(this->m_pPixelShaderTracker);
+        if (g_AllocDebugHeap == 0) {
+          XMemFree(this->m_pPixelShaderTracker,0x24800000);
+        }
+        else {
+          DmDebugFree(this->m_pPixelShaderTracker);
+        }
+        this->m_pPixelShaderTracker = (CPixelShaderHashTable *)0x0;
+      }
+      if (this->m_pVertexShaderTracker != (CVertexShaderHashTable *)0x0) {
+        CTSHashTable<D3D::CVertexShaderHashEntry,D3D::HashParams_DB,&D3D::RTDebugMemAlloc,&D3D::RTDebugMemFree>
+        ::Destroy(this->m_pVertexShaderTracker);
+        if (g_AllocDebugHeap == 0) {
+          XMemFree(this->m_pVertexShaderTracker,0x24800000);
+        }
+        else {
+          DmDebugFree(this->m_pVertexShaderTracker);
+        }
+        this->m_pVertexShaderTracker = (CVertexShaderHashTable *)0x0;
+      }
     }
-    *(undefined4 *)(iVar2 + 4) = 0;
-    if ((uVar5 & 0xff) != 0) {
-      *(undefined1 *)(iVar2 + 0x100) = 0;
+    this->m_TrackMipUsage = 0;
+    if (param_2) {
+      this->m_GuiOwnsCapture = false;
     }
     uVar1 = 0;
   }
-  uVar3 = __restgprlr_28(uVar1);
-  return uVar3;
+  return uVar1;
 }
 
 
@@ -1178,6 +1129,8 @@ ulong64 D3D::GetHashOfString(char *param_1)
 
 // 8287E5E0  DefaultTextureTrackerErrorCallback  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/rtcommon.cpp:1307)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 /* WARNING: Enum "ERareInstruction": Some values do not have unique names */
 
@@ -1185,7 +1138,6 @@ void D3D::DefaultTextureTrackerErrorCallback(char *param_1)
 
 {
   uint uVar1;
-  undefined8 uVar2;
   char in_RESERVE;
   byte in_cr0;
   undefined4 local_140;
@@ -1194,7 +1146,6 @@ void D3D::DefaultTextureTrackerErrorCallback(char *param_1)
   undefined1 auStack_130 [255];
   undefined1 local_31;
   
-  uVar2 = __savegprlr_27(param_1);
   uVar1 = g_RTGlobal.m_GracefulShutdownData & 0x80000000;
   if (g_RTGlobal.m_TrackTextures != 0) {
     do {
@@ -1209,9 +1160,9 @@ void D3D::DefaultTextureTrackerErrorCallback(char *param_1)
     sync(1);
   }
   if (g_RTGlobal.m_pfnErrorCallback != (_func___cdecl_void_int_char_ptr *)0x0) {
-    (*g_RTGlobal.m_pfnErrorCallback)(SUB14(g_RTGlobal.m_GuiOwnsCapture,0),(char *)uVar2);
+    (*g_RTGlobal.m_pfnErrorCallback)(SUB14(g_RTGlobal.m_GuiOwnsCapture,0),param_1);
   }
-  RtlSnprintf(auStack_130,0x100,0xffffffff821f6ca8,uVar2);
+  RtlSnprintf(auStack_130,0x100,0xffffffff821f6ca8,param_1);
   local_140 = 0x79;
   local_138 = auStack_130;
   local_31 = 0;
@@ -1219,12 +1170,11 @@ void D3D::DefaultTextureTrackerErrorCallback(char *param_1)
   if (_DAT_00000059 != 0) {
     (**(code **)(_DAT_00000059 + 0x18))(0x84,&local_140);
   }
-  RtlSnprintf(auStack_130,0x100,0xffffffff821f6c78,uVar2);
+  RtlSnprintf(auStack_130,0x100,0xffffffff821f6c78,param_1);
   local_31 = 0;
   if (((uVar1 == 0) && (g_RTGlobal.m_GuiOwnsCapture != false)) && (_DAT_00000059 != 0)) {
     (**(code **)(_DAT_00000059 + 0x18))(0x1b,auStack_130);
   }
-  __restgprlr_27();
   return;
 }
 

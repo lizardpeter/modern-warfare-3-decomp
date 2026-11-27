@@ -2,41 +2,32 @@
 
 // 823A0780  AssetBuf_Begin  (database/assetbuf.cpp:36)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Removing unreachable block (ram,0x823a0810) */
 
 void AssetBuf_Begin(uchar *param_1,int param_2,uchar *param_3,int param_4)
 
 {
-  ulonglong uVar1;
-  uchar *puVar2;
-  longlong lVar3;
-  longlong lVar4;
-  
-  lVar4 = (longlong)param_4;
-  lVar3 = (longlong)(int)param_3;
-  puVar2 = (uchar *)__savegprlr_25(param_1);
-  if (((uint)puVar2 & 3) != 0) {
+  if (((uint)param_1 & 3) != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\assetbuf.cpp",0x27,0,
                     "%s");
   }
-  uVar1 = lVar3 + 3U & 0xfffffffc;
-  g_assetBufGlob.sourcePos = (uchar *)0x0;
-  g_assetBufGlob.ptrMap = (PointerMapEntry *)uVar1;
-  g_assetBufGlob.ptrMapSize = (int)(((lVar3 - uVar1) + lVar4 & 0xffffffff) >> 4);
-  g_assetBufGlob.buf = puVar2;
+  g_assetBufGlob.ptrMap = (PointerMapEntry *)((uint)(param_3 + 3) & 0xfffffffc);
+  g_assetBufGlob.buf = param_1;
+  g_assetBufGlob.pos = param_1;
   g_assetBufGlob.bufsize = param_2;
-  g_assetBufGlob.pos = puVar2;
+  g_assetBufGlob.sourcePos = (uchar *)0x0;
+  g_assetBufGlob.ptrMapSize = (uint)(param_3 + (param_4 - (int)g_assetBufGlob.ptrMap)) >> 4;
   if ((uint)g_assetBufGlob.ptrMapSize < 0xffff) {
-    g_assetBufGlob.ptrMapRoot = (PointerMapEntry *)0x0;
     g_assetBufGlob.ptrMapEnd = g_assetBufGlob.ptrMap;
-    __restgprlr_25();
+    g_assetBufGlob.ptrMapRoot = (PointerMapEntry *)0x0;
     return;
   }
   MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\assetbuf.cpp",0x36,0,
                   "g_assetBufGlob.ptrMapSize < NULL_CHILD\n\t%i, %i");
   g_assetBufGlob.ptrMapRoot = (PointerMapEntry *)0x0;
   g_assetBufGlob.ptrMapEnd = g_assetBufGlob.ptrMap;
-  __restgprlr_25();
   return;
 }
 
@@ -203,15 +194,16 @@ void AssetBuf_PopStreamPos(void)
 
 // 823A0B60  SaveBuffer_Stream  (database/assetbuf.cpp:149)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void SaveBuffer_Stream(bool param_1,void *param_2,int param_3,void **param_4)
 
 {
   uchar *puVar1;
-  char cVar2;
   
-  cVar2 = __savegprlr_27(param_1);
   puVar1 = g_assetBufGlob.pos;
-  if (cVar2 != '\0') {
+  if (param_1) {
     if (param_3 != 0) {
       if (param_3 < 1) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\assetbuf.cpp",
@@ -226,7 +218,6 @@ void SaveBuffer_Stream(bool param_1,void *param_2,int param_3,void **param_4)
     }
     g_assetBufGlob.sourcePos = (uchar *)((int)param_2 + param_3);
   }
-  __restgprlr_27();
   return;
 }
 
@@ -354,50 +345,49 @@ void SetPointerMapChildRight(PointerMapEntry *param_1,PointerMapEntry *param_2)
 
 // 823A0CB8  SwapPointerMapChild  (database/assetbuf.cpp:242)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void SwapPointerMapChild(PointerMapEntry *param_1,PointerMapEntry *param_2,PointerMapEntry *param_3)
 
 {
   PointerMapEntry *pPVar1;
-  PointerMapEntry *pPVar2;
-  ulonglong uVar3;
   
-  uVar3 = (ulonglong)(int)param_2;
-  pPVar1 = (PointerMapEntry *)__savegprlr_29(param_1);
-  if (pPVar1 == (PointerMapEntry *)0x0) {
-    if (ZEXT48(g_assetBufGlob.ptrMapRoot) != (uVar3 & 0xffffffff)) {
+  if (param_1 == (PointerMapEntry *)0x0) {
+    if (g_assetBufGlob.ptrMapRoot != param_2) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\assetbuf.cpp",0x101
                       ,0,"%s");
     }
     g_assetBufGlob.ptrMapRoot = param_3;
-    __restgprlr_29();
     return;
   }
-  pPVar2 = GetPointerMapChildLeft(pPVar1);
-  if (ZEXT48(pPVar2) == (uVar3 & 0xffffffff)) {
-    SetPointerMapChildLeft(pPVar1,param_3);
-    __restgprlr_29();
+  pPVar1 = GetPointerMapChildLeft(param_1);
+  if (pPVar1 == param_2) {
+    SetPointerMapChildLeft(param_1,param_3);
     return;
   }
-  pPVar2 = GetPointerMapChildRight(pPVar1);
-  if (ZEXT48(pPVar2) != (uVar3 & 0xffffffff)) {
+  pPVar1 = GetPointerMapChildRight(param_1);
+  if (pPVar1 != param_2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\assetbuf.cpp",0xfb,0,
                     "%s");
   }
-  SetPointerMapChildRight(pPVar1,param_3);
-  __restgprlr_29();
+  SetPointerMapChildRight(param_1,param_3);
   return;
 }
 
 
 // 823A0D80  InsertPointerMapEntry  (database/assetbuf.cpp:264)
 
+/* WARNING: Function: __savegprlr_15 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_15 replaced with injection: xenon_save_restore */
+
 void InsertPointerMapEntry(void *param_1,void *param_2)
 
 {
   ushort uVar1;
   void *pvVar2;
-  PointerMapEntry *pPVar3;
-  void *pvVar4;
+  void *pvVar3;
+  PointerMapEntry *pPVar4;
   PointerMapEntry *pPVar5;
   ushort uVar6;
   ushort uVar7;
@@ -410,23 +400,22 @@ void InsertPointerMapEntry(void *param_1,void *param_2)
   PointerMapEntry *pPVar14;
   undefined4 local_190 [100];
   
-  pvVar4 = (void *)__savegprlr_15(param_1);
   if (g_assetBufGlob.ptrMap == (PointerMapEntry *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\assetbuf.cpp",0x116,0
                     ,"%s");
   }
-  pPVar3 = g_assetBufGlob.ptrMapEnd;
+  pPVar4 = g_assetBufGlob.ptrMapEnd;
   if (g_assetBufGlob.ptrMapSize <= (int)g_assetBufGlob.ptrMapEnd - (int)g_assetBufGlob.ptrMap >> 4)
   {
     Com_Error(ERR_DROP,"Out of temporary buffer space while copying asset");
-    pPVar3 = g_assetBufGlob.ptrMapEnd;
+    pPVar4 = g_assetBufGlob.ptrMapEnd;
   }
-  pPVar3->from = pvVar4;
-  pPVar3->to = param_2;
-  g_assetBufGlob.ptrMapEnd = pPVar3 + 1;
+  pPVar4->from = param_1;
+  pPVar4->to = param_2;
+  g_assetBufGlob.ptrMapEnd = pPVar4 + 1;
   local_190[0] = 0;
   uVar11 = 1;
-  pPVar5 = pPVar3;
+  pPVar5 = pPVar4;
   if (g_assetBufGlob.ptrMapRoot != (PointerMapEntry *)0x0) {
     puVar12 = local_190;
     pPVar5 = g_assetBufGlob.ptrMapRoot;
@@ -439,10 +428,10 @@ void InsertPointerMapEntry(void *param_1,void *param_2)
                         "ancestorCount doesn\'t index ARRAY_COUNT( ancestors )\n\t%i not in [0, %i)"
                        );
       }
-      pvVar4 = pPVar14->from;
-      pvVar2 = pPVar3->from;
+      pvVar2 = pPVar14->from;
+      pvVar3 = pPVar4->from;
       *puVar12 = pPVar14;
-      if (pvVar2 < pvVar4) {
+      if (pvVar3 < pvVar2) {
         if (pPVar14->children[0] == 0xffff) {
           pPVar5 = (PointerMapEntry *)0x0;
         }
@@ -451,7 +440,7 @@ void InsertPointerMapEntry(void *param_1,void *param_2)
         }
       }
       else {
-        if (pvVar2 <= pvVar4) {
+        if (pvVar3 <= pvVar2) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\assetbuf.cpp",
                           0x135,0,"%s");
         }
@@ -464,13 +453,13 @@ void InsertPointerMapEntry(void *param_1,void *param_2)
       }
       uVar11 = uVar11 + 1;
     } while (pPVar5 != (PointerMapEntry *)0x0);
-    if (pPVar3->from < pPVar14->from) {
+    if (pPVar4->from < pPVar14->from) {
       pPVar5 = GetPointerMapChildLeft(pPVar14);
       if (pPVar5 != (PointerMapEntry *)0x0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\assetbuf.cpp",
                         0x140,0,"%s");
       }
-      SetPointerMapChildLeft(pPVar14,pPVar3);
+      SetPointerMapChildLeft(pPVar14,pPVar4);
       pPVar5 = g_assetBufGlob.ptrMapRoot;
     }
     else {
@@ -479,39 +468,39 @@ void InsertPointerMapEntry(void *param_1,void *param_2)
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\assetbuf.cpp",
                         0x145,0,"%s");
       }
-      SetPointerMapChildRight(pPVar14,pPVar3);
+      SetPointerMapChildRight(pPVar14,pPVar4);
       pPVar5 = g_assetBufGlob.ptrMapRoot;
     }
   }
   g_assetBufGlob.ptrMapRoot = pPVar5;
-  if (pPVar3 == (PointerMapEntry *)0x0) {
+  if (pPVar4 == (PointerMapEntry *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\assetbuf.cpp",0xd0,0,
                     "%s");
   }
-  pPVar3->height = 1;
-  pPVar3->children[0] = 0xffff;
-  pPVar3->children[1] = 0xffff;
+  pPVar4->height = 1;
+  pPVar4->children[0] = 0xffff;
+  pPVar4->children[1] = 0xffff;
   if (1 < (int)uVar11) {
     puVar12 = local_190 + (uVar11 - 2);
     do {
-      pPVar3 = (PointerMapEntry *)puVar12[1];
-      if (pPVar3 == (PointerMapEntry *)0x0) {
+      pPVar4 = (PointerMapEntry *)puVar12[1];
+      if (pPVar4 == (PointerMapEntry *)0x0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\assetbuf.cpp",200
                         ,0,"%s");
       }
-      if (pPVar3->children[0] == 0xffff) {
+      if (pPVar4->children[0] == 0xffff) {
         uVar8 = 0;
       }
       else {
-        uVar8 = (uint)g_assetBufGlob.ptrMap[pPVar3->children[0]].height;
+        uVar8 = (uint)g_assetBufGlob.ptrMap[pPVar4->children[0]].height;
       }
-      if (pPVar3->children[1] == 0xffff) {
+      if (pPVar4->children[1] == 0xffff) {
         uVar9 = 0;
       }
       else {
-        uVar9 = (uint)g_assetBufGlob.ptrMap[pPVar3->children[1]].height;
+        uVar9 = (uint)g_assetBufGlob.ptrMap[pPVar4->children[1]].height;
       }
-      uVar1 = pPVar3->height;
+      uVar1 = pPVar4->height;
       if (0xfffe < uVar8) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\assetbuf.cpp",
                         0x15c,0,"%s");
@@ -525,10 +514,10 @@ void InsertPointerMapEntry(void *param_1,void *param_2)
         uVar10 = uVar9;
       }
       iVar13 = uVar8 - uVar9;
-      pPVar3->height = (short)uVar10 + 1;
+      pPVar4->height = (short)uVar10 + 1;
       if (iVar13 < 2) {
         if (iVar13 < -1) {
-          pPVar5 = GetPointerMapChildRight(pPVar3);
+          pPVar5 = GetPointerMapChildRight(pPVar4);
           if (pPVar5 == (PointerMapEntry *)0x0) {
             MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\assetbuf.cpp"
                             ,0x179,0,"%s");
@@ -540,15 +529,15 @@ void InsertPointerMapEntry(void *param_1,void *param_2)
           }
           uVar6 = GetPointerMapChildRightHeight(pPVar5);
           if (iVar13 <= (int)((uVar9 - uVar6) + 1)) {
-            SwapPointerMapChild((PointerMapEntry *)*puVar12,pPVar3,pPVar5);
-            pPVar3->children[1] = pPVar5->children[0];
-            SetPointerMapChildLeft(pPVar5,pPVar3);
+            SwapPointerMapChild((PointerMapEntry *)*puVar12,pPVar4,pPVar5);
+            pPVar4->children[1] = pPVar5->children[0];
+            SetPointerMapChildLeft(pPVar5,pPVar4);
             goto LAB_823a11e0;
           }
         }
       }
       else {
-        pPVar5 = GetPointerMapChildLeft(pPVar3);
+        pPVar5 = GetPointerMapChildLeft(pPVar4);
         if (pPVar5 == (PointerMapEntry *)0x0) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\assetbuf.cpp",
                           0x165,0,"%s");
@@ -559,16 +548,16 @@ void InsertPointerMapEntry(void *param_1,void *param_2)
         }
         uVar6 = GetPointerMapChildLeftHeight(pPVar5);
         if ((int)((uVar6 - uVar9) + -1) <= iVar13) {
-          SwapPointerMapChild((PointerMapEntry *)*puVar12,pPVar3,pPVar5);
-          pPVar3->children[0] = pPVar5->children[1];
-          SetPointerMapChildRight(pPVar5,pPVar3);
+          SwapPointerMapChild((PointerMapEntry *)*puVar12,pPVar4,pPVar5);
+          pPVar4->children[0] = pPVar5->children[1];
+          SetPointerMapChildRight(pPVar5,pPVar4);
 LAB_823a11e0:
-          uVar7 = GetPointerMapChildRightHeight(pPVar3);
-          uVar6 = GetPointerMapChildLeftHeight(pPVar3);
+          uVar7 = GetPointerMapChildRightHeight(pPVar4);
+          uVar6 = GetPointerMapChildLeftHeight(pPVar4);
           if (uVar6 < uVar7) {
             uVar6 = uVar7;
           }
-          pPVar3->height = uVar6 + 1;
+          pPVar4->height = uVar6 + 1;
           uVar7 = GetPointerMapChildRightHeight(pPVar5);
           uVar6 = GetPointerMapChildLeftHeight(pPVar5);
           if (uVar6 < uVar7) {
@@ -577,82 +566,88 @@ LAB_823a11e0:
           pPVar5->height = uVar6 + 1;
         }
       }
-      if (pPVar3->height == uVar1) break;
+      if (pPVar4->height == uVar1) {
+        return;
+      }
       uVar11 = uVar11 - 1;
       puVar12 = puVar12 + -1;
     } while (1 < (int)uVar11);
   }
-  __restgprlr_15();
   return;
 }
 
 
 // 823A1260  AssetBuf_FindStreamData  (database/assetbuf.cpp:401)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
+
 void * AssetBuf_FindStreamData(void *param_1)
 
 {
   ushort uVar1;
   bool bVar2;
-  void *pvVar3;
+  int iVar3;
   void *pvVar4;
-  int iVar5;
-  PointerMapEntry *pPVar6;
+  PointerMapEntry *pPVar5;
   
-  pvVar3 = (void *)__savegprlr_24(param_1);
   pvVar4 = (void *)0x0;
+  pPVar5 = g_assetBufGlob.ptrMapRoot;
   if (g_assetBufGlob.ptrMap == (PointerMapEntry *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\assetbuf.cpp",0x197,0
                     ,"%s");
+    pPVar5 = g_assetBufGlob.ptrMapRoot;
   }
-  pPVar6 = g_assetBufGlob.ptrMapRoot;
-  if (g_assetBufGlob.ptrMapRoot != (PointerMapEntry *)0x0) {
-    do {
-      if (pvVar3 < pPVar6->from) {
-        uVar1 = pPVar6->children[0];
+  do {
+    if (pPVar5 == (PointerMapEntry *)0x0) {
+LAB_823a1300:
+      bVar2 = false;
+      pPVar5 = g_assetBufGlob.ptrMap;
+      if (g_assetBufGlob.ptrMap != g_assetBufGlob.ptrMapEnd) {
+        do {
+          if (pPVar5->from == param_1) {
+            if (bVar2) {
+              MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\assetbuf.cpp"
+                              ,0x1b3,0,"%s");
+            }
+            if (pPVar5->to != pvVar4) {
+              MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\assetbuf.cpp"
+                              ,0x1b4,0,"%s");
+            }
+            bVar2 = true;
+          }
+          pPVar5 = pPVar5 + 1;
+        } while (pPVar5 != g_assetBufGlob.ptrMapEnd);
+      }
+      if (pvVar4 == (void *)0x0) {
+        if (!bVar2) {
+          return (void *)0x0;
+        }
+        iVar3 = 0x1b9;
       }
       else {
-        if (pvVar3 <= pPVar6->from) {
-          pvVar4 = pPVar6->to;
-          break;
-        }
-        uVar1 = pPVar6->children[1];
-      }
-      if ((uVar1 == 0xffff) ||
-         (pPVar6 = g_assetBufGlob.ptrMap + uVar1, pPVar6 == (PointerMapEntry *)0x0)) break;
-    } while( true );
-  }
-  bVar2 = false;
-  pPVar6 = g_assetBufGlob.ptrMap;
-  if (g_assetBufGlob.ptrMap != g_assetBufGlob.ptrMapEnd) {
-    do {
-      if (pPVar6->from == pvVar3) {
         if (bVar2) {
-          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\assetbuf.cpp",
-                          0x1b3,0,"%s");
+          return pvVar4;
         }
-        if (pPVar6->to != pvVar4) {
-          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\assetbuf.cpp",
-                          0x1b4,0,"%s");
-        }
-        bVar2 = true;
+        iVar3 = 0x1bb;
       }
-      pPVar6 = pPVar6 + 1;
-    } while (pPVar6 != g_assetBufGlob.ptrMapEnd);
-  }
-  if (pvVar4 == (void *)0x0) {
-    if (!bVar2) goto LAB_823a13d0;
-    iVar5 = 0x1b9;
-  }
-  else {
-    if (bVar2) goto LAB_823a13d0;
-    iVar5 = 0x1bb;
-  }
-  MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\assetbuf.cpp",iVar5,0,
-                  "%s");
-LAB_823a13d0:
-  pvVar4 = (void *)__restgprlr_24(pvVar4);
-  return pvVar4;
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\assetbuf.cpp",iVar3
+                      ,0,"%s");
+      return pvVar4;
+    }
+    if (param_1 < pPVar5->from) {
+      uVar1 = pPVar5->children[0];
+    }
+    else {
+      if (param_1 <= pPVar5->from) {
+        pvVar4 = pPVar5->to;
+        goto LAB_823a1300;
+      }
+      uVar1 = pPVar5->children[1];
+    }
+    if (uVar1 == 0xffff) goto LAB_823a1300;
+    pPVar5 = g_assetBufGlob.ptrMap + uVar1;
+  } while( true );
 }
 
 

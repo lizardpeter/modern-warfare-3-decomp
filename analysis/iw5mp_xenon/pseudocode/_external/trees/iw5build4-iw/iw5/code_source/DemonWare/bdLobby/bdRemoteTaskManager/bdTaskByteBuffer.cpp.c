@@ -2,52 +2,50 @@
 
 // 82912BD8  bdTaskByteBuffer  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdremotetaskmanager/bdtaskbytebuffer.cpp:44)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 bdTaskByteBuffer * __thiscall
 bdTaskByteBuffer::bdTaskByteBuffer(bdTaskByteBuffer *this,uint param_1,bool param_2)
 
 {
-  bdTaskByteBuffer *pbVar1;
   bdTaskByteBuffer *pbStack00000014;
   
-  pbVar1 = (bdTaskByteBuffer *)__savegprlr_29(this);
-  pbStack00000014 = pbVar1;
-  bdByteBuffer::bdByteBuffer((bdByteBuffer *)pbVar1,0,param_2);
-  pbVar1->m_taskData = (uchar *)0x0;
-  pbVar1->_padding_ = (int)&_vftable_;
-  pbVar1->m_taskDataSize = 0;
-  pbVar1->m_validHeaderSize = 0;
-  pbVar1->m_paddingSize = 0;
-  setupTaskData(pbVar1,param_1);
-  pbVar1 = (bdTaskByteBuffer *)__restgprlr_29(pbVar1);
-  return pbVar1;
+  pbStack00000014 = this;
+  bdByteBuffer::bdByteBuffer((bdByteBuffer *)this,0,param_2);
+  this->m_taskData = (uchar *)0x0;
+  this->_padding_ = (int)&_vftable_;
+  this->m_taskDataSize = 0;
+  this->m_validHeaderSize = 0;
+  this->m_paddingSize = 0;
+  setupTaskData(this,param_1);
+  return this;
 }
 
 
 // 82912CB8  bdTaskByteBuffer  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdremotetaskmanager/bdtaskbytebuffer.cpp:54)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 bdTaskByteBuffer * __thiscall
 bdTaskByteBuffer::bdTaskByteBuffer(bdTaskByteBuffer *this,void *param_1,uint param_2,bool param_3)
 
 {
-  bdTaskByteBuffer *pbVar1;
-  ulonglong uVar2;
   bdTaskByteBuffer *pbStack00000014;
   
-  uVar2 = (ulonglong)(int)param_1;
-  pbVar1 = (bdTaskByteBuffer *)__savegprlr_28(this);
-  pbStack00000014 = pbVar1;
-  bdByteBuffer::bdByteBuffer((bdByteBuffer *)pbVar1,(void *)0x0,0,param_3);
-  pbVar1->m_taskData = (uchar *)0x0;
-  pbVar1->_padding_ = (int)&_vftable_;
-  pbVar1->m_taskDataSize = 0;
-  pbVar1->m_validHeaderSize = 0;
-  pbVar1->m_paddingSize = 0;
-  if ((uVar2 & 0xffffffff) != 0) {
-    setupTaskData(pbVar1,param_2);
+  pbStack00000014 = this;
+  bdByteBuffer::bdByteBuffer((bdByteBuffer *)this,(void *)0x0,0,param_3);
+  this->m_taskData = (uchar *)0x0;
+  this->_padding_ = (int)&_vftable_;
+  this->m_taskDataSize = 0;
+  this->m_validHeaderSize = 0;
+  this->m_paddingSize = 0;
+  if (param_1 != (void *)0x0) {
+    setupTaskData(this,param_2);
     memcpy();
   }
-  pbVar1 = (bdTaskByteBuffer *)__restgprlr_28(pbVar1);
-  return pbVar1;
+  return this;
 }
 
 

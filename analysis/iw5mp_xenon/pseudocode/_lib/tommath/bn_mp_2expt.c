@@ -2,33 +2,33 @@
 
 // 822598F8  mp_2expt  (line unknown)
 
-void mp_2expt(undefined8 param_1,int param_2)
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
+void mp_2expt(undefined4 *param_1,int param_2)
 
 {
-  undefined4 *puVar1;
-  int iVar2;
-  undefined4 *puVar3;
-  longlong lVar4;
+  int iVar1;
+  undefined4 *puVar2;
+  longlong lVar3;
   
-  puVar1 = (undefined4 *)__savegprlr_28();
-  puVar1[2] = 0;
-  iVar2 = 0;
-  *puVar1 = 0;
-  if (0 < (int)puVar1[1]) {
-    puVar3 = (undefined4 *)(puVar1[3] + -4);
+  param_1[2] = 0;
+  iVar1 = 0;
+  *param_1 = 0;
+  if (0 < (int)param_1[1]) {
+    puVar2 = (undefined4 *)(param_1[3] + -4);
     do {
-      iVar2 = iVar2 + 1;
-      puVar3 = puVar3 + 1;
-      *puVar3 = 0;
-    } while (iVar2 < (int)puVar1[1]);
+      iVar1 = iVar1 + 1;
+      puVar2 = puVar2 + 1;
+      *puVar2 = 0;
+    } while (iVar1 < (int)param_1[1]);
   }
-  lVar4 = (longlong)(param_2 / 0x1c) + 1;
-  iVar2 = mp_grow(puVar1,lVar4);
-  if (iVar2 == 0) {
-    *puVar1 = (int)lVar4;
-    *(int *)((param_2 / 0x1c) * 4 + puVar1[3]) = 1 << (param_2 % 0x1c & 0x3fU);
+  lVar3 = (longlong)(param_2 / 0x1c) + 1;
+  iVar1 = mp_grow(param_1,lVar3);
+  if (iVar1 == 0) {
+    *param_1 = (int)lVar3;
+    *(int *)((param_2 / 0x1c) * 4 + param_1[3]) = 1 << (param_2 % 0x1c & 0x3fU);
   }
-  __restgprlr_28();
   return;
 }
 

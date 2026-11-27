@@ -2,34 +2,30 @@
 
 // 8281BAB0  tree2tok  (WebM_atvi_opt/vpx/vp8/common/treecoder.c:30)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void tree2tok(vp8_token_struct *param_1,char *param_2,int param_3,int param_4,int param_5)
 
 {
   char cVar1;
-  vp8_token_struct *pvVar2;
-  longlong lVar3;
-  longlong lVar4;
-  ulonglong uVar5;
+  char *pcVar2;
+  uint uVar3;
   
-  uVar5 = (ulonglong)param_4;
-  lVar4 = (longlong)param_3;
-  lVar3 = (longlong)(int)param_2;
-  pvVar2 = (vp8_token_struct *)__savegprlr_27(param_1);
-  uVar5 = (uVar5 & 0x7fffffff) << 1;
-  lVar4 = lVar3 + lVar4 + -1;
+  uVar3 = param_4 << 1;
+  pcVar2 = param_2 + param_3 + -1;
   do {
-    lVar4 = lVar4 + 1;
-    cVar1 = *(char *)lVar4;
+    pcVar2 = pcVar2 + 1;
+    cVar1 = *pcVar2;
     if (cVar1 < 1) {
-      pvVar2[-((int)cVar1 & 0x1fffffffU)].value = (int)uVar5;
-      pvVar2[-((int)cVar1 & 0x1fffffffU)].Len = param_5 + 1;
+      param_1[-((int)cVar1 & 0x1fffffffU)].value = uVar3;
+      param_1[-((int)cVar1 & 0x1fffffffU)].Len = param_5 + 1;
     }
     else {
-      tree2tok(pvVar2,(char *)lVar3,(int)cVar1,(int)uVar5,param_5 + 1);
+      tree2tok(param_1,param_2,(int)cVar1,uVar3,param_5 + 1);
     }
-    uVar5 = uVar5 + 1;
-  } while ((uVar5 & 1) != 0);
-  __restgprlr_27();
+    uVar3 = uVar3 + 1;
+  } while ((uVar3 & 1) != 0);
   return;
 }
 
@@ -56,59 +52,55 @@ void vp8_tokens_from_tree_offset(vp8_token_struct *param_1,char *param_2,int par
 
 // 8281BB50  branch_counts  (WebM_atvi_opt/vpx/vp8/common/treecoder.c:67)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void branch_counts(int param_1,vp8_token_struct *param_2,char *param_3,uint (*param_4) [2],
                   uint *param_5)
 
 {
   int iVar1;
-  int iVar2;
+  uint uVar2;
   int iVar3;
   uint uVar4;
-  int iVar5;
-  longlong lVar6;
-  longlong lVar7;
-  uint uVar8;
-  int iVar9;
-  int iVar10;
-  longlong lVar11;
-  longlong lVar12;
+  uint (*pauVar5) [2];
+  uint uVar6;
+  int iVar7;
+  int iVar8;
   
-  lVar11 = (longlong)(int)param_5;
-  lVar6 = (longlong)(int)param_4;
-  lVar12 = (longlong)(int)param_2;
-  iVar5 = __savegprlr_27(param_1);
-  iVar9 = 0;
-  lVar7 = lVar6 + -8;
+  iVar7 = 0;
+  pauVar5 = param_4 + -1;
   do {
-    iVar9 = iVar9 + 1;
-    *(undefined4 *)((int)lVar7 + 0xc) = 0;
-    lVar7 = lVar7 + 8;
-    *(undefined4 *)lVar7 = 0;
-  } while (iVar9 < iVar5 + -1);
-  iVar9 = 0;
+    iVar7 = iVar7 + 1;
+    pauVar5[1][1] = 0;
+    pauVar5 = pauVar5 + 1;
+    (*pauVar5)[0] = 0;
+  } while (iVar7 < param_1 + -1);
+  iVar7 = 0;
   do {
-    uVar8 = ((int *)lVar12)[1];
-    iVar10 = 0;
-    iVar1 = *(int *)lVar12;
-    iVar2 = *(int *)lVar11;
+    uVar6 = param_2->Len;
+    iVar8 = 0;
+    iVar1 = param_2->value;
+    uVar2 = *param_5;
     do {
-      uVar8 = uVar8 - 1;
-      uVar4 = iVar1 >> (uVar8 & 0x3f) & 1;
-      iVar3 = iVar10 + uVar4;
-      iVar10 = ((iVar10 >> 1) * 2 + uVar4) * 4;
-      *(int *)(iVar10 + (int)lVar6) = *(int *)(iVar10 + (int)lVar6) + iVar2;
-      iVar10 = (int)param_3[iVar3];
+      uVar6 = uVar6 - 1;
+      uVar4 = iVar1 >> (uVar6 & 0x3f) & 1;
+      iVar3 = iVar8 + uVar4;
+      param_4[iVar8 >> 1][uVar4] = param_4[iVar8 >> 1][uVar4] + uVar2;
+      iVar8 = (int)param_3[iVar3];
     } while ('\0' < param_3[iVar3]);
-    iVar9 = iVar9 + 1;
-    lVar12 = lVar12 + 8;
-    lVar11 = lVar11 + 4;
-  } while (iVar9 < iVar5);
-  __restgprlr_27();
+    iVar7 = iVar7 + 1;
+    param_2 = param_2 + 1;
+    param_5 = param_5 + 1;
+  } while (iVar7 < param_1);
   return;
 }
 
 
 // 8281BBF0  vp8_tree_probs_from_distribution  (WebM_atvi_opt/vpx/vp8/common/treecoder.c:123)
+
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 
 void vp8_tree_probs_from_distribution
                (int param_1,vp8_token_struct *param_2,char *param_3,uchar *param_4,
@@ -116,46 +108,43 @@ void vp8_tree_probs_from_distribution
 
 {
   uint uVar1;
-  int iVar2;
-  longlong lVar3;
+  longlong lVar2;
+  ulonglong uVar3;
   ulonglong uVar4;
-  ulonglong uVar5;
-  int iVar6;
+  int iVar5;
   
-  lVar3 = (longlong)(int)param_5;
-  iVar2 = __savegprlr_27(param_1);
-  iVar6 = 0;
-  branch_counts(iVar2,param_2,param_3,(uint (*) [2])lVar3,param_6);
+  lVar2 = (longlong)(int)param_5;
+  iVar5 = 0;
+  branch_counts(param_1,param_2,param_3,param_5,param_6);
   do {
-    uVar1 = *(uint *)lVar3;
-    uVar5 = (ulonglong)((uint *)lVar3)[1] + (ulonglong)uVar1;
-    if (uVar5 == 0) {
-      param_4[iVar6] = 0x80;
+    uVar1 = *(uint *)lVar2;
+    uVar4 = (ulonglong)((uint *)lVar2)[1] + (ulonglong)uVar1;
+    if (uVar4 == 0) {
+      param_4[iVar5] = 0x80;
     }
     else {
-      uVar4 = (uVar5 & 0xffffffff) >> 1;
+      uVar3 = (uVar4 & 0xffffffff) >> 1;
       if (param_8 == 0) {
-        uVar4 = 0;
+        uVar3 = 0;
       }
-      trapWord(6,uVar5,0);
-      uVar5 = ((longlong)(int)uVar1 * (longlong)(int)param_7 + uVar4 & 0xffffffff) /
-              (uVar5 & 0xffffffff);
-      if (uVar5 < 0x100) {
-        if (uVar5 == 0) {
-          param_4[iVar6] = '\x01';
+      trapWord(6,uVar4,0);
+      uVar4 = ((longlong)(int)uVar1 * (longlong)(int)param_7 + uVar3 & 0xffffffff) /
+              (uVar4 & 0xffffffff);
+      if (uVar4 < 0x100) {
+        if (uVar4 == 0) {
+          param_4[iVar5] = '\x01';
           goto LAB_8281bc84;
         }
       }
       else {
-        uVar5 = 0xff;
+        uVar4 = 0xff;
       }
-      param_4[iVar6] = (uchar)uVar5;
+      param_4[iVar5] = (uchar)uVar4;
     }
 LAB_8281bc84:
-    iVar6 = iVar6 + 1;
-    lVar3 = lVar3 + 8;
-    if (iVar2 + -1 <= iVar6) {
-      __restgprlr_27();
+    iVar5 = iVar5 + 1;
+    lVar2 = lVar2 + 8;
+    if (param_1 + -1 <= iVar5) {
       return;
     }
   } while( true );

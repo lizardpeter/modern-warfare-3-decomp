@@ -28,62 +28,58 @@ void __thiscall bdSubscriptionInfo::~bdSubscriptionInfo(bdSubscriptionInfo *this
 
 // 82909270  deserialize  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdsubscription/bdsubscriptioninfo.cpp:25)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 bool __thiscall
 bdSubscriptionInfo::deserialize(bdSubscriptionInfo *this,bdReference<bdByteBuffer> param_1)
 
 {
-  int iVar1;
+  bool bVar1;
   bool bVar2;
-  bool bVar3;
-  undefined1 uVar4;
-  undefined8 uVar5;
-  bdByteBuffer *pbStack0000001c;
+  bdReference<bdByteBuffer> bStack0000001c;
   
-  iVar1 = __savegprlr_29(this);
-  pbStack0000001c = param_1.m_ptr;
-  bVar2 = bdByteBuffer::readUInt64
-                    ((bdByteBuffer *)(param_1.m_ptr)->_padding_,(ulong64 *)(iVar1 + 8));
-  if (bVar2) {
-    bVar3 = bdByteBuffer::readUInt32
-                      ((bdByteBuffer *)(param_1.m_ptr)->_padding_,(uint *)(iVar1 + 0x10));
-    bVar2 = true;
-    if (!bVar3) goto LAB_829092b8;
+  bStack0000001c.m_ptr = param_1.m_ptr;
+  bVar1 = bdByteBuffer::readUInt64((bdByteBuffer *)(param_1.m_ptr)->_padding_,&this->m_userID);
+  if (bVar1) {
+    bVar2 = bdByteBuffer::readUInt32
+                      ((bdByteBuffer *)(param_1.m_ptr)->_padding_,&this->m_subscriptionType);
+    bVar1 = true;
+    if (!bVar2) goto LAB_829092b8;
   }
   else {
 LAB_829092b8:
-    bVar2 = false;
+    bVar1 = false;
   }
-  if (bVar2) {
-    bVar3 = bdByteBuffer::readUInt32
-                      ((bdByteBuffer *)(param_1.m_ptr)->_padding_,(uint *)(iVar1 + 0x14));
-    bVar2 = true;
-    if (!bVar3) goto LAB_829092dc;
+  if (bVar1) {
+    bVar2 = bdByteBuffer::readUInt32
+                      ((bdByteBuffer *)(param_1.m_ptr)->_padding_,&this->m_subscriptionLevel);
+    bVar1 = true;
+    if (!bVar2) goto LAB_829092dc;
   }
   else {
 LAB_829092dc:
-    bVar2 = false;
+    bVar1 = false;
   }
-  if (bVar2) {
-    bVar3 = bdByteBuffer::readInt32
-                      ((bdByteBuffer *)(param_1.m_ptr)->_padding_,(int *)(iVar1 + 0x18));
-    bVar2 = true;
-    if (!bVar3) goto LAB_82909300;
+  if (bVar1) {
+    bVar2 = bdByteBuffer::readInt32
+                      ((bdByteBuffer *)(param_1.m_ptr)->_padding_,&this->m_daysToExpiry);
+    bVar1 = true;
+    if (!bVar2) goto LAB_82909300;
   }
   else {
 LAB_82909300:
-    bVar2 = false;
+    bVar1 = false;
   }
-  if (bVar2) {
-    bVar2 = bdByteBuffer::readBool
-                      ((bdByteBuffer *)(param_1.m_ptr)->_padding_,(bool *)(iVar1 + 0x1c));
-    uVar5 = 1;
-    if (bVar2) goto LAB_82909328;
+  if (bVar1) {
+    bVar1 = bdByteBuffer::readBool((bdByteBuffer *)(param_1.m_ptr)->_padding_,&this->m_canExpire);
+    bVar2 = true;
+    if (bVar1) goto LAB_82909328;
   }
-  uVar5 = 0;
+  bVar2 = false;
 LAB_82909328:
   bdReference<bdByteBuffer>::~bdReference<bdByteBuffer>((bdReference<bdByteBuffer> *)param_1.m_ptr);
-  uVar4 = __restgprlr_29(uVar5);
-  return (bool)uVar4;
+  return bVar2;
 }
 
 

@@ -48,12 +48,14 @@ void __thiscall bdReliableReceiveWindow::~bdReliableReceiveWindow(bdReliableRece
 
 // 82935948  add  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdconnection/bdwindow/bdreliablereceivewindow.cpp:30)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
+
 bool __thiscall
 bdReliableReceiveWindow::add(bdReliableReceiveWindow *this,bdReference<bdDataChunk> param_1)
 
 {
   bdDataChunk *this_00;
-  bdReliableReceiveWindow *this_01;
   ushort uVar5;
   int iVar1;
   bool bVar7;
@@ -61,47 +63,45 @@ bdReliableReceiveWindow::add(bdReliableReceiveWindow *this,bdReference<bdDataChu
   bdSequenceNumber bVar3;
   uint uVar4;
   ushort uVar6;
-  undefined1 uVar8;
+  char *pcVar8;
   char *pcVar9;
-  char *pcVar10;
-  undefined8 uVar11;
-  bdDataChunk *pbStack0000001c;
+  bool bVar10;
+  bdReference<bdDataChunk> bStack0000001c;
   bdSequenceNumber local_50;
   bdSequenceNumber bStack_4c;
   bdSequenceNumber local_48 [18];
   
-  this_01 = (bdReliableReceiveWindow *)__savegprlr_25(this);
-  uVar11 = 1;
-  pbStack0000001c = param_1.m_ptr;
+  bVar10 = true;
+  bStack0000001c.m_ptr = param_1.m_ptr;
   if ((param_1.m_ptr)->_padding_ == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdConnection\\bdWindow\\bdReliableReceiveWindow.cpp"
                     ,0x22,0,"%s\n\t%s");
   }
   uVar5 = bdDataChunk::getSequenceNumber((bdDataChunk *)(param_1.m_ptr)->_padding_);
-  bdSequenceNumber::bdSequenceNumber(&local_50,(bdSequenceNumber *)this_01,(uint)uVar5,0x10);
+  bdSequenceNumber::bdSequenceNumber(&local_50,&this->m_newest,(uint)uVar5,0x10);
   iVar1 = (**(code **)(*(int *)(param_1.m_ptr)->_padding_ + 0x10))();
-  bVar7 = bdSequenceNumber::operator<(&local_50,(bdSequenceNumber *)this_01);
-  if ((bVar7) || (this_01->m_recvWindowUsedCredit + iVar1 <= this_01->m_recvWindowCredit)) {
+  bVar7 = bdSequenceNumber::operator<(&local_50,&this->m_newest);
+  if ((bVar7) || (this->m_recvWindowUsedCredit + iVar1 <= this->m_recvWindowCredit)) {
     bdSequenceNumber::bdSequenceNumber(&bStack_4c,0x80);
-    bVar3 = bdSequenceNumber::operator+(local_48,&this_01->m_lastDispatched);
+    bVar3 = bdSequenceNumber::operator+(local_48,&this->m_lastDispatched);
     bVar7 = bdSequenceNumber::operator>(&local_50,(bdSequenceNumber *)bVar3.m_seqNum);
     if (bVar7) {
-      pcVar10 = "Window overflow (a) - info only";
+      pcVar9 = "Window overflow (a) - info only";
       uVar4 = 0x30;
       goto LAB_82935a14;
     }
-    bVar7 = bdSequenceNumber::operator>(&local_50,&this_01->m_lastDispatched);
+    bVar7 = bdSequenceNumber::operator>(&local_50,&this->m_lastDispatched);
     if (!bVar7) goto LAB_82935b48;
     uVar4 = bdSequenceNumber::getValue(&local_50);
-    this_00 = this_01->m_frame[uVar4 & 0x7f].m_ptr;
+    this_00 = this->m_frame[uVar4 & 0x7f].m_ptr;
     if (this_00 == (bdDataChunk *)0x0) {
       iVar1 = (**(code **)(((bdDataChunk *)(param_1.m_ptr)->_padding_)->_padding_ + 0x10))();
-      this_01->m_recvWindowUsedCredit = iVar1 + this_01->m_recvWindowUsedCredit;
+      this->m_recvWindowUsedCredit = iVar1 + this->m_recvWindowUsedCredit;
       bdReference<bdDataChunk>::operator=
-                (this_01->m_frame + (uVar4 & 0x7f),(bdReference<bdDataChunk> *)param_1.m_ptr);
-      bVar7 = bdSequenceNumber::operator>(&local_50,(bdSequenceNumber *)this_01);
+                (this->m_frame + (uVar4 & 0x7f),(bdReference<bdDataChunk> *)param_1.m_ptr);
+      bVar7 = bdSequenceNumber::operator>(&local_50,&this->m_newest);
       if (bVar7) {
-        (this_01->m_newest).m_seqNum = local_50.m_seqNum;
+        (this->m_newest).m_seqNum = local_50.m_seqNum;
       }
       goto LAB_82935b48;
     }
@@ -109,27 +109,26 @@ bdReliableReceiveWindow::add(bdReliableReceiveWindow *this,bdReference<bdDataChu
     uVar5 = bdDataChunk::getSequenceNumber((bdDataChunk *)(param_1.m_ptr)->_padding_);
     uVar6 = bdDataChunk::getSequenceNumber(this_00);
     if (uVar6 == uVar5) goto LAB_82935b48;
-    pcVar10 = "Window overflow (b) - error";
-    pcVar9 = "err/";
+    pcVar9 = "Window overflow (b) - error";
+    pcVar8 = "err/";
     uVar4 = 0x44;
     bVar2 = BD_LOG_ERROR;
   }
   else {
-    pcVar10 = "Not enough recv window credit.";
+    pcVar9 = "Not enough recv window credit.";
     uVar4 = 0x4b;
 LAB_82935a14:
     bVar2 = BD_LOG_INFO;
-    pcVar9 = "info/";
+    pcVar8 = "info/";
   }
-  bdLogMessage(bVar2,pcVar9,"bdConnection/windows",
+  bdLogMessage(bVar2,pcVar8,"bdConnection/windows",
                "c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdConnection\\bdWindow\\bdReliableReceiveWindow.cpp"
-               ,"bdReliableReceiveWindow::add",uVar4,pcVar10);
-  uVar11 = 0;
+               ,"bdReliableReceiveWindow::add",uVar4,pcVar9);
+  bVar10 = false;
 LAB_82935b48:
-  calculateAck(this_01);
+  calculateAck(this);
   bdReference<bdDataChunk>::~bdReference<bdDataChunk>((bdReference<bdDataChunk> *)param_1.m_ptr);
-  uVar8 = __restgprlr_25(uVar11);
-  return (bool)uVar8;
+  return bVar10;
 }
 
 
@@ -309,44 +308,44 @@ bdReliableReceiveWindow::getDataToSend(bdReliableReceiveWindow *this,bdPacket *p
 
 // 82935358  getNextToRead  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdconnection/bdwindow/bdreliablereceivewindow.cpp:105)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 bdReference<bdDataChunk> __thiscall
 bdReliableReceiveWindow::getNextToRead(bdReliableReceiveWindow *this)
 
 {
-  bdReference<bdDataChunk> *this_00;
-  bdSequenceNumber *this_01;
+  bdSequenceNumber *this_00;
   int iVar1;
-  ushort uVar3;
-  bool bVar4;
-  bdDataChunk *pbVar2;
+  ushort uVar2;
+  bool bVar3;
   int in_r4;
-  bdReference<bdDataChunk> *this_02;
-  bdReference<bdDataChunk> *pbStack00000014;
+  bdReference<bdDataChunk> *this_01;
+  bdReliableReceiveWindow *pbStack00000014;
   bdSequenceNumber local_40;
   bdSequenceNumber bStack_3c;
   undefined4 local_38;
   bdSAckChunk *local_34;
   
-  this_00 = (bdReference<bdDataChunk> *)__savegprlr_27(this);
-  this_00->m_ptr = (bdDataChunk *)0x0;
-  this_01 = (bdSequenceNumber *)(in_r4 + 8);
+  (this->m_newest).m_seqNum = 0;
+  this_00 = (bdSequenceNumber *)(in_r4 + 8);
   local_38 = 1;
-  pbStack00000014 = this_00;
-  iVar1 = bdSequenceNumber::getValue(this_01);
+  pbStack00000014 = this;
+  iVar1 = bdSequenceNumber::getValue(this_00);
   bdSequenceNumber::bdSequenceNumber(&local_40,1);
-  bdSequenceNumber::operator+(&bStack_3c,this_01);
+  bdSequenceNumber::operator+(&bStack_3c,this_00);
   iVar1 = ((iVar1 + 1U & 0x7f) + 3) * 4;
-  this_02 = (bdReference<bdDataChunk> *)(iVar1 + in_r4);
+  this_01 = (bdReference<bdDataChunk> *)(iVar1 + in_r4);
   local_40.m_seqNum = *(undefined4 *)(iVar1 + in_r4);
   if ((bdDataChunk *)local_40.m_seqNum != (bdDataChunk *)0x0) {
-    uVar3 = bdDataChunk::getSequenceNumber((bdDataChunk *)local_40.m_seqNum);
-    bdSequenceNumber::bdSequenceNumber(&local_40,this_01,(uint)uVar3,0x10);
-    bVar4 = bdSequenceNumber::operator==(&bStack_3c,&local_40);
-    if (bVar4) {
-      bdReference<bdDataChunk>::operator=(this_00,this_02);
-      bdReference<bdDataChunk>::operator=(this_02,(bdDataChunk *)0x0);
-      this_01->m_seqNum = local_40.m_seqNum;
-      iVar1 = (**(code **)(this_00->m_ptr->_padding_ + 0x10))();
+    uVar2 = bdDataChunk::getSequenceNumber((bdDataChunk *)local_40.m_seqNum);
+    bdSequenceNumber::bdSequenceNumber(&local_40,this_00,(uint)uVar2,0x10);
+    bVar3 = bdSequenceNumber::operator==(&bStack_3c,&local_40);
+    if (bVar3) {
+      bdReference<bdDataChunk>::operator=((bdReference<bdDataChunk> *)this,this_01);
+      bdReference<bdDataChunk>::operator=(this_01,(bdDataChunk *)0x0);
+      this_00->m_seqNum = local_40.m_seqNum;
+      iVar1 = (**(code **)(*(int *)(this->m_newest).m_seqNum + 0x10))();
       local_34 = *(bdSAckChunk **)(in_r4 + 0x218);
       iVar1 = *(int *)(in_r4 + 0x214) - iVar1;
       *(int *)(in_r4 + 0x214) = iVar1;
@@ -368,28 +367,29 @@ bdReliableReceiveWindow::getNextToRead(bdReliableReceiveWindow *this)
                    "unexpected seq number. (%d != %d)");
     }
   }
-  pbVar2 = (bdDataChunk *)__restgprlr_27(this_00);
-  return (bdReference<bdDataChunk>)pbVar2;
+  return (bdReference<bdDataChunk>)(bdDataChunk *)this;
 }
 
 
 // 82935548  calculateAck  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdconnection/bdwindow/bdreliablereceivewindow.cpp:142)
 
+/* WARNING: Function: __savegprlr_19 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_19 replaced with injection: xenon_save_restore */
+
 void __thiscall bdReliableReceiveWindow::calculateAck(bdReliableReceiveWindow *this)
 
 {
   bdDataChunk *this_00;
-  bdSequenceNumber *pbVar1;
+  bool bVar7;
   bdSequenceNumber *this_01;
-  bool bVar8;
+  bdSequenceNumber *pbVar1;
+  bdSAckChunk *pbVar2;
+  uint uVar3;
+  bdSequenceNumber bVar4;
+  ushort uVar6;
+  int iVar5;
   bdSequenceNumber *this_02;
-  bdSequenceNumber *pbVar2;
-  bdSAckChunk *pbVar3;
   bdReference<bdSAckChunk> *this_03;
-  uint uVar4;
-  bdSequenceNumber bVar5;
-  ushort uVar7;
-  int iVar6;
   bdSequenceNumber local_b0;
   bdSequenceNumber local_ac;
   bdSequenceNumber bStack_a8;
@@ -406,80 +406,79 @@ void __thiscall bdReliableReceiveWindow::calculateAck(bdReliableReceiveWindow *t
   bdSequenceNumber bStack_7c;
   bdGapAckBlock local_78 [15];
   
-  pbVar1 = (bdSequenceNumber *)__savegprlr_19(this);
-  pbVar2 = pbVar1 + 2;
-  this_01 = pbVar1 + 1;
-  bVar8 = bdSequenceNumber::operator>(this_01,pbVar2);
-  if (bVar8) {
+  pbVar1 = &this->m_lastDispatched;
+  this_02 = &this->m_lastCumulative;
+  bVar7 = bdSequenceNumber::operator>(this_02,pbVar1);
+  if (bVar7) {
     bdSequenceNumber::bdSequenceNumber(&bStack_a8,1);
-    this_02 = &local_98;
-    pbVar2 = this_01;
+    this_01 = &local_98;
+    pbVar1 = this_02;
   }
   else {
     bdSequenceNumber::bdSequenceNumber(&local_ac,1);
-    this_02 = &bStack_9c;
+    this_01 = &bStack_9c;
   }
-  local_b0 = bdSequenceNumber::operator+(this_02,pbVar2);
+  local_b0 = bdSequenceNumber::operator+(this_01,pbVar1);
                     /* WARNING: Load size is inaccurate */
   local_b0.m_seqNum = *local_b0.m_seqNum;
-  while ((bVar8 = bdSequenceNumber::operator<=(&local_b0,pbVar1), bVar8 &&
-         (uVar4 = bdSequenceNumber::getValue(&local_b0), pbVar1[(uVar4 & 0x7f) + 3].m_seqNum != 0)))
-  {
-    this_01->m_seqNum = local_b0.m_seqNum;
+  while ((bVar7 = bdSequenceNumber::operator<=(&local_b0,&this->m_newest), bVar7 &&
+         (uVar3 = bdSequenceNumber::getValue(&local_b0),
+         this->m_frame[uVar3 & 0x7f].m_ptr != (bdDataChunk *)0x0))) {
+    this_02->m_seqNum = local_b0.m_seqNum;
     bdSequenceNumber::operator++(&local_98,(int)&local_b0);
   }
-  pbVar2 = bdSequenceNumber::bdSequenceNumber(&local_98,-1);
-  bVar8 = bdSequenceNumber::operator!=(this_01,pbVar2);
-  if (bVar8) {
+  pbVar1 = bdSequenceNumber::bdSequenceNumber(&local_98,-1);
+  bVar7 = bdSequenceNumber::operator!=(this_02,pbVar1);
+  if (bVar7) {
     local_98.m_seqNum = (int)bdMemory::allocate(0x28);
     if ((bdSAckChunk *)local_98.m_seqNum == (bdSAckChunk *)0x0) {
-      pbVar3 = (bdSAckChunk *)0x0;
+      pbVar2 = (bdSAckChunk *)0x0;
     }
     else {
-      pbVar3 = bdSAckChunk::bdSAckChunk
+      pbVar2 = bdSAckChunk::bdSAckChunk
                          ((bdSAckChunk *)local_98.m_seqNum,
-                          pbVar1[0x84].m_seqNum - pbVar1[0x85].m_seqNum,BD_SC_NO_FLAGS);
+                          this->m_recvWindowCredit - this->m_recvWindowUsedCredit,BD_SC_NO_FLAGS);
     }
-    this_03 = (bdReference<bdSAckChunk> *)(pbVar1 + 0x86);
-    bdReference<bdSAckChunk>::operator=(this_03,pbVar3);
+    this_03 = &this->m_sack;
+    bdReference<bdSAckChunk>::operator=(this_03,pbVar2);
     local_78[0].m_start = 0;
     local_78[0].m_end = 0;
     bdSequenceNumber::bdSequenceNumber(&bStack_a8,1);
-    local_b0 = bdSequenceNumber::operator+(&local_98,this_01);
+    local_b0 = bdSequenceNumber::operator+(&local_98,this_02);
                     /* WARNING: Load size is inaccurate */
     local_b0.m_seqNum = *local_b0.m_seqNum;
-    bVar8 = bdSequenceNumber::operator<=(&local_b0,pbVar1);
-    if (bVar8) {
+    bVar7 = bdSequenceNumber::operator<=(&local_b0,&this->m_newest);
+    if (bVar7) {
       do {
-        uVar4 = bdSequenceNumber::getValue(&local_b0);
-        if (pbVar1[(uVar4 & 0x7f) + 3].m_seqNum == 0) {
+        uVar3 = bdSequenceNumber::getValue(&local_b0);
+        if (this->m_frame[uVar3 & 0x7f].m_ptr == (bdDataChunk *)0x0) {
           if (local_78[0].m_start != 0) {
             bdSequenceNumber::bdSequenceNumber(&bStack_a4,1);
-            bVar5 = bdSequenceNumber::operator-(&bStack_90,&local_b0);
-            bVar5 = bdSequenceNumber::operator-(&bStack_8c,bVar5.m_seqNum);
-            local_78[0].m_end = bdSequenceNumber::getValue((bdSequenceNumber *)bVar5.m_seqNum);
+            bVar4 = bdSequenceNumber::operator-(&bStack_90,&local_b0);
+            bVar4 = bdSequenceNumber::operator-(&bStack_8c,bVar4.m_seqNum);
+            local_78[0].m_end = bdSequenceNumber::getValue((bdSequenceNumber *)bVar4.m_seqNum);
             bdSAckChunk::addGap(this_03->m_ptr,local_78);
             bdSequenceNumber::bdSequenceNumber(&bStack_a0,local_78[0].m_start);
-            bVar5 = bdSequenceNumber::operator+(&bStack_88,this_01);
-            iVar6 = bdSequenceNumber::getValue(bVar5.m_seqNum);
-            bdSequenceNumber::bdSequenceNumber(&local_98,iVar6);
+            bVar4 = bdSequenceNumber::operator+(&bStack_88,this_02);
+            iVar5 = bdSequenceNumber::getValue(bVar4.m_seqNum);
+            bdSequenceNumber::bdSequenceNumber(&local_98,iVar5);
             bdSequenceNumber::bdSequenceNumber(&bStack_9c,local_78[0].m_end);
-            bVar5 = bdSequenceNumber::operator+(&bStack_84,this_01);
-            iVar6 = bdSequenceNumber::getValue(bVar5.m_seqNum);
-            bdSequenceNumber::bdSequenceNumber(&bStack_a8,iVar6);
+            bVar4 = bdSequenceNumber::operator+(&bStack_84,this_02);
+            iVar5 = bdSequenceNumber::getValue(bVar4.m_seqNum);
+            bdSequenceNumber::bdSequenceNumber(&bStack_a8,iVar5);
             local_ac.m_seqNum = local_98.m_seqNum;
-            while (bVar8 = bdSequenceNumber::operator<(&local_ac,&bStack_a8), bVar8) {
-              uVar4 = bdSequenceNumber::getValue(&local_ac);
-              iVar6 = uVar4 + (((int)uVar4 >> 7) + (uint)((int)uVar4 < 0 && (uVar4 & 0x7f) != 0) &
-                              0x1ffffff) * -0x80 + 3;
-              if (pbVar1[iVar6].m_seqNum == 0) {
+            while (bVar7 = bdSequenceNumber::operator<(&local_ac,&bStack_a8), bVar7) {
+              uVar3 = bdSequenceNumber::getValue(&local_ac);
+              iVar5 = (uVar3 + (((int)uVar3 >> 7) + (uint)((int)uVar3 < 0 && (uVar3 & 0x7f) != 0) &
+                               0x1ffffff) * -0x80 + 3) * 4;
+              if (*(int *)(iVar5 + (int)this) == 0) {
                 MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdConnection\\bdWindow\\bdReliableReceiveWindow.cpp"
                                 ,0xc6,0,"%s\n\t%s");
               }
-              this_00 = (bdDataChunk *)pbVar1[iVar6].m_seqNum;
-              uVar4 = bdSequenceNumber::getValue(&local_ac);
-              uVar7 = bdDataChunk::getSequenceNumber(this_00);
-              if ((uint)uVar7 != (uVar4 & 0xffff)) {
+              this_00 = *(bdDataChunk **)(iVar5 + (int)this);
+              uVar3 = bdSequenceNumber::getValue(&local_ac);
+              uVar6 = bdDataChunk::getSequenceNumber(this_00);
+              if ((uint)uVar6 != (uVar3 & 0xffff)) {
                 MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdConnection\\bdWindow\\bdReliableReceiveWindow.cpp"
                                 ,200,0,"%s\n\t%s");
               }
@@ -490,25 +489,24 @@ void __thiscall bdReliableReceiveWindow::calculateAck(bdReliableReceiveWindow *t
           }
         }
         else if (local_78[0].m_start == 0) {
-          bVar5 = bdSequenceNumber::operator-(&bStack_94,&local_b0);
-          local_78[0].m_start = bdSequenceNumber::getValue((bdSequenceNumber *)bVar5.m_seqNum);
+          bVar4 = bdSequenceNumber::operator-(&bStack_94,&local_b0);
+          local_78[0].m_start = bdSequenceNumber::getValue((bdSequenceNumber *)bVar4.m_seqNum);
         }
         bdSequenceNumber::operator++(&bStack_7c,(int)&local_b0);
-        bVar8 = bdSequenceNumber::operator<=(&local_b0,pbVar1);
-      } while (bVar8);
+        bVar7 = bdSequenceNumber::operator<=(&local_b0,&this->m_newest);
+      } while (bVar7);
     }
     if (local_78[0].m_start != 0) {
       bdSequenceNumber::bdSequenceNumber(&local_98,1);
-      bVar5 = bdSequenceNumber::operator-(&bStack_7c,&local_b0);
-      bVar5 = bdSequenceNumber::operator-(&bStack_80,bVar5.m_seqNum);
-      local_78[0].m_end = bdSequenceNumber::getValue((bdSequenceNumber *)bVar5.m_seqNum);
+      bVar4 = bdSequenceNumber::operator-(&bStack_7c,&local_b0);
+      bVar4 = bdSequenceNumber::operator-(&bStack_80,bVar4.m_seqNum);
+      local_78[0].m_end = bdSequenceNumber::getValue((bdSequenceNumber *)bVar4.m_seqNum);
       bdSAckChunk::addGap(this_03->m_ptr,local_78);
     }
-    pbVar3 = this_03->m_ptr;
-    iVar6 = bdSequenceNumber::getValue(this_01);
-    bdSAckChunk::setCumulativeAck(pbVar3,(ushort)iVar6);
+    pbVar2 = this_03->m_ptr;
+    iVar5 = bdSequenceNumber::getValue(this_02);
+    bdSAckChunk::setCumulativeAck(pbVar2,(ushort)iVar5);
   }
-  __restgprlr_19();
   return;
 }
 

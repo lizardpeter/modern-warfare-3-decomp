@@ -2,133 +2,126 @@
 
 // 82811448  vp8_print_modes_and_motion_vectors  (WebM_atvi_opt/vpx/vp8/common/debugmodes.c:21)
 
+/* WARNING: Function: __savegprlr_19 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_19 replaced with injection: xenon_save_restore */
+
 void vp8_print_modes_and_motion_vectors(MODE_INFO *param_1,int param_2,int param_3,int param_4)
 
 {
   int iVar1;
-  int iVar2;
-  int iVar3;
-  _iobuf *p_Var4;
-  ulonglong uVar5;
+  _iobuf *p_Var2;
+  longlong lVar3;
+  longlong lVar4;
+  longlong lVar5;
   int iVar6;
+  longlong lVar7;
   int iVar8;
-  ulonglong uVar7;
-  ulonglong uVar9;
-  int iVar10;
-  ulonglong uVar11;
-  int iVar12;
   
-  uVar5 = (ulonglong)param_3;
-  uVar7 = (ulonglong)param_2;
-  iVar3 = __savegprlr_19(param_1,uVar7,uVar5,param_4);
-  p_Var4 = fopen("mvs.stt","a");
-  fprintf(p_Var4,"Mb Modes for Frame %d\n");
-  iVar8 = (int)uVar7;
-  iVar6 = (int)uVar5;
-  uVar9 = uVar7;
-  if (0 < iVar8) {
+  lVar3 = (longlong)param_3;
+  lVar4 = (longlong)param_2;
+  p_Var2 = fopen("mvs.stt","a");
+  fprintf(p_Var2,"Mb Modes for Frame %d\n");
+  lVar5 = lVar4;
+  if (0 < param_2) {
     do {
-      uVar11 = uVar5;
-      if (0 < iVar6) {
+      lVar7 = lVar3;
+      if (0 < param_3) {
         do {
-          fprintf(p_Var4,"%2d ");
-          uVar11 = uVar11 - 1;
-        } while (uVar11 != 0);
+          fprintf(p_Var2,"%2d ");
+          lVar7 = lVar7 + -1;
+        } while (lVar7 != 0);
       }
-      fprintf(p_Var4,"\n");
-      uVar9 = uVar9 - 1;
-    } while (uVar9 != 0);
+      fprintf(p_Var2,"\n");
+      lVar5 = lVar5 + -1;
+    } while (lVar5 != 0);
   }
-  fprintf(p_Var4,"\n");
-  fprintf(p_Var4,"Mb mv ref for Frame %d\n");
-  uVar9 = uVar7;
-  if (0 < iVar8) {
+  fprintf(p_Var2,"\n");
+  fprintf(p_Var2,"Mb mv ref for Frame %d\n");
+  lVar5 = lVar4;
+  if (0 < param_2) {
     do {
-      uVar11 = uVar5;
-      if (0 < iVar6) {
+      lVar7 = lVar3;
+      if (0 < param_3) {
         do {
-          fprintf(p_Var4,"%2d ");
-          uVar11 = uVar11 - 1;
-        } while (uVar11 != 0);
+          fprintf(p_Var2,"%2d ");
+          lVar7 = lVar7 + -1;
+        } while (lVar7 != 0);
       }
-      fprintf(p_Var4,"\n");
-      uVar9 = uVar9 - 1;
-    } while (uVar9 != 0);
+      fprintf(p_Var2,"\n");
+      lVar5 = lVar5 + -1;
+    } while (lVar5 != 0);
   }
-  fprintf(p_Var4,"\n");
-  fprintf(p_Var4,"UV Modes for Frame %d\n");
-  uVar9 = uVar7;
-  if (0 < iVar8) {
+  fprintf(p_Var2,"\n");
+  fprintf(p_Var2,"UV Modes for Frame %d\n");
+  lVar5 = lVar4;
+  if (0 < param_2) {
     do {
-      uVar11 = uVar5;
-      if (0 < iVar6) {
+      lVar7 = lVar3;
+      if (0 < param_3) {
         do {
-          fprintf(p_Var4,"%2d ");
-          uVar11 = uVar11 - 1;
-        } while (uVar11 != 0);
+          fprintf(p_Var2,"%2d ");
+          lVar7 = lVar7 + -1;
+        } while (lVar7 != 0);
       }
-      fprintf(p_Var4,"\n");
-      uVar9 = uVar9 - 1;
-    } while (uVar9 != 0);
+      fprintf(p_Var2,"\n");
+      lVar5 = lVar5 + -1;
+    } while (lVar5 != 0);
   }
-  fprintf(p_Var4,"\n");
-  fprintf(p_Var4,"Mbs for Frame %d\n");
-  iVar2 = (int)((uVar7 & 0xffffffff) << 2);
-  iVar10 = 0;
-  if (0 < iVar2) {
-    iVar1 = (int)((uVar5 & 0xffffffff) << 2);
-    do {
-      iVar12 = 0;
-      if (0 < iVar1) {
-        do {
-          if (*(int *)(((iVar12 >> 2) + (iVar10 >> 2) * (iVar6 + 1)) * 0x98 + iVar3) == 4) {
-            fprintf(p_Var4,"%2d ");
-          }
-          else {
-            fprintf(p_Var4,"xx ");
-          }
-          iVar12 = iVar12 + 1;
-        } while (iVar12 < iVar1);
-      }
-      fprintf(p_Var4,"\n");
-      iVar10 = iVar10 + 1;
-    } while (iVar10 < iVar2);
-  }
-  fprintf(p_Var4,"\n");
-  fprintf(p_Var4,"MVs for Frame %d\n");
-  if (0 < iVar8) {
-    do {
-      uVar9 = uVar5;
-      if (0 < iVar6) {
-        do {
-          fprintf(p_Var4,"%5d:%-5d");
-          uVar9 = uVar9 - 1;
-        } while (uVar9 != 0);
-      }
-      fprintf(p_Var4,"\n");
-      uVar7 = uVar7 - 1;
-    } while (uVar7 != 0);
-  }
-  fprintf(p_Var4,"\n");
-  fprintf(p_Var4,"MVs for Frame %d\n");
-  iVar3 = 0;
-  if (0 < iVar2) {
-    iVar6 = (int)((uVar5 & 0xffffffff) << 2);
+  fprintf(p_Var2,"\n");
+  fprintf(p_Var2,"Mbs for Frame %d\n");
+  iVar1 = param_2 << 2;
+  iVar6 = 0;
+  if (0 < iVar1) {
     do {
       iVar8 = 0;
-      if (0 < iVar6) {
+      if (0 < param_3 << 2) {
         do {
-          fprintf(p_Var4,"%3d:%-3d ");
+          if (param_1[(iVar8 >> 2) + (iVar6 >> 2) * (param_3 + 1)].mbmi.mode == B_PRED) {
+            fprintf(p_Var2,"%2d ");
+          }
+          else {
+            fprintf(p_Var2,"xx ");
+          }
           iVar8 = iVar8 + 1;
-        } while (iVar8 < iVar6);
+        } while (iVar8 < param_3 << 2);
       }
-      fprintf(p_Var4,"\n");
-      iVar3 = iVar3 + 1;
-    } while (iVar3 < iVar2);
+      fprintf(p_Var2,"\n");
+      iVar6 = iVar6 + 1;
+    } while (iVar6 < iVar1);
   }
-  fprintf(p_Var4,"\n");
-  iVar3 = fclose(p_Var4);
-  __restgprlr_19(iVar3);
+  fprintf(p_Var2,"\n");
+  fprintf(p_Var2,"MVs for Frame %d\n");
+  if (0 < param_2) {
+    do {
+      lVar5 = lVar3;
+      if (0 < param_3) {
+        do {
+          fprintf(p_Var2,"%5d:%-5d");
+          lVar5 = lVar5 + -1;
+        } while (lVar5 != 0);
+      }
+      fprintf(p_Var2,"\n");
+      lVar4 = lVar4 + -1;
+    } while (lVar4 != 0);
+  }
+  fprintf(p_Var2,"\n");
+  fprintf(p_Var2,"MVs for Frame %d\n");
+  iVar6 = 0;
+  if (0 < iVar1) {
+    do {
+      iVar8 = 0;
+      if (0 < param_3 << 2) {
+        do {
+          fprintf(p_Var2,"%3d:%-3d ");
+          iVar8 = iVar8 + 1;
+        } while (iVar8 < param_3 << 2);
+      }
+      fprintf(p_Var2,"\n");
+      iVar6 = iVar6 + 1;
+    } while (iVar6 < iVar1);
+  }
+  fprintf(p_Var2,"\n");
+  fclose(p_Var2);
   return;
 }
 

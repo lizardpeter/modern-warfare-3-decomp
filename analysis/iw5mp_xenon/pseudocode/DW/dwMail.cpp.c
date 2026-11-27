@@ -15,58 +15,55 @@ void _dynamic_initializer_for__s_dwMailManager__(void)
 
 // 826EBAA8  RecordUse  (DW/dwMail.cpp:486)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 bool __thiscall
 dwMailRateRecorderManager<20,1,60000>::RecordUse(dwMailRateRecorderManager<20,1,60000> *this)
 
 {
-  int *piVar1;
-  int iVar2;
-  undefined1 uVar3;
-  uint *puVar4;
-  int iVar5;
-  int *piVar6;
+  uint uVar1;
+  dwMailRateRecorderEntry *pdVar2;
+  int iVar3;
   
-  piVar1 = (int *)__savegprlr_29(this);
-  iVar2 = Sys_MillisecondsRaw();
-  if (*piVar1 != 0) {
-    puVar4 = (uint *)(piVar1 + 1);
-    iVar5 = 0;
-    if (0 < *piVar1) {
+  uVar1 = Sys_MillisecondsRaw();
+  if (this->m_numsamples != 0) {
+    pdVar2 = this->m_siwnetdwraterecorderentry_array;
+    iVar3 = 0;
+    if (0 < this->m_numsamples) {
       do {
-        if (*puVar4 < iVar2 - 60000U) {
-          *piVar1 = iVar5;
+        if (pdVar2->m_time < uVar1 - 60000) {
+          this->m_numsamples = iVar3;
           break;
         }
-        iVar5 = iVar5 + 1;
-        puVar4 = puVar4 + 2;
-      } while (iVar5 < *piVar1);
+        iVar3 = iVar3 + 1;
+        pdVar2 = pdVar2 + 1;
+      } while (iVar3 < this->m_numsamples);
     }
   }
-  piVar6 = piVar1 + 1;
-  if (*piVar1 == 0) {
-    *piVar6 = iVar2;
-    piVar1[2] = 1;
-    *piVar1 = *piVar1 + 1;
-    uVar3 = __restgprlr_29(1);
-    return (bool)uVar3;
+  pdVar2 = this->m_siwnetdwraterecorderentry_array;
+  if (this->m_numsamples == 0) {
+    pdVar2->m_time = uVar1;
+    this->m_siwnetdwraterecorderentry_array[0].m_count = 1;
+    this->m_numsamples = this->m_numsamples + 1;
+    return true;
   }
-  if (*piVar6 != iVar2) {
-    if (*piVar1 < 0x14) {
+  if (pdVar2->m_time != uVar1) {
+    if (this->m_numsamples < 0x14) {
       memmove();
-      *piVar1 = *piVar1 + 1;
-      piVar1[2] = 1;
-      *piVar6 = iVar2;
-      uVar3 = __restgprlr_29(1);
-      return (bool)uVar3;
+      this->m_numsamples = this->m_numsamples + 1;
+      this->m_siwnetdwraterecorderentry_array[0].m_count = 1;
+      pdVar2->m_time = uVar1;
+      return true;
     }
-    *piVar6 = iVar2;
-    piVar1[2] = piVar1[2] + 1;
-    uVar3 = __restgprlr_29(0);
-    return (bool)uVar3;
+    pdVar2->m_time = uVar1;
+    this->m_siwnetdwraterecorderentry_array[0].m_count =
+         this->m_siwnetdwraterecorderentry_array[0].m_count + 1;
+    return false;
   }
-  piVar1[2] = piVar1[2] + 1;
-  uVar3 = __restgprlr_29(1);
-  return (bool)uVar3;
+  this->m_siwnetdwraterecorderentry_array[0].m_count =
+       this->m_siwnetdwraterecorderentry_array[0].m_count + 1;
+  return true;
 }
 
 
@@ -346,6 +343,8 @@ void dwMail_PumpStateError(void)
 
 // 826EA290  dwMail_PumpStateIdle  (DW/dwMail.cpp:1004)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void dwMail_PumpStateIdle(void)
@@ -357,21 +356,20 @@ void dwMail_PumpStateIdle(void)
   int iVar4;
   int *piVar5;
   
-  __savegprlr_29();
   if (s_dwMailManager.enabled != 0) {
     iVar2 = 0;
     pdVar3 = s_dwMailManager.user;
     do {
       if (((pdVar3->signedin != 0) && (0 < pdVar3->newmailcounter)) &&
          (pbVar1 = dwGetMessaging(iVar2), pbVar1 != (bdMessaging *)0x0)) {
-        s_dwMailManager.controllerindex = iVar2;
-        if (s_dwMailManager.dwmailmanagerstate != DWMAILMANAGERSTATE_GETHEADERSINIT) {
-          s_dwMailManager.dwmailmanagerstate = DWMAILMANAGERSTATE_GETHEADERSINIT;
-          s_dwMailManager.time_entered_state = Sys_Milliseconds();
-          __restgprlr_29();
+        if (s_dwMailManager.dwmailmanagerstate == DWMAILMANAGERSTATE_GETHEADERSINIT) {
+          s_dwMailManager.controllerindex = iVar2;
           return;
         }
-        goto LAB_826ea364;
+        s_dwMailManager.dwmailmanagerstate = DWMAILMANAGERSTATE_GETHEADERSINIT;
+        s_dwMailManager.controllerindex = iVar2;
+        s_dwMailManager.time_entered_state = Sys_Milliseconds();
+        return;
       }
       iVar2 = iVar2 + 1;
       pdVar3 = pdVar3 + 1;
@@ -395,8 +393,6 @@ void dwMail_PumpStateIdle(void)
       } while (iVar4 < 4);
     }
   }
-LAB_826ea364:
-  __restgprlr_29();
   return;
 }
 
@@ -515,29 +511,28 @@ void dwMail_PumpStateGetHeader(void)
 
 // 826EA398  dwMail_GetMailHeadersSuccess  (DW/dwMail.cpp:1208)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void dwMail_GetMailHeadersSuccess(int param_1,bdMailHeader *param_2)
 
 {
-  int iVar1;
-  ulonglong uVar2;
-  char *pcVar3;
+  char *pcVar1;
   
-  uVar2 = (ulonglong)(int)param_2;
-  iVar1 = __savegprlr_29(param_1);
   if (s_dwMailManager.verboseflag != 0) {
     Com_Printf(0x19,"dwMail: Done fetching mail headers for controller #%d.\n");
-    if (iVar1 < 2) {
-      if (iVar1 == 1) {
-        pcVar3 = "dwMail: Exactly one mail header entry was found.\n";
+    if (param_1 < 2) {
+      if (param_1 == 1) {
+        pcVar1 = "dwMail: Exactly one mail header entry was found.\n";
       }
       else {
-        pcVar3 = "dwMail: No mail header entries were found.\n";
+        pcVar1 = "dwMail: No mail header entries were found.\n";
       }
     }
     else {
-      pcVar3 = "dwMail: More than one mail header entry was found.\n";
+      pcVar1 = "dwMail: More than one mail header entry was found.\n";
     }
-    Com_Printf(0x19,pcVar3);
+    Com_Printf(0x19,pcVar1);
   }
   if (s_dwMailManager.enabled == 0) {
     if (s_dwMailManager.verboseflag != 0) {
@@ -549,7 +544,6 @@ void dwMail_GetMailHeadersSuccess(int param_1,bdMailHeader *param_2)
       s_dwMailManager.dwmailmanagerstate = DWMAILMANAGERSTATE_IDLE;
       s_dwMailManager.time_entered_state = Sys_Milliseconds();
       s_dwMailManager.time_idle = s_dwMailManager.time_entered_state;
-      __restgprlr_29();
       return;
     }
   }
@@ -560,11 +554,12 @@ void dwMail_GetMailHeadersSuccess(int param_1,bdMailHeader *param_2)
     if (s_dwMailManager.user[s_dwMailManager.controllerindex].newmailcounter < 0) {
       s_dwMailManager.user[s_dwMailManager.controllerindex].newmailcounter = 0;
     }
-    if ((1 < iVar1) && (s_dwMailManager.user[s_dwMailManager.controllerindex].newmailcounter < 1)) {
+    if ((1 < param_1) && (s_dwMailManager.user[s_dwMailManager.controllerindex].newmailcounter < 1))
+    {
       s_dwMailManager.user[s_dwMailManager.controllerindex].newmailcounter = 1;
     }
     Sys_UnlockWrite(&s_dwMailManager.fastcriticalsection);
-    if (iVar1 < 1) {
+    if (param_1 < 1) {
       if (s_dwMailManager.verboseflag != 0) {
         Com_Printf(0x19,"dwMail: No message headers for controller #%d, therefore nothing to do.\n")
         ;
@@ -573,16 +568,14 @@ void dwMail_GetMailHeadersSuccess(int param_1,bdMailHeader *param_2)
         s_dwMailManager.dwmailmanagerstate = DWMAILMANAGERSTATE_IDLE;
         s_dwMailManager.time_entered_state = Sys_Milliseconds();
         s_dwMailManager.time_idle = s_dwMailManager.time_entered_state;
-        __restgprlr_29();
         return;
       }
     }
-    else if ((uVar2 & 0xffffffff) == 0) {
+    else if (param_2 == (bdMailHeader *)0x0) {
       Com_PrintError(0x19,"dwMail: bdmailheader_in passed in is NULL!!!\n");
       if (s_dwMailManager.dwmailmanagerstate != DWMAILMANAGERSTATE_ERROR) {
         s_dwMailManager.dwmailmanagerstate = DWMAILMANAGERSTATE_ERROR;
         s_dwMailManager.time_entered_state = Sys_Milliseconds();
-        __restgprlr_29();
         return;
       }
     }
@@ -592,17 +585,15 @@ void dwMail_GetMailHeadersSuccess(int param_1,bdMailHeader *param_2)
                    "dwMail: Discovered mail header MailID#%lld (%d bytes) from user %lld ($%llx) \'%s\' for controller #%d\n"
                   );
       }
-      if (0x3ff < *(uint *)((int)uVar2 + 0x5c)) {
+      if (0x3ff < param_2->m_size) {
         Com_PrintError(0x19,
                        "dwMail: Uh oh, mail body too big to process!!!  We\'ll just delete it!\n");
         dwMail_DeleteMail(s_dwMailManager.bdmailbody.m_mailID);
-        __restgprlr_29();
         return;
       }
-      dwMail_GetMailData(*(ulong64 *)((int)uVar2 + 0x50));
+      dwMail_GetMailData(param_2->m_mailID);
     }
   }
-  __restgprlr_29();
   return;
 }
 
@@ -733,67 +724,63 @@ void dwMail_PumpStateGetData(void)
 
 // 826EABD0  dwMail_GetMailDataSuccess  (DW/dwMail.cpp:1447)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 void dwMail_GetMailDataSuccess(int param_1,bdMailBody *param_2)
 
 {
-  int iVar1;
-  dwMailHandlerReturnCode_t dVar2;
-  ulonglong uVar3;
-  char *pcVar4;
-  uint uVar5;
-  dwMailMailHandlerEntry *pdVar6;
-  int iVar7;
+  dwMailHandlerReturnCode_t dVar1;
+  char *pcVar2;
+  int iVar3;
+  uint uVar4;
+  dwMailMailHandlerEntry *pdVar5;
+  int iVar6;
   
-  uVar3 = (ulonglong)(int)param_2;
-  iVar1 = __savegprlr_26(param_1);
-  if (s_dwMailManager.verboseflag == 0) {
-LAB_826eac80:
-    if (iVar1 < 1) {
-      if (s_dwMailManager.verboseflag != 0) {
-        Com_Printf(0x19,"dwMail: No mail data waiting for us.\n");
-      }
-      if (s_dwMailManager.dwmailmanagerstate != DWMAILMANAGERSTATE_IDLE) {
-        s_dwMailManager.dwmailmanagerstate = DWMAILMANAGERSTATE_IDLE;
-        s_dwMailManager.time_entered_state = Sys_Milliseconds();
-        s_dwMailManager.time_idle = s_dwMailManager.time_entered_state;
-        __restgprlr_26();
-        return;
-      }
-      goto LAB_826eae5c;
-    }
-  }
-  else {
+  if (s_dwMailManager.verboseflag != 0) {
     Com_Printf(0x19,"dwMail: Done fetching mail bodies for controller #%d\n");
-    if (1 < iVar1) {
-      pcVar4 = "dwMail: More than one mail body was found!!!!\n";
-LAB_826eac78:
-      Com_Printf(0x19,pcVar4);
-      goto LAB_826eac80;
+    if (param_1 < 2) {
+      if (param_1 == 1) {
+        Com_Printf(0x19,"dwMail: Exactly one mail body was found.\n");
+        goto LAB_826eac34;
+      }
+      pcVar2 = "dwMail: No mail bodies were found!!!\n";
     }
-    if (iVar1 != 1) {
-      pcVar4 = "dwMail: No mail bodies were found!!!\n";
-      goto LAB_826eac78;
+    else {
+      pcVar2 = "dwMail: More than one mail body was found!!!!\n";
     }
-    Com_Printf(0x19,"dwMail: Exactly one mail body was found.\n");
+    Com_Printf(0x19,pcVar2);
   }
-  if ((uVar3 & 0xffffffff) == 0) {
+  if (param_1 < 1) {
+    if (s_dwMailManager.verboseflag != 0) {
+      Com_Printf(0x19,"dwMail: No mail data waiting for us.\n");
+    }
+    if (s_dwMailManager.dwmailmanagerstate == DWMAILMANAGERSTATE_IDLE) {
+      return;
+    }
+    s_dwMailManager.dwmailmanagerstate = DWMAILMANAGERSTATE_IDLE;
+    s_dwMailManager.time_idle = Sys_Milliseconds();
+    s_dwMailManager.time_entered_state = s_dwMailManager.time_idle;
+    return;
+  }
+LAB_826eac34:
+  if (param_2 == (bdMailBody *)0x0) {
     Com_PrintError(0x19,"dwMail: bdmailbody_in passed in is NULL!!!\n");
     if (s_dwMailManager.dwmailmanagerstate != DWMAILMANAGERSTATE_ERROR) {
       s_dwMailManager.dwmailmanagerstate = DWMAILMANAGERSTATE_ERROR;
       s_dwMailManager.time_entered_state = Sys_Milliseconds();
-      __restgprlr_26();
       return;
     }
   }
   else {
-    uVar5 = *(uint *)((int)uVar3 + 8);
-    pcVar4 = *(char **)((int)uVar3 + 4);
-    if (0x3ff < uVar5) {
+    uVar4 = param_2->m_size;
+    pcVar2 = param_2->m_mailBody;
+    if (0x3ff < uVar4) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DW\\dwMail.cpp",0x5dc,0,"%s")
       ;
-      uVar5 = 0x3ff;
+      uVar4 = 0x3ff;
     }
-    pcVar4[uVar5] = '\0';
+    pcVar2[uVar4] = '\0';
     if ((s_dwMailManager.verboseflag != 0) &&
        (Com_Printf(0x19,"dwMail: Discovered mail body MailID#%lld (%d bytes)\n"),
        s_dwMailManager.verboseflag != 0)) {
@@ -807,74 +794,70 @@ LAB_826eac78:
       s_dwMailManager.dwmailmanagerstate = DWMAILMANAGERSTATE_PROCESSING;
       s_dwMailManager.time_entered_state = Sys_Milliseconds();
     }
-    iVar7 = 0;
-    pdVar6 = s_dwMailManager.dwmailmailhandlerentryarray;
-    iVar1 = s_dwMailManager.num_handlers;
+    iVar6 = 0;
+    pdVar5 = s_dwMailManager.dwmailmailhandlerentryarray;
+    iVar3 = s_dwMailManager.num_handlers;
     if (0 < s_dwMailManager.num_handlers) {
       do {
-        if (pdVar6->dwmailhandlerinspect !=
+        if (pdVar5->dwmailhandlerinspect !=
             (_func___cdecl_dwMailHandlerReturnCode_t_int_char_ptr_int *)0x0) {
           if (s_dwMailManager.verboseflag != 0) {
             Com_Printf(0x19,"dwMail: Calling process message callback (#%d)...\n");
           }
-          dVar2 = (*pdVar6->dwmailhandlerinspect)(s_dwMailManager.controllerindex,pcVar4,uVar5);
-          iVar1 = s_dwMailManager.num_handlers;
-          if (dVar2 != DWMAILHANDLERRETURNCODE_NOT_FOR_US) {
-            if (DWMAILHANDLERRETURNCODE_PROCESSING_SEND_THEN_DONE < dVar2) {
+          dVar1 = (*pdVar5->dwmailhandlerinspect)(s_dwMailManager.controllerindex,pcVar2,uVar4);
+          iVar3 = s_dwMailManager.num_handlers;
+          if (dVar1 != DWMAILHANDLERRETURNCODE_NOT_FOR_US) {
+            if (DWMAILHANDLERRETURNCODE_PROCESSING_SEND_THEN_DONE < dVar1) {
               if (s_dwMailManager.verboseflag != 0) {
                 Com_Printf(0x19,
                            "dwMail: Process message callback returned %d, going straight to Continue(DELETE)...\n"
                           );
               }
               dwMail_ProcessingDone();
-              __restgprlr_26();
               return;
             }
             s_dwMailManager.request_send = 0;
-            if ((dVar2 == DWMAILHANDLERRETURNCODE_PROCESSING_SEND_THEN_CONTINUE) ||
-               (dVar2 == DWMAILHANDLERRETURNCODE_PROCESSING_SEND_THEN_DONE)) {
+            if ((dVar1 == DWMAILHANDLERRETURNCODE_PROCESSING_SEND_THEN_CONTINUE) ||
+               (dVar1 == DWMAILHANDLERRETURNCODE_PROCESSING_SEND_THEN_DONE)) {
               s_dwMailManager.request_send = 1;
             }
             s_dwMailManager.done_processing = 0;
-            if ((dVar2 == DWMAILHANDLERRETURNCODE_PROCESSING_DONE) ||
-               (dVar2 == DWMAILHANDLERRETURNCODE_PROCESSING_SEND_THEN_DONE)) {
+            if ((dVar1 == DWMAILHANDLERRETURNCODE_PROCESSING_DONE) ||
+               (dVar1 == DWMAILHANDLERRETURNCODE_PROCESSING_SEND_THEN_DONE)) {
               s_dwMailManager.done_processing = 1;
             }
-            s_dwMailManager.dwmailmailhandlerentry = pdVar6;
-            if (s_dwMailManager.verboseflag != 0) {
-              if (dVar2 == DWMAILHANDLERRETURNCODE_PROCESSING_DONE) {
+            if (s_dwMailManager.verboseflag == 0) {
+              s_dwMailManager.dwmailmailhandlerentry = pdVar5;
+              return;
+            }
+            s_dwMailManager.dwmailmailhandlerentry = pdVar5;
+            if (dVar1 == DWMAILHANDLERRETURNCODE_PROCESSING_DONE) {
+              Com_Printf(0x19,
+                         "dwMail: Process message callback returned PROCESSING_COMPLETE, therefore we\'ve got some pumping to do...\n"
+                        );
+              return;
+            }
+            if (dVar1 != DWMAILHANDLERRETURNCODE_PROCESSING_SEND_THEN_CONTINUE) {
+              if (dVar1 != DWMAILHANDLERRETURNCODE_PROCESSING_SEND_THEN_DONE) {
                 Com_Printf(0x19,
-                           "dwMail: Process message callback returned PROCESSING_COMPLETE, therefore we\'ve got some pumping to do...\n"
+                           "dwMail: Process message callback returned PROCESSING, therefore we\'ve got some pumping to do...\n"
                           );
-                __restgprlr_26();
-                return;
-              }
-              if (dVar2 == DWMAILHANDLERRETURNCODE_PROCESSING_SEND_THEN_CONTINUE) {
-                Com_Printf(0x19,
-                           "dwMail: Process message callback returned PROCESSING_SEND_THEN_CONTINUE, therefore we\'ve got some pumping to do...\n"
-                          );
-                __restgprlr_26();
-                return;
-              }
-              if (dVar2 == DWMAILHANDLERRETURNCODE_PROCESSING_SEND_THEN_DONE) {
-                Com_Printf(0x19,
-                           "dwMail: Process message callback returned PROCESSING_SEND_THEN_COMPLETE, therefore we\'ve got some pumping to do...\n"
-                          );
-                __restgprlr_26();
                 return;
               }
               Com_Printf(0x19,
-                         "dwMail: Process message callback returned PROCESSING, therefore we\'ve got some pumping to do...\n"
+                         "dwMail: Process message callback returned PROCESSING_SEND_THEN_COMPLETE, therefore we\'ve got some pumping to do...\n"
                         );
-              __restgprlr_26();
               return;
             }
-            goto LAB_826eae5c;
+            Com_Printf(0x19,
+                       "dwMail: Process message callback returned PROCESSING_SEND_THEN_CONTINUE, therefore we\'ve got some pumping to do...\n"
+                      );
+            return;
           }
         }
-        iVar7 = iVar7 + 1;
-        pdVar6 = pdVar6 + 1;
-      } while (iVar7 < iVar1);
+        iVar6 = iVar6 + 1;
+        pdVar5 = pdVar5 + 1;
+      } while (iVar6 < iVar3);
     }
     if (s_dwMailManager.verboseflag != 0) {
       Com_Printf(0x19,
@@ -888,8 +871,6 @@ LAB_826eac78:
       s_dwMailManager.time_entered_state = Sys_Milliseconds();
     }
   }
-LAB_826eae5c:
-  __restgprlr_26();
   return;
 }
 
@@ -1327,21 +1308,20 @@ void dwMail_DeleteMailFailure(void)
 
 // 826EA708  dwMailBufferWriter_Init  (DW/dwMail.cpp:2109)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void dwMailBufferWriter_Init(dwMailBufferWriter *param_1,void *param_2,int param_3)
 
 {
-  undefined4 *puVar1;
-  
-  puVar1 = (undefined4 *)__savegprlr_29(param_1);
-  if (puVar1 == (undefined4 *)0x0) {
+  if (param_1 == (dwMailBufferWriter *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DW\\dwMail.cpp",0x83e,0,"%s");
   }
-  *puVar1 = param_2;
-  puVar1[1] = param_3;
-  puVar1[2] = param_2;
-  puVar1[3] = param_3;
-  puVar1[4] = 0;
-  __restgprlr_29();
+  param_1->bufferptr = param_2;
+  param_1->buffersize = param_3;
+  param_1->currentptr = param_2;
+  param_1->numbytesleft = param_3;
+  param_1->numbyteswritten = 0;
   return;
 }
 
@@ -1363,62 +1343,56 @@ void dwMailBufferWriter_Reset(dwMailBufferWriter *param_1)
 
 // 826E9A88  dwMailBufferWriter_WriteData  (DW/dwMail.cpp:2137)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 int dwMailBufferWriter_WriteData(dwMailBufferWriter *param_1,void *param_2,int param_3)
 
 {
-  int iVar1;
-  ulonglong uVar2;
-  
-  uVar2 = (ulonglong)(int)param_2;
-  iVar1 = __savegprlr_29(param_1);
-  if (iVar1 == 0) {
+  if (param_1 == (dwMailBufferWriter *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DW\\dwMail.cpp",0x85a,0,"%s");
   }
   if (0 < param_3) {
-    if (*(void **)(iVar1 + 8) != (void *)0x0) {
-      if (*(int *)(iVar1 + 0xc) < param_3) {
-        iVar1 = __restgprlr_29(0);
-        return iVar1;
+    if (param_1->currentptr != (uchar *)0x0) {
+      if (param_1->numbytesleft < param_3) {
+        return 0;
       }
-      if ((uVar2 & 0xffffffff) != 0) {
-        Com_Memcpy(*(void **)(iVar1 + 8),(void *)uVar2,param_3);
+      if (param_2 != (void *)0x0) {
+        Com_Memcpy(param_1->currentptr,param_2,param_3);
       }
-      *(int *)(iVar1 + 8) = *(int *)(iVar1 + 8) + param_3;
-      *(int *)(iVar1 + 0xc) = *(int *)(iVar1 + 0xc) - param_3;
+      param_1->currentptr = param_1->currentptr + param_3;
+      param_1->numbytesleft = param_1->numbytesleft - param_3;
     }
-    *(int *)(iVar1 + 0x10) = *(int *)(iVar1 + 0x10) + param_3;
+    param_1->numbyteswritten = param_1->numbyteswritten + param_3;
   }
-  iVar1 = __restgprlr_29(1);
-  return iVar1;
+  return 1;
 }
 
 
 // 826E9B40  dwMailBufferWriter_WriteString  (DW/dwMail.cpp:2168)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 int dwMailBufferWriter_WriteString(dwMailBufferWriter *param_1,char *param_2)
 
 {
-  dwMailBufferWriter *pdVar1;
+  char cVar1;
   int iVar2;
-  ulonglong uVar3;
-  char *pcVar5;
-  ulonglong uVar4;
+  char *pcVar3;
   
-  uVar3 = (ulonglong)(int)param_2;
-  pdVar1 = (dwMailBufferWriter *)__savegprlr_28(param_1);
-  if (pdVar1 == (dwMailBufferWriter *)0x0) {
+  if (param_1 == (dwMailBufferWriter *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DW\\dwMail.cpp",0x879,0,"%s");
   }
-  uVar4 = uVar3;
-  if ((uVar3 & 0xffffffff) == 0) {
+  pcVar3 = param_2;
+  if (param_2 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DW\\dwMail.cpp",0x87a,0,"%s");
   }
   do {
-    pcVar5 = (char *)uVar4;
-    uVar4 = uVar4 + 1;
-  } while (*pcVar5 != '\0');
-  iVar2 = dwMailBufferWriter_WriteData(pdVar1,(void *)uVar3,((int)uVar4 - (int)(void *)uVar3) + -1);
-  iVar2 = __restgprlr_28(iVar2);
+    cVar1 = *pcVar3;
+    pcVar3 = pcVar3 + 1;
+  } while (cVar1 != '\0');
+  iVar2 = dwMailBufferWriter_WriteData(param_1,param_2,(int)(pcVar3 + (-1 - (int)param_2)));
   return iVar2;
 }
 
@@ -1526,37 +1500,37 @@ int dwMail_RegisterHandler
 
 // 826E9D60  dwMail_UnregisterHandler  (DW/dwMail.cpp:2300)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void dwMail_UnregisterHandler(int param_1)
 
 {
-  int iVar1;
-  ulonglong uVar2;
-  longlong lVar3;
-  dwMailMailHandlerEntry *pdVar4;
+  ulonglong uVar1;
+  longlong lVar2;
+  dwMailMailHandlerEntry *pdVar3;
   
-  iVar1 = __savegprlr_27(param_1);
-  lVar3 = 0;
-  uVar2 = (ulonglong)(uint)s_dwMailManager.num_handlers;
+  lVar2 = 0;
+  uVar1 = (ulonglong)(uint)s_dwMailManager.num_handlers;
   if (0 < s_dwMailManager.num_handlers) {
-    pdVar4 = s_dwMailManager.dwmailmailhandlerentryarray;
+    pdVar3 = s_dwMailManager.dwmailmailhandlerentryarray;
     do {
-      if (pdVar4->id == iVar1) {
-        if (0 < (longlong)((uVar2 - lVar3) + -1)) {
+      if (pdVar3->id == param_1) {
+        if (0 < (longlong)((uVar1 - lVar2) + -1)) {
           memmove();
-          uVar2 = (ulonglong)(uint)s_dwMailManager.num_handlers;
+          uVar1 = (ulonglong)(uint)s_dwMailManager.num_handlers;
         }
         Com_Memset((void *)((int)(s_dwMailManager.dwmailmailhandlerentryarray + -1) +
-                           (int)((uVar2 + (uVar2 & 0x7fffffff) * 2 & 0xffffffff) << 2)),0,0xc);
-        lVar3 = lVar3 + -1;
-        uVar2 = (ulonglong)(uint)s_dwMailManager.num_handlers - 1;
-        pdVar4 = pdVar4 + -1;
-        s_dwMailManager.num_handlers = (int)uVar2;
+                           (int)((uVar1 + (uVar1 & 0x7fffffff) * 2 & 0xffffffff) << 2)),0,0xc);
+        lVar2 = lVar2 + -1;
+        uVar1 = (ulonglong)(uint)s_dwMailManager.num_handlers - 1;
+        pdVar3 = pdVar3 + -1;
+        s_dwMailManager.num_handlers = (int)uVar1;
       }
-      lVar3 = lVar3 + 1;
-      pdVar4 = pdVar4 + 1;
-    } while ((int)lVar3 < (int)uVar2);
+      lVar2 = lVar2 + 1;
+      pdVar3 = pdVar3 + 1;
+    } while ((int)lVar2 < (int)uVar1);
   }
-  __restgprlr_27();
   return;
 }
 
@@ -1603,22 +1577,21 @@ void dwMail_ReplyBufferReset(void)
 
 // 826E9EE0  dwMail_ReplyBufferWriteData  (DW/dwMail.cpp:2373)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 int dwMail_ReplyBufferWriteData(void *param_1,int param_2)
 
 {
-  void *pvVar1;
-  int iVar2;
+  int iVar1;
   
-  pvVar1 = (void *)__savegprlr_29(param_1);
   if ((s_dwMailManager.dwmailmanagerstate != DWMAILMANAGERSTATE_PROCESSING) &&
      (MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DW\\dwMail.cpp",0x946,0,"%s")
      , s_dwMailManager.dwmailmanagerstate != DWMAILMANAGERSTATE_PROCESSING)) {
-    iVar2 = __restgprlr_29(0);
-    return iVar2;
+    return 0;
   }
-  iVar2 = dwMailBufferWriter_WriteData(&s_dwMailManager.dwmailbufferwriter,pvVar1,param_2);
-  iVar2 = __restgprlr_29(iVar2);
-  return iVar2;
+  iVar1 = dwMailBufferWriter_WriteData(&s_dwMailManager.dwmailbufferwriter,param_1,param_2);
+  return iVar1;
 }
 
 
@@ -1801,84 +1774,81 @@ void dwMail_UserSignedInToLive(int param_1)
 
 // 826EA1E0  dwMail_UserSignedOut  (DW/dwMail.cpp:2577)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void dwMail_UserSignedOut(int param_1)
 
 {
-  int iVar1;
-  
-  iVar1 = __savegprlr_29(param_1);
   if (s_dwMailManager.verboseflag != 0) {
     Com_Printf(0x19,"dwMail: dwMail_UserSignedOut( %d )\n");
   }
-  if ((iVar1 < 0) || (3 < iVar1)) {
+  if ((param_1 < 0) || (3 < param_1)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DW\\dwMail.cpp",0xa1b,0,"%s");
   }
-  if ((-1 < iVar1) && (iVar1 < 4)) {
-    s_dwMailManager.user[iVar1].signedin = 0;
+  if ((-1 < param_1) && (param_1 < 4)) {
+    s_dwMailManager.user[param_1].signedin = 0;
     Sys_LockWrite(&s_dwMailManager.fastcriticalsection);
-    s_dwMailManager.user[iVar1].newmailcounter = 0;
+    s_dwMailManager.user[param_1].newmailcounter = 0;
     Sys_UnlockWrite(&s_dwMailManager.fastcriticalsection);
   }
-  __restgprlr_29();
   return;
 }
 
 
 // 826EBC40  dwMailManager  (line unknown)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 dwMailManager * __thiscall dwMailManager::dwMailManager(dwMailManager *this)
 
 {
-  int iVar1;
-  dwMailManager *pdVar2;
   bdMailHeader *this_00;
-  longlong lVar3;
+  longlong lVar1;
   
-  iVar1 = __savegprlr_28(this);
-  this_00 = (bdMailHeader *)(iVar1 + 0x50);
-  *(undefined4 *)(iVar1 + 0x48) = 0;
-  lVar3 = 1;
+  this_00 = this->bdmailheader;
+  (this->bdremotetaskref).m_ptr = (bdRemoteTask *)0x0;
+  lVar1 = 1;
   do {
     bdMailHeader::bdMailHeader(this_00);
-    lVar3 = lVar3 + -1;
+    lVar1 = lVar1 + -1;
     this_00 = this_00 + 1;
-  } while (-1 < lVar3);
-  bdMailBody::bdMailBody((bdMailBody *)(iVar1 + 0x118));
-  *(undefined4 *)(iVar1 + 0x188) = 0;
-  *(undefined1 *)(iVar1 + 0x17c) = 0;
-  *(undefined4 *)(iVar1 + 0x180) = 0;
-  *(undefined4 *)(iVar1 + 0x184) = 0;
-  *(undefined4 *)(iVar1 + 0x188) = 0;
-  pdVar2 = (dwMailManager *)__restgprlr_28(iVar1);
-  return pdVar2;
+  } while (-1 < lVar1);
+  bdMailBody::bdMailBody(&this->bdmailbody);
+  (this->dwmailthrottle).m_dwmailraterecordermanager.m_numsamples = 0;
+  (this->dwmailthrottle).m_errorcondition = false;
+  (this->dwmailthrottle).m_errortimestamp = 0;
+  (this->dwmailthrottle).m_errortimeamount = 0;
+  (this->dwmailthrottle).m_dwmailraterecordermanager.m_numsamples = 0;
+  return this;
 }
 
 
 // 826EBCA0  ~dwMailManager  (line unknown)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void __thiscall dwMailManager::~dwMailManager(dwMailManager *this)
 
 {
-  int iVar1;
-  longlong lVar2;
+  longlong lVar1;
   bdMailHeader *this_00;
   
-  iVar1 = __savegprlr_29(this);
-  *(undefined1 *)(iVar1 + 0x17c) = 0;
-  *(undefined4 *)(iVar1 + 0x180) = 0;
-  *(undefined4 *)(iVar1 + 0x184) = 0;
-  *(undefined4 *)(iVar1 + 0x188) = 0;
-  bdMailBody::~bdMailBody((bdMailBody *)(iVar1 + 0x118));
-  this_00 = (bdMailHeader *)(iVar1 + 0x110);
-  lVar2 = 1;
+  (this->dwmailthrottle).m_errorcondition = false;
+  (this->dwmailthrottle).m_errortimestamp = 0;
+  (this->dwmailthrottle).m_errortimeamount = 0;
+  (this->dwmailthrottle).m_dwmailraterecordermanager.m_numsamples = 0;
+  bdMailBody::~bdMailBody(&this->bdmailbody);
+  this_00 = (bdMailHeader *)&this->getmailbody_mailid;
+  lVar1 = 1;
   do {
     this_00 = this_00 + -1;
     bdMailHeader::~bdMailHeader(this_00);
-    lVar2 = lVar2 + -1;
-  } while (-1 < lVar2);
-  bdReference<bdRemoteTask>::~bdReference<bdRemoteTask>((bdReference<bdRemoteTask> *)(iVar1 + 0x48))
-  ;
-  __restgprlr_29();
+    lVar1 = lVar1 + -1;
+  } while (-1 < lVar1);
+  bdReference<bdRemoteTask>::~bdReference<bdRemoteTask>(&this->bdremotetaskref);
   return;
 }
 

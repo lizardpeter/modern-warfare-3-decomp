@@ -2,36 +2,36 @@
 
 // 82657900  Stream_Thread  (xenon/xenon_stream.cpp:20)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+
 void Stream_Thread(uint param_1)
 
 {
-  int iVar1;
-  uint uVar2;
-  void *pvVar3;
+  uint uVar1;
+  void *pvVar2;
   
-  iVar1 = __savegprlr_27(param_1);
-  if (iVar1 != 9) {
+  if (param_1 != 9) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_stream.cpp",0x17,0
                     ,"threadContext == THREAD_CONTEXT_STREAM\n\t%i, %i");
   }
-  uVar2 = Sys_MillisecondsRaw();
-  srand(uVar2);
-  pvVar3 = Sys_GetValue(2);
+  uVar1 = Sys_MillisecondsRaw();
+  srand(uVar1);
+  pvVar2 = Sys_GetValue(2);
   setjmp();
-  while (pvVar3 != (void *)0x0) {
+  while (pvVar2 != (void *)0x0) {
     Profile_Recover(1);
-    pvVar3 = Sys_GetValue(2);
+    pvVar2 = Sys_GetValue(2);
     setjmp();
   }
   Profile_Guard(1);
   do {
-    uVar2 = Sys_StreamSleep();
-    if (0xd < uVar2) {
+    uVar1 = Sys_StreamSleep();
+    if (0xd < uVar1) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\xenon_stream.cpp",0x28
                       ,0,"streamIndex doesn\'t index SND_MAX_STREAM_CHANNELS\n\t%i not in [0, %i)");
     }
     PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffff,"SND_ExecuteStreamRead");
-    SND_ExecuteStreamRead(uVar2);
+    SND_ExecuteStreamRead(uVar1);
     PIXEndNamedEvent();
   } while( true );
 }

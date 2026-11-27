@@ -2,82 +2,74 @@
 
 // 828AB4F8  XapiShowErrorAndWait  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/xapi0.c:27)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void XapiShowErrorAndWait(wchar_t *param_1,wchar_t *param_2,ulong param_3)
 
 {
-  undefined8 uVar1;
-  int iVar2;
-  longlong lVar3;
-  longlong lVar4;
-  undefined4 uStack0000001c;
+  int iVar1;
+  wchar_t *pwStack0000001c;
   ulong local_50 [2];
   undefined4 local_48;
   _XOVERLAPPED local_40 [2];
   
-  lVar4 = (longlong)(int)param_3;
-  lVar3 = (longlong)(int)param_2;
-  uVar1 = __savegprlr_29(param_1,lVar3,lVar4);
-  uStack0000001c = (undefined4)lVar3;
   local_40[0].InternalLow = 0;
+  pwStack0000001c = param_2;
   memset();
   local_48 = 0;
-  iVar2 = NtCreateEvent(&local_40[0].hEvent,0,1,0);
-  if (-1 < iVar2) {
-    local_50[0] = XamShowMessageBoxUIEx(0xff,0,uVar1,1,&stack0x0000001c,0,1,lVar4);
+  iVar1 = NtCreateEvent(&local_40[0].hEvent,0,1,0);
+  if (-1 < iVar1) {
+    local_50[0] = XamShowMessageBoxUIEx(0xff,0,param_1,1,&stack0x0000001c,0,1,param_3);
     if (local_50[0] == 0x3e5) {
       XGetOverlappedResult(local_40,local_50,1);
     }
     NtClose(local_40[0].hEvent);
   }
-  __restgprlr_29();
   return;
 }
 
 
 // 828AB5B8  XapiLookupString  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/xapi0.c:67)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void XapiLookupString(ulong param_1,ushort *param_2,uint param_3)
 
 {
-  uint uVar1;
-  longlong lVar2;
-  longlong lVar3;
+  ushort uVar1;
+  ulong uVar2;
+  ushort *puVar3;
   uint uVar4;
-  longlong lVar5;
-  ulonglong uVar6;
-  ulonglong uVar7;
-  longlong lVar8;
-  undefined2 *puVar9;
+  uint uVar5;
+  uchar *puVar6;
   
-  lVar3 = (longlong)(int)param_3;
-  lVar2 = (longlong)(int)param_2;
-  uVar1 = __savegprlr_29(param_1);
-  uVar4 = 0;
-  lVar8 = -0x7ddfe478;
+  uVar2 = 0;
+  puVar6 = "";
   do {
-    uVar6 = (ulonglong)*(ushort *)lVar8;
-    lVar8 = lVar8 + 2;
-    if (uVar4 == uVar1) {
-      uVar7 = 0;
-      if (uVar6 != 0) {
-        lVar5 = lVar2 + -2;
+    uVar4 = (uint)*(ushort *)puVar6;
+    puVar6 = (uchar *)((int)puVar6 + 2);
+    if (uVar2 == param_1) {
+      uVar5 = 0;
+      if (uVar4 != 0) {
+        puVar3 = param_2 + -1;
         do {
-          if ((lVar3 - 1U & 0xffffffff) <= (uVar7 & 0xffffffff)) break;
-          puVar9 = (undefined2 *)lVar8;
-          uVar7 = uVar7 + 1;
-          lVar8 = lVar8 + 2;
-          lVar5 = lVar5 + 2;
-          *(undefined2 *)lVar5 = *puVar9;
-        } while ((uVar7 & 0xffffffff) < uVar6);
+          if (param_3 - 1 <= uVar5) break;
+          uVar1 = *(ushort *)puVar6;
+          uVar5 = uVar5 + 1;
+          puVar6 = (uchar *)((int)puVar6 + 2);
+          puVar3 = puVar3 + 1;
+          *puVar3 = uVar1;
+        } while (uVar5 < uVar4);
       }
-      *(undefined2 *)((int)((uVar7 & 0xffffffff) << 1) + (int)lVar2) = 0;
+      param_2[uVar5] = 0;
     }
     else {
-      lVar8 = uVar6 * 2 + lVar8;
+      puVar6 = (uchar *)((int)puVar6 + uVar4 * 2);
     }
-    uVar4 = uVar4 + 1;
-    if (uVar1 < uVar4) {
-      __restgprlr_29();
+    uVar2 = uVar2 + 1;
+    if (param_1 < uVar2) {
       return;
     }
   } while( true );
@@ -152,6 +144,7 @@ int XapiPAL50Incompatible(void)
 
 // 828AB848  mainCRTStartup  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/xapi0.c:209)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void mainCRTStartup(void)
@@ -168,7 +161,6 @@ void mainCRTStartup(void)
   undefined4 local_180 [20];
   char local_130 [304];
   
-  __savegprlr_28();
   __onexitend = (_func___cdecl_void **)0xffffffff;
   __onexitbegin = (_func___cdecl_void **)0xffffffff;
   XapiInitProcess();

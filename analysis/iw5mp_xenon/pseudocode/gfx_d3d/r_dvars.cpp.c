@@ -14,6 +14,10 @@ dvar_t * R_RegisterWorkerThreadDvar(char *param_1,uint param_2)
 
 // 8273C418  R_RegisterDvars  (gfx_d3d/r_dvars.cpp:955)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
@@ -45,8 +49,6 @@ void R_RegisterDvars(void)
   double dVar23;
   double dVar24;
   
-  __savegprlr_26();
-  __savefpr();
   R_RegisterSunDvars();
   pcVar2 = (char *)0x80000000;
   uVar1 = 0;
@@ -624,8 +626,6 @@ void R_RegisterDvars(void)
   r_thermalDetailScale =
        Dvar_RegisterFloat("r_thermalDetailScale",1.0,(float)dVar16,(float)dVar20,uVar1,pcVar2);
   FX_RegisterDvars();
-  __restfpr();
-  __restgprlr_26();
   return;
 }
 

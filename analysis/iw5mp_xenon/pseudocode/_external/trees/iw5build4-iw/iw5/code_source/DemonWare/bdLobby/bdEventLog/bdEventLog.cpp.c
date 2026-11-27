@@ -21,89 +21,91 @@ void __thiscall bdEventLog::~bdEventLog(bdEventLog *this)
 
 // 82903018  recordEvent  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdeventlog/bdeventlog.cpp:29)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
+
 bdReference<bdRemoteTask> __thiscall
 bdEventLog::recordEvent
           (bdEventLog *this,char *param_1,uint param_2,uint param_3,bdEventLogID *param_4)
 
 {
-  bdReference<bdRemoteTask> *pbVar2;
-  uint uVar3;
-  bdTaskByteBuffer *pbVar4;
+  uint uVar2;
+  bdTaskByteBuffer *pbVar3;
   ulonglong uVar1;
-  bool bVar7;
-  bdLobbyErrorCode bVar5;
-  bdRemoteTask *pbVar6;
-  ulonglong uVar8;
-  ulonglong in_r8;
-  char *pcVar9;
-  int iVar10;
-  uint *puVar11;
+  bool bVar5;
+  bdLobbyErrorCode bVar4;
+  bdTaskResult *in_r8;
+  char *pcVar6;
+  int iVar7;
+  uint *puVar8;
   char in_RESERVE;
-  byte bVar12;
-  bdReference<bdRemoteTask> *pbStack00000014;
+  byte bVar9;
+  bdEventLog *pbStack00000014;
   bdReference<bdTaskByteBuffer> local_60;
   undefined4 local_5c;
   bdTaskByteBuffer *local_58;
   
-  uVar8 = (ulonglong)(int)param_2;
-  pbVar2 = (bdReference<bdRemoteTask> *)__savegprlr_23(this);
-  pbVar2->m_ptr = (bdRemoteTask *)0x0;
+  this->m_remoteTaskManager = (bdRemoteTaskManager *)0x0;
   local_5c = 1;
-  pbStack00000014 = pbVar2;
-  if ((uVar8 & 0xffffffff) == 0) {
-    iVar10 = 0;
+  pbStack00000014 = this;
+  if (param_2 == 0) {
+    iVar7 = 0;
   }
   else {
-    uVar3 = bdStrnlen((char *)uVar8,param_3);
-    iVar10 = uVar3 + 2;
+    uVar2 = bdStrnlen((char *)param_2,param_3);
+    iVar7 = uVar2 + 2;
   }
   local_58 = bdMemory::allocate(0x2c);
-  bVar12 = (local_58 == (bdTaskByteBuffer *)0x0) << 1;
+  bVar9 = (local_58 == (bdTaskByteBuffer *)0x0) << 1;
   if (local_58 == (bdTaskByteBuffer *)0x0) {
     uVar1 = 0;
   }
   else {
-    pbVar4 = bdTaskByteBuffer::bdTaskByteBuffer(local_58,iVar10 + 0x45,true);
-    uVar1 = (ulonglong)(int)pbVar4;
+    pbVar3 = bdTaskByteBuffer::bdTaskByteBuffer(local_58,iVar7 + 0x45,true);
+    uVar1 = (ulonglong)(int)pbVar3;
   }
   local_60.m_ptr = (bdTaskByteBuffer *)uVar1;
   if ((uVar1 & 0xffffffff) != 0) {
     do {
-      puVar11 = (uint *)(uVar1 + 4);
+      puVar8 = (uint *)(uVar1 + 4);
       if (in_RESERVE != '\0') {
-        uVar3 = storeWordConditionalIndexed((ulonglong)*puVar11 + 1,0,uVar1 + 4);
-        *puVar11 = uVar3;
-        bVar12 = 2;
+        uVar2 = storeWordConditionalIndexed((ulonglong)*puVar8 + 1,0,uVar1 + 4);
+        *puVar8 = uVar2;
+        bVar9 = 2;
       }
-    } while (!(bool)(bVar12 >> 1 & 1));
+    } while (!(bool)(bVar9 >> 1 & 1));
   }
   bdRemoteTaskManager::initTaskBuffer(&local_60,'C','\x01');
-  bVar7 = bdByteBuffer::writeString((bdByteBuffer *)local_60.m_ptr,(char *)uVar8,param_3);
+  bVar5 = bdByteBuffer::writeString((bdByteBuffer *)local_60.m_ptr,(char *)param_2,param_3);
   bdByteBuffer::writeUInt32((bdByteBuffer *)local_60.m_ptr,(uint)param_4);
-  if (bVar7) {
-    bVar5 = bdRemoteTaskManager::startTask(*(bdRemoteTaskManager **)param_1,pbVar2,&local_60);
-    if (bVar5 == BD_NO_ERROR) goto LAB_82903180;
-    pcVar9 = "Failed to start task: Error %i";
-    uVar3 = 0x2c;
+  if (bVar5) {
+    bVar4 = bdRemoteTaskManager::startTask
+                      (*(bdRemoteTaskManager **)param_1,(bdReference<bdRemoteTask> *)this,&local_60)
+    ;
+    if (bVar4 == BD_NO_ERROR) goto LAB_82903180;
+    pcVar6 = "Failed to start task: Error %i";
+    uVar2 = 0x2c;
   }
   else {
-    pcVar9 = "Failed to write string %s into buffer";
-    uVar3 = 0x31;
+    pcVar6 = "Failed to write string %s into buffer";
+    uVar2 = 0x31;
   }
   bdLogMessage(BD_LOG_WARNING,"warn/","record event",
                "c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdLobby\\bdEventLog\\bdEventLog.cpp"
-               ,"bdEventLog::recordEvent",uVar3,pcVar9);
+               ,"bdEventLog::recordEvent",uVar2,pcVar6);
 LAB_82903180:
-  if ((in_r8 & 0xffffffff) != 0) {
-    bdRemoteTask::setTaskResult(pbVar2->m_ptr,(bdTaskResult *)in_r8,1);
+  if (in_r8 != (bdTaskResult *)0x0) {
+    bdRemoteTask::setTaskResult((bdRemoteTask *)this->m_remoteTaskManager,in_r8,1);
   }
   bdReference<bdTaskByteBuffer>::~bdReference<bdTaskByteBuffer>(&local_60);
-  pbVar6 = (bdRemoteTask *)__restgprlr_23(pbVar2);
-  return (bdReference<bdRemoteTask>)pbVar6;
+  return (bdReference<bdRemoteTask>)(bdRemoteTask *)this;
 }
 
 
 // 82903248  recordEventBin  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdeventlog/bdeventlog.cpp:64)
+
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
 
 bdReference<bdRemoteTask> __thiscall
 bdEventLog::recordEventBin
@@ -111,57 +113,57 @@ bdEventLog::recordEventBin
 
 {
   uint uVar1;
-  bdReference<bdRemoteTask> *pbVar3;
-  bdTaskByteBuffer *pbVar4;
+  bdTaskByteBuffer *pbVar3;
   ulonglong uVar2;
-  bdRemoteTask *pbVar5;
-  ulonglong in_r8;
-  uint *puVar6;
+  bdTaskResult *in_r8;
+  uint *puVar4;
   char in_RESERVE;
-  byte bVar7;
-  bdReference<bdRemoteTask> *pbStack00000014;
+  byte bVar5;
+  bdEventLog *pbStack00000014;
   bdReference<bdTaskByteBuffer> local_60;
   undefined4 local_5c;
   bdTaskByteBuffer *local_58;
   
-  pbVar3 = (bdReference<bdRemoteTask> *)__savegprlr_23(this);
-  pbVar3->m_ptr = (bdRemoteTask *)0x0;
+  this->m_remoteTaskManager = (bdRemoteTaskManager *)0x0;
   local_5c = 1;
-  pbStack00000014 = pbVar3;
+  pbStack00000014 = this;
   local_58 = bdMemory::allocate(0x2c);
-  bVar7 = (local_58 == (bdTaskByteBuffer *)0x0) << 1;
+  bVar5 = (local_58 == (bdTaskByteBuffer *)0x0) << 1;
   if (local_58 == (bdTaskByteBuffer *)0x0) {
     uVar2 = 0;
   }
   else {
-    pbVar4 = bdTaskByteBuffer::bdTaskByteBuffer(local_58,param_3 + 0x4a,true);
-    uVar2 = (ulonglong)(int)pbVar4;
+    pbVar3 = bdTaskByteBuffer::bdTaskByteBuffer(local_58,param_3 + 0x4a,true);
+    uVar2 = (ulonglong)(int)pbVar3;
   }
   local_60.m_ptr = (bdTaskByteBuffer *)uVar2;
   if ((uVar2 & 0xffffffff) != 0) {
     do {
-      puVar6 = (uint *)(uVar2 + 4);
+      puVar4 = (uint *)(uVar2 + 4);
       if (in_RESERVE != '\0') {
-        uVar1 = storeWordConditionalIndexed((ulonglong)*puVar6 + 1,0,uVar2 + 4);
-        *puVar6 = uVar1;
-        bVar7 = 2;
+        uVar1 = storeWordConditionalIndexed((ulonglong)*puVar4 + 1,0,uVar2 + 4);
+        *puVar4 = uVar1;
+        bVar5 = 2;
       }
-    } while (!(bool)(bVar7 >> 1 & 1));
+    } while (!(bool)(bVar5 >> 1 & 1));
   }
   bdRemoteTaskManager::initTaskBuffer(&local_60,'C','\x02');
   bdByteBuffer::writeBlob((bdByteBuffer *)local_60.m_ptr,(void *)param_2,param_3);
   bdByteBuffer::writeUInt32((bdByteBuffer *)local_60.m_ptr,(uint)param_4);
-  bdRemoteTaskManager::startTask(*(bdRemoteTaskManager **)param_1,pbVar3,&local_60);
-  if ((in_r8 & 0xffffffff) != 0) {
-    bdRemoteTask::setTaskResult(pbVar3->m_ptr,(bdTaskResult *)in_r8,1);
+  bdRemoteTaskManager::startTask
+            (*(bdRemoteTaskManager **)param_1,(bdReference<bdRemoteTask> *)this,&local_60);
+  if (in_r8 != (bdTaskResult *)0x0) {
+    bdRemoteTask::setTaskResult((bdRemoteTask *)this->m_remoteTaskManager,in_r8,1);
   }
   bdReference<bdTaskByteBuffer>::~bdReference<bdTaskByteBuffer>(&local_60);
-  pbVar5 = (bdRemoteTask *)__restgprlr_23(pbVar3);
-  return (bdReference<bdRemoteTask>)pbVar5;
+  return (bdReference<bdRemoteTask>)(bdRemoteTask *)this;
 }
 
 
 // 829033E8  recordEvents  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdeventlog/bdeventlog.cpp:90)
+
+/* WARNING: Function: __savegprlr_19 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_19 replaced with injection: xenon_save_restore */
 
 bdReference<bdRemoteTask> __thiscall
 bdEventLog::recordEvents
@@ -169,106 +171,98 @@ bdEventLog::recordEvents
           bdEventLogID *param_5)
 
 {
-  char *pcVar1;
-  int iVar2;
-  bdReference<bdRemoteTask> *pbVar3;
-  uint uVar4;
-  bdTaskByteBuffer *pbVar5;
-  bool bVar8;
-  bool bVar9;
-  bdLobbyErrorCode bVar6;
-  bdRemoteTask *pbVar7;
-  ulonglong in_r9;
-  int iVar10;
-  uint *puVar11;
-  uint uVar12;
-  ulonglong uVar13;
-  ulonglong uVar14;
-  longlong lVar15;
-  longlong lVar16;
+  uint uVar2;
+  bdTaskByteBuffer *pbVar3;
+  ulonglong uVar1;
+  bool bVar5;
+  bool bVar6;
+  bdLobbyErrorCode bVar4;
+  bdTaskResult *in_r9;
+  int iVar7;
+  uint *puVar8;
+  uint uVar9;
+  longlong lVar10;
+  longlong lVar11;
   char in_RESERVE;
-  byte bVar17;
-  bdReference<bdRemoteTask> *pbStack00000014;
+  byte bVar12;
+  bdEventLog *pbStack00000014;
   bdReference<bdTaskByteBuffer> local_80;
   undefined4 local_7c;
   bdTaskByteBuffer *local_78;
   
-  uVar14 = (ulonglong)(int)param_4;
-  lVar16 = (longlong)(int)param_2;
-  pbVar3 = (bdReference<bdRemoteTask> *)__savegprlr_19(this);
-  uVar12 = 0x4a;
+  lVar11 = (longlong)(int)param_4;
+  uVar9 = 0x4a;
   local_7c = 0;
-  iVar2 = (int)lVar16;
-  pbStack00000014 = pbVar3;
-  if ((uVar14 & 0xffffffff) != 0) {
-    uVar13 = uVar14;
-    lVar15 = lVar16;
+  pbStack00000014 = this;
+  if (param_4 != 0) {
+    lVar10 = lVar11;
+    puVar8 = param_2;
     do {
-      pcVar1 = (char *)*(undefined4 *)lVar15;
-      if (pcVar1 == (char *)0x0) {
-        iVar10 = 0;
+      if ((char *)*puVar8 == (char *)0x0) {
+        iVar7 = 0;
       }
       else {
-        uVar4 = bdStrnlen(pcVar1,*(uint *)((param_3 - iVar2) + (int)(undefined4 *)lVar15));
-        iVar10 = uVar4 + 2;
+        uVar2 = bdStrnlen((char *)*puVar8,*(uint *)((param_3 - (int)param_2) + (int)puVar8));
+        iVar7 = uVar2 + 2;
       }
-      uVar13 = uVar13 - 1;
-      uVar12 = iVar10 + uVar12;
-      lVar15 = lVar15 + 4;
-    } while (uVar13 != 0);
+      lVar10 = lVar10 + -1;
+      uVar9 = iVar7 + uVar9;
+      puVar8 = puVar8 + 1;
+    } while (lVar10 != 0);
   }
   local_78 = bdMemory::allocate(0x2c);
-  bVar17 = (local_78 == (bdTaskByteBuffer *)0x0) << 1;
+  bVar12 = (local_78 == (bdTaskByteBuffer *)0x0) << 1;
   if (local_78 == (bdTaskByteBuffer *)0x0) {
-    uVar13 = 0;
+    uVar1 = 0;
   }
   else {
-    pbVar5 = bdTaskByteBuffer::bdTaskByteBuffer(local_78,uVar12,true);
-    uVar13 = (ulonglong)(int)pbVar5;
+    pbVar3 = bdTaskByteBuffer::bdTaskByteBuffer(local_78,uVar9,true);
+    uVar1 = (ulonglong)(int)pbVar3;
   }
-  local_80.m_ptr = (bdTaskByteBuffer *)uVar13;
-  if ((uVar13 & 0xffffffff) != 0) {
+  local_80.m_ptr = (bdTaskByteBuffer *)uVar1;
+  if ((uVar1 & 0xffffffff) != 0) {
     do {
-      puVar11 = (uint *)(uVar13 + 4);
+      puVar8 = (uint *)(uVar1 + 4);
       if (in_RESERVE != '\0') {
-        uVar12 = storeWordConditionalIndexed((ulonglong)*puVar11 + 1,0,uVar13 + 4);
-        *puVar11 = uVar12;
-        bVar17 = 2;
+        uVar9 = storeWordConditionalIndexed((ulonglong)*puVar8 + 1,0,uVar1 + 4);
+        *puVar8 = uVar9;
+        bVar12 = 2;
       }
-    } while (!(bool)(bVar17 >> 1 & 1));
+    } while (!(bool)(bVar12 >> 1 & 1));
   }
   bdRemoteTaskManager::initTaskBuffer(&local_80,'C','\x03');
-  bVar8 = bdByteBuffer::writeUInt32((bdByteBuffer *)local_80.m_ptr,(uint)param_5);
-  uVar12 = (uint)uVar14;
-  if (bVar8) {
-    bVar9 = bdByteBuffer::writeUInt32((bdByteBuffer *)local_80.m_ptr,uVar12);
-    bVar8 = true;
-    if (bVar9) goto LAB_8290350c;
+  bVar5 = bdByteBuffer::writeUInt32((bdByteBuffer *)local_80.m_ptr,(uint)param_5);
+  if (bVar5) {
+    bVar6 = bdByteBuffer::writeUInt32((bdByteBuffer *)local_80.m_ptr,param_4);
+    bVar5 = true;
+    if (bVar6) goto LAB_8290350c;
   }
-  bVar8 = false;
+  bVar5 = false;
 LAB_8290350c:
-  if ((uVar14 & 0xffffffff) != 0) {
+  if (param_4 != 0) {
+    iVar7 = param_3 - (int)param_2;
     do {
-      if (bVar8) {
-        bVar9 = bdByteBuffer::writeString
-                          ((bdByteBuffer *)local_80.m_ptr,(char *)*(undefined4 *)lVar16,
-                           *(uint *)((int)(undefined4 *)lVar16 + (param_3 - iVar2)));
-        bVar8 = true;
-        if (!bVar9) goto LAB_82903548;
+      if (bVar5) {
+        bVar6 = bdByteBuffer::writeString
+                          ((bdByteBuffer *)local_80.m_ptr,(char *)*param_2,
+                           *(uint *)((int)param_2 + iVar7));
+        bVar5 = true;
+        if (!bVar6) goto LAB_82903548;
       }
       else {
 LAB_82903548:
-        bVar8 = false;
+        bVar5 = false;
       }
-      uVar14 = uVar14 - 1;
-      lVar16 = lVar16 + 4;
-    } while (uVar14 != 0);
+      lVar11 = lVar11 + -1;
+      param_2 = param_2 + 1;
+    } while (lVar11 != 0);
   }
-  pbVar3->m_ptr = (bdRemoteTask *)0x0;
+  this->m_remoteTaskManager = (bdRemoteTaskManager *)0x0;
   local_7c = 1;
-  if (bVar8) {
-    bVar6 = bdRemoteTaskManager::startTask((bdRemoteTaskManager *)*param_1,pbVar3,&local_80);
-    if (bVar6 != BD_NO_ERROR) {
+  if (bVar5) {
+    bVar4 = bdRemoteTaskManager::startTask
+                      ((bdRemoteTaskManager *)*param_1,(bdReference<bdRemoteTask> *)this,&local_80);
+    if (bVar4 != BD_NO_ERROR) {
       bdLogMessage(BD_LOG_WARNING,"warn/","record event",
                    "c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdLobby\\bdEventLog\\bdEventLog.cpp"
                    ,"bdEventLog::recordEvents",0x79,"Failed to start task: Error %i");
@@ -279,16 +273,18 @@ LAB_82903548:
                  "c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdLobby\\bdEventLog\\bdEventLog.cpp"
                  ,"bdEventLog::recordEvents",0x7e,"Failed to write param(s) into buffer");
   }
-  if ((in_r9 & 0xffffffff) != 0) {
-    bdRemoteTask::setTaskResult(pbVar3->m_ptr,(bdTaskResult *)in_r9,uVar12);
+  if (in_r9 != (bdTaskResult *)0x0) {
+    bdRemoteTask::setTaskResult((bdRemoteTask *)this->m_remoteTaskManager,in_r9,param_4);
   }
   bdReference<bdTaskByteBuffer>::~bdReference<bdTaskByteBuffer>(&local_80);
-  pbVar7 = (bdRemoteTask *)__restgprlr_19(pbVar3);
-  return (bdReference<bdRemoteTask>)pbVar7;
+  return (bdReference<bdRemoteTask>)(bdRemoteTask *)this;
 }
 
 
 // 829036B8  recordEventsBin  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdeventlog/bdeventlog.cpp:143)
+
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
 
 bdReference<bdRemoteTask> __thiscall
 bdEventLog::recordEventsBin
@@ -297,95 +293,88 @@ bdEventLog::recordEventsBin
 
 {
   int iVar1;
-  bdReference<bdRemoteTask> *pbVar2;
   bdTaskByteBuffer *pbVar3;
+  ulonglong uVar2;
+  bool bVar5;
   bool bVar6;
-  bool bVar7;
   bdLobbyErrorCode bVar4;
-  bdRemoteTask *pbVar5;
-  longlong lVar8;
-  ulonglong in_r9;
+  bdTaskResult *in_r9;
+  int *piVar7;
+  uint *puVar8;
   longlong lVar9;
-  uint *puVar10;
-  ulonglong uVar11;
-  uint uVar13;
-  longlong lVar12;
+  uint uVar10;
   char in_RESERVE;
-  byte bVar14;
-  ulonglong uVar15;
-  bdReference<bdRemoteTask> *pbStack00000014;
+  byte bVar11;
+  longlong lVar12;
+  bdEventLog *pbStack00000014;
   bdReference<bdTaskByteBuffer> local_70;
   undefined4 local_6c;
   bdTaskByteBuffer *local_68;
   
-  uVar11 = (ulonglong)(int)param_4;
-  lVar8 = (longlong)(int)param_3;
-  lVar12 = (longlong)(int)param_2;
-  pbVar2 = (bdReference<bdRemoteTask> *)__savegprlr_22(this);
-  uVar13 = 0x4a;
+  lVar9 = (longlong)(int)param_4;
+  uVar10 = 0x4a;
   local_6c = 0;
-  if ((uVar11 & 0xffffffff) != 0) {
-    lVar9 = lVar8 + -4;
-    uVar15 = uVar11;
+  if (param_4 != 0) {
+    piVar7 = (int *)(param_3 - 4);
+    lVar12 = lVar9;
     do {
-      lVar9 = lVar9 + 4;
-      uVar13 = *(int *)lVar9 + uVar13 + 5;
-      uVar15 = uVar15 - 1;
-    } while (uVar15 != 0);
+      piVar7 = piVar7 + 1;
+      uVar10 = *piVar7 + uVar10 + 5;
+      lVar12 = lVar12 + -1;
+    } while (lVar12 != 0);
   }
-  pbStack00000014 = pbVar2;
+  pbStack00000014 = this;
   local_68 = bdMemory::allocate(0x2c);
-  bVar14 = (local_68 == (bdTaskByteBuffer *)0x0) << 1;
+  bVar11 = (local_68 == (bdTaskByteBuffer *)0x0) << 1;
   if (local_68 == (bdTaskByteBuffer *)0x0) {
-    uVar15 = 0;
+    uVar2 = 0;
   }
   else {
-    pbVar3 = bdTaskByteBuffer::bdTaskByteBuffer(local_68,uVar13,true);
-    uVar15 = (ulonglong)(int)pbVar3;
+    pbVar3 = bdTaskByteBuffer::bdTaskByteBuffer(local_68,uVar10,true);
+    uVar2 = (ulonglong)(int)pbVar3;
   }
-  local_70.m_ptr = (bdTaskByteBuffer *)uVar15;
-  if ((uVar15 & 0xffffffff) != 0) {
+  local_70.m_ptr = (bdTaskByteBuffer *)uVar2;
+  if ((uVar2 & 0xffffffff) != 0) {
     do {
-      puVar10 = (uint *)(uVar15 + 4);
+      puVar8 = (uint *)(uVar2 + 4);
       if (in_RESERVE != '\0') {
-        uVar13 = storeWordConditionalIndexed((ulonglong)*puVar10 + 1,0,uVar15 + 4);
-        *puVar10 = uVar13;
-        bVar14 = 2;
+        uVar10 = storeWordConditionalIndexed((ulonglong)*puVar8 + 1,0,uVar2 + 4);
+        *puVar8 = uVar10;
+        bVar11 = 2;
       }
-    } while (!(bool)(bVar14 >> 1 & 1));
+    } while (!(bool)(bVar11 >> 1 & 1));
   }
   bdRemoteTaskManager::initTaskBuffer(&local_70,'C','\x04');
-  bVar6 = bdByteBuffer::writeUInt32((bdByteBuffer *)local_70.m_ptr,(uint)param_5);
-  uVar13 = (uint)uVar11;
-  if (bVar6) {
-    bVar7 = bdByteBuffer::writeUInt32((bdByteBuffer *)local_70.m_ptr,uVar13);
-    bVar6 = true;
-    if (bVar7) goto LAB_829037b8;
+  bVar5 = bdByteBuffer::writeUInt32((bdByteBuffer *)local_70.m_ptr,(uint)param_5);
+  if (bVar5) {
+    bVar6 = bdByteBuffer::writeUInt32((bdByteBuffer *)local_70.m_ptr,param_4);
+    bVar5 = true;
+    if (bVar6) goto LAB_829037b8;
   }
-  bVar6 = false;
+  bVar5 = false;
 LAB_829037b8:
-  if ((uVar11 & 0xffffffff) != 0) {
-    iVar1 = (int)lVar12;
+  if (param_4 != 0) {
+    iVar1 = param_3 - (int)param_2;
     do {
-      if (bVar6) {
-        bVar7 = bdByteBuffer::writeBlob
-                          ((bdByteBuffer *)local_70.m_ptr,(void *)*(undefined4 *)lVar12,
-                           *(uint *)(((int)lVar8 - iVar1) + (int)(undefined4 *)lVar12));
-        bVar6 = true;
-        if (!bVar7) goto LAB_829037f4;
+      if (bVar5) {
+        bVar6 = bdByteBuffer::writeBlob
+                          ((bdByteBuffer *)local_70.m_ptr,(void *)*param_2,
+                           *(uint *)(iVar1 + (int)param_2));
+        bVar5 = true;
+        if (!bVar6) goto LAB_829037f4;
       }
       else {
 LAB_829037f4:
-        bVar6 = false;
+        bVar5 = false;
       }
-      uVar11 = uVar11 - 1;
-      lVar12 = lVar12 + 4;
-    } while (uVar11 != 0);
+      lVar9 = lVar9 + -1;
+      param_2 = param_2 + 1;
+    } while (lVar9 != 0);
   }
-  pbVar2->m_ptr = (bdRemoteTask *)0x0;
+  this->m_remoteTaskManager = (bdRemoteTaskManager *)0x0;
   local_6c = 1;
-  if (bVar6) {
-    bVar4 = bdRemoteTaskManager::startTask(*param_1,pbVar2,&local_70);
+  if (bVar5) {
+    bVar4 = bdRemoteTaskManager::startTask(*param_1,(bdReference<bdRemoteTask> *)this,&local_70);
     if (bVar4 != BD_NO_ERROR) {
       bdLogMessage(BD_LOG_WARNING,"warn/","record event",
                    "c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdLobby\\bdEventLog\\bdEventLog.cpp"
@@ -397,11 +386,10 @@ LAB_829037f4:
                  "c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdLobby\\bdEventLog\\bdEventLog.cpp"
                  ,"bdEventLog::recordEventsBin",0xb0,"Failed to write param(s) into buffer");
   }
-  if ((in_r9 & 0xffffffff) != 0) {
-    bdRemoteTask::setTaskResult(pbVar2->m_ptr,(bdTaskResult *)in_r9,uVar13);
+  if (in_r9 != (bdTaskResult *)0x0) {
+    bdRemoteTask::setTaskResult((bdRemoteTask *)this->m_remoteTaskManager,in_r9,param_4);
   }
   bdReference<bdTaskByteBuffer>::~bdReference<bdTaskByteBuffer>(&local_70);
-  pbVar5 = (bdRemoteTask *)__restgprlr_22(pbVar2);
-  return (bdReference<bdRemoteTask>)pbVar5;
+  return (bdReference<bdRemoteTask>)(bdRemoteTask *)this;
 }
 

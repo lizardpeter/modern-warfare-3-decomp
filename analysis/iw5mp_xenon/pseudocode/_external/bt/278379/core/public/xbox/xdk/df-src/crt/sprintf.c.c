@@ -2,43 +2,42 @@
 
 // 829178F8  sprintf  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/sprintf.c:99)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 int sprintf(char *param_1,char *param_2)
 
 {
-  char *pcVar1;
-  int *piVar2;
-  int iVar3;
-  ulonglong uVar4;
+  int *piVar1;
+  int iVar2;
+  ulonglong uVar3;
   char *pcStack0000001c;
   _iobuf local_40 [2];
   
-  uVar4 = (ulonglong)(int)param_2;
-  pcVar1 = (char *)__savegprlr_29(param_1);
   local_40[0]._ptr = (char *)0x0;
-  pcStack0000001c = (char *)uVar4;
+  pcStack0000001c = param_2;
   memset();
-  if (((uVar4 & 0xffffffff) == 0) || (pcVar1 == (char *)0x0)) {
-    piVar2 = _errno();
-    *piVar2 = 0x16;
+  if ((param_2 == (char *)0x0) || (param_1 == (char *)0x0)) {
+    piVar1 = _errno();
+    *piVar1 = 0x16;
     _invalid_parameter_noinfo();
-    iVar3 = -1;
+    iVar2 = -1;
   }
   else {
     local_40[0]._flag = 0x42;
     local_40[0]._cnt = 0x7fffffff;
-    local_40[0]._ptr = pcVar1;
-    local_40[0]._base = pcVar1;
-    iVar3 = _output_l(local_40,(char *)uVar4,(localeinfo_struct *)0x0,&stack0x00000020);
-    uVar4 = (ulonglong)(uint)local_40[0]._cnt;
-    local_40[0]._cnt = (int)(uVar4 - 1);
-    if ((longlong)(uVar4 - 1) < 0) {
+    local_40[0]._ptr = param_1;
+    local_40[0]._base = param_1;
+    iVar2 = _output_l(local_40,param_2,(localeinfo_struct *)0x0,&stack0x00000020);
+    uVar3 = (ulonglong)(uint)local_40[0]._cnt;
+    local_40[0]._cnt = (int)(uVar3 - 1);
+    if ((longlong)(uVar3 - 1) < 0) {
       _flsbuf(0,local_40);
     }
     else {
       *local_40[0]._ptr = '\0';
     }
   }
-  iVar3 = __restgprlr_29(iVar3);
-  return iVar3;
+  return iVar2;
 }
 

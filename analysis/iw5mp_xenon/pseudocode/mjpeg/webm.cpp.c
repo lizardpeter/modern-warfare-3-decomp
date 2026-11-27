@@ -46,124 +46,121 @@ void __thiscall WebmTranscode::Start(WebmTranscode *this)
 
 // 827FAAF0  Init  (mjpeg/webm.cpp:64)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 bool __thiscall WebmTranscode::Init(WebmTranscode *this)
 
 {
-  int *piVar1;
-  int *piVar2;
-  ulong64 *puVar3;
-  int iVar4;
-  char *pcVar5;
-  bool bVar10;
-  undefined1 uVar11;
-  void *pvVar6;
-  uchar *puVar7;
-  uchar *puVar8;
-  uchar *puVar9;
-  ulong64 *puVar12;
-  uint uVar13;
-  int iVar14;
+  uint uVar1;
+  int iVar2;
+  uint *puVar3;
+  bool bVar7;
+  uchar *puVar4;
+  uchar *puVar5;
+  uchar *puVar6;
+  int *piVar8;
+  int iVar9;
+  uint uVar10;
+  uint *puVar11;
   int iStack_50;
   int local_4c;
   int local_48;
   int aiStack_44 [17];
   
-  puVar3 = (ulong64 *)__savegprlr_26(this);
-  puVar12 = puVar3 + 1;
-  DCache_GetUploadFileInformation(puVar3,(int *)puVar12);
-  if (*(int *)(puVar3 + 1) < 1) {
+  piVar8 = &this->fileSize;
+  DCache_GetUploadFileInformation(&this->fileID,piVar8);
+  if (this->fileSize < 1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\mjpeg\\webm.cpp",0x54,0,"%s");
   }
-  iVar4 = Sys_Milliseconds();
-  *(int *)((int)puVar3 + 0x5c) = iVar4;
-  *(undefined4 *)(puVar3 + 0xc) = 0;
-  *(undefined1 *)((int)puVar3 + 0xc) = 1;
-  *(undefined1 *)((int)puVar3 + 0xd) = 0;
-  vpx_heapInit(*(void **)(puVar3 + 2),*(uint *)((int)puVar3 + 0x14));
-  uVar13 = 0x20000;
-  if ((int)*(uint *)puVar12 < 0x20000) {
-    uVar13 = *(uint *)puVar12;
+  iVar2 = Sys_Milliseconds();
+  this->msStart = iVar2;
+  this->bytesWritten = 0;
+  this->isTranscodeInProgress = true;
+  this->transcodeEnded = false;
+  vpx_heapInit(this->transcodeMem,this->transcodeMemSize);
+  uVar10 = 0x20000;
+  if (*piVar8 < 0x20000) {
+    uVar10 = *piVar8;
   }
-  pcVar5 = vpx_malloc(uVar13);
-  *(char **)(puVar3 + 3) = pcVar5;
-  bVar10 = DCache_IO_ReadFromCacheByOffset
-                     (*puVar3,DCACHE_LOCATION_AVI_RENDER,*(int *)puVar12 - uVar13,*(int *)puVar12,
-                      pcVar5,&iStack_50);
-  if (bVar10) {
-    iVar4 = *(int *)(puVar3 + 3) + uVar13;
-    if ((*(int *)(iVar4 + -8) == 0) ||
+  puVar3 = vpx_malloc(uVar10);
+  this->transcodeOffsets = puVar3;
+  bVar7 = DCache_IO_ReadFromCacheByOffset
+                    (this->fileID,DCACHE_LOCATION_AVI_RENDER,*piVar8 - uVar10,*piVar8,(char *)puVar3
+                     ,&iStack_50);
+  if (bVar7) {
+    puVar3 = this->transcodeOffsets;
+    puVar11 = (uint *)((int)puVar3 + (uVar10 - 8));
+    if ((*(int *)((int)puVar3 + (uVar10 - 8)) == 0) ||
        (MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\mjpeg\\webm.cpp",0x6c,0,
-                        "%s"), *(int *)(iVar4 + -8) == 0)) {
-      *(undefined4 *)(puVar3 + 9) = 0;
-      *(undefined4 *)((int)puVar3 + 0x54) = 0;
-      *(undefined4 *)(puVar3 + 0xb) = 0xffffffff;
-      iVar14 = *(int *)(iVar4 + -0x10);
-      piVar1 = (int *)(iVar4 + -8);
-      piVar2 = (int *)(iVar4 + -0x10);
-      while (iVar14 != 0) {
-        if (*(uint *)(puVar3 + 9) < (uint)piVar1[1]) {
-          *(int *)(puVar3 + 9) = piVar1[1];
+                        "%s"), *puVar11 == 0)) {
+      this->transcodeMaxSampleSize = 0;
+      this->transcodeSampleFrames = 0;
+      this->transcodeSampleFrameNow = -1;
+      uVar1 = *(uint *)((int)puVar3 + (uVar10 - 0x10));
+      puVar3 = (uint *)((int)puVar3 + (uVar10 - 0x10));
+      while (uVar1 != 0) {
+        if (this->transcodeMaxSampleSize < puVar11[1]) {
+          this->transcodeMaxSampleSize = puVar11[1];
         }
-        *(int *)((int)puVar3 + 0x54) = *(int *)((int)puVar3 + 0x54) + 1;
-        iVar14 = piVar2[-2];
-        piVar1 = piVar2;
-        piVar2 = piVar2 + -2;
+        this->transcodeSampleFrames = this->transcodeSampleFrames + 1;
+        uVar1 = puVar3[-2];
+        puVar11 = puVar3;
+        puVar3 = puVar3 + -2;
       }
-      *(undefined4 *)(puVar3 + 8) = 0;
-      *(undefined4 *)(puVar3 + 7) = 0;
-      *(int **)((int)puVar3 + 0x1c) = piVar1;
-      *(undefined4 *)((int)puVar3 + 0x3c) = 0;
-      iVar4 = piVar2[-2];
-      piVar1 = piVar2 + -2;
-      while (iVar4 != 0) {
-        if (*(uint *)(puVar3 + 7) < (uint)piVar2[1]) {
-          *(int *)(puVar3 + 7) = piVar2[1];
+      this->transcodeFrameNow = 0;
+      this->transcodeMaxJpegSize = 0;
+      this->transcodeOffsetsSample = puVar11;
+      this->transcodeFrames = 0;
+      uVar10 = puVar3[-2];
+      puVar11 = puVar3 + -2;
+      while (uVar10 != 0) {
+        if (this->transcodeMaxJpegSize < puVar3[1]) {
+          this->transcodeMaxJpegSize = puVar3[1];
         }
-        *(int *)((int)puVar3 + 0x3c) = *(int *)((int)puVar3 + 0x3c) + 1;
-        iVar4 = piVar1[-2];
-        piVar2 = piVar1;
-        piVar1 = piVar1 + -2;
+        this->transcodeFrames = this->transcodeFrames + 1;
+        uVar10 = puVar11[-2];
+        puVar3 = puVar11;
+        puVar11 = puVar11 + -2;
       }
-      iVar4 = *(int *)(puVar3 + 7);
-      *(int **)(puVar3 + 4) = piVar2;
-      *(uint *)(puVar3 + 7) = iVar4 + 8U;
-      *(int *)(puVar3 + 9) = *(int *)(puVar3 + 9) + 8;
-      pvVar6 = vpx_malloc(iVar4 + 8U);
-      *(void **)((int)puVar3 + 0x24) = pvVar6;
-      pvVar6 = vpx_malloc(*(uint *)(puVar3 + 9));
-      *(void **)((int)puVar3 + 0x44) = pvVar6;
-      *(undefined4 *)((int)puVar3 + 0x2c) = 0x100000;
-      puVar7 = vpx_malloc(0x100000);
-      *(uchar **)(puVar3 + 5) = puVar7;
-      iVar4 = **(int **)(puVar3 + 4);
-      iVar14 = (*(int **)(puVar3 + 4))[1] + 8;
-      bVar10 = DCache_IO_ReadFromCacheByOffset
-                         (*puVar3,DCACHE_LOCATION_AVI_RENDER,iVar4,iVar4 + iVar14,
-                          *(char **)((int)puVar3 + 0x24),&iStack_50);
-      if (bVar10) {
-        puVar8 = *(uchar **)((int)puVar3 + 0x24);
-        iVar4 = 0;
+      uVar10 = this->transcodeMaxJpegSize + 8;
+      this->transcodeOffsetsJpeg = puVar3;
+      this->transcodeMaxJpegSize = uVar10;
+      this->transcodeMaxSampleSize = this->transcodeMaxSampleSize + 8;
+      puVar4 = vpx_malloc(uVar10);
+      this->transcodeJpegBuffer = puVar4;
+      puVar4 = vpx_malloc(this->transcodeMaxSampleSize);
+      this->transcodeSampleBuffer = puVar4;
+      this->transcodeOutputBufferSize = 0x100000;
+      puVar4 = vpx_malloc(0x100000);
+      this->transcodeOutputBuffer = puVar4;
+      uVar10 = *this->transcodeOffsetsJpeg;
+      iVar2 = this->transcodeOffsetsJpeg[1] + 8;
+      bVar7 = DCache_IO_ReadFromCacheByOffset
+                        (this->fileID,DCACHE_LOCATION_AVI_RENDER,uVar10,uVar10 + iVar2,
+                         (char *)this->transcodeJpegBuffer,&iStack_50);
+      if (bVar7) {
+        puVar5 = this->transcodeJpegBuffer;
+        iVar9 = 0;
         do {
-          if ((((((*puVar8 == 0xff) && (puVar9 = puVar8, puVar8[1] == 0xd8)) ||
-                ((puVar8[1] == 0xff && (puVar9 = puVar8 + 1, puVar8[2] == 0xd8)))) ||
-               ((puVar8[2] == 0xff && (puVar9 = puVar8 + 2, puVar8[3] == 0xd8)))) ||
-              ((puVar8[3] == 0xff && (puVar9 = puVar8 + 3, puVar8[4] == 0xd8)))) ||
-             ((puVar8[4] == 0xff && (puVar9 = puVar8 + 4, puVar8[5] == 0xd8)))) break;
-          iVar4 = iVar4 + 5;
-          puVar8 = puVar8 + 5;
-          puVar9 = puVar8;
-        } while (iVar4 < 0x28);
-        stbi_jpeg_info_from_memory(puVar9,iVar14,&local_48,&local_4c,aiStack_44);
-        puVar7 = vp8_Init(puVar7,local_48,local_4c,0x1e);
-        *(undefined4 *)((int)puVar3 + 0x34) = 0;
-        *(int *)(puVar3 + 6) = (int)puVar7 - *(int *)(puVar3 + 5);
-        uVar11 = __restgprlr_26(1);
-        return (bool)uVar11;
+          if ((((((*puVar5 == 0xff) && (puVar6 = puVar5, puVar5[1] == 0xd8)) ||
+                ((puVar5[1] == 0xff && (puVar6 = puVar5 + 1, puVar5[2] == 0xd8)))) ||
+               ((puVar5[2] == 0xff && (puVar6 = puVar5 + 2, puVar5[3] == 0xd8)))) ||
+              ((puVar5[3] == 0xff && (puVar6 = puVar5 + 3, puVar5[4] == 0xd8)))) ||
+             ((puVar5[4] == 0xff && (puVar6 = puVar5 + 4, puVar5[5] == 0xd8)))) break;
+          iVar9 = iVar9 + 5;
+          puVar5 = puVar5 + 5;
+          puVar6 = puVar5;
+        } while (iVar9 < 0x28);
+        stbi_jpeg_info_from_memory(puVar6,iVar2,&local_48,&local_4c,aiStack_44);
+        puVar4 = vp8_Init(puVar4,local_48,local_4c,0x1e);
+        this->transcodeOutputFlushSize = 0;
+        this->transcodeOutputSize = (int)puVar4 - (int)this->transcodeOutputBuffer;
+        return true;
       }
     }
   }
-  uVar11 = __restgprlr_26(0);
-  return (bool)uVar11;
+  return false;
 }
 
 
@@ -184,125 +181,122 @@ void __thiscall WebmTranscode::End(WebmTranscode *this)
 
 // 827FAE10  Transcode  (mjpeg/webm.cpp:193)
 
+/* WARNING: Function: __savegprlr_19 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_19 replaced with injection: xenon_save_restore */
+
 int __thiscall WebmTranscode::Transcode(WebmTranscode *this,void *param_1,uint param_2,uint param_3)
 
 {
-  int iVar1;
-  ulong64 *puVar2;
-  int iVar3;
-  bool bVar6;
-  short *psVar4;
+  bool bVar3;
+  short *psVar1;
+  uchar *puVar2;
+  uchar *puVar4;
   uchar *puVar5;
-  char *pcVar7;
-  char *pcVar8;
-  ulonglong uVar9;
-  int *piVar10;
-  int iVar11;
-  uint uVar12;
-  uint uVar13;
-  uint uVar15;
-  ulonglong uVar14;
-  int local_80 [32];
+  uint *puVar6;
+  int iVar7;
+  uint uVar8;
+  uint uVar9;
+  uint uVar10;
+  uint uVar11;
+  uint local_80 [32];
   
-  uVar9 = (ulonglong)(int)param_2;
-  puVar2 = (ulong64 *)__savegprlr_19(this,param_1,uVar9,param_3);
-  if ((uVar9 & 0xffffffff) == 0) goto LAB_827fae30;
-  if (*(int *)((int)puVar2 + 0x34) == *(int *)(puVar2 + 6)) {
-    *(undefined4 *)((int)puVar2 + 0x34) = 0;
-    puVar5 = *(uchar **)(puVar2 + 5);
-    piVar10 = (int *)(*(int *)(puVar2 + 8) * 8 + *(int *)(puVar2 + 4));
-    if (*piVar10 != 0) {
-      iVar3 = piVar10[1];
-      bVar6 = DCache_IO_ReadFromCacheByOffset
-                        (*puVar2,DCACHE_LOCATION_AVI_RENDER,*piVar10,*piVar10 + iVar3 + 8U,
-                         *(char **)((int)puVar2 + 0x24),local_80);
-      if (bVar6) {
-        psVar4 = vpx_malloc(0x640);
-        uVar13 = 0;
+  if (param_2 == 0) {
+    return 0;
+  }
+  if (this->transcodeOutputFlushSize == this->transcodeOutputSize) {
+    this->transcodeOutputFlushSize = 0;
+    puVar2 = this->transcodeOutputBuffer;
+    puVar6 = this->transcodeOffsetsJpeg + this->transcodeFrameNow * 2;
+    if (*puVar6 != 0) {
+      uVar11 = puVar6[1];
+      bVar3 = DCache_IO_ReadFromCacheByOffset
+                        (this->fileID,DCACHE_LOCATION_AVI_RENDER,*puVar6,*puVar6 + uVar11 + 8,
+                         (char *)this->transcodeJpegBuffer,(int *)local_80);
+      if (bVar3) {
+        psVar1 = vpx_malloc(0x640);
+        uVar9 = 0;
         do {
-          if (*(int *)(puVar2 + 10) == *(int *)((int)puVar2 + 0x4c)) {
-            iVar11 = *(int *)(puVar2 + 0xb) + 1;
-            *(undefined4 *)(puVar2 + 10) = 0;
-            *(undefined4 *)((int)puVar2 + 0x4c) = 0;
-            *(int *)(puVar2 + 0xb) = iVar11;
-            if (*(int *)((int)puVar2 + 0x54) <= iVar11) break;
-            piVar10 = (int *)(iVar11 * 8 + *(int *)((int)puVar2 + 0x1c));
-            iVar11 = piVar10[1];
-            *(int *)((int)puVar2 + 0x4c) = iVar11;
-            iVar1 = *piVar10;
-            bVar6 = DCache_IO_ReadFromCacheByOffset
-                              (*puVar2,DCACHE_LOCATION_AVI_RENDER,iVar1 + 8,iVar1 + iVar11 + 8,
-                               *(char **)((int)puVar2 + 0x44),local_80);
-            if (!bVar6) goto LAB_827fae30;
-            if (local_80[0] != *(int *)((int)puVar2 + 0x4c)) {
+          if (this->transcodeSampleNow == this->transcodeSampleSize) {
+            iVar7 = this->transcodeSampleFrameNow + 1;
+            this->transcodeSampleNow = 0;
+            this->transcodeSampleSize = 0;
+            this->transcodeSampleFrameNow = iVar7;
+            if (this->transcodeSampleFrames <= iVar7) break;
+            uVar10 = (this->transcodeOffsetsSample + iVar7 * 2)[1];
+            this->transcodeSampleSize = uVar10;
+            uVar8 = this->transcodeOffsetsSample[iVar7 * 2];
+            bVar3 = DCache_IO_ReadFromCacheByOffset
+                              (this->fileID,DCACHE_LOCATION_AVI_RENDER,uVar8 + 8,uVar8 + uVar10 + 8,
+                               (char *)this->transcodeSampleBuffer,(int *)local_80);
+            if (!bVar3) {
+              return 0;
+            }
+            if (local_80[0] != this->transcodeSampleSize) {
               MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\mjpeg\\webm.cpp",0xe5
                               ,0,"%s");
             }
           }
-          uVar12 = *(int *)((int)puVar2 + 0x4c) - *(int *)(puVar2 + 10);
-          uVar15 = 0x640 - uVar13;
-          if (uVar12 < 0x640 - uVar13) {
-            uVar15 = uVar12;
+          uVar8 = this->transcodeSampleSize - this->transcodeSampleNow;
+          uVar10 = 0x640 - uVar9;
+          if (uVar8 < 0x640 - uVar9) {
+            uVar10 = uVar8;
           }
-          if ((uVar15 & 1) != 0) {
+          if ((uVar10 & 1) != 0) {
             MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\mjpeg\\webm.cpp",0xeb,0
                             ,"%s");
           }
-          if (uVar15 != 0) {
+          if (uVar10 != 0) {
             memcpy();
-            uVar13 = uVar15 + uVar13;
-            *(uint *)(puVar2 + 10) = *(int *)(puVar2 + 10) + uVar15;
+            uVar9 = uVar10 + uVar9;
+            this->transcodeSampleNow = this->transcodeSampleNow + uVar10;
           }
-        } while (uVar13 != 0x640);
-        iVar11 = 0;
-        pcVar7 = *(char **)((int)puVar2 + 0x24);
-        *(int *)(puVar2 + 8) = *(int *)(puVar2 + 8) + 1;
+        } while (uVar9 != 0x640);
+        iVar7 = 0;
+        puVar4 = this->transcodeJpegBuffer;
+        this->transcodeFrameNow = this->transcodeFrameNow + 1;
         do {
-          if ((((((*pcVar7 == -1) && (pcVar8 = pcVar7, pcVar7[1] == -0x28)) ||
-                ((pcVar7[1] == -1 && (pcVar8 = pcVar7 + 1, pcVar7[2] == -0x28)))) ||
-               ((pcVar7[2] == -1 && (pcVar8 = pcVar7 + 2, pcVar7[3] == -0x28)))) ||
-              ((pcVar7[3] == -1 && (pcVar8 = pcVar7 + 3, pcVar7[4] == -0x28)))) ||
-             ((pcVar7[4] == -1 && (pcVar8 = pcVar7 + 4, pcVar7[5] == -0x28)))) break;
-          iVar11 = iVar11 + 5;
-          pcVar7 = pcVar7 + 5;
-          pcVar8 = pcVar7;
-        } while (iVar11 < 0x28);
-        puVar5 = vp8_AddFrame(puVar5,pcVar8,iVar3 + 8U,psVar4,
-                              ((int)uVar13 >> 1) + (uint)((int)uVar13 < 0 && (uVar13 & 1) != 0));
-        vpx_free(psVar4);
-        if (puVar5 != (uchar *)0x0) {
-          *(int *)(puVar2 + 6) = (int)puVar5 - *(int *)(puVar2 + 5);
+          if ((((((*puVar4 == 0xff) && (puVar5 = puVar4, puVar4[1] == 0xd8)) ||
+                ((puVar4[1] == 0xff && (puVar5 = puVar4 + 1, puVar4[2] == 0xd8)))) ||
+               ((puVar4[2] == 0xff && (puVar5 = puVar4 + 2, puVar4[3] == 0xd8)))) ||
+              ((puVar4[3] == 0xff && (puVar5 = puVar4 + 3, puVar4[4] == 0xd8)))) ||
+             ((puVar4[4] == 0xff && (puVar5 = puVar4 + 4, puVar4[5] == 0xd8)))) break;
+          iVar7 = iVar7 + 5;
+          puVar4 = puVar4 + 5;
+          puVar5 = puVar4;
+        } while (iVar7 < 0x28);
+        puVar2 = vp8_AddFrame(puVar2,puVar5,uVar11 + 8,psVar1,
+                              ((int)uVar9 >> 1) + (uint)((int)uVar9 < 0 && (uVar9 & 1) != 0));
+        vpx_free(psVar1);
+        if (puVar2 != (uchar *)0x0) {
+          this->transcodeOutputSize = (int)puVar2 - (int)this->transcodeOutputBuffer;
           goto LAB_827fb100;
         }
       }
-LAB_827fae30:
-      iVar3 = __restgprlr_19(0);
-      return iVar3;
+      return 0;
     }
-    if (*(char *)((int)puVar2 + 0xc) != '\0') {
-      vp8_End(puVar5);
-      *(undefined1 *)((int)puVar2 + 0xd) = 1;
+    if (this->isTranscodeInProgress != false) {
+      vp8_End(puVar2);
+      this->transcodeEnded = true;
     }
   }
 LAB_827fb100:
-  uVar14 = (ulonglong)*(uint *)(puVar2 + 6) - (ulonglong)*(uint *)((int)puVar2 + 0x34);
-  if ((ulonglong)*(uint *)(puVar2 + 6) < (ulonglong)*(uint *)((int)puVar2 + 0x34)) {
+  uVar11 = this->transcodeOutputSize - this->transcodeOutputFlushSize;
+  if (this->transcodeOutputSize < this->transcodeOutputFlushSize) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\mjpeg\\webm.cpp",0x107,0,"%s");
   }
-  if ((ulonglong)*(uint *)((int)puVar2 + 0x2c) <= (uVar14 & 0xffffffff)) {
+  if (this->transcodeOutputBufferSize <= uVar11) {
     va("output=%d transcodeOutputSize=%d transcodeOutputFlushSize=%d transcodeOutputBufferSize=%d");
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\mjpeg\\webm.cpp",0x108,0,
                     "%s\n\t%s");
   }
-  if ((uVar9 & 0xffffffff) < (uVar14 & 0xffffffff)) {
-    uVar14 = uVar9;
+  if (param_2 < uVar11) {
+    uVar11 = param_2;
   }
-  if ((uVar14 & 0xffffffff) != 0) {
+  if (uVar11 != 0) {
     memcpy();
-    *(int *)((int)puVar2 + 0x34) = *(int *)((int)puVar2 + 0x34) + (int)uVar14;
+    this->transcodeOutputFlushSize = this->transcodeOutputFlushSize + uVar11;
   }
-  iVar3 = __restgprlr_19(uVar14);
-  return iVar3;
+  return uVar11;
 }
 
 

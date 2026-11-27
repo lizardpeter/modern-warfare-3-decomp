@@ -92,15 +92,14 @@ int DevGui_GetScreenHeight(ScreenPlacement *param_1)
 
 // 8240B120  DevGui_DrawBox  (devgui/devgui_util.cpp:114)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 
 void DevGui_DrawBox(int param_1,int param_2,int param_3,int param_4,uchar *param_5)
 
 {
-  int iVar1;
-  
-  iVar1 = __savegprlr_25(param_1);
   if (param_3 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\devgui\\devgui_util.cpp",0x74,0
                     ,"%s");
@@ -110,9 +109,8 @@ void DevGui_DrawBox(int param_1,int param_2,int param_3,int param_4,uchar *param
                     ,"%s");
   }
   R_AddCmdDrawStretchPic
-            ((float)(longlong)iVar1,(float)(longlong)param_2,(float)(longlong)param_3,
+            ((float)(longlong)param_1,(float)(longlong)param_2,(float)(longlong)param_3,
              (float)(longlong)param_4,0.0,0.0,0.0,0.0,(float *)param_2,(Material *)0x82010000);
-  __restgprlr_25();
   return;
 }
 
@@ -131,20 +129,22 @@ void DevGui_DrawBoxCentered(int param_1,int param_2,int param_3,int param_4,ucha
 
 // 8240B2C0  DevGui_DrawBevelBox  (devgui/devgui_util.cpp:148)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
+
 void DevGui_DrawBevelBox(int param_1,int param_2,int param_3,int param_4,float param_5,
                         uchar *param_6)
 
 {
+  byte *in_r8;
   int iVar1;
   int iVar2;
-  byte *in_r8;
   int iVar3;
   int iVar4;
   int iVar5;
   int iVar6;
-  int iVar7;
+  double dVar7;
   double dVar8;
-  double extraout_f1;
   double dVar9;
   double dVar10;
   double dVar11;
@@ -153,7 +153,6 @@ void DevGui_DrawBevelBox(int param_1,int param_2,int param_3,int param_4,float p
   double dVar14;
   double dVar15;
   double dVar16;
-  double dVar17;
   float local_90;
   float local_8c;
   float local_88;
@@ -167,14 +166,13 @@ void DevGui_DrawBevelBox(int param_1,int param_2,int param_3,int param_4,float p
   int local_68;
   int local_64;
   
-  iVar2 = __savegprlr_24((double)param_5,param_1);
-  dVar16 = 8.0;
-  dVar8 = extraout_f1;
+  dVar7 = (double)param_5;
+  dVar15 = 8.0;
   if ((double)(longlong)param_3 < 8.0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\devgui\\devgui_util.cpp",0x98,0
                     ,"%s");
   }
-  if ((double)(longlong)param_4 < dVar16) {
+  if ((double)(longlong)param_4 < dVar15) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\devgui\\devgui_util.cpp",0x99,0
                     ,"%s");
   }
@@ -182,176 +180,179 @@ void DevGui_DrawBevelBox(int param_1,int param_2,int param_3,int param_4,float p
   local_90 = (float)*in_r8 * 0.003921569;
   local_8c = (float)in_r8[1] * 0.003921569;
   local_84 = (float)in_r8[3] * 0.003921569;
-  DevGui_DrawBox(iVar2,param_2,param_3,param_4,in_r8);
-  dVar15 = (double)(float)((double)local_90 * dVar8);
-  dVar13 = (double)(float)((double)local_8c * dVar8);
-  dVar12 = (double)(float)((double)local_88 * dVar8);
-  iVar7 = param_2 + param_4;
-  iVar6 = iVar2 + 4;
-  iVar5 = param_2 + 4;
-  dVar17 = 1.0;
-  iVar4 = iVar7 + -4;
-  dVar16 = 0.0;
-  dVar14 = dVar17;
-  if ((float)(dVar15 - 1.0) < 0.0) {
-    dVar14 = dVar15;
+  DevGui_DrawBox(param_1,param_2,param_3,param_4,in_r8);
+  dVar14 = (double)(float)((double)local_90 * dVar7);
+  dVar12 = (double)(float)((double)local_8c * dVar7);
+  dVar11 = (double)(float)((double)local_88 * dVar7);
+  iVar6 = param_2 + param_4;
+  iVar4 = param_1 + 4;
+  iVar3 = param_2 + 4;
+  dVar16 = 1.0;
+  iVar2 = iVar6 + -4;
+  dVar15 = 0.0;
+  dVar13 = dVar16;
+  if ((float)(dVar14 - 1.0) < 0.0) {
+    dVar13 = dVar14;
   }
-  dVar11 = dVar17;
-  if ((float)(dVar13 - 1.0) < 0.0) {
-    dVar11 = dVar13;
-  }
-  dVar10 = dVar17;
+  dVar10 = dVar16;
   if ((float)(dVar12 - 1.0) < 0.0) {
     dVar10 = dVar12;
   }
   dVar9 = dVar16;
-  if (-dVar15 < 0.0) {
-    dVar9 = dVar14;
+  if ((float)(dVar11 - 1.0) < 0.0) {
+    dVar9 = dVar11;
   }
-  local_90 = (float)dVar9;
-  dVar14 = dVar16;
-  if (-dVar13 < 0.0) {
-    dVar14 = dVar11;
+  dVar8 = dVar15;
+  if (-dVar14 < 0.0) {
+    dVar8 = dVar13;
   }
-  local_8c = (float)dVar14;
-  dVar14 = dVar16;
+  local_90 = (float)dVar8;
+  dVar13 = dVar15;
   if (-dVar12 < 0.0) {
-    dVar14 = dVar10;
+    dVar13 = dVar10;
   }
-  local_88 = (float)dVar14;
-  local_80 = iVar2;
+  local_8c = (float)dVar13;
+  dVar13 = dVar15;
+  if (-dVar11 < 0.0) {
+    dVar13 = dVar9;
+  }
+  local_88 = (float)dVar13;
+  local_80 = param_1;
   local_7c = param_2;
-  local_78 = iVar6;
-  local_74 = iVar5;
-  local_70 = iVar6;
-  local_6c = iVar4;
-  local_68 = iVar2;
-  local_64 = iVar7;
+  local_78 = iVar4;
+  local_74 = iVar3;
+  local_70 = iVar4;
+  local_6c = iVar2;
+  local_68 = param_1;
+  local_64 = iVar6;
   DevGui_DrawQuad((int (*) [2])&local_80,&local_90);
-  iVar1 = iVar2 + param_3;
-  dVar15 = (double)(float)((double)local_90 * dVar8);
-  dVar13 = (double)(float)((double)local_8c * dVar8);
-  dVar12 = (double)(float)((double)local_88 * dVar8);
-  iVar3 = iVar1 + -4;
-  dVar14 = dVar17;
-  if ((float)(dVar15 - dVar17) < 0.0) {
-    dVar14 = dVar15;
+  iVar5 = param_1 + param_3;
+  dVar14 = (double)(float)((double)local_90 * dVar7);
+  dVar12 = (double)(float)((double)local_8c * dVar7);
+  dVar11 = (double)(float)((double)local_88 * dVar7);
+  iVar1 = iVar5 + -4;
+  dVar13 = dVar16;
+  if ((float)(dVar14 - dVar16) < 0.0) {
+    dVar13 = dVar14;
   }
-  dVar11 = dVar17;
-  if ((float)(dVar13 - dVar17) < 0.0) {
-    dVar11 = dVar13;
-  }
-  dVar10 = dVar17;
-  if ((float)(dVar12 - dVar17) < 0.0) {
+  dVar10 = dVar16;
+  if ((float)(dVar12 - dVar16) < 0.0) {
     dVar10 = dVar12;
   }
   dVar9 = dVar16;
-  if (-dVar15 < 0.0) {
-    dVar9 = dVar14;
+  if ((float)(dVar11 - dVar16) < 0.0) {
+    dVar9 = dVar11;
   }
-  local_90 = (float)dVar9;
-  dVar14 = dVar16;
-  if (-dVar13 < 0.0) {
-    dVar14 = dVar11;
-  }
-  local_8c = (float)dVar14;
-  dVar14 = dVar16;
-  if (-dVar12 < 0.0) {
-    dVar14 = dVar10;
-  }
-  local_88 = (float)dVar14;
-  local_80 = iVar2;
-  local_7c = param_2;
-  local_78 = iVar1;
-  local_74 = param_2;
-  local_70 = iVar3;
-  local_6c = iVar5;
-  local_68 = iVar6;
-  local_64 = iVar5;
-  DevGui_DrawQuad((int (*) [2])&local_80,&local_90);
-  dVar12 = (double)(float)((double)local_90 * dVar8);
-  dVar15 = (double)(float)((double)local_8c * dVar8);
-  dVar13 = (double)(float)((double)local_88 * dVar8);
-  dVar14 = dVar17;
-  if ((float)(dVar12 - dVar17) < 0.0) {
-    dVar14 = dVar12;
-  }
-  dVar11 = dVar17;
-  if ((float)(dVar15 - dVar17) < 0.0) {
-    dVar11 = dVar15;
-  }
-  dVar10 = dVar17;
-  if ((float)(dVar13 - dVar17) < 0.0) {
-    dVar10 = dVar13;
-  }
-  dVar9 = dVar16;
-  if (-dVar12 < 0.0) {
-    dVar9 = dVar14;
-  }
-  local_90 = (float)dVar9;
-  dVar14 = dVar16;
-  if (-dVar15 < 0.0) {
-    dVar14 = dVar11;
-  }
-  local_8c = (float)dVar14;
-  dVar14 = dVar16;
-  if (-dVar13 < 0.0) {
-    dVar14 = dVar10;
-  }
-  local_88 = (float)dVar14;
-  local_80 = iVar2;
-  local_7c = iVar7;
-  local_78 = iVar6;
-  local_74 = iVar4;
-  local_70 = iVar3;
-  local_6c = iVar4;
-  local_68 = iVar1;
-  local_64 = iVar7;
-  DevGui_DrawQuad((int (*) [2])&local_80,&local_90);
-  dVar13 = (double)(float)((double)local_90 * dVar8);
-  dVar12 = (double)(float)((double)local_8c * dVar8);
-  dVar14 = (double)(float)((double)local_88 * dVar8);
-  dVar8 = dVar17;
-  if ((float)(dVar13 - dVar17) < 0.0) {
+  dVar8 = dVar15;
+  if (-dVar14 < 0.0) {
     dVar8 = dVar13;
   }
-  dVar15 = dVar17;
-  if ((float)(dVar12 - dVar17) < 0.0) {
-    dVar15 = dVar12;
-  }
-  if ((float)(dVar14 - dVar17) < 0.0) {
-    dVar17 = dVar14;
-  }
-  dVar11 = dVar16;
-  if (-dVar13 < 0.0) {
-    dVar11 = dVar8;
-  }
-  local_90 = (float)dVar11;
-  dVar8 = dVar16;
+  local_90 = (float)dVar8;
+  dVar13 = dVar15;
   if (-dVar12 < 0.0) {
-    dVar8 = dVar15;
+    dVar13 = dVar10;
   }
-  local_8c = (float)dVar8;
-  if (-dVar14 < 0.0) {
-    dVar16 = dVar17;
+  local_8c = (float)dVar13;
+  dVar13 = dVar15;
+  if (-dVar11 < 0.0) {
+    dVar13 = dVar9;
   }
-  local_88 = (float)dVar16;
-  local_80 = iVar1;
+  local_88 = (float)dVar13;
+  local_80 = param_1;
   local_7c = param_2;
-  local_78 = iVar1;
-  local_74 = iVar7;
-  local_70 = iVar3;
-  local_6c = iVar4;
-  local_68 = iVar3;
-  local_64 = iVar5;
+  local_78 = iVar5;
+  local_74 = param_2;
+  local_70 = iVar1;
+  local_6c = iVar3;
+  local_68 = iVar4;
+  local_64 = iVar3;
   DevGui_DrawQuad((int (*) [2])&local_80,&local_90);
-  __restgprlr_24();
+  dVar11 = (double)(float)((double)local_90 * dVar7);
+  dVar14 = (double)(float)((double)local_8c * dVar7);
+  dVar12 = (double)(float)((double)local_88 * dVar7);
+  dVar13 = dVar16;
+  if ((float)(dVar11 - dVar16) < 0.0) {
+    dVar13 = dVar11;
+  }
+  dVar10 = dVar16;
+  if ((float)(dVar14 - dVar16) < 0.0) {
+    dVar10 = dVar14;
+  }
+  dVar9 = dVar16;
+  if ((float)(dVar12 - dVar16) < 0.0) {
+    dVar9 = dVar12;
+  }
+  dVar8 = dVar15;
+  if (-dVar11 < 0.0) {
+    dVar8 = dVar13;
+  }
+  local_90 = (float)dVar8;
+  dVar13 = dVar15;
+  if (-dVar14 < 0.0) {
+    dVar13 = dVar10;
+  }
+  local_8c = (float)dVar13;
+  dVar13 = dVar15;
+  if (-dVar12 < 0.0) {
+    dVar13 = dVar9;
+  }
+  local_88 = (float)dVar13;
+  local_80 = param_1;
+  local_7c = iVar6;
+  local_78 = iVar4;
+  local_74 = iVar2;
+  local_70 = iVar1;
+  local_6c = iVar2;
+  local_68 = iVar5;
+  local_64 = iVar6;
+  DevGui_DrawQuad((int (*) [2])&local_80,&local_90);
+  dVar12 = (double)(float)((double)local_90 * dVar7);
+  dVar11 = (double)(float)((double)local_8c * dVar7);
+  dVar13 = (double)(float)((double)local_88 * dVar7);
+  dVar7 = dVar16;
+  if ((float)(dVar12 - dVar16) < 0.0) {
+    dVar7 = dVar12;
+  }
+  dVar14 = dVar16;
+  if ((float)(dVar11 - dVar16) < 0.0) {
+    dVar14 = dVar11;
+  }
+  if ((float)(dVar13 - dVar16) < 0.0) {
+    dVar16 = dVar13;
+  }
+  dVar10 = dVar15;
+  if (-dVar12 < 0.0) {
+    dVar10 = dVar7;
+  }
+  local_90 = (float)dVar10;
+  dVar7 = dVar15;
+  if (-dVar11 < 0.0) {
+    dVar7 = dVar14;
+  }
+  local_8c = (float)dVar7;
+  if (-dVar13 < 0.0) {
+    dVar15 = dVar16;
+  }
+  local_88 = (float)dVar15;
+  local_80 = iVar5;
+  local_7c = param_2;
+  local_78 = iVar5;
+  local_74 = iVar6;
+  local_70 = iVar1;
+  local_6c = iVar2;
+  local_68 = iVar1;
+  local_64 = iVar3;
+  DevGui_DrawQuad((int (*) [2])&local_80,&local_90);
   return;
 }
 
 
 // 8240B648  DevGui_DrawLine  (devgui/devgui_util.cpp:243)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 
@@ -365,24 +366,21 @@ void DevGui_DrawLine(float *param_1,float *param_2,int param_3,uchar *param_4)
   float fVar5;
   float fVar6;
   float fVar7;
-  float *pfVar8;
+  double dVar8;
   double dVar9;
   double dVar10;
   double dVar11;
   double dVar12;
   double dVar13;
   double dVar14;
-  double dVar15;
   
-  __savegprlr_28(param_1);
-  pfVar8 = (float *)__savefpr_27();
   fVar1 = *param_2;
-  fVar2 = *pfVar8;
+  fVar2 = *param_1;
   fVar6 = fVar1 - fVar2;
   fVar3 = param_2[1];
-  fVar4 = pfVar8[1];
-  dVar15 = 1.0;
-  dVar14 = 0.5;
+  fVar4 = param_1[1];
+  dVar14 = 1.0;
+  dVar13 = 0.5;
   fVar5 = fVar2;
   if (fVar1 - fVar2 < 0.0) {
     fVar5 = fVar1;
@@ -399,36 +397,36 @@ void DevGui_DrawLine(float *param_1,float *param_2,int param_3,uchar *param_4)
     fVar7 = fVar3;
   }
   fVar3 = (fVar3 - fVar4) * (fVar3 - fVar4) + fVar6 * fVar6;
-  dVar10 = (double)SQRT(fVar3);
-  dVar12 = (double)((fVar2 - fVar5) * 0.5 + fVar5);
-  dVar11 = (double)((fVar7 - fVar1) * 0.5 + fVar1);
-  dVar13 = (double)SQRT(fVar3);
-  dVar9 = dVar15;
-  if (-dVar10 < 0.0) {
-    dVar9 = dVar10;
+  dVar9 = (double)SQRT(fVar3);
+  dVar11 = (double)((fVar2 - fVar5) * 0.5 + fVar5);
+  dVar10 = (double)((fVar7 - fVar1) * 0.5 + fVar1);
+  dVar12 = (double)SQRT(fVar3);
+  dVar8 = dVar14;
+  if (-dVar9 < 0.0) {
+    dVar8 = dVar9;
   }
-  dVar9 = acos((double)((float)(1.0 / dVar9) * fVar6));
-  fVar1 = (float)dVar9 * 57.295776;
-  if (param_2[1] < pfVar8[1]) {
+  dVar8 = acos((double)((float)(1.0 / dVar8) * fVar6));
+  fVar1 = (float)dVar8 * 57.295776;
+  if (param_2[1] < param_1[1]) {
     fVar1 = -fVar1;
   }
   for (; fVar1 < 0.0; fVar1 = fVar1 + 360.0) {
   }
   R_AddCmdDrawStretchPicRotateXY
-            (-(float)(dVar13 * dVar14 - dVar12),
-             (float)(dVar11 - (double)(longlong)
+            (-(float)(dVar12 * dVar13 - dVar11),
+             (float)(dVar10 - (double)(longlong)
                                       (int)((param_3 >> 1) +
                                            (uint)(param_3 < 0 && (param_3 & 1U) != 0))),
-             (float)dVar13,(float)(longlong)param_3,0.0,0.0,(float)dVar15,(float)dVar15,fVar1,
+             (float)dVar12,(float)(longlong)param_3,0.0,0.0,(float)dVar14,(float)dVar14,fVar1,
              (float *)(uint)param_4[1],(Material *)(uint)*param_4);
-  __restfpr_27();
-  __restgprlr_28();
   return;
 }
 
 
 // 8240B900  DevGui_DrawFont  (devgui/devgui_util.cpp:286)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 
@@ -436,53 +434,43 @@ void DevGui_DrawFont(int param_1,int param_2,uchar *param_3,char *param_4)
 
 {
   int iVar1;
-  int iVar2;
-  ulonglong uVar3;
   
-  uVar3 = (ulonglong)(int)param_4;
-  iVar1 = __savegprlr_28(param_1);
-  if ((uVar3 & 0xffffffff) == 0) {
+  if (param_4 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\devgui\\devgui_util.cpp",0x122,
                     0,"%s");
   }
-  if (*(char *)uVar3 != '\0') {
-    iVar2 = R_TextHeight(cls.consoleFont);
-    R_AddCmdDrawText((char *)uVar3,0x7fffffff,cls.consoleFont,(float)(longlong)iVar1,
-                     (float)(longlong)(iVar2 + param_2),1.0,1.0,0.0,
-                     (float *)&IMAGE_DOS_HEADER_82000000,iVar1);
+  if (*param_4 != '\0') {
+    iVar1 = R_TextHeight(cls.consoleFont);
+    R_AddCmdDrawText(param_4,0x7fffffff,cls.consoleFont,(float)(longlong)param_1,
+                     (float)(longlong)(iVar1 + param_2),1.0,1.0,0.0,
+                     (float *)&IMAGE_DOS_HEADER_82000000,param_1);
   }
-  __restgprlr_28();
   return;
 }
 
 
 // 8240BA48  DevGui_DrawFontCentered  (devgui/devgui_util.cpp:306)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 
 void DevGui_DrawFontCentered(int param_1,int param_2,uchar *param_3,char *param_4)
 
 {
-  int iVar1;
+  uint uVar1;
   uint uVar2;
-  uint uVar3;
-  ulonglong uVar4;
-  char *pcVar5;
   
-  uVar4 = (ulonglong)(int)param_4;
-  iVar1 = __savegprlr_27(param_1);
-  pcVar5 = (char *)uVar4;
-  if (((uVar4 & 0xffffffff) == 0) || (*pcVar5 == '\0')) {
+  if ((param_4 == (char *)0x0) || (*param_4 == '\0')) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\devgui\\devgui_util.cpp",0x133,
                     0,"%s");
   }
-  uVar2 = R_TextWidth(pcVar5,0,cls.consoleFont);
-  uVar3 = R_TextHeight(cls.consoleFont);
-  DevGui_DrawFont(iVar1 - (((int)uVar2 >> 1) + (uint)((int)uVar2 < 0 && (uVar2 & 1) != 0)),
-                  param_2 - (((int)uVar3 >> 1) + (uint)((int)uVar3 < 0 && (uVar3 & 1) != 0)),param_3
-                  ,pcVar5);
-  __restgprlr_27();
+  uVar1 = R_TextWidth(param_4,0,cls.consoleFont);
+  uVar2 = R_TextHeight(cls.consoleFont);
+  DevGui_DrawFont(param_1 - (((int)uVar1 >> 1) + (uint)((int)uVar1 < 0 && (uVar1 & 1) != 0)),
+                  param_2 - (((int)uVar2 >> 1) + (uint)((int)uVar2 < 0 && (uVar2 & 1) != 0)),param_3
+                  ,param_4);
   return;
 }
 

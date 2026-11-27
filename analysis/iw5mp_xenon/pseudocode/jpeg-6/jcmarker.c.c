@@ -46,237 +46,229 @@ void emit_2bytes(jpeg_compress_struct *param_1,int param_2)
 
 // 827B4D28  emit_dqt  (jpeg-6/jcmarker.c:147)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
+
 int emit_dqt(jpeg_compress_struct *param_1,int param_2)
 
 {
-  undefined2 uVar1;
-  uint uVar2;
-  int *piVar3;
-  int *piVar4;
-  char cVar6;
-  int iVar5;
-  longlong lVar7;
-  ushort *puVar8;
-  char cVar9;
-  int *piVar10;
-  longlong lVar11;
+  ushort uVar1;
+  jpeg_destination_mgr *pjVar2;
+  JQUANT_TBL *pJVar3;
+  uchar uVar4;
+  ushort *puVar5;
+  longlong lVar6;
+  int *piVar7;
+  longlong lVar8;
   
-  lVar7 = (longlong)param_2;
-  piVar4 = (int *)__savegprlr_25(param_1);
-  iVar5 = *(int *)((int)((lVar7 + 0x14U & 0xffffffff) << 2) + (int)piVar4);
-  if (iVar5 == 0) {
-    *(undefined4 *)(*piVar4 + 0x14) = 0x34;
-    *(int *)(*piVar4 + 0x18) = (int)lVar7;
-    (**(code **)*piVar4)();
+  pJVar3 = param_1->quant_tbl_ptrs[param_2];
+  if (pJVar3 == (JQUANT_TBL *)0x0) {
+    param_1->err->msg_code = 0x34;
+    (param_1->err->msg_parm).i[0] = param_2;
+    (*param_1->err->error_exit)((jpeg_common_struct *)param_1);
   }
-  cVar9 = '\0';
-  puVar8 = (ushort *)(iVar5 + 4);
-  lVar11 = 0x10;
+  lVar6 = 0;
+  puVar5 = pJVar3->quantval + 2;
+  lVar8 = 0x10;
   do {
-    if (0xff < puVar8[-2]) {
-      cVar9 = '\x01';
+    if (0xff < ((JQUANT_TBL *)(puVar5 + -2))->quantval[0]) {
+      lVar6 = 1;
     }
-    if (0xff < puVar8[-1]) {
-      cVar9 = '\x01';
+    if (0xff < puVar5[-1]) {
+      lVar6 = 1;
     }
-    if (0xff < *puVar8) {
-      cVar9 = '\x01';
+    if (0xff < *puVar5) {
+      lVar6 = 1;
     }
-    if (0xff < puVar8[1]) {
-      cVar9 = '\x01';
+    if (0xff < puVar5[1]) {
+      lVar6 = 1;
     }
-    puVar8 = puVar8 + 4;
-    lVar11 = lVar11 + -1;
-  } while (lVar11 != 0);
-  if (*(char *)(iVar5 + 0x80) == '\0') {
-    piVar10 = (int *)piVar4[8];
-    *(undefined1 *)*piVar10 = 0xff;
-    uVar2 = piVar10[1];
-    *piVar10 = *piVar10 + 1;
-    piVar10[1] = (int)((ulonglong)uVar2 - 1);
-    if (((ulonglong)uVar2 - 1 == 0) && (cVar6 = (*(code *)piVar10[3])(piVar4), cVar6 == '\0')) {
-      *(undefined4 *)(*piVar4 + 0x14) = 0x18;
-      (**(code **)*piVar4)(piVar4);
+    puVar5 = puVar5 + 4;
+    lVar8 = lVar8 + -1;
+  } while (lVar8 != 0);
+  if (pJVar3->sent_table == '\0') {
+    pjVar2 = param_1->dest;
+    *pjVar2->next_output_byte = 0xff;
+    lVar8 = (ulonglong)pjVar2->free_in_buffer - 1;
+    pjVar2->next_output_byte = pjVar2->next_output_byte + 1;
+    pjVar2->free_in_buffer = (uint)lVar8;
+    if ((lVar8 == 0) && (uVar4 = (*pjVar2->empty_output_buffer)(param_1), uVar4 == '\0')) {
+      param_1->err->msg_code = 0x18;
+      (*param_1->err->error_exit)((jpeg_common_struct *)param_1);
     }
-    piVar10 = (int *)piVar4[8];
-    *(undefined1 *)*piVar10 = 0xdb;
-    uVar2 = piVar10[1];
-    piVar10[1] = (int)((ulonglong)uVar2 - 1);
-    *piVar10 = *piVar10 + 1;
-    if (((ulonglong)uVar2 - 1 == 0) && (cVar6 = (*(code *)piVar10[3])(piVar4), cVar6 == '\0')) {
-      *(undefined4 *)(*piVar4 + 0x14) = 0x18;
-      (**(code **)*piVar4)(piVar4);
+    pjVar2 = param_1->dest;
+    *pjVar2->next_output_byte = 0xdb;
+    lVar8 = (ulonglong)pjVar2->free_in_buffer - 1;
+    pjVar2->free_in_buffer = (uint)lVar8;
+    pjVar2->next_output_byte = pjVar2->next_output_byte + 1;
+    if ((lVar8 == 0) && (uVar4 = (*pjVar2->empty_output_buffer)(param_1), uVar4 == '\0')) {
+      param_1->err->msg_code = 0x18;
+      (*param_1->err->error_exit)((jpeg_common_struct *)param_1);
     }
-    piVar10 = (int *)piVar4[8];
-    *(undefined1 *)*piVar10 = 0;
-    uVar2 = piVar10[1];
-    *piVar10 = *piVar10 + 1;
-    piVar10[1] = (int)((ulonglong)uVar2 - 1);
-    if (((ulonglong)uVar2 - 1 == 0) && (cVar6 = (*(code *)piVar10[3])(piVar4), cVar6 == '\0')) {
-      *(undefined4 *)(*piVar4 + 0x14) = 0x18;
-      (**(code **)*piVar4)(piVar4);
+    pjVar2 = param_1->dest;
+    *pjVar2->next_output_byte = '\0';
+    pjVar2->next_output_byte = pjVar2->next_output_byte + 1;
+    lVar8 = (ulonglong)pjVar2->free_in_buffer - 1;
+    pjVar2->free_in_buffer = (uint)lVar8;
+    if ((lVar8 == 0) && (uVar4 = (*pjVar2->empty_output_buffer)(param_1), uVar4 == '\0')) {
+      param_1->err->msg_code = 0x18;
+      (*param_1->err->error_exit)((jpeg_common_struct *)param_1);
     }
-    piVar10 = (int *)piVar4[8];
-    *(byte *)*piVar10 = (-(cVar9 != '\0') & 0x40U) + 0x43;
-    uVar2 = piVar10[1];
-    *piVar10 = *piVar10 + 1;
-    piVar10[1] = (int)((ulonglong)uVar2 - 1);
-    if (((ulonglong)uVar2 - 1 == 0) && (cVar6 = (*(code *)piVar10[3])(piVar4), cVar6 == '\0')) {
-      *(undefined4 *)(*piVar4 + 0x14) = 0x18;
-      (**(code **)*piVar4)(piVar4);
+    pjVar2 = param_1->dest;
+    *pjVar2->next_output_byte = (-(lVar6 != 0) & 0x40U) + 0x43;
+    lVar8 = (ulonglong)pjVar2->free_in_buffer - 1;
+    pjVar2->next_output_byte = pjVar2->next_output_byte + 1;
+    pjVar2->free_in_buffer = (uint)lVar8;
+    if ((lVar8 == 0) && (uVar4 = (*pjVar2->empty_output_buffer)(param_1), uVar4 == '\0')) {
+      param_1->err->msg_code = 0x18;
+      (*param_1->err->error_exit)((jpeg_common_struct *)param_1);
     }
-    piVar10 = (int *)piVar4[8];
-    *(char *)*piVar10 = cVar9 * '\x10' + (char)lVar7;
-    uVar2 = piVar10[1];
-    piVar10[1] = (int)((ulonglong)uVar2 - 1);
-    *piVar10 = *piVar10 + 1;
-    if (((ulonglong)uVar2 - 1 == 0) && (cVar6 = (*(code *)piVar10[3])(piVar4), cVar6 == '\0')) {
-      *(undefined4 *)(*piVar4 + 0x14) = 0x18;
-      (**(code **)*piVar4)(piVar4);
+    pjVar2 = param_1->dest;
+    *pjVar2->next_output_byte = (char)(lVar6 << 4) + (char)param_2;
+    lVar8 = (ulonglong)pjVar2->free_in_buffer - 1;
+    pjVar2->free_in_buffer = (uint)lVar8;
+    pjVar2->next_output_byte = pjVar2->next_output_byte + 1;
+    if ((lVar8 == 0) && (uVar4 = (*pjVar2->empty_output_buffer)(param_1), uVar4 == '\0')) {
+      param_1->err->msg_code = 0x18;
+      (*param_1->err->error_exit)((jpeg_common_struct *)param_1);
     }
-    piVar10 = jpeg_natural_order;
+    piVar7 = jpeg_natural_order;
     do {
-      uVar1 = *(undefined2 *)(*piVar10 * 2 + iVar5);
-      if (cVar9 != '\0') {
-        piVar3 = (int *)piVar4[8];
-        *(char *)*piVar3 = (char)((ushort)uVar1 >> 8);
-        uVar2 = piVar3[1];
-        piVar3[1] = (int)((ulonglong)uVar2 - 1);
-        *piVar3 = *piVar3 + 1;
-        if (((ulonglong)uVar2 - 1 == 0) && (cVar6 = (*(code *)piVar3[3])(piVar4), cVar6 == '\0')) {
-          *(undefined4 *)(*piVar4 + 0x14) = 0x18;
-          (**(code **)*piVar4)(piVar4);
+      uVar1 = pJVar3->quantval[*piVar7];
+      if ((int)lVar6 != 0) {
+        pjVar2 = param_1->dest;
+        *pjVar2->next_output_byte = (uchar)(uVar1 >> 8);
+        lVar8 = (ulonglong)pjVar2->free_in_buffer - 1;
+        pjVar2->free_in_buffer = (uint)lVar8;
+        pjVar2->next_output_byte = pjVar2->next_output_byte + 1;
+        if ((lVar8 == 0) && (uVar4 = (*pjVar2->empty_output_buffer)(param_1), uVar4 == '\0')) {
+          param_1->err->msg_code = 0x18;
+          (*param_1->err->error_exit)((jpeg_common_struct *)param_1);
         }
       }
-      piVar3 = (int *)piVar4[8];
-      *(char *)*piVar3 = (char)uVar1;
-      uVar2 = piVar3[1];
-      *piVar3 = *piVar3 + 1;
-      piVar3[1] = (int)((ulonglong)uVar2 - 1);
-      if (((ulonglong)uVar2 - 1 == 0) && (cVar6 = (*(code *)piVar3[3])(piVar4), cVar6 == '\0')) {
-        *(undefined4 *)(*piVar4 + 0x14) = 0x18;
-        (**(code **)*piVar4)(piVar4);
+      pjVar2 = param_1->dest;
+      *pjVar2->next_output_byte = (uchar)uVar1;
+      lVar8 = (ulonglong)pjVar2->free_in_buffer - 1;
+      pjVar2->next_output_byte = pjVar2->next_output_byte + 1;
+      pjVar2->free_in_buffer = (uint)lVar8;
+      if ((lVar8 == 0) && (uVar4 = (*pjVar2->empty_output_buffer)(param_1), uVar4 == '\0')) {
+        param_1->err->msg_code = 0x18;
+        (*param_1->err->error_exit)((jpeg_common_struct *)param_1);
       }
-      piVar10 = piVar10 + 1;
-    } while ((int)piVar10 < -0x7de24f90);
-    *(undefined1 *)(iVar5 + 0x80) = 1;
+      piVar7 = piVar7 + 1;
+    } while ((int)piVar7 < -0x7de24f90);
+    pJVar3->sent_table = '\x01';
   }
-  iVar5 = __restgprlr_25(cVar9);
-  return iVar5;
+  return (int)lVar6;
 }
 
 
 // 827B50E8  emit_dht  (jpeg-6/jcmarker.c:186)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
+
 void emit_dht(jpeg_compress_struct *param_1,int param_2,uchar param_3)
 
 {
   jpeg_destination_mgr *pjVar1;
-  int iVar2;
-  jpeg_compress_struct *pjVar3;
-  uchar uVar4;
+  JQUANT_TBL *pJVar2;
+  uchar uVar3;
+  int iVar4;
   int iVar5;
   int iVar6;
   int iVar7;
-  ulonglong uVar8;
-  int iVar9;
-  int iVar10;
-  int iVar11;
-  longlong lVar12;
+  int iVar8;
+  longlong lVar9;
   
-  uVar8 = (ulonglong)(char)param_3;
-  lVar12 = (longlong)param_2;
-  pjVar3 = (jpeg_compress_struct *)__savegprlr_25(param_1);
-  iVar10 = (int)lVar12;
-  if ((uVar8 & 0xff) == 0) {
-    uVar8 = lVar12 + 0x18;
+  if (param_3 == '\0') {
+    iVar8 = param_2 + 0x18;
   }
   else {
-    uVar8 = lVar12 + 0x1c;
-    iVar10 = iVar10 + 0x10;
+    iVar8 = param_2 + 0x1c;
+    param_2 = param_2 + 0x10;
   }
-  iVar2 = *(int *)((int)pjVar3->quant_tbl_ptrs + (int)((uVar8 & 0xffffffff) << 2) + -0x50);
-  if (iVar2 == 0) {
-    pjVar3->err->msg_code = 0x32;
-    (pjVar3->err->msg_parm).i[0] = iVar10;
-    (*pjVar3->err->error_exit)((jpeg_common_struct *)pjVar3);
+  pJVar2 = param_1->quant_tbl_ptrs[iVar8 + -0x14];
+  if (pJVar2 == (JQUANT_TBL *)0x0) {
+    param_1->err->msg_code = 0x32;
+    (param_1->err->msg_parm).i[0] = param_2;
+    (*param_1->err->error_exit)((jpeg_common_struct *)param_1);
   }
-  if (*(char *)(iVar2 + 0x111) == '\0') {
-    emit_byte(pjVar3,0xff);
-    emit_byte(pjVar3,0xc4);
-    iVar11 = 0;
-    iVar9 = 1;
-    iVar5 = 0;
-    iVar6 = 0;
+  if (*(char *)((int)pJVar2[2].quantval + 0xd) == '\0') {
+    emit_byte(param_1,0xff);
+    emit_byte(param_1,0xc4);
     iVar7 = 0;
-    lVar12 = 4;
+    iVar6 = 1;
+    iVar8 = 0;
+    iVar4 = 0;
+    iVar5 = 0;
+    lVar9 = 4;
     do {
-      iVar11 = (uint)*(byte *)(iVar9 + iVar2) + iVar11;
-      iVar7 = (uint)*(byte *)(iVar2 + 1 + iVar9) + iVar7;
-      iVar6 = (uint)*(byte *)(iVar2 + 2 + iVar9) + iVar6;
-      iVar5 = (uint)*(byte *)(iVar2 + 3 + iVar9) + iVar5;
-      iVar9 = iVar9 + 4;
-      lVar12 = lVar12 + -1;
-    } while (lVar12 != 0);
-    iVar11 = iVar6 + iVar7 + iVar5 + iVar11;
-    pjVar1 = pjVar3->dest;
-    *pjVar1->next_output_byte = (uchar)((uint)(iVar11 + 0x13) >> 8);
-    lVar12 = (ulonglong)pjVar1->free_in_buffer - 1;
+      iVar7 = (uint)*(byte *)((int)pJVar2->quantval + iVar6) + iVar7;
+      iVar5 = (uint)*(byte *)((int)pJVar2->quantval + iVar6 + 1) + iVar5;
+      iVar4 = (uint)*(byte *)((int)pJVar2->quantval + iVar6 + 2) + iVar4;
+      iVar8 = (uint)*(byte *)((int)pJVar2->quantval + iVar6 + 3) + iVar8;
+      iVar6 = iVar6 + 4;
+      lVar9 = lVar9 + -1;
+    } while (lVar9 != 0);
+    iVar7 = iVar4 + iVar5 + iVar8 + iVar7;
+    pjVar1 = param_1->dest;
+    *pjVar1->next_output_byte = (uchar)((uint)(iVar7 + 0x13) >> 8);
+    lVar9 = (ulonglong)pjVar1->free_in_buffer - 1;
     pjVar1->next_output_byte = pjVar1->next_output_byte + 1;
-    pjVar1->free_in_buffer = (uint)lVar12;
-    if ((lVar12 == 0) && (uVar4 = (*pjVar1->empty_output_buffer)(pjVar3), uVar4 == '\0')) {
-      pjVar3->err->msg_code = 0x18;
-      (*pjVar3->err->error_exit)((jpeg_common_struct *)pjVar3);
+    pjVar1->free_in_buffer = (uint)lVar9;
+    if ((lVar9 == 0) && (uVar3 = (*pjVar1->empty_output_buffer)(param_1), uVar3 == '\0')) {
+      param_1->err->msg_code = 0x18;
+      (*param_1->err->error_exit)((jpeg_common_struct *)param_1);
     }
-    pjVar1 = pjVar3->dest;
-    *pjVar1->next_output_byte = (uchar)(iVar11 + 0x13);
-    lVar12 = (ulonglong)pjVar1->free_in_buffer - 1;
+    pjVar1 = param_1->dest;
+    *pjVar1->next_output_byte = (uchar)(iVar7 + 0x13);
+    lVar9 = (ulonglong)pjVar1->free_in_buffer - 1;
     pjVar1->next_output_byte = pjVar1->next_output_byte + 1;
-    pjVar1->free_in_buffer = (uint)lVar12;
-    if ((lVar12 == 0) && (uVar4 = (*pjVar1->empty_output_buffer)(pjVar3), uVar4 == '\0')) {
-      pjVar3->err->msg_code = 0x18;
-      (*pjVar3->err->error_exit)((jpeg_common_struct *)pjVar3);
+    pjVar1->free_in_buffer = (uint)lVar9;
+    if ((lVar9 == 0) && (uVar3 = (*pjVar1->empty_output_buffer)(param_1), uVar3 == '\0')) {
+      param_1->err->msg_code = 0x18;
+      (*param_1->err->error_exit)((jpeg_common_struct *)param_1);
     }
-    pjVar1 = pjVar3->dest;
-    *pjVar1->next_output_byte = (uchar)iVar10;
-    lVar12 = (ulonglong)pjVar1->free_in_buffer - 1;
-    pjVar1->free_in_buffer = (uint)lVar12;
+    pjVar1 = param_1->dest;
+    *pjVar1->next_output_byte = (uchar)param_2;
+    lVar9 = (ulonglong)pjVar1->free_in_buffer - 1;
+    pjVar1->free_in_buffer = (uint)lVar9;
     pjVar1->next_output_byte = pjVar1->next_output_byte + 1;
-    if ((lVar12 == 0) && (uVar4 = (*pjVar1->empty_output_buffer)(pjVar3), uVar4 == '\0')) {
-      pjVar3->err->msg_code = 0x18;
-      (*pjVar3->err->error_exit)((jpeg_common_struct *)pjVar3);
+    if ((lVar9 == 0) && (uVar3 = (*pjVar1->empty_output_buffer)(param_1), uVar3 == '\0')) {
+      param_1->err->msg_code = 0x18;
+      (*param_1->err->error_exit)((jpeg_common_struct *)param_1);
     }
-    iVar10 = 1;
+    iVar8 = 1;
     do {
-      pjVar1 = pjVar3->dest;
-      *pjVar1->next_output_byte = *(uchar *)(iVar10 + iVar2);
-      lVar12 = (ulonglong)pjVar1->free_in_buffer - 1;
+      pjVar1 = param_1->dest;
+      *pjVar1->next_output_byte = *(uchar *)((int)pJVar2->quantval + iVar8);
+      lVar9 = (ulonglong)pjVar1->free_in_buffer - 1;
       pjVar1->next_output_byte = pjVar1->next_output_byte + 1;
-      pjVar1->free_in_buffer = (uint)lVar12;
-      if ((lVar12 == 0) && (uVar4 = (*pjVar1->empty_output_buffer)(pjVar3), uVar4 == '\0')) {
-        pjVar3->err->msg_code = 0x18;
-        (*pjVar3->err->error_exit)((jpeg_common_struct *)pjVar3);
+      pjVar1->free_in_buffer = (uint)lVar9;
+      if ((lVar9 == 0) && (uVar3 = (*pjVar1->empty_output_buffer)(param_1), uVar3 == '\0')) {
+        param_1->err->msg_code = 0x18;
+        (*param_1->err->error_exit)((jpeg_common_struct *)param_1);
       }
-      iVar10 = iVar10 + 1;
-    } while (iVar10 < 0x11);
-    iVar10 = 0;
-    if (0 < iVar11) {
+      iVar8 = iVar8 + 1;
+    } while (iVar8 < 0x11);
+    iVar8 = 0;
+    if (0 < iVar7) {
       do {
-        pjVar1 = pjVar3->dest;
-        *pjVar1->next_output_byte = *(uchar *)(iVar2 + 0x11 + iVar10);
-        lVar12 = (ulonglong)pjVar1->free_in_buffer - 1;
+        pjVar1 = param_1->dest;
+        *pjVar1->next_output_byte = *(uchar *)((int)pJVar2->quantval + iVar8 + 0x11);
+        lVar9 = (ulonglong)pjVar1->free_in_buffer - 1;
         pjVar1->next_output_byte = pjVar1->next_output_byte + 1;
-        pjVar1->free_in_buffer = (uint)lVar12;
-        if ((lVar12 == 0) && (uVar4 = (*pjVar1->empty_output_buffer)(pjVar3), uVar4 == '\0')) {
-          pjVar3->err->msg_code = 0x18;
-          (*pjVar3->err->error_exit)((jpeg_common_struct *)pjVar3);
+        pjVar1->free_in_buffer = (uint)lVar9;
+        if ((lVar9 == 0) && (uVar3 = (*pjVar1->empty_output_buffer)(param_1), uVar3 == '\0')) {
+          param_1->err->msg_code = 0x18;
+          (*param_1->err->error_exit)((jpeg_common_struct *)param_1);
         }
-        iVar10 = iVar10 + 1;
-      } while (iVar10 < iVar11);
+        iVar8 = iVar8 + 1;
+      } while (iVar8 < iVar7);
     }
-    *(undefined1 *)(iVar2 + 0x111) = 1;
+    *(undefined1 *)((int)pJVar2[2].quantval + 0xd) = 1;
   }
-  __restgprlr_25();
   return;
 }
 
@@ -310,77 +302,80 @@ void emit_dri(jpeg_compress_struct *param_1)
 
 // 827B5488  emit_sof  (jpeg-6/jcmarker.c:279)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void emit_sof(jpeg_compress_struct *param_1,JPEG_MARKER param_2)
 
 {
   jpeg_destination_mgr *pjVar1;
-  jpeg_compress_struct *pjVar2;
-  uchar uVar3;
-  longlong lVar4;
-  int iVar5;
-  uint uVar6;
-  jpeg_component_info *pjVar7;
+  uchar uVar2;
+  longlong lVar3;
+  int iVar4;
+  uint uVar5;
+  jpeg_component_info *pjVar6;
   
-  pjVar2 = (jpeg_compress_struct *)__savegprlr_28(param_1);
-  emit_byte(pjVar2,0xff);
-  emit_byte(pjVar2,param_2);
-  uVar6 = pjVar2->num_components * 3 + 8;
-  emit_byte(pjVar2,(int)uVar6 >> 8 & 0xff);
-  emit_byte(pjVar2,uVar6 & 0xff);
-  if ((0xffff < (int)pjVar2->image_height) || (0xffff < (int)pjVar2->image_width)) {
-    pjVar2->err->msg_code = 0x29;
-    (pjVar2->err->msg_parm).i[0] = 0xffff;
-    (*pjVar2->err->error_exit)((jpeg_common_struct *)pjVar2);
+  emit_byte(param_1,0xff);
+  emit_byte(param_1,param_2);
+  uVar5 = param_1->num_components * 3 + 8;
+  emit_byte(param_1,(int)uVar5 >> 8 & 0xff);
+  emit_byte(param_1,uVar5 & 0xff);
+  if ((0xffff < (int)param_1->image_height) || (0xffff < (int)param_1->image_width)) {
+    param_1->err->msg_code = 0x29;
+    (param_1->err->msg_parm).i[0] = 0xffff;
+    (*param_1->err->error_exit)((jpeg_common_struct *)param_1);
   }
-  emit_byte(pjVar2,pjVar2->data_precision);
-  uVar6 = pjVar2->image_height;
-  emit_byte(pjVar2,(int)uVar6 >> 8 & 0xff);
-  emit_byte(pjVar2,uVar6 & 0xff);
-  uVar6 = pjVar2->image_width;
-  emit_byte(pjVar2,(int)uVar6 >> 8 & 0xff);
-  emit_byte(pjVar2,uVar6 & 0xff);
-  emit_byte(pjVar2,pjVar2->num_components);
-  iVar5 = 0;
-  pjVar7 = pjVar2->comp_info;
-  if (0 < pjVar2->num_components) {
+  emit_byte(param_1,param_1->data_precision);
+  uVar5 = param_1->image_height;
+  emit_byte(param_1,(int)uVar5 >> 8 & 0xff);
+  emit_byte(param_1,uVar5 & 0xff);
+  uVar5 = param_1->image_width;
+  emit_byte(param_1,(int)uVar5 >> 8 & 0xff);
+  emit_byte(param_1,uVar5 & 0xff);
+  emit_byte(param_1,param_1->num_components);
+  iVar4 = 0;
+  pjVar6 = param_1->comp_info;
+  if (0 < param_1->num_components) {
     do {
-      pjVar1 = pjVar2->dest;
-      *pjVar1->next_output_byte = (uchar)pjVar7->component_id;
-      lVar4 = (ulonglong)pjVar1->free_in_buffer - 1;
+      pjVar1 = param_1->dest;
+      *pjVar1->next_output_byte = (uchar)pjVar6->component_id;
+      lVar3 = (ulonglong)pjVar1->free_in_buffer - 1;
       pjVar1->next_output_byte = pjVar1->next_output_byte + 1;
-      pjVar1->free_in_buffer = (uint)lVar4;
-      if ((lVar4 == 0) && (uVar3 = (*pjVar1->empty_output_buffer)(pjVar2), uVar3 == '\0')) {
-        pjVar2->err->msg_code = 0x18;
-        (*pjVar2->err->error_exit)((jpeg_common_struct *)pjVar2);
+      pjVar1->free_in_buffer = (uint)lVar3;
+      if ((lVar3 == 0) && (uVar2 = (*pjVar1->empty_output_buffer)(param_1), uVar2 == '\0')) {
+        param_1->err->msg_code = 0x18;
+        (*param_1->err->error_exit)((jpeg_common_struct *)param_1);
       }
-      pjVar1 = pjVar2->dest;
-      *pjVar1->next_output_byte = (char)(pjVar7->h_samp_factor << 4) + (char)pjVar7->v_samp_factor;
+      pjVar1 = param_1->dest;
+      *pjVar1->next_output_byte = (char)(pjVar6->h_samp_factor << 4) + (char)pjVar6->v_samp_factor;
       pjVar1->next_output_byte = pjVar1->next_output_byte + 1;
-      lVar4 = (ulonglong)pjVar1->free_in_buffer - 1;
-      pjVar1->free_in_buffer = (uint)lVar4;
-      if ((lVar4 == 0) && (uVar3 = (*pjVar1->empty_output_buffer)(pjVar2), uVar3 == '\0')) {
-        pjVar2->err->msg_code = 0x18;
-        (*pjVar2->err->error_exit)((jpeg_common_struct *)pjVar2);
+      lVar3 = (ulonglong)pjVar1->free_in_buffer - 1;
+      pjVar1->free_in_buffer = (uint)lVar3;
+      if ((lVar3 == 0) && (uVar2 = (*pjVar1->empty_output_buffer)(param_1), uVar2 == '\0')) {
+        param_1->err->msg_code = 0x18;
+        (*param_1->err->error_exit)((jpeg_common_struct *)param_1);
       }
-      pjVar1 = pjVar2->dest;
-      *pjVar1->next_output_byte = (uchar)pjVar7->quant_tbl_no;
+      pjVar1 = param_1->dest;
+      *pjVar1->next_output_byte = (uchar)pjVar6->quant_tbl_no;
       pjVar1->next_output_byte = pjVar1->next_output_byte + 1;
-      lVar4 = (ulonglong)pjVar1->free_in_buffer - 1;
-      pjVar1->free_in_buffer = (uint)lVar4;
-      if ((lVar4 == 0) && (uVar3 = (*pjVar1->empty_output_buffer)(pjVar2), uVar3 == '\0')) {
-        pjVar2->err->msg_code = 0x18;
-        (*pjVar2->err->error_exit)((jpeg_common_struct *)pjVar2);
+      lVar3 = (ulonglong)pjVar1->free_in_buffer - 1;
+      pjVar1->free_in_buffer = (uint)lVar3;
+      if ((lVar3 == 0) && (uVar2 = (*pjVar1->empty_output_buffer)(param_1), uVar2 == '\0')) {
+        param_1->err->msg_code = 0x18;
+        (*param_1->err->error_exit)((jpeg_common_struct *)param_1);
       }
-      iVar5 = iVar5 + 1;
-      pjVar7 = pjVar7 + 1;
-    } while (iVar5 < pjVar2->num_components);
+      iVar4 = iVar4 + 1;
+      pjVar6 = pjVar6 + 1;
+    } while (iVar4 < param_1->num_components);
   }
-  __restgprlr_28();
   return;
 }
 
 
 // 827B56E8  emit_sos  (jpeg-6/jcmarker.c:310)
+
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 
 void emit_sos(jpeg_compress_struct *param_1)
 
@@ -389,88 +384,85 @@ void emit_sos(jpeg_compress_struct *param_1)
   jpeg_component_info *pjVar2;
   uint uVar3;
   char cVar4;
-  jpeg_compress_struct *pjVar5;
-  uchar uVar6;
-  char cVar7;
-  longlong lVar8;
-  ulonglong uVar9;
-  int iVar10;
-  jpeg_component_info **ppjVar11;
+  uchar uVar5;
+  char cVar6;
+  longlong lVar7;
+  ulonglong uVar8;
+  int iVar9;
+  jpeg_component_info **ppjVar10;
   
-  pjVar5 = (jpeg_compress_struct *)__savegprlr_27(param_1);
-  emit_byte(pjVar5,0xff);
-  emit_byte(pjVar5,0xda);
-  uVar3 = (pjVar5->comps_in_scan + 3) * 2;
-  emit_byte(pjVar5,(int)uVar3 >> 8 & 0xff);
-  emit_byte(pjVar5,uVar3 & 0xfe);
-  emit_byte(pjVar5,pjVar5->comps_in_scan);
-  iVar10 = 0;
-  if (0 < pjVar5->comps_in_scan) {
-    ppjVar11 = pjVar5->cur_comp_info;
+  emit_byte(param_1,0xff);
+  emit_byte(param_1,0xda);
+  uVar3 = (param_1->comps_in_scan + 3) * 2;
+  emit_byte(param_1,(int)uVar3 >> 8 & 0xff);
+  emit_byte(param_1,uVar3 & 0xfe);
+  emit_byte(param_1,param_1->comps_in_scan);
+  iVar9 = 0;
+  if (0 < param_1->comps_in_scan) {
+    ppjVar10 = param_1->cur_comp_info;
     do {
-      pjVar1 = pjVar5->dest;
-      pjVar2 = *ppjVar11;
+      pjVar1 = param_1->dest;
+      pjVar2 = *ppjVar10;
       *pjVar1->next_output_byte = (uchar)pjVar2->component_id;
-      lVar8 = (ulonglong)pjVar1->free_in_buffer - 1;
-      pjVar1->free_in_buffer = (uint)lVar8;
+      lVar7 = (ulonglong)pjVar1->free_in_buffer - 1;
+      pjVar1->free_in_buffer = (uint)lVar7;
       pjVar1->next_output_byte = pjVar1->next_output_byte + 1;
-      if ((lVar8 == 0) && (uVar6 = (*pjVar1->empty_output_buffer)(pjVar5), uVar6 == '\0')) {
-        pjVar5->err->msg_code = 0x18;
-        (*pjVar5->err->error_exit)((jpeg_common_struct *)pjVar5);
+      if ((lVar7 == 0) && (uVar5 = (*pjVar1->empty_output_buffer)(param_1), uVar5 == '\0')) {
+        param_1->err->msg_code = 0x18;
+        (*param_1->err->error_exit)((jpeg_common_struct *)param_1);
       }
-      uVar9 = (ulonglong)(uint)pjVar2->dc_tbl_no;
-      cVar7 = (char)pjVar2->ac_tbl_no;
-      if (pjVar5->progressive_mode != '\0') {
-        cVar4 = cVar7;
-        if (pjVar5->Ss == 0) {
-          cVar7 = '\0';
-          if ((pjVar5->Ah == 0) || (cVar4 = '\0', pjVar5->arith_code != '\0')) goto LAB_827b5800;
+      uVar8 = (ulonglong)(uint)pjVar2->dc_tbl_no;
+      cVar6 = (char)pjVar2->ac_tbl_no;
+      if (param_1->progressive_mode != '\0') {
+        cVar4 = cVar6;
+        if (param_1->Ss == 0) {
+          cVar6 = '\0';
+          if ((param_1->Ah == 0) || (cVar4 = '\0', param_1->arith_code != '\0')) goto LAB_827b5800;
         }
-        cVar7 = cVar4;
-        uVar9 = 0;
+        cVar6 = cVar4;
+        uVar8 = 0;
       }
 LAB_827b5800:
-      pjVar1 = pjVar5->dest;
-      *pjVar1->next_output_byte = (char)(uVar9 << 4) + cVar7;
+      pjVar1 = param_1->dest;
+      *pjVar1->next_output_byte = (char)(uVar8 << 4) + cVar6;
       pjVar1->next_output_byte = pjVar1->next_output_byte + 1;
-      lVar8 = (ulonglong)pjVar1->free_in_buffer - 1;
-      pjVar1->free_in_buffer = (uint)lVar8;
-      if ((lVar8 == 0) && (uVar6 = (*pjVar1->empty_output_buffer)(pjVar5), uVar6 == '\0')) {
-        pjVar5->err->msg_code = 0x18;
-        (*pjVar5->err->error_exit)((jpeg_common_struct *)pjVar5);
+      lVar7 = (ulonglong)pjVar1->free_in_buffer - 1;
+      pjVar1->free_in_buffer = (uint)lVar7;
+      if ((lVar7 == 0) && (uVar5 = (*pjVar1->empty_output_buffer)(param_1), uVar5 == '\0')) {
+        param_1->err->msg_code = 0x18;
+        (*param_1->err->error_exit)((jpeg_common_struct *)param_1);
       }
-      iVar10 = iVar10 + 1;
-      ppjVar11 = ppjVar11 + 1;
-    } while (iVar10 < pjVar5->comps_in_scan);
+      iVar9 = iVar9 + 1;
+      ppjVar10 = ppjVar10 + 1;
+    } while (iVar9 < param_1->comps_in_scan);
   }
-  pjVar1 = pjVar5->dest;
-  *pjVar1->next_output_byte = (uchar)pjVar5->Ss;
+  pjVar1 = param_1->dest;
+  *pjVar1->next_output_byte = (uchar)param_1->Ss;
   pjVar1->next_output_byte = pjVar1->next_output_byte + 1;
-  lVar8 = (ulonglong)pjVar1->free_in_buffer - 1;
-  pjVar1->free_in_buffer = (uint)lVar8;
-  if ((lVar8 == 0) && (uVar6 = (*pjVar1->empty_output_buffer)(pjVar5), uVar6 == '\0')) {
-    pjVar5->err->msg_code = 0x18;
-    (*pjVar5->err->error_exit)((jpeg_common_struct *)pjVar5);
+  lVar7 = (ulonglong)pjVar1->free_in_buffer - 1;
+  pjVar1->free_in_buffer = (uint)lVar7;
+  if ((lVar7 == 0) && (uVar5 = (*pjVar1->empty_output_buffer)(param_1), uVar5 == '\0')) {
+    param_1->err->msg_code = 0x18;
+    (*param_1->err->error_exit)((jpeg_common_struct *)param_1);
   }
-  pjVar1 = pjVar5->dest;
-  *pjVar1->next_output_byte = (uchar)pjVar5->Se;
+  pjVar1 = param_1->dest;
+  *pjVar1->next_output_byte = (uchar)param_1->Se;
   pjVar1->next_output_byte = pjVar1->next_output_byte + 1;
-  lVar8 = (ulonglong)pjVar1->free_in_buffer - 1;
-  pjVar1->free_in_buffer = (uint)lVar8;
-  if ((lVar8 == 0) && (uVar6 = (*pjVar1->empty_output_buffer)(pjVar5), uVar6 == '\0')) {
-    pjVar5->err->msg_code = 0x18;
-    (*pjVar5->err->error_exit)((jpeg_common_struct *)pjVar5);
+  lVar7 = (ulonglong)pjVar1->free_in_buffer - 1;
+  pjVar1->free_in_buffer = (uint)lVar7;
+  if ((lVar7 == 0) && (uVar5 = (*pjVar1->empty_output_buffer)(param_1), uVar5 == '\0')) {
+    param_1->err->msg_code = 0x18;
+    (*param_1->err->error_exit)((jpeg_common_struct *)param_1);
   }
-  pjVar1 = pjVar5->dest;
-  *pjVar1->next_output_byte = (char)(pjVar5->Ah << 4) + (char)pjVar5->Al;
+  pjVar1 = param_1->dest;
+  *pjVar1->next_output_byte = (char)(param_1->Ah << 4) + (char)param_1->Al;
   pjVar1->next_output_byte = pjVar1->next_output_byte + 1;
-  lVar8 = (ulonglong)pjVar1->free_in_buffer - 1;
-  pjVar1->free_in_buffer = (uint)lVar8;
-  if ((lVar8 == 0) && (uVar6 = (*pjVar1->empty_output_buffer)(pjVar5), uVar6 == '\0')) {
-    pjVar5->err->msg_code = 0x18;
-    (*pjVar5->err->error_exit)((jpeg_common_struct *)pjVar5);
+  lVar7 = (ulonglong)pjVar1->free_in_buffer - 1;
+  pjVar1->free_in_buffer = (uint)lVar7;
+  if ((lVar7 == 0) && (uVar5 = (*pjVar1->empty_output_buffer)(param_1), uVar5 == '\0')) {
+    param_1->err->msg_code = 0x18;
+    (*param_1->err->error_exit)((jpeg_common_struct *)param_1);
   }
-  __restgprlr_27();
   return;
 }
 
@@ -544,25 +536,20 @@ void emit_adobe_app14(jpeg_compress_struct *param_1)
 
 // 827B5BE0  write_marker_header  (jpeg-6/jcmarker.c:440)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void write_marker_header(jpeg_compress_struct *param_1,int param_2,uint param_3)
 
 {
-  jpeg_compress_struct *pjVar1;
-  ulonglong uVar2;
-  uint uVar3;
-  
-  uVar2 = (ulonglong)(int)param_3;
-  pjVar1 = (jpeg_compress_struct *)__savegprlr_29(param_1);
-  if (0xfffd < (uVar2 & 0xffffffff)) {
-    pjVar1->err->msg_code = 0xb;
-    (*pjVar1->err->error_exit)((jpeg_common_struct *)pjVar1);
+  if (0xfffd < param_3) {
+    param_1->err->msg_code = 0xb;
+    (*param_1->err->error_exit)((jpeg_common_struct *)param_1);
   }
-  emit_byte(pjVar1,0xff);
-  emit_byte(pjVar1,param_2);
-  uVar3 = (int)uVar2 + 2;
-  emit_byte(pjVar1,(int)uVar3 >> 8 & 0xff);
-  emit_byte(pjVar1,uVar3 & 0xff);
-  __restgprlr_29();
+  emit_byte(param_1,0xff);
+  emit_byte(param_1,param_2);
+  emit_byte(param_1,(int)(param_3 + 2) >> 8 & 0xff);
+  emit_byte(param_1,param_3 + 2 & 0xff);
   return;
 }
 
@@ -590,127 +577,125 @@ void write_file_header(jpeg_compress_struct *param_1)
 
 // 827B5CE0  write_frame_header  (jpeg-6/jcmarker.c:495)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void write_frame_header(jpeg_compress_struct *param_1)
 
 {
   uint uVar1;
   bool bVar2;
-  jpeg_compress_struct *pjVar3;
-  int iVar4;
-  JPEG_MARKER JVar5;
-  ulonglong uVar6;
-  int iVar7;
-  int *piVar8;
-  int iVar9;
+  int iVar3;
+  JPEG_MARKER JVar4;
+  ulonglong uVar5;
+  int iVar6;
+  int *piVar7;
+  int iVar8;
   
-  pjVar3 = (jpeg_compress_struct *)__savegprlr_28(param_1);
-  uVar1 = pjVar3->num_components;
-  iVar7 = 0;
-  iVar9 = 0;
+  uVar1 = param_1->num_components;
+  iVar6 = 0;
+  iVar8 = 0;
   if (0 < (int)uVar1) {
-    piVar8 = &pjVar3->comp_info[-1].quant_tbl_no;
-    iVar7 = 0;
+    piVar7 = &param_1->comp_info[-1].quant_tbl_no;
+    iVar6 = 0;
     do {
-      piVar8 = piVar8 + 0x15;
-      iVar4 = emit_dqt(pjVar3,*piVar8);
-      uVar1 = pjVar3->num_components;
-      iVar9 = iVar9 + 1;
-      iVar7 = iVar4 + iVar7;
-    } while (iVar9 < (int)uVar1);
+      piVar7 = piVar7 + 0x15;
+      iVar3 = emit_dqt(param_1,*piVar7);
+      uVar1 = param_1->num_components;
+      iVar8 = iVar8 + 1;
+      iVar6 = iVar3 + iVar6;
+    } while (iVar8 < (int)uVar1);
   }
-  uVar6 = (ulonglong)uVar1;
-  if (((pjVar3->arith_code == '\0') && (pjVar3->progressive_mode == '\0')) &&
-     (pjVar3->data_precision == 8)) {
+  uVar5 = (ulonglong)uVar1;
+  if (((param_1->arith_code == '\0') && (param_1->progressive_mode == '\0')) &&
+     (param_1->data_precision == 8)) {
     bVar2 = true;
     if (0 < (int)uVar1) {
-      piVar8 = &pjVar3->comp_info->ac_tbl_no;
+      piVar7 = &param_1->comp_info->ac_tbl_no;
       do {
-        if ((1 < piVar8[-1]) || (1 < *piVar8)) {
+        if ((1 < piVar7[-1]) || (1 < *piVar7)) {
           bVar2 = false;
         }
-        piVar8 = piVar8 + 0x15;
-        uVar6 = uVar6 - 1;
-      } while (uVar6 != 0);
+        piVar7 = piVar7 + 0x15;
+        uVar5 = uVar5 - 1;
+      } while (uVar5 != 0);
     }
-    if ((iVar7 != 0) && (bVar2)) {
+    if ((iVar6 != 0) && (bVar2)) {
       bVar2 = false;
-      pjVar3->err->msg_code = 0x4b;
-      (*pjVar3->err->emit_message)((jpeg_common_struct *)pjVar3,0);
+      param_1->err->msg_code = 0x4b;
+      (*param_1->err->emit_message)((jpeg_common_struct *)param_1,0);
     }
   }
   else {
     bVar2 = false;
   }
-  if (pjVar3->arith_code != '\0') {
-    emit_sof(pjVar3,M_SOF9);
-    __restgprlr_28();
+  if (param_1->arith_code != '\0') {
+    emit_sof(param_1,M_SOF9);
     return;
   }
-  if (pjVar3->progressive_mode != '\0') {
-    emit_sof(pjVar3,M_SOF2);
-    __restgprlr_28();
+  if (param_1->progressive_mode != '\0') {
+    emit_sof(param_1,M_SOF2);
     return;
   }
-  JVar5 = M_SOF0;
+  JVar4 = M_SOF0;
   if (!bVar2) {
-    JVar5 = M_SOF1;
+    JVar4 = M_SOF1;
   }
-  emit_sof(pjVar3,JVar5);
-  __restgprlr_28();
+  emit_sof(param_1,JVar4);
   return;
 }
 
 
 // 827B5E38  write_scan_header  (jpeg-6/jcmarker.c:552)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void write_scan_header(jpeg_compress_struct *param_1)
 
 {
   jpeg_marker_writer *pjVar1;
   jpeg_component_info *pjVar2;
-  jpeg_compress_struct *pjVar3;
-  int iVar4;
-  uchar uVar5;
-  int iVar6;
-  jpeg_component_info **ppjVar7;
+  int iVar3;
+  uchar uVar4;
+  int iVar5;
+  jpeg_component_info **ppjVar6;
   
-  pjVar3 = (jpeg_compress_struct *)__savegprlr_27(param_1);
-  pjVar1 = pjVar3->marker;
-  if (pjVar3->arith_code == '\0') {
-    iVar6 = 0;
-    if (0 < pjVar3->comps_in_scan) {
-      ppjVar7 = pjVar3->cur_comp_info;
+  pjVar1 = param_1->marker;
+  if (param_1->arith_code == '\0') {
+    iVar5 = 0;
+    if (0 < param_1->comps_in_scan) {
+      ppjVar6 = param_1->cur_comp_info;
       do {
-        pjVar2 = *ppjVar7;
-        if (pjVar3->progressive_mode == '\0') {
-          emit_dht(pjVar3,pjVar2->dc_tbl_no,'\0');
+        pjVar2 = *ppjVar6;
+        if (param_1->progressive_mode == '\0') {
+          emit_dht(param_1,pjVar2->dc_tbl_no,'\0');
 LAB_827b5eb0:
-          iVar4 = pjVar2->ac_tbl_no;
-          uVar5 = '\x01';
+          iVar3 = pjVar2->ac_tbl_no;
+          uVar4 = '\x01';
 LAB_827b5eb8:
-          emit_dht(pjVar3,iVar4,uVar5);
+          emit_dht(param_1,iVar3,uVar4);
         }
         else {
-          if (pjVar3->Ss != 0) goto LAB_827b5eb0;
-          if (pjVar3->Ah == 0) {
-            iVar4 = pjVar2->dc_tbl_no;
-            uVar5 = '\0';
+          if (param_1->Ss != 0) goto LAB_827b5eb0;
+          if (param_1->Ah == 0) {
+            iVar3 = pjVar2->dc_tbl_no;
+            uVar4 = '\0';
             goto LAB_827b5eb8;
           }
         }
-        iVar6 = iVar6 + 1;
-        ppjVar7 = ppjVar7 + 1;
-      } while (iVar6 < pjVar3->comps_in_scan);
+        iVar5 = iVar5 + 1;
+        ppjVar6 = ppjVar6 + 1;
+      } while (iVar5 < param_1->comps_in_scan);
     }
   }
-  if ((_func___cdecl_void_jpeg_compress_struct_ptr *)pjVar3->restart_interval !=
+  if ((_func___cdecl_void_jpeg_compress_struct_ptr *)param_1->restart_interval !=
       pjVar1[1].write_file_header) {
-    emit_dri(pjVar3);
+    emit_dri(param_1);
     pjVar1[1].write_file_header =
-         (_func___cdecl_void_jpeg_compress_struct_ptr *)pjVar3->restart_interval;
+         (_func___cdecl_void_jpeg_compress_struct_ptr *)param_1->restart_interval;
   }
-  emit_sos(pjVar3);
-  __restgprlr_27();
+  emit_sos(param_1);
   return;
 }
 
@@ -728,62 +713,62 @@ void write_file_trailer(jpeg_compress_struct *param_1)
 
 // 827B5F48  write_tables_only  (jpeg-6/jcmarker.c:617)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void write_tables_only(jpeg_compress_struct *param_1)
 
 {
   jpeg_destination_mgr *pjVar1;
-  jpeg_compress_struct *pjVar2;
-  uchar uVar3;
-  longlong lVar4;
-  JQUANT_TBL **ppJVar5;
-  JHUFF_TBL **ppJVar6;
-  int iVar7;
+  uchar uVar2;
+  longlong lVar3;
+  JQUANT_TBL **ppJVar4;
+  JHUFF_TBL **ppJVar5;
+  int iVar6;
   
-  pjVar2 = (jpeg_compress_struct *)__savegprlr_29(param_1);
-  emit_byte(pjVar2,0xff);
-  emit_byte(pjVar2,0xd8);
-  iVar7 = 0;
-  ppJVar5 = pjVar2->quant_tbl_ptrs;
+  emit_byte(param_1,0xff);
+  emit_byte(param_1,0xd8);
+  iVar6 = 0;
+  ppJVar4 = param_1->quant_tbl_ptrs;
   do {
-    if (*ppJVar5 != (JQUANT_TBL *)0x0) {
-      emit_dqt(pjVar2,iVar7);
+    if (*ppJVar4 != (JQUANT_TBL *)0x0) {
+      emit_dqt(param_1,iVar6);
     }
-    iVar7 = iVar7 + 1;
-    ppJVar5 = ppJVar5 + 1;
-  } while (iVar7 < 4);
-  if (pjVar2->arith_code == '\0') {
-    iVar7 = 0;
-    ppJVar6 = pjVar2->ac_huff_tbl_ptrs;
+    iVar6 = iVar6 + 1;
+    ppJVar4 = ppJVar4 + 1;
+  } while (iVar6 < 4);
+  if (param_1->arith_code == '\0') {
+    iVar6 = 0;
+    ppJVar5 = param_1->ac_huff_tbl_ptrs;
     do {
-      if (ppJVar6[-4] != (JHUFF_TBL *)0x0) {
-        emit_dht(pjVar2,iVar7,'\0');
+      if (ppJVar5[-4] != (JHUFF_TBL *)0x0) {
+        emit_dht(param_1,iVar6,'\0');
       }
-      if (*ppJVar6 != (JHUFF_TBL *)0x0) {
-        emit_dht(pjVar2,iVar7,'\x01');
+      if (*ppJVar5 != (JHUFF_TBL *)0x0) {
+        emit_dht(param_1,iVar6,'\x01');
       }
-      iVar7 = iVar7 + 1;
-      ppJVar6 = ppJVar6 + 1;
-    } while (iVar7 < 4);
+      iVar6 = iVar6 + 1;
+      ppJVar5 = ppJVar5 + 1;
+    } while (iVar6 < 4);
   }
-  pjVar1 = pjVar2->dest;
+  pjVar1 = param_1->dest;
   *pjVar1->next_output_byte = 0xff;
-  lVar4 = (ulonglong)pjVar1->free_in_buffer - 1;
-  pjVar1->free_in_buffer = (uint)lVar4;
+  lVar3 = (ulonglong)pjVar1->free_in_buffer - 1;
+  pjVar1->free_in_buffer = (uint)lVar3;
   pjVar1->next_output_byte = pjVar1->next_output_byte + 1;
-  if ((lVar4 == 0) && (uVar3 = (*pjVar1->empty_output_buffer)(pjVar2), uVar3 == '\0')) {
-    pjVar2->err->msg_code = 0x18;
-    (*pjVar2->err->error_exit)((jpeg_common_struct *)pjVar2);
+  if ((lVar3 == 0) && (uVar2 = (*pjVar1->empty_output_buffer)(param_1), uVar2 == '\0')) {
+    param_1->err->msg_code = 0x18;
+    (*param_1->err->error_exit)((jpeg_common_struct *)param_1);
   }
-  pjVar1 = pjVar2->dest;
+  pjVar1 = param_1->dest;
   *pjVar1->next_output_byte = 0xd9;
-  lVar4 = (ulonglong)pjVar1->free_in_buffer - 1;
+  lVar3 = (ulonglong)pjVar1->free_in_buffer - 1;
   pjVar1->next_output_byte = pjVar1->next_output_byte + 1;
-  pjVar1->free_in_buffer = (uint)lVar4;
-  if ((lVar4 == 0) && (uVar3 = (*pjVar1->empty_output_buffer)(pjVar2), uVar3 == '\0')) {
-    pjVar2->err->msg_code = 0x18;
-    (*pjVar2->err->error_exit)((jpeg_common_struct *)pjVar2);
+  pjVar1->free_in_buffer = (uint)lVar3;
+  if ((lVar3 == 0) && (uVar2 = (*pjVar1->empty_output_buffer)(param_1), uVar2 == '\0')) {
+    param_1->err->msg_code = 0x18;
+    (*param_1->err->error_exit)((jpeg_common_struct *)param_1);
   }
-  __restgprlr_29();
   return;
 }
 

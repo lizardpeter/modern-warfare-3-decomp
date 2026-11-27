@@ -55,56 +55,57 @@ bool PhysVeh_ComparePhysObj(PhysVehicle *param_1,int param_2)
 
 // 82679BB0  PhysVeh_RemoveStability  (physics/phys_vehicle.cpp:147)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PhysWorld": Some values do not have unique names */
 
 void PhysVeh_RemoveStability(PhysVehicle *param_1)
 
 {
   float fVar1;
-  dxBody *pdVar2;
-  int *piVar3;
+  int iVar2;
+  int iVar3;
+  dxBody *pdVar4;
   undefined1 in_r6;
   dMass dStack_70;
   
-  piVar3 = (int *)__savegprlr_29(param_1);
   dMassSetZero(&dStack_70);
-  if (piVar3 == (int *)0x0) {
+  if (param_1 == (PhysVehicle *)0x0) {
     in_r6 = 0x98;
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_vehicle.cpp",0x97
                     ,0,"%s");
   }
-  if (*piVar3 == 0) {
+  if (param_1->body == 0) {
     in_r6 = 0x98;
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_vehicle.cpp",0x98
                     ,0,"%s");
   }
-  if ((piVar3[0x99] & 4U) == 0) {
-    *(undefined1 *)(piVar3 + 0x58) = 0;
-    piVar3[0x53] = 0;
-    piVar3[0x54] = 0;
-    piVar3[0x55] = 0;
-    piVar3[0x57] = 0;
-    piVar3[0x56] = 0;
-    piVar3[0x5a] = 0x40490fdb;
-    piVar3[0x5b] = 0x40490fdb;
-    G_PhysObjSetCollisionFromModelIndex
-              (piVar3[0x9e],PHYS_WORLD_FIRST_SERVER_WORLD,*piVar3,1.0,(bool)in_r6);
-    pdVar2 = (dxBody *)*piVar3;
-    dBodyGetMass(pdVar2,&dStack_70);
-    dMassAdjust(&dStack_70,
-                *(float *)(*(int *)(piVar3[0x9a] + 8) + 8) * *(float *)(piVar3[0x9a] + 0x8c));
-    dBodySetMass(pdVar2,&dStack_70);
-    fVar1 = *(float *)(piVar3[0x9a] + 0x8c);
-    pdVar2->facc[0] = pdVar2->facc[0] * fVar1;
-    pdVar2->facc[1] = pdVar2->facc[1] * fVar1;
-    pdVar2->facc[2] = pdVar2->facc[2] * fVar1;
-    fVar1 = *(float *)(piVar3[0x9a] + 0x8c);
-    pdVar2->tacc[0] = pdVar2->tacc[0] * fVar1;
-    pdVar2->tacc[1] = pdVar2->tacc[1] * fVar1;
-    pdVar2->tacc[2] = pdVar2->tacc[2] * fVar1;
-    piVar3[0x99] = piVar3[0x99] & 0xfffffff3U | 4;
+  if ((param_1->flags & 4) == 0) {
+    iVar2 = param_1->body;
+    iVar3 = param_1->modelIndex;
+    (param_1->orientationConstraint).uprightCorrection = false;
+    (param_1->orientationConstraint).rollResistance = 0.0;
+    (param_1->orientationConstraint).pitchResistance = 0.0;
+    (param_1->orientationConstraint).yawResistance = 0.0;
+    (param_1->orientationConstraint).uprightStrengthPitch = 0.0;
+    (param_1->orientationConstraint).uprightStrengthRoll = 0.0;
+    (param_1->orientationConstraint).maxRoll = 3.1415927;
+    (param_1->orientationConstraint).maxPitch = 3.1415927;
+    G_PhysObjSetCollisionFromModelIndex(iVar3,PHYS_WORLD_FIRST_SERVER_WORLD,iVar2,1.0,(bool)in_r6);
+    pdVar4 = (dxBody *)param_1->body;
+    dBodyGetMass(pdVar4,&dStack_70);
+    dMassAdjust(&dStack_70,param_1->def->physPreset->mass * param_1->def->wreckedMassScale);
+    dBodySetMass(pdVar4,&dStack_70);
+    fVar1 = param_1->def->wreckedMassScale;
+    pdVar4->facc[0] = pdVar4->facc[0] * fVar1;
+    pdVar4->facc[1] = pdVar4->facc[1] * fVar1;
+    pdVar4->facc[2] = pdVar4->facc[2] * fVar1;
+    fVar1 = param_1->def->wreckedMassScale;
+    pdVar4->tacc[0] = pdVar4->tacc[0] * fVar1;
+    pdVar4->tacc[1] = pdVar4->tacc[1] * fVar1;
+    pdVar4->tacc[2] = pdVar4->tacc[2] * fVar1;
+    param_1->flags = param_1->flags & 0xfffffff3 | 4;
   }
-  __restgprlr_29();
   return;
 }
 
@@ -176,24 +177,24 @@ void PhysVeh_Crash(PhysVehicle *param_1)
 
 // 82679F38  PhysVeh_Launch  (physics/phys_vehicle.cpp:231)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PhysWorld": Some values do not have unique names */
 
 void PhysVeh_Launch(PhysVehicle *param_1,float *param_2,float param_3)
 
 {
-  float *pfVar1;
-  float fVar2;
-  PhysVehicle *pPVar3;
-  ulonglong uVar4;
-  double extraout_f1;
+  float fVar1;
+  double dVar2;
+  double dVar3;
+  double dVar4;
   double dVar5;
   double dVar6;
   double dVar7;
   double dVar8;
-  double dVar9;
-  double dVar10;
-  double dVar11;
-  float fVar12;
+  float fVar9;
   float local_70;
   float local_6c;
   float local_68;
@@ -201,97 +202,88 @@ void PhysVeh_Launch(PhysVehicle *param_1,float *param_2,float param_3)
   float local_5c;
   float local_58;
   
-  uVar4 = (ulonglong)(int)param_2;
-  __savegprlr_28((double)param_3,param_1);
-  pPVar3 = (PhysVehicle *)__savefpr_28();
-  dVar9 = extraout_f1;
-  if (pPVar3 == (PhysVehicle *)0x0) {
+  dVar2 = (double)param_3;
+  if (param_1 == (PhysVehicle *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_vehicle.cpp",0xed
                     ,0,"%s");
   }
-  if ((uVar4 & 0xffffffff) == 0) {
+  if (param_2 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_vehicle.cpp",0xee
                     ,0,"%s");
   }
-  PhysVeh_RemoveStability(pPVar3);
-  Phys_ObjGetCenterOfMass(pPVar3->body,&local_70);
-  dVar11 = 1.0;
-  if (dVar9 != 0.0) {
-    fVar12 = G_random();
-    dVar5 = (double)fVar12;
-    fVar12 = G_random();
-    dVar6 = (double)fVar12;
-    fVar12 = G_random();
-    dVar7 = (double)fVar12;
-    dVar10 = (double)SQRT((float)(dVar5 * dVar5 +
-                                 (double)(float)(dVar7 * dVar7 + (double)(float)(dVar6 * dVar6))));
-    dVar8 = dVar11;
-    if (-dVar10 < 0.0) {
-      dVar8 = dVar10;
+  PhysVeh_RemoveStability(param_1);
+  Phys_ObjGetCenterOfMass(param_1->body,&local_70);
+  dVar8 = 1.0;
+  if (dVar2 != 0.0) {
+    fVar9 = G_random();
+    dVar3 = (double)fVar9;
+    fVar9 = G_random();
+    dVar4 = (double)fVar9;
+    fVar9 = G_random();
+    dVar5 = (double)fVar9;
+    dVar7 = (double)SQRT((float)(dVar3 * dVar3 +
+                                (double)(float)(dVar5 * dVar5 + (double)(float)(dVar4 * dVar4))));
+    dVar6 = dVar8;
+    if (-dVar7 < 0.0) {
+      dVar6 = dVar7;
     }
-    dVar8 = (double)(float)(dVar11 / dVar8);
-    local_70 = (float)((double)(float)(dVar8 * dVar7) * dVar9 + (double)local_70);
-    local_6c = (float)((double)(float)(dVar8 * dVar6) * dVar9 + (double)local_6c);
-    local_68 = (float)((double)(float)(dVar8 * dVar5) * dVar9 + (double)local_68);
+    dVar6 = (double)(float)(dVar8 / dVar6);
+    local_70 = (float)((double)(float)(dVar6 * dVar5) * dVar2 + (double)local_70);
+    local_6c = (float)((double)(float)(dVar6 * dVar4) * dVar2 + (double)local_6c);
+    local_68 = (float)((double)(float)(dVar6 * dVar3) * dVar2 + (double)local_68);
   }
-  pfVar1 = (float *)uVar4;
-  local_5c = pfVar1[1];
-  local_60 = *pfVar1;
-  fVar12 = pfVar1[2];
-  fVar2 = SQRT(fVar12 * fVar12 + local_60 * local_60 + local_5c * local_5c);
-  dVar8 = (double)fVar2;
-  dVar9 = dVar11;
-  if (-dVar8 < 0.0) {
-    dVar9 = dVar8;
+  local_5c = param_2[1];
+  local_60 = *param_2;
+  fVar9 = param_2[2];
+  fVar1 = SQRT(fVar9 * fVar9 + local_60 * local_60 + local_5c * local_5c);
+  dVar6 = (double)fVar1;
+  dVar2 = dVar8;
+  if (-dVar6 < 0.0) {
+    dVar2 = dVar6;
   }
-  local_58 = (float)(dVar11 / dVar9);
+  local_58 = (float)(dVar8 / dVar2);
   local_5c = local_58 * local_5c;
   local_60 = local_60 * local_58;
-  local_58 = local_58 * fVar12;
+  local_58 = local_58 * fVar9;
   Phys_ObjBulletImpact
-            (PHYS_WORLD_FIRST_SERVER_WORLD,pPVar3->body,&local_70,&local_60,fVar2,
-             pPVar3->def->physPreset->bulletForceScale);
-  __restfpr_28();
-  __restgprlr_28();
+            (PHYS_WORLD_FIRST_SERVER_WORLD,param_1->body,&local_70,&local_60,fVar1,
+             param_1->def->physPreset->bulletForceScale);
   return;
 }
 
 
 // 8267A0B8  PhysVeh_Impact  (physics/phys_vehicle.cpp:258)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
 void PhysVeh_Impact(PhysVehicle *param_1,float *param_2)
 
 {
-  PhysVehicle *pPVar1;
-  ulonglong uVar2;
   float local_40;
   float local_3c;
   float local_38;
   
-  uVar2 = (ulonglong)(int)param_2;
-  pPVar1 = (PhysVehicle *)__savegprlr_28(param_1);
-  if (pPVar1 == (PhysVehicle *)0x0) {
+  if (param_1 == (PhysVehicle *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_vehicle.cpp",
                     0x105,0,"%s");
   }
-  if ((uVar2 & 0xffffffff) == 0) {
+  if (param_2 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_vehicle.cpp",
                     0x106,0,"%s");
   }
-  if ((pPVar1->flags & 0xc) == 0) {
-    PhysVeh_Crash(pPVar1);
-    Phys_ObjGetVelocity(pPVar1->body,&local_40);
+  if ((param_1->flags & 0xc) == 0) {
+    PhysVeh_Crash(param_1);
+    Phys_ObjGetVelocity(param_1->body,&local_40);
     local_40 = local_40 * 0.056818184;
     local_3c = local_3c * 0.056818184;
     local_38 = local_38 * 0.056818184;
-    Scr_AddVector((float *)uVar2);
+    Scr_AddVector(param_2);
     Scr_AddVector(&local_40);
-    Scr_Notify(g_entities + pPVar1->passEntityNum,scr_const.veh_collision,2);
+    Scr_Notify(g_entities + param_1->passEntityNum,scr_const.veh_collision,2);
   }
-  __restgprlr_28();
   return;
 }
 
@@ -331,6 +323,8 @@ void PhysVeh_LeakCheck(void)
 
 // 8267E968  PhysVeh_Create  (physics/phys_vehicle.cpp:293)
 
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PhysWorld": Some values do not have unique names */
 
 PhysVehicle *
@@ -338,297 +332,302 @@ PhysVeh_Create(float *param_1,float *param_2,int param_3,int param_4,VehiclePhys
               GraphFloat *param_6)
 
 {
-  float *pfVar1;
-  PhysVehicle *pPVar2;
-  int iVar3;
-  ulonglong uVar4;
-  ulonglong uVar5;
+  PhysVehicle *pPVar1;
+  int iVar2;
   char in_RESERVE;
-  byte bVar6;
+  byte bVar3;
   float afStack_80 [32];
   
-  uVar5 = (ulonglong)(int)param_6;
-  uVar4 = (ulonglong)(int)param_5;
-  pfVar1 = (float *)__savegprlr_22(param_1);
-  if ((uVar4 & 0xffffffff) == 0) {
+  if (param_5 == (VehiclePhysDef *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_vehicle.cpp",
                     0x129,0,"%s");
   }
-  if ((uVar5 & 0xffffffff) == 0) {
+  if (param_6 == (GraphFloat *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_vehicle.cpp",
                     0x12a,0,"%s");
   }
-  bVar6 = (uVar5 == 0xffffffffffffffc0) << 1;
-  if (uVar5 == 0xffffffffffffffc0) {
+  bVar3 = (param_6 == (GraphFloat *)0xffffffc0) << 1;
+  if (param_6 == (GraphFloat *)0xffffffc0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_vehicle.cpp",299,
                     0,"%s");
   }
-  if (((GraphFloat *)uVar5)->knotCount < 2) {
+  if (param_6->knotCount < 2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_vehicle.cpp",300,
                     0,"%s\n\t(accelGraph->knotCount) = %i");
   }
-  pPVar2 = Pool_Alloc(&physVehGlob.physVehiclePool);
-  if (pPVar2 == (PhysVehicle *)0x0) {
+  pPVar1 = Pool_Alloc(&physVehGlob.physVehiclePool);
+  if (pPVar1 == (PhysVehicle *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_vehicle.cpp",
                     0x12f,0,"%s");
   }
   memset();
   AnglesToAxis(param_2,(float (*) [3])afStack_80);
-  iVar3 = Phys_ObjCreateAxis(PHYS_WORLD_FIRST_SERVER_WORLD,pfVar1,(float (*) [3])afStack_80,
-                             vec3_origin,((VehiclePhysDef *)uVar4)->physPreset);
-  pPVar2->body = iVar3;
-  if (iVar3 != 0) {
+  iVar2 = Phys_ObjCreateAxis(PHYS_WORLD_FIRST_SERVER_WORLD,param_1,(float (*) [3])afStack_80,
+                             vec3_origin,param_5->physPreset);
+  pPVar1->body = iVar2;
+  if (iVar2 != 0) {
     do {
       if (in_RESERVE != '\0') {
         g_vehiclePhysObjCount =
              storeWordConditionalIndexed
                        ((ulonglong)(uint)g_vehiclePhysObjCount + 1,0,0xffffffff8427b884);
-        bVar6 = 2;
+        bVar3 = 2;
       }
-    } while (!(bool)(bVar6 >> 1 & 1));
-    pPVar2->def = (VehiclePhysDef *)uVar4;
-    pPVar2->accelGraph = (GraphFloat *)uVar5;
-    pPVar2->passEntityNum = param_4;
-    pPVar2->modelIndex = param_3;
+    } while (!(bool)(bVar3 >> 1 & 1));
+    pPVar1->def = param_5;
+    pPVar1->accelGraph = param_6;
+    pPVar1->passEntityNum = param_4;
+    pPVar1->modelIndex = param_3;
     Phys_CreateOrientationConstraint
-              (PHYS_WORLD_FIRST_SERVER_WORLD,pPVar2->body,(dxJoint *)&pPVar2->orientationConstraint)
+              (PHYS_WORLD_FIRST_SERVER_WORLD,pPVar1->body,(dxJoint *)&pPVar1->orientationConstraint)
     ;
     Phys_CreatePathConstraint
-              (PHYS_WORLD_FIRST_SERVER_WORLD,pPVar2->body,(dxJoint *)&pPVar2->pathConstraint);
-    PhysVeh_InitDef(pPVar2);
-    (pPVar2->orientationConstraint).uprightCorrection = true;
-    (pPVar2->orientationConstraint).targetPitch = 0.0;
-    pPVar2 = (PhysVehicle *)__restgprlr_22(pPVar2);
-    return pPVar2;
+              (PHYS_WORLD_FIRST_SERVER_WORLD,pPVar1->body,(dxJoint *)&pPVar1->pathConstraint);
+    PhysVeh_InitDef(pPVar1);
+    (pPVar1->orientationConstraint).uprightCorrection = true;
+    (pPVar1->orientationConstraint).targetPitch = 0.0;
+    return pPVar1;
   }
-  Pool_Free(pPVar2,&physVehGlob.physVehiclePool);
-  pPVar2 = (PhysVehicle *)__restgprlr_22(0);
-  return pPVar2;
+  Pool_Free(pPVar1,&physVehGlob.physVehiclePool);
+  return (PhysVehicle *)0x0;
 }
 
 
 // 8267A250  PhysVeh_WheelEnable  (physics/phys_vehicle.cpp:335)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void PhysVeh_WheelEnable(PhysVehicle *param_1,int param_2,float *param_3)
 
 {
-  int iVar1;
-  bool bVar2;
-  int iVar3;
-  ulonglong uVar4;
+  bool bVar1;
   
-  uVar4 = (ulonglong)param_2;
-  iVar3 = __savegprlr_28(param_1);
-  if (iVar3 == 0) {
+  if (param_1 == (PhysVehicle *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_vehicle.cpp",
                     0x152,0,"%s");
   }
-  if (5 < (uVar4 & 0xffffffff)) {
+  if (5 < (uint)param_2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_vehicle.cpp",
                     0x153,0,"wheelIndex doesn\'t index PHYS_VEH_MAX_WHEELS\n\t%i not in [0, %i)");
   }
-  iVar1 = (int)uVar4 * 0x2c + iVar3;
-  bVar2 = true;
-  *(undefined4 *)(iVar1 + 0x10) = 1;
-  *(float *)(iVar1 + 4) = *param_3;
-  *(float *)(iVar1 + 8) = param_3[1];
-  *(float *)(iVar1 + 0xc) = param_3[2];
-  *(undefined4 *)(iVar1 + 0x14) = 0x3f800000;
-  *(undefined4 *)(iVar1 + 0x18) = 0;
-  *(undefined4 *)(iVar1 + 0x1c) = 0;
-  *(undefined4 *)(iVar1 + 0x20) = 0x3f800000;
-  *(undefined4 *)(iVar1 + 0x24) = 0x3f800000;
-  if (((uVar4 & 0xffffffff) != 0) && ((uVar4 & 0xffffffff) != 1)) {
-    bVar2 = false;
+  bVar1 = true;
+  param_1->wheels[param_2].flags = 1;
+  param_1->wheels[param_2].originLocal[0] = *param_3;
+  param_1->wheels[param_2].originLocal[1] = param_3[1];
+  param_1->wheels[param_2].originLocal[2] = param_3[2];
+  param_1->wheels[param_2].forward[0] = 1.0;
+  param_1->wheels[param_2].forward[1] = 0.0;
+  param_1->wheels[param_2].forward[2] = 0.0;
+  param_1->wheels[param_2].speedRatio = 1.0;
+  param_1->wheels[param_2].accelRatio = 1.0;
+  if ((param_2 != 0) && (param_2 != 1)) {
+    bVar1 = false;
   }
-  if (bVar2) {
-    *(undefined4 *)(iVar1 + 0x28) = *(undefined4 *)(*(int *)(iVar3 + 0x268) + 0x54);
-    __restgprlr_28();
+  if (bVar1) {
+    param_1->wheels[param_2].sideFriction = param_1->def->frictionSide;
     return;
   }
-  *(undefined4 *)(iVar1 + 0x28) = *(undefined4 *)(*(int *)(iVar3 + 0x268) + 0x58);
-  __restgprlr_28();
+  param_1->wheels[param_2].sideFriction = param_1->def->frictionSideRear;
   return;
 }
 
 
 // 8267A358  PhysVeh_WheelSetFlags  (physics/phys_vehicle.cpp:352)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void PhysVeh_WheelSetFlags(PhysVehicle *param_1,int param_2,uint param_3)
 
 {
-  int iVar1;
-  
-  iVar1 = __savegprlr_29(param_1);
-  if (iVar1 == 0) {
+  if (param_1 == (PhysVehicle *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_vehicle.cpp",
                     0x161,0,"%s");
   }
-  iVar1 = param_2 * 0x2c + iVar1;
-  *(uint *)(iVar1 + 0x10) = *(uint *)(iVar1 + 0x10) | param_3;
-  __restgprlr_29();
+  param_1->wheels[param_2].flags = param_1->wheels[param_2].flags | param_3;
   return;
 }
 
 
 // 8267A3C0  PhysVeh_FinalizeWheels  (physics/phys_vehicle.cpp:360)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 bool PhysVeh_FinalizeWheels(PhysVehicle *param_1)
 
 {
   uint uVar1;
-  float fVar2;
-  int iVar4;
-  undefined8 uVar3;
-  undefined1 uVar5;
-  float *pfVar6;
-  float *pfVar7;
+  uint uVar2;
+  uint uVar3;
+  uint uVar4;
+  VehicleAxleType VVar5;
+  float fVar6;
+  bool bVar7;
+  float *pfVar8;
+  float *pfVar9;
   
-  iVar4 = __savegprlr_29(param_1);
-  if (iVar4 == 0) {
+  if (param_1 == (PhysVehicle *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_vehicle.cpp",
                     0x170,0,"%s");
   }
-  if (*(int *)(iVar4 + 0x268) == 0) {
+  if (param_1->def == (VehiclePhysDef *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_vehicle.cpp",
                     0x171,0,"%s");
   }
-  uVar1 = *(uint *)(iVar4 + 0x10);
-  *(uint *)(iVar4 + 0x10) = uVar1 & 1;
-  *(uint *)(iVar4 + 0x3c) = *(uint *)(iVar4 + 0x3c) & 1;
-  *(uint *)(iVar4 + 0x68) = *(uint *)(iVar4 + 0x68) & 1;
-  *(uint *)(iVar4 + 0x94) = *(uint *)(iVar4 + 0x94) & 1;
-  *(uint *)(iVar4 + 0xc0) = *(uint *)(iVar4 + 0xc0) & 1;
-  *(uint *)(iVar4 + 0xec) = *(uint *)(iVar4 + 0xec) & 1;
+  uVar1 = param_1->wheels[0].flags;
+  uVar2 = param_1->wheels[1].flags;
+  uVar3 = param_1->wheels[2].flags;
+  uVar4 = param_1->wheels[3].flags;
+  param_1->wheels[0].flags = uVar1 & 1;
+  param_1->wheels[1].flags = uVar2 & 1;
+  param_1->wheels[2].flags = uVar3 & 1;
+  param_1->wheels[3].flags = uVar4 & 1;
+  param_1->wheels[4].flags = param_1->wheels[4].flags & 1;
+  param_1->wheels[5].flags = param_1->wheels[5].flags & 1;
   if ((uVar1 & 1) == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_vehicle.cpp",
                     0x176,0,"%s");
   }
-  if ((*(uint *)(iVar4 + 0x3c) & 1) == 0) {
+  if ((param_1->wheels[1].flags & 1) == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_vehicle.cpp",
                     0x177,0,"%s");
   }
-  if ((*(uint *)(iVar4 + 0x68) & 1) == 0) {
+  if ((param_1->wheels[2].flags & 1) == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_vehicle.cpp",
                     0x178,0,"%s");
   }
-  if ((*(uint *)(iVar4 + 0x94) & 1) == 0) {
+  if ((param_1->wheels[3].flags & 1) == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_vehicle.cpp",
                     0x179,0,"%s");
   }
-  pfVar7 = (float *)(iVar4 + 0x238);
-  pfVar6 = (float *)(iVar4 + 0x244);
-  uVar3 = 1;
-  *(float *)(iVar4 + 0x238) = (*(float *)(iVar4 + 4) + *(float *)(iVar4 + 0x30)) * 0.5;
-  *(float *)(iVar4 + 0x23c) = (*(float *)(iVar4 + 8) + *(float *)(iVar4 + 0x34)) * 0.5;
-  *(float *)(iVar4 + 0x240) = (*(float *)(iVar4 + 0xc) + *(float *)(iVar4 + 0x38)) * 0.5;
-  *(float *)(iVar4 + 0x244) = (*(float *)(iVar4 + 0x5c) + *(float *)(iVar4 + 0x88)) * 0.5;
-  *(float *)(iVar4 + 0x248) = (*(float *)(iVar4 + 0x60) + *(float *)(iVar4 + 0x8c)) * 0.5;
-  *(float *)(iVar4 + 0x24c) = (*(float *)(iVar4 + 100) + *(float *)(iVar4 + 0x90)) * 0.5;
-  *(uint *)(iVar4 + 0xc0) = *(uint *)(iVar4 + 0xc0) | 4;
-  *(uint *)(iVar4 + 0xec) = *(uint *)(iVar4 + 0xec) | 4;
-  uVar1 = *(uint *)(*(int *)(iVar4 + 0x268) + 0x10);
-  if (uVar1 == 0) {
-    *(uint *)(iVar4 + 0x10) = *(uint *)(iVar4 + 0x10) | 4;
-    *(uint *)(iVar4 + 0x3c) = *(uint *)(iVar4 + 0x3c) | 4;
-    *(float *)(iVar4 + 0x250) = *pfVar7;
-    *(undefined4 *)(iVar4 + 0x254) = *(undefined4 *)(iVar4 + 0x23c);
-    *(undefined4 *)(iVar4 + 600) = *(undefined4 *)(iVar4 + 0x240);
-    fVar2 = *pfVar6 - *pfVar7;
-    *(float *)(iVar4 + 0x25c) = fVar2;
+  pfVar9 = param_1->frontWheelCenter;
+  pfVar8 = param_1->rearWheelCenter;
+  bVar7 = true;
+  param_1->frontWheelCenter[0] =
+       (param_1->wheels[0].originLocal[0] + param_1->wheels[1].originLocal[0]) * 0.5;
+  param_1->frontWheelCenter[1] =
+       (param_1->wheels[0].originLocal[1] + param_1->wheels[1].originLocal[1]) * 0.5;
+  param_1->frontWheelCenter[2] =
+       (param_1->wheels[0].originLocal[2] + param_1->wheels[1].originLocal[2]) * 0.5;
+  param_1->rearWheelCenter[0] =
+       (param_1->wheels[2].originLocal[0] + param_1->wheels[3].originLocal[0]) * 0.5;
+  param_1->rearWheelCenter[1] =
+       (param_1->wheels[2].originLocal[1] + param_1->wheels[3].originLocal[1]) * 0.5;
+  param_1->rearWheelCenter[2] =
+       (param_1->wheels[2].originLocal[2] + param_1->wheels[3].originLocal[2]) * 0.5;
+  param_1->wheels[4].flags = param_1->wheels[4].flags | 4;
+  param_1->wheels[5].flags = param_1->wheels[5].flags | 4;
+  VVar5 = param_1->def->steeringAxle;
+  if (VVar5 == VEH_AXLE_FRONT) {
+    uVar1 = param_1->wheels[1].flags;
+    param_1->wheels[0].flags = param_1->wheels[0].flags | 4;
+    param_1->wheels[1].flags = uVar1 | 4;
+    param_1->steeringPoint[0] = *pfVar9;
+    param_1->steeringPoint[1] = param_1->frontWheelCenter[1];
+    param_1->steeringPoint[2] = param_1->frontWheelCenter[2];
+    fVar6 = *pfVar8 - *pfVar9;
+    param_1->steeringPointDist = fVar6;
 LAB_8267a6fc:
-    if (-1.0 < fVar2) {
+    if (-1.0 < fVar6) {
 LAB_8267a700:
-      uVar3 = 0;
+      bVar7 = false;
     }
   }
-  else if (uVar1 == 1) {
-    *(uint *)(iVar4 + 0x68) = *(uint *)(iVar4 + 0x68) | 4;
-    *(uint *)(iVar4 + 0x94) = *(uint *)(iVar4 + 0x94) | 4;
-    *(float *)(iVar4 + 0x250) = *pfVar6;
-    *(undefined4 *)(iVar4 + 0x254) = *(undefined4 *)(iVar4 + 0x248);
-    *(undefined4 *)(iVar4 + 600) = *(undefined4 *)(iVar4 + 0x24c);
-    *(float *)(iVar4 + 0x25c) = *pfVar7 - *pfVar6;
-    if (*pfVar7 - *pfVar6 < 1.0) goto LAB_8267a700;
+  else if (VVar5 == VEH_AXLE_REAR) {
+    param_1->wheels[2].flags = param_1->wheels[2].flags | 4;
+    param_1->wheels[3].flags = param_1->wheels[3].flags | 4;
+    param_1->steeringPoint[0] = *pfVar8;
+    param_1->steeringPoint[1] = param_1->rearWheelCenter[1];
+    param_1->steeringPoint[2] = param_1->rearWheelCenter[2];
+    param_1->steeringPointDist = *pfVar9 - *pfVar8;
+    if (*pfVar9 - *pfVar8 < 1.0) goto LAB_8267a700;
   }
-  else if (uVar1 < 3) {
-    *(uint *)(iVar4 + 0x68) = *(uint *)(iVar4 + 0x68) | 4;
-    *(uint *)(iVar4 + 0x94) = *(uint *)(iVar4 + 0x94) | 4;
-    *(uint *)(iVar4 + 0x3c) = *(uint *)(iVar4 + 0x3c) | 4;
-    *(uint *)(iVar4 + 0x10) = *(uint *)(iVar4 + 0x10) | 4;
-    *(float *)(iVar4 + 0x250) = *pfVar7;
-    *(undefined4 *)(iVar4 + 0x254) = *(undefined4 *)(iVar4 + 0x23c);
-    *(undefined4 *)(iVar4 + 600) = *(undefined4 *)(iVar4 + 0x240);
-    fVar2 = (*pfVar6 - *pfVar7) * 0.5;
-    *(float *)(iVar4 + 0x25c) = fVar2;
+  else if (VVar5 < VEH_AXLE_COUNT) {
+    uVar1 = param_1->wheels[0].flags;
+    param_1->wheels[2].flags = param_1->wheels[2].flags | 4;
+    param_1->wheels[3].flags = param_1->wheels[3].flags | 4;
+    param_1->wheels[1].flags = param_1->wheels[1].flags | 4;
+    param_1->wheels[0].flags = uVar1 | 4;
+    param_1->steeringPoint[0] = *pfVar9;
+    param_1->steeringPoint[1] = param_1->frontWheelCenter[1];
+    param_1->steeringPoint[2] = param_1->frontWheelCenter[2];
+    fVar6 = (*pfVar8 - *pfVar9) * 0.5;
+    param_1->steeringPointDist = fVar6;
     goto LAB_8267a6fc;
   }
-  uVar1 = *(uint *)(*(int *)(iVar4 + 0x268) + 0x14);
-  if (uVar1 == 0) {
-    uVar1 = *(uint *)(iVar4 + 0x10);
-    *(uint *)(iVar4 + 0x3c) = *(uint *)(iVar4 + 0x3c) | 2;
+  VVar5 = param_1->def->powerAxle;
+  if (VVar5 == VEH_AXLE_FRONT) {
+    uVar1 = param_1->wheels[0].flags;
+    param_1->wheels[1].flags = param_1->wheels[1].flags | 2;
 LAB_8267a798:
-    *(uint *)(iVar4 + 0x10) = uVar1 | 2;
+    param_1->wheels[0].flags = uVar1 | 2;
   }
-  else if (uVar1 == 1) {
-    *(uint *)(iVar4 + 0x68) = *(uint *)(iVar4 + 0x68) | 2;
-    *(uint *)(iVar4 + 0x94) = *(uint *)(iVar4 + 0x94) | 2;
+  else if (VVar5 == VEH_AXLE_REAR) {
+    param_1->wheels[2].flags = param_1->wheels[2].flags | 2;
+    param_1->wheels[3].flags = param_1->wheels[3].flags | 2;
   }
-  else if (uVar1 < 3) {
-    *(uint *)(iVar4 + 0x68) = *(uint *)(iVar4 + 0x68) | 2;
-    uVar1 = *(uint *)(iVar4 + 0x10);
-    *(uint *)(iVar4 + 0x94) = *(uint *)(iVar4 + 0x94) | 2;
-    *(uint *)(iVar4 + 0x3c) = *(uint *)(iVar4 + 0x3c) | 2;
-    *(uint *)(iVar4 + 0xc0) = *(uint *)(iVar4 + 0xc0) | 2;
-    *(uint *)(iVar4 + 0xec) = *(uint *)(iVar4 + 0xec) | 2;
+  else if (VVar5 < VEH_AXLE_COUNT) {
+    param_1->wheels[2].flags = param_1->wheels[2].flags | 2;
+    uVar1 = param_1->wheels[0].flags;
+    param_1->wheels[3].flags = param_1->wheels[3].flags | 2;
+    param_1->wheels[1].flags = param_1->wheels[1].flags | 2;
+    param_1->wheels[4].flags = param_1->wheels[4].flags | 2;
+    param_1->wheels[5].flags = param_1->wheels[5].flags | 2;
     goto LAB_8267a798;
   }
-  uVar1 = *(uint *)(*(int *)(iVar4 + 0x268) + 0x18);
-  if (uVar1 == 0) {
-    uVar1 = *(uint *)(iVar4 + 0x10);
-    *(uint *)(iVar4 + 0x3c) = *(uint *)(iVar4 + 0x3c) | 8;
+  VVar5 = param_1->def->brakingAxle;
+  if (VVar5 == VEH_AXLE_FRONT) {
+    uVar1 = param_1->wheels[0].flags;
+    param_1->wheels[1].flags = param_1->wheels[1].flags | 8;
   }
   else {
-    if (uVar1 == 1) {
-      *(uint *)(iVar4 + 0x68) = *(uint *)(iVar4 + 0x68) | 8;
-      *(uint *)(iVar4 + 0x94) = *(uint *)(iVar4 + 0x94) | 8;
+    if (VVar5 == VEH_AXLE_REAR) {
+      param_1->wheels[2].flags = param_1->wheels[2].flags | 8;
+      param_1->wheels[3].flags = param_1->wheels[3].flags | 8;
       goto LAB_8267a834;
     }
-    if (2 < uVar1) goto LAB_8267a834;
-    *(uint *)(iVar4 + 0x68) = *(uint *)(iVar4 + 0x68) | 8;
-    uVar1 = *(uint *)(iVar4 + 0x10);
-    *(uint *)(iVar4 + 0x94) = *(uint *)(iVar4 + 0x94) | 8;
-    *(uint *)(iVar4 + 0x3c) = *(uint *)(iVar4 + 0x3c) | 8;
-    *(uint *)(iVar4 + 0xc0) = *(uint *)(iVar4 + 0xc0) | 8;
-    *(uint *)(iVar4 + 0xec) = *(uint *)(iVar4 + 0xec) | 8;
+    if (VEH_AXLE_ALL < VVar5) goto LAB_8267a834;
+    param_1->wheels[2].flags = param_1->wheels[2].flags | 8;
+    uVar1 = param_1->wheels[0].flags;
+    param_1->wheels[3].flags = param_1->wheels[3].flags | 8;
+    param_1->wheels[1].flags = param_1->wheels[1].flags | 8;
+    param_1->wheels[4].flags = param_1->wheels[4].flags | 8;
+    param_1->wheels[5].flags = param_1->wheels[5].flags | 8;
   }
-  *(uint *)(iVar4 + 0x10) = uVar1 | 8;
+  param_1->wheels[0].flags = uVar1 | 8;
 LAB_8267a834:
-  *(float *)(iVar4 + 0x260) =
-       ((*(float *)(iVar4 + 0x60) + *(float *)(iVar4 + 8)) * 0.5 -
-       (*(float *)(iVar4 + 0x8c) + *(float *)(iVar4 + 0x34)) * 0.5) * 0.5;
-  fVar2 = 0.0;
-  if (((*(uint *)(iVar4 + 0x10) & 1) != 0) && ((*(uint *)(iVar4 + 0x10) & 2) != 0)) {
-    fVar2 = 1.0;
+  param_1->steeringHalfWidth =
+       ((param_1->wheels[2].originLocal[1] + param_1->wheels[0].originLocal[1]) * 0.5 -
+       (param_1->wheels[3].originLocal[1] + param_1->wheels[1].originLocal[1]) * 0.5) * 0.5;
+  uVar1 = param_1->wheels[0].flags;
+  fVar6 = 0.0;
+  if (((uVar1 & 1) != 0) && ((uVar1 & 2) != 0)) {
+    fVar6 = 1.0;
   }
-  if (((*(uint *)(iVar4 + 0x3c) & 1) != 0) && ((*(uint *)(iVar4 + 0x3c) & 2) != 0)) {
-    fVar2 = fVar2 + 1.0;
+  uVar1 = param_1->wheels[1].flags;
+  if (((uVar1 & 1) != 0) && ((uVar1 & 2) != 0)) {
+    fVar6 = fVar6 + 1.0;
   }
-  if (((*(uint *)(iVar4 + 0x68) & 1) != 0) && ((*(uint *)(iVar4 + 0x68) & 2) != 0)) {
-    fVar2 = fVar2 + 1.0;
+  uVar1 = param_1->wheels[2].flags;
+  if (((uVar1 & 1) != 0) && ((uVar1 & 2) != 0)) {
+    fVar6 = fVar6 + 1.0;
   }
-  if (((*(uint *)(iVar4 + 0x94) & 1) != 0) && ((*(uint *)(iVar4 + 0x94) & 2) != 0)) {
-    fVar2 = fVar2 + 1.0;
+  uVar1 = param_1->wheels[3].flags;
+  if (((uVar1 & 1) != 0) && ((uVar1 & 2) != 0)) {
+    fVar6 = fVar6 + 1.0;
   }
-  if (((*(uint *)(iVar4 + 0xc0) & 1) != 0) && ((*(uint *)(iVar4 + 0xc0) & 2) != 0)) {
-    fVar2 = fVar2 + 1.0;
+  uVar1 = param_1->wheels[4].flags;
+  if (((uVar1 & 1) != 0) && ((uVar1 & 2) != 0)) {
+    fVar6 = fVar6 + 1.0;
   }
-  if (((*(uint *)(iVar4 + 0xec) & 1) != 0) && ((*(uint *)(iVar4 + 0xec) & 2) != 0)) {
-    fVar2 = fVar2 + 1.0;
+  uVar1 = param_1->wheels[5].flags;
+  if (((uVar1 & 1) != 0) && ((uVar1 & 2) != 0)) {
+    fVar6 = fVar6 + 1.0;
   }
-  *(float *)(iVar4 + 0x1d8) = 1.0 / fVar2;
-  uVar5 = __restgprlr_29(uVar3);
-  return (bool)uVar5;
+  param_1->invWheelsWithPower = 1.0 / fVar6;
+  return bVar7;
 }
 
 
@@ -718,104 +717,100 @@ void PhysVeh_InitDef(PhysVehicle *param_1)
 
 // 8267AB58  PhysVeh_Save  (physics/phys_vehicle.cpp:540)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void PhysVeh_Save(PhysVehicle *param_1,MemoryFile *param_2)
 
 {
-  int *piVar1;
   uint local_30 [12];
   
-  piVar1 = (int *)__savegprlr_28(param_1);
-  if (piVar1 == (int *)0x0) {
+  if (param_1 == (PhysVehicle *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_vehicle.cpp",
                     0x21d,0,"%s");
   }
-  if (*piVar1 == 0) {
+  if (param_1->body == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_vehicle.cpp",
                     0x21e,0,"%s");
   }
-  local_30[0] = Phys_ObjGetSaveIndex(*piVar1);
+  local_30[0] = Phys_ObjGetSaveIndex(param_1->body);
   MemFile_WriteData(param_2,4,local_30);
-  MemFile_WriteData(param_2,0x28c,piVar1);
-  __restgprlr_28();
+  MemFile_WriteData(param_2,0x28c,param_1);
   return;
 }
 
 
 // 8267AC00  PhysVeh_Load  (physics/phys_vehicle.cpp:550)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PhysWorld": Some values do not have unique names */
 
 PhysVehicle * PhysVeh_Load(SaveGame *param_1,VehiclePhysDef *param_2,GraphFloat *param_3)
 
 {
   float fVar1;
-  SaveGame *pSVar2;
-  int *piVar3;
-  MemoryFile *pMVar4;
-  int iVar5;
-  PhysVehicle *pPVar6;
-  ulonglong uVar7;
-  ulonglong uVar8;
+  PhysVehicle *pPVar2;
+  MemoryFile *pMVar3;
+  int iVar4;
   char in_RESERVE;
-  byte bVar9;
+  byte bVar5;
   uint local_40 [16];
   
-  uVar8 = (ulonglong)(int)param_3;
-  uVar7 = (ulonglong)(int)param_2;
-  pSVar2 = (SaveGame *)__savegprlr_26(param_1);
-  if ((uVar7 & 0xffffffff) == 0) {
+  if (param_2 == (VehiclePhysDef *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_vehicle.cpp",
                     0x22c,0,"%s");
   }
-  if ((uVar8 & 0xffffffff) == 0) {
+  if (param_3 == (GraphFloat *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_vehicle.cpp",
                     0x22d,0,"%s");
   }
-  bVar9 = (uVar8 == 0xffffffffffffffc0) << 1;
-  if (uVar8 == 0xffffffffffffffc0) {
+  bVar5 = (param_3 == (GraphFloat *)0xffffffc0) << 1;
+  if (param_3 == (GraphFloat *)0xffffffc0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_vehicle.cpp",
                     0x22e,0,"%s");
   }
-  if (*(ushort *)((int)uVar8 + 0x140) < 2) {
+  if (param_3->knotCount < 2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_vehicle.cpp",
                     0x22f,0,"%s\n\t(accelGraph->knotCount) = %i");
   }
-  piVar3 = Pool_Alloc(&physVehGlob.physVehiclePool);
-  if (piVar3 == (int *)0x0) {
+  pPVar2 = Pool_Alloc(&physVehGlob.physVehiclePool);
+  if (pPVar2 == (PhysVehicle *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_vehicle.cpp",
                     0x232,0,"%s");
   }
-  pMVar4 = SaveMemory_GetMemoryFile(pSVar2);
-  MemFile_ReadData(pMVar4,4,local_40);
-  iVar5 = Phys_ObjFromSaveIndex(PHYS_WORLD_FIRST_SERVER_WORLD,local_40[0]);
-  SaveMemory_LoadRead(piVar3,0x28c,pSVar2);
-  *piVar3 = iVar5;
+  pMVar3 = SaveMemory_GetMemoryFile(param_1);
+  MemFile_ReadData(pMVar3,4,local_40);
+  iVar4 = Phys_ObjFromSaveIndex(PHYS_WORLD_FIRST_SERVER_WORLD,local_40[0]);
+  SaveMemory_LoadRead(pPVar2,0x28c,param_1);
+  pPVar2->body = iVar4;
   do {
     if (in_RESERVE != '\0') {
       g_vehiclePhysObjCount =
            storeWordConditionalIndexed
                      ((ulonglong)(uint)g_vehiclePhysObjCount + 1,0,0xffffffff8427b884);
-      bVar9 = 2;
+      bVar5 = 2;
     }
-  } while (!(bool)(bVar9 >> 1 & 1));
-  piVar3[0x9a] = (int)uVar7;
-  piVar3[0x9b] = (int)uVar8;
-  if ((piVar3[0x99] & 4U) == 0) {
-    fVar1 = 1.0 - *(float *)((int)uVar7 + 0x60);
+  } while (!(bool)(bVar5 >> 1 & 1));
+  pPVar2->def = param_2;
+  pPVar2->accelGraph = param_3;
+  if ((pPVar2->flags & 4) == 0) {
+    fVar1 = 1.0 - param_2->rollStability;
   }
   else {
     fVar1 = 1.0;
   }
   G_PhysObjSetCollisionFromModelIndex
-            (piVar3[0x9e],PHYS_WORLD_FIRST_SERVER_WORLD,iVar5,fVar1,(bool)((byte)piVar3[0x99] & 4));
-  Phys_CreateOrientationConstraint(PHYS_WORLD_FIRST_SERVER_WORLD,*piVar3,(dxJoint *)(piVar3 + 0x43))
-  ;
-  Phys_CreatePathConstraint(PHYS_WORLD_FIRST_SERVER_WORLD,*piVar3,(dxJoint *)(piVar3 + 0x5c));
-  if ((piVar3[0x99] & 0x20U) != 0) {
-    Phys_ObjClearAutoDisable(*piVar3);
+            (pPVar2->modelIndex,PHYS_WORLD_FIRST_SERVER_WORLD,iVar4,fVar1,
+             (bool)((byte)pPVar2->flags & 4));
+  Phys_CreateOrientationConstraint
+            (PHYS_WORLD_FIRST_SERVER_WORLD,pPVar2->body,(dxJoint *)&pPVar2->orientationConstraint);
+  Phys_CreatePathConstraint
+            (PHYS_WORLD_FIRST_SERVER_WORLD,pPVar2->body,(dxJoint *)&pPVar2->pathConstraint);
+  if ((pPVar2->flags & 0x20) != 0) {
+    Phys_ObjClearAutoDisable(pPVar2->body);
   }
-  pPVar6 = (PhysVehicle *)__restgprlr_26(piVar3);
-  return pPVar6;
+  return pPVar2;
 }
 
 
@@ -880,20 +875,20 @@ void PhysVeh_SetSpeed(PhysVehicle *param_1,float param_2)
 
 // 8267AF88  PhysVeh_SetState  (physics/phys_vehicle.cpp:629)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void PhysVeh_SetState(PhysVehicle *param_1,float *param_2,float *param_3,float *param_4,
                      float *param_5)
 
 {
-  int *piVar1;
   float afStack_50 [20];
   
-  piVar1 = (int *)__savegprlr_28(param_1);
   AnglesToAxis(param_3,(float (*) [3])afStack_50);
-  Phys_ObjSetOrientation(*piVar1,param_2,(float (*) [3])afStack_50);
-  Phys_ObjSetVelocity(*piVar1,param_4);
-  Phys_ObjSetAngularVelocity(*piVar1,param_5);
-  dBodyEnable((dxBody *)*piVar1);
-  __restgprlr_28();
+  Phys_ObjSetOrientation(param_1->body,param_2,(float (*) [3])afStack_50);
+  Phys_ObjSetVelocity(param_1->body,param_4);
+  Phys_ObjSetAngularVelocity(param_1->body,param_5);
+  dBodyEnable((dxBody *)param_1->body);
   return;
 }
 
@@ -914,59 +909,50 @@ void PhysVeh_GetCenterOfMass(PhysVehicle *param_1,float *param_2)
 
 // 8267B058  PhysVeh_GetState  (physics/phys_vehicle.cpp:649)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
+
 void PhysVeh_GetState(PhysVehicle *param_1,float *param_2,float *param_3,float *param_4,bool param_5
                      )
 
 {
   float fVar1;
-  int *piVar2;
-  ulonglong uVar3;
-  float *pfVar4;
-  ulonglong uVar5;
-  ulonglong uVar6;
-  ulonglong uVar7;
-  double dVar8;
+  double dVar2;
   float afStack_70 [28];
   
-  uVar7 = (ulonglong)param_5;
-  uVar6 = (ulonglong)(int)param_4;
-  uVar5 = (ulonglong)(int)param_3;
-  uVar3 = (ulonglong)(int)param_2;
-  piVar2 = (int *)__savegprlr_25(param_1);
-  if (piVar2 == (int *)0x0) {
+  if (param_1 == (PhysVehicle *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_vehicle.cpp",
                     0x28d,0,"%s");
   }
-  if ((uVar3 & 0xffffffff) == 0) {
+  if (param_2 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_vehicle.cpp",
                     0x28e,0,"%s");
   }
-  if ((uVar5 & 0xffffffff) == 0) {
+  if (param_3 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_vehicle.cpp",
                     0x28f,0,"%s");
   }
-  if ((uVar6 & 0xffffffff) == 0) {
+  if (param_4 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_vehicle.cpp",
                     0x290,0,"%s");
   }
-  Phys_ObjGetPosition(*piVar2,(float *)uVar3,(float (*) [3])afStack_70);
-  AxisToAngles((float (*) [3])afStack_70,(float *)uVar5);
-  pfVar4 = (float *)uVar6;
-  Phys_ObjGetVelocity(*piVar2,pfVar4);
-  if (((uVar7 & 0xff) != 0) &&
-     (dVar8 = (double)(pfVar4[2] * pfVar4[2] + *pfVar4 * *pfVar4 + pfVar4[1] * pfVar4[1]),
-     (double)(*(float *)(piVar2[0x9a] + 0x24) * *(float *)(piVar2[0x9a] + 0x24)) < dVar8)) {
-    if (dVar8 < 0.0) {
+  Phys_ObjGetPosition(param_1->body,param_2,(float (*) [3])afStack_70);
+  AxisToAngles((float (*) [3])afStack_70,param_3);
+  Phys_ObjGetVelocity(param_1->body,param_4);
+  if ((param_5) &&
+     (fVar1 = param_1->def->maxVelocity,
+     dVar2 = (double)(param_4[2] * param_4[2] + *param_4 * *param_4 + param_4[1] * param_4[1]),
+     (double)(fVar1 * fVar1) < dVar2)) {
+    if (dVar2 < 0.0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_vehicle.cpp",
                       0x29c,0,"%s");
     }
-    fVar1 = (*(float *)(piVar2[0x9a] + 0x24) - 1.0) / (float)SQRT(dVar8);
-    *pfVar4 = *pfVar4 * fVar1;
-    pfVar4[1] = fVar1 * pfVar4[1];
-    pfVar4[2] = fVar1 * pfVar4[2];
-    Phys_ObjSetVelocity(*piVar2,pfVar4);
+    fVar1 = (param_1->def->maxVelocity - 1.0) / (float)SQRT(dVar2);
+    *param_4 = *param_4 * fVar1;
+    param_4[1] = fVar1 * param_4[1];
+    param_4[2] = fVar1 * param_4[2];
+    Phys_ObjSetVelocity(param_1->body,param_4);
   }
-  __restgprlr_25();
   return;
 }
 
@@ -990,140 +976,118 @@ void PhysVeh_GetForwardDir(PhysVehicle *param_1,float *param_2)
 
 // 8267B250  PhysVeh_GetWorldVelocity  (physics/phys_vehicle.cpp:691)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void PhysVeh_GetWorldVelocity(PhysVehicle *param_1,float *param_2)
 
 {
-  int *piVar1;
-  ulonglong uVar2;
-  
-  uVar2 = (ulonglong)(int)param_2;
-  piVar1 = (int *)__savegprlr_28(param_1);
-  if (piVar1 == (int *)0x0) {
+  if (param_1 == (PhysVehicle *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_vehicle.cpp",
                     0x2b4,0,"%s");
   }
-  if ((uVar2 & 0xffffffff) == 0) {
+  if (param_2 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_vehicle.cpp",
                     0x2b5,0,"%s");
   }
-  Phys_ObjGetVelocity(*piVar1,(float *)uVar2);
-  __restgprlr_28();
+  Phys_ObjGetVelocity(param_1->body,param_2);
   return;
 }
 
 
 // 8267B2D0  PhysVeh_GetLocalVelocity  (physics/phys_vehicle.cpp:703)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void PhysVeh_GetLocalVelocity(PhysVehicle *param_1,float *param_2)
 
 {
-  int iVar1;
-  ulonglong uVar2;
-  undefined4 *puVar3;
-  
-  uVar2 = (ulonglong)(int)param_2;
-  iVar1 = __savegprlr_28(param_1);
-  if (iVar1 == 0) {
+  if (param_1 == (PhysVehicle *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_vehicle.cpp",
                     0x2c0,0,"%s");
   }
-  if ((uVar2 & 0xffffffff) == 0) {
+  if (param_2 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_vehicle.cpp",
                     0x2c1,0,"%s");
   }
-  puVar3 = (undefined4 *)uVar2;
-  *puVar3 = *(undefined4 *)(iVar1 + 0x214);
-  puVar3[1] = *(undefined4 *)(iVar1 + 0x218);
-  puVar3[2] = *(undefined4 *)(iVar1 + 0x21c);
-  __restgprlr_28();
+  *param_2 = param_1->localVelocity[0];
+  param_2[1] = param_1->localVelocity[1];
+  param_2[2] = param_1->localVelocity[2];
   return;
 }
 
 
 // 8267B360  PhysVeh_GetAngularVelocity  (physics/phys_vehicle.cpp:715)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void PhysVeh_GetAngularVelocity(PhysVehicle *param_1,float *param_2)
 
 {
-  undefined4 *puVar1;
-  int *piVar2;
-  ulonglong uVar3;
   float local_40;
-  undefined4 local_3c;
-  undefined4 local_38;
+  float local_3c;
+  float local_38;
   
-  uVar3 = (ulonglong)(int)param_2;
-  piVar2 = (int *)__savegprlr_28(param_1);
-  if (piVar2 == (int *)0x0) {
+  if (param_1 == (PhysVehicle *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_vehicle.cpp",
                     0x2ce,0,"%s");
   }
-  if ((uVar3 & 0xffffffff) == 0) {
+  if (param_2 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_vehicle.cpp",
                     0x2cf,0,"%s");
   }
-  Phys_ObjGetAngularVelocityRaw(*piVar2,&local_40);
-  puVar1 = (undefined4 *)uVar3;
-  puVar1[2] = local_40;
-  *puVar1 = local_3c;
-  puVar1[1] = local_38;
-  __restgprlr_28();
+  Phys_ObjGetAngularVelocityRaw(param_1->body,&local_40);
+  param_2[2] = local_40;
+  *param_2 = local_3c;
+  param_2[1] = local_38;
   return;
 }
 
 
 // 8267B3F8  PhysVeh_GetWorldAcceleration  (physics/phys_vehicle.cpp:733)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void PhysVeh_GetWorldAcceleration(PhysVehicle *param_1,float *param_2)
 
 {
-  int iVar1;
-  ulonglong uVar2;
-  undefined4 *puVar3;
-  
-  uVar2 = (ulonglong)(int)param_2;
-  iVar1 = __savegprlr_28(param_1);
-  if (iVar1 == 0) {
+  if (param_1 == (PhysVehicle *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_vehicle.cpp",
                     0x2de,0,"%s");
   }
-  if ((uVar2 & 0xffffffff) == 0) {
+  if (param_2 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_vehicle.cpp",
                     0x2df,0,"%s");
   }
-  puVar3 = (undefined4 *)uVar2;
-  *puVar3 = *(undefined4 *)(iVar1 + 0x1fc);
-  puVar3[1] = *(undefined4 *)(iVar1 + 0x200);
-  puVar3[2] = *(undefined4 *)(iVar1 + 0x204);
-  __restgprlr_28();
+  *param_2 = param_1->acceleration[0];
+  param_2[1] = param_1->acceleration[1];
+  param_2[2] = param_1->acceleration[2];
   return;
 }
 
 
 // 8267B488  PhysVeh_GetLocalAcceleration  (physics/phys_vehicle.cpp:745)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void PhysVeh_GetLocalAcceleration(PhysVehicle *param_1,float *param_2)
 
 {
-  int iVar1;
-  ulonglong uVar2;
-  undefined4 *puVar3;
-  
-  uVar2 = (ulonglong)(int)param_2;
-  iVar1 = __savegprlr_28(param_1);
-  if (iVar1 == 0) {
+  if (param_1 == (PhysVehicle *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_vehicle.cpp",
                     0x2ea,0,"%s");
   }
-  if ((uVar2 & 0xffffffff) == 0) {
+  if (param_2 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_vehicle.cpp",
                     0x2eb,0,"%s");
   }
-  puVar3 = (undefined4 *)uVar2;
-  *puVar3 = *(undefined4 *)(iVar1 + 0x220);
-  puVar3[1] = *(undefined4 *)(iVar1 + 0x224);
-  puVar3[2] = *(undefined4 *)(iVar1 + 0x228);
-  __restgprlr_28();
+  *param_2 = param_1->localAcceleration[0];
+  param_2[1] = param_1->localAcceleration[1];
+  param_2[2] = param_1->localAcceleration[2];
   return;
 }
 
@@ -1156,6 +1120,9 @@ bool PhysVeh_IsReversing(PhysVehicle *param_1)
 
 // 8267B5E8  Phys_CalcSpringParms  (physics/phys_vehicle.cpp:779)
 
+/* WARNING: Function: __savefpr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_27 replaced with injection: xenon_save_restore */
+
 void Phys_CalcSpringParms
                (float param_1,float param_2,float param_3,float param_4,float *param_5,
                float *param_6)
@@ -1170,9 +1137,9 @@ void Phys_CalcSpringParms
   double dVar5;
   
   dVar3 = (double)param_4;
+  dVar1 = (double)param_1;
   dVar4 = (double)param_2;
   dVar2 = (double)param_3;
-  dVar1 = (double)__savefpr_27((double)param_1,param_5,param_6);
   dVar5 = 0.0;
   if (dVar3 <= 0.0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_vehicle.cpp",
@@ -1184,32 +1151,31 @@ void Phys_CalcSpringParms
     dVar4 = dVar5;
   }
   *in_r8 = (float)dVar4;
-  __restfpr_27();
   return;
 }
 
 
 // 8267B698  PhysVeh_TorqueMove  (physics/phys_vehicle.cpp:814)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void PhysVeh_TorqueMove(PhysVehicle *param_1,float param_2,float param_3)
 
 {
-  int *piVar1;
-  double extraout_f1;
+  double dVar1;
   double dVar2;
-  double dVar3;
   float local_48;
   float local_44;
   float local_40;
   
   dVar2 = (double)param_3;
-  piVar1 = (int *)__savegprlr_28((double)param_2,param_1);
-  dVar3 = extraout_f1;
-  if (piVar1 == (int *)0x0) {
+  dVar1 = (double)param_2;
+  if (param_1 == (PhysVehicle *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_vehicle.cpp",
                     0x331,0,"%s");
   }
-  if (((uint)(float)dVar3 & 0x7f800000) == 0x7f800000) {
+  if (((uint)(float)dVar1 & 0x7f800000) == 0x7f800000) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_vehicle.cpp",
                     0x332,0,"%s");
   }
@@ -1217,11 +1183,10 @@ void PhysVeh_TorqueMove(PhysVehicle *param_1,float param_2,float param_3)
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_vehicle.cpp",
                     0x333,0,"%s");
   }
-  local_44 = (float)((double)(float)piVar1[0x7b] * dVar2);
-  local_40 = (float)((double)(float)piVar1[0x7a] * dVar3);
+  local_44 = (float)((double)param_1->pitchControl * dVar2);
+  local_40 = (float)((double)param_1->steeringAngle * dVar1);
   local_48 = 0.0;
-  Phys_ObjAddRelativeTorque(*piVar1,&local_48);
-  __restgprlr_28();
+  Phys_ObjAddRelativeTorque(param_1->body,&local_48);
   return;
 }
 
@@ -1246,6 +1211,11 @@ bool PhysVeh_WheelIsBeingDriven(PhysVehicle *param_1,PhysVehicleWheel *param_2)
 
 // 8267B800  PhysVeh_CalcWheelFriction  (physics/phys_vehicle.cpp:842)
 
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
+
 void PhysVeh_CalcWheelFriction
                (uint param_1,PhysVehicle *param_2,PhysVehicleWheel *param_3,float *param_4,
                float *param_5,float param_6,dSurfaceParameters *param_7)
@@ -1256,21 +1226,17 @@ void PhysVeh_CalcWheelFriction
   float fVar3;
   float fVar4;
   bool bVar5;
-  int iVar6;
-  ulonglong uVar7;
-  float *pfVar8;
-  float *pfVar9;
+  PhysVehicle *pPVar6;
   int in_r9;
-  bool bVar10;
+  bool bVar7;
+  double dVar8;
+  double dVar9;
+  double dVar10;
   double dVar11;
-  double extraout_f1;
   double dVar12;
   double dVar13;
   double dVar14;
   double dVar15;
-  double dVar16;
-  double dVar17;
-  double dVar18;
   float local_b0;
   float local_ac;
   float local_a8;
@@ -1278,36 +1244,31 @@ void PhysVeh_CalcWheelFriction
   float local_9c;
   float local_98;
   
-  uVar7 = (ulonglong)(int)param_2;
-  __savegprlr_22((double)param_6,param_1);
-  iVar6 = __savefpr_26();
-  pfVar8 = (float *)uVar7;
-  dVar13 = extraout_f1;
-  pfVar9 = pfVar8;
-  if ((uVar7 & 0xffffffff) == 0) {
-    pfVar9 = (float *)0x358;
+  dVar9 = (double)param_6;
+  pPVar6 = param_2;
+  if (param_2 == (PhysVehicle *)0x0) {
+    pPVar6 = (PhysVehicle *)0x358;
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_vehicle.cpp",
                     0x358,0,"%s");
   }
-  dBodyGetRelPointVel((dxBody *)*pfVar8,param_3->originLocal[0],param_3->originLocal[1],
-                      param_3->originLocal[2],pfVar9);
-  fVar1 = pfVar8[0xa2];
-  fVar2 = pfVar8[0xa1];
-  dVar17 = 0.0;
-  fVar3 = param_5[2];
-  bVar10 = param_4[2] < (float)0x3f333333;
-  dVar16 = (double)(fVar3 * local_a8 +
-                   *param_5 * (local_b0 - fVar2) + param_5[1] * (local_ac - fVar1));
-  dVar15 = 1.0;
-  dVar14 = 3.4028234663852886e+38;
-  dVar18 = dVar17;
-  if ((pfVar8[0x79] <= 0.0) || ((param_3->flags & 8) == 0)) {
+  dBodyGetRelPointVel((dxBody *)param_2->body,param_3->originLocal[0],param_3->originLocal[1],
+                      param_3->originLocal[2],(float *)pPVar6);
+  fVar3 = local_ac - param_2->conveyorVelocity[1];
+  fVar4 = local_b0 - param_2->conveyorVelocity[0];
+  dVar14 = 0.0;
+  fVar1 = param_5[2];
+  bVar7 = param_4[2] < (float)0x3f333333;
+  dVar13 = (double)(fVar1 * local_a8 + *param_5 * fVar4 + param_5[1] * fVar3);
+  dVar12 = 1.0;
+  dVar11 = 3.4028234663852886e+38;
+  dVar15 = dVar14;
+  if ((param_2->brakingFactor <= 0.0) || ((param_3->flags & 8) == 0)) {
     if ((param_3->flags & 2) == 0) {
 LAB_8267b9bc:
       bVar5 = false;
     }
-    else if ((pfVar8[0x78] == 0.0) || (pfVar8[0x77] <= 0.0)) {
-      if ((((uint)pfVar8[0x99] & 0x10) == 0) ||
+    else if ((param_2->desiredSpeed == 0.0) || (param_2->desiredAccel <= 0.0)) {
+      if (((param_2->flags & 0x10) == 0) ||
          ((param_3->speedRatio == 0.0 || (bVar5 = true, param_3->accelRatio <= 0.0))))
       goto LAB_8267b9bc;
     }
@@ -1316,11 +1277,11 @@ LAB_8267b9bc:
     }
     if (bVar5) {
       bVar5 = false;
-      if (bVar10) {
-        if (pfVar8[0x78] <= 0.0) {
-          if (fVar3 < 0.0) goto LAB_8267b9fc;
+      if (bVar7) {
+        if (param_2->desiredSpeed <= 0.0) {
+          if (fVar1 < 0.0) goto LAB_8267b9fc;
         }
-        else if (0.0 < fVar3) {
+        else if (0.0 < fVar1) {
 LAB_8267b9fc:
           bVar5 = true;
         }
@@ -1333,57 +1294,57 @@ LAB_8267b9fc:
           *(undefined4 *)(in_r9 + 8) = 0;
         }
         else {
-          fVar3 = param_5[2];
-          fVar4 = *(float *)((int)pfVar8[0x9a] + 0x48);
+          fVar1 = param_5[2];
+          fVar2 = param_2->def->frictionBraking;
           *(undefined4 *)(in_r9 + 8) = 0;
-          *(float *)(in_r9 + 4) = -(fVar3 * fVar3 - 1.0) * fVar4;
+          *(float *)(in_r9 + 4) = -(fVar1 * fVar1 - 1.0) * fVar2;
         }
       }
       else {
-        if (((uint)pfVar8[0x99] & 0x10) == 0) {
+        if ((param_2->flags & 0x10) == 0) {
           if (param_3->accelRatio <= 0.0) {
             MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_vehicle.cpp"
                             ,0x398,0,"%s");
           }
-          fVar3 = param_3->speedRatio * pfVar8[0x78];
-          *(float *)(in_r9 + 0x1c) = fVar3;
-          dVar12 = (double)(pfVar8[0x77] * param_3->accelRatio);
-          dVar11 = ABS((double)(float)((double)fVar3 - dVar16));
+          fVar1 = param_3->speedRatio * param_2->desiredSpeed;
+          *(float *)(in_r9 + 0x1c) = fVar1;
+          dVar10 = (double)(param_2->desiredAccel * param_3->accelRatio);
+          dVar8 = ABS((double)(float)((double)fVar1 - dVar13));
         }
         else {
-          *(float *)(in_r9 + 0x1c) = param_3->speedRatio + pfVar8[0x78];
-          dVar12 = (double)pfVar8[0x77];
-          if (dVar12 == 0.0) {
-            dVar12 = (double)param_3->accelRatio;
+          *(float *)(in_r9 + 0x1c) = param_3->speedRatio + param_2->desiredSpeed;
+          dVar10 = (double)param_2->desiredAccel;
+          if (dVar10 == 0.0) {
+            dVar10 = (double)param_3->accelRatio;
           }
           else if (param_3->accelRatio != 0.0) {
-            fVar3 = 1.0 - ABS(pfVar8[0x78] / pfVar8[0x9c]);
-            dVar11 = -(double)(fVar3 * fVar3 - 1.0);
-            if (pfVar8[0x9c] - 0.01 < 0.0) {
-              dVar11 = dVar17;
+            fVar1 = 1.0 - ABS(param_2->desiredSpeed / param_2->topSpeed);
+            dVar8 = -(double)(fVar1 * fVar1 - 1.0);
+            if (param_2->topSpeed - 0.01 < 0.0) {
+              dVar8 = dVar14;
             }
-            dVar12 = (double)((float)(1.0 - dVar11) * (float)(1.0 - dVar11) * param_3->accelRatio +
-                             (float)(dVar12 * dVar11));
+            dVar10 = (double)((float)(1.0 - dVar8) * (float)(1.0 - dVar8) * param_3->accelRatio +
+                             (float)(dVar10 * dVar8));
           }
-          if ((double)pfVar8[0x78] == 0.0) {
-            dVar11 = ABS((double)(float)((double)*(float *)(in_r9 + 0x1c) - dVar16));
+          if ((double)param_2->desiredSpeed == 0.0) {
+            dVar8 = ABS((double)(float)((double)*(float *)(in_r9 + 0x1c) - dVar13));
           }
           else {
-            dVar11 = ABS((double)(float)((double)pfVar8[0x78] - dVar16));
+            dVar8 = ABS((double)(float)((double)param_2->desiredSpeed - dVar13));
           }
         }
-        if (0.10000000149011612 <= dVar11) {
-          dVar12 = dVar12 / dVar11;
+        if (0.10000000149011612 <= dVar8) {
+          dVar10 = dVar10 / dVar8;
         }
         else {
-          dVar12 = dVar12 * 10.0;
+          dVar10 = dVar10 * 10.0;
         }
-        fVar3 = *(float *)((int)*pfVar8 + 0x94);
-        *(float *)(in_r9 + 4) = (float)dVar14;
-        *(float *)(in_r9 + 0x24) = fVar3 / (float)dVar12;
-        if ((dVar18 < (double)pfVar8[0x78]) &&
-           (fVar3 = (float)((double)pfVar8[0x78] - dVar16), 5.0 < ABS(fVar3))) {
-          dVar17 = (double)(fVar3 * (float)dVar12);
+        fVar1 = *(float *)(param_2->body + 0x94);
+        *(float *)(in_r9 + 4) = (float)dVar11;
+        *(float *)(in_r9 + 0x24) = fVar1 / (float)dVar10;
+        if ((dVar15 < (double)param_2->desiredSpeed) &&
+           (fVar1 = (float)((double)param_2->desiredSpeed - dVar13), 5.0 < ABS(fVar1))) {
+          dVar14 = (double)(fVar1 * (float)dVar10);
         }
       }
     }
@@ -1392,77 +1353,77 @@ LAB_8267b9fc:
       *(undefined4 *)(in_r9 + 0x24) = 0;
       *(undefined4 *)(in_r9 + 0x1c) = 0;
     }
-    *(float *)(in_r9 + 0x28) = (float)(ABS(dVar16) * (double)*(float *)((int)pfVar8[0x9a] + 0x5c));
+    *(float *)(in_r9 + 0x28) = (float)(ABS(dVar13) * (double)param_2->def->velocityDependentSlip);
   }
   else {
     *(undefined4 *)(in_r9 + 0x24) = 0;
     *(undefined4 *)(in_r9 + 0x1c) = 0;
-    dVar12 = dVar15;
-    if (bVar10) {
-      dVar12 = -(double)(param_5[2] * param_5[2] - 1.0);
+    dVar10 = dVar12;
+    if (bVar7) {
+      dVar10 = -(double)(param_5[2] * param_5[2] - 1.0);
     }
-    fVar3 = pfVar8[0x79];
+    fVar1 = (float)((double)param_2->brakingFactor * dVar10);
     *(undefined4 *)(in_r9 + 0x28) = 0;
-    *(float *)(in_r9 + 4) = (float)((double)fVar3 * dVar12);
-    fVar3 = (float)((double)fVar3 * dVar12) + 1.0;
-    if (fVar3 - *(float *)(in_r9 + 8) < 0.0) {
-      fVar3 = *(float *)(in_r9 + 8);
+    *(float *)(in_r9 + 4) = fVar1;
+    fVar1 = fVar1 + 1.0;
+    if (fVar1 - *(float *)(in_r9 + 8) < 0.0) {
+      fVar1 = *(float *)(in_r9 + 8);
     }
-    *(float *)(in_r9 + 8) = fVar3;
+    *(float *)(in_r9 + 8) = fVar1;
   }
   Vec3Cross(param_4,param_5,&local_a0);
-  if (bVar10) {
-    if ((iVar6 == 0) || (bVar10 = false, iVar6 == 1)) {
-      bVar10 = true;
+  if (bVar7) {
+    if ((param_1 == 0) || (bVar7 = false, param_1 == 1)) {
+      bVar7 = true;
     }
-    if (bVar10) {
-      *(float *)(in_r9 + 8) = (float)(dVar15 - ABS((double)local_98)) * *(float *)(in_r9 + 8);
+    if (bVar7) {
+      *(float *)(in_r9 + 8) = (float)(dVar12 - ABS((double)local_98)) * *(float *)(in_r9 + 8);
     }
   }
   fVar1 = (float)((double)local_a8 * (double)local_98 +
-                 (double)(local_9c * (local_ac - fVar1) + local_a0 * (local_b0 - fVar2))) * 3.0;
-  if ((iVar6 == 0) || (bVar10 = false, iVar6 == 1)) {
-    bVar10 = true;
+                 (double)(local_9c * fVar3 + local_a0 * fVar4)) * 3.0;
+  if ((param_1 == 0) || (bVar7 = false, param_1 == 1)) {
+    bVar7 = true;
   }
-  if (bVar10) {
-    fVar2 = *(float *)((int)pfVar8[0x9a] + 0x98);
+  if (bVar7) {
+    fVar3 = param_2->def->slipThresholdFront;
   }
   else {
-    fVar2 = *(float *)((int)pfVar8[0x9a] + 0x9c);
+    fVar3 = param_2->def->slipThresholdRear;
   }
-  if ((double)pfVar8[0x9c] < dVar16) {
-    fVar1 = fVar1 / (float)((double)(float)(dVar16 - (double)pfVar8[0x9c]) *
-                            (double)(physVeh_slideReductionForHighSpeed->current).value + dVar15);
+  if ((double)param_2->topSpeed < dVar13) {
+    fVar1 = fVar1 / (float)((double)(float)(dVar13 - (double)param_2->topSpeed) *
+                            (double)(physVeh_slideReductionForHighSpeed->current).value + dVar12);
   }
-  if ((((double)*(float *)(in_r9 + 4) != dVar14) && ((double)*(float *)(in_r9 + 4) != dVar18)) ||
-     (fVar1 * fVar1 + (float)(dVar17 * dVar17) < fVar2 * fVar2)) {
+  if ((((double)*(float *)(in_r9 + 4) != dVar11) && ((double)*(float *)(in_r9 + 4) != dVar15)) ||
+     (fVar1 * fVar1 + (float)(dVar14 * dVar14) < fVar3 * fVar3)) {
     param_3->slipping = false;
     fVar1 = *(float *)(in_r9 + 8);
   }
   else {
     param_3->slipping = true;
-    if ((iVar6 == 0) || (bVar10 = false, iVar6 == 1)) {
-      bVar10 = true;
+    if ((param_1 == 0) || (bVar7 = false, param_1 == 1)) {
+      bVar7 = true;
     }
-    if (bVar10) {
-      fVar1 = *(float *)((int)pfVar8[0x9a] + 0xa0);
+    if (bVar7) {
+      fVar1 = param_2->def->slipFricScaleFront;
     }
     else {
-      fVar1 = *(float *)((int)pfVar8[0x9a] + 0xa4);
+      fVar1 = param_2->def->slipFricScaleRear;
     }
     fVar1 = *(float *)(in_r9 + 8) * fVar1;
     *(float *)(in_r9 + 8) = fVar1;
     if (fVar1 < param_3->sideFriction) {
-      if ((iVar6 == 0) || (bVar10 = false, iVar6 == 1)) {
-        bVar10 = true;
+      if ((param_1 == 0) || (bVar7 = false, param_1 == 1)) {
+        bVar7 = true;
       }
-      if (bVar10) {
-        fVar1 = *(float *)((int)pfVar8[0x9a] + 0xa8);
+      if (bVar7) {
+        fVar1 = param_2->def->slipFricRateFront;
       }
       else {
-        fVar1 = *(float *)((int)pfVar8[0x9a] + 0xac);
+        fVar1 = param_2->def->slipFricRateRear;
       }
-      fVar1 = -(float)((double)fVar1 * dVar13 - dVar15) * param_3->sideFriction;
+      fVar1 = -(float)((double)fVar1 * dVar9 - dVar12) * param_3->sideFriction;
       param_3->sideFriction = fVar1;
       if (fVar1 - *(float *)(in_r9 + 8) < 0.0) {
         fVar1 = *(float *)(in_r9 + 8);
@@ -1475,10 +1436,10 @@ LAB_8267b9fc:
   param_3->sideFriction = fVar1;
 LAB_8267bd80:
   *(float *)(in_r9 + 0x1c) =
-       pfVar8[0xa1] * *param_5 + param_5[1] * pfVar8[0xa2] + *(float *)(in_r9 + 0x1c);
-  *(float *)(in_r9 + 0x20) = pfVar8[0xa2] * local_9c + pfVar8[0xa1] * local_a0;
-  __restfpr_26();
-  __restgprlr_22();
+       param_2->conveyorVelocity[0] * *param_5 + param_5[1] * param_2->conveyorVelocity[1] +
+       *(float *)(in_r9 + 0x1c);
+  *(float *)(in_r9 + 0x20) =
+       param_2->conveyorVelocity[1] * local_9c + param_2->conveyorVelocity[0] * local_a0;
   return;
 }
 
@@ -1509,6 +1470,10 @@ void PhysVeh_HighCenteredMove(PhysVehicle *param_1)
 
 // 8267BE78  PhysVeh_CollideWheels  (physics/phys_vehicle.cpp:1027)
 
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PhysWorld": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
@@ -1523,36 +1488,32 @@ void PhysVeh_CollideWheels(PhysVehicle *param_1,float param_2,int *param_3,float
   bool bVar5;
   bool bVar6;
   dxBody *pdVar7;
-  PhysVehicle *pPVar8;
-  float *pfVar9;
-  void *pvVar10;
-  uint uVar11;
-  trace_t *ptVar12;
-  ushort uVar15;
-  dxJoint *pdVar13;
-  int iVar14;
-  dxBody *pdVar16;
-  ulonglong uVar17;
-  float *pfVar18;
-  dxBody *pdVar19;
-  dxBody *pdVar20;
-  ulonglong in_r6;
-  dSurfaceParameters *pdVar21;
-  uint uVar22;
-  undefined4 *puVar23;
-  int iVar24;
+  float *pfVar8;
+  void *pvVar9;
+  uint uVar10;
+  trace_t *ptVar11;
+  ushort uVar14;
+  dxJoint *pdVar12;
+  int iVar13;
+  dxBody *pdVar15;
+  float *pfVar16;
+  dxBody *pdVar17;
+  dxBody *pdVar18;
+  int in_r6;
+  dSurfaceParameters *pdVar19;
+  uint uVar20;
+  undefined4 *puVar21;
+  double dVar22;
+  double dVar23;
+  double dVar24;
   double dVar25;
   double dVar26;
-  double extraout_f1;
   double dVar27;
   double dVar28;
   double dVar29;
   double dVar30;
   double dVar31;
   double dVar32;
-  double dVar33;
-  double dVar34;
-  double dVar35;
   float *pfStack00000024;
   undefined1 local_288 [20];
   dxJointNode *local_274;
@@ -1600,36 +1561,33 @@ void PhysVeh_CollideWheels(PhysVehicle *param_1,float param_2,int *param_3,float
   float afStack_10c [3];
   float afStack_100 [64];
   
-  uVar17 = (ulonglong)(int)param_4;
-  __savegprlr();
-  pPVar8 = (PhysVehicle *)__savefpr_22();
-  pfVar18 = (float *)uVar17;
-  dVar30 = extraout_f1;
-  pfStack00000024 = pfVar18;
-  if (pPVar8 == (PhysVehicle *)0x0) {
-    pfVar18 = (float *)0x0;
+  dVar24 = (double)param_2;
+  pfVar16 = param_4;
+  pfStack00000024 = param_4;
+  if (param_1 == (PhysVehicle *)0x0) {
+    pfVar16 = (float *)0x0;
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_vehicle.cpp",
                     0x426,0,"%s");
   }
-  if ((uVar17 & 0xffffffff) == 0) {
-    pfVar18 = (float *)0x0;
+  if (param_4 == (float *)0x0) {
+    pfVar16 = (float *)0x0;
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_vehicle.cpp",
                     0x427,0,"%s");
   }
-  if ((in_r6 & 0xffffffff) == 0) {
-    pfVar18 = (float *)0x0;
+  if (in_r6 == 0) {
+    pfVar16 = (float *)0x0;
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_vehicle.cpp",
                     0x428,0,"%s");
   }
   Profile_Begin(0x170);
   if ((physVeh_jump->current).enabled != false) {
-    pfVar9 = dBodyGetPosition((dxBody *)pPVar8->body);
-    dBodySetPosition((dxBody *)pPVar8->body,*pfVar9,pfVar9[1],pfVar9[2] + 12.0);
-    dBodyEnable((dxBody *)pPVar8->body);
+    pfVar8 = dBodyGetPosition((dxBody *)param_1->body);
+    dBodySetPosition((dxBody *)param_1->body,*pfVar8,pfVar8[1],pfVar8[2] + 12.0);
+    dBodyEnable((dxBody *)param_1->body);
     Dvar_SetBoolByName("physVeh_jump",false);
   }
-  dVar32 = 0.0;
-  dVar28 = 0.5;
+  dVar29 = 0.0;
+  dVar26 = 0.5;
   local_1c0.midPoint[0] = 0.0;
   local_1c0.midPoint[1] = 0.0;
   local_1c0.midPoint[2] = 0.0;
@@ -1637,128 +1595,127 @@ void PhysVeh_CollideWheels(PhysVehicle *param_1,float param_2,int *param_3,float
   local_1c0.halfSize[1] = 0.5;
   local_1c0.halfSize[2] = 0.5;
   if ((g_vehicleDebug->current).enabled != false) {
-    Phys_ObjGetCenterOfMass(pPVar8->body,afStack_100);
-    G_DebugBox(afStack_100,&local_1c0,(float)dVar32,pfVar18,-0x7de7e7c8,0);
+    Phys_ObjGetCenterOfMass(param_1->body,afStack_100);
+    G_DebugBox(afStack_100,&local_1c0,(float)dVar29,pfVar16,-0x7de7e7c8,0);
   }
-  Phys_ObjGetPosition(pPVar8->body,afStack_10c,(float (*) [3])&local_130);
-  local_20c = (dxBody *)pPVar8->body;
+  Phys_ObjGetPosition(param_1->body,afStack_10c,(float (*) [3])&local_130);
+  local_20c = (dxBody *)param_1->body;
   local_1a0.mode = 0x33fb;
-  pvVar10 = dBodyGetData(local_20c);
-  if (pvVar10 == (void *)0x0) {
+  pvVar9 = dBodyGetData(local_20c);
+  if (pvVar9 == (void *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_vehicle.cpp",
                     0x44a,0,"%s");
   }
   local_25c = 0.0;
-  bVar4 = pPVar8->wheelsOnGroundCount == 0;
+  bVar4 = param_1->wheelsOnGroundCount == 0;
   bVar6 = false;
-  pPVar8->flags = pPVar8->flags & 0xfffffffe;
-  dVar33 = 1.0;
-  pPVar8->wheelsOnGroundCount = 0;
-  dVar29 = 0.0010000000474974513;
-  dVar31 = 20.0;
-  uVar22 = 0;
+  param_1->flags = param_1->flags & 0xfffffffe;
+  dVar30 = 1.0;
+  param_1->wheelsOnGroundCount = 0;
+  dVar27 = 0.0010000000474974513;
+  dVar28 = 20.0;
+  uVar20 = 0;
   do {
-    iVar24 = uVar22 * 4;
-    pdVar20 = (dxBody *)(pPVar8->wheels + uVar22);
-    pfStack00000024[uVar22] = 0.0;
-    iVar14 = (int)in_r6;
-    *(float *)(iVar24 + iVar14) = (float)dVar32;
-    if ((pPVar8->wheels[uVar22].flags & 1) != 0) {
-      if ((uVar22 == 0) || (bVar5 = false, uVar22 == 1)) {
+    iVar13 = uVar20 * 4;
+    pdVar18 = (dxBody *)(param_1->wheels + uVar20);
+    pfStack00000024[uVar20] = 0.0;
+    *(float *)(iVar13 + in_r6) = (float)dVar29;
+    if ((param_1->wheels[uVar20].flags & 1) != 0) {
+      if ((uVar20 == 0) || (bVar5 = false, uVar20 == 1)) {
         bVar5 = true;
       }
       if (bVar5) {
-        fVar2 = pPVar8->def->suspensionTravelFront;
+        fVar2 = param_1->def->suspensionTravelFront;
       }
       else {
-        fVar2 = pPVar8->def->suspensionTravelRear;
+        fVar2 = param_1->def->suspensionTravelRear;
       }
-      dVar25 = (double)fVar2;
-      dVar34 = dVar33;
-      dVar26 = dVar31;
-      dVar27 = dVar32;
-      dVar35 = dVar31;
-      if (dVar33 <= dVar25) {
-        dVar35 = (double)(float)(dVar25 + dVar31);
-        dVar26 = (double)(float)(dVar35 + dVar25);
-        dVar34 = (double)(float)(dVar31 / dVar26);
-        dVar27 = dVar25;
-        if (dVar33 <= dVar34) {
+      dVar22 = (double)fVar2;
+      dVar31 = dVar30;
+      dVar23 = dVar28;
+      dVar25 = dVar29;
+      dVar32 = dVar28;
+      if (dVar30 <= dVar22) {
+        dVar32 = (double)(float)(dVar22 + dVar28);
+        dVar23 = (double)(float)(dVar32 + dVar22);
+        dVar31 = (double)(float)(dVar28 / dVar23);
+        dVar25 = dVar22;
+        if (dVar30 <= dVar31) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_vehicle.cpp"
                           ,0x470,0,"%s");
-          dVar27 = dVar25;
+          dVar25 = dVar22;
         }
       }
-      MatrixTransformVector43((float *)pdVar20,(float (*) [3])&local_130,&local_170);
-      dVar27 = -dVar27;
-      local_288._0_4_ = (undefined4)((double)local_118 * dVar35 + (double)local_170);
-      local_288._4_4_ = (undefined4)((double)local_114 * dVar35 + (double)local_16c);
-      local_288._8_4_ = (undefined4)((double)local_110 * dVar35 + (double)local_168);
-      local_288._16_4_ = (undefined4)((double)local_118 * dVar27 + (double)local_170);
-      local_274 = (dxJointNode *)(float)((double)local_114 * dVar27 + (double)local_16c);
-      local_270 = (char *)(float)((double)local_110 * dVar27 + (double)local_168);
-      uVar11 = Phys_GetWorldClipMask(PHYS_WORLD_FIRST_SERVER_WORLD);
-      if ((pPVar8->flags & 8) != 0) {
-        uVar11 = uVar11 & 0xff7fffff;
+      MatrixTransformVector43((float *)pdVar18,(float (*) [3])&local_130,&local_170);
+      dVar25 = -dVar25;
+      local_288._0_4_ = (undefined4)((double)local_118 * dVar32 + (double)local_170);
+      local_288._4_4_ = (undefined4)((double)local_114 * dVar32 + (double)local_16c);
+      local_288._8_4_ = (undefined4)((double)local_110 * dVar32 + (double)local_168);
+      local_288._16_4_ = (undefined4)((double)local_118 * dVar25 + (double)local_170);
+      local_274 = (dxJointNode *)(float)((double)local_114 * dVar25 + (double)local_16c);
+      local_270 = (char *)(float)((double)local_110 * dVar25 + (double)local_168);
+      uVar10 = Phys_GetWorldClipMask(PHYS_WORLD_FIRST_SERVER_WORLD);
+      if ((param_1->flags & 8) != 0) {
+        uVar10 = uVar10 & 0xff7fffff;
       }
-      pdVar19 = (dxBody *)(local_288 + 0x10);
-      pdVar16 = (dxBody *)local_288;
-      ptVar12 = &local_240;
-      G_TraceCapsule(ptVar12,(float *)pdVar16,(float *)pdVar19,&bounds_origin,pPVar8->passEntityNum,
-                     uVar11);
+      pdVar17 = (dxBody *)(local_288 + 0x10);
+      pdVar15 = (dxBody *)local_288;
+      ptVar11 = &local_240;
+      G_TraceCapsule(ptVar11,(float *)pdVar15,(float *)pdVar17,&bounds_origin,param_1->passEntityNum
+                     ,uVar10);
       if (local_240.allsolid != false) {
         local_240.normal[0] = local_118;
         local_240.normal[1] = local_114;
         local_240.normal[2] = local_110;
-        local_240.fraction = (float)((double)(float)(dVar34 + dVar33) * dVar28);
+        local_240.fraction = (float)((double)(float)(dVar31 + dVar30) * dVar26);
       }
       if ((g_vehicleDebug->current).enabled != false) {
-        pdVar16 = (dxBody *)(local_288 + 0x10);
-        ptVar12 = (trace_t *)local_288;
-        pdVar19 = (dxBody *)colorBlue;
-        G_DebugLine((float *)ptVar12,(float *)pdVar16,colorBlue,0);
+        pdVar15 = (dxBody *)(local_288 + 0x10);
+        ptVar11 = (trace_t *)local_288;
+        pdVar17 = (dxBody *)colorBlue;
+        G_DebugLine((float *)ptVar11,(float *)pdVar15,colorBlue,0);
       }
-      dVar27 = (double)local_240.fraction;
-      if (dVar27 == dVar33) {
-        pPVar8->wheels[uVar22].flags = pPVar8->wheels[uVar22].flags & 0xffffffef;
+      dVar25 = (double)local_240.fraction;
+      if (dVar25 == dVar30) {
+        param_1->wheels[uVar20].flags = param_1->wheels[uVar20].flags & 0xffffffef;
       }
       else {
-        pdVar21 = (dSurfaceParameters *)(local_240.surfaceFlags >> 0x14 & 0x1f);
-        pfStack00000024[uVar22] = (float)pdVar21;
-        if (dVar34 <= dVar27) {
-          if (dVar27 < dVar33) {
-            if (dVar33 <= dVar34) {
-              pdVar19 = (dxBody *)0x1;
-              pdVar16 = (dxBody *)0x49c;
-              ptVar12 = (trace_t *)
+        pdVar19 = (dSurfaceParameters *)(local_240.surfaceFlags >> 0x14 & 0x1f);
+        pfStack00000024[uVar20] = (float)pdVar19;
+        if (dVar31 <= dVar25) {
+          if (dVar25 < dVar30) {
+            if (dVar30 <= dVar31) {
+              pdVar17 = (dxBody *)0x1;
+              pdVar15 = (dxBody *)0x49c;
+              ptVar11 = (trace_t *)
                         "c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_vehicle.cpp";
               MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_vehicle.cpp"
                               ,0x49c,1,"%s");
-              dVar27 = (double)local_240.fraction;
+              dVar25 = (double)local_240.fraction;
             }
-            *(float *)(iVar24 + iVar14) =
-                 (float)(dVar33 - (double)((float)(dVar27 - dVar34) / (float)(dVar33 - dVar34)));
+            *(float *)(iVar13 + in_r6) =
+                 (float)(dVar30 - (double)((float)(dVar25 - dVar31) / (float)(dVar30 - dVar31)));
           }
           else {
-            *(float *)(iVar24 + iVar14) = (float)dVar32;
+            *(float *)(iVar13 + in_r6) = (float)dVar29;
           }
         }
         else {
-          *(float *)(iVar24 + iVar14) = (float)dVar33;
+          *(float *)(iVar13 + in_r6) = (float)dVar30;
         }
         pdVar7 = local_20c;
-        if (dVar34 < dVar27) {
-          if ((uVar22 == 0) || (bVar5 = false, uVar22 == 1)) {
+        if (dVar31 < dVar25) {
+          if ((uVar20 == 0) || (bVar5 = false, uVar20 == 1)) {
             bVar5 = true;
           }
-          pVVar3 = pPVar8->def;
+          pVVar3 = param_1->def;
           if (bVar5) {
             fVar2 = pVVar3->suspensionDampingFront;
           }
           else {
             fVar2 = pVVar3->suspensionDampingRear;
           }
-          if ((uVar22 == 0) || (bVar5 = false, uVar22 == 1)) {
+          if ((uVar20 == 0) || (bVar5 = false, uVar20 == 1)) {
             bVar5 = true;
           }
           if (bVar5) {
@@ -1767,40 +1724,41 @@ void PhysVeh_CollideWheels(PhysVehicle *param_1,float param_2,int *param_3,float
           else {
             fVar1 = pVVar3->suspensionStrengthRear;
           }
-          pdVar21 = (dSurfaceParameters *)local_204;
+          pdVar19 = (dSurfaceParameters *)local_204;
           Phys_CalcSpringParms
-                    ((float)dVar30,*(float *)(pPVar8->body + 0x94),fVar1,fVar2,&ptVar12->fraction,
-                     (float *)pdVar16);
-          dVar27 = (double)local_240.fraction;
+                    ((float)dVar24,*(float *)(param_1->body + 0x94),fVar1,fVar2,&ptVar11->fraction,
+                     (float *)pdVar15);
+          dVar25 = (double)local_240.fraction;
           local_1d4 = 0.0;
           local_1a0.soft_erp = local_24c;
           local_1a0.soft_cfm = (float)local_204._0_4_;
-          dVar26 = (double)(float)((double)(float)(dVar33 - dVar27) * dVar26);
-          if (dVar26 < 0.0) {
-            dVar26 = dVar32;
+          dVar23 = (double)(float)((double)(float)(dVar30 - dVar25) * dVar23);
+          if (dVar23 < 0.0) {
+            dVar23 = dVar29;
           }
-          local_1d8 = (float)dVar26;
+          local_1d8 = (float)dVar23;
         }
         else {
-          local_1a0.soft_erp = Phys_GetContactERP(3,(float)dVar30,pdVar16,local_20c);
-          pdVar19 = pdVar7;
-          local_1a0.soft_cfm = Phys_GetContactCFM(3,*(float *)(pPVar8->body + 0x94),pdVar16,pdVar7);
-          dVar27 = (double)local_240.fraction;
-          local_1d8 = (float)((double)(float)(dVar34 - dVar27) * dVar26);
-          if (dVar34 != dVar33) {
-            pPVar8->flags = pPVar8->flags | 1;
-            if ((uVar22 == 0) || (bVar5 = false, uVar22 == 1)) {
+          local_1a0.soft_erp = Phys_GetContactERP(3,(float)dVar24,pdVar15,local_20c);
+          pdVar17 = pdVar7;
+          local_1a0.soft_cfm = Phys_GetContactCFM(3,*(float *)(param_1->body + 0x94),pdVar15,pdVar7)
+          ;
+          dVar25 = (double)local_240.fraction;
+          local_1d8 = (float)((double)(float)(dVar31 - dVar25) * dVar23);
+          if (dVar31 != dVar30) {
+            param_1->flags = param_1->flags | 1;
+            if ((uVar20 == 0) || (bVar5 = false, uVar20 == 1)) {
               bVar5 = true;
             }
-            pVVar3 = pPVar8->def;
+            pVVar3 = param_1->def;
             if (bVar5) {
               fVar2 = pVVar3->suspensionDampingFront;
             }
             else {
               fVar2 = pVVar3->suspensionDampingRear;
             }
-            dVar35 = (double)fVar2;
-            if ((uVar22 == 0) || (bVar5 = false, uVar22 == 1)) {
+            dVar32 = (double)fVar2;
+            if ((uVar20 == 0) || (bVar5 = false, uVar20 == 1)) {
               bVar5 = true;
             }
             if (bVar5) {
@@ -1809,51 +1767,51 @@ void PhysVeh_CollideWheels(PhysVehicle *param_1,float param_2,int *param_3,float
             else {
               fVar2 = pVVar3->suspensionStrengthRear;
             }
-            dVar25 = (double)fVar2;
+            dVar22 = (double)fVar2;
             local_160 = (float)((double)(float)((double)(float)local_288._16_4_ -
-                                               (double)(float)local_288._0_4_) * dVar27 +
+                                               (double)(float)local_288._0_4_) * dVar25 +
                                (double)(float)local_288._0_4_);
             local_15c = (float)((double)(float)((double)(float)local_274 -
-                                               (double)(float)local_288._4_4_) * dVar27 +
+                                               (double)(float)local_288._4_4_) * dVar25 +
                                (double)(float)local_288._4_4_);
             local_158 = (float)((double)(float)((double)(float)local_270 -
-                                               (double)(float)local_288._8_4_) * dVar27 +
+                                               (double)(float)local_288._8_4_) * dVar25 +
                                (double)(float)local_288._8_4_);
-            dBodyGetRelPointVel((dxBody *)pPVar8->body,local_160,local_15c,local_158,
-                                (float *)pdVar16);
-            dVar27 = (double)(float)((double)local_148 * (double)local_240.normal[2] +
+            dBodyGetRelPointVel((dxBody *)param_1->body,local_160,local_15c,local_158,
+                                (float *)pdVar15);
+            dVar25 = (double)(float)((double)local_148 * (double)local_240.normal[2] +
                                     (double)(float)((double)local_150 * (double)local_240.normal[0]
                                                    + (double)(float)((double)local_14c *
                                                                     (double)local_240.normal[1])));
-            if (dVar27 < 0.0) {
-              dVar27 = dVar32;
+            if (dVar25 < 0.0) {
+              dVar25 = dVar29;
             }
-            dVar26 = (double)(float)((double)(float)((double)(float)(dVar33 - dVar34) * dVar26) *
-                                     dVar25 - (double)(float)(dVar27 * dVar35));
-            if (dVar32 < dVar26) {
-              local_140 = (float)((double)local_240.normal[0] * dVar26);
-              local_13c = (float)((double)local_240.normal[1] * dVar26);
-              local_138 = (float)((double)local_240.normal[2] * dVar26);
-              pdVar19 = (dxBody *)&local_140;
-              Phys_ObjAddForce(pPVar8->body,&local_160,(float *)pdVar19);
+            dVar23 = (double)(float)((double)(float)((double)(float)(dVar30 - dVar31) * dVar23) *
+                                     dVar22 - (double)(float)(dVar25 * dVar32));
+            if (dVar29 < dVar23) {
+              local_140 = (float)((double)local_240.normal[0] * dVar23);
+              local_13c = (float)((double)local_240.normal[1] * dVar23);
+              local_138 = (float)((double)local_240.normal[2] * dVar23);
+              pdVar17 = (dxBody *)&local_140;
+              Phys_ObjAddForce(param_1->body,&local_160,(float *)pdVar17);
             }
           }
-          dVar27 = (double)local_240.fraction;
+          dVar25 = (double)local_240.fraction;
           local_1d4 = (float)local_240.surfaceFlags;
         }
-        if (dVar27 <= dVar33) {
-          pdVar21 = (dSurfaceParameters *)(local_1a0.mode & 0xfffffbff);
-          pPVar8->wheels[uVar22].flags = pPVar8->wheels[uVar22].flags | 0x10;
-          pPVar8->wheelsOnGroundCount = pPVar8->wheelsOnGroundCount + 1;
-          uVar11 = pPVar8->wheels[uVar22].flags;
-          pdVar19 = (dxBody *)(uVar11 & 2);
-          local_1a0.mode = (int)pdVar21;
-          if ((uVar11 & 2) != 0) {
+        if (dVar25 <= dVar30) {
+          pdVar19 = (dSurfaceParameters *)(local_1a0.mode & 0xfffffbff);
+          param_1->wheels[uVar20].flags = param_1->wheels[uVar20].flags | 0x10;
+          param_1->wheelsOnGroundCount = param_1->wheelsOnGroundCount + 1;
+          uVar10 = param_1->wheels[uVar20].flags;
+          pdVar17 = (dxBody *)(uVar10 & 2);
+          local_1a0.mode = (int)pdVar19;
+          if ((uVar10 & 2) != 0) {
             local_25c = (float)((int)local_25c + 1);
           }
         }
         else {
-          dVar27 = dVar33;
+          dVar25 = dVar30;
           local_1a0.mode = (int)(local_1a0.mode | 0x400);
         }
         local_1e4 = local_240.normal[0];
@@ -1862,18 +1820,18 @@ void PhysVeh_CollideWheels(PhysVehicle *param_1,float param_2,int *param_3,float
         local_204._20_4_ =
              (undefined4)
              ((double)(float)((double)(float)local_288._16_4_ - (double)(float)local_288._0_4_) *
-              dVar27 + (double)(float)local_288._0_4_);
+              dVar25 + (double)(float)local_288._0_4_);
         local_1ec = (float)((double)(float)((double)(float)local_274 -
-                                           (double)(float)local_288._4_4_) * dVar27 +
+                                           (double)(float)local_288._4_4_) * dVar25 +
                            (double)(float)local_288._4_4_);
         local_1e8 = (float)((double)(float)((double)(float)local_270 -
-                                           (double)(float)local_288._8_4_) * dVar27 +
+                                           (double)(float)local_288._8_4_) * dVar25 +
                            (double)(float)local_288._8_4_);
         local_1d0 = (float)local_204._20_4_;
         if ((((local_204._20_4_ & 0x7f800000) == 0x7f800000) ||
             (local_204._8_4_ = local_1ec, ((uint)local_1ec & 0x7f800000) == 0x7f800000)) ||
            (local_204._12_4_ = local_1e8, ((uint)local_1e8 & 0x7f800000) == 0x7f800000)) {
-          pdVar19 = (dxBody *)0x0;
+          pdVar17 = (dxBody *)0x0;
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_vehicle.cpp"
                           ,0x4ea,0,"%s");
         }
@@ -1881,128 +1839,126 @@ void PhysVeh_CollideWheels(PhysVehicle *param_1,float param_2,int *param_3,float
         if (((((uint)local_1e4 & 0x7f800000) == 0x7f800000) ||
             (local_204._16_4_ = local_1e0, ((uint)local_1e0 & 0x7f800000) == 0x7f800000)) ||
            (local_204._4_4_ = local_1dc, ((uint)local_1dc & 0x7f800000) == 0x7f800000)) {
-          pdVar19 = (dxBody *)0x0;
+          pdVar17 = (dxBody *)0x0;
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_vehicle.cpp"
                           ,0x4eb,0,"%s");
         }
-        if ((pPVar8->pathConstraint).enabled == false) {
-          MatrixTransformVector(pPVar8->wheels[uVar22].forward,(float (*) [3])&local_130,&local_268)
-          ;
+        if ((param_1->pathConstraint).enabled == false) {
+          MatrixTransformVector
+                    (param_1->wheels[uVar20].forward,(float (*) [3])&local_130,&local_268);
           fVar1 = -(local_260 * local_240.normal[2] +
                    local_268 * local_240.normal[0] + (float)local_264 * local_240.normal[1]);
           local_260 = local_240.normal[2] * fVar1 + local_260;
           fVar2 = local_240.normal[1] * fVar1 + (float)local_264;
           local_268 = fVar1 * local_240.normal[0] + local_268;
-          dVar27 = (double)SQRT(local_268 * local_268 + fVar2 * fVar2 + local_260 * local_260);
-          dVar26 = dVar33;
-          if (-dVar27 < 0.0) {
-            dVar26 = dVar27;
+          dVar25 = (double)SQRT(local_268 * local_268 + fVar2 * fVar2 + local_260 * local_260);
+          dVar23 = dVar30;
+          if (-dVar25 < 0.0) {
+            dVar23 = dVar25;
           }
-          fVar1 = (float)(dVar33 / dVar26);
+          fVar1 = (float)(dVar30 / dVar23);
           local_268 = fVar1 * local_268;
           local_264 = (dxJointNode *)(fVar2 * fVar1);
           local_260 = local_260 * fVar1;
-          if (dVar27 < dVar29) {
+          if (dVar25 < dVar27) {
             local_268 = local_130;
             local_264 = local_12c;
             local_260 = local_128;
           }
-          if ((uVar22 == 0) || (bVar5 = false, uVar22 == 1)) {
+          if ((uVar20 == 0) || (bVar5 = false, uVar20 == 1)) {
             bVar5 = true;
           }
           if (bVar5) {
-            local_1a0.mu2 = pPVar8->def->frictionSide;
+            local_1a0.mu2 = param_1->def->frictionSide;
           }
           else {
-            local_1a0.mu2 = pPVar8->def->frictionSideRear;
+            local_1a0.mu2 = param_1->def->frictionSideRear;
           }
-          pdVar19 = pdVar20;
+          pdVar17 = pdVar18;
           PhysVeh_CalcWheelFriction
-                    (uVar22,pPVar8,(PhysVehicleWheel *)pdVar20,local_240.normal,&local_268,
-                     (float)dVar30,pdVar21);
-          if (((double)local_1a0.mu2 == dVar32) || (pPVar8->wheels[uVar22].slipping != false)) {
+                    (uVar20,param_1,(PhysVehicleWheel *)pdVar18,local_240.normal,&local_268,
+                     (float)dVar24,pdVar19);
+          if (((double)local_1a0.mu2 == dVar29) || (param_1->wheels[uVar20].slipping != false)) {
             bVar6 = true;
           }
         }
         else {
-          local_1a0.mu = (float)dVar32;
-          local_1a0.mu2 = (float)dVar32;
+          local_1a0.mu = (float)dVar29;
+          local_1a0.mu2 = (float)dVar29;
         }
         if ((g_vehicleDebug->current).enabled != false) {
-          pfVar18 = colorGreen;
-          if (pPVar8->wheels[uVar22].slipping == false) {
-            pfVar18 = colorRed;
+          pfVar16 = colorGreen;
+          if (param_1->wheels[uVar20].slipping == false) {
+            pfVar16 = colorRed;
           }
-          G_DebugBox((float *)(local_204 + 0x14),&local_1c0,(float)dVar32,(float *)pdVar19,
-                     (int)pfVar18,0);
+          G_DebugBox((float *)(local_204 + 0x14),&local_1c0,(float)dVar29,(float *)pdVar17,
+                     (int)pfVar16,0);
           local_258 = (float)((double)(float)((double)(float)local_288._16_4_ -
-                                             (double)(float)local_288._0_4_) * dVar34 +
+                                             (double)(float)local_288._0_4_) * dVar31 +
                              (double)(float)local_288._0_4_);
           local_254 = (float)((double)(float)((double)(float)local_274 -
-                                             (double)(float)local_288._4_4_) * dVar34 +
+                                             (double)(float)local_288._4_4_) * dVar31 +
                              (double)(float)local_288._4_4_);
           local_250 = (float)((double)(float)((double)(float)local_270 -
-                                             (double)(float)local_288._8_4_) * dVar34 +
+                                             (double)(float)local_288._8_4_) * dVar31 +
                              (double)(float)local_288._8_4_);
-          G_DebugBox(&local_258,&local_1c0,(float)dVar32,(float *)pdVar19,-0x7de7e7e8,0);
+          G_DebugBox(&local_258,&local_1c0,(float)dVar29,(float *)pdVar17,-0x7de7e7e8,0);
           local_258 = ((float)local_288._16_4_ - (float)local_288._0_4_) + (float)local_288._0_4_;
           local_254 = ((float)local_274 - (float)local_288._4_4_) + (float)local_288._4_4_;
           local_250 = ((float)local_270 - (float)local_288._8_4_) + (float)local_288._8_4_;
-          G_DebugBox(&local_258,&local_1c0,(float)dVar32,(float *)pdVar19,-0x7de7e7e8,0);
+          G_DebugBox(&local_258,&local_1c0,(float)dVar29,(float *)pdVar17,-0x7de7e7e8,0);
         }
-        uVar15 = Trace_GetEntityHitId(&local_240);
-        iVar14 = *(int *)((int)&(level.gentities)->r +
-                         ((uint)uVar15 + (uint)uVar15 * 4) * 0x80 + 0x60);
-        if ((iVar14 == 0) ||
-           (puVar23 = *(undefined4 **)(iVar14 + 0x1f0), puVar23 == (undefined4 *)0x0)) {
-          puVar23 = (undefined4 *)0x0;
+        uVar14 = Trace_GetEntityHitId(&local_240);
+        iVar13 = *(int *)((int)&(level.gentities)->r +
+                         ((uint)uVar14 + (uint)uVar14 * 4) * 0x80 + 0x60);
+        if ((iVar13 == 0) ||
+           (puVar21 = *(undefined4 **)(iVar13 + 0x1f0), puVar21 == (undefined4 *)0x0)) {
+          puVar21 = (undefined4 *)0x0;
         }
-        else if ((puVar23[0x99] & 8) != 0) {
+        else if ((puVar21[0x99] & 8) != 0) {
           local_1a0.mode = local_1a0.mode | 0x4000;
         }
-        pdVar13 = dJointCreateContact(physGlob.world + 3,(dxJointGroup *)&DAT_8299732c,&local_1a0,
+        pdVar12 = dJointCreateContact(physGlob.world + 3,(dxJointGroup *)&DAT_8299732c,&local_1a0,
                                       (dContactGeom *)(local_204 + 0x14));
-        if (pdVar13 == (dxJoint *)0x0) {
+        if (pdVar12 == (dxJoint *)0x0) {
           R_WarnOncePerFrame(R_WARN_MAX_JOINT_COUNT);
           goto LAB_8267ca94;
         }
-        ODE_JointSetContactDir1(pdVar13,&local_268);
-        if (puVar23 == (undefined4 *)0x0) {
-          pdVar20 = (dxBody *)0x0;
+        ODE_JointSetContactDir1(pdVar12,&local_268);
+        if (puVar21 == (undefined4 *)0x0) {
+          pdVar18 = (dxBody *)0x0;
         }
         else {
-          pdVar20 = (dxBody *)*puVar23;
+          pdVar18 = (dxBody *)*puVar21;
         }
-        dJointAttach(pdVar13,(dxBody *)pPVar8->body,pdVar20);
+        dJointAttach(pdVar12,(dxBody *)param_1->body,pdVar18);
       }
     }
-    uVar22 = uVar22 + 1;
-    if (5 < uVar22) {
-      if (pPVar8->wheelsOnGroundCount == 0) {
-        Phys_ObjSetFriction(pPVar8->body,pPVar8->def->wreckedBodyFriction);
-        PhysVeh_TorqueMove(pPVar8,pPVar8->def->airYawTorque,pPVar8->def->airPitchTorque);
-        if ((!bVar4) && (iVar14 = Scr_IsSystemActive('\x01'), iVar14 != 0)) {
-          Scr_Notify(g_entities + pPVar8->passEntityNum,scr_const.veh_leftground,0);
+    uVar20 = uVar20 + 1;
+    if (5 < uVar20) {
+      if (param_1->wheelsOnGroundCount == 0) {
+        Phys_ObjSetFriction(param_1->body,param_1->def->wreckedBodyFriction);
+        PhysVeh_TorqueMove(param_1,param_1->def->airYawTorque,param_1->def->airPitchTorque);
+        if ((!bVar4) && (iVar13 = Scr_IsSystemActive('\x01'), iVar13 != 0)) {
+          Scr_Notify(g_entities + param_1->passEntityNum,scr_const.veh_leftground,0);
         }
-        (pPVar8->orientationConstraint).targetPitch = pPVar8->def->targetAirPitch;
+        (param_1->orientationConstraint).targetPitch = param_1->def->targetAirPitch;
       }
       else {
-        Phys_ObjSetFriction(pPVar8->body,pPVar8->def->physPreset->friction);
+        Phys_ObjSetFriction(param_1->body,param_1->def->physPreset->friction);
         if (bVar6) {
-          PhysVeh_TorqueMove(pPVar8,pPVar8->def->slipYawTorque,(float)dVar32);
+          PhysVeh_TorqueMove(param_1,param_1->def->slipYawTorque,(float)dVar29);
         }
-        if ((bVar4) && (iVar14 = Scr_IsSystemActive('\x01'), iVar14 != 0)) {
-          Scr_Notify(g_entities + pPVar8->passEntityNum,scr_const.veh_landed,0);
+        if ((bVar4) && (iVar13 = Scr_IsSystemActive('\x01'), iVar13 != 0)) {
+          Scr_Notify(g_entities + param_1->passEntityNum,scr_const.veh_landed,0);
         }
-        (pPVar8->orientationConstraint).targetPitch = (float)dVar32;
+        (param_1->orientationConstraint).targetPitch = (float)dVar29;
       }
-      if ((local_25c == 0.0) && ((pPVar8->flags & 2) != 0)) {
-        PhysVeh_HighCenteredMove(pPVar8);
+      if ((local_25c == 0.0) && ((param_1->flags & 2) != 0)) {
+        PhysVeh_HighCenteredMove(param_1);
       }
 LAB_8267ca94:
-      iVar14 = Profile_EndInternal((double *)0x0);
-      __restfpr_22(iVar14);
-      __restgprlr();
+      Profile_EndInternal((double *)0x0);
       return;
     }
   } while( true );
@@ -2023,6 +1979,8 @@ bool PhysVeh_IsEnabled(PhysVehicle *param_1)
 
 // 8267CAB8  PhysVeh_CollideVehicleWithVehicle  (physics/phys_vehicle.cpp:1362)
 
+/* WARNING: Function: __savegprlr_21 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_21 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PhysWorld": Some values do not have unique names */
 
 void PhysVeh_CollideVehicleWithVehicle
@@ -2036,23 +1994,17 @@ void PhysVeh_CollideVehicleWithVehicle
   dxBody *pdVar5;
   dxBody *pdVar6;
   bool bVar7;
-  int *piVar8;
+  bool bVar13;
   bool bVar14;
-  bool bVar15;
-  uint uVar9;
-  int iVar10;
-  float *pfVar11;
-  dxBody *pdVar12;
-  dxJoint *pdVar13;
-  ulonglong uVar16;
-  ulonglong uVar17;
-  int *piVar18;
-  ulonglong uVar19;
-  dContactGeom *pdVar20;
-  int iVar21;
-  dContactGeom *pdVar22;
-  double extraout_f1;
-  double dVar23;
+  uint uVar8;
+  float *pfVar9;
+  dxBody *pdVar10;
+  int iVar11;
+  dxJoint *pdVar12;
+  dContactGeom *pdVar15;
+  int iVar16;
+  dContactGeom *pdVar17;
+  double dVar18;
   int *in_stack_fffffd58;
   int in_stack_fffffd5c;
   dContactGeom *in_stack_fffffd60;
@@ -2073,112 +2025,104 @@ void PhysVeh_CollideVehicleWithVehicle
   dSurfaceParameters local_1a0;
   float local_164 [89];
   
-  uVar19 = (ulonglong)param_4;
-  uVar17 = (ulonglong)(int)param_3;
-  uVar16 = (ulonglong)param_2;
-  piVar8 = (int *)__savegprlr_21((double)param_5,param_1);
-  dVar23 = extraout_f1;
+  dVar18 = (double)param_5;
   Profile_Begin(0x16e);
-  if (piVar8 == (int *)0x0) {
+  if (param_1 == (PhysVehicle *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_vehicle.cpp",
                     0x566,0,"%s");
   }
-  if ((uVar17 & 0xffffffff) == 0) {
+  if (param_3 == (PhysVehicle *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_vehicle.cpp",
                     0x567,0,"%s");
   }
-  bVar14 = dBodyIsEnabled((dxBody *)*piVar8);
-  piVar18 = (int *)uVar17;
-  if ((bVar14) || (bVar14 = dBodyIsEnabled((dxBody *)*piVar18), bVar14)) {
-    if (((piVar8[0x99] & 8U) != 0) || (bVar14 = false, (uVar16 & 0xff) != 0)) {
-      bVar14 = true;
+  bVar13 = dBodyIsEnabled((dxBody *)param_1->body);
+  if ((bVar13) || (bVar13 = dBodyIsEnabled((dxBody *)param_3->body), bVar13)) {
+    if (((param_1->flags & 8) != 0) || (bVar13 = false, param_2)) {
+      bVar13 = true;
     }
-    if (((piVar18[0x99] & 8U) != 0) || (bVar7 = false, (uVar19 & 0xff) != 0)) {
+    if (((param_3->flags & 8) != 0) || (bVar7 = false, param_4)) {
       bVar7 = true;
     }
-    if ((!bVar14) || (!bVar7)) {
+    if ((!bVar13) || (!bVar7)) {
       memset();
-      bVar15 = G_GetModelBounds(piVar8[0x9e],&local_220);
-      if (!bVar15) {
-        uVar9 = G_ModelName(piVar8[0x9e]);
-        SL_ConvertToString(uVar9);
+      bVar14 = G_GetModelBounds(param_1->modelIndex,&local_220);
+      if (!bVar14) {
+        uVar8 = G_ModelName(param_1->modelIndex);
+        SL_ConvertToString(uVar8);
         Com_PrintWarning(0xf,
                          "Physics-enabled vehicle has invalid xmodel \'%s\' with no surfaces to collide with. Check collisionLOD setting.\n"
                         );
-        iVar10 = Profile_EndInternal((double *)0x0);
-        __restgprlr_21(iVar10);
+        Profile_EndInternal((double *)0x0);
         return;
       }
-      Phys_ObjGetPosition(*piVar8,&local_1bc,(float (*) [3])afStack_1e0);
+      Phys_ObjGetPosition(param_1->body,&local_1bc,(float (*) [3])afStack_1e0);
       MatrixTransformVector(local_220.midPoint,(float (*) [3])afStack_1e0,&local_240);
       local_220.midPoint[0] = local_1bc + local_240;
       local_220.midPoint[1] = local_1b8 + local_23c;
       local_220.midPoint[2] = local_1b4 + local_238;
-      bVar15 = G_GetModelBounds(piVar18[0x9e],&local_200);
-      if (!bVar15) {
-        uVar9 = G_ModelName(piVar18[0x9e]);
-        SL_ConvertToString(uVar9);
+      bVar14 = G_GetModelBounds(param_3->modelIndex,&local_200);
+      if (!bVar14) {
+        uVar8 = G_ModelName(param_3->modelIndex);
+        SL_ConvertToString(uVar8);
         Com_PrintWarning(0xf,
                          "Physics-enabled vehicle has invalid \'%s\' with no surfaces to collide with. Check collisionLOD setting. \n"
                         );
-        iVar10 = Profile_EndInternal((double *)0x0);
-        __restgprlr_21(iVar10);
+        Profile_EndInternal((double *)0x0);
         return;
       }
-      Phys_ObjGetPosition(*piVar18,&local_1bc,(float (*) [3])afStack_1e0);
+      Phys_ObjGetPosition(param_3->body,&local_1bc,(float (*) [3])afStack_1e0);
       MatrixTransformVector(local_200.midPoint,(float (*) [3])afStack_1e0,&local_240);
       local_200.midPoint[0] = local_1bc + local_240;
       local_200.midPoint[1] = local_1b8 + local_23c;
       local_200.midPoint[2] = local_1b4 + local_238;
-      pdVar5 = (dxBody *)*piVar18;
-      pdVar6 = (dxBody *)*piVar8;
-      pfVar11 = dBodyGetRotation(pdVar5);
-      pdVar12 = (dxBody *)dBodyGetRotation(pdVar6);
-      iVar10 = ODE_CollideBoxBox(local_220.midPoint,(float *)pdVar12,local_220.halfSize,
-                                 local_200.midPoint,pfVar11,local_200.halfSize,&local_230,
-                                 afStack_1e8,in_stack_fffffd58,in_stack_fffffd5c,in_stack_fffffd60,
+      pdVar5 = (dxBody *)param_3->body;
+      pdVar6 = (dxBody *)param_1->body;
+      pfVar9 = dBodyGetRotation(pdVar5);
+      pdVar10 = (dxBody *)dBodyGetRotation(pdVar6);
+      iVar11 = ODE_CollideBoxBox(local_220.midPoint,(float *)pdVar10,local_220.halfSize,
+                                 local_200.midPoint,pfVar9,local_200.halfSize,&local_230,afStack_1e8
+                                 ,in_stack_fffffd58,in_stack_fffffd5c,in_stack_fffffd60,
                                  in_stack_fffffd64);
-      if (iVar10 != 0) {
+      if (iVar11 != 0) {
         local_1a0.mode = 0x3018;
         fVar1 = pdVar6->invMass;
         if (pdVar6->invMass - pdVar5->invMass < 0.0) {
           fVar1 = pdVar5->invMass;
         }
-        local_1a0.soft_cfm = Phys_GetContactCFM(3,fVar1,pdVar12,pdVar6);
-        local_1a0.soft_erp = Phys_GetContactERP(3,(float)dVar23,pdVar12,pdVar6);
+        local_1a0.soft_cfm = Phys_GetContactCFM(3,fVar1,pdVar10,pdVar6);
+        local_1a0.soft_erp = Phys_GetContactERP(3,(float)dVar18,pdVar10,pdVar6);
         local_1a0.mu = 0.0;
-        if (bVar14) {
+        if (bVar13) {
           local_1a0.mode = local_1a0.mode | 0x8000;
         }
         else if (bVar7) {
           local_1a0.mode = local_1a0.mode | 0x4000;
         }
-        iVar21 = 0;
-        if (0 < iVar10) {
-          pfVar11 = local_164 + 2;
+        iVar16 = 0;
+        if (0 < iVar11) {
+          pfVar9 = local_164 + 2;
           do {
-            pdVar22 = (dContactGeom *)(pfVar11 + -5);
-            pfVar11[-1] = -local_22c;
-            *pfVar11 = -local_228;
-            pfVar11[-2] = -local_230;
-            pdVar20 = pdVar22;
-            pdVar13 = dJointCreateContact(physGlob.world + 3,(dxJointGroup *)&DAT_8299732c,
-                                          &local_1a0,pdVar22);
-            if (pdVar13 == (dxJoint *)0x0) {
+            pdVar17 = (dContactGeom *)(pfVar9 + -5);
+            pfVar9[-1] = -local_22c;
+            *pfVar9 = -local_228;
+            pfVar9[-2] = -local_230;
+            pdVar15 = pdVar17;
+            pdVar12 = dJointCreateContact(physGlob.world + 3,(dxJointGroup *)&DAT_8299732c,
+                                          &local_1a0,pdVar17);
+            if (pdVar12 == (dxJoint *)0x0) {
               Profile_EndInternal((double *)0x0);
               R_WarnOncePerFrame(R_WARN_MAX_JOINT_COUNT);
-              __restgprlr_21();
               return;
             }
-            dJointAttach(pdVar13,pdVar6,pdVar5);
+            dJointAttach(pdVar12,pdVar6,pdVar5);
             if ((phys_drawcontacts->current).enabled != false) {
               Phys_DebugDrawContactPoint
-                        (PHYS_WORLD_FIRST_SERVER_WORLD,(float *)pdVar22,pfVar11 + -2,pfVar11[1],
-                         pdVar20->pos);
+                        (PHYS_WORLD_FIRST_SERVER_WORLD,(float *)pdVar17,pfVar9 + -2,pfVar9[1],
+                         pdVar15->pos);
             }
-            iVar21 = iVar21 + 1;
-            pfVar11 = pfVar11 + 8;
-          } while (iVar21 < iVar10);
+            iVar16 = iVar16 + 1;
+            pfVar9 = pfVar9 + 8;
+          } while (iVar16 < iVar11);
         }
         fVar1 = (pdVar6->info).lvel[1];
         fVar2 = (pdVar6->info).lvel[0];
@@ -2198,8 +2142,7 @@ void PhysVeh_CollideVehicleWithVehicle
       }
     }
   }
-  iVar10 = Profile_EndInternal((double *)0x0);
-  __restgprlr_21(iVar10);
+  Profile_EndInternal((double *)0x0);
   return;
 }
 
@@ -2249,16 +2192,20 @@ void PhysVeh_UpdateTankSteering(PhysVehicle *param_1,float param_2)
 
 // 8267D070  PhysVeh_SetSteeringAngle  (physics/phys_vehicle.cpp:1501)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_19 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_19 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
+
 void PhysVeh_SetSteeringAngle(PhysVehicle *param_1,float param_2)
 
 {
   float fVar1;
   uint uVar2;
-  PhysVehicle *pPVar3;
-  uint uVar4;
-  longlong lVar5;
-  float *pfVar6;
-  double extraout_f1;
+  uint uVar3;
+  longlong lVar4;
+  float *pfVar5;
+  double dVar6;
   double dVar7;
   double dVar8;
   double dVar9;
@@ -2271,217 +2218,204 @@ void PhysVeh_SetSteeringAngle(PhysVehicle *param_1,float param_2)
   double dVar16;
   double dVar17;
   double dVar18;
-  double dVar19;
   
-  __savegprlr_24((double)param_2,param_1);
-  pPVar3 = (PhysVehicle *)__savefpr_19();
-  dVar12 = extraout_f1;
-  if (pPVar3 == (PhysVehicle *)0x0) {
+  dVar6 = (double)param_2;
+  if (param_1 == (PhysVehicle *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_vehicle.cpp",
                     0x5e9,0,"%s");
   }
-  if (((uint)(float)dVar12 & 0x7f800000) == 0x7f800000) {
+  if (((uint)(float)dVar6 & 0x7f800000) == 0x7f800000) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_vehicle.cpp",
                     0x5ea,0,"%s");
   }
-  if (90.0 <= ABS(dVar12)) {
+  if (90.0 <= ABS(dVar6)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_vehicle.cpp",
                     0x5eb,0,"%s\n\t(steeringAngle) = %g");
   }
-  pPVar3->steeringAngle = (float)dVar12;
-  if ((pPVar3->flags & 0x10) != 0) {
-    PhysVeh_UpdateTankSteering(pPVar3,(float)dVar12);
-    __restfpr_19();
-    __restgprlr_24();
+  param_1->steeringAngle = (float)dVar6;
+  if ((param_1->flags & 0x10) != 0) {
+    PhysVeh_UpdateTankSteering(param_1,(float)dVar6);
     return;
   }
-  if (0.004999999888241291 < ABS(dVar12)) {
-    dVar16 = ABS((double)pPVar3->steeringPointDist);
-    dVar7 = tan((double)(float)(dVar12 * 0.01745329238474369));
-    dVar18 = (double)pPVar3->steeringPointDist;
+  if (0.004999999888241291 < ABS(dVar6)) {
+    dVar15 = ABS((double)param_1->steeringPointDist);
+    dVar7 = tan((double)(float)(dVar6 * 0.01745329238474369));
+    dVar17 = (double)param_1->steeringPointDist;
     dVar9 = 0.0010000000474974513;
-    dVar16 = (double)(float)(dVar16 / (double)(float)dVar7);
-    dVar7 = (double)SQRT((float)(dVar18 * dVar18 + (double)(float)(dVar16 * dVar16)));
+    dVar15 = (double)(float)(dVar15 / (double)(float)dVar7);
+    dVar7 = (double)SQRT((float)(dVar17 * dVar17 + (double)(float)(dVar15 * dVar15)));
     if (dVar7 <= 0.0010000000474974513) {
       va("turning radius: %f, width: %f, steering angle: %f, fbl: %f");
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_vehicle.cpp",
                       0x607,0,"%s\n\t%s");
     }
-    dVar8 = (double)(float)((double)pPVar3->steeringPoint[0] + dVar18);
-    dVar18 = (double)(float)((double)pPVar3->steeringPoint[1] + dVar16);
-    uVar4 = 0;
-    dVar13 = 0.0;
+    dVar8 = (double)(float)((double)param_1->steeringPoint[0] + dVar17);
+    dVar17 = (double)(float)((double)param_1->steeringPoint[1] + dVar15);
+    uVar3 = 0;
+    dVar12 = 0.0;
     dVar10 = -1.0;
-    pfVar6 = pPVar3->wheels[0].forward + 2;
+    pfVar5 = param_1->wheels[0].forward + 2;
     dVar11 = 1.0;
-    lVar5 = 6;
-    dVar16 = dVar13;
+    lVar4 = 6;
+    dVar15 = dVar12;
     do {
-      if (((uint)pfVar6[-3] & 1) != 0) {
-        dVar17 = (double)(float)(dVar8 - (double)((PhysVehicleWheel *)(pfVar6 + -6))->originLocal[0]
+      if (((uint)pfVar5[-3] & 1) != 0) {
+        dVar16 = (double)(float)(dVar8 - (double)((PhysVehicleWheel *)(pfVar5 + -6))->originLocal[0]
                                 );
-        dVar15 = (double)(float)(dVar18 - (double)pfVar6[-5]);
-        dVar19 = (double)SQRT((float)(dVar15 * dVar15 + (double)(float)(dVar17 * dVar17)));
-        if (((uint)pfVar6[-3] & 4) != 0) {
-          dVar14 = dVar11;
-          if (dVar12 < 0.0) {
-            dVar14 = dVar10;
+        dVar14 = (double)(float)(dVar17 - (double)pfVar5[-5]);
+        dVar18 = (double)SQRT((float)(dVar14 * dVar14 + (double)(float)(dVar16 * dVar16)));
+        if (((uint)pfVar5[-3] & 4) != 0) {
+          dVar13 = dVar11;
+          if (dVar6 < 0.0) {
+            dVar13 = dVar10;
           }
-          if (dVar19 <= dVar9) {
+          if (dVar18 <= dVar9) {
             MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_vehicle.cpp"
                             ,0x61a,0,"%s");
           }
-          *pfVar6 = (float)dVar16;
-          fVar1 = (float)((double)(float)(dVar14 / dVar19) * dVar15);
-          pfVar6[-2] = fVar1;
-          pfVar6[-1] = -(float)((double)(float)(dVar14 / dVar19) * dVar17);
-          if ((double)fVar1 <= dVar16) {
+          *pfVar5 = (float)dVar15;
+          fVar1 = (float)((double)(float)(dVar13 / dVar18) * dVar14);
+          pfVar5[-2] = fVar1;
+          pfVar5[-1] = -(float)((double)(float)(dVar13 / dVar18) * dVar16);
+          if ((double)fVar1 <= dVar15) {
             MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_vehicle.cpp"
                             ,0x61d,0,"%s");
           }
         }
-        if (((uint)pfVar6[-3] & 2) != 0) {
-          pfVar6[1] = (float)(dVar19 / dVar7);
-          uVar4 = uVar4 + 1;
-          dVar13 = (double)(float)((double)(float)(dVar19 / dVar7) + dVar13);
+        if (((uint)pfVar5[-3] & 2) != 0) {
+          pfVar5[1] = (float)(dVar18 / dVar7);
+          uVar3 = uVar3 + 1;
+          dVar12 = (double)(float)((double)(float)(dVar18 / dVar7) + dVar12);
         }
       }
-      lVar5 = lVar5 + -1;
-      pfVar6 = pfVar6 + 0xb;
-    } while (lVar5 != 0);
-    if (dVar13 <= dVar9) {
+      lVar4 = lVar4 + -1;
+      pfVar5 = pfVar5 + 0xb;
+    } while (lVar4 != 0);
+    if (dVar12 <= dVar9) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_vehicle.cpp",
                       0x628,0,"%s");
     }
-    uVar2 = pPVar3->wheels[0].flags;
-    fVar1 = (float)((double)uVar4 / dVar13);
+    uVar2 = param_1->wheels[0].flags;
+    fVar1 = (float)((double)uVar3 / dVar12);
     if (((uVar2 & 1) != 0) && ((uVar2 & 2) != 0)) {
-      pPVar3->wheels[0].accelRatio = pPVar3->wheels[0].speedRatio * fVar1;
+      param_1->wheels[0].accelRatio = param_1->wheels[0].speedRatio * fVar1;
     }
-    uVar4 = pPVar3->wheels[1].flags;
-    if (((uVar4 & 1) != 0) && ((uVar4 & 2) != 0)) {
-      pPVar3->wheels[1].accelRatio = pPVar3->wheels[1].speedRatio * fVar1;
+    uVar3 = param_1->wheels[1].flags;
+    if (((uVar3 & 1) != 0) && ((uVar3 & 2) != 0)) {
+      param_1->wheels[1].accelRatio = param_1->wheels[1].speedRatio * fVar1;
     }
-    uVar4 = pPVar3->wheels[2].flags;
-    if (((uVar4 & 1) != 0) && ((uVar4 & 2) != 0)) {
-      pPVar3->wheels[2].accelRatio = pPVar3->wheels[2].speedRatio * fVar1;
+    uVar3 = param_1->wheels[2].flags;
+    if (((uVar3 & 1) != 0) && ((uVar3 & 2) != 0)) {
+      param_1->wheels[2].accelRatio = param_1->wheels[2].speedRatio * fVar1;
     }
-    uVar4 = pPVar3->wheels[3].flags;
-    if (((uVar4 & 1) != 0) && ((uVar4 & 2) != 0)) {
-      pPVar3->wheels[3].accelRatio = pPVar3->wheels[3].speedRatio * fVar1;
+    uVar3 = param_1->wheels[3].flags;
+    if (((uVar3 & 1) != 0) && ((uVar3 & 2) != 0)) {
+      param_1->wheels[3].accelRatio = param_1->wheels[3].speedRatio * fVar1;
     }
-    uVar4 = pPVar3->wheels[4].flags;
-    if (((uVar4 & 1) != 0) && ((uVar4 & 2) != 0)) {
-      pPVar3->wheels[4].accelRatio = pPVar3->wheels[4].speedRatio * fVar1;
+    uVar3 = param_1->wheels[4].flags;
+    if (((uVar3 & 1) != 0) && ((uVar3 & 2) != 0)) {
+      param_1->wheels[4].accelRatio = param_1->wheels[4].speedRatio * fVar1;
     }
-    uVar4 = pPVar3->wheels[5].flags;
-    if (((uVar4 & 1) != 0) && ((uVar4 & 2) != 0)) {
-      pPVar3->wheels[5].accelRatio = pPVar3->wheels[5].speedRatio * fVar1;
+    uVar3 = param_1->wheels[5].flags;
+    if (((uVar3 & 1) != 0) && ((uVar3 & 2) != 0)) {
+      param_1->wheels[5].accelRatio = param_1->wheels[5].speedRatio * fVar1;
     }
   }
   else {
-    if ((pPVar3->wheels[0].flags & 1) != 0) {
-      pPVar3->wheels[0].forward[0] = 1.0;
-      pPVar3->wheels[0].forward[1] = 0.0;
-      pPVar3->wheels[0].forward[2] = 0.0;
-      pPVar3->wheels[0].speedRatio = 1.0;
-      pPVar3->wheels[0].accelRatio = 1.0;
+    if ((param_1->wheels[0].flags & 1) != 0) {
+      param_1->wheels[0].forward[0] = 1.0;
+      param_1->wheels[0].forward[1] = 0.0;
+      param_1->wheels[0].forward[2] = 0.0;
+      param_1->wheels[0].speedRatio = 1.0;
+      param_1->wheels[0].accelRatio = 1.0;
     }
-    if ((pPVar3->wheels[1].flags & 1) != 0) {
-      pPVar3->wheels[1].forward[0] = 1.0;
-      pPVar3->wheels[1].forward[1] = 0.0;
-      pPVar3->wheels[1].forward[2] = 0.0;
-      pPVar3->wheels[1].speedRatio = 1.0;
-      pPVar3->wheels[1].accelRatio = 1.0;
+    if ((param_1->wheels[1].flags & 1) != 0) {
+      param_1->wheels[1].forward[0] = 1.0;
+      param_1->wheels[1].forward[1] = 0.0;
+      param_1->wheels[1].forward[2] = 0.0;
+      param_1->wheels[1].speedRatio = 1.0;
+      param_1->wheels[1].accelRatio = 1.0;
     }
-    if ((pPVar3->wheels[2].flags & 1) != 0) {
-      pPVar3->wheels[2].forward[0] = 1.0;
-      pPVar3->wheels[2].forward[1] = 0.0;
-      pPVar3->wheels[2].forward[2] = 0.0;
-      pPVar3->wheels[2].speedRatio = 1.0;
-      pPVar3->wheels[2].accelRatio = 1.0;
+    if ((param_1->wheels[2].flags & 1) != 0) {
+      param_1->wheels[2].forward[0] = 1.0;
+      param_1->wheels[2].forward[1] = 0.0;
+      param_1->wheels[2].forward[2] = 0.0;
+      param_1->wheels[2].speedRatio = 1.0;
+      param_1->wheels[2].accelRatio = 1.0;
     }
-    if ((pPVar3->wheels[3].flags & 1) != 0) {
-      pPVar3->wheels[3].forward[0] = 1.0;
-      pPVar3->wheels[3].forward[1] = 0.0;
-      pPVar3->wheels[3].forward[2] = 0.0;
-      pPVar3->wheels[3].speedRatio = 1.0;
-      pPVar3->wheels[3].accelRatio = 1.0;
+    if ((param_1->wheels[3].flags & 1) != 0) {
+      param_1->wheels[3].forward[0] = 1.0;
+      param_1->wheels[3].forward[1] = 0.0;
+      param_1->wheels[3].forward[2] = 0.0;
+      param_1->wheels[3].speedRatio = 1.0;
+      param_1->wheels[3].accelRatio = 1.0;
     }
-    if ((pPVar3->wheels[4].flags & 1) != 0) {
-      pPVar3->wheels[4].forward[0] = 1.0;
-      pPVar3->wheels[4].forward[1] = 0.0;
-      pPVar3->wheels[4].forward[2] = 0.0;
-      pPVar3->wheels[4].speedRatio = 1.0;
-      pPVar3->wheels[4].accelRatio = 1.0;
+    if ((param_1->wheels[4].flags & 1) != 0) {
+      param_1->wheels[4].forward[0] = 1.0;
+      param_1->wheels[4].forward[1] = 0.0;
+      param_1->wheels[4].forward[2] = 0.0;
+      param_1->wheels[4].speedRatio = 1.0;
+      param_1->wheels[4].accelRatio = 1.0;
     }
-    if ((pPVar3->wheels[5].flags & 1) != 0) {
-      pPVar3->wheels[5].forward[0] = 1.0;
-      pPVar3->wheels[5].forward[1] = 0.0;
-      pPVar3->wheels[5].forward[2] = 0.0;
-      pPVar3->wheels[5].speedRatio = 1.0;
-      pPVar3->wheels[5].accelRatio = 1.0;
-      __restfpr_19();
-      __restgprlr_24();
+    if ((param_1->wheels[5].flags & 1) != 0) {
+      param_1->wheels[5].forward[0] = 1.0;
+      param_1->wheels[5].forward[1] = 0.0;
+      param_1->wheels[5].forward[2] = 0.0;
+      param_1->wheels[5].speedRatio = 1.0;
+      param_1->wheels[5].accelRatio = 1.0;
       return;
     }
   }
-  __restfpr_19();
-  __restgprlr_24();
   return;
 }
 
 
 // 8267D578  PhysVeh_GetFrontWheelCenter  (physics/phys_vehicle.cpp:1593)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void PhysVeh_GetFrontWheelCenter(PhysVehicle *param_1,float *param_2)
 
 {
-  int *piVar1;
-  ulonglong uVar2;
   float afStack_60 [9];
   float afStack_3c [15];
   
-  uVar2 = (ulonglong)(int)param_2;
-  piVar1 = (int *)__savegprlr_28(param_1);
-  if (piVar1 == (int *)0x0) {
+  if (param_1 == (PhysVehicle *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_vehicle.cpp",
                     0x63c,0,"%s");
   }
-  if ((uVar2 & 0xffffffff) == 0) {
+  if (param_2 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_vehicle.cpp",
                     0x63d,0,"%s");
   }
-  Phys_ObjGetPosition(*piVar1,afStack_3c,(float (*) [3])afStack_60);
-  MatrixTransformVector43((float *)(piVar1 + 0x8e),(float (*) [3])afStack_60,(float *)uVar2);
-  __restgprlr_28();
+  Phys_ObjGetPosition(param_1->body,afStack_3c,(float (*) [3])afStack_60);
+  MatrixTransformVector43(param_1->frontWheelCenter,(float (*) [3])afStack_60,param_2);
   return;
 }
 
 
 // 8267D610  PhysVeh_GetRearWheelCenter  (physics/phys_vehicle.cpp:1605)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void PhysVeh_GetRearWheelCenter(PhysVehicle *param_1,float *param_2)
 
 {
-  int *piVar1;
-  ulonglong uVar2;
   float afStack_60 [9];
   float afStack_3c [15];
   
-  uVar2 = (ulonglong)(int)param_2;
-  piVar1 = (int *)__savegprlr_28(param_1);
-  if (piVar1 == (int *)0x0) {
+  if (param_1 == (PhysVehicle *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_vehicle.cpp",
                     0x648,0,"%s");
   }
-  if ((uVar2 & 0xffffffff) == 0) {
+  if (param_2 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_vehicle.cpp",
                     0x649,0,"%s");
   }
-  Phys_ObjGetPosition(*piVar1,afStack_3c,(float (*) [3])afStack_60);
-  MatrixTransformVector43((float *)(piVar1 + 0x91),(float (*) [3])afStack_60,(float *)uVar2);
-  __restgprlr_28();
+  Phys_ObjGetPosition(param_1->body,afStack_3c,(float (*) [3])afStack_60);
+  MatrixTransformVector43(param_1->rearWheelCenter,(float (*) [3])afStack_60,param_2);
   return;
 }
 
@@ -2514,27 +2448,25 @@ float PhysVeh_GetRearWheelDist(PhysVehicle *param_1)
 
 // 8267D760  PhysVeh_GetSteeringPoint  (physics/phys_vehicle.cpp:1631)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void PhysVeh_GetSteeringPoint(PhysVehicle *param_1,float *param_2)
 
 {
-  int *piVar1;
-  ulonglong uVar2;
   float afStack_60 [9];
   float afStack_3c [15];
   
-  uVar2 = (ulonglong)(int)param_2;
-  piVar1 = (int *)__savegprlr_28(param_1);
-  if (piVar1 == (int *)0x0) {
+  if (param_1 == (PhysVehicle *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_vehicle.cpp",
                     0x662,0,"%s");
   }
-  if ((uVar2 & 0xffffffff) == 0) {
+  if (param_2 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_vehicle.cpp",
                     0x663,0,"%s");
   }
-  Phys_ObjGetPosition(*piVar1,afStack_3c,(float (*) [3])afStack_60);
-  MatrixTransformVector43((float *)(piVar1 + 0x94),(float (*) [3])afStack_60,(float *)uVar2);
-  __restgprlr_28();
+  Phys_ObjGetPosition(param_1->body,afStack_3c,(float (*) [3])afStack_60);
+  MatrixTransformVector43(param_1->steeringPoint,(float (*) [3])afStack_60,param_2);
   return;
 }
 
@@ -2554,23 +2486,21 @@ float PhysVeh_GetSteeringPointDist(PhysVehicle *param_1)
 
 // 8267D850  PhysVeh_GetWheelBaseHalfWidth  (physics/phys_vehicle.cpp:1650)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 float PhysVeh_GetWheelBaseHalfWidth(PhysVehicle *param_1)
 
 {
-  int iVar1;
-  double dVar2;
-  
-  iVar1 = __savegprlr_29(param_1);
-  if (iVar1 == 0) {
+  if (param_1 == (PhysVehicle *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_vehicle.cpp",
                     0x673,0,"%s");
   }
-  if (*(float *)(iVar1 + 0x260) < 0.0) {
+  if (param_1->steeringHalfWidth < 0.0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_vehicle.cpp",
                     0x674,0,"%s");
   }
-  dVar2 = (double)__restgprlr_29((double)*(float *)(iVar1 + 0x260));
-  return (float)dVar2;
+  return param_1->steeringHalfWidth;
 }
 
 
@@ -2648,23 +2578,23 @@ void PhysVeh_CheckForJolt(PhysVehicle *param_1,float param_2)
 
 // 8267DA90  PhysVeh_UpdateControls  (physics/phys_vehicle.cpp:1700)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 void PhysVeh_UpdateControls(PhysVehicle *param_1,PhysVehicleControl *param_2)
 
 {
   float fVar1;
   float fVar2;
   dxBody *pdVar3;
-  float *pfVar4;
-  bool bVar5;
-  PhysVehicle *pPVar6;
-  int iVar7;
-  ulonglong uVar8;
+  bool bVar4;
+  int iVar5;
+  double dVar6;
+  double dVar7;
+  double dVar8;
   double dVar9;
   double dVar10;
-  double dVar11;
-  double dVar12;
-  double dVar13;
-  float fVar14;
+  float fVar11;
   float local_98;
   float local_94;
   float local_90;
@@ -2673,133 +2603,129 @@ void PhysVeh_UpdateControls(PhysVehicle *param_1,PhysVehicleControl *param_2)
   float local_78;
   float afStack_5c [23];
   
-  uVar8 = (ulonglong)(int)param_2;
-  pPVar6 = (PhysVehicle *)__savegprlr_26(param_1);
-  if (pPVar6 == (PhysVehicle *)0x0) {
+  if (param_1 == (PhysVehicle *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_vehicle.cpp",
                     0x6ae,0,"%s");
   }
-  if ((uVar8 & 0xffffffff) == 0) {
+  if (param_2 == (PhysVehicleControl *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_vehicle.cpp",
                     0x6af,0,"%s");
   }
-  pfVar4 = (float *)uVar8;
-  dVar12 = 0.0;
-  if (pfVar4[4] < 0.0) {
+  dVar9 = 0.0;
+  if (param_2->brake < 0.0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_vehicle.cpp",
                     0x6b0,0,"%s");
   }
-  if ((double)pfVar4[1] < dVar12) {
+  if ((double)param_2->desiredSpeed < dVar9) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_vehicle.cpp",
                     0x6b1,0,"%s");
   }
-  if ((double)pfVar4[2] < dVar12) {
+  if ((double)param_2->desiredSpeedReverse < dVar9) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_vehicle.cpp",
                     0x6b2,0,"%s");
   }
   Profile_Begin(0x16f);
-  pdVar3 = (dxBody *)pPVar6->body;
+  pdVar3 = (dxBody *)param_1->body;
   Phys_ObjGetPosition((int)pdVar3,afStack_5c,(float (*) [3])&local_80);
-  Phys_ObjGetVelocity(pPVar6->body,&local_98);
-  local_98 = local_98 - pPVar6->conveyorVelocity[0];
-  local_94 = local_94 - pPVar6->conveyorVelocity[1];
-  dVar13 = 1.0;
-  fVar14 = local_90 * local_78 + local_7c * local_94 + local_80 * local_98;
-  if ((1.0 <= fVar14) || ((double)pfVar4[4] <= dVar12)) {
-    bVar5 = false;
-    pPVar6->desiredSpeed = pfVar4[1];
+  Phys_ObjGetVelocity(param_1->body,&local_98);
+  local_98 = local_98 - param_1->conveyorVelocity[0];
+  local_94 = local_94 - param_1->conveyorVelocity[1];
+  dVar10 = 1.0;
+  fVar11 = local_90 * local_78 + local_7c * local_94 + local_80 * local_98;
+  if ((1.0 <= fVar11) || ((double)param_2->brake <= dVar9)) {
+    bVar4 = false;
+    param_1->desiredSpeed = param_2->desiredSpeed;
   }
   else {
-    bVar5 = true;
-    pPVar6->desiredSpeed = -pfVar4[2];
+    bVar4 = true;
+    param_1->desiredSpeed = -param_2->desiredSpeedReverse;
   }
-  fVar1 = pPVar6->topSpeed;
-  if ((fVar1 < fVar14) && ((double)pfVar4[3] == dVar12)) {
-    fVar1 = pPVar6->def->frictionBraking * pfVar4[4];
-    pPVar6->brakingFactor = fVar1;
-    fVar14 = pPVar6->def->frictionTopSpeed;
-    pPVar6->desiredAccel = (float)dVar12;
-    if (fVar1 - fVar14 < 0.0) {
-      fVar1 = fVar14;
+  fVar1 = param_1->topSpeed;
+  if ((fVar1 < fVar11) && ((double)param_2->accelOverride == dVar9)) {
+    fVar1 = param_1->def->frictionBraking * param_2->brake;
+    param_1->brakingFactor = fVar1;
+    fVar11 = param_1->def->frictionTopSpeed;
+    param_1->desiredAccel = (float)dVar9;
+    if (fVar1 - fVar11 < 0.0) {
+      fVar1 = fVar11;
     }
-    pPVar6->brakingFactor = fVar1;
+    param_1->brakingFactor = fVar1;
     goto LAB_8267dda8;
   }
-  if ((double)pPVar6->desiredSpeed == dVar12) {
-    pPVar6->desiredAccel = (float)dVar12;
-    fVar14 = pPVar6->brakingFactor;
-    fVar1 = pPVar6->def->frictionBraking * pfVar4[4];
-    pPVar6->brakingFactor = fVar1;
-    if (((pPVar6->flags & 0x10) == 0) || ((double)*pfVar4 == dVar12)) {
-      fVar2 = pPVar6->def->frictionCoasting;
+  if ((double)param_1->desiredSpeed == dVar9) {
+    param_1->desiredAccel = (float)dVar9;
+    fVar11 = param_1->brakingFactor;
+    fVar1 = param_1->def->frictionBraking * param_2->brake;
+    param_1->brakingFactor = fVar1;
+    if (((param_1->flags & 0x10) == 0) || ((double)param_2->steering == dVar9)) {
+      fVar2 = param_1->def->frictionCoasting;
       if (fVar1 - fVar2 < 0.0) {
         fVar1 = fVar2;
       }
-      pPVar6->brakingFactor = fVar1;
-      if (fVar14 <= fVar1) goto LAB_8267dda8;
+      param_1->brakingFactor = fVar1;
+      if (fVar11 <= fVar1) goto LAB_8267dda8;
     }
   }
   else {
-    dVar9 = (double)pfVar4[3];
-    if (dVar9 <= dVar12) {
-      dVar9 = (double)(ABS(fVar14) / fVar1);
+    dVar6 = (double)param_2->accelOverride;
+    if (dVar6 <= dVar9) {
+      dVar6 = (double)(ABS(fVar11) / fVar1);
       if (fVar1 - 0.01 < 0.0) {
-        dVar9 = dVar12;
+        dVar6 = dVar9;
       }
-      dVar11 = dVar13;
-      if ((float)(dVar9 - 1.0) < 0.0) {
-        dVar11 = dVar9;
+      dVar8 = dVar10;
+      if ((float)(dVar6 - 1.0) < 0.0) {
+        dVar8 = dVar6;
       }
-      dVar10 = dVar12;
-      if (-dVar9 < 0.0) {
-        dVar10 = dVar11;
+      dVar7 = dVar9;
+      if (-dVar6 < 0.0) {
+        dVar7 = dVar8;
       }
-      fVar14 = GraphFloat_GetValue(pPVar6->accelGraph,(float)dVar10);
-      dVar11 = (double)local_78;
-      dVar9 = (double)(fVar14 * 17.6);
-      if (bVar5) {
-        if (dVar11 < dVar12) {
-          dVar13 = -(double)(float)(dVar11 * 2.0 - dVar13);
+      fVar11 = GraphFloat_GetValue(param_1->accelGraph,(float)dVar7);
+      dVar8 = (double)local_78;
+      dVar6 = (double)(fVar11 * 17.6);
+      if (bVar4) {
+        if (dVar8 < dVar9) {
+          dVar10 = -(double)(float)(dVar8 * 2.0 - dVar10);
 LAB_8267dcf8:
-          dVar9 = (double)(float)(dVar13 * dVar9);
+          dVar6 = (double)(float)(dVar10 * dVar6);
         }
       }
-      else if (dVar12 < dVar11) {
-        dVar13 = (double)(float)(dVar11 * 2.0 + dVar13);
+      else if (dVar9 < dVar8) {
+        dVar10 = (double)(float)(dVar8 * 2.0 + dVar10);
         goto LAB_8267dcf8;
       }
     }
-    fVar14 = (float)((double)pPVar6->invWheelsWithPower * dVar9);
-    pPVar6->desiredAccel = fVar14;
-    dVar13 = dVar12;
-    if (!bVar5) {
-      dVar13 = (double)(pPVar6->def->frictionBraking * pfVar4[4]);
+    fVar11 = (float)((double)param_1->invWheelsWithPower * dVar6);
+    param_1->desiredAccel = fVar11;
+    dVar10 = dVar9;
+    if (!bVar4) {
+      dVar10 = (double)(param_1->def->frictionBraking * param_2->brake);
     }
-    pPVar6->brakingFactor = (float)dVar13;
-    if (((double)fVar14 == dVar12) && (dVar13 == dVar12)) {
-      pPVar6->brakingFactor = pPVar6->def->frictionCoasting;
+    param_1->brakingFactor = (float)dVar10;
+    if (((double)fVar11 == dVar9) && (dVar10 == dVar9)) {
+      param_1->brakingFactor = param_1->def->frictionCoasting;
     }
   }
   dBodyEnable(pdVar3);
 LAB_8267dda8:
-  PhysVeh_SetSteeringAngle(pPVar6,*pfVar4);
-  pPVar6->pitchControl = pfVar4[5];
-  if (((uint)pfVar4[5] & 0x7f800000) == 0x7f800000) {
+  PhysVeh_SetSteeringAngle(param_1,param_2->steering);
+  param_1->pitchControl = param_2->pitch;
+  if (((uint)param_2->pitch & 0x7f800000) == 0x7f800000) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_vehicle.cpp",
                     0x70a,0,"%s");
   }
-  (pPVar6->orientationConstraint).uprightCorrection =
-       (bool)('\x01' - (pPVar6->wheelsOnGroundCount == 0));
-  iVar7 = ODE_BodyGetHasContactsFlag(pdVar3);
-  if (iVar7 == 0) {
-    pPVar6->flags = pPVar6->flags & 0xfffffffd;
+  (param_1->orientationConstraint).uprightCorrection =
+       (bool)('\x01' - (param_1->wheelsOnGroundCount == 0));
+  iVar5 = ODE_BodyGetHasContactsFlag(pdVar3);
+  if (iVar5 == 0) {
+    param_1->flags = param_1->flags & 0xfffffffd;
   }
   else {
-    pPVar6->flags = pPVar6->flags | 2;
+    param_1->flags = param_1->flags | 2;
     ODE_BodySetHasContactsFlag(pdVar3,0);
   }
-  iVar7 = Profile_EndInternal((double *)0x0);
-  __restgprlr_26(iVar7);
+  Profile_EndInternal((double *)0x0);
   return;
 }
 
@@ -2883,17 +2809,19 @@ bool PhysVeh_AreFrontWheelsOffGround(PhysVehicle *param_1)
 
 // 8267E030  PhysVeh_DebugText  (physics/phys_vehicle.cpp:1861)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void PhysVeh_DebugText(PhysVehicle *param_1,uint *param_2)
 
 {
   bool bVar1;
-  int *piVar2;
-  ulonglong uVar3;
-  uint *puVar4;
   char *in_r5;
-  uint uVar5;
-  double dVar6;
-  double dVar7;
+  uint uVar2;
+  double dVar3;
+  double dVar4;
   float local_a0;
   float local_9c;
   float local_98;
@@ -2914,110 +2842,101 @@ void PhysVeh_DebugText(PhysVehicle *param_1,uint *param_2)
   float local_48;
   float local_44;
   
-  uVar3 = (ulonglong)(int)param_2;
-  __savegprlr_29(param_1);
-  piVar2 = (int *)__savefpr_28();
-  if (piVar2 == (int *)0x0) {
+  if (param_1 == (PhysVehicle *)0x0) {
     in_r5 = (char *)0x0;
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_vehicle.cpp",
                     0x751,0,"%s");
   }
-  if ((g_vehicleDebug->current).enabled == false) goto LAB_8267e49c;
-  dVar7 = 14.0;
-  dVar6 = 1.0;
-  if ((uVar3 & 0xffffffff) == 0) {
-    Phys_ObjGetPosition(*piVar2,&local_4c,(float (*) [3])&local_70);
-    Phys_ObjGetVelocity(*piVar2,local_90);
+  if ((g_vehicleDebug->current).enabled == false) {
+    return;
+  }
+  dVar4 = 14.0;
+  dVar3 = 1.0;
+  if (param_2 == (uint *)0x0) {
+    Phys_ObjGetPosition(param_1->body,&local_4c,(float (*) [3])&local_70);
+    Phys_ObjGetVelocity(param_1->body,local_90);
     local_a0 = local_58 * 70.0 + local_64 * 50.0 + local_70 * 200.0 + local_4c;
     local_9c = local_54 * 70.0 + local_60 * 50.0 + local_6c * 200.0 + local_48;
     local_98 = local_50 * 70.0 + local_5c * 50.0 + local_68 * 200.0 + local_44;
     va("Speed: %f MPH");
     in_r5 = "etected";
-    G_AddDebugString(&local_a0,colorGreen,(float)dVar6,"etected");
-    local_a0 = -(float)((double)local_58 * dVar7 - (double)local_a0);
-    local_9c = -(float)((double)local_54 * dVar7 - (double)local_9c);
-    local_98 = -(float)((double)local_50 * dVar7 - (double)local_98);
+    G_AddDebugString(&local_a0,colorGreen,(float)dVar3,"etected");
+    local_a0 = -(float)((double)local_58 * dVar4 - (double)local_a0);
+    local_9c = -(float)((double)local_54 * dVar4 - (double)local_9c);
+    local_98 = -(float)((double)local_50 * dVar4 - (double)local_98);
     va("Slide: %f MPH");
-    G_AddDebugString(&local_a0,colorGreen,(float)dVar6,in_r5);
+    G_AddDebugString(&local_a0,colorGreen,(float)dVar3,in_r5);
   }
-  local_a0 = -(float)((double)local_58 * dVar7 - (double)local_a0);
-  local_9c = -(float)((double)local_54 * dVar7 - (double)local_9c);
-  local_98 = -(float)((double)local_50 * dVar7 - (double)local_98);
-  if (((piVar2[4] & 0x10U) != 0) || (bVar1 = true, (piVar2[0xf] & 0x10U) != 0)) {
+  local_a0 = -(float)((double)local_58 * dVar4 - (double)local_a0);
+  local_9c = -(float)((double)local_54 * dVar4 - (double)local_9c);
+  local_98 = -(float)((double)local_50 * dVar4 - (double)local_98);
+  if (((param_1->wheels[0].flags & 0x10) != 0) ||
+     (bVar1 = true, (param_1->wheels[1].flags & 0x10) != 0)) {
     bVar1 = false;
   }
-  puVar4 = (uint *)uVar3;
   if (bVar1) {
-    if ((uVar3 & 0xffffffff) == 0) {
+    if (param_2 == (uint *)0x0) {
       va("FRONT");
-      G_AddDebugString(&local_a0,colorCyan,(float)dVar6,in_r5);
+      G_AddDebugString(&local_a0,colorCyan,(float)dVar3,in_r5);
     }
     else {
-      uVar5 = *puVar4 | 0x80;
+      uVar2 = *param_2 | 0x80;
 LAB_8267e2bc:
-      *puVar4 = uVar5;
+      *param_2 = uVar2;
     }
   }
-  else if ((uVar3 & 0xffffffff) != 0) {
-    uVar5 = *puVar4 & 0xffffff7f;
+  else if (param_2 != (uint *)0x0) {
+    uVar2 = *param_2 & 0xffffff7f;
     goto LAB_8267e2bc;
   }
-  if (((piVar2[0x1a] & 0x10U) == 0) && ((piVar2[0x25] & 0x10U) == 0)) {
-    if ((uVar3 & 0xffffffff) == 0) {
+  if (((param_1->wheels[2].flags & 0x10) == 0) && ((param_1->wheels[3].flags & 0x10) == 0)) {
+    if (param_2 == (uint *)0x0) {
       local_80 = -(local_64 * 80.0 - local_a0);
       local_7c = -(local_60 * 80.0 - local_9c);
       local_78 = -(local_5c * 80.0 - local_98);
       va("BACK");
-      G_AddDebugString(&local_80,colorDkCyan,(float)dVar6,in_r5);
+      G_AddDebugString(&local_80,colorDkCyan,(float)dVar3,in_r5);
     }
     else {
-      uVar5 = *puVar4 | 0x100;
+      uVar2 = *param_2 | 0x100;
 LAB_8267e364:
-      *puVar4 = uVar5;
+      *param_2 = uVar2;
     }
   }
-  else if ((uVar3 & 0xffffffff) != 0) {
-    uVar5 = *puVar4 & 0xfffffeff;
+  else if (param_2 != (uint *)0x0) {
+    uVar2 = *param_2 & 0xfffffeff;
     goto LAB_8267e364;
   }
-  local_a0 = -(float)((double)local_58 * dVar7 - (double)local_a0);
-  local_9c = -(float)((double)local_54 * dVar7 - (double)local_9c);
-  local_98 = -(float)((double)local_50 * dVar7 - (double)local_98);
-  if ((piVar2[0x99] & 1U) == 0) {
-    if ((uVar3 & 0xffffffff) != 0) {
-      uVar5 = *puVar4 & 0xfffffdff;
-      goto LAB_8267e3ec;
-    }
-  }
-  else if ((uVar3 & 0xffffffff) == 0) {
-    G_AddDebugString(&local_a0,colorRed,(float)dVar6,in_r5);
+  local_a0 = -(float)((double)local_58 * dVar4 - (double)local_a0);
+  local_9c = -(float)((double)local_54 * dVar4 - (double)local_9c);
+  local_98 = -(float)((double)local_50 * dVar4 - (double)local_98);
+  if ((param_1->flags & 1) == 0) {
+    if (param_2 == (uint *)0x0) goto LAB_8267e3f0;
+    uVar2 = *param_2 & 0xfffffdff;
   }
   else {
-    uVar5 = *puVar4 | 0x200;
-LAB_8267e3ec:
-    *puVar4 = uVar5;
+    if (param_2 == (uint *)0x0) {
+      G_AddDebugString(&local_a0,colorRed,(float)dVar3,in_r5);
+      goto LAB_8267e3f0;
+    }
+    uVar2 = *param_2 | 0x200;
   }
+  *param_2 = uVar2;
+LAB_8267e3f0:
   local_a0 = -(local_58 * 28.0 - local_a0);
   local_9c = -(local_54 * 28.0 - local_9c);
   local_98 = -(local_50 * 28.0 - local_98);
-  if ((piVar2[0x99] & 2U) != 0) {
-    if ((uVar3 & 0xffffffff) != 0) {
-      *puVar4 = *puVar4 | 0x400;
-      __restfpr_28();
-      __restgprlr_29();
-      return;
+  if ((param_1->flags & 2) == 0) {
+    if (param_2 != (uint *)0x0) {
+      *param_2 = *param_2 & 0xfffffbff;
     }
-    G_AddDebugString(&local_a0,colorOrange,(float)dVar6,in_r5);
-    __restfpr_28();
-    __restgprlr_29();
     return;
   }
-  if ((uVar3 & 0xffffffff) != 0) {
-    *puVar4 = *puVar4 & 0xfffffbff;
+  if (param_2 == (uint *)0x0) {
+    G_AddDebugString(&local_a0,colorOrange,(float)dVar3,in_r5);
+    return;
   }
-LAB_8267e49c:
-  __restfpr_28();
-  __restgprlr_29();
+  *param_2 = *param_2 | 0x400;
   return;
 }
 
@@ -3065,40 +2984,42 @@ void PhysVeh_SetTankSteering(PhysVehicle *param_1,float param_2,float param_3)
 
 // 8267E508  PhysVeh_SetPathConstraintState  (physics/phys_vehicle.cpp:1982)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void PhysVeh_SetPathConstraintState
                (PhysVehicle *param_1,float *param_2,float *param_3,float param_4,float param_5)
 
 {
-  int *piVar1;
-  double extraout_f1;
+  dxBody *pdVar1;
   double dVar2;
   double dVar3;
   double dVar4;
   float local_58;
-  int local_54;
+  float local_54;
   
-  dVar2 = (double)param_5;
-  piVar1 = (int *)__savegprlr_28((double)param_4,param_1);
-  dVar4 = extraout_f1;
-  if (piVar1 == (int *)0x0) {
+  dVar2 = (double)param_4;
+  dVar3 = (double)param_5;
+  if (param_1 == (PhysVehicle *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_vehicle.cpp",
                     0x7c1,0,"%s");
   }
-  dVar3 = (double)(0.05 / (float)(longlong)(physVeh_StepsPerFrame->current).integer);
-  Phys_ObjGetCenterOfMassFromObjOrigin(*piVar1,param_2,&local_58);
-  piVar1[0x6c] = (int)local_58;
-  piVar1[0x6d] = local_54;
-  piVar1[0x6e] = (int)*param_3;
-  piVar1[0x6f] = (int)param_3[1];
-  piVar1[0x70] = (int)(float)dVar4;
-  piVar1[0x71] = (int)(float)dVar2;
-  piVar1[0x6b] = (physVeh_StepsPerFrame->current).integer;
-  piVar1[0x72] = (int)(((dxBody *)*piVar1)->invMass * (physVeh_pathConstraintCfm->current).value);
-  piVar1[0x73] = (int)((float)((double)(physVeh_pathConstraintErp->current).value * dVar3) * 20.0);
-  *(undefined1 *)(piVar1 + 0x74) = 1;
-  dBodyEnable((dxBody *)*piVar1);
-  ODE_BodySetSoftContacts((dxBody *)*piVar1,true);
-  __restgprlr_28();
+  dVar4 = (double)(0.05 / (float)(longlong)(physVeh_StepsPerFrame->current).integer);
+  Phys_ObjGetCenterOfMassFromObjOrigin(param_1->body,param_2,&local_58);
+  (param_1->pathConstraint).pos[0] = local_58;
+  (param_1->pathConstraint).pos[1] = local_54;
+  (param_1->pathConstraint).vel[0] = *param_3;
+  (param_1->pathConstraint).vel[1] = param_3[1];
+  (param_1->pathConstraint).yaw = (float)dVar2;
+  pdVar1 = (dxBody *)param_1->body;
+  (param_1->pathConstraint).yawVel = (float)dVar3;
+  (param_1->pathConstraint).substeps = (physVeh_StepsPerFrame->current).integer;
+  (param_1->pathConstraint).cfm = pdVar1->invMass * (physVeh_pathConstraintCfm->current).value;
+  (param_1->pathConstraint).erp =
+       (float)((double)(physVeh_pathConstraintErp->current).value * dVar4) * 20.0;
+  (param_1->pathConstraint).enabled = true;
+  dBodyEnable(pdVar1);
+  ODE_BodySetSoftContacts((dxBody *)param_1->body,true);
   return;
 }
 
@@ -3129,17 +3050,16 @@ void PhysVeh_AddForce(PhysVehicle *param_1,float *param_2,float *param_3)
 
 // 8267E668  PhysVeh_AddImpulse  (physics/phys_vehicle.cpp:2017)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PhysWorld": Some values do not have unique names */
 
 void PhysVeh_AddImpulse(PhysVehicle *param_1,float *param_2,float *param_3)
 
 {
-  int *piVar1;
-  ulonglong uVar2;
-  float *pfVar3;
-  double dVar4;
-  double dVar5;
-  float fVar6;
+  double dVar1;
+  double dVar2;
+  float fVar3;
   float local_60;
   float local_5c;
   float local_58;
@@ -3147,40 +3067,36 @@ void PhysVeh_AddImpulse(PhysVehicle *param_1,float *param_2,float *param_3)
   float local_4c;
   float local_48;
   
-  uVar2 = (ulonglong)(int)param_3;
-  piVar1 = (int *)__savegprlr_27(param_1);
-  pfVar3 = (float *)uVar2;
-  if (piVar1 == (int *)0x0) {
+  if (param_1 == (PhysVehicle *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_vehicle.cpp",
                     0x7e5,0,"%s");
   }
-  if ((piVar1[0x99] & 8U) != 0) {
+  if ((param_1->flags & 8) != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_vehicle.cpp",
                     0x7e6,0,"%s");
   }
   local_60 = *param_2;
   local_5c = param_2[1];
   local_58 = param_2[2];
-  if ((piVar1[0x99] & 4U) != 0) {
-    fVar6 = *(float *)(piVar1[0x9a] + 0x8c);
-    local_60 = local_60 * fVar6;
-    local_5c = local_5c * fVar6;
-    local_58 = local_58 * fVar6;
+  if ((param_1->flags & 4) != 0) {
+    fVar3 = param_1->def->wreckedMassScale;
+    local_60 = local_60 * fVar3;
+    local_5c = local_5c * fVar3;
+    local_58 = local_58 * fVar3;
   }
-  if ((uVar2 & 0xffffffff) == 0) {
-    Phys_ObjGetCenterOfMass(*piVar1,&local_50);
-    dVar5 = 1.0;
-    dVar4 = -1.0;
-    fVar6 = G_flrand(-1.0,1.0);
-    local_50 = fVar6 * (physVeh_explodeSpinScale->current).value + local_50;
-    fVar6 = G_flrand((float)dVar4,(float)dVar5);
-    local_4c = fVar6 * (physVeh_explodeSpinScale->current).value + local_4c;
-    fVar6 = G_flrand(0.0,(float)dVar5);
-    pfVar3 = &local_50;
-    local_48 = fVar6 * (physVeh_explodeSpinScale->current).value + local_48;
+  if (param_3 == (float *)0x0) {
+    Phys_ObjGetCenterOfMass(param_1->body,&local_50);
+    dVar2 = 1.0;
+    dVar1 = -1.0;
+    fVar3 = G_flrand(-1.0,1.0);
+    local_50 = fVar3 * (physVeh_explodeSpinScale->current).value + local_50;
+    fVar3 = G_flrand((float)dVar1,(float)dVar2);
+    local_4c = fVar3 * (physVeh_explodeSpinScale->current).value + local_4c;
+    fVar3 = G_flrand(0.0,(float)dVar2);
+    param_3 = &local_50;
+    local_48 = fVar3 * (physVeh_explodeSpinScale->current).value + local_48;
   }
-  Phys_ObjAddImpulse(PHYS_WORLD_FIRST_SERVER_WORLD,*piVar1,pfVar3,&local_60);
-  __restgprlr_27();
+  Phys_ObjAddImpulse(PHYS_WORLD_FIRST_SERVER_WORLD,param_1->body,param_3,&local_60);
   return;
 }
 
@@ -3203,32 +3119,30 @@ void PhysVeh_SetConveyorBelt(PhysVehicle *param_1,float *param_2)
 
 // 8267E868  PhysVeh_SetTopSpeed  (physics/phys_vehicle.cpp:2054)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void PhysVeh_SetTopSpeed(PhysVehicle *param_1,float param_2)
 
 {
   float fVar1;
-  int iVar2;
-  double extraout_f1;
-  double dVar3;
+  double dVar2;
   
-  iVar2 = __savegprlr_29((double)param_2,param_1);
-  dVar3 = extraout_f1;
-  if (iVar2 == 0) {
+  dVar2 = (double)param_2;
+  if (param_1 == (PhysVehicle *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_vehicle.cpp",
                     0x807,0,"%s");
   }
-  if (dVar3 < 0.0) {
+  if (dVar2 < 0.0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_vehicle.cpp",
                     0x808,0,"%s");
   }
-  fVar1 = *(float *)(*(int *)(iVar2 + 0x268) + 0x24);
-  if ((double)fVar1 < dVar3) {
-    *(float *)(iVar2 + 0x270) = fVar1;
-    __restgprlr_29();
+  fVar1 = param_1->def->maxVelocity;
+  if ((double)fVar1 < dVar2) {
+    param_1->topSpeed = fVar1;
     return;
   }
-  *(float *)(iVar2 + 0x270) = (float)dVar3;
-  __restgprlr_29();
+  param_1->topSpeed = (float)dVar2;
   return;
 }
 

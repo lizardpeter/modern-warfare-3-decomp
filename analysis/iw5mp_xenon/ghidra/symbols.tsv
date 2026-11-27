@@ -1360,7 +1360,6 @@ va	name	namespace	type	source	block	datatype	length
 82003CF0	??_C@_05LAPONLG@false?$AA@	Global	Label	IMPORTED	.rdata	/string	8
 82003CF0	s_false	Global	Label	ANALYSIS	.rdata	/string	8
 82003CF1	s_false+1	Global	Label	DEFAULT	.rdata		
-82003CF2	s_false+2	Global	Label	DEFAULT	.rdata		
 82003CF8	??_C@_04LOAJBDKD@true?$AA@	Global	Label	IMPORTED	.rdata	/undefined	1
 82003CF8	s_true	Global	Label	ANALYSIS	.rdata	/undefined	1
 82003CF9	DAT_82003cf9	Global	Label	DEFAULT	.rdata	/undefined1	1
@@ -18181,7 +18180,6 @@ va	name	namespace	type	source	block	datatype	length
 8205260C	??_C@_01PKGAHCOL@?$CJ?$AA@	Global	Label	IMPORTED	.rdata	/undefined	1
 8205260C	s_)	Global	Label	ANALYSIS	.rdata	/undefined	1
 8205260D	DAT_8205260d	Global	Label	DEFAULT	.rdata	/undefined1	1
-8205260E	DAT_8205260e	Global	Label	DEFAULT	.rdata	/undefined	1
 82052610	??_C@_0CM@KFILNCDF@?$CIUpload?5?$CFi?0?5NAT?5?$CFi?0?5?$CFs?5LSP?0?5conn@	Global	Label	IMPORTED	.rdata	/TerminatedCString	44
 82052610	s_(Upload_%i,_NAT_%i,_%s_LSP,_conn	Global	Label	ANALYSIS	.rdata	/TerminatedCString	44
 8205263C	??_C@_06FECNIJLD@not?5on?$AA@	Global	Label	IMPORTED	.rdata	/TerminatedCString	7
@@ -19244,8 +19242,7 @@ va	name	namespace	type	source	block	datatype	length
 82059100	s_DB_Auth:_Missing_magic_(not_an_a	Global	Label	ANALYSIS	.rdata	/TerminatedCString	73
 8205914C	??_C@_08PCHOHPC@IWffs100?$AA@	Global	Label	IMPORTED	.rdata	/undefined	1
 8205914C	s_IWffs100	Global	Label	ANALYSIS	.rdata	/undefined	1
-8205914D	DAT_8205914d	Global	Label	DEFAULT	.rdata	/undefined1	1
-82059154	DAT_82059154	Global	Label	DEFAULT	.rdata	/undefined	1
+8205914D	s_Wffs100_8205914d	Global	Label	DEFAULT	.rdata	/string	8
 82059158	??_C@_0CI@KDOGGEMN@g_authLoad?4authedChunkInGroupCou@	Global	Label	IMPORTED	.rdata	/TerminatedCString	40
 82059158	s_g_authLoad.authedChunkInGroupCou	Global	Label	ANALYSIS	.rdata	/TerminatedCString	40
 82059180	??_C@_0CP@JFFMFNBO@DB_Auth?3?5Master?5block?5hash?5valid@	Global	Label	IMPORTED	.rdata	/TerminatedCString	47
@@ -33147,9 +33144,8 @@ va	name	namespace	type	source	block	datatype	length
 8209BDF8	s_getshootatpos	Global	Label	ANALYSIS	.rdata	/TerminatedCString	14
 8209BE08	??_C@_0M@BGNOMCKI@getcentroid?$AA@	Global	Label	IMPORTED	.rdata	/TerminatedCString	12
 8209BE08	s_getcentroid	Global	Label	ANALYSIS	.rdata	/TerminatedCString	12
-8209BE14	??_C@_09KEBPCPMH@getorigin?$AA@	Global	Label	IMPORTED	.rdata	/string	12
-8209BE14	s_getorigin	Global	Label	ANALYSIS	.rdata	/string	12
-8209BE15	s_getorigin+1	Global	Label	DEFAULT	.rdata		
+8209BE14	??_C@_09KEBPCPMH@getorigin?$AA@	Global	Label	IMPORTED	.rdata	/TerminatedCString	10
+8209BE14	s_getorigin	Global	Label	ANALYSIS	.rdata	/TerminatedCString	10
 8209BE20	??_C@_0BA@IIOAOBGA@stalingradspawn?$AA@	Global	Label	IMPORTED	.rdata	/TerminatedCString	16
 8209BE20	s_stalingradspawn	Global	Label	ANALYSIS	.rdata	/TerminatedCString	16
 8209BE30	??_C@_07OOLMIFOB@dospawn?$AA@	Global	Label	IMPORTED	.rdata	/TerminatedCString	8
@@ -33217,9 +33213,8 @@ va	name	namespace	type	source	block	datatype	length
 8209C05C	??_C@_0BJ@DJLFMNPF@clearalltextafterhudelem?$AA@	Global	Label	IMPORTED	.rdata	/string	28
 8209C05C	s_clearalltextafterhudelem	Global	Label	ANALYSIS	.rdata	/string	28
 8209C05D	s_clearalltextafterhudelem+1	Global	Label	DEFAULT	.rdata		
-8209C078	??_C@_07OACEFOFE@settext?$AA@	Global	Label	IMPORTED	.rdata	/string	8
-8209C078	s_settext	Global	Label	ANALYSIS	.rdata	/string	8
-8209C079	s_settext+1	Global	Label	DEFAULT	.rdata		
+8209C078	??_C@_07OACEFOFE@settext?$AA@	Global	Label	IMPORTED	.rdata	/TerminatedCString	8
+8209C078	s_settext	Global	Label	ANALYSIS	.rdata	/TerminatedCString	8
 8209C080	??_C@_0BK@EPBINCND@vehicleusealtblendedaudio?$AA@	Global	Label	IMPORTED	.rdata	/TerminatedCString	26
 8209C080	s_vehicleusealtblendedaudio	Global	Label	ANALYSIS	.rdata	/TerminatedCString	26
 8209C09C	??_C@_0BJ@NFCMOKEK@vehphys_clearautodisable?$AA@	Global	Label	IMPORTED	.rdata	/TerminatedCString	25
@@ -33652,9 +33647,8 @@ va	name	namespace	type	source	block	datatype	length
 8209CFFC	s_playerlinkedturretanglesdisable	Global	Label	ANALYSIS	.rdata	/TerminatedCString	32
 8209D01C	??_C@_0BP@BPCCNCDM@playerlinkedturretanglesenable?$AA@	Global	Label	IMPORTED	.rdata	/TerminatedCString	31
 8209D01C	s_playerlinkedturretanglesenable	Global	Label	ANALYSIS	.rdata	/TerminatedCString	31
-8209D03C	??_C@_0P@EFIIDHJB@freehelicopter?$AA@	Global	Label	IMPORTED	.rdata	/string	16
-8209D03C	s_freehelicopter	Global	Label	ANALYSIS	.rdata	/string	16
-8209D03D	s_freehelicopter+1	Global	Label	DEFAULT	.rdata		
+8209D03C	??_C@_0P@EFIIDHJB@freehelicopter?$AA@	Global	Label	IMPORTED	.rdata	/TerminatedCString	15
+8209D03C	s_freehelicopter	Global	Label	ANALYSIS	.rdata	/TerminatedCString	15
 8209D04C	??_C@_0BI@KAKBINII@vehphys_setconveyorbelt?$AA@	Global	Label	IMPORTED	.rdata	/TerminatedCString	24
 8209D04C	s_vehphys_setconveyorbelt	Global	Label	ANALYSIS	.rdata	/TerminatedCString	24
 8209D064	??_C@_0BB@GNIPNMOG@vehphys_setspeed?$AA@	Global	Label	IMPORTED	.rdata	/TerminatedCString	17
@@ -33776,9 +33770,8 @@ va	name	namespace	type	source	block	datatype	length
 8209D490	??_C@_0L@JBODJKDA@attachpath?$AA@	Global	Label	IMPORTED	.rdata	/string	12
 8209D490	s_attachpath	Global	Label	ANALYSIS	.rdata	/string	12
 8209D491	s_attachpath+1	Global	Label	DEFAULT	.rdata		
-8209D49C	??_C@_0BB@EJJDCNCL@vehicle_teleport?$AA@	Global	Label	IMPORTED	.rdata	/string	20
-8209D49C	s_vehicle_teleport	Global	Label	ANALYSIS	.rdata	/string	20
-8209D49D	s_vehicle_teleport+1	Global	Label	DEFAULT	.rdata		
+8209D49C	??_C@_0BB@EJJDCNCL@vehicle_teleport?$AA@	Global	Label	IMPORTED	.rdata	/TerminatedCString	17
+8209D49C	s_vehicle_teleport	Global	Label	ANALYSIS	.rdata	/TerminatedCString	17
 8209D4B0	??_C@_0BF@MKIBCJAC@scriptmodelclearanim?$AA@	Global	Label	IMPORTED	.rdata	/TerminatedCString	21
 8209D4B0	s_scriptmodelclearanim	Global	Label	ANALYSIS	.rdata	/TerminatedCString	21
 8209D4C8	??_C@_0BE@JIGPGBMA@scriptmodelplayanim?$AA@	Global	Label	IMPORTED	.rdata	/TerminatedCString	20
@@ -33828,9 +33821,8 @@ va	name	namespace	type	source	block	datatype	length
 8209D608	??_C@_05GJLKHDB@movex?$AA@	Global	Label	IMPORTED	.rdata	/string	8
 8209D608	s_movex	Global	Label	ANALYSIS	.rdata	/string	8
 8209D609	s_movex+1	Global	Label	DEFAULT	.rdata		
-8209D610	??_C@_06LKKHBFJB@moveto?$AA@	Global	Label	IMPORTED	.rdata	/string	8
-8209D610	s_moveto	Global	Label	ANALYSIS	.rdata	/string	8
-8209D611	s_moveto+1	Global	Label	DEFAULT	.rdata		
+8209D610	??_C@_06LKKHBFJB@moveto?$AA@	Global	Label	IMPORTED	.rdata	/TerminatedCString	7
+8209D610	s_moveto	Global	Label	ANALYSIS	.rdata	/TerminatedCString	7
 8209D618	??_C@_09NHAANACJ@unsetperk?$AA@	Global	Label	IMPORTED	.rdata	/TerminatedCString	10
 8209D618	s_unsetperk	Global	Label	ANALYSIS	.rdata	/TerminatedCString	10
 8209D624	??_C@_0L@DMIBGMAH@clearperks?$AA@	Global	Label	IMPORTED	.rdata	/TerminatedCString	11
@@ -34058,9 +34050,8 @@ va	name	namespace	type	source	block	datatype	length
 8209DE9C	??_C@_0BC@JPLEKKGA@fragbuttonpressed?$AA@	Global	Label	IMPORTED	.rdata	/string	20
 8209DE9C	s_fragbuttonpressed	Global	Label	ANALYSIS	.rdata	/string	20
 8209DE9D	s_fragbuttonpressed+1	Global	Label	DEFAULT	.rdata		
-8209DEB0	??_C@_0N@FLEKGMGE@getviewmodel?$AA@	Global	Label	IMPORTED	.rdata	/string	16
-8209DEB0	s_getviewmodel	Global	Label	ANALYSIS	.rdata	/string	16
-8209DEB1	s_getviewmodel+1	Global	Label	DEFAULT	.rdata		
+8209DEB0	??_C@_0N@FLEKGMGE@getviewmodel?$AA@	Global	Label	IMPORTED	.rdata	/TerminatedCString	13
+8209DEB0	s_getviewmodel	Global	Label	ANALYSIS	.rdata	/TerminatedCString	13
 8209DEC0	??_C@_0BL@EJMNBBMD@issplitscreenplayerprimary?$AA@	Global	Label	IMPORTED	.rdata	/TerminatedCString	27
 8209DEC0	s_issplitscreenplayerprimary	Global	Label	ANALYSIS	.rdata	/TerminatedCString	27
 8209DEDC	??_C@_0BE@IKHFKJEI@issplitscreenplayer?$AA@	Global	Label	IMPORTED	.rdata	/TerminatedCString	20
@@ -34130,9 +34121,8 @@ va	name	namespace	type	source	block	datatype	length
 8209E0DC	??_C@_0O@DODNGAGE@buttonpressed?$AA@	Global	Label	IMPORTED	.rdata	/string	16
 8209E0DC	s_buttonpressed	Global	Label	ANALYSIS	.rdata	/string	16
 8209E0DD	s_buttonpressed+1	Global	Label	DEFAULT	.rdata		
-8209E0EC	??_C@_0L@HLAJHMJA@pingplayer?$AA@	Global	Label	IMPORTED	.rdata	/string	12
-8209E0EC	s_pingplayer	Global	Label	ANALYSIS	.rdata	/string	12
-8209E0ED	s_pingplayer+1	Global	Label	DEFAULT	.rdata		
+8209E0EC	??_C@_0L@HLAJHMJA@pingplayer?$AA@	Global	Label	IMPORTED	.rdata	/TerminatedCString	11
+8209E0EC	s_pingplayer	Global	Label	ANALYSIS	.rdata	/TerminatedCString	11
 8209E0F8	??_C@_0O@LNEAOCLO@trackerupdate?$AA@	Global	Label	IMPORTED	.rdata	/TerminatedCString	14
 8209E0F8	s_trackerupdate	Global	Label	ANALYSIS	.rdata	/TerminatedCString	14
 8209E108	??_C@_0O@BOHGHODI@setplayerdata?$AA@	Global	Label	IMPORTED	.rdata	/TerminatedCString	14
@@ -34456,9 +34446,8 @@ va	name	namespace	type	source	block	datatype	length
 8209ECEC	??_C@_0BC@DFHPMGON@attachshieldmodel?$AA@	Global	Label	IMPORTED	.rdata	/string	20
 8209ECEC	s_attachshieldmodel	Global	Label	ANALYSIS	.rdata	/string	20
 8209ECED	s_attachshieldmodel+1	Global	Label	DEFAULT	.rdata		
-8209ED00	??_C@_06LHJMGKLI@attach?$AA@	Global	Label	IMPORTED	.rdata	/string	8
-8209ED00	s_attach	Global	Label	ANALYSIS	.rdata	/string	8
-8209ED01	s_attach+1	Global	Label	DEFAULT	.rdata		
+8209ED00	??_C@_06LHJMGKLI@attach?$AA@	Global	Label	IMPORTED	.rdata	/TerminatedCString	7
+8209ED00	s_attach	Global	Label	ANALYSIS	.rdata	/TerminatedCString	7
 8209ED08	??_C@_0BB@IPLCHHHC@setlasermaterial?$AA@	Global	Label	IMPORTED	.rdata	/TerminatedCString	17
 8209ED08	s_setlasermaterial	Global	Label	ANALYSIS	.rdata	/TerminatedCString	17
 8209ED1C	??_C@_0BH@EDCIIHEC@gettimesincelastpaused?$AA@	Global	Label	IMPORTED	.rdata	/TerminatedCString	23
@@ -34954,9 +34943,8 @@ va	name	namespace	type	source	block	datatype	length
 8209FF14	??_C@_0N@NEKDPOMP@iprintlnbold?$AA@	Global	Label	IMPORTED	.rdata	/string	16
 8209FF14	s_iprintlnbold	Global	Label	ANALYSIS	.rdata	/string	16
 8209FF15	s_iprintlnbold+1	Global	Label	DEFAULT	.rdata		
-8209FF24	??_C@_08GJIGFICE@iprintln?$AA@	Global	Label	IMPORTED	.rdata	/string	12
-8209FF24	s_iprintln	Global	Label	ANALYSIS	.rdata	/string	12
-8209FF25	s_iprintln+1	Global	Label	DEFAULT	.rdata		
+8209FF24	??_C@_08GJIGFICE@iprintln?$AA@	Global	Label	IMPORTED	.rdata	/TerminatedCString	9
+8209FF24	s_iprintln	Global	Label	ANALYSIS	.rdata	/TerminatedCString	9
 8209FF30	??_C@_0BK@DIFJCCAE@objective_playerenemyteam?$AA@	Global	Label	IMPORTED	.rdata	/TerminatedCString	26
 8209FF30	s_objective_playerenemyteam	Global	Label	ANALYSIS	.rdata	/TerminatedCString	26
 8209FF4C	??_C@_0BF@PKCJBFFM@objective_playerteam?$AA@	Global	Label	IMPORTED	.rdata	/TerminatedCString	21
@@ -34978,9 +34966,8 @@ va	name	namespace	type	source	block	datatype	length
 8209FFE4	??_C@_0BB@PCBIFLDI@objective_delete?$AA@	Global	Label	IMPORTED	.rdata	/string	20
 8209FFE4	s_objective_delete	Global	Label	ANALYSIS	.rdata	/string	20
 8209FFE5	s_objective_delete+1	Global	Label	DEFAULT	.rdata		
-8209FFF8	??_C@_0O@IBGIIEAA@objective_add?$AA@	Global	Label	IMPORTED	.rdata	/string	16
-8209FFF8	s_objective_add	Global	Label	ANALYSIS	.rdata	/string	16
-8209FFF9	s_objective_add+1	Global	Label	DEFAULT	.rdata		
+8209FFF8	??_C@_0O@IBGIIEAA@objective_add?$AA@	Global	Label	IMPORTED	.rdata	/TerminatedCString	14
+8209FFF8	s_objective_add	Global	Label	ANALYSIS	.rdata	/TerminatedCString	14
 820A0008	??_C@_0BC@NPDEPNIF@getentchannelname?$AA@	Global	Label	IMPORTED	.rdata	/TerminatedCString	18
 820A0008	s_getentchannelname	Global	Label	ANALYSIS	.rdata	/TerminatedCString	18
 820A001C	??_C@_0BE@ONPKDPLJ@getentchannelscount?$AA@	Global	Label	IMPORTED	.rdata	/TerminatedCString	20
@@ -35326,9 +35313,8 @@ va	name	namespace	type	source	block	datatype	length
 820A0A24	??_C@_0BA@DNHAEGG@setprintchannel?$AA@	Global	Label	IMPORTED	.rdata	/string	16
 820A0A24	s_setprintchannel	Global	Label	ANALYSIS	.rdata	/string	16
 820A0A25	s_setprintchannel+1	Global	Label	DEFAULT	.rdata		
-820A0A34	??_C@_0BD@NBOKFMMA@createprintchannel?$AA@	Global	Label	IMPORTED	.rdata	/string	20
-820A0A34	s_createprintchannel	Global	Label	ANALYSIS	.rdata	/string	20
-820A0A35	s_createprintchannel+1	Global	Label	DEFAULT	.rdata		
+820A0A34	??_C@_0BD@NBOKFMMA@createprintchannel?$AA@	Global	Label	IMPORTED	.rdata	/TerminatedCString	19
+820A0A34	s_createprintchannel	Global	Label	ANALYSIS	.rdata	/TerminatedCString	19
 820A0A48	??_C@_0N@FAKJBLNA@flash_killed?$AA@	Global	Label	IMPORTED	.rdata	/TerminatedCString	13
 820A0A48	s_flash_killed	Global	Label	ANALYSIS	.rdata	/TerminatedCString	13
 820A0A58	??_C@_0BB@OKMDFFDK@transition_siren?$AA@	Global	Label	IMPORTED	.rdata	/TerminatedCString	17
@@ -103843,9 +103829,8 @@ va	name	namespace	type	source	block	datatype	length
 8215AFF0	s_serverinfo	Global	Label	ANALYSIS	.rdata	/TerminatedCString	11
 8215AFFC	??_C@_05KPGDANMI@mdone?$AA@	Global	Label	IMPORTED	.rdata	/TerminatedCString	6
 8215AFFC	s_mdone	Global	Label	ANALYSIS	.rdata	/TerminatedCString	6
-8215B004	??_C@_08PPJNGBMG@userinfo?$AA@	Global	Label	IMPORTED	.rdata	/string	12
-8215B004	s_userinfo	Global	Label	ANALYSIS	.rdata	/string	12
-8215B005	s_userinfo+1	Global	Label	DEFAULT	.rdata		
+8215B004	??_C@_08PPJNGBMG@userinfo?$AA@	Global	Label	IMPORTED	.rdata	/TerminatedCString	9
+8215B004	s_userinfo	Global	Label	ANALYSIS	.rdata	/TerminatedCString	9
 8215B010	??_C@_0DF@DBMIDMHK@client2?5doesn?8t?5index?5MAX_CLIENT@	Global	Label	IMPORTED	.rdata	/TerminatedCString	53
 8215B010	s_client2_doesn't_index_MAX_CLIENT	Global	Label	ANALYSIS	.rdata	/TerminatedCString	53
 8215B048	??_C@_0DF@IKEDCBNF@client1?5doesn?8t?5index?5MAX_CLIENT@	Global	Label	IMPORTED	.rdata	/TerminatedCString	53
@@ -126505,7 +126490,6 @@ va	name	namespace	type	source	block	datatype	length
 821C8480	s_codeConstUpdateFreq	Global	Label	IMPORTED	.rdata	/iw5mp_xenon.pdb/MaterialUpdateFrequency[0]	1
 821C8480	?s_codeConstUpdateFreq@@3QBW4MaterialUpdateFrequency@@B	Global	Label	IMPORTED	.rdata	/iw5mp_xenon.pdb/MaterialUpdateFrequency[0]	1
 821C8484	DAT_821c8484	Global	Label	DEFAULT	.rdata	/undefined4	4
-821C8488	DAT_821c8488	Global	Label	DEFAULT	.rdata	/undefined	1
 821C850C	DAT_821c850c	Global	Label	DEFAULT	.rdata	/undefined4	4
 821C8510	DAT_821c8510	Global	Label	DEFAULT	.rdata	/undefined4	4
 821C8514	DAT_821c8514	Global	Label	DEFAULT	.rdata	/undefined4	4
@@ -135539,7 +135523,6 @@ va	name	namespace	type	source	block	datatype	length
 8221368C	??_C@_04MEDPFIKH@HTTP?$AA@	Global	Label	IMPORTED	.rdata	/undefined	1
 8221368C	s_HTTP	Global	Label	ANALYSIS	.rdata	/undefined	1
 8221368D	DAT_8221368d	Global	Label	DEFAULT	.rdata	/undefined1	1
-82213690	DAT_82213690	Global	Label	DEFAULT	.rdata	/undefined	1
 82213694	??_C@_0BO@DCLJNAHC@bdHTTPClient?3?3parseStatusLine?$AA@	Global	Label	IMPORTED	.rdata	/TerminatedCString	30
 82213694	s_bdHTTPClient::parseStatusLine	Global	Label	ANALYSIS	.rdata	/TerminatedCString	30
 822136B8	??_C@_0ED@CPLEEEBC@Error?5parsing?5HTTP?5response?3?5ser@	Global	Label	IMPORTED	.rdata	/TerminatedCString	67
@@ -136703,7 +136686,6 @@ va	name	namespace	type	source	block	datatype	length
 8221D49C	DAT_8221d49c	Global	Label	DEFAULT	.rdata	/undefined4	4
 8221D7C0	sha1_desc	Global	Label	IMPORTED	.rdata	/iw5mp_xenon.pdb/ltc_hash_descriptor	104
 8221D828	DAT_8221d828	Global	Label	DEFAULT	.rdata	/undefined4	4
-8221D82C	DAT_8221d82c	Global	Label	DEFAULT	.rdata	/undefined	1
 8221D830	DAT_8221d830	Global	Label	DEFAULT	.rdata	/undefined4	4
 8221D834	DAT_8221d834	Global	Label	DEFAULT	.rdata	/undefined4	4
 8221D840	ltm_desc	Global	Label	IMPORTED	.rdata	/iw5mp_xenon.pdb/ltc_math_descriptor	196
@@ -137817,11 +137799,9 @@ va	name	namespace	type	source	block	datatype	length
 82964860	menuScrollButtonList[1]	Global	Label	DEFAULT	.data		
 8296487C	menuScrollAnalogList	Global	Label	IMPORTED	.data	/iw5mp_xenon.pdb/StickToCodeMap[4]	48
 8296487C	?menuScrollAnalogList@@3PAUStickToCodeMap@@A	Global	Label	IMPORTED	.data	/iw5mp_xenon.pdb/StickToCodeMap[4]	48
-82964880	menuScrollAnalogList[0].posCode	Global	Label	DEFAULT	.data		
 82964888	menuScrollAnalogList[1].physicalAxis	Global	Label	DEFAULT	.data		
 8296488C	menuScrollAnalogList[1].posCode	Global	Label	DEFAULT	.data		
 82964890	menuScrollAnalogList[1].negCode	Global	Label	DEFAULT	.data		
-829648AC	DAT_829648ac	Global	Label	DEFAULT	.data	/undefined	1
 829648B0	WeaponStateNames	Global	Label	IMPORTED	.data	/char *[32]	128
 82964930	demoExeModeNames	Global	Label	IMPORTED	.data	/char *[6]	24
 82964948	lbTrackTypes	Global	Label	IMPORTED	.data	/iw5mp_xenon.pdb/TrackType[8]	64
@@ -138290,7 +138270,6 @@ va	name	namespace	type	source	block	datatype	length
 8296C818	lbTrackTypes	Global	Label	IMPORTED	.data	/iw5mp_xenon.pdb/TrackType[8]	64
 8296C858	netsrcString	Global	Label	IMPORTED	.data	/char *[5]	20
 8296C85C	netsrcString[1]	Global	Label	DEFAULT	.data		
-8296C860	netsrcString[2]	Global	Label	DEFAULT	.data		
 8296C86C	MY_REJECTREASON	Global	Label	IMPORTED	.data	/char *	4
 8296C870	RDBG_WELCOME_RAW	Global	Label	IMPORTED	.data	/iw5mp_xenon.pdb/rdbgWelcomePacket_t	8
 8296C878	lbTrackTypes	Global	Label	IMPORTED	.data	/iw5mp_xenon.pdb/TrackType[8]	64
@@ -138346,7 +138325,6 @@ va	name	namespace	type	source	block	datatype	length
 8296D18C	g_commonAngleDeltas	Global	Label	IMPORTED	.data	/short[7]	14
 8296D18C	?g_commonAngleDeltas@@3PAFA	Global	Label	IMPORTED	.data	/short[7]	14
 8296D18E	g_commonAngleDeltas[1]	Global	Label	DEFAULT	.data		
-8296D19A	DAT_8296d19a	Global	Label	DEFAULT	.data	/undefined	1
 8296D19C	s_threadNames	Global	Label	IMPORTED	.data	/char *[14]	56
 8296D1D4	databaseCompletedEvent2	Global	Label	IMPORTED	.data	/int	4
 8296D1D8	propertyNames	Global	Label	IMPORTED	.data	/char *[4]	16
@@ -138355,14 +138333,11 @@ va	name	namespace	type	source	block	datatype	length
 8298DB24	g_scr_opaque_strings[33359]	Global	Label	DEFAULT	.data		
 8298DB28	g_scr_func_names	Global	Label	IMPORTED	.data	/char *[0]	1
 8298DB28	?g_scr_func_names@@3PAPBDA	Global	Label	IMPORTED	.data	/char *[0]	1
-8298DB2C	PTR_s_setprintchannel_8298db2c	Global	Label	DEFAULT	.data	/pointer	4
-8298DB30	PTR_s_print_8298db30	Global	Label	DEFAULT	.data	/undefined *	4
+8298DB2C	PTR_s_setprintchannel_8298db2c	Global	Label	DEFAULT	.data	/undefined *	4
 8298DE00	PTR_s_objective_add_8298de00	Global	Label	DEFAULT	.data	/pointer	4
-8298DE04	PTR_s_objective_delete_8298de04	Global	Label	DEFAULT	.data	/pointer	4
-8298DE08	PTR_s_objective_state_8298de08	Global	Label	DEFAULT	.data	/undefined *	4
+8298DE04	PTR_s_objective_delete_8298de04	Global	Label	DEFAULT	.data	/undefined *	4
 8298DE2C	PTR_s_iprintln_8298de2c	Global	Label	DEFAULT	.data	/pointer	4
-8298DE30	PTR_s_iprintlnbold_8298de30	Global	Label	DEFAULT	.data	/pointer	4
-8298DE34	PTR_s_logstring_8298de34	Global	Label	DEFAULT	.data	/undefined *	4
+8298DE30	PTR_s_iprintlnbold_8298de30	Global	Label	DEFAULT	.data	/undefined *	4
 8298E238	g_scr_meth_names	Global	Label	IMPORTED	.data	/char *[0]	1
 8298E238	?g_scr_meth_names@@3PAPBDA	Global	Label	IMPORTED	.data	/char *[0]	1
 8298E23C	PTR_s_attachshieldmodel_8298e23c	Global	Label	DEFAULT	.data	/undefined *	4
@@ -138675,7 +138650,6 @@ va	name	namespace	type	source	block	datatype	length
 82997308	contactGroups	Global	Label	IMPORTED	.data	/iw5mp_xenon.pdb/dxJointGroup[0]	1
 82997308	?contactGroups@@3PAUdxJointGroup@@A	Global	Label	IMPORTED	.data	/iw5mp_xenon.pdb/dxJointGroup[0]	1
 8299730C	DAT_8299730c	Global	Label	DEFAULT	.data	/undefined	1
-82997320	DAT_82997320	Global	Label	DEFAULT	.data	/undefined	1
 8299732C	DAT_8299732c	Global	Label	DEFAULT	.data	/undefined4	4
 82997330	DAT_82997330	Global	Label	DEFAULT	.data	/undefined4	4
 82997344	g_phys_contactListGroups	Global	Label	IMPORTED	.data	/iw5mp_xenon.pdb/ReducedContactListGroup[5]	60
@@ -140372,7 +140346,6 @@ va	name	namespace	type	source	block	datatype	length
 82A05D8C	cgEntCollWorld[0].box.halfSize[0]	Global	Label	DEFAULT	.data		
 82A05D90	cgEntCollWorld[0].box.halfSize[1]	Global	Label	DEFAULT	.data		
 82A05D98	cgEntCollWorld[0].freeHead	Global	Label	DEFAULT	.data		
-82A05D9C	cgEntCollWorld[0].sectors[0].tree.dist	Global	Label	DEFAULT	.data		
 82A05DA8	cgEntCollWorld[0].sectors[0].entListHead	Global	Label	DEFAULT	.data		
 82A05DAC	cgEntCollWorld[0].sectors[1].tree.dist	Global	Label	DEFAULT	.data		
 82A05DB0	cgEntCollWorld[0].sectors[1].tree.axis	Global	Label	DEFAULT	.data		
@@ -140831,7 +140804,6 @@ va	name	namespace	type	source	block	datatype	length
 82A22E4C	?marker_cg_localents@@3HA	Global	Label	IMPORTED	.data	/int	4
 82A22E50	cg_localEntities	Global	Label	IMPORTED	.data	/iw5mp_xenon.pdb/localEntity_s[4][128]	51200
 82A22E54	cg_localEntities[0][0].next	Global	Label	DEFAULT	.data		
-82A22EB4	cg_localEntities[0][1].prev	Global	Label	DEFAULT	.data		
 82A2F650	cg_freeLocalEntities	Global	Label	IMPORTED	.data	/iw5mp_xenon.pdb/localEntity_s *[4]	16
 82A2F650	?cg_freeLocalEntities@@3PAPAUlocalEntity_s@@A	Global	Label	IMPORTED	.data	/iw5mp_xenon.pdb/localEntity_s *[4]	16
 82A2F660	cg_activeLocalEntities	Global	Label	IMPORTED	.data	/iw5mp_xenon.pdb/localEntity_s[4]	400
@@ -142296,7 +142268,6 @@ va	name	namespace	type	source	block	datatype	length
 82A77ADC	con.consoleLines[0].messageIndex	Global	Label	DEFAULT	.data		
 82A7DADC	con.consoleMessages[0].startTime	Global	Label	DEFAULT	.data		
 82A7FADC	con.consoleText[0]	Global	Label	DEFAULT	.data		
-82A87AA8	con.consoleText[32716]	Global	Label	DEFAULT	.data		
 82A87ADC	con.textTempLine[0]	Global	Label	DEFAULT	.data		
 82A87ADD	con.textTempLine[1]	Global	Label	DEFAULT	.data		
 82A87CDC	con.lineOffset	Global	Label	DEFAULT	.data		
@@ -142428,7 +142399,6 @@ va	name	namespace	type	source	block	datatype	length
 82A9A2ED	playersKb[0][17].wasPressed	Global	Label	DEFAULT	.data		
 82A9A300	playersKb[0][18].active	Global	Label	DEFAULT	.data		
 82A9A301	playersKb[0][18].wasPressed	Global	Label	DEFAULT	.data		
-82A9A304	playersKb[0][19].down[0]	Global	Label	DEFAULT	.data		
 82A9A314	playersKb[0][19].active	Global	Label	DEFAULT	.data		
 82A9A315	playersKb[0][19].wasPressed	Global	Label	DEFAULT	.data		
 82A9A328	playersKb[0][20].active	Global	Label	DEFAULT	.data		
@@ -142451,15 +142421,12 @@ va	name	namespace	type	source	block	datatype	length
 82A9A3A1	playersKb[0][26].wasPressed	Global	Label	DEFAULT	.data		
 82A9A3B4	playersKb[0][27].active	Global	Label	DEFAULT	.data		
 82A9A3B5	playersKb[0][27].wasPressed	Global	Label	DEFAULT	.data		
-82A9A3B8	playersKb[0][28].down[0]	Global	Label	DEFAULT	.data		
 82A9A3C8	playersKb[0][28].active	Global	Label	DEFAULT	.data		
 82A9A3C9	playersKb[0][28].wasPressed	Global	Label	DEFAULT	.data		
 82A9A3DC	playersKb[0][29].active	Global	Label	DEFAULT	.data		
 82A9A3DD	playersKb[0][29].wasPressed	Global	Label	DEFAULT	.data		
-82A9A408	playersKb[0][32].down[0]	Global	Label	DEFAULT	.data		
 82A9A418	playersKb[0][32].active	Global	Label	DEFAULT	.data		
 82A9A419	playersKb[0][32].wasPressed	Global	Label	DEFAULT	.data		
-82A9A41C	playersKb[0][33].down[0]	Global	Label	DEFAULT	.data		
 82A9A42C	playersKb[0][33].active	Global	Label	DEFAULT	.data		
 82A9A42D	playersKb[0][33].wasPressed	Global	Label	DEFAULT	.data		
 82A9AC28	cl_pitchspeed	Global	Label	IMPORTED	.data	/iw5mp_xenon.pdb/dvar_t *	4
@@ -142733,7 +142700,6 @@ va	name	namespace	type	source	block	datatype	length
 82AFA028	cls.noDeltaSnapshot.parseClientsIndex	Global	Label	DEFAULT	.data		
 82AFA080	cls.nextNoDeltaEntity	Global	Label	DEFAULT	.data		
 82AFA084	cls.noDeltaEntities[0].number	Global	Label	DEFAULT	.data		
-82B01B00	cls.noDeltaEntities[122].attackerEntityNum	Global	Label	DEFAULT	.data		
 82B3A084	cls.isInvitePending	Global	Label	DEFAULT	.data		
 82B3A100	cl_pinglist	Global	Label	IMPORTED	.data	/iw5mp_xenon.pdb/ping_t[16]	17344
 82B3A100	?cl_pinglist@@3PAUping_t@@A	Global	Label	IMPORTED	.data	/iw5mp_xenon.pdb/ping_t[16]	17344
@@ -142821,7 +142787,6 @@ va	name	namespace	type	source	block	datatype	length
 82B3EAF0	clientUIActives[3].keyCatchers	Global	Label	DEFAULT	.data		
 82B3EC80	cl_inGameVideo	Global	Label	IMPORTED	.data	/iw5mp_xenon.pdb/dvar_t *	4
 82B3EC80	?cl_inGameVideo@@3PBUdvar_t@@B	Global	Label	IMPORTED	.data	/iw5mp_xenon.pdb/dvar_t *	4
-82B3EC81	cl_inGameVideo+1	Global	Label	DEFAULT	.data		
 82B3EC84	name	Global	Label	IMPORTED	.data	/iw5mp_xenon.pdb/dvar_t *	4
 82B3EC84	?name@@3PBUdvar_t@@B	Global	Label	IMPORTED	.data	/iw5mp_xenon.pdb/dvar_t *	4
 82B3EC88	cl_noprint	Global	Label	IMPORTED	.data	/iw5mp_xenon.pdb/dvar_t *	4
@@ -143009,7 +142974,6 @@ va	name	namespace	type	source	block	datatype	length
 82B3FADD	pcGlob.openChannels[5].name[0]	Global	Label	DEFAULT	.data		
 82B3FAFE	pcGlob.openChannels[6].name[0]	Global	Label	DEFAULT	.data		
 82B3FB1F	pcGlob.openChannels[7].name[0]	Global	Label	DEFAULT	.data		
-82B3FB61	pcGlob.openChannels[9].name[0]	Global	Label	DEFAULT	.data		
 82B3FD70	pcGlob.openChannels[24].allowScript	Global	Label	DEFAULT	.data		
 82B40000	pcGlob.openChannels[44].name[28]	Global	Label	DEFAULT	.data		
 82B41B38	pcGlob.filters[0][0]	Global	Label	DEFAULT	.data		
@@ -143059,7 +143023,6 @@ va	name	namespace	type	source	block	datatype	length
 82B44043	gamerSettings[0].commonConfig.clanPrefix[1]	Global	Label	DEFAULT	.data		
 82B44047	gamerSettings[0].commonConfig.useEliteClanTag	Global	Label	DEFAULT	.data		
 82B44048	gamerSettings[0].commonConfig.useEliteClanTitle	Global	Label	DEFAULT	.data		
-82B44049	gamerSettings[0].commonConfig.eliteClanTitleText[0]	Global	Label	DEFAULT	.data		
 82B44064	gamerSettings[0].commonConfig.eliteClanTitleBg	Global	Label	DEFAULT	.data		
 82B44070	gamerSettings[0].commonConfig.prestige_black_ops	Global	Label	DEFAULT	.data		
 82B44074	gamerSettings[0].commonConfig.rank_black_ops	Global	Label	DEFAULT	.data		
@@ -143466,7 +143429,6 @@ va	name	namespace	type	source	block	datatype	length
 82B5C8F4	s_voiceRegistrationLock	Global	Label	IMPORTED	.data	/long	4
 82B5C8F8	g_muteData	Global	Label	IMPORTED	.data	/iw5mp_xenon.pdb/MuteData	1032
 82B5C900	g_muteData.users[0]	Global	Label	DEFAULT	.data		
-82B5C908	g_muteData.users[1]	Global	Label	DEFAULT	.data		
 82B5CD00	g_assetBufGlob	Global	Label	IMPORTED	.data	/iw5mp_xenon.pdb/AssetBufGlob	32
 82B5CD04	g_assetBufGlob.bufsize	Global	Label	DEFAULT	.data		
 82B5CD08	g_assetBufGlob.pos	Global	Label	DEFAULT	.data		
@@ -143481,7 +143443,6 @@ va	name	namespace	type	source	block	datatype	length
 82B6CD80	g_authLoad	Global	Label	IMPORTED	.data	/iw5mp_xenon.pdb/DB_AuthLoadGlob	24644
 82B6CD84	g_authLoad.expectedFastfileName[0]	Global	Label	DEFAULT	.data		
 82B6CD85	g_authLoad.expectedFastfileName[1]	Global	Label	DEFAULT	.data		
-82B6CDA4	g_authLoad.header.magic[0]	Global	Label	DEFAULT	.data		
 82B6CED4	g_authLoad.header.subheader.fastfileName[4]	Global	Label	DEFAULT	.data		
 82B6CED5	g_authLoad.header.subheader.fastfileName[5]	Global	Label	DEFAULT	.data		
 82B6ED60	g_authLoad.header.subheader.masterBlockHashes[243].bytes[12]	Global	Label	DEFAULT	.data		
@@ -145876,7 +145837,6 @@ va	name	namespace	type	source	block	datatype	length
 8326ED80	g_stream.model[0].materialCount	Global	Label	DEFAULT	.data		
 8326ED84	g_stream.model[0].materials	Global	Label	DEFAULT	.data		
 8326ED88	g_stream.model[0].field2_0x8	Global	Label	DEFAULT	.data		
-83272F00	g_stream.model[1397].materials	Global	Label	DEFAULT	.data		
 83275500	g_stream.modelInuse[0]	Global	Label	DEFAULT	.data		
 83275680	g_stream.modelRadius[0]	Global	Label	DEFAULT	.data		
 83277900	g_stream.fxModelDist[0]	Global	Label	DEFAULT	.data		
@@ -145897,7 +145857,6 @@ va	name	namespace	type	source	block	datatype	length
 83282888	g_stream.materialAlwaysLoaded[0][2]	Global	Label	DEFAULT	.data		
 83282B80	g_stream.materialAlwaysLoaded[1][0]	Global	Label	DEFAULT	.data		
 83282E80	g_stream.materialAlwaysLoaded[2][0]	Global	Label	DEFAULT	.data		
-83282F00	g_stream.materialAlwaysLoaded[2][32]	Global	Label	DEFAULT	.data		
 83283180	g_stream.materialAlwaysLoaded[3][0]	Global	Label	DEFAULT	.data		
 83283480	g_stream.materialInuse[0]	Global	Label	DEFAULT	.data		
 83283484	g_stream.materialInuse[1]	Global	Label	DEFAULT	.data		
@@ -146086,7 +146045,6 @@ va	name	namespace	type	source	block	datatype	length
 8331AA78	s_input.analogStates[1]	Global	Label	DEFAULT	.data		
 8331AA7C	s_input.analogAxis[0]	Global	Label	DEFAULT	.data		
 8331AA80	s_input.analogAxis[1]	Global	Label	DEFAULT	.data		
-8331AA84	s_input.analogTimes[0]	Global	Label	DEFAULT	.data		
 8331AA8C	s_input.menuScroll[0]	Global	Label	DEFAULT	.data		
 8331AA8E	s_input.menuScroll[1]	Global	Label	DEFAULT	.data		
 8331AA90	s_input.menuScrollTime[0]	Global	Label	DEFAULT	.data		
@@ -146135,7 +146093,6 @@ va	name	namespace	type	source	block	datatype	length
 83324C74	hingeGlob.hinges[5].active	Global	Label	DEFAULT	.data		
 83324CAC	hingeGlob.hinges[6].active	Global	Label	DEFAULT	.data		
 83324CC8	hingeGlob.hinges[7].angle	Global	Label	DEFAULT	.data		
-83324CCC	hingeGlob.hinges[7].quat[0]	Global	Label	DEFAULT	.data		
 83324CE4	hingeGlob.hinges[7].active	Global	Label	DEFAULT	.data		
 83324CE8	hingeGlob.hinges[7].autoDisableTimeLeft	Global	Label	DEFAULT	.data		
 83324CEC	hingeGlob.hinges[7].def	Global	Label	DEFAULT	.data		
@@ -146479,7 +146436,6 @@ va	name	namespace	type	source	block	datatype	length
 8334664C	g_hudelems[1].clientNum	Global	Label	DEFAULT	.data		
 83346650	g_hudelems[1].team	Global	Label	DEFAULT	.data		
 83346654	g_hudelems[1].archived	Global	Label	DEFAULT	.data		
-83346658	g_hudelems[2].elem.type	Global	Label	DEFAULT	.data		
 833734F0	marker_g_hudelem	Global	Label	IMPORTED	.data	/int	4
 833734F0	?marker_g_hudelem@@3HA	Global	Label	IMPORTED	.data	/int	4
 833734F8	g_dummyHudCurrent	Global	Label	IMPORTED	.data	/iw5mp_xenon.pdb/hudelem_s	168
@@ -146605,7 +146561,6 @@ va	name	namespace	type	source	block	datatype	length
 833737C4	g_entities[0].r.currentAngles[0]	Global	Label	DEFAULT	.data		
 833737C8	g_entities[0].r.currentAngles[1]	Global	Label	DEFAULT	.data		
 833737CC	g_entities[0].r.currentAngles[2]	Global	Label	DEFAULT	.data		
-833737D0	g_entities[0].r.ownerNum.number	Global	Label	DEFAULT	.data		
 833737D8	g_entities[0].client	Global	Label	DEFAULT	.data		
 833737E0	g_entities[0].vehicle	Global	Label	DEFAULT	.data		
 833737E4	g_entities[0].physObjId	Global	Label	DEFAULT	.data		
@@ -146701,7 +146656,6 @@ va	name	namespace	type	source	block	datatype	length
 834B36A8	level_bgs	Global	Label	IMPORTED	.data	/iw5mp_xenon.pdb/bgs_t	575496
 834B36A8	?level_bgs@@3Ubgs_t@@A	Global	Label	IMPORTED	.data	/iw5mp_xenon.pdb/bgs_t	575496
 834E54E4	level_bgs.animScriptData.scriptItems[221].conditions[8].value[1]	Global	Label	DEFAULT	.data		
-835336A8	level_bgs.animScriptData.scriptItems[1090].commands[2].animDuration[0]	Global	Label	DEFAULT	.data		
 83539A4C	level_bgs.animScriptData.animTree.anims	Global	Label	DEFAULT	.data		
 83539A58	level_bgs.generic_human.tree.anims	Global	Label	DEFAULT	.data		
 83539A68	level_bgs.time	Global	Label	DEFAULT	.data		
@@ -147921,7 +147875,6 @@ va	name	namespace	type	source	block	datatype	length
 836368D0	controllerStatData	Global	Label	IMPORTED	.data	/iw5mp_xenon.pdb/PlayerStatNetworkData[4]	149728
 836368D0	?controllerStatData@@3PAUPlayerStatNetworkData@@A	Global	Label	IMPORTED	.data	/iw5mp_xenon.pdb/PlayerStatNetworkData[4]	149728
 836368D1	controllerStatData[0].playerStats[0].data[1]	Global	Label	DEFAULT	.data		
-836368D4	controllerStatData[0].playerStats[0].data[4]	Global	Label	DEFAULT	.data		
 836398D0	controllerStatData[0].playerStats[0].statsFetched	Global	Label	DEFAULT	.data		
 836398D1	controllerStatData[0].playerStats[0].onlineStatWritePending	Global	Label	DEFAULT	.data		
 836398D2	controllerStatData[0].playerStats[0].statWriteNeeded	Global	Label	DEFAULT	.data		
@@ -148622,7 +148575,6 @@ va	name	namespace	type	source	block	datatype	length
 836FDA01	g_rdbgInitializedSockets	Global	Label	IMPORTED	.data	/bool	1
 836FDA02	g_logShield	Global	Label	IMPORTED	.data	/bool	1
 836FDA04	s_pastTitleMaterialString	Global	Label	IMPORTED	.data	/char[32]	32
-836FDA08	s_pastTitleMaterialString+4	Global	Label	DEFAULT	.data		
 836FDA24	s_numPrestigeTokens	Global	Label	IMPORTED	.data	/int	4
 836FDA28	s_dataReadState	Global	Label	IMPORTED	.data	/int	4
 836FDA2C	printed	Global	Label	IMPORTED	.data	/bool	1
@@ -148663,8 +148615,6 @@ va	name	namespace	type	source	block	datatype	length
 837007A0	DAT_837007a0	Global	Label	DEFAULT	.data	/undefined4	4
 837007A4	g_renderWaitCount	Global	Label	IMPORTED	.data	/long	4
 837007A8	g_threadValues	Global	Label	IMPORTED	.data	/void *[14][4]	224
-83700818	g_threadValues[7][0]	Global	Label	DEFAULT	.data		
-83700848	g_threadValues[10][0]	Global	Label	DEFAULT	.data		
 83700888	blockDatabaseEvent	Global	Label	IMPORTED	.data	/void *	4
 8370088C	g_suspendWorkerThreadContext	Global	Label	IMPORTED	.data	/int	4
 83700890	g_timeoutFileRead	Global	Label	IMPORTED	.data	/long	4
@@ -148963,7 +148913,6 @@ va	name	namespace	type	source	block	datatype	length
 838FBA92	scrVarGlob.objectVariableValue[2].u+2	Global	Label	DEFAULT	.data		
 838FBA94	scrVarGlob.objectVariableValue[2].w	Global	Label	DEFAULT	.data		
 838FBA97	scrVarGlob.objectVariableValue[2].w+3	Global	Label	DEFAULT	.data		
-838FBAA0	scrVarGlob.objectVariableValue[4].u	Global	Label	DEFAULT	.data		
 838FBAA7	scrVarGlob.objectVariableValue[4].w+3	Global	Label	DEFAULT	.data		
 838FBAB7	scrVarGlob.objectVariableValue[6].w+3	Global	Label	DEFAULT	.data		
 838FBAC7	scrVarGlob.objectVariableValue[8].w+3	Global	Label	DEFAULT	.data		
@@ -148975,9 +148924,7 @@ va	name	namespace	type	source	block	datatype	length
 83943A84	scrVarGlob.objectVariableChildren[1].firstChild	Global	Label	DEFAULT	.data		
 83943A88	scrVarGlob.objectVariableChildren[2].firstChild	Global	Label	DEFAULT	.data		
 83943A8A	scrVarGlob.objectVariableChildren[2].lastChild	Global	Label	DEFAULT	.data		
-8394BA80	scrVarGlob.objectVariableChildren[8192].firstChild	Global	Label	DEFAULT	.data		
 83967A80	scrVarGlob.childVariableBucket[0]	Global	Label	DEFAULT	.data		
-8396BA80	scrVarGlob.childVariableBucket[8192]	Global	Label	DEFAULT	.data		
 83987A72	scrVarGlob.childVariableBucket[65529]	Global	Label	DEFAULT	.data		
 83987A80	scrVarGlob.childVariableValue[0].u	Global	Label	DEFAULT	.data		
 83987A82	scrVarGlob.childVariableValue[0].u+2	Global	Label	DEFAULT	.data		
@@ -149008,8 +148955,6 @@ va	name	namespace	type	source	block	datatype	length
 83987AF6	scrVarGlob.childVariableValue[7].type	Global	Label	DEFAULT	.data		
 83987B06	scrVarGlob.childVariableValue[8].type	Global	Label	DEFAULT	.data		
 83987B16	scrVarGlob.childVariableValue[9].type	Global	Label	DEFAULT	.data		
-83987B36	scrVarGlob.childVariableValue[11].type	Global	Label	DEFAULT	.data		
-8398BA80	scrVarGlob.childVariableValue[1024].u	Global	Label	DEFAULT	.data		
 83B17A80	marker_scr_variable	Global	Label	IMPORTED	.data	/int	4
 83B17A80	?marker_scr_variable@@3HA	Global	Label	IMPORTED	.data	/int	4
 83B17A84	g_notifydump	Global	Label	IMPORTED	.data	/iw5mp_xenon.pdb/dvar_t *	4
@@ -149051,7 +148996,6 @@ va	name	namespace	type	source	block	datatype	length
 83C4BAF8	scrVarPub.saveIdMap[0]	Global	Label	DEFAULT	.data		
 83C4BAFA	scrVarPub.saveIdMap[1]	Global	Label	DEFAULT	.data		
 83C4BAFC	scrVarPub.saveIdMap[2]	Global	Label	DEFAULT	.data		
-83C5BA90	scrVarPub.saveIdMap[32716]	Global	Label	DEFAULT	.data		
 83C5DAF8	scrVarPub.saveIdMapRev[0]	Global	Label	DEFAULT	.data		
 83C5DAFA	scrVarPub.saveIdMapRev[1]	Global	Label	DEFAULT	.data		
 83C5DAFC	scrVarPub.saveIdMapRev[2]	Global	Label	DEFAULT	.data		
@@ -149285,7 +149229,6 @@ va	name	namespace	type	source	block	datatype	length
 83CEE724	sv.emptyConfigString	Global	Label	DEFAULT	.data		
 83CEE726	sv.configstrings[0]	Global	Label	DEFAULT	.data		
 83CEE728	sv.configstrings[1]	Global	Label	DEFAULT	.data		
-83CF04E4	sv.configstrings[3807]	Global	Label	DEFAULT	.data		
 83CF04E6	sv.configstrings[3808]	Global	Label	DEFAULT	.data		
 83CF04E8	sv.configstrings[3809]	Global	Label	DEFAULT	.data		
 83CF04FC	sv.svEntities[0].worldSector	Global	Label	DEFAULT	.data		
@@ -149378,7 +149321,6 @@ va	name	namespace	type	source	block	datatype	length
 83D0ED84	svs.snapshotEntities	Global	Label	DEFAULT	.data		
 83D0ED88	svs.noDeltaEntities	Global	Label	DEFAULT	.data		
 83D0EE00	svs.archive.archivedSnapshotBuffer[0]	Global	Label	DEFAULT	.data		
-83F0B580	svs.archive.archivedSnapshotBuffer[2082688]	Global	Label	DEFAULT	.data		
 83F0EE00	svs.archive.nextArchivedSnapshotBuffer	Global	Label	DEFAULT	.data		
 83F0EE04	svs.archive.nextArchivedSnapshotFrames	Global	Label	DEFAULT	.data		
 83F0EE08	svs.archive.archivedSnapshotFrames[0].start	Global	Label	DEFAULT	.data		
@@ -149446,7 +149388,6 @@ va	name	namespace	type	source	block	datatype	length
 83F1DA44	svs.mapCenterBoundsMax[1]	Global	Label	DEFAULT	.data		
 83F1DA48	svs.mapCenterBoundsMax[2]	Global	Label	DEFAULT	.data		
 83F1DA4C	svs.botport	Global	Label	DEFAULT	.data		
-83F1DA50	svs.snapshots[0].ps[0]	Global	Label	DEFAULT	.data		
 83F1DA98	svs.snapshots[0].entityCount	Global	Label	DEFAULT	.data		
 83F1DA9C	svs.snapshots[0].clientCount	Global	Label	DEFAULT	.data		
 83F1DAA0	svs.snapshots[0].firstEntityIndex	Global	Label	DEFAULT	.data		
@@ -149769,7 +149710,6 @@ va	name	namespace	type	source	block	datatype	length
 83F60A44	g_uiExpressionState.milliseconds	Global	Label	DEFAULT	.data		
 83F60A48	s_waitPopupStrings	Global	Label	IMPORTED	.data	/char[4][64]	256
 83F60B48	playerCardUIStringBuf	Global	Label	IMPORTED	.data	/char[18][42]	756
-83F60E40	DAT_83f60e40	Global	Label	DEFAULT	.data	/undefined	1
 83F61E40	s_operandStrings	Global	Label	IMPORTED	.data	/char[16][256]	4096
 83F62E40	s_AllocatedContentServerMemorySize	Global	Label	IMPORTED	.data	/int	4
 83F62E44	playerCardUIStringIndex	Global	Label	IMPORTED	.data	/uint	4
@@ -149968,7 +149908,6 @@ va	name	namespace	type	source	block	datatype	length
 83F7EA00	sharedUiInfo.mapList[1].mapLoadName[0]	Global	Label	DEFAULT	.data		
 83F7EA01	sharedUiInfo.mapList[1].mapLoadName[1]	Global	Label	DEFAULT	.data		
 83F7F454	sharedUiInfo.mapList[1].mapPack	Global	Label	DEFAULT	.data		
-83FCA9B0	sharedUiInfo.mapList[117].mapCustomKey[16][0]	Global	Label	DEFAULT	.data		
 83FD1B60	sharedUiInfo.mapList[127].mapCustomCount	Global	Label	DEFAULT	.data		
 83FD1B64	sharedUiInfo.mapList[127].mapPack	Global	Label	DEFAULT	.data		
 83FD1B68	sharedUiInfo.mapIndexSorted[0]	Global	Label	DEFAULT	.data		
@@ -150292,7 +150231,6 @@ va	name	namespace	type	source	block	datatype	length
 84016DD0	pktCacheGlob.cacheEntryData[1].prev	Global	Label	DEFAULT	.data		
 84016DD4	pktCacheGlob.cacheEntryData[1].next	Global	Label	DEFAULT	.data		
 84016DE0	pktCacheGlob.cacheEntryData[2].filename.fileIndex	Global	Label	DEFAULT	.data		
-84026D90	pktCacheGlob.cacheEntryData[1638].hashCode	Global	Label	DEFAULT	.data		
 8402AD68	pktCacheGlob.cacheEntryData[2047].filename.fileIndex	Global	Label	DEFAULT	.data		
 8402AD84	pktCacheGlob.cacheEntryData[2047].next	Global	Label	DEFAULT	.data		
 8402AD90	pktCacheGlob.cacheEntry[0]	Global	Label	DEFAULT	.data		
@@ -150920,7 +150858,6 @@ va	name	namespace	type	source	block	datatype	length
 8404FA64	?s_savedContentDiscoveryHandle@@3PAXA	Global	Label	IMPORTED	.data	/void *	4
 8404FA68	contentPacks	Global	Label	IMPORTED	.data	/iw5mp_xenon.pdb/ContentPackList[6]	432
 8404FA6C	contentPacks[0].filename[0]	Global	Label	DEFAULT	.data		
-8404FA97	contentPacks[0].drivename[0]	Global	Label	DEFAULT	.data		
 8404FAA8	contentPacks[0].deviceID	Global	Label	DEFAULT	.data		
 8404FAAC	contentPacks[0].mounted	Global	Label	DEFAULT	.data		
 8404FAB0	contentPacks[1].contentPack	Global	Label	DEFAULT	.data		
@@ -151136,7 +151073,6 @@ va	name	namespace	type	source	block	datatype	length
 84184F8C	profileScript.write[1].totalTime	Global	Label	DEFAULT	.data		
 841850F8	profileScript.totalTime[0]	Global	Label	DEFAULT	.data		
 841850FC	profileScript.totalTime[1]	Global	Label	DEFAULT	.data		
-84185100	profileScript.totalTime[2]	Global	Label	DEFAULT	.data		
 84185178	profileScript.avgTime[0]	Global	Label	DEFAULT	.data		
 8418517C	profileScript.avgTime[1]	Global	Label	DEFAULT	.data		
 841851F8	profileScript.maxTime[0]	Global	Label	DEFAULT	.data		
@@ -151255,7 +151191,6 @@ va	name	namespace	type	source	block	datatype	length
 841AE2DC	s_reliableMsgClients[1].bytesAckd	Global	Label	DEFAULT	.data		
 841AF280	s_reliableMsgClients[1].msgs[0].active	Global	Label	DEFAULT	.data		
 841AF2BC	s_reliableMsgClients[1].msgs[1].active	Global	Label	DEFAULT	.data		
-841AF774	s_reliableMsgClients[2].bufferUsed	Global	Label	DEFAULT	.data		
 841DB3E8	reliableDebug	Global	Label	IMPORTED	.data	/iw5mp_xenon.pdb/dvar_t *	4
 841DB3E8	?reliableDebug@@3PBUdvar_t@@B	Global	Label	IMPORTED	.data	/iw5mp_xenon.pdb/dvar_t *	4
 841DB3EC	s_inDropClient	Global	Label	IMPORTED	.data	/int	4
@@ -151457,7 +151392,6 @@ va	name	namespace	type	source	block	datatype	length
 8421ECC8	xaGlob.baseVolEntries[30][1][7]	Global	Label	DEFAULT	.data		
 8421ECCC	xaGlob.baseVolEntries[30][1][8]	Global	Label	DEFAULT	.data		
 8421F57C	xaGlob.reverbSettings	Global	Label	DEFAULT	.data		
-8421F890	xaGlob.streamReadInfo[0].fileName.fileIndex	Global	Label	DEFAULT	.data		
 8421F8D8	xaGlob.streamReadInfo[0].packetCount	Global	Label	DEFAULT	.data		
 8421F8E4	xaGlob.streamReadInfo[0].totalMsec	Global	Label	DEFAULT	.data		
 8421F8E8	xaGlob.streamReadInfo[0].totalWaveLength	Global	Label	DEFAULT	.data		
@@ -151571,12 +151505,10 @@ va	name	namespace	type	source	block	datatype	length
 84222950	xaStreamInitialReadBuffer	Global	Label	IMPORTED	.data	/uchar *	4
 84222954	xaThreadDataInitializedOnStreamPacketCallback	Global	Label	IMPORTED	.data	/bool	1
 84222958	friendLists	Global	Label	IMPORTED	.data	/iw5mp_xenon.pdb/friendList_t[4][2]	156832
-84222960	friendLists[0][0].friends[0].szGamertag[0]	Global	Label	DEFAULT	.data		
 84222970	friendLists[0][0].friends[0].dwFriendState	Global	Label	DEFAULT	.data		
 84222A1C	friendLists[0][0].friends[1].xuid	Global	Label	DEFAULT	.data		
 84222A34	friendLists[0][0].friends[1].dwFriendState	Global	Label	DEFAULT	.data		
 84222A40	friendLists[0][0].friends[1].dwTitleID	Global	Label	DEFAULT	.data		
-842275EC	friendLists[0][1].friends[0].xuid	Global	Label	DEFAULT	.data		
 8422C27C	friendLists[0][1].hEnum	Global	Label	DEFAULT	.data		
 84248DF8	s_sortFriendList	Global	Label	IMPORTED	.data	/iw5mp_xenon.pdb/friendList_t *	4
 84248E00	tasks	Global	Label	IMPORTED	.data	/iw5mp_xenon.pdb/OverlappedTaskSet	5128
@@ -151677,7 +151609,6 @@ va	name	namespace	type	source	block	datatype	length
 8424B5B8	xenonUserData[0].xuidString[0]	Global	Label	DEFAULT	.data		
 8424B5D0	xenonUserData[0].xuidOffline	Global	Label	DEFAULT	.data		
 8424B5D1	xenonUserData[0].xuidOffline+1	Global	Label	DEFAULT	.data		
-8424B5D8	xenonUserData[0].xuidOfflineString[0]	Global	Label	DEFAULT	.data		
 8424B5E9	xenonUserData[0].isGuest	Global	Label	DEFAULT	.data		
 8424B5F0	xenonUserData[0].totalGamesPlayed	Global	Label	DEFAULT	.data		
 8424B5F8	xenonUserData[0].statsResults[0][0]	Global	Label	DEFAULT	.data		
@@ -151880,9 +151811,6 @@ va	name	namespace	type	source	block	datatype	length
 8425CE9C	memoryCardGlob.overlappedTasks.tasks[1].active	Global	Label	DEFAULT	.data		
 8425E168	memoryCardGlob.useDevDrive	Global	Label	DEFAULT	.data		
 8425E16C	memoryCardGlob.files[0].handle	Global	Label	DEFAULT	.data		
-8425E170	memoryCardGlob.files[0].controllerIndex	Global	Label	DEFAULT	.data		
-8425E174	memoryCardGlob.files[0].deviceId	Global	Label	DEFAULT	.data		
-8425E178	memoryCardGlob.files[0].name[0]	Global	Label	DEFAULT	.data		
 8425E1A4	memoryCardGlob.files[1].handle	Global	Label	DEFAULT	.data		
 8425E1A8	memoryCardGlob.files[1].controllerIndex	Global	Label	DEFAULT	.data		
 8425E1AC	memoryCardGlob.files[1].deviceId	Global	Label	DEFAULT	.data		
@@ -152657,7 +152585,6 @@ va	name	namespace	type	source	block	datatype	length
 84493FE0	s_teamUserInfoCount	Global	Label	IMPORTED	.data	/int	4
 84493FE8	s_teamUserInfos	Global	Label	IMPORTED	.data	/iw5mp_xenon.pdb/bdUserInfo[100]	8000
 84493FF0	s_teamUserInfos[0].m_userID	Global	Label	DEFAULT	.data		
-84493FF8	s_teamUserInfos[0].m_userName[0]	Global	Label	DEFAULT	.data		
 84494038	s_teamUserInfos[1]._padding_	Global	Label	DEFAULT	.data		
 84494040	s_teamUserInfos[1].m_userID	Global	Label	DEFAULT	.data		
 84494048	s_teamUserInfos[1].m_userName[0]	Global	Label	DEFAULT	.data		
@@ -152765,7 +152692,6 @@ va	name	namespace	type	source	block	datatype	length
 844A9E68	sessionGraveYard[0].sessionData.staticData.sessionName	Global	Label	DEFAULT	.data		
 844A9E78	sessionGraveYard[0].sessionData.dyn.sessionHandle	Global	Label	DEFAULT	.data		
 844A9E7C	sessionGraveYard[0].sessionData.dyn.sessionInfo.sessionID.ab[0]	Global	Label	DEFAULT	.data		
-844A9E84	sessionGraveYard[0].sessionData.dyn.sessionInfo.hostAddress.ina.S_un	Global	Label	DEFAULT	.data		
 844A9ED0	sessionGraveYard[0].sessionData.dyn.flags	Global	Label	DEFAULT	.data		
 844AA360	sessionGraveYard[0].sessionData.dyn.sessionCreateController	Global	Label	DEFAULT	.data		
 844AA364	sessionGraveYard[0].sessionData.dyn.sessionDeleteTime	Global	Label	DEFAULT	.data		
@@ -152784,7 +152710,6 @@ va	name	namespace	type	source	block	datatype	length
 844AC380	?g_partySearchSession@@3USessionData@@A	Global	Label	IMPORTED	.data	/iw5mp_xenon.pdb/SessionData	1576
 844AC384	g_partySearchSession.staticData.registerUsersWithVoice	Global	Label	DEFAULT	.data		
 844AC390	g_partySearchSession.dyn.sessionHandle	Global	Label	DEFAULT	.data		
-844AC884	g_partySearchSession.dyn+0x4f4	Global	Label	DEFAULT	.data		
 844AC9A8	matchmaking_debug	Global	Label	IMPORTED	.data	/iw5mp_xenon.pdb/dvar_t *	4
 844AC9A8	?matchmaking_debug@@3PBUdvar_t@@B	Global	Label	IMPORTED	.data	/iw5mp_xenon.pdb/dvar_t *	4
 844AC9AC	s_searchByIdResultsBufferSize	Global	Label	IMPORTED	.data	/ulong	4
@@ -153154,8 +153079,6 @@ va	name	namespace	type	source	block	datatype	length
 844F19F0	s_localCounters[1]._padding_	Global	Label	DEFAULT	.data		
 844F19F4	s_localCounters[1].m_counterID	Global	Label	DEFAULT	.data		
 844F19F8	s_localCounters[1].m_counterValue	Global	Label	DEFAULT	.data		
-844F1A04	s_localCounters[2].m_counterID	Global	Label	DEFAULT	.data		
-844F1A08	s_localCounters[2].m_counterValue	Global	Label	DEFAULT	.data		
 844F1DC0	s_localCounters[62]._padding_	Global	Label	DEFAULT	.data		
 844F1DD0	s_localCounters[63]._padding_	Global	Label	DEFAULT	.data		
 844F1DE0	s_uploadCounters	Global	Label	IMPORTED	.data	/iw5mp_xenon.pdb/bdCounterValue[64]	1024
@@ -153211,7 +153134,6 @@ va	name	namespace	type	source	block	datatype	length
 844F5F5C	g_dwControllerData[3].serverAddr.m_address.m_addr.inUn	Global	Label	DEFAULT	.data		
 844F5F70	dwMail_DWMailVerbose_f_VAR	Global	Label	IMPORTED	.data	/iw5mp_xenon.pdb/cmd_function_s	20
 844F5F84	dwMail_DWMailStatus_f_VAR	Global	Label	IMPORTED	.data	/iw5mp_xenon.pdb/cmd_function_s	20
-844F5F90	dwMail_DWMailStatus_f_VAR.autoCompleteExt	Global	Label	DEFAULT	.data		
 844F5F98	s_dwMailManager	Global	Label	IMPORTED	.data	/iw5mp_xenon.pdb/dwMailManager	1584
 844F5F98	?s_dwMailManager@@3UdwMailManager@@A	Global	Label	IMPORTED	.data	/iw5mp_xenon.pdb/dwMailManager	1584
 844F5FA0	s_dwMailManager.enabled	Global	Label	DEFAULT	.data		
@@ -153274,7 +153196,6 @@ va	name	namespace	type	source	block	datatype	length
 844F65EC	s_regionInfo	Global	Label	IMPORTED	.data	/iw5mp_xenon.pdb/bdDMLInfo	276
 844F65F0	s_regionInfo.m_countryCode[0]	Global	Label	DEFAULT	.data		
 844F65F1	s_regionInfo.m_countryCode[1]	Global	Label	DEFAULT	.data		
-844F65F3	s_regionInfo.m_country[0]	Global	Label	DEFAULT	.data		
 844F6634	s_regionInfo.m_region[0]	Global	Label	DEFAULT	.data		
 844F66F8	s_regionInfo.m_latitude	Global	Label	DEFAULT	.data		
 844F66FC	s_regionInfo.m_longitude	Global	Label	DEFAULT	.data		
@@ -153503,7 +153424,6 @@ va	name	namespace	type	source	block	datatype	length
 8451C432	s_facebookAgeDone[2]	Global	Label	DEFAULT	.data		
 8451C433	s_facebookAgeDone[3]	Global	Label	DEFAULT	.data		
 8451C434	g_FacebookIsRegistered	Global	Label	IMPORTED	.data	/bool[4]	4
-8451C438	DAT_8451c438	Global	Label	DEFAULT	.data	/undefined	1
 8451C473	DAT_8451c473	Global	Label	DEFAULT	.data	/undefined	1
 8451DBB0	facebook_password_asterisk	Global	Label	IMPORTED	.data	/iw5mp_xenon.pdb/dvar_t *	4
 8451DBB0	?facebook_password_asterisk@@3PBUdvar_t@@B	Global	Label	IMPORTED	.data	/iw5mp_xenon.pdb/dvar_t *	4
@@ -153566,7 +153486,6 @@ va	name	namespace	type	source	block	datatype	length
 8451E0A8	g_FacebookFriendStore[0].facebookFriends[0].m_accountID	Global	Label	DEFAULT	.data		
 8451E0B0	g_FacebookFriendStore[0].facebookFriends[0].m_accountName[0]	Global	Label	DEFAULT	.data		
 8451E130	g_FacebookFriendStore[0].facebookFriends[0].m_userID	Global	Label	DEFAULT	.data		
-8451E138	g_FacebookFriendStore[0].facebookFriends[0].m_userName[0]	Global	Label	DEFAULT	.data		
 8451E1C8	g_FacebookFriendStore[0].facebookFriends[1].m_accountID	Global	Label	DEFAULT	.data		
 8451E1D1	g_FacebookFriendStore[0].facebookFriends[1].m_accountName[1]	Global	Label	DEFAULT	.data		
 8451E250	g_FacebookFriendStore[0].facebookFriends[1].m_userID	Global	Label	DEFAULT	.data		
@@ -153933,7 +153852,6 @@ va	name	namespace	type	source	block	datatype	length
 84553B90	g_metPlayerInfo	Global	Label	IMPORTED	.data	/iw5mp_xenon.pdb/MetPlayerInfo[4]	44864
 84553B90	?g_metPlayerInfo@@3PAUMetPlayerInfo@@A	Global	Label	IMPORTED	.data	/iw5mp_xenon.pdb/MetPlayerInfo[4]	44864
 84553B98	g_metPlayerInfo[0].playersXuidInfo[0].playerXuids	Global	Label	DEFAULT	.data		
-84553BA0	g_metPlayerInfo[0].playersXuidInfo[0].gamertag[0]	Global	Label	DEFAULT	.data		
 84553BC0	g_metPlayerInfo[0].playersXuidInfo[0].systemTime	Global	Label	DEFAULT	.data		
 84553BC8	g_metPlayerInfo[0].playersXuidInfo[0].userGroups[0]	Global	Label	DEFAULT	.data		
 84553BD0	g_metPlayerInfo[0].playersXuidInfo[0].userGroups[1]	Global	Label	DEFAULT	.data		
@@ -154029,7 +153947,6 @@ va	name	namespace	type	source	block	datatype	length
 8456CF54	g_DWUserGroupTask[3].m_ptr	Global	Label	DEFAULT	.data		
 8456CF58	g_groupMembershipInfo	Global	Label	IMPORTED	.data	/iw5mp_xenon.pdb/bdUserGroupMembershipInfo[4][20]	7680
 8456CF60	g_groupMembershipInfo[0][0].m_userGroupID	Global	Label	DEFAULT	.data		
-8456CF68	g_groupMembershipInfo[0][0].m_userGroupName[0]	Global	Label	DEFAULT	.data		
 8456CFB8	g_groupMembershipInfo[0][1]._padding_	Global	Label	DEFAULT	.data		
 8456EC98	g_groupMembershipInfo[3][18]._padding_	Global	Label	DEFAULT	.data		
 8456ECF8	g_groupMembershipInfo[3][19]._padding_	Global	Label	DEFAULT	.data		
@@ -155013,7 +154930,6 @@ va	name	namespace	type	source	block	datatype	length
 845AAD9C	s_timerFrames[2].timers[0].field4_0x4	Global	Label	DEFAULT	.data		
 845AADB0	s_timerFrames[2].timers[1].field4_0x4	Global	Label	DEFAULT	.data		
 845B0000	s_timerFrames[38].timers[18].field0_0x0	Global	Label	DEFAULT	.data		
-845B1730	s_timerFrames[48].timers[26].field16_0x10	Global	Label	DEFAULT	.data		
 845B3908	SuppressEmptyModuleLinkerWarning__FILE____LINE__	_anon_87B3445F	Label	IMPORTED	.data	/char	1
 845B3908	?SuppressEmptyModuleLinkerWarning__FILE____LINE__@?A0x87b3445f@@3DA	Global	Label	IMPORTED	.data	/char	1
 845B390C	s_gpuTimerStyle	Global	Label	IMPORTED	.data	/iw5mp_xenon.pdb/PerfTimerStyle	60
@@ -155645,7 +155561,6 @@ va	name	namespace	type	source	block	datatype	length
 84621480	smodelLightGlob.local.usedFrameCount[0]	Global	Label	DEFAULT	.data		
 84621484	smodelLightGlob.local.usedFrameCount[1]	Global	Label	DEFAULT	.data		
 84621488	smodelLightGlob.local.usedFrameCount[2]	Global	Label	DEFAULT	.data		
-8462148C	smodelLightGlob.local.usedFrameCount[3]	Global	Label	DEFAULT	.data		
 84628480	smodelLightGlob.local.entryLimit	Global	Label	DEFAULT	.data		
 84628484	smodelLightGlob.local.assignedCount	Global	Label	DEFAULT	.data		
 84628488	smodelLightGlob.local.freeableCount	Global	Label	DEFAULT	.data		
@@ -155857,7 +155772,6 @@ va	name	namespace	type	source	block	datatype	length
 8476CA0C	scene.markSurfs[0].lighting	Global	Label	DEFAULT	.data		
 8476CA0D	scene.markSurfs[0].lighting+1	Global	Label	DEFAULT	.data		
 8476CA0E	scene.markSurfs[0].lighting+2	Global	Label	DEFAULT	.data		
-84772200	scene.markSurfs[1408].drawGroup	Global	Label	DEFAULT	.data		
 84772A00	scene.glassSurfs[0].drawGroup	Global	Label	DEFAULT	.data		
 84772A02	scene.glassSurfs[0].drawGroup+2	Global	Label	DEFAULT	.data		
 84772A04	scene.glassSurfs[0].pad	Global	Label	DEFAULT	.data		
@@ -155873,7 +155787,6 @@ va	name	namespace	type	source	block	datatype	length
 84799F00	scene.drawSurfsSunShadow0[0]	Global	Label	DEFAULT	.data		
 847A1F00	scene.drawSurfsSunShadow1[0]	Global	Label	DEFAULT	.data		
 847B1F00	scene.drawSurfsSpotShadow0[0]	Global	Label	DEFAULT	.data		
-847B2200	scene.drawSurfsSpotShadow0[96]	Global	Label	DEFAULT	.data		
 847B3B00	scene.drawSurfsSpotShadow1[0]	Global	Label	DEFAULT	.data		
 847B5700	scene.drawSurfsSpotShadow2[0]	Global	Label	DEFAULT	.data		
 847B7300	scene.drawSurfsSpotShadow3[0]	Global	Label	DEFAULT	.data		
@@ -156077,7 +155990,6 @@ va	name	namespace	type	source	block	datatype	length
 847D4748	scene.sceneModel[1].gfxEntIndex	Global	Label	DEFAULT	.data		
 847D474C	scene.sceneModel[1].radius	Global	Label	DEFAULT	.data		
 847D4750	scene.sceneModel[1].cachedLightingHandle	Global	Label	DEFAULT	.data		
-847E2200	scene.sceneModel[779].placement.base.quat[2]	Global	Label	DEFAULT	.data		
 847E66D4	scene.sceneModelVisData[0][0]	Global	Label	DEFAULT	.data		
 847E66D5	scene.sceneModelVisData[0][1]	Global	Label	DEFAULT	.data		
 847E6AD4	scene.sceneModelVisData[1][0]	Global	Label	DEFAULT	.data		
@@ -156105,7 +156017,6 @@ va	name	namespace	type	source	block	datatype	length
 847E8308	scene.sceneBrush[1].bmodel	Global	Label	DEFAULT	.data		
 847E830C	scene.sceneBrush[1].placement.quat[0]	Global	Label	DEFAULT	.data		
 847E8328	scene.sceneBrush[1].reflectionProbeIndex	Global	Label	DEFAULT	.data		
-847E8330	scene.sceneBrush[2].bmodel	Global	Label	DEFAULT	.data		
 847ED2DC	scene.sceneBrushVisData[0][0]	Global	Label	DEFAULT	.data		
 847ED2DD	scene.sceneBrushVisData[0][1]	Global	Label	DEFAULT	.data		
 847ED4DC	scene.sceneBrushVisData[1][0]	Global	Label	DEFAULT	.data		
@@ -156244,7 +156155,6 @@ va	name	namespace	type	source	block	datatype	length
 847EFE00	waterGlobStatic.fftTrigTable[0].real	Global	Label	DEFAULT	.data		
 847F0600	waterGlobStatic.fftBitswap[0]	Global	Label	DEFAULT	.data		
 847F0A00	waterGlob	Global	Label	IMPORTED	.data	/iw5mp_xenon.pdb/WaterGlob	36864
-847F2200	waterGlob.HX[1536]	Global	Label	DEFAULT	.data		
 847F4A00	waterGlob.HY[0]	Global	Label	DEFAULT	.data		
 847F8A00	waterGlob.pixels[0]	Global	Label	DEFAULT	.data		
 847F9A00	g_selectByteFromInt	Global	Label	IMPORTED	.data	/iw5mp_xenon.pdb/__vector4	16
@@ -156924,8 +156834,6 @@ va	name	namespace	type	source	block	datatype	length
 84858278	s_clientDemoEnumInfo.deviceEnumInfo[1].deviceID	Global	Label	DEFAULT	.data		
 84858288	s_clientDemoEnumInfo.deviceEnumInfo[1].count	Global	Label	DEFAULT	.data		
 84858298	s_clientDemoEnumInfo.deviceEnumInfo[1].metaInfo[0].createTime	Global	Label	DEFAULT	.data		
-84860F38	s_clientDemoEnumInfo.deviceEnumInfo[2].deviceID	Global	Label	DEFAULT	.data		
-8486F5B8	s_clientDemoEnumInfo.deviceEnumInfo[3].metaInfo[31].fileName[104]	Global	Label	DEFAULT	.data		
 848728B8	s_clientDemoEnumInfo.askForDeviceSelection[0]	Global	Label	DEFAULT	.data		
 848728B9	s_clientDemoEnumInfo.askForDeviceSelection[1]	Global	Label	DEFAULT	.data		
 848728BA	s_clientDemoEnumInfo.askForDeviceSelection[2]	Global	Label	DEFAULT	.data		
@@ -157391,7 +157299,6 @@ va	name	namespace	type	source	block	datatype	length
 84886AEC	g_snd.looptime	Global	Label	DEFAULT	.data		
 84886B08	g_snd.entchaninfo[0].name[0]	Global	Label	DEFAULT	.data		
 84886B09	g_snd.entchaninfo[0].name[1]	Global	Label	DEFAULT	.data		
-84886B20	g_snd.entchaninfo[0].name[24]	Global	Label	DEFAULT	.data		
 84886B48	g_snd.entchaninfo[0].priority	Global	Label	DEFAULT	.data		
 84886B4C	g_snd.entchaninfo[0].is3d	Global	Label	DEFAULT	.data		
 84886B4D	g_snd.entchaninfo[0].isRestricted	Global	Label	DEFAULT	.data		
@@ -157406,7 +157313,6 @@ va	name	namespace	type	source	block	datatype	length
 8488800C	g_snd.entchanOverrides.isPausable[1]	Global	Label	DEFAULT	.data		
 84888010	g_snd.entchanOverrides.timescaleLerp[0]	Global	Label	DEFAULT	.data		
 84888014	g_snd.entchanOverrides.timescaleLerp[1]	Global	Label	DEFAULT	.data		
-84888058	g_snd.entchanOverrides.timescaleLerp[18]	Global	Label	DEFAULT	.data		
 848880F8	g_snd.entchanOverrides.timescaleLerp[58]	Global	Label	DEFAULT	.data		
 848880FC	g_snd.entchanOverrides.timescaleLerp[59]	Global	Label	DEFAULT	.data		
 84888110	g_snd.entchannel_count	Global	Label	DEFAULT	.data		
@@ -157574,10 +157480,8 @@ va	name	namespace	type	source	block	datatype	length
 8488D5F4	g_sndOcclusionInfo[3].occlusionLerp.goalrate	Global	Label	DEFAULT	.data		
 8488D5F8	g_sndOcclusionInfo[3].lastLerpUpdateTime	Global	Label	DEFAULT	.data		
 8488D5FC	g_sndOcclusionInfo[3].nextOcclusionTime	Global	Label	DEFAULT	.data		
-8488D9C8	g_sndOcclusionInfo[44].occlusionLerp.goalvalue	Global	Label	DEFAULT	.data		
 8488E1A0	DAT_8488e1a0	Global	Label	DEFAULT	.data	/undefined2	2
 8488E1A2	DAT_8488e1a2	Global	Label	DEFAULT	.data	/undefined2	2
-8488E1A4	DAT_8488e1a4	Global	Label	DEFAULT	.data	/undefined	1
 8488F9A0	g_FXPlaySounds	Global	Label	IMPORTED	.data	/iw5mp_xenon.pdb/AsyncPlaySound[32]	640
 8488F9A4	g_FXPlaySounds[0].sndEnt	Global	Label	DEFAULT	.data		
 8488F9A8	g_FXPlaySounds[0].origin[0]	Global	Label	DEFAULT	.data		
@@ -158148,7 +158052,6 @@ va	name	namespace	type	source	block	datatype	length
 8489BEBC	DAT_8489bebc	Global	Label	DEFAULT	BINKDATA	/undefined4	4
 8489BEC0	DAT_8489bec0	Global	Label	DEFAULT	BINKDATA	/undefined4	4
 8489BEC4	DAT_8489bec4	Global	Label	DEFAULT	BINKDATA	/undefined4	4
-8489BEC8	DAT_8489bec8	Global	Label	DEFAULT	BINKDATA	/undefined	1
 8489BEE0	DAT_8489bee0	Global	Label	DEFAULT	BINKDATA	/undefined4	4
 8489BEE4	DAT_8489bee4	Global	Label	DEFAULT	BINKDATA	/undefined4	4
 8489BEE8	DAT_8489bee8	Global	Label	DEFAULT	BINKDATA	/undefined	1

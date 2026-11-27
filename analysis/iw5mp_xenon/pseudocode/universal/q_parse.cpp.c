@@ -103,40 +103,40 @@ void Com_InitParse(void)
 
 // 82609AC8  Com_BeginParseSession  (universal/q_parse.cpp:171)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 void Com_BeginParseSession(char *param_1)
 
 {
-  char *pcVar1;
-  ParseThreadInfo *pPVar2;
-  int iVar3;
+  ParseThreadInfo *pPVar1;
+  int iVar2;
   
-  pcVar1 = (char *)__savegprlr_26(param_1);
-  pPVar2 = Com_GetParseThreadInfo();
-  if (pPVar2->parseInfoNum == 0xf) {
+  pPVar1 = Com_GetParseThreadInfo();
+  if (pPVar1->parseInfoNum == 0xf) {
     Com_Printf(0x17,"Already parsing:\n");
-    iVar3 = 0;
-    if (0 < pPVar2->parseInfoNum) {
+    iVar2 = 0;
+    if (0 < pPVar1->parseInfoNum) {
       do {
         Com_Printf(0x17,"%i. %s\n");
-        iVar3 = iVar3 + 1;
-      } while (iVar3 < pPVar2->parseInfoNum);
+        iVar2 = iVar2 + 1;
+      } while (iVar2 < pPVar1->parseInfoNum);
     }
     Com_Error(ERR_FATAL,"\x15Com_BeginParseSession: session overflow trying to parse %s\n");
   }
-  iVar3 = pPVar2->parseInfoNum;
-  pPVar2->parseInfoNum = iVar3 + 1;
-  pPVar2->parseInfo[iVar3 + 1].lines = 1;
-  pPVar2->parseInfo[iVar3 + 1].ungetToken = false;
-  pPVar2->parseInfo[iVar3 + 1].spaceDelimited = true;
-  pPVar2->parseInfo[iVar3 + 1].keepStringQuotes = false;
-  pPVar2->parseInfo[iVar3 + 1].csv = false;
-  pPVar2->parseInfo[iVar3 + 1].negativeNumbers = false;
-  pPVar2->parseInfo[iVar3 + 1].errorPrefix = "";
-  pPVar2->parseInfo[iVar3 + 1].warningPrefix = "";
-  pPVar2->parseInfo[iVar3 + 1].backup_lines = 0;
-  pPVar2->parseInfo[iVar3 + 1].backup_text = (char *)0x0;
-  pPVar2->parseInfo[iVar3 + 1].parseFile = pcVar1;
-  __restgprlr_26();
+  iVar2 = pPVar1->parseInfoNum;
+  pPVar1->parseInfoNum = iVar2 + 1;
+  pPVar1->parseInfo[iVar2 + 1].lines = 1;
+  pPVar1->parseInfo[iVar2 + 1].ungetToken = false;
+  pPVar1->parseInfo[iVar2 + 1].spaceDelimited = true;
+  pPVar1->parseInfo[iVar2 + 1].keepStringQuotes = false;
+  pPVar1->parseInfo[iVar2 + 1].csv = false;
+  pPVar1->parseInfo[iVar2 + 1].negativeNumbers = false;
+  pPVar1->parseInfo[iVar2 + 1].errorPrefix = "";
+  pPVar1->parseInfo[iVar2 + 1].warningPrefix = "";
+  pPVar1->parseInfo[iVar2 + 1].backup_lines = 0;
+  pPVar1->parseInfo[iVar2 + 1].backup_text = (char *)0x0;
+  pPVar1->parseInfo[iVar2 + 1].parseFile = param_1;
   return;
 }
 
@@ -242,52 +242,52 @@ int Com_GetCurrentParseLine(void)
 
 // 82609D78  Com_SetScriptErrorPrefix  (universal/q_parse.cpp:285)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void Com_SetScriptErrorPrefix(char *param_1)
 
 {
   int iVar1;
-  char *pcVar2;
-  ParseThreadInfo *pPVar3;
+  ParseThreadInfo *pPVar2;
   
-  pcVar2 = (char *)__savegprlr_28(param_1);
-  pPVar3 = Com_GetParseThreadInfo();
-  iVar1 = pPVar3->parseInfoNum;
-  if (pcVar2 == (char *)0x0) {
+  pPVar2 = Com_GetParseThreadInfo();
+  iVar1 = pPVar2->parseInfoNum;
+  if (param_1 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\q_parse.cpp",0x124,0
                     ,"%s");
   }
-  if (pPVar3->parseInfoNum < 1) {
+  if (pPVar2->parseInfoNum < 1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\q_parse.cpp",0x125,0
                     ,"%s\n\t(parse->parseInfoNum) = %i");
   }
-  pPVar3->parseInfo[iVar1].errorPrefix = pcVar2;
-  __restgprlr_28();
+  pPVar2->parseInfo[iVar1].errorPrefix = param_1;
   return;
 }
 
 
 // 82609E08  Com_SetScriptWarningPrefix  (universal/q_parse.cpp:299)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void Com_SetScriptWarningPrefix(char *param_1)
 
 {
   int iVar1;
-  char *pcVar2;
-  ParseThreadInfo *pPVar3;
+  ParseThreadInfo *pPVar2;
   
-  pcVar2 = (char *)__savegprlr_28(param_1);
-  pPVar3 = Com_GetParseThreadInfo();
-  iVar1 = pPVar3->parseInfoNum;
-  if (pcVar2 == (char *)0x0) {
+  pPVar2 = Com_GetParseThreadInfo();
+  iVar1 = pPVar2->parseInfoNum;
+  if (param_1 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\q_parse.cpp",0x132,0
                     ,"%s");
   }
-  if (pPVar3->parseInfoNum < 1) {
+  if (pPVar2->parseInfoNum < 1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\q_parse.cpp",0x133,0
                     ,"%s\n\t(parse->parseInfoNum) = %i");
   }
-  pPVar3->parseInfo[iVar1].warningPrefix = pcVar2;
-  __restgprlr_28();
+  pPVar2->parseInfo[iVar1].warningPrefix = param_1;
   return;
 }
 
@@ -359,68 +359,60 @@ void Com_UngetToken(void)
 
 // 8260A090  Com_ParseSetMark  (universal/q_parse.cpp:387)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void Com_ParseSetMark(char **param_1,com_parse_mark_t *param_2)
 
 {
   int iVar1;
-  int *piVar2;
-  ParseThreadInfo *pPVar3;
-  ulonglong uVar4;
-  int *piVar5;
+  ParseThreadInfo *pPVar2;
   
-  uVar4 = (ulonglong)(int)param_2;
-  piVar2 = (int *)__savegprlr_27(param_1);
-  pPVar3 = Com_GetParseThreadInfo();
-  iVar1 = pPVar3->parseInfoNum;
-  if (piVar2 == (int *)0x0) {
+  pPVar2 = Com_GetParseThreadInfo();
+  iVar1 = pPVar2->parseInfoNum;
+  if (param_1 == (char **)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\q_parse.cpp",0x18a,0
                     ,"%s");
   }
-  if ((uVar4 & 0xffffffff) == 0) {
+  if (param_2 == (com_parse_mark_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\q_parse.cpp",0x18b,0
                     ,"%s");
   }
-  piVar5 = (int *)uVar4;
-  *piVar5 = pPVar3->parseInfo[iVar1].lines;
-  piVar5[1] = *piVar2;
-  piVar5[2] = (uint)pPVar3->parseInfo[iVar1].ungetToken;
-  piVar5[3] = pPVar3->parseInfo[iVar1].backup_lines;
-  piVar5[4] = (int)pPVar3->parseInfo[iVar1].backup_text;
-  __restgprlr_27();
+  param_2->lines = pPVar2->parseInfo[iVar1].lines;
+  param_2->text = *param_1;
+  param_2->ungetToken = (uint)pPVar2->parseInfo[iVar1].ungetToken;
+  param_2->backup_lines = pPVar2->parseInfo[iVar1].backup_lines;
+  param_2->backup_text = pPVar2->parseInfo[iVar1].backup_text;
   return;
 }
 
 
 // 8260A140  Com_ParseReturnToMark  (universal/q_parse.cpp:411)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void Com_ParseReturnToMark(char **param_1,com_parse_mark_t *param_2)
 
 {
   int iVar1;
-  int *piVar2;
-  ParseThreadInfo *pPVar3;
-  ulonglong uVar4;
-  int *piVar5;
+  ParseThreadInfo *pPVar2;
   
-  uVar4 = (ulonglong)(int)param_2;
-  piVar2 = (int *)__savegprlr_27(param_1);
-  pPVar3 = Com_GetParseThreadInfo();
-  iVar1 = pPVar3->parseInfoNum;
-  if (piVar2 == (int *)0x0) {
+  pPVar2 = Com_GetParseThreadInfo();
+  iVar1 = pPVar2->parseInfoNum;
+  if (param_1 == (char **)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\q_parse.cpp",0x1a2,0
                     ,"%s");
   }
-  if ((uVar4 & 0xffffffff) == 0) {
+  if (param_2 == (com_parse_mark_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\q_parse.cpp",0x1a3,0
                     ,"%s");
   }
-  piVar5 = (int *)uVar4;
-  pPVar3->parseInfo[iVar1].lines = *piVar5;
-  *piVar2 = piVar5[1];
-  pPVar3->parseInfo[iVar1].ungetToken = (bool)('\x01' - (piVar5[2] == 0));
-  pPVar3->parseInfo[iVar1].backup_lines = piVar5[3];
-  pPVar3->parseInfo[iVar1].backup_text = (char *)piVar5[4];
-  __restgprlr_27();
+  pPVar2->parseInfo[iVar1].lines = param_2->lines;
+  *param_1 = param_2->text;
+  pPVar2->parseInfo[iVar1].ungetToken = (bool)('\x01' - (param_2->ungetToken == 0));
+  pPVar2->parseInfo[iVar1].backup_lines = param_2->backup_lines;
+  pPVar2->parseInfo[iVar1].backup_text = param_2->backup_text;
   return;
 }
 
@@ -614,221 +606,217 @@ LAB_8260a4a8:
 
 // 8260A570  Com_ParseExt  (universal/q_parse.cpp:658)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
+
 char * Com_ParseExt(char **param_1,int param_2)
 
 {
   bool bVar1;
-  char **ppcVar2;
-  ParseThreadInfo *pPVar3;
-  char *pcVar4;
+  ParseThreadInfo *pPVar2;
+  char *pcVar3;
   char cVar5;
-  char **ppcVar6;
-  char cVar10;
+  char **ppcVar4;
+  char cVar9;
+  char *pcVar6;
   char *pcVar7;
   char *pcVar8;
-  char *pcVar9;
-  parseInfo_t *ppVar11;
-  uint uVar12;
+  parseInfo_t *ppVar10;
+  uint uVar11;
   int local_50 [20];
   
-  ppcVar2 = (char **)__savegprlr_25(param_1);
   local_50[0] = 0;
-  pPVar3 = Com_GetParseThreadInfo();
-  ppVar11 = pPVar3->parseInfo + pPVar3->parseInfoNum;
-  if (ppcVar2 == (char **)0x0) {
+  pPVar2 = Com_GetParseThreadInfo();
+  ppVar10 = pPVar2->parseInfo + pPVar2->parseInfoNum;
+  if (param_1 == (char **)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\q_parse.cpp",0x29e,0
                     ,"%s");
   }
-  pcVar4 = *ppcVar2;
-  uVar12 = 0;
-  ppVar11->token[0] = '\0';
-  if (pcVar4 != (char *)0x0) {
-    ppVar11->backup_lines = ppVar11->lines;
-    ppVar11->backup_text = *ppcVar2;
-    if (ppVar11->csv != false) {
-      pcVar4 = Com_ParseCSV(ppcVar2,param_2);
-      pcVar4 = (char *)__restgprlr_25(pcVar4);
-      return pcVar4;
+  pcVar3 = *param_1;
+  uVar11 = 0;
+  ppVar10->token[0] = '\0';
+  if (pcVar3 != (char *)0x0) {
+    ppVar10->backup_lines = ppVar10->lines;
+    ppVar10->backup_text = *param_1;
+    if (ppVar10->csv != false) {
+      pcVar3 = Com_ParseCSV(param_1,param_2);
+      return pcVar3;
     }
-    for (pcVar4 = SkipWhitespace(pcVar4,local_50); pcVar4 != (char *)0x0;
-        pcVar4 = SkipWhitespace(pcVar4,local_50)) {
-      if ((local_50[0] != 0) && (param_2 == 0)) goto LAB_8260aa60;
-      cVar5 = *pcVar4;
+    for (pcVar3 = SkipWhitespace(pcVar3,local_50); pcVar3 != (char *)0x0;
+        pcVar3 = SkipWhitespace(pcVar3,local_50)) {
+      if ((local_50[0] != 0) && (param_2 == 0)) {
+        return ppVar10->token;
+      }
+      cVar5 = *pcVar3;
       if (cVar5 != '/') {
 LAB_8260a70c:
-        pcVar7 = pPVar3->tokenPos;
-        pPVar3->tokenPos = pcVar4;
-        pPVar3->prevTokenPos = pcVar7;
+        pcVar6 = pPVar2->tokenPos;
+        pPVar2->tokenPos = pcVar3;
+        pPVar2->prevTokenPos = pcVar6;
         if (cVar5 == '\"') {
-          bVar1 = ppVar11->keepStringQuotes != false;
+          bVar1 = ppVar10->keepStringQuotes != false;
           if (bVar1) {
-            ppVar11->token[0] = '\"';
+            ppVar10->token[0] = '\"';
           }
-          uVar12 = (uint)bVar1;
-          pcVar4 = pcVar4 + 1;
+          uVar11 = (uint)bVar1;
+          pcVar3 = pcVar3 + 1;
           do {
-            cVar5 = *pcVar4;
-            pcVar7 = pcVar4 + 1;
-            if ((cVar5 == '\\') && ((cVar10 = *pcVar7, cVar10 == '\"' || (cVar10 == '\\')))) {
-              cVar5 = cVar10;
-              pcVar4 = pcVar4 + 2;
+            cVar5 = *pcVar3;
+            pcVar6 = pcVar3 + 1;
+            if ((cVar5 == '\\') && ((cVar9 = *pcVar6, cVar9 == '\"' || (cVar9 == '\\')))) {
+              cVar5 = cVar9;
+              pcVar3 = pcVar3 + 2;
             }
             else {
               if ((cVar5 == '\"') || (cVar5 == '\0')) {
-                if (ppVar11->keepStringQuotes != false) {
-                  ppVar11->token[uVar12] = '\"';
-                  uVar12 = uVar12 + 1;
+                if (ppVar10->keepStringQuotes != false) {
+                  ppVar10->token[uVar11] = '\"';
+                  uVar11 = uVar11 + 1;
                 }
-                ppVar11->token[uVar12] = '\0';
-                *ppcVar2 = pcVar7;
-                pcVar4 = (char *)__restgprlr_25(ppVar11);
-                return pcVar4;
+                ppVar10->token[uVar11] = '\0';
+                *param_1 = pcVar6;
+                return ppVar10->token;
               }
-              pcVar4 = pcVar7;
-              if (*pcVar7 == '\n') {
-                ppVar11->lines = ppVar11->lines + 1;
+              pcVar3 = pcVar6;
+              if (*pcVar6 == '\n') {
+                ppVar10->lines = ppVar10->lines + 1;
               }
             }
-            if ((int)uVar12 < 0x3ff) {
-              ppVar11->token[uVar12] = cVar5;
-              uVar12 = uVar12 + 1;
+            if ((int)uVar11 < 0x3ff) {
+              ppVar10->token[uVar11] = cVar5;
+              uVar11 = uVar11 + 1;
             }
           } while( true );
         }
-        if (ppVar11->spaceDelimited == false) {
+        if (ppVar10->spaceDelimited == false) {
           if ((((cVar5 < '0') || ('9' < cVar5)) &&
-              ((ppVar11->negativeNumbers == false ||
-               (((cVar5 != '-' || (pcVar4[1] < '0')) || ('9' < pcVar4[1])))))) &&
-             (((cVar5 != '.' || (pcVar4[1] < '0')) || ('9' < pcVar4[1])))) {
+              ((ppVar10->negativeNumbers == false ||
+               (((cVar5 != '-' || (pcVar3[1] < '0')) || ('9' < pcVar3[1])))))) &&
+             (((cVar5 != '.' || (pcVar3[1] < '0')) || ('9' < pcVar3[1])))) {
             if (((cVar5 < 'a') || ('z' < cVar5)) &&
                ((((cVar5 < 'A' || ('Z' < cVar5)) && (cVar5 != '_')) &&
                 ((cVar5 != '/' && (cVar5 != '\\')))))) {
-              ppcVar6 = punctuation;
-              pcVar7 = punctuation[0];
+              ppcVar4 = punctuation;
+              pcVar6 = punctuation[0];
               do {
-                pcVar8 = pcVar7;
-                if (pcVar7 == (char *)0x0) {
-                  cVar5 = *pcVar4;
-                  ppVar11->token[1] = '\0';
-                  ppVar11->token[0] = cVar5;
-                  *ppcVar2 = pcVar4 + 1;
-                  pcVar4 = (char *)__restgprlr_25(ppVar11);
-                  return pcVar4;
+                pcVar7 = pcVar6;
+                if (pcVar6 == (char *)0x0) {
+                  cVar5 = *pcVar3;
+                  ppVar10->token[1] = '\0';
+                  ppVar10->token[0] = cVar5;
+                  *param_1 = pcVar3 + 1;
+                  return ppVar10->token;
                 }
                 do {
-                  cVar5 = *pcVar8;
-                  pcVar8 = pcVar8 + 1;
+                  cVar5 = *pcVar7;
+                  pcVar7 = pcVar7 + 1;
                 } while (cVar5 != '\0');
-                pcVar9 = (char *)0x0;
-                pcVar8 = pcVar8 + (-1 - (int)pcVar7);
-                if (0 < (int)pcVar8) {
+                pcVar8 = (char *)0x0;
+                pcVar7 = pcVar7 + (-1 - (int)pcVar6);
+                if (0 < (int)pcVar7) {
                   do {
-                    if (pcVar4[(int)pcVar9] != pcVar7[(int)pcVar9]) break;
-                    pcVar9 = pcVar9 + 1;
-                  } while ((int)pcVar9 < (int)pcVar8);
+                    if (pcVar3[(int)pcVar8] != pcVar6[(int)pcVar8]) break;
+                    pcVar8 = pcVar8 + 1;
+                  } while ((int)pcVar8 < (int)pcVar7);
                 }
-                if (pcVar9 == pcVar8) {
+                if (pcVar8 == pcVar7) {
                   memcpy();
-                  pcVar8[(int)ppVar11->token] = '\0';
-                  *ppcVar2 = pcVar4 + (int)pcVar8;
-                  pcVar4 = (char *)__restgprlr_25(ppVar11);
-                  return pcVar4;
+                  pcVar7[(int)ppVar10->token] = '\0';
+                  *param_1 = pcVar3 + (int)pcVar7;
+                  return ppVar10->token;
                 }
-                ppcVar6 = ppcVar6 + 1;
-                pcVar7 = *ppcVar6;
+                ppcVar4 = ppcVar4 + 1;
+                pcVar6 = *ppcVar4;
               } while( true );
             }
             do {
-              if ((int)uVar12 < 0x3ff) {
-                ppVar11->token[uVar12] = cVar5;
-                uVar12 = uVar12 + 1;
+              if ((int)uVar11 < 0x3ff) {
+                ppVar10->token[uVar11] = cVar5;
+                uVar11 = uVar11 + 1;
               }
-              pcVar4 = pcVar4 + 1;
-              cVar5 = *pcVar4;
+              pcVar3 = pcVar3 + 1;
+              cVar5 = *pcVar3;
             } while ((((('`' < cVar5) && (cVar5 < '{')) || (('@' < cVar5 && (cVar5 < '[')))) ||
                      (cVar5 == '_')) || (('/' < cVar5 && (cVar5 < ':'))));
           }
           else {
             do {
-              pcVar7 = pcVar4;
-              if ((int)uVar12 < 0x3ff) {
-                ppVar11->token[uVar12] = cVar5;
-                uVar12 = uVar12 + 1;
+              pcVar6 = pcVar3;
+              if ((int)uVar11 < 0x3ff) {
+                ppVar10->token[uVar11] = cVar5;
+                uVar11 = uVar11 + 1;
               }
-              pcVar4 = pcVar7 + 1;
-              cVar5 = *pcVar4;
+              pcVar3 = pcVar6 + 1;
+              cVar5 = *pcVar3;
             } while ((('/' < cVar5) && (cVar5 < ':')) || (cVar5 == '.'));
             if ((cVar5 == 'e') || (cVar5 == 'E')) {
-              if ((int)uVar12 < 0x3ff) {
-                ppVar11->token[uVar12] = cVar5;
-                uVar12 = uVar12 + 1;
+              if ((int)uVar11 < 0x3ff) {
+                ppVar10->token[uVar11] = cVar5;
+                uVar11 = uVar11 + 1;
               }
-              pcVar4 = pcVar7 + 2;
-              cVar5 = *pcVar4;
+              pcVar3 = pcVar6 + 2;
+              cVar5 = *pcVar3;
               if ((cVar5 == '-') || (cVar5 == '+')) {
-                if ((int)uVar12 < 0x3ff) {
-                  ppVar11->token[uVar12] = cVar5;
-                  uVar12 = uVar12 + 1;
+                if ((int)uVar11 < 0x3ff) {
+                  ppVar10->token[uVar11] = cVar5;
+                  uVar11 = uVar11 + 1;
                 }
-                pcVar4 = pcVar7 + 3;
-                cVar5 = *pcVar4;
+                pcVar3 = pcVar6 + 3;
+                cVar5 = *pcVar3;
               }
               do {
-                if ((int)uVar12 < 0x3ff) {
-                  ppVar11->token[uVar12] = cVar5;
-                  uVar12 = uVar12 + 1;
+                if ((int)uVar11 < 0x3ff) {
+                  ppVar10->token[uVar11] = cVar5;
+                  uVar11 = uVar11 + 1;
                 }
-                pcVar4 = pcVar4 + 1;
-                cVar5 = *pcVar4;
+                pcVar3 = pcVar3 + 1;
+                cVar5 = *pcVar3;
               } while (('/' < cVar5) && (cVar5 < ':'));
             }
           }
         }
         else {
           do {
-            if ((int)uVar12 < 0x3ff) {
-              ppVar11->token[uVar12] = cVar5;
-              uVar12 = uVar12 + 1;
+            if ((int)uVar11 < 0x3ff) {
+              ppVar10->token[uVar11] = cVar5;
+              uVar11 = uVar11 + 1;
             }
-            pcVar4 = pcVar4 + 1;
-            cVar5 = *pcVar4;
+            pcVar3 = pcVar3 + 1;
+            cVar5 = *pcVar3;
           } while (' ' < cVar5);
         }
-        ppVar11->token[-(uint)(uVar12 != 0x400) & uVar12] = '\0';
-        *ppcVar2 = pcVar4;
-LAB_8260aa60:
-        pcVar4 = (char *)__restgprlr_25(ppVar11);
-        return pcVar4;
+        ppVar10->token[-(uint)(uVar11 != 0x400) & uVar11] = '\0';
+        *param_1 = pcVar3;
+        return ppVar10->token;
       }
-      if (pcVar4[1] == '/') {
+      if (pcVar3[1] == '/') {
         cVar5 = '/';
         do {
           if (cVar5 == '\n') break;
-          pcVar4 = pcVar4 + 1;
-          cVar5 = *pcVar4;
+          pcVar3 = pcVar3 + 1;
+          cVar5 = *pcVar3;
         } while (cVar5 != '\0');
       }
       else {
-        if (pcVar4[1] != '*') goto LAB_8260a70c;
+        if (pcVar3[1] != '*') goto LAB_8260a70c;
         cVar5 = '/';
         do {
-          if ((cVar5 == '*') && (cVar10 = '*', pcVar4[1] == '/')) break;
+          if ((cVar5 == '*') && (cVar9 = '*', pcVar3[1] == '/')) break;
           if (cVar5 == '\n') {
-            ppVar11->lines = ppVar11->lines + 1;
+            ppVar10->lines = ppVar10->lines + 1;
           }
-          pcVar4 = pcVar4 + 1;
-          cVar5 = *pcVar4;
-          cVar10 = '\0';
+          pcVar3 = pcVar3 + 1;
+          cVar5 = *pcVar3;
+          cVar9 = '\0';
         } while (cVar5 != '\0');
-        if (cVar10 != '\0') {
-          pcVar4 = pcVar4 + 2;
+        if (cVar9 != '\0') {
+          pcVar3 = pcVar3 + 2;
         }
       }
     }
   }
-  *ppcVar2 = (char *)0x0;
-  pcVar4 = (char *)__restgprlr_25(ppVar11);
-  return pcVar4;
+  *param_1 = (char *)0x0;
+  return ppVar10->token;
 }
 
 
@@ -880,92 +868,84 @@ char * Com_ParseOnLine(char **param_1)
 
 // 8260AB50  Com_MatchToken  (universal/q_parse.cpp:983)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 int Com_MatchToken(char **param_1,char *param_2,int param_3)
 
 {
   char cVar1;
-  char **ppcVar2;
-  ParseThreadInfo *pPVar3;
-  char *pcVar4;
-  int iVar5;
-  char *pcVar7;
-  longlong lVar6;
-  char *pcVar8;
+  char cVar2;
+  int iVar3;
+  ParseThreadInfo *pPVar4;
+  char *pcVar5;
   
-  lVar6 = (longlong)(int)param_2;
-  ppcVar2 = (char **)__savegprlr_29(param_1);
-  pPVar3 = Com_GetParseThreadInfo();
-  iVar5 = pPVar3->parseInfoNum;
-  if (pPVar3->parseInfo[iVar5].ungetToken != false) {
-    pcVar8 = pPVar3->parseInfo[iVar5].backup_text;
-    pPVar3->parseInfo[iVar5].ungetToken = false;
-    *ppcVar2 = pcVar8;
-    pPVar3->parseInfo[iVar5].lines = pPVar3->parseInfo[iVar5].backup_lines;
+  pPVar4 = Com_GetParseThreadInfo();
+  iVar3 = pPVar4->parseInfoNum;
+  if (pPVar4->parseInfo[iVar3].ungetToken != false) {
+    pcVar5 = pPVar4->parseInfo[iVar3].backup_text;
+    pPVar4->parseInfo[iVar3].ungetToken = false;
+    *param_1 = pcVar5;
+    pPVar4->parseInfo[iVar3].lines = pPVar4->parseInfo[iVar3].backup_lines;
   }
-  pcVar4 = Com_ParseExt(ppcVar2,1);
-  pcVar8 = pcVar4;
+  pcVar5 = Com_ParseExt(param_1,1);
   do {
-    cVar1 = *pcVar8;
-    pcVar7 = (char *)lVar6;
+    cVar1 = *pcVar5;
+    cVar2 = *param_2;
     if (cVar1 == '\0') break;
-    pcVar8 = pcVar8 + 1;
-    lVar6 = lVar6 + 1;
-  } while (cVar1 == *pcVar7);
-  if (cVar1 == *pcVar7) {
-    iVar5 = __restgprlr_29(1,pcVar4);
-    return iVar5;
+    pcVar5 = pcVar5 + 1;
+    param_2 = param_2 + 1;
+  } while (cVar1 == cVar2);
+  if (cVar1 == cVar2) {
+    return 1;
   }
   if (param_3 != 0) {
     Com_ScriptError("MatchToken: got \'%s\', expected \'%s\'\n");
-    iVar5 = __restgprlr_29(0);
-    return iVar5;
+    return 0;
   }
   Com_ScriptErrorDrop("MatchToken: got \'%s\', expected \'%s\'\n");
-  iVar5 = __restgprlr_29(0);
-  return iVar5;
+  return 0;
 }
 
 
 // 8260AC20  Com_SkipBracedSection  (universal/q_parse.cpp:1008)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 int Com_SkipBracedSection(char **param_1,uint param_2,int param_3)
 
 {
-  char **ppcVar1;
+  int iVar1;
   ParseThreadInfo *pPVar2;
   char *pcVar3;
   int iVar4;
-  undefined8 uVar5;
-  longlong lVar6;
   
-  lVar6 = (longlong)(int)param_2;
-  ppcVar1 = (char **)__savegprlr_27(param_1);
-  uVar5 = 0;
+  iVar4 = 0;
   do {
     pPVar2 = Com_GetParseThreadInfo();
-    iVar4 = pPVar2->parseInfoNum;
-    if (pPVar2->parseInfo[iVar4].ungetToken != false) {
-      pcVar3 = pPVar2->parseInfo[iVar4].backup_text;
-      pPVar2->parseInfo[iVar4].ungetToken = false;
-      *ppcVar1 = pcVar3;
-      pPVar2->parseInfo[iVar4].lines = pPVar2->parseInfo[iVar4].backup_lines;
+    iVar1 = pPVar2->parseInfoNum;
+    if (pPVar2->parseInfo[iVar1].ungetToken != false) {
+      pcVar3 = pPVar2->parseInfo[iVar1].backup_text;
+      pPVar2->parseInfo[iVar1].ungetToken = false;
+      *param_1 = pcVar3;
+      pPVar2->parseInfo[iVar1].lines = pPVar2->parseInfo[iVar1].backup_lines;
     }
-    pcVar3 = Com_ParseExt(ppcVar1,1);
+    pcVar3 = Com_ParseExt(param_1,1);
     if (pcVar3[1] == '\0') {
       if (*pcVar3 == '{') {
-        if ((int)lVar6 == param_3) {
-          uVar5 = 1;
+        if (param_2 == param_3) {
+          iVar4 = 1;
         }
         else {
-          lVar6 = lVar6 + 1;
+          param_2 = param_2 + 1;
         }
       }
       else if (*pcVar3 == '}') {
-        lVar6 = lVar6 + -1;
+        param_2 = param_2 - 1;
       }
     }
-  } while (((int)lVar6 != 0) && (*ppcVar1 != (char *)0x0));
-  iVar4 = __restgprlr_27(uVar5);
+  } while ((param_2 != 0) && (*param_1 != (char *)0x0));
   return iVar4;
 }
 
@@ -1000,87 +980,86 @@ void Com_SkipRestOfLine(char **param_1)
 
 // 8260AD68  Com_GetArgCountOnLine  (universal/q_parse.cpp:1069)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 int Com_GetArgCountOnLine(char **param_1)
 
 {
-  char **ppcVar1;
-  ParseThreadInfo *pPVar2;
-  parseInfo_t *ppVar3;
+  ParseThreadInfo *pPVar1;
+  parseInfo_t *ppVar2;
+  int iVar3;
   int iVar4;
-  longlong lVar5;
-  longlong lVar6;
   com_parse_mark_t acStack_40 [3];
   
-  ppcVar1 = (char **)__savegprlr_28(param_1);
-  Com_ParseSetMark(ppcVar1,acStack_40);
-  lVar5 = 0;
+  Com_ParseSetMark(param_1,acStack_40);
+  iVar3 = 0;
 LAB_8260ad88:
-  lVar6 = 0;
+  iVar4 = 0;
   do {
-    pPVar2 = Com_GetParseThreadInfo();
-    ppVar3 = pPVar2->parseInfo + pPVar2->parseInfoNum;
-    if (ppVar3->ungetToken == false) {
+    pPVar1 = Com_GetParseThreadInfo();
+    ppVar2 = pPVar1->parseInfo + pPVar1->parseInfoNum;
+    if (ppVar2->ungetToken == false) {
 LAB_8260adc8:
-      ppVar3 = (parseInfo_t *)Com_ParseExt(ppcVar1,0);
+      ppVar2 = (parseInfo_t *)Com_ParseExt(param_1,0);
     }
     else {
-      ppVar3->ungetToken = false;
-      if (ppVar3->spaceDelimited != false) {
-        *ppcVar1 = ppVar3->backup_text;
-        ppVar3->lines = ppVar3->backup_lines;
+      ppVar2->ungetToken = false;
+      if (ppVar2->spaceDelimited != false) {
+        *param_1 = ppVar2->backup_text;
+        ppVar2->lines = ppVar2->backup_lines;
         goto LAB_8260adc8;
       }
     }
-    if (ppVar3->token[0] != '\0') break;
-    lVar6 = lVar6 + 1;
-    if (4 < (int)lVar6) {
-      Com_ParseReturnToMark(ppcVar1,acStack_40);
-      iVar4 = __restgprlr_28(lVar5);
-      return iVar4;
+    if (ppVar2->token[0] != '\0') break;
+    iVar4 = iVar4 + 1;
+    if (4 < iVar4) {
+      Com_ParseReturnToMark(param_1,acStack_40);
+      return iVar3;
     }
   } while( true );
-  lVar5 = lVar6 + lVar5 + 1;
+  iVar3 = iVar4 + iVar3 + 1;
   goto LAB_8260ad88;
 }
 
 
 // 8260AE18  Com_ParseRestOfLine  (universal/q_parse.cpp:1106)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 char * Com_ParseRestOfLine(char **param_1)
 
 {
-  char **ppcVar1;
-  ParseThreadInfo *pPVar2;
-  parseInfo_t *ppVar3;
-  char *pcVar4;
+  ParseThreadInfo *pPVar1;
+  parseInfo_t *ppVar2;
+  char *pcVar3;
   
-  ppcVar1 = (char **)__savegprlr_27(param_1);
-  pPVar2 = Com_GetParseThreadInfo();
-  pcVar4 = pPVar2->line;
-  *pcVar4 = '\0';
+  pPVar1 = Com_GetParseThreadInfo();
+  pcVar3 = pPVar1->line;
+  *pcVar3 = '\0';
   do {
-    pPVar2 = Com_GetParseThreadInfo();
-    ppVar3 = pPVar2->parseInfo + pPVar2->parseInfoNum;
-    if (ppVar3->ungetToken == false) {
+    pPVar1 = Com_GetParseThreadInfo();
+    ppVar2 = pPVar1->parseInfo + pPVar1->parseInfoNum;
+    if (ppVar2->ungetToken == false) {
 LAB_8260ae84:
-      ppVar3 = (parseInfo_t *)Com_ParseExt(ppcVar1,0);
+      ppVar2 = (parseInfo_t *)Com_ParseExt(param_1,0);
     }
     else {
-      ppVar3->ungetToken = false;
-      if (ppVar3->spaceDelimited != false) {
-        *ppcVar1 = ppVar3->backup_text;
-        ppVar3->lines = ppVar3->backup_lines;
+      ppVar2->ungetToken = false;
+      if (ppVar2->spaceDelimited != false) {
+        *param_1 = ppVar2->backup_text;
+        ppVar2->lines = ppVar2->backup_lines;
         goto LAB_8260ae84;
       }
     }
-    if (ppVar3->token[0] == '\0') {
-      pcVar4 = (char *)__restgprlr_27(pcVar4);
-      return pcVar4;
+    if (ppVar2->token[0] == '\0') {
+      return pcVar3;
     }
-    if (*pcVar4 != '\0') {
-      I_strncat(pcVar4,0x400," ");
+    if (*pcVar3 != '\0') {
+      I_strncat(pcVar3,0x400," ");
     }
-    I_strncat(pcVar4,0x400,ppVar3->token);
+    I_strncat(pcVar3,0x400,ppVar2->token);
   } while( true );
 }
 
@@ -1162,68 +1141,70 @@ int Com_ParseIntOnLine(char **param_1)
 
 // 8260B010  Com_Parse1DMatrix  (universal/q_parse.cpp:1166)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void Com_Parse1DMatrix(char **param_1,int param_2,float *param_3)
 
 {
   char cVar1;
   char cVar2;
   int iVar3;
-  char **ppcVar4;
-  ParseThreadInfo *pPVar5;
+  ParseThreadInfo *pPVar4;
+  char *pcVar5;
   char *pcVar6;
-  char *pcVar7;
+  float *pfVar7;
   longlong lVar8;
-  longlong lVar9;
-  double dVar10;
+  double dVar9;
   
-  lVar8 = (longlong)(int)param_3;
-  lVar9 = (longlong)param_2;
-  ppcVar4 = (char **)__savegprlr_28(param_1);
-  Com_MatchToken(ppcVar4,"(",0);
-  if (0 < (int)lVar9) {
-    lVar8 = lVar8 + -4;
+  lVar8 = (longlong)param_2;
+  Com_MatchToken(param_1,"(",0);
+  if (0 < param_2) {
+    pfVar7 = param_3 + -1;
     do {
-      pPVar5 = Com_GetParseThreadInfo();
-      iVar3 = pPVar5->parseInfoNum;
-      if (pPVar5->parseInfo[iVar3].ungetToken != false) {
-        pcVar6 = pPVar5->parseInfo[iVar3].backup_text;
-        pPVar5->parseInfo[iVar3].ungetToken = false;
-        *ppcVar4 = pcVar6;
-        pPVar5->parseInfo[iVar3].lines = pPVar5->parseInfo[iVar3].backup_lines;
+      pPVar4 = Com_GetParseThreadInfo();
+      iVar3 = pPVar4->parseInfoNum;
+      if (pPVar4->parseInfo[iVar3].ungetToken != false) {
+        pcVar5 = pPVar4->parseInfo[iVar3].backup_text;
+        pPVar4->parseInfo[iVar3].ungetToken = false;
+        *param_1 = pcVar5;
+        pPVar4->parseInfo[iVar3].lines = pPVar4->parseInfo[iVar3].backup_lines;
       }
-      pcVar6 = Com_ParseExt(ppcVar4,1);
-      dVar10 = atof(pcVar6);
-      lVar8 = lVar8 + 4;
-      *(float *)lVar8 = (float)dVar10;
-      lVar9 = lVar9 + -1;
-    } while (lVar9 != 0);
+      pcVar5 = Com_ParseExt(param_1,1);
+      dVar9 = atof(pcVar5);
+      pfVar7 = pfVar7 + 1;
+      *pfVar7 = (float)dVar9;
+      lVar8 = lVar8 + -1;
+    } while (lVar8 != 0);
   }
-  pPVar5 = Com_GetParseThreadInfo();
-  iVar3 = pPVar5->parseInfoNum;
-  if (pPVar5->parseInfo[iVar3].ungetToken != false) {
-    pcVar6 = pPVar5->parseInfo[iVar3].backup_text;
-    pPVar5->parseInfo[iVar3].ungetToken = false;
-    *ppcVar4 = pcVar6;
-    pPVar5->parseInfo[iVar3].lines = pPVar5->parseInfo[iVar3].backup_lines;
+  pPVar4 = Com_GetParseThreadInfo();
+  iVar3 = pPVar4->parseInfoNum;
+  if (pPVar4->parseInfo[iVar3].ungetToken != false) {
+    pcVar5 = pPVar4->parseInfo[iVar3].backup_text;
+    pPVar4->parseInfo[iVar3].ungetToken = false;
+    *param_1 = pcVar5;
+    pPVar4->parseInfo[iVar3].lines = pPVar4->parseInfo[iVar3].backup_lines;
   }
-  pcVar6 = Com_ParseExt(ppcVar4,1);
-  pcVar7 = ")";
+  pcVar5 = Com_ParseExt(param_1,1);
+  pcVar6 = ")";
   do {
-    cVar1 = *pcVar6;
-    cVar2 = *pcVar7;
+    cVar1 = *pcVar5;
+    cVar2 = *pcVar6;
     if (cVar1 == '\0') break;
+    pcVar5 = pcVar5 + 1;
     pcVar6 = pcVar6 + 1;
-    pcVar7 = pcVar7 + 1;
   } while (cVar1 == cVar2);
   if (cVar1 != cVar2) {
     Com_ScriptErrorDrop("MatchToken: got \'%s\', expected \'%s\'\n");
   }
-  __restgprlr_28();
   return;
 }
 
 
 // 8260B128  Com_Parse2DMatrix  (universal/q_parse.cpp:1183)
+
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 
 void Com_Parse2DMatrix(char **param_1,int param_2,int param_3,float *param_4)
 
@@ -1231,52 +1212,48 @@ void Com_Parse2DMatrix(char **param_1,int param_2,int param_3,float *param_4)
   char cVar1;
   char cVar2;
   int iVar3;
-  char **ppcVar4;
-  ParseThreadInfo *pPVar5;
+  ParseThreadInfo *pPVar4;
+  char *pcVar5;
   char *pcVar6;
-  ulonglong uVar7;
-  char *pcVar8;
-  longlong lVar9;
-  longlong lVar10;
+  longlong lVar7;
   
-  lVar9 = (longlong)(int)param_4;
-  uVar7 = (ulonglong)param_3;
-  lVar10 = (longlong)param_2;
-  ppcVar4 = (char **)__savegprlr_27(param_1);
-  Com_MatchToken(ppcVar4,"(",0);
-  if (0 < (int)lVar10) {
+  lVar7 = (longlong)param_2;
+  Com_MatchToken(param_1,"(",0);
+  if (0 < param_2) {
     do {
-      Com_Parse1DMatrix(ppcVar4,(int)uVar7,(float *)lVar9);
-      lVar10 = lVar10 + -1;
-      lVar9 = (uVar7 & 0x3fffffff) * 4 + lVar9;
-    } while (lVar10 != 0);
+      Com_Parse1DMatrix(param_1,param_3,param_4);
+      lVar7 = lVar7 + -1;
+      param_4 = param_4 + param_3;
+    } while (lVar7 != 0);
   }
-  pPVar5 = Com_GetParseThreadInfo();
-  iVar3 = pPVar5->parseInfoNum;
-  if (pPVar5->parseInfo[iVar3].ungetToken != false) {
-    pcVar6 = pPVar5->parseInfo[iVar3].backup_text;
-    pPVar5->parseInfo[iVar3].ungetToken = false;
-    *ppcVar4 = pcVar6;
-    pPVar5->parseInfo[iVar3].lines = pPVar5->parseInfo[iVar3].backup_lines;
+  pPVar4 = Com_GetParseThreadInfo();
+  iVar3 = pPVar4->parseInfoNum;
+  if (pPVar4->parseInfo[iVar3].ungetToken != false) {
+    pcVar5 = pPVar4->parseInfo[iVar3].backup_text;
+    pPVar4->parseInfo[iVar3].ungetToken = false;
+    *param_1 = pcVar5;
+    pPVar4->parseInfo[iVar3].lines = pPVar4->parseInfo[iVar3].backup_lines;
   }
-  pcVar6 = Com_ParseExt(ppcVar4,1);
-  pcVar8 = ")";
+  pcVar5 = Com_ParseExt(param_1,1);
+  pcVar6 = ")";
   do {
-    cVar1 = *pcVar6;
-    cVar2 = *pcVar8;
+    cVar1 = *pcVar5;
+    cVar2 = *pcVar6;
     if (cVar1 == '\0') break;
+    pcVar5 = pcVar5 + 1;
     pcVar6 = pcVar6 + 1;
-    pcVar8 = pcVar8 + 1;
   } while (cVar1 == cVar2);
   if (cVar1 != cVar2) {
     Com_ScriptErrorDrop("MatchToken: got \'%s\', expected \'%s\'\n");
   }
-  __restgprlr_27();
   return;
 }
 
 
 // 8260B210  Com_Parse3DMatrix  (universal/q_parse.cpp:1198)
+
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 
 void Com_Parse3DMatrix(char **param_1,int param_2,int param_3,int param_4,float *param_5)
 
@@ -1284,45 +1261,40 @@ void Com_Parse3DMatrix(char **param_1,int param_2,int param_3,int param_4,float 
   char cVar1;
   char cVar2;
   int iVar3;
-  char **ppcVar4;
-  ParseThreadInfo *pPVar5;
+  ParseThreadInfo *pPVar4;
+  char *pcVar5;
   char *pcVar6;
-  char *pcVar7;
-  longlong lVar8;
-  longlong lVar9;
+  longlong lVar7;
   
-  lVar8 = (longlong)(int)param_5;
-  lVar9 = (longlong)param_2;
-  ppcVar4 = (char **)__savegprlr_26(param_1);
-  Com_MatchToken(ppcVar4,"(",0);
-  if (0 < (int)lVar9) {
+  lVar7 = (longlong)param_2;
+  Com_MatchToken(param_1,"(",0);
+  if (0 < param_2) {
     do {
-      Com_Parse2DMatrix(ppcVar4,param_3,param_4,(float *)lVar8);
-      lVar9 = lVar9 + -1;
-      lVar8 = ((longlong)param_3 * (longlong)param_4 & 0x3fffffffU) * 4 + lVar8;
-    } while (lVar9 != 0);
+      Com_Parse2DMatrix(param_1,param_3,param_4,param_5);
+      lVar7 = lVar7 + -1;
+      param_5 = param_5 + param_3 * param_4;
+    } while (lVar7 != 0);
   }
-  pPVar5 = Com_GetParseThreadInfo();
-  iVar3 = pPVar5->parseInfoNum;
-  if (pPVar5->parseInfo[iVar3].ungetToken != false) {
-    pcVar6 = pPVar5->parseInfo[iVar3].backup_text;
-    pPVar5->parseInfo[iVar3].ungetToken = false;
-    *ppcVar4 = pcVar6;
-    pPVar5->parseInfo[iVar3].lines = pPVar5->parseInfo[iVar3].backup_lines;
+  pPVar4 = Com_GetParseThreadInfo();
+  iVar3 = pPVar4->parseInfoNum;
+  if (pPVar4->parseInfo[iVar3].ungetToken != false) {
+    pcVar5 = pPVar4->parseInfo[iVar3].backup_text;
+    pPVar4->parseInfo[iVar3].ungetToken = false;
+    *param_1 = pcVar5;
+    pPVar4->parseInfo[iVar3].lines = pPVar4->parseInfo[iVar3].backup_lines;
   }
-  pcVar6 = Com_ParseExt(ppcVar4,1);
-  pcVar7 = ")";
+  pcVar5 = Com_ParseExt(param_1,1);
+  pcVar6 = ")";
   do {
-    cVar1 = *pcVar6;
-    cVar2 = *pcVar7;
+    cVar1 = *pcVar5;
+    cVar2 = *pcVar6;
     if (cVar1 == '\0') break;
+    pcVar5 = pcVar5 + 1;
     pcVar6 = pcVar6 + 1;
-    pcVar7 = pcVar7 + 1;
   } while (cVar1 == cVar2);
   if (cVar1 != cVar2) {
     Com_ScriptErrorDrop("MatchToken: got \'%s\', expected \'%s\'\n");
   }
-  __restgprlr_26();
   return;
 }
 

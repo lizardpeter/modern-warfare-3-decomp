@@ -60,135 +60,129 @@ void __thiscall dxBox::computeAABB(dxBox *this)
 
 // 82685728  ODE_BoxInit  (physics/ode/src/collision_std.cpp:83)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void ODE_BoxInit(dxGeom *param_1,dxSpace *param_2,dxBody *param_3,float param_4,float param_5,
                 float param_6)
 
 {
-  dxSpace *pdVar1;
-  dxBox *this;
-  ulonglong uVar2;
-  ulonglong uVar3;
-  double extraout_f1;
+  double dVar1;
+  double dVar2;
+  double dVar3;
   double dVar4;
-  double dVar5;
-  double dVar6;
-  double dVar7;
   
-  dVar4 = (double)param_5;
-  dVar5 = (double)param_6;
-  uVar3 = (ulonglong)(int)param_3;
-  uVar2 = (ulonglong)(int)param_2;
-  __savegprlr_27((double)param_4,param_1);
-  this = (dxBox *)__savefpr_28();
-  dVar6 = extraout_f1;
-  if (this == (dxBox *)0x0) {
+  dVar1 = (double)param_4;
+  dVar2 = (double)param_5;
+  dVar3 = (double)param_6;
+  if (param_1 == (dxGeom *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\collision_std.cpp"
                     ,0x54,0,"%s");
   }
-  if ((uVar3 & 0xffffffff) == 0) {
+  if (param_3 == (dxBody *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\collision_std.cpp"
                     ,0x55,0,"%s");
   }
-  dVar7 = 0.0;
-  if (dVar6 <= 0.0) {
+  dVar4 = 0.0;
+  if (dVar1 <= 0.0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\collision_std.cpp"
                     ,0x56,0,"%s\n\t(lx) = %g");
   }
-  if (dVar4 <= dVar7) {
+  if (dVar2 <= dVar4) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\collision_std.cpp"
                     ,0x57,0,"%s\n\t(ly) = %g");
   }
-  if (dVar5 <= dVar7) {
+  if (dVar3 <= dVar4) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\collision_std.cpp"
                     ,0x58,0,"%s\n\t(lz) = %g");
   }
   Sys_EnterCriticalSection(CRITSECT_PHYSICS);
-  if ((uVar2 & 0xffffffff) == 0) {
+  if (param_2 == (dxSpace *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\collision_std.cpp"
                     ,0x5f,0,"%s");
   }
-  pdVar1 = (dxSpace *)uVar2;
-  if (pdVar1->hasUpdateLock != 0) {
+  if (param_2->hasUpdateLock != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\collision_std.cpp"
                     ,0x60,0,"%s");
   }
-  pdVar1->hasUpdateLock = 1;
-  if (this != (dxBox *)0x0) {
-    dxBox::dxBox(this,pdVar1,(dxBody *)uVar3,(float)dVar6,(float)dVar4,(float)dVar5);
+  param_2->hasUpdateLock = 1;
+  if (param_1 != (dxGeom *)0x0) {
+    dxBox::dxBox((dxBox *)param_1,param_2,param_3,(float)dVar1,(float)dVar2,(float)dVar3);
   }
-  if (pdVar1->hasUpdateLock == 0) {
+  if (param_2->hasUpdateLock == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\collision_std.cpp"
                     ,0x67,0,"%s");
   }
-  pdVar1->hasUpdateLock = 0;
+  param_2->hasUpdateLock = 0;
   Sys_LeaveCriticalSection(CRITSECT_PHYSICS);
-  __restfpr_28();
-  __restgprlr_27();
   return;
 }
 
 
 // 82685918  dGeomBoxSetLengths  (physics/ode/src/collision_std.cpp:114)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void dGeomBoxSetLengths(dxGeom *param_1,float param_2,float param_3,float param_4)
 
 {
-  dxGeom *pdVar1;
-  double extraout_f1;
+  double dVar1;
   double dVar2;
   double dVar3;
-  double dVar4;
   
   dVar3 = (double)param_4;
   dVar2 = (double)param_3;
-  pdVar1 = (dxGeom *)__savegprlr_29((double)param_2,param_1);
-  dVar4 = extraout_f1;
-  if (pdVar1 == (dxGeom *)0x0) {
+  dVar1 = (double)param_2;
+  if (param_1 == (dxGeom *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\collision_std.cpp"
                     ,0x73,0,"%s");
   }
-  if (pdVar1->type != 0) {
+  if (param_1->type != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\collision_std.cpp"
                     ,0x74,0,"%s");
   }
-  if (((dVar4 <= 0.0) || (dVar2 <= 0.0)) || (dVar3 <= 0.0)) {
+  if (((dVar1 <= 0.0) || (dVar2 <= 0.0)) || (dVar3 <= 0.0)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\collision_std.cpp"
                     ,0x75,0,"%s");
   }
-  *(float *)&pdVar1->field_0x4c = (float)dVar4;
-  pdVar1[1]._padding_ = (int)(float)dVar2;
-  pdVar1[1].type = (int)(float)dVar3;
-  dGeomMoved(pdVar1);
-  __restgprlr_29();
+  *(float *)&param_1->field_0x4c = (float)dVar1;
+  param_1[1]._padding_ = (int)(float)dVar2;
+  param_1[1].type = (int)(float)dVar3;
+  dGeomMoved(param_1);
   return;
 }
 
 
 // 82685A00  dGeomBoxGetLengths  (physics/ode/src/collision_std.cpp:127)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void dGeomBoxGetLengths(dxGeom *param_1,float *param_2)
 
 {
-  int iVar1;
-  
-  iVar1 = __savegprlr_28(param_1);
-  if (iVar1 == 0) {
+  if (param_1 == (dxGeom *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\collision_std.cpp"
                     ,0x80,0,"%s");
   }
-  if (*(int *)(iVar1 + 4) != 0) {
+  if (param_1->type != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\collision_std.cpp"
                     ,0x81,0,"%s");
   }
-  *param_2 = *(float *)(iVar1 + 0x4c);
-  param_2[1] = *(float *)(iVar1 + 0x50);
-  param_2[2] = *(float *)(iVar1 + 0x54);
-  __restgprlr_28();
+  *param_2 = *(float *)&param_1->field_0x4c;
+  param_2[1] = (float)param_1[1]._padding_;
+  param_2[2] = (float)param_1[1].type;
   return;
 }
 
 
 // 82686198  dGeomBoxPointDepth  (physics/ode/src/collision_std.cpp:138)
+
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 
 float dGeomBoxPointDepth(dxGeom *param_1,float param_2,float param_3,float param_4)
 
@@ -198,50 +192,50 @@ float dGeomBoxPointDepth(dxGeom *param_1,float param_2,float param_3,float param
   float fVar3;
   float *pfVar4;
   float *pfVar5;
-  int iVar6;
-  double extraout_f1;
-  double dVar7;
+  float fVar6;
+  float fVar7;
   double dVar8;
   double dVar9;
+  double dVar10;
   
-  dVar8 = (double)param_3;
-  dVar9 = (double)param_4;
-  iVar6 = __savegprlr_29((double)param_2,param_1);
-  dVar7 = extraout_f1;
-  if (iVar6 == 0) {
+  dVar8 = (double)param_2;
+  dVar9 = (double)param_3;
+  dVar10 = (double)param_4;
+  if (param_1 == (dxGeom *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\collision_std.cpp"
                     ,0x8b,0,"%s");
   }
-  if (*(int *)(iVar6 + 4) != 0) {
+  if (param_1->type != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\collision_std.cpp"
                     ,0x8c,0,"%s");
   }
-  pfVar4 = *(float **)(iVar6 + 0x18);
-  pfVar5 = *(float **)(iVar6 + 0x1c);
-  fVar1 = (float)(dVar8 - (double)pfVar4[1]);
-  fVar2 = (float)(dVar9 - (double)pfVar4[2]);
-  fVar3 = (float)(dVar7 - (double)*pfVar4);
-  dVar9 = (double)(*(float *)(iVar6 + 0x4c) * 0.5 -
-                  ABS(*pfVar5 * fVar3 + pfVar5[8] * fVar2 + pfVar5[4] * fVar1));
-  dVar8 = (double)(*(float *)(iVar6 + 0x50) * 0.5 -
-                  ABS(pfVar5[1] * fVar3 + pfVar5[9] * fVar2 + pfVar5[5] * fVar1));
-  dVar7 = (double)(*(float *)(iVar6 + 0x54) * 0.5 -
-                  ABS(pfVar5[2] * fVar3 + pfVar5[10] * fVar2 + pfVar5[6] * fVar1));
-  if (dVar8 <= dVar9) {
-    if (dVar8 < dVar7) {
-      dVar7 = dVar8;
+  pfVar4 = param_1->pos;
+  pfVar5 = param_1->R;
+  fVar1 = (float)(dVar9 - (double)pfVar4[1]);
+  fVar2 = (float)(dVar10 - (double)pfVar4[2]);
+  fVar3 = (float)(dVar8 - (double)*pfVar4);
+  fVar6 = *(float *)&param_1->field_0x4c * 0.5 -
+          ABS(*pfVar5 * fVar3 + pfVar5[8] * fVar2 + pfVar5[4] * fVar1);
+  fVar7 = (float)param_1[1]._padding_ * 0.5 -
+          ABS(pfVar5[1] * fVar3 + pfVar5[9] * fVar2 + pfVar5[5] * fVar1);
+  fVar1 = (float)param_1[1].type * 0.5 -
+          ABS(pfVar5[2] * fVar3 + pfVar5[10] * fVar2 + pfVar5[6] * fVar1);
+  if (fVar7 <= fVar6) {
+    if (fVar7 < fVar1) {
+      fVar1 = fVar7;
     }
   }
-  else if (dVar9 < dVar7) {
-    dVar7 = (double)__restgprlr_29(dVar9);
-    return (float)dVar7;
+  else if (fVar6 < fVar1) {
+    return fVar6;
   }
-  dVar7 = (double)__restgprlr_29(dVar7);
-  return (float)dVar7;
+  return fVar1;
 }
 
 
 // 82685A90  intersectRectQuad  (physics/ode/src/collision_std.cpp:171)
+
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 
 int intersectRectQuad(float *param_1,float *param_2,float *param_3)
 
@@ -249,86 +243,83 @@ int intersectRectQuad(float *param_1,float *param_2,float *param_3)
   float fVar1;
   float fVar2;
   float fVar3;
-  undefined4 *puVar4;
-  int iVar5;
+  float *pfVar4;
+  float *pfVar5;
   ulonglong uVar6;
-  undefined4 *puVar7;
-  ulonglong uVar8;
-  undefined4 *puVar9;
-  ulonglong uVar10;
+  float *pfVar7;
+  int iVar8;
+  int iVar9;
+  float *pfVar10;
   ulonglong uVar11;
-  ulonglong uVar12;
-  int iVar13;
-  int iVar14;
-  ulonglong uVar15;
+  float afStack_70 [28];
   
-  uVar8 = (ulonglong)(int)param_3;
-  uVar6 = (ulonglong)(int)param_2;
-  iVar5 = __savegprlr_28(param_1);
-  uVar10 = 4;
-  iVar13 = 0;
-  uVar12 = uVar8;
+  uVar6 = 4;
+  iVar8 = 0;
+  pfVar10 = param_3;
   do {
-    iVar14 = -1;
-    uVar11 = uVar6;
+    iVar9 = -1;
+    pfVar4 = param_2;
     do {
-      uVar6 = uVar12;
-      puVar7 = (undefined4 *)uVar11;
-      uVar15 = 0;
-      if (0 < (int)uVar10) {
-        fVar3 = (float)(longlong)iVar14;
-        uVar12 = uVar6;
+      param_2 = pfVar10;
+      uVar11 = 0;
+      if (0 < (int)uVar6) {
+        fVar3 = (float)(longlong)iVar9;
+        pfVar10 = param_2;
+        pfVar7 = pfVar4;
         do {
-          puVar4 = (undefined4 *)uVar11;
-          if (*(float *)(iVar13 + (int)puVar4) * fVar3 < *(float *)(iVar13 + iVar5)) {
-            uVar15 = uVar15 + 1;
-            *(undefined4 *)uVar12 = *puVar4;
-            ((undefined4 *)uVar12)[1] = puVar4[1];
-            uVar12 = uVar12 + 8;
-            if ((uVar15 & 8) != 0) goto LAB_82685bf8;
+          if (*(float *)(iVar8 + (int)pfVar7) * fVar3 < *(float *)(iVar8 + (int)param_1)) {
+            uVar11 = uVar11 + 1;
+            *pfVar10 = *pfVar7;
+            pfVar10[1] = pfVar7[1];
+            pfVar10 = pfVar10 + 2;
+            if ((uVar11 & 8) != 0) goto LAB_82685bf8;
           }
-          puVar9 = puVar4 + 2;
-          if ((int)uVar10 < 2) {
-            puVar9 = puVar7;
+          pfVar5 = pfVar7 + 2;
+          if ((int)uVar6 < 2) {
+            pfVar5 = pfVar4;
           }
-          fVar2 = *(float *)(iVar13 + (int)puVar4);
-          if (*(float *)(iVar13 + (int)puVar9) * fVar3 < *(float *)(iVar13 + iVar5) !=
-              fVar2 * fVar3 < *(float *)(iVar13 + iVar5)) {
-            uVar15 = uVar15 + 1;
-            fVar1 = *(float *)((int)puVar4 + (4 - iVar13));
-            *(float *)(((int)uVar12 - iVar13) + 4) =
-                 ((*(float *)((int)puVar9 + (4 - iVar13)) - fVar1) /
-                 (*(float *)(iVar13 + (int)puVar9) - fVar2)) *
-                 (*(float *)(iVar13 + iVar5) * fVar3 - fVar2) + fVar1;
-            *(float *)(iVar13 + (int)uVar12) = *(float *)(iVar13 + iVar5) * fVar3;
-            uVar12 = uVar12 + 8;
-            if ((uVar15 & 8) != 0) goto LAB_82685bf8;
+          fVar2 = *(float *)(iVar8 + (int)pfVar7);
+          if (*(float *)(iVar8 + (int)pfVar5) * fVar3 < *(float *)(iVar8 + (int)param_1) !=
+              fVar2 * fVar3 < *(float *)(iVar8 + (int)param_1)) {
+            uVar11 = uVar11 + 1;
+            fVar1 = *(float *)((int)pfVar7 + (4 - iVar8));
+            *(float *)((int)pfVar10 + (4 - iVar8)) =
+                 ((*(float *)((int)pfVar5 + (4 - iVar8)) - fVar1) /
+                 (*(float *)(iVar8 + (int)pfVar5) - fVar2)) *
+                 (*(float *)(iVar8 + (int)param_1) * fVar3 - fVar2) + fVar1;
+            *(float *)(iVar8 + (int)pfVar10) = *(float *)(iVar8 + (int)param_1) * fVar3;
+            pfVar10 = pfVar10 + 2;
+            if ((uVar11 & 8) != 0) goto LAB_82685bf8;
           }
-          uVar10 = uVar10 - 1;
-          uVar11 = uVar11 + 8;
-        } while (0 < (longlong)uVar10);
+          uVar6 = uVar6 - 1;
+          pfVar7 = pfVar7 + 2;
+        } while (0 < (longlong)uVar6);
       }
-      uVar10 = uVar15;
-      uVar12 = ZEXT48(&stack0x00000000) - 0x70;
-      if ((uVar6 & 0xffffffff) != (uVar8 & 0xffffffff)) {
-        uVar12 = uVar8;
+      uVar6 = uVar11;
+      pfVar10 = afStack_70;
+      if (param_2 != param_3) {
+        pfVar10 = param_3;
       }
-      iVar14 = iVar14 + 2;
-      uVar11 = uVar6;
-    } while (iVar14 < 2);
-    iVar13 = iVar13 + 4;
-    uVar15 = uVar10;
-  } while (iVar13 < 5);
+      iVar9 = iVar9 + 2;
+      pfVar4 = param_2;
+    } while (iVar9 < 2);
+    iVar8 = iVar8 + 4;
+    uVar11 = uVar6;
+  } while (iVar8 < 5);
 LAB_82685bf8:
-  if ((uVar6 & 0xffffffff) != (uVar8 & 0xffffffff)) {
+  if (param_2 != param_3) {
     memcpy();
   }
-  iVar5 = __restgprlr_28(uVar15);
-  return iVar5;
+  return (int)uVar11;
 }
 
 
 // 82685C18  cullPoints  (physics/ode/src/collision_std.cpp:240)
+
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 
 void cullPoints(int param_1,float *param_2,int param_3,int param_4,int *param_5)
 
@@ -344,47 +335,35 @@ void cullPoints(int param_1,float *param_2,int param_3,int param_4,int *param_5)
   float fVar9;
   float fVar10;
   float fVar11;
-  float *pfVar12;
-  float fVar13;
-  ulonglong uVar14;
-  ulonglong uVar15;
+  float fVar12;
+  float *pfVar13;
+  float *pfVar14;
+  float *pfVar15;
   int iVar16;
   int iVar17;
-  longlong lVar18;
+  int iVar18;
+  undefined4 *puVar19;
   int iVar20;
-  int iVar21;
-  longlong lVar19;
-  undefined4 *puVar23;
-  ulonglong uVar22;
-  int iVar24;
-  float *pfVar25;
-  ulonglong uVar26;
-  longlong lVar27;
-  double dVar28;
-  double dVar29;
-  double dVar30;
+  float *pfVar21;
+  float *pfVar22;
+  double dVar23;
+  double dVar24;
+  double dVar25;
   undefined4 uStack_b4;
   int local_b0 [7];
   float fStack_94;
   float local_90 [36];
   
-  lVar18 = (longlong)(int)param_5;
-  uVar22 = (ulonglong)param_4;
-  lVar27 = (longlong)(int)param_2;
-  __savegprlr_24(param_1);
-  uVar15 = __savefpr_27();
-  iVar16 = (int)uVar15;
-  pfVar25 = (float *)lVar27;
-  if (iVar16 == 1) {
-    dVar30 = (double)*pfVar25;
-    dVar29 = (double)pfVar25[1];
+  if (param_1 == 1) {
+    dVar25 = (double)*param_2;
+    dVar24 = (double)param_2[1];
   }
-  else if (iVar16 == 2) {
-    dVar30 = (double)((pfVar25[2] + *pfVar25) * 0.5);
-    dVar29 = (double)((pfVar25[3] + pfVar25[1]) * 0.5);
+  else if (param_1 == 2) {
+    dVar25 = (double)((param_2[2] + *param_2) * 0.5);
+    dVar24 = (double)((param_2[3] + param_2[1]) * 0.5);
   }
   else {
-    iVar20 = 0;
+    iVar16 = 0;
     fVar4 = 0.0;
     fVar5 = fVar4;
     fVar6 = fVar4;
@@ -392,158 +371,157 @@ void cullPoints(int param_1,float *param_2,int param_3,int param_4,int *param_5)
     fVar9 = fVar4;
     fVar10 = fVar4;
     fVar8 = fVar4;
-    if (1 < iVar16 + -1) {
-      lVar19 = lVar27 + 8;
+    if (1 < param_1 + -1) {
+      pfVar22 = param_2 + 2;
       do {
-        pfVar12 = (float *)lVar19;
-        fVar1 = pfVar12[1];
-        iVar20 = iVar20 + 2;
-        lVar19 = lVar19 + 0x10;
-        fVar2 = pfVar12[-2] * fVar1 - pfVar12[-1] * *pfVar12;
-        fVar11 = pfVar12[3] * *pfVar12 - fVar1 * pfVar12[2];
-        fVar5 = fVar5 + fVar2;
-        fVar10 = (pfVar12[-2] + *pfVar12) * fVar2 + fVar10;
-        fVar6 = (pfVar12[-1] + fVar1) * fVar2 + fVar6;
+        fVar1 = pfVar22[1];
+        iVar16 = iVar16 + 2;
+        fVar2 = *pfVar22;
+        pfVar21 = pfVar22 + -1;
+        pfVar13 = pfVar22 + 2;
+        pfVar14 = pfVar22 + -2;
+        pfVar15 = pfVar22 + 3;
+        fVar3 = *pfVar22;
+        pfVar22 = pfVar22 + 4;
+        fVar12 = *pfVar14 * fVar1 - *pfVar21 * fVar2;
+        fVar11 = *pfVar15 * fVar3 - fVar1 * *pfVar13;
+        fVar5 = fVar5 + fVar12;
+        fVar10 = (*pfVar14 + fVar2) * fVar12 + fVar10;
+        fVar6 = (*pfVar21 + fVar1) * fVar12 + fVar6;
         fVar8 = fVar8 + fVar11;
-        fVar9 = (pfVar12[2] + *pfVar12) * fVar11 + fVar9;
-        fVar7 = (fVar1 + pfVar12[3]) * fVar11 + fVar7;
-      } while (iVar20 < iVar16 + -2);
+        fVar9 = (*pfVar13 + fVar3) * fVar11 + fVar9;
+        fVar7 = (fVar1 + *pfVar15) * fVar11 + fVar7;
+      } while (iVar16 < param_1 + -2);
     }
     fVar1 = fVar4;
-    fVar11 = fVar4;
-    if (iVar20 < iVar16 + -1) {
-      pfVar12 = pfVar25 + iVar20 * 2;
-      fVar11 = *pfVar12 * pfVar12[3] - pfVar12[1] * pfVar12[2];
-      fVar1 = (pfVar12[2] + *pfVar12) * fVar11;
-      fVar4 = (pfVar12[1] + pfVar12[3]) * fVar11;
+    fVar2 = fVar4;
+    if (iVar16 < param_1 + -1) {
+      pfVar22 = param_2 + iVar16 * 2;
+      fVar2 = *pfVar22 * pfVar22[3] - pfVar22[1] * pfVar22[2];
+      fVar1 = (pfVar22[2] + *pfVar22) * fVar2;
+      fVar4 = (pfVar22[1] + pfVar22[3]) * fVar2;
     }
-    iVar20 = (int)((uVar15 & 0xffffffff) << 3);
-    fVar2 = *(float *)((int)pfVar25 + iVar20 + -4);
-    fVar3 = *(float *)((int)pfVar25 + iVar20 + -8);
-    fVar13 = pfVar25[1] * fVar3 - fVar2 * *pfVar25;
-    fVar5 = 1.0 / ((fVar8 + fVar5 + fVar11 + fVar13) * 3.0);
-    dVar30 = (double)(((fVar3 + *pfVar25) * fVar13 + fVar9 + fVar10 + fVar1) * fVar5);
-    dVar29 = (double)(((fVar2 + pfVar25[1]) * fVar13 + fVar7 + fVar6 + fVar4) * fVar5);
+    fVar3 = param_2[1] * param_2[param_1 * 2 + -2] - param_2[param_1 * 2 + -1] * *param_2;
+    fVar5 = 1.0 / ((fVar8 + fVar5 + fVar2 + fVar3) * 3.0);
+    dVar25 = (double)(((param_2[param_1 * 2 + -2] + *param_2) * fVar3 + fVar9 + fVar10 + fVar1) *
+                     fVar5);
+    dVar24 = (double)(((param_2[param_1 * 2 + -1] + param_2[1]) * fVar3 + fVar7 + fVar6 + fVar4) *
+                     fVar5);
   }
-  if (0 < iVar16) {
-    lVar27 = lVar27 + -4;
-    pfVar25 = &fStack_94;
-    uVar26 = uVar15;
+  if (0 < param_1) {
+    pfVar22 = param_2 + -1;
+    pfVar21 = &fStack_94;
+    iVar16 = param_1;
     do {
-      iVar20 = (int)lVar27;
-      lVar27 = lVar27 + 8;
-      dVar28 = atan2((double)(float)((double)*(float *)lVar27 - dVar29),
-                     (double)(float)((double)*(float *)(iVar20 + 4) - dVar30));
-      pfVar25 = pfVar25 + 1;
-      *pfVar25 = (float)dVar28;
-      uVar26 = uVar26 - 1;
-    } while (uVar26 != 0);
-    if (0 < iVar16) {
-      puVar23 = &uStack_b4;
-      uVar26 = uVar15;
-      uVar14 = uVar15 & 0xffffffff;
-      while (uVar14 != 0) {
-        puVar23 = puVar23 + 1;
-        *puVar23 = 1;
-        uVar26 = uVar26 - 1;
-        uVar14 = uVar26;
+      pfVar13 = pfVar22 + 1;
+      pfVar22 = pfVar22 + 2;
+      dVar23 = atan2((double)(float)((double)*pfVar22 - dVar24),
+                     (double)(float)((double)*pfVar13 - dVar25));
+      pfVar21 = pfVar21 + 1;
+      *pfVar21 = (float)dVar23;
+      iVar16 = iVar16 + -1;
+    } while (iVar16 != 0);
+    if (0 < param_1) {
+      puVar19 = &uStack_b4;
+      for (iVar16 = param_1; iVar16 != 0; iVar16 = iVar16 + -1) {
+        puVar19 = puVar19 + 1;
+        *puVar19 = 1;
       }
     }
   }
-  iVar20 = (int)((uVar22 & 0xffffffff) << 2);
-  *(undefined4 *)lVar18 = (int)uVar22;
-  iVar17 = 1;
-  *(undefined4 *)((int)local_b0 + iVar20) = 0;
+  *param_5 = param_4;
+  iVar16 = 1;
+  local_b0[param_4] = 0;
   if (1 < param_3) {
-    fVar4 = *(float *)((int)local_90 + iVar20);
+    fVar4 = local_90[param_4];
     do {
-      fVar5 = (float)(longlong)iVar17 * (6.2831855 / (float)(longlong)param_3) + fVar4;
+      fVar5 = (float)(longlong)iVar16 * (6.2831855 / (float)(longlong)param_3) + fVar4;
       if (3.1415927 < fVar5) {
         fVar5 = fVar5 - 6.2831855;
       }
-      uVar22 = 0;
-      iVar20 = (int)lVar18;
+      iVar20 = 0;
       fVar6 = 1e+09;
-      if (3 < iVar16) {
-        iVar21 = 0;
+      if (3 < param_1) {
+        iVar17 = 0;
         do {
-          iVar24 = (int)uVar22;
-          if (*(int *)((int)local_b0 + iVar21) != 0) {
-            fVar7 = ABS(*(float *)((int)local_90 + iVar21) - fVar5);
+          if (*(int *)((int)local_b0 + iVar17) != 0) {
+            fVar7 = ABS(*(float *)((int)local_90 + iVar17) - fVar5);
             if (3.1415927 < fVar7) {
               fVar7 = 6.2831855 - fVar7;
             }
             if (fVar7 < fVar6) {
-              *(int *)(iVar20 + 4) = iVar24;
+              param_5[1] = iVar20;
               fVar6 = fVar7;
             }
           }
-          if (*(int *)((int)local_b0 + iVar21 + 4) != 0) {
-            fVar7 = ABS(*(float *)((int)local_90 + iVar21 + 4) - fVar5);
+          if (*(int *)((int)local_b0 + iVar17 + 4) != 0) {
+            fVar7 = ABS(*(float *)((int)local_90 + iVar17 + 4) - fVar5);
             if (3.1415927 < fVar7) {
               fVar7 = 6.2831855 - fVar7;
             }
             if (fVar7 < fVar6) {
-              *(int *)(iVar20 + 4) = iVar24 + 1;
+              param_5[1] = iVar20 + 1;
               fVar6 = fVar7;
             }
           }
-          if (*(int *)((int)local_b0 + iVar21 + 8) != 0) {
-            fVar7 = ABS(*(float *)((int)local_90 + iVar21 + 8) - fVar5);
+          if (*(int *)((int)local_b0 + iVar17 + 8) != 0) {
+            fVar7 = ABS(*(float *)((int)local_90 + iVar17 + 8) - fVar5);
             if (3.1415927 < fVar7) {
               fVar7 = 6.2831855 - fVar7;
             }
             if (fVar7 < fVar6) {
-              *(int *)(iVar20 + 4) = iVar24 + 2;
+              param_5[1] = iVar20 + 2;
               fVar6 = fVar7;
             }
           }
-          if (*(int *)((int)local_b0 + iVar21 + 0xc) != 0) {
-            fVar7 = ABS(*(float *)((int)local_90 + iVar21 + 0xc) - fVar5);
+          if (*(int *)((int)local_b0 + iVar17 + 0xc) != 0) {
+            fVar7 = ABS(*(float *)((int)local_90 + iVar17 + 0xc) - fVar5);
             if (3.1415927 < fVar7) {
               fVar7 = 6.2831855 - fVar7;
             }
             if (fVar7 < fVar6) {
-              *(int *)(iVar20 + 4) = iVar24 + 3;
+              param_5[1] = iVar20 + 3;
               fVar6 = fVar7;
             }
           }
-          uVar22 = uVar22 + 4;
-          iVar21 = iVar21 + 0x10;
-        } while ((int)uVar22 < iVar16 + -3);
+          iVar20 = iVar20 + 4;
+          iVar17 = iVar17 + 0x10;
+        } while (iVar20 < param_1 + -3);
       }
-      if ((int)uVar22 < iVar16) {
-        lVar27 = uVar15 - uVar22;
-        lVar19 = (uVar22 & 0x3fffffff) << 2;
+      if (iVar20 < param_1) {
+        iVar17 = param_1 - iVar20;
+        iVar18 = iVar20 << 2;
         do {
-          if (*(int *)((int)local_b0 + (int)lVar19) != 0) {
-            fVar7 = ABS(*(float *)((int)local_90 + (int)lVar19) - fVar5);
+          if (*(int *)((int)local_b0 + iVar18) != 0) {
+            fVar7 = ABS(*(float *)((int)local_90 + iVar18) - fVar5);
             if (3.1415927 < fVar7) {
               fVar7 = 6.2831855 - fVar7;
             }
             if (fVar7 < fVar6) {
-              *(int *)(iVar20 + 4) = (int)uVar22;
+              param_5[1] = iVar20;
               fVar6 = fVar7;
             }
           }
-          uVar22 = uVar22 + 1;
-          lVar19 = lVar19 + 4;
-          lVar27 = lVar27 + -1;
-        } while (lVar27 != 0);
+          iVar20 = iVar20 + 1;
+          iVar18 = iVar18 + 4;
+          iVar17 = iVar17 + -1;
+        } while (iVar17 != 0);
       }
-      lVar18 = lVar18 + 4;
-      iVar17 = iVar17 + 1;
-      local_b0[*(int *)lVar18] = 0;
-    } while (iVar17 < param_3);
+      param_5 = param_5 + 1;
+      iVar16 = iVar16 + 1;
+      local_b0[*param_5] = 0;
+    } while (iVar16 < param_3);
   }
-  __restfpr_27();
-  __restgprlr_24();
   return;
 }
 
 
 // 826862F8  ODE_CollideBoxBox  (physics/ode/src/collision_std.cpp:317)
 
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
 /* WARNING: Restarted to delay deadcode elimination for space: stack */
 
 int ODE_CollideBoxBox(float *param_1,float *param_2,float *param_3,float *param_4,float *param_5,
@@ -579,24 +557,24 @@ int ODE_CollideBoxBox(float *param_1,float *param_2,float *param_3,float *param_
   float fVar26;
   float fVar27;
   float fVar28;
-  int iVar29;
-  float *pfVar30;
+  float fVar29;
+  int iVar30;
   int iVar31;
   ulonglong uVar32;
-  ulonglong uVar33;
-  int iVar34;
-  float *pfVar35;
-  int iVar36;
-  ulonglong uVar37;
-  uint uVar38;
-  ulonglong uVar39;
+  float *pfVar33;
+  float *pfVar34;
+  int iVar35;
+  float *pfVar36;
+  int iVar37;
+  ulonglong uVar38;
+  uint uVar39;
   float *pfVar40;
   float *pfVar41;
-  float *pfVar42;
-  float *pfVar43;
-  bool bVar44;
-  bool bVar45;
-  longlong lVar46;
+  bool bVar42;
+  bool bVar43;
+  longlong lVar44;
+  double dVar45;
+  double dVar46;
   double dVar47;
   double dVar48;
   double dVar49;
@@ -613,8 +591,6 @@ int ODE_CollideBoxBox(float *param_1,float *param_2,float *param_3,float *param_
   double dVar60;
   double dVar61;
   double dVar62;
-  double dVar63;
-  double dVar64;
   uint *in_stack_00000054;
   int in_stack_0000005c;
   float *in_stack_00000064;
@@ -647,12 +623,6 @@ int ODE_CollideBoxBox(float *param_1,float *param_2,float *param_3,float *param_
   float local_170;
   float local_16c [91];
   
-  uVar32 = (ulonglong)(int)param_5;
-  uVar33 = (ulonglong)(int)param_2;
-  __savegprlr();
-  __savefpr();
-  pfVar43 = (float *)uVar32;
-  pfVar30 = (float *)uVar33;
   if (((((uint)*param_1 & 0x7f800000) == 0x7f800000) ||
       (((uint)param_1[1] & 0x7f800000) == 0x7f800000)) ||
      (((uint)param_1[2] & 0x7f800000) == 0x7f800000)) {
@@ -677,119 +647,136 @@ int ODE_CollideBoxBox(float *param_1,float *param_2,float *param_3,float *param_
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\collision_std.cpp"
                     ,0x148,0,"%s");
   }
+  pfVar40 = param_2 + 1;
+  pfVar33 = param_2 + 2;
   fVar23 = param_4[1] - param_1[1];
-  fVar1 = pfVar30[4];
-  fVar2 = pfVar43[5];
-  fVar3 = pfVar43[4];
-  fVar4 = pfVar43[6];
+  fVar1 = param_2[4];
+  fVar2 = param_5[5];
+  pfVar34 = param_5 + 1;
+  fVar3 = param_5[4];
+  pfVar41 = param_5 + 2;
+  fVar4 = param_5[6];
   fVar24 = *param_4 - *param_1;
-  fVar5 = pfVar30[9];
-  fVar6 = pfVar43[8];
-  fVar7 = *pfVar30;
-  fVar8 = pfVar43[9];
-  fVar9 = pfVar43[1];
-  fVar10 = pfVar43[10];
-  fVar11 = *pfVar43;
-  fVar12 = pfVar30[10];
-  fVar13 = pfVar43[2];
-  fVar26 = param_4[2] - param_1[2];
-  fVar14 = pfVar30[5];
-  fVar15 = pfVar30[6];
-  fVar16 = pfVar30[1];
-  fVar17 = pfVar30[8];
-  local_254 = fVar2 * fVar14 + fVar8 * fVar5;
+  fVar5 = param_2[9];
+  fVar6 = param_5[8];
+  fVar7 = *param_2;
+  fVar8 = param_5[9];
+  fVar9 = param_5[1];
+  fVar10 = param_5[10];
+  fVar11 = *param_5;
+  fVar12 = param_2[10];
+  fVar13 = param_5[2];
+  fVar27 = param_4[2] - param_1[2];
+  fVar14 = param_2[5];
+  fVar15 = param_2[6];
+  fVar16 = param_2[1];
+  fVar17 = param_2[8];
   local_260 = fVar6 * fVar17 + fVar11 * fVar7 + fVar3 * fVar1;
   fVar18 = param_6[1];
   local_200 = fVar10 * fVar17 + fVar13 * fVar7 + fVar4 * fVar1;
   fVar19 = *param_6;
-  fVar25 = fVar17 * fVar26 + fVar7 * fVar24 + fVar1 * fVar23;
+  fVar26 = fVar17 * fVar27 + fVar7 * fVar24 + fVar1 * fVar23;
   fVar20 = *param_3;
-  local_268 = fVar8 * fVar17 + fVar9 * fVar7 + fVar2 * fVar1;
-  fVar1 = pfVar30[2];
-  fVar17 = fVar16 * fVar9 + local_254;
+  fVar25 = fVar8 * fVar17 + fVar9 * fVar7 + fVar2 * fVar1;
+  fVar1 = param_2[2];
+  fVar17 = fVar16 * fVar9 + fVar2 * fVar14 + fVar8 * fVar5;
   fVar7 = fVar16 * fVar11 + fVar3 * fVar14 + fVar6 * fVar5;
-  local_1ec = fVar5 * fVar26 + fVar16 * fVar24 + fVar14 * fVar23;
+  local_1ec = fVar5 * fVar27 + fVar16 * fVar24 + fVar14 * fVar23;
   local_250 = fVar16 * fVar13 + fVar4 * fVar14 + fVar10 * fVar5;
-  fVar16 = ABS(local_268);
-  fVar14 = fVar12 * fVar26 + fVar1 * fVar24 + fVar15 * fVar23;
+  fVar16 = ABS(fVar25);
+  fVar14 = fVar12 * fVar27 + fVar1 * fVar24 + fVar15 * fVar23;
   fVar6 = fVar1 * fVar11 + fVar15 * fVar3 + fVar12 * fVar6;
   fVar5 = fVar1 * fVar9 + fVar2 * fVar15 + fVar8 * fVar12;
   fVar3 = fVar1 * fVar13 + fVar4 * fVar15 + fVar10 * fVar12;
   fVar1 = param_6[2];
   fVar15 = ABS(fVar17);
-  fVar28 = ABS(local_260);
-  dVar64 = 0.0;
+  fVar29 = ABS(local_260);
+  dVar62 = 0.0;
   local_240[0] = 0.0;
   local_240[1] = 0.0;
   fVar12 = ABS(fVar7);
   local_240[2] = 0.0;
-  dVar51 = (double)(ABS(fVar25) -
-                   (fVar19 * fVar28 + fVar1 * ABS(local_200) + fVar18 * fVar16 + fVar20));
-  if (0.0 < dVar51) goto LAB_82686698;
-  bVar45 = -3.4028234663852886e+38 < dVar51;
-  uVar39 = 0;
-  dVar47 = -3.4028234663852886e+38;
-  if (bVar45) {
-    uVar39 = uVar33;
-    dVar47 = dVar51;
+  dVar49 = (double)(ABS(fVar26) -
+                   (fVar19 * fVar29 + fVar1 * ABS(local_200) + fVar18 * fVar16 + fVar20));
+  if (0.0 < dVar49) {
+    return 0;
   }
-  bVar44 = bVar45 && fVar25 < 0.0;
-  uVar37 = (ulonglong)bVar45;
+  bVar43 = -3.4028234663852886e+38 < dVar49;
+  dVar45 = -3.4028234663852886e+38;
+  pfVar36 = (float *)0x0;
+  if (bVar43) {
+    dVar45 = dVar49;
+    pfVar36 = param_2;
+  }
+  bVar42 = bVar43 && fVar26 < 0.0;
+  uVar38 = (ulonglong)bVar43;
   fVar21 = param_3[1];
-  dVar51 = (double)(ABS(local_1ec) -
+  dVar49 = (double)(ABS(local_1ec) -
                    (fVar19 * fVar12 + fVar1 * ABS(local_250) + fVar18 * fVar15 + fVar21));
-  if (0.0 < dVar51) goto LAB_82686698;
-  if (dVar47 < dVar51) {
-    bVar44 = local_1ec < 0.0;
-    uVar37 = 2;
-    uVar39 = uVar33 + 4;
-    dVar47 = dVar51;
+  if (0.0 < dVar49) {
+    return 0;
+  }
+  if (dVar45 < dVar49) {
+    bVar42 = local_1ec < 0.0;
+    uVar38 = 2;
+    dVar45 = dVar49;
+    pfVar36 = pfVar40;
   }
   fVar22 = param_3[2];
-  fVar27 = ABS(fVar6);
-  dVar51 = (double)(ABS(fVar14) -
-                   (fVar19 * fVar27 + fVar1 * ABS(fVar3) + fVar18 * ABS(fVar5) + fVar22));
-  if (0.0 < dVar51) goto LAB_82686698;
-  if (dVar47 < dVar51) {
-    bVar44 = fVar14 < 0.0;
-    uVar37 = 3;
-    uVar39 = uVar33 + 8;
-    dVar47 = dVar51;
+  fVar28 = ABS(fVar6);
+  dVar49 = (double)(ABS(fVar14) -
+                   (fVar19 * fVar28 + fVar1 * ABS(fVar3) + fVar18 * ABS(fVar5) + fVar22));
+  if (0.0 < dVar49) {
+    return 0;
   }
-  fVar11 = fVar11 * fVar24 + pfVar43[8] * fVar26 + pfVar43[4] * fVar23;
-  dVar51 = (double)(ABS(fVar11) - (fVar20 * fVar28 + fVar22 * fVar27 + fVar21 * fVar12 + fVar19));
-  if (0.0 < dVar51) goto LAB_82686698;
-  if (dVar47 < dVar51) {
-    bVar44 = fVar11 < 0.0;
-    uVar37 = 4;
-    uVar39 = uVar32;
-    dVar47 = dVar51;
+  if (dVar45 < dVar49) {
+    bVar42 = fVar14 < 0.0;
+    uVar38 = 3;
+    dVar45 = dVar49;
+    pfVar36 = pfVar33;
+  }
+  fVar11 = fVar11 * fVar24 + param_5[8] * fVar27 + param_5[4] * fVar23;
+  dVar49 = (double)(ABS(fVar11) - (fVar20 * fVar29 + fVar22 * fVar28 + fVar21 * fVar12 + fVar19));
+  if (0.0 < dVar49) {
+    return 0;
+  }
+  if (dVar45 < dVar49) {
+    bVar42 = fVar11 < 0.0;
+    uVar38 = 4;
+    dVar45 = dVar49;
+    pfVar36 = param_5;
   }
   local_254 = ABS(fVar5);
-  fVar2 = fVar8 * fVar26 + fVar9 * fVar24 + fVar2 * fVar23;
-  dVar51 = (double)(ABS(fVar2) - (fVar20 * fVar16 + fVar22 * local_254 + fVar21 * fVar15 + fVar18));
-  if (0.0 < dVar51) goto LAB_82686698;
-  if (dVar47 < dVar51) {
-    bVar44 = fVar2 < 0.0;
-    uVar37 = 5;
-    uVar39 = uVar32 + 4;
-    dVar47 = dVar51;
+  fVar2 = fVar8 * fVar27 + fVar9 * fVar24 + fVar2 * fVar23;
+  dVar49 = (double)(ABS(fVar2) - (fVar20 * fVar16 + fVar22 * local_254 + fVar21 * fVar15 + fVar18));
+  if (0.0 < dVar49) {
+    return 0;
+  }
+  if (dVar45 < dVar49) {
+    bVar42 = fVar2 < 0.0;
+    uVar38 = 5;
+    dVar45 = dVar49;
+    pfVar36 = pfVar34;
   }
   fVar11 = ABS(local_250);
   fVar8 = ABS(local_200);
   fVar9 = ABS(fVar3);
-  fVar2 = fVar10 * fVar26 + fVar13 * fVar24 + fVar4 * fVar23;
-  dVar51 = (double)(ABS(fVar2) - (fVar20 * fVar8 + fVar22 * fVar9 + fVar21 * fVar11 + fVar1));
-  if (0.0 < dVar51) goto LAB_82686698;
-  if (dVar47 < dVar51) {
-    bVar44 = fVar2 < 0.0;
-    uVar37 = 6;
-    uVar39 = uVar32 + 8;
-    dVar47 = dVar51;
+  fVar2 = fVar10 * fVar27 + fVar13 * fVar24 + fVar4 * fVar23;
+  dVar49 = (double)(ABS(fVar2) - (fVar20 * fVar8 + fVar22 * fVar9 + fVar21 * fVar11 + fVar1));
+  if (0.0 < dVar49) {
+    return 0;
+  }
+  if (dVar45 < dVar49) {
+    bVar42 = fVar2 < 0.0;
+    uVar38 = 6;
+    dVar45 = dVar49;
+    pfVar36 = pfVar41;
   }
   fVar2 = fVar14 * fVar7 - local_1ec * fVar6;
-  fVar4 = ABS(fVar2) - (fVar18 * fVar8 + fVar1 * fVar16 + fVar22 * fVar12 + fVar21 * fVar27);
-  if (0.0 < fVar4) goto LAB_82686698;
+  fVar4 = ABS(fVar2) - (fVar18 * fVar8 + fVar1 * fVar16 + fVar22 * fVar12 + fVar21 * fVar28);
+  if (0.0 < fVar4) {
+    return 0;
+  }
   fVar13 = -fVar6;
   local_258 = 0x3f866666;
   local_25c = 1.0;
@@ -802,173 +789,188 @@ LAB_82686920:
   }
   else {
     fVar10 = 1.0 / fVar10;
-    dVar51 = (double)(fVar10 * fVar4);
-    if ((double)(float)(dVar51 * 1.0499999523162842) <= dVar47) goto LAB_82686920;
-    uVar39 = 0;
+    dVar49 = (double)(fVar10 * fVar4);
+    if ((double)(float)(dVar49 * 1.0499999523162842) <= dVar45) goto LAB_82686920;
+    pfVar36 = (float *)0x0;
     fVar4 = fVar10 * 0.0;
     fVar13 = fVar10 * fVar13;
     fVar10 = fVar10 * fVar7;
-    bVar44 = fVar2 < 0.0;
-    uVar37 = 7;
-    dVar47 = dVar51;
+    bVar42 = fVar2 < 0.0;
+    uVar38 = 7;
+    dVar45 = dVar49;
   }
   fVar2 = fVar14 * fVar17 - local_1ec * fVar5;
-  fVar23 = ABS(fVar2) - (fVar19 * fVar8 + fVar1 * fVar28 + fVar22 * fVar15 + fVar21 * local_254);
-  if (0.0 < fVar23) goto LAB_82686698;
-  fVar26 = -fVar5;
-  fVar24 = SQRT(fVar26 * fVar26 + fVar17 * fVar17);
+  fVar23 = ABS(fVar2) - (fVar19 * fVar8 + fVar1 * fVar29 + fVar22 * fVar15 + fVar21 * local_254);
+  if (0.0 < fVar23) {
+    return 0;
+  }
+  fVar27 = -fVar5;
+  fVar24 = SQRT(fVar27 * fVar27 + fVar17 * fVar17);
   if (0.0 < fVar24) {
     fVar24 = 1.0 / fVar24;
-    dVar51 = (double)(fVar24 * fVar23);
-    if (dVar47 < (double)(float)(dVar51 * 1.0499999523162842)) {
-      uVar39 = 0;
+    dVar49 = (double)(fVar24 * fVar23);
+    if (dVar45 < (double)(float)(dVar49 * 1.0499999523162842)) {
+      pfVar36 = (float *)0x0;
       fVar4 = fVar24 * 0.0;
-      fVar13 = fVar26 * fVar24;
+      fVar13 = fVar27 * fVar24;
       fVar10 = fVar24 * fVar17;
-      bVar44 = fVar2 < 0.0;
-      uVar37 = 8;
-      dVar47 = dVar51;
+      bVar42 = fVar2 < 0.0;
+      uVar38 = 8;
+      dVar45 = dVar49;
     }
   }
   fVar2 = fVar14 * local_250 - local_1ec * fVar3;
-  fVar23 = ABS(fVar2) - (fVar19 * fVar16 + fVar18 * fVar28 + fVar22 * fVar11 + fVar21 * fVar9);
-  if (0.0 < fVar23) goto LAB_82686698;
-  fVar26 = -fVar3;
-  fVar24 = SQRT(fVar26 * fVar26 + local_250 * local_250);
+  fVar23 = ABS(fVar2) - (fVar19 * fVar16 + fVar18 * fVar29 + fVar22 * fVar11 + fVar21 * fVar9);
+  if (0.0 < fVar23) {
+    return 0;
+  }
+  fVar27 = -fVar3;
+  fVar24 = SQRT(fVar27 * fVar27 + local_250 * local_250);
   if (0.0 < fVar24) {
     fVar24 = 1.0 / fVar24;
-    dVar51 = (double)(fVar24 * fVar23);
-    if (dVar47 < (double)(float)(dVar51 * 1.0499999523162842)) {
-      uVar39 = 0;
+    dVar49 = (double)(fVar24 * fVar23);
+    if (dVar45 < (double)(float)(dVar49 * 1.0499999523162842)) {
+      pfVar36 = (float *)0x0;
       fVar4 = fVar24 * 0.0;
-      fVar13 = fVar26 * fVar24;
+      fVar13 = fVar27 * fVar24;
       fVar10 = fVar24 * local_250;
-      bVar44 = fVar2 < 0.0;
-      uVar37 = 9;
-      dVar47 = dVar51;
+      bVar42 = fVar2 < 0.0;
+      uVar38 = 9;
+      dVar45 = dVar49;
     }
   }
-  fVar2 = fVar25 * fVar6 - fVar14 * local_260;
-  fVar23 = ABS(fVar2) - (fVar22 * fVar28 + fVar20 * fVar27 + fVar1 * fVar15 + fVar18 * fVar11);
-  if (0.0 < fVar23) goto LAB_82686698;
-  fVar26 = -local_260;
-  fVar24 = SQRT(fVar26 * fVar26 + fVar6 * fVar6);
+  fVar2 = fVar26 * fVar6 - fVar14 * local_260;
+  fVar23 = ABS(fVar2) - (fVar22 * fVar29 + fVar20 * fVar28 + fVar1 * fVar15 + fVar18 * fVar11);
+  if (0.0 < fVar23) {
+    return 0;
+  }
+  fVar27 = -local_260;
+  fVar24 = SQRT(fVar27 * fVar27 + fVar6 * fVar6);
   if (0.0 < fVar24) {
     fVar24 = 1.0 / fVar24;
-    dVar51 = (double)(fVar24 * fVar23);
-    if (dVar47 < (double)(float)(dVar51 * 1.0499999523162842)) {
-      uVar39 = 0;
+    dVar49 = (double)(fVar24 * fVar23);
+    if (dVar45 < (double)(float)(dVar49 * 1.0499999523162842)) {
+      pfVar36 = (float *)0x0;
       fVar4 = fVar24 * fVar6;
       fVar13 = fVar24 * 0.0;
-      fVar10 = fVar26 * fVar24;
-      bVar44 = fVar2 < 0.0;
-      uVar37 = 10;
-      dVar47 = dVar51;
+      fVar10 = fVar27 * fVar24;
+      bVar42 = fVar2 < 0.0;
+      uVar38 = 10;
+      dVar45 = dVar49;
     }
   }
-  fVar2 = fVar25 * fVar5 - fVar14 * local_268;
+  fVar2 = fVar26 * fVar5 - fVar14 * fVar25;
   fVar6 = ABS(fVar2) - (fVar22 * fVar16 + fVar20 * local_254 + fVar1 * fVar12 + fVar19 * fVar11);
-  if (0.0 < fVar6) goto LAB_82686698;
-  fVar24 = -local_268;
+  if (0.0 < fVar6) {
+    return 0;
+  }
+  fVar24 = -fVar25;
   fVar23 = SQRT(fVar24 * fVar24 + fVar5 * fVar5);
   if (0.0 < fVar23) {
     fVar23 = 1.0 / fVar23;
-    dVar51 = (double)(fVar23 * fVar6);
-    if (dVar47 < (double)(float)(dVar51 * 1.0499999523162842)) {
-      uVar39 = 0;
+    dVar49 = (double)(fVar23 * fVar6);
+    if (dVar45 < (double)(float)(dVar49 * 1.0499999523162842)) {
+      pfVar36 = (float *)0x0;
       fVar4 = fVar23 * fVar5;
       fVar13 = fVar23 * 0.0;
       fVar10 = fVar24 * fVar23;
-      bVar44 = fVar2 < 0.0;
-      uVar37 = 0xb;
-      dVar47 = dVar51;
+      bVar42 = fVar2 < 0.0;
+      uVar38 = 0xb;
+      dVar45 = dVar49;
     }
   }
-  fVar2 = fVar25 * fVar3 - fVar14 * local_200;
+  fVar2 = fVar26 * fVar3 - fVar14 * local_200;
   fVar5 = ABS(fVar2) - (fVar22 * fVar8 + fVar20 * fVar9 + fVar18 * fVar12 + fVar19 * fVar15);
-  if (0.0 < fVar5) goto LAB_82686698;
-  dVar51 = 1.0;
+  if (0.0 < fVar5) {
+    return 0;
+  }
+  dVar49 = 1.0;
   fVar14 = -local_200;
   fVar6 = SQRT(fVar14 * fVar14 + fVar3 * fVar3);
   if (0.0 < fVar6) {
     fVar6 = 1.0 / fVar6;
-    dVar54 = (double)(fVar6 * fVar5);
-    if (dVar47 < (double)(float)(dVar54 * 1.0499999523162842)) {
-      uVar39 = 0;
+    dVar52 = (double)(fVar6 * fVar5);
+    if (dVar45 < (double)(float)(dVar52 * 1.0499999523162842)) {
+      pfVar36 = (float *)0x0;
       fVar4 = fVar6 * fVar3;
       fVar13 = fVar6 * 0.0;
       fVar10 = fVar14 * fVar6;
-      bVar44 = fVar2 < 0.0;
-      uVar37 = 0xc;
-      dVar47 = dVar54;
+      bVar42 = fVar2 < 0.0;
+      uVar38 = 0xc;
+      dVar45 = dVar52;
     }
   }
-  fVar2 = local_1ec * local_260 - fVar25 * fVar7;
-  fVar3 = ABS(fVar2) - (fVar21 * fVar28 + fVar20 * fVar12 + fVar1 * local_254 + fVar18 * fVar9);
-  if (0.0 < fVar3) goto LAB_82686698;
+  fVar2 = local_1ec * local_260 - fVar26 * fVar7;
+  fVar3 = ABS(fVar2) - (fVar21 * fVar29 + fVar20 * fVar12 + fVar1 * local_254 + fVar18 * fVar9);
+  if (0.0 < fVar3) {
+    return 0;
+  }
   fVar7 = -fVar7;
   fVar5 = SQRT(fVar7 * fVar7 + local_260 * local_260);
   if (0.0 < fVar5) {
     fVar5 = 1.0 / fVar5;
-    dVar54 = (double)(fVar5 * fVar3);
-    if (dVar47 < (double)(float)(dVar54 * 1.0499999523162842)) {
-      uVar39 = 0;
+    dVar52 = (double)(fVar5 * fVar3);
+    if (dVar45 < (double)(float)(dVar52 * 1.0499999523162842)) {
+      pfVar36 = (float *)0x0;
       fVar4 = fVar7 * fVar5;
       fVar13 = fVar5 * local_260;
       fVar10 = fVar5 * 0.0;
-      bVar44 = fVar2 < 0.0;
-      uVar37 = 0xd;
-      dVar47 = dVar54;
+      bVar42 = fVar2 < 0.0;
+      uVar38 = 0xd;
+      dVar45 = dVar52;
     }
   }
-  fVar2 = local_1ec * local_268 - fVar25 * fVar17;
-  fVar1 = ABS(fVar2) - (fVar21 * fVar16 + fVar20 * fVar15 + fVar1 * fVar27 + fVar19 * fVar9);
-  if (0.0 < fVar1) goto LAB_82686698;
+  fVar2 = local_1ec * fVar25 - fVar26 * fVar17;
+  fVar1 = ABS(fVar2) - (fVar21 * fVar16 + fVar20 * fVar15 + fVar1 * fVar28 + fVar19 * fVar9);
+  if (0.0 < fVar1) {
+    return 0;
+  }
   fVar17 = -fVar17;
-  fVar3 = SQRT(fVar17 * fVar17 + local_268 * local_268);
+  fVar3 = SQRT(fVar17 * fVar17 + fVar25 * fVar25);
   if (0.0 < fVar3) {
     fVar3 = 1.0 / fVar3;
-    dVar54 = (double)(fVar3 * fVar1);
-    if (dVar47 < (double)(float)(dVar54 * 1.0499999523162842)) {
-      uVar39 = 0;
+    dVar52 = (double)(fVar3 * fVar1);
+    if (dVar45 < (double)(float)(dVar52 * 1.0499999523162842)) {
+      pfVar36 = (float *)0x0;
       fVar4 = fVar17 * fVar3;
-      fVar13 = fVar3 * local_268;
+      fVar13 = fVar3 * fVar25;
       fVar10 = fVar3 * 0.0;
-      bVar44 = fVar2 < 0.0;
-      uVar37 = 0xe;
-      dVar47 = dVar54;
+      bVar42 = fVar2 < 0.0;
+      uVar38 = 0xe;
+      dVar45 = dVar52;
     }
   }
-  fVar1 = local_1ec * local_200 - fVar25 * local_250;
-  fVar2 = ABS(fVar1) - (fVar21 * fVar8 + fVar20 * fVar11 + fVar18 * fVar27 + fVar19 * local_254);
-  if (0.0 < fVar2) goto LAB_82686698;
+  fVar1 = local_1ec * local_200 - fVar26 * local_250;
+  fVar2 = ABS(fVar1) - (fVar21 * fVar8 + fVar20 * fVar11 + fVar18 * fVar28 + fVar19 * local_254);
+  if (0.0 < fVar2) {
+    return 0;
+  }
   fVar5 = -local_250;
   fVar3 = SQRT(fVar5 * fVar5 + local_200 * local_200);
-  pfVar41 = (float *)(uVar33 + 4);
-  pfVar42 = (float *)(uVar33 + 8);
   if (fVar3 <= 0.0) {
 LAB_82686ea8:
-    if ((int)uVar37 == 0) goto LAB_82686698;
-    if ((uVar39 & 0xffffffff) == 0) goto LAB_82686d5c;
-    pfVar40 = (float *)uVar39;
-    *param_7 = *pfVar40;
-    param_7[1] = pfVar40[4];
-    param_7[2] = pfVar40[8];
+    if ((int)uVar38 == 0) {
+      return 0;
+    }
+    if (pfVar36 == (float *)0x0) goto LAB_82686d5c;
+    *param_7 = *pfVar36;
+    param_7[1] = pfVar36[4];
+    param_7[2] = pfVar36[8];
   }
   else {
     fVar3 = 1.0 / fVar3;
-    dVar54 = (double)(fVar3 * fVar2);
-    if ((double)(float)(dVar54 * 1.0499999523162842) <= dVar47) goto LAB_82686ea8;
+    dVar52 = (double)(fVar3 * fVar2);
+    if ((double)(float)(dVar52 * 1.0499999523162842) <= dVar45) goto LAB_82686ea8;
     fVar4 = fVar5 * fVar3;
     fVar13 = fVar3 * local_200;
     fVar10 = fVar3 * 0.0;
-    bVar44 = fVar1 < 0.0;
-    uVar37 = 0xf;
-    dVar47 = dVar54;
+    bVar42 = fVar1 < 0.0;
+    uVar38 = 0xf;
+    dVar45 = dVar52;
 LAB_82686d5c:
-    *param_7 = *pfVar42 * fVar10 + *pfVar30 * fVar4 + *pfVar41 * fVar13;
-    param_7[1] = pfVar30[4] * fVar4 + pfVar30[6] * fVar10 + pfVar30[5] * fVar13;
-    param_7[2] = pfVar30[8] * fVar4 + pfVar30[10] * fVar10 + pfVar30[9] * fVar13;
+    *param_7 = *pfVar33 * fVar10 + *param_2 * fVar4 + *pfVar40 * fVar13;
+    param_7[1] = param_2[4] * fVar4 + param_2[6] * fVar10 + param_2[5] * fVar13;
+    param_7[2] = param_2[8] * fVar4 + param_2[10] * fVar10 + param_2[9] * fVar13;
   }
   local_268 = *param_7;
   if (((((uint)local_268 & 0x7f800000) == 0x7f800000) ||
@@ -977,100 +979,98 @@ LAB_82686d5c:
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\collision_std.cpp"
                     ,0x1b2,0,"%s");
   }
-  if (bVar44) {
+  if (bVar42) {
     *param_7 = -*param_7;
     param_7[1] = -param_7[1];
     param_7[2] = -param_7[2];
   }
-  *param_8 = (float)-dVar47;
-  uVar38 = (uint)uVar37;
-  if (6 < uVar38) {
+  *param_8 = (float)-dVar45;
+  uVar39 = (uint)uVar38;
+  if (6 < uVar39) {
     fVar5 = *param_1;
     fVar1 = param_7[2];
     fVar2 = param_7[1];
     fVar3 = *param_7;
-    fVar4 = *pfVar30;
-    dVar47 = -1.0;
-    dVar54 = dVar47;
-    if (dVar64 < (double)(fVar3 * fVar4 + fVar2 * pfVar30[4] + fVar1 * pfVar30[8])) {
-      dVar54 = dVar51;
+    fVar4 = *param_2;
+    dVar45 = -1.0;
+    dVar52 = dVar45;
+    if (dVar62 < (double)(fVar3 * fVar4 + fVar2 * param_2[4] + fVar1 * param_2[8])) {
+      dVar52 = dVar49;
     }
     fVar6 = *param_3;
-    dVar60 = dVar47;
-    if (dVar64 < (double)(fVar1 * pfVar30[9] + fVar2 * pfVar30[5] + fVar3 * *pfVar41)) {
-      dVar60 = dVar51;
+    dVar58 = dVar45;
+    if (dVar62 < (double)(fVar1 * param_2[9] + fVar2 * param_2[5] + fVar3 * *pfVar40)) {
+      dVar58 = dVar49;
     }
     fVar7 = param_3[1];
-    fVar8 = *pfVar41;
-    dVar61 = dVar47;
-    if (dVar64 < (double)(fVar1 * pfVar30[10] + fVar3 * *pfVar42 + fVar2 * pfVar30[6])) {
-      dVar61 = dVar51;
+    fVar8 = *pfVar40;
+    dVar59 = dVar45;
+    if (dVar62 < (double)(fVar1 * param_2[10] + fVar3 * *pfVar33 + fVar2 * param_2[6])) {
+      dVar59 = dVar49;
     }
     fVar11 = *param_4;
     fVar1 = param_7[2];
     fVar2 = param_7[1];
-    dVar49 = (double)param_3[2];
+    dVar47 = (double)param_3[2];
     fVar3 = *param_7;
-    fVar9 = *pfVar43;
-    fVar10 = *pfVar42;
-    local_21c = (float)((double)(float)((double)pfVar30[6] * dVar49) * dVar61 +
-                       (double)(float)((double)(pfVar30[5] * fVar7) * dVar60 +
-                                      (double)(float)((double)(pfVar30[4] * fVar6) * dVar54 +
+    fVar9 = *param_5;
+    fVar10 = *pfVar33;
+    local_21c = (float)((double)(float)((double)param_2[6] * dVar47) * dVar59 +
+                       (double)(float)((double)(param_2[5] * fVar7) * dVar58 +
+                                      (double)(float)((double)(param_2[4] * fVar6) * dVar52 +
                                                      (double)param_1[1])));
-    local_218 = (float)((double)(float)((double)pfVar30[10] * dVar49) * dVar61 +
-                       (double)(float)((double)(pfVar30[9] * fVar7) * dVar60 +
-                                      (double)(float)((double)(pfVar30[8] * fVar6) * dVar54 +
+    local_218 = (float)((double)(float)((double)param_2[10] * dVar47) * dVar59 +
+                       (double)(float)((double)(param_2[9] * fVar7) * dVar58 +
+                                      (double)(float)((double)(param_2[8] * fVar6) * dVar52 +
                                                      (double)param_1[2])));
-    dVar62 = dVar51;
-    if (dVar64 < (double)(fVar9 * fVar3 + pfVar43[4] * fVar2 + pfVar43[8] * fVar1)) {
-      dVar62 = dVar47;
+    dVar60 = dVar49;
+    if (dVar62 < (double)(fVar9 * fVar3 + param_5[4] * fVar2 + param_5[8] * fVar1)) {
+      dVar60 = dVar45;
     }
-    pfVar41 = (float *)(uVar32 + 4);
     fVar12 = *param_6;
-    dVar48 = dVar51;
-    if (dVar64 < (double)(fVar2 * pfVar43[5] + pfVar43[9] * fVar1 + *pfVar41 * fVar3)) {
-      dVar48 = dVar47;
+    dVar46 = dVar49;
+    if (dVar62 < (double)(fVar2 * param_5[5] + param_5[9] * fVar1 + *pfVar34 * fVar3)) {
+      dVar46 = dVar45;
     }
-    pfVar42 = (float *)(uVar32 + 8);
     fVar13 = param_6[1];
-    fVar14 = *pfVar41;
-    if ((double)(fVar2 * pfVar43[6] + pfVar43[10] * fVar1 + fVar3 * *pfVar42) <= dVar64) {
-      dVar47 = dVar51;
+    fVar14 = *pfVar34;
+    if ((double)(fVar2 * param_5[6] + param_5[10] * fVar1 + fVar3 * *pfVar41) <= dVar62) {
+      dVar45 = dVar49;
     }
-    dVar51 = (double)param_6[2];
-    iVar34 = (int)(uVar37 - 7);
-    uVar33 = (longlong)iVar34 / 3 + ((longlong)iVar34 >> 0x3f);
-    fVar1 = *pfVar42;
-    local_20c = (float)((double)(float)((double)pfVar43[6] * dVar51) * dVar47 +
-                       (double)(float)((double)(pfVar43[5] * fVar13) * dVar48 +
-                                      (double)(float)((double)(pfVar43[4] * fVar12) * dVar62 +
+    dVar49 = (double)param_6[2];
+    iVar35 = (int)(uVar38 - 7);
+    uVar32 = (longlong)iVar35 / 3 + ((longlong)iVar35 >> 0x3f);
+    fVar1 = *pfVar41;
+    local_20c = (float)((double)(float)((double)param_5[6] * dVar49) * dVar45 +
+                       (double)(float)((double)(param_5[5] * fVar13) * dVar46 +
+                                      (double)(float)((double)(param_5[4] * fVar12) * dVar60 +
                                                      (double)param_4[1])));
-    local_208 = (float)((double)(float)((double)pfVar43[10] * dVar51) * dVar47 +
-                       (double)(float)((double)(pfVar43[9] * fVar13) * dVar48 +
-                                      (double)(float)((double)(pfVar43[8] * fVar12) * dVar62 +
+    local_208 = (float)((double)(float)((double)param_5[10] * dVar49) * dVar45 +
+                       (double)(float)((double)(param_5[9] * fVar13) * dVar46 +
+                                      (double)(float)((double)(param_5[8] * fVar12) * dVar60 +
                                                      (double)param_4[2])));
-    iVar34 = iVar34 / 3;
-    uVar33 = (uVar33 & 0xffffffff) + ((uVar33 & 0xffffffff) >> 0x1f);
-    uVar33 = (uVar37 - 7) - (uVar33 + (uVar33 & 0x7fffffff) * 2);
-    local_1f0 = pfVar30[iVar34];
-    local_1ec = pfVar30[iVar34 + 4];
-    local_1e8 = pfVar30[iVar34 + 8];
-    local_240[2] = *(float *)((int)((uVar33 + 8 & 0xffffffff) << 2) + (int)pfVar43);
-    local_240[0] = *(float *)((int)((uVar33 & 0xffffffff) << 2) + (int)pfVar43);
-    local_240[1] = *(float *)((int)((uVar33 + 4 & 0xffffffff) << 2) + (int)pfVar43);
+    iVar35 = iVar35 / 3;
+    uVar32 = (uVar32 & 0xffffffff) + ((uVar32 & 0xffffffff) >> 0x1f);
+    uVar38 = (uVar38 - 7) - (uVar32 + (uVar32 & 0x7fffffff) * 2);
+    local_1f0 = param_2[iVar35];
+    local_1ec = param_2[iVar35 + 4];
+    local_1e8 = param_2[iVar35 + 8];
+    local_240[2] = *(float *)((int)((uVar38 + 8 & 0xffffffff) << 2) + (int)param_5);
+    local_240[0] = *(float *)((int)((uVar38 & 0xffffffff) << 2) + (int)param_5);
+    local_240[1] = *(float *)((int)((uVar38 + 4 & 0xffffffff) << 2) + (int)param_5);
     dLineClosestApproach(&local_220,&local_1f0,&local_210,local_240,&local_268,&local_260);
     local_21c = local_1ec * local_268 + local_21c;
     local_218 = local_1e8 * local_268 + local_218;
     local_20c = local_240[1] * local_260 + local_20c;
     local_208 = local_240[2] * local_260 + local_208;
     fVar1 = (local_1f0 * local_268 +
-             (float)(dVar49 * dVar61) * fVar10 +
-             (float)((double)(fVar8 * fVar7) * dVar60 +
-                    (double)(float)((double)(fVar4 * fVar6) * dVar54 + (double)fVar5)) +
+             (float)(dVar47 * dVar59) * fVar10 +
+             (float)((double)(fVar8 * fVar7) * dVar58 +
+                    (double)(float)((double)(fVar4 * fVar6) * dVar52 + (double)fVar5)) +
             local_240[0] * local_260 +
-            (float)(dVar51 * dVar47) * fVar1 +
-            (float)((double)(fVar14 * fVar13) * dVar48 +
-                   (double)(float)((double)(fVar9 * fVar12) * dVar62 + (double)fVar11))) * 0.5;
+            (float)(dVar49 * dVar45) * fVar1 +
+            (float)((double)(fVar14 * fVar13) * dVar46 +
+                   (double)(float)((double)(fVar9 * fVar12) * dVar60 + (double)fVar11))) * 0.5;
     fVar2 = (local_20c + local_21c) * 0.5;
     *in_stack_00000064 = fVar1;
     in_stack_00000064[1] = fVar2;
@@ -1081,228 +1081,227 @@ LAB_82686d5c:
                       ,0x1e0,0,"%s");
     }
     in_stack_00000064[6] = *param_8;
-    iVar34 = 1;
+    iVar35 = 1;
     goto LAB_82687970;
   }
-  if (uVar38 < 4) {
-    dVar54 = (double)*param_7;
-    dVar47 = (double)param_7[1];
-    dVar51 = (double)param_7[2];
-    pfVar40 = param_1;
-    param_1 = param_4;
-    pfVar41 = param_6;
-    pfVar42 = pfVar30;
-    param_6 = param_3;
-    pfVar30 = pfVar43;
+  if (uVar39 < 4) {
+    dVar52 = (double)*param_7;
+    dVar45 = (double)param_7[1];
+    dVar49 = (double)param_7[2];
+    pfVar34 = param_6;
+    pfVar41 = param_4;
   }
   else {
-    dVar54 = -(double)*param_7;
-    dVar47 = -(double)param_7[1];
-    dVar51 = -(double)param_7[2];
-    pfVar40 = param_4;
-    pfVar41 = param_3;
-    pfVar42 = pfVar43;
+    dVar52 = -(double)*param_7;
+    dVar45 = -(double)param_7[1];
+    dVar49 = -(double)param_7[2];
+    pfVar34 = param_3;
+    pfVar41 = param_1;
+    param_1 = param_4;
+    param_3 = param_6;
+    param_2 = param_5;
+    param_5 = param_2;
   }
-  fVar1 = ABS((float)(dVar54 * (double)*pfVar30 +
-                     (double)(float)((double)pfVar30[8] * dVar51 +
-                                    (double)(float)((double)pfVar30[4] * dVar47))));
-  fVar3 = ABS((float)(dVar54 * (double)pfVar30[1] +
-                     (double)(float)((double)pfVar30[9] * dVar51 +
-                                    (double)(float)((double)pfVar30[5] * dVar47))));
-  fVar2 = ABS((float)((double)pfVar30[2] * dVar54 +
-                     (double)(float)((double)pfVar30[10] * dVar51 +
-                                    (double)(float)((double)pfVar30[6] * dVar47))));
+  fVar1 = ABS((float)(dVar52 * (double)*param_5 +
+                     (double)(float)((double)param_5[8] * dVar49 +
+                                    (double)(float)((double)param_5[4] * dVar45))));
+  fVar3 = ABS((float)(dVar52 * (double)param_5[1] +
+                     (double)(float)((double)param_5[9] * dVar49 +
+                                    (double)(float)((double)param_5[5] * dVar45))));
+  fVar2 = ABS((float)((double)param_5[2] * dVar52 +
+                     (double)(float)((double)param_5[10] * dVar49 +
+                                    (double)(float)((double)param_5[6] * dVar45))));
   if (fVar3 <= fVar1) {
     if (fVar1 <= fVar2) goto LAB_82687394;
-    iVar34 = 0;
-    iVar36 = 1;
+    iVar35 = 0;
+    iVar37 = 1;
     iVar31 = 2;
   }
   else {
-    iVar36 = 0;
+    iVar37 = 0;
     if (fVar3 <= fVar2) {
 LAB_82687394:
-      iVar36 = 0;
-      iVar34 = 2;
+      iVar37 = 0;
+      iVar35 = 2;
       iVar31 = 1;
     }
     else {
-      iVar34 = 1;
+      iVar35 = 1;
       iVar31 = 2;
     }
   }
-  fVar1 = pfVar41[iVar34];
-  if (dVar64 <= (double)local_240[iVar34]) {
-    dVar62 = -(double)(pfVar30[iVar34] * fVar1 - (*param_1 - *pfVar40));
-    dVar61 = -(double)(pfVar30[iVar34 + 4] * fVar1 - (param_1[1] - pfVar40[1]));
-    dVar60 = -(double)(pfVar30[iVar34 + 8] * fVar1 - (param_1[2] - pfVar40[2]));
+  fVar1 = pfVar34[iVar35];
+  if (dVar62 <= (double)local_240[iVar35]) {
+    dVar60 = -(double)(param_5[iVar35] * fVar1 - (*pfVar41 - *param_1));
+    dVar59 = -(double)(param_5[iVar35 + 4] * fVar1 - (pfVar41[1] - param_1[1]));
+    dVar58 = -(double)(param_5[iVar35 + 8] * fVar1 - (pfVar41[2] - param_1[2]));
   }
   else {
-    dVar62 = (double)(pfVar30[iVar34] * fVar1 + (*param_1 - *pfVar40));
-    dVar61 = (double)(pfVar30[iVar34 + 4] * fVar1 + (param_1[1] - pfVar40[1]));
-    dVar60 = (double)(pfVar30[iVar34 + 8] * fVar1 + (param_1[2] - pfVar40[2]));
+    dVar60 = (double)(param_5[iVar35] * fVar1 + (*pfVar41 - *param_1));
+    dVar59 = (double)(param_5[iVar35 + 4] * fVar1 + (pfVar41[1] - param_1[1]));
+    dVar58 = (double)(param_5[iVar35 + 8] * fVar1 + (pfVar41[2] - param_1[2]));
   }
-  uVar33 = uVar37 - 1;
-  if (3 < uVar38) {
-    uVar33 = uVar37 - 4;
+  uVar32 = uVar38 - 1;
+  if (3 < uVar39) {
+    uVar32 = uVar38 - 4;
   }
-  iVar34 = 2;
-  if ((int)uVar33 == 0) {
-    iVar29 = 1;
+  iVar35 = 2;
+  if ((int)uVar32 == 0) {
+    iVar30 = 1;
   }
   else {
-    iVar29 = 0;
-    if ((int)uVar33 != 1) {
-      iVar34 = 1;
+    iVar30 = 0;
+    if ((int)uVar32 != 1) {
+      iVar35 = 1;
     }
   }
-  dVar49 = (double)pfVar42[iVar29];
-  pfVar43 = pfVar30 + iVar36;
-  dVar55 = (double)pfVar42[iVar34];
-  pfVar35 = pfVar30 + iVar31;
-  dVar53 = (double)pfVar42[iVar29 + 8];
-  dVar52 = (double)pfVar42[iVar34 + 8];
-  dVar50 = (double)pfVar42[iVar29 + 4];
-  dVar48 = (double)pfVar42[iVar34 + 4];
-  local_268 = param_6[iVar29];
-  local_264 = param_6[iVar34];
-  dVar59 = (double)(float)((double)pfVar43[4] * dVar50 +
-                          (double)(float)((double)pfVar30[iVar36] * dVar49 +
-                                         (double)(float)((double)pfVar43[8] * dVar53)));
-  dVar58 = (double)(float)((double)pfVar35[4] * dVar50 +
-                          (double)(float)((double)pfVar30[iVar31] * dVar49 +
-                                         (double)(float)((double)pfVar35[8] * dVar53)));
-  dVar56 = (double)(float)((double)pfVar35[4] * dVar48 +
-                          (double)(float)((double)pfVar30[iVar31] * dVar55 +
-                                         (double)(float)((double)pfVar35[8] * dVar52)));
-  dVar57 = (double)(float)((double)pfVar43[4] * dVar48 +
-                          (double)(float)((double)pfVar30[iVar36] * dVar55 +
-                                         (double)(float)((double)pfVar43[8] * dVar52)));
-  dVar63 = (double)(float)(dVar62 * dVar49 +
-                          (double)(float)(dVar60 * dVar53 + (double)(float)(dVar61 * dVar50)));
-  dVar53 = (double)(float)(dVar62 * dVar55 +
-                          (double)(float)(dVar60 * dVar52 + (double)(float)(dVar61 * dVar48)));
-  dVar52 = (double)(float)(dVar59 * (double)pfVar41[iVar36]);
-  dVar50 = (double)(float)(dVar58 * (double)pfVar41[iVar31]);
-  dVar49 = (double)(float)(dVar56 * (double)pfVar41[iVar31]);
-  dVar48 = (double)(float)(dVar57 * (double)pfVar41[iVar36]);
-  local_240[0] = (float)((double)(float)(dVar63 - dVar52) - dVar50);
-  local_240[2] = (float)(dVar50 + (double)(float)(dVar63 - dVar52));
-  local_230 = (float)((double)(float)(dVar50 + dVar52) + dVar63);
-  local_240[1] = (float)((double)(float)(dVar53 - dVar48) - dVar49);
-  local_240[3] = (float)(dVar49 + (double)(float)(dVar53 - dVar48));
-  local_22c = (float)((double)(float)(dVar49 + dVar48) + dVar53);
-  local_228 = (float)((double)(float)(dVar52 + dVar63) - dVar50);
-  local_224 = (float)((double)(float)(dVar48 + dVar53) - dVar49);
-  iVar29 = intersectRectQuad(&local_268,local_240,&local_170);
-  lVar46 = (longlong)iVar29;
-  if (0 < iVar29) {
-    iVar34 = 0;
-    dVar49 = (double)(local_25c / (float)(dVar56 * dVar59 - (double)(float)(dVar57 * dVar58)));
-    if (0 < iVar29) {
-      fVar1 = *pfVar35;
-      fVar2 = *pfVar43;
-      fVar3 = pfVar30[iVar31 + 4];
-      fVar4 = pfVar30[iVar36 + 4];
-      pfVar41 = local_16c;
-      pfVar43 = &fStack_174;
-      fVar5 = pfVar30[iVar31 + 8];
-      fVar6 = pfVar30[iVar36 + 8];
-      pfVar30 = local_240;
-      fVar7 = *(float *)((int)((uVar33 & 0xffffffff) << 2) + (int)param_6);
-      pfVar42 = local_1d0 + 1;
-      pfVar35 = local_1d0 + 1;
+  dVar47 = (double)param_2[iVar30];
+  pfVar41 = param_5 + iVar37;
+  dVar53 = (double)param_2[iVar35];
+  pfVar40 = param_5 + iVar31;
+  dVar51 = (double)param_2[iVar30 + 8];
+  dVar50 = (double)param_2[iVar35 + 8];
+  dVar48 = (double)param_2[iVar30 + 4];
+  dVar46 = (double)param_2[iVar35 + 4];
+  local_268 = param_3[iVar30];
+  local_264 = param_3[iVar35];
+  dVar57 = (double)(float)((double)pfVar41[4] * dVar48 +
+                          (double)(float)((double)param_5[iVar37] * dVar47 +
+                                         (double)(float)((double)pfVar41[8] * dVar51)));
+  dVar56 = (double)(float)((double)pfVar40[4] * dVar48 +
+                          (double)(float)((double)param_5[iVar31] * dVar47 +
+                                         (double)(float)((double)pfVar40[8] * dVar51)));
+  dVar54 = (double)(float)((double)pfVar40[4] * dVar46 +
+                          (double)(float)((double)param_5[iVar31] * dVar53 +
+                                         (double)(float)((double)pfVar40[8] * dVar50)));
+  dVar55 = (double)(float)((double)pfVar41[4] * dVar46 +
+                          (double)(float)((double)param_5[iVar37] * dVar53 +
+                                         (double)(float)((double)pfVar41[8] * dVar50)));
+  dVar61 = (double)(float)(dVar60 * dVar47 +
+                          (double)(float)(dVar58 * dVar51 + (double)(float)(dVar59 * dVar48)));
+  dVar51 = (double)(float)(dVar60 * dVar53 +
+                          (double)(float)(dVar58 * dVar50 + (double)(float)(dVar59 * dVar46)));
+  dVar50 = (double)(float)(dVar57 * (double)pfVar34[iVar37]);
+  dVar48 = (double)(float)(dVar56 * (double)pfVar34[iVar31]);
+  dVar47 = (double)(float)(dVar54 * (double)pfVar34[iVar31]);
+  dVar46 = (double)(float)(dVar55 * (double)pfVar34[iVar37]);
+  local_240[0] = (float)((double)(float)(dVar61 - dVar50) - dVar48);
+  local_240[2] = (float)(dVar48 + (double)(float)(dVar61 - dVar50));
+  local_230 = (float)((double)(float)(dVar48 + dVar50) + dVar61);
+  local_240[1] = (float)((double)(float)(dVar51 - dVar46) - dVar47);
+  local_240[3] = (float)(dVar47 + (double)(float)(dVar51 - dVar46));
+  local_22c = (float)((double)(float)(dVar47 + dVar46) + dVar51);
+  local_228 = (float)((double)(float)(dVar50 + dVar61) - dVar48);
+  local_224 = (float)((double)(float)(dVar46 + dVar51) - dVar47);
+  iVar30 = intersectRectQuad(&local_268,local_240,&local_170);
+  lVar44 = (longlong)iVar30;
+  if (0 < iVar30) {
+    iVar35 = 0;
+    dVar47 = (double)(local_25c / (float)(dVar54 * dVar57 - (double)(float)(dVar55 * dVar56)));
+    if (0 < iVar30) {
+      fVar1 = *pfVar40;
+      fVar2 = *pfVar41;
+      fVar3 = param_5[iVar31 + 4];
+      fVar4 = param_5[iVar37 + 4];
+      pfVar40 = local_16c;
+      pfVar34 = &fStack_174;
+      fVar5 = param_5[iVar31 + 8];
+      fVar6 = param_5[iVar37 + 8];
+      pfVar41 = local_240;
+      fVar7 = *(float *)((int)((uVar32 & 0xffffffff) << 2) + (int)param_3);
+      pfVar33 = local_1d0 + 1;
+      pfVar36 = local_1d0 + 1;
       do {
-        fVar9 = pfVar41[-1];
-        fVar8 = (float)((double)fVar9 - dVar63);
-        fVar10 = (float)((double)*pfVar41 - dVar53) * (float)(dVar49 * dVar59) -
-                 fVar8 * (float)(dVar49 * dVar57);
-        fVar8 = fVar8 * (float)(dVar49 * dVar56) -
-                (float)((double)*pfVar41 - dVar53) * (float)(dVar49 * dVar58);
-        pfVar35[-1] = (float)((double)(fVar2 * fVar8 + fVar1 * fVar10) + dVar62);
-        *pfVar35 = (float)((double)(fVar8 * fVar4 + fVar10 * fVar3) + dVar61);
-        pfVar35[1] = (float)((double)(fVar8 * fVar6 + fVar10 * fVar5) + dVar60);
-        fVar8 = fVar7 - (float)(dVar54 * (double)pfVar42[-1] +
-                               (double)(float)(dVar47 * (double)*pfVar42 +
-                                              (double)(float)((double)pfVar42[1] * dVar51)));
-        *pfVar30 = fVar8;
-        if (dVar64 <= (double)fVar8) {
-          pfVar43[1] = fVar9;
-          iVar34 = iVar34 + 1;
-          pfVar35 = pfVar35 + 3;
-          pfVar42 = pfVar42 + 3;
-          pfVar30 = pfVar30 + 1;
-          pfVar43 = pfVar43 + 2;
-          *pfVar43 = *pfVar41;
+        fVar9 = pfVar40[-1];
+        fVar8 = (float)((double)fVar9 - dVar61);
+        fVar10 = (float)((double)*pfVar40 - dVar51) * (float)(dVar47 * dVar57) -
+                 fVar8 * (float)(dVar47 * dVar55);
+        fVar8 = fVar8 * (float)(dVar47 * dVar54) -
+                (float)((double)*pfVar40 - dVar51) * (float)(dVar47 * dVar56);
+        pfVar36[-1] = (float)((double)(fVar2 * fVar8 + fVar1 * fVar10) + dVar60);
+        *pfVar36 = (float)((double)(fVar8 * fVar4 + fVar10 * fVar3) + dVar59);
+        pfVar36[1] = (float)((double)(fVar8 * fVar6 + fVar10 * fVar5) + dVar58);
+        fVar8 = fVar7 - (float)(dVar52 * (double)pfVar33[-1] +
+                               (double)(float)(dVar45 * (double)*pfVar33 +
+                                              (double)(float)((double)pfVar33[1] * dVar49)));
+        *pfVar41 = fVar8;
+        if (dVar62 <= (double)fVar8) {
+          pfVar34[1] = fVar9;
+          iVar35 = iVar35 + 1;
+          pfVar36 = pfVar36 + 3;
+          pfVar33 = pfVar33 + 3;
+          pfVar41 = pfVar41 + 1;
+          pfVar34 = pfVar34 + 2;
+          *pfVar34 = *pfVar40;
         }
-        pfVar41 = pfVar41 + 2;
-        lVar46 = lVar46 + -1;
-      } while (lVar46 != 0);
-      if (0 < iVar34) {
-        if (iVar34 < in_stack_0000005c) {
-          in_stack_0000005c = iVar34;
+        pfVar40 = pfVar40 + 2;
+        lVar44 = lVar44 + -1;
+      } while (lVar44 != 0);
+      if (0 < iVar35) {
+        if (iVar35 < in_stack_0000005c) {
+          in_stack_0000005c = iVar35;
         }
         if (in_stack_0000005c < 1) {
           in_stack_0000005c = 1;
         }
-        if (in_stack_0000005c < iVar34) {
+        if (in_stack_0000005c < iVar35) {
           iVar31 = 0;
-          iVar36 = 1;
-          if (1 < iVar34) {
+          iVar37 = 1;
+          if (1 < iVar35) {
             fVar1 = local_240[0];
             iVar31 = 0;
-            if (3 < iVar34 + -1) {
-              pfVar30 = local_240 + 2;
+            if (3 < iVar35 + -1) {
+              pfVar34 = local_240 + 2;
               do {
-                if (fVar1 < pfVar30[-1]) {
-                  fVar1 = pfVar30[-1];
-                  iVar31 = iVar36;
+                if (fVar1 < pfVar34[-1]) {
+                  fVar1 = pfVar34[-1];
+                  iVar31 = iVar37;
                 }
-                if (fVar1 < *pfVar30) {
-                  iVar31 = iVar36 + 1;
-                  fVar1 = *pfVar30;
+                if (fVar1 < *pfVar34) {
+                  iVar31 = iVar37 + 1;
+                  fVar1 = *pfVar34;
                 }
-                if (fVar1 < pfVar30[1]) {
-                  iVar31 = iVar36 + 2;
-                  fVar1 = pfVar30[1];
+                if (fVar1 < pfVar34[1]) {
+                  iVar31 = iVar37 + 2;
+                  fVar1 = pfVar34[1];
                 }
-                if (fVar1 < pfVar30[2]) {
-                  iVar31 = iVar36 + 3;
-                  fVar1 = pfVar30[2];
+                if (fVar1 < pfVar34[2]) {
+                  iVar31 = iVar37 + 3;
+                  fVar1 = pfVar34[2];
                 }
-                iVar36 = iVar36 + 4;
-                pfVar30 = pfVar30 + 4;
-              } while (iVar36 < iVar34 + -3);
+                iVar37 = iVar37 + 4;
+                pfVar34 = pfVar34 + 4;
+              } while (iVar37 < iVar35 + -3);
             }
-            if (iVar36 < iVar34) {
-              iVar29 = iVar34 - iVar36;
-              pfVar30 = local_240 + iVar36;
+            if (iVar37 < iVar35) {
+              iVar30 = iVar35 - iVar37;
+              pfVar34 = local_240 + iVar37;
               do {
-                if (fVar1 < *pfVar30) {
-                  fVar1 = *pfVar30;
-                  iVar31 = iVar36;
+                if (fVar1 < *pfVar34) {
+                  fVar1 = *pfVar34;
+                  iVar31 = iVar37;
                 }
-                iVar36 = iVar36 + 1;
-                pfVar30 = pfVar30 + 1;
-                iVar29 = iVar29 + -1;
-              } while (iVar29 != 0);
+                iVar37 = iVar37 + 1;
+                pfVar34 = pfVar34 + 1;
+                iVar30 = iVar30 + -1;
+              } while (iVar30 != 0);
             }
           }
-          cullPoints(iVar34,&local_170,in_stack_0000005c,iVar31,(int *)&local_1f0);
-          iVar34 = in_stack_0000005c;
+          cullPoints(iVar35,&local_170,in_stack_0000005c,iVar31,(int *)&local_1f0);
+          iVar35 = in_stack_0000005c;
           if (0 < in_stack_0000005c) {
-            pfVar30 = &local_1f0;
-            pfVar43 = in_stack_00000064 + 2;
+            pfVar34 = &local_1f0;
+            pfVar41 = in_stack_00000064 + 2;
             iVar31 = in_stack_0000005c;
             do {
-              fVar3 = *pfVar30;
-              local_268 = local_1d0[(int)fVar3 * 3] + *pfVar40;
-              pfVar43[-2] = local_268;
-              fVar4 = local_1d0[(int)fVar3 * 3 + 1] + pfVar40[1];
+              fVar3 = *pfVar34;
+              local_268 = local_1d0[(int)fVar3 * 3] + *param_1;
+              pfVar41[-2] = local_268;
+              fVar4 = local_1d0[(int)fVar3 * 3 + 1] + param_1[1];
               fVar2 = local_1d0[(int)fVar3 * 3 + 2];
-              pfVar43[-1] = fVar4;
-              fVar1 = pfVar40[2];
-              *pfVar43 = fVar2 + fVar1;
+              pfVar41[-1] = fVar4;
+              fVar1 = param_1[2];
+              *pfVar41 = fVar2 + fVar1;
               if (((((uint)local_268 & 0x7f800000) == 0x7f800000) ||
                   (local_260 = fVar4, ((uint)fVar4 & 0x7f800000) == 0x7f800000)) ||
                  (((uint)(fVar2 + fVar1) & 0x7f800000) == 0x7f800000)) {
@@ -1310,65 +1309,60 @@ LAB_82687394:
                                 ,0x2ad,0,"%s");
               }
               iVar31 = iVar31 + -1;
-              pfVar30 = pfVar30 + 1;
-              pfVar43[4] = local_240[(int)fVar3];
-              pfVar43 = (float *)((int)pfVar43 + in_stack_0000006c);
+              pfVar34 = pfVar34 + 1;
+              pfVar41[4] = local_240[(int)fVar3];
+              pfVar41 = (float *)((int)pfVar41 + in_stack_0000006c);
             } while (iVar31 != 0);
           }
         }
-        else if (0 < iVar34) {
-          pfVar43 = local_1d0 + 1;
-          pfVar30 = &fStack_244;
-          pfVar41 = in_stack_00000064 + 2;
-          iVar31 = iVar34;
+        else if (0 < iVar35) {
+          pfVar41 = local_1d0 + 1;
+          pfVar34 = &fStack_244;
+          pfVar40 = in_stack_00000064 + 2;
+          iVar31 = iVar35;
           do {
-            local_268 = *pfVar40 + pfVar43[-1];
-            fVar1 = *pfVar43;
-            pfVar41[-2] = local_268;
-            fVar1 = fVar1 + pfVar40[1];
-            fVar2 = pfVar43[1];
-            pfVar41[-1] = fVar1;
-            fVar3 = pfVar40[2];
-            *pfVar41 = fVar2 + fVar3;
+            local_268 = *param_1 + pfVar41[-1];
+            fVar1 = *pfVar41;
+            pfVar40[-2] = local_268;
+            fVar1 = fVar1 + param_1[1];
+            fVar2 = pfVar41[1];
+            pfVar40[-1] = fVar1;
+            fVar3 = param_1[2];
+            *pfVar40 = fVar2 + fVar3;
             if (((((uint)local_268 & 0x7f800000) == 0x7f800000) ||
                 (local_260 = fVar1, ((uint)fVar1 & 0x7f800000) == 0x7f800000)) ||
                (((uint)(fVar2 + fVar3) & 0x7f800000) == 0x7f800000)) {
               MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\collision_std.cpp"
                               ,0x292,0,"%s");
             }
-            pfVar30 = pfVar30 + 1;
+            pfVar34 = pfVar34 + 1;
             iVar31 = iVar31 + -1;
-            pfVar41[4] = *pfVar30;
-            pfVar41 = (float *)((int)pfVar41 + in_stack_0000006c);
-            pfVar43 = pfVar43 + 3;
+            pfVar40[4] = *pfVar34;
+            pfVar40 = (float *)((int)pfVar40 + in_stack_0000006c);
+            pfVar41 = pfVar41 + 3;
           } while (iVar31 != 0);
         }
 LAB_82687970:
-        *in_stack_00000054 = uVar38;
-        __restfpr();
-        __restgprlr();
-        return iVar34;
+        *in_stack_00000054 = uVar39;
+        return iVar35;
       }
     }
   }
-LAB_82686698:
-  iVar34 = 0;
-  __restfpr();
-  __restgprlr();
-  return iVar34;
+  return 0;
 }
 
 
 // 82687988  dCollideBoxBox  (physics/ode/src/collision_std.cpp:700)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
+
 int dCollideBoxBox(dxGeom *param_1,dxGeom *param_2,int param_3,dContactGeom *param_4,int param_5)
 
 {
-  float *pfVar1;
-  int iVar2;
+  int iVar1;
+  float *pfVar2;
   longlong lVar3;
-  longlong lVar4;
-  longlong lVar5;
   int *in_stack_ffffff18;
   int in_stack_ffffff1c;
   dContactGeom *in_stack_ffffff20;
@@ -1384,15 +1378,12 @@ int dCollideBoxBox(dxGeom *param_1,dxGeom *param_2,int param_3,dContactGeom *par
   float local_4c;
   float local_48;
   
-  lVar3 = (longlong)param_5;
-  lVar4 = (longlong)(int)param_4;
-  iVar2 = __savegprlr_25(param_1);
   Profile_Begin(0x17a);
-  if ((int)lVar3 < 0x20) {
+  if (param_5 < 0x20) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\collision_std.cpp"
                     ,0x2c8,0,"%s");
   }
-  if (*(int *)(iVar2 + 4) != 0) {
+  if (param_1->type != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\collision_std.cpp"
                     ,0x2c9,0,"%s");
   }
@@ -1400,11 +1391,11 @@ int dCollideBoxBox(dxGeom *param_1,dxGeom *param_2,int param_3,dContactGeom *par
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\collision_std.cpp"
                     ,0x2ca,0,"%s");
   }
-  if (*(int *)(iVar2 + 0x18) == 0) {
+  if (param_1->pos == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\collision_std.cpp"
                     ,0x2cb,0,"%s");
   }
-  if (*(int *)(iVar2 + 0x1c) == 0) {
+  if (param_1->R == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\collision_std.cpp"
                     ,0x2cc,0,"%s");
   }
@@ -1416,46 +1407,45 @@ int dCollideBoxBox(dxGeom *param_1,dxGeom *param_2,int param_3,dContactGeom *par
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\collision_std.cpp"
                     ,0x2ce,0,"%s");
   }
-  local_78 = *(float *)(iVar2 + 0x4c) * 0.5;
-  local_74 = *(float *)(iVar2 + 0x50) * 0.5;
-  local_70 = *(float *)(iVar2 + 0x54) * 0.5;
+  local_78 = *(float *)&param_1->field_0x4c * 0.5;
+  local_74 = (float)param_1[1]._padding_ * 0.5;
+  local_70 = (float)param_1[1].type * 0.5;
   local_68 = *(float *)&param_2->field_0x4c * 0.5;
   local_64 = (float)param_2[1]._padding_ * 0.5;
   local_60 = (float)param_2[1].type * 0.5;
-  iVar2 = ODE_CollideBoxBox(*(float **)(iVar2 + 0x18),*(float **)(iVar2 + 0x1c),&local_78,
-                            param_2->pos,param_2->R,&local_68,&local_50,&fStack_7c,in_stack_ffffff18
-                            ,in_stack_ffffff1c,in_stack_ffffff20,in_stack_ffffff24);
-  if (0 < iVar2) {
-    lVar4 = lVar4 + 0x10;
-    lVar5 = (longlong)iVar2;
+  iVar1 = ODE_CollideBoxBox(param_1->pos,param_1->R,&local_78,param_2->pos,param_2->R,&local_68,
+                            &local_50,&fStack_7c,in_stack_ffffff18,in_stack_ffffff1c,
+                            in_stack_ffffff20,in_stack_ffffff24);
+  lVar3 = (longlong)iVar1;
+  if (0 < iVar1) {
+    pfVar2 = param_4->normal + 1;
     do {
-      pfVar1 = (float *)lVar4;
-      pfVar1[-1] = -local_50;
-      *pfVar1 = -local_4c;
-      pfVar1[1] = -local_48;
-      lVar4 = lVar4 + lVar3;
-      lVar5 = lVar5 + -1;
-    } while (lVar5 != 0);
+      pfVar2[-1] = -local_50;
+      *pfVar2 = -local_4c;
+      pfVar2[1] = -local_48;
+      pfVar2 = (float *)((int)pfVar2 + param_5);
+      lVar3 = lVar3 + -1;
+    } while (lVar3 != 0);
   }
   Profile_EndInternal((double *)0x0);
-  iVar2 = __restgprlr_25((longlong)iVar2);
-  return iVar2;
+  return iVar1;
 }
 
 
 // 82686068  ODE_CollideCapsuleBox  (physics/ode/src/collision_std.cpp:739)
+
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 
 int ODE_CollideCapsuleBox
               (float *param_1,float *param_2,float *param_3,float *param_4,float *param_5,
               float param_6,float param_7,int param_8,dContactGeom *param_9,int param_10)
 
 {
-  float *pfVar1;
-  int iVar2;
-  float *pfVar3;
-  double extraout_f1;
+  int iVar1;
+  float *pfVar2;
+  double dVar3;
   double dVar4;
-  double dVar5;
   int in_stack_0000005c;
   float local_90;
   float local_8c;
@@ -1466,8 +1456,7 @@ int ODE_CollideCapsuleBox
   dContactGeom adStack_70 [3];
   
   dVar4 = (double)param_7;
-  pfVar1 = (float *)__savegprlr_25((double)param_6,param_1);
-  dVar5 = extraout_f1;
+  dVar3 = (double)param_6;
   if (in_stack_0000005c < 0x20) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\collision_std.cpp"
                     ,0x2e8,0,"skip >= (int)sizeof( dContactGeom )\n\t%i, %i");
@@ -1476,7 +1465,7 @@ int ODE_CollideCapsuleBox
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\collision_std.cpp"
                     ,0x2e9,0,"%s");
   }
-  pfVar3 = &local_80;
+  pfVar2 = &local_80;
   local_90 = *param_4 + (float)((double)param_5[2] * dVar4);
   local_8c = param_4[1] + (float)((double)param_5[6] * dVar4);
   local_88 = param_4[2] + (float)((double)param_5[10] * dVar4);
@@ -1484,10 +1473,9 @@ int ODE_CollideCapsuleBox
   local_7c = param_4[1] - (float)((double)param_5[6] * dVar4);
   local_78 = param_4[2] - (float)((double)param_5[10] * dVar4);
   dClosestLineBoxPoints
-            (&local_90,pfVar3,pfVar1,param_2,param_3,adStack_70[0].normal + 1,adStack_70[0].pos);
-  iVar2 = dCollideSpheres(adStack_70[0].normal + 1,(float)dVar5,pfVar3,0.0,adStack_70);
-  iVar2 = __restgprlr_25(iVar2);
-  return iVar2;
+            (&local_90,pfVar2,param_1,param_2,param_3,adStack_70[0].normal + 1,adStack_70[0].pos);
+  iVar1 = dCollideSpheres(adStack_70[0].normal + 1,(float)dVar3,pfVar2,0.0,adStack_70);
+  return iVar1;
 }
 
 

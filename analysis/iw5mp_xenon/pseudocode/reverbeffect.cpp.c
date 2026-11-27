@@ -12,17 +12,20 @@ undefined4 XAudioQueryReverbEffectSize(XAUDIOFXINIT *param_1,ulong *param_2)
 
 // 828D8568  preprocess  (<external>/Xenon/mar09/core/private/xtl/audio/reverb/stereo_room/vardelay.hpp:44)
 
+/* WARNING: Function: __savegprlr_17 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_17 replaced with injection: xenon_save_restore */
+
 void __thiscall
 princeton_digital::vardelay_t<float,16384>::preprocess
           (vardelay_t<float,16384> *this,float *param_1,float *param_2)
 
 {
   float fVar1;
-  undefined4 uVar2;
+  float fVar2;
   undefined4 uVar3;
-  float fVar4;
-  undefined4 uVar5;
-  float fVar6;
+  undefined4 uVar4;
+  float fVar5;
+  undefined4 uVar6;
   float fVar7;
   float fVar8;
   float fVar9;
@@ -32,332 +35,328 @@ princeton_digital::vardelay_t<float,16384>::preprocess
   float fVar13;
   uint uVar14;
   uint uVar15;
-  int iVar16;
-  int iVar17;
-  int iVar18;
-  float *pfVar19;
-  int iVar20;
-  bool bVar21;
-  uint uVar22;
-  float fVar23;
-  float fVar24;
-  float fVar25;
-  float fVar26;
-  float fVar27;
-  longlong lVar28;
-  undefined4 *puVar29;
-  ulonglong uVar30;
-  longlong lVar31;
-  ulonglong uVar32;
+  float fVar16;
+  float fVar17;
+  float fVar18;
+  float fVar19;
+  float fVar20;
+  int iVar21;
+  float *pfVar22;
+  int iVar23;
+  int iVar24;
+  bool bVar25;
+  uint uVar26;
+  longlong lVar27;
+  ulonglong uVar28;
+  ulonglong uVar29;
+  longlong lVar30;
+  ulonglong uVar31;
+  longlong lVar32;
   longlong lVar33;
-  ulonglong uVar34;
-  longlong lVar35;
-  longlong lVar36;
+  longlong lVar34;
+  ulonglong uVar35;
+  uint uVar36;
   longlong lVar37;
-  ulonglong uVar38;
-  uint uVar39;
-  undefined4 *puVar40;
-  uint *puVar41;
-  float *pfVar42;
+  float *pfVar38;
+  delay_t<float,16384> *pdVar39;
+  float *pfVar40;
+  ulonglong uVar41;
+  ulonglong uVar42;
   ulonglong uVar43;
   ulonglong uVar44;
-  ulonglong uVar45;
+  longlong lVar45;
   ulonglong uVar46;
-  longlong lVar47;
-  ulonglong uVar48;
+  undefined1 auVar47 [16];
+  undefined1 auVar48 [16];
   undefined1 auVar49 [16];
   undefined1 auVar50 [16];
-  undefined1 auVar51 [16];
-  undefined1 auVar52 [16];
   uint uStack_9c;
   
-  lVar37 = (longlong)(int)param_2;
-  lVar31 = (longlong)(int)param_1;
-  lVar28 = __savegprlr_17(this);
-  iVar16 = (int)lVar28;
-  uVar14 = *(uint *)(iVar16 + 0xc);
-  uVar30 = (ulonglong)uVar14;
-  uVar15 = *(uint *)(iVar16 + 8);
-  uVar32 = (ulonglong)uVar15;
-  puVar29 = (undefined4 *)lVar37;
-  *puVar29 = *(undefined4 *)(iVar16 + 0x14);
-  puVar40 = (undefined4 *)(iVar16 + 0x14);
-  uVar43 = uVar32 - uVar30;
-  if ((4 < (uVar43 & 0xffffffff)) || (bVar21 = false, 4 < (uVar30 - uVar32 & 0xffffffff))) {
-    bVar21 = true;
+  lVar34 = (longlong)(int)param_2;
+  lVar27 = (longlong)(int)param_1;
+  lVar37 = (longlong)(int)this;
+  uVar14 = this->old_delay_;
+  uVar28 = (ulonglong)uVar14;
+  uVar15 = this->delay_;
+  uVar29 = (ulonglong)uVar15;
+  *param_2 = this->tap1_;
+  pfVar38 = &this->tap1_;
+  uVar41 = uVar29 - uVar28;
+  if ((4 < (uVar41 & 0xffffffff)) || (bVar25 = false, 4 < (uVar28 - uVar29 & 0xffffffff))) {
+    bVar25 = true;
   }
-  fVar1 = *(float *)(iVar16 + 4);
-  uVar39 = *(uint *)(iVar16 + 0x18);
-  uVar38 = (ulonglong)uVar39;
-  pfVar42 = (float *)(iVar16 + 4);
-  puVar41 = (uint *)(iVar16 + 0x18);
+  fVar1 = this->crossfade_;
+  uVar36 = (this->delay_line_).current_;
+  uVar35 = (ulonglong)uVar36;
+  pfVar40 = &this->crossfade_;
+  pdVar39 = &this->delay_line_;
   uStack_9c = (uint)(longlong)(fVar1 * 10000.0);
-  uVar22 = uStack_9c >> 1;
-  uVar46 = (ulonglong)uVar22;
-  if (uVar46 < 0x100) {
-    lVar28 = lVar28 + 0x20;
-    uVar44 = 1;
-    fVar13 = 1.0;
-    fVar12 = 1.0 - fVar1;
-    iVar17 = (int)lVar28;
-    if (3 < uVar22) {
-      uVar48 = (ulonglong)(uStack_9c >> 3);
-      uVar32 = uVar38 - uVar32;
-      lVar33 = uVar38 - uVar30;
-      lVar47 = ((ulonglong)uVar39 & 0x3fffffff) * 4 + lVar28 + -4;
-      uVar38 = (uVar46 & 0x7ffffffc) + uVar38;
-      uVar44 = (uVar46 & 0x7ffffffc) + 1;
-      uVar30 = uVar32 + 2;
-      uVar34 = lVar33 + 2;
-      lVar33 = lVar31 + -8;
-      lVar36 = lVar37 + 0xc;
+  uVar26 = uStack_9c >> 1;
+  uVar44 = (ulonglong)uVar26;
+  if (uVar44 < 0x100) {
+    lVar37 = lVar37 + 0x20;
+    uVar42 = 1;
+    fVar2 = 1.0;
+    fVar13 = 1.0 - fVar1;
+    iVar24 = (int)lVar37;
+    if (3 < uVar26) {
+      uVar46 = (ulonglong)(uStack_9c >> 3);
+      uVar29 = uVar35 - uVar29;
+      lVar30 = uVar35 - uVar28;
+      lVar45 = ((ulonglong)uVar36 & 0x3fffffff) * 4 + lVar37 + -4;
+      uVar35 = (uVar44 & 0x7ffffffc) + uVar35;
+      uVar42 = (uVar44 & 0x7ffffffc) + 1;
+      uVar28 = uVar29 + 2;
+      uVar31 = lVar30 + 2;
+      lVar30 = lVar27 + -8;
+      lVar33 = lVar34 + 0xc;
       do {
-        fVar23 = fVar1 - 0.0002;
-        fVar4 = *(float *)(((uint)((uVar32 & 0xffffffff) << 2) & 0xfffc) + iVar17);
-        iVar18 = (int)lVar33;
-        uVar2 = *(undefined4 *)(iVar18 + 0xc);
+        fVar16 = fVar1 - 0.0002;
+        fVar5 = *(float *)(((uint)((uVar29 & 0xffffffff) << 2) & 0xfffc) + iVar24);
+        iVar21 = (int)lVar30;
+        uVar3 = *(undefined4 *)(iVar21 + 0xc);
+        lVar30 = lVar30 + 0x10;
+        uVar4 = *(undefined4 *)lVar30;
+        pfVar22 = (float *)lVar33;
+        uVar6 = *(undefined4 *)(((int)param_1 - (int)param_2) + (int)pfVar22);
+        fVar7 = *(float *)(((uint)((uVar29 + uVar41 & 0xffffffff) << 2) & 0xfffc) + iVar24);
+        iVar23 = (int)lVar45;
+        *(undefined4 *)(iVar23 + 4) = *(undefined4 *)(iVar21 + 8);
+        fVar17 = fVar16 - 0.0002;
+        fVar8 = *(float *)(((uint)((uVar31 - 1 & 0xffffffff) << 2) & 0xfffc) + iVar24);
+        fVar9 = *(float *)(((uint)((uVar28 - 1 & 0xffffffff) << 2) & 0xfffc) + iVar24);
+        uVar29 = uVar29 + 4;
+        *(undefined4 *)(iVar23 + 8) = uVar3;
+        fVar18 = fVar17 - 0.0002;
+        fVar10 = *(float *)(((uint)((uVar31 & 0xffffffff) << 2) & 0xfffc) + iVar24);
+        fVar19 = fVar13 + 0.0002 + 0.0002;
+        fVar11 = *(float *)(((uint)((uVar28 & 0xffffffff) << 2) & 0xfffc) + iVar24);
+        *(undefined4 *)(iVar23 + 0xc) = uVar4;
+        fVar12 = *(float *)(((uint)((uVar31 + 1 & 0xffffffff) << 2) & 0xfffc) + iVar24);
+        fVar20 = fVar19 + 0.0002;
+        uVar43 = uVar28 + 1;
+        pfVar22[-2] = fVar7 * fVar1 + fVar5 * fVar13;
+        fVar1 = fVar18 - 0.0002;
+        pfVar22[-1] = fVar9 * (fVar13 + 0.0002) + fVar8 * fVar16;
+        *pfVar22 = fVar11 * fVar19 + fVar10 * fVar17;
+        uVar31 = uVar31 + 4;
+        uVar28 = uVar28 + 4;
+        fVar13 = *(float *)(((uint)((uVar43 & 0xffffffff) << 2) & 0xfffc) + iVar24);
+        lVar45 = lVar45 + 0x10;
+        *(undefined4 *)lVar45 = uVar6;
+        pfVar22[1] = fVar13 * fVar20 + fVar12 * fVar18;
+        fVar13 = fVar20 + 0.0002;
         lVar33 = lVar33 + 0x10;
-        uVar3 = *(undefined4 *)lVar33;
-        pfVar19 = (float *)lVar36;
-        uVar5 = *(undefined4 *)(((int)lVar31 - (int)puVar29) + (int)pfVar19);
-        fVar6 = *(float *)(((uint)((uVar32 + uVar43 & 0xffffffff) << 2) & 0xfffc) + iVar17);
-        iVar20 = (int)lVar47;
-        *(undefined4 *)(iVar20 + 4) = *(undefined4 *)(iVar18 + 8);
-        fVar24 = fVar23 - 0.0002;
-        fVar7 = *(float *)(((uint)((uVar34 - 1 & 0xffffffff) << 2) & 0xfffc) + iVar17);
-        fVar8 = *(float *)(((uint)((uVar30 - 1 & 0xffffffff) << 2) & 0xfffc) + iVar17);
-        uVar32 = uVar32 + 4;
-        *(undefined4 *)(iVar20 + 8) = uVar2;
-        fVar25 = fVar24 - 0.0002;
-        fVar9 = *(float *)(((uint)((uVar34 & 0xffffffff) << 2) & 0xfffc) + iVar17);
-        fVar26 = fVar12 + 0.0002 + 0.0002;
-        fVar10 = *(float *)(((uint)((uVar30 & 0xffffffff) << 2) & 0xfffc) + iVar17);
-        *(undefined4 *)(iVar20 + 0xc) = uVar3;
-        fVar11 = *(float *)(((uint)((uVar34 + 1 & 0xffffffff) << 2) & 0xfffc) + iVar17);
-        fVar27 = fVar26 + 0.0002;
-        uVar45 = uVar30 + 1;
-        pfVar19[-2] = fVar6 * fVar1 + fVar4 * fVar12;
-        fVar1 = fVar25 - 0.0002;
-        pfVar19[-1] = fVar8 * (fVar12 + 0.0002) + fVar7 * fVar23;
-        *pfVar19 = fVar10 * fVar26 + fVar9 * fVar24;
-        uVar34 = uVar34 + 4;
-        uVar30 = uVar30 + 4;
-        fVar12 = *(float *)(((uint)((uVar45 & 0xffffffff) << 2) & 0xfffc) + iVar17);
-        lVar47 = lVar47 + 0x10;
-        *(undefined4 *)lVar47 = uVar5;
-        pfVar19[1] = fVar12 * fVar27 + fVar11 * fVar25;
-        fVar12 = fVar27 + 0.0002;
-        lVar36 = lVar36 + 0x10;
-        uVar48 = uVar48 - 1;
-      } while (uVar48 != 0);
-      *pfVar42 = fVar1;
+        uVar46 = uVar46 - 1;
+      } while (uVar46 != 0);
+      *pfVar40 = fVar1;
     }
-    if (uVar44 <= uVar46) {
-      uVar14 = *(uint *)(iVar16 + 8);
-      uVar15 = *(uint *)(iVar16 + 0xc);
-      lVar36 = (uVar44 & 0x3fffffff) * 4;
-      fVar1 = *pfVar42;
-      lVar35 = (uVar46 - uVar44) + 1;
-      lVar47 = (uVar38 & 0x3fffffff) * 4 + lVar28 + -4;
-      uVar30 = uVar38 - uVar14;
-      lVar33 = lVar36 + lVar31 + -8;
-      lVar36 = lVar36 + lVar37 + -4;
-      uVar38 = lVar35 + uVar38;
+    if (uVar42 <= uVar44) {
+      uVar14 = this->delay_;
+      uVar15 = this->old_delay_;
+      lVar33 = (uVar42 & 0x3fffffff) * 4;
+      fVar1 = *pfVar40;
+      lVar32 = (uVar44 - uVar42) + 1;
+      lVar45 = (uVar35 & 0x3fffffff) * 4 + lVar37 + -4;
+      uVar28 = uVar35 - uVar14;
+      lVar30 = lVar33 + lVar27 + -8;
+      lVar33 = lVar33 + lVar34 + -4;
+      uVar35 = lVar32 + uVar35;
       do {
-        uVar32 = uVar30 & 0xffffffff;
+        uVar29 = uVar28 & 0xffffffff;
+        lVar30 = lVar30 + 4;
+        uVar41 = ((ulonglong)uVar14 - (ulonglong)uVar15) + uVar28;
+        uVar28 = uVar28 + 1;
+        fVar7 = *(float *)(((uint)(uVar29 << 2) & 0xfffc) + iVar24) * fVar13;
+        fVar13 = fVar13 + 0.0002;
+        fVar5 = *(float *)(((uint)((uVar41 & 0xffffffff) << 2) & 0xfffc) + iVar24);
+        lVar45 = lVar45 + 4;
+        *(undefined4 *)lVar45 = *(undefined4 *)lVar30;
         lVar33 = lVar33 + 4;
-        uVar43 = ((ulonglong)uVar14 - (ulonglong)uVar15) + uVar30;
-        uVar30 = uVar30 + 1;
-        fVar6 = *(float *)(((uint)(uVar32 << 2) & 0xfffc) + iVar17) * fVar12;
-        fVar12 = fVar12 + 0.0002;
-        fVar4 = *(float *)(((uint)((uVar43 & 0xffffffff) << 2) & 0xfffc) + iVar17);
-        lVar47 = lVar47 + 4;
-        *(undefined4 *)lVar47 = *(undefined4 *)lVar33;
-        lVar36 = lVar36 + 4;
-        *(float *)lVar36 = fVar4 * fVar1 + fVar6;
+        *(float *)lVar33 = fVar5 * fVar1 + fVar7;
         fVar1 = fVar1 - 0.0002;
-        lVar35 = lVar35 + -1;
-      } while (lVar35 != 0);
-      *pfVar42 = fVar1;
+        lVar32 = lVar32 + -1;
+      } while (lVar32 != 0);
+      *pfVar40 = fVar1;
     }
-    uVar30 = (ulonglong)*(uint *)(iVar16 + 0x10);
-    if (uVar30 == *(uint *)(iVar16 + 8)) {
-      fVar13 = 0.0;
+    uVar28 = (ulonglong)this->future_delay_;
+    if (uVar28 == this->delay_) {
+      fVar2 = 0.0;
     }
-    *pfVar42 = fVar13;
-    fVar1 = 1.0 - fVar13;
-    *(uint *)(iVar16 + 0xc) = *(uint *)(iVar16 + 8);
-    *(uint *)(iVar16 + 8) = *(uint *)(iVar16 + 0x10);
-    if (3 < (int)(0x100 - uVar22)) {
-      uVar14 = *(uint *)(iVar16 + 0xc);
-      lVar36 = ((0xfc - uVar46 & 0xffffffff) >> 2) + 1;
-      uVar43 = lVar36 * 4 & 0xfffffffc;
-      uVar32 = (uVar38 - uVar14) + 2;
-      uVar44 = uVar38 - uVar30;
-      lVar33 = (uVar46 & 0x3fffffff) * 4 + lVar31 + -4;
-      lVar47 = (uVar38 & 0x3fffffff) * 4 + lVar28 + -4;
-      uVar38 = uVar43 + uVar38;
-      lVar35 = ((uVar46 + 2) * 4 & 0xfffffffc) + lVar37;
-      uVar46 = uVar43 + uVar46;
-      uVar43 = uVar44 + 2;
+    *pfVar40 = fVar2;
+    fVar1 = 1.0 - fVar2;
+    this->old_delay_ = this->delay_;
+    this->delay_ = this->future_delay_;
+    if (3 < (int)(0x100 - uVar26)) {
+      uVar14 = this->old_delay_;
+      lVar33 = ((0xfc - uVar44 & 0xffffffff) >> 2) + 1;
+      uVar41 = lVar33 * 4 & 0xfffffffc;
+      uVar29 = (uVar35 - uVar14) + 2;
+      uVar42 = uVar35 - uVar28;
+      lVar30 = (uVar44 & 0x3fffffff) * 4 + lVar27 + -4;
+      lVar45 = (uVar35 & 0x3fffffff) * 4 + lVar37 + -4;
+      uVar35 = uVar41 + uVar35;
+      lVar32 = ((uVar44 + 2) * 4 & 0xfffffffc) + lVar34;
+      uVar44 = uVar41 + uVar44;
+      uVar41 = uVar42 + 2;
       do {
-        fVar12 = *(float *)(((uint)((uVar44 & 0xffffffff) << 2) & 0xfffc) + iVar17);
-        uVar2 = *(undefined4 *)((int)lVar33 + 8);
-        pfVar19 = (float *)lVar35;
-        uVar3 = *(undefined4 *)((int)pfVar19 + ((int)lVar31 - (int)puVar29));
-        fVar4 = *(float *)(((uint)(((uVar30 - uVar14) + uVar44 & 0xffffffff) << 2) & 0xfffc) +
-                          iVar17);
-        iVar18 = (int)lVar47;
-        *(undefined4 *)(iVar18 + 4) = *(undefined4 *)((int)lVar33 + 4);
-        fVar6 = *(float *)(((uint)((uVar43 - 1 & 0xffffffff) << 2) & 0xfffc) + iVar17);
-        fVar9 = fVar1 + 0.0002 + 0.0002;
-        fVar7 = *(float *)(((uint)((uVar32 - 1 & 0xffffffff) << 2) & 0xfffc) + iVar17);
-        fVar10 = (fVar13 - 0.0002) - 0.0002;
-        *(undefined4 *)(iVar18 + 8) = uVar2;
-        fVar8 = *(float *)(((uint)((uVar43 & 0xffffffff) << 2) & 0xfffc) + iVar17);
-        fVar11 = fVar9 + 0.0002;
-        *pfVar19 = fVar7 * (fVar13 - 0.0002) + fVar6 * (fVar1 + 0.0002);
-        fVar6 = *(float *)(((uint)((uVar32 & 0xffffffff) << 2) & 0xfffc) + iVar17);
-        *(undefined4 *)(iVar18 + 0xc) = uVar3;
-        fVar23 = fVar10 - 0.0002;
-        fVar7 = *(float *)(((uint)((uVar43 + 1 & 0xffffffff) << 2) & 0xfffc) + iVar17);
-        pfVar19[-1] = fVar4 * fVar13 + fVar12 * fVar1;
-        fVar1 = *(float *)(((uint)((uVar32 + 1 & 0xffffffff) << 2) & 0xfffc) + iVar17);
-        uVar44 = uVar44 + 4;
-        lVar33 = lVar33 + 0x10;
-        uVar2 = *(undefined4 *)lVar33;
-        pfVar19[1] = fVar6 * fVar10 + fVar8 * fVar9;
-        uVar32 = uVar32 + 4;
-        lVar47 = lVar47 + 0x10;
-        *(undefined4 *)lVar47 = uVar2;
-        uVar43 = uVar43 + 4;
-        pfVar19[2] = fVar1 * fVar23 + fVar7 * fVar11;
-        fVar13 = fVar23 - 0.0002;
-        lVar35 = lVar35 + 0x10;
-        fVar1 = fVar11 + 0.0002;
-        lVar36 = lVar36 + -1;
-      } while (lVar36 != 0);
-      *pfVar42 = fVar13;
+        fVar13 = *(float *)(((uint)((uVar42 & 0xffffffff) << 2) & 0xfffc) + iVar24);
+        uVar3 = *(undefined4 *)((int)lVar30 + 8);
+        pfVar22 = (float *)lVar32;
+        uVar4 = *(undefined4 *)((int)pfVar22 + ((int)param_1 - (int)param_2));
+        fVar5 = *(float *)(((uint)(((uVar28 - uVar14) + uVar42 & 0xffffffff) << 2) & 0xfffc) +
+                          iVar24);
+        iVar21 = (int)lVar45;
+        *(undefined4 *)(iVar21 + 4) = *(undefined4 *)((int)lVar30 + 4);
+        fVar7 = *(float *)(((uint)((uVar41 - 1 & 0xffffffff) << 2) & 0xfffc) + iVar24);
+        fVar10 = fVar1 + 0.0002 + 0.0002;
+        fVar8 = *(float *)(((uint)((uVar29 - 1 & 0xffffffff) << 2) & 0xfffc) + iVar24);
+        fVar11 = (fVar2 - 0.0002) - 0.0002;
+        *(undefined4 *)(iVar21 + 8) = uVar3;
+        fVar9 = *(float *)(((uint)((uVar41 & 0xffffffff) << 2) & 0xfffc) + iVar24);
+        fVar12 = fVar10 + 0.0002;
+        *pfVar22 = fVar8 * (fVar2 - 0.0002) + fVar7 * (fVar1 + 0.0002);
+        fVar7 = *(float *)(((uint)((uVar29 & 0xffffffff) << 2) & 0xfffc) + iVar24);
+        *(undefined4 *)(iVar21 + 0xc) = uVar4;
+        fVar16 = fVar11 - 0.0002;
+        fVar8 = *(float *)(((uint)((uVar41 + 1 & 0xffffffff) << 2) & 0xfffc) + iVar24);
+        pfVar22[-1] = fVar5 * fVar2 + fVar13 * fVar1;
+        fVar1 = *(float *)(((uint)((uVar29 + 1 & 0xffffffff) << 2) & 0xfffc) + iVar24);
+        uVar42 = uVar42 + 4;
+        lVar30 = lVar30 + 0x10;
+        uVar3 = *(undefined4 *)lVar30;
+        pfVar22[1] = fVar7 * fVar11 + fVar9 * fVar10;
+        uVar29 = uVar29 + 4;
+        lVar45 = lVar45 + 0x10;
+        *(undefined4 *)lVar45 = uVar3;
+        uVar41 = uVar41 + 4;
+        pfVar22[2] = fVar1 * fVar16 + fVar8 * fVar12;
+        fVar2 = fVar16 - 0.0002;
+        lVar32 = lVar32 + 0x10;
+        fVar1 = fVar12 + 0.0002;
+        lVar33 = lVar33 + -1;
+      } while (lVar33 != 0);
+      *pfVar40 = fVar2;
     }
-    uVar39 = (uint)uVar38;
-    if ((uVar46 & 0xffffffff) < 0x100) {
-      uVar14 = *(uint *)(iVar16 + 8);
-      lVar33 = (uVar46 & 0x3fffffff) * 4;
-      uVar15 = *(uint *)(iVar16 + 0xc);
-      lVar47 = 0x100 - uVar46;
-      fVar12 = *pfVar42;
-      lVar28 = (uVar38 & 0x3fffffff) * 4 + lVar28 + -4;
-      uVar38 = uVar38 - uVar14;
-      lVar31 = lVar33 + lVar31 + -4;
-      lVar33 = lVar33 + lVar37;
-      uVar39 = (int)lVar47 + uVar39;
+    uVar36 = (uint)uVar35;
+    if ((uVar44 & 0xffffffff) < 0x100) {
+      uVar14 = this->delay_;
+      lVar45 = (uVar44 & 0x3fffffff) * 4;
+      uVar15 = this->old_delay_;
+      lVar33 = 0x100 - uVar44;
+      fVar2 = *pfVar40;
+      lVar30 = (uVar35 & 0x3fffffff) * 4 + lVar37 + -4;
+      uVar35 = uVar35 - uVar14;
+      lVar37 = lVar45 + lVar27 + -4;
+      lVar45 = lVar45 + lVar34;
+      uVar36 = (int)lVar33 + uVar36;
       do {
-        uVar30 = uVar38 & 0xffffffff;
-        lVar31 = lVar31 + 4;
-        uVar32 = ((ulonglong)uVar14 - (ulonglong)uVar15) + uVar38;
-        uVar38 = uVar38 + 1;
-        fVar4 = *(float *)(((uint)(uVar30 << 2) & 0xfffc) + iVar17) * fVar1;
+        uVar28 = uVar35 & 0xffffffff;
+        lVar37 = lVar37 + 4;
+        uVar29 = ((ulonglong)uVar14 - (ulonglong)uVar15) + uVar35;
+        uVar35 = uVar35 + 1;
+        fVar5 = *(float *)(((uint)(uVar28 << 2) & 0xfffc) + iVar24) * fVar1;
         fVar1 = fVar1 + 0.0002;
-        fVar13 = *(float *)(((uint)((uVar32 & 0xffffffff) << 2) & 0xfffc) + iVar17);
-        lVar28 = lVar28 + 4;
-        *(undefined4 *)lVar28 = *(undefined4 *)lVar31;
-        lVar33 = lVar33 + 4;
-        *(float *)lVar33 = fVar13 * fVar12 + fVar4;
-        fVar12 = fVar12 - 0.0002;
-        lVar47 = lVar47 + -1;
-      } while (lVar47 != 0);
-      *pfVar42 = fVar12;
+        fVar13 = *(float *)(((uint)((uVar29 & 0xffffffff) << 2) & 0xfffc) + iVar24);
+        lVar30 = lVar30 + 4;
+        *(undefined4 *)lVar30 = *(undefined4 *)lVar37;
+        lVar45 = lVar45 + 4;
+        *(float *)lVar45 = fVar13 * fVar2 + fVar5;
+        fVar2 = fVar2 - 0.0002;
+        lVar33 = lVar33 + -1;
+      } while (lVar33 != 0);
+      *pfVar40 = fVar2;
     }
-    *puVar41 = uVar39 & 0x3fff;
+    pdVar39->current_ = uVar36 & 0x3fff;
   }
   else {
-    if (((((uVar38 + 0x100 & 0xffffffff) < 0x4000) &&
-         (((uVar38 - uVar30) + 0x100 & 0xffffffff) < 0x4000)) &&
-        (((uVar38 - uVar32) + 0x100 & 0xffffffff) < 0x4000)) &&
-       ((-1 < (int)(uVar38 - uVar30) && (-1 < (int)(uVar38 - uVar32))))) {
-      lVar33 = (uVar38 + 8 & 0x3fffffff) * 4 + lVar28;
-      uVar39 = (uint)(uVar38 + 0x100);
-      if (bVar21) {
-        uVar30 = (ulonglong)uVar15 & 0x3fffffff;
-        lVar28 = lVar33 + uVar30 * -4;
-        lVar47 = 0x100;
-        lVar33 = lVar33 + -4;
-        fVar12 = 1.0 - fVar1;
-        lVar31 = lVar31 + -4;
+    if (((((uVar35 + 0x100 & 0xffffffff) < 0x4000) &&
+         (((uVar35 - uVar28) + 0x100 & 0xffffffff) < 0x4000)) &&
+        (((uVar35 - uVar29) + 0x100 & 0xffffffff) < 0x4000)) &&
+       ((-1 < (int)(uVar35 - uVar28) && (-1 < (int)(uVar35 - uVar29))))) {
+      lVar37 = (uVar35 + 8 & 0x3fffffff) * 4 + lVar37;
+      uVar36 = (uint)(uVar35 + 0x100);
+      if (bVar25) {
+        uVar28 = (ulonglong)uVar15 & 0x3fffffff;
+        lVar30 = lVar37 + uVar28 * -4;
+        lVar45 = 0x100;
+        lVar37 = lVar37 + -4;
+        fVar2 = 1.0 - fVar1;
+        lVar27 = lVar27 + -4;
         do {
-          fVar4 = *(float *)lVar28 * fVar12;
-          fVar13 = ((float *)lVar28)[(int)uVar30 - (uVar14 & 0x3fffffff)];
-          lVar31 = lVar31 + 4;
-          fVar12 = fVar12 + 0.0002;
-          lVar33 = lVar33 + 4;
-          *(undefined4 *)lVar33 = *(undefined4 *)lVar31;
-          lVar28 = lVar28 + 4;
+          fVar5 = *(float *)lVar30 * fVar2;
+          fVar13 = ((float *)lVar30)[(int)uVar28 - uVar14];
+          lVar27 = lVar27 + 4;
+          fVar2 = fVar2 + 0.0002;
           lVar37 = lVar37 + 4;
-          *(float *)lVar37 = fVar13 * fVar1 + fVar4;
+          *(undefined4 *)lVar37 = *(undefined4 *)lVar27;
+          lVar30 = lVar30 + 4;
+          lVar34 = lVar34 + 4;
+          *(float *)lVar34 = fVar13 * fVar1 + fVar5;
           fVar1 = fVar1 - 0.0002;
-          lVar47 = lVar47 + -1;
-        } while (lVar47 != 0);
-        *pfVar42 = fVar1;
-        *puVar41 = uVar39;
-        *puVar40 = puVar29[0x100];
-        __restgprlr_17();
+          lVar45 = lVar45 + -1;
+        } while (lVar45 != 0);
+        *pfVar40 = fVar1;
+        pdVar39->current_ = uVar36;
+        *pfVar38 = param_2[0x100];
         return;
       }
-      lVar37 = lVar37 + 4;
-      lVar47 = lVar33 + ((ulonglong)uVar14 & 0x3fffffff) * -4;
-      lVar36 = 0x41;
+      lVar34 = lVar34 + 4;
+      lVar30 = lVar37 + ((ulonglong)uVar14 & 0x3fffffff) * -4;
+      lVar45 = 0x41;
       do {
-        auVar52 = loadVectorRightIndexed(lVar31 + 0x10);
-        auVar51 = loadVectorLeftIndexed(lVar31);
-        lVar31 = lVar31 + 0x10;
-        auVar50 = loadVectorRightIndexed(lVar47 + 0x10);
-        auVar49 = loadVectorLeftIndexed(lVar47);
-        lVar47 = lVar47 + 0x10;
-        storeVectorLeftIndexed(auVar51 | auVar52,lVar33);
-        storeVectorRightIndexed(auVar51 | auVar52,lVar33 + 0x10);
-        lVar33 = lVar33 + 0x10;
+        auVar50 = loadVectorRightIndexed(lVar27 + 0x10);
+        auVar49 = loadVectorLeftIndexed(lVar27);
+        lVar27 = lVar27 + 0x10;
+        auVar48 = loadVectorRightIndexed(lVar30 + 0x10);
+        auVar47 = loadVectorLeftIndexed(lVar30);
+        lVar30 = lVar30 + 0x10;
         storeVectorLeftIndexed(auVar49 | auVar50,lVar37);
         storeVectorRightIndexed(auVar49 | auVar50,lVar37 + 0x10);
         lVar37 = lVar37 + 0x10;
-        lVar36 = lVar36 + -1;
-      } while (lVar36 != 0);
-      *puVar41 = uVar39;
-      *pfVar42 = fVar1 - 0.0512;
-      *puVar40 = puVar29[0x100];
-      __restgprlr_17(lVar28,lVar31);
+        storeVectorLeftIndexed(auVar47 | auVar48,lVar34);
+        storeVectorRightIndexed(auVar47 | auVar48,lVar34 + 0x10);
+        lVar34 = lVar34 + 0x10;
+        lVar45 = lVar45 + -1;
+      } while (lVar45 != 0);
+      pdVar39->current_ = uVar36;
+      *pfVar40 = fVar1 - 0.0512;
+      *pfVar38 = param_2[0x100];
       return;
     }
-    uVar38 = uVar38 - uVar32;
-    lVar47 = 0x100;
-    lVar31 = lVar31 + -4;
-    fVar12 = 1.0 - fVar1;
-    lVar33 = ((ulonglong)uVar39 & 0x3fffffff) * 4 + lVar28 + 0x20 + -4;
-    uVar39 = uVar39 + 0x100;
+    uVar35 = uVar35 - uVar29;
+    lVar45 = 0x100;
+    lVar27 = lVar27 + -4;
+    fVar2 = 1.0 - fVar1;
+    lVar30 = ((ulonglong)uVar36 & 0x3fffffff) * 4 + lVar37 + 0x20 + -4;
+    uVar36 = uVar36 + 0x100;
     do {
-      iVar16 = (int)(lVar28 + 0x20);
-      uVar30 = uVar38 + uVar43;
-      fVar4 = *(float *)(((uint)((uVar38 & 0xffffffff) << 2) & 0xfffc) + iVar16) * fVar12;
-      uVar38 = uVar38 + 1;
-      lVar31 = lVar31 + 4;
-      fVar12 = fVar12 + 0.0002;
-      fVar13 = *(float *)(((uint)((uVar30 & 0xffffffff) << 2) & 0xfffc) + iVar16);
-      lVar33 = lVar33 + 4;
-      *(undefined4 *)lVar33 = *(undefined4 *)lVar31;
-      lVar37 = lVar37 + 4;
-      *(float *)lVar37 = fVar13 * fVar1 + fVar4;
+      iVar24 = (int)(lVar37 + 0x20);
+      uVar28 = uVar35 + uVar41;
+      fVar5 = *(float *)(((uint)((uVar35 & 0xffffffff) << 2) & 0xfffc) + iVar24) * fVar2;
+      uVar35 = uVar35 + 1;
+      lVar27 = lVar27 + 4;
+      fVar2 = fVar2 + 0.0002;
+      fVar13 = *(float *)(((uint)((uVar28 & 0xffffffff) << 2) & 0xfffc) + iVar24);
+      lVar30 = lVar30 + 4;
+      *(undefined4 *)lVar30 = *(undefined4 *)lVar27;
+      lVar34 = lVar34 + 4;
+      *(float *)lVar34 = fVar13 * fVar1 + fVar5;
       fVar1 = fVar1 - 0.0002;
-      lVar47 = lVar47 + -1;
-    } while (lVar47 != 0);
-    *pfVar42 = fVar1;
+      lVar45 = lVar45 + -1;
+    } while (lVar45 != 0);
+    *pfVar40 = fVar1;
   }
-  *puVar40 = puVar29[0x100];
-  *puVar41 = uVar39 & 0x3fff;
-  __restgprlr_17();
+  *pfVar38 = param_2[0x100];
+  pdVar39->current_ = uVar36 & 0x3fff;
   return;
 }
 
 
 // 828D9628  preprocess  (<external>/Xenon/mar09/core/private/xtl/audio/reverb/stereo_room/vardelay.hpp:44)
+
+/* WARNING: Function: __savegprlr_20 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_20 replaced with injection: xenon_save_restore */
 
 void __thiscall
 princeton_digital::vardelay_t<float,256>::preprocess
@@ -365,11 +364,11 @@ princeton_digital::vardelay_t<float,256>::preprocess
 
 {
   float fVar1;
-  undefined4 uVar2;
+  float fVar2;
   undefined4 uVar3;
-  float fVar4;
-  undefined4 uVar5;
-  float fVar6;
+  undefined4 uVar4;
+  float fVar5;
+  undefined4 uVar6;
   float fVar7;
   float fVar8;
   float fVar9;
@@ -380,256 +379,251 @@ princeton_digital::vardelay_t<float,256>::preprocess
   uint uVar14;
   uint uVar15;
   uint uVar16;
-  int iVar17;
-  int iVar18;
-  float *pfVar19;
-  int iVar20;
-  int iVar21;
-  float fVar22;
-  float fVar23;
-  float fVar24;
-  float fVar25;
-  float fVar26;
-  longlong lVar27;
+  float fVar17;
+  float fVar18;
+  float fVar19;
+  float fVar20;
+  float fVar21;
+  int iVar22;
+  float *pfVar23;
+  int iVar24;
+  int iVar25;
+  longlong lVar26;
+  ulonglong uVar27;
   longlong lVar28;
-  undefined4 *puVar29;
+  longlong lVar29;
   ulonglong uVar30;
   longlong lVar31;
   longlong lVar32;
   ulonglong uVar33;
-  longlong lVar34;
+  uint uVar34;
   longlong lVar35;
   ulonglong uVar36;
-  uint uVar37;
+  ulonglong uVar37;
   ulonglong uVar38;
   ulonglong uVar39;
-  ulonglong uVar40;
+  longlong lVar40;
   ulonglong uVar41;
-  longlong lVar42;
-  ulonglong uVar43;
   uint uStack_7c;
   
-  lVar28 = (longlong)(int)param_2;
-  lVar31 = (longlong)(int)param_1;
-  lVar27 = __savegprlr_20(this);
-  iVar17 = (int)lVar27;
-  puVar29 = (undefined4 *)lVar28;
-  *puVar29 = *(undefined4 *)(iVar17 + 0x14);
-  uVar37 = *(uint *)(iVar17 + 0x18);
-  uVar36 = (ulonglong)uVar37;
-  fVar1 = *(float *)(iVar17 + 4);
+  lVar26 = (longlong)(int)param_2;
+  lVar28 = (longlong)(int)param_1;
+  *param_2 = this->tap1_;
+  uVar34 = (this->delay_line_).current_;
+  uVar33 = (ulonglong)uVar34;
+  fVar1 = this->crossfade_;
   uStack_7c = (uint)(longlong)(fVar1 * 10000.0);
   uVar16 = uStack_7c >> 1;
-  uVar40 = (ulonglong)uVar16;
-  if (uVar40 < 0x100) {
-    lVar27 = lVar27 + 0x20;
-    uVar38 = 1;
-    fVar13 = 1.0;
-    fVar12 = 1.0 - fVar1;
-    iVar21 = (int)lVar27;
+  uVar38 = (ulonglong)uVar16;
+  if (uVar38 < 0x100) {
+    lVar35 = (longlong)(int)this + 0x20;
+    uVar36 = 1;
+    fVar2 = 1.0;
+    fVar13 = 1.0 - fVar1;
+    iVar25 = (int)lVar35;
     if (3 < uVar16) {
-      uVar14 = *(uint *)(iVar17 + 8);
-      uVar43 = (ulonglong)(uStack_7c >> 3);
-      uVar15 = *(uint *)(iVar17 + 0xc);
-      uVar41 = uVar36 - uVar14;
-      lVar32 = uVar36 - uVar15;
-      lVar42 = ((ulonglong)uVar37 & 0x3fffffff) * 4 + lVar27 + -4;
-      uVar36 = (uVar40 & 0x7ffffffc) + uVar36;
-      uVar38 = (uVar40 & 0x7ffffffc) + 1;
-      uVar30 = uVar41 + 2;
-      uVar33 = lVar32 + 2;
-      lVar32 = lVar31 + -8;
-      lVar35 = lVar28 + 0xc;
+      uVar14 = this->delay_;
+      uVar41 = (ulonglong)(uStack_7c >> 3);
+      uVar15 = this->old_delay_;
+      uVar39 = uVar33 - uVar14;
+      lVar29 = uVar33 - uVar15;
+      lVar40 = ((ulonglong)uVar34 & 0x3fffffff) * 4 + lVar35 + -4;
+      uVar33 = (uVar38 & 0x7ffffffc) + uVar33;
+      uVar36 = (uVar38 & 0x7ffffffc) + 1;
+      uVar27 = uVar39 + 2;
+      uVar30 = lVar29 + 2;
+      lVar29 = lVar28 + -8;
+      lVar32 = lVar26 + 0xc;
       do {
-        fVar22 = fVar1 - 0.0002;
-        fVar4 = *(float *)(((uint)((uVar41 & 0xffffffff) << 2) & 0x3fc) + iVar21);
-        iVar18 = (int)lVar32;
-        uVar2 = *(undefined4 *)(iVar18 + 0xc);
-        lVar32 = lVar32 + 0x10;
-        uVar3 = *(undefined4 *)lVar32;
-        pfVar19 = (float *)lVar35;
-        uVar5 = *(undefined4 *)(((int)lVar31 - (int)puVar29) + (int)pfVar19);
-        fVar6 = *(float *)(((uint)((uVar41 + ((ulonglong)uVar14 - (ulonglong)uVar15) & 0xffffffff)
-                                  << 2) & 0x3fc) + iVar21);
-        iVar20 = (int)lVar42;
-        *(undefined4 *)(iVar20 + 4) = *(undefined4 *)(iVar18 + 8);
-        fVar23 = fVar22 - 0.0002;
-        fVar7 = *(float *)(((uint)((uVar33 - 1 & 0xffffffff) << 2) & 0x3fc) + iVar21);
-        fVar8 = *(float *)(((uint)((uVar30 - 1 & 0xffffffff) << 2) & 0x3fc) + iVar21);
-        uVar41 = uVar41 + 4;
-        *(undefined4 *)(iVar20 + 8) = uVar2;
-        fVar24 = fVar23 - 0.0002;
-        fVar9 = *(float *)(((uint)((uVar33 & 0xffffffff) << 2) & 0x3fc) + iVar21);
-        fVar25 = fVar12 + 0.0002 + 0.0002;
-        fVar10 = *(float *)(((uint)((uVar30 & 0xffffffff) << 2) & 0x3fc) + iVar21);
-        *(undefined4 *)(iVar20 + 0xc) = uVar3;
-        fVar11 = *(float *)(((uint)((uVar33 + 1 & 0xffffffff) << 2) & 0x3fc) + iVar21);
-        fVar26 = fVar25 + 0.0002;
-        uVar39 = uVar30 + 1;
-        pfVar19[-2] = fVar6 * fVar1 + fVar4 * fVar12;
-        fVar1 = fVar24 - 0.0002;
-        pfVar19[-1] = fVar8 * (fVar12 + 0.0002) + fVar7 * fVar22;
-        *pfVar19 = fVar10 * fVar25 + fVar9 * fVar23;
-        uVar33 = uVar33 + 4;
+        fVar17 = fVar1 - 0.0002;
+        fVar5 = *(float *)(((uint)((uVar39 & 0xffffffff) << 2) & 0x3fc) + iVar25);
+        iVar22 = (int)lVar29;
+        uVar3 = *(undefined4 *)(iVar22 + 0xc);
+        lVar29 = lVar29 + 0x10;
+        uVar4 = *(undefined4 *)lVar29;
+        pfVar23 = (float *)lVar32;
+        uVar6 = *(undefined4 *)(((int)param_1 - (int)param_2) + (int)pfVar23);
+        fVar7 = *(float *)(((uint)((uVar39 + ((ulonglong)uVar14 - (ulonglong)uVar15) & 0xffffffff)
+                                  << 2) & 0x3fc) + iVar25);
+        iVar24 = (int)lVar40;
+        *(undefined4 *)(iVar24 + 4) = *(undefined4 *)(iVar22 + 8);
+        fVar18 = fVar17 - 0.0002;
+        fVar8 = *(float *)(((uint)((uVar30 - 1 & 0xffffffff) << 2) & 0x3fc) + iVar25);
+        fVar9 = *(float *)(((uint)((uVar27 - 1 & 0xffffffff) << 2) & 0x3fc) + iVar25);
+        uVar39 = uVar39 + 4;
+        *(undefined4 *)(iVar24 + 8) = uVar3;
+        fVar19 = fVar18 - 0.0002;
+        fVar10 = *(float *)(((uint)((uVar30 & 0xffffffff) << 2) & 0x3fc) + iVar25);
+        fVar20 = fVar13 + 0.0002 + 0.0002;
+        fVar11 = *(float *)(((uint)((uVar27 & 0xffffffff) << 2) & 0x3fc) + iVar25);
+        *(undefined4 *)(iVar24 + 0xc) = uVar4;
+        fVar12 = *(float *)(((uint)((uVar30 + 1 & 0xffffffff) << 2) & 0x3fc) + iVar25);
+        fVar21 = fVar20 + 0.0002;
+        uVar37 = uVar27 + 1;
+        pfVar23[-2] = fVar7 * fVar1 + fVar5 * fVar13;
+        fVar1 = fVar19 - 0.0002;
+        pfVar23[-1] = fVar9 * (fVar13 + 0.0002) + fVar8 * fVar17;
+        *pfVar23 = fVar11 * fVar20 + fVar10 * fVar18;
         uVar30 = uVar30 + 4;
-        fVar12 = *(float *)(((uint)((uVar39 & 0xffffffff) << 2) & 0x3fc) + iVar21);
-        lVar42 = lVar42 + 0x10;
-        *(undefined4 *)lVar42 = uVar5;
-        pfVar19[1] = fVar12 * fVar26 + fVar11 * fVar24;
-        fVar12 = fVar26 + 0.0002;
-        lVar35 = lVar35 + 0x10;
-        uVar43 = uVar43 - 1;
-      } while (uVar43 != 0);
-      *(float *)(iVar17 + 4) = fVar1;
-    }
-    if (uVar38 <= uVar40) {
-      uVar37 = *(uint *)(iVar17 + 8);
-      uVar14 = *(uint *)(iVar17 + 0xc);
-      lVar35 = (uVar38 & 0x3fffffff) * 4;
-      fVar1 = *(float *)(iVar17 + 4);
-      lVar34 = (uVar40 - uVar38) + 1;
-      lVar42 = (uVar36 & 0x3fffffff) * 4 + lVar27 + -4;
-      uVar38 = uVar36 - uVar37;
-      lVar32 = lVar35 + lVar31 + -8;
-      lVar35 = lVar35 + lVar28 + -4;
-      uVar36 = lVar34 + uVar36;
-      do {
-        uVar43 = uVar38 & 0xffffffff;
-        lVar32 = lVar32 + 4;
-        uVar30 = ((ulonglong)uVar37 - (ulonglong)uVar14) + uVar38;
-        uVar38 = uVar38 + 1;
-        fVar6 = *(float *)(((uint)(uVar43 << 2) & 0x3fc) + iVar21) * fVar12;
-        fVar12 = fVar12 + 0.0002;
-        fVar4 = *(float *)(((uint)((uVar30 & 0xffffffff) << 2) & 0x3fc) + iVar21);
-        lVar42 = lVar42 + 4;
-        *(undefined4 *)lVar42 = *(undefined4 *)lVar32;
-        lVar35 = lVar35 + 4;
-        *(float *)lVar35 = fVar4 * fVar1 + fVar6;
-        fVar1 = fVar1 - 0.0002;
-        lVar34 = lVar34 + -1;
-      } while (lVar34 != 0);
-      *(float *)(iVar17 + 4) = fVar1;
-    }
-    uVar38 = (ulonglong)*(uint *)(iVar17 + 0x10);
-    uVar37 = *(uint *)(iVar17 + 8);
-    if (uVar38 == uVar37) {
-      fVar13 = 0.0;
-    }
-    *(float *)(iVar17 + 4) = fVar13;
-    fVar1 = 1.0 - fVar13;
-    *(uint *)(iVar17 + 8) = *(uint *)(iVar17 + 0x10);
-    *(uint *)(iVar17 + 0xc) = uVar37;
-    if (3 < (int)(0x100 - uVar16)) {
-      uVar37 = *(uint *)(iVar17 + 0xc);
-      lVar35 = ((0xfc - uVar40 & 0xffffffff) >> 2) + 1;
-      uVar30 = lVar35 * 4 & 0xfffffffc;
-      uVar43 = (uVar36 - uVar37) + 2;
-      uVar33 = uVar36 - uVar38;
-      lVar32 = (uVar40 & 0x3fffffff) * 4 + lVar31 + -4;
-      lVar42 = (uVar36 & 0x3fffffff) * 4 + lVar27 + -4;
-      uVar36 = uVar30 + uVar36;
-      lVar34 = ((uVar40 + 2) * 4 & 0xfffffffc) + lVar28;
-      uVar40 = uVar30 + uVar40;
-      uVar30 = uVar33 + 2;
-      do {
-        fVar12 = *(float *)(((uint)((uVar33 & 0xffffffff) << 2) & 0x3fc) + iVar21);
-        uVar2 = *(undefined4 *)((int)lVar32 + 8);
-        pfVar19 = (float *)lVar34;
-        uVar3 = *(undefined4 *)(((int)lVar31 - (int)puVar29) + (int)pfVar19);
-        fVar4 = *(float *)(((uint)(((uVar38 - uVar37) + uVar33 & 0xffffffff) << 2) & 0x3fc) + iVar21
-                          );
-        iVar18 = (int)lVar42;
-        *(undefined4 *)(iVar18 + 4) = *(undefined4 *)((int)lVar32 + 4);
-        fVar6 = *(float *)(((uint)((uVar30 - 1 & 0xffffffff) << 2) & 0x3fc) + iVar21);
-        fVar9 = fVar1 + 0.0002 + 0.0002;
-        fVar7 = *(float *)(((uint)((uVar43 - 1 & 0xffffffff) << 2) & 0x3fc) + iVar21);
-        fVar10 = (fVar13 - 0.0002) - 0.0002;
-        *(undefined4 *)(iVar18 + 8) = uVar2;
-        fVar8 = *(float *)(((uint)((uVar30 & 0xffffffff) << 2) & 0x3fc) + iVar21);
-        fVar11 = fVar9 + 0.0002;
-        *pfVar19 = fVar7 * (fVar13 - 0.0002) + fVar6 * (fVar1 + 0.0002);
-        fVar6 = *(float *)(((uint)((uVar43 & 0xffffffff) << 2) & 0x3fc) + iVar21);
-        *(undefined4 *)(iVar18 + 0xc) = uVar3;
-        fVar22 = fVar10 - 0.0002;
-        fVar7 = *(float *)(((uint)((uVar30 + 1 & 0xffffffff) << 2) & 0x3fc) + iVar21);
-        pfVar19[-1] = fVar4 * fVar13 + fVar12 * fVar1;
-        fVar1 = *(float *)(((uint)((uVar43 + 1 & 0xffffffff) << 2) & 0x3fc) + iVar21);
-        uVar33 = uVar33 + 4;
+        uVar27 = uVar27 + 4;
+        fVar13 = *(float *)(((uint)((uVar37 & 0xffffffff) << 2) & 0x3fc) + iVar25);
+        lVar40 = lVar40 + 0x10;
+        *(undefined4 *)lVar40 = uVar6;
+        pfVar23[1] = fVar13 * fVar21 + fVar12 * fVar19;
+        fVar13 = fVar21 + 0.0002;
         lVar32 = lVar32 + 0x10;
-        uVar2 = *(undefined4 *)lVar32;
-        pfVar19[1] = fVar6 * fVar10 + fVar8 * fVar9;
-        uVar43 = uVar43 + 4;
-        lVar42 = lVar42 + 0x10;
-        *(undefined4 *)lVar42 = uVar2;
-        uVar30 = uVar30 + 4;
-        pfVar19[2] = fVar1 * fVar22 + fVar7 * fVar11;
-        fVar13 = fVar22 - 0.0002;
-        lVar34 = lVar34 + 0x10;
-        fVar1 = fVar11 + 0.0002;
-        lVar35 = lVar35 + -1;
-      } while (lVar35 != 0);
-      *(float *)(iVar17 + 4) = fVar13;
+        uVar41 = uVar41 - 1;
+      } while (uVar41 != 0);
+      this->crossfade_ = fVar1;
     }
-    uVar37 = (uint)uVar36;
-    if ((uVar40 & 0xffffffff) < 0x100) {
-      uVar16 = *(uint *)(iVar17 + 8);
-      lVar32 = (uVar40 & 0x3fffffff) * 4;
-      uVar14 = *(uint *)(iVar17 + 0xc);
-      lVar42 = 0x100 - uVar40;
-      fVar12 = *(float *)(iVar17 + 4);
-      lVar27 = (uVar36 & 0x3fffffff) * 4 + lVar27 + -4;
-      uVar36 = uVar36 - uVar16;
-      lVar31 = lVar32 + lVar31 + -4;
-      lVar32 = lVar32 + lVar28;
-      uVar37 = (int)lVar42 + uVar37;
+    if (uVar36 <= uVar38) {
+      uVar34 = this->delay_;
+      uVar14 = this->old_delay_;
+      lVar32 = (uVar36 & 0x3fffffff) * 4;
+      fVar1 = this->crossfade_;
+      lVar31 = (uVar38 - uVar36) + 1;
+      lVar40 = (uVar33 & 0x3fffffff) * 4 + lVar35 + -4;
+      uVar36 = uVar33 - uVar34;
+      lVar29 = lVar32 + lVar28 + -8;
+      lVar32 = lVar32 + lVar26 + -4;
+      uVar33 = lVar31 + uVar33;
       do {
-        uVar40 = uVar36 & 0xffffffff;
-        lVar31 = lVar31 + 4;
-        uVar38 = uVar36 + ((ulonglong)uVar16 - (ulonglong)uVar14);
+        uVar41 = uVar36 & 0xffffffff;
+        lVar29 = lVar29 + 4;
+        uVar27 = ((ulonglong)uVar34 - (ulonglong)uVar14) + uVar36;
         uVar36 = uVar36 + 1;
-        fVar4 = *(float *)(((uint)(uVar40 << 2) & 0x3fc) + iVar21) * fVar1;
-        fVar1 = fVar1 + 0.0002;
-        fVar13 = *(float *)(((uint)((uVar38 & 0xffffffff) << 2) & 0x3fc) + iVar21);
-        lVar27 = lVar27 + 4;
-        *(undefined4 *)lVar27 = *(undefined4 *)lVar31;
+        fVar7 = *(float *)(((uint)(uVar41 << 2) & 0x3fc) + iVar25) * fVar13;
+        fVar13 = fVar13 + 0.0002;
+        fVar5 = *(float *)(((uint)((uVar27 & 0xffffffff) << 2) & 0x3fc) + iVar25);
+        lVar40 = lVar40 + 4;
+        *(undefined4 *)lVar40 = *(undefined4 *)lVar29;
         lVar32 = lVar32 + 4;
-        *(float *)lVar32 = fVar13 * fVar12 + fVar4;
-        fVar12 = fVar12 - 0.0002;
-        lVar42 = lVar42 + -1;
-      } while (lVar42 != 0);
-      *(float *)(iVar17 + 4) = fVar12;
+        *(float *)lVar32 = fVar5 * fVar1 + fVar7;
+        fVar1 = fVar1 - 0.0002;
+        lVar31 = lVar31 + -1;
+      } while (lVar31 != 0);
+      this->crossfade_ = fVar1;
     }
-    *(uint *)(iVar17 + 0x18) = uVar37 & 0xff;
+    uVar36 = (ulonglong)this->future_delay_;
+    uVar34 = this->delay_;
+    if (uVar36 == uVar34) {
+      fVar2 = 0.0;
+    }
+    this->crossfade_ = fVar2;
+    fVar1 = 1.0 - fVar2;
+    this->delay_ = this->future_delay_;
+    this->old_delay_ = uVar34;
+    if (3 < (int)(0x100 - uVar16)) {
+      uVar34 = this->old_delay_;
+      lVar32 = ((0xfc - uVar38 & 0xffffffff) >> 2) + 1;
+      uVar27 = lVar32 * 4 & 0xfffffffc;
+      uVar41 = (uVar33 - uVar34) + 2;
+      uVar30 = uVar33 - uVar36;
+      lVar29 = (uVar38 & 0x3fffffff) * 4 + lVar28 + -4;
+      lVar40 = (uVar33 & 0x3fffffff) * 4 + lVar35 + -4;
+      uVar33 = uVar27 + uVar33;
+      lVar31 = ((uVar38 + 2) * 4 & 0xfffffffc) + lVar26;
+      uVar38 = uVar27 + uVar38;
+      uVar27 = uVar30 + 2;
+      do {
+        fVar13 = *(float *)(((uint)((uVar30 & 0xffffffff) << 2) & 0x3fc) + iVar25);
+        uVar3 = *(undefined4 *)((int)lVar29 + 8);
+        pfVar23 = (float *)lVar31;
+        uVar4 = *(undefined4 *)(((int)param_1 - (int)param_2) + (int)pfVar23);
+        fVar5 = *(float *)(((uint)(((uVar36 - uVar34) + uVar30 & 0xffffffff) << 2) & 0x3fc) + iVar25
+                          );
+        iVar22 = (int)lVar40;
+        *(undefined4 *)(iVar22 + 4) = *(undefined4 *)((int)lVar29 + 4);
+        fVar7 = *(float *)(((uint)((uVar27 - 1 & 0xffffffff) << 2) & 0x3fc) + iVar25);
+        fVar10 = fVar1 + 0.0002 + 0.0002;
+        fVar8 = *(float *)(((uint)((uVar41 - 1 & 0xffffffff) << 2) & 0x3fc) + iVar25);
+        fVar11 = (fVar2 - 0.0002) - 0.0002;
+        *(undefined4 *)(iVar22 + 8) = uVar3;
+        fVar9 = *(float *)(((uint)((uVar27 & 0xffffffff) << 2) & 0x3fc) + iVar25);
+        fVar12 = fVar10 + 0.0002;
+        *pfVar23 = fVar8 * (fVar2 - 0.0002) + fVar7 * (fVar1 + 0.0002);
+        fVar7 = *(float *)(((uint)((uVar41 & 0xffffffff) << 2) & 0x3fc) + iVar25);
+        *(undefined4 *)(iVar22 + 0xc) = uVar4;
+        fVar17 = fVar11 - 0.0002;
+        fVar8 = *(float *)(((uint)((uVar27 + 1 & 0xffffffff) << 2) & 0x3fc) + iVar25);
+        pfVar23[-1] = fVar5 * fVar2 + fVar13 * fVar1;
+        fVar1 = *(float *)(((uint)((uVar41 + 1 & 0xffffffff) << 2) & 0x3fc) + iVar25);
+        uVar30 = uVar30 + 4;
+        lVar29 = lVar29 + 0x10;
+        uVar3 = *(undefined4 *)lVar29;
+        pfVar23[1] = fVar7 * fVar11 + fVar9 * fVar10;
+        uVar41 = uVar41 + 4;
+        lVar40 = lVar40 + 0x10;
+        *(undefined4 *)lVar40 = uVar3;
+        uVar27 = uVar27 + 4;
+        pfVar23[2] = fVar1 * fVar17 + fVar8 * fVar12;
+        fVar2 = fVar17 - 0.0002;
+        lVar31 = lVar31 + 0x10;
+        fVar1 = fVar12 + 0.0002;
+        lVar32 = lVar32 + -1;
+      } while (lVar32 != 0);
+      this->crossfade_ = fVar2;
+    }
+    uVar34 = (uint)uVar33;
+    if ((uVar38 & 0xffffffff) < 0x100) {
+      uVar16 = this->delay_;
+      lVar29 = (uVar38 & 0x3fffffff) * 4;
+      uVar14 = this->old_delay_;
+      lVar40 = 0x100 - uVar38;
+      fVar2 = this->crossfade_;
+      lVar35 = (uVar33 & 0x3fffffff) * 4 + lVar35 + -4;
+      uVar33 = uVar33 - uVar16;
+      lVar28 = lVar29 + lVar28 + -4;
+      lVar29 = lVar29 + lVar26;
+      uVar34 = (int)lVar40 + uVar34;
+      do {
+        uVar38 = uVar33 & 0xffffffff;
+        lVar28 = lVar28 + 4;
+        uVar36 = uVar33 + ((ulonglong)uVar16 - (ulonglong)uVar14);
+        uVar33 = uVar33 + 1;
+        fVar5 = *(float *)(((uint)(uVar38 << 2) & 0x3fc) + iVar25) * fVar1;
+        fVar1 = fVar1 + 0.0002;
+        fVar13 = *(float *)(((uint)((uVar36 & 0xffffffff) << 2) & 0x3fc) + iVar25);
+        lVar35 = lVar35 + 4;
+        *(undefined4 *)lVar35 = *(undefined4 *)lVar28;
+        lVar29 = lVar29 + 4;
+        *(float *)lVar29 = fVar13 * fVar2 + fVar5;
+        fVar2 = fVar2 - 0.0002;
+        lVar40 = lVar40 + -1;
+      } while (lVar40 != 0);
+      this->crossfade_ = fVar2;
+    }
+    (this->delay_line_).current_ = uVar34 & 0xff;
   }
   else {
-    uVar16 = *(uint *)(iVar17 + 8);
-    uVar14 = *(uint *)(iVar17 + 0xc);
-    lVar42 = 0x100;
-    lVar31 = lVar31 + -4;
-    fVar12 = 1.0 - fVar1;
-    uVar36 = uVar36 - uVar16;
-    lVar32 = ((ulonglong)uVar37 & 0x3fffffff) * 4 + lVar27 + 0x20 + -4;
-    uVar37 = uVar37 + 0x100;
+    uVar16 = this->delay_;
+    uVar14 = this->old_delay_;
+    lVar29 = (longlong)(int)this + 0x20;
+    lVar40 = 0x100;
+    lVar28 = lVar28 + -4;
+    fVar2 = 1.0 - fVar1;
+    uVar33 = uVar33 - uVar16;
+    lVar35 = ((ulonglong)uVar34 & 0x3fffffff) * 4 + lVar29 + -4;
+    uVar34 = uVar34 + 0x100;
     do {
-      iVar21 = (int)(lVar27 + 0x20);
-      uVar40 = ((ulonglong)uVar16 - (ulonglong)uVar14) + uVar36;
-      fVar4 = *(float *)(((uint)((uVar36 & 0xffffffff) << 2) & 0x3fc) + iVar21) * fVar12;
-      uVar36 = uVar36 + 1;
-      lVar31 = lVar31 + 4;
-      fVar12 = fVar12 + 0.0002;
-      fVar13 = *(float *)(((uint)((uVar40 & 0xffffffff) << 2) & 0x3fc) + iVar21);
-      lVar32 = lVar32 + 4;
-      *(undefined4 *)lVar32 = *(undefined4 *)lVar31;
+      iVar25 = (int)lVar29;
+      uVar38 = ((ulonglong)uVar16 - (ulonglong)uVar14) + uVar33;
+      fVar5 = *(float *)(((uint)((uVar33 & 0xffffffff) << 2) & 0x3fc) + iVar25) * fVar2;
+      uVar33 = uVar33 + 1;
       lVar28 = lVar28 + 4;
-      *(float *)lVar28 = fVar13 * fVar1 + fVar4;
+      fVar2 = fVar2 + 0.0002;
+      fVar13 = *(float *)(((uint)((uVar38 & 0xffffffff) << 2) & 0x3fc) + iVar25);
+      lVar35 = lVar35 + 4;
+      *(undefined4 *)lVar35 = *(undefined4 *)lVar28;
+      lVar26 = lVar26 + 4;
+      *(float *)lVar26 = fVar13 * fVar1 + fVar5;
       fVar1 = fVar1 - 0.0002;
-      lVar42 = lVar42 + -1;
-    } while (lVar42 != 0);
-    *(float *)(iVar17 + 4) = fVar1;
+      lVar40 = lVar40 + -1;
+    } while (lVar40 != 0);
+    this->crossfade_ = fVar1;
   }
-  *(undefined4 *)(iVar17 + 0x14) = puVar29[0x100];
-  *(uint *)(iVar17 + 0x18) = uVar37 & 0xff;
-  __restgprlr_20();
+  this->tap1_ = param_2[0x100];
+  (this->delay_line_).current_ = uVar34 & 0xff;
   return;
 }
 
@@ -771,6 +765,9 @@ princeton_digital::occlusion_t<float,2>::preprocess
 
 // 828D8D78  preprocess  (<external>/Xenon/mar09/core/private/xtl/audio/reverb/stereo_room/allpass.hpp:64)
 
+/* WARNING: Function: __savefpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_28 replaced with injection: xenon_save_restore */
+
 void __thiscall
 princeton_digital::allpass_t<float,128>::preprocess(allpass_t<float,128> *this,float *param_1)
 
@@ -793,136 +790,149 @@ princeton_digital::allpass_t<float,128>::preprocess(allpass_t<float,128> *this,f
   float fVar16;
   float fVar17;
   float fVar18;
-  float fVar19;
-  uint *puVar20;
-  float *pfVar22;
-  longlong lVar21;
-  ulonglong uVar23;
+  uint uVar19;
+  float fVar20;
+  ulonglong uVar21;
+  ulonglong uVar22;
+  float *pfVar23;
   ulonglong uVar24;
-  float *pfVar25;
-  ulonglong uVar26;
-  ulonglong uVar27;
-  longlong lVar28;
+  ulonglong uVar25;
+  longlong lVar26;
   
-  lVar21 = (longlong)(int)param_1;
-  puVar20 = (uint *)__savefpr_28(this);
-  fVar1 = (float)puVar20[2];
-  fVar2 = (float)puVar20[1];
-  lVar28 = 0x10;
-  uVar26 = ((ulonglong)puVar20[4] - (ulonglong)*puVar20) + 2;
-  pfVar25 = (float *)(puVar20 + puVar20[4] + 5);
-  fVar10 = (float)puVar20[3];
+  uVar19 = (this->delay_line_).current_;
+  fVar1 = this->feed_backward_;
+  fVar2 = this->feed_forward_;
+  lVar26 = 0x10;
+  uVar24 = ((ulonglong)uVar19 - (ulonglong)this->delay_) + 2;
+  pfVar23 = (this->delay_line_).data_ + (uVar19 - 1);
+  fVar10 = this->output_;
   do {
-    pfVar22 = (float *)lVar21;
-    fVar3 = pfVar22[1];
-    fVar4 = pfVar22[2];
-    fVar5 = pfVar22[3];
-    fVar6 = pfVar22[4];
-    fVar7 = pfVar22[5];
-    fVar8 = pfVar22[6];
-    fVar11 = *(float *)((int)puVar20 + ((uint)((uVar26 - 2 & 0xffffffff) << 2) & 0x1fc) + 0x18);
-    fVar19 = fVar1 * fVar11 + *pfVar22;
-    pfVar25[1] = fVar19;
-    fVar12 = *(float *)((int)puVar20 + ((uint)((uVar26 - 1 & 0xffffffff) << 2) & 0x1fc) + 0x18);
+    fVar3 = param_1[1];
+    fVar4 = param_1[2];
+    fVar5 = param_1[3];
+    fVar6 = param_1[4];
+    fVar7 = param_1[5];
+    fVar8 = param_1[6];
+    fVar11 = *(float *)((int)(this->delay_line_).data_ +
+                       ((uint)((uVar24 - 2 & 0xffffffff) << 2) & 0x1fc));
+    fVar20 = fVar1 * fVar11 + *param_1;
+    pfVar23[1] = fVar20;
+    fVar12 = *(float *)((int)(this->delay_line_).data_ +
+                       ((uint)((uVar24 - 1 & 0xffffffff) << 2) & 0x1fc));
     fVar3 = fVar1 * fVar12 + fVar3;
-    pfVar25[2] = fVar3;
-    fVar13 = *(float *)((int)puVar20 + ((uint)((uVar26 & 0xffffffff) << 2) & 0x1fc) + 0x18);
+    pfVar23[2] = fVar3;
+    fVar13 = *(float *)((int)(this->delay_line_).data_ +
+                       ((uint)((uVar24 & 0xffffffff) << 2) & 0x1fc));
     fVar4 = fVar1 * fVar13 + fVar4;
-    pfVar25[3] = fVar4;
-    fVar14 = *(float *)((int)puVar20 + ((uint)((uVar26 + 1 & 0xffffffff) << 2) & 0x1fc) + 0x18);
+    pfVar23[3] = fVar4;
+    fVar14 = *(float *)((int)(this->delay_line_).data_ +
+                       ((uint)((uVar24 + 1 & 0xffffffff) << 2) & 0x1fc));
     fVar5 = fVar1 * fVar14 + fVar5;
-    pfVar25[4] = fVar5;
-    fVar15 = *(float *)((int)puVar20 + ((uint)((uVar26 + 2 & 0xffffffff) << 2) & 0x1fc) + 0x18);
+    pfVar23[4] = fVar5;
+    fVar15 = *(float *)((int)(this->delay_line_).data_ +
+                       ((uint)((uVar24 + 2 & 0xffffffff) << 2) & 0x1fc));
     fVar6 = fVar1 * fVar15 + fVar6;
-    pfVar25[5] = fVar6;
-    fVar16 = *(float *)((int)puVar20 + ((uint)((uVar26 + 3 & 0xffffffff) << 2) & 0x1fc) + 0x18);
+    pfVar23[5] = fVar6;
+    fVar16 = *(float *)((int)(this->delay_line_).data_ +
+                       ((uint)((uVar24 + 3 & 0xffffffff) << 2) & 0x1fc));
     fVar7 = fVar1 * fVar16 + fVar7;
-    pfVar25[6] = fVar7;
-    fVar17 = *(float *)((int)puVar20 + ((uint)((uVar26 + 4 & 0xffffffff) << 2) & 0x1fc) + 0x18);
+    pfVar23[6] = fVar7;
+    fVar17 = *(float *)((int)(this->delay_line_).data_ +
+                       ((uint)((uVar24 + 4 & 0xffffffff) << 2) & 0x1fc));
     fVar8 = fVar1 * fVar17 + fVar8;
-    fVar9 = pfVar22[7];
-    pfVar25[7] = fVar8;
-    fVar18 = *(float *)((int)puVar20 + ((uint)((uVar26 + 5 & 0xffffffff) << 2) & 0x1fc) + 0x18);
+    fVar9 = param_1[7];
+    pfVar23[7] = fVar8;
+    fVar18 = *(float *)((int)(this->delay_line_).data_ +
+                       ((uint)((uVar24 + 5 & 0xffffffff) << 2) & 0x1fc));
     fVar9 = fVar1 * fVar18 + fVar9;
     fVar18 = fVar2 * fVar9 + fVar18;
-    *pfVar22 = fVar10;
-    pfVar22[3] = fVar2 * fVar4 + fVar13;
-    pfVar22[1] = fVar2 * fVar19 + fVar11;
-    pfVar22[2] = fVar2 * fVar3 + fVar12;
-    pfVar22[4] = fVar2 * fVar5 + fVar14;
-    pfVar22[5] = fVar2 * fVar6 + fVar15;
-    pfVar22[6] = fVar2 * fVar7 + fVar16;
-    uVar26 = uVar26 + 8;
-    pfVar22[7] = fVar2 * fVar8 + fVar17;
-    lVar21 = lVar21 + 0x20;
-    pfVar25 = pfVar25 + 8;
-    *pfVar25 = fVar9;
-    lVar28 = lVar28 + -1;
+    *param_1 = fVar10;
+    param_1[3] = fVar2 * fVar4 + fVar13;
+    param_1[1] = fVar2 * fVar20 + fVar11;
+    param_1[2] = fVar2 * fVar3 + fVar12;
+    param_1[4] = fVar2 * fVar5 + fVar14;
+    param_1[5] = fVar2 * fVar6 + fVar15;
+    param_1[6] = fVar2 * fVar7 + fVar16;
+    uVar24 = uVar24 + 8;
+    param_1[7] = fVar2 * fVar8 + fVar17;
+    param_1 = param_1 + 8;
+    pfVar23 = pfVar23 + 8;
+    *pfVar23 = fVar9;
+    lVar26 = lVar26 + -1;
     fVar10 = fVar18;
-  } while (lVar28 != 0);
-  fVar1 = (float)puVar20[2];
-  pfVar25 = (float *)(puVar20 + 5);
-  uVar26 = -(ulonglong)*puVar20;
-  fVar2 = (float)puVar20[1];
-  uVar27 = 2 - (ulonglong)*puVar20;
-  lVar28 = 0x10;
+  } while (lVar26 != 0);
+  fVar1 = this->feed_backward_;
+  pfVar23 = &(this->delay_line_).initial_val_;
+  uVar24 = -(ulonglong)this->delay_;
+  fVar2 = this->feed_forward_;
+  uVar25 = 2 - (ulonglong)this->delay_;
+  lVar26 = 0x10;
   do {
-    fVar7 = *(float *)((int)puVar20 + ((uint)((uVar26 & 0xffffffff) << 2) & 0x1fc) + 0x18);
-    pfVar22 = (float *)lVar21;
-    fVar16 = fVar1 * fVar7 + *pfVar22;
-    pfVar25[1] = fVar16;
-    fVar10 = pfVar22[2];
-    fVar3 = pfVar22[3];
-    fVar8 = *(float *)((int)puVar20 + ((uint)((uVar27 - 1 & 0xffffffff) << 2) & 0x1fc) + 0x18);
-    fVar15 = fVar1 * fVar8 + pfVar22[1];
-    pfVar25[2] = fVar15;
-    fVar9 = *(float *)((int)puVar20 + ((uint)((uVar27 & 0xffffffff) << 2) & 0x1fc) + 0x18);
+    fVar7 = *(float *)((int)(this->delay_line_).data_ + ((uint)((uVar24 & 0xffffffff) << 2) & 0x1fc)
+                      );
+    fVar16 = fVar1 * fVar7 + *param_1;
+    pfVar23[1] = fVar16;
+    fVar10 = param_1[2];
+    fVar3 = param_1[3];
+    fVar8 = *(float *)((int)(this->delay_line_).data_ +
+                      ((uint)((uVar25 - 1 & 0xffffffff) << 2) & 0x1fc));
+    fVar15 = fVar1 * fVar8 + param_1[1];
+    pfVar23[2] = fVar15;
+    fVar9 = *(float *)((int)(this->delay_line_).data_ + ((uint)((uVar25 & 0xffffffff) << 2) & 0x1fc)
+                      );
     fVar10 = fVar1 * fVar9 + fVar10;
-    pfVar25[3] = fVar10;
-    uVar23 = uVar27 + 4;
-    fVar11 = *(float *)((int)puVar20 + ((uint)((uVar27 + 1 & 0xffffffff) << 2) & 0x1fc) + 0x18);
+    pfVar23[3] = fVar10;
+    uVar21 = uVar25 + 4;
+    fVar11 = *(float *)((int)(this->delay_line_).data_ +
+                       ((uint)((uVar25 + 1 & 0xffffffff) << 2) & 0x1fc));
     fVar3 = fVar1 * fVar11 + fVar3;
-    pfVar25[4] = fVar3;
-    fVar12 = *(float *)((int)puVar20 + ((uint)((uVar27 + 2 & 0xffffffff) << 2) & 0x1fc) + 0x18);
-    fVar14 = fVar1 * fVar12 + pfVar22[4];
-    fVar4 = pfVar22[5];
-    pfVar25[5] = fVar14;
-    uVar24 = uVar27 + 5;
-    fVar13 = *(float *)((int)puVar20 + ((uint)((uVar27 + 3 & 0xffffffff) << 2) & 0x1fc) + 0x18);
+    pfVar23[4] = fVar3;
+    fVar12 = *(float *)((int)(this->delay_line_).data_ +
+                       ((uint)((uVar25 + 2 & 0xffffffff) << 2) & 0x1fc));
+    fVar14 = fVar1 * fVar12 + param_1[4];
+    fVar4 = param_1[5];
+    pfVar23[5] = fVar14;
+    uVar22 = uVar25 + 5;
+    fVar13 = *(float *)((int)(this->delay_line_).data_ +
+                       ((uint)((uVar25 + 3 & 0xffffffff) << 2) & 0x1fc));
     fVar4 = fVar1 * fVar13 + fVar4;
-    pfVar25[6] = fVar4;
-    fVar5 = pfVar22[6];
-    fVar6 = pfVar22[7];
-    pfVar22[1] = fVar2 * fVar16 + fVar7;
-    *pfVar22 = fVar18;
-    uVar26 = uVar26 + 8;
-    pfVar22[6] = fVar2 * fVar4 + fVar13;
-    pfVar22[2] = fVar2 * fVar15 + fVar8;
-    pfVar22[3] = fVar2 * fVar10 + fVar9;
-    uVar27 = uVar27 + 8;
-    pfVar22[4] = fVar2 * fVar3 + fVar11;
-    pfVar22[5] = fVar2 * fVar14 + fVar12;
-    fVar10 = *(float *)((int)puVar20 + ((uint)((uVar23 & 0xffffffff) << 2) & 0x1fc) + 0x18);
+    pfVar23[6] = fVar4;
+    fVar5 = param_1[6];
+    fVar6 = param_1[7];
+    param_1[1] = fVar2 * fVar16 + fVar7;
+    *param_1 = fVar18;
+    uVar24 = uVar24 + 8;
+    param_1[6] = fVar2 * fVar4 + fVar13;
+    param_1[2] = fVar2 * fVar15 + fVar8;
+    param_1[3] = fVar2 * fVar10 + fVar9;
+    uVar25 = uVar25 + 8;
+    param_1[4] = fVar2 * fVar3 + fVar11;
+    param_1[5] = fVar2 * fVar14 + fVar12;
+    fVar10 = *(float *)((int)(this->delay_line_).data_ +
+                       ((uint)((uVar21 & 0xffffffff) << 2) & 0x1fc));
     fVar5 = fVar1 * fVar10 + fVar5;
-    pfVar25[7] = fVar5;
-    fVar18 = *(float *)((int)puVar20 + ((uint)((uVar24 & 0xffffffff) << 2) & 0x1fc) + 0x18);
+    pfVar23[7] = fVar5;
+    fVar18 = *(float *)((int)(this->delay_line_).data_ +
+                       ((uint)((uVar22 & 0xffffffff) << 2) & 0x1fc));
     fVar6 = fVar1 * fVar18 + fVar6;
-    pfVar22[7] = fVar2 * fVar5 + fVar10;
-    lVar21 = lVar21 + 0x20;
-    pfVar25 = pfVar25 + 8;
-    *pfVar25 = fVar6;
+    param_1[7] = fVar2 * fVar5 + fVar10;
+    param_1 = param_1 + 8;
+    pfVar23 = pfVar23 + 8;
+    *pfVar23 = fVar6;
     fVar18 = fVar2 * fVar6 + fVar18;
-    lVar28 = lVar28 + -1;
-  } while (lVar28 != 0);
-  puVar20[3] = (uint)fVar18;
-  *(float *)lVar21 = fVar18;
-  puVar20[4] = 0;
-  __restfpr_28();
+    lVar26 = lVar26 + -1;
+  } while (lVar26 != 0);
+  this->output_ = fVar18;
+  *param_1 = fVar18;
+  (this->delay_line_).current_ = 0;
   return;
 }
 
 
 // 828D90F0  preprocess  (<external>/Xenon/mar09/core/private/xtl/audio/reverb/stereo_room/allpass.hpp:64)
+
+/* WARNING: Function: __savefpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_28 replaced with injection: xenon_save_restore */
 
 void __thiscall
 princeton_digital::allpass_t<float,256>::preprocess(allpass_t<float,256> *this,float *param_1)
@@ -948,79 +958,83 @@ princeton_digital::allpass_t<float,256>::preprocess(allpass_t<float,256> *this,f
   uint uVar18;
   float fVar19;
   float fVar20;
-  uint *puVar21;
-  float *pfVar23;
-  longlong lVar22;
-  float *pfVar24;
-  ulonglong uVar25;
-  longlong lVar26;
+  float *pfVar21;
+  ulonglong uVar22;
+  longlong lVar23;
   
-  lVar22 = (longlong)(int)param_1;
-  puVar21 = (uint *)__savefpr_28(this);
-  uVar18 = puVar21[4];
-  fVar1 = (float)puVar21[2];
-  fVar2 = (float)puVar21[1];
-  lVar26 = 0x20;
-  uVar25 = ((ulonglong)uVar18 - (ulonglong)*puVar21) + 2;
-  pfVar24 = (float *)(puVar21 + uVar18 + 5);
-  fVar20 = (float)puVar21[3];
+  uVar18 = (this->delay_line_).current_;
+  fVar1 = this->feed_backward_;
+  fVar2 = this->feed_forward_;
+  lVar23 = 0x20;
+  uVar22 = ((ulonglong)uVar18 - (ulonglong)this->delay_) + 2;
+  pfVar21 = (this->delay_line_).data_ + (uVar18 - 1);
+  fVar20 = this->output_;
   do {
-    pfVar23 = (float *)lVar22;
-    fVar3 = pfVar23[1];
-    fVar4 = pfVar23[2];
-    fVar5 = pfVar23[3];
-    fVar6 = pfVar23[4];
-    fVar7 = pfVar23[5];
-    fVar8 = pfVar23[6];
-    fVar10 = *(float *)((int)puVar21 + ((uint)((uVar25 - 2 & 0xffffffff) << 2) & 0x3fc) + 0x18);
-    fVar19 = fVar1 * fVar10 + *pfVar23;
-    pfVar24[1] = fVar19;
-    fVar11 = *(float *)((int)puVar21 + ((uint)((uVar25 - 1 & 0xffffffff) << 2) & 0x3fc) + 0x18);
+    fVar3 = param_1[1];
+    fVar4 = param_1[2];
+    fVar5 = param_1[3];
+    fVar6 = param_1[4];
+    fVar7 = param_1[5];
+    fVar8 = param_1[6];
+    fVar10 = *(float *)((int)(this->delay_line_).data_ +
+                       ((uint)((uVar22 - 2 & 0xffffffff) << 2) & 0x3fc));
+    fVar19 = fVar1 * fVar10 + *param_1;
+    pfVar21[1] = fVar19;
+    fVar11 = *(float *)((int)(this->delay_line_).data_ +
+                       ((uint)((uVar22 - 1 & 0xffffffff) << 2) & 0x3fc));
     fVar3 = fVar1 * fVar11 + fVar3;
-    pfVar24[2] = fVar3;
-    fVar12 = *(float *)((int)puVar21 + ((uint)((uVar25 & 0xffffffff) << 2) & 0x3fc) + 0x18);
+    pfVar21[2] = fVar3;
+    fVar12 = *(float *)((int)(this->delay_line_).data_ +
+                       ((uint)((uVar22 & 0xffffffff) << 2) & 0x3fc));
     fVar4 = fVar1 * fVar12 + fVar4;
-    pfVar24[3] = fVar4;
-    fVar13 = *(float *)((int)puVar21 + ((uint)((uVar25 + 1 & 0xffffffff) << 2) & 0x3fc) + 0x18);
+    pfVar21[3] = fVar4;
+    fVar13 = *(float *)((int)(this->delay_line_).data_ +
+                       ((uint)((uVar22 + 1 & 0xffffffff) << 2) & 0x3fc));
     fVar5 = fVar1 * fVar13 + fVar5;
-    pfVar24[4] = fVar5;
-    fVar14 = *(float *)((int)puVar21 + ((uint)((uVar25 + 2 & 0xffffffff) << 2) & 0x3fc) + 0x18);
+    pfVar21[4] = fVar5;
+    fVar14 = *(float *)((int)(this->delay_line_).data_ +
+                       ((uint)((uVar22 + 2 & 0xffffffff) << 2) & 0x3fc));
     fVar6 = fVar1 * fVar14 + fVar6;
-    pfVar24[5] = fVar6;
-    fVar15 = *(float *)((int)puVar21 + ((uint)((uVar25 + 3 & 0xffffffff) << 2) & 0x3fc) + 0x18);
+    pfVar21[5] = fVar6;
+    fVar15 = *(float *)((int)(this->delay_line_).data_ +
+                       ((uint)((uVar22 + 3 & 0xffffffff) << 2) & 0x3fc));
     fVar7 = fVar1 * fVar15 + fVar7;
-    pfVar24[6] = fVar7;
-    fVar16 = *(float *)((int)puVar21 + ((uint)((uVar25 + 4 & 0xffffffff) << 2) & 0x3fc) + 0x18);
+    pfVar21[6] = fVar7;
+    fVar16 = *(float *)((int)(this->delay_line_).data_ +
+                       ((uint)((uVar22 + 4 & 0xffffffff) << 2) & 0x3fc));
     fVar8 = fVar1 * fVar16 + fVar8;
-    fVar9 = pfVar23[7];
-    pfVar24[7] = fVar8;
-    fVar17 = *(float *)((int)puVar21 + ((uint)((uVar25 + 5 & 0xffffffff) << 2) & 0x3fc) + 0x18);
+    fVar9 = param_1[7];
+    pfVar21[7] = fVar8;
+    fVar17 = *(float *)((int)(this->delay_line_).data_ +
+                       ((uint)((uVar22 + 5 & 0xffffffff) << 2) & 0x3fc));
     fVar9 = fVar1 * fVar17 + fVar9;
     fVar17 = fVar2 * fVar9 + fVar17;
-    *pfVar23 = fVar20;
-    pfVar23[3] = fVar2 * fVar4 + fVar12;
-    pfVar23[1] = fVar2 * fVar19 + fVar10;
-    pfVar23[2] = fVar2 * fVar3 + fVar11;
-    pfVar23[4] = fVar2 * fVar5 + fVar13;
-    pfVar23[5] = fVar2 * fVar6 + fVar14;
-    pfVar23[6] = fVar2 * fVar7 + fVar15;
-    uVar25 = uVar25 + 8;
-    pfVar23[7] = fVar2 * fVar8 + fVar16;
-    lVar22 = lVar22 + 0x20;
-    pfVar24 = pfVar24 + 8;
-    *pfVar24 = fVar9;
-    lVar26 = lVar26 + -1;
+    *param_1 = fVar20;
+    param_1[3] = fVar2 * fVar4 + fVar12;
+    param_1[1] = fVar2 * fVar19 + fVar10;
+    param_1[2] = fVar2 * fVar3 + fVar11;
+    param_1[4] = fVar2 * fVar5 + fVar13;
+    param_1[5] = fVar2 * fVar6 + fVar14;
+    param_1[6] = fVar2 * fVar7 + fVar15;
+    uVar22 = uVar22 + 8;
+    param_1[7] = fVar2 * fVar8 + fVar16;
+    param_1 = param_1 + 8;
+    pfVar21 = pfVar21 + 8;
+    *pfVar21 = fVar9;
+    lVar23 = lVar23 + -1;
     fVar20 = fVar17;
-  } while (lVar26 != 0);
-  puVar21[3] = (uint)fVar17;
-  *(float *)lVar22 = fVar17;
-  puVar21[4] = uVar18 + 0x100 & 0xff;
-  __restfpr_28();
+  } while (lVar23 != 0);
+  this->output_ = fVar17;
+  *param_1 = fVar17;
+  (this->delay_line_).current_ = uVar18 + 0x100 & 0xff;
   return;
 }
 
 
 // 828D9278  preprocess  (<external>/Xenon/mar09/core/private/xtl/audio/reverb/stereo_room/allpass.hpp:64)
+
+/* WARNING: Function: __savefpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_28 replaced with injection: xenon_save_restore */
 
 void __thiscall
 princeton_digital::allpass_t<float,512>::preprocess(allpass_t<float,512> *this,float *param_1)
@@ -1046,86 +1060,90 @@ princeton_digital::allpass_t<float,512>::preprocess(allpass_t<float,512> *this,f
   uint uVar18;
   float fVar19;
   float fVar20;
-  uint *puVar21;
-  float *pfVar23;
-  longlong lVar22;
-  float *pfVar24;
-  ulonglong uVar25;
-  longlong lVar26;
+  float *pfVar21;
+  ulonglong uVar22;
+  longlong lVar23;
   
-  lVar22 = (longlong)(int)param_1;
-  puVar21 = (uint *)__savefpr_28(this);
-  uVar18 = puVar21[4];
-  fVar1 = (float)puVar21[2];
-  fVar2 = (float)puVar21[1];
-  lVar26 = 0x20;
-  uVar25 = ((ulonglong)uVar18 - (ulonglong)*puVar21) + 2;
-  pfVar24 = (float *)(puVar21 + uVar18 + 5);
-  fVar20 = (float)puVar21[3];
+  uVar18 = (this->delay_line_).current_;
+  fVar1 = this->feed_backward_;
+  fVar2 = this->feed_forward_;
+  lVar23 = 0x20;
+  uVar22 = ((ulonglong)uVar18 - (ulonglong)this->delay_) + 2;
+  pfVar21 = (this->delay_line_).data_ + (uVar18 - 1);
+  fVar20 = this->output_;
   do {
-    pfVar23 = (float *)lVar22;
-    fVar3 = pfVar23[1];
-    fVar4 = pfVar23[2];
-    fVar5 = pfVar23[3];
-    fVar6 = pfVar23[4];
-    fVar7 = pfVar23[5];
-    fVar8 = pfVar23[6];
-    fVar10 = *(float *)((int)puVar21 + ((uint)((uVar25 - 2 & 0xffffffff) << 2) & 0x7fc) + 0x18);
-    fVar19 = fVar1 * fVar10 + *pfVar23;
-    pfVar24[1] = fVar19;
-    fVar11 = *(float *)((int)puVar21 + ((uint)((uVar25 - 1 & 0xffffffff) << 2) & 0x7fc) + 0x18);
+    fVar3 = param_1[1];
+    fVar4 = param_1[2];
+    fVar5 = param_1[3];
+    fVar6 = param_1[4];
+    fVar7 = param_1[5];
+    fVar8 = param_1[6];
+    fVar10 = *(float *)((int)(this->delay_line_).data_ +
+                       ((uint)((uVar22 - 2 & 0xffffffff) << 2) & 0x7fc));
+    fVar19 = fVar1 * fVar10 + *param_1;
+    pfVar21[1] = fVar19;
+    fVar11 = *(float *)((int)(this->delay_line_).data_ +
+                       ((uint)((uVar22 - 1 & 0xffffffff) << 2) & 0x7fc));
     fVar3 = fVar1 * fVar11 + fVar3;
-    pfVar24[2] = fVar3;
-    fVar12 = *(float *)((int)puVar21 + ((uint)((uVar25 & 0xffffffff) << 2) & 0x7fc) + 0x18);
+    pfVar21[2] = fVar3;
+    fVar12 = *(float *)((int)(this->delay_line_).data_ +
+                       ((uint)((uVar22 & 0xffffffff) << 2) & 0x7fc));
     fVar4 = fVar1 * fVar12 + fVar4;
-    pfVar24[3] = fVar4;
-    fVar13 = *(float *)((int)puVar21 + ((uint)((uVar25 + 1 & 0xffffffff) << 2) & 0x7fc) + 0x18);
+    pfVar21[3] = fVar4;
+    fVar13 = *(float *)((int)(this->delay_line_).data_ +
+                       ((uint)((uVar22 + 1 & 0xffffffff) << 2) & 0x7fc));
     fVar5 = fVar1 * fVar13 + fVar5;
-    pfVar24[4] = fVar5;
-    fVar14 = *(float *)((int)puVar21 + ((uint)((uVar25 + 2 & 0xffffffff) << 2) & 0x7fc) + 0x18);
+    pfVar21[4] = fVar5;
+    fVar14 = *(float *)((int)(this->delay_line_).data_ +
+                       ((uint)((uVar22 + 2 & 0xffffffff) << 2) & 0x7fc));
     fVar6 = fVar1 * fVar14 + fVar6;
-    pfVar24[5] = fVar6;
-    fVar15 = *(float *)((int)puVar21 + ((uint)((uVar25 + 3 & 0xffffffff) << 2) & 0x7fc) + 0x18);
+    pfVar21[5] = fVar6;
+    fVar15 = *(float *)((int)(this->delay_line_).data_ +
+                       ((uint)((uVar22 + 3 & 0xffffffff) << 2) & 0x7fc));
     fVar7 = fVar1 * fVar15 + fVar7;
-    pfVar24[6] = fVar7;
-    fVar16 = *(float *)((int)puVar21 + ((uint)((uVar25 + 4 & 0xffffffff) << 2) & 0x7fc) + 0x18);
+    pfVar21[6] = fVar7;
+    fVar16 = *(float *)((int)(this->delay_line_).data_ +
+                       ((uint)((uVar22 + 4 & 0xffffffff) << 2) & 0x7fc));
     fVar8 = fVar1 * fVar16 + fVar8;
-    fVar9 = pfVar23[7];
-    pfVar24[7] = fVar8;
-    fVar17 = *(float *)((int)puVar21 + ((uint)((uVar25 + 5 & 0xffffffff) << 2) & 0x7fc) + 0x18);
+    fVar9 = param_1[7];
+    pfVar21[7] = fVar8;
+    fVar17 = *(float *)((int)(this->delay_line_).data_ +
+                       ((uint)((uVar22 + 5 & 0xffffffff) << 2) & 0x7fc));
     fVar9 = fVar1 * fVar17 + fVar9;
     fVar17 = fVar2 * fVar9 + fVar17;
-    *pfVar23 = fVar20;
-    pfVar23[3] = fVar2 * fVar4 + fVar12;
-    pfVar23[1] = fVar2 * fVar19 + fVar10;
-    pfVar23[2] = fVar2 * fVar3 + fVar11;
-    pfVar23[4] = fVar2 * fVar5 + fVar13;
-    pfVar23[5] = fVar2 * fVar6 + fVar14;
-    pfVar23[6] = fVar2 * fVar7 + fVar15;
-    uVar25 = uVar25 + 8;
-    pfVar23[7] = fVar2 * fVar8 + fVar16;
-    lVar22 = lVar22 + 0x20;
-    pfVar24 = pfVar24 + 8;
-    *pfVar24 = fVar9;
-    lVar26 = lVar26 + -1;
+    *param_1 = fVar20;
+    param_1[3] = fVar2 * fVar4 + fVar12;
+    param_1[1] = fVar2 * fVar19 + fVar10;
+    param_1[2] = fVar2 * fVar3 + fVar11;
+    param_1[4] = fVar2 * fVar5 + fVar13;
+    param_1[5] = fVar2 * fVar6 + fVar14;
+    param_1[6] = fVar2 * fVar7 + fVar15;
+    uVar22 = uVar22 + 8;
+    param_1[7] = fVar2 * fVar8 + fVar16;
+    param_1 = param_1 + 8;
+    pfVar21 = pfVar21 + 8;
+    *pfVar21 = fVar9;
+    lVar23 = lVar23 + -1;
     fVar20 = fVar17;
-  } while (lVar26 != 0);
-  puVar21[3] = (uint)fVar17;
-  *(float *)lVar22 = fVar17;
-  puVar21[4] = uVar18 + 0x100 & 0x1ff;
-  __restfpr_28();
+  } while (lVar23 != 0);
+  this->output_ = fVar17;
+  *param_1 = fVar17;
+  (this->delay_line_).current_ = uVar18 + 0x100 & 0x1ff;
   return;
 }
 
 
 // 828D8CB0  preprocess3  (<external>/Xenon/mar09/core/private/xtl/audio/reverb/stereo_room/threetap.hpp:70)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void __thiscall
 princeton_digital::threetap_t<float,512>::preprocess3
           (threetap_t<float,512> *this,float *param_1,float *param_2,float *param_3,uint param_4)
 
 {
-  uint uVar1;
+  float fVar1;
   float fVar2;
   float fVar3;
   float fVar4;
@@ -1134,69 +1152,66 @@ princeton_digital::threetap_t<float,512>::preprocess3
   uint uVar7;
   uint uVar8;
   uint uVar9;
-  uint *puVar10;
-  ulonglong uVar11;
-  longlong lVar12;
-  longlong lVar13;
-  uint *puVar14;
+  ulonglong uVar10;
+  float *pfVar11;
+  ulonglong uVar12;
+  float *pfVar13;
+  ulonglong uVar14;
   ulonglong uVar15;
   longlong lVar16;
-  ulonglong uVar17;
-  ulonglong uVar18;
-  longlong lVar19;
   
-  lVar13 = (longlong)(int)param_3;
-  lVar12 = (longlong)(int)param_2;
-  lVar16 = (longlong)(int)param_1;
-  puVar10 = (uint *)__savegprlr_28(this);
-  uVar7 = puVar10[9];
-  uVar18 = (ulonglong)*puVar10;
-  uVar8 = puVar10[3];
-  uVar9 = puVar10[6];
-  uVar17 = uVar7 - uVar18;
-  uVar1 = puVar10[8];
-  lVar19 = 0x100;
-  fVar2 = (float)puVar10[4];
-  fVar3 = (float)puVar10[1];
-  fVar4 = (float)puVar10[7];
-  *(uint *)lVar12 = puVar10[2];
-  puVar14 = puVar10 + uVar7 + 10;
-  *(uint *)lVar13 = uVar1;
-  lVar16 = lVar16 + -4;
+  uVar7 = (this->delay_line_).current_;
+  uVar15 = (ulonglong)this->delay1_;
+  uVar8 = this->delay2_;
+  uVar9 = this->delay3_;
+  uVar14 = uVar7 - uVar15;
+  fVar1 = this->tap3_;
+  lVar16 = 0x100;
+  fVar2 = this->gain2_;
+  fVar3 = this->gain1_;
+  fVar4 = this->gain3_;
+  *param_2 = this->tap1_;
+  pfVar11 = (this->delay_line_).data_ + (uVar7 - 1);
+  *param_3 = fVar1;
+  pfVar13 = param_1 + -1;
   do {
-    fVar5 = *(float *)((int)puVar10 + ((uint)((uVar17 & 0xffffffff) << 2) & 0x7fc) + 0x2c);
-    uVar15 = (uVar18 - uVar8) + uVar17;
-    uVar11 = (uVar18 - uVar9) + uVar17;
-    lVar16 = lVar16 + 4;
-    uVar1 = *(uint *)lVar16;
-    uVar17 = uVar17 + 1;
-    fVar6 = *(float *)((int)puVar10 + ((uint)((uVar15 & 0xffffffff) << 2) & 0x7fc) + 0x2c);
-    lVar13 = lVar13 + 4;
-    *(float *)lVar13 =
-         *(float *)((int)puVar10 + ((uint)((uVar11 & 0xffffffff) << 2) & 0x7fc) + 0x2c) * fVar4;
-    puVar14 = puVar14 + 1;
-    *puVar14 = uVar1;
-    lVar12 = lVar12 + 4;
-    *(float *)lVar12 = fVar6 * fVar2 + fVar5 * fVar3;
-    lVar19 = lVar19 + -1;
-  } while (lVar19 != 0);
-  fVar2 = *(float *)lVar13;
-  puVar10[2] = (uint)*(float *)lVar12;
-  puVar10[9] = uVar7 + 0x100 & 0x1ff;
-  puVar10[8] = (uint)fVar2;
-  __restgprlr_28();
+    fVar5 = *(float *)((int)(this->delay_line_).data_ + ((uint)((uVar14 & 0xffffffff) << 2) & 0x7fc)
+                      );
+    uVar12 = (uVar15 - uVar8) + uVar14;
+    uVar10 = (uVar15 - uVar9) + uVar14;
+    pfVar13 = pfVar13 + 1;
+    fVar1 = *pfVar13;
+    uVar14 = uVar14 + 1;
+    fVar6 = *(float *)((int)(this->delay_line_).data_ + ((uint)((uVar12 & 0xffffffff) << 2) & 0x7fc)
+                      );
+    param_3 = param_3 + 1;
+    *param_3 = *(float *)((int)(this->delay_line_).data_ +
+                         ((uint)((uVar10 & 0xffffffff) << 2) & 0x7fc)) * fVar4;
+    pfVar11 = pfVar11 + 1;
+    *pfVar11 = fVar1;
+    param_2 = param_2 + 1;
+    *param_2 = fVar6 * fVar2 + fVar5 * fVar3;
+    lVar16 = lVar16 + -1;
+  } while (lVar16 != 0);
+  fVar1 = *param_3;
+  this->tap1_ = *param_2;
+  (this->delay_line_).current_ = uVar7 + 0x100 & 0x1ff;
+  this->tap3_ = fVar1;
   return;
 }
 
 
 // 828D9028  preprocess3  (<external>/Xenon/mar09/core/private/xtl/audio/reverb/stereo_room/threetap.hpp:70)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void __thiscall
 princeton_digital::threetap_t<float,2048>::preprocess3
           (threetap_t<float,2048> *this,float *param_1,float *param_2,float *param_3,uint param_4)
 
 {
-  uint uVar1;
+  float fVar1;
   float fVar2;
   float fVar3;
   float fVar4;
@@ -1205,94 +1220,82 @@ princeton_digital::threetap_t<float,2048>::preprocess3
   uint uVar7;
   uint uVar8;
   uint uVar9;
-  uint *puVar10;
-  ulonglong uVar11;
-  longlong lVar12;
-  longlong lVar13;
-  uint *puVar14;
+  ulonglong uVar10;
+  float *pfVar11;
+  ulonglong uVar12;
+  float *pfVar13;
+  ulonglong uVar14;
   ulonglong uVar15;
   longlong lVar16;
-  ulonglong uVar17;
-  ulonglong uVar18;
-  longlong lVar19;
   
-  lVar13 = (longlong)(int)param_3;
-  lVar12 = (longlong)(int)param_2;
-  lVar16 = (longlong)(int)param_1;
-  puVar10 = (uint *)__savegprlr_28(this);
-  uVar7 = puVar10[9];
-  uVar18 = (ulonglong)*puVar10;
-  uVar8 = puVar10[3];
-  uVar9 = puVar10[6];
-  uVar17 = uVar7 - uVar18;
-  uVar1 = puVar10[8];
-  lVar19 = 0x100;
-  fVar2 = (float)puVar10[4];
-  fVar3 = (float)puVar10[1];
-  fVar4 = (float)puVar10[7];
-  *(uint *)lVar12 = puVar10[2];
-  puVar14 = puVar10 + uVar7 + 10;
-  *(uint *)lVar13 = uVar1;
-  lVar16 = lVar16 + -4;
+  uVar7 = (this->delay_line_).current_;
+  uVar15 = (ulonglong)this->delay1_;
+  uVar8 = this->delay2_;
+  uVar9 = this->delay3_;
+  uVar14 = uVar7 - uVar15;
+  fVar1 = this->tap3_;
+  lVar16 = 0x100;
+  fVar2 = this->gain2_;
+  fVar3 = this->gain1_;
+  fVar4 = this->gain3_;
+  *param_2 = this->tap1_;
+  pfVar11 = (this->delay_line_).data_ + (uVar7 - 1);
+  *param_3 = fVar1;
+  pfVar13 = param_1 + -1;
   do {
-    fVar5 = *(float *)((int)puVar10 + ((uint)((uVar17 & 0xffffffff) << 2) & 0x1ffc) + 0x2c);
-    uVar15 = (uVar18 - uVar8) + uVar17;
-    uVar11 = (uVar18 - uVar9) + uVar17;
-    lVar16 = lVar16 + 4;
-    uVar1 = *(uint *)lVar16;
-    uVar17 = uVar17 + 1;
-    fVar6 = *(float *)((int)puVar10 + ((uint)((uVar15 & 0xffffffff) << 2) & 0x1ffc) + 0x2c);
-    lVar13 = lVar13 + 4;
-    *(float *)lVar13 =
-         *(float *)((int)puVar10 + ((uint)((uVar11 & 0xffffffff) << 2) & 0x1ffc) + 0x2c) * fVar4;
-    puVar14 = puVar14 + 1;
-    *puVar14 = uVar1;
-    lVar12 = lVar12 + 4;
-    *(float *)lVar12 = fVar6 * fVar2 + fVar5 * fVar3;
-    lVar19 = lVar19 + -1;
-  } while (lVar19 != 0);
-  fVar2 = *(float *)lVar13;
-  puVar10[2] = (uint)*(float *)lVar12;
-  puVar10[9] = uVar7 + 0x100 & 0x7ff;
-  puVar10[8] = (uint)fVar2;
-  __restgprlr_28();
+    fVar5 = *(float *)((int)(this->delay_line_).data_ +
+                      ((uint)((uVar14 & 0xffffffff) << 2) & 0x1ffc));
+    uVar12 = (uVar15 - uVar8) + uVar14;
+    uVar10 = (uVar15 - uVar9) + uVar14;
+    pfVar13 = pfVar13 + 1;
+    fVar1 = *pfVar13;
+    uVar14 = uVar14 + 1;
+    fVar6 = *(float *)((int)(this->delay_line_).data_ +
+                      ((uint)((uVar12 & 0xffffffff) << 2) & 0x1ffc));
+    param_3 = param_3 + 1;
+    *param_3 = *(float *)((int)(this->delay_line_).data_ +
+                         ((uint)((uVar10 & 0xffffffff) << 2) & 0x1ffc)) * fVar4;
+    pfVar11 = pfVar11 + 1;
+    *pfVar11 = fVar1;
+    param_2 = param_2 + 1;
+    *param_2 = fVar6 * fVar2 + fVar5 * fVar3;
+    lVar16 = lVar16 + -1;
+  } while (lVar16 != 0);
+  fVar1 = *param_3;
+  this->tap1_ = *param_2;
+  (this->delay_line_).current_ = uVar7 + 0x100 & 0x7ff;
+  this->tap3_ = fVar1;
   return;
 }
 
 
 // 828DB858  XAudioCreateReverbEffect  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/reverbeffect.cpp:81)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 undefined4
 XAudioCreateReverbEffect
           (XAUDIOFXINIT *param_1,IXAudioBatchAllocator *param_2,IXAudioEffect **param_3)
 
 {
-  undefined8 uVar1;
-  CReverbEffect *pCVar2;
-  undefined4 uVar3;
-  longlong lVar4;
+  CReverbEffect *pCVar1;
+  int iVar2;
   
-  lVar4 = (longlong)(int)param_2;
-  uVar1 = __savegprlr_28(param_1);
-  pCVar2 = (CReverbEffect *)
-           (**(code **)((int)*(IXAudioBatchAllocator *)lVar4 + 0x14))(lVar4,0x4bab0);
-  if (pCVar2 != (CReverbEffect *)0x0) {
-    pCVar2 = XAUDIO::CReverbEffect::CReverbEffect
-                       (pCVar2,(XAUDIOFXINIT *)uVar1,(IXAudioBatchAllocator *)lVar4);
-    if (pCVar2 != (CReverbEffect *)0x0) {
-      uVar1 = (**(code **)(pCVar2->_padding_ + 0x1c))((longlong)(int)pCVar2,uVar1,lVar4);
-      if (-1 < (int)uVar1) {
-        *param_3 = (IXAudioEffect *)pCVar2;
-        uVar3 = __restgprlr_28();
-        return uVar3;
+  pCVar1 = (CReverbEffect *)(**(code **)((int)*param_2 + 0x14))(param_2,0x4bab0);
+  if (pCVar1 != (CReverbEffect *)0x0) {
+    pCVar1 = XAUDIO::CReverbEffect::CReverbEffect(pCVar1,param_1,param_2);
+    if (pCVar1 != (CReverbEffect *)0x0) {
+      iVar2 = (**(code **)(pCVar1->_padding_ + 0x1c))((longlong)(int)pCVar1,param_1,param_2);
+      if (-1 < iVar2) {
+        *param_3 = (IXAudioEffect *)pCVar1;
+        return iVar2;
       }
-      (**(code **)(pCVar2->_padding_ + 0xc))((longlong)(int)pCVar2 + 4);
-      uVar3 = __restgprlr_28(uVar1);
-      return uVar3;
+      (**(code **)(pCVar1->_padding_ + 0xc))((longlong)(int)pCVar1 + 4);
+      return iVar2;
     }
   }
-  uVar3 = __restgprlr_28(0xffffffff8007000e);
-  return uVar3;
+  return 0x8007000e;
 }
 
 
@@ -1348,17 +1351,18 @@ void __thiscall XAUDIO::CReverbEffect::QueryInterface(CReverbEffect *this,IXAudi
 
 // 828DB318  Process  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/reverbeffect.cpp:144)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 void __thiscall
 XAUDIO::CStereoRoomFloat::Process(CStereoRoomFloat *this,float **param_1,float **param_2)
 
 {
-  stereo_room_3dl2_t<float> *this_00;
   uchar uVar1;
   ulonglong uVar2;
   void *in_r13;
   void *pvVar3;
   
-  this_00 = (stereo_room_3dl2_t<float> *)__savegprlr_26(this);
   uVar1 = KeRaiseIrqlToDpcLevel();
   pvVar3 = in_r13;
   if ((g_XAudioSpinLock.m_LockCount == 0) || (in_r13 != g_XAudioSpinLock.m_pOwningThread)) {
@@ -1367,26 +1371,26 @@ XAUDIO::CStereoRoomFloat::Process(CStereoRoomFloat *this,float **param_1,float *
     g_XAudioSpinLock.m_PreviousIrql = uVar1;
   }
   g_XAudioSpinLock.m_LockCount = g_XAudioSpinLock.m_LockCount + 1;
-  if (this_00->field_0xbc != '\0') {
+  if (this->m_WetDryChanged != false) {
     princeton_digital::stereo_room_t<float>::wet_dry_mix_set
-              ((stereo_room_t<float> *)(&this_00->field_0x0 + *(int *)(*(int *)this_00 + 4)),
-               *(float *)&this_00->field_0xb8);
+              ((stereo_room_t<float> *)(&this->field_0x0 + *(int *)(*(int *)this + 4)),
+               this->m_wetDryMix);
   }
-  if (this_00->field_0xbd == '\0') {
-    if (this_00->field_0xbe != '\0') {
+  if (this->m_PropertiesStandardChanged == false) {
+    if (this->m_PropertiesI3DL2Changed != false) {
       princeton_digital::stereo_room_3dl2_t<float>::set
-                (this_00,DSPROPERTY_I3DL2LISTENER_ALL,
-                 (_I3DL2_LISTENERPROPERTIES *)&this_00->field_0x88);
+                ((stereo_room_3dl2_t<float> *)this,DSPROPERTY_I3DL2LISTENER_ALL,
+                 &this->m_propertiesI3DL2);
     }
   }
   else {
     princeton_digital::stereo_room_t<float>::properties_set
-              ((stereo_room_t<float> *)(&this_00->field_0x0 + *(int *)(*(int *)this_00 + 4)),
-               (properties_t *)&this_00->field_0x34);
+              ((stereo_room_t<float> *)(&this->field_0x0 + *(int *)(*(int *)this + 4)),
+               &this->m_propertiesStandard);
   }
-  this_00->field_0xbe = 0;
-  this_00->field_0xbc = 0;
-  this_00->field_0xbd = 0;
+  this->m_PropertiesI3DL2Changed = false;
+  this->m_WetDryChanged = false;
+  this->m_PropertiesStandardChanged = false;
   uVar1 = g_XAudioSpinLock.m_PreviousIrql;
   uVar2 = (ulonglong)(uint)g_XAudioSpinLock.m_LockCount;
   if ((g_XAudioSpinLock.m_LockCount != 0) && (pvVar3 == g_XAudioSpinLock.m_pOwningThread)) {
@@ -1399,14 +1403,18 @@ XAUDIO::CStereoRoomFloat::Process(CStereoRoomFloat *this,float **param_1,float *
     }
   }
   princeton_digital::stereo_room_t<float>::process
-            ((stereo_room_t<float> *)(&this_00->field_0x0 + *(int *)(*(int *)this_00 + 4)),param_1,
-             param_2,0x100);
-  __restgprlr_26();
+            ((stereo_room_t<float> *)(&this->field_0x0 + *(int *)(*(int *)this + 4)),param_1,param_2
+             ,0x100);
   return;
 }
 
 
 // 828D9400  preprocess  (<external>/Xenon/mar09/core/private/xtl/audio/reverb/stereo_room/allpass.hpp:163)
+
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 
 void __thiscall
 princeton_digital::allpass_t<float,512>::preprocess
@@ -1431,120 +1439,111 @@ princeton_digital::allpass_t<float,512>::preprocess
   float fVar16;
   float fVar17;
   uint uVar18;
-  int iVar19;
+  float fVar19;
   float fVar20;
-  float fVar21;
-  uint *puVar22;
-  float *pfVar24;
-  longlong lVar23;
-  float *pfVar25;
-  longlong lVar26;
-  ulonglong uVar27;
-  longlong lVar28;
+  float *pfVar21;
+  float *pfVar22;
+  ulonglong uVar23;
+  longlong lVar24;
   
-  lVar26 = (longlong)(int)param_2;
-  lVar23 = (longlong)(int)param_1;
-  __savegprlr_29(this);
-  puVar22 = (uint *)__savefpr_28();
-  uVar18 = puVar22[4];
-  fVar1 = (float)puVar22[2];
-  fVar2 = (float)puVar22[1];
-  lVar28 = 0x20;
-  lVar26 = lVar26 + -4;
-  uVar27 = ((ulonglong)uVar18 - (ulonglong)*puVar22) + 2;
-  pfVar25 = (float *)(puVar22 + uVar18 + 5);
-  fVar21 = (float)puVar22[3];
+  uVar18 = (this->delay_line_).current_;
+  fVar1 = this->feed_backward_;
+  fVar2 = this->feed_forward_;
+  lVar24 = 0x20;
+  pfVar22 = param_2 + -1;
+  uVar23 = ((ulonglong)uVar18 - (ulonglong)this->delay_) + 2;
+  pfVar21 = (this->delay_line_).data_ + (uVar18 - 1);
+  fVar20 = this->output_;
   do {
-    pfVar24 = (float *)lVar23;
-    fVar3 = pfVar24[1];
-    fVar4 = pfVar24[2];
-    fVar5 = pfVar24[3];
-    fVar6 = pfVar24[4];
-    fVar7 = pfVar24[5];
-    fVar8 = pfVar24[6];
-    fVar10 = *(float *)((int)puVar22 + ((uint)((uVar27 - 2 & 0xffffffff) << 2) & 0x7fc) + 0x18);
-    fVar20 = fVar1 * fVar10 + *pfVar24;
-    pfVar25[1] = fVar20;
-    fVar11 = *(float *)((int)puVar22 + ((uint)((uVar27 - 1 & 0xffffffff) << 2) & 0x7fc) + 0x18);
+    fVar3 = param_1[1];
+    fVar4 = param_1[2];
+    fVar5 = param_1[3];
+    fVar6 = param_1[4];
+    fVar7 = param_1[5];
+    fVar8 = param_1[6];
+    fVar10 = *(float *)((int)(this->delay_line_).data_ +
+                       ((uint)((uVar23 - 2 & 0xffffffff) << 2) & 0x7fc));
+    fVar19 = fVar1 * fVar10 + *param_1;
+    pfVar21[1] = fVar19;
+    fVar11 = *(float *)((int)(this->delay_line_).data_ +
+                       ((uint)((uVar23 - 1 & 0xffffffff) << 2) & 0x7fc));
     fVar3 = fVar1 * fVar11 + fVar3;
-    pfVar25[2] = fVar3;
-    fVar12 = *(float *)((int)puVar22 + ((uint)((uVar27 & 0xffffffff) << 2) & 0x7fc) + 0x18);
+    pfVar21[2] = fVar3;
+    fVar12 = *(float *)((int)(this->delay_line_).data_ +
+                       ((uint)((uVar23 & 0xffffffff) << 2) & 0x7fc));
     fVar4 = fVar1 * fVar12 + fVar4;
-    pfVar25[3] = fVar4;
-    fVar13 = *(float *)((int)puVar22 + ((uint)((uVar27 + 1 & 0xffffffff) << 2) & 0x7fc) + 0x18);
+    pfVar21[3] = fVar4;
+    fVar13 = *(float *)((int)(this->delay_line_).data_ +
+                       ((uint)((uVar23 + 1 & 0xffffffff) << 2) & 0x7fc));
     fVar5 = fVar1 * fVar13 + fVar5;
-    pfVar25[4] = fVar5;
-    fVar14 = *(float *)((int)puVar22 + ((uint)((uVar27 + 2 & 0xffffffff) << 2) & 0x7fc) + 0x18);
+    pfVar21[4] = fVar5;
+    fVar14 = *(float *)((int)(this->delay_line_).data_ +
+                       ((uint)((uVar23 + 2 & 0xffffffff) << 2) & 0x7fc));
     fVar6 = fVar1 * fVar14 + fVar6;
-    pfVar25[5] = fVar6;
-    fVar15 = *(float *)((int)puVar22 + ((uint)((uVar27 + 3 & 0xffffffff) << 2) & 0x7fc) + 0x18);
+    pfVar21[5] = fVar6;
+    fVar15 = *(float *)((int)(this->delay_line_).data_ +
+                       ((uint)((uVar23 + 3 & 0xffffffff) << 2) & 0x7fc));
     fVar7 = fVar1 * fVar15 + fVar7;
-    pfVar25[6] = fVar7;
-    fVar16 = *(float *)((int)puVar22 + ((uint)((uVar27 + 4 & 0xffffffff) << 2) & 0x7fc) + 0x18);
+    pfVar21[6] = fVar7;
+    fVar16 = *(float *)((int)(this->delay_line_).data_ +
+                       ((uint)((uVar23 + 4 & 0xffffffff) << 2) & 0x7fc));
     fVar8 = fVar1 * fVar16 + fVar8;
-    fVar9 = pfVar24[7];
-    pfVar25[7] = fVar8;
-    fVar17 = *(float *)((int)puVar22 + ((uint)((uVar27 + 5 & 0xffffffff) << 2) & 0x7fc) + 0x18);
+    fVar9 = param_1[7];
+    pfVar21[7] = fVar8;
+    fVar17 = *(float *)((int)(this->delay_line_).data_ +
+                       ((uint)((uVar23 + 5 & 0xffffffff) << 2) & 0x7fc));
     fVar9 = fVar1 * fVar17 + fVar9;
     fVar17 = fVar2 * fVar9 + fVar17;
-    iVar19 = (int)lVar26;
-    *(float *)(iVar19 + 4) = fVar21;
-    *(float *)(iVar19 + 0x10) = fVar2 * fVar4 + fVar12;
-    *(float *)(iVar19 + 8) = fVar2 * fVar20 + fVar10;
-    *(float *)(iVar19 + 0xc) = fVar2 * fVar3 + fVar11;
-    *(float *)(iVar19 + 0x14) = fVar2 * fVar5 + fVar13;
-    *(float *)(iVar19 + 0x18) = fVar2 * fVar6 + fVar14;
-    *(float *)(iVar19 + 0x1c) = fVar2 * fVar7 + fVar15;
-    lVar23 = lVar23 + 0x20;
-    lVar26 = lVar26 + 0x20;
-    *(float *)lVar26 = fVar2 * fVar8 + fVar16;
-    uVar27 = uVar27 + 8;
-    pfVar25 = pfVar25 + 8;
-    *pfVar25 = fVar9;
-    lVar28 = lVar28 + -1;
-    fVar21 = fVar17;
-  } while (lVar28 != 0);
-  puVar22[3] = (uint)fVar17;
-  *(float *)lVar23 = fVar17;
-  puVar22[4] = uVar18 + 0x100 & 0x1ff;
-  __restfpr_28();
-  __restgprlr_29();
+    pfVar22[1] = fVar20;
+    pfVar22[4] = fVar2 * fVar4 + fVar12;
+    pfVar22[2] = fVar2 * fVar19 + fVar10;
+    pfVar22[3] = fVar2 * fVar3 + fVar11;
+    pfVar22[5] = fVar2 * fVar5 + fVar13;
+    pfVar22[6] = fVar2 * fVar6 + fVar14;
+    pfVar22[7] = fVar2 * fVar7 + fVar15;
+    param_1 = param_1 + 8;
+    pfVar22 = pfVar22 + 8;
+    *pfVar22 = fVar2 * fVar8 + fVar16;
+    uVar23 = uVar23 + 8;
+    pfVar21 = pfVar21 + 8;
+    *pfVar21 = fVar9;
+    lVar24 = lVar24 + -1;
+    fVar20 = fVar17;
+  } while (lVar24 != 0);
+  this->output_ = fVar17;
+  *param_1 = fVar17;
+  (this->delay_line_).current_ = uVar18 + 0x100 & 0x1ff;
   return;
 }
 
 
 // 828DB750  CReverbEffect  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/reverbeffect.cpp:199)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 CReverbEffect * __thiscall
 XAUDIO::CReverbEffect::CReverbEffect
           (CReverbEffect *this,XAUDIOFXINIT *param_1,IXAudioBatchAllocator *param_2)
 
 {
-  undefined4 *puVar1;
-  CReverbEffect *pCVar2;
-  longlong lVar3;
-  
-  lVar3 = (longlong)(int)param_1;
-  puVar1 = (undefined4 *)__savegprlr_29(this,lVar3,param_2);
-  puVar1[2] = 1;
-  puVar1[1] = &CEffect::_vftable_;
-  puVar1[3] = *(undefined4 *)((int)lVar3 + 4);
-  puVar1[1] = &_vftable__for__XAUDIO__CEffect__;
-  *puVar1 = &_vftable__for__IXAudioEffect__;
-  puVar1[4] = &CStereoRoomFloat::_vbtable_;
+  this->_padding_ = 1;
+  this->_padding_ = (int)&CEffect::_vftable_;
+  this->_padding_ = (int)param_1->pContext;
+  this->_padding_ = (int)&_vftable__for__XAUDIO__CEffect__;
+  this->_padding_ = (int)&_vftable__for__IXAudioEffect__;
+  *(undefined **)&this->m_effect = &CStereoRoomFloat::_vbtable_;
   princeton_digital::stereo_room_t<float>::stereo_room_t<float>
-            ((stereo_room_t<float> *)(puVar1 + 0x34));
+            ((stereo_room_t<float> *)&(this->m_effect).field_0xc0);
   princeton_digital::stereo_room_3dl2_t<float>::stereo_room_3dl2_t<float>
-            ((stereo_room_3dl2_t<float> *)(puVar1 + 4));
-  *(undefined ***)
-   (&((stereo_room_3dl2_t<float> *)(puVar1 + 4))->field_0x0 + *(int *)(puVar1[4] + 4)) =
+            ((stereo_room_3dl2_t<float> *)&this->m_effect);
+  *(undefined ***)(&(this->m_effect).field_0x0 + *(int *)(*(int *)&this->m_effect + 4)) =
        &CStereoRoomFloat::_vftable_;
   princeton_digital::stereo_room_t<float>::properties_t::properties_t
-            ((properties_t *)(puVar1 + 0x11));
-  *(undefined8 *)(puVar1 + 0x12eaa) = 0;
-  *(undefined8 *)(puVar1 + 0x12ea8) = 0;
-  pCVar2 = (CReverbEffect *)__restgprlr_29(puVar1);
-  return pCVar2;
+            (&(this->m_effect).m_propertiesStandard);
+  this->m_totalFramesProcessed = 0;
+  this->m_totalProcessingTime = 0;
+  return this;
 }
 
 
@@ -1560,6 +1559,11 @@ XAUDIO::CReverbEffect::Initialize
 
 
 // 828D9B10  process  (<external>/Xenon/mar09/core/private/xtl/audio/reverb/stereo_room/stereo_room.hpp:249)
+
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
 
 void __thiscall
 princeton_digital::stereo_room_t<float>::process
@@ -1691,8 +1695,6 @@ princeton_digital::stereo_room_t<float>::process
   float fStack_580;
   float afStack_57c [351];
   
-  __savegprlr();
-  __savefpr();
   if (this->input_mode_ == CH1) {
     local_45a4 = *param_1;
   }
@@ -2165,8 +2167,6 @@ LAB_828d9b74:
     pfVar59 = pfVar59 + 8;
     lVar90 = lVar90 + -1;
   } while (lVar90 != 0);
-  __restfpr();
-  __restgprlr();
   return;
 }
 
@@ -2184,90 +2184,89 @@ undefined4 __thiscall XAUDIO::CReverbEffect::GetInfo(CReverbEffect *this,XAUDIOF
 
 // 828D7FA0  GetParam  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/reverbeffect.cpp:308)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 undefined4 __thiscall
 XAUDIO::CReverbEffect::GetParam
           (CReverbEffect *this,uchar param_1,uchar param_2,XAUDIOFXPARAM *param_3)
 
 {
   int iVar1;
-  undefined4 uVar2;
-  int iVar3;
-  uchar uVar4;
-  ulonglong uVar5;
-  longlong lVar6;
-  uint uVar7;
+  uchar uVar2;
+  ulonglong uVar3;
+  longlong lVar4;
+  uint uVar5;
   void *in_r13;
-  void *pvVar8;
-  double dVar9;
+  void *pvVar6;
+  double dVar7;
   _LARGE_INTEGER local_50 [10];
   
-  lVar6 = (longlong)(char)param_1;
-  iVar1 = __savegprlr_26(this,lVar6,param_2);
-  uVar7 = (uint)lVar6 & 0xff;
-  if (uVar7 == 2) {
-    uVar5 = KeRaiseIrqlToDpcLevel();
-    pvVar8 = in_r13;
+  if (param_1 == '\x02') {
+    uVar3 = KeRaiseIrqlToDpcLevel(this,2,param_2);
+    pvVar6 = in_r13;
     if ((g_XAudioSpinLock.m_LockCount == 0) || (in_r13 != g_XAudioSpinLock.m_pOwningThread)) {
       KeAcquireSpinLockAtRaisedIrql(0xffffffff848958d8);
-      g_XAudioSpinLock.m_PreviousIrql = (uchar)uVar5;
+      g_XAudioSpinLock.m_PreviousIrql = (uchar)uVar3;
       g_XAudioSpinLock.m_pOwningThread = in_r13;
     }
     else {
-      uVar5 = (ulonglong)g_XAudioSpinLock.m_PreviousIrql;
+      uVar3 = (ulonglong)g_XAudioSpinLock.m_PreviousIrql;
     }
-    lVar6 = (ulonglong)(uint)g_XAudioSpinLock.m_LockCount + 1;
-    uVar7 = (uint)lVar6;
-    dVar9 = (double)(*(float *)(*(int *)(*(int *)(iVar1 + 0x10) + 4) + iVar1 + 0x6c) * 100.0);
-    if (((lVar6 != 0) && (pvVar8 == g_XAudioSpinLock.m_pOwningThread)) &&
-       (uVar7 = g_XAudioSpinLock.m_LockCount, (ulonglong)(uint)g_XAudioSpinLock.m_LockCount == 0)) {
+    lVar4 = (ulonglong)(uint)g_XAudioSpinLock.m_LockCount + 1;
+    uVar5 = (uint)lVar4;
+    dVar7 = (double)(*(float *)((int)&(this->m_effect).m_propertiesStandard.high_eq_gain +
+                               *(int *)(*(int *)&this->m_effect + 4)) * 100.0);
+    if (((lVar4 != 0) && (pvVar6 == g_XAudioSpinLock.m_pOwningThread)) &&
+       (uVar5 = g_XAudioSpinLock.m_LockCount, (ulonglong)(uint)g_XAudioSpinLock.m_LockCount == 0)) {
       g_XAudioSpinLock.m_PreviousIrql = '\0';
       g_XAudioSpinLock.m_pOwningThread = (void *)0x0;
       KeReleaseSpinLockFromRaisedIrql(0xffffffff848958d8);
-      KfLowerIrql(uVar5);
-      uVar7 = g_XAudioSpinLock.m_LockCount;
+      KfLowerIrql(uVar3);
+      uVar5 = g_XAudioSpinLock.m_LockCount;
     }
-    g_XAudioSpinLock.m_LockCount = uVar7;
-    param_3->Value = (float)(dVar9 * 0.009999999776482582);
+    g_XAudioSpinLock.m_LockCount = uVar5;
+    param_3->Value = (float)(dVar7 * 0.009999999776482582);
   }
   else {
-    if (uVar7 != 3) {
-      uVar2 = __restgprlr_26(0xffffffff80070057);
-      return uVar2;
+    if (param_1 != '\x03') {
+      return 0x80070057;
     }
-    iVar3 = QueryPerformanceFrequency(local_50);
-    uVar4 = KeRaiseIrqlToDpcLevel(iVar3);
-    pvVar8 = in_r13;
+    iVar1 = QueryPerformanceFrequency(local_50);
+    uVar2 = KeRaiseIrqlToDpcLevel(iVar1);
+    pvVar6 = in_r13;
     if ((g_XAudioSpinLock.m_LockCount == 0) || (in_r13 != g_XAudioSpinLock.m_pOwningThread)) {
       KeAcquireSpinLockAtRaisedIrql(0xffffffff848958d8);
       g_XAudioSpinLock.m_pOwningThread = in_r13;
-      g_XAudioSpinLock.m_PreviousIrql = uVar4;
+      g_XAudioSpinLock.m_PreviousIrql = uVar2;
     }
     g_XAudioSpinLock.m_LockCount = g_XAudioSpinLock.m_LockCount + 1;
     param_3->Value =
-         (float)(((double)*(longlong *)(iVar1 + 0x4baa0) / (double)local_50[0].QuadPart) /
-                ((double)*(longlong *)(iVar1 + 0x4baa8) * 0.005333333333333333));
-    *(longlong *)(iVar1 + 0x4baa0) = 0;
-    *(longlong *)(iVar1 + 0x4baa8) = 0;
-    uVar4 = g_XAudioSpinLock.m_PreviousIrql;
-    uVar5 = (ulonglong)(uint)g_XAudioSpinLock.m_LockCount;
-    if ((g_XAudioSpinLock.m_LockCount != 0) && (pvVar8 == g_XAudioSpinLock.m_pOwningThread)) {
-      g_XAudioSpinLock.m_LockCount = (long)(uVar5 - 1);
-      if (uVar5 - 1 == 0) {
+         (float)(((double)this->m_totalProcessingTime / (double)local_50[0].QuadPart) /
+                ((double)this->m_totalFramesProcessed * 0.005333333333333333));
+    this->m_totalProcessingTime = 0;
+    this->m_totalFramesProcessed = 0;
+    uVar2 = g_XAudioSpinLock.m_PreviousIrql;
+    uVar3 = (ulonglong)(uint)g_XAudioSpinLock.m_LockCount;
+    if ((g_XAudioSpinLock.m_LockCount != 0) && (pvVar6 == g_XAudioSpinLock.m_pOwningThread)) {
+      g_XAudioSpinLock.m_LockCount = (long)(uVar3 - 1);
+      if (uVar3 - 1 == 0) {
         g_XAudioSpinLock.m_pOwningThread = (void *)0x0;
         g_XAudioSpinLock.m_PreviousIrql = '\0';
         KeReleaseSpinLockFromRaisedIrql(0xffffffff848958d8);
-        KfLowerIrql(uVar4);
-        uVar2 = __restgprlr_26(0);
-        return uVar2;
+        KfLowerIrql(uVar2);
+        return 0;
       }
     }
   }
-  uVar2 = __restgprlr_26(0);
-  return uVar2;
+  return 0;
 }
 
 
 // 828D81B0  SetParam  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/reverbeffect.cpp:390)
+
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 
 undefined4 __thiscall
 XAUDIO::CReverbEffect::SetParam
@@ -2275,20 +2274,15 @@ XAUDIO::CReverbEffect::SetParam
 
 {
   uint *puVar1;
-  int iVar2;
-  undefined4 uVar3;
-  uchar uVar4;
-  ulonglong uVar5;
+  uchar uVar2;
+  ulonglong uVar3;
   void *in_r13;
-  void *pvVar6;
-  void *pvVar7;
-  double dVar8;
+  void *pvVar4;
+  void *pvVar5;
+  double dVar6;
   properties_t local_a0;
   
-  uVar5 = (ulonglong)(char)param_1;
-  iVar2 = __savegprlr_26(this,uVar5,param_2);
-  uVar5 = uVar5 & 0xff;
-  if (uVar5 == 0) {
+  if (param_1 == '\0') {
     puVar1 = (uint *)param_3->Flags;
     princeton_digital::stereo_room_t<float>::properties_t::properties_t(&local_a0);
     local_a0.reflections_delay = *puVar1;
@@ -2312,95 +2306,93 @@ XAUDIO::CReverbEffect::SetParam
     local_a0.decay_time = (float)puVar1[9];
     local_a0.density = (float)puVar1[10] * 100.0;
     local_a0.room_size = (float)puVar1[0xb] * 3.28084;
-    uVar4 = KeRaiseIrqlToDpcLevel();
-    pvVar6 = in_r13;
+    uVar2 = KeRaiseIrqlToDpcLevel();
+    pvVar4 = in_r13;
     if ((g_XAudioSpinLock.m_LockCount == 0) || (in_r13 != g_XAudioSpinLock.m_pOwningThread)) {
       KeAcquireSpinLockAtRaisedIrql(0xffffffff848958d8);
       g_XAudioSpinLock.m_pOwningThread = in_r13;
-      g_XAudioSpinLock.m_PreviousIrql = uVar4;
+      g_XAudioSpinLock.m_PreviousIrql = uVar2;
     }
     g_XAudioSpinLock.m_LockCount = g_XAudioSpinLock.m_LockCount + 1;
-    uVar4 = KeRaiseIrqlToDpcLevel();
-    pvVar7 = pvVar6;
-    if ((g_XAudioSpinLock.m_LockCount == 0) || (pvVar6 != g_XAudioSpinLock.m_pOwningThread)) {
+    uVar2 = KeRaiseIrqlToDpcLevel();
+    pvVar5 = pvVar4;
+    if ((g_XAudioSpinLock.m_LockCount == 0) || (pvVar4 != g_XAudioSpinLock.m_pOwningThread)) {
       KeAcquireSpinLockAtRaisedIrql(0xffffffff848958d8);
-      g_XAudioSpinLock.m_pOwningThread = pvVar6;
-      g_XAudioSpinLock.m_PreviousIrql = uVar4;
+      g_XAudioSpinLock.m_pOwningThread = pvVar4;
+      g_XAudioSpinLock.m_PreviousIrql = uVar2;
     }
     g_XAudioSpinLock.m_LockCount = g_XAudioSpinLock.m_LockCount + 1;
     memcpy();
-    *(undefined1 *)(iVar2 + 0xcd) = 1;
+    (this->m_effect).m_PropertiesStandardChanged = true;
   }
-  else if (uVar5 == 1) {
-    uVar4 = KeRaiseIrqlToDpcLevel();
-    pvVar6 = in_r13;
+  else if (param_1 == '\x01') {
+    uVar2 = KeRaiseIrqlToDpcLevel(this,1,param_2);
+    pvVar4 = in_r13;
     if ((g_XAudioSpinLock.m_LockCount == 0) || (in_r13 != g_XAudioSpinLock.m_pOwningThread)) {
       KeAcquireSpinLockAtRaisedIrql(0xffffffff848958d8);
       g_XAudioSpinLock.m_pOwningThread = in_r13;
-      g_XAudioSpinLock.m_PreviousIrql = uVar4;
+      g_XAudioSpinLock.m_PreviousIrql = uVar2;
     }
     g_XAudioSpinLock.m_LockCount = g_XAudioSpinLock.m_LockCount + 1;
-    uVar4 = KeRaiseIrqlToDpcLevel();
-    pvVar7 = pvVar6;
-    if ((g_XAudioSpinLock.m_LockCount == 0) || (pvVar6 != g_XAudioSpinLock.m_pOwningThread)) {
+    uVar2 = KeRaiseIrqlToDpcLevel();
+    pvVar5 = pvVar4;
+    if ((g_XAudioSpinLock.m_LockCount == 0) || (pvVar4 != g_XAudioSpinLock.m_pOwningThread)) {
       KeAcquireSpinLockAtRaisedIrql(0xffffffff848958d8);
-      g_XAudioSpinLock.m_pOwningThread = pvVar6;
-      g_XAudioSpinLock.m_PreviousIrql = uVar4;
+      g_XAudioSpinLock.m_pOwningThread = pvVar4;
+      g_XAudioSpinLock.m_PreviousIrql = uVar2;
     }
     g_XAudioSpinLock.m_LockCount = g_XAudioSpinLock.m_LockCount + 1;
     memcpy();
-    *(undefined1 *)(iVar2 + 0xce) = 1;
+    (this->m_effect).m_PropertiesI3DL2Changed = true;
   }
   else {
-    if (2 < uVar5) {
-      uVar3 = __restgprlr_26(0xffffffff80070057);
-      return uVar3;
+    if (2 < param_1) {
+      return 0x80070057;
     }
-    dVar8 = (double)param_3->Value;
-    uVar4 = KeRaiseIrqlToDpcLevel();
-    pvVar6 = in_r13;
+    dVar6 = (double)param_3->Value;
+    uVar2 = KeRaiseIrqlToDpcLevel(this,param_1,param_2);
+    pvVar4 = in_r13;
     if ((g_XAudioSpinLock.m_LockCount == 0) || (in_r13 != g_XAudioSpinLock.m_pOwningThread)) {
       KeAcquireSpinLockAtRaisedIrql(0xffffffff848958d8);
       g_XAudioSpinLock.m_pOwningThread = in_r13;
-      g_XAudioSpinLock.m_PreviousIrql = uVar4;
+      g_XAudioSpinLock.m_PreviousIrql = uVar2;
     }
     g_XAudioSpinLock.m_LockCount = g_XAudioSpinLock.m_LockCount + 1;
-    uVar4 = KeRaiseIrqlToDpcLevel();
-    pvVar7 = pvVar6;
-    if ((g_XAudioSpinLock.m_LockCount == 0) || (pvVar6 != g_XAudioSpinLock.m_pOwningThread)) {
+    uVar2 = KeRaiseIrqlToDpcLevel();
+    pvVar5 = pvVar4;
+    if ((g_XAudioSpinLock.m_LockCount == 0) || (pvVar4 != g_XAudioSpinLock.m_pOwningThread)) {
       KeAcquireSpinLockAtRaisedIrql(0xffffffff848958d8);
-      g_XAudioSpinLock.m_pOwningThread = pvVar6;
-      g_XAudioSpinLock.m_PreviousIrql = uVar4;
+      g_XAudioSpinLock.m_pOwningThread = pvVar4;
+      g_XAudioSpinLock.m_PreviousIrql = uVar2;
     }
     g_XAudioSpinLock.m_LockCount = g_XAudioSpinLock.m_LockCount + 1;
-    *(undefined1 *)(iVar2 + 0xcc) = 1;
-    *(float *)(iVar2 + 200) = (float)(dVar8 * 100.0);
+    (this->m_effect).m_WetDryChanged = true;
+    (this->m_effect).m_wetDryMix = (float)(dVar6 * 100.0);
   }
-  uVar4 = g_XAudioSpinLock.m_PreviousIrql;
-  uVar5 = (ulonglong)(uint)g_XAudioSpinLock.m_LockCount;
-  if ((g_XAudioSpinLock.m_LockCount != 0) && (pvVar7 == g_XAudioSpinLock.m_pOwningThread)) {
-    uVar5 = uVar5 - 1;
-    g_XAudioSpinLock.m_LockCount = (long)uVar5;
-    if (uVar5 == 0) {
+  uVar2 = g_XAudioSpinLock.m_PreviousIrql;
+  uVar3 = (ulonglong)(uint)g_XAudioSpinLock.m_LockCount;
+  if ((g_XAudioSpinLock.m_LockCount != 0) && (pvVar5 == g_XAudioSpinLock.m_pOwningThread)) {
+    uVar3 = uVar3 - 1;
+    g_XAudioSpinLock.m_LockCount = (long)uVar3;
+    if (uVar3 == 0) {
       g_XAudioSpinLock.m_pOwningThread = (void *)0x0;
       g_XAudioSpinLock.m_PreviousIrql = '\0';
       KeReleaseSpinLockFromRaisedIrql(0xffffffff848958d8);
-      KfLowerIrql(uVar4);
-      uVar5 = (ulonglong)(uint)g_XAudioSpinLock.m_LockCount;
+      KfLowerIrql(uVar2);
+      uVar3 = (ulonglong)(uint)g_XAudioSpinLock.m_LockCount;
     }
   }
-  uVar4 = g_XAudioSpinLock.m_PreviousIrql;
-  if (((int)uVar5 != 0) && (pvVar7 == g_XAudioSpinLock.m_pOwningThread)) {
-    g_XAudioSpinLock.m_LockCount = (long)(uVar5 - 1);
-    if (uVar5 - 1 == 0) {
+  uVar2 = g_XAudioSpinLock.m_PreviousIrql;
+  if (((int)uVar3 != 0) && (pvVar5 == g_XAudioSpinLock.m_pOwningThread)) {
+    g_XAudioSpinLock.m_LockCount = (long)(uVar3 - 1);
+    if (uVar3 - 1 == 0) {
       g_XAudioSpinLock.m_PreviousIrql = '\0';
       g_XAudioSpinLock.m_pOwningThread = (void *)0x0;
       KeReleaseSpinLockFromRaisedIrql(0xffffffff848958d8);
-      KfLowerIrql(uVar4);
+      KfLowerIrql(uVar2);
     }
   }
-  uVar3 = __restgprlr_26(0);
-  return uVar3;
+  return 0;
 }
 
 

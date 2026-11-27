@@ -2,32 +2,24 @@
 
 // 8290C2B0  bdRichPresenceInfo  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdrichpresence/bdrichpresenceinfo.cpp:13)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 bdRichPresenceInfo * __thiscall
 bdRichPresenceInfo::bdRichPresenceInfo(bdRichPresenceInfo *this,uchar *param_1,uint param_2)
 
 {
-  bdTaskResult *this_00;
-  bdRichPresenceInfo *pbVar1;
-  ulonglong uVar2;
-  ulonglong uVar3;
-  bdTaskResult bVar4;
-  
-  uVar3 = (ulonglong)(int)param_2;
-  uVar2 = (ulonglong)(int)param_1;
-  this_00 = (bdTaskResult *)__savegprlr_29(this);
-  bdTaskResult::bdTaskResult(this_00);
-  *(undefined1 *)(this_00 + 1) = 0;
-  *this_00 = (bdTaskResult)&_vftable_;
-  bVar4 = SUB84(uVar3,0);
-  if (0x1f < (uVar3 & 0xffffffff)) {
-    bVar4 = (bdTaskResult)0x20;
+  bdTaskResult::bdTaskResult((bdTaskResult *)this);
+  this->m_online = false;
+  this->_padding_ = (int)&_vftable_;
+  if (0x1f < param_2) {
+    param_2 = 0x20;
   }
-  this_00[10] = bVar4;
-  if ((uVar2 & 0xffffffff) != 0) {
+  this->m_count = param_2;
+  if (param_1 != (uchar *)0x0) {
     memcpy();
   }
-  pbVar1 = (bdRichPresenceInfo *)__restgprlr_29(this_00);
-  return pbVar1;
+  return this;
 }
 
 
@@ -52,32 +44,31 @@ void __thiscall bdRichPresenceInfo::serialize(bdRichPresenceInfo *this,bdByteBuf
 
 // 8290C390  deserialize  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdrichpresence/bdrichpresenceinfo.cpp:30)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 bool __thiscall
 bdRichPresenceInfo::deserialize(bdRichPresenceInfo *this,bdReference<bdByteBuffer> param_1)
 
 {
-  int iVar1;
+  bool bVar1;
   bool bVar2;
-  undefined1 uVar3;
-  undefined8 uVar4;
-  bdByteBuffer *pbStack0000001c;
+  bdReference<bdByteBuffer> bStack0000001c;
   
-  iVar1 = __savegprlr_28(this);
-  *(undefined4 *)(iVar1 + 0x28) = 0x20;
-  pbStack0000001c = param_1.m_ptr;
-  bVar2 = bdByteBuffer::readBool((bdByteBuffer *)(param_1.m_ptr)->_padding_,(bool *)(iVar1 + 4));
-  if (bVar2) {
-    bVar2 = bdByteBuffer::readBlob
-                      ((bdByteBuffer *)(param_1.m_ptr)->_padding_,(uchar *)(iVar1 + 5),
-                       (uint *)(iVar1 + 0x28));
-    uVar4 = 1;
-    if (bVar2) goto LAB_8290c3f8;
+  this->m_count = 0x20;
+  bStack0000001c.m_ptr = param_1.m_ptr;
+  bVar1 = bdByteBuffer::readBool((bdByteBuffer *)(param_1.m_ptr)->_padding_,&this->m_online);
+  if (bVar1) {
+    bVar1 = bdByteBuffer::readBlob
+                      ((bdByteBuffer *)(param_1.m_ptr)->_padding_,this->m_richPresence,
+                       &this->m_count);
+    bVar2 = true;
+    if (bVar1) goto LAB_8290c3f8;
   }
-  uVar4 = 0;
+  bVar2 = false;
 LAB_8290c3f8:
   bdReference<bdByteBuffer>::~bdReference<bdByteBuffer>((bdReference<bdByteBuffer> *)param_1.m_ptr);
-  uVar3 = __restgprlr_28(uVar4);
-  return (bool)uVar3;
+  return bVar2;
 }
 
 

@@ -242,105 +242,95 @@ void LiveAntiCheatDebugChallengeResponse_SetNoParams
 
 // 8270A640  LiveAntiCheatDebugChallengeResponse_SetParamUInt64  (online/live_anticheat.cpp:616)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void LiveAntiCheatDebugChallengeResponse_SetParamUInt64
                (LiveAntiCheatDebugChallengeResponse *param_1,FunctionID_t param_2,ulong64 param_3)
 
 {
-  FunctionID_t *pFVar1;
-  
-  pFVar1 = (FunctionID_t *)__savegprlr_29(param_1);
-  Com_Memset(pFVar1,0,0x110);
-  *pFVar1 = param_2;
-  *(ulong64 *)(pFVar1 + 2) = param_3;
-  __restgprlr_29();
+  Com_Memset(param_1,0,0x110);
+  param_1->functionid = param_2;
+  (param_1->params).checksum.key = param_3;
   return;
 }
 
 
 // 8270A678  LiveAntiCheatDebugChallengeResponse_SetParamChecksum  (online/live_anticheat.cpp:630)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void LiveAntiCheatDebugChallengeResponse_SetParamChecksum
                (LiveAntiCheatDebugChallengeResponse *param_1,FunctionID_t param_2,ulong64 param_3,
                uint param_4,uint param_5)
 
 {
-  FunctionID_t *pFVar1;
-  
-  pFVar1 = (FunctionID_t *)__savegprlr_27(param_1);
-  Com_Memset(pFVar1,0,0x110);
-  *pFVar1 = param_2;
-  *(ulong64 *)(pFVar1 + 2) = param_3;
-  pFVar1[4] = param_4;
-  pFVar1[5] = param_5;
-  __restgprlr_27();
+  Com_Memset(param_1,0,0x110);
+  param_1->functionid = param_2;
+  (param_1->params).checksum.key = param_3;
+  (param_1->params).checksum.start = param_4;
+  (param_1->params).checksum.size = param_5;
   return;
 }
 
 
 // 8270A6C0  LiveAntiCheatDebugChallengeResponse_SetParamDVar  (online/live_anticheat.cpp:646)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void LiveAntiCheatDebugChallengeResponse_SetParamDVar
                (LiveAntiCheatDebugChallengeResponse *param_1,FunctionID_t param_2,char *param_3)
 
 {
-  FunctionID_t *pFVar1;
-  
-  pFVar1 = (FunctionID_t *)__savegprlr_29(param_1);
-  Com_Memset(pFVar1,0,0x110);
-  *pFVar1 = param_2;
-  I_strncpyz((char *)(pFVar1 + 2),param_3,0x40);
-  __restgprlr_29();
+  Com_Memset(param_1,0,0x110);
+  param_1->functionid = param_2;
+  I_strncpyz((param_1->params)._padding_,param_3,0x40);
   return;
 }
 
 
 // 8270A700  LiveAntiCheatDebugChallengeResponse_SetParamDVarFloat  (online/live_anticheat.cpp:660)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void LiveAntiCheatDebugChallengeResponse_SetParamDVarFloat
                (LiveAntiCheatDebugChallengeResponse *param_1,FunctionID_t param_2,char *param_3,
                int param_4)
 
 {
-  FunctionID_t *pFVar1;
-  
-  pFVar1 = (FunctionID_t *)__savegprlr_28(param_1);
-  Com_Memset(pFVar1,0,0x110);
-  *pFVar1 = param_2;
-  I_strncpyz((char *)(pFVar1 + 2),param_3,0x40);
-  pFVar1[0x12] = param_4;
-  __restgprlr_28();
+  Com_Memset(param_1,0,0x110);
+  param_1->functionid = param_2;
+  I_strncpyz((param_1->params)._padding_,param_3,0x40);
+  (param_1->params).dvarfloat.scale = param_4;
   return;
 }
 
 
 // 8270A748  LiveAntiCheatDebugChallengeResponse_SetParamEncodedExpression  (online/live_anticheat.cpp:675)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void LiveAntiCheatDebugChallengeResponse_SetParamEncodedExpression
                (LiveAntiCheatDebugChallengeResponse *param_1,FunctionID_t param_2,uchar *param_3,
                int param_4)
 
 {
-  FunctionID_t *pFVar1;
-  ulonglong uVar2;
-  ulonglong uVar3;
-  FunctionID_t FVar4;
-  
-  uVar3 = (ulonglong)param_4;
-  uVar2 = (ulonglong)(int)param_3;
-  pFVar1 = (FunctionID_t *)__savegprlr_28(param_1);
-  Com_Memset(pFVar1,0,0x110);
-  *pFVar1 = param_2;
-  Com_Memset(pFVar1 + 2,0,0x100);
-  pFVar1[0x42] = FUNCTIONID_NONE;
-  if (((uVar2 & 0xffffffff) != 0) && (FVar4 = (FunctionID_t)uVar3, 0 < (int)FVar4)) {
-    if (0x100 < (uVar3 & 0xffffffff)) {
+  Com_Memset(param_1,0,0x110);
+  param_1->functionid = param_2;
+  Com_Memset(&param_1->params,0,0x100);
+  (param_1->params).encodedexpression.encodedexpressionsize = 0;
+  if ((param_3 != (uchar *)0x0) && (0 < param_4)) {
+    if (0x100 < (uint)param_4) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\online\\live_anticheat.cpp",
                       0x2a9,0,"%s");
     }
-    Com_Memcpy(pFVar1 + 2,(void *)uVar2,FVar4);
-    pFVar1[0x42] = FVar4;
+    Com_Memcpy(&param_1->params,param_3,param_4);
+    (param_1->params).encodedexpression.encodedexpressionsize = param_4;
   }
-  __restgprlr_28();
   return;
 }
 
@@ -369,6 +359,8 @@ void LiveAntiCheatExpressionStore_Reset(LiveAntiCheatExpressionStore *param_1)
 
 // 8270A858  LiveAntiCheatExpressionStore_GetSettings  (online/live_anticheat.cpp:715)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 
@@ -376,27 +368,23 @@ void LiveAntiCheatExpressionStore_GetSettings
                (LiveAntiCheatExpressionStore *param_1,LiveAntiCheatExpressionStoreSettings *param_2)
 
 {
-  void *pvVar1;
-  ulonglong uVar2;
-  
-  uVar2 = (ulonglong)(int)param_2;
-  pvVar1 = (void *)__savegprlr_28(param_1);
-  if (pvVar1 == (void *)0x0) {
+  if (param_1 == (LiveAntiCheatExpressionStore *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\online\\live_anticheat.cpp",
                     0x2cc,0,"%s");
   }
-  if ((uVar2 & 0xffffffff) == 0) {
+  if (param_2 == (LiveAntiCheatExpressionStoreSettings *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\online\\live_anticheat.cpp",
                     0x2cd,0,"%s");
   }
-  Com_Memcpy((void *)uVar2,pvVar1,0x18);
-  __restgprlr_28();
+  Com_Memcpy(param_2,param_1,0x18);
   return;
 }
 
 
 // 8270A8E0  LiveAntiCheatExpressionStore_SetSettings  (online/live_anticheat.cpp:730)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 
@@ -404,21 +392,15 @@ void LiveAntiCheatExpressionStore_SetSettings
                (LiveAntiCheatExpressionStore *param_1,LiveAntiCheatExpressionStoreSettings *param_2)
 
 {
-  void *pvVar1;
-  ulonglong uVar2;
-  
-  uVar2 = (ulonglong)(int)param_2;
-  pvVar1 = (void *)__savegprlr_28(param_1);
-  if (pvVar1 == (void *)0x0) {
+  if (param_1 == (LiveAntiCheatExpressionStore *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\online\\live_anticheat.cpp",
                     0x2db,0,"%s");
   }
-  if ((uVar2 & 0xffffffff) == 0) {
+  if (param_2 == (LiveAntiCheatExpressionStoreSettings *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\online\\live_anticheat.cpp",
                     0x2dc,0,"%s");
   }
-  Com_Memcpy(pvVar1,(void *)uVar2,0x18);
-  __restgprlr_28();
+  Com_Memcpy(param_1,param_2,0x18);
   return;
 }
 
@@ -528,6 +510,8 @@ LiveAntiCheatExpressionStore_GetNewExpressionSupportingDataPtr
 
 // 8270ABC8  LiveAntiCheatExpressionStore_GetNewStringPtr  (online/live_anticheat.cpp:833)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 
@@ -538,47 +522,40 @@ char * LiveAntiCheatExpressionStore_GetNewStringPtr
   char cVar1;
   int iVar2;
   int iVar3;
-  int iVar4;
-  char *pcVar5;
-  int iVar6;
-  ulonglong uVar7;
-  ulonglong uVar8;
+  char *pcVar4;
   
-  uVar8 = (ulonglong)(int)param_2;
-  iVar4 = __savegprlr_28(param_1);
-  if (iVar4 == 0) {
+  if (param_1 == (LiveAntiCheatExpressionStore *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\online\\live_anticheat.cpp",
                     0x345,0,"%s");
   }
-  uVar7 = uVar8;
-  if ((uVar8 & 0xffffffff) == 0) {
+  pcVar4 = param_2;
+  if (param_2 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\online\\live_anticheat.cpp",
                     0x346,0,"%s");
   }
   do {
-    pcVar5 = (char *)uVar7;
-    uVar7 = uVar7 + 1;
-  } while (*pcVar5 != '\0');
-  iVar3 = (int)uVar8;
-  iVar2 = *(int *)(iVar4 + 0x14);
-  iVar6 = iVar2 + ((int)uVar7 - iVar3);
-  if (iVar6 < 0x1000) {
-    *(int *)(iVar4 + 0x14) = iVar6;
+    cVar1 = *pcVar4;
+    pcVar4 = pcVar4 + 1;
+  } while (cVar1 != '\0');
+  iVar2 = (param_1->settings).stringbufferindex;
+  if ((int)(pcVar4 + (iVar2 - (int)param_2)) < 0x1000) {
+    (param_1->settings).stringbufferindex = (int)(pcVar4 + (iVar2 - (int)param_2));
+    iVar3 = (int)(param_1->stringbufferarray + iVar2) - (int)param_2;
     do {
-      cVar1 = *(char *)uVar8;
-      ((char *)uVar8)[(iVar2 + iVar4 + 0x678) - iVar3] = cVar1;
-      uVar8 = uVar8 + 1;
+      cVar1 = *param_2;
+      param_2[iVar3] = cVar1;
+      param_2 = param_2 + 1;
     } while (cVar1 != '\0');
-    pcVar5 = (char *)__restgprlr_28();
-    return pcVar5;
+    return param_1->stringbufferarray + iVar2;
   }
-  pcVar5 = (char *)__restgprlr_28(0);
-  return pcVar5;
+  return (char *)0x0;
 }
 
 
 // 8270ACA8  LiveAntiCheatExpressionStore_GetNewStaticDvar  (online/live_anticheat.cpp:864)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 
@@ -588,35 +565,30 @@ LiveAntiCheatExpressionStore_GetNewStaticDvar
 
 {
   int iVar1;
-  int iVar2;
-  StaticDvar *pSVar3;
-  int iVar4;
   
-  iVar2 = __savegprlr_28(param_1);
-  if (iVar2 == 0) {
+  if (param_1 == (LiveAntiCheatExpressionStore *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\online\\live_anticheat.cpp",
                     0x363,0,"%s");
   }
-  iVar1 = *(int *)(iVar2 + 0xc);
+  iVar1 = (param_1->settings).staticdvarindex;
   if (0x13 < iVar1) {
     if (alwaysfails == 0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\online\\live_anticheat.cpp",
                       0x367,0,"LiveAntiCheatExpressionStore_GetNewStaticDvar()");
     }
-    pSVar3 = (StaticDvar *)__restgprlr_28(0);
-    return pSVar3;
+    return (StaticDvar *)0x0;
   }
-  iVar4 = (iVar1 + 0xb1) * 8;
-  *(int *)(iVar2 + 0xc) = iVar1 + 1;
-  *(dvar_t **)(iVar4 + iVar2) = param_2;
-  *(char **)(iVar4 + iVar2 + 4) = param_3;
-  pSVar3 = (StaticDvar *)__restgprlr_28();
-  return pSVar3;
+  (param_1->settings).staticdvarindex = iVar1 + 1;
+  param_1->staticdvararray[iVar1].dvar = param_2;
+  param_1->staticdvararray[iVar1].dvarName = param_3;
+  return param_1->staticdvararray + iVar1;
 }
 
 
 // 8270AD58  LiveAntiCheatExpressionStore_GetNewStaticDvarPtr  (online/live_anticheat.cpp:893)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 
@@ -626,34 +598,29 @@ LiveAntiCheatExpressionStore_GetNewStaticDvarPtr
 
 {
   int iVar1;
-  int iVar2;
-  StaticDvar **ppSVar3;
-  int iVar4;
   
-  iVar2 = __savegprlr_29(param_1);
-  if (iVar2 == 0) {
+  if (param_1 == (LiveAntiCheatExpressionStore *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\online\\live_anticheat.cpp",
                     0x380,0,"%s");
   }
-  iVar1 = *(int *)(iVar2 + 0x10);
+  iVar1 = (param_1->settings).staticdvarptrindex;
   if (0x13 < iVar1) {
     if (alwaysfails == 0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\online\\live_anticheat.cpp",
                       900,0,"LiveAntiCheatExpressionStore_GetNewStaticDvarPtr()");
     }
-    ppSVar3 = (StaticDvar **)__restgprlr_29(0);
-    return ppSVar3;
+    return (StaticDvar **)0x0;
   }
-  iVar4 = (iVar1 + 0x18a) * 4;
-  *(int *)(iVar2 + 0x10) = iVar1 + 1;
-  *(StaticDvar **)(iVar4 + iVar2) = param_2;
-  ppSVar3 = (StaticDvar **)__restgprlr_29(iVar4 + iVar2);
-  return ppSVar3;
+  (param_1->settings).staticdvarptrindex = iVar1 + 1;
+  param_1->staticdvarptrarray[iVar1] = param_2;
+  return param_1->staticdvarptrarray + iVar1;
 }
 
 
 // 8270AE00  LiveAntiCheatExpressionStore_FindIndexOfStaticDvar  (online/live_anticheat.cpp:921)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 
@@ -665,41 +632,37 @@ int LiveAntiCheatExpressionStore_FindIndexOfStaticDvar
   int *piVar2;
   int iVar3;
   int iVar4;
-  ulonglong uVar5;
-  longlong lVar6;
-  int iVar7;
+  int iVar5;
   
-  uVar5 = (ulonglong)(int)param_2;
-  iVar3 = __savegprlr_28(param_1);
-  if (iVar3 == 0) {
+  if (param_1 == (ExpressionSupportingData *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\online\\live_anticheat.cpp",
                     0x39e,0,"%s");
   }
-  if ((uVar5 & 0xffffffff) == 0) {
+  if (param_2 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\online\\live_anticheat.cpp",
                     0x39f,0,"%s");
   }
-  lVar6 = 0;
-  if (0 < *(int *)(iVar3 + 8)) {
-    iVar7 = 0;
+  iVar4 = 0;
+  if (0 < (param_1->staticDvarList).numStaticDvars) {
+    iVar5 = 0;
     do {
-      piVar2 = *(int **)(*(int *)(iVar3 + 0xc) + iVar7);
+      piVar2 = *(int **)((int)(param_1->staticDvarList).staticDvars + iVar5);
       if (((piVar2 != (int *)0x0) && (puVar1 = (undefined4 *)*piVar2, puVar1 != (undefined4 *)0x0))
-         && (iVar4 = I_stricmp((char *)*puVar1,(char *)uVar5), iVar4 == 0)) {
-        iVar3 = __restgprlr_28(lVar6);
-        return iVar3;
+         && (iVar3 = I_stricmp((char *)*puVar1,param_2), iVar3 == 0)) {
+        return iVar4;
       }
-      lVar6 = lVar6 + 1;
-      iVar7 = iVar7 + 4;
-    } while ((int)lVar6 < *(int *)(iVar3 + 8));
+      iVar4 = iVar4 + 1;
+      iVar5 = iVar5 + 4;
+    } while (iVar4 < (param_1->staticDvarList).numStaticDvars);
   }
-  iVar3 = __restgprlr_28(0xffffffffffffffff);
-  return iVar3;
+  return -1;
 }
 
 
 // 8270AEE0  LiveAntiCheatExpressionStore_AddStaticDvar  (online/live_anticheat.cpp:958)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 
@@ -708,68 +671,57 @@ int LiveAntiCheatExpressionStore_AddStaticDvar
               )
 
 {
-  int iVar1;
-  dvar_t *pdVar2;
-  char *pcVar3;
-  char *pcVar5;
-  StaticDvar *pSVar6;
-  StaticDvar **ppSVar7;
-  ulonglong uVar8;
-  ulonglong uVar9;
-  LiveAntiCheatExpressionStore *pLVar4;
+  dvar_t *pdVar1;
+  char *pcVar2;
+  StaticDvar *pSVar3;
+  StaticDvar **ppSVar4;
   
-  uVar9 = (ulonglong)(int)param_3;
-  uVar8 = (ulonglong)(int)param_2;
-  iVar1 = __savegprlr_27(param_1);
-  if (iVar1 == 0) {
+  if (param_1 == (ExpressionSupportingData *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\online\\live_anticheat.cpp",
                     0x3c5,0,"%s");
   }
-  if ((uVar8 & 0xffffffff) == 0) {
+  if (param_2 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\online\\live_anticheat.cpp",
                     0x3c6,0,"%s");
   }
-  if ((uVar9 & 0xffffffff) == 0) {
+  if (param_3 == (LiveAntiCheatExpressionStore *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\online\\live_anticheat.cpp",
                     0x3c7,0,"%s");
   }
-  pcVar5 = (char *)uVar8;
-  pdVar2 = Dvar_FindVar(pcVar5);
-  if ((pdVar2 != (dvar_t *)0x0) ||
-     (pdVar2 = s_liveanticheatunknowndvar, s_liveanticheatunknowndvar != (dvar_t *)0x0)) {
-    pLVar4 = (LiveAntiCheatExpressionStore *)uVar9;
-    pcVar3 = LiveAntiCheatExpressionStore_GetNewStringPtr(pLVar4,pcVar5);
-    if (pcVar3 == (char *)0x0) {
+  pdVar1 = Dvar_FindVar(param_2);
+  if ((pdVar1 != (dvar_t *)0x0) ||
+     (pdVar1 = s_liveanticheatunknowndvar, s_liveanticheatunknowndvar != (dvar_t *)0x0)) {
+    pcVar2 = LiveAntiCheatExpressionStore_GetNewStringPtr(param_3,param_2);
+    if (pcVar2 == (char *)0x0) {
       if (alwaysfails == 0) {
-        pcVar5 = va(
+        pcVar2 = va(
                    "LiveAntiCheatExpressionStore_AddStaticDvar() : No more room for dvar name string \"%s\"!!!"
                    );
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\online\\live_anticheat.cpp"
-                        ,0x3da,0,pcVar5);
+                        ,0x3da,0,pcVar2);
       }
     }
     else {
-      pSVar6 = LiveAntiCheatExpressionStore_GetNewStaticDvar(pLVar4,pdVar2,pcVar5);
-      if (pSVar6 != (StaticDvar *)0x0) {
-        ppSVar7 = LiveAntiCheatExpressionStore_GetNewStaticDvarPtr(pLVar4,pSVar6);
-        if (ppSVar7 != (StaticDvar **)0x0) {
-          if (*(int *)(iVar1 + 0xc) == 0) {
-            *(StaticDvar ***)(iVar1 + 0xc) = ppSVar7;
-          }
-          *(int *)(iVar1 + 8) = *(int *)(iVar1 + 8) + 1;
-          iVar1 = __restgprlr_27((uint)(*(int *)(iVar1 + 0xc) - (int)ppSVar7 >> 2) >> 2);
-          return iVar1;
+      pSVar3 = LiveAntiCheatExpressionStore_GetNewStaticDvar(param_3,pdVar1,param_2);
+      if ((pSVar3 != (StaticDvar *)0x0) &&
+         (ppSVar4 = LiveAntiCheatExpressionStore_GetNewStaticDvarPtr(param_3,pSVar3),
+         ppSVar4 != (StaticDvar **)0x0)) {
+        if ((param_1->staticDvarList).staticDvars == (StaticDvar **)0x0) {
+          (param_1->staticDvarList).staticDvars = ppSVar4;
         }
+        (param_1->staticDvarList).numStaticDvars = (param_1->staticDvarList).numStaticDvars + 1;
+        return (uint)((int)(param_1->staticDvarList).staticDvars - (int)ppSVar4 >> 2) >> 2;
       }
     }
   }
-  iVar1 = __restgprlr_27(0xffffffffffffffff);
-  return iVar1;
+  return -1;
 }
 
 
 // 8270B050  LiveAntiCheat_GetExpressionString  (online/live_anticheat.cpp:1019)
 
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 
@@ -778,312 +730,288 @@ void LiveAntiCheat_GetExpressionString(Statement_s *param_1,char *param_2,int pa
 {
   bool bVar1;
   char cVar2;
-  int iVar3;
+  expressionEntry *peVar3;
   uint uVar4;
-  char cVar5;
-  int *piVar6;
-  ulonglong uVar7;
+  int iVar5;
+  StaticDvar *pSVar6;
+  char cVar7;
   char *pcVar8;
-  char *pcVar9;
-  ulonglong uVar10;
+  ulonglong uVar9;
+  int iVar10;
   int iVar11;
-  int iVar12;
   char local_4b0;
   undefined1 local_4af;
   char *local_4ac;
   char *local_4a8;
   char acStack_4a0 [1184];
   
-  uVar7 = (ulonglong)(int)param_2;
-  uVar10 = (ulonglong)(int)param_1;
-  __savegprlr();
-  if (((uVar7 & 0xffffffff) != 0) && (0 < param_3)) {
-    pcVar8 = (char *)uVar7;
-    *pcVar8 = '\0';
-    if ((uVar10 & 0xffffffff) != 0) {
-      piVar6 = (int *)uVar10;
+  if (((param_2 != (char *)0x0) && (0 < param_3)) &&
+     (*param_2 = '\0', param_1 != (Statement_s *)0x0)) {
+    iVar10 = 0;
+    local_4af = 0;
+    if (0 < param_1->numEntries) {
       iVar11 = 0;
-      local_4af = 0;
-      if (0 < *piVar6) {
-        iVar12 = 0;
-        local_4a8 = "FUNCTION";
-        local_4ac = "STATICDVARINT(\"";
-        do {
-          iVar3 = piVar6[1];
-          if (*(int *)(iVar12 + iVar3) == 0) {
-            uVar4 = *(uint *)(iVar12 + iVar3 + 4);
-            if ((0x16 < (int)uVar4) && ((int)uVar4 < 0x1b)) {
-              iVar12 = iVar12 + 0xc;
-              iVar11 = iVar11 + 1;
-              iVar3 = *(int *)(*(int *)(iVar12 + iVar3 + 8) * 4 + *(int *)(piVar6[2] + 0xc));
-              I_strncat(pcVar8,param_3," ");
-              uVar10 = (ulonglong)uVar4 - 0x17;
-              if ((uVar10 & 0xffffffff) < 4) {
-                bVar1 = (int)uVar10 != 0;
-                if ((ulonglong)uVar4 == 0x18 && bVar1) {
-                  pcVar9 = "STATICDVARBOOL(\"";
-                }
-                else if (uVar10 == 2 && bVar1) {
-                  pcVar9 = "STATICDVARFLOAT(\"";
-                }
-                else {
-                  pcVar9 = local_4ac;
-                  if (bVar1) {
-                    pcVar9 = "STATICDVARSTRING(\"";
-                  }
-                }
+      local_4a8 = "FUNCTION";
+      local_4ac = "STATICDVARINT(\"";
+      do {
+        peVar3 = param_1->entries;
+        iVar5 = *(int *)((int)&peVar3->type + iVar11);
+        if (iVar5 == 0) {
+          uVar4 = *(uint *)((int)&peVar3->data + iVar11);
+          if ((0x16 < (int)uVar4) && ((int)uVar4 < 0x1b)) {
+            iVar10 = iVar10 + 1;
+            pSVar6 = (param_1->supportingData->staticDvarList).staticDvars
+                     [*(int *)((int)&peVar3[1].data + iVar11 + 4)];
+            I_strncat(param_2,param_3," ");
+            uVar9 = (ulonglong)uVar4 - 0x17;
+            if ((uVar9 & 0xffffffff) < 4) {
+              bVar1 = (int)uVar9 != 0;
+              if ((ulonglong)uVar4 == 0x18 && bVar1) {
+                pcVar8 = "STATICDVARBOOL(\"";
+              }
+              else if (uVar9 == 2 && bVar1) {
+                pcVar8 = "STATICDVARFLOAT(\"";
               }
               else {
-                pcVar9 = "STATICDVAR(\"";
-              }
-              I_strncat(pcVar8,param_3,pcVar9);
-              I_strncat(pcVar8,param_3,*(char **)(iVar3 + 4));
-              pcVar9 = "\")";
-              goto LAB_8270b2e0;
-            }
-            pcVar9 = *(char **)(&g_expOperatorNames + uVar4 * 4);
-            I_strncat(pcVar8,param_3," ");
-            cVar2 = *pcVar9;
-            cVar5 = local_4b0;
-            while (local_4b0 = cVar5, cVar2 != '\0') {
-              local_4b0 = *pcVar9;
-              if (('\x1f' < local_4b0) && (local_4b0 <= '\x7f')) {
-                I_strncat(pcVar8,param_3,&local_4b0);
-                cVar5 = local_4b0;
-              }
-              local_4b0 = cVar5;
-              pcVar9 = pcVar9 + 1;
-              cVar5 = local_4b0;
-              cVar2 = *pcVar9;
-            }
-          }
-          else {
-            if (*(int *)(iVar12 + iVar3) == 1) {
-              uVar4 = *(uint *)(iVar12 + iVar3 + 4);
-              pcVar9 = "???";
-              if (uVar4 < 4) {
-                if (uVar4 == 1) {
-                  sprintf(acStack_4a0,"%f");
-                  pcVar9 = acStack_4a0;
-                }
-                else if (uVar4 == 2) {
-                  sprintf(acStack_4a0,"\"%s\"");
-                  pcVar9 = acStack_4a0;
-                }
-                else {
-                  pcVar9 = local_4a8;
-                  if (uVar4 == 0) {
-                    sprintf(acStack_4a0,"%d");
-                    pcVar9 = acStack_4a0;
-                  }
+                pcVar8 = local_4ac;
+                if (bVar1) {
+                  pcVar8 = "STATICDVARSTRING(\"";
                 }
               }
-              I_strncat(pcVar8,param_3," ");
             }
             else {
-              I_strncat(pcVar8,param_3," ");
-              pcVar9 = "???";
+              pcVar8 = "STATICDVAR(\"";
             }
-LAB_8270b2e0:
-            I_strncat(pcVar8,param_3,pcVar9);
+            I_strncat(param_2,param_3,pcVar8);
+            I_strncat(param_2,param_3,pSVar6->dvarName);
+            pcVar8 = "\")";
+            iVar11 = iVar11 + 0xc;
+            goto LAB_8270b2e0;
           }
-          iVar11 = iVar11 + 1;
-          iVar12 = iVar12 + 0xc;
-        } while (iVar11 < *piVar6);
-      }
+          pcVar8 = *(char **)(&g_expOperatorNames + uVar4 * 4);
+          I_strncat(param_2,param_3," ");
+          cVar2 = *pcVar8;
+          cVar7 = local_4b0;
+          while (local_4b0 = cVar7, cVar2 != '\0') {
+            local_4b0 = *pcVar8;
+            if (('\x1f' < local_4b0) && (local_4b0 <= '\x7f')) {
+              I_strncat(param_2,param_3,&local_4b0);
+              cVar7 = local_4b0;
+            }
+            local_4b0 = cVar7;
+            pcVar8 = pcVar8 + 1;
+            cVar7 = local_4b0;
+            cVar2 = *pcVar8;
+          }
+        }
+        else {
+          if (iVar5 == 1) {
+            uVar4 = *(uint *)((int)&peVar3->data + iVar11);
+            pcVar8 = "???";
+            if (uVar4 < 4) {
+              if (uVar4 == 1) {
+                sprintf(acStack_4a0,"%f");
+                pcVar8 = acStack_4a0;
+              }
+              else if (uVar4 == 2) {
+                sprintf(acStack_4a0,"\"%s\"");
+                pcVar8 = acStack_4a0;
+              }
+              else {
+                pcVar8 = local_4a8;
+                if (uVar4 == 0) {
+                  sprintf(acStack_4a0,"%d");
+                  pcVar8 = acStack_4a0;
+                }
+              }
+            }
+            I_strncat(param_2,param_3," ");
+          }
+          else {
+            I_strncat(param_2,param_3," ");
+            pcVar8 = "???";
+          }
+LAB_8270b2e0:
+          I_strncat(param_2,param_3,pcVar8);
+        }
+        iVar10 = iVar10 + 1;
+        iVar11 = iVar11 + 0xc;
+      } while (iVar10 < param_1->numEntries);
     }
   }
-  __restgprlr();
   return;
 }
 
 
 // 8270B308  LiveAntiCheat_IsWhitespace  (online/live_anticheat.cpp:1157)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 int LiveAntiCheat_IsWhitespace(char *param_1,int *param_2)
 
 {
-  char *pcVar1;
-  int iVar2;
-  ulonglong uVar3;
+  int iVar1;
   
-  uVar3 = (ulonglong)(int)param_2;
-  pcVar1 = (char *)__savegprlr_28(param_1);
-  if (pcVar1 == (char *)0x0) {
+  if (param_1 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\online\\live_anticheat.cpp",
                     0x489,0,"%s");
   }
-  if ((uVar3 & 0xffffffff) == 0) {
+  if (param_2 == (int *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\online\\live_anticheat.cpp",
                     0x48a,0,"%s");
   }
-  if ((*pcVar1 != ' ') && (*pcVar1 != '\t')) {
-    iVar2 = __restgprlr_28(0);
-    return iVar2;
+  if ((*param_1 != ' ') && (*param_1 != '\t')) {
+    return 0;
   }
-  for (iVar2 = 0; (pcVar1[iVar2] == ' ' || (pcVar1[iVar2] == '\t')); iVar2 = iVar2 + 1) {
+  for (iVar1 = 0; (param_1[iVar1] == ' ' || (param_1[iVar1] == '\t')); iVar1 = iVar1 + 1) {
   }
-  *(int *)uVar3 = iVar2;
-  iVar2 = __restgprlr_28(1);
-  return iVar2;
+  *param_2 = iVar1;
+  return 1;
 }
 
 
 // 8270B3D0  LiveAntiCheat_IsInt  (online/live_anticheat.cpp:1192)
+
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 
 int LiveAntiCheat_IsInt(char *param_1,int *param_2,int *param_3)
 
 {
   bool bVar1;
   char cVar2;
-  char *pcVar3;
-  int iVar4;
-  long lVar5;
-  ulonglong uVar6;
-  ulonglong uVar7;
-  uint uVar8;
-  uint uVar9;
+  long lVar3;
+  uint uVar4;
+  uint uVar5;
   char local_70 [112];
   
-  uVar7 = (ulonglong)(int)param_3;
-  uVar6 = (ulonglong)(int)param_2;
-  pcVar3 = (char *)__savegprlr_27(param_1);
-  if (pcVar3 == (char *)0x0) {
+  if (param_1 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\online\\live_anticheat.cpp",
                     0x4af,0,"%s");
   }
-  if ((uVar6 & 0xffffffff) == 0) {
+  if (param_2 == (int *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\online\\live_anticheat.cpp",
                     0x4b0,0,"%s");
   }
-  if ((uVar7 & 0xffffffff) == 0) {
+  if (param_3 == (int *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\online\\live_anticheat.cpp",
                     0x4b1,0,"%s");
   }
-  bVar1 = *pcVar3 == '-';
+  bVar1 = *param_1 == '-';
   if (bVar1) {
-    pcVar3 = pcVar3 + 1;
+    param_1 = param_1 + 1;
   }
-  uVar9 = (uint)bVar1;
-  if (('/' < *pcVar3) && (*pcVar3 < ':')) {
-    uVar8 = 0;
-    for (; (cVar2 = *pcVar3, '/' < cVar2 && (cVar2 < ':')); pcVar3 = pcVar3 + 1) {
-      if (uVar8 < 0x3f) {
-        local_70[uVar8] = cVar2;
-        uVar8 = uVar8 + 1;
+  uVar5 = (uint)bVar1;
+  if (('/' < *param_1) && (*param_1 < ':')) {
+    uVar4 = 0;
+    for (; (cVar2 = *param_1, '/' < cVar2 && (cVar2 < ':')); param_1 = param_1 + 1) {
+      if (uVar4 < 0x3f) {
+        local_70[uVar4] = cVar2;
+        uVar4 = uVar4 + 1;
       }
-      uVar9 = uVar9 + 1;
+      uVar5 = uVar5 + 1;
     }
-    local_70[uVar8] = '\0';
+    local_70[uVar4] = '\0';
     if (cVar2 != '.') {
-      lVar5 = atol(local_70);
-      *(long *)uVar7 = lVar5;
+      lVar3 = atol(local_70);
+      *param_3 = lVar3;
       if (bVar1) {
-        *(long *)uVar7 = -lVar5;
+        *param_3 = -lVar3;
       }
-      *(uint *)uVar6 = uVar9;
-      iVar4 = __restgprlr_27(1);
-      return iVar4;
+      *param_2 = uVar5;
+      return 1;
     }
   }
-  iVar4 = __restgprlr_27(0);
-  return iVar4;
+  return 0;
 }
 
 
 // 8270B528  LiveAntiCheat_IsFloat  (online/live_anticheat.cpp:1257)
+
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 
 int LiveAntiCheat_IsFloat(char *param_1,int *param_2,float *param_3)
 
 {
   bool bVar1;
   char cVar2;
-  char *pcVar3;
-  int iVar4;
-  ulonglong uVar5;
-  ulonglong uVar6;
-  uint uVar7;
-  uint uVar8;
-  double dVar9;
+  int iVar3;
+  uint uVar4;
+  uint uVar5;
+  double dVar6;
   char local_70 [112];
   
-  uVar6 = (ulonglong)(int)param_3;
-  uVar5 = (ulonglong)(int)param_2;
-  pcVar3 = (char *)__savegprlr_27(param_1);
-  if (pcVar3 == (char *)0x0) {
+  if (param_1 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\online\\live_anticheat.cpp",
                     0x4f1,0,"%s");
   }
-  if ((uVar5 & 0xffffffff) == 0) {
+  if (param_2 == (int *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\online\\live_anticheat.cpp",
                     0x4f2,0,"%s");
   }
-  if ((uVar6 & 0xffffffff) == 0) {
+  if (param_3 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\online\\live_anticheat.cpp",
                     0x4f3,0,"%s");
   }
-  bVar1 = *pcVar3 == '-';
+  bVar1 = *param_1 == '-';
   if (bVar1) {
-    pcVar3 = pcVar3 + 1;
+    param_1 = param_1 + 1;
   }
-  uVar8 = (uint)bVar1;
-  cVar2 = *pcVar3;
+  uVar5 = (uint)bVar1;
+  cVar2 = *param_1;
   if ((('/' < cVar2) && (cVar2 < ':')) || (cVar2 == '.')) {
-    uVar7 = 0;
-    iVar4 = 0;
-    for (; ((cVar2 = *pcVar3, '/' < cVar2 && (cVar2 < ':')) || (cVar2 == '.')); pcVar3 = pcVar3 + 1)
-    {
+    uVar4 = 0;
+    iVar3 = 0;
+    for (; ((cVar2 = *param_1, '/' < cVar2 && (cVar2 < ':')) || (cVar2 == '.'));
+        param_1 = param_1 + 1) {
       if (cVar2 == '.') {
-        iVar4 = iVar4 + 1;
+        iVar3 = iVar3 + 1;
       }
-      if (uVar7 < 0x3f) {
-        local_70[uVar7] = cVar2;
-        uVar7 = uVar7 + 1;
+      if (uVar4 < 0x3f) {
+        local_70[uVar4] = cVar2;
+        uVar4 = uVar4 + 1;
       }
-      uVar8 = uVar8 + 1;
+      uVar5 = uVar5 + 1;
     }
-    local_70[uVar7] = '\0';
-    if (iVar4 == 1) {
-      dVar9 = atof(local_70);
-      *(float *)uVar6 = (float)dVar9;
+    local_70[uVar4] = '\0';
+    if (iVar3 == 1) {
+      dVar6 = atof(local_70);
+      *param_3 = (float)dVar6;
       if (bVar1) {
-        *(float *)uVar6 = -(float)dVar9;
+        *param_3 = -(float)dVar6;
       }
-      *(uint *)uVar5 = uVar8;
-      iVar4 = __restgprlr_27(1);
-      return iVar4;
+      *param_2 = uVar5;
+      return 1;
     }
   }
-  iVar4 = __restgprlr_27(0);
-  return iVar4;
+  return 0;
 }
 
 
 // 8270B6A8  LiveAntiCheat_IsString  (online/live_anticheat.cpp:1327)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 int LiveAntiCheat_IsString(char *param_1,int *param_2,char *param_3,int param_4)
 
 {
   char cVar1;
-  char *pcVar2;
-  int iVar3;
-  ulonglong uVar4;
-  ulonglong uVar5;
-  int iVar6;
-  char *pcVar7;
+  int iVar2;
+  char *pcVar3;
+  int iVar4;
   
-  uVar5 = (ulonglong)(int)param_3;
-  uVar4 = (ulonglong)(int)param_2;
-  pcVar2 = (char *)__savegprlr_26(param_1);
-  if (pcVar2 == (char *)0x0) {
+  if (param_1 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\online\\live_anticheat.cpp",
                     0x534,0,"%s");
   }
-  if ((uVar4 & 0xffffffff) == 0) {
+  if (param_2 == (int *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\online\\live_anticheat.cpp",
                     0x535,0,"%s");
   }
-  if ((uVar5 & 0xffffffff) == 0) {
+  if (param_3 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\online\\live_anticheat.cpp",
                     0x536,0,"%s");
   }
@@ -1091,72 +1019,69 @@ int LiveAntiCheat_IsString(char *param_1,int *param_2,char *param_3,int param_4)
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\online\\live_anticheat.cpp",
                     0x537,0,"%s");
   }
-  if ((*pcVar2 != '\"') && (*pcVar2 != '\'')) {
-    iVar3 = __restgprlr_26(0);
-    return iVar3;
+  if ((*param_1 != '\"') && (*param_1 != '\'')) {
+    return 0;
   }
-  pcVar7 = pcVar2 + 1;
-  iVar6 = 1;
-  iVar3 = 0;
-  cVar1 = pcVar2[1];
+  pcVar3 = param_1 + 1;
+  iVar2 = 1;
+  iVar4 = 0;
+  cVar1 = param_1[1];
   while (((cVar1 != '\0' && (cVar1 != '\"')) && (cVar1 != '\''))) {
-    if (iVar3 < param_4 + -1) {
-      *(char *)(iVar3 + (int)uVar5) = cVar1;
-      iVar3 = iVar3 + 1;
+    if (iVar4 < param_4 + -1) {
+      param_3[iVar4] = cVar1;
+      iVar4 = iVar4 + 1;
     }
-    pcVar7 = pcVar7 + 1;
-    iVar6 = iVar6 + 1;
-    cVar1 = *pcVar7;
+    pcVar3 = pcVar3 + 1;
+    iVar2 = iVar2 + 1;
+    cVar1 = *pcVar3;
   }
-  *(undefined1 *)(iVar3 + (int)uVar5) = 0;
-  if ((*pcVar7 == '\"') || (*pcVar7 == '\'')) {
-    iVar6 = iVar6 + 1;
+  param_3[iVar4] = '\0';
+  if ((*pcVar3 == '\"') || (*pcVar3 == '\'')) {
+    iVar2 = iVar2 + 1;
   }
-  *(int *)uVar4 = iVar6;
-  iVar3 = __restgprlr_26(1);
-  return iVar3;
+  *param_2 = iVar2;
+  return 1;
 }
 
 
 // 8270B810  LiveAntiCheat_StringBeginIgnore  (online/live_anticheat.cpp:1380)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 int LiveAntiCheat_StringBeginIgnore(char *param_1,char *param_2)
 
 {
-  char *pcVar1;
+  int iVar1;
   int iVar2;
   int iVar3;
-  int iVar4;
-  char *pcVar6;
-  ulonglong uVar5;
   
-  uVar5 = (ulonglong)(int)param_2;
-  pcVar1 = (char *)__savegprlr_28(param_1);
-  pcVar6 = (char *)uVar5;
-  if (pcVar1 == (char *)0x0) {
+  if (param_1 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\online\\live_anticheat.cpp",
                     0x568,0,"%s");
   }
-  if ((uVar5 & 0xffffffff) == 0) {
+  if (param_2 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\online\\live_anticheat.cpp",
                     0x569,0,"%s");
   }
-  if (*pcVar1 != '\0') {
-    iVar4 = (int)pcVar1 - (int)pcVar6;
-    while (pcVar6 = (char *)uVar5, *pcVar6 != '\0') {
-      iVar2 = tolower((int)pcVar6[iVar4]);
-      iVar3 = tolower((int)*pcVar6);
-      if ((iVar2 != iVar3) || (uVar5 = uVar5 + 1, pcVar6 = (char *)uVar5, pcVar6[iVar4] == '\0'))
-      break;
-    }
+  if (*param_1 != '\0') {
+    iVar3 = (int)param_1 - (int)param_2;
+    do {
+      if (*param_2 == 0) break;
+      iVar1 = tolower((int)param_2[iVar3]);
+      iVar2 = tolower((int)*param_2);
+      if (iVar1 != iVar2) break;
+      param_2 = param_2 + 1;
+    } while (param_2[iVar3] != 0);
   }
-  iVar4 = __restgprlr_28(*pcVar6 == '\0');
-  return iVar4;
+  return (uint)LZCOUNT((uint)(byte)*param_2) >> 5;
 }
 
 
 // 8270B8E0  LiveAntiCheat_IsOp  (online/live_anticheat.cpp:1412)
 
+/* WARNING: Function: __savegprlr_16 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_16 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 
 int LiveAntiCheat_IsOp(char *param_1,int *param_2,operationEnum *param_3)
@@ -1164,39 +1089,33 @@ int LiveAntiCheat_IsOp(char *param_1,int *param_2,operationEnum *param_3)
 {
   char cVar1;
   int iVar2;
-  char *pcVar3;
-  int iVar4;
-  int iVar5;
-  int iVar6;
-  ulonglong uVar7;
-  ulonglong uVar8;
+  int iVar3;
+  operationEnum oVar4;
+  operationEnum oVar5;
+  char *pcVar6;
+  undefined4 *puVar7;
+  int iVar8;
   char *pcVar9;
-  int iVar10;
-  char *pcVar11;
-  undefined4 *puVar12;
   
-  uVar8 = (ulonglong)(int)param_3;
-  uVar7 = (ulonglong)(int)param_2;
-  pcVar3 = (char *)__savegprlr_16(param_1);
-  if (pcVar3 == (char *)0x0) {
+  if (param_1 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\online\\live_anticheat.cpp",
                     0x58a,0,"%s");
   }
-  if ((uVar8 & 0xffffffff) == 0) {
+  if (param_3 == (operationEnum *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\online\\live_anticheat.cpp",
                     0x58b,0,"%s");
   }
-  if ((uVar7 & 0xffffffff) == 0) {
+  if (param_2 == (int *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\online\\live_anticheat.cpp",
                     0x58c,0,"%s");
   }
-  puVar12 = (undefined4 *)&g_expOperatorNames;
-  pcVar11 = (char *)0x0;
-  iVar6 = -1;
-  iVar10 = 0;
+  puVar7 = (undefined4 *)&g_expOperatorNames;
+  pcVar6 = (char *)0x0;
+  oVar4 = ~OP_NOOP;
+  oVar5 = OP_NOOP;
   do {
-    pcVar9 = (char *)*puVar12;
-    if (pcVar3 == (char *)0x0) {
+    pcVar9 = (char *)*puVar7;
+    if (param_1 == (char *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\online\\live_anticheat.cpp",
                       0x568,0,"%s");
     }
@@ -1204,36 +1123,37 @@ int LiveAntiCheat_IsOp(char *param_1,int *param_2,operationEnum *param_3)
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\online\\live_anticheat.cpp",
                       0x569,0,"%s");
     }
-    if (*pcVar3 != '\0') {
-      iVar2 = (int)pcVar3 - (int)pcVar9;
-      while (cVar1 = *pcVar9, cVar1 != '\0') {
-        iVar4 = tolower((int)pcVar9[iVar2]);
-        iVar5 = tolower((int)cVar1);
-        if ((iVar4 != iVar5) || (pcVar9 = pcVar9 + 1, pcVar9[iVar2] == '\0')) break;
-      }
+    if (*param_1 != '\0') {
+      iVar8 = (int)param_1 - (int)pcVar9;
+      do {
+        cVar1 = *pcVar9;
+        if (cVar1 == '\0') break;
+        iVar2 = tolower((int)pcVar9[iVar8]);
+        iVar3 = tolower((int)cVar1);
+        if (iVar2 != iVar3) break;
+        pcVar9 = pcVar9 + 1;
+      } while (pcVar9[iVar8] != '\0');
     }
     if (*pcVar9 == '\0') {
-      pcVar9 = (char *)*puVar12;
+      pcVar9 = (char *)*puVar7;
       do {
         cVar1 = *pcVar9;
         pcVar9 = pcVar9 + 1;
       } while (cVar1 != '\0');
-      if ((int)pcVar11 < (int)(pcVar9 + (-1 - (int)*puVar12))) {
-        iVar6 = iVar10;
-        pcVar11 = pcVar9 + (-1 - (int)*puVar12);
+      if ((int)pcVar6 < (int)(pcVar9 + (-1 - (int)*puVar7))) {
+        oVar4 = oVar5;
+        pcVar6 = pcVar9 + (-1 - (int)*puVar7);
       }
     }
-    puVar12 = puVar12 + 1;
-    iVar10 = iVar10 + 1;
-    if (-0x7d66e2ed < (int)puVar12) {
-      if (pcVar11 == (char *)0x0) {
-        iVar6 = __restgprlr_16(0);
-        return iVar6;
+    puVar7 = puVar7 + 1;
+    oVar5 = oVar5 + OP_RIGHTPAREN;
+    if (-0x7d66e2ed < (int)puVar7) {
+      if (pcVar6 == (char *)0x0) {
+        return 0;
       }
-      *(int *)uVar8 = iVar6;
-      *(undefined4 *)uVar7 = pcVar11;
-      iVar6 = __restgprlr_16(1);
-      return iVar6;
+      *param_3 = oVar4;
+      *param_2 = (int)pcVar6;
+      return 1;
     }
   } while( true );
 }
@@ -1264,6 +1184,8 @@ void LiveAntiCheat_ConvertSingleQuotesToDoubleQuotes(char *param_1)
 
 // 8270BB38  LiveAntiCheat_ExpressionFixupPass  (online/live_anticheat.cpp:1482)
 
+/* WARNING: Function: __savegprlr_17 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_17 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 
@@ -1273,223 +1195,212 @@ int LiveAntiCheat_ExpressionFixupPass(LiveAntiCheatExpressionStore *param_1,Stat
   bool bVar1;
   uint uVar2;
   char *pcVar3;
-  LiveAntiCheatExpressionStore *pLVar4;
-  ExpressionSupportingData *pEVar5;
-  int iVar6;
-  uint *puVar7;
-  ulonglong uVar8;
-  int *piVar9;
-  longlong lVar10;
-  longlong lVar11;
-  int *piVar12;
+  ExpressionSupportingData *pEVar4;
+  int iVar5;
+  ulonglong uVar6;
+  expressionEntry *peVar7;
+  longlong lVar8;
+  longlong lVar9;
+  entryInternalData *peVar10;
   
-  uVar8 = (ulonglong)(int)param_2;
-  pLVar4 = (LiveAntiCheatExpressionStore *)__savegprlr_17(param_1);
-  if (pLVar4 == (LiveAntiCheatExpressionStore *)0x0) {
+  if (param_1 == (LiveAntiCheatExpressionStore *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\online\\live_anticheat.cpp",
                     0x5d9,0,"%s");
   }
-  if ((uVar8 & 0xffffffff) == 0) {
+  if (param_2 == (Statement_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\online\\live_anticheat.cpp",
                     0x5da,0,"%s");
   }
-  puVar7 = (uint *)uVar8;
-  piVar9 = (int *)puVar7[1];
-  lVar10 = 0;
-  if (0 < (int)*puVar7) {
-    piVar12 = piVar9 + 10;
+  peVar7 = param_2->entries;
+  lVar8 = 0;
+  if (0 < param_2->numEntries) {
+    peVar10 = &peVar7[3].data;
     do {
-      if (*piVar9 == 0) {
-        uVar2 = piVar12[-9];
-        if ((0x23 < (int)uVar2) && ((int)uVar2 < 0x28)) {
-          lVar11 = ((ulonglong)*puVar7 - lVar10) + -4;
-          if (((-1 < lVar11) &&
-              ((((piVar12[-7] == 0 && (piVar12[-6] == 0x10)) && (piVar12[-4] == 1)) &&
-               ((piVar12[-3] == 2 && (piVar12[-1] == 0)))))) && (*piVar12 == 1)) {
-            pEVar5 = (ExpressionSupportingData *)puVar7[2];
-            pcVar3 = (char *)piVar12[-2];
-            if (pEVar5 == (ExpressionSupportingData *)0x0) {
-              pEVar5 = LiveAntiCheatExpressionStore_GetNewExpressionSupportingDataPtr(pLVar4);
-              puVar7[2] = (uint)pEVar5;
-              if (pEVar5 == (ExpressionSupportingData *)0x0) goto LAB_8270bd34;
+      if (peVar7->type == 0) {
+        uVar2 = *(uint *)((int)peVar10 + -0x24);
+        if ((((0x23 < (int)uVar2) && ((int)uVar2 < 0x28)) &&
+            (lVar9 = ((ulonglong)(uint)param_2->numEntries - lVar8) + -4, -1 < lVar9)) &&
+           ((((*(int *)((int)peVar10 + -0x1c) == 0 && (peVar10[-3].op == 0x10)) &&
+             ((peVar10[-2].op == 1 &&
+              ((*(int *)((int)peVar10 + -0xc) == 2 &&
+               (((expressionEntry *)((int)peVar10 + -4))->type == 0)))))) &&
+            (peVar10->op == OP_RIGHTPAREN)))) {
+          pEVar4 = param_2->supportingData;
+          pcVar3 = *(char **)(peVar10 + -1);
+          if (pEVar4 == (ExpressionSupportingData *)0x0) {
+            pEVar4 = LiveAntiCheatExpressionStore_GetNewExpressionSupportingDataPtr(param_1);
+            param_2->supportingData = pEVar4;
+            if (pEVar4 == (ExpressionSupportingData *)0x0) {
+              return 0;
             }
-            iVar6 = LiveAntiCheatExpressionStore_FindIndexOfStaticDvar(pEVar5,pcVar3);
-            if (((iVar6 < 0) &&
-                (iVar6 = LiveAntiCheatExpressionStore_AddStaticDvar
-                                   ((ExpressionSupportingData *)puVar7[2],pcVar3,pLVar4), iVar6 < 0)
-                ) || (uVar8 = (ulonglong)uVar2 - 0x24, 3 < (uVar8 & 0xffffffff))) {
-LAB_8270bd34:
-              iVar6 = __restgprlr_17(0);
-              return iVar6;
-            }
-            bVar1 = (int)uVar8 != 0;
-            if ((ulonglong)uVar2 == 0x25 && bVar1) {
-              piVar12[-9] = 0x18;
-            }
-            else if (uVar8 == 2 && bVar1) {
-              piVar12[-9] = 0x19;
-            }
-            else if (bVar1) {
-              piVar12[-9] = 0x1a;
-            }
-            else {
-              piVar12[-9] = 0x17;
-            }
-            piVar12[-5] = iVar6;
-            piVar12[-7] = 1;
-            piVar12[-6] = 0;
-            if (0 < (int)lVar11) {
-              memmove();
-            }
-            *puVar7 = *puVar7 - 2;
           }
+          iVar5 = LiveAntiCheatExpressionStore_FindIndexOfStaticDvar(pEVar4,pcVar3);
+          if (((iVar5 < 0) &&
+              (iVar5 = LiveAntiCheatExpressionStore_AddStaticDvar
+                                 (param_2->supportingData,pcVar3,param_1), iVar5 < 0)) ||
+             (uVar6 = (ulonglong)uVar2 - 0x24, 3 < (uVar6 & 0xffffffff))) {
+            return 0;
+          }
+          bVar1 = (int)uVar6 != 0;
+          if ((ulonglong)uVar2 == 0x25 && bVar1) {
+            *(int *)((int)peVar10 + -0x24) = 0x18;
+          }
+          else if (uVar6 == 2 && bVar1) {
+            *(int *)((int)peVar10 + -0x24) = 0x19;
+          }
+          else if (bVar1) {
+            *(int *)((int)peVar10 + -0x24) = 0x1a;
+          }
+          else {
+            *(int *)((int)peVar10 + -0x24) = 0x17;
+          }
+          *(int *)((int)peVar10 + -0x14) = iVar5;
+          *(int *)((int)peVar10 + -0x1c) = 1;
+          peVar10[-3].op = 0;
+          if (0 < (int)lVar9) {
+            memmove();
+          }
+          param_2->numEntries = param_2->numEntries + -2;
         }
       }
-      lVar10 = lVar10 + 1;
-      piVar9 = piVar9 + 3;
-      piVar12 = piVar12 + 3;
-    } while ((int)lVar10 < (int)*puVar7);
+      lVar8 = lVar8 + 1;
+      peVar7 = peVar7 + 1;
+      peVar10 = (entryInternalData *)((int)peVar10 + 0xc);
+    } while ((int)lVar8 < param_2->numEntries);
   }
-  iVar6 = __restgprlr_17(1);
-  return iVar6;
+  return 1;
 }
 
 
 // 8270BD40  LiveAntiCheatQuickBuf_Init  (online/live_anticheat.cpp:1635)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void LiveAntiCheatQuickBuf_Init(LiveAntiCheatQuickBuf *param_1,void *param_2,int param_3)
 
 {
-  undefined4 *puVar1;
-  
-  puVar1 = (undefined4 *)__savegprlr_29(param_1);
-  if (puVar1 == (undefined4 *)0x0) {
+  if (param_1 == (LiveAntiCheatQuickBuf *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\online\\live_anticheat.cpp",
                     0x664,0,"%s");
   }
-  *puVar1 = param_2;
-  puVar1[1] = param_3;
-  puVar1[2] = param_2;
-  puVar1[3] = param_3;
-  puVar1[4] = 0;
-  __restgprlr_29();
+  param_1->bufferptr = param_2;
+  param_1->buffersize = param_3;
+  param_1->currentptr = param_2;
+  param_1->numbytesleft = param_3;
+  param_1->numbytestraversed = 0;
   return;
 }
 
 
 // 8270BDA8  LiveAntiCheatQuickBuf_WriteData  (online/live_anticheat.cpp:1650)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 int LiveAntiCheatQuickBuf_WriteData(LiveAntiCheatQuickBuf *param_1,void *param_2,int param_3)
 
 {
-  int iVar1;
-  
-  iVar1 = __savegprlr_29(param_1);
-  if (iVar1 == 0) {
+  if (param_1 == (LiveAntiCheatQuickBuf *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\online\\live_anticheat.cpp",
                     0x673,0,"%s");
   }
-  if (*(void **)(iVar1 + 8) != (void *)0x0) {
-    if (*(int *)(iVar1 + 0xc) < param_3) {
-      iVar1 = __restgprlr_29(0);
-      return iVar1;
+  if (param_1->currentptr != (uchar *)0x0) {
+    if (param_1->numbytesleft < param_3) {
+      return 0;
     }
-    Com_Memcpy(*(void **)(iVar1 + 8),param_2,param_3);
-    *(int *)(iVar1 + 8) = *(int *)(iVar1 + 8) + param_3;
-    *(int *)(iVar1 + 0xc) = *(int *)(iVar1 + 0xc) - param_3;
+    Com_Memcpy(param_1->currentptr,param_2,param_3);
+    param_1->currentptr = param_1->currentptr + param_3;
+    param_1->numbytesleft = param_1->numbytesleft - param_3;
   }
-  *(int *)(iVar1 + 0x10) = *(int *)(iVar1 + 0x10) + param_3;
-  iVar1 = __restgprlr_29(1);
-  return iVar1;
+  param_1->numbytestraversed = param_1->numbytestraversed + param_3;
+  return 1;
 }
 
 
 // 8270BE50  LiveAntiCheatQuickBuf_ReadData  (online/live_anticheat.cpp:1676)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 int LiveAntiCheatQuickBuf_ReadData(LiveAntiCheatQuickBuf *param_1,void *param_2,int param_3)
 
 {
-  int iVar1;
-  
-  iVar1 = __savegprlr_29(param_1);
-  if (iVar1 == 0) {
+  if (param_1 == (LiveAntiCheatQuickBuf *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\online\\live_anticheat.cpp",
                     0x68d,0,"%s");
   }
-  if ((*(void **)(iVar1 + 8) != (void *)0x0) && (param_3 <= *(int *)(iVar1 + 0xc))) {
-    Com_Memcpy(param_2,*(void **)(iVar1 + 8),param_3);
-    *(int *)(iVar1 + 8) = *(int *)(iVar1 + 8) + param_3;
-    *(int *)(iVar1 + 0x10) = *(int *)(iVar1 + 0x10) + param_3;
-    *(int *)(iVar1 + 0xc) = *(int *)(iVar1 + 0xc) - param_3;
-    iVar1 = __restgprlr_29(1);
-    return iVar1;
+  if ((param_1->currentptr != (uchar *)0x0) && (param_3 <= param_1->numbytesleft)) {
+    Com_Memcpy(param_2,param_1->currentptr,param_3);
+    param_1->currentptr = param_1->currentptr + param_3;
+    param_1->numbytestraversed = param_1->numbytestraversed + param_3;
+    param_1->numbytesleft = param_1->numbytesleft - param_3;
+    return 1;
   }
-  iVar1 = __restgprlr_29(0);
-  return iVar1;
+  return 0;
 }
 
 
 // 8270BEF8  LiveAntiCheatQuickBuf_ReadStringAndNull  (online/live_anticheat.cpp:1705)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 int LiveAntiCheatQuickBuf_ReadStringAndNull
               (LiveAntiCheatQuickBuf *param_1,char *param_2,int param_3)
 
 {
-  LiveAntiCheatQuickBuf *pLVar1;
-  int iVar2;
-  ulonglong uVar3;
-  uchar *puVar4;
-  uchar uVar5;
+  int iVar1;
+  uchar *puVar2;
+  uchar uVar3;
   
-  uVar3 = (ulonglong)(int)param_2;
-  pLVar1 = (LiveAntiCheatQuickBuf *)__savegprlr_27(param_1);
-  if (pLVar1 == (LiveAntiCheatQuickBuf *)0x0) {
+  if (param_1 == (LiveAntiCheatQuickBuf *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\online\\live_anticheat.cpp",
                     0x6ad,0,"%s");
   }
-  if ((uVar3 & 0xffffffff) == 0) {
+  if (param_2 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\online\\live_anticheat.cpp",
                     0x6ae,0,"%s");
   }
-  puVar4 = pLVar1->currentptr;
-  if (puVar4 != (uchar *)0x0) {
-    uVar5 = *puVar4;
-    iVar2 = 0;
-    if (uVar5 != '\0') {
+  puVar2 = param_1->currentptr;
+  if (puVar2 != (uchar *)0x0) {
+    uVar3 = *puVar2;
+    iVar1 = 0;
+    if (uVar3 != '\0') {
       do {
-        if (pLVar1->numbytesleft + -1 <= iVar2) break;
-        puVar4 = puVar4 + 1;
-        uVar5 = *puVar4;
-        iVar2 = iVar2 + 1;
-      } while (uVar5 != '\0');
-      if (uVar5 != '\0') goto LAB_8270bf74;
+        if (param_1->numbytesleft + -1 <= iVar1) break;
+        puVar2 = puVar2 + 1;
+        uVar3 = *puVar2;
+        iVar1 = iVar1 + 1;
+      } while (uVar3 != '\0');
+      if (uVar3 != '\0') {
+        return 0;
+      }
     }
-    if ((iVar2 < pLVar1->numbytesleft + -1) && (iVar2 + 1 <= param_3)) {
-      iVar2 = LiveAntiCheatQuickBuf_ReadData(pLVar1,(void *)uVar3,iVar2 + 1);
-      iVar2 = __restgprlr_27(iVar2);
-      return iVar2;
+    if ((iVar1 < param_1->numbytesleft + -1) && (iVar1 + 1 <= param_3)) {
+      iVar1 = LiveAntiCheatQuickBuf_ReadData(param_1,param_2,iVar1 + 1);
+      return iVar1;
     }
   }
-LAB_8270bf74:
-  iVar2 = __restgprlr_27(0);
-  return iVar2;
+  return 0;
 }
 
 
 // 8270BFF0  LiveAntiCheat_ASCIIExpressionToEncodedExpression  (online/live_anticheat.cpp:1751)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 
 int LiveAntiCheat_ASCIIExpressionToEncodedExpression(char *param_1,uchar *param_2,int param_3)
 
 {
   char cVar1;
-  char *pcVar2;
-  int iVar3;
-  float *pfVar4;
-  char *pcVar5;
+  int iVar2;
+  float *pfVar3;
+  char *pcVar4;
   undefined1 local_470 [4];
-  uint local_46c;
+  int local_46c;
   undefined2 local_468 [4];
   LiveAntiCheatQuickBuf local_460;
   operationEnum local_44c;
@@ -1497,102 +1408,110 @@ int LiveAntiCheat_ASCIIExpressionToEncodedExpression(char *param_1,uchar *param_
   float fStack_444;
   float local_440 [272];
   
-  local_460.bufferptr = param_2;
-  local_460.buffersize = param_3;
-  pcVar2 = (char *)__savegprlr_26(param_1);
   local_460.numbytestraversed = 0;
   local_470[0] = 1;
   local_44c = OP_NOOP;
   local_46c = 0;
-  local_460.currentptr = local_460.bufferptr;
-  local_460.numbytesleft = local_460.buffersize;
-  iVar3 = LiveAntiCheatQuickBuf_WriteData(&local_460,local_470,1);
-  pcVar5 = g_expVersion;
-  if (iVar3 != 0) {
+  local_460.bufferptr = param_2;
+  local_460.buffersize = param_3;
+  local_460.currentptr = param_2;
+  local_460.numbytesleft = param_3;
+  iVar2 = LiveAntiCheatQuickBuf_WriteData(&local_460,local_470,1);
+  pcVar4 = g_expVersion;
+  if (iVar2 != 0) {
     do {
-      cVar1 = *pcVar5;
-      pcVar5 = pcVar5 + 1;
+      cVar1 = *pcVar4;
+      pcVar4 = pcVar4 + 1;
     } while (cVar1 != '\0');
-    iVar3 = LiveAntiCheatQuickBuf_WriteData(&local_460,g_expVersion,(int)pcVar5 - (int)g_expVersion)
+    iVar2 = LiveAntiCheatQuickBuf_WriteData(&local_460,g_expVersion,(int)pcVar4 - (int)g_expVersion)
     ;
-    if (iVar3 != 0) {
-      if (pcVar2 == (char *)0x0) {
-        pcVar2 = "";
+    if (iVar2 != 0) {
+      if (param_1 == (char *)0x0) {
+        param_1 = "";
       }
-      cVar1 = *pcVar2;
+      cVar1 = *param_1;
       while (cVar1 != '\0') {
-        iVar3 = LiveAntiCheat_IsWhitespace(pcVar2,(int *)&local_46c);
-        if (iVar3 == 0) {
-          iVar3 = LiveAntiCheat_IsInt(pcVar2,(int *)&local_46c,(int *)&fStack_448);
-          if (iVar3 == 0) {
-            iVar3 = LiveAntiCheat_IsFloat(pcVar2,(int *)&local_46c,&fStack_444);
-            if (iVar3 == 0) {
-              iVar3 = LiveAntiCheat_IsString(pcVar2,(int *)&local_46c,(char *)local_440,0x400);
-              if (iVar3 == 0) {
-                iVar3 = LiveAntiCheat_IsOp(pcVar2,(int *)&local_46c,&local_44c);
-                if (iVar3 == 0) {
+        iVar2 = LiveAntiCheat_IsWhitespace(param_1,&local_46c);
+        if (iVar2 == 0) {
+          iVar2 = LiveAntiCheat_IsInt(param_1,&local_46c,(int *)&fStack_448);
+          if (iVar2 == 0) {
+            iVar2 = LiveAntiCheat_IsFloat(param_1,&local_46c,&fStack_444);
+            if (iVar2 == 0) {
+              iVar2 = LiveAntiCheat_IsString(param_1,&local_46c,(char *)local_440,0x400);
+              if (iVar2 == 0) {
+                iVar2 = LiveAntiCheat_IsOp(param_1,&local_46c,&local_44c);
+                if (iVar2 == 0) {
                   Com_Printf(0,
                              "LiveAntiCheat_ASCIIExpressionToEncodedExpression: Unknown expression element found \"%s\"\n"
                             );
-                  goto LAB_8270c248;
+                  return -1;
                 }
                 local_470[0] = 1;
-                iVar3 = LiveAntiCheatQuickBuf_WriteData(&local_460,local_470,1);
-                if (iVar3 == 0) goto LAB_8270c248;
-                iVar3 = 2;
-                pfVar4 = (float *)local_468;
+                iVar2 = LiveAntiCheatQuickBuf_WriteData(&local_460,local_470,1);
+                if (iVar2 == 0) {
+                  return -1;
+                }
+                iVar2 = 2;
+                pfVar3 = (float *)local_468;
                 local_468[0] = (undefined2)local_44c;
               }
               else {
                 local_470[0] = 4;
-                iVar3 = LiveAntiCheatQuickBuf_WriteData(&local_460,local_470,1);
-                if (iVar3 == 0) goto LAB_8270c248;
-                pfVar4 = local_440;
+                iVar2 = LiveAntiCheatQuickBuf_WriteData(&local_460,local_470,1);
+                if (iVar2 == 0) {
+                  return -1;
+                }
+                pfVar3 = local_440;
                 do {
-                  cVar1 = *(char *)pfVar4;
-                  pfVar4 = (float *)((int)pfVar4 + 1);
+                  cVar1 = *(char *)pfVar3;
+                  pfVar3 = (float *)((int)pfVar3 + 1);
                 } while (cVar1 != '\0');
-                iVar3 = (int)pfVar4 - (int)local_440;
-                pfVar4 = local_440;
+                iVar2 = (int)pfVar3 - (int)local_440;
+                pfVar3 = local_440;
               }
             }
             else {
               local_470[0] = 3;
-              iVar3 = LiveAntiCheatQuickBuf_WriteData(&local_460,local_470,1);
-              if (iVar3 == 0) goto LAB_8270c248;
-              iVar3 = 4;
-              pfVar4 = &fStack_444;
+              iVar2 = LiveAntiCheatQuickBuf_WriteData(&local_460,local_470,1);
+              if (iVar2 == 0) {
+                return -1;
+              }
+              iVar2 = 4;
+              pfVar3 = &fStack_444;
             }
           }
           else {
             local_470[0] = 2;
-            iVar3 = LiveAntiCheatQuickBuf_WriteData(&local_460,local_470,1);
-            if (iVar3 == 0) goto LAB_8270c248;
-            iVar3 = 4;
-            pfVar4 = &fStack_448;
+            iVar2 = LiveAntiCheatQuickBuf_WriteData(&local_460,local_470,1);
+            if (iVar2 == 0) {
+              return -1;
+            }
+            iVar2 = 4;
+            pfVar3 = &fStack_448;
           }
-          iVar3 = LiveAntiCheatQuickBuf_WriteData(&local_460,pfVar4,iVar3);
-          if (iVar3 == 0) goto LAB_8270c248;
+          iVar2 = LiveAntiCheatQuickBuf_WriteData(&local_460,pfVar3,iVar2);
+          if (iVar2 == 0) {
+            return -1;
+          }
         }
-        pcVar2 = pcVar2 + local_46c;
-        cVar1 = *pcVar2;
+        param_1 = param_1 + local_46c;
+        cVar1 = *param_1;
       }
       local_470[0] = 0;
-      iVar3 = LiveAntiCheatQuickBuf_WriteData(&local_460,local_470,1);
-      if (iVar3 != 0) {
-        iVar3 = __restgprlr_26(local_460.numbytestraversed);
-        return iVar3;
+      iVar2 = LiveAntiCheatQuickBuf_WriteData(&local_460,local_470,1);
+      if (iVar2 != 0) {
+        return local_460.numbytestraversed;
       }
     }
   }
-LAB_8270c248:
-  iVar3 = __restgprlr_26(0xffffffffffffffff);
-  return iVar3;
+  return -1;
 }
 
 
 // 8270C258  LiveAntiCheat_EncodedExpressionToStatement  (online/live_anticheat.cpp:1925)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 
@@ -1602,13 +1521,11 @@ LiveAntiCheat_EncodedExpressionToStatement
 
 {
   ushort uVar1;
-  LiveAntiCheatExpressionStore *pLVar2;
+  int iVar2;
   Statement_s *pSVar3;
-  int iVar4;
-  expressionEntry *peVar5;
-  Statement_s *pSVar6;
-  ulonglong uVar7;
-  ulong64 uVar8;
+  expressionEntry *peVar4;
+  Statement_s *pSVar5;
+  ulong64 uVar6;
   char local_4a0;
   char local_49f;
   ushort local_49e;
@@ -1618,90 +1535,82 @@ LiveAntiCheat_EncodedExpressionToStatement
   LiveAntiCheatExpressionStoreSettings LStack_470;
   char acStack_450 [1104];
   
-  uVar7 = (ulonglong)(int)param_2;
-  pLVar2 = (LiveAntiCheatExpressionStore *)__savegprlr_23(param_1);
-  if (pLVar2 == (LiveAntiCheatExpressionStore *)0x0) {
+  if (param_1 == (LiveAntiCheatExpressionStore *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\online\\live_anticheat.cpp",
                     0x794,0,"%s");
   }
-  if ((uVar7 & 0xffffffff) == 0) {
+  if (param_2 == (uchar *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\online\\live_anticheat.cpp",
                     0x795,0,"%s");
   }
   *param_4 = 0xffffffffffff0000;
-  if (pLVar2 == (LiveAntiCheatExpressionStore *)0x0) {
+  if (param_1 == (LiveAntiCheatExpressionStore *)0x0) {
     *param_4 = 0xffffffffffff0003;
-    pSVar3 = (Statement_s *)__restgprlr_23(0);
-    return pSVar3;
+    return (Statement_s *)0x0;
   }
-  if ((uVar7 & 0xffffffff) == 0) {
+  if (param_2 == (uchar *)0x0) {
     *param_4 = 0xffffffffffff0004;
-    pSVar3 = (Statement_s *)__restgprlr_23(0);
-    return pSVar3;
+    return (Statement_s *)0x0;
   }
-  LiveAntiCheatExpressionStore_GetSettings(pLVar2,&LStack_470);
-  LiveAntiCheatQuickBuf_Init(&LStack_490,(void *)uVar7,param_3);
-  iVar4 = LiveAntiCheatQuickBuf_ReadData(&LStack_490,&local_49f,1);
-  if (iVar4 == 0) {
-    uVar8 = 0xffffffffffff0005;
+  LiveAntiCheatExpressionStore_GetSettings(param_1,&LStack_470);
+  LiveAntiCheatQuickBuf_Init(&LStack_490,param_2,param_3);
+  iVar2 = LiveAntiCheatQuickBuf_ReadData(&LStack_490,&local_49f,1);
+  if (iVar2 == 0) {
+    uVar6 = 0xffffffffffff0005;
   }
   else if (local_49f == '\x01') {
-    iVar4 = LiveAntiCheatQuickBuf_ReadStringAndNull(&LStack_490,acStack_450,0x400);
-    if (iVar4 == 0) {
-      uVar8 = 0xffffffffffff0007;
+    iVar2 = LiveAntiCheatQuickBuf_ReadStringAndNull(&LStack_490,acStack_450,0x400);
+    if (iVar2 == 0) {
+      uVar6 = 0xffffffffffff0007;
     }
     else {
-      iVar4 = I_stricmp(acStack_450,g_expVersion);
-      if (iVar4 == 0) {
-        pSVar3 = LiveAntiCheatExpressionStore_GetNewStatement(pLVar2);
+      iVar2 = I_stricmp(acStack_450,g_expVersion);
+      if (iVar2 == 0) {
+        pSVar3 = LiveAntiCheatExpressionStore_GetNewStatement(param_1);
         if (pSVar3 == (Statement_s *)0x0) {
           *param_4 = 0xffffffffffff0010;
         }
         while( true ) {
-          iVar4 = LiveAntiCheatQuickBuf_ReadData(&LStack_490,&local_4a0,1);
-          if (iVar4 == 0) {
+          iVar2 = LiveAntiCheatQuickBuf_ReadData(&LStack_490,&local_4a0,1);
+          if (iVar2 == 0) {
             Com_Printf(0,"LiveAntiCheat_EncodedExpressionToStatement: Unable to read in CODE!\n");
             *param_4 = 0xffffffffffff0009;
-            LiveAntiCheatExpressionStore_SetSettings(pLVar2,&LStack_470);
-            pSVar3 = (Statement_s *)__restgprlr_23(0);
-            return pSVar3;
+            LiveAntiCheatExpressionStore_SetSettings(param_1,&LStack_470);
+            return (Statement_s *)0x0;
           }
           if (local_4a0 == '\0') break;
           if (local_4a0 == '\x01') {
-            iVar4 = LiveAntiCheatQuickBuf_ReadData(&LStack_490,&local_49e,2);
+            iVar2 = LiveAntiCheatQuickBuf_ReadData(&LStack_490,&local_49e,2);
             uVar1 = local_49e;
-            if (iVar4 == 0) {
+            if (iVar2 == 0) {
               Com_Printf(0,
                          "LiveAntiCheat_EncodedExpressionToStatement: Unable to read in WORD for OP!\n"
                         );
               *param_4 = 0xffffffffffff000a;
-              LiveAntiCheatExpressionStore_SetSettings(pLVar2,&LStack_470);
-              pSVar3 = (Statement_s *)__restgprlr_23(0);
-              return pSVar3;
+              LiveAntiCheatExpressionStore_SetSettings(param_1,&LStack_470);
+              return (Statement_s *)0x0;
             }
             if (0x14e < local_49e) {
               Com_Printf(0,
                          "LiveAntiCheat_EncodedExpressionToStatement: Unknown opcode found! (%d)\n")
               ;
               *param_4 = 0xffffffffffff000b;
-              LiveAntiCheatExpressionStore_SetSettings(pLVar2,&LStack_470);
-              pSVar3 = (Statement_s *)__restgprlr_23(0);
-              return pSVar3;
+              LiveAntiCheatExpressionStore_SetSettings(param_1,&LStack_470);
+              return (Statement_s *)0x0;
             }
-            peVar5 = LiveAntiCheatExpressionStore_GetNewExpressionEntry(pLVar2);
-            if (peVar5 == (expressionEntry *)0x0) {
+            peVar4 = LiveAntiCheatExpressionStore_GetNewExpressionEntry(param_1);
+            if (peVar4 == (expressionEntry *)0x0) {
               Com_Printf(0,
                          "LiveAntiCheat_EncodedExpressionToStatement: RAN OUT OF EXPRESSION ENTRIES! OP #%d\n"
                         );
               *param_4 = 0xffffffffffff0011;
-              LiveAntiCheatExpressionStore_SetSettings(pLVar2,&LStack_470);
-              pSVar3 = (Statement_s *)__restgprlr_23(0);
-              return pSVar3;
+              LiveAntiCheatExpressionStore_SetSettings(param_1,&LStack_470);
+              return (Statement_s *)0x0;
             }
-            *(uint *)&peVar5->data = (uint)uVar1;
-            peVar5->type = 0;
+            *(uint *)&peVar4->data = (uint)uVar1;
+            peVar4->type = 0;
             if (pSVar3->entries == (expressionEntry *)0x0) {
-              pSVar3->entries = peVar5;
+              pSVar3->entries = peVar4;
               pSVar3->numEntries = pSVar3->numEntries + 1;
             }
             else {
@@ -1710,58 +1619,54 @@ LAB_8270c518:
             }
           }
           else if (local_4a0 == '\x02') {
-            iVar4 = LiveAntiCheatQuickBuf_ReadData(&LStack_490,&local_49c,4);
-            if (iVar4 == 0) {
+            iVar2 = LiveAntiCheatQuickBuf_ReadData(&LStack_490,&local_49c,4);
+            if (iVar2 == 0) {
               Com_Printf(0,"LiveAntiCheat_EncodedExpressionToStatement: Unable to read in INT!\n");
               *param_4 = 0xffffffffffff000c;
-              LiveAntiCheatExpressionStore_SetSettings(pLVar2,&LStack_470);
-              pSVar3 = (Statement_s *)__restgprlr_23(0);
-              return pSVar3;
+              LiveAntiCheatExpressionStore_SetSettings(param_1,&LStack_470);
+              return (Statement_s *)0x0;
             }
-            peVar5 = LiveAntiCheatExpressionStore_GetNewExpressionEntry(pLVar2);
-            if (peVar5 == (expressionEntry *)0x0) {
+            peVar4 = LiveAntiCheatExpressionStore_GetNewExpressionEntry(param_1);
+            if (peVar4 == (expressionEntry *)0x0) {
               Com_Printf(0,
                          "LiveAntiCheat_EncodedExpressionToStatement: RAN OUT OF EXPRESSION ENTRIES! INT(%d)\n"
                         );
               *param_4 = 0xffffffffffff0011;
-              LiveAntiCheatExpressionStore_SetSettings(pLVar2,&LStack_470);
-              pSVar3 = (Statement_s *)__restgprlr_23(0);
-              return pSVar3;
+              LiveAntiCheatExpressionStore_SetSettings(param_1,&LStack_470);
+              return (Statement_s *)0x0;
             }
-            (peVar5->data).op = OP_NOOP;
-            peVar5->type = 1;
-            (peVar5->data).operand.internals = local_49c;
+            (peVar4->data).op = OP_NOOP;
+            peVar4->type = 1;
+            (peVar4->data).operand.internals = local_49c;
             if (pSVar3->entries != (expressionEntry *)0x0) goto LAB_8270c518;
-            pSVar3->entries = peVar5;
+            pSVar3->entries = peVar4;
             pSVar3->numEntries = pSVar3->numEntries + 1;
           }
           else {
             if (local_4a0 == '\x03') {
-              iVar4 = LiveAntiCheatQuickBuf_ReadData(&LStack_490,local_498,4);
-              if (iVar4 == 0) {
+              iVar2 = LiveAntiCheatQuickBuf_ReadData(&LStack_490,local_498,4);
+              if (iVar2 == 0) {
                 Com_Printf(0,
                            "LiveAntiCheat_EncodedExpressionToStatement: Unable to read in float!\n")
                 ;
                 *param_4 = 0xffffffffffff000d;
-                LiveAntiCheatExpressionStore_SetSettings(pLVar2,&LStack_470);
-                pSVar3 = (Statement_s *)__restgprlr_23(0);
-                return pSVar3;
+                LiveAntiCheatExpressionStore_SetSettings(param_1,&LStack_470);
+                return (Statement_s *)0x0;
               }
-              peVar5 = LiveAntiCheatExpressionStore_GetNewExpressionEntry(pLVar2);
-              if (peVar5 == (expressionEntry *)0x0) {
+              peVar4 = LiveAntiCheatExpressionStore_GetNewExpressionEntry(param_1);
+              if (peVar4 == (expressionEntry *)0x0) {
                 Com_Printf(0,
                            "LiveAntiCheat_EncodedExpressionToStatement: RAN OUT OF EXPRESSION ENTRIES! FLOAT(%f)\n"
                           );
                 *param_4 = 0xffffffffffff0011;
-                LiveAntiCheatExpressionStore_SetSettings(pLVar2,&LStack_470);
-                pSVar3 = (Statement_s *)__restgprlr_23(0);
-                return pSVar3;
+                LiveAntiCheatExpressionStore_SetSettings(param_1,&LStack_470);
+                return (Statement_s *)0x0;
               }
-              (peVar5->data).op = OP_RIGHTPAREN;
-              peVar5->type = 1;
-              (peVar5->data).operand.internals = local_498[0];
+              (peVar4->data).op = OP_RIGHTPAREN;
+              peVar4->type = 1;
+              (peVar4->data).operand.internals = local_498[0];
               if (pSVar3->entries == (expressionEntry *)0x0) {
-                pSVar3->entries = peVar5;
+                pSVar3->entries = peVar4;
               }
               goto LAB_8270c518;
             }
@@ -1770,72 +1675,66 @@ LAB_8270c518:
                          "LiveAntiCheat_EncodedExpressionToStatement: Unknown token %d found in encoded expression!!!\n"
                         );
               *param_4 = 0xffffffffffff000f;
-              LiveAntiCheatExpressionStore_SetSettings(pLVar2,&LStack_470);
-              pSVar3 = (Statement_s *)__restgprlr_23(0);
-              return pSVar3;
+              LiveAntiCheatExpressionStore_SetSettings(param_1,&LStack_470);
+              return (Statement_s *)0x0;
             }
-            iVar4 = LiveAntiCheatQuickBuf_ReadStringAndNull(&LStack_490,acStack_450,0x400);
-            if (iVar4 == 0) {
+            iVar2 = LiveAntiCheatQuickBuf_ReadStringAndNull(&LStack_490,acStack_450,0x400);
+            if (iVar2 == 0) {
               Com_Printf(0,"LiveAntiCheat_EncodedExpressionToStatement: Unable to read in string!\n"
                         );
               *param_4 = 0xffffffffffff000e;
-              LiveAntiCheatExpressionStore_SetSettings(pLVar2,&LStack_470);
-              pSVar3 = (Statement_s *)__restgprlr_23(0);
-              return pSVar3;
+              LiveAntiCheatExpressionStore_SetSettings(param_1,&LStack_470);
+              return (Statement_s *)0x0;
             }
-            peVar5 = LiveAntiCheatExpressionStore_GetNewExpressionEntry(pLVar2);
-            if (peVar5 == (expressionEntry *)0x0) {
+            peVar4 = LiveAntiCheatExpressionStore_GetNewExpressionEntry(param_1);
+            if (peVar4 == (expressionEntry *)0x0) {
               Com_Printf(0,
                          "LiveAntiCheat_EncodedExpressionToStatement: RAN OUT OF EXPRESSION ENTRIES! STRING(%s)\n"
                         );
               MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\online\\live_anticheat.cpp"
                               ,0x84e,0,"%s");
               *param_4 = 0xffffffffffff0011;
-              LiveAntiCheatExpressionStore_SetSettings(pLVar2,&LStack_470);
-              pSVar3 = (Statement_s *)__restgprlr_23(0);
-              return pSVar3;
+              LiveAntiCheatExpressionStore_SetSettings(param_1,&LStack_470);
+              return (Statement_s *)0x0;
             }
-            pSVar6 = (Statement_s *)LiveAntiCheatExpressionStore_GetNewStringPtr(pLVar2,acStack_450)
-            ;
-            if (pSVar6 == (Statement_s *)0x0) {
+            pSVar5 = (Statement_s *)
+                     LiveAntiCheatExpressionStore_GetNewStringPtr(param_1,acStack_450);
+            if (pSVar5 == (Statement_s *)0x0) {
               Com_Printf(0,
                          "LiveAntiCheat_EncodedExpressionToStatement: RAN OUT OF STRING SPACE FOR STRING \"%s\"!!!\n"
                         );
               MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\online\\live_anticheat.cpp"
                               ,0x857,0,"%s");
               *param_4 = 0xffffffffffff0012;
-              LiveAntiCheatExpressionStore_SetSettings(pLVar2,&LStack_470);
-              pSVar3 = (Statement_s *)__restgprlr_23(0);
-              return pSVar3;
+              LiveAntiCheatExpressionStore_SetSettings(param_1,&LStack_470);
+              return (Statement_s *)0x0;
             }
-            (peVar5->data).operand.internals.function = pSVar6;
-            (peVar5->data).op = OP_MULTIPLY;
-            peVar5->type = 1;
+            (peVar4->data).operand.internals.function = pSVar5;
+            (peVar4->data).op = OP_MULTIPLY;
+            peVar4->type = 1;
             if (pSVar3->entries == (expressionEntry *)0x0) {
-              pSVar3->entries = peVar5;
+              pSVar3->entries = peVar4;
             }
             pSVar3->numEntries = pSVar3->numEntries + 1;
           }
         }
-        iVar4 = LiveAntiCheat_ExpressionFixupPass(pLVar2,pSVar3);
-        if (iVar4 != 0) {
-          pSVar3 = (Statement_s *)__restgprlr_23(pSVar3);
+        iVar2 = LiveAntiCheat_ExpressionFixupPass(param_1,pSVar3);
+        if (iVar2 != 0) {
           return pSVar3;
         }
-        uVar8 = 0xffffffffffff0013;
+        uVar6 = 0xffffffffffff0013;
       }
       else {
-        uVar8 = 0xffffffffffff0008;
+        uVar6 = 0xffffffffffff0008;
       }
     }
   }
   else {
-    uVar8 = 0xffffffffffff0006;
+    uVar6 = 0xffffffffffff0006;
   }
-  *param_4 = uVar8;
-  LiveAntiCheatExpressionStore_SetSettings(pLVar2,&LStack_470);
-  pSVar3 = (Statement_s *)__restgprlr_23(0);
-  return pSVar3;
+  *param_4 = uVar6;
+  LiveAntiCheatExpressionStore_SetSettings(param_1,&LStack_470);
+  return (Statement_s *)0x0;
 }
 
 
@@ -1945,6 +1844,8 @@ LAB_8270caa4:
 
 // 8270D7E0  LiveAntiCheat_DebugChallengeResponseGetDisplayString  (online/live_anticheat.cpp:2404)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 
@@ -1954,38 +1855,33 @@ int LiveAntiCheat_DebugChallengeResponseGetDisplayString
 {
   ParamType_t PVar1;
   LiveAntiCheatFunctionEntry *pLVar2;
-  FunctionID_t *pFVar3;
-  int iVar4;
-  Statement_s *pSVar5;
-  ulonglong uVar6;
-  char *pcVar7;
-  char *pcVar8;
-  LiveAntiCheatFunctionEntry *pLVar9;
+  Statement_s *pSVar3;
+  char *pcVar4;
+  LiveAntiCheatFunctionEntry *pLVar5;
   ulong64 local_660 [2];
   LiveAntiCheatExpressionStoreSettings LStack_650;
   char acStack_630 [1024];
   char acStack_230 [560];
   
-  uVar6 = (ulonglong)(int)param_2;
-  pFVar3 = (FunctionID_t *)__savegprlr_28(param_1);
-  if (((pFVar3 == (FunctionID_t *)0x0) || ((uVar6 & 0xffffffff) == 0)) || (param_3 < 1)) {
-    iVar4 = __restgprlr_28(0);
-    return iVar4;
+  if (((param_1 == (LiveAntiCheatDebugChallengeResponse *)0x0) || (param_2 == (char *)0x0)) ||
+     (param_3 < 1)) {
+    return 0;
   }
-  pcVar7 = (char *)uVar6;
-  *pcVar7 = '\0';
+  *param_2 = '\0';
   if (s_liveanticheatfunctionentryarray[0].functionname != (char *)0x0) {
-    pLVar9 = s_liveanticheatfunctionentryarray;
+    pLVar5 = s_liveanticheatfunctionentryarray;
     do {
-      if (pLVar9->functionid == *pFVar3) {
+      if (pLVar5->functionid == param_1->functionid) {
         sprintf(acStack_630,"%s");
-        I_strncat(pcVar7,param_3,acStack_630);
-        PVar1 = pLVar9->paramtype;
+        I_strncat(param_2,param_3,acStack_630);
+        PVar1 = pLVar5->paramtype;
         if (PARAMTYPE_ENCODEDEXPRESSION < PVar1) {
           sprintf(acStack_630,"( ??? )");
           goto LAB_8270d9e4;
         }
-        if (PVar1 == PARAMTYPE_NONE) goto LAB_8270d9f4;
+        if (PVar1 == PARAMTYPE_NONE) {
+          return 1;
+        }
         if (PVar1 == PARAMTYPE_UINT64) {
           sprintf(acStack_630,"( value=%llu ($%llx) )");
           goto LAB_8270d9e4;
@@ -2002,34 +1898,32 @@ int LiveAntiCheat_DebugChallengeResponseGetDisplayString
           sprintf(acStack_630,"( dvarname=\"%s\", scale=%d )");
           goto LAB_8270d9e4;
         }
-        I_strncat(pcVar7,param_3,"( ");
+        I_strncat(param_2,param_3,"( ");
         LiveAntiCheatExpressionStore_GetSettings(&s_liveanticheatexpressionstore,&LStack_650);
-        pSVar5 = LiveAntiCheat_EncodedExpressionToStatement
-                           (&s_liveanticheatexpressionstore,(uchar *)(pFVar3 + 2),pFVar3[0x42],
-                            local_660);
-        if (pSVar5 == (Statement_s *)0x0) {
-          Com_sprintf(pcVar7,param_3,"(err=$%lx)");
+        pSVar3 = LiveAntiCheat_EncodedExpressionToStatement
+                           (&s_liveanticheatexpressionstore,(uchar *)(param_1->params)._padding_,
+                            (param_1->params).encodedexpression.encodedexpressionsize,local_660);
+        if (pSVar3 == (Statement_s *)0x0) {
+          Com_sprintf(param_2,param_3,"(err=$%lx)");
         }
         else {
-          LiveAntiCheat_GetExpressionString(pSVar5,acStack_230,0x200);
-          I_strncat(pcVar7,param_3,acStack_230);
+          LiveAntiCheat_GetExpressionString(pSVar3,acStack_230,0x200);
+          I_strncat(param_2,param_3,acStack_230);
         }
         LiveAntiCheatExpressionStore_SetSettings(&s_liveanticheatexpressionstore,&LStack_650);
-        pcVar8 = " )";
+        pcVar4 = " )";
         goto LAB_8270d9e8;
       }
-      pLVar2 = pLVar9 + 1;
-      pLVar9 = pLVar9 + 1;
+      pLVar2 = pLVar5 + 1;
+      pLVar5 = pLVar5 + 1;
     } while (pLVar2->functionname != (char *)0x0);
   }
   sprintf(acStack_630,"functionid=%d");
 LAB_8270d9e4:
-  pcVar8 = acStack_630;
+  pcVar4 = acStack_630;
 LAB_8270d9e8:
-  I_strncat(pcVar7,param_3,pcVar8);
-LAB_8270d9f4:
-  iVar4 = __restgprlr_28(1);
-  return iVar4;
+  I_strncat(param_2,param_3,pcVar4);
+  return 1;
 }
 
 
@@ -2108,6 +2002,8 @@ int LiveAntiCheat_DebugChallengeResponseRemove(int param_1)
 
 // 8270DA90  LiveAntiCheat_DebugChallengeResponseDump  (online/live_anticheat.cpp:2614)
 
+/* WARNING: Function: __savegprlr_15 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_15 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
@@ -2128,10 +2024,8 @@ void LiveAntiCheat_DebugChallengeResponseDump(void)
   char acStack_690 [1024];
   char acStack_290 [656];
   
-  __savegprlr_15();
   if (s_liveanticheatdebugchallengeresponse_count == 0) {
     Com_Printf(0,"Debug Challenge/Response list is empty.\n");
-    __restgprlr_15();
     return;
   }
   Com_Printf(0,"Debug Challenge/Response Entries:\n");
@@ -2205,7 +2099,6 @@ LAB_8270dd04:
       p<Var6 = (<unnamed_type_params> *)(p<Var6->_padding_ + 0x110);
     } while (iVar5 < s_liveanticheatdebugchallengeresponse_count);
   }
-  __restgprlr_15();
   return;
 }
 
@@ -2293,6 +2186,8 @@ void LiveAntiCheat_DebugChallengeResponseCancel(void)
 
 // 8270DE78  LiveAntiCheat_DebugChallengeResponsePump  (online/live_anticheat.cpp:2747)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
@@ -2303,41 +2198,41 @@ void LiveAntiCheat_DebugChallengeResponsePump(int param_1)
   FunctionID_t FVar1;
   bool bVar2;
   bool bVar3;
-  int iVar4;
-  Statement_s *pSVar5;
-  LocalClientNum_t LVar6;
-  int iVar7;
-  char *pcVar8;
-  LiveAntiCheatDebugChallengeResponse *pLVar9;
-  float fVar10;
+  Statement_s *pSVar4;
+  LocalClientNum_t LVar5;
+  int iVar6;
+  char *pcVar7;
+  LiveAntiCheatDebugChallengeResponse *pLVar8;
+  float fVar9;
   ulong64 local_290;
   ulong64 local_288;
   LiveAntiCheatMemoryInfo local_280;
   LiveAntiCheatExpressionStoreSettings LStack_260;
   char acStack_240 [576];
   
-  iVar4 = __savegprlr_25(param_1);
-  iVar7 = s_liveanticheatdebugchallengeresponse_index;
-  if (s_liveanticheatdebugchallengeresponse_enabled == 0) goto LAB_8270e574;
+  iVar6 = s_liveanticheatdebugchallengeresponse_index;
+  if (s_liveanticheatdebugchallengeresponse_enabled == 0) {
+    return;
+  }
   s_liveanticheatdebugchallengeresponse_numpumps_overall =
        s_liveanticheatdebugchallengeresponse_numpumps_overall + 1;
   s_liveanticheatdebugchallengeresponse_numpumps_current =
        s_liveanticheatdebugchallengeresponse_numpumps_current + 1;
   local_290 = 0;
-  pLVar9 = s_liveanticheatdebugchallengeresponse_array + s_liveanticheatdebugchallengeresponse_index
+  pLVar8 = s_liveanticheatdebugchallengeresponse_array + s_liveanticheatdebugchallengeresponse_index
   ;
   if (s_verbose != 0) {
-    LiveAntiCheat_DebugChallengeResponseGetDisplayString(pLVar9,acStack_240,0x200);
+    LiveAntiCheat_DebugChallengeResponseGetDisplayString(pLVar8,acStack_240,0x200);
   }
   bVar3 = false;
   bVar2 = false;
   if (s_verbose != 0) {
     Sys_Milliseconds();
   }
-  FVar1 = pLVar9->functionid;
+  FVar1 = pLVar8->functionid;
   if ((int)FVar1 < 0x6f) {
     if (FVar1 == FUNCTIONID_DEBUGREFLECT) {
-      local_290 = s_liveanticheatdebugchallengeresponse_array[iVar7].params.uint64.uint64value;
+      local_290 = s_liveanticheatdebugchallengeresponse_array[iVar6].params.uint64.uint64value;
     }
     else {
       if (4 < FVar1 - FUNCTIONID_DEBUG0) goto LAB_8270e2d4;
@@ -2369,46 +2264,45 @@ LAB_8270e3c8:
        (!bVar2)) goto LAB_8270e3dc;
     if (s_verbose != 0) {
       Sys_Milliseconds();
-      pcVar8 = "LiveAntiCheat:  1 frame pump took %llu microseconds.\n";
-      goto LAB_8270e45c;
+      pcVar7 = "LiveAntiCheat:  1 frame pump took %llu microseconds.\n";
+LAB_8270e45c:
+      Com_Printf(0,pcVar7);
     }
-LAB_8270e470:
-    if (!bVar3) goto LAB_8270e574;
   }
   else {
     if (300 < (int)FVar1) {
       if (FVar1 == FUNCTIONID_DVARFLOAT) {
-        fVar10 = Dvar_GetFloat(s_liveanticheatdebugchallengeresponse_array[iVar7].params._padding_);
-        iVar7 = s_liveanticheatdebugchallengeresponse_array[iVar7].params.dvarfloat.scale;
-        if (iVar7 == 0) {
-          iVar7 = 1;
+        fVar9 = Dvar_GetFloat(s_liveanticheatdebugchallengeresponse_array[iVar6].params._padding_);
+        iVar6 = s_liveanticheatdebugchallengeresponse_array[iVar6].params.dvarfloat.scale;
+        if (iVar6 == 0) {
+          iVar6 = 1;
         }
-        local_290 = (ulong64)((float)(longlong)iVar7 * fVar10);
+        local_290 = (ulong64)((float)(longlong)iVar6 * fVar9);
         local_288 = local_290;
       }
       else {
         if (FVar1 != FUNCTIONID_ENCODEDEXPRESSION) goto LAB_8270e2d4;
         LiveAntiCheatExpressionStore_GetSettings(&s_liveanticheatexpressionstore,&LStack_260);
-        pSVar5 = LiveAntiCheat_EncodedExpressionToStatement
+        pSVar4 = LiveAntiCheat_EncodedExpressionToStatement
                            (&s_liveanticheatexpressionstore,
-                            (uchar *)s_liveanticheatdebugchallengeresponse_array[iVar7].params.
+                            (uchar *)s_liveanticheatdebugchallengeresponse_array[iVar6].params.
                                      _padding_,
-                            s_liveanticheatdebugchallengeresponse_array[iVar7].params.
+                            s_liveanticheatdebugchallengeresponse_array[iVar6].params.
                             encodedexpression.encodedexpressionsize,&local_288);
-        if (pSVar5 == (Statement_s *)0x0) {
+        if (pSVar4 == (Statement_s *)0x0) {
           local_290 = local_288;
           LiveAntiCheatExpressionStore_SetSettings(&s_liveanticheatexpressionstore,&LStack_260);
         }
         else {
-          LVar6 = CL_LocalClientNumFromControllerIndex(iVar4);
-          local_290 = GetExpressionUInt64(LVar6,pSVar5);
+          LVar5 = CL_LocalClientNumFromControllerIndex(param_1);
+          local_290 = GetExpressionUInt64(LVar5,pSVar4);
           LiveAntiCheatExpressionStore_SetSettings(&s_liveanticheatexpressionstore,&LStack_260);
         }
       }
       goto LAB_8270e3a0;
     }
     if (FVar1 == FUNCTIONID_DVAR) {
-      local_290 = Dvar_GetInt64(s_liveanticheatdebugchallengeresponse_array[iVar7].params._padding_)
+      local_290 = Dvar_GetInt64(s_liveanticheatdebugchallengeresponse_array[iVar6].params._padding_)
       ;
       goto LAB_8270e3a0;
     }
@@ -2434,13 +2328,13 @@ LAB_8270e2d4:
           else {
             LiveAntiCheatMemoryInfo_Init
                       (&local_280,
-                       s_liveanticheatdebugchallengeresponse_array[iVar7].params.checksum.key,
-                       s_liveanticheatdebugchallengeresponse_array[iVar7].params.checksum.start,
-                       s_liveanticheatdebugchallengeresponse_array[iVar7].params.checksum.size);
-            iVar7 = MemoryHashInfo::OpenAsSHATomCrypt
+                       s_liveanticheatdebugchallengeresponse_array[iVar6].params.checksum.key,
+                       s_liveanticheatdebugchallengeresponse_array[iVar6].params.checksum.start,
+                       s_liveanticheatdebugchallengeresponse_array[iVar6].params.checksum.size);
+            iVar6 = MemoryHashInfo::OpenAsSHATomCrypt
                               (s_liveanticheatdebugchallengeresponse_memoryhashinfoptr,
                                local_280.scan_start,local_280.scan_size,local_280.scan_key);
-            if (iVar7 != 0) goto LAB_8270e04c;
+            if (iVar6 != 0) goto LAB_8270e04c;
             if (s_verbose != 0) {
               Com_Printf(0,"LiveAntiCheat:  Unable to initiate hash!\n");
             }
@@ -2462,13 +2356,13 @@ LAB_8270e2d4:
           else {
             LiveAntiCheatMemoryInfo_Init
                       (&local_280,
-                       s_liveanticheatdebugchallengeresponse_array[iVar7].params.checksum.key,
-                       s_liveanticheatdebugchallengeresponse_array[iVar7].params.checksum.start,
-                       s_liveanticheatdebugchallengeresponse_array[iVar7].params.checksum.size);
-            iVar7 = MemoryHashInfo::OpenAs8WayProbe
+                       s_liveanticheatdebugchallengeresponse_array[iVar6].params.checksum.key,
+                       s_liveanticheatdebugchallengeresponse_array[iVar6].params.checksum.start,
+                       s_liveanticheatdebugchallengeresponse_array[iVar6].params.checksum.size);
+            iVar6 = MemoryHashInfo::OpenAs8WayProbe
                               (s_liveanticheatdebugchallengeresponse_memoryhashinfoptr,
                                local_280.scan_start,local_280.scan_size,local_280.scan_key);
-            if (iVar7 != 0) goto LAB_8270e04c;
+            if (iVar6 != 0) goto LAB_8270e04c;
             if (s_verbose != 0) {
               Com_Printf(0,"LiveAntiCheat:  Unable to initiate hash!\n");
             }
@@ -2490,13 +2384,13 @@ LAB_8270e2d4:
           else {
             LiveAntiCheatMemoryInfo_Init
                       (&local_280,
-                       s_liveanticheatdebugchallengeresponse_array[iVar7].params.checksum.key,
-                       s_liveanticheatdebugchallengeresponse_array[iVar7].params.checksum.start,
-                       s_liveanticheatdebugchallengeresponse_array[iVar7].params.checksum.size);
-            iVar7 = MemoryHashInfo::OpenAsCRC32Split
+                       s_liveanticheatdebugchallengeresponse_array[iVar6].params.checksum.key,
+                       s_liveanticheatdebugchallengeresponse_array[iVar6].params.checksum.start,
+                       s_liveanticheatdebugchallengeresponse_array[iVar6].params.checksum.size);
+            iVar6 = MemoryHashInfo::OpenAsCRC32Split
                               (s_liveanticheatdebugchallengeresponse_memoryhashinfoptr,
                                local_280.scan_start,local_280.scan_size,local_280.scan_key);
-            if (iVar7 != 0) goto LAB_8270e04c;
+            if (iVar6 != 0) goto LAB_8270e04c;
             if (s_verbose != 0) {
               Com_Printf(0,"LiveAntiCheat:  Unable to initiate hash!\n");
             }
@@ -2517,13 +2411,13 @@ LAB_8270e2d4:
         goto LAB_8270e3a0;
       }
       LiveAntiCheatMemoryInfo_Init
-                (&local_280,s_liveanticheatdebugchallengeresponse_array[iVar7].params.checksum.key,
-                 s_liveanticheatdebugchallengeresponse_array[iVar7].params.checksum.start,
-                 s_liveanticheatdebugchallengeresponse_array[iVar7].params.checksum.size);
-      iVar7 = MemoryHashInfo::OpenAsCRC32
+                (&local_280,s_liveanticheatdebugchallengeresponse_array[iVar6].params.checksum.key,
+                 s_liveanticheatdebugchallengeresponse_array[iVar6].params.checksum.start,
+                 s_liveanticheatdebugchallengeresponse_array[iVar6].params.checksum.size);
+      iVar6 = MemoryHashInfo::OpenAsCRC32
                         (s_liveanticheatdebugchallengeresponse_memoryhashinfoptr,
                          local_280.scan_start,local_280.scan_size,local_280.scan_key);
-      if (iVar7 == 0) {
+      if (iVar6 == 0) {
         if (s_verbose != 0) {
           Com_Printf(0,"LiveAntiCheat:  Unable to initiate hash!\n");
         }
@@ -2544,13 +2438,13 @@ LAB_8270e04c:
       }
       else {
         LiveAntiCheatMemoryInfo_Init
-                  (&local_280,s_liveanticheatdebugchallengeresponse_array[iVar7].params.checksum.key
-                   ,s_liveanticheatdebugchallengeresponse_array[iVar7].params.checksum.start,
-                   s_liveanticheatdebugchallengeresponse_array[iVar7].params.checksum.size);
-        iVar7 = MemoryHashInfo::OpenAsMD4
+                  (&local_280,s_liveanticheatdebugchallengeresponse_array[iVar6].params.checksum.key
+                   ,s_liveanticheatdebugchallengeresponse_array[iVar6].params.checksum.start,
+                   s_liveanticheatdebugchallengeresponse_array[iVar6].params.checksum.size);
+        iVar6 = MemoryHashInfo::OpenAsMD4
                           (s_liveanticheatdebugchallengeresponse_memoryhashinfoptr,
                            local_280.scan_start,local_280.scan_size,local_280.scan_key);
-        if (iVar7 != 0) goto LAB_8270e04c;
+        if (iVar6 != 0) goto LAB_8270e04c;
         if (s_verbose != 0) {
           Com_Printf(0,"LiveAntiCheat:  Unable to initiate hash!\n");
         }
@@ -2560,23 +2454,26 @@ LAB_8270e04c:
       goto LAB_8270e3a0;
     }
 LAB_8270e3dc:
-    iVar7 = MemoryHashInfo::Continue(s_liveanticheatdebugchallengeresponse_memoryhashinfoptr);
-    if (iVar7 == 0) {
+    iVar6 = MemoryHashInfo::Continue(s_liveanticheatdebugchallengeresponse_memoryhashinfoptr);
+    if (iVar6 != 0) {
       if (s_verbose != 0) {
         Sys_Milliseconds();
-        pcVar8 = "LiveAntiCheat:  Hash pump took %llu microseconds.\n";
-LAB_8270e45c:
-        Com_Printf(0,pcVar8);
+        Com_Printf(0,"LiveAntiCheat:  Hash pump took %llu microseconds.\n");
       }
-      goto LAB_8270e470;
+      MemoryHashInfo::Complete(s_liveanticheatdebugchallengeresponse_memoryhashinfoptr,&local_290);
+      s_liveanticheatdebugchallengeresponse_memoryhashinfoptr = (MemoryHashInfo *)0x0;
+      goto LAB_8270e478;
     }
     if (s_verbose != 0) {
       Sys_Milliseconds();
-      Com_Printf(0,"LiveAntiCheat:  Hash pump took %llu microseconds.\n");
+      pcVar7 = "LiveAntiCheat:  Hash pump took %llu microseconds.\n";
+      goto LAB_8270e45c;
     }
-    MemoryHashInfo::Complete(s_liveanticheatdebugchallengeresponse_memoryhashinfoptr,&local_290);
-    s_liveanticheatdebugchallengeresponse_memoryhashinfoptr = (MemoryHashInfo *)0x0;
   }
+  if (!bVar3) {
+    return;
+  }
+LAB_8270e478:
   if (s_verbose != 0) {
     Sys_Milliseconds();
     Com_Printf(0,
@@ -2588,9 +2485,9 @@ LAB_8270e45c:
     s_liveanticheatdebugchallengeresponse_memoryhashinfoptr = (MemoryHashInfo *)0x0;
   }
   s_liveanticheatdebugchallengeresponse_index = s_liveanticheatdebugchallengeresponse_index + 1;
-  iVar7 = Sys_Milliseconds();
+  iVar6 = Sys_Milliseconds();
   s_liveanticheatdebugchallengeresponse_numpumps_current = 0;
-  s_liveanticheatdebugchallengeresponse_time_started_current = (ulong64)(iVar7 * 1000);
+  s_liveanticheatdebugchallengeresponse_time_started_current = (ulong64)(iVar6 * 1000);
   if (s_liveanticheatdebugchallengeresponse_count <= s_liveanticheatdebugchallengeresponse_index) {
     s_liveanticheatdebugchallengeresponse_enabled = 0;
     Sys_Milliseconds();
@@ -2601,15 +2498,12 @@ LAB_8270e45c:
     }
     if (1 < s_liveanticheatdebugchallengeresponse_numtimes) {
       LiveAntiCheat_DebugChallengeResponseExec(s_liveanticheatdebugchallengeresponse_numtimes + -1);
-      __restgprlr_25();
       return;
     }
     if (s_liveanticheatdebugchallengeresponse_numtimes < 0) {
       LiveAntiCheat_DebugChallengeResponseExec(s_liveanticheatdebugchallengeresponse_numtimes);
     }
   }
-LAB_8270e574:
-  __restgprlr_25();
   return;
 }
 
@@ -2631,6 +2525,8 @@ void LiveAntiCheat_DCREmpty_f(void)
 
 // 8270E5C0  LiveAntiCheat_DCRAdd_f  (online/live_anticheat.cpp:3224)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void LiveAntiCheat_DCRAdd_f(void)
@@ -2654,11 +2550,9 @@ void LiveAntiCheat_DCRAdd_f(void)
   char local_840 [1024];
   uchar auStack_440 [1088];
   
-  __savegprlr_25();
   iVar6 = Cmd_Argc();
   if (iVar6 < 2) {
     Com_Printf(0,"USAGE: DCRAdd <functionname> [ <param1> .... ]\n");
-    __restgprlr_25();
     return;
   }
   iVar6 = Cmd_Argc();
@@ -2692,20 +2586,17 @@ void LiveAntiCheat_DCRAdd_f(void)
   pLVar12 = LiveAntiCheat_FindFunctionEntryByFunctionName(pcVar8);
   if (pLVar12 == (LiveAntiCheatFunctionEntry *)0x0) {
     Com_Printf(0,"DCRAdd:  Function \'%s\' doesn\'t exist in function lookup table.\n");
-    __restgprlr_25();
     return;
   }
   Com_Memset(&local_a50,0,0x110);
   PVar1 = pLVar12->paramtype;
   if (PARAMTYPE_ENCODEDEXPRESSION < PVar1) {
     Com_Printf(0,"DCRAdd:  Unsupported param type %d encountered!\n");
-    __restgprlr_25();
     return;
   }
   if (PVar1 == PARAMTYPE_UINT64) {
     if (iVar13 < 1) {
       Com_Printf(0,"DCRAdd:  Function \'%s\' missing uint64 param!\n");
-      __restgprlr_25();
       return;
     }
     <Var3.uint64value = LiveAntiCheat_DebugChallengeResponseGetInt64FromString(pcVar9);
@@ -2717,19 +2608,16 @@ void LiveAntiCheat_DCRAdd_f(void)
   else if (PVar1 == PARAMTYPE_CHECKSUM) {
     if (iVar13 < 1) {
       Com_Printf(0,"DCRAdd:  Function \'%s\' missing key param!\n");
-      __restgprlr_25();
       return;
     }
     <Var3.uint64value = LiveAntiCheat_DebugChallengeResponseGetInt64FromString(pcVar9);
     if (iVar13 < 2) {
       Com_Printf(0,"DCRAdd:  Function \'%s\' missing start param!\n");
-      __restgprlr_25();
       return;
     }
     lVar5 = LiveAntiCheat_DebugChallengeResponseGetInt64FromString(pcVar10);
     if (iVar13 < 3) {
       Com_Printf(0,"DCRAdd:  Function \'%s\' missing size param!\n");
-      __restgprlr_25();
       return;
     }
     lVar4 = LiveAntiCheat_DebugChallengeResponseGetInt64FromString(pcVar11);
@@ -2744,7 +2632,6 @@ void LiveAntiCheat_DCRAdd_f(void)
     if (iVar13 < 1) {
 LAB_8270e808:
       Com_Printf(0,"DCRAdd:  Function \'%s\' missing dvarname param!\n");
-      __restgprlr_25();
       return;
     }
     FVar2 = pLVar12->functionid;
@@ -2756,7 +2643,6 @@ LAB_8270e808:
     if (iVar13 < 1) goto LAB_8270e808;
     if (iVar13 < 2) {
       Com_Printf(0,"DCRAdd:  Function \'%s\' missing scale param!\n");
-      __restgprlr_25();
       return;
     }
     lVar5 = LiveAntiCheat_DebugChallengeResponseGetInt64FromString(pcVar10);
@@ -2774,7 +2660,6 @@ LAB_8270e808:
   else {
     if (iVar6 == 2) {
       Com_Printf(0,"DCRAdd:  Function \'%s\' missing expression params!\n");
-      __restgprlr_25();
       return;
     }
     iVar6 = 0;
@@ -2793,7 +2678,6 @@ LAB_8270e808:
     iVar6 = LiveAntiCheat_ASCIIExpressionToEncodedExpression(local_840,auStack_440,0x400);
     if (iVar6 < 0) {
       Com_Printf(0,"DCRAdd:  Unable to encode ascii expression \'%s\'!!!\n");
-      __restgprlr_25();
       return;
     }
     LiveAntiCheatDebugChallengeResponse_SetParamEncodedExpression
@@ -2803,11 +2687,9 @@ LAB_8270e808:
   if (iVar6 != 0) {
     LiveAntiCheat_DebugChallengeResponseGetDisplayString(&local_a50,acStack_940,0x100);
     Com_Printf(0x19,"DCRADD : Debug Challenge/Response \"%s\" added!\n");
-    __restgprlr_25();
     return;
   }
   Com_Printf(0x19,"DCRADD : Error, Debug Challenge/Response not added!\n");
-  __restgprlr_25();
   return;
 }
 
@@ -2905,6 +2787,8 @@ void LiveAntiCheat_DCRCancel_f(void)
 
 // 8270EB88  LiveAntiCheat_DCRStatus_f  (online/live_anticheat.cpp:3512)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void LiveAntiCheat_DCRStatus_f(void)
@@ -2913,11 +2797,9 @@ void LiveAntiCheat_DCRStatus_f(void)
   int iVar1;
   char acStack_240 [576];
   
-  __savegprlr_26();
   iVar1 = LiveAntiCheat_IsBusy();
   if (iVar1 == 0) {
     Com_Printf(0,"DCRSTATUS: System is idle\n");
-    __restgprlr_26();
     return;
   }
   if (s_liveanticheatdebugchallengeresponse_enabled != 0) {
@@ -2951,7 +2833,6 @@ void LiveAntiCheat_DCRStatus_f(void)
     }
     iVar1 = iVar1 + 4;
   } while (iVar1 < 0x10);
-  __restgprlr_26();
   return;
 }
 
@@ -3092,58 +2973,50 @@ void LiveAntiCheat_ExtractDataFromBuffer<int>(int *param_1,uchar *param_2,int *p
 
 // 8270ED18  LiveAntiCheat_ResetChallengeResponse  (online/live_anticheat.cpp:3805)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 void LiveAntiCheat_ResetChallengeResponse(int param_1)
 
 {
-  int iVar1;
-  int iVar2;
-  ulonglong uVar3;
-  int iVar4;
-  
-  uVar3 = __savegprlr_26(param_1);
-  iVar4 = (int)uVar3;
-  if ((iVar4 < 0) || (3 < iVar4)) {
+  if ((param_1 < 0) || (3 < param_1)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\online\\live_anticheat.cpp",
                     0xedf,0,"%s");
   }
-  if ((-1 < iVar4) && (iVar4 < 4)) {
-    iVar1 = (int)((uVar3 & 0x3fffffff) << 2);
-    if (*(MemoryHashInfo **)((int)&DAT_845722e8 + iVar1) != (MemoryHashInfo *)0x0) {
-      MemoryHashInfo::Cancel(*(MemoryHashInfo **)((int)&DAT_845722e8 + iVar1));
-      *(undefined4 *)((int)&DAT_845722e8 + iVar1) = 0;
+  if ((-1 < param_1) && (param_1 < 4)) {
+    if ((MemoryHashInfo *)(&DAT_845722e8)[param_1] != (MemoryHashInfo *)0x0) {
+      MemoryHashInfo::Cancel((MemoryHashInfo *)(&DAT_845722e8)[param_1]);
+      (&DAT_845722e8)[param_1] = 0;
     }
-    *(undefined4 *)((int)s_challengesToProcess + iVar1) = 0;
-    iVar2 = (int)((uVar3 & 0x1fffffff) << 3);
-    *(undefined8 *)((int)&DAT_845722a8 + iVar2) = 0;
+    s_challengesToProcess[param_1] = 0;
+    (&DAT_845722a8)[param_1] = 0;
     bdReference<bdAntiCheatChallenges>::operator=
-              ((bdReference<bdAntiCheatChallenges> *)((int)&s_challenges[0].m_ptr + iVar1),
-               (bdAntiCheatChallenges *)0x0);
-    *(undefined4 *)((int)&DAT_845722e8 + iVar1) = 0;
-    *(undefined4 *)((int)s_challengesCurrentIndex + iVar1) = 0;
-    *(undefined8 *)((int)s_processingCurrentChallengeStartTime + iVar2) = 0;
-    bdAntiCheatResponses::clear(s_responses + iVar4);
-    bdReference<bdRemoteTask>::operator=
-              ((bdReference<bdRemoteTask> *)((int)&s_responsesbdRemoteTaskRef[0].m_ptr + iVar1),
-               (bdRemoteTask *)0x0);
-    *(undefined8 *)((int)s_responsesSendingStartTimestamp + iVar2) = 0;
-    *(undefined4 *)((int)&DAT_84572328 + iVar1) = 0;
-    *(undefined4 *)((int)&DAT_84572378 + iVar1) = 0;
-    *(undefined4 *)((int)&DAT_8456f284 + iVar1) = 0;
-    bdAntiCheatResponses::setLogMessage(s_responses + iVar4,(uchar *)0x0,0);
+              (s_challenges + param_1,(bdAntiCheatChallenges *)0x0);
+    (&DAT_845722e8)[param_1] = 0;
+    s_challengesCurrentIndex[param_1] = 0;
+    s_processingCurrentChallengeStartTime[param_1] = 0;
+    bdAntiCheatResponses::clear(s_responses + param_1);
+    bdReference<bdRemoteTask>::operator=(s_responsesbdRemoteTaskRef + param_1,(bdRemoteTask *)0x0);
+    s_responsesSendingStartTimestamp[param_1] = 0;
+    (&DAT_84572328)[param_1] = 0;
+    (&DAT_84572378)[param_1] = 0;
+    (&DAT_8456f284)[param_1] = 0;
+    bdAntiCheatResponses::setLogMessage(s_responses + param_1,(uchar *)0x0,0);
   }
-  __restgprlr_26();
   return;
 }
 
 
 // 8270EE30  LiveAntiCheat_SetBlobForController  (online/live_anticheat.cpp:3846)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void LiveAntiCheat_SetBlobForController(int param_1)
 
 {
-  int iVar1;
-  bool bVar3;
-  SocialPresence *pSVar2;
+  bool bVar2;
+  SocialPresence *pSVar1;
   uchar local_b0;
   uchar local_af;
   uchar local_ae [2];
@@ -3156,13 +3029,12 @@ void LiveAntiCheat_SetBlobForController(int param_1)
   LiveAntiCheatQuickBuf local_60;
   undefined1 auStack_40 [64];
   
-  iVar1 = __savegprlr_29(param_1);
-  if ((iVar1 < 0) || (3 < iVar1)) {
+  if ((param_1 < 0) || (3 < param_1)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\online\\live_anticheat.cpp",
                     0xf08,0,"%s");
   }
-  if ((-1 < iVar1) && (iVar1 < 4)) {
-    bdAntiCheatResponses::setLogMessage(s_responses + iVar1,(uchar *)0x0,0);
+  if ((-1 < param_1) && (param_1 < 4)) {
+    bdAntiCheatResponses::setLogMessage(s_responses + param_1,(uchar *)0x0,0);
     LiveAntiCheatQuickBuf_Init(&local_60,auStack_40,0x20);
     local_ac = 0;
     local_ab = 0;
@@ -3179,9 +3051,9 @@ void LiveAntiCheat_SetBlobForController(int param_1)
     local_80[1] = 0;
     local_80[2] = 0;
     local_80[3] = 0;
-    bVar3 = LiveAntiCheat_GetConsoleDetails
+    bVar2 = LiveAntiCheat_GetConsoleDetails
                       (local_80 + 4,local_80,local_a8 + 1,local_a8 + 3,local_a8 + 2);
-    if (bVar3) {
+    if (bVar2) {
       local_ac = (undefined1)local_80[0];
       local_ab = (undefined1)local_80[1];
       local_aa = (undefined1)local_80[2];
@@ -3189,31 +3061,32 @@ void LiveAntiCheat_SetBlobForController(int param_1)
     }
     LiveAntiCheatQuickBuf_WriteData(&local_60,&local_ac,4);
     local_a8[0] = 0;
-    bVar3 = dwGetConnectionID(iVar1,local_a8);
-    local_a8[0] = -(ulonglong)bVar3 & local_a8[0];
+    bVar2 = dwGetConnectionID(param_1,local_a8);
+    local_a8[0] = -(ulonglong)bVar2 & local_a8[0];
     LiveAntiCheatQuickBuf_WriteData(&local_60,local_a8,8);
     local_b0 = '\0';
     local_af = '\0';
     local_ae[0] = '\0';
-    pSVar2 = Social_getCurrentPresenceStruct(iVar1);
-    if (pSVar2 != (SocialPresence *)0x0) {
-      local_b0 = pSVar2->context;
-      local_af = pSVar2->gametype;
-      local_ae[0] = pSVar2->mapIndex;
+    pSVar1 = Social_getCurrentPresenceStruct(param_1);
+    if (pSVar1 != (SocialPresence *)0x0) {
+      local_b0 = pSVar1->context;
+      local_af = pSVar1->gametype;
+      local_ae[0] = pSVar1->mapIndex;
     }
     LiveAntiCheatQuickBuf_WriteData(&local_60,&local_b0,1);
     LiveAntiCheatQuickBuf_WriteData(&local_60,&local_af,1);
     LiveAntiCheatQuickBuf_WriteData(&local_60,local_ae,1);
     bdAntiCheatResponses::setLogMessage
-              (s_responses + iVar1,local_60.bufferptr,local_60.numbytestraversed);
+              (s_responses + param_1,local_60.bufferptr,local_60.numbytestraversed);
   }
-  __restgprlr_29();
   return;
 }
 
 
 // 8270F000  LiveAntiCheat_ResetAllChallenges  (online/live_anticheat.cpp:3934)
 
+/* WARNING: Function: __savegprlr_19 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_19 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void LiveAntiCheat_ResetAllChallenges(void)
@@ -3231,7 +3104,6 @@ void LiveAntiCheat_ResetAllChallenges(void)
   char in_RESERVE;
   byte in_cr0;
   
-  __savegprlr_19();
   this = s_responses;
   iVar6 = 0;
   iVar8 = 0;
@@ -3301,77 +3173,72 @@ void LiveAntiCheat_ResetAllChallenges(void)
     iVar8 = iVar8 + 4;
     iVar7 = iVar7 + 8;
   } while ((int)this < -0x7ba8db14);
-  __restgprlr_19();
   return;
 }
 
 
 // 8270F1E0  LiveAntiCheat_AnswerChallengesRetry  (online/live_anticheat.cpp:3949)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void LiveAntiCheat_AnswerChallengesRetry(int param_1)
 
 {
-  uint uVar1;
-  undefined4 *puVar2;
-  uint uVar3;
+  bdRemoteTask *pbVar1;
+  uint uVar2;
+  ulong64 uVar3;
   int iVar4;
-  ulonglong uVar5;
-  ulong64 uVar6;
-  int iVar7;
-  longlong lVar8;
-  uint *puVar9;
+  longlong lVar5;
+  uint *puVar6;
   char in_RESERVE;
   byte in_cr0;
   bdRandom abStack_40 [16];
   
-  uVar5 = __savegprlr_27(param_1);
   bdRandom::bdRandom(abStack_40);
-  iVar4 = (int)((uVar5 & 0x3fffffff) << 2);
-  *(undefined4 *)((int)&DAT_84572328 + iVar4) = 1;
-  uVar1 = *(uint *)((int)&s_responsesbdRemoteTaskRef[0].m_ptr + iVar4);
-  if ((ulonglong)uVar1 != 0) {
-    lVar8 = (ulonglong)uVar1 + 4;
+  (&DAT_84572328)[param_1] = 1;
+  pbVar1 = s_responsesbdRemoteTaskRef[param_1].m_ptr;
+  if (ZEXT48(pbVar1) != 0) {
+    lVar5 = ZEXT48(pbVar1) + 4;
     do {
-      puVar9 = (uint *)lVar8;
+      puVar6 = (uint *)lVar5;
       if (in_RESERVE != '\0') {
-        uVar3 = storeWordConditionalIndexed((ulonglong)*puVar9 - 1,0,lVar8);
-        *puVar9 = uVar3;
+        uVar2 = storeWordConditionalIndexed((ulonglong)*puVar6 - 1,0,lVar5);
+        *puVar6 = uVar2;
         in_cr0 = 2;
       }
     } while (!(bool)(in_cr0 >> 1 & 1));
-    if (*(int *)(uVar1 + 4) == 0) {
-      puVar2 = *(undefined4 **)((int)&s_responsesbdRemoteTaskRef[0].m_ptr + iVar4);
-      if (puVar2 != (undefined4 *)0x0) {
-        (**(code **)*puVar2)(puVar2,1);
+    if (*(int *)&pbVar1->field_0x4 == 0) {
+      pbVar1 = s_responsesbdRemoteTaskRef[param_1].m_ptr;
+      if (pbVar1 != (bdRemoteTask *)0x0) {
+        (**(code **)pbVar1->_padding_)(pbVar1,1);
       }
     }
   }
-  *(undefined4 *)((int)&s_responsesbdRemoteTaskRef[0].m_ptr + iVar4) = 0;
-  uVar6 = bdPlatformTiming::getHiResTimeStamp();
-  bdRandom::setSeed(abStack_40,(uint)uVar6);
-  iVar7 = *(int *)((int)&DAT_84572378 + iVar4) + 1;
-  *(int *)((int)&DAT_84572378 + iVar4) = iVar7;
-  if (2 < iVar7) {
+  s_responsesbdRemoteTaskRef[param_1].m_ptr = (bdRemoteTask *)0x0;
+  uVar3 = bdPlatformTiming::getHiResTimeStamp();
+  bdRandom::setSeed(abStack_40,(uint)uVar3);
+  iVar4 = (&DAT_84572378)[param_1];
+  (&DAT_84572378)[param_1] = iVar4 + 1;
+  if (2 < iVar4 + 1) {
     Com_PrintWarning(0x19,
                      "----------> DW : answerChallenges retry counter for controller #%d is %d!  Giving up now.\n"
                     );
-    LiveAntiCheat_ResetChallengeResponse((int)uVar5);
+    LiveAntiCheat_ResetChallengeResponse(param_1);
     bdRandom::~bdRandom(abStack_40);
-    __restgprlr_27();
     return;
   }
-  if (*(int *)((int)&DAT_8456f284 + iVar4) == 0) {
-    *(undefined4 *)((int)&DAT_8456f284 + iVar4) = 1;
+  if ((&DAT_8456f284)[param_1] == 0) {
+    (&DAT_8456f284)[param_1] = 1;
   }
   else {
-    *(int *)((int)&DAT_8456f284 + iVar4) = *(int *)((int)&DAT_8456f284 + iVar4) << 1;
+    (&DAT_8456f284)[param_1] = (&DAT_8456f284)[param_1] << 1;
   }
   bdRandom::nextUInt(abStack_40);
-  iVar7 = Sys_Milliseconds();
-  *(longlong *)((int)s_responsesSendingStartTimestamp + (int)((uVar5 & 0xffffffff) << 3)) =
-       (longlong)(iVar7 * 1000) + (longlong)(*(int *)((int)&DAT_8456f284 + iVar4) * 1000000);
+  iVar4 = Sys_Milliseconds();
+  s_responsesSendingStartTimestamp[param_1] =
+       (longlong)(iVar4 * 1000) + (longlong)((&DAT_8456f284)[param_1] * 1000000);
   bdRandom::~bdRandom(abStack_40);
-  __restgprlr_27();
   return;
 }
 
@@ -3433,181 +3300,146 @@ LAB_8270f480:
 
 // 82711080  LiveAntiCheat_ProcessChallengeResponse  (online/live_anticheat.cpp:4061)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 int LiveAntiCheat_ProcessChallengeResponse
               (int param_1,ushort param_2,bdArray<bdAntiCheatChallengeParam> *param_3,
               long64 *param_4)
 
 {
-  bool bVar1;
-  ulonglong uVar2;
-  ulonglong uVar3;
-  int iVar4;
-  bdAntiCheatChallengeParam *pbVar5;
-  ulonglong uVar6;
-  ushort uVar7;
-  uint uVar8;
-  undefined8 local_40 [8];
+  uint uVar1;
+  int iVar2;
+  bdAntiCheatChallengeParam *pbVar3;
+  ushort uVar4;
+  long64 local_40 [8];
   
-  uVar6 = (ulonglong)(short)param_2;
-  uVar3 = __savegprlr_27(param_1);
-  uVar2 = uVar6 & 0xffff;
-  ((bdArray<bdAntiCheatChallengeParam> *)param_4)->m_data = (bdAntiCheatChallengeParam *)0x0;
-  ((bdArray<bdAntiCheatChallengeParam> *)param_4)->m_capacity = 0;
-  uVar8 = (uint)uVar2;
-  if (uVar8 < 0x6f) {
-    if (uVar8 == 0x6e) {
-      iVar4 = Sys_Milliseconds();
-      *(longlong *)((int)s_processingCurrentChallengeStartTime + (int)((uVar3 & 0xffffffff) << 3)) =
-           (longlong)(iVar4 * 1000);
+  uVar1 = (uint)param_2;
+  *param_4 = 0;
+  if (param_2 < 0x6f) {
+    if (param_2 == 0x6e) {
+      iVar2 = Sys_Milliseconds();
+      s_processingCurrentChallengeStartTime[param_1] = (longlong)(iVar2 * 1000);
       if (param_3->m_size != 1) {
         Com_PrintError(0x19,
                        "Challenge/Response: GetChallengeResponse FUNCTIONID_DEBUGREFLECT expecting 1 param!!!!\n"
                       );
-        iVar4 = __restgprlr_27(1);
-        return iVar4;
+        return 1;
       }
-      pbVar5 = bdArray<bdAntiCheatChallengeParam>::operator[](param_3,0);
-      if (pbVar5->m_size != 8) {
+      pbVar3 = bdArray<bdAntiCheatChallengeParam>::operator[](param_3,0);
+      if (pbVar3->m_size != 8) {
         Com_PrintError(0x19,
                        "Challenge/Response: GetChallengeResponse FUNCTIONID_DEBUGREFLECT param 0 not sizeof( bdUInt64 )!!!!\n"
                       );
-        iVar4 = __restgprlr_27(1);
-        return iVar4;
+        return 1;
       }
-      pbVar5 = bdArray<bdAntiCheatChallengeParam>::operator[](param_3,0);
-      if (pbVar5->m_data == (uchar *)0x0) {
+      pbVar3 = bdArray<bdAntiCheatChallengeParam>::operator[](param_3,0);
+      if (pbVar3->m_data == (uchar *)0x0) {
         Com_PrintError(0x10,
                        "Challenge/Response: GetChallengeResponse FUNCTIONID_DEBUGREFLECT param #1 has null buffer!\n"
                       );
-        iVar4 = __restgprlr_27(1);
-        return iVar4;
+        return 1;
       }
-      pbVar5 = bdArray<bdAntiCheatChallengeParam>::operator[](param_3,0);
-      Com_Memcpy(local_40,pbVar5->m_data,8);
-      ((bdArray<bdAntiCheatChallengeParam> *)param_4)->m_data =
-           (bdAntiCheatChallengeParam *)local_40[0]._0_4_;
-      ((bdArray<bdAntiCheatChallengeParam> *)param_4)->m_capacity = local_40[0]._4_4_;
+      pbVar3 = bdArray<bdAntiCheatChallengeParam>::operator[](param_3,0);
+      Com_Memcpy(local_40,pbVar3->m_data,8);
+      *param_4 = local_40[0];
       Com_Printf(0x19,"Challenge/Response: Responding to DEBUGREFLECT check, results = %llu.\n");
-      iVar4 = __restgprlr_27(1);
-      return iVar4;
+      return 1;
     }
-    if ((uVar2 - 100 & 0xffffffff) < 5) {
-      bVar1 = (int)(uVar2 - 100) != 0;
-      if (uVar2 == 0x65 && bVar1) {
-        iVar4 = Sys_Milliseconds();
-        *(longlong *)((int)s_processingCurrentChallengeStartTime + (int)((uVar3 & 0xffffffff) << 3))
-             = (longlong)(iVar4 * 1000);
-        ((bdArray<bdAntiCheatChallengeParam> *)param_4)->m_data = (bdAntiCheatChallengeParam *)0x0;
-        ((bdArray<bdAntiCheatChallengeParam> *)param_4)->m_capacity = 1;
+    if (uVar1 - 100 < 5) {
+      if (uVar1 == 0x65) {
+        iVar2 = Sys_Milliseconds();
+        s_processingCurrentChallengeStartTime[param_1] = (longlong)(iVar2 * 1000);
+        *param_4 = 1;
         Com_Printf(0x19,"Challenge/Response: Responding to DEBUG1 check, results = %llu.\n");
-        iVar4 = __restgprlr_27(1);
-        return iVar4;
+        return 1;
       }
-      if (uVar2 == 0x66 && bVar1) {
-        iVar4 = Sys_Milliseconds();
-        *(longlong *)((int)s_processingCurrentChallengeStartTime + (int)((uVar3 & 0xffffffff) << 3))
-             = (longlong)(iVar4 * 1000);
-        ((bdArray<bdAntiCheatChallengeParam> *)param_4)->m_data = (bdAntiCheatChallengeParam *)0x0;
-        ((bdArray<bdAntiCheatChallengeParam> *)param_4)->m_capacity = 2;
+      if (uVar1 == 0x66) {
+        iVar2 = Sys_Milliseconds();
+        s_processingCurrentChallengeStartTime[param_1] = (longlong)(iVar2 * 1000);
+        *param_4 = 2;
         Com_Printf(0x19,"Challenge/Response: Responding to DEBUG2 check, results = %llu.\n");
-        iVar4 = __restgprlr_27(1);
-        return iVar4;
+        return 1;
       }
-      if (uVar2 == 0x67 && bVar1) {
-        iVar4 = Sys_Milliseconds();
-        *(longlong *)((int)s_processingCurrentChallengeStartTime + (int)((uVar3 & 0xffffffff) << 3))
-             = (longlong)(iVar4 * 1000);
-        ((bdArray<bdAntiCheatChallengeParam> *)param_4)->m_data = (bdAntiCheatChallengeParam *)0x0;
-        ((bdArray<bdAntiCheatChallengeParam> *)param_4)->m_capacity = 3;
+      if (uVar1 == 0x67) {
+        iVar2 = Sys_Milliseconds();
+        s_processingCurrentChallengeStartTime[param_1] = (longlong)(iVar2 * 1000);
+        *param_4 = 3;
         Com_Printf(0x19,"Challenge/Response: Responding to DEBUG3 check, results = %llu.\n");
-        iVar4 = __restgprlr_27(1);
-        return iVar4;
+        return 1;
       }
-      if (!bVar1) {
-        iVar4 = Sys_Milliseconds();
-        *(longlong *)((int)s_processingCurrentChallengeStartTime + (int)((uVar3 & 0xffffffff) << 3))
-             = (longlong)(iVar4 * 1000);
-        ((bdArray<bdAntiCheatChallengeParam> *)param_4)->m_data = (bdAntiCheatChallengeParam *)0x0;
-        ((bdArray<bdAntiCheatChallengeParam> *)param_4)->m_capacity = 0;
+      if (uVar1 == 100) {
+        iVar2 = Sys_Milliseconds();
+        s_processingCurrentChallengeStartTime[param_1] = (longlong)(iVar2 * 1000);
+        *param_4 = 0;
         Com_Printf(0x19,"Challenge/Response: Responding to DEBUG0 check, results = %llu.\n");
-        iVar4 = __restgprlr_27(1);
-        return iVar4;
+        return 1;
       }
-      iVar4 = Sys_Milliseconds();
-      *(longlong *)((int)s_processingCurrentChallengeStartTime + (int)((uVar3 & 0xffffffff) << 3)) =
-           (longlong)(iVar4 * 1000);
-      ((bdArray<bdAntiCheatChallengeParam> *)param_4)->m_data = (bdAntiCheatChallengeParam *)0x0;
-      ((bdArray<bdAntiCheatChallengeParam> *)param_4)->m_capacity = 4;
+      iVar2 = Sys_Milliseconds();
+      s_processingCurrentChallengeStartTime[param_1] = (longlong)(iVar2 * 1000);
+      *param_4 = 4;
       Com_Printf(0x19,"Challenge/Response: Responding to DEBUG4 check, results = %llu.\n");
-      iVar4 = __restgprlr_27(1);
-      return iVar4;
+      return 1;
     }
   }
   else {
-    uVar7 = (ushort)param_3;
-    iVar4 = (int)uVar3;
-    if (uVar8 < 0x12d) {
-      if (uVar8 == 300) {
-        iVar4 = LiveAntiCheat_AnswerDvarRequest
-                          (iVar4,uVar7,(bdArray<bdAntiCheatChallengeParam> *)param_4,param_4);
-        iVar4 = __restgprlr_27(iVar4);
-        return iVar4;
+    uVar4 = (ushort)param_3;
+    if (param_2 < 0x12d) {
+      if (param_2 == 300) {
+        iVar2 = LiveAntiCheat_AnswerDvarRequest
+                          (param_1,uVar4,(bdArray<bdAntiCheatChallengeParam> *)param_4,param_4);
+        return iVar2;
       }
-      if ((uVar2 - 200 & 0xffffffff) < 5) {
-        bVar1 = (int)(uVar2 - 200) != 0;
-        uVar7 = (ushort)uVar6;
-        if (uVar2 == 0xc9 && bVar1) {
-          iVar4 = LiveAntiCheat_AnswerMemoryHashRequest(iVar4,uVar7,param_3,param_4,CT_TYPE_MD4);
-          iVar4 = __restgprlr_27(iVar4);
-          return iVar4;
+      if (uVar1 - 200 < 5) {
+        if (uVar1 == 0xc9) {
+          iVar2 = LiveAntiCheat_AnswerMemoryHashRequest(param_1,param_2,param_3,param_4,CT_TYPE_MD4)
+          ;
+          return iVar2;
         }
-        if (uVar2 == 0xca && bVar1) {
-          iVar4 = LiveAntiCheat_AnswerMemoryHashRequest
-                            (iVar4,uVar7,param_3,param_4,CT_TYPE_SHA_TOMCRYPT);
-          iVar4 = __restgprlr_27(iVar4);
-          return iVar4;
+        if (uVar1 == 0xca) {
+          iVar2 = LiveAntiCheat_AnswerMemoryHashRequest
+                            (param_1,param_2,param_3,param_4,CT_TYPE_SHA_TOMCRYPT);
+          return iVar2;
         }
-        if (uVar2 == 0xcb && bVar1) {
-          iVar4 = LiveAntiCheat_AnswerMemoryHashRequest(iVar4,uVar7,param_3,param_4,CT_TYPE_8WAY);
-          iVar4 = __restgprlr_27(iVar4);
-          return iVar4;
+        if (uVar1 == 0xcb) {
+          iVar2 = LiveAntiCheat_AnswerMemoryHashRequest
+                            (param_1,param_2,param_3,param_4,CT_TYPE_8WAY);
+          return iVar2;
         }
-        if (!bVar1) {
-          iVar4 = LiveAntiCheat_AnswerMemoryHashRequest(iVar4,uVar7,param_3,param_4,CT_TYPE_CRC32);
-          iVar4 = __restgprlr_27(iVar4);
-          return iVar4;
+        if (uVar1 == 200) {
+          iVar2 = LiveAntiCheat_AnswerMemoryHashRequest
+                            (param_1,param_2,param_3,param_4,CT_TYPE_CRC32);
+          return iVar2;
         }
-        iVar4 = LiveAntiCheat_AnswerMemoryHashRequest
-                          (iVar4,uVar7,param_3,param_4,CT_TYPE_CRC32_SPLIT);
-        iVar4 = __restgprlr_27(iVar4);
-        return iVar4;
+        iVar2 = LiveAntiCheat_AnswerMemoryHashRequest
+                          (param_1,param_2,param_3,param_4,CT_TYPE_CRC32_SPLIT);
+        return iVar2;
       }
     }
     else {
-      if (uVar8 == 0x12d) {
-        iVar4 = LiveAntiCheat_AnswerDvarFloatRequest
-                          (iVar4,uVar7,(bdArray<bdAntiCheatChallengeParam> *)param_4,param_4);
-        iVar4 = __restgprlr_27(iVar4);
-        return iVar4;
+      if (param_2 == 0x12d) {
+        iVar2 = LiveAntiCheat_AnswerDvarFloatRequest
+                          (param_1,uVar4,(bdArray<bdAntiCheatChallengeParam> *)param_4,param_4);
+        return iVar2;
       }
-      if (uVar8 == 400) {
-        iVar4 = LiveAntiCheat_AnswerEncodedExpressionRequest
-                          (iVar4,uVar7,(bdArray<bdAntiCheatChallengeParam> *)param_4,param_4);
-        iVar4 = __restgprlr_27(iVar4);
-        return iVar4;
+      if (param_2 == 400) {
+        iVar2 = LiveAntiCheat_AnswerEncodedExpressionRequest
+                          (param_1,uVar4,(bdArray<bdAntiCheatChallengeParam> *)param_4,param_4);
+        return iVar2;
       }
     }
   }
-  iVar4 = Sys_Milliseconds();
-  *(longlong *)((int)s_processingCurrentChallengeStartTime + (int)((uVar3 & 0xffffffff) << 3)) =
-       (longlong)(iVar4 * 1000);
+  iVar2 = Sys_Milliseconds();
+  s_processingCurrentChallengeStartTime[param_1] = (longlong)(iVar2 * 1000);
   Com_PrintError(0x19,"Challenge/Response: GetChallengeResponse Function ID: %d does not exist.\n");
-  iVar4 = __restgprlr_27(1);
-  return iVar4;
+  return 1;
 }
 
 
 // 827108A8  LiveAntiCheat_AnswerMemoryHashRequest  (online/live_anticheat.cpp:4248)
+
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
 
 int LiveAntiCheat_AnswerMemoryHashRequest
               (int param_1,ushort param_2,bdArray<bdAntiCheatChallengeParam> *param_3,
@@ -3616,13 +3448,11 @@ int LiveAntiCheat_AnswerMemoryHashRequest
 {
   bool bVar1;
   uchar *puVar2;
-  ulonglong uVar3;
-  int iVar4;
-  bdAntiCheatChallengeParam *pbVar5;
-  MemoryHashInfo *pMVar6;
-  int iVar7;
-  char *pcVar8;
-  longlong lVar9;
+  bdAntiCheatChallengeParam *pbVar3;
+  MemoryHashInfo *pMVar4;
+  int iVar5;
+  char *pcVar6;
+  longlong lVar7;
   int local_a0;
   uint local_9c;
   uint local_98 [2];
@@ -3630,114 +3460,106 @@ int LiveAntiCheat_AnswerMemoryHashRequest
   ulong64 local_88;
   LiveAntiCheatMemoryInfo local_80 [4];
   
-  lVar9 = (longlong)(int)param_5;
-  uVar3 = __savegprlr_22(param_1,param_2);
+  lVar7 = (longlong)(int)param_5;
   if (param_3->m_size != 1) {
     Com_PrintError(0x10,
                    "Challenge/Response: AnswerChecksumRequest expecting 1 param but got %d instead!!!\n"
                   );
-    iVar4 = __restgprlr_22(1);
-    return iVar4;
+    return 1;
   }
-  pbVar5 = bdArray<bdAntiCheatChallengeParam>::operator[](param_3,0);
-  puVar2 = pbVar5->m_data;
+  pbVar3 = bdArray<bdAntiCheatChallengeParam>::operator[](param_3,0);
+  puVar2 = pbVar3->m_data;
   if (puVar2 == (uchar *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\online\\live_anticheat.cpp",
                     0x10ab,0,"%s");
     Com_PrintError(0x10,"Challenge/Response: AnswerChecksumRequest param #1 has null buffer!\n");
-    iVar4 = __restgprlr_22(1);
-    return iVar4;
+    return 1;
   }
-  pbVar5 = bdArray<bdAntiCheatChallengeParam>::operator[](param_3,0);
+  pbVar3 = bdArray<bdAntiCheatChallengeParam>::operator[](param_3,0);
   local_a0 = 0;
   local_90 = 0;
   local_98[0] = 0;
   local_9c = 0;
-  iVar4 = (int)((uVar3 & 0x3fffffff) << 2);
-  pMVar6 = *(MemoryHashInfo **)((int)&DAT_845722e8 + iVar4);
-  if (pMVar6 == (MemoryHashInfo *)0x0) {
-    if (pbVar5->m_size != 0x10) {
+  pMVar4 = (MemoryHashInfo *)(&DAT_845722e8)[param_1];
+  if (pMVar4 == (MemoryHashInfo *)0x0) {
+    if (pbVar3->m_size != 0x10) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\online\\live_anticheat.cpp",
                       0x10bc,0,"%s");
       Com_PrintError(0x10,
                      "Challenge/Response: AnswerChecksumRequest challenge param buffer size is not the correct address + memcheck size.\n"
                     );
-      iVar4 = __restgprlr_22(1);
-      return iVar4;
+      return 1;
     }
     LiveAntiCheat_ExtractDataFromBuffer<unsigned___int64>(&local_a0,puVar2,&local_90,8);
     LiveAntiCheat_ExtractDataFromBuffer<unsigned_int>(&local_a0,puVar2,local_98,4);
     LiveAntiCheat_ExtractDataFromBuffer<unsigned_int>(&local_a0,puVar2,&local_9c,4);
     LiveAntiCheatMemoryInfo_Init(local_80,local_90,local_98[0],local_9c);
-    pMVar6 = MemoryHashInfo::RequestHash();
-    if (pMVar6 == (MemoryHashInfo *)0x0) {
+    pMVar4 = MemoryHashInfo::RequestHash();
+    if (pMVar4 == (MemoryHashInfo *)0x0) {
       Com_PrintError(0x10,
                      "Challenge/Response: AnswerChecksumRequest challenge could not be initiated.\n"
                     );
-      iVar4 = __restgprlr_22(1);
-      return iVar4;
+      return 1;
     }
-    if (4 < (lVar9 - 1U & 0xffffffff)) {
+    if (4 < (lVar7 - 1U & 0xffffffff)) {
       if (alwaysfails == 0) {
-        pcVar8 = va("Challenge/Response: Unknown memory hash type %d (0x%x)!!!");
+        pcVar6 = va("Challenge/Response: Unknown memory hash type %d (0x%x)!!!");
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\online\\live_anticheat.cpp"
-                        ,0x10ec,0,pcVar8);
+                        ,0x10ec,0,pcVar6);
       }
       Com_PrintError(0x10,"Challenge/Response: Unknown memory hash type %d (0x%x)!!!\n");
-      MemoryHashInfo::Cancel(pMVar6);
-      iVar4 = __restgprlr_22(0);
-      return iVar4;
+      MemoryHashInfo::Cancel(pMVar4);
+      return 0;
     }
-    bVar1 = (int)(lVar9 - 1U) != 0;
-    if (lVar9 == 2 && bVar1) {
-      iVar7 = MemoryHashInfo::OpenAsMD4
-                        (pMVar6,local_80[0].scan_start,local_80[0].scan_size,local_80[0].scan_key);
+    bVar1 = (int)(lVar7 - 1U) != 0;
+    if (lVar7 == 2 && bVar1) {
+      iVar5 = MemoryHashInfo::OpenAsMD4
+                        (pMVar4,local_80[0].scan_start,local_80[0].scan_size,local_80[0].scan_key);
     }
-    else if (lVar9 == 3 && bVar1) {
-      iVar7 = MemoryHashInfo::OpenAsSHATomCrypt
-                        (pMVar6,local_80[0].scan_start,local_80[0].scan_size,local_80[0].scan_key);
+    else if (lVar7 == 3 && bVar1) {
+      iVar5 = MemoryHashInfo::OpenAsSHATomCrypt
+                        (pMVar4,local_80[0].scan_start,local_80[0].scan_size,local_80[0].scan_key);
     }
-    else if (lVar9 == 4 && bVar1) {
-      iVar7 = MemoryHashInfo::OpenAs8WayProbe
-                        (pMVar6,local_80[0].scan_start,local_80[0].scan_size,local_80[0].scan_key);
+    else if (lVar7 == 4 && bVar1) {
+      iVar5 = MemoryHashInfo::OpenAs8WayProbe
+                        (pMVar4,local_80[0].scan_start,local_80[0].scan_size,local_80[0].scan_key);
     }
     else if (bVar1) {
-      iVar7 = MemoryHashInfo::OpenAsCRC32Split
-                        (pMVar6,local_80[0].scan_start,local_80[0].scan_size,local_80[0].scan_key);
+      iVar5 = MemoryHashInfo::OpenAsCRC32Split
+                        (pMVar4,local_80[0].scan_start,local_80[0].scan_size,local_80[0].scan_key);
     }
     else {
-      iVar7 = MemoryHashInfo::OpenAsCRC32
-                        (pMVar6,local_80[0].scan_start,local_80[0].scan_size,local_80[0].scan_key);
+      iVar5 = MemoryHashInfo::OpenAsCRC32
+                        (pMVar4,local_80[0].scan_start,local_80[0].scan_size,local_80[0].scan_key);
     }
-    if (iVar7 == 0) {
-      MemoryHashInfo::Cancel(pMVar6);
-      iVar4 = __restgprlr_22(0);
-      return iVar4;
+    if (iVar5 == 0) {
+      MemoryHashInfo::Cancel(pMVar4);
+      return 0;
     }
-    *(MemoryHashInfo **)((int)&DAT_845722e8 + iVar4) = pMVar6;
-    iVar4 = Sys_Milliseconds();
-    *(longlong *)((int)s_processingCurrentChallengeStartTime + (int)((uVar3 & 0xffffffff) << 3)) =
-         (longlong)(iVar4 * 1000);
+    (&DAT_845722e8)[param_1] = pMVar4;
+    iVar5 = Sys_Milliseconds();
+    s_processingCurrentChallengeStartTime[param_1] = (longlong)(iVar5 * 1000);
   }
   else {
-    iVar7 = MemoryHashInfo::Continue(pMVar6);
-    if (iVar7 != 0) {
+    iVar5 = MemoryHashInfo::Continue(pMVar4);
+    if (iVar5 != 0) {
       local_88 = 0xffffffffff;
-      MemoryHashInfo::Complete(pMVar6,&local_88);
-      *(undefined4 *)((int)&DAT_845722e8 + iVar4) = 0;
+      MemoryHashInfo::Complete(pMVar4,&local_88);
+      (&DAT_845722e8)[param_1] = 0;
       *param_4 = local_88;
       Com_Printf(0x19,"Challenge/Response: Responding to memory hash check (%h), results = %llu.\n")
       ;
-      iVar4 = __restgprlr_22(1);
-      return iVar4;
+      return 1;
     }
   }
-  iVar4 = __restgprlr_22(0);
-  return iVar4;
+  return 0;
 }
 
 
 // 82710BE0  LiveAntiCheat_AnswerDvarRequest  (online/live_anticheat.cpp:4391)
+
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 
 int LiveAntiCheat_AnswerDvarRequest
               (int param_1,ushort param_2,bdArray<bdAntiCheatChallengeParam> *param_3,
@@ -3745,56 +3567,51 @@ int LiveAntiCheat_AnswerDvarRequest
 
 {
   uchar *puVar1;
-  bdArray<bdAntiCheatChallengeParam> *this;
   int iVar3;
-  int iVar4;
-  bdAntiCheatChallengeParam *pbVar5;
+  bdAntiCheatChallengeParam *pbVar4;
   long64 lVar2;
-  longlong lVar6;
-  longlong lVar7;
-  uint uVar8;
+  uint uVar5;
   char acStack_70 [112];
   
-  lVar7 = (longlong)(int)param_3;
-  lVar6 = (longlong)(short)param_2;
-  iVar3 = __savegprlr_29(param_1,lVar6,lVar7,param_4);
-  iVar4 = Sys_Milliseconds();
-  s_processingCurrentChallengeStartTime[iVar3] = (longlong)(iVar4 * 1000);
-  this = (bdArray<bdAntiCheatChallengeParam> *)lVar6;
-  if (this->m_size != 1) {
+  iVar3 = Sys_Milliseconds();
+  s_processingCurrentChallengeStartTime[param_1] = (longlong)(iVar3 * 1000);
+  if (*(int *)((short)param_2 + 8) != 1) {
     Com_PrintError(0x10,
                    "Challenge/Response: AnswerDvarRequest expecting 1 param but got %d instead!!!\n"
                   );
-    iVar3 = __restgprlr_29(1);
-    return iVar3;
+    return 1;
   }
-  pbVar5 = bdArray<bdAntiCheatChallengeParam>::operator[](this,0);
-  puVar1 = pbVar5->m_data;
+  pbVar4 = bdArray<bdAntiCheatChallengeParam>::operator[]
+                     ((bdArray<bdAntiCheatChallengeParam> *)(int)(short)param_2,0);
+  puVar1 = pbVar4->m_data;
   if (puVar1 == (uchar *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\online\\live_anticheat.cpp",
                     0x1139,0,"%s");
     Com_PrintError(0x10,"Challenge/Response: AnswerDvarRequest param #1 has null buffer!\n");
-    iVar3 = __restgprlr_29(1);
-    return iVar3;
+    return 1;
   }
-  pbVar5 = bdArray<bdAntiCheatChallengeParam>::operator[](this,0);
-  uVar8 = pbVar5->m_size;
-  if (0x40 < (int)uVar8) {
+  pbVar4 = bdArray<bdAntiCheatChallengeParam>::operator[]
+                     ((bdArray<bdAntiCheatChallengeParam> *)(int)(short)param_2,0);
+  uVar5 = pbVar4->m_size;
+  if (0x40 < (int)uVar5) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\online\\live_anticheat.cpp",
                     0x1142,0,"%s");
-    uVar8 = 0x40;
+    uVar5 = 0x40;
   }
-  Com_Memcpy(acStack_70,puVar1,uVar8);
-  acStack_70[uVar8] = '\0';
+  Com_Memcpy(acStack_70,puVar1,uVar5);
+  acStack_70[uVar5] = '\0';
   lVar2 = Dvar_GetInt64(acStack_70);
-  *(long64 *)lVar7 = lVar2;
+  param_3->m_data = (bdAntiCheatChallengeParam *)(int)((ulonglong)lVar2 >> 0x20);
+  param_3->m_capacity = (int)lVar2;
   Com_Printf(0x19,"Challenge/Response: Responding to dvar check, \"%s\" = %llu.\n");
-  iVar3 = __restgprlr_29(1);
-  return iVar3;
+  return 1;
 }
 
 
 // 82710D20  LiveAntiCheat_AnswerDvarFloatRequest  (online/live_anticheat.cpp:4445)
+
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 
 int LiveAntiCheat_AnswerDvarFloatRequest
               (int param_1,ushort param_2,bdArray<bdAntiCheatChallengeParam> *param_3,
@@ -3802,69 +3619,63 @@ int LiveAntiCheat_AnswerDvarFloatRequest
 
 {
   uchar *puVar1;
-  bdArray<bdAntiCheatChallengeParam> *this;
   int iVar2;
-  int iVar3;
-  bdAntiCheatChallengeParam *pbVar4;
-  char *pcVar5;
-  longlong lVar6;
-  longlong lVar7;
-  uint uVar8;
-  float fVar9;
+  bdAntiCheatChallengeParam *pbVar3;
+  char *pcVar4;
+  uint uVar5;
+  float fVar6;
   int local_80 [2];
   longlong local_78;
   char acStack_70 [112];
   
-  lVar7 = (longlong)(int)param_3;
-  lVar6 = (longlong)(short)param_2;
-  iVar2 = __savegprlr_27(param_1,lVar6,lVar7,param_4);
-  iVar3 = Sys_Milliseconds();
-  s_processingCurrentChallengeStartTime[iVar2] = (longlong)(iVar3 * 1000);
-  this = (bdArray<bdAntiCheatChallengeParam> *)lVar6;
-  if (this->m_size != 1) {
+  iVar2 = Sys_Milliseconds();
+  s_processingCurrentChallengeStartTime[param_1] = (longlong)(iVar2 * 1000);
+  if (*(int *)((short)param_2 + 8) != 1) {
     Com_PrintError(0x10,
                    "Challenge/Response: AnswerDvarFloatRequest expecting 1 param but got %d instead!!!\n"
                   );
-    iVar2 = __restgprlr_27(1);
-    return iVar2;
+    return 1;
   }
-  pbVar4 = bdArray<bdAntiCheatChallengeParam>::operator[](this,0);
-  puVar1 = pbVar4->m_data;
+  pbVar3 = bdArray<bdAntiCheatChallengeParam>::operator[]
+                     ((bdArray<bdAntiCheatChallengeParam> *)(int)(short)param_2,0);
+  puVar1 = pbVar3->m_data;
   if (puVar1 == (uchar *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\online\\live_anticheat.cpp",
                     0x1174,0,"%s");
     Com_PrintError(0x10,"Challenge/Response: AnswerDvarFloatRequest param #1 has null buffer!\n");
-    iVar2 = __restgprlr_27(1);
-    return iVar2;
+    return 1;
   }
-  pbVar4 = bdArray<bdAntiCheatChallengeParam>::operator[](this,0);
-  uVar8 = pbVar4->m_size;
+  pbVar3 = bdArray<bdAntiCheatChallengeParam>::operator[]
+                     ((bdArray<bdAntiCheatChallengeParam> *)(int)(short)param_2,0);
+  uVar5 = pbVar3->m_size;
   local_80[0] = 0;
-  pcVar5 = strstr((char *)puVar1,"~");
-  if (pcVar5 != (char *)0x0) {
-    uVar8 = (int)pcVar5 - (int)puVar1;
+  pcVar4 = strstr((char *)puVar1,"~");
+  if (pcVar4 != (char *)0x0) {
+    uVar5 = (int)pcVar4 - (int)puVar1;
   }
-  Com_Memcpy(acStack_70,puVar1,uVar8);
-  acStack_70[uVar8] = '\0';
-  if (pcVar5 != (char *)0x0) {
-    local_78 = CONCAT44(uVar8 + 1,local_78._4_4_);
+  Com_Memcpy(acStack_70,puVar1,uVar5);
+  acStack_70[uVar5] = '\0';
+  if (pcVar4 != (char *)0x0) {
+    local_78 = CONCAT44(uVar5 + 1,local_78._4_4_);
     LiveAntiCheat_ExtractDataFromBuffer<int>((int *)&local_78,puVar1,local_80,4);
   }
-  fVar9 = Dvar_GetFloat(acStack_70);
+  fVar6 = Dvar_GetFloat(acStack_70);
   iVar2 = local_80[0];
   if (local_80[0] == 0) {
     iVar2 = 1;
   }
-  local_78 = (longlong)((float)(longlong)iVar2 * fVar9);
-  *(longlong *)lVar7 = local_78;
+  local_78 = (longlong)((float)(longlong)iVar2 * fVar6);
+  param_3->m_data = (bdAntiCheatChallengeParam *)(int)((ulonglong)local_78 >> 0x20);
+  param_3->m_capacity = (int)local_78;
   Com_Printf(0x19,"Challenge/Response: Responding to dvar float check, \"%s\" = %llu.\n");
-  iVar2 = __restgprlr_27(1);
-  return iVar2;
+  return 1;
 }
 
 
 // 82710EA8  LiveAntiCheat_AnswerEncodedExpressionRequest  (online/live_anticheat.cpp:4523)
 
+/* WARNING: Function: __savegprlr_19 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_19 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
@@ -3874,85 +3685,78 @@ int LiveAntiCheat_AnswerEncodedExpressionRequest
               long64 *param_4)
 
 {
-  uint uVar1;
-  void *pvVar2;
-  uint uVar3;
-  bdArray<bdAntiCheatChallengeParam> *this;
-  int iVar5;
-  int iVar6;
-  bdAntiCheatChallengeParam *pbVar7;
-  Statement_s *pSVar8;
-  LocalClientNum_t LVar9;
-  ulong64 uVar4;
-  longlong lVar10;
-  longlong lVar11;
-  ulong64 *puVar12;
-  longlong lVar13;
-  uint uVar14;
+  void *pvVar1;
+  uint uVar2;
+  int iVar4;
+  bdAntiCheatChallengeParam *pbVar5;
+  Statement_s *pSVar6;
+  LocalClientNum_t LVar7;
+  ulong64 uVar3;
+  int iVar8;
+  longlong lVar9;
+  uint uVar10;
   ulong64 local_fa0 [2];
   undefined1 auStack_f90 [32];
   uchar auStack_f70 [3952];
   
-  lVar11 = (longlong)(int)param_3;
-  lVar10 = (longlong)(short)param_2;
-  iVar5 = __savegprlr_19(param_1,lVar10,lVar11,param_4);
-  iVar6 = Sys_Milliseconds();
-  lVar13 = 0;
-  uVar14 = 0;
-  s_processingCurrentChallengeStartTime[iVar5] = (longlong)(iVar6 * 1000);
-  this = (bdArray<bdAntiCheatChallengeParam> *)lVar10;
-  uVar1 = this->m_size;
-  puVar12 = (ulong64 *)lVar11;
-  if (0 < (int)uVar1) {
-    iVar6 = 0;
+  iVar4 = Sys_Milliseconds();
+  lVar9 = 0;
+  uVar10 = 0;
+  s_processingCurrentChallengeStartTime[param_1] = (longlong)(iVar4 * 1000);
+  iVar4 = *(int *)((short)param_2 + 8);
+  if (0 < iVar4) {
+    iVar8 = 0;
     do {
-      if (this->m_size <= uVar14) {
+      if (*(uint *)((short)param_2 + 8) <= uVar10) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\Demonware\\bdCore/bdContainers/bdArray.inl"
                         ,0x70,0,"%s\n\t%s");
       }
-      pvVar2 = *(void **)((int)&this->m_data->m_data + iVar6);
-      if (this->m_size <= uVar14) {
+      pvVar1 = *(void **)(iVar8 + *(int *)(int)(short)param_2 + 4);
+      if (*(uint *)((short)param_2 + 8) <= uVar10) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\Demonware\\bdCore/bdContainers/bdArray.inl"
                         ,0x70,0,"%s\n\t%s");
       }
-      uVar3 = *(uint *)((int)&this->m_data->m_size + iVar6);
-      if (0 < (int)uVar3) {
-        if (pvVar2 == (void *)0x0) {
-          *puVar12 = 0xffffffffffff0001;
-          iVar5 = __restgprlr_19(1);
-          return iVar5;
+      uVar2 = *(uint *)(iVar8 + *(int *)(int)(short)param_2 + 8);
+      if (0 < (int)uVar2) {
+        if (pvVar1 == (void *)0x0) {
+          param_3->m_data = (bdAntiCheatChallengeParam *)0xffffffff;
+          param_3->m_capacity = 0xffff0001;
+          return 1;
         }
-        if ((longlong)(((ulonglong)uVar3 - lVar13) + 0xf00) < 0) {
-          *puVar12 = 0xffffffffffff0002;
-          iVar5 = __restgprlr_19(1);
-          return iVar5;
+        if ((longlong)(((ulonglong)uVar2 - lVar9) + 0xf00) < 0) {
+          param_3->m_data = (bdAntiCheatChallengeParam *)0xffffffff;
+          param_3->m_capacity = 0xffff0002;
+          return 1;
         }
-        Com_Memcpy(auStack_f70 + (int)lVar13,pvVar2,uVar3);
-        pbVar7 = bdArray<bdAntiCheatChallengeParam>::operator[](this,uVar14);
-        lVar13 = (ulonglong)pbVar7->m_size + lVar13;
+        Com_Memcpy(auStack_f70 + (int)lVar9,pvVar1,uVar2);
+        pbVar5 = bdArray<bdAntiCheatChallengeParam>::operator[]
+                           ((bdArray<bdAntiCheatChallengeParam> *)(int)(short)param_2,uVar10);
+        lVar9 = (ulonglong)pbVar5->m_size + lVar9;
       }
-      uVar14 = uVar14 + 1;
-      iVar6 = iVar6 + 0xc;
-    } while ((int)uVar14 < (int)uVar1);
+      uVar10 = uVar10 + 1;
+      iVar8 = iVar8 + 0xc;
+    } while ((int)uVar10 < iVar4);
   }
   Com_Memcpy(auStack_f90,&s_liveanticheatexpressionstore,0x18);
-  pSVar8 = LiveAntiCheat_EncodedExpressionToStatement
-                     (&s_liveanticheatexpressionstore,auStack_f70,(int)lVar13,local_fa0);
-  uVar4 = local_fa0[0];
-  if (pSVar8 != (Statement_s *)0x0) {
-    LVar9 = CL_LocalClientNumFromControllerIndex(iVar5);
-    uVar4 = GetExpressionUInt64(LVar9,pSVar8);
+  pSVar6 = LiveAntiCheat_EncodedExpressionToStatement
+                     (&s_liveanticheatexpressionstore,auStack_f70,(int)lVar9,local_fa0);
+  uVar3 = local_fa0[0];
+  if (pSVar6 != (Statement_s *)0x0) {
+    LVar7 = CL_LocalClientNumFromControllerIndex(param_1);
+    uVar3 = GetExpressionUInt64(LVar7,pSVar6);
   }
   Com_Memcpy(&s_liveanticheatexpressionstore,auStack_f90,0x18);
-  *puVar12 = uVar4;
+  param_3->m_data = (bdAntiCheatChallengeParam *)(int)(uVar3 >> 0x20);
+  param_3->m_capacity = (int)uVar3;
   Com_Printf(0x19,"Challenge/Response: Responding to encoded expression check, results = %llu.\n");
-  iVar5 = __restgprlr_19(1);
-  return iVar5;
+  return 1;
 }
 
 
 // 8270F4A0  LiveAntiCheat_Init  (online/live_anticheat.cpp:4604)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
@@ -3965,7 +3769,6 @@ void LiveAntiCheat_Init(void)
   int iVar2;
   int *piVar3;
   
-  __savegprlr_24();
   DAT_845722e8 = 0;
   DAT_845722ec = 0;
   DAT_845722f0 = 0;
@@ -4028,7 +3831,6 @@ void LiveAntiCheat_Init(void)
        Dvar_RegisterInt("reportUserVoteInterval",2,1,0x7fffffff,0,
                         "The interval in minutes you wait before getting another vote on this console as long as the console is turned on."
                        );
-  __restgprlr_24();
   return;
 }
 
@@ -4083,76 +3885,75 @@ int LiveAntiCheat_IsBusy(void)
 
 // 8270F810  LiveAntiCheat_StillNeedsToProcessChallenge  (online/live_anticheat.cpp:4788)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 bool LiveAntiCheat_StillNeedsToProcessChallenge(int param_1,ulong64 param_2)
 
 {
-  int iVar1;
-  uint uVar2;
-  bdAntiCheatChallenge *pbVar3;
-  undefined1 uVar4;
-  uint uVar5;
+  uint uVar1;
+  bdAntiCheatChallenge *pbVar2;
+  uint uVar3;
   
-  iVar1 = __savegprlr_27(param_1);
-  if ((s_challengesToProcess[iVar1] != 0) &&
-     (s_challenges[iVar1].m_ptr != (bdAntiCheatChallenges *)0x0)) {
-    uVar2 = bdAntiCheatChallenges::getNumChallenges(s_challenges[iVar1].m_ptr);
-    for (uVar5 = s_challengesCurrentIndex[iVar1]; uVar5 < uVar2; uVar5 = uVar5 + 1) {
-      pbVar3 = bdAntiCheatChallenges::getChallengeByIndex(s_challenges[iVar1].m_ptr,uVar5);
-      if (pbVar3->m_challengeID == param_2) {
-        uVar4 = __restgprlr_27(1);
-        return (bool)uVar4;
+  if ((s_challengesToProcess[param_1] != 0) &&
+     (s_challenges[param_1].m_ptr != (bdAntiCheatChallenges *)0x0)) {
+    uVar1 = bdAntiCheatChallenges::getNumChallenges(s_challenges[param_1].m_ptr);
+    for (uVar3 = s_challengesCurrentIndex[param_1]; uVar3 < uVar1; uVar3 = uVar3 + 1) {
+      pbVar2 = bdAntiCheatChallenges::getChallengeByIndex(s_challenges[param_1].m_ptr,uVar3);
+      if (pbVar2->m_challengeID == param_2) {
+        return true;
       }
     }
   }
-  uVar4 = __restgprlr_27(0);
-  return (bool)uVar4;
+  return false;
 }
 
 
 // 8270F8A0  LiveAntiCheat_ShareResultsWithOtherControllers  (online/live_anticheat.cpp:4820)
+
+/* WARNING: Function: __savegprlr_19 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_19 replaced with injection: xenon_save_restore */
 
 void LiveAntiCheat_ShareResultsWithOtherControllers
                (int param_1,bdAntiCheatChallenge *param_2,long64 param_3)
 
 {
   bdAntiCheatChallenges *this;
-  int iVar1;
-  uint uVar2;
-  bdAntiCheatChallenge *pbVar3;
-  bool bVar4;
-  int iVar5;
+  uint uVar1;
+  bdAntiCheatChallenge *pbVar2;
+  bool bVar3;
+  int iVar4;
   bdAntiCheatResponses *this_00;
-  ulong64 uVar6;
-  int iVar7;
-  uint uVar8;
+  ulong64 uVar5;
+  int iVar6;
+  uint uVar7;
   long64 alStack_80 [16];
   
-  iVar1 = __savegprlr_19(param_1);
   this_00 = s_responses;
-  iVar5 = 0;
-  iVar7 = 0;
+  iVar4 = 0;
+  iVar6 = 0;
   do {
-    if (iVar5 != iVar1) {
-      uVar6 = param_2->m_challengeID;
-      if ((*(int *)((int)s_challengesToProcess + iVar7) != 0) &&
-         (this = *(bdAntiCheatChallenges **)((int)&s_challenges[0].m_ptr + iVar7),
+    if (iVar4 != param_1) {
+      uVar5 = param_2->m_challengeID;
+      if ((*(int *)((int)s_challengesToProcess + iVar6) != 0) &&
+         (this = *(bdAntiCheatChallenges **)((int)&s_challenges[0].m_ptr + iVar6),
          this != (bdAntiCheatChallenges *)0x0)) {
-        uVar2 = bdAntiCheatChallenges::getNumChallenges(this);
-        for (uVar8 = *(uint *)((int)s_challengesCurrentIndex + iVar7); uVar8 < uVar2;
-            uVar8 = uVar8 + 1) {
-          pbVar3 = bdAntiCheatChallenges::getChallengeByIndex
-                             (*(bdAntiCheatChallenges **)((int)&s_challenges[0].m_ptr + iVar7),uVar8
+        uVar1 = bdAntiCheatChallenges::getNumChallenges(this);
+        for (uVar7 = *(uint *)((int)s_challengesCurrentIndex + iVar6); uVar7 < uVar1;
+            uVar7 = uVar7 + 1) {
+          pbVar2 = bdAntiCheatChallenges::getChallengeByIndex
+                             (*(bdAntiCheatChallenges **)((int)&s_challenges[0].m_ptr + iVar6),uVar7
                              );
-          if (pbVar3->m_challengeID == uVar6) {
-            bVar4 = true;
+          if (pbVar2->m_challengeID == uVar5) {
+            bVar3 = true;
             goto LAB_8270f948;
           }
         }
       }
-      bVar4 = false;
+      bVar3 = false;
 LAB_8270f948:
-      if ((bVar4) &&
-         (bVar4 = bdAntiCheatResponses::findResponse(this_00,param_2,alStack_80), !bVar4)) {
+      if ((bVar3) &&
+         (bVar3 = bdAntiCheatResponses::findResponse(this_00,param_2,alStack_80), !bVar3)) {
         Com_Printf(0x19,
                    "Controller [%d] sharing challenge result ChallengeID#%llu with another controller [%d]\n"
                   );
@@ -4160,10 +3961,9 @@ LAB_8270f948:
       }
     }
     this_00 = this_00 + 1;
-    iVar5 = iVar5 + 1;
-    iVar7 = iVar7 + 4;
+    iVar4 = iVar4 + 1;
+    iVar6 = iVar6 + 4;
     if (-0x7ba8db15 < (int)this_00) {
-      __restgprlr_19();
       return;
     }
   } while( true );
@@ -4172,35 +3972,35 @@ LAB_8270f948:
 
 // 8270F9C0  LiveAntiCheat_ShouldThisControllerPerformWorkProcessingThisChallenge  (online/live_anticheat.cpp:4849)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
+
 bool LiveAntiCheat_ShouldThisControllerPerformWorkProcessingThisChallenge
                (int param_1,ulong64 param_2)
 
 {
   bdAntiCheatChallenges *this;
   bool bVar1;
-  int iVar2;
-  uint uVar3;
-  bdAntiCheatChallenge *pbVar4;
-  undefined1 uVar5;
-  int iVar6;
-  int iVar7;
-  uint uVar8;
+  uint uVar2;
+  bdAntiCheatChallenge *pbVar3;
+  int iVar4;
+  int iVar5;
+  uint uVar6;
   
-  iVar2 = __savegprlr_24(param_1);
-  iVar6 = 0;
-  iVar7 = 0;
+  iVar4 = 0;
+  iVar5 = 0;
   do {
-    if (iVar6 != iVar2) {
-      if ((*(int *)((int)s_challengesToProcess + iVar7) != 0) &&
-         (this = *(bdAntiCheatChallenges **)((int)&s_challenges[0].m_ptr + iVar7),
+    if (iVar4 != param_1) {
+      if ((*(int *)((int)s_challengesToProcess + iVar5) != 0) &&
+         (this = *(bdAntiCheatChallenges **)((int)&s_challenges[0].m_ptr + iVar5),
          this != (bdAntiCheatChallenges *)0x0)) {
-        uVar3 = bdAntiCheatChallenges::getNumChallenges(this);
-        for (uVar8 = *(uint *)((int)s_challengesCurrentIndex + iVar7); uVar8 < uVar3;
-            uVar8 = uVar8 + 1) {
-          pbVar4 = bdAntiCheatChallenges::getChallengeByIndex
-                             (*(bdAntiCheatChallenges **)((int)&s_challenges[0].m_ptr + iVar7),uVar8
+        uVar2 = bdAntiCheatChallenges::getNumChallenges(this);
+        for (uVar6 = *(uint *)((int)s_challengesCurrentIndex + iVar5); uVar6 < uVar2;
+            uVar6 = uVar6 + 1) {
+          pbVar3 = bdAntiCheatChallenges::getChallengeByIndex
+                             (*(bdAntiCheatChallenges **)((int)&s_challenges[0].m_ptr + iVar5),uVar6
                              );
-          if (pbVar4->m_challengeID == param_2) {
+          if (pbVar3->m_challengeID == param_2) {
             bVar1 = true;
             goto LAB_8270fa4c;
           }
@@ -4208,16 +4008,14 @@ bool LiveAntiCheat_ShouldThisControllerPerformWorkProcessingThisChallenge
       }
       bVar1 = false;
 LAB_8270fa4c:
-      if ((bVar1) && (iVar6 < iVar2)) {
-        uVar5 = __restgprlr_24(0);
-        return (bool)uVar5;
+      if ((bVar1) && (iVar4 < param_1)) {
+        return false;
       }
     }
-    iVar7 = iVar7 + 4;
-    iVar6 = iVar6 + 1;
-    if (0xf < iVar7) {
-      uVar5 = __restgprlr_24(1);
-      return (bool)uVar5;
+    iVar5 = iVar5 + 4;
+    iVar4 = iVar4 + 1;
+    if (0xf < iVar5) {
+      return true;
     }
   } while( true );
 }
@@ -4225,73 +4023,64 @@ LAB_8270fa4c:
 
 // 82711468  LiveAntiCheat_Pump  (online/live_anticheat.cpp:4874)
 
+/* WARNING: Function: __savegprlr_18 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_18 replaced with injection: xenon_save_restore */
+
 void LiveAntiCheat_Pump(int param_1)
 
 {
   uint uVar1;
   bdAntiCheatChallenges *this;
   long64 lVar2;
-  ulonglong uVar3;
-  int iVar5;
-  uint uVar6;
-  ulong64 uVar4;
-  bdAntiCheatChallenge *pbVar7;
-  bool bVar10;
-  int iVar8;
-  int iVar9;
+  int iVar4;
+  uint uVar5;
+  ulong64 uVar3;
+  bdAntiCheatChallenge *pbVar6;
+  bool bVar7;
   bdRandom abStack_90 [2];
   long64 local_88;
   long64 alStack_80 [16];
   
-  uVar3 = __savegprlr_18(param_1);
   bdRandom::bdRandom(abStack_90);
-  iVar8 = (int)uVar3;
-  if ((iVar8 < 0) || (3 < iVar8)) {
+  if ((param_1 < 0) || (3 < param_1)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\online\\live_anticheat.cpp",
                     0x130e,0,"%s");
   }
-  if ((-1 < iVar8) && (iVar8 < 4)) {
+  if ((-1 < param_1) && (param_1 < 4)) {
     PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffff,"LiveAntiCheat_Pump");
     Profile2_Begin(6);
-    if ((iVar8 == 0) && (s_liveanticheatdebugchallengeresponse_enabled != 0)) {
+    if ((param_1 == 0) && (s_liveanticheatdebugchallengeresponse_enabled != 0)) {
       LiveAntiCheat_DebugChallengeResponsePump(0);
     }
-    iVar9 = (int)((uVar3 & 0x3fffffff) << 2);
-    if ((*(int *)((int)&DAT_84572328 + iVar9) != 0) &&
-       (iVar5 = Sys_Milliseconds(),
-       *(ulonglong *)((int)s_responsesSendingStartTimestamp + (int)((uVar3 & 0xffffffff) << 3)) <
-       (ulonglong)(longlong)(iVar5 * 1000))) {
-      LiveAntiCheat_AnswerChallenges(iVar8);
+    if (((&DAT_84572328)[param_1] != 0) &&
+       (iVar4 = Sys_Milliseconds(),
+       s_responsesSendingStartTimestamp[param_1] < (ulonglong)(longlong)(iVar4 * 1000))) {
+      LiveAntiCheat_AnswerChallenges(param_1);
     }
-    if (*(int *)((int)s_challengesToProcess + iVar9) != 0) {
-      uVar1 = *(uint *)((int)s_challengesCurrentIndex + iVar9);
-      uVar6 = bdAntiCheatChallenges::getNumChallenges
-                        (*(bdAntiCheatChallenges **)((int)&s_challenges[0].m_ptr + iVar9));
-      if (uVar1 < uVar6) {
-        pbVar7 = bdAntiCheatChallenges::getChallengeByIndex
-                           (*(bdAntiCheatChallenges **)((int)&s_challenges[0].m_ptr + iVar9),uVar1);
+    if (s_challengesToProcess[param_1] != 0) {
+      uVar1 = s_challengesCurrentIndex[param_1];
+      uVar5 = bdAntiCheatChallenges::getNumChallenges(s_challenges[param_1].m_ptr);
+      if (uVar1 < uVar5) {
+        pbVar6 = bdAntiCheatChallenges::getChallengeByIndex(s_challenges[param_1].m_ptr,uVar1);
         local_88 = 0;
-        bVar10 = LiveAntiCheat_ShouldThisControllerPerformWorkProcessingThisChallenge
-                           (iVar8,pbVar7->m_challengeID);
-        if (bVar10) {
-          bVar10 = bdAntiCheatResponses::findResponse(s_responses + iVar8,pbVar7,alStack_80);
-          if (bVar10) {
+        bVar7 = LiveAntiCheat_ShouldThisControllerPerformWorkProcessingThisChallenge
+                          (param_1,pbVar6->m_challengeID);
+        if (bVar7) {
+          bVar7 = bdAntiCheatResponses::findResponse(s_responses + param_1,pbVar6,alStack_80);
+          if (bVar7) {
             Sys_Milliseconds();
             Com_Printf(0x19,
                        "----------> DW : Using answer for processed challenge %lld function %lld in %llu microseconds\n"
                       );
-            *(int *)((int)s_challengesCurrentIndex + iVar9) =
-                 *(int *)((int)s_challengesCurrentIndex + iVar9) + 1;
-            iVar8 = Sys_Milliseconds();
-            *(longlong *)
-             ((int)s_processingCurrentChallengeStartTime + (int)((uVar3 & 0xffffffff) << 3)) =
-                 (longlong)(iVar8 * 1000);
+            s_challengesCurrentIndex[param_1] = s_challengesCurrentIndex[param_1] + 1;
+            iVar4 = Sys_Milliseconds();
+            s_processingCurrentChallengeStartTime[param_1] = (longlong)(iVar4 * 1000);
           }
           else {
-            iVar5 = LiveAntiCheat_ProcessChallengeResponse
-                              (iVar8,pbVar7->m_functionID,&pbVar7->m_parameters,&local_88);
-            if (iVar5 != 0) {
-              this = *(bdAntiCheatChallenges **)((int)&s_challenges[0].m_ptr + iVar9);
+            iVar4 = LiveAntiCheat_ProcessChallengeResponse
+                              (param_1,pbVar6->m_functionID,&pbVar6->m_parameters,&local_88);
+            if (iVar4 != 0) {
+              this = s_challenges[param_1].m_ptr;
               Sys_Milliseconds();
               Sys_Milliseconds();
               bdAntiCheatChallenges::getNumChallenges(this);
@@ -4299,176 +4088,144 @@ void LiveAntiCheat_Pump(int param_1)
               Com_Printf(0x19,
                          "----------> DW : #%lld/%lld : Processed challenge ID#%lld (function ID %lld) with result = %lld ($%llx) in %llu usecs( %llu usecs total )\n"
                         );
-              bdAntiCheatResponses::addResponse(s_responses + iVar8,pbVar7,lVar2);
-              *(int *)((int)s_challengesCurrentIndex + iVar9) =
-                   *(int *)((int)s_challengesCurrentIndex + iVar9) + 1;
-              iVar9 = Sys_Milliseconds();
-              *(longlong *)
-               ((int)s_processingCurrentChallengeStartTime + (int)((uVar3 & 0x1fffffff) << 3)) =
-                   (longlong)(iVar9 * 1000);
-              LiveAntiCheat_ShareResultsWithOtherControllers(iVar8,pbVar7,lVar2);
+              bdAntiCheatResponses::addResponse(s_responses + param_1,pbVar6,lVar2);
+              s_challengesCurrentIndex[param_1] = s_challengesCurrentIndex[param_1] + 1;
+              iVar4 = Sys_Milliseconds();
+              s_processingCurrentChallengeStartTime[param_1] = (longlong)(iVar4 * 1000);
+              LiveAntiCheat_ShareResultsWithOtherControllers(param_1,pbVar6,lVar2);
             }
           }
         }
       }
       else {
-        *(undefined4 *)((int)s_challengesToProcess + iVar9) = 0;
-        *(undefined4 *)((int)&DAT_84572328 + iVar9) = 1;
-        uVar4 = bdPlatformTiming::getHiResTimeStamp();
-        bdRandom::setSeed(abStack_90,(uint)uVar4);
+        s_challengesToProcess[param_1] = 0;
+        (&DAT_84572328)[param_1] = 1;
+        uVar3 = bdPlatformTiming::getHiResTimeStamp();
+        bdRandom::setSeed(abStack_90,(uint)uVar3);
         bdRandom::nextUInt(abStack_90);
-        iVar8 = (int)((uVar3 & 0xffffffff) << 3);
-        *(undefined8 *)((int)s_responsesSendingStartTimestamp + iVar8) =
-             *(undefined8 *)((int)&DAT_845722a8 + iVar8);
+        s_responsesSendingStartTimestamp[param_1] = (&DAT_845722a8)[param_1];
       }
     }
     Profile2_End(6);
     PIXEndNamedEvent();
   }
   bdRandom::~bdRandom(abStack_90);
-  __restgprlr_18();
   return;
 }
 
 
 // 8270FA90  LiveAntiCheat_OnChallengesReceived  (online/live_anticheat.cpp:4984)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void LiveAntiCheat_OnChallengesReceived(int param_1,bdReference<bdAntiCheatChallenges> param_2)
 
 {
   int iVar1;
-  ulonglong uVar2;
-  int iVar3;
-  int iVar4;
   
-  uVar2 = __savegprlr_27(param_1);
-  iVar3 = (int)uVar2;
-  if ((iVar3 < 0) || (3 < iVar3)) {
+  if ((param_1 < 0) || (3 < param_1)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\online\\live_anticheat.cpp",
                     0x1379,0,"%s");
   }
-  if ((-1 < iVar3) && (iVar3 < 4)) {
-    LiveAntiCheat_ResetChallengeResponse(iVar3);
+  if ((-1 < param_1) && (param_1 < 4)) {
+    LiveAntiCheat_ResetChallengeResponse(param_1);
     Com_Printf(0x19,
                "We have received challenges from DemonWare for controller #%d, we need to respond to them.\n"
               );
-    iVar4 = (int)((uVar2 & 0xffffffff) << 2);
     bdReference<bdAntiCheatChallenges>::operator=
-              ((bdReference<bdAntiCheatChallenges> *)((int)&s_challenges[0].m_ptr + iVar4),
-               (bdReference<bdAntiCheatChallenges> *)param_2.m_ptr);
-    iVar1 = (int)((uVar2 & 0xffffffff) << 3);
-    *(undefined4 *)((int)s_challengesToProcess + iVar4) = 1;
-    iVar4 = Sys_Milliseconds();
-    *(longlong *)((int)&DAT_845722a8 + iVar1) = (longlong)(iVar4 * 1000);
-    iVar4 = Sys_Milliseconds();
-    *(longlong *)((int)s_processingCurrentChallengeStartTime + iVar1) = (longlong)(iVar4 * 1000);
-    LiveAntiCheat_SetBlobForController(iVar3);
+              (s_challenges + param_1,(bdReference<bdAntiCheatChallenges> *)param_2.m_ptr);
+    s_challengesToProcess[param_1] = 1;
+    iVar1 = Sys_Milliseconds();
+    (&DAT_845722a8)[param_1] = (longlong)(iVar1 * 1000);
+    iVar1 = Sys_Milliseconds();
+    s_processingCurrentChallengeStartTime[param_1] = (longlong)(iVar1 * 1000);
+    LiveAntiCheat_SetBlobForController(param_1);
   }
   bdReference<bdAntiCheatChallenges>::~bdReference<bdAntiCheatChallenges>
             ((bdReference<bdAntiCheatChallenges> *)param_2.m_ptr);
-  __restgprlr_27();
   return;
 }
 
 
 // 8270FB70  LiveAntiCheat_UserSignedInToLive  (online/live_anticheat.cpp:5018)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* void __cdecl LiveAntiCheat_UserSignedInToLive(int) */
 
 void LiveAntiCheat_UserSignedInToLive(int param_1)
 
 {
-  int iVar1;
-  int iVar2;
-  ulonglong uVar3;
-  int iVar4;
-  
-  uVar3 = __savegprlr_26(param_1);
-  iVar4 = (int)uVar3;
-  if ((iVar4 < 0) || (3 < iVar4)) {
+  if ((param_1 < 0) || (3 < param_1)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\online\\live_anticheat.cpp",
                     0xedf,0,"%s");
   }
-  if ((-1 < iVar4) && (iVar4 < 4)) {
-    iVar1 = (int)((uVar3 & 0x3fffffff) << 2);
-    if (*(MemoryHashInfo **)((int)&DAT_845722e8 + iVar1) != (MemoryHashInfo *)0x0) {
-      MemoryHashInfo::Cancel(*(MemoryHashInfo **)((int)&DAT_845722e8 + iVar1));
-      *(undefined4 *)((int)&DAT_845722e8 + iVar1) = 0;
+  if ((-1 < param_1) && (param_1 < 4)) {
+    if ((MemoryHashInfo *)(&DAT_845722e8)[param_1] != (MemoryHashInfo *)0x0) {
+      MemoryHashInfo::Cancel((MemoryHashInfo *)(&DAT_845722e8)[param_1]);
+      (&DAT_845722e8)[param_1] = 0;
     }
-    *(undefined4 *)((int)s_challengesToProcess + iVar1) = 0;
-    iVar2 = (int)((uVar3 & 0x1fffffff) << 3);
-    *(undefined8 *)((int)&DAT_845722a8 + iVar2) = 0;
+    s_challengesToProcess[param_1] = 0;
+    (&DAT_845722a8)[param_1] = 0;
     bdReference<bdAntiCheatChallenges>::operator=
-              ((bdReference<bdAntiCheatChallenges> *)((int)&s_challenges[0].m_ptr + iVar1),
-               (bdAntiCheatChallenges *)0x0);
-    *(undefined4 *)((int)&DAT_845722e8 + iVar1) = 0;
-    *(undefined4 *)((int)s_challengesCurrentIndex + iVar1) = 0;
-    *(undefined8 *)((int)s_processingCurrentChallengeStartTime + iVar2) = 0;
-    bdAntiCheatResponses::clear(s_responses + iVar4);
-    bdReference<bdRemoteTask>::operator=
-              ((bdReference<bdRemoteTask> *)((int)&s_responsesbdRemoteTaskRef[0].m_ptr + iVar1),
-               (bdRemoteTask *)0x0);
-    *(undefined8 *)((int)s_responsesSendingStartTimestamp + iVar2) = 0;
-    *(undefined4 *)((int)&DAT_84572328 + iVar1) = 0;
-    *(undefined4 *)((int)&DAT_84572378 + iVar1) = 0;
-    *(undefined4 *)((int)&DAT_8456f284 + iVar1) = 0;
-    bdAntiCheatResponses::setLogMessage(s_responses + iVar4,(uchar *)0x0,0);
+              (s_challenges + param_1,(bdAntiCheatChallenges *)0x0);
+    (&DAT_845722e8)[param_1] = 0;
+    s_challengesCurrentIndex[param_1] = 0;
+    s_processingCurrentChallengeStartTime[param_1] = 0;
+    bdAntiCheatResponses::clear(s_responses + param_1);
+    bdReference<bdRemoteTask>::operator=(s_responsesbdRemoteTaskRef + param_1,(bdRemoteTask *)0x0);
+    s_responsesSendingStartTimestamp[param_1] = 0;
+    (&DAT_84572328)[param_1] = 0;
+    (&DAT_84572378)[param_1] = 0;
+    (&DAT_8456f284)[param_1] = 0;
+    bdAntiCheatResponses::setLogMessage(s_responses + param_1,(uchar *)0x0,0);
   }
-  __restgprlr_26();
   return;
 }
 
 
 // 8270FB78  LiveAntiCheat_UserSignedOut  (online/live_anticheat.cpp:5029)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* void __cdecl LiveAntiCheat_UserSignedOut(int) */
 
 void LiveAntiCheat_UserSignedOut(int param_1)
 
 {
-  int iVar1;
-  int iVar2;
-  ulonglong uVar3;
-  int iVar4;
-  
-  uVar3 = __savegprlr_26(param_1);
-  iVar4 = (int)uVar3;
-  if ((iVar4 < 0) || (3 < iVar4)) {
+  if ((param_1 < 0) || (3 < param_1)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\online\\live_anticheat.cpp",
                     0xedf,0,"%s");
   }
-  if ((-1 < iVar4) && (iVar4 < 4)) {
-    iVar1 = (int)((uVar3 & 0x3fffffff) << 2);
-    if (*(MemoryHashInfo **)((int)&DAT_845722e8 + iVar1) != (MemoryHashInfo *)0x0) {
-      MemoryHashInfo::Cancel(*(MemoryHashInfo **)((int)&DAT_845722e8 + iVar1));
-      *(undefined4 *)((int)&DAT_845722e8 + iVar1) = 0;
+  if ((-1 < param_1) && (param_1 < 4)) {
+    if ((MemoryHashInfo *)(&DAT_845722e8)[param_1] != (MemoryHashInfo *)0x0) {
+      MemoryHashInfo::Cancel((MemoryHashInfo *)(&DAT_845722e8)[param_1]);
+      (&DAT_845722e8)[param_1] = 0;
     }
-    *(undefined4 *)((int)s_challengesToProcess + iVar1) = 0;
-    iVar2 = (int)((uVar3 & 0x1fffffff) << 3);
-    *(undefined8 *)((int)&DAT_845722a8 + iVar2) = 0;
+    s_challengesToProcess[param_1] = 0;
+    (&DAT_845722a8)[param_1] = 0;
     bdReference<bdAntiCheatChallenges>::operator=
-              ((bdReference<bdAntiCheatChallenges> *)((int)&s_challenges[0].m_ptr + iVar1),
-               (bdAntiCheatChallenges *)0x0);
-    *(undefined4 *)((int)&DAT_845722e8 + iVar1) = 0;
-    *(undefined4 *)((int)s_challengesCurrentIndex + iVar1) = 0;
-    *(undefined8 *)((int)s_processingCurrentChallengeStartTime + iVar2) = 0;
-    bdAntiCheatResponses::clear(s_responses + iVar4);
-    bdReference<bdRemoteTask>::operator=
-              ((bdReference<bdRemoteTask> *)((int)&s_responsesbdRemoteTaskRef[0].m_ptr + iVar1),
-               (bdRemoteTask *)0x0);
-    *(undefined8 *)((int)s_responsesSendingStartTimestamp + iVar2) = 0;
-    *(undefined4 *)((int)&DAT_84572328 + iVar1) = 0;
-    *(undefined4 *)((int)&DAT_84572378 + iVar1) = 0;
-    *(undefined4 *)((int)&DAT_8456f284 + iVar1) = 0;
-    bdAntiCheatResponses::setLogMessage(s_responses + iVar4,(uchar *)0x0,0);
+              (s_challenges + param_1,(bdAntiCheatChallenges *)0x0);
+    (&DAT_845722e8)[param_1] = 0;
+    s_challengesCurrentIndex[param_1] = 0;
+    s_processingCurrentChallengeStartTime[param_1] = 0;
+    bdAntiCheatResponses::clear(s_responses + param_1);
+    bdReference<bdRemoteTask>::operator=(s_responsesbdRemoteTaskRef + param_1,(bdRemoteTask *)0x0);
+    s_responsesSendingStartTimestamp[param_1] = 0;
+    (&DAT_84572328)[param_1] = 0;
+    (&DAT_84572378)[param_1] = 0;
+    (&DAT_8456f284)[param_1] = 0;
+    bdAntiCheatResponses::setLogMessage(s_responses + param_1,(uchar *)0x0,0);
   }
-  __restgprlr_26();
   return;
 }
 
 
 // 8270FB80  LiveAntiCheat_BanDisconnect  (online/live_anticheat.cpp:5037)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void LiveAntiCheat_BanDisconnect(void)
@@ -4477,7 +4234,6 @@ void LiveAntiCheat_BanDisconnect(void)
   int iVar1;
   int *piVar2;
   
-  __savegprlr_25();
   Dvar_SetBool(onlinegame,false);
   Dvar_SetBool(ui_onlineRequired,false);
   Dvar_SetBool(xblive_privatematch,false);
@@ -4501,34 +4257,32 @@ void LiveAntiCheat_BanDisconnect(void)
   s_consoleBanInfo.banInfoFetched = false;
   s_consoleBanInfo.banInfoLastFetchedTime = 0;
   s_consoleBanInfo.banInfoReceived = false;
-  __restgprlr_25();
   return;
 }
 
 
 // 8270FC80  LiveAntiCheat_DWPlayerBanned  (online/live_anticheat.cpp:5080)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
+
 void LiveAntiCheat_DWPlayerBanned(ulong64 param_1)
 
 {
+  bool bVar2;
   ulong64 uVar1;
-  bool bVar3;
-  ulong64 uVar2;
-  int iVar4;
-  int *piVar5;
+  int iVar3;
+  int *piVar4;
   
-  uVar1 = __savegprlr_25();
-  iVar4 = 0;
-  while( true ) {
-    bVar3 = Live_IsSignedIn(iVar4);
-    if ((bVar3) && (uVar2 = Live_GetXuid(iVar4), uVar1 == uVar2)) break;
-    iVar4 = iVar4 + 1;
-    if (3 < iVar4) {
-      __restgprlr_25();
+  iVar3 = 0;
+  while ((bVar2 = Live_IsSignedIn(iVar3), !bVar2 || (uVar1 = Live_GetXuid(iVar3), param_1 != uVar1))
+        ) {
+    iVar3 = iVar3 + 1;
+    if (3 < iVar3) {
       return;
     }
   }
-  if (iVar4 < 4) {
+  if (iVar3 < 4) {
     Dvar_SetBool(onlinegame,false);
     Dvar_SetBool(ui_onlineRequired,false);
     Dvar_SetBool(xblive_privatematch,false);
@@ -4536,25 +4290,24 @@ void LiveAntiCheat_DWPlayerBanned(ulong64 param_1)
     Dvar_SetBool(splitscreen,false);
     Live_CancelConnectingDialog();
     dwStopAllDemonWareReconnects();
-    iVar4 = 0;
-    piVar5 = &s_playerBanInfo[0].banInfoLastFetchedTime;
+    iVar3 = 0;
+    piVar4 = &s_playerBanInfo[0].banInfoLastFetchedTime;
     do {
-      if ((iVar4 < 0) || (3 < iVar4)) {
+      if ((iVar3 < 0) || (3 < iVar3)) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\online\\live_anticheat.cpp"
                         ,0x141c,0,"%s");
       }
-      ((lbBanInfo_t *)(piVar5 + -1))->banInfoFetched = false;
-      *piVar5 = 0;
-      iVar4 = iVar4 + 1;
-      *(bool *)((int)piVar5 + -3) = false;
-      piVar5 = piVar5 + 0xedc;
-    } while ((int)piVar5 < -0x7ba7b1dc);
+      ((lbBanInfo_t *)(piVar4 + -1))->banInfoFetched = false;
+      *piVar4 = 0;
+      iVar3 = iVar3 + 1;
+      *(bool *)((int)piVar4 + -3) = false;
+      piVar4 = piVar4 + 0xedc;
+    } while ((int)piVar4 < -0x7ba7b1dc);
     s_consoleBanInfo.banInfoFetched = false;
     s_consoleBanInfo.banInfoLastFetchedTime = 0;
     s_consoleBanInfo.banInfoReceived = false;
     Com_Error(ERR_DROP,"EXE_DEMONWARE_DISCONNECT");
   }
-  __restgprlr_25();
   return;
 }
 
@@ -4600,29 +4353,29 @@ bool LiveAntiCheat_PlayerBanTimeToRefetch(int param_1)
 
 // 8270D000  LiveAntiCheat_PlayerBanGetInfo  (online/live_anticheat.cpp:5123)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void LiveAntiCheat_PlayerBanGetInfo(int param_1)
 
 {
+  bool bVar3;
   int iVar2;
-  bool bVar4;
-  int iVar3;
   ulong64 uVar1;
   
-  iVar2 = __savegprlr_29(param_1);
-  if ((iVar2 < 0) || (3 < iVar2)) {
+  if ((param_1 < 0) || (3 < param_1)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\online\\live_anticheat.cpp",
                     0x1404,0,"%s");
   }
-  bVar4 = Live_UserIsGuest(iVar2);
-  if (!bVar4) {
-    s_playerBanInfo[iVar2].banInfoFetched = true;
-    iVar3 = Sys_Milliseconds();
-    s_playerBanInfo[iVar2].banInfoLastFetchedTime = iVar3;
-    s_playerBanInfo[iVar2].banInfoReceived = false;
-    uVar1 = Live_GetXuid(iVar2);
-    LB_ReadRowForUser(iVar2,uVar1,5000,8,&s_playerBanInfo[iVar2].userData);
+  bVar3 = Live_UserIsGuest(param_1);
+  if (!bVar3) {
+    s_playerBanInfo[param_1].banInfoFetched = true;
+    iVar2 = Sys_Milliseconds();
+    s_playerBanInfo[param_1].banInfoLastFetchedTime = iVar2;
+    s_playerBanInfo[param_1].banInfoReceived = false;
+    uVar1 = Live_GetXuid(param_1);
+    LB_ReadRowForUser(param_1,uVar1,5000,8,&s_playerBanInfo[param_1].userData);
   }
-  __restgprlr_29();
   return;
 }
 
@@ -4711,84 +4464,85 @@ void LiveAntiCheat_CloseOnlineMenusPlayer(int param_1)
 
 // 8270FE10  LiveAntiCheat_PlayerBanCheck  (online/live_anticheat.cpp:5205)
 
+/* WARNING: Function: __savegprlr_15 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_15 replaced with injection: xenon_save_restore */
+
 void LiveAntiCheat_PlayerBanCheck(int param_1)
 
 {
-  int iVar1;
-  bool bVar5;
-  ulong uVar2;
-  uint uVar3;
-  char *pcVar4;
+  bool bVar4;
+  ulong uVar1;
+  uint uVar2;
+  char *pcVar3;
+  ulonglong uVar5;
   ulong uVar6;
-  uint *puVar7;
+  int *piVar7;
   uint uVar8;
   char acStack_3a0 [16];
   char local_390 [256];
   char local_290 [656];
   
-  iVar1 = __savegprlr_15(param_1);
-  puVar7 = (uint *)(iVar1 * 4 + -0x7ba89f28);
+  piVar7 = s_playerBanInfo[0].userData.m_leaderBoardEntries[0].m_columns + param_1;
   uVar6 = 0;
-  while (bVar5 = LiveAntiCheat_PlayerIsBanned(uVar6,iVar1), !bVar5) {
+  while (bVar4 = LiveAntiCheat_PlayerIsBanned(uVar6,param_1), !bVar4) {
 LAB_8270ffcc:
     uVar6 = uVar6 + 1;
-    puVar7 = puVar7 + 0xedc;
+    piVar7 = piVar7 + 0xedc;
     if (3 < (int)uVar6) {
-      __restgprlr_15();
       return;
     }
   }
   LiveAntiCheat_BanDisconnect();
-  uVar2 = XUserGetName(uVar6,acStack_3a0,0x10);
-  if (uVar2 == 0) {
-    uVar8 = *puVar7;
-    bVar5 = true;
+  uVar1 = XUserGetName(uVar6,acStack_3a0,0x10);
+  if (uVar1 == 0) {
+    uVar8 = *piVar7;
+    bVar4 = true;
     local_290[0] = '\0';
     local_390[0] = '\0';
     if ((int)uVar8 < 0x7fffffc0) {
-      bVar5 = false;
-      uVar3 = LiveStorage_GetUTC();
-      uVar8 = (uint)(((ulonglong)uVar8 - (longlong)(int)uVar3 & 0xffffffff) / 0xe10);
+      bVar4 = false;
+      uVar2 = LiveStorage_GetUTC();
+      uVar8 = (uint)(((ulonglong)uVar8 - (longlong)(int)uVar2 & 0xffffffff) / 0xe10);
       if (uVar8 < 2) {
         uVar8 = 1;
 LAB_8270fef8:
-        pcVar4 = UI_SafeTranslateString("EXE_TEMP_BAN_HOURS");
+        pcVar3 = UI_SafeTranslateString("EXE_TEMP_BAN_HOURS");
       }
       else {
         if (uVar8 < 0x31) goto LAB_8270fef8;
-        pcVar4 = UI_SafeTranslateString("EXE_TEMP_BAN_DAYS");
+        pcVar3 = UI_SafeTranslateString("EXE_TEMP_BAN_DAYS");
         uVar8 = uVar8 / 0x18;
       }
-      pcVar4 = UI_ReplaceConversionInt(pcVar4,uVar8);
-      if (pcVar4 != (char *)0x0) {
+      pcVar3 = UI_ReplaceConversionInt(pcVar3,uVar8);
+      if (pcVar3 != (char *)0x0) {
         Com_sprintf(local_390,0x100,"%s");
       }
     }
-    if (iVar1 - 1U < 5) {
-      if ((iVar1 == 1) || (iVar1 == 2)) {
-        pcVar4 = "EXE_ONLINE_PERM_BAN_PLAYER";
-        if (!bVar5) {
-          pcVar4 = "EXE_ONLINE_TEMP_BAN_PLAYER";
+    uVar5 = (longlong)param_1 - 1;
+    if ((uVar5 & 0xffffffff) < 5) {
+      if (((int)uVar5 == 0) || ((longlong)param_1 == 2)) {
+        pcVar3 = "EXE_ONLINE_PERM_BAN_PLAYER";
+        if (!bVar4) {
+          pcVar3 = "EXE_ONLINE_TEMP_BAN_PLAYER";
         }
       }
       else {
-        pcVar4 = "EXE_FEATURE_PERM_BAN_PLAYER";
-        if (!bVar5) {
-          pcVar4 = "EXE_FEATURE_TEMP_BAN_PLAYER";
+        pcVar3 = "EXE_FEATURE_PERM_BAN_PLAYER";
+        if (!bVar4) {
+          pcVar3 = "EXE_FEATURE_TEMP_BAN_PLAYER";
         }
       }
-      pcVar4 = UI_SafeTranslateString(pcVar4);
-      UI_ReplaceConversionString(pcVar4,acStack_3a0);
+      pcVar3 = UI_SafeTranslateString(pcVar3);
+      UI_ReplaceConversionString(pcVar3,acStack_3a0);
       Com_sprintf(local_290,0x200,"%s");
-      pcVar4 = va("%s\n\n%s");
-      if (pcVar4 != (char *)0x0) goto LAB_8270ffec;
+      pcVar3 = va("%s\n\n%s");
+      if (pcVar3 != (char *)0x0) goto LAB_8270ffec;
       goto LAB_8270ffcc;
     }
   }
-  pcVar4 = "EXE_DEMONWARE_DISCONNECT";
+  pcVar3 = "EXE_DEMONWARE_DISCONNECT";
 LAB_8270ffec:
-  Com_Error(ERR_DROP,pcVar4);
-  __restgprlr_15();
+  Com_Error(ERR_DROP,pcVar3);
   return;
 }
 
@@ -4941,21 +4695,26 @@ void LiveAntiCheat_CloseOnlineMenusConsole(void)
 
 // 827100B0  LiveAntiCheat_ConsoleBanCheck  (online/live_anticheat.cpp:5395)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void LiveAntiCheat_ConsoleBanCheck(int param_1)
 
 {
-  int iVar1;
+  longlong lVar1;
   bool bVar4;
   uint uVar2;
   char *pcVar3;
   uint uVar5;
   
-  iVar1 = __savegprlr_28(param_1);
-  bVar4 = LiveAntiCheat_ConsoleIsBanned(iVar1);
-  if (!bVar4) goto LAB_82710210;
+  lVar1 = (longlong)param_1;
+  bVar4 = LiveAntiCheat_ConsoleIsBanned(param_1);
+  if (!bVar4) {
+    return;
+  }
   LiveAntiCheat_BanDisconnect();
   bVar4 = true;
-  uVar5 = s_consoleBanInfo.userData.m_leaderBoardEntries[0].m_columns[iVar1];
+  uVar5 = s_consoleBanInfo.userData.m_leaderBoardEntries[0].m_columns[param_1];
   if ((int)uVar5 < 0x7fffffc0) {
     bVar4 = false;
     uVar2 = LiveStorage_GetUTC();
@@ -4972,8 +4731,8 @@ LAB_82710128:
     }
     UI_ReplaceConversionInt(pcVar3,uVar5);
   }
-  if (iVar1 - 1U < 5) {
-    if ((iVar1 == 1) || (iVar1 == 2)) {
+  if ((lVar1 - 1U & 0xffffffff) < 5) {
+    if (((int)(lVar1 - 1U) == 0) || (lVar1 == 2)) {
       if (bVar4) {
         pcVar3 = "EXE_ONLINE_PERM_BAN_CONSOLE";
       }
@@ -4982,7 +4741,7 @@ LAB_82710128:
       }
     }
     else {
-      if (iVar1 == 3) goto LAB_82710200;
+      if (lVar1 == 3) goto LAB_82710200;
       if (bVar4) {
         pcVar3 = "EXE_FEATURE_PERM_BAN_CONSOLE";
       }
@@ -4994,7 +4753,6 @@ LAB_82710128:
     pcVar3 = va("%s\n\n%s");
     if (pcVar3 != (char *)0x0) {
       Com_Error(ERR_DROP,pcVar3);
-      __restgprlr_28();
       return;
     }
   }
@@ -5002,8 +4760,6 @@ LAB_82710128:
 LAB_82710200:
     Com_Error(ERR_DROP,"EXE_DEMONWARE_DISCONNECT");
   }
-LAB_82710210:
-  __restgprlr_28();
   return;
 }
 
@@ -5036,152 +4792,145 @@ void LiveAntiCheat_BanCheck(int param_1,int param_2)
 
 // 82710308  LiveAntiCheat_UserSignedInToDW  (online/live_anticheat.cpp:5491)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void LiveAntiCheat_UserSignedInToDW(int param_1)
 
 {
-  uint uVar1;
-  undefined4 *puVar2;
-  uint uVar3;
-  int iVar4;
-  ulonglong uVar5;
-  longlong lVar6;
-  uint *puVar7;
+  bdRemoteTask *pbVar1;
+  uint uVar2;
+  longlong lVar3;
+  uint *puVar4;
   char in_RESERVE;
   byte in_cr0;
   
-  uVar5 = __savegprlr_27(param_1);
-  if (3 < (uVar5 & 0xffffffff)) {
+  if (3 < (uint)param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\online\\live_anticheat.cpp",
                     0x1574,0,"controllerIndex doesn\'t index MAX_GPAD_COUNT\n\t%i not in [0, %i)");
   }
-  iVar4 = (int)((uVar5 & 0x3fffffff) << 2);
-  uVar1 = *(uint *)((int)&s_reportConsoleTaskRef[0].m_ptr + iVar4);
-  *(undefined4 *)(&DAT_845722d8 + iVar4) = 0;
-  if ((ulonglong)uVar1 != 0) {
-    lVar6 = (ulonglong)uVar1 + 4;
+  pbVar1 = s_reportConsoleTaskRef[param_1].m_ptr;
+  *(undefined4 *)(&DAT_845722d8 + param_1 * 4) = 0;
+  if (ZEXT48(pbVar1) != 0) {
+    lVar3 = ZEXT48(pbVar1) + 4;
     do {
-      puVar7 = (uint *)lVar6;
+      puVar4 = (uint *)lVar3;
       if (in_RESERVE != '\0') {
-        uVar3 = storeWordConditionalIndexed((ulonglong)*puVar7 - 1,0,lVar6);
-        *puVar7 = uVar3;
+        uVar2 = storeWordConditionalIndexed((ulonglong)*puVar4 - 1,0,lVar3);
+        *puVar4 = uVar2;
         in_cr0 = 2;
       }
     } while (!(bool)(in_cr0 >> 1 & 1));
-    if (*(int *)(uVar1 + 4) == 0) {
-      puVar2 = *(undefined4 **)((int)&s_reportConsoleTaskRef[0].m_ptr + iVar4);
-      if (puVar2 != (undefined4 *)0x0) {
-        (**(code **)*puVar2)(puVar2,1);
+    if (*(int *)&pbVar1->field_0x4 == 0) {
+      pbVar1 = s_reportConsoleTaskRef[param_1].m_ptr;
+      if (pbVar1 != (bdRemoteTask *)0x0) {
+        (**(code **)pbVar1->_padding_)(pbVar1,1);
       }
     }
   }
-  *(undefined4 *)((int)&s_reportConsoleTaskRef[0].m_ptr + iVar4) = 0;
-  *(undefined4 *)(&DAT_845722f8 + iVar4) = 0;
-  *(undefined8 *)((int)s_reportConsoleStartTimestamp + (int)((uVar5 & 0xffffffff) << 3)) = 0;
-  __restgprlr_27();
+  s_reportConsoleTaskRef[param_1].m_ptr = (bdRemoteTask *)0x0;
+  *(undefined4 *)(&DAT_845722f8 + param_1 * 4) = 0;
+  s_reportConsoleStartTimestamp[param_1] = 0;
   return;
 }
 
 
 // 827103D8  LiveAntiCheat_ResetReportConsole  (online/live_anticheat.cpp:5502)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void LiveAntiCheat_ResetReportConsole(int param_1)
 
 {
-  uint uVar1;
-  undefined4 *puVar2;
-  uint uVar3;
-  int iVar4;
-  ulonglong uVar5;
-  longlong lVar6;
-  uint *puVar7;
+  bdRemoteTask *pbVar1;
+  uint uVar2;
+  longlong lVar3;
+  uint *puVar4;
   char in_RESERVE;
   byte in_cr0;
   
-  uVar5 = __savegprlr_28(param_1);
-  if (3 < (uVar5 & 0xffffffff)) {
+  if (3 < (uint)param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\online\\live_anticheat.cpp",
                     0x157f,0,"controllerIndex doesn\'t index MAX_GPAD_COUNT\n\t%i not in [0, %i)");
   }
-  iVar4 = (int)((uVar5 & 0x3fffffff) << 2);
-  uVar1 = *(uint *)((int)&s_reportConsoleTaskRef[0].m_ptr + iVar4);
-  *(undefined4 *)(&DAT_845722d8 + iVar4) = 1;
-  if ((ulonglong)uVar1 != 0) {
-    lVar6 = (ulonglong)uVar1 + 4;
+  pbVar1 = s_reportConsoleTaskRef[param_1].m_ptr;
+  *(undefined4 *)(&DAT_845722d8 + param_1 * 4) = 1;
+  if (ZEXT48(pbVar1) != 0) {
+    lVar3 = ZEXT48(pbVar1) + 4;
     do {
-      puVar7 = (uint *)lVar6;
+      puVar4 = (uint *)lVar3;
       if (in_RESERVE != '\0') {
-        uVar3 = storeWordConditionalIndexed((ulonglong)*puVar7 - 1,0,lVar6);
-        *puVar7 = uVar3;
+        uVar2 = storeWordConditionalIndexed((ulonglong)*puVar4 - 1,0,lVar3);
+        *puVar4 = uVar2;
         in_cr0 = 2;
       }
     } while (!(bool)(in_cr0 >> 1 & 1));
-    if (*(int *)(uVar1 + 4) == 0) {
-      puVar2 = *(undefined4 **)((int)&s_reportConsoleTaskRef[0].m_ptr + iVar4);
-      if (puVar2 != (undefined4 *)0x0) {
-        (**(code **)*puVar2)(puVar2,1);
+    if (*(int *)&pbVar1->field_0x4 == 0) {
+      pbVar1 = s_reportConsoleTaskRef[param_1].m_ptr;
+      if (pbVar1 != (bdRemoteTask *)0x0) {
+        (**(code **)pbVar1->_padding_)(pbVar1,1);
       }
     }
   }
-  *(undefined4 *)((int)&s_reportConsoleTaskRef[0].m_ptr + iVar4) = 0;
-  *(undefined4 *)(&DAT_845722f8 + iVar4) = 0;
-  *(undefined8 *)((int)s_reportConsoleStartTimestamp + (int)((uVar5 & 0xffffffff) << 3)) = 0;
-  __restgprlr_28();
+  s_reportConsoleTaskRef[param_1].m_ptr = (bdRemoteTask *)0x0;
+  *(undefined4 *)(&DAT_845722f8 + param_1 * 4) = 0;
+  s_reportConsoleStartTimestamp[param_1] = 0;
   return;
 }
 
 
 // 827104B0  LiveAntiCheat_ReportConsoleIDRetry  (online/live_anticheat.cpp:5513)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void LiveAntiCheat_ReportConsoleIDRetry(int param_1)
 
 {
-  undefined4 *puVar1;
+  bdRemoteTask *pbVar1;
   int iVar2;
   uint uVar3;
-  ulonglong uVar4;
-  uint uVar5;
-  int iVar6;
-  longlong lVar7;
-  uint *puVar8;
+  int iVar4;
+  longlong lVar5;
+  uint *puVar6;
   char in_RESERVE;
   byte in_cr0;
   bdRandom abStack_40 [16];
   
-  uVar4 = __savegprlr_27(param_1);
   bdRandom::bdRandom(abStack_40);
-  if (3 < (uVar4 & 0xffffffff)) {
+  if (3 < (uint)param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\online\\live_anticheat.cpp",
                     0x158c,0,"controllerIndex doesn\'t index MAX_GPAD_COUNT\n\t%i not in [0, %i)");
   }
-  iVar6 = (int)((uVar4 & 0x3fffffff) << 2);
-  uVar5 = *(uint *)((int)&s_reportConsoleTaskRef[0].m_ptr + iVar6);
-  *(undefined4 *)(&DAT_845722d8 + iVar6) = 0;
-  if ((ulonglong)uVar5 != 0) {
-    lVar7 = (ulonglong)uVar5 + 4;
+  iVar4 = param_1 * 4;
+  pbVar1 = s_reportConsoleTaskRef[param_1].m_ptr;
+  *(undefined4 *)(&DAT_845722d8 + iVar4) = 0;
+  if (ZEXT48(pbVar1) != 0) {
+    lVar5 = ZEXT48(pbVar1) + 4;
     do {
-      puVar8 = (uint *)lVar7;
+      puVar6 = (uint *)lVar5;
       if (in_RESERVE != '\0') {
-        uVar3 = storeWordConditionalIndexed((ulonglong)*puVar8 - 1,0,lVar7);
-        *puVar8 = uVar3;
+        uVar3 = storeWordConditionalIndexed((ulonglong)*puVar6 - 1,0,lVar5);
+        *puVar6 = uVar3;
         in_cr0 = 2;
       }
     } while (!(bool)(in_cr0 >> 1 & 1));
-    if (*(int *)(uVar5 + 4) == 0) {
-      puVar1 = *(undefined4 **)((int)&s_reportConsoleTaskRef[0].m_ptr + iVar6);
-      if (puVar1 != (undefined4 *)0x0) {
-        (**(code **)*puVar1)(puVar1,1);
+    if (*(int *)&pbVar1->field_0x4 == 0) {
+      pbVar1 = s_reportConsoleTaskRef[param_1].m_ptr;
+      if (pbVar1 != (bdRemoteTask *)0x0) {
+        (**(code **)pbVar1->_padding_)(pbVar1,1);
       }
     }
   }
-  *(undefined4 *)((int)&s_reportConsoleTaskRef[0].m_ptr + iVar6) = 0;
-  iVar2 = *(int *)(&DAT_845722f8 + iVar6);
-  *(uint *)(&DAT_845722f8 + iVar6) = iVar2 + 1U;
-  uVar5 = Live_GenerateTimeToRetryInSeconds(iVar2 + 1U,0x3c);
-  iVar6 = Sys_Milliseconds();
-  *(ulonglong *)((int)s_reportConsoleStartTimestamp + (int)((uVar4 & 0xffffffff) << 3)) =
-       (longlong)(iVar6 * 1000) + ((longlong)(int)uVar5 * 1000000 & 0xffffffffU);
+  s_reportConsoleTaskRef[param_1].m_ptr = (bdRemoteTask *)0x0;
+  iVar2 = *(int *)(&DAT_845722f8 + iVar4);
+  *(uint *)(&DAT_845722f8 + iVar4) = iVar2 + 1U;
+  uVar3 = Live_GenerateTimeToRetryInSeconds(iVar2 + 1U,0x3c);
+  iVar4 = Sys_Milliseconds();
+  s_reportConsoleStartTimestamp[param_1] =
+       (longlong)(iVar4 * 1000) + ((longlong)(int)uVar3 * 1000000 & 0xffffffffU);
   bdRandom::~bdRandom(abStack_40);
-  __restgprlr_27();
   return;
 }
 
@@ -5299,63 +5048,60 @@ void LiveAntiCheat_Update(void)
 
 // 8270D468  LiveAntiCheat_GetConsoleDetails  (online/live_anticheat.cpp:5654)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 bool LiveAntiCheat_GetConsoleDetails
                (int *param_1,int *param_2,ulong64 *param_3,ulong64 *param_4,ulong64 *param_5)
 
 {
-  uint *puVar1;
-  XNADDR *pXVar2;
-  int iVar3;
-  undefined1 uVar4;
+  XNADDR *pXVar1;
+  int iVar2;
+  undefined1 *puVar3;
+  undefined1 *puVar4;
   longlong lVar5;
-  undefined1 *puVar6;
-  longlong lVar7;
   
-  lVar5 = (longlong)(int)param_5;
-  puVar1 = (uint *)__savegprlr_27(param_1);
-  pXVar2 = Xenon_GetXNAddrForLive();
-  if (pXVar2 != (XNADDR *)0x0) {
-    puVar6 = (undefined1 *)((int)&pXVar2->wPortOnline + 1);
-    lVar5 = lVar5 + -1;
-    *puVar1 = (uint)(pXVar2->ina).S_un.S_un_b.s_b1;
-    lVar7 = 6;
-    puVar1[1] = (uint)(pXVar2->ina).S_un.S_un_b.s_b2;
-    puVar1[2] = (uint)(pXVar2->ina).S_un.S_un_b.s_b3;
-    puVar1[3] = (uint)(pXVar2->ina).S_un.S_un_b.s_b4;
-    *param_2 = (uint)(pXVar2->inaOnline).S_un.S_un_b.s_b1;
-    param_2[1] = (uint)(pXVar2->inaOnline).S_un.S_un_b.s_b2;
-    param_2[2] = (uint)(pXVar2->inaOnline).S_un.S_un_b.s_b3;
-    param_2[3] = (uint)(pXVar2->inaOnline).S_un.S_un_b.s_b4;
+  pXVar1 = Xenon_GetXNAddrForLive();
+  if (pXVar1 != (XNADDR *)0x0) {
+    puVar4 = (undefined1 *)((int)&pXVar1->wPortOnline + 1);
+    puVar3 = (undefined1 *)((int)param_5 + -1);
+    *param_1 = (uint)(pXVar1->ina).S_un.S_un_b.s_b1;
+    lVar5 = 6;
+    param_1[1] = (uint)(pXVar1->ina).S_un.S_un_b.s_b2;
+    param_1[2] = (uint)(pXVar1->ina).S_un.S_un_b.s_b3;
+    param_1[3] = (uint)(pXVar1->ina).S_un.S_un_b.s_b4;
+    *param_2 = (uint)(pXVar1->inaOnline).S_un.S_un_b.s_b1;
+    param_2[1] = (uint)(pXVar1->inaOnline).S_un.S_un_b.s_b2;
+    param_2[2] = (uint)(pXVar1->inaOnline).S_un.S_un_b.s_b3;
+    param_2[3] = (uint)(pXVar1->inaOnline).S_un.S_un_b.s_b4;
     do {
-      puVar6 = puVar6 + 1;
-      lVar5 = lVar5 + 1;
-      *(undefined1 *)lVar5 = *puVar6;
-      lVar7 = lVar7 + -1;
-    } while (lVar7 != 0);
-    iVar3 = XNetXnAddrToMachineId(pXVar2,param_3);
-    if (iVar3 != 0) {
+      puVar4 = puVar4 + 1;
+      puVar3 = puVar3 + 1;
+      *puVar3 = *puVar4;
+      lVar5 = lVar5 + -1;
+    } while (lVar5 != 0);
+    iVar2 = XNetXnAddrToMachineId(pXVar1,param_3);
+    if (iVar2 != 0) {
       Com_PrintError(0x10,"ERROR: Getting console ID.\n");
-      uVar4 = __restgprlr_27(0);
-      return (bool)uVar4;
+      return false;
     }
     *param_4 = 0;
   }
-  uVar4 = __restgprlr_27(1);
-  return (bool)uVar4;
+  return true;
 }
 
 
 // 8270D530  LiveAntiCheat_ReportPlayer  (online/live_anticheat.cpp:5778)
+
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 
 void LiveAntiCheat_ReportPlayer(int param_1,ReportOffense param_2,ulong64 param_3)
 
 {
   int iVar1;
   int iVar2;
-  ulonglong uVar3;
   
-  uVar3 = (ulonglong)(int)param_2;
-  __savegprlr_28(param_1);
   if (param_3 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\online\\live_anticheat.cpp",
                     0x1693,0,"%s");
@@ -5365,11 +5111,8 @@ void LiveAntiCheat_ReportPlayer(int param_1,ReportOffense param_2,ulong64 param_
     iVar1 = (reportUserVoteInterval->current).integer;
     iVar2 = Sys_Milliseconds();
     s_timeTillNextVote = iVar2 + iVar1 * 60000;
-    iVar1 = LiveTracker_WriteByID
-                      (*(trackerColumn_e *)
-                        ((int)ReportTrackerColumn + (int)((uVar3 & 0xffffffff) << 2)),param_3,1);
+    LiveTracker_WriteByID(ReportTrackerColumn[param_2],param_3,1);
   }
-  __restgprlr_28(iVar1);
   return;
 }
 
@@ -5439,6 +5182,8 @@ void _dynamic_atexit_destructor_for__s_responses__(void)
 
 // 82940EC0  `dynamic_atexit_destructor_for_'s_challenges''  (line unknown)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void _dynamic_atexit_destructor_for__s_challenges__(void)
@@ -5454,7 +5199,6 @@ void _dynamic_atexit_destructor_for__s_challenges__(void)
   char in_RESERVE;
   byte in_cr0;
   
-  __savegprlr_29();
   lVar6 = 3;
   pbVar7 = s_responses;
   do {
@@ -5481,13 +5225,14 @@ void _dynamic_atexit_destructor_for__s_challenges__(void)
     lVar6 = lVar6 + -1;
     in_cr0 = (lVar6 == 0) << 1;
   } while (-1 < lVar6);
-  __restgprlr_29();
   return;
 }
 
 
 // 82940F50  `dynamic_atexit_destructor_for_'s_responsesbdRemoteTaskRef''  (line unknown)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void _dynamic_atexit_destructor_for__s_responsesbdRemoteTaskRef__(void)
@@ -5503,7 +5248,6 @@ void _dynamic_atexit_destructor_for__s_responsesbdRemoteTaskRef__(void)
   char in_RESERVE;
   byte in_cr0;
   
-  __savegprlr_29();
   lVar6 = 3;
   piVar7 = &controllerindex;
   do {
@@ -5530,13 +5274,14 @@ void _dynamic_atexit_destructor_for__s_responsesbdRemoteTaskRef__(void)
     lVar6 = lVar6 + -1;
     in_cr0 = (lVar6 == 0) << 1;
   } while (-1 < lVar6);
-  __restgprlr_29();
   return;
 }
 
 
 // 82940FE0  `dynamic_atexit_destructor_for_'s_reportConsoleTaskRef''  (line unknown)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void _dynamic_atexit_destructor_for__s_reportConsoleTaskRef__(void)
@@ -5551,7 +5296,6 @@ void _dynamic_atexit_destructor_for__s_reportConsoleTaskRef__(void)
   char in_RESERVE;
   byte in_cr0;
   
-  __savegprlr_29();
   lVar5 = 3;
   pbVar6 = s_challenges;
   do {
@@ -5578,13 +5322,14 @@ void _dynamic_atexit_destructor_for__s_reportConsoleTaskRef__(void)
     lVar5 = lVar5 + -1;
     in_cr0 = (lVar5 == 0) << 1;
   } while (-1 < lVar5);
-  __restgprlr_29();
   return;
 }
 
 
 // 82941070  `dynamic_atexit_destructor_for_'s_consoleBanInfo''  (line unknown)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void _dynamic_atexit_destructor_for__s_consoleBanInfo__(void)
@@ -5593,7 +5338,6 @@ void _dynamic_atexit_destructor_for__s_consoleBanInfo__(void)
   longlong lVar1;
   bdStatsInfo *this;
   
-  __savegprlr_29();
   lVar1 = 99;
   this = (bdStatsInfo *)&s_consoleBanInfo.userData.numResults;
   do {
@@ -5602,7 +5346,6 @@ void _dynamic_atexit_destructor_for__s_consoleBanInfo__(void)
     bdStatsInfo::~bdStatsInfo(this);
     lVar1 = lVar1 + -1;
   } while (-1 < lVar1);
-  __restgprlr_29();
   return;
 }
 

@@ -2,82 +2,69 @@
 
 // 828AAB30  SetFilePointer  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/xrtl/setfilepointer.c:89)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 ulong SetFilePointer(void *param_1,long param_2,long *param_3,ulong param_4)
 
 {
-  void *pvVar2;
-  long lVar3;
-  ulonglong uVar1;
-  ulong uVar4;
-  undefined4 *puVar5;
-  ulonglong uVar6;
-  ulonglong uVar7;
+  long lVar1;
+  ulonglong uVar2;
   undefined8 local_80;
   _IO_STATUS_BLOCK _Stack_78;
   undefined1 auStack_70 [40];
   ulonglong local_48;
   
-  uVar6 = (ulonglong)(int)param_4;
-  uVar1 = (ulonglong)(int)param_3;
-  pvVar2 = (void *)__savegprlr_27(param_1);
-  puVar5 = (undefined4 *)uVar1;
-  if ((uVar1 & 0xffffffff) == 0) {
-    uVar7 = (ulonglong)param_2;
+  if (param_3 == (long *)0x0) {
+    uVar2 = (ulonglong)param_2;
   }
   else {
-    local_80 = CONCAT44(*puVar5,param_2);
-    uVar7 = local_80;
+    local_80 = CONCAT44(*param_3,param_2);
+    uVar2 = local_80;
   }
-  if ((uVar6 & 0xffffffff) == 0) {
-LAB_828aac00:
-    local_80 = uVar7;
-    if ((longlong)uVar7 < 0) {
-      lVar3 = 0x83;
-    }
-    else {
-      if (((uVar1 & 0xffffffff) != 0) || ((uVar7 & 0x7fffffff00000000) == 0)) {
-        lVar3 = (*_fileIoHooks->NtSetInformationFile)
-                          (pvVar2,&_Stack_78,&local_80,8,FilePositionInformation);
-        if (-1 < lVar3) {
-          if ((uVar1 & 0xffffffff) != 0) {
-            *puVar5 = local_80._0_4_;
-          }
-          if (local_80._4_4_ == -1) {
-            SetLastError(0);
-          }
-          uVar1 = local_80 & 0xffffffff;
-          goto LAB_828aacac;
-        }
-        RtlSetLastNTError(lVar3);
-        if ((uVar1 & 0xffffffff) != 0) {
-          *puVar5 = 0xffffffff;
-        }
-        goto LAB_828aaca4;
-      }
-      lVar3 = 0x57;
-    }
-    RtlSetLastError(lVar3);
-  }
-  else {
-    if (((uVar6 & 0xffffffff) == 1) || (2 < (uVar6 & 0xffffffff))) {
-      lVar3 = (*_fileIoHooks->NtQueryInformationFile)
-                        (pvVar2,&_Stack_78,&local_80,8,FilePositionInformation);
+  if (param_4 != 0) {
+    if ((param_4 == 1) || (2 < param_4)) {
+      lVar1 = (*_fileIoHooks->NtQueryInformationFile)
+                        (param_1,&_Stack_78,&local_80,8,FilePositionInformation);
       local_48 = local_80;
     }
     else {
-      lVar3 = (*_fileIoHooks->NtQueryInformationFile)
-                        (pvVar2,&_Stack_78,auStack_70,0x38,FileNetworkOpenInformation);
+      lVar1 = (*_fileIoHooks->NtQueryInformationFile)
+                        (param_1,&_Stack_78,auStack_70,0x38,FileNetworkOpenInformation);
     }
-    if (-1 < lVar3) {
-      uVar7 = local_48 + uVar7;
-      goto LAB_828aac00;
+    if (lVar1 < 0) {
+      RtlSetLastNTError(lVar1);
+      return 0xffffffff;
     }
-    RtlSetLastNTError(lVar3);
+    uVar2 = local_48 + uVar2;
   }
-LAB_828aaca4:
-  uVar1 = 0xffffffffffffffff;
-LAB_828aacac:
-  uVar4 = __restgprlr_27(uVar1);
-  return uVar4;
+  local_80 = uVar2;
+  if ((longlong)uVar2 < 0) {
+    lVar1 = 0x83;
+  }
+  else {
+    if ((param_3 != (long *)0x0) || ((uVar2 & 0x7fffffff00000000) == 0)) {
+      lVar1 = (*_fileIoHooks->NtSetInformationFile)
+                        (param_1,&_Stack_78,&local_80,8,FilePositionInformation);
+      if (-1 < lVar1) {
+        if (param_3 != (long *)0x0) {
+          *param_3 = local_80._0_4_;
+        }
+        if (local_80._4_4_ == -1) {
+          SetLastError(0);
+        }
+        return local_80._4_4_;
+      }
+      RtlSetLastNTError(lVar1);
+      if (param_3 == (long *)0x0) {
+        return 0xffffffff;
+      }
+      *param_3 = -1;
+      return 0xffffffff;
+    }
+    lVar1 = 0x57;
+  }
+  RtlSetLastError(lVar1);
+  return 0xffffffff;
 }
 

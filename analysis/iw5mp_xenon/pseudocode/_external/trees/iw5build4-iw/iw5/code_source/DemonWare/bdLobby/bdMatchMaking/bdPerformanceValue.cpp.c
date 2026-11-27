@@ -37,40 +37,39 @@ void __thiscall bdPerformanceValue::serialize(bdPerformanceValue *this,bdByteBuf
 
 // 82905A58  deserialize  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdmatchmaking/bdperformancevalue.cpp:31)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 bool __thiscall
 bdPerformanceValue::deserialize(bdPerformanceValue *this,bdReference<bdByteBuffer> param_1)
 
 {
-  int iVar1;
+  bool bVar1;
   bool bVar2;
-  undefined1 uVar3;
-  longlong lVar4;
-  bdByteBuffer *pbStack0000001c;
+  bdReference<bdByteBuffer> bStack0000001c;
   ulong64 local_40;
   long64 local_38 [7];
   
-  iVar1 = __savegprlr_28(this);
   local_40 = 0;
-  pbStack0000001c = param_1.m_ptr;
-  bVar2 = bdByteBuffer::readUInt64((bdByteBuffer *)(param_1.m_ptr)->_padding_,&local_40);
+  bStack0000001c.m_ptr = param_1.m_ptr;
+  bVar1 = bdByteBuffer::readUInt64((bdByteBuffer *)(param_1.m_ptr)->_padding_,&local_40);
   local_38[0] = 0;
-  *(ulong64 *)(iVar1 + 8) = local_40;
-  if (bVar2) {
+  this->m_entityID = local_40;
+  if (bVar1) {
     bVar2 = bdByteBuffer::readInt64((bdByteBuffer *)(param_1.m_ptr)->_padding_,local_38);
-    lVar4 = 1;
+    bVar1 = true;
     if (bVar2) goto LAB_82905ab8;
   }
-  lVar4 = 0;
+  bVar1 = false;
 LAB_82905ab8:
-  *(long64 *)(iVar1 + 0x10) = local_38[0];
-  if (lVar4 == 0) {
+  this->m_performanceValue = local_38[0];
+  if (!bVar1) {
     bdLogMessage(BD_LOG_ERROR,"err/","err",
                  "c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdLobby\\bdMatchMaking\\bdPerformanceValue.cpp"
                  ,"bdPerformanceValue::deserialize",0x2a,"Deserialization failed");
   }
   bdReference<bdByteBuffer>::~bdReference<bdByteBuffer>((bdReference<bdByteBuffer> *)param_1.m_ptr);
-  uVar3 = __restgprlr_28(lVar4);
-  return (bool)uVar3;
+  return bVar1;
 }
 
 

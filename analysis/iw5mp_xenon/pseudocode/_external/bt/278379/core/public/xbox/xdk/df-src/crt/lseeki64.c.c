@@ -2,57 +2,53 @@
 
 // 82928068  _lseeki64  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/lseeki64.c:72)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
+
 long64 _lseeki64(int param_1,long64 param_2,int param_3)
 
 {
   int iVar1;
-  int iVar2;
-  uint uVar4;
-  ulong *puVar5;
-  int *piVar6;
-  long64 lVar3;
-  uint uStack00000014;
+  ulong *puVar2;
+  int *piVar3;
+  int iVar4;
+  int iStack00000014;
   long64 local_50;
   
-  uVar4 = __savegprlr_24(param_1);
-  uStack00000014 = uVar4;
-  if (uVar4 == 0xfffffffe) {
-    puVar5 = __doserrno();
-    *puVar5 = 0;
-    piVar6 = _errno();
-    local_50 = -1;
-    *piVar6 = 9;
+  iStack00000014 = param_1;
+  if (param_1 == -2) {
+    puVar2 = __doserrno();
+    *puVar2 = 0;
+    piVar3 = _errno();
+    *piVar3 = 9;
   }
   else {
-    if ((-1 < (int)uVar4) && (uVar4 < (uint)_nhandle)) {
-      iVar1 = ((int)uVar4 >> 5) * 4;
-      iVar2 = (uVar4 & 0x1f) * 0x48;
-      if ((*(byte *)(*(int *)(&__pioinfo + iVar1) + iVar2 + 4) & 1) != 0) {
-        __lock_fhandle(uVar4);
-        if ((*(byte *)(*(int *)(&__pioinfo + iVar1) + iVar2 + 4) & 1) == 0) {
-          piVar6 = _errno();
-          *piVar6 = 9;
-          puVar5 = __doserrno();
-          *puVar5 = 0;
+    if ((-1 < param_1) && ((uint)param_1 < (uint)_nhandle)) {
+      iVar1 = (param_1 >> 5) * 4;
+      iVar4 = (param_1 & 0x1fU) * 0x48;
+      if ((*(byte *)(*(int *)(&__pioinfo + iVar1) + iVar4 + 4) & 1) != 0) {
+        __lock_fhandle(param_1);
+        if ((*(byte *)(*(int *)(&__pioinfo + iVar1) + iVar4 + 4) & 1) == 0) {
+          piVar3 = _errno();
+          *piVar3 = 9;
+          puVar2 = __doserrno();
+          *puVar2 = 0;
           local_50 = -1;
         }
         else {
-          local_50 = _lseeki64_nolock(uVar4,param_2,param_3);
+          local_50 = _lseeki64_nolock(param_1,param_2,param_3);
         }
         FUN_829281b0();
-        goto LAB_82928188;
+        return local_50;
       }
     }
-    puVar5 = __doserrno();
-    *puVar5 = 0;
-    piVar6 = _errno();
-    *piVar6 = 9;
+    puVar2 = __doserrno();
+    *puVar2 = 0;
+    piVar3 = _errno();
+    *piVar3 = 9;
     _invalid_parameter_noinfo();
-    local_50 = -1;
   }
-LAB_82928188:
-  lVar3 = __restgprlr_24(local_50);
-  return lVar3;
+  return -1;
 }
 
 

@@ -34,26 +34,25 @@ int QuanPvSC3(float param_1,float param_2,float param_3)
 
 // 828C7FF0  UnQuanPvSC3  (<external>/Xenon/mar09/core/private/xam/codecs/nci/enc/src/codepv.c:182)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void UnQuanPvSC3(int param_1,float param_2,float *param_3,float *param_4)
 
 {
-  uint uVar1;
   float *in_r6;
-  double extraout_f1;
-  double dVar2;
-  float fVar3;
+  double dVar1;
+  float fVar2;
   
-  uVar1 = __savegprlr_29((double)param_2,param_1,param_3);
-  dVar2 = extraout_f1;
-  fVar3 = ScalarLUT(PvCodeBook,8,uVar1 - (uVar1 & 8));
-  *in_r6 = fVar3;
-  if ((uVar1 & 8) == 0) {
-    *param_4 = (float)dVar2;
+  dVar1 = (double)param_2;
+  fVar2 = ScalarLUT(PvCodeBook,8,param_1 - (param_1 & 8U));
+  *in_r6 = fVar2;
+  if ((param_1 & 8U) == 0) {
+    *param_4 = (float)dVar1;
   }
   else {
-    *param_4 = fVar3;
+    *param_4 = fVar2;
   }
-  __restgprlr_29();
   return;
 }
 

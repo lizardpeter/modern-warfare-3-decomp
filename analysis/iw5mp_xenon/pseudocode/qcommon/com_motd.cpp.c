@@ -38,103 +38,100 @@ bool LiveStorage_DoWeHaveMotd(void)
 
 // 824DCD68  LiveStorage_FetchMotd  (qcommon/com_motd.cpp:79)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 void LiveStorage_FetchMotd(int param_1)
 
 {
-  uint uVar1;
-  int iVar3;
-  bool bVar8;
-  DWOnlineStatus DVar4;
-  int iVar5;
-  longlong lVar2;
-  bool bVar9;
-  overlappedTask *poVar6;
-  char *pcVar7;
+  bool bVar5;
+  DWOnlineStatus DVar1;
+  int iVar2;
+  bool bVar6;
+  overlappedTask *poVar3;
+  char *pcVar4;
   
-  iVar3 = __savegprlr_26(param_1);
-  bVar8 = Live_IsUserSignedInToLive(iVar3);
-  lVar2 = (longlong)bVar8;
-  if ((lVar2 == 0) || (g_motdFetched != false)) goto LAB_824dcedc;
-  bVar8 = TaskManager_TaskIsInProgress(&storageTasks,1);
-  lVar2 = (longlong)bVar8;
-  if (lVar2 != 0) goto LAB_824dcedc;
-  bVar8 = Live_IsUserSignedInToDemonware(iVar3);
-  lVar2 = 0;
-  if (!bVar8) goto LAB_824dcedc;
-  DVar4 = dwGetLogOnStatus(iVar3);
-  lVar2 = (longlong)(int)DVar4;
-  if (DVar4 != DW_LIVE_CONNECTED) goto LAB_824dcedc;
-  iVar5 = Sys_Milliseconds();
-  bVar8 = false;
-  uVar1 = (iVar5 - g_LastFetchMotdAttemptTime) / 1000;
-  lVar2 = (longlong)(int)uVar1;
-  if (g_NumFetchMotdAttempts == 0) {
-LAB_824dce24:
-    bVar8 = true;
+  bVar5 = Live_IsUserSignedInToLive(param_1);
+  if (!bVar5) {
+    return;
   }
-  else {
-    bVar9 = Live_GetShouldDemonwareRetry(uVar1,g_NumFetchMotdAttempts,0x3c);
-    lVar2 = (longlong)bVar9;
-    if (lVar2 != 0) goto LAB_824dce24;
+  if (g_motdFetched != false) {
+    return;
   }
-  if (bVar8) {
-    g_NumFetchMotdAttempts = g_NumFetchMotdAttempts + 1;
-    g_LastFetchMotdAttemptTime = iVar5;
-    poVar6 = TaskManager_GetOpenTaskSlot(&storageTasks,iVar3,1);
-    lVar2 = (longlong)(int)poVar6;
-    if (poVar6 != (overlappedTask *)0x0) {
-      SEH_GetLanguageName((loc_language->current).integer);
-      pcVar7 = va("motd-%s.txt");
-      I_strncpyz(motdFilename,pcVar7,0x40);
-      g_fetchMessageOfTheDayFileTask.m_filename = motdFilename;
-      memset();
-      g_fetchMessageOfTheDayFileTask.m_buffer = s_motdBuffer;
-      g_fetchMessageOfTheDayFileTask.m_bufferSize = 0x100;
-      poVar6->data = &g_fetchMessageOfTheDayFileTask;
-      iVar3 = dwFetchPublisherFile(poVar6,&g_fetchMessageOfTheDayFileTask);
-      lVar2 = (longlong)iVar3;
+  bVar5 = TaskManager_TaskIsInProgress(&storageTasks,1);
+  if (bVar5) {
+    return;
+  }
+  bVar5 = Live_IsUserSignedInToDemonware(param_1);
+  if (bVar5) {
+    DVar1 = dwGetLogOnStatus(param_1);
+    if (DVar1 == DW_LIVE_CONNECTED) {
+      iVar2 = Sys_Milliseconds();
+      bVar5 = false;
+      if ((g_NumFetchMotdAttempts == 0) ||
+         (bVar6 = Live_GetShouldDemonwareRetry
+                            ((iVar2 - g_LastFetchMotdAttemptTime) / 1000,g_NumFetchMotdAttempts,0x3c
+                            ), bVar6)) {
+        bVar5 = true;
+      }
+      if (bVar5) {
+        g_NumFetchMotdAttempts = g_NumFetchMotdAttempts + 1;
+        g_LastFetchMotdAttemptTime = iVar2;
+        poVar3 = TaskManager_GetOpenTaskSlot(&storageTasks,param_1,1);
+        if (poVar3 != (overlappedTask *)0x0) {
+          SEH_GetLanguageName((loc_language->current).integer);
+          pcVar4 = va("motd-%s.txt");
+          I_strncpyz(motdFilename,pcVar4,0x40);
+          g_fetchMessageOfTheDayFileTask.m_filename = motdFilename;
+          memset();
+          g_fetchMessageOfTheDayFileTask.m_buffer = s_motdBuffer;
+          g_fetchMessageOfTheDayFileTask.m_bufferSize = 0x100;
+          poVar3->data = &g_fetchMessageOfTheDayFileTask;
+          dwFetchPublisherFile(poVar3,&g_fetchMessageOfTheDayFileTask);
+        }
+      }
+      return;
     }
+    return;
   }
-LAB_824dcedc:
-  __restgprlr_26(lVar2);
   return;
 }
 
 
 // 824DCEE8  LiveStorage_MotdFetchComplete  (qcommon/com_motd.cpp:155)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
+
 taskCompleteResults LiveStorage_MotdFetchComplete(int param_1)
 
 {
   bdRemoteTask *this;
-  int iVar1;
-  bdLobbyService *pbVar2;
-  Status SVar3;
-  taskCompleteResults tVar4;
-  int iVar5;
-  bdLobbyErrorCode bVar6;
-  int iVar7;
+  bdLobbyService *pbVar1;
+  Status SVar2;
+  taskCompleteResults tVar3;
+  int iVar4;
+  bdLobbyErrorCode bVar5;
+  int iVar6;
   
-  iVar1 = __savegprlr_25(param_1);
-  if (storageTasks.tasks[iVar1].active == false) {
+  if (storageTasks.tasks[param_1].active == false) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_motd.cpp",0xa0,0,
                     "%s");
   }
-  if (storageTasks.tasks[iVar1].type != 1) {
+  if (storageTasks.tasks[param_1].type != 1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_motd.cpp",0xa1,0,
                     "%s");
   }
-  pbVar2 = dwGetLobbyService((uint)storageTasks.tasks[iVar1].controllerIndex);
-  if (pbVar2 != (bdLobbyService *)0x0) {
-    pbVar2 = dwGetLobbyService((uint)storageTasks.tasks[iVar1].controllerIndex);
-    SVar3 = bdLobbyService::getStatus(pbVar2);
-    if (SVar3 != BD_CONNECTED) {
-      tVar4 = __restgprlr_25(0);
-      return tVar4;
+  pbVar1 = dwGetLobbyService((uint)storageTasks.tasks[param_1].controllerIndex);
+  if (pbVar1 != (bdLobbyService *)0x0) {
+    pbVar1 = dwGetLobbyService((uint)storageTasks.tasks[param_1].controllerIndex);
+    SVar2 = bdLobbyService::getStatus(pbVar1);
+    if (SVar2 != BD_CONNECTED) {
+      return TASK_NOTCOMPLETE;
     }
   }
-  tVar4 = dwFetchFileComplete(storageTasks.tasks + iVar1,&g_fetchMessageOfTheDayFileTask);
-  if (tVar4 == TASK_COMPLETE) {
+  tVar3 = dwFetchFileComplete(storageTasks.tasks + param_1,&g_fetchMessageOfTheDayFileTask);
+  if (tVar3 == TASK_COMPLETE) {
     if (g_fetchMessageOfTheDayFileTask.m_fileSize < 0x101) {
       Com_Printf(0x10,"Motd was %i bytes\n");
       for (; (g_fetchMessageOfTheDayFileTask.m_fileSize != 0 &&
@@ -143,16 +140,16 @@ taskCompleteResults LiveStorage_MotdFetchComplete(int param_1)
           g_fetchMessageOfTheDayFileTask.m_fileSize = g_fetchMessageOfTheDayFileTask.m_fileSize - 1)
       {
       }
-      iVar7 = 0;
+      iVar6 = 0;
       s_motdBuffer[g_fetchMessageOfTheDayFileTask.m_fileSize] = '\0';
-      iVar5 = I_strcmp((motd->current).string,(char *)s_motdBuffer);
-      if (iVar5 != 0) {
+      iVar4 = I_strcmp((motd->current).string,(char *)s_motdBuffer);
+      if (iVar4 != 0) {
         do {
-          GamerProfile_UpdateMotd(iVar7,(char *)s_motdBuffer);
+          GamerProfile_UpdateMotd(iVar6,(char *)s_motdBuffer);
           Dvar_SetStringByName("motd",(char *)s_motdBuffer);
-          iVar7 = iVar7 + 1;
-        } while (iVar7 < 4);
-        if ((cl_multi_gamepads_enabled == 0) && (iVar7 != cl_controller_in_use)) {
+          iVar6 = iVar6 + 1;
+        } while (iVar6 < 4);
+        if ((cl_multi_gamepads_enabled == 0) && (iVar6 != cl_controller_in_use)) {
           GamerProfile_UpdateMotd(cl_controller_in_use,(char *)s_motdBuffer);
         }
       }
@@ -160,29 +157,28 @@ taskCompleteResults LiveStorage_MotdFetchComplete(int param_1)
     }
     else {
       Com_Error(ERR_DROP,"Insufficient space for motd");
-      tVar4 = TASK_ERROR;
+      tVar3 = TASK_ERROR;
     }
   }
-  else if (tVar4 == TASK_ERROR) {
-    this = storageTasks.tasks[iVar1].u.remoteTask.m_ptr;
+  else if (tVar3 == TASK_ERROR) {
+    this = storageTasks.tasks[param_1].u.remoteTask.m_ptr;
     if ((this != (bdRemoteTask *)0x0) &&
-       (bVar6 = bdRemoteTask::getErrorCode(this), bVar6 == BD_NO_FILE)) {
+       (bVar5 = bdRemoteTask::getErrorCode(this), bVar5 == BD_NO_FILE)) {
       g_motdFetched = true;
     }
   }
-  else if (tVar4 == TASK_NOTCOMPLETE) goto LAB_824dd150;
-  TaskManager_ClearTask(storageTasks.tasks + iVar1);
-  if (tVar4 == TASK_ERROR) {
+  else if (tVar3 == TASK_NOTCOMPLETE) {
+    return TASK_NOTCOMPLETE;
+  }
+  TaskManager_ClearTask(storageTasks.tasks + param_1);
+  if (tVar3 == TASK_ERROR) {
     if (g_motdFetched != false) {
       Com_Printf(0x10,"No MOTD file found with name [%s]\n");
-      tVar4 = __restgprlr_25(2);
-      return tVar4;
+      return TASK_ERROR;
     }
     Com_PrintError(0x10,"Unable to retrieve MOTD\n");
   }
-LAB_824dd150:
-  tVar4 = __restgprlr_25(tVar4);
-  return tVar4;
+  return tVar3;
 }
 
 

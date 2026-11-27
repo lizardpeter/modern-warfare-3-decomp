@@ -60,6 +60,8 @@ void Facebook_RegisterCommands(void)
 
 // 826FE6B8  Facebook_ShutdownFriends  (social/fb_friends.cpp:118)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void Facebook_ShutdownFriends(void)
@@ -72,7 +74,6 @@ void Facebook_ShutdownFriends(void)
   char in_RESERVE;
   byte in_cr0;
   
-  __savegprlr_29();
   pbVar4 = g_DWFacebookFriendTask;
   do {
     pbVar1 = pbVar4->m_ptr;
@@ -97,7 +98,6 @@ void Facebook_ShutdownFriends(void)
     }
     pbVar4 = pbVar4 + 1;
   } while ((int)pbVar4 < -0x7bac5cd0);
-  __restgprlr_29();
   return;
 }
 
@@ -154,49 +154,50 @@ void Facebook_ClearFriends(int param_1,bool param_2)
 
 // 826FE758  FacebookFriends_UserSignedOut  (social/fb_friends.cpp:153)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void FacebookFriends_UserSignedOut(int param_1)
 
 {
   bdRemoteTask *pbVar1;
   uint uVar2;
   int iVar3;
-  int iVar4;
-  longlong lVar5;
-  uint *puVar6;
+  longlong lVar4;
+  uint *puVar5;
   char in_RESERVE;
   byte in_cr0;
   
-  iVar3 = __savegprlr_27(param_1);
-  if ((g_DWFacebookFriendTask[iVar3].m_ptr != (bdRemoteTask *)0x0) &&
-     (iVar4 = (**(code **)((g_DWFacebookFriendTask[iVar3].m_ptr)->_padding_ + 4))(), iVar4 == 1)) {
-    bdRemoteTask::cancelTask(g_DWFacebookFriendTask[iVar3].m_ptr);
+  if ((g_DWFacebookFriendTask[param_1].m_ptr != (bdRemoteTask *)0x0) &&
+     (iVar3 = (**(code **)((g_DWFacebookFriendTask[param_1].m_ptr)->_padding_ + 4))(), iVar3 == 1))
+  {
+    bdRemoteTask::cancelTask(g_DWFacebookFriendTask[param_1].m_ptr);
   }
-  pbVar1 = g_DWFacebookFriendTask[iVar3].m_ptr;
-  g_DWFacebookFriendTaskStage[iVar3] = FACEBOOK_FRIENDS_TASK_STAGE_WAITING_FOR_AUTHENTICATION;
+  pbVar1 = g_DWFacebookFriendTask[param_1].m_ptr;
+  g_DWFacebookFriendTaskStage[param_1] = FACEBOOK_FRIENDS_TASK_STAGE_WAITING_FOR_AUTHENTICATION;
   if (ZEXT48(pbVar1) != 0) {
-    lVar5 = ZEXT48(pbVar1) + 4;
+    lVar4 = ZEXT48(pbVar1) + 4;
     do {
-      puVar6 = (uint *)lVar5;
+      puVar5 = (uint *)lVar4;
       if (in_RESERVE != '\0') {
-        uVar2 = storeWordConditionalIndexed((ulonglong)*puVar6 - 1,0,lVar5);
-        *puVar6 = uVar2;
+        uVar2 = storeWordConditionalIndexed((ulonglong)*puVar5 - 1,0,lVar4);
+        *puVar5 = uVar2;
         in_cr0 = 2;
       }
     } while (!(bool)(in_cr0 >> 1 & 1));
     if (*(int *)&pbVar1->field_0x4 == 0) {
-      pbVar1 = g_DWFacebookFriendTask[iVar3].m_ptr;
+      pbVar1 = g_DWFacebookFriendTask[param_1].m_ptr;
       if (pbVar1 != (bdRemoteTask *)0x0) {
         (**(code **)pbVar1->_padding_)(pbVar1,1);
       }
     }
   }
-  g_DWFacebookFriendTask[iVar3].m_ptr = (bdRemoteTask *)0x0;
-  (&DAT_8451e080)[iVar3] = 0;
-  (&DAT_8451e070)[iVar3] = 0;
-  (&DAT_8451e090)[iVar3] = 0;
-  (&DAT_8451e058)[iVar3] = 0;
-  Facebook_ClearFriends(iVar3,true);
-  __restgprlr_27();
+  g_DWFacebookFriendTask[param_1].m_ptr = (bdRemoteTask *)0x0;
+  (&DAT_8451e080)[param_1] = 0;
+  (&DAT_8451e070)[param_1] = 0;
+  (&DAT_8451e090)[param_1] = 0;
+  (&DAT_8451e058)[param_1] = 0;
+  Facebook_ClearFriends(param_1,true);
   return;
 }
 
@@ -222,6 +223,8 @@ bool FacebookFriends_IsDisabled(int param_1)
 
 // 826FE840  Facebook_InitFriends  (social/fb_friends.cpp:185)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void Facebook_InitFriends(void)
@@ -237,7 +240,6 @@ void Facebook_InitFriends(void)
   char in_RESERVE;
   byte in_cr0;
   
-  __savegprlr_27();
   facebook_friends_showing_count =
        Dvar_RegisterInt("facebook_friends_showing_count",0,0,100,0x2000,
                         "Contains how many facebook friends are being shown in the UI.");
@@ -272,80 +274,79 @@ void Facebook_InitFriends(void)
     iVar7 = iVar7 + 4;
     iVar6 = iVar6 + 1;
   } while (iVar7 < 0x10);
-  __restgprlr_27();
   return;
 }
 
 
 // 826FD140  Facebook_RetryGetFriends  (social/fb_friends.cpp:205)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void Facebook_RetryGetFriends(int param_1)
 
 {
   dvar_t *pdVar1;
   dvar_t *pdVar2;
-  int iVar3;
-  uint uVar4;
-  int iVar5;
+  uint uVar3;
+  int iVar4;
   
-  iVar3 = __savegprlr_29(param_1);
   pdVar2 = facebook_friends_retry_step;
   pdVar1 = facebook_friends_max_retry_time;
-  iVar5 = (&DAT_8451e070)[iVar3];
-  (&DAT_8451e070)[iVar3] = iVar5 + 1;
-  uVar4 = Live_GenerateTimeToRetryInSeconds
-                    (((pdVar2->current).integer / 1000) * (iVar5 + 1),
+  iVar4 = (&DAT_8451e070)[param_1];
+  (&DAT_8451e070)[param_1] = iVar4 + 1;
+  uVar3 = Live_GenerateTimeToRetryInSeconds
+                    (((pdVar2->current).integer / 1000) * (iVar4 + 1),
                      (pdVar1->current).integer / 1000);
-  iVar5 = Sys_Milliseconds();
-  g_DWFacebookFriendTaskStage[iVar3] = FACEBOOK_FRIENDS_TASK_STAGE_WAITING;
-  (&DAT_8451e080)[iVar3] = iVar5 + uVar4 * 1000;
-  __restgprlr_29();
+  iVar4 = Sys_Milliseconds();
+  g_DWFacebookFriendTaskStage[param_1] = FACEBOOK_FRIENDS_TASK_STAGE_WAITING;
+  (&DAT_8451e080)[param_1] = iVar4 + uVar3 * 1000;
   return;
 }
 
 
 // 826FE938  Facebook_GetFriends  (social/fb_friends.cpp:213)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void Facebook_GetFriends(int param_1)
 
 {
   bdRemoteTask *pbVar1;
-  int iVar2;
-  bdFacebook *pbVar3;
-  bdReference<bdRemoteTask> bVar4;
-  int iVar5;
+  bdFacebook *pbVar2;
+  bdReference<bdRemoteTask> bVar3;
+  int iVar4;
   bdReference<bdRemoteTask> abStack_30 [12];
   
-  iVar2 = __savegprlr_28(param_1);
-  if (g_DWFacebookFriendTaskStage[iVar2] != FACEBOOK_FRIENDS_TASK_STAGE_WORKING) {
-    pbVar3 = dwGetFacebook(iVar2);
-    if ((pbVar3 != (bdFacebook *)0x0) && ((facebook_friends_active->current).integer != 0)) {
-      bVar4 = bdFacebook::getFriends
-                        ((bdFacebook *)abStack_30,SUB41(pbVar3,0),1,
-                         g_FacebookFriendStore[iVar2].facebookCurrentOffset,(bdFacebookFriend *)0x64
-                         ,(bdFacebookFriendSort)(g_FacebookFriendStore + iVar2));
-      bdReference<bdRemoteTask>::operator=
-                (g_DWFacebookFriendTask + iVar2,(bdReference<bdRemoteTask> *)bVar4.m_ptr);
-      bdReference<bdRemoteTask>::~bdReference<bdRemoteTask>(abStack_30);
-      pbVar1 = g_DWFacebookFriendTask[iVar2].m_ptr;
-      if ((pbVar1 != (bdRemoteTask *)0x0) &&
-         (iVar5 = (**(code **)(pbVar1->_padding_ + 4))(), iVar5 == 1)) {
-        g_DWFacebookFriendTaskStage[iVar2] = FACEBOOK_FRIENDS_TASK_STAGE_WORKING;
-        iVar5 = Sys_Milliseconds();
-        (&DAT_8451e058)[iVar2] = (facebook_friends_throttle_time->current).string + iVar5;
-        __restgprlr_28();
-        return;
-      }
-      Facebook_RetryGetFriends(iVar2);
+  if (((g_DWFacebookFriendTaskStage[param_1] != FACEBOOK_FRIENDS_TASK_STAGE_WORKING) &&
+      (pbVar2 = dwGetFacebook(param_1), pbVar2 != (bdFacebook *)0x0)) &&
+     ((facebook_friends_active->current).integer != 0)) {
+    bVar3 = bdFacebook::getFriends
+                      ((bdFacebook *)abStack_30,SUB41(pbVar2,0),1,
+                       g_FacebookFriendStore[param_1].facebookCurrentOffset,(bdFacebookFriend *)0x64
+                       ,(bdFacebookFriendSort)(g_FacebookFriendStore + param_1));
+    bdReference<bdRemoteTask>::operator=
+              (g_DWFacebookFriendTask + param_1,(bdReference<bdRemoteTask> *)bVar3.m_ptr);
+    bdReference<bdRemoteTask>::~bdReference<bdRemoteTask>(abStack_30);
+    pbVar1 = g_DWFacebookFriendTask[param_1].m_ptr;
+    if ((pbVar1 != (bdRemoteTask *)0x0) &&
+       (iVar4 = (**(code **)(pbVar1->_padding_ + 4))(), iVar4 == 1)) {
+      g_DWFacebookFriendTaskStage[param_1] = FACEBOOK_FRIENDS_TASK_STAGE_WORKING;
+      iVar4 = Sys_Milliseconds();
+      (&DAT_8451e058)[param_1] = (facebook_friends_throttle_time->current).string + iVar4;
+      return;
     }
+    Facebook_RetryGetFriends(param_1);
   }
-  __restgprlr_28();
   return;
 }
 
 
 // 826FEA30  Facebook_UpdateFriends  (social/fb_friends.cpp:244)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void Facebook_UpdateFriends(int param_1)
@@ -355,90 +356,99 @@ void Facebook_UpdateFriends(int param_1)
   char *pcVar2;
   FACEBOOK_FRIENDS_TASK_STAGE FVar3;
   uint uVar4;
+  bool bVar9;
   int iVar5;
-  bool bVar10;
-  int iVar6;
-  bdLobbyErrorCode bVar7;
+  bdLobbyErrorCode bVar6;
+  uint uVar7;
   uint uVar8;
-  uint uVar9;
-  ulonglong uVar11;
+  ulonglong uVar10;
   LocalClientNum_t local_40 [16];
   
-  iVar5 = __savegprlr_26(param_1);
   bVar1 = false;
-  bVar10 = CL_DoesControllerIndexHaveALocalClientNum(iVar5,local_40);
-  if ((bVar10) && (iVar6 = CL_IsCgameInitialized(local_40[0]), iVar6 != 0)) {
+  bVar9 = CL_DoesControllerIndexHaveALocalClientNum(param_1,local_40);
+  if ((bVar9) && (iVar5 = CL_IsCgameInitialized(local_40[0]), iVar5 != 0)) {
     bVar1 = true;
   }
-  FVar3 = g_DWFacebookFriendTaskStage[iVar5];
+  FVar3 = g_DWFacebookFriendTaskStage[param_1];
   if (FACEBOOK_FRIENDS_TASK_STAGE_DISABLED < FVar3) {
     if (alwaysfails == 0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\fb_friends.cpp",0x148
                       ,0,"Facebook Friends: Unknown Facebook friends task stage");
     }
-LAB_826fec34:
-    __restgprlr_26();
     return;
   }
-  if (FVar3 == FACEBOOK_FRIENDS_TASK_STAGE_WAITING_FOR_AUTHENTICATION) goto LAB_826fec34;
-  if (FVar3 == FACEBOOK_FRIENDS_TASK_STAGE_WAITING) {
-    iVar6 = Sys_Milliseconds();
-    if (((int)(&DAT_8451e080)[iVar5] < iVar6) && (!bVar1)) {
-      (&DAT_8451e080)[iVar5] = 0;
-      Facebook_GetFriends(iVar5);
-      __restgprlr_26();
-      return;
-    }
-    goto LAB_826fec34;
+  if (FVar3 == FACEBOOK_FRIENDS_TASK_STAGE_WAITING_FOR_AUTHENTICATION) {
+    return;
   }
-  if ((((FVar3 != FACEBOOK_FRIENDS_TASK_STAGE_WORKING) ||
-       (g_DWFacebookFriendTask[iVar5].m_ptr == (bdRemoteTask *)0x0)) ||
-      (iVar6 = (**(code **)((g_DWFacebookFriendTask[iVar5].m_ptr)->_padding_ + 4))(), iVar6 == 1))
-     || (iVar6 = Sys_Milliseconds(), iVar6 < (int)(&DAT_8451e058)[iVar5])) goto LAB_826fec34;
-  bVar7 = bdRemoteTask::getErrorCode(g_DWFacebookFriendTask[iVar5].m_ptr);
-  if ((int)bVar7 < 0xe17) {
-    if (bVar7 == BD_FACEBOOK_UNAVAILABLE) goto LAB_826febf8;
-    if (bVar7 == BD_NO_ERROR) {
-      uVar8 = bdRemoteTask::getNumResults(g_DWFacebookFriendTask[iVar5].m_ptr);
-      g_FacebookFriendStore[iVar5].facebookFriendCount = uVar8;
-      uVar9 = bdRemoteTask::getTotalNumResults(g_DWFacebookFriendTask[iVar5].m_ptr);
-      uVar8 = g_FacebookFriendStore[iVar5].facebookFriendCount;
-      uVar11 = (ulonglong)uVar8 - 1;
-      uVar4 = g_FacebookFriendStore[iVar5].facebookCurrentIndex;
-      g_FacebookFriendStore[iVar5].facebookTotalFriendCount = uVar9;
-      if ((int)uVar4 < (int)uVar11) {
-        uVar11 = (ulonglong)uVar4;
-      }
-      g_FacebookFriendStore[iVar5].facebookCurrentIndex =
-           -((int)(uint)uVar11 >> 0x1f) - (uint)(uVar11 != 0) & (uint)uVar11;
-      Dvar_SetInt(facebook_friends_showing_count,uVar8);
-      uVar8 = Sys_GetTimeAsSeconds();
-      pcVar2 = (facebook_friends_refresh_time->current).string;
-      g_FacebookFriendStore[iVar5].initial_sort = true;
-      g_DWFacebookFriendTaskStage[iVar5] = FACEBOOK_FRIENDS_TASK_STAGE_ALL_DONE;
-      (&DAT_8451e090)[iVar5] = pcVar2 + uVar8;
-      __restgprlr_26();
+  if (FVar3 == FACEBOOK_FRIENDS_TASK_STAGE_WAITING) {
+    iVar5 = Sys_Milliseconds();
+    if (iVar5 <= (int)(&DAT_8451e080)[param_1]) {
       return;
     }
-    bVar1 = bVar7 == BD_SERVICE_NOT_AVAILABLE;
+    if (bVar1) {
+      return;
+    }
+    (&DAT_8451e080)[param_1] = 0;
+    Facebook_GetFriends(param_1);
+    return;
+  }
+  if (FVar3 != FACEBOOK_FRIENDS_TASK_STAGE_WORKING) {
+    return;
+  }
+  if (g_DWFacebookFriendTask[param_1].m_ptr == (bdRemoteTask *)0x0) {
+    return;
+  }
+  iVar5 = (**(code **)((g_DWFacebookFriendTask[param_1].m_ptr)->_padding_ + 4))();
+  if (iVar5 == 1) {
+    return;
+  }
+  iVar5 = Sys_Milliseconds();
+  if (iVar5 < (int)(&DAT_8451e058)[param_1]) {
+    return;
+  }
+  bVar6 = bdRemoteTask::getErrorCode(g_DWFacebookFriendTask[param_1].m_ptr);
+  if ((int)bVar6 < 0xe17) {
+    if (bVar6 == BD_FACEBOOK_UNAVAILABLE) goto LAB_826febf8;
+    if (bVar6 == BD_NO_ERROR) {
+      uVar7 = bdRemoteTask::getNumResults(g_DWFacebookFriendTask[param_1].m_ptr);
+      g_FacebookFriendStore[param_1].facebookFriendCount = uVar7;
+      uVar8 = bdRemoteTask::getTotalNumResults(g_DWFacebookFriendTask[param_1].m_ptr);
+      uVar7 = g_FacebookFriendStore[param_1].facebookFriendCount;
+      uVar10 = (ulonglong)uVar7 - 1;
+      uVar4 = g_FacebookFriendStore[param_1].facebookCurrentIndex;
+      g_FacebookFriendStore[param_1].facebookTotalFriendCount = uVar8;
+      if ((int)uVar4 < (int)uVar10) {
+        uVar10 = (ulonglong)uVar4;
+      }
+      g_FacebookFriendStore[param_1].facebookCurrentIndex =
+           -((int)(uint)uVar10 >> 0x1f) - (uint)(uVar10 != 0) & (uint)uVar10;
+      Dvar_SetInt(facebook_friends_showing_count,uVar7);
+      uVar7 = Sys_GetTimeAsSeconds();
+      pcVar2 = (facebook_friends_refresh_time->current).string;
+      g_FacebookFriendStore[param_1].initial_sort = true;
+      g_DWFacebookFriendTaskStage[param_1] = FACEBOOK_FRIENDS_TASK_STAGE_ALL_DONE;
+      (&DAT_8451e090)[param_1] = pcVar2 + uVar7;
+      return;
+    }
+    bVar1 = bVar6 == BD_SERVICE_NOT_AVAILABLE;
   }
   else {
-    bVar1 = bVar7 == BD_FACEBOOK_DISABLED_FOR_USER;
+    bVar1 = bVar6 == BD_FACEBOOK_DISABLED_FOR_USER;
   }
   if (!bVar1) {
-    Facebook_RetryGetFriends(iVar5);
-    __restgprlr_26();
+    Facebook_RetryGetFriends(param_1);
     return;
   }
 LAB_826febf8:
-  g_DWFacebookFriendTaskStage[iVar5] = FACEBOOK_FRIENDS_TASK_STAGE_DISABLED;
-  __restgprlr_26();
+  g_DWFacebookFriendTaskStage[param_1] = FACEBOOK_FRIENDS_TASK_STAGE_DISABLED;
   return;
 }
 
 
 // 826FEC40  Facebook_RefreshFriends  (social/fb_friends.cpp:335)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
@@ -449,14 +459,12 @@ void Facebook_RefreshFriends(void)
   int iVar2;
   uint uVar3;
   
-  __savegprlr_29();
   LVar1 = Cmd_LocalClientNum();
   iVar2 = CL_ControllerIndexFromClientNum(LVar1);
   if ((g_DWFacebookFriendTaskStage[iVar2] == FACEBOOK_FRIENDS_TASK_STAGE_ALL_DONE) &&
      (uVar3 = Sys_GetTimeAsSeconds(), (uint)(&DAT_8451e090)[iVar2] < uVar3)) {
     Facebook_GetFriends(iVar2);
   }
-  __restgprlr_29();
   return;
 }
 
@@ -482,120 +490,100 @@ bool Facebook_IsPlatformFriend(int param_1)
 
 // 826FD258  Facebook_FeederItemText  (social/fb_friends.cpp:361)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 char * Facebook_FeederItemText
                  (int param_1,int param_2,int param_3,Material **param_4,Font_s *param_5,
                  float param_6)
 
 {
-  uint uVar1;
-  Material *pMVar2;
-  char *pcVar3;
-  bool bVar4;
-  ulonglong uVar5;
-  ulonglong uVar6;
-  ulonglong uVar7;
-  int iVar8;
-  double extraout_f1;
-  double dVar9;
+  Material *pMVar1;
+  char *pcVar2;
+  bool bVar3;
+  int iVar4;
+  double dVar5;
   
-  uVar6 = (ulonglong)param_3;
-  uVar5 = (ulonglong)param_2;
-  uVar1 = __savegprlr_26((double)param_6,param_1);
-  uVar7 = uVar6;
-  dVar9 = extraout_f1;
-  if (3 < uVar1) {
-    uVar7 = 0;
+  dVar5 = (double)param_6;
+  iVar4 = param_3;
+  if (3 < (uint)param_1) {
+    iVar4 = 0;
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\fb_friends.cpp",0x16c,0
                     ,"controllerIndex doesn\'t index MAX_GPAD_COUNT\n\t%i not in [0, %i)");
   }
-  iVar8 = (int)uVar7;
-  if (99 < (uVar5 & 0xffffffff)) {
-    iVar8 = 0;
+  if (99 < (uint)param_2) {
+    iVar4 = 0;
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\fb_friends.cpp",0x16d,0
                     ,"row doesn\'t index MAX_FACEBOOK_FRIENDS\n\t%i not in [0, %i)");
   }
-  if (4 < (uVar6 & 0xffffffff)) {
-    iVar8 = 0;
+  if ((uint)param_3 < 5) {
+    if (param_3 == 1) {
+      pMVar1 = Material_RegisterHandle("xbox360",3);
+      *param_4 = pMVar1;
+      return "";
+    }
+    if (param_3 == 2) {
+      iVar4 = 0x400;
+      I_strncpyz(facebookUserName,
+                 g_FacebookFriendStore[param_1].facebookFriends[0].m_accountName +
+                 (int)(((longlong)param_2 + ((ulonglong)(uint)param_2 & 0x1fffffff) * 8 & 0xffffffff
+                       ) << 5),0x400);
+      bVar3 = MakeUTF8NameSafeForAllLanguages(facebookUserName,0x400);
+      facebookUserName[0] = -bVar3 & facebookUserName[0];
+      pcVar2 = UI_TruncateTextWithEllipsis(facebookUserName,param_5,(float)dVar5,iVar4);
+      return pcVar2;
+    }
+    if (param_3 == 3) {
+      pcVar2 = UI_TruncateTextWithEllipsis
+                         (g_FacebookFriendStore[param_1].facebookFriends[0].m_userName +
+                          (int)(((longlong)param_2 + ((ulonglong)(uint)param_2 & 0x1fffffff) * 8 &
+                                0xffffffff) << 5),param_5,(float)dVar5,iVar4);
+      return pcVar2;
+    }
+    if (param_3 == 0) {
+      pMVar1 = Material_RegisterHandle("facebook",3);
+      *param_4 = pMVar1;
+      return "";
+    }
+  }
+  else {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\fb_friends.cpp",0x16e,0
                     ,"column doesn\'t index FACEBOOK_FRIEND_FEEDER_COL_MAX\n\t%i not in [0, %i)");
   }
-  if ((uVar6 & 0xffffffff) < 5) {
-    bVar4 = (int)uVar6 != 0;
-    if (uVar6 == 1 && bVar4) {
-      pMVar2 = Material_RegisterHandle("xbox360",3);
-      *param_4 = pMVar2;
-      pcVar3 = (char *)__restgprlr_26(0xffffffff820068af);
-      return pcVar3;
-    }
-    if (uVar6 == 2 && bVar4) {
-      iVar8 = 0x400;
-      I_strncpyz(facebookUserName,
-                 g_FacebookFriendStore[uVar1].facebookFriends[0].m_accountName +
-                 (int)((uVar5 + (uVar5 & 0x1fffffff) * 8 & 0xffffffff) << 5),0x400);
-      bVar4 = MakeUTF8NameSafeForAllLanguages(facebookUserName,0x400);
-      facebookUserName[0] = -bVar4 & facebookUserName[0];
-      pcVar3 = UI_TruncateTextWithEllipsis(facebookUserName,param_5,(float)dVar9,iVar8);
-      pcVar3 = (char *)__restgprlr_26(pcVar3);
-      return pcVar3;
-    }
-    if (uVar6 == 3 && bVar4) {
-      pcVar3 = UI_TruncateTextWithEllipsis
-                         (g_FacebookFriendStore[uVar1].facebookFriends[0].m_userName +
-                          (int)((uVar5 + (uVar5 & 0x1fffffff) * 8 & 0xffffffff) << 5),param_5,
-                          (float)dVar9,iVar8);
-      pcVar3 = (char *)__restgprlr_26(pcVar3);
-      return pcVar3;
-    }
-    if (!bVar4) {
-      pMVar2 = Material_RegisterHandle("facebook",3);
-      *param_4 = pMVar2;
-      pcVar3 = (char *)__restgprlr_26(0xffffffff820068af);
-      return pcVar3;
-    }
-  }
-  pcVar3 = (char *)__restgprlr_26(0xffffffff820068af);
-  return pcVar3;
+  return "";
 }
 
 
 // 826FD440  Facebook_FeederItemColor  (social/fb_friends.cpp:401)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 bool Facebook_FeederItemColor(LocalClientNum_t param_1,int param_2,int param_3,float *param_4)
 
 {
-  LocalClientNum_t LVar1;
-  int iVar2;
-  undefined1 uVar3;
-  ulonglong uVar4;
-  ulonglong uVar5;
+  int iVar1;
   
-  uVar5 = (ulonglong)param_3;
-  uVar4 = (ulonglong)param_2;
-  LVar1 = __savegprlr_27(param_1);
-  iVar2 = (int)uVar4;
-  if (99 < (uVar4 & 0xffffffff)) {
-    iVar2 = 0x194;
+  if (99 < (uint)param_2) {
+    param_2 = 0x194;
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\fb_friends.cpp",0x194,0
                     ,"row doesn\'t index MAX_FACEBOOK_FRIENDS\n\t%i not in [0, %i)");
   }
-  if (4 < (uVar5 & 0xffffffff)) {
-    iVar2 = 0x195;
+  if (4 < (uint)param_3) {
+    param_2 = 0x195;
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\fb_friends.cpp",0x195,0
                     ,"column doesn\'t index FACEBOOK_FRIEND_FEEDER_COL_MAX\n\t%i not in [0, %i)");
   }
-  iVar2 = UI_FeederItemEnabled(LVar1,33.0,iVar2);
-  if ((iVar2 != 0) && ((int)uVar5 == 2)) {
+  iVar1 = UI_FeederItemEnabled(param_1,33.0,param_2);
+  if ((iVar1 != 0) && (param_3 == 2)) {
     *param_4 = 0.522;
     param_4[1] = 0.643;
     param_4[2] = 0.882;
     param_4[3] = 1.0;
-    uVar3 = __restgprlr_27(1);
-    return (bool)uVar3;
+    return true;
   }
-  uVar3 = __restgprlr_27(0);
-  return (bool)uVar3;
+  return false;
 }
 
 
@@ -650,29 +638,27 @@ void Facebook_FeederClearXUID(int param_1)
 
 // 826FEC98  Facebook_FeederGamerTag  (social/fb_friends.cpp:450)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 char * Facebook_FeederGamerTag(int param_1)
 
 {
   uint uVar1;
-  uint uVar2;
-  char *pcVar3;
   
-  uVar1 = __savegprlr_28(param_1);
-  if (3 < uVar1) {
+  if (3 < (uint)param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\fb_friends.cpp",0x1c5,0
                     ,"controllerIndex doesn\'t index MAX_GPAD_COUNT\n\t%i not in [0, %i)");
   }
-  uVar2 = Facebook_GetPositionByXuid(uVar1,g_FacebookFriendStore[uVar1].storedPlayer);
-  if ((int)uVar2 < 0) {
-    pcVar3 = (char *)__restgprlr_28(0xffffffff820068af);
-    return pcVar3;
+  uVar1 = Facebook_GetPositionByXuid(param_1,g_FacebookFriendStore[param_1].storedPlayer);
+  if ((int)uVar1 < 0) {
+    return "";
   }
-  if (99 < uVar2) {
+  if (99 < uVar1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\fb_friends.cpp",0x1cb,0
                     ,"playerIndex doesn\'t index MAX_FACEBOOK_FRIENDS\n\t%i not in [0, %i)");
   }
-  pcVar3 = (char *)__restgprlr_28(uVar2 * 0x120 + uVar1 * 0x70a0 + -0x7bae1ec8);
-  return pcVar3;
+  return g_FacebookFriendStore[param_1].facebookFriends[uVar1].m_userName;
 }
 
 
@@ -729,76 +715,74 @@ LAB_826fd7d8:
 
 // 826FD7F8  FacebookFriend_Compare  (social/fb_friends.cpp:539)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 int FacebookFriend_Compare(void *param_1,void *param_2)
 
 {
-  int iVar1;
+  FriendStatus FVar1;
   FriendStatus FVar2;
-  FriendStatus FVar3;
+  int iVar3;
   
-  iVar1 = __savegprlr_29(param_1);
-  FVar2 = FacebookFriend_GetPresence(sortingControllerIndex,*(ulong64 *)(iVar1 + 0x90));
-  FVar3 = FacebookFriend_GetPresence(sortingControllerIndex,*(ulong64 *)((int)param_2 + 0x90));
-  if (FVar3 == FVar2) {
-    iVar1 = I_stricmp((char *)(iVar1 + 0x10),(char *)((int)param_2 + 0x10));
-    iVar1 = __restgprlr_29(iVar1);
-    return iVar1;
+  FVar1 = FacebookFriend_GetPresence(sortingControllerIndex,*(ulong64 *)((int)param_1 + 0x90));
+  FVar2 = FacebookFriend_GetPresence(sortingControllerIndex,*(ulong64 *)((int)param_2 + 0x90));
+  if (FVar2 == FVar1) {
+    iVar3 = I_stricmp((char *)((int)param_1 + 0x10),(char *)((int)param_2 + 0x10));
+    return iVar3;
   }
-  iVar1 = __restgprlr_29((longlong)(int)FVar3 - (longlong)(int)FVar2);
-  return iVar1;
+  return FVar2 - FVar1;
 }
 
 
 // 826FD858  Facebook_Sort  (social/fb_friends.cpp:560)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 void Facebook_Sort(int param_1)
 
 {
-  uint uVar1;
+  int iVar1;
   int iVar2;
   int iVar3;
-  int iVar4;
-  ulong64 uVar5;
+  ulong64 uVar4;
   
-  uVar1 = __savegprlr_26(param_1);
-  if (3 < uVar1) {
+  if (3 < (uint)param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\fb_friends.cpp",0x231,0
                     ,"controllerIndex doesn\'t index MAX_GPAD_COUNT\n\t%i not in [0, %i)");
   }
-  if ((g_FacebookFriendStore[uVar1].facebookFriendCount != 0) &&
-     (g_FacebookFriendStore[uVar1].facebookTotalFriendCount < 0x65)) {
-    uVar5 = g_FacebookFriendStore[uVar1].facebookFriends
-            [g_FacebookFriendStore[uVar1].facebookCurrentIndex].m_userID;
-    sortingControllerIndex = uVar1;
-    qsort(g_FacebookFriendStore + uVar1,g_FacebookFriendStore[uVar1].facebookFriendCount,0x120,
+  if ((g_FacebookFriendStore[param_1].facebookFriendCount != 0) &&
+     (g_FacebookFriendStore[param_1].facebookTotalFriendCount < 0x65)) {
+    uVar4 = g_FacebookFriendStore[param_1].facebookFriends
+            [g_FacebookFriendStore[param_1].facebookCurrentIndex].m_userID;
+    sortingControllerIndex = param_1;
+    qsort(g_FacebookFriendStore + param_1,g_FacebookFriendStore[param_1].facebookFriendCount,0x120,
           FacebookFriend_Compare);
-    if (g_FacebookFriendStore[uVar1].initial_sort != false) {
-      g_FacebookFriendStore[uVar1].initial_sort = false;
-      __restgprlr_26();
+    if (g_FacebookFriendStore[param_1].initial_sort != false) {
+      g_FacebookFriendStore[param_1].initial_sort = false;
       return;
     }
-    iVar2 = 0;
-    if (0 < g_FacebookFriendStore[uVar1].facebookFriendCount) {
-      iVar4 = 0;
-      iVar3 = uVar1 * 0x70a0;
+    iVar1 = 0;
+    if (0 < g_FacebookFriendStore[param_1].facebookFriendCount) {
+      iVar3 = 0;
+      iVar2 = param_1 * 0x70a0;
       do {
-        if (uVar5 == *(ulong64 *)
-                      (g_FacebookFriendStore[0].facebookFriends[0].m_userName + iVar3 + -8)) {
-          Facebook_FeederSelection(uVar1,iVar2);
-          __restgprlr_26();
+        if (uVar4 == *(ulong64 *)
+                      (g_FacebookFriendStore[0].facebookFriends[0].m_userName + iVar2 + -8)) {
+          Facebook_FeederSelection(param_1,iVar1);
           return;
         }
-        iVar2 = iVar2 + 1;
-        iVar4 = iVar4 + 0x120;
-        iVar3 = iVar4 + uVar1 * 0x70a0;
-      } while (iVar2 < g_FacebookFriendStore[uVar1].facebookFriendCount);
+        iVar1 = iVar1 + 1;
+        iVar3 = iVar3 + 0x120;
+        iVar2 = iVar3 + param_1 * 0x70a0;
+      } while (iVar1 < g_FacebookFriendStore[param_1].facebookFriendCount);
     }
     if (alwaysfails == 0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\fb_friends.cpp",0x250
                       ,0,"Facebook: We can\'t find the user we just had selected");
     }
   }
-  __restgprlr_26();
   return;
 }
 
@@ -849,128 +833,109 @@ int Facebook_GetPositionByXuid(int param_1,ulong64 param_2)
 
 // 826FDAB8  Facebook_GetGamerTagByXuid  (social/fb_friends.cpp:626)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void Facebook_GetGamerTagByXuid(int param_1,ulong64 param_2,char *param_3,int param_4)
 
 {
   int iVar1;
-  int iVar2;
   
-  iVar1 = __savegprlr_27(param_1);
-  iVar2 = Facebook_GetPositionByXuid(iVar1,param_2);
-  if (iVar2 < 0) {
+  iVar1 = Facebook_GetPositionByXuid(param_1,param_2);
+  if (iVar1 < 0) {
     *param_3 = '\0';
-    __restgprlr_27();
     return;
   }
-  if (g_FacebookFriendStore[iVar1].facebookFriendCount == 0) {
+  if (g_FacebookFriendStore[param_1].facebookFriendCount == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\fb_friends.cpp",0x27a,0
                     ,
                     "0 doesn\'t index g_FacebookFriendStore[controllerIndex].facebookFriendCount\n\t%i not in [0, %i)"
                    );
   }
-  I_strncpyz(param_3,g_FacebookFriendStore[iVar1].facebookFriends[iVar2].m_userName,param_4);
-  __restgprlr_27();
+  I_strncpyz(param_3,g_FacebookFriendStore[param_1].facebookFriends[iVar1].m_userName,param_4);
   return;
 }
 
 
 // 826FDB58  Facebook_GetUserId  (social/fb_friends.cpp:640)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 ulong64 Facebook_GetUserId(int param_1,uint param_2)
 
 {
-  uint uVar2;
-  ulong64 uVar1;
-  ulonglong uVar3;
-  
-  uVar3 = (ulonglong)(int)param_2;
-  uVar2 = __savegprlr_28(param_1);
-  if (3 < uVar2) {
+  if (3 < (uint)param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\fb_friends.cpp",0x281,0
                     ,"controllerIndex doesn\'t index MAX_GPAD_COUNT\n\t%i not in [0, %i)");
   }
-  if ((ulonglong)(uint)g_FacebookFriendStore[uVar2].facebookFriendCount <= (uVar3 & 0xffffffff)) {
+  if ((uint)g_FacebookFriendStore[param_1].facebookFriendCount <= param_2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\fb_friends.cpp",0x282,0
                     ,
                     "friendIndex doesn\'t index g_FacebookFriendStore[controllerIndex].facebookFriendCount\n\t%i not in [0, %i)"
                    );
   }
-  uVar1 = __restgprlr_28(*(undefined8 *)
-                          (g_FacebookFriendStore[uVar2].facebookFriends[0].m_userName +
-                          (int)((uVar3 + (uVar3 & 0x1fffffff) * 8 & 0xffffffff) << 5) + -8));
-  return uVar1;
+  return g_FacebookFriendStore[param_1].facebookFriends[param_2].m_userID;
 }
 
 
 // 826FDBF8  Facebook_FeederOverrideCursorPos  (social/fb_friends.cpp:667)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
+
 void Facebook_FeederOverrideCursorPos(int param_1,int param_2,int *param_3,int *param_4)
 
 {
-  uint uVar1;
-  ulonglong uVar2;
-  ulonglong uVar3;
-  uint *puVar4;
-  ulonglong uVar5;
-  uint *puVar6;
-  int iVar7;
-  uint uVar8;
+  int iVar1;
   
-  uVar5 = (ulonglong)(int)param_4;
-  uVar3 = (ulonglong)(int)param_3;
-  uVar2 = (ulonglong)param_2;
-  uVar1 = __savegprlr_23(param_1);
-  if ((uVar3 & 0xffffffff) == 0) {
+  if (param_3 == (int *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\fb_friends.cpp",0x29c,0
                     ,"%s");
   }
-  if ((uVar5 & 0xffffffff) == 0) {
+  if (param_4 == (int *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\fb_friends.cpp",0x29d,0
                     ,"%s");
   }
-  if (3 < uVar1) {
+  if (3 < (uint)param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\fb_friends.cpp",0x29e,0
                     ,"localControllerIndex doesn\'t index MAX_GPAD_COUNT\n\t%i not in [0, %i)");
   }
-  puVar4 = (uint *)uVar3;
-  if ((int)*puVar4 < 0) {
+  if (*param_3 < 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\fb_friends.cpp",0x2a1,0
                     ,"%s");
   }
-  puVar6 = (uint *)uVar5;
-  if ((int)*puVar6 < 0) {
+  if (*param_4 < 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\fb_friends.cpp",0x2a2,0
                     ,"%s");
   }
-  if (g_FacebookFriendStore[uVar1].facebookFriendCount == 0) {
-    *puVar4 = 0;
-    *puVar6 = 0;
+  if (g_FacebookFriendStore[param_1].facebookFriendCount == 0) {
+    *param_3 = 0;
+    *param_4 = 0;
   }
   else {
-    *puVar4 = g_FacebookFriendStore[uVar1].facebookCurrentIndex;
+    *param_3 = g_FacebookFriendStore[param_1].facebookCurrentIndex;
   }
-  uVar8 = *puVar4;
-  if ((int)*puVar6 <= (int)uVar8) {
-    iVar7 = uVar8 - (int)uVar2;
-    if (iVar7 < (int)*puVar6) goto LAB_826fdd48;
-    uVar8 = iVar7 + 1;
+  iVar1 = *param_3;
+  if (*param_4 <= iVar1) {
+    if (iVar1 - param_2 < *param_4) goto LAB_826fdd48;
+    iVar1 = (iVar1 - param_2) + 1;
   }
-  *puVar6 = uVar8;
+  *param_4 = iVar1;
 LAB_826fdd48:
-  if ((int)*puVar4 < 0) {
+  if (*param_3 < 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\fb_friends.cpp",0x2b7,1
                     ,"%s");
   }
-  if ((int)*puVar6 < 0) {
+  if (*param_4 < 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\fb_friends.cpp",0x2b8,1
                     ,"%s");
   }
-  if ((uVar2 & 0xffffffff) <= ((ulonglong)*puVar4 - (ulonglong)*puVar6 & 0xffffffff)) {
+  if ((uint)param_2 <= (uint)(*param_3 - *param_4)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\fb_friends.cpp",0x2b9,1
                     ,"(*cursorPos - *startPos) doesn\'t index viewmax\n\t%i not in [0, %i)");
   }
-  g_FacebookFriendStore[uVar1].facebookCurrentStartPos = *puVar6;
-  __restgprlr_23();
+  g_FacebookFriendStore[param_1].facebookCurrentStartPos = *param_4;
   return;
 }
 
@@ -1085,42 +1050,39 @@ void Facebook_FeederOnReportRequest(int param_1,ReportOffense param_2)
 
 // 826FDFF8  Facebook_GetSelectedFeederXuid  (social/fb_friends.cpp:806)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 int Facebook_GetSelectedFeederXuid(int param_1,ulong64 *param_2)
 
 {
   uint uVar1;
-  int iVar2;
-  bool bVar3;
-  ulonglong uVar4;
-  ulong64 uVar5;
+  bool bVar2;
+  ulong64 uVar3;
   
-  uVar4 = (ulonglong)(int)param_2;
-  iVar2 = __savegprlr_26(param_1);
-  if ((uVar4 & 0xffffffff) == 0) {
+  if (param_2 == (ulong64 *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\fb_friends.cpp",0x327,0
                     ,"%s");
   }
-  bVar3 = Live_IsUserSignedInToLive(iVar2);
-  if (bVar3) {
-    if (g_FacebookFriendStore[iVar2].facebookFriendCount != 0) {
-      uVar1 = g_FacebookFriendStore[iVar2].facebookCurrentIndex;
-      if ((uint)g_FacebookFriendStore[iVar2].facebookFriendCount <= uVar1) {
+  bVar2 = Live_IsUserSignedInToLive(param_1);
+  if (bVar2) {
+    if (g_FacebookFriendStore[param_1].facebookFriendCount != 0) {
+      uVar1 = g_FacebookFriendStore[param_1].facebookCurrentIndex;
+      if ((uint)g_FacebookFriendStore[param_1].facebookFriendCount <= uVar1) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\fb_friends.cpp",
                         0x332,0,
                         "currentIndex doesn\'t index g_FacebookFriendStore[ controllerIndex ].facebookFriendCount\n\t%i not in [0, %i)"
                        );
       }
-      uVar5 = g_FacebookFriendStore[iVar2].facebookFriends[uVar1].m_userID;
-      bVar3 = Facebook_IsPlatformFriend(iVar2);
-      if (!bVar3) {
-        *(ulong64 *)uVar4 = uVar5;
-        iVar2 = __restgprlr_26(1);
-        return iVar2;
+      uVar3 = g_FacebookFriendStore[param_1].facebookFriends[uVar1].m_userID;
+      bVar2 = Facebook_IsPlatformFriend(param_1);
+      if (!bVar2) {
+        *param_2 = uVar3;
+        return 1;
       }
     }
   }
-  iVar2 = __restgprlr_26(0);
-  return iVar2;
+  return 0;
 }
 
 
@@ -1172,133 +1134,125 @@ void Facebook_FeederOnFriendRequest(int param_1)
 
 // 826FE268  Facebook_FeederJoin  (social/fb_friends.cpp:925)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void Facebook_FeederJoin(int param_1)
 
 {
-  uint uVar1;
-  bool bVar5;
-  int iVar2;
-  FriendStatus FVar3;
-  SocialPresence *pSVar4;
-  ulong64 uVar6;
+  bool bVar4;
+  int iVar1;
+  FriendStatus FVar2;
+  SocialPresence *pSVar3;
+  ulong64 uVar5;
   char *local_30 [12];
   
-  uVar1 = __savegprlr_29(param_1);
-  if (3 < uVar1) {
+  if (3 < (uint)param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\fb_friends.cpp",0x3a6,0
                     ,"controllerIndex doesn\'t index MAX_GPAD_COUNT\n\t%i not in [0, %i)");
   }
-  bVar5 = Live_IsUserSignedInToLive(uVar1);
-  if ((bVar5) && (g_FacebookFriendStore[uVar1].facebookFriendCount != 0)) {
-    uVar6 = g_FacebookFriendStore[uVar1].storedPlayer;
-    iVar2 = Friends_FindIndex(uVar1,uVar6);
-    if ((iVar2 == -1) || (FVar3 = FriendsMenu_GetStatus(uVar1,iVar2), (int)FVar3 < 2)) {
-      iVar2 = MeetPlayer_GetPositionByXuid(uVar1,uVar6);
-      if (-1 < iVar2) {
-        MeetPlayer_Join(uVar1,uVar6);
-        __restgprlr_29();
+  bVar4 = Live_IsUserSignedInToLive(param_1);
+  if ((bVar4) && (g_FacebookFriendStore[param_1].facebookFriendCount != 0)) {
+    uVar5 = g_FacebookFriendStore[param_1].storedPlayer;
+    iVar1 = Friends_FindIndex(param_1,uVar5);
+    if ((iVar1 == -1) || (FVar2 = FriendsMenu_GetStatus(param_1,iVar1), (int)FVar2 < 2)) {
+      iVar1 = MeetPlayer_GetPositionByXuid(param_1,uVar5);
+      if (-1 < iVar1) {
+        MeetPlayer_Join(param_1,uVar5);
         return;
       }
-      iVar2 = LiveParty_GetPositionByXuid(uVar6);
-      if (-1 < iVar2) {
-        LiveParty_JoinPartyMember(uVar1,iVar2);
-        __restgprlr_29();
+      iVar1 = LiveParty_GetPositionByXuid(uVar5);
+      if (-1 < iVar1) {
+        LiveParty_JoinPartyMember(param_1,iVar1);
         return;
       }
-      pSVar4 = Social_GetPresence(uVar1,uVar6);
-      if (pSVar4 != (SocialPresence *)0x0) {
-        Social_JoinPlayer(uVar1,uVar6,pSVar4);
-        __restgprlr_29();
+      pSVar3 = Social_GetPresence(param_1,uVar5);
+      if (pSVar3 != (SocialPresence *)0x0) {
+        Social_JoinPlayer(param_1,uVar5,pSVar3);
         return;
       }
       Com_PrintError(0x10,"Facebook_FeederJoin() failed because the friend info was not found.\n");
       local_30[0] = "MENU_JOIN_SESSION_INVALID";
     }
     else {
-      bVar5 = FriendsMenu_JoinOnPresence(uVar1,uVar6,local_30);
-      if (bVar5) goto LAB_826fe3f4;
+      bVar4 = FriendsMenu_JoinOnPresence(param_1,uVar5,local_30);
+      if (bVar4) {
+        return;
+      }
       if (*local_30[0] == '\0') {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\fb_friends.cpp",
                         0x3b9,0,"%s");
         FriendsMenu_ShowErrorMessage(local_30[0]);
-        __restgprlr_29();
         return;
       }
     }
     FriendsMenu_ShowErrorMessage(local_30[0]);
   }
-LAB_826fe3f4:
-  __restgprlr_29();
   return;
 }
 
 
 // 826FE400  Facebook_FeederInvite  (social/fb_friends.cpp:999)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void Facebook_FeederInvite(int param_1)
 
 {
+  bool bVar5;
   uint uVar1;
-  bool bVar6;
-  uint uVar2;
-  FriendStatus FVar3;
-  int iVar4;
-  SocialPresence *pSVar5;
-  ulong64 uVar7;
+  FriendStatus FVar2;
+  int iVar3;
+  SocialPresence *pSVar4;
+  ulong64 uVar6;
   char *local_30 [12];
   
-  uVar1 = __savegprlr_29(param_1);
-  if (3 < uVar1) {
+  if (3 < (uint)param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\fb_friends.cpp",0x3ef,0
                     ,"controllerIndex doesn\'t index MAX_GPAD_COUNT\n\t%i not in [0, %i)");
   }
-  bVar6 = Live_IsUserSignedInToLive(uVar1);
-  if ((bVar6) && (g_FacebookFriendStore[uVar1].facebookFriendCount != 0)) {
-    bVar6 = FriendsMenu_IsAllowedToInvite(uVar1,local_30);
-    if (!bVar6) {
+  bVar5 = Live_IsUserSignedInToLive(param_1);
+  if ((bVar5) && (g_FacebookFriendStore[param_1].facebookFriendCount != 0)) {
+    bVar5 = FriendsMenu_IsAllowedToInvite(param_1,local_30);
+    if (!bVar5) {
       Com_PrintError(0x10,
                      "Facebook_FeederInvite() failed because we are not allowed to invite anyone right now.\n"
                     );
       FriendsMenu_ShowErrorMessage(local_30[0]);
-      __restgprlr_29();
       return;
     }
-    uVar7 = g_FacebookFriendStore[uVar1].storedPlayer;
-    uVar2 = Friends_FindIndex(uVar1,uVar7);
-    if (((uVar2 != 0xffffffff) && (FVar3 = FriendsMenu_GetStatus(uVar1,uVar2), 1 < (int)FVar3)) &&
-       (bVar6 = FriendsMenu_IsUserInvitable(uVar1,uVar2,local_30), !bVar6)) {
+    uVar6 = g_FacebookFriendStore[param_1].storedPlayer;
+    uVar1 = Friends_FindIndex(param_1,uVar6);
+    if (((uVar1 != 0xffffffff) && (FVar2 = FriendsMenu_GetStatus(param_1,uVar1), 1 < (int)FVar2)) &&
+       (bVar5 = FriendsMenu_IsUserInvitable(param_1,uVar1,local_30), !bVar5)) {
       Com_PrintError(0x10,
                      "Facebook_FeederInvite() failed because friend is not available for invites.\n"
                     );
       FriendsMenu_ShowErrorMessage(local_30[0]);
-      __restgprlr_29();
       return;
     }
-    iVar4 = MeetPlayer_GetPositionByXuid(uVar1,uVar7);
-    if (-1 < iVar4) {
-      MeetPlayer_Invite(uVar1,uVar7);
-      __restgprlr_29();
+    iVar3 = MeetPlayer_GetPositionByXuid(param_1,uVar6);
+    if (-1 < iVar3) {
+      MeetPlayer_Invite(param_1,uVar6);
       return;
     }
-    iVar4 = LiveParty_GetPositionByXuid(uVar7);
-    if (-1 < iVar4) {
-      LiveParty_InvitePartyMember(uVar1,uVar7);
-      __restgprlr_29();
+    iVar3 = LiveParty_GetPositionByXuid(uVar6);
+    if (-1 < iVar3) {
+      LiveParty_InvitePartyMember(param_1,uVar6);
       return;
     }
-    pSVar5 = Social_GetPresence(uVar1,uVar7);
-    if ((pSVar5 != (SocialPresence *)0x0) &&
-       (bVar6 = Social_IsAlreadyConnected(uVar1,(XNKID)*&(pSVar5->sessionId).ab,uVar7,local_30),
-       bVar6)) {
+    pSVar4 = Social_GetPresence(param_1,uVar6);
+    if ((pSVar4 != (SocialPresence *)0x0) &&
+       (bVar5 = Social_IsAlreadyConnected(param_1,(XNKID)*&(pSVar4->sessionId).ab,uVar6,local_30),
+       bVar5)) {
       Com_PrintError(0x10,
                      "Facebook_FeederInvite() failed because the player is already connected.\n");
       FriendsMenu_ShowErrorMessage(local_30[0]);
-      __restgprlr_29();
       return;
     }
-    bVar6 = Live_SendInvite(uVar1,uVar7);
+    Live_SendInvite(param_1,uVar6);
   }
-  __restgprlr_29(bVar6);
   return;
 }
 
@@ -1357,6 +1311,8 @@ ulong64 FacebookFriends_GetCurrentIndexXUID(int param_1)
 
 // 829409C0  `dynamic_atexit_destructor_for_'g_DWFacebookFriendTask''  (line unknown)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void _dynamic_atexit_destructor_for__g_DWFacebookFriendTask__(void)
@@ -1372,7 +1328,6 @@ void _dynamic_atexit_destructor_for__g_DWFacebookFriendTask__(void)
   char in_RESERVE;
   byte in_cr0;
   
-  __savegprlr_29();
   lVar6 = 3;
   pcVar7 = facebookUserName;
   do {
@@ -1399,7 +1354,6 @@ void _dynamic_atexit_destructor_for__g_DWFacebookFriendTask__(void)
     lVar6 = lVar6 + -1;
     in_cr0 = (lVar6 == 0) << 1;
   } while (-1 < lVar6);
-  __restgprlr_29();
   return;
 }
 

@@ -2,17 +2,20 @@
 
 // 828B3738  XapiFormatFATVolumeEx  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/xrtl/format.c:39)
 
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
+
 long XapiFormatFATVolumeEx(_STRING *param_1,ulong param_2)
 
 {
   ulonglong uVar1;
   bool bVar2;
   longlong lVar3;
-  long lVar4;
+  int iVar4;
   undefined4 *puVar5;
+  uint uVar7;
   ulonglong uVar6;
-  uint uVar8;
-  ulonglong uVar7;
+  ulonglong uVar8;
   ulonglong uVar9;
   ulonglong uVar10;
   undefined4 local_b0 [2];
@@ -23,122 +26,122 @@ long XapiFormatFATVolumeEx(_STRING *param_1,ulong param_2)
   undefined1 auStack_88 [4];
   undefined4 local_84;
   undefined4 local_80;
-  undefined4 local_7c;
+  _STRING *local_7c;
   undefined4 local_78;
   ulonglong local_68;
   
-  uVar6 = (ulonglong)(int)param_2;
-  local_7c = __savegprlr_22(param_1);
   local_78 = 0x40;
   local_80 = 0;
+  local_7c = param_1;
   lVar3 = NtOpenFile(local_b0,0x100003,&local_80,auStack_a0,0,0x18);
-  if (lVar3 < 0) goto LAB_828b3794;
-  lVar3 = NtQueryVolumeInformationFile(local_b0[0],auStack_a0,local_90,8,4);
-  if ((lVar3 < 0) ||
-     (lVar3 = NtDeviceIoControlFile(local_b0[0],0,0,0,auStack_a0,0x70000,0,0), lVar3 < 0)) {
-    NtClose(local_b0[0]);
-    goto LAB_828b3794;
-  }
-  if (local_94 == 0) {
-    uVar8 = 0;
-  }
-  else {
-    uVar8 = 0x1f - (int)LZCOUNT(local_94);
-  }
-  lVar3 = NtDeviceIoControlFile(local_b0[0],0,0,0,auStack_a0,0x74004,0,0);
-  if (-1 < (int)lVar3) {
-    if (local_68 == 0) {
-      lVar3 = -0x3fffffcc;
-    }
-    if (-1 < (int)lVar3) {
-      uVar1 = (ulonglong)local_94 + 0xfff & 0xfffff000;
-      if ((uVar6 & 0xffffffff) < uVar1) {
-        uVar6 = uVar1;
+  if (-1 < lVar3) {
+    lVar3 = NtQueryVolumeInformationFile(local_b0[0],auStack_a0,local_90,8,4);
+    if ((-1 < lVar3) &&
+       (lVar3 = NtDeviceIoControlFile(local_b0[0],0,0,0,auStack_a0,0x70000,0,0), -1 < lVar3)) {
+      if (local_94 == 0) {
+        uVar7 = 0;
       }
-      uVar10 = 0x1000;
-      if (0x1000 < uVar1) {
-        uVar10 = uVar1;
+      else {
+        uVar7 = 0x1f - (int)LZCOUNT(local_94);
       }
-      if (uVar10 < local_68) {
-        uVar9 = uVar6 & 0xffffffff;
-        uVar7 = ((longlong)local_68 / (longlong)uVar9 & 0xffffffffU) + 1;
-        trapDoubleWordImmediate(6,uVar9,0);
-        trapDoubleWordImmediate(5,uVar9 & ~((local_68 << 1 | local_68 >> 0x3f) - 1),0xffff);
-        if (((uVar7 & 0xffffffff) < 0xfff0) && (local_90[0] != 0x46)) {
-          lVar3 = (uVar7 & 0x7fffffff) << 1;
-          bVar2 = true;
+      iVar4 = NtDeviceIoControlFile(local_b0[0],0,0,0,auStack_a0,0x74004,0,0);
+      if (-1 < iVar4) {
+        if (local_68 == 0) {
+          iVar4 = -0x3fffffcc;
         }
-        else {
-          lVar3 = (uVar7 & 0x3fffffff) << 2;
-          bVar2 = false;
-        }
-        uVar7 = (lVar3 + uVar1) - 1 & ~(uVar1 - 1);
-        if (((uVar7 & 0xffffffff) <= local_68 - uVar10) &&
-           (uVar9 <= (local_68 - uVar10) - (uVar7 & 0xffffffff))) {
-          puVar5 = LocalAlloc(0,(ulong)uVar1);
-          if (puVar5 == (undefined4 *)0x0) {
-            lVar3 = -0x3fffff66;
+        if (-1 < iVar4) {
+          uVar1 = (ulonglong)local_94 + 0xfff & 0xfffff000;
+          uVar8 = (longlong)(int)param_2;
+          if (param_2 < uVar1) {
+            uVar8 = uVar1;
           }
-          else {
-            memset();
-            local_a8 = 0;
-            lVar3 = NtWriteFile(local_b0[0],0,0,0,auStack_a0,puVar5,uVar1,&local_a8);
-            if (-1 < lVar3) {
-              memset();
-              local_a8 = uVar10;
-              if (bVar2) {
-                *(undefined2 *)puVar5 = 0xfff8;
-                *(undefined2 *)((int)puVar5 + 2) = 0xffff;
+          uVar10 = 0x1000;
+          if (0x1000 < uVar1) {
+            uVar10 = uVar1;
+          }
+          if (uVar10 < local_68) {
+            uVar9 = uVar8 & 0xffffffff;
+            uVar6 = ((longlong)local_68 / (longlong)uVar9 & 0xffffffffU) + 1;
+            trapDoubleWordImmediate(6,uVar9,0);
+            trapDoubleWordImmediate(5,uVar9 & ~((local_68 << 1 | local_68 >> 0x3f) - 1),0xffff);
+            if (((uVar6 & 0xffffffff) < 0xfff0) && (local_90[0] != 0x46)) {
+              lVar3 = (uVar6 & 0x7fffffff) << 1;
+              bVar2 = true;
+            }
+            else {
+              lVar3 = (uVar6 & 0x3fffffff) << 2;
+              bVar2 = false;
+            }
+            uVar6 = (lVar3 + uVar1) - 1 & ~(uVar1 - 1);
+            if (((uVar6 & 0xffffffff) <= local_68 - uVar10) &&
+               (uVar9 <= (local_68 - uVar10) - (uVar6 & 0xffffffff))) {
+              puVar5 = LocalAlloc(0,(ulong)uVar1);
+              if (puVar5 == (undefined4 *)0x0) {
+                iVar4 = -0x3fffff66;
               }
               else {
-                *puVar5 = 0xfffffff8;
-                puVar5[1] = 0xffffffff;
-              }
-              do {
-                lVar3 = NtWriteFile(local_b0[0],0,0,0,auStack_a0,puVar5,uVar1,&local_a8);
-                if (lVar3 < 0) goto LAB_828b3b38;
                 memset();
-                uVar7 = uVar7 - uVar1;
-                local_a8 = uVar1 + local_a8;
-              } while (uVar7 != 0);
-              memset();
-              uVar9 = uVar6;
-              do {
+                local_a8 = 0;
                 lVar3 = NtWriteFile(local_b0[0],0,0,0,auStack_a0,puVar5,uVar1,&local_a8);
-                if (lVar3 < 0) goto LAB_828b3b38;
-                uVar9 = uVar9 - uVar1;
-                local_a8 = uVar1 + local_a8;
-              } while (uVar9 != 0);
-              memset();
-              *(undefined2 *)(puVar5 + 4) = 0;
-              puVar5[2] = (uint)uVar6 >> (uVar8 & 0x3f) & 0xff;
-              *puVar5 = 0x58544146;
-              puVar5[3] = 1;
-              KeQuerySystemTime(auStack_88);
-              puVar5[1] = local_84;
-              local_a8 = 0;
-              do {
-                lVar3 = NtWriteFile(local_b0[0],0,0,0,auStack_a0,puVar5,uVar1,&local_a8);
-                if (lVar3 < 0) break;
-                memset();
-                uVar10 = uVar10 - uVar1;
-                local_a8 = uVar1 + local_a8;
-              } while (uVar10 != 0);
-            }
+                if (-1 < lVar3) {
+                  memset();
+                  local_a8 = uVar10;
+                  if (bVar2) {
+                    *(undefined2 *)puVar5 = 0xfff8;
+                    *(undefined2 *)((int)puVar5 + 2) = 0xffff;
+                  }
+                  else {
+                    *puVar5 = 0xfffffff8;
+                    puVar5[1] = 0xffffffff;
+                  }
+                  do {
+                    lVar3 = NtWriteFile(local_b0[0],0,0,0,auStack_a0,puVar5,uVar1,&local_a8);
+                    if (lVar3 < 0) goto LAB_828b3b38;
+                    memset();
+                    uVar6 = uVar6 - uVar1;
+                    local_a8 = uVar1 + local_a8;
+                  } while (uVar6 != 0);
+                  memset();
+                  uVar9 = uVar8;
+                  do {
+                    lVar3 = NtWriteFile(local_b0[0],0,0,0,auStack_a0,puVar5,uVar1,&local_a8);
+                    if (lVar3 < 0) goto LAB_828b3b38;
+                    uVar9 = uVar9 - uVar1;
+                    local_a8 = uVar1 + local_a8;
+                  } while (uVar9 != 0);
+                  memset();
+                  *(undefined2 *)(puVar5 + 4) = 0;
+                  puVar5[2] = (uint)uVar8 >> (uVar7 & 0x3f) & 0xff;
+                  *puVar5 = 0x58544146;
+                  puVar5[3] = 1;
+                  KeQuerySystemTime(auStack_88);
+                  puVar5[1] = local_84;
+                  local_a8 = 0;
+                  do {
+                    lVar3 = NtWriteFile(local_b0[0],0,0,0,auStack_a0,puVar5,uVar1,&local_a8);
+                    if (lVar3 < 0) break;
+                    memset();
+                    uVar10 = uVar10 - uVar1;
+                    local_a8 = uVar1 + local_a8;
+                  } while (uVar10 != 0);
+                }
 LAB_828b3b38:
-            LocalFree(puVar5);
-            IoDismountVolumeByFileHandle(local_b0[0]);
+                iVar4 = (int)lVar3;
+                LocalFree(puVar5);
+                IoDismountVolumeByFileHandle(local_b0[0]);
+              }
+              goto LAB_828b3888;
+            }
           }
-          goto LAB_828b3888;
+          iVar4 = -0x3fffff81;
         }
       }
-      lVar3 = -0x3fffff81;
-    }
-  }
 LAB_828b3888:
-  NtClose(local_b0[0]);
-LAB_828b3794:
-  lVar4 = __restgprlr_22(lVar3);
-  return lVar4;
+      NtClose(local_b0[0]);
+      return iVar4;
+    }
+    NtClose(local_b0[0]);
+  }
+  return (long)lVar3;
 }
 

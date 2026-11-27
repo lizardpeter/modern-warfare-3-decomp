@@ -2,73 +2,70 @@
 
 // 82511340  AwardPrestigeCoin  (qcommon/past_title_data.cpp:97)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void AwardPrestigeCoin(ulong param_1,int param_2)
 
 {
-  uint uVar1;
-  bool bVar6;
-  StructuredDataDef *pSVar2;
-  LookupState LVar3;
-  LookupResultDataType LVar4;
-  StructuredData_SetResult SVar5;
-  char *pcVar7;
+  bool bVar4;
+  StructuredDataDef *pSVar1;
+  LookupState LVar2;
+  LookupResultDataType LVar3;
+  char *pcVar5;
   StructuredDataBuffer aSStack_40 [2];
   StructuredDataLookup aSStack_30 [3];
   
-  uVar1 = __savegprlr_29(param_1);
-  pcVar7 = (char *)0x0;
-  bVar6 = LiveStorage_GetPlayerUnlockDataBuffer(aSStack_40,param_2);
-  if (!bVar6) {
-    if (printed == false) {
-      Com_Printf(0xe,"Cannot get past title prestige level: we have not downloaded player stats\n");
-      printed = true;
-      __restgprlr_29();
+  pcVar5 = (char *)0x0;
+  bVar4 = LiveStorage_GetPlayerUnlockDataBuffer(aSStack_40,param_2);
+  if (!bVar4) {
+    if (printed != false) {
       return;
     }
-    goto LAB_825114d4;
+    Com_Printf(0xe,"Cannot get past title prestige level: we have not downloaded player stats\n");
+    printed = true;
+    return;
   }
-  pSVar2 = StructuredDataDef_GetAsset("mp/playerdata.def",0x2ffc);
-  StructuredData_InitializeLookup(pSVar2,aSStack_30);
-  if (uVar1 < 0x41560818) {
-    if (uVar1 == 0x41560817) {
-      pcVar7 = "prestigeTokenMW2";
+  pSVar1 = StructuredDataDef_GetAsset("mp/playerdata.def",0x2ffc);
+  StructuredData_InitializeLookup(pSVar1,aSStack_30);
+  if (param_1 < 0x41560818) {
+    if (param_1 == 0x41560817) {
+      pcVar5 = "prestigeTokenMW2";
+      goto LAB_8251144c;
     }
-    else if (uVar1 == 0x1442) {
-      pcVar7 = "prestigeTokenBlackOps";
+    if (param_1 == 0x1442) {
+      pcVar5 = "prestigeTokenBlackOps";
+      goto LAB_8251144c;
     }
-    else {
-      if (uVar1 != 0x415607e6) goto LAB_82511414;
-      pcVar7 = "prestigeTokenMW";
-    }
-  }
-  else if (uVar1 == 0x4156081c) {
-    pcVar7 = "prestigeTokenWAW";
-  }
-  else {
-LAB_82511414:
-    if (alwaysfails == 0) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\past_title_data.cpp"
-                      ,0x84,0,"AwardPrestigeCoin: Invalid titleID specified\n");
+    if (param_1 == 0x415607e6) {
+      pcVar5 = "prestigeTokenMW";
+      goto LAB_8251144c;
     }
   }
-  StructuredData_LookupWithString(aSStack_30,pcVar7);
-  LVar3 = StructuredData_GetLookupState(aSStack_30);
-  if ((LVar3 == LOOKUP_FINISHED) &&
-     (LVar4 = StructuredData_GetLookupResultType(aSStack_30), LVar4 == LOOKUP_RESULT_BOOL)) {
-    bVar6 = StructuredData_GetBool(aSStack_30,aSStack_40);
-    if (!bVar6) {
+  else if (param_1 == 0x4156081c) {
+    pcVar5 = "prestigeTokenWAW";
+    goto LAB_8251144c;
+  }
+  if (alwaysfails == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\past_title_data.cpp",
+                    0x84,0,"AwardPrestigeCoin: Invalid titleID specified\n");
+  }
+LAB_8251144c:
+  StructuredData_LookupWithString(aSStack_30,pcVar5);
+  LVar2 = StructuredData_GetLookupState(aSStack_30);
+  if ((LVar2 == LOOKUP_FINISHED) &&
+     (LVar3 = StructuredData_GetLookupResultType(aSStack_30), LVar3 == LOOKUP_RESULT_BOOL)) {
+    bVar4 = StructuredData_GetBool(aSStack_30,aSStack_40);
+    if (!bVar4) {
       Entitlements_AddPrestigeCoin(param_2);
-      SVar5 = StructuredData_SetBool(aSStack_30,aSStack_40,true);
+      StructuredData_SetBool(aSStack_30,aSStack_40,true);
       s_numPrestigeTokens = s_numPrestigeTokens + 1;
-      __restgprlr_29(SVar5);
       return;
     }
   }
   else {
     Com_Error(ERR_DROP,"Expected \"%s\" to be a bool in playerdata.def");
   }
-LAB_825114d4:
-  __restgprlr_29();
   return;
 }
 
@@ -269,45 +266,43 @@ LAB_82511948:
 
 // 825119A0  SetPastTitlePrestigeLevel  (qcommon/past_title_data.cpp:331)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void SetPastTitlePrestigeLevel(ulong param_1,ulong param_2,int param_3)
 
 {
+  bool bVar3;
   ulong uVar1;
-  bool bVar4;
-  ulong uVar2;
-  StructuredData_SetResult SVar3;
+  StructuredData_SetResult SVar2;
   StructuredDataBuffer aSStack_40 [2];
   StructuredDataLookup aSStack_30 [3];
   
-  uVar1 = __savegprlr_29(param_1);
-  bVar4 = GetPastTitleStatLookup(uVar1,PAST_TITLE_STATS_PRESTIGE,aSStack_30);
-  if (bVar4) {
-    bVar4 = LiveStorage_GetPlayerUnlockDataBuffer(aSStack_40,param_3);
-    if (bVar4) {
+  bVar3 = GetPastTitleStatLookup(param_1,PAST_TITLE_STATS_PRESTIGE,aSStack_30);
+  if (bVar3) {
+    bVar3 = LiveStorage_GetPlayerUnlockDataBuffer(aSStack_40,param_3);
+    if (bVar3) {
       Com_Printf(0xe,"Got prestige level for title: %x, plevel: %d\n");
-      uVar2 = PastTitle_ClampPrestige(uVar1,param_2);
-      if ((uVar2 != 0) && (uVar2 < 0xff)) {
-        SVar3 = StructuredData_SetInt(aSStack_30,aSStack_40,uVar2);
-        if ((SVar3 == SETRESULT_SUCCESS_CHANGED) ||
-           (bVar4 = false, SVar3 == SETRESULT_SUCCESS_NOCHANGE)) {
-          bVar4 = true;
+      uVar1 = PastTitle_ClampPrestige(param_1,param_2);
+      if ((uVar1 != 0) && (uVar1 < 0xff)) {
+        SVar2 = StructuredData_SetInt(aSStack_30,aSStack_40,uVar1);
+        if ((SVar2 == SETRESULT_SUCCESS_CHANGED) ||
+           (bVar3 = false, SVar2 == SETRESULT_SUCCESS_NOCHANGE)) {
+          bVar3 = true;
         }
-        if (!bVar4) {
+        if (!bVar3) {
           Com_Printf(0xe,"Failed setting prestige level for past title.\n");
-          __restgprlr_29();
           return;
         }
-        AwardPrestigeCoin(uVar1,param_3);
+        AwardPrestigeCoin(param_1,param_3);
       }
     }
     else if (printed == false) {
       Com_Printf(0xe,"Cannot set past title prestige level: we have not downloaded player stats\n");
       printed = true;
-      __restgprlr_29();
       return;
     }
   }
-  __restgprlr_29();
   return;
 }
 
@@ -379,22 +374,24 @@ ulong PastTitle_ClampRank(ulong param_1,ulong param_2)
 
 // 82511C60  SetPastTitleRank  (qcommon/past_title_data.cpp:428)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void SetPastTitleRank(ulong param_1,ulong param_2,int param_3)
 
 {
-  ulong uVar1;
   bool bVar3;
+  ulong uVar1;
   StructuredData_SetResult SVar2;
   StructuredDataBuffer aSStack_40 [2];
   StructuredDataLookup aSStack_30 [3];
   
-  uVar1 = __savegprlr_29(param_1);
-  bVar3 = GetPastTitleStatLookup(uVar1,PAST_TITLE_STATS_RANK,aSStack_30);
+  bVar3 = GetPastTitleStatLookup(param_1,PAST_TITLE_STATS_RANK,aSStack_30);
   if (bVar3) {
     bVar3 = LiveStorage_GetPlayerUnlockDataBuffer(aSStack_40,param_3);
     if (bVar3) {
       Com_Printf(0xe,"Got rank for title: %x, rank: %d\n");
-      uVar1 = PastTitle_ClampRank(uVar1,param_2);
+      uVar1 = PastTitle_ClampRank(param_1,param_2);
       if ((uVar1 != 0) && (uVar1 < 0xff)) {
         SVar2 = StructuredData_SetInt(aSStack_30,aSStack_40,uVar1);
         if ((SVar2 == SETRESULT_SUCCESS_CHANGED) ||
@@ -409,11 +406,9 @@ void SetPastTitleRank(ulong param_1,ulong param_2,int param_3)
     else if (printed == false) {
       Com_Printf(0xe,"Cannot set past title rank: we have not downloaded player stats\n");
       printed = true;
-      __restgprlr_29();
       return;
     }
   }
-  __restgprlr_29();
   return;
 }
 
@@ -478,28 +473,25 @@ void SetPastTitleNextReadTime(ulong param_1,ulong param_2,int param_3)
 
 // 82511ED8  PastTitle_CalculateNextReadTime  (qcommon/past_title_data.cpp:519)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 ulong PastTitle_CalculateNextReadTime(bool param_1)
 
 {
-  uint uVar1;
-  uint uVar2;
-  char cVar6;
+  int iVar1;
+  int iVar2;
   uint uVar3;
   uint uVar4;
-  ulong uVar5;
   
-  cVar6 = __savegprlr_28(param_1);
-  uVar1 = (past_title_data_read_success_interval_hours->current).unsignedInt;
-  uVar2 = (past_title_data_read_failure_interval_hours->current).unsignedInt;
+  iVar1 = (past_title_data_read_success_interval_hours->current).integer;
+  iVar2 = (past_title_data_read_failure_interval_hours->current).integer;
   uVar3 = rand();
   uVar4 = Sys_GetTimeAsSeconds();
-  if (cVar6 == '\0') {
-    uVar1 = uVar2;
+  if (!param_1) {
+    iVar1 = iVar2;
   }
-  uVar5 = __restgprlr_28((longlong)(int)uVar4 +
-                         (longlong)(int)uVar3 + ((ulonglong)uVar3 / 0x5460) * -0x5460 +
-                         (ulonglong)uVar1 * 0xe10);
-  return uVar5;
+  return uVar4 + uVar3 % 0x5460 + iVar1 * 0xe10;
 }
 
 
@@ -520,39 +512,32 @@ void PastTitle_AdvanceState(ulong param_1,bool param_2,int param_3)
 
 // 82511FB0  PastTitle_GetRank  (qcommon/past_title_data.cpp:547)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 int PastTitle_GetRank(ulong param_1,ulong *param_2,int param_3)
 
 {
-  uint uVar1;
-  int iVar2;
-  longlong lVar3;
-  longlong lVar4;
-  ulonglong uVar5;
+  int iVar1;
   
-  lVar3 = (longlong)param_3;
-  uVar5 = (ulonglong)(int)param_2;
-  uVar1 = __savegprlr_27(param_1);
-  if ((uVar5 & 0xffffffff) == 0) {
+  if (param_2 == (ulong *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\past_title_data.cpp",
                     0x224,0,"%s");
   }
-  iVar2 = (int)lVar3;
-  if (iVar2 < 1) {
+  if (param_3 < 1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\past_title_data.cpp",
                     0x225,0,"%s");
   }
-  if (((uVar5 & 0xffffffff) != 0) && (lVar4 = 0, 0 < iVar2)) {
+  if ((param_2 != (ulong *)0x0) && (iVar1 = 0, 0 < param_3)) {
     do {
-      if (*(uint *)uVar5 < uVar1) {
-        iVar2 = __restgprlr_27(lVar3 - lVar4);
-        return iVar2;
+      if (*param_2 < param_1) {
+        return param_3 - iVar1;
       }
-      lVar4 = lVar4 + 1;
-      uVar5 = uVar5 + 4;
-    } while ((int)lVar4 < iVar2);
+      iVar1 = iVar1 + 1;
+      param_2 = param_2 + 1;
+    } while (iVar1 < param_3);
   }
-  iVar2 = __restgprlr_27(0);
-  return iVar2;
+  return 0;
 }
 
 
@@ -627,52 +612,46 @@ ulong PastTitle_GetRankFromXP(ulong param_1,ulong param_2)
 
 // 82512270  PastTitle_Enumerate  (qcommon/past_title_data.cpp:727)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
+
 bool PastTitle_Enumerate(int param_1,void *param_2,void *param_3,ulong param_4,int param_5,
                         ulong param_6)
 
 {
-  int iVar1;
-  overlappedTask *poVar2;
-  _XOVERLAPPED *p_Var3;
-  ulong uVar4;
-  bool bVar5;
-  undefined1 uVar6;
-  ulonglong uVar7;
-  ulonglong uVar8;
+  overlappedTask *poVar1;
+  _XOVERLAPPED *p_Var2;
+  ulong uVar3;
+  bool bVar4;
   
-  uVar8 = (ulonglong)(int)param_3;
-  uVar7 = (ulonglong)(int)param_2;
-  iVar1 = __savegprlr_24(param_1);
-  if ((uVar7 & 0xffffffff) == 0) {
+  if (param_2 == (void *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\past_title_data.cpp",
                     0x2db,0,"%s");
   }
-  if ((uVar8 & 0xffffffff) == 0) {
+  if (param_3 == (void *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\past_title_data.cpp",
                     0x2dc,0,"%s");
   }
-  poVar2 = TaskManager_GetOpenTaskSlot(&lbGlob.tasks,iVar1,param_5);
-  p_Var3 = TaskManager_TaskToXOverlapped(poVar2);
-  poVar2 = TaskManager_TaskFromXOverlapped(&lbGlob.tasks,p_Var3);
-  TaskManager_SetTaskData(poVar2,(void *)param_6);
-  uVar4 = XEnumerate((void *)uVar7,(void *)uVar8,param_4,(ulong *)0x0,p_Var3);
-  if (uVar4 != 0x3e5) {
-    bVar5 = Live_IsUserSignedInToLive(iVar1);
-    if (bVar5) {
+  poVar1 = TaskManager_GetOpenTaskSlot(&lbGlob.tasks,param_1,param_5);
+  p_Var2 = TaskManager_TaskToXOverlapped(poVar1);
+  poVar1 = TaskManager_TaskFromXOverlapped(&lbGlob.tasks,p_Var2);
+  TaskManager_SetTaskData(poVar1,(void *)param_6);
+  uVar3 = XEnumerate(param_2,param_3,param_4,(ulong *)0x0,p_Var2);
+  if (uVar3 != 0x3e5) {
+    bVar4 = Live_IsUserSignedInToLive(param_1);
+    if (bVar4) {
       Com_PrintError(0x16,"Microsoft error: enumeration failed with error %llx\n");
     }
-    CloseHandle((void *)uVar7);
-    uVar4 = PastTitle_CalculateNextReadTime(false);
-    SetPastTitleNextReadTime(param_6,uVar4,iVar1);
-    GamerProfile_UpdateProfilePastTitleData(iVar1);
+    CloseHandle(param_2);
+    uVar3 = PastTitle_CalculateNextReadTime(false);
+    SetPastTitleNextReadTime(param_6,uVar3,param_1);
+    GamerProfile_UpdateProfilePastTitleData(param_1);
     s_dataReadState = s_dataReadState + 1;
-    poVar2 = TaskManager_TaskFromXOverlapped(&lbGlob.tasks,p_Var3);
-    TaskManager_CancelTask(poVar2);
-    uVar6 = __restgprlr_24(0);
-    return (bool)uVar6;
+    poVar1 = TaskManager_TaskFromXOverlapped(&lbGlob.tasks,p_Var2);
+    TaskManager_CancelTask(poVar1);
+    return false;
   }
-  uVar6 = __restgprlr_24(1);
-  return (bool)uVar6;
+  return true;
 }
 
 
@@ -702,100 +681,89 @@ bool PastTitle_GetPrestigeSpec(ulong param_1,_XUSER_STATS_SPEC *param_2)
 
 // 82512490  PastTitle_GetDataForPlayer  (qcommon/past_title_data.cpp:777)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
+
 bool PastTitle_GetDataForPlayer(ulong param_1,int param_2)
 
 {
-  int iVar1;
-  ulong uVar3;
-  bool bVar6;
-  undefined1 uVar7;
-  ulong64 uVar2;
-  ulong uVar4;
-  overlappedTask *poVar5;
-  ulonglong uVar8;
-  int iVar9;
-  uchar *puVar10;
-  uchar *puVar11;
-  longlong lVar12;
-  _XUSER_STATS_SPEC *p_Var13;
+  bool bVar4;
+  ulong64 uVar1;
+  ulong uVar2;
+  overlappedTask *poVar3;
+  ulong *puVar5;
+  void **ppvVar6;
+  _XUSER_STATS_SPEC *p_Var7;
   
-  uVar8 = (ulonglong)param_2;
-  uVar3 = __savegprlr_24(param_1);
-  iVar9 = (int)uVar8;
-  if (3 < iVar9) {
+  if (3 < param_2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\past_title_data.cpp",
                     0x30e,0,"%s");
   }
-  bVar6 = TaskManager_TaskIsInProgressForController(&lbGlob.tasks,10,iVar9);
-  if (bVar6) {
+  bVar4 = TaskManager_TaskIsInProgressForController(&lbGlob.tasks,10,param_2);
+  if (bVar4) {
     Com_Printf(0xe,"Get past title leaderboard data already in progress, earlying out (cont %i)\n");
   }
   else {
-    bVar6 = Live_IsUserSignedInToLive(iVar9);
-    if (bVar6) {
-      lVar12 = uVar8 * 400 + -0x7bb5a780;
-      if (lVar12 == 0) {
+    bVar4 = Live_IsUserSignedInToLive(param_2);
+    if (bVar4) {
+      p_Var7 = &lbGlob.pastLBData[param_2].pastSpec;
+      if (p_Var7 == (_XUSER_STATS_SPEC *)0x0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\past_title_data.cpp"
                         ,0x319,0,"%s");
       }
-      p_Var13 = (_XUSER_STATS_SPEC *)lVar12;
-      p_Var13->dwViewId = 0;
-      bVar6 = PastTitle_GetPrestigeSpec(uVar3,p_Var13);
-      if (bVar6) {
-        uVar2 = Live_GetXuid(iVar9);
-        iVar1 = (int)(uVar8 * 400);
-        puVar11 = lbGlob.pastLBData[0].pastTitleUserStats + iVar1 + 0x104;
-        puVar10 = lbGlob.pastLBData[0].pastTitleUserStats + iVar1 + 0x100;
-        uVar4 = XUserCreateStatsEnumeratorByXuid
-                          (uVar3,uVar2,1,1,p_Var13,(ulong *)puVar10,(void **)puVar11);
-        if (uVar4 != 0) {
-          bVar6 = Live_IsUserSignedInToLive(iVar9);
-          if (bVar6) {
+      p_Var7->dwViewId = 0;
+      bVar4 = PastTitle_GetPrestigeSpec(param_1,p_Var7);
+      if (bVar4) {
+        uVar1 = Live_GetXuid(param_2);
+        ppvVar6 = &lbGlob.pastLBData[param_2].pastTitleEnumHandle;
+        puVar5 = &lbGlob.pastLBData[param_2].pastTitleBufferSize;
+        uVar2 = XUserCreateStatsEnumeratorByXuid(param_1,uVar1,1,1,p_Var7,puVar5,ppvVar6);
+        if (uVar2 != 0) {
+          bVar4 = Live_IsUserSignedInToLive(param_2);
+          if (bVar4) {
             Com_PrintError(0x16,
                            "Microsoft error: Unable to create stats enumerator by xuid ( xuid = %llx ): %llx\n"
                           );
           }
-          PastTitle_AdvanceState(uVar3,false,iVar9);
-          uVar7 = __restgprlr_24(0);
-          return (bool)uVar7;
+          PastTitle_AdvanceState(param_1,false,param_2);
+          return false;
         }
         Com_DPrintf(0x16,
                     "buffer used in PastTitle_GetPrestigeForPlayer() for titleID: %x, xuid %llx: %i of %i bytes\n"
                    );
-        if (0x100 < *(uint *)puVar10) {
+        if (0x100 < *puVar5) {
           va("Microsoft error: buffer size not large enough, %i > %i\n");
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\past_title_data.cpp"
                           ,0x329,1,
                           "%s\n\t(va( \"Microsoft error: buffer size not large enough, %i > %i\\n\", pastLB->pastTitleBufferSize, 256 )) = %i"
                          );
         }
-        bVar6 = PastTitle_Enumerate(iVar9,*(void **)puVar11,p_Var13 + 1,*(ulong *)puVar10,10,uVar3);
-        uVar7 = __restgprlr_24(bVar6);
-        return (bool)uVar7;
+        bVar4 = PastTitle_Enumerate(param_2,*ppvVar6,lbGlob.pastLBData[param_2].pastTitleUserStats,
+                                    *puVar5,10,param_1);
+        return bVar4;
       }
-      if (uVar3 == 0x1442) {
-        poVar5 = TaskManager_GetOpenTaskSlot(&lbGlob.tasks,iVar9,10);
-        if (poVar5 == (overlappedTask *)0x0) {
+      if (param_1 == 0x1442) {
+        poVar3 = TaskManager_GetOpenTaskSlot(&lbGlob.tasks,param_2,10);
+        if (poVar3 == (overlappedTask *)0x0) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\past_title_data.cpp"
                           ,0x331,0,"%s");
         }
-        poVar5->data = (void *)0x1442;
+        poVar3->data = (void *)0x1442;
         dwReadExternalTitleNamedStats
-                  (poVar5,0x1442,"playerstatslist",s_pastTitlesBlackOpsStats,2,
-                   (bdTaskResult *)
-                   ((int)&lbGlob.pastTitleBlackOpsResult[0]._padding_ +
-                   (int)((uVar8 & 0xffffffff) << 5)));
-        uVar7 = __restgprlr_24(1);
-        return (bool)uVar7;
+                  (poVar3,0x1442,"playerstatslist",s_pastTitlesBlackOpsStats,2,
+                   (bdTaskResult *)(lbGlob.pastTitleBlackOpsResult + param_2));
+        return true;
       }
     }
   }
-  uVar7 = __restgprlr_24(0);
-  return (bool)uVar7;
+  return false;
 }
 
 
 // 82512B00  PastTitle_GetBlackOpsDataComplete  (qcommon/past_title_data.cpp:831)
+
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 
 taskCompleteResults PastTitle_GetBlackOpsDataComplete(int param_1)
 
@@ -803,65 +771,64 @@ taskCompleteResults PastTitle_GetBlackOpsDataComplete(int param_1)
   byte bVar1;
   bdRemoteTask *this;
   ulonglong uVar2;
-  int iVar3;
-  overlappedTask *poVar4;
-  taskCompleteResults tVar5;
-  uint uVar6;
-  ulong uVar7;
-  int iVar8;
-  ulong *puVar9;
-  bool bVar10;
+  taskCompleteResults tVar3;
+  uint uVar4;
+  ulong uVar5;
+  int iVar6;
+  ulong *puVar7;
+  bool bVar8;
+  overlappedTask *poVar9;
   
-  iVar3 = __savegprlr_28(param_1);
-  bVar10 = false;
-  poVar4 = lbGlob.tasks.tasks + iVar3;
-  tVar5 = dwReadExternalTitleNamedStatsComplete(poVar4);
-  if (tVar5 == TASK_COMPLETE) {
-    this = lbGlob.tasks.tasks[iVar3].u.remoteTask.m_ptr;
-    if ((this != (bdRemoteTask *)0x0) && (uVar6 = bdRemoteTask::getNumResults(this), uVar6 != 0)) {
-      uVar6 = (uint)lbGlob.tasks.tasks[iVar3].controllerIndex;
-      if (uVar6 == 0x3ddad0a) {
+  bVar8 = false;
+  poVar9 = lbGlob.tasks.tasks + param_1;
+  tVar3 = dwReadExternalTitleNamedStatsComplete(poVar9);
+  if (tVar3 == TASK_COMPLETE) {
+    this = lbGlob.tasks.tasks[param_1].u.remoteTask.m_ptr;
+    if ((this != (bdRemoteTask *)0x0) && (uVar4 = bdRemoteTask::getNumResults(this), uVar4 != 0)) {
+      uVar4 = (uint)lbGlob.tasks.tasks[param_1].controllerIndex;
+      if (uVar4 == 0x3ddad0a) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\past_title_data.cpp"
                         ,0x34c,0,"%s");
       }
       SetPastTitlePrestigeLevel
-                (0x1442,(ulong)lbGlob.pastTitleBlackOpsResult[uVar6].m_plevel,
-                 (uint)lbGlob.tasks.tasks[iVar3].controllerIndex);
-      uVar2 = lbGlob.pastTitleBlackOpsResult[uVar6].m_rankxp & 0xffffffff;
+                (0x1442,(ulong)lbGlob.pastTitleBlackOpsResult[uVar4].m_plevel,
+                 (uint)lbGlob.tasks.tasks[param_1].controllerIndex);
+      uVar2 = lbGlob.pastTitleBlackOpsResult[uVar4].m_rankxp & 0xffffffff;
       if (uVar2 != 0) {
-        iVar8 = 0;
-        puVar9 = s_RanksBlackOps;
+        iVar6 = 0;
+        puVar7 = s_RanksBlackOps;
         do {
-          if (*puVar9 < uVar2) {
-            SetPastTitleRank(0x1442,0x32 - iVar8,(uint)lbGlob.tasks.tasks[iVar3].controllerIndex);
-            bVar10 = true;
+          if (*puVar7 < uVar2) {
+            SetPastTitleRank(0x1442,0x32 - iVar6,(uint)lbGlob.tasks.tasks[param_1].controllerIndex);
+            bVar8 = true;
             goto LAB_82512c20;
           }
-          puVar9 = puVar9 + 1;
-          iVar8 = iVar8 + 1;
-        } while ((int)puVar9 < -0x7df6e4c0);
+          puVar7 = puVar7 + 1;
+          iVar6 = iVar6 + 1;
+        } while ((int)puVar7 < -0x7df6e4c0);
       }
-      SetPastTitleRank(0x1442,0,(uint)lbGlob.tasks.tasks[iVar3].controllerIndex);
-      bVar10 = true;
+      SetPastTitleRank(0x1442,0,(uint)lbGlob.tasks.tasks[param_1].controllerIndex);
+      bVar8 = true;
     }
   }
-  else if (tVar5 == TASK_NOTCOMPLETE) goto LAB_82512c5c;
+  else if (tVar3 == TASK_NOTCOMPLETE) {
+    return TASK_NOTCOMPLETE;
+  }
 LAB_82512c20:
-  bVar1 = lbGlob.tasks.tasks[iVar3].controllerIndex;
-  uVar7 = PastTitle_CalculateNextReadTime(bVar10);
-  SetPastTitleNextReadTime(0x1442,uVar7,(uint)bVar1);
+  bVar1 = lbGlob.tasks.tasks[param_1].controllerIndex;
+  uVar5 = PastTitle_CalculateNextReadTime(bVar8);
+  SetPastTitleNextReadTime(0x1442,uVar5,(uint)bVar1);
   GamerProfile_UpdateProfilePastTitleData((uint)bVar1);
   s_dataReadState = s_dataReadState + 1;
-  TaskManager_CancelTask(poVar4);
-LAB_82512c5c:
-  tVar5 = __restgprlr_28(tVar5);
-  return tVar5;
+  TaskManager_CancelTask(poVar9);
+  return tVar3;
 }
 
 
 // 82512C68  PastTitle_GetDataForPlayerComplete  (qcommon/past_title_data.cpp:863)
 
-/* WARNING: Type propagation algorithm not settling */
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
 
 taskCompleteResults PastTitle_GetDataForPlayerComplete(int param_1)
 
@@ -889,20 +856,17 @@ taskCompleteResults PastTitle_GetDataForPlayerComplete(int param_1)
   char local_b0;
   ulong local_a8;
   
-  uVar11 = (ulonglong)param_1;
-  __savegprlr();
   bVar10 = false;
-  if (0x1f < (uVar11 & 0xffffffff)) {
+  if (0x1f < (uint)param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\past_title_data.cpp",
                     0x36c,0,"slot doesn\'t index MAX_OVERLAPPED_TASKS_PER_SET\n\t%i not in [0, %i)")
     ;
   }
-  iVar18 = (int)((uVar11 + (uVar11 & 0x3fffffff) * 4 & 0x7ffffff) << 5);
-  if (*(char *)((int)(&lbGlob.tasks.tasks[0].u + 1) + iVar18 + 4) == '\0') {
+  if (lbGlob.tasks.tasks[param_1].active == false) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\past_title_data.cpp",
                     0x36d,0,"%s");
   }
-  bVar1 = *(byte *)((int)(&lbGlob.tasks.tasks[0].u + 1) + iVar18 + 5);
+  bVar1 = lbGlob.tasks.tasks[param_1].controllerIndex;
   uVar16 = (uint)bVar1;
   if (3 < bVar1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\past_title_data.cpp",
@@ -912,19 +876,16 @@ taskCompleteResults PastTitle_GetDataForPlayerComplete(int param_1)
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\past_title_data.cpp",
                     0x373,0,"%s");
   }
-  if (*(int *)((int)(&lbGlob.tasks.tasks[0].u + 1) + iVar18) != 10) {
+  if (lbGlob.tasks.tasks[param_1].type != 10) {
     Com_Printf(0x10,
                "Task in PastTitle_GetPrestigeForPlayerComplete not of type LB_TASK_READPASTLB_BYPLAYER\n"
               );
-    tVar6 = TASK_ERROR;
-    __restgprlr();
-    return tVar6;
+    return TASK_ERROR;
   }
-  poVar9 = (overlappedTask *)(lbGlob.tasks.tasks[0].u.storageRequest.filename + iVar18 + -0x28);
+  poVar9 = lbGlob.tasks.tasks + param_1;
   pvVar5 = TaskManager_GetTaskData(poVar9);
   if (pvVar5 == (void *)0x1442) {
-    tVar6 = PastTitle_GetBlackOpsDataComplete((int)uVar11);
-    __restgprlr();
+    tVar6 = PastTitle_GetBlackOpsDataComplete(param_1);
     return tVar6;
   }
   p_Var7 = TaskManager_TaskToXOverlapped(poVar9);
@@ -933,9 +894,7 @@ taskCompleteResults PastTitle_GetDataForPlayerComplete(int param_1)
                     0x386,0,"%s");
   }
   if (p_Var7->InternalLow == 0x3e5) {
-    tVar6 = TASK_NOTCOMPLETE;
-    __restgprlr();
-    return tVar6;
+    return TASK_NOTCOMPLETE;
   }
   uVar8 = XGetOverlappedExtendedError(p_Var7);
   if ((int)uVar8 < 0) {
@@ -948,9 +907,7 @@ taskCompleteResults PastTitle_GetDataForPlayerComplete(int param_1)
     PastTitle_AdvanceState((ulong)pvVar5,false,(uint)bVar1);
     poVar9 = TaskManager_TaskFromXOverlapped(&lbGlob.tasks,p_Var7);
     TaskManager_CancelTask(poVar9);
-    tVar6 = TASK_ERROR;
-    __restgprlr();
-    return tVar6;
+    return TASK_ERROR;
   }
   puVar12 = lbGlob.pastLBData[uVar16].pastTitleUserStats;
   if (puVar12 == (uchar *)0x0) {
@@ -1032,55 +989,52 @@ LAB_82513048:
   Com_Printf(0x10,"Finished reading data for title: %x\n");
   poVar9 = TaskManager_TaskFromXOverlapped(&lbGlob.tasks,p_Var7);
   TaskManager_CancelTask(poVar9);
-  tVar6 = TASK_COMPLETE;
-  __restgprlr();
-  return tVar6;
+  return TASK_COMPLETE;
 }
 
 
 // 82512710  PastTitle_GetData_Update  (qcommon/past_title_data.cpp:987)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void PastTitle_GetData_Update(int param_1)
 
 {
   int iVar1;
-  int iVar2;
-  uint uVar3;
-  bool bVar5;
-  ulong uVar4;
+  uint uVar2;
+  bool bVar4;
+  ulong uVar3;
   
-  iVar2 = __savegprlr_28(param_1);
-  uVar3 = Sys_GetTimeAsSeconds();
-  if ((past_title_data_active->current).integer == 0) goto LAB_82512814;
+  uVar2 = Sys_GetTimeAsSeconds();
+  if ((past_title_data_active->current).integer == 0) {
+    return;
+  }
   iVar1 = s_dataReadState / 5 + (s_dataReadState >> 0x1f);
   s_dataReadState = s_dataReadState + (iVar1 - (iVar1 >> 0x1f)) * -5;
-  bVar5 = LiveStorage_DoWeHaveStats(iVar2);
-  if (bVar5) {
-    if (s_dataReadState < 4) {
-      if (previousDataReadState != s_dataReadState) {
-        previousDataReadState = s_dataReadState;
-        uVar4 = GetPastTitleNextReadTime(s_pastTitleIDs[s_dataReadState],iVar2);
-        if (uVar3 < uVar4) {
-          s_dataReadState = s_dataReadState + 1;
-        }
-        else {
-          PastTitle_GetDataForPlayer(s_pastTitleIDs[s_dataReadState],iVar2);
-        }
+  bVar4 = LiveStorage_DoWeHaveStats(param_1);
+  if (bVar4) {
+    if (3 < s_dataReadState) goto LAB_825127f0;
+    if (previousDataReadState != s_dataReadState) {
+      previousDataReadState = s_dataReadState;
+      uVar3 = GetPastTitleNextReadTime(s_pastTitleIDs[s_dataReadState],param_1);
+      if (uVar2 < uVar3) {
+        s_dataReadState = s_dataReadState + 1;
       }
-      goto LAB_825127e8;
+      else {
+        PastTitle_GetDataForPlayer(s_pastTitleIDs[s_dataReadState],param_1);
+      }
     }
   }
-  else {
-LAB_825127e8:
-    if (s_dataReadState < 4) goto LAB_82512814;
+  if (s_dataReadState < 4) {
+    return;
   }
+LAB_825127f0:
   if (s_numPrestigeTokens != 0) {
-    LiveStorage_StatsWriteNeeded(iVar2);
-    LiveStorage_SaveStats(iVar2);
+    LiveStorage_StatsWriteNeeded(param_1);
+    LiveStorage_SaveStats(param_1);
     s_numPrestigeTokens = 0;
   }
-LAB_82512814:
-  __restgprlr_28();
   return;
 }
 

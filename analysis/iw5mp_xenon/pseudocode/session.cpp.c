@@ -2,142 +2,128 @@
 
 // 828BA208  XSessionCreate  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/online/src/session.cpp:35)
 
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
+
 ulong XSessionCreate(ulong param_1,ulong param_2,ulong param_3,ulong param_4,ulong64 *param_5,
                     _XSESSION_INFO *param_6,_XOVERLAPPED *param_7,void **param_8)
 
 {
-  uint uVar2;
   ulonglong uVar1;
-  int iVar3;
-  long lVar4;
-  ulong uVar5;
-  ulonglong uVar6;
-  ulonglong uVar7;
-  ulonglong uVar8;
-  ulonglong uVar9;
-  undefined4 *puVar10;
+  int iVar2;
+  long lVar3;
   undefined4 local_90 [4];
   undefined4 local_80;
-  uint local_7c;
+  ulong local_7c;
   ulong local_78;
   ulong local_74;
-  undefined4 local_70;
-  undefined4 local_6c;
-  undefined4 local_68;
+  ulong local_70;
+  _XSESSION_INFO *local_6c;
+  ulong64 *local_68;
   
-  uVar1 = (ulonglong)(int)param_8;
-  uVar9 = (ulonglong)(int)param_7;
-  uVar8 = (ulonglong)(int)param_6;
-  uVar7 = (ulonglong)(int)param_5;
-  uVar6 = (ulonglong)(int)param_2;
-  uVar2 = __savegprlr_22(param_1);
-  if (((((uVar6 & 0xffffffff) < 4) && ((uVar8 & 0xffffffff) != 0)) && ((uVar7 & 0xffffffff) != 0))
-     && ((uVar1 & 0xffffffff) != 0)) {
-    puVar10 = (undefined4 *)uVar1;
-    *puVar10 = 0xffffffff;
-    if ((uVar2 & 0xffffffc0) == 0 && (uVar2 & 0xffffe0c0) == 0) {
-      if (((uVar2 & 8) == 0) || ((uVar2 & 0x20) != 0)) {
-        if (((((uVar2 & 0x10) == 0) || ((uVar2 & 4) != 0)) &&
-            (((uVar2 & 0x10) == 0 || ((uVar2 & 0x20) != 0)))) &&
-           (((uVar2 & 1) == 0 || ((uVar2 & 0x2c) != 0)))) {
-          if ((uVar2 & 0xf00) == 0) {
+  if ((((param_2 < 4) && (param_6 != (_XSESSION_INFO *)0x0)) && (param_5 != (ulong64 *)0x0)) &&
+     (param_8 != (void **)0x0)) {
+    *param_8 = (void *)0xffffffff;
+    if ((param_1 & 0xffffffc0) == 0 && (param_1 & 0xffffe0c0) == 0) {
+      if (((param_1 & 8) == 0) || ((param_1 & 0x20) != 0)) {
+        if ((param_1 & 0x10) != 0) {
+          if ((param_1 & 4) == 0) goto LAB_828ba3a8;
+        }
+        if ((((param_1 & 0x10) == 0) || ((param_1 & 0x20) != 0)) &&
+           (((param_1 & 1) == 0 || ((param_1 & 0x2c) != 0)))) {
+          if ((param_1 & 0xf00) == 0) {
 LAB_828ba2ec:
-            uVar1 = XamSessionCreateHandle(uVar1);
+            uVar1 = XamSessionCreateHandle(param_8);
             if (uVar1 == 0) {
               local_90[0] = 0;
-              uVar1 = XamSessionRefObjByHandle(*puVar10,local_90);
+              uVar1 = XamSessionRefObjByHandle(*param_8,local_90);
               if (uVar1 == 0) {
-                local_70 = (undefined4)uVar6;
-                local_6c = (undefined4)uVar8;
-                local_68 = (undefined4)uVar7;
                 local_80 = local_90[0];
-                local_7c = uVar2;
+                local_7c = param_1;
                 local_78 = param_3;
                 local_74 = param_4;
-                iVar3 = XMsgStartIORequest(0xfb,0xb0010,uVar9,&local_80,0x1c);
-                if (iVar3 < 0) {
+                local_70 = param_2;
+                local_6c = param_6;
+                local_68 = param_5;
+                iVar2 = XMsgStartIORequest(0xfb,0xb0010,param_7,&local_80,0x1c);
+                if (iVar2 < 0) {
                   uVar1 = 0x65b;
                 }
                 else {
-                  if ((uVar9 & 0xffffffff) == 0) {
-                    lVar4 = RtlGetLastError();
-                    uVar1 = -(ulonglong)(lVar4 != 0) & 0x65b;
+                  if (param_7 == (_XOVERLAPPED *)0x0) {
+                    lVar3 = RtlGetLastError();
+                    uVar1 = -(ulonglong)(lVar3 != 0) & 0x65b;
                   }
                   else {
                     uVar1 = 0x3e5;
                   }
                   if ((uVar1 == 0x3e5) || (uVar1 == 0)) goto LAB_828ba3ac;
                 }
-                CloseHandle((void *)*puVar10);
-                *puVar10 = 0;
+                CloseHandle(*param_8);
+                *param_8 = (void *)0x0;
               }
             }
             goto LAB_828ba3ac;
           }
-          if ((uVar2 & 10) != 0) {
-            if ((((uVar2 & 2) != 0) || ((uVar2 & 8) == 0)) || ((uVar2 & 0xf00) == (uVar2 & 0x400)))
-            {
-              if (((uVar2 & 0x200) == 0) || ((uVar2 & 0x800) == 0)) goto LAB_828ba2ec;
+          if ((param_1 & 10) != 0) {
+            if ((((param_1 & 2) != 0) || ((param_1 & 8) == 0)) ||
+               ((param_1 & 0xf00) == (param_1 & 0x400))) {
+              if (((param_1 & 0x200) == 0) || ((param_1 & 0x800) == 0)) goto LAB_828ba2ec;
             }
           }
         }
       }
     }
   }
+LAB_828ba3a8:
   uVar1 = 0x57;
 LAB_828ba3ac:
-  uVar5 = __restgprlr_22(uVar1);
-  return uVar5;
+  return (ulong)uVar1;
 }
 
 
 // 828BA3B8  XSessionModify  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/online/src/session.cpp:198)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 ulong XSessionModify(void *param_1,ulong param_2,ulong param_3,ulong param_4,_XOVERLAPPED *param_5)
 
 {
-  undefined8 uVar1;
-  int iVar2;
-  long lVar3;
-  ulong uVar4;
-  ulonglong uVar5;
-  ulonglong uVar6;
-  ulonglong uVar7;
+  int iVar1;
+  long lVar2;
+  ulonglong uVar3;
   undefined4 local_50 [4];
   undefined4 local_40;
-  undefined4 local_3c;
+  ulong local_3c;
   ulong local_38;
   ulong local_34;
   
-  uVar6 = (ulonglong)(int)param_5;
-  uVar5 = (ulonglong)(int)param_2;
-  uVar1 = __savegprlr_27(param_1);
-  if (((uVar5 & 0x200) == 0) || ((uVar5 & 0x800) == 0)) {
-    uVar7 = XamSessionRefObjByHandle(uVar1,local_50);
-    if (uVar7 == 0) {
-      local_3c = (undefined4)uVar5;
+  if (((param_2 & 0x200) == 0) || ((param_2 & 0x800) == 0)) {
+    uVar3 = XamSessionRefObjByHandle(param_1,local_50);
+    if (uVar3 == 0) {
       local_40 = local_50[0];
+      local_3c = param_2;
       local_38 = param_3;
       local_34 = param_4;
-      iVar2 = XMsgStartIORequest(0xfb,0xb0018,uVar6,&local_40,0x10);
-      if (iVar2 < 0) {
-        uVar7 = 0x65b;
+      iVar1 = XMsgStartIORequest(0xfb,0xb0018,param_5,&local_40,0x10);
+      if (iVar1 < 0) {
+        uVar3 = 0x65b;
       }
-      else if ((uVar6 & 0xffffffff) == 0) {
-        lVar3 = RtlGetLastError();
-        uVar7 = -(ulonglong)(lVar3 != 0) & 0x65b;
+      else if (param_5 == (_XOVERLAPPED *)0x0) {
+        lVar2 = RtlGetLastError();
+        uVar3 = -(ulonglong)(lVar2 != 0) & 0x65b;
       }
       else {
-        uVar7 = 0x3e5;
+        uVar3 = 0x3e5;
       }
       ObDereferenceObject(local_50[0]);
     }
   }
   else {
-    uVar7 = 0x57;
+    uVar3 = 0x57;
   }
-  uVar4 = __restgprlr_27(uVar7);
-  return uVar4;
+  return (ulong)uVar3;
 }
 
 
@@ -178,16 +164,16 @@ ulong XSessionDelete(void *param_1,_XOVERLAPPED *param_2)
 
 // 828BA528  XSessionJoinRemote  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/online/src/session.cpp:383)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 ulong XSessionJoinRemote(void *param_1,ulong param_2,ulong64 *param_3,int *param_4,
                         _XOVERLAPPED *param_5)
 
 {
-  undefined8 uVar1;
-  ulonglong uVar2;
-  int iVar3;
-  long lVar4;
-  ulong uVar5;
-  ulonglong uVar6;
+  ulonglong uVar1;
+  int iVar2;
+  long lVar3;
   undefined4 local_60 [4];
   undefined4 local_50;
   ulong local_4c;
@@ -195,44 +181,41 @@ ulong XSessionJoinRemote(void *param_1,ulong param_2,ulong64 *param_3,int *param
   undefined4 local_44;
   int *local_40;
   
-  uVar6 = (ulonglong)(int)param_5;
-  uVar1 = __savegprlr_27(param_1);
-  uVar2 = XamSessionRefObjByHandle(uVar1,local_60);
-  if (uVar2 == 0) {
+  uVar1 = XamSessionRefObjByHandle(param_1,local_60);
+  if (uVar1 == 0) {
     local_44 = 0;
     local_50 = local_60[0];
     local_4c = param_2;
     local_48 = param_3;
     local_40 = param_4;
-    iVar3 = XMsgStartIORequest(0xfb,0xb0012,uVar6,&local_50,0x14);
-    if (iVar3 < 0) {
-      uVar2 = 0x65b;
+    iVar2 = XMsgStartIORequest(0xfb,0xb0012,param_5,&local_50,0x14);
+    if (iVar2 < 0) {
+      uVar1 = 0x65b;
     }
-    else if ((uVar6 & 0xffffffff) == 0) {
-      lVar4 = RtlGetLastError();
-      uVar2 = -(ulonglong)(lVar4 != 0) & 0x65b;
+    else if (param_5 == (_XOVERLAPPED *)0x0) {
+      lVar3 = RtlGetLastError();
+      uVar1 = -(ulonglong)(lVar3 != 0) & 0x65b;
     }
     else {
-      uVar2 = 0x3e5;
+      uVar1 = 0x3e5;
     }
     ObDereferenceObject(local_60[0]);
   }
-  uVar5 = __restgprlr_27(uVar2);
-  return uVar5;
+  return (ulong)uVar1;
 }
 
 
 // 828BA5D8  XSessionLeaveRemote  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/online/src/session.cpp:507)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 ulong XSessionLeaveRemote(void *param_1,ulong param_2,ulong64 *param_3,_XOVERLAPPED *param_4)
 
 {
-  undefined8 uVar1;
-  ulonglong uVar2;
-  int iVar3;
-  long lVar4;
-  ulong uVar5;
-  ulonglong uVar6;
+  ulonglong uVar1;
+  int iVar2;
+  long lVar3;
   undefined4 local_50 [4];
   undefined4 local_40;
   ulong local_3c;
@@ -240,71 +223,65 @@ ulong XSessionLeaveRemote(void *param_1,ulong param_2,ulong64 *param_3,_XOVERLAP
   undefined4 local_34;
   undefined4 local_30;
   
-  uVar6 = (ulonglong)(int)param_4;
-  uVar1 = __savegprlr_28(param_1);
-  uVar2 = XamSessionRefObjByHandle(uVar1,local_50);
-  if (uVar2 == 0) {
+  uVar1 = XamSessionRefObjByHandle(param_1,local_50);
+  if (uVar1 == 0) {
     local_34 = 0;
     local_30 = 0;
     local_40 = local_50[0];
     local_3c = param_2;
     local_38 = param_3;
-    iVar3 = XMsgStartIORequest(0xfb,0xb0013,uVar6,&local_40,0x14);
-    if (iVar3 < 0) {
-      uVar2 = 0x65b;
+    iVar2 = XMsgStartIORequest(0xfb,0xb0013,param_4,&local_40,0x14);
+    if (iVar2 < 0) {
+      uVar1 = 0x65b;
     }
-    else if ((uVar6 & 0xffffffff) == 0) {
-      lVar4 = RtlGetLastError();
-      uVar2 = -(ulonglong)(lVar4 != 0) & 0x65b;
+    else if (param_4 == (_XOVERLAPPED *)0x0) {
+      lVar3 = RtlGetLastError();
+      uVar1 = -(ulonglong)(lVar3 != 0) & 0x65b;
     }
     else {
-      uVar2 = 0x3e5;
+      uVar1 = 0x3e5;
     }
     ObDereferenceObject(local_50[0]);
   }
-  uVar5 = __restgprlr_28(uVar2);
-  return uVar5;
+  return (ulong)uVar1;
 }
 
 
 // 828BA680  XSessionStart  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/online/src/session.cpp:638)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 ulong XSessionStart(void *param_1,ulong param_2,_XOVERLAPPED *param_3)
 
 {
-  undefined8 uVar1;
-  ulonglong uVar2;
-  int iVar3;
-  long lVar4;
-  ulong uVar5;
-  ulonglong uVar6;
+  ulonglong uVar1;
+  int iVar2;
+  long lVar3;
   undefined4 local_40 [4];
   undefined4 local_30;
   ulong local_2c;
   undefined8 local_28;
   
-  uVar6 = (ulonglong)(int)param_3;
-  uVar1 = __savegprlr_29(param_1);
-  uVar2 = XamSessionRefObjByHandle(uVar1,local_40);
-  if (uVar2 == 0) {
+  uVar1 = XamSessionRefObjByHandle(param_1,local_40);
+  if (uVar1 == 0) {
     local_28 = 0;
     local_30 = local_40[0];
     local_2c = param_2;
-    iVar3 = XMsgStartIORequest(0xfb,0xb0014,uVar6,&local_30,0x10);
-    if (iVar3 < 0) {
-      uVar2 = 0x65b;
+    iVar2 = XMsgStartIORequest(0xfb,0xb0014,param_3,&local_30,0x10);
+    if (iVar2 < 0) {
+      uVar1 = 0x65b;
     }
-    else if ((uVar6 & 0xffffffff) == 0) {
-      lVar4 = RtlGetLastError();
-      uVar2 = -(ulonglong)(lVar4 != 0) & 0x65b;
+    else if (param_3 == (_XOVERLAPPED *)0x0) {
+      lVar3 = RtlGetLastError();
+      uVar1 = -(ulonglong)(lVar3 != 0) & 0x65b;
     }
     else {
-      uVar2 = 0x3e5;
+      uVar1 = 0x3e5;
     }
     ObDereferenceObject(local_40[0]);
   }
-  uVar5 = __restgprlr_29(uVar2);
-  return uVar5;
+  return (ulong)uVar1;
 }
 
 
@@ -345,24 +322,23 @@ ulong XSessionEnd(void *param_1,_XOVERLAPPED *param_2)
 
 // 828BA7D0  XSessionSearchEx  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/online/src/session.cpp:860)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 ulong XSessionSearchEx(ulong param_1,ulong param_2,ulong param_3,ulong param_4,ushort param_5,
                       ushort param_6,_XUSER_PROPERTY *param_7,_XUSER_CONTEXT *param_8,ulong *param_9
                       ,_XSESSION_SEARCHRESULT_HEADER *param_10,_XOVERLAPPED *param_11)
 
 {
-  undefined4 uVar2;
-  int iVar3;
-  ulonglong uVar1;
-  long lVar4;
-  ulong uVar5;
-  longlong lVar6;
-  ulonglong uVar7;
+  int iVar1;
+  long lVar2;
+  uint uVar3;
   uint *in_stack_00000054;
   undefined4 *in_stack_0000005c;
   int in_stack_00000064;
-  undefined4 local_60;
+  ulong local_60;
   ulong local_5c;
-  undefined4 local_58;
+  ulong local_58;
   ushort local_54;
   ushort local_52;
   _XUSER_PROPERTY *local_50;
@@ -370,47 +346,40 @@ ulong XSessionSearchEx(ulong param_1,ulong param_2,ulong param_3,ulong param_4,u
   uint local_48;
   ulong local_40;
   
-  lVar6 = (longlong)(int)param_3;
-  uVar2 = __savegprlr_27(param_1);
-  uVar7 = lVar6 * 0x52e + 8;
-  if (((uVar7 & 0xffffffff) <= (ulonglong)*in_stack_00000054) &&
-     (in_stack_0000005c != (undefined4 *)0x0)) {
+  uVar3 = param_3 * 0x52e + 8;
+  if ((uVar3 <= *in_stack_00000054) && (in_stack_0000005c != (undefined4 *)0x0)) {
     *in_stack_0000005c = 0;
     in_stack_0000005c[1] = 0;
-    local_58 = (undefined4)lVar6;
     local_48 = *in_stack_00000054;
-    local_60 = uVar2;
+    local_60 = param_1;
     local_5c = param_2;
+    local_58 = param_3;
     local_54 = param_5;
     local_52 = param_6;
     local_50 = param_7;
     local_4c = param_8;
     local_40 = param_4;
-    iVar3 = XMsgStartIORequest(0xfb,0xb001c,in_stack_00000064,&local_60,0x24);
-    if (-1 < iVar3) {
+    iVar1 = XMsgStartIORequest(0xfb,0xb001c,in_stack_00000064,&local_60,0x24);
+    if (-1 < iVar1) {
       if (in_stack_00000064 == 0) {
-        lVar4 = RtlGetLastError();
-        uVar1 = -(ulonglong)(lVar4 != 0) & 0x65b;
+        lVar2 = RtlGetLastError();
+        return -(uint)(lVar2 != 0) & 0x65b;
       }
-      else {
-        uVar1 = 0x3e5;
-      }
-      goto LAB_828ba8b0;
+      return 0x3e5;
     }
-    if (iVar3 != -0x7feaadf9) {
-      uVar1 = 0x65b;
-      goto LAB_828ba8b0;
+    if (iVar1 != -0x7feaadf9) {
+      return 0x65b;
     }
   }
-  uVar1 = 0x7a;
-  *in_stack_00000054 = (uint)uVar7;
-LAB_828ba8b0:
-  uVar5 = __restgprlr_27(uVar1);
-  return uVar5;
+  *in_stack_00000054 = uVar3;
+  return 0x7a;
 }
 
 
 // 828BA8B8  XSessionSearchWeighted  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/online/src/session.cpp:975)
+
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
 
 ulong XSessionSearchWeighted
                 (ulong param_1,ulong param_2,ulong param_3,ulong param_4,ushort param_5,
@@ -419,19 +388,15 @@ ulong XSessionSearchWeighted
                 ulong *param_13,_XSESSION_SEARCHRESULT_HEADER *param_14,_XOVERLAPPED *param_15)
 
 {
-  undefined4 uVar2;
-  int iVar3;
-  ulonglong uVar1;
-  long lVar4;
-  ulong uVar5;
-  longlong lVar6;
-  ulonglong uVar7;
+  int iVar1;
+  long lVar2;
+  uint uVar3;
   uint *in_stack_00000074;
   undefined4 *in_stack_0000007c;
   int in_stack_00000084;
-  undefined4 local_90;
+  ulong local_90;
   ulong local_8c;
-  undefined4 local_88;
+  ulong local_88;
   ushort local_84;
   ushort local_82;
   _XUSER_WEIGHTED_PROPERTY *local_80;
@@ -440,44 +405,34 @@ ulong XSessionSearchWeighted
   ulong local_64;
   undefined4 local_60;
   
-  lVar6 = (longlong)(int)param_3;
-  uVar2 = __savegprlr_22(param_1);
-  uVar7 = lVar6 * 0x52e + 8;
-  if (((uVar7 & 0xffffffff) <= (ulonglong)*in_stack_00000074) &&
-     (in_stack_0000007c != (undefined4 *)0x0)) {
+  uVar3 = param_3 * 0x52e + 8;
+  if ((uVar3 <= *in_stack_00000074) && (in_stack_0000007c != (undefined4 *)0x0)) {
     *in_stack_0000007c = 0;
     in_stack_0000007c[1] = 0;
-    local_88 = (undefined4)lVar6;
     local_60 = 1;
     local_6c = *in_stack_00000074;
-    local_90 = uVar2;
+    local_90 = param_1;
     local_8c = param_2;
+    local_88 = param_3;
     local_84 = param_5;
     local_82 = param_6;
     local_80 = param_7;
     local_7c = param_8;
     local_64 = param_4;
-    iVar3 = XMsgStartIORequest(0xfb,0xb0065,in_stack_00000084,&local_90,0x34);
-    if (-1 < iVar3) {
+    iVar1 = XMsgStartIORequest(0xfb,0xb0065,in_stack_00000084,&local_90,0x34);
+    if (-1 < iVar1) {
       if (in_stack_00000084 == 0) {
-        lVar4 = RtlGetLastError();
-        uVar1 = -(ulonglong)(lVar4 != 0) & 0x65b;
+        lVar2 = RtlGetLastError();
+        return -(uint)(lVar2 != 0) & 0x65b;
       }
-      else {
-        uVar1 = 0x3e5;
-      }
-      goto LAB_828ba9c8;
+      return 0x3e5;
     }
-    if (iVar3 != -0x7feaadf9) {
-      uVar1 = 0x65b;
-      goto LAB_828ba9c8;
+    if (iVar1 != -0x7feaadf9) {
+      return 0x65b;
     }
   }
-  uVar1 = 0x7a;
-  *in_stack_00000074 = (uint)uVar7;
-LAB_828ba9c8:
-  uVar5 = __restgprlr_22(uVar1);
-  return uVar5;
+  *in_stack_00000074 = uVar3;
+  return 0x7a;
 }
 
 
@@ -520,47 +475,44 @@ ulong XSessionSearchByID(XNKID param_1,ulong param_2,ulong *param_3,
 
 // 828BAAB0  XSessionWriteStats  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/online/src/session.cpp:1273)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 ulong XSessionWriteStats(void *param_1,ulong64 param_2,ulong param_3,
                         _XSESSION_VIEW_PROPERTIES *param_4,_XOVERLAPPED *param_5)
 
 {
-  undefined8 uVar1;
-  int iVar2;
-  long lVar3;
-  ulong uVar4;
-  ulonglong uVar5;
-  ulonglong uVar6;
+  int iVar1;
+  long lVar2;
+  ulonglong uVar3;
   undefined4 local_60 [4];
   undefined4 local_50 [2];
-  ulonglong local_48;
+  ulong64 local_48;
   ulong local_40;
   _XSESSION_VIEW_PROPERTIES *local_3c;
   
-  uVar5 = (ulonglong)(int)param_5;
-  uVar1 = __savegprlr_27(param_1);
-  uVar6 = 0;
+  uVar3 = 0;
   if (((param_2 >> 0x30 & 0xf) != 9) || ((param_2 >> 0x30 & 0xc0) == 0)) {
-    uVar6 = XamSessionRefObjByHandle(uVar1,local_60);
-    if (uVar6 == 0) {
+    uVar3 = XamSessionRefObjByHandle(param_1,local_60);
+    if (uVar3 == 0) {
       local_50[0] = local_60[0];
       local_48 = param_2;
       local_40 = param_3;
       local_3c = param_4;
-      iVar2 = XMsgStartIORequest(0xfb,0xb0025,uVar5,local_50,0x18);
-      if (iVar2 < 0) {
-        uVar6 = 0x65b;
+      iVar1 = XMsgStartIORequest(0xfb,0xb0025,param_5,local_50,0x18);
+      if (iVar1 < 0) {
+        uVar3 = 0x65b;
       }
-      else if ((uVar5 & 0xffffffff) == 0) {
-        lVar3 = RtlGetLastError();
-        uVar6 = -(ulonglong)(lVar3 != 0) & 0x65b;
+      else if (param_5 == (_XOVERLAPPED *)0x0) {
+        lVar2 = RtlGetLastError();
+        uVar3 = -(ulonglong)(lVar2 != 0) & 0x65b;
       }
       else {
-        uVar6 = 0x3e5;
+        uVar3 = 0x3e5;
       }
       ObDereferenceObject(local_60[0]);
     }
   }
-  uVar4 = __restgprlr_27(uVar6);
-  return uVar4;
+  return (ulong)uVar3;
 }
 

@@ -31,39 +31,39 @@ int fclose(_iobuf *param_1)
 
 // 82919698  _fclose_nolock  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/fclose.c:85)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 int _fclose_nolock(_iobuf *param_1)
 
 {
-  _iobuf *p_Var1;
-  int *piVar2;
+  int *piVar1;
+  int iVar2;
   int iVar3;
-  int iVar4;
   
-  p_Var1 = (_iobuf *)__savegprlr_29(param_1);
-  iVar4 = -1;
-  if (p_Var1 == (_iobuf *)0x0) {
-    piVar2 = _errno();
-    *piVar2 = 0x16;
+  iVar2 = -1;
+  if (param_1 == (_iobuf *)0x0) {
+    piVar1 = _errno();
+    *piVar1 = 0x16;
     _invalid_parameter_noinfo();
-    iVar4 = -1;
+    iVar2 = -1;
   }
   else {
-    if ((p_Var1->_flag & 0x83U) != 0) {
-      iVar4 = _flush(p_Var1);
-      _freebuf(p_Var1);
-      iVar3 = _fileno(p_Var1);
+    if ((param_1->_flag & 0x83U) != 0) {
+      iVar2 = _flush(param_1);
+      _freebuf(param_1);
+      iVar3 = _fileno(param_1);
       iVar3 = _close(iVar3);
       if (iVar3 < 0) {
-        iVar4 = -1;
+        iVar2 = -1;
       }
-      else if (p_Var1->_tmpfname != (char *)0x0) {
-        free(p_Var1->_tmpfname);
-        p_Var1->_tmpfname = (char *)0x0;
+      else if (param_1->_tmpfname != (char *)0x0) {
+        free(param_1->_tmpfname);
+        param_1->_tmpfname = (char *)0x0;
       }
     }
-    p_Var1->_flag = 0;
+    param_1->_flag = 0;
   }
-  iVar4 = __restgprlr_29(iVar4);
-  return iVar4;
+  return iVar2;
 }
 

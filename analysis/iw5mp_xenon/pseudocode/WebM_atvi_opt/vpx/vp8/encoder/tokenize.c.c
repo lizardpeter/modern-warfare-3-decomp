@@ -30,6 +30,8 @@ void vp8_FreeToken(_func___cdecl_void_void_ptr *param_1)
 
 // 8283B770  fill_value_tokens  (WebM_atvi_opt/vpx/vp8/encoder/tokenize.c:68)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void fill_value_tokens(void)
@@ -47,7 +49,6 @@ void fill_value_tokens(void)
   ushort uVar10;
   longlong lVar11;
   
-  __savegprlr_24();
   pTVar2 = vp8_dct_value_tokens;
   lVar11 = -0x800;
   uVar10 = 1;
@@ -96,7 +97,6 @@ LAB_8283b7c0:
     if (0x7ff < (int)lVar11) {
       vp8_dct_value_tokens_ptr = vp8_dct_value_tokens + 0x800;
       vp8_dct_value_cost_ptr = vp8_dct_value_cost + 0x800;
-      __restgprlr_24();
       return;
     }
   } while( true );
@@ -131,6 +131,8 @@ int vp8_treed_cost(char *param_1,uchar *param_2,int param_3,int param_4)
 
 // 8283B8E8  tokenize2nd_order_b  (WebM_atvi_opt/vpx/vp8/encoder/tokenize.c:136)
 
+/* WARNING: Function: __savegprlr_17 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_17 replaced with injection: xenon_save_restore */
 /* WARNING: Type propagation algorithm not settling */
 
 void tokenize2nd_order_b(BLOCKD *param_1,TOKENEXTRA **param_2,int param_3,FRAME_TYPE param_4,
@@ -140,72 +142,61 @@ void tokenize2nd_order_b(BLOCKD *param_1,TOKENEXTRA **param_2,int param_3,FRAME_
   byte bVar1;
   short sVar2;
   int iVar3;
-  int iVar4;
+  short *psVar4;
   char cVar5;
-  int *piVar6;
-  uint uVar7;
-  ulonglong uVar8;
-  int iVar9;
-  ulonglong uVar10;
-  longlong lVar11;
-  ulonglong uVar12;
-  TOKENEXTRA *pTVar13;
-  int iVar14;
-  ulonglong uVar15;
+  uint uVar6;
+  int iVar7;
+  TOKENEXTRA *pTVar8;
+  int *piVar9;
+  int iVar10;
+  uint uVar11;
   
-  uVar10 = (ulonglong)(int)param_4;
-  uVar8 = (ulonglong)param_3;
-  piVar6 = (int *)__savegprlr_17(param_1);
-  iVar3 = piVar6[0xc];
-  iVar4 = *piVar6;
-  piVar6 = vp8_default_zig_zag1d;
-  pTVar13 = *param_2;
-  uVar15 = (ulonglong)(*param_5 != '\0') + (ulonglong)(*param_6 != '\0');
-  uVar7 = 0;
+  iVar3 = param_1->eob;
+  psVar4 = param_1->qcoeff;
+  piVar9 = vp8_default_zig_zag1d;
+  pTVar8 = *param_2;
+  uVar11 = (uint)(*param_5 != '\0') + (uint)(*param_6 != '\0');
+  uVar6 = 0;
   do {
-    bVar1 = ""[uVar7];
-    if ((int)uVar7 < iVar3) {
-      sVar2 = *(short *)(*piVar6 * 2 + iVar4);
-      pTVar13->Extra = (int)vp8_dct_value_tokens_ptr[sVar2].Extra;
-      lVar11 = (longlong)vp8_dct_value_tokens_ptr[sVar2].Token;
+    bVar1 = ""[uVar6];
+    if ((int)uVar6 < iVar3) {
+      sVar2 = psVar4[*piVar9];
+      pTVar8->Extra = (int)vp8_dct_value_tokens_ptr[sVar2].Extra;
+      iVar7 = (int)vp8_dct_value_tokens_ptr[sVar2].Token;
     }
     else {
-      lVar11 = 0xb;
+      iVar7 = 0xb;
     }
-    uVar12 = (uVar8 & 0x1fffffff) * 8 + (ulonglong)bVar1;
-    pTVar13->Token = (int)lVar11;
-    uVar12 = uVar12 + (uVar12 & 0x7fffffff) * 2 + uVar15;
-    pTVar13->section =
-         ((uint)LZCOUNT(uVar7) >> 5) + (int)(((uVar10 & 0x3fffffff) * 4 + uVar8 & 0xffffffff) << 1);
-    pTVar13->context_tree = (param_7->common).fc.coef_probs[0][0][(int)uVar12];
-    iVar9 = (int)uVar8;
-    if (((int)uVar15 == 0) && (((bVar1 != 0 && (0 < iVar9)) || ((1 < bVar1 && (iVar9 == 0)))))) {
-      iVar14 = 1;
+    pTVar8->Token = iVar7;
+    pTVar8->section = ((uint)LZCOUNT(uVar6) >> 5) + (param_4 * 4 + param_3) * 2;
+    pTVar8->context_tree = (param_7->common).fc.coef_probs[param_3][bVar1][uVar11];
+    if ((uVar11 == 0) && (((bVar1 != 0 && (0 < param_3)) || ((1 < bVar1 && (param_3 == 0)))))) {
+      iVar10 = 1;
     }
     else {
-      iVar14 = 0;
+      iVar10 = 0;
     }
-    pTVar13->skip_eob_node = iVar14;
-    pTVar13 = pTVar13 + 1;
-    iVar14 = (int)(((uVar12 + (uVar12 & 0x7fffffff) * 2 & 0x3fffffff) * 4 + lVar11 + 0xabff &
-                   0xffffffff) << 2);
-    *(int *)((int)param_7->Y1quant[0] + iVar14) = *(int *)((int)param_7->Y1quant[0] + iVar14) + 1;
-    uVar15 = (ulonglong)""[(int)lVar11];
-    if (iVar3 <= (int)uVar7) break;
-    piVar6 = piVar6 + 1;
-    uVar7 = uVar7 + 1;
-  } while ((int)piVar6 < -0x7de18b10);
-  *param_2 = pTVar13;
-  cVar5 = '\x01' - ((iVar9 == 0) == uVar7);
+    pTVar8->skip_eob_node = iVar10;
+    pTVar8 = pTVar8 + 1;
+    param_7->coef_counts[param_3][bVar1][uVar11][iVar7] =
+         param_7->coef_counts[param_3][bVar1][uVar11][iVar7] + 1;
+    uVar11 = (uint)""[iVar7];
+    if (iVar3 <= (int)uVar6) break;
+    piVar9 = piVar9 + 1;
+    uVar6 = uVar6 + 1;
+  } while ((int)piVar9 < -0x7de18b10);
+  *param_2 = pTVar8;
+  cVar5 = '\x01' - ((param_3 == 0) == uVar6);
   *param_6 = cVar5;
   *param_5 = cVar5;
-  __restgprlr_17();
   return;
 }
 
 
 // 8283BA80  tokenize1st_order_b  (WebM_atvi_opt/vpx/vp8/encoder/tokenize.c:189)
 
+/* WARNING: Function: __savegprlr_17 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_17 replaced with injection: xenon_save_restore */
 /* WARNING: Type propagation algorithm not settling */
 
 void tokenize1st_order_b(BLOCKD *param_1,TOKENEXTRA **param_2,int param_3,FRAME_TYPE param_4,
@@ -215,129 +206,122 @@ void tokenize1st_order_b(BLOCKD *param_1,TOKENEXTRA **param_2,int param_3,FRAME_
   byte bVar1;
   short sVar2;
   int iVar3;
-  int iVar4;
+  short *psVar4;
   char cVar5;
-  int *piVar7;
-  longlong lVar6;
-  ulonglong uVar8;
-  int iVar9;
-  ulonglong uVar10;
-  ulonglong uVar11;
+  int iVar6;
+  uint uVar7;
+  TOKENEXTRA *pTVar8;
+  byte *pbVar9;
+  int *piVar10;
+  int iVar11;
   uint uVar12;
-  TOKENEXTRA *pTVar13;
-  byte *pbVar14;
-  int iVar15;
-  ulonglong uVar16;
   
-  uVar10 = (ulonglong)(int)param_4;
-  uVar8 = (ulonglong)param_3;
-  piVar7 = (int *)__savegprlr_17(param_1);
-  iVar9 = (int)uVar8;
-  pTVar13 = *param_2;
-  iVar3 = piVar7[0xc];
-  iVar4 = *piVar7;
-  uVar12 = (uint)(iVar9 == 0);
-  uVar16 = (ulonglong)(*param_5 != '\0') + (ulonglong)(*param_6 != '\0');
-  pbVar14 = "" + uVar12;
-  piVar7 = vp8_default_zig_zag1d + uVar12;
+  pTVar8 = *param_2;
+  iVar3 = param_1->eob;
+  psVar4 = param_1->qcoeff;
+  uVar7 = (uint)(param_3 == 0);
+  uVar12 = (uint)(*param_5 != '\0') + (uint)(*param_6 != '\0');
+  pbVar9 = "" + uVar7;
+  piVar10 = vp8_default_zig_zag1d + uVar7;
   do {
-    bVar1 = *pbVar14;
-    lVar6 = 0xb;
-    if ((int)uVar12 < iVar3) {
-      sVar2 = *(short *)(*piVar7 * 2 + iVar4);
-      pTVar13->Extra = (int)vp8_dct_value_tokens_ptr[sVar2].Extra;
-      lVar6 = (longlong)vp8_dct_value_tokens_ptr[sVar2].Token;
+    bVar1 = *pbVar9;
+    iVar6 = 0xb;
+    if ((int)uVar7 < iVar3) {
+      sVar2 = psVar4[*piVar10];
+      pTVar8->Extra = (int)vp8_dct_value_tokens_ptr[sVar2].Extra;
+      iVar6 = (int)vp8_dct_value_tokens_ptr[sVar2].Token;
     }
-    uVar11 = (uVar8 & 0x1fffffff) * 8 + (ulonglong)bVar1;
-    pTVar13->Token = (int)lVar6;
-    uVar11 = uVar11 + (uVar11 & 0x7fffffff) * 2 + uVar16;
-    pTVar13->section =
-         ((uint)LZCOUNT(uVar12) >> 5) + (int)(((uVar10 & 0x3fffffff) * 4 + uVar8 & 0xffffffff) << 1)
-    ;
-    pTVar13->context_tree = (param_7->common).fc.coef_probs[0][0][(int)uVar11];
-    if (((int)uVar16 == 0) && (((bVar1 != 0 && (0 < iVar9)) || ((1 < bVar1 && (iVar9 == 0)))))) {
-      iVar15 = 1;
+    pTVar8->Token = iVar6;
+    pTVar8->section = ((uint)LZCOUNT(uVar7) >> 5) + (param_4 * 4 + param_3) * 2;
+    pTVar8->context_tree = (param_7->common).fc.coef_probs[param_3][bVar1][uVar12];
+    if ((uVar12 == 0) && (((bVar1 != 0 && (0 < param_3)) || ((1 < bVar1 && (param_3 == 0)))))) {
+      iVar11 = 1;
     }
     else {
-      iVar15 = 0;
+      iVar11 = 0;
     }
-    pTVar13->skip_eob_node = iVar15;
-    pTVar13 = pTVar13 + 1;
-    iVar15 = (int)(((uVar11 + (uVar11 & 0x7fffffff) * 2 & 0x3fffffff) * 4 + lVar6 + 0xabff &
-                   0xffffffff) << 2);
-    *(int *)((int)param_7->Y1quant[0] + iVar15) = *(int *)((int)param_7->Y1quant[0] + iVar15) + 1;
-    uVar16 = (ulonglong)""[(int)lVar6];
-    if (iVar3 <= (int)uVar12) break;
-    piVar7 = piVar7 + 1;
-    uVar12 = uVar12 + 1;
-    pbVar14 = pbVar14 + 1;
-  } while ((int)piVar7 < -0x7de18b10);
-  *param_2 = pTVar13;
-  cVar5 = '\x01' - ((iVar9 == 0) == uVar12);
+    pTVar8->skip_eob_node = iVar11;
+    pTVar8 = pTVar8 + 1;
+    param_7->coef_counts[param_3][bVar1][uVar12][iVar6] =
+         param_7->coef_counts[param_3][bVar1][uVar12][iVar6] + 1;
+    uVar12 = (uint)""[iVar6];
+    if (iVar3 <= (int)uVar7) break;
+    piVar10 = piVar10 + 1;
+    uVar7 = uVar7 + 1;
+    pbVar9 = pbVar9 + 1;
+  } while ((int)piVar10 < -0x7de18b10);
+  *param_2 = pTVar8;
+  cVar5 = '\x01' - ((param_3 == 0) == uVar7);
   *param_6 = cVar5;
   *param_5 = cVar5;
-  __restgprlr_17();
   return;
 }
 
 
 // 8283BC28  mb_is_skippable  (WebM_atvi_opt/vpx/vp8/encoder/tokenize.c:233)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 int mb_is_skippable(MACROBLOCKD *param_1)
 
 {
-  uint uVar1;
-  uint *puVar2;
+  MB_PREDICTION_MODE MVar1;
+  uint uVar2;
   uint *puVar3;
   uint *puVar4;
-  int iVar6;
-  ulonglong uVar5;
-  uint uVar7;
-  uint *puVar8;
-  int iVar9;
-  int *piVar10;
+  uint *puVar5;
+  ulonglong uVar6;
+  int iVar7;
+  uint uVar8;
+  int *piVar9;
+  int iVar10;
   longlong lVar11;
   
-  iVar6 = __savegprlr_28(param_1);
-  uVar5 = 1;
-  uVar7 = 0;
-  if ((**(int **)(iVar6 + 0x1140) == 4) || (**(int **)(iVar6 + 0x1140) == 9)) {
-    iVar9 = 0;
+  uVar6 = 1;
+  uVar8 = 0;
+  MVar1 = (param_1->mode_info_context->mbmi).mode;
+  if ((MVar1 == B_PRED) || (MVar1 == SPLITMV)) {
+    iVar10 = 0;
   }
   else {
-    iVar9 = 1;
-    puVar8 = (uint *)(iVar6 + 0xb68);
-    uVar7 = 0x10;
+    iVar10 = 1;
+    piVar9 = &param_1->block[1].eob;
+    uVar8 = 0x10;
     lVar11 = 4;
     do {
-      puVar2 = puVar8 + -0xf;
-      uVar1 = *puVar8;
-      puVar3 = puVar8 + 0xf;
-      puVar4 = puVar8 + 0x1e;
-      puVar8 = puVar8 + 0x3c;
-      uVar5 = ((~(ulonglong)*puVar4 & 0xffffffff) >> 0x1f) + (ulonglong)(1 < (ulonglong)*puVar4) & 1
-              & ((~(ulonglong)*puVar3 & 0xffffffff) >> 0x1f) + (ulonglong)(1 < (ulonglong)*puVar3) &
-                1 & ((~(ulonglong)uVar1 & 0xffffffff) >> 0x1f) + (ulonglong)(1 < (ulonglong)uVar1) &
-                    1 & ((~(ulonglong)*puVar2 & 0xffffffff) >> 0x1f) +
-                        (ulonglong)(1 < (ulonglong)*puVar2) & 1 & uVar5;
+      puVar3 = (uint *)(piVar9 + -0xf);
+      uVar2 = *piVar9;
+      puVar4 = (uint *)(piVar9 + 0xf);
+      puVar5 = (uint *)(piVar9 + 0x1e);
+      piVar9 = piVar9 + 0x3c;
+      uVar6 = ((~(ulonglong)*puVar5 & 0xffffffff) >> 0x1f) + (ulonglong)(1 < (ulonglong)*puVar5) & 1
+              & ((~(ulonglong)*puVar4 & 0xffffffff) >> 0x1f) + (ulonglong)(1 < (ulonglong)*puVar4) &
+                1 & ((~(ulonglong)uVar2 & 0xffffffff) >> 0x1f) + (ulonglong)(1 < (ulonglong)uVar2) &
+                    1 & ((~(ulonglong)*puVar3 & 0xffffffff) >> 0x1f) +
+                        (ulonglong)(1 < (ulonglong)*puVar3) & 1 & uVar6;
       lVar11 = lVar11 + -1;
     } while (lVar11 != 0);
   }
-  if (uVar7 < iVar9 + 0x18U) {
-    iVar9 = (iVar9 + 0x18U) - uVar7;
-    piVar10 = (int *)(uVar7 * 0x3c + iVar6 + 0xaf0);
+  iVar7 = (int)uVar6;
+  if (uVar8 < iVar10 + 0x18U) {
+    iVar10 = (iVar10 + 0x18U) - uVar8;
+    piVar9 = &param_1->block[uVar8 - 1].eob;
     do {
-      piVar10 = piVar10 + 0xf;
-      uVar5 = *piVar10 == 0 & uVar5;
-      iVar9 = iVar9 + -1;
-    } while (iVar9 != 0);
+      piVar9 = piVar9 + 0xf;
+      uVar6 = *piVar9 == 0 & uVar6;
+      iVar7 = (int)uVar6;
+      iVar10 = iVar10 + -1;
+    } while (iVar10 != 0);
   }
-  iVar6 = __restgprlr_28(uVar5);
-  return iVar6;
+  return iVar7;
 }
 
 
 // 8283C460  vp8_tokenize_mb  (WebM_atvi_opt/vpx/vp8/encoder/tokenize.c:254)
+
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
 
 void vp8_tokenize_mb(VP8_COMP *param_1,MACROBLOCKD *param_2,TOKENEXTRA **param_3)
 
@@ -346,70 +330,62 @@ void vp8_tokenize_mb(VP8_COMP *param_1,MACROBLOCKD *param_2,TOKENEXTRA **param_3
   ENTROPY_CONTEXT_PLANES *pEVar2;
   MODE_INFO *pMVar3;
   MB_PREDICTION_MODE MVar4;
-  MACROBLOCKD *pMVar5;
-  VP8_COMP *pVVar6;
-  int iVar7;
-  longlong lVar8;
-  longlong lVar9;
-  int iVar10;
+  int iVar5;
+  BLOCKD *pBVar7;
+  longlong lVar6;
+  int iVar8;
   
-  lVar8 = (longlong)(int)param_2;
-  pVVar6 = (VP8_COMP *)__savegprlr_22(param_1);
-  pMVar5 = (MACROBLOCKD *)lVar8;
-  pEVar1 = pMVar5->above_context;
-  pEVar2 = pMVar5->left_context;
-  (pMVar5->mode_info_context->mbmi).dc_diff = '\x01';
-  iVar7 = mb_is_skippable(pMVar5);
-  (pMVar5->mode_info_context->mbmi).mb_skip_coeff = (uchar)iVar7;
-  if ((pMVar5->mode_info_context->mbmi).mb_skip_coeff == '\0') {
-    pVVar6->skip_false_count = pVVar6->skip_false_count + 1;
-    MVar4 = (pMVar5->mode_info_context->mbmi).mode;
+  pEVar1 = param_2->above_context;
+  pEVar2 = param_2->left_context;
+  (param_2->mode_info_context->mbmi).dc_diff = '\x01';
+  iVar5 = mb_is_skippable(param_2);
+  (param_2->mode_info_context->mbmi).mb_skip_coeff = (uchar)iVar5;
+  if ((param_2->mode_info_context->mbmi).mb_skip_coeff == '\0') {
+    param_1->skip_false_count = param_1->skip_false_count + 1;
+    MVar4 = (param_2->mode_info_context->mbmi).mode;
     if ((MVar4 == B_PRED) || (MVar4 == SPLITMV)) {
-      iVar7 = 3;
+      iVar5 = 3;
     }
     else {
-      tokenize2nd_order_b(pMVar5->block + 0x18,param_3,1,pMVar5->frame_type,&pEVar1->y2,&pEVar2->y2,
-                          pVVar6);
-      iVar7 = 0;
+      tokenize2nd_order_b(param_2->block + 0x18,param_3,1,param_2->frame_type,&pEVar1->y2,
+                          &pEVar2->y2,param_1);
+      iVar5 = 0;
     }
-    iVar10 = 0;
-    lVar9 = lVar8 + 0xafc;
+    iVar8 = 0;
+    pBVar7 = param_2->block;
     do {
-      tokenize1st_order_b((BLOCKD *)lVar9,param_3,iVar7,pMVar5->frame_type,pEVar1->y1 + ""[iVar10],
-                          pEVar2->y1 + ""[iVar10],pVVar6);
-      iVar10 = iVar10 + 1;
-      lVar9 = lVar9 + 0x3c;
-    } while (iVar10 < 0x10);
-    lVar8 = lVar8 + 0xebc;
-    iVar7 = 0;
-    lVar9 = 8;
+      tokenize1st_order_b(pBVar7,param_3,iVar5,param_2->frame_type,pEVar1->y1 + ""[iVar8],
+                          pEVar2->y1 + ""[iVar8],param_1);
+      iVar8 = iVar8 + 1;
+      pBVar7 = pBVar7 + 1;
+    } while (iVar8 < 0x10);
+    pBVar7 = param_2->block + 0x10;
+    iVar5 = 0;
+    lVar6 = 8;
     do {
-      tokenize1st_order_b((BLOCKD *)lVar8,param_3,2,pMVar5->frame_type,pEVar1->y1 + ""[iVar7 + 0x10]
-                          ,pEVar2->y1 + ""[iVar7 + 0x10],pVVar6);
-      lVar9 = lVar9 + -1;
-      iVar7 = iVar7 + 1;
-      lVar8 = lVar8 + 0x3c;
-    } while (lVar9 != 0);
-    __restgprlr_22();
+      tokenize1st_order_b(pBVar7,param_3,2,param_2->frame_type,pEVar1->y1 + ""[iVar5 + 0x10],
+                          pEVar2->y1 + ""[iVar5 + 0x10],param_1);
+      lVar6 = lVar6 + -1;
+      iVar5 = iVar5 + 1;
+      pBVar7 = pBVar7 + 1;
+    } while (lVar6 != 0);
     return;
   }
-  iVar7 = (pVVar6->common).mb_no_coeff_skip;
-  pVVar6->skip_true_count = pVVar6->skip_true_count + 1;
-  if (iVar7 == 0) {
-    vp8_stuff_mb(pVVar6,pMVar5,param_3);
+  iVar5 = (param_1->common).mb_no_coeff_skip;
+  param_1->skip_true_count = param_1->skip_true_count + 1;
+  if (iVar5 == 0) {
+    vp8_stuff_mb(param_1,param_2,param_3);
   }
   else {
-    vp8_fix_contexts(pMVar5);
+    vp8_fix_contexts(param_2);
   }
-  pMVar3 = pMVar5->mode_info_context;
+  pMVar3 = param_2->mode_info_context;
   MVar4 = (pMVar3->mbmi).mode;
   if ((MVar4 != B_PRED) && (MVar4 != SPLITMV)) {
     (pMVar3->mbmi).dc_diff = '\0';
-    __restgprlr_22();
     return;
   }
   (pMVar3->mbmi).dc_diff = '\x01';
-  __restgprlr_22();
   return;
 }
 
@@ -512,6 +488,10 @@ void stuff1st_order_buv(BLOCKD *param_1,TOKENEXTRA **param_2,int param_3,FRAME_T
 
 // 8283BEE8  vp8_stuff_mb  (WebM_atvi_opt/vpx/vp8/encoder/tokenize.c:539)
 
+/* WARNING: Function: __savegprlr_16 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_16 replaced with injection: xenon_save_restore */
+/* WARNING: Type propagation algorithm not settling */
+
 void vp8_stuff_mb(VP8_COMP *param_1,MACROBLOCKD *param_2,TOKENEXTRA **param_3)
 
 {
@@ -526,11 +506,9 @@ void vp8_stuff_mb(VP8_COMP *param_1,MACROBLOCKD *param_2,TOKENEXTRA **param_3)
   MB_PREDICTION_MODE MVar9;
   int iVar10;
   int iVar11;
-  int iVar12;
-  int *piVar13;
-  longlong lVar14;
+  uint *puVar12;
+  longlong lVar13;
   
-  iVar10 = __savegprlr_16(param_1);
   pEVar5 = param_2->above_context;
   pEVar6 = param_2->left_context;
   pTVar7 = *param_3;
@@ -539,10 +517,10 @@ void vp8_stuff_mb(VP8_COMP *param_1,MACROBLOCKD *param_2,TOKENEXTRA **param_3)
   pTVar7->Token = 0xb;
   pTVar7->section = 0xb;
   pTVar7->skip_eob_node = 0;
-  iVar11 = (uint)(cVar1 != '\0') + (uint)(cVar2 != '\0');
-  pTVar7->context_tree = (uchar *)(iVar11 * 0xb + iVar10 + 0x218d6);
-  piVar13 = (int *)(iVar11 * 0x30 + iVar10 + 0x2b4a8);
-  *piVar13 = *piVar13 + 1;
+  iVar10 = (uint)(cVar1 != '\0') + (uint)(cVar2 != '\0');
+  pTVar7->context_tree = (param_1->common).fc.coef_probs[1][0][iVar10];
+  puVar12 = param_1->coef_counts[1][0][iVar10] + 0xb;
+  *puVar12 = *puVar12 + 1;
   *param_3 = pTVar7 + 1;
   pEVar6->y2 = '\0';
   pEVar5->y2 = '\0';
@@ -554,139 +532,138 @@ void vp8_stuff_mb(VP8_COMP *param_1,MACROBLOCKD *param_2,TOKENEXTRA **param_3)
   else {
     (pMVar8->mbmi).dc_diff = '\0';
   }
-  iVar11 = 0;
-  lVar14 = 4;
+  iVar10 = 0;
+  lVar13 = 4;
   do {
-    bVar3 = ""[iVar11];
-    bVar4 = ""[iVar11];
+    bVar3 = ""[iVar10];
+    bVar4 = ""[iVar10];
     pTVar7 = *param_3;
     cVar1 = pEVar5->y1[bVar3];
     cVar2 = pEVar6->y1[bVar4];
     pTVar7->Token = 0xb;
     pTVar7->section = 8;
     pTVar7->skip_eob_node = 0;
-    iVar12 = (uint)(cVar1 != '\0') + (uint)(cVar2 != '\0');
-    pTVar7->context_tree = (uchar *)(iVar12 * 0xb + iVar10 + 0x217ef);
-    piVar13 = (int *)(iVar12 * 0x30 + iVar10 + 0x2b0b8);
-    *piVar13 = *piVar13 + 1;
+    iVar11 = (uint)(cVar1 != '\0') + (uint)(cVar2 != '\0');
+    pTVar7->context_tree = (&(param_1->common).lfc)[1].coef_probs[0][1][iVar11];
+    puVar12 = param_1->coef_counts[0][1][iVar11] + 0xb;
+    *puVar12 = *puVar12 + 1;
     *param_3 = pTVar7 + 1;
     pEVar6->y1[bVar4] = '\0';
     pEVar5->y1[bVar3] = '\0';
-    bVar3 = ""[iVar11 + 1];
-    bVar4 = ""[iVar11 + 1];
+    bVar3 = ""[iVar10 + 1];
+    bVar4 = ""[iVar10 + 1];
     cVar1 = pEVar6->y1[bVar4];
     pTVar7 = *param_3;
     cVar2 = pEVar5->y1[bVar3];
     pTVar7->Token = 0xb;
-    iVar12 = (uint)(cVar2 != '\0') + (uint)(cVar1 != '\0');
-    pTVar7->context_tree = (uchar *)(iVar12 * 0xb + iVar10 + 0x217ef);
-    piVar13 = (int *)(iVar12 * 0x30 + iVar10 + 0x2b0b8);
+    iVar11 = (uint)(cVar2 != '\0') + (uint)(cVar1 != '\0');
+    pTVar7->context_tree = (&(param_1->common).lfc)[1].coef_probs[0][1][iVar11];
+    puVar12 = param_1->coef_counts[0][1][iVar11] + 0xb;
     pTVar7->section = 8;
     pTVar7->skip_eob_node = 0;
-    *piVar13 = *piVar13 + 1;
+    *puVar12 = *puVar12 + 1;
     *param_3 = pTVar7 + 1;
     pEVar6->y1[bVar4] = '\0';
     pEVar5->y1[bVar3] = '\0';
-    bVar3 = ""[iVar11 + 2];
-    bVar4 = ""[iVar11 + 2];
+    bVar3 = ""[iVar10 + 2];
+    bVar4 = ""[iVar10 + 2];
     pTVar7 = *param_3;
     cVar1 = pEVar5->y1[bVar3];
     cVar2 = pEVar6->y1[bVar4];
     pTVar7->Token = 0xb;
-    iVar12 = (uint)(cVar1 != '\0') + (uint)(cVar2 != '\0');
-    piVar13 = (int *)(iVar12 * 0x30 + iVar10 + 0x2b0b8);
-    pTVar7->context_tree = (uchar *)(iVar12 * 0xb + iVar10 + 0x217ef);
+    iVar11 = (uint)(cVar1 != '\0') + (uint)(cVar2 != '\0');
+    puVar12 = param_1->coef_counts[0][1][iVar11] + 0xb;
+    pTVar7->context_tree = (&(param_1->common).lfc)[1].coef_probs[0][1][iVar11];
     pTVar7->section = 8;
     pTVar7->skip_eob_node = 0;
-    *piVar13 = *piVar13 + 1;
+    *puVar12 = *puVar12 + 1;
     *param_3 = pTVar7 + 1;
     pEVar6->y1[bVar4] = '\0';
     pEVar5->y1[bVar3] = '\0';
-    bVar3 = ""[iVar11 + 3];
-    bVar4 = ""[iVar11 + 3];
-    iVar11 = iVar11 + 4;
+    bVar3 = ""[iVar10 + 3];
+    bVar4 = ""[iVar10 + 3];
+    iVar10 = iVar10 + 4;
     pTVar7 = *param_3;
     cVar1 = pEVar5->y1[bVar3];
     cVar2 = pEVar6->y1[bVar4];
     pTVar7->Token = 0xb;
-    iVar12 = (uint)(cVar1 != '\0') + (uint)(cVar2 != '\0');
-    pTVar7->context_tree = (uchar *)(iVar12 * 0xb + iVar10 + 0x217ef);
+    iVar11 = (uint)(cVar1 != '\0') + (uint)(cVar2 != '\0');
+    pTVar7->context_tree = (&(param_1->common).lfc)[1].coef_probs[0][1][iVar11];
     pTVar7->section = 8;
     pTVar7->skip_eob_node = 0;
-    piVar13 = (int *)(iVar12 * 0x30 + iVar10 + 0x2b0b8);
-    *piVar13 = *piVar13 + 1;
+    puVar12 = param_1->coef_counts[0][1][iVar11] + 0xb;
+    *puVar12 = *puVar12 + 1;
     *param_3 = pTVar7 + 1;
     pEVar6->y1[bVar4] = '\0';
     pEVar5->y1[bVar3] = '\0';
-    lVar14 = lVar14 + -1;
-  } while (lVar14 != 0);
-  iVar11 = 0;
-  lVar14 = 2;
+    lVar13 = lVar13 + -1;
+  } while (lVar13 != 0);
+  iVar10 = 0;
+  lVar13 = 2;
   do {
     pTVar7 = *param_3;
-    bVar3 = ""[iVar11 + 0x10];
-    bVar4 = ""[iVar11 + 0x10];
+    bVar3 = ""[iVar10 + 0x10];
+    bVar4 = ""[iVar10 + 0x10];
     cVar1 = pEVar5->y1[bVar3];
     cVar2 = pEVar6->y1[bVar4];
     pTVar7->Token = 0xb;
     pTVar7->section = 0xd;
     pTVar7->skip_eob_node = 0;
-    iVar12 = (uint)(cVar1 != '\0') + (uint)(cVar2 != '\0');
-    pTVar7->context_tree = (uchar *)(iVar12 * 0xb + iVar10 + 0x219de);
-    piVar13 = (int *)(iVar12 * 0x30 + iVar10 + 0x2b928);
-    *piVar13 = *piVar13 + 1;
+    iVar11 = (uint)(cVar1 != '\0') + (uint)(cVar2 != '\0');
+    pTVar7->context_tree = (param_1->common).fc.coef_probs[2][0][iVar11];
+    puVar12 = param_1->coef_counts[2][0][iVar11] + 0xb;
+    *puVar12 = *puVar12 + 1;
     *param_3 = pTVar7 + 1;
     pEVar6->y1[bVar4] = '\0';
     pEVar5->y1[bVar3] = '\0';
-    bVar3 = ""[iVar11 + 0x11];
+    bVar3 = ""[iVar10 + 0x11];
     cVar1 = pEVar6->y1[bVar3];
-    bVar4 = ""[iVar11 + 0x11];
+    bVar4 = ""[iVar10 + 0x11];
     cVar2 = pEVar5->y1[bVar4];
     pTVar7 = *param_3;
     pTVar7->Token = 0xb;
-    iVar12 = (uint)(cVar2 != '\0') + (uint)(cVar1 != '\0');
-    pTVar7->context_tree = (uchar *)(iVar12 * 0xb + iVar10 + 0x219de);
+    iVar11 = (uint)(cVar2 != '\0') + (uint)(cVar1 != '\0');
+    pTVar7->context_tree = (param_1->common).fc.coef_probs[2][0][iVar11];
     pTVar7->section = 0xd;
     pTVar7->skip_eob_node = 0;
-    piVar13 = (int *)(iVar12 * 0x30 + iVar10 + 0x2b928);
-    *piVar13 = *piVar13 + 1;
+    puVar12 = param_1->coef_counts[2][0][iVar11] + 0xb;
+    *puVar12 = *puVar12 + 1;
     *param_3 = pTVar7 + 1;
     pEVar6->y1[bVar3] = '\0';
     pEVar5->y1[bVar4] = '\0';
-    bVar3 = ""[iVar11 + 0x12];
-    bVar4 = ""[iVar11 + 0x12];
+    bVar3 = ""[iVar10 + 0x12];
+    bVar4 = ""[iVar10 + 0x12];
     pTVar7 = *param_3;
     cVar1 = pEVar5->y1[bVar4];
     cVar2 = pEVar6->y1[bVar3];
     pTVar7->Token = 0xb;
-    iVar12 = (uint)(cVar1 != '\0') + (uint)(cVar2 != '\0');
-    pTVar7->context_tree = (uchar *)(iVar12 * 0xb + iVar10 + 0x219de);
+    iVar11 = (uint)(cVar1 != '\0') + (uint)(cVar2 != '\0');
+    pTVar7->context_tree = (param_1->common).fc.coef_probs[2][0][iVar11];
     pTVar7->section = 0xd;
     pTVar7->skip_eob_node = 0;
-    piVar13 = (int *)(iVar12 * 0x30 + iVar10 + 0x2b928);
-    *piVar13 = *piVar13 + 1;
+    puVar12 = param_1->coef_counts[2][0][iVar11] + 0xb;
+    *puVar12 = *puVar12 + 1;
     *param_3 = pTVar7 + 1;
     pEVar6->y1[bVar3] = '\0';
     pEVar5->y1[bVar4] = '\0';
-    bVar3 = ""[iVar11 + 0x13];
-    bVar4 = ""[iVar11 + 0x13];
-    iVar11 = iVar11 + 4;
+    bVar3 = ""[iVar10 + 0x13];
+    bVar4 = ""[iVar10 + 0x13];
+    iVar10 = iVar10 + 4;
     cVar1 = pEVar6->y1[bVar3];
     cVar2 = pEVar5->y1[bVar4];
     pTVar7 = *param_3;
     pTVar7->Token = 0xb;
-    iVar12 = (uint)(cVar2 != '\0') + (uint)(cVar1 != '\0');
-    pTVar7->context_tree = (uchar *)(iVar12 * 0xb + iVar10 + 0x219de);
+    iVar11 = (uint)(cVar2 != '\0') + (uint)(cVar1 != '\0');
+    pTVar7->context_tree = (param_1->common).fc.coef_probs[2][0][iVar11];
     pTVar7->section = 0xd;
     pTVar7->skip_eob_node = 0;
-    piVar13 = (int *)(iVar12 * 0x30 + iVar10 + 0x2b928);
-    *piVar13 = *piVar13 + 1;
+    puVar12 = param_1->coef_counts[2][0][iVar11] + 0xb;
+    *puVar12 = *puVar12 + 1;
     *param_3 = pTVar7 + 1;
     pEVar6->y1[bVar3] = '\0';
     pEVar5->y1[bVar4] = '\0';
-    lVar14 = lVar14 + -1;
-  } while (lVar14 != 0);
-  __restgprlr_16();
+    lVar13 = lVar13 + -1;
+  } while (lVar13 != 0);
   return;
 }
 

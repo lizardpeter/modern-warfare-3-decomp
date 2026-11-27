@@ -42,6 +42,8 @@ CG_GlassPieceChange * CG_GlassPieceChangesFromIndex(int param_1)
 
 // 822CF848  CG_Glass_Enter  (cgame/cg_glass.cpp:63)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void CG_Glass_Enter(void)
@@ -49,7 +51,6 @@ void CG_Glass_Enter(void)
 {
   int iVar1;
   
-  __savegprlr_29();
   Sys_EnterCriticalSection(CRITSECT_CG_GLASS);
   if (insideGlassCode != false) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_glass.cpp",0x42,0,
@@ -66,7 +67,6 @@ void CG_Glass_Enter(void)
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_glass.cpp",0x49,0,
                     "%s");
   }
-  __restgprlr_29();
   return;
 }
 
@@ -189,6 +189,8 @@ void CG_Glass_Shutdown(void)
 
 // 822CFBB8  CG_Glass_PlaySoundAtPos  (cgame/cg_glass.cpp:156)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -196,31 +198,25 @@ void CG_Glass_Shutdown(void)
 void CG_Glass_PlaySoundAtPos(float *param_1,snd_alias_list_t *param_2)
 
 {
+  bool bVar2;
   cg_s *pcVar1;
-  bool bVar3;
-  cg_s *pcVar2;
-  LocalClientNum_t LVar4;
+  LocalClientNum_t LVar3;
   
-  pcVar1 = (cg_s *)__savegprlr_28(param_1);
-  pcVar2 = pcVar1;
-  if ((cg_glassData.recievedInitialState != false) && (cg_glassData.soundsThisFrame != 4)) {
+  if ((cg_glassData.recievedInitialState) && (cg_glassData.soundsThisFrame != 4)) {
     cg_glassData.soundsThisFrame = cg_glassData.soundsThisFrame + 1;
-    LVar4 = LOCAL_CLIENT_0;
+    LVar3 = LOCAL_CLIENT_0;
     if (0 < cl_maxLocalClients) {
       do {
-        bVar3 = CL_IsLocalClientActive(LVar4);
-        pcVar2 = (cg_s *)0x0;
-        if (bVar3) {
-          pcVar2 = CG_GetLocalClientGlobals(LVar4);
-          if ((pcVar2->predictedPlayerState).deltaTime == 0) {
-            pcVar2 = (cg_s *)CG_PlaySoundAlias(LVar4,0x7fe,(float *)pcVar1,param_2);
-          }
+        bVar2 = CL_IsLocalClientActive(LVar3);
+        if ((bVar2) &&
+           (pcVar1 = CG_GetLocalClientGlobals(LVar3), (pcVar1->predictedPlayerState).deltaTime == 0)
+           ) {
+          CG_PlaySoundAlias(LVar3,0x7fe,param_1,param_2);
         }
-        LVar4 = LVar4 + LOCAL_CLIENT_1;
-      } while ((int)LVar4 < cl_maxLocalClients);
+        LVar3 = LVar3 + LOCAL_CLIENT_1;
+      } while ((int)LVar3 < cl_maxLocalClients);
     }
   }
-  __restgprlr_28(pcVar2);
   return;
 }
 
@@ -236,6 +232,9 @@ float UnpackFloat(uchar param_1)
 
 // 822CFC90  CG_Glass_ApplyChangesToPiece  (cgame/cg_glass.cpp:203)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void CG_Glass_ApplyChangesToPiece(uint param_1,Glass_BreakData *param_2)
 
 {
@@ -243,8 +242,7 @@ void CG_Glass_ApplyChangesToPiece(uint param_1,Glass_BreakData *param_2)
   byte bVar2;
   float fVar3;
   float fVar4;
-  uint uVar5;
-  CG_GlassPieceChange *pCVar6;
+  CG_GlassPieceChange *pCVar5;
   float local_98;
   float local_94;
   float local_90;
@@ -259,8 +257,7 @@ void CG_Glass_ApplyChangesToPiece(uint param_1,Glass_BreakData *param_2)
   float local_50;
   float local_4c;
   
-  uVar5 = __savegprlr_27(param_1);
-  if (0x3ff < uVar5) {
+  if (0x3ff < param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_glass.cpp",0x2d,0,
                     "pieceIndex doesn\'t index ARRAY_COUNT( cg_glassData.glassPieces )\n\t%i not in [0, %i)"
                    );
@@ -268,24 +265,23 @@ void CG_Glass_ApplyChangesToPiece(uint param_1,Glass_BreakData *param_2)
                     "pieceIndex doesn\'t index ARRAY_COUNT( cg_glassData.glassChanges )\n\t%i not in [0, %i)"
                    );
   }
-  bVar1 = cg_glassData.glassPieces[uVar5].state;
-  pCVar6 = cg_glassData.glassChanges + uVar5;
-  bVar2 = cg_glassData.glassChanges[uVar5].state;
+  bVar1 = cg_glassData.glassPieces[param_1].state;
+  pCVar5 = cg_glassData.glassChanges + param_1;
+  bVar2 = cg_glassData.glassChanges[param_1].state;
   if (bVar1 < bVar2) {
     if (bVar2 == 3) {
-      Glass_DeleteInitialPiece(uVar5);
-      cg_glassData.glassPieces[uVar5].state = pCVar6->state;
-      __restgprlr_27();
+      Glass_DeleteInitialPiece(param_1);
+      cg_glassData.glassPieces[param_1].state = pCVar5->state;
       return;
     }
-    if (((bVar2 != 0) && (bVar1 == 0)) && (Glass_DamageInitialPiece(uVar5), pCVar6->state == '\x01')
-       ) {
-      Glass_GetInitialPieceCenter(uVar5,&local_98);
+    if (((bVar2 != 0) && (bVar1 == 0)) &&
+       (Glass_DamageInitialPiece(param_1), pCVar5->state == '\x01')) {
+      Glass_GetInitialPieceCenter(param_1,&local_98);
       CG_Glass_PlaySoundAtPos(&local_98,cgMedia.glassDamaged);
     }
-    if (1 < pCVar6->state) {
-      Glass_GetInitialPieceCenter(uVar5,&local_98);
-      if (cg_glassData.glassChanges[uVar5].impactDir == 0xff) {
+    if (1 < pCVar5->state) {
+      Glass_GetInitialPieceCenter(param_1,&local_98);
+      if (cg_glassData.glassChanges[param_1].impactDir == 0xff) {
         CG_Glass_PlaySoundAtPos(&local_98,cgMedia.glassDestroyedQuiet);
         local_84 = local_94;
         local_80 = local_90;
@@ -296,19 +292,18 @@ void CG_Glass_ApplyChangesToPiece(uint param_1,Glass_BreakData *param_2)
       }
       else {
         CG_Glass_PlaySoundAtPos(&local_98,cgMedia.glassDestroyed);
-        Glass_GetInitialPieceAxis(uVar5,(float (*) [3])&local_60);
-        ByteToDir((uint)cg_glassData.glassChanges[uVar5].impactDir,local_78);
-        fVar3 = ((float)cg_glassData.glassChanges[uVar5].impactPos[0] - 31.5) * 8.126985;
-        fVar4 = ((float)cg_glassData.glassChanges[uVar5].impactPos[1] - 31.5) * 8.126985;
+        Glass_GetInitialPieceAxis(param_1,(float (*) [3])&local_60);
+        ByteToDir((uint)cg_glassData.glassChanges[param_1].impactDir,local_78);
+        fVar3 = ((float)cg_glassData.glassChanges[param_1].impactPos[0] - 31.5) * 8.126985;
+        fVar4 = ((float)cg_glassData.glassChanges[param_1].impactPos[1] - 31.5) * 8.126985;
         local_88 = local_54 * fVar4 + local_60 * fVar3 + local_98;
         local_84 = local_50 * fVar4 + local_5c * fVar3 + local_94;
         local_80 = local_4c * fVar4 + local_58 * fVar3 + local_90;
       }
-      Glass_DestroyInitialPiece(uVar5,&local_88,local_78,param_2);
+      Glass_DestroyInitialPiece(param_1,&local_88,local_78,param_2);
     }
-    cg_glassData.glassPieces[uVar5].state = pCVar6->state;
+    cg_glassData.glassPieces[param_1].state = pCVar5->state;
   }
-  __restgprlr_27();
   return;
 }
 
@@ -388,45 +383,36 @@ void CG_Glass_MeleeEvent(LocalClientNum_t param_1,int param_2)
 
 // 822CF3C0  MSG_GetByte  (qcommon/msg.h:319)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 int MSG_GetByte(msg_t *param_1,int param_2)
 
 {
-  int iVar1;
-  ulonglong uVar2;
-  int iVar3;
-  
-  uVar2 = (ulonglong)param_2;
-  iVar1 = __savegprlr_28(param_1);
-  iVar3 = (int)uVar2;
-  if (iVar3 < 0) {
+  if (param_2 < 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\../qcommon/msg.h",0x140,
                     0,"%s\n\t(where) = %i");
   }
-  if (*(int *)(iVar1 + 0x14) <= iVar3) {
-    if (*(int *)(iVar1 + 0xc) == 0) {
+  if (param_1->cursize <= param_2) {
+    if (param_1->splitData == (uchar *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\../qcommon/msg.h",
                       0x144,0,"%s");
     }
-    if (*(int *)(iVar1 + 0x18) + *(int *)(iVar1 + 0x14) <= iVar3) {
+    if (param_1->splitSize + param_1->cursize <= param_2) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\../qcommon/msg.h",
                       0x145,0,"%s\n\t(where) = %i");
     }
-    iVar1 = __restgprlr_28(*(undefined1 *)((*(int *)(iVar1 + 0xc) - *(int *)(iVar1 + 0x14)) + iVar3)
-                          );
-    return iVar1;
+    return (int)param_1->splitData[param_2 - param_1->cursize];
   }
-  if ((iVar3 < (int)*(uint *)(iVar1 + 0x10)) && (-1 < iVar3)) {
-    iVar1 = __restgprlr_28(*(undefined1 *)(*(int *)(iVar1 + 8) + iVar3));
-    return iVar1;
+  if ((param_2 < param_1->maxsize) && (-1 < param_2)) {
+    return (int)param_1->data[param_2];
   }
-  if ((ulonglong)*(uint *)(iVar1 + 0x10) <= (uVar2 & 0xffffffff)) {
+  if ((uint)param_1->maxsize <= (uint)param_2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\../qcommon/msg.h",0x14c,
                     0,"where doesn\'t index msg->maxsize\n\t%i not in [0, %i)");
   }
-  iVar1 = __restgprlr_28(0);
-  return iVar1;
+  return 0;
 }
 
 
@@ -459,46 +445,43 @@ void CG_Glass_ReadImpactInfo(msg_t *param_1,CG_GlassPieceChange *param_2)
 
 // 822D0100  CG_Glass_ReadPieceChange  (cgame/cg_glass.cpp:339)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 void CG_Glass_ReadPieceChange(msg_t *param_1,int param_2)
 
 {
   CG_GlassPieceChange CVar1;
-  msg_t *pmVar2;
-  int iVar3;
-  ulonglong uVar4;
-  CG_GlassPieceChange *pCVar5;
+  int iVar2;
+  CG_GlassPieceChange *pCVar3;
   
-  uVar4 = (ulonglong)param_2;
-  pmVar2 = (msg_t *)__savegprlr_25(param_1);
-  if (0x3ff < (uVar4 & 0xffffffff)) {
+  if (0x3ff < (uint)param_2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_glass.cpp",0x34,0,
                     "pieceIndex doesn\'t index ARRAY_COUNT( cg_glassData.glassChanges )\n\t%i not in [0, %i)"
                    );
   }
-  iVar3 = (int)((uVar4 & 0xffffffff) << 2);
-  pCVar5 = (CG_GlassPieceChange *)(cg_glassData.glassChanges[0].impactPos + iVar3 + -2);
-  CVar1 = *(CG_GlassPieceChange *)(cg_glassData.glassChanges[0].impactPos + iVar3 + -2);
-  iVar3 = MSG_ReadBits(pmVar2,2);
-  pCVar5->state = (uchar)iVar3;
-  if (pmVar2->overflowed != 0) {
+  pCVar3 = cg_glassData.glassChanges + param_2;
+  CVar1 = cg_glassData.glassChanges[param_2];
+  iVar2 = MSG_ReadBits(param_1,2);
+  pCVar3->state = (uchar)iVar2;
+  if (param_1->overflowed != 0) {
     va("Bad glass piece message (overflowed glassPieceState) at index (%i) in glass state");
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_glass.cpp",0x15c,0,
                     "%s\n\t%s");
   }
-  if (pCVar5->state == '\x02') {
-    CG_Glass_ReadImpactInfo(pmVar2,pCVar5);
-    if (pmVar2->overflowed == 0) goto LAB_822d0214;
+  if (pCVar3->state == '\x02') {
+    CG_Glass_ReadImpactInfo(param_1,pCVar3);
+    if (param_1->overflowed == 0) {
+      return;
+    }
     va("Bad glass piece message (overflowed impact info) at index (%i) in glass state");
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_glass.cpp",0x161,0,
                     "%s\n\t%s");
   }
-  if (pmVar2->overflowed != 0) {
-    *pCVar5 = CVar1;
+  if (param_1->overflowed != 0) {
+    *pCVar3 = CVar1;
   }
-LAB_822d0214:
-  __restgprlr_25();
   return;
 }
 
@@ -531,150 +514,147 @@ int MSG_ReadBit(msg_t *param_1)
 
 // 822D0220  CG_Glass_ReadChanges  (cgame/cg_glass.cpp:364)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 void CG_Glass_ReadChanges(msg_t *param_1)
 
 {
-  msg_t *pmVar1;
+  int iVar1;
   int iVar2;
-  int iVar3;
   
-  pmVar1 = (msg_t *)__savegprlr_24(param_1);
-  if (pmVar1 == (msg_t *)0x0) {
+  if (param_1 == (msg_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_glass.cpp",0x172,0,
                     "%s");
   }
-  if (pmVar1->overflowed == 0) {
-    iVar2 = MSG_ReadBit(pmVar1);
-    if (pmVar1->overflowed != 0) {
+  if (param_1->overflowed == 0) {
+    iVar1 = MSG_ReadBit(param_1);
+    if (param_1->overflowed != 0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_glass.cpp",0x17b,0,
                       "%s\n\t%s");
     }
-    if (iVar2 != 0) {
-      iVar2 = MSG_ReadBit(pmVar1);
-      if (pmVar1->overflowed != 0) {
+    if (iVar1 != 0) {
+      iVar1 = MSG_ReadBit(param_1);
+      if (param_1->overflowed != 0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_glass.cpp",0x181,
                         0,"%s\n\t%s");
       }
-      if (iVar2 == 0) {
-        iVar2 = MSG_ReadBits(pmVar1,0xb);
-        if (pmVar1->overflowed != 0) {
+      if (iVar1 == 0) {
+        iVar1 = MSG_ReadBits(param_1,0xb);
+        if (param_1->overflowed != 0) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_glass.cpp",
                           0x197,0,"%s\n\t%s");
         }
-        iVar3 = 0;
-        if (0 < iVar2) {
+        iVar2 = 0;
+        if (0 < iVar1) {
           do {
-            CG_Glass_ReadPieceChange(pmVar1,iVar3);
-            iVar3 = iVar3 + 1;
-          } while (iVar3 < iVar2);
+            CG_Glass_ReadPieceChange(param_1,iVar2);
+            iVar2 = iVar2 + 1;
+          } while (iVar2 < iVar1);
         }
       }
       else {
         while( true ) {
-          iVar2 = MSG_ReadBits(pmVar1,0xb);
-          if (pmVar1->overflowed != 0) {
+          iVar1 = MSG_ReadBits(param_1,0xb);
+          if (param_1->overflowed != 0) {
             va("Bad glass piece message (overflowed piece index %i) in glass state");
             MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_glass.cpp",
                             0x189,0,"%s\n\t%s");
           }
-          if (0x400 < iVar2) {
+          if (0x400 < iVar1) {
             MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_glass.cpp",
                             0x18a,0,"%s\n\t(pieceIndex) = %i");
           }
-          if (iVar2 == 0x400) break;
-          CG_Glass_ReadPieceChange(pmVar1,iVar2);
+          if (iVar1 == 0x400) break;
+          CG_Glass_ReadPieceChange(param_1,iVar1);
         }
       }
     }
   }
-  __restgprlr_24();
   return;
 }
 
 
 // 822CF588  MSG_ReadBits  (qcommon/msg.h:373)
 
+/* WARNING: Function: __savegprlr_18 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_18 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 int MSG_ReadBits(msg_t *param_1,int param_2)
 
 {
-  uint uVar1;
+  int iVar1;
   uint uVar2;
-  undefined4 *puVar3;
-  int iVar4;
-  ulonglong uVar5;
+  uint uVar3;
+  uint uVar4;
+  uint uVar5;
   uint uVar6;
   uint uVar7;
-  uint uVar8;
-  uint uVar9;
   
-  uVar5 = (ulonglong)param_2;
-  puVar3 = (undefined4 *)__savegprlr_18(param_1);
-  if (0x20 < (uVar5 & 0xffffffff)) {
+  if (0x20 < (uint)param_2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\../qcommon/msg.h",0x17c,
                     0,"%s");
   }
-  uVar9 = puVar3[8];
-  uVar7 = 0;
-  uVar8 = 0;
-  if (0 < (int)uVar5) {
+  uVar7 = param_1->bit;
+  uVar5 = 0;
+  uVar6 = 0;
+  if (0 < param_2) {
     do {
-      uVar2 = uVar9 & 7;
-      if ((uVar9 & 7) == 0) {
-        iVar4 = puVar3[7];
-        if ((int)(puVar3[6] + puVar3[5]) <= iVar4) {
-          *puVar3 = 1;
-          iVar4 = __restgprlr_18(0xffffffffffffffff);
-          return iVar4;
+      uVar3 = uVar7 & 7;
+      if ((uVar7 & 7) == 0) {
+        iVar1 = param_1->readcount;
+        if (param_1->splitSize + param_1->cursize <= iVar1) {
+          param_1->overflowed = 1;
+          return -1;
         }
-        uVar9 = iVar4 << 3;
-        puVar3[7] = iVar4 + 1;
+        uVar7 = iVar1 << 3;
+        param_1->readcount = iVar1 + 1;
       }
-      uVar6 = (int)uVar9 >> 3;
-      if ((int)uVar6 < 0) {
+      uVar4 = (int)uVar7 >> 3;
+      if ((int)uVar4 < 0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\../qcommon/msg.h",
                         0x140,0,"%s\n\t(where) = %i");
       }
-      if ((int)uVar6 < (int)puVar3[5]) {
-        if (((int)uVar6 < (int)puVar3[4]) && (-1 < (int)uVar6)) {
-          uVar6 = (uint)*(byte *)(puVar3[2] + uVar6);
+      if ((int)uVar4 < param_1->cursize) {
+        if (((int)uVar4 < param_1->maxsize) && (-1 < (int)uVar4)) {
+          uVar4 = (uint)param_1->data[uVar4];
         }
         else {
-          if ((uint)puVar3[4] <= uVar6) {
+          if ((uint)param_1->maxsize <= uVar4) {
             MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\../qcommon/msg.h"
                             ,0x14c,0,"where doesn\'t index msg->maxsize\n\t%i not in [0, %i)");
           }
-          uVar6 = 0;
+          uVar4 = 0;
         }
       }
       else {
-        if (puVar3[3] == 0) {
+        if (param_1->splitData == (uchar *)0x0) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\../qcommon/msg.h",
                           0x144,0,"%s");
         }
-        if ((int)(puVar3[6] + puVar3[5]) <= (int)uVar6) {
+        if (param_1->splitSize + param_1->cursize <= (int)uVar4) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\../qcommon/msg.h",
                           0x145,0,"%s\n\t(where) = %i");
         }
-        uVar6 = (uint)*(byte *)((puVar3[3] - puVar3[5]) + uVar6);
+        uVar4 = (uint)param_1->splitData[uVar4 - param_1->cursize];
       }
-      uVar9 = uVar9 + 1;
-      uVar1 = uVar8 & 0x3f;
-      uVar8 = uVar8 + 1;
-      uVar7 = ((int)uVar6 >> uVar2 & 1U) << uVar1 | uVar7;
-    } while ((int)uVar8 < (int)uVar5);
+      uVar7 = uVar7 + 1;
+      uVar2 = uVar6 & 0x3f;
+      uVar6 = uVar6 + 1;
+      uVar5 = ((int)uVar4 >> uVar3 & 1U) << uVar2 | uVar5;
+    } while ((int)uVar6 < param_2);
   }
-  puVar3[8] = uVar9;
-  iVar4 = __restgprlr_18(uVar7);
-  return iVar4;
+  param_1->bit = uVar7;
+  return uVar5;
 }
 
 
 // 822D0408  CG_Glass_ApplyChanges  (cgame/cg_glass.cpp:418)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Removing unreachable block (ram,0x822d0494) */
 /* WARNING: Removing unreachable block (ram,0x822d0524) */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
@@ -685,41 +665,39 @@ void CG_Glass_ApplyChanges(LocalClientNum_t param_1)
 
 {
   LocalClientNum_t LVar1;
-  LocalClientNum_t LVar2;
-  cg_s *pcVar3;
-  CG_GlassPieceChange *pCVar4;
-  uint uVar5;
-  float fVar6;
+  cg_s *pcVar2;
+  CG_GlassPieceChange *pCVar3;
+  uint uVar4;
+  float fVar5;
   Glass_BreakData local_50 [6];
   
-  LVar1 = __savegprlr_26(param_1);
-  if ((cg_glassInited != false) && (LVar2 = CL_GetFirstActiveLocalClient(), LVar1 == LVar2)) {
+  if ((cg_glassInited) && (LVar1 = CL_GetFirstActiveLocalClient(), param_1 == LVar1)) {
     cg_glassData.soundsThisFrame = 0;
     CG_Glass_Enter();
-    pcVar3 = CG_GetLocalClientGlobals(LVar1);
-    local_50[0].playerOrigin = (pcVar3->refdef).view.org;
+    pcVar2 = CG_GetLocalClientGlobals(param_1);
+    local_50[0].playerOrigin = (pcVar2->refdef).view.org;
     local_50[0].brokenPieceCount = 0;
-    uVar5 = 0;
+    uVar4 = 0;
     local_50[0].totalAreaX2 = 0.0;
-    pCVar4 = cg_glassData.glassChanges;
+    pCVar3 = cg_glassData.glassChanges;
     do {
-      if ((cg_glassData.glassPieces[uVar5].state < pCVar4->state) && (pCVar4->state == 2)) {
+      if ((cg_glassData.glassPieces[uVar4].state < pCVar3->state) && (pCVar3->state == 2)) {
         local_50[0].brokenPieceCount = local_50[0].brokenPieceCount + 1;
-        fVar6 = Glass_GetInitialPieceAreaX2(uVar5);
-        local_50[0].totalAreaX2 = fVar6 + local_50[0].totalAreaX2;
+        fVar5 = Glass_GetInitialPieceAreaX2(uVar4);
+        local_50[0].totalAreaX2 = fVar5 + local_50[0].totalAreaX2;
       }
-      uVar5 = uVar5 + 1;
-      pCVar4 = pCVar4 + 1;
-    } while (uVar5 < 0x400);
-    uVar5 = 0;
-    pCVar4 = cg_glassData.glassChanges;
+      uVar4 = uVar4 + 1;
+      pCVar3 = pCVar3 + 1;
+    } while (uVar4 < 0x400);
+    uVar4 = 0;
+    pCVar3 = cg_glassData.glassChanges;
     do {
-      if (cg_glassData.glassPieces[uVar5].state < pCVar4->state) {
-        CG_Glass_ApplyChangesToPiece(uVar5,local_50);
+      if (cg_glassData.glassPieces[uVar4].state < pCVar3->state) {
+        CG_Glass_ApplyChangesToPiece(uVar4,local_50);
       }
-      uVar5 = uVar5 + 1;
-      pCVar4 = pCVar4 + 1;
-    } while (uVar5 < 0x400);
+      uVar4 = uVar4 + 1;
+      pCVar3 = pCVar3 + 1;
+    } while (uVar4 < 0x400);
     memset();
     cg_glassData.recievedInitialState = true;
     Sys_EnterCriticalSection(CRITSECT_CG_GLASS);
@@ -730,7 +708,6 @@ void CG_Glass_ApplyChanges(LocalClientNum_t param_1)
     insideGlassCode = false;
     Sys_LeaveCriticalSection(CRITSECT_CG_GLASS);
   }
-  __restgprlr_26();
   return;
 }
 

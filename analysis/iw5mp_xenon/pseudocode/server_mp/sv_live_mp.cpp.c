@@ -2,6 +2,8 @@
 
 // 82576268  CL_Live_RequestClientDrop  (server_mp/sv_live_mp.cpp:21)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -10,16 +12,12 @@
 void CL_Live_RequestClientDrop(int param_1,LiveClientDropType param_2,char *param_3)
 
 {
-  uint uVar1;
-  bool bVar3;
-  PartyData *pPVar2;
-  ulonglong uVar4;
-  client_t *pcVar5;
+  bool bVar2;
+  PartyData *pPVar1;
+  client_t *pcVar3;
   
-  uVar4 = (ulonglong)(int)param_2;
-  uVar1 = __savegprlr_27(param_1);
-  bVar3 = Lobby_AreWeHost();
-  if (!bVar3) {
+  bVar2 = Lobby_AreWeHost();
+  if (!bVar2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_live_mp.cpp",0x18
                     ,0,"%s");
   }
@@ -27,30 +25,28 @@ void CL_Live_RequestClientDrop(int param_1,LiveClientDropType param_2,char *para
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_live_mp.cpp",0x19
                     ,0,"%s");
   }
-  if (0x11 < uVar1) {
+  if (0x11 < (uint)param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_live_mp.cpp",0x1a
                     ,0,"clientNum doesn\'t index MAX_CLIENTS\n\t%i not in [0, %i)");
   }
-  if (3 < (uVar4 & 0xffffffff)) {
+  if (SV_LIVE_DROP_INACTIVE < param_2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_live_mp.cpp",0x1b
                     ,0,"dropType doesn\'t index SV_LIVE_DROP_COUNT\n\t%i not in [0, %i)");
   }
-  pcVar5 = svs.clients + uVar1;
-  if ((svs.clients[uVar1].header.state == 0) && (pcVar5->lastPacketTime == 0)) {
+  pcVar3 = svs.clients + param_1;
+  if ((svs.clients[param_1].header.state == 0) && (pcVar3->lastPacketTime == 0)) {
     Com_PrintWarning(0x19,
                      "Client %i is already CS_FREE and the server doesn\'t know about them. Removing them immediately from the lobby\n"
                     );
-    pPVar2 = Lobby_GetPartyData();
+    pPVar1 = Lobby_GetPartyData();
     PartyHost_RemovePlayer
-              (pPVar2,uVar1,
-               (int)(uVar4 - 3) -
-               (((LiveClientDropType)uVar4 - SV_LIVE_DROP_COUNT) + (uint)(uVar4 - 3 == 0)),param_3);
-    SV_Live_ClearDropFlagClient(pcVar5);
-    __restgprlr_27();
+              (pPVar1,param_1,
+               (int)((longlong)(int)param_2 + -3) -
+               ((param_2 - SV_LIVE_DROP_COUNT) + (uint)((longlong)(int)param_2 + -3 == 0)),param_3);
+    SV_Live_ClearDropFlagClient(pcVar3);
     return;
   }
-  pcVar5->liveDropRequest = (LiveClientDropType)uVar4;
-  __restgprlr_27();
+  pcVar3->liveDropRequest = param_2;
   return;
 }
 
@@ -93,18 +89,16 @@ LiveClientDropType SV_Live_GetClientDropRequest(client_t *param_1)
 
 // 825758A8  SV_Live_GetClientXuidString  (server_mp/sv_live_mp.cpp:61)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 void SV_Live_GetClientXuidString(int param_1,char *param_2)
 
 {
-  int iVar1;
-  ulonglong uVar2;
   ulong64 local_40 [8];
   
-  uVar2 = (ulonglong)(int)param_2;
-  iVar1 = __savegprlr_27(param_1);
-  if ((uVar2 & 0xffffffff) == 0) {
+  if (param_2 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_live_mp.cpp",0x3e
                     ,0,"%s");
   }
@@ -112,75 +106,69 @@ void SV_Live_GetClientXuidString(int param_1,char *param_2)
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_live_mp.cpp",0x3f
                     ,0,"%s");
   }
-  local_40[0] = Session_GetXuid(&g_serverSession,iVar1);
-  XUIDToString(local_40,(char *)uVar2);
-  __restgprlr_27();
+  local_40[0] = Session_GetXuid(&g_serverSession,param_1);
+  XUIDToString(local_40,param_2);
   return;
 }
 
 
 // 82575948  SV_Live_GetClientXnAddr  (server_mp/sv_live_mp.cpp:71)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void SV_Live_GetClientXnAddr(int param_1,char *param_2,int param_3)
 
 {
-  uint uVar1;
-  bool bVar4;
-  PartyData *pPVar2;
-  int iVar3;
-  ulonglong uVar5;
+  bool bVar3;
+  PartyData *pPVar1;
+  int iVar2;
   XNADDR aXStack_50 [2];
   
-  uVar5 = (ulonglong)(int)param_2;
-  uVar1 = __savegprlr_28(param_1,uVar5,param_3);
-  if ((uVar5 & 0xffffffff) == 0) {
+  if (param_2 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_live_mp.cpp",0x4a
                     ,0,"%s");
   }
-  bVar4 = Lobby_IsInLobby();
-  if (!bVar4) {
+  bVar3 = Lobby_IsInLobby();
+  if (!bVar3) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_live_mp.cpp",0x4b
                     ,0,"%s");
   }
-  pPVar2 = Lobby_GetPartyData();
-  iVar3 = Party_IsMemberIndexDataAvailable(pPVar2,uVar1);
-  if (iVar3 == 0) {
+  pPVar1 = Lobby_GetPartyData();
+  iVar2 = Party_IsMemberIndexDataAvailable(pPVar1,param_1);
+  if (iVar2 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_live_mp.cpp",0x4c
                     ,0,"%s");
   }
-  pPVar2 = Lobby_GetPartyData();
-  iVar3 = Party_GetClientXNAddr(pPVar2,uVar1,aXStack_50);
-  if (iVar3 != 0) {
-    XNAddrToString(aXStack_50,(char *)uVar5);
-    __restgprlr_28();
+  pPVar1 = Lobby_GetPartyData();
+  iVar2 = Party_GetClientXNAddr(pPVar1,param_1,aXStack_50);
+  if (iVar2 != 0) {
+    XNAddrToString(aXStack_50,param_2);
     return;
   }
-  *(char *)uVar5 = '\0';
+  *param_2 = '\0';
   if (alwaysfails == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_live_mp.cpp",0x55
                     ,0,"Could not get client\'s xnaddr");
   }
-  __restgprlr_28();
   return;
 }
 
 
 // 82575A50  SV_Live_GetClientNatType  (server_mp/sv_live_mp.cpp:91)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 void SV_Live_GetClientNatType(int param_1,char *param_2,int param_3)
 
 {
   int iVar1;
-  ulonglong uVar2;
   
-  uVar2 = (ulonglong)(int)param_2;
-  iVar1 = __savegprlr_26(param_1);
-  if ((uVar2 & 0xffffffff) == 0) {
+  if (param_2 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_live_mp.cpp",0x5c
                     ,0,"%s");
   }
@@ -188,108 +176,100 @@ void SV_Live_GetClientNatType(int param_1,char *param_2,int param_3)
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_live_mp.cpp",0x5d
                     ,0,"%s");
   }
-  iVar1 = Live_GetNatTypeForClientNum(&g_serverSession,iVar1);
+  iVar1 = Live_GetNatTypeForClientNum(&g_serverSession,param_1);
   if ((iVar1 < 1) || (3 < iVar1)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_live_mp.cpp",0x60
                     ,0,"%s\n\t(natType) = %i");
   }
-  iVar1 = Com_sprintf((char *)uVar2,param_3,"%i");
-  __restgprlr_26(iVar1);
+  Com_sprintf(param_2,param_3,"%i");
   return;
 }
 
 
 // 82575B30  SV_Live_GetClientNpId  (server_mp/sv_live_mp.cpp:103)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void SV_Live_GetClientNpId(int param_1,char *param_2,int param_3)
 
 {
-  uint uVar1;
-  bool bVar4;
-  PartyData *pPVar2;
-  int iVar3;
-  ulonglong uVar5;
+  bool bVar3;
+  PartyData *pPVar1;
+  int iVar2;
   
-  uVar5 = (ulonglong)(int)param_2;
-  uVar1 = __savegprlr_27(param_1);
-  if ((uVar5 & 0xffffffff) == 0) {
+  if (param_2 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_live_mp.cpp",0x68
                     ,0,"%s");
   }
-  bVar4 = Lobby_IsInLobby();
-  if (!bVar4) {
+  bVar3 = Lobby_IsInLobby();
+  if (!bVar3) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_live_mp.cpp",0x6a
                     ,0,"%s");
   }
-  pPVar2 = Lobby_GetPartyData();
-  iVar3 = Party_IsMemberIndexDataAvailable(pPVar2,uVar1);
-  if (iVar3 == 0) {
+  pPVar1 = Lobby_GetPartyData();
+  iVar2 = Party_IsMemberIndexDataAvailable(pPVar1,param_1);
+  if (iVar2 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_live_mp.cpp",0x6b
                     ,0,"%s");
   }
-  I_strncpyz((char *)uVar5,"0",param_3);
-  __restgprlr_27();
+  I_strncpyz(param_2,"0",param_3);
   return;
 }
 
 
 // 82575BF8  SV_Live_GetClientPartyId  (server_mp/sv_live_mp.cpp:119)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void SV_Live_GetClientPartyId(int param_1,char *param_2,int param_3)
 
 {
-  uint uVar1;
-  bool bVar5;
-  PartyData *pPVar2;
-  int iVar3;
-  XNKID *pXVar4;
-  ulonglong uVar6;
+  bool bVar4;
+  PartyData *pPVar1;
+  int iVar2;
+  XNKID *pXVar3;
   
-  uVar6 = (ulonglong)(int)param_2;
-  uVar1 = __savegprlr_27(param_1);
-  if ((uVar6 & 0xffffffff) == 0) {
+  if (param_2 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_live_mp.cpp",0x7a
                     ,0,"%s");
   }
-  bVar5 = Lobby_IsInLobby();
-  if (!bVar5) {
+  bVar4 = Lobby_IsInLobby();
+  if (!bVar4) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_live_mp.cpp",0x7b
                     ,0,"%s");
   }
-  pPVar2 = Lobby_GetPartyData();
-  iVar3 = Party_IsMemberIndexDataAvailable(pPVar2,uVar1);
-  if (iVar3 == 0) {
+  pPVar1 = Lobby_GetPartyData();
+  iVar2 = Party_IsMemberIndexDataAvailable(pPVar1,param_1);
+  if (iVar2 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_live_mp.cpp",0x7c
                     ,0,"%s");
   }
-  pPVar2 = Lobby_GetPartyData();
-  pXVar4 = Party_GetClientPrivatePartyId(pPVar2,uVar1);
-  XNKIDToString(pXVar4,(char *)uVar6,param_3);
-  __restgprlr_27();
+  pPVar1 = Lobby_GetPartyData();
+  pXVar3 = Party_GetClientPrivatePartyId(pPVar1,param_1);
+  XNKIDToString(pXVar3,param_2,param_3);
   return;
 }
 
 
 // 82575CC0  SV_Live_GetClientLocalNetId  (server_mp/sv_live_mp.cpp:133)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 netsrc_t SV_Live_GetClientLocalNetId(int param_1)
 
 {
-  uint uVar1;
-  netadr_t *pnVar2;
-  netsrc_t nVar3;
+  netadr_t *pnVar1;
   netadr_t anStack_30 [3];
   
-  uVar1 = __savegprlr_29(param_1);
-  if (0x11 < uVar1) {
+  if (0x11 < (uint)param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_live_mp.cpp",0x86
                     ,0,"clientNum doesn\'t index MAX_CLIENTS\n\t%i not in [0, %i)");
   }
@@ -297,14 +277,15 @@ netsrc_t SV_Live_GetClientLocalNetId(int param_1)
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_live_mp.cpp",0x87
                     ,0,"%s");
   }
-  pnVar2 = Session_GetPlayerAddr(anStack_30,&g_serverSession,uVar1);
-  nVar3 = __restgprlr_29(pnVar2->localNetID);
-  return nVar3;
+  pnVar1 = Session_GetPlayerAddr(anStack_30,&g_serverSession,param_1);
+  return pnVar1->localNetID;
 }
 
 
 // 82575D78  SV_Live_AddConnectingClient  (server_mp/sv_live_mp.cpp:146)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "ConfigString": Some values do not have unique names */
@@ -312,55 +293,53 @@ netsrc_t SV_Live_GetClientLocalNetId(int param_1)
 void SV_Live_AddConnectingClient(int param_1)
 
 {
-  uint uVar1;
-  bool bVar6;
-  SessionData *pSVar2;
-  PartyData *pPVar3;
-  int iVar4;
-  char *pcVar5;
-  uint uVar7;
+  bool bVar5;
+  SessionData *pSVar1;
+  PartyData *pPVar2;
+  int iVar3;
+  char *pcVar4;
+  int iVar6;
   char local_d0 [2];
   char local_ce [14];
   char local_c0 [32];
   char local_a0 [32];
   char local_80 [128];
   
-  uVar1 = __savegprlr_28(param_1);
-  if (0x11 < uVar1) {
+  if (0x11 < (uint)param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_live_mp.cpp",0x9d
                     ,0,"clientNum doesn\'t index MAX_CLIENTS\n\t%i not in [0, %i)");
   }
-  bVar6 = Lobby_IsInLobby();
-  if (bVar6) {
-    uVar7 = uVar1;
+  bVar5 = Lobby_IsInLobby();
+  if (bVar5) {
+    iVar6 = param_1;
     Com_Printf(0xe,"SV - Client %i connected through lobby session. Setting up his CS_PLAYERINFOS\n"
               );
-    pSVar2 = Live_GetCurrentSession();
-    if (pSVar2 != &g_serverSession) {
-      uVar7 = 0;
+    pSVar1 = Live_GetCurrentSession();
+    if (pSVar1 != &g_serverSession) {
+      iVar6 = 0;
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_live_mp.cpp",
                       0xa5,0,"%s");
     }
-    bVar6 = Session_IsUserRegistered(&g_serverSession,uVar1);
-    if (!bVar6) {
-      uVar7 = 0;
+    bVar5 = Session_IsUserRegistered(&g_serverSession,param_1);
+    if (!bVar5) {
+      iVar6 = 0;
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_live_mp.cpp",
                       0xa6,0,"%s");
     }
-    pPVar3 = Lobby_GetPartyData();
-    iVar4 = Party_IsMemberIndexDataAvailable(pPVar3,uVar1);
-    if (iVar4 == 0) {
-      uVar7 = 0;
+    pPVar2 = Lobby_GetPartyData();
+    iVar3 = Party_IsMemberIndexDataAvailable(pPVar2,param_1);
+    if (iVar3 == 0) {
+      iVar6 = 0;
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_live_mp.cpp",
                       0xa7,0,"%s");
     }
     sync(1);
-    SV_Live_GetClientXuidString(uVar1,local_a0);
-    SV_Live_GetClientXnAddr(uVar1,local_80,uVar7);
-    SV_Live_GetClientNatType(uVar1,local_ce,2);
-    SV_Live_GetClientNpId(uVar1,local_d0,2);
-    SV_Live_GetClientPartyId(uVar1,local_c0,0x11);
-    SV_Live_GetClientLocalNetId(uVar1);
+    SV_Live_GetClientXuidString(param_1,local_a0);
+    SV_Live_GetClientXnAddr(param_1,local_80,iVar6);
+    SV_Live_GetClientNatType(param_1,local_ce,2);
+    SV_Live_GetClientNpId(param_1,local_d0,2);
+    SV_Live_GetClientPartyId(param_1,local_c0,0x11);
+    SV_Live_GetClientLocalNetId(param_1);
     if (local_a0[0] == '\0') {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_live_mp.cpp",
                       0xb5,0,"%s");
@@ -384,20 +363,21 @@ void SV_Live_AddConnectingClient(int param_1)
     Com_Printf(0xf,
                "Setting XUID to %s. XNADDR to %s. NATTYPE to %s. NPID to %s. XNKID to %s. NETID to %i\n"
               );
-    if (0xeea < (int)(uVar1 + CS_PLAYERINFOS)) {
+    if (0xeea < (int)(param_1 + CS_PLAYERINFOS)) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\../bgame/bg_public.h"
                       ,0x285,0,"%s");
     }
-    pcVar5 = va("%s %s %s %s %s %i");
-    SV_SetConfigstring(uVar1 + CS_PLAYERINFOS,pcVar5);
+    pcVar4 = va("%s %s %s %s %s %i");
+    SV_SetConfigstring(param_1 + CS_PLAYERINFOS,pcVar4);
   }
-  __restgprlr_28();
   return;
 }
 
 
 // 82576028  SV_Live_RemoveClient  (server_mp/sv_live_mp.cpp:237)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "ConfigString": Some values do not have unique names */
@@ -407,63 +387,56 @@ void SV_Live_AddConnectingClient(int param_1)
 void SV_Live_RemoveClient(int param_1,char *param_2,int param_3,int param_4)
 
 {
-  int iVar1;
-  bool bVar4;
-  SessionData *pSVar2;
-  PartyData *pPVar3;
-  longlong lVar5;
-  longlong lVar6;
+  bool bVar3;
+  SessionData *pSVar1;
+  PartyData *pPVar2;
   
-  lVar6 = (longlong)param_3;
-  lVar5 = (longlong)(int)param_2;
-  iVar1 = __savegprlr_26(param_1,lVar5,lVar6,param_4);
-  Session_GetXuidEvenIfInactive(&g_serverSession,iVar1);
+  Session_GetXuidEvenIfInactive(&g_serverSession,param_1);
   Com_Printf(0xf,"Removing xuid %llx (clientNum %i) from session %s\n");
-  bVar4 = Session_IsUserRegistered(&g_serverSession,iVar1);
-  if ((bVar4) && (bVar4 = Session_PlayerHasLoopbackAddr(&g_serverSession,iVar1), !bVar4)) {
-    bVar4 = Lobby_IsInLobby();
-    if (bVar4) {
-      bVar4 = Lobby_AreWeHost();
-      if (!bVar4) {
+  bVar3 = Session_IsUserRegistered(&g_serverSession,param_1);
+  if ((bVar3) && (bVar3 = Session_PlayerHasLoopbackAddr(&g_serverSession,param_1), !bVar3)) {
+    bVar3 = Lobby_IsInLobby();
+    if (bVar3) {
+      bVar3 = Lobby_AreWeHost();
+      if (!bVar3) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_live_mp.cpp",
                         0x102,0,"%s");
       }
-      bVar4 = Lobby_IsInRunningLobby();
-      if (bVar4) {
+      bVar3 = Lobby_IsInRunningLobby();
+      if (bVar3) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_live_mp.cpp",
                         0x103,0,"%s\n\t%s");
       }
-      pSVar2 = Lobby_GetSession();
-      if (pSVar2 != &g_serverSession) {
+      pSVar1 = Lobby_GetSession();
+      if (pSVar1 != &g_serverSession) {
         Lobby_GetSession();
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_live_mp.cpp",
                         0x104,0,"session == Lobby_GetSession()\n\t0x%08x, 0x%08x");
       }
-      pPVar3 = Lobby_GetPartyData();
-      PartyHost_RemovePlayer(pPVar3,iVar1,(int)lVar6,(char *)lVar5);
+      pPVar2 = Lobby_GetPartyData();
+      PartyHost_RemovePlayer(pPVar2,param_1,param_3,param_2);
     }
     else {
       if ((onlinegame->current).enabled != false) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_live_mp.cpp",
                         0x10a,0,"%s\n\t%s");
       }
-      Session_UnregisterRemotePlayer(&g_serverSession,iVar1);
+      Session_UnregisterRemotePlayer(&g_serverSession,param_1);
     }
   }
-  if (svs.clients[iVar1].header.state == 0) {
-    svs.clients[iVar1].lastPacketTime = 0;
+  if (svs.clients[param_1].header.state == 0) {
+    svs.clients[param_1].lastPacketTime = 0;
   }
-  if (0xeea < (int)(iVar1 + CS_PLAYERINFOS)) {
+  if (0xeea < (int)(param_1 + CS_PLAYERINFOS)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\../bgame/bg_public.h"
                     ,0x285,0,"%s");
   }
-  SV_SetConfigstring(iVar1 + CS_PLAYERINFOS,(char *)0x0);
-  bVar4 = SV_Live_HasTeamRankStatsAvailable(iVar1);
-  if (bVar4) {
+  SV_SetConfigstring(param_1 + CS_PLAYERINFOS,(char *)0x0);
+  bVar3 = SV_Live_HasTeamRankStatsAvailable(param_1);
+  if (bVar3) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_live_mp.cpp",
                     0x11f,0,"%s");
   }
-  __restgprlr_26();
   return;
 }
 

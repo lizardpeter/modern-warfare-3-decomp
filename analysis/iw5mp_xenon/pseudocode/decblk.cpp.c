@@ -2,111 +2,106 @@
 
 // 828B6248  decode_data  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/compression/codec/lzx/decoder/decblk.cpp:49)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 long XCOMPRESS::decode_data(t_decoder_context *param_1,long param_2)
 
 {
-  t_decoder_context *ptVar1;
+  long lVar1;
   ulong uVar2;
   ulong uVar3;
   lzx_block_type lVar4;
   ulong uVar5;
-  bool bVar8;
+  bool bVar7;
   int iVar6;
-  long lVar7;
+  int iVar8;
   int iVar9;
-  longlong lVar10;
-  ulonglong uVar11;
-  ulonglong uVar12;
   
-  uVar11 = (ulonglong)param_2;
-  ptVar1 = (t_decoder_context *)__savegprlr_26(param_1);
-  lVar10 = 0;
+  iVar9 = 0;
   do {
-    iVar9 = (int)uVar11;
-    do {
-      if (iVar9 < 1) {
-        uVar2 = ptVar1->dec_bufpos;
+    if (param_2 < 1) {
+      uVar2 = param_1->dec_bufpos;
+      if (uVar2 == 0) {
+        uVar2 = param_1->dec_window_size;
+      }
+      copy_data_to_output(param_1,iVar9,param_1->dec_mem_window + (uVar2 - iVar9));
+      return iVar9;
+    }
+    if (param_1->dec_decoder_state == DEC_STATE_START_NEW_BLOCK) {
+      if (param_1->dec_first_time_this_group != false) {
+        param_1->dec_first_time_this_group = false;
+        uVar2 = getbits(param_1,1);
         if (uVar2 == 0) {
-          uVar2 = ptVar1->dec_window_size;
-        }
-        copy_data_to_output(ptVar1,(int)lVar10,ptVar1->dec_mem_window + (uVar2 - (int)lVar10));
-LAB_828b64ac:
-        lVar7 = __restgprlr_26(lVar10);
-        return lVar7;
-      }
-      if (ptVar1->dec_decoder_state == DEC_STATE_START_NEW_BLOCK) {
-        if (ptVar1->dec_first_time_this_group != false) {
-          ptVar1->dec_first_time_this_group = false;
-          uVar2 = getbits(ptVar1,1);
-          if (uVar2 == 0) {
-            ptVar1->dec_current_file_size = 0;
-          }
-          else {
-            uVar2 = getbits(ptVar1,0x10);
-            uVar3 = getbits(ptVar1,0x10);
-            ptVar1->dec_current_file_size = uVar3 | uVar2 << 0x10;
-          }
-        }
-        if (ptVar1->dec_block_type == BLOCKTYPE_UNCOMPRESSED) {
-          ptVar1->dec_block_type = BLOCKTYPE_INVALID;
-          initialise_decoder_bitbuf(ptVar1);
-        }
-        lVar4 = getbits(ptVar1,3);
-        ptVar1->dec_block_type = lVar4;
-        uVar2 = getbits(ptVar1,8);
-        uVar3 = getbits(ptVar1,8);
-        uVar5 = getbits(ptVar1,8);
-        iVar9 = uVar5 + (uVar2 * 0x100 + uVar3) * 0x100;
-        ptVar1->dec_original_block_size = iVar9;
-        ptVar1->dec_block_size = iVar9;
-        if (ptVar1->dec_block_type == BLOCKTYPE_ALIGNED) {
-          read_aligned_offset_tree(ptVar1);
-        }
-        lVar4 = ptVar1->dec_block_type;
-        if ((lVar4 == BLOCKTYPE_VERBATIM) || (lVar4 == BLOCKTYPE_ALIGNED)) {
-          memcpy();
-          memcpy();
-          read_main_and_secondary_trees(ptVar1);
-        }
-        else if ((lVar4 != BLOCKTYPE_UNCOMPRESSED) ||
-                (bVar8 = handle_beginning_of_uncompressed_block(ptVar1), !bVar8)) {
-LAB_828b6374:
-          lVar10 = -1;
-          goto LAB_828b64ac;
-        }
-        ptVar1->dec_decoder_state = DEC_STATE_DECODING_DATA;
-      }
-      for (; (iVar9 = (int)uVar11, 0 < ptVar1->dec_block_size && (0 < iVar9));
-          uVar11 = uVar11 - uVar12) {
-        uVar12 = (ulonglong)(uint)ptVar1->dec_block_size;
-        if (iVar9 <= ptVar1->dec_block_size) {
-          uVar12 = uVar11;
-        }
-        if ((uVar12 & 0xffffffff) == 0) goto LAB_828b6374;
-        lVar4 = ptVar1->dec_block_type;
-        lVar7 = ptVar1->dec_bufpos;
-        iVar9 = (int)uVar12;
-        if (lVar4 == BLOCKTYPE_ALIGNED) {
-          iVar6 = decode_aligned_offset_block(ptVar1,lVar7,iVar9);
-        }
-        else if (lVar4 == BLOCKTYPE_VERBATIM) {
-          iVar6 = decode_verbatim_block(ptVar1,lVar7,iVar9);
-        }
-        else if (lVar4 == BLOCKTYPE_UNCOMPRESSED) {
-          iVar6 = decode_uncompressed_block(ptVar1,lVar7,iVar9);
+          param_1->dec_current_file_size = 0;
         }
         else {
-          iVar6 = -1;
+          uVar2 = getbits(param_1,0x10);
+          uVar3 = getbits(param_1,0x10);
+          param_1->dec_current_file_size = uVar3 | uVar2 << 0x10;
         }
-        if (iVar6 != 0) goto LAB_828b6374;
-        lVar10 = uVar12 + lVar10;
-        ptVar1->dec_block_size = ptVar1->dec_block_size - iVar9;
       }
-      if (ptVar1->dec_block_size == 0) {
-        ptVar1->dec_decoder_state = DEC_STATE_START_NEW_BLOCK;
+      if (param_1->dec_block_type == BLOCKTYPE_UNCOMPRESSED) {
+        param_1->dec_block_type = BLOCKTYPE_INVALID;
+        initialise_decoder_bitbuf(param_1);
       }
-    } while (iVar9 != 0);
-    initialise_decoder_bitbuf(ptVar1);
+      lVar4 = getbits(param_1,3);
+      param_1->dec_block_type = lVar4;
+      uVar2 = getbits(param_1,8);
+      uVar3 = getbits(param_1,8);
+      uVar5 = getbits(param_1,8);
+      iVar8 = uVar5 + (uVar2 * 0x100 + uVar3) * 0x100;
+      param_1->dec_original_block_size = iVar8;
+      param_1->dec_block_size = iVar8;
+      if (param_1->dec_block_type == BLOCKTYPE_ALIGNED) {
+        read_aligned_offset_tree(param_1);
+      }
+      lVar4 = param_1->dec_block_type;
+      if ((lVar4 == BLOCKTYPE_VERBATIM) || (lVar4 == BLOCKTYPE_ALIGNED)) {
+        memcpy();
+        memcpy();
+        read_main_and_secondary_trees(param_1);
+      }
+      else if ((lVar4 != BLOCKTYPE_UNCOMPRESSED) ||
+              (bVar7 = handle_beginning_of_uncompressed_block(param_1), !bVar7)) {
+        return -1;
+      }
+      param_1->dec_decoder_state = DEC_STATE_DECODING_DATA;
+    }
+    for (; (0 < param_1->dec_block_size && (0 < param_2)); param_2 = param_2 - iVar8) {
+      iVar8 = param_1->dec_block_size;
+      if (param_2 <= param_1->dec_block_size) {
+        iVar8 = param_2;
+      }
+      if (iVar8 == 0) {
+        return -1;
+      }
+      lVar4 = param_1->dec_block_type;
+      lVar1 = param_1->dec_bufpos;
+      if (lVar4 == BLOCKTYPE_ALIGNED) {
+        iVar6 = decode_aligned_offset_block(param_1,lVar1,iVar8);
+      }
+      else if (lVar4 == BLOCKTYPE_VERBATIM) {
+        iVar6 = decode_verbatim_block(param_1,lVar1,iVar8);
+      }
+      else if (lVar4 == BLOCKTYPE_UNCOMPRESSED) {
+        iVar6 = decode_uncompressed_block(param_1,lVar1,iVar8);
+      }
+      else {
+        iVar6 = -1;
+      }
+      if (iVar6 != 0) {
+        return -1;
+      }
+      iVar9 = iVar8 + iVar9;
+      param_1->dec_block_size = param_1->dec_block_size - iVar8;
+    }
+    if (param_1->dec_block_size == 0) {
+      param_1->dec_decoder_state = DEC_STATE_START_NEW_BLOCK;
+    }
+    if (param_2 == 0) {
+      initialise_decoder_bitbuf(param_1);
+    }
   } while( true );
 }
 

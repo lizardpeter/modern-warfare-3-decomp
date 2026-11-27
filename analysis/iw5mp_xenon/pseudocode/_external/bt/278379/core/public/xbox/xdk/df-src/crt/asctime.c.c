@@ -2,94 +2,94 @@
 
 // 8291A0C8  asctime  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/asctime.c:190)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 char * asctime(tm *param_1)
 
 {
   int iVar1;
-  int *piVar2;
-  _tiddata *p_Var3;
-  char *pcVar4;
+  _tiddata *p_Var2;
+  char *pcVar3;
+  int *piVar4;
   char *pcVar5;
-  char *pcVar6;
-  int iVar7;
-  ulonglong uVar8;
-  int iVar9;
+  int iVar6;
+  ulonglong uVar7;
+  int iVar8;
+  char *pcVar9;
   longlong lVar10;
   
-  piVar2 = (int *)__savegprlr_29(param_1);
-  pcVar5 = buf;
-  p_Var3 = _getptd_noexit();
-  if (p_Var3 != (_tiddata *)0x0) {
-    if (p_Var3->_asctimebuf == (char *)0x0) {
-      pcVar4 = calloc(0x1a,1);
-      p_Var3->_asctimebuf = pcVar4;
-      if (pcVar4 == (char *)0x0) goto LAB_8291a114;
+  pcVar9 = buf;
+  p_Var2 = _getptd_noexit();
+  if (p_Var2 != (_tiddata *)0x0) {
+    if (p_Var2->_asctimebuf == (char *)0x0) {
+      pcVar3 = calloc(0x1a,1);
+      p_Var2->_asctimebuf = pcVar3;
+      if (pcVar3 == (char *)0x0) goto LAB_8291a114;
     }
-    pcVar5 = p_Var3->_asctimebuf;
+    pcVar9 = p_Var2->_asctimebuf;
   }
 LAB_8291a114:
-  if ((((((pcVar5 != (char *)0x0) && (*pcVar5 = '\0', piVar2 != (int *)0x0)) && (-1 < piVar2[5])) &&
-       ((iVar7 = piVar2[4], -1 < iVar7 && (iVar7 < 0xc)))) &&
-      ((-1 < piVar2[2] && ((piVar2[2] < 0x18 && (-1 < piVar2[1])))))) &&
-     ((piVar2[1] < 0x3c && (((-1 < *piVar2 && (*piVar2 < 0x3c)) && (iVar1 = piVar2[3], 0 < iVar1))))
-     )) {
-    if ((&DAT_829b08f8)[iVar7] - *(int *)(&_days + iVar7 * 4) < iVar1) {
-      uVar8 = (ulonglong)(uint)piVar2[5] + 0x76c;
-      iVar9 = (int)uVar8;
-      if ((((uVar8 != ((longlong)(iVar9 >> 2) + (ulonglong)(iVar9 < 0 && (uVar8 & 3) != 0) &
-                      0x3fffffff) << 2) || (uVar8 == (longlong)(iVar9 / 100) * 100)) &&
-          (uVar8 != (longlong)(iVar9 / 400) * 400)) || ((iVar7 != 1 || (0x1d < iVar1))))
+  if ((((((pcVar9 != (char *)0x0) && (*pcVar9 = '\0', param_1 != (tm *)0x0)) &&
+        (-1 < param_1->tm_year)) && ((iVar6 = param_1->tm_mon, -1 < iVar6 && (iVar6 < 0xc)))) &&
+      ((-1 < param_1->tm_hour && ((param_1->tm_hour < 0x18 && (-1 < param_1->tm_min)))))) &&
+     ((param_1->tm_min < 0x3c &&
+      (((-1 < param_1->tm_sec && (param_1->tm_sec < 0x3c)) && (iVar1 = param_1->tm_mday, 0 < iVar1))
+      )))) {
+    if ((&DAT_829b08f8)[iVar6] - *(int *)(&_days + iVar6 * 4) < iVar1) {
+      uVar7 = (ulonglong)(uint)param_1->tm_year + 0x76c;
+      iVar8 = (int)uVar7;
+      if ((((uVar7 != ((longlong)(iVar8 >> 2) + (ulonglong)(iVar8 < 0 && (uVar7 & 3) != 0) &
+                      0x3fffffff) << 2) || (uVar7 == (longlong)(iVar8 / 100) * 100)) &&
+          (uVar7 != (longlong)(iVar8 / 400) * 400)) || ((iVar6 != 1 || (0x1d < iVar1))))
       goto LAB_8291a120;
     }
-    iVar1 = piVar2[6];
+    iVar1 = param_1->tm_wday;
     if ((-1 < iVar1) && (iVar1 < 7)) {
       lVar10 = 3;
-      iVar9 = 0;
-      pcVar4 = pcVar5;
+      iVar8 = 0;
+      pcVar3 = pcVar9;
       do {
-        pcVar6 = pcVar4;
-        *pcVar6 = "SunMonTueWedThuFriSat"[iVar9 + iVar1 * 3];
-        pcVar5[iVar9 + 4] = "JanFebMarAprMayJunJulAugSepOctNovDec"[iVar9 + iVar7 * 3];
-        iVar9 = iVar9 + 1;
+        pcVar5 = pcVar3;
+        *pcVar5 = "SunMonTueWedThuFriSat"[iVar8 + iVar1 * 3];
+        pcVar9[iVar8 + 4] = "JanFebMarAprMayJunJulAugSepOctNovDec"[iVar8 + iVar6 * 3];
+        iVar8 = iVar8 + 1;
         lVar10 = lVar10 + -1;
-        pcVar4 = pcVar6 + 1;
+        pcVar3 = pcVar5 + 1;
       } while (lVar10 != 0);
-      pcVar6[1] = ' ';
-      pcVar6[5] = ' ';
-      iVar7 = piVar2[3];
-      pcVar6[6] = (char)(iVar7 / 10) + '0';
-      pcVar6[7] = (char)iVar7 + (char)(iVar7 / 10) * -10 + '0';
-      pcVar6[8] = ' ';
-      iVar7 = piVar2[2];
-      pcVar6[9] = (char)(iVar7 / 10) + '0';
-      pcVar6[10] = (char)iVar7 + (char)(iVar7 / 10) * -10 + '0';
-      pcVar6[0xb] = ':';
-      iVar7 = piVar2[1];
-      pcVar6[0xc] = (char)(iVar7 / 10) + '0';
-      pcVar6[0xd] = (char)iVar7 + (char)(iVar7 / 10) * -10 + '0';
-      pcVar6[0xe] = ':';
-      iVar7 = *piVar2;
-      pcVar6[0xf] = (char)(iVar7 / 10) + '0';
-      pcVar6[0x10] = (char)iVar7 + (char)(iVar7 / 10) * -10 + '0';
-      pcVar6[0x11] = ' ';
-      iVar7 = piVar2[5] / 100 + 0x13;
-      pcVar6[0x12] = (char)(iVar7 / 10) + '0';
-      pcVar6[0x13] = (char)iVar7 + (char)(iVar7 / 10) * -10 + '0';
-      iVar7 = piVar2[5] % 100;
-      pcVar6[0x14] = (char)(iVar7 / 10) + '0';
-      pcVar6[0x15] = (char)iVar7 + (char)(iVar7 / 10) * -10 + '0';
-      pcVar6[0x16] = '\n';
-      pcVar6[0x17] = '\0';
-      goto LAB_8291a3ec;
+      pcVar5[1] = ' ';
+      pcVar5[5] = ' ';
+      iVar6 = param_1->tm_mday;
+      pcVar5[6] = (char)(iVar6 / 10) + '0';
+      pcVar5[7] = (char)iVar6 + (char)(iVar6 / 10) * -10 + '0';
+      pcVar5[8] = ' ';
+      iVar6 = param_1->tm_hour;
+      pcVar5[9] = (char)(iVar6 / 10) + '0';
+      pcVar5[10] = (char)iVar6 + (char)(iVar6 / 10) * -10 + '0';
+      pcVar5[0xb] = ':';
+      iVar6 = param_1->tm_min;
+      pcVar5[0xc] = (char)(iVar6 / 10) + '0';
+      pcVar5[0xd] = (char)iVar6 + (char)(iVar6 / 10) * -10 + '0';
+      pcVar5[0xe] = ':';
+      iVar6 = param_1->tm_sec;
+      pcVar5[0xf] = (char)(iVar6 / 10) + '0';
+      pcVar5[0x10] = (char)iVar6 + (char)(iVar6 / 10) * -10 + '0';
+      pcVar5[0x11] = ' ';
+      iVar6 = param_1->tm_year / 100 + 0x13;
+      pcVar5[0x12] = (char)(iVar6 / 10) + '0';
+      pcVar5[0x13] = (char)iVar6 + (char)(iVar6 / 10) * -10 + '0';
+      iVar6 = param_1->tm_year % 100;
+      pcVar5[0x14] = (char)(iVar6 / 10) + '0';
+      pcVar5[0x15] = (char)iVar6 + (char)(iVar6 / 10) * -10 + '0';
+      pcVar5[0x16] = '\n';
+      pcVar5[0x17] = '\0';
+      return pcVar9;
     }
   }
 LAB_8291a120:
-  piVar2 = _errno();
-  *piVar2 = 0x16;
+  piVar4 = _errno();
+  *piVar4 = 0x16;
   _invalid_parameter_noinfo();
-  pcVar5 = (char *)0x0;
-LAB_8291a3ec:
-  pcVar5 = (char *)__restgprlr_29(pcVar5);
-  return pcVar5;
+  return (char *)0x0;
 }
 

@@ -31,14 +31,14 @@ ulong XSessionCalculateSkill
 
 // 828BAC98  XSessionModifySkill  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/online/src/sessionskill.cpp:88)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 ulong XSessionModifySkill(void *param_1,ulong param_2,ulong64 *param_3,_XOVERLAPPED *param_4)
 
 {
-  undefined8 uVar1;
-  uint uVar2;
-  long lVar3;
-  ulong uVar4;
-  ulonglong uVar5;
+  uint uVar1;
+  long lVar2;
   ulong local_60;
   int local_5c;
   int local_58 [2];
@@ -49,16 +49,14 @@ ulong XSessionModifySkill(void *param_1,ulong param_2,ulong64 *param_3,_XOVERLAP
   undefined4 local_40;
   undefined4 local_3c;
   
-  uVar5 = (ulonglong)(int)param_4;
-  uVar1 = __savegprlr_27(param_1);
   local_60 = 0;
   local_5c = 0;
-  uVar2 = XamGetSystemVersion();
-  if (uVar2 < 0x200ed800) {
-    SetExtendedError(0x65b,&local_60,local_58,(_XOVERLAPPED *)uVar5);
+  uVar1 = XamGetSystemVersion();
+  if (uVar1 < 0x200ed800) {
+    SetExtendedError(0x65b,&local_60,local_58,param_4);
   }
   else {
-    local_60 = XamSessionRefObjByHandle(uVar1,&local_5c);
+    local_60 = XamSessionRefObjByHandle(param_1,&local_5c);
     if (local_60 == 0) {
       local_44 = 0;
       local_40 = 0;
@@ -66,13 +64,13 @@ ulong XSessionModifySkill(void *param_1,ulong param_2,ulong64 *param_3,_XOVERLAP
       local_3c = 0;
       local_4c = param_2;
       local_48 = param_3;
-      local_58[0] = XMsgStartIORequest(0xfb,0xb001f,uVar5,&local_50,0x18);
+      local_58[0] = XMsgStartIORequest(0xfb,0xb001f,param_4,&local_50,0x18);
       if (local_58[0] < 0) {
         local_60 = 0x65b;
       }
-      else if ((uVar5 & 0xffffffff) == 0) {
-        lVar3 = RtlGetLastError();
-        local_60 = lVar3 >> 0x1f & 0x65b;
+      else if (param_4 == (_XOVERLAPPED *)0x0) {
+        lVar2 = RtlGetLastError();
+        local_60 = lVar2 >> 0x1f & 0x65b;
       }
       else {
         local_60 = 0x3e5;
@@ -82,7 +80,6 @@ ulong XSessionModifySkill(void *param_1,ulong param_2,ulong64 *param_3,_XOVERLAP
   if (local_5c != 0) {
     ObDereferenceObject();
   }
-  uVar4 = __restgprlr_27(local_60);
-  return uVar4;
+  return local_60;
 }
 

@@ -73,6 +73,8 @@ void SnapAngles(float *param_1)
 
 // 82588018  SV_LinkEntity  (server/sv_world.cpp:95)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
@@ -88,212 +90,210 @@ void SV_LinkEntity(gentity_s *param_1)
   float fVar7;
   float fVar8;
   uint uVar9;
-  gentity_s *pgVar10;
-  float *pfVar11;
-  int iVar12;
-  DObj *pDVar13;
-  uint uVar14;
-  uint uVar15;
-  float *pfVar16;
-  double dVar17;
-  float fVar18;
+  int iVar10;
+  DObj *pDVar11;
+  uint uVar12;
+  uint uVar13;
+  float *pfVar14;
+  float *pfVar15;
+  double dVar16;
+  float fVar17;
   float local_58;
   float local_54;
   float local_50;
   float local_4c;
   
-  pgVar10 = (gentity_s *)__savegprlr_25(param_1);
-  if ((pgVar10->r).isInUse == '\0') {
+  if ((param_1->r).isInUse == '\0') {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server\\sv_world.cpp",0x6f,0,
                     "%s");
   }
-  dVar17 = 1.0;
-  if ((pgVar10->r).modelType == '\x04') {
-    (pgVar10->s).solid = 0xffffff;
+  dVar16 = 1.0;
+  if ((param_1->r).modelType == '\x04') {
+    (param_1->s).solid = 0xffffff;
     goto LAB_82588228;
   }
-  uVar9 = (pgVar10->r).contents;
+  uVar9 = (param_1->r).contents;
   if ((uVar9 & 0x2000001) == 0) {
     if ((uVar9 & 0x800000) == 0) {
-      (pgVar10->s).solid = 0;
+      (param_1->s).solid = 0;
       goto LAB_82588228;
     }
-    uVar9 = (uint)(pgVar10->r).box.halfSize[0];
+    uVar9 = (uint)(param_1->r).box.halfSize[0];
     if ((int)uVar9 < 0xff) {
-      uVar14 = 1;
+      uVar12 = 1;
       if (1 < (int)uVar9) goto LAB_825881c0;
     }
     else {
       uVar9 = 0xff;
 LAB_825881c0:
-      uVar14 = uVar9;
+      uVar12 = uVar9;
     }
-    iVar12 = (int)((pgVar10->r).box.midPoint[2] + 128.0);
-    if (iVar12 < 0xff) {
-      if (iVar12 < 2) {
-        iVar12 = 1;
+    iVar10 = (int)((param_1->r).box.midPoint[2] + 128.0);
+    if (iVar10 < 0xff) {
+      if (iVar10 < 2) {
+        iVar10 = 1;
       }
-      (pgVar10->s).solid = iVar12 << 8 | 0x10000U | uVar14;
+      (param_1->s).solid = iVar10 << 8 | 0x10000U | uVar12;
     }
     else {
-      (pgVar10->s).solid = uVar14 | 0x1ff00;
+      (param_1->s).solid = uVar12 | 0x1ff00;
     }
     goto LAB_82588228;
   }
-  uVar9 = (uint)(pgVar10->r).box.halfSize[0];
+  uVar9 = (uint)(param_1->r).box.halfSize[0];
   if ((int)uVar9 < 0xff) {
-    uVar14 = 1;
+    uVar12 = 1;
     if (1 < (int)uVar9) goto LAB_825880f8;
   }
   else {
     uVar9 = 0xff;
 LAB_825880f8:
-    uVar14 = uVar9;
+    uVar12 = uVar9;
   }
-  fVar18 = (pgVar10->r).box.midPoint[2];
-  fVar8 = (pgVar10->r).box.halfSize[2];
-  uVar9 = (uint)((fVar18 - fVar8) + 1.0);
+  fVar17 = (param_1->r).box.midPoint[2];
+  fVar8 = (param_1->r).box.halfSize[2];
+  uVar9 = (uint)((fVar17 - fVar8) + 1.0);
   if ((int)uVar9 < 0xff) {
-    uVar15 = 1;
+    uVar13 = 1;
     if (1 < (int)uVar9) goto LAB_82588134;
   }
   else {
     uVar9 = 0xff;
 LAB_82588134:
-    uVar15 = uVar9;
+    uVar13 = uVar9;
   }
-  iVar12 = (int)(fVar8 + fVar18 + 32.0);
-  if (iVar12 < 0xff) {
-    if (iVar12 < 2) {
-      iVar12 = 1;
+  iVar10 = (int)(fVar8 + fVar17 + 32.0);
+  if (iVar10 < 0xff) {
+    if (iVar10 < 2) {
+      iVar10 = 1;
     }
   }
   else {
-    iVar12 = 0xff;
+    iVar10 = 0xff;
   }
-  (pgVar10->s).solid = (iVar12 << 8 | uVar15) << 8 | uVar14;
+  (param_1->s).solid = (iVar10 << 8 | uVar13) << 8 | uVar12;
 LAB_82588228:
-  pfVar11 = (pgVar10->r).currentAngles;
-  pfVar16 = (pgVar10->r).currentOrigin;
-  if (((((uint)(pgVar10->r).currentAngles[0] & 0x7f800000) == 0x7f800000) ||
-      (((uint)(pgVar10->r).currentAngles[1] & 0x7f800000) == 0x7f800000)) ||
-     (((uint)(pgVar10->r).currentAngles[2] & 0x7f800000) == 0x7f800000)) {
+  pfVar15 = (param_1->r).currentAngles;
+  pfVar14 = (param_1->r).currentOrigin;
+  if (((((uint)(param_1->r).currentAngles[0] & 0x7f800000) == 0x7f800000) ||
+      (((uint)(param_1->r).currentAngles[1] & 0x7f800000) == 0x7f800000)) ||
+     (((uint)(param_1->r).currentAngles[2] & 0x7f800000) == 0x7f800000)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server\\sv_world.cpp",0xa8,0,
                     "%s");
   }
-  if (((((uint)*pfVar16 & 0x7f800000) == 0x7f800000) ||
-      (((uint)(pgVar10->r).currentOrigin[1] & 0x7f800000) == 0x7f800000)) ||
-     (((uint)(pgVar10->r).currentOrigin[2] & 0x7f800000) == 0x7f800000)) {
+  if (((((uint)*pfVar14 & 0x7f800000) == 0x7f800000) ||
+      (((uint)(param_1->r).currentOrigin[1] & 0x7f800000) == 0x7f800000)) ||
+     (((uint)(param_1->r).currentOrigin[2] & 0x7f800000) == 0x7f800000)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server\\sv_world.cpp",0xa9,0,
                     "%s");
   }
-  SnapAngles(pfVar11);
-  if ((pgVar10->r).modelType == '\0') {
-    (pgVar10->r).absBox.midPoint[0] = *pfVar16 + (pgVar10->r).box.midPoint[0];
-    (pgVar10->r).absBox.midPoint[1] = (pgVar10->r).box.midPoint[1] + (pgVar10->r).currentOrigin[1];
-    (pgVar10->r).absBox.midPoint[2] = (pgVar10->r).box.midPoint[2] + (pgVar10->r).currentOrigin[2];
-    (pgVar10->r).absBox.halfSize[0] = (pgVar10->r).box.halfSize[0];
-    (pgVar10->r).absBox.halfSize[1] = (pgVar10->r).box.halfSize[1];
-    (pgVar10->r).absBox.halfSize[2] = (pgVar10->r).box.halfSize[2];
+  SnapAngles(pfVar15);
+  if ((param_1->r).modelType == '\0') {
+    (param_1->r).absBox.midPoint[0] = *pfVar14 + (param_1->r).box.midPoint[0];
+    (param_1->r).absBox.midPoint[1] = (param_1->r).box.midPoint[1] + (param_1->r).currentOrigin[1];
+    (param_1->r).absBox.midPoint[2] = (param_1->r).box.midPoint[2] + (param_1->r).currentOrigin[2];
+    (param_1->r).absBox.halfSize[0] = (param_1->r).box.halfSize[0];
+    (param_1->r).absBox.halfSize[1] = (param_1->r).box.halfSize[1];
+    (param_1->r).absBox.halfSize[2] = (param_1->r).box.halfSize[2];
   }
-  else if ((*pfVar11 == 0.0) && ((pgVar10->r).currentAngles[2] == 0.0)) {
-    if ((pgVar10->r).currentAngles[1] == 0.0) {
-      (pgVar10->r).absBox.midPoint[0] = *pfVar16 + (pgVar10->r).box.midPoint[0];
-      (pgVar10->r).absBox.midPoint[1] = (pgVar10->r).box.midPoint[1] + (pgVar10->r).currentOrigin[1]
+  else if ((*pfVar15 == 0.0) && ((param_1->r).currentAngles[2] == 0.0)) {
+    if ((param_1->r).currentAngles[1] == 0.0) {
+      (param_1->r).absBox.midPoint[0] = *pfVar14 + (param_1->r).box.midPoint[0];
+      (param_1->r).absBox.midPoint[1] = (param_1->r).box.midPoint[1] + (param_1->r).currentOrigin[1]
       ;
-      (pgVar10->r).absBox.midPoint[2] = (pgVar10->r).box.midPoint[2] + (pgVar10->r).currentOrigin[2]
+      (param_1->r).absBox.midPoint[2] = (param_1->r).box.midPoint[2] + (param_1->r).currentOrigin[2]
       ;
-      (pgVar10->r).absBox.halfSize[0] = (pgVar10->r).box.halfSize[0];
-      (pgVar10->r).absBox.halfSize[1] = (pgVar10->r).box.halfSize[1];
-      (pgVar10->r).absBox.halfSize[2] = (pgVar10->r).box.halfSize[2];
+      (param_1->r).absBox.halfSize[0] = (param_1->r).box.halfSize[0];
+      (param_1->r).absBox.halfSize[1] = (param_1->r).box.halfSize[1];
+      (param_1->r).absBox.halfSize[2] = (param_1->r).box.halfSize[2];
     }
     else {
-      fVar18 = (pgVar10->r).box.midPoint[0];
-      fVar8 = (pgVar10->r).box.halfSize[0];
-      fVar2 = (pgVar10->r).box.midPoint[1];
-      fVar3 = (pgVar10->r).box.halfSize[1];
-      fVar4 = (pgVar10->r).box.midPoint[2];
-      fVar5 = (pgVar10->r).currentOrigin[2];
-      fVar6 = (pgVar10->r).box.halfSize[2];
-      fVar7 = (pgVar10->r).currentOrigin[1];
-      (pgVar10->r).absBox.midPoint[0] = *pfVar16;
-      (pgVar10->r).absBox.midPoint[1] = fVar7;
-      fVar8 = ABS(fVar18) + fVar8;
-      (pgVar10->r).absBox.midPoint[2] = fVar4 + fVar5;
-      (pgVar10->r).absBox.halfSize[2] = fVar6;
+      fVar17 = (param_1->r).box.midPoint[0];
+      fVar8 = (param_1->r).box.halfSize[0];
+      fVar2 = (param_1->r).box.midPoint[1];
+      fVar3 = (param_1->r).box.halfSize[1];
+      fVar4 = (param_1->r).box.midPoint[2];
+      fVar5 = (param_1->r).currentOrigin[2];
+      fVar6 = (param_1->r).box.halfSize[2];
+      fVar7 = (param_1->r).currentOrigin[1];
+      (param_1->r).absBox.midPoint[0] = *pfVar14;
+      (param_1->r).absBox.midPoint[1] = fVar7;
+      fVar8 = ABS(fVar17) + fVar8;
+      (param_1->r).absBox.midPoint[2] = fVar4 + fVar5;
+      (param_1->r).absBox.halfSize[2] = fVar6;
       fVar3 = ABS(fVar2) + fVar3;
-      fVar18 = SQRT(fVar3 * fVar3 + fVar8 * fVar8);
-      (pgVar10->r).absBox.halfSize[0] = fVar18;
-      (pgVar10->r).absBox.halfSize[1] = fVar18;
+      fVar17 = SQRT(fVar3 * fVar3 + fVar8 * fVar8);
+      (param_1->r).absBox.halfSize[0] = fVar17;
+      (param_1->r).absBox.halfSize[1] = fVar17;
     }
   }
   else {
-    fVar18 = (pgVar10->r).box.midPoint[1];
-    fVar8 = (pgVar10->r).box.halfSize[1];
-    fVar2 = (pgVar10->r).box.midPoint[2];
-    fVar3 = (pgVar10->r).box.halfSize[2];
-    fVar4 = (pgVar10->r).box.halfSize[0];
-    (pgVar10->r).absBox.midPoint[0] = *pfVar16;
-    fVar8 = ABS(fVar18) + fVar8;
+    fVar17 = (param_1->r).box.midPoint[1];
+    fVar8 = (param_1->r).box.halfSize[1];
+    fVar2 = (param_1->r).box.midPoint[2];
+    fVar3 = (param_1->r).box.halfSize[2];
+    fVar4 = (param_1->r).box.halfSize[0];
+    (param_1->r).absBox.midPoint[0] = *pfVar14;
+    fVar8 = ABS(fVar17) + fVar8;
     fVar3 = ABS(fVar2) + fVar3;
-    fVar4 = ABS((pgVar10->r).box.midPoint[0]) + fVar4;
-    (pgVar10->r).absBox.midPoint[1] = (pgVar10->r).currentOrigin[1];
-    (pgVar10->r).absBox.midPoint[2] = (pgVar10->r).currentOrigin[2];
-    fVar18 = SQRT(fVar4 * fVar4 + fVar3 * fVar3 + fVar8 * fVar8);
-    (pgVar10->r).absBox.halfSize[0] = fVar18;
-    (pgVar10->r).absBox.halfSize[1] = fVar18;
-    (pgVar10->r).absBox.halfSize[2] = fVar18;
+    fVar4 = ABS((param_1->r).box.midPoint[0]) + fVar4;
+    (param_1->r).absBox.midPoint[1] = (param_1->r).currentOrigin[1];
+    (param_1->r).absBox.midPoint[2] = (param_1->r).currentOrigin[2];
+    fVar17 = SQRT(fVar4 * fVar4 + fVar3 * fVar3 + fVar8 * fVar8);
+    (param_1->r).absBox.halfSize[0] = fVar17;
+    (param_1->r).absBox.halfSize[1] = fVar17;
+    (param_1->r).absBox.halfSize[2] = fVar17;
   }
-  pfVar11 = (pgVar10->r).absBox.halfSize;
-  fVar18 = (pgVar10->r).absBox.halfSize[1];
-  fVar8 = (pgVar10->r).absBox.halfSize[2];
-  *pfVar11 = (float)((double)*pfVar11 + dVar17);
-  (pgVar10->r).absBox.halfSize[1] = (float)((double)fVar18 + dVar17);
-  (pgVar10->r).absBox.halfSize[2] = (float)((double)fVar8 + dVar17);
-  (pgVar10->r).isLinked = '\x01';
+  pfVar15 = (param_1->r).absBox.halfSize;
+  fVar17 = (param_1->r).absBox.halfSize[1];
+  fVar8 = (param_1->r).absBox.halfSize[2];
+  *pfVar15 = (float)((double)*pfVar15 + dVar16);
+  (param_1->r).absBox.halfSize[1] = (float)((double)fVar17 + dVar16);
+  (param_1->r).absBox.halfSize[2] = (float)((double)fVar8 + dVar16);
+  (param_1->r).isLinked = '\x01';
   Profile_Begin(0x22);
-  if ((pgVar10->r).contents != 0) {
-    iVar12 = SV_ContentsForEntity(pgVar10);
-    pDVar13 = Com_GetServerDObjForEnt(pgVar10);
-    if ((pDVar13 == (DObj *)0x0) || (bVar1 = (pgVar10->r).svFlags, (bVar1 & 6) == 0)) {
-      fVar18 = (pgVar10->r).absBox.halfSize[1];
-      local_58 = (pgVar10->r).absBox.midPoint[0];
-      local_54 = (pgVar10->r).absBox.midPoint[1];
-      local_50 = *pfVar11 + local_58;
-      local_4c = fVar18 + local_54;
-      local_58 = local_58 - *pfVar11;
-      local_54 = local_54 - fVar18;
+  if ((param_1->r).contents != 0) {
+    iVar10 = SV_ContentsForEntity(param_1);
+    pDVar11 = Com_GetServerDObjForEnt(param_1);
+    if ((pDVar11 == (DObj *)0x0) || (bVar1 = (param_1->r).svFlags, (bVar1 & 6) == 0)) {
+      fVar17 = (param_1->r).absBox.halfSize[1];
+      local_58 = (param_1->r).absBox.midPoint[0];
+      local_54 = (param_1->r).absBox.midPoint[1];
+      local_50 = *pfVar15 + local_58;
+      local_4c = fVar17 + local_54;
+      local_58 = local_58 - *pfVar15;
+      local_54 = local_54 - fVar17;
     }
     else if ((bVar1 & 2) == 0) {
-      fVar18 = DObjGetRadius(pDVar13);
-      local_4c = (pgVar10->r).currentOrigin[1];
-      local_58 = *pfVar16 - fVar18;
-      local_54 = local_4c - fVar18;
-      local_50 = *pfVar16 + fVar18;
-      local_4c = local_4c + fVar18;
+      fVar17 = DObjGetRadius(pDVar11);
+      local_4c = (param_1->r).currentOrigin[1];
+      local_58 = *pfVar14 - fVar17;
+      local_54 = local_4c - fVar17;
+      local_50 = *pfVar14 + fVar17;
+      local_4c = local_4c + fVar17;
     }
     else {
-      local_54 = (pgVar10->r).currentOrigin[1] + 0.0;
-      local_50 = *pfVar16 + 64.0;
-      local_58 = *pfVar16 - 64.0;
+      local_54 = (param_1->r).currentOrigin[1] + 0.0;
+      local_50 = *pfVar14 + 64.0;
+      local_58 = *pfVar14 - 64.0;
       local_4c = local_54 + 64.0;
       local_54 = local_54 - 64.0;
     }
-    CM_LinkEntity(sv.svEntities + (int)&pgVar10[0x31e9ea].s.groundEntityNum / 0x280,&local_58,
-                  &local_50,iVar12);
-    iVar12 = Profile_EndInternal((double *)0x0);
-    __restgprlr_25(iVar12);
+    CM_LinkEntity(sv.svEntities + (int)&param_1[0x31e9ea].s.groundEntityNum / 0x280,&local_58,
+                  &local_50,iVar10);
+    Profile_EndInternal((double *)0x0);
     return;
   }
-  CM_UnlinkEntity(sv.svEntities + (int)&pgVar10[0x31e9ea].s.groundEntityNum / 0x280);
-  iVar12 = Profile_EndInternal((double *)0x0);
-  __restgprlr_25(iVar12);
+  CM_UnlinkEntity(sv.svEntities + (int)&param_1[0x31e9ea].s.groundEntityNum / 0x280);
+  Profile_EndInternal((double *)0x0);
   return;
 }
 
 
 // 82588608  SV_ClipMoveToEntity  (server/sv_world.cpp:248)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
@@ -301,65 +301,70 @@ void SV_ClipMoveToEntity(moveclip_t *param_1,svEntity_s *param_2,int param_3,tra
 
 {
   uchar uVar1;
-  uint uVar2;
-  gentity_s *pgVar3;
-  Bounds *pBVar4;
   EntHandle *this;
-  int iVar5;
-  float fVar6;
-  char *pcVar7;
-  double dVar8;
+  int iVar2;
+  uint uVar3;
+  char *pcVar4;
+  gentity_s *pgVar5;
+  double dVar6;
   Bounds local_50 [3];
   
-  pBVar4 = (Bounds *)__savegprlr_28(param_1,param_2);
-  pgVar3 = sv.gentities + param_3;
-  if (((uint)pBVar4[6].midPoint[2] & (pgVar3->r).contents) == 0) goto LAB_82588808;
-  if (pBVar4[6].midPoint[0] != 2.86846e-42) {
-    if ((float)param_3 == pBVar4[6].midPoint[0]) goto LAB_82588808;
-    this = &(pgVar3->r).ownerNum;
-    iVar5 = EntHandle::isDefined(this);
-    if ((iVar5 != 0) &&
-       ((fVar6 = (float)EntHandle::entnum(this), fVar6 == pBVar4[6].midPoint[0] ||
-        (fVar6 = (float)EntHandle::entnum(this), fVar6 == pBVar4[6].midPoint[1]))))
-    goto LAB_82588808;
+  pgVar5 = sv.gentities + param_3;
+  if ((param_1->contentmask & (pgVar5->r).contents) == 0) {
+    return;
   }
-  local_50[0].midPoint[0] = (pgVar3->r).absBox.midPoint[0] + pBVar4->midPoint[0];
-  local_50[0].midPoint[1] = (pgVar3->r).absBox.midPoint[1] + pBVar4->midPoint[1];
-  local_50[0].midPoint[2] = (pgVar3->r).absBox.midPoint[2] + pBVar4->midPoint[2];
-  local_50[0].halfSize[0] = (pgVar3->r).absBox.halfSize[0] + pBVar4->halfSize[0];
-  local_50[0].halfSize[1] = (pgVar3->r).absBox.halfSize[1] + pBVar4->halfSize[1];
-  local_50[0].halfSize[2] = (pgVar3->r).absBox.halfSize[2] + pBVar4->halfSize[2];
-  iVar5 = CM_TraceBox((TraceExtents *)(pBVar4 + 2),local_50,param_4->fraction);
-  if (iVar5 == 0) {
-    uVar1 = (pgVar3->r).modelType;
-    dVar8 = (double)param_4->fraction;
+  if (param_1->passEntityNum != 0x7ff) {
+    if (param_3 == param_1->passEntityNum) {
+      return;
+    }
+    this = &(pgVar5->r).ownerNum;
+    iVar2 = EntHandle::isDefined(this);
+    if (iVar2 != 0) {
+      uVar3 = EntHandle::entnum(this);
+      if (uVar3 == param_1->passEntityNum) {
+        return;
+      }
+      uVar3 = EntHandle::entnum(this);
+      if (uVar3 == param_1->passOwnerNum) {
+        return;
+      }
+    }
+  }
+  local_50[0].midPoint[0] = (pgVar5->r).absBox.midPoint[0] + (param_1->bounds).midPoint[0];
+  local_50[0].midPoint[1] = (pgVar5->r).absBox.midPoint[1] + (param_1->bounds).midPoint[1];
+  local_50[0].midPoint[2] = (pgVar5->r).absBox.midPoint[2] + (param_1->bounds).midPoint[2];
+  local_50[0].halfSize[0] = (pgVar5->r).absBox.halfSize[0] + (param_1->bounds).halfSize[0];
+  local_50[0].halfSize[1] = (pgVar5->r).absBox.halfSize[1] + (param_1->bounds).halfSize[1];
+  local_50[0].halfSize[2] = (pgVar5->r).absBox.halfSize[2] + (param_1->bounds).halfSize[2];
+  iVar2 = CM_TraceBox(&param_1->extents,local_50,param_4->fraction);
+  if (iVar2 == 0) {
+    uVar1 = (pgVar5->r).modelType;
+    dVar6 = (double)param_4->fraction;
     if (uVar1 == '\0') {
-      uVar2 = (pgVar3->r).contents;
-      if (((uint)pBVar4[6].midPoint[2] & uVar2) != 0) {
+      uVar3 = (pgVar5->r).contents;
+      if ((param_1->contentmask & uVar3) != 0) {
         CM_TransformedCapsuleTrace
-                  (param_4,pBVar4[4].halfSize + 1,pBVar4[5].midPoint + 2,pBVar4,&(pgVar3->r).box,
-                   uVar2,(pgVar3->r).currentOrigin,vec3_origin);
+                  (param_4,(param_1->extents).start,(param_1->extents).end,&param_1->bounds,
+                   &(pgVar5->r).box,uVar3,(pgVar5->r).currentOrigin,vec3_origin);
       }
     }
     else if (uVar1 == '\x04') {
       CM_TransformedBrushModelTrace
-                (param_4,pBVar4[4].halfSize + 1,pBVar4[5].midPoint + 2,pBVar4,
-                 (pgVar3->s).index.brushModel,(int)pBVar4[6].midPoint[2],(pgVar3->r).currentOrigin,
-                 (pgVar3->r).currentAngles);
+                (param_4,(param_1->extents).start,(param_1->extents).end,&param_1->bounds,
+                 (pgVar5->s).index.brushModel,param_1->contentmask,(pgVar5->r).currentOrigin,
+                 (pgVar5->r).currentAngles);
     }
     else if (alwaysfails == 0) {
-      pcVar7 = va("clip move to unhandled entity model type %i");
+      pcVar4 = va("clip move to unhandled entity model type %i");
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server\\sv_world.cpp",0x12d,1
-                      ,pcVar7);
+                      ,pcVar4);
     }
-    if (((double)param_4->fraction < dVar8) &&
-       (Trace_SetHitId(param_4,TRACE_HITTYPE_ENTITY,(pgVar3->s).number),
-       ((pgVar3->s).lerp.eFlags & 0x1000000U) != 0)) {
+    if (((double)param_4->fraction < dVar6) &&
+       (Trace_SetHitId(param_4,TRACE_HITTYPE_ENTITY,(pgVar5->s).number),
+       ((pgVar5->s).lerp.eFlags & 0x1000000U) != 0)) {
       param_4->surfaceFlags = param_4->surfaceFlags | 0x1000;
     }
   }
-LAB_82588808:
-  __restgprlr_28();
   return;
 }
 
@@ -406,6 +411,8 @@ DObj * SV_LocationalSightTraceDObj(sightpointtrace_t *param_1,gentity_s *param_2
 
 // 825888A8  SV_PointTraceToEntity  (server/sv_world.cpp:388)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
@@ -414,16 +421,15 @@ void SV_PointTraceToEntity(pointtrace_t *param_1,svEntity_s *param_2,int param_3
 {
   byte bVar1;
   uchar uVar2;
-  int *piVar3;
-  gentity_s *pgVar4;
-  float fVar5;
-  TraceExtents *pTVar6;
+  IgnoreEntParams *pIVar3;
+  float fVar4;
   EntHandle *this;
-  int iVar7;
-  uint uVar8;
-  DObj *pDVar9;
-  char *pcVar10;
-  double dVar11;
+  int iVar5;
+  uint uVar6;
+  DObj *pDVar7;
+  char *pcVar8;
+  gentity_s *pgVar9;
+  double dVar10;
   Bounds local_f0;
   DObjTrace_s local_d0;
   float afStack_b0 [9];
@@ -434,98 +440,122 @@ void SV_PointTraceToEntity(pointtrace_t *param_1,svEntity_s *param_2,int param_3
   float afStack_70 [4];
   int aiStack_60 [24];
   
-  pTVar6 = (TraceExtents *)__savegprlr_25(param_1);
-  pgVar4 = sv.gentities + param_3;
-  if (((uint)pTVar6[1].midPoint[1] & (pgVar4->r).contents) == 0) goto LAB_82588e48;
-  piVar3 = (int *)pTVar6[1].midPoint[0];
-  if ((piVar3 != (int *)0x0) && (*piVar3 != 0x7ff)) {
-    if (((*(char *)(piVar3 + 2) != '\0') && (param_3 == *piVar3)) ||
-       ((*(char *)((int)piVar3 + 9) != '\0' && (param_3 == piVar3[1])))) goto LAB_82588e48;
-    this = &(pgVar4->r).ownerNum;
-    iVar7 = EntHandle::isDefined(this);
-    if ((iVar7 != 0) &&
-       ((((piVar3 = (int *)pTVar6[1].midPoint[0], *(char *)((int)piVar3 + 10) != '\0' &&
-          (uVar8 = EntHandle::entnum(this), uVar8 == piVar3[1])) && (param_3 != *piVar3)) ||
-        ((*(char *)((int)piVar3 + 0xb) != '\0' &&
-         (uVar8 = EntHandle::entnum(this), uVar8 == *(uint *)pTVar6[1].midPoint[0]))))))
-    goto LAB_82588e48;
+  pgVar9 = sv.gentities + param_3;
+  if ((param_1->contentmask & (pgVar9->r).contents) == 0) {
+    return;
   }
-  if (((pTVar6[1].midPoint[2] == 0.0) || (bVar1 = (pgVar4->r).svFlags, (bVar1 & 6) == 0)) ||
-     ((((bVar1 & 2) != 0 && (pTVar6[1].halfDelta[0] == 0.0)) ||
-      (pDVar9 = Com_GetServerDObjForEntnum(param_3), pDVar9 == (DObj *)0x0)))) {
-    if (((param_2->linkcontents & (uint)pTVar6[1].midPoint[1]) == 0) ||
-       (iVar7 = CM_TraceBox(pTVar6,&(pgVar4->r).absBox,param_4->fraction), iVar7 != 0))
-    goto LAB_82588e48;
-    uVar2 = (pgVar4->r).modelType;
-    dVar11 = (double)param_4->fraction;
+  pIVar3 = param_1->ignoreEntParams;
+  if ((pIVar3 != (IgnoreEntParams *)0x0) && (pIVar3->baseEntity != 0x7ff)) {
+    if ((pIVar3->ignoreSelf != false) && (param_3 == pIVar3->baseEntity)) {
+      return;
+    }
+    if ((pIVar3->ignoreParent != false) && (param_3 == pIVar3->parentEntity)) {
+      return;
+    }
+    this = &(pgVar9->r).ownerNum;
+    iVar5 = EntHandle::isDefined(this);
+    if (iVar5 != 0) {
+      pIVar3 = param_1->ignoreEntParams;
+      if (((pIVar3->ignoreSiblings != false) &&
+          (uVar6 = EntHandle::entnum(this), uVar6 == pIVar3->parentEntity)) &&
+         (param_3 != pIVar3->baseEntity)) {
+        return;
+      }
+      if ((pIVar3->ignoreChildren != false) &&
+         (uVar6 = EntHandle::entnum(this), uVar6 == param_1->ignoreEntParams->baseEntity)) {
+        return;
+      }
+    }
+  }
+  if ((((param_1->bLocational == 0) || (bVar1 = (pgVar9->r).svFlags, (bVar1 & 6) == 0)) ||
+      (((bVar1 & 2) != 0 && (param_1->priorityMap == (uchar *)0x0)))) ||
+     (pDVar7 = Com_GetServerDObjForEntnum(param_3), pDVar7 == (DObj *)0x0)) {
+    if ((param_2->linkcontents & param_1->contentmask) == 0) {
+      return;
+    }
+    iVar5 = CM_TraceBox(&param_1->extents,&(pgVar9->r).absBox,param_4->fraction);
+    if (iVar5 != 0) {
+      return;
+    }
+    uVar2 = (pgVar9->r).modelType;
+    dVar10 = (double)param_4->fraction;
     if (uVar2 == '\0') {
-      uVar8 = (pgVar4->r).contents;
-      if (((uint)pTVar6[1].midPoint[1] & uVar8) != 0) {
+      uVar6 = (pgVar9->r).contents;
+      if ((param_1->contentmask & uVar6) != 0) {
         CM_TransformedCapsuleTrace
-                  (param_4,pTVar6->start,pTVar6->end,&bounds_origin,&(pgVar4->r).box,uVar8,
-                   (pgVar4->r).currentOrigin,vec3_origin);
+                  (param_4,(param_1->extents).start,(param_1->extents).end,&bounds_origin,
+                   &(pgVar9->r).box,uVar6,(pgVar9->r).currentOrigin,vec3_origin);
       }
     }
     else if (uVar2 == '\x04') {
       CM_TransformedBrushModelTrace
-                (param_4,pTVar6->start,pTVar6->end,&bounds_origin,(pgVar4->s).index.brushModel,
-                 (int)pTVar6[1].midPoint[1],(pgVar4->r).currentOrigin,(pgVar4->r).currentAngles);
+                (param_4,(param_1->extents).start,(param_1->extents).end,&bounds_origin,
+                 (pgVar9->s).index.brushModel,param_1->contentmask,(pgVar9->r).currentOrigin,
+                 (pgVar9->r).currentAngles);
     }
     else if (alwaysfails == 0) {
-      pcVar10 = va("point trace to unhandled entity model type %i");
+      pcVar8 = va("point trace to unhandled entity model type %i");
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server\\sv_world.cpp",0x225,1
-                      ,pcVar10);
+                      ,pcVar8);
     }
-    if (dVar11 <= (double)param_4->fraction) goto LAB_82588e48;
+    if (dVar10 <= (double)param_4->fraction) {
+      return;
+    }
     param_4->modelIndex = 0;
     param_4->partName = 0;
     param_4->partGroup = 0;
   }
   else {
-    if (((pgVar4->r).svFlags & 4) == 0) {
-      if (pTVar6[1].halfDelta[0] == 0.0) {
+    if (((pgVar9->r).svFlags & 4) == 0) {
+      if (param_1->priorityMap == (uchar *)0x0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server\\sv_world.cpp",0x1d0
                         ,0,"%s");
       }
-      local_8c = (pgVar4->r).currentOrigin[0];
-      local_88 = (pgVar4->r).currentOrigin[1];
+      local_8c = (pgVar9->r).currentOrigin[0];
+      local_88 = (pgVar9->r).currentOrigin[1];
       local_f0.midPoint[1] = local_88 + 0.0;
-      local_84 = (pgVar4->r).currentOrigin[2];
+      local_84 = (pgVar9->r).currentOrigin[2];
       local_f0.midPoint[2] = local_84 + 20.0;
       local_f0.halfSize[1] = 64.0;
       local_f0.halfSize[2] = 52.0;
     }
     else {
-      iVar7 = DObjHasContents(pDVar9,(int)pTVar6[1].midPoint[1]);
-      if (iVar7 == 0) goto LAB_82588e48;
-      local_8c = (pgVar4->r).currentOrigin[0];
-      local_88 = (pgVar4->r).currentOrigin[1];
-      local_84 = (pgVar4->r).currentOrigin[2];
-      local_f0.halfSize[1] = DObjGetRadius(pDVar9);
+      iVar5 = DObjHasContents(pDVar7,param_1->contentmask);
+      if (iVar5 == 0) {
+        return;
+      }
+      local_8c = (pgVar9->r).currentOrigin[0];
+      local_88 = (pgVar9->r).currentOrigin[1];
+      local_84 = (pgVar9->r).currentOrigin[2];
+      local_f0.halfSize[1] = DObjGetRadius(pDVar7);
       local_f0.midPoint[1] = local_88;
       local_f0.midPoint[2] = local_84;
       local_f0.halfSize[2] = local_f0.halfSize[1];
     }
     local_f0.midPoint[0] = local_8c;
     local_f0.halfSize[0] = local_f0.halfSize[1];
-    iVar7 = CM_TraceBox(pTVar6,&local_f0,param_4->fraction);
-    if (iVar7 != 0) goto LAB_82588e48;
-    AnglesToAxis((pgVar4->r).currentAngles,(float (*) [3])afStack_b0);
-    MatrixTransposeTransformVector43(pTVar6->start,(float (*) [3])afStack_b0,afStack_70);
-    MatrixTransposeTransformVector43(pTVar6->end,(float (*) [3])afStack_b0,afStack_80);
+    iVar5 = CM_TraceBox(&param_1->extents,&local_f0,param_4->fraction);
+    if (iVar5 != 0) {
+      return;
+    }
+    AnglesToAxis((pgVar9->r).currentAngles,(float (*) [3])afStack_b0);
+    MatrixTransposeTransformVector43((param_1->extents).start,(float (*) [3])afStack_b0,afStack_70);
+    MatrixTransposeTransformVector43((param_1->extents).end,(float (*) [3])afStack_b0,afStack_80);
     local_d0.fraction = param_4->fraction;
-    if (((pgVar4->r).svFlags & 4) == 0) {
-      DObjTracelinePartBits(pDVar9,aiStack_60);
-      G_DObjCalcPose(pgVar4,aiStack_60);
-      DObjTraceline(pDVar9,afStack_70,afStack_80,(uchar *)pTVar6[1].halfDelta[0],&local_d0);
+    if (((pgVar9->r).svFlags & 4) == 0) {
+      DObjTracelinePartBits(pDVar7,aiStack_60);
+      G_DObjCalcPose(pgVar9,aiStack_60);
+      DObjTraceline(pDVar7,afStack_70,afStack_80,param_1->priorityMap,&local_d0);
     }
     else {
-      DObjGeomTracelinePartBits(pDVar9,(int)pTVar6[1].midPoint[1],aiStack_60);
-      G_DObjCalcPose(pgVar4,aiStack_60);
-      DObjGeomTraceline(pDVar9,afStack_70,afStack_80,(int)pTVar6[1].midPoint[1],&local_d0);
+      DObjGeomTracelinePartBits(pDVar7,param_1->contentmask,aiStack_60);
+      G_DObjCalcPose(pgVar9,aiStack_60);
+      DObjGeomTraceline(pDVar7,afStack_70,afStack_80,param_1->contentmask,&local_d0);
     }
-    if (param_4->fraction <= local_d0.fraction) goto LAB_82588e48;
-    dVar11 = 1.0;
+    if (param_4->fraction <= local_d0.fraction) {
+      return;
+    }
+    dVar10 = 1.0;
     if ((1.0 <= local_d0.fraction) || (local_d0.fraction < 0.0)) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server\\sv_world.cpp",0x204,0
                       ,"%s\n\t(objTrace.fraction) = %g");
@@ -536,27 +566,25 @@ void SV_PointTraceToEntity(pointtrace_t *param_1,svEntity_s *param_2,int param_3
     param_4->partName = local_d0.partName;
     param_4->partGroup = local_d0.partGroup;
     MatrixTransformVector(local_d0.normal,(float (*) [3])afStack_b0,param_4->normal);
-    fVar5 = param_4->normal[0] * param_4->normal[0];
+    fVar4 = param_4->normal[0] * param_4->normal[0];
     if ((0.01 <= ABS((float)((double)SQRT(param_4->normal[1] * param_4->normal[1] +
-                                          param_4->normal[2] * param_4->normal[2] + fVar5) - dVar11)
+                                          param_4->normal[2] * param_4->normal[2] + fVar4) - dVar10)
                     )) &&
        (0.01 <= SQRT(param_4->normal[1] * param_4->normal[1] +
-                     param_4->normal[2] * param_4->normal[2] + fVar5))) {
+                     param_4->normal[2] * param_4->normal[2] + fVar4))) {
       va("%g %g %g");
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server\\sv_world.cpp",0x20c,0
                       ,"%s\n\t%s");
     }
     param_4->walkable = (float)0x3f333333 <= param_4->normal[2];
   }
-  Trace_SetHitId(param_4,TRACE_HITTYPE_ENTITY,(pgVar4->s).number);
-  iVar7 = (pgVar4->r).contents;
+  Trace_SetHitId(param_4,TRACE_HITTYPE_ENTITY,(pgVar9->s).number);
+  iVar5 = (pgVar9->r).contents;
   param_4->material = (char *)0x0;
-  param_4->contents = iVar7;
-  if (((pgVar4->s).lerp.eFlags & 0x1000000U) != 0) {
+  param_4->contents = iVar5;
+  if (((pgVar9->s).lerp.eFlags & 0x1000000U) != 0) {
     param_4->surfaceFlags = param_4->surfaceFlags | 0x1000;
   }
-LAB_82588e48:
-  __restgprlr_25();
   return;
 }
 
@@ -608,71 +636,72 @@ int SV_EntityBlocksSightTrace
 
 // 82588F80  SV_ClipSightToEntity  (server/sv_world.cpp:603)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
 int SV_ClipSightToEntity(sightclip_t *param_1,svEntity_s *param_2)
 
 {
-  Bounds *pBVar1;
+  EntHandle *pEVar1;
   int iVar2;
-  EntHandle *pEVar3;
-  float fVar4;
-  float fVar5;
-  gentity_s *pgVar6;
+  uint uVar3;
+  int iVar4;
+  gentity_s *pgVar5;
   
-  pBVar1 = (Bounds *)__savegprlr_28(param_1);
-  fVar5 = (float)((int)&param_2[0x52cb520].linkcontents / 0x18);
-  pgVar6 = sv.gentities + (int)fVar5;
-  if (((pgVar6->r).contents & (uint)pBVar1[2].halfSize[2]) == 0) goto LAB_82588fd8;
-  if (pBVar1[2].halfSize[0] != 2.86846e-42) {
-    if (fVar5 == pBVar1[2].halfSize[0]) goto LAB_82588fd8;
-    pEVar3 = &(pgVar6->r).ownerNum;
-    iVar2 = EntHandle::isDefined(pEVar3);
-    if ((iVar2 != 0) && (fVar4 = (float)EntHandle::entnum(pEVar3), fVar4 == pBVar1[2].halfSize[0]))
-    goto LAB_82588fd8;
+  iVar4 = (int)&param_2[0x52cb520].linkcontents / 0x18;
+  pgVar5 = sv.gentities + iVar4;
+  if (((pgVar5->r).contents & param_1->contentmask) == 0) {
+    return 0;
   }
-  if (pBVar1[2].halfSize[1] != 2.86846e-42) {
-    if (fVar5 != pBVar1[2].halfSize[1]) {
-      pEVar3 = &(pgVar6->r).ownerNum;
-      iVar2 = EntHandle::isDefined(pEVar3);
-      if ((iVar2 == 0) || (fVar5 = (float)EntHandle::entnum(pEVar3), fVar5 != pBVar1[2].halfSize[1])
-         ) goto LAB_8258905c;
+  if (param_1->passEntityNum[0] != 0x7ff) {
+    if (iVar4 == param_1->passEntityNum[0]) {
+      return 0;
     }
-LAB_82588fd8:
-    iVar2 = __restgprlr_28(0);
-    return iVar2;
+    pEVar1 = &(pgVar5->r).ownerNum;
+    iVar2 = EntHandle::isDefined(pEVar1);
+    if ((iVar2 != 0) && (uVar3 = EntHandle::entnum(pEVar1), uVar3 == param_1->passEntityNum[0])) {
+      return 0;
+    }
   }
+  if (param_1->passEntityNum[1] == 0x7ff) {
 LAB_8258905c:
-  iVar2 = SV_EntityBlocksSightTrace
-                    (pBVar1[1].halfSize,pBVar1[2].midPoint,pBVar1,(int)pBVar1[2].halfSize[2],pgVar6)
-  ;
-  iVar2 = __restgprlr_28(-(ulonglong)(iVar2 != 0));
-  return iVar2;
+    iVar4 = SV_EntityBlocksSightTrace
+                      (param_1->start,param_1->end,&param_1->bounds,param_1->contentmask,pgVar5);
+    return -(uint)(iVar4 != 0);
+  }
+  if (iVar4 != param_1->passEntityNum[1]) {
+    pEVar1 = &(pgVar5->r).ownerNum;
+    iVar4 = EntHandle::isDefined(pEVar1);
+    if ((iVar4 == 0) || (uVar3 = EntHandle::entnum(pEVar1), uVar3 != param_1->passEntityNum[1]))
+    goto LAB_8258905c;
+  }
+  return 0;
 }
 
 
 // 82589088  SV_PointSightTraceToEntity  (server/sv_world.cpp:649)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
 int SV_PointSightTraceToEntity(sightpointtrace_t *param_1,svEntity_s *param_2)
 
 {
-  float fVar1;
-  byte bVar2;
-  float fVar3;
-  float *pfVar5;
+  byte bVar1;
+  uint uVar2;
   EntHandle *this;
+  int iVar3;
+  uint uVar4;
+  DObj *pDVar5;
   int iVar6;
-  float fVar7;
-  DObj *pDVar8;
-  int iVar9;
-  undefined8 uVar4;
-  float *pfVar10;
-  gentity_s *pgVar11;
-  double dVar12;
+  int iVar7;
+  int *piVar8;
+  gentity_s *pgVar9;
+  double dVar10;
   Bounds local_150;
   float afStack_138 [6];
   float afStack_120 [9];
@@ -684,94 +713,94 @@ int SV_PointSightTraceToEntity(sightpointtrace_t *param_1,svEntity_s *param_2)
   DObjTrace_s local_c0;
   TraceExtents TStack_a0;
   
-  pfVar5 = (float *)__savegprlr_26(param_1);
-  fVar1 = (float)((int)&param_2[0x52cb520].linkcontents / 0x18);
-  pgVar11 = sv.gentities + (int)fVar1;
-  if (((pgVar11->r).contents & (uint)pfVar5[8]) != 0) {
-    iVar9 = 0;
-    pfVar10 = pfVar5 + 6;
+  iVar6 = (int)&param_2[0x52cb520].linkcontents / 0x18;
+  pgVar9 = sv.gentities + iVar6;
+  if (((pgVar9->r).contents & param_1->contentmask) != 0) {
+    iVar7 = 0;
+    piVar8 = param_1->passEntityNum;
     do {
-      if (*pfVar10 != 2.86846e-42) {
-        if (fVar1 == *pfVar10) goto LAB_825893ac;
-        this = &(pgVar11->r).ownerNum;
-        iVar6 = EntHandle::isDefined(this);
-        if ((iVar6 != 0) &&
-           (fVar3 = *pfVar10, fVar7 = (float)EntHandle::entnum(this), fVar7 == fVar3))
-        goto LAB_825893ac;
+      if (*piVar8 != 0x7ff) {
+        if (iVar6 == *piVar8) {
+          return 0;
+        }
+        this = &(pgVar9->r).ownerNum;
+        iVar3 = EntHandle::isDefined(this);
+        if ((iVar3 != 0) && (uVar2 = *piVar8, uVar4 = EntHandle::entnum(this), uVar4 == uVar2)) {
+          return 0;
+        }
       }
-      iVar9 = iVar9 + 1;
-      pfVar10 = pfVar10 + 1;
-    } while (iVar9 < 2);
-    if ((((pfVar5[9] == 0.0) || (bVar2 = (pgVar11->r).svFlags, (bVar2 & 6) == 0)) ||
-        (((bVar2 & 2) != 0 && (pfVar5[10] == 0.0)))) ||
-       (pDVar8 = Com_GetServerDObjForEnt(pgVar11), pDVar8 == (DObj *)0x0)) {
-      iVar9 = SV_EntityBlocksSightTrace(pfVar5,pfVar5 + 3,&bounds_origin,(int)pfVar5[8],pgVar11);
-      uVar4 = 0xffffffffffffffff;
-      if (iVar9 != 0) goto LAB_825893b0;
+      iVar7 = iVar7 + 1;
+      piVar8 = piVar8 + 1;
+    } while (iVar7 < 2);
+    if ((((param_1->locational == 0) || (bVar1 = (pgVar9->r).svFlags, (bVar1 & 6) == 0)) ||
+        (((bVar1 & 2) != 0 && (param_1->priorityMap == (uchar *)0x0)))) ||
+       (pDVar5 = Com_GetServerDObjForEnt(pgVar9), pDVar5 == (DObj *)0x0)) {
+      iVar6 = SV_EntityBlocksSightTrace
+                        (param_1->start,param_1->end,&bounds_origin,param_1->contentmask,pgVar9);
+      if (iVar6 != 0) {
+        return -1;
+      }
     }
     else {
-      if (((pgVar11->r).svFlags & 4) == 0) {
-        if (pfVar5[10] == 0.0) {
+      if (((pgVar9->r).svFlags & 4) == 0) {
+        if (param_1->priorityMap == (uchar *)0x0) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server\\sv_world.cpp",
                           0x2ba,0,"%s");
         }
-        local_fc = (pgVar11->r).currentOrigin[0];
-        local_f8 = (pgVar11->r).currentOrigin[1];
+        local_fc = (pgVar9->r).currentOrigin[0];
+        local_f8 = (pgVar9->r).currentOrigin[1];
         local_150.midPoint[1] = local_f8 + 0.0;
-        local_f4 = (pgVar11->r).currentOrigin[2];
+        local_f4 = (pgVar9->r).currentOrigin[2];
         local_150.midPoint[2] = local_f4 + 20.0;
         local_150.halfSize[1] = 64.0;
         local_150.halfSize[2] = 52.0;
       }
       else {
-        iVar9 = DObjHasContents(pDVar8,(int)pfVar5[8]);
-        if (iVar9 == 0) goto LAB_825893ac;
-        local_fc = (pgVar11->r).currentOrigin[0];
-        local_f8 = (pgVar11->r).currentOrigin[1];
-        local_f4 = (pgVar11->r).currentOrigin[2];
-        local_150.halfSize[1] = DObjGetRadius(pDVar8);
+        iVar6 = DObjHasContents(pDVar5,param_1->contentmask);
+        if (iVar6 == 0) {
+          return 0;
+        }
+        local_fc = (pgVar9->r).currentOrigin[0];
+        local_f8 = (pgVar9->r).currentOrigin[1];
+        local_f4 = (pgVar9->r).currentOrigin[2];
+        local_150.halfSize[1] = DObjGetRadius(pDVar5);
         local_150.midPoint[1] = local_f8;
         local_150.midPoint[2] = local_f4;
         local_150.halfSize[2] = local_150.halfSize[1];
       }
-      TStack_a0.start[0] = *pfVar5;
-      TStack_a0.start[1] = pfVar5[1];
-      TStack_a0.start[2] = pfVar5[2];
-      TStack_a0.end[0] = pfVar5[3];
-      TStack_a0.end[1] = pfVar5[4];
-      TStack_a0.end[2] = pfVar5[5];
+      TStack_a0.start[0] = param_1->start[0];
+      TStack_a0.start[1] = param_1->start[1];
+      TStack_a0.start[2] = param_1->start[2];
+      TStack_a0.end[0] = param_1->end[0];
+      TStack_a0.end[1] = param_1->end[1];
+      TStack_a0.end[2] = param_1->end[2];
       local_150.midPoint[0] = local_fc;
       local_150.halfSize[0] = local_150.halfSize[1];
       CM_CalcTraceExtents(&TStack_a0);
-      dVar12 = 1.0;
-      iVar9 = CM_TraceBox(&TStack_a0,&local_150,1.0);
-      if (iVar9 == 0) {
-        AnglesToAxis((pgVar11->r).currentAngles,(float (*) [3])afStack_120);
+      dVar10 = 1.0;
+      iVar6 = CM_TraceBox(&TStack_a0,&local_150,1.0);
+      if (iVar6 == 0) {
+        AnglesToAxis((pgVar9->r).currentAngles,(float (*) [3])afStack_120);
         MatrixTransposeTransformVector43(TStack_a0.start,(float (*) [3])afStack_120,afStack_138);
         MatrixTransposeTransformVector43(TStack_a0.end,(float (*) [3])afStack_120,afStack_f0);
-        local_c0.fraction = (float)dVar12;
-        if (((pgVar11->r).svFlags & 4) == 0) {
-          DObjTracelinePartBits(pDVar8,aiStack_e0);
-          G_DObjCalcPose(pgVar11,aiStack_e0);
-          DObjTraceline(pDVar8,afStack_138,afStack_f0,(uchar *)pfVar5[10],&local_c0);
+        local_c0.fraction = (float)dVar10;
+        if (((pgVar9->r).svFlags & 4) == 0) {
+          DObjTracelinePartBits(pDVar5,aiStack_e0);
+          G_DObjCalcPose(pgVar9,aiStack_e0);
+          DObjTraceline(pDVar5,afStack_138,afStack_f0,param_1->priorityMap,&local_c0);
         }
         else {
-          DObjGeomTracelinePartBits(pDVar8,(int)pfVar5[8],aiStack_e0);
-          G_DObjCalcPose(pgVar11,aiStack_e0);
-          DObjGeomTraceline(pDVar8,afStack_138,afStack_f0,(int)pfVar5[8],&local_c0);
+          DObjGeomTracelinePartBits(pDVar5,param_1->contentmask,aiStack_e0);
+          G_DObjCalcPose(pgVar9,aiStack_e0);
+          DObjGeomTraceline(pDVar5,afStack_138,afStack_f0,param_1->contentmask,&local_c0);
         }
-        if ((double)local_c0.fraction < dVar12) {
-          iVar9 = __restgprlr_26(0xffffffffffffffff);
-          return iVar9;
+        if ((double)local_c0.fraction < dVar10) {
+          return -1;
         }
       }
     }
   }
-LAB_825893ac:
-  uVar4 = 0;
-LAB_825893b0:
-  iVar9 = __restgprlr_26(uVar4);
-  return iVar9;
+  return 0;
 }
 
 
@@ -809,28 +838,30 @@ LAB_82589434:
 
 // 82589468  SV_WorldTrace  (server/sv_world.cpp:775)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void SV_WorldTrace(trace_t *param_1,float *param_2,float *param_3,Bounds *param_4,int param_5)
 
 {
-  trace_t *ptVar1;
-  bool bVar2;
+  bool bVar1;
   CM_WorldTraceCallbacks local_40 [16];
   
-  ptVar1 = (trace_t *)__savegprlr_27(param_1);
-  bVar2 = Sys_IsServerThread();
-  if ((!bVar2) && (bVar2 = Sys_IsMainThread(), !bVar2)) {
+  bVar1 = Sys_IsServerThread();
+  if ((!bVar1) && (bVar1 = Sys_IsMainThread(), !bVar1)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server\\sv_world.cpp",0x30e,0,
                     "%s");
   }
   local_40[0].isGlassSolid = G_Glass_IsPieceSolid;
-  CM_WorldTrace(ptVar1,param_2,param_3,param_4,param_5,local_40);
-  __restgprlr_27();
+  CM_WorldTrace(param_1,param_2,param_3,param_4,param_5,local_40);
   return;
 }
 
 
 // 82589500  SV_Trace  (server/sv_world.cpp:794)
 
+/* WARNING: Function: __savegprlr_19 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_19 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
@@ -838,104 +869,90 @@ void SV_Trace(trace_t *param_1,float *param_2,float *param_3,Bounds *param_4,
              IgnoreEntParams *param_5,int param_6,int param_7,uchar *param_8,int param_9)
 
 {
-  trace_t *ptVar1;
-  int iVar2;
-  uint uVar3;
-  ulonglong uVar4;
-  float *pfVar5;
-  ulonglong uVar6;
-  float *pfVar7;
-  ulonglong uVar8;
-  Bounds *pBVar9;
-  double dVar10;
-  double dVar11;
+  int iVar1;
+  uint uVar2;
+  double dVar3;
+  double dVar4;
   int in_stack_00000054;
   moveclip_t local_1a0;
   pointtrace_t apStack_100 [2];
   
-  uVar8 = (ulonglong)(int)param_4;
-  uVar6 = (ulonglong)(int)param_3;
-  uVar4 = (ulonglong)(int)param_2;
-  ptVar1 = (trace_t *)__savegprlr_19(param_1);
-  if ((uVar4 & 0xffffffff) == 0) {
+  if (param_2 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server\\sv_world.cpp",0x31b,0,
                     "%s");
   }
-  if ((uVar6 & 0xffffffff) == 0) {
+  if (param_3 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server\\sv_world.cpp",0x31c,0,
                     "%s");
   }
-  if ((uVar8 & 0xffffffff) == 0) {
+  if (param_4 == (Bounds *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server\\sv_world.cpp",0x31d,0,
                     "%s");
   }
-  pfVar5 = (float *)uVar4;
-  if (((((uint)*pfVar5 & 0x7f800000) == 0x7f800000) ||
-      (((uint)pfVar5[1] & 0x7f800000) == 0x7f800000)) ||
-     (((uint)pfVar5[2] & 0x7f800000) == 0x7f800000)) {
+  if (((((uint)*param_2 & 0x7f800000) == 0x7f800000) ||
+      (((uint)param_2[1] & 0x7f800000) == 0x7f800000)) ||
+     (((uint)param_2[2] & 0x7f800000) == 0x7f800000)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server\\sv_world.cpp",0x31e,0,
                     "%s");
   }
-  pfVar7 = (float *)uVar6;
-  if (((((uint)*pfVar7 & 0x7f800000) == 0x7f800000) ||
-      (((uint)pfVar7[1] & 0x7f800000) == 0x7f800000)) ||
-     (((uint)pfVar7[2] & 0x7f800000) == 0x7f800000)) {
+  if (((((uint)*param_3 & 0x7f800000) == 0x7f800000) ||
+      (((uint)param_3[1] & 0x7f800000) == 0x7f800000)) ||
+     (((uint)param_3[2] & 0x7f800000) == 0x7f800000)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server\\sv_world.cpp",799,0,
                     "%s");
   }
-  pBVar9 = (Bounds *)uVar8;
-  if (((((uint)pBVar9->midPoint[0] & 0x7f800000) == 0x7f800000) ||
-      (((uint)pBVar9->midPoint[1] & 0x7f800000) == 0x7f800000)) ||
-     (((uint)pBVar9->midPoint[2] & 0x7f800000) == 0x7f800000)) {
+  if (((((uint)param_4->midPoint[0] & 0x7f800000) == 0x7f800000) ||
+      (((uint)param_4->midPoint[1] & 0x7f800000) == 0x7f800000)) ||
+     (((uint)param_4->midPoint[2] & 0x7f800000) == 0x7f800000)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server\\sv_world.cpp",800,0,
                     "%s");
   }
-  if (((((uint)pBVar9->halfSize[0] & 0x7f800000) == 0x7f800000) ||
-      (((uint)pBVar9->halfSize[1] & 0x7f800000) == 0x7f800000)) ||
-     (((uint)pBVar9->halfSize[2] & 0x7f800000) == 0x7f800000)) {
+  if (((((uint)param_4->halfSize[0] & 0x7f800000) == 0x7f800000) ||
+      (((uint)param_4->halfSize[1] & 0x7f800000) == 0x7f800000)) ||
+     (((uint)param_4->halfSize[2] & 0x7f800000) == 0x7f800000)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server\\sv_world.cpp",0x321,0,
                     "%s");
   }
   Profile_Begin(0x1d);
-  SV_WorldTrace(ptVar1,pfVar5,pfVar7,pBVar9,param_6);
-  if (((uint)ptVar1->fraction & 0x7f800000) == 0x7f800000) {
+  SV_WorldTrace(param_1,param_2,param_3,param_4,param_6);
+  if (((uint)param_1->fraction & 0x7f800000) == 0x7f800000) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server\\sv_world.cpp",0x328,0,
                     "%s");
   }
-  dVar10 = 1.0;
-  if ((uint)LZCOUNT(ptVar1->hitType) >> 5 != (uint)(ptVar1->fraction == 1.0)) {
+  dVar3 = 1.0;
+  if ((uint)LZCOUNT(param_1->hitType) >> 5 != (uint)(param_1->fraction == 1.0)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server\\sv_world.cpp",0x32a,0,
                     "%s");
   }
-  dVar11 = 0.0;
-  if (ptVar1->fraction != 0.0) {
-    if (pBVar9->halfSize[0] < 0.0) {
+  dVar4 = 0.0;
+  if (param_1->fraction != 0.0) {
+    if (param_4->halfSize[0] < 0.0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server\\sv_world.cpp",0x332,0
                       ,"%s");
     }
-    if ((double)pBVar9->halfSize[1] < dVar11) {
+    if ((double)param_4->halfSize[1] < dVar4) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server\\sv_world.cpp",0x333,0
                       ,"%s");
     }
-    if ((double)pBVar9->halfSize[2] < dVar11) {
+    if ((double)param_4->halfSize[2] < dVar4) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server\\sv_world.cpp",0x334,0
                       ,"%s");
     }
-    if ((double)(pBVar9->halfSize[2] + pBVar9->halfSize[1] + pBVar9->halfSize[0]) == dVar11) {
+    if ((double)(param_4->halfSize[2] + param_4->halfSize[1] + param_4->halfSize[0]) == dVar4) {
       if (in_stack_00000054 != 0) {
-        CM_PointTraceStaticModels(ptVar1,pfVar5,pfVar7,param_6);
-        if (((uint)ptVar1->fraction & 0x7f800000) == 0x7f800000) {
+        CM_PointTraceStaticModels(param_1,param_2,param_3,param_6);
+        if (((uint)param_1->fraction & 0x7f800000) == 0x7f800000) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server\\sv_world.cpp",
                           0x33f,0,"%s");
         }
-        if ((double)ptVar1->fraction == dVar11) goto LAB_82589d88;
+        if ((double)param_1->fraction == dVar4) goto LAB_82589d88;
       }
-      apStack_100[0].extents.start[0] = *pfVar5;
-      apStack_100[0].extents.end[0] = *pfVar7;
-      apStack_100[0].extents.start[1] = pfVar5[1];
-      apStack_100[0].extents.start[2] = pfVar5[2];
-      apStack_100[0].extents.end[1] = pfVar7[1];
-      apStack_100[0].extents.end[2] = pfVar7[2];
+      apStack_100[0].extents.start[0] = *param_2;
+      apStack_100[0].extents.end[0] = *param_3;
+      apStack_100[0].extents.start[1] = param_2[1];
+      apStack_100[0].extents.start[2] = param_2[2];
+      apStack_100[0].extents.end[1] = param_3[1];
+      apStack_100[0].extents.end[2] = param_3[2];
       apStack_100[0].contentmask = param_6;
       CM_CalcTraceExtents(&apStack_100[0].extents);
       apStack_100[0].bCalcDObjPose = 1;
@@ -943,18 +960,18 @@ void SV_Trace(trace_t *param_1,float *param_2,float *param_3,Bounds *param_4,
       apStack_100[0].bLocational = param_7;
       apStack_100[0].priorityMap = param_8;
       if (((param_5->baseEntity != 0x7ff) && (param_5->parentEntity != -1)) &&
-         ((iVar2 = EntHandle::isDefined(&sv.gentities[param_5->baseEntity].r.ownerNum), iVar2 == 0
-          || (uVar3 = EntHandle::entnum(&sv.gentities[param_5->baseEntity].r.ownerNum),
-             param_5->parentEntity != uVar3)))) {
-        iVar2 = EntHandle::isDefined(&sv.gentities[param_5->baseEntity].r.ownerNum);
-        if (iVar2 != 0) {
+         ((iVar1 = EntHandle::isDefined(&sv.gentities[param_5->baseEntity].r.ownerNum), iVar1 == 0
+          || (uVar2 = EntHandle::entnum(&sv.gentities[param_5->baseEntity].r.ownerNum),
+             param_5->parentEntity != uVar2)))) {
+        iVar1 = EntHandle::isDefined(&sv.gentities[param_5->baseEntity].r.ownerNum);
+        if (iVar1 != 0) {
           EntHandle::entnum(&sv.gentities[param_5->baseEntity].r.ownerNum);
         }
         va("base: %d; parent: %d; base\'s parent: %d\n");
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server\\sv_world.cpp",0x351
                         ,0,"%s\n\t%s");
       }
-      CM_PointTraceToEntities(apStack_100,ptVar1);
+      CM_PointTraceToEntities(apStack_100,param_1);
     }
     else {
       if (in_stack_00000054 != 0) {
@@ -968,12 +985,12 @@ void SV_Trace(trace_t *param_1,float *param_2,float *param_3,Bounds *param_4,
       local_1a0.passEntityNum = param_5->baseEntity;
       local_1a0.contentmask = param_6;
       if (((local_1a0.passEntityNum != 0x7ff) && (param_5->parentEntity != -1)) &&
-         ((iVar2 = EntHandle::isDefined(&sv.gentities[local_1a0.passEntityNum].r.ownerNum),
-          iVar2 == 0 ||
-          (uVar3 = EntHandle::entnum(&sv.gentities[param_5->baseEntity].r.ownerNum),
-          param_5->parentEntity != uVar3)))) {
-        iVar2 = EntHandle::isDefined(&sv.gentities[param_5->baseEntity].r.ownerNum);
-        if (iVar2 != 0) {
+         ((iVar1 = EntHandle::isDefined(&sv.gentities[local_1a0.passEntityNum].r.ownerNum),
+          iVar1 == 0 ||
+          (uVar2 = EntHandle::entnum(&sv.gentities[param_5->baseEntity].r.ownerNum),
+          param_5->parentEntity != uVar2)))) {
+        iVar1 = EntHandle::isDefined(&sv.gentities[param_5->baseEntity].r.ownerNum);
+        if (iVar1 != 0) {
           EntHandle::entnum(&sv.gentities[param_5->baseEntity].r.ownerNum);
         }
         va("base: %d; parent: %d; base\'s parent: %d\n");
@@ -981,26 +998,26 @@ void SV_Trace(trace_t *param_1,float *param_2,float *param_3,Bounds *param_4,
                         ,0,"%s\n\t%s");
       }
       local_1a0.passOwnerNum = param_5->parentEntity;
-      local_1a0.extents.start[0] = pBVar9->midPoint[0] + *pfVar5;
-      local_1a0.extents.start[1] = pfVar5[1] + pBVar9->midPoint[1];
-      local_1a0.extents.start[2] = pBVar9->midPoint[2] + pfVar5[2];
-      local_1a0.extents.end[0] = *pfVar7 + pBVar9->midPoint[0];
-      local_1a0.bounds.halfSize[0] = pBVar9->halfSize[0];
-      local_1a0.extents.end[1] = pBVar9->midPoint[1] + pfVar7[1];
-      local_1a0.bounds.halfSize[1] = pBVar9->halfSize[1];
-      local_1a0.outerSize[0] = (float)((double)local_1a0.bounds.halfSize[0] + dVar10);
-      local_1a0.bounds.halfSize[2] = pBVar9->halfSize[2];
-      local_1a0.outerSize[1] = (float)((double)local_1a0.bounds.halfSize[1] + dVar10);
-      local_1a0.outerSize[2] = (float)((double)local_1a0.bounds.halfSize[2] + dVar10);
-      local_1a0.extents.end[2] = pBVar9->midPoint[2] + pfVar7[2];
-      local_1a0.bounds.midPoint[0] = (float)dVar11;
-      local_1a0.bounds.midPoint[1] = (float)dVar11;
-      local_1a0.bounds.midPoint[2] = (float)dVar11;
+      local_1a0.extents.start[0] = param_4->midPoint[0] + *param_2;
+      local_1a0.extents.start[1] = param_2[1] + param_4->midPoint[1];
+      local_1a0.extents.start[2] = param_4->midPoint[2] + param_2[2];
+      local_1a0.extents.end[0] = *param_3 + param_4->midPoint[0];
+      local_1a0.bounds.halfSize[0] = param_4->halfSize[0];
+      local_1a0.extents.end[1] = param_4->midPoint[1] + param_3[1];
+      local_1a0.bounds.halfSize[1] = param_4->halfSize[1];
+      local_1a0.outerSize[0] = (float)((double)local_1a0.bounds.halfSize[0] + dVar3);
+      local_1a0.bounds.halfSize[2] = param_4->halfSize[2];
+      local_1a0.outerSize[1] = (float)((double)local_1a0.bounds.halfSize[1] + dVar3);
+      local_1a0.outerSize[2] = (float)((double)local_1a0.bounds.halfSize[2] + dVar3);
+      local_1a0.extents.end[2] = param_4->midPoint[2] + param_3[2];
+      local_1a0.bounds.midPoint[0] = (float)dVar4;
+      local_1a0.bounds.midPoint[1] = (float)dVar4;
+      local_1a0.bounds.midPoint[2] = (float)dVar4;
       CM_CalcTraceExtents(&local_1a0.extents);
-      CM_ClipMoveToEntities(&local_1a0,ptVar1);
+      CM_ClipMoveToEntities(&local_1a0,param_1);
     }
-    if (((double)ptVar1->fractionForHitType != (double)ptVar1->fraction) &&
-       ((double)ptVar1->fraction != dVar10)) {
+    if (((double)param_1->fractionForHitType != (double)param_1->fraction) &&
+       ((double)param_1->fraction != dVar3)) {
       va(
         "fractionForHitType = %f, fraction = %f, hitType = %i, hitId = %i, start = (%f,%f,%f), end = (%f,%f,%f), bounds = ((%f,%f,%f),(%f,%f,%f)), contentMask = %i, locational = %s, staticModels = %s"
         );
@@ -1009,8 +1026,7 @@ void SV_Trace(trace_t *param_1,float *param_2,float *param_3,Bounds *param_4,
     }
   }
 LAB_82589d88:
-  iVar2 = Profile_EndInternal((double *)0x0);
-  __restgprlr_19(iVar2);
+  Profile_EndInternal((double *)0x0);
   return;
 }
 
@@ -1032,347 +1048,321 @@ int SV_BrushModelSightTrace
 
 // 82589DD0  SV_TracePassed  (server/sv_world.cpp:914)
 
+/* WARNING: Function: __savegprlr_21 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_21 replaced with injection: xenon_save_restore */
+
 int SV_TracePassed(float *param_1,float *param_2,Bounds *param_3,int param_4,int param_5,int param_6
                   ,int param_7,uchar *param_8,int param_9)
 
 {
-  float *pfVar1;
-  int iVar2;
-  ulonglong uVar3;
-  float *pfVar4;
-  ulonglong uVar5;
-  Bounds *pBVar6;
-  double dVar7;
+  int iVar1;
+  double dVar2;
   int in_stack_00000054;
   CM_WorldTraceCallbacks local_100 [4];
   sightpointtrace_t local_f0;
   sightclip_t local_c0 [2];
   
-  uVar5 = (ulonglong)(int)param_3;
-  uVar3 = (ulonglong)(int)param_2;
-  pfVar1 = (float *)__savegprlr_21(param_1);
-  if ((uVar5 & 0xffffffff) == 0) {
+  if (param_3 == (Bounds *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server\\sv_world.cpp",0x393,0,
                     "%s");
   }
-  if (pfVar1 == (float *)0x0) {
+  if (param_1 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server\\sv_world.cpp",0x394,0,
                     "%s");
   }
-  if ((uVar3 & 0xffffffff) == 0) {
+  if (param_2 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server\\sv_world.cpp",0x395,0,
                     "%s");
   }
-  local_100[0].isGlassSolid = (_func___cdecl_bool_uint *)*pfVar1;
+  local_100[0].isGlassSolid = (_func___cdecl_bool_uint *)*param_1;
   if (((((uint)local_100[0].isGlassSolid & 0x7f800000) == 0x7f800000) ||
-      (local_100[0].isGlassSolid = (_func___cdecl_bool_uint *)pfVar1[1],
+      (local_100[0].isGlassSolid = (_func___cdecl_bool_uint *)param_1[1],
       ((uint)local_100[0].isGlassSolid & 0x7f800000) == 0x7f800000)) ||
-     (local_100[0].isGlassSolid = (_func___cdecl_bool_uint *)pfVar1[2],
+     (local_100[0].isGlassSolid = (_func___cdecl_bool_uint *)param_1[2],
      ((uint)local_100[0].isGlassSolid & 0x7f800000) == 0x7f800000)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server\\sv_world.cpp",0x396,0,
                     "%s");
   }
-  pfVar4 = (float *)uVar3;
-  local_100[0].isGlassSolid = (_func___cdecl_bool_uint *)*pfVar4;
+  local_100[0].isGlassSolid = (_func___cdecl_bool_uint *)*param_2;
   if (((((uint)local_100[0].isGlassSolid & 0x7f800000) == 0x7f800000) ||
-      (local_100[0].isGlassSolid = (_func___cdecl_bool_uint *)pfVar4[1],
+      (local_100[0].isGlassSolid = (_func___cdecl_bool_uint *)param_2[1],
       ((uint)local_100[0].isGlassSolid & 0x7f800000) == 0x7f800000)) ||
-     (local_100[0].isGlassSolid = (_func___cdecl_bool_uint *)pfVar4[2],
+     (local_100[0].isGlassSolid = (_func___cdecl_bool_uint *)param_2[2],
      ((uint)local_100[0].isGlassSolid & 0x7f800000) == 0x7f800000)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server\\sv_world.cpp",0x397,0,
                     "%s");
   }
-  pBVar6 = (Bounds *)uVar5;
-  local_100[0].isGlassSolid = (_func___cdecl_bool_uint *)pBVar6->midPoint[0];
+  local_100[0].isGlassSolid = (_func___cdecl_bool_uint *)param_3->midPoint[0];
   if (((((uint)local_100[0].isGlassSolid & 0x7f800000) == 0x7f800000) ||
-      (local_100[0].isGlassSolid = (_func___cdecl_bool_uint *)pBVar6->midPoint[1],
+      (local_100[0].isGlassSolid = (_func___cdecl_bool_uint *)param_3->midPoint[1],
       ((uint)local_100[0].isGlassSolid & 0x7f800000) == 0x7f800000)) ||
-     (local_100[0].isGlassSolid = (_func___cdecl_bool_uint *)pBVar6->midPoint[2],
+     (local_100[0].isGlassSolid = (_func___cdecl_bool_uint *)param_3->midPoint[2],
      ((uint)local_100[0].isGlassSolid & 0x7f800000) == 0x7f800000)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server\\sv_world.cpp",0x398,0,
                     "%s");
   }
-  local_100[0].isGlassSolid = (_func___cdecl_bool_uint *)pBVar6->halfSize[0];
+  local_100[0].isGlassSolid = (_func___cdecl_bool_uint *)param_3->halfSize[0];
   if (((((uint)local_100[0].isGlassSolid & 0x7f800000) == 0x7f800000) ||
-      (local_100[0].isGlassSolid = (_func___cdecl_bool_uint *)pBVar6->halfSize[1],
+      (local_100[0].isGlassSolid = (_func___cdecl_bool_uint *)param_3->halfSize[1],
       ((uint)local_100[0].isGlassSolid & 0x7f800000) == 0x7f800000)) ||
-     (local_100[0].isGlassSolid = (_func___cdecl_bool_uint *)pBVar6->halfSize[2],
+     (local_100[0].isGlassSolid = (_func___cdecl_bool_uint *)param_3->halfSize[2],
      ((uint)local_100[0].isGlassSolid & 0x7f800000) == 0x7f800000)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server\\sv_world.cpp",0x399,0,
                     "%s");
   }
   Profile_Begin(0x1e);
   local_100[0].isGlassSolid = G_Glass_IsPieceSolid;
-  iVar2 = CM_BrushModelSightTrace(0,pfVar1,pfVar4,pBVar6,0,param_6,local_100);
-  if ((iVar2 == 0) &&
+  iVar1 = CM_BrushModelSightTrace(0,param_1,param_2,param_3,0,param_6,local_100);
+  if ((iVar1 == 0) &&
      ((in_stack_00000054 == 0 ||
-      (iVar2 = CM_PointTraceStaticModelsComplete(pfVar1,pfVar4,param_6), iVar2 != 0)))) {
-    dVar7 = 0.0;
-    if (pBVar6->halfSize[0] < 0.0) {
+      (iVar1 = CM_PointTraceStaticModelsComplete(param_1,param_2,param_6), iVar1 != 0)))) {
+    dVar2 = 0.0;
+    if (param_3->halfSize[0] < 0.0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server\\sv_world.cpp",0x3ae,0
                       ,"%s");
     }
-    if ((double)pBVar6->halfSize[1] < dVar7) {
+    if ((double)param_3->halfSize[1] < dVar2) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server\\sv_world.cpp",0x3af,0
                       ,"%s");
     }
-    if ((double)pBVar6->halfSize[2] < dVar7) {
+    if ((double)param_3->halfSize[2] < dVar2) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server\\sv_world.cpp",0x3b0,0
                       ,"%s");
     }
-    if ((double)(pBVar6->halfSize[2] + pBVar6->halfSize[1] + pBVar6->halfSize[0]) == dVar7) {
-      local_f0.start[0] = *pfVar1;
-      local_f0.start[1] = pfVar1[1];
-      local_f0.start[2] = pfVar1[2];
-      local_f0.end[0] = *pfVar4;
-      local_f0.end[1] = pfVar4[1];
-      local_f0.end[2] = pfVar4[2];
+    if ((double)(param_3->halfSize[2] + param_3->halfSize[1] + param_3->halfSize[0]) == dVar2) {
+      local_f0.start[0] = *param_1;
+      local_f0.start[1] = param_1[1];
+      local_f0.start[2] = param_1[2];
+      local_f0.end[0] = *param_2;
+      local_f0.end[1] = param_2[1];
+      local_f0.end[2] = param_2[2];
       local_f0.passEntityNum[0] = param_4;
       local_f0.passEntityNum[1] = param_5;
       local_f0.contentmask = param_6;
       local_f0.locational = param_7;
       local_f0.priorityMap = param_8;
-      iVar2 = CM_PointSightTraceToEntities(&local_f0);
-      if (iVar2 != 0) goto LAB_8258a164;
+      iVar1 = CM_PointSightTraceToEntities(&local_f0);
+      if (iVar1 != 0) goto LAB_8258a164;
     }
     else {
       if (param_7 != 0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server\\sv_world.cpp",0x3c9
                         ,0,"%s");
       }
-      local_c0[0].bounds.halfSize[0] = pBVar6->halfSize[0];
-      local_c0[0].bounds.halfSize[1] = pBVar6->halfSize[1];
-      local_c0[0].bounds.halfSize[2] = pBVar6->halfSize[2];
-      local_c0[0].start[0] = pBVar6->midPoint[0] + *pfVar1;
+      local_c0[0].bounds.halfSize[0] = param_3->halfSize[0];
+      local_c0[0].bounds.halfSize[1] = param_3->halfSize[1];
+      local_c0[0].bounds.halfSize[2] = param_3->halfSize[2];
+      local_c0[0].start[0] = param_3->midPoint[0] + *param_1;
       local_c0[0].outerSize[0] = local_c0[0].bounds.halfSize[0] + 1.0;
       local_c0[0].outerSize[1] = local_c0[0].bounds.halfSize[1] + 1.0;
       local_c0[0].outerSize[2] = local_c0[0].bounds.halfSize[2] + 1.0;
-      local_c0[0].start[1] = pfVar1[1] + pBVar6->midPoint[1];
-      local_c0[0].end[0] = pBVar6->midPoint[0] + *pfVar4;
-      local_c0[0].end[1] = pfVar4[1] + pBVar6->midPoint[1];
-      local_c0[0].start[2] = pfVar1[2] + pBVar6->midPoint[2];
-      local_c0[0].end[2] = pfVar4[2] + pBVar6->midPoint[2];
-      local_c0[0].bounds.midPoint[0] = (float)dVar7;
-      local_c0[0].bounds.midPoint[1] = (float)dVar7;
-      local_c0[0].bounds.midPoint[2] = (float)dVar7;
+      local_c0[0].start[1] = param_1[1] + param_3->midPoint[1];
+      local_c0[0].end[0] = param_3->midPoint[0] + *param_2;
+      local_c0[0].end[1] = param_2[1] + param_3->midPoint[1];
+      local_c0[0].start[2] = param_1[2] + param_3->midPoint[2];
+      local_c0[0].end[2] = param_2[2] + param_3->midPoint[2];
+      local_c0[0].bounds.midPoint[0] = (float)dVar2;
+      local_c0[0].bounds.midPoint[1] = (float)dVar2;
+      local_c0[0].bounds.midPoint[2] = (float)dVar2;
       local_c0[0].passEntityNum[0] = param_4;
       local_c0[0].passEntityNum[1] = param_5;
       local_c0[0].contentmask = param_6;
-      iVar2 = CM_ClipSightTraceToEntities(local_c0);
-      if (iVar2 != 0) {
+      iVar1 = CM_ClipSightTraceToEntities(local_c0);
+      if (iVar1 != 0) {
         Profile_EndInternal((double *)0x0);
-        iVar2 = __restgprlr_21(0);
-        return iVar2;
+        return 0;
       }
     }
     Profile_EndInternal((double *)0x0);
-    iVar2 = __restgprlr_21(1);
-    return iVar2;
+    return 1;
   }
 LAB_8258a164:
   Profile_EndInternal((double *)0x0);
-  iVar2 = __restgprlr_21(0);
-  return iVar2;
+  return 0;
 }
 
 
 // 8258A290  SV_SightTrace  (server/sv_world.cpp:1004)
+
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
 
 void SV_SightTrace(int *param_1,float *param_2,float *param_3,Bounds *param_4,int param_5,
                   int param_6,int param_7)
 
 {
   float fVar1;
-  int *piVar2;
-  int iVar3;
-  ulonglong uVar4;
-  float *pfVar5;
-  ulonglong uVar6;
-  float *pfVar7;
-  ulonglong uVar8;
-  Bounds *pBVar9;
-  double dVar10;
+  int iVar2;
+  double dVar3;
   CM_WorldTraceCallbacks local_f0 [4];
   sightpointtrace_t local_e0;
   sightclip_t local_b0 [2];
   
-  uVar8 = (ulonglong)(int)param_4;
-  uVar6 = (ulonglong)(int)param_3;
-  uVar4 = (ulonglong)(int)param_2;
-  piVar2 = (int *)__savegprlr_22(param_1);
   Profile_Begin(0xe4);
-  if ((uVar4 & 0xffffffff) == 0) {
+  if (param_2 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server\\sv_world.cpp",0x3ef,0,
                     "%s");
   }
-  if ((uVar6 & 0xffffffff) == 0) {
+  if (param_3 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server\\sv_world.cpp",0x3f0,0,
                     "%s");
   }
-  if ((uVar8 & 0xffffffff) == 0) {
+  if (param_4 == (Bounds *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server\\sv_world.cpp",0x3f1,0,
                     "%s");
   }
-  pfVar5 = (float *)uVar4;
-  local_f0[0].isGlassSolid = (_func___cdecl_bool_uint *)*pfVar5;
+  local_f0[0].isGlassSolid = (_func___cdecl_bool_uint *)*param_2;
   if (((((uint)local_f0[0].isGlassSolid & 0x7f800000) == 0x7f800000) ||
-      (local_f0[0].isGlassSolid = (_func___cdecl_bool_uint *)pfVar5[1],
+      (local_f0[0].isGlassSolid = (_func___cdecl_bool_uint *)param_2[1],
       ((uint)local_f0[0].isGlassSolid & 0x7f800000) == 0x7f800000)) ||
-     (local_f0[0].isGlassSolid = (_func___cdecl_bool_uint *)pfVar5[2],
+     (local_f0[0].isGlassSolid = (_func___cdecl_bool_uint *)param_2[2],
      ((uint)local_f0[0].isGlassSolid & 0x7f800000) == 0x7f800000)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server\\sv_world.cpp",0x3f2,0,
                     "%s");
   }
-  pfVar7 = (float *)uVar6;
-  local_f0[0].isGlassSolid = (_func___cdecl_bool_uint *)*pfVar7;
+  local_f0[0].isGlassSolid = (_func___cdecl_bool_uint *)*param_3;
   if (((((uint)local_f0[0].isGlassSolid & 0x7f800000) == 0x7f800000) ||
-      (local_f0[0].isGlassSolid = (_func___cdecl_bool_uint *)pfVar7[1],
+      (local_f0[0].isGlassSolid = (_func___cdecl_bool_uint *)param_3[1],
       ((uint)local_f0[0].isGlassSolid & 0x7f800000) == 0x7f800000)) ||
-     (local_f0[0].isGlassSolid = (_func___cdecl_bool_uint *)pfVar7[2],
+     (local_f0[0].isGlassSolid = (_func___cdecl_bool_uint *)param_3[2],
      ((uint)local_f0[0].isGlassSolid & 0x7f800000) == 0x7f800000)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server\\sv_world.cpp",0x3f3,0,
                     "%s");
   }
-  pBVar9 = (Bounds *)uVar8;
-  local_f0[0].isGlassSolid = (_func___cdecl_bool_uint *)pBVar9->midPoint[0];
+  local_f0[0].isGlassSolid = (_func___cdecl_bool_uint *)param_4->midPoint[0];
   if (((((uint)local_f0[0].isGlassSolid & 0x7f800000) == 0x7f800000) ||
-      (local_f0[0].isGlassSolid = (_func___cdecl_bool_uint *)pBVar9->midPoint[1],
+      (local_f0[0].isGlassSolid = (_func___cdecl_bool_uint *)param_4->midPoint[1],
       ((uint)local_f0[0].isGlassSolid & 0x7f800000) == 0x7f800000)) ||
-     (local_f0[0].isGlassSolid = (_func___cdecl_bool_uint *)pBVar9->midPoint[2],
+     (local_f0[0].isGlassSolid = (_func___cdecl_bool_uint *)param_4->midPoint[2],
      ((uint)local_f0[0].isGlassSolid & 0x7f800000) == 0x7f800000)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server\\sv_world.cpp",0x3f4,0,
                     "%s");
   }
-  local_f0[0].isGlassSolid = (_func___cdecl_bool_uint *)pBVar9->halfSize[0];
+  local_f0[0].isGlassSolid = (_func___cdecl_bool_uint *)param_4->halfSize[0];
   if (((((uint)local_f0[0].isGlassSolid & 0x7f800000) == 0x7f800000) ||
-      (local_f0[0].isGlassSolid = (_func___cdecl_bool_uint *)pBVar9->halfSize[1],
+      (local_f0[0].isGlassSolid = (_func___cdecl_bool_uint *)param_4->halfSize[1],
       ((uint)local_f0[0].isGlassSolid & 0x7f800000) == 0x7f800000)) ||
-     (local_f0[0].isGlassSolid = (_func___cdecl_bool_uint *)pBVar9->halfSize[2],
+     (local_f0[0].isGlassSolid = (_func___cdecl_bool_uint *)param_4->halfSize[2],
      ((uint)local_f0[0].isGlassSolid & 0x7f800000) == 0x7f800000)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server\\sv_world.cpp",0x3f5,0,
                     "%s");
   }
   local_f0[0].isGlassSolid = G_Glass_IsPieceSolid;
-  iVar3 = CM_BrushModelSightTrace(*piVar2,pfVar5,pfVar7,pBVar9,0,param_7,local_f0);
-  *piVar2 = iVar3;
-  if (iVar3 == 0) {
-    dVar10 = 0.0;
-    if (pBVar9->halfSize[0] < 0.0) {
+  iVar2 = CM_BrushModelSightTrace(*param_1,param_2,param_3,param_4,0,param_7,local_f0);
+  *param_1 = iVar2;
+  if (iVar2 == 0) {
+    dVar3 = 0.0;
+    if (param_4->halfSize[0] < 0.0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server\\sv_world.cpp",0x3ff,0
                       ,"%s");
     }
-    if ((double)pBVar9->halfSize[1] < dVar10) {
+    if ((double)param_4->halfSize[1] < dVar3) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server\\sv_world.cpp",0x400,0
                       ,"%s");
     }
-    if ((double)pBVar9->halfSize[2] < dVar10) {
+    if ((double)param_4->halfSize[2] < dVar3) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server\\sv_world.cpp",0x401,0
                       ,"%s");
     }
-    fVar1 = pBVar9->halfSize[0];
-    if ((double)(pBVar9->halfSize[2] + pBVar9->halfSize[1] + fVar1) == dVar10) {
-      local_b0[0].bounds.halfSize[1] = pBVar9->halfSize[1];
-      local_b0[0].start[1] = pfVar5[1] + pBVar9->midPoint[1];
-      local_b0[0].bounds.halfSize[2] = pBVar9->halfSize[2];
+    fVar1 = param_4->halfSize[0];
+    if ((double)(param_4->halfSize[2] + param_4->halfSize[1] + fVar1) == dVar3) {
+      local_b0[0].bounds.halfSize[1] = param_4->halfSize[1];
+      local_b0[0].start[1] = param_2[1] + param_4->midPoint[1];
+      local_b0[0].bounds.halfSize[2] = param_4->halfSize[2];
       local_b0[0].outerSize[1] = local_b0[0].bounds.halfSize[1] + 1.0;
       local_b0[0].outerSize[2] = local_b0[0].bounds.halfSize[2] + 1.0;
-      local_b0[0].start[0] = *pfVar5 + pBVar9->midPoint[0];
+      local_b0[0].start[0] = *param_2 + param_4->midPoint[0];
       local_b0[0].outerSize[0] = fVar1 + 1.0;
-      local_b0[0].start[2] = pfVar5[2] + pBVar9->midPoint[2];
-      local_b0[0].end[0] = *pfVar7 + pBVar9->midPoint[0];
-      local_b0[0].end[1] = pfVar7[1] + pBVar9->midPoint[1];
-      local_b0[0].bounds.midPoint[0] = (float)dVar10;
-      local_b0[0].end[2] = pfVar7[2] + pBVar9->midPoint[2];
-      local_b0[0].bounds.midPoint[1] = (float)dVar10;
-      local_b0[0].bounds.midPoint[2] = (float)dVar10;
+      local_b0[0].start[2] = param_2[2] + param_4->midPoint[2];
+      local_b0[0].end[0] = *param_3 + param_4->midPoint[0];
+      local_b0[0].end[1] = param_3[1] + param_4->midPoint[1];
+      local_b0[0].bounds.midPoint[0] = (float)dVar3;
+      local_b0[0].end[2] = param_3[2] + param_4->midPoint[2];
+      local_b0[0].bounds.midPoint[1] = (float)dVar3;
+      local_b0[0].bounds.midPoint[2] = (float)dVar3;
       local_b0[0].bounds.halfSize[0] = fVar1;
       local_b0[0].passEntityNum[0] = param_5;
       local_b0[0].passEntityNum[1] = param_6;
       local_b0[0].contentmask = param_7;
-      iVar3 = CM_ClipSightTraceToEntities(local_b0);
+      iVar2 = CM_ClipSightTraceToEntities(local_b0);
     }
     else {
-      local_e0.start[0] = *pfVar5;
-      local_e0.start[1] = pfVar5[1];
-      local_e0.start[2] = pfVar5[2];
-      local_e0.end[0] = *pfVar7;
-      local_e0.end[1] = pfVar7[1];
+      local_e0.start[0] = *param_2;
+      local_e0.start[1] = param_2[1];
+      local_e0.start[2] = param_2[2];
+      local_e0.end[0] = *param_3;
+      local_e0.end[1] = param_3[1];
       local_e0.locational = 0;
-      local_e0.end[2] = pfVar7[2];
+      local_e0.end[2] = param_3[2];
       local_e0.passEntityNum[0] = param_5;
       local_e0.passEntityNum[1] = param_6;
       local_e0.contentmask = param_7;
-      iVar3 = CM_PointSightTraceToEntities(&local_e0);
+      iVar2 = CM_PointSightTraceToEntities(&local_e0);
     }
-    *piVar2 = iVar3;
+    *param_1 = iVar2;
   }
-  iVar3 = Profile_EndInternal((double *)0x0);
-  __restgprlr_22(iVar3);
+  Profile_EndInternal((double *)0x0);
   return;
 }
 
 
 // 8258A6C8  SV_SightTraceToEntity  (server/sv_world.cpp:1074)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
 int SV_SightTraceToEntity(float *param_1,float *param_2,int param_3,int param_4)
 
 {
-  gentity_s *pgVar1;
-  float *pfVar2;
-  int iVar3;
-  bool bVar4;
-  ulonglong uVar5;
-  float *pfVar6;
+  bool bVar2;
+  int iVar1;
+  gentity_s *pgVar3;
   Bounds local_60 [4];
   
-  uVar5 = (ulonglong)(int)param_2;
-  pfVar2 = (float *)__savegprlr_25(param_1);
-  pgVar1 = sv.gentities + param_3;
-  if (((pgVar1->r).contents & param_4) != 0) {
-    if (pfVar2 == (float *)0x0) {
+  pgVar3 = sv.gentities + param_3;
+  if (((pgVar3->r).contents & param_4) != 0) {
+    if (param_1 == (float *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server\\sv_world.cpp",0x43b,0
                       ,"%s");
     }
-    if ((uVar5 & 0xffffffff) == 0) {
+    if (param_2 == (float *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server\\sv_world.cpp",0x43c,0
                       ,"%s");
     }
-    if (((((uint)*pfVar2 & 0x7f800000) == 0x7f800000) ||
-        (((uint)pfVar2[1] & 0x7f800000) == 0x7f800000)) ||
-       (((uint)pfVar2[2] & 0x7f800000) == 0x7f800000)) {
+    if (((((uint)*param_1 & 0x7f800000) == 0x7f800000) ||
+        (((uint)param_1[1] & 0x7f800000) == 0x7f800000)) ||
+       (((uint)param_1[2] & 0x7f800000) == 0x7f800000)) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server\\sv_world.cpp",0x43d,0
                       ,"%s");
     }
-    pfVar6 = (float *)uVar5;
-    if (((((uint)*pfVar6 & 0x7f800000) == 0x7f800000) ||
-        (((uint)pfVar6[1] & 0x7f800000) == 0x7f800000)) ||
-       (((uint)pfVar6[2] & 0x7f800000) == 0x7f800000)) {
+    if (((((uint)*param_2 & 0x7f800000) == 0x7f800000) ||
+        (((uint)param_2[1] & 0x7f800000) == 0x7f800000)) ||
+       (((uint)param_2[2] & 0x7f800000) == 0x7f800000)) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server\\sv_world.cpp",0x43e,0
                       ,"%s");
     }
-    local_60[0].midPoint[0] = (*pfVar6 + *pfVar2) * 0.5;
-    local_60[0].midPoint[1] = (pfVar6[1] + pfVar2[1]) * 0.5;
-    local_60[0].midPoint[2] = (pfVar6[2] + pfVar2[2]) * 0.5;
-    local_60[0].halfSize[0] = ABS(*pfVar2 - local_60[0].midPoint[0]) + 1.0;
-    local_60[0].halfSize[1] = ABS(pfVar2[1] - local_60[0].midPoint[1]) + 1.0;
-    local_60[0].halfSize[2] = ABS(pfVar2[2] - local_60[0].midPoint[2]) + 1.0;
-    bVar4 = Bounds_OverlapOrTouch(&(pgVar1->r).absBox,local_60);
-    if (bVar4) {
-      iVar3 = SV_EntityBlocksSightTrace(pfVar2,pfVar6,&bounds_origin,param_4,pgVar1);
-      iVar3 = __restgprlr_25(-(ulonglong)(iVar3 != 0));
-      return iVar3;
+    local_60[0].midPoint[0] = (*param_2 + *param_1) * 0.5;
+    local_60[0].midPoint[1] = (param_2[1] + param_1[1]) * 0.5;
+    local_60[0].midPoint[2] = (param_2[2] + param_1[2]) * 0.5;
+    local_60[0].halfSize[0] = ABS(*param_1 - local_60[0].midPoint[0]) + 1.0;
+    local_60[0].halfSize[1] = ABS(param_1[1] - local_60[0].midPoint[1]) + 1.0;
+    local_60[0].halfSize[2] = ABS(param_1[2] - local_60[0].midPoint[2]) + 1.0;
+    bVar2 = Bounds_OverlapOrTouch(&(pgVar3->r).absBox,local_60);
+    if (bVar2) {
+      iVar1 = SV_EntityBlocksSightTrace(param_1,param_2,&bounds_origin,param_4,pgVar3);
+      return -(uint)(iVar1 != 0);
     }
   }
-  iVar3 = __restgprlr_25(0);
-  return iVar3;
+  return 0;
 }
 
 
 // 8258A908  SV_SightTraceToEntityWithBounds  (server/sv_world.cpp:1112)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
@@ -1384,106 +1374,96 @@ int SV_SightTraceToEntityWithBounds
   float fVar2;
   float fVar3;
   float fVar4;
-  gentity_s *pgVar5;
+  float fVar5;
   float fVar6;
   float fVar7;
-  float fVar8;
-  float *pfVar9;
-  int iVar10;
-  bool bVar11;
-  ulonglong uVar12;
-  float *pfVar13;
-  ulonglong uVar14;
-  Bounds *pBVar15;
+  bool bVar9;
+  int iVar8;
+  gentity_s *pgVar10;
   Bounds local_60 [4];
   
-  uVar14 = (ulonglong)(int)param_3;
-  uVar12 = (ulonglong)(int)param_2;
-  pfVar9 = (float *)__savegprlr_24(param_1);
-  pgVar5 = sv.gentities + param_4;
-  if (((pgVar5->r).contents & param_5) != 0) {
-    if (pfVar9 == (float *)0x0) {
+  pgVar10 = sv.gentities + param_4;
+  if (((pgVar10->r).contents & param_5) != 0) {
+    if (param_1 == (float *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server\\sv_world.cpp",0x464,0
                       ,"%s");
     }
-    if ((uVar12 & 0xffffffff) == 0) {
+    if (param_2 == (float *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server\\sv_world.cpp",0x465,0
                       ,"%s");
     }
-    if ((uVar14 & 0xffffffff) == 0) {
+    if (param_3 == (Bounds *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server\\sv_world.cpp",0x466,0
                       ,"%s");
     }
-    if (((((uint)*pfVar9 & 0x7f800000) == 0x7f800000) ||
-        (((uint)pfVar9[1] & 0x7f800000) == 0x7f800000)) ||
-       (((uint)pfVar9[2] & 0x7f800000) == 0x7f800000)) {
+    if (((((uint)*param_1 & 0x7f800000) == 0x7f800000) ||
+        (((uint)param_1[1] & 0x7f800000) == 0x7f800000)) ||
+       (((uint)param_1[2] & 0x7f800000) == 0x7f800000)) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server\\sv_world.cpp",0x467,0
                       ,"%s");
     }
-    pfVar13 = (float *)uVar12;
-    if (((((uint)*pfVar13 & 0x7f800000) == 0x7f800000) ||
-        (((uint)pfVar13[1] & 0x7f800000) == 0x7f800000)) ||
-       (((uint)pfVar13[2] & 0x7f800000) == 0x7f800000)) {
+    if (((((uint)*param_2 & 0x7f800000) == 0x7f800000) ||
+        (((uint)param_2[1] & 0x7f800000) == 0x7f800000)) ||
+       (((uint)param_2[2] & 0x7f800000) == 0x7f800000)) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server\\sv_world.cpp",0x468,0
                       ,"%s");
     }
-    pBVar15 = (Bounds *)uVar14;
-    if (((((uint)pBVar15->midPoint[0] & 0x7f800000) == 0x7f800000) ||
-        (((uint)pBVar15->midPoint[1] & 0x7f800000) == 0x7f800000)) ||
-       (((uint)pBVar15->midPoint[2] & 0x7f800000) == 0x7f800000)) {
+    if (((((uint)param_3->midPoint[0] & 0x7f800000) == 0x7f800000) ||
+        (((uint)param_3->midPoint[1] & 0x7f800000) == 0x7f800000)) ||
+       (((uint)param_3->midPoint[2] & 0x7f800000) == 0x7f800000)) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server\\sv_world.cpp",0x469,0
                       ,"%s");
     }
-    if (((((uint)pBVar15->halfSize[0] & 0x7f800000) == 0x7f800000) ||
-        (((uint)pBVar15->halfSize[1] & 0x7f800000) == 0x7f800000)) ||
-       (((uint)pBVar15->halfSize[2] & 0x7f800000) == 0x7f800000)) {
+    if (((((uint)param_3->halfSize[0] & 0x7f800000) == 0x7f800000) ||
+        (((uint)param_3->halfSize[1] & 0x7f800000) == 0x7f800000)) ||
+       (((uint)param_3->halfSize[2] & 0x7f800000) == 0x7f800000)) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server\\sv_world.cpp",0x46a,0
                       ,"%s");
     }
-    fVar1 = *pfVar13;
-    fVar2 = *pfVar9;
-    fVar6 = fVar1;
+    fVar1 = *param_2;
+    fVar2 = *param_1;
+    fVar5 = fVar1;
     if (fVar2 < fVar1) {
-      fVar6 = fVar2;
+      fVar5 = fVar2;
       fVar2 = fVar1;
     }
-    fVar6 = fVar6 + (pBVar15->midPoint[0] - pBVar15->halfSize[0]);
-    fVar1 = pfVar13[1];
-    fVar3 = pfVar9[1];
-    fVar7 = fVar1;
+    fVar5 = fVar5 + (param_3->midPoint[0] - param_3->halfSize[0]);
+    fVar1 = param_2[1];
+    fVar3 = param_1[1];
+    fVar6 = fVar1;
     if (fVar3 < fVar1) {
-      fVar7 = fVar3;
+      fVar6 = fVar3;
       fVar3 = fVar1;
     }
-    fVar7 = fVar7 + (pBVar15->midPoint[1] - pBVar15->halfSize[1]);
-    fVar1 = pfVar13[2];
-    fVar4 = pfVar9[2];
-    fVar8 = fVar1;
+    fVar6 = fVar6 + (param_3->midPoint[1] - param_3->halfSize[1]);
+    fVar1 = param_2[2];
+    fVar4 = param_1[2];
+    fVar7 = fVar1;
     if (fVar4 < fVar1) {
-      fVar8 = fVar4;
+      fVar7 = fVar4;
       fVar4 = fVar1;
     }
-    fVar8 = fVar8 + (pBVar15->midPoint[2] - pBVar15->halfSize[2]);
-    local_60[0].midPoint[1] = (fVar3 + pBVar15->halfSize[1] + pBVar15->midPoint[1] + fVar7) * 0.5;
-    local_60[0].midPoint[0] = (fVar2 + pBVar15->halfSize[0] + pBVar15->midPoint[0] + fVar6) * 0.5;
-    local_60[0].midPoint[2] = (fVar4 + pBVar15->halfSize[2] + pBVar15->midPoint[2] + fVar8) * 0.5;
-    local_60[0].halfSize[1] = (local_60[0].midPoint[1] - fVar7) + 1.0;
-    local_60[0].halfSize[0] = (local_60[0].midPoint[0] - fVar6) + 1.0;
-    local_60[0].halfSize[2] = (local_60[0].midPoint[2] - fVar8) + 1.0;
-    bVar11 = Bounds_OverlapOrTouch(&(pgVar5->r).absBox,local_60);
-    if (bVar11) {
-      iVar10 = SV_EntityBlocksSightTrace(pfVar9,pfVar13,pBVar15,param_5,pgVar5);
-      iVar10 = __restgprlr_24(-(ulonglong)(iVar10 != 0));
-      return iVar10;
+    fVar7 = fVar7 + (param_3->midPoint[2] - param_3->halfSize[2]);
+    local_60[0].midPoint[1] = (fVar3 + param_3->halfSize[1] + param_3->midPoint[1] + fVar6) * 0.5;
+    local_60[0].midPoint[0] = (fVar2 + param_3->halfSize[0] + param_3->midPoint[0] + fVar5) * 0.5;
+    local_60[0].midPoint[2] = (fVar4 + param_3->halfSize[2] + param_3->midPoint[2] + fVar7) * 0.5;
+    local_60[0].halfSize[1] = (local_60[0].midPoint[1] - fVar6) + 1.0;
+    local_60[0].halfSize[0] = (local_60[0].midPoint[0] - fVar5) + 1.0;
+    local_60[0].halfSize[2] = (local_60[0].midPoint[2] - fVar7) + 1.0;
+    bVar9 = Bounds_OverlapOrTouch(&(pgVar10->r).absBox,local_60);
+    if (bVar9) {
+      iVar8 = SV_EntityBlocksSightTrace(param_1,param_2,param_3,param_5,pgVar10);
+      return -(uint)(iVar8 != 0);
     }
   }
-  iVar10 = __restgprlr_24(0);
-  return iVar10;
+  return 0;
 }
 
 
 // 8258ACA8  SV_LocationalTraceToEntity  (server/sv_world.cpp:1169)
 
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
@@ -1492,80 +1472,63 @@ void SV_LocationalTraceToEntity
                uchar *param_6)
 
 {
-  float *pfVar1;
-  int iVar2;
-  gentity_s *pgVar3;
-  trace_t *ptVar4;
-  ulonglong uVar5;
-  float *pfVar6;
-  ulonglong uVar7;
-  ulonglong uVar8;
-  ulonglong uVar9;
-  int iVar10;
+  gentity_s *pgVar1;
   pointtrace_t pStack_e0;
   
-  uVar9 = (ulonglong)(int)param_6;
-  uVar8 = (ulonglong)param_4;
-  uVar7 = (ulonglong)(int)param_3;
-  uVar5 = (ulonglong)(int)param_2;
-  ptVar4 = (trace_t *)__savegprlr_22(param_1);
-  if (ptVar4 == (trace_t *)0x0) {
+  if (param_1 == (trace_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server\\sv_world.cpp",0x496,0,
                     "%s");
   }
-  if ((uVar5 & 0xffffffff) == 0) {
+  if (param_2 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server\\sv_world.cpp",0x497,0,
                     "%s");
   }
-  if ((uVar7 & 0xffffffff) == 0) {
+  if (param_3 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server\\sv_world.cpp",0x498,0,
                     "%s");
   }
-  iVar10 = (int)uVar8;
-  if (iVar10 < 0) {
+  if (param_4 < 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server\\sv_world.cpp",0x499,0,
                     "%s");
   }
-  if (0x7ff < iVar10) {
+  if (0x7ff < param_4) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server\\sv_world.cpp",0x49a,0,
                     "%s");
   }
-  if ((uVar9 & 0xffffffff) == 0) {
+  if (param_6 == (uchar *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server\\sv_world.cpp",0x49b,0,
                     "%s");
   }
-  pgVar3 = sv.gentities;
-  iVar2 = (int)((uVar8 + (uVar8 & 0x3fffffff) * 4 & 0xffffffff) << 7);
-  if (*(char *)((int)((sv.gentities)->r).box.midPoint + iVar2 + -4) == '\0') {
+  pgVar1 = sv.gentities;
+  if (sv.gentities[param_4].r.isLinked == '\0') {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server\\sv_world.cpp",0x49e,0,
                     "%s");
   }
   memset();
-  ptVar4->fraction = 1.0;
-  pfVar1 = (float *)uVar7;
-  pStack_e0.extents.end[1] = pfVar1[1];
-  pStack_e0.extents.end[2] = pfVar1[2];
-  pfVar6 = (float *)uVar5;
-  pStack_e0.extents.start[0] = *pfVar6;
-  pStack_e0.extents.start[1] = pfVar6[1];
-  pStack_e0.extents.end[0] = *pfVar1;
-  pStack_e0.extents.start[2] = pfVar6[2];
+  param_1->fraction = 1.0;
+  pStack_e0.extents.end[1] = param_3[1];
+  pStack_e0.extents.end[2] = param_3[2];
+  pStack_e0.extents.start[0] = *param_2;
+  pStack_e0.extents.start[1] = param_2[1];
+  pStack_e0.extents.end[0] = *param_3;
+  pStack_e0.extents.start[2] = param_2[2];
   CM_CalcTraceExtents(&pStack_e0.extents);
   pStack_e0.bLocational = 1;
   pStack_e0.bCalcDObjPose = 1;
   pStack_e0.ignoreEntParams = (IgnoreEntParams *)0x0;
-  pStack_e0.priorityMap = (uchar *)uVar9;
   pStack_e0.contentmask = param_5;
+  pStack_e0.priorityMap = param_6;
   SV_PointTraceToEntity
-            (&pStack_e0,sv.svEntities + ((int)pgVar3[0x31e9ea].s.events + iVar2 + -0x28) / 0x280,
-             iVar10,ptVar4);
-  __restgprlr_22();
+            (&pStack_e0,sv.svEntities + (int)&pgVar1[param_4 + 0x31e9ea].s.groundEntityNum / 0x280,
+             param_4,param_1);
   return;
 }
 
 
 // 8258AEB0  SV_PointContents  (server/sv_world.cpp:1209)
 
+/* WARNING: Function: __savegprlr_21 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_21 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
@@ -1574,68 +1537,59 @@ int SV_PointContents(float *param_1,int param_2,int param_3)
 {
   uchar uVar1;
   gentity_s *pgVar2;
-  float *pfVar4;
-  int iVar5;
-  char *pcVar6;
-  ulonglong uVar3;
-  ulonglong uVar7;
-  longlong lVar8;
-  int *piVar9;
-  ulonglong uVar10;
+  uint uVar3;
+  int iVar4;
+  char *pcVar5;
+  uint uVar6;
+  longlong lVar7;
+  int *piVar8;
   float afStack_2090 [4];
   Bounds local_2080;
   int local_2060 [2072];
   
-  uVar7 = (ulonglong)param_3;
-  pfVar4 = (float *)__savegprlr_21(param_1);
-  iVar5 = CM_BrushModelPointContents(0,pfVar4);
-  uVar10 = (ulonglong)iVar5;
-  local_2080.midPoint[0] = *pfVar4;
-  local_2080.midPoint[1] = pfVar4[1];
-  local_2080.midPoint[2] = pfVar4[2];
+  uVar3 = CM_BrushModelPointContents(0,param_1);
+  local_2080.midPoint[0] = *param_1;
+  local_2080.midPoint[1] = param_1[1];
+  local_2080.midPoint[2] = param_1[2];
   local_2080.halfSize[0] = 0.0;
   local_2080.halfSize[1] = 0.0;
   local_2080.halfSize[2] = 0.0;
-  iVar5 = CM_AreaEntities(&local_2080,local_2060,0x800,(int)uVar7);
-  lVar8 = (longlong)iVar5;
-  if (0 < iVar5) {
-    piVar9 = local_2060;
+  iVar4 = CM_AreaEntities(&local_2080,local_2060,0x800,param_3);
+  lVar7 = (longlong)iVar4;
+  if (0 < iVar4) {
+    piVar8 = local_2060;
     do {
       pgVar2 = sv.gentities;
-      iVar5 = *piVar9;
-      if (iVar5 != param_2) {
-        CM_TransformPoint(pfVar4,sv.gentities[iVar5].r.currentOrigin,
-                          sv.gentities[iVar5].r.currentAngles,afStack_2090);
-        uVar1 = pgVar2[iVar5].r.modelType;
+      iVar4 = *piVar8;
+      if (iVar4 != param_2) {
+        CM_TransformPoint(param_1,sv.gentities[iVar4].r.currentOrigin,
+                          sv.gentities[iVar4].r.currentAngles,afStack_2090);
+        uVar1 = pgVar2[iVar4].r.modelType;
         if (uVar1 == '\0') {
-          iVar5 = CM_CapsulePointContents
-                            (&pgVar2[iVar5].r.absBox,pgVar2[iVar5].r.contents,afStack_2090);
-          uVar3 = (ulonglong)iVar5;
+          uVar6 = CM_CapsulePointContents
+                            (&pgVar2[iVar4].r.absBox,pgVar2[iVar4].r.contents,afStack_2090);
         }
         else if (uVar1 == '\x03') {
-          iVar5 = CM_TriggerModelPointContents(pgVar2[iVar5].s.index.brushModel,afStack_2090);
-          uVar3 = (ulonglong)iVar5;
+          uVar6 = CM_TriggerModelPointContents(pgVar2[iVar4].s.index.brushModel,afStack_2090);
         }
         else {
           if (uVar1 != '\x04') {
             if (alwaysfails == 0) {
-              pcVar6 = va("point contents not handled for model type %i");
+              pcVar5 = va("point contents not handled for model type %i");
               MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server\\sv_world.cpp"
-                              ,0x4e0,1,pcVar6);
+                              ,0x4e0,1,pcVar5);
             }
             goto LAB_8258b004;
           }
-          iVar5 = CM_BrushModelPointContents(pgVar2[iVar5].s.index.brushModel,afStack_2090);
-          uVar3 = (ulonglong)iVar5;
+          uVar6 = CM_BrushModelPointContents(pgVar2[iVar4].s.index.brushModel,afStack_2090);
         }
-        uVar10 = uVar3 | uVar10;
+        uVar3 = uVar6 | uVar3;
       }
 LAB_8258b004:
-      lVar8 = lVar8 + -1;
-      piVar9 = piVar9 + 1;
-    } while (lVar8 != 0);
+      lVar7 = lVar7 + -1;
+      piVar8 = piVar8 + 1;
+    } while (lVar7 != 0);
   }
-  iVar5 = __restgprlr_21(uVar10 & uVar7);
-  return iVar5;
+  return uVar3 & param_3;
 }
 

@@ -2,22 +2,21 @@
 
 // 82912810  bdSessionInvite  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdmatchmaking/bdsessioninvite.cpp:16)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 bdSessionInvite * __thiscall bdSessionInvite::bdSessionInvite(bdSessionInvite *this)
 
 {
-  bdTaskResult *this_00;
-  bdSessionInvite *pbVar1;
-  bdTaskResult *pbStack00000014;
+  bdSessionInvite *pbStack00000014;
   
-  this_00 = (bdTaskResult *)__savegprlr_29(this);
-  pbStack00000014 = this_00;
-  bdTaskResult::bdTaskResult(this_00);
-  *(undefined8 *)(this_00 + 2) = 0;
-  *this_00 = (bdTaskResult)&_vftable_;
-  bdSessionID::bdSessionID((bdSessionID *)(this_00 + 0x14));
-  this_00[0x117] = (bdTaskResult)0x0;
-  pbVar1 = (bdSessionInvite *)__restgprlr_29(this_00);
-  return pbVar1;
+  pbStack00000014 = this;
+  bdTaskResult::bdTaskResult((bdTaskResult *)this);
+  this->m_senderID = 0;
+  this->_padding_ = (int)&_vftable_;
+  bdSessionID::bdSessionID(&this->m_sessionID);
+  this->m_attachmentSize = 0;
+  return this;
 }
 
 
@@ -38,61 +37,59 @@ void __thiscall bdSessionInvite::~bdSessionInvite(bdSessionInvite *this)
 
 // 829128D8  deserialize  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdmatchmaking/bdsessioninvite.cpp:24)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 bool __thiscall
 bdSessionInvite::deserialize(bdSessionInvite *this,bdReference<bdByteBuffer> param_1)
 
 {
-  int iVar1;
+  bool bVar1;
   bool bVar2;
-  bool bVar3;
-  undefined1 uVar4;
-  longlong lVar5;
-  bdByteBuffer *pbStack0000001c;
+  bdReference<bdByteBuffer> bStack0000001c;
   uint local_30 [12];
   
-  iVar1 = __savegprlr_29(this);
-  pbStack0000001c = param_1.m_ptr;
-  bVar2 = bdByteBuffer::readUInt64
-                    ((bdByteBuffer *)(param_1.m_ptr)->_padding_,(ulong64 *)(iVar1 + 8));
-  if (bVar2) {
-    bVar3 = bdByteBuffer::readString
-                      ((bdByteBuffer *)(param_1.m_ptr)->_padding_,(char *)(iVar1 + 0x10),0x40);
-    bVar2 = true;
-    if (!bVar3) goto LAB_82912930;
+  bStack0000001c.m_ptr = param_1.m_ptr;
+  bVar1 = bdByteBuffer::readUInt64((bdByteBuffer *)(param_1.m_ptr)->_padding_,&this->m_senderID);
+  if (bVar1) {
+    bVar2 = bdByteBuffer::readString
+                      ((bdByteBuffer *)(param_1.m_ptr)->_padding_,this->m_senderName,0x40);
+    bVar1 = true;
+    if (!bVar2) goto LAB_82912930;
   }
   else {
 LAB_82912930:
-    bVar2 = false;
+    bVar1 = false;
   }
   local_30[0] = 8;
-  if (bVar2) {
-    bVar3 = bdByteBuffer::readBlob
-                      ((bdByteBuffer *)(param_1.m_ptr)->_padding_,(uchar *)(iVar1 + 0x54),local_30);
-    bVar2 = true;
-    if (!bVar3) goto LAB_82912960;
+  if (bVar1) {
+    bVar2 = bdByteBuffer::readBlob
+                      ((bdByteBuffer *)(param_1.m_ptr)->_padding_,(this->m_sessionID).m_sessionID.ab
+                       ,local_30);
+    bVar1 = true;
+    if (!bVar2) goto LAB_82912960;
   }
   else {
 LAB_82912960:
-    bVar2 = false;
+    bVar1 = false;
   }
-  *(undefined4 *)(iVar1 + 0x45c) = 0x400;
-  if (bVar2) {
+  this->m_attachmentSize = 0x400;
+  if (bVar1) {
     bVar2 = bdByteBuffer::readBlob
-                      ((bdByteBuffer *)(param_1.m_ptr)->_padding_,(uchar *)(iVar1 + 0x5c),
-                       (uint *)(iVar1 + 0x45c));
-    lVar5 = 1;
+                      ((bdByteBuffer *)(param_1.m_ptr)->_padding_,this->m_attachment,
+                       &this->m_attachmentSize);
+    bVar1 = true;
     if (bVar2) goto LAB_82912994;
   }
-  lVar5 = 0;
+  bVar1 = false;
 LAB_82912994:
-  if (lVar5 == 0) {
+  if (!bVar1) {
     bdLogMessage(BD_LOG_ERROR,"err/","session invite",
                  "c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdLobby\\bdMatchMaking\\bdSessionInvite.cpp"
                  ,"bdSessionInvite::deserialize",0x27,"Deserialization failed");
   }
   bdReference<bdByteBuffer>::~bdReference<bdByteBuffer>((bdReference<bdByteBuffer> *)param_1.m_ptr);
-  uVar4 = __restgprlr_29(lVar5);
-  return (bool)uVar4;
+  return bVar1;
 }
 
 

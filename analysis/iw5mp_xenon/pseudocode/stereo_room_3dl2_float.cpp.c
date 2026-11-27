@@ -2,6 +2,9 @@
 
 // 828F1E80  i3dl2_to_properties  (<external>/Xenon/mar09/core/private/xtl/audio/reverb/stereo_room/stereo_room_3dl2_float.cpp:28)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void `anonymous_namespace'::i3dl2_to_properties
                (float param_1,_I3DL2_LISTENERPROPERTIES *param_2,properties_t *param_3)
 
@@ -15,7 +18,6 @@ void `anonymous_namespace'::i3dl2_to_properties
   double dVar6;
   undefined4 uStack_3c;
   
-  __savegprlr_29((double)param_1,param_2);
   in_r5[0xc] = 5;
   dVar6 = 0.009999999776482582;
   in_r5[2] = 6;
@@ -81,7 +83,6 @@ void `anonymous_namespace'::i3dl2_to_properties
   in_r5[6] = uStack_3c;
   in_r5[0x13] = param_3->high_eq_gain;
   in_r5[0xd] = param_3->high_eq_cutoff;
-  __restgprlr_29();
   return;
 }
 

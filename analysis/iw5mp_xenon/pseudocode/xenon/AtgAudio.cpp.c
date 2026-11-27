@@ -73,29 +73,26 @@ ulong __thiscall CRiffChunk::Open(CRiffChunk *this)
 
 // 82634C10  ReadData  (xenon/AtgAudio.cpp:140)
 
-undefined4 __thiscall
-CRiffChunk::ReadData(CRiffChunk *this,long param_1,void *param_2,ulong param_3)
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
+uint __thiscall CRiffChunk::ReadData(CRiffChunk *this,long param_1,void *param_2,ulong param_3)
 
 {
   int iVar1;
-  int iVar2;
-  ulong uVar3;
-  undefined4 uVar4;
+  ulong uVar2;
   
-  iVar1 = __savegprlr_29(this);
-  iVar2 = FS_Seek(*(void **)(iVar1 + 8),*(int *)(iVar1 + 0xc) + param_1,2);
-  if ((iVar2 == -1) || (iVar1 = FS_Read(param_2,param_3,*(void **)(iVar1 + 8)), iVar1 == 0)) {
-    uVar3 = GetLastError();
-    if (0 < (int)uVar3) {
-      uVar4 = __restgprlr_29(uVar3 & 0xffff | 0x80070000);
-      return uVar4;
+  iVar1 = FS_Seek(this->m_hFile,this->m_dwDataOffset + param_1,2);
+  if ((iVar1 == -1) || (iVar1 = FS_Read(param_2,param_3,this->m_hFile), iVar1 == 0)) {
+    uVar2 = GetLastError();
+    if (0 < (int)uVar2) {
+      return uVar2 & 0xffff | 0x80070000;
     }
   }
   else {
-    uVar3 = 0;
+    uVar2 = 0;
   }
-  uVar4 = __restgprlr_29(uVar3);
-  return uVar4;
+  return uVar2;
 }
 
 
@@ -160,80 +157,72 @@ void __thiscall CXMAFile::~CXMAFile(CXMAFile *this)
 
 // 826357E8  Open  (xenon/AtgAudio.cpp:179)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
+
 undefined4 __thiscall CXMAFile::Open(CXMAFile *this,char *param_1,StreamingState param_2)
 
 {
-  void **ppvVar2;
-  int iVar3;
-  undefined4 uVar4;
-  ulonglong uVar1;
+  void *pvVar1;
+  int iVar2;
+  uint uVar3;
   CRiffChunk *this_00;
   int local_50 [20];
   
-  ppvVar2 = (void **)__savegprlr_25(this);
-  if (*ppvVar2 != (void *)0x0) {
-    FS_FCloseFile(*ppvVar2);
-    *ppvVar2 = (void *)0x0;
+  if (this->m_hFile != (void *)0x0) {
+    FS_FCloseFile(this->m_hFile);
+    this->m_hFile = (void *)0x0;
   }
   if (param_2 == UNSTREAMED) {
-    iVar3 = FS_FOpenFileRead(param_1,ppvVar2);
-    if (iVar3 == -1) {
+    iVar2 = FS_FOpenFileRead(param_1,&this->m_hFile);
+    if (iVar2 == -1) {
       Com_PrintError(1,"Sound file \'%s\' could not be found.\n");
-      uVar4 = __restgprlr_25(0xffffffff80070002);
-      return uVar4;
+      return 0x80070002;
     }
   }
   else {
-    iVar3 = FS_FOpenFileReadStream(param_1,ppvVar2);
-    if (iVar3 == -1) {
+    iVar2 = FS_FOpenFileReadStream(param_1,&this->m_hFile);
+    if (iVar2 == -1) {
       Com_PrintError(1,"Sound file \'%s\' could not be found.\n");
-      uVar4 = __restgprlr_25(0xffffffff80070002);
-      return uVar4;
+      return 0x80070002;
     }
   }
-  ppvVar2[2] = (void *)0x0;
-  this_00 = (CRiffChunk *)(ppvVar2 + 1);
-  ppvVar2[1] = (void *)0x52494646;
-  ppvVar2[3] = *ppvVar2;
-  ppvVar2[7] = (void *)0x666d7420;
-  ppvVar2[8] = this_00;
-  ppvVar2[9] = *ppvVar2;
-  ppvVar2[0xd] = (void *)0x64617461;
-  ppvVar2[0xe] = this_00;
-  ppvVar2[0xf] = *ppvVar2;
-  ppvVar2[0x14] = this_00;
-  ppvVar2[0x13] = (void *)0x57415645;
-  ppvVar2[0x15] = *ppvVar2;
-  ppvVar2[0x1a] = this_00;
-  ppvVar2[0x19] = (void *)0x7365656b;
-  ppvVar2[0x1b] = *ppvVar2;
-  ppvVar2[0x20] = this_00;
-  ppvVar2[0x1f] = (void *)0x49575849;
-  ppvVar2[0x21] = *ppvVar2;
-  iVar3 = CRiffChunk::Open(this_00);
-  uVar1 = (ulonglong)iVar3;
-  if (-1 < iVar3) {
-    iVar3 = CRiffChunk::Open((CRiffChunk *)(ppvVar2 + 7));
-    uVar1 = (ulonglong)iVar3;
-    if (-1 < iVar3) {
-      iVar3 = CRiffChunk::Open((CRiffChunk *)(ppvVar2 + 0x19));
-      uVar1 = (ulonglong)iVar3;
-      if (-1 < iVar3) {
-        CRiffChunk::Open((CRiffChunk *)(ppvVar2 + 0x1f));
-        iVar3 = CRiffChunk::Open((CRiffChunk *)(ppvVar2 + 0xd));
-        uVar1 = (ulonglong)iVar3;
-        if (-1 < iVar3) {
-          iVar3 = CRiffChunk::ReadData(this_00,0,local_50,4);
-          uVar1 = (ulonglong)iVar3;
-          if (-1 < iVar3) {
-            uVar1 = -(ulonglong)(local_50[0] != 0x57415645) & 0xffffffff800703ee;
-          }
-        }
-      }
+  pvVar1 = this->m_hFile;
+  (this->m_RiffChunk).m_pParentChunk = (CRiffChunk *)0x0;
+  this_00 = &this->m_RiffChunk;
+  (this->m_RiffChunk).m_fccChunkId = 0x52494646;
+  (this->m_RiffChunk).m_hFile = pvVar1;
+  pvVar1 = this->m_hFile;
+  (this->m_FormatChunk).m_fccChunkId = 0x666d7420;
+  (this->m_FormatChunk).m_pParentChunk = this_00;
+  (this->m_FormatChunk).m_hFile = pvVar1;
+  pvVar1 = this->m_hFile;
+  (this->m_DataChunk).m_fccChunkId = 0x64617461;
+  (this->m_DataChunk).m_pParentChunk = this_00;
+  (this->m_DataChunk).m_hFile = pvVar1;
+  pvVar1 = this->m_hFile;
+  (this->m_WaveChunk).m_pParentChunk = this_00;
+  (this->m_WaveChunk).m_fccChunkId = 0x57415645;
+  (this->m_WaveChunk).m_hFile = pvVar1;
+  pvVar1 = this->m_hFile;
+  (this->m_SeekTableChunk).m_pParentChunk = this_00;
+  (this->m_SeekTableChunk).m_fccChunkId = 0x7365656b;
+  (this->m_SeekTableChunk).m_hFile = pvVar1;
+  pvVar1 = this->m_hFile;
+  (this->m_IwXmaDataInfoChunk).m_pParentChunk = this_00;
+  (this->m_IwXmaDataInfoChunk).m_fccChunkId = 0x49575849;
+  (this->m_IwXmaDataInfoChunk).m_hFile = pvVar1;
+  uVar3 = CRiffChunk::Open(this_00);
+  if (((-1 < (int)uVar3) && (uVar3 = CRiffChunk::Open(&this->m_FormatChunk), -1 < (int)uVar3)) &&
+     (uVar3 = CRiffChunk::Open(&this->m_SeekTableChunk), -1 < (int)uVar3)) {
+    CRiffChunk::Open(&this->m_IwXmaDataInfoChunk);
+    uVar3 = CRiffChunk::Open(&this->m_DataChunk);
+    if ((-1 < (int)uVar3) && (uVar3 = CRiffChunk::ReadData(this_00,0,local_50,4), -1 < (int)uVar3))
+    {
+      uVar3 = -(uint)(local_50[0] != 0x57415645) & 0x800703ee;
     }
   }
-  uVar4 = __restgprlr_25(uVar1);
-  return uVar4;
+  return uVar3;
 }
 
 
@@ -252,85 +241,84 @@ void __thiscall CXMAFile::Close(CXMAFile *this)
 
 // 82634D68  GetFormat  (xenon/AtgAudio.cpp:259)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 undefined4 __thiscall CXMAFile::GetFormat(CXMAFile *this,XMAWAVEFORMAT *param_1)
 
 {
-  int iVar1;
-  short sVar2;
-  uint *puVar3;
-  int iVar5;
-  int iVar6;
-  undefined2 *puVar7;
-  ulong uVar8;
-  ulonglong uVar4;
-  undefined4 uVar9;
-  ulonglong uVar10;
+  ulong uVar1;
+  ushort uVar2;
+  int iVar3;
+  uint uVar4;
+  ushort *puVar5;
+  ulong *puVar6;
   
-  uVar10 = (ulonglong)(int)param_1;
-  iVar5 = __savegprlr_27(this);
-  if ((uVar10 & 0xffffffff) == 0) {
+  if (param_1 == (XMAWAVEFORMAT *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\AtgAudio.cpp",0x109,0,
                     "%s");
   }
-  iVar1 = *(int *)(iVar5 + 0x2c);
-  if (iVar1 != 0x20) {
+  uVar1 = (this->m_FormatChunk).m_dwDataSize;
+  if (uVar1 != 0x20) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\AtgAudio.cpp",0x10c,0,
                     "%s");
   }
-  iVar6 = FS_Seek(*(void **)(iVar5 + 0x24),*(long *)(iVar5 + 0x28),2);
-  puVar7 = (undefined2 *)uVar10;
-  if (iVar6 == -1) {
-    uVar8 = GetLastError();
-    uVar4 = (ulonglong)(int)uVar8;
-    if (0 < (int)uVar8) {
-LAB_82634e28:
-      uVar4 = uVar4 & 0xffff | 0x80070000;
-LAB_82634e30:
-      uVar8 = (ulong)uVar4;
-    }
-    if ((int)uVar8 < 0) goto LAB_82634ed0;
+  iVar3 = FS_Seek((this->m_FormatChunk).m_hFile,(this->m_FormatChunk).m_dwDataOffset,2);
+  if (iVar3 == -1) {
+    uVar4 = GetLastError();
   }
   else {
-    iVar5 = FS_Read(puVar7,iVar1,*(void **)(iVar5 + 0x24));
-    if (iVar5 == 0) {
-      uVar8 = GetLastError();
-      uVar4 = (ulonglong)(int)uVar8;
-      if (0 < (int)uVar8) goto LAB_82634e28;
-      goto LAB_82634e30;
-    }
+    iVar3 = FS_Read(param_1,uVar1,(this->m_FormatChunk).m_hFile);
+    if (iVar3 != 0) goto LAB_82634e38;
+    uVar4 = GetLastError();
   }
-  iVar5 = 0;
-  *puVar7 = CONCAT11(*(undefined1 *)((int)puVar7 + 1),*(undefined1 *)puVar7);
-  puVar7[1] = CONCAT11(*(undefined1 *)((int)puVar7 + 3),*(undefined1 *)(puVar7 + 1));
-  puVar7[2] = CONCAT11(*(undefined1 *)((int)puVar7 + 5),*(undefined1 *)(puVar7 + 2));
-  puVar7[3] = CONCAT11(*(undefined1 *)((int)puVar7 + 7),*(undefined1 *)(puVar7 + 3));
-  sVar2 = CONCAT11(*(undefined1 *)((int)puVar7 + 9),*(undefined1 *)(puVar7 + 4));
-  puVar7[4] = sVar2;
-  if (sVar2 != 0) {
+  if (0 < (int)uVar4) {
+    uVar4 = uVar4 & 0xffff | 0x80070000;
+  }
+  if ((int)uVar4 < 0) {
+    return uVar4;
+  }
+LAB_82634e38:
+  puVar5 = &param_1->NumStreams;
+  iVar3 = 0;
+  param_1->FormatTag = CONCAT11((char)param_1->FormatTag,*(undefined1 *)&param_1->FormatTag);
+  param_1->BitsPerSample =
+       CONCAT11((char)param_1->BitsPerSample,*(undefined1 *)&param_1->BitsPerSample);
+  param_1->EncodeOptions =
+       CONCAT11((char)param_1->EncodeOptions,*(undefined1 *)&param_1->EncodeOptions);
+  param_1->LargestSkip = CONCAT11((char)param_1->LargestSkip,*(undefined1 *)&param_1->LargestSkip);
+  uVar2 = CONCAT11((char)param_1->NumStreams,*(undefined1 *)puVar5);
+  param_1->NumStreams = uVar2;
+  if (uVar2 != 0) {
     do {
-      iVar1 = (int)uVar10;
-      iVar5 = iVar5 + 1;
-      *(uint *)(iVar1 + 0xc) =
-           (uint)*(byte *)(iVar1 + 0xf) << 0x18 | (uint)*(byte *)(iVar1 + 0xe) << 0x10 |
-           (uint)*(byte *)(iVar1 + 0xd) << 8 | (uint)*(byte *)(iVar1 + 0xc);
-      *(uint *)(iVar1 + 0x10) =
-           (uint)*(byte *)(iVar1 + 0x13) << 0x18 | (uint)*(byte *)(iVar1 + 0x12) << 0x10 |
-           (uint)*(byte *)(iVar1 + 0x11) << 8 | (uint)*(byte *)(iVar1 + 0x10);
-      puVar3 = (uint *)(uVar10 + 0x14);
-      *puVar3 = (uint)(byte)*puVar3 << 0x18 | (uint)*(byte *)((int)puVar3 + 2) << 0x10 |
-                (uint)*(byte *)((int)puVar3 + 1) << 8 | (uint)*(byte *)puVar3;
-      *(uint *)(iVar1 + 0x18) =
-           (uint)*(byte *)(iVar1 + 0x1b) << 0x18 | (uint)*(byte *)(iVar1 + 0x1a) << 0x10 |
-           (uint)*(byte *)(iVar1 + 0x19) << 8 | (uint)*(byte *)(iVar1 + 0x18);
-      *(ushort *)(iVar1 + 0x1e) =
-           CONCAT11(*(undefined1 *)(iVar1 + 0x1f),*(undefined1 *)(iVar1 + 0x1e));
-      uVar10 = uVar10 + 0x14;
-    } while (iVar5 < (int)(uint)(ushort)puVar7[4]);
+      puVar6 = &param_1->XmaStreams[0].LoopStart;
+      iVar3 = iVar3 + 1;
+      param_1->XmaStreams[0].PsuedoBytesPerSec =
+           (uint)(byte)param_1->XmaStreams[0].PsuedoBytesPerSec << 0x18 |
+           (uint)*(byte *)((int)&param_1->XmaStreams[0].PsuedoBytesPerSec + 2) << 0x10 |
+           (uint)*(byte *)((int)&param_1->XmaStreams[0].PsuedoBytesPerSec + 1) << 8 |
+           (uint)*(byte *)&param_1->XmaStreams[0].PsuedoBytesPerSec;
+      param_1->XmaStreams[0].SampleRate =
+           (uint)(byte)param_1->XmaStreams[0].SampleRate << 0x18 |
+           (uint)*(byte *)((int)&param_1->XmaStreams[0].SampleRate + 2) << 0x10 |
+           (uint)*(byte *)((int)&param_1->XmaStreams[0].SampleRate + 1) << 8 |
+           (uint)*(byte *)&param_1->XmaStreams[0].SampleRate;
+      *puVar6 = (uint)(byte)param_1->XmaStreams[0].LoopStart << 0x18 |
+                (uint)*(byte *)((int)&param_1->XmaStreams[0].LoopStart + 2) << 0x10 |
+                (uint)*(byte *)((int)&param_1->XmaStreams[0].LoopStart + 1) << 8 |
+                (uint)*(byte *)puVar6;
+      param_1->XmaStreams[0].LoopEnd =
+           (uint)(byte)param_1->XmaStreams[0].LoopEnd << 0x18 |
+           (uint)*(byte *)((int)&param_1->XmaStreams[0].LoopEnd + 2) << 0x10 |
+           (uint)*(byte *)((int)&param_1->XmaStreams[0].LoopEnd + 1) << 8 |
+           (uint)*(byte *)&param_1->XmaStreams[0].LoopEnd;
+      param_1->XmaStreams[0].ChannelMask =
+           CONCAT11((char)param_1->XmaStreams[0].ChannelMask,
+                    *(undefined1 *)&param_1->XmaStreams[0].ChannelMask);
+      param_1 = (XMAWAVEFORMAT *)puVar6;
+    } while (iVar3 < (int)(uint)*puVar5);
   }
-  uVar4 = 0;
-LAB_82634ed0:
-  uVar9 = __restgprlr_27(uVar4);
-  return uVar9;
+  return 0;
 }
 
 
@@ -424,26 +412,23 @@ CRiffChunkBuffer * __thiscall CRiffChunkBuffer::CRiffChunkBuffer(CRiffChunkBuffe
 
 // 82635050  Initialize  (xenon/AtgAudio.cpp:394)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void __thiscall
 CRiffChunkBuffer::Initialize
           (CRiffChunkBuffer *this,ulong param_1,CRiffChunkBuffer *param_2,uchar *param_3,int param_4
           )
 
 {
-  ulong *puVar1;
-  ulonglong uVar2;
-  
-  uVar2 = (ulonglong)(int)param_3;
-  puVar1 = (ulong *)__savegprlr_27(this);
-  if ((uVar2 & 0xffffffff) == 0) {
+  if (param_3 == (uchar *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\AtgAudio.cpp",0x18b,0,
                     "%s");
   }
-  *puVar1 = param_1;
-  puVar1[1] = (ulong)param_2;
-  puVar1[2] = (ulong)uVar2;
-  puVar1[3] = param_4;
-  __restgprlr_27();
+  this->m_fccChunkId = param_1;
+  this->m_pParentChunk = param_2;
+  this->m_pBuffer = param_3;
+  this->m_bufferSize = param_4;
   return;
 }
 
@@ -555,134 +540,126 @@ CXMAHeaderBuffer * __thiscall CXMAHeaderBuffer::CXMAHeaderBuffer(CXMAHeaderBuffe
 
 // 82635220  Initialize  (xenon/AtgAudio.cpp:470)
 
-undefined4 __thiscall
+/* WARNING: Function: __savegprlr_20 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_20 replaced with injection: xenon_save_restore */
+
+int __thiscall
 CXMAHeaderBuffer::Initialize(CXMAHeaderBuffer *this,char *param_1,uchar *param_2,int param_3)
 
 {
-  undefined4 *puVar1;
-  int iVar2;
-  undefined4 uVar3;
-  ulonglong uVar4;
-  ulonglong uVar5;
+  uchar *puVar1;
+  uint uVar2;
+  ulong uVar3;
+  int iVar4;
   CRiffChunkBuffer *this_00;
   
-  uVar5 = (ulonglong)(int)param_2;
-  uVar4 = (ulonglong)(int)param_1;
-  puVar1 = (undefined4 *)__savegprlr_20(this);
-  if ((uVar4 & 0xffffffff) == 0) {
+  if (param_1 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\AtgAudio.cpp",0x1da,0,
                     "%s");
   }
-  if ((uVar5 & 0xffffffff) == 0) {
+  if (param_2 == (uchar *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\AtgAudio.cpp",0x1db,0,
                     "%s");
   }
-  *puVar1 = (int)uVar4;
-  this_00 = (CRiffChunkBuffer *)(puVar1 + 3);
-  puVar1[1] = (int)uVar5;
-  puVar1[2] = param_3;
-  if ((uVar5 & 0xffffffff) == 0) {
+  this->m_pDebugFileName = param_1;
+  this_00 = &this->m_RiffChunk;
+  this->m_pBuffer = param_2;
+  this->m_bufferSize = param_3;
+  if (param_2 == (uchar *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\AtgAudio.cpp",0x18b,0,
                     "%s");
   }
-  puVar1[5] = (int)uVar5;
-  puVar1[6] = param_3;
-  puVar1[4] = 0;
+  (this->m_RiffChunk).m_pBuffer = param_2;
+  (this->m_RiffChunk).m_bufferSize = param_3;
+  (this->m_RiffChunk).m_pParentChunk = (CRiffChunkBuffer *)0x0;
   this_00->m_fccChunkId = 0x52494646;
-  iVar2 = puVar1[1];
-  uVar3 = puVar1[2];
-  if (iVar2 == 0) {
+  puVar1 = this->m_pBuffer;
+  uVar2 = this->m_bufferSize;
+  if (puVar1 == (uchar *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\AtgAudio.cpp",0x18b,0,
                     "%s");
   }
-  puVar1[0xd] = uVar3;
-  puVar1[0xb] = this_00;
-  puVar1[0xc] = iVar2;
-  ((CRiffChunkBuffer *)(puVar1 + 10))->m_fccChunkId = 0x666d7420;
-  iVar2 = puVar1[1];
-  uVar3 = puVar1[2];
-  if (iVar2 == 0) {
+  (this->m_FormatChunk).m_bufferSize = uVar2;
+  (this->m_FormatChunk).m_pParentChunk = this_00;
+  (this->m_FormatChunk).m_pBuffer = puVar1;
+  (this->m_FormatChunk).m_fccChunkId = 0x666d7420;
+  puVar1 = this->m_pBuffer;
+  uVar2 = this->m_bufferSize;
+  if (puVar1 == (uchar *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\AtgAudio.cpp",0x18b,0,
                     "%s");
   }
-  puVar1[0x12] = this_00;
-  puVar1[0x13] = iVar2;
-  puVar1[0x14] = uVar3;
-  ((CRiffChunkBuffer *)(puVar1 + 0x11))->m_fccChunkId = 0x64617461;
-  iVar2 = puVar1[1];
-  uVar3 = puVar1[2];
-  if (iVar2 == 0) {
+  (this->m_DataChunk).m_pParentChunk = this_00;
+  (this->m_DataChunk).m_pBuffer = puVar1;
+  (this->m_DataChunk).m_bufferSize = uVar2;
+  (this->m_DataChunk).m_fccChunkId = 0x64617461;
+  puVar1 = this->m_pBuffer;
+  uVar2 = this->m_bufferSize;
+  if (puVar1 == (uchar *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\AtgAudio.cpp",0x18b,0,
                     "%s");
   }
-  puVar1[0x1a] = iVar2;
-  puVar1[0x19] = this_00;
-  puVar1[0x1b] = uVar3;
-  puVar1[0x18] = 0x57415645;
-  iVar2 = puVar1[1];
-  uVar3 = puVar1[2];
-  if (iVar2 == 0) {
+  (this->m_WaveChunk).m_pBuffer = puVar1;
+  (this->m_WaveChunk).m_pParentChunk = this_00;
+  (this->m_WaveChunk).m_bufferSize = uVar2;
+  (this->m_WaveChunk).m_fccChunkId = 0x57415645;
+  puVar1 = this->m_pBuffer;
+  uVar2 = this->m_bufferSize;
+  if (puVar1 == (uchar *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\AtgAudio.cpp",0x18b,0,
                     "%s");
   }
-  puVar1[0x21] = iVar2;
-  puVar1[0x20] = this_00;
-  puVar1[0x22] = uVar3;
-  ((CRiffChunkBuffer *)(puVar1 + 0x1f))->m_fccChunkId = 0x7365656b;
-  iVar2 = puVar1[1];
-  uVar3 = puVar1[2];
-  if (iVar2 == 0) {
+  (this->m_SeekTableChunk).m_pBuffer = puVar1;
+  (this->m_SeekTableChunk).m_pParentChunk = this_00;
+  (this->m_SeekTableChunk).m_bufferSize = uVar2;
+  (this->m_SeekTableChunk).m_fccChunkId = 0x7365656b;
+  puVar1 = this->m_pBuffer;
+  uVar2 = this->m_bufferSize;
+  if (puVar1 == (uchar *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\AtgAudio.cpp",0x18b,0,
                     "%s");
   }
-  puVar1[0x27] = this_00;
-  puVar1[0x28] = iVar2;
-  puVar1[0x29] = uVar3;
-  ((CRiffChunkBuffer *)(puVar1 + 0x26))->m_fccChunkId = 0x49575849;
-  iVar2 = CRiffChunkBuffer::Open(this_00);
-  if (iVar2 < 0) {
+  (this->m_IwXmaDataInfoChunk).m_pParentChunk = this_00;
+  (this->m_IwXmaDataInfoChunk).m_pBuffer = puVar1;
+  (this->m_IwXmaDataInfoChunk).m_bufferSize = uVar2;
+  (this->m_IwXmaDataInfoChunk).m_fccChunkId = 0x49575849;
+  iVar4 = CRiffChunkBuffer::Open(this_00);
+  if (iVar4 < 0) {
     Com_PrintError(1,"Couldn\'t find Riff Chunk in sound file \'%s\'\n");
-    uVar3 = __restgprlr_20(iVar2);
-    return uVar3;
+    return iVar4;
   }
-  iVar2 = CRiffChunkBuffer::Open((CRiffChunkBuffer *)(puVar1 + 10));
-  if (iVar2 < 0) {
+  iVar4 = CRiffChunkBuffer::Open(&this->m_FormatChunk);
+  if (iVar4 < 0) {
     Com_PrintError(1,"Couldn\'t find Format Chunk in sound file \'%s\'\n");
-    uVar3 = __restgprlr_20(iVar2);
-    return uVar3;
+    return iVar4;
   }
-  iVar2 = CRiffChunkBuffer::Open((CRiffChunkBuffer *)(puVar1 + 0x1f));
-  if (iVar2 < 0) {
+  iVar4 = CRiffChunkBuffer::Open(&this->m_SeekTableChunk);
+  if (iVar4 < 0) {
     Com_PrintError(1,"Couldn\'t find SeekTable Chunk in sound file \'%s\'\n");
-    uVar3 = __restgprlr_20(iVar2);
-    return uVar3;
+    return iVar4;
   }
-  iVar2 = CRiffChunkBuffer::Open((CRiffChunkBuffer *)(puVar1 + 0x26));
-  if (iVar2 < 0) {
+  iVar4 = CRiffChunkBuffer::Open(&this->m_IwXmaDataInfoChunk);
+  if (iVar4 < 0) {
     Com_PrintError(1,"Couldn\'t find IwXmaDataInfo Chunk in sound file \'%s\'\n");
-    uVar3 = __restgprlr_20(iVar2);
-    return uVar3;
+    return iVar4;
   }
-  iVar2 = CRiffChunkBuffer::Open((CRiffChunkBuffer *)(puVar1 + 0x11));
-  if (iVar2 < 0) {
+  iVar4 = CRiffChunkBuffer::Open(&this->m_DataChunk);
+  if (iVar4 < 0) {
     Com_PrintError(1,"Couldn\'t find Data Chunk in sound file \'%s\'\n");
-    uVar3 = __restgprlr_20(iVar2);
-    return uVar3;
+    return iVar4;
   }
-  if ((uint)puVar1[2] < puVar1[7] + 4) {
+  uVar3 = (this->m_RiffChunk).m_dwDataOffset;
+  if (this->m_bufferSize < uVar3 + 4) {
     Com_PrintError(1,
                    "XMA header exceeded buffersize in sound file: \'%s\'. bufferSize: %d, dataOffset: %d, sizeof( fccType ): %d\n"
                   );
-    uVar3 = __restgprlr_20(0xffffffff80004005);
-    return uVar3;
+    return 0x80004005;
   }
-  if (*(int *)(puVar1[1] + puVar1[7]) != 0x57415645) {
+  if (*(int *)(this->m_pBuffer + uVar3) != 0x57415645) {
     Com_PrintError(1,"Sound file \'%s\' is not a valid XMA file\n");
-    uVar3 = __restgprlr_20(0xffffffff80004005);
-    return uVar3;
+    return 0x80004005;
   }
-  uVar3 = __restgprlr_20(0);
-  return uVar3;
+  return 0;
 }
 
 

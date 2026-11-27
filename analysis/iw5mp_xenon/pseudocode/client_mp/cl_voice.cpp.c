@@ -2,158 +2,133 @@
 
 // 82355480  CL_CanClient1ConnectToClient2  (client_mp/cl_voice.cpp:76)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 int CL_CanClient1ConnectToClient2(SessionData *param_1,int param_2,int param_3)
 
 {
-  SessionData *pSVar1;
-  bool bVar4;
-  int iVar2;
-  uint uVar3;
+  bool bVar2;
+  uint uVar1;
   
-  pSVar1 = (SessionData *)__savegprlr_29(param_1);
-  bVar4 = Session_IsHost(pSVar1,param_2);
-  if (!bVar4) {
-    bVar4 = Session_IsHost(pSVar1,param_3);
-    if (!bVar4) {
-      bVar4 = Session_IsUserRegistered(pSVar1,param_3);
-      if (!bVar4) {
-        iVar2 = __restgprlr_29(0);
-        return iVar2;
-      }
-      uVar3 = Session_GetClientVoiceConnectivity(pSVar1,param_3);
-      iVar2 = __restgprlr_29(uVar3 & 1 << (param_2 & 0x3fU));
-      return iVar2;
+  bVar2 = Session_IsHost(param_1,param_2);
+  if ((!bVar2) && (bVar2 = Session_IsHost(param_1,param_3), !bVar2)) {
+    bVar2 = Session_IsUserRegistered(param_1,param_3);
+    if (!bVar2) {
+      return 0;
     }
+    uVar1 = Session_GetClientVoiceConnectivity(param_1,param_3);
+    return uVar1 & 1 << (param_2 & 0x3fU);
   }
-  iVar2 = __restgprlr_29(1);
-  return iVar2;
+  return 1;
 }
 
 
 // 82355510  CL_CanWeConnectToClient  (client_mp/cl_voice.cpp:89)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* int __cdecl CL_CanWeConnectToClient(struct SessionData *,int,int) */
 
 int CL_CanWeConnectToClient(SessionData *param_1,int param_2,int param_3)
 
 {
-  SessionData *pSVar1;
-  bool bVar4;
-  int iVar2;
-  uint uVar3;
+  bool bVar2;
+  uint uVar1;
   
-  pSVar1 = (SessionData *)__savegprlr_29(param_1);
-  bVar4 = Session_IsHost(pSVar1,param_2);
-  if (!bVar4) {
-    bVar4 = Session_IsHost(pSVar1,param_3);
-    if (!bVar4) {
-      bVar4 = Session_IsUserRegistered(pSVar1,param_3);
-      if (!bVar4) {
-        iVar2 = __restgprlr_29(0);
-        return iVar2;
-      }
-      uVar3 = Session_GetClientVoiceConnectivity(pSVar1,param_3);
-      iVar2 = __restgprlr_29(uVar3 & 1 << (param_2 & 0x3fU));
-      return iVar2;
+  bVar2 = Session_IsHost(param_1,param_2);
+  if ((!bVar2) && (bVar2 = Session_IsHost(param_1,param_3), !bVar2)) {
+    bVar2 = Session_IsUserRegistered(param_1,param_3);
+    if (!bVar2) {
+      return 0;
     }
+    uVar1 = Session_GetClientVoiceConnectivity(param_1,param_3);
+    return uVar1 & 1 << (param_2 & 0x3fU);
   }
-  iVar2 = __restgprlr_29(1);
-  return iVar2;
+  return 1;
 }
 
 
 // 82355518  CL_CanClientTalkToAllClientsInList  (client_mp/cl_voice.cpp:95)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 bool CL_CanClientTalkToAllClientsInList(SessionData *param_1,int param_2,int param_3)
 
 {
-  SessionData *pSVar1;
-  bool bVar3;
-  uint uVar2;
-  undefined1 uVar4;
-  uint uVar5;
+  bool bVar2;
+  uint uVar1;
+  uint uVar3;
   
-  pSVar1 = (SessionData *)__savegprlr_27(param_1);
-  uVar5 = 0;
-  do {
-    if ((1 << (uVar5 & 0x3f) & param_3) != 0) {
-      bVar3 = Session_IsUserRegistered(pSVar1,uVar5);
-      if (!bVar3) {
-LAB_82355594:
-        uVar4 = __restgprlr_27(0);
-        return (bool)uVar4;
-      }
-      uVar2 = Session_GetClientVoiceConnectivity(pSVar1,uVar5);
-      if ((uVar2 & 1 << (param_2 & 0x3fU)) == 0) goto LAB_82355594;
+  uVar3 = 0;
+  while (((1 << (uVar3 & 0x3f) & param_3) == 0 ||
+         ((bVar2 = Session_IsUserRegistered(param_1,uVar3), bVar2 &&
+          (uVar1 = Session_GetClientVoiceConnectivity(param_1,uVar3),
+          (uVar1 & 1 << (param_2 & 0x3fU)) != 0))))) {
+    uVar3 = uVar3 + 1;
+    if (0x11 < (int)uVar3) {
+      return true;
     }
-    uVar5 = uVar5 + 1;
-    if (0x11 < (int)uVar5) {
-      uVar4 = __restgprlr_27(1);
-      return (bool)uVar4;
-    }
-  } while( true );
+  }
+  return false;
 }
 
 
 // 823555A0  CL_UpdateFailedVoiceConnectivityBitsForRemoteUser  (client_mp/cl_voice.cpp:115)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 void CL_UpdateFailedVoiceConnectivityBitsForRemoteUser(SessionData *param_1,int param_2,int param_3)
 
 {
-  SessionData *pSVar1;
-  bool bVar4;
-  int iVar2;
-  uint uVar3;
+  bool bVar2;
+  int iVar1;
   
-  pSVar1 = (SessionData *)__savegprlr_27(param_1);
-  if (pSVar1 == (SessionData *)0x0) {
+  if (param_1 == (SessionData *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_voice.cpp",0x74,0
                     ,"%s");
   }
-  bVar4 = Session_IsUserRegistered(pSVar1,param_3);
-  if (!bVar4) {
+  bVar2 = Session_IsUserRegistered(param_1,param_3);
+  if (!bVar2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_voice.cpp",0x75,0
                     ,"%s");
   }
-  bVar4 = Session_IsUserRegistered(pSVar1,param_2);
-  if (!bVar4) {
+  bVar2 = Session_IsUserRegistered(param_1,param_2);
+  if (!bVar2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_voice.cpp",0x76,0
                     ,"%s");
   }
-  iVar2 = Session_AreWeHost(pSVar1);
-  if (iVar2 == 0) {
-    iVar2 = Session_HasHostAddress(pSVar1,param_3);
-    if (iVar2 == 0) {
-      uVar3 = Session_HostNum(pSVar1);
-      if (uVar3 == param_2) {
-        Session_HostNum(pSVar1);
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_voice.cpp",
-                        0x80,0,"Session_HostNum( session ) != ourClientNum\n\t%i, %i");
-      }
-      uVar3 = Session_HostNum(pSVar1);
-      if (uVar3 == param_3) {
-        Session_HostNum(pSVar1);
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_voice.cpp",
-                        0x81,0,"Session_HostNum( session ) != clientNum\n\t%i, %i");
-      }
-      Session_RemoveClientVoiceConnectivity(pSVar1,param_3,1 << (param_2 & 0x3fU));
-      iVar2 = Session_RemoveLocalVoiceConnectivity(pSVar1,1 << (param_3 & 0x3fU));
+  iVar1 = Session_AreWeHost(param_1);
+  if ((iVar1 == 0) && (iVar1 = Session_HasHostAddress(param_1,param_3), iVar1 == 0)) {
+    iVar1 = Session_HostNum(param_1);
+    if (iVar1 == param_2) {
+      Session_HostNum(param_1);
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_voice.cpp",0x80
+                      ,0,"Session_HostNum( session ) != ourClientNum\n\t%i, %i");
     }
+    iVar1 = Session_HostNum(param_1);
+    if (iVar1 == param_3) {
+      Session_HostNum(param_1);
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_voice.cpp",0x81
+                      ,0,"Session_HostNum( session ) != clientNum\n\t%i, %i");
+    }
+    Session_RemoveClientVoiceConnectivity(param_1,param_3,1 << (param_2 & 0x3fU));
+    Session_RemoveLocalVoiceConnectivity(param_1,1 << (param_3 & 0x3fU));
   }
-  __restgprlr_27(iVar2);
   return;
 }
 
 
 // 82355710  CL_UpdateConnectivityBits  (client_mp/cl_voice.cpp:138)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
@@ -161,50 +136,44 @@ void CL_UpdateConnectivityBits(LocalClientNum_t param_1,SessionData *param_2,int
 
 {
   char *pcVar1;
-  SessionData *pSVar2;
-  LocalClientNum_t LVar3;
-  int iVar4;
-  uint uVar5;
-  uint uVar6;
-  bool bVar11;
-  PartyData *pPVar7;
-  netsrc_t nVar8;
-  connstate_t cVar9;
-  clientConnection_t *pcVar10;
-  ulonglong uVar12;
-  undefined8 uVar13;
-  undefined4 uVar14;
+  int iVar2;
+  uint uVar3;
+  uint uVar4;
+  bool bVar9;
+  PartyData *pPVar5;
+  netsrc_t nVar6;
+  connstate_t cVar7;
+  clientConnection_t *pcVar8;
+  undefined8 uVar10;
+  undefined4 uVar11;
   netadr_t in_stack_fffff748;
   msg_t mStack_860;
   uchar auStack_830 [2096];
   
-  uVar12 = (ulonglong)(int)param_2;
-  LVar3 = __savegprlr_27(param_1);
-  if ((uVar12 & 0xffffffff) == 0) {
+  if (param_2 == (SessionData *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_voice.cpp",0x94,0
                     ,"%s");
   }
-  pSVar2 = (SessionData *)uVar12;
-  if ((pSVar2->dyn).sessionHandle != (void *)0x0) {
-    iVar4 = Session_AreWeHost(pSVar2);
-    if (iVar4 == 0) {
-      iVar4 = Session_HostNum(pSVar2);
-      uVar5 = Session_GetConnectivityBitsForClientAddress(pSVar2,iVar4);
-      uVar6 = Session_GetConnectivityBitsForLocalClients(pSVar2);
-      uVar6 = uVar6 | uVar5 | param_3;
-      uVar5 = Session_HostNum(pSVar2);
-      if ((1 << (uVar5 & 0x3f) & uVar6) == 0) {
+  if ((param_2->dyn).sessionHandle != (void *)0x0) {
+    iVar2 = Session_AreWeHost(param_2);
+    if (iVar2 == 0) {
+      iVar2 = Session_HostNum(param_2);
+      uVar3 = Session_GetConnectivityBitsForClientAddress(param_2,iVar2);
+      uVar4 = Session_GetConnectivityBitsForLocalClients(param_2);
+      uVar4 = uVar4 | uVar3 | param_3;
+      uVar3 = Session_HostNum(param_2);
+      if ((1 << (uVar3 & 0x3f) & uVar4) == 0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_voice.cpp",
                         0xa2,0,"%s");
       }
     }
     else {
-      uVar6 = 0x3ffff;
-      iVar4 = Session_HostNum(pSVar2);
-      iVar4 = Session_GetClientVoiceConnectivity(pSVar2,iVar4);
-      if (iVar4 != 0x3ffff) {
-        iVar4 = Session_HostNum(pSVar2);
-        Session_GetClientVoiceConnectivity(pSVar2,iVar4);
+      uVar4 = 0x3ffff;
+      iVar2 = Session_HostNum(param_2);
+      iVar2 = Session_GetClientVoiceConnectivity(param_2,iVar2);
+      if (iVar2 != 0x3ffff) {
+        iVar2 = Session_HostNum(param_2);
+        Session_GetClientVoiceConnectivity(param_2,iVar2);
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_voice.cpp",
                         0x9b,0,
                         "Session_GetClientVoiceConnectivity( session, Session_HostNum( session ) ) == connectivityBits\n\t%i, %i"
@@ -212,73 +181,68 @@ void CL_UpdateConnectivityBits(LocalClientNum_t param_1,SessionData *param_2,int
       }
     }
     if ((xenon_voiceDebug->current).enabled != false) {
-      Session_GetLocalVoiceConnectivity(pSVar2);
+      Session_GetLocalVoiceConnectivity(param_2);
       Com_Printf(0xe,"Setting voiceconnectivity for us from %i to %i\n");
     }
-    Session_SetLocalVoiceConnectivity(pSVar2,uVar6);
-    pPVar7 = &g_partyData;
-    iVar4 = Party_InParty(&g_partyData);
-    if ((iVar4 != 0) ||
-       ((bVar11 = Lobby_IsInRunningLobby(), bVar11 &&
-        (pPVar7 = Lobby_GetPartyData(), pPVar7 != (PartyData *)0x0)))) {
-      if (pPVar7->areWeHost == 0) {
-        iVar4 = NET_IsLocalAddress(in_stack_fffff748);
-        if (iVar4 != 0) {
+    Session_SetLocalVoiceConnectivity(param_2,uVar4);
+    pPVar5 = &g_partyData;
+    iVar2 = Party_InParty(&g_partyData);
+    if ((iVar2 != 0) ||
+       ((bVar9 = Lobby_IsInRunningLobby(), bVar9 &&
+        (pPVar5 = Lobby_GetPartyData(), pPVar5 != (PartyData *)0x0)))) {
+      if (pPVar5->areWeHost == 0) {
+        iVar2 = NET_IsLocalAddress(in_stack_fffff748);
+        if (iVar2 != 0) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_voice.cpp",
                           0xb8,0,"%s");
         }
         va("%iihear %i");
-        pcVar1 = *(char **)(pPVar7->currentHost).addr.ip;
-        nVar8 = NET_GetLocalNetIDFromLocalClientNum(LVar3);
-        bVar11 = NET_OutOfBandPrint(nVar8,in_stack_fffff748,pcVar1);
-        __restgprlr_27(bVar11);
+        pcVar1 = *(char **)(pPVar5->currentHost).addr.ip;
+        nVar6 = NET_GetLocalNetIDFromLocalClientNum(param_1);
+        NET_OutOfBandPrint(nVar6,in_stack_fffff748,pcVar1);
         return;
       }
     }
     else {
-      cVar9 = CL_GetLocalClientConnectionState(LVar3);
-      if (4 < (int)cVar9) {
-        pcVar10 = CL_GetLocalClientConnection(LVar3);
+      cVar7 = CL_GetLocalClientConnectionState(param_1);
+      if (4 < (int)cVar7) {
+        pcVar8 = CL_GetLocalClientConnection(param_1);
         MSG_Init(&mStack_860,auStack_830,0x800);
         MSG_WriteString(&mStack_860,"ihear");
-        MSG_WriteLong(&mStack_860,uVar6);
-        uVar13._0_4_ = (pcVar10->serverAddress).type;
-        uVar13._4_1_ = (pcVar10->serverAddress).ip[0];
-        uVar13._5_1_ = (pcVar10->serverAddress).ip[1];
-        uVar13._6_1_ = (pcVar10->serverAddress).ip[2];
-        uVar13._7_1_ = (pcVar10->serverAddress).ip[3];
-        uVar14 = (pcVar10->serverAddress).localNetID;
-        NET_OutOfBandData((pcVar10->netchan).sock,in_stack_fffff748,(uchar *)uVar13,uVar14);
+        MSG_WriteLong(&mStack_860,uVar4);
+        uVar10._0_4_ = (pcVar8->serverAddress).type;
+        uVar10._4_1_ = (pcVar8->serverAddress).ip[0];
+        uVar10._5_1_ = (pcVar8->serverAddress).ip[1];
+        uVar10._6_1_ = (pcVar8->serverAddress).ip[2];
+        uVar10._7_1_ = (pcVar8->serverAddress).ip[3];
+        uVar11 = (pcVar8->serverAddress).localNetID;
+        NET_OutOfBandData((pcVar8->netchan).sock,in_stack_fffff748,(uchar *)uVar10,uVar11);
       }
     }
   }
-  __restgprlr_27();
   return;
 }
 
 
 // 823559B0  CL_WeNowCantHearSomeone  (client_mp/cl_voice.cpp:211)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void CL_WeNowCantHearSomeone(LocalClientNum_t param_1,SessionData *param_2,int param_3)
 
 {
-  LocalClientNum_t LVar1;
-  uint uVar2;
-  ulonglong uVar3;
+  uint uVar1;
   
-  uVar3 = (ulonglong)param_3;
-  LVar1 = __savegprlr_29(param_1);
-  if (0x11 < (uVar3 & 0xffffffff)) {
+  if (0x11 < (uint)param_3) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_voice.cpp",0xd4,0
                     ,"remoteClient doesn\'t index MAX_CLIENTS\n\t%i not in [0, %i)");
   }
   Com_PrintWarning(0xe,"Apparently we can\'t get packets from client %i anymore\n");
-  uVar2 = Session_GetLocalVoiceConnectivity(param_2);
-  CL_UpdateConnectivityBits(LVar1,param_2,uVar2 & ~(1 << ((uint)uVar3 & 0x3f)));
-  __restgprlr_29();
+  uVar1 = Session_GetLocalVoiceConnectivity(param_2);
+  CL_UpdateConnectivityBits(param_1,param_2,uVar1 & ~(1 << (param_3 & 0x3fU)));
   return;
 }
 
@@ -319,6 +283,8 @@ netsrc_t CL_GetLocalClientSock(LocalClientNum_t param_1,connstate_t param_2)
 
 // 82355B20  CL_SendPeerConnectivityTest  (client_mp/cl_voice.cpp:250)
 
+/* WARNING: Function: __savegprlr_21 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_21 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
@@ -328,16 +294,12 @@ void CL_SendPeerConnectivityTest
 {
   uchar *puVar1;
   netsrc_t nVar2;
-  longlong lVar3;
-  int iVar5;
-  bool bVar11;
-  PartyData *pPVar7;
-  netadr_t *pnVar8;
-  ulong64 uVar4;
-  netsrc_t nVar9;
-  int iVar10;
-  ulonglong uVar12;
-  ulonglong uVar13;
+  int iVar4;
+  bool bVar8;
+  PartyData *pPVar5;
+  netadr_t *pnVar6;
+  ulong64 uVar3;
+  netsrc_t nVar7;
   netadr_t in_stack_fffff708;
   char cStack_8ac;
   char cStack_8ab;
@@ -346,38 +308,31 @@ void CL_SendPeerConnectivityTest
   msg_t mStack_8a0;
   netadr_t nStack_870;
   uchar auStack_860 [2144];
-  SessionData *pSVar6;
   
-  uVar13 = (ulonglong)param_5;
-  uVar12 = (ulonglong)(int)param_4;
-  lVar3 = __savegprlr_21(param_1);
-  if ((uVar12 & 0xffffffff) == 0) {
+  if (param_4 == (SessionData *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_voice.cpp",0xff,0
                     ,"%s");
   }
-  pSVar6 = (SessionData *)uVar12;
-  iVar5 = Session_AreWeHost(pSVar6);
-  if (iVar5 != 0) {
+  iVar4 = Session_AreWeHost(param_4);
+  if (iVar4 != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_voice.cpp",0x100,
                     0,"%s");
   }
-  iVar5 = (int)uVar13;
-  bVar11 = Session_IsHost(pSVar6,iVar5);
-  if (bVar11) {
+  bVar8 = Session_IsHost(param_4,param_5);
+  if (bVar8) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_voice.cpp",0x101,
                     0,"%s");
   }
-  pPVar7 = Lobby_GetPartyData();
-  if ((((pPVar7->migrateData).migrateActive == false) || (bVar11 = Lobby_IsInLobby(), !bVar11)) &&
+  pPVar5 = Lobby_GetPartyData();
+  if ((((pPVar5->migrateData).migrateActive == false) || (bVar8 = Lobby_IsInLobby(), !bVar8)) &&
      ((g_partyData.migrateData.migrateActive == false || (g_partyData.inParty == 0)))) {
-    bVar11 = Session_IsUserRegistered(pSVar6,iVar5);
-    if (!bVar11) {
+    bVar8 = Session_IsUserRegistered(param_4,param_5);
+    if (!bVar8) {
       Com_Printf(0xe,"Tried to send a voice connectivity test packet to unregistered client %i\n");
-      __restgprlr_21();
       return;
     }
-    bVar11 = Live_IsSignedIn(param_2);
-    if (!bVar11) {
+    bVar8 = Live_IsSignedIn(param_2);
+    if (!bVar8) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_voice.cpp",
                       0x10e,0,"%s");
     }
@@ -385,24 +340,24 @@ void CL_SendPeerConnectivityTest
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_voice.cpp",
                       0x10f,0,"%s");
     }
-    if (param_3 == iVar5) {
+    if (param_3 == param_5) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_voice.cpp",
                       0x111,0,"ourClientNum != clientNum\n\t%i, %i");
     }
-    bVar11 = Session_IsHost(pSVar6,param_3);
-    if (bVar11) {
+    bVar8 = Session_IsHost(param_4,param_3);
+    if (bVar8) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_voice.cpp",
                       0x112,0,"%s");
     }
-    pnVar8 = Session_GetPlayerAddr(&nStack_870,pSVar6,iVar5);
-    puVar1 = *(uchar **)pnVar8->ip;
-    nVar2 = pnVar8->localNetID;
+    pnVar6 = Session_GetPlayerAddr(&nStack_870,param_4,param_5);
+    puVar1 = *(uchar **)pnVar6->ip;
+    nVar2 = pnVar6->localNetID;
     cStack_8ac = (char)((uint)puVar1 >> 0x18);
     cStack_8ab = (char)((uint)puVar1 >> 0x10);
     cStack_8aa = (char)((uint)puVar1 >> 8);
     cStack_8a9 = (char)puVar1;
-    iVar5 = NET_IsLocalAddress(in_stack_fffff708);
-    if (iVar5 != 0) {
+    iVar4 = NET_IsLocalAddress(in_stack_fffff708);
+    if (iVar4 != 0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_voice.cpp",
                       0x115,0,"%s");
     }
@@ -411,46 +366,44 @@ void CL_SendPeerConnectivityTest
       if (((cStack_8ac == '\0') && (cStack_8ab == '\0')) &&
          ((cStack_8aa == '\0' && (cStack_8a9 == '\0')))) {
         Com_Printf(0xe,"Client %i has a zero inaddr!  Our clientNum is %i\n");
-        __restgprlr_21();
         return;
       }
       MSG_Init(&mStack_8a0,auStack_860,0x800);
       Com_Printf(0xe,"Sending voice connectivity test packet to %u.%u.%u.%u:%i (client %i)\n");
       MSG_WriteString(&mStack_8a0,"vt");
-      MSG_WriteData(&mStack_8a0,&(pSVar6->dyn).sessionInfo,8);
+      MSG_WriteData(&mStack_8a0,&(param_4->dyn).sessionInfo,8);
       MSG_WriteByte(&mStack_8a0,param_3);
       if (((systemlink->current).enabled == false) &&
          (((splitscreen->current).enabled == false || ((onlinegame->current).enabled != false)))) {
-        uVar4 = Live_GetXuid(param_2);
+        uVar3 = Live_GetXuid(param_2);
       }
       else {
         if ((onlinegame->current).enabled != false) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_voice.cpp",
                           0x133,0,"%s");
         }
-        uVar4 = Live_GetOfflineXuid(param_2);
+        uVar3 = Live_GetOfflineXuid(param_2);
       }
-      MSG_WriteInt64(&mStack_8a0,uVar4);
-      nVar9 = CL_GetLocalClientSock((LocalClientNum_t)lVar3,CA_CONNECTED);
-      NET_OutOfBandData(nVar9,in_stack_fffff708,puVar1,nVar2);
-      iVar5 = (int)(((uVar13 & 0xfffffff) * 0x10 + lVar3 + 0x26 & 0x3fffffff) << 2);
-      if (*(int *)((pSVar6->dyn).sessionInfo.sessionID.ab + iVar5 + -0x14) == 0) {
-        iVar10 = Sys_Milliseconds();
-        *(int *)((pSVar6->dyn).sessionInfo.sessionID.ab + iVar5 + -0x14) = iVar10 + 600;
-        __restgprlr_21();
+      MSG_WriteInt64(&mStack_8a0,uVar3);
+      nVar7 = CL_GetLocalClientSock(param_1,CA_CONNECTED);
+      NET_OutOfBandData(nVar7,in_stack_fffff708,puVar1,nVar2);
+      if ((param_4->dyn).users[param_5].nextConnectivityTestTime[param_1] == 0) {
+        iVar4 = Sys_Milliseconds();
+        (param_4->dyn).users[param_5].nextConnectivityTestTime[param_1] = iVar4 + 600;
         return;
       }
-      iVar10 = Sys_Milliseconds();
-      *(int *)((pSVar6->dyn).sessionInfo.sessionID.ab + iVar5 + -0x14) = iVar10 + 10000;
+      iVar4 = Sys_Milliseconds();
+      (param_4->dyn).users[param_5].nextConnectivityTestTime[param_1] = iVar4 + 10000;
     }
   }
-  __restgprlr_21();
   return;
 }
 
 
 // 82355F40  CL_RebuildConnectionToClient  (client_mp/cl_voice.cpp:329)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
@@ -458,15 +411,12 @@ bool CL_RebuildConnectionToClient
                (SessionData *param_1,LocalClientNum_t param_2,int param_3,int param_4)
 
 {
-  SessionData *pSVar1;
-  netadr_t *pnVar2;
-  int iVar3;
-  undefined1 uVar4;
-  bool bVar5;
-  ulonglong uVar6;
-  longlong lVar7;
-  XNADDR *pXVar8;
-  byte *pbVar9;
+  netadr_t *pnVar1;
+  int iVar2;
+  bool bVar3;
+  longlong lVar4;
+  XNADDR *pXVar5;
+  byte *pbVar6;
   netadr_t in_stack_fffffee8;
   <unnamed_type_S_un> local_d0;
   ushort local_cc [6];
@@ -475,28 +425,26 @@ bool CL_RebuildConnectionToClient
   netadr_t nStack_70;
   byte local_60 [96];
   
-  uVar6 = (ulonglong)(int)param_2;
-  pSVar1 = (SessionData *)__savegprlr_27(param_1);
-  pnVar2 = Session_GetPlayerAddr(&nStack_70,pSVar1,param_4);
-  local_c0.type = pnVar2->type;
-  local_c0.ip = *&pnVar2->ip;
-  local_c0.port = pnVar2->port;
-  local_c0._10_2_ = *(undefined2 *)&pnVar2->field_0xa;
-  local_c0.localNetID = pnVar2->localNetID;
+  pnVar1 = Session_GetPlayerAddr(&nStack_70,param_1,param_4);
+  local_c0.type = pnVar1->type;
+  local_c0.ip = *&pnVar1->ip;
+  local_c0.port = pnVar1->port;
+  local_c0._10_2_ = *(undefined2 *)&pnVar1->field_0xa;
+  local_c0.localNetID = pnVar1->localNetID;
   NET_AdrToString(in_stack_fffffee8);
   Com_Printf(0x10,"CL_RebuildConnectionToClient() (%s) to client %i (%llx) at %s.\n");
   memcpy();
-  iVar3 = Party_InParty(&g_partyData);
-  if (iVar3 == 0) {
+  iVar2 = Party_InParty(&g_partyData);
+  if (iVar2 == 0) {
     Lobby_GetPartyData();
   }
-  if (3 < (uVar6 & 0xffffffff)) {
+  if (LOCAL_CLIENT_3 < param_2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\client_mp.h",0x4aa,0
                     ,"localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)");
   }
   memcpy();
-  pbVar9 = local_60;
-  pXVar8 = &_Stack_b0.hostAddress;
+  pbVar6 = local_60;
+  pXVar5 = &_Stack_b0.hostAddress;
   local_60[0] = 0;
   local_60[1] = 0;
   local_60[2] = 0;
@@ -534,31 +482,28 @@ bool CL_RebuildConnectionToClient
   local_60[0x22] = 0;
   local_60[0x23] = 0;
   do {
-    lVar7 = (ulonglong)*pbVar9 - (ulonglong)(pXVar8->ina).S_un.S_un_b.s_b1;
-    if (lVar7 != 0) break;
-    pbVar9 = pbVar9 + 1;
-    pXVar8 = (XNADDR *)((int)&(pXVar8->ina).S_un + 1);
-  } while (pbVar9 != local_60 + 0x24);
-  if ((int)lVar7 == 0) {
+    lVar4 = (ulonglong)*pbVar6 - (ulonglong)(pXVar5->ina).S_un.S_un_b.s_b1;
+    if (lVar4 != 0) break;
+    pbVar6 = pbVar6 + 1;
+    pXVar5 = (XNADDR *)((int)&(pXVar5->ina).S_un + 1);
+  } while (pbVar6 != local_60 + 0x24);
+  if ((int)lVar4 == 0) {
     Com_Printf(0x10,
                "CL_RebuildConnectionToClient() FAILED: Client %i has no xnaddr, we can\'t talk to them.\n"
               );
-    uVar4 = __restgprlr_27(0);
-    return (bool)uVar4;
+    return false;
   }
   NET_UnregisterAddr(&local_c0);
-  bVar5 = Xenon_RegisterRemoteXenon(&_Stack_b0,(in_addr *)&local_d0.S_un_b,local_cc);
-  if (!bVar5) {
-    CL_UpdateFailedVoiceConnectivityBitsForRemoteUser(pSVar1,param_3,param_4);
+  bVar3 = Xenon_RegisterRemoteXenon(&_Stack_b0,(in_addr *)&local_d0.S_un_b,local_cc);
+  if (!bVar3) {
+    CL_UpdateFailedVoiceConnectivityBitsForRemoteUser(param_1,param_3,param_4);
     Com_Printf(0x10,"CL_RebuildConnectionToClient() FAILED: Address mapping failed.\n");
-    uVar4 = __restgprlr_27(0);
-    return (bool)uVar4;
+    return false;
   }
   if ((((local_d0.S_un_b.s_b1 == '\x7f') && (local_d0.S_un_b.s_b2 == '\0')) &&
       (local_d0.S_un_b.s_b3 == '\0')) && (local_d0.S_un_b.s_b4 == '\x01')) {
     Com_Printf(0x10,"CL_RebuildConnectionToClient() FAILED: inaddr is 127.0.0.1 (loopback).\n");
-    uVar4 = __restgprlr_27(0);
-    return (bool)uVar4;
+    return false;
   }
   if (local_d0.S_addr == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_voice.cpp",0x181,
@@ -567,129 +512,122 @@ bool CL_RebuildConnectionToClient
   XNetConnect((in_addr)local_d0.S_un_b);
   Com_Printf(0x10,"CL_RebuildConnectionToClient() SUCCESS: Trying to resend to new IP %u.%u.%u.%u\n"
             );
-  Session_UpdateSplitscreenMembersInAddr(pSVar1,param_4,(in_addr)local_d0.S_un_b,local_cc[0]);
-  uVar4 = __restgprlr_27(1);
-  return (bool)uVar4;
+  Session_UpdateSplitscreenMembersInAddr(param_1,param_4,(in_addr)local_d0.S_un_b,local_cc[0]);
+  return true;
 }
 
 
 // 82358D30  CL_SendVoiceTestPackets  (client_mp/cl_voice.cpp:402)
 
+/* WARNING: Function: __savegprlr_18 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_18 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 void CL_SendVoiceTestPackets(SessionData *param_1,int param_2,LocalClientNum_t param_3)
 
 {
-  SessionData *pSVar1;
-  uint uVar2;
-  longlong lVar3;
+  uint uVar1;
+  int iVar2;
+  bool bVar6;
+  int iVar3;
   int iVar4;
-  bool bVar8;
-  int iVar5;
-  int iVar6;
-  uint uVar7;
-  longlong lVar9;
-  ulonglong uVar10;
-  int iVar11;
+  uint uVar5;
+  int *piVar7;
+  ulonglong uVar8;
+  int iVar9;
   netadr_t in_stack_ffffff18;
   netadr_t in_stack_ffffff28;
   netadr_t anStack_90 [9];
   
-  lVar9 = (longlong)(int)param_3;
-  lVar3 = __savegprlr_18(param_1);
-  pSVar1 = (SessionData *)lVar3;
-  if ((pSVar1->dyn).sessionHandle != (void *)0x0) {
-    iVar4 = Session_HostNum(pSVar1);
-    bVar8 = Session_IsUserRegistered(pSVar1,iVar4);
-    if (bVar8) {
-      iVar5 = Session_AreWeHost(pSVar1);
-      if (iVar5 == 0) {
-        bVar8 = Live_IsSignedIn(param_2);
-        if (bVar8) {
-          iVar5 = Live_GetOurClientNum(param_2,pSVar1);
-          if (iVar5 < 0) {
+  if ((param_1->dyn).sessionHandle != (void *)0x0) {
+    iVar2 = Session_HostNum(param_1);
+    bVar6 = Session_IsUserRegistered(param_1,iVar2);
+    if (bVar6) {
+      iVar3 = Session_AreWeHost(param_1);
+      if (iVar3 == 0) {
+        bVar6 = Live_IsSignedIn(param_2);
+        if (bVar6) {
+          iVar3 = Live_GetOurClientNum(param_2,param_1);
+          if (iVar3 < 0) {
             if ((xenon_voiceDebug->current).enabled != false) {
               Com_Printf(0xe,
                          "Deferring sending connectivity tests until we know our own client number\n"
                         );
-              __restgprlr_18();
               return;
             }
           }
           else {
-            bVar8 = Session_IsUserRegistered(pSVar1,iVar5);
-            if (!bVar8) {
+            bVar6 = Session_IsUserRegistered(param_1,iVar3);
+            if (!bVar6) {
               MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_voice.cpp"
                               ,0x1c0,0,"%s");
             }
-            if (iVar5 == iVar4) {
+            if (iVar3 == iVar2) {
               MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_voice.cpp"
                               ,0x1c1,0,"ourClientNum != hostNum\n\t%i, %i");
             }
-            Session_GetPlayerAddr(anStack_90,pSVar1,iVar4);
-            iVar4 = NET_IsLocalAddress(in_stack_ffffff18);
-            if (iVar4 != 0) {
+            Session_GetPlayerAddr(anStack_90,param_1,iVar2);
+            iVar2 = NET_IsLocalAddress(in_stack_ffffff18);
+            if (iVar2 != 0) {
               MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_voice.cpp"
                               ,0x1c5,0,"%s");
             }
-            iVar4 = Sys_Milliseconds();
-            uVar10 = 1;
-            lVar3 = (lVar9 + 0x26U & 0x3fffffff) * 4 + lVar3;
-            uVar2 = (uint)(0x100000001 << ((longlong)iVar5 & 0x1fU)) |
-                    (uint)(0x100000001 >> 0x40 - ((longlong)iVar5 & 0x1fU));
-            iVar11 = 0;
+            iVar2 = Sys_Milliseconds();
+            uVar8 = 1;
+            piVar7 = (param_1->dyn).users[0].nextConnectivityTestTime + param_3;
+            uVar1 = (uint)(0x100000001 << ((longlong)iVar3 & 0x1fU)) |
+                    (uint)(0x100000001 >> 0x40 - ((longlong)iVar3 & 0x1fU));
+            iVar9 = 0;
             do {
-              if ((((iVar11 != iVar5) && (bVar8 = Session_IsUserRegistered(pSVar1,iVar11), bVar8))
-                  && (*(int *)lVar3 <= iVar4)) &&
-                 (bVar8 = Session_PlayerHasLoopbackAddr(pSVar1,iVar11), !bVar8)) {
-                Session_GetPlayerAddr(anStack_90,pSVar1,iVar11);
-                bVar8 = Session_IsHost(pSVar1,iVar11);
-                if ((bVar8) ||
-                   (iVar6 = NET_CompareIPAdr(in_stack_ffffff18,in_stack_ffffff28), iVar6 != 0)) {
-                  uVar7 = Session_GetClientVoiceConnectivity(pSVar1,iVar11);
-                  if ((uVar7 & uVar2) == 0) {
+              if ((((iVar9 != iVar3) && (bVar6 = Session_IsUserRegistered(param_1,iVar9), bVar6)) &&
+                  (*piVar7 <= iVar2)) &&
+                 (bVar6 = Session_PlayerHasLoopbackAddr(param_1,iVar9), !bVar6)) {
+                Session_GetPlayerAddr(anStack_90,param_1,iVar9);
+                bVar6 = Session_IsHost(param_1,iVar9);
+                if ((bVar6) ||
+                   (iVar4 = NET_CompareIPAdr(in_stack_ffffff18,in_stack_ffffff28), iVar4 != 0)) {
+                  uVar5 = Session_GetClientVoiceConnectivity(param_1,iVar9);
+                  if ((uVar5 & uVar1) == 0) {
                     Com_PrintWarning(0xe,
                                      "SendVoiceTestPackets - The host doesn\'t think he can receive packets from us (%i <- %i)!\n"
                                     );
                   }
-                  uVar7 = Session_GetClientVoiceConnectivity(pSVar1,iVar5);
-                  if ((uVar7 & (uint)uVar10) == 0) {
+                  uVar5 = Session_GetClientVoiceConnectivity(param_1,iVar3);
+                  if ((uVar5 & (uint)uVar8) == 0) {
                     Com_PrintWarning(0xe,
                                      "SendVoiceTestPackets - We don\'t think we can receive packets from the host (%i <- %i)!\n"
                                     );
                   }
                 }
                 else {
-                  bVar8 = CL_HasConnectionFailed(pSVar1,iVar11);
-                  if ((bVar8) && (iVar6 = Live_OnlinePlayEvenIfDown(), iVar6 == 0)) {
-                    Session_GetXuid(pSVar1,iVar11);
+                  bVar6 = CL_HasConnectionFailed(param_1,iVar9);
+                  if ((bVar6) && (iVar4 = Live_OnlinePlayEvenIfDown(), iVar4 == 0)) {
+                    Session_GetXuid(param_1,iVar9);
                     Com_Printf(0xe,
                                "CL_SendVoiceTestPackets - (%s) Connection has failed, rebuilding connection to \'%llx\'\n"
                               );
-                    CL_RebuildConnectionToClient(pSVar1,(LocalClientNum_t)lVar9,iVar5,iVar11);
+                    CL_RebuildConnectionToClient(param_1,param_3,iVar3,iVar9);
                   }
                   else {
-                    bVar8 = CL_ConnectionIsEstablished(pSVar1,iVar11);
-                    if ((bVar8) &&
-                       (uVar7 = Session_GetClientVoiceConnectivity(pSVar1,iVar11),
-                       (uVar7 & uVar2) == 0)) {
-                      CL_SendPeerConnectivityTest
-                                ((LocalClientNum_t)lVar9,param_2,iVar5,pSVar1,iVar11);
+                    bVar6 = CL_ConnectionIsEstablished(param_1,iVar9);
+                    if ((bVar6) &&
+                       (uVar5 = Session_GetClientVoiceConnectivity(param_1,iVar9),
+                       (uVar5 & uVar1) == 0)) {
+                      CL_SendPeerConnectivityTest(param_3,param_2,iVar3,param_1,iVar9);
                     }
                   }
                 }
               }
-              iVar11 = iVar11 + 1;
-              lVar3 = lVar3 + 0x40;
-              uVar10 = (uVar10 & 0x7fffffff) << 1 | uVar10 >> 0x1f;
-            } while (iVar11 < 0x12);
+              iVar9 = iVar9 + 1;
+              piVar7 = piVar7 + 0x10;
+              uVar8 = (uVar8 & 0x7fffffff) << 1 | uVar8 >> 0x1f;
+            } while (iVar9 < 0x12);
           }
         }
         else if ((xenon_voiceDebug->current).enabled != false) {
           Com_Printf(0xe,"Deferring sending connectivity tests until controller %i is signed in.\n")
           ;
-          __restgprlr_18();
           return;
         }
       }
@@ -698,17 +636,17 @@ void CL_SendVoiceTestPackets(SessionData *param_1,int param_2,LocalClientNum_t p
       Com_Printf(0xe,
                  "Deferring sending connectivity tests until the host is registered. Can happen during host migrations\n"
                 );
-      __restgprlr_18();
       return;
     }
   }
-  __restgprlr_18();
   return;
 }
 
 
 // 82356200  CL_SendPeerVoiceData_Real  (client_mp/cl_voice.cpp:516)
 
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
@@ -720,127 +658,114 @@ bool CL_SendPeerVoiceData_Real
   dvar_t *pdVar1;
   uchar *puVar2;
   netsrc_t nVar3;
-  SessionData *pSVar4;
-  int iVar5;
-  bool bVar9;
-  undefined1 uVar10;
-  netadr_t *pnVar7;
-  int iVar8;
-  ulonglong uVar11;
-  undefined8 uVar12;
-  undefined4 uVar13;
-  ulonglong uVar14;
+  int iVar4;
+  bool bVar7;
+  netadr_t *pnVar5;
+  int iVar6;
+  undefined8 uVar8;
+  undefined4 uVar9;
   netadr_t in_stack_ffffff38;
   char cStack_7c;
   char cStack_7b;
   char cStack_7a;
   char cStack_79;
   netadr_t anStack_70 [7];
-  LocalClientNum_t LVar6;
   
-  uVar14 = (ulonglong)param_6;
-  uVar11 = (ulonglong)(int)param_2;
-  pSVar4 = (SessionData *)__savegprlr_22(param_1);
   if ((param_4 < 0) || (0x11 < param_4)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_voice.cpp",0x210,
                     0,"%s\n\t(clientNum) = %i");
   }
-  LVar6 = (LocalClientNum_t)uVar11;
-  iVar5 = CL_ControllerIndexFromClientNum(LVar6);
-  bVar9 = Live_IsSignedIn(iVar5);
-  if (!bVar9) {
+  iVar4 = CL_ControllerIndexFromClientNum(param_2);
+  bVar7 = Live_IsSignedIn(iVar4);
+  if (!bVar7) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_voice.cpp",0x214,
                     0,"%s");
   }
-  iVar5 = Live_GetOurClientNum(iVar5,pSVar4);
-  if (iVar5 == param_4) {
+  iVar4 = Live_GetOurClientNum(iVar4,param_1);
+  if (iVar4 == param_4) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_voice.cpp",0x217,
                     0,"%s\n\t(clientNum) = %i");
   }
-  if (3 < (uVar11 & 0xffffffff)) {
+  if (LOCAL_CLIENT_3 < param_2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_voice.h",0x4d,0,
                     "localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)");
   }
-  bVar9 = IsServerRunning();
+  bVar7 = IsServerRunning();
   pdVar1 = xenon_maxVoicePacketsPerSec;
-  if (bVar9) {
+  if (bVar7) {
     pdVar1 = xenon_maxVoicePacketsPerSecForServer;
   }
-  if (((pdVar1->current).integer < cl_voiceCommunication[LVar6].packetsPerSec) &&
-     ((uVar14 & 0xff) != 0)) {
+  if (((pdVar1->current).integer < cl_voiceCommunication[param_2].packetsPerSec) && (param_6)) {
     if ((xenon_voiceDebug->current).enabled != false) {
       Com_Printf(0xe,
                  "Dropping voice packet to client %i because we\'re trying to send too many this frame\n"
                 );
     }
-LAB_8235637c:
-    uVar10 = __restgprlr_22(1);
-    return (bool)uVar10;
+    return true;
   }
-  cl_voiceCommunication[LVar6].packetsPerSec = cl_voiceCommunication[LVar6].packetsPerSec + 1;
-  bVar9 = Session_IsUserRegistered(pSVar4,param_4);
-  if (bVar9) {
-    pnVar7 = Session_GetPlayerAddr(anStack_70,pSVar4,param_4);
-    puVar2 = *(uchar **)pnVar7->ip;
-    nVar3 = pnVar7->localNetID;
+  cl_voiceCommunication[param_2].packetsPerSec = cl_voiceCommunication[param_2].packetsPerSec + 1;
+  bVar7 = Session_IsUserRegistered(param_1,param_4);
+  if (bVar7) {
+    pnVar5 = Session_GetPlayerAddr(anStack_70,param_1,param_4);
+    puVar2 = *(uchar **)pnVar5->ip;
+    nVar3 = pnVar5->localNetID;
     cStack_7c = (char)((uint)puVar2 >> 0x18);
     cStack_7b = (char)((uint)puVar2 >> 0x10);
     cStack_7a = (char)((uint)puVar2 >> 8);
     cStack_79 = (char)puVar2;
-    iVar8 = NET_IsLocalAddress(in_stack_ffffff38);
-    if ((iVar8 == 0) &&
+    iVar6 = NET_IsLocalAddress(in_stack_ffffff38);
+    if ((iVar6 == 0) &&
        ((((cStack_7c != '\x7f' || (cStack_7b != '\0')) || (cStack_7a != '\0')) ||
         (cStack_79 != '\x01')))) {
       if (((cStack_7c == '\0') && (cStack_7b == '\0')) &&
          ((cStack_7a == '\0' && (cStack_79 == '\0')))) {
         Com_Printf(0xe,"Send voice: Client %i had a zero inaddr!\n");
-        uVar10 = __restgprlr_22(0);
-        return (bool)uVar10;
+        return false;
       }
       if ((xenon_voiceDebug->current).enabled != false) {
         Com_Printf(0xe,"Sending voice packet to %u.%u.%u.%u:%i (client %i)\n");
       }
-      iVar8 = NET_OutOfBandVoiceData(param_3,in_stack_ffffff38,puVar2,nVar3,SUB41(param_5->data,0));
-      if (iVar8 == 0) {
-        Session_GetXuid(pSVar4,param_4);
-        NET_AdrToString(in_stack_ffffff38);
-        Com_Printf(0x19,
-                   "Got WSAEHOSTUNREACH while trying to send voice data; rebuilding connection (%s) %llx.\n"
-                  );
-        bVar9 = CL_RebuildConnectionToClient(pSVar4,LVar6,iVar5,param_4);
-        if (bVar9) {
-          pnVar7 = Session_GetPlayerAddr(anStack_70,pSVar4,param_4);
-          uVar12._0_4_ = pnVar7->type;
-          uVar12._4_1_ = pnVar7->ip[0];
-          uVar12._5_1_ = pnVar7->ip[1];
-          uVar12._6_1_ = pnVar7->ip[2];
-          uVar12._7_1_ = pnVar7->ip[3];
-          uVar13 = pnVar7->localNetID;
-          iVar8 = NET_OutOfBandVoiceData
-                            (param_3,in_stack_ffffff38,(uchar *)uVar12,uVar13,SUB41(param_5->data,0)
-                            );
-          if (iVar8 == 0) {
-            CL_UpdateFailedVoiceConnectivityBitsForRemoteUser(pSVar4,iVar5,param_4);
-            Com_PrintWarning(0xe,
-                             "Error sending packet even after rebuilding the secure connection.\n");
-            uVar10 = __restgprlr_22(0);
-            return (bool)uVar10;
-          }
-        }
+      iVar6 = NET_OutOfBandVoiceData(param_3,in_stack_ffffff38,puVar2,nVar3,SUB41(param_5->data,0));
+      if (iVar6 != 0) {
+        return true;
       }
-      goto LAB_8235637c;
+      Session_GetXuid(param_1,param_4);
+      NET_AdrToString(in_stack_ffffff38);
+      Com_Printf(0x19,
+                 "Got WSAEHOSTUNREACH while trying to send voice data; rebuilding connection (%s) %llx.\n"
+                );
+      bVar7 = CL_RebuildConnectionToClient(param_1,param_2,iVar4,param_4);
+      if (!bVar7) {
+        return true;
+      }
+      pnVar5 = Session_GetPlayerAddr(anStack_70,param_1,param_4);
+      uVar8._0_4_ = pnVar5->type;
+      uVar8._4_1_ = pnVar5->ip[0];
+      uVar8._5_1_ = pnVar5->ip[1];
+      uVar8._6_1_ = pnVar5->ip[2];
+      uVar8._7_1_ = pnVar5->ip[3];
+      uVar9 = pnVar5->localNetID;
+      iVar6 = NET_OutOfBandVoiceData
+                        (param_3,in_stack_ffffff38,(uchar *)uVar8,uVar9,SUB41(param_5->data,0));
+      if (iVar6 != 0) {
+        return true;
+      }
+      CL_UpdateFailedVoiceConnectivityBitsForRemoteUser(param_1,iVar4,param_4);
+      Com_PrintWarning(0xe,"Error sending packet even after rebuilding the secure connection.\n");
+      return false;
     }
   }
   else {
     Com_Printf(0xe,"Tried to send a packet to unregistered client %i\n");
   }
-  uVar10 = __restgprlr_22(0);
-  return (bool)uVar10;
+  return false;
 }
 
 
 // 823565B8  CL_SendPeerVoiceData  (client_mp/cl_voice.cpp:636)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
@@ -850,234 +775,218 @@ bool CL_SendPeerVoiceData
 
 {
   char *pcVar1;
-  SessionData *pSVar2;
-  bool bVar8;
-  int iVar3;
-  PartyData *pPVar4;
-  netsrc_t nVar5;
-  undefined1 uVar9;
-  connstate_t cVar6;
-  clientConnection_t *pcVar7;
-  undefined8 uVar10;
-  undefined4 uVar11;
+  bool bVar7;
+  int iVar2;
+  PartyData *pPVar3;
+  netsrc_t nVar4;
+  connstate_t cVar5;
+  clientConnection_t *pcVar6;
+  undefined8 uVar8;
+  undefined4 uVar9;
   netadr_t in_stack_fffff748;
   msg_t mStack_860;
   uchar auStack_830 [2096];
   
-  pSVar2 = (SessionData *)__savegprlr_28(param_1);
-  bVar8 = CL_SendPeerVoiceData_Real(pSVar2,param_2,param_3,param_4,param_5,param_6);
-  if (bVar8) {
-    uVar9 = __restgprlr_28(1);
-    return (bool)uVar9;
+  bVar7 = CL_SendPeerVoiceData_Real(param_1,param_2,param_3,param_4,param_5,param_6);
+  if (bVar7) {
+    return true;
   }
-  bVar8 = Session_IsHost(pSVar2,param_4);
-  if (!bVar8) {
-    pPVar4 = &g_partyData;
-    iVar3 = Party_InParty(&g_partyData);
-    if ((iVar3 != 0) ||
-       ((bVar8 = Lobby_IsInRunningLobby(), bVar8 &&
-        (pPVar4 = Lobby_GetPartyData(), pPVar4 != (PartyData *)0x0)))) {
+  bVar7 = Session_IsHost(param_1,param_4);
+  if (!bVar7) {
+    pPVar3 = &g_partyData;
+    iVar2 = Party_InParty(&g_partyData);
+    if ((iVar2 != 0) ||
+       ((bVar7 = Lobby_IsInRunningLobby(), bVar7 &&
+        (pPVar3 = Lobby_GetPartyData(), pPVar3 != (PartyData *)0x0)))) {
       va("%icanthear %i");
-      pcVar1 = *(char **)(pPVar4->currentHost).addr.ip;
-      nVar5 = NET_GetLocalNetIDFromLocalClientNum(param_2);
-      bVar8 = NET_OutOfBandPrint(nVar5,in_stack_fffff748,pcVar1);
-      if (!bVar8) {
+      pcVar1 = *(char **)(pPVar3->currentHost).addr.ip;
+      nVar4 = NET_GetLocalNetIDFromLocalClientNum(param_2);
+      bVar7 = NET_OutOfBandPrint(nVar4,in_stack_fffff748,pcVar1);
+      if (!bVar7) {
         Com_PrintError(0xe,
                        "Tried to tell the server that client %i can\'t hear us but we couldn\'t send the packet to the server\n"
                       );
-        uVar9 = __restgprlr_28(0);
-        return (bool)uVar9;
+        return false;
       }
     }
-    cVar6 = CL_GetLocalClientConnectionState(param_2);
-    if (4 < (int)cVar6) {
-      pcVar7 = CL_GetLocalClientConnection(param_2);
+    cVar5 = CL_GetLocalClientConnectionState(param_2);
+    if (4 < (int)cVar5) {
+      pcVar6 = CL_GetLocalClientConnection(param_2);
       MSG_Init(&mStack_860,auStack_830,0x800);
       MSG_WriteString(&mStack_860,"icanthear");
       MSG_WriteByte(&mStack_860,param_4);
-      uVar10._0_4_ = (pcVar7->serverAddress).type;
-      uVar10._4_1_ = (pcVar7->serverAddress).ip[0];
-      uVar10._5_1_ = (pcVar7->serverAddress).ip[1];
-      uVar10._6_1_ = (pcVar7->serverAddress).ip[2];
-      uVar10._7_1_ = (pcVar7->serverAddress).ip[3];
-      uVar11 = (pcVar7->serverAddress).localNetID;
-      NET_OutOfBandData((pcVar7->netchan).sock,in_stack_fffff748,(uchar *)uVar10,uVar11);
+      uVar8._0_4_ = (pcVar6->serverAddress).type;
+      uVar8._4_1_ = (pcVar6->serverAddress).ip[0];
+      uVar8._5_1_ = (pcVar6->serverAddress).ip[1];
+      uVar8._6_1_ = (pcVar6->serverAddress).ip[2];
+      uVar8._7_1_ = (pcVar6->serverAddress).ip[3];
+      uVar9 = (pcVar6->serverAddress).localNetID;
+      NET_OutOfBandData((pcVar6->netchan).sock,in_stack_fffff748,(uchar *)uVar8,uVar9);
     }
   }
-  uVar9 = __restgprlr_28(0);
-  return (bool)uVar9;
+  return false;
 }
 
 
 // 82356730  CL_ServerIsTheOnlyWayToTalkToClient  (client_mp/cl_voice.cpp:691)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 bool CL_ServerIsTheOnlyWayToTalkToClient(SessionData *param_1,int param_2)
 
 {
-  SessionData *pSVar1;
-  int iVar2;
-  bool bVar5;
-  undefined1 uVar6;
+  int iVar1;
+  bool bVar4;
+  uint uVar2;
   uint uVar3;
-  uint uVar4;
-  longlong lVar7;
   
-  lVar7 = (longlong)param_2;
-  pSVar1 = (SessionData *)__savegprlr_29(param_1,lVar7);
-  iVar2 = Session_HostNum(pSVar1);
-  bVar5 = Session_IsUserRegistered(pSVar1,iVar2);
-  if (!bVar5) {
-    uVar6 = __restgprlr_29(0);
-    return (bool)uVar6;
+  iVar1 = Session_HostNum(param_1);
+  bVar4 = Session_IsUserRegistered(param_1,iVar1);
+  if (!bVar4) {
+    return false;
   }
-  uVar3 = Session_GetConnectivityBitsForClientAddress(pSVar1,iVar2);
-  uVar4 = Session_GetConnectivityBitsForLocalClients(pSVar1);
-  uVar6 = __restgprlr_29(((uint)lVar7 & ~(uVar4 | uVar3)) == 0);
-  return (bool)uVar6;
+  uVar2 = Session_GetConnectivityBitsForClientAddress(param_1,iVar1);
+  uVar3 = Session_GetConnectivityBitsForLocalClients(param_1);
+  return (param_2 & ~(uVar3 | uVar2)) == 0;
 }
 
 
 // 823567A0  CL_FindGoodRouteForClientList  (client_mp/cl_voice.cpp:706)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 int CL_FindGoodRouteForClientList(SessionData *param_1,int param_2,int *param_3,int param_4)
 
 {
-  SessionData *pSVar1;
-  bool bVar3;
-  int iVar2;
-  longlong lVar4;
-  uint uVar5;
-  ulonglong uVar6;
-  longlong lVar7;
-  longlong lVar8;
+  bool bVar2;
+  int iVar1;
+  uint uVar3;
+  ulonglong uVar4;
+  longlong lVar5;
+  longlong lVar6;
   
-  lVar4 = (longlong)param_2;
-  pSVar1 = (SessionData *)__savegprlr_24(param_1);
-  lVar8 = 0;
-  do {
-    lVar7 = lVar8 + lVar4 + 1;
-    iVar2 = (int)lVar7;
-    uVar5 = iVar2 / 0x12 + (iVar2 >> 0x1f);
-    uVar6 = (longlong)(int)uVar5 + (ulonglong)(uVar5 >> 0x1f);
-    uVar6 = lVar7 + (uVar6 + (uVar6 & 0x1fffffff) * 8 & 0x7fffffff) * -2;
-    uVar5 = (uint)uVar6;
-    bVar3 = Session_IsHost(pSVar1,uVar5);
-    if ((((!bVar3) && (bVar3 = Session_IsUserRegistered(pSVar1,uVar5), bVar3)) &&
-        (bVar3 = Session_PlayerHasLoopbackAddr(pSVar1,uVar5), !bVar3)) &&
-       ((((param_4 - 1U & param_4) != 0 || (param_4 != 1 << (uVar5 & 0x3f))) &&
-        ((*(int *)((int)((uVar6 & 0xffffffff) << 2) + (int)param_3) != 0 &&
-         (bVar3 = CL_CanClientTalkToAllClientsInList(pSVar1,uVar5,param_4), bVar3))))))
-    goto LAB_82356960;
-    lVar8 = lVar8 + 1;
-  } while ((int)lVar8 < 0x12);
-  lVar8 = 0;
+  lVar6 = 0;
   while( true ) {
-    lVar7 = lVar8 + lVar4 + 1;
-    iVar2 = (int)lVar7;
-    uVar5 = iVar2 / 0x12 + (iVar2 >> 0x1f);
-    uVar6 = (longlong)(int)uVar5 + (ulonglong)(uVar5 >> 0x1f);
-    uVar6 = lVar7 + (uVar6 + (uVar6 & 0x1fffffff) * 8 & 0x7fffffff) * -2;
-    uVar5 = (uint)uVar6;
-    bVar3 = Session_IsHost(pSVar1,uVar5);
-    if ((((!bVar3) && (bVar3 = Session_IsUserRegistered(pSVar1,uVar5), bVar3)) &&
-        ((bVar3 = Session_PlayerHasLoopbackAddr(pSVar1,uVar5), !bVar3 &&
-         ((((param_4 - 1U & param_4) != 0 || (param_4 != 1 << (uVar5 & 0x3f))) &&
-          (*(int *)((int)((uVar6 & 0xffffffff) << 2) + (int)param_3) == 0)))))) &&
-       (bVar3 = CL_CanClientTalkToAllClientsInList(pSVar1,uVar5,param_4), bVar3)) break;
-    lVar8 = lVar8 + 1;
-    if (0x11 < (int)lVar8) {
-      iVar2 = Session_HostNum(pSVar1);
-      iVar2 = __restgprlr_24(iVar2);
-      return iVar2;
+    lVar5 = lVar6 + (longlong)param_2 + 1;
+    iVar1 = (int)lVar5;
+    uVar3 = iVar1 / 0x12 + (iVar1 >> 0x1f);
+    uVar4 = (longlong)(int)uVar3 + (ulonglong)(uVar3 >> 0x1f);
+    uVar4 = lVar5 + (uVar4 + (uVar4 & 0x1fffffff) * 8 & 0x7fffffff) * -2;
+    uVar3 = (uint)uVar4;
+    bVar2 = Session_IsHost(param_1,uVar3);
+    if ((((!bVar2) && (bVar2 = Session_IsUserRegistered(param_1,uVar3), bVar2)) &&
+        (bVar2 = Session_PlayerHasLoopbackAddr(param_1,uVar3), !bVar2)) &&
+       ((((param_4 - 1U & param_4) != 0 || (param_4 != 1 << (uVar3 & 0x3f))) &&
+        ((*(int *)((int)((uVar4 & 0xffffffff) << 2) + (int)param_3) != 0 &&
+         (bVar2 = CL_CanClientTalkToAllClientsInList(param_1,uVar3,param_4), bVar2)))))) break;
+    lVar6 = lVar6 + 1;
+    if (0x11 < (int)lVar6) {
+      lVar6 = 0;
+      while( true ) {
+        lVar5 = lVar6 + (longlong)param_2 + 1;
+        iVar1 = (int)lVar5;
+        uVar3 = iVar1 / 0x12 + (iVar1 >> 0x1f);
+        uVar4 = (longlong)(int)uVar3 + (ulonglong)(uVar3 >> 0x1f);
+        uVar4 = lVar5 + (uVar4 + (uVar4 & 0x1fffffff) * 8 & 0x7fffffff) * -2;
+        uVar3 = (uint)uVar4;
+        bVar2 = Session_IsHost(param_1,uVar3);
+        if ((((!bVar2) && (bVar2 = Session_IsUserRegistered(param_1,uVar3), bVar2)) &&
+            ((bVar2 = Session_PlayerHasLoopbackAddr(param_1,uVar3), !bVar2 &&
+             ((((param_4 - 1U & param_4) != 0 || (param_4 != 1 << (uVar3 & 0x3f))) &&
+              (*(int *)((int)((uVar4 & 0xffffffff) << 2) + (int)param_3) == 0)))))) &&
+           (bVar2 = CL_CanClientTalkToAllClientsInList(param_1,uVar3,param_4), bVar2)) break;
+        lVar6 = lVar6 + 1;
+        if (0x11 < (int)lVar6) {
+          iVar1 = Session_HostNum(param_1);
+          return iVar1;
+        }
+      }
+      return uVar3;
     }
   }
-LAB_82356960:
-  iVar2 = __restgprlr_24(uVar6);
-  return iVar2;
+  return uVar3;
 }
 
 
 // 82356970  CL_FindGoodRouteForClientNum  (client_mp/cl_voice.cpp:748)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 int CL_FindGoodRouteForClientNum(SessionData *param_1,int param_2,int *param_3,int param_4)
 
 {
   uint uVar1;
-  SessionData *pSVar2;
-  bool bVar6;
-  int iVar3;
-  uint uVar4;
-  int iVar5;
-  longlong lVar7;
-  uint uVar8;
-  ulonglong uVar9;
-  longlong lVar10;
-  longlong lVar11;
+  bool bVar5;
+  int iVar2;
+  uint uVar3;
+  int iVar4;
+  uint uVar6;
+  ulonglong uVar7;
+  longlong lVar8;
+  longlong lVar9;
   
-  lVar7 = (longlong)param_2;
-  pSVar2 = (SessionData *)__savegprlr_23(param_1);
-  bVar6 = Session_IsUserRegistered(pSVar2,param_4);
-  if (bVar6) {
-    iVar3 = Session_HostNum(pSVar2);
-    uVar4 = Session_GetClientVoiceConnectivity(pSVar2,param_4);
-    bVar6 = CL_ServerIsTheOnlyWayToTalkToClient(pSVar2,uVar4);
-    if (bVar6) {
-      iVar3 = __restgprlr_23(iVar3);
-      return iVar3;
+  bVar5 = Session_IsUserRegistered(param_1,param_4);
+  if (bVar5) {
+    iVar2 = Session_HostNum(param_1);
+    uVar3 = Session_GetClientVoiceConnectivity(param_1,param_4);
+    bVar5 = CL_ServerIsTheOnlyWayToTalkToClient(param_1,uVar3);
+    if (bVar5) {
+      return iVar2;
     }
-    lVar11 = 0;
+    lVar9 = 0;
     do {
-      lVar10 = lVar11 + lVar7 + 1;
-      iVar5 = (int)lVar10;
-      uVar8 = iVar5 / 0x12 + (iVar5 >> 0x1f);
-      uVar9 = (longlong)(int)uVar8 + (ulonglong)(uVar8 >> 0x1f);
-      uVar9 = lVar10 + (uVar9 + (uVar9 & 0x1fffffff) * 8 & 0x7fffffff) * -2;
-      uVar8 = (uint)uVar9;
-      bVar6 = Session_IsHost(pSVar2,uVar8);
-      if ((((!bVar6) && (bVar6 = Session_IsUserRegistered(pSVar2,uVar8), bVar6)) &&
-          (bVar6 = Session_PlayerHasLoopbackAddr(pSVar2,uVar8), !bVar6)) &&
-         (((uVar1 = *(uint *)((int)((uVar9 & 0xffffffff) << 2) + (int)param_3), uVar1 != 0 &&
-           (iVar5 = CountBitsEnabled(uVar1), iVar5 < 3)) && ((1 << (uVar8 & 0x3f) & uVar4) != 0))))
-      goto LAB_82356b6c;
-      lVar11 = lVar11 + 1;
-    } while ((int)lVar11 < 0x12);
-    lVar11 = 0;
-    do {
-      lVar10 = lVar11 + lVar7 + 1;
-      iVar5 = (int)lVar10;
-      uVar8 = iVar5 / 0x12 + (iVar5 >> 0x1f);
-      uVar9 = (longlong)(int)uVar8 + (ulonglong)(uVar8 >> 0x1f);
-      uVar9 = lVar10 + (uVar9 + (uVar9 & 0x1fffffff) * 8 & 0x7fffffff) * -2;
-      uVar8 = (uint)uVar9;
-      bVar6 = Session_IsHost(pSVar2,uVar8);
-      if (((!bVar6) && (bVar6 = Session_IsUserRegistered(pSVar2,uVar8), bVar6)) &&
-         ((bVar6 = Session_PlayerHasLoopbackAddr(pSVar2,uVar8), !bVar6 &&
-          (((*(int *)((int)((uVar9 & 0xffffffff) << 2) + (int)param_3) == 0 &&
-            ((pSVar2->dyn).users[0].addr.ip[(int)((uVar9 & 0xffffffff) << 6) + -0x18] != '\0')) &&
-           ((1 << (uVar8 & 0x3f) & uVar4) != 0)))))) {
-LAB_82356b6c:
-        iVar3 = __restgprlr_23(uVar9);
-        return iVar3;
+      lVar8 = lVar9 + (longlong)param_2 + 1;
+      iVar4 = (int)lVar8;
+      uVar6 = iVar4 / 0x12 + (iVar4 >> 0x1f);
+      uVar7 = (longlong)(int)uVar6 + (ulonglong)(uVar6 >> 0x1f);
+      uVar7 = lVar8 + (uVar7 + (uVar7 & 0x1fffffff) * 8 & 0x7fffffff) * -2;
+      uVar6 = (uint)uVar7;
+      bVar5 = Session_IsHost(param_1,uVar6);
+      if ((((!bVar5) && (bVar5 = Session_IsUserRegistered(param_1,uVar6), bVar5)) &&
+          (bVar5 = Session_PlayerHasLoopbackAddr(param_1,uVar6), !bVar5)) &&
+         (((uVar1 = *(uint *)((int)((uVar7 & 0xffffffff) << 2) + (int)param_3), uVar1 != 0 &&
+           (iVar4 = CountBitsEnabled(uVar1), iVar4 < 3)) && ((1 << (uVar6 & 0x3f) & uVar3) != 0))))
+      {
+        return uVar6;
       }
-      lVar11 = lVar11 + 1;
-    } while ((int)lVar11 < 0x12);
-    if ((pSVar2->dyn).users[iVar3].registered != false) goto LAB_82356b64;
+      lVar9 = lVar9 + 1;
+    } while ((int)lVar9 < 0x12);
+    lVar9 = 0;
+    do {
+      lVar8 = lVar9 + (longlong)param_2 + 1;
+      iVar4 = (int)lVar8;
+      uVar6 = iVar4 / 0x12 + (iVar4 >> 0x1f);
+      uVar7 = (longlong)(int)uVar6 + (ulonglong)(uVar6 >> 0x1f);
+      uVar7 = lVar8 + (uVar7 + (uVar7 & 0x1fffffff) * 8 & 0x7fffffff) * -2;
+      uVar6 = (uint)uVar7;
+      bVar5 = Session_IsHost(param_1,uVar6);
+      if (((!bVar5) && (bVar5 = Session_IsUserRegistered(param_1,uVar6), bVar5)) &&
+         ((bVar5 = Session_PlayerHasLoopbackAddr(param_1,uVar6), !bVar5 &&
+          (((*(int *)((int)((uVar7 & 0xffffffff) << 2) + (int)param_3) == 0 &&
+            ((param_1->dyn).users[0].addr.ip[(int)((uVar7 & 0xffffffff) << 6) + -0x18] != '\0')) &&
+           ((1 << (uVar6 & 0x3f) & uVar3) != 0)))))) {
+        return uVar6;
+      }
+      lVar9 = lVar9 + 1;
+    } while ((int)lVar9 < 0x12);
+    if ((param_1->dyn).users[iVar2].registered != false) {
+      return iVar2;
+    }
   }
-  iVar3 = -1;
-LAB_82356b64:
-  iVar3 = __restgprlr_23(iVar3);
-  return iVar3;
+  return -1;
 }
 
 
 // 82356B78  CL_BuildRouteList  (client_mp/cl_voice.cpp:813)
 
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
@@ -1086,24 +995,22 @@ void CL_BuildRouteList(SessionData *param_1,LocalClientNum_t param_2,int param_3
 {
   netsrc_t nVar1;
   netsrc_t nVar2;
-  int *piVar3;
-  bool bVar9;
-  netadr_t *pnVar4;
+  bool bVar8;
+  netadr_t *pnVar3;
+  int iVar4;
   int iVar5;
-  int iVar6;
-  uint uVar7;
-  netsrc_t nVar8;
-  longlong lVar10;
-  int iVar11;
-  uint uVar12;
-  longlong lVar13;
-  ulonglong uVar14;
-  longlong lVar15;
+  uint uVar6;
+  netsrc_t nVar7;
+  int iVar9;
+  uint uVar10;
+  longlong lVar11;
+  ulonglong uVar12;
+  uint *puVar13;
+  netsrc_t *pnVar14;
+  netsrc_t nVar15;
   netsrc_t *pnVar16;
-  netsrc_t nVar17;
-  netsrc_t *pnVar18;
-  netsrc_t *pnVar19;
-  int iVar20;
+  netsrc_t *pnVar17;
+  int iVar18;
   netsrc_t nStack00000024;
   netadr_t in_stack_fffffe38;
   netadr_t in_stack_fffffe48;
@@ -1114,108 +1021,105 @@ void CL_BuildRouteList(SessionData *param_1,LocalClientNum_t param_2,int param_3
   netadr_t nStack_f0;
   netsrc_t local_e0 [56];
   
-  lVar10 = (longlong)(int)param_4;
-  __savegprlr();
-  pnVar16 = &nStack_f0.localNetID;
-  pnVar18 = &nStack_164;
-  uVar12 = 0;
-  lVar13 = 0;
-  nVar17 = NS_CLIENT1;
-  uVar14 = 1;
-  lVar15 = lVar10;
+  pnVar14 = &nStack_f0.localNetID;
+  pnVar16 = &nStack_164;
+  uVar10 = 0;
+  lVar11 = 0;
+  nVar15 = NS_CLIENT1;
+  uVar12 = 1;
+  puVar13 = (uint *)param_4;
   nStack00000024 = param_3;
   do {
-    if ((nStack00000024 != nVar17) &&
-       (bVar9 = CL_ShouldSendPeerVoiceData(param_1,param_2,nVar17), bVar9)) {
-      bVar9 = Session_IsUserRegistered(param_1,nVar17);
-      if (!bVar9) {
+    if ((nStack00000024 != nVar15) &&
+       (bVar8 = CL_ShouldSendPeerVoiceData(param_1,param_2,nVar15), bVar8)) {
+      bVar8 = Session_IsUserRegistered(param_1,nVar15);
+      if (!bVar8) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_voice.cpp",
                         0x348,0,"%s");
       }
-      pnVar4 = Session_GetPlayerAddr(&nStack_f0,param_1,nVar17);
-      iVar11 = 0;
-      nStack_164 = pnVar4->localNetID;
-      if (0 < (int)uVar12) {
-        pnVar19 = local_160;
+      pnVar3 = Session_GetPlayerAddr(&nStack_f0,param_1,nVar15);
+      iVar9 = 0;
+      nStack_164 = pnVar3->localNetID;
+      if (0 < (int)uVar10) {
+        pnVar17 = local_160;
         do {
-          Session_GetPlayerAddr(&nStack_100,param_1,*pnVar19);
+          Session_GetPlayerAddr(&nStack_100,param_1,*pnVar17);
+          iVar4 = NET_CompareIPAdr(in_stack_fffffe38,in_stack_fffffe48);
+          if (iVar4 != 0) {
+            if (iVar9 < (int)uVar10) goto LAB_82356e10;
+            break;
+          }
+          iVar9 = iVar9 + 1;
+          pnVar17 = pnVar17 + 1;
+        } while (iVar9 < (int)uVar10);
+      }
+      iVar4 = 0;
+      iVar9 = (int)lVar11;
+      if (0 < iVar9) {
+        pnVar17 = local_e0;
+        do {
+          Session_GetPlayerAddr(&nStack_110,param_1,*pnVar17);
           iVar5 = NET_CompareIPAdr(in_stack_fffffe38,in_stack_fffffe48);
           if (iVar5 != 0) {
-            if (iVar11 < (int)uVar12) goto LAB_82356e10;
+            if (iVar4 < iVar9) goto LAB_82356e10;
             break;
           }
-          iVar11 = iVar11 + 1;
-          pnVar19 = pnVar19 + 1;
-        } while (iVar11 < (int)uVar12);
-      }
-      iVar5 = 0;
-      iVar11 = (int)lVar13;
-      if (0 < iVar11) {
-        pnVar19 = local_e0;
-        do {
-          Session_GetPlayerAddr(&nStack_110,param_1,*pnVar19);
-          iVar6 = NET_CompareIPAdr(in_stack_fffffe38,in_stack_fffffe48);
-          if (iVar6 != 0) {
-            if (iVar5 < iVar11) goto LAB_82356e10;
-            break;
-          }
-          iVar5 = iVar5 + 1;
-          pnVar19 = pnVar19 + 1;
-        } while (iVar5 < iVar11);
+          iVar4 = iVar4 + 1;
+          pnVar17 = pnVar17 + 1;
+        } while (iVar4 < iVar9);
       }
       if ((xenon_voiceDebug->current).enabled != false) {
         Com_Printf(0xe,"Client %i (XUID %llx) can hear us\n");
       }
       nVar1 = nStack00000024;
-      bVar9 = Session_IsHost(param_1,nStack00000024);
-      if (((bVar9) || (bVar9 = Session_IsHost(param_1,nVar17), bVar9)) ||
-         ((bVar9 = Session_IsUserRegistered(param_1,nVar17), bVar9 &&
-          (uVar7 = Session_GetClientVoiceConnectivity(param_1,nVar17),
-          (uVar7 & 1 << (nVar1 & 0x3f)) != 0)))) {
-        if (0x11 < uVar12) {
+      bVar8 = Session_IsHost(param_1,nStack00000024);
+      if (((bVar8) || (bVar8 = Session_IsHost(param_1,nVar15), bVar8)) ||
+         ((bVar8 = Session_IsUserRegistered(param_1,nVar15), bVar8 &&
+          (uVar6 = Session_GetClientVoiceConnectivity(param_1,nVar15),
+          (uVar6 & 1 << (nVar1 & 0x3f)) != 0)))) {
+        if (0x11 < uVar10) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_voice.cpp",
                           0x367,0,"totalPackets doesn\'t index MAX_CLIENTS\n\t%i not in [0, %i)");
         }
-        uVar7 = *(uint *)lVar15;
-        uVar12 = uVar12 + 1;
-        pnVar18 = pnVar18 + 1;
-        *pnVar18 = nVar17;
-        *(uint *)lVar15 = uVar7 | (uint)uVar14;
+        uVar6 = *puVar13;
+        uVar10 = uVar10 + 1;
+        pnVar16 = pnVar16 + 1;
+        *pnVar16 = nVar15;
+        *puVar13 = uVar6 | (uint)uVar12;
       }
       else {
-        pnVar16 = pnVar16 + 1;
-        *pnVar16 = nVar17;
-        lVar13 = lVar13 + 1;
+        pnVar14 = pnVar14 + 1;
+        *pnVar14 = nVar15;
+        lVar11 = lVar11 + 1;
       }
     }
 LAB_82356e10:
     nVar1 = nStack00000024;
-    nVar17 = nVar17 + NS_CLIENT2;
-    lVar15 = lVar15 + 4;
-    uVar14 = (uVar14 & 0x7fffffff) << 1 | uVar14 >> 0x1f;
-  } while ((int)nVar17 < 0x12);
-  piVar3 = (int *)lVar10;
-  if (0 < (int)lVar13) {
-    pnVar18 = local_160 + (uVar12 - 1);
-    pnVar16 = local_e0;
+    nVar15 = nVar15 + NS_CLIENT2;
+    puVar13 = puVar13 + 1;
+    uVar12 = (uVar12 & 0x7fffffff) << 1 | uVar12 >> 0x1f;
+  } while ((int)nVar15 < 0x12);
+  if (0 < (int)lVar11) {
+    pnVar16 = local_160 + (uVar10 - 1);
+    pnVar14 = local_e0;
     do {
-      nVar17 = *pnVar16;
-      nVar8 = CL_FindGoodRouteForClientNum(param_1,nVar1,piVar3,nVar17);
-      if (((int)nVar8 < 0) || ((param_1->dyn).users[nVar8].registered == false)) {
+      nVar15 = *pnVar14;
+      nVar7 = CL_FindGoodRouteForClientNum(param_1,nVar1,param_4,nVar15);
+      if (((int)nVar7 < 0) || ((param_1->dyn).users[nVar7].registered == false)) {
         Com_Printf(0xe,"We have no route to client %i.  We\'ll try to blindly fire off the packet\n"
                   );
-        pnVar18 = pnVar18 + 1;
-        *pnVar18 = nVar17;
-        uVar12 = uVar12 + 1;
-        piVar3[nVar17] = 1 << (nVar17 & 0x3f) | piVar3[nVar17];
+        pnVar16 = pnVar16 + 1;
+        *pnVar16 = nVar15;
+        uVar10 = uVar10 + 1;
+        param_4[nVar15] = 1 << (nVar15 & 0x3f) | param_4[nVar15];
       }
       else {
-        if (0x11 < nVar8) {
+        if (0x11 < nVar7) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_voice.cpp",
                           0x380,0,
                           "clientWhoCanRelay doesn\'t index MAX_CLIENTS\n\t%i not in [0, %i)");
         }
-        if (nVar8 == nVar1) {
+        if (nVar7 == nVar1) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_voice.cpp",
                           0x381,0,"%s");
         }
@@ -1224,128 +1128,128 @@ LAB_82356e10:
                      "Can\'t send packets to XUID %llx (client %i) directly, we can ask %llx (client %i) to send it for us\n"
                     );
         }
-        uVar7 = piVar3[nVar8];
-        if (uVar7 == 0) {
-          pnVar18[1] = nVar8;
-          uVar12 = uVar12 + 1;
-          pnVar18 = pnVar18 + 1;
-        }
-        piVar3[nVar8] = 1 << (nVar17 & 0x3f) | uVar7;
-      }
-      lVar13 = lVar13 + -1;
-      pnVar16 = pnVar16 + 1;
-    } while (lVar13 != 0);
-  }
-  nVar17 = nStack00000024;
-  bVar9 = Session_IsHost(param_1,nStack00000024);
-  iVar11 = (-(uint)bVar9 & 0xfffffffa) + 8;
-  if (iVar11 < (int)uVar12) {
-    iVar5 = 0;
-    iVar6 = 0;
-    if (0 < (int)uVar12) {
-      pnVar18 = local_160 + uVar12;
-      pnVar16 = local_160;
-      do {
-        if (((int)uVar12 <= iVar11) || (0x11 < iVar6)) break;
-        nVar1 = *pnVar16;
-        iVar6 = iVar6 + 1;
-        if ((nVar1 == NS_CLIENT1) || ((piVar3[nVar1] - 1U & piVar3[nVar1]) != 0)) {
-LAB_82357134:
-          iVar5 = iVar5 + 1;
+        uVar6 = param_4[nVar7];
+        if (uVar6 == 0) {
+          pnVar16[1] = nVar7;
+          uVar10 = uVar10 + 1;
           pnVar16 = pnVar16 + 1;
         }
+        param_4[nVar7] = 1 << (nVar15 & 0x3f) | uVar6;
+      }
+      lVar11 = lVar11 + -1;
+      pnVar14 = pnVar14 + 1;
+    } while (lVar11 != 0);
+  }
+  nVar15 = nStack00000024;
+  bVar8 = Session_IsHost(param_1,nStack00000024);
+  iVar9 = (-(uint)bVar8 & 0xfffffffa) + 8;
+  if (iVar9 < (int)uVar10) {
+    iVar4 = 0;
+    iVar5 = 0;
+    if (0 < (int)uVar10) {
+      pnVar16 = local_160 + uVar10;
+      pnVar14 = local_160;
+      do {
+        if (((int)uVar10 <= iVar9) || (0x11 < iVar5)) break;
+        nVar1 = *pnVar14;
+        iVar5 = iVar5 + 1;
+        if ((nVar1 == NS_CLIENT1) || ((param_4[nVar1] - 1U & param_4[nVar1]) != 0)) {
+LAB_82357134:
+          iVar4 = iVar4 + 1;
+          pnVar14 = pnVar14 + 1;
+        }
         else {
-          nVar8 = CL_FindGoodRouteForClientNum(param_1,nVar17,piVar3,nVar1);
-          if ((int)nVar8 < 0) {
+          nVar7 = CL_FindGoodRouteForClientNum(param_1,nVar15,param_4,nVar1);
+          if ((int)nVar7 < 0) {
             Com_Printf(0xe,"We have no way of talking to clientNum %i\n");
             goto LAB_82357134;
           }
-          if (0x11 < nVar8) {
+          if (0x11 < nVar7) {
             MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_voice.cpp"
                             ,0x3a4,0,
                             "clientWhoCanRelay doesn\'t index MAX_CLIENTS\n\t%i not in [0, %i)");
           }
-          bVar9 = Session_IsUserRegistered(param_1,nVar8);
-          if (!bVar9) {
+          bVar8 = Session_IsUserRegistered(param_1,nVar7);
+          if (!bVar8) {
             MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_voice.cpp"
                             ,0x3a5,0,"%s");
           }
-          if (((nVar8 == nVar17) || (nVar8 == nVar1)) || (piVar3[nVar8] == 0)) goto LAB_82357134;
+          if (((nVar7 == nVar15) || (nVar7 == nVar1)) || (param_4[nVar7] == 0)) goto LAB_82357134;
           if ((xenon_voiceDebug->current).enabled != false) {
             Com_Printf(0xe,"Asking client %i to relay it to %i\n");
           }
-          pnVar18 = pnVar18 + -1;
-          nVar2 = *pnVar18;
-          uVar12 = uVar12 - 1;
-          piVar3[nVar8] = 1 << (nVar1 & 0x3f) | piVar3[nVar8];
-          piVar3[nVar1] = 0;
-          *pnVar16 = nVar2;
+          pnVar16 = pnVar16 + -1;
+          nVar2 = *pnVar16;
+          uVar10 = uVar10 - 1;
+          param_4[nVar7] = 1 << (nVar1 & 0x3f) | param_4[nVar7];
+          param_4[nVar1] = 0;
+          *pnVar14 = nVar2;
         }
-      } while (iVar5 < (int)uVar12);
+      } while (iVar4 < (int)uVar10);
     }
+    iVar4 = 0;
     iVar5 = 0;
-    iVar6 = 0;
-    if (0 < (int)uVar12) {
-      pnVar18 = local_160 + uVar12;
-      pnVar16 = local_160;
+    if (0 < (int)uVar10) {
+      pnVar16 = local_160 + uVar10;
+      pnVar14 = local_160;
       do {
-        if (((int)uVar12 <= iVar11) || (0x11 < iVar6)) break;
-        nVar1 = *pnVar16;
-        uVar7 = piVar3[nVar1];
-        iVar6 = iVar6 + 1;
-        uVar14 = (((ulonglong)(uVar7 >> 0x10) * 0x8000400020001 >> 3 & 0x1111111111111111) +
-                 (((ulonglong)uVar7 & 0xffffffff0000ffff) * 0x8000400020001 >> 3 &
+        if (((int)uVar10 <= iVar9) || (0x11 < iVar5)) break;
+        nVar1 = *pnVar14;
+        uVar6 = param_4[nVar1];
+        iVar5 = iVar5 + 1;
+        uVar12 = (((ulonglong)(uVar6 >> 0x10) * 0x8000400020001 >> 3 & 0x1111111111111111) +
+                 (((ulonglong)uVar6 & 0xffffffff0000ffff) * 0x8000400020001 >> 3 &
                  0x1111111111111111)) % 0xfff;
-        if (((uint)((longlong)uVar14 >> 4) & 0xf) + ((uint)uVar14 & 0xf) + (int)(uVar14 >> 8) < 3) {
-          nVar8 = CL_FindGoodRouteForClientList(param_1,nVar17,piVar3,uVar7);
-          if (0x11 < nVar8) {
+        if (((uint)((longlong)uVar12 >> 4) & 0xf) + ((uint)uVar12 & 0xf) + (int)(uVar12 >> 8) < 3) {
+          nVar7 = CL_FindGoodRouteForClientList(param_1,nVar15,param_4,uVar6);
+          if (0x11 < nVar7) {
             MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_voice.cpp"
                             ,0x3c7,0,
                             "clientWhoCanRelay doesn\'t index MAX_CLIENTS\n\t%i not in [0, %i)");
           }
-          if ((param_1->dyn).users[nVar8].registered == false) {
+          if ((param_1->dyn).users[nVar7].registered == false) {
             MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_voice.cpp"
                             ,0x3c8,0,"%s");
           }
-          if ((nVar8 == nVar17) || (piVar3[nVar8] == 0)) goto LAB_82357374;
+          if ((nVar7 == nVar15) || (param_4[nVar7] == 0)) goto LAB_82357374;
           if ((xenon_voiceDebug->current).enabled != false) {
             Com_Printf(0xe,"Asking client %i to relay a voice packet to ");
-            iVar20 = 0;
-            uVar14 = 1;
+            iVar18 = 0;
+            uVar12 = 1;
             do {
-              if ((piVar3[nVar1] & (uint)uVar14) != 0) {
+              if ((param_4[nVar1] & (uint)uVar12) != 0) {
                 Com_Printf(0xe,"client %i, ");
               }
-              iVar20 = iVar20 + 1;
-              uVar14 = (uVar14 & 0x7fffffff) << 1 | uVar14 >> 0x1f;
-            } while (iVar20 < 0x12);
+              iVar18 = iVar18 + 1;
+              uVar12 = (uVar12 & 0x7fffffff) << 1 | uVar12 >> 0x1f;
+            } while (iVar18 < 0x12);
             Com_Printf(0xe,"\n");
           }
-          uVar12 = uVar12 - 1;
-          pnVar18 = pnVar18 + -1;
-          nVar2 = *pnVar18;
-          piVar3[nVar8] = piVar3[nVar1] | piVar3[nVar8];
-          piVar3[nVar1] = 0;
-          *pnVar16 = nVar2;
+          uVar10 = uVar10 - 1;
+          pnVar16 = pnVar16 + -1;
+          nVar2 = *pnVar16;
+          param_4[nVar7] = param_4[nVar1] | param_4[nVar7];
+          param_4[nVar1] = 0;
+          *pnVar14 = nVar2;
         }
         else {
 LAB_82357374:
-          iVar5 = iVar5 + 1;
-          pnVar16 = pnVar16 + 1;
+          iVar4 = iVar4 + 1;
+          pnVar14 = pnVar14 + 1;
         }
-      } while (iVar5 < (int)uVar12);
+      } while (iVar4 < (int)uVar10);
     }
-    bVar9 = Session_IsHost(param_1,nVar17);
-    if ((!bVar9) && (iVar11 < (int)uVar12)) {
-      pnVar18 = local_160 + (uVar12 - 1);
+    bVar8 = Session_IsHost(param_1,nVar15);
+    if ((!bVar8) && (iVar9 < (int)uVar10)) {
+      pnVar16 = local_160 + (uVar10 - 1);
       do {
-        if (0x11 < uVar12 - 1) {
+        if (0x11 < uVar10 - 1) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_voice.cpp",
                           0x3ea,0,"totalPackets - 1 doesn\'t index MAX_CLIENTS\n\t%i not in [0, %i)"
                          );
         }
-        nVar17 = *pnVar18;
-        if (0x11 < nVar17) {
+        nVar15 = *pnVar16;
+        if (0x11 < nVar15) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_voice.cpp",
                           0x3eb,0,
                           "destinationClientList[ totalPackets-1 ] doesn\'t index MAX_CLIENTS\n\t%i not in [0, %i)"
@@ -1356,26 +1260,27 @@ LAB_82357374:
                      "We are sending too many packets to too many people (%i peers currently), so asking the server to send the packet to client %i\n"
                     );
         }
-        uVar7 = Session_HostNum(param_1);
-        if ((1 << (uVar7 & 0x3f) & piVar3[nVar17]) != 0) {
+        uVar6 = Session_HostNum(param_1);
+        if ((1 << (uVar6 & 0x3f) & param_4[nVar15]) != 0) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_voice.cpp",
                           0x3f2,0,"%s");
         }
-        iVar5 = Session_HostNum(param_1);
-        uVar12 = uVar12 - 1;
-        pnVar18 = pnVar18 + -1;
-        piVar3[iVar5] = piVar3[nVar17] | piVar3[iVar5];
-        piVar3[nVar17] = 0;
-      } while (iVar11 < (int)uVar12);
+        iVar4 = Session_HostNum(param_1);
+        uVar10 = uVar10 - 1;
+        pnVar16 = pnVar16 + -1;
+        param_4[iVar4] = param_4[nVar15] | param_4[iVar4];
+        param_4[nVar15] = 0;
+      } while (iVar9 < (int)uVar10);
     }
   }
-  __restgprlr();
   return;
 }
 
 
 // 823574D0  CL_WriteVoicePacket  (client_mp/cl_voice.cpp:1027)
 
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
@@ -1384,21 +1289,21 @@ void CL_WriteVoicePacket(LocalClientNum_t param_1)
 {
   uint uVar1;
   connstate_t cVar2;
-  int iVar3;
-  LocalClientNum_t LVar4;
-  bool bVar11;
-  int iVar5;
-  SessionData *pSVar6;
-  int iVar7;
-  PartyData *pPVar8;
-  int iVar9;
-  netsrc_t nVar10;
+  LocalClientNum_t LVar3;
+  bool bVar10;
+  int iVar4;
+  SessionData *pSVar5;
+  int iVar6;
+  PartyData *pPVar7;
+  int iVar8;
+  netsrc_t nVar9;
+  uchar *puVar11;
   undefined8 *puVar13;
   ulonglong uVar12;
   uint uVar14;
   uint *puVar15;
   ulonglong uVar16;
-  uchar *puVar17;
+  voiceCommunication_t *pvVar17;
   int iVar18;
   longlong lVar19;
   LocalClientNum_t LStack00000014;
@@ -1408,271 +1313,257 @@ void CL_WriteVoicePacket(LocalClientNum_t param_1)
   uint local_8f0 [20];
   uchar auStack_8a0 [2208];
   
-  uVar16 = (ulonglong)(int)param_1;
-  __savegprlr();
-  LVar4 = (LocalClientNum_t)uVar16;
-  LStack00000014 = LVar4;
-  if (3 < (uVar16 & 0xffffffff)) {
+  LStack00000014 = param_1;
+  if (LOCAL_CLIENT_3 < param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\client_mp.h",0x4aa,0
                     ,"localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)");
   }
-  cVar2 = clientUIActives[LVar4].connectionState;
-  bVar11 = Lobby_IsInRunningLobby();
-  if ((bVar11) || (iVar5 = Party_InParty(&g_partyData), iVar5 != 0)) {
-    if (2 < (int)cVar2) goto LAB_82357564;
+  cVar2 = clientUIActives[param_1].connectionState;
+  bVar10 = Lobby_IsInRunningLobby();
+  if ((bVar10) || (iVar4 = Party_InParty(&g_partyData), iVar4 != 0)) {
+    if ((int)cVar2 < 3) goto LAB_82357578;
   }
-  else {
-    if ((int)cVar2 < 3) goto LAB_82357b24;
-LAB_82357564:
-    bVar11 = CL_Demo_IsPlaying(LVar4);
-    if (bVar11) goto LAB_82357b24;
+  else if ((int)cVar2 < 3) {
+    return;
   }
-  pSVar6 = Live_GetCurrentSession();
-  iVar5 = Session_HostNum(pSVar6);
-  if (3 < (uVar16 & 0xffffffff)) {
+  bVar10 = CL_Demo_IsPlaying(param_1);
+  if (bVar10) {
+    return;
+  }
+LAB_82357578:
+  pSVar5 = Live_GetCurrentSession();
+  iVar4 = Session_HostNum(pSVar5);
+  if (LOCAL_CLIENT_3 < param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_voice.h",0x4d,0,
                     "localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)");
   }
-  iVar3 = (int)(uVar16 * 0x74);
-  iVar7 = CL_ControllerIndexFromClientNum(LVar4);
-  bVar11 = Live_IsSignedIn(iVar7);
-  if (!bVar11) {
-    Com_PrintWarning(0xe,"Not signed in, so not sending voice packet.\n");
-    __restgprlr();
-    return;
-  }
-  iVar7 = Live_GetOurClientNum(iVar7,pSVar6);
-  if (iVar7 < 0) {
-    Com_PrintWarning(0xe,"We can\'t find our own clientNum, so not sending voice packet.\n");
-    __restgprlr();
-    return;
-  }
-  if (0x11 < iVar7) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_voice.cpp",0x43a,
-                    0,"%s\n\t(ourClientNum) = %i");
-  }
-  bVar11 = Session_IsUserRegistered(pSVar6,iVar7);
-  local_924 = "%s";
-  if (!bVar11) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_voice.cpp",0x43b,
-                    0,"%s");
-  }
-  bVar11 = Session_IsHost(pSVar6,iVar7);
-  if (bVar11) {
-    if ((((com_sv_running->current).enabled == false) && (g_partyData.areWeHost == 0)) &&
-       (bVar11 = Lobby_AreWeHost(), !bVar11)) {
-      Com_Printf(0xe,
-                 "CL_WriteVoicePacket clientnum is host\'s but we\'re not running a server or host:\n"
-                );
-      Party_IsRunning(&g_partyData);
-      Com_Printf(0xe,"Party: %srunning, %sin party, %shost\n");
-      Lobby_AreWeHost();
-      Lobby_IsInLobby();
-      pPVar8 = Lobby_GetPartyData();
-      Party_IsRunning(pPVar8);
-      Com_Printf(0xe,"Lobby: %srunning, %sin party, %shost\n");
-      if (alwaysfails == 0) {
+  iVar6 = CL_ControllerIndexFromClientNum(param_1);
+  bVar10 = Live_IsSignedIn(iVar6);
+  if (bVar10) {
+    iVar6 = Live_GetOurClientNum(iVar6,pSVar5);
+    if (-1 < iVar6) {
+      if (0x11 < iVar6) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_voice.cpp",
-                        1099,0,
-                        "CL_WriteVoicePacket: we think we\'re the host but we\'re not, check console log"
-                       );
+                        0x43a,0,"%s\n\t(ourClientNum) = %i");
       }
-    }
-  }
-  else {
-    iVar9 = Session_GetConnectivityBitsForClientAddress(pSVar6,iVar5);
-    Session_AddClientVoiceConnectivity(pSVar6,iVar7,iVar9);
-    iVar9 = Session_GetConnectivityBitsForLocalClients(pSVar6);
-    Session_AddClientVoiceConnectivity(pSVar6,iVar7,iVar9);
-    bVar11 = Session_IsUserRegistered(pSVar6,iVar5);
-    if (bVar11) {
-      Session_SetClientVoiceConnectivity(pSVar6,iVar5,0x3ffff);
-    }
-  }
-  puVar13 = (undefined8 *)(auStack_920 + 0x28);
-  lVar19 = 9;
-  do {
-    puVar13 = puVar13 + 1;
-    *puVar13 = 0;
-    lVar19 = lVar19 + -1;
-  } while (lVar19 != 0);
-  CL_BuildRouteList(pSVar6,LVar4,iVar7,(int *)local_8f0);
-  iVar5 = CL_ControllerIndexFromClientNum(LVar4);
-  iVar5 = Voice_GetTalkingCount(pSVar6,iVar5);
-  uVar1 = *(uint *)((int)(cl_voiceCommunication[0].voicePackets + 10) + iVar3);
-  uVar12 = (ulonglong)uVar1;
-  uVar14 = 0;
-  if (0 < (int)uVar1) {
-    lVar19 = uVar16 * 0x74 + -0x7d4c079f;
-    do {
-      if (((*(byte *)lVar19 & 1) == 0) ||
-         (((xenon_voiceDegrade->current).enabled == false && (iVar5 < 3)))) {
-        uVar14 = uVar14 + 1;
+      bVar10 = Session_IsUserRegistered(pSVar5,iVar6);
+      local_924 = "%s";
+      if (!bVar10) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_voice.cpp",
+                        0x43b,0,"%s");
       }
-      lVar19 = lVar19 + 10;
-      uVar12 = uVar12 - 1;
-    } while (uVar12 != 0);
-    if (uVar14 != 0) {
-      iVar9 = 0;
-      uVar16 = 1;
-      puVar15 = local_8f0;
-      do {
-        uVar1 = *puVar15;
-        if (uVar1 != 0) {
-          if (iVar9 == iVar7) {
+      bVar10 = Session_IsHost(pSVar5,iVar6);
+      if (bVar10) {
+        if ((((com_sv_running->current).enabled == false) && (g_partyData.areWeHost == 0)) &&
+           (bVar10 = Lobby_AreWeHost(), !bVar10)) {
+          Com_Printf(0xe,
+                     "CL_WriteVoicePacket clientnum is host\'s but we\'re not running a server or host:\n"
+                    );
+          Party_IsRunning(&g_partyData);
+          Com_Printf(0xe,"Party: %srunning, %sin party, %shost\n");
+          Lobby_AreWeHost();
+          Lobby_IsInLobby();
+          pPVar7 = Lobby_GetPartyData();
+          Party_IsRunning(pPVar7);
+          Com_Printf(0xe,"Lobby: %srunning, %sin party, %shost\n");
+          if (alwaysfails == 0) {
             MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_voice.cpp"
-                            ,0x480,0,local_924);
-          }
-          if ((xenon_voiceDebug->current).enabled != false) {
-            Com_Printf(0xe,"Sending a voice packet to client %i");
-            if (uVar1 != (uint)uVar16) {
-              Com_Printf(0xe," with voice data for %sclients ");
-              iVar18 = 0;
-              uVar12 = 1;
-              do {
-                if ((iVar9 != iVar18) && ((uVar1 & (uint)uVar12) != 0)) {
-                  Com_Printf(0xe,"%i, ");
-                }
-                iVar18 = iVar18 + 1;
-                uVar12 = (uVar12 & 0x7fffffff) << 1 | uVar12 >> 0x1f;
-              } while (iVar18 < 0x12);
-            }
-            Com_Printf(0xe,"\n");
-          }
-          MSG_Init((msg_t *)auStack_920,auStack_8a0,0x800);
-          MSG_WriteString((msg_t *)auStack_920,"v");
-          MSG_WriteByte((msg_t *)auStack_920,iVar7);
-          local_928 = uVar1;
-          MSG_WriteData((msg_t *)auStack_920,&local_928,4);
-          MSG_WriteByte((msg_t *)auStack_920,uVar14 & 0xff);
-          iVar18 = 0;
-          puVar17 = cl_voiceCommunication[0].voicePackets[0].data + iVar3;
-          if (0 < *(int *)((int)(cl_voiceCommunication[0].voicePackets + 10) + iVar3)) {
-            do {
-              if (((puVar17[1] & 1) == 0) ||
-                 (((xenon_voiceDegrade->current).enabled == false && (iVar5 < 3)))) {
-                MSG_WriteData((msg_t *)auStack_920,puVar17,10);
-              }
-              iVar18 = iVar18 + 1;
-              puVar17 = puVar17 + 10;
-            } while (iVar18 < *(int *)((int)(cl_voiceCommunication[0].voicePackets + 10) + iVar3));
-          }
-          LVar4 = LStack00000014;
-          nVar10 = CL_GetLocalClientSock(LStack00000014,CA_PRIMED);
-          CL_SendPeerVoiceData(pSVar6,LVar4,nVar10,iVar9,(msg_t *)auStack_920,true);
-          if ((cl_showSend->current).enabled != false) {
-            Com_Printf(0xe,"voice: %i\n");
+                            ,1099,0,
+                            "CL_WriteVoicePacket: we think we\'re the host but we\'re not, check console log"
+                           );
           }
         }
-        iVar9 = iVar9 + 1;
-        puVar15 = puVar15 + 1;
-        uVar16 = (uVar16 & 0x7fffffff) << 1 | uVar16 >> 0x1f;
-      } while (iVar9 < 0x12);
+      }
+      else {
+        iVar8 = Session_GetConnectivityBitsForClientAddress(pSVar5,iVar4);
+        Session_AddClientVoiceConnectivity(pSVar5,iVar6,iVar8);
+        iVar8 = Session_GetConnectivityBitsForLocalClients(pSVar5);
+        Session_AddClientVoiceConnectivity(pSVar5,iVar6,iVar8);
+        bVar10 = Session_IsUserRegistered(pSVar5,iVar4);
+        if (bVar10) {
+          Session_SetClientVoiceConnectivity(pSVar5,iVar4,0x3ffff);
+        }
+      }
+      puVar13 = (undefined8 *)(auStack_920 + 0x28);
+      lVar19 = 9;
+      do {
+        puVar13 = puVar13 + 1;
+        *puVar13 = 0;
+        lVar19 = lVar19 + -1;
+      } while (lVar19 != 0);
+      CL_BuildRouteList(pSVar5,param_1,iVar6,(int *)local_8f0);
+      iVar4 = CL_ControllerIndexFromClientNum(param_1);
+      iVar4 = Voice_GetTalkingCount(pSVar5,iVar4);
+      uVar12 = (ulonglong)(uint)cl_voiceCommunication[param_1].voicePacketCount;
+      uVar14 = 0;
+      if (0 < cl_voiceCommunication[param_1].voicePacketCount) {
+        puVar11 = cl_voiceCommunication[param_1].voicePackets[0].data + 1;
+        do {
+          if (((*puVar11 & 1) == 0) ||
+             (((xenon_voiceDegrade->current).enabled == false && (iVar4 < 3)))) {
+            uVar14 = uVar14 + 1;
+          }
+          puVar11 = puVar11 + 10;
+          uVar12 = uVar12 - 1;
+        } while (uVar12 != 0);
+        if (uVar14 != 0) {
+          iVar8 = 0;
+          uVar12 = 1;
+          puVar15 = local_8f0;
+          do {
+            uVar1 = *puVar15;
+            if (uVar1 != 0) {
+              if (iVar8 == iVar6) {
+                MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_voice.cpp"
+                                ,0x480,0,local_924);
+              }
+              if ((xenon_voiceDebug->current).enabled != false) {
+                Com_Printf(0xe,"Sending a voice packet to client %i");
+                if (uVar1 != (uint)uVar12) {
+                  Com_Printf(0xe," with voice data for %sclients ");
+                  iVar18 = 0;
+                  uVar16 = 1;
+                  do {
+                    if ((iVar8 != iVar18) && ((uVar1 & (uint)uVar16) != 0)) {
+                      Com_Printf(0xe,"%i, ");
+                    }
+                    iVar18 = iVar18 + 1;
+                    uVar16 = (uVar16 & 0x7fffffff) << 1 | uVar16 >> 0x1f;
+                  } while (iVar18 < 0x12);
+                }
+                Com_Printf(0xe,"\n");
+              }
+              MSG_Init((msg_t *)auStack_920,auStack_8a0,0x800);
+              MSG_WriteString((msg_t *)auStack_920,"v");
+              MSG_WriteByte((msg_t *)auStack_920,iVar6);
+              local_928 = uVar1;
+              MSG_WriteData((msg_t *)auStack_920,&local_928,4);
+              MSG_WriteByte((msg_t *)auStack_920,uVar14 & 0xff);
+              iVar18 = 0;
+              pvVar17 = cl_voiceCommunication + param_1;
+              if (0 < cl_voiceCommunication[param_1].voicePacketCount) {
+                do {
+                  if (((pvVar17->voicePackets[0].data[1] & 1) == 0) ||
+                     (((xenon_voiceDegrade->current).enabled == false && (iVar4 < 3)))) {
+                    MSG_WriteData((msg_t *)auStack_920,pvVar17,10);
+                  }
+                  iVar18 = iVar18 + 1;
+                  pvVar17 = (voiceCommunication_t *)(pvVar17->voicePackets + 1);
+                } while (iVar18 < cl_voiceCommunication[param_1].voicePacketCount);
+              }
+              LVar3 = LStack00000014;
+              nVar9 = CL_GetLocalClientSock(LStack00000014,CA_PRIMED);
+              CL_SendPeerVoiceData(pSVar5,LVar3,nVar9,iVar8,(msg_t *)auStack_920,true);
+              if ((cl_showSend->current).enabled != false) {
+                Com_Printf(0xe,"voice: %i\n");
+              }
+            }
+            iVar8 = iVar8 + 1;
+            puVar15 = puVar15 + 1;
+            uVar12 = (uVar12 & 0x7fffffff) << 1 | uVar12 >> 0x1f;
+          } while (iVar8 < 0x12);
+        }
+      }
+      return;
     }
+    Com_PrintWarning(0xe,"We can\'t find our own clientNum, so not sending voice packet.\n");
+    return;
   }
-LAB_82357b24:
-  __restgprlr();
+  Com_PrintWarning(0xe,"Not signed in, so not sending voice packet.\n");
   return;
 }
 
 
 // 82357B30  CL_VoiceConnectionTestPacket  (client_mp/cl_voice.cpp:1229)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void CL_VoiceConnectionTestPacket(LocalClientNum_t param_1,msg_t *param_2,netadr_t param_3)
 
 {
-  LocalClientNum_t LVar3;
-  uint uVar4;
+  uint uVar3;
   ulong64 uVar1;
-  SessionData *pSVar5;
-  bool bVar8;
+  SessionData *pSVar4;
+  bool bVar7;
   ulong64 uVar2;
-  int iVar6;
-  uint uVar7;
-  longlong lVar9;
-  byte *pbVar10;
-  _XSESSION_INFO *p_Var11;
+  int iVar5;
+  uint uVar6;
+  longlong lVar8;
+  byte *pbVar9;
+  _XSESSION_INFO *p_Var10;
   netadr_t in_stack_ffffff28;
   byte local_90 [16];
   char acStack_80 [128];
   
-  LVar3 = __savegprlr_26(param_1);
   MSG_ReadData(param_2,local_90,8);
-  uVar4 = MSG_ReadByte(param_2);
+  uVar3 = MSG_ReadByte(param_2);
   uVar1 = MSG_ReadInt64(param_2);
   if (param_2->overflowed != 0) {
     NET_AdrToString(in_stack_ffffff28);
     Com_Printf(0xe,"Invalid voice test packet - overflowed (%s)\n");
-    __restgprlr_26();
     return;
   }
-  if (((int)uVar4 < 0) || (0x11 < (int)uVar4)) {
+  if (((int)uVar3 < 0) || (0x11 < (int)uVar3)) {
     Com_Printf(0xe,"Invalid voice test packet - talker was %i\n");
-    __restgprlr_26();
     return;
   }
-  pSVar5 = Live_GetCurrentSession();
-  p_Var11 = &(pSVar5->dyn).sessionInfo;
-  pbVar10 = local_90;
+  pSVar4 = Live_GetCurrentSession();
+  p_Var10 = &(pSVar4->dyn).sessionInfo;
+  pbVar9 = local_90;
   do {
-    lVar9 = (ulonglong)(p_Var11->sessionID).ab[0] - (ulonglong)*pbVar10;
-    if (lVar9 != 0) break;
-    p_Var11 = (_XSESSION_INFO *)((p_Var11->sessionID).ab + 1);
-    pbVar10 = pbVar10 + 1;
-  } while (p_Var11 != (_XSESSION_INFO *)&(pSVar5->dyn).sessionInfo.hostAddress);
-  if ((int)lVar9 != 0) {
+    lVar8 = (ulonglong)(p_Var10->sessionID).ab[0] - (ulonglong)*pbVar9;
+    if (lVar8 != 0) break;
+    p_Var10 = (_XSESSION_INFO *)((p_Var10->sessionID).ab + 1);
+    pbVar9 = pbVar9 + 1;
+  } while (p_Var10 != (_XSESSION_INFO *)&(pSVar4->dyn).sessionInfo.hostAddress);
+  if ((int)lVar8 != 0) {
     Com_Printf(0xe,
                "Got a voice connectivity test packet for an unknown session ID (%llx vs %llx) \n");
-    __restgprlr_26();
     return;
   }
-  bVar8 = Session_IsUserRegistered(pSVar5,uVar4);
-  if (!bVar8) {
+  bVar7 = Session_IsUserRegistered(pSVar4,uVar3);
+  if (!bVar7) {
     Com_Printf(0xe,"Got a voice connectivity test packet from unregistered client %i\n");
-    __restgprlr_26();
     return;
   }
-  bVar8 = Session_PlayerHasLoopbackAddr(pSVar5,uVar4);
-  if (bVar8) {
+  bVar7 = Session_PlayerHasLoopbackAddr(pSVar4,uVar3);
+  if (bVar7) {
     Com_PrintWarning(0xe,"Got a voice connectivity test packet from a local client %i, ignoring.\n")
     ;
-    __restgprlr_26();
     return;
   }
-  uVar2 = Session_GetXuid(pSVar5,uVar4);
+  uVar2 = Session_GetXuid(pSVar4,uVar3);
   if (uVar2 != uVar1) {
     Com_Printf(0xe,"Invalid voice test packet, XUID %llx didn\'t match our clientNum %i\'s XUID\n");
-    __restgprlr_26();
     return;
   }
-  iVar6 = Session_AreWeHost(pSVar5);
-  if (iVar6 != 0) {
+  iVar5 = Session_AreWeHost(pSVar4);
+  if (iVar5 != 0) {
     Com_Printf(0xe,"Invalid voice test packet, we\'re the nost.\n");
-    __restgprlr_26();
     return;
   }
-  bVar8 = Session_IsHost(pSVar5,uVar4);
-  if (bVar8) {
+  bVar7 = Session_IsHost(pSVar4,uVar3);
+  if (bVar7) {
     Com_Printf(0xe,"Invalid voice test packet, from the host (%llx, %i)\n");
-    __restgprlr_26();
     return;
   }
-  CL_GetClientName(LVar3,uVar4,acStack_80,0x40);
+  CL_GetClientName(param_1,uVar3,acStack_80,0x40);
   NET_AdrToString(in_stack_ffffff28);
   Com_Printf(0xe,"Session %s - We can hear \'%s\' ( client %i ) at addr %s\n");
-  uVar7 = Session_GetLocalVoiceConnectivity(pSVar5);
-  CL_UpdateConnectivityBits(LVar3,pSVar5,1 << (uVar4 & 0x3f) | uVar7);
-  Session_UpdatePlayerAddr(pSVar5,uVar4,in_stack_ffffff28);
-  __restgprlr_26();
+  uVar6 = Session_GetLocalVoiceConnectivity(pSVar4);
+  CL_UpdateConnectivityBits(param_1,pSVar4,1 << (uVar3 & 0x3f) | uVar6);
+  Session_UpdatePlayerAddr(pSVar4,uVar3,in_stack_ffffff28);
   return;
 }
 
 
 // 82359118  CL_VoicePacket  (client_mp/cl_voice.cpp:1306)
 
+/* WARNING: Function: __savegprlr_15 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_15 replaced with injection: xenon_save_restore */
 /* WARNING: Type propagation algorithm not settling */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
@@ -1680,128 +1571,120 @@ void CL_VoiceConnectionTestPacket(LocalClientNum_t param_1,msg_t *param_2,netadr
 void CL_VoicePacket(LocalClientNum_t param_1,msg_t *param_2)
 
 {
-  LocalClientNum_t LVar1;
-  uint uVar2;
-  bool bVar10;
-  PartyData *pPVar3;
-  SessionData *pSVar4;
-  int iVar5;
+  uint uVar1;
+  bool bVar9;
+  PartyData *pPVar2;
+  SessionData *pSVar3;
+  int iVar4;
+  uint uVar5;
   uint uVar6;
   uint uVar7;
-  uint uVar8;
-  netsrc_t nVar9;
-  uint uVar11;
-  ulonglong uVar12;
-  longlong lVar13;
+  netsrc_t nVar8;
+  uint uVar10;
+  ulonglong uVar11;
+  longlong lVar12;
   uint local_8e0 [2];
   PartyActiveClient local_8d8;
   uchar auStack_8cf [15];
   msg_t mStack_8c0;
   uchar auStack_890 [2192];
   
-  LVar1 = __savegprlr_15(param_1);
-  uVar2 = MSG_ReadByte(param_2);
-  if (((int)uVar2 < 0) || (0x11 < (int)uVar2)) {
+  uVar1 = MSG_ReadByte(param_2);
+  if (((int)uVar1 < 0) || (0x11 < (int)uVar1)) {
     Com_Printf(0xe,"Invalid voice packet - talker was %i\n");
   }
   else {
-    bVar10 = Lobby_IsInRunningLobby();
-    if (bVar10) {
-      pPVar3 = Lobby_GetPartyData();
-      pSVar4 = Lobby_GetSession();
+    bVar9 = Lobby_IsInRunningLobby();
+    if (bVar9) {
+      pPVar2 = Lobby_GetPartyData();
+      pSVar3 = Lobby_GetSession();
     }
     else {
-      iVar5 = Party_InParty(&g_partyData);
-      if (iVar5 == 0) {
-        bVar10 = Lobby_IsInLobby();
-        if (bVar10) {
-          pPVar3 = Lobby_GetPartyData();
+      iVar4 = Party_InParty(&g_partyData);
+      if (iVar4 == 0) {
+        bVar9 = Lobby_IsInLobby();
+        if (bVar9) {
+          pPVar2 = Lobby_GetPartyData();
         }
         else {
-          pPVar3 = (PartyData *)0x0;
+          pPVar2 = (PartyData *)0x0;
         }
-        pSVar4 = &g_serverSession;
+        pSVar3 = &g_serverSession;
       }
       else {
-        pPVar3 = &g_partyData;
-        pSVar4 = g_partyData.session;
+        pPVar2 = &g_partyData;
+        pSVar3 = g_partyData.session;
       }
     }
     MSG_ReadData(param_2,local_8e0,4);
-    if (pPVar3 == (PartyData *)0x0) {
-      uVar6 = CL_ControllerIndexFromClientNum(LVar1);
+    if (pPVar2 == (PartyData *)0x0) {
+      uVar5 = CL_ControllerIndexFromClientNum(param_1);
     }
     else {
-      local_8d8 = Party_GetActiveClientForLocalClientNum(pPVar3,LVar1);
-      uVar6 = local_8d8.localControllerIndex;
-      LVar1 = local_8d8.localClientNum;
+      local_8d8 = Party_GetActiveClientForLocalClientNum(pPVar2,param_1);
+      param_1 = local_8d8.localClientNum;
+      uVar5 = local_8d8.localControllerIndex;
     }
-    bVar10 = Live_IsSignedIn(uVar6);
-    if (!bVar10) {
+    bVar9 = Live_IsSignedIn(uVar5);
+    if (!bVar9) {
       Com_Printf(0xe,"Can\'t process voice packets, not signed in.\n");
-      __restgprlr_15();
       return;
     }
-    uVar6 = Live_GetOurClientNum(uVar6,pSVar4);
-    if ((int)uVar6 < 0) {
+    uVar5 = Live_GetOurClientNum(uVar5,pSVar3);
+    if ((int)uVar5 < 0) {
       Com_Printf(0xe,"Couldn\'t find our own XUID in the session.\n");
-      __restgprlr_15();
       return;
     }
-    bVar10 = Session_IsUserRegistered(pSVar4,uVar2);
-    if (!bVar10) {
+    bVar9 = Session_IsUserRegistered(pSVar3,uVar1);
+    if (!bVar9) {
       Com_Printf(0xe,"talker %i is not registered in the session.\n");
-      __restgprlr_15();
       return;
     }
-    bVar10 = Session_PlayerHasLoopbackAddr(pSVar4,uVar2);
-    if (bVar10) {
+    bVar9 = Session_PlayerHasLoopbackAddr(pSVar3,uVar1);
+    if (bVar9) {
       Com_Printf(0xe,
                  "Received voice packet from a local client (but not ourself)  (talker num is %i)  relayList is %i\n"
                 );
-      __restgprlr_15();
       return;
     }
-    uVar7 = Session_GetConnectivityBitsForLocalClients(pSVar4);
-    uVar12 = 1;
-    uVar7 = uVar7 | 1 << (uVar6 & 0x3f);
-    if ((1 << (uVar2 & 0x3f) & uVar7) != 0) {
+    uVar6 = Session_GetConnectivityBitsForLocalClients(pSVar3);
+    uVar11 = 1;
+    uVar6 = uVar6 | 1 << (uVar5 & 0x3f);
+    if ((1 << (uVar1 & 0x3f) & uVar6) != 0) {
       Com_Printf(0xe,
                  "Received voice packet from ourself?  (our ourLocalTalkBits are %i)  relayList is %i\n"
                 );
-      __restgprlr_15();
       return;
     }
-    uVar8 = MSG_ReadByte(param_2);
-    lVar13 = (longlong)(int)uVar8;
-    if (((int)uVar8 < 1) || (0x28 < (int)uVar8)) {
+    uVar7 = MSG_ReadByte(param_2);
+    lVar12 = (longlong)(int)uVar7;
+    if (((int)uVar7 < 1) || (0x28 < (int)uVar7)) {
       Com_Printf(0xe,"Received invalid numPackets in a voice packet: numPackets is %i\n");
-      __restgprlr_15();
       return;
     }
-    uVar11 = local_8e0[0] & ~uVar7;
+    uVar10 = local_8e0[0] & ~uVar6;
     MSG_Init(&mStack_8c0,auStack_890,0x800);
-    if (uVar11 != 0) {
+    if (uVar10 != 0) {
       MSG_WriteString(&mStack_8c0,"v");
-      MSG_WriteByte(&mStack_8c0,uVar2);
+      MSG_WriteByte(&mStack_8c0,uVar1);
       local_8e0[1] = 0;
       MSG_WriteData(&mStack_8c0,local_8e0 + 1,4);
-      MSG_WriteByte(&mStack_8c0,uVar8 & 0xff);
+      MSG_WriteByte(&mStack_8c0,uVar7 & 0xff);
     }
-    if (0 < (int)uVar8) {
+    if (0 < (int)uVar7) {
       do {
         MSG_ReadData(param_2,auStack_8cf,10);
-        if (uVar11 != 0) {
+        if (uVar10 != 0) {
           MSG_WriteData(&mStack_8c0,auStack_8cf,10);
         }
-        bVar10 = CL_IsPlayerMuted(pSVar4,uVar2);
-        if ((bVar10) || ((local_8e0[0] != 0 && ((uVar7 & local_8e0[0]) == 0)))) {
+        bVar9 = CL_IsPlayerMuted(pSVar3,uVar1);
+        if ((bVar9) || ((local_8e0[0] != 0 && ((uVar6 & local_8e0[0]) == 0)))) {
           if ((xenon_voiceDebug->current).enabled != false) {
-            bVar10 = CL_IsPlayerMuted(pSVar4,uVar2);
-            if (bVar10) {
+            bVar9 = CL_IsPlayerMuted(pSVar3,uVar1);
+            if (bVar9) {
               Com_Printf(0xe,"Not playing voice packet because client %i is muted\n");
             }
-            else if ((local_8e0[0] != 0) && ((uVar7 & local_8e0[0]) != 0)) {
+            else if ((local_8e0[0] != 0) && ((uVar6 & local_8e0[0]) != 0)) {
               Com_Printf(0xe,
                          "Not playing voice packet because the relay list is %i and our client bits are %i\n"
                         );
@@ -1809,19 +1692,19 @@ void CL_VoicePacket(LocalClientNum_t param_1,msg_t *param_2)
           }
         }
         else {
-          Voice_IncomingVoiceData(pSVar4,uVar2,auStack_8cf,10);
+          Voice_IncomingVoiceData(pSVar3,uVar1,auStack_8cf,10);
         }
-        lVar13 = lVar13 + -1;
-      } while (lVar13 != 0);
+        lVar12 = lVar12 + -1;
+      } while (lVar12 != 0);
     }
-    if (uVar11 != 0) {
-      uVar7 = 0;
+    if (uVar10 != 0) {
+      uVar6 = 0;
       do {
-        if (((uint)uVar12 & uVar11) != 0) {
-          bVar10 = Session_IsUserRegistered(pSVar4,uVar7);
-          if (bVar10) {
-            bVar10 = Session_PlayerHasLoopbackAddr(pSVar4,uVar7);
-            if (bVar10) {
+        if (((uint)uVar11 & uVar10) != 0) {
+          bVar9 = Session_IsUserRegistered(pSVar3,uVar6);
+          if (bVar9) {
+            bVar9 = Session_PlayerHasLoopbackAddr(pSVar3,uVar6);
+            if (bVar9) {
               Com_PrintWarning(0xe,
                                "Invalid relay voice packet - we were asked to relay voice to local client %i in session %s\n"
                               );
@@ -1829,23 +1712,23 @@ void CL_VoicePacket(LocalClientNum_t param_1,msg_t *param_2)
             else {
               if (((cl_showSend->current).enabled != false) ||
                  ((xenon_voiceDebug->current).enabled != false)) {
-                if (pPVar3 != (PartyData *)0x0) {
-                  Party_GetMemberName(pPVar3,uVar2);
-                  Party_GetMemberName(pPVar3,uVar7);
+                if (pPVar2 != (PartyData *)0x0) {
+                  Party_GetMemberName(pPVar2,uVar1);
+                  Party_GetMemberName(pPVar2,uVar6);
                 }
                 Com_Printf(0xe,"relaying voice: %i to client %i (%s) from client %i (%s)\n");
               }
-              if (uVar6 == uVar7) {
+              if (uVar5 == uVar6) {
                 MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_voice.cpp"
                                 ,0x611,0,"ourClientNum != relayClient\n\t%i, %i");
               }
-              iVar5 = 0;
+              iVar4 = 0;
               do {
-                nVar9 = CL_GetLocalClientSock(LVar1,CA_CONNECTED);
-                bVar10 = CL_SendPeerVoiceData(pSVar4,LVar1,nVar9,uVar7,&mStack_8c0,true);
-                if (bVar10) break;
-                iVar5 = iVar5 + 1;
-              } while (iVar5 < 3);
+                nVar8 = CL_GetLocalClientSock(param_1,CA_CONNECTED);
+                bVar9 = CL_SendPeerVoiceData(pSVar3,param_1,nVar8,uVar6,&mStack_8c0,true);
+                if (bVar9) break;
+                iVar4 = iVar4 + 1;
+              } while (iVar4 < 3);
             }
           }
           else {
@@ -1854,16 +1737,14 @@ void CL_VoicePacket(LocalClientNum_t param_1,msg_t *param_2)
                             );
           }
         }
-        uVar7 = uVar7 + 1;
-        uVar12 = (uVar12 & 0x7fffffff) << 1 | uVar12 >> 0x1f;
-        if (0x11 < (int)uVar7) {
-          __restgprlr_15();
+        uVar6 = uVar6 + 1;
+        uVar11 = (uVar11 & 0x7fffffff) << 1 | uVar11 >> 0x1f;
+        if (0x11 < (int)uVar6) {
           return;
         }
       } while( true );
     }
   }
-  __restgprlr_15();
   return;
 }
 
@@ -1923,84 +1804,73 @@ bool CL_HasConnectionFailed(SessionData *param_1,int param_2)
 
 // 82357EF8  CL_FindRouteForClientNum  (client_mp/cl_voice.cpp:1601)
 
+/* WARNING: Function: __savegprlr_21 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_21 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 int CL_FindRouteForClientNum(SessionData *param_1,int param_2,int param_3,int param_4)
 
 {
-  uint uVar1;
-  SessionData *pSVar2;
-  int iVar3;
-  bool bVar5;
-  bool bVar6;
-  int iVar4;
-  longlong lVar7;
-  int iVar8;
-  char *pcVar9;
-  ulonglong uVar10;
-  longlong lVar11;
-  longlong lVar12;
+  int iVar1;
+  bool bVar3;
+  bool bVar4;
+  int iVar2;
+  char *pcVar5;
+  int iVar6;
   
-  lVar7 = (longlong)param_2;
-  pSVar2 = (SessionData *)__savegprlr_21(param_1);
-  iVar8 = (int)lVar7;
-  iVar3 = CL_CanClient1ConnectToClient2(pSVar2,iVar8,param_3);
-  if ((iVar3 == 0) || (bVar5 = CL_ConnectionIsEstablished(pSVar2,param_3), !bVar5)) {
+  iVar1 = CL_CanClient1ConnectToClient2(param_1,param_2,param_3);
+  if ((iVar1 == 0) || (bVar3 = CL_ConnectionIsEstablished(param_1,param_3), !bVar3)) {
     if (param_4 == 0) {
-      pcVar9 = 
+      pcVar5 = 
       "We were asked to send an OOB packet directly to a client %i but have no route to them. Blindly firing off the packet anyway, we don\'t want to forward relay packets.\n"
       ;
     }
     else {
-      bVar5 = false;
-      lVar12 = 0;
+      bVar3 = false;
+      iVar1 = 0;
       do {
-        lVar11 = lVar12 + lVar7 + 1;
-        iVar3 = (int)lVar11;
-        uVar1 = iVar3 / 0x12 + (iVar3 >> 0x1f);
-        uVar10 = (longlong)(int)uVar1 + (ulonglong)(uVar1 >> 0x1f);
-        lVar11 = lVar11 + (uVar10 + (uVar10 & 0x1fffffff) * 8 & 0x7fffffff) * -2;
-        iVar3 = (int)lVar11;
-        if (iVar3 == iVar8) {
+        iVar6 = iVar1 + param_2 + 1;
+        iVar2 = iVar6 / 0x12 + (iVar6 >> 0x1f);
+        iVar6 = iVar6 + (iVar2 - (iVar2 >> 0x1f)) * -0x12;
+        if (iVar6 == param_2) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_voice.cpp",
                           0x655,0,"%s");
         }
-        if ((((iVar3 != param_3) && (bVar6 = Session_IsUserRegistered(pSVar2,iVar3), bVar6)) &&
-            (bVar6 = Session_PlayerHasLoopbackAddr(pSVar2,iVar3), !bVar6)) &&
-           (((iVar4 = CL_CanClient1ConnectToClient2(pSVar2,iVar8,iVar3), iVar4 != 0 &&
-             (iVar4 = CL_CanClient1ConnectToClient2(pSVar2,iVar3,param_3), iVar4 != 0)) &&
-            (bVar6 = CL_ConnectionIsEstablished(pSVar2,iVar3), bVar6)))) {
-          bVar5 = Session_IsHost(pSVar2,iVar3);
-          if (!bVar5) {
-            iVar3 = __restgprlr_21(lVar11);
-            return iVar3;
+        if ((((iVar6 != param_3) && (bVar4 = Session_IsUserRegistered(param_1,iVar6), bVar4)) &&
+            (bVar4 = Session_PlayerHasLoopbackAddr(param_1,iVar6), !bVar4)) &&
+           (((iVar2 = CL_CanClient1ConnectToClient2(param_1,param_2,iVar6), iVar2 != 0 &&
+             (iVar2 = CL_CanClient1ConnectToClient2(param_1,iVar6,param_3), iVar2 != 0)) &&
+            (bVar4 = CL_ConnectionIsEstablished(param_1,iVar6), bVar4)))) {
+          bVar3 = Session_IsHost(param_1,iVar6);
+          if (!bVar3) {
+            return iVar6;
           }
-          bVar5 = true;
+          bVar3 = true;
         }
-        lVar12 = lVar12 + 1;
-      } while ((int)lVar12 < 0x11);
-      if (bVar5) {
-        Session_HostNum(pSVar2);
+        iVar1 = iVar1 + 1;
+      } while (iVar1 < 0x11);
+      if (bVar3) {
+        Session_HostNum(param_1);
         Com_PrintWarning(0xe,
                          "We have no client route to get a packet from us to client %i.  We\'ll fire the packet through the host (%i)\n"
                         );
-        iVar3 = Session_HostNum(pSVar2);
-        iVar3 = __restgprlr_21(iVar3);
-        return iVar3;
+        iVar1 = Session_HostNum(param_1);
+        return iVar1;
       }
-      pcVar9 = 
+      pcVar5 = 
       "We have no client route to get a packet from us to client %i, not even the host. We\'ll fire the packet blindly and hope it makes it\n"
       ;
     }
-    Com_PrintWarning(0xe,pcVar9);
+    Com_PrintWarning(0xe,pcVar5);
   }
-  iVar3 = __restgprlr_21(lVar7);
-  return iVar3;
+  return param_2;
 }
 
 
 // 823580C8  CL_SendRelayPacket  (client_mp/cl_voice.cpp:1666)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
@@ -2008,42 +1878,35 @@ bool CL_SendRelayPacket(SessionData *param_1,LocalClientNum_t param_2,int param_
                        uchar *param_5,int param_6,bool param_7)
 
 {
-  SessionData *pSVar1;
-  char *pcVar2;
-  netsrc_t nVar3;
-  bool bVar4;
-  undefined1 uVar5;
-  longlong lVar6;
-  longlong lVar7;
-  int iVar8;
+  char *pcVar1;
+  netsrc_t nVar2;
+  bool bVar3;
+  int iVar4;
   msg_t mStack_870;
   uchar auStack_840 [2112];
   
-  lVar7 = (longlong)param_3;
-  lVar6 = (longlong)(int)param_2;
-  pSVar1 = (SessionData *)__savegprlr_25(param_1,lVar6,lVar7,param_4);
   MSG_Init(&mStack_870,auStack_840,0x800);
-  pcVar2 = va("relay %i %i");
-  MSG_WriteString(&mStack_870,pcVar2);
+  pcVar1 = va("relay %i %i");
+  MSG_WriteString(&mStack_870,pcVar1);
   MSG_WriteData(&mStack_870,param_5,param_6);
-  iVar8 = 0;
+  iVar4 = 0;
   do {
-    nVar3 = CL_GetLocalClientSock((LocalClientNum_t)lVar6,CA_PRIMED);
-    bVar4 = CL_SendPeerVoiceData
-                      (pSVar1,(LocalClientNum_t)lVar6,nVar3,(int)lVar7,&mStack_870,param_7);
-    if (bVar4) break;
-    iVar8 = iVar8 + 1;
-  } while (iVar8 < 3);
+    nVar2 = CL_GetLocalClientSock(param_2,CA_PRIMED);
+    bVar3 = CL_SendPeerVoiceData(param_1,param_2,nVar2,param_3,&mStack_870,param_7);
+    if (bVar3) break;
+    iVar4 = iVar4 + 1;
+  } while (iVar4 < 3);
   if ((cl_showSend->current).enabled != false) {
     Com_Printf(0xe,"oob: %i\n");
   }
-  uVar5 = __restgprlr_25(1);
-  return (bool)uVar5;
+  return true;
 }
 
 
 // 823581A8  CL_WritePeerToPeerOOBData  (client_mp/cl_voice.cpp:1696)
 
+/* WARNING: Function: __savegprlr_17 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_17 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
@@ -2052,97 +1915,85 @@ bool CL_WritePeerToPeerOOBData
                ,bool param_6,int param_7)
 
 {
-  LocalClientNum_t LVar1;
-  SessionData *pSVar2;
-  bool bVar6;
-  undefined1 uVar7;
-  int iVar3;
-  int iVar4;
-  netsrc_t nVar5;
-  ulonglong uVar8;
-  int iVar9;
+  bool bVar4;
+  int iVar1;
+  int iVar2;
+  netsrc_t nVar3;
+  int iVar5;
   msg_t mStack_8b0;
   uchar auStack_880 [2176];
   
-  uVar8 = (ulonglong)(int)param_2;
-  pSVar2 = (SessionData *)__savegprlr_17(param_1);
   if ((param_3 < 0) || (0x11 < param_3)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_voice.cpp",0x6a7,
                     0,"%s\n\t(clientNum) = %i");
   }
-  if (3 < (uVar8 & 0xffffffff)) {
+  if (LOCAL_CLIENT_3 < param_2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\client_mp.h",0x4aa,0
                     ,"localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)");
   }
-  LVar1 = (LocalClientNum_t)uVar8;
-  if (((int)clientUIActives[LVar1].connectionState < 3) ||
-     (bVar6 = CL_Demo_IsPlaying(LVar1), !bVar6)) {
-    bVar6 = Session_IsUserRegistered(pSVar2,param_3);
-    if (bVar6) {
-      bVar6 = Session_PlayerHasLoopbackAddr(pSVar2,param_3);
-      if (bVar6) {
+  if (((int)clientUIActives[param_2].connectionState < 3) ||
+     (bVar4 = CL_Demo_IsPlaying(param_2), !bVar4)) {
+    bVar4 = Session_IsUserRegistered(param_1,param_3);
+    if (bVar4) {
+      bVar4 = Session_PlayerHasLoopbackAddr(param_1,param_3);
+      if (bVar4) {
         Com_PrintError(0xe,
                        "WritePeerToPeerOOBData - Trying to send a packet to a local client (%i)\n");
-        uVar7 = __restgprlr_17(0);
-        return (bool)uVar7;
+        return false;
       }
-      iVar3 = CL_ControllerIndexFromClientNum(LVar1);
-      bVar6 = Live_IsSignedIn(iVar3);
-      if (!bVar6) {
+      iVar1 = CL_ControllerIndexFromClientNum(param_2);
+      bVar4 = Live_IsSignedIn(iVar1);
+      if (!bVar4) {
         Com_PrintWarning(0xe,
                          "WritePeerToPeerOOBData - Trying to send a packet from a non-signed-in controller (%i).\n"
                         );
-        uVar7 = __restgprlr_17(0);
-        return (bool)uVar7;
+        return false;
       }
-      iVar3 = Live_GetOurClientNum(iVar3,pSVar2);
-      if (iVar3 == param_3) {
+      iVar1 = Live_GetOurClientNum(iVar1,param_1);
+      if (iVar1 == param_3) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_voice.cpp",
                         0x6c6,0,"ourClientNum != clientNum\n\t%i, %i");
       }
       MSG_Init(&mStack_8b0,auStack_880,0x800);
       MSG_WriteData(&mStack_8b0,param_4,param_5);
-      iVar9 = 0;
+      iVar5 = 0;
       do {
-        iVar4 = CL_FindRouteForClientNum(pSVar2,iVar3,param_3,param_7);
-        if (param_3 == iVar4) {
+        iVar2 = CL_FindRouteForClientNum(param_1,iVar1,param_3,param_7);
+        if (param_3 == iVar2) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_voice.cpp",
                           0x6ce,0,"%s\n\t%s");
         }
-        if (iVar3 != iVar4) {
-          bVar6 = Session_IsUserRegistered(pSVar2,iVar4);
-          if (!bVar6) {
+        if (iVar1 != iVar2) {
+          bVar4 = Session_IsUserRegistered(param_1,iVar2);
+          if (!bVar4) {
             MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_voice.cpp"
                             ,0x6d2,0,"%s");
           }
-          bVar6 = Session_PlayerHasLoopbackAddr(pSVar2,iVar4);
-          if (bVar6) {
+          bVar4 = Session_PlayerHasLoopbackAddr(param_1,iVar2);
+          if (bVar4) {
             MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_voice.cpp"
                             ,0x6d3,0,"%s");
           }
           Com_Printf(0xe,"Sending a relayed packet to client %i through relay client %i\n");
-          bVar6 = CL_SendRelayPacket(pSVar2,LVar1,iVar4,param_3,param_4,param_5,param_6);
-          uVar7 = __restgprlr_17(bVar6);
-          return (bool)uVar7;
+          bVar4 = CL_SendRelayPacket(param_1,param_2,iVar2,param_3,param_4,param_5,param_6);
+          return bVar4;
         }
         Com_Printf(0xe,"Sending an OOB packet directly to client %i\n");
-        nVar5 = CL_GetLocalClientSock(LVar1,CA_PRIMED);
-        bVar6 = CL_SendPeerVoiceData(pSVar2,LVar1,nVar5,param_3,&mStack_8b0,param_6);
-        if (bVar6) break;
-        iVar9 = iVar9 + 1;
-      } while (iVar9 < 3);
+        nVar3 = CL_GetLocalClientSock(param_2,CA_PRIMED);
+        bVar4 = CL_SendPeerVoiceData(param_1,param_2,nVar3,param_3,&mStack_8b0,param_6);
+        if (bVar4) break;
+        iVar5 = iVar5 + 1;
+      } while (iVar5 < 3);
       if ((cl_showSend->current).enabled != false) {
         Com_Printf(0xe,"oob: %i\n");
       }
-      uVar7 = __restgprlr_17(1);
-      return (bool)uVar7;
+      return true;
     }
     Com_PrintWarning(0xe,
                      "WritePeerToPeerOOBData - Trying to send a packet to an unregistered user (%i)\n"
                     );
   }
-  uVar7 = __restgprlr_17(0);
-  return (bool)uVar7;
+  return false;
 }
 
 
@@ -2270,6 +2121,8 @@ void CL_VoiceTransmit(LocalClientNum_t param_1)
 
 // 82359650  CL_VoiceFrame  (client_mp/cl_voice.cpp:2018)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
@@ -2285,10 +2138,9 @@ void CL_VoiceFrame(LocalClientNum_t param_1)
   LocalClientNum_t local_50;
   uint uStack_4c;
   
-  local_50 = __savegprlr_25(param_1);
-  bVar6 = CL_IsUsingVoice(local_50);
+  bVar6 = CL_IsUsingVoice(param_1);
   if (bVar6) {
-    pvVar2 = CL_GetLocalClientVoiceCommunication(local_50);
+    pvVar2 = CL_GetLocalClientVoiceCommunication(param_1);
     if (9 < pvVar2->voicePacketCount) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_voice.cpp",
                       0x7f2,0,"%s");
@@ -2313,8 +2165,7 @@ void CL_VoiceFrame(LocalClientNum_t param_1)
         pSVar4 = &g_serverSession;
       }
     }
-    iVar5 = Voice_GetLocalVoiceData(pSVar4,local_50,pvVar2->voicePackets + pvVar2->voicePacketCount)
-    ;
+    iVar5 = Voice_GetLocalVoiceData(pSVar4,param_1,pvVar2->voicePackets + pvVar2->voicePacketCount);
     while (0 < iVar5) {
       if (iVar5 != 10) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_voice.cpp",
@@ -2323,17 +2174,18 @@ void CL_VoiceFrame(LocalClientNum_t param_1)
       iVar5 = pvVar2->voicePacketCount + 1;
       pvVar2->voicePacketCount = iVar5;
       if (9 < iVar5) {
-        CL_VoiceTransmit(local_50);
+        CL_VoiceTransmit(param_1);
       }
       iVar5 = Voice_GetLocalVoiceData
-                        (pSVar4,local_50,pvVar2->voicePackets + pvVar2->voicePacketCount);
+                        (pSVar4,param_1,pvVar2->voicePackets + pvVar2->voicePacketCount);
     }
-    CL_VoiceTransmit(local_50);
+    CL_VoiceTransmit(param_1);
     if (pPVar3 == (PartyData *)0x0) {
-      uStack_4c = CL_ControllerIndexFromClientNum(local_50);
+      uStack_4c = CL_ControllerIndexFromClientNum(param_1);
+      local_50 = param_1;
     }
     else {
-      PVar1 = Party_GetActiveClientForLocalClientNum(pPVar3,local_50);
+      PVar1 = Party_GetActiveClientForLocalClientNum(pPVar3,param_1);
       local_50 = PVar1.localClientNum;
       uStack_4c = PVar1.localControllerIndex;
     }
@@ -2348,7 +2200,6 @@ void CL_VoiceFrame(LocalClientNum_t param_1)
       pvVar2->packetsPerSecStart = iVar5;
     }
   }
-  __restgprlr_25();
   return;
 }
 
@@ -2381,94 +2232,90 @@ int CL_IsClientBlockedByPrivacySettings(SessionData *param_1,int param_2,int par
 
 // 82358860  CL_IsPlayerMuted  (client_mp/cl_voice.cpp:2140)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 bool CL_IsPlayerMuted(SessionData *param_1,int param_2)
 
 {
-  SessionData *pSVar2;
   ulong64 uVar1;
+  int iVar2;
+  bool bVar4;
   int iVar3;
-  bool bVar5;
-  undefined1 uVar6;
-  int iVar4;
-  ulonglong uVar7;
   
-  uVar7 = (ulonglong)param_2;
-  pSVar2 = (SessionData *)__savegprlr_28(param_1);
-  if (pSVar2 == (SessionData *)0x0) {
+  if (param_1 == (SessionData *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_voice.cpp",0x860,
                     0,"%s");
   }
-  if (0x11 < (uVar7 & 0xffffffff)) {
+  if (0x11 < (uint)param_2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_voice.cpp",0x861,
                     0,"muteClientIndex doesn\'t index MAX_CLIENTS\n\t%i not in [0, %i)");
   }
-  uVar1 = Session_GetXuidEvenIfInactive(pSVar2,(int)uVar7);
+  uVar1 = Session_GetXuidEvenIfInactive(param_1,param_2);
   if (uVar1 != 0) {
-    iVar3 = Live_GetPortForLocalXUID(uVar1);
-    if ((-1 < iVar3) &&
-       ((bVar5 = Live_IsSignedIn(iVar3), !bVar5 || (bVar5 = Live_UserIsGuest(iVar3), bVar5)))) {
-LAB_82358904:
-      uVar6 = __restgprlr_28(1);
-      return (bool)uVar6;
+    iVar2 = Live_GetPortForLocalXUID(uVar1);
+    if ((-1 < iVar2) &&
+       ((bVar4 = Live_IsSignedIn(iVar2), !bVar4 || (bVar4 = Live_UserIsGuest(iVar2), bVar4)))) {
+      return true;
     }
-    iVar3 = 0;
+    iVar2 = 0;
     do {
-      bVar5 = Live_IsSignedIn(iVar3);
-      if ((bVar5) &&
-         ((iVar4 = CL_IsClientBlockedByPrivacySettings(pSVar2,iVar3,(int)uVar7), iVar4 != 0 ||
-          (bVar5 = Voice_IsMemberMuted(pSVar2,iVar3,uVar1), bVar5)))) goto LAB_82358904;
-      iVar3 = iVar3 + 1;
-    } while (iVar3 < 4);
+      bVar4 = Live_IsSignedIn(iVar2);
+      if (bVar4) {
+        iVar3 = CL_IsClientBlockedByPrivacySettings(param_1,iVar2,param_2);
+        if (iVar3 != 0) {
+          return true;
+        }
+        bVar4 = Voice_IsMemberMuted(param_1,iVar2,uVar1);
+        if (bVar4) {
+          return true;
+        }
+      }
+      iVar2 = iVar2 + 1;
+    } while (iVar2 < 4);
   }
-  uVar6 = __restgprlr_28(0);
-  return (bool)uVar6;
+  return false;
 }
 
 
 // 82358988  CL_IsPlayerUnmutable  (client_mp/cl_voice.cpp:2178)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 bool CL_IsPlayerUnmutable(SessionData *param_1,int param_2)
 
 {
-  SessionData *pSVar2;
   ulong64 uVar1;
-  undefined1 uVar5;
+  int iVar2;
+  bool bVar4;
   int iVar3;
-  bool bVar6;
-  int iVar4;
-  ulonglong uVar7;
   
-  uVar7 = (ulonglong)param_2;
-  pSVar2 = (SessionData *)__savegprlr_28(param_1);
-  if (pSVar2 == (SessionData *)0x0) {
+  if (param_1 == (SessionData *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_voice.cpp",0x886,
                     0,"%s");
   }
-  if (0x11 < (uVar7 & 0xffffffff)) {
+  if (0x11 < (uint)param_2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_voice.cpp",0x887,
                     0,"muteClientIndex doesn\'t index MAX_CLIENTS\n\t%i not in [0, %i)");
   }
-  uVar1 = Session_GetXuidEvenIfInactive(pSVar2,(int)uVar7);
+  uVar1 = Session_GetXuidEvenIfInactive(param_1,param_2);
   if ((uVar1 != 0) &&
-     ((iVar3 = Live_GetPortForLocalXUID(uVar1), iVar3 < 0 ||
-      ((bVar6 = Live_IsSignedIn(iVar3), bVar6 && (bVar6 = Live_UserIsGuest(iVar3), !bVar6)))))) {
-    iVar3 = 0;
-    while ((bVar6 = Live_IsSignedIn(iVar3), !bVar6 ||
-           ((iVar4 = CL_IsClientBlockedByPrivacySettings(pSVar2,iVar3,(int)uVar7), iVar4 == 0 &&
-            (bVar6 = Voice_IsMemberUnmutable(pSVar2,iVar3,uVar1), bVar6))))) {
-      iVar3 = iVar3 + 1;
-      if (3 < iVar3) {
-        uVar5 = __restgprlr_28(1);
-        return (bool)uVar5;
+     ((iVar2 = Live_GetPortForLocalXUID(uVar1), iVar2 < 0 ||
+      ((bVar4 = Live_IsSignedIn(iVar2), bVar4 && (bVar4 = Live_UserIsGuest(iVar2), !bVar4)))))) {
+    iVar2 = 0;
+    while ((bVar4 = Live_IsSignedIn(iVar2), !bVar4 ||
+           ((iVar3 = CL_IsClientBlockedByPrivacySettings(param_1,iVar2,param_2), iVar3 == 0 &&
+            (bVar4 = Voice_IsMemberUnmutable(param_1,iVar2,uVar1), bVar4))))) {
+      iVar2 = iVar2 + 1;
+      if (3 < iVar2) {
+        return true;
       }
     }
   }
-  uVar5 = __restgprlr_28(0);
-  return (bool)uVar5;
+  return false;
 }
 
 
@@ -2490,33 +2337,32 @@ void CL_ResetPlayerMuting(SessionData *param_1,int param_2)
 
 // 82358B28  CL_ClearMutedList  (client_mp/cl_voice.cpp:2223)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 void CL_ClearMutedList(SessionData *param_1)
 
 {
-  SessionData *pSVar1;
-  bool bVar2;
-  uint uVar3;
+  bool bVar1;
+  uint uVar2;
   
-  pSVar1 = (SessionData *)__savegprlr_28(param_1);
-  if (pSVar1 == (SessionData *)0x0) {
+  if (param_1 == (SessionData *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_voice.cpp",0x8b2,
                     0,"%s");
   }
-  uVar3 = 0;
+  uVar2 = 0;
   do {
-    bVar2 = Session_IsUserRegistered(pSVar1,uVar3);
-    if (bVar2) {
-      if (0x11 < uVar3) {
+    bVar1 = Session_IsUserRegistered(param_1,uVar2);
+    if (bVar1) {
+      if (0x11 < uVar2) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_voice.cpp",
                         0x8a9,0,"muteClientIndex doesn\'t index MAX_CLIENTS\n\t%i not in [0, %i)");
       }
-      Voice_UnmuteMember(pSVar1,uVar3);
+      Voice_UnmuteMember(param_1,uVar2);
     }
-    uVar3 = uVar3 + 1;
-  } while ((int)uVar3 < 0x12);
-  __restgprlr_28();
+    uVar2 = uVar2 + 1;
+  } while ((int)uVar2 < 0x12);
   return;
 }
 

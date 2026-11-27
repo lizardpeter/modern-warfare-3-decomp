@@ -2,6 +2,8 @@
 
 // 82737B68  R_DrawSunShadowMapCallback  (gfx_d3d/r_draw_sunshadow.cpp:37)
 
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 /* WARNING: Enum "GPUTimerId": Some values do not have unique names */
@@ -17,21 +19,19 @@ void R_DrawSunShadowMapCallback(void *param_1,GfxCmdBufContext param_2)
   D3DDevice *pDVar5;
   GfxCmdBufSourceState *pGVar6;
   GfxCmdBufState *pGVar7;
-  int *piVar8;
-  GfxViewport *pGVar9;
+  GfxViewport *pGVar8;
   uchar in_r6;
   GfxCmdBufSourceState *pGStack00000018;
   GfxCmdBufState *pGStack0000001c;
   GfxViewport local_70 [7];
   
-  piVar8 = (int *)__savegprlr_22(param_1);
-  iVar1 = *piVar8;
-  pGVar9 = (GfxViewport *)piVar8[1];
-  pGVar2 = (GfxDrawList *)piVar8[2];
-  iVar3 = piVar8[3];
-  pGVar4 = (GfxBackEndData *)piVar8[5];
+  iVar1 = *(int *)param_1;
+  pGVar8 = *(GfxViewport **)((int)param_1 + 4);
+  pGVar2 = *(GfxDrawList **)((int)param_1 + 8);
+  iVar3 = *(int *)((int)param_1 + 0xc);
+  pGVar4 = *(GfxBackEndData **)((int)param_1 + 0x14);
   _pGStack00000018 = param_2;
-  R_SetRenderTarget(param_2,piVar8[4]);
+  R_SetRenderTarget(param_2,*(GfxRenderTargetId *)((int)param_1 + 0x10));
   pGVar7 = pGStack0000001c;
   pDVar5 = (pGStack0000001c->prim).device;
   if (pDVar5 == dx.device) {
@@ -43,10 +43,10 @@ void R_DrawSunShadowMapCallback(void *param_1,GfxCmdBufContext param_2)
     }
     R_ClearScreen(pDVar5,0xb0,shadowmapClearColor,0.0,in_r6,(GfxViewport *)0x0);
     R_GPU_EndTimer();
-    R_RunCommandBuffer(pGVar4,iVar1 + 0x11,&(pGVar2->info).iterGroup.drawListIter,pGVar9,
+    R_RunCommandBuffer(pGVar4,iVar1 + 0x11,&(pGVar2->info).iterGroup.drawListIter,pGVar8,
                        "sun shadow map");
   }
-  R_HW_EnableScissor(param_2,pGVar9);
+  R_HW_EnableScissor(param_2,pGVar8);
   pGVar6 = pGStack00000018;
   if (pGStack00000018->drawListId != 0x27) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.h",0x4eb,
@@ -58,23 +58,24 @@ void R_DrawSunShadowMapCallback(void *param_1,GfxCmdBufContext param_2)
   if (pDVar5 == dx.device) {
     R_GPU_BeginTimer(iVar1 + GPU_TIMER_SUN_SHADOW_0);
     if ((sm_showOverlay->current).integer == 1) {
-      pGVar9 = local_70;
+      pGVar8 = local_70;
       local_70[0].x = 0;
       local_70[0].y = 0;
       local_70[0].width = iVar3;
       local_70[0].height = iVar3;
     }
-    R_ResolveShadowmap(pGVar7,pGVar9,0,iVar3 * iVar1);
+    R_ResolveShadowmap(pGVar7,pGVar8,0,iVar3 * iVar1);
     R_GPU_EndTimer();
   }
   R_HW_DisableScissor(pGVar7);
-  __restgprlr_22();
   return;
 }
 
 
 // 82737D00  R_DrawSunShadowMap  (gfx_d3d/r_draw_sunshadow.cpp:162)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
@@ -83,35 +84,31 @@ void R_DrawSunShadowMap(GfxViewInfo *param_1,GfxDrawList *param_2,uint param_3,
 
 {
   GfxRenderTargetId GVar1;
-  int iVar2;
-  int iVar3;
-  int iVar4;
+  uint uVar2;
   uint local_17c0;
-  int local_17bc;
+  GfxSunShadowPartition *local_17bc;
   GfxDrawList *local_17b8;
-  int local_17b4;
+  uint local_17b4;
   GfxRenderTargetId local_17b0;
-  int local_17ac;
+  GfxBackEndData *local_17ac;
   GfxCmdBufSourceState GStack_17a0;
   
-  iVar4 = __savegprlr_26(param_1);
   PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffff,"Sun Shadow Map");
-  R_InitCmdBufSourceState(&GStack_17a0,(GfxCmdBufInput *)(iVar4 + 0x330),0);
-  GVar1 = *(GfxRenderTargetId *)(iVar4 + 0x93c);
-  iVar2 = *(int *)(iVar4 + 0x938);
+  R_InitCmdBufSourceState(&GStack_17a0,&param_1->input,0);
+  GVar1 = param_1->sunShadowRenderTargetId;
+  uVar2 = param_1->sunShadowResolution;
   R_SetRenderTargetSize(&GStack_17a0,GVar1);
-  R_SetViewportValues(&GStack_17a0,0,0,iVar2,iVar2);
-  local_17ac = *(int *)(iVar4 + 0x91c);
-  iVar3 = param_3 * 0x160 + local_17ac;
-  local_17bc = iVar3 + 0x2450;
+  R_SetViewportValues(&GStack_17a0,0,0,uVar2,uVar2);
+  local_17ac = (param_1->input).data;
+  local_17bc = (local_17ac->sunShadow).partition + param_3;
   local_17c0 = param_3;
   local_17b8 = param_2;
-  local_17b4 = iVar2;
+  local_17b4 = uVar2;
   local_17b0 = GVar1;
-  R_DrawCall(R_DrawSunShadowMapCallback,&local_17c0,&GStack_17a0,(GfxSceneDef *)(iVar4 + 0x180),
-             (GfxViewParms *)(iVar3 + 0x2460),param_4);
+  R_DrawCall(R_DrawSunShadowMapCallback,&local_17c0,&GStack_17a0,&param_1->sceneDef,
+             (GfxViewParms *)(local_17ac->emissiveSpotShadowDrawList + param_3 * 0x58 + 0x1f),
+             param_4);
   PIXEndNamedEvent();
-  __restgprlr_26();
   return;
 }
 

@@ -112,6 +112,8 @@ void CG_RegisterWeaponDvars(void)
 
 // 82316B18  GetWeaponAnimRate  (cgame/cg_weapons.cpp:183)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "weapAnimFiles_t": Some values do not have unique names */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
 
@@ -120,161 +122,144 @@ float GetWeaponAnimRate(uint *param_1,Weapon param_2,bool param_3,bool param_4,X
 
 {
   WeaponDef *pWVar1;
-  uint *puVar2;
-  Weapon WVar3;
-  int iVar4;
-  bool bVar5;
-  ulonglong uVar6;
-  ulonglong uVar7;
-  ulonglong uVar8;
-  ulonglong uVar9;
-  double dVar10;
+  Weapon WVar2;
+  int iVar3;
   int local_60 [2];
-  longlong local_58 [11];
+  int local_58 [22];
   
-  uVar9 = (ulonglong)(int)param_7;
-  uVar8 = (ulonglong)(int)param_6;
-  uVar7 = (ulonglong)(int)param_5;
-  uVar6 = (ulonglong)param_4;
-  puVar2 = (uint *)__savegprlr_23(param_1);
-  if ((uVar7 & 0xffffffff) == 0) {
+  if (param_5 == (XAnim_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp",0xbc,0,
                     "%s");
   }
-  if (0x29 < (uVar8 & 0xffffffff)) {
+  if (WEAP_ALT_ANIM_ADJUST < param_6) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp",0xbd,0,
                     "animIndex_desiredTime doesn\'t index NUM_WEAP_ANIMS\n\t%i not in [0, %i)");
   }
-  if (0x29 < (uVar9 & 0xffffffff)) {
+  if (WEAP_ALT_ANIM_ADJUST < param_7) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp",0xbe,0,
                     "animIndex_actual doesn\'t index NUM_WEAP_ANIMS\n\t%i not in [0, %i)");
   }
-  WVar3 = BG_GetAlternateWeapon(param_2,param_3);
-  pWVar1 = bg_weaponDefs[WVar3.data & 0xff];
-  bVar5 = SUB81(uVar6,0);
-  if ((param_8 == 0) || ((int)uVar8 != 6)) {
-    switch((int)uVar8 + -4) {
-    case 0:
-      if ((uVar6 & 0xff) == 0) {
-        local_60[0] = (pWVar1->stateTimers).iHoldFireTime;
+  WVar2 = BG_GetAlternateWeapon(param_2,param_3);
+  pWVar1 = bg_weaponDefs[WVar2.data & 0xff];
+  if ((param_8 == 0) || (param_6 != WEAP_ANIM_RECHAMBER)) {
+    switch(param_6) {
+    case WEAP_ANIM_HOLD_FIRE:
+      if (param_4) {
+        local_60[0] = (pWVar1->akimboStateTimers).iHoldFireTime;
       }
       else {
-        local_60[0] = (pWVar1->akimboStateTimers).iHoldFireTime;
+        local_60[0] = (pWVar1->stateTimers).iHoldFireTime;
       }
       break;
     default:
-      dVar10 = (double)__restgprlr_23(0x3ff0000000000000);
-      return (float)dVar10;
-    case 3:
-      BG_GetMeleeTime(puVar2,param_2,param_3,bVar5,local_60,(int *)local_58);
+      return 1.0;
+    case WEAP_ANIM_MELEE:
+      BG_GetMeleeTime(param_1,param_2,param_3,param_4,local_60,local_58);
       break;
-    case 4:
-      BG_GetMeleeChargeTime(puVar2,param_2,param_3,bVar5,local_60,(int *)local_58);
+    case WEAP_ANIM_MELEE_CHARGE:
+      BG_GetMeleeChargeTime(param_1,param_2,param_3,param_4,local_60,local_58);
       break;
-    case 5:
-      local_60[0] = BG_ReloadTime(param_2,param_3,bVar5);
+    case WEAP_ANIM_RELOAD:
+      local_60[0] = BG_ReloadTime(param_2,param_3,param_4);
       break;
-    case 6:
-      local_60[0] = BG_ReloadEmptyTime(param_2,param_3,bVar5);
+    case WEAP_ANIM_RELOAD_EMPTY:
+      local_60[0] = BG_ReloadEmptyTime(param_2,param_3,param_4);
       break;
-    case 7:
-      local_60[0] = BG_ReloadStartTime(param_2,param_3,bVar5);
+    case WEAP_ANIM_RELOAD_START:
+      local_60[0] = BG_ReloadStartTime(param_2,param_3,param_4);
       break;
-    case 8:
-      local_60[0] = BG_ReloadEndTime(param_2,param_3,bVar5);
+    case WEAP_ANIM_RELOAD_END:
+      local_60[0] = BG_ReloadEndTime(param_2,param_3,param_4);
       break;
-    case 9:
-      local_60[0] = BG_RaiseTime(param_2,param_3,bVar5);
+    case WEAP_ANIM_RAISE:
+      local_60[0] = BG_RaiseTime(param_2,param_3,param_4);
       break;
-    case 10:
-      local_60[0] = BG_FirstRaiseTime(param_2,param_3,bVar5);
+    case WEAP_ANIM_FIRST_RAISE:
+      local_60[0] = BG_FirstRaiseTime(param_2,param_3,param_4);
       break;
-    case 0xb:
-      local_60[0] = BG_BreachRaiseTime(param_2,param_3,bVar5);
+    case WEAP_ANIM_BREACH_RAISE:
+      local_60[0] = BG_BreachRaiseTime(param_2,param_3,param_4);
       break;
-    case 0xc:
-      local_60[0] = BG_DropTime(param_2,param_3,bVar5);
+    case WEAP_ANIM_DROP:
+      local_60[0] = BG_DropTime(param_2,param_3,param_4);
       break;
-    case 0xd:
-      local_60[0] = BG_AltRaiseTime(param_2,param_3,bVar5);
+    case WEAP_ANIM_ALT_RAISE:
+      local_60[0] = BG_AltRaiseTime(param_2,param_3,param_4);
       break;
-    case 0xe:
-      local_60[0] = BG_AltDropTime(param_2,param_3,bVar5);
+    case WEAP_ANIM_ALT_DROP:
+      local_60[0] = BG_AltDropTime(param_2,param_3,param_4);
       break;
-    case 0xf:
-      local_60[0] = BG_QuickRaiseTime(param_2,param_3,bVar5);
+    case WEAP_ANIM_QUICK_RAISE:
+      local_60[0] = BG_QuickRaiseTime(param_2,param_3,param_4);
       break;
-    case 0x10:
-      local_60[0] = BG_QuickDropTime(param_2,param_3,bVar5);
+    case WEAP_ANIM_QUICK_DROP:
+      local_60[0] = BG_QuickDropTime(param_2,param_3,param_4);
       break;
-    case 0x11:
-      local_60[0] = BG_EmptyRaiseTime(param_2,param_3,bVar5);
+    case WEAP_ANIM_EMPTY_RAISE:
+      local_60[0] = BG_EmptyRaiseTime(param_2,param_3,param_4);
       break;
-    case 0x12:
-      local_60[0] = BG_EmptyDropTime(param_2,param_3,bVar5);
+    case WEAP_ANIM_EMPTY_DROP:
+      local_60[0] = BG_EmptyDropTime(param_2,param_3,param_4);
       break;
-    case 0x13:
-      local_60[0] = BG_SprintInTime(param_2,param_3,bVar5);
+    case WEAP_ANIM_SPRINT_IN:
+      local_60[0] = BG_SprintInTime(param_2,param_3,param_4);
       break;
-    case 0x14:
-      local_60[0] = BG_SprintLoopTime(param_2,param_3,bVar5);
+    case WEAP_ANIM_SPRINT_LOOP:
+      local_60[0] = BG_SprintLoopTime(param_2,param_3,param_4);
       break;
-    case 0x15:
-      local_60[0] = BG_SprintOutTime(param_2,param_3,bVar5);
+    case WEAP_ANIM_SPRINT_OUT:
+      local_60[0] = BG_SprintOutTime(param_2,param_3,param_4);
       break;
-    case 0x16:
-      local_60[0] = BG_StunnedTimeBegin(param_2,param_3,bVar5);
+    case WEAP_ANIM_STUNNED_START:
+      local_60[0] = BG_StunnedTimeBegin(param_2,param_3,param_4);
       break;
-    case 0x17:
-      local_60[0] = BG_StunnedTimeLoop(param_2,param_3,bVar5);
+    case WEAP_ANIM_STUNNED_LOOP:
+      local_60[0] = BG_StunnedTimeLoop(param_2,param_3,param_4);
       break;
-    case 0x18:
-      local_60[0] = BG_StunnedTimeEnd(param_2,param_3,bVar5);
+    case WEAP_ANIM_STUNNED_END:
+      local_60[0] = BG_StunnedTimeEnd(param_2,param_3,param_4);
       break;
-    case 0x1a:
-      if ((uVar6 & 0xff) == 0) {
-        local_60[0] = (pWVar1->stateTimers).nightVisionWearTime;
-      }
-      else {
+    case WEAP_ANIM_NIGHTVISION_WEAR:
+      if (param_4) {
         local_60[0] = (pWVar1->akimboStateTimers).nightVisionWearTime;
       }
-      break;
-    case 0x1b:
-      if ((uVar6 & 0xff) == 0) {
-        local_60[0] = (pWVar1->stateTimers).nightVisionRemoveTime;
-      }
       else {
+        local_60[0] = (pWVar1->stateTimers).nightVisionWearTime;
+      }
+      break;
+    case WEAP_ANIM_NIGHTVISION_REMOVE:
+      if (param_4) {
         local_60[0] = (pWVar1->akimboStateTimers).nightVisionRemoveTime;
       }
+      else {
+        local_60[0] = (pWVar1->stateTimers).nightVisionRemoveTime;
+      }
       break;
-    case 0x1f:
-      local_60[0] = BG_BlastFrontTime(param_2,param_3,bVar5);
+    case WEAP_ANIM_BLAST_FRONT:
+      local_60[0] = BG_BlastFrontTime(param_2,param_3,param_4);
       break;
-    case 0x20:
-      local_60[0] = BG_BlastRightTime(param_2,param_3,bVar5);
+    case WEAP_ANIM_BLAST_RIGHT:
+      local_60[0] = BG_BlastRightTime(param_2,param_3,param_4);
       break;
-    case 0x21:
-      local_60[0] = BG_BlastBackTime(param_2,param_3,bVar5);
+    case WEAP_ANIM_BLAST_BACK:
+      local_60[0] = BG_BlastBackTime(param_2,param_3,param_4);
       break;
-    case 0x22:
-      local_60[0] = BG_BlastLeftTime(param_2,param_3,bVar5);
+    case WEAP_ANIM_BLAST_LEFT:
+      local_60[0] = BG_BlastLeftTime(param_2,param_3,param_4);
     }
   }
   else {
-    local_60[0] = BG_RechamberTimeOneHanded(param_2,param_3,bVar5);
+    local_60[0] = BG_RechamberTimeOneHanded(param_2,param_3,param_4);
   }
   if (local_60[0] < 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp",0x12e,0,
                     "%s\n\t(time) = %i");
   }
   if (local_60[0] == 0) {
-    dVar10 = (double)__restgprlr_23(0);
-    return (float)dVar10;
+    return 0.0;
   }
-  iVar4 = XAnimGetLengthMsec((XAnim_s *)uVar7,(uint)uVar9);
-  local_58[0] = (longlong)local_60[0];
-  dVar10 = (double)__restgprlr_23((double)(float)((double)(longlong)iVar4 / (double)local_58[0]));
-  return (float)dVar10;
+  iVar3 = XAnimGetLengthMsec(param_5,param_7);
+  return (float)(longlong)iVar3 / (float)(longlong)local_60[0];
 }
 
 
@@ -314,6 +299,10 @@ bool CEMuzzleflashIsSet(centity_s *param_1,PlayerHandIndex param_2)
 
 // 82316FE0  StartWeaponAnim  (cgame/cg_weapons.cpp:311)
 
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "weapAnimFiles_t": Some values do not have unique names */
@@ -325,151 +314,144 @@ void StartWeaponAnim(LocalClientNum_t param_1,Weapon param_2,PlayerHandIndex par
 {
   Weapon WVar1;
   DObj *pDVar2;
-  LocalClientNum_t LVar4;
-  cg_s *pcVar5;
-  bool bVar10;
-  int iVar6;
-  WeaponHand *pWVar7;
+  cg_s *pcVar4;
+  bool bVar9;
+  int iVar5;
+  WeaponHand *pWVar6;
   longlong lVar3;
-  int iVar9;
-  longlong lVar11;
-  ulonglong uVar12;
+  int iVar8;
+  longlong lVar10;
+  ulonglong uVar11;
+  weapAnimFiles_t wVar12;
   weapAnimFiles_t wVar13;
-  weapAnimFiles_t wVar14;
-  Weapon *pWVar15;
-  dvar_t *pdVar16;
-  ulonglong uVar17;
-  longlong lVar18;
-  uint *puVar19;
-  double extraout_f1;
+  Weapon *pWVar14;
+  dvar_t *pdVar15;
+  ulonglong uVar16;
+  longlong lVar17;
+  uint *puVar18;
+  double dVar19;
   double dVar20;
   double dVar21;
   double dVar22;
   double dVar23;
   double dVar24;
-  double dVar25;
-  float fVar26;
+  float fVar25;
   Weapon WStack0000001c;
   Weapon local_80 [32];
-  XAnim_s *pXVar8;
+  XAnim_s *pXVar7;
   
-  __savegprlr_22((double)param_5,param_1);
-  LVar4 = __savefpr_28();
-  dVar22 = extraout_f1;
+  dVar19 = (double)param_5;
   WStack0000001c = param_2;
-  pcVar5 = CG_GetLocalClientGlobals(LVar4);
-  if ((pcVar5 == (cg_s *)0x0) ||
-     (bVar10 = true, ((pcVar5->predictedPlayerState).weapCommon.weapFlags & 0x8000U) == 0)) {
-    bVar10 = false;
+  pcVar4 = CG_GetLocalClientGlobals(param_1);
+  if ((pcVar4 == (cg_s *)0x0) ||
+     (bVar9 = true, ((pcVar4->predictedPlayerState).weapCommon.weapFlags & 0x8000U) == 0)) {
+    bVar9 = false;
   }
-  lVar11 = 0;
-  if (bVar10) {
-    bVar10 = BG_HasUnderbarrelAmmo(param_2);
-    lVar11 = (longlong)bVar10;
+  lVar10 = 0;
+  if (bVar9) {
+    bVar9 = BG_HasUnderbarrelAmmo(param_2);
+    lVar10 = (longlong)bVar9;
   }
-  iVar6 = BG_PlayerDualWieldingWeapon(&pcVar5->predictedPlayerState,param_2);
-  uVar12 = (ulonglong)(iVar6 == 1);
-  if (lVar11 == 0) {
-    pWVar15 = &stack0x0000001c;
+  iVar5 = BG_PlayerDualWieldingWeapon(&pcVar4->predictedPlayerState,param_2);
+  uVar11 = (ulonglong)(iVar5 == 1);
+  if (lVar10 == 0) {
+    pWVar14 = &stack0x0000001c;
   }
   else {
     local_80[0] = BG_GetAltWeapon(param_2);
-    pWVar15 = local_80;
+    pWVar14 = local_80;
   }
-  WVar1 = *pWVar15;
-  uVar17 = 0xffffffff82000f98;
+  WVar1 = *pWVar14;
+  uVar16 = 0xffffffff82000f98;
   if (((int)param_4 < 1) || (0x26 < (int)param_4)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp",0x14e,0,
                     "%s");
   }
-  pWVar7 = CG_GetLocalClientViewModelHand(LVar4,param_3);
-  pDVar2 = pWVar7->viewModelDObj;
+  pWVar6 = CG_GetLocalClientViewModelHand(param_1,param_3);
+  pDVar2 = pWVar6->viewModelDObj;
   if (pDVar2 == (DObj *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp",0x153,0,
                     "%s");
   }
-  pXVar8 = XAnimGetAnims(pWVar7->tree);
-  lVar3 = (longlong)(int)pXVar8;
-  if (pXVar8 == (XAnim_s *)0x0) {
+  pXVar7 = XAnimGetAnims(pWVar6->tree);
+  lVar3 = (longlong)(int)pXVar7;
+  if (pXVar7 == (XAnim_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp",0x156,0,
                     "%s");
   }
   if ((param_4 == WEAP_ANIM_EMPTY_DROP) &&
-     ((pcVar5->predictedPlayerState).weapState[param_3].weaponState == 4)) {
-    iVar9 = BG_PlayerDualWieldingWeapon(&pcVar5->predictedPlayerState,WVar1);
-    wVar13 = WEAP_ANIM_QUICK_DROP;
-    wVar14 = WEAP_ANIM_EMPTY_DROP;
+     ((pcVar4->predictedPlayerState).weapState[param_3].weaponState == 4)) {
+    iVar8 = BG_PlayerDualWieldingWeapon(&pcVar4->predictedPlayerState,WVar1);
+    wVar12 = WEAP_ANIM_QUICK_DROP;
+    wVar13 = WEAP_ANIM_EMPTY_DROP;
   }
   else {
-    iVar9 = BG_PlayerDualWieldingWeapon(&pcVar5->predictedPlayerState,WVar1);
+    iVar8 = BG_PlayerDualWieldingWeapon(&pcVar4->predictedPlayerState,WVar1);
+    wVar12 = param_4;
     wVar13 = param_4;
-    wVar14 = param_4;
   }
-  puVar19 = (pcVar5->predictedPlayerState).perks;
-  fVar26 = GetWeaponAnimRate(puVar19,WVar1,SUB81(lVar11,0),iVar6 == 1,pXVar8,wVar13,wVar14,iVar9);
-  dVar25 = (double)fVar26;
-  iVar6 = (pcVar5->predictedPlayerState).weapState[param_3].weaponState;
-  lVar18 = -0x7dfff064;
-  dVar23 = 0.0;
-  if ((((iVar6 == 8) || (iVar6 == 10)) || (iVar6 == 0xc)) || ((iVar6 == 0xb || (iVar6 == 9)))) {
-    if (pcVar5 == (cg_s *)0xfffffb14) {
-      lVar11 = 0;
-      uVar12 = uVar17;
-      lVar3 = lVar18;
+  puVar18 = (pcVar4->predictedPlayerState).perks;
+  fVar25 = GetWeaponAnimRate(puVar18,WVar1,SUB81(lVar10,0),iVar5 == 1,pXVar7,wVar12,wVar13,iVar8);
+  dVar24 = (double)fVar25;
+  iVar5 = (pcVar4->predictedPlayerState).weapState[param_3].weaponState;
+  lVar17 = -0x7dfff064;
+  dVar22 = 0.0;
+  if ((((iVar5 == 8) || (iVar5 == 10)) || (iVar5 == 0xc)) || ((iVar5 == 0xb || (iVar5 == 9)))) {
+    if (pcVar4 == (cg_s *)0xfffffb14) {
+      lVar10 = 0;
+      uVar11 = uVar16;
+      lVar3 = lVar17;
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\../bgame/bg_perks.h",
                       0x4f,0,"%s");
     }
-    pdVar16 = perk_weapReloadMultiplier;
-    if ((*puVar19 & 2) == 0) goto LAB_82317228;
+    pdVar15 = perk_weapReloadMultiplier;
+    if ((*puVar18 & 2) == 0) goto LAB_82317228;
   }
   else {
 LAB_82317228:
-    if ((pcVar5->predictedPlayerState).weapState[param_3].weaponState == 7) {
-      if (pcVar5 == (cg_s *)0xfffffb14) {
-        lVar11 = 0;
+    if ((pcVar4->predictedPlayerState).weapState[param_3].weaponState == 7) {
+      if (pcVar4 == (cg_s *)0xfffffb14) {
+        lVar10 = 0;
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\../bgame/bg_perks.h"
                         ,0x4f,0,"%s");
-        uVar12 = uVar17;
-        lVar3 = lVar18;
+        uVar11 = uVar16;
+        lVar3 = lVar17;
       }
-      pdVar16 = perk_weapRateMultiplier;
-      if ((*puVar19 & 4) != 0) goto LAB_82317334;
+      pdVar15 = perk_weapRateMultiplier;
+      if ((*puVar18 & 4) != 0) goto LAB_82317334;
     }
-    if (((((pcVar5->predictedPlayerState).weapState[param_3].weaponState != 0x19) ||
-         (bVar10 = BG_HasPerk(puVar19,0x11), pdVar16 = perk_sprintRecoveryMultiplierVisual, !bVar10)
-         ) && ((iVar6 = (pcVar5->predictedPlayerState).weapState[param_3].weaponState, iVar6 < 0x10
-               || ((0x15 < iVar6 ||
-                   (bVar10 = BG_HasPerk(puVar19,0x13), pdVar16 = perk_fastOffhandMultiplier, !bVar10
-                   )))))) &&
-       ((((pcVar5->predictedPlayerState).weapCommon.weapFlags & 0x20000U) == 0 ||
-        ((bVar10 = BG_HasPerk(puVar19,0x2b), !bVar10 ||
-         ((((iVar6 = (pcVar5->predictedPlayerState).weapState[param_3].weaponState,
-            pdVar16 = perk_weapSwapMultiplier, iVar6 != 1 && (iVar6 != 2)) && (iVar6 != 3)) &&
-          ((iVar6 != 4 && (iVar6 != 5)))))))))) goto LAB_82317350;
+    if (((((pcVar4->predictedPlayerState).weapState[param_3].weaponState != 0x19) ||
+         (bVar9 = BG_HasPerk(puVar18,0x11), pdVar15 = perk_sprintRecoveryMultiplierVisual, !bVar9))
+        && ((iVar5 = (pcVar4->predictedPlayerState).weapState[param_3].weaponState, iVar5 < 0x10 ||
+            ((0x15 < iVar5 ||
+             (bVar9 = BG_HasPerk(puVar18,0x13), pdVar15 = perk_fastOffhandMultiplier, !bVar9))))))
+       && ((((pcVar4->predictedPlayerState).weapCommon.weapFlags & 0x20000U) == 0 ||
+           ((bVar9 = BG_HasPerk(puVar18,0x2b), !bVar9 ||
+            ((((iVar5 = (pcVar4->predictedPlayerState).weapState[param_3].weaponState,
+               pdVar15 = perk_weapSwapMultiplier, iVar5 != 1 && (iVar5 != 2)) && (iVar5 != 3)) &&
+             ((iVar5 != 4 && (iVar5 != 5)))))))))) goto LAB_82317350;
   }
 LAB_82317334:
-  if ((double)(pdVar16->current).value == dVar23) {
-    dVar25 = 1000.0;
+  if ((double)(pdVar15->current).value == dVar22) {
+    dVar24 = 1000.0;
   }
   else {
-    dVar25 = (double)(float)(dVar25 / (double)(pdVar16->current).value);
+    dVar24 = (double)(float)(dVar24 / (double)(pdVar15->current).value);
   }
 LAB_82317350:
-  wVar13 = WEAP_ANIM_IDLE;
-  dVar24 = 1.0;
+  wVar12 = WEAP_ANIM_IDLE;
+  dVar23 = 1.0;
   do {
-    dVar20 = dVar23;
-    dVar21 = dVar24;
-    if (param_4 == wVar13) {
-      dVar20 = dVar24;
-      dVar21 = dVar25;
+    dVar20 = dVar22;
+    dVar21 = dVar23;
+    if (param_4 == wVar12) {
+      dVar20 = dVar23;
+      dVar21 = dVar24;
     }
-    iVar6 = XAnimSetGoalWeight(pDVar2,wVar13,(float)dVar20,(float)dVar22,(float)dVar21,(uint)lVar11,
-                               (uint)uVar12,(int)lVar3);
-    wVar13 = wVar13 + WEAP_ANIM_IDLE;
-  } while ((int)wVar13 < 0x27);
-  __restfpr_28(iVar6);
-  __restgprlr_22();
+    XAnimSetGoalWeight(pDVar2,wVar12,(float)dVar20,(float)dVar19,(float)dVar21,(uint)lVar10,
+                       (uint)uVar11,(int)lVar3);
+    wVar12 = wVar12 + WEAP_ANIM_IDLE;
+  } while ((int)wVar12 < 0x27);
   return;
 }
 
@@ -732,6 +714,8 @@ bool CG_UICheckWeapLockTooClose(LocalClientNum_t param_1)
 
 // 823177D8  GetLockTargetTagPos  (cgame/cg_weapons.cpp:583)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -739,32 +723,31 @@ bool CG_UICheckWeapLockTooClose(LocalClientNum_t param_1)
 void GetLockTargetTagPos(LocalClientNum_t param_1,playerState_s *param_2,float *param_3)
 
 {
-  LocalClientNum_t LVar1;
-  centity_s *pcVar2;
-  DObj *pDVar3;
-  int iVar4;
+  centity_s *pcVar1;
+  DObj *pDVar2;
+  int iVar3;
   
-  LVar1 = __savegprlr_29(param_1);
-  pcVar2 = CG_GetEntity(LVar1,(param_2->weapCommon).weapLockedEntnum);
-  if (pcVar2 == (centity_s *)0x0) {
+  pcVar1 = CG_GetEntity(param_1,(param_2->weapCommon).weapLockedEntnum);
+  if (pcVar1 == (centity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp",0x24d,0,
                     "%s");
   }
-  if ((((pcVar2->flags & 1U) == 0) ||
-      (pDVar3 = Com_GetClientDObj((pcVar2->nextState).number,LVar1), pDVar3 == (DObj *)0x0)) ||
-     (iVar4 = CG_DObjGetWorldTagPos(&pcVar2->pose,pDVar3,(uint)scr_const.tag_body,param_3),
-     iVar4 == 0)) {
-    *param_3 = (pcVar2->pose).origin[0];
-    param_3[1] = (pcVar2->pose).origin[1];
-    param_3[2] = (pcVar2->pose).origin[2];
+  if ((((pcVar1->flags & 1U) == 0) ||
+      (pDVar2 = Com_GetClientDObj((pcVar1->nextState).number,param_1), pDVar2 == (DObj *)0x0)) ||
+     (iVar3 = CG_DObjGetWorldTagPos(&pcVar1->pose,pDVar2,(uint)scr_const.tag_body,param_3),
+     iVar3 == 0)) {
+    *param_3 = (pcVar1->pose).origin[0];
+    param_3[1] = (pcVar1->pose).origin[1];
+    param_3[2] = (pcVar1->pose).origin[2];
   }
-  __restgprlr_29();
   return;
 }
 
 
 // 82317890  GetWeapLockLoc2D  (cgame/cg_weapons.cpp:607)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
@@ -773,46 +756,39 @@ void GetWeapLockLoc2D(LocalClientNum_t param_1,cg_s *param_2,float *param_3)
 
 {
   uint uVar1;
-  playerState_s *ppVar2;
-  LocalClientNum_t LVar3;
-  ScreenPlacement *pSVar4;
-  bool bVar5;
-  ulonglong uVar6;
+  ScreenPlacement *pSVar2;
   float local_30;
   float local_2c;
   float local_28;
   
-  uVar6 = (ulonglong)(int)param_2;
-  LVar3 = __savegprlr_29(param_1);
-  if ((uVar6 & 0xffffffff) == 0) {
+  if (param_2 == (cg_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp",0x263,0,
                     "%s");
   }
-  ppVar2 = (playerState_s *)uVar6;
-  uVar1 = (ppVar2->weapCommon).weapLockFlags;
+  uVar1 = (param_2->predictedPlayerState).weapCommon.weapLockFlags;
   if ((uVar1 & 1) == 0) {
     *param_3 = 0.0;
     param_3[1] = 0.0;
-    __restgprlr_29();
     return;
   }
   if ((uVar1 & 0x40) == 0) {
-    GetLockTargetTagPos(LVar3,ppVar2,&local_30);
+    GetLockTargetTagPos(param_1,&param_2->predictedPlayerState,&local_30);
   }
   else {
-    local_30 = (ppVar2->weapCommon).weapLockedPos[0];
-    local_2c = (ppVar2->weapCommon).weapLockedPos[1];
-    local_28 = (ppVar2->weapCommon).weapLockedPos[2];
+    local_30 = (param_2->predictedPlayerState).weapCommon.weapLockedPos[0];
+    local_2c = (param_2->predictedPlayerState).weapCommon.weapLockedPos[1];
+    local_28 = (param_2->predictedPlayerState).weapCommon.weapLockedPos[2];
   }
-  pSVar4 = ScrPlace_GetViewPlacement(LVar3);
-  bVar5 = CG_WorldPosToScreenPosReal(LVar3,pSVar4,&local_30,param_3);
-  __restgprlr_29(bVar5);
+  pSVar2 = ScrPlace_GetViewPlacement(param_1);
+  CG_WorldPosToScreenPosReal(param_1,pSVar2,&local_30,param_3);
   return;
 }
 
 
 // 82317960  GetWeapLockLoc2DCached  (cgame/cg_weapons.cpp:630)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -820,24 +796,19 @@ void GetWeapLockLoc2D(LocalClientNum_t param_1,cg_s *param_2,float *param_3)
 void GetWeapLockLoc2DCached(LocalClientNum_t param_1,float *param_2)
 
 {
-  LocalClientNum_t LVar1;
-  cg_s *pcVar2;
-  ulonglong uVar3;
+  cg_s *pcVar1;
   
-  uVar3 = (ulonglong)(int)param_2;
-  LVar1 = __savegprlr_26(param_1);
-  if ((uVar3 & 0xffffffff) == 0) {
+  if (param_2 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp",0x279,0,
                     "%s");
   }
-  pcVar2 = CG_GetLocalClientGlobals(LVar1);
-  if (pcVar2->targetPosCachedTime != pcVar2->time) {
-    GetWeapLockLoc2D(LVar1,pcVar2,pcVar2->targetPosCached);
-    pcVar2->targetPosCachedTime = pcVar2->time;
+  pcVar1 = CG_GetLocalClientGlobals(param_1);
+  if (pcVar1->targetPosCachedTime != pcVar1->time) {
+    GetWeapLockLoc2D(param_1,pcVar1,pcVar1->targetPosCached);
+    pcVar1->targetPosCachedTime = pcVar1->time;
   }
-  *(float *)uVar3 = pcVar2->targetPosCached[0];
-  ((float *)uVar3)[1] = pcVar2->targetPosCached[1];
-  __restgprlr_26();
+  *param_2 = pcVar1->targetPosCached[0];
+  param_2[1] = pcVar1->targetPosCached[1];
   return;
 }
 
@@ -873,6 +844,8 @@ float CG_UIGetWeapLockLoc2D_Y(LocalClientNum_t param_1)
 
 // 82317A58  CG_GetWeaponName  (cgame/cg_weapons.cpp:665)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -880,42 +853,39 @@ float CG_UIGetWeapLockLoc2D_Y(LocalClientNum_t param_1)
 char * CG_GetWeaponName(LocalClientNum_t param_1,char *param_2,uint param_3)
 
 {
-  LocalClientNum_t LVar1;
-  cg_s *pcVar2;
-  int iVar3;
-  char *pcVar4;
-  centity_s *pcVar5;
+  cg_s *pcVar1;
+  int iVar2;
+  char *pcVar3;
+  centity_s *pcVar4;
   
-  LVar1 = __savegprlr_27(param_1);
-  pcVar2 = CG_GetLocalClientGlobals(LVar1);
-  iVar3 = CG_KillCamDefaultView(LVar1);
-  if (iVar3 != 0) {
-    pcVar4 = BG_GetWeaponName((Weapon)0x0,param_2,param_3);
-    pcVar4 = (char *)__restgprlr_27(pcVar4);
-    return pcVar4;
+  pcVar1 = CG_GetLocalClientGlobals(param_1);
+  iVar2 = CG_KillCamDefaultView(param_1);
+  if (iVar2 != 0) {
+    pcVar3 = BG_GetWeaponName((Weapon)0x0,param_2,param_3);
+    return pcVar3;
   }
-  if (((pcVar2->predictedPlayerState).eFlags & 0x200000U) != 0) {
-    if ((pcVar2->predictedPlayerState).viewlocked_entNum == 0x7ff) {
+  if (((pcVar1->predictedPlayerState).eFlags & 0x200000U) != 0) {
+    if ((pcVar1->predictedPlayerState).viewlocked_entNum == 0x7ff) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp",0x2af,
                       0,"%s");
     }
-    if (0x7ff < (uint)(pcVar2->predictedPlayerState).viewlocked_entNum) {
+    if (0x7ff < (uint)(pcVar1->predictedPlayerState).viewlocked_entNum) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp",0x2b0,
                       0,"ps->viewlocked_entNum doesn\'t index MAX_GENTITIES\n\t%i not in [0, %i)");
     }
-    pcVar5 = CG_GetEntity(LVar1,(pcVar2->predictedPlayerState).viewlocked_entNum);
-    pcVar4 = BG_GetWeaponName((pcVar5->nextState).weapon,param_2,param_3);
-    pcVar4 = (char *)__restgprlr_27(pcVar4);
-    return pcVar4;
+    pcVar4 = CG_GetEntity(param_1,(pcVar1->predictedPlayerState).viewlocked_entNum);
+    pcVar3 = BG_GetWeaponName((pcVar4->nextState).weapon,param_2,param_3);
+    return pcVar3;
   }
-  pcVar4 = BG_GetWeaponName((pcVar2->predictedPlayerState).weapCommon.weapon,param_2,param_3);
-  pcVar4 = (char *)__restgprlr_27(pcVar4);
-  return pcVar4;
+  pcVar3 = BG_GetWeaponName((pcVar1->predictedPlayerState).weapCommon.weapon,param_2,param_3);
+  return pcVar3;
 }
 
 
 // 82317B48  WeaponRunOverrideAnims  (cgame/cg_weapons.cpp:700)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
@@ -927,39 +897,35 @@ void WeaponRunOverrideAnims
 {
   float fVar1;
   DObj *pDVar2;
-  LocalClientNum_t LVar3;
-  WeaponHand *pWVar4;
-  Weapon WVar5;
-  int iVar6;
-  PlayerHandIndex PVar7;
-  Weapon WVar8;
-  ulonglong uVar9;
+  WeaponHand *pWVar3;
+  Weapon WVar4;
+  PlayerHandIndex PVar5;
+  uint uVar6;
   
-  uVar9 = (ulonglong)(int)param_5.data;
-  LVar3 = __savegprlr_28(param_1);
-  PVar7 = param_3;
-  WVar8 = (Weapon)param_4;
-  pWVar4 = CG_GetLocalClientViewModelHand(LVar3,(int)param_2);
-  pDVar2 = pWVar4->viewModelDObj;
-  if ((((uVar9 & 0xff) != 0) && ((param_3 & 0xfffffdff) != 0x11)) &&
+  PVar5 = param_3;
+  uVar6 = param_4;
+  pWVar3 = CG_GetLocalClientViewModelHand(param_1,(int)param_2);
+  pDVar2 = pWVar3->viewModelDObj;
+  if ((((param_5.data & 0xff) != 0) && ((param_3 & 0xfffffdff) != 0x11)) &&
      ((param_3 & 0xfffffdff) != 0x12)) {
-    WVar5 = BG_GetAlternateWeapon((Weapon)param_4,SUB81(uVar9,0));
-    if ((bg_weaponCompleteDefs[WVar5.data & 0xff]->szXAnims[0x29] != (char *)0x0) &&
-       (*bg_weaponCompleteDefs[WVar5.data & 0xff]->szXAnims[0x29] != '\0')) {
+    WVar4 = BG_GetAlternateWeapon((Weapon)param_4,(bool)param_5._s_0.weaponIdx);
+    if ((bg_weaponCompleteDefs[WVar4.data & 0xff]->szXAnims[0x29] != (char *)0x0) &&
+       (*bg_weaponCompleteDefs[WVar4.data & 0xff]->szXAnims[0x29] != '\0')) {
       fVar1 = 1.0;
       goto LAB_82317bf8;
     }
   }
   fVar1 = 0.0;
 LAB_82317bf8:
-  iVar6 = XAnimSetGoalWeight(pDVar2,0x29,fVar1,0.0,1.0,PVar7,WVar8.data,-0x7e000000);
-  __restgprlr_28(iVar6);
+  XAnimSetGoalWeight(pDVar2,0x29,fVar1,0.0,1.0,PVar5,uVar6,-0x7e000000);
   return;
 }
 
 
 // 82317C18  WeaponRunXModelAnims  (cgame/cg_weapons.cpp:729)
 
+/* WARNING: Function: __savegprlr_20 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_20 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -970,221 +936,216 @@ void WeaponRunXModelAnims(LocalClientNum_t param_1,playerState_s *param_2,Player
 {
   DObj *pDVar1;
   uint uVar2;
-  LocalClientNum_t LVar3;
-  WeaponHand *pWVar4;
-  cg_s *pcVar5;
-  XAnimTree *pXVar6;
-  Weapon WVar7;
-  bool bVar12;
-  DObj *pDVar9;
-  DObj *pDVar10;
-  int iVar11;
-  ulonglong uVar13;
-  bool bVar14;
+  WeaponHand *pWVar3;
+  cg_s *pcVar4;
+  XAnimTree *pXVar5;
+  Weapon WVar6;
+  bool bVar10;
+  DObj *pDVar7;
+  DObj *pDVar8;
+  int iVar9;
+  bool bVar11;
   undefined1 in_r8;
-  Weapon WVar15;
-  PlayerHandIndex PVar16;
-  double dVar17;
-  double dVar18;
-  playerState_s *ppVar8;
+  Weapon WVar12;
+  PlayerHandIndex PVar13;
+  double dVar14;
+  double dVar15;
   
-  uVar13 = (ulonglong)(int)param_2;
-  LVar3 = __savegprlr_20(param_1);
-  pWVar4 = CG_GetLocalClientViewModelHand(LVar3,param_3);
-  pcVar5 = CG_GetLocalClientGlobals(LVar3);
-  pDVar1 = pWVar4->viewModelDObj;
+  pWVar3 = CG_GetLocalClientViewModelHand(param_1,param_3);
+  pcVar4 = CG_GetLocalClientGlobals(param_1);
+  pDVar1 = pWVar3->viewModelDObj;
   if (pDVar1 == (DObj *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp",0x2ea,0,
                     "%s");
   }
-  pXVar6 = DObjGetTree(pDVar1);
-  ppVar8 = (playerState_s *)uVar13;
-  WVar7 = BG_GetViewmodelWeapon(ppVar8);
-  if (((uVar13 & 0xffffffff) == 0) ||
-     (WVar15.data = 1, ((ppVar8->weapCommon).weapFlags & 0x8000U) == 0)) {
-    WVar15.data = 0;
+  pXVar5 = DObjGetTree(pDVar1);
+  WVar6 = BG_GetViewmodelWeapon(param_2);
+  if ((param_2 == (playerState_s *)0x0) ||
+     (WVar12.data = 1, ((param_2->weapCommon).weapFlags & 0x8000U) == 0)) {
+    WVar12.data = 0;
   }
-  if ((WVar7.data & 0xff) == 0) {
+  if ((WVar6.data & 0xff) == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp",0x2f1,0,
                     "%s");
   }
-  bVar14 = (bool)WVar15._s_0.weaponIdx;
-  bVar12 = BG_IsAimDownSight(WVar7,bVar14);
-  dVar18 = 0.0;
-  if (bVar12) {
-    pDVar9 = (DObj *)(int)bVar12;
-    if ((ppVar8->origin[(int)&((playerState_s *)param_3)->linkFlags * 7] == 1.12104e-44) &&
-       (pDVar9 = (DObj *)BG_ADSReloadTransTime(WVar7,bVar14),
+  bVar11 = (bool)WVar12._s_0.weaponIdx;
+  bVar10 = BG_IsAimDownSight(WVar6,bVar11);
+  dVar15 = 0.0;
+  if (bVar10) {
+    pDVar7 = (DObj *)(int)bVar10;
+    if ((param_2->weapState[param_3].weaponState == 8) &&
+       (pDVar7 = (DObj *)BG_ADSReloadTransTime(WVar6,bVar11),
        0 < (longlong)
-           ((ulonglong)(uint)ppVar8->weapState[param_3].weaponTime - (longlong)(int)pDVar9))) {
-      bVar12 = PM_Weapon_IsInInterruptableState(ppVar8,param_3);
-      pDVar10 = (DObj *)(int)bVar12;
-      dVar17 = dVar18;
-      pDVar9 = (DObj *)(int)bVar12;
-      if (bVar12) goto LAB_82317d5c;
+           ((ulonglong)(uint)param_2->weapState[param_3].weaponTime - (longlong)(int)pDVar7))) {
+      bVar10 = PM_Weapon_IsInInterruptableState(param_2,param_3);
+      pDVar8 = (DObj *)(int)bVar10;
+      dVar14 = dVar15;
+      pDVar7 = (DObj *)(int)bVar10;
+      if (bVar10) goto LAB_82317d5c;
     }
     else {
 LAB_82317d5c:
-      pDVar10 = pDVar9;
-      dVar17 = dVar18;
+      pDVar8 = pDVar7;
+      dVar14 = dVar15;
     }
-    dVar18 = (double)(ppVar8->weapCommon).fWeaponPosFrac;
+    dVar15 = (double)(param_2->weapCommon).fWeaponPosFrac;
   }
   else {
-    pDVar10 = (DObj *)BG_ViewModelAnimExists(ppVar8,WVar7,WEAP_ANIM_ADS_DOWN,param_3);
-    dVar17 = dVar18;
-    if (pDVar10 == (DObj *)0x0) goto LAB_82317de0;
+    pDVar8 = (DObj *)BG_ViewModelAnimExists(param_2,WVar6,WEAP_ANIM_ADS_DOWN,param_3);
+    dVar14 = dVar15;
+    if (pDVar8 == (DObj *)0x0) goto LAB_82317de0;
   }
-  PlayADSAnim((float)dVar18,pDVar10,(int)pDVar1);
-  dVar18 = dVar17;
+  PlayADSAnim((float)dVar15,pDVar8,(int)pDVar1);
+  dVar15 = dVar14;
 LAB_82317de0:
-  uVar2 = ppVar8->weapState[param_3].weapAnim;
-  if ((uVar2 != pWVar4->iPrevAnim) || (WVar7.data != (pcVar5->prevViewmodelWeapon).data)) {
+  uVar2 = param_2->weapState[param_3].weapAnim;
+  if ((uVar2 != pWVar3->iPrevAnim) || (WVar6.data != (pcVar4->prevViewmodelWeapon).data)) {
     switch(uVar2 & 0xfffffdff) {
     case 0:
     case 1:
-      PVar16 = WEAPON_HAND_LEFT;
-      dVar17 = 0.5;
+      PVar13 = WEAPON_HAND_LEFT;
+      dVar14 = 0.5;
       do {
-        bVar12 = XAnimHasFinished(pXVar6,PVar16);
-        if ((!bVar12) &&
-           (pWVar4->iPrevAnim = -1, dVar18 = dVar17, (ppVar8->weapState[param_3].weapAnim & 1U) == 0
-           )) {
-          pcVar5->prevViewmodelWeapon = WVar7;
+        bVar10 = XAnimHasFinished(pXVar5,PVar13);
+        if ((!bVar10) &&
+           (pWVar3->iPrevAnim = -1, dVar15 = dVar14,
+           (param_2->weapState[param_3].weapAnim & 1U) == 0)) {
+          pcVar4->prevViewmodelWeapon = WVar6;
           goto LAB_82318374;
         }
-        PVar16 = PVar16 + WEAPON_HAND_LEFT;
-      } while ((int)PVar16 < 0x27);
-      iVar11 = BG_GetAmmoInClipForWeapon(ppVar8,WVar7,bVar14,param_3);
-      if (iVar11 == 0) {
-        StartWeaponAnim(LVar3,WVar7,param_3,WEAP_ANIM_EMPTY_IDLE,(float)dVar18);
+        PVar13 = PVar13 + WEAPON_HAND_LEFT;
+      } while ((int)PVar13 < 0x27);
+      iVar9 = BG_GetAmmoInClipForWeapon(param_2,WVar6,bVar11,param_3);
+      if (iVar9 == 0) {
+        StartWeaponAnim(param_1,WVar6,param_3,WEAP_ANIM_EMPTY_IDLE,(float)dVar15);
       }
       else {
-        StartWeaponAnim(LVar3,WVar7,param_3,WEAP_ANIM_IDLE,(float)dVar18);
+        StartWeaponAnim(param_1,WVar6,param_3,WEAP_ANIM_IDLE,(float)dVar15);
       }
       break;
     case 2:
-      StartWeaponAnim(LVar3,WVar7,param_3,WEAP_ANIM_FIRE,(float)dVar18);
+      StartWeaponAnim(param_1,WVar6,param_3,WEAP_ANIM_FIRE,(float)dVar15);
       break;
     case 3:
-      StartWeaponAnim(LVar3,WVar7,param_3,WEAP_ANIM_LASTSHOT,(float)dVar18);
+      StartWeaponAnim(param_1,WVar6,param_3,WEAP_ANIM_LASTSHOT,(float)dVar15);
       break;
     case 4:
-      StartWeaponAnim(LVar3,WVar7,param_3,WEAP_ANIM_RECHAMBER,(float)dVar18);
+      StartWeaponAnim(param_1,WVar6,param_3,WEAP_ANIM_RECHAMBER,(float)dVar15);
       break;
     case 5:
-      StartWeaponAnim(LVar3,WVar7,param_3,WEAP_ANIM_ADS_FIRE,(float)dVar18);
+      StartWeaponAnim(param_1,WVar6,param_3,WEAP_ANIM_ADS_FIRE,(float)dVar15);
       break;
     case 6:
-      StartWeaponAnim(LVar3,WVar7,param_3,WEAP_ANIM_ADS_LASTSHOT,(float)dVar18);
+      StartWeaponAnim(param_1,WVar6,param_3,WEAP_ANIM_ADS_LASTSHOT,(float)dVar15);
       break;
     case 7:
-      StartWeaponAnim(LVar3,WVar7,param_3,WEAP_ANIM_ADS_RECHAMBER,(float)dVar18);
+      StartWeaponAnim(param_1,WVar6,param_3,WEAP_ANIM_ADS_RECHAMBER,(float)dVar15);
       break;
     case 8:
-      StartWeaponAnim(LVar3,WVar7,param_3,WEAP_ANIM_MELEE,(float)dVar18);
+      StartWeaponAnim(param_1,WVar6,param_3,WEAP_ANIM_MELEE,(float)dVar15);
       break;
     case 9:
-      StartWeaponAnim(LVar3,WVar7,param_3,WEAP_ANIM_MELEE_CHARGE,(float)dVar18);
+      StartWeaponAnim(param_1,WVar6,param_3,WEAP_ANIM_MELEE_CHARGE,(float)dVar15);
       break;
     case 10:
-      StartWeaponAnim(LVar3,WVar7,param_3,WEAP_ANIM_DROP,(float)dVar18);
+      StartWeaponAnim(param_1,WVar6,param_3,WEAP_ANIM_DROP,(float)dVar15);
       break;
     case 0xb:
-      StartWeaponAnim(LVar3,WVar7,param_3,WEAP_ANIM_RAISE,(float)dVar18);
+      StartWeaponAnim(param_1,WVar6,param_3,WEAP_ANIM_RAISE,(float)dVar15);
       break;
     case 0xc:
-      StartWeaponAnim(LVar3,WVar7,param_3,WEAP_ANIM_FIRST_RAISE,(float)dVar18);
+      StartWeaponAnim(param_1,WVar6,param_3,WEAP_ANIM_FIRST_RAISE,(float)dVar15);
       break;
     case 0xd:
-      StartWeaponAnim(LVar3,WVar7,param_3,WEAP_ANIM_RELOAD,(float)dVar18);
+      StartWeaponAnim(param_1,WVar6,param_3,WEAP_ANIM_RELOAD,(float)dVar15);
       break;
     case 0xe:
-      StartWeaponAnim(LVar3,WVar7,param_3,WEAP_ANIM_RELOAD_EMPTY,(float)dVar18);
+      StartWeaponAnim(param_1,WVar6,param_3,WEAP_ANIM_RELOAD_EMPTY,(float)dVar15);
       break;
     case 0xf:
-      StartWeaponAnim(LVar3,WVar7,param_3,WEAP_ANIM_RELOAD_START,(float)dVar18);
+      StartWeaponAnim(param_1,WVar6,param_3,WEAP_ANIM_RELOAD_START,(float)dVar15);
       break;
     case 0x10:
-      StartWeaponAnim(LVar3,WVar7,param_3,WEAP_ANIM_RELOAD_END,(float)dVar18);
+      StartWeaponAnim(param_1,WVar6,param_3,WEAP_ANIM_RELOAD_END,(float)dVar15);
       break;
     case 0x11:
-      StartWeaponAnim(LVar3,WVar7,param_3,WEAP_ANIM_ALT_DROP,(float)dVar18);
+      StartWeaponAnim(param_1,WVar6,param_3,WEAP_ANIM_ALT_DROP,(float)dVar15);
       break;
     case 0x12:
-      StartWeaponAnim(LVar3,WVar7,param_3,WEAP_ANIM_ALT_RAISE,(float)dVar18);
+      StartWeaponAnim(param_1,WVar6,param_3,WEAP_ANIM_ALT_RAISE,(float)dVar15);
       break;
     case 0x13:
-      StartWeaponAnim(LVar3,WVar7,param_3,WEAP_ANIM_QUICK_DROP,(float)dVar18);
+      StartWeaponAnim(param_1,WVar6,param_3,WEAP_ANIM_QUICK_DROP,(float)dVar15);
       break;
     case 0x14:
-      StartWeaponAnim(LVar3,WVar7,param_3,WEAP_ANIM_QUICK_RAISE,(float)dVar18);
+      StartWeaponAnim(param_1,WVar6,param_3,WEAP_ANIM_QUICK_RAISE,(float)dVar15);
       break;
     case 0x15:
-      StartWeaponAnim(LVar3,WVar7,param_3,WEAP_ANIM_EMPTY_DROP,(float)dVar18);
+      StartWeaponAnim(param_1,WVar6,param_3,WEAP_ANIM_EMPTY_DROP,(float)dVar15);
       break;
     case 0x16:
-      StartWeaponAnim(LVar3,WVar7,param_3,WEAP_ANIM_EMPTY_RAISE,(float)dVar18);
+      StartWeaponAnim(param_1,WVar6,param_3,WEAP_ANIM_EMPTY_RAISE,(float)dVar15);
       break;
     case 0x17:
-      StartWeaponAnim(LVar3,WVar7,param_3,WEAP_ANIM_SPRINT_IN,(float)dVar18);
+      StartWeaponAnim(param_1,WVar6,param_3,WEAP_ANIM_SPRINT_IN,(float)dVar15);
       break;
     case 0x18:
-      StartWeaponAnim(LVar3,WVar7,param_3,WEAP_ANIM_SPRINT_LOOP,(float)dVar18);
+      StartWeaponAnim(param_1,WVar6,param_3,WEAP_ANIM_SPRINT_LOOP,(float)dVar15);
       break;
     case 0x19:
-      StartWeaponAnim(LVar3,WVar7,param_3,WEAP_ANIM_SPRINT_OUT,(float)dVar18);
+      StartWeaponAnim(param_1,WVar6,param_3,WEAP_ANIM_SPRINT_OUT,(float)dVar15);
       break;
     case 0x1a:
-      StartWeaponAnim(LVar3,WVar7,param_3,WEAP_ANIM_STUNNED_START,(float)dVar18);
+      StartWeaponAnim(param_1,WVar6,param_3,WEAP_ANIM_STUNNED_START,(float)dVar15);
       break;
     case 0x1b:
-      StartWeaponAnim(LVar3,WVar7,param_3,WEAP_ANIM_STUNNED_LOOP,(float)dVar18);
+      StartWeaponAnim(param_1,WVar6,param_3,WEAP_ANIM_STUNNED_LOOP,(float)dVar15);
       break;
     case 0x1c:
-      StartWeaponAnim(LVar3,WVar7,param_3,WEAP_ANIM_STUNNED_END,(float)dVar18);
+      StartWeaponAnim(param_1,WVar6,param_3,WEAP_ANIM_STUNNED_END,(float)dVar15);
       break;
     case 0x1d:
-      StartWeaponAnim(LVar3,WVar7,param_3,WEAP_ANIM_HOLD_FIRE,(float)dVar18);
+      StartWeaponAnim(param_1,WVar6,param_3,WEAP_ANIM_HOLD_FIRE,(float)dVar15);
       break;
     case 0x1e:
-      StartWeaponAnim(LVar3,WVar7,param_3,WEAP_ANIM_DETONATE,(float)dVar18);
+      StartWeaponAnim(param_1,WVar6,param_3,WEAP_ANIM_DETONATE,(float)dVar15);
       break;
     case 0x1f:
-      StartWeaponAnim(LVar3,WVar7,param_3,WEAP_ANIM_NIGHTVISION_WEAR,(float)dVar18);
+      StartWeaponAnim(param_1,WVar6,param_3,WEAP_ANIM_NIGHTVISION_WEAR,(float)dVar15);
       break;
     case 0x20:
-      StartWeaponAnim(LVar3,WVar7,param_3,WEAP_ANIM_NIGHTVISION_REMOVE,(float)dVar18);
+      StartWeaponAnim(param_1,WVar6,param_3,WEAP_ANIM_NIGHTVISION_REMOVE,(float)dVar15);
       break;
     case 0x21:
-      StartWeaponAnim(LVar3,WVar7,param_3,WEAP_ANIM_BLAST_FRONT,(float)dVar18);
+      StartWeaponAnim(param_1,WVar6,param_3,WEAP_ANIM_BLAST_FRONT,(float)dVar15);
       break;
     case 0x22:
-      StartWeaponAnim(LVar3,WVar7,param_3,WEAP_ANIM_BLAST_LEFT,(float)dVar18);
+      StartWeaponAnim(param_1,WVar6,param_3,WEAP_ANIM_BLAST_LEFT,(float)dVar15);
       break;
     case 0x23:
-      StartWeaponAnim(LVar3,WVar7,param_3,WEAP_ANIM_BLAST_BACK,(float)dVar18);
+      StartWeaponAnim(param_1,WVar6,param_3,WEAP_ANIM_BLAST_BACK,(float)dVar15);
       break;
     case 0x24:
-      StartWeaponAnim(LVar3,WVar7,param_3,WEAP_ANIM_BLAST_RIGHT,(float)dVar18);
+      StartWeaponAnim(param_1,WVar6,param_3,WEAP_ANIM_BLAST_RIGHT,(float)dVar15);
       break;
     default:
-      StartWeaponAnim(LVar3,WVar7,param_3,WEAP_ANIM_IDLE,(float)dVar18);
+      StartWeaponAnim(param_1,WVar6,param_3,WEAP_ANIM_IDLE,(float)dVar15);
       Com_Printf(0x13,"WeaponRunXModelAnims: Unknown weapon animation %i\n");
     }
-    pWVar4->iPrevAnim = ppVar8->weapState[param_3].weapAnim;
-    pcVar5->prevViewmodelWeapon = WVar7;
-    PVar16 = pWVar4->iPrevAnim;
+    pWVar3->iPrevAnim = param_2->weapState[param_3].weapAnim;
+    pcVar4->prevViewmodelWeapon = WVar6;
+    PVar13 = pWVar3->iPrevAnim;
 LAB_82318374:
-    WeaponRunOverrideAnims(LVar3,(playerState_s *)param_3,PVar16,WVar7.data,WVar15,(bool)in_r8);
+    WeaponRunOverrideAnims(param_1,(playerState_s *)param_3,PVar13,WVar6.data,WVar12,(bool)in_r8);
   }
-  __restgprlr_20();
   return;
 }
 
 
 // 82318398  ResetWeaponAnimTrees  (cgame/cg_weapons.cpp:973)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "weapAnimFiles_t": Some values do not have unique names */
@@ -1194,51 +1155,48 @@ void ResetWeaponAnimTrees(LocalClientNum_t param_1,playerState_s *param_2)
 {
   Weapon WVar1;
   DObj *pDVar2;
-  LocalClientNum_t LVar3;
-  WeaponHand *pWVar4;
-  XAnimTree *pXVar5;
-  PlayerHandIndex PVar6;
-  int iVar7;
+  WeaponHand *pWVar3;
+  XAnimTree *pXVar4;
+  PlayerHandIndex PVar5;
+  int iVar6;
   uint in_r5;
   char *in_r6;
-  weapAnimFiles_t wVar8;
-  PlayerHandIndex PVar9;
-  double dVar10;
+  weapAnimFiles_t wVar7;
+  PlayerHandIndex PVar8;
+  double dVar9;
   
-  LVar3 = __savegprlr_27(param_1);
-  pWVar4 = CG_GetLocalClientViewModelHand(LVar3,0);
+  pWVar3 = CG_GetLocalClientViewModelHand(param_1,0);
   WVar1 = (param_2->weapCommon).weapon;
   if ((((WVar1.data & 0xff) != 0) || (7 < param_2->pm_type)) &&
-     (pDVar2 = pWVar4->viewModelDObj, pDVar2 != (DObj *)0x0)) {
-    pXVar5 = DObjGetTree(pDVar2);
-    if (pXVar5 == (XAnimTree *)0x0) {
+     (pDVar2 = pWVar3->viewModelDObj, pDVar2 != (DObj *)0x0)) {
+    pXVar4 = DObjGetTree(pDVar2);
+    if (pXVar4 == (XAnimTree *)0x0) {
       in_r6 = "%s";
       in_r5 = 0;
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp",0x3e0,
                       0,"%s");
     }
-    dVar10 = 0.0;
-    XAnimClearTreeGoalWeights(pXVar5,0,0.0);
-    XAnimSetGoalWeight(pDVar2,0,1.0,(float)dVar10,1.0,in_r5,(uint)in_r6,-0x7e000000);
-    PVar9 = WEAPON_HAND_DEFAULT;
-    PVar6 = BG_PlayerLastWeaponHandForViewWeapon(param_2);
-    if (-1 < (int)PVar6) {
+    dVar9 = 0.0;
+    XAnimClearTreeGoalWeights(pXVar4,0,0.0);
+    XAnimSetGoalWeight(pDVar2,0,1.0,(float)dVar9,1.0,in_r5,(uint)in_r6,-0x7e000000);
+    PVar8 = WEAPON_HAND_DEFAULT;
+    PVar5 = BG_PlayerLastWeaponHandForViewWeapon(param_2);
+    if (-1 < (int)PVar5) {
       do {
-        pWVar4 = CG_GetLocalClientViewModelHand(LVar3,PVar9);
-        if (pWVar4->viewModelDObj != (DObj *)0x0) {
-          iVar7 = PM_WeaponClipEmpty(param_2,PVar9);
-          wVar8 = WEAP_ANIM_EMPTY_IDLE;
-          if (iVar7 == 0) {
-            wVar8 = WEAP_ANIM_IDLE;
+        pWVar3 = CG_GetLocalClientViewModelHand(param_1,PVar8);
+        if (pWVar3->viewModelDObj != (DObj *)0x0) {
+          iVar6 = PM_WeaponClipEmpty(param_2,PVar8);
+          wVar7 = WEAP_ANIM_EMPTY_IDLE;
+          if (iVar6 == 0) {
+            wVar7 = WEAP_ANIM_IDLE;
           }
-          StartWeaponAnim(LVar3,WVar1,PVar9,wVar8,(float)dVar10);
+          StartWeaponAnim(param_1,WVar1,PVar8,wVar7,(float)dVar9);
         }
-        PVar9 = PVar9 + WEAPON_HAND_LEFT;
-        PVar6 = BG_PlayerLastWeaponHandForViewWeapon(param_2);
-      } while ((int)PVar9 <= (int)PVar6);
+        PVar8 = PVar8 + WEAPON_HAND_LEFT;
+        PVar5 = BG_PlayerLastWeaponHandForViewWeapon(param_2);
+      } while ((int)PVar8 <= (int)PVar5);
     }
   }
-  __restgprlr_27();
   return;
 }
 
@@ -1256,149 +1214,141 @@ int CG_WeaponDObjHandle(PlayerHandIndex param_1)
 
 // 823184E0  CG_CreateWeaponViewModelXAnim  (cgame/cg_weapons.cpp:1031)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void CG_CreateWeaponViewModelXAnim(char **param_1,WeaponXAnim *param_2)
 
 {
-  XAnim_s *pXVar1;
-  int iVar2;
-  ulonglong uVar3;
-  longlong lVar4;
-  char *pcVar5;
-  longlong lVar6;
-  char *pcVar7;
-  int *piVar8;
-  int *piVar9;
-  uint uVar10;
-  longlong lVar11;
+  char **ppcVar1;
+  char *pcVar2;
+  char (*pacVar3) [32];
+  char *pcVar4;
+  char **ppcVar5;
+  uint uVar6;
+  longlong lVar7;
   
-  uVar3 = (ulonglong)(int)param_2;
-  iVar2 = __savegprlr_28(param_1);
-  if ((uVar3 & 0xffffffff) == 0) {
+  if (param_2 == (WeaponXAnim *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp",0x40b,0,
                     "%s");
   }
-  pXVar1 = (XAnim_s *)uVar3;
-  pXVar1->size = 0x76c;
-  pXVar1->debugName = (char *)&pXVar1[0x11].entries[0].field2_0x4;
-  lVar6 = uVar3 + 0x22c;
-  lVar4 = uVar3 + 0x180;
-  lVar11 = 0x2a;
+  (param_2->xanim).size = 0x76c;
+  (param_2->xanim).debugName = param_2->debugName;
+  pacVar3 = param_2->debugNames;
+  ppcVar1 = (char **)(param_2->debugName + 0x1c);
+  lVar7 = 0x2a;
   do {
-    lVar4 = lVar4 + 4;
-    *(undefined4 *)lVar4 = (int)lVar6;
-    lVar6 = lVar6 + 0x20;
-    lVar11 = lVar11 + -1;
-  } while (lVar11 != 0);
-  pXVar1->debugAnimNames = (char **)&pXVar1[0x13].debugAnimNames;
-  pcVar5 = pXVar1->debugName + -1;
-  pcVar7 = "";
-  lVar4 = 10;
+    ppcVar1 = ppcVar1 + 1;
+    *ppcVar1 = *pacVar3;
+    pacVar3 = pacVar3 + 1;
+    lVar7 = lVar7 + -1;
+  } while (lVar7 != 0);
+  (param_2->xanim).debugAnimNames = param_2->debugAnimNames;
+  pcVar2 = (param_2->xanim).debugName + -1;
+  pcVar4 = "";
+  lVar7 = 10;
   do {
-    pcVar7 = pcVar7 + 1;
-    pcVar5 = pcVar5 + 1;
-    *pcVar5 = *pcVar7;
-    lVar4 = lVar4 + -1;
-  } while (lVar4 != 0);
-  XAnimBlend(pXVar1,0,"root",1,0x2a,0,false);
-  piVar8 = (int *)(iVar2 + 4);
-  if (*piVar8 == 0) {
+    pcVar4 = pcVar4 + 1;
+    pcVar2 = pcVar2 + 1;
+    *pcVar2 = *pcVar4;
+    lVar7 = lVar7 + -1;
+  } while (lVar7 != 0);
+  XAnimBlend(&param_2->xanim,0,"root",1,0x2a,0,false);
+  ppcVar1 = param_1 + 1;
+  if (*ppcVar1 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp",0x418,0,
                     "%s");
   }
-  if (*(char *)*piVar8 == '\0') {
+  if (**ppcVar1 == '\0') {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp",0x419,0,
                     "%s");
   }
-  uVar10 = 1;
-  piVar9 = piVar8;
+  uVar6 = 1;
+  ppcVar5 = ppcVar1;
   do {
-    pcVar7 = (char *)*piVar9;
-    if ((pcVar7 == (char *)0x0) || (*pcVar7 == '\0')) {
-      pcVar7 = (char *)*piVar8;
+    pcVar4 = *ppcVar5;
+    if ((pcVar4 == (char *)0x0) || (*pcVar4 == '\0')) {
+      pcVar4 = *ppcVar1;
     }
-    BG_CreateXAnim(pXVar1,uVar10,pcVar7,false);
-    uVar10 = uVar10 + 1;
-    piVar9 = piVar9 + 1;
-  } while ((int)uVar10 < 0x2a);
-  __restgprlr_28();
+    BG_CreateXAnim(&param_2->xanim,uVar6,pcVar4,false);
+    uVar6 = uVar6 + 1;
+    ppcVar5 = ppcVar5 + 1;
+  } while ((int)uVar6 < 0x2a);
   return;
 }
 
 
 // 82318650  CG_CreateTurretAnims  (cgame/cg_weapons.cpp:1062)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
 
 XAnim_s * CG_CreateTurretAnims(Weapon param_1,ClientPlayerWeaponInfo *param_2)
 
 {
   WeaponCompleteDef *pWVar1;
-  int iVar2;
-  Weapon WVar3;
-  Weapon WVar4;
-  weapClass_t wVar5;
-  XAnim_s *pXVar6;
-  longlong lVar7;
-  longlong lVar8;
-  undefined1 *puVar9;
-  longlong lVar10;
-  undefined *puVar11;
-  char *pcVar12;
-  longlong lVar13;
+  Weapon WVar2;
+  weapClass_t wVar3;
+  char **ppcVar4;
+  char *pcVar5;
+  char (*pacVar6) [32];
+  char *pcVar7;
+  WeaponXAnim *pWVar8;
+  longlong lVar9;
   
-  lVar7 = (longlong)(int)param_2;
-  WVar3.data = __savegprlr_27(param_1.data);
-  iVar2 = (int)lVar7;
-  if (*(uint *)(iVar2 + 0x10) != WVar3.data) {
-    WVar4 = BG_GetAlternateWeapon(WVar3,false);
-    pWVar1 = bg_weaponCompleteDefs[WVar4.data & 0xff];
-    wVar5 = BG_GetWeaponClass(WVar3,false);
-    if (wVar5 != WEAPCLASS_TURRET) {
+  if ((param_2->turretWeapon).data != param_1.data) {
+    WVar2 = BG_GetAlternateWeapon(param_1,false);
+    pWVar1 = bg_weaponCompleteDefs[WVar2.data & 0xff];
+    wVar3 = BG_GetWeaponClass(param_1,false);
+    if (wVar3 != WEAPCLASS_TURRET) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp",0x42c,
                       0,"%s");
     }
-    *(undefined4 *)(iVar2 + 0x1dc8) = 0x76c;
-    *(int *)(iVar2 + 0x1dcc) = iVar2 + 0x1f2c;
-    pXVar6 = (XAnim_s *)(iVar2 + 0x1dc8);
-    lVar10 = lVar7 + 0x1ff4;
-    lVar13 = 0x2a;
-    lVar8 = lVar7 + 0x1f48;
+    (param_2->animsTurret).xanim.size = 0x76c;
+    (param_2->animsTurret).xanim.debugName = (param_2->animsTurret).debugName;
+    pWVar8 = &param_2->animsTurret;
+    pacVar6 = (param_2->animsTurret).debugNames;
+    lVar9 = 0x2a;
+    ppcVar4 = (char **)((param_2->animsTurret).debugName + 0x1c);
     do {
-      lVar8 = lVar8 + 4;
-      *(undefined4 *)lVar8 = (int)lVar10;
-      lVar10 = lVar10 + 0x20;
-      lVar13 = lVar13 + -1;
-    } while (lVar13 != 0);
-    *(int *)(iVar2 + 0x1dd0) = iVar2 + 0x1f4c;
-    puVar9 = (undefined1 *)(*(int *)(iVar2 + 0x1dcc) + -1);
-    puVar11 = &UNK_82002b13;
-    lVar8 = 7;
+      ppcVar4 = ppcVar4 + 1;
+      *ppcVar4 = *pacVar6;
+      pacVar6 = pacVar6 + 1;
+      lVar9 = lVar9 + -1;
+    } while (lVar9 != 0);
+    pcVar5 = (param_2->animsTurret).xanim.debugName;
+    (param_2->animsTurret).xanim.debugAnimNames = (param_2->animsTurret).debugAnimNames;
+    pcVar5 = pcVar5 + -1;
+    pcVar7 = "";
+    lVar9 = 7;
     do {
-      puVar11 = puVar11 + 1;
-      puVar9 = puVar9 + 1;
-      *puVar9 = *puVar11;
-      lVar8 = lVar8 + -1;
-    } while (lVar8 != 0);
-    XAnimBlend(pXVar6,0,"root",1,2,0,false);
-    pcVar12 = pWVar1->szXAnims[1];
-    if (*pcVar12 == '\0') {
-      pcVar12 = "void";
+      pcVar7 = pcVar7 + 1;
+      pcVar5 = pcVar5 + 1;
+      *pcVar5 = *pcVar7;
+      lVar9 = lVar9 + -1;
+    } while (lVar9 != 0);
+    XAnimBlend(&pWVar8->xanim,0,"root",1,2,0,false);
+    pcVar7 = pWVar1->szXAnims[1];
+    if (*pcVar7 == '\0') {
+      pcVar7 = "void";
     }
-    BG_CreateXAnim(pXVar6,1,pcVar12,false);
-    pcVar12 = pWVar1->szXAnims[3];
-    if (*pcVar12 == '\0') {
-      pcVar12 = "void";
+    BG_CreateXAnim(&pWVar8->xanim,1,pcVar7,false);
+    pcVar7 = pWVar1->szXAnims[3];
+    if (*pcVar7 == '\0') {
+      pcVar7 = "void";
     }
-    BG_CreateXAnim(pXVar6,2,pcVar12,false);
-    *(Weapon *)(iVar2 + 0x10) = WVar3;
+    BG_CreateXAnim(&pWVar8->xanim,2,pcVar7,false);
+    param_2->turretWeapon = param_1;
   }
-  pXVar6 = (XAnim_s *)__restgprlr_27(lVar7 + 0x1dc8);
-  return pXVar6;
+  return &(param_2->animsTurret).xanim;
 }
 
 
 // 823187B8  CG_CreateWeaponViewModelXAnimDefs  (cgame/cg_weapons.cpp:1095)
 
+/* WARNING: Function: __savegprlr_18 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_18 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
 
 void CG_CreateWeaponViewModelXAnimDefs(Weapon param_1,ClientPlayerWeaponInfo *param_2)
@@ -1414,17 +1364,14 @@ void CG_CreateWeaponViewModelXAnimDefs(Weapon param_1,ClientPlayerWeaponInfo *pa
   WeaponCompleteDef *pWVar8;
   undefined4 uVar9;
   Weapon WVar10;
-  Weapon WVar11;
-  weapClass_t wVar12;
-  int iVar13;
-  bool bVar14;
-  ulonglong uVar15;
-  ClientPlayerWeaponInfo *pCVar16;
-  undefined4 *puVar17;
-  uint uVar18;
-  ushort *puVar19;
-  uint uVar20;
-  longlong lVar21;
+  weapClass_t wVar11;
+  int iVar12;
+  bool bVar13;
+  undefined4 *puVar14;
+  uint uVar15;
+  ushort *puVar16;
+  uint uVar17;
+  longlong lVar18;
   uint local_6a0;
   uint local_69c;
   uint local_698 [2];
@@ -1436,22 +1383,18 @@ void CG_CreateWeaponViewModelXAnimDefs(Weapon param_1,ClientPlayerWeaponInfo *pa
   int local_530 [44];
   char acStack_480 [1152];
   
-  uVar15 = (ulonglong)(int)param_2;
-  WVar10.data = __savegprlr_18(param_1.data);
-  if ((uVar15 & 0xffffffff) == 0) {
+  if (param_2 == (ClientPlayerWeaponInfo *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp",0x44e,0,
                     "%s");
   }
-  WVar11 = BG_GetAlternateWeapon(WVar10,false);
-  pWVar7 = bg_weaponDefs[WVar11.data & 0xff];
-  WVar11 = BG_GetAlternateWeapon(WVar10,false);
-  pWVar8 = bg_weaponCompleteDefs[WVar11.data & 0xff];
-  wVar12 = BG_GetWeaponClass(WVar10,false);
-  pCVar16 = (ClientPlayerWeaponInfo *)uVar15;
-  if (wVar12 == WEAPCLASS_TURRET) {
-    CG_CreateTurretAnims(WVar10,pCVar16);
+  WVar10 = BG_GetAlternateWeapon(param_1,false);
+  pWVar7 = bg_weaponDefs[WVar10.data & 0xff];
+  WVar10 = BG_GetAlternateWeapon(param_1,false);
+  pWVar8 = bg_weaponCompleteDefs[WVar10.data & 0xff];
+  wVar11 = BG_GetWeaponClass(param_1,false);
+  if (wVar11 == WEAPCLASS_TURRET) {
+    CG_CreateTurretAnims(param_1,param_2);
     memcpy();
-    __restgprlr_18();
     return;
   }
   if (pWVar8->szXAnims[1] == (char *)0x0) {
@@ -1460,61 +1403,59 @@ void CG_CreateWeaponViewModelXAnimDefs(Weapon param_1,ClientPlayerWeaponInfo *pa
   }
   if (*pWVar8->szXAnims[1] == '\0') {
     if ((*pWVar7->gunXModel != (XModel *)0x0) && (pWVar7->handXModel != (XModel *)0x0)) {
-      BG_GetWeaponName(WVar10,acStack_480,0x400);
+      BG_GetWeaponName(param_1,acStack_480,0x400);
       Com_Error(ERR_DROP,"\x15CG_RegisterWeapon: No idle anim specified for [%s]");
-      __restgprlr_18();
       return;
     }
   }
   else {
-    CG_CreateWeaponViewModelXAnim(pWVar8->szXAnims,&pCVar16->animsTwoHanded);
+    CG_CreateWeaponViewModelXAnim(pWVar8->szXAnims,&param_2->animsTwoHanded);
     if ((pWVar7->noDualWield == false) &&
-       (iVar13 = BG_OneHandedViewModelAnimsValid(pWVar7), iVar13 != 0)) {
-      CG_CreateWeaponViewModelXAnim(pWVar7->szXAnimsRightHanded,&pCVar16->animsRightHanded);
-      CG_CreateWeaponViewModelXAnim(pWVar7->szXAnimsLeftHanded,&pCVar16->animsLeftHanded);
+       (iVar12 = BG_OneHandedViewModelAnimsValid(pWVar7), iVar12 != 0)) {
+      CG_CreateWeaponViewModelXAnim(pWVar7->szXAnimsRightHanded,&param_2->animsRightHanded);
+      CG_CreateWeaponViewModelXAnim(pWVar7->szXAnimsLeftHanded,&param_2->animsLeftHanded);
     }
     else {
       memset();
       memset();
     }
-    BG_GetAttachmentIndices(WVar10,(int *)&local_69c,(int *)&local_6a0,(int *)local_698);
+    BG_GetAttachmentIndices(param_1,(int *)&local_69c,(int *)&local_6a0,(int *)local_698);
     if (((local_69c == 0) && (local_6a0 == 0)) && (local_698[0] == 0)) {
-      WVar10 = BG_GetAlternateWeapon(WVar10,true);
+      WVar10 = BG_GetAlternateWeapon(param_1,true);
       CG_CreateWeaponViewModelXAnim
-                (bg_weaponCompleteDefs[WVar10.data & 0xff]->szXAnims,&pCVar16->animsTwoHandedAltMode
+                (bg_weaponCompleteDefs[WVar10.data & 0xff]->szXAnims,&param_2->animsTwoHandedAltMode
                 );
-      __restgprlr_18();
       return;
     }
     ppcVar3 = pWVar8->szXAnims;
-    puVar17 = &uStack_534;
-    iVar13 = 0;
-    lVar21 = 0x2a;
+    puVar14 = &uStack_534;
+    iVar12 = 0;
+    lVar18 = 0x2a;
     do {
-      puVar17 = puVar17 + 1;
-      *puVar17 = 0;
-      lVar21 = lVar21 + -1;
-    } while (lVar21 != 0);
-    lVar21 = 0x2a;
+      puVar14 = puVar14 + 1;
+      *puVar14 = 0;
+      lVar18 = lVar18 + -1;
+    } while (lVar18 != 0);
+    lVar18 = 0x2a;
     do {
-      uVar9 = *(undefined4 *)(iVar13 + (int)ppcVar3);
-      *(undefined4 *)((int)local_5e0 + iVar13) = uVar9;
-      *(undefined4 *)((int)local_690 + iVar13) = uVar9;
-      iVar13 = iVar13 + 4;
-      lVar21 = lVar21 + -1;
-    } while (lVar21 != 0);
+      uVar9 = *(undefined4 *)(iVar12 + (int)ppcVar3);
+      *(undefined4 *)((int)local_5e0 + iVar12) = uVar9;
+      *(undefined4 *)((int)local_690 + iVar12) = uVar9;
+      iVar12 = iVar12 + 4;
+      lVar18 = lVar18 + -1;
+    } while (lVar18 != 0);
     if (pWVar8->animOverrides != (AnimOverrideEntry *)0x0) {
-      uVar18 = 0;
+      uVar15 = 0;
       if (pWVar8->numAnimOverrides != 0) {
-        puVar19 = &pWVar8->animOverrides->attachment2;
+        puVar16 = &pWVar8->animOverrides->attachment2;
         do {
-          uVar4 = *(uint *)(puVar19 + 5);
+          uVar4 = *(uint *)(puVar16 + 5);
           if ((0x29 < (int)uVar4) || ((int)uVar4 < 1)) {
             MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp",
                             0x494,0,"%s");
           }
-          uVar1 = ((AnimOverrideEntry *)(puVar19 + -1))->attachment1;
-          uVar2 = *puVar19;
+          uVar1 = ((AnimOverrideEntry *)(puVar16 + -1))->attachment1;
+          uVar2 = *puVar16;
           if (uVar1 == uVar2) {
             MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp",
                             0x497,0,"%s");
@@ -1523,40 +1464,39 @@ void CG_CreateWeaponViewModelXAnimDefs(Weapon param_1,ClientPlayerWeaponInfo *pa
             MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp",
                             0x498,0,"%s");
           }
-          iVar13 = 0;
-          uVar20 = (uint)uVar1;
-          if ((uVar20 != 0) &&
-             (((uVar20 == local_69c || (uVar20 == local_6a0)) || (uVar20 == local_698[0])))) {
-            iVar13 = 1;
+          iVar12 = 0;
+          uVar17 = (uint)uVar1;
+          if ((uVar17 != 0) &&
+             (((uVar17 == local_69c || (uVar17 == local_6a0)) || (uVar17 == local_698[0])))) {
+            iVar12 = 1;
           }
           if ((uVar2 != 0) &&
-             (((uVar20 = (uint)uVar2, uVar20 == local_69c || (uVar20 == local_6a0)) ||
-              (uVar20 == local_698[0])))) {
-            iVar13 = iVar13 + 1;
+             (((uVar17 = (uint)uVar2, uVar17 == local_69c || (uVar17 == local_6a0)) ||
+              (uVar17 == local_698[0])))) {
+            iVar12 = iVar12 + 1;
           }
-          if (local_530[uVar4] < iVar13) {
-            pcVar5 = *(char **)(puVar19 + 1);
-            pcVar6 = *(char **)(puVar19 + 3);
-            local_530[uVar4] = iVar13;
+          if (local_530[uVar4] < iVar12) {
+            pcVar5 = *(char **)(puVar16 + 1);
+            pcVar6 = *(char **)(puVar16 + 3);
+            local_530[uVar4] = iVar12;
             local_5e0[uVar4] = pcVar5;
             local_690[uVar4] = pcVar6;
           }
-          uVar18 = uVar18 + 1;
-          puVar19 = puVar19 + 0xc;
-        } while (uVar18 < pWVar8->numAnimOverrides);
+          uVar15 = uVar15 + 1;
+          puVar16 = puVar16 + 0xc;
+        } while (uVar15 < pWVar8->numAnimOverrides);
       }
-      bVar14 = BG_HasUnderbarrelAmmo(WVar10);
-      if (((bVar14) && (local_5f0 == 0)) && (local_540 != 0)) {
+      bVar13 = BG_HasUnderbarrelAmmo(param_1);
+      if (((bVar13) && (local_5f0 == 0)) && (local_540 != 0)) {
         local_5f0 = local_540;
       }
-      CG_CreateWeaponViewModelXAnim(local_5e0,&pCVar16->animsTwoHanded);
-      bVar14 = BG_HasUnderbarrelAmmo(WVar10);
-      if (bVar14) {
-        CG_CreateWeaponViewModelXAnim(local_690,&pCVar16->animsTwoHandedAltMode);
+      CG_CreateWeaponViewModelXAnim(local_5e0,&param_2->animsTwoHanded);
+      bVar13 = BG_HasUnderbarrelAmmo(param_1);
+      if (bVar13) {
+        CG_CreateWeaponViewModelXAnim(local_690,&param_2->animsTwoHandedAltMode);
       }
     }
   }
-  __restgprlr_18();
   return;
 }
 
@@ -1579,6 +1519,8 @@ XAnimTree * CG_CreateWeaponViewModelXAnimTree(XAnim_s *param_1)
 
 // 82318C18  CG_UpdateViewModelHidePartBits_EMP  (cgame/cg_weapons.cpp:1213)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -1587,79 +1529,74 @@ void CG_UpdateViewModelHidePartBits_EMP(LocalClientNum_t param_1,DObj *param_2)
 
 {
   uint uVar1;
-  LocalClientNum_t LVar2;
-  cg_s *pcVar3;
-  DObj *pDVar4;
-  int iVar5;
-  ulonglong uVar6;
+  cg_s *pcVar2;
+  int iVar3;
   byte local_50 [16];
   uint auStack_40 [16];
   
-  uVar6 = (ulonglong)(int)param_2;
-  LVar2 = __savegprlr_28(param_1);
-  if ((uVar6 & 0xffffffff) == 0) {
+  if (param_2 == (DObj *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp",0x4c3,0,
                     "%s");
   }
-  pcVar3 = CG_GetLocalClientGlobals(LVar2);
-  if (pcVar3 == (cg_s *)0xfff8911c) {
+  pcVar2 = CG_GetLocalClientGlobals(param_1);
+  if (pcVar2 == (cg_s *)0xfff8911c) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp",0x4c8,1,
                     "%s");
   }
-  if ((pcVar3->playerWeaponInfo).hideReticle != false) {
-    pDVar4 = (DObj *)uVar6;
-    DObjGetHidePartBits(pDVar4,auStack_40);
+  if ((pcVar2->playerWeaponInfo).hideReticle != false) {
+    DObjGetHidePartBits(param_2,auStack_40);
     local_50[0] = 0xfe;
-    iVar5 = DObjGetBoneIndex(pDVar4,(uint)scr_const.tag_reticle_acog,local_50);
-    if (iVar5 != 0) {
+    iVar3 = DObjGetBoneIndex(param_2,(uint)scr_const.tag_reticle_acog,local_50);
+    if (iVar3 != 0) {
       uVar1 = local_50[0] >> 3 & 0x1ffffffc;
       *(uint *)((int)auStack_40 + uVar1) =
            *(uint *)(&g_bitShift + (local_50[0] & 0x1f) * 4) | *(uint *)((int)auStack_40 + uVar1);
     }
     local_50[0] = 0xfe;
-    iVar5 = DObjGetBoneIndex(pDVar4,(uint)scr_const.tag_reticle_red_dot,local_50);
-    if (iVar5 != 0) {
+    iVar3 = DObjGetBoneIndex(param_2,(uint)scr_const.tag_reticle_red_dot,local_50);
+    if (iVar3 != 0) {
       uVar1 = local_50[0] >> 3 & 0x1ffffffc;
       *(uint *)((int)auStack_40 + uVar1) =
            *(uint *)(&g_bitShift + (local_50[0] & 0x1f) * 4) | *(uint *)((int)auStack_40 + uVar1);
     }
     local_50[0] = 0xfe;
-    iVar5 = DObjGetBoneIndex(pDVar4,(uint)scr_const.tag_eotech_reticle,local_50);
-    if (iVar5 != 0) {
+    iVar3 = DObjGetBoneIndex(param_2,(uint)scr_const.tag_eotech_reticle,local_50);
+    if (iVar3 != 0) {
       uVar1 = local_50[0] >> 3 & 0x1ffffffc;
       *(uint *)((int)auStack_40 + uVar1) =
            *(uint *)(&g_bitShift + (local_50[0] & 0x1f) * 4) | *(uint *)((int)auStack_40 + uVar1);
     }
     local_50[0] = 0xfe;
-    iVar5 = DObjGetBoneIndex(pDVar4,(uint)scr_const.tag_magnifier_eotech_reticle,local_50);
-    if (iVar5 != 0) {
+    iVar3 = DObjGetBoneIndex(param_2,(uint)scr_const.tag_magnifier_eotech_reticle,local_50);
+    if (iVar3 != 0) {
       uVar1 = local_50[0] >> 3 & 0x1ffffffc;
       *(uint *)((int)auStack_40 + uVar1) =
            *(uint *)(&g_bitShift + (local_50[0] & 0x1f) * 4) | *(uint *)((int)auStack_40 + uVar1);
     }
     local_50[0] = 0xfe;
-    iVar5 = DObjGetBoneIndex(pDVar4,(uint)scr_const.tag_reticle_tavor_scope,local_50);
-    if (iVar5 != 0) {
+    iVar3 = DObjGetBoneIndex(param_2,(uint)scr_const.tag_reticle_tavor_scope,local_50);
+    if (iVar3 != 0) {
       uVar1 = local_50[0] >> 3 & 0x1ffffffc;
       *(uint *)((int)auStack_40 + uVar1) =
            *(uint *)(&g_bitShift + (local_50[0] & 0x1f) * 4) | *(uint *)((int)auStack_40 + uVar1);
     }
     local_50[0] = 0xfe;
-    iVar5 = DObjGetBoneIndex(pDVar4,(uint)scr_const.tag_reticle_thermal_scope,local_50);
-    if (iVar5 != 0) {
+    iVar3 = DObjGetBoneIndex(param_2,(uint)scr_const.tag_reticle_thermal_scope,local_50);
+    if (iVar3 != 0) {
       uVar1 = local_50[0] >> 3 & 0x1ffffffc;
       *(uint *)((int)auStack_40 + uVar1) =
            *(uint *)(&g_bitShift + (local_50[0] & 0x1f) * 4) | *(uint *)((int)auStack_40 + uVar1);
     }
-    DObjSetHidePartBits(pDVar4,auStack_40);
+    DObjSetHidePartBits(param_2,auStack_40);
   }
-  __restgprlr_28();
   return;
 }
 
 
 // 82318E38  CG_UpdateViewModelHidePartBits  (cgame/cg_weapons.cpp:1269)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
@@ -1667,15 +1604,12 @@ void CG_UpdateViewModelHidePartBits(LocalClientNum_t param_1,Weapon param_2,Play
 
 {
   DObj *pDVar1;
-  LocalClientNum_t LVar2;
-  WeaponHand *pWVar3;
+  WeaponHand *pWVar2;
   
-  LVar2 = __savegprlr_29(param_1);
-  pWVar3 = CG_GetLocalClientViewModelHand(LVar2,param_3);
-  pDVar1 = pWVar3->viewModelDObj;
+  pWVar2 = CG_GetLocalClientViewModelHand(param_1,param_3);
+  pDVar1 = pWVar2->viewModelDObj;
   BG_UpdateWeaponHidePartBitsForDObj(pDVar1,param_2,0);
-  CG_UpdateViewModelHidePartBits_EMP(LVar2,pDVar1);
-  __restgprlr_29();
+  CG_UpdateViewModelHidePartBits_EMP(param_1,pDVar1);
   return;
 }
 
@@ -1706,6 +1640,8 @@ void CheckForDefaultViewHands(Weapon param_1,WeaponDef *param_2)
 
 // 82318F38  CG_PrecacheWeaponAnimations  (cgame/cg_weapons.cpp:1302)
 
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "XAssetType": Some values do not have unique names */
 /* WARNING: Enum "nodeType": Some values do not have unique names */
@@ -1728,7 +1664,6 @@ void CG_PrecacheWeaponAnimations(void)
   int iVar10;
   XAssetHeader local_3a0 [232];
   
-  __savegprlr();
   uVar4 = BG_GetNumWeapons();
   iVar10 = 0;
   WVar8.data = 0;
@@ -1814,13 +1749,14 @@ void CG_PrecacheWeaponAnimations(void)
     } while (uVar9 < uVar4);
   }
   cgMedia.translatedCustom = SEH_StringEd_GetString("WEAPON_CUSTOM_ATTACHMENT");
-  __restgprlr();
   return;
 }
 
 
 // 82319200  CG_RegisterWeapon  (cgame/cg_weapons.cpp:1421)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
 
@@ -1828,41 +1764,37 @@ void CG_RegisterWeapon(LocalClientNum_t param_1,Weapon param_2,ClientPlayerWeapo
 
 {
   WeaponDef *pWVar1;
-  Weapon WVar2;
-  bool bVar3;
-  uint uVar4;
-  Weapon WVar5;
-  ulonglong uVar6;
+  bool bVar2;
+  uint uVar3;
+  Weapon WVar4;
   
-  uVar6 = (ulonglong)(int)param_2.data;
-  __savegprlr_28(param_1);
-  if ((uVar6 & 0xff) != 0) {
-    uVar4 = BG_GetNumWeapons();
-    if ((ulonglong)uVar4 <= (uVar6 & 0xff)) {
+  if ((param_2.data & 0xff) != 0) {
+    uVar3 = BG_GetNumWeapons();
+    if (uVar3 <= (param_2.data & 0xff)) {
       BG_GetNumWeapons();
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp",0x593,
                       0,"weapon.weaponIdx doesn\'t index BG_GetNumWeapons()\n\t%i not in [0, %i)");
     }
-    WVar2.data = (uint)uVar6;
-    bVar3 = WVar2.data != (param_3->weapon).data;
-    WVar5 = BG_GetAlternateWeapon(WVar2,false);
-    pWVar1 = bg_weaponDefs[WVar5.data & 0xff];
-    if (bVar3) {
-      CG_CreateWeaponViewModelXAnimDefs(WVar2,param_3);
+    bVar2 = param_2.data != (param_3->weapon).data;
+    WVar4 = BG_GetAlternateWeapon(param_2,false);
+    pWVar1 = bg_weaponDefs[WVar4.data & 0xff];
+    if (bVar2) {
+      CG_CreateWeaponViewModelXAnimDefs(param_2,param_3);
     }
-    CheckForDefaultViewHands(WVar2,pWVar1);
-    if ((param_3->handModel == (XModel *)0x0) || (bVar3)) {
+    CheckForDefaultViewHands(param_2,pWVar1);
+    if ((param_3->handModel == (XModel *)0x0) || (bVar2)) {
       param_3->handModel = pWVar1->handXModel;
     }
-    param_3->weapon = WVar2;
+    param_3->weapon = param_2;
   }
-  __restgprlr_28();
   return;
 }
 
 
 // 823192D0  CG_ProcessWeaponOnAltChange  (cgame/cg_weapons.cpp:1445)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -1870,31 +1802,30 @@ void CG_RegisterWeapon(LocalClientNum_t param_1,Weapon param_2,ClientPlayerWeapo
 void CG_ProcessWeaponOnAltChange(LocalClientNum_t param_1,bool param_2)
 
 {
-  LocalClientNum_t LVar1;
-  cg_s *pcVar2;
-  Weapon WVar3;
-  WeaponHand *pWVar4;
-  int iVar5;
+  cg_s *pcVar1;
+  Weapon WVar2;
+  WeaponHand *pWVar3;
+  int iVar4;
   
-  LVar1 = __savegprlr_26(param_1);
-  pcVar2 = CG_GetLocalClientGlobals(LVar1);
-  WVar3 = BG_GetViewmodelWeapon(&pcVar2->predictedPlayerState);
-  iVar5 = 0;
+  pcVar1 = CG_GetLocalClientGlobals(param_1);
+  WVar2 = BG_GetViewmodelWeapon(&pcVar1->predictedPlayerState);
+  iVar4 = 0;
   do {
-    pWVar4 = CG_GetLocalClientViewModelHand(LVar1,iVar5);
-    if (pWVar4->viewModelDObj != (DObj *)0x0) {
+    pWVar3 = CG_GetLocalClientViewModelHand(param_1,iVar4);
+    if (pWVar3->viewModelDObj != (DObj *)0x0) {
       BG_ShowHideTagsBasedOnAltMode
-                (WVar3,pWVar4->viewModelDObj,param_2,(pcVar2->playerWeaponInfo).hideReticle);
+                (WVar2,pWVar3->viewModelDObj,param_2,(pcVar1->playerWeaponInfo).hideReticle);
     }
-    iVar5 = iVar5 + 1;
-  } while (iVar5 < 2);
-  __restgprlr_26();
+    iVar4 = iVar4 + 1;
+  } while (iVar4 < 2);
   return;
 }
 
 
 // 82319340  ChangeViewmodelDobj  (cgame/cg_weapons.cpp:1468)
 
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -1906,17 +1837,17 @@ void ChangeViewmodelDobj(LocalClientNum_t param_1,playerState_s *param_2,Weapon 
 {
   uint uVar1;
   XModel *pXVar2;
-  LocalClientNum_t LVar3;
-  char *pcVar4;
-  WeaponDef *pWVar5;
-  WeaponCompleteDef *pWVar6;
-  undefined4 uVar7;
-  int iVar8;
-  cg_s *pcVar9;
-  uint uVar10;
-  Weapon WVar11;
-  int iVar12;
-  Weapon WVar13;
+  WeaponAttachment *pWVar3;
+  LocalClientNum_t LVar4;
+  char *pcVar5;
+  WeaponDef *pWVar6;
+  WeaponCompleteDef *pWVar7;
+  undefined4 uVar8;
+  int iVar9;
+  cg_s *pcVar10;
+  uint uVar11;
+  Weapon WVar12;
+  int iVar13;
   WeaponHand *pWVar14;
   int iVar15;
   XAnim_s *pXVar16;
@@ -1924,273 +1855,262 @@ void ChangeViewmodelDobj(LocalClientNum_t param_1,playerState_s *param_2,Weapon 
   XAnimTree *pXVar18;
   DObj *pDVar20;
   WeaponHand *pWVar21;
-  playerState_s *ppVar22;
-  undefined1 uVar23;
-  LocalClientNum_t LVar24;
-  XModel **ppXVar25;
-  ushort uVar26;
-  undefined2 uVar27;
-  bool bVar28;
-  ClientPlayerWeaponInfo *pCVar29;
+  undefined1 uVar22;
+  LocalClientNum_t LVar23;
+  XModel **ppXVar24;
+  ushort uVar25;
+  undefined2 uVar26;
+  bool bVar27;
+  ClientPlayerWeaponInfo *pCVar28;
+  uint uVar29;
   bool *pbVar30;
-  ulonglong uVar31;
-  longlong lVar32;
-  int *piVar33;
+  longlong lVar31;
+  int *piVar32;
+  ulonglong uVar33;
   ulonglong uVar34;
-  ulonglong uVar35;
-  ulonglong uVar36;
+  double dVar35;
+  double dVar36;
   double dVar37;
-  double dVar38;
-  double dVar39;
   XAnim_s *pXVar19;
   
-  uVar35 = (ulonglong)(int)param_4;
-  uVar36 = (ulonglong)(int)param_3.data;
-  uVar34 = (ulonglong)(int)param_2;
-  __savegprlr();
-  iVar8 = (int)(ZEXT48(&stack0x00000000) - 0x630);
-  *(BADSPACEBASE **)iVar8 = register0x0000000c;
-  *(LocalClientNum_t *)(iVar8 + 0x644) = param_1;
-  ppVar22 = (playerState_s *)uVar34;
-  *(playerState_s **)(iVar8 + 0x64c) = ppVar22;
-  WVar13.data = (uint)uVar36;
-  *(Weapon *)(iVar8 + 0x654) = WVar13;
-  *(bool *)(iVar8 + 0x667) = param_5;
-  *(bool *)(iVar8 + 0x66f) = param_6;
-  if ((uVar36 & 0xff) != 0) {
-    pcVar9 = CG_GetLocalClientGlobals(param_1);
-    *(cg_s **)(iVar8 + 0x78) = pcVar9;
-    *(char **)(iVar8 + 0x50) = "%s";
-    if ((uVar34 & 0xffffffff) == 0) {
+  iVar9 = (int)(ZEXT48(&stack0x00000000) - 0x630);
+  *(BADSPACEBASE **)iVar9 = register0x0000000c;
+  *(LocalClientNum_t *)(iVar9 + 0x644) = param_1;
+  *(playerState_s **)(iVar9 + 0x64c) = param_2;
+  *(Weapon *)(iVar9 + 0x654) = param_3;
+  *(bool *)(iVar9 + 0x667) = param_5;
+  *(bool *)(iVar9 + 0x66f) = param_6;
+  if ((param_3.data & 0xff) != 0) {
+    pcVar10 = CG_GetLocalClientGlobals(param_1);
+    *(cg_s **)(iVar9 + 0x78) = pcVar10;
+    *(char **)(iVar9 + 0x50) = "%s";
+    if (param_2 == (playerState_s *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp",0x5d5,
                       0,"%s");
     }
-    uVar10 = BG_GetNumWeapons();
-    if ((ulonglong)uVar10 <= (uVar36 & 0xff)) {
+    uVar11 = BG_GetNumWeapons();
+    if (uVar11 <= (param_3.data & 0xff)) {
       BG_GetNumWeapons();
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp",0x5d6,
                       0,"weapon.weaponIdx doesn\'t index BG_GetNumWeapons()\n\t%i not in [0, %i)");
     }
-    if (((uVar34 & 0xffffffff) == 0) ||
-       (uVar10 = 1, ((ppVar22->weapCommon).weapFlags & 0x8000U) == 0)) {
-      uVar10 = 0;
+    if ((param_2 == (playerState_s *)0x0) ||
+       (uVar11 = 1, ((param_2->weapCommon).weapFlags & 0x8000U) == 0)) {
+      uVar11 = 0;
     }
-    *(uint *)(iVar8 + 0x74) = uVar10;
-    if (uVar10 == 0) {
-      iVar12 = 0x24;
+    *(uint *)(iVar9 + 0x74) = uVar11;
+    if (uVar11 == 0) {
+      iVar13 = 0x24;
     }
     else {
-      WVar11 = BG_GetAltWeapon(WVar13);
-      *(Weapon *)(iVar8 + 0x54) = WVar11;
-      iVar12 = -0x5dc;
+      WVar12 = BG_GetAltWeapon(param_3);
+      *(Weapon *)(iVar9 + 0x54) = WVar12;
+      iVar13 = -0x5dc;
     }
-    uVar1 = *(uint *)(&stack0x00000000 + iVar12);
-    *(uint *)(iVar8 + 0x58) = uVar1;
+    uVar1 = *(uint *)(&stack0x00000000 + iVar13);
+    *(uint *)(iVar9 + 0x58) = uVar1;
     if ((uVar1 & 0xff) == 0) {
-      *(Weapon *)(iVar8 + 0x58) = WVar13;
+      *(Weapon *)(iVar9 + 0x58) = param_3;
     }
-    WVar11 = BG_GetAlternateWeapon(WVar13,SUB41(uVar10,0));
-    uVar1 = (uint)((uVar36 & 0xffffffff) >> 6) & 0x3c;
-    pWVar5 = bg_weaponDefs[WVar11.data & 0xff];
-    ppXVar25 = pWVar5->gunXModel;
-    *(WeaponDef **)(iVar8 + 100) = pWVar5;
-    if (*(int *)(uVar1 + (int)ppXVar25) != 0) {
-      pCVar29 = &pcVar9->playerWeaponInfo;
-      *(ClientPlayerWeaponInfo **)(iVar8 + 0x60) = pCVar29;
-      CG_RegisterWeapon(param_1,WVar13,pCVar29);
-      if (((((ulonglong)(pcVar9->prevViewmodelWeapon).data == (uVar36 & 0xffffffff)) &&
-           ((pcVar9->playerWeaponInfo).isAlternate == uVar10)) &&
-          (ZEXT48(pCVar29->handModel) == (uVar35 & 0xffffffff))) &&
-         (iVar12 = BG_PlayerDualWieldingWeapon(ppVar22,WVar13), pcVar9->prevDualWielding == iVar12))
-      {
-        *(undefined4 *)(iVar8 + 0x68) = 1;
+    WVar12 = BG_GetAlternateWeapon(param_3,SUB41(uVar11,0));
+    uVar1 = param_3.data >> 6 & 0x3c;
+    pWVar6 = bg_weaponDefs[WVar12.data & 0xff];
+    ppXVar24 = pWVar6->gunXModel;
+    *(WeaponDef **)(iVar9 + 100) = pWVar6;
+    if (*(int *)(uVar1 + (int)ppXVar24) != 0) {
+      pCVar28 = &pcVar10->playerWeaponInfo;
+      *(ClientPlayerWeaponInfo **)(iVar9 + 0x60) = pCVar28;
+      CG_RegisterWeapon(param_1,param_3,pCVar28);
+      if (((((pcVar10->prevViewmodelWeapon).data == param_3.data) &&
+           ((pcVar10->playerWeaponInfo).isAlternate == uVar11)) && (pCVar28->handModel == param_4))
+         && (iVar13 = BG_PlayerDualWieldingWeapon(param_2,param_3),
+            pcVar10->prevDualWielding == iVar13)) {
+        *(undefined4 *)(iVar9 + 0x68) = 1;
       }
       else {
-        *(undefined4 *)(iVar8 + 0x68) = 0;
+        *(undefined4 *)(iVar9 + 0x68) = 0;
       }
-      pCVar29->handModel = (XModel *)uVar35;
-      if ((uVar35 & 0xffffffff) != 0) {
-        *(undefined2 *)(iVar8 + 0x84) = 0;
-        *(undefined1 *)(iVar8 + 0x86) = 0;
-        pbVar30 = &(pcVar9->playerWeaponInfo).isWeaponHidden;
-        *(XModel **)(iVar8 + 0x80) = pCVar29->handModel;
-        bVar28 = *pbVar30;
-        uVar34 = 1;
-        *(bool **)(iVar8 + 0x70) = pbVar30;
-        *(scr_const_t **)(iVar8 + 0x5c) = &scr_const;
-        if (bVar28 == false) {
-          *(undefined1 *)(iVar8 + 0x8e) = 0;
-          uVar34 = 2;
-          *(ushort *)(iVar8 + 0x8c) = scr_const.tag_weapon;
-          *(undefined4 *)(iVar8 + 0x88) = *(undefined4 *)(uVar1 + (int)pWVar5->gunXModel);
+      pCVar28->handModel = param_4;
+      if (param_4 != (XModel *)0x0) {
+        *(undefined2 *)(iVar9 + 0x84) = 0;
+        *(undefined1 *)(iVar9 + 0x86) = 0;
+        pbVar30 = &(pcVar10->playerWeaponInfo).isWeaponHidden;
+        *(XModel **)(iVar9 + 0x80) = pCVar28->handModel;
+        bVar27 = *pbVar30;
+        uVar33 = 1;
+        *(bool **)(iVar9 + 0x70) = pbVar30;
+        *(scr_const_t **)(iVar9 + 0x5c) = &scr_const;
+        if (bVar27 == false) {
+          *(undefined1 *)(iVar9 + 0x8e) = 0;
+          uVar33 = 2;
+          *(ushort *)(iVar9 + 0x8c) = scr_const.tag_weapon;
+          *(undefined4 *)(iVar9 + 0x88) = *(undefined4 *)(uVar1 + (int)pWVar6->gunXModel);
         }
-        ppXVar25 = &(pcVar9->playerWeaponInfo).gogglesModel;
-        if (*ppXVar25 != (XModel *)0x0) {
-          uVar26 = scr_const.tag_gasmask;
+        ppXVar24 = &(pcVar10->playerWeaponInfo).gogglesModel;
+        if (*ppXVar24 != (XModel *)0x0) {
+          uVar25 = scr_const.tag_gasmask;
           if ((overrideNVGModelWithKnife->current).enabled != false) {
-            uVar26 = scr_const.tag_gasmask2;
+            uVar25 = scr_const.tag_gasmask2;
           }
-          iVar12 = (int)(uVar34 << 3);
-          *(ushort *)(iVar12 + iVar8 + 0x84) = uVar26;
-          pXVar2 = *ppXVar25;
-          uVar34 = uVar34 + 1;
-          *(undefined1 *)(iVar12 + iVar8 + 0x86) = 0;
-          *(XModel **)(iVar12 + iVar8 + 0x80) = pXVar2;
+          iVar13 = (int)(uVar33 << 3);
+          *(ushort *)(iVar13 + iVar9 + 0x84) = uVar25;
+          pXVar2 = *ppXVar24;
+          uVar33 = uVar33 + 1;
+          *(undefined1 *)(iVar13 + iVar9 + 0x86) = 0;
+          *(XModel **)(iVar13 + iVar9 + 0x80) = pXVar2;
         }
-        WVar13 = BG_GetAlternateWeapon(WVar13,SUB41(uVar10,0));
-        bVar28 = *pbVar30;
-        *(WeaponCompleteDef ***)(iVar8 + 0x6c) = bg_weaponCompleteDefs;
-        pWVar6 = bg_weaponCompleteDefs[WVar13.data & 0xff];
-        *(char **)(iVar8 + 0x54) = "mdlIdx < DOBJ_MAX_SUBMODELS";
-        if (bVar28 == false) {
-          uVar31 = (uVar36 & 0xffffffff) >> 0xc & 7;
-          uVar35 = uVar34;
-          if (uVar31 != 0) {
-            if (0x1f < (uint)uVar34) {
+        WVar12 = BG_GetAlternateWeapon(param_3,SUB41(uVar11,0));
+        bVar27 = *pbVar30;
+        *(WeaponCompleteDef ***)(iVar9 + 0x6c) = bg_weaponCompleteDefs;
+        pWVar7 = bg_weaponCompleteDefs[WVar12.data & 0xff];
+        *(char **)(iVar9 + 0x54) = "mdlIdx < DOBJ_MAX_SUBMODELS";
+        if (bVar27 == false) {
+          uVar34 = uVar33;
+          if ((param_3.data >> 0xc & 7) != 0) {
+            if (0x1f < (uint)uVar33) {
               MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp"
                               ,0x60e,0,"%s");
             }
-            iVar12 = *(int *)((int)pWVar6->scopes + (int)(uVar31 << 2) + -4);
-            if (iVar12 == 0) {
+            pWVar3 = pWVar7->scopes[(param_3.data >> 0xc & 7) - 1];
+            if (pWVar3 == (WeaponAttachment *)0x0) {
               MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp"
                               ,0x610,1,"%s");
             }
-            iVar15 = *(int *)(*(int *)(iVar12 + 0x18) + uVar1);
-            if (iVar15 != 0) {
-              uVar35 = uVar34 + 1;
-              iVar17 = (int)(uVar34 << 3);
-              *(undefined2 *)(iVar17 + iVar8 + 0x84) = 0;
-              *(undefined1 *)(iVar17 + iVar8 + 0x86) = 0;
-              *(int *)(iVar17 + iVar8 + 0x80) = iVar15;
-              if ((((pcVar9->playerWeaponInfo).hideReticle == false) &&
-                  (*(int *)(iVar12 + 0x1c) != 0)) &&
-                 (uVar10 = (uint)((uVar36 & 0xffffffff) >> 0x13) & 0x1c,
-                 *(int *)(uVar10 + *(int *)(iVar12 + 0x1c)) != 0)) {
-                if (0x1f < (uint)uVar35) {
+            iVar13 = *(int *)((int)pWVar3->viewModels + uVar1);
+            if (iVar13 != 0) {
+              uVar34 = uVar33 + 1;
+              iVar15 = (int)(uVar33 << 3);
+              *(undefined2 *)(iVar15 + iVar9 + 0x84) = 0;
+              *(undefined1 *)(iVar15 + iVar9 + 0x86) = 0;
+              *(int *)(iVar15 + iVar9 + 0x80) = iVar13;
+              if ((((pcVar10->playerWeaponInfo).hideReticle == false) &&
+                  (pWVar3->reticleViewModels != (XModel **)0x0)) &&
+                 (uVar11 = param_3.data >> 0x13 & 0x1c,
+                 *(int *)(uVar11 + (int)pWVar3->reticleViewModels) != 0)) {
+                if (0x1f < (uint)uVar34) {
                   MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp"
                                   ,0x61a,0,"%s");
                 }
-                iVar15 = (uint)uVar35 * 8;
-                uVar35 = uVar34 + 2;
-                uVar7 = *(undefined4 *)(uVar10 + *(int *)(iVar12 + 0x1c));
-                *(undefined2 *)(iVar15 + iVar8 + 0x84) = 0;
-                *(undefined1 *)(iVar15 + iVar8 + 0x86) = 0;
-                *(undefined4 *)(iVar15 + iVar8 + 0x80) = uVar7;
+                iVar13 = (uint)uVar34 * 8;
+                uVar34 = uVar33 + 2;
+                uVar8 = *(undefined4 *)(uVar11 + (int)pWVar3->reticleViewModels);
+                *(undefined2 *)(iVar13 + iVar9 + 0x84) = 0;
+                *(undefined1 *)(iVar13 + iVar9 + 0x86) = 0;
+                *(undefined4 *)(iVar13 + iVar9 + 0x80) = uVar8;
               }
             }
           }
-          uVar31 = (uVar36 & 0xffffffff) >> 0xf & 3;
-          uVar34 = uVar35;
-          if (uVar31 != 0) {
-            if (0x1f < (uint)uVar35) {
+          uVar33 = uVar34;
+          if ((param_3.data >> 0xf & 3) != 0) {
+            if (0x1f < (uint)uVar34) {
               MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp"
                               ,0x625,0,"%s");
             }
-            iVar12 = *(int *)((int)pWVar6->underBarrels + (int)(uVar31 << 2) + -4);
-            if (iVar12 == 0) {
+            pWVar3 = pWVar7->underBarrels[(param_3.data >> 0xf & 3) - 1];
+            if (pWVar3 == (WeaponAttachment *)0x0) {
               MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp"
                               ,0x627,1,"%s");
             }
-            iVar12 = *(int *)(*(int *)(iVar12 + 0x18) + uVar1);
-            if (iVar12 != 0) {
-              uVar34 = uVar35 + 1;
-              iVar15 = (int)(uVar35 << 3);
-              *(int *)(iVar15 + iVar8 + 0x80) = iVar12;
-              *(undefined2 *)(iVar15 + iVar8 + 0x84) = 0;
-              *(undefined1 *)(iVar15 + iVar8 + 0x86) = 0;
+            iVar13 = *(int *)((int)pWVar3->viewModels + uVar1);
+            if (iVar13 != 0) {
+              uVar33 = uVar34 + 1;
+              iVar15 = (int)(uVar34 << 3);
+              *(int *)(iVar15 + iVar9 + 0x80) = iVar13;
+              *(undefined2 *)(iVar15 + iVar9 + 0x84) = 0;
+              *(undefined1 *)(iVar15 + iVar9 + 0x86) = 0;
             }
           }
-          if (((uVar36 & 0xffffffff) >> 0x11 & 0xf) != 0) {
-            uVar35 = 1;
-            uVar10 = 0;
-            lVar32 = uVar34 * 8 + (ZEXT48(&stack0x00000000) - 0x630) + 0x7e;
+          if ((param_3.data >> 0x11 & 0xf) != 0) {
+            uVar11 = 1;
+            uVar29 = 0;
+            lVar31 = uVar33 * 8 + (ZEXT48(&stack0x00000000) - 0x630) + 0x7e;
             do {
-              if (((uVar36 & 0xffffffff) >> 0x11 & uVar35 & 0xf) != 0) {
-                if (0x1f < (int)uVar34) {
+              if ((param_3.data >> 0x11 & uVar11 & 0xf) != 0) {
+                if (0x1f < (int)uVar33) {
                   MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp"
                                   ,0x637,0,"%s");
                 }
-                iVar12 = *(int *)((int)pWVar6->others + uVar10);
-                if (iVar12 == 0) {
+                iVar13 = *(int *)((int)pWVar7->others + uVar29);
+                if (iVar13 == 0) {
                   MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp"
                                   ,0x639,1,"%s");
                 }
-                iVar12 = *(int *)(*(int *)(iVar12 + 0x18) + uVar1);
-                if (iVar12 != 0) {
-                  *(undefined2 *)((int)lVar32 + 6) = 0;
-                  uVar34 = uVar34 + 1;
-                  *(int *)((int)lVar32 + 2) = iVar12;
-                  lVar32 = lVar32 + 8;
-                  *(undefined1 *)lVar32 = 0;
+                iVar13 = *(int *)(*(int *)(iVar13 + 0x18) + uVar1);
+                if (iVar13 != 0) {
+                  *(undefined2 *)((int)lVar31 + 6) = 0;
+                  uVar33 = uVar33 + 1;
+                  *(int *)((int)lVar31 + 2) = iVar13;
+                  lVar31 = lVar31 + 8;
+                  *(undefined1 *)lVar31 = 0;
                 }
               }
-              uVar10 = uVar10 + 4;
-              uVar35 = (uVar35 & 0x7fffffff) << 1;
-            } while (uVar10 < 0x10);
+              uVar29 = uVar29 + 4;
+              uVar11 = uVar11 << 1;
+            } while (uVar29 < 0x10);
           }
         }
-        dVar37 = 0.05000000074505806;
-        dVar39 = 1.0;
-        dVar38 = 0.0;
-        iVar12 = 0;
+        dVar35 = 0.05000000074505806;
+        dVar37 = 1.0;
+        dVar36 = 0.0;
+        iVar13 = 0;
         do {
-          LVar3 = *(LocalClientNum_t *)(iVar8 + 0x644);
-          uVar10 = iVar12 + 0x800;
-          pWVar14 = CG_GetLocalClientViewModelHand(LVar3,iVar12);
+          LVar4 = *(LocalClientNum_t *)(iVar9 + 0x644);
+          uVar11 = iVar13 + 0x800;
+          pWVar14 = CG_GetLocalClientViewModelHand(LVar4,iVar13);
           if (pWVar14->viewModelDObj != (DObj *)0x0) {
-            Com_SafeClientDObjFree(uVar10,LVar3);
+            Com_SafeClientDObjFree(uVar11,LVar4);
             pWVar14->viewModelDObj = (DObj *)0x0;
           }
           iVar15 = BG_PlayerDualWieldingWeapon
-                             (*(playerState_s **)(iVar8 + 0x64c),*(Weapon *)(iVar8 + 0x58));
-          if ((iVar15 == 0) && (iVar12 != 0)) {
+                             (*(playerState_s **)(iVar9 + 0x64c),*(Weapon *)(iVar9 + 0x58));
+          if ((iVar15 == 0) && (iVar13 != 0)) {
             if (pWVar14->tree != (XAnimTree *)0x0) {
               Com_XAnimFreeSmallTree(pWVar14->tree);
               pWVar14->tree = (XAnimTree *)0x0;
             }
           }
           else {
-            if (((*(int *)(iVar8 + 0x68) == 0) || (*(char *)(iVar8 + 0x66f) != '\0')) &&
+            if (((*(int *)(iVar9 + 0x68) == 0) || (*(char *)(iVar9 + 0x66f) != '\0')) &&
                (pWVar14->tree != (XAnimTree *)0x0)) {
               Com_XAnimFreeSmallTree(pWVar14->tree);
               pWVar14->tree = (XAnimTree *)0x0;
             }
-            bVar28 = false;
+            bVar27 = false;
             if (pWVar14->tree == (XAnimTree *)0x0) {
-              iVar15 = *(int *)(iVar8 + 0x60);
+              iVar15 = *(int *)(iVar9 + 0x60);
               pXVar16 = (XAnim_s *)(iVar15 + 0x18);
               if (*(int *)(iVar15 + 0x18) == 0) {
-                WVar13 = BG_GetAlternateWeapon(*(Weapon *)(iVar8 + 0x58),false);
-                pcVar4 = *(char **)(iVar8 + 0x50);
-                iVar15 = *(int *)((WVar13.data & 0xff) * 4 + *(int *)(iVar8 + 0x6c));
+                WVar12 = BG_GetAlternateWeapon(*(Weapon *)(iVar9 + 0x58),false);
+                pcVar5 = *(char **)(iVar9 + 0x50);
+                iVar15 = *(int *)((WVar12.data & 0xff) * 4 + *(int *)(iVar9 + 0x6c));
                 if (*(int *)(*(int *)(iVar15 + 0x1c) + 4) == 0) {
                   MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp"
-                                  ,0x671,0,pcVar4);
+                                  ,0x671,0,pcVar5);
                 }
                 if (**(char **)(*(int *)(iVar15 + 0x1c) + 4) != '\0') {
                   MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp"
-                                  ,0x672,0,pcVar4);
+                                  ,0x672,0,pcVar5);
                 }
-                if ((**(int **)(*(int *)(iVar8 + 100) + 4) != 0) &&
-                   (*(int *)(*(int *)(iVar8 + 100) + 8) != 0)) {
+                if ((**(int **)(*(int *)(iVar9 + 100) + 4) != 0) &&
+                   (*(int *)(*(int *)(iVar9 + 100) + 8) != 0)) {
                   MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp"
-                                  ,0x673,0,pcVar4);
+                                  ,0x673,0,pcVar5);
                 }
-                BG_GetWeaponName(*(Weapon *)(iVar8 + 0x654),(char *)(iVar8 + 0x180),0x400);
+                BG_GetWeaponName(*(Weapon *)(iVar9 + 0x654),(char *)(iVar9 + 0x180),0x400);
                 Com_Error(ERR_DROP,"\x15CG_RegisterWeapon: No idle anim specified for [%s]");
-                iVar15 = *(int *)(iVar8 + 0x60);
+                iVar15 = *(int *)(iVar9 + 0x60);
               }
               iVar17 = BG_PlayerDualWieldingWeapon
-                                 (*(playerState_s **)(iVar8 + 0x64c),*(Weapon *)(iVar8 + 0x58));
+                                 (*(playerState_s **)(iVar9 + 0x64c),*(Weapon *)(iVar9 + 0x58));
               if ((iVar17 == 0) ||
-                 (iVar17 = BG_OneHandedViewModelAnimsValid(*(WeaponDef **)(iVar8 + 100)),
+                 (iVar17 = BG_OneHandedViewModelAnimsValid(*(WeaponDef **)(iVar9 + 100)),
                  iVar17 == 0)) {
                 pXVar19 = (XAnim_s *)(iVar15 + 0x784);
-                if (*(int *)(iVar8 + 0x74) == 0) {
+                if (*(int *)(iVar9 + 0x74) == 0) {
                   pXVar19 = pXVar16;
                 }
               }
-              else if (iVar12 == 0) {
+              else if (iVar13 == 0) {
                 pXVar19 = (XAnim_s *)(iVar15 + 0xef0);
               }
               else {
@@ -2199,103 +2119,104 @@ void ChangeViewmodelDobj(LocalClientNum_t param_1,playerState_s *param_2,Weapon 
               pXVar18 = Com_XAnimCreateSmallTree(pXVar19);
               if (pXVar18 == (XAnimTree *)0x0) {
                 MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp"
-                                ,0x4b6,0,*(char **)(iVar8 + 0x50));
+                                ,0x4b6,0,*(char **)(iVar9 + 0x50));
               }
               pWVar14->tree = pXVar18;
               if (pXVar18 == (XAnimTree *)0x0) {
                 MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp"
-                                ,0x685,0,*(char **)(iVar8 + 0x50));
+                                ,0x685,0,*(char **)(iVar9 + 0x50));
               }
-              bVar28 = true;
+              bVar27 = true;
             }
-            uVar36 = uVar34;
+            uVar34 = uVar33;
             if (pWVar14->rocketModel != (XModel *)0x0) {
-              if (0x1f < (int)uVar34) {
+              if (0x1f < (int)uVar33) {
                 MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp"
-                                ,0x68e,0,*(char **)(iVar8 + 0x50));
+                                ,0x68e,0,*(char **)(iVar9 + 0x50));
               }
-              uVar36 = uVar34 + 1;
-              uVar27 = *(undefined2 *)(*(int *)(iVar8 + 0x5c) + 0xc4);
-              iVar15 = (int)((uVar34 & 0x1fffffff) << 3);
-              *(undefined1 *)(iVar15 + iVar8 + 0x86) = 0;
-              *(undefined2 *)(iVar15 + iVar8 + 0x84) = uVar27;
-              *(XModel **)(iVar15 + iVar8 + 0x80) = pWVar14->rocketModel;
+              uVar34 = uVar33 + 1;
+              uVar26 = *(undefined2 *)(*(int *)(iVar9 + 0x5c) + 0xc4);
+              iVar15 = (int)((uVar33 & 0x1fffffff) << 3);
+              *(undefined1 *)(iVar15 + iVar9 + 0x86) = 0;
+              *(undefined2 *)(iVar15 + iVar9 + 0x84) = uVar26;
+              *(XModel **)(iVar15 + iVar9 + 0x80) = pWVar14->rocketModel;
             }
-            iVar15 = (int)uVar36;
-            piVar33 = (int *)(*(int *)(iVar8 + 0x78) + 0x76eec);
-            if (*piVar33 != 0) {
+            iVar15 = (int)uVar34;
+            piVar32 = (int *)(*(int *)(iVar9 + 0x78) + 0x76eec);
+            if (*piVar32 != 0) {
               if (0x1f < iVar15) {
                 MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp"
-                                ,0x697,0,*(char **)(iVar8 + 0x50));
+                                ,0x697,0,*(char **)(iVar9 + 0x50));
               }
               iVar17 = BG_PlayerDualWieldingWeapon
-                                 (*(playerState_s **)(iVar8 + 0x64c),*(Weapon *)(iVar8 + 0x654));
-              if ((iVar17 == 0) || (iVar12 == 1)) {
-                uVar27 = *(undefined2 *)(*(int *)(iVar8 + 0x5c) + 0xe4);
+                                 (*(playerState_s **)(iVar9 + 0x64c),*(Weapon *)(iVar9 + 0x654));
+              if ((iVar17 == 0) || (iVar13 == 1)) {
+                uVar26 = *(undefined2 *)(*(int *)(iVar9 + 0x5c) + 0xe4);
               }
               else {
-                uVar27 = *(undefined2 *)(*(int *)(iVar8 + 0x5c) + 0xe6);
+                uVar26 = *(undefined2 *)(*(int *)(iVar9 + 0x5c) + 0xe6);
               }
               iVar15 = iVar15 + 1;
-              iVar17 = (int)((uVar36 & 0x1fffffff) << 3);
-              *(undefined2 *)(iVar17 + iVar8 + 0x84) = uVar27;
-              *(undefined1 *)(iVar17 + iVar8 + 0x86) = 0;
-              *(int *)(iVar17 + iVar8 + 0x80) = *piVar33;
+              iVar17 = (int)((uVar34 & 0x1fffffff) << 3);
+              *(undefined2 *)(iVar17 + iVar9 + 0x84) = uVar26;
+              *(undefined1 *)(iVar17 + iVar9 + 0x86) = 0;
+              *(int *)(iVar17 + iVar9 + 0x80) = *piVar32;
             }
             if (0x20 < iVar15) {
               MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp"
-                              ,0x6a3,0,*(char **)(iVar8 + 0x50));
+                              ,0x6a3,0,*(char **)(iVar9 + 0x50));
             }
-            LVar3 = *(LocalClientNum_t *)(iVar8 + 0x644);
+            LVar4 = *(LocalClientNum_t *)(iVar9 + 0x644);
             pXVar18 = pWVar14->tree;
-            LVar24 = LVar3;
+            LVar23 = LVar4;
             pDVar20 = Com_ClientDObjCreate
-                                ((DObjModel_s *)(iVar8 + 0x80),(ushort)iVar15,pXVar18,uVar10,LVar3);
+                                ((DObjModel_s *)(iVar9 + 0x80),(ushort)iVar15,pXVar18,uVar11,LVar4);
             pWVar14->viewModelDObj = pDVar20;
-            if (bVar28) {
+            if (bVar27) {
               pWVar14->iPrevAnim = -1;
-              XAnimClearTreeGoalWeights(pWVar14->tree,0,(float)dVar38);
-              XAnimSetGoalWeight(pWVar14->viewModelDObj,0,(float)dVar39,(float)dVar38,(float)dVar39,
-                                 (uint)pXVar18,uVar10,LVar24);
-              XAnimSetGoalWeight(pWVar14->viewModelDObj,1,(float)dVar39,(float)dVar38,(float)dVar39,
-                                 (uint)pXVar18,uVar10,LVar24);
+              XAnimClearTreeGoalWeights(pWVar14->tree,0,(float)dVar36);
+              XAnimSetGoalWeight(pWVar14->viewModelDObj,0,(float)dVar37,(float)dVar36,(float)dVar37,
+                                 (uint)pXVar18,uVar11,LVar23);
+              XAnimSetGoalWeight(pWVar14->viewModelDObj,1,(float)dVar37,(float)dVar36,(float)dVar37,
+                                 (uint)pXVar18,uVar11,LVar23);
               pXVar16 = pWVar14->tree->anims;
               if (pXVar16[0x10].entries[0].field2_0x4.parts != (XAnimParts *)pXVar16[1].debugName) {
-                XAnimSetGoalWeight(pWVar14->viewModelDObj,0x28,(float)dVar39,(float)dVar38,
-                                   (float)dVar38,(uint)pXVar18,uVar10,LVar24);
-                XAnimSetTime(pWVar14->tree,0x28,(float)dVar39);
+                XAnimSetGoalWeight(pWVar14->viewModelDObj,0x28,(float)dVar37,(float)dVar36,
+                                   (float)dVar36,(uint)pXVar18,uVar11,LVar23);
+                XAnimSetTime(pWVar14->tree,0x28,(float)dVar37);
               }
             }
-            WVar13 = *(Weapon *)(iVar8 + 0x654);
-            if (**(char **)(iVar8 + 0x70) == '\0') {
-              pWVar21 = CG_GetLocalClientViewModelHand(LVar3,iVar12);
+            WVar12 = *(Weapon *)(iVar9 + 0x654);
+            if (**(char **)(iVar9 + 0x70) == '\0') {
+              pWVar21 = CG_GetLocalClientViewModelHand(LVar4,iVar13);
               pDVar20 = pWVar21->viewModelDObj;
-              BG_UpdateWeaponHidePartBitsForDObj(pDVar20,WVar13,0);
-              CG_UpdateViewModelHidePartBits_EMP(LVar3,pDVar20);
+              BG_UpdateWeaponHidePartBitsForDObj(pDVar20,WVar12,0);
+              CG_UpdateViewModelHidePartBits_EMP(LVar4,pDVar20);
             }
-            uVar23 = SUB41(pWVar14->viewModelDObj,0);
-            BG_SetWeaponIronSights(WVar13,pWVar14->viewModelDObj,0);
-            if (*(char *)(iVar8 + 0x667) != '\0') {
-              DObjUpdateClientInfo(pWVar14->viewModelDObj,(float)dVar37,(bool)uVar23);
+            uVar22 = SUB41(pWVar14->viewModelDObj,0);
+            BG_SetWeaponIronSights(WVar12,pWVar14->viewModelDObj,0);
+            if (*(char *)(iVar9 + 0x667) != '\0') {
+              DObjUpdateClientInfo(pWVar14->viewModelDObj,(float)dVar35,(bool)uVar22);
             }
           }
-          iVar12 = iVar12 + 1;
-        } while (iVar12 < 2);
-        if ((*(int *)(iVar8 + 0x64c) == 0) ||
-           (bVar28 = true, (*(uint *)(*(int *)(iVar8 + 0x64c) + 0x374) & 0x8000) == 0)) {
-          bVar28 = false;
+          iVar13 = iVar13 + 1;
+        } while (iVar13 < 2);
+        if ((*(int *)(iVar9 + 0x64c) == 0) ||
+           (bVar27 = true, (*(uint *)(*(int *)(iVar9 + 0x64c) + 0x374) & 0x8000) == 0)) {
+          bVar27 = false;
         }
-        CG_ProcessWeaponOnAltChange(*(LocalClientNum_t *)(iVar8 + 0x644),bVar28);
+        CG_ProcessWeaponOnAltChange(*(LocalClientNum_t *)(iVar9 + 0x644),bVar27);
       }
     }
   }
-  __restgprlr();
   return;
 }
 
 
 // 82319D70  ViewmodelRocketShouldBeAttached  (cgame/cg_weapons.cpp:1736)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
@@ -2305,45 +2226,35 @@ bool ViewmodelRocketShouldBeAttached
                (LocalClientNum_t param_1,WeaponDef *param_2,PlayerHandIndex param_3)
 
 {
-  LocalClientNum_t LVar2;
-  cg_s *pcVar3;
-  int iVar4;
-  undefined1 uVar5;
-  undefined8 uVar1;
-  ulonglong uVar6;
-  bool bVar7;
+  cg_s *pcVar1;
+  int iVar2;
+  bool bVar3;
   
-  uVar6 = (ulonglong)(int)param_2;
-  LVar2 = __savegprlr_28(param_1);
-  if ((uVar6 & 0xffffffff) == 0) {
+  if (param_2 == (WeaponDef *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp",0x6cd,0,
                     "%s");
   }
-  if (*(int *)((int)uVar6 + 0x1e8) != 0) {
-    pcVar3 = CG_GetLocalClientGlobals(LVar2);
-    if ((pcVar3 == (cg_s *)0x0) ||
-       (bVar7 = true, ((pcVar3->predictedPlayerState).weapCommon.weapFlags & 0x8000U) == 0)) {
-      bVar7 = false;
+  if (param_2->rocketModel != (XModel *)0x0) {
+    pcVar1 = CG_GetLocalClientGlobals(param_1);
+    if ((pcVar1 == (cg_s *)0x0) ||
+       (bVar3 = true, ((pcVar1->predictedPlayerState).weapCommon.weapFlags & 0x8000U) == 0)) {
+      bVar3 = false;
     }
-    iVar4 = BG_GetAmmoInClipForWeapon
-                      (&pcVar3->predictedPlayerState,
-                       (pcVar3->predictedPlayerState).weapCommon.weapon,bVar7,param_3);
-    if (iVar4 != 0) {
-      uVar5 = __restgprlr_28(1);
-      return (bool)uVar5;
+    iVar2 = BG_GetAmmoInClipForWeapon
+                      (&pcVar1->predictedPlayerState,
+                       (pcVar1->predictedPlayerState).weapCommon.weapon,bVar3,param_3);
+    if (iVar2 != 0) {
+      return true;
     }
-    iVar4 = (pcVar3->predictedPlayerState).weapState[param_3].weaponState;
-    if ((((iVar4 == 8) || (iVar4 == 10)) || (iVar4 == 0xc)) || ((iVar4 == 0xb || (iVar4 == 9)))) {
-      iVar4 = BG_ReloadTime((pcVar3->predictedPlayerState).weapCommon.weapon,bVar7,false);
-      uVar1 = 1;
-      if (*(int *)((int)uVar6 + 0x278) <
-          iVar4 - (pcVar3->predictedPlayerState).weapState[param_3].weaponTime) goto LAB_82319e80;
+    iVar2 = (pcVar1->predictedPlayerState).weapState[param_3].weaponState;
+    if (((((iVar2 == 8) || (iVar2 == 10)) || (iVar2 == 0xc)) || ((iVar2 == 0xb || (iVar2 == 9)))) &&
+       (iVar2 = BG_ReloadTime((pcVar1->predictedPlayerState).weapCommon.weapon,bVar3,false),
+       (param_2->stateTimers).reloadShowRocketTime <
+       iVar2 - (pcVar1->predictedPlayerState).weapState[param_3].weaponTime)) {
+      return true;
     }
   }
-  uVar1 = 0;
-LAB_82319e80:
-  uVar5 = __restgprlr_28(uVar1);
-  return (bool)uVar5;
+  return false;
 }
 
 
@@ -2381,6 +2292,8 @@ bool ViewmodelKnifeShouldBeAttached(LocalClientNum_t param_1,WeaponDef *param_2)
 
 // 82319F28  UpdateViewmodelAttachments  (cgame/cg_weapons.cpp:1790)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -2392,56 +2305,53 @@ bool UpdateViewmodelAttachments(LocalClientNum_t param_1,PlayerHandIndex param_2
   bool bVar1;
   bool bVar2;
   WeaponDef *pWVar3;
-  LocalClientNum_t LVar4;
-  cg_s *pcVar5;
-  Weapon WVar6;
-  WeaponHand *pWVar7;
+  cg_s *pcVar4;
+  Weapon WVar5;
+  WeaponHand *pWVar6;
+  bool bVar7;
   bool bVar8;
-  bool bVar9;
-  undefined1 uVar10;
-  XModel *pXVar11;
-  XModel *pXVar12;
+  XModel *pXVar9;
+  XModel *pXVar10;
   
-  LVar4 = __savegprlr_25(param_1);
-  pXVar12 = (XModel *)0x0;
-  pXVar11 = (XModel *)0x0;
-  pcVar5 = CG_GetLocalClientGlobals(LVar4);
-  WVar6 = BG_GetAlternateWeapon((pcVar5->playerWeaponInfo).weapon,false);
-  pWVar3 = bg_weaponDefs[WVar6.data & 0xff];
-  pWVar7 = CG_GetLocalClientViewModelHand(LVar4,param_2);
-  bVar8 = ViewmodelRocketShouldBeAttached(LVar4,pWVar3,param_2);
-  if (bVar8) {
-    pXVar12 = pWVar3->rocketModel;
+  pXVar10 = (XModel *)0x0;
+  pXVar9 = (XModel *)0x0;
+  pcVar4 = CG_GetLocalClientGlobals(param_1);
+  WVar5 = BG_GetAlternateWeapon((pcVar4->playerWeaponInfo).weapon,false);
+  pWVar3 = bg_weaponDefs[WVar5.data & 0xff];
+  pWVar6 = CG_GetLocalClientViewModelHand(param_1,param_2);
+  bVar7 = ViewmodelRocketShouldBeAttached(param_1,pWVar3,param_2);
+  if (bVar7) {
+    pXVar10 = pWVar3->rocketModel;
   }
-  bVar8 = ViewmodelKnifeShouldBeAttached(LVar4,pWVar3);
-  if (bVar8) {
-    pXVar11 = pWVar3->knifeModel;
+  bVar7 = ViewmodelKnifeShouldBeAttached(param_1,pWVar3);
+  if (bVar7) {
+    pXVar9 = pWVar3->knifeModel;
   }
-  bVar8 = (pcVar5->playerWeaponInfo).gogglesModel != (XModel *)0x0;
-  if (bVar8) {
-    (pcVar5->playerWeaponInfo).gogglesModel = (XModel *)0x0;
+  bVar7 = (pcVar4->playerWeaponInfo).gogglesModel != (XModel *)0x0;
+  if (bVar7) {
+    (pcVar4->playerWeaponInfo).gogglesModel = (XModel *)0x0;
   }
-  bVar1 = pXVar12 != pWVar7->rocketModel;
+  bVar1 = pXVar10 != pWVar6->rocketModel;
   if (bVar1) {
-    pWVar7->rocketModel = pXVar12;
+    pWVar6->rocketModel = pXVar10;
   }
-  bVar2 = pXVar11 != (pcVar5->playerWeaponInfo).knifeModel;
+  bVar2 = pXVar9 != (pcVar4->playerWeaponInfo).knifeModel;
   if (bVar2) {
-    (pcVar5->playerWeaponInfo).knifeModel = pXVar11;
+    (pcVar4->playerWeaponInfo).knifeModel = pXVar9;
   }
-  bVar9 = CG_IsEMPJammed(LVar4);
-  if (bVar9 != (pcVar5->playerWeaponInfo).hideReticle) {
-    (pcVar5->playerWeaponInfo).hideReticle = bVar9;
-    uVar10 = __restgprlr_25(1);
-    return (bool)uVar10;
+  bVar8 = CG_IsEMPJammed(param_1);
+  if (bVar8 != (pcVar4->playerWeaponInfo).hideReticle) {
+    (pcVar4->playerWeaponInfo).hideReticle = bVar8;
+    return true;
   }
-  uVar10 = __restgprlr_25(bVar2 || (bVar1 || bVar8));
-  return (bool)uVar10;
+  return bVar2 || (bVar1 || bVar7);
 }
 
 
 // 8231A038  CG_TouchViewModel  (cgame/cg_weapons.cpp:1860)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
@@ -2449,36 +2359,34 @@ bool UpdateViewmodelAttachments(LocalClientNum_t param_1,PlayerHandIndex param_2
 void CG_TouchViewModel(LocalClientNum_t param_1,Weapon param_2,playerState_s *param_3)
 
 {
-  int iVar1;
+  WeaponAttachment *pWVar1;
   WeaponDef *pWVar2;
   XModel *pXVar3;
   WeaponCompleteDef *pWVar4;
-  ulonglong uVar5;
+  int iVar5;
   uint uVar6;
-  Weapon WVar7;
-  bool bVar9;
-  ulonglong uVar10;
-  uint uVar11;
+  LocalClientNum_t LVar7;
   Weapon WVar8;
+  bool bVar9;
+  uint uVar10;
+  uint uVar11;
   
-  uVar5 = __savegprlr_23(param_1,param_2.data,param_3);
-  if ((uVar5 & 0xff) == 0) {
+  if ((param_1 & 0xff) == LOCAL_CLIENT_0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp",0x74d,0,
                     "%s");
   }
-  uVar6 = BG_GetNumWeapons();
-  if ((ulonglong)uVar6 <= (uVar5 & 0xff)) {
+  LVar7 = BG_GetNumWeapons();
+  if (LVar7 <= (param_1 & 0xff)) {
     BG_GetNumWeapons();
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp",0x74e,0,
                     "weapon.weaponIdx doesn\'t index BG_GetNumWeapons()\n\t%i not in [0, %i)");
   }
-  WVar8.data = (uint)uVar5;
-  WVar7 = BG_GetAlternateWeapon(WVar8,false);
-  pWVar2 = bg_weaponDefs[WVar7.data & 0xff];
-  WVar7 = BG_GetAlternateWeapon(WVar8,false);
-  uVar6 = (uint)((uVar5 & 0xffffffff) >> 6) & 0x3c;
+  WVar8 = BG_GetAlternateWeapon((Weapon)param_1,false);
+  pWVar2 = bg_weaponDefs[WVar8.data & 0xff];
+  WVar8 = BG_GetAlternateWeapon((Weapon)param_1,false);
+  uVar6 = param_1 >> 6 & 0x3c;
   pXVar3 = *(XModel **)((int)pWVar2->gunXModel + uVar6);
-  pWVar4 = bg_weaponCompleteDefs[WVar7.data & 0xff];
+  pWVar4 = bg_weaponCompleteDefs[WVar8.data & 0xff];
   if (pXVar3 != (XModel *)0x0) {
     DB_TouchXModelBase(pXVar3);
   }
@@ -2488,65 +2396,64 @@ void CG_TouchViewModel(LocalClientNum_t param_1,Weapon param_2,playerState_s *pa
   if (pWVar2->knifeModel != (XModel *)0x0) {
     DB_TouchXModelBase(pWVar2->knifeModel);
   }
-  bVar9 = BG_HasMotionTracker(WVar8,false);
+  bVar9 = BG_HasMotionTracker((Weapon)param_1,false);
   if (bVar9) {
     CG_TouchMotionTracker();
   }
-  uVar10 = (uVar5 & 0xffffffff) >> 0xc & 7;
-  if (uVar10 != 0) {
-    iVar1 = *(int *)((int)pWVar4->scopes + (int)(uVar10 << 2) + -4);
-    if (iVar1 == 0) {
+  if ((param_1 >> 0xc & 7) != 0) {
+    pWVar1 = pWVar4->scopes[(param_1 >> 0xc & 7) - 1];
+    if (pWVar1 == (WeaponAttachment *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp",0x763,
                       1,"%s");
     }
-    pXVar3 = *(XModel **)(*(int *)(iVar1 + 0x18) + uVar6);
+    pXVar3 = *(XModel **)((int)pWVar1->viewModels + uVar6);
     if (pXVar3 != (XModel *)0x0) {
       DB_TouchXModelBase(pXVar3);
     }
-    if ((*(int *)(iVar1 + 0x1c) != 0) &&
-       (pXVar3 = *(XModel **)((WVar8.data >> 0x13 & 0x1c) + *(int *)(iVar1 + 0x1c)),
+    if ((pWVar1->reticleViewModels != (XModel **)0x0) &&
+       (pXVar3 = *(XModel **)((param_1 >> 0x13 & 0x1c) + (int)pWVar1->reticleViewModels),
        pXVar3 != (XModel *)0x0)) {
       DB_TouchXModelBase(pXVar3);
     }
   }
-  uVar10 = (uVar5 & 0xffffffff) >> 0xf & 3;
-  if (uVar10 != 0) {
-    iVar1 = *(int *)((int)pWVar4->underBarrels + (int)(uVar10 << 2) + -4);
-    if (iVar1 == 0) {
+  if ((param_1 >> 0xf & 3) != 0) {
+    pWVar1 = pWVar4->underBarrels[(param_1 >> 0xf & 3) - 1];
+    if (pWVar1 == (WeaponAttachment *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp",0x76d,
                       1,"%s");
     }
-    pXVar3 = *(XModel **)(*(int *)(iVar1 + 0x18) + uVar6);
+    pXVar3 = *(XModel **)((int)pWVar1->viewModels + uVar6);
     if (pXVar3 != (XModel *)0x0) {
       DB_TouchXModelBase(pXVar3);
     }
   }
-  if (((uVar5 & 0xffffffff) >> 0x11 & 0xf) != 0) {
+  if ((param_1 >> 0x11 & 0xf) != 0) {
     uVar10 = 1;
     uVar11 = 0;
     do {
-      if (((uVar5 & 0xffffffff) >> 0x11 & uVar10 & 0xf) != 0) {
-        iVar1 = *(int *)((int)pWVar4->others + uVar11);
-        if (iVar1 == 0) {
+      if ((param_1 >> 0x11 & uVar10 & 0xf) != 0) {
+        iVar5 = *(int *)((int)pWVar4->others + uVar11);
+        if (iVar5 == 0) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp",
                           0x779,1,"%s");
         }
-        pXVar3 = *(XModel **)(*(int *)(iVar1 + 0x18) + uVar6);
+        pXVar3 = *(XModel **)(*(int *)(iVar5 + 0x18) + uVar6);
         if (pXVar3 != (XModel *)0x0) {
           DB_TouchXModelBase(pXVar3);
         }
       }
       uVar11 = uVar11 + 4;
-      uVar10 = (uVar10 & 0x7fffffff) << 1;
+      uVar10 = uVar10 << 1;
     } while (uVar11 < 0x10);
   }
-  __restgprlr_23();
   return;
 }
 
 
 // 8231A298  CG_UpdateWeaponViewmodels  (cgame/cg_weapons.cpp:1924)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -2555,68 +2462,65 @@ void CG_UpdateWeaponViewmodels(LocalClientNum_t param_1)
 
 {
   bool bVar1;
-  LocalClientNum_t LVar2;
-  cg_s *pcVar3;
-  Weapon WVar4;
+  cg_s *pcVar2;
+  Weapon WVar3;
   undefined8 in_r4;
   undefined8 in_r5;
-  bool bVar5;
-  longlong lVar6;
-  Weapon *pWVar7;
-  int *piVar8;
+  bool bVar4;
+  longlong lVar5;
+  Weapon *pWVar6;
+  int *piVar7;
   
-  LVar2 = __savegprlr_28(param_1);
-  pcVar3 = CG_GetLocalClientGlobals(LVar2);
-  lVar6 = 0xf;
-  pWVar7 = (pcVar3->predictedPlayerState).weaponsEquipped;
+  pcVar2 = CG_GetLocalClientGlobals(param_1);
+  lVar5 = 0xf;
+  pWVar6 = (pcVar2->predictedPlayerState).weaponsEquipped;
   do {
-    if ((pWVar7->data & 0xff) != LOCAL_CLIENT_0) {
-      CG_TouchViewModel(pWVar7->data,(Weapon)(uint)in_r4,(playerState_s *)in_r5);
+    if ((pWVar6->data & 0xff) != LOCAL_CLIENT_0) {
+      CG_TouchViewModel(pWVar6->data,(Weapon)(uint)in_r4,(playerState_s *)in_r5);
     }
-    lVar6 = lVar6 + -1;
-    pWVar7 = pWVar7 + 1;
-  } while (lVar6 != 0);
-  WVar4 = BG_GetViewmodelWeapon(&pcVar3->predictedPlayerState);
-  if ((WVar4.data & 0xff) != 0) {
-    if ((pcVar3 == (cg_s *)0x0) ||
-       (bVar5 = true, ((pcVar3->predictedPlayerState).weapCommon.weapFlags & 0x8000U) == 0)) {
-      bVar5 = false;
+    lVar5 = lVar5 + -1;
+    pWVar6 = pWVar6 + 1;
+  } while (lVar5 != 0);
+  WVar3 = BG_GetViewmodelWeapon(&pcVar2->predictedPlayerState);
+  if ((WVar3.data & 0xff) != 0) {
+    if ((pcVar2 == (cg_s *)0x0) ||
+       (bVar4 = true, ((pcVar2->predictedPlayerState).weapCommon.weapFlags & 0x8000U) == 0)) {
+      bVar4 = false;
     }
     bVar1 = true;
-    if (bVar5 != (pcVar3->playerWeaponInfo).isAlternate) goto LAB_8231a330;
+    if (bVar4 != (pcVar2->playerWeaponInfo).isAlternate) goto LAB_8231a330;
   }
   bVar1 = false;
 LAB_8231a330:
-  if ((((pcVar3->playerWeaponInfo).weapon.data != WVar4.data) || (bVar1)) &&
-     (ChangeViewmodelDobj(LVar2,&pcVar3->predictedPlayerState,WVar4,
-                          (pcVar3->playerWeaponInfo).handModel,true,false), (WVar4.data & 0xff) != 0
+  if ((((pcVar2->playerWeaponInfo).weapon.data != WVar3.data) || (bVar1)) &&
+     (ChangeViewmodelDobj(param_1,&pcVar2->predictedPlayerState,WVar3,
+                          (pcVar2->playerWeaponInfo).handModel,true,false), (WVar3.data & 0xff) != 0
      )) {
-    (pcVar3->playerWeaponInfo).isAlternate =
-         (bool)((byte)((uint)(pcVar3->predictedPlayerState).weapCommon.weapFlags >> 0xf) & 1);
+    (pcVar2->playerWeaponInfo).isAlternate =
+         (bool)((byte)((uint)(pcVar2->predictedPlayerState).weapCommon.weapFlags >> 0xf) & 1);
   }
-  piVar8 = &pcVar3->lastWeaponState;
-  if ((*piVar8 == 2) && ((pcVar3->predictedPlayerState).weapState[0].weaponState != 2)) {
+  piVar7 = &pcVar2->lastWeaponState;
+  if ((*piVar7 == 2) && ((pcVar2->predictedPlayerState).weapState[0].weaponState != 2)) {
     CG_ProcessWeaponOnAltChange
-              (LVar2,(bool)((byte)((uint)(pcVar3->predictedPlayerState).weapCommon.weapFlags >> 0xf)
-                           & 1));
-    *piVar8 = (pcVar3->predictedPlayerState).weapState[0].weaponState;
-    __restgprlr_28();
+              (param_1,(bool)((byte)((uint)(pcVar2->predictedPlayerState).weapCommon.weapFlags >>
+                                    0xf) & 1));
+    *piVar7 = (pcVar2->predictedPlayerState).weapState[0].weaponState;
     return;
   }
-  if ((pcVar3->predictedPlayerState).weapState[0].weaponState == 2) {
-    CG_ProcessWeaponOnAltChange(LVar2,(pcVar3->playerWeaponInfo).isAlternate == false);
-    *piVar8 = (pcVar3->predictedPlayerState).weapState[0].weaponState;
-    __restgprlr_28();
+  if ((pcVar2->predictedPlayerState).weapState[0].weaponState == 2) {
+    CG_ProcessWeaponOnAltChange(param_1,(pcVar2->playerWeaponInfo).isAlternate == false);
+    *piVar7 = (pcVar2->predictedPlayerState).weapState[0].weaponState;
     return;
   }
-  *piVar8 = (pcVar3->predictedPlayerState).weapState[0].weaponState;
-  __restgprlr_28();
+  *piVar7 = (pcVar2->predictedPlayerState).weapState[0].weaponState;
   return;
 }
 
 
 // 8231A408  CG_UpdateHandViewmodels  (cgame/cg_weapons.cpp:1966)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -2625,86 +2529,73 @@ LAB_8231a330:
 void CG_UpdateHandViewmodels(LocalClientNum_t param_1,XModel *param_2)
 
 {
-  LocalClientNum_t LVar1;
-  cg_s *pcVar2;
+  cg_s *pcVar1;
+  Weapon WVar2;
   Weapon WVar3;
-  Weapon WVar4;
-  ulonglong uVar5;
   
-  uVar5 = (ulonglong)(int)param_2;
-  LVar1 = __savegprlr_28(param_1);
-  if ((uVar5 & 0xffffffff) == 0) {
+  if (param_2 == (XModel *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp",0x7b4,0,
                     "%s");
   }
-  pcVar2 = CG_GetLocalClientGlobals(LVar1);
-  WVar3 = BG_GetViewmodelWeapon(&pcVar2->predictedPlayerState);
-  if ((((WVar3.data & 0xff) != 0) &&
-      (WVar4 = BG_GetAlternateWeapon(WVar3,false),
-      *(int *)((int)bg_weaponDefs[WVar4.data & 0xff]->gunXModel + (WVar3.data >> 6 & 0x3c)) != 0))
-     && (ZEXT48((pcVar2->playerWeaponInfo).handModel) != (uVar5 & 0xffffffff))) {
-    ChangeViewmodelDobj(LVar1,&pcVar2->predictedPlayerState,WVar3,(XModel *)uVar5,true,false);
+  pcVar1 = CG_GetLocalClientGlobals(param_1);
+  WVar2 = BG_GetViewmodelWeapon(&pcVar1->predictedPlayerState);
+  if ((((WVar2.data & 0xff) != 0) &&
+      (WVar3 = BG_GetAlternateWeapon(WVar2,false),
+      *(int *)((int)bg_weaponDefs[WVar3.data & 0xff]->gunXModel + (WVar2.data >> 6 & 0x3c)) != 0))
+     && ((pcVar1->playerWeaponInfo).handModel != param_2)) {
+    ChangeViewmodelDobj(param_1,&pcVar1->predictedPlayerState,WVar2,param_2,true,false);
   }
-  __restgprlr_28();
   return;
 }
 
 
 // 8231A4D0  PlayNoteMappedSoundAliases  (cgame/cg_weapons.cpp:1988)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
 
 void PlayNoteMappedSoundAliases(LocalClientNum_t param_1,char *param_2,Weapon param_3,bool param_4)
 
 {
-  LocalClientNum_t LVar2;
-  bool bVar7;
-  Weapon WVar3;
-  uint uVar4;
-  ulonglong uVar1;
-  char *pcVar5;
-  int iVar6;
-  int iVar8;
+  bool bVar4;
+  Weapon WVar1;
+  uint uVar2;
+  char *pcVar3;
+  int iVar5;
   ushort *local_30;
   ushort *local_2c [11];
   
-  LVar2 = __savegprlr_28(param_1);
-  bVar7 = BG_GetNotetrackOverrides(param_3,param_4,&local_30,local_2c);
-  uVar1 = (ulonglong)bVar7;
-  if (uVar1 == 0) {
-    WVar3 = BG_GetAlternateWeapon(param_3,param_4);
-    uVar1 = (ulonglong)(int)WVar3.data;
-    local_30 = bg_weaponDefs[WVar3.data & 0xff]->notetrackSoundMapKeys;
-    local_2c[0] = bg_weaponDefs[WVar3.data & 0xff]->notetrackSoundMapValues;
+  bVar4 = BG_GetNotetrackOverrides(param_3,param_4,&local_30,local_2c);
+  if (!bVar4) {
+    WVar1 = BG_GetAlternateWeapon(param_3,param_4);
+    local_30 = bg_weaponDefs[WVar1.data & 0xff]->notetrackSoundMapKeys;
+    local_2c[0] = bg_weaponDefs[WVar1.data & 0xff]->notetrackSoundMapValues;
   }
-  if (*local_30 != 0) {
-    uVar4 = SL_FindLowercaseString(param_2);
-    uVar1 = (ulonglong)(int)uVar4;
-    if (uVar4 != 0) {
-      iVar8 = 0;
-      do {
-        if (*(ushort *)(iVar8 + (int)local_30) == 0) break;
-        uVar1 = (ulonglong)*(ushort *)(iVar8 + (int)local_2c[0]);
-        if ((uVar1 != 0) && (*(ushort *)(iVar8 + (int)local_30) == uVar4)) {
-          pcVar5 = SL_ConvertToString((uint)*(ushort *)(iVar8 + (int)local_2c[0]));
-          uVar1 = (ulonglong)(int)pcVar5;
-          if (pcVar5 != (char *)0x0) {
-            iVar6 = CG_PlayClientSoundAliasByName2(LVar2,pcVar5);
-            uVar1 = (ulonglong)iVar6;
-          }
-        }
-        iVar8 = iVar8 + 2;
-      } while (iVar8 < 0x30);
-    }
+  if ((*local_30 != 0) && (uVar2 = SL_FindLowercaseString(param_2), uVar2 != 0)) {
+    iVar5 = 0;
+    do {
+      if (*(ushort *)(iVar5 + (int)local_30) == 0) {
+        return;
+      }
+      if (((*(ushort *)(iVar5 + (int)local_2c[0]) != 0) &&
+          (*(ushort *)(iVar5 + (int)local_30) == uVar2)) &&
+         (pcVar3 = SL_ConvertToString((uint)*(ushort *)(iVar5 + (int)local_2c[0])),
+         pcVar3 != (char *)0x0)) {
+        CG_PlayClientSoundAliasByName2(param_1,pcVar3);
+      }
+      iVar5 = iVar5 + 2;
+    } while (iVar5 < 0x30);
   }
-  __restgprlr_28(uVar1);
   return;
 }
 
 
 // 8231A5B8  PlayNoteMappedRumbleAliases  (cgame/cg_weapons.cpp:2032)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
 
@@ -2712,34 +2603,35 @@ void PlayNoteMappedRumbleAliases(LocalClientNum_t param_1,char *param_2,WeaponDe
 
 {
   ushort uVar1;
-  LocalClientNum_t LVar2;
-  uint uVar3;
-  char *pcVar4;
-  uint uVar5;
-  int iVar6;
+  uint uVar2;
+  char *pcVar3;
+  uint uVar4;
+  int iVar5;
   
-  LVar2 = __savegprlr_28(param_1);
   if ((*param_3->notetrackRumbleMapKeys != 0) &&
-     (uVar3 = SL_FindLowercaseString(param_2), uVar3 != 0)) {
-    iVar6 = 0;
+     (uVar2 = SL_FindLowercaseString(param_2), uVar2 != 0)) {
+    iVar5 = 0;
     do {
-      uVar5 = (uint)*(ushort *)(iVar6 + (int)param_3->notetrackRumbleMapKeys);
-      if (uVar5 == 0) break;
-      uVar1 = *(ushort *)((int)param_3->notetrackRumbleMapValues + iVar6);
-      if (((uVar1 != 0) && (uVar5 == uVar3)) &&
-         (pcVar4 = SL_ConvertToString((uint)uVar1), pcVar4 != (char *)0x0)) {
-        CG_PlayRumbleOnClientSafe(LVar2,pcVar4);
+      uVar4 = (uint)*(ushort *)(iVar5 + (int)param_3->notetrackRumbleMapKeys);
+      if (uVar4 == 0) {
+        return;
       }
-      iVar6 = iVar6 + 2;
-    } while (iVar6 < 0x20);
+      uVar1 = *(ushort *)((int)param_3->notetrackRumbleMapValues + iVar5);
+      if (((uVar1 != 0) && (uVar4 == uVar2)) &&
+         (pcVar3 = SL_ConvertToString((uint)uVar1), pcVar3 != (char *)0x0)) {
+        CG_PlayRumbleOnClientSafe(param_1,pcVar3);
+      }
+      iVar5 = iVar5 + 2;
+    } while (iVar5 < 0x20);
   }
-  __restgprlr_28();
   return;
 }
 
 
 // 8231A648  ProcessWeaponNoteTracks  (cgame/cg_weapons.cpp:2064)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
@@ -2748,66 +2640,61 @@ void ProcessWeaponNoteTracks(LocalClientNum_t param_1,playerState_s *param_2)
 
 {
   WeaponDef *pWVar1;
-  LocalClientNum_t LVar2;
-  bool bVar9;
-  Weapon WVar3;
-  uint uVar5;
-  Weapon WVar6;
-  int iVar7;
-  int iVar8;
-  ulonglong uVar10;
-  longlong lVar11;
+  bool bVar7;
+  Weapon WVar2;
+  uint uVar3;
+  Weapon WVar4;
+  int iVar5;
+  int iVar6;
+  longlong lVar8;
   XAnimNotify_s *local_60 [24];
-  playerState_s *ppVar4;
   
-  uVar10 = (ulonglong)(int)param_2;
-  LVar2 = __savegprlr_23(param_1);
-  bVar9 = CL_Demo_IsFollowCamera(LVar2);
-  if ((!bVar9) && (bVar9 = CL_Demo_IsFreeCamera(LVar2), !bVar9)) {
-    ppVar4 = (playerState_s *)uVar10;
-    WVar3 = BG_GetViewmodelWeapon(ppVar4);
-    if ((WVar3.data & 0xff) != 0) {
-      uVar5 = BG_GetNumWeapons();
-      if (uVar5 <= (WVar3.data & 0xff)) {
+  bVar7 = CL_Demo_IsFollowCamera(param_1);
+  if ((!bVar7) && (bVar7 = CL_Demo_IsFreeCamera(param_1), !bVar7)) {
+    WVar2 = BG_GetViewmodelWeapon(param_2);
+    if ((WVar2.data & 0xff) != 0) {
+      uVar3 = BG_GetNumWeapons();
+      if (uVar3 <= (WVar2.data & 0xff)) {
         BG_GetNumWeapons();
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp",
                         0x81e,0,
                         "weapon.weaponIdx doesn\'t index BG_GetNumWeapons()\n\t%i not in [0, %i)");
       }
-      if (((uVar10 & 0xffffffff) == 0) ||
-         (bVar9 = true, ((ppVar4->weapCommon).weapFlags & 0x8000U) == 0)) {
-        bVar9 = false;
+      if ((param_2 == (playerState_s *)0x0) ||
+         (bVar7 = true, ((param_2->weapCommon).weapFlags & 0x8000U) == 0)) {
+        bVar7 = false;
       }
-      WVar6 = BG_GetAlternateWeapon(WVar3,bVar9);
-      pWVar1 = bg_weaponDefs[WVar6.data & 0xff];
-      iVar7 = DObjGetClientNotifyList(local_60);
-      lVar11 = (longlong)iVar7;
-      if (0 < iVar7) {
-        iVar7 = 0;
+      WVar4 = BG_GetAlternateWeapon(WVar2,bVar7);
+      pWVar1 = bg_weaponDefs[WVar4.data & 0xff];
+      iVar5 = DObjGetClientNotifyList(local_60);
+      lVar8 = (longlong)iVar5;
+      if (0 < iVar5) {
+        iVar5 = 0;
         do {
-          iVar8 = I_stricmp(*(char **)((int)&local_60[0]->name + iVar7),"end");
-          if (iVar8 != 0) {
+          iVar6 = I_stricmp(*(char **)((int)&local_60[0]->name + iVar5),"end");
+          if (iVar6 != 0) {
             if ((viewModelDebugNotetracks->current).enabled != false) {
               Com_Printf(0xe,"Viewmodel note at %.2f - \"%s\"\n");
             }
-            bVar9 = BG_UsingAlternate(ppVar4);
+            bVar7 = BG_UsingAlternate(param_2);
             PlayNoteMappedSoundAliases
-                      (LVar2,*(char **)((int)&local_60[0]->name + iVar7),WVar3,bVar9);
-            PlayNoteMappedRumbleAliases(LVar2,*(char **)((int)&local_60[0]->name + iVar7),pWVar1);
+                      (param_1,*(char **)((int)&local_60[0]->name + iVar5),WVar2,bVar7);
+            PlayNoteMappedRumbleAliases(param_1,*(char **)((int)&local_60[0]->name + iVar5),pWVar1);
           }
-          lVar11 = lVar11 + -1;
-          iVar7 = iVar7 + 0xc;
-        } while (lVar11 != 0);
+          lVar8 = lVar8 + -1;
+          iVar5 = iVar5 + 0xc;
+        } while (lVar8 != 0);
       }
     }
   }
-  __restgprlr_23();
   return;
 }
 
 
 // 8231A7D0  CG_BuildWeaponState  (cgame/cg_weapons.cpp:2228)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
@@ -2815,71 +2702,67 @@ void ProcessWeaponNoteTracks(LocalClientNum_t param_1,playerState_s *param_2)
 void CG_BuildWeaponState(cg_s *param_1,weaponState_t *param_2)
 
 {
-  float fVar1;
-  playerState_s *ppVar2;
-  bool bVar3;
-  int iVar4;
-  int *piVar5;
-  double dVar6;
+  shellshock_parms_t *psVar1;
+  bool bVar2;
+  int iVar3;
+  double dVar4;
   
-  ppVar2 = (playerState_s *)__savegprlr_28(param_1);
-  param_2->ps = ppVar2;
-  piVar5 = &ppVar2[0x21].hud.archival[0xc].fadeTime;
-  param_2->xyspeed = ppVar2[0x26].dofFarBlur;
-  dVar6 = 0.0010000000474974513;
-  param_2->frametime = (float)((double)(longlong)*piVar5 * 0.0010000000474974513);
-  bVar3 = BG_Diving(ppVar2);
-  if (bVar3) {
+  param_2->ps = &param_1->predictedPlayerState;
+  param_2->xyspeed = param_1->xyspeed;
+  dVar4 = 0.0010000000474974513;
+  param_2->frametime = (float)((double)(longlong)param_1->frametime * 0.0010000000474974513);
+  bVar2 = BG_Diving(&param_1->predictedPlayerState);
+  if (bVar2) {
     param_2->xyspeed = 0.0;
   }
-  param_2->v_dmg_pitch = ppVar2[0x26].dofFarEnd;
-  param_2->v_dmg_roll = ppVar2[0x26].dofNearBlur;
-  param_2->shellShockStart = ppVar2[0x26].objective[4].entNum;
-  param_2->shellShockDuration = ppVar2[0x26].objective[4].teamNum;
-  fVar1 = ppVar2[0x26].objective[4].origin[2];
-  if (fVar1 == 0.0) {
-    iVar4 = 3000;
+  param_2->v_dmg_pitch = param_1->v_dmg_pitch;
+  param_2->v_dmg_roll = param_1->v_dmg_roll;
+  param_2->shellShockStart = (param_1->shellshock).startTime;
+  param_2->shellShockDuration = (param_1->shellshock).duration;
+  psVar1 = (param_1->shellshock).parms;
+  if (psVar1 == (shellshock_parms_t *)0x0) {
+    iVar3 = 3000;
   }
   else {
-    iVar4 = *(int *)((int)fVar1 + 0x14);
+    iVar3 = (psVar1->view).fadeTime;
   }
-  param_2->shellShockFadeTime = iVar4;
-  param_2->time = ppVar2[0x21].hud.archival[0xc].label - ppVar2->deltaTime;
-  if (ppVar2[0x26].shellshockIndex == 0) {
-    iVar4 = 0;
+  param_2->shellShockFadeTime = iVar3;
+  param_2->time = param_1->time - (param_1->predictedPlayerState).deltaTime;
+  if (param_1->damageTime == 0) {
+    iVar3 = 0;
   }
   else {
-    iVar4 = ppVar2[0x26].shellshockIndex - ppVar2->deltaTime;
+    iVar3 = param_1->damageTime - (param_1->predictedPlayerState).deltaTime;
   }
-  param_2->damageTime = iVar4;
-  param_2->recoilAngles[0] = (float)ppVar2[0x23].hud.current[3].fadeTime;
-  param_2->recoilAngles[1] = (float)ppVar2[0x23].hud.current[3].label;
-  param_2->recoilAngles[2] = (float)ppVar2[0x23].hud.current[3].width;
-  param_2->recoilSpeed[0] = (float)ppVar2[0x23].hud.current[3].height;
-  param_2->recoilSpeed[1] = (float)ppVar2[0x23].hud.current[3].materialIndex;
-  param_2->recoilSpeed[2] = (float)ppVar2[0x23].hud.current[3].fromWidth;
-  param_2->swayAngles[0] = (float)ppVar2[0x23].hud.current[3].font;
-  param_2->swayAngles[1] = (float)ppVar2[0x23].hud.current[3].alignOrg;
-  param_2->swayAngles[2] = (float)ppVar2[0x23].hud.current[3].alignScreen;
-  param_2->swayOrigin[0] = (float)ppVar2[0x23].hud.current[3].color;
-  *(hudelem_color_t *)(param_2->swayOrigin + 1) = ppVar2[0x23].hud.current[3].fromColor;
-  param_2->swayOrigin[2] = (float)ppVar2[0x23].hud.current[3].fadeStartTime;
-  param_2->swayViewAngles[0] = ppVar2[0x23].hud.current[3].fromFontScale;
-  param_2->swayViewAngles[1] = (float)ppVar2[0x23].hud.current[3].fontScaleStartTime;
-  param_2->swayViewAngles[2] = (float)ppVar2[0x23].hud.current[3].fontScaleTime;
-  param_2->fLastIdleFactor = (float)ppVar2[1].pm_time;
-  param_2->baseAngles[0] = (float)ppVar2[1].bobCycle;
-  param_2->baseAngles[1] = ppVar2[1].origin[0];
-  param_2->baseAngles[2] = ppVar2[1].origin[1];
-  param_2->baseOrigin[0] = (float)ppVar2[1].pm_flags;
-  param_2->baseOrigin[1] = (float)ppVar2[1].otherFlags;
-  param_2->baseOrigin[2] = (float)ppVar2[1].linkFlags;
-  if ((ppVar2->weapCommon).fWeaponPosFrac == 0.0) {
+  param_2->damageTime = iVar3;
+  param_2->recoilAngles[0] = param_1->recoilAngles[0];
+  param_2->recoilAngles[1] = param_1->recoilAngles[1];
+  param_2->recoilAngles[2] = param_1->recoilAngles[2];
+  param_2->recoilSpeed[0] = param_1->recoilSpeed[0];
+  param_2->recoilSpeed[1] = param_1->recoilSpeed[1];
+  param_2->recoilSpeed[2] = param_1->recoilSpeed[2];
+  param_2->swayAngles[0] = param_1->swayAngles[0];
+  param_2->swayAngles[1] = param_1->swayAngles[1];
+  param_2->swayAngles[2] = param_1->swayAngles[2];
+  param_2->swayOrigin[0] = param_1->swayOffset[0];
+  param_2->swayOrigin[1] = param_1->swayOffset[1];
+  param_2->swayOrigin[2] = param_1->swayOffset[2];
+  param_2->swayViewAngles[0] = param_1->swayViewAngles[0];
+  param_2->swayViewAngles[1] = param_1->swayViewAngles[1];
+  param_2->swayViewAngles[2] = param_1->swayViewAngles[2];
+  param_2->fLastIdleFactor = (param_1->playerEntity).fLastIdleFactor;
+  param_2->baseAngles[0] = (param_1->playerEntity).baseMoveAngles[0];
+  param_2->baseAngles[1] = (param_1->playerEntity).baseMoveAngles[1];
+  param_2->baseAngles[2] = (param_1->playerEntity).baseMoveAngles[2];
+  param_2->baseOrigin[0] = (param_1->playerEntity).baseMoveOrigin[0];
+  param_2->baseOrigin[1] = (param_1->playerEntity).baseMoveOrigin[1];
+  param_2->baseOrigin[2] = (param_1->playerEntity).baseMoveOrigin[2];
+  if ((param_1->predictedPlayerState).weapCommon.fWeaponPosFrac == 0.0) {
     BG_IncrementWeaponMovementIdleTime
-              (ppVar2,(float)((double)(longlong)*piVar5 * dVar6),(int *)0x79828);
-    (ppVar2->weapCommon).weaponIdleTime = ppVar2[0x52].hud.archival[0x12].fxDecayDuration;
+              (&param_1->predictedPlayerState,(float)((double)(longlong)param_1->frametime * dVar4),
+               (int *)0x79828);
+    (param_1->predictedPlayerState).weapCommon.weaponIdleTime = param_1->weaponIdleTime;
   }
-  __restgprlr_28();
   return;
 }
 
@@ -3088,6 +2971,8 @@ void CG_CalculateWeaponMovement_Debug(cg_s *param_1,float *param_2)
 
 // 8231AEA8  CG_CalculateWeaponMovement_SaveAngles  (cgame/cg_weapons.cpp:2403)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
@@ -3095,51 +2980,45 @@ void CG_CalculateWeaponMovement_Debug(cg_s *param_1,float *param_2)
 void CG_CalculateWeaponMovement_SaveAngles(cg_s *param_1,float *param_2,GfxScaledPlacement *param_3)
 
 {
-  playerState_s *ppVar1;
-  int *piVar2;
-  Weapon WVar3;
-  bool bVar5;
-  ADSOverlay *pAVar4;
-  bool bVar6;
-  float fVar7;
+  Weapon WVar1;
+  bool bVar3;
+  ADSOverlay *pAVar2;
+  bool bVar4;
+  float fVar5;
   float afStack_c0 [12];
   float afStack_90 [12];
   float afStack_60 [24];
   
-  ppVar1 = (playerState_s *)__savegprlr_26(param_1);
   AnglesToAxis(param_2,(float (*) [3])afStack_90);
-  piVar2 = &ppVar1[0x23].hud.current[2].text;
-  AnglesToAxis((float *)piVar2,(float (*) [3])afStack_c0);
+  AnglesToAxis(param_1->baseGunAngles,(float (*) [3])afStack_c0);
   MatrixMultiply((float (*) [3])afStack_90,(float (*) [3])afStack_c0,(float (*) [3])afStack_60);
   AxisToQuat((float (*) [3])afStack_60,(float *)param_3);
-  WVar3 = BG_GetViewmodelWeapon(ppVar1);
-  if ((ppVar1 == (playerState_s *)0x0) ||
-     (bVar6 = true, ((ppVar1->weapCommon).weapFlags & 0x8000U) == 0)) {
-    bVar6 = false;
+  WVar1 = BG_GetViewmodelWeapon(&param_1->predictedPlayerState);
+  if ((param_1 == (cg_s *)0x0) ||
+     (bVar4 = true, ((param_1->predictedPlayerState).weapCommon.weapFlags & 0x8000U) == 0)) {
+    bVar4 = false;
   }
-  bVar5 = BG_IsAimDownSight((ppVar1->weapCommon).weapon,bVar6);
-  if ((bVar5) && ((ppVar1->weapCommon).fWeaponPosFrac != 0.0)) {
-    pAVar4 = BG_GetOverlay(WVar3,bVar6);
-    if (pAVar4->reticle == WEAPOVERLAYRETICLE_NONE) {
-      UnitQuatToAngles((float *)param_3,param_2);
-      fVar7 = AngleNormalize360(*param_2);
-      ppVar1[0x26].objective[0].invertVisibilityByClientNum = (int)fVar7;
-      fVar7 = AngleNormalize360(param_2[1]);
-      ppVar1[0x26].objective[0].icon = (int)fVar7;
-      __restgprlr_26();
-      return;
-    }
+  bVar3 = BG_IsAimDownSight((param_1->predictedPlayerState).weapCommon.weapon,bVar4);
+  if (((bVar3) && ((param_1->predictedPlayerState).weapCommon.fWeaponPosFrac != 0.0)) &&
+     (pAVar2 = BG_GetOverlay(WVar1,bVar4), pAVar2->reticle == WEAPOVERLAYRETICLE_NONE)) {
+    UnitQuatToAngles((float *)param_3,param_2);
+    fVar5 = AngleNormalize360(*param_2);
+    param_1->gunPitch = fVar5;
+    fVar5 = AngleNormalize360(param_2[1]);
+    param_1->gunYaw = fVar5;
+    return;
   }
-  fVar7 = ppVar1[0x23].hud.current[2].sort;
-  ppVar1[0x26].objective[0].invertVisibilityByClientNum = *piVar2;
-  ppVar1[0x26].objective[0].icon = (int)fVar7;
-  __restgprlr_26();
+  fVar5 = param_1->baseGunAngles[1];
+  param_1->gunPitch = param_1->baseGunAngles[0];
+  param_1->gunYaw = fVar5;
   return;
 }
 
 
 // 8231AFE0  CG_CalculateWeaponMovement_ClientSpecific  (cgame/cg_weapons.cpp:2437)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
@@ -3148,83 +3027,74 @@ void CG_CalculateWeaponMovement_ClientSpecific
                (cg_s *param_1,GfxScaledPlacement *param_2,float *param_3)
 
 {
-  GfxScaledPlacement *pGVar1;
-  cg_s *pcVar2;
-  cg_s *pcVar3;
-  ulonglong uVar4;
-  float *pfVar5;
-  float *pfVar6;
+  cg_s *pcVar1;
+  float *pfVar2;
+  float *pfVar3;
   float local_40;
   float local_3c;
   float local_38;
   
-  uVar4 = (ulonglong)(int)param_2;
-  pcVar2 = (cg_s *)__savegprlr_28(param_1);
-  if ((uVar4 & 0xffffffff) == 0) {
+  if (param_2 == (GfxScaledPlacement *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp",0x986,0,
                     "%s");
   }
-  pGVar1 = (GfxScaledPlacement *)uVar4;
-  local_40 = (pGVar1->base).origin[0];
-  pfVar6 = (pGVar1->base).origin;
-  local_3c = (pGVar1->base).origin[1];
-  local_38 = (pGVar1->base).origin[2];
-  MatrixTransformVector43(&local_40,pcVar2->viewModelAxis,pfVar6);
-  pcVar3 = pcVar2;
-  pfVar5 = pfVar6;
-  CG_CalculateWeaponMovement_Landing(pcVar2,pfVar6);
-  CG_CalculateWeaponMovement_SaveOrigin(pcVar3,pfVar5);
-  CG_CalculateWeaponMovement_Debug(pcVar2,pfVar6);
-  CG_CalculateWeaponMovement_SaveAngles(pcVar2,param_3,pGVar1);
-  pGVar1->scale = 1.0;
-  __restgprlr_28();
+  local_40 = (param_2->base).origin[0];
+  pfVar3 = (param_2->base).origin;
+  local_3c = (param_2->base).origin[1];
+  local_38 = (param_2->base).origin[2];
+  MatrixTransformVector43(&local_40,param_1->viewModelAxis,pfVar3);
+  pcVar1 = param_1;
+  pfVar2 = pfVar3;
+  CG_CalculateWeaponMovement_Landing(param_1,pfVar3);
+  CG_CalculateWeaponMovement_SaveOrigin(pcVar1,pfVar2);
+  CG_CalculateWeaponMovement_Debug(param_1,pfVar3);
+  CG_CalculateWeaponMovement_SaveAngles(param_1,param_3,param_2);
+  param_2->scale = 1.0;
   return;
 }
 
 
 // 8231B090  WeaponFlash  (cgame/cg_weapons.cpp:2466)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void WeaponFlash(LocalClientNum_t param_1,int param_2,Weapon param_3,bool param_4,int param_5,
                 uint param_6)
 
 {
-  LocalClientNum_t LVar1;
-  FxEffectDef *pFVar2;
+  FxEffectDef *pFVar1;
   
-  LVar1 = __savegprlr_29(param_1);
   if (param_5 == 0) {
-    pFVar2 = BG_WorldFlashEffect(param_3,param_4);
+    pFVar1 = BG_WorldFlashEffect(param_3,param_4);
   }
   else {
-    pFVar2 = BG_ViewFlashEffect(param_3,param_4);
+    pFVar1 = BG_ViewFlashEffect(param_3,param_4);
   }
-  if (pFVar2 != (FxEffectDef *)0x0) {
-    CG_PlayBoltedEffect(LVar1,pFVar2,param_2,param_6);
+  if (pFVar1 != (FxEffectDef *)0x0) {
+    CG_PlayBoltedEffect(param_1,pFVar1,param_2,param_6);
   }
-  __restgprlr_29();
   return;
 }
 
 
 // 8231B0E8  WeaponFlashWorldLeftHand  (cgame/cg_weapons.cpp:2478)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void WeaponFlashWorldLeftHand
                (LocalClientNum_t param_1,int param_2,Weapon param_3,bool param_4,uint param_5)
 
 {
-  LocalClientNum_t LVar1;
-  FxEffectDef *pFVar2;
+  FxEffectDef *pFVar1;
   
-  LVar1 = __savegprlr_29(param_1);
-  pFVar2 = BG_WorldFlashEffect(param_3,param_4);
-  if (pFVar2 != (FxEffectDef *)0x0) {
-    CG_PlayBoltedEffectOnSecondTag(LVar1,pFVar2,param_2,param_5);
+  pFVar1 = BG_WorldFlashEffect(param_3,param_4);
+  if (pFVar1 != (FxEffectDef *)0x0) {
+    CG_PlayBoltedEffectOnSecondTag(param_1,pFVar1,param_2,param_5);
   }
-  __restgprlr_29();
   return;
 }
 
@@ -3248,53 +3118,52 @@ void CG_HoldBreathInit(cg_s *param_1)
 
 // 8231B178  HoldBreathSoundLerp  (cgame/cg_weapons.cpp:2526)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void HoldBreathSoundLerp(LocalClientNum_t param_1,float param_2)
 
 {
-  LocalClientNum_t LVar1;
-  cgs_t *pcVar2;
-  int iVar3;
+  cgs_t *pcVar1;
+  int iVar2;
+  float *pfVar3;
   float *pfVar4;
-  float *pfVar5;
-  int iVar6;
-  double extraout_f1;
+  int iVar5;
+  double dVar6;
   double dVar7;
-  double dVar8;
   float fStack_134;
   float local_130 [76];
   
-  LVar1 = __savegprlr_29((double)param_2,param_1);
-  if (extraout_f1 == 0.0) {
+  dVar6 = (double)param_2;
+  if (dVar6 == 0.0) {
     SND_DeactivateChannelVolumes(1,0);
-    __restgprlr_29();
     return;
   }
-  dVar7 = extraout_f1;
-  pcVar2 = CG_GetLocalClientStaticGlobals(LVar1);
-  iVar6 = 0;
-  iVar3 = SND_GetEntChannelCount();
-  if (0 < iVar3) {
-    pfVar5 = (float *)((pcVar2->holdBreathParams).sound.roomtype + 0xc);
-    pfVar4 = &fStack_134;
-    dVar8 = 1.0;
+  pcVar1 = CG_GetLocalClientStaticGlobals(param_1);
+  iVar5 = 0;
+  iVar2 = SND_GetEntChannelCount();
+  if (0 < iVar2) {
+    pfVar4 = (float *)((pcVar1->holdBreathParams).sound.roomtype + 0xc);
+    pfVar3 = &fStack_134;
+    dVar7 = 1.0;
     do {
-      pfVar5 = pfVar5 + 1;
-      iVar6 = iVar6 + 1;
       pfVar4 = pfVar4 + 1;
-      *pfVar4 = (float)((double)(float)((double)*pfVar5 - dVar8) * dVar7 + dVar8);
-      iVar3 = SND_GetEntChannelCount();
-    } while (iVar6 < iVar3);
+      iVar5 = iVar5 + 1;
+      pfVar3 = pfVar3 + 1;
+      *pfVar3 = (float)((double)(float)((double)*pfVar4 - dVar7) * dVar6 + dVar7);
+      iVar2 = SND_GetEntChannelCount();
+    } while (iVar5 < iVar2);
   }
   SND_SetChannelVolumes(1,local_130,0);
-  __restgprlr_29();
   return;
 }
 
 
 // 8231B228  HoldBreathUpdate  (cgame/cg_weapons.cpp:2549)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -3302,71 +3171,68 @@ void HoldBreathSoundLerp(LocalClientNum_t param_1,float param_2)
 void HoldBreathUpdate(LocalClientNum_t param_1)
 
 {
-  LocalClientNum_t LVar1;
-  cg_s *pcVar2;
-  int iVar3;
-  bool bVar4;
+  cg_s *pcVar1;
+  int iVar2;
+  bool bVar3;
+  int *piVar4;
   int *piVar5;
   int *piVar6;
-  int *piVar7;
-  double dVar8;
-  float fVar9;
+  double dVar7;
+  float fVar8;
   
-  LVar1 = __savegprlr_23(param_1);
-  pcVar2 = CG_GetLocalClientGlobals(LVar1);
-  piVar5 = &pcVar2->holdBreathDelay;
-  if (0 < *piVar5) {
-    *piVar5 = *piVar5 - pcVar2->frametime;
+  pcVar1 = CG_GetLocalClientGlobals(param_1);
+  piVar4 = &pcVar1->holdBreathDelay;
+  if (0 < *piVar4) {
+    *piVar4 = *piVar4 - pcVar1->frametime;
   }
-  if (((pcVar2->predictedPlayerState).weapCommon.weapFlags & 4U) == 0) {
-    iVar3 = pcVar2->holdBreathTime;
-    if (-1 < iVar3) {
-      iVar3 = pcVar2->frametime + iVar3;
-      pcVar2->holdBreathTime = iVar3;
-      dVar8 = 1000.0;
-      if ((int)((player_breath_hold_time->current).value * 1000.0) < iVar3) {
-        CG_PlayClientSoundAlias(LVar1,cgMedia.playerBreathGaspSound);
+  if (((pcVar1->predictedPlayerState).weapCommon.weapFlags & 4U) == 0) {
+    iVar2 = pcVar1->holdBreathTime;
+    if (-1 < iVar2) {
+      iVar2 = pcVar1->frametime + iVar2;
+      pcVar1->holdBreathTime = iVar2;
+      dVar7 = 1000.0;
+      if ((int)((player_breath_hold_time->current).value * 1000.0) < iVar2) {
+        CG_PlayClientSoundAlias(param_1,cgMedia.playerBreathGaspSound);
       }
-      else if (*piVar5 < 1) {
-        CG_PlayClientSoundAlias(LVar1,cgMedia.playerBreathOutSound);
-        *piVar5 = (int)((double)(player_breath_snd_delay->current).value * dVar8);
+      else if (*piVar4 < 1) {
+        CG_PlayClientSoundAlias(param_1,cgMedia.playerBreathOutSound);
+        *piVar4 = (int)((double)(player_breath_snd_delay->current).value * dVar7);
       }
     }
   }
   else {
-    piVar6 = &pcVar2->frametime;
-    fVar9 = DiffTrack(1.0,pcVar2->holdBreathFrac,(player_breath_snd_lerp->current).value,
-                      (float)(longlong)*piVar6 * 0.001);
-    pcVar2->holdBreathFrac = fVar9;
-    piVar7 = &pcVar2->holdBreathTime;
-    if (-1 < *piVar7) {
-      if (pcVar2->holdBreathInTime < *piVar7) {
-        CG_PlayClientSoundAlias(LVar1,cgMedia.playerHeartBeatSound);
+    piVar5 = &pcVar1->frametime;
+    fVar8 = DiffTrack(1.0,pcVar1->holdBreathFrac,(player_breath_snd_lerp->current).value,
+                      (float)(longlong)*piVar5 * 0.001);
+    pcVar1->holdBreathFrac = fVar8;
+    piVar6 = &pcVar1->holdBreathTime;
+    if (-1 < *piVar6) {
+      if (pcVar1->holdBreathInTime < *piVar6) {
+        CG_PlayClientSoundAlias(param_1,cgMedia.playerHeartBeatSound);
       }
-      *piVar7 = *piVar7 + *piVar6;
+      *piVar6 = *piVar6 + *piVar5;
       goto LAB_8231b470;
     }
-    *piVar7 = 0;
-    if (0 < *piVar5) {
-      pcVar2->holdBreathInTime = 0;
-      *piVar7 = *piVar7 + *piVar6;
+    *piVar6 = 0;
+    if (0 < *piVar4) {
+      pcVar1->holdBreathInTime = 0;
+      *piVar6 = *piVar6 + *piVar5;
       goto LAB_8231b470;
     }
-    iVar3 = CG_PlayClientSoundAlias(LVar1,cgMedia.playerBreathInSound);
-    bVar4 = SND_GetKnownLength(iVar3,&pcVar2->holdBreathInTime);
-    if (bVar4) {
-      fVar9 = (player_breath_snd_delay->current).value;
-      *piVar7 = *piVar7 + *piVar6;
-      *piVar5 = (int)(fVar9 * 1000.0);
+    iVar2 = CG_PlayClientSoundAlias(param_1,cgMedia.playerBreathInSound);
+    bVar3 = SND_GetKnownLength(iVar2,&pcVar1->holdBreathInTime);
+    if (bVar3) {
+      fVar8 = (player_breath_snd_delay->current).value;
+      *piVar6 = *piVar6 + *piVar5;
+      *piVar4 = (int)(fVar8 * 1000.0);
       goto LAB_8231b470;
     }
   }
-  pcVar2->holdBreathInTime = 0;
-  pcVar2->holdBreathTime = -1;
-  pcVar2->holdBreathFrac = 0.0;
+  pcVar1->holdBreathInTime = 0;
+  pcVar1->holdBreathTime = -1;
+  pcVar1->holdBreathFrac = 0.0;
 LAB_8231b470:
-  HoldBreathSoundLerp(LVar1,pcVar2->holdBreathFrac);
-  __restgprlr_23();
+  HoldBreathSoundLerp(param_1,pcVar1->holdBreathFrac);
   return;
 }
 
@@ -3396,6 +3262,8 @@ void CG_UpdateViewModelPose(DObj *param_1,LocalClientNum_t param_2)
 
 // 8231B508  CG_UpdateViewModelPoseForHand  (cgame/cg_weapons.cpp:2631)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -3403,32 +3271,31 @@ void CG_UpdateViewModelPose(DObj *param_1,LocalClientNum_t param_2)
 void CG_UpdateViewModelPoseForHand(DObj *param_1,LocalClientNum_t param_2,PlayerHandIndex param_3)
 
 {
-  DObj *pDVar1;
-  cg_s *pcVar2;
-  cpose_t *pcVar3;
+  cg_s *pcVar1;
+  cpose_t *pcVar2;
   
-  pDVar1 = (DObj *)__savegprlr_29(param_1);
-  if (pDVar1 != (DObj *)0x0) {
-    DObjClearSkel(pDVar1);
+  if (param_1 != (DObj *)0x0) {
+    DObjClearSkel(param_1);
   }
-  pcVar2 = CG_GetLocalClientGlobals(param_2);
+  pcVar1 = CG_GetLocalClientGlobals(param_2);
   if (param_3 == WEAPON_HAND_DEFAULT) {
-    pcVar3 = &pcVar2->viewModelPose;
+    pcVar2 = &pcVar1->viewModelPose;
   }
   else {
-    pcVar3 = &pcVar2->viewModelPoseLeftHand;
+    pcVar2 = &pcVar1->viewModelPoseLeftHand;
   }
-  AxisToAngles(pcVar2->viewModelAxis,pcVar3->angles);
-  pcVar3->origin[0] = pcVar2->viewModelAxis[3][0];
-  pcVar3->origin[1] = pcVar2->viewModelAxis[3][1];
-  pcVar3->origin[2] = pcVar2->viewModelAxis[3][2];
-  __restgprlr_29();
+  AxisToAngles(pcVar1->viewModelAxis,pcVar2->angles);
+  pcVar2->origin[0] = pcVar1->viewModelAxis[3][0];
+  pcVar2->origin[1] = pcVar1->viewModelAxis[3][1];
+  pcVar2->origin[2] = pcVar1->viewModelAxis[3][2];
   return;
 }
 
 
 // 8231B588  CG_BulletDynEntImpact  (cgame/cg_weapons.cpp:2648)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void CG_BulletDynEntImpact
@@ -3436,52 +3303,47 @@ void CG_BulletDynEntImpact
                float *param_6,float *param_7,trace_t *param_8)
 
 {
-  LocalClientNum_t LVar1;
-  int iVar2;
-  float *pfVar3;
-  ulonglong uVar4;
-  IMAGE_DOS_HEADER *pIVar5;
-  IMAGE_DOS_HEADER *pIVar6;
-  ulonglong uVar7;
-  double dVar8;
-  double dVar9;
-  double dVar10;
-  float fVar11;
+  int iVar1;
+  float *pfVar2;
+  IMAGE_DOS_HEADER *pIVar3;
+  IMAGE_DOS_HEADER *pIVar4;
+  double dVar5;
+  double dVar6;
+  double dVar7;
+  float fVar8;
   
-  uVar7 = (ulonglong)(int)param_8;
-  uVar4 = (ulonglong)param_5;
-  LVar1 = __savegprlr_24(param_1);
-  if ((uVar7 & 0xffffffff) != 0) {
-    DynEntCl_EntityImpactEvent((trace_t *)uVar7,LVar1,param_2,param_6,param_7,false,param_4);
+  if (param_8 != (trace_t *)0x0) {
+    DynEntCl_EntityImpactEvent(param_8,param_1,param_2,param_6,param_7,false,param_4);
   }
-  if ((uVar4 & 0xff) == 0) {
-    iVar2 = BG_GetDamage(param_3,param_4);
+  if (param_5) {
+    fVar8 = BG_WeaponBulletFire_GetExplDmg(param_3,param_4);
+    iVar1 = (int)fVar8;
   }
   else {
-    fVar11 = BG_WeaponBulletFire_GetExplDmg(param_3,param_4);
-    iVar2 = (int)fVar11;
+    iVar1 = BG_GetDamage(param_3,param_4);
   }
-  pfVar3 = param_7;
-  DynEntCl_DynEntImpactEvent(LVar1,param_2,param_6,param_7,iVar2,false,param_4);
-  if ((uVar4 & 0xff) != 0) {
-    fVar11 = BG_WeaponBulletFire_GetExplRadius(param_3,param_4);
-    dVar8 = (double)fVar11;
-    pIVar6 = &IMAGE_DOS_HEADER_82000000;
-    pIVar5 = &IMAGE_DOS_HEADER_82000000;
-    dVar10 = 1.0;
-    dVar9 = 0.0;
-    Ragdoll_ExplosionEvent(LVar1,false,param_7,0.0,fVar11,pfVar3,1.0,-0x7e000000);
+  pfVar2 = param_7;
+  DynEntCl_DynEntImpactEvent(param_1,param_2,param_6,param_7,iVar1,false,param_4);
+  if (param_5) {
+    fVar8 = BG_WeaponBulletFire_GetExplRadius(param_3,param_4);
+    dVar5 = (double)fVar8;
+    pIVar4 = &IMAGE_DOS_HEADER_82000000;
+    pIVar3 = &IMAGE_DOS_HEADER_82000000;
+    dVar7 = 1.0;
+    dVar6 = 0.0;
+    Ragdoll_ExplosionEvent(param_1,false,param_7,0.0,fVar8,pfVar2,1.0,-0x7e000000);
     DynEntCl_ExplosionEvent
-              (LVar1,false,param_7,(float)dVar9,(float)dVar8,(float *)0x1,(float)dVar10,(int)pIVar5,
-               -0x7de86028,(int)pIVar6);
+              (param_1,false,param_7,(float)dVar6,(float)dVar5,(float *)0x1,(float)dVar7,(int)pIVar3
+               ,-0x7de86028,(int)pIVar4);
   }
-  __restgprlr_24();
   return;
 }
 
 
 // 8231B6D0  CG_GetClientInfo  (cgame/cg_weapons.cpp:2690)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
@@ -3490,22 +3352,15 @@ clientInfo_t * CG_GetClientInfo(LocalClientNum_t param_1,centity_s *param_2)
 
 {
   uint uVar1;
-  int iVar2;
-  LocalClientNum_t LVar3;
-  clientInfo_t *pcVar4;
-  cg_s *pcVar5;
-  ulonglong uVar6;
+  cg_s *pcVar2;
   
-  uVar6 = (ulonglong)(int)param_2;
-  LVar3 = __savegprlr_27(param_1);
-  if ((uVar6 & 0xffffffff) == 0) {
+  if (param_2 == (centity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp",0xa87,0,
                     "%s");
   }
-  iVar2 = (int)uVar6;
-  if (((*(uint *)(iVar2 + 0x1c4) & 1) != 0) && (*(int *)(iVar2 + 200) == 1)) {
-    uVar1 = *(uint *)(iVar2 + 0x154);
-    if (uVar1 != *(uint *)(iVar2 + 0xc4)) {
+  if (((param_2->flags & 1U) != 0) && ((param_2->nextState).eType == 1)) {
+    uVar1 = (param_2->nextState).clientNum;
+    if (uVar1 != (param_2->nextState).number) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp",0xa8f,
                       0,"%s");
     }
@@ -3513,18 +3368,17 @@ clientInfo_t * CG_GetClientInfo(LocalClientNum_t param_1,centity_s *param_2)
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp",0xa90,
                       0,"otherClientNum doesn\'t index MAX_CLIENTS\n\t%i not in [0, %i)");
     }
-    pcVar5 = CG_GetLocalClientGlobals(LVar3);
-    pcVar4 = (clientInfo_t *)
-             __restgprlr_27((longlong)(int)pcVar5 + (ulonglong)uVar1 * 0x590 + 0x100b88);
-    return pcVar4;
+    pcVar2 = CG_GetLocalClientGlobals(param_1);
+    return (pcVar2->bgs).clientinfo + uVar1;
   }
-  pcVar4 = (clientInfo_t *)__restgprlr_27(0);
-  return pcVar4;
+  return (clientInfo_t *)0x0;
 }
 
 
 // 8231B7B8  CG_GetPlayerViewOrigin  (cgame/cg_weapons.cpp:2717)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -3532,40 +3386,36 @@ clientInfo_t * CG_GetClientInfo(LocalClientNum_t param_1,centity_s *param_2)
 void CG_GetPlayerViewOrigin(LocalClientNum_t param_1,playerState_s *param_2,float *param_3)
 
 {
-  LocalClientNum_t LVar1;
-  centity_s *pcVar2;
-  DObj *pDVar3;
-  int iVar4;
-  cg_s *pcVar5;
+  centity_s *pcVar1;
+  DObj *pDVar2;
+  int iVar3;
+  cg_s *pcVar4;
   
-  LVar1 = __savegprlr_27(param_1);
   if ((param_2->eFlags & 0x3800U) == 0) {
-    pcVar5 = CG_GetLocalClientGlobals(LVar1);
-    BG_GetPlayerEyePosition(param_2,param_3,pcVar5->time);
+    pcVar4 = CG_GetLocalClientGlobals(param_1);
+    BG_GetPlayerEyePosition(param_2,param_3,pcVar4->time);
   }
   else {
     if (param_2->viewlocked == PLAYERVIEWLOCK_NONE) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp",0xaa4,
                       0,"%s");
     }
-    iVar4 = param_2->viewlocked_entNum;
-    if (iVar4 == 0x7ff) {
+    iVar3 = param_2->viewlocked_entNum;
+    if (iVar3 == 0x7ff) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp",0xaa6,
                       0,"%s");
     }
-    pcVar2 = CG_GetEntity(LVar1,iVar4);
-    pDVar3 = Com_GetClientDObj((pcVar2->nextState).number,LVar1);
-    if (pDVar3 == (DObj *)0x0) {
+    pcVar1 = CG_GetEntity(param_1,iVar3);
+    pDVar2 = Com_GetClientDObj((pcVar1->nextState).number,param_1);
+    if (pDVar2 == (DObj *)0x0) {
       Com_Error(ERR_DROP,"\x15CG_GetPlayerViewOrigin: Unable to get DObj for turret entity %i");
     }
-    iVar4 = CG_DObjGetWorldTagPos(&pcVar2->pose,pDVar3,(uint)scr_const.tag_player,param_3);
-    if (iVar4 == 0) {
+    iVar3 = CG_DObjGetWorldTagPos(&pcVar1->pose,pDVar2,(uint)scr_const.tag_player,param_3);
+    if (iVar3 == 0) {
       Com_Error(ERR_DROP,"\x15CG_GetPlayerViewOrigin: Couldn\'t find [tag_player] on turret\n");
-      __restgprlr_27();
       return;
     }
   }
-  __restgprlr_27();
   return;
 }
 
@@ -3581,6 +3431,8 @@ bool ShouldIgnoreHitEntity(int param_1,int param_2)
 
 // 8231B8F0  CG_BulletTrace  (cgame/cg_weapons.cpp:2762)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
@@ -3596,96 +3448,78 @@ bool CG_BulletTrace(LocalClientNum_t param_1,BulletFireParams *param_2,WeaponDef
   uint uVar4;
   uint uVar5;
   bool bVar6;
-  LocalClientNum_t LVar7;
-  trace_t *ptVar8;
-  ushort uVar10;
-  centity_s *pcVar9;
-  undefined1 uVar11;
-  ulonglong uVar12;
-  ulonglong uVar13;
-  ulonglong uVar14;
-  ulonglong uVar15;
-  ulonglong uVar16;
+  ushort uVar8;
+  centity_s *pcVar7;
   
-  uVar16 = (ulonglong)param_6;
-  uVar15 = (ulonglong)(int)param_5;
-  uVar14 = (ulonglong)(int)param_4;
-  uVar13 = (ulonglong)(int)param_3;
-  uVar12 = (ulonglong)(int)param_2;
-  LVar7 = __savegprlr_23(param_1);
-  if ((uVar12 & 0xffffffff) == 0) {
+  if (param_2 == (BulletFireParams *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp",0xace,0,
                     "%s");
   }
-  if ((uVar13 & 0xffffffff) == 0) {
+  if (param_3 == (WeaponDef *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp",0xacf,0,
                     "%s");
   }
-  if ((uVar14 & 0xffffffff) == 0) {
+  if (param_4 == (centity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp",0xad0,0,
                     "%s");
   }
-  if ((uVar15 & 0xffffffff) == 0) {
+  if (param_5 == (BulletTraceResults *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp",0xad1,0,
                     "%s");
   }
-  if (0x1e < (uVar16 & 0xffffffff)) {
+  if (0x1e < (uint)param_6) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp",0xad2,0,
                     "lastSurfaceType doesn\'t index SURF_TYPECOUNT\n\t%i not in [0, %i)");
   }
-  iVar3 = (int)uVar12;
-  ptVar8 = (trace_t *)uVar15;
-  CG_LocationalTrace(ptVar8,(float *)(iVar3 + 0x20),(float *)(iVar3 + 0x2c),*(int *)(iVar3 + 4),
-                     0x2806831);
-  uVar10 = Trace_GetEntityHitId(ptVar8);
-  if ((uVar10 == 0x7ff) || (uVar10 == 0x7fe)) {
-    pcVar9 = (centity_s *)0x0;
+  CG_LocationalTrace(&param_5->trace,param_2->start,param_2->end,param_2->ignoreEntIndex,0x2806831);
+  uVar8 = Trace_GetEntityHitId(&param_5->trace);
+  if ((uVar8 == 0x7ff) || (uVar8 == 0x7fe)) {
+    pcVar7 = (centity_s *)0x0;
   }
   else {
-    pcVar9 = CG_GetEntity(LVar7,(uint)uVar10);
+    pcVar7 = CG_GetEntity(param_1,(uint)uVar8);
   }
-  fVar1 = *(float *)(iVar3 + 0x20);
-  fVar2 = ptVar8->fraction;
-  ptVar8[1].normal[0] = (*(float *)(iVar3 + 0x2c) - fVar1) * fVar2 + fVar1;
-  ptVar8[1].normal[1] =
-       (*(float *)(iVar3 + 0x30) - *(float *)(iVar3 + 0x24)) * fVar2 + *(float *)(iVar3 + 0x24);
-  ptVar8[1].normal[2] =
-       (*(float *)(iVar3 + 0x34) - *(float *)(iVar3 + 0x28)) * fVar2 + *(float *)(iVar3 + 0x28);
-  if (pcVar9 == (centity_s *)0x0) {
-    *(undefined1 *)&ptVar8[1].surfaceFlags = 0;
+  fVar1 = param_2->start[0];
+  fVar2 = (param_5->trace).fraction;
+  param_5->hitPos[0] = (param_2->end[0] - fVar1) * fVar2 + fVar1;
+  param_5->hitPos[1] = (param_2->end[1] - param_2->start[1]) * fVar2 + param_2->start[1];
+  param_5->hitPos[2] = (param_2->end[2] - param_2->start[2]) * fVar2 + param_2->start[2];
+  if (pcVar7 == (centity_s *)0x0) {
+    param_5->ignoreHitEnt = false;
   }
   else {
-    iVar3 = (pcVar9->nextState).eType;
-    if (((iVar3 != 1) && (iVar3 != 2)) || (bVar6 = true, ptVar8->surfaceFlags != 0)) {
+    iVar3 = (pcVar7->nextState).eType;
+    if (((iVar3 != 1) && (iVar3 != 2)) || (bVar6 = true, (param_5->trace).surfaceFlags != 0)) {
       bVar6 = false;
     }
     if (bVar6) {
-      ptVar8->surfaceFlags = 0x700000;
+      (param_5->trace).surfaceFlags = 0x700000;
     }
-    *(bool *)&ptVar8[1].surfaceFlags = *(uint *)((int)uVar14 + 0xc4) == (uint)uVar10;
+    param_5->ignoreHitEnt = (param_4->nextState).number == (uint)uVar8;
   }
-  uVar4 = ptVar8->surfaceFlags;
+  uVar4 = (param_5->trace).surfaceFlags;
   uVar5 = (int)uVar4 >> 0x14 & 0x1f;
-  ptVar8[1].contents = uVar5;
+  param_5->depthSurfaceType = uVar5;
   if ((uVar4 & 0x100) == 0) {
-    if ((uVar5 == 0) && ((int)uVar16 != 0)) {
-      ptVar8[1].contents = (int)uVar16;
+    if ((uVar5 == 0) && (param_6 != 0)) {
+      param_5->depthSurfaceType = param_6;
     }
   }
   else {
-    ptVar8[1].contents = 0;
+    param_5->depthSurfaceType = 0;
   }
-  if (0x1e < (uint)ptVar8[1].contents) {
+  if (0x1e < (uint)param_5->depthSurfaceType) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp",0xaf4,1,
                     "br->depthSurfaceType doesn\'t index SURF_TYPECOUNT\n\t%i not in [0, %i)");
   }
-  uVar11 = __restgprlr_23(ptVar8->hitType != TRACE_HITTYPE_NONE);
-  return (bool)uVar11;
+  return (bool)('\x01' - ((param_5->trace).hitType == TRACE_HITTYPE_NONE));
 }
 
 
 // 8231BB48  CG_SimulateBulletFire_FakeTrace  (cgame/cg_weapons.cpp:2815)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -3696,74 +3530,64 @@ bool CG_SimulateBulletFire_FakeTrace
                centity_s *param_4,BulletTraceResults *param_5)
 
 {
-  int iVar1;
-  float fVar2;
-  int iVar3;
-  undefined1 uVar4;
-  ulonglong uVar5;
-  ulonglong uVar6;
-  ulonglong uVar7;
-  float *pfVar8;
+  float fVar1;
   
-  uVar7 = (ulonglong)(int)param_4;
-  uVar6 = (ulonglong)(int)param_3;
-  uVar5 = (ulonglong)(int)param_2;
-  iVar3 = __savegprlr_27(param_1);
-  if (iVar3 == 0) {
+  if (param_1 == LOCAL_CLIENT_0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp",0xb02,0,
                     "%s");
   }
-  if ((uVar5 & 0xffffffff) == 0) {
+  if (param_2 == (WeaponDef *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp",0xb03,0,
                     "%s");
   }
-  if ((uVar7 & 0xffffffff) == 0) {
+  if (param_4 == (centity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp",0xb04,0,
                     "%s");
   }
-  if ((uVar6 & 0xffffffff) == 0) {
+  if (param_3 == (BulletFireParams *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp",0xb05,0,
                     "%s");
   }
-  iVar3 = (int)uVar6;
-  if ((*(uint *)(iVar3 + 0x1c4) & 1) == 0) {
+  if (((uint)param_3[6].end[0] & 1) == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp",0xb06,0,
                     "%s");
   }
-  if (*(int *)(iVar3 + 200) != 1) {
+  if (param_3[2].dir[2] != 1.4013e-45) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp",0xb07,0,
                     "knownHitClientEntity->nextState.eType == ET_PLAYER\n\t%i, %i");
   }
-  if (*(int *)(iVar3 + 0xc4) != *(int *)(iVar3 + 0x154)) {
+  if (param_3[2].dir[1] != (float)param_3[5].weaponEntIndex) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp",0xb08,0,
                     "knownHitClientEntity->nextState.number == knownHitClientEntity->nextState.clientNum\n\t%i, %i"
                    );
   }
   memset();
-  iVar1 = (int)uVar5;
-  fVar2 = *(float *)(iVar1 + 0x40) * (*(float *)(iVar3 + 0x1c) - *(float *)(iVar1 + 0x28)) +
-          *(float *)(iVar1 + 0x38) * (*(float *)(iVar3 + 0x14) - *(float *)(iVar1 + 0x20)) +
-          *(float *)(iVar1 + 0x3c) * (*(float *)(iVar3 + 0x18) - *(float *)(iVar1 + 0x24));
-  pfVar8 = (float *)uVar7;
-  *pfVar8 = fVar2;
-  pfVar8[0xe] = (*(float *)(iVar1 + 0x2c) - *(float *)(iVar1 + 0x20)) * fVar2 +
-                *(float *)(iVar1 + 0x20);
-  pfVar8[0xf] = (*(float *)(iVar1 + 0x30) - *(float *)(iVar1 + 0x24)) * fVar2 +
-                *(float *)(iVar1 + 0x24);
-  pfVar8[0x10] = (*(float *)(iVar1 + 0x34) - *(float *)(iVar1 + 0x28)) * fVar2 +
-                 *(float *)(iVar1 + 0x28);
-  pfVar8[1] = -*(float *)(iVar1 + 0x38);
-  pfVar8[2] = -*(float *)(iVar1 + 0x3c);
-  pfVar8[3] = -*(float *)(iVar1 + 0x40);
-  pfVar8[4] = 1.0285576e-38;
-  pfVar8[5] = 1.4013e-45;
-  pfVar8[7] = 1.4013e-45;
-  *(short *)(pfVar8 + 8) = (short)*(undefined4 *)(iVar3 + 0xc4);
-  pfVar8[0x12] = 9.80909e-45;
-  pfVar8[0x13] = *(float *)(iVar3 + 0x154);
-  *(undefined1 *)(pfVar8 + 0x11) = 0;
-  uVar4 = __restgprlr_27(1);
-  return (bool)uVar4;
+  fVar1 = (float)param_2->offhandClass * (param_3->origStart[2] - (float)param_2->playerAnimType) +
+          (float)param_2->inventoryType *
+          (param_3->origStart[0] - (float)param_2->notetrackRumbleMapKeys) +
+          (float)param_2->fireType *
+          (param_3->origStart[1] - (float)param_2->notetrackRumbleMapValues);
+  *(float *)&param_4->pose = fVar1;
+  *(float *)((int)&(param_4->pose).field9_0x2c + 0xc) =
+       ((float)param_2->weapType - (float)param_2->notetrackRumbleMapKeys) * fVar1 +
+       (float)param_2->notetrackRumbleMapKeys;
+  (param_4->pose).field9_0x2c.vehicle.time =
+       ((float)param_2->weapClass - (float)param_2->notetrackRumbleMapValues) * fVar1 +
+       (float)param_2->notetrackRumbleMapValues;
+  (param_4->pose).field9_0x2c.turret.barrelRoll =
+       ((float)param_2->penetrateType - (float)param_2->playerAnimType) * fVar1 +
+       (float)param_2->playerAnimType;
+  *(float *)&(param_4->pose).isRagdoll = -(float)param_2->inventoryType;
+  (param_4->pose).ragdollHandle = (int)-(float)param_2->fireType;
+  (param_4->pose).killcamRagdollHandle = (int)-(float)param_2->offhandClass;
+  (param_4->pose).physObjId = 0x700000;
+  (param_4->pose).origin[0] = 1.4013e-45;
+  (param_4->pose).origin[2] = 1.4013e-45;
+  *(short *)(param_4->pose).angles = SUB42(param_3[2].dir[1],0);
+  (param_4->pose).field9_0x2c.turret.barrelRollSndTime = 7;
+  *(int *)((int)&(param_4->pose).field9_0x2c + 0x20) = param_3[5].weaponEntIndex;
+  (param_4->pose).field9_0x2c.turret.barrelRollSndLastRotating = false;
+  return true;
 }
 
 
@@ -3809,6 +3633,8 @@ int CG_SimulateBulletFire_Internal_UseEventBasedHitEffect
 
 // 82323A78  CG_SimulateBulletFire_Internal_HitEffect  (cgame/cg_weapons.cpp:2885)
 
+/* WARNING: Function: __savegprlr_21 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_21 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -3819,10 +3645,9 @@ void CG_SimulateBulletFire_Internal_HitEffect
                uchar param_12,int param_13)
 
 {
-  LocalClientNum_t LVar1;
-  cg_s *pcVar2;
-  uint uVar3;
-  bool bVar4;
+  cg_s *pcVar1;
+  uint uVar2;
+  bool bVar3;
   float *in_stack_00000054;
   int in_stack_0000005c;
   uint in_stack_00000064;
@@ -3831,35 +3656,32 @@ void CG_SimulateBulletFire_Internal_HitEffect
   uchar in_stack_ffffff43;
   int in_stack_ffffff44;
   
-  LVar1 = __savegprlr_21(param_1);
   if (0xf < in_stack_00000064) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp",0xb49,0,
                     "meansOfDeath doesn\'t index MOD_NUM\n\t%i not in [0, %i)");
   }
-  pcVar2 = CG_GetLocalClientGlobals(LVar1);
-  if (pcVar2 == (cg_s *)0x0) {
+  pcVar1 = CG_GetLocalClientGlobals(param_1);
+  if (pcVar1 == (cg_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp",0xb4c,1,
                     "%s");
   }
-  if (param_4 == pcVar2->clientNum) {
-    uVar3 = BG_WeaponBulletFire_GetClientHitEvent(in_stack_00000064);
+  if (param_4 == pcVar1->clientNum) {
+    uVar2 = BG_WeaponBulletFire_GetClientHitEvent(in_stack_00000064);
   }
   else {
-    uVar3 = BG_WeaponBulletFire_GetHitEvent(in_stack_00000064);
+    uVar2 = BG_WeaponBulletFire_GetHitEvent(in_stack_00000064);
   }
-  if ((((uVar3 == 0x3c) || (uVar3 == 0x40)) || (uVar3 == 0x3d)) ||
-     ((uVar3 == 0x41 || (bVar4 = CG_IsEntityAPlayer(LVar1,param_3), !bVar4)))) {
-    if (param_4 == pcVar2->clientNum) {
+  if ((((uVar2 == 0x3c) || (uVar2 == 0x40)) || (uVar2 == 0x3d)) ||
+     ((uVar2 == 0x41 || (bVar3 = CG_IsEntityAPlayer(param_1,param_3), !bVar3)))) {
+    if (param_4 == pcVar1->clientNum) {
       CG_BulletHitClientEvent
-                (LVar1,param_2,param_5,param_6,param_7,param_8,in_stack_0000005c,uVar3,
+                (param_1,param_2,param_5,param_6,param_7,param_8,in_stack_0000005c,uVar2,
                  (uchar)in_stack_ffffff38);
-      __restgprlr_21();
       return;
     }
-    CG_BulletHitEvent(LVar1,param_2,param_3,param_5,param_6,param_7,param_8,in_stack_00000054,
+    CG_BulletHitEvent(param_1,param_2,param_3,param_5,param_6,param_7,param_8,in_stack_00000054,
                       in_stack_ffffff38,in_stack_ffffff3c,in_stack_ffffff43,in_stack_ffffff44);
   }
-  __restgprlr_21();
   return;
 }
 
@@ -3916,6 +3738,9 @@ bool RayPlaneIntersection(float *param_1,float *param_2,float param_3,float *par
 
 // 8231BF18  CG_ShouldSimulateBulletFire  (cgame/cg_weapons.cpp:2942)
 
+/* WARNING: Function: __savefpr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Type propagation algorithm not settling */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -3924,11 +3749,11 @@ bool CG_ShouldSimulateBulletFire(LocalClientNum_t param_1,BulletFireParams *para
 
 {
   float fVar1;
-  LocalClientNum_t LVar2;
-  cg_s *pcVar3;
-  bool bVar4;
-  undefined1 uVar5;
-  float *pfVar6;
+  cg_s *pcVar2;
+  bool bVar3;
+  float *pfVar4;
+  double dVar5;
+  double dVar6;
   double dVar7;
   double dVar8;
   double dVar9;
@@ -3937,9 +3762,7 @@ bool CG_ShouldSimulateBulletFire(LocalClientNum_t param_1,BulletFireParams *para
   double dVar12;
   double dVar13;
   double dVar14;
-  double dVar15;
-  double dVar16;
-  float fVar17;
+  float fVar15;
   float local_d0;
   float local_cc;
   float local_c8;
@@ -3960,142 +3783,134 @@ bool CG_ShouldSimulateBulletFire(LocalClientNum_t param_1,BulletFireParams *para
   float local_78;
   float afStack_70 [24];
   
-  LVar2 = __savefpr_22(param_1);
   if ((((cg_cullBullets->current).enabled != false) &&
-      (pcVar3 = CG_GetLocalClientGlobals(LVar2),
-      ((pcVar3->predictedPlayerState).otherFlags & 2U) == 0)) &&
-     (((pcVar3->predictedPlayerState).linkFlags & 4U) == 0)) {
-    if ((pcVar3->predictedPlayerState).vehicleState.entity == 0x7ff) {
-      local_b0 = (pcVar3->predictedPlayerState).origin[0];
-      local_ac = (pcVar3->predictedPlayerState).origin[1];
-      local_a8 = (pcVar3->predictedPlayerState).origin[2];
+      (pcVar2 = CG_GetLocalClientGlobals(param_1),
+      ((pcVar2->predictedPlayerState).otherFlags & 2U) == 0)) &&
+     (((pcVar2->predictedPlayerState).linkFlags & 4U) == 0)) {
+    if ((pcVar2->predictedPlayerState).vehicleState.entity == 0x7ff) {
+      local_b0 = (pcVar2->predictedPlayerState).origin[0];
+      local_ac = (pcVar2->predictedPlayerState).origin[1];
+      local_a8 = (pcVar2->predictedPlayerState).origin[2];
     }
     else {
-      local_b0 = (pcVar3->predictedPlayerState).vehicleState.origin[0];
-      local_ac = (pcVar3->predictedPlayerState).vehicleState.origin[1];
-      local_a8 = (pcVar3->predictedPlayerState).vehicleState.origin[2];
+      local_b0 = (pcVar2->predictedPlayerState).vehicleState.origin[0];
+      local_ac = (pcVar2->predictedPlayerState).vehicleState.origin[1];
+      local_a8 = (pcVar2->predictedPlayerState).vehicleState.origin[2];
     }
-    AngleVectors(pcVar3->refdefViewAngles,&local_d0,(float *)0x0,afStack_70);
+    AngleVectors(pcVar2->refdefViewAngles,&local_d0,(float *)0x0,afStack_70);
     RotatePointAroundVector
               (&local_a0,afStack_70,&local_d0,90.0 - (cg_cullBulletAngle->current).value);
-    pfVar6 = param_2->end;
+    pfVar4 = param_2->end;
     local_88 = param_2->start[2] - local_a8;
-    dVar14 = (double)local_88;
+    dVar12 = (double)local_88;
     local_8c = param_2->start[1] - local_ac;
-    dVar15 = (double)local_8c;
+    dVar13 = (double)local_8c;
     local_b8 = param_2->end[2] - local_a8;
-    dVar11 = (double)local_b8;
+    dVar9 = (double)local_b8;
     local_90 = param_2->start[0] - local_b0;
-    dVar16 = (double)local_90;
+    dVar14 = (double)local_90;
     local_c0 = param_2->end[0] - local_b0;
-    dVar13 = (double)local_c0;
+    dVar11 = (double)local_c0;
     local_bc = param_2->end[1] - local_ac;
-    dVar12 = (double)local_bc;
-    fVar17 = (local_c8 * local_98 + local_cc * local_9c + local_a0 * local_d0) * 2.0;
-    local_80 = local_d0 * fVar17 - local_a0;
-    dVar10 = (double)local_80;
-    local_7c = local_cc * fVar17 - local_9c;
-    dVar9 = (double)local_7c;
-    local_78 = local_c8 * fVar17 - local_98;
-    dVar8 = (double)local_78;
+    dVar10 = (double)local_bc;
+    fVar15 = (local_c8 * local_98 + local_cc * local_9c + local_a0 * local_d0) * 2.0;
+    local_80 = local_d0 * fVar15 - local_a0;
+    dVar8 = (double)local_80;
+    local_7c = local_cc * fVar15 - local_9c;
+    dVar7 = (double)local_7c;
+    local_78 = local_c8 * fVar15 - local_98;
+    dVar6 = (double)local_78;
     if (((param_2->start[0] == param_2->end[0]) && (param_2->start[1] == param_2->end[1])) &&
        (param_2->start[2] == param_2->end[2])) {
-LAB_8231c0b0:
-      bVar4 = false;
-      goto LAB_8231c1e4;
+      return false;
     }
-    dVar7 = (double)(cg_minCullBulletDist->current).value;
-    fVar17 = PointToLineSegmentDistSq(&local_b0,param_2->start,pfVar6);
-    if ((float)(dVar7 * dVar7) < fVar17) {
-      local_ac = (float)(dVar12 - dVar15);
-      local_a8 = (float)(dVar11 - dVar14);
-      local_b0 = (float)(dVar13 - dVar16);
-      dVar11 = 0.0;
+    dVar5 = (double)(cg_minCullBulletDist->current).value;
+    fVar15 = PointToLineSegmentDistSq(&local_b0,param_2->start,pfVar4);
+    if ((float)(dVar5 * dVar5) < fVar15) {
+      local_ac = (float)(dVar10 - dVar13);
+      local_a8 = (float)(dVar9 - dVar12);
+      local_b0 = (float)(dVar11 - dVar14);
+      dVar9 = 0.0;
       fVar1 = SQRT(local_b0 * local_b0 + local_a8 * local_a8 + local_ac * local_ac);
-      fVar17 = 1.0;
+      fVar15 = 1.0;
       if (-fVar1 < 0.0) {
-        fVar17 = fVar1;
+        fVar15 = fVar1;
       }
-      fVar17 = 1.0 / fVar17;
-      local_b0 = fVar17 * local_b0;
-      local_ac = local_ac * fVar17;
-      local_a8 = local_a8 * fVar17;
-      if (0.0 < (float)(dVar14 * (double)local_98 +
-                       (double)(float)(dVar15 * (double)local_9c +
-                                      (double)(float)(dVar16 * (double)local_a0)))) {
-        if (0.0 < (float)(dVar14 * dVar8 +
-                         (double)(float)(dVar15 * dVar9 + (double)(float)(dVar16 * dVar10))))
-        goto LAB_8231c1e0;
-        bVar4 = RayPlaneIntersection(&local_90,&local_b0,fVar1,pfVar6,&local_80);
-        if (!bVar4) {
-          bVar4 = false;
-          goto LAB_8231c1e4;
+      fVar15 = 1.0 / fVar15;
+      local_b0 = fVar15 * local_b0;
+      local_ac = local_ac * fVar15;
+      local_a8 = local_a8 * fVar15;
+      if (0.0 < (float)(dVar12 * (double)local_98 +
+                       (double)(float)(dVar13 * (double)local_9c +
+                                      (double)(float)(dVar14 * (double)local_a0)))) {
+        if (0.0 < (float)(dVar12 * dVar6 +
+                         (double)(float)(dVar13 * dVar7 + (double)(float)(dVar14 * dVar8)))) {
+          return true;
+        }
+        bVar3 = RayPlaneIntersection(&local_90,&local_b0,fVar1,pfVar4,&local_80);
+        if (!bVar3) {
+          return false;
         }
       }
       else {
-        bVar4 = RayPlaneIntersection(&local_90,&local_b0,fVar1,pfVar6,&local_a0);
-        if (!bVar4) goto LAB_8231c0b0;
+        bVar3 = RayPlaneIntersection(&local_90,&local_b0,fVar1,pfVar4,&local_a0);
+        if (!bVar3) {
+          return false;
+        }
       }
-      bVar4 = dVar11 < (double)(local_b8 * local_c8 + local_bc * local_cc + local_c0 * local_d0);
-      goto LAB_8231c1e4;
+      return dVar9 < (double)(local_b8 * local_c8 + local_bc * local_cc + local_c0 * local_d0);
     }
   }
-LAB_8231c1e0:
-  bVar4 = true;
-LAB_8231c1e4:
-  uVar5 = __restfpr_22(bVar4);
-  return (bool)uVar5;
+  return true;
 }
 
 
 // 8231C200  CG_SimulateBulletFire_GetknownHitClientEntity  (cgame/cg_weapons.cpp:3012)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 
 centity_s * CG_SimulateBulletFire_GetknownHitClientEntity(LocalClientNum_t param_1,int param_2)
 
 {
-  LocalClientNum_t LVar1;
-  centity_s *pcVar2;
-  ulonglong uVar3;
-  int iVar4;
+  centity_s *pcVar1;
   
-  uVar3 = (ulonglong)param_2;
-  LVar1 = __savegprlr_29(param_1);
-  iVar4 = (int)uVar3;
-  if (iVar4 != -1) {
-    if (0x11 < (uVar3 & 0xffffffff)) {
+  if (param_2 != -1) {
+    if (0x11 < (uint)param_2) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp",0xbcb,
                       0,"knownHitClientNum doesn\'t index MAX_CLIENTS\n\t%i not in [0, %i)");
     }
-    pcVar2 = CG_GetEntity(LVar1,iVar4);
-    if ((pcVar2->flags & 1U) != 0) {
-      if ((pcVar2->nextState).eType != 1) {
+    pcVar1 = CG_GetEntity(param_1,param_2);
+    if ((pcVar1->flags & 1U) != 0) {
+      if ((pcVar1->nextState).eType != 1) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp",
                         0xbd2,1,"knownHitClientEntity->nextState.eType == ET_PLAYER\n\t%i, %i");
       }
-      if ((pcVar2->nextState).number != iVar4) {
+      if ((pcVar1->nextState).number != param_2) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp",
                         0xbd3,1,
                         "knownHitClientEntity->nextState.number == knownHitClientNum\n\t%i, %i");
       }
-      if ((pcVar2->nextState).clientNum != iVar4) {
+      if ((pcVar1->nextState).clientNum != param_2) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp",
                         0xbd4,1,
                         "knownHitClientEntity->nextState.clientNum == knownHitClientNum\n\t%i, %i");
       }
-      pcVar2 = (centity_s *)__restgprlr_29(pcVar2);
-      return pcVar2;
+      return pcVar1;
     }
   }
-  pcVar2 = (centity_s *)__restgprlr_29(0);
-  return pcVar2;
+  return (centity_s *)0x0;
 }
 
 
 // 82323BF0  CG_SimulateBulletFire_Internal  (cgame/cg_weapons.cpp:3034)
 
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
@@ -4107,35 +3922,28 @@ void CG_SimulateBulletFire_Internal
 
 {
   WeaponDef *pWVar1;
-  XModel *pXVar2;
-  bool bVar3;
-  LocalClientNum_t LVar4;
-  Weapon WVar5;
-  weapType_t wVar6;
-  centity_s *pcVar7;
-  bool bVar12;
-  ushort uVar11;
+  bool bVar2;
+  Weapon WVar3;
+  weapType_t wVar4;
+  centity_s *pcVar5;
+  bool bVar10;
+  ushort uVar9;
+  int iVar6;
+  clientInfo_t *pcVar7;
+  bool bVar11;
   int iVar8;
-  clientInfo_t *pcVar9;
-  bool bVar13;
-  int iVar10;
-  ulonglong uVar14;
-  WeaponDef *pWVar15;
-  ulonglong uVar16;
-  centity_s *pcVar17;
-  char *pcVar18;
-  ushort **ppuVar19;
-  ulonglong uVar20;
-  BulletTraceResults *pBVar21;
+  char *pcVar12;
+  float *pfVar13;
+  BulletTraceResults *pBVar14;
+  double dVar15;
+  double dVar16;
+  double dVar17;
+  double dVar18;
+  double dVar19;
+  double dVar20;
+  double dVar21;
   double dVar22;
-  double dVar23;
-  double dVar24;
-  double dVar25;
-  double dVar26;
-  double dVar27;
-  double dVar28;
-  double dVar29;
-  float fVar30;
+  float fVar23;
   float *in_stack_fffffdb8;
   int in_stack_fffffdbc;
   uint in_stack_fffffdc0;
@@ -4147,141 +3955,137 @@ void CG_SimulateBulletFire_Internal
   BulletTraceResults BStack_170;
   BulletFireParams aBStack_120 [4];
   
-  uVar20 = (ulonglong)param_8;
-  uVar16 = (ulonglong)(int)param_5;
-  uVar14 = (ulonglong)(int)param_2;
-  __savegprlr();
-  LVar4 = __savefpr_24();
-  pcVar17 = (centity_s *)uVar16;
-  pcVar18 = (char *)pcVar17;
-  WVar5 = BG_GetAlternateWeapon(param_3,param_4);
-  pWVar1 = bg_weaponDefs[WVar5.data & 0xff];
-  if ((uVar14 & 0xffffffff) == 0) {
-    pcVar18 = "bp";
+  pcVar12 = (char *)param_5;
+  WVar3 = BG_GetAlternateWeapon(param_3,param_4);
+  pWVar1 = bg_weaponDefs[WVar3.data & 0xff];
+  if (param_2 == (BulletFireParams *)0x0) {
+    pcVar12 = "bp";
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp",0xbf0,0,
                     "%s");
   }
-  if ((uVar16 & 0xffffffff) == 0) {
-    pcVar18 = "attackerEnt";
+  if (param_5 == (centity_s *)0x0) {
+    pcVar12 = "attackerEnt";
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp",0xbf1,0,
                     "%s");
   }
-  wVar6 = BG_GetWeaponType(param_3,param_4);
-  if (wVar6 != WEAPTYPE_BULLET) {
-    pcVar18 = "CG_IsBulletWeapon( weapon, isAlternate )";
+  wVar4 = BG_GetWeaponType(param_3,param_4);
+  if (wVar4 != WEAPTYPE_BULLET) {
+    pcVar12 = "CG_IsBulletWeapon( weapon, isAlternate )";
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp",0xbf2,0,
                     "%s");
   }
-  pcVar7 = CG_SimulateBulletFire_GetknownHitClientEntity(LVar4,param_6);
-  pWVar15 = (WeaponDef *)uVar14;
-  if (pcVar7 == (centity_s *)0x0) {
-    bVar12 = CG_BulletTrace(LVar4,(BulletFireParams *)pWVar15,pWVar1,pcVar17,&BStack_1c0,0);
+  pcVar5 = CG_SimulateBulletFire_GetknownHitClientEntity(param_1,param_6);
+  if (pcVar5 == (centity_s *)0x0) {
+    bVar10 = CG_BulletTrace(param_1,param_2,pWVar1,param_5,&BStack_1c0,0);
   }
   else {
-    bVar12 = CG_SimulateBulletFire_FakeTrace
-                       ((LocalClientNum_t)pWVar1,pWVar15,(BulletFireParams *)pcVar7,
-                        (centity_s *)&BStack_1c0,(BulletTraceResults *)pcVar18);
+    bVar10 = CG_SimulateBulletFire_FakeTrace
+                       ((LocalClientNum_t)pWVar1,(WeaponDef *)param_2,(BulletFireParams *)pcVar5,
+                        (centity_s *)&BStack_1c0,(BulletTraceResults *)pcVar12);
   }
-  uVar11 = Trace_GetEntityHitId(&BStack_1c0.trace);
-  if (((uVar20 & 0xff) != 0) &&
-     (iVar8 = Tracer_UpdateDrawRate(LVar4,param_3,param_4,pcVar17), iVar8 != 0)) {
-    Tracer_Spawn(LVar4,param_7,BStack_1c0.hitPos,pcVar17,param_3,param_4);
+  uVar9 = Trace_GetEntityHitId(&BStack_1c0.trace);
+  if ((param_8) && (iVar6 = Tracer_UpdateDrawRate(param_1,param_3,param_4,param_5), iVar6 != 0)) {
+    Tracer_Spawn(param_1,param_7,BStack_1c0.hitPos,param_5,param_3,param_4);
   }
-  pcVar9 = CG_GetClientInfo(LVar4,pcVar17);
-  local_1c8 = pcVar9;
-  if (pcVar9 == (clientInfo_t *)0x0) {
+  pcVar7 = CG_GetClientInfo(param_1,param_5);
+  local_1c8 = pcVar7;
+  if (pcVar7 == (clientInfo_t *)0x0) {
     BG_ClearPerks(local_1d0);
   }
   else {
-    if (pcVar9->infoValid == 0) {
+    if (pcVar7->infoValid == 0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp",0xc03,
                       0,"%s");
     }
-    BG_CopyPerks(pcVar9->perks,local_1d0);
+    BG_CopyPerks(pcVar7->perks,local_1d0);
   }
-  if ((bVar12 == false) || (bVar13 = true, pWVar15->szXAnimsRightHanded != (char **)0x3)) {
-    bVar13 = false;
+  if ((bVar10 == false) || (bVar11 = true, param_2->methodOfDeath != MOD_EXPLOSIVE_BULLET)) {
+    bVar11 = false;
   }
-  if (((bVar13) && (iVar8 = (pcVar17->nextState).eType, iVar8 != 1)) && (iVar8 != 0xc)) {
-    BG_GetEntityTypeName(iVar8);
+  if (((bVar11) && (iVar6 = (param_5->nextState).eType, iVar6 != 1)) && (iVar6 != 0xc)) {
+    BG_GetEntityTypeName(iVar6);
     Com_PrintWarning(0x11,
                      "WARNING: Explosive bullets fired by unsupported entity \'%i\' of type \'%s\'.\n"
                     );
   }
-  ppuVar19 = &pWVar15->notetrackRumbleMapKeys;
-  pBVar21 = &BStack_1c0;
+  pfVar13 = param_2->start;
+  pBVar14 = &BStack_1c0;
   CG_BulletDynEntImpact
-            (LVar4,(pcVar17->nextState).number,param_3,param_4,bVar13,(float *)ppuVar19,
-             BStack_1c0.hitPos,&pBVar21->trace);
-  iVar8 = (pcVar17->nextState).number;
-  if (bVar12 == false) {
+            (param_1,(param_5->nextState).number,param_3,param_4,bVar11,pfVar13,BStack_1c0.hitPos,
+             &pBVar14->trace);
+  iVar6 = (param_5->nextState).number;
+  if (bVar10 == false) {
     CG_BulletTrajectoryEffects
-              (LVar4,iVar8,param_3,param_4,(float *)ppuVar19,BStack_1c0.hitPos,0x3b,(int)pBVar21);
+              (param_1,iVar6,param_3,param_4,pfVar13,BStack_1c0.hitPos,0x3b,(int)pBVar14);
   }
   else {
     CG_SimulateBulletFire_Internal_HitEffect
-              (LVar4,iVar8,(uint)uVar11,param_6,param_3,param_4,(float *)ppuVar19,BStack_1c0.hitPos,
+              (param_1,iVar6,(uint)uVar9,param_6,param_3,param_4,pfVar13,BStack_1c0.hitPos,
                in_stack_fffffdb8,in_stack_fffffdbc,in_stack_fffffdc0,in_stack_fffffdc7,
                in_stack_fffffdc8);
     if ((BStack_1c0.trace.startsolid == false) &&
-       (bVar12 = BG_WeaponBulletFire_ShouldPenetrate(local_1d0,param_3,param_4), bVar12)) {
+       (bVar10 = BG_WeaponBulletFire_ShouldPenetrate(local_1d0,param_3,param_4), bVar10)) {
       if (param_6 != -1) {
         Com_PrintWarning(0x11,
                          "WARNING: Possible Client/Server Perk desync - Received HITCLIENT fire event from entity \'%i\' but the bullet did not explode as expected (%i) (perks = %i).\n"
                         );
       }
-      iVar8 = 0;
-      dVar22 = 1.0;
-      dVar26 = 0.009999999776482582;
-      dVar23 = 0.13500000536441803;
-      dVar24 = 0.0;
+      iVar6 = 0;
+      dVar15 = 1.0;
+      dVar19 = 0.009999999776482582;
+      dVar16 = 0.13500000536441803;
+      dVar17 = 0.0;
       while( true ) {
-        fVar30 = BG_GetSurfacePenetrationDepth(param_3,param_4,BStack_1c0.depthSurfaceType);
-        dVar25 = (double)fVar30;
-        if (((pcVar17->nextState).eType == 1) && ((local_1d0[0] & 0x4000000) != 0)) {
-          dVar25 = (double)(float)((double)(perk_bulletPenetrationMultiplier->current).value *
-                                  dVar25);
+        fVar23 = BG_GetSurfacePenetrationDepth(param_3,param_4,BStack_1c0.depthSurfaceType);
+        dVar18 = (double)fVar23;
+        if (((param_5->nextState).eType == 1) && ((local_1d0[0] & 0x4000000) != 0)) {
+          dVar18 = (double)(float)((double)(perk_bulletPenetrationMultiplier->current).value *
+                                  dVar18);
         }
-        if (dVar25 <= dVar24) break;
-        dVar29 = (double)BStack_1c0.hitPos[0];
-        dVar28 = (double)BStack_1c0.hitPos[1];
-        dVar27 = (double)BStack_1c0.hitPos[2];
-        bVar12 = BG_AdvanceTrace((BulletFireParams *)pWVar15,&BStack_1c0,(float)dVar23);
-        if ((!bVar12) ||
-           (bVar12 = CG_ShouldSimulateBulletFire(LVar4,(BulletFireParams *)pWVar15), !bVar12))
-        break;
-        bVar12 = CG_BulletTrace(LVar4,(BulletFireParams *)pWVar15,pWVar1,pcVar17,&BStack_1c0,
+        if (dVar18 <= dVar17) break;
+        dVar22 = (double)BStack_1c0.hitPos[0];
+        dVar21 = (double)BStack_1c0.hitPos[1];
+        dVar20 = (double)BStack_1c0.hitPos[2];
+        bVar10 = BG_AdvanceTrace(param_2,&BStack_1c0,(float)dVar16);
+        if (!bVar10) {
+          return;
+        }
+        bVar10 = CG_ShouldSimulateBulletFire(param_1,param_2);
+        if (!bVar10) {
+          return;
+        }
+        bVar10 = CG_BulletTrace(param_1,param_2,pWVar1,param_5,&BStack_1c0,
                                 BStack_1c0.depthSurfaceType);
-        Com_Memcpy(aBStack_120,pWVar15,0x44);
-        aBStack_120[0].start[0] = (float)pWVar15->weapType;
-        aBStack_120[0].start[1] = (float)pWVar15->weapClass;
-        aBStack_120[0].start[2] = (float)pWVar15->penetrateType;
-        aBStack_120[0].dir[0] = (float)-(double)(float)pWVar15->inventoryType;
-        aBStack_120[0].dir[1] = (float)-(double)(float)pWVar15->fireType;
-        aBStack_120[0].dir[2] = (float)-(double)(float)pWVar15->offhandClass;
-        aBStack_120[0].end[0] = (float)(-(double)(float)pWVar15->inventoryType * dVar26 + dVar29);
-        aBStack_120[0].end[1] = (float)(-(double)(float)pWVar15->fireType * dVar26 + dVar28);
-        aBStack_120[0].end[2] = (float)(-(double)(float)pWVar15->offhandClass * dVar26 + dVar27);
+        Com_Memcpy(aBStack_120,param_2,0x44);
+        aBStack_120[0].start[0] = param_2->end[0];
+        aBStack_120[0].start[1] = param_2->end[1];
+        aBStack_120[0].start[2] = param_2->end[2];
+        aBStack_120[0].dir[0] = (float)-(double)param_2->dir[0];
+        aBStack_120[0].dir[1] = (float)-(double)param_2->dir[1];
+        aBStack_120[0].dir[2] = (float)-(double)param_2->dir[2];
+        aBStack_120[0].end[0] = (float)(-(double)param_2->dir[0] * dVar19 + dVar22);
+        aBStack_120[0].end[1] = (float)(-(double)param_2->dir[1] * dVar19 + dVar21);
+        aBStack_120[0].end[2] = (float)(-(double)param_2->dir[2] * dVar19 + dVar20);
         Com_Memcpy(&BStack_170,&BStack_1c0,0x50);
         BStack_170.trace.normal[0] = -BStack_170.trace.normal[0];
         BStack_170.trace.normal[1] = -BStack_170.trace.normal[1];
         BStack_170.trace.normal[2] = -BStack_170.trace.normal[2];
-        if (bVar12) {
-          BG_AdvanceTrace(aBStack_120,&BStack_170,(float)dVar26);
+        if (bVar10) {
+          BG_AdvanceTrace(aBStack_120,&BStack_170,(float)dVar19);
         }
-        bVar13 = CG_BulletTrace(LVar4,aBStack_120,pWVar1,pcVar17,&BStack_170,
+        bVar11 = CG_BulletTrace(param_1,aBStack_120,pWVar1,param_5,&BStack_170,
                                 BStack_170.depthSurfaceType);
-        if (((bVar13) && (BStack_170.trace.allsolid != false)) ||
+        if (((bVar11) && (BStack_170.trace.allsolid != false)) ||
            ((BStack_1c0.trace.startsolid != false && (BStack_170.trace.startsolid != false)))) {
-          bVar3 = true;
+          bVar2 = true;
         }
         else {
-          bVar3 = false;
+          bVar2 = false;
         }
-        if ((bVar13) || (bVar3)) {
-          uVar11 = Trace_GetEntityHitId(&BStack_170.trace);
-          if (bVar3) {
-            fVar30 = (aBStack_120[0].end[0] - aBStack_120[0].start[0]) *
+        if ((bVar11) || (bVar2)) {
+          uVar9 = Trace_GetEntityHitId(&BStack_170.trace);
+          if (bVar2) {
+            fVar23 = (aBStack_120[0].end[0] - aBStack_120[0].start[0]) *
                      (aBStack_120[0].end[0] - aBStack_120[0].start[0]) +
                      (aBStack_120[0].end[2] - aBStack_120[0].start[2]) *
                      (aBStack_120[0].end[2] - aBStack_120[0].start[2]) +
@@ -4289,38 +4093,42 @@ void CG_SimulateBulletFire_Internal
                      (aBStack_120[0].end[1] - aBStack_120[0].start[1]);
           }
           else {
-            fVar30 = (float)(dVar27 - (double)BStack_170.hitPos[2]) *
-                     (float)(dVar27 - (double)BStack_170.hitPos[2]) +
-                     (float)(dVar28 - (double)BStack_170.hitPos[1]) *
-                     (float)(dVar28 - (double)BStack_170.hitPos[1]) +
-                     (float)(dVar29 - (double)BStack_170.hitPos[0]) *
-                     (float)(dVar29 - (double)BStack_170.hitPos[0]);
+            fVar23 = (float)(dVar20 - (double)BStack_170.hitPos[2]) *
+                     (float)(dVar20 - (double)BStack_170.hitPos[2]) +
+                     (float)(dVar21 - (double)BStack_170.hitPos[1]) *
+                     (float)(dVar21 - (double)BStack_170.hitPos[1]) +
+                     (float)(dVar22 - (double)BStack_170.hitPos[0]) *
+                     (float)(dVar22 - (double)BStack_170.hitPos[0]);
           }
-          dVar27 = (double)SQRT(fVar30);
-          if ((double)SQRT(fVar30) < dVar22) {
-            dVar27 = dVar22;
+          dVar20 = (double)SQRT(fVar23);
+          if ((double)SQRT(fVar23) < dVar15) {
+            dVar20 = dVar15;
           }
-          if (bVar13) {
+          if (bVar11) {
             if ((local_1c8 == (clientInfo_t *)0x0) ||
-               (bVar13 = BG_HasPerk(local_1c8->perks,0x1a), !bVar13)) {
-              fVar30 = BG_GetSurfacePenetrationDepth(param_3,param_4,BStack_170.depthSurfaceType);
-              if ((float)((double)fVar30 - dVar25) < 0.0) {
-                dVar25 = (double)fVar30;
+               (bVar11 = BG_HasPerk(local_1c8->perks,0x1a), !bVar11)) {
+              fVar23 = BG_GetSurfacePenetrationDepth(param_3,param_4,BStack_170.depthSurfaceType);
+              if ((float)((double)fVar23 - dVar18) < 0.0) {
+                dVar18 = (double)fVar23;
               }
             }
             else {
-              fVar30 = BG_GetSurfacePenetrationDepth(param_3,param_4,BStack_170.depthSurfaceType);
-              dVar28 = (double)(fVar30 * (perk_bulletPenetrationMultiplier->current).value);
-              if ((float)(dVar28 - dVar25) < 0.0) {
-                dVar25 = dVar28;
+              fVar23 = BG_GetSurfacePenetrationDepth(param_3,param_4,BStack_170.depthSurfaceType);
+              dVar21 = (double)(fVar23 * (perk_bulletPenetrationMultiplier->current).value);
+              if ((float)(dVar21 - dVar18) < 0.0) {
+                dVar18 = dVar21;
               }
             }
-            if (dVar25 <= dVar24) break;
+            if (dVar18 <= dVar17) {
+              return;
+            }
           }
-          pXVar2 = (XModel *)((float)pWVar15->handXModel - (float)(dVar27 / dVar25));
-          pWVar15->handXModel = pXVar2;
-          if ((double)(float)pXVar2 <= dVar24) break;
-          if ((!bVar3) &&
+          fVar23 = param_2->damageMultiplier - (float)(dVar20 / dVar18);
+          param_2->damageMultiplier = fVar23;
+          if ((double)fVar23 <= dVar17) {
+            return;
+          }
+          if ((!bVar2) &&
              ((bullet_penetrationMinFxDist->current).value *
               (bullet_penetrationMinFxDist->current).value <
               (BStack_170.hitPos[1] - BStack_1c0.hitPos[1]) *
@@ -4329,51 +4137,57 @@ void CG_SimulateBulletFire_Internal
               (BStack_170.hitPos[0] - BStack_1c0.hitPos[0]) +
               (BStack_170.hitPos[2] - BStack_1c0.hitPos[2]) *
               (BStack_170.hitPos[2] - BStack_1c0.hitPos[2]))) {
-            if ((!bVar12) || ((BStack_1c0.trace.surfaceFlags & 4U) == 0)) {
+            if ((!bVar10) || ((BStack_1c0.trace.surfaceFlags & 4U) == 0)) {
               CG_SimulateBulletFire_Internal_HitEffect
-                        (LVar4,(pcVar17->nextState).number,(uint)uVar11,param_6,param_3,param_4,
+                        (param_1,(param_5->nextState).number,(uint)uVar9,param_6,param_3,param_4,
                          aBStack_120[0].start,BStack_170.hitPos,in_stack_fffffdb8,in_stack_fffffdbc,
                          in_stack_fffffdc0,in_stack_fffffdc7,in_stack_fffffdc8);
             }
-            if (bVar12) {
-              CG_SimulateBulletFire_Internal_HitEffect
-                        (LVar4,(pcVar17->nextState).number,(uint)uVar11,param_6,param_3,param_4,
-                         (float *)ppuVar19,BStack_1c0.hitPos,in_stack_fffffdb8,in_stack_fffffdbc,
-                         in_stack_fffffdc0,in_stack_fffffdc7,in_stack_fffffdc8);
-              goto LAB_823243cc;
+            if (!bVar10) {
+              return;
             }
-            break;
+            CG_SimulateBulletFire_Internal_HitEffect
+                      (param_1,(param_5->nextState).number,(uint)uVar9,param_6,param_3,param_4,
+                       pfVar13,BStack_1c0.hitPos,in_stack_fffffdb8,in_stack_fffffdbc,
+                       in_stack_fffffdc0,in_stack_fffffdc7,in_stack_fffffdc8);
+            goto LAB_823243cc;
           }
         }
         else {
-          if (!bVar12) break;
+          if (!bVar10) {
+            return;
+          }
           if ((BStack_1c0.trace.allsolid == false) &&
              ((bullet_penetrationMinFxDist->current).value *
               (bullet_penetrationMinFxDist->current).value <
-              (float)(dVar28 - (double)BStack_1c0.hitPos[1]) *
-              (float)(dVar28 - (double)BStack_1c0.hitPos[1]) +
-              (float)(dVar29 - (double)BStack_1c0.hitPos[0]) *
-              (float)(dVar29 - (double)BStack_1c0.hitPos[0]) +
-              (float)(dVar27 - (double)BStack_1c0.hitPos[2]) *
-              (float)(dVar27 - (double)BStack_1c0.hitPos[2]))) {
-            uVar11 = Trace_GetEntityHitId(&BStack_1c0.trace);
+              (float)(dVar21 - (double)BStack_1c0.hitPos[1]) *
+              (float)(dVar21 - (double)BStack_1c0.hitPos[1]) +
+              (float)(dVar22 - (double)BStack_1c0.hitPos[0]) *
+              (float)(dVar22 - (double)BStack_1c0.hitPos[0]) +
+              (float)(dVar20 - (double)BStack_1c0.hitPos[2]) *
+              (float)(dVar20 - (double)BStack_1c0.hitPos[2]))) {
+            uVar9 = Trace_GetEntityHitId(&BStack_1c0.trace);
             CG_SimulateBulletFire_Internal_HitEffect
-                      (LVar4,(pcVar17->nextState).number,(uint)uVar11,param_6,param_3,param_4,
-                       (float *)ppuVar19,BStack_1c0.hitPos,in_stack_fffffdb8,in_stack_fffffdbc,
+                      (param_1,(param_5->nextState).number,(uint)uVar9,param_6,param_3,param_4,
+                       pfVar13,BStack_1c0.hitPos,in_stack_fffffdb8,in_stack_fffffdbc,
                        in_stack_fffffdc0,in_stack_fffffdc7,in_stack_fffffdc8);
 LAB_823243cc:
-            iVar10 = BG_GetDamage(param_3,param_4);
+            iVar8 = BG_GetDamage(param_3,param_4);
             DynEntCl_DynEntImpactEvent
-                      (LVar4,(pcVar17->nextState).number,(float *)ppuVar19,BStack_1c0.hitPos,iVar10,
-                       false,param_4);
+                      (param_1,(param_5->nextState).number,pfVar13,BStack_1c0.hitPos,iVar8,false,
+                       param_4);
           }
         }
-        if ((!bVar12) || (iVar8 = iVar8 + 1, 4 < iVar8)) break;
+        if (!bVar10) {
+          return;
+        }
+        iVar6 = iVar6 + 1;
+        if (4 < iVar6) {
+          return;
+        }
       }
     }
   }
-  __restfpr_24();
-  __restgprlr();
   return;
 }
 
@@ -4425,6 +4239,8 @@ bool CG_IsPlayerADS(centity_s *param_1)
 
 // 8231C3B0  CG_GuessSpreadForWeapon  (cgame/cg_weapons.cpp:3243)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
@@ -4434,9 +4250,6 @@ void CG_GuessSpreadForWeapon
 
 {
   int iVar1;
-  int iVar2;
-  byte bVar3;
-  float *pfVar4;
   float local_40;
   float local_3c;
   float local_38;
@@ -4444,77 +4257,70 @@ void CG_GuessSpreadForWeapon
   float local_30;
   float local_2c [11];
   
-  pfVar4 = (float *)(int)param_4;
-  bVar3 = param_3._s_0.weaponIdx;
-  iVar1 = __savegprlr_29(param_1);
-  BG_GetHipSpread((Weapon)param_2,(bool)bVar3,&local_30,local_2c,&local_38,&local_34,&local_40,
-                  &local_3c);
-  if (0x11 < *(uint *)(iVar1 + 0xc4)) {
+  BG_GetHipSpread((Weapon)param_2,(bool)param_3._s_0.weaponIdx,&local_30,local_2c,&local_38,
+                  &local_34,&local_40,&local_3c);
+  if (0x11 < *(uint *)(param_1 + 0xc4)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp",0xcb5,0,
                     "cent->nextState.number doesn\'t index MAX_CLIENTS\n\t%i not in [0, %i)");
   }
-  iVar2 = BG_IsProneAnim(*(int *)(iVar1 + 0x194));
-  if (iVar2 != 0) {
-    *pfVar4 = local_40;
-    *param_5 = local_3c;
-    __restgprlr_29();
-    return;
-  }
-  iVar1 = BG_IsCrouchingAnim(*(int *)(iVar1 + 0x194));
+  iVar1 = BG_IsProneAnim(*(int *)(param_1 + 0x194));
   if (iVar1 != 0) {
-    *pfVar4 = local_38;
-    *param_5 = local_34;
-    __restgprlr_29();
+    *(float *)(int)param_4 = local_40;
+    *param_5 = local_3c;
     return;
   }
-  *pfVar4 = local_30;
+  iVar1 = BG_IsCrouchingAnim(*(int *)(param_1 + 0x194));
+  if (iVar1 != 0) {
+    *(float *)(int)param_4 = local_38;
+    *param_5 = local_34;
+    return;
+  }
+  *(float *)(int)param_4 = local_30;
   *param_5 = local_2c[0];
-  __restgprlr_29();
   return;
 }
 
 
 // 8231C498  RandomBulletDir  (cgame/cg_weapons.cpp:3273)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void RandomBulletDir(uint *param_1,float *param_2,float *param_3)
 
 {
-  uint *puVar1;
-  ulonglong uVar2;
-  ulonglong uVar3;
+  double dVar1;
+  double dVar2;
+  double dVar3;
   double dVar4;
-  double dVar5;
-  double dVar6;
-  double dVar7;
-  float fVar8;
+  float fVar5;
   
-  uVar3 = (ulonglong)(int)param_3;
-  uVar2 = (ulonglong)(int)param_2;
-  puVar1 = (uint *)__savegprlr_27(param_1);
-  if ((uVar2 & 0xffffffff) == 0) {
+  if (param_2 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp",0xccc,0,
                     "%s");
   }
-  if ((uVar3 & 0xffffffff) == 0) {
+  if (param_3 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp",0xccd,0,
                     "%s");
   }
-  fVar8 = BG_random(puVar1);
-  dVar6 = (double)(fVar8 * 360.0);
-  fVar8 = BG_random(puVar1);
-  dVar4 = (double)fVar8;
-  dVar7 = (double)(float)(dVar6 * 0.01745329238474369);
-  dVar6 = sin(dVar7);
-  dVar5 = (double)(float)dVar6;
-  dVar6 = cos(dVar7);
-  *(float *)uVar2 = (float)((double)(float)dVar6 * dVar4);
-  *(float *)uVar3 = (float)(dVar5 * dVar4);
-  __restgprlr_27();
+  fVar5 = BG_random(param_1);
+  dVar3 = (double)(fVar5 * 360.0);
+  fVar5 = BG_random(param_1);
+  dVar1 = (double)fVar5;
+  dVar4 = (double)(float)(dVar3 * 0.01745329238474369);
+  dVar3 = sin(dVar4);
+  dVar2 = (double)(float)dVar3;
+  dVar3 = cos(dVar4);
+  *param_2 = (float)((double)(float)dVar3 * dVar1);
+  *param_3 = (float)(dVar2 * dVar1);
   return;
 }
 
 
 // 8231C580  CG_SimulateBulletFire_EndPos  (cgame/cg_weapons.cpp:3294)
+
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
 
 void CG_SimulateBulletFire_EndPos
                (uint *param_1,float param_2,float *param_3,float *param_4,float *param_5,
@@ -4525,119 +4331,108 @@ void CG_SimulateBulletFire_EndPos
   float fVar2;
   float fVar3;
   float fVar4;
-  uint *puVar5;
-  ulonglong uVar6;
-  float *pfVar7;
-  ulonglong uVar8;
-  float *pfVar9;
   float *in_r10;
-  double extraout_f1;
-  double dVar10;
-  double dVar11;
-  double dVar12;
+  double dVar5;
+  double dVar6;
+  double dVar7;
   float local_80;
   float local_7c [31];
   
-  dVar11 = (double)param_9;
-  uVar8 = (ulonglong)(int)param_6;
-  uVar6 = (ulonglong)(int)param_5;
-  puVar5 = (uint *)__savegprlr_22((double)param_2,param_1,param_3);
-  local_80 = (float)extraout_f1;
-  dVar10 = extraout_f1;
-  if (((uint)local_80 & 0x7f800000) == 0x7f800000) {
+  dVar5 = (double)param_2;
+  dVar6 = (double)param_9;
+  local_80 = param_2;
+  if (((uint)param_2 & 0x7f800000) == 0x7f800000) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp",0xce3,0,
                     "%s");
   }
-  if ((uVar6 & 0xffffffff) == 0) {
+  if (param_5 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp",0xce5,0,
                     "%s");
   }
-  dVar10 = tan((double)(float)(dVar10 * 0.01745329238474369));
-  local_80 = (float)((double)(float)dVar10 * dVar11);
-  dVar10 = (double)local_80;
+  dVar5 = tan((double)(float)(dVar5 * 0.01745329238474369));
+  local_80 = (float)((double)(float)dVar5 * dVar6);
+  dVar5 = (double)local_80;
   if (((uint)local_80 & 0x7f800000) == 0x7f800000) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp",0xce9,0,
                     "%s");
   }
-  RandomBulletDir(puVar5,&local_80,local_7c);
-  local_80 = (float)((double)local_80 * dVar10);
-  dVar12 = (double)local_80;
-  dVar10 = (double)(float)((double)local_7c[0] * dVar10);
+  RandomBulletDir(param_1,&local_80,local_7c);
+  local_80 = (float)((double)local_80 * dVar5);
+  dVar7 = (double)local_80;
+  dVar5 = (double)(float)((double)local_7c[0] * dVar5);
   if (((uint)local_80 & 0x7f800000) == 0x7f800000) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp",0xcf0,0,
                     "%s");
   }
-  local_7c[0] = (float)dVar10;
+  local_7c[0] = (float)dVar5;
   if (((uint)local_7c[0] & 0x7f800000) == 0x7f800000) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp",0xcf1,0,
                     "%s");
   }
-  local_7c[0] = (float)((double)*param_7 * dVar11 + (double)*param_4);
-  pfVar7 = (float *)uVar6;
-  *pfVar7 = local_7c[0];
-  fVar1 = (float)((double)param_7[1] * dVar11 + (double)param_4[1]);
-  pfVar7[1] = fVar1;
-  fVar2 = (float)((double)param_7[2] * dVar11 + (double)param_4[2]);
-  pfVar7[2] = fVar2;
+  local_7c[0] = (float)((double)*param_7 * dVar6 + (double)*param_4);
+  *param_5 = local_7c[0];
+  fVar1 = (float)((double)param_7[1] * dVar6 + (double)param_4[1]);
+  param_5[1] = fVar1;
+  fVar2 = (float)((double)param_7[2] * dVar6 + (double)param_4[2]);
+  param_5[2] = fVar2;
   if (((((uint)local_7c[0] & 0x7f800000) == 0x7f800000) ||
       (local_7c[0] = fVar1, ((uint)fVar1 & 0x7f800000) == 0x7f800000)) ||
      (local_7c[0] = fVar2, ((uint)fVar2 & 0x7f800000) == 0x7f800000)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp",0xcf5,0,
                     "%s");
   }
-  fVar1 = (float)((double)*param_8 * dVar12 + (double)*pfVar7);
-  *pfVar7 = fVar1;
-  fVar2 = (float)((double)param_8[1] * dVar12 + (double)pfVar7[1]);
-  pfVar7[1] = fVar2;
-  fVar3 = (float)((double)param_8[2] * dVar12 + (double)pfVar7[2]);
-  pfVar7[2] = fVar3;
-  local_7c[0] = (float)((double)*in_r10 * dVar10 + (double)fVar1);
-  *pfVar7 = local_7c[0];
-  fVar1 = (float)((double)in_r10[1] * dVar10 + (double)fVar2);
-  pfVar7[1] = fVar1;
-  fVar2 = (float)((double)in_r10[2] * dVar10 + (double)fVar3);
-  pfVar7[2] = fVar2;
+  fVar1 = (float)((double)*param_8 * dVar7 + (double)*param_5);
+  *param_5 = fVar1;
+  fVar2 = (float)((double)param_8[1] * dVar7 + (double)param_5[1]);
+  param_5[1] = fVar2;
+  fVar3 = (float)((double)param_8[2] * dVar7 + (double)param_5[2]);
+  param_5[2] = fVar3;
+  local_7c[0] = (float)((double)*in_r10 * dVar5 + (double)fVar1);
+  *param_5 = local_7c[0];
+  fVar1 = (float)((double)in_r10[1] * dVar5 + (double)fVar2);
+  param_5[1] = fVar1;
+  fVar2 = (float)((double)in_r10[2] * dVar5 + (double)fVar3);
+  param_5[2] = fVar2;
   if (((((uint)local_7c[0] & 0x7f800000) == 0x7f800000) ||
       (local_7c[0] = fVar1, ((uint)fVar1 & 0x7f800000) == 0x7f800000)) ||
      (local_7c[0] = fVar2, ((uint)fVar2 & 0x7f800000) == 0x7f800000)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp",0xcfa,0,
                     "%s");
   }
-  if ((uVar8 & 0xffffffff) != 0) {
-    fVar1 = *pfVar7 - *param_4;
-    pfVar9 = (float *)uVar8;
-    *pfVar9 = fVar1;
-    fVar2 = pfVar7[1] - param_4[1];
-    pfVar9[1] = fVar2;
-    local_7c[0] = pfVar7[2] - param_4[2];
-    pfVar9[2] = local_7c[0];
-    fVar4 = SQRT(local_7c[0] * local_7c[0] + fVar1 * fVar1 + fVar2 * fVar2);
+  if (param_6 != (float *)0x0) {
+    local_7c[0] = *param_5 - *param_4;
+    *param_6 = local_7c[0];
+    fVar1 = param_5[1] - param_4[1];
+    param_6[1] = fVar1;
+    fVar2 = param_5[2] - param_4[2];
+    param_6[2] = fVar2;
+    fVar4 = SQRT(fVar2 * fVar2 + local_7c[0] * local_7c[0] + fVar1 * fVar1);
     fVar3 = 1.0;
     if (-fVar4 < 0.0) {
       fVar3 = fVar4;
     }
     fVar3 = 1.0 / fVar3;
-    fVar1 = fVar1 * fVar3;
-    fVar2 = fVar2 * fVar3;
-    *pfVar9 = fVar1;
     local_7c[0] = local_7c[0] * fVar3;
-    pfVar9[1] = fVar2;
-    pfVar9[2] = local_7c[0];
-    if (((((uint)fVar1 & 0x7f800000) == 0x7f800000) ||
-        (fVar1 = fVar2, ((uint)fVar2 & 0x7f800000) == 0x7f800000)) ||
-       (fVar1 = local_7c[0], ((uint)local_7c[0] & 0x7f800000) == 0x7f800000)) {
-      local_7c[0] = fVar1;
+    fVar1 = fVar1 * fVar3;
+    *param_6 = local_7c[0];
+    fVar2 = fVar2 * fVar3;
+    param_6[1] = fVar1;
+    param_6[2] = fVar2;
+    if (((((uint)local_7c[0] & 0x7f800000) == 0x7f800000) ||
+        (local_7c[0] = fVar1, ((uint)fVar1 & 0x7f800000) == 0x7f800000)) ||
+       (local_7c[0] = fVar2, ((uint)fVar2 & 0x7f800000) == 0x7f800000)) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp",0xd01,
                       0,"%s");
     }
   }
-  __restgprlr_22();
   return;
 }
 
 
 // 82324420  CG_SimulateBulletFire  (cgame/cg_weapons.cpp:3335)
 
+/* WARNING: Function: __savegprlr_16 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_16 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
@@ -4654,34 +4449,29 @@ void CG_SimulateBulletFire
   float fVar4;
   float fVar5;
   ulonglong uVar6;
-  LocalClientNum_t LVar7;
-  Weapon WVar8;
-  weapType_t wVar10;
-  cg_s *pcVar11;
-  clientInfo_t *pcVar12;
+  Weapon WVar7;
+  weapType_t wVar8;
+  cg_s *pcVar9;
+  clientInfo_t *pcVar10;
+  bool bVar13;
+  bool bVar14;
   bool bVar15;
-  bool bVar16;
-  bool bVar17;
-  int iVar13;
-  int iVar14;
-  bool bVar19;
-  longlong lVar18;
-  longlong lVar20;
-  float *pfVar21;
-  float *pfVar22;
-  ulonglong uVar23;
-  ulonglong uVar24;
-  longlong lVar25;
-  cg_s *pcVar26;
-  bool bVar27;
-  longlong lVar28;
-  double dVar29;
-  double dVar30;
-  double dVar31;
-  double dVar32;
-  double dVar33;
-  double dVar34;
-  float fVar35;
+  int iVar11;
+  int iVar12;
+  longlong lVar16;
+  longlong lVar17;
+  float *pfVar18;
+  longlong lVar19;
+  cg_s *pcVar20;
+  bool bVar21;
+  longlong lVar22;
+  double dVar23;
+  double dVar24;
+  double dVar25;
+  double dVar26;
+  double dVar27;
+  double dVar28;
+  float fVar29;
   int in_stack_00000054;
   byte local_1a0 [8];
   float local_198;
@@ -4716,306 +4506,311 @@ void CG_SimulateBulletFire
   float fStack_dc;
   longlong local_d8;
   orientation_t local_d0 [4];
-  Weapon WVar9;
   
-  uVar24 = (ulonglong)param_8;
-  uVar23 = (ulonglong)param_7;
-  pfVar21 = (float *)(int)(short)param_6;
-  lVar20 = (longlong)param_5;
-  lVar18 = (longlong)(int)param_4.data;
+  pfVar18 = (float *)(int)(short)param_6;
+  lVar17 = (longlong)param_5;
+  lVar16 = (longlong)(int)param_4.data;
   uVar6 = ZEXT48(&stack0x00000000);
-  LVar7 = __savegprlr_16(param_1);
-  WVar9.data = (uint)lVar18;
-  bVar19 = SUB81(lVar20,0);
-  pfVar22 = pfVar21;
-  WVar8 = BG_GetAlternateWeapon(WVar9,bVar19);
-  pWVar2 = bg_weaponDefs[WVar8.data & 0xff];
-  wVar10 = BG_GetWeaponType(WVar9,bVar19);
-  if (wVar10 != WEAPTYPE_BULLET) {
+  WVar7 = BG_GetAlternateWeapon(param_4,param_5);
+  pWVar2 = bg_weaponDefs[WVar7.data & 0xff];
+  wVar8 = BG_GetWeaponType(param_4,param_5);
+  if (wVar8 != WEAPTYPE_BULLET) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp",0xd29,0,
                     "%s");
   }
-  iVar14 = (param_2->nextState).eType;
-  if ((0x11 < iVar14) && (iVar14 != 0x32)) goto LAB_82324dd0;
-  pcVar26 = (cg_s *)0x0;
-  pcVar11 = CG_GetLocalClientGlobals(LVar7);
-  pcVar12 = CG_GetClientInfo(LVar7,param_2);
-  if ((pcVar12 != (clientInfo_t *)0x0) && (pcVar12->infoValid == 0)) goto LAB_82324dd0;
-  dVar34 = 0.0;
-  dVar32 = 1.0;
-  if ((uVar24 & 0xff) == 0) {
-    iVar14 = (param_2->nextState).eType;
-    if (iVar14 == 1) {
+  iVar12 = (param_2->nextState).eType;
+  if ((0x11 < iVar12) && (iVar12 != 0x32)) {
+    return;
+  }
+  pcVar20 = (cg_s *)0x0;
+  pcVar9 = CG_GetLocalClientGlobals(param_1);
+  pcVar10 = CG_GetClientInfo(param_1,param_2);
+  if ((pcVar10 != (clientInfo_t *)0x0) && (pcVar10->infoValid == 0)) {
+    return;
+  }
+  dVar28 = 0.0;
+  dVar26 = 1.0;
+  if (!param_8) {
+    iVar12 = (param_2->nextState).eType;
+    if (iVar12 == 1) {
       CG_GuessSpreadForWeapon
-                ((LocalClientNum_t)param_2,(centity_s *)WVar9,(Weapon)(uint)lVar20,true,&local_17c,
-                 pfVar22);
-      bVar27 = CG_IsPlayerADS(param_2);
-      fVar35 = (param_2->nextState).lerp.pos.trBase[0] - (param_2->prevState).pos.trBase[0];
+                ((LocalClientNum_t)param_2,(centity_s *)param_4,(Weapon)(int)param_5,true,&local_17c
+                 ,pfVar18);
+      bVar21 = CG_IsPlayerADS(param_2);
+      fVar29 = (param_2->nextState).lerp.pos.trBase[0] - (param_2->prevState).pos.trBase[0];
       fVar3 = (param_2->nextState).lerp.pos.trBase[1] - (param_2->prevState).pos.trBase[1];
-      lVar25 = (ulonglong)(uint)pcVar11->nextSnap->serverTime -
-               (ulonglong)(uint)pcVar11->snap->serverTime;
+      lVar19 = (ulonglong)(uint)pcVar9->nextSnap->serverTime -
+               (ulonglong)(uint)pcVar9->snap->serverTime;
       fVar4 = (param_2->nextState).lerp.pos.trBase[2] - (param_2->prevState).pos.trBase[2];
-      if (lVar25 != 0) {
-        local_d8 = (longlong)(int)lVar25;
+      if (lVar19 != 0) {
+        local_d8 = (longlong)(int)lVar19;
         fVar5 = 1000.0 / (float)local_d8;
-        fVar35 = fVar5 * fVar35;
+        fVar29 = fVar5 * fVar29;
         fVar3 = fVar3 * fVar5;
         fVar4 = fVar4 * fVar5;
       }
-      iVar14 = (param_2->nextState).number;
+      iVar12 = (param_2->nextState).number;
       local_1a0[0] = 0xfe;
-      fVar3 = SQRT(fVar35 * fVar35 + fVar4 * fVar4 + fVar3 * fVar3);
-      fVar35 = 255.0;
+      fVar3 = SQRT(fVar29 * fVar29 + fVar4 * fVar4 + fVar3 * fVar3);
+      fVar29 = 255.0;
       if (fVar3 - 255.0 < 0.0) {
-        fVar35 = fVar3;
+        fVar29 = fVar3;
       }
-      dVar33 = (double)(fVar35 * 0.003921569);
-      iVar13 = CG_GetBoneIndex(LVar7,iVar14,(uint)pfVar21 & 0xffff,local_1a0);
-      if ((iVar13 == 0) ||
-         (bVar15 = FX_GetBoneOrientation(LVar7,iVar14,(uint)local_1a0[0],&local_170), !bVar15))
-      goto LAB_82324dd0;
-      bVar15 = false;
+      dVar27 = (double)(fVar29 * 0.003921569);
+      iVar11 = CG_GetBoneIndex(param_1,iVar12,(uint)param_6,local_1a0);
+      if (iVar11 == 0) {
+        return;
+      }
+      bVar13 = FX_GetBoneOrientation(param_1,iVar12,(uint)local_1a0[0],&local_170);
+      if (!bVar13) {
+        return;
+      }
+      bVar13 = false;
       local_188 = local_170.origin[0];
       local_184 = local_170.origin[1];
       local_180 = local_170.origin[2];
       local_198 = local_170.origin[0];
       local_194 = local_170.origin[1];
       local_190 = local_170.origin[2];
-      if (pcVar12 == (clientInfo_t *)0x0) {
+      if (pcVar10 == (clientInfo_t *)0x0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp",
                         0xda9,0,"%s");
       }
-      AngleVectors(pcVar12->playerAngles,local_170.axis[0],local_170.axis[1],local_170.axis[2]);
+      AngleVectors(pcVar10->playerAngles,local_170.axis[0],local_170.axis[1],local_170.axis[2]);
+      goto LAB_82324bb8;
     }
-    else {
-      if (iVar14 == 0xb) {
-        local_178 = pWVar2->playerSpread;
-        local_17c = pWVar2->playerSpread;
-        bVar27 = false;
-        dVar33 = dVar32;
-        if ((uVar23 & 0xff) == 0) {
-          if ((((pcVar11->predictedPlayerState).linkFlags & 4U) == 0) ||
-             ((pcVar11->predictedPlayerState).linkWeaponEnt != (param_2->nextState).number))
-          goto LAB_82324b48;
-          BG_GetPlayerViewDirection
-                    (&pcVar11->predictedPlayerState,local_170.axis[0],local_170.axis[1],
-                     local_170.axis[2]);
-          CG_GetPlayerViewOrigin(LVar7,&pcVar11->predictedPlayerState,local_170.origin);
+    if (iVar12 == 0xb) {
+      local_178 = pWVar2->playerSpread;
+      local_17c = pWVar2->playerSpread;
+      bVar21 = false;
+      dVar27 = dVar26;
+      if (param_7) {
+        CG_GetPlayerViewOrigin(param_1,&pcVar9->predictedPlayerState,local_170.origin);
+        bVar13 = BG_IsThirdPersonMode(&pcVar9->predictedPlayerState);
+        if (bVar13) {
+          local_13c = pcVar9->thirdPersonGunYaw;
+          local_140 = pcVar9->thirdPersonGunPitch;
+          local_138 = (float)dVar28;
+          AngleVectors(&local_140,local_170.axis[0],local_170.axis[1],local_170.axis[2]);
+          pcVar20 = pcVar9;
         }
         else {
-          CG_GetPlayerViewOrigin(LVar7,&pcVar11->predictedPlayerState,local_170.origin);
-          bVar15 = BG_IsThirdPersonMode(&pcVar11->predictedPlayerState);
-          if (bVar15) {
-            local_13c = pcVar11->thirdPersonGunYaw;
-            local_140 = pcVar11->thirdPersonGunPitch;
-            local_138 = (float)dVar34;
-            AngleVectors(&local_140,local_170.axis[0],local_170.axis[1],local_170.axis[2]);
-            pcVar26 = pcVar11;
-          }
-          else {
-            BG_GetPlayerViewDirection
-                      (&pcVar11->predictedPlayerState,local_170.axis[0],local_170.axis[1],
-                       local_170.axis[2]);
-            pcVar26 = pcVar11;
-          }
+          BG_GetPlayerViewDirection
+                    (&pcVar9->predictedPlayerState,local_170.axis[0],local_170.axis[1],
+                     local_170.axis[2]);
+          pcVar20 = pcVar9;
         }
       }
       else {
-        dVar33 = dVar34;
-        if ((iVar14 != 0xe) && (iVar14 != 0xc)) {
-          if (iVar14 < 0x12) {
-            Com_PrintError(0xe,"Unknown eType %i in CG_DrawBulletImpacts()\n");
-            __restgprlr_16();
-            return;
-          }
-          if (iVar14 != 0x32) {
-            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp",
-                            0xde9,0,"%s");
-            dVar33 = dVar34;
-          }
-          local_17c = BG_ADSSpread(WVar9,false);
-          bVar27 = true;
-          dVar34 = dVar33;
-          local_178 = local_17c;
-          ByteToDir((param_2->nextState).eventParm,local_170.axis[0]);
-          AxisRandomAroundForward(local_170.axis[0],local_170.axis[1],local_170.axis[2]);
-          local_198 = (param_2->pose).origin[0];
-          local_194 = (param_2->pose).origin[1];
-          bVar15 = true;
-          local_190 = (param_2->pose).origin[2];
-          local_188 = local_198;
-          local_184 = local_194;
-          local_180 = local_190;
-          local_170.origin[0] = local_198;
-          local_170.origin[1] = local_194;
-          local_170.origin[2] = local_190;
-          goto LAB_82324bb8;
-        }
-        local_17c = BG_ADSSpread(WVar9,false);
-        bVar27 = true;
-        dVar34 = dVar33;
-        local_178 = local_17c;
-LAB_82324b48:
-        iVar14 = (param_2->nextState).number;
-        local_1a0[0] = 0xfe;
-        iVar13 = CG_GetBoneIndex(LVar7,iVar14,(uint)pfVar21 & 0xffff,local_1a0);
-        if ((iVar13 == 0) ||
-           (bVar15 = FX_GetBoneOrientation(LVar7,iVar14,(uint)local_1a0[0],&local_170), !bVar15))
-        goto LAB_82324dd0;
+        if ((((pcVar9->predictedPlayerState).linkFlags & 4U) == 0) ||
+           ((pcVar9->predictedPlayerState).linkWeaponEnt != (param_2->nextState).number))
+        goto LAB_82324b48;
+        BG_GetPlayerViewDirection
+                  (&pcVar9->predictedPlayerState,local_170.axis[0],local_170.axis[1],
+                   local_170.axis[2]);
+        CG_GetPlayerViewOrigin(param_1,&pcVar9->predictedPlayerState,local_170.origin);
       }
-      bVar15 = false;
-      local_198 = local_170.origin[0];
-      local_194 = local_170.origin[1];
-      local_190 = local_170.origin[2];
-      local_188 = local_170.origin[0];
-      local_184 = local_170.origin[1];
-      local_180 = local_170.origin[2];
     }
+    else {
+      dVar27 = dVar28;
+      if ((iVar12 != 0xe) && (iVar12 != 0xc)) {
+        if (iVar12 < 0x12) {
+          Com_PrintError(0xe,"Unknown eType %i in CG_DrawBulletImpacts()\n");
+          return;
+        }
+        if (iVar12 != 0x32) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp",
+                          0xde9,0,"%s");
+          dVar27 = dVar28;
+        }
+        local_17c = BG_ADSSpread(param_4,false);
+        bVar21 = true;
+        dVar28 = dVar27;
+        local_178 = local_17c;
+        ByteToDir((param_2->nextState).eventParm,local_170.axis[0]);
+        AxisRandomAroundForward(local_170.axis[0],local_170.axis[1],local_170.axis[2]);
+        local_198 = (param_2->pose).origin[0];
+        local_194 = (param_2->pose).origin[1];
+        bVar13 = true;
+        local_190 = (param_2->pose).origin[2];
+        local_188 = local_198;
+        local_184 = local_194;
+        local_180 = local_190;
+        local_170.origin[0] = local_198;
+        local_170.origin[1] = local_194;
+        local_170.origin[2] = local_190;
+        goto LAB_82324bb8;
+      }
+      local_17c = BG_ADSSpread(param_4,false);
+      bVar21 = true;
+      dVar28 = dVar27;
+      local_178 = local_17c;
+LAB_82324b48:
+      iVar12 = (param_2->nextState).number;
+      local_1a0[0] = 0xfe;
+      iVar11 = CG_GetBoneIndex(param_1,iVar12,(uint)param_6,local_1a0);
+      if (iVar11 == 0) {
+        return;
+      }
+      bVar13 = FX_GetBoneOrientation(param_1,iVar12,(uint)local_1a0[0],&local_170);
+      if (!bVar13) {
+        return;
+      }
+    }
+    bVar13 = false;
+    local_198 = local_170.origin[0];
+    local_194 = local_170.origin[1];
+    local_190 = local_170.origin[2];
+    local_188 = local_170.origin[0];
+    local_184 = local_170.origin[1];
+    local_180 = local_170.origin[2];
+    goto LAB_82324bb8;
+  }
+  bVar21 = (pcVar9->predictedPlayerState).weapCommon.fWeaponPosFrac == 1.0;
+  dVar27 = (double)((pcVar9->lastFrame).aimSpreadScale * 0.003921569);
+  BG_GetSpreadForWeapon(&pcVar9->predictedPlayerState,param_4,&local_178,&local_17c);
+  CG_GetPlayerViewOrigin(param_1,&pcVar9->predictedPlayerState,&local_188);
+  bVar13 = BG_IsThirdPersonMode(&pcVar9->predictedPlayerState);
+  bVar14 = CL_Demo_IsFollowCamera(param_1);
+  if (bVar14) {
+LAB_823245b0:
+    bVar14 = true;
   }
   else {
-    bVar27 = (pcVar11->predictedPlayerState).weapCommon.fWeaponPosFrac == 1.0;
-    dVar33 = (double)((pcVar11->lastFrame).aimSpreadScale * 0.003921569);
-    BG_GetSpreadForWeapon(&pcVar11->predictedPlayerState,WVar9,&local_178,&local_17c);
-    CG_GetPlayerViewOrigin(LVar7,&pcVar11->predictedPlayerState,&local_188);
-    bVar15 = BG_IsThirdPersonMode(&pcVar11->predictedPlayerState);
-    bVar16 = CL_Demo_IsFollowCamera(LVar7);
-    if (bVar16) {
-LAB_823245b0:
-      bVar16 = true;
-    }
-    else {
-      bVar17 = CL_Demo_IsFollowCamera(LVar7);
-      bVar16 = false;
-      if (bVar17) goto LAB_823245b0;
-    }
-    if (bVar15 || bVar16) {
-      local_13c = pcVar11->thirdPersonGunYaw;
-      local_140 = pcVar11->thirdPersonGunPitch;
-      local_138 = (float)dVar34;
-      AngleVectors(&local_140,local_170.axis[0],local_170.axis[1],local_170.axis[2]);
-      local_170.origin[0] = local_188;
-      local_170.origin[1] = local_184;
-      local_170.origin[2] = local_180;
-      uVar1 = (pcVar11->predictedPlayerState).eFlags;
-      if ((uVar1 & 8) == 0) {
-        dVar31 = (double)pcVar11->thirdPersonGunPitch;
-        dVar30 = dVar34;
-        if (dVar31 < 0.0) {
-          dVar30 = dVar31;
-        }
-        dVar29 = -90.0;
-        if ((float)(-90.0 - dVar31) < 0.0) {
-          dVar29 = dVar30;
-        }
-        if ((uVar1 & 4) == 0) {
-          fVar35 = 8.0;
-        }
-        else {
-          fVar35 = 5.0;
-        }
-        fVar35 = (float)(dVar29 * -0.011111111380159855) * 30.0 - fVar35;
+    bVar15 = CL_Demo_IsFollowCamera(param_1);
+    bVar14 = false;
+    if (bVar15) goto LAB_823245b0;
+  }
+  if (bVar13 || bVar14) {
+    local_13c = pcVar9->thirdPersonGunYaw;
+    local_140 = pcVar9->thirdPersonGunPitch;
+    local_138 = (float)dVar28;
+    AngleVectors(&local_140,local_170.axis[0],local_170.axis[1],local_170.axis[2]);
+    local_170.origin[0] = local_188;
+    local_170.origin[1] = local_184;
+    local_170.origin[2] = local_180;
+    uVar1 = (pcVar9->predictedPlayerState).eFlags;
+    if ((uVar1 & 8) == 0) {
+      dVar25 = (double)pcVar9->thirdPersonGunPitch;
+      dVar24 = dVar28;
+      if (dVar25 < 0.0) {
+        dVar24 = dVar25;
+      }
+      dVar23 = -90.0;
+      if ((float)(-90.0 - dVar25) < 0.0) {
+        dVar23 = dVar24;
+      }
+      if ((uVar1 & 4) == 0) {
+        fVar29 = 8.0;
       }
       else {
-        fVar35 = -2.5;
+        fVar29 = 5.0;
       }
-      bVar15 = true;
-      local_198 = local_170.axis[2][0] * fVar35 + local_170.axis[0][0] * 45.0 + local_188;
-      local_194 = local_170.axis[2][1] * fVar35 + local_170.axis[0][1] * 45.0 + local_184;
-      local_190 = local_170.axis[2][2] * fVar35 + local_170.axis[0][2] * 45.0 + local_180;
-      pcVar26 = pcVar11;
-    }
-    else if (pcVar11->renderingThirdPerson == 0) {
-      local_140 = pcVar11->gunPitch;
-      local_13c = pcVar11->gunYaw;
-      local_1a0[0] = 0xfe;
-      local_138 = (float)dVar34;
-      iVar14 = CG_GetBoneIndex(LVar7,in_stack_00000054 + 0x800,(uint)pfVar21 & 0xffff,local_1a0);
-      if ((iVar14 == 0) ||
-         (bVar15 = FX_GetBoneOrientation
-                             (LVar7,in_stack_00000054 + 0x800,(uint)local_1a0[0],local_d0), !bVar15)
-         ) goto LAB_82324dd0;
-      local_198 = local_d0[0].origin[0];
-      local_194 = local_d0[0].origin[1];
-      local_190 = local_d0[0].origin[2];
-      AngleVectors(&local_140,local_170.axis[0],local_170.axis[1],local_170.axis[2]);
-      bVar15 = true;
-      pcVar26 = pcVar11;
+      fVar29 = (float)(dVar23 * -0.011111111380159855) * 30.0 - fVar29;
     }
     else {
-      local_198 = local_188;
-      local_194 = local_184;
-      local_190 = local_180;
-      if (pcVar12 == (clientInfo_t *)0x0) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp",
-                        0xd8b,0,"%s");
-      }
-      AngleVectors(pcVar12->playerAngles,local_170.axis[0],local_170.axis[1],local_170.axis[2]);
-      bVar15 = true;
-      local_198 = local_170.axis[0][0] * 45.0 + local_198;
-      local_194 = local_170.axis[0][1] * 45.0 + local_194;
-      local_190 = local_170.axis[0][2] * 45.0 + local_190;
-      pcVar26 = pcVar11;
+      fVar29 = -2.5;
     }
+    bVar13 = true;
+    local_198 = local_170.axis[2][0] * fVar29 + local_170.axis[0][0] * 45.0 + local_188;
+    local_194 = local_170.axis[2][1] * fVar29 + local_170.axis[0][1] * 45.0 + local_184;
+    local_190 = local_170.axis[2][2] * fVar29 + local_170.axis[0][2] * 45.0 + local_180;
+    pcVar20 = pcVar9;
+  }
+  else if (pcVar9->renderingThirdPerson == 0) {
+    local_140 = pcVar9->gunPitch;
+    local_13c = pcVar9->gunYaw;
+    local_1a0[0] = 0xfe;
+    local_138 = (float)dVar28;
+    iVar12 = CG_GetBoneIndex(param_1,in_stack_00000054 + 0x800,(uint)param_6,local_1a0);
+    if (iVar12 == 0) {
+      return;
+    }
+    bVar13 = FX_GetBoneOrientation(param_1,in_stack_00000054 + 0x800,(uint)local_1a0[0],local_d0);
+    if (!bVar13) {
+      return;
+    }
+    local_198 = local_d0[0].origin[0];
+    local_194 = local_d0[0].origin[1];
+    local_190 = local_d0[0].origin[2];
+    AngleVectors(&local_140,local_170.axis[0],local_170.axis[1],local_170.axis[2]);
+    bVar13 = true;
+    pcVar20 = pcVar9;
+  }
+  else {
+    local_198 = local_188;
+    local_194 = local_184;
+    local_190 = local_180;
+    if (pcVar10 == (clientInfo_t *)0x0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp",0xd8b,
+                      0,"%s");
+    }
+    AngleVectors(pcVar10->playerAngles,local_170.axis[0],local_170.axis[1],local_170.axis[2]);
+    bVar13 = true;
+    local_198 = local_170.axis[0][0] * 45.0 + local_198;
+    local_194 = local_170.axis[0][1] * 45.0 + local_194;
+    local_190 = local_170.axis[0][2] * 45.0 + local_190;
+    pcVar20 = pcVar9;
   }
 LAB_82324bb8:
-  fVar35 = BG_ADSSpread(WVar9,bVar19);
-  if (((bVar27 == false) || (pcVar26 == (cg_s *)0x0)) ||
-     ((double)(pcVar26->predictedPlayerState).weapCommon.fWeaponPosFrac == dVar34)) {
-    fVar35 = (float)((double)(float)((double)local_17c - (double)local_178) * dVar33 +
+  fVar29 = BG_ADSSpread(param_4,param_5);
+  if (((bVar21 == false) || (pcVar20 == (cg_s *)0x0)) ||
+     ((double)(pcVar20->predictedPlayerState).weapCommon.fWeaponPosFrac == dVar28)) {
+    fVar29 = (float)((double)(float)((double)local_17c - (double)local_178) * dVar27 +
                     (double)local_178);
   }
   else {
-    dVar34 = (double)(pcVar26->predictedPlayerState).weapCommon.fWeaponPosFrac;
-    fVar35 = (float)((double)(float)((double)local_17c - (double)local_178) * dVar33 +
-                    (double)local_178) * (float)(dVar32 - dVar34) +
-             (float)((double)(float)((double)(float)((double)local_17c - (double)fVar35) * dVar33 +
-                                    (double)fVar35) * dVar34);
+    dVar28 = (double)(pcVar20->predictedPlayerState).weapCommon.fWeaponPosFrac;
+    fVar29 = (float)((double)(float)((double)local_17c - (double)local_178) * dVar27 +
+                    (double)local_178) * (float)(dVar26 - dVar28) +
+             (float)((double)(float)((double)(float)((double)local_17c - (double)fVar29) * dVar27 +
+                                    (double)fVar29) * dVar28);
   }
-  dVar34 = (double)fVar35;
-  if (pcVar12 == (clientInfo_t *)0x0) {
+  dVar28 = (double)fVar29;
+  if (pcVar10 == (clientInfo_t *)0x0) {
     BG_ClearPerks(auStack_130);
   }
   else {
-    BG_CopyPerks(pcVar12->perks,auStack_130);
+    BG_CopyPerks(pcVar10->perks,auStack_130);
   }
-  lVar25 = uVar6 - 0x128;
-  lVar28 = 8;
+  lVar19 = uVar6 - 0x128;
+  lVar22 = 8;
   do {
-    lVar25 = lVar25 + 8;
-    *(undefined8 *)lVar25 = 0;
-    lVar28 = lVar28 + -1;
-  } while (lVar28 != 0);
+    lVar19 = lVar19 + 8;
+    *(undefined8 *)lVar19 = 0;
+    lVar22 = lVar22 + -1;
+  } while (lVar22 != 0);
   iStack_11c = (param_2->nextState).number;
-  *(undefined4 *)((undefined8 *)lVar25 + 1) = 0;
-  local_118 = (float)dVar32;
+  *(undefined4 *)((undefined8 *)lVar19 + 1) = 0;
+  local_118 = (float)dVar26;
   local_120 = 0x7fe;
-  local_114 = BG_WeaponBulletFire_GetMethodOfDeath(auStack_130,WVar9,bVar19);
-  BG_GetPlayerDamageRange(auStack_130,WVar9,bVar19,local_128,&fStack_dc);
-  bVar27 = BG_WeaponBulletFire_ShouldSpread(auStack_130,WVar9,bVar19);
-  if (bVar27) {
-    iVar14 = BG_ShotCount(WVar9,bVar19);
-    lVar25 = (longlong)iVar14;
-    lVar18 = lVar20;
+  local_114 = BG_WeaponBulletFire_GetMethodOfDeath(auStack_130,param_4,param_5);
+  BG_GetPlayerDamageRange(auStack_130,param_4,param_5,local_128,&fStack_dc);
+  bVar21 = BG_WeaponBulletFire_ShouldSpread(auStack_130,param_4,param_5);
+  if (bVar21) {
+    iVar12 = BG_ShotCount(param_4,param_5);
+    lVar19 = (longlong)iVar12;
+    lVar16 = lVar17;
   }
   else {
-    lVar25 = 1;
+    lVar19 = 1;
     local_128[0] = 8192.0;
   }
-  dVar33 = (double)local_128[0];
+  dVar27 = (double)local_128[0];
   local_10c = local_188;
   local_108 = local_184;
   local_104 = local_180;
-  if (pcVar26 == (cg_s *)0x0) {
+  if (pcVar20 == (cg_s *)0x0) {
     local_174 = Sys_Milliseconds();
   }
   else {
-    local_174 = (pcVar26->predictedPlayerState).commandTime;
+    local_174 = (pcVar20->predictedPlayerState).commandTime;
   }
   if (in_stack_00000054 != 0) {
     local_174 = local_174 + 10;
   }
   BG_srand(&local_174);
-  if (0 < (int)lVar25) {
+  if (0 < (int)lVar19) {
     do {
       local_e8 = local_170.axis[0][0];
       local_e4 = local_170.axis[0][1];
@@ -5024,31 +4819,32 @@ LAB_82324bb8:
       local_fc = local_184;
       local_f8 = local_180;
       CG_SimulateBulletFire_EndPos
-                (&local_174,(float)dVar34,(float *)lVar18,&local_100,afStack_f4,&local_e8,
-                 local_170.axis[0],local_170.axis[1],(float)dVar33);
-      local_118 = (float)dVar32;
-      if ((uVar24 & 0xff) == 0) {
-        lVar18 = uVar6 - 0x120;
-        bVar27 = CG_ShouldSimulateBulletFire(LVar7,(BulletFireParams *)lVar18);
-        if (bVar27) goto LAB_82324da4;
+                (&local_174,(float)dVar28,(float *)lVar16,&local_100,afStack_f4,&local_e8,
+                 local_170.axis[0],local_170.axis[1],(float)dVar27);
+      local_118 = (float)dVar26;
+      if (param_8) {
+LAB_82324da4:
+        lVar16 = uVar6 - 0x120;
+        CG_SimulateBulletFire_Internal
+                  (param_1,(BulletFireParams *)lVar16,param_4,param_5,param_2,param_3,&local_198,
+                   bVar13);
       }
       else {
-LAB_82324da4:
-        lVar18 = uVar6 - 0x120;
-        CG_SimulateBulletFire_Internal
-                  (LVar7,(BulletFireParams *)lVar18,WVar9,bVar19,param_2,param_3,&local_198,bVar15);
+        lVar16 = uVar6 - 0x120;
+        bVar21 = CG_ShouldSimulateBulletFire(param_1,(BulletFireParams *)lVar16);
+        if (bVar21) goto LAB_82324da4;
       }
-      lVar25 = lVar25 + -1;
-    } while (lVar25 != 0);
+      lVar19 = lVar19 + -1;
+    } while (lVar19 != 0);
   }
-LAB_82324dd0:
-  __restgprlr_16();
   return;
 }
 
 
 // 8231C930  CG_AddMuzzleFlash  (cgame/cg_weapons.cpp:3683)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
@@ -5058,71 +4854,72 @@ void CG_AddMuzzleFlash(LocalClientNum_t param_1,centity_s *param_2,Weapon param_
 
 {
   int iVar1;
-  LocalClientNum_t LVar2;
-  cg_s *pcVar3;
+  cg_s *pcVar2;
+  bool bVar5;
   bool bVar6;
-  bool bVar7;
-  ushort uVar5;
-  FxEffectDef *pFVar4;
-  PlayerHandIndex PVar8;
+  ushort uVar4;
+  FxEffectDef *pFVar3;
+  PlayerHandIndex PVar7;
   
-  LVar2 = __savegprlr_24(param_1);
-  pcVar3 = CG_GetLocalClientGlobals(LVar2);
-  if ((((pcVar3->predictedPlayerState).otherFlags & 0x1800U) == 0) ||
-     (bVar7 = true, (param_2->nextState).number != (pcVar3->predictedPlayerState).clientNum)) {
-    bVar7 = false;
+  pcVar2 = CG_GetLocalClientGlobals(param_1);
+  if ((((pcVar2->predictedPlayerState).otherFlags & 0x1800U) == 0) ||
+     (bVar6 = true, (param_2->nextState).number != (pcVar2->predictedPlayerState).clientNum)) {
+    bVar6 = false;
   }
-  if ((bVar7) && (pcVar3->renderingThirdPerson == 0)) {
-    bVar6 = BG_IsThirdPersonMode(&pcVar3->predictedPlayerState);
-    bVar7 = true;
-    if (!bVar6) goto LAB_8231c9b8;
+  if ((bVar6) && (pcVar2->renderingThirdPerson == 0)) {
+    bVar5 = BG_IsThirdPersonMode(&pcVar2->predictedPlayerState);
+    bVar6 = true;
+    if (!bVar5) goto LAB_8231c9b8;
   }
-  bVar7 = false;
+  bVar6 = false;
 LAB_8231c9b8:
-  if (((param_2->flags & 0xcU) != 0) && ((!bVar7 || (param_5 != 0)))) {
+  if (((param_2->flags & 0xcU) != 0) && ((!bVar6 || (param_5 != 0)))) {
     if (param_6 != 0) {
-      PVar8 = WEAPON_HAND_DEFAULT;
+      PVar7 = WEAPON_HAND_DEFAULT;
       do {
-        bVar7 = CEMuzzleflashIsSet(param_2,PVar8);
-        if (bVar7) {
+        bVar6 = CEMuzzleflashIsSet(param_2,PVar7);
+        if (bVar6) {
           if (param_5 == 0) {
-            if (PVar8 == WEAPON_HAND_DEFAULT) {
-              uVar5 = BG_GetWeaponFlashTagname(param_3,param_4);
+            if (PVar7 == WEAPON_HAND_DEFAULT) {
+              uVar4 = BG_GetWeaponFlashTagname(param_3,param_4);
               iVar1 = (param_2->nextState).number;
-              pFVar4 = BG_WorldFlashEffect(param_3,param_4);
-              if (pFVar4 != (FxEffectDef *)0x0) {
-                CG_PlayBoltedEffect(LVar2,pFVar4,iVar1,(uint)uVar5);
+              pFVar3 = BG_WorldFlashEffect(param_3,param_4);
+              if (pFVar3 != (FxEffectDef *)0x0) {
+                CG_PlayBoltedEffect(param_1,pFVar3,iVar1,(uint)uVar4);
               }
             }
             else {
-              uVar5 = BG_GetWeaponFlashTagname(param_3,param_4);
+              uVar4 = BG_GetWeaponFlashTagname(param_3,param_4);
               iVar1 = (param_2->nextState).number;
-              pFVar4 = BG_WorldFlashEffect(param_3,param_4);
-              if (pFVar4 != (FxEffectDef *)0x0) {
-                CG_PlayBoltedEffectOnSecondTag(LVar2,pFVar4,iVar1,(uint)uVar5);
+              pFVar3 = BG_WorldFlashEffect(param_3,param_4);
+              if (pFVar3 != (FxEffectDef *)0x0) {
+                CG_PlayBoltedEffectOnSecondTag(param_1,pFVar3,iVar1,(uint)uVar4);
               }
             }
           }
           else {
-            uVar5 = BG_GetWeaponFlashTagname(param_3,param_4);
-            pFVar4 = BG_ViewFlashEffect(param_3,param_4);
-            if (pFVar4 != (FxEffectDef *)0x0) {
-              CG_PlayBoltedEffect(LVar2,pFVar4,PVar8 + 0x800,(uint)uVar5);
+            uVar4 = BG_GetWeaponFlashTagname(param_3,param_4);
+            pFVar3 = BG_ViewFlashEffect(param_3,param_4);
+            if (pFVar3 != (FxEffectDef *)0x0) {
+              CG_PlayBoltedEffect(param_1,pFVar3,PVar7 + 0x800,(uint)uVar4);
             }
           }
         }
-        PVar8 = PVar8 + WEAPON_HAND_LEFT;
-      } while ((int)PVar8 < 2);
+        PVar7 = PVar7 + WEAPON_HAND_LEFT;
+      } while ((int)PVar7 < 2);
     }
     param_2->flags = param_2->flags & 0xfffffff3;
   }
-  __restgprlr_24();
   return;
 }
 
 
 // 8231CAD8  CG_AddPlayerWeapon  (cgame/cg_weapons.cpp:3771)
 
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -5134,29 +4931,26 @@ void CG_AddPlayerWeapon(LocalClientNum_t param_1,GfxScaledPlacement *param_2,pla
 {
   WeaponDef *pWVar1;
   WeaponCompleteDef *pWVar2;
-  LocalClientNum_t LVar3;
-  playerState_s *ppVar4;
-  cg_s *pcVar5;
-  Weapon WVar6;
-  PlayerHandIndex PVar7;
-  bool bVar10;
-  WeaponHand *pWVar8;
-  int iVar9;
-  bool bVar11;
-  ulonglong uVar12;
-  longlong lVar13;
-  Weapon *pWVar14;
+  cg_s *pcVar3;
+  Weapon WVar4;
+  PlayerHandIndex PVar5;
+  bool bVar8;
+  WeaponHand *pWVar6;
+  int iVar7;
+  bool bVar9;
+  longlong lVar10;
+  Weapon *pWVar11;
+  uint uVar12;
+  Weapon WVar13;
+  PlayerHandIndex PVar14;
   uint uVar15;
-  Weapon WVar16;
-  PlayerHandIndex PVar17;
-  uint uVar18;
-  cpose_t *pcVar19;
+  cpose_t *pcVar16;
+  double dVar17;
+  double dVar18;
+  double dVar19;
   double dVar20;
   double dVar21;
   double dVar22;
-  double dVar23;
-  double dVar24;
-  double dVar25;
   centity_s *pcStack0000002c;
   int iStack00000034;
   Weapon local_100;
@@ -5171,171 +4965,170 @@ void CG_AddPlayerWeapon(LocalClientNum_t param_1,GfxScaledPlacement *param_2,pla
   float local_d4;
   float local_d0;
   
-  uVar12 = (ulonglong)(int)param_3;
-  __savegprlr();
-  LVar3 = __savefpr_27();
+  if (((param_4->nextState).lerp.eFlags & 0x203800U) != 0) {
+    return;
+  }
+  uVar15 = (uint)(param_3 != (playerState_s *)0x0);
+  uVar12 = (uint)(param_3 != (playerState_s *)0x0);
+  local_f0 = uVar12;
   pcStack0000002c = param_4;
   iStack00000034 = param_5;
-  if (((param_4->nextState).lerp.eFlags & 0x203800U) != 0) goto LAB_8231d010;
-  uVar18 = (uint)(uVar12 != 0);
-  uVar15 = (uint)(uVar12 != 0);
-  ppVar4 = (playerState_s *)uVar12;
-  local_f0 = uVar15;
-  if (uVar18 == 0) {
-    pWVar14 = &(param_4->nextState).weapon;
+  if (uVar15 == 0) {
+    pWVar11 = &(param_4->nextState).weapon;
   }
   else {
-    BG_GetViewmodelWeapon(ppVar4);
-    pWVar14 = &local_100;
+    local_100 = BG_GetViewmodelWeapon(param_3);
+    pWVar11 = &local_100;
   }
-  WVar16 = *pWVar14;
-  local_100 = WVar16;
-  if ((WVar16.data & 0xff) == 0) goto LAB_8231d010;
+  WVar13 = *pWVar11;
+  if ((WVar13.data & 0xff) == 0) {
+    return;
+  }
   local_fc = -(uint)((viewModelHacks->current).enabled != false) & 3;
-  if (uVar15 != 0) {
-    pcVar5 = CG_GetLocalClientGlobals(LVar3);
-    UnitQuatToAxis((float *)param_2,pcVar5->viewModelAxis);
-    pcVar5->viewModelAxis[3][0] = (param_2->base).origin[0];
-    pcVar5->viewModelAxis[3][1] = (param_2->base).origin[1];
-    pcVar5->viewModelAxis[3][2] = (param_2->base).origin[2];
-    WVar6 = BG_GetAlternateWeapon(WVar16,false);
-    pWVar1 = bg_weaponDefs[WVar6.data & 0xff];
-    if (pWVar1 == (WeaponDef *)0x0) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp",0xee3,
-                      0,"%s");
+  local_100 = WVar13;
+  if (uVar12 == 0) goto LAB_8231cfd4;
+  pcVar3 = CG_GetLocalClientGlobals(param_1);
+  UnitQuatToAxis((float *)param_2,pcVar3->viewModelAxis);
+  pcVar3->viewModelAxis[3][0] = (param_2->base).origin[0];
+  pcVar3->viewModelAxis[3][1] = (param_2->base).origin[1];
+  pcVar3->viewModelAxis[3][2] = (param_2->base).origin[2];
+  WVar4 = BG_GetAlternateWeapon(WVar13,false);
+  pWVar1 = bg_weaponDefs[WVar4.data & 0xff];
+  if (pWVar1 == (WeaponDef *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp",0xee3,0,
+                    "%s");
+  }
+  PVar5 = BG_PlayerLastWeaponHandForViewWeapon(param_3);
+  local_f4 = PVar5;
+  if (param_5 == 0) {
+    iVar7 = 0;
+    if (-1 < (int)PVar5) {
+      do {
+        pWVar6 = CG_GetLocalClientViewModelHand(param_1,iVar7);
+        if (pWVar6->viewModelDObj == (DObj *)0x0) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp",
+                          0xf51,0,"%s");
+        }
+        DB_StreamViewmodelDObj(pWVar6->viewModelDObj);
+        iVar7 = iVar7 + 1;
+      } while (iVar7 <= (int)PVar5);
     }
-    PVar7 = BG_PlayerLastWeaponHandForViewWeapon(ppVar4);
-    local_f4 = PVar7;
-    if (param_5 == 0) {
-      iVar9 = 0;
-      if (-1 < (int)PVar7) {
-        do {
-          pWVar8 = CG_GetLocalClientViewModelHand(LVar3,iVar9);
-          if (pWVar8->viewModelDObj == (DObj *)0x0) {
-            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp",
-                            0xf51,0,"%s");
-          }
-          DB_StreamViewmodelDObj(pWVar8->viewModelDObj);
-          iVar9 = iVar9 + 1;
-        } while (iVar9 <= (int)PVar7);
-      }
+  }
+  else {
+    local_d8 = param_3->origin[0];
+    local_d0 = param_3->origin[2] + param_3->viewHeightCurrent;
+    local_d4 = param_3->origin[1];
+    dVar19 = 0.0;
+    local_e8 = 0.0;
+    local_e4 = 0.0;
+    local_e0 = 0.0;
+    dVar20 = dVar19;
+    dVar21 = dVar19;
+    dVar22 = dVar19;
+    bVar8 = CG_LookingThroughNightVision(param_1);
+    if ((bVar8) && (pWVar1->laserSightDuringNightvision != false)) {
+LAB_8231cc98:
+      local_f8 = 1;
     }
     else {
-      local_d8 = ppVar4->origin[0];
-      local_d0 = ppVar4->origin[2] + ppVar4->viewHeightCurrent;
-      local_d4 = ppVar4->origin[1];
-      dVar22 = 0.0;
-      local_e8 = 0.0;
-      local_e4 = 0.0;
-      local_e0 = 0.0;
-      dVar23 = dVar22;
-      dVar24 = dVar22;
-      dVar25 = dVar22;
-      bVar10 = CG_LookingThroughNightVision(LVar3);
-      if ((bVar10) && (pWVar1->laserSightDuringNightvision != false)) {
-LAB_8231cc98:
-        local_f8 = 1;
-      }
-      else {
-        bVar10 = CG_LaserForceOnEnabled();
-        local_f8 = 0;
-        if (bVar10) goto LAB_8231cc98;
-      }
-      bVar10 = false;
-      PVar17 = WEAPON_HAND_DEFAULT;
-      local_f8 = -(uint)((pcVar5->playerWeaponInfo).knifeModel == (XModel *)0x0) & local_f8;
-      if (-1 < (int)PVar7) {
-        dVar21 = -1.7000000476837158;
-        lVar13 = -0x7dfd0000;
-        bVar10 = false;
-        do {
-          pWVar8 = CG_GetLocalClientViewModelHand(LVar3,PVar17);
-          if (pWVar8->viewModelDObj == (DObj *)0x0) {
-            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp",
-                            0xf08,0,"%s");
-          }
-          CG_UpdateViewModelPoseForHand(pWVar8->viewModelDObj,LVar3,PVar17);
-          if (PVar17 == WEAPON_HAND_DEFAULT) {
-            uVar18 = 0x7ff;
-            iVar9 = BG_PlayerDualWieldingWeapon(ppVar4,local_100);
-            pcVar19 = &pcVar5->viewModelPose;
-            if (iVar9 != 0) {
-              dVar25 = (double)(pcVar5->viewModelPose).origin[0];
-              dVar24 = (double)(pcVar5->viewModelPose).origin[1];
-              dVar23 = (double)(pcVar5->viewModelPose).origin[2];
-              AngleVectors(ppVar4->viewangles,(float *)0x0,&local_e8,(float *)0x0);
-              dVar20 = (double)pWVar1->dualWieldViewModelOffset;
-              (pcVar5->viewModelPose).origin[0] = (float)(dVar20 * (double)local_e8 + dVar25);
-              (pcVar5->viewModelPose).origin[1] = (float)((double)local_e4 * dVar20 + dVar24);
-              (pcVar5->viewModelPose).origin[2] = (float)((double)local_e0 * dVar20 + dVar23);
-            }
-          }
-          else {
-            if (PVar17 != WEAPON_HAND_LEFT) {
-              MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp"
-                              ,0xf19,0,"%s");
-            }
-            if (((local_e8 == 0.0) && (local_e4 == 0.0)) && (local_e0 == 0.0)) {
-              MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp"
-                              ,0xf1a,0,"%s");
-            }
-            pcVar19 = &pcVar5->viewModelPoseLeftHand;
-            memcpy();
-            dVar20 = (double)(float)((double)pWVar1->dualWieldViewModelOffset * dVar21);
-            uVar18 = 0x7fe;
-            (pcVar5->viewModelPoseLeftHand).origin[0] = (float)((double)local_e8 * dVar20 + dVar25);
-            (pcVar5->viewModelPoseLeftHand).origin[1] = (float)((double)local_e4 * dVar20 + dVar24);
-            (pcVar5->viewModelPoseLeftHand).origin[2] = (float)((double)local_e0 * dVar20 + dVar23);
-          }
-          iVar9 = DB_StreamViewmodelDObj(pWVar8->viewModelDObj);
-          if (iVar9 != 0) {
-            bVar11 = DoesDObjHaveDistortion(pWVar8->viewModelDObj);
-            if (bVar11) {
-              bVar10 = true;
-            }
-            R_AddViewmodelDObjToScene
-                      (pWVar8->viewModelDObj,pcVar19,uVar18,local_fc,&local_d8,(float)dVar22,
-                       (int)lVar13);
-          }
-          if (local_f8 != 0) {
-            lVar13 = (longlong)(int)pcVar5 + 0x6b9fc;
-            CG_LaserDraw(LVar3,ppVar4,pcStack0000002c,pWVar8->viewModelDObj,pcVar19,(float *)lVar13,
-                         LASER_OWNER_PLAYER,LASER_LIGHT_ON);
-          }
-          PVar17 = PVar17 + WEAPON_HAND_LEFT;
-          WVar16 = local_100;
-          param_5 = iStack00000034;
-          uVar18 = local_f0;
-          param_4 = pcStack0000002c;
-        } while ((int)PVar17 <= (int)local_f4);
-      }
-      WVar6 = BG_GetAlternateWeapon
-                        (WVar16,(bool)((byte)((uint)(ppVar4->weapCommon).weapFlags >> 0xf) & 1));
-      pWVar2 = bg_weaponCompleteDefs[WVar6.data & 0xff];
-      (pcVar5->refdef).dof.viewModelStart =
-           (pWVar2->adsDofStart - ppVar4->dofViewmodelStart) * (ppVar4->weapCommon).fWeaponPosFrac +
-           ppVar4->dofViewmodelStart;
-      (pcVar5->refdef).dof.viewModelEnd =
-           (pWVar2->adsDofEnd - ppVar4->dofViewmodelEnd) * (ppVar4->weapCommon).fWeaponPosFrac +
-           ppVar4->dofViewmodelEnd;
-      (pcVar5->refdef).viewModelHasDistortion = bVar10;
+      bVar8 = CG_LaserForceOnEnabled();
+      local_f8 = 0;
+      if (bVar8) goto LAB_8231cc98;
     }
-    HoldBreathUpdate(LVar3);
+    bVar8 = false;
+    PVar14 = WEAPON_HAND_DEFAULT;
+    local_f8 = -(uint)((pcVar3->playerWeaponInfo).knifeModel == (XModel *)0x0) & local_f8;
+    if (-1 < (int)PVar5) {
+      dVar18 = -1.7000000476837158;
+      lVar10 = -0x7dfd0000;
+      bVar8 = false;
+      do {
+        pWVar6 = CG_GetLocalClientViewModelHand(param_1,PVar14);
+        if (pWVar6->viewModelDObj == (DObj *)0x0) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp",
+                          0xf08,0,"%s");
+        }
+        CG_UpdateViewModelPoseForHand(pWVar6->viewModelDObj,param_1,PVar14);
+        if (PVar14 == WEAPON_HAND_DEFAULT) {
+          uVar15 = 0x7ff;
+          iVar7 = BG_PlayerDualWieldingWeapon(param_3,local_100);
+          pcVar16 = &pcVar3->viewModelPose;
+          if (iVar7 != 0) {
+            dVar22 = (double)(pcVar3->viewModelPose).origin[0];
+            dVar21 = (double)(pcVar3->viewModelPose).origin[1];
+            dVar20 = (double)(pcVar3->viewModelPose).origin[2];
+            AngleVectors(param_3->viewangles,(float *)0x0,&local_e8,(float *)0x0);
+            dVar17 = (double)pWVar1->dualWieldViewModelOffset;
+            (pcVar3->viewModelPose).origin[0] = (float)(dVar17 * (double)local_e8 + dVar22);
+            (pcVar3->viewModelPose).origin[1] = (float)((double)local_e4 * dVar17 + dVar21);
+            (pcVar3->viewModelPose).origin[2] = (float)((double)local_e0 * dVar17 + dVar20);
+          }
+        }
+        else {
+          if (PVar14 != WEAPON_HAND_LEFT) {
+            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp",
+                            0xf19,0,"%s");
+          }
+          if (((local_e8 == 0.0) && (local_e4 == 0.0)) && (local_e0 == 0.0)) {
+            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp",
+                            0xf1a,0,"%s");
+          }
+          pcVar16 = &pcVar3->viewModelPoseLeftHand;
+          memcpy();
+          dVar17 = (double)(float)((double)pWVar1->dualWieldViewModelOffset * dVar18);
+          uVar15 = 0x7fe;
+          (pcVar3->viewModelPoseLeftHand).origin[0] = (float)((double)local_e8 * dVar17 + dVar22);
+          (pcVar3->viewModelPoseLeftHand).origin[1] = (float)((double)local_e4 * dVar17 + dVar21);
+          (pcVar3->viewModelPoseLeftHand).origin[2] = (float)((double)local_e0 * dVar17 + dVar20);
+        }
+        iVar7 = DB_StreamViewmodelDObj(pWVar6->viewModelDObj);
+        if (iVar7 != 0) {
+          bVar9 = DoesDObjHaveDistortion(pWVar6->viewModelDObj);
+          if (bVar9) {
+            bVar8 = true;
+          }
+          R_AddViewmodelDObjToScene
+                    (pWVar6->viewModelDObj,pcVar16,uVar15,local_fc,&local_d8,(float)dVar19,
+                     (int)lVar10);
+        }
+        if (local_f8 != 0) {
+          lVar10 = (longlong)(int)pcVar3 + 0x6b9fc;
+          CG_LaserDraw(param_1,param_3,pcStack0000002c,pWVar6->viewModelDObj,pcVar16,(float *)lVar10
+                       ,LASER_OWNER_PLAYER,LASER_LIGHT_ON);
+        }
+        PVar14 = PVar14 + WEAPON_HAND_LEFT;
+        WVar13 = local_100;
+        param_4 = pcStack0000002c;
+        param_5 = iStack00000034;
+        uVar15 = local_f0;
+      } while ((int)PVar14 <= (int)local_f4);
+    }
+    WVar4 = BG_GetAlternateWeapon
+                      (WVar13,(bool)((byte)((uint)(param_3->weapCommon).weapFlags >> 0xf) & 1));
+    pWVar2 = bg_weaponCompleteDefs[WVar4.data & 0xff];
+    (pcVar3->refdef).dof.viewModelStart =
+         (pWVar2->adsDofStart - param_3->dofViewmodelStart) * (param_3->weapCommon).fWeaponPosFrac +
+         param_3->dofViewmodelStart;
+    (pcVar3->refdef).dof.viewModelEnd =
+         (pWVar2->adsDofEnd - param_3->dofViewmodelEnd) * (param_3->weapCommon).fWeaponPosFrac +
+         param_3->dofViewmodelEnd;
+    (pcVar3->refdef).viewModelHasDistortion = bVar8;
   }
-  if (((uVar12 & 0xffffffff) == 0) ||
-     (bVar10 = true, ((ppVar4->weapCommon).weapFlags & 0x8000U) == 0)) {
-    bVar10 = false;
+  HoldBreathUpdate(param_1);
+LAB_8231cfd4:
+  if ((param_3 == (playerState_s *)0x0) ||
+     (bVar8 = true, ((param_3->weapCommon).weapFlags & 0x8000U) == 0)) {
+    bVar8 = false;
   }
-  CG_AddMuzzleFlash(LVar3,param_4,WVar16,bVar10,uVar18,param_5);
-LAB_8231d010:
-  __restfpr_27();
-  __restgprlr();
+  CG_AddMuzzleFlash(param_1,param_4,WVar13,bVar8,uVar15,param_5);
   return;
 }
 
 
 // 82324DE8  CG_UpdateViewWeaponAnim  (cgame/cg_weapons.cpp:3954)
 
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -5344,103 +5137,100 @@ void CG_UpdateViewWeaponAnim(LocalClientNum_t param_1)
 
 {
   int iVar1;
-  LocalClientNum_t LVar2;
-  cg_s *pcVar3;
-  Weapon WVar4;
-  int iVar5;
-  WeaponHand *pWVar6;
-  bool bVar9;
-  weapType_t wVar7;
-  char *pcVar8;
-  undefined1 uVar10;
-  byte bVar11;
-  PlayerHandIndex PVar12;
-  double dVar13;
+  cg_s *pcVar2;
+  Weapon WVar3;
+  int iVar4;
+  WeaponHand *pWVar5;
+  bool bVar8;
+  weapType_t wVar6;
+  char *pcVar7;
+  undefined1 uVar9;
+  byte bVar10;
+  PlayerHandIndex PVar11;
+  double dVar12;
   longlong local_470;
   int local_468 [2];
   char acStack_460 [1120];
   
-  LVar2 = __savegprlr_22(param_1);
-  pcVar3 = CG_GetLocalClientGlobals(LVar2);
-  if ((7 < (pcVar3->predictedPlayerState).pm_type) &&
-     (((uint)(pcVar3->predictedPlayerState).weapCommon.weapFlags >> 0xf & 1) != 0)) {
-    ToggleWeaponAltMode(LVar2);
+  pcVar2 = CG_GetLocalClientGlobals(param_1);
+  if ((7 < (pcVar2->predictedPlayerState).pm_type) &&
+     (((uint)(pcVar2->predictedPlayerState).weapCommon.weapFlags >> 0xf & 1) != 0)) {
+    ToggleWeaponAltMode(param_1);
   }
-  if (7 < (pcVar3->predictedPlayerState).pm_type) {
-    ResetWeaponAnimTrees(LVar2,&pcVar3->predictedPlayerState);
-    __restgprlr_22();
+  if (7 < (pcVar2->predictedPlayerState).pm_type) {
+    ResetWeaponAnimTrees(param_1,&pcVar2->predictedPlayerState);
     return;
   }
-  WVar4 = BG_GetViewmodelWeapon(&pcVar3->predictedPlayerState);
-  if ((WVar4.data & 0xff) == 0) goto LAB_823250a4;
-  CG_RegisterWeapon(LVar2,WVar4,&pcVar3->playerWeaponInfo);
-  if ((pcVar3->prevViewmodelWeapon).data == WVar4.data) {
-    iVar5 = BG_PlayerDualWieldingWeapon(&pcVar3->predictedPlayerState,WVar4);
-    bVar11 = 0;
-    if (pcVar3->prevDualWielding != iVar5) goto LAB_82324eb4;
+  WVar3 = BG_GetViewmodelWeapon(&pcVar2->predictedPlayerState);
+  if ((WVar3.data & 0xff) == 0) {
+    return;
   }
-  else {
-LAB_82324eb4:
-    bVar11 = 1;
+  CG_RegisterWeapon(param_1,WVar3,&pcVar2->playerWeaponInfo);
+  if ((pcVar2->prevViewmodelWeapon).data == WVar3.data) {
+    iVar4 = BG_PlayerDualWieldingWeapon(&pcVar2->predictedPlayerState,WVar3);
+    bVar10 = 0;
+    if (pcVar2->prevDualWielding == iVar4) goto LAB_82324eb8;
   }
-  iVar5 = BG_PlayerDualWieldingWeapon(&pcVar3->predictedPlayerState,WVar4);
-  PVar12 = WEAPON_HAND_DEFAULT;
-  pcVar3->prevDualWielding = iVar5;
+  bVar10 = 1;
+LAB_82324eb8:
+  iVar4 = BG_PlayerDualWieldingWeapon(&pcVar2->predictedPlayerState,WVar3);
+  PVar11 = WEAPON_HAND_DEFAULT;
+  pcVar2->prevDualWielding = iVar4;
   do {
-    pWVar6 = CG_GetLocalClientViewModelHand(LVar2,PVar12);
-    if (pWVar6->viewModelDObj == (DObj *)0x0) {
-      bVar11 = 1;
+    pWVar5 = CG_GetLocalClientViewModelHand(param_1,PVar11);
+    if (pWVar5->viewModelDObj == (DObj *)0x0) {
+      bVar10 = 1;
     }
-    bVar9 = UpdateViewmodelAttachments(LVar2,PVar12);
-    PVar12 = PVar12 + WEAPON_HAND_LEFT;
-    bVar11 = bVar9 | bVar11;
-  } while ((int)PVar12 <= (int)(uint)(iVar5 != 0));
-  bVar9 = false;
-  wVar7 = BG_GetWeaponType(WVar4,false);
-  if ((wVar7 == WEAPTYPE_GRENADE) &&
-     ((iVar1 = (pcVar3->predictedPlayerState).weapState[0].weaponState, iVar1 == 6 ||
+    bVar8 = UpdateViewmodelAttachments(param_1,PVar11);
+    PVar11 = PVar11 + WEAPON_HAND_LEFT;
+    bVar10 = bVar8 | bVar10;
+  } while ((int)PVar11 <= (int)(uint)(iVar4 != 0));
+  bVar8 = false;
+  wVar6 = BG_GetWeaponType(WVar3,false);
+  if ((wVar6 == WEAPTYPE_GRENADE) &&
+     ((iVar1 = (pcVar2->predictedPlayerState).weapState[0].weaponState, iVar1 == 6 ||
       (iVar1 == 0x13)))) {
-    BG_GetFireTime(WVar4,false,false,(int *)&local_470,local_468);
+    BG_GetFireTime(WVar3,false,false,(int *)&local_470,local_468);
     if (local_468[0] < local_470._0_4_) {
-      bVar9 = (pcVar3->predictedPlayerState).weapState[0].weaponDelay == 0;
+      bVar8 = (pcVar2->predictedPlayerState).weapState[0].weaponDelay == 0;
     }
   }
-  if (bVar9 != (pcVar3->playerWeaponInfo).isWeaponHidden) {
-    (pcVar3->playerWeaponInfo).isWeaponHidden = bVar9;
-    bVar11 = 1;
+  if (bVar8 != (pcVar2->playerWeaponInfo).isWeaponHidden) {
+    (pcVar2->playerWeaponInfo).isWeaponHidden = bVar8;
+    bVar10 = 1;
   }
-  if (bVar11 != 0) {
-    ChangeViewmodelDobj(LVar2,&pcVar3->predictedPlayerState,WVar4,
-                        (pcVar3->playerWeaponInfo).handModel,false,false);
+  if (bVar10 != 0) {
+    ChangeViewmodelDobj(param_1,&pcVar2->predictedPlayerState,WVar3,
+                        (pcVar2->playerWeaponInfo).handModel,false,false);
   }
-  PVar12 = WEAPON_HAND_DEFAULT;
-  dVar13 = 0.0010000000474974513;
+  PVar11 = WEAPON_HAND_DEFAULT;
+  dVar12 = 0.0010000000474974513;
   do {
-    pWVar6 = CG_GetLocalClientViewModelHand(LVar2,PVar12);
-    if (pWVar6->viewModelDObj == (DObj *)0x0) {
-      BG_GetWeaponName(WVar4,acStack_460,0x400);
-      pcVar8 = va(
+    pWVar5 = CG_GetLocalClientViewModelHand(param_1,PVar11);
+    if (pWVar5->viewModelDObj == (DObj *)0x0) {
+      BG_GetWeaponName(WVar3,acStack_460,0x400);
+      pcVar7 = va(
                  "no viewmodel set for player %d for \'%s\' in \'%s\' hand. Set viewmodel hands in script or weapon settings"
                  );
-      Com_Error(ERR_DROP,pcVar8);
+      Com_Error(ERR_DROP,pcVar7);
     }
     else {
-      uVar10 = (char)pcVar3;
-      WeaponRunXModelAnims(LVar2,&pcVar3->predictedPlayerState,PVar12);
-      local_470 = (longlong)pcVar3->frametime;
-      DObjUpdateClientInfo(pWVar6->viewModelDObj,(float)((double)local_470 * dVar13),(bool)uVar10);
-      ProcessWeaponNoteTracks(LVar2,&pcVar3->predictedPlayerState);
+      uVar9 = (char)pcVar2;
+      WeaponRunXModelAnims(param_1,&pcVar2->predictedPlayerState,PVar11);
+      local_470 = (longlong)pcVar2->frametime;
+      DObjUpdateClientInfo(pWVar5->viewModelDObj,(float)((double)local_470 * dVar12),(bool)uVar9);
+      ProcessWeaponNoteTracks(param_1,&pcVar2->predictedPlayerState);
     }
-    PVar12 = PVar12 + WEAPON_HAND_LEFT;
-  } while ((int)PVar12 <= (int)(uint)(iVar5 != 0));
-LAB_823250a4:
-  __restgprlr_22();
+    PVar11 = PVar11 + WEAPON_HAND_LEFT;
+  } while ((int)PVar11 <= (int)(uint)(iVar4 != 0));
   return;
 }
 
 
 // 8231D020  CG_AddViewWeapon  (cgame/cg_weapons.cpp:4052)
 
+/* WARNING: Function: __savegprlr_19 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_19 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -5454,50 +5244,48 @@ void CG_AddViewWeapon(LocalClientNum_t param_1)
   WeaponDef *pWVar3;
   WeaponCompleteDef *pWVar4;
   uint uVar5;
-  LocalClientNum_t LVar6;
-  cg_s *pcVar7;
-  Weapon WVar8;
-  char *pcVar9;
-  XModel *pXVar10;
-  Weapon WVar11;
-  int iVar12;
-  bool bVar13;
-  int iVar14;
+  cg_s *pcVar6;
+  Weapon WVar7;
+  char *pcVar8;
+  XModel *pXVar9;
+  Weapon WVar10;
+  int iVar11;
+  bool bVar12;
+  int iVar13;
+  uint uVar14;
   uint uVar15;
-  uint uVar16;
-  double dVar17;
+  double dVar16;
   float afStack_140 [4];
   GfxScaledPlacement GStack_130;
   weaponState_t wStack_110;
   
-  LVar6 = __savegprlr_19(param_1);
-  iVar14 = 1;
-  pcVar7 = CG_GetLocalClientGlobals(LVar6);
-  WVar8 = BG_GetViewmodelWeapon(&pcVar7->predictedPlayerState);
-  iVar12 = (pcVar7->predictedPlayerState).viewmodelIndex;
-  if (0 < iVar12) {
-    pcVar9 = CL_GetConfigString(iVar12 + 0x404);
-    if ((pcVar9 == (char *)0x0) || (*pcVar9 == '\0')) {
+  iVar13 = 1;
+  pcVar6 = CG_GetLocalClientGlobals(param_1);
+  WVar7 = BG_GetViewmodelWeapon(&pcVar6->predictedPlayerState);
+  iVar11 = (pcVar6->predictedPlayerState).viewmodelIndex;
+  if (0 < iVar11) {
+    pcVar8 = CL_GetConfigString(iVar11 + 0x404);
+    if ((pcVar8 == (char *)0x0) || (*pcVar8 == '\0')) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp",0xfef,
                       0,"%s");
     }
-    pXVar10 = R_RegisterModel(pcVar9);
-    DB_TouchXModel(pXVar10);
+    pXVar9 = R_RegisterModel(pcVar8);
+    DB_TouchXModel(pXVar9);
   }
-  if ((WVar8.data & 0xff) != 0) {
-    WVar11 = BG_GetAlternateWeapon(WVar8,false);
-    pWVar3 = bg_weaponDefs[WVar11.data & 0xff];
-    WVar11 = BG_GetAlternateWeapon(WVar8,false);
-    pWVar4 = bg_weaponCompleteDefs[WVar11.data & 0xff];
-    iVar12 = BG_PlayerHasWeapon(&pcVar7->predictedPlayerState,WVar8);
-    if (iVar12 == 0) {
+  if ((WVar7.data & 0xff) != 0) {
+    WVar10 = BG_GetAlternateWeapon(WVar7,false);
+    pWVar3 = bg_weaponDefs[WVar10.data & 0xff];
+    WVar10 = BG_GetAlternateWeapon(WVar7,false);
+    pWVar4 = bg_weaponCompleteDefs[WVar10.data & 0xff];
+    iVar11 = BG_PlayerHasWeapon(&pcVar6->predictedPlayerState,WVar7);
+    if (iVar11 == 0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp",0xffa,
                       0,"%s");
     }
-    uVar5 = WVar8.data >> 6 & 0x3c;
-    pXVar10 = *(XModel **)((int)pWVar3->gunXModel + uVar5);
-    if (pXVar10 != (XModel *)0x0) {
-      DB_TouchXModelBase(pXVar10);
+    uVar5 = WVar7.data >> 6 & 0x3c;
+    pXVar9 = *(XModel **)((int)pWVar3->gunXModel + uVar5);
+    if (pXVar9 != (XModel *)0x0) {
+      DB_TouchXModelBase(pXVar9);
     }
     if (pWVar3->rocketModel != (XModel *)0x0) {
       DB_TouchXModelBase(pWVar3->rocketModel);
@@ -5505,91 +5293,89 @@ void CG_AddViewWeapon(LocalClientNum_t param_1)
     if (pWVar3->knifeModel != (XModel *)0x0) {
       DB_TouchXModelBase(pWVar3->knifeModel);
     }
-    bVar13 = BG_HasMotionTracker(WVar8,(bool)((byte)((uint)(pcVar7->predictedPlayerState).weapCommon
+    bVar12 = BG_HasMotionTracker(WVar7,(bool)((byte)((uint)(pcVar6->predictedPlayerState).weapCommon
                                                            .weapFlags >> 0xf) & 1));
-    if (bVar13) {
+    if (bVar12) {
       CG_TouchMotionTracker();
     }
-    if ((WVar8.data >> 0xc & 7) != 0) {
-      pWVar2 = pWVar4->scopes[(WVar8.data >> 0xc & 7) - 1];
+    if ((WVar7.data >> 0xc & 7) != 0) {
+      pWVar2 = pWVar4->scopes[(WVar7.data >> 0xc & 7) - 1];
       if (pWVar2 == (WeaponAttachment *)0x0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp",
                         0x100b,1,"%s");
       }
-      pXVar10 = *(XModel **)((int)pWVar2->viewModels + uVar5);
-      if (pXVar10 != (XModel *)0x0) {
-        DB_TouchXModelBase(pXVar10);
+      pXVar9 = *(XModel **)((int)pWVar2->viewModels + uVar5);
+      if (pXVar9 != (XModel *)0x0) {
+        DB_TouchXModelBase(pXVar9);
       }
       if ((pWVar2->reticleViewModels != (XModel **)0x0) &&
-         (pXVar10 = *(XModel **)((WVar8.data >> 0x13 & 0x1c) + (int)pWVar2->reticleViewModels),
-         pXVar10 != (XModel *)0x0)) {
-        DB_TouchXModelBase(pXVar10);
+         (pXVar9 = *(XModel **)((WVar7.data >> 0x13 & 0x1c) + (int)pWVar2->reticleViewModels),
+         pXVar9 != (XModel *)0x0)) {
+        DB_TouchXModelBase(pXVar9);
       }
     }
-    if ((WVar8.data >> 0xf & 3) != 0) {
-      pWVar2 = pWVar4->underBarrels[(WVar8.data >> 0xf & 3) - 1];
+    if ((WVar7.data >> 0xf & 3) != 0) {
+      pWVar2 = pWVar4->underBarrels[(WVar7.data >> 0xf & 3) - 1];
       if (pWVar2 == (WeaponAttachment *)0x0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp",
                         0x1015,1,"%s");
       }
-      pXVar10 = *(XModel **)((int)pWVar2->viewModels + uVar5);
-      if (pXVar10 != (XModel *)0x0) {
-        DB_TouchXModelBase(pXVar10);
+      pXVar9 = *(XModel **)((int)pWVar2->viewModels + uVar5);
+      if (pXVar9 != (XModel *)0x0) {
+        DB_TouchXModelBase(pXVar9);
       }
     }
-    if ((WVar8.data >> 0x11 & 0xf) != 0) {
-      uVar15 = 1;
-      uVar16 = 0;
+    if ((WVar7.data >> 0x11 & 0xf) != 0) {
+      uVar14 = 1;
+      uVar15 = 0;
       do {
-        if ((WVar8.data >> 0x11 & uVar15 & 0xf) != 0) {
-          iVar12 = *(int *)((int)pWVar4->others + uVar16);
-          if (iVar12 == 0) {
+        if ((WVar7.data >> 0x11 & uVar14 & 0xf) != 0) {
+          iVar11 = *(int *)((int)pWVar4->others + uVar15);
+          if (iVar11 == 0) {
             MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp",
                             0x1021,1,"%s");
           }
-          pXVar10 = *(XModel **)(*(int *)(iVar12 + 0x18) + uVar5);
-          if (pXVar10 != (XModel *)0x0) {
-            DB_TouchXModelBase(pXVar10);
+          pXVar9 = *(XModel **)(*(int *)(iVar11 + 0x18) + uVar5);
+          if (pXVar9 != (XModel *)0x0) {
+            DB_TouchXModelBase(pXVar9);
           }
         }
-        uVar16 = uVar16 + 4;
-        uVar15 = uVar15 << 1;
-      } while (uVar16 < 0x10);
+        uVar15 = uVar15 + 4;
+        uVar14 = uVar14 << 1;
+      } while (uVar15 < 0x10);
     }
   }
-  iVar12 = (pcVar7->predictedPlayerState).pm_type;
-  dVar17 = 0.0;
-  (pcVar7->refdef).dof.viewModelStart = 0.0;
-  (pcVar7->refdef).dof.viewModelEnd = 0.0;
-  if ((((iVar12 != 5) && (iVar12 != 6)) && (pcVar7->renderingThirdPerson == 0)) &&
-     ((bVar13 = BG_IsThirdPersonMode(&pcVar7->predictedPlayerState), !bVar13 &&
-      ((pcVar7->predictedPlayerState).pm_type != 4)))) {
-    if ((pcVar7->cubemapShot != CUBEMAPSHOT_NONE) ||
+  iVar11 = (pcVar6->predictedPlayerState).pm_type;
+  dVar16 = 0.0;
+  (pcVar6->refdef).dof.viewModelStart = 0.0;
+  (pcVar6->refdef).dof.viewModelEnd = 0.0;
+  if ((((iVar11 != 5) && (iVar11 != 6)) && (pcVar6->renderingThirdPerson == 0)) &&
+     ((bVar12 = BG_IsThirdPersonMode(&pcVar6->predictedPlayerState), !bVar12 &&
+      ((pcVar6->predictedPlayerState).pm_type != 4)))) {
+    if ((pcVar6->cubemapShot != CUBEMAPSHOT_NONE) ||
        (((cg_drawGun->current).enabled == false ||
-        (bVar13 = CG_GetWeapReticleZoom(pcVar7,(float *)0x0), bVar13)))) {
-      iVar14 = 0;
+        (bVar12 = CG_GetWeapReticleZoom(pcVar6,(float *)0x0), bVar12)))) {
+      iVar13 = 0;
     }
-    if (((pcVar7->predictedPlayerState).eFlags & 0x203800U) == 0) {
-      if ((WVar8.data & 0xff) != 0) {
-        CG_UpdateWeaponPositionToADS(pcVar7,&pcVar7->predictedPlayerState);
-        CG_BuildWeaponState(pcVar7,&wStack_110);
+    if (((pcVar6->predictedPlayerState).eFlags & 0x203800U) == 0) {
+      if ((WVar7.data & 0xff) != 0) {
+        CG_UpdateWeaponPositionToADS(pcVar6,&pcVar6->predictedPlayerState);
+        CG_BuildWeaponState(pcVar6,&wStack_110);
         BG_CalculateWeaponMovement(&wStack_110,GStack_130.base.origin,afStack_140);
-        CG_CalculateWeaponMovement_ClientSpecific(pcVar7,&GStack_130,afStack_140);
-        CG_SaveWeaponState(&wStack_110,pcVar7);
-        CG_AddPlayerWeapon(LVar6,&GStack_130,&pcVar7->predictedPlayerState,
-                           pcVar7->predictedPlayerEntity,iVar14);
-        __restgprlr_19();
+        CG_CalculateWeaponMovement_ClientSpecific(pcVar6,&GStack_130,afStack_140);
+        CG_SaveWeaponState(&wStack_110,pcVar6);
+        CG_AddPlayerWeapon(param_1,&GStack_130,&pcVar6->predictedPlayerState,
+                           pcVar6->predictedPlayerEntity,iVar13);
         return;
       }
-      fVar1 = pcVar7->refdefViewAngles[1];
-      pcVar7->gunPitch = pcVar7->refdefViewAngles[0];
-      pcVar7->gunYaw = fVar1;
-      pcVar7->gunXOfs = (float)dVar17;
-      pcVar7->gunYOfs = (float)dVar17;
-      pcVar7->gunZOfs = (float)dVar17;
+      fVar1 = pcVar6->refdefViewAngles[1];
+      pcVar6->gunPitch = pcVar6->refdefViewAngles[0];
+      pcVar6->gunYaw = fVar1;
+      pcVar6->gunXOfs = (float)dVar16;
+      pcVar6->gunYOfs = (float)dVar16;
+      pcVar6->gunZOfs = (float)dVar16;
     }
   }
-  __restgprlr_19();
   return;
 }
 
@@ -5652,6 +5438,8 @@ bool CG_CancelOffhand(cg_s *param_1)
 
 // 823250B0  CG_CycleWeapon  (cgame/cg_weapons.cpp:4285)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -5659,39 +5447,30 @@ bool CG_CancelOffhand(cg_s *param_1)
 void CG_CycleWeapon(LocalClientNum_t param_1,int param_2)
 
 {
-  LocalClientNum_t LVar2;
-  longlong lVar1;
-  bool bVar4;
-  cg_s *pcVar3;
+  cg_s *pcVar1;
+  bool bVar2;
   
-  LVar2 = __savegprlr_29(param_1);
-  pcVar3 = CG_GetLocalClientGlobals(LVar2);
-  lVar1 = (longlong)(int)pcVar3;
-  if (pcVar3->nextSnap != (snapshot_s *)0x0) {
-    if (pcVar3->localClientNum != LVar2) {
+  pcVar1 = CG_GetLocalClientGlobals(param_1);
+  if (pcVar1->nextSnap != (snapshot_s *)0x0) {
+    if (pcVar1->localClientNum != param_1) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp",0x10c4
                       ,0,"cgameGlob->localClientNum == localClientNum\n\t%i, %i");
     }
-    bVar4 = WeaponCycleAllowed(pcVar3);
-    lVar1 = 0;
-    if (bVar4) {
-      bVar4 = CG_CancelOffhand(pcVar3);
-      lVar1 = (longlong)bVar4;
-      if (lVar1 == 0) {
-        pcVar3->weaponSelectTime = pcVar3->time;
-        CG_MenuShowNotify(LVar2,1);
-        bVar4 = CycleWeapPrimary(LVar2,param_2,0,0);
-        lVar1 = (longlong)bVar4;
-      }
+    bVar2 = WeaponCycleAllowed(pcVar1);
+    if ((bVar2) && (bVar2 = CG_CancelOffhand(pcVar1), !bVar2)) {
+      pcVar1->weaponSelectTime = pcVar1->time;
+      CG_MenuShowNotify(param_1,1);
+      CycleWeapPrimary(param_1,param_2,0,0);
     }
   }
-  __restgprlr_29(lVar1);
   return;
 }
 
 
 // 82325170  CG_OutOfAmmoChange_internal  (cgame/cg_weapons.cpp:4306)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -5702,80 +5481,64 @@ void CG_OutOfAmmoChange_internal(LocalClientNum_t param_1,bool param_2)
 {
   Weapon WVar1;
   uint uVar2;
-  LocalClientNum_t LVar4;
-  longlong lVar3;
-  int iVar6;
-  PlayerEquippedWeaponState *pPVar7;
-  bool bVar9;
-  Weapon WVar8;
-  ulonglong uVar10;
-  Weapon *pWVar11;
-  cg_s *pcVar5;
+  cg_s *pcVar3;
+  int iVar4;
+  PlayerEquippedWeaponState *pPVar5;
+  Weapon WVar6;
+  bool bVar7;
+  Weapon *pWVar8;
   
-  uVar10 = (ulonglong)param_2;
-  LVar4 = __savegprlr_26(param_1);
-  pcVar5 = CG_GetLocalClientGlobals(LVar4);
-  lVar3 = (longlong)(int)pcVar5;
-  if ((((pcVar5->nextSnap != (snapshot_s *)0x0) && (pcVar5->demoType == DEMO_TYPE_NONE)) &&
-      (pcVar5->inKillCam == 0)) &&
-     (uVar2 = (uint)(pcVar5->predictedPlayerState).weapCommon.weapFlags >> 0xf & 1,
-     (pcVar5->predictedPlayerState).pm_type < 8)) {
-    if ((((pcVar5->predictedPlayerState).weapCommon.weapon._s_0.weaponIdx == 0) &&
-        (pWVar11 = &pcVar5->weaponLatestPrimary, (pcVar5->weaponLatestPrimary)._s_0.weaponIdx != 0))
-       && (iVar6 = BG_PlayerHasWeapon(&pcVar5->predictedPlayerState,*pWVar11), iVar6 != 0)) {
-      pPVar7 = BG_GetEquippedWeaponState(&pcVar5->predictedPlayerState,*pWVar11);
-      if (pPVar7 == (PlayerEquippedWeaponState *)0x0) {
-        bVar9 = CG_SelectWeapon(LVar4,*pWVar11,0);
-        __restgprlr_26(bVar9);
+  pcVar3 = CG_GetLocalClientGlobals(param_1);
+  if ((((pcVar3->nextSnap != (snapshot_s *)0x0) && (pcVar3->demoType == DEMO_TYPE_NONE)) &&
+      (pcVar3->inKillCam == 0)) &&
+     (uVar2 = (uint)(pcVar3->predictedPlayerState).weapCommon.weapFlags >> 0xf & 1,
+     (pcVar3->predictedPlayerState).pm_type < 8)) {
+    if ((((pcVar3->predictedPlayerState).weapCommon.weapon._s_0.weaponIdx == 0) &&
+        (pWVar8 = &pcVar3->weaponLatestPrimary, (pcVar3->weaponLatestPrimary)._s_0.weaponIdx != 0))
+       && (iVar4 = BG_PlayerHasWeapon(&pcVar3->predictedPlayerState,*pWVar8), iVar4 != 0)) {
+      pPVar5 = BG_GetEquippedWeaponState(&pcVar3->predictedPlayerState,*pWVar8);
+      if (pPVar5 == (PlayerEquippedWeaponState *)0x0) {
+        CG_SelectWeapon(param_1,*pWVar8,0);
         return;
       }
-      bVar9 = CG_SelectWeapon(LVar4,*pWVar11,(uint)pPVar7->inAltMode);
-      __restgprlr_26(bVar9);
+      CG_SelectWeapon(param_1,*pWVar8,(uint)pPVar5->inAltMode);
       return;
     }
-    WVar1 = (pcVar5->predictedPlayerState).weapCommon.weapon;
-    WVar8 = BG_GetAlternateWeapon(WVar1,SUB41(uVar2,0));
-    lVar3 = (longlong)(int)WVar8.data;
-    if (bg_weaponDefs[WVar8.data & 0xff]->cancelAutoHolsterWhenEmpty == false) {
-      if (bg_weaponDefs[WVar8.data & 0xff]->inventoryType != WEAPINVENTORY_ALTMODE) {
-        iVar6 = MY_DELAY;
-        if ((uVar10 & 0xff) != 0) {
-          iVar6 = MY_DELAY_CLIPONLY;
+    WVar1 = (pcVar3->predictedPlayerState).weapCommon.weapon;
+    WVar6 = BG_GetAlternateWeapon(WVar1,SUB41(uVar2,0));
+    if (bg_weaponDefs[WVar6.data & 0xff]->cancelAutoHolsterWhenEmpty == false) {
+      if (bg_weaponDefs[WVar6.data & 0xff]->inventoryType != WEAPINVENTORY_ALTMODE) {
+        iVar4 = MY_DELAY;
+        if (param_2) {
+          iVar4 = MY_DELAY_CLIPONLY;
         }
-        pcVar5->weaponForcedSelectTime = pcVar5->time + iVar6;
+        pcVar3->weaponForcedSelectTime = pcVar3->time + iVar4;
       }
-      iVar6 = BG_PlayerDualWieldingWeapon(&pcVar5->predictedPlayerState,WVar1);
-      if (iVar6 != 0) {
-        iVar6 = BG_WeaponBothClipEmpty(&pcVar5->predictedPlayerState);
-        lVar3 = (longlong)iVar6;
-        if (iVar6 == 0) goto LAB_82325388;
-      }
-      if ((uVar2 != 0) &&
-         (iVar6 = BG_WeaponAmmo(&pcVar5->predictedPlayerState,WVar1,SUB41(uVar2,0)), iVar6 != 0)) {
+      iVar4 = BG_PlayerDualWieldingWeapon(&pcVar3->predictedPlayerState,WVar1);
+      if ((iVar4 == 0) ||
+         (iVar4 = BG_WeaponBothClipEmpty(&pcVar3->predictedPlayerState), iVar4 != 0)) {
+        if ((uVar2 != 0) &&
+           (iVar4 = BG_WeaponAmmo(&pcVar3->predictedPlayerState,WVar1,SUB41(uVar2,0)), iVar4 != 0))
+        {
 LAB_823252fc:
-        pPVar7 = BG_GetEquippedWeaponState(&pcVar5->predictedPlayerState,WVar1);
-        if (pPVar7 == (PlayerEquippedWeaponState *)0x0) {
-          bVar9 = CG_SelectWeapon(LVar4,WVar1,0);
-          __restgprlr_26(bVar9);
+          pPVar5 = BG_GetEquippedWeaponState(&pcVar3->predictedPlayerState,WVar1);
+          if (pPVar5 == (PlayerEquippedWeaponState *)0x0) {
+            CG_SelectWeapon(param_1,WVar1,0);
+            return;
+          }
+          CG_SelectWeapon(param_1,WVar1,(uint)pPVar5->inAltMode);
           return;
         }
-        bVar9 = CG_SelectWeapon(LVar4,WVar1,(uint)pPVar7->inAltMode);
-        __restgprlr_26(bVar9);
-        return;
-      }
-      bVar9 = CycleWeapPrimary(LVar4,1,1,0);
-      lVar3 = (longlong)bVar9;
-      if (lVar3 == 0) {
-        if (uVar2 != 0) goto LAB_823252fc;
-        if ((uVar10 & 0xff) != 0) {
-          bVar9 = CycleWeapPrimary(LVar4,1,0,0);
-          lVar3 = (longlong)bVar9;
+        bVar7 = CycleWeapPrimary(param_1,1,1,0);
+        if (!bVar7) {
+          if (uVar2 != 0) goto LAB_823252fc;
+          if (param_2) {
+            CycleWeapPrimary(param_1,1,0,0);
+          }
         }
       }
     }
   }
-LAB_82325388:
-  __restgprlr_26(lVar3);
   return;
 }
 
@@ -5840,6 +5603,8 @@ int CG_ForceSwitchToValidWeapon(LocalClientNum_t param_1)
 
 // 82322B58  CycleWeapPrimary  (cgame/cg_weapons.cpp:4431)
 
+/* WARNING: Function: __savegprlr_17 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_17 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -5851,91 +5616,83 @@ bool CycleWeapPrimary(LocalClientNum_t param_1,int param_2,int param_3,int param
   Weapon WVar1;
   weapInventoryType_t wVar2;
   WeaponDef *pWVar3;
-  LocalClientNum_t LVar4;
-  cg_s *pcVar5;
-  Weapon WVar6;
-  uint uVar7;
+  cg_s *pcVar4;
+  Weapon WVar5;
+  uint uVar6;
+  bool bVar9;
+  int iVar7;
+  PlayerEquippedWeaponState *pPVar8;
   bool bVar10;
-  undefined1 uVar11;
-  int iVar8;
-  PlayerEquippedWeaponState *pPVar9;
-  bool bVar12;
-  longlong lVar13;
-  float *pfVar14;
-  Weapon *pWVar15;
-  uint uVar16;
-  Weapon *pWVar17;
+  float *pfVar11;
+  Weapon *pWVar12;
+  uint uVar13;
+  Weapon *pWVar14;
   WeaponAttachment *local_90;
   WeaponAttachment *local_8c;
   WeaponAttachment *local_88 [34];
   
-  lVar13 = (longlong)param_2;
-  LVar4 = __savegprlr_17(param_1);
-  pcVar5 = CG_GetLocalClientGlobals(LVar4);
-  if (((pcVar5->nextSnap != (snapshot_s *)0x0) &&
-      (((pcVar5->predictedPlayerState).otherFlags & 0x1000U) != 0)) &&
-     ((pcVar5->predictedPlayerState).pm_type < 8)) {
-    pWVar15 = &pcVar5->weaponSelect;
-    WVar1 = *pWVar15;
-    WVar6 = BG_GetAlternateWeapon(WVar1,false);
-    pWVar3 = bg_weaponDefs[WVar6.data & 0xff];
-    uVar7 = BG_GetNumWeapons();
-    if (1 < uVar7) {
-      if ((((uint)(pcVar5->predictedPlayerState).weapCommon.weapFlags >> 0xf & 1) != 0) &&
-         (CG_MenuShowNotify(LVar4,1), pWVar3->altModeSameWeapon == false)) {
-        bVar10 = BG_IsIW5Weapon(WVar1);
-        if (bVar10) {
+  pcVar4 = CG_GetLocalClientGlobals(param_1);
+  if (((pcVar4->nextSnap != (snapshot_s *)0x0) &&
+      (((pcVar4->predictedPlayerState).otherFlags & 0x1000U) != 0)) &&
+     ((pcVar4->predictedPlayerState).pm_type < 8)) {
+    pWVar12 = &pcVar4->weaponSelect;
+    WVar1 = *pWVar12;
+    WVar5 = BG_GetAlternateWeapon(WVar1,false);
+    pWVar3 = bg_weaponDefs[WVar5.data & 0xff];
+    uVar6 = BG_GetNumWeapons();
+    if (1 < uVar6) {
+      if ((((uint)(pcVar4->predictedPlayerState).weapCommon.weapFlags >> 0xf & 1) != 0) &&
+         (CG_MenuShowNotify(param_1,1), pWVar3->altModeSameWeapon == false)) {
+        bVar9 = BG_IsIW5Weapon(WVar1);
+        if (bVar9) {
           BG_GetWeaponAttachments(WVar1,true,&local_90,&local_8c,local_88);
-          bVar10 = local_90 == (WeaponAttachment *)0x0;
+          bVar9 = local_90 == (WeaponAttachment *)0x0;
           if ((local_90 != (WeaponAttachment *)0x0) &&
-             ((bVar10 || (bVar10 = false, local_90->shareAmmoWithAlt != false)))) {
-            bVar10 = true;
+             ((bVar9 || (bVar9 = false, local_90->shareAmmoWithAlt != false)))) {
+            bVar9 = true;
           }
           if ((local_8c != (WeaponAttachment *)0x0) &&
-             ((bVar10 || (bVar10 = false, local_8c->shareAmmoWithAlt != false)))) {
-            bVar10 = true;
+             ((bVar9 || (bVar9 = false, local_8c->shareAmmoWithAlt != false)))) {
+            bVar9 = true;
           }
           if ((local_88[0] != (WeaponAttachment *)0x0) &&
-             ((bVar10 || (bVar10 = false, local_88[0]->shareAmmoWithAlt != false)))) {
-            bVar10 = true;
+             ((bVar9 || (bVar9 = false, local_88[0]->shareAmmoWithAlt != false)))) {
+            bVar9 = true;
           }
-          if (bVar10) goto LAB_82322cec;
+          if (bVar9) goto LAB_82322cec;
         }
-        CG_SelectWeapon(LVar4,*pWVar15,0);
-        uVar11 = __restgprlr_17(1);
-        return (bool)uVar11;
+        CG_SelectWeapon(param_1,*pWVar12,0);
+        return true;
       }
 LAB_82322cec:
       if ((((pWVar3->inventoryType != WEAPINVENTORY_PRIMARY) &&
            (pWVar3->inventoryType != WEAPINVENTORY_EXCLUSIVE)) &&
-          (pWVar17 = &pcVar5->weaponLatestPrimary, (pcVar5->weaponLatestPrimary)._s_0.weaponIdx != 0
-          )) && (iVar8 = BG_PlayerHasWeapon(&pcVar5->predictedPlayerState,*pWVar17), iVar8 != 0)) {
-        pPVar9 = BG_GetEquippedWeaponState(&pcVar5->predictedPlayerState,*pWVar17);
-        if (pPVar9 == (PlayerEquippedWeaponState *)0x0) {
-          CG_SelectWeapon(LVar4,*pWVar17,0);
-          uVar11 = __restgprlr_17(1);
-          return (bool)uVar11;
+          (pWVar14 = &pcVar4->weaponLatestPrimary, (pcVar4->weaponLatestPrimary)._s_0.weaponIdx != 0
+          )) && (iVar7 = BG_PlayerHasWeapon(&pcVar4->predictedPlayerState,*pWVar14), iVar7 != 0)) {
+        pPVar8 = BG_GetEquippedWeaponState(&pcVar4->predictedPlayerState,*pWVar14);
+        if (pPVar8 != (PlayerEquippedWeaponState *)0x0) {
+          CG_SelectWeapon(param_1,*pWVar14,(uint)pPVar8->inAltMode);
+          return true;
         }
-        CG_SelectWeapon(LVar4,*pWVar17,(uint)pPVar9->inAltMode);
-        uVar11 = __restgprlr_17(1);
-        return (bool)uVar11;
+        CG_SelectWeapon(param_1,*pWVar14,0);
+        return true;
       }
       wVar2 = pWVar3->inventoryType;
       if ((WVar1.data & 0xff) == 0) {
-        bVar10 = true;
-        uVar7 = 0;
-        uVar16 = uVar7;
+        bVar9 = true;
+        uVar6 = 0;
+        uVar13 = uVar6;
       }
       else {
-        bVar10 = false;
-        uVar7 = BG_GetEquippedWeaponIndex(&pcVar5->predictedPlayerState,WVar1);
-        if ((int)uVar7 < 1) {
-          uVar7 = 0;
-          uVar16 = uVar7;
+        bVar9 = false;
+        uVar6 = BG_GetEquippedWeaponIndex(&pcVar4->predictedPlayerState,WVar1);
+        if ((int)uVar6 < 1) {
+          uVar6 = 0;
+          uVar13 = uVar6;
         }
         else {
-          uVar16 = uVar7;
-          if (0xe < uVar7) {
+          uVar13 = uVar6;
+          if (0xe < uVar6) {
             MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp",
                             0x11ad,0,
                             "startIndex doesn\'t index MAX_EQUIPPED_WEAPONS\n\t%i not in [0, %i)");
@@ -5943,58 +5700,60 @@ LAB_82322cec:
         }
       }
       do {
-        if (bVar10) {
-          bVar10 = false;
-          uVar7 = 0;
+        if (bVar9) {
+          bVar9 = false;
+          uVar6 = 0;
         }
         else {
-          uVar7 = (int)(uVar7 + (-(uint)(lVar13 != 0) & 2) + 0xe) % 0xf;
-          if (0xe < uVar7) {
+          uVar6 = (int)(uVar6 + (-(uint)(param_2 != 0) & 2) + 0xe) % 0xf;
+          if (0xe < uVar6) {
             MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp",
                             0x11ba,0,
                             "equippedIndex doesn\'t index MAX_EQUIPPED_WEAPONS\n\t%i not in [0, %i)"
                            );
           }
-          if (uVar7 == uVar16) {
-            iVar8 = BG_PlayerHasWeapon(&pcVar5->predictedPlayerState,*pWVar15);
-            if (iVar8 == 0) {
-              CG_SelectWeapon(LVar4,(Weapon)0x0,0);
+          if (uVar6 == uVar13) {
+            iVar7 = BG_PlayerHasWeapon(&pcVar4->predictedPlayerState,*pWVar12);
+            if (iVar7 != 0) {
+              return false;
             }
-            break;
+            CG_SelectWeapon(param_1,(Weapon)0x0,0);
+            return false;
           }
         }
-        WVar1 = (pcVar5->predictedPlayerState).weaponsEquipped[uVar7];
+        WVar1 = (pcVar4->predictedPlayerState).weaponsEquipped[uVar6];
         if (((((WVar1.data & 0xff) != 0) &&
              ((param_4 == 0 ||
-              (bVar12 = BG_IsWeaponUsableInState(&pcVar5->predictedPlayerState,WVar1), bVar12)))) &&
+              (bVar10 = BG_IsWeaponUsableInState(&pcVar4->predictedPlayerState,WVar1), bVar10)))) &&
             ((param_3 == 0 ||
-             (iVar8 = BG_WeaponAmmo(&pcVar5->predictedPlayerState,WVar1,false), iVar8 != 0)))) &&
-           (WVar6 = BG_GetAlternateWeapon(WVar1,false),
-           bg_weaponDefs[WVar6.data & 0xff]->inventoryType ==
+             (iVar7 = BG_WeaponAmmo(&pcVar4->predictedPlayerState,WVar1,false), iVar7 != 0)))) &&
+           (WVar5 = BG_GetAlternateWeapon(WVar1,false),
+           bg_weaponDefs[WVar5.data & 0xff]->inventoryType ==
            (-(uint)(wVar2 == WEAPINVENTORY_EXCLUSIVE) & WEAPINVENTORY_EXCLUSIVE))) {
-          iVar8 = BG_GetEquippedWeaponIndex(&pcVar5->predictedPlayerState,WVar1);
-          if ((iVar8 < 0) ||
-             (pfVar14 = (pcVar5->predictedPlayerState).origin + iVar8 * 3 + -7,
-             pfVar14 == (float *)0xfffffd50)) {
-            uVar7 = 0;
+          iVar7 = BG_GetEquippedWeaponIndex(&pcVar4->predictedPlayerState,WVar1);
+          if ((iVar7 < 0) ||
+             (pfVar11 = (pcVar4->predictedPlayerState).origin + iVar7 * 3 + -7,
+             pfVar11 == (float *)0xfffffd50)) {
+            uVar6 = 0;
           }
           else {
-            uVar7 = (uint)*(byte *)((int)pfVar14 + 0x2b2);
+            uVar6 = (uint)*(byte *)((int)pfVar11 + 0x2b2);
           }
-          CG_SelectWeapon(LVar4,WVar1,uVar7);
-          uVar11 = __restgprlr_17(1);
-          return (bool)uVar11;
+          CG_SelectWeapon(param_1,WVar1,uVar6);
+          return true;
         }
       } while( true );
     }
   }
-  uVar11 = __restgprlr_17(0);
-  return (bool)uVar11;
+  return false;
 }
 
 
 // 82322F88  ToggleWeaponAltMode  (cgame/cg_weapons.cpp:4575)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Type propagation algorithm not settling */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -6004,62 +5763,55 @@ bool ToggleWeaponAltMode(LocalClientNum_t param_1)
 
 {
   Weapon WVar1;
-  LocalClientNum_t LVar2;
-  bool bVar5;
-  cg_s *pcVar3;
-  Weapon WVar4;
-  undefined1 uVar6;
-  int iVar7;
-  Weapon *pWVar8;
+  bool bVar4;
+  cg_s *pcVar2;
+  Weapon WVar3;
+  int iVar5;
+  Weapon *pWVar6;
   
-  LVar2 = __savegprlr_27(param_1);
-  bVar5 = CL_Demo_IsPlaying(LVar2);
-  if (!bVar5) {
-    pcVar3 = CG_GetLocalClientGlobals(LVar2);
-    iVar7 = (pcVar3->predictedPlayerState).weapState[0].weaponState;
-    if (((iVar7 == 1) ||
-        (((((iVar7 != 2 && (iVar7 != 3)) && (iVar7 != 4)) && (iVar7 != 5)) || (iVar7 == 1)))) &&
-       (((iVar7 = (pcVar3->predictedPlayerState).clientNum, -1 < iVar7 && (iVar7 < 0x12)) &&
-        (((pcVar3->bgs).clientinfo[iVar7].infoValid != 0 &&
-         (WVar4 = BG_GetAlternateWeapon((pcVar3->predictedPlayerState).weapCommon.weapon,false),
-         bg_weaponDefs[WVar4.data & 0xff]->inventoryType != WEAPINVENTORY_EXCLUSIVE)))))) {
-      if ((((uint)(pcVar3->predictedPlayerState).weapCommon.weapFlags >> 0xf & 1) == 0) &&
-         (((pcVar3->predictedPlayerState).weapCommon.weapon._s_0.weaponIdx == 0 ||
-          (bVar5 = BG_ActiveUnderbarrel((pcVar3->predictedPlayerState).weapCommon.weapon), !bVar5)))
+  bVar4 = CL_Demo_IsPlaying(param_1);
+  if (!bVar4) {
+    pcVar2 = CG_GetLocalClientGlobals(param_1);
+    iVar5 = (pcVar2->predictedPlayerState).weapState[0].weaponState;
+    if (((iVar5 == 1) ||
+        (((((iVar5 != 2 && (iVar5 != 3)) && (iVar5 != 4)) && (iVar5 != 5)) || (iVar5 == 1)))) &&
+       (((iVar5 = (pcVar2->predictedPlayerState).clientNum, -1 < iVar5 && (iVar5 < 0x12)) &&
+        (((pcVar2->bgs).clientinfo[iVar5].infoValid != 0 &&
+         (WVar3 = BG_GetAlternateWeapon((pcVar2->predictedPlayerState).weapCommon.weapon,false),
+         bg_weaponDefs[WVar3.data & 0xff]->inventoryType != WEAPINVENTORY_EXCLUSIVE)))))) {
+      if ((((uint)(pcVar2->predictedPlayerState).weapCommon.weapFlags >> 0xf & 1) == 0) &&
+         (((pcVar2->predictedPlayerState).weapCommon.weapon._s_0.weaponIdx == 0 ||
+          (bVar4 = BG_ActiveUnderbarrel((pcVar2->predictedPlayerState).weapCommon.weapon), !bVar4)))
          ) {
-        WVar4 = BG_GetAlternateWeapon((pcVar3->predictedPlayerState).weapCommon.weapon,false);
-        if ((bg_weaponCompleteDefs[WVar4.data & 0xff] != (WeaponCompleteDef *)0x0) &&
-           (bg_weaponCompleteDefs[WVar4.data & 0xff]->altWeapon == 0)) {
-          WVar4.data = 0;
-          iVar7 = 0;
-          pWVar8 = (pcVar3->predictedPlayerState).weaponsEquipped;
-          do {
-            WVar1 = *pWVar8;
-            if ((((WVar1.data & 0xff) != 0) &&
-                (WVar1.data != (pcVar3->predictedPlayerState).weapCommon.weapon.data)) &&
-               (bVar5 = BG_HasUnderbarrelAmmo(WVar1), bVar5)) {
-              WVar4 = (pcVar3->predictedPlayerState).weaponsEquipped[iVar7];
-              break;
+        WVar3 = BG_GetAlternateWeapon((pcVar2->predictedPlayerState).weapCommon.weapon,false);
+        if ((bg_weaponCompleteDefs[WVar3.data & 0xff] != (WeaponCompleteDef *)0x0) &&
+           (bg_weaponCompleteDefs[WVar3.data & 0xff]->altWeapon == 0)) {
+          WVar3.data = 0;
+          iVar5 = 0;
+          pWVar6 = (pcVar2->predictedPlayerState).weaponsEquipped;
+          while (((WVar1 = *pWVar6, (WVar1.data & 0xff) == 0 ||
+                  (WVar1.data == (pcVar2->predictedPlayerState).weapCommon.weapon.data)) ||
+                 (bVar4 = BG_HasUnderbarrelAmmo(WVar1), !bVar4))) {
+            iVar5 = iVar5 + 1;
+            pWVar6 = pWVar6 + 1;
+            if (0xe < iVar5) {
+LAB_823230fc:
+              if (iVar5 == 0xf) {
+                return false;
+              }
+              CG_SelectWeapon(param_1,WVar3,1);
+              return true;
             }
-            iVar7 = iVar7 + 1;
-            pWVar8 = pWVar8 + 1;
-          } while (iVar7 < 0xf);
-          if (iVar7 != 0xf) {
-            CG_SelectWeapon(LVar2,WVar4,1);
-            uVar6 = __restgprlr_27(1);
-            return (bool)uVar6;
           }
-          goto LAB_82323154;
+          WVar3 = (pcVar2->predictedPlayerState).weaponsEquipped[iVar5];
+          goto LAB_823230fc;
         }
       }
-      CG_SelectWeapon(LVar2,pcVar3->weaponSelect,(uint)LZCOUNT(pcVar3->weaponSelectInAlt) >> 5);
-      uVar6 = __restgprlr_27(1);
-      return (bool)uVar6;
+      CG_SelectWeapon(param_1,pcVar2->weaponSelect,(uint)LZCOUNT(pcVar2->weaponSelectInAlt) >> 5);
+      return true;
     }
   }
-LAB_82323154:
-  uVar6 = __restgprlr_27(0);
-  return (bool)uVar6;
+  return false;
 }
 
 
@@ -6105,6 +5857,8 @@ bool ActionSlotUsageAllowed(cg_s *param_1,int param_2)
 
 // 82323160  CG_ActionSlotDown  (cgame/cg_weapons.cpp:4697)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -6113,97 +5867,76 @@ bool ActionSlotUsageAllowed(cg_s *param_1,int param_2)
 void CG_ActionSlotDown(LocalClientNum_t param_1,int param_2)
 
 {
-  Weapon WVar1;
-  int iVar2;
-  LocalClientNum_t LVar4;
-  longlong lVar3;
-  cg_s *pcVar6;
-  bool bVar9;
-  Weapon WVar7;
-  PlayerEquippedWeaponState *pPVar8;
-  longlong lVar10;
-  uint uVar11;
-  longlong lVar12;
-  Weapon *pWVar13;
-  int iVar5;
+  ActionSlotType AVar1;
+  Weapon WVar2;
+  int iVar3;
+  cg_s *pcVar4;
+  bool bVar7;
+  Weapon WVar5;
+  PlayerEquippedWeaponState *pPVar6;
+  uint uVar8;
+  Weapon *pWVar9;
   
-  lVar10 = (longlong)param_2;
-  LVar4 = __savegprlr_26(param_1);
-  iVar5 = CL_IsCgameInitialized(LVar4);
-  lVar3 = (longlong)iVar5;
-  if (iVar5 != 0) {
-    pcVar6 = CG_GetLocalClientGlobals(LVar4);
-    bVar9 = ActionSlotUsageAllowed(pcVar6,(int)lVar10);
-    lVar3 = (longlong)bVar9;
-    if (lVar3 != 0) {
-      iVar2 = (int)((lVar10 + 0x146U & 0xffffffff) << 2);
-      lVar12 = 0;
-      iVar5 = *(int *)((int)(pcVar6->predictedPlayerState).origin + iVar2 + -0x1c);
-      if (iVar5 == 1) {
-        WVar1 = *(Weapon *)
-                 ((int)(pcVar6->predictedPlayerState).origin +
-                 (int)((lVar10 + 0x14aU & 0xffffffff) << 2) + -0x1c);
-        WVar7 = BG_GetAlternateWeapon((pcVar6->predictedPlayerState).weapCommon.weapon,false);
-        lVar3 = (longlong)(int)WVar7.data;
-        if (bg_weaponDefs[WVar7.data & 0xff]->inventoryType != WEAPINVENTORY_EXCLUSIVE) {
-          if (WVar1.data == (pcVar6->weaponSelect).data) {
-            pWVar13 = &pcVar6->weaponLatestPrimary;
-            if ((WVar1.data == (*pWVar13).data) ||
-               (iVar5 = BG_PlayerHasWeapon(&pcVar6->predictedPlayerState,*pWVar13), iVar5 == 0)) {
-              bVar9 = CycleWeapPrimary(LVar4,1,0,0);
-              lVar3 = (longlong)bVar9;
-              lVar12 = lVar3;
+  iVar3 = CL_IsCgameInitialized(param_1);
+  if (iVar3 != 0) {
+    pcVar4 = CG_GetLocalClientGlobals(param_1);
+    bVar7 = ActionSlotUsageAllowed(pcVar4,param_2);
+    if (bVar7) {
+      bVar7 = false;
+      AVar1 = (pcVar4->predictedPlayerState).actionSlotType[param_2];
+      if (AVar1 == ACTIONSLOTTYPE_SPECIFYWEAPON) {
+        WVar2 = *(Weapon *)((pcVar4->predictedPlayerState).actionSlotParam + param_2);
+        WVar5 = BG_GetAlternateWeapon((pcVar4->predictedPlayerState).weapCommon.weapon,false);
+        if (bg_weaponDefs[WVar5.data & 0xff]->inventoryType != WEAPINVENTORY_EXCLUSIVE) {
+          if (WVar2.data == (pcVar4->weaponSelect).data) {
+            pWVar9 = &pcVar4->weaponLatestPrimary;
+            if ((WVar2.data == (*pWVar9).data) ||
+               (iVar3 = BG_PlayerHasWeapon(&pcVar4->predictedPlayerState,*pWVar9), iVar3 == 0)) {
+              bVar7 = CycleWeapPrimary(param_1,1,0,0);
             }
             else {
-              pPVar8 = BG_GetEquippedWeaponState(&pcVar6->predictedPlayerState,*pWVar13);
-              if (pPVar8 == (PlayerEquippedWeaponState *)0x0) {
-                bVar9 = CG_SelectWeapon(LVar4,*pWVar13,0);
-                lVar3 = (longlong)bVar9;
-                lVar12 = 1;
+              pPVar6 = BG_GetEquippedWeaponState(&pcVar4->predictedPlayerState,*pWVar9);
+              if (pPVar6 == (PlayerEquippedWeaponState *)0x0) {
+                CG_SelectWeapon(param_1,*pWVar9,0);
+                bVar7 = true;
               }
               else {
-                bVar9 = CG_SelectWeapon(LVar4,*pWVar13,(uint)pPVar8->inAltMode);
-                lVar3 = (longlong)bVar9;
-                lVar12 = 1;
+                CG_SelectWeapon(param_1,*pWVar9,(uint)pPVar6->inAltMode);
+                bVar7 = true;
               }
             }
           }
           else {
-            iVar5 = BG_PlayerHasWeapon(&pcVar6->predictedPlayerState,WVar1);
-            lVar3 = (longlong)iVar5;
-            if ((iVar5 != 0) &&
-               ((pcVar6->predictedPlayerState).weapCommon.weapon.data != WVar1.data)) {
-              lVar12 = 1;
-              pPVar8 = BG_GetEquippedWeaponState(&pcVar6->predictedPlayerState,WVar1);
-              if (pPVar8 == (PlayerEquippedWeaponState *)0x0) {
-                uVar11 = 0;
+            iVar3 = BG_PlayerHasWeapon(&pcVar4->predictedPlayerState,WVar2);
+            if ((iVar3 != 0) &&
+               ((pcVar4->predictedPlayerState).weapCommon.weapon.data != WVar2.data)) {
+              bVar7 = true;
+              pPVar6 = BG_GetEquippedWeaponState(&pcVar4->predictedPlayerState,WVar2);
+              if (pPVar6 == (PlayerEquippedWeaponState *)0x0) {
+                uVar8 = 0;
               }
               else {
-                uVar11 = (uint)pPVar8->inAltMode;
+                uVar8 = (uint)pPVar6->inAltMode;
               }
-              bVar9 = CG_SelectWeapon(LVar4,WVar1,uVar11);
-              lVar3 = (longlong)bVar9;
+              CG_SelectWeapon(param_1,WVar2,uVar8);
             }
           }
         }
       }
-      else if (iVar5 == 2) {
-        bVar9 = ToggleWeaponAltMode(LVar4);
-        lVar3 = (longlong)bVar9;
-        lVar12 = lVar3;
+      else if (AVar1 == ACTIONSLOTTYPE_ALTWEAPONTOGGLE) {
+        bVar7 = ToggleWeaponAltMode(param_1);
       }
-      else if (iVar5 == 3) {
-        pcVar6->extraButtons = pcVar6->extraButtons | 0x40000;
-        lVar12 = 1;
+      else if (AVar1 == ACTIONSLOTTYPE_NIGHTVISION) {
+        bVar7 = true;
+        pcVar4->extraButtons = pcVar4->extraButtons | 0x40000;
       }
-      pcVar6->ammoFadeTime = pcVar6->time;
-      if (((lVar12 != 0) && (((pcVar6->predictedPlayerState).eFlags & 0x3800U) != 0)) &&
-         (*(int *)((int)(pcVar6->predictedPlayerState).origin + iVar2 + -0x1c) == 1)) {
-        pcVar6->extraButtons = pcVar6->extraButtons | 0x20;
+      pcVar4->ammoFadeTime = pcVar4->time;
+      if (((bVar7 != false) && (((pcVar4->predictedPlayerState).eFlags & 0x3800U) != 0)) &&
+         ((pcVar4->predictedPlayerState).actionSlotType[param_2] == ACTIONSLOTTYPE_SPECIFYWEAPON)) {
+        pcVar4->extraButtons = pcVar4->extraButtons | 0x20;
       }
     }
   }
-  __restgprlr_26(lVar3);
   return;
 }
 
@@ -6231,6 +5964,8 @@ void CG_ActionSlotUp(LocalClientNum_t param_1,int param_2)
 
 // 8231D7E0  CG_EjectWeaponBrass  (cgame/cg_weapons.cpp:4800)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
@@ -6241,57 +5976,53 @@ void CG_EjectWeaponBrass(LocalClientNum_t param_1,entityState_s *param_2,int par
 {
   WeaponDef *pWVar1;
   bool bVar2;
-  LocalClientNum_t LVar3;
-  uint uVar4;
-  cg_s *pcVar5;
-  Weapon WVar6;
-  bool bVar9;
-  FxEffectDef *pFVar7;
-  PlayerHandIndex PVar8;
-  int iVar10;
+  uint uVar3;
+  cg_s *pcVar4;
+  Weapon WVar5;
+  bool bVar8;
+  FxEffectDef *pFVar6;
+  PlayerHandIndex PVar7;
+  int iVar9;
   
-  LVar3 = __savegprlr_26(param_1);
   if ((((cg_brass->current).enabled != false) && (param_2->eType < 0x12)) &&
      ((param_2->weapon)._s_0.weaponIdx != 0)) {
-    uVar4 = BG_GetNumWeapons();
-    if (uVar4 <= (param_2->weapon)._s_0.weaponIdx) {
+    uVar3 = BG_GetNumWeapons();
+    if (uVar3 <= (param_2->weapon)._s_0.weaponIdx) {
       Com_Error(ERR_DROP,"\x15CG_EjectWeaponBrass: ent->weapon >= BG_GetNumWeapons()");
-      __restgprlr_26();
       return;
     }
-    pcVar5 = CG_GetLocalClientGlobals(LVar3);
-    if ((((pcVar5->predictedPlayerState).otherFlags & 0x1800U) == 0) ||
-       (bVar2 = true, param_2->number != (pcVar5->predictedPlayerState).clientNum)) {
+    pcVar4 = CG_GetLocalClientGlobals(param_1);
+    if ((((pcVar4->predictedPlayerState).otherFlags & 0x1800U) == 0) ||
+       (bVar2 = true, param_2->number != (pcVar4->predictedPlayerState).clientNum)) {
       bVar2 = false;
     }
-    WVar6 = BG_GetAlternateWeapon(param_2->weapon,param_4);
-    pWVar1 = bg_weaponDefs[WVar6.data & 0xff];
+    WVar5 = BG_GetAlternateWeapon(param_2->weapon,param_4);
+    pWVar1 = bg_weaponDefs[WVar5.data & 0xff];
     if (((pWVar1->viewLastShotEjectEffect == (FxEffectDef *)0x0) ||
         (pWVar1->worldLastShotEjectEffect == (FxEffectDef *)0x0)) ||
-       (bVar9 = BG_IsLastShotWeaponEvent(param_3), !bVar9)) {
+       (bVar8 = BG_IsLastShotWeaponEvent(param_3), !bVar8)) {
       if (bVar2) {
-        pFVar7 = BG_ViewShellEjectEffect(param_2->weapon,param_4);
+        pFVar6 = BG_ViewShellEjectEffect(param_2->weapon,param_4);
       }
       else {
-        pFVar7 = BG_WorldShellEjectEffect(param_2->weapon,param_4);
+        pFVar6 = BG_WorldShellEjectEffect(param_2->weapon,param_4);
       }
     }
     else if (bVar2) {
-      pFVar7 = pWVar1->viewLastShotEjectEffect;
+      pFVar6 = pWVar1->viewLastShotEjectEffect;
     }
     else {
-      pFVar7 = pWVar1->worldLastShotEjectEffect;
+      pFVar6 = pWVar1->worldLastShotEjectEffect;
     }
-    if (pFVar7 != (FxEffectDef *)0x0) {
-      PVar8 = BG_GetHandFromWeaponEvent(param_3);
-      iVar10 = PVar8 + 0x800;
+    if (pFVar6 != (FxEffectDef *)0x0) {
+      PVar7 = BG_GetHandFromWeaponEvent(param_3);
+      iVar9 = PVar7 + 0x800;
       if (!bVar2) {
-        iVar10 = param_2->number;
+        iVar9 = param_2->number;
       }
-      CG_PlayBoltedEffect(LVar3,pFVar7,iVar10,(uint)scr_const.tag_brass);
+      CG_PlayBoltedEffect(param_1,pFVar6,iVar9,(uint)scr_const.tag_brass);
     }
   }
-  __restgprlr_26();
   return;
 }
 
@@ -6356,6 +6087,8 @@ bool CG_ClientViewLockedOnTurret(LocalClientNum_t param_1,int param_2)
 
 // 8231D9A8  CG_FireWeapon_AddNonPlayerWeaponFlash  (cgame/cg_weapons.cpp:4891)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
@@ -6366,15 +6099,10 @@ void CG_FireWeapon_AddNonPlayerWeaponFlash
 
 {
   int iVar1;
-  entityState_s *peVar2;
-  LocalClientNum_t LVar3;
-  centity_s *pcVar4;
-  cg_s *pcVar5;
-  FxEffectDef *pFVar6;
-  bool bVar7;
-  ulonglong uVar8;
-  uint uVar9;
-  ulonglong uVar10;
+  centity_s *pcVar2;
+  cg_s *pcVar3;
+  FxEffectDef *pFVar4;
+  bool bVar5;
   float local_70;
   float local_6c;
   float local_68;
@@ -6382,63 +6110,57 @@ void CG_FireWeapon_AddNonPlayerWeaponFlash
   float afStack_54 [3];
   float afStack_48 [18];
   
-  uVar10 = (ulonglong)param_6;
-  uVar9 = (uint)(short)param_3;
-  uVar8 = (ulonglong)(int)param_2;
-  LVar3 = __savegprlr_26(param_1);
-  if ((uVar8 & 0xffffffff) == 0) {
+  if (param_2 == (entityState_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp",0x1321,0
                     ,"%s");
   }
-  peVar2 = (entityState_s *)uVar8;
-  iVar1 = peVar2->eType;
+  iVar1 = param_2->eType;
   if (iVar1 == 0xb) {
-    iVar1 = peVar2->number;
-    if ((uVar10 & 0xff) == 0) {
-      pFVar6 = BG_WorldFlashEffect(param_4,param_5);
+    iVar1 = param_2->number;
+    if (param_6) {
+      pFVar4 = BG_ViewFlashEffect(param_4,param_5);
     }
     else {
-      pFVar6 = BG_ViewFlashEffect(param_4,param_5);
+      pFVar4 = BG_WorldFlashEffect(param_4,param_5);
     }
-    if (pFVar6 != (FxEffectDef *)0x0) {
-      CG_PlayBoltedEffect(LVar3,pFVar6,iVar1,uVar9 & 0xffff);
+    if (pFVar4 != (FxEffectDef *)0x0) {
+      CG_PlayBoltedEffect(param_1,pFVar4,iVar1,(uint)param_3);
     }
   }
   else if (iVar1 == 0xc) {
-    iVar1 = peVar2->number;
-    pFVar6 = BG_WorldFlashEffect(param_4,param_5);
-    if (pFVar6 != (FxEffectDef *)0x0) {
-      CG_PlayBoltedEffect(LVar3,pFVar6,iVar1,uVar9 & 0xffff);
+    iVar1 = param_2->number;
+    pFVar4 = BG_WorldFlashEffect(param_4,param_5);
+    if (pFVar4 != (FxEffectDef *)0x0) {
+      CG_PlayBoltedEffect(param_1,pFVar4,iVar1,(uint)param_3);
     }
-    CG_EjectWeaponBrass(LVar3,peVar2,0x22,param_5);
-    bVar7 = CG_ClientViewLockedOnTurret(LVar3,peVar2->number);
-    if (!bVar7) {
-      Veh_IncTurretBarrelRoll(LVar3,peVar2->number,(heli_barrelRotation->current).value);
-      __restgprlr_26();
+    CG_EjectWeaponBrass(param_1,param_2,0x22,param_5);
+    bVar5 = CG_ClientViewLockedOnTurret(param_1,param_2->number);
+    if (!bVar5) {
+      Veh_IncTurretBarrelRoll(param_1,param_2->number,(heli_barrelRotation->current).value);
       return;
     }
   }
   else if ((0x11 < iVar1) && (iVar1 == 0x32)) {
-    pcVar4 = CG_GetEntity(LVar3,peVar2->number);
-    ByteToDir(peVar2->eventParm,afStack_60);
+    pcVar2 = CG_GetEntity(param_1,param_2->number);
+    ByteToDir(param_2->eventParm,afStack_60);
     AxisRandomAroundForward(afStack_60,afStack_54,afStack_48);
-    local_70 = (pcVar4->pose).origin[0];
-    local_6c = (pcVar4->pose).origin[1];
-    local_68 = (pcVar4->pose).origin[2];
-    pcVar5 = CG_GetLocalClientGlobals(LVar3);
-    iVar1 = pcVar5->time;
-    pFVar6 = BG_WorldFlashEffect(param_4,param_5);
-    FX_PlayOrientedEffect(LVar3,pFVar6,iVar1,&local_70,&afStack_60);
-    __restgprlr_26();
+    local_70 = (pcVar2->pose).origin[0];
+    local_6c = (pcVar2->pose).origin[1];
+    local_68 = (pcVar2->pose).origin[2];
+    pcVar3 = CG_GetLocalClientGlobals(param_1);
+    iVar1 = pcVar3->time;
+    pFVar4 = BG_WorldFlashEffect(param_4,param_5);
+    FX_PlayOrientedEffect(param_1,pFVar4,iVar1,&local_70,&afStack_60);
     return;
   }
-  __restgprlr_26();
   return;
 }
 
 
 // 8231DB68  CG_FireWeapon_FireSound  (cgame/cg_weapons.cpp:4986)
 
+/* WARNING: Function: __savegprlr_19 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_19 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
@@ -6448,102 +6170,89 @@ void CG_FireWeapon_FireSound
                ,Weapon param_6,bool param_7,bool param_8,PlayerHandIndex param_9)
 
 {
-  centity_s *pcVar1;
-  LocalClientNum_t LVar2;
-  cg_s *pcVar3;
-  snd_alias_list_t *psVar4;
-  snd_alias_list_t *psVar5;
-  bool bVar8;
-  int iVar6;
-  weapType_t wVar7;
-  ulonglong uVar9;
-  uint uVar10;
-  ulonglong uVar11;
-  ulonglong uVar12;
+  cg_s *pcVar1;
+  snd_alias_list_t *psVar2;
+  snd_alias_list_t *psVar3;
+  bool bVar6;
+  int iVar4;
+  weapType_t wVar5;
   int in_stack_00000054;
   int local_90 [2];
   float afStack_88 [34];
   
-  uVar12 = (ulonglong)param_8;
-  uVar11 = (ulonglong)(int)param_5;
-  uVar10 = (uint)(short)param_4;
-  uVar9 = (ulonglong)(int)param_2;
-  LVar2 = __savegprlr_19(param_1);
-  if ((uVar9 & 0xffffffff) == 0) {
+  if (param_2 == (centity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp",0x1384,0
                     ,"%s");
   }
-  pcVar3 = CG_GetLocalClientGlobals(LVar2);
-  pcVar1 = (centity_s *)uVar9;
-  bVar8 = false;
-  if ((((pcVar1->nextState).eType == 0xc) && (((pcVar3->predictedPlayerState).linkFlags & 4U) != 0))
-     && ((pcVar3->predictedPlayerState).linkWeaponEnt == (pcVar1->nextState).number)) {
-    bVar8 = true;
+  pcVar1 = CG_GetLocalClientGlobals(param_1);
+  bVar6 = false;
+  if ((((param_2->nextState).eType == 0xc) && (((pcVar1->predictedPlayerState).linkFlags & 4U) != 0)
+      ) && ((pcVar1->predictedPlayerState).linkWeaponEnt == (param_2->nextState).number)) {
+    bVar6 = true;
   }
-  psVar4 = BG_FireSound(param_6,param_7);
-  uVar9 = uVar12 & 0xff;
-  if ((uVar9 != 0) || (bVar8)) {
-    psVar5 = BG_FireSoundPlayer(param_6,param_7);
-    if (psVar5 != (snd_alias_list_t *)0x0) {
-      psVar4 = psVar5;
+  psVar2 = BG_FireSound(param_6,param_7);
+  if ((param_8) || (bVar6)) {
+    psVar3 = BG_FireSoundPlayer(param_6,param_7);
+    if (psVar3 != (snd_alias_list_t *)0x0) {
+      psVar2 = psVar3;
     }
-    psVar5 = BG_FireSoundPlayerAkimbo(param_6,param_7);
-    if ((in_stack_00000054 == 1) && (psVar5 != (snd_alias_list_t *)0x0)) {
-      psVar4 = psVar5;
+    psVar3 = BG_FireSoundPlayerAkimbo(param_6,param_7);
+    if ((in_stack_00000054 == 1) && (psVar3 != (snd_alias_list_t *)0x0)) {
+      psVar2 = psVar3;
     }
   }
-  bVar8 = BG_IsLastShotWeaponEvent(param_3);
-  if (((bVar8) ||
-      ((uVar9 != 0 && (((pcVar3->predictedPlayerState).weapCommon.weapFlags & 0x200U) != 0)))) &&
-     (psVar5 = BG_FireSoundLastShot(SUB81(uVar12,0),param_6,param_7),
-     psVar5 != (snd_alias_list_t *)0x0)) {
-    psVar4 = psVar5;
+  bVar6 = BG_IsLastShotWeaponEvent(param_3);
+  if (((bVar6) ||
+      ((param_8 && (((pcVar1->predictedPlayerState).weapCommon.weapFlags & 0x200U) != 0)))) &&
+     (psVar3 = BG_FireSoundLastShot(param_8,param_6,param_7), psVar3 != (snd_alias_list_t *)0x0)) {
+    psVar2 = psVar3;
   }
-  if (psVar4 == (snd_alias_list_t *)0x0) goto LAB_8231ddd4;
-  if (uVar9 == 0) {
-    if (((uVar11 & 0xffffffff) == 0) ||
-       (iVar6 = CG_DObjGetWorldTagPos(&pcVar1->pose,(DObj *)uVar11,uVar10 & 0xffff,afStack_88),
-       iVar6 == 0)) {
-      pcVar3 = CG_GetLocalClientGlobals(LVar2);
-      iVar6 = pcVar3->time;
-      goto LAB_8231dd30;
-    }
+  if (psVar2 == (snd_alias_list_t *)0x0) {
+    return;
   }
-  else if (((uVar11 & 0xffffffff) == 0) ||
-          (iVar6 = CG_DObjGetWorldTagPos
-                             (&pcVar3->viewModelPose,(DObj *)uVar11,uVar10 & 0xffff,afStack_88),
-          iVar6 == 0)) {
-    iVar6 = pcVar3->time;
+  if (param_8) {
+    if ((param_5 == (DObj *)0x0) ||
+       (iVar4 = CG_DObjGetWorldTagPos(&pcVar1->viewModelPose,param_5,(uint)param_4,afStack_88),
+       iVar4 == 0)) {
+      iVar4 = pcVar1->time;
 LAB_8231dd30:
-    BG_EvaluateTrajectory(&(pcVar1->nextState).lerp.pos,iVar6,afStack_88);
+      BG_EvaluateTrajectory(&(param_2->nextState).lerp.pos,iVar4,afStack_88);
+    }
   }
-  iVar6 = CG_PlaySoundAlias(LVar2,(pcVar1->nextState).number,afStack_88,psVar4);
-  if ((pcVar1->nextState).eType != 1) goto LAB_8231ddd4;
-  bVar8 = BG_IsSilenced(param_6,param_7);
-  if (bVar8) {
-LAB_8231dd90:
-    bVar8 = false;
+  else if ((param_5 == (DObj *)0x0) ||
+          (iVar4 = CG_DObjGetWorldTagPos(&param_2->pose,param_5,(uint)param_4,afStack_88),
+          iVar4 == 0)) {
+    pcVar1 = CG_GetLocalClientGlobals(param_1);
+    iVar4 = pcVar1->time;
+    goto LAB_8231dd30;
   }
-  else {
-    wVar7 = BG_GetWeaponType(param_6,param_7);
-    bVar8 = true;
-    if (wVar7 == WEAPTYPE_GRENADE) goto LAB_8231dd90;
+  iVar4 = CG_PlaySoundAlias(param_1,(param_2->nextState).number,afStack_88,psVar2);
+  if ((param_2->nextState).eType != 1) {
+    return;
   }
-  if (bVar8) {
-    bVar8 = SND_GetKnownLength(iVar6,local_90);
-    if (!bVar8) {
+  bVar6 = BG_IsSilenced(param_6,param_7);
+  if (!bVar6) {
+    wVar5 = BG_GetWeaponType(param_6,param_7);
+    bVar6 = true;
+    if (wVar5 != WEAPTYPE_GRENADE) goto LAB_8231dd94;
+  }
+  bVar6 = false;
+LAB_8231dd94:
+  if (bVar6) {
+    bVar6 = SND_GetKnownLength(iVar4,local_90);
+    if (!bVar6) {
       local_90[0] = 0x5dc;
     }
-    CG_CompassAddWeaponPingInfo(LVar2,pcVar1,afStack_88,local_90[0]);
+    CG_CompassAddWeaponPingInfo(param_1,param_2,afStack_88,local_90[0]);
   }
-LAB_8231ddd4:
-  __restgprlr_19();
   return;
 }
 
 
 // 8231DDE0  CG_FireWeapon_Rumble  (cgame/cg_weapons.cpp:5090)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
@@ -6553,46 +6262,39 @@ void CG_FireWeapon_Rumble
                bool param_5)
 
 {
-  int *piVar1;
+  bool bVar1;
   bool bVar2;
-  bool bVar3;
-  LocalClientNum_t LVar4;
-  char *pcVar5;
-  cg_s *pcVar6;
-  ulonglong uVar7;
-  ulonglong uVar8;
+  char *pcVar3;
+  cg_s *pcVar4;
   
-  uVar8 = (ulonglong)param_5;
-  uVar7 = (ulonglong)(int)param_2;
-  LVar4 = __savegprlr_27(param_1);
-  if ((uVar7 & 0xffffffff) == 0) {
+  if (param_2 == (entityState_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp",0x13e9,0
                     ,"%s");
   }
-  pcVar5 = BG_FireRumble(param_3,param_4);
-  if ((pcVar5 != (char *)0x0) && (*pcVar5 != '\0')) {
-    pcVar6 = CG_GetLocalClientGlobals(LVar4);
-    piVar1 = (int *)uVar7;
-    if ((piVar1[1] != 0xc) ||
-       ((((pcVar6->predictedPlayerState).eFlags & 0x200000U) == 0 ||
-        (bVar2 = true, (pcVar6->predictedPlayerState).viewlocked_entNum != *piVar1)))) {
+  pcVar3 = BG_FireRumble(param_3,param_4);
+  if ((pcVar3 != (char *)0x0) && (*pcVar3 != '\0')) {
+    pcVar4 = CG_GetLocalClientGlobals(param_1);
+    if ((param_2->eType != 0xc) ||
+       ((((pcVar4->predictedPlayerState).eFlags & 0x200000U) == 0 ||
+        (bVar1 = true, (pcVar4->predictedPlayerState).viewlocked_entNum != param_2->number)))) {
+      bVar1 = false;
+    }
+    if (((param_2->eType != 0xb) || (((pcVar4->predictedPlayerState).linkFlags & 4U) == 0)) ||
+       (bVar2 = true, (pcVar4->predictedPlayerState).viewlocked_entNum != param_2->number)) {
       bVar2 = false;
     }
-    if (((piVar1[1] != 0xb) || (((pcVar6->predictedPlayerState).linkFlags & 4U) == 0)) ||
-       (bVar3 = true, (pcVar6->predictedPlayerState).viewlocked_entNum != *piVar1)) {
-      bVar3 = false;
-    }
-    if ((((uVar8 & 0xff) != 0) || (bVar2)) || (bVar3)) {
-      CG_PlayRumbleOnClient(LVar4,pcVar5);
+    if (((param_5) || (bVar1)) || (bVar2)) {
+      CG_PlayRumbleOnClient(param_1,pcVar3);
     }
   }
-  __restgprlr_27();
   return;
 }
 
 
 // 82325588  CG_FireWeapon  (cgame/cg_weapons.cpp:5150)
 
+/* WARNING: Function: __savegprlr_17 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_17 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
@@ -6601,96 +6303,84 @@ void CG_FireWeapon(LocalClientNum_t param_1,centity_s *param_2,int param_3,int p
                   ushort param_5,Weapon param_6,bool param_7,bool param_8)
 
 {
-  LocalClientNum_t LVar1;
-  uint uVar2;
-  bool bVar10;
-  PlayerHandIndex PVar3;
-  cg_s *pcVar4;
-  WeaponHand *pWVar5;
-  DObj *pDVar6;
-  uint *puVar7;
-  weapType_t wVar8;
-  bool bVar11;
-  ulonglong uVar12;
-  entityState_s *peVar13;
-  ulonglong uVar14;
-  ulonglong uVar15;
+  uint uVar1;
+  bool bVar8;
+  bool bVar9;
+  PlayerHandIndex PVar2;
+  cg_s *pcVar3;
+  WeaponHand *pWVar4;
+  DObj *pDVar5;
+  uint *puVar6;
+  weapType_t wVar7;
+  entityState_s *peVar10;
   PlayerHandIndex in_stack_ffffff28;
-  Weapon WVar9;
   
-  uVar12 = (ulonglong)param_8;
-  uVar14 = (ulonglong)(int)param_6.data;
-  LVar1 = __savegprlr_17(param_1);
-  peVar13 = &param_2->nextState;
-  if ((uVar14 & 0xff) == 0) {
-    uVar14 = (ulonglong)(param_2->nextState).weapon.data;
+  peVar10 = &param_2->nextState;
+  if ((param_6.data & 0xff) == 0) {
+    param_6 = (param_2->nextState).weapon;
     param_7 = (param_2->nextState).inAltWeaponMode != 0;
   }
-  if ((uVar14 & 0xff) != 0) {
-    uVar2 = BG_GetNumWeapons();
-    if ((ulonglong)uVar2 <= (uVar14 & 0xff)) {
+  if ((param_6.data & 0xff) != 0) {
+    uVar1 = BG_GetNumWeapons();
+    if (uVar1 <= (param_6.data & 0xff)) {
       Com_Error(ERR_DROP,"\x15CG_FireWeapon: base weapon >= BG_GetNumWeapons()");
-      __restgprlr_17();
       return;
     }
-    uVar15 = uVar12;
+    bVar8 = param_8;
     if ((param_2->nextState).eType == 0xb) {
-      bVar10 = CG_ClientViewLockedOnTurret(LVar1,peVar13->number);
-      uVar15 = (ulonglong)bVar10;
+      bVar8 = CG_ClientViewLockedOnTurret(param_1,peVar10->number);
     }
-    bVar10 = CL_Demo_IsFollowCamera(LVar1);
-    if ((bVar10) || (bVar10 = CL_Demo_IsFreeCamera(LVar1), bVar10)) {
-      uVar15 = 0;
-      uVar12 = 0;
+    bVar9 = CL_Demo_IsFollowCamera(param_1);
+    if ((bVar9) || (bVar9 = CL_Demo_IsFreeCamera(param_1), bVar9)) {
+      bVar8 = false;
+      param_8 = false;
     }
-    PVar3 = BG_GetHandFromWeaponEvent(param_3);
-    if ((uVar15 & 0xff) == 0) {
-      pcVar4 = (cg_s *)0x0;
-      pDVar6 = Com_GetClientDObj(peVar13->number,LVar1);
+    PVar2 = BG_GetHandFromWeaponEvent(param_3);
+    if (bVar8 == false) {
+      pcVar3 = (cg_s *)0x0;
+      pDVar5 = Com_GetClientDObj(peVar10->number,param_1);
     }
     else {
-      pcVar4 = CG_GetLocalClientGlobals(LVar1);
-      pWVar5 = CG_GetLocalClientViewModelHand(LVar1,PVar3);
-      pDVar6 = pWVar5->viewModelDObj;
-      CG_UpdateViewModelPoseForHand(pDVar6,LVar1,PVar3);
-      if ((pcVar4 == (cg_s *)0x0) ||
-         (param_7 = true, ((pcVar4->predictedPlayerState).weapCommon.weapFlags & 0x8000U) == 0)) {
+      pcVar3 = CG_GetLocalClientGlobals(param_1);
+      pWVar4 = CG_GetLocalClientViewModelHand(param_1,PVar2);
+      pDVar5 = pWVar4->viewModelDObj;
+      CG_UpdateViewModelPoseForHand(pDVar5,param_1,PVar2);
+      if ((pcVar3 == (cg_s *)0x0) ||
+         (param_7 = true, ((pcVar3->predictedPlayerState).weapCommon.weapFlags & 0x8000U) == 0)) {
         param_7 = false;
       }
     }
-    if ((uVar12 & 0xff) != 0) {
-      puVar7 = GetRandSeed();
-      BG_WeaponFireRecoil(&pcVar4->predictedPlayerState,pcVar4->recoilSpeed,pcVar4->kickAVel,puVar7,
-                          PVar3);
+    if (param_8 != false) {
+      puVar6 = GetRandSeed();
+      BG_WeaponFireRecoil(&pcVar3->predictedPlayerState,pcVar3->recoilSpeed,pcVar3->kickAVel,puVar6,
+                          PVar2);
     }
-    WVar9.data = (uint)uVar14;
-    wVar8 = BG_GetWeaponType(WVar9,param_7);
-    bVar10 = SUB81(uVar15,0);
-    if (wVar8 == WEAPTYPE_BULLET) {
+    wVar7 = BG_GetWeaponType(param_6,param_7);
+    if (wVar7 == WEAPTYPE_BULLET) {
       CG_SimulateBulletFire
-                (LVar1,param_2,param_4,WVar9,param_7,param_5,bVar10,SUB81(uVar12,0),
-                 in_stack_ffffff28);
+                (param_1,param_2,param_4,param_6,param_7,param_5,bVar8,param_8,in_stack_ffffff28);
     }
-    CEMuzzleflashSet(param_2,PVar3);
-    CG_FireWeapon_AddNonPlayerWeaponFlash(LVar1,peVar13,param_5,WVar9,param_7,bVar10);
+    CEMuzzleflashSet(param_2,PVar2);
+    CG_FireWeapon_AddNonPlayerWeaponFlash(param_1,peVar10,param_5,param_6,param_7,bVar8);
     CG_FireWeapon_FireSound
-              (LVar1,param_2,param_3,param_5,pDVar6,WVar9,param_7,bVar10,in_stack_ffffff28);
-    bVar11 = BG_IsBoltAction(WVar9,param_7);
-    if (!bVar11) {
-      CG_EjectWeaponBrass(LVar1,peVar13,param_3,param_7);
+              (param_1,param_2,param_3,param_5,pDVar5,param_6,param_7,bVar8,in_stack_ffffff28);
+    bVar9 = BG_IsBoltAction(param_6,param_7);
+    if (!bVar9) {
+      CG_EjectWeaponBrass(param_1,peVar10,param_3,param_7);
     }
-    CG_FireWeapon_Rumble(LVar1,peVar13,WVar9,param_7,bVar10);
-    if ((uVar15 & 0xff) != 0) {
-      TakeWeaponIfEmpty(LVar1,&pcVar4->predictedPlayerState);
+    CG_FireWeapon_Rumble(param_1,peVar10,param_6,param_7,bVar8);
+    if (bVar8 != false) {
+      TakeWeaponIfEmpty(param_1,&pcVar3->predictedPlayerState);
     }
   }
-  __restgprlr_17();
   return;
 }
 
 
 // 8231DEF0  PlayRandomWhizby  (cgame/cg_weapons.cpp:5270)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void PlayRandomWhizby(LocalClientNum_t param_1,int param_2,float *param_3,float *param_4)
@@ -6698,48 +6388,46 @@ void PlayRandomWhizby(LocalClientNum_t param_1,int param_2,float *param_3,float 
 {
   snd_alias_list_t *psVar1;
   snd_alias_list_t *psVar2;
-  LocalClientNum_t LVar3;
+  int iVar3;
   int iVar4;
-  ulonglong uVar5;
-  int iVar6;
-  int iVar7;
+  int iVar5;
   
-  uVar5 = (ulonglong)param_2;
-  LVar3 = __savegprlr_28(param_1);
-  if (2 < (uVar5 & 0xffffffff)) {
+  if (2 < (uint)param_2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp",0x149b,0
                     ,"whizbyType doesn\'t index NUM_WHIZBY_TYPES\n\t%i not in [0, %i)");
   }
-  iVar4 = SND_GetNextWhizbyVariationIndex((int)uVar5);
-  if ((uVar5 & 0xffffffff) == 0) {
-    iVar7 = -0x7d5c5d64;
-    iVar6 = -0x7d5c5d24;
+  iVar3 = SND_GetNextWhizbyVariationIndex(param_2);
+  if (param_2 == 0) {
+    iVar5 = -0x7d5c5d64;
+    iVar4 = -0x7d5c5d24;
   }
-  else if ((uVar5 & 0xffffffff) == 1) {
-    iVar7 = -0x7d5c5ce4;
-    iVar6 = -0x7d5c5ca4;
+  else if (param_2 == 1) {
+    iVar5 = -0x7d5c5ce4;
+    iVar4 = -0x7d5c5ca4;
   }
   else {
-    if (2 < (uVar5 & 0xffffffff)) goto LAB_8231dfcc;
-    iVar7 = -0x7d5c5c64;
-    iVar6 = -0x7d5c5c24;
+    if (2 < (uint)param_2) {
+      return;
+    }
+    iVar5 = -0x7d5c5c64;
+    iVar4 = -0x7d5c5c24;
   }
-  psVar1 = *(snd_alias_list_t **)(iVar4 * 4 + iVar7);
-  psVar2 = *(snd_alias_list_t **)(iVar4 * 4 + iVar6);
+  psVar1 = *(snd_alias_list_t **)(iVar3 * 4 + iVar5);
+  psVar2 = *(snd_alias_list_t **)(iVar3 * 4 + iVar4);
   if (psVar1 != (snd_alias_list_t *)0x0) {
-    iVar4 = CG_PlaySoundAlias(LVar3,0x7fe,param_3,psVar1);
+    CG_PlaySoundAlias(param_1,0x7fe,param_3,psVar1);
   }
   if (psVar2 != (snd_alias_list_t *)0x0) {
-    iVar4 = CG_PlaySoundAlias(LVar3,0x7fe,param_4,psVar2);
+    CG_PlaySoundAlias(param_1,0x7fe,param_4,psVar2);
   }
-LAB_8231dfcc:
-  __restgprlr_28(iVar4);
   return;
 }
 
 
 // 8231DFD8  OldWhizbySound  (cgame/cg_weapons.cpp:5318)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -6757,54 +6445,55 @@ void OldWhizbySound(LocalClientNum_t param_1,float *param_2,float *param_3)
   float fVar8;
   float fVar9;
   float fVar10;
-  LocalClientNum_t LVar11;
-  cg_s *pcVar12;
-  float *pfVar13;
+  cg_s *pcVar11;
+  float *pfVar12;
   float local_30;
   float local_2c;
   float local_28;
   
-  LVar11 = __savegprlr_29(param_1);
-  pcVar12 = CG_GetLocalClientGlobals(LVar11);
+  pcVar11 = CG_GetLocalClientGlobals(param_1);
   fVar1 = *param_2;
-  pfVar13 = (pcVar12->refdef).view.org;
+  pfVar12 = (pcVar11->refdef).view.org;
   fVar4 = *param_3 - fVar1;
   fVar2 = param_2[1];
   fVar3 = param_2[2];
   fVar5 = param_3[2] - fVar3;
-  fVar10 = param_3[1] - fVar2;
-  fVar6 = SQRT(fVar10 * fVar10 + fVar5 * fVar5 + fVar4 * fVar4);
+  fVar9 = param_3[1] - fVar2;
+  fVar6 = SQRT(fVar9 * fVar9 + fVar5 * fVar5 + fVar4 * fVar4);
   fVar8 = 1.0;
   if (-fVar6 < 0.0) {
     fVar8 = fVar6;
   }
   fVar8 = 1.0 / fVar8;
   fVar7 = fVar8 * fVar4;
-  fVar6 = fVar8 * fVar10;
+  fVar6 = fVar8 * fVar9;
   fVar8 = fVar5 * fVar8;
-  fVar9 = ((pcVar12->refdef).view.org[2] - fVar3) * fVar8 +
-          ((pcVar12->refdef).view.org[1] - fVar2) * fVar6 + (*pfVar13 - fVar1) * fVar7;
-  if ((64.0 <= fVar9) && (fVar9 - -64.0 <= fVar8 * fVar5 + fVar7 * fVar4 + fVar6 * fVar10)) {
-    local_30 = fVar7 * fVar9 + fVar1;
-    local_2c = fVar6 * fVar9 + fVar2;
-    local_28 = fVar8 * fVar9 + fVar3;
-    fVar3 = local_30 - *pfVar13;
-    fVar1 = local_28 - (pcVar12->refdef).view.org[2];
-    fVar2 = local_2c - (pcVar12->refdef).view.org[1];
-    if (SQRT(fVar2 * fVar2 + fVar1 * fVar1 + fVar3 * fVar3) <= 140.0) {
-      local_30 = -(fVar7 * 16.0 - local_30);
-      local_2c = -(fVar6 * 16.0 - local_2c);
-      local_28 = -(fVar8 * 16.0 - local_28);
-      pcVar12 = (cg_s *)CG_PlaySoundAlias(LVar11,0x7fe,&local_30,cgMedia.bulletWhizby);
+  fVar10 = ((pcVar11->refdef).view.org[2] - fVar3) * fVar8 +
+           ((pcVar11->refdef).view.org[1] - fVar2) * fVar6 + (*pfVar12 - fVar1) * fVar7;
+  if ((64.0 <= fVar10) && (fVar10 - -64.0 <= fVar8 * fVar5 + fVar7 * fVar4 + fVar6 * fVar9)) {
+    fVar1 = fVar7 * fVar10 + fVar1;
+    fVar2 = fVar6 * fVar10 + fVar2;
+    fVar3 = fVar8 * fVar10 + fVar3;
+    fVar9 = fVar1 - *pfVar12;
+    fVar4 = fVar3 - (pcVar11->refdef).view.org[2];
+    fVar5 = fVar2 - (pcVar11->refdef).view.org[1];
+    if (SQRT(fVar5 * fVar5 + fVar4 * fVar4 + fVar9 * fVar9) <= 140.0) {
+      local_30 = -(fVar7 * 16.0 - fVar1);
+      local_2c = -(fVar6 * 16.0 - fVar2);
+      local_28 = -(fVar8 * 16.0 - fVar3);
+      CG_PlaySoundAlias(param_1,0x7fe,&local_30,cgMedia.bulletWhizby);
     }
   }
-  __restgprlr_29(pcVar12);
   return;
 }
 
 
 // 8231E138  NewWhizbySound  (cgame/cg_weapons.cpp:5368)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -6815,10 +6504,10 @@ void NewWhizbySound(LocalClientNum_t param_1,float *param_2,float *param_3)
   float fVar1;
   float fVar2;
   float fVar3;
-  LocalClientNum_t LVar4;
-  cg_s *pcVar5;
-  int iVar6;
-  float *pfVar7;
+  cg_s *pcVar4;
+  int iVar5;
+  float *pfVar6;
+  double dVar7;
   double dVar8;
   double dVar9;
   double dVar10;
@@ -6829,8 +6518,7 @@ void NewWhizbySound(LocalClientNum_t param_1,float *param_2,float *param_3)
   double dVar15;
   double dVar16;
   double dVar17;
-  double dVar18;
-  float fVar19;
+  float fVar18;
   float local_80;
   float local_7c;
   float local_78;
@@ -6838,73 +6526,69 @@ void NewWhizbySound(LocalClientNum_t param_1,float *param_2,float *param_3)
   float local_6c;
   float local_68;
   
-  __savegprlr_28(param_1);
-  LVar4 = __savefpr_25();
-  pcVar5 = CG_GetLocalClientGlobals(LVar4);
-  dVar15 = (double)*param_2;
-  fVar19 = (float)((double)*param_3 - dVar15);
-  dVar13 = (double)param_2[1];
-  pfVar7 = (pcVar5->refdef).view.org;
-  dVar14 = (double)param_2[2];
-  fVar2 = (float)((double)param_3[1] - dVar13);
-  fVar3 = (float)((double)param_3[2] - dVar14);
-  dVar12 = (double)*pfVar7;
-  dVar11 = (double)(pcVar5->refdef).view.org[1];
-  dVar10 = (double)(pcVar5->refdef).view.org[2];
-  dVar9 = (double)SQRT(fVar2 * fVar2 + fVar3 * fVar3 + fVar19 * fVar19);
-  dVar8 = 1.0;
-  if (-dVar9 < 0.0) {
-    dVar8 = dVar9;
+  pcVar4 = CG_GetLocalClientGlobals(param_1);
+  dVar14 = (double)*param_2;
+  fVar18 = (float)((double)*param_3 - dVar14);
+  dVar12 = (double)param_2[1];
+  pfVar6 = (pcVar4->refdef).view.org;
+  dVar13 = (double)param_2[2];
+  fVar2 = (float)((double)param_3[1] - dVar12);
+  fVar3 = (float)((double)param_3[2] - dVar13);
+  dVar11 = (double)*pfVar6;
+  dVar10 = (double)(pcVar4->refdef).view.org[1];
+  dVar9 = (double)(pcVar4->refdef).view.org[2];
+  dVar8 = (double)SQRT(fVar2 * fVar2 + fVar3 * fVar3 + fVar18 * fVar18);
+  dVar7 = 1.0;
+  if (-dVar8 < 0.0) {
+    dVar7 = dVar8;
   }
-  fVar1 = (float)(1.0 / dVar8);
-  dVar18 = (double)(fVar1 * fVar19);
-  dVar17 = (double)(fVar1 * fVar2);
-  dVar16 = (double)(fVar3 * fVar1);
-  dVar8 = (double)(float)((double)(float)(dVar10 - dVar14) * dVar16 +
-                         (double)(float)((double)(float)(dVar11 - dVar13) * dVar17 +
-                                        (double)(float)((double)(float)(dVar12 - dVar15) * dVar18)))
+  fVar1 = (float)(1.0 / dVar7);
+  dVar17 = (double)(fVar1 * fVar18);
+  dVar16 = (double)(fVar1 * fVar2);
+  dVar15 = (double)(fVar3 * fVar1);
+  dVar7 = (double)(float)((double)(float)(dVar9 - dVar13) * dVar15 +
+                         (double)(float)((double)(float)(dVar10 - dVar12) * dVar16 +
+                                        (double)(float)((double)(float)(dVar11 - dVar14) * dVar17)))
   ;
-  if ((dVar8 <= dVar9) && (64.0 <= dVar8)) {
-    dVar13 = (double)(float)((double)(float)(dVar17 * dVar8 + dVar13) - dVar11);
-    dVar11 = (double)(float)((double)(float)(dVar16 * dVar8 + dVar14) - dVar10);
-    dVar10 = (double)(float)((double)(float)(dVar18 * dVar8 + dVar15) - dVar12);
-    dVar9 = (double)SQRT((float)(dVar10 * dVar10 +
-                                (double)(float)(dVar11 * dVar11 + (double)(float)(dVar13 * dVar13)))
+  if ((dVar7 <= dVar8) && (64.0 <= dVar7)) {
+    dVar12 = (double)(float)((double)(float)(dVar16 * dVar7 + dVar12) - dVar10);
+    dVar10 = (double)(float)((double)(float)(dVar15 * dVar7 + dVar13) - dVar9);
+    dVar9 = (double)(float)((double)(float)(dVar17 * dVar7 + dVar14) - dVar11);
+    dVar8 = (double)SQRT((float)(dVar9 * dVar9 +
+                                (double)(float)(dVar10 * dVar10 + (double)(float)(dVar12 * dVar12)))
                         );
-    dVar8 = 1.0;
-    if ((float)(1.0 - dVar9) < 0.0) {
-      dVar8 = dVar9;
+    dVar7 = 1.0;
+    if ((float)(1.0 - dVar8) < 0.0) {
+      dVar7 = dVar8;
     }
-    fVar19 = SND_GetWhizbyRadius(2);
-    if (dVar8 <= (double)fVar19) {
-      fVar19 = SND_GetWhizbyRadius(0);
-      if ((double)fVar19 <= dVar8) {
-        fVar19 = SND_GetWhizbyRadius(1);
-        iVar6 = 1;
-        if ((double)fVar19 <= dVar8) {
-          iVar6 = 2;
+    fVar18 = SND_GetWhizbyRadius(2);
+    if (dVar7 <= (double)fVar18) {
+      fVar18 = SND_GetWhizbyRadius(0);
+      if ((double)fVar18 <= dVar7) {
+        fVar18 = SND_GetWhizbyRadius(1);
+        iVar5 = 1;
+        if ((double)fVar18 <= dVar7) {
+          iVar5 = 2;
         }
       }
       else {
-        iVar6 = 0;
+        iVar5 = 0;
       }
-      dVar10 = (double)(float)((double)*pfVar7 + dVar10);
-      dVar12 = (double)(float)(dVar13 + (double)(pcVar5->refdef).view.org[1]);
-      dVar11 = (double)(float)(dVar11 + (double)(pcVar5->refdef).view.org[2]);
-      fVar19 = SND_GetWhizbySpread(iVar6,(float)dVar8);
-      dVar9 = (double)(fVar19 * -0.5);
-      dVar8 = (double)(fVar19 * 0.5);
-      local_80 = (float)(dVar9 * dVar18 + dVar10);
-      local_7c = (float)(dVar17 * dVar9 + dVar12);
-      local_78 = (float)(dVar16 * dVar9 + dVar11);
-      local_70 = (float)(dVar8 * dVar18 + dVar10);
-      local_6c = (float)(dVar17 * dVar8 + dVar12);
-      local_68 = (float)(dVar16 * dVar8 + dVar11);
-      PlayRandomWhizby(LVar4,iVar6,&local_80,&local_70);
+      dVar9 = (double)(float)((double)*pfVar6 + dVar9);
+      dVar11 = (double)(float)(dVar12 + (double)(pcVar4->refdef).view.org[1]);
+      dVar10 = (double)(float)(dVar10 + (double)(pcVar4->refdef).view.org[2]);
+      fVar18 = SND_GetWhizbySpread(iVar5,(float)dVar7);
+      dVar8 = (double)(fVar18 * -0.5);
+      dVar7 = (double)(fVar18 * 0.5);
+      local_80 = (float)(dVar8 * dVar17 + dVar9);
+      local_7c = (float)(dVar16 * dVar8 + dVar11);
+      local_78 = (float)(dVar15 * dVar8 + dVar10);
+      local_70 = (float)(dVar7 * dVar17 + dVar9);
+      local_6c = (float)(dVar16 * dVar7 + dVar11);
+      local_68 = (float)(dVar15 * dVar7 + dVar10);
+      PlayRandomWhizby(param_1,iVar5,&local_80,&local_70);
     }
   }
-  __restfpr_25();
-  __restgprlr_28();
   return;
 }
 
@@ -6961,6 +6645,8 @@ cg_s * CG_GetLocalClientGlobalsForEnt(int param_1)
 
 // 8231E3A8  CG_GetViewDirection  (cgame/cg_weapons.cpp:5495)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -6969,37 +6655,33 @@ bool CG_GetViewDirection(LocalClientNum_t param_1,int param_2,float *param_3,flo
                         float *param_5)
 
 {
-  LocalClientNum_t LVar1;
-  cg_s *pcVar2;
-  undefined1 uVar5;
-  centity_s *pcVar3;
-  clientInfo_t *pcVar4;
+  cg_s *pcVar1;
+  centity_s *pcVar2;
+  clientInfo_t *pcVar3;
   
-  LVar1 = __savegprlr_27(param_1);
-  pcVar2 = CG_GetLocalClientGlobalsForEnt(param_2);
-  if (pcVar2 != (cg_s *)0x0) {
-    BG_GetPlayerViewDirection(&pcVar2->predictedPlayerState,param_3,param_4,param_5);
-    uVar5 = __restgprlr_27(1);
-    return (bool)uVar5;
+  pcVar1 = CG_GetLocalClientGlobalsForEnt(param_2);
+  if (pcVar1 != (cg_s *)0x0) {
+    BG_GetPlayerViewDirection(&pcVar1->predictedPlayerState,param_3,param_4,param_5);
+    return true;
   }
-  pcVar3 = CG_GetEntity(LVar1,param_2);
-  if (pcVar3 == (centity_s *)0x0) {
+  pcVar2 = CG_GetEntity(param_1,param_2);
+  if (pcVar2 == (centity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp",0x1586,0
                     ,"%s");
   }
-  pcVar4 = CG_GetClientInfo(LVar1,pcVar3);
-  if ((pcVar4 != (clientInfo_t *)0x0) && (pcVar4->infoValid != 0)) {
-    AngleVectors(pcVar4->playerAngles,param_3,param_4,param_5);
-    uVar5 = __restgprlr_27(1);
-    return (bool)uVar5;
+  pcVar3 = CG_GetClientInfo(param_1,pcVar2);
+  if ((pcVar3 != (clientInfo_t *)0x0) && (pcVar3->infoValid != 0)) {
+    AngleVectors(pcVar3->playerAngles,param_3,param_4,param_5);
+    return true;
   }
-  uVar5 = __restgprlr_27(0);
-  return (bool)uVar5;
+  return false;
 }
 
 
 // 8231E480  CG_CalcEyePoint  (cgame/cg_weapons.cpp:5525)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -7009,45 +6691,41 @@ void CG_CalcEyePoint(LocalClientNum_t param_1,int param_2,float *param_3)
 {
   float fVar1;
   uint uVar2;
-  LocalClientNum_t LVar3;
-  cg_s *pcVar4;
-  centity_s *pcVar5;
+  cg_s *pcVar3;
+  centity_s *pcVar4;
   
-  LVar3 = __savegprlr_29(param_1);
-  pcVar4 = CG_GetLocalClientGlobalsForEnt(param_2);
-  if (pcVar4 != (cg_s *)0x0) {
-    *param_3 = (pcVar4->refdef).view.org[0];
-    param_3[1] = (pcVar4->refdef).view.org[1];
-    param_3[2] = (pcVar4->refdef).view.org[2];
-    __restgprlr_29();
+  pcVar3 = CG_GetLocalClientGlobalsForEnt(param_2);
+  if (pcVar3 != (cg_s *)0x0) {
+    *param_3 = (pcVar3->refdef).view.org[0];
+    param_3[1] = (pcVar3->refdef).view.org[1];
+    param_3[2] = (pcVar3->refdef).view.org[2];
     return;
   }
-  pcVar5 = CG_GetEntity(LVar3,param_2);
-  *param_3 = (pcVar5->pose).origin[0];
-  param_3[1] = (pcVar5->pose).origin[1];
-  fVar1 = (pcVar5->pose).origin[2];
+  pcVar4 = CG_GetEntity(param_1,param_2);
+  *param_3 = (pcVar4->pose).origin[0];
+  param_3[1] = (pcVar4->pose).origin[1];
+  fVar1 = (pcVar4->pose).origin[2];
   param_3[2] = fVar1;
   if (param_2 < 0x12) {
-    uVar2 = (pcVar5->nextState).lerp.eFlags;
+    uVar2 = (pcVar4->nextState).lerp.eFlags;
     if ((uVar2 & 8) != 0) {
       param_3[2] = fVar1 + 11.0;
-      __restgprlr_29();
       return;
     }
     if ((uVar2 & 4) != 0) {
       param_3[2] = fVar1 + 40.0;
-      __restgprlr_29();
       return;
     }
     param_3[2] = fVar1 + 60.0;
   }
-  __restgprlr_29();
   return;
 }
 
 
 // 8231E560  CG_CalcMuzzlePoint  (cgame/cg_weapons.cpp:5552)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
@@ -7059,11 +6737,10 @@ void CG_CalcMuzzlePoint(LocalClientNum_t param_1,int param_2,uint param_3,float 
   uint uVar2;
   float fVar3;
   float fVar4;
-  LocalClientNum_t LVar5;
-  centity_s *pcVar6;
-  cg_s *pcVar7;
-  DObj *pDVar8;
-  int iVar9;
+  centity_s *pcVar5;
+  cg_s *pcVar6;
+  DObj *pDVar7;
+  int iVar8;
   float local_60;
   float local_5c;
   float local_58;
@@ -7072,74 +6749,69 @@ void CG_CalcMuzzlePoint(LocalClientNum_t param_1,int param_2,uint param_3,float 
   float local_44;
   float local_40;
   
-  LVar5 = __savegprlr_26(param_1);
-  pcVar6 = CG_GetEntity(LVar5,param_2);
-  if (pcVar6 == (centity_s *)0x0) {
+  pcVar5 = CG_GetEntity(param_1,param_2);
+  if (pcVar5 == (centity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp",0x15b6,0
                     ,"%s");
   }
-  pcVar7 = CG_GetLocalClientGlobalsForEnt(param_2);
-  if (pcVar7 == (cg_s *)0x0) {
-    pDVar8 = Com_GetClientDObj((pcVar6->nextState).number,LVar5);
-    if ((pDVar8 == (DObj *)0x0) ||
-       (iVar9 = CG_DObjGetWorldTagPos(&pcVar6->pose,pDVar8,param_3,param_4), iVar9 == 0)) {
+  pcVar6 = CG_GetLocalClientGlobalsForEnt(param_2);
+  if (pcVar6 == (cg_s *)0x0) {
+    pDVar7 = Com_GetClientDObj((pcVar5->nextState).number,param_1);
+    if ((pDVar7 == (DObj *)0x0) ||
+       (iVar8 = CG_DObjGetWorldTagPos(&pcVar5->pose,pDVar7,param_3,param_4), iVar8 == 0)) {
       SL_ConvertToString(param_3);
       Com_PrintWarning(0x11,"WARNING: No %s or DObj in CalcMuzzlePoint on entity %d (eType %i).\n");
-      *param_4 = (pcVar6->pose).origin[0];
-      param_4[1] = (pcVar6->pose).origin[1];
-      fVar1 = (pcVar6->pose).origin[2];
+      *param_4 = (pcVar5->pose).origin[0];
+      param_4[1] = (pcVar5->pose).origin[1];
+      fVar1 = (pcVar5->pose).origin[2];
       param_4[2] = fVar1;
       if (param_2 < 0x12) {
-        uVar2 = (pcVar6->nextState).lerp.eFlags;
+        uVar2 = (pcVar5->nextState).lerp.eFlags;
         if ((uVar2 & 8) != 0) {
           param_4[2] = fVar1 + 11.0;
-          __restgprlr_26();
           return;
         }
         if ((uVar2 & 4) != 0) {
           param_4[2] = fVar1 + 40.0;
-          __restgprlr_26();
           return;
         }
         param_4[2] = fVar1 + 60.0;
       }
     }
-    __restgprlr_26();
     return;
   }
-  CG_GetPlayerViewOrigin(LVar5,&pcVar7->predictedPlayerState,param_4);
-  AngleVectors((pcVar6->pose).angles,&local_60,afStack_54,&local_48);
+  CG_GetPlayerViewOrigin(param_1,&pcVar6->predictedPlayerState,param_4);
+  AngleVectors((pcVar5->pose).angles,&local_60,afStack_54,&local_48);
   fVar4 = local_5c * 45.0 + param_4[1];
   fVar1 = local_60 * 45.0 + *param_4;
   fVar3 = local_58 * 45.0 + param_4[2];
   *param_4 = fVar1;
   param_4[1] = fVar4;
   param_4[2] = fVar3;
-  uVar2 = (pcVar7->predictedPlayerState).eFlags;
+  uVar2 = (pcVar6->predictedPlayerState).eFlags;
   if ((uVar2 & 8) != 0) {
     *param_4 = -(local_48 * 2.5 - fVar1);
     param_4[1] = -(local_44 * 2.5 - fVar4);
     param_4[2] = -(local_40 * 2.5 - fVar3);
-    __restgprlr_26();
     return;
   }
   if ((uVar2 & 4) != 0) {
     *param_4 = -(local_48 * 5.0 - fVar1);
     param_4[1] = -(local_44 * 5.0 - fVar4);
     param_4[2] = -(local_40 * 5.0 - fVar3);
-    __restgprlr_26();
     return;
   }
   *param_4 = -(local_48 * 8.0 - fVar1);
   param_4[1] = -(local_44 * 8.0 - fVar4);
   param_4[2] = -(local_40 * 8.0 - fVar3);
-  __restgprlr_26();
   return;
 }
 
 
 // 82323368  CG_BulletTracer_ShouldSpawn_TrajectoryEffects  (cgame/cg_weapons.cpp:5605)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
@@ -7148,41 +6820,33 @@ int CG_BulletTracer_ShouldSpawn_TrajectoryEffects
               (LocalClientNum_t param_1,centity_s *param_2,Weapon param_3,bool param_4)
 
 {
-  centity_s *pcVar1;
-  LocalClientNum_t LVar2;
-  cg_s *pcVar3;
-  int iVar4;
-  bool bVar5;
-  ulonglong uVar6;
+  cg_s *pcVar1;
+  bool bVar3;
+  int iVar2;
   
-  uVar6 = (ulonglong)(int)param_2;
-  LVar2 = __savegprlr_27(param_1);
-  if ((uVar6 & 0xffffffff) == 0) {
+  if (param_2 == (centity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp",0x15e8,0
                     ,"%s");
   }
-  pcVar3 = CG_GetLocalClientGlobals(LVar2);
-  pcVar1 = (centity_s *)uVar6;
-  if (((pcVar3->predictedPlayerState).otherFlags & 0x1800U) != 0) {
-    bVar5 = true;
-    if ((pcVar1->nextState).number == (pcVar3->predictedPlayerState).clientNum) goto LAB_823233e4;
+  pcVar1 = CG_GetLocalClientGlobals(param_1);
+  if ((((pcVar1->predictedPlayerState).otherFlags & 0x1800U) == 0) ||
+     (bVar3 = true, (param_2->nextState).number != (pcVar1->predictedPlayerState).clientNum)) {
+    bVar3 = false;
   }
-  bVar5 = false;
-LAB_823233e4:
-  if ((!bVar5) &&
-     ((bVar5 = CG_PlayerUsingScopedTurret(LVar2), !bVar5 ||
-      ((pcVar3->predictedPlayerState).viewlocked_entNum != (pcVar1->nextState).number)))) {
-    iVar4 = Tracer_UpdateDrawRate(LVar2,param_3,param_4,pcVar1);
-    iVar4 = __restgprlr_27(iVar4);
-    return iVar4;
+  if ((!bVar3) &&
+     ((bVar3 = CG_PlayerUsingScopedTurret(param_1), !bVar3 ||
+      ((pcVar1->predictedPlayerState).viewlocked_entNum != (param_2->nextState).number)))) {
+    iVar2 = Tracer_UpdateDrawRate(param_1,param_3,param_4,param_2);
+    return iVar2;
   }
-  iVar4 = __restgprlr_27(0);
-  return iVar4;
+  return 0;
 }
 
 
 // 82323440  CG_BulletTrajectoryEffects  (cgame/cg_weapons.cpp:5694)
 
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "XAssetType": Some values do not have unique names */
@@ -7193,97 +6857,89 @@ void CG_BulletTrajectoryEffects
                float *param_6,int param_7,int param_8)
 
 {
-  LocalClientNum_t LVar1;
-  centity_s *pcVar2;
-  int iVar3;
-  cg_s *pcVar4;
-  bool bVar5;
+  centity_s *pcVar1;
+  int iVar2;
+  cg_s *pcVar3;
+  bool bVar4;
   
-  LVar1 = __savegprlr_22(param_1);
   if (param_2 < 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp",0x1643,0
                     ,"%s");
   }
-  pcVar2 = CG_GetEntity(LVar1,param_2);
-  if (pcVar2 == (centity_s *)0x0) {
+  pcVar1 = CG_GetEntity(param_1,param_2);
+  if (pcVar1 == (centity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp",0x164a,0
                     ,"%s");
   }
-  iVar3 = CG_BulletTracer_ShouldSpawn_TrajectoryEffects(LVar1,pcVar2,param_3,param_4);
-  if (iVar3 != 0) {
-    Tracer_Spawn(LVar1,param_5,param_6,pcVar2,param_3,param_4);
+  iVar2 = CG_BulletTracer_ShouldSpawn_TrajectoryEffects(param_1,pcVar1,param_3,param_4);
+  if (iVar2 != 0) {
+    Tracer_Spawn(param_1,param_5,param_6,pcVar1,param_3,param_4);
   }
   if ((snd_newWhizby->current).enabled == false) {
-    OldWhizbySound(LVar1,param_5,param_6);
+    OldWhizbySound(param_1,param_5,param_6);
   }
   else {
-    NewWhizbySound(LVar1,param_5,param_6);
+    NewWhizbySound(param_1,param_5,param_6);
   }
-  if ((param_7 == 0x3c) || (bVar5 = false, param_7 == 0x40)) {
-    bVar5 = true;
+  if ((param_7 == 0x3c) || (bVar4 = false, param_7 == 0x40)) {
+    bVar4 = true;
   }
-  CG_BulletDynEntImpact(LVar1,param_2,param_3,param_4,bVar5,param_5,param_6,(trace_t *)0x0);
-  iVar3 = DB_AssetCount(ASSET_TYPE_FXWORLD);
-  if (iVar3 != 1) {
+  CG_BulletDynEntImpact(param_1,param_2,param_3,param_4,bVar4,param_5,param_6,(trace_t *)0x0);
+  iVar2 = DB_AssetCount(ASSET_TYPE_FXWORLD);
+  if (iVar2 != 1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp",0x165d,0
                     ,"%s");
   }
-  pcVar4 = CG_GetLocalClientGlobals(LVar1);
-  Glass_TraceLine(&fxWorld.glassSys,param_5,param_6,(pcVar4->refdef).view.org);
-  __restgprlr_22();
+  pcVar3 = CG_GetLocalClientGlobals(param_1);
+  Glass_TraceLine(&fxWorld.glassSys,param_5,param_6,(pcVar3->refdef).view.org);
   return;
 }
 
 
 // 8231E7A0  CG_OverrideImpactEffectType  (cgame/cg_weapons.cpp:5738)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 
 void CG_OverrideImpactEffectType(LocalClientNum_t param_1,int param_2,ImpactType *param_3)
 
 {
-  LocalClientNum_t LVar1;
-  centity_s *pcVar2;
-  clientInfo_t *pcVar3;
-  bool bVar4;
-  ulonglong uVar5;
-  ulonglong uVar6;
+  centity_s *pcVar1;
+  clientInfo_t *pcVar2;
   uint local_40 [16];
   
-  uVar6 = (ulonglong)(int)param_3;
-  uVar5 = (ulonglong)param_2;
-  LVar1 = __savegprlr_27(param_1);
-  if (0x7ff < (uVar5 & 0xffffffff)) {
+  if (0x7ff < (uint)param_2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp",0x1671,0
                     ,"sourceEntityNum doesn\'t index MAX_GENTITIES\n\t%i not in [0, %i)");
   }
-  if ((uVar6 & 0xffffffff) == 0) {
+  if (param_3 == (ImpactType *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp",0x1672,0
                     ,"%s");
   }
-  pcVar2 = CG_GetEntity(LVar1,(int)uVar5);
-  if (pcVar2 == (centity_s *)0x0) {
+  pcVar1 = CG_GetEntity(param_1,param_2);
+  if (pcVar1 == (centity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp",0x1676,1
                     ,"%s");
   }
-  pcVar3 = CG_GetClientInfo(LVar1,pcVar2);
-  if ((pcVar3 != (clientInfo_t *)0x0) && (pcVar3->infoValid != 0)) {
-    BG_CopyPerks(pcVar3->perks,local_40);
-    bVar4 = BG_WeaponBulletFire_OverrideImpactType(local_40,(ImpactType *)uVar6);
-    __restgprlr_27(bVar4);
+  pcVar2 = CG_GetClientInfo(param_1,pcVar1);
+  if ((pcVar2 != (clientInfo_t *)0x0) && (pcVar2->infoValid != 0)) {
+    BG_CopyPerks(pcVar2->perks,local_40);
+    BG_WeaponBulletFire_OverrideImpactType(local_40,param_3);
     return;
   }
   local_40[0] = 0;
   local_40[1] = 0;
-  bVar4 = BG_WeaponBulletFire_OverrideImpactType(local_40,(ImpactType *)uVar6);
-  __restgprlr_27(bVar4);
+  BG_WeaponBulletFire_OverrideImpactType(local_40,param_3);
   return;
 }
 
 
 // 8231E8A8  CG_GetImpactEffectForWeapon  (cgame/cg_weapons.cpp:5766)
 
+/* WARNING: Function: __savegprlr_19 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_19 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
 
@@ -7294,26 +6950,20 @@ void CG_GetImpactEffectForWeapon
 {
   WeaponDef *pWVar1;
   WeaponCompleteDef *pWVar2;
-  LocalClientNum_t LVar3;
+  uint uVar3;
   Weapon WVar4;
   snd_alias_list_t *psVar5;
   ulonglong uVar6;
-  ulonglong uVar7;
-  int iVar8;
-  ulonglong uVar9;
-  ulonglong uVar10;
+  int iVar7;
+  ulonglong uVar8;
   ImpactType local_80;
   WeaponAttachment *local_7c;
   WeaponAttachment *local_78;
   WeaponAttachment *local_74 [29];
   
-  uVar6 = (ulonglong)param_6;
-  uVar7 = (ulonglong)param_5;
-  LVar3 = __savegprlr_19(param_1);
-  if ((uVar6 & 0x18) != 0) {
+  if ((param_6 & 0x18U) != 0) {
     *param_7 = (FxEffectDef *)0x0;
     *param_8 = (snd_alias_list_t *)0x0;
-    __restgprlr_19();
     return;
   }
   WVar4 = BG_GetAlternateWeapon(param_3,param_4);
@@ -7321,9 +6971,9 @@ void CG_GetImpactEffectForWeapon
   WVar4 = BG_GetAlternateWeapon(param_3,param_4);
   pWVar2 = bg_weaponCompleteDefs[WVar4.data & 0xff];
   BG_GetWeaponAttachments(param_3,param_4,&local_7c,&local_78,local_74);
-  uVar9 = 0xffffffffffffffff;
+  uVar8 = 0xffffffffffffffff;
   *param_8 = (snd_alias_list_t *)0x0;
-  uVar10 = (uVar6 & 0xffffffff) >> 2 & 1;
+  uVar3 = (uint)param_6 >> 2 & 1;
   local_80 = pWVar2->impactType;
   if ((((local_7c != (WeaponAttachment *)0x0) && (local_7c->ammogeneral != (AttAmmoGeneral *)0x0))
       || ((local_78 != (WeaponAttachment *)0x0 &&
@@ -7332,106 +6982,100 @@ void CG_GetImpactEffectForWeapon
       (local_7c = local_74[0], local_74[0]->ammogeneral != (AttAmmoGeneral *)0x0)))) {
     local_80 = local_7c->ammogeneral->impactType;
   }
-  CG_OverrideImpactEffectType(LVar3,param_2,&local_80);
+  CG_OverrideImpactEffectType(param_1,param_2,&local_80);
   switch(local_80) {
   case IMPACT_TYPE_BULLET_SMALL:
-    uVar9 = (ulonglong)(uVar10 != 0);
-    iVar8 = -0x7d5c6938;
-    if (uVar10 == 0) {
-      iVar8 = -0x7d5c6b28;
+    uVar8 = (ulonglong)(uVar3 != 0);
+    iVar7 = -0x7d5c6938;
+    if (uVar3 == 0) {
+      iVar7 = -0x7d5c6b28;
     }
-    *param_8 = *(snd_alias_list_t **)((int)((uVar7 & 0xffffffff) << 2) + iVar8);
+    *param_8 = *(snd_alias_list_t **)(param_5 * 4 + iVar7);
     break;
   case IMPACT_TYPE_BULLET_LARGE:
-    iVar8 = -0x7d5c68bc;
-    uVar9 = ((ulonglong)(uVar10 == 0) ^ 1) + 2;
-    if (uVar10 == 0) {
-      iVar8 = -0x7d5c6aac;
+    iVar7 = -0x7d5c68bc;
+    uVar8 = ((ulonglong)(uVar3 == 0) ^ 1) + 2;
+    if (uVar3 == 0) {
+      iVar7 = -0x7d5c6aac;
     }
-    *param_8 = *(snd_alias_list_t **)((int)((uVar7 & 0xffffffff) << 2) + iVar8);
+    *param_8 = *(snd_alias_list_t **)(param_5 * 4 + iVar7);
     break;
   case IMPACT_TYPE_BULLET_AP:
-    iVar8 = -0x7d5c6840;
-    uVar9 = ((ulonglong)(uVar10 == 0) ^ 1) + 8;
-    if (uVar10 == 0) {
-      iVar8 = -0x7d5c6a30;
+    iVar7 = -0x7d5c6840;
+    uVar8 = ((ulonglong)(uVar3 == 0) ^ 1) + 8;
+    if (uVar3 == 0) {
+      iVar7 = -0x7d5c6a30;
     }
-    *param_8 = *(snd_alias_list_t **)((int)((uVar7 & 0xffffffff) << 2) + iVar8);
+    *param_8 = *(snd_alias_list_t **)(param_5 * 4 + iVar7);
     break;
   case IMPACT_TYPE_BULLET_EXPLODE:
-    uVar9 = 4;
-    *param_8 = *(snd_alias_list_t **)
-                ((int)cgMedia.bulletExplodeSound + (int)((uVar7 & 0xffffffff) << 2));
+    uVar8 = 4;
+    *param_8 = cgMedia.bulletExplodeSound[param_5];
     break;
   case IMPACT_TYPE_SHOTGUN:
-    iVar8 = -0x7d5c67c4;
-    uVar9 = ((ulonglong)(uVar10 == 0) ^ 1) + 5;
-    if (uVar10 == 0) {
-      iVar8 = -0x7d5c69b4;
+    iVar7 = -0x7d5c67c4;
+    uVar8 = ((ulonglong)(uVar3 == 0) ^ 1) + 5;
+    if (uVar3 == 0) {
+      iVar7 = -0x7d5c69b4;
     }
-    *param_8 = *(snd_alias_list_t **)((int)((uVar7 & 0xffffffff) << 2) + iVar8);
+    *param_8 = *(snd_alias_list_t **)(param_5 * 4 + iVar7);
     break;
   case IMPACT_TYPE_SHOTGUN_EXPLODE:
-    uVar9 = 7;
-    *param_8 = *(snd_alias_list_t **)
-                ((int)cgMedia.bulletExplodeSound + (int)((uVar7 & 0xffffffff) << 2));
+    uVar8 = 7;
+    *param_8 = cgMedia.bulletExplodeSound[param_5];
     break;
   case IMPACT_TYPE_GRENADE_BOUNCE:
-    uVar9 = 10;
+    uVar8 = 10;
     if (pWVar1->bounceSound == (snd_alias_list_t **)0x0) {
       *param_8 = (snd_alias_list_t *)0x0;
     }
     else {
-      *param_8 = *(snd_alias_list_t **)((int)((uVar7 & 0xffffffff) << 2) + (int)pWVar1->bounceSound)
-      ;
+      *param_8 = pWVar1->bounceSound[param_5];
     }
     break;
   case IMPACT_TYPE_GRENADE_EXPLODE:
-    uVar9 = 0xc;
-    *param_8 = *(snd_alias_list_t **)
-                ((int)cgMedia.grenadeExplodeSound + (int)((uVar7 & 0xffffffff) << 2));
+    uVar8 = 0xc;
+    *param_8 = cgMedia.grenadeExplodeSound[param_5];
     break;
   case IMPACT_TYPE_ROCKET_EXPLODE:
-    uVar9 = 0xd;
-    *param_8 = *(snd_alias_list_t **)
-                ((int)cgMedia.rocketExplodeSound + (int)((uVar7 & 0xffffffff) << 2));
+    uVar8 = 0xd;
+    *param_8 = cgMedia.rocketExplodeSound[param_5];
     break;
   case IMPACT_TYPE_PROJECTILE_DUD:
-    uVar9 = 0xe;
+    uVar8 = 0xe;
     psVar5 = BG_ProjDudSound(param_3,param_4);
     *param_8 = psVar5;
   }
-  if ((uVar6 & 0x10) != 0) {
+  if ((param_6 & 0x10U) != 0) {
     *param_8 = (snd_alias_list_t *)0x0;
   }
-  if ((-1 < (int)uVar9) && ((uVar6 & 8) == 0)) {
-    if ((int)uVar7 != 7) {
+  if ((-1 < (int)uVar8) && ((param_6 & 8U) == 0)) {
+    if (param_5 != 7) {
       *param_7 = *(FxEffectDef **)
                   ((int)(cgMedia.fx)->table->nonflesh +
-                  (int)((uVar9 * 0x23 + uVar7 & 0xffffffff) << 2));
-      __restgprlr_19();
+                  (int)((uVar8 * 0x23 + (longlong)param_5 & 0xffffffff) << 2));
       return;
     }
-    if ((uVar6 & 2) == 0) {
-      uVar7 = (uVar6 & 1) << 1;
+    if ((param_6 & 2U) == 0) {
+      uVar6 = ((ulonglong)(uint)param_6 & 1) << 1;
     }
     else {
-      uVar7 = (uVar6 & 1) << 1 | 1;
+      uVar6 = ((ulonglong)(uint)param_6 & 1) << 1 | 1;
     }
     *param_7 = *(FxEffectDef **)
                 ((int)(cgMedia.fx)->table->nonflesh +
-                (int)((uVar9 * 0x23 + uVar7 + 0x1f & 0xffffffff) << 2));
-    __restgprlr_19();
+                (int)((uVar8 * 0x23 + uVar6 + 0x1f & 0xffffffff) << 2));
     return;
   }
   *param_7 = (FxEffectDef *)0x0;
-  __restgprlr_19();
   return;
 }
 
 
 // 8231EC20  CG_CullBulletHitEffect_Cell  (cgame/cg_weapons.cpp:5882)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
@@ -7440,36 +7084,24 @@ int CG_CullBulletHitEffect_Cell
               (int param_1,cg_s *param_2,float *param_3,float *param_4,float (*param_5) [3])
 
 {
+  bool bVar2;
   int iVar1;
-  bool bVar3;
-  int iVar2;
-  longlong lVar4;
-  float *pfVar5;
-  longlong lVar6;
-  float *pfVar7;
   float local_30;
   float local_2c;
   float local_28;
   
-  lVar6 = (longlong)(int)param_3;
-  lVar4 = (longlong)(int)param_2;
-  iVar1 = __savegprlr_29(param_1,lVar4,lVar6,param_4,param_5);
-  bVar3 = CL_IsRenderingSplitScreen();
-  if (!bVar3) {
-    pfVar5 = (float *)lVar4;
-    pfVar7 = (float *)lVar6;
-    local_30 = *pfVar5 + *pfVar7;
-    local_2c = pfVar5[1] + pfVar7[1];
-    local_28 = pfVar5[2] + pfVar7[2];
-    iVar2 = R_CellForPoint(&local_30);
-    if ((-1 < iVar2) && (-1 < iVar1)) {
-      iVar1 = R_IsCellVisible(iVar2,iVar1);
-      iVar1 = __restgprlr_29(iVar1 == 0);
-      return iVar1;
+  bVar2 = CL_IsRenderingSplitScreen();
+  if (!bVar2) {
+    local_30 = (float)(param_2->predictedPlayerState).commandTime + *param_3;
+    local_2c = (float)(param_2->predictedPlayerState).pm_type + param_3[1];
+    local_28 = (float)(param_2->predictedPlayerState).pm_time + param_3[2];
+    iVar1 = R_CellForPoint(&local_30);
+    if ((-1 < iVar1) && (-1 < param_1)) {
+      iVar1 = R_IsCellVisible(iVar1,param_1);
+      return (uint)LZCOUNT(iVar1) >> 5;
     }
   }
-  iVar1 = __restgprlr_29(0);
-  return iVar1;
+  return 0;
 }
 
 
@@ -7507,6 +7139,8 @@ bool CG_CullBulletHitEffect_Normal
 
 // 8231ED80  CG_CullBulletHitEffect  (cgame/cg_weapons.cpp:5934)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -7518,30 +7152,22 @@ bool CG_CullBulletHitEffect
 {
   float fVar1;
   float fVar2;
-  LocalClientNum_t LVar3;
-  cg_s *pcVar4;
-  undefined1 uVar6;
-  bool bVar7;
-  int iVar5;
-  char *pcVar8;
+  cg_s *pcVar3;
+  bool bVar5;
+  int iVar4;
   float local_40;
   float local_3c;
   float local_38;
   
-  pcVar8 = (char *)param_5;
-  LVar3 = __savegprlr_27(param_1);
-  pcVar4 = CG_GetLocalClientGlobals(LVar3);
-  if (pcVar4 == (cg_s *)0x0) {
-    pcVar8 = "cgameGlob";
+  pcVar3 = CG_GetLocalClientGlobals(param_1);
+  if (pcVar3 == (cg_s *)0x0) {
+    param_5 = (int)"cgameGlob";
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp",0x1733,0
                     ,"%s");
   }
-  local_40 = (float)(((cg_s *)param_2)->predictedPlayerState).commandTime -
-             (pcVar4->refdef).view.org[0];
-  local_38 = (float)(((cg_s *)param_2)->predictedPlayerState).pm_time - (pcVar4->refdef).view.org[2]
-  ;
-  local_3c = (float)(((cg_s *)param_2)->predictedPlayerState).pm_type - (pcVar4->refdef).view.org[1]
-  ;
+  local_40 = *(float *)param_2 - (pcVar3->refdef).view.org[0];
+  local_38 = *(float *)(param_2 + 8) - (pcVar3->refdef).view.org[2];
+  local_3c = *(float *)(param_2 + 4) - (pcVar3->refdef).view.org[1];
   fVar2 = SQRT(local_3c * local_3c + local_38 * local_38 + local_40 * local_40);
   fVar1 = 1.0;
   if (-fVar2 < 0.0) {
@@ -7552,20 +7178,17 @@ bool CG_CullBulletHitEffect
   local_3c = fVar1 * local_3c;
   local_38 = local_38 * fVar1;
   if ((cg_weapHitCullEnable->current).color[0] == 0) {
-    uVar6 = __restgprlr_27(0);
-    return (bool)uVar6;
+    return false;
   }
-  bVar7 = CG_CullBulletHitEffect_Normal
-                    (LVar3,(cg_s *)&local_40,(int)param_3,*param_4,(float *)pcVar8,
+  bVar5 = CG_CullBulletHitEffect_Normal
+                    (param_1,(cg_s *)&local_40,(int)param_3,*param_4,(float *)param_5,
                      (float (*) [3])(uint)(cg_weapHitCullEnable->current).color[0],-0x7d5c0000);
-  if (bVar7) {
-    uVar6 = __restgprlr_27(1);
-    return (bool)uVar6;
+  if (bVar5) {
+    return true;
   }
-  iVar5 = CG_CullBulletHitEffect_Cell
-                    (pcVar4->prevViewIndex,(cg_s *)param_2,param_3,*param_4,(float (*) [3])pcVar8);
-  uVar6 = __restgprlr_27(iVar5 != 0);
-  return (bool)uVar6;
+  iVar4 = CG_CullBulletHitEffect_Cell
+                    (pcVar3->prevViewIndex,(cg_s *)param_2,param_3,*param_4,(float (*) [3])param_5);
+  return (bool)('\x01' - (iVar4 == 0));
 }
 
 
@@ -7599,6 +7222,8 @@ float GetSplatterHeight(LocalClientNum_t param_1,centity_s *param_2)
 
 // 8231EF60  BloodSplatterOnShield  (cgame/cg_weapons.cpp:5980)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
@@ -7607,9 +7232,8 @@ void BloodSplatterOnShield(LocalClientNum_t param_1,int param_2)
 
 {
   FxEffectDef *pFVar1;
-  LocalClientNum_t LVar2;
-  centity_s *pcVar3;
-  cg_s *pcVar4;
+  centity_s *pcVar2;
+  cg_s *pcVar3;
   float local_90;
   float local_8c;
   float local_88;
@@ -7622,34 +7246,34 @@ void BloodSplatterOnShield(LocalClientNum_t param_1,int param_2)
   float afStack_44 [3];
   float afStack_38 [14];
   
-  LVar2 = __savegprlr_28(param_1);
   pFVar1 = cgMedia.fxBloodOnRiotshield;
   if ((((param_2 != 0x7ff) && (param_2 != 0x7fe)) &&
       (cgMedia.fxBloodOnRiotshield != (FxEffectDef *)0x0)) &&
-     (pcVar3 = CG_GetEntity(LVar2,param_2), (pcVar3->flags & 1U) != 0)) {
-    AnglesToAxis((pcVar3->pose).angles,(float (*) [3])&local_80);
+     (pcVar2 = CG_GetEntity(param_1,param_2), (pcVar2->flags & 1U) != 0)) {
+    AnglesToAxis((pcVar2->pose).angles,(float (*) [3])&local_80);
     local_50 = -local_80;
     local_4c = -local_7c;
     local_48 = -local_78;
     AxisRandomAroundForward(&local_50,afStack_44,afStack_38);
-    local_90 = (pcVar3->pose).origin[0];
-    local_8c = (pcVar3->pose).origin[1];
-    local_88 = (pcVar3->pose).origin[2];
-    local_88 = GetSplatterHeight(LVar2,pcVar3);
+    local_90 = (pcVar2->pose).origin[0];
+    local_8c = (pcVar2->pose).origin[1];
+    local_88 = (pcVar2->pose).origin[2];
+    local_88 = GetSplatterHeight(param_1,pcVar2);
     local_90 = local_80 * 10.0 + local_90;
     local_8c = local_7c * 10.0 + local_8c;
     local_88 = local_78 * 10.0 + local_88;
-    pcVar4 = CG_GetLocalClientGlobals(LVar2);
+    pcVar3 = CG_GetLocalClientGlobals(param_1);
     FX_PlayOrientedEffectWithMarkEntity
-              (LVar2,pFVar1,pcVar4->time,&local_90,(float (*) [3])&local_50,param_2,true);
+              (param_1,pFVar1,pcVar3->time,&local_90,(float (*) [3])&local_50,param_2,true);
   }
-  __restgprlr_28();
   return;
 }
 
 
 // 8231F080  CG_BulletImpactEffects  (cgame/cg_weapons.cpp:6018)
 
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -7659,17 +7283,10 @@ void CG_BulletImpactEffects
                float *param_6,float *param_7,int param_8,int param_9,uchar param_10,int param_11)
 
 {
-  LocalClientNum_t LVar1;
-  bool bVar3;
-  cg_s *pcVar2;
-  float *pfVar4;
-  int iVar5;
-  ulonglong uVar6;
-  ulonglong uVar7;
-  float *pfVar8;
-  ulonglong uVar9;
-  int iVar10;
-  FxEffectDef *pFVar11;
+  bool bVar2;
+  cg_s *pcVar1;
+  int iVar3;
+  FxEffectDef *pFVar4;
   byte in_stack_00000057;
   uint in_stack_0000005c;
   FxEffectDef *local_90;
@@ -7680,11 +7297,6 @@ void CG_BulletImpactEffects
   float afStack_74 [3];
   float afStack_68 [26];
   
-  uVar9 = (ulonglong)param_8;
-  uVar7 = (ulonglong)(int)param_7;
-  uVar6 = (ulonglong)(int)param_6;
-  LVar1 = __savegprlr_22(param_1);
-  iVar10 = (int)uVar9;
   if (param_2 < 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp",0x1787,0
                     ,"%s");
@@ -7693,60 +7305,59 @@ void CG_BulletImpactEffects
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp",0x1788,0
                     ,"%s");
   }
-  if ((uVar6 & 0xffffffff) == 0) {
+  if (param_6 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp",0x1789,0
                     ,"%s");
   }
-  if ((uVar7 & 0xffffffff) == 0) {
+  if (param_7 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp",0x178a,0
                     ,"%s");
   }
-  if (0x1e < (uVar9 & 0xffffffff)) {
+  if (0x1e < (uint)param_8) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp",0x178b,0
                     ,"surfType doesn\'t index SURF_TYPECOUNT\n\t%i not in [0, %i)");
   }
   local_90 = (FxEffectDef *)0x0;
   local_8c[0] = (snd_alias_list_t *)0x0;
-  if (((in_stack_0000005c & 0x800) == 0) && ((float (*) [3])param_3 != (float (*) [3])0x7ff)) {
-    iVar5 = iVar10;
+  if (((in_stack_0000005c & 0x800) == 0) && (param_3 != 0x7ff)) {
+    iVar3 = param_8;
     CG_GetImpactEffectForWeapon
-              (LVar1,param_2,param_4,param_5,iVar10,(uint)in_stack_00000057,&local_90,local_8c);
-    pFVar11 = local_90;
+              (param_1,param_2,param_4,param_5,param_8,(uint)in_stack_00000057,&local_90,local_8c);
+    pFVar4 = local_90;
     if ((local_90 != (FxEffectDef *)0x0) &&
-       ((iVar10 == 7 && (BloodSplatterOnShield(LVar1,param_3), (cg_blood->current).enabled == false)
-        ))) {
-      pFVar11 = cgMedia.fxNoBloodFleshHit;
+       ((param_8 == 7 &&
+        (BloodSplatterOnShield(param_1,param_3), (cg_blood->current).enabled == false)))) {
+      pFVar4 = cgMedia.fxNoBloodFleshHit;
     }
-    pfVar4 = (float *)uVar6;
     if (local_8c[0] != (snd_alias_list_t *)0x0) {
-      CG_PlaySoundAlias(LVar1,0x7fe,pfVar4,local_8c[0]);
+      CG_PlaySoundAlias(param_1,0x7fe,param_6,local_8c[0]);
     }
-    if (pFVar11 != (FxEffectDef *)0x0) {
-      pfVar8 = (float *)uVar7;
-      if (((*pfVar8 != 0.0) || (pfVar8[1] != 0.0)) || (pfVar8[2] != 0.0)) {
-        local_7c = pfVar8[1];
-        local_78 = pfVar8[2];
-        local_80 = *pfVar8;
+    if (pFVar4 != (FxEffectDef *)0x0) {
+      local_80 = *param_7;
+      if (((local_80 != 0.0) || (param_7[1] != 0.0)) || (param_7[2] != 0.0)) {
+        local_7c = param_7[1];
+        local_78 = param_7[2];
         AxisRandomAroundForward(&local_80,afStack_74,afStack_68);
         if (((cg_marks_ents_player_only->current).enabled != false) && (param_2 < 0x12)) {
           param_3 = 0x7ff;
         }
-        bVar3 = CG_CullBulletHitEffect(LVar1,(int)pfVar4,&local_80,(float (*) [3])param_3,iVar5);
-        if (!bVar3) {
-          pcVar2 = CG_GetLocalClientGlobals(LVar1);
+        bVar2 = CG_CullBulletHitEffect(param_1,(int)param_6,&local_80,(float (*) [3])param_3,iVar3);
+        if (!bVar2) {
+          pcVar1 = CG_GetLocalClientGlobals(param_1);
           FX_PlayOrientedEffectWithMarkEntity
-                    (LVar1,pFVar11,pcVar2->time,pfVar4,(float (*) [3])&local_80,param_3,false);
+                    (param_1,pFVar4,pcVar1->time,param_6,(float (*) [3])&local_80,param_3,false);
         }
       }
     }
   }
-  __restgprlr_22();
   return;
 }
 
 
 // 823235D0  CG_BulletHitEvent_Internal  (cgame/cg_weapons.cpp:6094)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void CG_BulletHitEvent_Internal
@@ -7755,7 +7366,6 @@ void CG_BulletHitEvent_Internal
                int param_12)
 
 {
-  LocalClientNum_t LVar1;
   int in_stack_00000054;
   int in_stack_0000005c;
   byte in_stack_00000067;
@@ -7763,22 +7373,22 @@ void CG_BulletHitEvent_Internal
   uchar in_stack_ffffff6f;
   int in_stack_ffffff70;
   
-  LVar1 = __savegprlr_25(param_1);
   CG_BulletImpactEffects
-            (LVar1,param_2,param_3,param_4,param_5,param_7,param_8,in_stack_00000054,
+            (param_1,param_2,param_3,param_4,param_5,param_7,param_8,in_stack_00000054,
              in_stack_ffffff68,in_stack_ffffff6f,in_stack_ffffff70);
   if ((in_stack_00000067 & 4) == 0) {
     CG_BulletTrajectoryEffects
-              (LVar1,param_2,param_4,param_5,param_6,param_7,in_stack_0000005c,in_stack_00000067 & 4
-              );
+              (param_1,param_2,param_4,param_5,param_6,param_7,in_stack_0000005c,
+               in_stack_00000067 & 4);
   }
-  __restgprlr_25();
   return;
 }
 
 
 // 82323648  CG_BulletHitEvent  (cgame/cg_weapons.cpp:6188)
 
+/* WARNING: Function: __savegprlr_19 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_19 replaced with injection: xenon_save_restore */
 /* WARNING: Removing unreachable block (ram,0x82323790) */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
@@ -7789,8 +7399,7 @@ void CG_BulletHitEvent(LocalClientNum_t param_1,int param_2,int param_3,Weapon p
 {
   float fVar1;
   float fVar2;
-  LocalClientNum_t LVar3;
-  bool bVar4;
+  bool bVar3;
   int in_stack_00000054;
   int in_stack_0000005c;
   byte in_stack_00000067;
@@ -7801,9 +7410,8 @@ void CG_BulletHitEvent(LocalClientNum_t param_1,int param_2,int param_3,Weapon p
   float local_7c;
   float local_78;
   
-  LVar3 = __savegprlr_19(param_1);
   if ((((in_stack_0000005c != 0x3c) && (in_stack_0000005c != 0x40)) && (in_stack_0000005c != 0x3d))
-     && ((in_stack_0000005c != 0x41 && (bVar4 = CG_IsEntityAPlayer(LVar3,param_3), bVar4)))) {
+     && ((in_stack_0000005c != 0x41 && (bVar3 = CG_IsEntityAPlayer(param_1,param_3), bVar3)))) {
     if ((in_stack_00000067 & 4) != 0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp",0x183a
                       ,0,"%s\n\t(impactEffects) = %i");
@@ -7821,74 +7429,67 @@ void CG_BulletHitEvent(LocalClientNum_t param_1,int param_2,int param_3,Weapon p
     local_7c = fVar1 * local_7c;
     local_78 = local_78 * fVar1;
     CG_BulletImpactEffects
-              (LVar3,param_2,param_3,param_4,param_5,param_7,&local_80,in_stack_00000054,
+              (param_1,param_2,param_3,param_4,param_5,param_7,&local_80,in_stack_00000054,
                in_stack_ffffff28,in_stack_ffffff2f,in_stack_ffffff30);
   }
   CG_BulletImpactEffects
-            (LVar3,param_2,param_3,param_4,param_5,param_7,param_8,in_stack_00000054,
+            (param_1,param_2,param_3,param_4,param_5,param_7,param_8,in_stack_00000054,
              in_stack_ffffff28,in_stack_ffffff2f,in_stack_ffffff30);
   if ((in_stack_00000067 & 4) == 0) {
     CG_BulletTrajectoryEffects
-              (LVar3,param_2,param_4,param_5,param_6,param_7,in_stack_0000005c,in_stack_00000054);
+              (param_1,param_2,param_4,param_5,param_6,param_7,in_stack_0000005c,in_stack_00000054);
   }
-  __restgprlr_19();
   return;
 }
 
 
 // 8231F2E8  BulletHitClientEventSound  (cgame/cg_weapons.cpp:6224)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void BulletHitClientEventSound(LocalClientNum_t param_1,float *param_2,int param_3,int param_4)
 
 {
-  LocalClientNum_t LVar1;
-  char *pcVar2;
-  ulonglong uVar3;
-  ulonglong uVar4;
-  int iVar5;
+  char *pcVar1;
+  int iVar2;
   
-  uVar4 = (ulonglong)param_3;
-  uVar3 = (ulonglong)(int)param_2;
-  LVar1 = __savegprlr_26(param_1);
-  if ((uVar3 & 0xffffffff) == 0) {
+  if (param_2 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp",0x1853,0
                     ,"%s");
   }
-  if (((int)uVar4 < 0) || (0x1e < (int)uVar4)) {
+  if ((param_3 < 0) || (0x1e < param_3)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp",0x1854,0
                     ,"%s");
   }
   if (param_4 == 0x3e) {
-    iVar5 = -0x7d5c6b28;
+    iVar2 = -0x7d5c6b28;
   }
   else if (param_4 == 0x3f) {
-    iVar5 = -0x7d5c6aac;
+    iVar2 = -0x7d5c6aac;
   }
   else {
     if (param_4 != 0x40) {
-      if (alwaysfails == 0) {
-        pcVar2 = va("CG_BulletHitClientEvent: Unknown event type [%d]\n");
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp",
-                        0x1867,0,pcVar2);
-        __restgprlr_26();
+      if (alwaysfails != 0) {
         return;
       }
-      goto LAB_8231f3fc;
+      pcVar1 = va("CG_BulletHitClientEvent: Unknown event type [%d]\n");
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp",0x1867
+                      ,0,pcVar1);
+      return;
     }
-    iVar5 = -0x7d5c6a30;
+    iVar2 = -0x7d5c6a30;
   }
-  CG_PlaySoundAlias(LVar1,0x7fe,(float *)uVar3,
-                    *(snd_alias_list_t **)((int)((uVar4 & 0xffffffff) << 2) + iVar5));
-LAB_8231f3fc:
-  __restgprlr_26();
+  CG_PlaySoundAlias(param_1,0x7fe,param_2,*(snd_alias_list_t **)(param_3 * 4 + iVar2));
   return;
 }
 
 
 // 82323810  CG_BulletHitClientEvent  (cgame/cg_weapons.cpp:6260)
 
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void CG_BulletHitClientEvent
@@ -7896,12 +7497,8 @@ void CG_BulletHitClientEvent
                float *param_6,int param_7,int param_8,uchar param_9)
 
 {
-  LocalClientNum_t LVar1;
-  ulonglong uVar2;
   byte in_stack_00000057;
   
-  uVar2 = (ulonglong)(int)param_6;
-  LVar1 = __savegprlr_22(param_1);
   if (param_2 < 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp",0x1875,0
                     ,"%s");
@@ -7910,7 +7507,7 @@ void CG_BulletHitClientEvent
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp",0x1876,0
                     ,"%s");
   }
-  if ((uVar2 & 0xffffffff) == 0) {
+  if (param_6 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp",0x1877,0
                     ,"%s");
   }
@@ -7918,18 +7515,19 @@ void CG_BulletHitClientEvent
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp",0x1878,0
                     ,"%s");
   }
-  BulletHitClientEventSound(LVar1,(float *)uVar2,param_7,param_8);
+  BulletHitClientEventSound(param_1,param_6,param_7,param_8);
   if ((in_stack_00000057 & 4) == 0) {
     CG_BulletTrajectoryEffects
-              (LVar1,param_2,param_3,param_4,param_5,(float *)uVar2,param_8,in_stack_00000057 & 4);
+              (param_1,param_2,param_3,param_4,param_5,param_6,param_8,in_stack_00000057 & 4);
   }
-  __restgprlr_22();
   return;
 }
 
 
 // 8231F408  DecodeHitLocToWorldSpace  (cgame/cg_weapons.cpp:6275)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
@@ -7938,28 +7536,27 @@ void DecodeHitLocToWorldSpace
                (LocalClientNum_t param_1,cg_s *param_2,uint param_3,float *param_4,bool *param_5)
 
 {
-  int iVar1;
-  ulonglong uVar2;
   float afStack_40 [16];
   
-  uVar2 = (ulonglong)(int)param_4;
-  iVar1 = __savegprlr_28(param_1);
-  if ((uVar2 & 0xffffffff) == 0) {
+  if (param_4 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp",0x1886,0
                     ,"%s");
   }
-  BG_ShieldHitDecode((uint)param_2,afStack_40,(bool *)uVar2);
-  MatrixTransformVector(afStack_40,(float (*) [3])(iVar1 + 0x6b9d4),(float *)param_3);
-  *(float *)param_3 = *(float *)param_3 + *(float *)(iVar1 + 0x6b9fc);
-  *(float *)(param_3 + 4) = *(float *)(iVar1 + 0x6ba00) + *(float *)(param_3 + 4);
-  *(float *)(param_3 + 8) = *(float *)(iVar1 + 0x6ba04) + *(float *)(param_3 + 8);
-  __restgprlr_28();
+  BG_ShieldHitDecode((uint)param_2,afStack_40,(bool *)param_4);
+  MatrixTransformVector(afStack_40,(float (*) [3])(param_1 + 0x6b9d4),(float *)param_3);
+  *(float *)param_3 = *(float *)param_3 + *(float *)(param_1 + 0x6b9fc);
+  *(float *)(param_3 + 4) = *(float *)(param_1 + 0x6ba00) + *(float *)(param_3 + 4);
+  *(float *)(param_3 + 8) = *(float *)(param_1 + 0x6ba04) + *(float *)(param_3 + 8);
   return;
 }
 
 
 // 8231F4B8  CalcViewmodelHitPos  (cgame/cg_weapons.cpp:6289)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -7970,22 +7567,20 @@ bool CalcViewmodelHitPos(LocalClientNum_t param_1,uint param_2,float *param_3,fl
   float fVar1;
   DObj *pDVar2;
   float fVar3;
-  LocalClientNum_t LVar4;
-  cg_s *pcVar5;
-  WeaponHand *pWVar6;
-  uint uVar7;
-  undefined1 uVar8;
+  cg_s *pcVar4;
+  WeaponHand *pWVar5;
+  uint uVar6;
   bool *in_r7;
-  float *pfVar9;
-  float (*pafVar10) [3];
+  float *pfVar7;
+  float (*pafVar8) [3];
+  double dVar9;
+  double dVar10;
   double dVar11;
   double dVar12;
   double dVar13;
   double dVar14;
   double dVar15;
   double dVar16;
-  double dVar17;
-  double dVar18;
   char local_f0 [8];
   float local_e8;
   float local_e4;
@@ -7999,63 +7594,57 @@ bool CalcViewmodelHitPos(LocalClientNum_t param_1,uint param_2,float *param_3,fl
   int aiStack_b0 [8];
   DObjTrace_s local_90 [5];
   
-  __savegprlr_26(param_1);
-  LVar4 = __savefpr_25();
-  pcVar5 = CG_GetLocalClientGlobals(LVar4);
-  pWVar6 = CG_GetLocalClientViewModelHand(LVar4,0);
-  pDVar2 = pWVar6->viewModelDObj;
-  uVar7 = DObjGetContents(pDVar2);
-  if ((uVar7 & 0x2806831) != 0) {
+  pcVar4 = CG_GetLocalClientGlobals(param_1);
+  pWVar5 = CG_GetLocalClientViewModelHand(param_1,0);
+  pDVar2 = pWVar5->viewModelDObj;
+  uVar6 = DObjGetContents(pDVar2);
+  if ((uVar6 & 0x2806831) != 0) {
     DecodeHitLocToWorldSpace
-              ((LocalClientNum_t)pcVar5,(cg_s *)param_2,(uint)&local_e8,(float *)local_f0,in_r7);
+              ((LocalClientNum_t)pcVar4,(cg_s *)param_2,(uint)&local_e8,(float *)local_f0,in_r7);
     if (local_f0[0] == '\0') {
       fVar1 = -100.0;
     }
     else {
       fVar1 = 100.0;
     }
-    pafVar10 = (pcVar5->refdef).view.axis;
-    pfVar9 = (pcVar5->refdef).viewOffset;
+    pafVar8 = (pcVar4->refdef).view.axis;
+    pfVar7 = (pcVar4->refdef).viewOffset;
     fVar3 = -fVar1;
-    dVar18 = (double)((*pafVar10)[0] * fVar1 + local_e8);
-    dVar17 = (double)((pcVar5->refdef).view.axis[0][1] * fVar1 + local_e4);
-    dVar16 = (double)((pcVar5->refdef).view.axis[0][2] * fVar1 + local_e0);
-    dVar15 = 1.0;
-    local_c8 = (float)(dVar18 - (double)*pfVar9);
-    local_c4 = (float)(dVar17 - (double)(pcVar5->refdef).viewOffset[1]);
-    local_c0 = (float)(dVar16 - (double)(pcVar5->refdef).viewOffset[2]);
-    dVar14 = (double)((*pafVar10)[0] * fVar3 + local_e8);
-    dVar13 = (double)((pcVar5->refdef).view.axis[0][1] * fVar3 + local_e4);
-    dVar12 = (double)((pcVar5->refdef).view.axis[0][2] * fVar3 + local_e0);
-    local_d8 = (float)(dVar14 - (double)*pfVar9);
-    local_d4 = (float)(dVar13 - (double)(pcVar5->refdef).viewOffset[1]);
-    local_d0 = (float)(dVar12 - (double)(pcVar5->refdef).viewOffset[2]);
+    dVar16 = (double)((*pafVar8)[0] * fVar1 + local_e8);
+    dVar15 = (double)((pcVar4->refdef).view.axis[0][1] * fVar1 + local_e4);
+    dVar14 = (double)((pcVar4->refdef).view.axis[0][2] * fVar1 + local_e0);
+    dVar13 = 1.0;
+    local_c8 = (float)(dVar16 - (double)*pfVar7);
+    local_c4 = (float)(dVar15 - (double)(pcVar4->refdef).viewOffset[1]);
+    local_c0 = (float)(dVar14 - (double)(pcVar4->refdef).viewOffset[2]);
+    dVar12 = (double)((*pafVar8)[0] * fVar3 + local_e8);
+    dVar11 = (double)((pcVar4->refdef).view.axis[0][1] * fVar3 + local_e4);
+    dVar10 = (double)((pcVar4->refdef).view.axis[0][2] * fVar3 + local_e0);
+    local_d8 = (float)(dVar12 - (double)*pfVar7);
+    local_d4 = (float)(dVar11 - (double)(pcVar4->refdef).viewOffset[1]);
+    local_d0 = (float)(dVar10 - (double)(pcVar4->refdef).viewOffset[2]);
     local_90[0].fraction = 1.0;
     DObjGeomTracelinePartBits(pDVar2,0x2806831,aiStack_b0);
-    CG_LocationTraceDobjCalcPose(pDVar2,&pcVar5->viewModelPose,aiStack_b0);
+    CG_LocationTraceDobjCalcPose(pDVar2,&pcVar4->viewModelPose,aiStack_b0);
     DObjGeomTraceline(pDVar2,&local_c8,&local_d8,0x2806831,local_90);
-    dVar11 = (double)local_90[0].fraction;
-    if (dVar11 < dVar15) {
+    dVar9 = (double)local_90[0].fraction;
+    if (dVar9 < dVar13) {
       fVar1 = local_90[0].normal[1] * MY_TWEAK_FORWARD;
       fVar3 = local_90[0].normal[2] * MY_TWEAK_FORWARD;
-      *param_3 = (float)((double)(float)((double)(float)(dVar14 - dVar18) * dVar11 +
-                                        (double)(local_90[0].normal[0] * MY_TWEAK_FORWARD)) + dVar18
+      *param_3 = (float)((double)(float)((double)(float)(dVar12 - dVar16) * dVar9 +
+                                        (double)(local_90[0].normal[0] * MY_TWEAK_FORWARD)) + dVar16
                         );
-      param_3[1] = (float)((double)(float)((double)(float)(dVar13 - dVar17) * dVar11 + (double)fVar1
-                                          ) + dVar17);
-      param_3[2] = (float)((double)(float)((double)(float)(dVar12 - dVar16) * dVar11 + (double)fVar3
-                                          ) + dVar16);
+      param_3[1] = (float)((double)(float)((double)(float)(dVar11 - dVar15) * dVar9 + (double)fVar1)
+                          + dVar15);
+      param_3[2] = (float)((double)(float)((double)(float)(dVar10 - dVar14) * dVar9 + (double)fVar3)
+                          + dVar14);
       *param_4 = local_90[0].normal[0];
       param_4[1] = local_90[0].normal[1];
       param_4[2] = local_90[0].normal[2];
-      __restfpr_25(1);
-      uVar8 = __restgprlr_26();
-      return (bool)uVar8;
+      return true;
     }
   }
-  __restfpr_25(0);
-  uVar8 = __restgprlr_26();
-  return (bool)uVar8;
+  return false;
 }
 
 
@@ -8083,6 +7672,8 @@ void CG_ViewmodelShieldHitStore(LocalClientNum_t param_1,uint param_2,bool param
 
 // 8231F720  CG_ViewmodelShieldHitsProcess  (cgame/cg_weapons.cpp:6365)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -8091,12 +7682,11 @@ void CG_ViewmodelShieldHitsProcess(LocalClientNum_t param_1)
 
 {
   FxEffectDef *pFVar1;
-  LocalClientNum_t LVar2;
-  cg_s *pcVar3;
-  bool bVar4;
-  int *piVar5;
-  int iVar6;
-  ShieldHitDelayedEvent *pSVar7;
+  cg_s *pcVar2;
+  bool bVar3;
+  int *piVar4;
+  int iVar5;
+  ShieldHitDelayedEvent *pSVar6;
   float local_90;
   float local_8c;
   float local_88;
@@ -8107,42 +7697,42 @@ void CG_ViewmodelShieldHitsProcess(LocalClientNum_t param_1)
   float afStack_64 [3];
   float afStack_58 [22];
   
-  LVar2 = __savegprlr_24(param_1);
-  pcVar3 = CG_GetLocalClientGlobals(LVar2);
-  piVar5 = &pcVar3->delayedShieldHitEventsCount;
-  if ((*piVar5 < 0) || (2 < *piVar5)) {
+  pcVar2 = CG_GetLocalClientGlobals(param_1);
+  piVar4 = &pcVar2->delayedShieldHitEventsCount;
+  if ((*piVar4 < 0) || (2 < *piVar4)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp",0x18e3,0
                     ,
                     "cgameGlob->delayedShieldHitEventsCount not in [0, MAX_DELAYED_SHIELD_HIT_EVENTS]\n\t%i not in [%i, %i]"
                    );
   }
-  iVar6 = 0;
-  if (0 < *piVar5) {
-    pSVar7 = pcVar3->delayedShieldHitEvents;
+  iVar5 = 0;
+  if (0 < *piVar4) {
+    pSVar6 = pcVar2->delayedShieldHitEvents;
     do {
-      bVar4 = CalcViewmodelHitPos(LVar2,pSVar7->eventParm,afStack_80,&local_90);
+      bVar3 = CalcViewmodelHitPos(param_1,pSVar6->eventParm,afStack_80,&local_90);
       pFVar1 = cgMedia.fxRiotShieldImpact;
-      if ((bVar4) && (cgMedia.fxRiotShieldImpact != (FxEffectDef *)0x0)) {
+      if ((bVar3) && (cgMedia.fxRiotShieldImpact != (FxEffectDef *)0x0)) {
         local_70 = local_90;
         local_6c = local_8c;
         local_68 = local_88;
         AxisRandomAroundForward(&local_70,afStack_64,afStack_58);
-        pcVar3 = CG_GetLocalClientGlobals(LVar2);
+        pcVar2 = CG_GetLocalClientGlobals(param_1);
         FX_PlayOrientedEffectWithMarkViewmodel
-                  (LVar2,pFVar1,pcVar3->time,afStack_80,(float (*) [3])&local_70);
+                  (param_1,pFVar1,pcVar2->time,afStack_80,(float (*) [3])&local_70);
       }
-      iVar6 = iVar6 + 1;
-      pSVar7 = pSVar7 + 1;
-    } while (iVar6 < *piVar5);
+      iVar5 = iVar5 + 1;
+      pSVar6 = pSVar6 + 1;
+    } while (iVar5 < *piVar4);
   }
-  *piVar5 = 0;
-  __restgprlr_24();
+  *piVar4 = 0;
   return;
 }
 
 
 // 8231F838  CG_BulletHitClientShieldEvent  (cgame/cg_weapons.cpp:6414)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -8152,10 +7742,9 @@ void CG_BulletHitClientShieldEvent
                int param_6,uint param_7)
 
 {
-  LocalClientNum_t LVar1;
-  cg_s *pcVar2;
-  char *pcVar3;
-  int *piVar4;
+  cg_s *pcVar1;
+  char *pcVar2;
+  int *piVar3;
   float fStack_70;
   snd_alias_list_t *local_6c;
   FxEffectDef *apFStack_68 [2];
@@ -8163,44 +7752,42 @@ void CG_BulletHitClientShieldEvent
   float local_5c;
   float local_58;
   
-  LVar1 = __savegprlr_24(param_1);
-  pcVar3 = (char *)param_5;
+  pcVar2 = (char *)param_5;
   if (param_2 < 0) {
-    pcVar3 = "sourceEntityNum >= 0";
+    pcVar2 = "sourceEntityNum >= 0";
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp",0x1917,0
                     ,"%s");
   }
   if (param_2 == 0x7ff) {
-    pcVar3 = "sourceEntityNum != ENTITYNUM_NONE";
+    pcVar2 = "sourceEntityNum != ENTITYNUM_NONE";
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp",0x1918,0
                     ,"%s");
   }
   if ((param_5 < 0) || (0x1e < param_5)) {
-    pcVar3 = "surfType >= 0 && surfType < SURF_TYPECOUNT";
+    pcVar2 = "surfType >= 0 && surfType < SURF_TYPECOUNT";
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp",0x1919,0
                     ,"%s");
   }
-  pcVar2 = CG_GetLocalClientGlobals(LVar1);
+  pcVar1 = CG_GetLocalClientGlobals(param_1);
   DecodeHitLocToWorldSpace
-            ((LocalClientNum_t)pcVar2,(cg_s *)param_7,(uint)&local_60,&fStack_70,(bool *)pcVar3);
-  local_60 = (pcVar2->refdef).view.axis[0][0] * 10.0 + local_60;
-  local_5c = (pcVar2->refdef).view.axis[0][1] * 10.0 + local_5c;
-  local_58 = (pcVar2->refdef).view.axis[0][2] * 10.0 + local_58;
-  pcVar3 = "riotshield_impact";
-  CG_PlayRumbleOnClient(LVar1,"riotshield_impact");
-  CG_StartShakeCamera(LVar1,(shieldImpactBulletShakeScale->current).value,(int)pcVar3,
+            ((LocalClientNum_t)pcVar1,(cg_s *)param_7,(uint)&local_60,&fStack_70,(bool *)pcVar2);
+  local_60 = (pcVar1->refdef).view.axis[0][0] * 10.0 + local_60;
+  local_5c = (pcVar1->refdef).view.axis[0][1] * 10.0 + local_5c;
+  local_58 = (pcVar1->refdef).view.axis[0][2] * 10.0 + local_58;
+  pcVar2 = "riotshield_impact";
+  CG_PlayRumbleOnClient(param_1,"riotshield_impact");
+  CG_StartShakeCamera(param_1,(shieldImpactBulletShakeScale->current).value,(int)pcVar2,
                       (float *)(shieldImpactBulletShakeDuration->current).string,100.0);
-  CG_GetImpactEffectForWeapon(LVar1,param_2,param_3,param_4,param_5,0,apFStack_68,&local_6c);
+  CG_GetImpactEffectForWeapon(param_1,param_2,param_3,param_4,param_5,0,apFStack_68,&local_6c);
   if (local_6c != (snd_alias_list_t *)0x0) {
-    CG_PlaySoundAlias(LVar1,0x7fe,&local_60,local_6c);
+    CG_PlaySoundAlias(param_1,0x7fe,&local_60,local_6c);
   }
-  pcVar2 = CG_GetLocalClientGlobals(LVar1);
-  piVar4 = &pcVar2->delayedShieldHitEventsCount;
-  if (*piVar4 < 2) {
-    pcVar2->delayedShieldHitEvents[*piVar4].eventParm = param_7;
-    *piVar4 = *piVar4 + 1;
+  pcVar1 = CG_GetLocalClientGlobals(param_1);
+  piVar3 = &pcVar1->delayedShieldHitEventsCount;
+  if (*piVar3 < 2) {
+    pcVar1->delayedShieldHitEvents[*piVar3].eventParm = param_7;
+    *piVar3 = *piVar3 + 1;
   }
-  __restgprlr_24();
   return;
 }
 
@@ -8255,6 +7842,8 @@ void CG_ExplosiveSplashOnShieldEvent(LocalClientNum_t param_1,int param_2)
 
 // 8231FB20  CG_MeleeBloodEvent  (cgame/cg_weapons.cpp:6493)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
@@ -8263,34 +7852,28 @@ void CG_MeleeBloodEvent(LocalClientNum_t param_1,centity_s *param_2,int param_3)
 
 {
   bool bVar1;
-  LocalClientNum_t LVar2;
-  cg_s *pcVar3;
-  ulonglong uVar4;
+  cg_s *pcVar2;
   
-  uVar4 = (ulonglong)(int)param_2;
-  LVar2 = __savegprlr_27(param_1,uVar4,param_3);
-  pcVar3 = CG_GetLocalClientGlobals(LVar2);
-  if ((uVar4 & 0xffffffff) == 0) {
+  pcVar2 = CG_GetLocalClientGlobals(param_1);
+  if (param_2 == (centity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp",0x1963,0
                     ,"%s");
   }
-  if ((((pcVar3->predictedPlayerState).otherFlags & 0x1800U) == 0) ||
-     (bVar1 = true, *(int *)((int)uVar4 + 0xc4) != (pcVar3->predictedPlayerState).clientNum)) {
+  if ((((pcVar2->predictedPlayerState).otherFlags & 0x1800U) == 0) ||
+     (bVar1 = true, (param_2->nextState).number != (pcVar2->predictedPlayerState).clientNum)) {
     bVar1 = false;
   }
   if (!bVar1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp",0x1964,0
                     ,"%s");
   }
-  if ((pcVar3->playerWeaponInfo).knifeModel != (XModel *)0x0) {
+  if ((pcVar2->playerWeaponInfo).knifeModel != (XModel *)0x0) {
     if ((cg_blood->current).enabled != false) {
-      CG_PlayBoltedEffect(LVar2,cgMedia.fxKnifeBlood,0x800,(uint)scr_const.tag_knife_fx);
-      __restgprlr_27();
+      CG_PlayBoltedEffect(param_1,cgMedia.fxKnifeBlood,0x800,(uint)scr_const.tag_knife_fx);
       return;
     }
-    CG_PlayBoltedEffect(LVar2,cgMedia.fxKnifeNoBlood,0x800,(uint)scr_const.tag_knife_fx);
+    CG_PlayBoltedEffect(param_1,cgMedia.fxKnifeNoBlood,0x800,(uint)scr_const.tag_knife_fx);
   }
-  __restgprlr_27();
   return;
 }
 
@@ -8342,6 +7925,8 @@ Weapon ValidLatestPrimaryWeapon(cg_s *param_1,Weapon param_2)
 
 // 8231FD28  CG_SelectWeapon  (cgame/cg_weapons.cpp:6572)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -8350,53 +7935,45 @@ Weapon ValidLatestPrimaryWeapon(cg_s *param_1,Weapon param_2)
 bool CG_SelectWeapon(LocalClientNum_t param_1,Weapon param_2,int param_3)
 
 {
-  LocalClientNum_t LVar1;
-  cg_s *pcVar2;
-  int iVar3;
-  undefined1 uVar7;
-  Weapon WVar4;
-  uint uVar5;
-  Weapon WVar6;
-  ulonglong uVar8;
-  Weapon *pWVar9;
+  cg_s *pcVar1;
+  int iVar2;
+  Weapon WVar3;
+  uint uVar4;
+  ulonglong uVar5;
+  Weapon *pWVar6;
   
-  uVar8 = (ulonglong)(int)param_2.data;
-  LVar1 = __savegprlr_25(param_1);
-  WVar6.data = (uint)uVar8;
-  pcVar2 = CG_GetLocalClientGlobals(LVar1);
-  pWVar9 = &pcVar2->weaponSelect;
-  pcVar2->weaponSelectTime = pcVar2->time;
-  if (((ulonglong)pWVar9->data != (uVar8 & 0xffffffff)) || (pcVar2->weaponSelectInAlt != param_3)) {
-    WVar4.data = WVar6.data;
-    iVar3 = BG_WeaponDisableSwitchToEmpty(&pcVar2->predictedPlayerState,WVar6);
-    if (iVar3 != 0) {
-      uVar7 = __restgprlr_25(0);
-      return (bool)uVar7;
+  pcVar1 = CG_GetLocalClientGlobals(param_1);
+  pWVar6 = &pcVar1->weaponSelect;
+  pcVar1->weaponSelectTime = pcVar1->time;
+  if ((pWVar6->data != param_2.data) || (pcVar1->weaponSelectInAlt != param_3)) {
+    WVar3 = param_2;
+    iVar2 = BG_WeaponDisableSwitchToEmpty(&pcVar1->predictedPlayerState,param_2);
+    if (iVar2 != 0) {
+      return false;
     }
-    WVar4 = ValidLatestPrimaryWeapon(WVar6._s_0,WVar4);
-    if ((WVar4.data & 0xff) != 0) {
-      pcVar2->weaponLatestPrimary = WVar4;
+    WVar3 = ValidLatestPrimaryWeapon(param_2._s_0,WVar3);
+    if ((WVar3.data & 0xff) != 0) {
+      pcVar1->weaponLatestPrimary = WVar3;
     }
     if ((g_giveAll == (dvar_t *)0x0) || ((g_giveAll->current).enabled == false)) {
-      *pWVar9 = WVar6;
+      *pWVar6 = param_2;
     }
     else {
       do {
         do {
-          uVar5 = BG_GetNumWeapons();
-          trapWord(6,(longlong)(int)uVar5,0);
-          uVar8 = (ulonglong)(pcVar2->weaponSelect)._s_0.weaponIdx + 1;
-          (pcVar2->weaponSelect)._s_0.weaponIdx = (char)uVar8 - (char)(uVar8 / uVar5) * (char)uVar5;
-        } while (((*pWVar9).data & 0xff) == 0);
-        WVar6 = BG_GetAlternateWeapon(*pWVar9,false);
-      } while (bg_weaponDefs[WVar6.data & 0xff]->inventoryType != WEAPINVENTORY_PRIMARY);
+          uVar4 = BG_GetNumWeapons();
+          trapWord(6,(longlong)(int)uVar4,0);
+          uVar5 = (ulonglong)(pcVar1->weaponSelect)._s_0.weaponIdx + 1;
+          (pcVar1->weaponSelect)._s_0.weaponIdx = (char)uVar5 - (char)(uVar5 / uVar4) * (char)uVar4;
+        } while (((*pWVar6).data & 0xff) == 0);
+        WVar3 = BG_GetAlternateWeapon(*pWVar6,false);
+      } while (bg_weaponDefs[WVar3.data & 0xff]->inventoryType != WEAPINVENTORY_PRIMARY);
     }
-    CG_MenuShowNotify(LVar1,1);
-    pcVar2->weaponSelectInAlt = param_3;
-    CL_SetADS(LVar1,false);
+    CG_MenuShowNotify(param_1,1);
+    pcVar1->weaponSelectInAlt = param_3;
+    CL_SetADS(param_1,false);
   }
-  uVar7 = __restgprlr_25(1);
-  return (bool)uVar7;
+  return true;
 }
 
 
@@ -8529,6 +8106,8 @@ float CG_GetWeaponZoom(cg_s *param_1,Weapon param_2)
 
 // 8231FFC0  CG_PlayerTurretWeapon  (cgame/cg_weapons.cpp:6707)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -8536,38 +8115,36 @@ float CG_GetWeaponZoom(cg_s *param_1,Weapon param_2)
 Weapon CG_PlayerTurretWeapon(playerState_s *param_1,LocalClientNum_t param_2)
 
 {
-  int iVar1;
-  uint uVar2;
-  centity_s *pcVar3;
-  int iVar4;
+  centity_s *pcVar1;
+  int iVar2;
   
-  iVar1 = __savegprlr_26(param_1);
-  iVar4 = 0x7ff;
-  if (iVar1 == 0) {
+  iVar2 = 0x7ff;
+  if (param_1 == (playerState_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp",0x1a3a,0
                     ,"%s");
   }
-  if ((*(uint *)(iVar1 + 0xf8) & 0x3800) == 0) {
-    if ((*(uint *)(iVar1 + 0x10) & 0x80000) != 0) {
-      if ((*(uint *)(iVar1 + 0x10) & 0x80000) == 0) {
+  if ((param_1->eFlags & 0x3800U) == 0) {
+    if ((param_1->otherFlags & 0x80000U) != 0) {
+      if ((param_1->otherFlags & 0x80000U) == 0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp",
                         0x1a58,0,"%s");
       }
       else {
-        iVar4 = *(int *)(iVar1 + 0x50);
-        if (iVar4 == 0x7ff) goto LAB_82320050;
+        iVar2 = param_1->remoteTurretEnt;
+        if (iVar2 == 0x7ff) {
+          return (Weapon)0;
+        }
       }
-LAB_82320098:
-      pcVar3 = CG_GetEntity(param_2,iVar4);
-      uVar2 = __restgprlr_26((pcVar3->nextState).weapon.data);
-      return (Weapon)uVar2;
+      goto LAB_82320098;
     }
   }
-  else if ((*(int *)(iVar1 + 0x1b8) != 0) && (iVar4 = *(int *)(iVar1 + 0x1bc), iVar4 != 0x7ff))
-  goto LAB_82320098;
-LAB_82320050:
-  uVar2 = __restgprlr_26(0);
-  return (Weapon)uVar2;
+  else if ((param_1->viewlocked != PLAYERVIEWLOCK_NONE) &&
+          (iVar2 = param_1->viewlocked_entNum, iVar2 != 0x7ff)) {
+LAB_82320098:
+    pcVar1 = CG_GetEntity(param_2,iVar2);
+    return (Weapon)(pcVar1->nextState).weapon.data;
+  }
+  return (Weapon)0;
 }
 
 
@@ -8671,6 +8248,8 @@ int CG_PlayerTurret_HeatEnabled(LocalClientNum_t param_1)
 
 // 823202D0  CG_PlayerTurret_HeatValue  (cgame/cg_weapons.cpp:6812)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -8680,45 +8259,42 @@ float CG_PlayerTurret_HeatValue(LocalClientNum_t param_1)
 
 {
   WeaponDef *pWVar1;
-  LocalClientNum_t LVar2;
-  cg_s *pcVar3;
-  centity_s *pcVar4;
-  Weapon WVar5;
-  double dVar6;
-  float fVar7;
+  cg_s *pcVar2;
+  centity_s *pcVar3;
+  Weapon WVar4;
+  float fVar5;
   
-  LVar2 = __savegprlr_27(param_1);
-  pcVar3 = CG_GetLocalClientGlobals(LVar2);
-  if ((((pcVar3->predictedPlayerState).eFlags & 0x3800U) != 0) &&
-     ((pcVar3->predictedPlayerState).viewlocked != PLAYERVIEWLOCK_NONE)) {
-    if ((pcVar3->predictedPlayerState).viewlocked_entNum == 0x7ff) {
+  pcVar2 = CG_GetLocalClientGlobals(param_1);
+  if ((((pcVar2->predictedPlayerState).eFlags & 0x3800U) != 0) &&
+     ((pcVar2->predictedPlayerState).viewlocked != PLAYERVIEWLOCK_NONE)) {
+    if ((pcVar2->predictedPlayerState).viewlocked_entNum == 0x7ff) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp",0x1aaa
                       ,0,"%s");
     }
-    pcVar4 = CG_GetEntity(LVar2,(pcVar3->predictedPlayerState).viewlocked_entNum);
-    if (pcVar4 == (centity_s *)0x0) {
+    pcVar3 = CG_GetEntity(param_1,(pcVar2->predictedPlayerState).viewlocked_entNum);
+    if (pcVar3 == (centity_s *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp",0x1aad
                       ,0,"%s");
     }
-    WVar5 = BG_GetAlternateWeapon((pcVar4->nextState).weapon,false);
-    pWVar1 = bg_weaponDefs[WVar5.data & 0xff];
+    WVar4 = BG_GetAlternateWeapon((pcVar3->nextState).weapon,false);
+    pWVar1 = bg_weaponDefs[WVar4.data & 0xff];
     if (pWVar1 == (WeaponDef *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp",0x1ab0
                       ,1,"%s");
     }
-    fVar7 = BG_Turret_ComputeHeatLevel
-                      (pWVar1,&(pcVar4->nextState).lerp.u.turret,
-                       pcVar3->time - (pcVar3->predictedPlayerState).deltaTime);
-    dVar6 = (double)__restgprlr_27((double)fVar7);
-    return (float)dVar6;
+    fVar5 = BG_Turret_ComputeHeatLevel
+                      (pWVar1,&(pcVar3->nextState).lerp.u.turret,
+                       pcVar2->time - (pcVar2->predictedPlayerState).deltaTime);
+    return fVar5;
   }
-  dVar6 = (double)__restgprlr_27(0);
-  return (float)dVar6;
+  return 0.0;
 }
 
 
 // 823203E8  CG_PlayerTurret_HeatOverheated  (cgame/cg_weapons.cpp:6845)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -8726,34 +8302,33 @@ float CG_PlayerTurret_HeatValue(LocalClientNum_t param_1)
 int CG_PlayerTurret_HeatOverheated(LocalClientNum_t param_1)
 
 {
-  LocalClientNum_t LVar1;
-  cg_s *pcVar2;
-  int iVar3;
-  centity_s *pcVar4;
+  cg_s *pcVar1;
+  centity_s *pcVar2;
   
-  LVar1 = __savegprlr_28(param_1);
-  pcVar2 = CG_GetLocalClientGlobals(LVar1);
-  if ((((pcVar2->predictedPlayerState).eFlags & 0x3800U) != 0) &&
-     ((pcVar2->predictedPlayerState).viewlocked != PLAYERVIEWLOCK_NONE)) {
-    if ((pcVar2->predictedPlayerState).viewlocked_entNum == 0x7ff) {
+  pcVar1 = CG_GetLocalClientGlobals(param_1);
+  if ((((pcVar1->predictedPlayerState).eFlags & 0x3800U) != 0) &&
+     ((pcVar1->predictedPlayerState).viewlocked != PLAYERVIEWLOCK_NONE)) {
+    if ((pcVar1->predictedPlayerState).viewlocked_entNum == 0x7ff) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp",0x1ac9
                       ,0,"%s");
     }
-    pcVar4 = CG_GetEntity(LVar1,(pcVar2->predictedPlayerState).viewlocked_entNum);
-    if (pcVar4 == (centity_s *)0x0) {
+    pcVar2 = CG_GetEntity(param_1,(pcVar1->predictedPlayerState).viewlocked_entNum);
+    if (pcVar2 == (centity_s *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp",0x1acc
                       ,0,"%s");
     }
-    iVar3 = __restgprlr_28((pcVar4->nextState).lerp.u.turret.isOverheat);
-    return iVar3;
+    return (int)(pcVar2->nextState).lerp.u.turret.isOverheat;
   }
-  iVar3 = __restgprlr_28(0);
-  return iVar3;
+  return 0;
 }
 
 
 // 823204A0  GetIconDimsForPlayer  (cgame/cg_weapons.cpp:6869)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
@@ -8763,104 +8338,86 @@ bool GetIconDimsForPlayer
                float *param_5,float *param_6)
 
 {
-  int iVar1;
-  LocalClientNum_t LVar2;
-  undefined1 uVar4;
-  ScreenPlacement *pSVar3;
-  bool bVar5;
-  ulonglong uVar6;
-  ulonglong uVar7;
-  ulonglong uVar8;
-  ulonglong uVar9;
-  ulonglong uVar10;
-  double dVar11;
-  double dVar12;
-  double dVar13;
-  double dVar14;
-  double dVar15;
-  double dVar16;
-  double dVar17;
-  float fVar18;
+  ScreenPlacement *pSVar1;
+  bool bVar2;
+  float *pfVar3;
+  double dVar4;
+  double dVar5;
+  double dVar6;
+  double dVar7;
+  double dVar8;
+  double dVar9;
+  double dVar10;
+  float fVar11;
   float local_90;
   float local_8c;
   float local_88;
   float local_84;
   float local_80;
-  undefined4 local_7c;
+  float local_7c;
   float local_78;
   
-  uVar10 = (ulonglong)(int)param_6;
-  uVar9 = (ulonglong)(int)param_5;
-  uVar8 = (ulonglong)(int)param_4;
-  uVar7 = (ulonglong)(int)param_3;
-  uVar6 = (ulonglong)(int)param_2;
-  __savegprlr_24(param_1);
-  LVar2 = __savefpr_27();
-  if ((uVar6 & 0xffffffff) == 0) {
+  if (param_2 == (centity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp",0x1ae3,0
                     ,"%s");
   }
-  iVar1 = (int)uVar6;
-  if ((*(uint *)(iVar1 + 0x1c4) & 1) == 0) {
+  if ((param_2->flags & 1U) == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp",0x1ae4,0
                     ,"%s");
   }
-  if ((uVar7 & 0xffffffff) == 0) {
+  if (param_3 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp",0x1ae5,0
                     ,"%s");
   }
-  if ((uVar8 & 0xffffffff) == 0) {
+  if (param_4 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp",0x1ae6,0
                     ,"%s");
   }
-  if ((uVar9 & 0xffffffff) == 0) {
+  if (param_5 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp",0x1ae7,0
                     ,"%s");
   }
-  if ((uVar10 & 0xffffffff) == 0) {
+  if (param_6 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp",0x1ae8,0
                     ,"%s");
   }
-  if (*(int *)(iVar1 + 200) == 1) {
-    pSVar3 = ScrPlace_GetActivePlacement(LVar2);
-    bVar5 = CG_WorldPosToScreenPosReal(LVar2,pSVar3,(float *)(iVar1 + 0x14),&local_88);
-    if (bVar5) {
-      local_80 = *(float *)(iVar1 + 0x14);
-      local_7c = *(undefined4 *)(iVar1 + 0x18);
-      local_78 = *(float *)(iVar1 + 0x1c) + 60.0;
-      bVar5 = CG_WorldPosToScreenPosReal(LVar2,pSVar3,&local_80,&local_90);
-      if (bVar5) {
-        dVar17 = 0.5;
-        dVar16 = (double)((FoFIconMaxSize->current).value * pSVar3->scaleVirtualToReal[0]);
-        dVar15 = (double)(*(float *)(DAT_82a771e8 + 0xc) * pSVar3->scaleVirtualToReal[0]);
-        dVar14 = (double)((local_90 + local_88) * 0.5);
-        dVar13 = (double)((local_8c + local_84) * 0.5);
-        fVar18 = Vec2Distance(&local_88,&local_90);
-        dVar12 = (double)(*(float *)(DAT_82a7719c + 0xc) * fVar18);
-        dVar11 = (double)cls.vidConfig.aspectRatioDisplayPixel;
-        if ((float)(dVar12 - dVar16) < 0.0) {
-          dVar16 = dVar12;
+  if ((param_2->nextState).eType == 1) {
+    pSVar1 = ScrPlace_GetActivePlacement(param_1);
+    pfVar3 = (param_2->pose).origin;
+    bVar2 = CG_WorldPosToScreenPosReal(param_1,pSVar1,pfVar3,&local_88);
+    if (bVar2) {
+      local_80 = *pfVar3;
+      local_7c = (param_2->pose).origin[1];
+      local_78 = (param_2->pose).origin[2] + 60.0;
+      bVar2 = CG_WorldPosToScreenPosReal(param_1,pSVar1,&local_80,&local_90);
+      if (bVar2) {
+        dVar10 = 0.5;
+        dVar9 = (double)((FoFIconMaxSize->current).value * pSVar1->scaleVirtualToReal[0]);
+        dVar8 = (double)(*(float *)(DAT_82a771e8 + 0xc) * pSVar1->scaleVirtualToReal[0]);
+        dVar7 = (double)((local_90 + local_88) * 0.5);
+        dVar6 = (double)((local_8c + local_84) * 0.5);
+        fVar11 = Vec2Distance(&local_88,&local_90);
+        dVar5 = (double)(*(float *)(DAT_82a7719c + 0xc) * fVar11);
+        dVar4 = (double)cls.vidConfig.aspectRatioDisplayPixel;
+        if ((float)(dVar5 - dVar9) < 0.0) {
+          dVar9 = dVar5;
         }
-        if ((float)(dVar15 - dVar12) < 0.0) {
-          dVar15 = dVar16;
+        if ((float)(dVar8 - dVar5) < 0.0) {
+          dVar8 = dVar9;
         }
-        *(float *)uVar9 = (float)dVar15;
-        *(float *)uVar10 = (float)(dVar11 * dVar15);
-        *(float *)uVar7 = -(float)(dVar15 * dVar17 - dVar14);
-        *(float *)uVar8 = -(float)((double)(float)(dVar11 * dVar15) * dVar17 - dVar13);
-        __restfpr_27(1);
-        uVar4 = __restgprlr_24();
-        return (bool)uVar4;
+        *param_5 = (float)dVar8;
+        *param_6 = (float)(dVar4 * dVar8);
+        *param_3 = -(float)(dVar8 * dVar10 - dVar7);
+        *param_4 = -(float)((double)(float)(dVar4 * dVar8) * dVar10 - dVar6);
+        return true;
       }
     }
   }
-  *(float *)uVar7 = 0.0;
-  *(float *)uVar8 = 0.0;
-  *(float *)uVar9 = 0.0;
-  *(float *)uVar10 = 0.0;
-  __restfpr_27(0);
-  uVar4 = __restgprlr_24();
-  return (bool)uVar4;
+  *param_3 = 0.0;
+  *param_4 = 0.0;
+  *param_5 = 0.0;
+  *param_6 = 0.0;
+  return false;
 }
 
 
@@ -8898,6 +8455,8 @@ void DrawTargetBox(float param_1,float param_2,float param_3,float param_4,Mater
 
 // 823207F8  GetTargetboxAlphaForPlayer  (cgame/cg_weapons.cpp:6955)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
@@ -8906,45 +8465,43 @@ float GetTargetboxAlphaForPlayer(LocalClientNum_t param_1,centity_s *param_2)
 
 {
   int iVar1;
-  LocalClientNum_t LVar2;
+  float fVar2;
   cg_s *pcVar3;
-  ulonglong uVar4;
-  int iVar5;
-  double dVar6;
+  int iVar4;
+  double dVar5;
   
-  uVar4 = (ulonglong)(int)param_2;
-  LVar2 = __savegprlr_28(param_1);
-  if ((uVar4 & 0xffffffff) == 0) {
+  if (param_2 == (centity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp",0x1b31,0
                     ,"%s");
   }
-  iVar5 = (int)uVar4;
-  if ((*(uint *)(iVar5 + 0x1c4) & 1) == 0) {
+  if ((param_2->flags & 1U) == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp",0x1b32,0
                     ,"%s");
   }
-  if (*(int *)(iVar5 + 200) == 1) {
-    dVar6 = 1000.0;
+  if ((param_2->nextState).eType == 1) {
+    dVar5 = 1000.0;
     iVar1 = (int)(*(float *)(DAT_82a771c8 + 0xc) * 1000.0);
-    pcVar3 = CG_GetLocalClientGlobals(LVar2);
-    iVar5 = pcVar3->time - *(int *)(iVar5 + 300);
-    if (iVar1 < iVar5) {
-      dVar6 = (double)((float)(longlong)(iVar5 - iVar1) /
-                      (float)((double)(FoFIconSpawnTimeFade->current).value * dVar6));
-      if ((float)(1.0 - dVar6) < 0.0) {
-        dVar6 = 1.0;
+    pcVar3 = CG_GetLocalClientGlobals(param_1);
+    iVar4 = pcVar3->time - (param_2->nextState).lerp.u.turret.lastHeatChangeTime;
+    if (iVar1 < iVar4) {
+      fVar2 = (float)(longlong)(iVar4 - iVar1) /
+              (float)((double)(FoFIconSpawnTimeFade->current).value * dVar5);
+      if (1.0 - fVar2 < 0.0) {
+        fVar2 = 1.0;
       }
-      dVar6 = (double)__restgprlr_28(dVar6);
-      return (float)dVar6;
+      return fVar2;
     }
   }
-  dVar6 = (double)__restgprlr_28(0);
-  return (float)dVar6;
+  return 0.0;
 }
 
 
 // 82320920  GetIconDimsForVehicle  (cgame/cg_weapons.cpp:6981)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -8954,23 +8511,16 @@ bool GetIconDimsForVehicle
                float *param_6,float *param_7)
 
 {
-  LocalClientNum_t LVar1;
-  ScreenPlacement *pSVar2;
-  bool bVar3;
-  undefined1 uVar4;
-  ulonglong uVar5;
-  ulonglong uVar6;
-  ulonglong uVar7;
-  ulonglong uVar8;
-  ulonglong uVar9;
-  double dVar10;
-  double dVar11;
-  double dVar12;
-  double dVar13;
-  double dVar14;
-  double dVar15;
-  double dVar16;
-  float fVar17;
+  ScreenPlacement *pSVar1;
+  bool bVar2;
+  double dVar3;
+  double dVar4;
+  double dVar5;
+  double dVar6;
+  double dVar7;
+  double dVar8;
+  double dVar9;
+  float fVar10;
   float local_b0;
   float local_ac;
   float local_a8;
@@ -8982,102 +8532,90 @@ bool GetIconDimsForVehicle
   float local_8c;
   float local_88;
   
-  uVar9 = (ulonglong)(int)param_7;
-  uVar8 = (ulonglong)(int)param_6;
-  uVar7 = (ulonglong)(int)param_5;
-  uVar6 = (ulonglong)(int)param_4;
-  uVar5 = (ulonglong)(int)param_2;
-  __savegprlr_23(param_1);
-  LVar1 = __savefpr_27();
-  if ((uVar5 & 0xffffffff) == 0) {
+  if (param_2 == (DObj *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp",0x1b53,0
                     ,"%s");
   }
-  if ((uVar6 & 0xffffffff) == 0) {
+  if (param_4 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp",0x1b54,0
                     ,"%s");
   }
-  if ((uVar7 & 0xffffffff) == 0) {
+  if (param_5 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp",0x1b55,0
                     ,"%s");
   }
-  if ((uVar8 & 0xffffffff) == 0) {
+  if (param_6 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp",0x1b56,0
                     ,"%s");
   }
-  if ((uVar9 & 0xffffffff) == 0) {
+  if (param_7 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp",6999,0,
                     "%s");
   }
-  pSVar2 = ScrPlace_GetActivePlacement(LVar1);
-  dVar15 = 0.0;
-  dVar14 = dVar15;
-  if (50.0 < *(float *)((int)uVar5 + 0x7c)) {
-    dVar14 = -100.0;
+  pSVar1 = ScrPlace_GetActivePlacement(param_1);
+  dVar8 = 0.0;
+  dVar7 = dVar8;
+  if (50.0 < param_2->radius) {
+    dVar7 = -100.0;
   }
   local_a0 = *param_3 - MY_SIZE;
   local_9c = param_3[1] - MY_SIZE;
   local_90 = *param_3 + MY_SIZE;
   local_8c = param_3[1] + MY_SIZE;
-  local_98 = (float)((double)(param_3[2] - MY_SIZE) + dVar14);
-  local_88 = (float)((double)(param_3[2] + MY_SIZE) + dVar14);
-  bVar3 = CG_WorldPosToScreenPosReal(LVar1,pSVar2,&local_a0,&local_a8);
-  if ((bVar3) && (bVar3 = CG_WorldPosToScreenPosReal(LVar1,pSVar2,&local_90,&local_b0), bVar3)) {
-    dVar16 = 0.5;
-    dVar14 = (double)((FoFIconMaxSize->current).value * pSVar2->scaleVirtualToReal[0]);
-    dVar15 = (double)(*(float *)(DAT_82a771e8 + 0xc) * pSVar2->scaleVirtualToReal[0]);
-    dVar13 = (double)((local_b0 + local_a8) * 0.5);
-    dVar12 = (double)((local_ac + local_a4) * 0.5);
-    fVar17 = Vec2Distance(&local_a8,&local_b0);
-    dVar11 = (double)(*(float *)(DAT_82a7719c + 0xc) * fVar17);
-    dVar10 = (double)cls.vidConfig.aspectRatioDisplayPixel;
-    if ((float)(dVar11 - dVar14) < 0.0) {
-      dVar14 = dVar11;
+  local_98 = (float)((double)(param_3[2] - MY_SIZE) + dVar7);
+  local_88 = (float)((double)(param_3[2] + MY_SIZE) + dVar7);
+  bVar2 = CG_WorldPosToScreenPosReal(param_1,pSVar1,&local_a0,&local_a8);
+  if ((bVar2) && (bVar2 = CG_WorldPosToScreenPosReal(param_1,pSVar1,&local_90,&local_b0), bVar2)) {
+    dVar9 = 0.5;
+    dVar7 = (double)((FoFIconMaxSize->current).value * pSVar1->scaleVirtualToReal[0]);
+    dVar8 = (double)(*(float *)(DAT_82a771e8 + 0xc) * pSVar1->scaleVirtualToReal[0]);
+    dVar6 = (double)((local_b0 + local_a8) * 0.5);
+    dVar5 = (double)((local_ac + local_a4) * 0.5);
+    fVar10 = Vec2Distance(&local_a8,&local_b0);
+    dVar4 = (double)(*(float *)(DAT_82a7719c + 0xc) * fVar10);
+    dVar3 = (double)cls.vidConfig.aspectRatioDisplayPixel;
+    if ((float)(dVar4 - dVar7) < 0.0) {
+      dVar7 = dVar4;
     }
-    if ((float)(dVar15 - dVar11) < 0.0) {
-      dVar15 = dVar14;
+    if ((float)(dVar8 - dVar4) < 0.0) {
+      dVar8 = dVar7;
     }
-    *(float *)uVar8 = (float)dVar15;
-    *(float *)uVar9 = (float)(dVar10 * dVar15);
-    *(float *)uVar6 = -(float)(dVar15 * dVar16 - dVar13);
-    *(float *)uVar7 = -(float)((double)(float)(dVar10 * dVar15) * dVar16 - dVar12);
-    __restfpr_27(1);
-    uVar4 = __restgprlr_23();
-    return (bool)uVar4;
+    *param_6 = (float)dVar8;
+    *param_7 = (float)(dVar3 * dVar8);
+    *param_4 = -(float)(dVar8 * dVar9 - dVar6);
+    *param_5 = -(float)((double)(float)(dVar3 * dVar8) * dVar9 - dVar5);
+    return true;
   }
-  *(float *)uVar6 = (float)dVar15;
-  *(float *)uVar7 = (float)dVar15;
-  *(float *)uVar8 = (float)dVar15;
-  *(float *)uVar9 = (float)dVar15;
-  __restfpr_27(0);
-  uVar4 = __restgprlr_23();
-  return (bool)uVar4;
+  *param_4 = (float)dVar8;
+  *param_5 = (float)dVar8;
+  *param_6 = (float)dVar8;
+  *param_7 = (float)dVar8;
+  return false;
 }
 
 
 // 82320BB0  DrawTargetBoxVehicle  (cgame/cg_weapons.cpp:7051)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void DrawTargetBoxVehicle(LocalClientNum_t param_1,DObj *param_2,float *param_3)
 
 {
-  LocalClientNum_t LVar1;
-  bool bVar2;
+  bool bVar1;
   float local_30;
   float local_2c;
   float local_28;
   float local_24 [9];
   
-  LVar1 = __savegprlr_29(param_1);
-  bVar2 = CL_Demo_IsFollowCamera(LVar1);
-  if ((!bVar2) && (bVar2 = CL_Demo_IsFreeCamera(LVar1), !bVar2)) {
-    bVar2 = GetIconDimsForVehicle(LVar1,param_2,param_3,local_24,&local_28,&local_2c,&local_30);
-    if (bVar2) {
+  bVar1 = CL_Demo_IsFollowCamera(param_1);
+  if ((!bVar1) && (bVar1 = CL_Demo_IsFreeCamera(param_1), !bVar1)) {
+    bVar1 = GetIconDimsForVehicle(param_1,param_2,param_3,local_24,&local_28,&local_2c,&local_30);
+    if (bVar1) {
       DrawTargetBox(local_24[0],local_28,local_2c,local_30,(Material *)0x1,1.0);
     }
   }
-  __restgprlr_29();
   return;
 }
 
@@ -9096,6 +8634,8 @@ void DrawTargetBoxVehicles(LocalClientNum_t param_1)
 
 // 82320C60  CanSeePlayer_Helper  (cgame/cg_weapons.cpp:7080)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
@@ -9105,22 +8645,18 @@ bool CanSeePlayer_Helper(LocalClientNum_t param_1,centity_s *param_2,cg_s *param
                         )
 
 {
-  LocalClientNum_t LVar1;
-  ushort uVar2;
-  undefined1 uVar3;
-  bool bVar4;
+  ushort uVar1;
+  bool bVar2;
   float local_70;
   float local_6c;
   float local_68;
   trace_t local_60;
   
-  LVar1 = __savegprlr_28(param_1);
   CG_LocationalTrace(&local_60,(float *)param_4,*param_5,(param_3->predictedPlayerState).clientNum,
                      (int)param_6);
-  uVar2 = Trace_GetEntityHitId(&local_60);
-  if ((uVar2 != 0x7ff) && ((uint)uVar2 != (param_2->nextState).clientNum)) {
-    uVar3 = __restgprlr_28(0);
-    return (bool)uVar3;
+  uVar1 = Trace_GetEntityHitId(&local_60);
+  if ((uVar1 != 0x7ff) && ((uint)uVar1 != (param_2->nextState).clientNum)) {
+    return false;
   }
   local_70 = ((*param_5)[0] - (float)param_4->commandTime) * local_60.fraction +
              (float)param_4->commandTime;
@@ -9128,14 +8664,15 @@ bool CanSeePlayer_Helper(LocalClientNum_t param_1,centity_s *param_2,cg_s *param
   ;
   local_68 = ((*param_5)[2] - (float)param_4->pm_time) * local_60.fraction + (float)param_4->pm_time
   ;
-  bVar4 = FX_ClientVisibilityTest(LVar1,(float *)param_4,&local_70);
-  uVar3 = __restgprlr_28(bVar4);
-  return (bool)uVar3;
+  bVar2 = FX_ClientVisibilityTest(param_1,(float *)param_4,&local_70);
+  return (bool)('\x01' - !bVar2);
 }
 
 
 // 82320D28  CG_CanSeePlayer  (cgame/cg_weapons.cpp:7103)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
@@ -9143,54 +8680,50 @@ bool CanSeePlayer_Helper(LocalClientNum_t param_1,centity_s *param_2,cg_s *param
 bool CG_CanSeePlayer(LocalClientNum_t param_1,centity_s *param_2,int param_3)
 
 {
-  LocalClientNum_t LVar1;
-  cg_s *pcVar2;
-  DObj *pDVar3;
-  undefined1 uVar5;
-  int iVar4;
-  bool bVar6;
+  cg_s *pcVar1;
+  DObj *pDVar2;
+  int iVar3;
+  bool bVar4;
   int in_r9;
   float local_60;
   float local_5c;
   float local_58;
   float afStack_50 [20];
   
-  LVar1 = __savegprlr_26(param_1);
-  pcVar2 = CG_GetLocalClientGlobals(LVar1);
-  local_60 = (pcVar2->refdef).view.org[0];
-  local_5c = (pcVar2->refdef).view.org[1];
-  local_58 = (pcVar2->refdef).view.org[2];
-  pDVar3 = Com_GetClientDObj((param_2->nextState).number,LVar1);
-  if ((pDVar3 == (DObj *)0x0) ||
-     ((pcVar2->refdef).view.axis[0][2] * ((param_2->pose).origin[2] - local_58) +
-      (pcVar2->refdef).view.axis[0][1] * ((param_2->pose).origin[1] - local_5c) +
-      (pcVar2->refdef).view.axis[0][0] * ((param_2->pose).origin[0] - local_60) < 0.0)) {
-    uVar5 = __restgprlr_26(0);
-    return (bool)uVar5;
+  pcVar1 = CG_GetLocalClientGlobals(param_1);
+  local_60 = (pcVar1->refdef).view.org[0];
+  local_5c = (pcVar1->refdef).view.org[1];
+  local_58 = (pcVar1->refdef).view.org[2];
+  pDVar2 = Com_GetClientDObj((param_2->nextState).number,param_1);
+  if ((pDVar2 == (DObj *)0x0) ||
+     ((pcVar1->refdef).view.axis[0][2] * ((param_2->pose).origin[2] - local_58) +
+      (pcVar1->refdef).view.axis[0][1] * ((param_2->pose).origin[1] - local_5c) +
+      (pcVar1->refdef).view.axis[0][0] * ((param_2->pose).origin[0] - local_60) < 0.0)) {
+    return false;
   }
-  iVar4 = CG_DObjGetWorldTagPos(&param_2->pose,pDVar3,(uint)scr_const.j_head,afStack_50);
-  if (iVar4 == 0) {
+  iVar3 = CG_DObjGetWorldTagPos(&param_2->pose,pDVar2,(uint)scr_const.j_head,afStack_50);
+  if (iVar3 == 0) {
     Com_Error(ERR_DROP,"\x15CG_CanSeePlayer: Couldn\'t find [j_head] on player\n");
   }
-  bVar6 = CanSeePlayer_Helper(LVar1,param_2,pcVar2,(playerState_s *)&local_60,
+  bVar4 = CanSeePlayer_Helper(param_1,param_2,pcVar1,(playerState_s *)&local_60,
                               (float (*) [3])afStack_50,(float (*) [3])param_3,in_r9);
-  if (bVar6) {
-    uVar5 = __restgprlr_26(1);
-    return (bool)uVar5;
+  if (bVar4) {
+    return true;
   }
-  iVar4 = CG_DObjGetWorldTagPos(&param_2->pose,pDVar3,(uint)scr_const.j_mainroot,afStack_50);
-  if (iVar4 == 0) {
+  iVar3 = CG_DObjGetWorldTagPos(&param_2->pose,pDVar2,(uint)scr_const.j_mainroot,afStack_50);
+  if (iVar3 == 0) {
     Com_Error(ERR_DROP,"\x15CG_CanSeePlayer: Couldn\'t find [j_mainroot] on player\n");
   }
-  bVar6 = CanSeePlayer_Helper(LVar1,param_2,pcVar2,(playerState_s *)&local_60,
+  bVar4 = CanSeePlayer_Helper(param_1,param_2,pcVar1,(playerState_s *)&local_60,
                               (float (*) [3])afStack_50,(float (*) [3])param_3,in_r9);
-  uVar5 = __restgprlr_26(bVar6);
-  return (bool)uVar5;
+  return (bool)('\x01' - !bVar4);
 }
 
 
 // 82320EA8  CG_CanAutospotPlayer  (cgame/cg_weapons.cpp:7146)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
@@ -9200,44 +8733,44 @@ bool CG_CanAutospotPlayer(LocalClientNum_t param_1,centity_s *param_2)
 {
   team_t tVar1;
   int iVar2;
-  LocalClientNum_t LVar3;
-  cg_s *pcVar4;
-  undefined1 uVar5;
-  bool bVar6;
-  longlong lVar7;
+  cg_s *pcVar3;
+  bool bVar4;
+  longlong lVar5;
   
-  LVar3 = __savegprlr_27(param_1);
-  pcVar4 = CG_GetLocalClientGlobals(LVar3);
-  lVar7 = (ulonglong)(uint)(param_2->nextState).clientNum * 0x590 + (longlong)(int)pcVar4;
-  iVar2 = (int)lVar7;
+  pcVar3 = CG_GetLocalClientGlobals(param_1);
+  lVar5 = (ulonglong)(uint)(param_2->nextState).clientNum * 0x590 + (longlong)(int)pcVar3;
+  iVar2 = (int)lVar5;
   if (*(int *)(iVar2 + 0x100b88) == 0) {
-LAB_82320ee4:
-    uVar5 = __restgprlr_27(0);
-    return (bool)uVar5;
+    return false;
   }
-  if (lVar7 == -0x100bcc) {
+  if (lVar5 == -0x100bcc) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\../bgame/bg_perks.h",
                     0x4f,0,"%s");
   }
-  if (((*(uint *)(iVar2 + 0x100bd0) & 0x40) != 0) ||
-     (bVar6 = CG_CanSeePlayer(LVar3,param_2,0x2807823), !bVar6)) goto LAB_82320ee4;
-  if ((((pcVar4->predictedPlayerState).otherFlags & 0x1800U) == 0) ||
-     (bVar6 = true, (param_2->nextState).number != (pcVar4->predictedPlayerState).clientNum)) {
-    bVar6 = false;
-  }
-  if (!bVar6) {
-    tVar1 = (pcVar4->bgs).clientinfo[(pcVar4->predictedPlayerState).clientNum].team;
-    if ((tVar1 == TEAM_FREE) ||
-       (bVar6 = true, tVar1 != (pcVar4->bgs).clientinfo[(param_2->nextState).clientNum].team)) {
-      bVar6 = false;
+  if ((*(uint *)(iVar2 + 0x100bd0) & 0x40) == 0) {
+    bVar4 = CG_CanSeePlayer(param_1,param_2,0x2807823);
+    if (!bVar4) {
+      return false;
     }
-    if (!bVar6) goto LAB_82320ff4;
+    if ((((pcVar3->predictedPlayerState).otherFlags & 0x1800U) == 0) ||
+       (bVar4 = true, (param_2->nextState).number != (pcVar3->predictedPlayerState).clientNum)) {
+      bVar4 = false;
+    }
+    if (!bVar4) {
+      tVar1 = (pcVar3->bgs).clientinfo[(pcVar3->predictedPlayerState).clientNum].team;
+      if ((tVar1 == TEAM_FREE) ||
+         (bVar4 = true, tVar1 != (pcVar3->bgs).clientinfo[(param_2->nextState).clientNum].team)) {
+        bVar4 = false;
+      }
+      if (!bVar4) {
+        return true;
+      }
+    }
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp",0x1bfd,0
+                    ,"%s");
+    return true;
   }
-  MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp",0x1bfd,0,
-                  "%s");
-LAB_82320ff4:
-  uVar5 = __restgprlr_27(1);
-  return (bool)uVar5;
+  return false;
 }
 
 
@@ -9262,6 +8795,8 @@ bool CG_PlayerHasAutoSpot(LocalClientNum_t param_1)
 
 // 82321070  DrawTargetBoxPlayers  (cgame/cg_weapons.cpp:7193)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -9270,60 +8805,57 @@ void DrawTargetBoxPlayers(LocalClientNum_t param_1)
 
 {
   team_t tVar1;
-  LocalClientNum_t LVar2;
-  bool bVar5;
-  cg_s *pcVar3;
-  centity_s *pcVar4;
-  uint *puVar6;
-  int iVar7;
-  double dVar8;
-  float fVar9;
+  bool bVar4;
+  cg_s *pcVar2;
+  centity_s *pcVar3;
+  uint *puVar5;
+  int iVar6;
+  double dVar7;
+  float fVar8;
   float local_60;
   float local_5c;
   float local_58;
   float local_54 [21];
   
-  LVar2 = __savegprlr_25(param_1);
-  bVar5 = CL_Demo_IsFollowCamera(LVar2);
-  if ((!bVar5) && (bVar5 = CL_Demo_IsFreeCamera(LVar2), !bVar5)) {
-    pcVar3 = CG_GetLocalClientGlobals(LVar2);
-    if (0x11 < (uint)(pcVar3->predictedPlayerState).clientNum) {
+  bVar4 = CL_Demo_IsFollowCamera(param_1);
+  if ((!bVar4) && (bVar4 = CL_Demo_IsFreeCamera(param_1), !bVar4)) {
+    pcVar2 = CG_GetLocalClientGlobals(param_1);
+    if (0x11 < (uint)(pcVar2->predictedPlayerState).clientNum) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp",0x1c27
                       ,0,"ps->clientNum doesn\'t index MAX_CLIENTS\n\t%i not in [0, %i)");
     }
-    iVar7 = (pcVar3->predictedPlayerState).clientNum;
-    if ((pcVar3->bgs).clientinfo[iVar7].infoValid != 0) {
-      tVar1 = (pcVar3->bgs).clientinfo[iVar7].team;
-      if (((pcVar3->predictedPlayerState).otherFlags & 0x10U) == 0) {
+    iVar6 = (pcVar2->predictedPlayerState).clientNum;
+    if ((pcVar2->bgs).clientinfo[iVar6].infoValid != 0) {
+      tVar1 = (pcVar2->bgs).clientinfo[iVar6].team;
+      if (((pcVar2->predictedPlayerState).otherFlags & 0x10U) == 0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp",
                         0x1c35,0,"%s");
       }
-      iVar7 = 0;
-      puVar6 = (pcVar3->bgs).clientinfo[0].perks;
+      iVar6 = 0;
+      puVar5 = (pcVar2->bgs).clientinfo[0].perks;
       do {
-        if ((iVar7 != (pcVar3->predictedPlayerState).clientNum) &&
-           (((clientInfo_t *)(puVar6 + -0x11))->infoValid != 0)) {
-          if ((tVar1 == TEAM_FREE) || (bVar5 = true, tVar1 != puVar6[-6])) {
-            bVar5 = false;
+        if ((iVar6 != (pcVar2->predictedPlayerState).clientNum) &&
+           (((clientInfo_t *)(puVar5 + -0x11))->infoValid != 0)) {
+          if ((tVar1 == TEAM_FREE) || (bVar4 = true, tVar1 != puVar5[-6])) {
+            bVar4 = false;
           }
-          if ((((!bVar5) && (pcVar4 = CG_GetEntity(LVar2,iVar7), (pcVar4->flags & 1U) != 0)) &&
-              (bVar5 = BG_HasPerk(puVar6,0x25), !bVar5)) &&
-             (((pcVar4->nextState).eType == 1 && (((pcVar4->nextState).lerp.eFlags & 0x20U) == 0))))
+          if ((((!bVar4) && (pcVar3 = CG_GetEntity(param_1,iVar6), (pcVar3->flags & 1U) != 0)) &&
+              (bVar4 = BG_HasPerk(puVar5,0x25), !bVar4)) &&
+             (((pcVar3->nextState).eType == 1 && (((pcVar3->nextState).lerp.eFlags & 0x20U) == 0))))
           {
-            fVar9 = GetTargetboxAlphaForPlayer(LVar2,pcVar4);
-            dVar8 = (double)fVar9;
-            bVar5 = GetIconDimsForPlayer(LVar2,pcVar4,local_54,&local_58,&local_5c,&local_60);
-            if (bVar5) {
-              DrawTargetBox(local_54[0],local_58,local_5c,local_60,(Material *)0x1,(float)dVar8);
+            fVar8 = GetTargetboxAlphaForPlayer(param_1,pcVar3);
+            dVar7 = (double)fVar8;
+            bVar4 = GetIconDimsForPlayer(param_1,pcVar3,local_54,&local_58,&local_5c,&local_60);
+            if (bVar4) {
+              DrawTargetBox(local_54[0],local_58,local_5c,local_60,(Material *)0x1,(float)dVar7);
             }
           }
         }
-        iVar7 = iVar7 + 1;
-        puVar6 = puVar6 + 0x164;
-      } while (iVar7 < 0x12);
+        iVar6 = iVar6 + 1;
+        puVar5 = puVar5 + 0x164;
+      } while (iVar6 < 0x12);
     }
   }
-  __restgprlr_25();
   return;
 }
 
@@ -9376,6 +8908,8 @@ void CG_DrawFriendOrFoeTargetBoxes(LocalClientNum_t param_1)
 
 // 82321398  CG_DrawRemoteMissileOverlay  (cgame/cg_weapons.cpp:7337)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -9383,32 +8917,30 @@ void CG_DrawFriendOrFoeTargetBoxes(LocalClientNum_t param_1)
 void CG_DrawRemoteMissileOverlay(LocalClientNum_t param_1)
 
 {
-  LocalClientNum_t LVar1;
-  cg_s *pcVar2;
-  ScreenPlacement *pSVar3;
-  bool bVar9;
-  uint uVar4;
-  Font_s *pFVar5;
-  centity_s *pcVar6;
+  cg_s *pcVar1;
+  ScreenPlacement *pSVar2;
+  bool bVar8;
+  uint uVar3;
+  Font_s *pFVar4;
+  centity_s *pcVar5;
+  int iVar6;
   int iVar7;
-  int iVar8;
-  double dVar10;
+  double dVar9;
   float local_160;
   float local_15c;
   float local_158;
   float local_154;
   char acStack_150 [336];
   
-  LVar1 = __savegprlr_25(param_1);
-  pcVar2 = CG_GetLocalClientGlobals(LVar1);
-  pSVar3 = ScrPlace_GetActivePlacement(LVar1);
-  bVar9 = CL_Demo_IsFollowCamera(LVar1);
-  if ((((!bVar9) && (bVar9 = CL_Demo_IsFreeCamera(LVar1), !bVar9)) &&
-      (((pcVar2->predictedPlayerState).otherFlags & 2U) != 0)) &&
-     ((pcVar2->predictedPlayerState).remoteEyesEnt != 0x7ff)) {
-    uVar4 = rand();
-    if ((longlong)(int)uVar4 ==
-        ((longlong)((int)uVar4 >> 1) + (ulonglong)((int)uVar4 < 0 && (uVar4 & 1) != 0) & 0x7fffffff)
+  pcVar1 = CG_GetLocalClientGlobals(param_1);
+  pSVar2 = ScrPlace_GetActivePlacement(param_1);
+  bVar8 = CL_Demo_IsFollowCamera(param_1);
+  if ((((!bVar8) && (bVar8 = CL_Demo_IsFreeCamera(param_1), !bVar8)) &&
+      (((pcVar1->predictedPlayerState).otherFlags & 2U) != 0)) &&
+     ((pcVar1->predictedPlayerState).remoteEyesEnt != 0x7ff)) {
+    uVar3 = rand();
+    if ((longlong)(int)uVar3 ==
+        ((longlong)((int)uVar3 >> 1) + (ulonglong)((int)uVar3 < 0 && (uVar3 & 1) != 0) & 0x7fffffff)
         << 1) {
       local_160 = 0.1;
       local_15c = 0.1;
@@ -9421,31 +8953,33 @@ void CG_DrawRemoteMissileOverlay(LocalClientNum_t param_1)
       local_158 = 0.17;
       local_154 = 0.8;
     }
-    pFVar5 = UI_GetFontHandle(pSVar3,6,0.4);
-    pcVar6 = CG_GetEntity(LVar1,(pcVar2->predictedPlayerState).remoteEyesEnt);
-    iVar8 = SUB84((double)(pcVar6->prevState).pos.trBase[2],0);
-    iVar7 = SUB84((double)(pcVar6->prevState).pos.trBase[1],0);
+    pFVar4 = UI_GetFontHandle(pSVar2,6,0.4);
+    pcVar5 = CG_GetEntity(param_1,(pcVar1->predictedPlayerState).remoteEyesEnt);
+    iVar7 = SUB84((double)(pcVar5->prevState).pos.trBase[2],0);
+    iVar6 = SUB84((double)(pcVar5->prevState).pos.trBase[1],0);
     Com_sprintf(acStack_150,0x100,"%.0f %.0f %.0f\n%.0f : %.0f\n%i %i [%i]\n");
-    UI_DrawText(pSVar3,acStack_150,0x100,pFVar5,5.0,20.0,iVar7,iVar8,0.4,(float *)&DAT_00000008,8);
-    pFVar5 = UI_GetFontHandle(pSVar3,6,0.24);
-    iVar7 = UI_TextHeight(pFVar5,0.24);
+    UI_DrawText(pSVar2,acStack_150,0x100,pFVar4,5.0,20.0,iVar6,iVar7,0.4,(float *)&DAT_00000008,8);
+    pFVar4 = UI_GetFontHandle(pSVar2,6,0.24);
+    iVar6 = UI_TextHeight(pFVar4,0.24);
     Com_sprintf(acStack_150,0x100,"52.61.79.6d.65.4c.6f.76.65.73.53.61.72.61.68\n");
-    iVar8 = UI_TextWidth(acStack_150,0x100,pFVar5,0.24);
-    UI_DrawText(pSVar3,acStack_150,0x100,pFVar5,(float)(longlong)-iVar8 - 5.0,-0.0,(int)&local_160,
-                -iVar8,0.24,(float *)0xa,10);
-    dVar10 = -(double)(longlong)iVar7;
-    iVar7 = pcVar2->teamScores[0];
+    iVar7 = UI_TextWidth(acStack_150,0x100,pFVar4,0.24);
+    UI_DrawText(pSVar2,acStack_150,0x100,pFVar4,(float)(longlong)-iVar7 - 5.0,-0.0,(int)&local_160,
+                -iVar7,0.24,(float *)0xa,10);
+    dVar9 = -(double)(longlong)iVar6;
+    iVar6 = pcVar1->teamScores[0];
     Com_sprintf(acStack_150,0x100,"%i %i %i %X\n");
-    iVar8 = UI_TextWidth(acStack_150,0x100,pFVar5,0.24);
-    UI_DrawText(pSVar3,acStack_150,0x100,pFVar5,(float)(longlong)-iVar8 - 5.0,(float)dVar10,-iVar8,
-                iVar7,0.24,(float *)0xa,10);
+    iVar7 = UI_TextWidth(acStack_150,0x100,pFVar4,0.24);
+    UI_DrawText(pSVar2,acStack_150,0x100,pFVar4,(float)(longlong)-iVar7 - 5.0,(float)dVar9,-iVar7,
+                iVar6,0.24,(float *)0xa,10);
   }
-  __restgprlr_25();
   return;
 }
 
 
 // 82321710  DebugDrawMissileProjectedSound  (cgame/cg_weapons.cpp:7466)
+
+/* WARNING: Function: __savegprlr_19 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_19 replaced with injection: xenon_save_restore */
 
 void DebugDrawMissileProjectedSound(MissileConeSoundVars *param_1)
 
@@ -9456,12 +8990,11 @@ void DebugDrawMissileProjectedSound(MissileConeSoundVars *param_1)
   float *pfVar4;
   float *pfVar5;
   float *pfVar6;
-  float *pfVar7;
-  int iVar8;
+  int iVar7;
+  float *pfVar8;
   float *pfVar9;
-  float *pfVar10;
+  double dVar10;
   double dVar11;
-  double dVar12;
   float local_180;
   float local_17c;
   float local_178;
@@ -9504,122 +9037,125 @@ void DebugDrawMissileProjectedSound(MissileConeSoundVars *param_1)
   float local_98 [3];
   float afStack_8c [35];
   
-  pfVar4 = (float *)__savegprlr_19(param_1);
-  fVar2 = pfVar4[10];
-  local_180 = pfVar4[3] * fVar2 + *pfVar4;
-  local_17c = pfVar4[4] * fVar2 + pfVar4[1];
-  local_178 = pfVar4[5] * fVar2 + pfVar4[2];
-  pfVar5 = pfVar4 + 3;
-  local_100 = pfVar4[3] * MY_BEYONDDRAW_DIST + local_180;
-  local_fc = pfVar4[4] * MY_BEYONDDRAW_DIST + local_17c;
-  local_f8 = pfVar4[5] * MY_BEYONDDRAW_DIST + local_178;
-  CG_DebugLine(pfVar4,&local_100,MY_COLOR,(uint)MY_DEPTHTEST,MY_DURATION);
-  PerpendicularVector(pfVar5,&local_130);
-  local_c8 = pfVar4[8];
-  local_108 = pfVar4[9];
-  local_118 = pfVar4[0xd] * local_c8;
-  local_e8 = local_108 * pfVar4[0xd];
+  fVar2 = param_1->height;
+  local_180 = param_1->dir[0] * fVar2 + param_1->start[0];
+  local_17c = param_1->dir[1] * fVar2 + param_1->start[1];
+  local_178 = param_1->dir[2] * fVar2 + param_1->start[2];
+  pfVar4 = param_1->dir;
+  local_100 = param_1->dir[0] * MY_BEYONDDRAW_DIST + local_180;
+  local_fc = param_1->dir[1] * MY_BEYONDDRAW_DIST + local_17c;
+  local_f8 = param_1->dir[2] * MY_BEYONDDRAW_DIST + local_178;
+  CG_DebugLine(param_1->start,&local_100,MY_COLOR,(uint)MY_DEPTHTEST,MY_DURATION);
+  PerpendicularVector(pfVar4,&local_130);
+  local_c8 = param_1->radiusAtTop;
+  local_108 = param_1->radiusAtBase;
+  local_118 = param_1->volumescaleCoreSize * local_c8;
+  local_e8 = local_108 * param_1->volumescaleCoreSize;
   local_d0 = local_130 * local_c8;
   local_cc = local_12c * local_c8;
   local_c8 = local_128 * local_c8;
   local_110 = local_108 * local_130;
   local_10c = local_12c * local_108;
-  dVar11 = 1.0;
+  dVar10 = 1.0;
   local_108 = local_128 * local_108;
-  dVar12 = 0.0;
+  dVar11 = 0.0;
   local_120 = local_130 * local_118;
   local_11c = local_12c * local_118;
   local_118 = local_128 * local_118;
   local_f0 = local_e8 * local_130;
   local_ec = local_12c * local_e8;
   local_e8 = local_128 * local_e8;
-  if ((*(char *)(pfVar4 + 0xe) != '\0') && ((pfVar4[0x11] != 0.0 || (pfVar4[0x12] != 0.0)))) {
-    fVar1 = pfVar4[10] * pfVar4[0x11];
-    local_150 = local_130 * MY_ALTLINEOFFSET + *pfVar4;
-    local_14c = local_12c * MY_ALTLINEOFFSET + pfVar4[1];
-    local_148 = local_128 * MY_ALTLINEOFFSET + pfVar4[2];
-    fVar2 = (1.0 - pfVar4[0x12]) * pfVar4[10];
-    local_140 = *pfVar5 * fVar1 + local_150;
-    local_13c = pfVar4[4] * fVar1 + local_14c;
-    local_138 = pfVar4[5] * fVar1 + local_148;
-    local_150 = *pfVar5 * fVar2 + local_150;
-    local_14c = pfVar4[4] * fVar2 + local_14c;
-    local_148 = pfVar4[5] * fVar2 + local_148;
+  if ((param_1->pitchshiftEnabled != false) &&
+     ((param_1->pitchTopSize != 0.0 || (param_1->pitchBottomSize != 0.0)))) {
+    fVar1 = param_1->height * param_1->pitchTopSize;
+    local_150 = local_130 * MY_ALTLINEOFFSET + param_1->start[0];
+    local_14c = local_12c * MY_ALTLINEOFFSET + param_1->start[1];
+    local_148 = local_128 * MY_ALTLINEOFFSET + param_1->start[2];
+    fVar2 = (1.0 - param_1->pitchBottomSize) * param_1->height;
+    local_140 = *pfVar4 * fVar1 + local_150;
+    local_13c = param_1->dir[1] * fVar1 + local_14c;
+    local_138 = param_1->dir[2] * fVar1 + local_148;
+    local_150 = *pfVar4 * fVar2 + local_150;
+    local_14c = param_1->dir[1] * fVar2 + local_14c;
+    local_148 = param_1->dir[2] * fVar2 + local_148;
     CG_DebugLine(&local_150,&local_140,MY_COLOR_PITCH,(uint)MY_DEPTHTEST,MY_DURATION);
   }
-  if ((*(char *)(pfVar4 + 0x13) != '\0') &&
-     (((double)pfVar4[0x14] != dVar12 || ((double)pfVar4[0x15] != dVar12)))) {
+  if ((param_1->crossfadeEnabled != false) &&
+     (((double)param_1->crossfadeTopSize != dVar11 ||
+      ((double)param_1->crossfadeBottomSize != dVar11)))) {
     fVar1 = -MY_ALTLINEOFFSET;
-    fVar2 = (float)((double)pfVar4[10] * (double)pfVar4[0x14]);
-    local_150 = fVar1 * local_130 + *pfVar4;
-    local_14c = local_12c * fVar1 + pfVar4[1];
-    local_148 = local_128 * fVar1 + pfVar4[2];
-    fVar1 = (float)((double)(float)(dVar11 - (double)pfVar4[0x15]) * (double)pfVar4[10]);
-    local_140 = *pfVar5 * fVar2 + local_150;
-    local_13c = pfVar4[4] * fVar2 + local_14c;
-    local_138 = pfVar4[5] * fVar2 + local_148;
-    local_150 = *pfVar5 * fVar1 + local_150;
-    local_14c = pfVar4[4] * fVar1 + local_14c;
-    local_148 = pfVar4[5] * fVar1 + local_148;
+    fVar2 = (float)((double)param_1->height * (double)param_1->crossfadeTopSize);
+    local_150 = fVar1 * local_130 + param_1->start[0];
+    local_14c = local_12c * fVar1 + param_1->start[1];
+    local_148 = local_128 * fVar1 + param_1->start[2];
+    fVar1 = (float)((double)(float)(dVar10 - (double)param_1->crossfadeBottomSize) *
+                   (double)param_1->height);
+    local_140 = *pfVar4 * fVar2 + local_150;
+    local_13c = param_1->dir[1] * fVar2 + local_14c;
+    local_138 = param_1->dir[2] * fVar2 + local_148;
+    local_150 = *pfVar4 * fVar1 + local_150;
+    local_14c = param_1->dir[1] * fVar1 + local_14c;
+    local_148 = param_1->dir[2] * fVar1 + local_148;
     CG_DebugLine(&local_150,&local_140,MY_COLOR_CROSSFADE,(uint)MY_DEPTHTEST,MY_DURATION);
   }
-  pfVar9 = local_b0;
-  pfVar10 = local_98;
-  iVar8 = 0;
+  pfVar8 = local_b0;
+  pfVar9 = local_98;
+  iVar7 = 0;
   local_c0 = (longlong)MY_STEPS;
-  dVar11 = (double)(360.0 / (float)local_c0);
+  dVar10 = (double)(360.0 / (float)local_c0);
   pfVar3 = afStack_8c;
-  pfVar6 = afStack_a4;
+  pfVar5 = afStack_a4;
   if (-1 < MY_STEPS) {
     do {
-      pfVar7 = pfVar6;
-      pfVar6 = pfVar3;
-      RotatePointAroundVector(pfVar9,pfVar5,&local_d0,(float)dVar12);
-      fVar2 = pfVar4[1];
-      fVar1 = pfVar4[2];
-      *pfVar9 = *pfVar9 + *pfVar4;
-      pfVar9[1] = pfVar9[1] + fVar2;
-      pfVar9[2] = pfVar9[2] + fVar1;
-      RotatePointAroundVector(&local_170,pfVar5,&local_120,(float)dVar12);
-      local_170 = local_170 + *pfVar4;
-      local_16c = pfVar4[1] + local_16c;
-      local_168 = pfVar4[2] + local_168;
-      CG_DebugLine(pfVar4,&local_170,MY_COLOR_INNER,(uint)MY_DEPTHTEST,MY_DURATION);
-      CG_DebugLine(&local_170,pfVar9,MY_COLOR,(uint)MY_DEPTHTEST,MY_DURATION);
-      RotatePointAroundVector(pfVar10,pfVar5,&local_110,(float)dVar12);
-      *pfVar10 = *pfVar10 + local_180;
-      pfVar10[1] = local_17c + pfVar10[1];
-      pfVar10[2] = local_178 + pfVar10[2];
-      RotatePointAroundVector(&local_160,pfVar5,&local_f0,(float)dVar12);
+      pfVar6 = pfVar5;
+      pfVar5 = pfVar3;
+      RotatePointAroundVector(pfVar8,pfVar4,&local_d0,(float)dVar11);
+      fVar2 = param_1->start[1];
+      fVar1 = param_1->start[2];
+      *pfVar8 = *pfVar8 + param_1->start[0];
+      pfVar8[1] = pfVar8[1] + fVar2;
+      pfVar8[2] = pfVar8[2] + fVar1;
+      RotatePointAroundVector(&local_170,pfVar4,&local_120,(float)dVar11);
+      local_170 = local_170 + param_1->start[0];
+      local_16c = param_1->start[1] + local_16c;
+      local_168 = param_1->start[2] + local_168;
+      CG_DebugLine(param_1->start,&local_170,MY_COLOR_INNER,(uint)MY_DEPTHTEST,MY_DURATION);
+      CG_DebugLine(&local_170,pfVar8,MY_COLOR,(uint)MY_DEPTHTEST,MY_DURATION);
+      RotatePointAroundVector(pfVar9,pfVar4,&local_110,(float)dVar11);
+      *pfVar9 = *pfVar9 + local_180;
+      pfVar9[1] = local_17c + pfVar9[1];
+      pfVar9[2] = local_178 + pfVar9[2];
+      RotatePointAroundVector(&local_160,pfVar4,&local_f0,(float)dVar11);
       local_160 = local_160 + local_180;
       local_15c = local_15c + local_17c;
       local_158 = local_158 + local_178;
       CG_DebugLine(&local_180,&local_160,MY_COLOR_INNER,(uint)MY_DEPTHTEST,MY_DURATION);
-      CG_DebugLine(&local_160,pfVar10,MY_COLOR,(uint)MY_DEPTHTEST,MY_DURATION);
-      CG_DebugLine(pfVar9,pfVar10,MY_COLOR,(uint)MY_DEPTHTEST,MY_DURATION);
-      local_e0 = MY_BEYONDDRAW_DIST * *pfVar5 + *pfVar10;
-      local_dc = pfVar4[4] * MY_BEYONDDRAW_DIST + pfVar10[1];
-      local_d8 = MY_BEYONDDRAW_DIST * pfVar4[5] + pfVar10[2];
-      CG_DebugLine(pfVar10,&local_e0,MY_COLOR,(uint)MY_DEPTHTEST,MY_DURATION);
-      if (iVar8 != 0) {
-        CG_DebugLine(pfVar9,pfVar7,MY_COLOR,(uint)MY_DEPTHTEST,MY_DURATION);
-        CG_DebugLine(pfVar10,pfVar6,MY_COLOR,(uint)MY_DEPTHTEST,MY_DURATION);
+      CG_DebugLine(&local_160,pfVar9,MY_COLOR,(uint)MY_DEPTHTEST,MY_DURATION);
+      CG_DebugLine(pfVar8,pfVar9,MY_COLOR,(uint)MY_DEPTHTEST,MY_DURATION);
+      local_e0 = MY_BEYONDDRAW_DIST * *pfVar4 + *pfVar9;
+      local_dc = param_1->dir[1] * MY_BEYONDDRAW_DIST + pfVar9[1];
+      local_d8 = MY_BEYONDDRAW_DIST * param_1->dir[2] + pfVar9[2];
+      CG_DebugLine(pfVar9,&local_e0,MY_COLOR,(uint)MY_DEPTHTEST,MY_DURATION);
+      if (iVar7 != 0) {
+        CG_DebugLine(pfVar8,pfVar6,MY_COLOR,(uint)MY_DEPTHTEST,MY_DURATION);
+        CG_DebugLine(pfVar9,pfVar5,MY_COLOR,(uint)MY_DEPTHTEST,MY_DURATION);
       }
-      dVar12 = (double)(float)(dVar12 + dVar11);
-      iVar8 = iVar8 + 1;
-      pfVar3 = pfVar10;
-      pfVar10 = pfVar6;
-      pfVar6 = pfVar9;
-      pfVar9 = pfVar7;
-    } while (iVar8 <= MY_STEPS);
+      dVar11 = (double)(float)(dVar11 + dVar10);
+      iVar7 = iVar7 + 1;
+      pfVar3 = pfVar9;
+      pfVar9 = pfVar5;
+      pfVar5 = pfVar8;
+      pfVar8 = pfVar6;
+    } while (iVar7 <= MY_STEPS);
   }
-  __restgprlr_19();
   return;
 }
 
 
 // 82321C40  SetupAndValidateConeVars  (cgame/cg_weapons.cpp:7575)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
 
@@ -9628,227 +9164,208 @@ bool SetupAndValidateConeVars(centity_s *param_1,MissileConeSoundVars *param_2)
 {
   float fVar1;
   WeaponDef *pWVar2;
-  float *pfVar3;
-  int iVar4;
-  Weapon WVar5;
-  snd_alias_t *psVar6;
-  undefined1 uVar7;
-  ulonglong uVar8;
-  bool bVar9;
-  double dVar10;
-  double dVar11;
+  Weapon WVar3;
+  snd_alias_t *psVar4;
+  bool bVar5;
+  double dVar6;
+  double dVar7;
   float local_470;
   float local_46c;
   float local_468;
   char acStack_440 [1088];
   
-  uVar8 = (ulonglong)(int)param_2;
-  iVar4 = __savegprlr_27(param_1);
-  if (iVar4 == 0) {
+  if (param_1 == (centity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp",0x1d9e,0
                     ,"%s");
   }
-  if (*(int *)(iVar4 + 200) != 4) {
+  if ((param_1->nextState).eType != 4) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp",0x1d9f,0
                     ,"%s");
   }
-  if ((uVar8 & 0xffffffff) == 0) {
+  if (param_2 == (MissileConeSoundVars *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp",0x1da0,0
                     ,"%s");
   }
-  WVar5 = BG_GetAlternateWeapon(*(Weapon *)(iVar4 + 0x18c),false);
-  pWVar2 = bg_weaponDefs[WVar5.data & 0xff];
+  WVar3 = BG_GetAlternateWeapon((param_1->nextState).weapon,false);
+  pWVar2 = bg_weaponDefs[WVar3.data & 0xff];
   if (pWVar2->missileConeSoundEnabled == false) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp",0x1da3,0
                     ,"%s");
   }
-  AnglesToAxis((float *)(iVar4 + 0x20),(float (*) [3])&local_470);
-  pfVar3 = (float *)uVar8;
-  pfVar3[3] = local_470;
-  pfVar3[4] = local_46c;
-  pfVar3[5] = local_468;
+  AnglesToAxis((param_1->pose).angles,(float (*) [3])&local_470);
+  param_2->dir[0] = local_470;
+  param_2->dir[1] = local_46c;
+  param_2->dir[2] = local_468;
   fVar1 = pWVar2->missileConeSoundOriginOffset;
-  *pfVar3 = fVar1 * local_470 + *(float *)(iVar4 + 0x14);
-  pfVar3[1] = fVar1 * local_46c + *(float *)(iVar4 + 0x18);
-  pfVar3[2] = fVar1 * local_468 + *(float *)(iVar4 + 0x1c);
-  psVar6 = Com_PickSoundAliasFromList(pWVar2->missileConeSoundAlias);
-  pfVar3[6] = (float)psVar6;
-  psVar6 = Com_PickSoundAliasFromList(pWVar2->missileConeSoundAliasAtBase);
-  pfVar3[7] = (float)psVar6;
-  pfVar3[8] = pWVar2->missileConeSoundRadiusAtTop;
-  pfVar3[9] = pWVar2->missileConeSoundRadiusAtBase;
-  pfVar3[10] = pWVar2->missileConeSoundHeight;
-  pfVar3[0xb] = pWVar2->missileConeSoundVolumescaleAtCore;
-  pfVar3[0xc] = pWVar2->missileConeSoundVolumescaleAtEdge;
-  pfVar3[0xd] = pWVar2->missileConeSoundVolumescaleCoreSize;
-  *(char *)(pfVar3 + 0xe) = '\x01' - (pWVar2->missileConeSoundPitchshiftEnabled == false);
-  pfVar3[0xf] = pWVar2->missileConeSoundPitchAtTop;
-  pfVar3[0x10] = pWVar2->missileConeSoundPitchAtBottom;
-  pfVar3[0x11] = pWVar2->missileConeSoundPitchTopSize;
-  pfVar3[0x12] = pWVar2->missileConeSoundPitchBottomSize;
-  bVar9 = pWVar2->missileConeSoundCrossfadeEnabled != false;
-  *(bool *)(pfVar3 + 0x13) = bVar9;
-  pfVar3[0x14] = pWVar2->missileConeSoundCrossfadeTopSize;
-  pfVar3[0x15] = pWVar2->missileConeSoundCrossfadeBottomSize;
-  if ((bVar9) && (psVar6 == (snd_alias_t *)0x0)) {
-    BG_GetWeaponName(*(Weapon *)(iVar4 + 0x18c),acStack_440,0x400);
+  param_2->start[0] = fVar1 * local_470 + (param_1->pose).origin[0];
+  param_2->start[1] = fVar1 * local_46c + (param_1->pose).origin[1];
+  param_2->start[2] = fVar1 * local_468 + (param_1->pose).origin[2];
+  psVar4 = Com_PickSoundAliasFromList(pWVar2->missileConeSoundAlias);
+  param_2->alias = psVar4;
+  psVar4 = Com_PickSoundAliasFromList(pWVar2->missileConeSoundAliasAtBase);
+  param_2->aliasAtBase = psVar4;
+  param_2->radiusAtTop = pWVar2->missileConeSoundRadiusAtTop;
+  param_2->radiusAtBase = pWVar2->missileConeSoundRadiusAtBase;
+  param_2->height = pWVar2->missileConeSoundHeight;
+  param_2->volumescaleAtCore = pWVar2->missileConeSoundVolumescaleAtCore;
+  param_2->volumescaleAtEdge = pWVar2->missileConeSoundVolumescaleAtEdge;
+  param_2->volumescaleCoreSize = pWVar2->missileConeSoundVolumescaleCoreSize;
+  param_2->pitchshiftEnabled = (bool)('\x01' - (pWVar2->missileConeSoundPitchshiftEnabled == false))
+  ;
+  param_2->pitchAtTop = pWVar2->missileConeSoundPitchAtTop;
+  param_2->pitchAtBottom = pWVar2->missileConeSoundPitchAtBottom;
+  param_2->pitchTopSize = pWVar2->missileConeSoundPitchTopSize;
+  param_2->pitchBottomSize = pWVar2->missileConeSoundPitchBottomSize;
+  bVar5 = pWVar2->missileConeSoundCrossfadeEnabled != false;
+  param_2->crossfadeEnabled = bVar5;
+  param_2->crossfadeTopSize = pWVar2->missileConeSoundCrossfadeTopSize;
+  param_2->crossfadeBottomSize = pWVar2->missileConeSoundCrossfadeBottomSize;
+  if ((bVar5) && (psVar4 == (snd_alias_t *)0x0)) {
+    BG_GetWeaponName((param_1->nextState).weapon,acStack_440,0x400);
     Com_PrintWarning(0xe,
                      "Weapon \"%s\" has invalid missile cone crossfade settings.  Crossfade is enabled, but no second sound was given.\n"
                     );
-    *(undefined1 *)(pfVar3 + 0x13) = 0;
+    param_2->crossfadeEnabled = false;
   }
-  dVar10 = 0.0;
-  if (pfVar3[0xd] < 0.0) {
-    pfVar3[0xd] = 0.0;
+  dVar6 = 0.0;
+  if (param_2->volumescaleCoreSize < 0.0) {
+    param_2->volumescaleCoreSize = 0.0;
   }
-  dVar11 = 1.0;
-  if (1.0 < pfVar3[0xd]) {
-    pfVar3[0xd] = 1.0;
+  dVar7 = 1.0;
+  if (1.0 < param_2->volumescaleCoreSize) {
+    param_2->volumescaleCoreSize = 1.0;
   }
-  if (*(char *)(pfVar3 + 0x13) != '\0') {
-    if (pfVar3[0x14] < 0.0) {
-      pfVar3[0x14] = 0.0;
+  if (param_2->crossfadeEnabled != false) {
+    if (param_2->crossfadeTopSize < 0.0) {
+      param_2->crossfadeTopSize = 0.0;
     }
-    if (1.0 < pfVar3[0x14]) {
-      pfVar3[0x14] = 1.0;
+    if (1.0 < param_2->crossfadeTopSize) {
+      param_2->crossfadeTopSize = 1.0;
     }
-    if (pfVar3[0x15] < 0.0) {
-      pfVar3[0x15] = 0.0;
+    if (param_2->crossfadeBottomSize < 0.0) {
+      param_2->crossfadeBottomSize = 0.0;
     }
-    if (1.0 < pfVar3[0x15]) {
-      pfVar3[0x15] = 1.0;
+    if (1.0 < param_2->crossfadeBottomSize) {
+      param_2->crossfadeBottomSize = 1.0;
     }
-    if (1.0 < pfVar3[0x15] + pfVar3[0x14]) {
-      BG_GetWeaponName(*(Weapon *)(iVar4 + 0x18c),acStack_440,0x400);
+    if (1.0 < param_2->crossfadeBottomSize + param_2->crossfadeTopSize) {
+      BG_GetWeaponName((param_1->nextState).weapon,acStack_440,0x400);
       Com_PrintWarning(0xe,
                        "Weapon \"%s\" has invalid missile cone crossfade settings.  The top/bottom regions would overlap.\n"
                       );
-      pfVar3[0x14] = (float)dVar10;
-      pfVar3[0x15] = (float)dVar10;
-      *(undefined1 *)(pfVar3 + 0x13) = 0;
+      param_2->crossfadeTopSize = (float)dVar6;
+      param_2->crossfadeBottomSize = (float)dVar6;
+      param_2->crossfadeEnabled = false;
     }
   }
-  if (*(char *)(pfVar3 + 0xe) != '\0') {
-    if ((double)pfVar3[0x11] < dVar10) {
-      pfVar3[0x11] = (float)dVar10;
+  if (param_2->pitchshiftEnabled != false) {
+    if ((double)param_2->pitchTopSize < dVar6) {
+      param_2->pitchTopSize = (float)dVar6;
     }
-    if (dVar11 < (double)pfVar3[0x11]) {
-      pfVar3[0x11] = (float)dVar11;
+    if (dVar7 < (double)param_2->pitchTopSize) {
+      param_2->pitchTopSize = (float)dVar7;
     }
-    if ((double)pfVar3[0x12] < dVar10) {
-      pfVar3[0x12] = (float)dVar10;
+    if ((double)param_2->pitchBottomSize < dVar6) {
+      param_2->pitchBottomSize = (float)dVar6;
     }
-    if (dVar11 < (double)pfVar3[0x12]) {
-      pfVar3[0x12] = (float)dVar11;
+    if (dVar7 < (double)param_2->pitchBottomSize) {
+      param_2->pitchBottomSize = (float)dVar7;
     }
-    if (dVar11 < (double)(pfVar3[0x11] + pfVar3[0x12])) {
-      BG_GetWeaponName(*(Weapon *)(iVar4 + 0x18c),acStack_440,0x400);
+    if (dVar7 < (double)(param_2->pitchTopSize + param_2->pitchBottomSize)) {
+      BG_GetWeaponName((param_1->nextState).weapon,acStack_440,0x400);
       Com_PrintWarning(0xe,
                        "Weapon \"%s\" has invalid missile cone pitch-shift settings.  The top/bottom regions would overlap.\n"
                       );
-      pfVar3[0x14] = (float)dVar10;
-      pfVar3[0x15] = (float)dVar10;
-      *(undefined1 *)(pfVar3 + 0xe) = 0;
+      param_2->crossfadeTopSize = (float)dVar6;
+      param_2->crossfadeBottomSize = (float)dVar6;
+      param_2->pitchshiftEnabled = false;
     }
   }
-  if (pfVar3[6] == 0.0) {
-    BG_GetWeaponName(*(Weapon *)(iVar4 + 0x18c),acStack_440,0x400);
+  if (param_2->alias == (snd_alias_t *)0x0) {
+    BG_GetWeaponName((param_1->nextState).weapon,acStack_440,0x400);
     Com_PrintWarning(0xe,
                      "Weapon \"%s\" has invalid missile cone height settings.  No sound is available to play.\n"
                     );
-    uVar7 = __restgprlr_27(0);
-    return (bool)uVar7;
+    return false;
   }
-  if ((double)pfVar3[10] == dVar10) {
-    BG_GetWeaponName(*(Weapon *)(iVar4 + 0x18c),acStack_440,0x400);
+  if ((double)param_2->height == dVar6) {
+    BG_GetWeaponName((param_1->nextState).weapon,acStack_440,0x400);
     Com_PrintWarning(0xe,
                      "Weapon \"%s\" has invalid missile cone height settings.  Zero height is invalid.\n"
                     );
-    uVar7 = __restgprlr_27(0);
-    return (bool)uVar7;
+    return false;
   }
-  uVar7 = __restgprlr_27(1);
-  return (bool)uVar7;
+  return true;
 }
 
 
 // 82322030  CalcDistanceFactors  (cgame/cg_weapons.cpp:7689)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 bool CalcDistanceFactors(float *param_1,MissileConeSoundVars *param_2,float *param_3,float *param_4)
 
 {
   float fVar1;
-  float *pfVar2;
-  float *pfVar3;
-  undefined1 uVar4;
-  ulonglong uVar5;
-  ulonglong uVar6;
-  ulonglong uVar7;
-  double dVar8;
-  double dVar9;
-  double dVar10;
-  double dVar11;
+  double dVar2;
+  double dVar3;
+  double dVar4;
+  double dVar5;
   float local_70 [2];
   float local_68;
   float local_64;
   float local_60;
   
-  uVar7 = (ulonglong)(int)param_4;
-  uVar6 = (ulonglong)(int)param_3;
-  uVar5 = (ulonglong)(int)param_2;
-  __savegprlr_26(param_1);
-  pfVar3 = (float *)__savefpr_28();
-  if ((uVar5 & 0xffffffff) == 0) {
+  if (param_2 == (MissileConeSoundVars *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp",0x1e11,0
                     ,"%s");
   }
-  pfVar2 = (float *)uVar5;
-  dVar8 = 0.0;
-  if (pfVar2[10] == 0.0) {
+  dVar2 = 0.0;
+  if (param_2->height == 0.0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp",0x1e12,0
                     ,"%s");
   }
-  if (pfVar3 == (float *)0x0) {
+  if (param_1 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp",0x1e13,0
                     ,"%s");
   }
-  if ((uVar6 & 0xffffffff) == 0) {
+  if (param_3 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp",0x1e14,0
                     ,"%s");
   }
-  if ((uVar7 & 0xffffffff) == 0) {
+  if (param_4 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp",0x1e15,0
                     ,"%s");
   }
-  ProjectPointOntoVectorDir(pfVar3,pfVar2,pfVar2 + 3,&local_68,local_70);
-  dVar11 = (double)(local_70[0] / pfVar2[10]);
-  if (dVar8 <= dVar11) {
-    dVar9 = 1.0;
-    if (1.0 < dVar11) {
-      dVar11 = dVar9;
+  ProjectPointOntoVectorDir(param_1,param_2->start,param_2->dir,&local_68,local_70);
+  dVar5 = (double)(local_70[0] / param_2->height);
+  if (dVar2 <= dVar5) {
+    dVar3 = 1.0;
+    if (1.0 < dVar5) {
+      dVar5 = dVar3;
     }
-    dVar10 = (double)(float)((double)(float)((double)pfVar2[9] - (double)pfVar2[8]) * dVar11 +
-                            (double)pfVar2[8]);
-    if (dVar10 == dVar8) {
+    dVar4 = (double)(float)((double)(float)((double)param_2->radiusAtBase -
+                                           (double)param_2->radiusAtTop) * dVar5 +
+                           (double)param_2->radiusAtTop);
+    if (dVar4 == dVar2) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp",0x1e24
                       ,0,"%s");
     }
-    fVar1 = (float)((double)SQRT((local_64 - pfVar3[1]) * (local_64 - pfVar3[1]) +
-                                 (local_68 - *pfVar3) * (local_68 - *pfVar3) +
-                                 (local_60 - pfVar3[2]) * (local_60 - pfVar3[2])) / dVar10);
-    if ((double)fVar1 <= dVar9) {
-      *(float *)uVar6 = fVar1;
-      *(float *)uVar7 = (float)dVar11;
-      __restfpr_28(1);
-      uVar4 = __restgprlr_26();
-      return (bool)uVar4;
+    fVar1 = (float)((double)SQRT((local_64 - param_1[1]) * (local_64 - param_1[1]) +
+                                 (local_68 - *param_1) * (local_68 - *param_1) +
+                                 (local_60 - param_1[2]) * (local_60 - param_1[2])) / dVar4);
+    if ((double)fVar1 <= dVar3) {
+      *param_3 = fVar1;
+      *param_4 = (float)dVar5;
+      return true;
     }
   }
-  *(float *)uVar6 = (float)dVar8;
-  *(float *)uVar7 = (float)dVar8;
-  __restfpr_28(0);
-  uVar4 = __restgprlr_26();
-  return (bool)uVar4;
+  *param_3 = (float)dVar2;
+  *param_4 = (float)dVar2;
+  return false;
 }
 
 
@@ -9882,6 +9399,10 @@ float NormalizeForMinMax(float param_1,float param_2,float param_3)
 
 // 823222B8  CG_PlayMissileProjectedConeSound  (cgame/cg_weapons.cpp:7755)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
@@ -9889,43 +9410,38 @@ float NormalizeForMinMax(float param_1,float param_2,float param_3)
 void CG_PlayMissileProjectedConeSound(LocalClientNum_t param_1,centity_s *param_2)
 
 {
-  centity_s *pcVar1;
-  LocalClientNum_t LVar2;
-  bool bVar5;
-  cg_s *pcVar3;
+  bool bVar3;
+  cg_s *pcVar1;
+  SndEntHandle SVar2;
   SndEntHandle SVar4;
-  ulonglong uVar6;
-  SndEntHandle SVar7;
-  SndEntHandle SVar8;
-  float *pfVar9;
+  SndEntHandle SVar5;
+  float *pfVar6;
   char *in_r7;
+  double dVar7;
+  double dVar8;
+  double dVar9;
   double dVar10;
   double dVar11;
   double dVar12;
-  double dVar13;
-  double dVar14;
-  double dVar15;
-  float fVar16;
+  float fVar13;
   float local_d0;
   float local_cc [3];
   MissileConeSoundVars aMStack_c0 [2];
   
-  uVar6 = (ulonglong)(int)param_2;
-  __savegprlr_28(param_1);
-  LVar2 = __savefpr_25();
-  if ((uVar6 & 0xffffffff) == 0) {
+  if (param_2 == (centity_s *)0x0) {
     in_r7 = "cent";
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp",0x1e58,0
                     ,"%s");
   }
-  pcVar1 = (centity_s *)uVar6;
-  if ((pcVar1->nextState).eType != 4) {
+  if ((param_2->nextState).eType != 4) {
     in_r7 = "cent->nextState.eType == ET_MISSILE";
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp",0x1e59,0
                     ,"%s");
   }
-  bVar5 = SetupAndValidateConeVars(pcVar1,aMStack_c0);
-  if (!bVar5) goto LAB_82322634;
+  bVar3 = SetupAndValidateConeVars(param_2,aMStack_c0);
+  if (!bVar3) {
+    return;
+  }
   if (aMStack_c0[0].alias == (snd_alias_t *)0x0) {
     in_r7 = "mcv.alias";
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp",0x1e5e,0
@@ -9934,67 +9450,70 @@ void CG_PlayMissileProjectedConeSound(LocalClientNum_t param_1,centity_s *param_
   if ((missileDebugDraw != (dvar_t *)0x0) && ((missileDebugDraw->current).enabled != false)) {
     DebugDrawMissileProjectedSound(aMStack_c0);
   }
-  pcVar3 = CG_GetLocalClientGlobals(LVar2);
-  if (((((pcVar3->predictedPlayerState).otherFlags & 2U) != 0) &&
-      ((pcVar3->predictedPlayerState).remoteEyesEnt == (pcVar1->nextState).number)) ||
-     (((pcVar3->predictedPlayerState).linkFlags & 4U) != 0)) goto LAB_82322634;
-  pfVar9 = local_cc;
-  SVar8.handle = (int)&local_d0;
-  bVar5 = CalcDistanceFactors((pcVar3->refdef).view.org,aMStack_c0,(float *)SVar8,pfVar9);
-  if (!bVar5) goto LAB_82322634;
-  dVar13 = 1.0;
-  fVar16 = NormalizeForMinMax(local_d0,aMStack_c0[0].volumescaleCoreSize,1.0);
-  dVar10 = (double)local_cc[0];
-  dVar11 = (double)((aMStack_c0[0].volumescaleAtEdge - aMStack_c0[0].volumescaleAtCore) * fVar16 +
-                   aMStack_c0[0].volumescaleAtCore);
-  dVar14 = dVar13;
+  pcVar1 = CG_GetLocalClientGlobals(param_1);
+  if ((((pcVar1->predictedPlayerState).otherFlags & 2U) != 0) &&
+     ((pcVar1->predictedPlayerState).remoteEyesEnt == (param_2->nextState).number)) {
+    return;
+  }
+  if (((pcVar1->predictedPlayerState).linkFlags & 4U) != 0) {
+    return;
+  }
+  pfVar6 = local_cc;
+  SVar5.handle = (int)&local_d0;
+  bVar3 = CalcDistanceFactors((pcVar1->refdef).view.org,aMStack_c0,(float *)SVar5,pfVar6);
+  if (!bVar3) {
+    return;
+  }
+  dVar10 = 1.0;
+  fVar13 = NormalizeForMinMax(local_d0,aMStack_c0[0].volumescaleCoreSize,1.0);
+  dVar7 = (double)local_cc[0];
+  dVar8 = (double)((aMStack_c0[0].volumescaleAtEdge - aMStack_c0[0].volumescaleAtCore) * fVar13 +
+                  aMStack_c0[0].volumescaleAtCore);
+  dVar11 = dVar10;
   if (aMStack_c0[0].pitchshiftEnabled != false) {
-    fVar16 = NormalizeForMinMax(local_cc[0],aMStack_c0[0].pitchTopSize,
-                                (float)(dVar13 - (double)aMStack_c0[0].pitchBottomSize));
-    dVar13 = (double)((aMStack_c0[0].pitchAtBottom - aMStack_c0[0].pitchAtTop) * fVar16 +
+    fVar13 = NormalizeForMinMax(local_cc[0],aMStack_c0[0].pitchTopSize,
+                                (float)(dVar10 - (double)aMStack_c0[0].pitchBottomSize));
+    dVar10 = (double)((aMStack_c0[0].pitchAtBottom - aMStack_c0[0].pitchAtTop) * fVar13 +
                      aMStack_c0[0].pitchAtTop);
   }
-  SVar7 = (SndEntHandle)(pcVar1->nextState).number;
-  SVar4 = CG_GenerateSndEntHandle(LVar2,SVar7.handle);
-  if (aMStack_c0[0].crossfadeEnabled == false) {
-LAB_8232255c:
-    SND_PlayScaledSoundAlias
-              (aMStack_c0[0].alias,(float)dVar11,(float)dVar13,SVar7,(float *)SVar8,SVar4.handle,
-               (snd_alias_system_t)aMStack_c0);
-  }
-  else {
-    dVar12 = dVar11;
+  SVar4 = (SndEntHandle)(param_2->nextState).number;
+  SVar2 = CG_GenerateSndEntHandle(param_1,SVar4.handle);
+  if (aMStack_c0[0].crossfadeEnabled != false) {
+    dVar9 = dVar8;
     if (aMStack_c0[0].aliasAtBase == (snd_alias_t *)0x0) {
       in_r7 = "mcv.aliasAtBase";
-      pfVar9 = (float *)"%s";
+      pfVar6 = (float *)"%s";
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp",0x1e8a
                       ,0,"%s");
-      dVar12 = dVar11;
+      dVar9 = dVar8;
     }
-    fVar16 = NormalizeForMinMax((float)dVar10,aMStack_c0[0].crossfadeTopSize,
-                                (float)(dVar14 - (double)aMStack_c0[0].crossfadeBottomSize));
-    dVar10 = (double)fVar16;
-    SVar8.handle = 0;
-    SVar7 = (SndEntHandle)aMStack_c0[0].aliasAtBase;
-    bVar5 = SND_ValidateSoundAliasBlend(aMStack_c0[0].alias,aMStack_c0[0].aliasAtBase,false);
-    if (bVar5) {
+    fVar13 = NormalizeForMinMax((float)dVar7,aMStack_c0[0].crossfadeTopSize,
+                                (float)(dVar11 - (double)aMStack_c0[0].crossfadeBottomSize));
+    dVar7 = (double)fVar13;
+    SVar5.handle = 0;
+    SVar4 = (SndEntHandle)aMStack_c0[0].aliasAtBase;
+    bVar3 = SND_ValidateSoundAliasBlend(aMStack_c0[0].alias,aMStack_c0[0].aliasAtBase,false);
+    if (bVar3) {
       SND_PlayBlendedSoundAliasesWithPitch
-                (aMStack_c0[0].alias,aMStack_c0[0].aliasAtBase,(float)dVar10,(float)dVar12,
-                 (float)dVar13,SVar8,pfVar9,(int)in_r7,SVar4.handle);
+                (aMStack_c0[0].alias,aMStack_c0[0].aliasAtBase,(float)dVar7,(float)dVar9,
+                 (float)dVar10,SVar5,pfVar6,(int)in_r7,SVar2.handle);
+      goto LAB_82322574;
     }
-    else {
-      dVar11 = (double)(float)(dVar10 * dVar12);
-      dVar15 = 0.0010000000474974513;
-      fVar16 = (float)((double)(float)(dVar14 - dVar10) * dVar12);
-      if (0.001 < fVar16) {
-        SND_PlayScaledSoundAlias
-                  (aMStack_c0[0].alias,fVar16,(float)dVar13,SVar7,(float *)SVar8,SVar4.handle,
-                   (snd_alias_system_t)aMStack_c0);
-      }
-      aMStack_c0[0].alias = aMStack_c0[0].aliasAtBase;
-      if (dVar15 < dVar11) goto LAB_8232255c;
+    dVar8 = (double)(float)(dVar7 * dVar9);
+    dVar12 = 0.0010000000474974513;
+    fVar13 = (float)((double)(float)(dVar11 - dVar7) * dVar9);
+    if (0.001 < fVar13) {
+      SND_PlayScaledSoundAlias
+                (aMStack_c0[0].alias,fVar13,(float)dVar10,SVar4,(float *)SVar5,SVar2.handle,
+                 (snd_alias_system_t)aMStack_c0);
     }
+    aMStack_c0[0].alias = aMStack_c0[0].aliasAtBase;
+    if (dVar8 <= dVar12) goto LAB_82322574;
   }
+  SND_PlayScaledSoundAlias
+            (aMStack_c0[0].alias,(float)dVar8,(float)dVar10,SVar4,(float *)SVar5,SVar2.handle,
+             (snd_alias_system_t)aMStack_c0);
+LAB_82322574:
   if ((missileDebugText != (dvar_t *)0x0) && ((missileDebugText->current).enabled != false)) {
     Com_Printf(0,"Line:%.2f, Misl:%.2f  |  ");
     Com_Printf(0,"Vol:%.2f, Pitch:%.2f");
@@ -10003,15 +9522,14 @@ LAB_8232255c:
     }
     Com_Printf(0,"\n");
   }
-LAB_82322634:
-  __restfpr_25();
-  __restgprlr_28();
   return;
 }
 
 
 // 82322648  CG_GetAirburstMarkDistance  (cgame/cg_weapons.cpp:7864)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -10022,60 +9540,50 @@ int CG_GetAirburstMarkDistance
 
 {
   bool bVar1;
-  LocalClientNum_t LVar2;
-  cg_s *pcVar3;
-  Weapon WVar4;
-  int iVar5;
-  ulonglong uVar6;
-  ulonglong uVar7;
-  ulonglong uVar8;
-  uint uVar9;
+  cg_s *pcVar2;
+  Weapon WVar3;
+  uint uVar4;
   
-  uVar8 = (ulonglong)(int)param_4;
-  uVar7 = (ulonglong)param_3;
-  uVar6 = (ulonglong)(int)param_2;
-  LVar2 = __savegprlr_26(param_1);
-  if ((uVar8 & 0xffffffff) == 0) {
+  if (param_4 == (uint *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp",0x1ebe,0
                     ,"%s");
   }
-  pcVar3 = CG_GetLocalClientGlobals(LVar2);
-  if (pcVar3 == (cg_s *)0x0) {
+  pcVar2 = CG_GetLocalClientGlobals(param_1);
+  if (pcVar2 == (cg_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp",0x1ec1,0
                     ,"%s");
   }
-  bVar1 = pcVar3->breathPressedLastFrame;
-  pcVar3->breathPressedLastFrame = (bool)((byte)((uVar7 & 0xffffffff) >> 0xd) & 1);
-  if (((uVar7 & 0x2000) != 0) && (bVar1 == false)) {
-    if ((uVar6 & 0xffffffff) == 0) {
+  bVar1 = pcVar2->breathPressedLastFrame;
+  pcVar2->breathPressedLastFrame = (bool)((byte)((uint)param_3 >> 0xd) & 1);
+  if (((param_3 & 0x2000U) != 0) && (bVar1 == false)) {
+    if (param_2 == (playerState_s *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp",0x1ec8
                       ,0,"%s");
     }
-    iVar5 = (int)uVar6;
-    if ((*(float *)(iVar5 + 0x378) == 1.0) &&
-       (WVar4 = BG_GetAlternateWeapon(*(Weapon *)(iVar5 + 0x370),false),
-       bg_weaponDefs[WVar4.data & 0xff]->isAirburstWeapon != false)) {
-      uVar9 = 0;
-      if (pcVar3->crosshairTraceDistance != 0) {
-        WVar4 = BG_GetAlternateWeapon(*(Weapon *)(iVar5 + 0x370),false);
-        uVar9 = pcVar3->crosshairTraceDistance;
-        if ((int)uVar9 < bg_weaponDefs[WVar4.data & 0xff]->iProjectileActivateDist) {
-          uVar9 = bg_weaponDefs[WVar4.data & 0xff]->iProjectileActivateDist;
+    if (((param_2->weapCommon).fWeaponPosFrac == 1.0) &&
+       (WVar3 = BG_GetAlternateWeapon((param_2->weapCommon).weapon,false),
+       bg_weaponDefs[WVar3.data & 0xff]->isAirburstWeapon != false)) {
+      uVar4 = 0;
+      if (pcVar2->crosshairTraceDistance != 0) {
+        WVar3 = BG_GetAlternateWeapon((param_2->weapCommon).weapon,false);
+        uVar4 = pcVar2->crosshairTraceDistance;
+        if ((int)uVar4 < bg_weaponDefs[WVar3.data & 0xff]->iProjectileActivateDist) {
+          uVar4 = bg_weaponDefs[WVar3.data & 0xff]->iProjectileActivateDist;
         }
       }
-      *(uint *)(iVar5 + 0x4e8) = uVar9;
-      *(uint *)uVar8 = uVar9;
-      iVar5 = __restgprlr_26(1);
-      return iVar5;
+      param_2->airburstMarkDistance = uVar4;
+      *param_4 = uVar4;
+      return 1;
     }
   }
-  iVar5 = __restgprlr_26(0);
-  return iVar5;
+  return 0;
 }
 
 
 // 823227C8  CG_GetWeaponDisplayName  (cgame/cg_weapons.cpp:7905)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
 
 char * CG_GetWeaponDisplayName(Weapon param_1,bool param_2,char *param_3,int param_4)
@@ -10086,27 +9594,20 @@ char * CG_GetWeaponDisplayName(Weapon param_1,bool param_2,char *param_3,int par
   WeaponDef *pWVar3;
   uint uVar4;
   Weapon WVar5;
-  Weapon WVar6;
-  char *pcVar7;
-  ulonglong uVar8;
-  ulonglong uVar9;
-  undefined1 *puVar10;
-  char cVar11;
-  Weapon *pWVar12;
-  WeaponAttachment *pWVar13;
-  int iVar14;
-  int iVar15;
+  WeaponAttachment *pWVar6;
+  char cVar7;
+  Weapon *pWVar8;
+  char *pcVar9;
+  int iVar10;
+  int iVar11;
   Weapon WStack00000014;
   WeaponAttachment *local_60;
   WeaponAttachment *local_5c;
   WeaponAttachment *local_58;
   Weapon local_54 [21];
   
-  uVar9 = (ulonglong)(int)param_3;
-  uVar8 = (ulonglong)param_2;
-  WVar5.data = __savegprlr_24(param_1.data);
-  WStack00000014.data = WVar5.data;
-  if ((uVar9 & 0xffffffff) == 0) {
+  WStack00000014 = param_1;
+  if (param_3 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp",0x1eed,0
                     ,"%s");
   }
@@ -10114,113 +9615,110 @@ char * CG_GetWeaponDisplayName(Weapon param_1,bool param_2,char *param_3,int par
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp",0x1eee,0
                     ,"%s");
   }
-  iVar14 = 0;
-  puVar10 = (undefined1 *)uVar9;
-  *puVar10 = 0;
-  if ((WVar5.data & 0xff) == 0) goto LAB_82322b4c;
-  if ((uVar8 & 0xff) == 0) {
-    pWVar12 = &stack0x00000014;
+  iVar10 = 0;
+  *param_3 = '\0';
+  if ((param_1.data & 0xff) == 0) {
+    return param_3;
+  }
+  if (param_2) {
+    local_54[0] = BG_GetAltWeapon(param_1);
+    pWVar8 = local_54;
   }
   else {
-    local_54[0] = BG_GetAltWeapon(WVar5);
-    pWVar12 = local_54;
+    pWVar8 = &stack0x00000014;
   }
-  WVar1 = *pWVar12;
-  WVar6 = BG_GetAlternateWeapon(WVar1,false);
+  WVar1 = *pWVar8;
+  WVar5 = BG_GetAlternateWeapon(WVar1,false);
   uVar4 = WVar1.data & 0xff;
-  pcVar7 = cgMedia.translatedDisplayName[uVar4];
-  pWVar3 = bg_weaponDefs[WVar6.data & 0xff];
-  if ((pcVar7 != (char *)0x0) && (cVar11 = *pcVar7, cVar11 != '\0')) {
+  pcVar9 = cgMedia.translatedDisplayName[uVar4];
+  pWVar3 = bg_weaponDefs[WVar5.data & 0xff];
+  if ((pcVar9 != (char *)0x0) && (cVar7 = *pcVar9, cVar7 != '\0')) {
     do {
-      if (param_4 + -1 <= iVar14) break;
-      puVar10[iVar14] = cVar11;
-      iVar14 = iVar14 + 1;
-      pcVar7 = pcVar7 + 1;
-      cVar11 = *pcVar7;
-    } while (cVar11 != '\0');
+      if (param_4 + -1 <= iVar10) break;
+      param_3[iVar10] = cVar7;
+      iVar10 = iVar10 + 1;
+      pcVar9 = pcVar9 + 1;
+      cVar7 = *pcVar9;
+    } while (cVar7 != '\0');
   }
-  BG_GetAllWeaponAttachments(WVar5,&local_58,&local_5c,&local_60);
-  if (local_58 != (WeaponAttachment *)0x0) {
-    pAVar2 = local_58->sight;
-    if (((pAVar2 == (AttSight *)0x0) || (pAVar2->hideRailWithThisScope == false)) ||
-       (pAVar2->canVariableZoom != false)) {
-      if (((local_5c == (WeaponAttachment *)0x0) ||
-          (pAVar2 = local_5c->sight, pAVar2 == (AttSight *)0x0)) ||
-         ((pAVar2->hideRailWithThisScope == false || (pAVar2->canVariableZoom != false)))) {
-        if (((local_60 != (WeaponAttachment *)0x0) &&
-            (pAVar2 = local_60->sight, pAVar2 != (AttSight *)0x0)) &&
-           (pAVar2->hideRailWithThisScope != false)) {
-          local_60 = (WeaponAttachment *)
-                     (-(uint)(pAVar2->canVariableZoom != false) & (uint)local_60);
-        }
-      }
-      else {
-        local_5c = local_60;
-        local_60 = (WeaponAttachment *)0x0;
+  BG_GetAllWeaponAttachments(param_1,&local_58,&local_5c,&local_60);
+  if (local_58 == (WeaponAttachment *)0x0) goto LAB_82322ad4;
+  pAVar2 = local_58->sight;
+  if (((pAVar2 == (AttSight *)0x0) || (pAVar2->hideRailWithThisScope == false)) ||
+     (pAVar2->canVariableZoom != false)) {
+    if (((local_5c == (WeaponAttachment *)0x0) ||
+        (pAVar2 = local_5c->sight, pAVar2 == (AttSight *)0x0)) ||
+       ((pAVar2->hideRailWithThisScope == false || (pAVar2->canVariableZoom != false)))) {
+      pWVar6 = local_60;
+      if (((local_60 != (WeaponAttachment *)0x0) &&
+          (pAVar2 = local_60->sight, pAVar2 != (AttSight *)0x0)) &&
+         (pAVar2->hideRailWithThisScope != false)) {
+        pWVar6 = (WeaponAttachment *)(-(uint)(pAVar2->canVariableZoom != false) & (uint)local_60);
       }
     }
     else {
-      local_58 = local_5c;
+      pWVar6 = (WeaponAttachment *)0x0;
       local_5c = local_60;
-      local_60 = (WeaponAttachment *)0x0;
     }
-    if (local_58 != (WeaponAttachment *)0x0) {
-      iVar15 = iVar14;
-      do {
-        if (param_4 + -1 <= iVar15) break;
-        puVar10[iVar15] = (&s__)[iVar15 - iVar14];
-        iVar15 = iVar15 + 1;
-      } while ((&s__)[iVar15 - iVar14] != '\0');
-      pcVar7 = cgMedia.translatedAttachmentDisplayName[local_58->loadIndex];
-      pWVar13 = local_5c;
-      if ((pcVar7 == (char *)0x0) || (*pcVar7 == '\0')) {
-        if (local_5c != (WeaponAttachment *)0x0) {
-          pcVar7 = cgMedia.translatedAttachmentDisplayName[local_5c->loadIndex];
-          pWVar13 = local_60;
-        }
-        if ((pcVar7 != (char *)0x0) && (*pcVar7 != '\0')) goto LAB_82322a74;
-        if (local_60 != (WeaponAttachment *)0x0) {
-          pcVar7 = cgMedia.translatedAttachmentDisplayName[local_60->loadIndex];
-        }
-      }
-      else {
+  }
+  else {
+    pWVar6 = (WeaponAttachment *)0x0;
+    local_58 = local_5c;
+    local_5c = local_60;
+  }
+  if (local_58 == (WeaponAttachment *)0x0) goto LAB_82322ad4;
+  iVar11 = iVar10;
+  do {
+    if (param_4 + -1 <= iVar11) break;
+    param_3[iVar11] = (&s__)[iVar11 - iVar10];
+    iVar11 = iVar11 + 1;
+  } while ((&s__)[iVar11 - iVar10] != '\0');
+  pcVar9 = cgMedia.translatedAttachmentDisplayName[local_58->loadIndex];
+  if ((pcVar9 == (char *)0x0) || (*pcVar9 == '\0')) {
+    if (local_5c != (WeaponAttachment *)0x0) {
+      pcVar9 = cgMedia.translatedAttachmentDisplayName[local_5c->loadIndex];
+      local_5c = pWVar6;
+    }
+    if ((pcVar9 != (char *)0x0) && (*pcVar9 != '\0')) goto LAB_82322a74;
+    if (pWVar6 != (WeaponAttachment *)0x0) {
+      pcVar9 = cgMedia.translatedAttachmentDisplayName[pWVar6->loadIndex];
+    }
+  }
+  else {
 LAB_82322a74:
-        if (((pWVar13 != (WeaponAttachment *)0x0) &&
-            (cgMedia.translatedAttachmentDisplayName[pWVar13->loadIndex] != (char *)0x0)) &&
-           (*cgMedia.translatedAttachmentDisplayName[pWVar13->loadIndex] != '\0')) {
-          pcVar7 = cgMedia.translatedCustom;
-        }
-      }
-      cVar11 = *pcVar7;
-      iVar14 = iVar15;
-      if (cVar11 != '\0') {
-        do {
-          if (param_4 + -1 <= iVar14) break;
-          puVar10[iVar14] = cVar11;
-          iVar14 = iVar14 + 1;
-          cVar11 = pcVar7[iVar14 - iVar15];
-        } while (cVar11 != '\0');
-      }
+    if (((local_5c != (WeaponAttachment *)0x0) &&
+        (cgMedia.translatedAttachmentDisplayName[local_5c->loadIndex] != (char *)0x0)) &&
+       (*cgMedia.translatedAttachmentDisplayName[local_5c->loadIndex] != '\0')) {
+      pcVar9 = cgMedia.translatedCustom;
     }
   }
-  if (*pWVar3->szModeName != '\0') {
-    iVar15 = iVar14;
+  cVar7 = *pcVar9;
+  iVar10 = iVar11;
+  if (cVar7 != '\0') {
     do {
-      if (param_4 + -1 <= iVar15) break;
-      puVar10[iVar15] = (&s____)[iVar15 - iVar14];
-      iVar15 = iVar15 + 1;
-    } while ((&s____)[iVar15 - iVar14] != '\0');
-    pcVar7 = cgMedia.translatedModename[uVar4];
-    cVar11 = *pcVar7;
-    for (iVar14 = iVar15; (cVar11 != '\0' && (iVar14 < param_4 + -1)); iVar14 = iVar14 + 1) {
-      puVar10[iVar14] = cVar11;
-      pcVar7 = pcVar7 + 1;
-      cVar11 = *pcVar7;
+      if (param_4 + -1 <= iVar10) break;
+      param_3[iVar10] = cVar7;
+      iVar10 = iVar10 + 1;
+      cVar7 = pcVar9[iVar10 - iVar11];
+    } while (cVar7 != '\0');
+  }
+LAB_82322ad4:
+  if (*pWVar3->szModeName != '\0') {
+    iVar11 = iVar10;
+    do {
+      if (param_4 + -1 <= iVar11) break;
+      param_3[iVar11] = (&s____)[iVar11 - iVar10];
+      iVar11 = iVar11 + 1;
+    } while ((&s____)[iVar11 - iVar10] != '\0');
+    pcVar9 = cgMedia.translatedModename[uVar4];
+    cVar7 = *pcVar9;
+    for (iVar10 = iVar11; (cVar7 != '\0' && (iVar10 < param_4 + -1)); iVar10 = iVar10 + 1) {
+      param_3[iVar10] = cVar7;
+      pcVar9 = pcVar9 + 1;
+      cVar7 = *pcVar9;
     }
   }
-  puVar10[iVar14] = 0;
-LAB_82322b4c:
-  pcVar7 = (char *)__restgprlr_24(uVar9);
-  return pcVar7;
+  param_3[iVar10] = '\0';
+  return param_3;
 }
 

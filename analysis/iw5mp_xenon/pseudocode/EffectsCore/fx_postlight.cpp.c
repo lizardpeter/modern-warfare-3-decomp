@@ -2,6 +2,10 @@
 
 // 82438628  FX_PostLight_GenerateVerts  (EffectsCore/fx_postlight.cpp:56)
 
+/* WARNING: Function: __savegprlr_20 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_17 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_17 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_20 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void FX_PostLight_GenerateVerts(GfxCodeSurfGlob *param_1,FxPostLightInfo *param_2,FxSystem *param_3)
@@ -11,24 +15,24 @@ void FX_PostLight_GenerateVerts(GfxCodeSurfGlob *param_1,FxPostLightInfo *param_
   float fVar2;
   float fVar3;
   float fVar4;
-  GfxCodeSurfGlob *pGVar5;
-  bool bVar8;
-  float (*pafVar6) [4];
-  GfxPackedVertex *pGVar7;
-  longlong lVar9;
-  uint uVar10;
-  short sVar11;
-  float *pfVar12;
-  uint uVar13;
-  short sVar14;
-  GfxColor *pGVar15;
-  r_double_index_t *prVar16;
+  bool bVar7;
+  float (*pafVar5) [4];
+  GfxPackedVertex *pGVar6;
+  uint uVar8;
+  short sVar9;
+  float *pfVar10;
+  uint uVar11;
+  short sVar12;
+  GfxColor *pGVar13;
+  r_double_index_t *prVar14;
+  int iVar15;
+  float *pfVar16;
   int iVar17;
-  longlong lVar18;
-  float *pfVar19;
-  int iVar20;
-  GfxPackedVertex *pGVar21;
-  longlong lVar22;
+  GfxPackedVertex *pGVar18;
+  longlong lVar19;
+  double dVar20;
+  double dVar21;
+  double dVar22;
   double dVar23;
   double dVar24;
   double dVar25;
@@ -41,9 +45,6 @@ void FX_PostLight_GenerateVerts(GfxCodeSurfGlob *param_1,FxPostLightInfo *param_
   double dVar32;
   double dVar33;
   double dVar34;
-  double dVar35;
-  double dVar36;
-  double dVar37;
   undefined4 local_190;
   ushort local_18c [2];
   r_double_index_t *local_188;
@@ -60,159 +61,154 @@ void FX_PostLight_GenerateVerts(GfxCodeSurfGlob *param_1,FxPostLightInfo *param_
   longlong local_150;
   float afStack_144 [81];
   
-  lVar9 = (longlong)(int)param_2;
-  __savegprlr_20(param_1);
-  pGVar5 = (GfxCodeSurfGlob *)__savefpr_17();
-  dVar30 = (double)(param_3->camera).origin[0];
-  dVar29 = (double)(param_3->camera).origin[1];
-  dVar28 = (double)(param_3->camera).origin[2];
-  iVar17 = 0;
-  if (*(int *)((int)lVar9 + 0xd80) != 0) {
-    dVar32 = 1.4142135381698608;
-    dVar31 = 0.7853981852531433;
-    dVar33 = 1.0;
-    dVar27 = 9.999999747378752e-05;
-    dVar26 = 0.0010000000474974513;
-    lVar18 = lVar9 + 0x18;
+  dVar27 = (double)(param_3->camera).origin[0];
+  dVar26 = (double)(param_3->camera).origin[1];
+  dVar25 = (double)(param_3->camera).origin[2];
+  iVar15 = 0;
+  if (param_2->postLightCount != 0) {
+    dVar29 = 1.4142135381698608;
+    dVar28 = 0.7853981852531433;
+    dVar30 = 1.0;
+    dVar24 = 9.999999747378752e-05;
+    dVar23 = 0.0010000000474974513;
+    pfVar16 = &param_2->postLights[0].radius;
     do {
-      pfVar19 = (float *)lVar18;
-      if ((double)*pfVar19 < dVar26) {
+      if ((double)*pfVar16 < dVar23) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_postlight.cpp"
                         ,0x5f,0,"%s\n\t(postLight->radius) = %g");
       }
-      dVar36 = (double)(pfVar19[-2] - pfVar19[-5]);
-      dVar35 = (double)(pfVar19[-3] - pfVar19[-6]);
-      dVar34 = (double)(pfVar19[-1] - pfVar19[-4]);
-      dVar37 = (double)(float)(dVar34 * dVar34 +
-                              (double)(float)(dVar35 * dVar35 + (double)(float)(dVar36 * dVar36)));
-      if (dVar27 <= dVar37) {
-        bVar8 = R_ReserveCodeSurfBuffers(pGVar5,0x10,0x54,2,local_18c,&local_188,&local_184);
-        if (!bVar8) break;
-        dVar25 = (double)(float)((double)pfVar19[-6] - dVar30);
-        dVar24 = (double)(float)((double)pfVar19[-5] - dVar29);
-        dVar23 = (double)(float)((double)pfVar19[-4] - dVar28);
-        pafVar6 = R_CodeSurfArgsIter_Begin(pGVar5,local_184);
-        fVar3 = *pfVar19;
-        (*pafVar6)[0] = (float)dVar25;
-        (*pafVar6)[1] = (float)dVar24;
-        (*pafVar6)[2] = (float)dVar23;
-        (*pafVar6)[3] = (float)(dVar33 / (double)fVar3);
-        pafVar6[1][0] = (float)dVar35;
-        pafVar6[1][1] = (float)dVar36;
-        pafVar6[1][2] = (float)dVar34;
-        pafVar6[1][3] = (float)(dVar33 / dVar37);
-        dVar24 = (double)*pfVar19;
-        dVar23 = dVar33;
-        if (-(double)(float)SQRT(dVar37) < 0.0) {
-          dVar23 = (double)(float)SQRT(dVar37);
+      dVar33 = (double)(pfVar16[-2] - pfVar16[-5]);
+      dVar32 = (double)(pfVar16[-3] - ((FxPostLight *)(pfVar16 + -6))->begin[0]);
+      dVar31 = (double)(pfVar16[-1] - pfVar16[-4]);
+      dVar34 = (double)(float)(dVar31 * dVar31 +
+                              (double)(float)(dVar32 * dVar32 + (double)(float)(dVar33 * dVar33)));
+      if (dVar24 <= dVar34) {
+        bVar7 = R_ReserveCodeSurfBuffers(param_1,0x10,0x54,2,local_18c,&local_188,&local_184);
+        if (!bVar7) {
+          return;
         }
-        dVar37 = (double)(float)(dVar33 / dVar23);
-        local_180 = (float)(dVar37 * dVar35);
-        local_17c = (float)(dVar37 * dVar36);
-        local_178 = (float)(dVar37 * dVar34);
+        dVar22 = (double)(float)((double)((FxPostLight *)(pfVar16 + -6))->begin[0] - dVar27);
+        dVar21 = (double)(float)((double)pfVar16[-5] - dVar26);
+        dVar20 = (double)(float)((double)pfVar16[-4] - dVar25);
+        pafVar5 = R_CodeSurfArgsIter_Begin(param_1,local_184);
+        fVar3 = *pfVar16;
+        (*pafVar5)[0] = (float)dVar22;
+        (*pafVar5)[1] = (float)dVar21;
+        (*pafVar5)[2] = (float)dVar20;
+        (*pafVar5)[3] = (float)(dVar30 / (double)fVar3);
+        pafVar5[1][0] = (float)dVar32;
+        pafVar5[1][1] = (float)dVar33;
+        pafVar5[1][2] = (float)dVar31;
+        pafVar5[1][3] = (float)(dVar30 / dVar34);
+        dVar21 = (double)*pfVar16;
+        dVar20 = dVar30;
+        if (-(double)(float)SQRT(dVar34) < 0.0) {
+          dVar20 = (double)(float)SQRT(dVar34);
+        }
+        dVar34 = (double)(float)(dVar30 / dVar20);
+        local_180 = (float)(dVar34 * dVar32);
+        local_17c = (float)(dVar34 * dVar33);
+        local_178 = (float)(dVar34 * dVar31);
         PerpendicularVector(&local_180,&local_170);
         Vec3Cross(&local_180,&local_170,&local_160);
-        pGVar7 = R_CodeSurfVertIter_Begin(pGVar5,local_18c[0]);
-        dVar36 = (double)local_158;
-        dVar35 = (double)local_15c;
-        iVar20 = 0;
-        dVar34 = (double)local_160;
-        pfVar12 = afStack_144;
+        pGVar6 = R_CodeSurfVertIter_Begin(param_1,local_18c[0]);
+        dVar33 = (double)local_158;
+        dVar32 = (double)local_15c;
+        iVar17 = 0;
+        dVar31 = (double)local_160;
+        pfVar10 = afStack_144;
         do {
-          pGVar21 = pGVar7;
-          local_150 = (longlong)iVar20;
-          dVar23 = (double)(float)((double)local_150 * dVar31);
-          dVar37 = sin(dVar23);
-          dVar25 = (double)(float)((double)(float)((double)(float)dVar37 * dVar24) * dVar32);
-          dVar37 = cos(dVar23);
-          fVar4 = pfVar19[-6];
-          iVar20 = iVar20 + 1;
-          dVar37 = (double)(float)((double)(float)((double)(float)dVar37 * dVar24) * dVar32);
-          fVar3 = (float)(dVar34 * dVar37 + (double)(float)((double)local_170 * dVar25));
-          fVar1 = (float)(dVar35 * dVar37 + (double)(float)((double)local_16c * dVar25));
-          fVar2 = (float)(dVar36 * dVar37 + (double)(float)((double)local_168 * dVar25));
-          pfVar12[2] = (float)((double)local_17c * dVar24) + fVar1;
-          pfVar12[1] = (float)((double)local_180 * dVar24) + fVar3;
-          pfVar12 = pfVar12 + 3;
-          *pfVar12 = (float)((double)local_178 * dVar24) + fVar2;
-          pGVar21->xyz[0] = fVar4 + (fVar3 - (float)((double)local_180 * dVar24));
-          pGVar21->xyz[1] = pfVar19[-5] + (fVar1 - (float)((double)local_17c * dVar24));
-          pGVar21->xyz[2] = pfVar19[-4] + (fVar2 - (float)((double)local_178 * dVar24));
-          (pGVar21->texCoord).packed = 0;
-          pGVar21->color = *(GfxColor *)(pfVar19 + 1);
-          pGVar7 = pGVar21 + 1;
-        } while (iVar20 != 8);
-        pfVar12 = afStack_144;
-        pGVar15 = &pGVar21->color;
-        lVar22 = 8;
+          pGVar18 = pGVar6;
+          local_150 = (longlong)iVar17;
+          dVar20 = (double)(float)((double)local_150 * dVar28);
+          dVar34 = sin(dVar20);
+          dVar22 = (double)(float)((double)(float)((double)(float)dVar34 * dVar21) * dVar29);
+          dVar34 = cos(dVar20);
+          fVar4 = ((FxPostLight *)(pfVar16 + -6))->begin[0];
+          iVar17 = iVar17 + 1;
+          dVar34 = (double)(float)((double)(float)((double)(float)dVar34 * dVar21) * dVar29);
+          fVar3 = (float)(dVar31 * dVar34 + (double)(float)((double)local_170 * dVar22));
+          fVar1 = (float)(dVar32 * dVar34 + (double)(float)((double)local_16c * dVar22));
+          fVar2 = (float)(dVar33 * dVar34 + (double)(float)((double)local_168 * dVar22));
+          pfVar10[2] = (float)((double)local_17c * dVar21) + fVar1;
+          pfVar10[1] = (float)((double)local_180 * dVar21) + fVar3;
+          pfVar10 = pfVar10 + 3;
+          *pfVar10 = (float)((double)local_178 * dVar21) + fVar2;
+          pGVar18->xyz[0] = fVar4 + (fVar3 - (float)((double)local_180 * dVar21));
+          pGVar18->xyz[1] = pfVar16[-5] + (fVar1 - (float)((double)local_17c * dVar21));
+          pGVar18->xyz[2] = pfVar16[-4] + (fVar2 - (float)((double)local_178 * dVar21));
+          (pGVar18->texCoord).packed = 0;
+          pGVar18->color = *(GfxColor *)(pfVar16 + 1);
+          pGVar6 = pGVar18 + 1;
+        } while (iVar17 != 8);
+        pfVar10 = afStack_144;
+        pGVar13 = &pGVar18->color;
+        lVar19 = 8;
         do {
-          fVar3 = pfVar12[2];
-          pGVar15[4] = (GfxColor)(pfVar12[1] + pfVar19[-6]);
-          pfVar12 = pfVar12 + 3;
-          fVar1 = *pfVar12;
-          pGVar15[5] = (GfxColor)(pfVar19[-5] + fVar3);
-          pGVar15[6] = (GfxColor)(pfVar19[-4] + fVar1);
-          pGVar15[9].packed = 0;
-          pGVar15 = pGVar15 + 8;
-          *pGVar15 = *(GfxColor *)(pfVar19 + 1);
-          lVar22 = lVar22 + -1;
-        } while (lVar22 != 0);
-        lVar22 = 8;
-        prVar16 = local_188;
-        uVar13 = 0;
+          fVar3 = pfVar10[2];
+          pGVar13[4] = (GfxColor)(pfVar10[1] + ((FxPostLight *)(pfVar16 + -6))->begin[0]);
+          pfVar10 = pfVar10 + 3;
+          fVar1 = *pfVar10;
+          pGVar13[5] = (GfxColor)(pfVar16[-5] + fVar3);
+          pGVar13[6] = (GfxColor)(pfVar16[-4] + fVar1);
+          pGVar13[9].packed = 0;
+          pGVar13 = pGVar13 + 8;
+          *pGVar13 = *(GfxColor *)(pfVar16 + 1);
+          lVar19 = lVar19 + -1;
+        } while (lVar19 != 0);
+        lVar19 = 8;
+        prVar14 = local_188;
+        uVar11 = 0;
         do {
-          uVar10 = uVar13 + 1;
-          sVar14 = (short)uVar10 +
-                   ((short)((int)uVar10 >> 3) + (ushort)((int)uVar10 < 0 && (uVar10 & 7) != 0)) * -8
-          ;
-          local_190 = CONCAT22(local_18c[0] + (short)uVar13,local_18c[0] + sVar14);
-          *(undefined4 *)prVar16->value = local_190;
-          sVar11 = local_18c[0] + (short)uVar13 + 8;
-          local_190 = CONCAT22(sVar11,sVar11);
-          *(undefined4 *)prVar16[1].value = local_190;
-          sVar14 = local_18c[0] + sVar14;
-          local_190 = CONCAT22(sVar14,sVar14 + 8);
-          *(undefined4 *)prVar16[2].value = local_190;
-          prVar16 = prVar16 + 3;
-          lVar22 = lVar22 + -1;
-          uVar13 = uVar10;
-        } while (lVar22 != 0);
-        sVar14 = 0;
-        lVar22 = 3;
+          uVar8 = uVar11 + 1;
+          sVar12 = (short)uVar8 +
+                   ((short)((int)uVar8 >> 3) + (ushort)((int)uVar8 < 0 && (uVar8 & 7) != 0)) * -8;
+          local_190 = CONCAT22(local_18c[0] + (short)uVar11,local_18c[0] + sVar12);
+          *(undefined4 *)prVar14->value = local_190;
+          sVar9 = local_18c[0] + (short)uVar11 + 8;
+          local_190 = CONCAT22(sVar9,sVar9);
+          *(undefined4 *)prVar14[1].value = local_190;
+          sVar12 = local_18c[0] + sVar12;
+          local_190 = CONCAT22(sVar12,sVar12 + 8);
+          *(undefined4 *)prVar14[2].value = local_190;
+          prVar14 = prVar14 + 3;
+          lVar19 = lVar19 + -1;
+          uVar11 = uVar8;
+        } while (lVar19 != 0);
+        sVar12 = 0;
+        lVar19 = 3;
         do {
-          local_190 = CONCAT22(local_18c[0] + sVar14 + 2,local_18c[0] + sVar14 + 1);
-          *(undefined4 *)prVar16->value = local_190;
-          local_190 = CONCAT22(local_18c[0],local_18c[0] + sVar14 + 3);
-          *(undefined4 *)prVar16[1].value = local_190;
-          sVar11 = local_18c[0] + sVar14;
-          sVar14 = sVar14 + 2;
-          local_190 = CONCAT22(sVar11 + 2,local_18c[0]);
-          *(undefined4 *)prVar16[2].value = local_190;
-          prVar16 = prVar16 + 3;
-          lVar22 = lVar22 + -1;
-        } while (lVar22 != 0);
-        sVar14 = 0;
-        lVar22 = 3;
+          local_190 = CONCAT22(local_18c[0] + sVar12 + 2,local_18c[0] + sVar12 + 1);
+          *(undefined4 *)prVar14->value = local_190;
+          local_190 = CONCAT22(local_18c[0],local_18c[0] + sVar12 + 3);
+          *(undefined4 *)prVar14[1].value = local_190;
+          sVar9 = local_18c[0] + sVar12;
+          sVar12 = sVar12 + 2;
+          local_190 = CONCAT22(sVar9 + 2,local_18c[0]);
+          *(undefined4 *)prVar14[2].value = local_190;
+          prVar14 = prVar14 + 3;
+          lVar19 = lVar19 + -1;
+        } while (lVar19 != 0);
+        sVar12 = 0;
+        lVar19 = 3;
         do {
-          local_190 = CONCAT22(local_18c[0] + 8,local_18c[0] + sVar14 + 9);
-          *(undefined4 *)prVar16->value = local_190;
-          local_190 = CONCAT22(local_18c[0] + sVar14 + 10,local_18c[0] + 8);
-          *(undefined4 *)prVar16[1].value = local_190;
-          sVar11 = local_18c[0] + sVar14;
-          sVar14 = sVar14 + 2;
-          local_190 = CONCAT22(sVar11 + 10,sVar11 + 0xb);
-          *(undefined4 *)prVar16[2].value = local_190;
-          prVar16 = prVar16 + 3;
-          lVar22 = lVar22 + -1;
-        } while (lVar22 != 0);
-        R_AddCodeSurf(pGVar5,(Material *)pfVar19[2],local_188,0x54,local_184,2,"PostLight");
+          local_190 = CONCAT22(local_18c[0] + 8,local_18c[0] + sVar12 + 9);
+          *(undefined4 *)prVar14->value = local_190;
+          local_190 = CONCAT22(local_18c[0] + sVar12 + 10,local_18c[0] + 8);
+          *(undefined4 *)prVar14[1].value = local_190;
+          sVar9 = local_18c[0] + sVar12;
+          sVar12 = sVar12 + 2;
+          local_190 = CONCAT22(sVar9 + 10,sVar9 + 0xb);
+          *(undefined4 *)prVar14[2].value = local_190;
+          prVar14 = prVar14 + 3;
+          lVar19 = lVar19 + -1;
+        } while (lVar19 != 0);
+        R_AddCodeSurf(param_1,(Material *)pfVar16[2],local_188,0x54,local_184,2,"PostLight");
       }
-      iVar17 = iVar17 + 1;
-      lVar18 = lVar18 + 0x24;
-    } while (iVar17 != *(int *)((int)lVar9 + 0xd80));
+      iVar15 = iVar15 + 1;
+      pfVar16 = pfVar16 + 9;
+    } while (iVar15 != param_2->postLightCount);
   }
-  __restfpr_17();
-  __restgprlr_20();
   return;
 }
 

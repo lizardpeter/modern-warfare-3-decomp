@@ -481,6 +481,9 @@ void vp8cx_horizontal_line_5_4_scale_c(uchar *param_1,uint param_2,uchar *param_
 
 // 828400A8  vp8cx_vertical_band_5_4_scale_c  (WebM_atvi_opt/vpx/vpx_scale/generic/gen_scalers.c:784)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
+
 void vp8cx_vertical_band_5_4_scale_c
                (uchar *param_1,uint param_2,uchar *param_3,uint param_4,uint param_5)
 
@@ -489,38 +492,30 @@ void vp8cx_vertical_band_5_4_scale_c
   byte bVar2;
   byte bVar3;
   byte bVar4;
-  uchar *puVar5;
-  ulonglong uVar6;
-  ulonglong uVar7;
-  uchar *puVar8;
-  int iVar9;
-  ulonglong uVar10;
+  int iVar5;
+  uchar *puVar6;
+  int iVar7;
+  longlong lVar8;
   
-  uVar10 = (ulonglong)(int)param_5;
-  uVar7 = (ulonglong)(int)param_4;
-  uVar6 = (ulonglong)(int)param_2;
-  puVar5 = (uchar *)__savegprlr_23(param_1);
-  iVar9 = 0;
-  if ((uVar10 & 0xffffffff) != 0) {
-    puVar8 = puVar5;
+  lVar8 = (longlong)(int)param_5;
+  iVar7 = 0;
+  if (param_5 != 0) {
+    iVar5 = (int)param_3 - (int)param_1;
+    puVar6 = param_1;
     do {
-      bVar1 = puVar5[iVar9 + (int)uVar6];
-      bVar2 = puVar8[(int)((uVar6 & 0xffffffff) << 2)];
-      iVar9 = iVar9 + 1;
-      bVar3 = puVar8[(int)((uVar6 & 0xffffffff) << 1)];
-      bVar4 = puVar8[(int)uVar6 + (int)((uVar6 & 0xffffffff) << 1)];
-      param_3[(int)puVar8 - (int)puVar5] = *puVar8;
-      param_3[(int)(puVar8 + ((int)uVar7 - (int)puVar5))] =
-           (uchar)((ulonglong)bVar1 * 3 + (ulonglong)bVar3 + 2 >> 2);
-      param_3[(int)(puVar8 + ((int)((uVar7 & 0xffffffff) << 1) - (int)puVar5))] =
-           (uchar)((ulonglong)bVar4 + (ulonglong)bVar3 + 1 >> 1);
-      param_3[(int)(puVar8 + (((int)uVar7 + (int)((uVar7 & 0xffffffff) << 1)) - (int)puVar5))] =
-           (uchar)((ulonglong)bVar2 * 3 + (ulonglong)bVar4 + 2 >> 2);
-      uVar10 = uVar10 - 1;
-      puVar8 = puVar8 + 1;
-    } while (uVar10 != 0);
+      bVar1 = param_1[iVar7 + param_2];
+      bVar2 = puVar6[param_2 * 4];
+      iVar7 = iVar7 + 1;
+      bVar3 = puVar6[param_2 * 2];
+      bVar4 = puVar6[param_2 * 3];
+      puVar6[iVar5] = *puVar6;
+      puVar6[param_4 + iVar5] = (uchar)((ulonglong)bVar1 * 3 + (ulonglong)bVar3 + 2 >> 2);
+      puVar6[param_4 * 2 + iVar5] = (uchar)((ulonglong)bVar4 + (ulonglong)bVar3 + 1 >> 1);
+      puVar6[param_4 * 3 + iVar5] = (uchar)((ulonglong)bVar2 * 3 + (ulonglong)bVar4 + 2 >> 2);
+      lVar8 = lVar8 + -1;
+      puVar6 = puVar6 + 1;
+    } while (lVar8 != 0);
   }
-  __restgprlr_23();
   return;
 }
 
@@ -562,6 +557,9 @@ void vp8cx_horizontal_line_5_3_scale_c(uchar *param_1,uint param_2,uchar *param_
 
 // 828401D0  vp8cx_vertical_band_5_3_scale_c  (WebM_atvi_opt/vpx/vpx_scale/generic/gen_scalers.c:865)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 void vp8cx_vertical_band_5_3_scale_c
                (uchar *param_1,uint param_2,uchar *param_3,uint param_4,uint param_5)
 
@@ -570,36 +568,31 @@ void vp8cx_vertical_band_5_3_scale_c
   byte bVar2;
   byte bVar3;
   byte bVar4;
-  uchar *puVar5;
-  ulonglong uVar6;
-  ulonglong uVar7;
-  int iVar8;
-  uchar *puVar9;
-  ulonglong uVar10;
+  int iVar5;
+  int iVar6;
+  uchar *puVar7;
+  longlong lVar8;
   
-  uVar10 = (ulonglong)(int)param_5;
-  uVar7 = (ulonglong)(int)param_4;
-  uVar6 = (ulonglong)(int)param_2;
-  puVar5 = (uchar *)__savegprlr_26(param_1);
-  iVar8 = 0;
-  if ((uVar10 & 0xffffffff) != 0) {
-    puVar9 = puVar5;
+  lVar8 = (longlong)(int)param_5;
+  iVar6 = 0;
+  if (param_5 != 0) {
+    iVar5 = (int)param_3 - (int)param_1;
+    puVar7 = param_1;
     do {
-      bVar1 = puVar5[iVar8 + (int)uVar6];
-      bVar2 = puVar9[(int)uVar6 + (int)((uVar6 & 0xffffffff) << 1)];
-      iVar8 = iVar8 + 1;
-      bVar3 = puVar9[(int)((uVar6 & 0xffffffff) << 1)];
-      bVar4 = puVar9[(int)((uVar6 & 0xffffffff) << 2)];
-      param_3[(int)puVar9 - (int)puVar5] = *puVar9;
-      param_3[(int)(puVar9 + ((int)uVar7 - (int)puVar5))] =
+      bVar1 = param_1[iVar6 + param_2];
+      bVar2 = puVar7[param_2 * 3];
+      iVar6 = iVar6 + 1;
+      bVar3 = puVar7[param_2 * 2];
+      bVar4 = puVar7[param_2 * 4];
+      puVar7[iVar5] = *puVar7;
+      puVar7[param_4 + iVar5] =
            (uchar)((ulonglong)bVar3 * 0xab + (ulonglong)bVar1 * 0x55 + 0x80 >> 8);
-      param_3[(int)(puVar9 + ((int)((uVar7 & 0xffffffff) << 1) - (int)puVar5))] =
+      puVar7[param_4 * 2 + iVar5] =
            (uchar)((ulonglong)bVar2 * 0xab + (ulonglong)bVar4 * 0x55 + 0x80 >> 8);
-      uVar10 = uVar10 - 1;
-      puVar9 = puVar9 + 1;
-    } while (uVar10 != 0);
+      lVar8 = lVar8 + -1;
+      puVar7 = puVar7 + 1;
+    } while (lVar8 != 0);
   }
-  __restgprlr_26();
   return;
 }
 

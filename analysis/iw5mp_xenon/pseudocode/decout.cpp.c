@@ -2,37 +2,36 @@
 
 // 828B7758  copy_data_to_output  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/compression/codec/lzx/decoder/decout.cpp:12)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void XCOMPRESS::copy_data_to_output(t_decoder_context *param_1,long param_2,uchar *param_3)
 
 {
   bool bVar1;
-  t_decoder_context *ptVar2;
-  uchar *puVar3;
+  uchar *puVar2;
   
-  ptVar2 = (t_decoder_context *)__savegprlr_28(param_1);
-  puVar3 = ptVar2->dec_output_buffer;
-  if (puVar3 == (uchar *)0x0) goto LAB_828b77f4;
-  if ((ptVar2->dec_current_file_size == 0) || (bVar1 = true, 0x7fff < ptVar2->dec_num_cfdata_frames)
-     ) {
+  puVar2 = param_1->dec_output_buffer;
+  if (puVar2 == (uchar *)0x0) {
+    return;
+  }
+  if ((param_1->dec_current_file_size == 0) ||
+     (bVar1 = true, 0x7fff < param_1->dec_num_cfdata_frames)) {
     bVar1 = false;
   }
-  if (ptVar2->dec_noncached_dest == false) {
-LAB_828b77b8:
-    XMemCpy(puVar3,param_3,param_2);
-  }
-  else {
-    if (bVar1) {
-      puVar3 = ptVar2->dec_dest_staging_buffer;
-      goto LAB_828b77b8;
+  if (param_1->dec_noncached_dest != false) {
+    if (!bVar1) {
+      XMemCpyStreaming_WriteCombined(puVar2,param_3,param_2);
+      goto LAB_828b77c0;
     }
-    XMemCpyStreaming_WriteCombined(puVar3,param_3,param_2);
+    puVar2 = param_1->dec_dest_staging_buffer;
   }
-  if ((bVar1) && (decoder_translate_e8(ptVar2,puVar3,param_2), ptVar2->dec_noncached_dest != false))
-  {
-    XMemCpyStreaming_WriteCombined(ptVar2->dec_output_buffer,puVar3,param_2);
+  XMemCpy(puVar2,param_3,param_2);
+LAB_828b77c0:
+  if ((bVar1) &&
+     (decoder_translate_e8(param_1,puVar2,param_2), param_1->dec_noncached_dest != false)) {
+    XMemCpyStreaming_WriteCombined(param_1->dec_output_buffer,puVar2,param_2);
   }
-LAB_828b77f4:
-  __restgprlr_28();
   return;
 }
 

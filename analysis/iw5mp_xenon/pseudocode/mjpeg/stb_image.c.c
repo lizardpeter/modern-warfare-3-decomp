@@ -146,38 +146,39 @@ int stbi_register_loader(stbi_loader *param_1)
 
 // 827FA7F8  stbi_load  (mjpeg/stb_image.c:687)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 uchar * stbi_load(char *param_1,int *param_2,int *param_3,int *param_4,int param_5)
 
 {
-  char *pcVar1;
-  _iobuf *p_Var2;
-  uchar *puVar3;
+  _iobuf *p_Var1;
+  uchar *puVar2;
   
-  pcVar1 = (char *)__savegprlr_27(param_1);
-  p_Var2 = fopen(pcVar1,"rb");
-  if (p_Var2 == (_iobuf *)0x0) {
+  p_Var1 = fopen(param_1,"rb");
+  if (p_Var1 == (_iobuf *)0x0) {
     failure_reason = "can\'t fopen";
-    puVar3 = (uchar *)__restgprlr_27();
-    return puVar3;
+    return (uchar *)0x0;
   }
-  puVar3 = stbi_load_from_file(p_Var2,param_2,param_3,param_4,param_5);
-  fclose(p_Var2);
-  puVar3 = (uchar *)__restgprlr_27(puVar3);
-  return puVar3;
+  puVar2 = stbi_load_from_file(p_Var1,param_2,param_3,param_4,param_5);
+  fclose(p_Var1);
+  return puVar2;
 }
 
 
 // 827F9B18  stbi_load_from_file  (mjpeg/stb_image.c:697)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
+
 uchar * stbi_load_from_file(_iobuf *param_1,int *param_2,int *param_3,int *param_4,int param_5)
 
 {
-  _iobuf *p_Var1;
-  int iVar2;
-  uchar *puVar3;
-  float *pfVar4;
-  int iVar5;
-  stbi_loader **ppsVar6;
+  int iVar1;
+  uchar *puVar2;
+  float *pfVar3;
+  int iVar4;
+  stbi_loader **ppsVar5;
   stbi sStack_470;
   stbi sStack_3c0;
   stbi sStack_310;
@@ -185,121 +186,112 @@ uchar * stbi_load_from_file(_iobuf *param_1,int *param_2,int *param_3,int *param
   stbi sStack_1b0;
   png pStack_100;
   
-  p_Var1 = (_iobuf *)__savegprlr_23(param_1);
-  iVar2 = stbi_jpeg_test_file(p_Var1);
-  if (iVar2 != 0) {
-    puVar3 = stbi_jpeg_load_from_file(p_Var1,param_2,param_3,param_4,param_5);
-    puVar3 = (uchar *)__restgprlr_23(puVar3);
-    return puVar3;
+  iVar1 = stbi_jpeg_test_file(param_1);
+  if (iVar1 != 0) {
+    puVar2 = stbi_jpeg_load_from_file(param_1,param_2,param_3,param_4,param_5);
+    return puVar2;
   }
-  iVar2 = stbi_png_test_file(p_Var1);
-  if (iVar2 != 0) {
+  iVar1 = stbi_png_test_file(param_1);
+  if (iVar1 != 0) {
     pStack_100.s.img_buffer_end = (uchar *)&pStack_100.s.from_file;
     pStack_100.s.img_buffer = (uchar *)&pStack_100.s.from_file;
     pStack_100.s.buflen = 0x80;
     pStack_100.s.from_file = 1;
-    pStack_100.s.img_file = p_Var1;
-    puVar3 = do_png(&pStack_100,param_2,param_3,param_4,param_5);
-    puVar3 = (uchar *)__restgprlr_23(puVar3);
-    return puVar3;
+    pStack_100.s.img_file = param_1;
+    puVar2 = do_png(&pStack_100,param_2,param_3,param_4,param_5);
+    return puVar2;
   }
-  iVar2 = stbi_bmp_test_file(p_Var1);
-  if (iVar2 != 0) {
+  iVar1 = stbi_bmp_test_file(param_1);
+  if (iVar1 != 0) {
     sStack_1b0.img_buffer_end = (uchar *)&sStack_1b0.from_file;
     sStack_1b0.img_buffer = (uchar *)&sStack_1b0.from_file;
     sStack_1b0.buflen = 0x80;
     sStack_1b0.from_file = 1;
-    sStack_1b0.img_file = p_Var1;
-    puVar3 = bmp_load(&sStack_1b0,param_2,param_3,param_4,param_5);
-    puVar3 = (uchar *)__restgprlr_23(puVar3);
-    return puVar3;
+    sStack_1b0.img_file = param_1;
+    puVar2 = bmp_load(&sStack_1b0,param_2,param_3,param_4,param_5);
+    return puVar2;
   }
-  iVar2 = stbi_gif_test_file(p_Var1);
-  if (iVar2 != 0) {
-    puVar3 = stbi_gif_load_from_file(p_Var1,param_2,param_3,param_4,param_5);
-    puVar3 = (uchar *)__restgprlr_23(puVar3);
-    return puVar3;
+  iVar1 = stbi_gif_test_file(param_1);
+  if (iVar1 != 0) {
+    puVar2 = stbi_gif_load_from_file(param_1,param_2,param_3,param_4,param_5);
+    return puVar2;
   }
-  iVar2 = stbi_psd_test_file(p_Var1);
-  if (iVar2 != 0) {
+  iVar1 = stbi_psd_test_file(param_1);
+  if (iVar1 != 0) {
     sStack_310.img_buffer_end = (uchar *)&sStack_310.from_file;
     sStack_310.img_buffer = (uchar *)&sStack_310.from_file;
     sStack_310.buflen = 0x80;
     sStack_310.from_file = 1;
-    sStack_310.img_file = p_Var1;
-    puVar3 = psd_load(&sStack_310,param_2,param_3,param_4,param_5);
-    puVar3 = (uchar *)__restgprlr_23(puVar3);
-    return puVar3;
+    sStack_310.img_file = param_1;
+    puVar2 = psd_load(&sStack_310,param_2,param_3,param_4,param_5);
+    return puVar2;
   }
-  iVar2 = stbi_pic_test_file(p_Var1);
-  if (iVar2 != 0) {
+  iVar1 = stbi_pic_test_file(param_1);
+  if (iVar1 != 0) {
     sStack_470.img_buffer_end = (uchar *)&sStack_470.from_file;
     sStack_470.img_buffer = (uchar *)&sStack_470.from_file;
     sStack_470.buflen = 0x80;
     sStack_470.from_file = 1;
-    sStack_470.img_file = p_Var1;
-    puVar3 = pic_load(&sStack_470,param_2,param_3,param_4,param_5);
-    puVar3 = (uchar *)__restgprlr_23(puVar3);
-    return puVar3;
+    sStack_470.img_file = param_1;
+    puVar2 = pic_load(&sStack_470,param_2,param_3,param_4,param_5);
+    return puVar2;
   }
-  iVar2 = stbi_hdr_test_file(p_Var1);
-  if (iVar2 != 0) {
+  iVar1 = stbi_hdr_test_file(param_1);
+  if (iVar1 != 0) {
     sStack_3c0.img_buffer_end = (uchar *)&sStack_3c0.from_file;
     sStack_3c0.img_buffer = (uchar *)&sStack_3c0.from_file;
     sStack_3c0.buflen = 0x80;
     sStack_3c0.from_file = 1;
-    sStack_3c0.img_file = p_Var1;
-    pfVar4 = hdr_load(&sStack_3c0,param_2,param_3,param_4,param_5);
+    sStack_3c0.img_file = param_1;
+    pfVar3 = hdr_load(&sStack_3c0,param_2,param_3,param_4,param_5);
     if (param_5 == 0) {
       param_5 = *param_4;
     }
-    puVar3 = hdr_to_ldr(pfVar4,*param_2,*param_3,param_5);
-    puVar3 = (uchar *)__restgprlr_23(puVar3);
-    return puVar3;
+    puVar2 = hdr_to_ldr(pfVar3,*param_2,*param_3,param_5);
+    return puVar2;
   }
-  iVar2 = 0;
+  iVar1 = 0;
   if (0 < max_loaders) {
-    ppsVar6 = loaders;
+    ppsVar5 = loaders;
     do {
-      iVar5 = (*(*ppsVar6)->test_file)(p_Var1);
-      if (iVar5 != 0) {
-        (*loaders[iVar2]->load_from_file)(p_Var1,param_2,param_3,param_4,param_5);
-        puVar3 = (uchar *)__restgprlr_23();
-        return puVar3;
+      iVar4 = (*(*ppsVar5)->test_file)(param_1);
+      if (iVar4 != 0) {
+        puVar2 = (*loaders[iVar1]->load_from_file)(param_1,param_2,param_3,param_4,param_5);
+        return puVar2;
       }
-      iVar2 = iVar2 + 1;
-      ppsVar6 = ppsVar6 + 1;
-    } while (iVar2 < max_loaders);
+      iVar1 = iVar1 + 1;
+      ppsVar5 = ppsVar5 + 1;
+    } while (iVar1 < max_loaders);
   }
-  iVar2 = stbi_tga_test_file(p_Var1);
-  if (iVar2 != 0) {
+  iVar1 = stbi_tga_test_file(param_1);
+  if (iVar1 != 0) {
     sStack_260.img_buffer_end = (uchar *)&sStack_260.from_file;
     sStack_260.img_buffer = (uchar *)&sStack_260.from_file;
     sStack_260.buflen = 0x80;
     sStack_260.from_file = 1;
-    sStack_260.img_file = p_Var1;
-    puVar3 = tga_load(&sStack_260,param_2,param_3,param_4,param_5);
-    puVar3 = (uchar *)__restgprlr_23(puVar3);
-    return puVar3;
+    sStack_260.img_file = param_1;
+    puVar2 = tga_load(&sStack_260,param_2,param_3,param_4,param_5);
+    return puVar2;
   }
   failure_reason = "unknown image type";
-  puVar3 = (uchar *)__restgprlr_23(0);
-  return puVar3;
+  return (uchar *)0x0;
 }
 
 
 // 827F9E40  stbi_load_from_memory  (mjpeg/stb_image.c:724)
 
+/* WARNING: Function: __savegprlr_20 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_20 replaced with injection: xenon_save_restore */
+
 uchar * stbi_load_from_memory
                   (uchar *param_1,int param_2,int *param_3,int *param_4,int *param_5,int param_6)
 
 {
-  uchar *puVar1;
-  int iVar2;
+  int iVar1;
+  uchar *puVar2;
   float *pfVar3;
   int iVar4;
   stbi_loader **ppsVar5;
-  uchar *puVar6;
   stbi sStack_8b0;
   stbi sStack_800;
   stbi sStack_750;
@@ -313,237 +305,223 @@ uchar * stbi_load_from_memory
   png pStack_1d0;
   png pStack_120;
   
-  puVar1 = (uchar *)__savegprlr_20(param_1);
-  iVar2 = stbi_jpeg_test_memory(puVar1,param_2);
-  if (iVar2 != 0) {
-    puVar1 = stbi_jpeg_load_from_memory(puVar1,param_2,param_3,param_4,param_5,param_6);
-    puVar1 = (uchar *)__restgprlr_20(puVar1);
-    return puVar1;
+  iVar1 = stbi_jpeg_test_memory(param_1,param_2);
+  if (iVar1 != 0) {
+    puVar2 = stbi_jpeg_load_from_memory(param_1,param_2,param_3,param_4,param_5,param_6);
+    return puVar2;
   }
-  puVar6 = puVar1 + param_2;
+  puVar2 = param_1 + param_2;
   pStack_1d0.s.img_file = (_iobuf *)0x0;
   pStack_1d0.s.from_file = 0;
-  pStack_1d0.s.img_buffer = puVar1;
-  pStack_1d0.s.img_buffer_end = puVar6;
-  iVar2 = parse_png_file(&pStack_1d0,1,0);
-  if (iVar2 != 0) {
+  pStack_1d0.s.img_buffer = param_1;
+  pStack_1d0.s.img_buffer_end = puVar2;
+  iVar1 = parse_png_file(&pStack_1d0,1,0);
+  if (iVar1 != 0) {
     pStack_120.s.img_file = (_iobuf *)0x0;
     pStack_120.s.from_file = 0;
-    pStack_120.s.img_buffer = puVar1;
-    pStack_120.s.img_buffer_end = puVar6;
-    puVar1 = do_png(&pStack_120,param_3,param_4,param_5,param_6);
-    puVar1 = (uchar *)__restgprlr_20(puVar1);
-    return puVar1;
+    pStack_120.s.img_buffer = param_1;
+    pStack_120.s.img_buffer_end = puVar2;
+    puVar2 = do_png(&pStack_120,param_3,param_4,param_5,param_6);
+    return puVar2;
   }
   sStack_490.img_file = (_iobuf *)0x0;
   sStack_490.from_file = 0;
-  sStack_490.img_buffer = puVar1;
-  sStack_490.img_buffer_end = puVar6;
-  iVar2 = bmp_test(&sStack_490);
-  if (iVar2 != 0) {
+  sStack_490.img_buffer = param_1;
+  sStack_490.img_buffer_end = puVar2;
+  iVar1 = bmp_test(&sStack_490);
+  if (iVar1 != 0) {
     sStack_750.img_file = (_iobuf *)0x0;
     sStack_750.from_file = 0;
-    sStack_750.img_buffer = puVar1;
-    sStack_750.img_buffer_end = puVar6;
-    puVar1 = bmp_load(&sStack_750,param_3,param_4,param_5,param_6);
-    puVar1 = (uchar *)__restgprlr_20(puVar1);
-    return puVar1;
+    sStack_750.img_buffer = param_1;
+    sStack_750.img_buffer_end = puVar2;
+    puVar2 = bmp_load(&sStack_750,param_3,param_4,param_5,param_6);
+    return puVar2;
   }
   sStack_280.img_file = (_iobuf *)0x0;
   sStack_280.from_file = 0;
-  sStack_280.img_buffer = puVar1;
-  sStack_280.img_buffer_end = puVar6;
-  iVar2 = gif_test(&sStack_280);
-  if (iVar2 != 0) {
-    puVar1 = stbi_gif_load_from_memory(puVar1,param_2,param_3,param_4,param_5,param_6);
-    puVar1 = (uchar *)__restgprlr_20(puVar1);
-    return puVar1;
+  sStack_280.img_buffer = param_1;
+  sStack_280.img_buffer_end = puVar2;
+  iVar1 = gif_test(&sStack_280);
+  if (iVar1 != 0) {
+    puVar2 = stbi_gif_load_from_memory(param_1,param_2,param_3,param_4,param_5,param_6);
+    return puVar2;
   }
-  iVar2 = stbi_psd_test_memory(puVar1,param_2);
-  if (iVar2 != 0) {
+  iVar1 = stbi_psd_test_memory(param_1,param_2);
+  if (iVar1 != 0) {
     sStack_5f0.img_file = (_iobuf *)0x0;
     sStack_5f0.from_file = 0;
-    sStack_5f0.img_buffer = puVar1;
-    sStack_5f0.img_buffer_end = puVar6;
-    puVar1 = psd_load(&sStack_5f0,param_3,param_4,param_5,param_6);
-    puVar1 = (uchar *)__restgprlr_20(puVar1);
-    return puVar1;
+    sStack_5f0.img_buffer = param_1;
+    sStack_5f0.img_buffer_end = puVar2;
+    puVar2 = psd_load(&sStack_5f0,param_3,param_4,param_5,param_6);
+    return puVar2;
   }
   sStack_330.img_file = (_iobuf *)0x0;
   sStack_330.from_file = 0;
-  sStack_330.img_buffer = puVar1;
-  sStack_330.img_buffer_end = puVar6;
-  iVar2 = pic_test(&sStack_330);
-  if (iVar2 != 0) {
+  sStack_330.img_buffer = param_1;
+  sStack_330.img_buffer_end = puVar2;
+  iVar1 = pic_test(&sStack_330);
+  if (iVar1 != 0) {
     sStack_8b0.img_file = (_iobuf *)0x0;
     sStack_8b0.from_file = 0;
-    sStack_8b0.img_buffer = puVar1;
-    sStack_8b0.img_buffer_end = puVar6;
-    puVar1 = pic_load(&sStack_8b0,param_3,param_4,param_5,param_6);
-    puVar1 = (uchar *)__restgprlr_20(puVar1);
-    return puVar1;
+    sStack_8b0.img_buffer = param_1;
+    sStack_8b0.img_buffer_end = puVar2;
+    puVar2 = pic_load(&sStack_8b0,param_3,param_4,param_5,param_6);
+    return puVar2;
   }
   sStack_800.img_file = (_iobuf *)0x0;
   sStack_800.from_file = 0;
-  sStack_800.img_buffer = puVar1;
-  sStack_800.img_buffer_end = puVar6;
-  iVar2 = hdr_test(&sStack_800);
-  if (iVar2 != 0) {
+  sStack_800.img_buffer = param_1;
+  sStack_800.img_buffer_end = puVar2;
+  iVar1 = hdr_test(&sStack_800);
+  if (iVar1 != 0) {
     sStack_6a0.img_file = (_iobuf *)0x0;
     sStack_6a0.from_file = 0;
-    sStack_6a0.img_buffer = puVar1;
-    sStack_6a0.img_buffer_end = puVar6;
+    sStack_6a0.img_buffer = param_1;
+    sStack_6a0.img_buffer_end = puVar2;
     pfVar3 = hdr_load(&sStack_6a0,param_3,param_4,param_5,param_6);
     if (param_6 == 0) {
       param_6 = *param_5;
     }
-    puVar1 = hdr_to_ldr(pfVar3,*param_3,*param_4,param_6);
-    puVar1 = (uchar *)__restgprlr_20(puVar1);
-    return puVar1;
+    puVar2 = hdr_to_ldr(pfVar3,*param_3,*param_4,param_6);
+    return puVar2;
   }
-  iVar2 = 0;
+  iVar1 = 0;
   if (0 < max_loaders) {
     ppsVar5 = loaders;
     do {
-      iVar4 = (*(*ppsVar5)->test_memory)(puVar1,param_2);
+      iVar4 = (*(*ppsVar5)->test_memory)(param_1,param_2);
       if (iVar4 != 0) {
-        (*loaders[iVar2]->load_from_memory)(puVar1,param_2,param_3,param_4,param_5,param_6);
-        puVar1 = (uchar *)__restgprlr_20();
-        return puVar1;
+        puVar2 = (*loaders[iVar1]->load_from_memory)
+                           (param_1,param_2,param_3,param_4,param_5,param_6);
+        return puVar2;
       }
-      iVar2 = iVar2 + 1;
+      iVar1 = iVar1 + 1;
       ppsVar5 = ppsVar5 + 1;
-    } while (iVar2 < max_loaders);
+    } while (iVar1 < max_loaders);
   }
   sStack_540.img_file = (_iobuf *)0x0;
   sStack_540.from_file = 0;
-  sStack_540.img_buffer = puVar1;
-  sStack_540.img_buffer_end = puVar6;
-  iVar2 = tga_test(&sStack_540);
-  if (iVar2 != 0) {
+  sStack_540.img_buffer = param_1;
+  sStack_540.img_buffer_end = puVar2;
+  iVar1 = tga_test(&sStack_540);
+  if (iVar1 != 0) {
     sStack_3e0.img_file = (_iobuf *)0x0;
     sStack_3e0.from_file = 0;
-    sStack_3e0.img_buffer = puVar1;
-    sStack_3e0.img_buffer_end = puVar6;
-    puVar1 = tga_load(&sStack_3e0,param_3,param_4,param_5,param_6);
-    puVar1 = (uchar *)__restgprlr_20(puVar1);
-    return puVar1;
+    sStack_3e0.img_buffer = param_1;
+    sStack_3e0.img_buffer_end = puVar2;
+    puVar2 = tga_load(&sStack_3e0,param_3,param_4,param_5,param_6);
+    return puVar2;
   }
   failure_reason = "unknown image type";
-  puVar1 = (uchar *)__restgprlr_20(0);
-  return puVar1;
+  return (uchar *)0x0;
 }
 
 
 // 827FA878  stbi_loadf  (mjpeg/stb_image.c:753)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 float * stbi_loadf(char *param_1,int *param_2,int *param_3,int *param_4,int param_5)
 
 {
-  char *pcVar1;
-  _iobuf *p_Var2;
-  float *pfVar3;
+  _iobuf *p_Var1;
+  float *pfVar2;
   
-  pcVar1 = (char *)__savegprlr_27(param_1);
-  p_Var2 = fopen(pcVar1,"rb");
-  if (p_Var2 == (_iobuf *)0x0) {
+  p_Var1 = fopen(param_1,"rb");
+  if (p_Var1 == (_iobuf *)0x0) {
     failure_reason = "can\'t fopen";
-    pfVar3 = (float *)__restgprlr_27();
-    return pfVar3;
+    return (float *)0x0;
   }
-  pfVar3 = stbi_loadf_from_file(p_Var2,param_2,param_3,param_4,param_5);
-  fclose(p_Var2);
-  pfVar3 = (float *)__restgprlr_27(pfVar3);
-  return pfVar3;
+  pfVar2 = stbi_loadf_from_file(p_Var1,param_2,param_3,param_4,param_5);
+  fclose(p_Var1);
+  return pfVar2;
 }
 
 
 // 827FA178  stbi_loadf_from_file  (mjpeg/stb_image.c:763)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
+
 float * stbi_loadf_from_file(_iobuf *param_1,int *param_2,int *param_3,int *param_4,int param_5)
 
 {
-  _iobuf *p_Var1;
-  long lVar2;
-  int iVar3;
-  float *pfVar4;
-  uchar *puVar5;
+  long lVar1;
+  int iVar2;
+  float *pfVar3;
+  uchar *puVar4;
   stbi sStack_1b0;
   stbi sStack_100;
   
-  p_Var1 = (_iobuf *)__savegprlr_23(param_1);
-  lVar2 = ftell(p_Var1);
+  lVar1 = ftell(param_1);
   sStack_1b0.img_buffer_end = (uchar *)&sStack_1b0.from_file;
   sStack_1b0.img_buffer = (uchar *)&sStack_1b0.from_file;
   sStack_1b0.buflen = 0x80;
   sStack_1b0.from_file = 1;
-  sStack_1b0.img_file = p_Var1;
-  iVar3 = hdr_test(&sStack_1b0);
-  fseek(p_Var1,lVar2,0);
-  if (iVar3 != 0) {
+  sStack_1b0.img_file = param_1;
+  iVar2 = hdr_test(&sStack_1b0);
+  fseek(param_1,lVar1,0);
+  if (iVar2 != 0) {
     sStack_100.img_buffer_end = (uchar *)&sStack_100.from_file;
     sStack_100.img_buffer = (uchar *)&sStack_100.from_file;
     sStack_100.buflen = 0x80;
     sStack_100.from_file = 1;
-    sStack_100.img_file = p_Var1;
-    pfVar4 = hdr_load(&sStack_100,param_2,param_3,param_4,param_5);
-    pfVar4 = (float *)__restgprlr_23(pfVar4);
-    return pfVar4;
+    sStack_100.img_file = param_1;
+    pfVar3 = hdr_load(&sStack_100,param_2,param_3,param_4,param_5);
+    return pfVar3;
   }
-  puVar5 = stbi_load_from_file(p_Var1,param_2,param_3,param_4,param_5);
-  if (puVar5 != (uchar *)0x0) {
+  puVar4 = stbi_load_from_file(param_1,param_2,param_3,param_4,param_5);
+  if (puVar4 != (uchar *)0x0) {
     if (param_5 == 0) {
       param_5 = *param_4;
     }
-    pfVar4 = ldr_to_hdr(puVar5,*param_2,*param_3,param_5);
-    pfVar4 = (float *)__restgprlr_23(pfVar4);
-    return pfVar4;
+    pfVar3 = ldr_to_hdr(puVar4,*param_2,*param_3,param_5);
+    return pfVar3;
   }
   failure_reason = "unknown image type";
-  pfVar4 = (float *)__restgprlr_23(0);
-  return pfVar4;
+  return (float *)0x0;
 }
 
 
 // 827FA278  stbi_loadf_from_memory  (mjpeg/stb_image.c:777)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
+
 float * stbi_loadf_from_memory
                   (uchar *param_1,int param_2,int *param_3,int *param_4,int *param_5,int param_6)
 
 {
-  uchar *puVar1;
-  int iVar2;
-  float *pfVar3;
+  int iVar1;
+  float *pfVar2;
+  uchar *puVar3;
   stbi sStack_1a0;
   stbi sStack_f0;
   
-  puVar1 = (uchar *)__savegprlr_24(param_1);
   sStack_1a0.img_file = (_iobuf *)0x0;
   sStack_1a0.from_file = 0;
-  sStack_1a0.img_buffer = puVar1;
-  sStack_1a0.img_buffer_end = puVar1 + param_2;
-  iVar2 = hdr_test(&sStack_1a0);
-  if (iVar2 != 0) {
+  sStack_1a0.img_buffer = param_1;
+  sStack_1a0.img_buffer_end = param_1 + param_2;
+  iVar1 = hdr_test(&sStack_1a0);
+  if (iVar1 != 0) {
     sStack_f0.img_file = (_iobuf *)0x0;
     sStack_f0.from_file = 0;
-    sStack_f0.img_buffer = puVar1;
-    sStack_f0.img_buffer_end = puVar1 + param_2;
-    pfVar3 = hdr_load(&sStack_f0,param_3,param_4,param_5,param_6);
-    pfVar3 = (float *)__restgprlr_24(pfVar3);
-    return pfVar3;
+    sStack_f0.img_buffer = param_1;
+    sStack_f0.img_buffer_end = param_1 + param_2;
+    pfVar2 = hdr_load(&sStack_f0,param_3,param_4,param_5,param_6);
+    return pfVar2;
   }
-  puVar1 = stbi_load_from_memory(puVar1,param_2,param_3,param_4,param_5,param_6);
-  if (puVar1 != (uchar *)0x0) {
+  puVar3 = stbi_load_from_memory(param_1,param_2,param_3,param_4,param_5,param_6);
+  if (puVar3 != (uchar *)0x0) {
     if (param_6 == 0) {
       param_6 = *param_5;
     }
-    pfVar3 = ldr_to_hdr(puVar1,*param_3,*param_4,param_6);
-    pfVar3 = (float *)__restgprlr_24(pfVar3);
-    return pfVar3;
+    pfVar2 = ldr_to_hdr(puVar3,*param_3,*param_4,param_6);
+    return pfVar2;
   }
   failure_reason = "unknown image type";
-  pfVar3 = (float *)__restgprlr_24(0);
-  return pfVar3;
+  return (float *)0x0;
 }
 
 
@@ -584,25 +562,25 @@ int stbi_is_hdr(char *param_1)
 
 // 827FA398  stbi_is_hdr_from_file  (mjpeg/stb_image.c:818)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 int stbi_is_hdr_from_file(_iobuf *param_1)
 
 {
-  _iobuf *p_Var1;
-  long lVar2;
-  int iVar3;
+  long lVar1;
+  int iVar2;
   stbi sStack_d0;
   
-  p_Var1 = (_iobuf *)__savegprlr_29(param_1);
-  lVar2 = ftell(p_Var1);
+  lVar1 = ftell(param_1);
   sStack_d0.img_buffer_end = (uchar *)&sStack_d0.from_file;
   sStack_d0.img_buffer = (uchar *)&sStack_d0.from_file;
   sStack_d0.buflen = 0x80;
   sStack_d0.from_file = 1;
-  sStack_d0.img_file = p_Var1;
-  iVar3 = hdr_test(&sStack_d0);
-  fseek(p_Var1,lVar2,0);
-  iVar3 = __restgprlr_29(iVar3);
-  return iVar3;
+  sStack_d0.img_file = param_1;
+  iVar2 = hdr_test(&sStack_d0);
+  fseek(param_1,lVar1,0);
+  return iVar2;
 }
 
 
@@ -784,35 +762,28 @@ void skip(stbi *param_1,int param_2)
 
 // 827EC3D8  getn  (mjpeg/stb_image.c:949)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 int getn(stbi *param_1,uchar *param_2,int param_3)
 
 {
-  int iVar1;
-  uint uVar2;
-  longlong lVar3;
-  int iVar4;
-  int iVar5;
+  uint uVar1;
+  int iVar2;
   
-  lVar3 = (longlong)param_3;
-  iVar1 = __savegprlr_28(param_1);
-  iVar4 = (int)lVar3;
-  if ((*(int *)(iVar1 + 0x10) != 0) &&
-     (iVar5 = *(int *)(iVar1 + 0xa0) - *(int *)(iVar1 + 0x9c), iVar5 < iVar4)) {
+  if ((param_1->img_file != (_iobuf *)0x0) &&
+     (iVar2 = (int)param_1->img_buffer_end - (int)param_1->img_buffer, iVar2 < param_3)) {
     memcpy();
-    uVar2 = fread(param_2 + iVar5,1,iVar4 - iVar5,*(_iobuf **)(iVar1 + 0x10));
-    *(undefined4 *)(iVar1 + 0x9c) = *(undefined4 *)(iVar1 + 0xa0);
-    iVar1 = __restgprlr_28(iVar4 - iVar5 == uVar2);
-    return iVar1;
+    uVar1 = fread(param_2 + iVar2,1,param_3 - iVar2,param_1->img_file);
+    param_1->img_buffer = param_1->img_buffer_end;
+    return (uint)LZCOUNT((param_3 - iVar2) - uVar1) >> 5;
   }
-  if (((ulonglong)*(uint *)(iVar1 + 0x9c) + lVar3 & 0xffffffff) <=
-      (ulonglong)*(uint *)(iVar1 + 0xa0)) {
+  if (param_1->img_buffer + param_3 <= param_1->img_buffer_end) {
     memcpy();
-    *(int *)(iVar1 + 0x9c) = *(int *)(iVar1 + 0x9c) + iVar4;
-    iVar1 = __restgprlr_28(1);
-    return iVar1;
+    param_1->img_buffer = param_1->img_buffer + param_3;
+    return 1;
   }
-  iVar1 = __restgprlr_28(0);
-  return iVar1;
+  return 0;
 }
 
 
@@ -942,520 +913,501 @@ uchar compute_y(int param_1,int param_2,int param_3)
 
 // 827EC6F8  convert_format  (mjpeg/stb_image.c:1011)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
+
 uchar * convert_format(uchar *param_1,int param_2,int param_3,uint param_4,uint param_5)
 
 {
   uchar uVar1;
   byte *pbVar2;
   byte *pbVar3;
-  void *pvVar4;
-  uchar *puVar5;
-  longlong lVar6;
+  uchar *puVar4;
+  longlong lVar5;
+  uchar *puVar6;
   uchar *puVar7;
-  void *pvVar8;
-  uint uVar9;
-  uchar *puVar10;
+  uint uVar8;
+  uchar *puVar9;
+  byte *pbVar10;
   uchar *puVar11;
-  byte *pbVar12;
-  int iVar13;
-  longlong lVar14;
-  longlong lVar15;
+  longlong lVar12;
+  longlong lVar13;
   
-  lVar14 = (longlong)(int)param_5;
-  lVar6 = (longlong)(int)param_4;
-  pvVar4 = (void *)__savegprlr_24(param_1);
+  lVar12 = (longlong)(int)param_5;
+  lVar5 = (longlong)(int)param_4;
   if (param_3 == param_2) {
-    puVar5 = (uchar *)__restgprlr_24();
-    return puVar5;
+    return param_1;
   }
-  iVar13 = param_3 * (int)lVar6;
-  uVar9 = iVar13 * (int)lVar14;
+  uVar8 = param_3 * param_4 * param_5;
   if (alt_stb_malloc == (_func___cdecl_void_ptr_uint *)0x0) {
-    uVar9 = stbi_mem.index + uVar9;
-    if (stbi_mem.size <= uVar9) goto LAB_827ec784;
-    puVar5 = stbi_mem.data + stbi_mem.index;
-    stbi_mem.index = uVar9;
+    uVar8 = stbi_mem.index + uVar8;
+    if (stbi_mem.size <= uVar8) goto LAB_827ec784;
+    puVar4 = stbi_mem.data + stbi_mem.index;
+    stbi_mem.index = uVar8;
   }
   else {
-    puVar5 = (*alt_stb_malloc)(uVar9);
+    puVar4 = (*alt_stb_malloc)(uVar8);
   }
-  if (puVar5 != (uchar *)0x0) {
-    if (0 < (int)lVar14) {
-      puVar7 = puVar5;
-      pvVar8 = pvVar4;
+  if (puVar4 != (uchar *)0x0) {
+    if (0 < (int)param_5) {
+      puVar7 = param_1;
+      puVar6 = puVar4;
       do {
-        switch(param_2 * 8 + param_3 + -10) {
-        case 0:
-          if (-1 < lVar6 + -1) {
-            puVar11 = puVar7 + -1;
-            puVar10 = (uchar *)((int)pvVar8 + -1);
-            lVar15 = lVar6;
-            do {
-              puVar10 = puVar10 + 1;
-              puVar11[1] = *puVar10;
-              puVar11 = puVar11 + 2;
-              *puVar11 = 0xff;
-              lVar15 = lVar15 + -1;
-            } while (lVar15 != 0);
-          }
-          break;
-        case 1:
-          if (-1 < lVar6 + -1) {
-            puVar11 = puVar7 + -3;
-            puVar10 = (uchar *)((int)pvVar8 + -1);
-            lVar15 = lVar6;
-            do {
-              puVar10 = puVar10 + 1;
-              uVar1 = *puVar10;
-              puVar11[5] = uVar1;
-              puVar11[4] = uVar1;
-              puVar11 = puVar11 + 3;
-              *puVar11 = uVar1;
-              lVar15 = lVar15 + -1;
-            } while (lVar15 != 0);
-          }
-          break;
-        case 2:
-          if (-1 < lVar6 + -1) {
-            puVar11 = puVar7 + -1;
-            puVar10 = (uchar *)((int)pvVar8 + -1);
-            lVar15 = lVar6;
-            do {
-              puVar10 = puVar10 + 1;
-              uVar1 = *puVar10;
-              puVar11[3] = uVar1;
-              puVar11[2] = uVar1;
-              puVar11[1] = uVar1;
-              puVar11 = puVar11 + 4;
-              *puVar11 = 0xff;
-              lVar15 = lVar15 + -1;
-            } while (lVar15 != 0);
-          }
-          break;
-        case 7:
-          if (-1 < lVar6 + -1) {
-            puVar11 = puVar7 + -1;
-            puVar10 = (uchar *)((int)pvVar8 + -2);
-            lVar15 = lVar6;
-            do {
-              puVar10 = puVar10 + 2;
-              puVar11 = puVar11 + 1;
-              *puVar11 = *puVar10;
-              lVar15 = lVar15 + -1;
-            } while (lVar15 != 0);
-          }
-          break;
-        case 9:
-          if (-1 < lVar6 + -1) {
-            puVar11 = puVar7 + -3;
-            puVar10 = (uchar *)((int)pvVar8 + -2);
-            lVar15 = lVar6;
-            do {
-              puVar10 = puVar10 + 2;
-              uVar1 = *puVar10;
-              puVar11[5] = uVar1;
-              puVar11[4] = uVar1;
-              puVar11 = puVar11 + 3;
-              *puVar11 = uVar1;
-              lVar15 = lVar15 + -1;
-            } while (lVar15 != 0);
-          }
-          break;
+        switch(param_2 * 8 + param_3) {
         case 10:
-          if (-1 < lVar6 + -1) {
+          if (-1 < lVar5 + -1) {
+            puVar9 = puVar6 + -1;
             puVar11 = puVar7 + -1;
-            puVar10 = (uchar *)((int)pvVar8 + -1);
-            lVar15 = lVar6;
+            lVar13 = lVar5;
             do {
-              uVar1 = puVar10[1];
-              puVar11[3] = uVar1;
-              puVar11[2] = uVar1;
-              puVar11[1] = uVar1;
-              puVar10 = puVar10 + 2;
-              puVar11 = puVar11 + 4;
-              *puVar11 = *puVar10;
-              lVar15 = lVar15 + -1;
-            } while (lVar15 != 0);
+              puVar11 = puVar11 + 1;
+              puVar9[1] = *puVar11;
+              puVar9 = puVar9 + 2;
+              *puVar9 = 0xff;
+              lVar13 = lVar13 + -1;
+            } while (lVar13 != 0);
           }
           break;
-        case 0xf:
-          if (-1 < lVar6 + -1) {
-            puVar10 = puVar7 + -1;
-            pbVar12 = (byte *)((int)pvVar8 + -2);
-            lVar15 = lVar6;
-            do {
-              pbVar2 = pbVar12 + 2;
-              pbVar3 = pbVar12 + 4;
-              pbVar12 = pbVar12 + 3;
-              puVar10 = puVar10 + 1;
-              *puVar10 = (uchar)((uint)*pbVar12 * 0x96 + (uint)*pbVar2 * 0x4d + (uint)*pbVar3 * 0x1d
-                                >> 8);
-              lVar15 = lVar15 + -1;
-            } while (lVar15 != 0);
-          }
-          break;
-        case 0x10:
-          if (-1 < lVar6 + -1) {
-            puVar10 = puVar7 + -1;
-            pbVar12 = (byte *)((int)pvVar8 + -2);
-            lVar15 = lVar6;
-            do {
-              pbVar2 = pbVar12 + 2;
-              pbVar3 = pbVar12 + 4;
-              pbVar12 = pbVar12 + 3;
-              puVar10[1] = (uchar)((uint)*pbVar12 * 0x96 + (uint)*pbVar2 * 0x4d +
-                                   (uint)*pbVar3 * 0x1d >> 8);
-              puVar10 = puVar10 + 2;
-              *puVar10 = 0xff;
-              lVar15 = lVar15 + -1;
-            } while (lVar15 != 0);
-          }
-          break;
-        case 0x12:
-          if (-1 < lVar6 + -1) {
+        case 0xb:
+          if (-1 < lVar5 + -1) {
+            puVar9 = puVar6 + -3;
             puVar11 = puVar7 + -1;
-            puVar10 = (uchar *)((int)pvVar8 + -1);
-            lVar15 = lVar6;
+            lVar13 = lVar5;
             do {
-              puVar11[1] = puVar10[1];
-              puVar11[2] = puVar10[2];
-              puVar10 = puVar10 + 3;
-              puVar11[3] = *puVar10;
-              puVar11 = puVar11 + 4;
-              *puVar11 = 0xff;
-              lVar15 = lVar15 + -1;
-            } while (lVar15 != 0);
+              puVar11 = puVar11 + 1;
+              uVar1 = *puVar11;
+              puVar9[5] = uVar1;
+              puVar9[4] = uVar1;
+              puVar9 = puVar9 + 3;
+              *puVar9 = uVar1;
+              lVar13 = lVar13 + -1;
+            } while (lVar13 != 0);
           }
           break;
-        case 0x17:
-          if (-1 < lVar6 + -1) {
-            puVar10 = puVar7 + -1;
-            pbVar12 = (byte *)((int)pvVar8 + -3);
-            lVar15 = lVar6;
-            do {
-              pbVar2 = pbVar12 + 3;
-              pbVar3 = pbVar12 + 5;
-              pbVar12 = pbVar12 + 4;
-              puVar10 = puVar10 + 1;
-              *puVar10 = (uchar)((uint)*pbVar12 * 0x96 + (uint)*pbVar2 * 0x4d + (uint)*pbVar3 * 0x1d
-                                >> 8);
-              lVar15 = lVar15 + -1;
-            } while (lVar15 != 0);
-          }
-          break;
-        case 0x18:
-          if (-1 < lVar6 + -1) {
+        case 0xc:
+          if (-1 < lVar5 + -1) {
+            puVar9 = puVar6 + -1;
             puVar11 = puVar7 + -1;
-            puVar10 = (uchar *)((int)pvVar8 + -1);
-            lVar15 = lVar6;
+            lVar13 = lVar5;
             do {
-              puVar11[1] = (uchar)((uint)puVar10[2] * 0x96 + (uint)puVar10[1] * 0x4d +
-                                   (uint)puVar10[3] * 0x1d >> 8);
-              puVar10 = puVar10 + 4;
+              puVar11 = puVar11 + 1;
+              uVar1 = *puVar11;
+              puVar9[3] = uVar1;
+              puVar9[2] = uVar1;
+              puVar9[1] = uVar1;
+              puVar9 = puVar9 + 4;
+              *puVar9 = 0xff;
+              lVar13 = lVar13 + -1;
+            } while (lVar13 != 0);
+          }
+          break;
+        case 0x11:
+          if (-1 < lVar5 + -1) {
+            puVar9 = puVar6 + -1;
+            puVar11 = puVar7 + -2;
+            lVar13 = lVar5;
+            do {
               puVar11 = puVar11 + 2;
-              *puVar11 = *puVar10;
-              lVar15 = lVar15 + -1;
-            } while (lVar15 != 0);
+              puVar9 = puVar9 + 1;
+              *puVar9 = *puVar11;
+              lVar13 = lVar13 + -1;
+            } while (lVar13 != 0);
+          }
+          break;
+        case 0x13:
+          if (-1 < lVar5 + -1) {
+            puVar9 = puVar6 + -3;
+            puVar11 = puVar7 + -2;
+            lVar13 = lVar5;
+            do {
+              puVar11 = puVar11 + 2;
+              uVar1 = *puVar11;
+              puVar9[5] = uVar1;
+              puVar9[4] = uVar1;
+              puVar9 = puVar9 + 3;
+              *puVar9 = uVar1;
+              lVar13 = lVar13 + -1;
+            } while (lVar13 != 0);
+          }
+          break;
+        case 0x14:
+          if (-1 < lVar5 + -1) {
+            puVar9 = puVar6 + -1;
+            puVar11 = puVar7 + -1;
+            lVar13 = lVar5;
+            do {
+              uVar1 = puVar11[1];
+              puVar9[3] = uVar1;
+              puVar9[2] = uVar1;
+              puVar9[1] = uVar1;
+              puVar11 = puVar11 + 2;
+              puVar9 = puVar9 + 4;
+              *puVar9 = *puVar11;
+              lVar13 = lVar13 + -1;
+            } while (lVar13 != 0);
           }
           break;
         case 0x19:
-          if (-1 < lVar6 + -1) {
-            puVar11 = puVar7 + -1;
-            puVar10 = (uchar *)((int)pvVar8 + -2);
-            lVar15 = lVar6;
+          if (-1 < lVar5 + -1) {
+            puVar11 = puVar6 + -1;
+            pbVar10 = puVar7 + -2;
+            lVar13 = lVar5;
             do {
-              puVar11[1] = puVar10[2];
-              puVar11[2] = puVar10[3];
-              puVar10 = puVar10 + 4;
+              pbVar2 = pbVar10 + 2;
+              pbVar3 = pbVar10 + 4;
+              pbVar10 = pbVar10 + 3;
+              puVar11 = puVar11 + 1;
+              *puVar11 = (uchar)((uint)*pbVar10 * 0x96 + (uint)*pbVar2 * 0x4d + (uint)*pbVar3 * 0x1d
+                                >> 8);
+              lVar13 = lVar13 + -1;
+            } while (lVar13 != 0);
+          }
+          break;
+        case 0x1a:
+          if (-1 < lVar5 + -1) {
+            puVar11 = puVar6 + -1;
+            pbVar10 = puVar7 + -2;
+            lVar13 = lVar5;
+            do {
+              pbVar2 = pbVar10 + 2;
+              pbVar3 = pbVar10 + 4;
+              pbVar10 = pbVar10 + 3;
+              puVar11[1] = (uchar)((uint)*pbVar10 * 0x96 + (uint)*pbVar2 * 0x4d +
+                                   (uint)*pbVar3 * 0x1d >> 8);
+              puVar11 = puVar11 + 2;
+              *puVar11 = 0xff;
+              lVar13 = lVar13 + -1;
+            } while (lVar13 != 0);
+          }
+          break;
+        case 0x1c:
+          if (-1 < lVar5 + -1) {
+            puVar9 = puVar6 + -1;
+            puVar11 = puVar7 + -1;
+            lVar13 = lVar5;
+            do {
+              puVar9[1] = puVar11[1];
+              puVar9[2] = puVar11[2];
               puVar11 = puVar11 + 3;
-              *puVar11 = *puVar10;
-              lVar15 = lVar15 + -1;
-            } while (lVar15 != 0);
+              puVar9[3] = *puVar11;
+              puVar9 = puVar9 + 4;
+              *puVar9 = 0xff;
+              lVar13 = lVar13 + -1;
+            } while (lVar13 != 0);
+          }
+          break;
+        case 0x21:
+          if (-1 < lVar5 + -1) {
+            puVar11 = puVar6 + -1;
+            pbVar10 = puVar7 + -3;
+            lVar13 = lVar5;
+            do {
+              pbVar2 = pbVar10 + 3;
+              pbVar3 = pbVar10 + 5;
+              pbVar10 = pbVar10 + 4;
+              puVar11 = puVar11 + 1;
+              *puVar11 = (uchar)((uint)*pbVar10 * 0x96 + (uint)*pbVar2 * 0x4d + (uint)*pbVar3 * 0x1d
+                                >> 8);
+              lVar13 = lVar13 + -1;
+            } while (lVar13 != 0);
+          }
+          break;
+        case 0x22:
+          if (-1 < lVar5 + -1) {
+            puVar9 = puVar6 + -1;
+            puVar11 = puVar7 + -1;
+            lVar13 = lVar5;
+            do {
+              puVar9[1] = (uchar)((uint)puVar11[2] * 0x96 + (uint)puVar11[1] * 0x4d +
+                                  (uint)puVar11[3] * 0x1d >> 8);
+              puVar11 = puVar11 + 4;
+              puVar9 = puVar9 + 2;
+              *puVar9 = *puVar11;
+              lVar13 = lVar13 + -1;
+            } while (lVar13 != 0);
+          }
+          break;
+        case 0x23:
+          if (-1 < lVar5 + -1) {
+            puVar9 = puVar6 + -1;
+            puVar11 = puVar7 + -2;
+            lVar13 = lVar5;
+            do {
+              puVar9[1] = puVar11[2];
+              puVar9[2] = puVar11[3];
+              puVar11 = puVar11 + 4;
+              puVar9 = puVar9 + 3;
+              *puVar9 = *puVar11;
+              lVar13 = lVar13 + -1;
+            } while (lVar13 != 0);
           }
         }
-        lVar14 = lVar14 + -1;
-        pvVar8 = (void *)(param_2 * (int)lVar6 + (int)pvVar8);
-        puVar7 = puVar7 + iVar13;
-      } while (lVar14 != 0);
+        lVar12 = lVar12 + -1;
+        puVar7 = puVar7 + param_2 * param_4;
+        puVar6 = puVar6 + param_3 * param_4;
+      } while (lVar12 != 0);
     }
     if (alt_stb_free != (_func___cdecl_void_void_ptr *)0x0) {
-      (*alt_stb_free)(pvVar4);
+      (*alt_stb_free)(param_1);
     }
-    puVar5 = (uchar *)__restgprlr_24(puVar5);
-    return puVar5;
+    return puVar4;
   }
 LAB_827ec784:
   if (alt_stb_free != (_func___cdecl_void_void_ptr *)0x0) {
-    (*alt_stb_free)(pvVar4);
+    (*alt_stb_free)(param_1);
   }
   failure_reason = "outofmem";
-  puVar5 = (uchar *)__restgprlr_24(0);
-  return puVar5;
+  return (uchar *)0x0;
 }
 
 
 // 827ECB70  ldr_to_hdr  (mjpeg/stb_image.c:1056)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
+
 float * ldr_to_hdr(uchar *param_1,int param_2,int param_3,int param_4)
 
 {
-  void *pvVar1;
-  uchar *puVar2;
-  float *pfVar3;
-  ulonglong uVar4;
+  uint uVar1;
+  float *pfVar2;
+  ulonglong uVar3;
+  longlong lVar4;
   int iVar5;
-  ulonglong uVar6;
-  uint uVar7;
+  longlong lVar6;
+  longlong lVar7;
   longlong lVar8;
-  int iVar9;
-  longlong lVar10;
-  longlong lVar11;
-  longlong lVar12;
-  double dVar13;
-  double dVar14;
+  double dVar9;
+  double dVar10;
   
-  uVar4 = (ulonglong)param_4;
-  pvVar1 = (void *)__savegprlr_24(param_1);
-  lVar10 = (longlong)param_2 * (longlong)param_3;
-  iVar5 = (int)uVar4;
-  uVar7 = (int)lVar10 * iVar5 * 4;
+  lVar6 = (longlong)param_2 * (longlong)param_3;
+  uVar1 = (int)lVar6 * param_4 * 4;
   if (alt_stb_malloc == (_func___cdecl_void_ptr_uint *)0x0) {
-    uVar7 = stbi_mem.index + uVar7;
-    if (stbi_mem.size <= uVar7) goto LAB_827ecbe8;
-    puVar2 = stbi_mem.data + stbi_mem.index;
-    stbi_mem.index = uVar7;
+    uVar1 = stbi_mem.index + uVar1;
+    if (stbi_mem.size <= uVar1) goto LAB_827ecbe8;
+    pfVar2 = (float *)(stbi_mem.data + stbi_mem.index);
+    stbi_mem.index = uVar1;
   }
   else {
-    puVar2 = (*alt_stb_malloc)(uVar7);
+    pfVar2 = (*alt_stb_malloc)(uVar1);
   }
-  if (puVar2 != (uchar *)0x0) {
-    iVar9 = iVar5;
-    if ((uVar4 & 1) == 0) {
-      iVar9 = iVar5 + -1;
+  if (pfVar2 != (float *)0x0) {
+    iVar5 = param_4;
+    if ((param_4 & 1U) == 0) {
+      iVar5 = param_4 + -1;
     }
-    if (0 < (int)lVar10) {
-      lVar11 = 0;
-      dVar14 = 0.003921568859368563;
+    if (0 < (int)lVar6) {
+      lVar7 = 0;
+      dVar10 = 0.003921568859368563;
       do {
-        lVar12 = 0;
-        lVar8 = lVar11;
-        if (0 < iVar9) {
+        lVar8 = 0;
+        lVar4 = lVar7;
+        if (0 < iVar5) {
           do {
-            dVar13 = pow((double)(float)((double)*(byte *)((int)lVar8 + (int)pvVar1) * dVar14),
-                         (double)l2h_gamma);
-            uVar6 = lVar11 + lVar12;
-            lVar12 = lVar12 + 1;
-            *(float *)(puVar2 + (int)((uVar6 & 0xffffffff) << 2)) = (float)dVar13 * l2h_scale;
-            lVar8 = lVar11 + lVar12;
-          } while ((int)lVar12 < iVar9);
+            dVar9 = pow((double)(float)((double)param_1[(int)lVar4] * dVar10),(double)l2h_gamma);
+            uVar3 = lVar7 + lVar8;
+            lVar8 = lVar8 + 1;
+            *(float *)((int)((uVar3 & 0xffffffff) << 2) + (int)pfVar2) = (float)dVar9 * l2h_scale;
+            lVar4 = lVar7 + lVar8;
+          } while ((int)lVar8 < iVar5);
         }
-        if ((int)lVar12 < iVar5) {
-          *(float *)(puVar2 + (int)((lVar11 + lVar12 & 0xffffffffU) << 2)) =
-               (float)((double)*(byte *)((int)(lVar11 + lVar12) + (int)pvVar1) * dVar14);
+        if ((int)lVar8 < param_4) {
+          *(float *)((int)((lVar7 + lVar8 & 0xffffffffU) << 2) + (int)pfVar2) =
+               (float)((double)param_1[(int)(lVar7 + lVar8)] * dVar10);
         }
-        lVar10 = lVar10 + -1;
-        lVar11 = lVar11 + uVar4;
-      } while (lVar10 != 0);
+        lVar6 = lVar6 + -1;
+        lVar7 = lVar7 + param_4;
+      } while (lVar6 != 0);
     }
     if (alt_stb_free != (_func___cdecl_void_void_ptr *)0x0) {
-      (*alt_stb_free)(pvVar1);
+      (*alt_stb_free)(param_1);
     }
-    pfVar3 = (float *)__restgprlr_24(puVar2);
-    return pfVar3;
+    return pfVar2;
   }
 LAB_827ecbe8:
   if (alt_stb_free != (_func___cdecl_void_void_ptr *)0x0) {
-    (*alt_stb_free)(pvVar1);
+    (*alt_stb_free)(param_1);
   }
   failure_reason = "outofmem";
-  pfVar3 = (float *)__restgprlr_24(0);
-  return pfVar3;
+  return (float *)0x0;
 }
 
 
 // 827ECD18  hdr_to_ldr  (mjpeg/stb_image.c:1074)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
+
 uchar * hdr_to_ldr(float *param_1,int param_2,int param_3,int param_4)
 
 {
-  void *pvVar1;
-  uchar *puVar2;
-  ulonglong uVar3;
-  int iVar4;
-  uint uVar5;
-  int iVar6;
-  longlong lVar7;
-  longlong lVar8;
-  longlong lVar9;
+  uchar *puVar1;
+  uint uVar2;
+  int iVar3;
+  longlong lVar4;
+  longlong lVar5;
+  longlong lVar6;
+  double dVar7;
+  double dVar8;
+  double dVar9;
   double dVar10;
   double dVar11;
-  double dVar12;
-  double dVar13;
-  double dVar14;
   
-  uVar3 = (ulonglong)param_4;
-  pvVar1 = (void *)__savegprlr_23(param_1);
-  lVar7 = (longlong)param_2 * (longlong)param_3;
-  iVar4 = (int)uVar3;
-  uVar5 = (int)lVar7 * iVar4;
+  lVar4 = (longlong)param_2 * (longlong)param_3;
+  uVar2 = (int)lVar4 * param_4;
   if (alt_stb_malloc == (_func___cdecl_void_ptr_uint *)0x0) {
-    uVar5 = stbi_mem.index + uVar5;
-    if (stbi_mem.size <= uVar5) goto LAB_827ecd94;
-    puVar2 = stbi_mem.data + stbi_mem.index;
-    stbi_mem.index = uVar5;
+    uVar2 = stbi_mem.index + uVar2;
+    if (stbi_mem.size <= uVar2) goto LAB_827ecd94;
+    puVar1 = stbi_mem.data + stbi_mem.index;
+    stbi_mem.index = uVar2;
   }
   else {
-    puVar2 = (*alt_stb_malloc)(uVar5);
+    puVar1 = (*alt_stb_malloc)(uVar2);
   }
-  if (puVar2 != (uchar *)0x0) {
-    iVar6 = iVar4;
-    if ((uVar3 & 1) == 0) {
-      iVar6 = iVar4 + -1;
+  if (puVar1 != (uchar *)0x0) {
+    iVar3 = param_4;
+    if ((param_4 & 1U) == 0) {
+      iVar3 = param_4 + -1;
     }
-    if (0 < (int)lVar7) {
-      lVar8 = 0;
-      dVar13 = 0.0;
-      dVar12 = 0.5;
-      dVar14 = 255.0;
+    if (0 < (int)lVar4) {
+      lVar5 = 0;
+      dVar10 = 0.0;
+      dVar9 = 0.5;
+      dVar11 = 255.0;
       do {
-        lVar9 = 0;
-        if (0 < iVar6) {
+        lVar6 = 0;
+        if (0 < iVar3) {
           do {
-            dVar11 = pow((double)(*(float *)((int)((lVar8 + lVar9 & 0xffffffffU) << 2) + (int)pvVar1
-                                            ) * h2l_scale_i),(double)h2l_gamma_i);
-            dVar10 = (double)(float)((double)(float)dVar11 * dVar14 + dVar12);
-            dVar11 = dVar13;
-            if ((dVar13 <= dVar10) && (dVar11 = dVar10, dVar14 < dVar10)) {
-              dVar11 = dVar14;
+            dVar8 = pow((double)(*(float *)((int)((lVar5 + lVar6 & 0xffffffffU) << 2) + (int)param_1
+                                           ) * h2l_scale_i),(double)h2l_gamma_i);
+            dVar7 = (double)(float)((double)(float)dVar8 * dVar11 + dVar9);
+            dVar8 = dVar10;
+            if ((dVar10 <= dVar7) && (dVar8 = dVar7, dVar11 < dVar7)) {
+              dVar8 = dVar11;
             }
-            puVar2[(int)lVar9 + (int)lVar8] = (uchar)(int)dVar11;
-            lVar9 = lVar9 + 1;
-          } while ((int)lVar9 < iVar6);
+            puVar1[(int)lVar6 + (int)lVar5] = (uchar)(int)dVar8;
+            lVar6 = lVar6 + 1;
+          } while ((int)lVar6 < iVar3);
         }
-        if ((int)lVar9 < iVar4) {
-          dVar10 = (double)(float)((double)*(float *)((int)((lVar8 + lVar9 & 0xffffffffU) << 2) +
-                                                     (int)pvVar1) * dVar14 + dVar12);
-          dVar11 = dVar13;
-          if ((dVar13 <= dVar10) && (dVar11 = dVar10, dVar14 < dVar10)) {
-            dVar11 = dVar14;
+        if ((int)lVar6 < param_4) {
+          dVar7 = (double)(float)((double)*(float *)((int)((lVar5 + lVar6 & 0xffffffffU) << 2) +
+                                                    (int)param_1) * dVar11 + dVar9);
+          dVar8 = dVar10;
+          if ((dVar10 <= dVar7) && (dVar8 = dVar7, dVar11 < dVar7)) {
+            dVar8 = dVar11;
           }
-          puVar2[(int)(lVar8 + lVar9)] = (uchar)(int)dVar11;
+          puVar1[(int)(lVar5 + lVar6)] = (uchar)(int)dVar8;
         }
-        lVar7 = lVar7 + -1;
-        lVar8 = lVar8 + uVar3;
-      } while (lVar7 != 0);
+        lVar4 = lVar4 + -1;
+        lVar5 = lVar5 + param_4;
+      } while (lVar4 != 0);
     }
     if (alt_stb_free != (_func___cdecl_void_void_ptr *)0x0) {
-      (*alt_stb_free)(pvVar1);
+      (*alt_stb_free)(param_1);
     }
-    puVar2 = (uchar *)__restgprlr_23(puVar2);
-    return puVar2;
+    return puVar1;
   }
 LAB_827ecd94:
   if (alt_stb_free != (_func___cdecl_void_void_ptr *)0x0) {
-    (*alt_stb_free)(pvVar1);
+    (*alt_stb_free)(param_1);
   }
   failure_reason = "outofmem";
-  puVar2 = (uchar *)__restgprlr_23(0);
-  return puVar2;
+  return (uchar *)0x0;
 }
 
 
 // 827ECF18  build_huffman  (mjpeg/stb_image.c:1180)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 int build_huffman(huffman *param_1,int *param_2)
 
 {
   ushort uVar1;
-  int iVar2;
   int iVar3;
+  longlong lVar2;
   ushort *puVar4;
-  int *piVar5;
-  byte *pbVar6;
-  longlong lVar7;
-  undefined2 *puVar8;
+  uint *puVar5;
+  uchar *puVar6;
+  int iVar8;
+  uint uVar9;
+  ulonglong uVar7;
   int iVar10;
   uint uVar11;
-  ulonglong uVar9;
-  int iVar12;
-  uint uVar13;
-  byte *pbVar14;
+  uchar *puVar12;
   
-  lVar7 = (longlong)(int)param_2;
-  iVar2 = __savegprlr_28(param_1);
-  iVar12 = 0;
+  iVar10 = 0;
   iVar3 = 0;
   do {
-    iVar10 = 0;
-    if (0 < *(int *)lVar7) {
+    iVar8 = 0;
+    if (0 < *param_2) {
       do {
+        iVar8 = iVar8 + 1;
+        param_1->size[iVar10] = (char)iVar3 + '\x01';
         iVar10 = iVar10 + 1;
-        *(char *)(iVar2 + 0x500 + iVar12) = (char)iVar3 + '\x01';
-        iVar12 = iVar12 + 1;
-      } while (iVar10 < *(int *)lVar7);
+      } while (iVar8 < *param_2);
     }
     iVar3 = iVar3 + 1;
-    lVar7 = lVar7 + 4;
+    param_2 = param_2 + 1;
   } while (iVar3 < 0x10);
-  pbVar14 = (byte *)(iVar2 + 0x500);
+  puVar12 = param_1->size;
   iVar3 = 0;
-  *(undefined1 *)(iVar12 + iVar2 + 0x500) = 0;
-  iVar12 = 0;
-  lVar7 = 0xf;
-  piVar5 = (int *)(iVar2 + 0x604);
-  uVar13 = 1;
-  pbVar6 = pbVar14;
+  param_1->size[iVar10] = '\0';
+  iVar10 = 0;
+  lVar2 = 0xf;
+  puVar5 = param_1->maxcode;
+  uVar11 = 1;
+  puVar6 = puVar12;
   do {
-    uVar11 = uVar13;
-    piVar5[0x13] = iVar12 - iVar3;
-    if (*pbVar6 == uVar11) {
-      puVar8 = (undefined2 *)((iVar12 + 0xff) * 2 + iVar2);
+    uVar9 = uVar11;
+    puVar5[0x13] = iVar10 - iVar3;
+    if (*puVar6 == uVar9) {
+      puVar4 = param_1->code + iVar10 + -1;
       do {
-        iVar10 = iVar3;
-        iVar12 = iVar12 + 1;
-        pbVar6 = pbVar14 + iVar12;
-        puVar8 = puVar8 + 1;
-        *puVar8 = (short)iVar10;
-        iVar3 = iVar10 + 1;
-      } while (pbVar14[iVar12] == uVar11);
-      if (1 << (uVar11 & 0x3f) <= iVar10) {
+        iVar8 = iVar3;
+        iVar10 = iVar10 + 1;
+        puVar6 = puVar12 + iVar10;
+        puVar4 = puVar4 + 1;
+        *puVar4 = (ushort)iVar8;
+        iVar3 = iVar8 + 1;
+      } while (puVar12[iVar10] == uVar9);
+      if (1 << (uVar9 & 0x3f) <= iVar8) {
         failure_reason = "bad code lengths";
-        iVar2 = __restgprlr_28(0);
-        return iVar2;
+        return 0;
       }
     }
-    uVar13 = (uint)lVar7;
-    lVar7 = lVar7 + -1;
-    piVar5 = piVar5 + 1;
-    *piVar5 = iVar3 << (uVar13 & 0x3f);
+    uVar11 = (uint)lVar2;
+    lVar2 = lVar2 + -1;
+    puVar5 = puVar5 + 1;
+    *puVar5 = iVar3 << (uVar11 & 0x3f);
     iVar3 = iVar3 << 1;
-    uVar13 = uVar11 + 1;
-    if (lVar7 < 0) {
-      *(undefined4 *)((uVar11 + 0x182) * 4 + iVar2) = 0xffffffff;
+    uVar11 = uVar9 + 1;
+    if (lVar2 < 0) {
+      param_1->maxcode[uVar9 + 1] = 0xffffffff;
       memset();
       iVar3 = 0;
-      if (0 < iVar12) {
-        puVar4 = (ushort *)(iVar2 + 0x200);
+      if (0 < iVar10) {
+        puVar4 = param_1->code;
         do {
-          if (pbVar14[iVar3] < 10) {
+          if (puVar12[iVar3] < 10) {
             uVar1 = *puVar4;
-            uVar13 = 9 - pbVar14[iVar3];
-            uVar9 = (ulonglong)(uint)(1 << (uVar13 & 0x3f));
-            iVar10 = 0;
-            if (uVar9 != 0) {
+            uVar11 = 9 - puVar12[iVar3];
+            uVar7 = (ulonglong)(uint)(1 << (uVar11 & 0x3f));
+            iVar8 = 0;
+            if (uVar7 != 0) {
               do {
-                *(char *)(((uint)uVar1 << (uVar13 & 0x3f)) + iVar2 + iVar10) = (char)iVar3;
-                iVar10 = iVar10 + 1;
-                uVar9 = uVar9 - 1;
-              } while (uVar9 != 0);
+                param_1->fast[iVar8 + ((uint)uVar1 << (uVar11 & 0x3f))] = (uchar)iVar3;
+                iVar8 = iVar8 + 1;
+                uVar7 = uVar7 - 1;
+              } while (uVar7 != 0);
             }
           }
           iVar3 = iVar3 + 1;
           puVar4 = puVar4 + 1;
-        } while (iVar3 < iVar12);
+        } while (iVar3 < iVar10);
       }
-      iVar2 = __restgprlr_28(1);
-      return iVar2;
+      return 1;
     }
   } while( true );
 }
@@ -1576,36 +1528,35 @@ int decode(jpeg *param_1,huffman *param_2)
 
 // 827ED2E8  extend_receive  (mjpeg/stb_image.c:1293)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 int extend_receive(jpeg *param_1,int param_2)
 
 {
   ulonglong uVar1;
-  uint uVar2;
-  jpeg *pjVar4;
-  ulonglong uVar3;
-  int iVar5;
+  int iVar2;
   
-  uVar3 = (ulonglong)param_2;
-  pjVar4 = (jpeg *)__savegprlr_28(param_1);
-  uVar2 = (uint)uVar3;
-  if (pjVar4->code_bits < (int)uVar2) {
-    grow_buffer_unsafe(pjVar4);
+  if (param_1->code_bits < param_2) {
+    grow_buffer_unsafe(param_1);
   }
-  iVar5 = (int)((uVar3 & 0xffffffff) << 2);
-  uVar1 = CONCAT44(pjVar4->code_buffer,pjVar4->code_buffer);
-  uVar3 = uVar1 << (uVar3 & 0x1f) | uVar1 >> 0x40 - (uVar3 & 0x1f);
-  pjVar4->code_buffer = (uint)uVar3 & ~*(uint *)((int)bmask + iVar5);
-  uVar3 = (ulonglong)*(uint *)((int)bmask + iVar5) & uVar3 & 0xffffffff;
-  pjVar4->code_bits = pjVar4->code_bits - uVar2;
-  if (uVar3 < (uint)(1 << (uVar2 - 1 & 0x3f))) {
-    uVar3 = (uVar3 - (uint)(1 << (uVar2 & 0x3f))) + 1;
+  uVar1 = CONCAT44(param_1->code_buffer,param_1->code_buffer);
+  uVar1 = uVar1 << ((longlong)param_2 & 0x1fU) | uVar1 >> 0x40 - ((longlong)param_2 & 0x1fU);
+  param_1->code_buffer = (uint)uVar1 & ~bmask[param_2];
+  uVar1 = (ulonglong)bmask[param_2] & uVar1 & 0xffffffff;
+  iVar2 = (int)uVar1;
+  param_1->code_bits = param_1->code_bits - param_2;
+  if (uVar1 < (uint)(1 << (param_2 - 1U & 0x3f))) {
+    iVar2 = (iVar2 - (1 << (param_2 & 0x3fU))) + 1;
   }
-  iVar5 = __restgprlr_28(uVar3);
-  return iVar5;
+  return iVar2;
 }
 
 
 // 827ED368  decode_block  (mjpeg/stb_image.c:1336)
+
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 
 int decode_block(jpeg *param_1,short *param_2,huffman *param_3,huffman *param_4,int param_5)
 
@@ -1613,144 +1564,142 @@ int decode_block(jpeg *param_1,short *param_2,huffman *param_3,huffman *param_4,
   byte bVar1;
   byte bVar2;
   uint uVar3;
-  int iVar4;
-  jpeg *pjVar5;
-  int iVar6;
-  longlong lVar7;
-  ulonglong uVar8;
-  longlong lVar9;
+  uint *puVar5;
+  ulonglong uVar4;
+  longlong lVar6;
+  int iVar7;
+  int iVar8;
+  uint uVar9;
   uint uVar10;
-  int iVar11;
-  uint uVar12;
   
-  lVar7 = (longlong)(int)param_4;
-  lVar9 = (longlong)(int)param_3;
-  pjVar5 = (jpeg *)__savegprlr_24(param_1);
-  if (pjVar5->code_bits < 0x10) {
-    grow_buffer_unsafe(pjVar5);
+  if (param_1->code_bits < 0x10) {
+    grow_buffer_unsafe(param_1);
   }
-  uVar12 = pjVar5->code_buffer;
-  iVar6 = (int)lVar9;
-  bVar2 = *(byte *)((uVar12 >> 0x17) + iVar6);
+  uVar9 = param_1->code_buffer;
+  bVar2 = param_3->fast[uVar9 >> 0x17];
   if (bVar2 < 0xff) {
-    iVar6 = (uint)bVar2 + iVar6;
-    bVar2 = *(byte *)(iVar6 + 0x500);
-    if ((int)(uint)bVar2 <= pjVar5->code_bits) {
-      pjVar5->code_buffer = uVar12 << (bVar2 & 0x3f);
-      pjVar5->code_bits = pjVar5->code_bits - (uint)bVar2;
-      bVar2 = *(byte *)(iVar6 + 0x400);
+    bVar1 = param_3->size[bVar2];
+    if ((int)(uint)bVar1 <= param_1->code_bits) {
+      param_1->code_buffer = uVar9 << (bVar1 & 0x3f);
+      param_1->code_bits = param_1->code_bits - (uint)bVar1;
+      bVar2 = param_3->values[bVar2];
 LAB_827ed458:
-      uVar12 = (uint)bVar2;
+      uVar9 = (uint)bVar2;
       uVar10 = (uint)bVar2;
       memset();
       if (uVar10 == 0) {
-        uVar8 = 0;
+        uVar4 = 0;
       }
       else {
-        if (pjVar5->code_bits < (int)uVar10) {
-          grow_buffer_unsafe(pjVar5);
+        if (param_1->code_bits < (int)uVar10) {
+          grow_buffer_unsafe(param_1);
         }
-        uVar8 = CONCAT44(pjVar5->code_buffer,pjVar5->code_buffer);
-        uVar8 = uVar8 << (uVar12 & 0x1f) | uVar8 >> 0x40 - (uVar12 & 0x1f);
-        pjVar5->code_buffer = (uint)uVar8 & ~bmask[uVar12];
-        uVar8 = uVar8 & 0xffffffff & (ulonglong)bmask[uVar12];
-        pjVar5->code_bits = pjVar5->code_bits - (uint)bVar2;
-        if (uVar8 < (uint)(1 << (bVar2 - 1 & 0x3f))) {
-          uVar8 = (uVar8 - (uint)(1 << (uVar10 & 0x3f))) + 1;
+        uVar4 = CONCAT44(param_1->code_buffer,param_1->code_buffer);
+        uVar4 = uVar4 << (uVar9 & 0x1f) | uVar4 >> 0x40 - (uVar9 & 0x1f);
+        param_1->code_buffer = (uint)uVar4 & ~bmask[uVar9];
+        uVar4 = uVar4 & 0xffffffff & (ulonglong)bmask[uVar9];
+        param_1->code_bits = param_1->code_bits - (uint)bVar2;
+        if (uVar4 < (uint)(1 << (bVar2 - 1 & 0x3f))) {
+          uVar4 = (uVar4 - (uint)(1 << (uVar10 & 0x3f))) + 1;
         }
       }
-      iVar6 = 1;
-      lVar9 = (uint)pjVar5->img_comp[param_5].dc_pred + uVar8;
-      pjVar5->img_comp[param_5].dc_pred = (int)lVar9;
-      *param_2 = (short)lVar9;
+      iVar8 = 1;
+      lVar6 = (uint)param_1->img_comp[param_5].dc_pred + uVar4;
+      param_1->img_comp[param_5].dc_pred = (int)lVar6;
+      *param_2 = (short)lVar6;
       do {
-        if (pjVar5->code_bits < 0x10) {
-          grow_buffer_unsafe(pjVar5);
+        if (param_1->code_bits < 0x10) {
+          grow_buffer_unsafe(param_1);
         }
-        uVar12 = pjVar5->code_buffer;
-        iVar11 = (int)lVar7;
-        bVar2 = *(byte *)((uVar12 >> 0x17) + iVar11);
+        uVar9 = param_1->code_buffer;
+        bVar2 = param_4->fast[uVar9 >> 0x17];
         if (bVar2 < 0xff) {
-          bVar1 = *(byte *)((uint)bVar2 + iVar11 + 0x500);
-          if (pjVar5->code_bits < (int)(uint)bVar1) goto LAB_827ed68c;
-          pjVar5->code_bits = pjVar5->code_bits - (uint)bVar1;
-          pjVar5->code_buffer = uVar12 << (bVar1 & 0x3f);
-          bVar2 = *(byte *)((uint)bVar2 + iVar11 + 0x400);
+          bVar1 = param_4->size[bVar2];
+          if (param_1->code_bits < (int)(uint)bVar1) {
+            failure_reason = "bad huffman code";
+            return 0;
+          }
+          param_1->code_bits = param_1->code_bits - (uint)bVar1;
+          param_1->code_buffer = uVar9 << (bVar1 & 0x3f);
+          bVar2 = param_4->values[bVar2];
         }
         else {
-          lVar9 = lVar7 + 0x62c;
-          uVar8 = 10;
-          if (*(uint *)(iVar11 + 0x62c) <= uVar12 >> 0x10) {
+          puVar5 = param_4->maxcode + 10;
+          uVar10 = 10;
+          if (param_4->maxcode[10] <= uVar9 >> 0x10) {
             do {
-              lVar9 = lVar9 + 4;
-              uVar8 = uVar8 + 1;
-            } while (*(uint *)lVar9 <= uVar12 >> 0x10);
-            if ((int)uVar8 == 0x11) goto LAB_827ed680;
+              puVar5 = puVar5 + 1;
+              uVar10 = uVar10 + 1;
+            } while (*puVar5 <= uVar9 >> 0x10);
+            if (uVar10 == 0x11) goto LAB_827ed680;
           }
-          uVar10 = (uint)uVar8;
-          if (pjVar5->code_bits < (int)uVar10) goto LAB_827ed68c;
-          uVar3 = *(uint *)((int)bmask + (int)((uVar8 & 0xffffffff) << 2));
-          iVar4 = *(int *)((int)((uVar8 + 0x193 & 0xffffffff) << 2) + iVar11);
-          pjVar5->code_bits = pjVar5->code_bits - uVar10;
-          pjVar5->code_buffer = uVar12 << (uVar10 & 0x3f);
-          bVar2 = *(byte *)((uVar12 >> (0x20 - uVar10 & 0x3f) & uVar3) + iVar4 + iVar11 + 0x400);
+          if (param_1->code_bits < (int)uVar10) {
+            failure_reason = "bad huffman code";
+            return 0;
+          }
+          uVar3 = bmask[uVar10];
+          iVar7 = param_4->delta[uVar10];
+          param_1->code_bits = param_1->code_bits - uVar10;
+          param_1->code_buffer = uVar9 << (uVar10 & 0x3f);
+          bVar2 = param_4->values[(uVar9 >> (0x20 - uVar10 & 0x3f) & uVar3) + iVar7];
         }
-        uVar12 = (uint)bVar2;
-        uVar10 = uVar12 & 0xf;
+        uVar9 = (uint)bVar2;
+        uVar10 = uVar9 & 0xf;
         if ((bVar2 & 0xf) == 0) {
-          if (uVar12 != 0xf0) break;
-          iVar6 = iVar6 + 0x10;
+          if (uVar9 != 0xf0) {
+            return 1;
+          }
+          iVar8 = iVar8 + 0x10;
         }
         else {
-          iVar11 = ((int)uVar12 >> 4) + iVar6;
-          if (pjVar5->code_bits < (int)uVar10) {
-            grow_buffer_unsafe(pjVar5);
+          iVar7 = ((int)uVar9 >> 4) + iVar8;
+          if (param_1->code_bits < (int)uVar10) {
+            grow_buffer_unsafe(param_1);
           }
-          uVar8 = CONCAT44(pjVar5->code_buffer,pjVar5->code_buffer);
-          uVar8 = uVar8 << uVar10 | uVar8 >> 0x40 - uVar10;
-          pjVar5->code_buffer = (uint)uVar8 & ~bmask[uVar10];
-          uVar12 = bmask[uVar10];
-          pjVar5->code_bits = pjVar5->code_bits - uVar10;
-          uVar8 = (ulonglong)uVar12 & uVar8 & 0xffffffff;
-          if (uVar8 < (uint)(1 << (uVar10 - 1 & 0x3f))) {
-            uVar8 = (uVar8 - (uint)(1 << uVar10)) + 1;
+          uVar4 = CONCAT44(param_1->code_buffer,param_1->code_buffer);
+          uVar4 = uVar4 << uVar10 | uVar4 >> 0x40 - uVar10;
+          param_1->code_buffer = (uint)uVar4 & ~bmask[uVar10];
+          uVar9 = bmask[uVar10];
+          param_1->code_bits = param_1->code_bits - uVar10;
+          uVar4 = (ulonglong)uVar9 & uVar4 & 0xffffffff;
+          if (uVar4 < (uint)(1 << (uVar10 - 1 & 0x3f))) {
+            uVar4 = (uVar4 - (uint)(1 << uVar10)) + 1;
           }
-          iVar6 = iVar11 + 1;
-          param_2[dezigzag[iVar11]] = (short)uVar8;
+          iVar8 = iVar7 + 1;
+          param_2[dezigzag[iVar7]] = (short)uVar4;
         }
-      } while (iVar6 < 0x40);
-      iVar6 = __restgprlr_24(1);
-      return iVar6;
+        if (0x3f < iVar8) {
+          return 1;
+        }
+      } while( true );
     }
   }
   else {
-    lVar9 = lVar9 + 0x62c;
-    uVar8 = 10;
-    if (*(uint *)(iVar6 + 0x62c) <= uVar12 >> 0x10) {
+    puVar5 = param_3->maxcode + 10;
+    uVar10 = 10;
+    if (param_3->maxcode[10] <= uVar9 >> 0x10) {
       do {
-        lVar9 = lVar9 + 4;
-        uVar8 = uVar8 + 1;
-      } while (*(uint *)lVar9 <= uVar12 >> 0x10);
-      if ((int)uVar8 == 0x11) {
+        puVar5 = puVar5 + 1;
+        uVar10 = uVar10 + 1;
+      } while (*puVar5 <= uVar9 >> 0x10);
+      if (uVar10 == 0x11) {
 LAB_827ed680:
-        pjVar5->code_bits = pjVar5->code_bits + -0x10;
-        goto LAB_827ed68c;
+        param_1->code_bits = param_1->code_bits + -0x10;
+        failure_reason = "bad huffman code";
+        return 0;
       }
     }
-    uVar10 = (uint)uVar8;
-    if ((int)uVar10 <= pjVar5->code_bits) {
-      uVar3 = *(uint *)((int)bmask + (int)((uVar8 & 0xffffffff) << 2));
-      iVar11 = *(int *)((int)((uVar8 + 0x193 & 0xffffffff) << 2) + iVar6);
-      pjVar5->code_bits = pjVar5->code_bits - uVar10;
-      pjVar5->code_buffer = uVar12 << (uVar10 & 0x3f);
-      bVar2 = *(byte *)((uVar12 >> (0x20 - uVar10 & 0x3f) & uVar3) + iVar11 + iVar6 + 0x400);
+    if ((int)uVar10 <= param_1->code_bits) {
+      uVar3 = bmask[uVar10];
+      iVar8 = param_3->delta[uVar10];
+      param_1->code_bits = param_1->code_bits - uVar10;
+      param_1->code_buffer = uVar9 << (uVar10 & 0x3f);
+      bVar2 = param_3->values[(uVar9 >> (0x20 - uVar10 & 0x3f) & uVar3) + iVar8];
       goto LAB_827ed458;
     }
   }
-LAB_827ed68c:
   failure_reason = "bad huffman code";
-  iVar6 = __restgprlr_24(0);
-  return iVar6;
+  return 0;
 }
 
 
@@ -1773,34 +1722,33 @@ uchar clamp(int param_1)
 
 // 827ED6D8  idct_block  (mjpeg/stb_image.c:1429)
 
+/* WARNING: Function: __savegprlr_19 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_19 replaced with injection: xenon_save_restore */
+
 void idct_block(uchar *param_1,int param_2,short *param_3,uchar *param_4)
 
 {
-  int iVar1;
-  uint uVar2;
-  short *psVar3;
-  byte *pbVar4;
-  undefined1 *puVar5;
-  longlong lVar6;
-  longlong lVar7;
+  uint uVar1;
+  int iVar2;
+  int iVar3;
+  int iVar4;
+  int iVar5;
+  int iVar6;
+  int iVar7;
   int iVar8;
-  int iVar9;
-  int iVar10;
-  int iVar11;
-  int iVar12;
+  short *psVar9;
+  byte *pbVar10;
+  uchar uVar11;
+  int *piVar12;
   int iVar13;
-  longlong lVar14;
-  longlong lVar15;
-  undefined1 uVar16;
-  int *piVar17;
+  uchar *puVar14;
+  int iVar15;
+  int iVar16;
+  int iVar17;
   int iVar18;
   int iVar19;
   int iVar20;
-  int iVar21;
-  int iVar22;
-  int iVar23;
-  int iVar24;
-  longlong lVar25;
+  longlong lVar21;
   int local_170 [16];
   int local_130 [8];
   int local_110 [8];
@@ -1809,204 +1757,196 @@ void idct_block(uchar *param_1,int param_2,short *param_3,uchar *param_4)
   int local_b0 [8];
   int local_90 [36];
   
-  lVar15 = (longlong)(int)param_4;
-  lVar14 = (longlong)(int)param_3;
-  lVar7 = (longlong)param_2;
-  lVar6 = __savegprlr_19(param_1);
-  piVar17 = local_170 + 8;
-  lVar15 = lVar15 + 0x30;
-  lVar14 = lVar14 + 0x60;
-  lVar25 = 8;
+  piVar12 = local_170 + 8;
+  pbVar10 = param_4 + 0x30;
+  psVar9 = param_3 + 0x30;
+  lVar21 = 8;
   do {
-    psVar3 = (short *)lVar14;
-    pbVar4 = (byte *)lVar15;
-    if ((((psVar3[-0x28] == 0) && (psVar3[-0x20] == 0)) && (psVar3[-0x18] == 0)) &&
-       (((psVar3[-0x10] == 0 && (psVar3[-8] == 0)) && ((*psVar3 == 0 && (psVar3[8] == 0)))))) {
-      iVar13 = (int)psVar3[-0x30] * (uint)pbVar4[-0x30] * 4;
-      piVar17[0x30] = iVar13;
-      piVar17[0x28] = iVar13;
-      piVar17[0x18] = iVar13;
-      piVar17[0x10] = iVar13;
-      piVar17[8] = iVar13;
-      *piVar17 = iVar13;
-      piVar17[-8] = iVar13;
+    if ((((psVar9[-0x28] == 0) && (psVar9[-0x20] == 0)) && (psVar9[-0x18] == 0)) &&
+       (((psVar9[-0x10] == 0 && (psVar9[-8] == 0)) && ((*psVar9 == 0 && (psVar9[8] == 0)))))) {
+      iVar8 = (int)psVar9[-0x30] * (uint)pbVar10[-0x30] * 4;
+      piVar12[0x30] = iVar8;
+      piVar12[0x28] = iVar8;
+      piVar12[0x18] = iVar8;
+      piVar12[0x10] = iVar8;
+      piVar12[8] = iVar8;
+      *piVar12 = iVar8;
+      piVar12[-8] = iVar8;
     }
     else {
-      iVar8 = (int)psVar3[-8] * (uint)pbVar4[-8];
-      iVar13 = (uint)pbVar4[-0x28] * (int)psVar3[-0x28];
-      iVar12 = (int)psVar3[8] * (uint)pbVar4[8];
-      iVar11 = (int)psVar3[-0x18] * (uint)pbVar4[-0x18];
-      iVar23 = ((int)*psVar3 * (uint)*pbVar4 + (int)psVar3[-0x20] * (uint)pbVar4[-0x20]) * 0x8a9;
-      iVar10 = iVar23 + (int)*psVar3 * (uint)*pbVar4 * -0x1d8f;
-      iVar18 = (iVar8 + iVar13) * -0x63d;
-      iVar23 = (int)psVar3[-0x20] * (uint)pbVar4[-0x20] * 0xc3f + iVar23;
-      iVar19 = ((int)psVar3[-0x10] * (uint)pbVar4[-0x10] + (int)psVar3[-0x30] * (uint)pbVar4[-0x30])
-               * 0x1000;
-      iVar9 = (iVar8 + iVar13 + iVar12 + iVar11) * 0x12d0;
-      iVar22 = ((int)psVar3[-0x30] * (uint)pbVar4[-0x30] - (int)psVar3[-0x10] * (uint)pbVar4[-0x10])
-               * 0x1000;
-      iVar24 = (iVar12 + iVar11) * -0x1f62;
-      iVar20 = iVar9 + (iVar12 + iVar13) * -0xe65;
-      iVar9 = iVar9 + (iVar8 + iVar11) * -0x2901;
-      iVar1 = iVar13 * 0x1805 + iVar18 + iVar20;
-      iVar13 = iVar19 + iVar23 + 0x200;
-      iVar11 = iVar11 * 0x312a + iVar24 + iVar9;
-      iVar9 = iVar8 * 0x20da + iVar18 + iVar9;
-      iVar24 = iVar12 * 0x4c7 + iVar20 + iVar24;
-      iVar12 = iVar22 + iVar10 + 0x200;
-      piVar17[-8] = iVar13 + iVar1 >> 10;
-      iVar10 = (iVar22 - iVar10) + 0x200;
-      iVar8 = (iVar19 - iVar23) + 0x200;
-      piVar17[0x30] = iVar13 - iVar1 >> 10;
-      *piVar17 = iVar12 + iVar11 >> 10;
-      piVar17[0x28] = iVar12 - iVar11 >> 10;
-      piVar17[8] = iVar10 + iVar9 >> 10;
-      iVar13 = iVar10 - iVar9 >> 10;
-      piVar17[0x10] = iVar8 + iVar24 >> 10;
-      piVar17[0x18] = iVar8 - iVar24 >> 10;
+      iVar2 = (int)psVar9[-8] * (uint)pbVar10[-8];
+      iVar8 = (uint)pbVar10[-0x28] * (int)psVar9[-0x28];
+      iVar7 = (int)psVar9[8] * (uint)pbVar10[8];
+      iVar6 = (int)psVar9[-0x18] * (uint)pbVar10[-0x18];
+      iVar19 = ((int)*psVar9 * (uint)*pbVar10 + (int)psVar9[-0x20] * (uint)pbVar10[-0x20]) * 0x8a9;
+      iVar5 = iVar19 + (int)*psVar9 * (uint)*pbVar10 * -0x1d8f;
+      iVar13 = (iVar2 + iVar8) * -0x63d;
+      iVar19 = (int)psVar9[-0x20] * (uint)pbVar10[-0x20] * 0xc3f + iVar19;
+      iVar15 = ((int)psVar9[-0x10] * (uint)pbVar10[-0x10] +
+               (int)psVar9[-0x30] * (uint)pbVar10[-0x30]) * 0x1000;
+      iVar3 = (iVar2 + iVar8 + iVar7 + iVar6) * 0x12d0;
+      iVar17 = ((int)psVar9[-0x30] * (uint)pbVar10[-0x30] -
+               (int)psVar9[-0x10] * (uint)pbVar10[-0x10]) * 0x1000;
+      iVar20 = (iVar7 + iVar6) * -0x1f62;
+      iVar16 = iVar3 + (iVar7 + iVar8) * -0xe65;
+      iVar3 = iVar3 + (iVar2 + iVar6) * -0x2901;
+      iVar4 = iVar8 * 0x1805 + iVar13 + iVar16;
+      iVar8 = iVar15 + iVar19 + 0x200;
+      iVar6 = iVar6 * 0x312a + iVar20 + iVar3;
+      iVar3 = iVar2 * 0x20da + iVar13 + iVar3;
+      iVar20 = iVar7 * 0x4c7 + iVar16 + iVar20;
+      iVar7 = iVar17 + iVar5 + 0x200;
+      piVar12[-8] = iVar8 + iVar4 >> 10;
+      iVar5 = (iVar17 - iVar5) + 0x200;
+      iVar2 = (iVar15 - iVar19) + 0x200;
+      piVar12[0x30] = iVar8 - iVar4 >> 10;
+      *piVar12 = iVar7 + iVar6 >> 10;
+      piVar12[0x28] = iVar7 - iVar6 >> 10;
+      piVar12[8] = iVar5 + iVar3 >> 10;
+      iVar8 = iVar5 - iVar3 >> 10;
+      piVar12[0x10] = iVar2 + iVar20 >> 10;
+      piVar12[0x18] = iVar2 - iVar20 >> 10;
     }
-    piVar17[0x20] = iVar13;
-    lVar14 = lVar14 + 2;
-    lVar15 = lVar15 + 1;
-    piVar17 = piVar17 + 1;
-    lVar25 = lVar25 + -1;
-  } while (lVar25 != 0);
-  lVar6 = lVar6 + 1;
-  piVar17 = local_170 + 6;
-  lVar14 = 8;
+    piVar12[0x20] = iVar8;
+    psVar9 = psVar9 + 1;
+    pbVar10 = pbVar10 + 1;
+    piVar12 = piVar12 + 1;
+    lVar21 = lVar21 + -1;
+  } while (lVar21 != 0);
+  puVar14 = param_1 + 1;
+  piVar12 = local_170 + 6;
+  lVar21 = 8;
   do {
-    iVar13 = piVar17[1];
-    iVar1 = piVar17[-5];
-    iVar8 = piVar17[-1];
-    iVar9 = piVar17[-3];
-    iVar11 = (*piVar17 + piVar17[-4]) * 0x8a9;
-    iVar23 = piVar17[-4] * 0xc3f + iVar11;
-    iVar21 = (piVar17[-2] + piVar17[-6]) * 0x1000;
-    iVar18 = (iVar8 + iVar1) * -0x63d;
-    iVar19 = (iVar8 + iVar1 + iVar13 + iVar9) * 0x12d0;
-    iVar24 = iVar19 + (iVar13 + iVar1) * -0xe65;
-    iVar10 = iVar21 + iVar23 + 0x1010000;
-    iVar11 = iVar11 + *piVar17 * -0x1d8f;
-    iVar20 = (piVar17[-6] - piVar17[-2]) * 0x1000;
-    iVar1 = iVar1 * 0x1805 + iVar18 + iVar24;
-    iVar12 = (iVar13 + iVar9) * -0x1f62;
-    iVar19 = iVar19 + (iVar8 + iVar9) * -0x2901;
-    uVar2 = iVar10 + iVar1 >> 0x11;
-    iVar22 = iVar9 * 0x312a + iVar12 + iVar19;
-    iVar19 = iVar8 * 0x20da + iVar18 + iVar19;
-    iVar12 = iVar13 * 0x4c7 + iVar24 + iVar12;
-    iVar9 = iVar20 + iVar11 + 0x1010000;
-    iVar8 = (iVar20 - iVar11) + 0x1010000;
-    iVar13 = (iVar21 - iVar23) + 0x1010000;
-    if (uVar2 < 0x100) {
+    iVar8 = piVar12[1];
+    iVar4 = piVar12[-5];
+    iVar2 = piVar12[-1];
+    iVar3 = piVar12[-3];
+    iVar6 = (*piVar12 + piVar12[-4]) * 0x8a9;
+    iVar15 = piVar12[-4] * 0xc3f + iVar6;
+    iVar20 = (piVar12[-2] + piVar12[-6]) * 0x1000;
+    iVar7 = (iVar2 + iVar4) * -0x63d;
+    iVar13 = (iVar2 + iVar4 + iVar8 + iVar3) * 0x12d0;
+    iVar17 = iVar13 + (iVar8 + iVar4) * -0xe65;
+    iVar5 = iVar20 + iVar15 + 0x1010000;
+    iVar6 = iVar6 + *piVar12 * -0x1d8f;
+    iVar19 = (piVar12[-6] - piVar12[-2]) * 0x1000;
+    iVar18 = iVar4 * 0x1805 + iVar7 + iVar17;
+    iVar4 = (iVar8 + iVar3) * -0x1f62;
+    iVar13 = iVar13 + (iVar2 + iVar3) * -0x2901;
+    uVar1 = iVar5 + iVar18 >> 0x11;
+    iVar16 = iVar3 * 0x312a + iVar4 + iVar13;
+    iVar13 = iVar2 * 0x20da + iVar7 + iVar13;
+    iVar4 = iVar8 * 0x4c7 + iVar17 + iVar4;
+    iVar3 = iVar19 + iVar6 + 0x1010000;
+    iVar2 = (iVar19 - iVar6) + 0x1010000;
+    iVar8 = (iVar20 - iVar15) + 0x1010000;
+    if (uVar1 < 0x100) {
 LAB_827eda1c:
-      uVar16 = (undefined1)uVar2;
+      uVar11 = (uchar)uVar1;
     }
-    else if ((int)uVar2 < 0) {
-      uVar16 = 0;
+    else if ((int)uVar1 < 0) {
+      uVar11 = '\0';
     }
     else {
-      if ((int)uVar2 < 0x100) goto LAB_827eda1c;
-      uVar16 = 0xff;
+      if ((int)uVar1 < 0x100) goto LAB_827eda1c;
+      uVar11 = 0xff;
     }
-    puVar5 = (undefined1 *)lVar6;
-    puVar5[-1] = uVar16;
-    uVar2 = iVar10 - iVar1 >> 0x11;
-    if (uVar2 < 0x100) {
+    puVar14[-1] = uVar11;
+    uVar1 = iVar5 - iVar18 >> 0x11;
+    if (uVar1 < 0x100) {
 LAB_827eda54:
-      uVar16 = (undefined1)uVar2;
+      uVar11 = (uchar)uVar1;
     }
-    else if ((int)uVar2 < 0) {
-      uVar16 = 0;
+    else if ((int)uVar1 < 0) {
+      uVar11 = '\0';
     }
     else {
-      if ((int)uVar2 < 0x100) goto LAB_827eda54;
-      uVar16 = 0xff;
+      if ((int)uVar1 < 0x100) goto LAB_827eda54;
+      uVar11 = 0xff;
     }
-    puVar5[6] = uVar16;
-    uVar2 = iVar9 + iVar22 >> 0x11;
-    if (uVar2 < 0x100) {
+    puVar14[6] = uVar11;
+    uVar1 = iVar3 + iVar16 >> 0x11;
+    if (uVar1 < 0x100) {
 LAB_827eda8c:
-      uVar16 = (undefined1)uVar2;
+      uVar11 = (uchar)uVar1;
     }
-    else if ((int)uVar2 < 0) {
-      uVar16 = 0;
+    else if ((int)uVar1 < 0) {
+      uVar11 = '\0';
     }
     else {
-      if ((int)uVar2 < 0x100) goto LAB_827eda8c;
-      uVar16 = 0xff;
+      if ((int)uVar1 < 0x100) goto LAB_827eda8c;
+      uVar11 = 0xff;
     }
-    *puVar5 = uVar16;
-    uVar2 = iVar9 - iVar22 >> 0x11;
-    if (uVar2 < 0x100) {
+    *puVar14 = uVar11;
+    uVar1 = iVar3 - iVar16 >> 0x11;
+    if (uVar1 < 0x100) {
 LAB_827edac4:
-      uVar16 = (undefined1)uVar2;
+      uVar11 = (uchar)uVar1;
     }
-    else if ((int)uVar2 < 0) {
-      uVar16 = 0;
+    else if ((int)uVar1 < 0) {
+      uVar11 = '\0';
     }
     else {
-      if ((int)uVar2 < 0x100) goto LAB_827edac4;
-      uVar16 = 0xff;
+      if ((int)uVar1 < 0x100) goto LAB_827edac4;
+      uVar11 = 0xff;
     }
-    puVar5[5] = uVar16;
-    uVar2 = iVar8 + iVar19 >> 0x11;
-    if (uVar2 < 0x100) {
+    puVar14[5] = uVar11;
+    uVar1 = iVar2 + iVar13 >> 0x11;
+    if (uVar1 < 0x100) {
 LAB_827edafc:
-      uVar16 = (undefined1)uVar2;
+      uVar11 = (uchar)uVar1;
     }
-    else if ((int)uVar2 < 0) {
-      uVar16 = 0;
+    else if ((int)uVar1 < 0) {
+      uVar11 = '\0';
     }
     else {
-      if ((int)uVar2 < 0x100) goto LAB_827edafc;
-      uVar16 = 0xff;
+      if ((int)uVar1 < 0x100) goto LAB_827edafc;
+      uVar11 = 0xff;
     }
-    puVar5[1] = uVar16;
-    uVar2 = iVar8 - iVar19 >> 0x11;
-    if (uVar2 < 0x100) {
+    puVar14[1] = uVar11;
+    uVar1 = iVar2 - iVar13 >> 0x11;
+    if (uVar1 < 0x100) {
 LAB_827edb34:
-      uVar16 = (undefined1)uVar2;
+      uVar11 = (uchar)uVar1;
     }
-    else if ((int)uVar2 < 0) {
-      uVar16 = 0;
+    else if ((int)uVar1 < 0) {
+      uVar11 = '\0';
     }
     else {
-      if ((int)uVar2 < 0x100) goto LAB_827edb34;
-      uVar16 = 0xff;
+      if ((int)uVar1 < 0x100) goto LAB_827edb34;
+      uVar11 = 0xff;
     }
-    puVar5[4] = uVar16;
-    uVar2 = iVar13 + iVar12 >> 0x11;
-    if (uVar2 < 0x100) {
+    puVar14[4] = uVar11;
+    uVar1 = iVar8 + iVar4 >> 0x11;
+    if (uVar1 < 0x100) {
 LAB_827edb6c:
-      uVar16 = (undefined1)uVar2;
+      uVar11 = (uchar)uVar1;
     }
-    else if ((int)uVar2 < 0) {
-      uVar16 = 0;
+    else if ((int)uVar1 < 0) {
+      uVar11 = '\0';
     }
     else {
-      if ((int)uVar2 < 0x100) goto LAB_827edb6c;
-      uVar16 = 0xff;
+      if ((int)uVar1 < 0x100) goto LAB_827edb6c;
+      uVar11 = 0xff;
     }
-    puVar5[2] = uVar16;
-    uVar2 = iVar13 - iVar12 >> 0x11;
-    if (uVar2 < 0x100) {
+    puVar14[2] = uVar11;
+    uVar1 = iVar8 - iVar4 >> 0x11;
+    if (uVar1 < 0x100) {
 LAB_827edba4:
-      uVar16 = (undefined1)uVar2;
+      uVar11 = (uchar)uVar1;
     }
-    else if ((int)uVar2 < 0) {
-      uVar16 = 0;
+    else if ((int)uVar1 < 0) {
+      uVar11 = '\0';
     }
     else {
-      if ((int)uVar2 < 0x100) goto LAB_827edba4;
-      uVar16 = 0xff;
+      if ((int)uVar1 < 0x100) goto LAB_827edba4;
+      uVar11 = 0xff;
     }
-    puVar5[3] = uVar16;
-    piVar17 = piVar17 + 8;
-    lVar6 = lVar6 + lVar7;
-    lVar14 = lVar14 + -1;
-    if (lVar14 == 0) {
-      __restgprlr_19();
+    puVar14[3] = uVar11;
+    piVar12 = piVar12 + 8;
+    puVar14 = puVar14 + param_2;
+    lVar21 = lVar21 + -1;
+    if (lVar21 == 0) {
       return;
     }
   } while( true );
@@ -2089,511 +2029,526 @@ void reset(jpeg *param_1)
 
 // 827EDD30  parse_entropy_coded_data  (mjpeg/stb_image.c:1532)
 
+/* WARNING: Function: __savegprlr_17 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_17 replaced with injection: xenon_save_restore */
+
 int parse_entropy_coded_data(jpeg *param_1)
 
 {
   int iVar1;
-  jpeg *pjVar2;
+  int iVar2;
   int iVar3;
-  int iVar4;
   int iVar5;
-  longlong lVar6;
-  int iVar7;
-  int *piVar8;
+  longlong lVar4;
+  int iVar6;
+  int *piVar7;
+  int iVar8;
   int iVar9;
   int iVar10;
   int iVar11;
-  int iVar12;
   short asStack_100 [128];
   
-  pjVar2 = (jpeg *)__savegprlr_17(param_1);
-  iVar4 = pjVar2->restart_interval;
-  pjVar2->code_bits = 0;
-  pjVar2->code_buffer = 0;
-  pjVar2->nomore = 0;
-  pjVar2->img_comp[2].dc_pred = 0;
-  pjVar2->img_comp[1].dc_pred = 0;
-  pjVar2->img_comp[0].dc_pred = 0;
-  pjVar2->marker = 0xff;
-  if (iVar4 == 0) {
-    iVar4 = 0x7fffffff;
+  iVar5 = param_1->restart_interval;
+  param_1->code_bits = 0;
+  param_1->code_buffer = 0;
+  param_1->nomore = 0;
+  param_1->img_comp[2].dc_pred = 0;
+  param_1->img_comp[1].dc_pred = 0;
+  param_1->img_comp[0].dc_pred = 0;
+  param_1->marker = 0xff;
+  if (iVar5 == 0) {
+    iVar5 = 0x7fffffff;
   }
-  pjVar2->todo = iVar4;
-  if (pjVar2->scan_n == 1) {
-    iVar4 = pjVar2->order[0];
-    iVar10 = 0;
-    iVar9 = pjVar2->img_comp[iVar4].x + 7 >> 3;
-    iVar7 = pjVar2->img_comp[iVar4].y + 7 >> 3;
-    if (0 < iVar7) {
+  param_1->todo = iVar5;
+  if (param_1->scan_n == 1) {
+    iVar5 = param_1->order[0];
+    iVar9 = 0;
+    iVar8 = param_1->img_comp[iVar5].x + 7 >> 3;
+    iVar6 = param_1->img_comp[iVar5].y + 7 >> 3;
+    if (0 < iVar6) {
       do {
-        iVar11 = 0;
-        if (0 < iVar9) {
+        iVar10 = 0;
+        if (0 < iVar8) {
           do {
-            iVar3 = decode_block(pjVar2,asStack_100,pjVar2->huff_dc + pjVar2->img_comp[iVar4].hd,
-                                 pjVar2->huff_ac + pjVar2->img_comp[iVar4].ha,iVar4);
-            if (iVar3 == 0) {
-LAB_827ee068:
-              iVar4 = __restgprlr_17(0);
-              return iVar4;
+            iVar2 = decode_block(param_1,asStack_100,param_1->huff_dc + param_1->img_comp[iVar5].hd,
+                                 param_1->huff_ac + param_1->img_comp[iVar5].ha,iVar5);
+            if (iVar2 == 0) {
+              return 0;
             }
-            iVar3 = pjVar2->img_comp[iVar4].w2;
-            idct_block(pjVar2->img_comp[iVar4].data + (iVar3 * iVar10 + iVar11) * 8,iVar3,
-                       asStack_100,pjVar2->dequant[pjVar2->img_comp[iVar4].tq]);
-            lVar6 = (ulonglong)(uint)pjVar2->todo - 1;
-            pjVar2->todo = (int)lVar6;
-            if (lVar6 < 1) {
-              if (pjVar2->code_bits < 0x18) {
-                grow_buffer_unsafe(pjVar2);
+            iVar2 = param_1->img_comp[iVar5].w2;
+            idct_block(param_1->img_comp[iVar5].data + (iVar2 * iVar9 + iVar10) * 8,iVar2,
+                       asStack_100,param_1->dequant[param_1->img_comp[iVar5].tq]);
+            lVar4 = (ulonglong)(uint)param_1->todo - 1;
+            param_1->todo = (int)lVar4;
+            if (lVar4 < 1) {
+              if (param_1->code_bits < 0x18) {
+                grow_buffer_unsafe(param_1);
               }
-              if ((pjVar2->marker < 0xd0) || (0xd7 < pjVar2->marker)) goto LAB_827edeac;
-              iVar3 = pjVar2->restart_interval;
-              pjVar2->code_bits = 0;
-              pjVar2->code_buffer = 0;
-              pjVar2->nomore = 0;
-              pjVar2->img_comp[2].dc_pred = 0;
-              pjVar2->img_comp[1].dc_pred = 0;
-              pjVar2->img_comp[0].dc_pred = 0;
-              pjVar2->marker = 0xff;
-              if (iVar3 == 0) {
-                iVar3 = 0x7fffffff;
+              if (param_1->marker < 0xd0) {
+                return 1;
               }
-              pjVar2->todo = iVar3;
+              if (0xd7 < param_1->marker) {
+                return 1;
+              }
+              iVar2 = param_1->restart_interval;
+              param_1->code_bits = 0;
+              param_1->code_buffer = 0;
+              param_1->nomore = 0;
+              param_1->img_comp[2].dc_pred = 0;
+              param_1->img_comp[1].dc_pred = 0;
+              param_1->img_comp[0].dc_pred = 0;
+              param_1->marker = 0xff;
+              if (iVar2 == 0) {
+                iVar2 = 0x7fffffff;
+              }
+              param_1->todo = iVar2;
             }
-            iVar11 = iVar11 + 1;
-          } while (iVar11 < iVar9);
+            iVar10 = iVar10 + 1;
+          } while (iVar10 < iVar8);
         }
-        iVar10 = iVar10 + 1;
-      } while (iVar10 < iVar7);
+        iVar9 = iVar9 + 1;
+      } while (iVar9 < iVar6);
     }
   }
   else {
-    iVar4 = 0;
-    if (0 < pjVar2->img_mcu_y) {
+    iVar5 = 0;
+    if (0 < param_1->img_mcu_y) {
       do {
-        iVar9 = 0;
-        if (0 < pjVar2->img_mcu_x) {
+        iVar8 = 0;
+        if (0 < param_1->img_mcu_x) {
           do {
-            iVar7 = 0;
-            if (0 < pjVar2->scan_n) {
-              piVar8 = pjVar2->order;
+            iVar6 = 0;
+            if (0 < param_1->scan_n) {
+              piVar7 = param_1->order;
               do {
-                iVar10 = *piVar8;
-                iVar11 = 0;
-                if (0 < pjVar2->img_comp[iVar10].v) {
+                iVar9 = *piVar7;
+                iVar10 = 0;
+                if (0 < param_1->img_comp[iVar9].v) {
                   do {
-                    iVar3 = pjVar2->img_comp[iVar10].h;
-                    iVar12 = 0;
-                    if (0 < iVar3) {
+                    iVar2 = param_1->img_comp[iVar9].h;
+                    iVar11 = 0;
+                    if (0 < iVar2) {
                       do {
-                        iVar1 = pjVar2->img_comp[iVar10].v;
-                        iVar5 = decode_block(pjVar2,asStack_100,
-                                             pjVar2->huff_dc + pjVar2->img_comp[iVar10].hd,
-                                             pjVar2->huff_ac + pjVar2->img_comp[iVar10].ha,iVar10);
-                        if (iVar5 == 0) goto LAB_827ee068;
-                        iVar5 = pjVar2->img_comp[iVar10].w2;
-                        idct_block(pjVar2->img_comp[iVar10].data +
-                                   (iVar3 * iVar9 + iVar12) * 8 +
-                                   iVar5 * (iVar1 * iVar4 + iVar11) * 8,iVar5,asStack_100,
-                                   pjVar2->dequant[pjVar2->img_comp[iVar10].tq]);
-                        iVar3 = pjVar2->img_comp[iVar10].h;
-                        iVar12 = iVar12 + 1;
-                      } while (iVar12 < iVar3);
+                        iVar1 = param_1->img_comp[iVar9].v;
+                        iVar3 = decode_block(param_1,asStack_100,
+                                             param_1->huff_dc + param_1->img_comp[iVar9].hd,
+                                             param_1->huff_ac + param_1->img_comp[iVar9].ha,iVar9);
+                        if (iVar3 == 0) {
+                          return 0;
+                        }
+                        iVar3 = param_1->img_comp[iVar9].w2;
+                        idct_block(param_1->img_comp[iVar9].data +
+                                   (iVar2 * iVar8 + iVar11) * 8 +
+                                   iVar3 * (iVar1 * iVar5 + iVar10) * 8,iVar3,asStack_100,
+                                   param_1->dequant[param_1->img_comp[iVar9].tq]);
+                        iVar2 = param_1->img_comp[iVar9].h;
+                        iVar11 = iVar11 + 1;
+                      } while (iVar11 < iVar2);
                     }
-                    iVar11 = iVar11 + 1;
-                  } while (iVar11 < pjVar2->img_comp[iVar10].v);
+                    iVar10 = iVar10 + 1;
+                  } while (iVar10 < param_1->img_comp[iVar9].v);
                 }
-                iVar7 = iVar7 + 1;
-                piVar8 = piVar8 + 1;
-              } while (iVar7 < pjVar2->scan_n);
+                iVar6 = iVar6 + 1;
+                piVar7 = piVar7 + 1;
+              } while (iVar6 < param_1->scan_n);
             }
-            lVar6 = (ulonglong)(uint)pjVar2->todo - 1;
-            pjVar2->todo = (int)lVar6;
-            if (lVar6 < 1) {
-              if (pjVar2->code_bits < 0x18) {
-                grow_buffer_unsafe(pjVar2);
+            lVar4 = (ulonglong)(uint)param_1->todo - 1;
+            param_1->todo = (int)lVar4;
+            if (lVar4 < 1) {
+              if (param_1->code_bits < 0x18) {
+                grow_buffer_unsafe(param_1);
               }
-              if ((pjVar2->marker < 0xd0) || (0xd7 < pjVar2->marker)) goto LAB_827edeac;
-              iVar7 = pjVar2->restart_interval;
-              pjVar2->code_bits = 0;
-              pjVar2->code_buffer = 0;
-              pjVar2->nomore = 0;
-              pjVar2->img_comp[2].dc_pred = 0;
-              pjVar2->img_comp[1].dc_pred = 0;
-              pjVar2->img_comp[0].dc_pred = 0;
-              pjVar2->marker = 0xff;
-              if (iVar7 == 0) {
-                iVar7 = 0x7fffffff;
+              if (param_1->marker < 0xd0) {
+                return 1;
               }
-              pjVar2->todo = iVar7;
+              if (0xd7 < param_1->marker) {
+                return 1;
+              }
+              iVar6 = param_1->restart_interval;
+              param_1->code_bits = 0;
+              param_1->code_buffer = 0;
+              param_1->nomore = 0;
+              param_1->img_comp[2].dc_pred = 0;
+              param_1->img_comp[1].dc_pred = 0;
+              param_1->img_comp[0].dc_pred = 0;
+              param_1->marker = 0xff;
+              if (iVar6 == 0) {
+                iVar6 = 0x7fffffff;
+              }
+              param_1->todo = iVar6;
             }
-            iVar9 = iVar9 + 1;
-          } while (iVar9 < pjVar2->img_mcu_x);
+            iVar8 = iVar8 + 1;
+          } while (iVar8 < param_1->img_mcu_x);
         }
-        iVar4 = iVar4 + 1;
-        if (pjVar2->img_mcu_y <= iVar4) {
-          iVar4 = __restgprlr_17(1);
-          return iVar4;
+        iVar5 = iVar5 + 1;
+        if (param_1->img_mcu_y <= iVar5) {
+          return 1;
         }
       } while( true );
     }
   }
-LAB_827edeac:
-  iVar4 = __restgprlr_17(1);
-  return iVar4;
+  return 1;
 }
 
 
 // 827EE078  process_marker  (mjpeg/stb_image.c:1604)
+
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 
 int process_marker(jpeg *param_1,int param_2)
 
 {
   byte *pbVar1;
   uchar *puVar2;
-  uint uVar3;
-  stbi *psVar4;
-  int iVar5;
-  uint uVar7;
-  ulonglong uVar6;
-  uchar uVar8;
-  longlong lVar9;
-  longlong lVar10;
-  undefined4 *puVar11;
+  _iobuf *p_Var3;
+  uint uVar4;
+  huffman *phVar5;
+  int iVar6;
+  int iVar7;
+  uint uVar9;
+  ulonglong uVar8;
+  uchar uVar10;
+  longlong lVar11;
   longlong lVar12;
-  int iVar13;
+  undefined4 *puVar13;
+  longlong lVar14;
   undefined4 uStack_84;
   int local_80 [32];
   
-  psVar4 = (stbi *)__savegprlr_25(param_1);
   if (param_2 < 0xdc) {
     if (param_2 == 0xdb) {
-      iVar5 = get16(psVar4);
-      lVar10 = (longlong)iVar5 + -2;
+      iVar6 = get16(&param_1->s);
+      lVar12 = (longlong)iVar6 + -2;
       while( true ) {
-        if (lVar10 < 1) {
-          iVar5 = __restgprlr_25((int)lVar10 == 0);
-          return iVar5;
+        if (lVar12 < 1) {
+          return (uint)LZCOUNT((int)lVar12) >> 5;
         }
-        pbVar1 = psVar4->img_buffer;
-        if (pbVar1 < psVar4->img_buffer_end) {
-          uVar7 = (uint)*pbVar1;
-          psVar4->img_buffer = pbVar1 + 1;
+        pbVar1 = (param_1->s).img_buffer;
+        if (pbVar1 < (param_1->s).img_buffer_end) {
+          uVar9 = (uint)*pbVar1;
+          (param_1->s).img_buffer = pbVar1 + 1;
         }
-        else if (psVar4->from_file == 0) {
-          uVar7 = 0;
+        else if ((param_1->s).from_file == 0) {
+          uVar9 = 0;
         }
         else {
-          refill_buffer(psVar4);
-          uVar7 = (uint)*psVar4->img_buffer;
-          psVar4->img_buffer = psVar4->img_buffer + 1;
+          refill_buffer(&param_1->s);
+          pbVar1 = (param_1->s).img_buffer;
+          uVar9 = (uint)*pbVar1;
+          (param_1->s).img_buffer = pbVar1 + 1;
         }
-        if ((uVar7 & 0xfffffff0) != 0) break;
-        if (3 < (uVar7 & 0xf)) {
+        if ((uVar9 & 0xfffffff0) != 0) break;
+        if (3 < (uVar9 & 0xf)) {
           failure_reason = "bad DQT table";
-          iVar5 = __restgprlr_25(0);
-          return iVar5;
+          return 0;
         }
-        iVar5 = 0;
+        iVar6 = 0;
         do {
-          puVar2 = psVar4->img_buffer;
-          if (puVar2 < psVar4->img_buffer_end) {
-            uVar8 = *puVar2;
-            psVar4->img_buffer = puVar2 + 1;
+          puVar2 = (param_1->s).img_buffer;
+          if (puVar2 < (param_1->s).img_buffer_end) {
+            uVar10 = *puVar2;
+            (param_1->s).img_buffer = puVar2 + 1;
           }
-          else if (psVar4->from_file == 0) {
-            uVar8 = '\0';
+          else if ((param_1->s).from_file == 0) {
+            uVar10 = '\0';
           }
           else {
-            refill_buffer(psVar4);
-            uVar8 = *psVar4->img_buffer;
-            psVar4->img_buffer = psVar4->img_buffer + 1;
+            refill_buffer(&param_1->s);
+            puVar2 = (param_1->s).img_buffer;
+            uVar10 = *puVar2;
+            (param_1->s).img_buffer = puVar2 + 1;
           }
-          pbVar1 = dezigzag + iVar5;
-          iVar5 = iVar5 + 1;
-          psVar4[0x52].buffer_start[(uint)*pbVar1 + (uVar7 & 0xf) * 0x40 + 0x84] = uVar8;
-        } while (iVar5 < 0x40);
-        lVar10 = lVar10 + -0x41;
+          pbVar1 = dezigzag + iVar6;
+          iVar6 = iVar6 + 1;
+          param_1->dequant[uVar9 & 0xf][*pbVar1] = uVar10;
+        } while (iVar6 < 0x40);
+        lVar12 = lVar12 + -0x41;
       }
       failure_reason = "bad DQT type";
-      iVar5 = __restgprlr_25(0);
-      return iVar5;
+      return 0;
     }
     if (param_2 == 0xc2) {
       failure_reason = "progressive jpeg";
-      iVar5 = __restgprlr_25(0);
-      return iVar5;
+      return 0;
     }
     if (param_2 == 0xc4) {
-      iVar5 = get16(psVar4);
-      lVar10 = (longlong)iVar5 + -2;
-      do {
-        if (lVar10 < 1) {
-          iVar5 = __restgprlr_25((int)lVar10 == 0);
-          return iVar5;
+      iVar6 = get16(&param_1->s);
+      lVar12 = (longlong)iVar6 + -2;
+      while( true ) {
+        if (lVar12 < 1) {
+          return (uint)LZCOUNT((int)lVar12) >> 5;
         }
-        pbVar1 = psVar4->img_buffer;
-        lVar9 = 0;
-        if (pbVar1 < psVar4->img_buffer_end) {
-          uVar7 = (uint)*pbVar1;
-          psVar4->img_buffer = pbVar1 + 1;
+        pbVar1 = (param_1->s).img_buffer;
+        lVar11 = 0;
+        if (pbVar1 < (param_1->s).img_buffer_end) {
+          uVar9 = (uint)*pbVar1;
+          (param_1->s).img_buffer = pbVar1 + 1;
         }
-        else if (psVar4->from_file == 0) {
-          uVar7 = 0;
+        else if ((param_1->s).from_file == 0) {
+          uVar9 = 0;
         }
         else {
-          refill_buffer(psVar4);
-          uVar7 = (uint)*psVar4->img_buffer;
-          psVar4->img_buffer = psVar4->img_buffer + 1;
+          refill_buffer(&param_1->s);
+          pbVar1 = (param_1->s).img_buffer;
+          uVar9 = (uint)*pbVar1;
+          (param_1->s).img_buffer = pbVar1 + 1;
         }
-        uVar3 = uVar7 & 0xf;
-        if ((1 < (uint)((int)uVar7 >> 4)) || (3 < uVar3)) {
-          failure_reason = "bad DHT header";
-          iVar5 = __restgprlr_25(0);
-          return iVar5;
-        }
-        lVar12 = 0x10;
-        puVar11 = &uStack_84;
+        uVar4 = uVar9 & 0xf;
+        if ((1 < (uint)((int)uVar9 >> 4)) || (3 < uVar4)) break;
+        lVar14 = 0x10;
+        puVar13 = &uStack_84;
         do {
-          pbVar1 = psVar4->img_buffer;
-          if (pbVar1 < psVar4->img_buffer_end) {
-            uVar6 = (ulonglong)*pbVar1;
-            psVar4->img_buffer = pbVar1 + 1;
+          pbVar1 = (param_1->s).img_buffer;
+          if (pbVar1 < (param_1->s).img_buffer_end) {
+            uVar8 = (ulonglong)*pbVar1;
+            (param_1->s).img_buffer = pbVar1 + 1;
           }
-          else if (psVar4->from_file == 0) {
-            uVar6 = 0;
+          else if ((param_1->s).from_file == 0) {
+            uVar8 = 0;
           }
           else {
-            refill_buffer(psVar4);
-            uVar6 = (ulonglong)*psVar4->img_buffer;
-            psVar4->img_buffer = psVar4->img_buffer + 1;
+            refill_buffer(&param_1->s);
+            pbVar1 = (param_1->s).img_buffer;
+            uVar8 = (ulonglong)*pbVar1;
+            (param_1->s).img_buffer = pbVar1 + 1;
           }
-          lVar12 = lVar12 + -1;
-          puVar11 = puVar11 + 1;
-          *puVar11 = (int)uVar6;
-          lVar9 = uVar6 + lVar9;
-        } while (lVar12 != 0);
-        if ((int)uVar7 >> 4 == 0) {
-          iVar5 = build_huffman((huffman *)((int)psVar4 + uVar3 * 0x690 + 0xa4),local_80);
-          if (iVar5 == 0) goto LAB_827ee25c;
-          iVar5 = uVar3 * 0x690 + 0x4a4;
+          lVar14 = lVar14 + -1;
+          puVar13 = puVar13 + 1;
+          *puVar13 = (int)uVar8;
+          lVar11 = uVar8 + lVar11;
+        } while (lVar14 != 0);
+        if ((int)uVar9 >> 4 == 0) {
+          iVar6 = build_huffman(param_1->huff_dc + uVar4,local_80);
+          if (iVar6 == 0) {
+            return 0;
+          }
+          phVar5 = param_1->huff_dc;
         }
         else {
-          iVar5 = build_huffman((huffman *)((int)psVar4 + uVar3 * 0x690 + 0x1ae4),local_80);
-          if (iVar5 == 0) goto LAB_827ee25c;
-          iVar5 = uVar3 * 0x690 + 0x1ee4;
+          iVar6 = build_huffman(param_1->huff_ac + uVar4,local_80);
+          if (iVar6 == 0) {
+            return 0;
+          }
+          phVar5 = param_1->huff_ac;
         }
-        iVar13 = 0;
-        if (0 < (int)lVar9) {
+        iVar6 = 0;
+        if (0 < (int)lVar11) {
           do {
-            puVar2 = psVar4->img_buffer;
-            if (puVar2 < psVar4->img_buffer_end) {
-              uVar8 = *puVar2;
-              psVar4->img_buffer = puVar2 + 1;
+            puVar2 = (param_1->s).img_buffer;
+            if (puVar2 < (param_1->s).img_buffer_end) {
+              uVar10 = *puVar2;
+              (param_1->s).img_buffer = puVar2 + 1;
             }
-            else if (psVar4->from_file == 0) {
-              uVar8 = '\0';
+            else if ((param_1->s).from_file == 0) {
+              uVar10 = '\0';
             }
             else {
-              refill_buffer(psVar4);
-              uVar8 = *psVar4->img_buffer;
-              psVar4->img_buffer = psVar4->img_buffer + 1;
+              refill_buffer(&param_1->s);
+              puVar2 = (param_1->s).img_buffer;
+              uVar10 = *puVar2;
+              (param_1->s).img_buffer = puVar2 + 1;
             }
-            psVar4->buffer_start[iVar13 + iVar5 + -0x18] = uVar8;
-            iVar13 = iVar13 + 1;
-          } while (iVar13 < (int)lVar9);
+            phVar5[uVar4].values[iVar6] = uVar10;
+            iVar6 = iVar6 + 1;
+          } while (iVar6 < (int)lVar11);
         }
-        lVar10 = (lVar10 + -0x11) - lVar9;
-      } while( true );
+        lVar12 = (lVar12 + -0x11) - lVar11;
+      }
+      failure_reason = "bad DHT header";
+      return 0;
     }
   }
   else {
     if (param_2 == 0xdd) {
-      iVar5 = get16(psVar4);
-      if (iVar5 == 4) {
-        iVar5 = get16(psVar4);
-        *(int *)(psVar4[0x56].buffer_start + 0x10) = iVar5;
-        iVar5 = __restgprlr_25(1);
-        return iVar5;
+      iVar6 = get16(&param_1->s);
+      if (iVar6 != 4) {
+        failure_reason = "bad DRI len";
+        return 0;
       }
-      failure_reason = "bad DRI len";
-      iVar5 = __restgprlr_25(0);
-      return iVar5;
+      iVar6 = get16(&param_1->s);
+      param_1->restart_interval = iVar6;
+      return 1;
     }
     if (param_2 == 0xff) {
       failure_reason = "expected marker";
-      iVar5 = __restgprlr_25(0);
-      return iVar5;
+      return 0;
     }
   }
-  if (((0xdf < param_2) && (param_2 < 0xf0)) || (param_2 == 0xfe)) {
-    iVar5 = get16(psVar4);
-    iVar5 = iVar5 + -2;
-    if (psVar4->img_file != (_iobuf *)0x0) {
-      iVar13 = (int)psVar4->img_buffer_end - (int)psVar4->img_buffer;
-      if (iVar13 < iVar5) {
-        psVar4->img_buffer = psVar4->img_buffer_end;
-        fseek(psVar4->img_file,iVar5 - iVar13,1);
-        iVar5 = __restgprlr_25(1);
-        return iVar5;
-      }
-    }
-    psVar4->img_buffer = psVar4->img_buffer + iVar5;
-    iVar5 = __restgprlr_25(1);
-    return iVar5;
+  if (((param_2 < 0xe0) || (0xef < param_2)) && (param_2 != 0xfe)) {
+    return 0;
   }
-LAB_827ee25c:
-  iVar5 = __restgprlr_25(0);
-  return iVar5;
+  iVar6 = get16(&param_1->s);
+  p_Var3 = (param_1->s).img_file;
+  iVar6 = iVar6 + -2;
+  if (p_Var3 != (_iobuf *)0x0) {
+    puVar2 = (param_1->s).img_buffer_end;
+    iVar7 = (int)puVar2 - (int)(param_1->s).img_buffer;
+    if (iVar7 < iVar6) {
+      (param_1->s).img_buffer = puVar2;
+      fseek(p_Var3,iVar6 - iVar7,1);
+      return 1;
+    }
+  }
+  (param_1->s).img_buffer = (param_1->s).img_buffer + iVar6;
+  return 1;
 }
 
 
 // 827EE4D8  process_scan_header  (mjpeg/stb_image.c:1673)
+
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 
 int process_scan_header(jpeg *param_1)
 
 {
   uchar uVar1;
   byte *pbVar2;
-  stbi *psVar3;
+  int iVar3;
   int iVar4;
   uint uVar5;
   uint uVar6;
-  int iVar7;
-  uchar *puVar8;
-  int *piVar9;
+  <unnamed_tag_0000BC6E> *p<Var7;
+  int iVar8;
+  uchar *puVar9;
+  int *piVar10;
   
-  psVar3 = (stbi *)__savegprlr_28(param_1);
-  iVar4 = get16(psVar3);
-  pbVar2 = psVar3->img_buffer;
-  if (pbVar2 < psVar3->img_buffer_end) {
+  iVar4 = get16(&param_1->s);
+  pbVar2 = (param_1->s).img_buffer;
+  if (pbVar2 < (param_1->s).img_buffer_end) {
     uVar6 = (uint)*pbVar2;
-    psVar3->img_buffer = pbVar2 + 1;
+    (param_1->s).img_buffer = pbVar2 + 1;
   }
-  else if (psVar3->from_file == 0) {
+  else if ((param_1->s).from_file == 0) {
     uVar6 = 0;
   }
   else {
-    refill_buffer(psVar3);
-    uVar6 = (uint)*psVar3->img_buffer;
-    psVar3->img_buffer = psVar3->img_buffer + 1;
+    refill_buffer(&param_1->s);
+    pbVar2 = (param_1->s).img_buffer;
+    uVar6 = (uint)*pbVar2;
+    (param_1->s).img_buffer = pbVar2 + 1;
   }
-  psVar3[0x56].buflen = uVar6;
-  if (((uVar6 == 0) || (4 < uVar6)) || (psVar3->img_n < (int)uVar6)) {
+  param_1->scan_n = uVar6;
+  if (((uVar6 == 0) || (4 < uVar6)) || ((param_1->s).img_n < (int)uVar6)) {
     failure_reason = "bad SOS component count";
-LAB_827ee7ec:
-    iVar4 = __restgprlr_28(0);
-    return iVar4;
+    return 0;
   }
   if (iVar4 != (uVar6 + 3) * 2) {
     failure_reason = "bad SOS len";
-    iVar4 = __restgprlr_28(0);
-    return iVar4;
+    return 0;
   }
   iVar4 = 0;
   if (uVar6 != 0) {
-    piVar9 = &psVar3[0x56].buflen;
+    piVar10 = &param_1->scan_n;
     do {
-      pbVar2 = psVar3->img_buffer;
-      if (pbVar2 < psVar3->img_buffer_end) {
+      pbVar2 = (param_1->s).img_buffer;
+      if (pbVar2 < (param_1->s).img_buffer_end) {
         uVar6 = (uint)*pbVar2;
-        psVar3->img_buffer = pbVar2 + 1;
+        (param_1->s).img_buffer = pbVar2 + 1;
       }
-      else if (psVar3->from_file == 0) {
+      else if ((param_1->s).from_file == 0) {
         uVar6 = 0;
       }
       else {
-        refill_buffer(psVar3);
-        uVar6 = (uint)*psVar3->img_buffer;
-        psVar3->img_buffer = psVar3->img_buffer + 1;
+        refill_buffer(&param_1->s);
+        pbVar2 = (param_1->s).img_buffer;
+        uVar6 = (uint)*pbVar2;
+        (param_1->s).img_buffer = pbVar2 + 1;
       }
-      pbVar2 = psVar3->img_buffer;
-      if (pbVar2 < psVar3->img_buffer_end) {
+      pbVar2 = (param_1->s).img_buffer;
+      if (pbVar2 < (param_1->s).img_buffer_end) {
         uVar5 = (uint)*pbVar2;
-        psVar3->img_buffer = pbVar2 + 1;
+        (param_1->s).img_buffer = pbVar2 + 1;
       }
-      else if (psVar3->from_file == 0) {
+      else if ((param_1->s).from_file == 0) {
         uVar5 = 0;
       }
       else {
-        refill_buffer(psVar3);
-        uVar5 = (uint)*psVar3->img_buffer;
-        psVar3->img_buffer = psVar3->img_buffer + 1;
+        refill_buffer(&param_1->s);
+        pbVar2 = (param_1->s).img_buffer;
+        uVar5 = (uint)*pbVar2;
+        (param_1->s).img_buffer = pbVar2 + 1;
       }
-      iVar7 = 0;
-      if (0 < psVar3->img_n) {
-        puVar8 = psVar3[0x54].buffer_start + 0x54;
-        iVar7 = 0;
+      iVar3 = (param_1->s).img_n;
+      iVar8 = 0;
+      if (0 < iVar3) {
+        p<Var7 = param_1->img_comp;
         do {
-          if (*(uint *)puVar8 == uVar6) break;
-          iVar7 = iVar7 + 1;
-          puVar8 = puVar8 + 0x38;
-        } while (iVar7 < psVar3->img_n);
+          if (p<Var7->id == uVar6) break;
+          iVar8 = iVar8 + 1;
+          p<Var7 = p<Var7 + 1;
+        } while (iVar8 < (param_1->s).img_n);
       }
-      if (iVar7 == psVar3->img_n) goto LAB_827ee7ec;
-      *(int *)(psVar3[0x54].buffer_start + iVar7 * 0x38 + 100) = (int)uVar5 >> 4;
+      if (iVar8 == iVar3) {
+        return 0;
+      }
+      param_1->img_comp[iVar8].hd = (int)uVar5 >> 4;
       if (3 < (uint)((int)uVar5 >> 4)) {
         failure_reason = "bad DC huff";
-        iVar4 = __restgprlr_28(0);
-        return iVar4;
+        return 0;
       }
-      *(uint *)(psVar3[0x54].buffer_start + iVar7 * 0x38 + 0x68) = uVar5 & 0xf;
+      param_1->img_comp[iVar8].ha = uVar5 & 0xf;
       if (3 < (uVar5 & 0xf)) {
         failure_reason = "bad AC huff";
-        iVar4 = __restgprlr_28(0);
-        return iVar4;
+        return 0;
       }
       iVar4 = iVar4 + 1;
-      piVar9 = piVar9 + 1;
-      *piVar9 = iVar7;
-    } while (iVar4 < psVar3[0x56].buflen);
+      piVar10 = piVar10 + 1;
+      *piVar10 = iVar8;
+    } while (iVar4 < param_1->scan_n);
   }
-  puVar8 = psVar3->img_buffer;
-  if (puVar8 < psVar3->img_buffer_end) {
-    uVar1 = *puVar8;
-    psVar3->img_buffer = puVar8 + 1;
+  puVar9 = (param_1->s).img_buffer;
+  if (puVar9 < (param_1->s).img_buffer_end) {
+    uVar1 = *puVar9;
+    (param_1->s).img_buffer = puVar9 + 1;
 LAB_827ee72c:
-    if (uVar1 != '\0') goto LAB_827ee734;
+    if (uVar1 != '\0') {
+      failure_reason = "bad SOS";
+      return 0;
+    }
   }
-  else if (psVar3->from_file != 0) {
-    refill_buffer(psVar3);
-    uVar1 = *psVar3->img_buffer;
-    psVar3->img_buffer = psVar3->img_buffer + 1;
+  else if ((param_1->s).from_file != 0) {
+    refill_buffer(&param_1->s);
+    puVar9 = (param_1->s).img_buffer;
+    uVar1 = *puVar9;
+    (param_1->s).img_buffer = puVar9 + 1;
     goto LAB_827ee72c;
   }
-  puVar8 = psVar3->img_buffer;
-  if (puVar8 < psVar3->img_buffer_end) {
-LAB_827ee778:
-    psVar3->img_buffer = puVar8 + 1;
+  puVar9 = (param_1->s).img_buffer;
+  if ((param_1->s).img_buffer_end <= puVar9) {
+    if ((param_1->s).from_file == 0) goto LAB_827ee780;
+    refill_buffer(&param_1->s);
+    puVar9 = (param_1->s).img_buffer;
   }
-  else if (psVar3->from_file != 0) {
-    refill_buffer(psVar3);
-    puVar8 = psVar3->img_buffer;
-    goto LAB_827ee778;
-  }
-  puVar8 = psVar3->img_buffer;
-  if (puVar8 < psVar3->img_buffer_end) {
-    uVar1 = *puVar8;
-    psVar3->img_buffer = puVar8 + 1;
+  (param_1->s).img_buffer = puVar9 + 1;
+LAB_827ee780:
+  puVar9 = (param_1->s).img_buffer;
+  if (puVar9 < (param_1->s).img_buffer_end) {
+    uVar1 = *puVar9;
+    (param_1->s).img_buffer = puVar9 + 1;
   }
   else {
-    if (psVar3->from_file == 0) goto LAB_827ee7d0;
-    refill_buffer(psVar3);
-    uVar1 = *psVar3->img_buffer;
-    psVar3->img_buffer = psVar3->img_buffer + 1;
+    if ((param_1->s).from_file == 0) {
+      return 1;
+    }
+    refill_buffer(&param_1->s);
+    puVar9 = (param_1->s).img_buffer;
+    uVar1 = *puVar9;
+    (param_1->s).img_buffer = puVar9 + 1;
   }
-  if (uVar1 != '\0') {
-LAB_827ee734:
-    failure_reason = "bad SOS";
-    iVar4 = __restgprlr_28(0);
-    return iVar4;
+  if (uVar1 == '\0') {
+    return 1;
   }
-LAB_827ee7d0:
-  iVar4 = __restgprlr_28(1);
-  return iVar4;
+  failure_reason = "bad SOS";
+  return 0;
 }
 
 
 // 827EE7F8  process_frame_header  (mjpeg/stb_image.c:1698)
+
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 
 int process_frame_header(jpeg *param_1,int param_2)
 
@@ -2602,328 +2557,319 @@ int process_frame_header(jpeg *param_1,int param_2)
   uchar uVar2;
   byte bVar3;
   byte *pbVar4;
-  uint *puVar5;
-  int iVar6;
-  longlong lVar7;
-  int iVar8;
-  uint uVar10;
-  uchar *puVar11;
-  longlong lVar12;
-  uint uVar14;
-  ulonglong uVar13;
+  int iVar5;
+  uint *puVar6;
+  int iVar7;
+  uint uVar8;
+  uchar *puVar9;
+  ulonglong uVar10;
+  longlong lVar11;
+  uint uVar13;
+  ulonglong uVar12;
+  ulonglong uVar14;
   ulonglong uVar15;
   ulonglong uVar16;
   ulonglong uVar17;
-  ulonglong uVar18;
-  uint uVar19;
-  longlong lVar20;
-  int *piVar21;
-  stbi *psVar9;
+  uint uVar18;
+  longlong lVar19;
+  int *piVar20;
+  longlong lVar21;
   
-  lVar7 = __savegprlr_24(param_1);
+  lVar21 = (longlong)(int)param_1;
+  uVar16 = 1;
   uVar17 = 1;
-  uVar18 = 1;
-  psVar9 = (stbi *)lVar7;
-  iVar8 = get16(psVar9);
-  if (10 < iVar8) {
-    puVar11 = psVar9->img_buffer;
-    if (puVar11 < psVar9->img_buffer_end) {
-      uVar2 = *puVar11;
-      psVar9->img_buffer = puVar11 + 1;
+  iVar7 = get16(&param_1->s);
+  if (10 < iVar7) {
+    puVar9 = (param_1->s).img_buffer;
+    if (puVar9 < (param_1->s).img_buffer_end) {
+      uVar2 = *puVar9;
+      (param_1->s).img_buffer = puVar9 + 1;
     }
     else {
-      if (psVar9->from_file == 0) goto LAB_827ee890;
-      refill_buffer(psVar9);
-      uVar2 = *psVar9->img_buffer;
-      psVar9->img_buffer = psVar9->img_buffer + 1;
+      if ((param_1->s).from_file == 0) {
+        failure_reason = "only 8-bit";
+        return 0;
+      }
+      refill_buffer(&param_1->s);
+      puVar9 = (param_1->s).img_buffer;
+      uVar2 = *puVar9;
+      (param_1->s).img_buffer = puVar9 + 1;
     }
     if (uVar2 != '\b') {
-LAB_827ee890:
       failure_reason = "only 8-bit";
-      iVar8 = __restgprlr_24(0);
-      return iVar8;
+      return 0;
     }
-    uVar10 = get16(psVar9);
-    psVar9->img_y = uVar10;
-    if (uVar10 == 0) {
+    uVar8 = get16(&param_1->s);
+    (param_1->s).img_y = uVar8;
+    if (uVar8 == 0) {
       failure_reason = "no header height";
-      iVar8 = __restgprlr_24(0);
-      return iVar8;
+      return 0;
     }
-    uVar10 = get16(psVar9);
-    psVar9->img_x = uVar10;
-    if (uVar10 == 0) {
+    uVar8 = get16(&param_1->s);
+    (param_1->s).img_x = uVar8;
+    if (uVar8 == 0) {
       failure_reason = "0 width";
-      iVar8 = __restgprlr_24();
-      return iVar8;
+      return 0;
     }
-    pbVar4 = psVar9->img_buffer;
-    if (pbVar4 < psVar9->img_buffer_end) {
+    pbVar4 = (param_1->s).img_buffer;
+    if (pbVar4 < (param_1->s).img_buffer_end) {
       bVar3 = *pbVar4;
-      psVar9->img_buffer = pbVar4 + 1;
+      (param_1->s).img_buffer = pbVar4 + 1;
     }
     else {
-      if (psVar9->from_file == 0) goto LAB_827ee960;
-      refill_buffer(psVar9);
-      bVar3 = *psVar9->img_buffer;
-      psVar9->img_buffer = psVar9->img_buffer + 1;
+      if ((param_1->s).from_file == 0) {
+        failure_reason = "bad component count";
+        return 0;
+      }
+      refill_buffer(&param_1->s);
+      pbVar4 = (param_1->s).img_buffer;
+      bVar3 = *pbVar4;
+      (param_1->s).img_buffer = pbVar4 + 1;
     }
-    uVar15 = (ulonglong)bVar3;
-    uVar10 = (uint)bVar3;
-    if ((uVar10 != 3) && (uVar10 != 1)) {
-LAB_827ee960:
+    uVar14 = (ulonglong)bVar3;
+    uVar8 = (uint)bVar3;
+    if ((uVar8 != 3) && (uVar8 != 1)) {
       failure_reason = "bad component count";
-      iVar8 = __restgprlr_24(0);
-      return iVar8;
+      return 0;
     }
-    psVar9->img_n = uVar10;
-    if (uVar10 != 0) {
-      lVar12 = lVar7 + 0x3638;
+    (param_1->s).img_n = uVar8;
+    if (uVar8 != 0) {
+      lVar11 = lVar21 + 0x3638;
       do {
-        *(undefined4 *)((int)lVar12 + 0x30) = 0;
-        lVar12 = lVar12 + 0x38;
-        *(undefined4 *)lVar12 = 0;
-        uVar15 = uVar15 - 1;
-      } while (uVar15 != 0);
+        *(undefined4 *)((int)lVar11 + 0x30) = 0;
+        lVar11 = lVar11 + 0x38;
+        *(undefined4 *)lVar11 = 0;
+        uVar14 = uVar14 - 1;
+      } while (uVar14 != 0);
     }
-    if (iVar8 == psVar9->img_n * 3 + 8) {
-      if (0 < psVar9->img_n) {
-        lVar12 = lVar7 + 0x3640;
-        uVar10 = 0;
+    iVar5 = (param_1->s).img_n;
+    if (iVar7 == iVar5 * 3 + 8) {
+      if (0 < iVar5) {
+        lVar11 = lVar21 + 0x3640;
+        uVar8 = 0;
         do {
-          pbVar4 = psVar9->img_buffer;
-          if (pbVar4 < psVar9->img_buffer_end) {
-            uVar14 = (uint)*pbVar4;
-            psVar9->img_buffer = pbVar4 + 1;
+          pbVar4 = (param_1->s).img_buffer;
+          if (pbVar4 < (param_1->s).img_buffer_end) {
+            uVar13 = (uint)*pbVar4;
+            (param_1->s).img_buffer = pbVar4 + 1;
           }
-          else if (psVar9->from_file == 0) {
-            uVar14 = 0;
+          else if ((param_1->s).from_file == 0) {
+            uVar13 = 0;
           }
           else {
-            refill_buffer(psVar9);
-            uVar14 = (uint)*psVar9->img_buffer;
-            psVar9->img_buffer = psVar9->img_buffer + 1;
+            refill_buffer(&param_1->s);
+            pbVar4 = (param_1->s).img_buffer;
+            uVar13 = (uint)*pbVar4;
+            (param_1->s).img_buffer = pbVar4 + 1;
           }
-          uVar19 = uVar10 + 1;
-          puVar5 = (uint *)lVar12;
-          puVar5[-1] = uVar14;
-          if ((uVar14 != uVar19) && (uVar14 != uVar10)) {
+          uVar18 = uVar8 + 1;
+          puVar6 = (uint *)lVar11;
+          puVar6[-1] = uVar13;
+          if ((uVar13 != uVar18) && (uVar13 != uVar8)) {
             failure_reason = "bad component ID";
-            iVar8 = __restgprlr_24(0);
-            return iVar8;
+            return 0;
           }
-          pbVar4 = psVar9->img_buffer;
-          if (pbVar4 < psVar9->img_buffer_end) {
-            uVar10 = (uint)*pbVar4;
-            psVar9->img_buffer = pbVar4 + 1;
+          pbVar4 = (param_1->s).img_buffer;
+          if (pbVar4 < (param_1->s).img_buffer_end) {
+            uVar8 = (uint)*pbVar4;
+            (param_1->s).img_buffer = pbVar4 + 1;
           }
-          else if (psVar9->from_file == 0) {
-            uVar10 = 0;
+          else if ((param_1->s).from_file == 0) {
+            uVar8 = 0;
           }
           else {
-            refill_buffer(psVar9);
-            uVar10 = (uint)*psVar9->img_buffer;
-            psVar9->img_buffer = psVar9->img_buffer + 1;
+            refill_buffer(&param_1->s);
+            pbVar4 = (param_1->s).img_buffer;
+            uVar8 = (uint)*pbVar4;
+            (param_1->s).img_buffer = pbVar4 + 1;
           }
-          uVar14 = (int)uVar10 >> 4;
-          *puVar5 = uVar14;
-          if ((uVar14 == 0) || (4 < uVar14)) {
+          uVar13 = (int)uVar8 >> 4;
+          *puVar6 = uVar13;
+          if ((uVar13 == 0) || (4 < uVar13)) {
             failure_reason = "bad H";
-            iVar8 = __restgprlr_24(0);
-            return iVar8;
+            return 0;
           }
-          uVar10 = uVar10 & 0xf;
-          puVar5[1] = uVar10;
-          if ((uVar10 == 0) || (4 < uVar10)) {
+          uVar8 = uVar8 & 0xf;
+          puVar6[1] = uVar8;
+          if ((uVar8 == 0) || (4 < uVar8)) {
             failure_reason = "bad V";
-            iVar8 = __restgprlr_24(0);
-            return iVar8;
+            return 0;
           }
-          pbVar4 = psVar9->img_buffer;
-          if (pbVar4 < psVar9->img_buffer_end) {
-            uVar10 = (uint)*pbVar4;
-            psVar9->img_buffer = pbVar4 + 1;
+          pbVar4 = (param_1->s).img_buffer;
+          if (pbVar4 < (param_1->s).img_buffer_end) {
+            uVar8 = (uint)*pbVar4;
+            (param_1->s).img_buffer = pbVar4 + 1;
           }
-          else if (psVar9->from_file == 0) {
-            uVar10 = 0;
+          else if ((param_1->s).from_file == 0) {
+            uVar8 = 0;
           }
           else {
-            refill_buffer(psVar9);
-            uVar10 = (uint)*psVar9->img_buffer;
-            psVar9->img_buffer = psVar9->img_buffer + 1;
+            refill_buffer(&param_1->s);
+            pbVar4 = (param_1->s).img_buffer;
+            uVar8 = (uint)*pbVar4;
+            (param_1->s).img_buffer = pbVar4 + 1;
           }
-          puVar5[2] = uVar10;
-          if (3 < uVar10) {
+          puVar6[2] = uVar8;
+          if (3 < uVar8) {
             failure_reason = "bad TQ";
-            iVar8 = __restgprlr_24(0);
-            return iVar8;
+            return 0;
           }
-          lVar12 = lVar12 + 0x38;
-          uVar10 = uVar19;
-        } while ((int)uVar19 < psVar9->img_n);
+          lVar11 = lVar11 + 0x38;
+          uVar8 = uVar18;
+        } while ((int)uVar18 < (param_1->s).img_n);
       }
       if (param_2 == 0) {
-        uVar15 = (ulonglong)psVar9->img_x;
-        uVar10 = psVar9->img_n;
-        uVar14 = psVar9->img_y;
-        trapWord(6,uVar15,0);
-        trapWord(6,(ulonglong)uVar10,0);
-        if ((0x40000000 / uVar15) / (ulonglong)uVar10 < (ulonglong)uVar14) {
+        uVar10 = (ulonglong)(param_1->s).img_x;
+        uVar8 = (param_1->s).img_n;
+        uVar14 = (ulonglong)(param_1->s).img_y;
+        trapWord(6,uVar10,0);
+        trapWord(6,(ulonglong)uVar8,0);
+        if ((0x40000000 / uVar10) / (ulonglong)uVar8 < uVar14) {
           failure_reason = "too large";
-          iVar8 = __restgprlr_24(0);
-          return iVar8;
+          return 0;
         }
-        iVar8 = 0;
-        if (0 < (int)uVar10) {
-          lVar12 = lVar7 + 0x3644;
+        iVar7 = 0;
+        if (0 < (int)uVar8) {
+          lVar11 = lVar21 + 0x3644;
           do {
-            uVar19 = ((uint *)lVar12)[-1];
-            if ((int)uVar17 < (int)uVar19) {
-              uVar17 = (ulonglong)uVar19;
+            uVar13 = ((uint *)lVar11)[-1];
+            if ((int)uVar16 < (int)uVar13) {
+              uVar16 = (ulonglong)uVar13;
             }
-            uVar19 = *(uint *)lVar12;
-            if ((int)uVar18 < (int)uVar19) {
-              uVar18 = (ulonglong)uVar19;
+            uVar13 = *(uint *)lVar11;
+            if ((int)uVar17 < (int)uVar13) {
+              uVar17 = (ulonglong)uVar13;
             }
-            iVar8 = iVar8 + 1;
-            lVar12 = lVar12 + 0x38;
-          } while (iVar8 < psVar9->img_n);
+            iVar7 = iVar7 + 1;
+            lVar11 = lVar11 + 0x38;
+          } while (iVar7 < (param_1->s).img_n);
         }
-        uVar16 = (uVar17 & 0x1fffffff) * 8;
-        *(int *)(psVar9[0x54].buffer_start + 0x3c) = (int)uVar17;
-        uVar13 = (uVar18 & 0x1fffffff) * 8;
-        *(int *)(psVar9[0x54].buffer_start + 0x40) = (int)uVar18;
-        *(int *)(psVar9[0x54].buffer_start + 0x4c) = (int)uVar16;
-        *(int *)(psVar9[0x54].buffer_start + 0x50) = (int)uVar13;
-        trapWord(6,uVar16,0);
-        *(int *)(psVar9[0x54].buffer_start + 0x44) =
-             (int)(((uVar15 + uVar16) - 1 & 0xffffffff) / uVar16);
-        trapWord(6,uVar13,0);
-        *(int *)(psVar9[0x54].buffer_start + 0x48) =
-             (int)(((uVar14 + uVar13) - 1 & 0xffffffff) / uVar13);
-        lVar12 = 0;
-        if (0 < (int)uVar10) {
-          lVar20 = lVar7 + 0x3640;
-          uVar10 = stbi_mem.index;
+        uVar15 = (uVar16 & 0x1fffffff) * 8;
+        param_1->img_h_max = (int)uVar16;
+        uVar12 = (uVar17 & 0x1fffffff) * 8;
+        param_1->img_v_max = (int)uVar17;
+        param_1->img_mcu_w = (int)uVar15;
+        param_1->img_mcu_h = (int)uVar12;
+        trapWord(6,uVar15,0);
+        param_1->img_mcu_x = (int)(((uVar10 + uVar15) - 1 & 0xffffffff) / uVar15);
+        trapWord(6,uVar12,0);
+        param_1->img_mcu_y = (int)(((uVar14 + uVar12) - 1 & 0xffffffff) / uVar12);
+        lVar11 = 0;
+        if (0 < (int)uVar8) {
+          lVar19 = lVar21 + 0x3640;
+          uVar8 = stbi_mem.index;
           do {
+            trapWord(6,uVar16,0);
+            piVar20 = (int *)lVar19;
             trapWord(6,uVar17,0);
-            piVar21 = (int *)lVar20;
-            trapWord(6,uVar18,0);
             bVar1 = alt_stb_malloc == (_func___cdecl_void_ptr_uint *)0x0;
-            piVar21[6] = (int)((((longlong)*piVar21 * (longlong)(int)psVar9->img_x + uVar17) - 1 &
-                               0xffffffff) / uVar17);
-            piVar21[7] = (int)((((longlong)(int)psVar9->img_y * (longlong)piVar21[1] + uVar18) - 1 &
-                               0xffffffff) / uVar18);
-            iVar8 = *piVar21 * *(int *)(psVar9[0x54].buffer_start + 0x44) * 8;
-            piVar21[8] = iVar8;
-            iVar6 = *(int *)(psVar9[0x54].buffer_start + 0x48) * piVar21[1] * 8;
-            piVar21[9] = iVar6;
-            uVar14 = iVar8 * iVar6 + 0xf;
+            piVar20[6] = (int)((((longlong)*piVar20 * (longlong)(int)(param_1->s).img_x + uVar16) -
+                                1 & 0xffffffff) / uVar16);
+            piVar20[7] = (int)((((longlong)(int)(param_1->s).img_y * (longlong)piVar20[1] + uVar17)
+                                - 1 & 0xffffffff) / uVar17);
+            iVar7 = *piVar20 * param_1->img_mcu_x * 8;
+            piVar20[8] = iVar7;
+            iVar5 = param_1->img_mcu_y * piVar20[1] * 8;
+            piVar20[9] = iVar5;
+            uVar13 = iVar7 * iVar5 + 0xf;
             if (bVar1) {
-              uVar14 = uVar10 + uVar14;
-              if (uVar14 < stbi_mem.size) {
-                puVar11 = stbi_mem.data + uVar10;
-                uVar10 = uVar14;
-                stbi_mem.index = uVar14;
+              uVar13 = uVar8 + uVar13;
+              if (uVar13 < stbi_mem.size) {
+                puVar9 = stbi_mem.data + uVar8;
+                uVar8 = uVar13;
+                stbi_mem.index = uVar13;
               }
               else {
-                puVar11 = (uchar *)0x0;
+                puVar9 = (uchar *)0x0;
               }
             }
             else {
-              puVar11 = (*alt_stb_malloc)(uVar14);
-              uVar10 = stbi_mem.index;
+              puVar9 = (*alt_stb_malloc)(uVar13);
+              uVar8 = stbi_mem.index;
             }
-            piVar21[0xb] = (int)puVar11;
-            if (puVar11 == (uchar *)0x0) {
-              lVar12 = lVar12 + -1;
-              if (-1 < lVar12) {
-                lVar7 = lVar12 * 0x38 + lVar7 + 0x36a0;
+            piVar20[0xb] = (int)puVar9;
+            if (puVar9 == (uchar *)0x0) {
+              lVar11 = lVar11 + -1;
+              if (-1 < lVar11) {
+                lVar21 = lVar11 * 0x38 + lVar21 + 0x36a0;
                 do {
                   if (alt_stb_free != (_func___cdecl_void_void_ptr *)0x0) {
-                    (*alt_stb_free)(*(void **)((int)lVar7 + -0x34));
+                    (*alt_stb_free)(*(void **)((int)lVar21 + -0x34));
                   }
-                  lVar12 = lVar12 + -1;
-                  lVar7 = lVar7 + -0x38;
-                  *(undefined4 *)lVar7 = 0;
-                } while (-1 < lVar12);
+                  lVar11 = lVar11 + -1;
+                  lVar21 = lVar21 + -0x38;
+                  *(undefined4 *)lVar21 = 0;
+                } while (-1 < lVar11);
               }
               failure_reason = "outofmem";
-              iVar8 = __restgprlr_24(0);
-              return iVar8;
+              return 0;
             }
-            piVar21[0xc] = 0;
-            lVar12 = lVar12 + 1;
-            piVar21[10] = (uint)(puVar11 + 0xf) & 0xfffffff0;
-            lVar20 = lVar20 + 0x38;
-          } while ((int)lVar12 < psVar9->img_n);
+            piVar20[0xc] = 0;
+            lVar11 = lVar11 + 1;
+            piVar20[10] = (uint)(puVar9 + 0xf) & 0xfffffff0;
+            lVar19 = lVar19 + 0x38;
+          } while ((int)lVar11 < (param_1->s).img_n);
         }
       }
-      iVar8 = __restgprlr_24(1);
-      return iVar8;
+      return 1;
     }
   }
   failure_reason = "bad SOF len";
-  iVar8 = __restgprlr_24(0);
-  return iVar8;
+  return 0;
 }
 
 
 // 827EEDC8  decode_jpeg_header  (mjpeg/stb_image.c:1777)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 int decode_jpeg_header(jpeg *param_1,int param_2)
 
 {
   _iobuf *p_Var1;
-  jpeg *pjVar2;
-  uchar uVar4;
-  int iVar3;
-  byte bVar5;
+  uchar uVar3;
+  byte bVar4;
+  int iVar2;
   
-  pjVar2 = (jpeg *)__savegprlr_29(param_1);
-  pjVar2->marker = 0xff;
-  uVar4 = get_marker(pjVar2);
-  if (uVar4 != 0xd8) {
+  param_1->marker = 0xff;
+  uVar3 = get_marker(param_1);
+  if (uVar3 != 0xd8) {
     failure_reason = "no SOI";
-    iVar3 = __restgprlr_29(0);
-    return iVar3;
+    return 0;
   }
   if (param_2 == 1) {
-    iVar3 = __restgprlr_29(1);
-    return iVar3;
+    return 1;
   }
-  bVar5 = get_marker(pjVar2);
+  bVar4 = get_marker(param_1);
   do {
-    if ((bVar5 == 0xc0) || (bVar5 == 0xc1)) {
-      iVar3 = process_frame_header(pjVar2,param_2);
-      iVar3 = __restgprlr_29(iVar3 != 0);
-      return iVar3;
+    if ((bVar4 == 0xc0) || (bVar4 == 0xc1)) {
+      iVar2 = process_frame_header(param_1,param_2);
+      return (uint)(iVar2 != 0);
     }
-    iVar3 = process_marker(pjVar2,(uint)bVar5);
-    if (iVar3 == 0) {
-      iVar3 = __restgprlr_29(0);
-      return iVar3;
+    iVar2 = process_marker(param_1,(uint)bVar4);
+    if (iVar2 == 0) {
+      return 0;
     }
-    bVar5 = get_marker(pjVar2);
-    while (bVar5 == 0xff) {
-      p_Var1 = (pjVar2->s).img_file;
+    bVar4 = get_marker(param_1);
+    while (bVar4 == 0xff) {
+      p_Var1 = (param_1->s).img_file;
       if (p_Var1 == (_iobuf *)0x0) {
 LAB_827eee8c:
-        if ((pjVar2->s).img_buffer_end <= (pjVar2->s).img_buffer) {
+        if ((param_1->s).img_buffer_end <= (param_1->s).img_buffer) {
 LAB_827eeee4:
           failure_reason = "no SOF";
-          iVar3 = __restgprlr_29(0);
-          return iVar3;
+          return 0;
         }
       }
       else {
-        iVar3 = feof(p_Var1);
-        if (iVar3 != 0) {
-          if ((pjVar2->s).from_file == 0) goto LAB_827eeee4;
+        iVar2 = feof(p_Var1);
+        if (iVar2 != 0) {
+          if ((param_1->s).from_file == 0) goto LAB_827eeee4;
           goto LAB_827eee8c;
         }
       }
-      bVar5 = get_marker(pjVar2);
+      bVar4 = get_marker(param_1);
     }
   } while( true );
 }
@@ -2931,104 +2877,108 @@ LAB_827eeee4:
 
 // 827EEF00  decode_jpeg_image  (mjpeg/stb_image.c:1806)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 int decode_jpeg_image(jpeg *param_1)
 
 {
   uchar uVar1;
   _iobuf *p_Var2;
-  jpeg *pjVar3;
-  int iVar4;
-  byte bVar6;
-  uint uVar5;
-  uchar *puVar7;
+  int iVar3;
+  byte bVar5;
+  uint uVar4;
+  uchar *puVar6;
   
-  pjVar3 = (jpeg *)__savegprlr_28(param_1);
-  pjVar3->restart_interval = 0;
-  iVar4 = decode_jpeg_header(pjVar3,0);
-  if (iVar4 == 0) {
-LAB_827eef28:
-    iVar4 = __restgprlr_28(0);
-    return iVar4;
+  param_1->restart_interval = 0;
+  iVar3 = decode_jpeg_header(param_1,0);
+  if (iVar3 == 0) {
+    return 0;
   }
-  bVar6 = get_marker(pjVar3);
+  bVar5 = get_marker(param_1);
 joined_r0x827eef44:
-  if (bVar6 == 0xd9) {
-    iVar4 = __restgprlr_28(1);
-    return iVar4;
+  if (bVar5 == 0xd9) {
+    return 1;
   }
-  if (bVar6 == 0xda) {
-    iVar4 = process_scan_header(pjVar3);
-    if ((iVar4 != 0) && (iVar4 = parse_entropy_coded_data(pjVar3), iVar4 != 0)) {
-      if (pjVar3->marker == 0xff) {
-LAB_827eef80:
-        p_Var2 = (pjVar3->s).img_file;
-        if (p_Var2 == (_iobuf *)0x0) {
-LAB_827eefa4:
-          if ((pjVar3->s).img_buffer_end <= (pjVar3->s).img_buffer) goto LAB_827ef0b8;
-        }
-        else {
-          iVar4 = feof(p_Var2);
-          if (iVar4 != 0) {
-            if ((pjVar3->s).from_file != 0) goto LAB_827eefa4;
-            goto LAB_827ef0b8;
-          }
-        }
-        puVar7 = (pjVar3->s).img_buffer;
-        if ((pjVar3->s).img_buffer_end <= puVar7) goto LAB_827eefd4;
-        uVar1 = *puVar7;
-        goto LAB_827ef030;
-      }
-      goto LAB_827ef0b8;
+  if (bVar5 == 0xda) {
+    iVar3 = process_scan_header(param_1);
+    if (iVar3 == 0) {
+      return 0;
     }
-    goto LAB_827eef28;
-  }
-  iVar4 = process_marker(pjVar3,(uint)bVar6);
-  if (iVar4 == 0) goto LAB_827eef28;
-LAB_827ef0b8:
-  bVar6 = get_marker(pjVar3);
-  goto joined_r0x827eef44;
-LAB_827eefd4:
-  if ((pjVar3->s).from_file == 0) goto LAB_827eef80;
-  puVar7 = (pjVar3->s).buffer_start;
-  uVar5 = fread(puVar7,1,(pjVar3->s).buflen,(pjVar3->s).img_file);
-  if (uVar5 == 0) {
-    (pjVar3->s).from_file = 0;
-    puVar7 = (pjVar3->s).img_buffer_end + -1;
-    (pjVar3->s).img_buffer = puVar7;
-    *puVar7 = '\0';
+    iVar3 = parse_entropy_coded_data(param_1);
+    if (iVar3 == 0) {
+      return 0;
+    }
+    if (param_1->marker == 0xff) {
+LAB_827eef80:
+      p_Var2 = (param_1->s).img_file;
+      if (p_Var2 == (_iobuf *)0x0) {
+LAB_827eefa4:
+        if ((param_1->s).img_buffer_end <= (param_1->s).img_buffer) goto LAB_827ef0b8;
+      }
+      else {
+        iVar3 = feof(p_Var2);
+        if (iVar3 != 0) {
+          if ((param_1->s).from_file != 0) goto LAB_827eefa4;
+          goto LAB_827ef0b8;
+        }
+      }
+      puVar6 = (param_1->s).img_buffer;
+      if ((param_1->s).img_buffer_end <= puVar6) goto LAB_827eefd4;
+      uVar1 = *puVar6;
+      goto LAB_827ef030;
+    }
   }
   else {
-    (pjVar3->s).img_buffer = puVar7;
-    (pjVar3->s).img_buffer_end = puVar7 + uVar5;
+    iVar3 = process_marker(param_1,(uint)bVar5);
+    if (iVar3 == 0) {
+      return 0;
+    }
   }
-  puVar7 = (pjVar3->s).img_buffer;
-  uVar1 = *puVar7;
+  goto LAB_827ef0b8;
+LAB_827eefd4:
+  if ((param_1->s).from_file == 0) goto LAB_827eef80;
+  puVar6 = (param_1->s).buffer_start;
+  uVar4 = fread(puVar6,1,(param_1->s).buflen,(param_1->s).img_file);
+  if (uVar4 == 0) {
+    (param_1->s).from_file = 0;
+    puVar6 = (param_1->s).img_buffer_end + -1;
+    (param_1->s).img_buffer = puVar6;
+    *puVar6 = '\0';
+  }
+  else {
+    (param_1->s).img_buffer = puVar6;
+    (param_1->s).img_buffer_end = puVar6 + uVar4;
+  }
+  puVar6 = (param_1->s).img_buffer;
+  uVar1 = *puVar6;
 LAB_827ef030:
-  (pjVar3->s).img_buffer = puVar7 + 1;
+  (param_1->s).img_buffer = puVar6 + 1;
   if (uVar1 != 0xff) {
     if (uVar1 != '\0') {
-      iVar4 = __restgprlr_28(0);
-      return iVar4;
+      return 0;
     }
     goto LAB_827eef80;
   }
-  if (puVar7 + 1 < (pjVar3->s).img_buffer_end) {
-    puVar7 = (pjVar3->s).img_buffer;
-    uVar1 = *puVar7;
-    (pjVar3->s).img_buffer = puVar7 + 1;
-    pjVar3->marker = uVar1;
+  if (puVar6 + 1 < (param_1->s).img_buffer_end) {
+    puVar6 = (param_1->s).img_buffer;
+    uVar1 = *puVar6;
+    (param_1->s).img_buffer = puVar6 + 1;
+    param_1->marker = uVar1;
   }
-  else if ((pjVar3->s).from_file == 0) {
-    pjVar3->marker = '\0';
+  else if ((param_1->s).from_file == 0) {
+    param_1->marker = '\0';
   }
   else {
-    refill_buffer((stbi *)pjVar3);
-    puVar7 = (pjVar3->s).img_buffer;
-    uVar1 = *puVar7;
-    (pjVar3->s).img_buffer = puVar7 + 1;
-    pjVar3->marker = uVar1;
+    refill_buffer(&param_1->s);
+    puVar6 = (param_1->s).img_buffer;
+    uVar1 = *puVar6;
+    (param_1->s).img_buffer = puVar6 + 1;
+    param_1->marker = uVar1;
   }
-  goto LAB_827ef0b8;
+LAB_827ef0b8:
+  bVar5 = get_marker(param_1);
+  goto joined_r0x827eef44;
 }
 
 
@@ -3220,159 +3170,148 @@ void YCbCr_to_RGB(uchar param_1,uchar param_2,uchar param_3,uchar *param_4,uchar
 
 // 827EF3F8  YCbCr_to_RGB_row  (mjpeg/stb_image.c:1955)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
+
 void YCbCr_to_RGB_row(uchar *param_1,uchar *param_2,uchar *param_3,uchar *param_4,int param_5,
                      int param_6)
 
 {
   int iVar1;
-  undefined1 *puVar2;
-  longlong lVar3;
-  int iVar4;
+  int iVar2;
+  int iVar3;
+  uint uVar4;
   uint uVar5;
-  longlong lVar6;
+  int iVar6;
   uint uVar7;
-  byte *pbVar9;
-  longlong lVar8;
-  int iVar10;
-  uint uVar11;
-  int iVar12;
-  longlong lVar13;
+  int iVar8;
+  uchar *puVar9;
+  longlong lVar10;
   
-  lVar6 = (longlong)param_6;
-  lVar13 = (longlong)param_5;
-  lVar8 = (longlong)(int)param_4;
-  lVar3 = __savegprlr_25(param_1);
-  if (0 < (int)lVar13) {
-    iVar1 = (int)lVar8;
-    lVar3 = lVar3 + 2;
+  lVar10 = (longlong)param_5;
+  if (0 < param_5) {
+    iVar2 = (int)param_2 - (int)param_4;
+    iVar1 = (int)param_3 - (int)param_4;
+    puVar9 = param_1 + 2;
     do {
-      pbVar9 = (byte *)lVar8;
-      iVar10 = (uint)pbVar9[(int)param_2 - iVar1] * 0x10000 + 0x8000;
-      iVar4 = (*pbVar9 - 0x80) * 0x166e9 + iVar10;
-      iVar12 = (*pbVar9 - 0x80) * -0xb6d2 + (pbVar9[(int)param_3 - iVar1] - 0x80) * -0x581a + iVar10
-      ;
-      uVar7 = iVar4 >> 0x10;
-      iVar10 = (pbVar9[(int)param_3 - iVar1] - 0x80) * 0x1c5a2 + iVar10;
-      uVar5 = iVar12 >> 0x10;
-      uVar11 = iVar10 >> 0x10;
-      if (0xff < uVar7) {
-        uVar7 = 0xffffffffU - (iVar4 >> 0x1f) & 0xff;
-      }
+      iVar6 = (uint)param_4[iVar2] * 0x10000 + 0x8000;
+      iVar3 = (*param_4 - 0x80) * 0x166e9 + iVar6;
+      iVar8 = (*param_4 - 0x80) * -0xb6d2 + (param_4[iVar1] - 0x80) * -0x581a + iVar6;
+      uVar5 = iVar3 >> 0x10;
+      iVar6 = (param_4[iVar1] - 0x80) * 0x1c5a2 + iVar6;
+      uVar4 = iVar8 >> 0x10;
+      uVar7 = iVar6 >> 0x10;
       if (0xff < uVar5) {
-        uVar5 = 0xffffffffU - (iVar12 >> 0x1f) & 0xff;
+        uVar5 = 0xffffffffU - (iVar3 >> 0x1f) & 0xff;
       }
-      if (0xff < uVar11) {
-        uVar11 = 0xffffffffU - (iVar10 >> 0x1f) & 0xff;
+      if (0xff < uVar4) {
+        uVar4 = 0xffffffffU - (iVar8 >> 0x1f) & 0xff;
       }
-      puVar2 = (undefined1 *)lVar3;
-      puVar2[1] = 0xff;
-      puVar2[-2] = (char)uVar7;
-      puVar2[-1] = (char)uVar5;
-      lVar8 = lVar8 + 1;
-      *puVar2 = (char)uVar11;
-      lVar3 = lVar3 + lVar6;
-      lVar13 = lVar13 + -1;
-    } while (lVar13 != 0);
+      if (0xff < uVar7) {
+        uVar7 = 0xffffffffU - (iVar6 >> 0x1f) & 0xff;
+      }
+      puVar9[1] = 0xff;
+      puVar9[-2] = (uchar)uVar5;
+      puVar9[-1] = (uchar)uVar4;
+      param_4 = param_4 + 1;
+      *puVar9 = (uchar)uVar7;
+      puVar9 = puVar9 + param_6;
+      lVar10 = lVar10 + -1;
+    } while (lVar10 != 0);
   }
-  __restgprlr_25();
   return;
 }
 
 
 // 827EF4F0  cleanup_jpeg  (mjpeg/stb_image.c:1980)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void cleanup_jpeg(jpeg *param_1)
 
 {
   int iVar1;
-  int iVar2;
-  undefined4 *puVar3;
+  uchar **ppuVar2;
   
-  iVar1 = __savegprlr_27(param_1);
-  iVar2 = 0;
-  if (0 < *(int *)(iVar1 + 8)) {
-    puVar3 = (undefined4 *)(iVar1 + 0x3670);
+  iVar1 = 0;
+  if (0 < (param_1->s).img_n) {
+    ppuVar2 = &param_1->img_comp[0].linebuf;
     do {
-      if (puVar3[-2] != 0) {
+      if (ppuVar2[-2] != (uchar *)0x0) {
         if (alt_stb_free != (_func___cdecl_void_void_ptr *)0x0) {
-          (*alt_stb_free)((void *)puVar3[-1]);
+          (*alt_stb_free)(ppuVar2[-1]);
         }
-        puVar3[-2] = 0;
+        ppuVar2[-2] = (uchar *)0x0;
       }
-      if ((void *)*puVar3 != (void *)0x0) {
+      if (*ppuVar2 != (uchar *)0x0) {
         if (alt_stb_free != (_func___cdecl_void_void_ptr *)0x0) {
-          (*alt_stb_free)((void *)*puVar3);
+          (*alt_stb_free)(*ppuVar2);
         }
-        *puVar3 = 0;
+        *ppuVar2 = (uchar *)0x0;
       }
-      iVar2 = iVar2 + 1;
-      puVar3 = puVar3 + 0xe;
-    } while (iVar2 < *(int *)(iVar1 + 8));
+      iVar1 = iVar1 + 1;
+      ppuVar2 = ppuVar2 + 0xe;
+    } while (iVar1 < (param_1->s).img_n);
   }
-  __restgprlr_27();
   return;
 }
 
 
 // 827EF590  load_jpeg_image_yuv  (mjpeg/stb_image.c:2005)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 uchar * load_jpeg_image_yuv(jpeg *param_1,int *param_2,int *param_3,int *param_4,int *param_5)
 
 {
-  jpeg *pjVar2;
-  int iVar3;
-  uchar *puVar4;
-  longlong lVar1;
-  void *pvVar5;
-  ulonglong uVar6;
-  ulonglong uVar7;
-  longlong lVar8;
+  int iVar1;
+  uint uVar2;
+  uchar *puVar3;
   
-  pjVar2 = (jpeg *)__savegprlr_26(param_1);
-  lVar8 = 0;
-  (pjVar2->s).img_n = 0;
-  iVar3 = decode_jpeg_image(pjVar2);
-  if (iVar3 == 0) {
-    cleanup_jpeg(pjVar2);
-    puVar4 = (uchar *)__restgprlr_26(0);
-    return puVar4;
+  puVar3 = (uchar *)0x0;
+  (param_1->s).img_n = 0;
+  iVar1 = decode_jpeg_image(param_1);
+  if (iVar1 == 0) {
+    cleanup_jpeg(param_1);
+    return (uchar *)0x0;
   }
-  *param_2 = pjVar2->img_comp[0].x;
-  *param_3 = pjVar2->img_comp[0].y;
-  if ((pjVar2->s).img_n < 2) {
+  *param_2 = param_1->img_comp[0].x;
+  *param_3 = param_1->img_comp[0].y;
+  if ((param_1->s).img_n < 2) {
     *param_4 = 0;
     *param_5 = 0;
   }
   else {
-    *param_4 = pjVar2->img_comp[1].x;
-    *param_5 = pjVar2->img_comp[1].y;
+    *param_4 = param_1->img_comp[1].x;
+    *param_5 = param_1->img_comp[1].y;
   }
-  lVar1 = ((longlong)*param_4 * (longlong)*param_5 & 0x7fffffffU) * 2 +
-          (longlong)*param_2 * (longlong)*param_3;
+  uVar2 = *param_4 * *param_5 * 2 + *param_2 * *param_3;
   if (alt_stb_malloc == (_func___cdecl_void_ptr_uint *)0x0) {
-    uVar7 = (ulonglong)stbi_mem.index;
-    uVar6 = uVar7 + lVar1;
-    if ((uVar6 & 0xffffffff) < (ulonglong)stbi_mem.size) {
-      stbi_mem.index = (uint)uVar6;
-      lVar8 = ZEXT48(stbi_mem.data) + uVar7;
+    uVar2 = stbi_mem.index + uVar2;
+    if (uVar2 < stbi_mem.size) {
+      puVar3 = stbi_mem.data + stbi_mem.index;
+      stbi_mem.index = uVar2;
     }
   }
   else {
-    pvVar5 = (*alt_stb_malloc)((uint)lVar1);
-    lVar8 = (longlong)(int)pvVar5;
+    puVar3 = (*alt_stb_malloc)(uVar2);
   }
   memcpy();
-  if (1 < (pjVar2->s).img_n) {
+  if (1 < (param_1->s).img_n) {
     memcpy();
     memcpy();
   }
-  cleanup_jpeg(pjVar2);
-  puVar4 = (uchar *)__restgprlr_26(lVar8);
-  return puVar4;
+  cleanup_jpeg(param_1);
+  return puVar3;
 }
 
 
 // 827EF6F8  load_jpeg_image  (mjpeg/stb_image.c:2041)
+
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
 
 uchar * load_jpeg_image(jpeg *param_1,int *param_2,int *param_3,int *param_4,int param_5)
 
@@ -3385,268 +3324,244 @@ uchar * load_jpeg_image(jpeg *param_1,int *param_2,int *param_3,int *param_4,int
   uint uVar6;
   int iVar7;
   int iVar8;
-  jpeg *pjVar9;
-  uint *puVar10;
-  int *piVar11;
-  longlong lVar12;
-  int iVar14;
-  longlong lVar13;
-  uchar *puVar15;
-  void *pvVar16;
-  uchar *puVar17;
+  uchar *puVar9;
+  int iVar10;
+  uchar *puVar11;
+  uchar *puVar12;
+  code *pcVar13;
+  uint uVar14;
+  int iVar15;
+  ulonglong uVar16;
+  uint uVar17;
   ulonglong uVar18;
-  ulonglong uVar19;
-  int iVar20;
-  code *pcVar21;
-  uint uVar22;
-  int iVar23;
-  ulonglong uVar24;
-  ulonglong uVar25;
-  uint uVar26;
-  ulonglong uVar27;
-  uchar **ppuVar28;
-  int iVar29;
-  int iVar30;
-  longlong lVar31;
-  int *piVar32;
+  uchar *puVar19;
+  uchar **ppuVar20;
+  int iVar21;
+  int iVar22;
+  int *piVar23;
+  int *piVar24;
   uchar *local_130 [4];
   int local_120 [72];
   
-  uVar25 = (ulonglong)param_5;
-  uVar18 = (ulonglong)(int)param_4;
-  lVar12 = (longlong)(int)param_1;
-  __savegprlr();
-  iVar20 = (int)uVar25;
-  if ((iVar20 < 0) || (4 < iVar20)) {
-    puVar15 = (uchar *)0x0;
+  if ((param_5 < 0) || (4 < param_5)) {
     failure_reason = "bad req_comp";
-    __restgprlr();
-    return puVar15;
+    return (uchar *)0x0;
   }
-  pjVar9 = (jpeg *)lVar12;
-  (pjVar9->s).img_n = 0;
-  iVar14 = decode_jpeg_image(pjVar9);
-  if (iVar14 == 0) {
-    cleanup_jpeg(pjVar9);
-    puVar15 = (uchar *)0x0;
-    __restgprlr();
-    return puVar15;
+  (param_1->s).img_n = 0;
+  iVar10 = decode_jpeg_image(param_1);
+  if (iVar10 == 0) {
+    cleanup_jpeg(param_1);
+    return (uchar *)0x0;
   }
-  if (iVar20 == 0) {
-    uVar25 = (ulonglong)(uint)(pjVar9->s).img_n;
+  if (param_5 == 0) {
+    param_5 = (param_1->s).img_n;
   }
-  uVar26 = (pjVar9->s).img_n;
-  iVar20 = (int)uVar25;
-  if ((uVar26 != 3) || (uVar24 = 1, 2 < iVar20)) {
-    uVar24 = (ulonglong)uVar26;
+  uVar17 = (param_1->s).img_n;
+  if ((uVar17 != 3) || (uVar16 = 1, 2 < param_5)) {
+    uVar16 = (ulonglong)uVar17;
   }
-  iVar29 = 0;
-  iVar14 = (int)uVar24;
-  uVar19 = (ulonglong)stbi_mem.index;
-  if (0 < iVar14) {
-    piVar32 = local_120 + 5;
-    lVar31 = lVar12 + 0x3640;
-    uVar27 = uVar19;
+  iVar21 = 0;
+  iVar10 = (int)uVar16;
+  uVar17 = stbi_mem.index;
+  if (0 < iVar10) {
+    piVar24 = local_120 + 5;
+    piVar23 = &param_1->img_comp[0].h;
+    uVar14 = stbi_mem.index;
     do {
-      lVar13 = (ulonglong)(pjVar9->s).img_x + 3;
+      uVar17 = (param_1->s).img_x + 3;
       if (alt_stb_malloc == (_func___cdecl_void_ptr_uint *)0x0) {
-        uVar19 = uVar27 + lVar13;
-        if ((uVar19 & 0xffffffff) < (ulonglong)stbi_mem.size) {
-          stbi_mem.index = (uint)uVar19;
-          puVar15 = stbi_mem.data + (int)uVar27;
+        uVar17 = uVar14 + uVar17;
+        if (uVar17 < stbi_mem.size) {
+          puVar11 = stbi_mem.data + uVar14;
+          stbi_mem.index = uVar17;
         }
         else {
-          puVar15 = (uchar *)0x0;
-          uVar19 = uVar27;
+          puVar11 = (uchar *)0x0;
+          uVar17 = uVar14;
         }
       }
       else {
-        puVar15 = (*alt_stb_malloc)((uint)lVar13);
-        uVar19 = (ulonglong)stbi_mem.index;
+        puVar11 = (*alt_stb_malloc)(uVar17);
+        uVar17 = stbi_mem.index;
       }
-      puVar10 = (uint *)lVar31;
-      puVar10[0xc] = (uint)puVar15;
-      if (puVar15 == (uchar *)0x0) goto LAB_827ef928;
-      uVar22 = *puVar10;
-      uVar2 = pjVar9->img_h_max;
-      uVar3 = pjVar9->img_v_max;
-      trapWord(6,(ulonglong)uVar22,0);
-      uVar26 = (int)uVar2 / (int)uVar22;
-      uVar4 = (pjVar9->s).img_x;
-      uVar5 = puVar10[1];
-      uVar6 = puVar10[10];
-      piVar32[-2] = uVar26;
-      iVar23 = (int)uVar3 / (int)uVar5;
-      piVar32[2] = 0;
-      piVar32[-1] = iVar23;
-      piVar32[-3] = uVar6;
-      piVar32[-4] = uVar6;
-      trapWord(6,(ulonglong)uVar5,0);
-      piVar32[1] = iVar23 >> 1;
-      trapWord(6,(longlong)(int)uVar26,0);
-      *piVar32 = (int)((((longlong)(int)uVar26 + (ulonglong)uVar4) - 1 & 0xffffffff) /
-                      (ulonglong)uVar26);
-      trapWord(5,(ulonglong)uVar22 &
-                 ~((((ulonglong)uVar2 & 0x7fffffff) << 1 | (ulonglong)(uVar2 >> 0x1f)) - 1),0xffff);
-      trapWord(5,(ulonglong)uVar5 &
+      piVar23[0xc] = (int)puVar11;
+      if (puVar11 == (uchar *)0x0) goto LAB_827ef928;
+      uVar2 = *piVar23;
+      uVar3 = param_1->img_h_max;
+      uVar4 = param_1->img_v_max;
+      trapWord(6,(ulonglong)uVar2,0);
+      uVar14 = (int)uVar3 / (int)uVar2;
+      uVar5 = (param_1->s).img_x;
+      uVar6 = piVar23[1];
+      puVar11 = (uchar *)piVar23[10];
+      piVar24[-2] = uVar14;
+      iVar15 = (int)uVar4 / (int)uVar6;
+      piVar24[2] = 0;
+      piVar24[-1] = iVar15;
+      piVar24[-3] = (int)puVar11;
+      piVar24[-4] = (int)puVar11;
+      trapWord(6,(ulonglong)uVar6,0);
+      piVar24[1] = iVar15 >> 1;
+      trapWord(6,(longlong)(int)uVar14,0);
+      *piVar24 = (int)((((longlong)(int)uVar14 + (ulonglong)uVar5) - 1 & 0xffffffff) /
+                      (ulonglong)uVar14);
+      trapWord(5,(ulonglong)uVar2 &
                  ~((((ulonglong)uVar3 & 0x7fffffff) << 1 | (ulonglong)(uVar3 >> 0x1f)) - 1),0xffff);
-      if (uVar26 == 1) {
-        if (iVar23 == 1) {
-          pcVar21 = resample_row_1;
+      trapWord(5,(ulonglong)uVar6 &
+                 ~((((ulonglong)uVar4 & 0x7fffffff) << 1 | (ulonglong)(uVar4 >> 0x1f)) - 1),0xffff);
+      if (uVar14 == 1) {
+        if (iVar15 == 1) {
+          pcVar13 = resample_row_1;
         }
         else {
-          if (iVar23 != 2) goto LAB_827ef8a4;
-          pcVar21 = resample_row_v_2;
+          if (iVar15 != 2) goto LAB_827ef8a4;
+          pcVar13 = resample_row_v_2;
         }
       }
       else {
 LAB_827ef8a4:
-        if (uVar26 == 2) {
-          if (iVar23 == 1) {
-            pcVar21 = resample_row_h_2;
+        if (uVar14 == 2) {
+          if (iVar15 == 1) {
+            pcVar13 = resample_row_h_2;
           }
           else {
-            if (iVar23 != 2) goto LAB_827ef8d4;
-            pcVar21 = resample_row_hv_2;
+            if (iVar15 != 2) goto LAB_827ef8d4;
+            pcVar13 = resample_row_hv_2;
           }
         }
         else {
 LAB_827ef8d4:
-          pcVar21 = resample_row_generic;
+          pcVar13 = resample_row_generic;
         }
       }
-      iVar29 = iVar29 + 1;
-      piVar32[-5] = (int)pcVar21;
-      piVar32 = piVar32 + 8;
-      lVar31 = lVar31 + 0x38;
-      uVar27 = uVar19;
-    } while (iVar29 < iVar14);
+      iVar21 = iVar21 + 1;
+      piVar24[-5] = (int)pcVar13;
+      piVar24 = piVar24 + 8;
+      piVar23 = piVar23 + 0xe;
+      uVar14 = uVar17;
+    } while (iVar21 < iVar10);
   }
-  lVar31 = (longlong)(int)((pjVar9->s).img_x * (pjVar9->s).img_y) * (longlong)iVar20 + 1;
+  uVar14 = (param_1->s).img_x * (param_1->s).img_y * param_5 + 1;
   if (alt_stb_malloc == (_func___cdecl_void_ptr_uint *)0x0) {
-    uVar27 = uVar19 + lVar31;
-    if ((ulonglong)stbi_mem.size <= (uVar27 & 0xffffffff)) goto LAB_827ef928;
-    stbi_mem.index = (uint)uVar27;
-    uVar19 = ZEXT48(stbi_mem.data) + uVar19;
+    uVar14 = uVar17 + uVar14;
+    if (stbi_mem.size <= uVar14) goto LAB_827ef928;
+    puVar11 = stbi_mem.data + uVar17;
+    stbi_mem.index = uVar14;
   }
   else {
-    pvVar16 = (*alt_stb_malloc)((uint)lVar31);
-    uVar19 = (ulonglong)(int)pvVar16;
+    puVar11 = (*alt_stb_malloc)(uVar14);
   }
-  if ((uVar19 & 0xffffffff) != 0) {
-    uVar26 = 0;
-    puVar15 = local_130[0];
-    if ((pjVar9->s).img_y != 0) {
+  if (puVar11 != (uchar *)0x0) {
+    uVar17 = 0;
+    puVar12 = local_130[0];
+    if ((param_1->s).img_y != 0) {
       do {
-        lVar31 = (longlong)(int)((pjVar9->s).img_x * uVar26) * (longlong)iVar20 + uVar19;
-        if (0 < iVar14) {
-          ppuVar28 = local_130;
-          lVar13 = lVar12 + 0x365c;
-          piVar32 = local_120 + 6;
-          uVar27 = uVar24;
+        puVar19 = puVar11 + (param_1->s).img_x * uVar17 * param_5;
+        if (0 < iVar10) {
+          ppuVar20 = local_130;
+          piVar23 = &param_1->img_comp[0].y;
+          piVar24 = local_120 + 6;
+          uVar18 = uVar16;
           do {
-            iVar29 = piVar32[-2];
-            iVar23 = *piVar32;
-            if (iVar23 < iVar29 >> 1) {
-              iVar30 = piVar32[-4];
-              iVar7 = piVar32[-5];
-              iVar8 = iVar30;
+            iVar21 = piVar24[-2];
+            iVar15 = *piVar24;
+            if (iVar15 < iVar21 >> 1) {
+              iVar22 = piVar24[-4];
+              iVar7 = piVar24[-5];
+              iVar8 = iVar22;
             }
             else {
-              iVar30 = piVar32[-4];
-              iVar7 = iVar30;
-              iVar8 = piVar32[-5];
+              iVar22 = piVar24[-4];
+              iVar7 = iVar22;
+              iVar8 = piVar24[-5];
             }
-            piVar11 = (int *)lVar13;
-            puVar15 = (uchar *)(*(code *)piVar32[-6])
-                                         (piVar11[5],iVar7,iVar8,piVar32[-1],piVar32[-3]);
-            iVar23 = iVar23 + 1;
-            *ppuVar28 = puVar15;
-            *piVar32 = iVar23;
-            if (iVar29 <= iVar23) {
-              iVar29 = piVar32[1];
-              iVar23 = *piVar11;
-              piVar32[-5] = iVar30;
-              *piVar32 = 0;
-              piVar32[1] = iVar29 + 1;
-              if (iVar29 + 1 < iVar23) {
-                piVar32[-4] = piVar11[1] + iVar30;
+            puVar12 = (uchar *)(*(code *)piVar24[-6])
+                                         ((uchar *)piVar23[5],iVar7,iVar8,piVar24[-1],piVar24[-3]);
+            iVar15 = iVar15 + 1;
+            *ppuVar20 = puVar12;
+            *piVar24 = iVar15;
+            if (iVar21 <= iVar15) {
+              iVar21 = piVar24[1];
+              iVar15 = *piVar23;
+              piVar24[-5] = iVar22;
+              *piVar24 = 0;
+              piVar24[1] = iVar21 + 1;
+              if (iVar21 + 1 < iVar15) {
+                piVar24[-4] = piVar23[1] + iVar22;
               }
             }
-            uVar27 = uVar27 - 1;
-            piVar32 = piVar32 + 8;
-            ppuVar28 = ppuVar28 + 1;
-            lVar13 = lVar13 + 0x38;
-            puVar15 = local_130[0];
-          } while (uVar27 != 0);
+            uVar18 = uVar18 - 1;
+            piVar24 = piVar24 + 8;
+            ppuVar20 = ppuVar20 + 1;
+            piVar23 = piVar23 + 0xe;
+            puVar12 = local_130[0];
+          } while (uVar18 != 0);
         }
-        puVar17 = (uchar *)lVar31;
-        if (iVar20 < 3) {
-          if (iVar20 == 1) {
-            uVar22 = 0;
-            if ((pjVar9->s).img_x != 0) {
+        if (param_5 < 3) {
+          if (param_5 == 1) {
+            uVar14 = 0;
+            if ((param_1->s).img_x != 0) {
+              iVar21 = (int)puVar12 - (int)puVar19;
               do {
-                uVar22 = uVar22 + 1;
-                *(undefined1 *)lVar31 = ((undefined1 *)lVar31)[(int)puVar15 - (int)puVar17];
-                lVar31 = lVar31 + 1;
-              } while (uVar22 < (pjVar9->s).img_x);
+                uVar14 = uVar14 + 1;
+                *puVar19 = puVar19[iVar21];
+                puVar19 = puVar19 + 1;
+              } while (uVar14 < (param_1->s).img_x);
             }
           }
           else {
-            uVar22 = 0;
-            if ((pjVar9->s).img_x != 0) {
+            uVar14 = 0;
+            if ((param_1->s).img_x != 0) {
               do {
-                puVar17 = puVar15 + uVar22;
-                uVar22 = uVar22 + 1;
-                *(uchar *)lVar31 = *puVar17;
-                ((uchar *)lVar31)[1] = 0xff;
-                lVar31 = lVar31 + 2;
-              } while (uVar22 < (pjVar9->s).img_x);
+                puVar9 = puVar12 + uVar14;
+                uVar14 = uVar14 + 1;
+                *puVar19 = *puVar9;
+                puVar19[1] = 0xff;
+                puVar19 = puVar19 + 2;
+              } while (uVar14 < (param_1->s).img_x);
             }
           }
         }
-        else if ((pjVar9->s).img_n == 3) {
-          YCbCr_to_RGB_row(puVar17,puVar15,local_130[1],local_130[2],(pjVar9->s).img_x,iVar20);
+        else if ((param_1->s).img_n == 3) {
+          YCbCr_to_RGB_row(puVar19,puVar12,local_130[1],local_130[2],(param_1->s).img_x,param_5);
         }
         else {
-          uVar22 = 0;
-          if ((pjVar9->s).img_x != 0) {
-            lVar31 = lVar31 + 1;
+          uVar14 = 0;
+          if ((param_1->s).img_x != 0) {
+            puVar19 = puVar19 + 1;
             do {
-              uVar1 = puVar15[uVar22];
-              uVar22 = uVar22 + 1;
-              puVar17 = (uchar *)lVar31;
-              puVar17[2] = 0xff;
-              puVar17[1] = uVar1;
-              *puVar17 = uVar1;
-              puVar17[-1] = uVar1;
-              lVar31 = lVar31 + uVar25;
-            } while (uVar22 < (pjVar9->s).img_x);
+              uVar1 = puVar12[uVar14];
+              uVar14 = uVar14 + 1;
+              puVar19[2] = 0xff;
+              puVar19[1] = uVar1;
+              *puVar19 = uVar1;
+              puVar19[-1] = uVar1;
+              puVar19 = puVar19 + param_5;
+            } while (uVar14 < (param_1->s).img_x);
           }
         }
-        uVar26 = uVar26 + 1;
-      } while (uVar26 < (pjVar9->s).img_y);
+        uVar17 = uVar17 + 1;
+      } while (uVar17 < (param_1->s).img_y);
     }
-    cleanup_jpeg(pjVar9);
-    *param_2 = (pjVar9->s).img_x;
-    *param_3 = (pjVar9->s).img_y;
-    if ((uVar18 & 0xffffffff) != 0) {
-      *(int *)uVar18 = (pjVar9->s).img_n;
+    cleanup_jpeg(param_1);
+    *param_2 = (param_1->s).img_x;
+    *param_3 = (param_1->s).img_y;
+    if (param_4 != (int *)0x0) {
+      *param_4 = (param_1->s).img_n;
     }
-    puVar15 = (uchar *)uVar19;
-    __restgprlr();
-    return puVar15;
+    return puVar11;
   }
 LAB_827ef928:
-  cleanup_jpeg(pjVar9);
-  puVar15 = (uchar *)0x0;
+  cleanup_jpeg(param_1);
   failure_reason = "outofmem";
-  __restgprlr();
-  return puVar15;
+  return (uchar *)0x0;
 }
 
 
 // 827EFB98  load_jpeg_image_swizzle  (mjpeg/stb_image.c:2143)
+
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
 
 uchar * load_jpeg_image_swizzle
                   (jpeg *param_1,uchar *param_2,uint param_3,uint param_4,int param_5,int param_6,
@@ -3657,32 +3572,21 @@ uchar * load_jpeg_image_swizzle
   uint uVar1;
   uint uVar2;
   uint uVar3;
-  uint uVar4;
+  int iVar4;
   int iVar5;
-  jpeg *pjVar6;
-  uint *puVar7;
-  int *piVar8;
-  longlong lVar9;
+  uchar *puVar6;
+  int iVar7;
+  ulonglong uVar8;
+  code *pcVar9;
   int iVar10;
-  uchar *puVar11;
-  void *pvVar12;
-  int iVar13;
-  longlong lVar14;
-  ulonglong uVar15;
-  ulonglong uVar16;
-  ulonglong uVar17;
-  longlong lVar18;
-  longlong lVar19;
-  code *pcVar20;
-  int iVar21;
-  uint uVar22;
-  longlong lVar23;
-  int *piVar24;
-  int iVar25;
-  longlong lVar26;
-  longlong lVar27;
-  uint uVar28;
-  int *piVar29;
+  uint uVar11;
+  longlong lVar12;
+  longlong lVar13;
+  int *piVar14;
+  int iVar15;
+  uint uVar16;
+  int *piVar17;
+  int *piVar18;
   code *in_stack_00000054;
   code *in_stack_0000005c;
   uchar local_140;
@@ -3691,158 +3595,149 @@ uchar * load_jpeg_image_swizzle
   int local_130 [4];
   int local_120 [72];
   
-  lVar19 = (longlong)(int)param_8;
-  lVar23 = (longlong)param_6;
-  lVar18 = (longlong)param_5;
-  uVar16 = (ulonglong)(int)param_4;
-  uVar15 = (ulonglong)(int)param_3;
-  lVar14 = (longlong)(int)param_2;
-  lVar9 = (longlong)(int)param_1;
-  __savegprlr();
+  lVar12 = (longlong)param_6;
   if (param_7 == 4) {
-    pjVar6 = (jpeg *)lVar9;
-    (pjVar6->s).img_n = 0;
-    iVar10 = decode_jpeg_image(pjVar6);
-    if (iVar10 != 0) {
-      if ((((pjVar6->s).img_n != 3) ||
-          (uVar17 = (ulonglong)(pjVar6->s).img_x, (uVar15 & 0xffffffff) < uVar17)) ||
-         ((uVar16 & 0xffffffff) < (ulonglong)(pjVar6->s).img_y)) goto LAB_827efbe4;
-      iVar10 = 0;
-      piVar24 = local_120 + 5;
-      lVar26 = lVar9 + 0x3640;
+    (param_1->s).img_n = 0;
+    iVar5 = decode_jpeg_image(param_1);
+    if (iVar5 != 0) {
+      if ((param_1->s).img_n != 3) {
+        return (uchar *)0x0;
+      }
+      uVar8 = (ulonglong)(param_1->s).img_x;
+      if (param_3 < uVar8) {
+        return (uchar *)0x0;
+      }
+      if (param_4 < (param_1->s).img_y) {
+        return (uchar *)0x0;
+      }
+      iVar5 = 0;
+      piVar17 = local_120 + 5;
+      piVar14 = &param_1->img_comp[0].h;
       while( true ) {
-        pvVar12 = stb_malloc((int)uVar17 + 3);
-        puVar7 = (uint *)lVar26;
-        puVar7[0xc] = (uint)pvVar12;
-        if (pvVar12 == (void *)0x0) break;
-        uVar28 = *puVar7;
-        uVar1 = pjVar6->img_h_max;
-        uVar2 = pjVar6->img_v_max;
-        trapWord(6,(ulonglong)uVar28,0);
-        uVar22 = (int)uVar1 / (int)uVar28;
-        uVar3 = puVar7[1];
-        uVar17 = (ulonglong)(pjVar6->s).img_x;
-        uVar4 = puVar7[10];
-        iVar21 = (int)uVar2 / (int)uVar3;
-        piVar24[-2] = uVar22;
-        piVar24[2] = 0;
-        piVar24[-1] = iVar21;
-        piVar24[-3] = uVar4;
-        piVar24[-4] = uVar4;
+        puVar6 = stb_malloc((int)uVar8 + 3);
+        piVar14[0xc] = (int)puVar6;
+        if (puVar6 == (uchar *)0x0) break;
+        uVar16 = *piVar14;
+        uVar1 = param_1->img_h_max;
+        uVar2 = param_1->img_v_max;
+        trapWord(6,(ulonglong)uVar16,0);
+        uVar11 = (int)uVar1 / (int)uVar16;
+        uVar3 = piVar14[1];
+        uVar8 = (ulonglong)(param_1->s).img_x;
+        puVar6 = (uchar *)piVar14[10];
+        iVar10 = (int)uVar2 / (int)uVar3;
+        piVar17[-2] = uVar11;
+        piVar17[2] = 0;
+        piVar17[-1] = iVar10;
+        piVar17[-3] = (int)puVar6;
+        piVar17[-4] = (int)puVar6;
         trapWord(6,(ulonglong)uVar3,0);
-        piVar24[1] = iVar21 >> 1;
-        trapWord(6,(longlong)(int)uVar22,0);
-        *piVar24 = (int)((((longlong)(int)uVar22 + uVar17) - 1 & 0xffffffff) / (ulonglong)uVar22);
-        trapWord(5,(ulonglong)uVar28 &
+        piVar17[1] = iVar10 >> 1;
+        trapWord(6,(longlong)(int)uVar11,0);
+        *piVar17 = (int)((((longlong)(int)uVar11 + uVar8) - 1 & 0xffffffff) / (ulonglong)uVar11);
+        trapWord(5,(ulonglong)uVar16 &
                    ~((((ulonglong)uVar1 & 0x7fffffff) << 1 | (ulonglong)(uVar1 >> 0x1f)) - 1),0xffff
                 );
         trapWord(5,(ulonglong)uVar3 &
                    ~((((ulonglong)uVar2 & 0x7fffffff) << 1 | (ulonglong)(uVar2 >> 0x1f)) - 1),0xffff
                 );
-        if (uVar22 == 1) {
-          if (iVar21 == 1) {
-            pcVar20 = resample_row_1;
+        if (uVar11 == 1) {
+          if (iVar10 == 1) {
+            pcVar9 = resample_row_1;
           }
           else {
-            if (iVar21 != 2) goto LAB_827efcdc;
-            pcVar20 = resample_row_v_2;
+            if (iVar10 != 2) goto LAB_827efcdc;
+            pcVar9 = resample_row_v_2;
           }
         }
         else {
 LAB_827efcdc:
-          if (uVar22 == 2) {
-            if (iVar21 == 1) {
-              pcVar20 = resample_row_h_2;
+          if (uVar11 == 2) {
+            if (iVar10 == 1) {
+              pcVar9 = resample_row_h_2;
             }
             else {
-              if (iVar21 != 2) goto LAB_827efd0c;
-              pcVar20 = resample_row_hv_2;
+              if (iVar10 != 2) goto LAB_827efd0c;
+              pcVar9 = resample_row_hv_2;
             }
           }
           else {
 LAB_827efd0c:
-            pcVar20 = resample_row_generic;
+            pcVar9 = resample_row_generic;
           }
         }
-        iVar10 = iVar10 + 1;
-        piVar24[-5] = (int)pcVar20;
-        piVar24 = piVar24 + 8;
-        lVar26 = lVar26 + 0x38;
-        if (2 < iVar10) {
-          if ((pjVar6->s).img_y != 0) {
-            uVar22 = 0;
+        iVar5 = iVar5 + 1;
+        piVar17[-5] = (int)pcVar9;
+        piVar17 = piVar17 + 8;
+        piVar14 = piVar14 + 0xe;
+        if (2 < iVar5) {
+          if ((param_1->s).img_y != 0) {
+            uVar11 = 0;
             do {
-              piVar24 = local_130;
-              lVar27 = lVar9 + 0x365c;
-              piVar29 = local_120 + 6;
-              lVar26 = 3;
+              piVar14 = local_130;
+              piVar17 = &param_1->img_comp[0].y;
+              piVar18 = local_120 + 6;
+              lVar13 = 3;
               do {
-                iVar10 = piVar29[-2];
-                iVar21 = *piVar29;
-                if (iVar21 < iVar10 >> 1) {
-                  iVar25 = piVar29[-4];
-                  iVar5 = piVar29[-5];
-                  iVar13 = iVar25;
+                iVar5 = piVar18[-2];
+                iVar10 = *piVar18;
+                if (iVar10 < iVar5 >> 1) {
+                  iVar15 = piVar18[-4];
+                  iVar4 = piVar18[-5];
+                  iVar7 = iVar15;
                 }
                 else {
-                  iVar25 = piVar29[-4];
-                  iVar5 = iVar25;
-                  iVar13 = piVar29[-5];
+                  iVar15 = piVar18[-4];
+                  iVar4 = iVar15;
+                  iVar7 = piVar18[-5];
                 }
-                piVar8 = (int *)lVar27;
-                iVar13 = (*(code *)piVar29[-6])(piVar8[5],iVar5,iVar13,piVar29[-1],piVar29[-3]);
-                iVar21 = iVar21 + 1;
-                *piVar24 = iVar13;
-                *piVar29 = iVar21;
-                if (iVar10 <= iVar21) {
-                  iVar10 = piVar29[1];
-                  iVar21 = *piVar8;
-                  piVar29[-5] = iVar25;
-                  *piVar29 = 0;
-                  piVar29[1] = iVar10 + 1;
-                  if (iVar10 + 1 < iVar21) {
-                    piVar29[-4] = piVar8[1] + iVar25;
+                iVar7 = (*(code *)piVar18[-6])
+                                  ((uchar *)piVar17[5],iVar4,iVar7,piVar18[-1],piVar18[-3]);
+                iVar10 = iVar10 + 1;
+                *piVar14 = iVar7;
+                *piVar18 = iVar10;
+                if (iVar5 <= iVar10) {
+                  iVar5 = piVar18[1];
+                  iVar10 = *piVar17;
+                  piVar18[-5] = iVar15;
+                  *piVar18 = 0;
+                  piVar18[1] = iVar5 + 1;
+                  if (iVar5 + 1 < iVar10) {
+                    piVar18[-4] = piVar17[1] + iVar15;
                   }
                 }
-                lVar26 = lVar26 + -1;
-                piVar29 = piVar29 + 8;
-                piVar24 = piVar24 + 1;
-                lVar27 = lVar27 + 0x38;
-              } while (lVar26 != 0);
-              if ((pjVar6->s).img_x != 0) {
-                uVar28 = 0;
-                iVar21 = (int)lVar18;
-                iVar10 = local_130[2] - iVar21;
-                iVar25 = local_130[1] - iVar21;
-                iVar21 = local_130[0] - iVar21;
-                lVar26 = lVar18;
+                lVar13 = lVar13 + -1;
+                piVar18 = piVar18 + 8;
+                piVar14 = piVar14 + 1;
+                piVar17 = piVar17 + 0xe;
+              } while (lVar13 != 0);
+              if ((param_1->s).img_x != 0) {
+                uVar16 = 0;
+                iVar5 = local_130[2] - param_5;
+                iVar10 = local_130[1] - param_5;
+                iVar15 = local_130[0] - param_5;
+                iVar7 = param_5;
                 do {
-                  lVar27 = (*in_stack_00000054)(lVar26,lVar23,uVar15,uVar16,4,lVar19);
-                  iVar13 = (int)lVar26;
-                  YCbCr_to_RGB(*(uchar *)(iVar21 + iVar13),*(uchar *)(iVar25 + iVar13),
-                               *(uchar *)(iVar10 + iVar13),local_13e,&local_13f,&local_140);
-                  (*in_stack_0000005c)(lVar27 + lVar14,local_13e[0],local_13f,local_140);
-                  uVar28 = uVar28 + 1;
-                  lVar26 = lVar26 + 1;
-                } while (uVar28 < (pjVar6->s).img_x);
+                  lVar13 = (*in_stack_00000054)(iVar7,lVar12,param_3,param_4,4,param_8);
+                  YCbCr_to_RGB(*(uchar *)(iVar15 + iVar7),*(uchar *)(iVar10 + iVar7),
+                               *(uchar *)(iVar5 + iVar7),local_13e,&local_13f,&local_140);
+                  (*in_stack_0000005c)(lVar13 + (int)param_2,local_13e[0],local_13f,local_140);
+                  uVar16 = uVar16 + 1;
+                  iVar7 = iVar7 + 1;
+                } while (uVar16 < (param_1->s).img_x);
               }
-              uVar22 = uVar22 + 1;
-              lVar23 = lVar23 + 1;
-            } while (uVar22 < (pjVar6->s).img_y);
+              uVar11 = uVar11 + 1;
+              lVar12 = lVar12 + 1;
+            } while (uVar11 < (param_1->s).img_y);
           }
-          cleanup_jpeg(pjVar6);
-          puVar11 = (uchar *)lVar14;
-          __restgprlr();
-          return puVar11;
+          cleanup_jpeg(param_1);
+          return param_2;
         }
       }
     }
-    cleanup_jpeg(pjVar6);
+    cleanup_jpeg(param_1);
   }
-LAB_827efbe4:
-  puVar11 = (uchar *)0x0;
-  __restgprlr();
-  return puVar11;
+  return (uchar *)0x0;
 }
 
 
@@ -3866,13 +3761,15 @@ uchar * stbi_jpeg_load_from_file_yuv
 
 // 827EFF10  stbi_jpeg_load_from_file_yuv_next  (mjpeg/stb_image.c:2231)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 uchar * stbi_jpeg_load_from_file_yuv_next
                   (_iobuf *param_1,int *param_2,int *param_3,int *param_4,int *param_5)
 
 {
   uchar *puVar1;
   
-  j.s.img_file = (_iobuf *)__savegprlr_29(param_1);
   j.marker = 0xff;
   j.code_bits = 0;
   j.code_buffer = 0;
@@ -3881,13 +3778,16 @@ uchar * stbi_jpeg_load_from_file_yuv_next
   j.s.img_buffer_end = (uchar *)&j.s.from_file;
   j.s.img_buffer = (uchar *)&j.s.from_file;
   j.s.from_file = 1;
+  j.s.img_file = param_1;
   puVar1 = load_jpeg_image_yuv(&j,param_2,param_3,param_4,param_5);
-  puVar1 = (uchar *)__restgprlr_29(puVar1);
   return puVar1;
 }
 
 
 // 827EFF78  stbi_jpeg_load_from_memory_yuv  (mjpeg/stb_image.c:2240)
+
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 
 uchar * stbi_jpeg_load_from_memory_yuv
                   (uchar *param_1,int param_2,int *param_3,int *param_4,int *param_5,int *param_6)
@@ -3895,16 +3795,15 @@ uchar * stbi_jpeg_load_from_memory_yuv
 {
   uchar *puVar1;
   
-  j.s.img_buffer = (uchar *)__savegprlr_28(param_1);
   j.marker = 0xff;
-  j.s.img_buffer_end = j.s.img_buffer + param_2;
+  j.s.img_buffer_end = param_1 + param_2;
   j.code_bits = 0;
   j.code_buffer = 0;
   j.nomore = 0;
   j.s.img_file = (_iobuf *)0x0;
   j.s.from_file = 0;
+  j.s.img_buffer = param_1;
   puVar1 = load_jpeg_image_yuv(&j,param_3,param_4,param_5,param_6);
-  puVar1 = (uchar *)__restgprlr_28(puVar1);
   return puVar1;
 }
 
@@ -3929,23 +3828,22 @@ uchar * stbi_jpeg_load_from_file(_iobuf *param_1,int *param_2,int *param_3,int *
 
 // 827F0048  stbi_jpeg_load  (mjpeg/stb_image.c:2258)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 uchar * stbi_jpeg_load(char *param_1,int *param_2,int *param_3,int *param_4,int param_5)
 
 {
-  char *pcVar1;
-  _iobuf *p_Var2;
-  uchar *puVar3;
+  _iobuf *p_Var1;
+  uchar *puVar2;
   
-  pcVar1 = (char *)__savegprlr_27(param_1);
-  p_Var2 = fopen(pcVar1,"rb");
-  if (p_Var2 == (_iobuf *)0x0) {
-    puVar3 = (uchar *)__restgprlr_27();
-    return puVar3;
+  p_Var1 = fopen(param_1,"rb");
+  if (p_Var1 == (_iobuf *)0x0) {
+    return (uchar *)0x0;
   }
-  puVar3 = stbi_jpeg_load_from_file(p_Var2,param_2,param_3,param_4,param_5);
-  fclose(p_Var2);
-  puVar3 = (uchar *)__restgprlr_27(puVar3);
-  return puVar3;
+  puVar2 = stbi_jpeg_load_from_file(p_Var1,param_2,param_3,param_4,param_5);
+  fclose(p_Var1);
+  return puVar2;
 }
 
 
@@ -3969,6 +3867,9 @@ uchar * stbi_jpeg_load_from_memory
 
 // 827F0118  stbi_jpeg_load_from_memory_swizzle  (mjpeg/stb_image.c:2285)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 uchar * stbi_jpeg_load_from_memory_swizzle
                   (uchar *param_1,int param_2,uchar *param_3,uint param_4,uint param_5,int param_6,
                   int param_7,int param_8,uint param_9,
@@ -3982,147 +3883,130 @@ uchar * stbi_jpeg_load_from_memory_swizzle
   _func___cdecl_void_uchar_ptr_uchar_uchar_uchar *in_stack_ffffc83c;
   jpeg jStack_3770;
   
-  jStack_3770.s.img_buffer = (uchar *)__savegprlr_28(param_1);
-  jStack_3770.s.img_buffer_end = jStack_3770.s.img_buffer + param_2;
+  jStack_3770.s.img_buffer_end = param_1 + param_2;
   jStack_3770.s.img_file = (_iobuf *)0x0;
   jStack_3770.s.from_file = 0;
+  jStack_3770.s.img_buffer = param_1;
   puVar1 = load_jpeg_image_swizzle
                      (&jStack_3770,param_3,param_4,param_5,param_6,param_7,param_8,in_stack_00000054
                       ,in_stack_ffffc838,in_stack_ffffc83c);
-  puVar1 = (uchar *)__restgprlr_28(puVar1);
   return puVar1;
 }
 
 
 // 827F0190  stbi_jpeg_info_raw  (mjpeg/stb_image.c:2301)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 int stbi_jpeg_info_raw(jpeg *param_1,int *param_2,int *param_3,int *param_4)
 
 {
-  jpeg *pjVar1;
-  int iVar2;
-  ulonglong uVar3;
-  ulonglong uVar4;
-  ulonglong uVar5;
+  int iVar1;
   
-  uVar5 = (ulonglong)(int)param_4;
-  uVar4 = (ulonglong)(int)param_3;
-  uVar3 = (ulonglong)(int)param_2;
-  pjVar1 = (jpeg *)__savegprlr_28(param_1);
-  iVar2 = decode_jpeg_header(pjVar1,2);
-  if (iVar2 == 0) {
-    iVar2 = __restgprlr_28();
-    return iVar2;
+  iVar1 = decode_jpeg_header(param_1,2);
+  if (iVar1 == 0) {
+    return 0;
   }
-  if ((uVar3 & 0xffffffff) != 0) {
-    *(uint *)uVar3 = (pjVar1->s).img_x;
+  if (param_2 != (int *)0x0) {
+    *param_2 = (param_1->s).img_x;
   }
-  if ((uVar4 & 0xffffffff) != 0) {
-    *(uint *)uVar4 = (pjVar1->s).img_y;
+  if (param_3 != (int *)0x0) {
+    *param_3 = (param_1->s).img_y;
   }
-  if ((uVar5 & 0xffffffff) != 0) {
-    *(int *)uVar5 = (pjVar1->s).img_n;
+  if (param_4 != (int *)0x0) {
+    *param_4 = (param_1->s).img_n;
   }
-  iVar2 = __restgprlr_28(1);
-  return iVar2;
+  return 1;
 }
 
 
 // 827F0200  stbi_jpeg_test_file  (mjpeg/stb_image.c:2312)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 int stbi_jpeg_test_file(_iobuf *param_1)
 
 {
-  _iobuf *p_Var1;
-  long lVar2;
-  uchar uVar4;
-  int iVar3;
+  long lVar1;
+  uchar uVar2;
   jpeg jStack_3770;
   
-  p_Var1 = (_iobuf *)__savegprlr_29(param_1);
-  lVar2 = ftell(p_Var1);
+  lVar1 = ftell(param_1);
   jStack_3770.s.img_buffer_end = (uchar *)&jStack_3770.s.from_file;
   jStack_3770.s.img_buffer = (uchar *)&jStack_3770.s.from_file;
   jStack_3770.s.buflen = 0x80;
   jStack_3770.marker = 0xff;
   jStack_3770.s.from_file = 1;
-  jStack_3770.s.img_file = p_Var1;
-  uVar4 = get_marker(&jStack_3770);
-  if (uVar4 != 0xd8) {
+  jStack_3770.s.img_file = param_1;
+  uVar2 = get_marker(&jStack_3770);
+  if (uVar2 != 0xd8) {
     failure_reason = "no SOI";
   }
-  fseek(p_Var1,lVar2,0);
-  iVar3 = __restgprlr_29(uVar4 == 0xd8);
-  return iVar3;
+  fseek(param_1,lVar1,0);
+  return (int)(uVar2 == 0xd8);
 }
 
 
 // 827F0298  stbi_jpeg_info_from_file  (mjpeg/stb_image.c:2323)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 int stbi_jpeg_info_from_file(_iobuf *param_1,int *param_2,int *param_3,int *param_4)
 
 {
-  _iobuf *p_Var1;
-  long lVar2;
-  int iVar3;
-  ulonglong uVar4;
-  ulonglong uVar5;
-  ulonglong uVar6;
-  undefined8 uVar7;
+  long lVar1;
+  int iVar2;
   jpeg local_3780;
   
-  uVar6 = (ulonglong)(int)param_4;
-  uVar5 = (ulonglong)(int)param_3;
-  uVar4 = (ulonglong)(int)param_2;
-  p_Var1 = (_iobuf *)__savegprlr_27(param_1);
-  lVar2 = ftell(p_Var1);
+  lVar1 = ftell(param_1);
   local_3780.s.img_buffer_end = (uchar *)&local_3780.s.from_file;
   local_3780.s.img_buffer = (uchar *)&local_3780.s.from_file;
   local_3780.s.buflen = 0x80;
   local_3780.s.from_file = 1;
-  local_3780.s.img_file = p_Var1;
-  iVar3 = decode_jpeg_header(&local_3780,2);
-  if (iVar3 == 0) {
-    uVar7 = 0;
+  local_3780.s.img_file = param_1;
+  iVar2 = decode_jpeg_header(&local_3780,2);
+  if (iVar2 == 0) {
+    iVar2 = 0;
   }
   else {
-    if ((uVar4 & 0xffffffff) != 0) {
-      *(uint *)uVar4 = local_3780.s.img_x;
+    if (param_2 != (int *)0x0) {
+      *param_2 = local_3780.s.img_x;
     }
-    if ((uVar5 & 0xffffffff) != 0) {
-      *(uint *)uVar5 = local_3780.s.img_y;
+    if (param_3 != (int *)0x0) {
+      *param_3 = local_3780.s.img_y;
     }
-    if ((uVar6 & 0xffffffff) != 0) {
-      *(int *)uVar6 = local_3780.s.img_n;
+    if (param_4 != (int *)0x0) {
+      *param_4 = local_3780.s.img_n;
     }
-    uVar7 = 1;
+    iVar2 = 1;
   }
-  fseek(p_Var1,lVar2,0);
-  iVar3 = __restgprlr_27(uVar7);
-  return iVar3;
+  fseek(param_1,lVar1,0);
+  return iVar2;
 }
 
 
 // 827F0358  stbi_jpeg_info  (mjpeg/stb_image.c:2334)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 int stbi_jpeg_info(char *param_1,int *param_2,int *param_3,int *param_4)
 
 {
-  char *pcVar1;
-  _iobuf *p_Var2;
-  int iVar3;
+  _iobuf *p_Var1;
+  int iVar2;
   
-  pcVar1 = (char *)__savegprlr_28(param_1);
-  p_Var2 = fopen(pcVar1,"rb");
-  if (p_Var2 == (_iobuf *)0x0) {
+  p_Var1 = fopen(param_1,"rb");
+  if (p_Var1 == (_iobuf *)0x0) {
     failure_reason = "can\'t fopen";
-    iVar3 = __restgprlr_28();
-    return iVar3;
+    return 0;
   }
-  iVar3 = stbi_jpeg_info_from_file(p_Var2,param_2,param_3,param_4);
-  fclose(p_Var2);
-  iVar3 = __restgprlr_28(iVar3);
-  return iVar3;
+  iVar2 = stbi_jpeg_info_from_file(p_Var1,param_2,param_3,param_4);
+  fclose(p_Var1);
+  return iVar2;
 }
 
 
@@ -4150,38 +4034,33 @@ int stbi_jpeg_test_memory(uchar *param_1,int param_2)
 
 // 827F0460  stbi_jpeg_info_from_memory  (mjpeg/stb_image.c:2352)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 int stbi_jpeg_info_from_memory(uchar *param_1,int param_2,int *param_3,int *param_4,int *param_5)
 
 {
   int iVar1;
-  ulonglong uVar2;
-  ulonglong uVar3;
-  ulonglong uVar4;
   jpeg local_3770;
   
-  uVar4 = (ulonglong)(int)param_5;
-  uVar3 = (ulonglong)(int)param_4;
-  uVar2 = (ulonglong)(int)param_3;
-  local_3770.s.img_buffer = (uchar *)__savegprlr_28(param_1);
-  local_3770.s.img_buffer_end = local_3770.s.img_buffer + param_2;
+  local_3770.s.img_buffer_end = param_1 + param_2;
   local_3770.s.img_file = (_iobuf *)0x0;
   local_3770.s.from_file = 0;
+  local_3770.s.img_buffer = param_1;
   iVar1 = decode_jpeg_header(&local_3770,2);
   if (iVar1 == 0) {
-    iVar1 = __restgprlr_28(0);
-    return iVar1;
+    return 0;
   }
-  if ((uVar2 & 0xffffffff) != 0) {
-    *(uint *)uVar2 = local_3770.s.img_x;
+  if (param_3 != (int *)0x0) {
+    *param_3 = local_3770.s.img_x;
   }
-  if ((uVar3 & 0xffffffff) != 0) {
-    *(uint *)uVar3 = local_3770.s.img_y;
+  if (param_4 != (int *)0x0) {
+    *param_4 = local_3770.s.img_y;
   }
-  if ((uVar4 & 0xffffffff) != 0) {
-    *(int *)uVar4 = local_3770.s.img_n;
+  if (param_5 != (int *)0x0) {
+    *param_5 = local_3770.s.img_n;
   }
-  iVar1 = __restgprlr_28(1);
-  return iVar1;
+  return 1;
 }
 
 
@@ -4215,6 +4094,9 @@ int bit_reverse(int param_1,int param_2)
 
 // 827F05C0  zbuild_huffman  (mjpeg/stb_image.c:2405)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 int zbuild_huffman(zhuffman *param_1,uchar *param_2,int param_3)
 
 {
@@ -4222,103 +4104,97 @@ int zbuild_huffman(zhuffman *param_1,uchar *param_2,int param_3)
   int iVar2;
   byte *pbVar3;
   undefined8 *puVar4;
-  int iVar5;
-  int *piVar6;
-  int iVar7;
+  int *piVar5;
+  int iVar6;
+  uint uVar7;
   uint uVar8;
-  uint uVar9;
-  undefined2 *puVar10;
-  int iVar11;
-  undefined8 *puVar12;
-  int iVar13;
-  int iVar14;
-  longlong lVar15;
-  longlong lVar16;
+  ushort *puVar9;
+  int iVar10;
+  undefined8 *puVar11;
+  int iVar12;
+  longlong lVar13;
+  longlong lVar14;
   undefined8 uStack_d8;
   int local_d0 [20];
   uint auStack_80 [32];
   
-  lVar16 = (longlong)param_3;
-  iVar5 = __savegprlr_26(param_1);
-  iVar7 = 0;
-  lVar15 = 8;
+  lVar14 = (longlong)param_3;
+  iVar6 = 0;
+  lVar13 = 8;
   puVar4 = &uStack_d8;
   do {
-    puVar12 = puVar4;
-    puVar4 = puVar12 + 1;
+    puVar11 = puVar4;
+    puVar4 = puVar11 + 1;
     *puVar4 = 0;
-    lVar15 = lVar15 + -1;
-  } while (lVar15 != 0);
-  *(undefined4 *)(puVar12 + 2) = 0;
+    lVar13 = lVar13 + -1;
+  } while (lVar13 != 0);
+  *(undefined4 *)(puVar11 + 2) = 0;
   memset();
-  iVar13 = 0;
-  iVar14 = (int)lVar16;
-  if (0 < iVar14) {
+  iVar12 = 0;
+  if (0 < param_3) {
     do {
-      pbVar3 = param_2 + iVar13;
-      iVar13 = iVar13 + 1;
+      pbVar3 = param_2 + iVar12;
+      iVar12 = iVar12 + 1;
       local_d0[*pbVar3] = local_d0[*pbVar3] + 1;
-      lVar16 = lVar16 + -1;
-    } while (lVar16 != 0);
+      lVar14 = lVar14 + -1;
+    } while (lVar14 != 0);
   }
   local_d0[0] = 0;
-  iVar11 = 0;
-  uVar8 = 1;
-  lVar16 = 0xf;
-  piVar6 = (int *)(iVar5 + 0x420);
-  puVar10 = (undefined2 *)(iVar5 + 0x466);
-  iVar13 = 0;
+  iVar10 = 0;
+  uVar7 = 1;
+  lVar14 = 0xf;
+  piVar5 = param_1->maxcode;
+  puVar9 = param_1->firstsymbol;
+  iVar12 = 0;
   while( true ) {
-    iVar2 = *(int *)((int)local_d0 + iVar13 + 4);
-    *(int *)((int)auStack_80 + iVar13 + 4) = iVar11;
-    puVar10[-0x32] = (short)iVar11;
-    iVar11 = iVar2 + iVar11;
-    *puVar10 = (short)iVar7;
-    if ((iVar2 != 0) && (1 << (uVar8 & 0x3f) <= iVar11 + -1)) break;
-    piVar6 = piVar6 + 1;
-    *piVar6 = iVar11 << ((uint)lVar16 & 0x3f);
-    iVar7 = iVar2 + iVar7;
-    lVar16 = lVar16 + -1;
-    iVar11 = iVar11 * 2;
-    uVar8 = uVar8 + 1;
-    puVar10 = puVar10 + 1;
-    iVar13 = iVar13 + 4;
-    if (lVar16 < 1) {
-      iVar7 = 0;
-      *(undefined4 *)(iVar5 + 0x460) = 0x10000;
-      if (0 < iVar14) {
+    puVar9 = puVar9 + 1;
+    iVar2 = *(int *)((int)local_d0 + iVar12 + 4);
+    *(int *)((int)auStack_80 + iVar12 + 4) = iVar10;
+    puVar9[-0x32] = (ushort)iVar10;
+    iVar10 = iVar2 + iVar10;
+    *puVar9 = (ushort)iVar6;
+    if ((iVar2 != 0) && (1 << (uVar7 & 0x3f) <= iVar10 + -1)) break;
+    piVar5 = piVar5 + 1;
+    *piVar5 = iVar10 << ((uint)lVar14 & 0x3f);
+    iVar6 = iVar2 + iVar6;
+    lVar14 = lVar14 + -1;
+    iVar10 = iVar10 * 2;
+    uVar7 = uVar7 + 1;
+    iVar12 = iVar12 + 4;
+    if (lVar14 < 1) {
+      iVar6 = 0;
+      param_1->maxcode[0x10] = 0x10000;
+      if (0 < param_3) {
         do {
-          bVar1 = param_2[iVar7];
+          bVar1 = param_2[iVar6];
           if (bVar1 != 0) {
-            uVar8 = auStack_80[bVar1];
-            iVar13 = ((uint)*(ushort *)((bVar1 + 0x232) * 2 + iVar5) -
-                     (uint)*(ushort *)((bVar1 + 0x200) * 2 + iVar5)) + uVar8;
-            *(byte *)(iVar13 + iVar5 + 0x484) = bVar1;
-            *(short *)((iVar13 + 0x2d2) * 2 + iVar5) = (short)iVar7;
+            uVar7 = auStack_80[bVar1];
+            iVar12 = ((uint)param_1->firstsymbol[bVar1] - (uint)param_1->firstcode[bVar1]) + uVar7;
+            *(byte *)((int)param_1 + iVar12 + 0x484) = bVar1;
+            *(short *)((iVar12 + 0x2d2) * 2 + (int)param_1) = (short)iVar6;
             if ((bVar1 < 10) &&
-               (uVar9 = (int)uVar8 >> 1 & 0x5555U | (uVar8 & 0x5555) << 1,
-               uVar9 = (int)uVar9 >> 2 & 0x3333U | (uVar9 & 0x3333) << 2,
-               uVar9 = (int)uVar9 >> 4 & 0xf0fU | (uVar9 & 0xf0f) << 4,
-               iVar11 = (int)((uVar9 & 0xff) << 8 | (int)uVar9 >> 8) >> (0x10 - bVar1 & 0x3f),
-               iVar11 < 0x200)) {
+               (uVar8 = (int)uVar7 >> 1 & 0x5555U | (uVar7 & 0x5555) << 1,
+               uVar8 = (int)uVar8 >> 2 & 0x3333U | (uVar8 & 0x3333) << 2,
+               uVar8 = (int)uVar8 >> 4 & 0xf0fU | (uVar8 & 0xf0f) << 4,
+               iVar10 = (int)((uVar8 & 0xff) << 8 | (int)uVar8 >> 8) >> (0x10 - bVar1 & 0x3f),
+               iVar10 < 0x200)) {
+              iVar2 = iVar10 << 1;
               do {
-                iVar2 = iVar11 * 2;
-                iVar11 = (1 << (bVar1 & 0x3f)) + iVar11;
-                *(short *)(iVar2 + iVar5) = (short)iVar13;
-              } while (iVar11 < 0x200);
+                iVar10 = (1 << (bVar1 & 0x3f)) + iVar10;
+                *(short *)((int)param_1->fast + iVar2) = (short)iVar12;
+                iVar2 = iVar10 * 2;
+              } while (iVar10 < 0x200);
             }
-            auStack_80[bVar1] = uVar8 + 1;
+            auStack_80[bVar1] = uVar7 + 1;
           }
-          iVar7 = iVar7 + 1;
-        } while (iVar7 < iVar14);
+          iVar6 = iVar6 + 1;
+        } while (iVar6 < param_3);
       }
-      iVar5 = __restgprlr_26(1);
-      return iVar5;
+      return 1;
     }
   }
   failure_reason = "bad codelengths";
-  iVar5 = __restgprlr_26(0);
-  return iVar5;
+  return 0;
 }
 
 
@@ -4440,40 +4316,41 @@ int zhuffman_decode(zbuf *param_1,zhuffman *param_2)
 
 // 827F0A38  expand  (mjpeg/stb_image.c:2522)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 int expand(zbuf *param_1,int param_2)
 
 {
   int iVar1;
-  int iVar2;
-  void *pvVar3;
-  uint uVar4;
+  char *pcVar2;
+  uint uVar3;
   
-  iVar2 = __savegprlr_29(param_1);
-  if (*(int *)(iVar2 + 0x1c) == 0) {
+  if (param_1->z_expandable == 0) {
     failure_reason = "output buffer limit";
-    iVar2 = __restgprlr_29(0);
-    return iVar2;
+    return 0;
   }
-  pvVar3 = *(void **)(iVar2 + 0x14);
-  iVar1 = *(int *)(iVar2 + 0x10) - (int)pvVar3;
-  for (uVar4 = *(int *)(iVar2 + 0x18) - (int)pvVar3; (int)uVar4 < iVar1 + param_2;
-      uVar4 = uVar4 << 1) {
+  pcVar2 = param_1->zout_start;
+  iVar1 = (int)param_1->zout - (int)pcVar2;
+  for (uVar3 = (int)param_1->zout_end - (int)pcVar2; (int)uVar3 < iVar1 + param_2;
+      uVar3 = uVar3 << 1) {
   }
-  pvVar3 = realloc(pvVar3,uVar4);
-  if (pvVar3 != (void *)0x0) {
-    *(void **)(iVar2 + 0x14) = pvVar3;
-    *(int *)(iVar2 + 0x10) = (int)pvVar3 + iVar1;
-    *(uint *)(iVar2 + 0x18) = (int)pvVar3 + uVar4;
-    iVar2 = __restgprlr_29(1);
-    return iVar2;
+  pcVar2 = realloc(pcVar2,uVar3);
+  if (pcVar2 != (char *)0x0) {
+    param_1->zout_start = pcVar2;
+    param_1->zout = pcVar2 + iVar1;
+    param_1->zout_end = pcVar2 + uVar3;
+    return 1;
   }
   failure_reason = "outofmem";
-  iVar2 = __restgprlr_29();
-  return iVar2;
+  return 0;
 }
 
 
 // 827F0AE8  parse_huffman_block  (mjpeg/stb_image.c:2553)
+
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 
 int parse_huffman_block(zbuf *param_1)
 
@@ -4482,173 +4359,167 @@ int parse_huffman_block(zbuf *param_1)
   ushort uVar2;
   ushort uVar3;
   byte *pbVar4;
-  zbuf *pzVar5;
-  longlong lVar6;
-  uint uVar8;
-  longlong lVar7;
-  int iVar9;
-  int iVar10;
-  uint uVar12;
-  longlong lVar11;
-  uint uVar13;
-  uint uVar14;
-  char *pcVar15;
-  ulonglong uVar16;
+  uint uVar6;
+  longlong lVar5;
+  int iVar7;
+  int iVar8;
+  uint uVar9;
+  uint uVar10;
+  uint uVar11;
+  char *pcVar12;
+  ulonglong uVar13;
   
-  lVar6 = __savegprlr_25(param_1);
-  pzVar5 = (zbuf *)lVar6;
   do {
     while( true ) {
-      uVar8 = pzVar5->num_bits;
-      if ((int)uVar8 < 0x10) {
+      uVar6 = param_1->num_bits;
+      if ((int)uVar6 < 0x10) {
         do {
-          pbVar4 = pzVar5->zbuffer;
-          if (pbVar4 < pzVar5->zbuffer_end) {
-            uVar12 = (uint)*pbVar4;
-            pzVar5->zbuffer = pbVar4 + 1;
+          pbVar4 = param_1->zbuffer;
+          if (pbVar4 < param_1->zbuffer_end) {
+            uVar9 = (uint)*pbVar4;
+            param_1->zbuffer = pbVar4 + 1;
           }
           else {
-            uVar12 = 0;
+            uVar9 = 0;
           }
-          uVar14 = uVar8 & 0x3f;
-          uVar8 = uVar8 + 8;
-          pzVar5->num_bits = uVar8;
-          pzVar5->code_buffer = uVar12 << uVar14 | pzVar5->code_buffer;
-        } while ((int)uVar8 < 0x19);
+          uVar11 = uVar6 & 0x3f;
+          uVar6 = uVar6 + 8;
+          param_1->num_bits = uVar6;
+          param_1->code_buffer = uVar9 << uVar11 | param_1->code_buffer;
+        } while ((int)uVar6 < 0x19);
       }
-      uVar12 = pzVar5->code_buffer;
-      uVar2 = (pzVar5->z_length).fast[uVar12 & 0x1ff];
+      uVar9 = param_1->code_buffer;
+      uVar2 = (param_1->z_length).fast[uVar9 & 0x1ff];
       if (uVar2 < 0xffff) {
-        bVar1 = (pzVar5->z_length).size[uVar2];
-        iVar9 = uVar8 - bVar1;
-        pzVar5->code_buffer = uVar12 >> (bVar1 & 0x3f);
-        pzVar5->num_bits = iVar9;
-        uVar2 = (pzVar5->z_length).value[uVar2];
+        bVar1 = (param_1->z_length).size[uVar2];
+        iVar7 = uVar6 - bVar1;
+        param_1->code_buffer = uVar9 >> (bVar1 & 0x3f);
+        param_1->num_bits = iVar7;
+        uVar2 = (param_1->z_length).value[uVar2];
       }
       else {
-        lVar7 = lVar6 + 0x468;
-        uVar14 = (int)uVar12 >> 1 & 0x5555U | (uVar12 & 0x5555) << 1;
-        lVar11 = 10;
-        uVar14 = (int)uVar14 >> 2 & 0x3333U | (uVar14 & 0x3333) << 2;
-        uVar14 = (int)uVar14 >> 4 & 0xf0fU | (uVar14 & 0xf0f) << 4;
-        uVar14 = (uVar14 & 0xff) << 8 | (int)uVar14 >> 8;
-        if ((pzVar5->z_length).maxcode[10] <= (int)uVar14) {
+        lVar5 = (longlong)(int)param_1 + 0x468;
+        uVar11 = (int)uVar9 >> 1 & 0x5555U | (uVar9 & 0x5555) << 1;
+        uVar10 = 10;
+        uVar11 = (int)uVar11 >> 2 & 0x3333U | (uVar11 & 0x3333) << 2;
+        uVar11 = (int)uVar11 >> 4 & 0xf0fU | (uVar11 & 0xf0f) << 4;
+        uVar11 = (uVar11 & 0xff) << 8 | (int)uVar11 >> 8;
+        if ((param_1->z_length).maxcode[10] <= (int)uVar11) {
           do {
-            lVar7 = lVar7 + 4;
-            lVar11 = lVar11 + 1;
-          } while (*(int *)lVar7 <= (int)uVar14);
-          if ((int)lVar11 == 0x10) goto LAB_827f0f0c;
+            lVar5 = lVar5 + 4;
+            uVar10 = uVar10 + 1;
+          } while (*(int *)lVar5 <= (int)uVar11);
+          if (uVar10 == 0x10) goto LAB_827f0f0c;
         }
-        uVar13 = (uint)lVar11;
-        iVar9 = uVar8 - uVar13;
+        iVar7 = uVar6 - uVar10;
+        uVar2 = (param_1->z_length).firstcode[uVar10];
+        uVar3 = (param_1->z_length).firstsymbol[uVar10];
+        param_1->code_buffer = uVar9 >> (uVar10 & 0x3f);
+        param_1->num_bits = iVar7;
         uVar2 = *(ushort *)
-                 ((int)(pzVar5->z_length).fast + (int)((lVar11 + 0x200U & 0xffffffff) << 1));
-        uVar3 = *(ushort *)
-                 ((int)(pzVar5->z_length).fast + (int)((lVar11 + 0x232U & 0xffffffff) << 1));
-        pzVar5->code_buffer = uVar12 >> (uVar13 & 0x3f);
-        pzVar5->num_bits = iVar9;
-        uVar2 = *(ushort *)
-                 ((int)pzVar5 +
-                 ((((int)uVar14 >> (0x10 - uVar13 & 0x3f)) - (uint)uVar2) + (uint)uVar3 + 0x2d2) * 2
+                 ((int)param_1 +
+                 ((((int)uVar11 >> (0x10 - uVar10 & 0x3f)) - (uint)uVar2) + (uint)uVar3 + 0x2d2) * 2
                  + 0x20);
       }
       if (0xff < uVar2) break;
-      if ((pzVar5->zout_end <= pzVar5->zout) && (iVar9 = expand(pzVar5,1), iVar9 == 0))
-      goto LAB_827f0f44;
-      *pzVar5->zout = (char)uVar2;
-      pzVar5->zout = pzVar5->zout + 1;
+      if ((param_1->zout_end <= param_1->zout) && (iVar7 = expand(param_1,1), iVar7 == 0)) {
+        return 0;
+      }
+      *param_1->zout = (char)uVar2;
+      param_1->zout = param_1->zout + 1;
     }
     if (uVar2 == 0x100) {
-      iVar9 = __restgprlr_25(1);
-      return iVar9;
+      return 1;
     }
-    iVar10 = uVar2 - 0x101;
-    uVar8 = length_extra[iVar10];
-    uVar16 = (ulonglong)(uint)length_base[iVar10];
-    if (uVar8 != 0) {
-      if (iVar9 < (int)uVar8) {
-        fill_bits(pzVar5);
+    iVar8 = uVar2 - 0x101;
+    uVar6 = length_extra[iVar8];
+    uVar13 = (ulonglong)(uint)length_base[iVar8];
+    if (uVar6 != 0) {
+      if (iVar7 < (int)uVar6) {
+        fill_bits(param_1);
       }
-      uVar12 = pzVar5->code_buffer;
-      pzVar5->code_buffer = uVar12 >> (uVar8 & 0x3f);
-      uVar16 = ((ulonglong)(uint)(1 << (uVar8 & 0x3f)) - 1 & (ulonglong)uVar12) + uVar16;
-      pzVar5->num_bits = pzVar5->num_bits - uVar8;
+      uVar9 = param_1->code_buffer;
+      param_1->code_buffer = uVar9 >> (uVar6 & 0x3f);
+      uVar13 = ((ulonglong)(uint)(1 << (uVar6 & 0x3f)) - 1 & (ulonglong)uVar9) + uVar13;
+      param_1->num_bits = param_1->num_bits - uVar6;
     }
-    lVar7 = lVar6 + 0x804;
-    if (pzVar5->num_bits < 0x10) {
-      fill_bits(pzVar5);
+    lVar5 = (longlong)(int)param_1 + 0x804;
+    if (param_1->num_bits < 0x10) {
+      fill_bits(param_1);
     }
-    uVar8 = pzVar5->code_buffer;
-    iVar9 = (int)lVar7;
-    uVar2 = *(ushort *)((uVar8 & 0x1ff) * 2 + iVar9);
+    uVar6 = param_1->code_buffer;
+    iVar7 = (int)lVar5;
+    uVar2 = *(ushort *)((uVar6 & 0x1ff) * 2 + iVar7);
     if (uVar2 < 0xffff) {
-      bVar1 = *(byte *)((uint)uVar2 + iVar9 + 0x484);
-      iVar10 = pzVar5->num_bits - (uint)bVar1;
-      pzVar5->code_buffer = uVar8 >> (bVar1 & 0x3f);
-      pzVar5->num_bits = iVar10;
-      uVar2 = *(ushort *)((uVar2 + 0x2d2) * 2 + iVar9);
+      bVar1 = *(byte *)((uint)uVar2 + iVar7 + 0x484);
+      iVar8 = param_1->num_bits - (uint)bVar1;
+      param_1->code_buffer = uVar6 >> (bVar1 & 0x3f);
+      param_1->num_bits = iVar8;
+      uVar2 = *(ushort *)((uVar2 + 0x2d2) * 2 + iVar7);
     }
     else {
-      lVar7 = lVar7 + 0x448;
-      uVar12 = (int)uVar8 >> 1 & 0x5555U | (uVar8 & 0x5555) << 1;
-      uVar14 = 10;
-      uVar12 = (int)uVar12 >> 2 & 0x3333U | (uVar12 & 0x3333) << 2;
-      uVar12 = (int)uVar12 >> 4 & 0xf0fU | (uVar12 & 0xf0f) << 4;
-      uVar12 = (uVar12 & 0xff) << 8 | (int)uVar12 >> 8;
-      if (*(int *)(iVar9 + 0x448) <= (int)uVar12) {
+      lVar5 = lVar5 + 0x448;
+      uVar9 = (int)uVar6 >> 1 & 0x5555U | (uVar6 & 0x5555) << 1;
+      uVar11 = 10;
+      uVar9 = (int)uVar9 >> 2 & 0x3333U | (uVar9 & 0x3333) << 2;
+      uVar9 = (int)uVar9 >> 4 & 0xf0fU | (uVar9 & 0xf0f) << 4;
+      uVar9 = (uVar9 & 0xff) << 8 | (int)uVar9 >> 8;
+      if (*(int *)(iVar7 + 0x448) <= (int)uVar9) {
         do {
-          lVar7 = lVar7 + 4;
-          uVar14 = uVar14 + 1;
-        } while (*(int *)lVar7 <= (int)uVar12);
-        if (uVar14 == 0x10) {
+          lVar5 = lVar5 + 4;
+          uVar11 = uVar11 + 1;
+        } while (*(int *)lVar5 <= (int)uVar9);
+        if (uVar11 == 0x10) {
 LAB_827f0f0c:
           failure_reason = "bad huffman code";
-          iVar9 = __restgprlr_25(0);
-          return iVar9;
+          return 0;
         }
       }
-      iVar10 = pzVar5->num_bits - uVar14;
-      uVar2 = *(ushort *)((uVar14 + 0x232) * 2 + iVar9);
-      uVar3 = *(ushort *)((uVar14 + 0x200) * 2 + iVar9);
-      pzVar5->code_buffer = uVar8 >> (uVar14 & 0x3f);
-      pzVar5->num_bits = iVar10;
+      iVar8 = param_1->num_bits - uVar11;
+      uVar2 = *(ushort *)((uVar11 + 0x232) * 2 + iVar7);
+      uVar3 = *(ushort *)((uVar11 + 0x200) * 2 + iVar7);
+      param_1->code_buffer = uVar6 >> (uVar11 & 0x3f);
+      param_1->num_bits = iVar8;
       uVar2 = *(ushort *)
-               (((((int)uVar12 >> (0x10 - uVar14 & 0x3f)) - (uint)uVar3) + (uint)uVar2 + 0x2d2) * 2
-               + iVar9);
+               (((((int)uVar9 >> (0x10 - uVar11 & 0x3f)) - (uint)uVar3) + (uint)uVar2 + 0x2d2) * 2 +
+               iVar7);
     }
-    uVar8 = dist_extra[uVar2];
-    iVar9 = dist_base[uVar2];
-    if (uVar8 != 0) {
-      if (iVar10 < (int)uVar8) {
-        fill_bits(pzVar5);
+    uVar6 = dist_extra[uVar2];
+    iVar7 = dist_base[uVar2];
+    if (uVar6 != 0) {
+      if (iVar8 < (int)uVar6) {
+        fill_bits(param_1);
       }
-      uVar12 = pzVar5->code_buffer;
-      pzVar5->code_buffer = uVar12 >> (uVar8 & 0x3f);
-      iVar9 = ((1 << (uVar8 & 0x3f)) - 1U & uVar12) + iVar9;
-      pzVar5->num_bits = pzVar5->num_bits - uVar8;
+      uVar9 = param_1->code_buffer;
+      param_1->code_buffer = uVar9 >> (uVar6 & 0x3f);
+      iVar7 = ((1 << (uVar6 & 0x3f)) - 1U & uVar9) + iVar7;
+      param_1->num_bits = param_1->num_bits - uVar6;
     }
-    if ((int)pzVar5->zout - (int)pzVar5->zout_start < iVar9) {
+    if ((int)param_1->zout - (int)param_1->zout_start < iVar7) {
       failure_reason = "bad dist";
-LAB_827f0f44:
-      iVar9 = __restgprlr_25(0);
-      return iVar9;
+      return 0;
     }
-    if ((ZEXT48(pzVar5->zout_end) < (ZEXT48(pzVar5->zout) + uVar16 & 0xffffffff)) &&
-       (iVar10 = expand(pzVar5,(int)uVar16), iVar10 == 0)) goto LAB_827f0f44;
-    if ((int)uVar16 != 0) {
-      pcVar15 = pzVar5->zout + (-1 - iVar9);
+    if ((ZEXT48(param_1->zout_end) < (ZEXT48(param_1->zout) + uVar13 & 0xffffffff)) &&
+       (iVar8 = expand(param_1,(int)uVar13), iVar8 == 0)) {
+      return 0;
+    }
+    if ((int)uVar13 != 0) {
+      pcVar12 = param_1->zout + (-1 - iVar7);
       do {
-        pcVar15 = pcVar15 + 1;
-        *pzVar5->zout = *pcVar15;
-        pzVar5->zout = pzVar5->zout + 1;
-        uVar16 = uVar16 - 1;
-      } while (uVar16 != 0);
+        pcVar12 = pcVar12 + 1;
+        *param_1->zout = *pcVar12;
+        param_1->zout = param_1->zout + 1;
+        uVar13 = uVar13 - 1;
+      } while (uVar13 != 0);
     }
   } while( true );
 }
 
 
 // 827F0F50  compute_huffman_codes  (mjpeg/stb_image.c:2581)
+
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
 
 int compute_huffman_codes(zbuf *param_1)
 
@@ -4657,54 +4528,52 @@ int compute_huffman_codes(zbuf *param_1)
   ushort uVar2;
   byte *pbVar3;
   uint uVar4;
-  zbuf *pzVar5;
-  int iVar6;
-  longlong lVar7;
-  uint uVar8;
-  longlong lVar9;
-  uint uVar10;
-  int *piVar11;
-  uint uVar12;
-  int iVar13;
-  uint uVar14;
+  int iVar5;
+  longlong lVar6;
+  uint uVar7;
+  longlong lVar8;
+  uint uVar9;
+  int *piVar10;
+  uint uVar11;
+  int iVar12;
+  uint uVar13;
+  int iVar14;
   int iVar15;
   int iVar16;
   int iVar17;
-  int iVar18;
   byte local_a30 [32];
   uchar local_a10 [257];
   uchar auStack_90f [207];
   zhuffman zStack_840;
   
-  pzVar5 = (zbuf *)__savegprlr_23(param_1);
-  if (pzVar5->num_bits < 5) {
-    fill_bits(pzVar5);
+  if (param_1->num_bits < 5) {
+    fill_bits(param_1);
   }
-  iVar6 = pzVar5->num_bits + -5;
-  pzVar5->num_bits = iVar6;
-  uVar4 = pzVar5->code_buffer & 0x1f;
-  pzVar5->code_buffer = pzVar5->code_buffer >> 5;
-  iVar15 = uVar4 + 0x101;
-  if (iVar6 < 5) {
-    fill_bits(pzVar5);
+  iVar5 = param_1->num_bits + -5;
+  param_1->num_bits = iVar5;
+  uVar4 = param_1->code_buffer & 0x1f;
+  param_1->code_buffer = param_1->code_buffer >> 5;
+  iVar14 = uVar4 + 0x101;
+  if (iVar5 < 5) {
+    fill_bits(param_1);
   }
-  iVar6 = pzVar5->num_bits + -5;
-  pzVar5->num_bits = iVar6;
-  iVar16 = (pzVar5->code_buffer & 0x1f) + 1;
-  pzVar5->code_buffer = pzVar5->code_buffer >> 5;
-  if (iVar6 < 4) {
-    fill_bits(pzVar5);
+  iVar5 = param_1->num_bits + -5;
+  param_1->num_bits = iVar5;
+  iVar15 = (param_1->code_buffer & 0x1f) + 1;
+  param_1->code_buffer = param_1->code_buffer >> 5;
+  if (iVar5 < 4) {
+    fill_bits(param_1);
   }
   local_a30[0] = 0;
   local_a30[1] = 0;
   local_a30[2] = 0;
   local_a30[3] = 0;
-  lVar7 = ((ulonglong)pzVar5->code_buffer & 0xf) + 4;
+  lVar6 = ((ulonglong)param_1->code_buffer & 0xf) + 4;
   local_a30[4] = 0;
   local_a30[5] = 0;
   local_a30[6] = 0;
   local_a30[7] = 0;
-  lVar9 = 0;
+  lVar8 = 0;
   local_a30[8] = 0;
   local_a30[9] = 0;
   local_a30[10] = 0;
@@ -4715,133 +4584,130 @@ int compute_huffman_codes(zbuf *param_1)
   local_a30[0xf] = 0;
   local_a30[0x10] = 0;
   local_a30[0x11] = 0;
-  pzVar5->code_buffer = pzVar5->code_buffer >> 4;
-  pzVar5->num_bits = pzVar5->num_bits + -4;
+  param_1->code_buffer = param_1->code_buffer >> 4;
+  param_1->num_bits = param_1->num_bits + -4;
   local_a30[0x12] = 0;
-  if (lVar7 != 0) {
+  if (lVar6 != 0) {
     do {
-      if (pzVar5->num_bits < 3) {
-        fill_bits(pzVar5);
+      if (param_1->num_bits < 3) {
+        fill_bits(param_1);
       }
-      uVar10 = pzVar5->code_buffer;
-      pzVar5->code_buffer = uVar10 >> 3;
-      pzVar5->num_bits = pzVar5->num_bits + -3;
-      iVar6 = (int)lVar9;
-      lVar9 = lVar9 + 1;
-      local_a30[length_dezigzag[iVar6]] = (byte)uVar10 & 7;
-    } while ((int)lVar9 < (int)lVar7);
+      uVar9 = param_1->code_buffer;
+      param_1->code_buffer = uVar9 >> 3;
+      param_1->num_bits = param_1->num_bits + -3;
+      iVar5 = (int)lVar8;
+      lVar8 = lVar8 + 1;
+      local_a30[length_dezigzag[iVar5]] = (byte)uVar9 & 7;
+    } while ((int)lVar8 < (int)lVar6);
   }
-  iVar6 = zbuild_huffman(&zStack_840,local_a30,0x13);
-  if (iVar6 != 0) {
-    iVar6 = iVar16 + iVar15;
-    iVar17 = 0;
-    if (iVar6 != 0) {
+  iVar5 = zbuild_huffman(&zStack_840,local_a30,0x13);
+  if (iVar5 != 0) {
+    iVar5 = iVar15 + iVar14;
+    iVar16 = 0;
+    if (iVar5 != 0) {
       do {
-        uVar10 = pzVar5->num_bits;
-        if ((int)uVar10 < 0x10) {
+        uVar9 = param_1->num_bits;
+        if ((int)uVar9 < 0x10) {
           do {
-            pbVar3 = pzVar5->zbuffer;
-            if (pbVar3 < pzVar5->zbuffer_end) {
-              uVar12 = (uint)*pbVar3;
-              pzVar5->zbuffer = pbVar3 + 1;
+            pbVar3 = param_1->zbuffer;
+            if (pbVar3 < param_1->zbuffer_end) {
+              uVar11 = (uint)*pbVar3;
+              param_1->zbuffer = pbVar3 + 1;
             }
             else {
-              uVar12 = 0;
+              uVar11 = 0;
             }
-            uVar14 = uVar10 & 0x3f;
-            uVar10 = uVar10 + 8;
-            pzVar5->num_bits = uVar10;
-            pzVar5->code_buffer = uVar12 << uVar14 | pzVar5->code_buffer;
-          } while ((int)uVar10 < 0x19);
+            uVar13 = uVar9 & 0x3f;
+            uVar9 = uVar9 + 8;
+            param_1->num_bits = uVar9;
+            param_1->code_buffer = uVar11 << uVar13 | param_1->code_buffer;
+          } while ((int)uVar9 < 0x19);
         }
-        uVar12 = pzVar5->code_buffer;
-        uVar1 = zStack_840.fast[uVar12 & 0x1ff];
+        uVar11 = param_1->code_buffer;
+        uVar1 = zStack_840.fast[uVar11 & 0x1ff];
         if (uVar1 < 0xffff) {
           uVar2 = zStack_840.value[uVar1];
-          uVar14 = (uint)zStack_840.size[uVar1];
-          pzVar5->code_buffer = uVar12 >> (zStack_840.size[uVar1] & 0x3f);
+          uVar13 = (uint)zStack_840.size[uVar1];
+          param_1->code_buffer = uVar11 >> (zStack_840.size[uVar1] & 0x3f);
 LAB_827f1210:
-          iVar13 = uVar10 - uVar14;
-          pzVar5->num_bits = iVar13;
+          iVar12 = uVar9 - uVar13;
+          param_1->num_bits = iVar12;
           if (uVar2 < 0x10) {
-            local_a10[iVar17] = (uchar)uVar2;
-            iVar17 = iVar17 + 1;
+            local_a10[iVar16] = (uchar)uVar2;
+            iVar16 = iVar16 + 1;
           }
           else {
             if (uVar2 == 0x10) {
-              if (iVar13 < 2) {
-                fill_bits(pzVar5);
+              if (iVar12 < 2) {
+                fill_bits(param_1);
               }
-              pzVar5->num_bits = pzVar5->num_bits + -2;
-              iVar18 = (pzVar5->code_buffer & 3) + 3;
-              pzVar5->code_buffer = pzVar5->code_buffer >> 2;
+              param_1->num_bits = param_1->num_bits + -2;
+              iVar17 = (param_1->code_buffer & 3) + 3;
+              param_1->code_buffer = param_1->code_buffer >> 2;
             }
             else {
               if (uVar2 == 0x11) {
-                if (iVar13 < 3) {
-                  fill_bits(pzVar5);
+                if (iVar12 < 3) {
+                  fill_bits(param_1);
                 }
-                iVar13 = pzVar5->num_bits + -3;
-                iVar18 = (pzVar5->code_buffer & 7) + 3;
-                uVar10 = pzVar5->code_buffer >> 3;
+                iVar12 = param_1->num_bits + -3;
+                iVar17 = (param_1->code_buffer & 7) + 3;
+                uVar9 = param_1->code_buffer >> 3;
               }
               else {
-                if (iVar13 < 7) {
-                  fill_bits(pzVar5);
+                if (iVar12 < 7) {
+                  fill_bits(param_1);
                 }
-                iVar13 = pzVar5->num_bits + -7;
-                iVar18 = (pzVar5->code_buffer & 0x7f) + 0xb;
-                uVar10 = pzVar5->code_buffer >> 7;
+                iVar12 = param_1->num_bits + -7;
+                iVar17 = (param_1->code_buffer & 0x7f) + 0xb;
+                uVar9 = param_1->code_buffer >> 7;
               }
-              pzVar5->code_buffer = uVar10;
-              pzVar5->num_bits = iVar13;
+              param_1->code_buffer = uVar9;
+              param_1->num_bits = iVar12;
             }
             memset();
-            iVar17 = iVar18 + iVar17;
+            iVar16 = iVar17 + iVar16;
           }
         }
         else {
-          uVar8 = (int)uVar12 >> 1 & 0x5555U | (uVar12 & 0x5555) << 1;
-          uVar14 = 10;
-          uVar8 = (int)uVar8 >> 2 & 0x3333U | (uVar8 & 0x3333) << 2;
-          uVar8 = (int)uVar8 >> 4 & 0xf0fU | (uVar8 & 0xf0f) << 4;
-          uVar8 = (uVar8 & 0xff) << 8 | (int)uVar8 >> 8;
-          if ((int)uVar8 < zStack_840.maxcode[10]) {
+          uVar7 = (int)uVar11 >> 1 & 0x5555U | (uVar11 & 0x5555) << 1;
+          uVar13 = 10;
+          uVar7 = (int)uVar7 >> 2 & 0x3333U | (uVar7 & 0x3333) << 2;
+          uVar7 = (int)uVar7 >> 4 & 0xf0fU | (uVar7 & 0xf0f) << 4;
+          uVar7 = (uVar7 & 0xff) << 8 | (int)uVar7 >> 8;
+          if ((int)uVar7 < zStack_840.maxcode[10]) {
 LAB_827f11d4:
-            uVar1 = zStack_840.firstcode[uVar14];
-            uVar2 = zStack_840.firstsymbol[uVar14];
-            pzVar5->code_buffer = uVar12 >> (uVar14 & 0x3f);
+            uVar1 = zStack_840.firstcode[uVar13];
+            uVar2 = zStack_840.firstsymbol[uVar13];
+            param_1->code_buffer = uVar11 >> (uVar13 & 0x3f);
             uVar2 = *(ushort *)
                      ((int)&zStack_840 +
-                     ((((int)uVar8 >> (0x10 - uVar14 & 0x3f)) - (uint)uVar1) + (uint)uVar2) * 2 +
+                     ((((int)uVar7 >> (0x10 - uVar13 & 0x3f)) - (uint)uVar1) + (uint)uVar2) * 2 +
                      0x5a4);
             goto LAB_827f1210;
           }
-          piVar11 = zStack_840.maxcode + 10;
+          piVar10 = zStack_840.maxcode + 10;
           do {
-            piVar11 = piVar11 + 1;
-            uVar14 = uVar14 + 1;
-          } while (*piVar11 <= (int)uVar8);
-          if (uVar14 != 0x10) goto LAB_827f11d4;
-          local_a10[iVar17] = 0xff;
-          iVar17 = iVar17 + 1;
+            piVar10 = piVar10 + 1;
+            uVar13 = uVar13 + 1;
+          } while (*piVar10 <= (int)uVar7);
+          if (uVar13 != 0x10) goto LAB_827f11d4;
+          local_a10[iVar16] = 0xff;
+          iVar16 = iVar16 + 1;
         }
-      } while (iVar17 < iVar6);
+      } while (iVar16 < iVar5);
     }
-    if (iVar17 != iVar6) {
+    if (iVar16 != iVar5) {
       failure_reason = "bad codelengths";
-      iVar6 = __restgprlr_23(0);
-      return iVar6;
+      return 0;
     }
-    iVar6 = zbuild_huffman(&pzVar5->z_length,local_a10,iVar15);
-    if (iVar6 != 0) {
-      iVar6 = zbuild_huffman(&pzVar5->z_distance,auStack_90f + uVar4,iVar16);
-      iVar6 = __restgprlr_23(iVar6 != 0);
-      return iVar6;
+    iVar5 = zbuild_huffman(&param_1->z_length,local_a10,iVar14);
+    if (iVar5 != 0) {
+      iVar5 = zbuild_huffman(&param_1->z_distance,auStack_90f + uVar4,iVar15);
+      return (uint)(iVar5 != 0);
     }
   }
-  iVar6 = __restgprlr_23(0);
-  return iVar6;
+  return 0;
 }
 
 
@@ -5015,44 +4881,351 @@ void init_defaults(void)
 
 // 827F16A0  parse_zlib  (mjpeg/stb_image.c:2683)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 int parse_zlib(zbuf *param_1,int param_2)
 
 {
   uint uVar1;
   uint uVar2;
-  zbuf *pzVar3;
+  int iVar3;
+  uchar *puVar4;
+  undefined1 *puVar5;
+  longlong lVar6;
+  
+  if ((param_2 != 0) && (iVar3 = parse_zlib_header(param_1), iVar3 == 0)) {
+    return 0;
+  }
+  param_1->num_bits = 0;
+  param_1->code_buffer = 0;
+  do {
+    if (param_1->num_bits < 1) {
+      fill_bits(param_1);
+    }
+    uVar1 = param_1->code_buffer;
+    iVar3 = param_1->num_bits + -1;
+    param_1->code_buffer = uVar1 >> 1;
+    param_1->num_bits = iVar3;
+    if (iVar3 < 2) {
+      fill_bits(param_1);
+    }
+    uVar2 = param_1->code_buffer & 3;
+    param_1->code_buffer = param_1->code_buffer >> 2;
+    param_1->num_bits = param_1->num_bits + -2;
+    if (uVar2 == 0) {
+      iVar3 = parse_uncompressed_block(param_1);
+    }
+    else {
+      if (uVar2 == 3) {
+        return 0;
+      }
+      if (uVar2 == 1) {
+        if (default_distance[0x1f] == '\0') {
+          puVar4 = default_distance + 0x1f;
+          lVar6 = 0x90;
+          do {
+            puVar4 = puVar4 + 1;
+            *puVar4 = '\b';
+            lVar6 = lVar6 + -1;
+          } while (lVar6 != 0);
+          puVar4 = default_length + 0x8f;
+          lVar6 = 0x70;
+          do {
+            puVar4 = puVar4 + 1;
+            *puVar4 = '\t';
+            lVar6 = lVar6 + -1;
+          } while (lVar6 != 0);
+          puVar4 = default_length + 0xff;
+          lVar6 = 0x18;
+          do {
+            puVar4 = puVar4 + 1;
+            *puVar4 = '\a';
+            lVar6 = lVar6 + -1;
+          } while (lVar6 != 0);
+          puVar4 = default_length + 0x117;
+          lVar6 = 8;
+          do {
+            puVar4 = puVar4 + 1;
+            *puVar4 = '\b';
+            lVar6 = lVar6 + -1;
+          } while (lVar6 != 0);
+          puVar5 = (undefined1 *)((int)&j.todo + 3);
+          lVar6 = 0x20;
+          do {
+            puVar5 = puVar5 + 1;
+            *puVar5 = 5;
+            lVar6 = lVar6 + -1;
+          } while (lVar6 != 0);
+        }
+        iVar3 = zbuild_huffman(&param_1->z_length,default_length,0x120);
+        if (iVar3 == 0) {
+          return 0;
+        }
+        iVar3 = zbuild_huffman(&param_1->z_distance,default_distance,0x20);
+      }
+      else {
+        iVar3 = compute_huffman_codes(param_1);
+      }
+      if (iVar3 == 0) {
+        return 0;
+      }
+      iVar3 = parse_huffman_block(param_1);
+    }
+    if (iVar3 == 0) {
+      return 0;
+    }
+  } while (((stbi_png_partial == 0) || ((int)param_1->zout - (int)param_1->zout_start < 0x10001)) &&
+          ((uVar1 & 1) == 0));
+  return 1;
+}
+
+
+// 827F1878  do_zlib  (mjpeg/stb_image.c:2714)
+
+int do_zlib(zbuf *param_1,char *param_2,int param_3,int param_4,int param_5)
+
+{
+  int iVar1;
+  
+  param_1->zout_start = param_2;
+  param_1->zout = param_2;
+  param_1->zout_end = param_2 + param_3;
+  param_1->z_expandable = param_4;
+  iVar1 = parse_zlib(param_1,param_5);
+  return iVar1;
+}
+
+
+// 827F1898  stbi_zlib_decode_malloc_guesssize  (mjpeg/stb_image.c:2724)
+
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
+char * stbi_zlib_decode_malloc_guesssize(char *param_1,int param_2,int param_3,int *param_4)
+
+{
+  uint uVar1;
+  uint uVar2;
+  uint uVar3;
   int iVar4;
   uchar *puVar5;
   undefined1 *puVar6;
   longlong lVar7;
+  zbuf local_1020;
   
-  pzVar3 = (zbuf *)__savegprlr_27(param_1);
-  if ((param_2 != 0) && (iVar4 = parse_zlib_header(pzVar3), iVar4 == 0)) {
-LAB_827f16c4:
-    iVar4 = __restgprlr_27(0);
-    return iVar4;
+  if (alt_stb_malloc == (_func___cdecl_void_ptr_uint *)0x0) {
+    if (stbi_mem.size <= stbi_mem.index + param_3) {
+      return (char *)0x0;
+    }
+    local_1020.zout = (char *)(stbi_mem.data + stbi_mem.index);
+    stbi_mem.index = stbi_mem.index + param_3;
   }
-  pzVar3->num_bits = 0;
-  pzVar3->code_buffer = 0;
+  else {
+    local_1020.zout = (*alt_stb_malloc)(param_3);
+  }
+  if ((uchar *)local_1020.zout != (uchar *)0x0) {
+    local_1020.zout_end = local_1020.zout + param_3;
+    local_1020.zbuffer_end = (uchar *)(param_1 + param_2);
+    local_1020.z_expandable = 1;
+    local_1020.zbuffer = (uchar *)param_1;
+    local_1020.zout_start = local_1020.zout;
+    iVar4 = parse_zlib_header(&local_1020);
+    if (iVar4 != 0) {
+      local_1020.num_bits = 0;
+      local_1020.code_buffer = 0;
+      do {
+        if (local_1020.num_bits < 1) {
+          fill_bits(&local_1020);
+        }
+        uVar1 = local_1020.code_buffer & 1;
+        local_1020.num_bits = local_1020.num_bits + -1;
+        local_1020.code_buffer = local_1020.code_buffer >> 1;
+        if (local_1020.num_bits < 2) {
+          fill_bits(&local_1020);
+        }
+        uVar3 = local_1020.code_buffer & 3;
+        uVar2 = local_1020.code_buffer & 3;
+        local_1020.code_buffer = local_1020.code_buffer >> 2;
+        local_1020.num_bits = local_1020.num_bits + -2;
+        if (uVar3 == 0) {
+          iVar4 = parse_uncompressed_block(&local_1020);
+        }
+        else {
+          if (uVar2 == 3) break;
+          if (uVar2 == 1) {
+            if (default_distance[0x1f] == '\0') {
+              puVar5 = default_distance + 0x1f;
+              lVar7 = 0x90;
+              do {
+                puVar5 = puVar5 + 1;
+                *puVar5 = '\b';
+                lVar7 = lVar7 + -1;
+              } while (lVar7 != 0);
+              puVar5 = default_length + 0x8f;
+              lVar7 = 0x70;
+              do {
+                puVar5 = puVar5 + 1;
+                *puVar5 = '\t';
+                lVar7 = lVar7 + -1;
+              } while (lVar7 != 0);
+              puVar5 = default_length + 0xff;
+              lVar7 = 0x18;
+              do {
+                puVar5 = puVar5 + 1;
+                *puVar5 = '\a';
+                lVar7 = lVar7 + -1;
+              } while (lVar7 != 0);
+              puVar5 = default_length + 0x117;
+              lVar7 = 8;
+              do {
+                puVar5 = puVar5 + 1;
+                *puVar5 = '\b';
+                lVar7 = lVar7 + -1;
+              } while (lVar7 != 0);
+              puVar6 = (undefined1 *)((int)&j.todo + 3);
+              lVar7 = 0x20;
+              do {
+                puVar6 = puVar6 + 1;
+                *puVar6 = 5;
+                lVar7 = lVar7 + -1;
+              } while (lVar7 != 0);
+            }
+            iVar4 = zbuild_huffman(&local_1020.z_length,default_length,0x120);
+            if (iVar4 == 0) break;
+            iVar4 = zbuild_huffman(&local_1020.z_distance,default_distance,0x20);
+          }
+          else {
+            iVar4 = compute_huffman_codes(&local_1020);
+          }
+          if (iVar4 == 0) break;
+          iVar4 = parse_huffman_block(&local_1020);
+        }
+        if (iVar4 == 0) break;
+        if (((stbi_png_partial != 0) &&
+            (0x10000 < (int)local_1020.zout - (int)local_1020.zout_start)) || (uVar1 != 0)) {
+          if (param_4 != (int *)0x0) {
+            *param_4 = (int)local_1020.zout - (int)local_1020.zout_start;
+            return local_1020.zout_start;
+          }
+          return (char *)(uchar *)local_1020.zout_start;
+        }
+      } while( true );
+    }
+    if (alt_stb_free != (_func___cdecl_void_void_ptr *)0x0) {
+      (*alt_stb_free)(local_1020.zout_start);
+    }
+  }
+  return (char *)0x0;
+}
+
+
+// 827F1B20  stbi_zlib_decode_malloc  (mjpeg/stb_image.c:2740)
+
+char * stbi_zlib_decode_malloc(char *param_1,int param_2,int *param_3)
+
+{
+  char *pcVar1;
+  
+  pcVar1 = stbi_zlib_decode_malloc_guesssize(param_1,param_2,0x4000,param_3);
+  return pcVar1;
+}
+
+
+// 827F1B30  stbi_zlib_decode_malloc_guesssize_headerflag  (mjpeg/stb_image.c:2745)
+
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
+char * stbi_zlib_decode_malloc_guesssize_headerflag
+                 (char *param_1,int param_2,int param_3,int *param_4,int param_5)
+
+{
+  int iVar1;
+  zbuf local_1020;
+  
+  if (alt_stb_malloc == (_func___cdecl_void_ptr_uint *)0x0) {
+    if (stbi_mem.size <= stbi_mem.index + param_3) {
+      return (char *)0x0;
+    }
+    local_1020.zout = (char *)(stbi_mem.data + stbi_mem.index);
+    stbi_mem.index = stbi_mem.index + param_3;
+  }
+  else {
+    local_1020.zout = (*alt_stb_malloc)(param_3);
+  }
+  if ((uchar *)local_1020.zout != (uchar *)0x0) {
+    local_1020.zout_end = local_1020.zout + param_3;
+    local_1020.zbuffer_end = (uchar *)(param_1 + param_2);
+    local_1020.z_expandable = 1;
+    local_1020.zbuffer = (uchar *)param_1;
+    local_1020.zout_start = local_1020.zout;
+    iVar1 = parse_zlib(&local_1020,param_5);
+    if (iVar1 != 0) {
+      if (param_4 != (int *)0x0) {
+        *param_4 = (int)local_1020.zout - (int)local_1020.zout_start;
+        return local_1020.zout_start;
+      }
+      return (char *)(uchar *)local_1020.zout_start;
+    }
+    if (alt_stb_free != (_func___cdecl_void_void_ptr *)0x0) {
+      (*alt_stb_free)(local_1020.zout_start);
+    }
+  }
+  return (char *)0x0;
+}
+
+
+// 827F1C28  stbi_zlib_decode_buffer  (mjpeg/stb_image.c:2761)
+
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
+int stbi_zlib_decode_buffer(char *param_1,int param_2,char *param_3,int param_4)
+
+{
+  uint uVar1;
+  uint uVar2;
+  uint uVar3;
+  int iVar4;
+  uchar *puVar5;
+  undefined1 *puVar6;
+  longlong lVar7;
+  zbuf local_1010;
+  
+  local_1010.zout_end = param_1 + param_2;
+  local_1010.zbuffer_end = (uchar *)(param_3 + param_4);
+  local_1010.z_expandable = 0;
+  local_1010.zbuffer = (uchar *)param_3;
+  local_1010.zout = param_1;
+  local_1010.zout_start = param_1;
+  iVar4 = parse_zlib_header(&local_1010);
+  if (iVar4 == 0) {
+    return -1;
+  }
+  local_1010.num_bits = 0;
+  local_1010.code_buffer = 0;
   do {
-    if (pzVar3->num_bits < 1) {
-      fill_bits(pzVar3);
+    if (local_1010.num_bits < 1) {
+      fill_bits(&local_1010);
     }
-    uVar1 = pzVar3->code_buffer;
-    iVar4 = pzVar3->num_bits + -1;
-    pzVar3->code_buffer = uVar1 >> 1;
-    pzVar3->num_bits = iVar4;
-    if (iVar4 < 2) {
-      fill_bits(pzVar3);
+    uVar1 = local_1010.code_buffer & 1;
+    local_1010.num_bits = local_1010.num_bits + -1;
+    local_1010.code_buffer = local_1010.code_buffer >> 1;
+    if (local_1010.num_bits < 2) {
+      fill_bits(&local_1010);
     }
-    uVar2 = pzVar3->code_buffer & 3;
-    pzVar3->code_buffer = pzVar3->code_buffer >> 2;
-    pzVar3->num_bits = pzVar3->num_bits + -2;
-    if (uVar2 == 0) {
-      iVar4 = parse_uncompressed_block(pzVar3);
+    uVar3 = local_1010.code_buffer & 3;
+    uVar2 = local_1010.code_buffer & 3;
+    local_1010.code_buffer = local_1010.code_buffer >> 2;
+    local_1010.num_bits = local_1010.num_bits + -2;
+    if (uVar3 == 0) {
+      iVar4 = parse_uncompressed_block(&local_1010);
     }
     else {
-      if (uVar2 == 3) goto LAB_827f16c4;
+      if (uVar2 == 3) {
+        return -1;
+      }
       if (uVar2 == 1) {
         if (default_distance[0x1f] == '\0') {
           puVar5 = default_distance + 0x1f;
@@ -5091,406 +5264,69 @@ LAB_827f16c4:
             lVar7 = lVar7 + -1;
           } while (lVar7 != 0);
         }
-        iVar4 = zbuild_huffman(&pzVar3->z_length,default_length,0x120);
-        if (iVar4 == 0) goto LAB_827f16c4;
-        iVar4 = zbuild_huffman(&pzVar3->z_distance,default_distance,0x20);
+        iVar4 = zbuild_huffman(&local_1010.z_length,default_length,0x120);
+        if (iVar4 == 0) {
+          return -1;
+        }
+        iVar4 = zbuild_huffman(&local_1010.z_distance,default_distance,0x20);
       }
       else {
-        iVar4 = compute_huffman_codes(pzVar3);
+        iVar4 = compute_huffman_codes(&local_1010);
       }
-      if (iVar4 == 0) goto LAB_827f16c4;
-      iVar4 = parse_huffman_block(pzVar3);
+      if (iVar4 == 0) {
+        return -1;
+      }
+      iVar4 = parse_huffman_block(&local_1010);
     }
-    if (iVar4 == 0) goto LAB_827f16c4;
-    if (((stbi_png_partial != 0) && (0x10000 < (int)pzVar3->zout - (int)pzVar3->zout_start)) ||
-       ((uVar1 & 1) != 0)) {
-      iVar4 = __restgprlr_27(1);
-      return iVar4;
+    if (iVar4 == 0) {
+      return -1;
     }
-  } while( true );
-}
-
-
-// 827F1878  do_zlib  (mjpeg/stb_image.c:2714)
-
-int do_zlib(zbuf *param_1,char *param_2,int param_3,int param_4,int param_5)
-
-{
-  int iVar1;
-  
-  param_1->zout_start = param_2;
-  param_1->zout = param_2;
-  param_1->zout_end = param_2 + param_3;
-  param_1->z_expandable = param_4;
-  iVar1 = parse_zlib(param_1,param_5);
-  return iVar1;
-}
-
-
-// 827F1898  stbi_zlib_decode_malloc_guesssize  (mjpeg/stb_image.c:2724)
-
-char * stbi_zlib_decode_malloc_guesssize(char *param_1,int param_2,int param_3,int *param_4)
-
-{
-  uint uVar1;
-  uint uVar2;
-  uint uVar3;
-  uchar *puVar4;
-  void *pvVar5;
-  int iVar6;
-  char *pcVar7;
-  ulonglong uVar8;
-  ulonglong uVar9;
-  ulonglong uVar10;
-  undefined1 *puVar11;
-  longlong lVar12;
-  zbuf local_1020;
-  
-  uVar8 = (ulonglong)(int)param_4;
-  lVar12 = (longlong)param_3;
-  puVar4 = (uchar *)__savegprlr_27(param_1);
-  if (alt_stb_malloc == (_func___cdecl_void_ptr_uint *)0x0) {
-    uVar10 = (ulonglong)stbi_mem.index;
-    uVar9 = uVar10 + lVar12;
-    if ((uVar9 & 0xffffffff) < (ulonglong)stbi_mem.size) {
-      stbi_mem.index = (uint)uVar9;
-      uVar10 = ZEXT48(stbi_mem.data) + uVar10;
-      goto LAB_827f1904;
-    }
-  }
-  else {
-    pvVar5 = (*alt_stb_malloc)((uint)lVar12);
-    uVar10 = (ulonglong)(int)pvVar5;
-LAB_827f1904:
-    if ((uVar10 & 0xffffffff) != 0) {
-      local_1020.zout = (char *)uVar10;
-      local_1020.zout_end = local_1020.zout + (uint)lVar12;
-      local_1020.zbuffer_end = puVar4 + param_2;
-      local_1020.z_expandable = 1;
-      local_1020.zbuffer = puVar4;
-      local_1020.zout_start = local_1020.zout;
-      iVar6 = parse_zlib_header(&local_1020);
-      if (iVar6 != 0) {
-        local_1020.num_bits = 0;
-        local_1020.code_buffer = 0;
-        do {
-          if (local_1020.num_bits < 1) {
-            fill_bits(&local_1020);
-          }
-          uVar1 = local_1020.code_buffer & 1;
-          local_1020.num_bits = local_1020.num_bits + -1;
-          local_1020.code_buffer = local_1020.code_buffer >> 1;
-          if (local_1020.num_bits < 2) {
-            fill_bits(&local_1020);
-          }
-          uVar3 = local_1020.code_buffer & 3;
-          uVar2 = local_1020.code_buffer & 3;
-          local_1020.code_buffer = local_1020.code_buffer >> 2;
-          local_1020.num_bits = local_1020.num_bits + -2;
-          if (uVar3 == 0) {
-            iVar6 = parse_uncompressed_block(&local_1020);
-          }
-          else {
-            if (uVar2 == 3) goto LAB_827f1af8;
-            if (uVar2 == 1) {
-              if (default_distance[0x1f] == '\0') {
-                puVar4 = default_distance + 0x1f;
-                lVar12 = 0x90;
-                do {
-                  puVar4 = puVar4 + 1;
-                  *puVar4 = '\b';
-                  lVar12 = lVar12 + -1;
-                } while (lVar12 != 0);
-                puVar4 = default_length + 0x8f;
-                lVar12 = 0x70;
-                do {
-                  puVar4 = puVar4 + 1;
-                  *puVar4 = '\t';
-                  lVar12 = lVar12 + -1;
-                } while (lVar12 != 0);
-                puVar4 = default_length + 0xff;
-                lVar12 = 0x18;
-                do {
-                  puVar4 = puVar4 + 1;
-                  *puVar4 = '\a';
-                  lVar12 = lVar12 + -1;
-                } while (lVar12 != 0);
-                puVar4 = default_length + 0x117;
-                lVar12 = 8;
-                do {
-                  puVar4 = puVar4 + 1;
-                  *puVar4 = '\b';
-                  lVar12 = lVar12 + -1;
-                } while (lVar12 != 0);
-                puVar11 = (undefined1 *)((int)&j.todo + 3);
-                lVar12 = 0x20;
-                do {
-                  puVar11 = puVar11 + 1;
-                  *puVar11 = 5;
-                  lVar12 = lVar12 + -1;
-                } while (lVar12 != 0);
-              }
-              iVar6 = zbuild_huffman(&local_1020.z_length,default_length,0x120);
-              if (iVar6 == 0) goto LAB_827f1af8;
-              iVar6 = zbuild_huffman(&local_1020.z_distance,default_distance,0x20);
-            }
-            else {
-              iVar6 = compute_huffman_codes(&local_1020);
-            }
-            if (iVar6 == 0) goto LAB_827f1af8;
-            iVar6 = parse_huffman_block(&local_1020);
-          }
-          if (iVar6 == 0) goto LAB_827f1af8;
-        } while (((stbi_png_partial == 0) ||
-                 ((int)local_1020.zout - (int)local_1020.zout_start < 0x10001)) && (uVar1 == 0));
-        pcVar7 = local_1020.zout_start;
-        if ((uVar8 & 0xffffffff) != 0) {
-          *(int *)uVar8 = (int)local_1020.zout - (int)local_1020.zout_start;
-          pcVar7 = (char *)__restgprlr_27();
-          return pcVar7;
-        }
-        goto LAB_827f1b18;
-      }
-LAB_827f1af8:
-      if (alt_stb_free != (_func___cdecl_void_void_ptr *)0x0) {
-        (*alt_stb_free)(local_1020.zout_start);
-      }
-    }
-  }
-  pcVar7 = (char *)0x0;
-LAB_827f1b18:
-  pcVar7 = (char *)__restgprlr_27(pcVar7);
-  return pcVar7;
-}
-
-
-// 827F1B20  stbi_zlib_decode_malloc  (mjpeg/stb_image.c:2740)
-
-char * stbi_zlib_decode_malloc(char *param_1,int param_2,int *param_3)
-
-{
-  char *pcVar1;
-  
-  pcVar1 = stbi_zlib_decode_malloc_guesssize(param_1,param_2,0x4000,param_3);
-  return pcVar1;
-}
-
-
-// 827F1B30  stbi_zlib_decode_malloc_guesssize_headerflag  (mjpeg/stb_image.c:2745)
-
-char * stbi_zlib_decode_malloc_guesssize_headerflag
-                 (char *param_1,int param_2,int param_3,int *param_4,int param_5)
-
-{
-  uchar *puVar1;
-  void *pvVar2;
-  int iVar3;
-  char *pcVar4;
-  longlong lVar5;
-  ulonglong uVar6;
-  ulonglong uVar7;
-  ulonglong uVar8;
-  zbuf local_1020;
-  
-  uVar6 = (ulonglong)(int)param_4;
-  lVar5 = (longlong)param_3;
-  puVar1 = (uchar *)__savegprlr_26(param_1);
-  if (alt_stb_malloc == (_func___cdecl_void_ptr_uint *)0x0) {
-    uVar8 = (ulonglong)stbi_mem.index;
-    uVar7 = uVar8 + lVar5;
-    if ((uVar7 & 0xffffffff) < (ulonglong)stbi_mem.size) {
-      stbi_mem.index = (uint)uVar7;
-      uVar8 = ZEXT48(stbi_mem.data) + uVar8;
-      goto LAB_827f1ba0;
-    }
-  }
-  else {
-    pvVar2 = (*alt_stb_malloc)((uint)lVar5);
-    uVar8 = (ulonglong)(int)pvVar2;
-LAB_827f1ba0:
-    if ((uVar8 & 0xffffffff) != 0) {
-      local_1020.zout = (char *)uVar8;
-      local_1020.zout_end = local_1020.zout + (uint)lVar5;
-      local_1020.zbuffer_end = puVar1 + param_2;
-      local_1020.z_expandable = 1;
-      local_1020.zbuffer = puVar1;
-      local_1020.zout_start = local_1020.zout;
-      iVar3 = parse_zlib(&local_1020,param_5);
-      if (iVar3 != 0) {
-        pcVar4 = local_1020.zout_start;
-        if ((uVar6 & 0xffffffff) != 0) {
-          *(int *)uVar6 = (int)local_1020.zout - (int)local_1020.zout_start;
-          pcVar4 = (char *)__restgprlr_26();
-          return pcVar4;
-        }
-        goto LAB_827f1c20;
-      }
-      if (alt_stb_free != (_func___cdecl_void_void_ptr *)0x0) {
-        (*alt_stb_free)(local_1020.zout_start);
-      }
-    }
-  }
-  pcVar4 = (char *)0x0;
-LAB_827f1c20:
-  pcVar4 = (char *)__restgprlr_26(pcVar4);
-  return pcVar4;
-}
-
-
-// 827F1C28  stbi_zlib_decode_buffer  (mjpeg/stb_image.c:2761)
-
-int stbi_zlib_decode_buffer(char *param_1,int param_2,char *param_3,int param_4)
-
-{
-  uint uVar1;
-  uint uVar2;
-  uint uVar3;
-  int iVar4;
-  uchar *puVar5;
-  undefined1 *puVar6;
-  longlong lVar7;
-  zbuf local_1010;
-  
-  local_1010.zbuffer = (uchar *)param_3;
-  local_1010.zout = (char *)__savegprlr_28(param_1);
-  local_1010.zout_end = local_1010.zout + param_2;
-  local_1010.zbuffer_end = local_1010.zbuffer + param_4;
-  local_1010.z_expandable = 0;
-  local_1010.zout_start = local_1010.zout;
-  iVar4 = parse_zlib_header(&local_1010);
-  if (iVar4 != 0) {
-    local_1010.num_bits = 0;
-    local_1010.code_buffer = 0;
-    do {
-      if (local_1010.num_bits < 1) {
-        fill_bits(&local_1010);
-      }
-      uVar1 = local_1010.code_buffer & 1;
-      local_1010.num_bits = local_1010.num_bits + -1;
-      local_1010.code_buffer = local_1010.code_buffer >> 1;
-      if (local_1010.num_bits < 2) {
-        fill_bits(&local_1010);
-      }
-      uVar3 = local_1010.code_buffer & 3;
-      uVar2 = local_1010.code_buffer & 3;
-      local_1010.code_buffer = local_1010.code_buffer >> 2;
-      local_1010.num_bits = local_1010.num_bits + -2;
-      if (uVar3 == 0) {
-        iVar4 = parse_uncompressed_block(&local_1010);
-      }
-      else {
-        if (uVar2 == 3) break;
-        if (uVar2 == 1) {
-          if (default_distance[0x1f] == '\0') {
-            puVar5 = default_distance + 0x1f;
-            lVar7 = 0x90;
-            do {
-              puVar5 = puVar5 + 1;
-              *puVar5 = '\b';
-              lVar7 = lVar7 + -1;
-            } while (lVar7 != 0);
-            puVar5 = default_length + 0x8f;
-            lVar7 = 0x70;
-            do {
-              puVar5 = puVar5 + 1;
-              *puVar5 = '\t';
-              lVar7 = lVar7 + -1;
-            } while (lVar7 != 0);
-            puVar5 = default_length + 0xff;
-            lVar7 = 0x18;
-            do {
-              puVar5 = puVar5 + 1;
-              *puVar5 = '\a';
-              lVar7 = lVar7 + -1;
-            } while (lVar7 != 0);
-            puVar5 = default_length + 0x117;
-            lVar7 = 8;
-            do {
-              puVar5 = puVar5 + 1;
-              *puVar5 = '\b';
-              lVar7 = lVar7 + -1;
-            } while (lVar7 != 0);
-            puVar6 = (undefined1 *)((int)&j.todo + 3);
-            lVar7 = 0x20;
-            do {
-              puVar6 = puVar6 + 1;
-              *puVar6 = 5;
-              lVar7 = lVar7 + -1;
-            } while (lVar7 != 0);
-          }
-          iVar4 = zbuild_huffman(&local_1010.z_length,default_length,0x120);
-          if (iVar4 == 0) break;
-          iVar4 = zbuild_huffman(&local_1010.z_distance,default_distance,0x20);
-        }
-        else {
-          iVar4 = compute_huffman_codes(&local_1010);
-        }
-        if (iVar4 == 0) break;
-        iVar4 = parse_huffman_block(&local_1010);
-      }
-      if (iVar4 == 0) break;
-      if (((stbi_png_partial != 0) && (0x10000 < (int)local_1010.zout - (int)local_1010.zout_start))
-         || (uVar1 != 0)) {
-        iVar4 = __restgprlr_28(ZEXT48(local_1010.zout) - ZEXT48(local_1010.zout_start));
-        return iVar4;
-      }
-    } while( true );
-  }
-  iVar4 = __restgprlr_28(0xffffffffffffffff);
-  return iVar4;
+  } while (((stbi_png_partial == 0) || ((int)local_1010.zout - (int)local_1010.zout_start < 0x10001)
+           ) && (uVar1 == 0));
+  return (int)local_1010.zout - (int)local_1010.zout_start;
 }
 
 
 // 827F1E18  stbi_zlib_decode_noheader_malloc  (mjpeg/stb_image.c:2772)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 char * stbi_zlib_decode_noheader_malloc(char *param_1,int param_2,int *param_3)
 
 {
-  uchar *puVar1;
-  uchar *puVar2;
-  int iVar3;
-  char *pcVar4;
-  ulonglong uVar5;
+  int iVar1;
   zbuf local_1010;
   
-  uVar5 = (ulonglong)(int)param_3;
-  puVar1 = (uchar *)__savegprlr_28(param_1);
   if (alt_stb_malloc == (_func___cdecl_void_ptr_uint *)0x0) {
-    if (stbi_mem.index + 0x4000 < stbi_mem.size) {
-      puVar2 = stbi_mem.data + stbi_mem.index;
-      stbi_mem.index = stbi_mem.index + 0x4000;
-      goto LAB_827f1e80;
+    if (stbi_mem.size <= stbi_mem.index + 0x4000) {
+      return (char *)0x0;
     }
+    local_1010.zout = (char *)(stbi_mem.data + stbi_mem.index);
+    stbi_mem.index = stbi_mem.index + 0x4000;
   }
   else {
-    puVar2 = (*alt_stb_malloc)(0x4000);
-LAB_827f1e80:
-    if (puVar2 != (uchar *)0x0) {
-      local_1010.zout_end = (char *)(puVar2 + 0x4000);
-      local_1010.zbuffer_end = puVar1 + param_2;
-      local_1010.z_expandable = 1;
-      local_1010.zbuffer = puVar1;
-      local_1010.zout = (char *)puVar2;
-      local_1010.zout_start = (char *)puVar2;
-      iVar3 = parse_zlib(&local_1010,0);
-      if (iVar3 != 0) {
-        puVar1 = (uchar *)local_1010.zout_start;
-        if ((uVar5 & 0xffffffff) != 0) {
-          *(int *)uVar5 = (int)local_1010.zout - (int)local_1010.zout_start;
-          pcVar4 = (char *)__restgprlr_28();
-          return pcVar4;
-        }
-        goto LAB_827f1f00;
+    local_1010.zout = (*alt_stb_malloc)(0x4000);
+  }
+  if ((uchar *)local_1010.zout != (uchar *)0x0) {
+    local_1010.zout_end = local_1010.zout + 0x4000;
+    local_1010.zbuffer_end = (uchar *)(param_1 + param_2);
+    local_1010.z_expandable = 1;
+    local_1010.zbuffer = (uchar *)param_1;
+    local_1010.zout_start = local_1010.zout;
+    iVar1 = parse_zlib(&local_1010,0);
+    if (iVar1 != 0) {
+      if (param_3 != (int *)0x0) {
+        *param_3 = (int)local_1010.zout - (int)local_1010.zout_start;
+        return local_1010.zout_start;
       }
-      if (alt_stb_free != (_func___cdecl_void_void_ptr *)0x0) {
-        (*alt_stb_free)(local_1010.zout_start);
-      }
+      return (char *)(uchar *)local_1010.zout_start;
+    }
+    if (alt_stb_free != (_func___cdecl_void_void_ptr *)0x0) {
+      (*alt_stb_free)(local_1010.zout_start);
     }
   }
-  puVar1 = (uchar *)0x0;
-LAB_827f1f00:
-  pcVar4 = (char *)__restgprlr_28(puVar1);
-  return pcVar4;
+  return (char *)0x0;
 }
 
 
@@ -5539,40 +5375,39 @@ chunk get_chunk_header(stbi *param_1)
 
 // 827F1FF0  check_png_header  (mjpeg/stb_image.c:2826)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 int check_png_header(stbi *param_1)
 
 {
   uchar *puVar1;
-  stbi *psVar2;
+  uchar uVar2;
   int iVar3;
-  uchar uVar4;
   
-  psVar2 = (stbi *)__savegprlr_29(param_1);
   iVar3 = 0;
   while( true ) {
-    puVar1 = psVar2->img_buffer;
-    if (puVar1 < psVar2->img_buffer_end) {
-      uVar4 = *puVar1;
-      psVar2->img_buffer = puVar1 + 1;
+    puVar1 = param_1->img_buffer;
+    if (puVar1 < param_1->img_buffer_end) {
+      uVar2 = *puVar1;
+      param_1->img_buffer = puVar1 + 1;
     }
-    else if (psVar2->from_file == 0) {
-      uVar4 = '\0';
+    else if (param_1->from_file == 0) {
+      uVar2 = '\0';
     }
     else {
-      refill_buffer(psVar2);
-      uVar4 = *psVar2->img_buffer;
-      psVar2->img_buffer = psVar2->img_buffer + 1;
+      refill_buffer(param_1);
+      uVar2 = *param_1->img_buffer;
+      param_1->img_buffer = param_1->img_buffer + 1;
     }
-    if (uVar4 != png_sig[iVar3]) break;
+    if (uVar2 != png_sig[iVar3]) break;
     iVar3 = iVar3 + 1;
     if (7 < iVar3) {
-      iVar3 = __restgprlr_29(1);
-      return iVar3;
+      return 1;
     }
   }
   failure_reason = "bad png sig";
-  iVar3 = __restgprlr_29(0);
-  return iVar3;
+  return 0;
 }
 
 
@@ -5607,6 +5442,8 @@ int paeth(int param_1,int param_2,int param_3)
 
 // 827F2118  create_png_image_raw  (mjpeg/stb_image.c:2864)
 
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
 /* WARNING: Removing unreachable block (ram,0x827f29cc) */
 /* WARNING: Removing unreachable block (ram,0x827f2664) */
 
@@ -5616,524 +5453,492 @@ int create_png_image_raw
 {
   byte bVar1;
   byte bVar2;
-  uint uVar3;
+  int iVar3;
   uint uVar4;
   uint uVar5;
   uint uVar6;
-  byte *pbVar7;
-  char *pcVar8;
-  uint uVar9;
-  uchar *puVar10;
-  uint uVar11;
-  int iVar12;
-  longlong lVar13;
-  uint uVar14;
+  char *pcVar7;
+  ulonglong uVar8;
+  uchar *puVar9;
+  uint uVar10;
+  int iVar11;
+  byte *pbVar12;
+  uint uVar13;
+  int iVar14;
   int iVar15;
-  longlong lVar16;
-  uint uVar18;
+  byte *pbVar16;
   longlong lVar17;
-  ulonglong uVar19;
+  ulonglong uVar18;
+  byte bVar19;
   int iVar20;
-  byte bVar21;
-  char *pcVar22;
+  uchar *puVar21;
+  uint uVar22;
   int iVar23;
   uint uVar24;
-  int iVar25;
-  longlong lVar26;
-  ulonglong uVar27;
-  longlong lVar28;
-  longlong lVar29;
-  ulonglong uVar30;
-  longlong lVar31;
-  ulonglong uVar32;
+  byte *pbVar25;
+  uchar *puVar26;
   
-  uVar19 = (ulonglong)(int)param_5;
-  lVar16 = (longlong)param_4;
-  uVar27 = (ulonglong)(int)param_3;
-  lVar28 = (longlong)(int)param_2;
-  __savegprlr();
-  uVar3 = (param_1->s).img_n;
-  uVar30 = (ulonglong)uVar3;
-  uVar18 = (uint)lVar16;
-  iVar20 = (int)uVar19;
+  lVar17 = (longlong)(int)param_5;
+  iVar3 = (param_1->s).img_n;
+  iVar23 = param_4 * param_5;
   if (stbi_png_partial != 0) {
     param_6 = 1;
   }
-  iVar25 = (int)((longlong)(int)uVar18 * (longlong)iVar20);
-  uVar9 = iVar25 * param_6;
   if (alt_stb_malloc == (_func___cdecl_void_ptr_uint *)0x0) {
-    uVar9 = stbi_mem.index + uVar9;
-    if (uVar9 < stbi_mem.size) {
-      puVar10 = stbi_mem.data + stbi_mem.index;
-      stbi_mem.index = uVar9;
+    uVar24 = stbi_mem.index + iVar23 * param_6;
+    if (uVar24 < stbi_mem.size) {
+      puVar9 = stbi_mem.data + stbi_mem.index;
+      stbi_mem.index = uVar24;
     }
     else {
-      puVar10 = (uchar *)0x0;
+      puVar9 = (uchar *)0x0;
     }
   }
   else {
-    puVar10 = (*alt_stb_malloc)(uVar9);
+    puVar9 = (*alt_stb_malloc)(iVar23 * param_6);
   }
-  param_1->out = puVar10;
-  if (puVar10 == (uchar *)0x0) {
-    iVar20 = 0;
+  param_1->out = puVar9;
+  if (puVar9 == (uchar *)0x0) {
     failure_reason = "outofmem";
-    __restgprlr();
-    return iVar20;
+    return 0;
   }
   if (stbi_png_partial == 0) {
-    if (((ulonglong)(param_1->s).img_x == (uVar19 & 0xffffffff)) && ((param_1->s).img_y == param_6))
-    {
-      if ((uVar27 & 0xffffffff) !=
-          ((longlong)(int)(uVar3 * iVar20 + 1) * (longlong)(int)param_6 & 0xffffffffU)) {
+    if (((param_1->s).img_x == param_5) && ((param_1->s).img_y == param_6)) {
+      if (param_3 != (iVar3 * param_5 + 1) * param_6) {
 LAB_827f220c:
-        iVar20 = 0;
         failure_reason = "not enough pixels";
-        __restgprlr();
-        return iVar20;
+        return 0;
       }
     }
-    else if ((uVar27 & 0xffffffff) <
-             ((longlong)(int)(uVar3 * iVar20 + 1) * (longlong)(int)param_6 & 0xffffffffU))
-    goto LAB_827f220c;
+    else if (param_3 < (iVar3 * param_5 + 1) * param_6) goto LAB_827f220c;
   }
-  uVar9 = 0;
+  uVar24 = 0;
   if (param_6 != 0) {
     do {
-      bVar21 = *(byte *)lVar28;
-      lVar29 = (longlong)(int)uVar9 * (longlong)iVar25 + ZEXT48(param_1->out);
-      lVar28 = lVar28 + 1;
-      lVar26 = lVar29 - (longlong)(int)uVar18 * (longlong)iVar20;
-      if (4 < bVar21) {
-        iVar20 = 0;
+      puVar9 = param_1->out;
+      iVar15 = uVar24 * iVar23;
+      bVar19 = *param_2;
+      pbVar25 = param_2 + 1;
+      if (4 < bVar19) {
         failure_reason = "invalid filter";
-        __restgprlr();
-        return iVar20;
+        return 0;
       }
-      if (uVar9 == 0) {
-        bVar21 = first_row_filter[bVar21];
+      if (uVar24 == 0) {
+        bVar19 = first_row_filter[bVar19];
       }
-      if (0 < (int)uVar3) {
-        iVar12 = (int)lVar26 - (int)lVar28;
-        iVar15 = (int)lVar29 - (int)lVar28;
-        uVar27 = uVar30;
-        lVar31 = lVar28;
+      if (0 < iVar3) {
+        puVar21 = puVar9 + ((iVar15 - iVar23) - (int)pbVar25);
+        puVar26 = puVar9 + (iVar15 - (int)pbVar25);
+        iVar11 = iVar3;
+        pbVar16 = pbVar25;
         do {
-          if (bVar21 < 7) {
-            pcVar22 = (char *)lVar31;
-            if ((bVar21 == 0) || (bVar21 == 1)) {
+          if (bVar19 < 7) {
+            if ((bVar19 == 0) || (bVar19 == 1)) {
 LAB_827f2314:
-              pcVar22[iVar15] = *pcVar22;
+              pbVar16[(int)puVar26] = *pbVar16;
             }
-            else if (bVar21 == 2) {
-              pcVar22[iVar15] = pcVar22[iVar12] + *pcVar22;
+            else if (bVar19 == 2) {
+              pbVar16[(int)puVar26] = pbVar16[(int)puVar21] + *pbVar16;
             }
-            else if (bVar21 == 3) {
-              pcVar22[iVar15] = ((byte)pcVar22[iVar12] >> 1) + *pcVar22;
+            else if (bVar19 == 3) {
+              pbVar16[(int)puVar26] = (pbVar16[(int)puVar21] >> 1) + *pbVar16;
             }
             else {
-              if (bVar21 != 4) goto LAB_827f2314;
-              iVar23 = paeth(0,(uint)(byte)pcVar22[iVar12],0);
-              pcVar22[iVar15] = (char)iVar23 + *pcVar22;
+              if (bVar19 != 4) goto LAB_827f2314;
+              iVar14 = paeth(0,(uint)pbVar16[(int)puVar21],0);
+              pbVar16[(int)puVar26] = (char)iVar14 + *pbVar16;
             }
           }
-          uVar27 = uVar27 - 1;
-          lVar31 = lVar31 + 1;
-        } while (uVar27 != 0);
+          iVar11 = iVar11 + -1;
+          pbVar16 = pbVar16 + 1;
+        } while (iVar11 != 0);
       }
-      if (uVar3 != uVar18) {
-        *(undefined1 *)((int)lVar29 + uVar3) = 0xff;
+      if (iVar3 != param_4) {
+        puVar9[iVar3 + iVar15] = 0xff;
       }
-      lVar28 = uVar30 + lVar28;
-      lVar29 = lVar29 + lVar16;
-      lVar26 = lVar26 + lVar16;
-      if (uVar3 == uVar18) {
-        if (bVar21 < 7) {
-          if (bVar21 == 1) {
-            uVar27 = uVar19 - 1;
-            if ((uVar27 & 0xffffffff) != 0) {
-              lVar26 = lVar29 - uVar30;
+      param_2 = pbVar25 + iVar3;
+      puVar21 = puVar9 + param_4 + iVar15;
+      puVar9 = puVar9 + param_4 + (iVar15 - iVar23);
+      if (iVar3 == param_4) {
+        if (bVar19 < 7) {
+          if (bVar19 == 1) {
+            uVar18 = lVar17 - 1;
+            if ((uVar18 & 0xffffffff) != 0) {
+              iVar15 = (int)puVar21 - iVar3;
               do {
-                iVar12 = 0;
-                if (0 < (int)uVar3) {
-                  uVar32 = uVar30;
+                iVar11 = 0;
+                if (0 < iVar3) {
+                  iVar14 = iVar3;
                   do {
-                    pcVar8 = (char *)(iVar12 + (int)lVar29);
-                    pcVar22 = (char *)((int)lVar26 + iVar12);
-                    iVar12 = iVar12 + 1;
-                    *pcVar8 = *pcVar22 + pcVar8[(int)lVar28 - (int)lVar29];
-                    uVar32 = uVar32 - 1;
-                  } while (uVar32 != 0);
+                    puVar9 = puVar21 + iVar11;
+                    pcVar7 = (char *)(iVar15 + iVar11);
+                    iVar11 = iVar11 + 1;
+                    *puVar9 = *pcVar7 + puVar9[(int)param_2 - (int)puVar21];
+                    iVar14 = iVar14 + -1;
+                  } while (iVar14 != 0);
                 }
-                uVar27 = uVar27 - 1;
-                lVar28 = uVar30 + lVar28;
-                lVar29 = lVar29 + uVar30;
-                lVar26 = lVar26 + uVar30;
-              } while (uVar27 != 0);
+                uVar18 = uVar18 - 1;
+                param_2 = param_2 + iVar3;
+                puVar21 = puVar21 + iVar3;
+                iVar15 = iVar15 + iVar3;
+              } while (uVar18 != 0);
             }
           }
-          else if (bVar21 == 2) {
-            uVar27 = uVar19 - 1;
-            uVar32 = uVar27 & 0xffffffff;
-            while (uVar32 != 0) {
-              if (0 < (int)uVar3) {
-                lVar31 = lVar28;
-                uVar32 = uVar30;
+          else if (bVar19 == 2) {
+            uVar18 = lVar17 - 1;
+            uVar8 = uVar18 & 0xffffffff;
+            while (uVar8 != 0) {
+              if (0 < iVar3) {
+                iVar15 = iVar3;
+                pbVar25 = param_2;
                 do {
-                  pcVar22 = (char *)lVar31;
-                  pcVar22[(int)lVar29 - (int)lVar28] = pcVar22[(int)lVar26 - (int)lVar28] + *pcVar22
-                  ;
-                  lVar31 = lVar31 + 1;
-                  uVar32 = uVar32 - 1;
-                } while (uVar32 != 0);
+                  pbVar25[(int)puVar21 - (int)param_2] =
+                       pbVar25[(int)puVar9 - (int)param_2] + *pbVar25;
+                  pbVar25 = pbVar25 + 1;
+                  iVar15 = iVar15 + -1;
+                } while (iVar15 != 0);
               }
-              lVar28 = uVar30 + lVar28;
-              lVar29 = lVar29 + uVar30;
-              lVar26 = lVar26 + uVar30;
-              uVar27 = uVar27 - 1;
-              uVar32 = uVar27;
+              param_2 = param_2 + iVar3;
+              puVar21 = puVar21 + iVar3;
+              puVar9 = puVar9 + iVar3;
+              uVar18 = uVar18 - 1;
+              uVar8 = uVar18;
             }
           }
-          else if (bVar21 == 3) {
-            uVar27 = uVar19 - 1;
-            if ((uVar27 & 0xffffffff) != 0) {
-              lVar31 = lVar29 - uVar30;
+          else if (bVar19 == 3) {
+            uVar18 = lVar17 - 1;
+            if ((uVar18 & 0xffffffff) != 0) {
+              iVar15 = (int)puVar21 - iVar3;
               do {
-                iVar12 = 0;
-                if (0 < (int)uVar3) {
-                  lVar13 = lVar28;
-                  uVar32 = uVar30;
+                iVar11 = 0;
+                if (0 < iVar3) {
+                  iVar14 = iVar3;
+                  pbVar25 = param_2;
                   do {
-                    pbVar7 = (byte *)((int)lVar31 + iVar12);
-                    iVar12 = iVar12 + 1;
-                    pcVar22 = (char *)lVar13;
-                    pcVar22[(int)lVar29 - (int)lVar28] =
-                         (char)((int)((uint)(byte)pcVar22[(int)lVar26 - (int)lVar28] + (uint)*pbVar7
-                                     ) >> 1) + *pcVar22;
-                    lVar13 = lVar13 + 1;
-                    uVar32 = uVar32 - 1;
-                  } while (uVar32 != 0);
+                    pbVar16 = (byte *)(iVar15 + iVar11);
+                    iVar11 = iVar11 + 1;
+                    pbVar25[(int)puVar21 - (int)param_2] =
+                         (char)((int)((uint)pbVar25[(int)puVar9 - (int)param_2] + (uint)*pbVar16) >>
+                               1) + *pbVar25;
+                    pbVar25 = pbVar25 + 1;
+                    iVar14 = iVar14 + -1;
+                  } while (iVar14 != 0);
                 }
-                uVar27 = uVar27 - 1;
-                lVar28 = uVar30 + lVar28;
-                lVar29 = lVar29 + uVar30;
-                lVar31 = lVar31 + uVar30;
-                lVar26 = lVar26 + uVar30;
-              } while (uVar27 != 0);
+                uVar18 = uVar18 - 1;
+                param_2 = param_2 + iVar3;
+                puVar21 = puVar21 + iVar3;
+                iVar15 = iVar15 + iVar3;
+                puVar9 = puVar9 + iVar3;
+              } while (uVar18 != 0);
             }
           }
-          else if (bVar21 == 4) {
-            uVar27 = uVar19 - 1;
-            if ((uVar27 & 0xffffffff) != 0) {
-              lVar31 = lVar29 - uVar30;
+          else if (bVar19 == 4) {
+            uVar18 = lVar17 - 1;
+            if ((uVar18 & 0xffffffff) != 0) {
+              pbVar25 = puVar21 + -iVar3;
               do {
-                if (0 < (int)uVar3) {
-                  lVar13 = lVar28;
-                  lVar17 = lVar31;
-                  uVar32 = uVar30;
+                if (0 < iVar3) {
+                  iVar15 = iVar3;
+                  pbVar16 = pbVar25;
+                  pbVar12 = param_2;
                   do {
-                    pbVar7 = (byte *)lVar17;
-                    bVar1 = pbVar7[(int)lVar26 - (int)lVar29];
-                    bVar21 = *pbVar7;
-                    pcVar22 = (char *)lVar13;
-                    bVar2 = pcVar22[(int)lVar26 - (int)lVar28];
-                    iVar12 = ((uint)bVar21 - (uint)bVar1) + (uint)bVar2;
-                    uVar14 = iVar12 - (uint)bVar21;
-                    uVar11 = iVar12 - (uint)bVar2;
-                    uVar4 = (int)uVar14 >> 0x1f;
-                    uVar24 = iVar12 - (uint)bVar1;
-                    uVar5 = (int)uVar11 >> 0x1f;
-                    uVar6 = (int)uVar24 >> 0x1f;
-                    iVar23 = (uVar14 ^ uVar4) - uVar4;
-                    iVar15 = (uVar11 ^ uVar5) - uVar5;
-                    iVar12 = (uVar24 ^ uVar6) - uVar6;
-                    if (((iVar15 < iVar23) || (iVar12 < iVar23)) &&
-                       (bVar21 = bVar2, iVar12 < iVar15)) {
-                      bVar21 = bVar1;
+                    bVar1 = pbVar16[(int)puVar9 - (int)puVar21];
+                    bVar19 = *pbVar16;
+                    bVar2 = pbVar12[(int)puVar9 - (int)param_2];
+                    iVar11 = ((uint)bVar19 - (uint)bVar1) + (uint)bVar2;
+                    uVar13 = iVar11 - (uint)bVar19;
+                    uVar10 = iVar11 - (uint)bVar2;
+                    uVar4 = (int)uVar13 >> 0x1f;
+                    uVar22 = iVar11 - (uint)bVar1;
+                    uVar5 = (int)uVar10 >> 0x1f;
+                    uVar6 = (int)uVar22 >> 0x1f;
+                    iVar20 = (uVar13 ^ uVar4) - uVar4;
+                    iVar14 = (uVar10 ^ uVar5) - uVar5;
+                    iVar11 = (uVar22 ^ uVar6) - uVar6;
+                    if (((iVar14 < iVar20) || (iVar11 < iVar20)) &&
+                       (bVar19 = bVar2, iVar11 < iVar14)) {
+                      bVar19 = bVar1;
                     }
-                    lVar13 = lVar13 + 1;
-                    pbVar7[uVar3] = *pcVar22 + bVar21;
-                    lVar17 = lVar17 + 1;
-                    uVar32 = uVar32 - 1;
-                  } while (uVar32 != 0);
+                    bVar1 = *pbVar12;
+                    pbVar12 = pbVar12 + 1;
+                    pbVar16[iVar3] = bVar1 + bVar19;
+                    pbVar16 = pbVar16 + 1;
+                    iVar15 = iVar15 + -1;
+                  } while (iVar15 != 0);
                 }
-                uVar27 = uVar27 - 1;
-                lVar28 = uVar30 + lVar28;
-                lVar29 = lVar29 + uVar30;
-                lVar31 = lVar31 + uVar30;
-                lVar26 = lVar26 + uVar30;
-              } while (uVar27 != 0);
+                uVar18 = uVar18 - 1;
+                param_2 = param_2 + iVar3;
+                puVar21 = puVar21 + iVar3;
+                pbVar25 = pbVar25 + iVar3;
+                puVar9 = puVar9 + iVar3;
+              } while (uVar18 != 0);
             }
           }
-          else if (bVar21 == 5) {
-            uVar27 = uVar19 - 1;
-            if ((uVar27 & 0xffffffff) != 0) {
-              lVar26 = lVar29 - uVar30;
+          else if (bVar19 == 5) {
+            uVar18 = lVar17 - 1;
+            if ((uVar18 & 0xffffffff) != 0) {
+              iVar15 = (int)puVar21 - iVar3;
               do {
-                iVar12 = 0;
-                if (0 < (int)uVar3) {
-                  uVar32 = uVar30;
+                iVar11 = 0;
+                if (0 < iVar3) {
+                  iVar14 = iVar3;
                   do {
-                    pcVar22 = (char *)(iVar12 + (int)lVar29);
-                    pbVar7 = (byte *)((int)lVar26 + iVar12);
-                    iVar12 = iVar12 + 1;
-                    *pcVar22 = (*pbVar7 >> 1) + pcVar22[(int)lVar28 - (int)lVar29];
-                    uVar32 = uVar32 - 1;
-                  } while (uVar32 != 0);
+                    puVar9 = puVar21 + iVar11;
+                    pbVar25 = (byte *)(iVar15 + iVar11);
+                    iVar11 = iVar11 + 1;
+                    *puVar9 = (*pbVar25 >> 1) + puVar9[(int)param_2 - (int)puVar21];
+                    iVar14 = iVar14 + -1;
+                  } while (iVar14 != 0);
                 }
-                uVar27 = uVar27 - 1;
-                lVar28 = uVar30 + lVar28;
-                lVar29 = lVar29 + uVar30;
-                lVar26 = lVar26 + uVar30;
-              } while (uVar27 != 0);
+                uVar18 = uVar18 - 1;
+                param_2 = param_2 + iVar3;
+                puVar21 = puVar21 + iVar3;
+                iVar15 = iVar15 + iVar3;
+              } while (uVar18 != 0);
             }
           }
-          else if (bVar21 == 0) {
-            uVar27 = uVar19 - 1;
-            uVar32 = uVar27 & 0xffffffff;
-            while (uVar32 != 0) {
-              if (0 < (int)uVar3) {
-                lVar26 = lVar29;
-                uVar32 = uVar30;
+          else if (bVar19 == 0) {
+            uVar18 = lVar17 - 1;
+            uVar8 = uVar18 & 0xffffffff;
+            while (uVar8 != 0) {
+              if (0 < iVar3) {
+                iVar15 = iVar3;
+                puVar9 = puVar21;
                 do {
-                  *(undefined1 *)lVar26 = ((undefined1 *)lVar26)[(int)lVar28 - (int)lVar29];
-                  lVar26 = lVar26 + 1;
-                  uVar32 = uVar32 - 1;
-                } while (uVar32 != 0);
+                  *puVar9 = puVar9[(int)param_2 - (int)puVar21];
+                  puVar9 = puVar9 + 1;
+                  iVar15 = iVar15 + -1;
+                } while (iVar15 != 0);
               }
-              lVar28 = uVar30 + lVar28;
-              lVar29 = lVar29 + uVar30;
-              uVar27 = uVar27 - 1;
-              uVar32 = uVar27;
+              param_2 = param_2 + iVar3;
+              puVar21 = puVar21 + iVar3;
+              uVar18 = uVar18 - 1;
+              uVar8 = uVar18;
             }
           }
           else {
-            uVar27 = uVar19 - 1;
-            if ((uVar27 & 0xffffffff) != 0) {
-              lVar26 = lVar29 - uVar30;
+            uVar18 = lVar17 - 1;
+            if ((uVar18 & 0xffffffff) != 0) {
+              iVar15 = (int)puVar21 - iVar3;
               do {
-                iVar12 = 0;
-                if (0 < (int)uVar3) {
-                  uVar32 = uVar30;
+                iVar11 = 0;
+                if (0 < iVar3) {
+                  iVar14 = iVar3;
                   do {
-                    pcVar22 = (char *)((int)lVar26 + iVar12);
-                    pcVar8 = (char *)(iVar12 + (int)lVar29);
-                    iVar12 = iVar12 + 1;
-                    *pcVar8 = pcVar8[(int)lVar28 - (int)lVar29] + *pcVar22;
-                    uVar32 = uVar32 - 1;
-                  } while (uVar32 != 0);
+                    pcVar7 = (char *)(iVar15 + iVar11);
+                    puVar9 = puVar21 + iVar11;
+                    iVar11 = iVar11 + 1;
+                    *puVar9 = puVar9[(int)param_2 - (int)puVar21] + *pcVar7;
+                    iVar14 = iVar14 + -1;
+                  } while (iVar14 != 0);
                 }
-                uVar27 = uVar27 - 1;
-                lVar28 = uVar30 + lVar28;
-                lVar29 = lVar29 + uVar30;
-                lVar26 = lVar26 + uVar30;
-              } while (uVar27 != 0);
+                uVar18 = uVar18 - 1;
+                param_2 = param_2 + iVar3;
+                puVar21 = puVar21 + iVar3;
+                iVar15 = iVar15 + iVar3;
+              } while (uVar18 != 0);
             }
           }
         }
       }
-      else if (bVar21 < 7) {
-        if (bVar21 == 1) {
-          uVar27 = uVar19 - 1;
-          if ((uVar27 & 0xffffffff) != 0) {
-            lVar26 = lVar29 - lVar16;
+      else if (bVar19 < 7) {
+        if (bVar19 == 1) {
+          uVar18 = lVar17 - 1;
+          if ((uVar18 & 0xffffffff) != 0) {
+            iVar15 = (int)puVar21 - param_4;
             do {
-              iVar15 = 0;
-              iVar12 = (int)lVar29;
-              if (0 < (int)uVar3) {
-                uVar32 = uVar30;
+              iVar11 = 0;
+              if (0 < iVar3) {
+                iVar14 = iVar3;
                 do {
-                  pcVar8 = (char *)(iVar15 + iVar12);
-                  pcVar22 = (char *)((int)lVar26 + iVar15);
-                  iVar15 = iVar15 + 1;
-                  *pcVar8 = pcVar8[(int)lVar28 - iVar12] + *pcVar22;
-                  uVar32 = uVar32 - 1;
-                } while (uVar32 != 0);
+                  puVar9 = puVar21 + iVar11;
+                  pcVar7 = (char *)(iVar15 + iVar11);
+                  iVar11 = iVar11 + 1;
+                  *puVar9 = puVar9[(int)param_2 - (int)puVar21] + *pcVar7;
+                  iVar14 = iVar14 + -1;
+                } while (iVar14 != 0);
               }
-              *(undefined1 *)(iVar12 + uVar3) = 0xff;
-              uVar27 = uVar27 - 1;
-              lVar28 = uVar30 + lVar28;
-              lVar29 = lVar29 + lVar16;
-              lVar26 = lVar26 + lVar16;
-            } while (uVar27 != 0);
+              puVar21[iVar3] = 0xff;
+              uVar18 = uVar18 - 1;
+              param_2 = param_2 + iVar3;
+              puVar21 = puVar21 + param_4;
+              iVar15 = iVar15 + param_4;
+            } while (uVar18 != 0);
           }
         }
-        else if (bVar21 == 2) {
-          uVar27 = uVar19 - 1;
-          uVar32 = uVar27 & 0xffffffff;
-          while (uVar32 != 0) {
-            if (0 < (int)uVar3) {
-              lVar31 = lVar28;
-              uVar32 = uVar30;
+        else if (bVar19 == 2) {
+          uVar18 = lVar17 - 1;
+          uVar8 = uVar18 & 0xffffffff;
+          while (uVar8 != 0) {
+            if (0 < iVar3) {
+              iVar15 = iVar3;
+              pbVar25 = param_2;
               do {
-                pcVar22 = (char *)lVar31;
-                pcVar22[(int)lVar29 - (int)lVar28] = pcVar22[(int)lVar26 - (int)lVar28] + *pcVar22;
-                lVar31 = lVar31 + 1;
-                uVar32 = uVar32 - 1;
-              } while (uVar32 != 0);
+                pbVar25[(int)puVar21 - (int)param_2] =
+                     pbVar25[(int)puVar9 - (int)param_2] + *pbVar25;
+                pbVar25 = pbVar25 + 1;
+                iVar15 = iVar15 + -1;
+              } while (iVar15 != 0);
             }
-            *(undefined1 *)((int)lVar29 + uVar3) = 0xff;
-            lVar28 = uVar30 + lVar28;
-            lVar29 = lVar29 + lVar16;
-            lVar26 = lVar26 + lVar16;
-            uVar27 = uVar27 - 1;
-            uVar32 = uVar27;
+            puVar21[iVar3] = 0xff;
+            param_2 = param_2 + iVar3;
+            puVar21 = puVar21 + param_4;
+            puVar9 = puVar9 + param_4;
+            uVar18 = uVar18 - 1;
+            uVar8 = uVar18;
           }
         }
-        else if (bVar21 == 3) {
-          uVar27 = uVar19 - 1;
-          if ((uVar27 & 0xffffffff) != 0) {
-            lVar31 = lVar29 - lVar16;
+        else if (bVar19 == 3) {
+          uVar18 = lVar17 - 1;
+          if ((uVar18 & 0xffffffff) != 0) {
+            iVar15 = (int)puVar21 - param_4;
             do {
-              iVar12 = 0;
-              if (0 < (int)uVar3) {
-                lVar13 = lVar28;
-                uVar32 = uVar30;
+              iVar11 = 0;
+              if (0 < iVar3) {
+                iVar14 = iVar3;
+                pbVar25 = param_2;
                 do {
-                  pbVar7 = (byte *)((int)lVar31 + iVar12);
-                  iVar12 = iVar12 + 1;
-                  pcVar22 = (char *)lVar13;
-                  pcVar22[(int)lVar29 - (int)lVar28] =
-                       (char)((int)((uint)(byte)pcVar22[(int)lVar26 - (int)lVar28] + (uint)*pbVar7)
-                             >> 1) + *pcVar22;
-                  lVar13 = lVar13 + 1;
-                  uVar32 = uVar32 - 1;
-                } while (uVar32 != 0);
+                  pbVar16 = (byte *)(iVar15 + iVar11);
+                  iVar11 = iVar11 + 1;
+                  pbVar25[(int)puVar21 - (int)param_2] =
+                       (char)((int)((uint)pbVar25[(int)puVar9 - (int)param_2] + (uint)*pbVar16) >> 1
+                             ) + *pbVar25;
+                  pbVar25 = pbVar25 + 1;
+                  iVar14 = iVar14 + -1;
+                } while (iVar14 != 0);
               }
-              *(undefined1 *)((int)lVar29 + uVar3) = 0xff;
-              uVar27 = uVar27 - 1;
-              lVar28 = uVar30 + lVar28;
-              lVar29 = lVar29 + lVar16;
-              lVar31 = lVar31 + lVar16;
-              lVar26 = lVar26 + lVar16;
-            } while (uVar27 != 0);
+              puVar21[iVar3] = 0xff;
+              uVar18 = uVar18 - 1;
+              param_2 = param_2 + iVar3;
+              puVar21 = puVar21 + param_4;
+              iVar15 = iVar15 + param_4;
+              puVar9 = puVar9 + param_4;
+            } while (uVar18 != 0);
           }
         }
-        else if (bVar21 == 4) {
-          uVar27 = uVar19 - 1;
-          if ((uVar27 & 0xffffffff) != 0) {
-            lVar31 = lVar29 - lVar16;
+        else if (bVar19 == 4) {
+          uVar18 = lVar17 - 1;
+          if ((uVar18 & 0xffffffff) != 0) {
+            pbVar25 = puVar21 + -param_4;
             do {
-              if (0 < (int)uVar3) {
-                lVar13 = lVar28;
-                lVar17 = lVar31;
-                uVar32 = uVar30;
+              if (0 < iVar3) {
+                iVar15 = iVar3;
+                pbVar16 = pbVar25;
+                pbVar12 = param_2;
                 do {
-                  pbVar7 = (byte *)lVar17;
-                  bVar1 = pbVar7[(int)lVar26 - (int)lVar29];
-                  bVar21 = *pbVar7;
-                  pcVar22 = (char *)lVar13;
-                  bVar2 = pcVar22[(int)lVar26 - (int)lVar28];
-                  iVar12 = ((uint)bVar21 - (uint)bVar1) + (uint)bVar2;
-                  uVar14 = iVar12 - (uint)bVar21;
-                  uVar11 = iVar12 - (uint)bVar2;
-                  uVar4 = (int)uVar14 >> 0x1f;
-                  uVar24 = iVar12 - (uint)bVar1;
-                  uVar5 = (int)uVar11 >> 0x1f;
-                  uVar6 = (int)uVar24 >> 0x1f;
-                  iVar23 = (uVar14 ^ uVar4) - uVar4;
-                  iVar15 = (uVar11 ^ uVar5) - uVar5;
-                  iVar12 = (uVar24 ^ uVar6) - uVar6;
-                  if (((iVar15 < iVar23) || (iVar12 < iVar23)) && (bVar21 = bVar2, iVar12 < iVar15))
+                  bVar1 = pbVar16[(int)puVar9 - (int)puVar21];
+                  bVar19 = *pbVar16;
+                  bVar2 = pbVar12[(int)puVar9 - (int)param_2];
+                  iVar11 = ((uint)bVar19 - (uint)bVar1) + (uint)bVar2;
+                  uVar13 = iVar11 - (uint)bVar19;
+                  uVar10 = iVar11 - (uint)bVar2;
+                  uVar4 = (int)uVar13 >> 0x1f;
+                  uVar22 = iVar11 - (uint)bVar1;
+                  uVar5 = (int)uVar10 >> 0x1f;
+                  uVar6 = (int)uVar22 >> 0x1f;
+                  iVar20 = (uVar13 ^ uVar4) - uVar4;
+                  iVar14 = (uVar10 ^ uVar5) - uVar5;
+                  iVar11 = (uVar22 ^ uVar6) - uVar6;
+                  if (((iVar14 < iVar20) || (iVar11 < iVar20)) && (bVar19 = bVar2, iVar11 < iVar14))
                   {
-                    bVar21 = bVar1;
+                    bVar19 = bVar1;
                   }
-                  lVar13 = lVar13 + 1;
-                  pbVar7[uVar18] = *pcVar22 + bVar21;
-                  lVar17 = lVar17 + 1;
-                  uVar32 = uVar32 - 1;
-                } while (uVar32 != 0);
+                  bVar1 = *pbVar12;
+                  pbVar12 = pbVar12 + 1;
+                  pbVar16[param_4] = bVar1 + bVar19;
+                  pbVar16 = pbVar16 + 1;
+                  iVar15 = iVar15 + -1;
+                } while (iVar15 != 0);
               }
-              *(undefined1 *)((int)lVar29 + uVar3) = 0xff;
-              uVar27 = uVar27 - 1;
-              lVar28 = uVar30 + lVar28;
-              lVar29 = lVar29 + lVar16;
-              lVar31 = lVar31 + lVar16;
-              lVar26 = lVar26 + lVar16;
-            } while (uVar27 != 0);
+              puVar21[iVar3] = 0xff;
+              uVar18 = uVar18 - 1;
+              param_2 = param_2 + iVar3;
+              puVar21 = puVar21 + param_4;
+              pbVar25 = pbVar25 + param_4;
+              puVar9 = puVar9 + param_4;
+            } while (uVar18 != 0);
           }
         }
-        else if (bVar21 == 5) {
-          uVar27 = uVar19 - 1;
-          if ((uVar27 & 0xffffffff) != 0) {
-            lVar26 = lVar29 - lVar16;
+        else if (bVar19 == 5) {
+          uVar18 = lVar17 - 1;
+          if ((uVar18 & 0xffffffff) != 0) {
+            iVar15 = (int)puVar21 - param_4;
             do {
-              iVar15 = 0;
-              iVar12 = (int)lVar29;
-              if (0 < (int)uVar3) {
-                uVar32 = uVar30;
+              iVar11 = 0;
+              if (0 < iVar3) {
+                iVar14 = iVar3;
                 do {
-                  pcVar22 = (char *)(iVar15 + iVar12);
-                  pbVar7 = (byte *)((int)lVar26 + iVar15);
-                  iVar15 = iVar15 + 1;
-                  *pcVar22 = (*pbVar7 >> 1) + pcVar22[(int)lVar28 - iVar12];
-                  uVar32 = uVar32 - 1;
-                } while (uVar32 != 0);
+                  puVar9 = puVar21 + iVar11;
+                  pbVar25 = (byte *)(iVar15 + iVar11);
+                  iVar11 = iVar11 + 1;
+                  *puVar9 = (*pbVar25 >> 1) + puVar9[(int)param_2 - (int)puVar21];
+                  iVar14 = iVar14 + -1;
+                } while (iVar14 != 0);
               }
-              *(undefined1 *)(iVar12 + uVar3) = 0xff;
-              uVar27 = uVar27 - 1;
-              lVar28 = uVar30 + lVar28;
-              lVar29 = lVar29 + lVar16;
-              lVar26 = lVar26 + lVar16;
-            } while (uVar27 != 0);
+              puVar21[iVar3] = 0xff;
+              uVar18 = uVar18 - 1;
+              param_2 = param_2 + iVar3;
+              puVar21 = puVar21 + param_4;
+              iVar15 = iVar15 + param_4;
+            } while (uVar18 != 0);
           }
         }
-        else if (bVar21 == 0) {
-          uVar27 = uVar19 - 1;
-          uVar32 = uVar27 & 0xffffffff;
-          while (uVar32 != 0) {
-            if (0 < (int)uVar3) {
-              lVar26 = lVar29;
-              uVar32 = uVar30;
+        else if (bVar19 == 0) {
+          uVar18 = lVar17 - 1;
+          uVar8 = uVar18 & 0xffffffff;
+          while (uVar8 != 0) {
+            if (0 < iVar3) {
+              iVar15 = iVar3;
+              puVar9 = puVar21;
               do {
-                *(undefined1 *)lVar26 = ((undefined1 *)lVar26)[(int)lVar28 - (int)lVar29];
-                lVar26 = lVar26 + 1;
-                uVar32 = uVar32 - 1;
-              } while (uVar32 != 0);
+                *puVar9 = puVar9[(int)param_2 - (int)puVar21];
+                puVar9 = puVar9 + 1;
+                iVar15 = iVar15 + -1;
+              } while (iVar15 != 0);
             }
-            *(undefined1 *)((int)lVar29 + uVar3) = 0xff;
-            lVar28 = uVar30 + lVar28;
-            lVar29 = lVar29 + lVar16;
-            uVar27 = uVar27 - 1;
-            uVar32 = uVar27;
+            puVar21[iVar3] = 0xff;
+            param_2 = param_2 + iVar3;
+            puVar21 = puVar21 + param_4;
+            uVar18 = uVar18 - 1;
+            uVar8 = uVar18;
           }
         }
         else {
-          uVar27 = uVar19 - 1;
-          if ((uVar27 & 0xffffffff) != 0) {
-            lVar26 = lVar29 - lVar16;
+          uVar18 = lVar17 - 1;
+          if ((uVar18 & 0xffffffff) != 0) {
+            iVar15 = (int)puVar21 - param_4;
             do {
-              iVar15 = 0;
-              iVar12 = (int)lVar29;
-              if (0 < (int)uVar3) {
-                uVar32 = uVar30;
+              iVar11 = 0;
+              if (0 < iVar3) {
+                iVar14 = iVar3;
                 do {
-                  pcVar22 = (char *)((int)lVar26 + iVar15);
-                  pcVar8 = (char *)(iVar15 + iVar12);
-                  iVar15 = iVar15 + 1;
-                  *pcVar8 = pcVar8[(int)lVar28 - iVar12] + *pcVar22;
-                  uVar32 = uVar32 - 1;
-                } while (uVar32 != 0);
+                  pcVar7 = (char *)(iVar15 + iVar11);
+                  puVar9 = puVar21 + iVar11;
+                  iVar11 = iVar11 + 1;
+                  *puVar9 = puVar9[(int)param_2 - (int)puVar21] + *pcVar7;
+                  iVar14 = iVar14 + -1;
+                } while (iVar14 != 0);
               }
-              *(undefined1 *)(iVar12 + uVar3) = 0xff;
-              uVar27 = uVar27 - 1;
-              lVar28 = uVar30 + lVar28;
-              lVar29 = lVar29 + lVar16;
-              lVar26 = lVar26 + lVar16;
-            } while (uVar27 != 0);
+              puVar21[iVar3] = 0xff;
+              uVar18 = uVar18 - 1;
+              param_2 = param_2 + iVar3;
+              puVar21 = puVar21 + param_4;
+              iVar15 = iVar15 + param_4;
+            } while (uVar18 != 0);
           }
         }
       }
-      uVar9 = uVar9 + 1;
-    } while (uVar9 < param_6);
+      uVar24 = uVar24 + 1;
+    } while (uVar24 < param_6);
   }
-  iVar20 = 1;
-  __restgprlr();
-  return iVar20;
+  return 1;
 }
 
 
 // 827F2A38  create_png_image  (mjpeg/stb_image.c:2941)
+
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
 
 int create_png_image(png *param_1,uchar *param_2,uint param_3,int param_4,int param_5)
 
@@ -6141,14 +5946,11 @@ int create_png_image(png *param_1,uchar *param_2,uint param_3,int param_4,int pa
   int iVar1;
   uchar *puVar2;
   int iVar3;
-  int iVar4;
-  longlong lVar5;
-  uint uVar6;
+  uint uVar4;
+  int iVar5;
+  ulonglong uVar6;
   ulonglong uVar7;
-  ulonglong uVar8;
-  ulonglong uVar9;
-  ulonglong uVar10;
-  uint uVar11;
+  uint uVar8;
   uchar *puStack0000001c;
   uint uStack00000024;
   uint local_120 [8];
@@ -6156,35 +5958,30 @@ int create_png_image(png *param_1,uchar *param_2,uint param_3,int param_4,int pa
   uint local_e0 [8];
   uint local_c0 [48];
   
-  uVar7 = (ulonglong)(int)param_3;
-  uVar9 = (ulonglong)(int)param_2;
-  __savegprlr();
   iVar1 = stbi_png_partial;
-  puStack0000001c = (uchar *)uVar9;
-  uStack00000024 = (uint)uVar7;
+  puStack0000001c = param_2;
+  uStack00000024 = param_3;
   if (param_5 == 0) {
     iVar1 = create_png_image_raw
-                      (param_1,puStack0000001c,uStack00000024,param_4,(param_1->s).img_x,
-                       (param_1->s).img_y);
-    __restgprlr();
+                      (param_1,param_2,param_3,param_4,(param_1->s).img_x,(param_1->s).img_y);
     return iVar1;
   }
   stbi_png_partial = 0;
-  uVar11 = (param_1->s).img_x * (param_1->s).img_y * param_4;
+  uVar8 = (param_1->s).img_x * (param_1->s).img_y * param_4;
   if (alt_stb_malloc == (_func___cdecl_void_ptr_uint *)0x0) {
-    uVar11 = uVar11 + stbi_mem.index;
-    if (uVar11 < stbi_mem.size) {
+    uVar8 = uVar8 + stbi_mem.index;
+    if (uVar8 < stbi_mem.size) {
       puVar2 = stbi_mem.data + stbi_mem.index;
-      stbi_mem.index = uVar11;
+      stbi_mem.index = uVar8;
     }
     else {
       puVar2 = (uchar *)0x0;
     }
   }
   else {
-    puVar2 = (*alt_stb_malloc)(uVar11);
+    puVar2 = (*alt_stb_malloc)(uVar8);
   }
-  iVar4 = 0;
+  iVar5 = 0;
   do {
     local_100[0] = 0;
     local_100[1] = 0;
@@ -6200,7 +5997,7 @@ int create_png_image(png *param_1,uchar *param_2,uint param_3,int param_4,int pa
     local_e0[4] = 4;
     local_e0[5] = 2;
     local_e0[6] = 2;
-    uVar8 = (ulonglong)*(uint *)((int)local_e0 + iVar4);
+    uVar6 = (ulonglong)*(uint *)((int)local_e0 + iVar5);
     local_120[6] = 1;
     local_120[0] = 8;
     local_120[1] = 8;
@@ -6215,55 +6012,49 @@ int create_png_image(png *param_1,uchar *param_2,uint param_3,int param_4,int pa
     local_c0[4] = 0;
     local_c0[5] = 1;
     local_c0[6] = 0;
-    uVar10 = (ulonglong)*(uint *)((int)local_120 + iVar4);
-    uVar11 = (uint)(((((ulonglong)(param_1->s).img_x - (ulonglong)*(uint *)((int)local_c0 + iVar4))
-                     + uVar10) - 1 & 0xffffffff) / uVar10);
-    trapWord(6,uVar10,0);
-    uVar10 = (((uVar8 - *(uint *)((int)local_100 + iVar4)) + (ulonglong)(param_1->s).img_y) - 1 &
-             0xffffffff) / uVar8;
-    trapWord(6,uVar8,0);
-    if ((uVar11 != 0) && (uVar6 = (uint)uVar10, uVar6 != 0)) {
-      iVar3 = create_png_image_raw(param_1,(uchar *)uVar9,(uint)uVar7,param_4,uVar11,uVar6);
+    uVar7 = (ulonglong)*(uint *)((int)local_120 + iVar5);
+    uVar8 = (uint)(((((ulonglong)(param_1->s).img_x - (ulonglong)*(uint *)((int)local_c0 + iVar5)) +
+                    uVar7) - 1 & 0xffffffff) / uVar7);
+    trapWord(6,uVar7,0);
+    uVar7 = (((uVar6 - *(uint *)((int)local_100 + iVar5)) + (ulonglong)(param_1->s).img_y) - 1 &
+            0xffffffff) / uVar6;
+    trapWord(6,uVar6,0);
+    if ((uVar8 != 0) && (uVar4 = (uint)uVar7, uVar4 != 0)) {
+      iVar3 = create_png_image_raw(param_1,param_2,param_3,param_4,uVar8,uVar4);
       if (iVar3 == 0) {
         if (alt_stb_free != (_func___cdecl_void_void_ptr *)0x0) {
           (*alt_stb_free)(puVar2);
         }
-        iVar1 = 0;
-        __restgprlr();
-        return iVar1;
+        return 0;
       }
-      if (0 < (int)uVar6) {
+      if (0 < (int)uVar4) {
         do {
           iVar3 = 0;
-          if (0 < (int)uVar11) {
+          if (0 < (int)uVar8) {
             do {
               memcpy();
               iVar3 = iVar3 + 1;
-            } while (iVar3 < (int)uVar11);
+            } while (iVar3 < (int)uVar8);
           }
-          uVar10 = uVar10 - 1;
-        } while (uVar10 != 0);
-        uVar9 = ZEXT48(puStack0000001c);
-        uVar7 = (ulonglong)uStack00000024;
+          uVar7 = uVar7 - 1;
+          param_2 = puStack0000001c;
+          param_3 = uStack00000024;
+        } while (uVar7 != 0);
       }
       if (alt_stb_free != (_func___cdecl_void_void_ptr *)0x0) {
         (*alt_stb_free)(param_1->out);
       }
-      lVar5 = (longlong)(int)(uVar11 * param_4 + 1) * (longlong)(int)uVar6;
-      uVar9 = lVar5 + uVar9;
-      uVar7 = uVar7 - lVar5;
-      puStack0000001c = (uchar *)uVar9;
-      uVar9 = uVar9 & 0xffffffff;
-      uStack00000024 = (uint)uVar7;
-      uVar7 = uVar7 & 0xffffffff;
+      iVar3 = (uVar8 * param_4 + 1) * uVar4;
+      puStack0000001c = param_2 + iVar3;
+      uStack00000024 = param_3 - iVar3;
+      param_3 = uStack00000024;
+      param_2 = puStack0000001c;
     }
-    iVar4 = iVar4 + 4;
-  } while (iVar4 < 0x1c);
+    iVar5 = iVar5 + 4;
+  } while (iVar5 < 0x1c);
   param_1->out = puVar2;
-  iVar4 = 1;
   stbi_png_partial = iVar1;
-  __restgprlr();
-  return iVar4;
+  return 1;
 }
 
 
@@ -6308,80 +6099,73 @@ int compute_transparency(png *param_1,uchar *param_2,int param_3)
 
 // 827F2DB8  expand_palette  (mjpeg/stb_image.c:3007)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
+
 int expand_palette(png *param_1,uchar *param_2,int param_3,int param_4)
 
 {
-  int iVar1;
-  byte *pbVar2;
-  int iVar3;
-  int *piVar4;
-  uchar *puVar5;
+  uchar *puVar1;
+  int iVar2;
+  byte *pbVar3;
+  uchar *puVar4;
+  uint uVar5;
   int iVar6;
-  longlong lVar7;
-  longlong lVar8;
-  uint uVar9;
-  int iVar10;
-  uchar *puVar11;
-  ulonglong uVar12;
+  uchar *puVar7;
+  ulonglong uVar8;
   
-  lVar8 = (longlong)param_3;
-  lVar7 = (longlong)(int)param_2;
-  piVar4 = (int *)__savegprlr_25(param_1,lVar7,lVar8,param_4);
-  iVar6 = piVar4[0x2b];
-  uVar12 = (longlong)piVar4[1] * (longlong)*piVar4;
-  uVar9 = (int)uVar12 * (int)lVar8;
+  puVar1 = param_1->out;
+  uVar8 = (longlong)(int)(param_1->s).img_y * (longlong)(int)(param_1->s).img_x;
+  uVar5 = (int)uVar8 * param_3;
   if (alt_stb_malloc == (_func___cdecl_void_ptr_uint *)0x0) {
-    uVar9 = stbi_mem.index + uVar9;
-    if (stbi_mem.size <= uVar9) goto LAB_827f2e38;
-    puVar5 = stbi_mem.data + stbi_mem.index;
-    stbi_mem.index = uVar9;
+    uVar5 = stbi_mem.index + uVar5;
+    if (stbi_mem.size <= uVar5) goto LAB_827f2e38;
+    puVar4 = stbi_mem.data + stbi_mem.index;
+    stbi_mem.index = uVar5;
   }
   else {
-    puVar5 = (*alt_stb_malloc)(uVar9);
+    puVar4 = (*alt_stb_malloc)(uVar5);
   }
-  if (puVar5 != (uchar *)0x0) {
-    iVar10 = 0;
-    iVar3 = (int)lVar7;
-    if ((int)lVar8 == 3) {
-      if ((uVar12 & 0xffffffff) != 0) {
-        puVar11 = puVar5 + -1;
+  if (puVar4 != (uchar *)0x0) {
+    iVar6 = 0;
+    if (param_3 == 3) {
+      if ((uVar8 & 0xffffffff) != 0) {
+        puVar7 = puVar4 + -1;
         do {
-          pbVar2 = (byte *)(iVar10 + iVar6);
-          iVar10 = iVar10 + 1;
-          iVar1 = (uint)*pbVar2 * 4;
-          puVar11[1] = *(uchar *)(iVar1 + iVar3);
-          puVar11[2] = *(uchar *)(iVar3 + 1 + iVar1);
-          puVar11 = puVar11 + 3;
-          *puVar11 = *(uchar *)(iVar3 + 2 + iVar1);
-          uVar12 = uVar12 - 1;
-        } while (uVar12 != 0);
+          pbVar3 = puVar1 + iVar6;
+          iVar6 = iVar6 + 1;
+          iVar2 = (uint)*pbVar3 * 4;
+          puVar7[1] = param_2[iVar2];
+          puVar7[2] = param_2[iVar2 + 1];
+          puVar7 = puVar7 + 3;
+          *puVar7 = param_2[iVar2 + 2];
+          uVar8 = uVar8 - 1;
+        } while (uVar8 != 0);
       }
     }
-    else if ((uVar12 & 0xffffffff) != 0) {
-      puVar11 = puVar5 + -1;
+    else if ((uVar8 & 0xffffffff) != 0) {
+      puVar7 = puVar4 + -1;
       do {
-        pbVar2 = (byte *)(iVar10 + iVar6);
-        iVar10 = iVar10 + 1;
-        iVar1 = (uint)*pbVar2 * 4;
-        puVar11[1] = *(uchar *)(iVar1 + iVar3);
-        puVar11[2] = *(uchar *)(iVar3 + 1 + iVar1);
-        puVar11[3] = *(uchar *)(iVar3 + 2 + iVar1);
-        puVar11 = puVar11 + 4;
-        *puVar11 = *(uchar *)(iVar3 + 3 + iVar1);
-        uVar12 = uVar12 - 1;
-      } while (uVar12 != 0);
+        pbVar3 = puVar1 + iVar6;
+        iVar6 = iVar6 + 1;
+        iVar2 = (uint)*pbVar3 * 4;
+        puVar7[1] = param_2[iVar2];
+        puVar7[2] = param_2[iVar2 + 1];
+        puVar7[3] = param_2[iVar2 + 2];
+        puVar7 = puVar7 + 4;
+        *puVar7 = param_2[iVar2 + 3];
+        uVar8 = uVar8 - 1;
+      } while (uVar8 != 0);
     }
     if (alt_stb_free != (_func___cdecl_void_void_ptr *)0x0) {
-      (*alt_stb_free)((void *)piVar4[0x2b]);
+      (*alt_stb_free)(param_1->out);
     }
-    piVar4[0x2b] = (int)puVar5;
-    iVar6 = __restgprlr_25(1);
-    return iVar6;
+    param_1->out = puVar4;
+    return 1;
   }
 LAB_827f2e38:
   failure_reason = "outofmem";
-  iVar6 = __restgprlr_25(0);
-  return iVar6;
+  return 0;
 }
 
 
@@ -6482,6 +6266,9 @@ void stbi_de_iphone(png *param_1)
 
 // 827F3078  parse_png_file  (mjpeg/stb_image.c:3098)
 
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
+
 int parse_png_file(png *param_1,int param_2,int param_3)
 
 {
@@ -6513,7 +6300,6 @@ int parse_png_file(png *param_1,int param_2,int param_3)
   uchar local_4a4 [4];
   uchar local_4a0 [1184];
   
-  __savegprlr();
   uVar11 = 0;
   bVar6 = false;
   local_4ac = (_func___cdecl_void_void_ptr *)0x0;
@@ -6525,148 +6311,35 @@ int parse_png_file(png *param_1,int param_2,int param_3)
   iStack00000024 = param_3;
   iVar9 = check_png_header(&param_1->s);
   if (iVar9 == 0) {
-LAB_827f3ba8:
-    iVar9 = 0;
-    __restgprlr();
-    return iVar9;
+    return 0;
   }
   if (param_2 == 1) {
-LAB_827f39b4:
-    iVar9 = 1;
-    __restgprlr();
-    return iVar9;
+    return 1;
   }
   local_4a8 = &alt_stb_free;
 LAB_827f30fc:
-  do {
-    while( true ) {
-      uVar10 = get16(&param_1->s);
-      iVar9 = get16(&param_1->s);
-      uVar22 = (longlong)iVar9 + ((ulonglong)uVar10 & 0xffff) * 0x10000;
-      uVar10 = get16(&param_1->s);
-      iVar9 = get16(&param_1->s);
-      p_Var7 = local_4ac;
-      uVar16 = (longlong)iVar9 + ((ulonglong)uVar10 & 0xffff) * 0x10000;
-      iVar9 = (int)uVar22;
-      if ((uVar16 & 0xffffffff) < 0x49484453) break;
-      if ((uVar16 & 0xffffffff) == 0x504c5445) {
-        if (bVar5) goto LAB_827f3178;
-        if (((uVar22 & 0xffffffff) < 0x301) &&
-           (uVar20 = (uVar22 & 0xffffffff) / 3, (uVar20 * 3 & 0xffffffff) == (uVar22 & 0xffffffff)))
-        {
-          if (uVar20 != 0) {
-            puVar12 = local_4a4 + 3;
-            uVar16 = uVar20;
-            do {
-              puVar3 = (param_1->s).img_buffer;
-              if (puVar3 < (param_1->s).img_buffer_end) {
-                uVar15 = *puVar3;
-                (param_1->s).img_buffer = puVar3 + 1;
-              }
-              else if ((param_1->s).from_file == 0) {
-                uVar15 = '\0';
-              }
-              else {
-                refill_buffer(&param_1->s);
-                puVar3 = (param_1->s).img_buffer;
-                uVar15 = *puVar3;
-                (param_1->s).img_buffer = puVar3 + 1;
-              }
-              puVar3 = (param_1->s).img_buffer;
-              puVar4 = (param_1->s).img_buffer_end;
-              puVar12[1] = uVar15;
-              if (puVar3 < puVar4) {
-                uVar15 = *puVar3;
-                (param_1->s).img_buffer = puVar3 + 1;
-              }
-              else if ((param_1->s).from_file == 0) {
-                uVar15 = '\0';
-              }
-              else {
-                refill_buffer(&param_1->s);
-                puVar3 = (param_1->s).img_buffer;
-                uVar15 = *puVar3;
-                (param_1->s).img_buffer = puVar3 + 1;
-              }
-              puVar3 = (param_1->s).img_buffer;
-              puVar4 = (param_1->s).img_buffer_end;
-              puVar12[2] = uVar15;
-              if (puVar3 < puVar4) {
-                uVar15 = *puVar3;
-                (param_1->s).img_buffer = puVar3 + 1;
-              }
-              else if ((param_1->s).from_file == 0) {
-                uVar15 = '\0';
-              }
-              else {
-                refill_buffer(&param_1->s);
-                puVar3 = (param_1->s).img_buffer;
-                uVar15 = *puVar3;
-                (param_1->s).img_buffer = puVar3 + 1;
-              }
-              uVar16 = uVar16 - 1;
-              puVar12[3] = uVar15;
-              puVar12 = puVar12 + 4;
-              *puVar12 = 0xff;
-            } while (uVar16 != 0);
-          }
-          goto LAB_827f3800;
-        }
+  uVar10 = get16(&param_1->s);
+  iVar9 = get16(&param_1->s);
+  uVar22 = (longlong)iVar9 + ((ulonglong)uVar10 & 0xffff) * 0x10000;
+  uVar10 = get16(&param_1->s);
+  iVar9 = get16(&param_1->s);
+  p_Var7 = local_4ac;
+  uVar16 = (longlong)iVar9 + ((ulonglong)uVar10 & 0xffff) * 0x10000;
+  iVar9 = (int)uVar22;
+  if (0x49484452 < (uVar16 & 0xffffffff)) {
+    if ((uVar16 & 0xffffffff) == 0x504c5445) {
+      if (bVar5) {
+        failure_reason = "first not IHDR";
+        return 0;
+      }
+      if ((0x300 < (uVar22 & 0xffffffff)) ||
+         (uVar20 = (uVar22 & 0xffffffff) / 3, (uVar20 * 3 & 0xffffffff) != (uVar22 & 0xffffffff))) {
         failure_reason = "invalid PLTE";
-        goto LAB_827f3ba8;
+        return 0;
       }
-      if ((uVar16 & 0xffffffff) != 0x74524e53) goto LAB_827f3538;
-      if (bVar5) goto LAB_827f3178;
-      if (param_1->idata != (uchar *)0x0) {
-        iVar9 = 0;
-        failure_reason = "tRNS after IDAT";
-        __restgprlr();
-        return iVar9;
-      }
-      if (iVar18 == 0) {
-        uVar10 = (param_1->s).img_n;
-        if ((uVar10 & 1) == 0) {
-          iVar9 = 0;
-          failure_reason = "tRNS with alpha";
-          __restgprlr();
-          return iVar9;
-        }
-        if ((uVar22 & 0xffffffff) != ((ulonglong)uVar10 & 0x7fffffff) << 1) goto LAB_827f3b60;
-        bVar6 = true;
-        iVar9 = 0;
-        if ((int)uVar10 < 1) goto LAB_827f3800;
-        do {
-          iVar13 = get16(&param_1->s);
-          iVar14 = (param_1->s).img_n;
-          local_4a4[iVar9] = (uchar)iVar13;
-          iVar9 = iVar9 + 1;
-        } while (iVar9 < iVar14);
-        get16(&param_1->s);
-        get16(&param_1->s);
-      }
-      else {
-        if (param_2 == 2) {
-          iVar9 = 1;
-          (param_1->s).img_n = 4;
-          __restgprlr();
-          return iVar9;
-        }
-        if (uVar20 == 0) {
-          iVar9 = 0;
-          failure_reason = "tRNS before PLTE";
-          __restgprlr();
-          return iVar9;
-        }
-        if (uVar20 < (uVar22 & 0xffffffff)) {
-LAB_827f3b60:
-          iVar9 = 0;
-          failure_reason = "bad tRNS len";
-          __restgprlr();
-          return iVar9;
-        }
-        iVar18 = 4;
-        if ((uVar22 & 0xffffffff) == 0) goto LAB_827f3800;
+      if (uVar20 != 0) {
         puVar12 = local_4a4 + 3;
+        uVar16 = uVar20;
         do {
           puVar3 = (param_1->s).img_buffer;
           if (puVar3 < (param_1->s).img_buffer_end) {
@@ -6682,194 +6355,182 @@ LAB_827f3b60:
             uVar15 = *puVar3;
             (param_1->s).img_buffer = puVar3 + 1;
           }
-          uVar22 = uVar22 - 1;
-          puVar12 = puVar12 + 4;
-          *puVar12 = uVar15;
-        } while (uVar22 != 0);
-        get16(&param_1->s);
-        get16(&param_1->s);
-      }
-    }
-    if ((uVar16 & 0xffffffff) != 0x49484452) {
-      if ((uVar16 & 0xffffffff) == 0x43674249) {
-        p_Var2 = (param_1->s).img_file;
-        local_4ac = local_4a8[3];
-        if (p_Var2 != (_iobuf *)0x0) {
-          puVar12 = (param_1->s).img_buffer_end;
-          iVar14 = (int)puVar12 - (int)(param_1->s).img_buffer;
-          if (iVar14 < iVar9) {
-            (param_1->s).img_buffer = puVar12;
-            fseek(p_Var2,iVar9 - iVar14,1);
-            get16(&param_1->s);
-            get16(&param_1->s);
-            goto LAB_827f30fc;
+          puVar3 = (param_1->s).img_buffer;
+          puVar4 = (param_1->s).img_buffer_end;
+          puVar12[1] = uVar15;
+          if (puVar3 < puVar4) {
+            uVar15 = *puVar3;
+            (param_1->s).img_buffer = puVar3 + 1;
           }
-        }
-      }
-      else {
-        iVar14 = (int)uVar19;
-        if ((uVar16 & 0xffffffff) == 0x49444154) {
-          if (bVar5) goto LAB_827f3178;
-          if ((iVar18 != 0) && (uVar20 == 0)) {
-            iVar9 = 0;
-            failure_reason = "no PLTE";
-            __restgprlr();
-            return iVar9;
-          }
-          if (param_2 == 2) {
-            (param_1->s).img_n = iVar18;
-            goto LAB_827f39b4;
-          }
-          uVar19 = uVar22 + uVar19;
-          if ((uVar21 & 0xffffffff) < (uVar19 & 0xffffffff)) {
-            if (((uVar21 & 0xffffffff) == 0) && (uVar21 = uVar22, (uVar22 & 0xffffffff) < 0x1001)) {
-              uVar21 = 0x1000;
-            }
-            if ((uVar21 & 0xffffffff) < (uVar19 & 0xffffffff)) {
-              do {
-                uVar21 = (uVar21 & 0x7fffffff) << 1;
-              } while (uVar21 < (uVar19 & 0xffffffff));
-            }
-            puVar12 = realloc(param_1->idata,(uint)uVar21);
-            if (puVar12 == (uchar *)0x0) {
-              iVar9 = 0;
-              failure_reason = "outofmem";
-              __restgprlr();
-              return iVar9;
-            }
-            param_1->idata = puVar12;
-          }
-          iVar9 = getn(&param_1->s,param_1->idata + iVar14,iVar9);
-          if (iVar9 == 0) {
-            iVar9 = 0;
-            failure_reason = "outofdata";
-            __restgprlr();
-            return iVar9;
-          }
-          get16(&param_1->s);
-          get16(&param_1->s);
-          goto LAB_827f30fc;
-        }
-        if ((uVar16 & 0xffffffff) == 0x49454e44) {
-          if (bVar5) goto LAB_827f3178;
-          if (param_2 != 0) goto LAB_827f39b4;
-          puVar12 = param_1->idata;
-          if (puVar12 == (uchar *)0x0) {
-            failure_reason = "no IDAT";
-            __restgprlr();
-            return (int)puVar12;
-          }
-          puVar12 = (uchar *)stbi_zlib_decode_malloc_guesssize_headerflag
-                                       ((char *)puVar12,iVar14,0x4000,(int *)&local_4ac,
-                                        (uint)LZCOUNT(local_4ac) >> 5);
-          pp_Var8 = local_4a8;
-          param_1->expanded = puVar12;
-          if (puVar12 == (uchar *)0x0) goto LAB_827f3ba8;
-          if (*local_4a8 != (_func___cdecl_void_void_ptr *)0x0) {
-            (**local_4a8)(param_1->idata);
-          }
-          iVar14 = iStack00000024;
-          iVar9 = (param_1->s).img_n;
-          iVar13 = iVar9 + 1;
-          param_1->idata = (uchar *)0x0;
-          if ((((iStack00000024 == iVar13) && (iStack00000024 != 3)) && (iVar18 == 0)) || (bVar6)) {
-            (param_1->s).img_out_n = iVar13;
+          else if ((param_1->s).from_file == 0) {
+            uVar15 = '\0';
           }
           else {
-            (param_1->s).img_out_n = iVar9;
+            refill_buffer(&param_1->s);
+            puVar3 = (param_1->s).img_buffer;
+            uVar15 = *puVar3;
+            (param_1->s).img_buffer = puVar3 + 1;
           }
-          iVar9 = (param_1->s).img_out_n;
-          iVar13 = create_png_image(param_1,param_1->expanded,(uint)local_4ac,iVar9,uVar11);
-          if ((iVar13 == 0) ||
-             ((bVar6 && (iVar13 = compute_transparency(param_1,local_4a4,(param_1->s).img_out_n),
-                        iVar13 == 0)))) goto LAB_827f3ba8;
-          if ((p_Var7 != (_func___cdecl_void_void_ptr *)0x0) && (2 < (param_1->s).img_out_n)) {
-            stbi_de_iphone(param_1);
+          puVar3 = (param_1->s).img_buffer;
+          puVar4 = (param_1->s).img_buffer_end;
+          puVar12[2] = uVar15;
+          if (puVar3 < puVar4) {
+            uVar15 = *puVar3;
+            (param_1->s).img_buffer = puVar3 + 1;
           }
-          if (iVar18 != 0) {
-            (param_1->s).img_n = iVar18;
-            (param_1->s).img_out_n = iVar18;
-            if (2 < iVar14) {
-              (param_1->s).img_out_n = iVar14;
-            }
-            iVar9 = expand_palette(param_1,local_4a0,(param_1->s).img_out_n,iVar9);
-            if (iVar9 == 0) goto LAB_827f3ba8;
+          else if ((param_1->s).from_file == 0) {
+            uVar15 = '\0';
           }
-          if (*pp_Var8 != (_func___cdecl_void_void_ptr *)0x0) {
-            (**pp_Var8)(param_1->expanded);
+          else {
+            refill_buffer(&param_1->s);
+            puVar3 = (param_1->s).img_buffer;
+            uVar15 = *puVar3;
+            (param_1->s).img_buffer = puVar3 + 1;
           }
-          iVar9 = 1;
-          param_1->expanded = (uchar *)0x0;
-          __restgprlr();
-          return iVar9;
-        }
+          uVar16 = uVar16 - 1;
+          puVar12[3] = uVar15;
+          puVar12 = puVar12 + 4;
+          *puVar12 = 0xff;
+        } while (uVar16 != 0);
+      }
+    }
+    else {
+      if ((uVar16 & 0xffffffff) != 0x74524e53) {
 LAB_827f3538:
         if (bVar5) {
-LAB_827f3178:
-          iVar9 = 0;
           failure_reason = "first not IHDR";
-          __restgprlr();
-          return iVar9;
+          return 0;
         }
         if ((uVar16 & 0x20000000) == 0) {
           invalid_chunk[0] = (char)(uVar16 >> 0x18);
           invalid_chunk[1] = (char)(uVar16 >> 0x10);
-          invalid_chunk[2] = (char)(uVar16 >> 8);
-          iVar9 = 0;
           failure_reason = invalid_chunk;
+          invalid_chunk[2] = (char)(uVar16 >> 8);
           invalid_chunk[3] = (char)uVar16;
-          __restgprlr();
-          return iVar9;
+          return 0;
         }
         p_Var2 = (param_1->s).img_file;
-        if (p_Var2 != (_iobuf *)0x0) {
-          puVar12 = (param_1->s).img_buffer_end;
-          iVar14 = (int)puVar12 - (int)(param_1->s).img_buffer;
-          if (iVar14 < iVar9) {
-            (param_1->s).img_buffer = puVar12;
-            fseek(p_Var2,iVar9 - iVar14,1);
-            get16(&param_1->s);
-            get16(&param_1->s);
-            goto LAB_827f30fc;
-          }
+        if (p_Var2 == (_iobuf *)0x0) goto LAB_827f328c;
+        puVar12 = (param_1->s).img_buffer_end;
+        iVar14 = (int)puVar12 - (int)(param_1->s).img_buffer;
+        if (iVar14 < iVar9) {
+          (param_1->s).img_buffer = puVar12;
+          fseek(p_Var2,iVar9 - iVar14,1);
+          get16(&param_1->s);
+          get16(&param_1->s);
+          goto LAB_827f30fc;
+        }
+        goto LAB_827f328c;
+      }
+      if (bVar5) {
+        failure_reason = "first not IHDR";
+        return 0;
+      }
+      if (param_1->idata != (uchar *)0x0) {
+        failure_reason = "tRNS after IDAT";
+        return 0;
+      }
+      if (iVar18 == 0) {
+        uVar10 = (param_1->s).img_n;
+        if ((uVar10 & 1) == 0) {
+          failure_reason = "tRNS with alpha";
+          return 0;
+        }
+        if ((uVar22 & 0xffffffff) != ((ulonglong)uVar10 & 0x7fffffff) << 1) {
+          failure_reason = "bad tRNS len";
+          return 0;
+        }
+        bVar6 = true;
+        iVar9 = 0;
+        if (0 < (int)uVar10) {
+          do {
+            iVar13 = get16(&param_1->s);
+            iVar14 = (param_1->s).img_n;
+            local_4a4[iVar9] = (uchar)iVar13;
+            iVar9 = iVar9 + 1;
+          } while (iVar9 < iVar14);
+          get16(&param_1->s);
+          get16(&param_1->s);
+          goto LAB_827f30fc;
         }
       }
-      (param_1->s).img_buffer = (param_1->s).img_buffer + iVar9;
-      get16(&param_1->s);
-      get16(&param_1->s);
-      goto LAB_827f30fc;
+      else {
+        if (param_2 == 2) {
+          (param_1->s).img_n = 4;
+          return 1;
+        }
+        if (uVar20 == 0) {
+          failure_reason = "tRNS before PLTE";
+          return 0;
+        }
+        if (uVar20 < (uVar22 & 0xffffffff)) {
+          failure_reason = "bad tRNS len";
+          return 0;
+        }
+        iVar18 = 4;
+        if ((uVar22 & 0xffffffff) != 0) {
+          puVar12 = local_4a4 + 3;
+          do {
+            puVar3 = (param_1->s).img_buffer;
+            if (puVar3 < (param_1->s).img_buffer_end) {
+              uVar15 = *puVar3;
+              (param_1->s).img_buffer = puVar3 + 1;
+            }
+            else if ((param_1->s).from_file == 0) {
+              uVar15 = '\0';
+            }
+            else {
+              refill_buffer(&param_1->s);
+              puVar3 = (param_1->s).img_buffer;
+              uVar15 = *puVar3;
+              (param_1->s).img_buffer = puVar3 + 1;
+            }
+            uVar22 = uVar22 - 1;
+            puVar12 = puVar12 + 4;
+            *puVar12 = uVar15;
+          } while (uVar22 != 0);
+          get16(&param_1->s);
+          get16(&param_1->s);
+          goto LAB_827f30fc;
+        }
+      }
     }
+LAB_827f3800:
+    get16(&param_1->s);
+    get16(&param_1->s);
+    goto LAB_827f30fc;
+  }
+  if ((uVar16 & 0xffffffff) == 0x49484452) {
     if (!bVar5) {
-      iVar9 = 0;
       failure_reason = "multiple IHDR";
-      __restgprlr();
-      return iVar9;
+      return 0;
     }
     bVar5 = false;
     if ((uVar22 & 0xffffffff) != 0xd) {
-      iVar9 = 0;
       failure_reason = "bad IHDR len";
-      __restgprlr();
-      return iVar9;
+      return 0;
     }
     uVar11 = get32(&param_1->s);
     (param_1->s).img_x = uVar11;
     if (0x1000000 < uVar11) {
-LAB_827f350c:
-      iVar9 = 0;
       failure_reason = "too large";
-      __restgprlr();
-      return iVar9;
+      return 0;
     }
     uVar11 = get32(&param_1->s);
     (param_1->s).img_y = uVar11;
-    if (0x1000000 < uVar11) goto LAB_827f350c;
+    if (0x1000000 < uVar11) {
+      failure_reason = "too large";
+      return 0;
+    }
     puVar12 = (param_1->s).img_buffer;
     if (puVar12 < (param_1->s).img_buffer_end) {
       uVar15 = *puVar12;
     }
     else {
-      if ((param_1->s).from_file == 0) goto LAB_827f3a30;
+      if ((param_1->s).from_file == 0) {
+        failure_reason = "8bit only";
+        return 0;
+      }
       refill_buffer(&param_1->s);
       puVar12 = (param_1->s).img_buffer;
       uVar15 = *puVar12;
@@ -6877,18 +6538,18 @@ LAB_827f350c:
     pbVar17 = puVar12 + 1;
     (param_1->s).img_buffer = pbVar17;
     if (uVar15 != '\b') {
-LAB_827f3a30:
-      iVar9 = 0;
       failure_reason = "8bit only";
-      __restgprlr();
-      return iVar9;
+      return 0;
     }
     if (pbVar17 < (param_1->s).img_buffer_end) {
       bVar1 = *pbVar17;
       (param_1->s).img_buffer = puVar12 + 2;
 LAB_827f3348:
       uVar16 = (ulonglong)bVar1;
-      if (6 < bVar1) goto LAB_827f3a4c;
+      if (6 < bVar1) {
+        failure_reason = "bad ctype";
+        return 0;
+      }
       if (bVar1 != 3) goto LAB_827f338c;
       iVar18 = 3;
     }
@@ -6903,11 +6564,8 @@ LAB_827f3348:
       uVar16 = 0;
 LAB_827f338c:
       if ((uVar16 & 1) != 0) {
-LAB_827f3a4c:
-        iVar9 = 0;
         failure_reason = "bad ctype";
-        __restgprlr();
-        return iVar9;
+        return 0;
       }
     }
     puVar12 = (param_1->s).img_buffer;
@@ -6916,10 +6574,8 @@ LAB_827f3a4c:
       (param_1->s).img_buffer = puVar12 + 1;
 LAB_827f33e0:
       if (uVar15 != '\0') {
-        iVar9 = 0;
         failure_reason = "bad comp method";
-        __restgprlr();
-        return iVar9;
+        return 0;
       }
     }
     else if ((param_1->s).from_file != 0) {
@@ -6935,10 +6591,8 @@ LAB_827f33e0:
       (param_1->s).img_buffer = puVar12 + 1;
 LAB_827f3430:
       if (uVar15 != '\0') {
-        iVar9 = 0;
         failure_reason = "bad filter method";
-        __restgprlr();
-        return iVar9;
+        return 0;
       }
     }
     else if ((param_1->s).from_file != 0) {
@@ -6955,10 +6609,8 @@ LAB_827f3430:
 LAB_827f3454:
       uVar11 = (uint)bVar1;
       if (1 < bVar1) {
-        iVar9 = 0;
         failure_reason = "bad interlace method";
-        __restgprlr();
-        return iVar9;
+        return 0;
       }
     }
     else {
@@ -6973,91 +6625,212 @@ LAB_827f3454:
     }
     uVar22 = (ulonglong)(param_1->s).img_x;
     if ((uVar22 == 0) || (uVar10 = (param_1->s).img_y, uVar10 == 0)) {
-      iVar9 = 0;
       failure_reason = "0-pixel image";
-      __restgprlr();
-      return iVar9;
+      return 0;
     }
     trapWord(6,uVar22,0);
-    if (iVar18 == 0) {
-      uVar16 = (uVar16 >> 2 & 1) + (uVar16 & 2 | 0x100000001);
-      (param_1->s).img_n = (int)uVar16;
-      trapWord(6,uVar16,0);
-      if ((0x40000000 / uVar22) / (uVar16 & 0xffffffff) < (ulonglong)uVar10) goto LAB_827f350c;
-      if (param_2 == 2) goto LAB_827f39b4;
-      get16(&param_1->s);
-      get16(&param_1->s);
-    }
-    else {
+    if (iVar18 != 0) {
       (param_1->s).img_n = 1;
-      if (0x40000000 / uVar22 >> 2 < (ulonglong)uVar10) goto LAB_827f350c;
-LAB_827f3800:
-      get16(&param_1->s);
-      get16(&param_1->s);
+      if (0x40000000 / uVar22 >> 2 < (ulonglong)uVar10) {
+        failure_reason = "too large";
+        return 0;
+      }
+      goto LAB_827f3800;
     }
-  } while( true );
+    uVar16 = (uVar16 >> 2 & 1) + (uVar16 & 2 | 0x100000001);
+    (param_1->s).img_n = (int)uVar16;
+    trapWord(6,uVar16,0);
+    if ((0x40000000 / uVar22) / (uVar16 & 0xffffffff) < (ulonglong)uVar10) {
+      failure_reason = "too large";
+      return 0;
+    }
+    if (param_2 == 2) {
+      return 1;
+    }
+    get16(&param_1->s);
+    get16(&param_1->s);
+    goto LAB_827f30fc;
+  }
+  if ((uVar16 & 0xffffffff) != 0x43674249) {
+    iVar14 = (int)uVar19;
+    if ((uVar16 & 0xffffffff) != 0x49444154) {
+      if ((uVar16 & 0xffffffff) == 0x49454e44) {
+        if (bVar5) {
+          failure_reason = "first not IHDR";
+          return 0;
+        }
+        if (param_2 != 0) {
+          return 1;
+        }
+        if (param_1->idata == (uchar *)0x0) {
+          failure_reason = "no IDAT";
+          return 0;
+        }
+        puVar12 = (uchar *)stbi_zlib_decode_malloc_guesssize_headerflag
+                                     ((char *)param_1->idata,iVar14,0x4000,(int *)&local_4ac,
+                                      (uint)LZCOUNT(local_4ac) >> 5);
+        pp_Var8 = local_4a8;
+        param_1->expanded = puVar12;
+        if (puVar12 != (uchar *)0x0) {
+          if (*local_4a8 != (_func___cdecl_void_void_ptr *)0x0) {
+            (**local_4a8)(param_1->idata);
+          }
+          iVar14 = iStack00000024;
+          iVar9 = (param_1->s).img_n;
+          iVar13 = iVar9 + 1;
+          param_1->idata = (uchar *)0x0;
+          if ((((iStack00000024 == iVar13) && (iStack00000024 != 3)) && (iVar18 == 0)) || (bVar6)) {
+            (param_1->s).img_out_n = iVar13;
+          }
+          else {
+            (param_1->s).img_out_n = iVar9;
+          }
+          iVar9 = (param_1->s).img_out_n;
+          iVar13 = create_png_image(param_1,param_1->expanded,(uint)local_4ac,iVar9,uVar11);
+          if (iVar13 == 0) {
+            return 0;
+          }
+          if ((bVar6) &&
+             (iVar13 = compute_transparency(param_1,local_4a4,(param_1->s).img_out_n), iVar13 == 0))
+          {
+            return 0;
+          }
+          if ((p_Var7 != (_func___cdecl_void_void_ptr *)0x0) && (2 < (param_1->s).img_out_n)) {
+            stbi_de_iphone(param_1);
+          }
+          if (iVar18 != 0) {
+            (param_1->s).img_n = iVar18;
+            (param_1->s).img_out_n = iVar18;
+            if (2 < iVar14) {
+              (param_1->s).img_out_n = iVar14;
+            }
+            iVar9 = expand_palette(param_1,local_4a0,(param_1->s).img_out_n,iVar9);
+            if (iVar9 == 0) {
+              return 0;
+            }
+          }
+          if (*pp_Var8 != (_func___cdecl_void_void_ptr *)0x0) {
+            (**pp_Var8)(param_1->expanded);
+          }
+          param_1->expanded = (uchar *)0x0;
+          return 1;
+        }
+        return 0;
+      }
+      goto LAB_827f3538;
+    }
+    if (bVar5) {
+      failure_reason = "first not IHDR";
+      return 0;
+    }
+    if ((iVar18 != 0) && (uVar20 == 0)) {
+      failure_reason = "no PLTE";
+      return 0;
+    }
+    if (param_2 == 2) {
+      (param_1->s).img_n = iVar18;
+      return 1;
+    }
+    uVar19 = uVar22 + uVar19;
+    if ((uVar21 & 0xffffffff) < (uVar19 & 0xffffffff)) {
+      if (((uVar21 & 0xffffffff) == 0) && (uVar21 = uVar22, (uVar22 & 0xffffffff) < 0x1001)) {
+        uVar21 = 0x1000;
+      }
+      if ((uVar21 & 0xffffffff) < (uVar19 & 0xffffffff)) {
+        do {
+          uVar21 = (uVar21 & 0x7fffffff) << 1;
+        } while (uVar21 < (uVar19 & 0xffffffff));
+      }
+      puVar12 = realloc(param_1->idata,(uint)uVar21);
+      if (puVar12 == (uchar *)0x0) {
+        failure_reason = "outofmem";
+        return 0;
+      }
+      param_1->idata = puVar12;
+    }
+    iVar9 = getn(&param_1->s,param_1->idata + iVar14,iVar9);
+    if (iVar9 == 0) {
+      failure_reason = "outofdata";
+      return 0;
+    }
+    get16(&param_1->s);
+    get16(&param_1->s);
+    goto LAB_827f30fc;
+  }
+  p_Var2 = (param_1->s).img_file;
+  local_4ac = local_4a8[3];
+  if (p_Var2 != (_iobuf *)0x0) {
+    puVar12 = (param_1->s).img_buffer_end;
+    iVar14 = (int)puVar12 - (int)(param_1->s).img_buffer;
+    if (iVar9 <= iVar14) goto LAB_827f328c;
+    (param_1->s).img_buffer = puVar12;
+    fseek(p_Var2,iVar9 - iVar14,1);
+    get16(&param_1->s);
+    get16(&param_1->s);
+    goto LAB_827f30fc;
+  }
+LAB_827f328c:
+  (param_1->s).img_buffer = (param_1->s).img_buffer + iVar9;
+  get16(&param_1->s);
+  get16(&param_1->s);
+  goto LAB_827f30fc;
 }
 
 
 // 827F3BB8  do_png  (mjpeg/stb_image.c:3247)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
+
 uchar * do_png(png *param_1,int *param_2,int *param_3,int *param_4,int param_5)
 
 {
   bool bVar1;
-  png *ppVar2;
-  int iVar3;
-  uchar *puVar4;
-  ulonglong uVar5;
-  _func___cdecl_void_void_ptr *p_Var6;
-  ulonglong uVar7;
+  int iVar2;
+  uchar *puVar3;
+  _func___cdecl_void_void_ptr *p_Var4;
   
-  uVar5 = (ulonglong)(int)param_4;
-  ppVar2 = (png *)__savegprlr_25(param_1);
-  ppVar2->expanded = (uchar *)0x0;
-  ppVar2->idata = (uchar *)0x0;
-  ppVar2->out = (uchar *)0x0;
-  uVar7 = 0;
+  param_1->expanded = (uchar *)0x0;
+  param_1->idata = (uchar *)0x0;
+  param_1->out = (uchar *)0x0;
+  puVar3 = (uchar *)0x0;
   if ((-1 < param_5) && (param_5 < 5)) {
-    iVar3 = parse_png_file(ppVar2,0,param_5);
-    if (iVar3 != 0) {
-      puVar4 = ppVar2->out;
-      uVar7 = ZEXT48(puVar4);
-      ppVar2->out = (uchar *)0x0;
-      if ((param_5 != 0) && (iVar3 = (ppVar2->s).img_out_n, param_5 != iVar3)) {
-        puVar4 = convert_format(puVar4,iVar3,param_5,(ppVar2->s).img_x,(ppVar2->s).img_y);
-        uVar7 = (ulonglong)(int)puVar4;
-        (ppVar2->s).img_out_n = param_5;
-        if (puVar4 == (uchar *)0x0) goto LAB_827f3cf0;
+    iVar2 = parse_png_file(param_1,0,param_5);
+    if (iVar2 != 0) {
+      puVar3 = param_1->out;
+      param_1->out = (uchar *)0x0;
+      if ((param_5 != 0) && (iVar2 = (param_1->s).img_out_n, param_5 != iVar2)) {
+        puVar3 = convert_format(puVar3,iVar2,param_5,(param_1->s).img_x,(param_1->s).img_y);
+        (param_1->s).img_out_n = param_5;
+        if (puVar3 == (uchar *)0x0) {
+          return (uchar *)0x0;
+        }
       }
-      *param_2 = (ppVar2->s).img_x;
-      *param_3 = (ppVar2->s).img_y;
-      if ((uVar5 & 0xffffffff) != 0) {
-        *(int *)uVar5 = (ppVar2->s).img_n;
+      *param_2 = (param_1->s).img_x;
+      *param_3 = (param_1->s).img_y;
+      if (param_4 != (int *)0x0) {
+        *param_4 = (param_1->s).img_n;
       }
     }
     if (alt_stb_free != (_func___cdecl_void_void_ptr *)0x0) {
-      (*alt_stb_free)(ppVar2->out);
+      (*alt_stb_free)(param_1->out);
     }
-    p_Var6 = alt_stb_free;
+    p_Var4 = alt_stb_free;
     bVar1 = alt_stb_free != (_func___cdecl_void_void_ptr *)0x0;
-    ppVar2->out = (uchar *)0x0;
+    param_1->out = (uchar *)0x0;
     if (bVar1) {
-      (*alt_stb_free)(ppVar2->expanded);
-      p_Var6 = alt_stb_free;
+      (*alt_stb_free)(param_1->expanded);
+      p_Var4 = alt_stb_free;
     }
-    ppVar2->expanded = (uchar *)0x0;
-    if (p_Var6 != (_func___cdecl_void_void_ptr *)0x0) {
-      (*alt_stb_free)(ppVar2->idata);
+    param_1->expanded = (uchar *)0x0;
+    if (p_Var4 != (_func___cdecl_void_void_ptr *)0x0) {
+      (*alt_stb_free)(param_1->idata);
     }
-    ppVar2->idata = (uchar *)0x0;
-    puVar4 = (uchar *)__restgprlr_25(uVar7);
-    return puVar4;
+    param_1->idata = (uchar *)0x0;
+    return puVar3;
   }
   failure_reason = "bad req_comp";
-LAB_827f3cf0:
-  puVar4 = (uchar *)__restgprlr_25(0);
-  return puVar4;
+  return (uchar *)0x0;
 }
 
 
@@ -7081,29 +6854,28 @@ uchar * stbi_png_load_from_file(_iobuf *param_1,int *param_2,int *param_3,int *p
 
 // 827F3D48  stbi_png_load  (mjpeg/stb_image.c:3281)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 uchar * stbi_png_load(char *param_1,int *param_2,int *param_3,int *param_4,int param_5)
 
 {
-  char *pcVar1;
-  _iobuf *p_Var2;
-  uchar *puVar3;
+  _iobuf *p_Var1;
+  uchar *puVar2;
   png pStack_e0;
   
-  pcVar1 = (char *)__savegprlr_27(param_1);
-  p_Var2 = fopen(pcVar1,"rb");
-  if (p_Var2 == (_iobuf *)0x0) {
-    puVar3 = (uchar *)__restgprlr_27();
-    return puVar3;
+  p_Var1 = fopen(param_1,"rb");
+  if (p_Var1 == (_iobuf *)0x0) {
+    return (uchar *)0x0;
   }
   pStack_e0.s.img_buffer_end = (uchar *)&pStack_e0.s.from_file;
   pStack_e0.s.img_buffer = (uchar *)&pStack_e0.s.from_file;
   pStack_e0.s.buflen = 0x80;
   pStack_e0.s.from_file = 1;
-  pStack_e0.s.img_file = p_Var2;
-  puVar3 = do_png(&pStack_e0,param_2,param_3,param_4,param_5);
-  fclose(p_Var2);
-  puVar3 = (uchar *)__restgprlr_27(puVar3);
-  return puVar3;
+  pStack_e0.s.img_file = p_Var1;
+  puVar2 = do_png(&pStack_e0,param_2,param_3,param_4,param_5);
+  fclose(p_Var1);
+  return puVar2;
 }
 
 
@@ -7127,25 +6899,25 @@ uchar * stbi_png_load_from_memory
 
 // 827F3E28  stbi_png_test_file  (mjpeg/stb_image.c:3300)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 int stbi_png_test_file(_iobuf *param_1)
 
 {
-  _iobuf *p_Var1;
-  long lVar2;
-  int iVar3;
+  long lVar1;
+  int iVar2;
   png pStack_d0;
   
-  p_Var1 = (_iobuf *)__savegprlr_29(param_1);
-  lVar2 = ftell(p_Var1);
+  lVar1 = ftell(param_1);
   pStack_d0.s.img_buffer_end = (uchar *)&pStack_d0.s.from_file;
   pStack_d0.s.img_buffer = (uchar *)&pStack_d0.s.from_file;
   pStack_d0.s.buflen = 0x80;
   pStack_d0.s.from_file = 1;
-  pStack_d0.s.img_file = p_Var1;
-  iVar3 = parse_png_file(&pStack_d0,1,0);
-  fseek(p_Var1,lVar2,0);
-  iVar3 = __restgprlr_29(iVar3);
-  return iVar3;
+  pStack_d0.s.img_file = param_1;
+  iVar2 = parse_png_file(&pStack_d0,1,0);
+  fseek(param_1,lVar1,0);
+  return iVar2;
 }
 
 
@@ -7168,140 +6940,120 @@ int stbi_png_test_memory(uchar *param_1,int param_2)
 
 // 827F3EE0  stbi_png_info_raw  (mjpeg/stb_image.c:3319)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 int stbi_png_info_raw(png *param_1,int *param_2,int *param_3,int *param_4)
 
 {
-  png *ppVar1;
-  int iVar2;
-  ulonglong uVar3;
-  ulonglong uVar4;
-  ulonglong uVar5;
+  int iVar1;
   
-  uVar5 = (ulonglong)(int)param_4;
-  uVar4 = (ulonglong)(int)param_3;
-  uVar3 = (ulonglong)(int)param_2;
-  ppVar1 = (png *)__savegprlr_28(param_1);
-  iVar2 = parse_png_file(ppVar1,2,0);
-  if (iVar2 == 0) {
-    iVar2 = __restgprlr_28();
-    return iVar2;
+  iVar1 = parse_png_file(param_1,2,0);
+  if (iVar1 == 0) {
+    return 0;
   }
-  if ((uVar3 & 0xffffffff) != 0) {
-    *(uint *)uVar3 = (ppVar1->s).img_x;
+  if (param_2 != (int *)0x0) {
+    *param_2 = (param_1->s).img_x;
   }
-  if ((uVar4 & 0xffffffff) != 0) {
-    *(uint *)uVar4 = (ppVar1->s).img_y;
+  if (param_3 != (int *)0x0) {
+    *param_3 = (param_1->s).img_y;
   }
-  if ((uVar5 & 0xffffffff) != 0) {
-    *(int *)uVar5 = (ppVar1->s).img_n;
+  if (param_4 != (int *)0x0) {
+    *param_4 = (param_1->s).img_n;
   }
-  iVar2 = __restgprlr_28(1);
-  return iVar2;
+  return 1;
 }
 
 
 // 827FA400  stbi_png_info  (mjpeg/stb_image.c:3330)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 int stbi_png_info(char *param_1,int *param_2,int *param_3,int *param_4)
 
 {
-  char *pcVar1;
-  _iobuf *p_Var2;
-  int iVar3;
+  _iobuf *p_Var1;
+  int iVar2;
   
-  pcVar1 = (char *)__savegprlr_28(param_1);
-  p_Var2 = fopen(pcVar1,"rb");
-  if (p_Var2 == (_iobuf *)0x0) {
-    iVar3 = __restgprlr_28();
-    return iVar3;
+  p_Var1 = fopen(param_1,"rb");
+  if (p_Var1 == (_iobuf *)0x0) {
+    return 0;
   }
-  iVar3 = stbi_png_info_from_file(p_Var2,param_2,param_3,param_4);
-  fclose(p_Var2);
-  iVar3 = __restgprlr_28(iVar3);
-  return iVar3;
+  iVar2 = stbi_png_info_from_file(p_Var1,param_2,param_3,param_4);
+  fclose(p_Var1);
+  return iVar2;
 }
 
 
 // 827F3F58  stbi_png_info_from_file  (mjpeg/stb_image.c:3340)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 int stbi_png_info_from_file(_iobuf *param_1,int *param_2,int *param_3,int *param_4)
 
 {
-  _iobuf *p_Var1;
-  long lVar2;
-  int iVar3;
-  ulonglong uVar4;
-  ulonglong uVar5;
-  ulonglong uVar6;
-  undefined8 uVar7;
+  long lVar1;
+  int iVar2;
   png local_e0;
   
-  uVar6 = (ulonglong)(int)param_4;
-  uVar5 = (ulonglong)(int)param_3;
-  uVar4 = (ulonglong)(int)param_2;
-  p_Var1 = (_iobuf *)__savegprlr_27(param_1);
-  lVar2 = ftell(p_Var1);
+  lVar1 = ftell(param_1);
   local_e0.s.img_buffer_end = (uchar *)&local_e0.s.from_file;
   local_e0.s.img_buffer = (uchar *)&local_e0.s.from_file;
   local_e0.s.buflen = 0x80;
   local_e0.s.from_file = 1;
-  local_e0.s.img_file = p_Var1;
-  iVar3 = parse_png_file(&local_e0,2,0);
-  if (iVar3 == 0) {
-    uVar7 = 0;
+  local_e0.s.img_file = param_1;
+  iVar2 = parse_png_file(&local_e0,2,0);
+  if (iVar2 == 0) {
+    iVar2 = 0;
   }
   else {
-    if ((uVar4 & 0xffffffff) != 0) {
-      *(uint *)uVar4 = local_e0.s.img_x;
+    if (param_2 != (int *)0x0) {
+      *param_2 = local_e0.s.img_x;
     }
-    if ((uVar5 & 0xffffffff) != 0) {
-      *(uint *)uVar5 = local_e0.s.img_y;
+    if (param_3 != (int *)0x0) {
+      *param_3 = local_e0.s.img_y;
     }
-    if ((uVar6 & 0xffffffff) != 0) {
-      *(int *)uVar6 = local_e0.s.img_n;
+    if (param_4 != (int *)0x0) {
+      *param_4 = local_e0.s.img_n;
     }
-    uVar7 = 1;
+    iVar2 = 1;
   }
-  fseek(p_Var1,lVar2,0);
-  iVar3 = __restgprlr_27(uVar7);
-  return iVar3;
+  fseek(param_1,lVar1,0);
+  return iVar2;
 }
 
 
 // 827F4010  stbi_png_info_from_memory  (mjpeg/stb_image.c:3352)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 int stbi_png_info_from_memory(uchar *param_1,int param_2,int *param_3,int *param_4,int *param_5)
 
 {
   int iVar1;
-  ulonglong uVar2;
-  ulonglong uVar3;
-  ulonglong uVar4;
   png local_e0;
   
-  uVar4 = (ulonglong)(int)param_5;
-  uVar3 = (ulonglong)(int)param_4;
-  uVar2 = (ulonglong)(int)param_3;
-  local_e0.s.img_buffer = (uchar *)__savegprlr_28(param_1);
-  local_e0.s.img_buffer_end = local_e0.s.img_buffer + param_2;
+  local_e0.s.img_buffer_end = param_1 + param_2;
   local_e0.s.img_file = (_iobuf *)0x0;
   local_e0.s.from_file = 0;
+  local_e0.s.img_buffer = param_1;
   iVar1 = parse_png_file(&local_e0,2,0);
   if (iVar1 == 0) {
-    iVar1 = __restgprlr_28(0);
-    return iVar1;
+    return 0;
   }
-  if ((uVar2 & 0xffffffff) != 0) {
-    *(uint *)uVar2 = local_e0.s.img_x;
+  if (param_3 != (int *)0x0) {
+    *param_3 = local_e0.s.img_x;
   }
-  if ((uVar3 & 0xffffffff) != 0) {
-    *(uint *)uVar3 = local_e0.s.img_y;
+  if (param_4 != (int *)0x0) {
+    *param_4 = local_e0.s.img_y;
   }
-  if ((uVar4 & 0xffffffff) != 0) {
-    *(int *)uVar4 = local_e0.s.img_n;
+  if (param_5 != (int *)0x0) {
+    *param_5 = local_e0.s.img_n;
   }
-  iVar1 = __restgprlr_28(1);
-  return iVar1;
+  return 1;
 }
 
 
@@ -7365,25 +7117,25 @@ int bmp_test(stbi *param_1)
 
 // 827F41E0  stbi_bmp_test_file  (mjpeg/stb_image.c:3376)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 int stbi_bmp_test_file(_iobuf *param_1)
 
 {
-  _iobuf *p_Var1;
-  long lVar2;
-  int iVar3;
+  long lVar1;
+  int iVar2;
   stbi sStack_d0;
   
-  p_Var1 = (_iobuf *)__savegprlr_29(param_1);
-  lVar2 = ftell(p_Var1);
+  lVar1 = ftell(param_1);
   sStack_d0.img_buffer_end = (uchar *)&sStack_d0.from_file;
   sStack_d0.img_buffer = (uchar *)&sStack_d0.from_file;
   sStack_d0.buflen = 0x80;
   sStack_d0.from_file = 1;
-  sStack_d0.img_file = p_Var1;
-  iVar3 = bmp_test(&sStack_d0);
-  fseek(p_Var1,lVar2,0);
-  iVar3 = __restgprlr_29(iVar3);
-  return iVar3;
+  sStack_d0.img_file = param_1;
+  iVar2 = bmp_test(&sStack_d0);
+  fseek(param_1,lVar1,0);
+  return iVar2;
 }
 
 
@@ -7488,6 +7240,9 @@ int shiftsigned(int param_1,int param_2,int param_3)
 
 // 827F43A8  bmp_load  (mjpeg/stb_image.c:3434)
 
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
+
 uchar * bmp_load(stbi *param_1,int *param_2,int *param_3,int *param_4,int param_5)
 
 {
@@ -7533,7 +7288,6 @@ uchar * bmp_load(stbi *param_1,int *param_2,int *param_3,int *param_4,int param_
   undefined1 uStack_4a1;
   uchar local_4a0 [1184];
   
-  __savegprlr();
   uVar23 = 0;
   puVar11 = param_1->img_buffer;
   uVar22 = 0;
@@ -7547,158 +7301,314 @@ uchar * bmp_load(stbi *param_1,int *param_2,int *param_3,int *param_4,int param_
   iStack00000034 = param_5;
   if (puVar11 < param_1->img_buffer_end) {
     uVar17 = *puVar11;
-LAB_827f4424:
-    puVar20 = puVar11 + 1;
-    param_1->img_buffer = puVar20;
-    if (uVar17 == 'B') {
-      if (puVar20 < param_1->img_buffer_end) {
-        uVar17 = *puVar20;
-        param_1->img_buffer = puVar11 + 2;
-      }
-      else {
-        if (param_1->from_file == 0) goto LAB_827f5358;
-        refill_buffer(param_1);
-        uVar17 = *param_1->img_buffer;
-        param_1->img_buffer = param_1->img_buffer + 1;
-      }
-      if (uVar17 == 'M') {
-        get16le(param_1);
-        get16le(param_1);
-        get16le(param_1);
-        get16le(param_1);
-        iVar5 = get16le(param_1);
-        iVar6 = get16le(param_1);
-        iVar5 = iVar6 * 0x10000 + iVar5;
-        iVar6 = get16le(param_1);
-        iVar7 = get16le(param_1);
-        iVar6 = iVar7 * 0x10000 + iVar6;
-        if (iVar6 == 0xc) {
-          uVar8 = get16le(param_1);
-          param_1->img_x = uVar8;
-          uVar8 = get16le(param_1);
-        }
-        else {
-          if (((iVar6 != 0x28) && (iVar6 != 0x38)) && (iVar6 != 0x6c)) {
-            puVar11 = (uchar *)0x0;
-            failure_reason = "unknown BMP";
-            __restgprlr();
-            return puVar11;
-          }
-          uVar8 = get32le(param_1);
-          param_1->img_x = uVar8;
-          uVar8 = get32le(param_1);
-        }
-        param_1->img_y = uVar8;
-        iVar7 = get16le(param_1);
-        if (iVar7 != 1) goto LAB_827f4550;
-        iVar7 = get16le(param_1);
-        if (iVar7 == 1) {
-          puVar11 = (uchar *)0x0;
-          failure_reason = "monochrome";
-          __restgprlr();
-          return puVar11;
-        }
-        uVar8 = param_1->img_y;
-        param_1->img_y = (uVar8 ^ (int)uVar8 >> 0x1f) - ((int)uVar8 >> 0x1f);
-        if (iVar6 == 0xc) {
-          if (iVar7 < 0x18) {
-            lVar29 = (longlong)((iVar5 + -0x26) / 3);
-          }
-        }
-        else {
-          uVar24 = get32le(param_1);
-          if ((uVar24 == 1) || (uVar24 == 2)) {
-            puVar11 = (uchar *)0x0;
-            failure_reason = "BMP RLE";
-            __restgprlr();
-            return puVar11;
-          }
-          get32le(param_1);
-          get32le(param_1);
-          get32le(param_1);
-          get32le(param_1);
-          get32le(param_1);
-          if (iVar6 == 0x28) {
+  }
+  else {
+    if (param_1->from_file == 0) goto LAB_827f5358;
+    refill_buffer(param_1);
+    puVar11 = param_1->img_buffer;
+    uVar17 = *puVar11;
+  }
+  puVar20 = puVar11 + 1;
+  param_1->img_buffer = puVar20;
+  if (uVar17 != 'B') {
+LAB_827f5358:
+    failure_reason = "not BMP";
+    return (uchar *)0x0;
+  }
+  if (puVar20 < param_1->img_buffer_end) {
+    uVar17 = *puVar20;
+    param_1->img_buffer = puVar11 + 2;
+  }
+  else {
+    if (param_1->from_file == 0) goto LAB_827f5358;
+    refill_buffer(param_1);
+    uVar17 = *param_1->img_buffer;
+    param_1->img_buffer = param_1->img_buffer + 1;
+  }
+  if (uVar17 != 'M') goto LAB_827f5358;
+  get16le(param_1);
+  get16le(param_1);
+  get16le(param_1);
+  get16le(param_1);
+  iVar5 = get16le(param_1);
+  iVar6 = get16le(param_1);
+  iVar5 = iVar6 * 0x10000 + iVar5;
+  iVar6 = get16le(param_1);
+  iVar7 = get16le(param_1);
+  iVar6 = iVar7 * 0x10000 + iVar6;
+  if (iVar6 == 0xc) {
+    uVar8 = get16le(param_1);
+    param_1->img_x = uVar8;
+    uVar8 = get16le(param_1);
+  }
+  else {
+    if (((iVar6 != 0x28) && (iVar6 != 0x38)) && (iVar6 != 0x6c)) {
+      failure_reason = "unknown BMP";
+      return (uchar *)0x0;
+    }
+    uVar8 = get32le(param_1);
+    param_1->img_x = uVar8;
+    uVar8 = get32le(param_1);
+  }
+  param_1->img_y = uVar8;
+  iVar7 = get16le(param_1);
+  if (iVar7 != 1) goto LAB_827f4550;
+  iVar7 = get16le(param_1);
+  if (iVar7 == 1) {
+    failure_reason = "monochrome";
+    return (uchar *)0x0;
+  }
+  uVar8 = param_1->img_y;
+  param_1->img_y = (uVar8 ^ (int)uVar8 >> 0x1f) - ((int)uVar8 >> 0x1f);
+  if (iVar6 == 0xc) {
+    if (iVar7 < 0x18) {
+      lVar29 = (longlong)((iVar5 + -0x26) / 3);
+    }
+  }
+  else {
+    uVar24 = get32le(param_1);
+    if ((uVar24 == 1) || (uVar24 == 2)) {
+      failure_reason = "BMP RLE";
+      return (uchar *)0x0;
+    }
+    get32le(param_1);
+    get32le(param_1);
+    get32le(param_1);
+    get32le(param_1);
+    get32le(param_1);
+    if (iVar6 == 0x28) {
 LAB_827f46b0:
-            if ((iVar7 == 0x10) || (iVar7 == 0x20)) {
-              if (uVar24 == 0) {
-                if (iVar7 == 0x20) {
-                  local_4b8 = 0xff000000;
-                  uVar22 = 0xff0000;
-                  uVar9 = 0xff00;
-                  uVar10 = 0xff;
-                  goto LAB_827f474c;
-                }
-                uVar22 = 0x7c00;
-                uVar9 = 0x3e0;
-                uVar10 = 0x1f;
+      if ((iVar7 == 0x10) || (iVar7 == 0x20)) {
+        if (uVar24 == 0) {
+          if (iVar7 == 0x20) {
+            local_4b8 = 0xff000000;
+            uVar22 = 0xff0000;
+            uVar9 = 0xff00;
+            uVar10 = 0xff;
+            goto LAB_827f474c;
+          }
+          uVar22 = 0x7c00;
+          uVar9 = 0x3e0;
+          uVar10 = 0x1f;
+        }
+        else {
+          if (uVar24 != 3) {
+LAB_827f4550:
+            failure_reason = "bad BMP";
+            return (uchar *)0x0;
+          }
+          uVar24 = get32le(param_1);
+          uVar22 = (ulonglong)(int)uVar24;
+          uVar9 = get32le(param_1);
+          uVar10 = get32le(param_1);
+          if ((uVar24 == uVar9) && (uVar9 == uVar10)) goto LAB_827f4550;
+        }
+      }
+    }
+    else {
+      if (iVar6 == 0x38) {
+        get32le(param_1);
+        get32le(param_1);
+        get32le(param_1);
+        get32le(param_1);
+        goto LAB_827f46b0;
+      }
+      uVar9 = get32le(param_1);
+      uVar22 = (ulonglong)(int)uVar9;
+      uVar9 = get32le(param_1);
+      uVar10 = get32le(param_1);
+      local_4b8 = get32le(param_1);
+      get32le(param_1);
+      lVar32 = 0xc;
+      do {
+        get32le(param_1);
+        lVar32 = lVar32 + -1;
+      } while (lVar32 != 0);
+    }
+    if (iVar7 < 0x10) {
+      lVar29 = (longlong)((iVar5 - iVar6) + -0xe >> 2);
+    }
+  }
+LAB_827f474c:
+  iVar19 = ((uint)LZCOUNT(local_4b8) >> 5 ^ 1) + 3;
+  param_1->img_n = iVar19;
+  if ((param_5 != 0) && (2 < param_5)) {
+    iVar19 = param_5;
+  }
+  puVar11 = stb_malloc(param_1->img_y * param_1->img_x * iVar19);
+  if (puVar11 == (uchar *)0x0) {
+    failure_reason = "outofmem";
+    return (uchar *)0x0;
+  }
+  if (0xf < iVar7) {
+    uVar24 = 0;
+    local_4bc = 0;
+    uVar26 = 0;
+    uVar25 = 0;
+    uVar15 = 0;
+    uVar30 = 0;
+    uVar28 = 0;
+    uVar27 = 0;
+    iVar13 = 0;
+    iVar5 = (iVar5 - iVar6) + -0xe;
+    if (param_1->img_file == (_iobuf *)0x0) {
+LAB_827f4c74:
+      param_1->img_buffer = param_1->img_buffer + iVar5;
+    }
+    else {
+      iVar6 = (int)param_1->img_buffer_end - (int)param_1->img_buffer;
+      if (iVar5 <= iVar6) goto LAB_827f4c74;
+      param_1->img_buffer = param_1->img_buffer_end;
+      fseek(param_1->img_file,iVar5 - iVar6,1);
+    }
+    if (iVar7 == 0x18) {
+      iVar5 = param_1->img_x * 3;
+    }
+    else if (iVar7 == 0x10) {
+      iVar5 = param_1->img_x << 1;
+    }
+    else {
+      iVar5 = 0;
+    }
+    uVar4 = -iVar5 & 3;
+    if (iVar7 == 0x18) {
+      local_4bc = 1;
+    }
+    else {
+      if ((((iVar7 == 0x20) && (uVar10 == 0xff)) && (uVar9 == 0xff00)) &&
+         ((uVar22 & 0xffffffff) == 0xff000000)) {
+        if (local_4b8 == 0xff000000) {
+          local_4bc = 2;
+          goto LAB_827f4cd0;
+        }
+      }
+      else if ((((uVar22 & 0xffffffff) == 0) || (uVar9 == 0)) || (uVar10 == 0)) {
+        failure_reason = "bad masks";
+        return (uchar *)0x0;
+      }
+      iVar5 = high_bit((uint)uVar22);
+      uVar24 = iVar5 - 7;
+      uVar27 = ((uVar22 & 0xffffffff) >> 1 & 0x55555555) + (uVar22 & 0x55555555);
+      uVar15 = (uVar27 >> 2 & 0x33333333) + (uVar27 & 0x33333333);
+      uVar15 = (uVar15 >> 4) + uVar15 & 0xf0f0f0f;
+      uVar15 = (uVar15 >> 8) + uVar15;
+      uVar15 = (uVar15 >> 0x10) + uVar15 & 0xff;
+      iVar5 = high_bit(uVar9);
+      uVar26 = iVar5 - 7;
+      uVar30 = ((uVar27 & 0xffffffff) >> 2 & 0x33333333) + (uVar27 & 0x33333333);
+      uVar30 = (uVar30 >> 4) + uVar30 & 0xf0f0f0f;
+      uVar30 = (uVar30 >> 8) + uVar30;
+      uVar30 = (uVar30 >> 0x10) + uVar30 & 0xff;
+      iVar5 = high_bit(uVar10);
+      uVar25 = iVar5 - 7;
+      uVar28 = ((uVar27 & 0xffffffff) >> 2 & 0x33333333) + (uVar27 & 0x33333333);
+      uVar28 = (uVar28 >> 4) + uVar28 & 0xf0f0f0f;
+      uVar28 = (uVar28 >> 8) + uVar28;
+      uVar28 = (uVar28 >> 0x10) + uVar28 & 0xff;
+      iVar5 = high_bit(local_4b8);
+      uVar23 = iVar5 - 7;
+      uVar27 = ((uVar27 & 0xffffffff) >> 2 & 0x33333333) + (uVar27 & 0x33333333);
+      uVar27 = (uVar27 >> 4) + uVar27 & 0xf0f0f0f;
+      uVar27 = (uVar27 >> 8) + uVar27;
+      uVar27 = (uVar27 >> 0x10) + uVar27 & 0xff;
+    }
+LAB_827f4cd0:
+    iVar5 = 0;
+    if (0 < (int)param_1->img_y) {
+      do {
+        if (local_4bc == 0) {
+          iVar31 = 0;
+          iVar6 = iVar13;
+          if (0 < (int)param_1->img_x) {
+            do {
+              if (iVar7 == 0x10) {
+                uVar12 = get16le(param_1);
               }
               else {
-                if (uVar24 != 3) {
-LAB_827f4550:
-                  puVar11 = (uchar *)0x0;
-                  failure_reason = "bad BMP";
-                  __restgprlr();
-                  return puVar11;
-                }
-                uVar24 = get32le(param_1);
-                uVar22 = (ulonglong)(int)uVar24;
-                uVar9 = get32le(param_1);
-                uVar10 = get32le(param_1);
-                if ((uVar24 == uVar9) && (uVar9 == uVar10)) goto LAB_827f4550;
+                uVar12 = get32le(param_1);
               }
-            }
-          }
-          else {
-            if (iVar6 == 0x38) {
-              get32le(param_1);
-              get32le(param_1);
-              get32le(param_1);
-              get32le(param_1);
-              goto LAB_827f46b0;
-            }
-            uVar9 = get32le(param_1);
-            uVar22 = (ulonglong)(int)uVar9;
-            uVar9 = get32le(param_1);
-            uVar10 = get32le(param_1);
-            local_4b8 = get32le(param_1);
-            get32le(param_1);
-            lVar32 = 0xc;
-            do {
-              get32le(param_1);
-              lVar32 = lVar32 + -1;
-            } while (lVar32 != 0);
-          }
-          if (iVar7 < 0x10) {
-            lVar29 = (longlong)((iVar5 - iVar6) + -0xe >> 2);
+              uVar21 = uVar12 & (uint)uVar22;
+              if ((int)uVar24 < 0) {
+                iVar13 = uVar21 << (-uVar24 & 0x3f);
+              }
+              else {
+                iVar13 = (int)uVar21 >> (uVar24 & 0x3f);
+              }
+              uVar18 = uVar15;
+              iVar16 = iVar13;
+              if ((uint)uVar15 < 8) {
+                do {
+                  uVar21 = (uint)uVar18;
+                  uVar18 = uVar18 + uVar15;
+                  iVar16 = (iVar13 >> (uVar21 & 0x3f)) + iVar16;
+                } while ((int)uVar18 < 8);
+              }
+              puVar11[iVar6] = (uchar)iVar16;
+              if ((int)uVar26 < 0) {
+                iVar13 = (uVar12 & uVar9) << (-uVar26 & 0x3f);
+              }
+              else {
+                iVar13 = (int)(uVar12 & uVar9) >> (uVar26 & 0x3f);
+              }
+              uVar18 = uVar30;
+              iVar16 = iVar13;
+              if ((uint)uVar30 < 8) {
+                do {
+                  uVar21 = (uint)uVar18;
+                  uVar18 = uVar18 + uVar30;
+                  iVar16 = (iVar13 >> (uVar21 & 0x3f)) + iVar16;
+                } while ((int)uVar18 < 8);
+              }
+              puVar11[iVar6 + 1] = (uchar)iVar16;
+              if ((int)uVar25 < 0) {
+                iVar13 = (uVar12 & uVar10) << (-uVar25 & 0x3f);
+              }
+              else {
+                iVar13 = (int)(uVar12 & uVar10) >> (uVar25 & 0x3f);
+              }
+              uVar18 = uVar28;
+              iVar16 = iVar13;
+              if ((uint)uVar28 < 8) {
+                do {
+                  uVar21 = (uint)uVar18;
+                  uVar18 = uVar18 + uVar28;
+                  iVar16 = (iVar13 >> (uVar21 & 0x3f)) + iVar16;
+                } while ((int)uVar18 < 8);
+              }
+              iVar13 = iVar6 + 3;
+              puVar11[iVar6 + 2] = (uchar)iVar16;
+              if (local_4b8 == 0) {
+                iVar16 = 0xff;
+              }
+              else {
+                if ((int)uVar23 < 0) {
+                  iVar14 = (uVar12 & local_4b8) << (-uVar23 & 0x3f);
+                }
+                else {
+                  iVar14 = (int)(uVar12 & local_4b8) >> (uVar23 & 0x3f);
+                }
+                uVar18 = uVar27;
+                iVar16 = iVar14;
+                if ((uint)uVar27 < 8) {
+                  do {
+                    uVar12 = (uint)uVar18;
+                    uVar18 = uVar18 + uVar27;
+                    iVar16 = (iVar14 >> (uVar12 & 0x3f)) + iVar16;
+                  } while ((int)uVar18 < 8);
+                }
+              }
+              if (iVar19 == 4) {
+                puVar11[iVar13] = (uchar)iVar16;
+                iVar13 = iVar6 + 4;
+              }
+              iVar31 = iVar31 + 1;
+              iVar6 = iVar13;
+            } while (iVar31 < (int)param_1->img_x);
           }
         }
-LAB_827f474c:
-        iVar19 = ((uint)LZCOUNT(local_4b8) >> 5 ^ 1) + 3;
-        param_1->img_n = iVar19;
-        if ((param_5 != 0) && (2 < param_5)) {
-          iVar19 = param_5;
-        }
-        puVar11 = stb_malloc(param_1->img_y * param_1->img_x * iVar19);
-        if (puVar11 == (uchar *)0x0) {
-          failure_reason = "outofmem";
-          __restgprlr();
-          return puVar11;
-        }
-        if (iVar7 < 0x10) {
-          iVar13 = 0;
-          iVar31 = (int)lVar29;
-          if ((iVar31 == 0) || (0x100 < iVar31)) {
-            if (alt_stb_free != (_func___cdecl_void_void_ptr *)0x0) {
-              (*alt_stb_free)(puVar11);
-            }
-            puVar11 = (uchar *)0x0;
-            failure_reason = "invalid";
-            __restgprlr();
-            return puVar11;
-          }
-          if (0 < iVar31) {
-            puVar33 = &uStack_4a1;
+        else {
+          iVar6 = 0;
+          if (0 < (int)param_1->img_x) {
             do {
               puVar20 = param_1->img_buffer;
               if (puVar20 < param_1->img_buffer_end) {
@@ -7713,10 +7623,9 @@ LAB_827f474c:
                 uVar17 = *param_1->img_buffer;
                 param_1->img_buffer = param_1->img_buffer + 1;
               }
+              puVar11[iVar13 + 2] = uVar17;
               puVar20 = param_1->img_buffer;
-              puVar2 = param_1->img_buffer_end;
-              puVar33[3] = uVar17;
-              if (puVar20 < puVar2) {
+              if (puVar20 < param_1->img_buffer_end) {
                 uVar17 = *puVar20;
                 param_1->img_buffer = puVar20 + 1;
               }
@@ -7728,10 +7637,9 @@ LAB_827f474c:
                 uVar17 = *param_1->img_buffer;
                 param_1->img_buffer = param_1->img_buffer + 1;
               }
+              puVar11[iVar13 + 1] = uVar17;
               puVar20 = param_1->img_buffer;
-              puVar2 = param_1->img_buffer_end;
-              puVar33[2] = uVar17;
-              if (puVar20 < puVar2) {
+              if (puVar20 < param_1->img_buffer_end) {
                 uVar17 = *puVar20;
                 param_1->img_buffer = puVar20 + 1;
               }
@@ -7743,458 +7651,282 @@ LAB_827f474c:
                 uVar17 = *param_1->img_buffer;
                 param_1->img_buffer = param_1->img_buffer + 1;
               }
-              puVar33[1] = uVar17;
-              if (iVar6 != 0xc) {
+              puVar11[iVar13] = uVar17;
+              if (local_4bc == 2) {
                 puVar20 = param_1->img_buffer;
-                if (param_1->img_buffer_end <= puVar20) {
-                  if (param_1->from_file == 0) goto LAB_827f4914;
-                  refill_buffer(param_1);
-                  puVar20 = param_1->img_buffer;
+                if (puVar20 < param_1->img_buffer_end) {
+                  uVar17 = *puVar20;
+                  param_1->img_buffer = puVar20 + 1;
                 }
-                param_1->img_buffer = puVar20 + 1;
-              }
-LAB_827f4914:
-              lVar29 = lVar29 + -1;
-              puVar33 = puVar33 + 4;
-              *puVar33 = 0xff;
-            } while (lVar29 != 0);
-          }
-          iVar5 = ((iVar5 - (((uint)LZCOUNT(iVar6 + -0xc) >> 5 ^ 1) + 3) * iVar31) - iVar6) + -0xe;
-          if (param_1->img_file == (_iobuf *)0x0) {
-LAB_827f4978:
-            param_1->img_buffer = param_1->img_buffer + iVar5;
-          }
-          else {
-            iVar6 = (int)param_1->img_buffer_end - (int)param_1->img_buffer;
-            if (iVar5 <= iVar6) goto LAB_827f4978;
-            param_1->img_buffer = param_1->img_buffer_end;
-            fseek(param_1->img_file,iVar5 - iVar6,1);
-          }
-          if (iVar7 == 4) {
-            uVar9 = (uint)(((ulonglong)param_1->img_x + 1 & 0xffffffff) >> 1);
-          }
-          else {
-            if (iVar7 != 8) {
-              if (alt_stb_free != (_func___cdecl_void_void_ptr *)0x0) {
-                (*alt_stb_free)(puVar11);
-              }
-              puVar11 = (uchar *)0x0;
-              failure_reason = "bad bpp";
-              __restgprlr();
-              return puVar11;
-            }
-            uVar9 = param_1->img_x;
-          }
-          iVar5 = 0;
-          uVar9 = -uVar9 & 3;
-          if (0 < (int)param_1->img_y) {
-            do {
-              iVar6 = 0;
-              if (0 < (int)param_1->img_x) {
-                do {
-                  pbVar3 = param_1->img_buffer;
-                  if (pbVar3 < param_1->img_buffer_end) {
-                    uVar22 = (ulonglong)*pbVar3;
-                    param_1->img_buffer = pbVar3 + 1;
-                  }
-                  else if (param_1->from_file == 0) {
-                    uVar22 = 0;
-                  }
-                  else {
-                    refill_buffer(param_1);
-                    uVar22 = (ulonglong)*param_1->img_buffer;
-                    param_1->img_buffer = param_1->img_buffer + 1;
-                  }
-                  uVar15 = 0;
-                  if (iVar7 == 4) {
-                    uVar15 = uVar22 & 0xf;
-                    uVar22 = (ulonglong)((int)uVar22 >> 4);
-                  }
-                  iVar31 = (int)(uVar22 << 2);
-                  uVar17 = local_4a0[iVar31 + 1];
-                  uVar1 = local_4a0[iVar31 + 2];
-                  puVar11[iVar13] = local_4a0[iVar31];
-                  puVar11[iVar13 + 1] = uVar17;
-                  iVar31 = iVar13 + 3;
-                  puVar11[iVar13 + 2] = uVar1;
-                  if (iVar19 == 4) {
-                    puVar11[iVar31] = 0xff;
-                    iVar31 = iVar13 + 4;
-                  }
-                  iVar13 = iVar31;
-                  if (iVar6 + 1U == param_1->img_x) break;
-                  if (iVar7 == 8) {
-                    pbVar3 = param_1->img_buffer;
-                    if (pbVar3 < param_1->img_buffer_end) {
-                      uVar15 = (ulonglong)*pbVar3;
-                      param_1->img_buffer = pbVar3 + 1;
-                    }
-                    else if (param_1->from_file == 0) {
-                      uVar15 = 0;
-                    }
-                    else {
-                      refill_buffer(param_1);
-                      uVar15 = (ulonglong)*param_1->img_buffer;
-                      param_1->img_buffer = param_1->img_buffer + 1;
-                    }
-                  }
-                  iVar13 = (int)(uVar15 << 2);
-                  uVar17 = local_4a0[iVar13 + 1];
-                  uVar1 = local_4a0[iVar13 + 2];
-                  puVar11[iVar31] = local_4a0[iVar13];
-                  puVar11[iVar31 + 1] = uVar17;
-                  iVar13 = iVar31 + 3;
-                  puVar11[iVar31 + 2] = uVar1;
-                  if (iVar19 == 4) {
-                    puVar11[iVar13] = 0xff;
-                    iVar13 = iVar31 + 4;
-                  }
-                  iVar6 = iVar6 + 2;
-                } while (iVar6 < (int)param_1->img_x);
-              }
-              if (param_1->img_file == (_iobuf *)0x0) {
-LAB_827f4b7c:
-                param_1->img_buffer = param_1->img_buffer + uVar9;
+                else if (param_1->from_file == 0) {
+                  uVar17 = '\0';
+                }
+                else {
+                  refill_buffer(param_1);
+                  uVar17 = *param_1->img_buffer;
+                  param_1->img_buffer = param_1->img_buffer + 1;
+                }
               }
               else {
-                iVar6 = (int)param_1->img_buffer_end - (int)param_1->img_buffer;
-                if ((int)uVar9 <= iVar6) goto LAB_827f4b7c;
-                param_1->img_buffer = param_1->img_buffer_end;
-                fseek(param_1->img_file,uVar9 - iVar6,1);
+                uVar17 = 0xff;
               }
-              iVar5 = iVar5 + 1;
-            } while (iVar5 < (int)param_1->img_y);
+              iVar31 = iVar13 + 3;
+              if (iVar19 == 4) {
+                puVar11[iVar13 + 3] = uVar17;
+                iVar31 = iVar13 + 4;
+              }
+              iVar13 = iVar31;
+              iVar6 = iVar6 + 1;
+            } while (iVar6 < (int)param_1->img_x);
           }
+        }
+        if (param_1->img_file == (_iobuf *)0x0) {
+LAB_827f5218:
+          param_1->img_buffer = param_1->img_buffer + uVar4;
         }
         else {
-          uVar24 = 0;
-          local_4bc = 0;
-          uVar26 = 0;
-          uVar25 = 0;
-          uVar15 = 0;
-          uVar30 = 0;
-          uVar28 = 0;
-          uVar27 = 0;
-          iVar13 = 0;
-          iVar5 = (iVar5 - iVar6) + -0xe;
-          if (param_1->img_file == (_iobuf *)0x0) {
-LAB_827f4c74:
-            param_1->img_buffer = param_1->img_buffer + iVar5;
-          }
-          else {
-            iVar6 = (int)param_1->img_buffer_end - (int)param_1->img_buffer;
-            if (iVar5 <= iVar6) goto LAB_827f4c74;
-            param_1->img_buffer = param_1->img_buffer_end;
-            fseek(param_1->img_file,iVar5 - iVar6,1);
-          }
-          if (iVar7 == 0x18) {
-            iVar5 = param_1->img_x * 3;
-          }
-          else if (iVar7 == 0x10) {
-            iVar5 = param_1->img_x << 1;
-          }
-          else {
-            iVar5 = 0;
-          }
-          uVar4 = -iVar5 & 3;
-          if (iVar7 == 0x18) {
-            local_4bc = 1;
-          }
-          else {
-            if ((((iVar7 == 0x20) && (uVar10 == 0xff)) && (uVar9 == 0xff00)) &&
-               ((uVar22 & 0xffffffff) == 0xff000000)) {
-              if (local_4b8 == 0xff000000) {
-                local_4bc = 2;
-                goto LAB_827f4cd0;
-              }
-            }
-            else if ((((uVar22 & 0xffffffff) == 0) || (uVar9 == 0)) || (uVar10 == 0)) {
-              puVar11 = (uchar *)0x0;
-              failure_reason = "bad masks";
-              __restgprlr();
-              return puVar11;
-            }
-            iVar5 = high_bit((uint)uVar22);
-            uVar24 = iVar5 - 7;
-            uVar27 = ((uVar22 & 0xffffffff) >> 1 & 0x55555555) + (uVar22 & 0x55555555);
-            uVar15 = (uVar27 >> 2 & 0x33333333) + (uVar27 & 0x33333333);
-            uVar15 = (uVar15 >> 4) + uVar15 & 0xf0f0f0f;
-            uVar15 = (uVar15 >> 8) + uVar15;
-            uVar15 = (uVar15 >> 0x10) + uVar15 & 0xff;
-            iVar5 = high_bit(uVar9);
-            uVar26 = iVar5 - 7;
-            uVar30 = ((uVar27 & 0xffffffff) >> 2 & 0x33333333) + (uVar27 & 0x33333333);
-            uVar30 = (uVar30 >> 4) + uVar30 & 0xf0f0f0f;
-            uVar30 = (uVar30 >> 8) + uVar30;
-            uVar30 = (uVar30 >> 0x10) + uVar30 & 0xff;
-            iVar5 = high_bit(uVar10);
-            uVar25 = iVar5 - 7;
-            uVar28 = ((uVar27 & 0xffffffff) >> 2 & 0x33333333) + (uVar27 & 0x33333333);
-            uVar28 = (uVar28 >> 4) + uVar28 & 0xf0f0f0f;
-            uVar28 = (uVar28 >> 8) + uVar28;
-            uVar28 = (uVar28 >> 0x10) + uVar28 & 0xff;
-            iVar5 = high_bit(local_4b8);
-            uVar23 = iVar5 - 7;
-            uVar27 = ((uVar27 & 0xffffffff) >> 2 & 0x33333333) + (uVar27 & 0x33333333);
-            uVar27 = (uVar27 >> 4) + uVar27 & 0xf0f0f0f;
-            uVar27 = (uVar27 >> 8) + uVar27;
-            uVar27 = (uVar27 >> 0x10) + uVar27 & 0xff;
-          }
-LAB_827f4cd0:
-          iVar5 = 0;
-          if (0 < (int)param_1->img_y) {
-            do {
-              if (local_4bc == 0) {
-                iVar31 = 0;
-                iVar6 = iVar13;
-                if (0 < (int)param_1->img_x) {
-                  do {
-                    if (iVar7 == 0x10) {
-                      uVar12 = get16le(param_1);
-                    }
-                    else {
-                      uVar12 = get32le(param_1);
-                    }
-                    uVar21 = uVar12 & (uint)uVar22;
-                    if ((int)uVar24 < 0) {
-                      iVar13 = uVar21 << (-uVar24 & 0x3f);
-                    }
-                    else {
-                      iVar13 = (int)uVar21 >> (uVar24 & 0x3f);
-                    }
-                    uVar18 = uVar15;
-                    iVar16 = iVar13;
-                    if ((uint)uVar15 < 8) {
-                      do {
-                        uVar21 = (uint)uVar18;
-                        uVar18 = uVar18 + uVar15;
-                        iVar16 = (iVar13 >> (uVar21 & 0x3f)) + iVar16;
-                      } while ((int)uVar18 < 8);
-                    }
-                    puVar11[iVar6] = (uchar)iVar16;
-                    if ((int)uVar26 < 0) {
-                      iVar13 = (uVar12 & uVar9) << (-uVar26 & 0x3f);
-                    }
-                    else {
-                      iVar13 = (int)(uVar12 & uVar9) >> (uVar26 & 0x3f);
-                    }
-                    uVar18 = uVar30;
-                    iVar16 = iVar13;
-                    if ((uint)uVar30 < 8) {
-                      do {
-                        uVar21 = (uint)uVar18;
-                        uVar18 = uVar18 + uVar30;
-                        iVar16 = (iVar13 >> (uVar21 & 0x3f)) + iVar16;
-                      } while ((int)uVar18 < 8);
-                    }
-                    puVar11[iVar6 + 1] = (uchar)iVar16;
-                    if ((int)uVar25 < 0) {
-                      iVar13 = (uVar12 & uVar10) << (-uVar25 & 0x3f);
-                    }
-                    else {
-                      iVar13 = (int)(uVar12 & uVar10) >> (uVar25 & 0x3f);
-                    }
-                    uVar18 = uVar28;
-                    iVar16 = iVar13;
-                    if ((uint)uVar28 < 8) {
-                      do {
-                        uVar21 = (uint)uVar18;
-                        uVar18 = uVar18 + uVar28;
-                        iVar16 = (iVar13 >> (uVar21 & 0x3f)) + iVar16;
-                      } while ((int)uVar18 < 8);
-                    }
-                    iVar13 = iVar6 + 3;
-                    puVar11[iVar6 + 2] = (uchar)iVar16;
-                    if (local_4b8 == 0) {
-                      iVar16 = 0xff;
-                    }
-                    else {
-                      if ((int)uVar23 < 0) {
-                        iVar14 = (uVar12 & local_4b8) << (-uVar23 & 0x3f);
-                      }
-                      else {
-                        iVar14 = (int)(uVar12 & local_4b8) >> (uVar23 & 0x3f);
-                      }
-                      uVar18 = uVar27;
-                      iVar16 = iVar14;
-                      if ((uint)uVar27 < 8) {
-                        do {
-                          uVar12 = (uint)uVar18;
-                          uVar18 = uVar18 + uVar27;
-                          iVar16 = (iVar14 >> (uVar12 & 0x3f)) + iVar16;
-                        } while ((int)uVar18 < 8);
-                      }
-                    }
-                    if (iVar19 == 4) {
-                      puVar11[iVar13] = (uchar)iVar16;
-                      iVar13 = iVar6 + 4;
-                    }
-                    iVar31 = iVar31 + 1;
-                    iVar6 = iVar13;
-                  } while (iVar31 < (int)param_1->img_x);
-                }
-              }
-              else {
-                iVar6 = 0;
-                if (0 < (int)param_1->img_x) {
-                  do {
-                    puVar20 = param_1->img_buffer;
-                    if (puVar20 < param_1->img_buffer_end) {
-                      uVar17 = *puVar20;
-                      param_1->img_buffer = puVar20 + 1;
-                    }
-                    else if (param_1->from_file == 0) {
-                      uVar17 = '\0';
-                    }
-                    else {
-                      refill_buffer(param_1);
-                      uVar17 = *param_1->img_buffer;
-                      param_1->img_buffer = param_1->img_buffer + 1;
-                    }
-                    puVar11[iVar13 + 2] = uVar17;
-                    puVar20 = param_1->img_buffer;
-                    if (puVar20 < param_1->img_buffer_end) {
-                      uVar17 = *puVar20;
-                      param_1->img_buffer = puVar20 + 1;
-                    }
-                    else if (param_1->from_file == 0) {
-                      uVar17 = '\0';
-                    }
-                    else {
-                      refill_buffer(param_1);
-                      uVar17 = *param_1->img_buffer;
-                      param_1->img_buffer = param_1->img_buffer + 1;
-                    }
-                    puVar11[iVar13 + 1] = uVar17;
-                    puVar20 = param_1->img_buffer;
-                    if (puVar20 < param_1->img_buffer_end) {
-                      uVar17 = *puVar20;
-                      param_1->img_buffer = puVar20 + 1;
-                    }
-                    else if (param_1->from_file == 0) {
-                      uVar17 = '\0';
-                    }
-                    else {
-                      refill_buffer(param_1);
-                      uVar17 = *param_1->img_buffer;
-                      param_1->img_buffer = param_1->img_buffer + 1;
-                    }
-                    puVar11[iVar13] = uVar17;
-                    if (local_4bc == 2) {
-                      puVar20 = param_1->img_buffer;
-                      if (puVar20 < param_1->img_buffer_end) {
-                        uVar17 = *puVar20;
-                        param_1->img_buffer = puVar20 + 1;
-                      }
-                      else if (param_1->from_file == 0) {
-                        uVar17 = '\0';
-                      }
-                      else {
-                        refill_buffer(param_1);
-                        uVar17 = *param_1->img_buffer;
-                        param_1->img_buffer = param_1->img_buffer + 1;
-                      }
-                    }
-                    else {
-                      uVar17 = 0xff;
-                    }
-                    iVar31 = iVar13 + 3;
-                    if (iVar19 == 4) {
-                      puVar11[iVar13 + 3] = uVar17;
-                      iVar31 = iVar13 + 4;
-                    }
-                    iVar13 = iVar31;
-                    iVar6 = iVar6 + 1;
-                  } while (iVar6 < (int)param_1->img_x);
-                }
-              }
-              if (param_1->img_file == (_iobuf *)0x0) {
-LAB_827f5218:
-                param_1->img_buffer = param_1->img_buffer + uVar4;
-              }
-              else {
-                iVar6 = (int)param_1->img_buffer_end - (int)param_1->img_buffer;
-                if ((int)uVar4 <= iVar6) goto LAB_827f5218;
-                param_1->img_buffer = param_1->img_buffer_end;
-                fseek(param_1->img_file,uVar4 - iVar6,1);
-              }
-              iVar5 = iVar5 + 1;
-            } while (iVar5 < (int)param_1->img_y);
-          }
+          iVar6 = (int)param_1->img_buffer_end - (int)param_1->img_buffer;
+          if ((int)uVar4 <= iVar6) goto LAB_827f5218;
+          param_1->img_buffer = param_1->img_buffer_end;
+          fseek(param_1->img_file,uVar4 - iVar6,1);
         }
-        if (((int)(-uVar8 & ~uVar8) < 0) && (iVar5 = 0, 0 < (int)(param_1->img_y & 0xfffffffe))) {
-          do {
-            iVar6 = 0;
-            uVar9 = param_1->img_x;
-            puVar20 = puVar11 + ((param_1->img_y - iVar5) + -1) * uVar9 * iVar19;
-            if (0 < (longlong)(int)uVar9 * (longlong)iVar19) {
-              iVar7 = uVar9 * iVar5 * iVar19 - (int)puVar20;
-              do {
-                iVar6 = iVar6 + 1;
-                uVar17 = puVar11[(int)(puVar20 + iVar7)];
-                puVar11[(int)(puVar20 + iVar7)] = *puVar20;
-                *puVar20 = uVar17;
-                puVar20 = puVar20 + 1;
-              } while (iVar6 < (int)(param_1->img_x * iVar19));
-            }
-            iVar5 = iVar5 + 1;
-          } while (iVar5 < (int)param_1->img_y >> 1);
-        }
-        if (((iStack00000034 == 0) || (iStack00000034 == iVar19)) ||
-           (puVar11 = convert_format(puVar11,iVar19,iStack00000034,param_1->img_x,param_1->img_y),
-           puVar11 != (uchar *)0x0)) {
-          *puStack0000001c = param_1->img_x;
-          *puStack00000024 = param_1->img_y;
-          if (piStack0000002c != (int *)0x0) {
-            *piStack0000002c = iVar19;
-          }
-          __restgprlr();
-          return puVar11;
-        }
-        goto LAB_827f5368;
-      }
+        iVar5 = iVar5 + 1;
+      } while (iVar5 < (int)param_1->img_y);
     }
+    goto LAB_827f5234;
   }
-  else if (param_1->from_file != 0) {
-    refill_buffer(param_1);
-    puVar11 = param_1->img_buffer;
-    uVar17 = *puVar11;
-    goto LAB_827f4424;
+  iVar13 = 0;
+  iVar31 = (int)lVar29;
+  if ((iVar31 == 0) || (0x100 < iVar31)) {
+    if (alt_stb_free != (_func___cdecl_void_void_ptr *)0x0) {
+      (*alt_stb_free)(puVar11);
+    }
+    failure_reason = "invalid";
+    return (uchar *)0x0;
   }
-LAB_827f5358:
-  failure_reason = "not BMP";
-LAB_827f5368:
-  puVar11 = (uchar *)0x0;
-  __restgprlr();
+  if (0 < iVar31) {
+    puVar33 = &uStack_4a1;
+    do {
+      puVar20 = param_1->img_buffer;
+      if (puVar20 < param_1->img_buffer_end) {
+        uVar17 = *puVar20;
+        param_1->img_buffer = puVar20 + 1;
+      }
+      else if (param_1->from_file == 0) {
+        uVar17 = '\0';
+      }
+      else {
+        refill_buffer(param_1);
+        uVar17 = *param_1->img_buffer;
+        param_1->img_buffer = param_1->img_buffer + 1;
+      }
+      puVar20 = param_1->img_buffer;
+      puVar2 = param_1->img_buffer_end;
+      puVar33[3] = uVar17;
+      if (puVar20 < puVar2) {
+        uVar17 = *puVar20;
+        param_1->img_buffer = puVar20 + 1;
+      }
+      else if (param_1->from_file == 0) {
+        uVar17 = '\0';
+      }
+      else {
+        refill_buffer(param_1);
+        uVar17 = *param_1->img_buffer;
+        param_1->img_buffer = param_1->img_buffer + 1;
+      }
+      puVar20 = param_1->img_buffer;
+      puVar2 = param_1->img_buffer_end;
+      puVar33[2] = uVar17;
+      if (puVar20 < puVar2) {
+        uVar17 = *puVar20;
+        param_1->img_buffer = puVar20 + 1;
+      }
+      else if (param_1->from_file == 0) {
+        uVar17 = '\0';
+      }
+      else {
+        refill_buffer(param_1);
+        uVar17 = *param_1->img_buffer;
+        param_1->img_buffer = param_1->img_buffer + 1;
+      }
+      puVar33[1] = uVar17;
+      if (iVar6 != 0xc) {
+        puVar20 = param_1->img_buffer;
+        if (param_1->img_buffer_end <= puVar20) {
+          if (param_1->from_file == 0) goto LAB_827f4914;
+          refill_buffer(param_1);
+          puVar20 = param_1->img_buffer;
+        }
+        param_1->img_buffer = puVar20 + 1;
+      }
+LAB_827f4914:
+      lVar29 = lVar29 + -1;
+      puVar33 = puVar33 + 4;
+      *puVar33 = 0xff;
+    } while (lVar29 != 0);
+  }
+  iVar5 = ((iVar5 - (((uint)LZCOUNT(iVar6 + -0xc) >> 5 ^ 1) + 3) * iVar31) - iVar6) + -0xe;
+  if (param_1->img_file == (_iobuf *)0x0) {
+LAB_827f4978:
+    param_1->img_buffer = param_1->img_buffer + iVar5;
+  }
+  else {
+    iVar6 = (int)param_1->img_buffer_end - (int)param_1->img_buffer;
+    if (iVar5 <= iVar6) goto LAB_827f4978;
+    param_1->img_buffer = param_1->img_buffer_end;
+    fseek(param_1->img_file,iVar5 - iVar6,1);
+  }
+  if (iVar7 == 4) {
+    uVar9 = (uint)(((ulonglong)param_1->img_x + 1 & 0xffffffff) >> 1);
+  }
+  else {
+    if (iVar7 != 8) {
+      if (alt_stb_free != (_func___cdecl_void_void_ptr *)0x0) {
+        (*alt_stb_free)(puVar11);
+      }
+      failure_reason = "bad bpp";
+      return (uchar *)0x0;
+    }
+    uVar9 = param_1->img_x;
+  }
+  iVar5 = 0;
+  uVar9 = -uVar9 & 3;
+  if (0 < (int)param_1->img_y) {
+    do {
+      iVar6 = 0;
+      if (0 < (int)param_1->img_x) {
+        do {
+          pbVar3 = param_1->img_buffer;
+          if (pbVar3 < param_1->img_buffer_end) {
+            uVar22 = (ulonglong)*pbVar3;
+            param_1->img_buffer = pbVar3 + 1;
+          }
+          else if (param_1->from_file == 0) {
+            uVar22 = 0;
+          }
+          else {
+            refill_buffer(param_1);
+            uVar22 = (ulonglong)*param_1->img_buffer;
+            param_1->img_buffer = param_1->img_buffer + 1;
+          }
+          uVar15 = 0;
+          if (iVar7 == 4) {
+            uVar15 = uVar22 & 0xf;
+            uVar22 = (ulonglong)((int)uVar22 >> 4);
+          }
+          iVar31 = (int)(uVar22 << 2);
+          uVar17 = local_4a0[iVar31 + 1];
+          uVar1 = local_4a0[iVar31 + 2];
+          puVar11[iVar13] = local_4a0[iVar31];
+          puVar11[iVar13 + 1] = uVar17;
+          iVar31 = iVar13 + 3;
+          puVar11[iVar13 + 2] = uVar1;
+          if (iVar19 == 4) {
+            puVar11[iVar31] = 0xff;
+            iVar31 = iVar13 + 4;
+          }
+          iVar13 = iVar31;
+          if (iVar6 + 1U == param_1->img_x) break;
+          if (iVar7 == 8) {
+            pbVar3 = param_1->img_buffer;
+            if (pbVar3 < param_1->img_buffer_end) {
+              uVar15 = (ulonglong)*pbVar3;
+              param_1->img_buffer = pbVar3 + 1;
+            }
+            else if (param_1->from_file == 0) {
+              uVar15 = 0;
+            }
+            else {
+              refill_buffer(param_1);
+              uVar15 = (ulonglong)*param_1->img_buffer;
+              param_1->img_buffer = param_1->img_buffer + 1;
+            }
+          }
+          iVar13 = (int)(uVar15 << 2);
+          uVar17 = local_4a0[iVar13 + 1];
+          uVar1 = local_4a0[iVar13 + 2];
+          puVar11[iVar31] = local_4a0[iVar13];
+          puVar11[iVar31 + 1] = uVar17;
+          iVar13 = iVar31 + 3;
+          puVar11[iVar31 + 2] = uVar1;
+          if (iVar19 == 4) {
+            puVar11[iVar13] = 0xff;
+            iVar13 = iVar31 + 4;
+          }
+          iVar6 = iVar6 + 2;
+        } while (iVar6 < (int)param_1->img_x);
+      }
+      if (param_1->img_file == (_iobuf *)0x0) {
+LAB_827f4b7c:
+        param_1->img_buffer = param_1->img_buffer + uVar9;
+      }
+      else {
+        iVar6 = (int)param_1->img_buffer_end - (int)param_1->img_buffer;
+        if ((int)uVar9 <= iVar6) goto LAB_827f4b7c;
+        param_1->img_buffer = param_1->img_buffer_end;
+        fseek(param_1->img_file,uVar9 - iVar6,1);
+      }
+      iVar5 = iVar5 + 1;
+    } while (iVar5 < (int)param_1->img_y);
+  }
+LAB_827f5234:
+  if (((int)(-uVar8 & ~uVar8) < 0) && (iVar5 = 0, 0 < (int)(param_1->img_y & 0xfffffffe))) {
+    do {
+      iVar6 = 0;
+      uVar9 = param_1->img_x;
+      puVar20 = puVar11 + ((param_1->img_y - iVar5) + -1) * uVar9 * iVar19;
+      if (0 < (longlong)(int)uVar9 * (longlong)iVar19) {
+        iVar7 = uVar9 * iVar5 * iVar19 - (int)puVar20;
+        do {
+          iVar6 = iVar6 + 1;
+          uVar17 = puVar20[(int)(puVar11 + iVar7)];
+          puVar20[(int)(puVar11 + iVar7)] = *puVar20;
+          *puVar20 = uVar17;
+          puVar20 = puVar20 + 1;
+        } while (iVar6 < (int)(param_1->img_x * iVar19));
+      }
+      iVar5 = iVar5 + 1;
+    } while (iVar5 < (int)param_1->img_y >> 1);
+  }
+  if (((iStack00000034 != 0) && (iStack00000034 != iVar19)) &&
+     (puVar11 = convert_format(puVar11,iVar19,iStack00000034,param_1->img_x,param_1->img_y),
+     puVar11 == (uchar *)0x0)) {
+    return (uchar *)0x0;
+  }
+  *puStack0000001c = param_1->img_x;
+  *puStack00000024 = param_1->img_y;
+  if (piStack0000002c != (int *)0x0) {
+    *piStack0000002c = iVar19;
+  }
   return puVar11;
 }
 
 
 // 827FA468  stbi_bmp_load  (mjpeg/stb_image.c:3630)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 uchar * stbi_bmp_load(char *param_1,int *param_2,int *param_3,int *param_4,int param_5)
 
 {
-  char *pcVar1;
-  _iobuf *p_Var2;
-  uchar *puVar3;
+  _iobuf *p_Var1;
+  uchar *puVar2;
   stbi sStack_e0;
   
-  pcVar1 = (char *)__savegprlr_27(param_1);
-  p_Var2 = fopen(pcVar1,"rb");
-  if (p_Var2 == (_iobuf *)0x0) {
-    puVar3 = (uchar *)__restgprlr_27();
-    return puVar3;
+  p_Var1 = fopen(param_1,"rb");
+  if (p_Var1 == (_iobuf *)0x0) {
+    return (uchar *)0x0;
   }
   sStack_e0.img_buffer_end = (uchar *)&sStack_e0.from_file;
   sStack_e0.img_buffer = (uchar *)&sStack_e0.from_file;
   sStack_e0.buflen = 0x80;
   sStack_e0.from_file = 1;
-  sStack_e0.img_file = p_Var2;
-  puVar3 = bmp_load(&sStack_e0,param_2,param_3,param_4,param_5);
-  fclose(p_Var2);
-  puVar3 = (uchar *)__restgprlr_27(puVar3);
-  return puVar3;
+  sStack_e0.img_file = p_Var1;
+  puVar2 = bmp_load(&sStack_e0,param_2,param_3,param_4,param_5);
+  fclose(p_Var1);
+  return puVar2;
 }
 
 
@@ -8236,133 +7968,129 @@ uchar * stbi_bmp_load_from_memory
 
 // 827F5410  tga_info  (mjpeg/stb_image.c:3658)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 int tga_info(stbi *param_1,int *param_2,int *param_3,int *param_4)
 
 {
   byte *pbVar1;
-  stbi *psVar2;
+  int iVar2;
   int iVar3;
-  int iVar4;
-  ulonglong uVar5;
-  ulonglong uVar6;
-  ulonglong uVar7;
-  uchar *puVar8;
-  byte bVar10;
-  uchar uVar11;
-  uint uVar9;
+  uchar *puVar4;
+  byte bVar6;
+  uchar uVar7;
+  uint uVar5;
   
-  uVar7 = (ulonglong)(int)param_4;
-  uVar6 = (ulonglong)(int)param_3;
-  uVar5 = (ulonglong)(int)param_2;
-  psVar2 = (stbi *)__savegprlr_26(param_1);
-  puVar8 = psVar2->img_buffer;
-  if (puVar8 < psVar2->img_buffer_end) {
+  puVar4 = param_1->img_buffer;
+  if (puVar4 < param_1->img_buffer_end) {
 LAB_827f5450:
-    psVar2->img_buffer = puVar8 + 1;
+    param_1->img_buffer = puVar4 + 1;
   }
-  else if (psVar2->from_file != 0) {
-    refill_buffer(psVar2);
-    puVar8 = psVar2->img_buffer;
+  else if (param_1->from_file != 0) {
+    refill_buffer(param_1);
+    puVar4 = param_1->img_buffer;
     goto LAB_827f5450;
   }
-  pbVar1 = psVar2->img_buffer;
-  if (pbVar1 < psVar2->img_buffer_end) {
-    bVar10 = *pbVar1;
-    psVar2->img_buffer = pbVar1 + 1;
+  pbVar1 = param_1->img_buffer;
+  if (pbVar1 < param_1->img_buffer_end) {
+    bVar6 = *pbVar1;
+    param_1->img_buffer = pbVar1 + 1;
   }
-  else if (psVar2->from_file == 0) {
-    bVar10 = 0;
-  }
-  else {
-    refill_buffer(psVar2);
-    bVar10 = *psVar2->img_buffer;
-    psVar2->img_buffer = psVar2->img_buffer + 1;
-  }
-  if (1 < bVar10) goto LAB_827f54b4;
-  puVar8 = psVar2->img_buffer;
-  if (puVar8 < psVar2->img_buffer_end) {
-    uVar11 = *puVar8;
-    psVar2->img_buffer = puVar8 + 1;
-  }
-  else if (psVar2->from_file == 0) {
-    uVar11 = '\0';
+  else if (param_1->from_file == 0) {
+    bVar6 = 0;
   }
   else {
-    refill_buffer(psVar2);
-    uVar11 = *psVar2->img_buffer;
-    psVar2->img_buffer = psVar2->img_buffer + 1;
+    refill_buffer(param_1);
+    bVar6 = *param_1->img_buffer;
+    param_1->img_buffer = param_1->img_buffer + 1;
   }
-  if ((((uVar11 != '\x01') && (uVar11 != '\x02')) && (uVar11 != '\x03')) &&
-     (((uVar11 != '\t' && (uVar11 != '\n')) && (uVar11 != '\v')))) goto LAB_827f54b4;
-  get16le(psVar2);
-  get16le(psVar2);
-  puVar8 = psVar2->img_buffer;
-  if (puVar8 < psVar2->img_buffer_end) {
-LAB_827f557c:
-    psVar2->img_buffer = puVar8 + 1;
+  if (1 < bVar6) {
+    return 0;
   }
-  else if (psVar2->from_file != 0) {
-    refill_buffer(psVar2);
-    puVar8 = psVar2->img_buffer;
-    goto LAB_827f557c;
+  puVar4 = param_1->img_buffer;
+  if (puVar4 < param_1->img_buffer_end) {
+    uVar7 = *puVar4;
+    param_1->img_buffer = puVar4 + 1;
   }
-  get16le(psVar2);
-  get16le(psVar2);
-  iVar3 = get16le(psVar2);
-  if ((0 < iVar3) && (iVar4 = get16le(psVar2), 0 < iVar4)) {
-    pbVar1 = psVar2->img_buffer;
-    if (pbVar1 < psVar2->img_buffer_end) {
-      bVar10 = *pbVar1;
-      psVar2->img_buffer = pbVar1 + 1;
+  else if (param_1->from_file == 0) {
+    uVar7 = '\0';
+  }
+  else {
+    refill_buffer(param_1);
+    uVar7 = *param_1->img_buffer;
+    param_1->img_buffer = param_1->img_buffer + 1;
+  }
+  if ((((uVar7 != '\x01') && (uVar7 != '\x02')) && (uVar7 != '\x03')) &&
+     (((uVar7 != '\t' && (uVar7 != '\n')) && (uVar7 != '\v')))) {
+    return 0;
+  }
+  get16le(param_1);
+  get16le(param_1);
+  puVar4 = param_1->img_buffer;
+  if (param_1->img_buffer_end <= puVar4) {
+    if (param_1->from_file == 0) goto LAB_827f5584;
+    refill_buffer(param_1);
+    puVar4 = param_1->img_buffer;
+  }
+  param_1->img_buffer = puVar4 + 1;
+LAB_827f5584:
+  get16le(param_1);
+  get16le(param_1);
+  iVar2 = get16le(param_1);
+  if ((0 < iVar2) && (iVar3 = get16le(param_1), 0 < iVar3)) {
+    pbVar1 = param_1->img_buffer;
+    if (pbVar1 < param_1->img_buffer_end) {
+      bVar6 = *pbVar1;
+      param_1->img_buffer = pbVar1 + 1;
     }
     else {
-      if (psVar2->from_file == 0) goto LAB_827f54b4;
-      refill_buffer(psVar2);
-      bVar10 = *psVar2->img_buffer;
-      psVar2->img_buffer = psVar2->img_buffer + 1;
+      if (param_1->from_file == 0) {
+        return 0;
+      }
+      refill_buffer(param_1);
+      bVar6 = *param_1->img_buffer;
+      param_1->img_buffer = param_1->img_buffer + 1;
     }
-    uVar9 = (uint)bVar10;
-    if ((((uVar9 == 8) || (uVar9 == 0x10)) || (uVar9 == 0x18)) || (uVar9 == 0x20)) {
-      if ((uVar5 & 0xffffffff) != 0) {
-        *(int *)uVar5 = iVar3;
+    uVar5 = (uint)bVar6;
+    if ((((uVar5 == 8) || (uVar5 == 0x10)) || (uVar5 == 0x18)) || (uVar5 == 0x20)) {
+      if (param_2 != (int *)0x0) {
+        *param_2 = iVar2;
       }
-      if ((uVar6 & 0xffffffff) != 0) {
-        *(int *)uVar6 = iVar4;
+      if (param_3 != (int *)0x0) {
+        *param_3 = iVar3;
       }
-      if ((uVar7 & 0xffffffff) != 0) {
-        *(int *)uVar7 = (int)uVar9 >> 3;
+      if (param_4 != (int *)0x0) {
+        *param_4 = (int)uVar5 >> 3;
       }
-      iVar3 = __restgprlr_26(1);
-      return iVar3;
+      return 1;
     }
   }
-LAB_827f54b4:
-  iVar3 = __restgprlr_26(0);
-  return iVar3;
+  return 0;
 }
 
 
 // 827F5660  stbi_tga_info_from_file  (mjpeg/stb_image.c:3688)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 int stbi_tga_info_from_file(_iobuf *param_1,int *param_2,int *param_3,int *param_4)
 
 {
-  _iobuf *p_Var1;
-  long lVar2;
-  int iVar3;
+  long lVar1;
+  int iVar2;
   stbi sStack_e0;
   
-  p_Var1 = (_iobuf *)__savegprlr_27(param_1);
-  lVar2 = ftell(p_Var1);
+  lVar1 = ftell(param_1);
   sStack_e0.img_buffer_end = (uchar *)&sStack_e0.from_file;
   sStack_e0.img_buffer = (uchar *)&sStack_e0.from_file;
   sStack_e0.buflen = 0x80;
   sStack_e0.from_file = 1;
-  sStack_e0.img_file = p_Var1;
-  iVar3 = tga_info(&sStack_e0,param_2,param_3,param_4);
-  fseek(p_Var1,lVar2,0);
-  iVar3 = __restgprlr_27(iVar3);
-  return iVar3;
+  sStack_e0.img_file = param_1;
+  iVar2 = tga_info(&sStack_e0,param_2,param_3,param_4);
+  fseek(param_1,lVar1,0);
+  return iVar2;
 }
 
 
@@ -8474,25 +8202,25 @@ LAB_827f58a8:
 
 // 827F5958  stbi_tga_test_file  (mjpeg/stb_image.c:3728)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 int stbi_tga_test_file(_iobuf *param_1)
 
 {
-  _iobuf *p_Var1;
-  long lVar2;
-  int iVar3;
+  long lVar1;
+  int iVar2;
   stbi sStack_d0;
   
-  p_Var1 = (_iobuf *)__savegprlr_29(param_1);
-  lVar2 = ftell(p_Var1);
+  lVar1 = ftell(param_1);
   sStack_d0.img_buffer_end = (uchar *)&sStack_d0.from_file;
   sStack_d0.img_buffer = (uchar *)&sStack_d0.from_file;
   sStack_d0.buflen = 0x80;
   sStack_d0.from_file = 1;
-  sStack_d0.img_file = p_Var1;
-  iVar3 = tga_test(&sStack_d0);
-  fseek(p_Var1,lVar2,0);
-  iVar3 = __restgprlr_29(iVar3);
-  return iVar3;
+  sStack_d0.img_file = param_1;
+  iVar2 = tga_test(&sStack_d0);
+  fseek(param_1,lVar1,0);
+  return iVar2;
 }
 
 
@@ -8514,6 +8242,9 @@ int stbi_tga_test_memory(uchar *param_1,int param_2)
 
 
 // 827F5A00  tga_load  (mjpeg/stb_image.c:3746)
+
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
 
 uchar * tga_load(stbi *param_1,int *param_2,int *param_3,int *param_4,int param_5)
 
@@ -8560,7 +8291,6 @@ uchar * tga_load(stbi *param_1,int *param_2,int *param_3,int *param_4,int param_
   uint local_a0;
   int local_9c;
   
-  __savegprlr();
   pbVar22 = param_1->img_buffer;
   iVar18 = 0;
   iStack00000034 = param_5;
@@ -8658,8 +8388,21 @@ uchar * tga_load(stbi *param_1,int *param_2,int *param_3,int *param_4,int param_
     local_a8 = 1;
   }
   local_9c = 1 - ((int)uVar10 >> 5 & 1U);
-  if (((((iVar4 < 1) || (iVar5 < 1)) || ((int)uVar31 < 1)) || (3 < (int)uVar31)) ||
-     (((uVar9 != 8 && (uVar9 != 0x10)) && ((uVar9 != 0x18 && (uVar9 != 0x20)))))) goto LAB_827f61b4;
+  if (iVar4 < 1) {
+    return (uchar *)0x0;
+  }
+  if (iVar5 < 1) {
+    return (uchar *)0x0;
+  }
+  if ((int)uVar31 < 1) {
+    return (uchar *)0x0;
+  }
+  if (3 < (int)uVar31) {
+    return (uchar *)0x0;
+  }
+  if ((((uVar9 != 8) && (uVar9 != 0x10)) && (uVar9 != 0x18)) && (uVar9 != 0x20)) {
+    return (uchar *)0x0;
+  }
   if (uVar7 != 0) {
     uVar9 = uVar8;
   }
@@ -8702,10 +8445,7 @@ LAB_827f5dac:
   local_ac = stb_malloc(uVar11);
   iVar2 = getn(param_1,local_ac,uVar11);
   if (iVar2 == 0) {
-LAB_827f61b4:
-    puVar6 = (uchar *)0x0;
-    __restgprlr();
-    return puVar6;
+    return (uchar *)0x0;
   }
 LAB_827f5de8:
   iVar2 = iStack00000034;
@@ -8881,36 +8621,34 @@ LAB_827f60e8:
   if ((local_ac != (uchar *)0x0) && (alt_stb_free != (_func___cdecl_void_void_ptr *)0x0)) {
     (*alt_stb_free)(local_ac);
   }
-  __restgprlr();
   return puVar6;
 }
 
 
 // 827FA4F8  stbi_tga_load  (mjpeg/stb_image.c:3968)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 uchar * stbi_tga_load(char *param_1,int *param_2,int *param_3,int *param_4,int param_5)
 
 {
-  char *pcVar1;
-  _iobuf *p_Var2;
-  uchar *puVar3;
+  _iobuf *p_Var1;
+  uchar *puVar2;
   stbi sStack_e0;
   
-  pcVar1 = (char *)__savegprlr_27(param_1);
-  p_Var2 = fopen(pcVar1,"rb");
-  if (p_Var2 == (_iobuf *)0x0) {
-    puVar3 = (uchar *)__restgprlr_27();
-    return puVar3;
+  p_Var1 = fopen(param_1,"rb");
+  if (p_Var1 == (_iobuf *)0x0) {
+    return (uchar *)0x0;
   }
   sStack_e0.img_buffer_end = (uchar *)&sStack_e0.from_file;
   sStack_e0.img_buffer = (uchar *)&sStack_e0.from_file;
   sStack_e0.buflen = 0x80;
   sStack_e0.from_file = 1;
-  sStack_e0.img_file = p_Var2;
-  puVar3 = tga_load(&sStack_e0,param_2,param_3,param_4,param_5);
-  fclose(p_Var2);
-  puVar3 = (uchar *)__restgprlr_27(puVar3);
-  return puVar3;
+  sStack_e0.img_file = p_Var1;
+  puVar2 = tga_load(&sStack_e0,param_2,param_3,param_4,param_5);
+  fclose(p_Var1);
+  return puVar2;
 }
 
 
@@ -8966,27 +8704,27 @@ int psd_test(stbi *param_1)
 
 // 827F62B8  stbi_psd_test_file  (mjpeg/stb_image.c:4004)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 int stbi_psd_test_file(_iobuf *param_1)
 
 {
-  _iobuf *p_Var1;
-  long lVar2;
+  long lVar1;
+  int iVar2;
   int iVar3;
-  int iVar4;
   stbi sStack_d0;
   
-  p_Var1 = (_iobuf *)__savegprlr_29(param_1);
-  lVar2 = ftell(p_Var1);
+  lVar1 = ftell(param_1);
   sStack_d0.img_buffer_end = (uchar *)&sStack_d0.from_file;
   sStack_d0.img_buffer = (uchar *)&sStack_d0.from_file;
   sStack_d0.buflen = 0x80;
   sStack_d0.from_file = 1;
-  sStack_d0.img_file = p_Var1;
+  sStack_d0.img_file = param_1;
+  iVar2 = get16(&sStack_d0);
   iVar3 = get16(&sStack_d0);
-  iVar4 = get16(&sStack_d0);
-  fseek(p_Var1,lVar2,0);
-  iVar3 = __restgprlr_29(iVar4 + iVar3 * 0x10000 == 0x38425053);
-  return iVar3;
+  fseek(param_1,lVar1,0);
+  return (uint)LZCOUNT(0x38425053 - (iVar3 + iVar2 * 0x10000)) >> 5;
 }
 
 
@@ -9011,299 +8749,288 @@ int stbi_psd_test_memory(uchar *param_1,int param_2)
 
 // 827F63B8  psd_load  (mjpeg/stb_image.c:4022)
 
+/* WARNING: Function: __savegprlr_17 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_17 replaced with injection: xenon_save_restore */
+
 uchar * psd_load(stbi *param_1,int *param_2,int *param_3,int *param_4,int param_5)
 
 {
   byte *pbVar1;
   uchar *puVar2;
-  stbi *psVar3;
+  int iVar3;
   int iVar4;
-  int iVar5;
-  uchar *puVar6;
+  uint uVar5;
+  uint uVar6;
   uint uVar7;
-  uint uVar8;
-  uint uVar9;
-  ulonglong uVar10;
-  int iVar11;
-  uchar *puVar12;
-  byte *pbVar13;
-  byte bVar14;
-  uchar uVar15;
-  ulonglong uVar16;
-  int iVar17;
+  uchar *puVar8;
+  int iVar9;
+  byte *pbVar10;
+  byte bVar11;
+  uchar uVar12;
+  ulonglong uVar13;
+  int iVar14;
+  longlong lVar15;
+  byte *pbVar16;
+  uchar *puVar17;
   longlong lVar18;
-  byte *pbVar19;
-  longlong lVar20;
-  ulonglong uVar21;
+  ulonglong uVar19;
   
-  uVar10 = (ulonglong)(int)param_4;
-  psVar3 = (stbi *)__savegprlr_17(param_1);
-  iVar4 = get16(psVar3);
-  iVar5 = get16(psVar3);
-  if (iVar5 + iVar4 * 0x10000 != 0x38425053) {
+  iVar3 = get16(param_1);
+  iVar4 = get16(param_1);
+  if (iVar4 + iVar3 * 0x10000 != 0x38425053) {
     failure_reason = "not PSD";
-    puVar6 = (uchar *)__restgprlr_17(0);
-    return puVar6;
+    return (uchar *)0x0;
   }
-  iVar4 = get16(psVar3);
-  if (iVar4 != 1) {
+  iVar3 = get16(param_1);
+  if (iVar3 != 1) {
     failure_reason = "wrong version";
-    puVar6 = (uchar *)__restgprlr_17(0);
-    return puVar6;
+    return (uchar *)0x0;
   }
-  if (psVar3->img_file == (_iobuf *)0x0) {
+  if (param_1->img_file == (_iobuf *)0x0) {
 LAB_827f647c:
-    psVar3->img_buffer = psVar3->img_buffer + 6;
+    param_1->img_buffer = param_1->img_buffer + 6;
   }
   else {
-    iVar4 = (int)psVar3->img_buffer_end - (int)psVar3->img_buffer;
-    if (5 < iVar4) goto LAB_827f647c;
-    psVar3->img_buffer = psVar3->img_buffer_end;
-    fseek(psVar3->img_file,6 - iVar4,1);
+    iVar3 = (int)param_1->img_buffer_end - (int)param_1->img_buffer;
+    if (5 < iVar3) goto LAB_827f647c;
+    param_1->img_buffer = param_1->img_buffer_end;
+    fseek(param_1->img_file,6 - iVar3,1);
   }
-  iVar4 = get16(psVar3);
-  if ((iVar4 < 0) || (0x10 < iVar4)) {
+  iVar3 = get16(param_1);
+  if ((iVar3 < 0) || (0x10 < iVar3)) {
     failure_reason = "wrong channel count";
-    goto LAB_827f6980;
+    return (uchar *)0x0;
   }
-  uVar7 = get32(psVar3);
-  uVar8 = get32(psVar3);
-  iVar5 = get16(psVar3);
-  if (iVar5 != 8) {
+  uVar5 = get32(param_1);
+  uVar6 = get32(param_1);
+  iVar4 = get16(param_1);
+  if (iVar4 != 8) {
     failure_reason = "unsupported bit depth";
-    puVar6 = (uchar *)__restgprlr_17(0);
-    return puVar6;
+    return (uchar *)0x0;
   }
-  iVar5 = get16(psVar3);
-  if (iVar5 != 3) {
+  iVar4 = get16(param_1);
+  if (iVar4 != 3) {
     failure_reason = "wrong color format";
-    puVar6 = (uchar *)__restgprlr_17(0);
-    return puVar6;
+    return (uchar *)0x0;
   }
-  uVar9 = get32(psVar3);
-  if (psVar3->img_file == (_iobuf *)0x0) {
+  uVar7 = get32(param_1);
+  if (param_1->img_file == (_iobuf *)0x0) {
 LAB_827f6554:
-    psVar3->img_buffer = psVar3->img_buffer + uVar9;
+    param_1->img_buffer = param_1->img_buffer + uVar7;
   }
   else {
-    iVar5 = (int)psVar3->img_buffer_end - (int)psVar3->img_buffer;
-    if ((int)uVar9 <= iVar5) goto LAB_827f6554;
-    psVar3->img_buffer = psVar3->img_buffer_end;
-    fseek(psVar3->img_file,uVar9 - iVar5,1);
+    iVar4 = (int)param_1->img_buffer_end - (int)param_1->img_buffer;
+    if ((int)uVar7 <= iVar4) goto LAB_827f6554;
+    param_1->img_buffer = param_1->img_buffer_end;
+    fseek(param_1->img_file,uVar7 - iVar4,1);
   }
-  uVar9 = get32(psVar3);
-  if (psVar3->img_file == (_iobuf *)0x0) {
+  uVar7 = get32(param_1);
+  if (param_1->img_file == (_iobuf *)0x0) {
 LAB_827f65a0:
-    psVar3->img_buffer = psVar3->img_buffer + uVar9;
+    param_1->img_buffer = param_1->img_buffer + uVar7;
   }
   else {
-    iVar5 = (int)psVar3->img_buffer_end - (int)psVar3->img_buffer;
-    if ((int)uVar9 <= iVar5) goto LAB_827f65a0;
-    psVar3->img_buffer = psVar3->img_buffer_end;
-    fseek(psVar3->img_file,uVar9 - iVar5,1);
+    iVar4 = (int)param_1->img_buffer_end - (int)param_1->img_buffer;
+    if ((int)uVar7 <= iVar4) goto LAB_827f65a0;
+    param_1->img_buffer = param_1->img_buffer_end;
+    fseek(param_1->img_file,uVar7 - iVar4,1);
   }
-  uVar9 = get32(psVar3);
-  if (psVar3->img_file == (_iobuf *)0x0) {
+  uVar7 = get32(param_1);
+  if (param_1->img_file == (_iobuf *)0x0) {
 LAB_827f65ec:
-    psVar3->img_buffer = psVar3->img_buffer + uVar9;
+    param_1->img_buffer = param_1->img_buffer + uVar7;
   }
   else {
-    iVar5 = (int)psVar3->img_buffer_end - (int)psVar3->img_buffer;
-    if ((int)uVar9 <= iVar5) goto LAB_827f65ec;
-    psVar3->img_buffer = psVar3->img_buffer_end;
-    fseek(psVar3->img_file,uVar9 - iVar5,1);
+    iVar4 = (int)param_1->img_buffer_end - (int)param_1->img_buffer;
+    if ((int)uVar7 <= iVar4) goto LAB_827f65ec;
+    param_1->img_buffer = param_1->img_buffer_end;
+    fseek(param_1->img_file,uVar7 - iVar4,1);
   }
-  iVar5 = get16(psVar3);
-  if (1 < iVar5) {
+  iVar4 = get16(param_1);
+  if (1 < iVar4) {
     failure_reason = "bad compression";
-    puVar6 = (uchar *)__restgprlr_17(0);
-    return puVar6;
+    return (uchar *)0x0;
   }
-  uVar16 = (longlong)(int)uVar8 * (longlong)(int)uVar7;
-  puVar6 = stb_malloc((uint)((uVar16 & 0xffffffff) << 2));
-  if (puVar6 == (uchar *)0x0) {
+  uVar13 = (longlong)(int)uVar6 * (longlong)(int)uVar5;
+  puVar8 = stb_malloc((uint)((uVar13 & 0xffffffff) << 2));
+  if (puVar8 == (uchar *)0x0) {
     failure_reason = "outofmem";
-    puVar6 = (uchar *)__restgprlr_17();
-    return puVar6;
+    return (uchar *)0x0;
   }
-  iVar17 = (int)uVar16;
-  if (iVar5 == 0) {
-    iVar5 = 0;
+  iVar14 = (int)uVar13;
+  if (iVar4 == 0) {
+    iVar4 = 0;
     do {
-      if (iVar4 < iVar5) {
-        if (0 < iVar17) {
-          puVar12 = puVar6 + iVar5 + -4;
-          uVar21 = uVar16;
+      if (iVar3 < iVar4) {
+        if (0 < iVar14) {
+          puVar17 = puVar8 + iVar4 + -4;
+          uVar19 = uVar13;
           do {
-            puVar12 = puVar12 + 4;
-            *puVar12 = -(iVar5 == 3);
-            uVar21 = uVar21 - 1;
-          } while (uVar21 != 0);
+            puVar17 = puVar17 + 4;
+            *puVar17 = -(iVar4 == 3);
+            uVar19 = uVar19 - 1;
+          } while (uVar19 != 0);
         }
       }
-      else if (0 < iVar17) {
-        puVar12 = puVar6 + iVar5 + -4;
-        uVar21 = uVar16;
+      else if (0 < iVar14) {
+        puVar17 = puVar8 + iVar4 + -4;
+        uVar19 = uVar13;
         do {
-          puVar2 = psVar3->img_buffer;
-          if (puVar2 < psVar3->img_buffer_end) {
-            uVar15 = *puVar2;
-            psVar3->img_buffer = puVar2 + 1;
+          puVar2 = param_1->img_buffer;
+          if (puVar2 < param_1->img_buffer_end) {
+            uVar12 = *puVar2;
+            param_1->img_buffer = puVar2 + 1;
           }
-          else if (psVar3->from_file == 0) {
-            uVar15 = '\0';
+          else if (param_1->from_file == 0) {
+            uVar12 = '\0';
           }
           else {
-            refill_buffer(psVar3);
-            uVar15 = *psVar3->img_buffer;
-            psVar3->img_buffer = psVar3->img_buffer + 1;
+            refill_buffer(param_1);
+            uVar12 = *param_1->img_buffer;
+            param_1->img_buffer = param_1->img_buffer + 1;
           }
-          uVar21 = uVar21 - 1;
-          puVar12 = puVar12 + 4;
-          *puVar12 = uVar15;
-        } while (uVar21 != 0);
+          uVar19 = uVar19 - 1;
+          puVar17 = puVar17 + 4;
+          *puVar17 = uVar12;
+        } while (uVar19 != 0);
       }
-      iVar5 = iVar5 + 1;
-    } while (iVar5 < 4);
+      iVar4 = iVar4 + 1;
+    } while (iVar4 < 4);
+    goto LAB_827f691c;
+  }
+  iVar4 = uVar5 * iVar3 * 2;
+  if (param_1->img_file == (_iobuf *)0x0) {
+LAB_827f669c:
+    param_1->img_buffer = param_1->img_buffer + iVar4;
   }
   else {
-    iVar5 = uVar7 * iVar4 * 2;
-    if (psVar3->img_file == (_iobuf *)0x0) {
-LAB_827f669c:
-      psVar3->img_buffer = psVar3->img_buffer + iVar5;
-    }
-    else {
-      iVar11 = (int)psVar3->img_buffer_end - (int)psVar3->img_buffer;
-      if (iVar5 <= iVar11) goto LAB_827f669c;
-      psVar3->img_buffer = psVar3->img_buffer_end;
-      fseek(psVar3->img_file,iVar5 - iVar11,1);
-    }
-    iVar5 = 0;
-    do {
-      if (iVar5 < iVar4) {
-        lVar18 = 0;
-        if (0 < iVar17) {
-          pbVar19 = puVar6 + iVar5 + -4;
-          do {
-            pbVar1 = psVar3->img_buffer;
-            if (pbVar1 < psVar3->img_buffer_end) {
-              bVar14 = *pbVar1;
+    iVar9 = (int)param_1->img_buffer_end - (int)param_1->img_buffer;
+    if (iVar4 <= iVar9) goto LAB_827f669c;
+    param_1->img_buffer = param_1->img_buffer_end;
+    fseek(param_1->img_file,iVar4 - iVar9,1);
+  }
+  iVar4 = 0;
+  do {
+    if (iVar4 < iVar3) {
+      lVar15 = 0;
+      if (0 < iVar14) {
+        pbVar16 = puVar8 + iVar4 + -4;
+        do {
+          pbVar1 = param_1->img_buffer;
+          if (pbVar1 < param_1->img_buffer_end) {
+            bVar11 = *pbVar1;
 LAB_827f6714:
-              pbVar13 = pbVar1 + 1;
-              uVar21 = (ulonglong)bVar14;
-              psVar3->img_buffer = pbVar13;
-              if (bVar14 != 0x80) {
-                if (bVar14 < 0x80) goto LAB_827f6724;
-                if (0x80 < bVar14) {
-                  lVar20 = (uVar21 ^ 0xff) + 2;
-                  if (pbVar13 < psVar3->img_buffer_end) {
-                    bVar14 = *pbVar13;
-                    psVar3->img_buffer = pbVar1 + 2;
-                  }
-                  else if (psVar3->from_file == 0) {
-                    bVar14 = 0;
-                  }
-                  else {
-                    refill_buffer(psVar3);
-                    bVar14 = *psVar3->img_buffer;
-                    psVar3->img_buffer = psVar3->img_buffer + 1;
-                  }
-                  lVar18 = lVar20 + lVar18;
-                  if ((int)lVar20 != 0) {
-                    do {
-                      pbVar19 = pbVar19 + 4;
-                      *pbVar19 = bVar14;
-                      lVar20 = lVar20 + -1;
-                    } while (lVar20 != 0);
-                  }
+            pbVar10 = pbVar1 + 1;
+            uVar19 = (ulonglong)bVar11;
+            param_1->img_buffer = pbVar10;
+            if (bVar11 != 0x80) {
+              if (bVar11 < 0x80) goto LAB_827f6724;
+              if (0x80 < bVar11) {
+                lVar18 = (uVar19 ^ 0xff) + 2;
+                if (pbVar10 < param_1->img_buffer_end) {
+                  bVar11 = *pbVar10;
+                  param_1->img_buffer = pbVar1 + 2;
                 }
-              }
-            }
-            else {
-              if (psVar3->from_file != 0) {
-                refill_buffer(psVar3);
-                pbVar1 = psVar3->img_buffer;
-                bVar14 = *pbVar1;
-                goto LAB_827f6714;
-              }
-              uVar21 = 0;
-LAB_827f6724:
-              lVar20 = uVar21 + 1;
-              lVar18 = lVar20 + lVar18;
-              for (; lVar20 != 0; lVar20 = lVar20 + -1) {
-                pbVar1 = psVar3->img_buffer;
-                if (pbVar1 < psVar3->img_buffer_end) {
-                  bVar14 = *pbVar1;
-                  psVar3->img_buffer = pbVar1 + 1;
-                }
-                else if (psVar3->from_file == 0) {
-                  bVar14 = 0;
+                else if (param_1->from_file == 0) {
+                  bVar11 = 0;
                 }
                 else {
-                  refill_buffer(psVar3);
-                  bVar14 = *psVar3->img_buffer;
-                  psVar3->img_buffer = psVar3->img_buffer + 1;
+                  refill_buffer(param_1);
+                  bVar11 = *param_1->img_buffer;
+                  param_1->img_buffer = param_1->img_buffer + 1;
                 }
-                pbVar19[4] = bVar14;
-                pbVar19 = pbVar19 + 4;
+                lVar15 = lVar18 + lVar15;
+                if ((int)lVar18 != 0) {
+                  do {
+                    pbVar16 = pbVar16 + 4;
+                    *pbVar16 = bVar11;
+                    lVar18 = lVar18 + -1;
+                  } while (lVar18 != 0);
+                }
               }
             }
-          } while ((int)lVar18 < iVar17);
-        }
+          }
+          else {
+            if (param_1->from_file != 0) {
+              refill_buffer(param_1);
+              pbVar1 = param_1->img_buffer;
+              bVar11 = *pbVar1;
+              goto LAB_827f6714;
+            }
+            uVar19 = 0;
+LAB_827f6724:
+            lVar18 = uVar19 + 1;
+            lVar15 = lVar18 + lVar15;
+            for (; lVar18 != 0; lVar18 = lVar18 + -1) {
+              pbVar1 = param_1->img_buffer;
+              if (pbVar1 < param_1->img_buffer_end) {
+                bVar11 = *pbVar1;
+                param_1->img_buffer = pbVar1 + 1;
+              }
+              else if (param_1->from_file == 0) {
+                bVar11 = 0;
+              }
+              else {
+                refill_buffer(param_1);
+                bVar11 = *param_1->img_buffer;
+                param_1->img_buffer = param_1->img_buffer + 1;
+              }
+              pbVar16[4] = bVar11;
+              pbVar16 = pbVar16 + 4;
+            }
+          }
+        } while ((int)lVar15 < iVar14);
       }
-      else if (0 < iVar17) {
-        puVar12 = puVar6 + iVar5 + -4;
-        uVar21 = uVar16;
-        do {
-          puVar12 = puVar12 + 4;
-          *puVar12 = -(iVar5 == 3);
-          uVar21 = uVar21 - 1;
-        } while (uVar21 != 0);
-      }
-      iVar5 = iVar5 + 1;
-    } while (iVar5 < 4);
-  }
-  if (((param_5 == 0) || (param_5 == 4)) ||
-     (puVar6 = convert_format(puVar6,4,param_5,uVar8,uVar7), puVar6 != (uchar *)0x0)) {
-    if ((uVar10 & 0xffffffff) != 0) {
-      *(int *)uVar10 = iVar4;
     }
-    *param_3 = uVar7;
-    *param_2 = uVar8;
-    puVar6 = (uchar *)__restgprlr_17(puVar6);
-    return puVar6;
+    else if (0 < iVar14) {
+      puVar17 = puVar8 + iVar4 + -4;
+      uVar19 = uVar13;
+      do {
+        puVar17 = puVar17 + 4;
+        *puVar17 = -(iVar4 == 3);
+        uVar19 = uVar19 - 1;
+      } while (uVar19 != 0);
+    }
+    iVar4 = iVar4 + 1;
+  } while (iVar4 < 4);
+LAB_827f691c:
+  if (((param_5 != 0) && (param_5 != 4)) &&
+     (puVar8 = convert_format(puVar8,4,param_5,uVar6,uVar5), puVar8 == (uchar *)0x0)) {
+    return (uchar *)0x0;
   }
-LAB_827f6980:
-  puVar6 = (uchar *)__restgprlr_17(0);
-  return puVar6;
+  if (param_4 != (int *)0x0) {
+    *param_4 = iVar3;
+  }
+  *param_3 = uVar5;
+  *param_2 = uVar6;
+  return puVar8;
 }
 
 
 // 827FA588  stbi_psd_load  (mjpeg/stb_image.c:4181)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 uchar * stbi_psd_load(char *param_1,int *param_2,int *param_3,int *param_4,int param_5)
 
 {
-  char *pcVar1;
-  _iobuf *p_Var2;
-  uchar *puVar3;
+  _iobuf *p_Var1;
+  uchar *puVar2;
   stbi sStack_e0;
   
-  pcVar1 = (char *)__savegprlr_27(param_1);
-  p_Var2 = fopen(pcVar1,"rb");
-  if (p_Var2 == (_iobuf *)0x0) {
-    puVar3 = (uchar *)__restgprlr_27();
-    return puVar3;
+  p_Var1 = fopen(param_1,"rb");
+  if (p_Var1 == (_iobuf *)0x0) {
+    return (uchar *)0x0;
   }
   sStack_e0.img_buffer_end = (uchar *)&sStack_e0.from_file;
   sStack_e0.img_buffer = (uchar *)&sStack_e0.from_file;
   sStack_e0.buflen = 0x80;
   sStack_e0.from_file = 1;
-  sStack_e0.img_file = p_Var2;
-  puVar3 = psd_load(&sStack_e0,param_2,param_3,param_4,param_5);
-  fclose(p_Var2);
-  puVar3 = (uchar *)__restgprlr_27(puVar3);
-  return puVar3;
+  sStack_e0.img_file = p_Var1;
+  puVar2 = psd_load(&sStack_e0,param_2,param_3,param_4,param_5);
+  fclose(p_Var1);
+  return puVar2;
 }
 
 
@@ -9345,39 +9072,38 @@ uchar * stbi_psd_load_from_memory
 
 // 827F6A28  pic_is4  (mjpeg/stb_image.c:4213)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 int pic_is4(stbi *param_1,char *param_2)
 
 {
   uchar *puVar1;
-  stbi *psVar2;
+  uchar uVar2;
   int iVar3;
-  uchar uVar4;
   
-  psVar2 = (stbi *)__savegprlr_29(param_1);
   iVar3 = 0;
   while( true ) {
-    puVar1 = psVar2->img_buffer;
-    if (puVar1 < psVar2->img_buffer_end) {
-      uVar4 = *puVar1;
-      psVar2->img_buffer = puVar1 + 1;
+    puVar1 = param_1->img_buffer;
+    if (puVar1 < param_1->img_buffer_end) {
+      uVar2 = *puVar1;
+      param_1->img_buffer = puVar1 + 1;
     }
-    else if (psVar2->from_file == 0) {
-      uVar4 = '\0';
+    else if (param_1->from_file == 0) {
+      uVar2 = '\0';
     }
     else {
-      refill_buffer(psVar2);
-      uVar4 = *psVar2->img_buffer;
-      psVar2->img_buffer = psVar2->img_buffer + 1;
+      refill_buffer(param_1);
+      uVar2 = *param_1->img_buffer;
+      param_1->img_buffer = param_1->img_buffer + 1;
     }
-    if (uVar4 != param_2[iVar3]) break;
+    if (uVar2 != param_2[iVar3]) break;
     iVar3 = iVar3 + 1;
     if (3 < iVar3) {
-      iVar3 = __restgprlr_29(1);
-      return iVar3;
+      return 1;
     }
   }
-  iVar3 = __restgprlr_29(0);
-  return iVar3;
+  return 0;
 }
 
 
@@ -9417,59 +9143,58 @@ LAB_827f6b18:
 
 // 827F6B58  pic_readval  (mjpeg/stb_image.c:4244)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 uchar * pic_readval(stbi *param_1,int param_2,uchar *param_3)
 
 {
-  stbi *psVar1;
+  uchar *puVar1;
   int iVar2;
-  uchar *puVar3;
-  longlong lVar4;
-  uchar uVar5;
-  uint uVar6;
-  int iVar7;
+  uchar uVar3;
+  uint uVar4;
+  int iVar5;
   
-  lVar4 = (longlong)(int)param_3;
-  psVar1 = (stbi *)__savegprlr_26(param_1);
-  uVar6 = 0x80;
-  iVar7 = 0;
+  uVar4 = 0x80;
+  iVar5 = 0;
   do {
-    if ((uVar6 & param_2) != 0) {
-      if (psVar1->img_file == (_iobuf *)0x0) {
+    if ((uVar4 & param_2) != 0) {
+      if (param_1->img_file == (_iobuf *)0x0) {
 LAB_827f6bac:
-        if (psVar1->img_buffer_end <= psVar1->img_buffer) {
-LAB_827f6c30:
+        if (param_1->img_buffer_end <= param_1->img_buffer) {
           failure_reason = "bad file";
-          puVar3 = (uchar *)__restgprlr_26(0);
-          return puVar3;
+          return (uchar *)0x0;
         }
       }
       else {
-        iVar2 = feof(psVar1->img_file);
+        iVar2 = feof(param_1->img_file);
         if (iVar2 != 0) {
-          if (psVar1->from_file == 0) goto LAB_827f6c30;
+          if (param_1->from_file == 0) {
+            failure_reason = "bad file";
+            return (uchar *)0x0;
+          }
           goto LAB_827f6bac;
         }
       }
-      puVar3 = psVar1->img_buffer;
-      if (puVar3 < psVar1->img_buffer_end) {
-        uVar5 = *puVar3;
-        psVar1->img_buffer = puVar3 + 1;
+      puVar1 = param_1->img_buffer;
+      if (puVar1 < param_1->img_buffer_end) {
+        uVar3 = *puVar1;
+        param_1->img_buffer = puVar1 + 1;
       }
-      else if (psVar1->from_file == 0) {
-        uVar5 = '\0';
+      else if (param_1->from_file == 0) {
+        uVar3 = '\0';
       }
       else {
-        refill_buffer(psVar1);
-        uVar5 = *psVar1->img_buffer;
-        psVar1->img_buffer = psVar1->img_buffer + 1;
+        refill_buffer(param_1);
+        uVar3 = *param_1->img_buffer;
+        param_1->img_buffer = param_1->img_buffer + 1;
       }
-      *(uchar *)(iVar7 + (int)lVar4) = uVar5;
+      param_3[iVar5] = uVar3;
     }
-    iVar7 = iVar7 + 1;
-    uVar6 = (int)uVar6 >> 1;
-    if (3 < iVar7) {
-      puVar3 = (uchar *)__restgprlr_26(lVar4);
-      return puVar3;
+    iVar5 = iVar5 + 1;
+    uVar4 = (int)uVar4 >> 1;
+    if (3 < iVar5) {
+      return param_3;
     }
   } while( true );
 }
@@ -9499,379 +9224,370 @@ void pic_copyval(int param_1,uchar *param_2,uchar *param_3)
 
 // 827F6CA8  pic_load2  (mjpeg/stb_image.c:4267)
 
+/* WARNING: Function: __savegprlr_15 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_15 replaced with injection: xenon_save_restore */
+
 uchar * pic_load2(stbi *param_1,int param_2,int param_3,int *param_4,uchar *param_5)
 
 {
   byte bVar1;
-  uchar *puVar2;
-  byte *pbVar3;
-  byte *pbVar4;
-  _iobuf *p_Var5;
-  ulonglong uVar6;
-  stbi *psVar7;
-  int iVar8;
-  uint uVar9;
-  int iVar10;
-  uchar *puVar11;
-  ulonglong uVar12;
-  longlong lVar13;
-  longlong lVar14;
-  ulonglong uVar15;
-  longlong lVar16;
-  uchar uVar18;
+  byte *pbVar2;
+  _iobuf *p_Var3;
+  int iVar4;
+  uint uVar5;
+  int iVar6;
+  uchar *puVar7;
+  longlong lVar8;
+  ulonglong uVar9;
+  uchar uVar11;
+  uchar uVar12;
+  uint uVar10;
+  int iVar13;
+  uchar *puVar14;
+  int iVar15;
+  byte *pbVar16;
+  ulonglong uVar17;
   uchar uVar19;
-  uint uVar17;
-  longlong lVar20;
-  int iVar21;
-  longlong lVar22;
-  int iVar23;
-  longlong lVar24;
-  uchar *puVar26;
-  ulonglong uVar25;
-  uchar uVar28;
-  longlong lVar27;
-  ulonglong uVar29;
-  int iVar30;
-  longlong lVar31;
+  longlong lVar18;
+  uchar *puVar20;
+  ulonglong uVar21;
+  int iVar22;
+  longlong lVar23;
   uchar auStack_c0 [4];
-  uchar auStack_bc [188];
+  uchar auStack_bc [12];
+  uchar local_b0 [2];
+  byte local_ae [174];
   
-  lVar13 = (longlong)(int)param_5;
-  uVar12 = (ulonglong)param_2;
-  uVar6 = ZEXT48(&stack0x00000000);
-  psVar7 = (stbi *)__savegprlr_15(param_1);
-  uVar9 = 0;
-  iVar21 = 0;
-  lVar22 = uVar6 - 0xb0;
+  uVar5 = 0;
+  iVar13 = 0;
+  puVar14 = local_b0;
   do {
-    if (iVar21 == 10) {
+    if (iVar13 == 10) {
 LAB_827f7024:
       failure_reason = "bad format";
-      puVar11 = (uchar *)__restgprlr_15(0);
-      return puVar11;
+      return (uchar *)0x0;
     }
-    puVar11 = psVar7->img_buffer;
-    iVar21 = iVar21 + 1;
-    if (puVar11 < psVar7->img_buffer_end) {
-      uVar28 = *puVar11;
-      psVar7->img_buffer = puVar11 + 1;
+    puVar20 = param_1->img_buffer;
+    iVar13 = iVar13 + 1;
+    if (puVar20 < param_1->img_buffer_end) {
+      uVar19 = *puVar20;
+      param_1->img_buffer = puVar20 + 1;
     }
-    else if (psVar7->from_file == 0) {
-      uVar28 = '\0';
-    }
-    else {
-      puVar11 = psVar7->buffer_start;
-      uVar17 = fread(puVar11,1,psVar7->buflen,psVar7->img_file);
-      if (uVar17 == 0) {
-        psVar7->from_file = 0;
-        psVar7->img_buffer = psVar7->img_buffer_end + -1;
-        psVar7->img_buffer_end[-1] = '\0';
-        uVar28 = *psVar7->img_buffer;
-        psVar7->img_buffer = psVar7->img_buffer + 1;
-      }
-      else {
-        psVar7->img_buffer = puVar11;
-        psVar7->img_buffer_end = puVar11 + uVar17;
-        uVar28 = *puVar11;
-        psVar7->img_buffer = psVar7->buffer_start + 1;
-      }
-    }
-    puVar11 = psVar7->img_buffer;
-    if (puVar11 < psVar7->img_buffer_end) {
-      uVar18 = *puVar11;
-      psVar7->img_buffer = puVar11 + 1;
-    }
-    else if (psVar7->from_file == 0) {
-      uVar18 = '\0';
-    }
-    else {
-      puVar11 = psVar7->buffer_start;
-      uVar17 = fread(puVar11,1,psVar7->buflen,psVar7->img_file);
-      if (uVar17 == 0) {
-        psVar7->from_file = 0;
-        psVar7->img_buffer = psVar7->img_buffer_end + -1;
-        psVar7->img_buffer_end[-1] = '\0';
-      }
-      else {
-        psVar7->img_buffer = puVar11;
-        psVar7->img_buffer_end = puVar11 + uVar17;
-      }
-      uVar18 = *psVar7->img_buffer;
-      psVar7->img_buffer = psVar7->img_buffer + 1;
-    }
-    puVar11 = psVar7->img_buffer;
-    puVar2 = psVar7->img_buffer_end;
-    puVar26 = (uchar *)lVar22;
-    *puVar26 = uVar18;
-    if (puVar11 < puVar2) {
-      uVar19 = *puVar11;
-      psVar7->img_buffer = puVar11 + 1;
-    }
-    else if (psVar7->from_file == 0) {
+    else if (param_1->from_file == 0) {
       uVar19 = '\0';
     }
     else {
-      puVar11 = psVar7->buffer_start;
-      uVar17 = fread(puVar11,1,psVar7->buflen,psVar7->img_file);
-      if (uVar17 == 0) {
-        psVar7->from_file = 0;
-        psVar7->img_buffer = psVar7->img_buffer_end + -1;
-        psVar7->img_buffer_end[-1] = '\0';
+      puVar20 = param_1->buffer_start;
+      uVar10 = fread(puVar20,1,param_1->buflen,param_1->img_file);
+      if (uVar10 == 0) {
+        param_1->from_file = 0;
+        param_1->img_buffer = param_1->img_buffer_end + -1;
+        param_1->img_buffer_end[-1] = '\0';
+        uVar19 = *param_1->img_buffer;
+        param_1->img_buffer = param_1->img_buffer + 1;
       }
       else {
-        psVar7->img_buffer = puVar11;
-        psVar7->img_buffer_end = puVar11 + uVar17;
+        param_1->img_buffer = puVar20;
+        param_1->img_buffer_end = puVar20 + uVar10;
+        uVar19 = param_1->buffer_start[0];
+        param_1->img_buffer = param_1->buffer_start + 1;
       }
-      uVar19 = *psVar7->img_buffer;
-      psVar7->img_buffer = psVar7->img_buffer + 1;
     }
-    pbVar3 = psVar7->img_buffer;
-    pbVar4 = psVar7->img_buffer_end;
-    puVar26[1] = uVar19;
-    if (pbVar3 < pbVar4) {
-      uVar17 = (uint)*pbVar3;
-      psVar7->img_buffer = pbVar3 + 1;
+    puVar20 = param_1->img_buffer;
+    if (puVar20 < param_1->img_buffer_end) {
+      uVar11 = *puVar20;
+      param_1->img_buffer = puVar20 + 1;
     }
-    else if (psVar7->from_file == 0) {
-      uVar17 = 0;
+    else if (param_1->from_file == 0) {
+      uVar11 = '\0';
     }
     else {
-      puVar11 = psVar7->buffer_start;
-      uVar17 = fread(puVar11,1,psVar7->buflen,psVar7->img_file);
-      if (uVar17 == 0) {
-        psVar7->from_file = 0;
-        psVar7->img_buffer = psVar7->img_buffer_end + -1;
-        psVar7->img_buffer_end[-1] = '\0';
-        uVar17 = (uint)*psVar7->img_buffer;
-        psVar7->img_buffer = psVar7->img_buffer + 1;
+      puVar20 = param_1->buffer_start;
+      uVar10 = fread(puVar20,1,param_1->buflen,param_1->img_file);
+      if (uVar10 == 0) {
+        param_1->from_file = 0;
+        param_1->img_buffer = param_1->img_buffer_end + -1;
+        param_1->img_buffer_end[-1] = '\0';
       }
       else {
-        psVar7->img_buffer = puVar11;
-        psVar7->img_buffer_end = puVar11 + uVar17;
-        uVar17 = (uint)*puVar11;
-        psVar7->img_buffer = psVar7->buffer_start + 1;
+        param_1->img_buffer = puVar20;
+        param_1->img_buffer_end = puVar20 + uVar10;
+      }
+      uVar11 = *param_1->img_buffer;
+      param_1->img_buffer = param_1->img_buffer + 1;
+    }
+    puVar20 = param_1->img_buffer;
+    puVar7 = param_1->img_buffer_end;
+    *puVar14 = uVar11;
+    if (puVar20 < puVar7) {
+      uVar12 = *puVar20;
+      param_1->img_buffer = puVar20 + 1;
+    }
+    else if (param_1->from_file == 0) {
+      uVar12 = '\0';
+    }
+    else {
+      puVar20 = param_1->buffer_start;
+      uVar10 = fread(puVar20,1,param_1->buflen,param_1->img_file);
+      if (uVar10 == 0) {
+        param_1->from_file = 0;
+        param_1->img_buffer = param_1->img_buffer_end + -1;
+        param_1->img_buffer_end[-1] = '\0';
+      }
+      else {
+        param_1->img_buffer = puVar20;
+        param_1->img_buffer_end = puVar20 + uVar10;
+      }
+      uVar12 = *param_1->img_buffer;
+      param_1->img_buffer = param_1->img_buffer + 1;
+    }
+    pbVar16 = param_1->img_buffer;
+    pbVar2 = param_1->img_buffer_end;
+    puVar14[1] = uVar12;
+    if (pbVar16 < pbVar2) {
+      uVar10 = (uint)*pbVar16;
+      param_1->img_buffer = pbVar16 + 1;
+    }
+    else if (param_1->from_file == 0) {
+      uVar10 = 0;
+    }
+    else {
+      puVar20 = param_1->buffer_start;
+      uVar10 = fread(puVar20,1,param_1->buflen,param_1->img_file);
+      if (uVar10 == 0) {
+        param_1->from_file = 0;
+        param_1->img_buffer = param_1->img_buffer_end + -1;
+        param_1->img_buffer_end[-1] = '\0';
+        uVar10 = (uint)*param_1->img_buffer;
+        param_1->img_buffer = param_1->img_buffer + 1;
+      }
+      else {
+        param_1->img_buffer = puVar20;
+        param_1->img_buffer_end = puVar20 + uVar10;
+        uVar10 = (uint)param_1->buffer_start[0];
+        param_1->img_buffer = param_1->buffer_start + 1;
       }
     }
-    p_Var5 = psVar7->img_file;
-    puVar26[2] = (uchar)uVar17;
-    uVar9 = uVar17 | uVar9;
-    if (p_Var5 == (_iobuf *)0x0) {
+    p_Var3 = param_1->img_file;
+    puVar14[2] = (uchar)uVar10;
+    uVar5 = uVar10 | uVar5;
+    if (p_Var3 == (_iobuf *)0x0) {
 LAB_827f6f78:
-      if (psVar7->img_buffer_end <= psVar7->img_buffer) goto LAB_827f7040;
+      if (param_1->img_buffer_end <= param_1->img_buffer) goto LAB_827f7040;
     }
     else {
-      iVar8 = feof(p_Var5);
-      if (iVar8 != 0) {
-        if (psVar7->from_file != 0) goto LAB_827f6f78;
+      iVar4 = feof(p_Var3);
+      if (iVar4 != 0) {
+        if (param_1->from_file != 0) goto LAB_827f6f78;
 LAB_827f7040:
         failure_reason = "bad file";
-        puVar11 = (uchar *)__restgprlr_15(0);
-        return puVar11;
+        return (uchar *)0x0;
       }
     }
-    if (uVar18 != '\b') goto LAB_827f7024;
-    lVar22 = lVar22 + 3;
-    if (uVar28 == '\0') {
-      iVar8 = 0;
-      *param_4 = ((uint)LZCOUNT(uVar9 & 0x10) >> 5 ^ 1) + 3;
+    if (uVar11 != '\b') goto LAB_827f7024;
+    puVar14 = puVar14 + 3;
+    if (uVar19 == '\0') {
+      iVar4 = 0;
+      *param_4 = ((uint)LZCOUNT(uVar5 & 0x10) >> 5 ^ 1) + 3;
       if (0 < param_3) {
-        lVar22 = lVar13;
+        puVar14 = param_5;
         do {
-          iVar23 = 0;
-          if (0 < iVar21) {
-            lVar24 = uVar6 - 0xae;
+          iVar15 = 0;
+          if (0 < iVar13) {
+            pbVar16 = local_ae;
             do {
-              pbVar3 = (byte *)lVar24;
-              bVar1 = pbVar3[-1];
-              iVar10 = (int)uVar12;
+              bVar1 = pbVar16[-1];
               if (bVar1 == 0) {
-                iVar30 = 0;
-                if (0 < iVar10) {
-                  bVar1 = *pbVar3;
-                  lVar20 = lVar22;
+                iVar6 = 0;
+                if (0 < param_2) {
+                  bVar1 = *pbVar16;
+                  puVar20 = puVar14;
                   do {
-                    puVar11 = pic_readval(psVar7,(uint)bVar1,(uchar *)lVar20);
-                    if (puVar11 == (uchar *)0x0) goto LAB_827f73d0;
-                    iVar30 = iVar30 + 1;
-                    lVar20 = lVar20 + 4;
-                  } while (iVar30 < iVar10);
+                    puVar7 = pic_readval(param_1,(uint)bVar1,puVar20);
+                    if (puVar7 == (uchar *)0x0) {
+                      return (uchar *)0x0;
+                    }
+                    iVar6 = iVar6 + 1;
+                    puVar20 = puVar20 + 4;
+                  } while (iVar6 < param_2);
                 }
               }
               else if (bVar1 == 1) {
-                uVar25 = uVar12;
-                lVar20 = lVar22;
-                if (0 < iVar10) {
+                uVar17 = (longlong)param_2;
+                puVar20 = puVar14;
+                if (0 < param_2) {
                   do {
-                    pbVar4 = psVar7->img_buffer;
-                    if (pbVar4 < psVar7->img_buffer_end) {
-                      uVar29 = (ulonglong)*pbVar4;
-                      psVar7->img_buffer = pbVar4 + 1;
+                    pbVar2 = param_1->img_buffer;
+                    if (pbVar2 < param_1->img_buffer_end) {
+                      uVar21 = (ulonglong)*pbVar2;
+                      param_1->img_buffer = pbVar2 + 1;
                     }
-                    else if (psVar7->from_file == 0) {
-                      uVar29 = 0;
+                    else if (param_1->from_file == 0) {
+                      uVar21 = 0;
                     }
                     else {
-                      puVar11 = psVar7->buffer_start;
-                      uVar9 = fread(puVar11,1,psVar7->buflen,psVar7->img_file);
-                      if (uVar9 == 0) {
-                        psVar7->from_file = 0;
-                        psVar7->img_buffer = psVar7->img_buffer_end + -1;
-                        psVar7->img_buffer_end[-1] = '\0';
-                        uVar29 = (ulonglong)*psVar7->img_buffer;
-                        psVar7->img_buffer = psVar7->img_buffer + 1;
+                      puVar7 = param_1->buffer_start;
+                      uVar5 = fread(puVar7,1,param_1->buflen,param_1->img_file);
+                      if (uVar5 == 0) {
+                        param_1->from_file = 0;
+                        param_1->img_buffer = param_1->img_buffer_end + -1;
+                        param_1->img_buffer_end[-1] = '\0';
+                        uVar21 = (ulonglong)*param_1->img_buffer;
+                        param_1->img_buffer = param_1->img_buffer + 1;
                       }
                       else {
-                        psVar7->img_buffer = puVar11;
-                        psVar7->img_buffer_end = puVar11 + uVar9;
-                        uVar29 = (ulonglong)*puVar11;
-                        psVar7->img_buffer = psVar7->buffer_start + 1;
+                        param_1->img_buffer = puVar7;
+                        param_1->img_buffer_end = puVar7 + uVar5;
+                        uVar21 = (ulonglong)param_1->buffer_start[0];
+                        param_1->img_buffer = param_1->buffer_start + 1;
                       }
                     }
-                    if (psVar7->img_file == (_iobuf *)0x0) {
+                    if (param_1->img_file == (_iobuf *)0x0) {
 LAB_827f72c8:
-                      if (psVar7->img_buffer_end <= psVar7->img_buffer) goto LAB_827f7040;
+                      if (param_1->img_buffer_end <= param_1->img_buffer) goto LAB_827f7040;
                     }
                     else {
-                      iVar10 = feof(psVar7->img_file);
-                      if (iVar10 != 0) {
-                        if (psVar7->from_file != 0) goto LAB_827f72c8;
+                      iVar6 = feof(param_1->img_file);
+                      if (iVar6 != 0) {
+                        if (param_1->from_file != 0) goto LAB_827f72c8;
                         goto LAB_827f7040;
                       }
                     }
-                    if ((int)uVar25 < (int)uVar29) {
-                      uVar29 = uVar25 & 0xff;
+                    if ((int)uVar17 < (int)uVar21) {
+                      uVar21 = uVar17 & 0xff;
                     }
-                    bVar1 = *pbVar3;
-                    puVar11 = pic_readval(psVar7,(uint)bVar1,auStack_bc);
-                    if (puVar11 == (uchar *)0x0) goto LAB_827f73d0;
-                    if ((int)uVar29 != 0) {
-                      lVar27 = (uVar6 - 0xbc) - lVar20;
-                      uVar15 = uVar29;
+                    bVar1 = *pbVar16;
+                    puVar7 = pic_readval(param_1,(uint)bVar1,auStack_bc);
+                    if (puVar7 == (uchar *)0x0) {
+                      return (uchar *)0x0;
+                    }
+                    if ((int)uVar21 != 0) {
+                      puVar7 = auStack_bc + -(int)puVar20;
+                      uVar9 = uVar21;
                       do {
-                        uVar9 = 0x80;
-                        lVar14 = 4;
+                        uVar5 = 0x80;
+                        lVar18 = 4;
                         do {
-                          if ((uVar9 & bVar1) != 0) {
-                            *(undefined1 *)lVar20 = ((undefined1 *)lVar20)[(int)lVar27];
+                          if ((uVar5 & bVar1) != 0) {
+                            *puVar20 = puVar20[(int)puVar7];
                           }
-                          lVar20 = lVar20 + 1;
-                          uVar9 = (int)uVar9 >> 1;
-                          lVar14 = lVar14 + -1;
-                        } while (lVar14 != 0);
-                        uVar15 = uVar15 - 1;
-                        lVar27 = lVar27 + -4;
-                      } while (uVar15 != 0);
+                          puVar20 = puVar20 + 1;
+                          uVar5 = (int)uVar5 >> 1;
+                          lVar18 = lVar18 + -1;
+                        } while (lVar18 != 0);
+                        uVar9 = uVar9 - 1;
+                        puVar7 = puVar7 + -4;
+                      } while (uVar9 != 0);
                     }
-                    uVar25 = uVar25 - uVar29;
-                  } while (0 < (longlong)uVar25);
+                    uVar17 = uVar17 - uVar21;
+                  } while (0 < (longlong)uVar17);
                 }
               }
               else {
                 if (2 < bVar1) goto LAB_827f7024;
-                uVar25 = uVar12;
-                lVar20 = lVar22;
-                if (0 < iVar10) {
+                uVar17 = (longlong)param_2;
+                puVar20 = puVar14;
+                if (0 < param_2) {
                   do {
-                    pbVar4 = psVar7->img_buffer;
-                    if (pbVar4 < psVar7->img_buffer_end) {
-                      uVar29 = (ulonglong)*pbVar4;
-                      psVar7->img_buffer = pbVar4 + 1;
+                    pbVar2 = param_1->img_buffer;
+                    if (pbVar2 < param_1->img_buffer_end) {
+                      uVar21 = (ulonglong)*pbVar2;
+                      param_1->img_buffer = pbVar2 + 1;
                     }
-                    else if (psVar7->from_file == 0) {
-                      uVar29 = 0;
+                    else if (param_1->from_file == 0) {
+                      uVar21 = 0;
                     }
                     else {
-                      puVar11 = psVar7->buffer_start;
-                      uVar9 = fread(puVar11,1,psVar7->buflen,psVar7->img_file);
-                      if (uVar9 == 0) {
-                        psVar7->from_file = 0;
-                        psVar7->img_buffer = psVar7->img_buffer_end + -1;
-                        psVar7->img_buffer_end[-1] = '\0';
-                        uVar29 = (ulonglong)*psVar7->img_buffer;
-                        psVar7->img_buffer = psVar7->img_buffer + 1;
+                      puVar7 = param_1->buffer_start;
+                      uVar5 = fread(puVar7,1,param_1->buflen,param_1->img_file);
+                      if (uVar5 == 0) {
+                        param_1->from_file = 0;
+                        param_1->img_buffer = param_1->img_buffer_end + -1;
+                        param_1->img_buffer_end[-1] = '\0';
+                        uVar21 = (ulonglong)*param_1->img_buffer;
+                        param_1->img_buffer = param_1->img_buffer + 1;
                       }
                       else {
-                        psVar7->img_buffer = puVar11;
-                        psVar7->img_buffer_end = puVar11 + uVar9;
-                        uVar29 = (ulonglong)*puVar11;
-                        psVar7->img_buffer = psVar7->buffer_start + 1;
+                        param_1->img_buffer = puVar7;
+                        param_1->img_buffer_end = puVar7 + uVar5;
+                        uVar21 = (ulonglong)param_1->buffer_start[0];
+                        param_1->img_buffer = param_1->buffer_start + 1;
                       }
                     }
-                    if (psVar7->img_file == (_iobuf *)0x0) {
+                    if (param_1->img_file == (_iobuf *)0x0) {
 LAB_827f70f8:
-                      if (psVar7->img_buffer_end <= psVar7->img_buffer) goto LAB_827f7040;
+                      if (param_1->img_buffer_end <= param_1->img_buffer) goto LAB_827f7040;
                     }
                     else {
-                      iVar10 = feof(psVar7->img_file);
-                      if (iVar10 != 0) {
-                        if (psVar7->from_file != 0) goto LAB_827f70f8;
+                      iVar6 = feof(param_1->img_file);
+                      if (iVar6 != 0) {
+                        if (param_1->from_file != 0) goto LAB_827f70f8;
                         goto LAB_827f7040;
                       }
                     }
-                    if ((uint)uVar29 < 0x80) {
-                      lVar27 = uVar29 + 1;
-                      iVar10 = (int)lVar27;
-                      if ((int)uVar25 < iVar10) goto LAB_827f7040;
-                      iVar30 = 0;
-                      if (iVar10 != 0) {
-                        bVar1 = *pbVar3;
+                    if ((uint)uVar21 < 0x80) {
+                      lVar18 = uVar21 + 1;
+                      iVar6 = (int)lVar18;
+                      if ((int)uVar17 < iVar6) goto LAB_827f7040;
+                      iVar22 = 0;
+                      if (iVar6 != 0) {
+                        bVar1 = *pbVar16;
                         do {
-                          puVar11 = pic_readval(psVar7,(uint)bVar1,(uchar *)lVar20);
-                          if (puVar11 == (uchar *)0x0) goto LAB_827f73d0;
-                          iVar30 = iVar30 + 1;
-                          lVar20 = lVar20 + 4;
-                        } while (iVar30 < iVar10);
+                          puVar7 = pic_readval(param_1,(uint)bVar1,puVar20);
+                          if (puVar7 == (uchar *)0x0) {
+                            return (uchar *)0x0;
+                          }
+                          iVar22 = iVar22 + 1;
+                          puVar20 = puVar20 + 4;
+                        } while (iVar22 < iVar6);
                       }
                     }
                     else {
-                      if ((uint)uVar29 == 0x80) {
-                        iVar10 = get16(psVar7);
-                        lVar27 = (longlong)iVar10;
+                      if ((uint)uVar21 == 0x80) {
+                        iVar6 = get16(param_1);
+                        lVar18 = (longlong)iVar6;
                       }
                       else {
-                        lVar27 = uVar29 - 0x7f;
+                        lVar18 = uVar21 - 0x7f;
                       }
-                      if ((int)uVar25 < (int)lVar27) goto LAB_827f7040;
-                      bVar1 = *pbVar3;
-                      puVar11 = pic_readval(psVar7,(uint)bVar1,auStack_c0);
-                      if (puVar11 == (uchar *)0x0) {
-LAB_827f73d0:
-                        puVar11 = (uchar *)__restgprlr_15(0);
-                        return puVar11;
+                      if ((int)uVar17 < (int)lVar18) goto LAB_827f7040;
+                      bVar1 = *pbVar16;
+                      puVar7 = pic_readval(param_1,(uint)bVar1,auStack_c0);
+                      if (puVar7 == (uchar *)0x0) {
+                        return (uchar *)0x0;
                       }
-                      if (0 < (int)lVar27) {
-                        lVar16 = (uVar6 - 0xc0) - lVar20;
-                        lVar14 = lVar27;
+                      if (0 < (int)lVar18) {
+                        puVar7 = auStack_c0 + -(int)puVar20;
+                        lVar8 = lVar18;
                         do {
-                          uVar9 = 0x80;
-                          lVar31 = 4;
+                          uVar5 = 0x80;
+                          lVar23 = 4;
                           do {
-                            if ((uVar9 & bVar1) != 0) {
-                              *(undefined1 *)lVar20 = ((undefined1 *)lVar20)[(int)lVar16];
+                            if ((uVar5 & bVar1) != 0) {
+                              *puVar20 = puVar20[(int)puVar7];
                             }
-                            lVar20 = lVar20 + 1;
-                            uVar9 = (int)uVar9 >> 1;
-                            lVar31 = lVar31 + -1;
-                          } while (lVar31 != 0);
-                          lVar14 = lVar14 + -1;
-                          lVar16 = lVar16 + -4;
-                        } while (lVar14 != 0);
+                            puVar20 = puVar20 + 1;
+                            uVar5 = (int)uVar5 >> 1;
+                            lVar23 = lVar23 + -1;
+                          } while (lVar23 != 0);
+                          lVar8 = lVar8 + -1;
+                          puVar7 = puVar7 + -4;
+                        } while (lVar8 != 0);
                       }
                     }
-                    uVar25 = uVar25 - lVar27;
-                  } while (0 < (longlong)uVar25);
+                    uVar17 = uVar17 - lVar18;
+                  } while (0 < (longlong)uVar17);
                 }
               }
-              iVar23 = iVar23 + 1;
-              lVar24 = lVar24 + 3;
-            } while (iVar23 < iVar21);
+              iVar15 = iVar15 + 1;
+              pbVar16 = pbVar16 + 3;
+            } while (iVar15 < iVar13);
           }
-          iVar8 = iVar8 + 1;
-          lVar22 = (uVar12 & 0x3fffffff) * 4 + lVar22;
-        } while (iVar8 < param_3);
+          iVar4 = iVar4 + 1;
+          puVar14 = puVar14 + param_2 * 4;
+        } while (iVar4 < param_3);
       }
-      puVar11 = (uchar *)__restgprlr_15(lVar13);
-      return puVar11;
+      return param_5;
     }
   } while( true );
 }
@@ -9879,87 +9595,87 @@ LAB_827f73d0:
 
 // 827F73E0  pic_load  (mjpeg/stb_image.c:4378)
 
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
+
 uchar * pic_load(stbi *param_1,int *param_2,int *param_3,int *param_4,int param_5)
 
 {
-  stbi *psVar1;
+  uint uVar1;
   uint uVar2;
-  uint uVar3;
-  int iVar4;
+  int iVar3;
+  uchar *puVar4;
   uchar *puVar5;
-  uchar *puVar6;
-  uint uVar7;
-  longlong lVar8;
+  uint uVar6;
+  longlong lVar7;
   
-  psVar1 = (stbi *)__savegprlr_22(param_1);
-  lVar8 = 0x5c;
+  lVar7 = 0x5c;
   do {
-    puVar5 = psVar1->img_buffer;
-    if (puVar5 < psVar1->img_buffer_end) {
+    puVar4 = param_1->img_buffer;
+    if (puVar4 < param_1->img_buffer_end) {
 LAB_827f742c:
-      psVar1->img_buffer = puVar5 + 1;
+      param_1->img_buffer = puVar4 + 1;
     }
-    else if (psVar1->from_file != 0) {
-      refill_buffer(psVar1);
-      puVar5 = psVar1->img_buffer;
+    else if (param_1->from_file != 0) {
+      refill_buffer(param_1);
+      puVar4 = param_1->img_buffer;
       goto LAB_827f742c;
     }
-    lVar8 = lVar8 + -1;
-  } while (lVar8 != 0);
-  uVar2 = get16(psVar1);
-  uVar3 = get16(psVar1);
-  if (psVar1->img_file != (_iobuf *)0x0) {
-    iVar4 = feof(psVar1->img_file);
-    if (iVar4 == 0) goto LAB_827f74b0;
-    if (psVar1->from_file == 0) goto LAB_827f7494;
+    lVar7 = lVar7 + -1;
+  } while (lVar7 != 0);
+  uVar1 = get16(param_1);
+  uVar2 = get16(param_1);
+  if (param_1->img_file != (_iobuf *)0x0) {
+    iVar3 = feof(param_1->img_file);
+    if (iVar3 == 0) goto LAB_827f74b0;
+    if (param_1->from_file == 0) {
+      failure_reason = "bad file";
+      return (uchar *)0x0;
+    }
   }
-  if (psVar1->img_buffer_end <= psVar1->img_buffer) {
-LAB_827f7494:
+  if (param_1->img_buffer_end <= param_1->img_buffer) {
     failure_reason = "bad file";
-    puVar5 = (uchar *)__restgprlr_22(0);
-    return puVar5;
+    return (uchar *)0x0;
   }
 LAB_827f74b0:
-  trapWord(6,(longlong)(int)uVar2,0);
-  if (0x10000000 / (int)uVar2 < (int)uVar3) {
-    failure_reason = "too large";
-    puVar5 = (uchar *)__restgprlr_22(0);
-    return puVar5;
-  }
-  get16(psVar1);
-  get16(psVar1);
-  get16(psVar1);
-  get16(psVar1);
-  uVar7 = uVar3 * uVar2 * 4;
-  if (alt_stb_malloc == (_func___cdecl_void_ptr_uint *)0x0) {
-    uVar7 = uVar7 + stbi_mem.index;
-    if (uVar7 < stbi_mem.size) {
-      puVar5 = stbi_mem.data + stbi_mem.index;
-      stbi_mem.index = uVar7;
+  trapWord(6,(longlong)(int)uVar1,0);
+  if ((int)uVar2 <= 0x10000000 / (int)uVar1) {
+    get16(param_1);
+    get16(param_1);
+    get16(param_1);
+    get16(param_1);
+    uVar6 = uVar2 * uVar1 * 4;
+    if (alt_stb_malloc == (_func___cdecl_void_ptr_uint *)0x0) {
+      uVar6 = uVar6 + stbi_mem.index;
+      if (uVar6 < stbi_mem.size) {
+        puVar4 = stbi_mem.data + stbi_mem.index;
+        stbi_mem.index = uVar6;
+      }
+      else {
+        puVar4 = (uchar *)0x0;
+      }
     }
     else {
-      puVar5 = (uchar *)0x0;
+      puVar4 = (*alt_stb_malloc)(uVar6);
     }
-  }
-  else {
-    puVar5 = (*alt_stb_malloc)(uVar7);
-  }
-  memset();
-  puVar6 = pic_load2(psVar1,uVar2,uVar3,param_4,puVar5);
-  if (puVar6 == (uchar *)0x0) {
-    if (alt_stb_free != (_func___cdecl_void_void_ptr *)0x0) {
-      (*alt_stb_free)(puVar5);
+    memset();
+    puVar5 = pic_load2(param_1,uVar1,uVar2,param_4,puVar4);
+    if (puVar5 == (uchar *)0x0) {
+      if (alt_stb_free != (_func___cdecl_void_void_ptr *)0x0) {
+        (*alt_stb_free)(puVar4);
+      }
+      puVar4 = (uchar *)0x0;
     }
-    puVar5 = (uchar *)0x0;
+    *param_2 = uVar1;
+    *param_3 = uVar2;
+    if (param_5 == 0) {
+      param_5 = *param_4;
+    }
+    puVar4 = convert_format(puVar4,4,param_5,uVar1,uVar2);
+    return puVar4;
   }
-  *param_2 = uVar2;
-  *param_3 = uVar3;
-  if (param_5 == 0) {
-    param_5 = *param_4;
-  }
-  puVar5 = convert_format(puVar5,4,param_5,uVar2,uVar3);
-  puVar5 = (uchar *)__restgprlr_22(puVar5);
-  return puVar5;
+  failure_reason = "too large";
+  return (uchar *)0x0;
 }
 
 
@@ -10000,53 +9716,52 @@ uchar * stbi_pic_load_from_memory
 
 // 827F7678  stbi_pic_test_file  (mjpeg/stb_image.c:4426)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 int stbi_pic_test_file(_iobuf *param_1)
 
 {
-  _iobuf *p_Var1;
-  long lVar2;
-  int iVar3;
+  long lVar1;
+  int iVar2;
   stbi sStack_d0;
   
-  p_Var1 = (_iobuf *)__savegprlr_29(param_1);
-  lVar2 = ftell(p_Var1);
+  lVar1 = ftell(param_1);
   sStack_d0.img_buffer_end = (uchar *)&sStack_d0.from_file;
   sStack_d0.img_buffer = (uchar *)&sStack_d0.from_file;
   sStack_d0.buflen = 0x80;
   sStack_d0.from_file = 1;
-  sStack_d0.img_file = p_Var1;
-  iVar3 = pic_test(&sStack_d0);
-  fseek(p_Var1,lVar2,0);
-  iVar3 = __restgprlr_29(iVar3);
-  return iVar3;
+  sStack_d0.img_file = param_1;
+  iVar2 = pic_test(&sStack_d0);
+  fseek(param_1,lVar1,0);
+  return iVar2;
 }
 
 
 // 827FA618  stbi_pic_load  (mjpeg/stb_image.c:4437)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 uchar * stbi_pic_load(char *param_1,int *param_2,int *param_3,int *param_4,int param_5)
 
 {
-  char *pcVar1;
-  _iobuf *p_Var2;
-  uchar *puVar3;
+  _iobuf *p_Var1;
+  uchar *puVar2;
   stbi sStack_e0;
   
-  pcVar1 = (char *)__savegprlr_27(param_1);
-  p_Var2 = fopen(pcVar1,"rb");
-  if (p_Var2 == (_iobuf *)0x0) {
-    puVar3 = (uchar *)__restgprlr_27();
-    return puVar3;
+  p_Var1 = fopen(param_1,"rb");
+  if (p_Var1 == (_iobuf *)0x0) {
+    return (uchar *)0x0;
   }
   sStack_e0.img_buffer_end = (uchar *)&sStack_e0.from_file;
   sStack_e0.img_buffer = (uchar *)&sStack_e0.from_file;
   sStack_e0.buflen = 0x80;
   sStack_e0.from_file = 1;
-  sStack_e0.img_file = p_Var2;
-  puVar3 = pic_load(&sStack_e0,param_2,param_3,param_4,param_5);
-  fclose(p_Var2);
-  puVar3 = (uchar *)__restgprlr_27(puVar3);
-  return puVar3;
+  sStack_e0.img_file = p_Var1;
+  puVar2 = pic_load(&sStack_e0,param_2,param_3,param_4,param_5);
+  fclose(p_Var1);
+  return puVar2;
 }
 
 
@@ -10174,25 +9889,25 @@ int gif_test(stbi *param_1)
 
 // 827F7920  stbi_gif_test_file  (mjpeg/stb_image.c:4491)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 int stbi_gif_test_file(_iobuf *param_1)
 
 {
-  _iobuf *p_Var1;
-  long lVar2;
-  int iVar3;
+  long lVar1;
+  int iVar2;
   stbi sStack_d0;
   
-  p_Var1 = (_iobuf *)__savegprlr_29(param_1);
-  lVar2 = ftell(p_Var1);
+  lVar1 = ftell(param_1);
   sStack_d0.img_buffer_end = (uchar *)&sStack_d0.from_file;
   sStack_d0.img_buffer = (uchar *)&sStack_d0.from_file;
   sStack_d0.buflen = 0x80;
   sStack_d0.from_file = 1;
-  sStack_d0.img_file = p_Var1;
-  iVar3 = gif_test(&sStack_d0);
-  fseek(p_Var1,lVar2,0);
-  iVar3 = __restgprlr_29(iVar3);
-  return iVar3;
+  sStack_d0.img_file = param_1;
+  iVar2 = gif_test(&sStack_d0);
+  fseek(param_1,lVar1,0);
+  return iVar2;
 }
 
 
@@ -10215,233 +9930,239 @@ int stbi_gif_test_memory(uchar *param_1,int param_2)
 
 // 827F79C8  stbi_gif_parse_colortable  (mjpeg/stb_image.c:4509)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void stbi_gif_parse_colortable(stbi *param_1,uchar (*param_2) [4],int param_3,int param_4)
 
 {
   uchar *puVar1;
-  int iVar2;
-  stbi *psVar3;
-  longlong lVar4;
-  uchar uVar5;
-  longlong lVar6;
-  longlong lVar7;
+  uchar uVar2;
+  longlong lVar3;
+  uchar *puVar4;
   
-  lVar4 = (longlong)param_4;
-  lVar6 = (longlong)param_3;
-  lVar7 = (longlong)(int)param_2;
-  psVar3 = (stbi *)__savegprlr_28(param_1);
-  if (0 < (int)lVar6) {
-    lVar7 = lVar7 + -1;
+  lVar3 = (longlong)param_3;
+  if (0 < param_3) {
+    puVar4 = param_2[-1] + 3;
     do {
-      puVar1 = psVar3->img_buffer;
-      if (puVar1 < psVar3->img_buffer_end) {
-        uVar5 = *puVar1;
-        psVar3->img_buffer = puVar1 + 1;
+      puVar1 = param_1->img_buffer;
+      if (puVar1 < param_1->img_buffer_end) {
+        uVar2 = *puVar1;
+        param_1->img_buffer = puVar1 + 1;
       }
-      else if (psVar3->from_file == 0) {
-        uVar5 = '\0';
-      }
-      else {
-        refill_buffer(psVar3);
-        uVar5 = *psVar3->img_buffer;
-        psVar3->img_buffer = psVar3->img_buffer + 1;
-      }
-      iVar2 = (int)lVar7;
-      *(uchar *)(iVar2 + 3) = uVar5;
-      puVar1 = psVar3->img_buffer;
-      if (puVar1 < psVar3->img_buffer_end) {
-        uVar5 = *puVar1;
-        psVar3->img_buffer = puVar1 + 1;
-      }
-      else if (psVar3->from_file == 0) {
-        uVar5 = '\0';
+      else if (param_1->from_file == 0) {
+        uVar2 = '\0';
       }
       else {
-        refill_buffer(psVar3);
-        uVar5 = *psVar3->img_buffer;
-        psVar3->img_buffer = psVar3->img_buffer + 1;
+        refill_buffer(param_1);
+        uVar2 = *param_1->img_buffer;
+        param_1->img_buffer = param_1->img_buffer + 1;
       }
-      *(uchar *)(iVar2 + 2) = uVar5;
-      puVar1 = psVar3->img_buffer;
-      if (puVar1 < psVar3->img_buffer_end) {
-        uVar5 = *puVar1;
-        psVar3->img_buffer = puVar1 + 1;
+      puVar4[3] = uVar2;
+      puVar1 = param_1->img_buffer;
+      if (puVar1 < param_1->img_buffer_end) {
+        uVar2 = *puVar1;
+        param_1->img_buffer = puVar1 + 1;
       }
-      else if (psVar3->from_file == 0) {
-        uVar5 = '\0';
+      else if (param_1->from_file == 0) {
+        uVar2 = '\0';
       }
       else {
-        refill_buffer(psVar3);
-        uVar5 = *psVar3->img_buffer;
-        psVar3->img_buffer = psVar3->img_buffer + 1;
+        refill_buffer(param_1);
+        uVar2 = *param_1->img_buffer;
+        param_1->img_buffer = param_1->img_buffer + 1;
       }
-      lVar6 = lVar6 + -1;
-      *(uchar *)(iVar2 + 1) = uVar5;
-      lVar7 = lVar7 + 4;
-      *(char *)lVar7 = -(lVar4 == 0);
-    } while (lVar6 != 0);
+      puVar4[2] = uVar2;
+      puVar1 = param_1->img_buffer;
+      if (puVar1 < param_1->img_buffer_end) {
+        uVar2 = *puVar1;
+        param_1->img_buffer = puVar1 + 1;
+      }
+      else if (param_1->from_file == 0) {
+        uVar2 = '\0';
+      }
+      else {
+        refill_buffer(param_1);
+        uVar2 = *param_1->img_buffer;
+        param_1->img_buffer = param_1->img_buffer + 1;
+      }
+      lVar3 = lVar3 + -1;
+      puVar4[1] = uVar2;
+      puVar4 = puVar4 + 4;
+      *puVar4 = -(param_4 == 0);
+    } while (lVar3 != 0);
   }
-  __restgprlr_28();
   return;
 }
 
 
 // 827F7B10  stbi_gif_header  (mjpeg/stb_image.c:4520)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 int stbi_gif_header(stbi *param_1,stbi_gif_struct *param_2,int *param_3,int param_4)
 
 {
   uchar *puVar1;
   byte *pbVar2;
-  stbi *psVar3;
-  int iVar4;
-  ulonglong uVar5;
-  uchar *puVar6;
-  uchar uVar8;
-  uint uVar7;
+  int iVar3;
+  uchar *puVar4;
+  uchar uVar6;
+  uint uVar5;
   
-  uVar5 = (ulonglong)(int)param_3;
-  psVar3 = (stbi *)__savegprlr_28(param_1);
-  puVar1 = psVar3->img_buffer;
-  if (puVar1 < psVar3->img_buffer_end) {
-    uVar8 = *puVar1;
+  puVar1 = param_1->img_buffer;
+  if (puVar1 < param_1->img_buffer_end) {
+    uVar6 = *puVar1;
   }
   else {
-    if (psVar3->from_file == 0) goto LAB_827f7e84;
-    refill_buffer(psVar3);
-    puVar1 = psVar3->img_buffer;
-    uVar8 = *puVar1;
+    if (param_1->from_file == 0) {
+      failure_reason = "not GIF";
+      return 0;
+    }
+    refill_buffer(param_1);
+    puVar1 = param_1->img_buffer;
+    uVar6 = *puVar1;
   }
-  puVar6 = puVar1 + 1;
-  psVar3->img_buffer = puVar6;
-  if (uVar8 == 'G') {
-    if (puVar6 < psVar3->img_buffer_end) {
-      uVar8 = *puVar6;
-      psVar3->img_buffer = puVar1 + 2;
+  puVar4 = puVar1 + 1;
+  param_1->img_buffer = puVar4;
+  if (uVar6 == 'G') {
+    if (puVar4 < param_1->img_buffer_end) {
+      uVar6 = *puVar4;
+      param_1->img_buffer = puVar1 + 2;
     }
     else {
-      if (psVar3->from_file == 0) goto LAB_827f7e84;
-      refill_buffer(psVar3);
-      uVar8 = *psVar3->img_buffer;
-      psVar3->img_buffer = psVar3->img_buffer + 1;
+      if (param_1->from_file == 0) {
+        failure_reason = "not GIF";
+        return 0;
+      }
+      refill_buffer(param_1);
+      uVar6 = *param_1->img_buffer;
+      param_1->img_buffer = param_1->img_buffer + 1;
     }
-    if (uVar8 == 'I') {
-      puVar1 = psVar3->img_buffer;
-      if (puVar1 < psVar3->img_buffer_end) {
-        uVar8 = *puVar1;
+    if (uVar6 == 'I') {
+      puVar1 = param_1->img_buffer;
+      if (puVar1 < param_1->img_buffer_end) {
+        uVar6 = *puVar1;
       }
       else {
-        if (psVar3->from_file == 0) goto LAB_827f7e84;
-        refill_buffer(psVar3);
-        puVar1 = psVar3->img_buffer;
-        uVar8 = *puVar1;
+        if (param_1->from_file == 0) {
+          failure_reason = "not GIF";
+          return 0;
+        }
+        refill_buffer(param_1);
+        puVar1 = param_1->img_buffer;
+        uVar6 = *puVar1;
       }
-      puVar6 = puVar1 + 1;
-      psVar3->img_buffer = puVar6;
-      if (uVar8 == 'F') {
-        if (puVar6 < psVar3->img_buffer_end) {
-          uVar8 = *puVar6;
-          psVar3->img_buffer = puVar1 + 2;
+      puVar4 = puVar1 + 1;
+      param_1->img_buffer = puVar4;
+      if (uVar6 == 'F') {
+        if (puVar4 < param_1->img_buffer_end) {
+          uVar6 = *puVar4;
+          param_1->img_buffer = puVar1 + 2;
         }
         else {
-          if (psVar3->from_file == 0) goto LAB_827f7e84;
-          refill_buffer(psVar3);
-          uVar8 = *psVar3->img_buffer;
-          psVar3->img_buffer = psVar3->img_buffer + 1;
-        }
-        if (uVar8 == '8') {
-          puVar1 = psVar3->img_buffer;
-          if (puVar1 < psVar3->img_buffer_end) {
-            uVar8 = *puVar1;
-            psVar3->img_buffer = puVar1 + 1;
+          if (param_1->from_file == 0) {
+            failure_reason = "not GIF";
+            return 0;
           }
-          else if (psVar3->from_file == 0) {
-            uVar8 = '\0';
+          refill_buffer(param_1);
+          uVar6 = *param_1->img_buffer;
+          param_1->img_buffer = param_1->img_buffer + 1;
+        }
+        if (uVar6 == '8') {
+          puVar1 = param_1->img_buffer;
+          if (puVar1 < param_1->img_buffer_end) {
+            uVar6 = *puVar1;
+            param_1->img_buffer = puVar1 + 1;
+          }
+          else if (param_1->from_file == 0) {
+            uVar6 = '\0';
           }
           else {
-            refill_buffer(psVar3);
-            uVar8 = *psVar3->img_buffer;
-            psVar3->img_buffer = psVar3->img_buffer + 1;
+            refill_buffer(param_1);
+            uVar6 = *param_1->img_buffer;
+            param_1->img_buffer = param_1->img_buffer + 1;
           }
-          if ((uVar8 == '7') || (uVar8 == '9')) {
-            puVar1 = psVar3->img_buffer;
-            if (puVar1 < psVar3->img_buffer_end) {
-              uVar8 = *puVar1;
-              psVar3->img_buffer = puVar1 + 1;
+          if ((uVar6 == '7') || (uVar6 == '9')) {
+            puVar1 = param_1->img_buffer;
+            if (puVar1 < param_1->img_buffer_end) {
+              uVar6 = *puVar1;
+              param_1->img_buffer = puVar1 + 1;
             }
             else {
-              if (psVar3->from_file == 0) goto LAB_827f7e84;
-              refill_buffer(psVar3);
-              uVar8 = *psVar3->img_buffer;
-              psVar3->img_buffer = psVar3->img_buffer + 1;
+              if (param_1->from_file == 0) {
+                failure_reason = "not GIF";
+                return 0;
+              }
+              refill_buffer(param_1);
+              uVar6 = *param_1->img_buffer;
+              param_1->img_buffer = param_1->img_buffer + 1;
             }
-            if (uVar8 == 'a') {
+            if (uVar6 == 'a') {
               failure_reason = "";
-              iVar4 = get16le(psVar3);
-              param_2->w = iVar4;
-              iVar4 = get16le(psVar3);
-              param_2->h = iVar4;
-              pbVar2 = psVar3->img_buffer;
-              if (pbVar2 < psVar3->img_buffer_end) {
-                uVar7 = (uint)*pbVar2;
-                psVar3->img_buffer = pbVar2 + 1;
+              iVar3 = get16le(param_1);
+              param_2->w = iVar3;
+              iVar3 = get16le(param_1);
+              param_2->h = iVar3;
+              pbVar2 = param_1->img_buffer;
+              if (pbVar2 < param_1->img_buffer_end) {
+                uVar5 = (uint)*pbVar2;
+                param_1->img_buffer = pbVar2 + 1;
               }
-              else if (psVar3->from_file == 0) {
-                uVar7 = 0;
-              }
-              else {
-                refill_buffer(psVar3);
-                uVar7 = (uint)*psVar3->img_buffer;
-                psVar3->img_buffer = psVar3->img_buffer + 1;
-              }
-              param_2->flags = uVar7;
-              pbVar2 = psVar3->img_buffer;
-              if (pbVar2 < psVar3->img_buffer_end) {
-                uVar7 = (uint)*pbVar2;
-                psVar3->img_buffer = pbVar2 + 1;
-              }
-              else if (psVar3->from_file == 0) {
-                uVar7 = 0;
+              else if (param_1->from_file == 0) {
+                uVar5 = 0;
               }
               else {
-                refill_buffer(psVar3);
-                uVar7 = (uint)*psVar3->img_buffer;
-                psVar3->img_buffer = psVar3->img_buffer + 1;
+                refill_buffer(param_1);
+                uVar5 = (uint)*param_1->img_buffer;
+                param_1->img_buffer = param_1->img_buffer + 1;
               }
-              param_2->bgindex = uVar7;
-              pbVar2 = psVar3->img_buffer;
-              if (pbVar2 < psVar3->img_buffer_end) {
-                uVar7 = (uint)*pbVar2;
-                psVar3->img_buffer = pbVar2 + 1;
+              param_2->flags = uVar5;
+              pbVar2 = param_1->img_buffer;
+              if (pbVar2 < param_1->img_buffer_end) {
+                uVar5 = (uint)*pbVar2;
+                param_1->img_buffer = pbVar2 + 1;
               }
-              else if (psVar3->from_file == 0) {
-                uVar7 = 0;
+              else if (param_1->from_file == 0) {
+                uVar5 = 0;
               }
               else {
-                refill_buffer(psVar3);
-                uVar7 = (uint)*psVar3->img_buffer;
-                psVar3->img_buffer = psVar3->img_buffer + 1;
+                refill_buffer(param_1);
+                uVar5 = (uint)*param_1->img_buffer;
+                param_1->img_buffer = param_1->img_buffer + 1;
               }
-              param_2->ratio = uVar7;
+              param_2->bgindex = uVar5;
+              pbVar2 = param_1->img_buffer;
+              if (pbVar2 < param_1->img_buffer_end) {
+                uVar5 = (uint)*pbVar2;
+                param_1->img_buffer = pbVar2 + 1;
+              }
+              else if (param_1->from_file == 0) {
+                uVar5 = 0;
+              }
+              else {
+                refill_buffer(param_1);
+                uVar5 = (uint)*param_1->img_buffer;
+                param_1->img_buffer = param_1->img_buffer + 1;
+              }
+              param_2->ratio = uVar5;
               param_2->transparent = -1;
-              if ((uVar5 & 0xffffffff) != 0) {
-                *(undefined4 *)uVar5 = 4;
+              if (param_3 != (int *)0x0) {
+                *param_3 = 4;
               }
               if ((param_4 == 0) && ((param_2->flags & 0x80U) != 0)) {
-                stbi_gif_parse_colortable(psVar3,param_2->pal,2 << (param_2->flags & 7U),-1);
+                stbi_gif_parse_colortable(param_1,param_2->pal,2 << (param_2->flags & 7U),-1);
               }
-              iVar4 = __restgprlr_28(1);
-              return iVar4;
+              return 1;
             }
           }
         }
       }
     }
   }
-LAB_827f7e84:
   failure_reason = "not GIF";
-  iVar4 = __restgprlr_28(0);
-  return iVar4;
+  return 0;
 }
 
 
@@ -10520,221 +10241,212 @@ void stbi_out_gif_code(stbi_gif_struct *param_1,ushort param_2)
 
 // 827F8058  stbi_process_gif_raster  (mjpeg/stb_image.c:4591)
 
+/* WARNING: Function: __savegprlr_15 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_15 replaced with injection: xenon_save_restore */
+
 uchar * stbi_process_gif_raster(stbi *param_1,stbi_gif_struct *param_2)
 
 {
   byte bVar1;
-  uchar uVar2;
-  byte *pbVar3;
-  uint uVar4;
-  bool bVar5;
-  stbi *psVar6;
-  stbi_gif_struct *psVar7;
-  uint uVar8;
+  byte *pbVar2;
+  uint uVar3;
+  bool bVar4;
+  uint uVar5;
+  uint uVar6;
+  stbi_gif_lzw_struct *psVar7;
+  int iVar8;
+  uchar uVar10;
   uchar *puVar9;
-  longlong lVar10;
+  ulonglong uVar11;
   uint uVar12;
-  longlong lVar11;
-  stbi_gif_lzw_struct *psVar13;
-  int iVar14;
-  char cVar15;
+  uint uVar13;
+  ulonglong uVar14;
+  uint uVar15;
   ulonglong uVar16;
   uint uVar17;
-  ulonglong uVar18;
-  uint uVar19;
-  ulonglong uVar20;
-  uint uVar21;
-  uint uVar22;
-  ulonglong uVar23;
-  ulonglong uVar24;
+  uint uVar18;
+  ulonglong uVar19;
   
-  lVar10 = (longlong)(int)param_2;
-  psVar6 = (stbi *)__savegprlr_15(param_1);
-  pbVar3 = psVar6->img_buffer;
-  if (pbVar3 < psVar6->img_buffer_end) {
-    uVar12 = (uint)*pbVar3;
-    psVar6->img_buffer = pbVar3 + 1;
+  pbVar2 = param_1->img_buffer;
+  if (pbVar2 < param_1->img_buffer_end) {
+    uVar6 = (uint)*pbVar2;
+    param_1->img_buffer = pbVar2 + 1;
   }
-  else if (psVar6->from_file == 0) {
-    uVar12 = 0;
+  else if (param_1->from_file == 0) {
+    uVar6 = 0;
   }
   else {
-    refill_buffer(psVar6);
-    uVar12 = (uint)*psVar6->img_buffer;
-    psVar6->img_buffer = psVar6->img_buffer + 1;
+    refill_buffer(param_1);
+    uVar6 = (uint)*param_1->img_buffer;
+    param_1->img_buffer = param_1->img_buffer + 1;
   }
-  uVar4 = 1 << (uVar12 & 0x3f);
-  uVar18 = (ulonglong)uVar4;
-  bVar5 = true;
-  uVar16 = 0;
-  uVar17 = 0;
-  if (uVar18 != 0) {
-    lVar11 = lVar10 + 0x81f;
-    uVar24 = uVar18;
-    cVar15 = '\0';
+  uVar3 = 1 << (uVar6 & 0x3f);
+  bVar4 = true;
+  uVar11 = 0;
+  uVar12 = 0;
+  if (uVar3 != 0) {
+    puVar9 = param_2->lpal[0xff] + 3;
+    uVar10 = '\0';
+    uVar13 = uVar3;
     do {
-      *(undefined2 *)((int)lVar11 + 1) = 0xffff;
-      *(char *)((int)lVar11 + 3) = cVar15;
-      lVar11 = lVar11 + 4;
-      *(char *)lVar11 = cVar15;
-      uVar24 = uVar24 - 1;
-      cVar15 = cVar15 + '\x01';
-    } while (uVar24 != 0);
+      *(undefined2 *)(puVar9 + 1) = 0xffff;
+      puVar9[3] = uVar10;
+      puVar9 = puVar9 + 4;
+      *puVar9 = uVar10;
+      uVar13 = uVar13 - 1;
+      uVar10 = uVar10 + '\x01';
+    } while (uVar13 != 0);
   }
-  uVar19 = 0;
+  uVar13 = 0;
   do {
-    uVar20 = (ulonglong)(uint)(1 << (uVar12 + 1 & 0x3f)) - 1;
-    uVar24 = 0xffffffffffffffff;
-    lVar11 = uVar18 + 2;
-    uVar21 = uVar12 + 1;
+    uVar14 = (ulonglong)(uint)(1 << (uVar6 + 1 & 0x3f)) - 1;
+    uVar16 = 0xffffffffffffffff;
+    uVar15 = uVar6 + 1;
+    uVar17 = uVar3 + 2;
     while( true ) {
-      while (psVar7 = (stbi_gif_struct *)lVar10, (int)uVar17 < (int)uVar21) {
-        if (uVar19 == 0) {
-          pbVar3 = psVar6->img_buffer;
-          if (pbVar3 < psVar6->img_buffer_end) {
-            bVar1 = *pbVar3;
-            psVar6->img_buffer = pbVar3 + 1;
+      while ((int)uVar12 < (int)uVar15) {
+        if (uVar13 == 0) {
+          pbVar2 = param_1->img_buffer;
+          if (pbVar2 < param_1->img_buffer_end) {
+            bVar1 = *pbVar2;
+            param_1->img_buffer = pbVar2 + 1;
           }
           else {
-            if (psVar6->from_file == 0) goto LAB_827f8358;
-            puVar9 = psVar6->buffer_start;
-            uVar19 = fread(puVar9,1,psVar6->buflen,psVar6->img_file);
-            if (uVar19 == 0) {
-              psVar6->from_file = 0;
-              psVar6->img_buffer = psVar6->img_buffer_end + -1;
-              psVar6->img_buffer_end[-1] = '\0';
+            if (param_1->from_file == 0) goto LAB_827f8358;
+            puVar9 = param_1->buffer_start;
+            uVar13 = fread(puVar9,1,param_1->buflen,param_1->img_file);
+            if (uVar13 == 0) {
+              param_1->from_file = 0;
+              param_1->img_buffer = param_1->img_buffer_end + -1;
+              param_1->img_buffer_end[-1] = '\0';
             }
             else {
-              psVar6->img_buffer = puVar9;
-              psVar6->img_buffer_end = puVar9 + uVar19;
+              param_1->img_buffer = puVar9;
+              param_1->img_buffer_end = puVar9 + uVar13;
             }
-            bVar1 = *psVar6->img_buffer;
-            psVar6->img_buffer = psVar6->img_buffer + 1;
+            bVar1 = *param_1->img_buffer;
+            param_1->img_buffer = param_1->img_buffer + 1;
           }
-          uVar19 = (uint)bVar1;
-          if (uVar19 == 0) goto LAB_827f8358;
+          uVar13 = (uint)bVar1;
+          if (uVar13 == 0) goto LAB_827f8358;
         }
-        pbVar3 = psVar6->img_buffer;
-        uVar19 = uVar19 - 1;
-        if (pbVar3 < psVar6->img_buffer_end) {
-          bVar1 = *pbVar3;
-          psVar6->img_buffer = pbVar3 + 1;
-          uVar16 = (uint)bVar1 << (uVar17 & 0x3f) | uVar16;
-          uVar17 = uVar17 + 8;
+        pbVar2 = param_1->img_buffer;
+        uVar13 = uVar13 - 1;
+        if (pbVar2 < param_1->img_buffer_end) {
+          bVar1 = *pbVar2;
+          param_1->img_buffer = pbVar2 + 1;
+          uVar11 = (uint)bVar1 << (uVar12 & 0x3f) | uVar11;
+          uVar12 = uVar12 + 8;
         }
-        else if (psVar6->from_file == 0) {
-          uVar16 = (uint)(0 << (uVar17 & 0x3f)) | uVar16;
-          uVar17 = uVar17 + 8;
+        else if (param_1->from_file == 0) {
+          uVar11 = (uint)(0 << (uVar12 & 0x3f)) | uVar11;
+          uVar12 = uVar12 + 8;
         }
         else {
-          puVar9 = psVar6->buffer_start;
-          uVar8 = fread(puVar9,1,psVar6->buflen,psVar6->img_file);
-          if (uVar8 == 0) {
-            psVar6->from_file = 0;
-            psVar6->img_buffer = psVar6->img_buffer_end + -1;
-            psVar6->img_buffer_end[-1] = '\0';
+          puVar9 = param_1->buffer_start;
+          uVar5 = fread(puVar9,1,param_1->buflen,param_1->img_file);
+          if (uVar5 == 0) {
+            param_1->from_file = 0;
+            param_1->img_buffer = param_1->img_buffer_end + -1;
+            param_1->img_buffer_end[-1] = '\0';
           }
           else {
-            psVar6->img_buffer = puVar9;
-            psVar6->img_buffer_end = puVar9 + uVar8;
+            param_1->img_buffer = puVar9;
+            param_1->img_buffer_end = puVar9 + uVar5;
           }
-          bVar1 = *psVar6->img_buffer;
-          psVar6->img_buffer = psVar6->img_buffer + 1;
-          uVar16 = (uint)bVar1 << (uVar17 & 0x3f) | uVar16;
-          uVar17 = uVar17 + 8;
+          bVar1 = *param_1->img_buffer;
+          param_1->img_buffer = param_1->img_buffer + 1;
+          uVar11 = (uint)bVar1 << (uVar12 & 0x3f) | uVar11;
+          uVar12 = uVar12 + 8;
         }
       }
-      uVar23 = uVar16 & uVar20;
-      uVar16 = (ulonglong)((int)uVar16 >> (uVar21 & 0x3f));
-      uVar17 = uVar17 - uVar21;
-      uVar8 = (uint)uVar23;
-      if (uVar8 == uVar4) break;
-      if (uVar8 == uVar4 + 1) {
-        if (psVar6->img_file != (_iobuf *)0x0) {
-          iVar14 = (int)psVar6->img_buffer_end - (int)psVar6->img_buffer;
-          if (iVar14 < (int)uVar19) {
-            psVar6->img_buffer = psVar6->img_buffer_end;
-            fseek(psVar6->img_file,uVar19 - iVar14,1);
+      uVar19 = uVar11 & uVar14;
+      uVar11 = (ulonglong)((int)uVar11 >> (uVar15 & 0x3f));
+      uVar12 = uVar12 - uVar15;
+      uVar5 = (uint)uVar19;
+      if (uVar5 == uVar3) break;
+      if (uVar5 == uVar3 + 1) {
+        if (param_1->img_file != (_iobuf *)0x0) {
+          iVar8 = (int)param_1->img_buffer_end - (int)param_1->img_buffer;
+          if (iVar8 < (int)uVar13) {
+            param_1->img_buffer = param_1->img_buffer_end;
+            fseek(param_1->img_file,uVar13 - iVar8,1);
             goto LAB_827f83a4;
           }
         }
-        puVar9 = psVar6->img_buffer + uVar19;
+        puVar9 = param_1->img_buffer + uVar13;
         goto LAB_827f83a0;
       }
-      uVar22 = (uint)lVar11;
-      if ((int)uVar22 < (int)uVar8) {
+      if ((int)uVar17 < (int)uVar5) {
 LAB_827f8494:
         failure_reason = "illegal code in raster";
-        puVar9 = (uchar *)__restgprlr_15(0);
-        return puVar9;
+        return (uchar *)0x0;
       }
-      if (bVar5) {
+      if (bVar4) {
         failure_reason = "no clear code";
-        puVar9 = (uchar *)__restgprlr_15(0);
-        return puVar9;
+        return (uchar *)0x0;
       }
-      if ((int)uVar24 < 0) {
-        if (uVar8 == uVar22) goto LAB_827f8494;
+      if ((int)uVar16 < 0) {
+        if (uVar5 == uVar17) goto LAB_827f8494;
       }
       else {
-        lVar11 = lVar11 + 1;
-        psVar13 = psVar7->codes + uVar22;
-        if (0x1000 < (int)(uint)lVar11) {
+        uVar18 = uVar17 + 1;
+        psVar7 = param_2->codes + uVar17;
+        if (0x1000 < (int)uVar18) {
           failure_reason = "too many codes";
-          puVar9 = (uchar *)__restgprlr_15(0);
-          return puVar9;
+          return (uchar *)0x0;
         }
-        psVar13->prefix = (short)uVar24;
-        uVar2 = (&psVar7->codes[0].first)[(int)((uVar24 & 0xffffffff) << 2)];
-        psVar13->first = uVar2;
-        if (uVar8 == (uint)lVar11) {
-          psVar13->suffix = uVar2;
+        psVar7->prefix = (short)uVar16;
+        uVar10 = (&param_2->codes[0].first)[(int)((uVar16 & 0xffffffff) << 2)];
+        psVar7->first = uVar10;
+        uVar17 = uVar18;
+        if (uVar5 == uVar18) {
+          psVar7->suffix = uVar10;
         }
         else {
-          psVar13->suffix = (&psVar7->codes[0].first)[(int)((uVar23 & 0xffffffff) << 2)];
+          psVar7->suffix = (&param_2->codes[0].first)[(int)((uVar19 & 0xffffffff) << 2)];
         }
       }
-      stbi_out_gif_code(psVar7,(ushort)uVar23);
-      uVar24 = uVar23;
-      if ((((uint)lVar11 & (uint)uVar20) == 0) && ((int)(uint)lVar11 < 0x1000)) {
-        uVar21 = uVar21 + 1;
-        uVar20 = (ulonglong)(uint)(1 << (uVar21 & 0x3f)) - 1;
+      stbi_out_gif_code(param_2,(ushort)uVar19);
+      uVar16 = uVar19;
+      if (((uVar17 & (uint)uVar14) == 0) && ((int)uVar17 < 0x1000)) {
+        uVar15 = uVar15 + 1;
+        uVar14 = (ulonglong)(uint)(1 << (uVar15 & 0x3f)) - 1;
       }
     }
-    bVar5 = false;
+    bVar4 = false;
   } while( true );
 LAB_827f83a0:
-  psVar6->img_buffer = puVar9;
+  param_1->img_buffer = puVar9;
 LAB_827f83a4:
   do {
-    if (psVar6->img_buffer_end <= psVar6->img_buffer) {
-      if (psVar6->from_file == 0) {
+    if (param_1->img_buffer_end <= param_1->img_buffer) {
+      if (param_1->from_file == 0) {
 LAB_827f8358:
-        puVar9 = (uchar *)__restgprlr_15(psVar7->out);
-        return puVar9;
+        return param_2->out;
       }
-      puVar9 = psVar6->buffer_start;
-      uVar12 = fread(puVar9,1,psVar6->buflen,psVar6->img_file);
-      if (uVar12 == 0) {
-        psVar6->from_file = 0;
-        psVar6->img_buffer = psVar6->img_buffer_end + -1;
-        psVar6->img_buffer_end[-1] = '\0';
+      puVar9 = param_1->buffer_start;
+      uVar6 = fread(puVar9,1,param_1->buflen,param_1->img_file);
+      if (uVar6 == 0) {
+        param_1->from_file = 0;
+        param_1->img_buffer = param_1->img_buffer_end + -1;
+        param_1->img_buffer_end[-1] = '\0';
       }
       else {
-        psVar6->img_buffer = puVar9;
-        psVar6->img_buffer_end = puVar9 + uVar12;
+        param_1->img_buffer = puVar9;
+        param_1->img_buffer_end = puVar9 + uVar6;
       }
     }
-    bVar1 = *psVar6->img_buffer;
-    psVar6->img_buffer = psVar6->img_buffer + 1;
+    bVar1 = *param_1->img_buffer;
+    param_1->img_buffer = param_1->img_buffer + 1;
     if (bVar1 == 0) goto LAB_827f8358;
-    if (psVar6->img_file == (_iobuf *)0x0) break;
-    iVar14 = (int)psVar6->img_buffer_end - (int)psVar6->img_buffer;
-    if ((int)(uint)bVar1 <= iVar14) break;
-    psVar6->img_buffer = psVar6->img_buffer_end;
-    fseek(psVar6->img_file,(uint)bVar1 - iVar14,1);
+    if (param_1->img_file == (_iobuf *)0x0) break;
+    iVar8 = (int)param_1->img_buffer_end - (int)param_1->img_buffer;
+    if ((int)(uint)bVar1 <= iVar8) break;
+    param_1->img_buffer = param_1->img_buffer_end;
+    fseek(param_1->img_file,(uint)bVar1 - iVar8,1);
   } while( true );
-  puVar9 = psVar6->img_buffer + bVar1;
+  puVar9 = param_1->img_buffer + bVar1;
   goto LAB_827f83a0;
 }
 
@@ -10767,328 +10479,323 @@ void stbi_fill_gif_background(stbi_gif_struct *param_1)
 
 // 827F8528  stbi_gif_load_next  (mjpeg/stb_image.c:4685)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
+
 uchar * stbi_gif_load_next(stbi *param_1,stbi_gif_struct *param_2,int *param_3,int param_4)
 
 {
   uchar uVar1;
   byte bVar2;
   byte *pbVar3;
-  stbi_gif_struct *psVar4;
+  int iVar4;
   int iVar5;
-  stbi *psVar6;
+  uchar *puVar6;
   int iVar7;
-  uchar *puVar8;
+  int iVar8;
   int iVar9;
-  int iVar10;
-  int iVar11;
-  uint uVar13;
+  uint uVar10;
+  undefined1 *puVar11;
   longlong lVar12;
-  longlong lVar14;
   
-  lVar12 = (longlong)(int)param_2;
-  psVar6 = (stbi *)__savegprlr_24(param_1);
-  psVar4 = (stbi_gif_struct *)lVar12;
-  if (psVar4->out != (uchar *)0x0) {
-    if ((psVar4->eflags & 0x1cU) == 0xc) {
-      uVar13 = psVar4->w * psVar4->h * 4;
-      if (alt_stb_malloc == (_func___cdecl_void_ptr_uint *)0x0) {
-        uVar13 = stbi_mem.index + uVar13;
-        if (uVar13 < stbi_mem.size) {
-          puVar8 = stbi_mem.data + stbi_mem.index;
-          stbi_mem.index = uVar13;
+  if (param_2->out == (uchar *)0x0) {
+    iVar5 = stbi_gif_header(param_1,param_2,param_3,0);
+    if (iVar5 == 0) {
+      return (uchar *)0x0;
+    }
+    uVar10 = param_2->h * param_2->w * 4;
+    if (alt_stb_malloc == (_func___cdecl_void_ptr_uint *)0x0) {
+      uVar10 = stbi_mem.index + uVar10;
+      if (uVar10 < stbi_mem.size) {
+        puVar6 = stbi_mem.data + stbi_mem.index;
+        stbi_mem.index = uVar10;
+      }
+      else {
+        puVar6 = (uchar *)0x0;
+      }
+    }
+    else {
+      puVar6 = (*alt_stb_malloc)(uVar10);
+    }
+    param_2->out = puVar6;
+    if (puVar6 == (uchar *)0x0) {
+      failure_reason = "outofmem";
+      return (uchar *)0x0;
+    }
+    stbi_fill_gif_background(param_2);
+  }
+  else if ((param_2->eflags & 0x1cU) == 0xc) {
+    uVar10 = param_2->w * param_2->h * 4;
+    if (alt_stb_malloc == (_func___cdecl_void_ptr_uint *)0x0) {
+      uVar10 = stbi_mem.index + uVar10;
+      if (uVar10 < stbi_mem.size) {
+        puVar6 = stbi_mem.data + stbi_mem.index;
+        stbi_mem.index = uVar10;
+      }
+      else {
+        puVar6 = (uchar *)0x0;
+      }
+    }
+    else {
+      puVar6 = (*alt_stb_malloc)(uVar10);
+    }
+    param_2->out = puVar6;
+    if (puVar6 == (uchar *)0x0) {
+      failure_reason = "outofmem";
+      return (uchar *)0x0;
+    }
+    memcpy();
+  }
+LAB_827f867c:
+  if (param_1->img_buffer_end <= param_1->img_buffer) {
+    if (param_1->from_file == 0) {
+      failure_reason = "unknown code";
+      return (uchar *)0x0;
+    }
+    refill_buffer(param_1);
+  }
+  puVar6 = param_1->img_buffer + 1;
+  uVar1 = *param_1->img_buffer;
+  param_1->img_buffer = puVar6;
+  if (uVar1 != '!') {
+    if (uVar1 != ',') {
+      if (uVar1 == ';') {
+        return (uchar *)0x1;
+      }
+      failure_reason = "unknown code";
+      return (uchar *)0x0;
+    }
+    iVar5 = get16le(param_1);
+    iVar7 = get16le(param_1);
+    iVar8 = get16le(param_1);
+    iVar9 = get16le(param_1);
+    if ((param_2->w < iVar8 + iVar5) || (param_2->h < iVar9 + iVar7)) {
+      failure_reason = "bad Image Descriptor";
+    }
+    else {
+      iVar4 = param_2->w * 4;
+      iVar5 = iVar5 * 4;
+      param_2->cur_x = iVar5;
+      iVar7 = iVar4 * iVar7;
+      param_2->line_size = iVar4;
+      param_2->start_x = iVar5;
+      param_2->cur_y = iVar7;
+      param_2->start_y = iVar7;
+      param_2->max_x = iVar8 * 4 + iVar5;
+      param_2->max_y = iVar4 * iVar9 + iVar7;
+      pbVar3 = param_1->img_buffer;
+      if (pbVar3 < param_1->img_buffer_end) {
+        uVar10 = (uint)*pbVar3;
+        param_1->img_buffer = pbVar3 + 1;
+      }
+      else if (param_1->from_file == 0) {
+        uVar10 = 0;
+      }
+      else {
+        refill_buffer(param_1);
+        uVar10 = (uint)*param_1->img_buffer;
+        param_1->img_buffer = param_1->img_buffer + 1;
+      }
+      param_2->lflags = uVar10;
+      if ((uVar10 & 0x40) == 0) {
+        param_2->parse = 0;
+        param_2->step = param_2->line_size;
+      }
+      else {
+        param_2->parse = 3;
+        param_2->step = param_2->line_size << 3;
+      }
+      if ((uVar10 & 0x80) == 0) {
+        if ((param_2->flags & 0x80U) == 0) {
+          failure_reason = "missing color table";
+          return (uchar *)0x0;
+        }
+        puVar11 = (undefined1 *)((int)&param_2->eflags + 3);
+        lVar12 = 0x100;
+        do {
+          puVar11 = puVar11 + 4;
+          *puVar11 = 0xff;
+          lVar12 = lVar12 + -1;
+        } while (lVar12 != 0);
+        if ((-1 < param_2->transparent) && ((param_2->eflags & 1U) != 0)) {
+          param_2->pal[param_2->transparent][3] = '\0';
+        }
+        param_2->color_table = param_2->pal[0];
+      }
+      else {
+        if ((param_2->eflags & 1U) == 0) {
+          iVar5 = -1;
         }
         else {
-          puVar8 = (uchar *)0x0;
+          iVar5 = param_2->transparent;
         }
+        stbi_gif_parse_colortable(param_1,param_2->lpal,2 << (uVar10 & 7),iVar5);
+        param_2->color_table = param_2->lpal[0];
       }
-      else {
-        puVar8 = (*alt_stb_malloc)(uVar13);
+      puVar6 = stbi_process_gif_raster(param_1,param_2);
+      if (puVar6 != (uchar *)0x0) {
+        if (param_4 == 0) {
+          return puVar6;
+        }
+        if (param_4 != 4) {
+          puVar6 = convert_format(puVar6,4,param_4,param_2->w,param_2->h);
+          return puVar6;
+        }
+        return puVar6;
       }
-      psVar4->out = puVar8;
-      if (puVar8 == (uchar *)0x0) goto LAB_827f85cc;
-      memcpy();
     }
-LAB_827f867c:
-    do {
-      if (psVar6->img_buffer_end <= psVar6->img_buffer) {
-        if (psVar6->from_file == 0) goto LAB_827f88e8;
-        refill_buffer(psVar6);
-      }
-      puVar8 = psVar6->img_buffer + 1;
-      uVar1 = *psVar6->img_buffer;
-      psVar6->img_buffer = puVar8;
-      if (uVar1 != '!') goto LAB_827f88d8;
-      if (psVar6->img_buffer_end <= puVar8) {
-        if (psVar6->from_file == 0) goto LAB_827f880c;
-        refill_buffer(psVar6);
-      }
-      puVar8 = psVar6->img_buffer + 1;
-      uVar1 = *psVar6->img_buffer;
-      psVar6->img_buffer = puVar8;
-      if (uVar1 != 0xf9) goto LAB_827f880c;
-      if (puVar8 < psVar6->img_buffer_end) {
+    return (uchar *)0x0;
+  }
+  if (param_1->img_buffer_end <= puVar6) {
+    if (param_1->from_file == 0) goto LAB_827f880c;
+    refill_buffer(param_1);
+  }
+  puVar6 = param_1->img_buffer + 1;
+  uVar1 = *param_1->img_buffer;
+  param_1->img_buffer = puVar6;
+  if (uVar1 != 0xf9) goto LAB_827f880c;
+  if (puVar6 < param_1->img_buffer_end) {
 LAB_827f8710:
-        pbVar3 = psVar6->img_buffer;
-        bVar2 = *pbVar3;
-        uVar13 = (uint)bVar2;
-        psVar6->img_buffer = pbVar3 + 1;
-        if (bVar2 == 4) {
-          if (pbVar3 + 1 < psVar6->img_buffer_end) {
-            uVar13 = (uint)pbVar3[1];
-            psVar6->img_buffer = pbVar3 + 2;
-          }
-          else if (psVar6->from_file == 0) {
-            uVar13 = 0;
-          }
-          else {
-            refill_buffer(psVar6);
-            uVar13 = (uint)*psVar6->img_buffer;
-            psVar6->img_buffer = psVar6->img_buffer + 1;
-          }
-          psVar4->eflags = uVar13;
-          get16le(psVar6);
-          pbVar3 = psVar6->img_buffer;
-          if (pbVar3 < psVar6->img_buffer_end) {
-            uVar13 = (uint)*pbVar3;
-            psVar6->img_buffer = pbVar3 + 1;
-          }
-          else if (psVar6->from_file == 0) {
-            uVar13 = 0;
-          }
-          else {
-            refill_buffer(psVar6);
-            uVar13 = (uint)*psVar6->img_buffer;
-            psVar6->img_buffer = psVar6->img_buffer + 1;
-          }
-          psVar4->transparent = uVar13;
+    pbVar3 = param_1->img_buffer;
+    bVar2 = *pbVar3;
+    uVar10 = (uint)bVar2;
+    param_1->img_buffer = pbVar3 + 1;
+    if (bVar2 == 4) {
+      if (pbVar3 + 1 < param_1->img_buffer_end) {
+        uVar10 = (uint)pbVar3[1];
+        param_1->img_buffer = pbVar3 + 2;
+      }
+      else if (param_1->from_file == 0) {
+        uVar10 = 0;
+      }
+      else {
+        refill_buffer(param_1);
+        uVar10 = (uint)*param_1->img_buffer;
+        param_1->img_buffer = param_1->img_buffer + 1;
+      }
+      param_2->eflags = uVar10;
+      get16le(param_1);
+      pbVar3 = param_1->img_buffer;
+      if (pbVar3 < param_1->img_buffer_end) {
+        uVar10 = (uint)*pbVar3;
+        param_1->img_buffer = pbVar3 + 1;
+      }
+      else if (param_1->from_file == 0) {
+        uVar10 = 0;
+      }
+      else {
+        refill_buffer(param_1);
+        uVar10 = (uint)*param_1->img_buffer;
+        param_1->img_buffer = param_1->img_buffer + 1;
+      }
+      param_2->transparent = uVar10;
 LAB_827f880c:
-          do {
-            if (psVar6->img_buffer_end <= psVar6->img_buffer) {
-              if (psVar6->from_file == 0) goto LAB_827f867c;
-              puVar8 = psVar6->buffer_start;
-              uVar13 = fread(puVar8,1,psVar6->buflen,psVar6->img_file);
-              if (uVar13 == 0) {
-                psVar6->from_file = 0;
-                psVar6->img_buffer = psVar6->img_buffer_end + -1;
-                psVar6->img_buffer_end[-1] = '\0';
-              }
-              else {
-                psVar6->img_buffer = puVar8;
-                psVar6->img_buffer_end = puVar8 + uVar13;
-              }
-            }
-            bVar2 = *psVar6->img_buffer;
-            psVar6->img_buffer = psVar6->img_buffer + 1;
-            if (bVar2 == 0) goto LAB_827f867c;
-            if (psVar6->img_file != (_iobuf *)0x0) {
-              iVar7 = (int)psVar6->img_buffer_end - (int)psVar6->img_buffer;
-              if (iVar7 < (int)(uint)bVar2) {
-                psVar6->img_buffer = psVar6->img_buffer_end;
-                fseek(psVar6->img_file,(uint)bVar2 - iVar7,1);
-                goto LAB_827f880c;
-              }
-            }
-            psVar6->img_buffer = psVar6->img_buffer + bVar2;
-          } while( true );
+      if (param_1->img_buffer_end <= param_1->img_buffer) {
+        if (param_1->from_file == 0) goto LAB_827f867c;
+        puVar6 = param_1->buffer_start;
+        uVar10 = fread(puVar6,1,param_1->buflen,param_1->img_file);
+        if (uVar10 == 0) {
+          param_1->from_file = 0;
+          param_1->img_buffer = param_1->img_buffer_end + -1;
+          param_1->img_buffer_end[-1] = '\0';
         }
+        else {
+          param_1->img_buffer = puVar6;
+          param_1->img_buffer_end = puVar6 + uVar10;
+        }
+      }
+      bVar2 = *param_1->img_buffer;
+      param_1->img_buffer = param_1->img_buffer + 1;
+      if (bVar2 == 0) goto LAB_827f867c;
+      if (param_1->img_file == (_iobuf *)0x0) {
+LAB_827f88c8:
+        param_1->img_buffer = param_1->img_buffer + bVar2;
       }
       else {
-        if (psVar6->from_file != 0) {
-          refill_buffer(psVar6);
-          goto LAB_827f8710;
-        }
-        uVar13 = 0;
+        iVar5 = (int)param_1->img_buffer_end - (int)param_1->img_buffer;
+        if ((int)(uint)bVar2 <= iVar5) goto LAB_827f88c8;
+        param_1->img_buffer = param_1->img_buffer_end;
+        fseek(param_1->img_file,(uint)bVar2 - iVar5,1);
       }
-      if (psVar6->img_file != (_iobuf *)0x0) {
-        iVar7 = (int)psVar6->img_buffer_end - (int)psVar6->img_buffer;
-        if (iVar7 < (int)uVar13) {
-          psVar6->img_buffer = psVar6->img_buffer_end;
-          fseek(psVar6->img_file,uVar13 - iVar7,1);
-          goto LAB_827f867c;
-        }
-      }
-      psVar6->img_buffer = psVar6->img_buffer + uVar13;
-    } while( true );
-  }
-  iVar7 = stbi_gif_header(psVar6,psVar4,param_3,0);
-  if (iVar7 != 0) {
-    uVar13 = psVar4->h * psVar4->w * 4;
-    if (alt_stb_malloc == (_func___cdecl_void_ptr_uint *)0x0) {
-      uVar13 = stbi_mem.index + uVar13;
-      if (uVar13 < stbi_mem.size) {
-        puVar8 = stbi_mem.data + stbi_mem.index;
-        stbi_mem.index = uVar13;
-      }
-      else {
-        puVar8 = (uchar *)0x0;
-      }
+      goto LAB_827f880c;
     }
-    else {
-      puVar8 = (*alt_stb_malloc)(uVar13);
-    }
-    psVar4->out = puVar8;
-    if (puVar8 == (uchar *)0x0) {
-LAB_827f85cc:
-      failure_reason = "outofmem";
-      puVar8 = (uchar *)__restgprlr_24(0);
-      return puVar8;
-    }
-    stbi_fill_gif_background(psVar4);
-    goto LAB_827f867c;
-  }
-  goto LAB_827f8b18;
-LAB_827f88d8:
-  if (uVar1 != ',') {
-    if (uVar1 == ';') {
-      puVar8 = (uchar *)__restgprlr_24(1);
-      return puVar8;
-    }
-LAB_827f88e8:
-    failure_reason = "unknown code";
-    puVar8 = (uchar *)__restgprlr_24(0);
-    return puVar8;
-  }
-  iVar7 = get16le(psVar6);
-  iVar9 = get16le(psVar6);
-  iVar10 = get16le(psVar6);
-  iVar11 = get16le(psVar6);
-  if ((psVar4->w < iVar10 + iVar7) || (psVar4->h < iVar11 + iVar9)) {
-    failure_reason = "bad Image Descriptor";
   }
   else {
-    iVar5 = psVar4->w * 4;
-    iVar7 = iVar7 * 4;
-    psVar4->cur_x = iVar7;
-    iVar9 = iVar5 * iVar9;
-    psVar4->line_size = iVar5;
-    psVar4->start_x = iVar7;
-    psVar4->cur_y = iVar9;
-    psVar4->start_y = iVar9;
-    psVar4->max_x = iVar10 * 4 + iVar7;
-    psVar4->max_y = iVar5 * iVar11 + iVar9;
-    pbVar3 = psVar6->img_buffer;
-    if (pbVar3 < psVar6->img_buffer_end) {
-      uVar13 = (uint)*pbVar3;
-      psVar6->img_buffer = pbVar3 + 1;
+    if (param_1->from_file != 0) {
+      refill_buffer(param_1);
+      goto LAB_827f8710;
     }
-    else if (psVar6->from_file == 0) {
-      uVar13 = 0;
-    }
-    else {
-      refill_buffer(psVar6);
-      uVar13 = (uint)*psVar6->img_buffer;
-      psVar6->img_buffer = psVar6->img_buffer + 1;
-    }
-    psVar4->lflags = uVar13;
-    if ((uVar13 & 0x40) == 0) {
-      psVar4->parse = 0;
-      psVar4->step = psVar4->line_size;
-    }
-    else {
-      psVar4->parse = 3;
-      psVar4->step = psVar4->line_size << 3;
-    }
-    if ((uVar13 & 0x80) == 0) {
-      if ((psVar4->flags & 0x80U) == 0) {
-        failure_reason = "missing color table";
-        puVar8 = (uchar *)__restgprlr_24(0);
-        return puVar8;
-      }
-      lVar12 = lVar12 + 0x1f;
-      lVar14 = 0x100;
-      do {
-        lVar12 = lVar12 + 4;
-        *(undefined1 *)lVar12 = 0xff;
-        lVar14 = lVar14 + -1;
-      } while (lVar14 != 0);
-      if ((-1 < psVar4->transparent) && ((psVar4->eflags & 1U) != 0)) {
-        psVar4->pal[psVar4->transparent][3] = '\0';
-      }
-      psVar4->color_table = psVar4->pal[0];
-    }
-    else {
-      if ((psVar4->eflags & 1U) == 0) {
-        iVar7 = -1;
-      }
-      else {
-        iVar7 = psVar4->transparent;
-      }
-      stbi_gif_parse_colortable(psVar6,psVar4->lpal,2 << (uVar13 & 7),iVar7);
-      psVar4->color_table = psVar4->lpal[0];
-    }
-    puVar8 = stbi_process_gif_raster(psVar6,psVar4);
-    if (puVar8 != (uchar *)0x0) {
-      if ((param_4 != 0) && (param_4 != 4)) {
-        puVar8 = convert_format(puVar8,4,param_4,psVar4->w,psVar4->h);
-        puVar8 = (uchar *)__restgprlr_24(puVar8);
-        return puVar8;
-      }
-      goto LAB_827f8b1c;
+    uVar10 = 0;
+  }
+  if (param_1->img_file != (_iobuf *)0x0) {
+    iVar5 = (int)param_1->img_buffer_end - (int)param_1->img_buffer;
+    if (iVar5 < (int)uVar10) {
+      param_1->img_buffer = param_1->img_buffer_end;
+      fseek(param_1->img_file,uVar10 - iVar5,1);
+      goto LAB_827f867c;
     }
   }
-LAB_827f8b18:
-  puVar8 = (uchar *)0x0;
-LAB_827f8b1c:
-  puVar8 = (uchar *)__restgprlr_24(puVar8);
-  return puVar8;
+  param_1->img_buffer = param_1->img_buffer + uVar10;
+  goto LAB_827f867c;
 }
 
 
 // 827FA6A8  stbi_gif_load  (mjpeg/stb_image.c:4786)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 uchar * stbi_gif_load(char *param_1,int *param_2,int *param_3,int *param_4,int param_5)
 
 {
-  char *pcVar1;
-  _iobuf *p_Var2;
-  uchar *puVar3;
+  _iobuf *p_Var1;
+  uchar *puVar2;
   
-  pcVar1 = (char *)__savegprlr_27(param_1);
-  p_Var2 = fopen(pcVar1,"rb");
-  if (p_Var2 == (_iobuf *)0x0) {
-    puVar3 = (uchar *)__restgprlr_27();
-    return puVar3;
+  p_Var1 = fopen(param_1,"rb");
+  if (p_Var1 == (_iobuf *)0x0) {
+    return (uchar *)0x0;
   }
-  puVar3 = stbi_gif_load_from_file(p_Var2,param_2,param_3,param_4,param_5);
-  fclose(p_Var2);
-  puVar3 = (uchar *)__restgprlr_27(puVar3);
-  return puVar3;
+  puVar2 = stbi_gif_load_from_file(p_Var1,param_2,param_3,param_4,param_5);
+  fclose(p_Var1);
+  return puVar2;
 }
 
 
 // 827F8B28  stbi_gif_load_from_file  (mjpeg/stb_image.c:4796)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 uchar * stbi_gif_load_from_file(_iobuf *param_1,int *param_2,int *param_3,int *param_4,int param_5)
 
 {
-  _iobuf *p_Var1;
-  uchar *puVar2;
+  uchar *puVar1;
   stbi sStack_4930;
   stbi_gif_struct local_4880;
   
-  p_Var1 = (_iobuf *)__savegprlr_27(param_1);
   local_4880.w = 0;
   memset();
   sStack_4930.img_buffer_end = (uchar *)&sStack_4930.from_file;
   sStack_4930.img_buffer = (uchar *)&sStack_4930.from_file;
   sStack_4930.buflen = 0x80;
   sStack_4930.from_file = 1;
-  sStack_4930.img_file = p_Var1;
-  puVar2 = stbi_gif_load_next(&sStack_4930,&local_4880,param_4,param_5);
-  if (puVar2 == (uchar *)0x1) {
-    puVar2 = (uchar *)__restgprlr_27(0);
-    return puVar2;
+  sStack_4930.img_file = param_1;
+  puVar1 = stbi_gif_load_next(&sStack_4930,&local_4880,param_4,param_5);
+  if (puVar1 == (uchar *)0x1) {
+    return (uchar *)0x0;
   }
-  if (puVar2 != (uchar *)0x0) {
+  if (puVar1 != (uchar *)0x0) {
     *param_2 = local_4880.w;
     *param_3 = local_4880.h;
   }
-  puVar2 = (uchar *)__restgprlr_27();
-  return puVar2;
+  return puVar1;
 }
 
 
 // 827F8BE0  stbi_gif_load_from_memory  (mjpeg/stb_image.c:4814)
+
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 
 uchar * stbi_gif_load_from_memory
                   (uchar *param_1,int param_2,int *param_3,int *param_4,int *param_5,int param_6)
@@ -11098,70 +10805,66 @@ uchar * stbi_gif_load_from_memory
   stbi sStack_4940;
   stbi_gif_struct local_4890;
   
-  puVar1 = (uchar *)__savegprlr_25(param_1);
   local_4890.w = 0;
   memset();
-  sStack_4940.img_buffer_end = puVar1 + param_2;
+  sStack_4940.img_buffer_end = param_1 + param_2;
   sStack_4940.img_file = (_iobuf *)0x0;
   sStack_4940.from_file = 0;
-  sStack_4940.img_buffer = puVar1;
+  sStack_4940.img_buffer = param_1;
   puVar1 = stbi_gif_load_next(&sStack_4940,&local_4890,param_5,param_6);
   if (puVar1 == (uchar *)0x1) {
-    puVar1 = (uchar *)__restgprlr_25(0);
-    return puVar1;
+    return (uchar *)0x0;
   }
   if (puVar1 != (uchar *)0x0) {
     *param_3 = local_4890.w;
     *param_4 = local_4890.h;
   }
-  puVar1 = (uchar *)__restgprlr_25();
   return puVar1;
 }
 
 
 // 827FA718  stbi_gif_info  (mjpeg/stb_image.c:4830)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 int stbi_gif_info(char *param_1,int *param_2,int *param_3,int *param_4)
 
 {
-  char *pcVar1;
-  _iobuf *p_Var2;
-  int iVar3;
+  _iobuf *p_Var1;
+  int iVar2;
   
-  pcVar1 = (char *)__savegprlr_28(param_1);
-  p_Var2 = fopen(pcVar1,"rb");
-  if (p_Var2 == (_iobuf *)0x0) {
-    iVar3 = __restgprlr_28();
-    return iVar3;
+  p_Var1 = fopen(param_1,"rb");
+  if (p_Var1 == (_iobuf *)0x0) {
+    return 0;
   }
-  iVar3 = stbi_gif_info_from_file(p_Var2,param_2,param_3,param_4);
-  fclose(p_Var2);
-  iVar3 = __restgprlr_28(iVar3);
-  return iVar3;
+  iVar2 = stbi_gif_info_from_file(p_Var1,param_2,param_3,param_4);
+  fclose(p_Var1);
+  return iVar2;
 }
 
 
 // 827F8C88  stbi_gif_info_from_file  (mjpeg/stb_image.c:4840)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 int stbi_gif_info_from_file(_iobuf *param_1,int *param_2,int *param_3,int *param_4)
 
 {
-  _iobuf *p_Var1;
-  long lVar2;
-  int iVar3;
+  long lVar1;
+  int iVar2;
   stbi sStack_e0;
   
-  p_Var1 = (_iobuf *)__savegprlr_27(param_1);
-  lVar2 = ftell(p_Var1);
+  lVar1 = ftell(param_1);
   sStack_e0.img_buffer_end = (uchar *)&sStack_e0.from_file;
   sStack_e0.img_buffer = (uchar *)&sStack_e0.from_file;
   sStack_e0.buflen = 0x80;
   sStack_e0.from_file = 1;
-  sStack_e0.img_file = p_Var1;
-  iVar3 = stbi_gif_info_raw(&sStack_e0,param_2,param_3,param_4);
-  fseek(p_Var1,lVar2,0);
-  iVar3 = __restgprlr_27(iVar3);
-  return iVar3;
+  sStack_e0.img_file = param_1;
+  iVar2 = stbi_gif_info_raw(&sStack_e0,param_2,param_3,param_4);
+  fseek(param_1,lVar1,0);
+  return iVar2;
 }
 
 
@@ -11235,128 +10938,125 @@ int stbi_hdr_test_memory(uchar *param_1,int param_2)
 
 // 827F8E48  stbi_hdr_test_file  (mjpeg/stb_image.c:4884)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 int stbi_hdr_test_file(_iobuf *param_1)
 
 {
-  _iobuf *p_Var1;
-  long lVar2;
-  int iVar3;
+  long lVar1;
+  int iVar2;
   stbi sStack_d0;
   
-  p_Var1 = (_iobuf *)__savegprlr_29(param_1);
-  lVar2 = ftell(p_Var1);
+  lVar1 = ftell(param_1);
   sStack_d0.img_buffer_end = (uchar *)&sStack_d0.from_file;
   sStack_d0.img_buffer = (uchar *)&sStack_d0.from_file;
   sStack_d0.buflen = 0x80;
   sStack_d0.from_file = 1;
-  sStack_d0.img_file = p_Var1;
-  iVar3 = hdr_test(&sStack_d0);
-  fseek(p_Var1,lVar2,0);
-  iVar3 = __restgprlr_29(iVar3);
-  return iVar3;
+  sStack_d0.img_file = param_1;
+  iVar2 = hdr_test(&sStack_d0);
+  fseek(param_1,lVar1,0);
+  return iVar2;
 }
 
 
 // 827F8EB0  hdr_gettoken  (mjpeg/stb_image.c:4896)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 char * hdr_gettoken(stbi *param_1,char *param_2)
 
 {
-  stbi *psVar1;
-  int iVar2;
-  uchar *puVar3;
-  uint uVar4;
-  char *pcVar5;
-  longlong lVar6;
-  uchar uVar7;
-  int iVar8;
+  int iVar1;
+  uchar *puVar2;
+  uint uVar3;
+  uchar uVar4;
+  int iVar5;
   
-  lVar6 = (longlong)(int)param_2;
-  psVar1 = (stbi *)__savegprlr_26(param_1);
-  puVar3 = psVar1->img_buffer;
-  iVar8 = 0;
-  if (puVar3 < psVar1->img_buffer_end) {
-    uVar7 = *puVar3;
-    psVar1->img_buffer = puVar3 + 1;
+  puVar2 = param_1->img_buffer;
+  iVar5 = 0;
+  if (puVar2 < param_1->img_buffer_end) {
+    uVar4 = *puVar2;
+    param_1->img_buffer = puVar2 + 1;
   }
-  else if (psVar1->from_file == 0) {
-    uVar7 = '\0';
+  else if (param_1->from_file == 0) {
+    uVar4 = '\0';
   }
   else {
-    refill_buffer(psVar1);
-    uVar7 = *psVar1->img_buffer;
-    psVar1->img_buffer = psVar1->img_buffer + 1;
+    refill_buffer(param_1);
+    uVar4 = *param_1->img_buffer;
+    param_1->img_buffer = param_1->img_buffer + 1;
   }
 LAB_827f8f20:
-  if (psVar1->img_file == (_iobuf *)0x0) {
+  if (param_1->img_file == (_iobuf *)0x0) {
 LAB_827f8f48:
-    if (psVar1->img_buffer_end <= psVar1->img_buffer) goto LAB_827f9098;
+    if (param_1->img_buffer_end <= param_1->img_buffer) goto LAB_827f9098;
   }
   else {
-    iVar2 = feof(psVar1->img_file);
-    if (iVar2 != 0) {
-      if (psVar1->from_file != 0) goto LAB_827f8f48;
+    iVar1 = feof(param_1->img_file);
+    if (iVar1 != 0) {
+      if (param_1->from_file != 0) goto LAB_827f8f48;
       goto LAB_827f9098;
     }
   }
-  if (uVar7 == '\n') goto LAB_827f9098;
-  *(uchar *)(iVar8 + (int)lVar6) = uVar7;
-  iVar8 = iVar8 + 1;
-  if (iVar8 != 0x3ff) {
-    puVar3 = psVar1->img_buffer;
-    if (puVar3 < psVar1->img_buffer_end) {
-      uVar7 = *puVar3;
-      psVar1->img_buffer = puVar3 + 1;
+  if (uVar4 == '\n') goto LAB_827f9098;
+  param_2[iVar5] = uVar4;
+  iVar5 = iVar5 + 1;
+  if (iVar5 != 0x3ff) {
+    puVar2 = param_1->img_buffer;
+    if (puVar2 < param_1->img_buffer_end) {
+      uVar4 = *puVar2;
+      param_1->img_buffer = puVar2 + 1;
     }
-    else if (psVar1->from_file == 0) {
-      uVar7 = '\0';
+    else if (param_1->from_file == 0) {
+      uVar4 = '\0';
     }
     else {
-      puVar3 = psVar1->buffer_start;
-      uVar4 = fread(puVar3,1,psVar1->buflen,psVar1->img_file);
-      if (uVar4 == 0) {
-        psVar1->from_file = 0;
-        psVar1->img_buffer = psVar1->img_buffer_end + -1;
-        psVar1->img_buffer_end[-1] = '\0';
+      puVar2 = param_1->buffer_start;
+      uVar3 = fread(puVar2,1,param_1->buflen,param_1->img_file);
+      if (uVar3 == 0) {
+        param_1->from_file = 0;
+        param_1->img_buffer = param_1->img_buffer_end + -1;
+        param_1->img_buffer_end[-1] = '\0';
       }
       else {
-        psVar1->img_buffer = puVar3;
-        psVar1->img_buffer_end = puVar3 + uVar4;
+        param_1->img_buffer = puVar2;
+        param_1->img_buffer_end = puVar2 + uVar3;
       }
-      uVar7 = *psVar1->img_buffer;
-      psVar1->img_buffer = psVar1->img_buffer + 1;
+      uVar4 = *param_1->img_buffer;
+      param_1->img_buffer = param_1->img_buffer + 1;
     }
     goto LAB_827f8f20;
   }
 LAB_827f9010:
   do {
-    if (psVar1->img_file == (_iobuf *)0x0) {
+    if (param_1->img_file == (_iobuf *)0x0) {
 LAB_827f9034:
-      if (psVar1->img_buffer_end <= psVar1->img_buffer) goto LAB_827f9098;
+      if (param_1->img_buffer_end <= param_1->img_buffer) goto LAB_827f9098;
     }
     else {
-      iVar2 = feof(psVar1->img_file);
-      if (iVar2 != 0) {
-        if (psVar1->from_file != 0) goto LAB_827f9034;
+      iVar1 = feof(param_1->img_file);
+      if (iVar1 != 0) {
+        if (param_1->from_file != 0) goto LAB_827f9034;
         goto LAB_827f9098;
       }
     }
-    puVar3 = psVar1->img_buffer;
-    if (puVar3 < psVar1->img_buffer_end) {
-      uVar7 = *puVar3;
+    puVar2 = param_1->img_buffer;
+    if (puVar2 < param_1->img_buffer_end) {
+      uVar4 = *puVar2;
     }
     else {
-      if (psVar1->from_file == 0) goto LAB_827f9010;
-      refill_buffer(psVar1);
-      puVar3 = psVar1->img_buffer;
-      uVar7 = *puVar3;
+      if (param_1->from_file == 0) goto LAB_827f9010;
+      refill_buffer(param_1);
+      puVar2 = param_1->img_buffer;
+      uVar4 = *puVar2;
     }
-    psVar1->img_buffer = puVar3 + 1;
-    if (uVar7 == '\n') {
+    param_1->img_buffer = puVar2 + 1;
+    if (uVar4 == '\n') {
 LAB_827f9098:
-      *(undefined1 *)(iVar8 + (int)lVar6) = 0;
-      pcVar5 = (char *)__restgprlr_26(lVar6);
-      return pcVar5;
+      param_2[iVar5] = '\0';
+      return param_2;
     }
   } while( true );
 }
@@ -11364,67 +11064,63 @@ LAB_827f9098:
 
 // 827F90A8  hdr_convert  (mjpeg/stb_image.c:4918)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void hdr_convert(float *param_1,uchar *param_2,int param_3)
 
 {
   float fVar1;
-  float *pfVar2;
-  longlong lVar3;
-  ulonglong uVar4;
-  int iVar5;
-  double dVar6;
+  ulonglong uVar2;
+  double dVar3;
   
-  lVar3 = (longlong)param_3;
-  pfVar2 = (float *)__savegprlr_29(param_1);
-  if (param_2[3] == 0) {
-    uVar4 = lVar3 - 1;
-    if ((uVar4 & 0xffffffff) < 4) {
-      if ((int)uVar4 != 0) {
-        if (lVar3 != 2) {
-          if (uVar4 != 2) {
-            pfVar2[3] = 1.0;
+  if (param_2[3] == '\0') {
+    uVar2 = (longlong)param_3 - 1;
+    if ((uVar2 & 0xffffffff) < 4) {
+      if ((int)uVar2 != 0) {
+        if ((longlong)param_3 != 2) {
+          if (uVar2 != 2) {
+            param_1[3] = 1.0;
           }
-          pfVar2[2] = 0.0;
-          pfVar2[1] = 0.0;
-          *pfVar2 = 0.0;
-          __restgprlr_29();
+          param_1[2] = 0.0;
+          param_1[1] = 0.0;
+          *param_1 = 0.0;
           return;
         }
-        pfVar2[1] = 1.0;
+        param_1[1] = 1.0;
       }
-      *pfVar2 = 0.0;
+      *param_1 = 0.0;
     }
   }
   else {
-    dVar6 = ldexp(1.0,(int)pfVar2);
-    fVar1 = (float)dVar6;
-    iVar5 = (int)lVar3;
-    if (iVar5 < 3) {
-      *pfVar2 = (float)(longlong)(int)((uint)param_2[2] + (uint)param_2[1] + (uint)*param_2) * fVar1
-                * 0.33333334;
+    dVar3 = ldexp(1.0,(int)param_1);
+    fVar1 = (float)dVar3;
+    if (param_3 < 3) {
+      *param_1 = (float)(longlong)(int)((uint)param_2[2] + (uint)param_2[1] + (uint)*param_2) *
+                 fVar1 * 0.33333334;
     }
     else {
-      *pfVar2 = (float)*param_2 * fVar1;
-      pfVar2[1] = (float)param_2[1] * fVar1;
-      pfVar2[2] = (float)param_2[2] * fVar1;
+      *param_1 = (float)*param_2 * fVar1;
+      param_1[1] = (float)param_2[1] * fVar1;
+      param_1[2] = (float)param_2[2] * fVar1;
     }
-    if (iVar5 == 2) {
-      pfVar2[1] = 1.0;
-      __restgprlr_29();
+    if (param_3 == 2) {
+      param_1[1] = 1.0;
       return;
     }
-    if (iVar5 == 4) {
-      pfVar2[3] = 1.0;
-      __restgprlr_29();
+    if (param_3 == 4) {
+      param_1[3] = 1.0;
       return;
     }
   }
-  __restgprlr_29();
   return;
 }
 
 
 // 827F9220  hdr_load  (mjpeg/stb_image.c:4946)
+
+/* WARNING: Function: __savegprlr_20 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_20 replaced with injection: xenon_save_restore */
 
 float * hdr_load(stbi *param_1,int *param_2,int *param_3,int *param_4,int param_5)
 
@@ -11434,23 +11130,21 @@ float * hdr_load(stbi *param_1,int *param_2,int *param_3,int *param_4,int param_
   byte *pbVar3;
   uchar *puVar4;
   bool bVar5;
-  stbi *psVar6;
-  char *pcVar7;
-  float *pfVar8;
-  long lVar9;
-  uint uVar10;
-  uchar *puVar11;
+  char *pcVar6;
+  long lVar7;
+  uint uVar8;
+  float *pfVar9;
+  uchar *puVar10;
+  uint uVar11;
   uint uVar12;
-  uint uVar13;
-  uchar uVar16;
-  uchar *puVar14;
-  int iVar15;
+  uchar uVar15;
+  uchar *puVar13;
+  int iVar14;
+  int iVar16;
   int iVar17;
   int iVar18;
-  int iVar19;
-  char *pcVar20;
-  uchar uVar22;
-  int iVar21;
+  char *pcVar19;
+  int iVar20;
   char *local_480;
   uchar local_47c;
   uchar local_47b;
@@ -11458,277 +11152,271 @@ float * hdr_load(stbi *param_1,int *param_2,int *param_3,int *param_4,int param_
   uchar local_479;
   char acStack_470 [1136];
   
-  psVar6 = (stbi *)__savegprlr_20(param_1);
-  pcVar20 = "#?RADIANCE";
+  pcVar19 = "#?RADIANCE";
   bVar5 = false;
-  pcVar7 = hdr_gettoken(psVar6,acStack_470);
+  pcVar6 = hdr_gettoken(param_1,acStack_470);
   do {
-    cVar1 = *pcVar7;
-    cVar2 = *pcVar20;
+    cVar1 = *pcVar6;
+    cVar2 = *pcVar19;
     if (cVar1 == '\0') break;
-    pcVar7 = pcVar7 + 1;
-    pcVar20 = pcVar20 + 1;
+    pcVar6 = pcVar6 + 1;
+    pcVar19 = pcVar19 + 1;
   } while (cVar1 == cVar2);
   if (cVar1 != cVar2) {
     failure_reason = "not HDR";
-    pfVar8 = (float *)__restgprlr_20(0);
-    return pfVar8;
+    return (float *)0x0;
   }
-  pcVar7 = hdr_gettoken(psVar6,acStack_470);
-  local_480 = pcVar7;
-  if (*pcVar7 != '\0') {
-    pcVar20 = "FORMAT=32-bit_rle_rgbe";
+  pcVar6 = hdr_gettoken(param_1,acStack_470);
+  if (*pcVar6 != '\0') {
+    pcVar19 = "FORMAT=32-bit_rle_rgbe";
+    local_480 = pcVar6;
 LAB_827f92c8:
     do {
-      cVar1 = *pcVar7;
-      cVar2 = *pcVar20;
+      cVar1 = *pcVar6;
+      cVar2 = *pcVar19;
       if (cVar1 != '\0') {
-        pcVar7 = pcVar7 + 1;
-        pcVar20 = pcVar20 + 1;
+        pcVar6 = pcVar6 + 1;
+        pcVar19 = pcVar19 + 1;
         if (cVar1 == cVar2) goto LAB_827f92c8;
       }
       if (cVar1 == cVar2) {
         bVar5 = true;
       }
-      pcVar7 = hdr_gettoken(psVar6,acStack_470);
-      pcVar20 = "FORMAT=32-bit_rle_rgbe";
-      local_480 = pcVar7;
-    } while (*pcVar7 != '\0');
+      pcVar6 = hdr_gettoken(param_1,acStack_470);
+      pcVar19 = "FORMAT=32-bit_rle_rgbe";
+      local_480 = pcVar6;
+    } while (*pcVar6 != '\0');
     if (bVar5) {
-      pcVar7 = hdr_gettoken(psVar6,acStack_470);
-      local_480 = pcVar7;
+      pcVar6 = hdr_gettoken(param_1,acStack_470);
+      local_480 = pcVar6;
       strncmp();
-      if (pcVar7 == (char *)0x0) {
+      if (pcVar6 == (char *)0x0) {
         local_480 = local_480 + 3;
-        lVar9 = strtol(local_480,&local_480,10);
+        lVar7 = strtol(local_480,&local_480,10);
         cVar1 = *local_480;
-        pcVar7 = local_480;
+        pcVar6 = local_480;
         while (cVar1 == ' ') {
-          pcVar7 = pcVar7 + 1;
-          cVar1 = *pcVar7;
+          pcVar6 = pcVar6 + 1;
+          cVar1 = *pcVar6;
         }
-        local_480 = pcVar7;
+        local_480 = pcVar6;
         strncmp();
-        if (pcVar7 == (char *)0x0) {
+        if (pcVar6 == (char *)0x0) {
           local_480 = local_480 + 3;
-          uVar10 = strtol(local_480,(char **)0x0,10);
-          *param_2 = uVar10;
-          *param_3 = lVar9;
+          uVar8 = strtol(local_480,(char **)0x0,10);
+          *param_2 = uVar8;
+          *param_3 = lVar7;
           *param_4 = 3;
           if (param_5 == 0) {
             param_5 = 3;
           }
-          pfVar8 = stb_malloc(uVar10 * lVar9 * param_5 * 4);
-          if (((int)uVar10 < 8) || (0x7fff < (int)uVar10)) {
-            iVar17 = 0;
+          pfVar9 = stb_malloc(uVar8 * lVar7 * param_5 * 4);
+          if (((int)uVar8 < 8) || (0x7fff < (int)uVar8)) {
+            iVar16 = 0;
             goto LAB_827f98bc;
           }
-          puVar11 = (uchar *)0x0;
-          iVar17 = 0;
-          if (0 < lVar9) {
-            iVar18 = 0;
+          puVar10 = (uchar *)0x0;
+          iVar16 = 0;
+          if (0 < lVar7) {
+            iVar17 = 0;
             do {
-              puVar14 = psVar6->img_buffer;
-              if (puVar14 < psVar6->img_buffer_end) {
-                uVar16 = *puVar14;
-                psVar6->img_buffer = puVar14 + 1;
+              puVar13 = param_1->img_buffer;
+              if (puVar13 < param_1->img_buffer_end) {
+                uVar15 = *puVar13;
+                param_1->img_buffer = puVar13 + 1;
               }
-              else if (psVar6->from_file == 0) {
-                uVar16 = '\0';
-              }
-              else {
-                refill_buffer(psVar6);
-                uVar16 = *psVar6->img_buffer;
-                psVar6->img_buffer = psVar6->img_buffer + 1;
-              }
-              puVar14 = psVar6->img_buffer;
-              if (puVar14 < psVar6->img_buffer_end) {
-                uVar22 = *puVar14;
-                psVar6->img_buffer = puVar14 + 1;
-              }
-              else if (psVar6->from_file == 0) {
-                uVar22 = '\0';
+              else if (param_1->from_file == 0) {
+                uVar15 = '\0';
               }
               else {
-                refill_buffer(psVar6);
-                uVar22 = *psVar6->img_buffer;
-                psVar6->img_buffer = psVar6->img_buffer + 1;
+                refill_buffer(param_1);
+                uVar15 = *param_1->img_buffer;
+                param_1->img_buffer = param_1->img_buffer + 1;
               }
-              pbVar3 = psVar6->img_buffer;
-              if (pbVar3 < psVar6->img_buffer_end) {
-                uVar12 = (uint)*pbVar3;
-                psVar6->img_buffer = pbVar3 + 1;
+              puVar13 = param_1->img_buffer;
+              if (puVar13 < param_1->img_buffer_end) {
+                local_47b = *puVar13;
+                param_1->img_buffer = puVar13 + 1;
               }
-              else if (psVar6->from_file == 0) {
-                uVar12 = 0;
+              else if (param_1->from_file == 0) {
+                local_47b = '\0';
               }
               else {
-                refill_buffer(psVar6);
-                uVar12 = (uint)*psVar6->img_buffer;
-                psVar6->img_buffer = psVar6->img_buffer + 1;
+                refill_buffer(param_1);
+                local_47b = *param_1->img_buffer;
+                param_1->img_buffer = param_1->img_buffer + 1;
               }
-              if (((uVar16 != '\x02') || (uVar22 != '\x02')) || ((uVar12 & 0x80) != 0)) {
-                puVar14 = psVar6->img_buffer;
-                local_47a = (undefined1)uVar12;
-                local_47c = uVar16;
-                local_47b = uVar22;
-                if (puVar14 < psVar6->img_buffer_end) {
-                  local_479 = *puVar14;
-                  psVar6->img_buffer = puVar14 + 1;
+              pbVar3 = param_1->img_buffer;
+              if (pbVar3 < param_1->img_buffer_end) {
+                uVar11 = (uint)*pbVar3;
+                param_1->img_buffer = pbVar3 + 1;
+              }
+              else if (param_1->from_file == 0) {
+                uVar11 = 0;
+              }
+              else {
+                refill_buffer(param_1);
+                uVar11 = (uint)*param_1->img_buffer;
+                param_1->img_buffer = param_1->img_buffer + 1;
+              }
+              if (((uVar15 != '\x02') || (local_47b != '\x02')) || ((uVar11 & 0x80) != 0)) {
+                puVar13 = param_1->img_buffer;
+                local_47a = (undefined1)uVar11;
+                local_47c = uVar15;
+                if (puVar13 < param_1->img_buffer_end) {
+                  local_479 = *puVar13;
+                  param_1->img_buffer = puVar13 + 1;
                 }
-                else if (psVar6->from_file == 0) {
+                else if (param_1->from_file == 0) {
                   local_479 = '\0';
                 }
                 else {
-                  refill_buffer(psVar6);
-                  local_479 = *psVar6->img_buffer;
-                  psVar6->img_buffer = psVar6->img_buffer + 1;
+                  refill_buffer(param_1);
+                  local_479 = *param_1->img_buffer;
+                  param_1->img_buffer = param_1->img_buffer + 1;
                 }
-                hdr_convert(pfVar8,&local_47c,param_5);
-                iVar18 = 1;
-                iVar17 = 0;
+                hdr_convert(pfVar9,&local_47c,param_5);
+                iVar17 = 1;
+                iVar16 = 0;
                 if (alt_stb_free != (_func___cdecl_void_void_ptr *)0x0) {
-                  (*alt_stb_free)(puVar11);
+                  (*alt_stb_free)(puVar10);
                 }
                 do {
-                  getn(psVar6,&local_47c,4);
-                  hdr_convert(pfVar8 + (iVar17 * uVar10 + iVar18) * param_5,&local_47c,param_5);
-                  iVar18 = iVar18 + 1;
-                  while ((int)uVar10 <= iVar18) {
-                    iVar17 = iVar17 + 1;
+                  getn(param_1,&local_47c,4);
+                  hdr_convert(pfVar9 + (iVar16 * uVar8 + iVar17) * param_5,&local_47c,param_5);
+                  iVar17 = iVar17 + 1;
+                  while ((int)uVar8 <= iVar17) {
+                    iVar16 = iVar16 + 1;
 LAB_827f98bc:
-                    if (lVar9 <= iVar17) goto LAB_827f97b8;
-                    iVar18 = 0;
+                    if (lVar7 <= iVar16) {
+                      return pfVar9;
+                    }
+                    iVar17 = 0;
                   }
                 } while( true );
               }
-              pbVar3 = psVar6->img_buffer;
-              if (pbVar3 < psVar6->img_buffer_end) {
-                uVar13 = (uint)*pbVar3;
-                psVar6->img_buffer = pbVar3 + 1;
+              pbVar3 = param_1->img_buffer;
+              if (pbVar3 < param_1->img_buffer_end) {
+                uVar12 = (uint)*pbVar3;
+                param_1->img_buffer = pbVar3 + 1;
               }
-              else if (psVar6->from_file == 0) {
-                uVar13 = 0;
+              else if (param_1->from_file == 0) {
+                uVar12 = 0;
               }
               else {
-                refill_buffer(psVar6);
-                uVar13 = (uint)*psVar6->img_buffer;
-                psVar6->img_buffer = psVar6->img_buffer + 1;
+                refill_buffer(param_1);
+                uVar12 = (uint)*param_1->img_buffer;
+                param_1->img_buffer = param_1->img_buffer + 1;
               }
-              if ((uVar13 | uVar12 << 8) != uVar10) {
+              if ((uVar12 | uVar11 << 8) != uVar8) {
                 if ((alt_stb_free != (_func___cdecl_void_void_ptr *)0x0) &&
-                   ((*alt_stb_free)(pfVar8), alt_stb_free != (_func___cdecl_void_void_ptr *)0x0)) {
-                  (*alt_stb_free)(puVar11);
+                   ((*alt_stb_free)(pfVar9), alt_stb_free != (_func___cdecl_void_void_ptr *)0x0)) {
+                  (*alt_stb_free)(puVar10);
                 }
                 failure_reason = "invalid decoded scanline length";
-                pfVar8 = (float *)__restgprlr_20(0);
-                return pfVar8;
+                return (float *)0x0;
               }
-              if (puVar11 == (uchar *)0x0) {
-                puVar11 = stb_malloc(uVar10 << 2);
+              if (puVar10 == (uchar *)0x0) {
+                puVar10 = stb_malloc(uVar8 << 2);
               }
-              iVar21 = 0;
+              iVar20 = 0;
               do {
-                iVar19 = 0;
-                if (0 < (int)uVar10) {
+                iVar18 = 0;
+                if (0 < (int)uVar8) {
                   do {
-                    pbVar3 = psVar6->img_buffer;
-                    if (pbVar3 < psVar6->img_buffer_end) {
-                      uVar12 = (uint)*pbVar3;
-                      psVar6->img_buffer = pbVar3 + 1;
+                    pbVar3 = param_1->img_buffer;
+                    if (pbVar3 < param_1->img_buffer_end) {
+                      uVar11 = (uint)*pbVar3;
+                      param_1->img_buffer = pbVar3 + 1;
                     }
-                    else if (psVar6->from_file == 0) {
-                      uVar12 = 0;
+                    else if (param_1->from_file == 0) {
+                      uVar11 = 0;
                     }
                     else {
-                      refill_buffer(psVar6);
-                      uVar12 = (uint)*psVar6->img_buffer;
-                      psVar6->img_buffer = psVar6->img_buffer + 1;
+                      refill_buffer(param_1);
+                      uVar11 = (uint)*param_1->img_buffer;
+                      param_1->img_buffer = param_1->img_buffer + 1;
                     }
-                    if (uVar12 < 0x81) {
-                      if (uVar12 != 0) {
-                        iVar15 = iVar19 * 4;
-                        iVar19 = uVar12 + iVar19;
-                        puVar14 = puVar11 + iVar15 + iVar21 + -4;
+                    if (uVar11 < 0x81) {
+                      if (uVar11 != 0) {
+                        iVar14 = iVar18 * 4;
+                        iVar18 = uVar11 + iVar18;
+                        puVar13 = puVar10 + iVar14 + iVar20 + -4;
                         do {
-                          puVar4 = psVar6->img_buffer;
-                          if (puVar4 < psVar6->img_buffer_end) {
-                            uVar16 = *puVar4;
-                            psVar6->img_buffer = puVar4 + 1;
+                          puVar4 = param_1->img_buffer;
+                          if (puVar4 < param_1->img_buffer_end) {
+                            uVar15 = *puVar4;
+                            param_1->img_buffer = puVar4 + 1;
                           }
-                          else if (psVar6->from_file == 0) {
-                            uVar16 = '\0';
+                          else if (param_1->from_file == 0) {
+                            uVar15 = '\0';
                           }
                           else {
-                            refill_buffer(psVar6);
-                            uVar16 = *psVar6->img_buffer;
-                            psVar6->img_buffer = psVar6->img_buffer + 1;
+                            refill_buffer(param_1);
+                            uVar15 = *param_1->img_buffer;
+                            param_1->img_buffer = param_1->img_buffer + 1;
                           }
-                          uVar12 = uVar12 - 1;
-                          puVar14 = puVar14 + 4;
-                          *puVar14 = uVar16;
-                        } while (uVar12 != 0);
+                          uVar11 = uVar11 - 1;
+                          puVar13 = puVar13 + 4;
+                          *puVar13 = uVar15;
+                        } while (uVar11 != 0);
                       }
                     }
                     else {
-                      puVar14 = psVar6->img_buffer;
-                      if (puVar14 < psVar6->img_buffer_end) {
-                        uVar16 = *puVar14;
-                        psVar6->img_buffer = puVar14 + 1;
+                      puVar13 = param_1->img_buffer;
+                      if (puVar13 < param_1->img_buffer_end) {
+                        uVar15 = *puVar13;
+                        param_1->img_buffer = puVar13 + 1;
                       }
-                      else if (psVar6->from_file == 0) {
-                        uVar16 = '\0';
+                      else if (param_1->from_file == 0) {
+                        uVar15 = '\0';
                       }
                       else {
-                        refill_buffer(psVar6);
-                        uVar16 = *psVar6->img_buffer;
-                        psVar6->img_buffer = psVar6->img_buffer + 1;
+                        refill_buffer(param_1);
+                        uVar15 = *param_1->img_buffer;
+                        param_1->img_buffer = param_1->img_buffer + 1;
                       }
-                      uVar12 = uVar12 + 0x80 & 0xff;
-                      if (uVar12 != 0) {
-                        iVar15 = iVar19 * 4;
-                        iVar19 = uVar12 + iVar19;
-                        puVar14 = puVar11 + iVar15 + iVar21 + -4;
+                      uVar11 = uVar11 + 0x80 & 0xff;
+                      if (uVar11 != 0) {
+                        iVar14 = iVar18 * 4;
+                        iVar18 = uVar11 + iVar18;
+                        puVar13 = puVar10 + iVar14 + iVar20 + -4;
                         do {
-                          puVar14 = puVar14 + 4;
-                          *puVar14 = uVar16;
-                          uVar12 = uVar12 - 1;
-                        } while (uVar12 != 0);
+                          puVar13 = puVar13 + 4;
+                          *puVar13 = uVar15;
+                          uVar11 = uVar11 - 1;
+                        } while (uVar11 != 0);
                       }
                     }
-                  } while (iVar19 < (int)uVar10);
+                  } while (iVar18 < (int)uVar8);
                 }
-                iVar21 = iVar21 + 1;
-              } while (iVar21 < 4);
-              iVar21 = 0;
-              puVar14 = puVar11;
-              if (0 < (int)uVar10) {
+                iVar20 = iVar20 + 1;
+              } while (iVar20 < 4);
+              iVar20 = 0;
+              puVar13 = puVar10;
+              if (0 < (int)uVar8) {
                 do {
-                  hdr_convert(pfVar8 + (iVar18 + iVar21) * param_5,puVar14,param_5);
-                  iVar21 = iVar21 + 1;
-                  puVar14 = puVar14 + 4;
-                } while (iVar21 < (int)uVar10);
+                  hdr_convert(pfVar9 + (iVar17 + iVar20) * param_5,puVar13,param_5);
+                  iVar20 = iVar20 + 1;
+                  puVar13 = puVar13 + 4;
+                } while (iVar20 < (int)uVar8);
               }
-              iVar17 = iVar17 + 1;
-              iVar18 = iVar18 + uVar10;
-            } while (iVar17 < lVar9);
+              iVar16 = iVar16 + 1;
+              iVar17 = iVar17 + uVar8;
+            } while (iVar16 < lVar7);
           }
           if (alt_stb_free != (_func___cdecl_void_void_ptr *)0x0) {
-            (*alt_stb_free)(puVar11);
+            (*alt_stb_free)(puVar10);
           }
-LAB_827f97b8:
-          pfVar8 = (float *)__restgprlr_20(pfVar8);
-          return pfVar8;
+          return pfVar9;
         }
       }
       failure_reason = "unsupported data layout";
-      pfVar8 = (float *)__restgprlr_20(0);
-      return pfVar8;
+      return (float *)0x0;
     }
   }
   failure_reason = "unsupported format";
-  pfVar8 = (float *)__restgprlr_20(0);
-  return pfVar8;
+  return (float *)0x0;
 }
 
 
@@ -11770,84 +11458,80 @@ float * stbi_hdr_load_from_memory
 
 // 827FA780  stbi_info  (mjpeg/stb_image.c:5077)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 int stbi_info(char *param_1,int *param_2,int *param_3,int *param_4)
-
-{
-  char *pcVar1;
-  _iobuf *p_Var2;
-  int iVar3;
-  
-  pcVar1 = (char *)__savegprlr_28(param_1);
-  p_Var2 = fopen(pcVar1,"rb");
-  if (p_Var2 == (_iobuf *)0x0) {
-    failure_reason = "can\'t fopen";
-    iVar3 = __restgprlr_28();
-    return iVar3;
-  }
-  iVar3 = stbi_info_from_file(p_Var2,param_2,param_3,param_4);
-  fclose(p_Var2);
-  iVar3 = __restgprlr_28(iVar3);
-  return iVar3;
-}
-
-
-// 827F99A8  stbi_info_from_file  (mjpeg/stb_image.c:5087)
-
-int stbi_info_from_file(_iobuf *param_1,int *param_2,int *param_3,int *param_4)
 
 {
   _iobuf *p_Var1;
   int iVar2;
   
-  p_Var1 = (_iobuf *)__savegprlr_28(param_1);
-  iVar2 = stbi_jpeg_info_from_file(p_Var1,param_2,param_3,param_4);
-  if (((iVar2 == 0) && (iVar2 = stbi_png_info_from_file(p_Var1,param_2,param_3,param_4), iVar2 == 0)
-      ) && (iVar2 = stbi_gif_info_from_file(p_Var1,param_2,param_3,param_4), iVar2 == 0)) {
-    iVar2 = stbi_tga_info_from_file(p_Var1,param_2,param_3,param_4);
-    if (iVar2 == 0) {
-      failure_reason = "unknown image type";
-      iVar2 = __restgprlr_28();
-      return iVar2;
-    }
+  p_Var1 = fopen(param_1,"rb");
+  if (p_Var1 == (_iobuf *)0x0) {
+    failure_reason = "can\'t fopen";
+    return 0;
   }
-  iVar2 = __restgprlr_28(1);
+  iVar2 = stbi_info_from_file(p_Var1,param_2,param_3,param_4);
+  fclose(p_Var1);
   return iVar2;
+}
+
+
+// 827F99A8  stbi_info_from_file  (mjpeg/stb_image.c:5087)
+
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
+int stbi_info_from_file(_iobuf *param_1,int *param_2,int *param_3,int *param_4)
+
+{
+  int iVar1;
+  
+  iVar1 = stbi_jpeg_info_from_file(param_1,param_2,param_3,param_4);
+  if ((((iVar1 == 0) &&
+       (iVar1 = stbi_png_info_from_file(param_1,param_2,param_3,param_4), iVar1 == 0)) &&
+      (iVar1 = stbi_gif_info_from_file(param_1,param_2,param_3,param_4), iVar1 == 0)) &&
+     (iVar1 = stbi_tga_info_from_file(param_1,param_2,param_3,param_4), iVar1 == 0)) {
+    failure_reason = "unknown image type";
+    return 0;
+  }
+  return 1;
 }
 
 
 // 827F9A48  stbi_info_from_memory  (mjpeg/stb_image.c:5107)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 int stbi_info_from_memory(uchar *param_1,int param_2,int *param_3,int *param_4,int *param_5)
 
 {
-  uchar *puVar1;
-  int iVar2;
+  int iVar1;
   stbi sStack_190;
   stbi sStack_e0;
   
-  puVar1 = (uchar *)__savegprlr_26(param_1);
-  iVar2 = stbi_jpeg_info_from_memory(puVar1,param_2,param_3,param_4,param_5);
-  if ((iVar2 == 0) &&
-     (iVar2 = stbi_png_info_from_memory(puVar1,param_2,param_3,param_4,param_5), iVar2 == 0)) {
+  iVar1 = stbi_jpeg_info_from_memory(param_1,param_2,param_3,param_4,param_5);
+  if ((iVar1 == 0) &&
+     (iVar1 = stbi_png_info_from_memory(param_1,param_2,param_3,param_4,param_5), iVar1 == 0)) {
     sStack_190.img_file = (_iobuf *)0x0;
     sStack_190.from_file = 0;
-    sStack_190.img_buffer = puVar1;
-    sStack_190.img_buffer_end = puVar1 + param_2;
-    iVar2 = stbi_gif_info_raw(&sStack_190,param_3,param_4,param_5);
-    if (iVar2 == 0) {
+    sStack_190.img_buffer = param_1;
+    sStack_190.img_buffer_end = param_1 + param_2;
+    iVar1 = stbi_gif_info_raw(&sStack_190,param_3,param_4,param_5);
+    if (iVar1 == 0) {
       sStack_e0.img_file = (_iobuf *)0x0;
       sStack_e0.from_file = 0;
-      sStack_e0.img_buffer = puVar1;
-      sStack_e0.img_buffer_end = puVar1 + param_2;
-      iVar2 = tga_info(&sStack_e0,param_3,param_4,param_5);
-      if (iVar2 == 0) {
+      sStack_e0.img_buffer = param_1;
+      sStack_e0.img_buffer_end = param_1 + param_2;
+      iVar1 = tga_info(&sStack_e0,param_3,param_4,param_5);
+      if (iVar1 == 0) {
         failure_reason = "unknown image type";
-        iVar2 = __restgprlr_26();
-        return iVar2;
+        return 0;
       }
     }
   }
-  iVar2 = __restgprlr_26(1);
-  return iVar2;
+  return 1;
 }
 

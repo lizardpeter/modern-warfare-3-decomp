@@ -11,6 +11,8 @@ __vector4 * __lvx(__vector4 *__return_storage_ptr__,void *param_1,int param_2)
 
 // 827325F8  R_AddAabbTreeSurfacesInFrustum_r  (gfx_d3d/r_dpvs_static.cpp:288)
 
+/* WARNING: Function: __savegprlr_18 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_18 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 
@@ -20,15 +22,15 @@ void R_AddAabbTreeSurfacesInFrustum_r(GfxAabbTree *param_1,DpvsClipPlaneSet *par
   ushort uVar1;
   DpvsClipPlane *pDVar2;
   int iVar3;
-  Bounds *pBVar4;
+  __vector4 _Var4;
   __vector4 _Var5;
-  __vector4 _Var6;
-  longlong lVar7;
+  uint *puVar6;
+  ulonglong uVar7;
   longlong lVar8;
   ulonglong uVar9;
-  ulonglong uVar10;
-  ushort *puVar11;
+  ushort *puVar10;
   int *in_r13;
+  longlong lVar11;
   uint uVar12;
   uint uVar13;
   undefined1 auVar14 [16];
@@ -43,17 +45,16 @@ void R_AddAabbTreeSurfacesInFrustum_r(GfxAabbTree *param_1,DpvsClipPlaneSet *par
   float local_d0;
   DpvsClipPlaneSet local_c0 [2];
   
-  lVar8 = (longlong)(int)param_2;
-  uVar10 = ZEXT48(&stack0x00000000);
-  lVar7 = __savegprlr_18(param_1);
   _Var19 = g_keepXYZ.field0_0x0;
-  _Var6 = g_inc;
-  auVar21 = loadVectorLeftIndexed(lVar7);
+  _Var5.field0_0x0 = g_inc.field0_0x0;
+  lVar11 = (longlong)(int)param_1;
+  uVar9 = ZEXT48(&stack0x00000000);
+  auVar21 = loadVectorLeftIndexed(lVar11);
   auVar20 = vectorSplatImmediateSignedWord(0xff);
-  uVar9 = (ulonglong)*(uint *)((int)lVar8 + 0x40);
-  auVar18 = loadVectorLeftIndexed(lVar7 + 0xc);
-  auVar17 = loadVectorRightIndexed(lVar7 + 0x1c);
-  auVar16 = loadVectorRightIndexed(lVar7 + 0x10);
+  uVar7 = (ulonglong)param_2->count;
+  auVar18 = loadVectorLeftIndexed(lVar11 + 0xc);
+  auVar17 = loadVectorRightIndexed(lVar11 + 0x1c);
+  auVar16 = loadVectorRightIndexed(lVar11 + 0x10);
   auVar20 = vectorShiftLeftWord128(auVar20,auVar20);
   auVar17 = (auVar18 | auVar17) & (undefined1  [16])g_keepXYZ.field0_0x0;
   local_c0[0].count = 0;
@@ -61,12 +62,12 @@ void R_AddAabbTreeSurfacesInFrustum_r(GfxAabbTree *param_1,DpvsClipPlaneSet *par
                       ((auVar21 | auVar16) & (undefined1  [16])g_keepXYZ.field0_0x0,
                        (undefined1  [16])g_unit.field0_0x0);
   _Var22 = g_one.field0_0x0;
-  if (uVar9 != 0) {
-    lVar8 = lVar8 + -4;
+  if (uVar7 != 0) {
+    puVar6 = &param_2[-1].count;
     do {
-      _Var5.field0_0x0 = g_zero.field0_0x0;
-      lVar8 = lVar8 + 4;
-      pDVar2 = (DpvsClipPlane *)*(uint *)lVar8;
+      _Var4.field0_0x0 = g_zero.field0_0x0;
+      puVar6 = puVar6 + 1;
+      pDVar2 = (DpvsClipPlane *)*puVar6;
       auVar18 = *(undefined1 (*) [16])((uint)&pDVar2->signs & 0xfffffff0);
       auVar21 = vectorMultiplyAddFloatingPoint(auVar17 ^ auVar20,auVar18,auVar16);
       auVar15 = *(undefined1 (*) [16])((uint)pDVar2 & 0xfffffff0);
@@ -74,82 +75,79 @@ void R_AddAabbTreeSurfacesInFrustum_r(GfxAabbTree *param_1,DpvsClipPlaneSet *par
       local_c0[0].planes[local_c0[0].count] = pDVar2;
       auVar14 = vectorMultiplySum4FloatingPoint(auVar15,auVar21);
       auVar21 = vectorMultiplySum4FloatingPoint(auVar15,auVar18);
-      auVar18 = vectorCompareGreaterThanFloatingPoint128((undefined1  [16])_Var5.field0_0x0,auVar14)
+      auVar18 = vectorCompareGreaterThanFloatingPoint128((undefined1  [16])_Var4.field0_0x0,auVar14)
       ;
       _Var22.vector4_f32 = (float  [4])vectorMinimumFloatingPoint128(_Var22.vector4_f32,auVar21);
-      auVar18 = vectorSplatWord(auVar18 & (undefined1  [16])_Var6.field0_0x0,0);
-      storeVectorElementWordIndexed(auVar18,uVar10 - 0xd0);
+      auVar18 = vectorSplatWord(auVar18 & (undefined1  [16])_Var5.field0_0x0,0);
+      storeVectorElementWordIndexed(auVar18,uVar9 - 0xd0);
       local_c0[0].count = (int)local_d0 + local_c0[0].count;
-      uVar9 = uVar9 - 1;
-    } while (uVar9 != 0);
+      uVar7 = uVar7 - 1;
+    } while (uVar7 != 0);
   }
   auVar17 = vectorSplatWord((undefined1  [16])_Var22,0);
-  storeVectorElementWordIndexed(auVar17,uVar10 - 0xd0);
+  storeVectorElementWordIndexed(auVar17,uVar9 - 0xd0);
   if (0.0 < local_d0) {
-    pBVar4 = (Bounds *)lVar7;
     if (local_c0[0].count == 0) {
       if (((r_showAabbTrees->current).unsignedInt & 1) != 0) {
-        R_AddDebugBox(&frontEndDataOut->debugGlobals,pBVar4,colorYellow);
+        R_AddDebugBox(&frontEndDataOut->debugGlobals,&param_1->bounds,colorYellow);
       }
-      if ((rg.drawSModels != false) &&
-         (uVar10 = (ulonglong)*(ushort *)((int)pBVar4[1].midPoint + 6), uVar10 != 0)) {
-        puVar11 = (ushort *)((int)pBVar4[1].midPoint[2] + -2);
+      if ((rg.drawSModels != false) && (uVar9 = (ulonglong)param_1->smodelIndexCount, uVar9 != 0)) {
+        puVar10 = param_1->smodelIndexes + -1;
         iVar3 = *(int *)(*in_r13 + 0x108);
         do {
-          puVar11 = puVar11 + 1;
-          *(undefined1 *)((uint)*puVar11 + iVar3) = 1;
-          uVar10 = uVar10 - 1;
-        } while (uVar10 != 0);
+          puVar10 = puVar10 + 1;
+          *(undefined1 *)((uint)*puVar10 + iVar3) = 1;
+          uVar9 = uVar9 - 1;
+        } while (uVar9 != 0);
       }
-      if ((rg.drawWorld != false) &&
-         (uVar10 = (ulonglong)*(ushort *)((int)pBVar4[1].midPoint + 2), uVar10 != 0)) {
-        if (uVar10 != 0) {
-          puVar11 = g_worldDpvs->sortedSurfIndex + (*(ushort *)(pBVar4[1].midPoint + 1) - 1);
+      if ((rg.drawWorld != false) && (uVar9 = (ulonglong)param_1->surfaceCount, uVar9 != 0)) {
+        if (uVar9 != 0) {
+          puVar10 = g_worldDpvs->sortedSurfIndex + (param_1->startSurfIndex - 1);
           iVar3 = *(int *)(*in_r13 + 0x10c);
           do {
-            puVar11 = puVar11 + 1;
-            *(undefined1 *)((uint)*puVar11 + iVar3) = 1;
-            uVar10 = uVar10 - 1;
-          } while (uVar10 != 0);
-          __restgprlr_18();
+            puVar10 = puVar10 + 1;
+            *(undefined1 *)((uint)*puVar10 + iVar3) = 1;
+            uVar9 = uVar9 - 1;
+          } while (uVar9 != 0);
           return;
         }
       }
     }
     else {
-      uVar9 = (ulonglong)*(ushort *)pBVar4[1].midPoint;
-      if (uVar9 == 0) {
+      uVar7 = (ulonglong)param_1->childCount;
+      if (uVar7 == 0) {
         if (((r_showAabbTrees->current).unsignedInt & 2) != 0) {
-          R_AddDebugBox(&frontEndDataOut->debugGlobals,pBVar4,colorOrange);
+          R_AddDebugBox(&frontEndDataOut->debugGlobals,&param_1->bounds,colorOrange);
           _Var19 = g_keepXYZ.field0_0x0;
         }
-        if ((rg.drawSModels != false) &&
-           (uVar9 = (ulonglong)*(ushort *)((int)pBVar4[1].midPoint + 6), uVar9 != 0)) {
-          puVar11 = (ushort *)pBVar4[1].midPoint[2];
+        if ((rg.drawSModels != false) && (uVar7 = (ulonglong)param_1->smodelIndexCount, uVar7 != 0))
+        {
+          puVar10 = param_1->smodelIndexes;
           iVar3 = *(int *)(*in_r13 + 0x108);
           do {
-            uVar1 = *puVar11;
+            uVar1 = *puVar10;
             if (*(char *)(iVar3 + (uint)uVar1) == '\0') {
-              lVar8 = (ulonglong)uVar1 * 0x24 + ZEXT48(g_worldDpvs->smodelInsts);
-              auVar18 = loadVectorRightIndexed(lVar8 + 0x10);
-              auVar17 = loadVectorLeftIndexed(lVar8);
-              auVar20 = loadVectorRightIndexed(lVar8 + 0x1c);
-              auVar16 = loadVectorLeftIndexed(lVar8 + 0xc);
+              lVar11 = (ulonglong)uVar1 * 0x24 + ZEXT48(g_worldDpvs->smodelInsts);
+              auVar18 = loadVectorRightIndexed(lVar11 + 0x10);
+              auVar17 = loadVectorLeftIndexed(lVar11);
+              auVar20 = loadVectorRightIndexed(lVar11 + 0x1c);
+              auVar16 = loadVectorLeftIndexed(lVar11 + 0xc);
               auVar17 = vectorAddFloatingPoint128
                                   ((auVar17 | auVar18) & (undefined1  [16])_Var19,
                                    (undefined1  [16])g_unit.field0_0x0);
               _Var22 = g_one.field0_0x0;
               if (local_c0[0].count != 0) {
-                lVar8 = uVar10 - 0xc4;
+                lVar11 = uVar9 - 0xc4;
                 uVar12 = local_c0[0].count;
                 do {
-                  lVar8 = lVar8 + 4;
+                  lVar11 = lVar11 + 4;
                   auVar18 = vectorMultiplyAddFloatingPoint
                                       ((auVar16 | auVar20) & (undefined1  [16])_Var19,
-                                       *(undefined1 (*) [16])(*(uint *)lVar8 + 0x10 & 0xfffffff0),
+                                       *(undefined1 (*) [16])(*(uint *)lVar11 + 0x10 & 0xfffffff0),
                                        auVar17);
                   auVar18 = vectorMultiplySum4FloatingPoint
-                                      (*(undefined1 (*) [16])(*(uint *)lVar8 & 0xfffffff0),auVar18);
+                                      (*(undefined1 (*) [16])(*(uint *)lVar11 & 0xfffffff0),auVar18)
+                  ;
                   _Var22.vector4_f32 =
                        (float  [4])vectorMinimumFloatingPoint128(_Var22.vector4_f32,auVar18);
                   uVar12 = uVar12 - 1;
@@ -158,45 +156,44 @@ void R_AddAabbTreeSurfacesInFrustum_r(GfxAabbTree *param_1,DpvsClipPlaneSet *par
               auVar17 = vectorCompareGreaterThanFloatingPoint128
                                   ((undefined1  [16])_Var22,(undefined1  [16])g_zero.field0_0x0);
               auVar17 = vectorSplatWord(auVar17,0);
-              storeVectorElementWordIndexed(auVar17,uVar10 - 0xd0);
+              storeVectorElementWordIndexed(auVar17,uVar9 - 0xd0);
               if (local_d0 != 0.0) {
                 *(undefined1 *)(iVar3 + (uint)uVar1) = 1;
                 _Var19 = g_keepXYZ.field0_0x0;
               }
             }
-            uVar9 = uVar9 - 1;
-            puVar11 = puVar11 + 1;
-          } while (uVar9 != 0);
+            uVar7 = uVar7 - 1;
+            puVar10 = puVar10 + 1;
+          } while (uVar7 != 0);
         }
-        if ((rg.drawWorld != false) &&
-           (uVar9 = (ulonglong)*(ushort *)((int)pBVar4[1].midPoint + 2), uVar9 != 0)) {
-          puVar11 = g_worldDpvs->sortedSurfIndex + *(ushort *)(pBVar4[1].midPoint + 1);
-          if (uVar9 != 0) {
+        if ((rg.drawWorld != false) && (uVar7 = (ulonglong)param_1->surfaceCount, uVar7 != 0)) {
+          puVar10 = g_worldDpvs->sortedSurfIndex + param_1->startSurfIndex;
+          if (uVar7 != 0) {
             iVar3 = *in_r13;
             uVar12 = local_c0[0].count;
             do {
-              uVar1 = *puVar11;
+              uVar1 = *puVar10;
               if (*(char *)(*(int *)(iVar3 + 0x10c) + (uint)uVar1) == '\0') {
-                lVar8 = (ulonglong)uVar1 * 0x20 + ZEXT48(g_worldDpvs->surfacesBounds);
-                auVar18 = loadVectorRightIndexed(lVar8 + 0x10);
-                auVar17 = loadVectorLeftIndexed(lVar8);
-                auVar20 = loadVectorRightIndexed(lVar8 + 0x1c);
-                auVar16 = loadVectorLeftIndexed(lVar8 + 0xc);
+                lVar11 = (ulonglong)uVar1 * 0x20 + ZEXT48(g_worldDpvs->surfacesBounds);
+                auVar18 = loadVectorRightIndexed(lVar11 + 0x10);
+                auVar17 = loadVectorLeftIndexed(lVar11);
+                auVar20 = loadVectorRightIndexed(lVar11 + 0x1c);
+                auVar16 = loadVectorLeftIndexed(lVar11 + 0xc);
                 auVar17 = vectorAddFloatingPoint128
                                     ((auVar17 | auVar18) & (undefined1  [16])_Var19,
                                      (undefined1  [16])g_unit.field0_0x0);
                 _Var22 = g_one.field0_0x0;
                 if (uVar12 != 0) {
-                  lVar7 = uVar10 - 0xc4;
+                  lVar8 = uVar9 - 0xc4;
                   uVar13 = uVar12;
                   do {
-                    lVar7 = lVar7 + 4;
+                    lVar8 = lVar8 + 4;
                     auVar18 = vectorMultiplyAddFloatingPoint
                                         ((auVar16 | auVar20) & (undefined1  [16])_Var19,
-                                         *(undefined1 (*) [16])(*(uint *)lVar7 + 0x10 & 0xfffffff0),
+                                         *(undefined1 (*) [16])(*(uint *)lVar8 + 0x10 & 0xfffffff0),
                                          auVar17);
                     auVar18 = vectorMultiplySum4FloatingPoint
-                                        (*(undefined1 (*) [16])(*(uint *)lVar7 & 0xfffffff0),auVar18
+                                        (*(undefined1 (*) [16])(*(uint *)lVar8 & 0xfffffff0),auVar18
                                         );
                     _Var22.vector4_f32 =
                          (float  [4])vectorMinimumFloatingPoint128(_Var22.vector4_f32,auVar18);
@@ -206,37 +203,35 @@ void R_AddAabbTreeSurfacesInFrustum_r(GfxAabbTree *param_1,DpvsClipPlaneSet *par
                 auVar17 = vectorCompareGreaterThanFloatingPoint128
                                     ((undefined1  [16])_Var22,(undefined1  [16])g_zero.field0_0x0);
                 auVar17 = vectorSplatWord(auVar17,0);
-                storeVectorElementWordIndexed(auVar17,uVar10 - 0xd0);
+                storeVectorElementWordIndexed(auVar17,uVar9 - 0xd0);
                 if (local_d0 != 0.0) {
                   if (((r_showAabbTrees->current).unsignedInt & 2) != 0) {
-                    R_AddDebugBox(&frontEndDataOut->debugGlobals,(Bounds *)lVar8,colorGreen);
+                    R_AddDebugBox(&frontEndDataOut->debugGlobals,(Bounds *)lVar11,colorGreen);
                   }
                   *(undefined1 *)(*(int *)(iVar3 + 0x10c) + (uint)uVar1) = 1;
                   _Var19 = g_keepXYZ.field0_0x0;
                   uVar12 = local_c0[0].count;
                 }
               }
-              uVar9 = uVar9 - 1;
-              puVar11 = puVar11 + 1;
-            } while (uVar9 != 0);
+              uVar7 = uVar7 - 1;
+              puVar10 = puVar10 + 1;
+            } while (uVar7 != 0);
           }
         }
       }
       else {
-        lVar7 = (ulonglong)(uint)pBVar4[1].halfSize[0] + lVar7;
-        if (uVar9 != 0) {
+        lVar11 = (ulonglong)(uint)param_1->childrenOffset + lVar11;
+        if (uVar7 != 0) {
           do {
-            R_AddAabbTreeSurfacesInFrustum_r((GfxAabbTree *)lVar7,local_c0);
-            uVar9 = uVar9 - 1;
-            lVar7 = lVar7 + 0x28;
-          } while (uVar9 != 0);
-          __restgprlr_18();
+            R_AddAabbTreeSurfacesInFrustum_r((GfxAabbTree *)lVar11,local_c0);
+            uVar7 = uVar7 - 1;
+            lVar11 = lVar11 + 0x28;
+          } while (uVar7 != 0);
           return;
         }
       }
     }
   }
-  __restgprlr_18();
   return;
 }
 
@@ -281,6 +276,9 @@ void R_CopyClipPlane(DpvsPlane *param_1,DpvsClipPlane *param_2)
 
 // 82732B28  R_AddCellStaticSurfacesInFrustum  (gfx_d3d/r_dpvs_static.cpp:620)
 
+/* WARNING: Function: __savegprlr_19 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_19 replaced with injection: xenon_save_restore */
+
 void R_AddCellStaticSurfacesInFrustum(DpvsStaticCellCmd *param_1)
 
 {
@@ -290,7 +288,7 @@ void R_AddCellStaticSurfacesInFrustum(DpvsStaticCellCmd *param_1)
   float fVar4;
   float fVar5;
   GfxAabbTree *pGVar6;
-  uint uVar7;
+  DpvsPlane *pDVar7;
   int iVar8;
   undefined4 uVar9;
   undefined4 uVar10;
@@ -298,28 +296,26 @@ void R_AddCellStaticSurfacesInFrustum(DpvsStaticCellCmd *param_1)
   float *pfVar12;
   undefined4 *puVar13;
   ulonglong uVar14;
-  uint *puVar15;
-  ulonglong uVar16;
+  ulonglong uVar15;
+  longlong lVar16;
   longlong lVar17;
-  longlong lVar18;
-  undefined1 (*pauVar19) [16];
+  undefined1 (*pauVar18) [16];
+  longlong lVar19;
   longlong lVar20;
-  longlong lVar21;
-  uint uVar22;
+  uint uVar21;
+  undefined1 auVar22 [16];
   undefined1 auVar23 [16];
-  undefined1 auVar24 [16];
   undefined4 local_2d0;
   undefined4 uStack_2cc;
   undefined4 uStack_2c8;
   undefined4 uStack_2c4;
   
   uVar14 = ZEXT48(&stack0x00000000);
-  puVar15 = (uint *)__savegprlr_19(param_1);
   iVar8 = (int)(uVar14 - 800);
   *(BADSPACEBASE **)iVar8 = register0x0000000c;
-  pGVar6 = (GfxAabbTree *)puVar15[1];
+  pGVar6 = param_1->tree;
   if (pGVar6 != (GfxAabbTree *)0x0) {
-    bVar1 = *(byte *)(puVar15 + 2);
+    bVar1 = param_1->planeCount;
     if (0x10 < bVar1) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dpvs_static.cpp",
                       0x286,0,"%s\n\t(planes.count) = %i");
@@ -328,27 +324,27 @@ void R_AddCellStaticSurfacesInFrustum(DpvsStaticCellCmd *param_1)
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dpvs_static.cpp",
                       0x287,0,"%s");
     }
-    uVar7 = *puVar15;
-    uVar16 = 0;
+    pDVar7 = param_1->planes;
+    uVar15 = 0;
     uVar2 = 0xbf800000;
-    uVar22 = (uint)bVar1;
+    uVar21 = (uint)bVar1;
     uVar3 = 0x3f800000;
-    if (3 < uVar22) {
+    if (3 < uVar21) {
       *(undefined4 *)(iVar8 + 0x5c) = 0;
-      lVar17 = uVar14 - 0x2c4;
-      lVar18 = uVar14 - 0x240;
-      lVar20 = (ulonglong)uVar7 + 0x18;
+      lVar16 = uVar14 - 0x2c4;
+      lVar17 = uVar14 - 0x240;
+      lVar19 = ZEXT48(pDVar7) + 0x18;
       do {
-        puVar13 = (undefined4 *)lVar18;
-        iVar11 = (int)lVar17;
+        puVar13 = (undefined4 *)lVar17;
+        iVar11 = (int)lVar16;
         *(undefined1 (**) [16])(iVar11 + 4) = (undefined1 (*) [16])(puVar13 + -0xc);
-        auVar24 = loadVectorRightIndexed(lVar20 + -8);
-        auVar23 = loadVectorLeftIndexed(lVar20 + -0x18);
+        auVar23 = loadVectorRightIndexed(lVar19 + -8);
+        auVar22 = loadVectorLeftIndexed(lVar19 + -0x18);
         *(undefined1 (**) [16])(iVar11 + 8) = (undefined1 (*) [16])(puVar13 + -4);
-        *(undefined1 (*) [16])(puVar13 + -0xc) = auVar23 | auVar24;
-        pfVar12 = (float *)lVar20;
+        *(undefined1 (*) [16])(puVar13 + -0xc) = auVar22 | auVar23;
+        pfVar12 = (float *)lVar19;
         fVar4 = pfVar12[-5];
-        uVar16 = uVar16 + 4;
+        uVar15 = uVar15 + 4;
         fVar5 = pfVar12[-4];
         *(undefined1 (**) [16])(iVar11 + 0xc) = (undefined1 (*) [16])(puVar13 + 4);
         uVar10 = uVar3;
@@ -366,15 +362,15 @@ void R_AddCellStaticSurfacesInFrustum(DpvsStaticCellCmd *param_1)
         }
         *(undefined4 *)(iVar8 + 0x50) = uVar10;
         *(undefined4 *)(iVar8 + 0x58) = uVar9;
-        lVar17 = lVar17 + 0x10;
-        *(int *)lVar17 = (int)(puVar13 + 0xc);
+        lVar16 = lVar16 + 0x10;
+        *(int *)lVar16 = (int)(puVar13 + 0xc);
         puVar13[-8] = local_2d0;
         puVar13[-7] = uStack_2cc;
         puVar13[-6] = uStack_2c8;
         puVar13[-5] = uStack_2c4;
-        auVar24 = loadVectorRightIndexed(lVar20 + 8);
-        auVar23 = loadVectorLeftIndexed(lVar20 + -8);
-        *(undefined1 (*) [16])(puVar13 + -4) = auVar23 | auVar24;
+        auVar23 = loadVectorRightIndexed(lVar19 + 8);
+        auVar22 = loadVectorLeftIndexed(lVar19 + -8);
+        *(undefined1 (*) [16])(puVar13 + -4) = auVar22 | auVar23;
         fVar4 = pfVar12[-1];
         uVar10 = uVar3;
         if (pfVar12[-2] < 0.0) {
@@ -395,9 +391,9 @@ void R_AddCellStaticSurfacesInFrustum(DpvsStaticCellCmd *param_1)
         puVar13[1] = uStack_2cc;
         puVar13[2] = uStack_2c8;
         puVar13[3] = uStack_2c4;
-        auVar24 = loadVectorRightIndexed(lVar20 + 0x18);
-        auVar23 = loadVectorLeftIndexed(lVar20 + 8);
-        *(undefined1 (*) [16])(puVar13 + 4) = auVar23 | auVar24;
+        auVar23 = loadVectorRightIndexed(lVar19 + 0x18);
+        auVar22 = loadVectorLeftIndexed(lVar19 + 8);
+        *(undefined1 (*) [16])(puVar13 + 4) = auVar22 | auVar23;
         fVar4 = pfVar12[3];
         uVar10 = uVar3;
         if (pfVar12[2] < 0.0) {
@@ -418,9 +414,9 @@ void R_AddCellStaticSurfacesInFrustum(DpvsStaticCellCmd *param_1)
         puVar13[9] = uStack_2cc;
         puVar13[10] = uStack_2c8;
         puVar13[0xb] = uStack_2c4;
-        auVar24 = loadVectorRightIndexed(lVar20 + 0x28);
-        auVar23 = loadVectorLeftIndexed(lVar20 + 0x18);
-        *(undefined1 (*) [16])(puVar13 + 0xc) = auVar23 | auVar24;
+        auVar23 = loadVectorRightIndexed(lVar19 + 0x28);
+        auVar22 = loadVectorLeftIndexed(lVar19 + 0x18);
+        *(undefined1 (*) [16])(puVar13 + 0xc) = auVar22 | auVar23;
         fVar4 = pfVar12[7];
         uVar10 = uVar3;
         if (pfVar12[8] < 0.0) {
@@ -437,28 +433,28 @@ void R_AddCellStaticSurfacesInFrustum(DpvsStaticCellCmd *param_1)
         }
         *(undefined4 *)(iVar8 + 0x54) = uVar9;
         *(undefined4 *)(iVar8 + 0x58) = uVar10;
-        lVar20 = lVar20 + 0x40;
+        lVar19 = lVar19 + 0x40;
         puVar13[0x10] = local_2d0;
         puVar13[0x11] = uStack_2cc;
         puVar13[0x12] = uStack_2c8;
         puVar13[0x13] = uStack_2c4;
-        lVar18 = lVar18 + 0x80;
-      } while ((uVar16 & 0xffffffff) < ((ulonglong)bVar1 - 3 & 0xffffffff));
+        lVar17 = lVar17 + 0x80;
+      } while ((uVar15 & 0xffffffff) < ((ulonglong)bVar1 - 3 & 0xffffffff));
     }
-    if ((uVar16 & 0xffffffff) < (ulonglong)uVar22) {
+    if ((uVar15 & 0xffffffff) < (ulonglong)uVar21) {
       *(undefined4 *)(iVar8 + 0x5c) = 0;
-      lVar18 = bVar1 - uVar16;
-      lVar21 = (uVar16 & 0xfffffff) * 0x10 + (ulonglong)uVar7;
-      lVar20 = (uVar16 & 0x7ffffff) * 0x20 + (uVar14 - 0x270);
-      lVar17 = (uVar16 & 0x3fffffff) * 4 + (uVar14 - 800) + 0x5c;
+      lVar17 = bVar1 - uVar15;
+      lVar20 = (uVar15 & 0xfffffff) * 0x10 + ZEXT48(pDVar7);
+      lVar19 = (uVar15 & 0x7ffffff) * 0x20 + (uVar14 - 0x270);
+      lVar16 = (uVar15 & 0x3fffffff) * 4 + (uVar14 - 800) + 0x5c;
       do {
-        auVar24 = loadVectorLeftIndexed(lVar21);
-        auVar23 = loadVectorRightIndexed(lVar21 + 0x10);
-        lVar17 = lVar17 + 4;
-        pauVar19 = (undefined1 (*) [16])lVar20;
-        *(int *)lVar17 = (int)pauVar19;
-        *pauVar19 = auVar24 | auVar23;
-        pfVar12 = (float *)lVar21;
+        auVar23 = loadVectorLeftIndexed(lVar20);
+        auVar22 = loadVectorRightIndexed(lVar20 + 0x10);
+        lVar16 = lVar16 + 4;
+        pauVar18 = (undefined1 (*) [16])lVar19;
+        *(int *)lVar16 = (int)pauVar18;
+        *pauVar18 = auVar23 | auVar22;
+        pfVar12 = (float *)lVar20;
         fVar4 = pfVar12[1];
         fVar5 = *pfVar12;
         uVar10 = uVar3;
@@ -476,19 +472,18 @@ void R_AddCellStaticSurfacesInFrustum(DpvsStaticCellCmd *param_1)
         }
         *(undefined4 *)(iVar8 + 0x50) = uVar10;
         *(undefined4 *)(iVar8 + 0x54) = uVar9;
-        lVar21 = lVar21 + 0x10;
-        *(undefined4 *)pauVar19[1] = local_2d0;
-        *(undefined4 *)(pauVar19[1] + 4) = uStack_2cc;
-        *(undefined4 *)(pauVar19[1] + 8) = uStack_2c8;
-        *(undefined4 *)(pauVar19[1] + 0xc) = uStack_2c4;
-        lVar20 = lVar20 + 0x20;
-        lVar18 = lVar18 + -1;
-      } while (lVar18 != 0);
+        lVar20 = lVar20 + 0x10;
+        *(undefined4 *)pauVar18[1] = local_2d0;
+        *(undefined4 *)(pauVar18[1] + 4) = uStack_2cc;
+        *(undefined4 *)(pauVar18[1] + 8) = uStack_2c8;
+        *(undefined4 *)(pauVar18[1] + 0xc) = uStack_2c4;
+        lVar19 = lVar19 + 0x20;
+        lVar17 = lVar17 + -1;
+      } while (lVar17 != 0);
     }
-    *(uint *)(iVar8 + 0xa0) = uVar22;
+    *(uint *)(iVar8 + 0xa0) = uVar21;
     R_AddAabbTreeSurfacesInFrustum_r(pGVar6,(DpvsClipPlaneSet *)(iVar8 + 0x60));
   }
-  __restgprlr_19();
   return;
 }
 
@@ -513,6 +508,8 @@ void R_AddCellStaticSurfacesInFrustumCmd(void *param_1)
 
 // 82732E18  R_AddSkySurfacesDpvs  (gfx_d3d/r_dpvs_static.cpp:898)
 
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 
@@ -541,38 +538,34 @@ void R_AddSkySurfacesDpvs(DpvsPlane *param_1,int param_2)
   ulonglong uVar20;
   bool bVar21;
   ulonglong uVar22;
-  ulonglong uVar23;
+  longlong lVar23;
   longlong lVar24;
   longlong lVar25;
-  longlong lVar26;
-  undefined1 (*pauVar27) [16];
-  longlong lVar28;
-  float *pfVar29;
+  undefined1 (*pauVar26) [16];
+  longlong lVar27;
+  float *pfVar28;
   int *in_r13;
-  int iVar30;
+  int iVar29;
+  GfxWorld *pGVar30;
   int iVar31;
-  GfxWorld *pGVar32;
+  int iVar32;
   int iVar33;
-  int iVar34;
+  undefined1 auVar34 [16];
   undefined1 auVar35 [16];
   undefined1 auVar36 [16];
   undefined1 auVar37 [16];
   undefined1 auVar38 [16];
   undefined1 auVar39 [16];
   undefined1 auVar40 [16];
-  undefined1 auVar41 [16];
-  __vector4_u_0 _Var42;
-  undefined1 auVar43 [16];
-  __vector4_u_0 _Var44;
+  __vector4_u_0 _Var41;
+  undefined1 auVar42 [16];
+  __vector4_u_0 _Var43;
   undefined4 local_310;
   undefined4 uStack_30c;
   undefined4 uStack_308;
   undefined4 uStack_304;
   
-  uVar22 = (ulonglong)param_2;
-  lVar28 = (longlong)(int)param_1;
   uVar20 = ZEXT48(&stack0x00000000);
-  __savegprlr();
   iVar9 = (int)(uVar20 - 0x360);
   *(BADSPACEBASE **)iVar9 = register0x0000000c;
   bVar21 = Sys_IsMainThread();
@@ -581,30 +574,29 @@ void R_AddSkySurfacesDpvs(DpvsPlane *param_1,int param_2)
                     0x389,0,"%s");
   }
   *(r_global_permanent_t **)(iVar9 + 100) = &rgp;
-  pGVar32 = rgp.world;
+  pGVar30 = rgp.world;
   if ((rgp.world)->skyCount != 0) {
     iVar5 = *in_r13;
     puVar6 = ((rgp.world)->dpvs).surfaceVisData[0];
     *(uchar **)(iVar5 + 0x108) = ((rgp.world)->dpvs).smodelVisData[0];
     uVar1 = 0xbf800000;
-    uVar23 = 0;
+    uVar22 = 0;
     uVar2 = 0x3f800000;
-    iVar31 = (int)uVar22;
     *(uchar **)(iVar5 + 0x10c) = puVar6;
-    if (3 < iVar31) {
+    if (3 < param_2) {
       *(undefined4 *)(iVar9 + 0x5c) = 0;
-      lVar25 = uVar20 - 0x2f4;
-      lVar26 = uVar20 - 0x270;
-      lVar24 = lVar28 + 0x18;
+      lVar24 = uVar20 - 0x2f4;
+      lVar25 = uVar20 - 0x270;
+      lVar23 = (longlong)(int)param_1 + 0x18;
       do {
-        pfVar29 = (float *)lVar24;
-        fVar3 = pfVar29[-5];
+        pfVar28 = (float *)lVar23;
+        fVar3 = pfVar28[-5];
         uVar12 = uVar2;
-        if (pfVar29[-6] < 0.0) {
+        if (pfVar28[-6] < 0.0) {
           uVar12 = uVar1;
         }
         uVar11 = uVar2;
-        if (pfVar29[-4] < 0.0) {
+        if (pfVar28[-4] < 0.0) {
           uVar11 = uVar1;
         }
         *(undefined4 *)(iVar9 + 0x50) = uVar12;
@@ -615,52 +607,52 @@ void R_AddSkySurfacesDpvs(DpvsPlane *param_1,int param_2)
         *(undefined4 *)(iVar9 + 0x54) = uVar12;
         *(undefined4 *)(iVar9 + 0x58) = uVar11;
         uVar12 = uVar2;
-        if (pfVar29[-2] < 0.0) {
+        if (pfVar28[-2] < 0.0) {
           uVar12 = uVar1;
         }
         uVar11 = uVar2;
-        if (pfVar29[-1] < 0.0) {
+        if (pfVar28[-1] < 0.0) {
           uVar11 = uVar1;
         }
         uVar10 = uVar2;
-        if (*pfVar29 < 0.0) {
+        if (*pfVar28 < 0.0) {
           uVar10 = uVar1;
         }
         uVar18 = uVar2;
-        if (pfVar29[3] < 0.0) {
+        if (pfVar28[3] < 0.0) {
           uVar18 = uVar1;
         }
         uVar17 = uVar2;
-        if (pfVar29[2] < 0.0) {
+        if (pfVar28[2] < 0.0) {
           uVar17 = uVar1;
         }
         uVar16 = uVar2;
-        if (pfVar29[4] < 0.0) {
+        if (pfVar28[4] < 0.0) {
           uVar16 = uVar1;
         }
         uVar15 = uVar2;
-        if (pfVar29[6] < 0.0) {
+        if (pfVar28[6] < 0.0) {
           uVar15 = uVar1;
         }
         uVar14 = uVar2;
-        if (pfVar29[7] < 0.0) {
+        if (pfVar28[7] < 0.0) {
           uVar14 = uVar1;
         }
         uVar13 = uVar2;
-        if (pfVar29[8] < 0.0) {
+        if (pfVar28[8] < 0.0) {
           uVar13 = uVar1;
         }
-        uVar23 = uVar23 + 4;
-        auVar43 = loadVectorRightIndexed(lVar24 + -8);
-        auVar41 = loadVectorLeftIndexed(lVar24 + -0x18);
-        puVar19 = (undefined4 *)lVar26;
-        auVar40 = loadVectorLeftIndexed(lVar24 + -8);
-        auVar39 = loadVectorRightIndexed(lVar24 + 8);
-        auVar38 = loadVectorLeftIndexed(lVar24 + 8);
-        iVar33 = (int)lVar25;
-        *(undefined1 (**) [16])(iVar33 + 4) = (undefined1 (*) [16])(puVar19 + -0xc);
+        uVar22 = uVar22 + 4;
+        auVar42 = loadVectorRightIndexed(lVar23 + -8);
+        auVar40 = loadVectorLeftIndexed(lVar23 + -0x18);
+        puVar19 = (undefined4 *)lVar25;
+        auVar39 = loadVectorLeftIndexed(lVar23 + -8);
+        auVar38 = loadVectorRightIndexed(lVar23 + 8);
+        auVar37 = loadVectorLeftIndexed(lVar23 + 8);
+        iVar31 = (int)lVar24;
+        *(undefined1 (**) [16])(iVar31 + 4) = (undefined1 (*) [16])(puVar19 + -0xc);
         *(undefined4 *)(iVar9 + 0x50) = uVar12;
-        *(undefined1 (**) [16])(iVar33 + 8) = (undefined1 (*) [16])(puVar19 + -4);
+        *(undefined1 (**) [16])(iVar31 + 8) = (undefined1 (*) [16])(puVar19 + -4);
         *(undefined4 *)(iVar9 + 0x54) = uVar11;
         *(undefined4 *)(iVar9 + 0x58) = uVar10;
         *(undefined4 *)(iVar9 + 0x50) = uVar17;
@@ -669,140 +661,139 @@ void R_AddSkySurfacesDpvs(DpvsPlane *param_1,int param_2)
         *(undefined4 *)(iVar9 + 0x50) = uVar15;
         *(undefined4 *)(iVar9 + 0x54) = uVar14;
         *(undefined4 *)(iVar9 + 0x58) = uVar13;
-        auVar37 = loadVectorRightIndexed(lVar24 + 0x18);
-        auVar36 = loadVectorRightIndexed(lVar24 + 0x28);
-        auVar35 = loadVectorLeftIndexed(lVar24 + 0x18);
-        *(undefined1 (*) [16])(puVar19 + -0xc) = auVar41 | auVar43;
+        auVar36 = loadVectorRightIndexed(lVar23 + 0x18);
+        auVar35 = loadVectorRightIndexed(lVar23 + 0x28);
+        auVar34 = loadVectorLeftIndexed(lVar23 + 0x18);
+        *(undefined1 (*) [16])(puVar19 + -0xc) = auVar40 | auVar42;
         puVar19[-8] = local_310;
         puVar19[-7] = uStack_30c;
         puVar19[-6] = uStack_308;
         puVar19[-5] = uStack_304;
-        *(undefined1 (**) [16])(iVar33 + 0xc) = (undefined1 (*) [16])(puVar19 + 4);
-        *(undefined1 (*) [16])(puVar19 + -4) = auVar40 | auVar39;
-        lVar25 = lVar25 + 0x10;
-        *(int *)lVar25 = (int)(puVar19 + 0xc);
+        *(undefined1 (**) [16])(iVar31 + 0xc) = (undefined1 (*) [16])(puVar19 + 4);
+        *(undefined1 (*) [16])(puVar19 + -4) = auVar39 | auVar38;
+        lVar24 = lVar24 + 0x10;
+        *(int *)lVar24 = (int)(puVar19 + 0xc);
         *puVar19 = local_310;
         puVar19[1] = uStack_30c;
         puVar19[2] = uStack_308;
         puVar19[3] = uStack_304;
-        *(undefined1 (*) [16])(puVar19 + 4) = auVar38 | auVar37;
+        *(undefined1 (*) [16])(puVar19 + 4) = auVar37 | auVar36;
         puVar19[8] = local_310;
         puVar19[9] = uStack_30c;
         puVar19[10] = uStack_308;
         puVar19[0xb] = uStack_304;
-        *(undefined1 (*) [16])(puVar19 + 0xc) = auVar35 | auVar36;
+        *(undefined1 (*) [16])(puVar19 + 0xc) = auVar34 | auVar35;
         puVar19[0x10] = local_310;
         puVar19[0x11] = uStack_30c;
         puVar19[0x12] = uStack_308;
         puVar19[0x13] = uStack_304;
-        lVar26 = lVar26 + 0x80;
-        lVar24 = lVar24 + 0x40;
-      } while ((int)uVar23 < iVar31 + -3);
+        lVar25 = lVar25 + 0x80;
+        lVar23 = lVar23 + 0x40;
+      } while ((int)uVar22 < param_2 + -3);
     }
-    if ((int)uVar23 < iVar31) {
+    if ((int)uVar22 < param_2) {
       *(undefined4 *)(iVar9 + 0x5c) = 0;
-      lVar24 = uVar22 - uVar23;
-      lVar28 = (uVar23 & 0xfffffff) * 0x10 + lVar28;
-      lVar26 = (uVar23 & 0x7ffffff) * 0x20 + (uVar20 - 0x2a0);
-      lVar25 = (uVar23 & 0x3fffffff) * 4 + (uVar20 - 0x360) + 0x6c;
+      lVar23 = (longlong)param_2 - uVar22;
+      lVar27 = (uVar22 & 0xfffffff) * 0x10 + (longlong)(int)param_1;
+      lVar25 = (uVar22 & 0x7ffffff) * 0x20 + (uVar20 - 0x2a0);
+      lVar24 = (uVar22 & 0x3fffffff) * 4 + (uVar20 - 0x360) + 0x6c;
       do {
-        auVar36 = loadVectorLeftIndexed(lVar28);
-        auVar35 = loadVectorRightIndexed(lVar28 + 0x10);
-        lVar25 = lVar25 + 4;
-        pauVar27 = (undefined1 (*) [16])lVar26;
-        *(int *)lVar25 = (int)pauVar27;
-        pfVar29 = (float *)lVar28;
+        auVar35 = loadVectorLeftIndexed(lVar27);
+        auVar34 = loadVectorRightIndexed(lVar27 + 0x10);
+        lVar24 = lVar24 + 4;
+        pauVar26 = (undefined1 (*) [16])lVar25;
+        *(int *)lVar24 = (int)pauVar26;
+        pfVar28 = (float *)lVar27;
         uVar12 = uVar2;
-        if (*pfVar29 < 0.0) {
+        if (*pfVar28 < 0.0) {
           uVar12 = uVar1;
         }
         uVar11 = uVar2;
-        if (pfVar29[1] < 0.0) {
+        if (pfVar28[1] < 0.0) {
           uVar11 = uVar1;
         }
         uVar10 = uVar2;
-        if (pfVar29[2] < 0.0) {
+        if (pfVar28[2] < 0.0) {
           uVar10 = uVar1;
         }
         *(undefined4 *)(iVar9 + 0x50) = uVar12;
         *(undefined4 *)(iVar9 + 0x54) = uVar11;
-        lVar28 = lVar28 + 0x10;
+        lVar27 = lVar27 + 0x10;
         *(undefined4 *)(iVar9 + 0x58) = uVar10;
-        *(undefined4 *)pauVar27[1] = local_310;
-        *(undefined4 *)(pauVar27[1] + 4) = uStack_30c;
-        *(undefined4 *)(pauVar27[1] + 8) = uStack_308;
-        *(undefined4 *)(pauVar27[1] + 0xc) = uStack_304;
-        *pauVar27 = auVar36 | auVar35;
-        lVar26 = lVar26 + 0x20;
-        lVar24 = lVar24 + -1;
-      } while (lVar24 != 0);
+        *(undefined4 *)pauVar26[1] = local_310;
+        *(undefined4 *)(pauVar26[1] + 4) = uStack_30c;
+        *(undefined4 *)(pauVar26[1] + 8) = uStack_308;
+        *(undefined4 *)(pauVar26[1] + 0xc) = uStack_304;
+        *pauVar26 = auVar35 | auVar34;
+        lVar25 = lVar25 + 0x20;
+        lVar23 = lVar23 + -1;
+      } while (lVar23 != 0);
     }
-    iVar33 = pGVar32->skyCount;
-    iVar30 = 0;
-    *(int *)(iVar9 + 0xb0) = iVar31;
-    if (0 < iVar33) {
+    iVar31 = pGVar30->skyCount;
+    iVar29 = 0;
+    *(int *)(iVar9 + 0xb0) = param_2;
+    if (0 < iVar31) {
       iVar31 = 0;
-      _Var42 = g_keepXYZ.field0_0x0;
+      _Var41 = g_keepXYZ.field0_0x0;
       do {
-        pGVar7 = pGVar32->skies;
-        iVar33 = 0;
+        pGVar7 = pGVar30->skies;
+        iVar32 = 0;
         if (0 < *(int *)((int)&pGVar7->skySurfCount + iVar31)) {
-          iVar34 = 0;
+          iVar33 = 0;
           do {
-            uVar4 = (pGVar32->dpvs).sortedSurfIndex
-                    [*(int *)(*(int *)((int)&pGVar7->skyStartSurfs + iVar31) + iVar34)];
+            uVar4 = (pGVar30->dpvs).sortedSurfIndex
+                    [*(int *)(*(int *)((int)&pGVar7->skyStartSurfs + iVar31) + iVar33)];
             if (*(char *)(*(int *)(iVar5 + 0x10c) + (uint)uVar4) == '\0') {
-              lVar28 = ZEXT48(g_worldDpvs->surfacesBounds) + (ulonglong)uVar4 * 0x20;
-              auVar38 = loadVectorRightIndexed(lVar28 + 0x10);
-              auVar35 = loadVectorLeftIndexed(lVar28);
-              auVar37 = loadVectorRightIndexed(lVar28 + 0x1c);
-              auVar36 = loadVectorLeftIndexed(lVar28 + 0xc);
-              auVar35 = vectorAddFloatingPoint128
-                                  ((auVar35 | auVar38) & (undefined1  [16])_Var42,
+              lVar24 = ZEXT48(g_worldDpvs->surfacesBounds) + (ulonglong)uVar4 * 0x20;
+              auVar37 = loadVectorRightIndexed(lVar24 + 0x10);
+              auVar34 = loadVectorLeftIndexed(lVar24);
+              auVar36 = loadVectorRightIndexed(lVar24 + 0x1c);
+              auVar35 = loadVectorLeftIndexed(lVar24 + 0xc);
+              auVar34 = vectorAddFloatingPoint128
+                                  ((auVar34 | auVar37) & (undefined1  [16])_Var41,
                                    (undefined1  [16])g_unit.field0_0x0);
-              _Var44 = g_one.field0_0x0;
-              if ((uVar22 & 0xffffffff) != 0) {
-                lVar25 = uVar20 - 0x2f4;
-                uVar23 = uVar22;
+              _Var43 = g_one.field0_0x0;
+              if (param_2 != 0) {
+                lVar23 = uVar20 - 0x2f4;
+                lVar25 = (longlong)param_2;
                 do {
-                  lVar25 = lVar25 + 4;
-                  auVar38 = vectorMultiplyAddFloatingPoint
-                                      ((auVar36 | auVar37) & (undefined1  [16])_Var42,
-                                       *(undefined1 (*) [16])(*(uint *)lVar25 + 0x10 & 0xfffffff0),
-                                       auVar35);
-                  auVar38 = vectorMultiplySum4FloatingPoint
-                                      (*(undefined1 (*) [16])(*(uint *)lVar25 & 0xfffffff0),auVar38)
+                  lVar23 = lVar23 + 4;
+                  auVar37 = vectorMultiplyAddFloatingPoint
+                                      ((auVar35 | auVar36) & (undefined1  [16])_Var41,
+                                       *(undefined1 (*) [16])(*(uint *)lVar23 + 0x10 & 0xfffffff0),
+                                       auVar34);
+                  auVar37 = vectorMultiplySum4FloatingPoint
+                                      (*(undefined1 (*) [16])(*(uint *)lVar23 & 0xfffffff0),auVar37)
                   ;
-                  _Var44.vector4_f32 =
-                       (float  [4])vectorMinimumFloatingPoint128(_Var44.vector4_f32,auVar38);
-                  uVar23 = uVar23 - 1;
-                } while (uVar23 != 0);
+                  _Var43.vector4_f32 =
+                       (float  [4])vectorMinimumFloatingPoint128(_Var43.vector4_f32,auVar37);
+                  lVar25 = lVar25 + -1;
+                } while (lVar25 != 0);
               }
-              auVar35 = vectorCompareGreaterThanFloatingPoint128
-                                  ((undefined1  [16])_Var44,(undefined1  [16])g_zero.field0_0x0);
-              auVar35 = vectorSplatWord(auVar35,0);
-              storeVectorElementWordIndexed(auVar35,uVar20 - 0x300);
+              auVar34 = vectorCompareGreaterThanFloatingPoint128
+                                  ((undefined1  [16])_Var43,(undefined1  [16])g_zero.field0_0x0);
+              auVar34 = vectorSplatWord(auVar34,0);
+              storeVectorElementWordIndexed(auVar34,uVar20 - 0x300);
               if (*(int *)(iVar9 + 0x60) != 0) {
                 if (((r_showAabbTrees->current).unsignedInt & 2) != 0) {
-                  R_AddDebugBox(&frontEndDataOut->debugGlobals,(Bounds *)lVar28,colorGreen);
+                  R_AddDebugBox(&frontEndDataOut->debugGlobals,(Bounds *)lVar24,colorGreen);
                 }
                 iVar8 = *(int *)(iVar9 + 100);
                 *(undefined1 *)(*(int *)(iVar5 + 0x10c) + (uint)uVar4) = 1;
-                pGVar32 = *(GfxWorld **)(iVar8 + 0x2e0c);
-                _Var42 = g_keepXYZ.field0_0x0;
+                pGVar30 = *(GfxWorld **)(iVar8 + 0x2e0c);
+                _Var41 = g_keepXYZ.field0_0x0;
               }
             }
-            pGVar7 = pGVar32->skies;
-            iVar33 = iVar33 + 1;
-            iVar34 = iVar34 + 4;
-          } while (iVar33 < *(int *)((int)&pGVar7->skySurfCount + iVar31));
+            pGVar7 = pGVar30->skies;
+            iVar32 = iVar32 + 1;
+            iVar33 = iVar33 + 4;
+          } while (iVar32 < *(int *)((int)&pGVar7->skySurfCount + iVar31));
         }
-        iVar30 = iVar30 + 1;
+        iVar29 = iVar29 + 1;
         iVar31 = iVar31 + 0x10;
-      } while (iVar30 < pGVar32->skyCount);
+      } while (iVar29 < pGVar30->skyCount);
     }
   }
-  __restgprlr();
   return;
 }
 

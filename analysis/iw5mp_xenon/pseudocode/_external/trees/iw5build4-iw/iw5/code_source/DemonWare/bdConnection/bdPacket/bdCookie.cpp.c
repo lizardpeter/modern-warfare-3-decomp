@@ -17,30 +17,29 @@ bdCookie * __thiscall bdCookie::bdCookie(bdCookie *this)
 
 // 82939628  bdCookie  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdconnection/bdpacket/bdcookie.cpp:33)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 bdCookie * __thiscall
 bdCookie::bdCookie(bdCookie *this,uint param_1,uint param_2,uint param_3,uint param_4)
 
 {
-  undefined4 *puVar1;
   bdTrulyRandomImpl *this_00;
-  bdCookie *pbVar2;
-  undefined4 *puStack00000014;
+  bdCookie *pbStack00000014;
   
-  puVar1 = (undefined4 *)__savegprlr_29(this);
-  puVar1[1] = 0;
-  puVar1[2] = param_1;
-  puVar1[3] = param_2;
-  puVar1[4] = param_3;
-  puVar1[5] = param_4;
-  *puVar1 = &_vftable_;
-  puStack00000014 = puVar1;
+  this->_padding_ = 0;
+  this->m_localTag = param_1;
+  this->m_peerTag = param_2;
+  this->m_localTieTag = param_3;
+  this->m_peerTieTag = param_4;
+  this->_padding_ = (int)&_vftable_;
   if (m_secretInitialized == false) {
+    pbStack00000014 = this;
     this_00 = bdSingleton<bdTrulyRandomImpl>::getInstance();
     bdTrulyRandomImpl::getRandomUByte8(this_00,m_secret,0x14);
     m_secretInitialized = true;
   }
-  pbVar2 = (bdCookie *)__restgprlr_29(puVar1);
-  return pbVar2;
+  return this;
 }
 
 
@@ -82,20 +81,20 @@ uint __thiscall bdCookie::getPeerTieTag(bdCookie *this)
 
 // 829391A8  serialize  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdconnection/bdpacket/bdcookie.cpp:68)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 uint __thiscall bdCookie::serialize(bdCookie *this,uchar *param_1,uint param_2)
 
 {
   undefined1 *puVar1;
   int iVar2;
-  int iVar3;
-  uchar *puVar4;
-  bool bVar7;
-  uint uVar5;
-  ulonglong uVar8;
-  uint *puVar9;
-  undefined1 *puVar10;
-  int iVar11;
-  longlong lVar12;
+  bool bVar3;
+  bool bVar4;
+  uint *puVar5;
+  undefined1 *puVar6;
+  int iVar7;
+  longlong lVar8;
   uint local_150;
   undefined4 local_14c;
   undefined1 auStack_148 [3];
@@ -106,207 +105,195 @@ uint __thiscall bdCookie::serialize(bdCookie *this,uchar *param_1,uint param_2)
   undefined1 auStack_138 [3];
   undefined1 local_135 [5];
   bdHMacSHA1 bStack_130;
-  bool bVar6;
   
-  uVar8 = (ulonglong)(int)param_1;
-  iVar3 = __savegprlr_27(this);
   local_14c = 0;
   local_150 = 0x14;
-  lVar12 = 4;
-  iVar11 = 0;
-  puVar9 = &local_13c;
+  lVar8 = 4;
+  iVar7 = 0;
+  puVar5 = &local_13c;
   do {
-    iVar2 = iVar11 + -4;
-    iVar11 = iVar11 + 1;
-    puVar9 = (uint *)((int)puVar9 + -1);
-    *(undefined1 *)puVar9 = auStack_148[iVar2];
-    lVar12 = lVar12 + -1;
-  } while (lVar12 != 0);
-  puVar4 = (uchar *)uVar8;
-  bVar6 = bdBytePacker::appendBuffer(puVar4,param_2,0x14,&local_150,local_141 + 1,4);
-  if (bVar6) {
-    iVar11 = 0;
-    puVar10 = auStack_148;
-    lVar12 = 4;
+    iVar2 = iVar7 + -4;
+    iVar7 = iVar7 + 1;
+    puVar5 = (uint *)((int)puVar5 + -1);
+    *(undefined1 *)puVar5 = auStack_148[iVar2];
+    lVar8 = lVar8 + -1;
+  } while (lVar8 != 0);
+  bVar3 = bdBytePacker::appendBuffer(param_1,param_2,0x14,&local_150,local_141 + 1,4);
+  if (bVar3) {
+    iVar7 = 0;
+    puVar6 = auStack_148;
+    lVar8 = 4;
     do {
-      puVar1 = (undefined1 *)(iVar11 + iVar3 + 8);
-      iVar11 = iVar11 + 1;
-      puVar10 = puVar10 + -1;
-      *puVar10 = *puVar1;
-      lVar12 = lVar12 + -1;
-    } while (lVar12 != 0);
-    bVar7 = bdBytePacker::appendBuffer(puVar4,param_2,local_150,&local_150,&local_14c,4);
-    bVar6 = true;
-    if (!bVar7) goto LAB_82939274;
+      puVar1 = (undefined1 *)((int)&this->m_localTag + iVar7);
+      iVar7 = iVar7 + 1;
+      puVar6 = puVar6 + -1;
+      *puVar6 = *puVar1;
+      lVar8 = lVar8 + -1;
+    } while (lVar8 != 0);
+    bVar4 = bdBytePacker::appendBuffer(param_1,param_2,local_150,&local_150,&local_14c,4);
+    bVar3 = true;
+    if (!bVar4) goto LAB_82939274;
   }
   else {
 LAB_82939274:
-    bVar6 = false;
+    bVar3 = false;
   }
-  if (bVar6) {
-    iVar11 = 0;
-    puVar10 = local_145 + 1;
-    lVar12 = 4;
+  if (bVar3) {
+    iVar7 = 0;
+    puVar6 = local_145 + 1;
+    lVar8 = 4;
     do {
-      puVar1 = (undefined1 *)(iVar11 + iVar3 + 0xc);
-      iVar11 = iVar11 + 1;
-      puVar10 = puVar10 + -1;
-      *puVar10 = *puVar1;
-      lVar12 = lVar12 + -1;
-    } while (lVar12 != 0);
-    bVar7 = bdBytePacker::appendBuffer(puVar4,param_2,local_150,&local_150,auStack_148,4);
-    bVar6 = true;
-    if (!bVar7) goto LAB_829392cc;
+      puVar1 = (undefined1 *)((int)&this->m_peerTag + iVar7);
+      iVar7 = iVar7 + 1;
+      puVar6 = puVar6 + -1;
+      *puVar6 = *puVar1;
+      lVar8 = lVar8 + -1;
+    } while (lVar8 != 0);
+    bVar4 = bdBytePacker::appendBuffer(param_1,param_2,local_150,&local_150,auStack_148,4);
+    bVar3 = true;
+    if (!bVar4) goto LAB_829392cc;
   }
   else {
 LAB_829392cc:
-    bVar6 = false;
+    bVar3 = false;
   }
-  if (bVar6) {
-    iVar11 = 0;
-    puVar10 = local_135 + 1;
-    lVar12 = 4;
+  if (bVar3) {
+    iVar7 = 0;
+    puVar6 = local_135 + 1;
+    lVar8 = 4;
     do {
-      puVar1 = (undefined1 *)(iVar11 + iVar3 + 0x14);
-      iVar11 = iVar11 + 1;
-      puVar10 = puVar10 + -1;
-      *puVar10 = *puVar1;
-      lVar12 = lVar12 + -1;
-    } while (lVar12 != 0);
-    bVar7 = bdBytePacker::appendBuffer(puVar4,param_2,local_150,&local_150,auStack_138,4);
-    bVar6 = true;
-    if (bVar7) goto LAB_82939328;
+      puVar1 = (undefined1 *)((int)&this->m_peerTieTag + iVar7);
+      iVar7 = iVar7 + 1;
+      puVar6 = puVar6 + -1;
+      *puVar6 = *puVar1;
+      lVar8 = lVar8 + -1;
+    } while (lVar8 != 0);
+    bVar4 = bdBytePacker::appendBuffer(param_1,param_2,local_150,&local_150,auStack_138,4);
+    bVar3 = true;
+    if (bVar4) goto LAB_82939328;
   }
-  bVar6 = false;
+  bVar3 = false;
 LAB_82939328:
-  if (bVar6) {
-    iVar11 = 0;
-    puVar10 = local_141 + 1;
-    lVar12 = 4;
+  if (bVar3) {
+    iVar7 = 0;
+    puVar6 = local_141 + 1;
+    lVar8 = 4;
     do {
-      puVar1 = (undefined1 *)(iVar11 + iVar3 + 0x10);
-      iVar11 = iVar11 + 1;
-      puVar10 = puVar10 + -1;
-      *puVar10 = *puVar1;
-      lVar12 = lVar12 + -1;
-    } while (lVar12 != 0);
-    bdBytePacker::appendBuffer(puVar4,param_2,local_150,&local_150,local_145 + 1,4);
+      puVar1 = (undefined1 *)((int)&this->m_localTieTag + iVar7);
+      iVar7 = iVar7 + 1;
+      puVar6 = puVar6 + -1;
+      *puVar6 = *puVar1;
+      lVar8 = lVar8 + -1;
+    } while (lVar8 != 0);
+    bdBytePacker::appendBuffer(param_1,param_2,local_150,&local_150,local_145 + 1,4);
   }
-  if ((uVar8 & 0xffffffff) != 0) {
+  if (param_1 != (uchar *)0x0) {
     bdHMacSHA1::bdHMacSHA1(&bStack_130,m_secret,0x14);
-    bdHMacSHA1::process(&bStack_130,puVar4 + 0x14,local_150 - 0x14);
+    bdHMacSHA1::process(&bStack_130,param_1 + 0x14,local_150 - 0x14);
     local_13c = 0x14;
-    bdHMacSHA1::getData(&bStack_130,puVar4,&local_13c);
+    bdHMacSHA1::getData(&bStack_130,param_1,&local_13c);
     bdHMacSHA1::~bdHMacSHA1(&bStack_130);
   }
-  uVar5 = __restgprlr_27(local_150);
-  return uVar5;
+  return local_150;
 }
 
 
 // 829393F8  deserialize  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdconnection/bdpacket/bdcookie.cpp:99)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
+
 bool __thiscall bdCookie::deserialize(bdCookie *this,uchar *param_1,uint param_2,uint *param_3)
 
 {
-  int iVar1;
-  bdCookie *this_00;
-  uint uVar2;
-  void *pvVar3;
+  byte bVar1;
+  byte bVar2;
+  uint uVar3;
+  bool bVar4;
   bool bVar5;
-  undefined1 uVar6;
-  longlong lVar7;
-  longlong lVar8;
-  longlong lVar9;
-  byte *pbVar10;
-  longlong lVar11;
-  longlong lVar12;
+  byte *pbVar6;
+  byte *pbVar7;
+  byte *pbVar8;
   uint local_170 [4];
   byte local_160 [32];
   bdHMacSHA1 bStack_140;
-  bool bVar4;
   
-  lVar8 = (longlong)(int)param_2;
-  lVar7 = (longlong)(int)param_1;
-  this_00 = (bdCookie *)__savegprlr_25(this);
-  uVar2 = *param_3;
-  lVar11 = 0;
-  if ((lVar8 - (ulonglong)uVar2 & 0xffffffff) < 0x15) goto LAB_829395e8;
-  lVar12 = (ulonglong)uVar2 + lVar7;
-  local_170[0] = uVar2;
+  local_170[0] = *param_3;
+  bVar4 = false;
+  if (param_2 - local_170[0] < 0x15) {
+    return false;
+  }
+  pbVar8 = param_1 + local_170[0];
   bdHMacSHA1::bdHMacSHA1(&bStack_140,m_secret,0x14);
-  uVar2 = serialize(this_00,(uchar *)0x0,0);
-  iVar1 = (int)lVar12;
-  bdHMacSHA1::process(&bStack_140,(uchar *)(iVar1 + 0x14),uVar2 - 0x14);
+  uVar3 = serialize(this,(uchar *)0x0,0);
+  bdHMacSHA1::process(&bStack_140,pbVar8 + 0x14,uVar3 - 0x14);
   local_170[2] = 0x14;
   bdHMacSHA1::getData(&bStack_140,local_160,local_170 + 2);
-  pbVar10 = local_160;
+  pbVar7 = local_160;
+  pbVar6 = pbVar8 + 0x14;
   do {
-    lVar9 = (ulonglong)*(byte *)lVar12 - (ulonglong)*pbVar10;
-    if (lVar9 != 0) break;
-    lVar12 = lVar12 + 1;
-    pbVar10 = pbVar10 + 1;
-  } while ((int)lVar12 != iVar1 + 0x14);
-  if ((int)lVar9 == 0) {
-    local_170[1] = 0;
-    local_170[0] = local_170[0] + 0x14;
-    pvVar3 = (void *)lVar7;
-    uVar2 = (uint)lVar8;
-    bVar4 = bdBytePacker::removeBasicType<unsigned_int>
-                      (pvVar3,uVar2,local_170[0],local_170,local_170 + 1);
-    if (bVar4) {
-      bVar5 = bdBytePacker::removeBasicType<unsigned_int>
-                        (pvVar3,uVar2,local_170[0],local_170,&this_00->m_localTag);
-      bVar4 = true;
-      if (!bVar5) goto LAB_82939504;
-    }
-    else {
-LAB_82939504:
-      bVar4 = false;
-    }
-    if (bVar4) {
-      bVar5 = bdBytePacker::removeBasicType<unsigned_int>
-                        (pvVar3,uVar2,local_170[0],local_170,&this_00->m_peerTag);
-      bVar4 = true;
-      if (!bVar5) goto LAB_82939534;
-    }
-    else {
-LAB_82939534:
-      bVar4 = false;
-    }
-    if (bVar4) {
-      bVar5 = bdBytePacker::removeBasicType<unsigned_int>
-                        (pvVar3,uVar2,local_170[0],local_170,&this_00->m_peerTieTag);
-      bVar4 = true;
-      if (!bVar5) goto LAB_82939564;
-    }
-    else {
-LAB_82939564:
-      bVar4 = false;
-    }
-    if (bVar4) {
-      bVar4 = bdBytePacker::removeBasicType<unsigned_int>
-                        (pvVar3,uVar2,local_170[0],local_170,&this_00->m_localTieTag);
-      lVar11 = 1;
-      if (!bVar4) goto LAB_82939594;
-    }
-    else {
-LAB_82939594:
-      lVar11 = 0;
-    }
-    if (lVar11 != 0) {
-      *param_3 = local_170[0];
-    }
-  }
-  else {
+    bVar1 = *pbVar8;
+    bVar2 = *pbVar7;
+    if ((ulonglong)bVar1 - (ulonglong)bVar2 != 0) break;
+    pbVar8 = pbVar8 + 1;
+    pbVar7 = pbVar7 + 1;
+  } while (pbVar8 != pbVar6);
+  if ((int)((ulonglong)bVar1 - (ulonglong)bVar2) != 0) {
     bdLogMessage(BD_LOG_WARNING,"warn/","bdConnection/packet",
                  "c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdConnection\\bdPacket\\bdCookie.cpp"
                  ,"bdCookie::deserialize",0x85,"cookie failed HMac test.");
+    goto LAB_829395e0;
   }
+  local_170[1] = 0;
+  local_170[0] = local_170[0] + 0x14;
+  bVar4 = bdBytePacker::removeBasicType<unsigned_int>
+                    (param_1,param_2,local_170[0],local_170,local_170 + 1);
+  if (bVar4) {
+    bVar5 = bdBytePacker::removeBasicType<unsigned_int>
+                      (param_1,param_2,local_170[0],local_170,&this->m_localTag);
+    bVar4 = true;
+    if (!bVar5) goto LAB_82939504;
+  }
+  else {
+LAB_82939504:
+    bVar4 = false;
+  }
+  if (bVar4) {
+    bVar5 = bdBytePacker::removeBasicType<unsigned_int>
+                      (param_1,param_2,local_170[0],local_170,&this->m_peerTag);
+    bVar4 = true;
+    if (!bVar5) goto LAB_82939534;
+  }
+  else {
+LAB_82939534:
+    bVar4 = false;
+  }
+  if (bVar4) {
+    bVar5 = bdBytePacker::removeBasicType<unsigned_int>
+                      (param_1,param_2,local_170[0],local_170,&this->m_peerTieTag);
+    bVar4 = true;
+    if (!bVar5) goto LAB_82939564;
+  }
+  else {
+LAB_82939564:
+    bVar4 = false;
+  }
+  if (bVar4) {
+    bVar5 = bdBytePacker::removeBasicType<unsigned_int>
+                      (param_1,param_2,local_170[0],local_170,&this->m_localTieTag);
+    bVar4 = true;
+    if (!bVar5) goto LAB_82939594;
+  }
+  else {
+LAB_82939594:
+    bVar4 = false;
+  }
+  if (bVar4) {
+    *param_3 = local_170[0];
+  }
+LAB_829395e0:
   bdHMacSHA1::~bdHMacSHA1(&bStack_140);
-LAB_829395e8:
-  uVar6 = __restgprlr_25(lVar11);
-  return (bool)uVar6;
+  return bVar4;
 }
 
 

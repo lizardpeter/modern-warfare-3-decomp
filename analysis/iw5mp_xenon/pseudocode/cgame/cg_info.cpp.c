@@ -30,52 +30,51 @@ bool CG_IsShowingProgress(void)
 
 // 822D4358  CG_DrawInformation  (cgame/cg_info.cpp:50)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void CG_DrawInformation(LocalClientNum_t param_1)
 
 {
-  LocalClientNum_t LVar1;
+  bool bVar5;
   bool bVar6;
-  bool bVar7;
-  ScreenPlacement *pSVar2;
-  Font_s *pFVar3;
-  char *pcVar4;
-  int iVar5;
+  ScreenPlacement *pSVar1;
+  Font_s *pFVar2;
+  char *pcVar3;
+  int iVar4;
+  double dVar7;
   double dVar8;
-  double dVar9;
-  float fVar10;
+  float fVar9;
   
-  LVar1 = __savegprlr_28(param_1);
-  bVar6 = CL_IsServerLoadingMap();
-  if (bVar6) {
-    bVar7 = CL_IsWaitingOnServerToLoadMap(LVar1);
-    if (bVar7) goto LAB_822d43c4;
-    CG_CloseScriptMenu(LVar1,false);
-    UI_CloseAllMenus(LVar1);
+  bVar5 = CL_IsServerLoadingMap();
+  if (bVar5) {
+    bVar6 = CL_IsWaitingOnServerToLoadMap(param_1);
+    if (bVar6) goto LAB_822d43c4;
+    CG_CloseScriptMenu(param_1,false);
+    UI_CloseAllMenus(param_1);
     SND_StopSounds(SND_STOP_ALL);
-    bVar7 = true;
+    bVar6 = true;
   }
   else {
-    bVar7 = false;
+    bVar6 = false;
   }
-  CL_SetWaitingOnServerToLoadMap(LVar1,bVar7);
+  CL_SetWaitingOnServerToLoadMap(param_1,bVar6);
 LAB_822d43c4:
-  UI_DrawMapLevelshot(LVar1);
-  fVar10 = DB_GetLoadedFraction();
-  if (((fVar10 <= 0.0) && (bVar6)) && (g_waitingForServer != false)) {
-    pSVar2 = ScrPlace_GetActivePlacement(LVar1);
-    dVar9 = 0.5;
-    pFVar3 = UI_GetFontHandle(pSVar2,0,0.5);
+  UI_DrawMapLevelshot(param_1);
+  fVar9 = DB_GetLoadedFraction();
+  if (((fVar9 <= 0.0) && (bVar5)) && (g_waitingForServer != false)) {
+    pSVar1 = ScrPlace_GetActivePlacement(param_1);
+    dVar8 = 0.5;
+    pFVar2 = UI_GetFontHandle(pSVar1,0,0.5);
     Sys_Milliseconds();
-    pcVar4 = UI_SafeTranslateString("CGAME_WAITINGFORSERVERLOAD");
-    iVar5 = UI_TextWidth(pcVar4,0,pFVar3,(float)dVar9);
-    dVar8 = (double)(longlong)iVar5;
-    pcVar4 = va("%s%s");
-    UI_DrawText(pSVar2,pcVar4,0x7fffffff,pFVar3,(float)((double)(float)(640.0 - dVar8) * dVar9),
-                439.0,-0x7dfe0000,-0x7e000000,(float)dVar9,(float *)0x0,0);
+    pcVar3 = UI_SafeTranslateString("CGAME_WAITINGFORSERVERLOAD");
+    iVar4 = UI_TextWidth(pcVar3,0,pFVar2,(float)dVar8);
+    dVar7 = (double)(longlong)iVar4;
+    pcVar3 = va("%s%s");
+    UI_DrawText(pSVar1,pcVar3,0x7fffffff,pFVar2,(float)((double)(float)(640.0 - dVar7) * dVar8),
+                439.0,-0x7dfe0000,-0x7e000000,(float)dVar8,(float *)0x0,0);
   }
-  __restgprlr_28();
   return;
 }
 

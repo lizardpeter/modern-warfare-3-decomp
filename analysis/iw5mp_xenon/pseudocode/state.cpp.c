@@ -81,6 +81,8 @@ void D3D::SetSurfaceInfo(CDevice *param_1,D3DSurface *param_2)
 
 // 8285DE40  SetSurfaceClip  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:150)
 
+/* WARNING: Function: __savegprlr_21 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_21 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 
 void D3D::SetSurfaceClip(CDevice *param_1,int param_2,int param_3,int param_4,int param_5)
@@ -89,169 +91,161 @@ void D3D::SetSurfaceClip(CDevice *param_1,int param_2,int param_3,int param_4,in
   int iVar1;
   int iVar2;
   bool bVar3;
-  CDevice *this;
   ulong *puVar4;
-  ulonglong uVar5;
-  ulonglong uVar6;
+  uint uVar5;
+  uint uVar6;
   uint uVar7;
-  ulonglong uVar8;
+  uint uVar8;
   uint uVar9;
-  ulonglong uVar10;
+  long *plVar10;
   uint uVar11;
   long *plVar12;
-  uint uVar13;
-  long *plVar14;
   
-  uVar6 = (ulonglong)param_5;
-  uVar5 = (ulonglong)param_3;
-  this = (CDevice *)__savegprlr_21(param_1);
-  puVar4 = *(ulong **)&this->field_0x30;
-  if (*(ulong **)&this->field_0x38 < puVar4) {
-    puVar4 = CDevice::KickOff(this);
+  puVar4 = *(ulong **)&param_1->field_0x30;
+  if (*(ulong **)&param_1->field_0x38 < puVar4) {
+    puVar4 = CDevice::KickOff(param_1);
   }
-  if (this->m_TilingSurfaceOverride) {
+  if (param_1->m_TilingSurfaceOverride) {
     bVar3 = true;
   }
-  else if ((((this->m_TilingBracket) &&
-            ((this->m_pTileSurfaces[0] == this->m_pRenderTarget[0] ||
-             (this->m_pRenderTarget[0] == (D3DSurface *)0x0)))) &&
-           ((this->m_pTileSurfaces[1] == this->m_pRenderTarget[1] ||
-            (this->m_pRenderTarget[1] == (D3DSurface *)0x0)))) &&
-          ((((this->m_pTileSurfaces[2] == this->m_pRenderTarget[2] ||
-             (this->m_pRenderTarget[2] == (D3DSurface *)0x0)) &&
-            ((this->m_pTileSurfaces[3] == this->m_pRenderTarget[3] ||
-             (this->m_pRenderTarget[3] == (D3DSurface *)0x0)))) &&
-           ((this->m_pTileDepthSurface == this->m_pDepthStencilSurface ||
-            (this->m_pDepthStencilSurface == (D3DSurface *)0x0)))))) {
+  else if ((((param_1->m_TilingBracket) &&
+            ((param_1->m_pTileSurfaces[0] == param_1->m_pRenderTarget[0] ||
+             (param_1->m_pRenderTarget[0] == (D3DSurface *)0x0)))) &&
+           ((param_1->m_pTileSurfaces[1] == param_1->m_pRenderTarget[1] ||
+            (param_1->m_pRenderTarget[1] == (D3DSurface *)0x0)))) &&
+          ((((param_1->m_pTileSurfaces[2] == param_1->m_pRenderTarget[2] ||
+             (param_1->m_pRenderTarget[2] == (D3DSurface *)0x0)) &&
+            ((param_1->m_pTileSurfaces[3] == param_1->m_pRenderTarget[3] ||
+             (param_1->m_pRenderTarget[3] == (D3DSurface *)0x0)))) &&
+           ((param_1->m_pTileDepthSurface == param_1->m_pDepthStencilSurface ||
+            (param_1->m_pDepthStencilSurface == (D3DSurface *)0x0)))))) {
     bVar3 = true;
   }
   else {
     bVar3 = false;
   }
   if (bVar3) {
-    uVar11 = 0;
+    uVar9 = 0;
     puVar4[1] = 0xc0006100;
     puVar4 = puVar4 + 2;
     *puVar4 = 0;
-    if (this->m_Tiles != 0) {
-      uVar13 = 0;
-      plVar14 = &this->m_TileRects[0].y1;
-      plVar12 = &this->m_TileOffsets[0].y;
+    if (param_1->m_Tiles != 0) {
+      uVar11 = 0;
+      plVar12 = &param_1->m_TileRects[0].y1;
+      plVar10 = &param_1->m_TileOffsets[0].y;
       do {
-        iVar1 = ((_D3DPOINT *)(plVar12 + -1))->x;
-        iVar2 = *plVar12;
-        uVar7 = param_2;
-        if (param_2 <= ((_D3DRECT *)(plVar14 + -1))->x1) {
-          uVar7 = ((_D3DRECT *)(plVar14 + -1))->x1;
+        iVar1 = ((_D3DPOINT *)(plVar10 + -1))->x;
+        iVar2 = *plVar10;
+        uVar5 = param_2;
+        if (param_2 <= ((_D3DRECT *)(plVar12 + -1))->x1) {
+          uVar5 = ((_D3DRECT *)(plVar12 + -1))->x1;
         }
-        uVar8 = uVar5;
-        if ((int)uVar5 <= *plVar14) {
-          uVar8 = (ulonglong)(uint)*plVar14;
+        uVar6 = param_3;
+        if (param_3 <= *plVar12) {
+          uVar6 = *plVar12;
         }
-        uVar9 = plVar14[1];
-        if (param_4 < plVar14[1]) {
-          uVar9 = param_4;
+        uVar7 = plVar12[1];
+        if (param_4 < plVar12[1]) {
+          uVar7 = param_4;
         }
-        uVar10 = (ulonglong)(uint)plVar14[2];
-        if ((int)uVar6 < plVar14[2]) {
-          uVar10 = uVar6;
+        uVar8 = plVar12[2];
+        if (param_5 < plVar12[2]) {
+          uVar8 = param_5;
         }
-        if (((int)uVar9 <= (int)uVar7) || ((int)uVar10 <= (int)uVar8)) {
-          uVar10 = 0;
-          uVar9 = 0;
+        if (((int)uVar7 <= (int)uVar5) || ((int)uVar8 <= (int)uVar6)) {
           uVar8 = 0;
           uVar7 = 0;
+          uVar6 = 0;
+          uVar5 = 0;
         }
         puVar4[1] = 0xc0006000;
-        puVar4[2] = 3 << (uVar13 & 0x3f);
+        puVar4[2] = 3 << (uVar11 & 0x3f);
         puVar4[3] = 0xc0032d01;
         puVar4[4] = 0x40080;
         puVar4[5] = (-iVar2 & 0x7fffU) << 0x10 | -iVar1 & 0x7fffU;
-        puVar4[6] = (uint)((uVar8 & 0xffffffff) << 0x10) & 0x3fff0000 | uVar7 & 0x3fff;
+        puVar4[6] = (uVar6 & 0x3fff) << 0x10 | uVar5 & 0x3fff;
         puVar4 = puVar4 + 7;
-        *puVar4 = (uint)((uVar10 & 0xffffffff) << 0x10) & 0x3fff0000 | uVar9 & 0x3fff;
-        *(ulong **)&this->field_0x30 = puVar4;
-        if (*(ulong **)&this->field_0x38 < puVar4) {
-          puVar4 = CDevice::KickOff(this);
+        *puVar4 = (uVar8 & 0x3fff) << 0x10 | uVar7 & 0x3fff;
+        *(ulong **)&param_1->field_0x30 = puVar4;
+        if (*(ulong **)&param_1->field_0x38 < puVar4) {
+          puVar4 = CDevice::KickOff(param_1);
         }
-        uVar11 = uVar11 + 1;
-        plVar12 = plVar12 + 2;
-        plVar14 = plVar14 + 4;
-        uVar13 = uVar13 + 2;
-      } while (uVar11 < this->m_Tiles);
+        uVar9 = uVar9 + 1;
+        plVar10 = plVar10 + 2;
+        plVar12 = plVar12 + 4;
+        uVar11 = uVar11 + 2;
+      } while (uVar9 < param_1->m_Tiles);
     }
-    if ((this->m_OnePassZPass) && (this->m_ZPassBracket)) {
+    if ((param_1->m_OnePassZPass) && (param_1->m_ZPassBracket)) {
       puVar4[1] = 0xc0006000;
       puVar4[2] = 1;
       puVar4[3] = 0xc0022d01;
       puVar4[4] = 0x40081;
-      puVar4[5] = (uint)((uVar5 & 0xffffffff) << 0x10) & 0x3fff0000 | param_2 & 0x3fffU;
+      puVar4[5] = (param_3 & 0x3fffU) << 0x10 | param_2 & 0x3fffU;
       puVar4 = puVar4 + 6;
-      *puVar4 = (uint)((uVar6 & 0xffffffff) << 0x10) & 0x3fff0000 | param_4 & 0x3fffU;
+      *puVar4 = (param_5 & 0x3fffU) << 0x10 | param_4 & 0x3fffU;
     }
     puVar4[1] = 0xc0006000;
-    puVar4[2] = this->m_PredicationMaskLo;
+    puVar4[2] = param_1->m_PredicationMaskLo;
     puVar4[3] = 0xc0006100;
     puVar4 = puVar4 + 4;
-    *puVar4 = this->m_PredicationMaskHi;
+    *puVar4 = param_1->m_PredicationMaskHi;
   }
   else {
     puVar4[1] = 0x22080;
     puVar4[2] = 0;
-    puVar4[3] = (uint)((uVar5 & 0xffffffff) << 0x10) & 0x3fff0000 | param_2 & 0x3fffU;
+    puVar4[3] = (param_3 & 0x3fffU) << 0x10 | param_2 & 0x3fffU;
     puVar4 = puVar4 + 4;
-    *puVar4 = (uint)((uVar6 & 0xffffffff) << 0x10) & 0x3fff0000 | param_4 & 0x3fffU;
+    *puVar4 = (param_5 & 0x3fffU) << 0x10 | param_4 & 0x3fffU;
   }
-  *(ulong **)&this->field_0x30 = puVar4;
-  __restgprlr_21();
+  *(ulong **)&param_1->field_0x30 = puVar4;
   return;
 }
 
 
 // 82863420  SetViewport  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:271)
 
+/* WARNING: Function: __savefpr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_26 replaced with injection: xenon_save_restore */
+
 void D3D::SetViewport(D3DDevice *param_1,float param_2,float param_3,float param_4,float param_5,
                      float param_6,float param_7,ulong param_8)
 
 {
   bool bVar1;
-  D3DDevice *pDVar2;
-  int iVar3;
-  ulonglong uVar4;
-  int iVar5;
-  ulonglong uVar6;
-  longlong lVar7;
-  double extraout_f1;
+  int iVar2;
+  ulonglong uVar3;
+  int iVar4;
+  ulonglong uVar5;
+  longlong lVar6;
+  double dVar7;
   double dVar8;
   double dVar9;
   double dVar10;
   double dVar11;
   double dVar12;
-  double dVar13;
   
-  dVar10 = (double)param_6;
-  dVar11 = (double)param_7;
-  dVar12 = (double)param_5;
-  dVar9 = (double)param_4;
+  dVar9 = (double)param_6;
+  dVar10 = (double)param_7;
   dVar8 = (double)param_3;
-  pDVar2 = (D3DDevice *)__savefpr_26((double)param_2,param_1,param_8);
-  iVar3 = *(int *)((int)&pDVar2[1].m_Constants.field0_0x0 + 0x210);
-  iVar5 = iVar3;
-  if ((iVar3 != 0) || (iVar5 = *(int *)((int)&pDVar2[1].m_Constants.field0_0x0 + 0x220), iVar5 != 0)
-     ) {
-    if ((pDVar2[1].m_ReferenceCount & 0x10000000) == 0) {
-      if (((((pDVar2[1].m_ReferenceCount & 0x20000000) == 0) ||
-           ((*(int *)((int)&pDVar2[1].m_Constants.field1_0x300 + 0x30) != iVar3 && (iVar3 != 0))))
-          || ((iVar3 = *(int *)((int)&pDVar2[1].m_Constants.field0_0x0 + 0x214),
-              *(int *)((int)&pDVar2[1].m_Constants.field1_0x300 + 0x34) != iVar3 && (iVar3 != 0))))
-         || ((((iVar3 = *(int *)((int)&pDVar2[1].m_Constants.field0_0x0 + 0x218),
-               *(int *)((int)&pDVar2[1].m_Constants.field1_0x300 + 0x38) != iVar3 && (iVar3 != 0))
-              || ((iVar3 = *(int *)((int)&pDVar2[1].m_Constants.field0_0x0 + 0x21c),
-                  *(int *)((int)&pDVar2[1].m_Constants.field1_0x300 + 0x3c) != iVar3 && (iVar3 != 0)
-                  ))) ||
-             ((iVar3 = *(int *)((int)&pDVar2[1].m_Constants.field0_0x0 + 0x220),
-              *(int *)((int)&pDVar2[1].m_Constants.field1_0x300 + 0x40) != iVar3 && (iVar3 != 0)))))
-         ) {
+  dVar7 = (double)param_2;
+  iVar2 = *(int *)((int)&param_1[1].m_Constants.field0_0x0 + 0x210);
+  iVar4 = iVar2;
+  if ((iVar2 != 0) ||
+     (iVar4 = *(int *)((int)&param_1[1].m_Constants.field0_0x0 + 0x220), iVar4 != 0)) {
+    if ((param_1[1].m_ReferenceCount & 0x10000000) == 0) {
+      if (((((param_1[1].m_ReferenceCount & 0x20000000) == 0) ||
+           ((*(int *)((int)&param_1[1].m_Constants.field1_0x300 + 0x30) != iVar2 && (iVar2 != 0))))
+          || ((iVar2 = *(int *)((int)&param_1[1].m_Constants.field0_0x0 + 0x214),
+              *(int *)((int)&param_1[1].m_Constants.field1_0x300 + 0x34) != iVar2 && (iVar2 != 0))))
+         || ((((iVar2 = *(int *)((int)&param_1[1].m_Constants.field0_0x0 + 0x218),
+               *(int *)((int)&param_1[1].m_Constants.field1_0x300 + 0x38) != iVar2 && (iVar2 != 0))
+              || ((iVar2 = *(int *)((int)&param_1[1].m_Constants.field0_0x0 + 0x21c),
+                  *(int *)((int)&param_1[1].m_Constants.field1_0x300 + 0x3c) != iVar2 &&
+                  (iVar2 != 0)))) ||
+             ((iVar2 = *(int *)((int)&param_1[1].m_Constants.field0_0x0 + 0x220),
+              *(int *)((int)&param_1[1].m_Constants.field1_0x300 + 0x40) != iVar2 && (iVar2 != 0))))
+            )) {
         bVar1 = false;
       }
       else {
@@ -262,53 +256,51 @@ void D3D::SetViewport(D3DDevice *param_1,float param_2,float param_3,float param
       bVar1 = true;
     }
     if (bVar1) {
-      uVar6 = (ulonglong)*(uint *)((int)&pDVar2[1].m_Constants.field1_0x300 + 500);
-      iVar3 = *(int *)((int)&pDVar2[1].m_Constants.field1_0x300 + 0x1f8);
+      uVar5 = (ulonglong)*(uint *)((int)&param_1[1].m_Constants.field1_0x300 + 500);
+      iVar2 = *(int *)((int)&param_1[1].m_Constants.field1_0x300 + 0x1f8);
     }
     else {
-      uVar6 = (ulonglong)(*(uint *)(iVar5 + 0x24) >> 0x12) + 1;
-      iVar3 = (*(uint *)(iVar5 + 0x24) >> 3 & 0x7fff) + 1;
+      uVar5 = (ulonglong)(*(uint *)(iVar4 + 0x24) >> 0x12) + 1;
+      iVar2 = (*(uint *)(iVar4 + 0x24) >> 3 & 0x7fff) + 1;
     }
-    uVar4 = (ulonglong)(uint)(int)dVar9 + (ulonglong)(uint)(int)extraout_f1;
-    if ((int)uVar4 < (int)uVar6) {
-      uVar6 = uVar4;
+    uVar3 = (ulonglong)(uint)(int)param_4 + (ulonglong)(uint)(int)param_2;
+    if ((int)uVar3 < (int)uVar5) {
+      uVar5 = uVar3;
     }
-    iVar5 = (int)dVar12 + (int)dVar8;
-    if (iVar3 <= iVar5) {
-      iVar5 = iVar3;
+    iVar4 = (int)param_5 + (int)param_3;
+    if (iVar2 <= iVar4) {
+      iVar4 = iVar2;
     }
-    lVar7 = uVar6 - (uint)(int)extraout_f1;
-    iVar5 = iVar5 - (int)dVar8;
-    if ((lVar7 < 0) || (iVar5 < 0)) {
-      lVar7 = 0;
-      iVar5 = 0;
+    lVar6 = uVar5 - (uint)(int)param_2;
+    iVar4 = iVar4 - (int)param_3;
+    if ((lVar6 < 0) || (iVar4 < 0)) {
+      lVar6 = 0;
+      iVar4 = 0;
     }
-    *(float *)((int)&pDVar2[1].m_Constants.field0_0x0 + 0x2e0) = (float)extraout_f1;
-    *(float *)((int)&pDVar2[1].m_Constants.field0_0x0 + 0x2e4) = (float)dVar8;
-    dVar13 = (double)(longlong)iVar5;
-    *(float *)((int)&pDVar2[1].m_Constants.field0_0x0 + 0x2f0) = (float)dVar10;
-    *(float *)((int)&pDVar2[1].m_Constants.field0_0x0 + 0x2f4) = (float)dVar11;
-    *(float *)((int)&pDVar2[1].m_Constants.field0_0x0 + 0x2ec) = (float)(longlong)iVar5;
-    *(undefined4 *)((int)&pDVar2[1].m_Constants.field0_0x0 + 0x2f8) = 0;
-    dVar12 = (double)(longlong)(int)lVar7;
-    *(float *)((int)&pDVar2[1].m_Constants.field0_0x0 + 0x2e8) = (float)(longlong)(int)lVar7;
-    dVar9 = extraout_f1;
-    D3DDevice_SetScissorRect(pDVar2,(tagRECT *)((int)&pDVar2[1].m_Constants.field0_0x0 + 0x2fc));
-    (pDVar2->m_ValuesPacket).VportZScale = (float)(dVar11 - dVar10);
-    (pDVar2->m_ValuesPacket).VportZOffset = (float)dVar10;
-    (pDVar2->m_ValuesPacket).VportXScale = (float)(dVar12 * 0.5);
-    (pDVar2->m_ValuesPacket).VportXOffset = (float)((double)(float)(dVar12 * 0.5) + dVar9);
-    (pDVar2->m_ValuesPacket).VportYScale = (float)-(double)(float)(dVar13 * 0.5);
-    (pDVar2->m_ValuesPacket).VportYOffset = (float)((double)(float)(dVar13 * 0.5) + dVar8);
-    uVar6 = (pDVar2->m_Pending).m_Mask[2];
-    (pDVar2->m_Pending).m_Mask[2] = uVar6 | 0x4000000;
-    (pDVar2->m_Pending).m_Mask[2] = uVar6 | 0x6000000;
-    (pDVar2->m_Pending).m_Mask[2] = uVar6 | 0x7000000;
-    (pDVar2->m_Pending).m_Mask[2] = uVar6 | 0x7800000;
-    (pDVar2->m_Pending).m_Mask[2] = uVar6 | 0x7c00000;
-    (pDVar2->m_Pending).m_Mask[2] = uVar6 | 0x7e00000;
+    *(float *)((int)&param_1[1].m_Constants.field0_0x0 + 0x2e0) = param_2;
+    *(float *)((int)&param_1[1].m_Constants.field0_0x0 + 0x2e4) = param_3;
+    dVar12 = (double)(longlong)iVar4;
+    *(float *)((int)&param_1[1].m_Constants.field0_0x0 + 0x2f0) = param_6;
+    *(float *)((int)&param_1[1].m_Constants.field0_0x0 + 0x2f4) = param_7;
+    *(float *)((int)&param_1[1].m_Constants.field0_0x0 + 0x2ec) = (float)(longlong)iVar4;
+    *(undefined4 *)((int)&param_1[1].m_Constants.field0_0x0 + 0x2f8) = 0;
+    dVar11 = (double)(longlong)(int)lVar6;
+    *(float *)((int)&param_1[1].m_Constants.field0_0x0 + 0x2e8) = (float)(longlong)(int)lVar6;
+    D3DDevice_SetScissorRect(param_1,(tagRECT *)((int)&param_1[1].m_Constants.field0_0x0 + 0x2fc));
+    (param_1->m_ValuesPacket).VportZScale = (float)(dVar10 - dVar9);
+    (param_1->m_ValuesPacket).VportZOffset = (float)dVar9;
+    (param_1->m_ValuesPacket).VportXScale = (float)(dVar11 * 0.5);
+    (param_1->m_ValuesPacket).VportXOffset = (float)((double)(float)(dVar11 * 0.5) + dVar7);
+    (param_1->m_ValuesPacket).VportYScale = (float)-(double)(float)(dVar12 * 0.5);
+    (param_1->m_ValuesPacket).VportYOffset = (float)((double)(float)(dVar12 * 0.5) + dVar8);
+    uVar5 = (param_1->m_Pending).m_Mask[2];
+    (param_1->m_Pending).m_Mask[2] = uVar5 | 0x4000000;
+    (param_1->m_Pending).m_Mask[2] = uVar5 | 0x6000000;
+    (param_1->m_Pending).m_Mask[2] = uVar5 | 0x7000000;
+    (param_1->m_Pending).m_Mask[2] = uVar5 | 0x7800000;
+    (param_1->m_Pending).m_Mask[2] = uVar5 | 0x7c00000;
+    (param_1->m_Pending).m_Mask[2] = uVar5 | 0x7e00000;
   }
-  __restfpr_26();
   return;
 }
 
@@ -2037,33 +2029,34 @@ ulong D3DDevice_GetRenderState_ViewportEnable(D3DDevice *param_1)
 
 // 82860D10  D3DDevice_SetRenderState_HighPrecisionBlendEnable  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1819)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void D3DDevice_SetRenderState_HighPrecisionBlendEnable(D3DDevice *param_1,ulong param_2)
 
 {
   uint uVar1;
   int iVar2;
-  int iVar3;
+  ulonglong uVar4;
   ulonglong uVar5;
-  ulonglong uVar6;
-  ulong uVar4;
+  ulong uVar3;
   
-  uVar5 = (ulonglong)(int)param_2;
-  iVar2 = __savegprlr_28(param_1);
-  *(int *)(iVar2 + 0x2ff8) = (int)uVar5;
-  if (*(int *)(iVar2 + 0x3190) != 0) {
-    uVar1 = *(uint *)(iVar2 + 0x2884);
-    uVar6 = (ulonglong)(uVar1 >> 0x10) & 0xf;
-    uVar4 = (ulong)uVar6;
-    iVar3 = D3D::IsEDRAMFormat2_10_10_10Bits(uVar4);
-    if ((iVar3 != 0) && (((ulonglong)(uVar1 >> 0x13) & 1) != uVar5)) {
-      *(uint *)(iVar2 + 0x2884) =
+  iVar2 = *(int *)((int)&param_1[1].m_Constants.field0_0x0 + 0x210);
+  *(ulong *)((int)&param_1[1].m_Constants.field0_0x0 + 0x78) = param_2;
+  if (iVar2 != 0) {
+    uVar1 = (param_1->m_DestinationPacket).Color0Info.dword;
+    uVar5 = (ulonglong)(uVar1 >> 0x10) & 0xf;
+    uVar3 = (ulong)uVar5;
+    iVar2 = D3D::IsEDRAMFormat2_10_10_10Bits(uVar3);
+    if ((iVar2 != 0) && (((ulonglong)(uVar1 >> 0x13) & 1) != (longlong)(int)param_2)) {
+      uVar4 = (longlong)(int)param_2 - 1;
+      (param_1->m_DestinationPacket).Color0Info.dword =
            uVar1 & 0xfff0ffff |
-           ((uint)((~(uVar5 - 1) & 0xffffffff) << 0x10) & (uVar4 + 3) * 0x20000 |
-           (uint)(((uVar6 >> 1) - 3 & uVar5 - 1 & 0xffffffff) << 0x10)) & 0xf0000;
-      *(ulonglong *)(iVar2 + 0x10) = *(ulonglong *)(iVar2 + 0x10) | 0x100000000000000;
+           ((uint)((~uVar4 & 0xffffffff) << 0x10) & (uVar3 + 3) * 0x20000 |
+           (uint)(((uVar5 >> 1) - 3 & uVar4 & 0xffffffff) << 0x10)) & 0xf0000;
+      (param_1->m_Pending).m_Mask[2] = (param_1->m_Pending).m_Mask[2] | 0x100000000000000;
     }
   }
-  __restgprlr_28();
   return;
 }
 
@@ -2079,33 +2072,34 @@ ulong D3DDevice_GetRenderState_HighPrecisionBlendEnable(D3DDevice *param_1)
 
 // 82860DE8  D3DDevice_SetRenderState_HighPrecisionBlendEnable1  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1836)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void D3DDevice_SetRenderState_HighPrecisionBlendEnable1(D3DDevice *param_1,ulong param_2)
 
 {
   uint uVar1;
   int iVar2;
-  int iVar3;
+  ulonglong uVar4;
   ulonglong uVar5;
-  ulonglong uVar6;
-  ulong uVar4;
+  ulong uVar3;
   
-  uVar5 = (ulonglong)(int)param_2;
-  iVar2 = __savegprlr_28(param_1);
-  *(int *)(iVar2 + 0x2ffc) = (int)uVar5;
-  if (*(int *)(iVar2 + 0x3194) != 0) {
-    uVar1 = *(uint *)(iVar2 + 0x288c);
-    uVar6 = (ulonglong)(uVar1 >> 0x10) & 0xf;
-    uVar4 = (ulong)uVar6;
-    iVar3 = D3D::IsEDRAMFormat2_10_10_10Bits(uVar4);
-    if ((iVar3 != 0) && (((ulonglong)(uVar1 >> 0x13) & 1) != uVar5)) {
-      *(uint *)(iVar2 + 0x288c) =
+  iVar2 = *(int *)((int)&param_1[1].m_Constants.field0_0x0 + 0x214);
+  *(ulong *)((int)&param_1[1].m_Constants.field0_0x0 + 0x7c) = param_2;
+  if (iVar2 != 0) {
+    uVar1 = (param_1->m_DestinationPacket).Color1Info.dword;
+    uVar5 = (ulonglong)(uVar1 >> 0x10) & 0xf;
+    uVar3 = (ulong)uVar5;
+    iVar2 = D3D::IsEDRAMFormat2_10_10_10Bits(uVar3);
+    if ((iVar2 != 0) && (((ulonglong)(uVar1 >> 0x13) & 1) != (longlong)(int)param_2)) {
+      uVar4 = (longlong)(int)param_2 - 1;
+      (param_1->m_DestinationPacket).Color1Info.dword =
            uVar1 & 0xfff0ffff |
-           ((uint)((~(uVar5 - 1) & 0xffffffff) << 0x10) & (uVar4 + 3) * 0x20000 |
-           (uint)(((uVar6 >> 1) - 3 & uVar5 - 1 & 0xffffffff) << 0x10)) & 0xf0000;
-      *(ulonglong *)(iVar2 + 0x10) = *(ulonglong *)(iVar2 + 0x10) | 0x40000000000000;
+           ((uint)((~uVar4 & 0xffffffff) << 0x10) & (uVar3 + 3) * 0x20000 |
+           (uint)(((uVar5 >> 1) - 3 & uVar4 & 0xffffffff) << 0x10)) & 0xf0000;
+      (param_1->m_Pending).m_Mask[2] = (param_1->m_Pending).m_Mask[2] | 0x40000000000000;
     }
   }
-  __restgprlr_28();
   return;
 }
 
@@ -2121,33 +2115,34 @@ ulong D3DDevice_GetRenderState_HighPrecisionBlendEnable1(D3DDevice *param_1)
 
 // 82860EC0  D3DDevice_SetRenderState_HighPrecisionBlendEnable2  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1853)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void D3DDevice_SetRenderState_HighPrecisionBlendEnable2(D3DDevice *param_1,ulong param_2)
 
 {
   uint uVar1;
   int iVar2;
-  int iVar3;
+  ulonglong uVar4;
   ulonglong uVar5;
-  ulonglong uVar6;
-  ulong uVar4;
+  ulong uVar3;
   
-  uVar5 = (ulonglong)(int)param_2;
-  iVar2 = __savegprlr_28(param_1);
-  *(int *)(iVar2 + 0x3000) = (int)uVar5;
-  if (*(int *)(iVar2 + 0x3198) != 0) {
-    uVar1 = *(uint *)(iVar2 + 0x2890);
-    uVar6 = (ulonglong)(uVar1 >> 0x10) & 0xf;
-    uVar4 = (ulong)uVar6;
-    iVar3 = D3D::IsEDRAMFormat2_10_10_10Bits(uVar4);
-    if ((iVar3 != 0) && (((ulonglong)(uVar1 >> 0x13) & 1) != uVar5)) {
-      *(uint *)(iVar2 + 0x2890) =
+  iVar2 = *(int *)((int)&param_1[1].m_Constants.field0_0x0 + 0x218);
+  *(ulong *)((int)&param_1[1].m_Constants.field0_0x0 + 0x80) = param_2;
+  if (iVar2 != 0) {
+    uVar1 = (param_1->m_DestinationPacket).Color2Info.dword;
+    uVar5 = (ulonglong)(uVar1 >> 0x10) & 0xf;
+    uVar3 = (ulong)uVar5;
+    iVar2 = D3D::IsEDRAMFormat2_10_10_10Bits(uVar3);
+    if ((iVar2 != 0) && (((ulonglong)(uVar1 >> 0x13) & 1) != (longlong)(int)param_2)) {
+      uVar4 = (longlong)(int)param_2 - 1;
+      (param_1->m_DestinationPacket).Color2Info.dword =
            uVar1 & 0xfff0ffff |
-           ((uint)((~(uVar5 - 1) & 0xffffffff) << 0x10) & (uVar4 + 3) * 0x20000 |
-           (uint)(((uVar6 >> 1) - 3 & uVar5 - 1 & 0xffffffff) << 0x10)) & 0xf0000;
-      *(ulonglong *)(iVar2 + 0x10) = *(ulonglong *)(iVar2 + 0x10) | 0x20000000000000;
+           ((uint)((~uVar4 & 0xffffffff) << 0x10) & (uVar3 + 3) * 0x20000 |
+           (uint)(((uVar5 >> 1) - 3 & uVar4 & 0xffffffff) << 0x10)) & 0xf0000;
+      (param_1->m_Pending).m_Mask[2] = (param_1->m_Pending).m_Mask[2] | 0x20000000000000;
     }
   }
-  __restgprlr_28();
   return;
 }
 
@@ -2163,33 +2158,34 @@ ulong D3DDevice_GetRenderState_HighPrecisionBlendEnable2(D3DDevice *param_1)
 
 // 82860F98  D3DDevice_SetRenderState_HighPrecisionBlendEnable3  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:1870)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void D3DDevice_SetRenderState_HighPrecisionBlendEnable3(D3DDevice *param_1,ulong param_2)
 
 {
   uint uVar1;
   int iVar2;
-  int iVar3;
+  ulonglong uVar4;
   ulonglong uVar5;
-  ulonglong uVar6;
-  ulong uVar4;
+  ulong uVar3;
   
-  uVar5 = (ulonglong)(int)param_2;
-  iVar2 = __savegprlr_28(param_1);
-  *(int *)(iVar2 + 0x3004) = (int)uVar5;
-  if (*(int *)(iVar2 + 0x319c) != 0) {
-    uVar1 = *(uint *)(iVar2 + 0x2894);
-    uVar6 = (ulonglong)(uVar1 >> 0x10) & 0xf;
-    uVar4 = (ulong)uVar6;
-    iVar3 = D3D::IsEDRAMFormat2_10_10_10Bits(uVar4);
-    if ((iVar3 != 0) && (((ulonglong)(uVar1 >> 0x13) & 1) != uVar5)) {
-      *(uint *)(iVar2 + 0x2894) =
+  iVar2 = *(int *)((int)&param_1[1].m_Constants.field0_0x0 + 0x21c);
+  *(ulong *)((int)&param_1[1].m_Constants.field0_0x0 + 0x84) = param_2;
+  if (iVar2 != 0) {
+    uVar1 = (param_1->m_DestinationPacket).Color3Info.dword;
+    uVar5 = (ulonglong)(uVar1 >> 0x10) & 0xf;
+    uVar3 = (ulong)uVar5;
+    iVar2 = D3D::IsEDRAMFormat2_10_10_10Bits(uVar3);
+    if ((iVar2 != 0) && (((ulonglong)(uVar1 >> 0x13) & 1) != (longlong)(int)param_2)) {
+      uVar4 = (longlong)(int)param_2 - 1;
+      (param_1->m_DestinationPacket).Color3Info.dword =
            uVar1 & 0xfff0ffff |
-           ((uint)((~(uVar5 - 1) & 0xffffffff) << 0x10) & (uVar4 + 3) * 0x20000 |
-           (uint)(((uVar6 >> 1) - 3 & uVar5 - 1 & 0xffffffff) << 0x10)) & 0xf0000;
-      *(ulonglong *)(iVar2 + 0x10) = *(ulonglong *)(iVar2 + 0x10) | 0x10000000000000;
+           ((uint)((~uVar4 & 0xffffffff) << 0x10) & (uVar3 + 3) * 0x20000 |
+           (uint)(((uVar5 >> 1) - 3 & uVar4 & 0xffffffff) << 0x10)) & 0xf0000;
+      (param_1->m_Pending).m_Mask[2] = (param_1->m_Pending).m_Mask[2] | 0x10000000000000;
     }
   }
-  __restgprlr_28();
   return;
 }
 
@@ -2623,50 +2619,39 @@ ulong D3DDevice_GetRenderState_PresentImmediateThreshold(D3DDevice *param_1)
 
 // 82861BA0  D3DDevice_SetSamplerState_MinFilter  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:2355)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void D3DDevice_SetSamplerState_MinFilter(D3DDevice *param_1,ulong param_2,ulong param_3)
 
 {
-  byte bVar1;
+  uint uVar1;
   uint uVar2;
-  uint uVar3;
-  GPUANISOFILTER *pGVar4;
-  int iVar5;
-  int iVar6;
-  uint uVar7;
-  ulonglong uVar8;
-  int iVar9;
-  longlong lVar10;
-  ulonglong uVar11;
-  ulonglong uVar12;
-  uint uVar13;
+  GPUANISOFILTER *pGVar3;
+  uint uVar4;
+  uint uVar5;
+  ulonglong uVar6;
   
-  uVar11 = (ulonglong)(int)param_3;
-  lVar10 = (longlong)(int)param_2;
-  iVar9 = __savegprlr_29(param_1);
-  iVar5 = iVar9 + (int)lVar10;
-  iVar6 = ((int)lVar10 + 0x30) * 0x18 + iVar9;
-  uVar2 = *(uint *)(iVar6 + 0x10);
-  uVar12 = (uVar11 & 0xffffffff) >> 2;
-  uVar3 = *(uint *)(iVar6 + 0xc);
-  pGVar4 = (&`enum_GPUANISOFILTER___cdecl_D3D::MapMaxAnisotropyToGpuAnisoFilter(unsigned_long)'::
-             __l2::anisoFilterMap)[*(byte *)(iVar5 + 0x2a70)];
-  uVar7 = (uint)((uVar12 & 1) << 0xb);
-  *(uint *)(iVar6 + 0x10) = uVar7 | uVar2 & 0xfffff7ff;
-  uVar12 = (ZEXT48(pGVar4) & ~(((ulonglong)(uVar2 >> 10) & 1 | uVar12) - 1) & 0xfffffff) << 4 |
-           uVar12;
-  uVar8 = (uVar12 | uVar11 & 0xffffffff) & 3;
-  *(uint *)(iVar6 + 0xc) =
-       (uint)(((uVar12 | uVar11 & 0xffffffff) & 0x70) << 0x15) |
-       (uint)(uVar8 << 0x15) | uVar3 & 0xf19fffff;
-  bVar1 = *(byte *)(iVar5 + 0x2a8a);
-  uVar13 = (bVar1 >> 2) - 1;
-  *(uint *)(iVar6 + 0x10) =
-       uVar7 | uVar2 & 0xfffff7fc |
-       ((uint)((uVar8 << 0x14 | (ulonglong)uVar3 & 0x80080000) >> 0x13) & 0xfff & uVar13) +
-       ((uint)bVar1 & ~uVar13) & 3;
-  *(ulonglong *)(iVar9 + 0x18) =
-       0x8000000000000000U >> (lVar10 + 0x20U & 0x7f) | *(ulonglong *)(iVar9 + 0x18);
-  __restgprlr_29();
+  uVar1 = *(uint *)((int)&(param_1->m_Constants).field0_0x0 + param_2 * 0x18 + 0x10);
+  uVar4 = param_3 >> 2;
+  uVar2 = *(uint *)((int)&(param_1->m_Constants).field0_0x0 + param_2 * 0x18 + 0xc);
+  pGVar3 = (&`enum_GPUANISOFILTER___cdecl_D3D::MapMaxAnisotropyToGpuAnisoFilter(unsigned_long)'::
+             __l2::anisoFilterMap)[param_1->m_MaxAnisotropy[param_2]];
+  uVar5 = (uVar4 & 1) << 0xb;
+  *(uint *)((int)&(param_1->m_Constants).field0_0x0 + param_2 * 0x18 + 0x10) =
+       uVar5 | uVar1 & 0xfffff7ff;
+  uVar6 = (ZEXT48(pGVar3) & ~(((ulonglong)(uVar1 >> 10) & 1 | (ulonglong)uVar4) - 1) & 0xfffffff) <<
+          4 | (ulonglong)uVar4;
+  uVar6 = ((uVar6 | param_3) & 0x70) << 0x15 |
+          ((uVar6 | param_3) & 3) << 0x15 | (ulonglong)uVar2 & 0xfffffffff19fffff;
+  *(int *)((int)&(param_1->m_Constants).field0_0x0 + param_2 * 0x18 + 0xc) = (int)uVar6;
+  uVar4 = (param_1->m_ZFilter[param_2] >> 2) - 1;
+  *(uint *)((int)&(param_1->m_Constants).field0_0x0 + param_2 * 0x18 + 0x10) =
+       uVar5 | uVar1 & 0xfffff7fc |
+       (((uint)(uVar6 >> 1) & 0x7ff00000 | uVar2 & 0x80000) >> 0x13 & uVar4) +
+       ((uint)param_1->m_ZFilter[param_2] & ~uVar4) & 3;
+  (param_1->m_Pending).m_Mask[3] =
+       0x8000000000000000U >> (param_2 + 0x20 & 0x7f) | (param_1->m_Pending).m_Mask[3];
   return;
 }
 
@@ -2688,36 +2673,27 @@ ulong D3DDevice_GetSamplerState_MinFilter(D3DDevice *param_1,ulong param_2)
 
 // 82861CF8  D3DDevice_SetSamplerState_MinFilterZ  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:2405)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void D3DDevice_SetSamplerState_MinFilterZ(D3DDevice *param_1,ulong param_2,ulong param_3)
 
 {
-  int iVar1;
-  int iVar2;
-  uint uVar3;
-  int iVar4;
-  longlong lVar5;
-  ulonglong uVar6;
-  ulonglong uVar7;
-  ulonglong uVar8;
+  uint uVar1;
+  uint uVar2;
+  ulonglong uVar3;
+  ulonglong uVar4;
   
-  uVar6 = (ulonglong)(int)param_3;
-  lVar5 = (longlong)(int)param_2;
-  iVar4 = __savegprlr_29(param_1);
-  iVar1 = iVar4 + (int)lVar5;
-  uVar7 = (uVar6 & 0x7fffffff) << 1;
-  uVar8 = (ulonglong)*(byte *)(iVar1 + 0x2a8a);
-  iVar2 = ((int)lVar5 + 0x30) * 0x18 + iVar4;
-  uVar6 = uVar8 & 0xfffffffffffffffd | uVar7;
-  uVar3 = (int)((uVar8 & 0xfffffffd | uVar7) >> 2) - 1;
-  *(uint *)(iVar2 + 0x10) =
-       *(uint *)(iVar2 + 0x10) & 0xfffffffc |
-       ((uint)(((ulonglong)(*(uint *)(iVar2 + 0xc) >> 1) & 0x7ff00000 |
-               (ulonglong)*(uint *)(iVar2 + 0xc) & 0xffffffff80080000) >> 0x13) & 0xfff & uVar3) +
-       ((uint)uVar6 & ~uVar3) & 3;
-  *(char *)(iVar1 + 0x2a8a) = (char)uVar6;
-  *(ulonglong *)(iVar4 + 0x18) =
-       0x8000000000000000U >> (lVar5 + 0x20U & 0x7f) | *(ulonglong *)(iVar4 + 0x18);
-  __restgprlr_29();
+  uVar4 = ((ulonglong)param_3 & 0x7fffffff) << 1;
+  uVar3 = (ulonglong)param_1->m_ZFilter[param_2] & 0xfffffffffffffffd | uVar4;
+  uVar1 = *(uint *)((int)&(param_1->m_Constants).field0_0x0 + param_2 * 0x18 + 0xc);
+  uVar2 = (int)(((ulonglong)param_1->m_ZFilter[param_2] & 0xfffffffd | uVar4) >> 2) - 1;
+  *(uint *)((int)&(param_1->m_Constants).field0_0x0 + param_2 * 0x18 + 0x10) =
+       *(uint *)((int)&(param_1->m_Constants).field0_0x0 + param_2 * 0x18 + 0x10) & 0xfffffffc |
+       ((uVar1 >> 1 & 0x7ff00000 | uVar1 & 0x80000) >> 0x13 & uVar2) + ((uint)uVar3 & ~uVar2) & 3;
+  param_1->m_ZFilter[param_2] = (uchar)uVar3;
+  (param_1->m_Pending).m_Mask[3] =
+       0x8000000000000000U >> (param_2 + 0x20 & 0x7f) | (param_1->m_Pending).m_Mask[3];
   return;
 }
 
@@ -2733,48 +2709,40 @@ ulong D3DDevice_GetSamplerState_MinFilterZ(D3DDevice *param_1,ulong param_2)
 
 // 82861DE8  D3DDevice_SetSamplerState_MagFilter  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:2439)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void D3DDevice_SetSamplerState_MagFilter(D3DDevice *param_1,ulong param_2,ulong param_3)
 
 {
-  byte bVar1;
+  uint uVar1;
   uint uVar2;
-  uint uVar3;
-  GPUANISOFILTER *pGVar4;
-  ulonglong uVar5;
-  int iVar6;
-  int iVar7;
-  uint uVar8;
-  int iVar9;
-  longlong lVar10;
-  ulonglong uVar11;
-  ulonglong uVar12;
-  uint uVar13;
+  GPUANISOFILTER *pGVar3;
+  ulonglong uVar4;
+  uint uVar5;
+  uint uVar6;
+  ulonglong uVar7;
   
-  uVar11 = (ulonglong)(int)param_3;
-  lVar10 = (longlong)(int)param_2;
-  iVar9 = __savegprlr_29(param_1);
-  iVar6 = iVar9 + (int)lVar10;
-  iVar7 = ((int)lVar10 + 0x30) * 0x18 + iVar9;
-  uVar2 = *(uint *)(iVar7 + 0x10);
-  uVar12 = (uVar11 & 0xffffffff) >> 2;
-  uVar3 = *(uint *)(iVar7 + 0xc);
-  pGVar4 = (&`enum_GPUANISOFILTER___cdecl_D3D::MapMaxAnisotropyToGpuAnisoFilter(unsigned_long)'::
-             __l2::anisoFilterMap)[*(byte *)(iVar6 + 0x2a70)];
-  uVar8 = (uint)((uVar12 & 1) << 10);
-  *(uint *)(iVar7 + 0x10) = uVar8 | uVar2 & 0xfffffbff;
-  uVar12 = (ZEXT48(pGVar4) & ~(((ulonglong)(uVar2 >> 0xb) & 1 | uVar12) - 1) & 0x3ffffff) << 6 |
-           uVar12;
-  uVar5 = ((uVar12 | uVar11 & 0xffffffff) & 3) << 0x13 | (ulonglong)uVar3 & 0xfffffffff1e7ffff;
-  *(uint *)(iVar7 + 0xc) = (uint)(((uVar12 | uVar11 & 0xffffffff) & 0x1c0) << 0x13) | (uint)uVar5;
-  bVar1 = *(byte *)(iVar6 + 0x2a8a);
-  uVar13 = (bVar1 >> 2) - 1;
-  *(uint *)(iVar7 + 0x10) =
-       uVar8 | uVar2 & 0xfffffbfc |
-       ((uint)((((ulonglong)uVar3 & 0xf1e00000) >> 1 | uVar5 & 0x80080000) >> 0x13) & 0xfff & uVar13
-       ) + ((uint)bVar1 & ~uVar13) & 3;
-  *(ulonglong *)(iVar9 + 0x18) =
-       0x8000000000000000U >> (lVar10 + 0x20U & 0x7f) | *(ulonglong *)(iVar9 + 0x18);
-  __restgprlr_29();
+  uVar1 = *(uint *)((int)&(param_1->m_Constants).field0_0x0 + param_2 * 0x18 + 0x10);
+  uVar5 = param_3 >> 2;
+  uVar2 = *(uint *)((int)&(param_1->m_Constants).field0_0x0 + param_2 * 0x18 + 0xc);
+  pGVar3 = (&`enum_GPUANISOFILTER___cdecl_D3D::MapMaxAnisotropyToGpuAnisoFilter(unsigned_long)'::
+             __l2::anisoFilterMap)[param_1->m_MaxAnisotropy[param_2]];
+  uVar6 = (uVar5 & 1) << 10;
+  *(uint *)((int)&(param_1->m_Constants).field0_0x0 + param_2 * 0x18 + 0x10) =
+       uVar6 | uVar1 & 0xfffffbff;
+  uVar7 = (ZEXT48(pGVar3) & ~(((ulonglong)(uVar1 >> 0xb) & 1 | (ulonglong)uVar5) - 1) & 0x3ffffff)
+          << 6 | (ulonglong)uVar5;
+  uVar4 = ((uVar7 | param_3) & 3) << 0x13 | (ulonglong)uVar2 & 0xfffffffff1e7ffff;
+  uVar7 = ((uVar7 | param_3) & 0x1c0) << 0x13 | uVar4;
+  *(int *)((int)&(param_1->m_Constants).field0_0x0 + param_2 * 0x18 + 0xc) = (int)uVar7;
+  uVar2 = (param_1->m_ZFilter[param_2] >> 2) - 1;
+  *(uint *)((int)&(param_1->m_Constants).field0_0x0 + param_2 * 0x18 + 0x10) =
+       uVar6 | uVar1 & 0xfffffbfc |
+       (((uint)(uVar7 >> 1) & 0x7ff00000 | (uint)uVar4 & 0x80000) >> 0x13 & uVar2) +
+       ((uint)param_1->m_ZFilter[param_2] & ~uVar2) & 3;
+  (param_1->m_Pending).m_Mask[3] =
+       0x8000000000000000U >> (param_2 + 0x20 & 0x7f) | (param_1->m_Pending).m_Mask[3];
   return;
 }
 
@@ -2796,35 +2764,27 @@ ulong D3DDevice_GetSamplerState_MagFilter(D3DDevice *param_1,ulong param_2)
 
 // 82861F40  D3DDevice_SetSamplerState_MagFilterZ  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:2490)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void D3DDevice_SetSamplerState_MagFilterZ(D3DDevice *param_1,ulong param_2,ulong param_3)
 
 {
-  int iVar1;
-  int iVar2;
+  uint uVar1;
+  uint uVar2;
   ulonglong uVar3;
-  uint uVar4;
-  int iVar5;
-  longlong lVar6;
-  ulonglong uVar7;
-  ulonglong uVar8;
+  ulonglong uVar4;
   
-  uVar7 = (ulonglong)(int)param_3;
-  lVar6 = (longlong)(int)param_2;
-  iVar5 = __savegprlr_29(param_1);
-  iVar1 = iVar5 + (int)lVar6;
-  iVar2 = ((int)lVar6 + 0x30) * 0x18 + iVar5;
-  uVar3 = (ulonglong)*(byte *)(iVar1 + 0x2a8a) & 0xfffffffe;
-  uVar8 = uVar3 | uVar7;
-  uVar4 = (int)((uVar3 | uVar7 & 0xffffffff) >> 2) - 1;
-  *(uint *)(iVar2 + 0x10) =
-       *(uint *)(iVar2 + 0x10) & 0xfffffffc |
-       ((uint)(((ulonglong)(*(uint *)(iVar2 + 0xc) >> 1) & 0x7ff00000 |
-               (ulonglong)*(uint *)(iVar2 + 0xc) & 0xffffffff80080000) >> 0x13) & 0xfff & uVar4) +
-       ((uint)uVar8 & ~uVar4) & 3;
-  *(char *)(iVar1 + 0x2a8a) = (char)uVar8;
-  *(ulonglong *)(iVar5 + 0x18) =
-       0x8000000000000000U >> (lVar6 + 0x20U & 0x7f) | *(ulonglong *)(iVar5 + 0x18);
-  __restgprlr_29();
+  uVar3 = (ulonglong)param_1->m_ZFilter[param_2] & 0xfffffffe;
+  uVar4 = uVar3 | (longlong)(int)param_3;
+  uVar1 = *(uint *)((int)&(param_1->m_Constants).field0_0x0 + param_2 * 0x18 + 0xc);
+  uVar2 = (int)((uVar3 | param_3) >> 2) - 1;
+  *(uint *)((int)&(param_1->m_Constants).field0_0x0 + param_2 * 0x18 + 0x10) =
+       *(uint *)((int)&(param_1->m_Constants).field0_0x0 + param_2 * 0x18 + 0x10) & 0xfffffffc |
+       ((uVar1 >> 1 & 0x7ff00000 | uVar1 & 0x80000) >> 0x13 & uVar2) + ((uint)uVar4 & ~uVar2) & 3;
+  param_1->m_ZFilter[param_2] = (uchar)uVar4;
+  (param_1->m_Pending).m_Mask[3] =
+       0x8000000000000000U >> (param_2 + 0x20 & 0x7f) | (param_1->m_Pending).m_Mask[3];
   return;
 }
 
@@ -2840,23 +2800,17 @@ ulong D3DDevice_GetSamplerState_MagFilterZ(D3DDevice *param_1,ulong param_2)
 
 // 82862028  D3DDevice_SetSamplerState_MipFilter  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:2524)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void D3DDevice_SetSamplerState_MipFilter(D3DDevice *param_1,ulong param_2,ulong param_3)
 
 {
-  int iVar1;
-  int iVar2;
-  longlong lVar3;
-  ulonglong uVar4;
-  
-  uVar4 = (ulonglong)(int)param_3;
-  lVar3 = (longlong)(int)param_2;
-  iVar2 = __savegprlr_29(param_1);
-  iVar1 = ((int)lVar3 + 0x30) * 0x18 + iVar2;
-  *(uint *)(iVar1 + 0xc) =
-       (uint)((uVar4 & 0xffffffff) << 0x17) & 0x1800000 | *(uint *)(iVar1 + 0xc) & 0xfe7fffff;
-  *(ulonglong *)(iVar2 + 0x18) =
-       0x8000000000000000U >> (lVar3 + 0x20U & 0x7f) | *(ulonglong *)(iVar2 + 0x18);
-  __restgprlr_29();
+  *(ulong *)((int)&(param_1->m_Constants).field0_0x0 + param_2 * 0x18 + 0xc) =
+       (param_3 & 3) << 0x17 |
+       *(uint *)((int)&(param_1->m_Constants).field0_0x0 + param_2 * 0x18 + 0xc) & 0xfe7fffff;
+  (param_1->m_Pending).m_Mask[3] =
+       0x8000000000000000U >> (param_2 + 0x20 & 0x7f) | (param_1->m_Pending).m_Mask[3];
   return;
 }
 
@@ -2872,36 +2826,27 @@ ulong D3DDevice_GetSamplerState_MipFilter(D3DDevice *param_1,ulong param_2)
 
 // 828620D8  D3DDevice_SetSamplerState_SeparateZFilterEnable  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:2555)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void D3DDevice_SetSamplerState_SeparateZFilterEnable(D3DDevice *param_1,ulong param_2,ulong param_3)
 
 {
-  int iVar1;
-  int iVar2;
-  uint uVar3;
-  int iVar4;
-  longlong lVar5;
-  ulonglong uVar6;
-  ulonglong uVar7;
-  ulonglong uVar8;
+  uint uVar1;
+  uint uVar2;
+  ulonglong uVar3;
+  ulonglong uVar4;
   
-  uVar6 = (ulonglong)(int)param_3;
-  lVar5 = (longlong)(int)param_2;
-  iVar4 = __savegprlr_29(param_1);
-  iVar1 = iVar4 + (int)lVar5;
-  uVar7 = (uVar6 & 0x3fffffff) << 2;
-  uVar8 = (ulonglong)*(byte *)(iVar1 + 0x2a8a);
-  iVar2 = ((int)lVar5 + 0x30) * 0x18 + iVar4;
-  uVar6 = uVar8 & 0xfffffffffffffffb | uVar7;
-  uVar3 = (int)((uVar8 & 0xfffffffb | uVar7) >> 2) - 1;
-  *(uint *)(iVar2 + 0x10) =
-       *(uint *)(iVar2 + 0x10) & 0xfffffffc |
-       ((uint)(((ulonglong)(*(uint *)(iVar2 + 0xc) >> 1) & 0x7ff00000 |
-               (ulonglong)*(uint *)(iVar2 + 0xc) & 0xffffffff80080000) >> 0x13) & 0xfff & uVar3) +
-       ((uint)uVar6 & ~uVar3) & 3;
-  *(char *)(iVar1 + 0x2a8a) = (char)uVar6;
-  *(ulonglong *)(iVar4 + 0x18) =
-       0x8000000000000000U >> (lVar5 + 0x20U & 0x7f) | *(ulonglong *)(iVar4 + 0x18);
-  __restgprlr_29();
+  uVar4 = ((ulonglong)param_3 & 0x3fffffff) << 2;
+  uVar3 = (ulonglong)param_1->m_ZFilter[param_2] & 0xfffffffffffffffb | uVar4;
+  uVar1 = *(uint *)((int)&(param_1->m_Constants).field0_0x0 + param_2 * 0x18 + 0xc);
+  uVar2 = (int)(((ulonglong)param_1->m_ZFilter[param_2] & 0xfffffffb | uVar4) >> 2) - 1;
+  *(uint *)((int)&(param_1->m_Constants).field0_0x0 + param_2 * 0x18 + 0x10) =
+       *(uint *)((int)&(param_1->m_Constants).field0_0x0 + param_2 * 0x18 + 0x10) & 0xfffffffc |
+       ((uVar1 >> 1 & 0x7ff00000 | uVar1 & 0x80000) >> 0x13 & uVar2) + ((uint)uVar3 & ~uVar2) & 3;
+  param_1->m_ZFilter[param_2] = (uchar)uVar3;
+  (param_1->m_Pending).m_Mask[3] =
+       0x8000000000000000U >> (param_2 + 0x20 & 0x7f) | (param_1->m_Pending).m_Mask[3];
   return;
 }
 
@@ -2917,28 +2862,24 @@ ulong D3DDevice_GetSamplerState_SeparateZFilterEnable(D3DDevice *param_1,ulong p
 
 // 828621C8  D3DDevice_SetSamplerState_MaxAnisotropy  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:2591)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void D3DDevice_SetSamplerState_MaxAnisotropy(D3DDevice *param_1,ulong param_2,ulong param_3)
 
 {
-  int iVar1;
-  int iVar2;
-  longlong lVar3;
-  ulonglong uVar4;
+  uint uVar1;
   
-  uVar4 = (ulonglong)(int)param_3;
-  lVar3 = (longlong)(int)param_2;
-  iVar2 = __savegprlr_29(param_1);
-  iVar1 = ((int)lVar3 + 0x30) * 0x18 + iVar2;
-  if (((*(uint *)(iVar1 + 0x10) & 0x800) != 0) || ((*(uint *)(iVar1 + 0x10) & 0x400) != 0)) {
-    *(uint *)(iVar1 + 0xc) =
-         (*(uint *)((int)&`enum_GPUANISOFILTER___cdecl_D3D::MapMaxAnisotropyToGpuAnisoFilter(unsigned_long)'
-                          ::__l2::anisoFilterMap + (int)((uVar4 & 0xffffffff) << 2)) & 7) << 0x19 |
-         *(uint *)(iVar1 + 0xc) & 0xf1ffffff;
-    *(ulonglong *)(iVar2 + 0x18) =
-         0x8000000000000000U >> (lVar3 + 0x20U & 0x7f) | *(ulonglong *)(iVar2 + 0x18);
+  uVar1 = *(uint *)((int)&(param_1->m_Constants).field0_0x0 + param_2 * 0x18 + 0x10);
+  if (((uVar1 & 0x800) != 0) || ((uVar1 & 0x400) != 0)) {
+    *(uint *)((int)&(param_1->m_Constants).field0_0x0 + param_2 * 0x18 + 0xc) =
+         ((uint)(&`enum_GPUANISOFILTER___cdecl_D3D::MapMaxAnisotropyToGpuAnisoFilter(unsigned_long)'
+                  ::__l2::anisoFilterMap)[param_3] & 7) << 0x19 |
+         *(uint *)((int)&(param_1->m_Constants).field0_0x0 + param_2 * 0x18 + 0xc) & 0xf1ffffff;
+    (param_1->m_Pending).m_Mask[3] =
+         0x8000000000000000U >> (param_2 + 0x20 & 0x7f) | (param_1->m_Pending).m_Mask[3];
   }
-  *(char *)(iVar2 + (int)lVar3 + 0x2a70) = (char)uVar4;
-  __restgprlr_29();
+  param_1->m_MaxAnisotropy[param_2] = (uchar)param_3;
   return;
 }
 
@@ -3012,32 +2953,28 @@ ulong D3DDevice_GetSamplerState_MipMapLodBias(D3DDevice *param_1,ulong param_2)
 
 // 828624C8  D3DDevice_SetSamplerState_MaxMipLevel  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:2705)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void D3DDevice_SetSamplerState_MaxMipLevel(D3DDevice *param_1,ulong param_2,ulong param_3)
 
 {
   int iVar1;
-  int iVar2;
-  longlong lVar3;
-  ulonglong uVar4;
-  ulonglong uVar5;
+  uint uVar2;
   
-  uVar4 = (ulonglong)(int)param_3;
-  lVar3 = (longlong)(int)param_2;
-  iVar2 = __savegprlr_29(param_1);
-  iVar1 = *(int *)((int)((lVar3 + 0xc7eU & 0xffffffff) << 2) + iVar2);
+  iVar1 = *(int *)((int)&param_1[1].m_Constants.field0_0x0 + param_2 * 4 + 0x278);
   if (iVar1 != 0) {
-    uVar5 = (ulonglong)(*(uint *)(iVar1 + 0x2c) >> 2) & 0xf;
-    iVar1 = ((int)lVar3 + 0x30) * 0x18 + iVar2;
-    if (uVar5 <= (uVar4 & 0xffffffff)) {
-      uVar5 = uVar4;
+    uVar2 = *(uint *)(iVar1 + 0x2c) >> 2 & 0xf;
+    if (uVar2 <= param_3) {
+      uVar2 = param_3;
     }
-    *(uint *)(iVar1 + 0x10) =
-         (uint)((uVar5 & 0xffffffff) << 2) & 0x3c | *(uint *)(iVar1 + 0x10) & 0xffffffc3;
-    *(ulonglong *)(iVar2 + 0x18) =
-         0x8000000000000000U >> (lVar3 + 0x20U & 0x7f) | *(ulonglong *)(iVar2 + 0x18);
+    *(uint *)((int)&(param_1->m_Constants).field0_0x0 + param_2 * 0x18 + 0x10) =
+         (uVar2 & 0xf) << 2 |
+         *(uint *)((int)&(param_1->m_Constants).field0_0x0 + param_2 * 0x18 + 0x10) & 0xffffffc3;
+    (param_1->m_Pending).m_Mask[3] =
+         0x8000000000000000U >> (param_2 + 0x20 & 0x7f) | (param_1->m_Pending).m_Mask[3];
   }
-  *(char *)(iVar2 + (int)lVar3 + 0x2fc4) = (char)uVar4;
-  __restgprlr_29();
+  *(char *)((int)&param_1[1].m_Constants.field0_0x0 + param_2 + 0x44) = (char)param_3;
   return;
 }
 
@@ -3053,32 +2990,28 @@ ulong D3DDevice_GetSamplerState_MaxMipLevel(D3DDevice *param_1,ulong param_2)
 
 // 828625A0  D3DDevice_SetSamplerState_MinMipLevel  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:2747)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void D3DDevice_SetSamplerState_MinMipLevel(D3DDevice *param_1,ulong param_2,ulong param_3)
 
 {
   int iVar1;
-  int iVar2;
-  longlong lVar3;
-  ulonglong uVar4;
-  ulonglong uVar5;
+  uint uVar2;
   
-  uVar4 = (ulonglong)(int)param_3;
-  lVar3 = (longlong)(int)param_2;
-  iVar2 = __savegprlr_29(param_1);
-  iVar1 = *(int *)((int)((lVar3 + 0xc7eU & 0xffffffff) << 2) + iVar2);
+  iVar1 = *(int *)((int)&param_1[1].m_Constants.field0_0x0 + param_2 * 4 + 0x278);
   if (iVar1 != 0) {
-    uVar5 = (ulonglong)(*(uint *)(iVar1 + 0x2c) >> 6) & 0xf;
-    iVar1 = ((int)lVar3 + 0x30) * 0x18 + iVar2;
-    if ((uVar4 & 0xffffffff) <= uVar5) {
-      uVar5 = uVar4;
+    uVar2 = *(uint *)(iVar1 + 0x2c) >> 6 & 0xf;
+    if (param_3 <= uVar2) {
+      uVar2 = param_3;
     }
-    *(uint *)(iVar1 + 0x10) =
-         (uint)((uVar5 & 0xffffffff) << 6) & 0x3c0 | *(uint *)(iVar1 + 0x10) & 0xfffffc3f;
-    *(ulonglong *)(iVar2 + 0x18) =
-         0x8000000000000000U >> (lVar3 + 0x20U & 0x7f) | *(ulonglong *)(iVar2 + 0x18);
+    *(uint *)((int)&(param_1->m_Constants).field0_0x0 + param_2 * 0x18 + 0x10) =
+         (uVar2 & 0xf) << 6 |
+         *(uint *)((int)&(param_1->m_Constants).field0_0x0 + param_2 * 0x18 + 0x10) & 0xfffffc3f;
+    (param_1->m_Pending).m_Mask[3] =
+         0x8000000000000000U >> (param_2 + 0x20 & 0x7f) | (param_1->m_Pending).m_Mask[3];
   }
-  *(char *)(iVar2 + (int)lVar3 + 0x2fde) = (char)uVar4;
-  __restgprlr_29();
+  *(char *)((int)&param_1[1].m_Constants.field0_0x0 + param_2 + 0x5e) = (char)param_3;
   return;
 }
 
@@ -3094,22 +3027,17 @@ ulong D3DDevice_GetSamplerState_MinMipLevel(D3DDevice *param_1,ulong param_2)
 
 // 82862678  D3DDevice_SetSamplerState_BorderColor  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:2789)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void D3DDevice_SetSamplerState_BorderColor(D3DDevice *param_1,ulong param_2,ulong param_3)
 
 {
-  int iVar1;
-  int iVar2;
-  longlong lVar3;
-  longlong lVar4;
-  
-  lVar4 = (longlong)(int)param_3;
-  lVar3 = (longlong)(int)param_2;
-  iVar2 = __savegprlr_29(param_1);
-  iVar1 = ((int)lVar3 + 0x30) * 0x18 + iVar2;
-  *(uint *)(iVar1 + 0x14) = *(uint *)(iVar1 + 0x14) & 0xfffffffc | (uint)(lVar4 != 0);
-  *(ulonglong *)(iVar2 + 0x18) =
-       0x8000000000000000U >> (lVar3 + 0x20U & 0x7f) | *(ulonglong *)(iVar2 + 0x18);
-  __restgprlr_29();
+  *(uint *)((int)&(param_1->m_Constants).field0_0x0 + param_2 * 0x18 + 0x14) =
+       *(uint *)((int)&(param_1->m_Constants).field0_0x0 + param_2 * 0x18 + 0x14) & 0xfffffffc |
+       (uint)(param_3 != 0);
+  (param_1->m_Pending).m_Mask[3] =
+       0x8000000000000000U >> (param_2 + 0x20 & 0x7f) | (param_1->m_Pending).m_Mask[3];
   return;
 }
 
@@ -3126,23 +3054,18 @@ ulong D3DDevice_GetSamplerState_BorderColor(D3DDevice *param_1,ulong param_2)
 
 // 82862740  D3DDevice_SetSamplerState_AddressU  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:2824)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void D3DDevice_SetSamplerState_AddressU(D3DDevice *param_1,ulong param_2,ulong param_3)
 
 {
-  int iVar1;
-  int iVar2;
-  longlong lVar3;
-  ulonglong uVar4;
-  
-  uVar4 = (ulonglong)(int)param_3;
-  lVar3 = (longlong)(int)param_2;
-  iVar2 = __savegprlr_29(param_1);
-  iVar1 = ((int)lVar3 + 0x30) * 0x18;
-  *(uint *)(iVar1 + iVar2) =
-       (uint)((uVar4 & 0xffffffff) << 10) & 0x1c00 | *(uint *)(iVar1 + iVar2) & 0xffffe3ff;
-  *(ulonglong *)(iVar2 + 0x18) =
-       0x8000000000000000U >> (lVar3 + 0x20U & 0x7f) | *(ulonglong *)(iVar2 + 0x18);
-  __restgprlr_29();
+  param_1->m_GetSamplerStateCall[param_2 * 6 + 0x32] =
+       (_func___cdecl_ulong_D3DDevice_ptr_ulong *)
+       ((param_3 & 7) << 10 | (uint)param_1->m_GetSamplerStateCall[param_2 * 6 + 0x32] & 0xffffe3ff)
+  ;
+  (param_1->m_Pending).m_Mask[3] =
+       0x8000000000000000U >> (param_2 + 0x20 & 0x7f) | (param_1->m_Pending).m_Mask[3];
   return;
 }
 
@@ -3158,23 +3081,18 @@ ulong D3DDevice_GetSamplerState_AddressU(D3DDevice *param_1,ulong param_2)
 
 // 828627F0  D3DDevice_SetSamplerState_AddressV  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:2855)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void D3DDevice_SetSamplerState_AddressV(D3DDevice *param_1,ulong param_2,ulong param_3)
 
 {
-  int iVar1;
-  int iVar2;
-  longlong lVar3;
-  ulonglong uVar4;
-  
-  uVar4 = (ulonglong)(int)param_3;
-  lVar3 = (longlong)(int)param_2;
-  iVar2 = __savegprlr_29(param_1);
-  iVar1 = ((int)lVar3 + 0x30) * 0x18;
-  *(uint *)(iVar1 + iVar2) =
-       (uint)((uVar4 & 0xffffffff) << 0xd) & 0xe000 | *(uint *)(iVar1 + iVar2) & 0xffff1fff;
-  *(ulonglong *)(iVar2 + 0x18) =
-       0x8000000000000000U >> (lVar3 + 0x20U & 0x7f) | *(ulonglong *)(iVar2 + 0x18);
-  __restgprlr_29();
+  param_1->m_GetSamplerStateCall[param_2 * 6 + 0x32] =
+       (_func___cdecl_ulong_D3DDevice_ptr_ulong *)
+       ((param_3 & 7) << 0xd | (uint)param_1->m_GetSamplerStateCall[param_2 * 6 + 0x32] & 0xffff1fff
+       );
+  (param_1->m_Pending).m_Mask[3] =
+       0x8000000000000000U >> (param_2 + 0x20 & 0x7f) | (param_1->m_Pending).m_Mask[3];
   return;
 }
 
@@ -3190,23 +3108,18 @@ ulong D3DDevice_GetSamplerState_AddressV(D3DDevice *param_1,ulong param_2)
 
 // 828628A0  D3DDevice_SetSamplerState_AddressW  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:2886)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void D3DDevice_SetSamplerState_AddressW(D3DDevice *param_1,ulong param_2,ulong param_3)
 
 {
-  int iVar1;
-  int iVar2;
-  longlong lVar3;
-  ulonglong uVar4;
-  
-  uVar4 = (ulonglong)(int)param_3;
-  lVar3 = (longlong)(int)param_2;
-  iVar2 = __savegprlr_29(param_1);
-  iVar1 = ((int)lVar3 + 0x30) * 0x18;
-  *(uint *)(iVar1 + iVar2) =
-       (uint)((uVar4 & 0xffffffff) << 0x10) & 0x70000 | *(uint *)(iVar1 + iVar2) & 0xfff8ffff;
-  *(ulonglong *)(iVar2 + 0x18) =
-       0x8000000000000000U >> (lVar3 + 0x20U & 0x7f) | *(ulonglong *)(iVar2 + 0x18);
-  __restgprlr_29();
+  param_1->m_GetSamplerStateCall[param_2 * 6 + 0x32] =
+       (_func___cdecl_ulong_D3DDevice_ptr_ulong *)
+       ((param_3 & 7) << 0x10 |
+       (uint)param_1->m_GetSamplerStateCall[param_2 * 6 + 0x32] & 0xfff8ffff);
+  (param_1->m_Pending).m_Mask[3] =
+       0x8000000000000000U >> (param_2 + 0x20 & 0x7f) | (param_1->m_Pending).m_Mask[3];
   return;
 }
 
@@ -3222,23 +3135,17 @@ ulong D3DDevice_GetSamplerState_AddressW(D3DDevice *param_1,ulong param_2)
 
 // 82862950  D3DDevice_SetSamplerState_TrilinearThreshold  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:2917)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void D3DDevice_SetSamplerState_TrilinearThreshold(D3DDevice *param_1,ulong param_2,ulong param_3)
 
 {
-  int iVar1;
-  int iVar2;
-  longlong lVar3;
-  ulonglong uVar4;
-  
-  uVar4 = (ulonglong)(int)param_3;
-  lVar3 = (longlong)(int)param_2;
-  iVar2 = __savegprlr_29(param_1);
-  iVar1 = ((int)lVar3 + 0x30) * 0x18 + iVar2;
-  *(uint *)(iVar1 + 0x14) =
-       (uint)((uVar4 & 0xffffffff) << 3) & 0x18 | *(uint *)(iVar1 + 0x14) & 0xffffffe7;
-  *(ulonglong *)(iVar2 + 0x18) =
-       0x8000000000000000U >> (lVar3 + 0x20U & 0x7f) | *(ulonglong *)(iVar2 + 0x18);
-  __restgprlr_29();
+  *(ulong *)((int)&(param_1->m_Constants).field0_0x0 + param_2 * 0x18 + 0x14) =
+       (param_3 & 3) << 3 |
+       *(uint *)((int)&(param_1->m_Constants).field0_0x0 + param_2 * 0x18 + 0x14) & 0xffffffe7;
+  (param_1->m_Pending).m_Mask[3] =
+       0x8000000000000000U >> (param_2 + 0x20 & 0x7f) | (param_1->m_Pending).m_Mask[3];
   return;
 }
 
@@ -3254,23 +3161,17 @@ ulong D3DDevice_GetSamplerState_TrilinearThreshold(D3DDevice *param_1,ulong para
 
 // 82862A00  D3DDevice_SetSamplerState_HGradientExpBias  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:2948)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void D3DDevice_SetSamplerState_HGradientExpBias(D3DDevice *param_1,ulong param_2,ulong param_3)
 
 {
-  int iVar1;
-  int iVar2;
-  longlong lVar3;
-  ulonglong uVar4;
-  
-  uVar4 = (ulonglong)(int)param_3;
-  lVar3 = (longlong)(int)param_2;
-  iVar2 = __savegprlr_29(param_1);
-  iVar1 = ((int)lVar3 + 0x30) * 0x18 + iVar2;
-  *(uint *)(iVar1 + 0x10) =
-       (uint)((uVar4 & 0xffffffff) << 0x16) & 0x7c00000 | *(uint *)(iVar1 + 0x10) & 0xf83fffff;
-  *(ulonglong *)(iVar2 + 0x18) =
-       0x8000000000000000U >> (lVar3 + 0x20U & 0x7f) | *(ulonglong *)(iVar2 + 0x18);
-  __restgprlr_29();
+  *(ulong *)((int)&(param_1->m_Constants).field0_0x0 + param_2 * 0x18 + 0x10) =
+       (param_3 & 0x1f) << 0x16 |
+       *(uint *)((int)&(param_1->m_Constants).field0_0x0 + param_2 * 0x18 + 0x10) & 0xf83fffff;
+  (param_1->m_Pending).m_Mask[3] =
+       0x8000000000000000U >> (param_2 + 0x20 & 0x7f) | (param_1->m_Pending).m_Mask[3];
   return;
 }
 
@@ -3289,23 +3190,17 @@ ulong D3DDevice_GetSamplerState_HGradientExpBias(D3DDevice *param_1,ulong param_
 
 // 82862AB8  D3DDevice_SetSamplerState_VGradientExpBias  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:2979)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void D3DDevice_SetSamplerState_VGradientExpBias(D3DDevice *param_1,ulong param_2,ulong param_3)
 
 {
-  int iVar1;
-  int iVar2;
-  longlong lVar3;
-  ulonglong uVar4;
-  
-  uVar4 = (ulonglong)(int)param_3;
-  lVar3 = (longlong)(int)param_2;
-  iVar2 = __savegprlr_29(param_1);
-  iVar1 = ((int)lVar3 + 0x30) * 0x18 + iVar2;
-  *(uint *)(iVar1 + 0x10) =
-       (uint)((uVar4 & 0xffffffff) << 0x1b) | *(uint *)(iVar1 + 0x10) & 0x7ffffff;
-  *(ulonglong *)(iVar2 + 0x18) =
-       0x8000000000000000U >> (lVar3 + 0x20U & 0x7f) | *(ulonglong *)(iVar2 + 0x18);
-  __restgprlr_29();
+  *(ulong *)((int)&(param_1->m_Constants).field0_0x0 + param_2 * 0x18 + 0x10) =
+       param_3 << 0x1b |
+       *(uint *)((int)&(param_1->m_Constants).field0_0x0 + param_2 * 0x18 + 0x10) & 0x7ffffff;
+  (param_1->m_Pending).m_Mask[3] =
+       0x8000000000000000U >> (param_2 + 0x20 & 0x7f) | (param_1->m_Pending).m_Mask[3];
   return;
 }
 
@@ -3321,23 +3216,17 @@ ulong D3DDevice_GetSamplerState_VGradientExpBias(D3DDevice *param_1,ulong param_
 
 // 82862B68  D3DDevice_SetSamplerState_WhiteBorderColorW  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:3010)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void D3DDevice_SetSamplerState_WhiteBorderColorW(D3DDevice *param_1,ulong param_2,ulong param_3)
 
 {
-  int iVar1;
-  int iVar2;
-  longlong lVar3;
-  ulonglong uVar4;
-  
-  uVar4 = (ulonglong)(int)param_3;
-  lVar3 = (longlong)(int)param_2;
-  iVar2 = __savegprlr_29(param_1);
-  iVar1 = ((int)lVar3 + 0x30) * 0x18 + iVar2;
-  *(uint *)(iVar1 + 0x14) =
-       (uint)((uVar4 & 0xffffffff) << 2) & 4 | *(uint *)(iVar1 + 0x14) & 0xfffffffb;
-  *(ulonglong *)(iVar2 + 0x18) =
-       0x8000000000000000U >> (lVar3 + 0x20U & 0x7f) | *(ulonglong *)(iVar2 + 0x18);
-  __restgprlr_29();
+  *(ulong *)((int)&(param_1->m_Constants).field0_0x0 + param_2 * 0x18 + 0x14) =
+       (param_3 & 1) << 2 |
+       *(uint *)((int)&(param_1->m_Constants).field0_0x0 + param_2 * 0x18 + 0x14) & 0xfffffffb;
+  (param_1->m_Pending).m_Mask[3] =
+       0x8000000000000000U >> (param_2 + 0x20 & 0x7f) | (param_1->m_Pending).m_Mask[3];
   return;
 }
 
@@ -3353,20 +3242,18 @@ ulong D3DDevice_GetSamplerState_WhiteBorderColorW(D3DDevice *param_1,ulong param
 
 // 82862C18  D3DDevice_SetSamplerState_PointBorderEnable  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:3041)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void D3DDevice_SetSamplerState_PointBorderEnable(D3DDevice *param_1,ulong param_2,ulong param_3)
 
 {
-  int iVar1;
-  int iVar2;
-  longlong lVar3;
-  
-  lVar3 = (longlong)(int)param_2;
-  iVar2 = __savegprlr_29(param_1);
-  iVar1 = ((int)lVar3 + 0x30) * 0x18 + iVar2;
-  *(uint *)(iVar1 + 4) = (uint)(param_3 == 0) << 0xb | *(uint *)(iVar1 + 4) & 0xfffff7ff;
-  *(ulonglong *)(iVar2 + 0x18) =
-       0x8000000000000000U >> (lVar3 + 0x20U & 0x7f) | *(ulonglong *)(iVar2 + 0x18);
-  __restgprlr_29();
+  param_1->m_GetSamplerStateCall[param_2 * 6 + 0x33] =
+       (_func___cdecl_ulong_D3DDevice_ptr_ulong *)
+       ((uint)(param_3 == 0) << 0xb |
+       (uint)param_1->m_GetSamplerStateCall[param_2 * 6 + 0x33] & 0xfffff7ff);
+  (param_1->m_Pending).m_Mask[3] =
+       0x8000000000000000U >> (param_2 + 0x20 & 0x7f) | (param_1->m_Pending).m_Mask[3];
   return;
 }
 
@@ -3463,6 +3350,8 @@ void D3DDevice_SetViewportF(D3DDevice *param_1,_D3DVIEWPORTF9 *param_2)
 
 // 82862DD8  D3DDevice_SetStreamSource  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:3857)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 
 void D3DDevice_SetStreamSource
@@ -3470,524 +3359,544 @@ void D3DDevice_SetStreamSource
                ulong64 param_6)
 
 {
-  int iVar1;
+  ulong uVar1;
   uint *puVar2;
-  int iVar3;
+  longlong lVar3;
   BufferResource BVar4;
-  CDevice *pCVar5;
+  int iVar5;
   BufferResource *pBVar6;
-  longlong lVar7;
-  longlong lVar8;
-  ulonglong uVar9;
-  ulonglong uVar10;
+  uint uVar7;
   uint local_40;
   
-  uVar9 = (ulonglong)(int)param_5;
-  lVar8 = (longlong)(int)param_4;
-  uVar10 = (ulonglong)(int)param_3;
-  lVar7 = (longlong)(int)param_2;
-  pCVar5 = (CDevice *)__savegprlr_26(param_1);
-  iVar3 = (int)uVar10;
-  if ((uVar10 & 0xffffffff) != 0) {
-    iVar1 = *(int *)(iVar3 + 0x1c);
-    uVar10 = (ulonglong)*(uint *)(iVar3 + 0x18) + lVar8;
-    *(uint *)(&pCVar5->field_0x0 + (int)((-lVar7 + 0xefU & 0xffffffff) << 3)) =
-         ((int)((uVar10 & 0xffffffff) >> 0x14) + 0x200U & 0x1000) + ((uint)uVar10 & 0x1fffffff);
-    *(int *)(&pCVar5->field_0x6f4 + (int)((-lVar7 + 0x11U & 0xffffffff) << 3)) = iVar1 - (int)lVar8;
-    *(ulonglong *)&pCVar5->field_0x18 = *(ulonglong *)&pCVar5->field_0x18 | param_6;
+  if (param_3 != (D3DVertexBuffer *)0x0) {
+    lVar3 = -(longlong)(int)param_2;
+    uVar1 = (param_3->Format).dword[1];
+    uVar7 = (param_3->Format).dword[0] + param_4;
+    *(uint *)((int)(param_1->m_Pending).m_Mask + (int)((lVar3 + 0xefU & 0xffffffff) << 3)) =
+         ((uVar7 >> 0x14) + 0x200 & 0x1000) + (uVar7 & 0x1fffffff);
+    *(ulong *)((int)&(param_1->m_Constants).field0_0x0 +
+              (int)((lVar3 + 0x11U & 0xffffffff) << 3) + 0x274) = uVar1 - param_4;
+    (param_1->m_Pending).m_Mask[3] = (param_1->m_Pending).m_Mask[3] | param_6;
   }
-  iVar1 = (int)((lVar7 + 0xc69U & 0xffffffff) << 2);
-  puVar2 = *(uint **)(&pCVar5->field_0x0 + iVar1);
+  iVar5 = (int)(((longlong)(int)param_2 + 0xc69U & 0xffffffff) << 2);
+  puVar2 = *(uint **)((int)(param_1->m_Pending).m_Mask + iVar5);
   if (puVar2 != (uint *)0x0) {
-    if (pCVar5->m_CpuFence == 0) {
-      if ((pCVar5->m_CommandBufferTimeStampMask & *puVar2) != 0) {
-        pBVar6 = pCVar5->m_pBufferResource;
-        if (pCVar5->m_pBufferResourceEnd <= pBVar6) {
-          pBVar6 = D3D::MakeBufferResourceSpace(pCVar5);
+    uVar7 = *(uint *)((int)param_1[1].m_Pending.m_Mask + 0x1c);
+    if (uVar7 == 0) {
+      if ((*(uint *)(param_1[1].m_Pending.m_Mask + 4) & *puVar2) != 0) {
+        pBVar6 = *(BufferResource **)((int)&param_1[1].m_Constants.field1_0x300 + 0x37c);
+        if (*(BufferResource **)((int)&param_1[1].m_Constants.field1_0x300 + 0x380) <= pBVar6) {
+          pBVar6 = D3D::MakeBufferResourceSpace((CDevice *)param_1);
         }
         BVar4._0_4_ = (uint)puVar2 >> 2 | local_40 & 0x80000000;
         BVar4.m_PredicationMask = 0xffffffff;
         *pBVar6 = BVar4;
-        pCVar5->m_pBufferResource = pBVar6 + 1;
+        *(BufferResource **)((int)&param_1[1].m_Constants.field1_0x300 + 0x37c) = pBVar6 + 1;
       }
     }
     else {
-      puVar2[2] = pCVar5->m_CpuFence;
+      puVar2[2] = uVar7;
     }
   }
-  *(int *)(&pCVar5->field_0x0 + iVar1) = iVar3;
-  uVar10 = (uVar9 & 0xffffffff) >> 2;
-  *(char *)((int)pCVar5->m_Textures + (int)lVar7 + -0x10) = (char)((uVar9 & 0xffffffff) >> 2);
-  if ((uVar10 != 0) && (uVar10 != *(byte *)((int)pCVar5->m_ColorEnable + (int)lVar7 + -0x1c))) {
-    *(ulonglong *)&pCVar5->field_0x10 = *(ulonglong *)&pCVar5->field_0x10 | 0x80000;
+  *(D3DVertexBuffer **)((int)(param_1->m_Pending).m_Mask + iVar5) = param_3;
+  *(char *)((int)&param_1[1].m_Constants.field0_0x0 + param_2 + 0x268) = (char)(param_5 >> 2);
+  if ((param_5 >> 2 != 0) &&
+     (param_5 >> 2 != (uint)*(byte *)((int)param_1[1].m_GetSamplerStateCall + param_2 + 0xb0))) {
+    (param_1->m_Pending).m_Mask[2] = (param_1->m_Pending).m_Mask[2] | 0x80000;
   }
-  __restgprlr_26();
   return;
 }
 
 
 // 82862F08  D3DDevice_GetStreamSource  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:3948)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 D3DVertexBuffer *
 D3DDevice_GetStreamSource(D3DDevice *param_1,uint param_2,uint *param_3,uint *param_4)
 
 {
-  D3DResource *pDVar1;
-  int iVar2;
-  D3DVertexBuffer *pDVar3;
-  longlong lVar4;
-  uint uVar5;
+  D3DVertexBuffer *pDVar1;
+  uint uVar2;
   
-  lVar4 = (longlong)(int)param_2;
-  iVar2 = __savegprlr_26(param_1);
-  uVar5 = 0;
-  pDVar1 = *(D3DResource **)((int)((lVar4 + 0xc69U & 0xffffffff) << 2) + iVar2);
-  if (pDVar1 != (D3DResource *)0x0) {
-    uVar5 = (*(int *)((int)((0xefU - lVar4 & 0xffffffff) << 3) + iVar2) -
-            ((pDVar1[1].Common >> 0x14) + 0x200 & 0x1000)) - (pDVar1[1].Common & 0x1fffffff);
-    D3DResource_AddRef(pDVar1);
+  uVar2 = 0;
+  pDVar1 = *(D3DVertexBuffer **)
+            ((int)(param_1->m_Pending).m_Mask +
+            (int)(((longlong)(int)param_2 + 0xc69U & 0xffffffff) << 2));
+  if (pDVar1 != (D3DVertexBuffer *)0x0) {
+    uVar2 = (*(int *)((int)(param_1->m_Pending).m_Mask +
+                     (int)((0xefU - (longlong)(int)param_2 & 0xffffffff) << 3)) -
+            (((pDVar1->Format).dword[0] >> 0x14) + 0x200 & 0x1000)) -
+            ((pDVar1->Format).dword[0] & 0x1fffffff);
+    D3DResource_AddRef((D3DResource *)pDVar1);
   }
-  *param_3 = uVar5;
-  *param_4 = (uint)*(byte *)(iVar2 + (int)lVar4 + 0x31e8) << 2;
-  pDVar3 = (D3DVertexBuffer *)__restgprlr_26(pDVar1);
-  return pDVar3;
+  *param_3 = uVar2;
+  *param_4 = (uint)*(byte *)((int)&param_1[1].m_Constants.field0_0x0 + param_2 + 0x268) << 2;
+  return pDVar1;
 }
 
 
 // 82862F98  D3DDevice_SetIndices  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:3984)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 
 void D3DDevice_SetIndices(D3DDevice *param_1,D3DIndexBuffer *param_2)
 
 {
-  D3DIndexBuffer *pDVar1;
-  BufferResource BVar2;
-  CDevice *pCVar3;
+  uint *puVar1;
+  uint uVar2;
+  BufferResource BVar3;
   BufferResource *pBVar4;
   uint local_30;
   
-  pCVar3 = (CDevice *)__savegprlr_29(param_1);
-  pDVar1 = pCVar3->m_pIndexBuffer;
-  if (pDVar1 != (D3DIndexBuffer *)0x0) {
-    if (pCVar3->m_CpuFence == 0) {
-      if ((pCVar3->m_CommandBufferTimeStampMask & pDVar1->_padding_) != 0) {
-        pBVar4 = pCVar3->m_pBufferResource;
-        if (pCVar3->m_pBufferResourceEnd <= pBVar4) {
-          pBVar4 = D3D::MakeBufferResourceSpace(pCVar3);
+  puVar1 = *(uint **)((int)&param_1[1].m_Constants.field0_0x0 + 0x20c);
+  if (puVar1 != (uint *)0x0) {
+    uVar2 = *(uint *)((int)param_1[1].m_Pending.m_Mask + 0x1c);
+    if (uVar2 == 0) {
+      if ((*(uint *)(param_1[1].m_Pending.m_Mask + 4) & *puVar1) != 0) {
+        pBVar4 = *(BufferResource **)((int)&param_1[1].m_Constants.field1_0x300 + 0x37c);
+        if (*(BufferResource **)((int)&param_1[1].m_Constants.field1_0x300 + 0x380) <= pBVar4) {
+          pBVar4 = D3D::MakeBufferResourceSpace((CDevice *)param_1);
         }
-        BVar2._0_4_ = (uint)pDVar1 >> 2 | local_30 & 0x80000000;
-        BVar2.m_PredicationMask = 0xffffffff;
-        *pBVar4 = BVar2;
-        pCVar3->m_pBufferResource = pBVar4 + 1;
+        BVar3._0_4_ = (uint)puVar1 >> 2 | local_30 & 0x80000000;
+        BVar3.m_PredicationMask = 0xffffffff;
+        *pBVar4 = BVar3;
+        *(BufferResource **)((int)&param_1[1].m_Constants.field1_0x300 + 0x37c) = pBVar4 + 1;
       }
     }
     else {
-      pDVar1->_padding_ = pCVar3->m_CpuFence;
+      puVar1[2] = uVar2;
     }
   }
-  pCVar3->m_pIndexBuffer = param_2;
-  __restgprlr_29();
+  *(D3DIndexBuffer **)((int)&param_1[1].m_Constants.field0_0x0 + 0x20c) = param_2;
   return;
 }
 
 
 // 82864248  D3DDevice_SetRenderTarget_External  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:4024)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 
 void D3DDevice_SetRenderTarget_External(D3DDevice *param_1,ulong param_2,D3DSurface *param_3)
 
 {
-  D3DDevice *pDVar1;
   TimingMarker local_30 [12];
   
-  pDVar1 = (D3DDevice *)__savegprlr_29(param_1);
   D3D::TimingMarker::TimingMarker(local_30,PIXOP_SetRenderTarget,PIXGROUP_GraphicsTiming);
-  D3DDevice_SetRenderTarget(pDVar1,param_2,param_3);
+  D3DDevice_SetRenderTarget(param_1,param_2,param_3);
   PIXAddPixOpWithData(local_30[0].m_EventID | 0x400000,0,(void *)0x0);
-  __restgprlr_29();
   return;
 }
 
 
 // 828638B0  D3DDevice_SetRenderTarget  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:4037)
 
+/* WARNING: Function: __savegprlr_21 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_21 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 
 void D3DDevice_SetRenderTarget(D3DDevice *param_1,ulong param_2,D3DSurface *param_3)
 
 {
   uint uVar1;
-  undefined1 *puVar2;
+  uint uVar2;
   int iVar3;
   bool bVar4;
-  CDevice *this;
   int iVar5;
-  int iVar7;
-  ulong *puVar8;
-  ulonglong uVar9;
-  D3DSurface *pDVar10;
+  int iVar6;
+  ulong *puVar7;
+  D3DSurface *pDVar8;
+  ulong uVar9;
+  longlong lVar10;
   ulonglong uVar11;
-  D3DSurface *pDVar12;
-  uint uVar13;
-  longlong lVar14;
+  longlong lVar12;
+  longlong lVar13;
+  ulonglong uVar14;
   ulonglong uVar15;
   byte bVar16;
-  longlong lVar17;
-  ulonglong uVar18;
-  ulonglong uVar19;
-  ulong uVar6;
   
-  uVar11 = (ulonglong)(int)param_3;
-  uVar9 = (ulonglong)(int)param_2;
-  this = (CDevice *)__savegprlr_21(param_1);
-  pDVar12 = (D3DSurface *)uVar11;
-  if (this->m_TilingSurfaceOverride) {
-    lVar17 = 1;
-  }
-  else if ((((this->m_TilingBracket) &&
-            ((this->m_pTileSurfaces[0] == this->m_pRenderTarget[0] ||
-             (this->m_pRenderTarget[0] == (D3DSurface *)0x0)))) &&
-           ((this->m_pTileSurfaces[1] == this->m_pRenderTarget[1] ||
-            (this->m_pRenderTarget[1] == (D3DSurface *)0x0)))) &&
-          ((((this->m_pTileSurfaces[2] == this->m_pRenderTarget[2] ||
-             (this->m_pRenderTarget[2] == (D3DSurface *)0x0)) &&
-            ((this->m_pTileSurfaces[3] == this->m_pRenderTarget[3] ||
-             (this->m_pRenderTarget[3] == (D3DSurface *)0x0)))) &&
-           ((this->m_pTileDepthSurface == this->m_pDepthStencilSurface ||
-            (this->m_pDepthStencilSurface == (D3DSurface *)0x0)))))) {
-    lVar17 = 1;
+  lVar12 = (longlong)(int)param_2;
+  if ((param_1[1].m_ReferenceCount & 0x10000000) == 0) {
+    if (((((param_1[1].m_ReferenceCount & 0x20000000) == 0) ||
+         ((iVar6 = *(int *)((int)&param_1[1].m_Constants.field0_0x0 + 0x210),
+          *(int *)((int)&param_1[1].m_Constants.field1_0x300 + 0x30) != iVar6 && (iVar6 != 0)))) ||
+        ((iVar6 = *(int *)((int)&param_1[1].m_Constants.field0_0x0 + 0x214),
+         *(int *)((int)&param_1[1].m_Constants.field1_0x300 + 0x34) != iVar6 && (iVar6 != 0)))) ||
+       ((((iVar6 = *(int *)((int)&param_1[1].m_Constants.field0_0x0 + 0x218),
+          *(int *)((int)&param_1[1].m_Constants.field1_0x300 + 0x38) != iVar6 && (iVar6 != 0)) ||
+         ((iVar6 = *(int *)((int)&param_1[1].m_Constants.field0_0x0 + 0x21c),
+          *(int *)((int)&param_1[1].m_Constants.field1_0x300 + 0x3c) != iVar6 && (iVar6 != 0)))) ||
+        ((iVar6 = *(int *)((int)&param_1[1].m_Constants.field0_0x0 + 0x220),
+         *(int *)((int)&param_1[1].m_Constants.field1_0x300 + 0x40) != iVar6 && (iVar6 != 0)))))) {
+      lVar13 = 0;
+    }
+    else {
+      lVar13 = 1;
+    }
   }
   else {
-    lVar17 = 0;
+    lVar13 = 1;
   }
-  iVar7 = (int)((uVar9 + 0xc64 & 0xffffffff) << 2);
-  *(D3DSurface **)(&this->field_0x0 + iVar7) = pDVar12;
-  if ((uVar11 & 0xffffffff) != 0) {
-    lVar14 = 0;
-    if ((uVar9 & 0xffffffff) != 0) {
-      lVar14 = uVar9 + 1;
+  iVar6 = (int)((lVar12 + 0xc64U & 0xffffffff) << 2);
+  *(D3DSurface **)((int)(param_1->m_Pending).m_Mask + iVar6) = param_3;
+  if (param_3 != (D3DSurface *)0x0) {
+    lVar10 = 0;
+    if (param_2 != 0) {
+      lVar10 = lVar12 + 1;
     }
-    *(D3DSurface_u_24_s_0_u_4 *)(&this->field_0x0 + (int)((lVar14 + 0xa21U & 0xffffffff) << 2)) =
-         (pDVar12->field6_0x18)._s_0._u_4;
-    iVar5 = ((int)(lVar14 + 0x20107U) >> 0x10) * 8;
-    iVar3 = (int)((uVar9 + 0xbfe & 0xffffffff) << 2);
-    *(ulonglong *)(&this->field_0x0 + iVar5) =
-         0x8000000000000000U >> (lVar14 + 0x20107U & 0x7f) |
-         *(ulonglong *)(&this->field_0x0 + iVar5);
-    iVar7 = *(int *)(&this->field_0x0 + iVar7);
-    uVar13 = *(uint *)(&this->field_0x0 + iVar3);
-    *(uint *)(&this->field_0x0 + iVar3) = uVar13;
-    if (iVar7 != 0) {
-      uVar18 = -(ulonglong)(uVar9 != 0) & uVar9 + 1;
-      iVar7 = (int)((uVar18 + 0xa21 & 0xffffffff) << 2);
-      uVar1 = *(uint *)(&this->field_0x0 + iVar7);
-      uVar19 = (ulonglong)(uVar1 >> 0x10) & 0xf;
-      uVar6 = (ulong)uVar19;
-      iVar5 = D3D::IsEDRAMFormat2_10_10_10Bits(uVar6);
-      if ((iVar5 != 0) && (((ulonglong)(uVar1 >> 0x13) & 1) != (ulonglong)uVar13)) {
-        uVar15 = (ulonglong)uVar13 - 1;
-        uVar18 = uVar18 + 0x20107;
-        iVar5 = ((int)uVar18 >> 0x10) * 8;
-        *(uint *)(&this->field_0x0 + iVar7) =
-             uVar1 & 0xfff0ffff |
-             ((uint)((~uVar15 & 0xffffffff) << 0x10) & (uVar6 + 3) * 0x20000 |
-             (uint)(((uVar19 >> 1) - 3 & uVar15 & 0xffffffff) << 0x10)) & 0xf0000;
-        *(ulonglong *)(&this->field_0x0 + iVar5) =
-             0x8000000000000000U >> (uVar18 & 0x7f) | *(ulonglong *)(&this->field_0x0 + iVar5);
+    *(D3DSurface_u_24_s_0_u_4 *)
+     ((int)(param_1->m_Pending).m_Mask + (int)((lVar10 + 0xa21U & 0xffffffff) << 2)) =
+         (param_3->field6_0x18)._s_0._u_4;
+    iVar5 = (int)(lVar10 + 0x20107U) >> 0x10;
+    iVar3 = (int)((lVar12 + 0xbfeU & 0xffffffff) << 2);
+    (param_1->m_Pending).m_Mask[iVar5] =
+         0x8000000000000000U >> (lVar10 + 0x20107U & 0x7f) | (param_1->m_Pending).m_Mask[iVar5];
+    iVar6 = *(int *)((int)(param_1->m_Pending).m_Mask + iVar6);
+    uVar1 = *(uint *)((int)(param_1->m_Pending).m_Mask + iVar3);
+    *(uint *)((int)(param_1->m_Pending).m_Mask + iVar3) = uVar1;
+    if (iVar6 != 0) {
+      uVar14 = -(ulonglong)(lVar12 != 0) & lVar12 + 1U;
+      iVar6 = (int)((uVar14 + 0xa21 & 0xffffffff) << 2);
+      uVar2 = *(uint *)((int)(param_1->m_Pending).m_Mask + iVar6);
+      uVar15 = (ulonglong)(uVar2 >> 0x10) & 0xf;
+      uVar9 = (ulong)uVar15;
+      iVar5 = D3D::IsEDRAMFormat2_10_10_10Bits(uVar9);
+      if ((iVar5 != 0) && (((ulonglong)(uVar2 >> 0x13) & 1) != (ulonglong)uVar1)) {
+        uVar11 = (ulonglong)uVar1 - 1;
+        uVar14 = uVar14 + 0x20107;
+        iVar5 = (int)uVar14 >> 0x10;
+        *(uint *)((int)(param_1->m_Pending).m_Mask + iVar6) =
+             uVar2 & 0xfff0ffff |
+             ((uint)((~uVar11 & 0xffffffff) << 0x10) & (uVar9 + 3) * 0x20000 |
+             (uint)(((uVar15 >> 1) - 3 & uVar11 & 0xffffffff) << 0x10)) & 0xf0000;
+        (param_1->m_Pending).m_Mask[iVar5] =
+             0x8000000000000000U >> (uVar14 & 0x7f) | (param_1->m_Pending).m_Mask[iVar5];
       }
     }
   }
-  if ((uVar9 & 0xffffffff) == 0) {
-    if ((uVar11 & 0xffffffff) == 0) {
-      uVar13 = *(uint *)&this->field_0x2884;
-      iVar7 = D3D::Is32BitEdramFormat(uVar13 >> 0x10 & 0xf);
-      if (iVar7 == 0) {
-        *(uint *)&this->field_0x2884 = uVar13 & 0xfff0ffff;
-        *(ulonglong *)&this->field_0x10 = *(ulonglong *)&this->field_0x10 | 0x100000000000000;
+  if (param_2 == 0) {
+    if (param_3 == (D3DSurface *)0x0) {
+      uVar1 = (param_1->m_DestinationPacket).Color0Info.dword;
+      iVar6 = D3D::Is32BitEdramFormat(uVar1 >> 0x10 & 0xf);
+      if (iVar6 == 0) {
+        (param_1->m_DestinationPacket).Color0Info.dword = uVar1 & 0xfff0ffff;
+        (param_1->m_Pending).m_Mask[2] = (param_1->m_Pending).m_Mask[2] | 0x100000000000000;
       }
     }
-    bVar16 = this->field_0x2b3f;
-    this->m_64BitRenderTarget = false;
-    if ((uVar11 & 0xffffffff) == 0) {
-      pDVar10 = this->m_pDepthStencilSurface;
-      if (this->m_pDepthStencilSurface != (D3DSurface *)0x0) goto LAB_82863b10;
+    bVar16 = (byte)param_1[1].m_ReferenceCount & 0xf7;
+    *(byte *)((int)&param_1[1].m_ReferenceCount + 3) = bVar16;
+    if (param_3 == (D3DSurface *)0x0) {
+      pDVar8 = *(D3DSurface **)((int)&param_1[1].m_Constants.field0_0x0 + 0x220);
+      if (pDVar8 != (D3DSurface *)0x0) goto LAB_82863b10;
     }
     else {
-      iVar7 = D3D::Is32BitEdramFormat(*(ushort *)((int)&pDVar12->field6_0x18 + 4) & 0xf);
-      pDVar10 = pDVar12;
-      if (iVar7 == 0) {
-        this->field_0x2b3f = bVar16 & 0xf7 | 8;
-        *(ulonglong *)&this->field_0x10 = *(ulonglong *)&this->field_0x10 | 0x100000;
+      iVar6 = D3D::Is32BitEdramFormat(*(ushort *)((int)&param_3->field6_0x18 + 4) & 0xf);
+      pDVar8 = param_3;
+      if (iVar6 == 0) {
+        *(byte *)((int)&param_1[1].m_ReferenceCount + 3) = bVar16 | 8;
+        (param_1->m_Pending).m_Mask[2] = (param_1->m_Pending).m_Mask[2] | 0x100000;
       }
 LAB_82863b10:
-      D3D::SetSurfaceInfo(this,pDVar10);
+      D3D::SetSurfaceInfo((CDevice *)param_1,pDVar8);
     }
-    if ((((this->m_GpuPacket3Predication != 0) || (this->m_TilingPredicateWhole)) ||
-        (this->m_CullGeometryVisibilitySurveyBracket)) ||
-       (this->m_ConditionalRenderStackIndex != '\0')) {
-LAB_82863bf0:
-      bVar16 = 0;
-    }
-    else {
-      if (this->m_TilingSurfaceOverride) {
-        bVar4 = true;
-      }
-      else if (((((this->m_TilingBracket) &&
-                 ((this->m_pTileSurfaces[0] == this->m_pRenderTarget[0] ||
-                  (this->m_pRenderTarget[0] == (D3DSurface *)0x0)))) &&
-                ((this->m_pTileSurfaces[1] == this->m_pRenderTarget[1] ||
-                 (this->m_pRenderTarget[1] == (D3DSurface *)0x0)))) &&
-               (((this->m_pTileSurfaces[2] == this->m_pRenderTarget[2] ||
-                 (this->m_pRenderTarget[2] == (D3DSurface *)0x0)) &&
-                ((this->m_pTileSurfaces[3] == this->m_pRenderTarget[3] ||
-                 (this->m_pRenderTarget[3] == (D3DSurface *)0x0)))))) &&
-              ((this->m_pTileDepthSurface == this->m_pDepthStencilSurface ||
-               (this->m_pDepthStencilSurface == (D3DSurface *)0x0)))) {
-        bVar4 = true;
+    if ((((*(int *)((int)&param_1[1].m_Constants.field1_0x300 + 0x24) == 0) &&
+         (uVar9 = param_1[1].m_ReferenceCount, (uVar9 & 0x8000000) == 0)) &&
+        ((uVar9 & 0x4000000) == 0)) &&
+       (*(char *)((int)&param_1[1].m_Constants.field0_0x0 + 0x113) == '\0')) {
+      if ((uVar9 & 0x10000000) == 0) {
+        if ((((((uVar9 & 0x20000000) == 0) ||
+              ((iVar6 = *(int *)((int)&param_1[1].m_Constants.field0_0x0 + 0x210),
+               *(int *)((int)&param_1[1].m_Constants.field1_0x300 + 0x30) != iVar6 && (iVar6 != 0)))
+              ) || ((iVar6 = *(int *)((int)&param_1[1].m_Constants.field0_0x0 + 0x214),
+                    *(int *)((int)&param_1[1].m_Constants.field1_0x300 + 0x34) != iVar6 &&
+                    (iVar6 != 0)))) ||
+            (((iVar6 = *(int *)((int)&param_1[1].m_Constants.field0_0x0 + 0x218),
+              *(int *)((int)&param_1[1].m_Constants.field1_0x300 + 0x38) != iVar6 && (iVar6 != 0))
+             || ((iVar6 = *(int *)((int)&param_1[1].m_Constants.field0_0x0 + 0x21c),
+                 *(int *)((int)&param_1[1].m_Constants.field1_0x300 + 0x3c) != iVar6 && (iVar6 != 0)
+                 ))))) ||
+           ((iVar6 = *(int *)((int)&param_1[1].m_Constants.field0_0x0 + 0x220),
+            *(int *)((int)&param_1[1].m_Constants.field1_0x300 + 0x40) != iVar6 && (iVar6 != 0)))) {
+          bVar4 = false;
+        }
+        else {
+          bVar4 = true;
+        }
       }
       else {
-        bVar4 = false;
+        bVar4 = true;
       }
       bVar16 = 1;
       if (!bVar4) goto LAB_82863bf0;
     }
-    uVar13 = this->m_ColorEnable[0];
-    this->m_PredicateDrawPrims = bVar16;
-    this->m_ColorEnable[0] = uVar13;
-    *(uint *)&this->field_0x28dc =
-         *(uint *)&this->field_0x28dc & 0xfffffff0 |
-         -(uint)(this->m_pRenderTarget[0] != (D3DSurface *)0x0) & uVar13 & 0xf;
+    else {
+LAB_82863bf0:
+      bVar16 = 0;
+    }
+    uVar1 = *(uint *)((int)&param_1[1].m_Constants.field0_0x0 + 4);
+    *(byte *)&param_1[1].m_ReferenceCount = bVar16 | *(byte *)&param_1[1].m_ReferenceCount & 0xfe;
+    iVar6 = *(int *)((int)&param_1[1].m_Constants.field0_0x0 + 0x210);
+    uVar2 = (param_1->m_ValuesPacket).ColorMask.dword;
+    *(uint *)((int)&param_1[1].m_Constants.field0_0x0 + 4) = uVar1;
+    (param_1->m_ValuesPacket).ColorMask.dword =
+         uVar2 & 0xfffffff0 | -(uint)(iVar6 != 0) & uVar1 & 0xf;
   }
   else {
-    if ((uVar9 & 0xffffffff) == 1) {
-      uVar13 = this->m_ColorEnable[1];
-      uVar1 = *(uint *)&this->field_0x28dc;
-      this->m_ColorEnable[1] = uVar13;
-      uVar13 = (-(uint)(this->m_pRenderTarget[1] != (D3DSurface *)0x0) & uVar13 & 0xf) << 4 |
-               uVar1 & 0xffffff0f;
+    if (param_2 == 1) {
+      iVar6 = *(int *)((int)&param_1[1].m_Constants.field0_0x0 + 0x214);
+      uVar1 = *(uint *)((int)&param_1[1].m_Constants.field0_0x0 + 8);
+      uVar2 = (param_1->m_ValuesPacket).ColorMask.dword;
+      *(uint *)((int)&param_1[1].m_Constants.field0_0x0 + 8) = uVar1;
+      uVar9 = (-(uint)(iVar6 != 0) & uVar1 & 0xf) << 4 | uVar2 & 0xffffff0f;
     }
-    else if ((uVar9 & 0xffffffff) == 2) {
-      uVar13 = this->m_ColorEnable[2];
-      uVar1 = *(uint *)&this->field_0x28dc;
-      this->m_ColorEnable[2] = uVar13;
-      uVar13 = (-(uint)(this->m_pRenderTarget[2] != (D3DSurface *)0x0) & uVar13 & 0xf) << 8 |
-               uVar1 & 0xfffff0ff;
+    else if (param_2 == 2) {
+      iVar6 = *(int *)((int)&param_1[1].m_Constants.field0_0x0 + 0x218);
+      uVar1 = *(uint *)((int)&param_1[1].m_Constants.field0_0x0 + 0xc);
+      uVar2 = (param_1->m_ValuesPacket).ColorMask.dword;
+      *(uint *)((int)&param_1[1].m_Constants.field0_0x0 + 0xc) = uVar1;
+      uVar9 = (-(uint)(iVar6 != 0) & uVar1 & 0xf) << 8 | uVar2 & 0xfffff0ff;
     }
     else {
-      if ((uVar9 & 0xffffffff) != 3) goto LAB_82863cc0;
-      uVar13 = this->m_ColorEnable[3];
-      uVar1 = *(uint *)&this->field_0x28dc;
-      this->m_ColorEnable[3] = uVar13;
-      uVar13 = (-(uint)(this->m_pRenderTarget[3] != (D3DSurface *)0x0) & uVar13 & 0xf) << 0xc |
-               uVar1 & 0xffff0fff;
+      if (param_2 != 3) goto LAB_82863cc0;
+      iVar6 = *(int *)((int)&param_1[1].m_Constants.field0_0x0 + 0x21c);
+      uVar1 = *(uint *)((int)&param_1[1].m_Constants.field0_0x0 + 0x10);
+      uVar2 = (param_1->m_ValuesPacket).ColorMask.dword;
+      *(uint *)((int)&param_1[1].m_Constants.field0_0x0 + 0x10) = uVar1;
+      uVar9 = (-(uint)(iVar6 != 0) & uVar1 & 0xf) << 0xc | uVar2 & 0xffff0fff;
     }
-    *(uint *)&this->field_0x28dc = uVar13;
+    (param_1->m_ValuesPacket).ColorMask.dword = uVar9;
   }
-  *(ulonglong *)&this->field_0x10 = *(ulonglong *)&this->field_0x10 | 0x2000000000;
+  (param_1->m_Pending).m_Mask[2] = (param_1->m_Pending).m_Mask[2] | 0x2000000000;
 LAB_82863cc0:
-  D3D::PIXMetaRecordRenderTarget(this,(ulong)uVar9,pDVar12);
-  if (this->m_TilingSurfaceOverride) {
-    lVar14 = 1;
-  }
-  else if ((((this->m_TilingBracket) &&
-            ((this->m_pTileSurfaces[0] == this->m_pRenderTarget[0] ||
-             (this->m_pRenderTarget[0] == (D3DSurface *)0x0)))) &&
-           ((this->m_pTileSurfaces[1] == this->m_pRenderTarget[1] ||
-            (this->m_pRenderTarget[1] == (D3DSurface *)0x0)))) &&
-          ((((this->m_pTileSurfaces[2] == this->m_pRenderTarget[2] ||
-             (this->m_pRenderTarget[2] == (D3DSurface *)0x0)) &&
-            ((this->m_pTileSurfaces[3] == this->m_pRenderTarget[3] ||
-             (this->m_pRenderTarget[3] == (D3DSurface *)0x0)))) &&
-           ((this->m_pTileDepthSurface == this->m_pDepthStencilSurface ||
-            (this->m_pDepthStencilSurface == (D3DSurface *)0x0)))))) {
-    lVar14 = 1;
+  D3D::PIXMetaRecordRenderTarget((CDevice *)param_1,param_2,param_3);
+  if ((param_1[1].m_ReferenceCount & 0x10000000) == 0) {
+    if (((((param_1[1].m_ReferenceCount & 0x20000000) == 0) ||
+         ((iVar6 = *(int *)((int)&param_1[1].m_Constants.field0_0x0 + 0x210),
+          *(int *)((int)&param_1[1].m_Constants.field1_0x300 + 0x30) != iVar6 && (iVar6 != 0)))) ||
+        ((iVar6 = *(int *)((int)&param_1[1].m_Constants.field0_0x0 + 0x214),
+         *(int *)((int)&param_1[1].m_Constants.field1_0x300 + 0x34) != iVar6 && (iVar6 != 0)))) ||
+       ((((iVar6 = *(int *)((int)&param_1[1].m_Constants.field0_0x0 + 0x218),
+          *(int *)((int)&param_1[1].m_Constants.field1_0x300 + 0x38) != iVar6 && (iVar6 != 0)) ||
+         ((iVar6 = *(int *)((int)&param_1[1].m_Constants.field0_0x0 + 0x21c),
+          *(int *)((int)&param_1[1].m_Constants.field1_0x300 + 0x3c) != iVar6 && (iVar6 != 0)))) ||
+        ((iVar6 = *(int *)((int)&param_1[1].m_Constants.field0_0x0 + 0x220),
+         *(int *)((int)&param_1[1].m_Constants.field1_0x300 + 0x40) != iVar6 && (iVar6 != 0)))))) {
+      lVar12 = 0;
+    }
+    else {
+      lVar12 = 1;
+    }
   }
   else {
-    lVar14 = 0;
+    lVar12 = 1;
   }
-  if (lVar14 != lVar17) {
-    puVar8 = *(ulong **)&this->field_0x30;
-    if (*(ulong **)&this->field_0x38 < puVar8) {
-      puVar8 = D3D::CDevice::KickOff(this);
+  if (lVar12 != lVar13) {
+    puVar7 = param_1->m_pRing;
+    if (param_1->m_pRingGuarantee < puVar7) {
+      puVar7 = D3D::CDevice::KickOff((CDevice *)param_1);
     }
-    puVar8[1] = 0x57e;
-    uVar6 = 0x1002c;
-    if (lVar14 == 0) {
-      uVar6 = 0x1002b;
+    puVar7[1] = 0x57e;
+    uVar9 = 0x1002c;
+    if (lVar12 == 0) {
+      uVar9 = 0x1002b;
     }
-    puVar8[2] = uVar6;
-    *(ulong **)&this->field_0x30 = puVar8 + 2;
+    puVar7[2] = uVar9;
+    param_1->m_pRing = puVar7 + 2;
   }
-  __restgprlr_21();
   return;
 }
 
 
 // 82863DD0  D3DDevice_SetDepthStencilSurface  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:4164)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 
 void D3DDevice_SetDepthStencilSurface(D3DDevice *param_1,D3DSurface *param_2)
 
 {
   uint uVar1;
-  undefined1 *puVar2;
-  bool bVar3;
-  CDevice *this;
-  ulong *puVar4;
-  ulonglong uVar5;
-  byte bVar8;
-  longlong lVar6;
-  ulong uVar7;
-  longlong lVar9;
-  D3DSurface *pDVar10;
+  uint uVar2;
+  int iVar3;
+  bool bVar4;
+  ulong *puVar5;
+  ulonglong uVar6;
+  ulong64 uVar7;
+  byte bVar10;
+  longlong lVar8;
+  ulong uVar9;
+  longlong lVar11;
   
-  uVar5 = (ulonglong)(int)param_2;
-  this = (CDevice *)__savegprlr_29(param_1);
-  if (this->m_TilingSurfaceOverride) {
-    lVar9 = 1;
-  }
-  else if ((((this->m_TilingBracket) &&
-            ((this->m_pTileSurfaces[0] == this->m_pRenderTarget[0] ||
-             (this->m_pRenderTarget[0] == (D3DSurface *)0x0)))) &&
-           ((this->m_pTileSurfaces[1] == this->m_pRenderTarget[1] ||
-            (this->m_pRenderTarget[1] == (D3DSurface *)0x0)))) &&
-          ((((this->m_pTileSurfaces[2] == this->m_pRenderTarget[2] ||
-             (this->m_pRenderTarget[2] == (D3DSurface *)0x0)) &&
-            ((this->m_pTileSurfaces[3] == this->m_pRenderTarget[3] ||
-             (this->m_pRenderTarget[3] == (D3DSurface *)0x0)))) &&
-           ((this->m_pTileDepthSurface == this->m_pDepthStencilSurface ||
-            (this->m_pDepthStencilSurface == (D3DSurface *)0x0)))))) {
-    lVar9 = 1;
-  }
-  else {
-    lVar9 = 0;
-  }
-  pDVar10 = (D3DSurface *)uVar5;
-  this->m_pDepthStencilSurface = pDVar10;
-  if ((uVar5 & 0xffffffff) == 0) {
-    *(uint *)&this->field_0x2940 = *(uint *)&this->field_0x2940 & 0xfffffff0;
-    this->m_HiZWriteEnable = false;
-    uVar5 = *(ulonglong *)&this->field_0x10 | 0x100;
-  }
-  else {
-    if (this->m_pRenderTarget[0] == (D3DSurface *)0x0) {
-      D3D::SetSurfaceInfo(this,pDVar10);
-    }
-    *(D3DSurface_u_24_s_0_u_4 *)&this->field_0x2888 = (pDVar10->field6_0x18)._s_0._u_4;
-    *(GPU_HICONTROL *)&this->field_0x2940 = (pDVar10->field6_0x18)._s_0.HiControl;
-    this->m_HiZWriteEnable = *(undefined4 *)((int)&pDVar10->field6_0x18 + 8);
-    if (this->m_OnePassZPass) {
-      if (this->m_TilingSurfaceOverride) {
-        bVar3 = true;
-      }
-      else if (((this->m_TilingBracket) &&
-               ((this->m_pTileSurfaces[0] == this->m_pRenderTarget[0] ||
-                (this->m_pRenderTarget[0] == (D3DSurface *)0x0)))) &&
-              (((this->m_pTileSurfaces[1] == this->m_pRenderTarget[1] ||
-                (this->m_pRenderTarget[1] == (D3DSurface *)0x0)) &&
-               ((((this->m_pTileSurfaces[2] == this->m_pRenderTarget[2] ||
-                  (this->m_pRenderTarget[2] == (D3DSurface *)0x0)) &&
-                 ((this->m_pTileSurfaces[3] == this->m_pRenderTarget[3] ||
-                  (this->m_pRenderTarget[3] == (D3DSurface *)0x0)))) &&
-                ((this->m_pTileDepthSurface == this->m_pDepthStencilSurface ||
-                 (this->m_pDepthStencilSurface == (D3DSurface *)0x0)))))))) {
-        bVar3 = true;
-      }
-      else {
-        bVar3 = false;
-      }
-      if (bVar3) {
-        *(ulong *)&this->field_0x2880 =
-             this->m_TileHiZPitch << 0x12 | *(uint *)&this->field_0x2880 & 0x3ffff;
-      }
-    }
-    uVar5 = *(ulonglong *)&this->field_0x10;
-    *(ulonglong *)&this->field_0x10 = uVar5 | 0x80000000000000;
-    *(ulonglong *)&this->field_0x10 = uVar5 | 0x80000000000100;
-    uVar5 = uVar5 | 0x80000000020100;
-  }
-  *(ulonglong *)&this->field_0x10 = uVar5;
-  if ((((this->m_GpuPacket3Predication == 0) && (!this->m_TilingPredicateWhole)) &&
-      (!this->m_CullGeometryVisibilitySurveyBracket)) &&
-     (this->m_ConditionalRenderStackIndex == '\0')) {
-    if (this->m_TilingSurfaceOverride) {
-      bVar3 = true;
-    }
-    else if ((((this->m_TilingBracket) &&
-              ((this->m_pTileSurfaces[0] == this->m_pRenderTarget[0] ||
-               (this->m_pRenderTarget[0] == (D3DSurface *)0x0)))) &&
-             ((this->m_pTileSurfaces[1] == this->m_pRenderTarget[1] ||
-              (this->m_pRenderTarget[1] == (D3DSurface *)0x0)))) &&
-            ((((this->m_pTileSurfaces[2] == this->m_pRenderTarget[2] ||
-               (this->m_pRenderTarget[2] == (D3DSurface *)0x0)) &&
-              ((this->m_pTileSurfaces[3] == this->m_pRenderTarget[3] ||
-               (this->m_pRenderTarget[3] == (D3DSurface *)0x0)))) &&
-             ((this->m_pTileDepthSurface == this->m_pDepthStencilSurface ||
-              (this->m_pDepthStencilSurface == (D3DSurface *)0x0)))))) {
-      bVar3 = true;
+  if ((param_1[1].m_ReferenceCount & 0x10000000) == 0) {
+    if (((((param_1[1].m_ReferenceCount & 0x20000000) == 0) ||
+         ((iVar3 = *(int *)((int)&param_1[1].m_Constants.field0_0x0 + 0x210),
+          *(int *)((int)&param_1[1].m_Constants.field1_0x300 + 0x30) != iVar3 && (iVar3 != 0)))) ||
+        ((iVar3 = *(int *)((int)&param_1[1].m_Constants.field0_0x0 + 0x214),
+         *(int *)((int)&param_1[1].m_Constants.field1_0x300 + 0x34) != iVar3 && (iVar3 != 0)))) ||
+       ((((iVar3 = *(int *)((int)&param_1[1].m_Constants.field0_0x0 + 0x218),
+          *(int *)((int)&param_1[1].m_Constants.field1_0x300 + 0x38) != iVar3 && (iVar3 != 0)) ||
+         ((iVar3 = *(int *)((int)&param_1[1].m_Constants.field0_0x0 + 0x21c),
+          *(int *)((int)&param_1[1].m_Constants.field1_0x300 + 0x3c) != iVar3 && (iVar3 != 0)))) ||
+        ((iVar3 = *(int *)((int)&param_1[1].m_Constants.field0_0x0 + 0x220),
+         *(int *)((int)&param_1[1].m_Constants.field1_0x300 + 0x40) != iVar3 && (iVar3 != 0)))))) {
+      lVar11 = 0;
     }
     else {
-      bVar3 = false;
+      lVar11 = 1;
     }
-    bVar8 = 1;
-    if (bVar3) goto LAB_828640bc;
-  }
-  bVar8 = 0;
-LAB_828640bc:
-  uVar1 = this->m_ZEnable;
-  this->m_PredicateDrawPrims = bVar8;
-  this->m_ZEnable = uVar1;
-  *(uint *)&this->field_0x2934 =
-       (-(uint)(this->m_pDepthStencilSurface != (D3DSurface *)0x0) & uVar1 & 1) << 1 |
-       *(uint *)&this->field_0x2934 & 0xfffffffd;
-  uVar5 = *(ulonglong *)&this->field_0x10;
-  *(ulonglong *)&this->field_0x10 = uVar5 | 0x800;
-  *(ulonglong *)&this->field_0x10 = uVar5 | 0x20800;
-  uVar1 = this->m_StencilEnable;
-  this->m_StencilEnable = uVar1;
-  *(uint *)&this->field_0x2934 =
-       -(uint)(this->m_pDepthStencilSurface != (D3DSurface *)0x0) & uVar1 & 1 |
-       *(uint *)&this->field_0x2934 & 0xfffffffe;
-  uVar5 = *(ulonglong *)&this->field_0x10;
-  *(ulonglong *)&this->field_0x10 = uVar5 | 0x800;
-  *(ulonglong *)&this->field_0x10 = uVar5 | 0x20800;
-  D3D::PIXMetaRecordRenderTarget(this,4,this->m_pDepthStencilSurface);
-  if (this->m_TilingSurfaceOverride) {
-    lVar6 = 1;
-  }
-  else if ((((this->m_TilingBracket) &&
-            ((this->m_pTileSurfaces[0] == this->m_pRenderTarget[0] ||
-             (this->m_pRenderTarget[0] == (D3DSurface *)0x0)))) &&
-           ((this->m_pTileSurfaces[1] == this->m_pRenderTarget[1] ||
-            (this->m_pRenderTarget[1] == (D3DSurface *)0x0)))) &&
-          ((((this->m_pTileSurfaces[2] == this->m_pRenderTarget[2] ||
-             (this->m_pRenderTarget[2] == (D3DSurface *)0x0)) &&
-            ((this->m_pTileSurfaces[3] == this->m_pRenderTarget[3] ||
-             (this->m_pRenderTarget[3] == (D3DSurface *)0x0)))) &&
-           ((this->m_pTileDepthSurface == this->m_pDepthStencilSurface ||
-            (this->m_pDepthStencilSurface == (D3DSurface *)0x0)))))) {
-    lVar6 = 1;
   }
   else {
-    lVar6 = 0;
+    lVar11 = 1;
   }
-  if (lVar6 != lVar9) {
-    puVar4 = *(ulong **)&this->field_0x30;
-    if (*(ulong **)&this->field_0x38 < puVar4) {
-      puVar4 = D3D::CDevice::KickOff(this);
-    }
-    puVar4[1] = 0x57e;
-    uVar7 = 0x1002c;
-    if (lVar6 == 0) {
-      uVar7 = 0x1002b;
-    }
-    puVar4[2] = uVar7;
-    *(ulong **)&this->field_0x30 = puVar4 + 2;
+  *(D3DSurface **)((int)&param_1[1].m_Constants.field0_0x0 + 0x220) = param_2;
+  if (param_2 == (D3DSurface *)0x0) {
+    bVar10 = *(byte *)((int)&param_1[1].m_ReferenceCount + 2);
+    (param_1->m_ControlPacket).HiControl.dword =
+         (param_1->m_ControlPacket).HiControl.dword & 0xfffffff0;
+    *(byte *)((int)&param_1[1].m_ReferenceCount + 2) = bVar10 & 0xdf;
+    uVar7 = (param_1->m_Pending).m_Mask[2] | 0x100;
   }
-  __restgprlr_29();
+  else {
+    if (*(int *)((int)&param_1[1].m_Constants.field0_0x0 + 0x210) == 0) {
+      D3D::SetSurfaceInfo((CDevice *)param_1,param_2);
+    }
+    (param_1->m_DestinationPacket).DepthInfo = (GPU_DEPTHINFO)(param_2->field6_0x18)._s_0._u_4;
+    bVar10 = *(byte *)((int)&param_1[1].m_ReferenceCount + 2);
+    uVar9 = param_1[1].m_ReferenceCount;
+    (param_1->m_ControlPacket).HiControl = (param_2->field6_0x18)._s_0.HiControl;
+    *(byte *)((int)&param_1[1].m_ReferenceCount + 2) =
+         ((byte)*(undefined4 *)((int)&param_2->field6_0x18 + 8) & 1) << 5 | bVar10 & 0xdf;
+    if ((uVar9 & 0x20) != 0) {
+      if ((param_1[1].m_ReferenceCount & 0x10000000) == 0) {
+        if ((((param_1[1].m_ReferenceCount & 0x20000000) == 0) ||
+            ((iVar3 = *(int *)((int)&param_1[1].m_Constants.field0_0x0 + 0x210),
+             *(int *)((int)&param_1[1].m_Constants.field1_0x300 + 0x30) != iVar3 && (iVar3 != 0))))
+           || (((iVar3 = *(int *)((int)&param_1[1].m_Constants.field0_0x0 + 0x214),
+                *(int *)((int)&param_1[1].m_Constants.field1_0x300 + 0x34) != iVar3 && (iVar3 != 0))
+               || ((((iVar3 = *(int *)((int)&param_1[1].m_Constants.field0_0x0 + 0x218),
+                     *(int *)((int)&param_1[1].m_Constants.field1_0x300 + 0x38) != iVar3 &&
+                     (iVar3 != 0)) ||
+                    ((iVar3 = *(int *)((int)&param_1[1].m_Constants.field0_0x0 + 0x21c),
+                     *(int *)((int)&param_1[1].m_Constants.field1_0x300 + 0x3c) != iVar3 &&
+                     (iVar3 != 0)))) ||
+                   ((iVar3 = *(int *)((int)&param_1[1].m_Constants.field0_0x0 + 0x220),
+                    *(int *)((int)&param_1[1].m_Constants.field1_0x300 + 0x40) != iVar3 &&
+                    (iVar3 != 0)))))))) {
+          bVar4 = false;
+        }
+        else {
+          bVar4 = true;
+        }
+      }
+      else {
+        bVar4 = true;
+      }
+      if (bVar4) {
+        (param_1->m_DestinationPacket).SurfaceInfo.dword =
+             *(int *)((int)&param_1[1].m_Constants.field1_0x300 + 0x1ec) << 0x12 |
+             (param_1->m_DestinationPacket).SurfaceInfo.dword & 0x3ffff;
+      }
+    }
+    uVar6 = (param_1->m_Pending).m_Mask[2];
+    (param_1->m_Pending).m_Mask[2] = uVar6 | 0x80000000000000;
+    (param_1->m_Pending).m_Mask[2] = uVar6 | 0x80000000000100;
+    uVar7 = uVar6 | 0x80000000020100;
+  }
+  (param_1->m_Pending).m_Mask[2] = uVar7;
+  if ((((*(int *)((int)&param_1[1].m_Constants.field1_0x300 + 0x24) == 0) &&
+       (uVar9 = param_1[1].m_ReferenceCount, (uVar9 & 0x8000000) == 0)) &&
+      ((uVar9 & 0x4000000) == 0)) &&
+     (*(char *)((int)&param_1[1].m_Constants.field0_0x0 + 0x113) == '\0')) {
+    if ((uVar9 & 0x10000000) == 0) {
+      if (((((uVar9 & 0x20000000) == 0) ||
+           ((iVar3 = *(int *)((int)&param_1[1].m_Constants.field0_0x0 + 0x210),
+            *(int *)((int)&param_1[1].m_Constants.field1_0x300 + 0x30) != iVar3 && (iVar3 != 0))))
+          || ((iVar3 = *(int *)((int)&param_1[1].m_Constants.field0_0x0 + 0x214),
+              *(int *)((int)&param_1[1].m_Constants.field1_0x300 + 0x34) != iVar3 && (iVar3 != 0))))
+         || ((((iVar3 = *(int *)((int)&param_1[1].m_Constants.field0_0x0 + 0x218),
+               *(int *)((int)&param_1[1].m_Constants.field1_0x300 + 0x38) != iVar3 && (iVar3 != 0))
+              || ((iVar3 = *(int *)((int)&param_1[1].m_Constants.field0_0x0 + 0x21c),
+                  *(int *)((int)&param_1[1].m_Constants.field1_0x300 + 0x3c) != iVar3 &&
+                  (iVar3 != 0)))) ||
+             ((iVar3 = *(int *)((int)&param_1[1].m_Constants.field0_0x0 + 0x220),
+              *(int *)((int)&param_1[1].m_Constants.field1_0x300 + 0x40) != iVar3 && (iVar3 != 0))))
+            )) {
+        bVar4 = false;
+      }
+      else {
+        bVar4 = true;
+      }
+    }
+    else {
+      bVar4 = true;
+    }
+    bVar10 = 1;
+    if (bVar4) goto LAB_828640bc;
+  }
+  bVar10 = 0;
+LAB_828640bc:
+  uVar1 = *(uint *)((int)&param_1[1].m_Constants.field0_0x0 + 0x14);
+  *(byte *)&param_1[1].m_ReferenceCount = bVar10 | *(byte *)&param_1[1].m_ReferenceCount & 0xfe;
+  uVar2 = (param_1->m_ControlPacket).DepthControl.dword;
+  iVar3 = *(int *)((int)&param_1[1].m_Constants.field0_0x0 + 0x220);
+  *(uint *)((int)&param_1[1].m_Constants.field0_0x0 + 0x14) = uVar1;
+  (param_1->m_ControlPacket).DepthControl.dword =
+       (-(uint)(iVar3 != 0) & uVar1 & 1) << 1 | uVar2 & 0xfffffffd;
+  uVar6 = (param_1->m_Pending).m_Mask[2];
+  (param_1->m_Pending).m_Mask[2] = uVar6 | 0x800;
+  (param_1->m_Pending).m_Mask[2] = uVar6 | 0x20800;
+  uVar1 = *(uint *)((int)&param_1[1].m_Constants.field0_0x0 + 0x18);
+  uVar2 = (param_1->m_ControlPacket).DepthControl.dword;
+  iVar3 = *(int *)((int)&param_1[1].m_Constants.field0_0x0 + 0x220);
+  *(uint *)((int)&param_1[1].m_Constants.field0_0x0 + 0x18) = uVar1;
+  (param_1->m_ControlPacket).DepthControl.dword =
+       -(uint)(iVar3 != 0) & uVar1 & 1 | uVar2 & 0xfffffffe;
+  uVar6 = (param_1->m_Pending).m_Mask[2];
+  (param_1->m_Pending).m_Mask[2] = uVar6 | 0x800;
+  (param_1->m_Pending).m_Mask[2] = uVar6 | 0x20800;
+  D3D::PIXMetaRecordRenderTarget
+            ((CDevice *)param_1,4,*(D3DSurface **)((int)&param_1[1].m_Constants.field0_0x0 + 0x220))
+  ;
+  if ((param_1[1].m_ReferenceCount & 0x10000000) == 0) {
+    if (((((param_1[1].m_ReferenceCount & 0x20000000) == 0) ||
+         ((iVar3 = *(int *)((int)&param_1[1].m_Constants.field0_0x0 + 0x210),
+          *(int *)((int)&param_1[1].m_Constants.field1_0x300 + 0x30) != iVar3 && (iVar3 != 0)))) ||
+        ((iVar3 = *(int *)((int)&param_1[1].m_Constants.field0_0x0 + 0x214),
+         *(int *)((int)&param_1[1].m_Constants.field1_0x300 + 0x34) != iVar3 && (iVar3 != 0)))) ||
+       ((((iVar3 = *(int *)((int)&param_1[1].m_Constants.field0_0x0 + 0x218),
+          *(int *)((int)&param_1[1].m_Constants.field1_0x300 + 0x38) != iVar3 && (iVar3 != 0)) ||
+         ((iVar3 = *(int *)((int)&param_1[1].m_Constants.field0_0x0 + 0x21c),
+          *(int *)((int)&param_1[1].m_Constants.field1_0x300 + 0x3c) != iVar3 && (iVar3 != 0)))) ||
+        ((iVar3 = *(int *)((int)&param_1[1].m_Constants.field0_0x0 + 0x220),
+         *(int *)((int)&param_1[1].m_Constants.field1_0x300 + 0x40) != iVar3 && (iVar3 != 0)))))) {
+      lVar8 = 0;
+    }
+    else {
+      lVar8 = 1;
+    }
+  }
+  else {
+    lVar8 = 1;
+  }
+  if (lVar8 != lVar11) {
+    puVar5 = param_1->m_pRing;
+    if (param_1->m_pRingGuarantee < puVar5) {
+      puVar5 = D3D::CDevice::KickOff((CDevice *)param_1);
+    }
+    puVar5[1] = 0x57e;
+    uVar9 = 0x1002c;
+    if (lVar8 == 0) {
+      uVar9 = 0x1002b;
+    }
+    puVar5[2] = uVar9;
+    param_1->m_pRing = puVar5 + 2;
+  }
   return;
 }
 
@@ -4112,26 +4021,24 @@ void D3DDevice_SetPWLGamma(D3DDevice *param_1,ulong param_2,_D3DPWLGAMMA *param_
 
 // 82863298  D3DDevice_SetBlendState  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/state.cpp:4823)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void D3DDevice_SetBlendState(D3DDevice *param_1,ulong param_2,_D3DBLENDSTATE param_3)
 
 {
   int iVar1;
   int iVar2;
-  ulonglong uVar3;
-  longlong lVar4;
   
-  uVar3 = (ulonglong)(int)param_2;
-  iVar2 = __savegprlr_29(param_1);
-  lVar4 = 0;
-  if ((uVar3 & 0xffffffff) != 0) {
-    lVar4 = uVar3 + 7;
+  iVar2 = 0;
+  if (param_2 != 0) {
+    iVar2 = param_2 + 7;
   }
-  *(_D3DBLENDSTATE *)((int)((lVar4 + 0xa4eU & 0xffffffff) << 2) + iVar2) = param_3;
-  iVar1 = ((int)(lVar4 + 0x20135U) >> 0x10) * 8;
-  *(ulonglong *)(iVar1 + iVar2) =
-       0x8000000000000000U >> (lVar4 + 0x20135U & 0x7f) | *(ulonglong *)(iVar1 + iVar2);
-  *(ulonglong *)(iVar2 + 0x10) = *(ulonglong *)(iVar2 + 0x10) | 0x20000;
-  __restgprlr_29();
+  iVar1 = (int)(iVar2 + 0x20135U) >> 0x10;
+  *(_D3DBLENDSTATE *)((param_1->m_TessellatorPacket).Unused2 + iVar2 + -0x1b) = param_3;
+  (param_1->m_Pending).m_Mask[iVar1] =
+       0x8000000000000000U >> (iVar2 + 0x20135U & 0x7f) | (param_1->m_Pending).m_Mask[iVar1];
+  (param_1->m_Pending).m_Mask[2] = (param_1->m_Pending).m_Mask[2] | 0x20000;
   return;
 }
 

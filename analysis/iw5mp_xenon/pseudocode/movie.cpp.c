@@ -197,22 +197,21 @@ void D3D::XBMUninitialize(CDevice *param_1)
 
 // 8288FD38  XBMProcessCommand  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/movie.cpp:180)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
+
 undefined4 D3D::XBMProcessCommand(char *param_1,char *param_2,ulong param_3,_DM_CMDCONT *param_4)
 
 {
   char cVar1;
-  longlong lVar2;
-  undefined4 uVar3;
-  int iVar4;
-  longlong lVar5;
+  int iVar2;
+  char *pcVar3;
+  undefined1 *puVar4;
+  undefined *puVar5;
   char *pcVar6;
-  longlong lVar7;
-  undefined1 *puVar8;
-  undefined *puVar9;
-  undefined8 uVar10;
-  uint uVar11;
-  char *pcVar12;
-  longlong lVar13;
+  undefined4 uVar7;
+  uint uVar8;
+  longlong lVar9;
   char local_260 [64];
   code *local_220;
   char local_21c [64];
@@ -227,10 +226,8 @@ undefined4 D3D::XBMProcessCommand(char *param_1,char *param_2,ulong param_3,_DM_
   char local_84 [64];
   code *local_44;
   
-  lVar7 = (longlong)(int)param_3;
-  lVar5 = (longlong)(int)param_2;
-  lVar2 = __savegprlr_25(param_1,lVar5,lVar7,param_4);
-  uVar10 = 0xffffffff82da0007;
+  uVar7 = 0x82da0007;
+  builtin_strncpy(local_260,"{Connect}",10);
   memset();
   local_220 = XBMHandleConnect;
   builtin_strncpy(local_21c,"{Disconnect}",0xd);
@@ -238,16 +235,16 @@ undefined4 D3D::XBMProcessCommand(char *param_1,char *param_2,ulong param_3,_DM_
   local_1dc = XBMHandleDisconnect;
   builtin_strncpy(local_1d8,"{Version}",10);
   memset();
-  puVar8 = &stack0x00000000 + -0x195;
+  puVar4 = (undefined1 *)((int)&local_198 + 3);
   local_198 = XBMHandleVersionCheck;
-  puVar9 = &UNK_821fa11f;
-  lVar13 = 0x13;
+  puVar5 = &UNK_821fa11f;
+  lVar9 = 0x13;
   do {
-    puVar9 = puVar9 + 1;
-    puVar8 = puVar8 + 1;
-    *puVar8 = *puVar9;
-    lVar13 = lVar13 + -1;
-  } while (lVar13 != 0);
+    puVar5 = puVar5 + 1;
+    puVar4 = puVar4 + 1;
+    *puVar4 = *puVar5;
+    lVar9 = lVar9 + -1;
+  } while (lVar9 != 0);
   memset();
   local_154 = XBMHandleLimitCaptureSize;
   memcpy();
@@ -261,34 +258,34 @@ undefined4 D3D::XBMProcessCommand(char *param_1,char *param_2,ulong param_3,_DM_
   local_88 = XBMHandleBeginCapture;
   builtin_strncpy(local_84,"{EndCapture}",0xd);
   memset();
-  uVar11 = 0;
-  pcVar12 = &stack0x00000000 + -0x260;
+  uVar8 = 0;
+  pcVar6 = local_260;
   local_44 = XBMHandleEndCapture;
-  pcVar6 = pcVar12;
+  pcVar3 = pcVar6;
   while( true ) {
     do {
       cVar1 = *pcVar6;
       pcVar6 = pcVar6 + 1;
     } while (cVar1 != '\0');
-    lVar13 = lVar2 + 6;
+    lVar9 = (longlong)(int)param_1 + 6;
     strncmp();
-    if ((int)lVar13 == 0) break;
-    uVar11 = uVar11 + 1;
-    pcVar12 = pcVar12 + 0x44;
-    pcVar6 = pcVar12;
-    if (7 < uVar11) {
+    if ((int)lVar9 == 0) break;
+    uVar8 = uVar8 + 1;
+    pcVar6 = pcVar3 + 0x44;
+    pcVar3 = pcVar6;
+    if (7 < uVar8) {
 LAB_8288ff9c:
-      pcVar6 = "PIX!NO";
+      pcVar3 = "PIX!NO";
 LAB_8288ffa4:
-      strncpy((char *)lVar5,pcVar6,(uint)lVar7);
-      uVar3 = __restgprlr_25(uVar10);
-      return uVar3;
+      strncpy(param_2,pcVar3,param_3);
+      return uVar7;
     }
   }
-  iVar4 = (*(&local_220)[uVar11 * 0x11])(ZEXT48(pcVar6 + (-1 - (int)pcVar12)) + lVar2 + 6 + 1);
-  uVar10 = 0x2da0000;
-  if (iVar4 != 0) {
-    pcVar6 = "PIX!OK";
+  iVar2 = (*(&local_220)[uVar8 * 0x11])
+                    (ZEXT48(pcVar6 + (-1 - (int)pcVar3)) + (longlong)(int)param_1 + 6 + 1);
+  uVar7 = 0x2da0000;
+  if (iVar2 != 0) {
+    pcVar3 = "PIX!OK";
     goto LAB_8288ffa4;
   }
   goto LAB_8288ff9c;
@@ -297,34 +294,32 @@ LAB_8288ffa4:
 
 // 8288FFF8  XBMAllocateFrameMemory  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/movie.cpp:228)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void D3D::XBMAllocateFrameMemory(uint param_1,void *param_2,void **param_3,MEMORYREGION *param_4)
 
 {
-  undefined8 uVar1;
-  void *pvVar2;
-  ulonglong uVar3;
-  MEMORYREGION MVar4;
+  void *pvVar1;
+  MEMORYREGION MVar2;
   
-  uVar3 = (ulonglong)(int)param_2;
-  uVar1 = __savegprlr_27(param_1);
-  MVar4 = MEMREGION_SYSTEM;
-  pvVar2 = (void *)MmAllocatePhysicalMemoryEx(2,uVar1,0x404,0,0xffffffffffffffff,0x1000);
-  if (pvVar2 == (void *)0x0) {
+  MVar2 = MEMREGION_SYSTEM;
+  pvVar1 = (void *)MmAllocatePhysicalMemoryEx(2,param_1,0x404,0,0xffffffffffffffff,0x1000);
+  if (pvVar1 == (void *)0x0) {
     g_DrPixMemAllocPhysicalCount = g_DrPixMemAllocPhysicalCount + 1;
-    pvVar2 = XMemAlloc((ulong)uVar1,0xb9800000);
-    if (pvVar2 == (void *)0x0) {
-      if ((uVar3 & 0xffffffff) != 0) {
-        MVar4 = MEMREGION_XAM_FRONT_BUFFER;
-        pvVar2 = (void *)uVar3;
+    pvVar1 = XMemAlloc(param_1,0xb9800000);
+    if (pvVar1 == (void *)0x0) {
+      if (param_2 != (void *)0x0) {
+        MVar2 = MEMREGION_XAM_FRONT_BUFFER;
+        pvVar1 = param_2;
       }
     }
     else {
-      MVar4 = MEMREGION_TITLE;
+      MVar2 = MEMREGION_TITLE;
     }
   }
-  *param_3 = pvVar2;
-  *param_4 = MVar4;
-  __restgprlr_27();
+  *param_3 = pvVar1;
+  *param_4 = MVar2;
   return;
 }
 
@@ -392,6 +387,8 @@ void D3D::XBMDestroyContext(CDevice *param_1)
 
 // 828901D0  XBMCreateContext  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/movie.cpp:320)
 
+/* WARNING: Function: __savegprlr_18 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_18 replaced with injection: xenon_save_restore */
 /* WARNING: Removing unreachable block (ram,0x82890570) */
 /* WARNING: Removing unreachable block (ram,0x828903d0) */
 /* WARNING: Removing unreachable block (ram,0x82890568) */
@@ -404,22 +401,23 @@ undefined4 D3D::XBMCreateContext(CDevice *param_1,D3DBaseTexture *param_2,char *
 
 {
   char cVar1;
-  int iVar2;
-  short sVar3;
+  ushort uVar2;
+  ushort uVar3;
   short sVar4;
   longlong lVar5;
-  int iVar7;
-  undefined8 uVar6;
-  void *pvVar8;
-  undefined4 uVar9;
+  int iVar6;
+  undefined4 uVar7;
+  _D3DGAMMARAMP *p_Var8;
+  void *pvVar9;
   void **ppvVar10;
+  ushort *puVar12;
   ulonglong uVar11;
-  char *pcVar13;
-  ulonglong uVar12;
-  uint uVar14;
+  char *pcVar14;
+  ulonglong uVar13;
   uint uVar15;
-  undefined1 auVar16 [16];
+  uint uVar16;
   undefined1 auVar17 [16];
+  undefined1 auVar18 [16];
   char *pcStack00000024;
   float local_1b0;
   float fStack_1ac;
@@ -431,142 +429,154 @@ undefined4 D3D::XBMCreateContext(CDevice *param_1,D3DBaseTexture *param_2,char *
   char acStack_181 [260];
   undefined1 local_7d;
   
-  pcStack00000024 = param_3;
-  lVar5 = __savegprlr_18(param_1);
-  iVar2 = (int)lVar5;
-  *(uint *)(iVar2 + 0x5f10) = *(uint *)(iVar2 + 0x5f10) & 0x1fffffff;
+  lVar5 = (longlong)(int)param_1;
+  puVar12 = &(param_1->m_XbmContext).FrontBufferWidthTA;
+  (param_1->m_XbmContext).CaptureType = XBMCAPTURE_FULL;
   sVar4 = ((ushort)((param_2->Format).dword[3] >> 0x1e) & 2) + 1;
-  sVar3 = ((ushort)(param_2->Format).dword[2] & 0x1fff) + sVar4;
-  sVar4 = ((ushort)((param_2->Format).dword[2] >> 0xd) & 0x1fff) + sVar4;
-  *(short *)(iVar2 + 0x5e24) = sVar3;
-  *(short *)(iVar2 + 0x5e26) = sVar4;
-  *(ushort *)(iVar2 + 0x5e28) = sVar3 + 0x1fU & 0xffe0;
-  *(ushort *)(iVar2 + 0x5e2a) = sVar4 + 0x1fU & 0xffe0;
-  local_1b0 = (float)*(ushort *)(iVar2 + 0x5e28);
+  uVar2 = ((ushort)(param_2->Format).dword[2] & 0x1fff) + sVar4;
+  uVar3 = ((ushort)((param_2->Format).dword[2] >> 0xd) & 0x1fff) + sVar4;
+  (param_1->m_XbmContext).FrontBufferWidth = uVar2;
+  (param_1->m_XbmContext).FrontBufferHeight = uVar3;
+  (param_1->m_XbmContext).FrontBufferWidthTA = uVar2 + 0x1f & 0xffe0;
+  (param_1->m_XbmContext).FrontBufferHeightTA = uVar3 + 0x1f & 0xffe0;
+  local_1b0 = (float)*puVar12;
   fStack_1ac = 1.0 / local_1b0;
   local_1b0 = local_1b0 * 0.03125;
-  auVar17._0_4_ = fStack_1ac;
-  auVar17._4_4_ = 0x3f800000;
-  auVar17._8_4_ = 0x3d000000;
-  auVar17._12_4_ = 0x3d800000;
-  storeVectorLeftIndexed(auVar17,lVar5 + 0x5e4c);
-  storeVectorRightIndexed(auVar17,lVar5 + 0x5e5c);
-  auVar16 = loadVectorLeftIndexed(0xffffffff821fa098);
-  auVar17 = loadVectorRightIndexed(0xffffffff821fa0a8);
-  storeVectorLeftIndexed(auVar16 | auVar17,lVar5 + 0x5e5c);
-  storeVectorRightIndexed(auVar16 | auVar17,lVar5 + 0x5e6c);
-  auVar16 = loadVectorRightIndexed(0xffffffff821fa0b8);
-  auVar17 = loadVectorLeftIndexed(0xffffffff821fa0a8);
-  storeVectorLeftIndexed(auVar17 | auVar16,lVar5 + 0x5e6c);
-  storeVectorRightIndexed(auVar17 | auVar16,lVar5 + 0x5e7c);
-  auVar17 = loadVectorLeftIndexed(0xffffffff821fa0b8);
-  auVar16 = loadVectorRightIndexed(0xffffffff821fa0c8);
-  storeVectorLeftIndexed(auVar17 | auVar16,lVar5 + 0x5e7c);
-  storeVectorRightIndexed(auVar17 | auVar16,lVar5 + 0x5e8c);
+  auVar18._0_4_ = fStack_1ac;
+  auVar18._4_4_ = 0x3f800000;
+  auVar18._8_4_ = 0x3d000000;
+  auVar18._12_4_ = 0x3d800000;
+  storeVectorLeftIndexed(auVar18,lVar5 + 0x5e4c);
+  storeVectorRightIndexed(auVar18,lVar5 + 0x5e5c);
+  auVar17 = loadVectorLeftIndexed(0xffffffff821fa098);
+  auVar18 = loadVectorRightIndexed(0xffffffff821fa0a8);
+  storeVectorLeftIndexed(auVar17 | auVar18,lVar5 + 0x5e5c);
+  storeVectorRightIndexed(auVar17 | auVar18,lVar5 + 0x5e6c);
+  auVar17 = loadVectorRightIndexed(0xffffffff821fa0b8);
+  auVar18 = loadVectorLeftIndexed(0xffffffff821fa0a8);
+  storeVectorLeftIndexed(auVar18 | auVar17,lVar5 + 0x5e6c);
+  storeVectorRightIndexed(auVar18 | auVar17,lVar5 + 0x5e7c);
+  auVar18 = loadVectorLeftIndexed(0xffffffff821fa0b8);
+  auVar17 = loadVectorRightIndexed(0xffffffff821fa0c8);
+  storeVectorLeftIndexed(auVar18 | auVar17,lVar5 + 0x5e7c);
+  storeVectorRightIndexed(auVar18 | auVar17,lVar5 + 0x5e8c);
   storeVectorLeftIndexed(___vmx_3f0020083d8020080000000000000000,lVar5 + 0x5e8c);
   storeVectorRightIndexed(___vmx_3f0020083d8020080000000000000000,lVar5 + 0x5e9c);
   storeVectorLeftIndexed(___vmx_000000003f8000004100000040800000,lVar5 + 0x5e9c);
   storeVectorRightIndexed(___vmx_000000003f8000004100000040800000,lVar5 + 0x5eac);
-  auVar16._0_4_ = local_1b0;
-  auVar16._4_4_ = fStack_1ac;
-  auVar16._8_4_ = 0x40000000;
-  auVar16._12_4_ = 0x42000000;
+  auVar17._0_4_ = local_1b0;
+  auVar17._4_4_ = fStack_1ac;
+  auVar17._8_4_ = 0x40000000;
+  auVar17._12_4_ = 0x42000000;
   storeVectorLeftIndexed(___vmx_000000003727c5ac3e80000041400000,lVar5 + 0x5eac);
   storeVectorRightIndexed(___vmx_000000003727c5ac3e80000041400000,lVar5 + 0x5ebc);
   storeVectorLeftIndexed(___vmx_3e0000003f8000004180000042000000,lVar5 + 0x5ebc);
   storeVectorRightIndexed(___vmx_3e0000003f8000004180000042000000,lVar5 + 0x5ecc);
-  storeVectorLeftIndexed(auVar16,lVar5 + 0x5ecc);
-  storeVectorRightIndexed(auVar16,lVar5 + 0x5edc);
+  storeVectorLeftIndexed(auVar17,lVar5 + 0x5ecc);
+  storeVectorRightIndexed(auVar17,lVar5 + 0x5edc);
   storeVectorLeftIndexed(___vmx_3c800000000000003d00000000000000,lVar5 + 0x5edc);
   storeVectorRightIndexed(___vmx_3c800000000000003d00000000000000,lVar5 + 0x5eec);
-  *(uint *)(iVar2 + 0x5e2c) =
-       (uint)*(ushort *)(iVar2 + 0x5e2a) * (uint)*(ushort *)(iVar2 + 0x5e28) >> 5 & 0x7ffffe0;
+  (param_1->m_XbmContext).VertexCount =
+       (uint)(param_1->m_XbmContext).FrontBufferHeightTA * (uint)*puVar12 >> 5 & 0x7ffffe0;
   uStack_194 = 0x3d800000;
   uStack_198 = 0x3d000000;
   local_1a0._s_0.LowPart = 0x3f800000;
   uStack_1a4 = 0x42000000;
   uStack_1a8 = 0x40000000;
+  uVar16 = (param_1->m_XbmContext).VertexCount;
   uVar11 = (ulonglong)g_XbmMaxCaptureFileSizeInMB;
-  *(int *)(iVar2 + 0x5e38) = *(int *)(iVar2 + 0x5e2c) * 0xc;
-  uVar12 = ((longlong)*(int *)(iVar2 + 0x5e2c) * 0x30 + 0x1ffU & 0xffffffff) >> 9;
-  *(short *)(iVar2 + 0x5cc2) = (short)uVar12;
+  (param_1->m_XbmContext).MaxExportIndex = uVar16 * 0xc;
+  uVar13 = ((longlong)(int)uVar16 * 0x30 + 0x1ffU & 0xffffffff) >> 9;
+  (param_1->m_XbmContext).FrameVideoSizeInSectors = (ushort)uVar13;
   uVar11 = uVar11 * 0x100000;
-  lVar5 = ((uVar12 & 0xffff) + 0xac) * 0x200;
+  lVar5 = ((uVar13 & 0xffff) + 0xac) * 0x200;
+  pcStack00000024 = param_3;
   local_1a0._s_0.HighPart = (ulong)fStack_1ac;
-  strncpy(acStack_181 + 1,pcStack00000024,0x104);
+  strncpy(acStack_181 + 1,param_3,0x104);
   local_7d = 0;
-  pcVar13 = acStack_181 + 1;
+  pcVar14 = acStack_181 + 1;
   do {
-    cVar1 = *pcVar13;
-    pcVar13 = pcVar13 + 1;
+    cVar1 = *pcVar14;
+    pcVar14 = pcVar14 + 1;
   } while (cVar1 != '\0');
-  pcVar13 = pcVar13 + (int)(acStack_181 + (-1 - (int)(acStack_181 + 1)));
-  if (acStack_181 + 1 <= pcVar13) {
+  pcVar14 = pcVar14 + (int)(acStack_181 + (-1 - (int)(acStack_181 + 1)));
+  if (acStack_181 + 1 <= pcVar14) {
     do {
-      if (*pcVar13 == '\\') break;
-      pcVar13 = pcVar13 + -1;
-    } while (acStack_181 + 1 <= pcVar13);
+      if (*pcVar14 == '\\') break;
+      pcVar14 = pcVar14 + -1;
+    } while (acStack_181 + 1 <= pcVar14);
   }
-  pcVar13[1] = '\0';
-  iVar7 = GetDiskFreeSpaceExA(acStack_181 + 1,&local_1a0,(_ULARGE_INTEGER *)0x0,
+  pcVar14[1] = '\0';
+  iVar6 = GetDiskFreeSpaceExA(acStack_181 + 1,&local_1a0,(_ULARGE_INTEGER *)0x0,
                               (_ULARGE_INTEGER *)0x0);
-  if ((iVar7 != 0) &&
-     (uVar12 = CONCAT44(local_1a0._s_0.HighPart,local_1a0._s_0.LowPart), uVar12 < uVar11 + 0x2800000
+  if ((iVar6 != 0) &&
+     (uVar13 = CONCAT44(local_1a0._s_0.HighPart,local_1a0._s_0.LowPart), uVar13 < uVar11 + 0x2800000
      )) {
-    if (uVar12 < 0x2800001) {
+    if (uVar13 < 0x2800001) {
       uVar11 = 0;
     }
     else {
-      uVar11 = uVar12 - 0x2800000;
+      uVar11 = uVar13 - 0x2800000;
     }
   }
   if (uVar11 < lVar5 + 0x800U) {
-    uVar6 = 0xffffffff80004005;
+    uVar7 = 0x80004005;
   }
   else {
-    uVar15 = 0;
-    uVar12 = (uVar11 + 0xffefffff) / 0xfff00000;
-    *(uint *)(iVar2 + 0x5f08) =
-         (uint)((uVar12 & 0x3f) << 0xe) | *(uint *)(iVar2 + 0x5f08) & 0xfff03fff;
-    *(int *)(iVar2 + 0x5e34) = (int)(((uVar12 & 0x3f) - 1 & 0xffffffff) << 0x14) + (int)uVar11;
+    uVar16 = 0;
+    uVar13 = (uVar11 + 0xffefffff) / 0xfff00000;
+    (param_1->m_XbmContext).CaptureFileCount = uVar13;
+    (param_1->m_XbmContext).MaxFinalFileSegmentSize =
+         (int)(((uVar13 & 0x3f) - 1 & 0xffffffff) << 0x14) + (int)uVar11;
     do {
-      if ((uVar15 == 0) || (pvVar8 = (void *)0x0, *(int *)(iVar2 + 0x5f18) >> 0x1e != 2)) {
-        pvVar8 = *(void **)(iVar2 + 0x5f1c);
+      if ((uVar16 == 0) ||
+         (pvVar9 = (void *)0x0, *(int *)&(param_1->m_XbmContext).field_0x264 >> 0x1e != 2)) {
+        pvVar9 = (void *)(param_1->m_XbmContext).XamFrontBufferBase;
       }
-      ppvVar10 = (void **)(uVar15 * 4 + iVar2 + 0x5cb4);
-      XBMAllocateFrameMemory((uint)lVar5,pvVar8,ppvVar10,(MEMORYREGION *)&local_1b0);
-      if (*ppvVar10 == (void *)0x0) goto LAB_828908f0;
-      if (uVar15 == 0) {
-        uVar14 = (int)local_1b0 << 0x1e | *(uint *)(iVar2 + 0x5f18) & 0x3fffffff;
+      ppvVar10 = (param_1->m_XbmContext).pFrameData + uVar16;
+      XBMAllocateFrameMemory((uint)lVar5,pvVar9,ppvVar10,(MEMORYREGION *)&local_1b0);
+      if (*ppvVar10 == (void *)0x0) {
+        return 0x8007000e;
+      }
+      uVar15 = *(uint *)&(param_1->m_XbmContext).field_0x264;
+      if (uVar16 == 0) {
+        uVar15 = (int)local_1b0 << 0x1e | uVar15 & 0x3fffffff;
       }
       else {
-        uVar14 = ((uint)local_1b0 & 3) << 0x1c | *(uint *)(iVar2 + 0x5f18) & 0xcfffffff;
+        uVar15 = ((uint)local_1b0 & 3) << 0x1c | uVar15 & 0xcfffffff;
       }
-      uVar15 = uVar15 + 1;
-      *(uint *)(iVar2 + 0x5f18) = uVar14;
-    } while (uVar15 < 2);
-    iVar7 = MmAllocatePhysicalMemoryEx(2,0x600,4,0,0xffffffffffffffff,0x1000);
-    *(int *)(iVar2 + 0x5f04) = iVar7;
-    if (iVar7 == 0) {
-      pvVar8 = XMemAlloc(0x600,0x24800000);
-      *(void **)(iVar2 + 0x5f04) = pvVar8;
-      if (pvVar8 == (void *)0x0) {
-LAB_828908f0:
-        uVar6 = 0xffffffff8007000e;
-        goto LAB_828908fc;
+      uVar16 = uVar16 + 1;
+      *(uint *)&(param_1->m_XbmContext).field_0x264 = uVar15;
+    } while (uVar16 < 2);
+    p_Var8 = (_D3DGAMMARAMP *)MmAllocatePhysicalMemoryEx(2,0x600,4,0,0xffffffffffffffff,0x1000);
+    (param_1->m_XbmContext).pGammaRamp = p_Var8;
+    if (p_Var8 == (_D3DGAMMARAMP *)0x0) {
+      p_Var8 = XMemAlloc(0x600,0x24800000);
+      (param_1->m_XbmContext).pGammaRamp = p_Var8;
+      if (p_Var8 == (_D3DGAMMARAMP *)0x0) {
+        return 0x8007000e;
       }
-      uVar15 = *(uint *)(iVar2 + 0x5f18) | 0x8000000;
+      uVar16 = *(uint *)&(param_1->m_XbmContext).field_0x264 | 0x8000000;
     }
     else {
-      uVar15 = *(uint *)(iVar2 + 0x5f18) & 0xf7ffffff;
+      uVar16 = *(uint *)&(param_1->m_XbmContext).field_0x264 & 0xf7ffffff;
     }
-    *(uint *)(iVar2 + 0x5f18) = uVar15;
-    *(byte *)(iVar2 + 0x5f14) = *(byte *)(iVar2 + 0x5f14) | 0x10;
-    uVar6 = 0;
+    *(uint *)&(param_1->m_XbmContext).field_0x264 = uVar16;
+    (param_1->m_XbmContext).Created = true;
+    uVar7 = 0;
   }
-LAB_828908fc:
-  uVar9 = __restgprlr_18(uVar6);
-  return uVar9;
+                    /* WARNING: Read-only address (ram,0x821fa160) is written */
+                    /* WARNING: Read-only address (ram,0x821fa170) is written */
+                    /* WARNING: Read-only address (ram,0x821fa180) is written */
+                    /* WARNING: Read-only address (ram,0x821fa190) is written */
+                    /* WARNING: Read-only address (ram,0x821fa1a0) is written */
+                    /* WARNING: Read-only address (ram,0x821fa1b0) is written */
+                    /* WARNING: Read-only address (ram,0x821fa1c0) is written */
+                    /* WARNING: Read-only address (ram,0x821fa1d0) is written */
+                    /* WARNING: Read-only address (ram,0x821fa1e0) is written */
+                    /* WARNING: Read-only address (ram,0x821fa1f0) is written */
+                    /* WARNING: Read-only address (ram,0x821fa200) is written */
+  return uVar7;
 }
 
 
@@ -615,6 +625,8 @@ void D3D::XBMAdvanceCaptureFile(XBMContext *param_1,uint param_2)
 
 // 82890E68  XBMBeginCapture  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/movie.cpp:614)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 
 int D3D::XBMBeginCapture(CDevice *param_1,D3DBaseTexture *param_2,char *param_3)
@@ -622,14 +634,12 @@ int D3D::XBMBeginCapture(CDevice *param_1,D3DBaseTexture *param_2,char *param_3)
 {
   char cVar1;
   uint uVar2;
-  CDevice *pCVar4;
-  undefined8 uVar3;
-  void *pvVar5;
-  int iVar6;
+  int iVar3;
+  void *pvVar4;
+  char *pcVar5;
+  void **ppvVar6;
   char *pcVar7;
-  void **ppvVar8;
-  char *pcVar9;
-  ulonglong uVar10;
+  ulonglong uVar8;
   undefined8 local_2e0;
   undefined1 auStack_2d8 [8];
   ulong auStack_2d0 [3];
@@ -639,61 +649,60 @@ int D3D::XBMBeginCapture(CDevice *param_1,D3DBaseTexture *param_2,char *param_3)
   byte local_1ab;
   char acStack_150 [336];
   
-  pCVar4 = (CDevice *)__savegprlr_24(param_1);
-  if (!(pCVar4->m_XbmContext).Created) {
+  if (!(param_1->m_XbmContext).Created) {
     strncpy(acStack_2c1 + 1,param_3,0x104);
     local_1bd = 0;
-    pcVar7 = acStack_2c1 + 1;
+    pcVar5 = acStack_2c1 + 1;
     do {
-      cVar1 = *pcVar7;
-      pcVar7 = pcVar7 + 1;
+      cVar1 = *pcVar5;
+      pcVar5 = pcVar5 + 1;
     } while (cVar1 != '\0');
-    pcVar7 = pcVar7 + (int)auStack_2d0 + (0xe - (int)(acStack_2c1 + 1));
-    if (acStack_2c1 + 1 <= pcVar7) {
+    pcVar5 = pcVar5 + (int)auStack_2d0 + (0xe - (int)(acStack_2c1 + 1));
+    if (acStack_2c1 + 1 <= pcVar5) {
       do {
-        if (*pcVar7 == '\\') break;
-        pcVar7 = pcVar7 + -1;
-      } while (acStack_2c1 + 1 <= pcVar7);
+        if (*pcVar5 == '\\') break;
+        pcVar5 = pcVar5 + -1;
+      } while (acStack_2c1 + 1 <= pcVar5);
     }
-    if (*pcVar7 == '\\') {
-      *pcVar7 = '\0';
+    if (*pcVar5 == '\\') {
+      *pcVar5 = '\0';
       RtlInitAnsiString(auStack_2d8,acStack_2c1 + 1);
-      iVar6 = ObCreateSymbolicLink(0xffffffff829a8270,auStack_2d8);
-      if (-1 < iVar6) {
-        RtlSprintf(acStack_150,0xffffffff8217a788,0xffffffff821fa22c,pcVar7 + 1);
-        iVar6 = XBMCreateContext(pCVar4,param_2,acStack_150);
-        if (-1 < iVar6) {
+      iVar3 = ObCreateSymbolicLink(0xffffffff829a8270,auStack_2d8);
+      if (-1 < iVar3) {
+        RtlSprintf(acStack_150,0xffffffff8217a788,0xffffffff821fa22c,pcVar5 + 1);
+        iVar3 = XBMCreateContext(param_1,param_2,acStack_150);
+        if (-1 < iVar3) {
           strncpy(acStack_2c1 + 1,acStack_150,0x104);
           local_1bd = 0;
-          pcVar7 = acStack_2c1 + 1;
+          pcVar5 = acStack_2c1 + 1;
           do {
-            cVar1 = *pcVar7;
-            pcVar7 = pcVar7 + 1;
+            cVar1 = *pcVar5;
+            pcVar5 = pcVar5 + 1;
           } while (cVar1 != '\0');
-          pcVar7 = pcVar7 + (int)auStack_2d0 + (0xe - (int)(acStack_2c1 + 1));
-          pcVar9 = pcVar7;
-          if (acStack_2c1 + 1 <= pcVar7) {
+          pcVar5 = pcVar5 + (int)auStack_2d0 + (0xe - (int)(acStack_2c1 + 1));
+          pcVar7 = pcVar5;
+          if (acStack_2c1 + 1 <= pcVar5) {
             do {
-              if ((*pcVar9 == '.') || (*pcVar9 == '\\')) break;
-              pcVar9 = pcVar9 + -1;
-            } while (acStack_2c1 + 1 <= pcVar9);
+              if ((*pcVar7 == '.') || (*pcVar7 == '\\')) break;
+              pcVar7 = pcVar7 + -1;
+            } while (acStack_2c1 + 1 <= pcVar7);
           }
-          if (*pcVar9 != '.') {
-            pcVar9 = pcVar7;
+          if (*pcVar7 != '.') {
+            pcVar7 = pcVar5;
           }
-          uVar10 = 0;
-          if ((pCVar4->m_XbmContext).CaptureFileCount != 0) {
-            ppvVar8 = (void **)&(pCVar4->m_XbmContext).SwapTimeStamp;
+          uVar8 = 0;
+          if ((param_1->m_XbmContext).CaptureFileCount != 0) {
+            ppvVar6 = (void **)&(param_1->m_XbmContext).SwapTimeStamp;
             do {
               if (g_XbmEndCapture != false) goto LAB_82890e94;
-              RtlSprintf(pcVar9,0xffffffff821fa224,uVar10,pcVar9 + 0x170);
-              pvVar5 = CreateFileA(acStack_2c1 + 1,0x40000000,0,(void *)0x0,2,0x68000000,(void *)0x0
+              RtlSprintf(pcVar7,0xffffffff821fa224,uVar8,pcVar7 + 0x170);
+              pvVar4 = CreateFileA(acStack_2c1 + 1,0x40000000,0,(void *)0x0,2,0x68000000,(void *)0x0
                                   );
-              ppvVar8[1] = pvVar5;
-              if (pvVar5 == (void *)0xffffffff) goto LAB_82890e94;
-              if ((uVar10 & 0xffffffff) ==
-                  ((pCVar4->m_XbmContext).CaptureFileCount - 1 & 0xffffffff)) {
-                uVar2 = (pCVar4->m_XbmContext).MaxFinalFileSegmentSize;
+              ppvVar6[1] = pvVar4;
+              if (pvVar4 == (void *)0xffffffff) goto LAB_82890e94;
+              if ((uVar8 & 0xffffffff) ==
+                  ((param_1->m_XbmContext).CaptureFileCount - 1 & 0xffffffff)) {
+                uVar2 = (param_1->m_XbmContext).MaxFinalFileSegmentSize;
                 if (uVar2 == 0) {
                   local_2e0 = 0x100000000;
                 }
@@ -704,55 +713,53 @@ int D3D::XBMBeginCapture(CDevice *param_1,D3DBaseTexture *param_2,char *param_3)
               else {
                 local_2e0 = 0xfff00000;
               }
-              SetFilePointer(pvVar5,local_2e0._4_4_,(long *)&local_2e0,0);
-              ppvVar8 = ppvVar8 + 1;
-              SetEndOfFile(*ppvVar8);
-              uVar10 = uVar10 + 1;
-            } while ((uVar10 & 0xffffffff) < (pCVar4->m_XbmContext).CaptureFileCount);
+              SetFilePointer(pvVar4,local_2e0._4_4_,(long *)&local_2e0,0);
+              ppvVar6 = ppvVar6 + 1;
+              SetEndOfFile(*ppvVar6);
+              uVar8 = uVar8 + 1;
+            } while ((uVar8 & 0xffffffff) < (param_1->m_XbmContext).CaptureFileCount);
           }
           do {
-            RtlSprintf(pcVar9,0xffffffff821fa224,uVar10,pcVar9 + 0x170);
-            uVar10 = uVar10 + 1;
-            iVar6 = DeleteFileA(acStack_2c1 + 1);
-          } while (iVar6 != 0);
-          (pCVar4->m_XbmContext).Overlapped.Internal = 0;
-          (pCVar4->m_XbmContext).Overlapped.InternalHigh = 0;
-          (pCVar4->m_XbmContext).Overlapped.Offset = 0;
-          (pCVar4->m_XbmContext).Overlapped.OffsetHigh = 0;
-          (pCVar4->m_XbmContext).Overlapped.hEvent = (void *)0x0;
-          pvVar5 = CreateEventA((void *)0x0,0,0,(char *)0x0);
-          (pCVar4->m_XbmContext).Overlapped.hEvent = pvVar5;
-          if (pvVar5 != (void *)0x0) {
-            (pCVar4->m_XbmContext).Overlapped.Offset = 0;
-            (pCVar4->m_XbmContext).Overlapped.OffsetHigh = 0;
+            RtlSprintf(pcVar7,0xffffffff821fa224,uVar8,pcVar7 + 0x170);
+            uVar8 = uVar8 + 1;
+            iVar3 = DeleteFileA(acStack_2c1 + 1);
+          } while (iVar3 != 0);
+          (param_1->m_XbmContext).Overlapped.Internal = 0;
+          (param_1->m_XbmContext).Overlapped.InternalHigh = 0;
+          (param_1->m_XbmContext).Overlapped.Offset = 0;
+          (param_1->m_XbmContext).Overlapped.OffsetHigh = 0;
+          (param_1->m_XbmContext).Overlapped.hEvent = (void *)0x0;
+          pvVar4 = CreateEventA((void *)0x0,0,0,(char *)0x0);
+          (param_1->m_XbmContext).Overlapped.hEvent = pvVar4;
+          if (pvVar4 != (void *)0x0) {
+            (param_1->m_XbmContext).Overlapped.Offset = 0;
+            (param_1->m_XbmContext).Overlapped.OffsetHigh = 0;
             memset();
-            WriteFile((pCVar4->m_XbmContext).CaptureFile[0],(pCVar4->m_XbmContext).pFrameData[0],
-                      0x800,auStack_2d0,&(pCVar4->m_XbmContext).Overlapped);
-            WaitForSingleObject((pCVar4->m_XbmContext).Overlapped.hEvent,0xffffffff);
+            WriteFile((param_1->m_XbmContext).CaptureFile[0],(param_1->m_XbmContext).pFrameData[0],
+                      0x800,auStack_2d0,&(param_1->m_XbmContext).Overlapped);
+            WaitForSingleObject((param_1->m_XbmContext).Overlapped.hEvent,0xffffffff);
             VdGetCurrentDisplayInformation(auStack_1b0);
-            (pCVar4->m_XbmContext).CaptureFileOffset = 0x800;
-            (pCVar4->m_XbmContext).CaptureFrame = 0;
-            *(uint *)&(pCVar4->m_XbmContext).field_0x254 =
-                 *(uint *)&(pCVar4->m_XbmContext).field_0x254 & 0xfc0fffff;
-            (pCVar4->m_XbmContext).UsePWLGamma = (ulonglong)LZCOUNT(local_1ab - 1) >> 5;
-            uVar3 = 1;
-            goto LAB_828911d8;
+            (param_1->m_XbmContext).CaptureFileOffset = 0x800;
+            (param_1->m_XbmContext).CaptureFrame = 0;
+            *(uint *)&(param_1->m_XbmContext).field_0x254 =
+                 *(uint *)&(param_1->m_XbmContext).field_0x254 & 0xfc0fffff;
+            (param_1->m_XbmContext).UsePWLGamma = (ulonglong)LZCOUNT(local_1ab - 1) >> 5;
+            return 1;
           }
         }
       }
     }
   }
 LAB_82890e94:
-  XBMEndCapture(pCVar4);
-  uVar3 = 0;
-LAB_828911d8:
-  iVar6 = __restgprlr_24(uVar3);
-  return iVar6;
+  XBMEndCapture(param_1);
+  return 0;
 }
 
 
 // 828909F8  XBMEndCapture  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/movie.cpp:755)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
 /* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 
@@ -766,19 +773,18 @@ void D3D::XBMEndCapture(CDevice *param_1)
   code *pcVar5;
   undefined4 *puVar6;
   undefined1 *puVar7;
-  XBMContext *pXVar8;
-  ulong uVar9;
-  bool bVar10;
-  undefined4 uVar11;
-  CDevice *pCVar12;
-  uint uVar13;
-  _D3DPWLGAMMA *p_Var14;
-  ulonglong uVar15;
-  int iVar16;
-  uint uVar17;
-  void **ppvVar18;
+  ulong uVar8;
+  bool bVar9;
+  undefined4 uVar10;
+  uint uVar11;
+  _D3DPWLGAMMA *p_Var12;
+  ulonglong uVar13;
+  int iVar14;
+  uint uVar15;
+  XBMContext *pXVar16;
+  void **ppvVar17;
   char in_RESERVE;
-  byte bVar19;
+  byte bVar18;
   ulong auStack_8c0 [4];
   undefined1 auStack_8b0 [5];
   char local_8ab;
@@ -796,139 +802,138 @@ void D3D::XBMEndCapture(CDevice *param_1)
   uint local_82c;
   _D3DPWLGAMMA _Stack_7f0;
   
-  pCVar12 = (CDevice *)__savegprlr_23(param_1);
-  pXVar8 = &pCVar12->m_XbmContext;
-  if ((pCVar12->m_XbmContext).Created) {
-    pvVar2 = (pCVar12->m_XbmContext).Overlapped.hEvent;
+  pXVar16 = &param_1->m_XbmContext;
+  if ((param_1->m_XbmContext).Created) {
+    pvVar2 = (param_1->m_XbmContext).Overlapped.hEvent;
     if (pvVar2 != (void *)0x0) {
-      if ((pCVar12->m_XbmContext).FrameExported) {
-        bVar10 = !(pCVar12->m_XbmContext).FrameWritten;
-        bVar19 = bVar10 << 1;
-        if (!bVar10) {
+      if ((param_1->m_XbmContext).FrameExported) {
+        bVar9 = !(param_1->m_XbmContext).FrameWritten;
+        bVar18 = bVar9 << 1;
+        if (!bVar9) {
           WaitForSingleObject(pvVar2,0xffffffff);
         }
-        uVar3 = (pCVar12->m_XbmContext).SwapTimeStamp;
-        D3DDevice_BlockOnFence((pCVar12->m_XbmContext).CaptureFence);
+        uVar3 = (param_1->m_XbmContext).SwapTimeStamp;
+        D3DDevice_BlockOnFence((param_1->m_XbmContext).CaptureFence);
         do {
-          uVar15 = (ulonglong)(uint)XBM__AudioSampleBuffer;
+          uVar13 = (ulonglong)(uint)XBM__AudioSampleBuffer;
           if (in_RESERVE != '\0') {
             XBM__AudioSampleBuffer =
                  storeWordConditionalIndexed
                            ((ulonglong)XBM__CaptureCompletionSignalXAudio,0,0xffffffff829a8258);
-            bVar19 = 2;
+            bVar18 = 2;
           }
-        } while (!(bool)(bVar19 >> 1 & 1));
-        uVar15 = (uVar15 - ZEXT48((pCVar12->m_XbmContext).pFrameAudioData) & 0xffffffff) / 0x1800;
-        iVar16 = (int)uVar15;
-        if (0xd < uVar15) {
-          iVar16 = 0xe;
+        } while (!(bool)(bVar18 >> 1 & 1));
+        uVar13 = (uVar13 - ZEXT48((param_1->m_XbmContext).pFrameAudioData) & 0xffffffff) / 0x1800;
+        iVar14 = (int)uVar13;
+        if (0xd < uVar13) {
+          iVar14 = 0xe;
         }
-        uVar1 = (pCVar12->m_XbmContext).FrameSizeInSectors;
+        uVar1 = (param_1->m_XbmContext).FrameSizeInSectors;
         puVar6 = *(undefined4 **)
-                  ((int)pXVar8->pFrameData + (((pCVar12->m_XbmContext).CaptureFrame - 1) * 4 & 4));
-        (pCVar12->m_XbmContext).Overlapped.Offset = (pCVar12->m_XbmContext).CaptureFileOffset;
-        (pCVar12->m_XbmContext).Overlapped.OffsetHigh = 0;
-        uVar9 = ((uint)uVar1 + iVar16 * 0xc) * 0x200;
-        pvVar2 = pXVar8->CaptureFile[(pCVar12->m_XbmContext).CaptureFileIndex];
+                  ((int)pXVar16->pFrameData + (((param_1->m_XbmContext).CaptureFrame - 1) * 4 & 4));
+        (param_1->m_XbmContext).Overlapped.Offset = (param_1->m_XbmContext).CaptureFileOffset;
+        (param_1->m_XbmContext).Overlapped.OffsetHigh = 0;
+        uVar8 = ((uint)uVar1 + iVar14 * 0xc) * 0x200;
+        pvVar2 = pXVar16->CaptureFile[(param_1->m_XbmContext).CaptureFileIndex];
         *puVar6 = 0x9b58e71a;
-        puVar6[1] = (pCVar12->m_XbmContext).FrameFlagsPrev;
+        puVar6[1] = (param_1->m_XbmContext).FrameFlagsPrev;
         puVar6[2] = uVar3;
-        puVar6[3] = iVar16;
-        WriteFile(pvVar2,puVar6,uVar9,auStack_8c0,&(pCVar12->m_XbmContext).Overlapped);
-        XBMAdvanceCaptureFile(pXVar8,uVar9);
-        WaitForSingleObject((pCVar12->m_XbmContext).Overlapped.hEvent,0xffffffff);
+        puVar6[3] = iVar14;
+        WriteFile(pvVar2,puVar6,uVar8,auStack_8c0,&(param_1->m_XbmContext).Overlapped);
+        XBMAdvanceCaptureFile(pXVar16,uVar8);
+        WaitForSingleObject((param_1->m_XbmContext).Overlapped.hEvent,0xffffffff);
         while (XBM__AudioSampleBuffer != XBM__CaptureCompletionSignalD3D) {
           Sleep(6);
         }
       }
-      uVar17 = 0;
+      uVar15 = 0;
       auStack_8c0[1] = 0;
-      if ((pCVar12->m_XbmContext).CaptureFileCount != 0) {
-        ppvVar18 = (void **)&(pCVar12->m_XbmContext).SwapTimeStamp;
+      if ((param_1->m_XbmContext).CaptureFileCount != 0) {
+        ppvVar17 = (void **)&(param_1->m_XbmContext).SwapTimeStamp;
         do {
-          if (((pCVar12->m_XbmContext).Looped) ||
-             (uVar13 = (pCVar12->m_XbmContext).CaptureFileIndex, uVar17 < uVar13)) {
-            uVar13 = (uint)ppvVar18[0x2a];
+          if (((param_1->m_XbmContext).Looped) ||
+             (uVar11 = (param_1->m_XbmContext).CaptureFileIndex, uVar15 < uVar11)) {
+            uVar11 = (uint)ppvVar17[0x2a];
           }
-          else if (uVar13 < uVar17) {
-            uVar13 = 0;
+          else if (uVar11 < uVar15) {
+            uVar11 = 0;
           }
           else {
-            uVar13 = (pCVar12->m_XbmContext).CaptureFileOffset;
+            uVar11 = (param_1->m_XbmContext).CaptureFileOffset;
           }
-          SetFilePointer(ppvVar18[1],uVar13,(long *)(auStack_8c0 + 1),0);
-          ppvVar18 = ppvVar18 + 1;
-          SetEndOfFile(*ppvVar18);
-          uVar17 = uVar17 + 1;
-        } while (uVar17 < (pCVar12->m_XbmContext).CaptureFileCount);
+          SetFilePointer(ppvVar17[1],uVar11,(long *)(auStack_8c0 + 1),0);
+          ppvVar17 = ppvVar17 + 1;
+          SetEndOfFile(*ppvVar17);
+          uVar15 = uVar15 + 1;
+        } while (uVar15 < (param_1->m_XbmContext).CaptureFileCount);
       }
       VdGetCurrentDisplayInformation(auStack_8b0);
-      iVar16 = *(int *)&(pCVar12->m_XbmContext).field_0x25c >> 0x1d;
-      if (iVar16 == 0) {
+      iVar14 = *(int *)&(param_1->m_XbmContext).field_0x25c >> 0x1d;
+      if (iVar14 == 0) {
         local_850 = 0x53a722b4;
       }
-      else if (iVar16 == 1) {
+      else if (iVar14 == 1) {
         local_850 = 0x53a722b5;
       }
-      else if (iVar16 == 2) {
+      else if (iVar14 == 2) {
         local_850 = 0x53a722b6;
       }
       local_84c = 0x10001;
-      if ((iVar16 == 0) || (iVar16 == 1)) {
-        local_840 = (uint)(pCVar12->m_XbmContext).FrontBufferWidth;
-        local_83c = (uint)(pCVar12->m_XbmContext).FrontBufferHeight;
+      if ((iVar14 == 0) || (iVar14 == 1)) {
+        local_840 = (uint)(param_1->m_XbmContext).FrontBufferWidth;
+        local_83c = (uint)(param_1->m_XbmContext).FrontBufferHeight;
         local_838 = (uint)local_868;
         local_834 = (uint)local_866;
       }
-      else if (iVar16 == 2) {
+      else if (iVar14 == 2) {
         local_840 = 400;
         local_83c = 0xe0;
         local_838 = 400;
         local_834 = 0xe0;
       }
       local_830 = KeQueryPerformanceFrequency();
-      bVar10 = ((pCVar12->m_XbmContext).FrameFlagsCumulative & 1) != 0;
-      local_82c = (uint)bVar10;
-      if (((pCVar12->m_XbmContext).FrameFlagsCumulative & 2) != 0) {
-        local_82c = bVar10 | 2;
+      bVar9 = ((param_1->m_XbmContext).FrameFlagsCumulative & 1) != 0;
+      local_82c = (uint)bVar9;
+      if (((param_1->m_XbmContext).FrameFlagsCumulative & 2) != 0) {
+        local_82c = bVar9 | 2;
       }
-      if (((pCVar12->m_XbmContext).FrameFlags & 2) == 0) {
-        p_Var14 = (_D3DPWLGAMMA *)&pCVar12->m_GammaRamp;
+      if (((param_1->m_XbmContext).FrameFlags & 2) == 0) {
+        p_Var12 = (_D3DPWLGAMMA *)&param_1->m_GammaRamp;
       }
       else {
-        p_Var14 = (_D3DPWLGAMMA *)(pCVar12->m_XbmContext).pGammaRamp;
+        p_Var12 = (_D3DPWLGAMMA *)(param_1->m_XbmContext).pGammaRamp;
       }
       if (local_8ab == '\x01') {
         local_82c = local_82c | 4;
-        GammaPWLCorrected(&_Stack_7f0,p_Var14,1);
+        GammaPWLCorrected(&_Stack_7f0,p_Var12,1);
       }
       else {
-        GammaRampCorrected((_D3DGAMMARAMP *)&_Stack_7f0,(_D3DGAMMARAMP *)p_Var14,1);
+        GammaRampCorrected((_D3DGAMMARAMP *)&_Stack_7f0,(_D3DGAMMARAMP *)p_Var12,1);
       }
       memcpy();
-      if ((pCVar12->m_XbmContext).Looped) {
-        local_844 = (pCVar12->m_XbmContext).CaptureFileIndex;
-        local_848 = (pCVar12->m_XbmContext).CaptureFileOffset;
+      if ((param_1->m_XbmContext).Looped) {
+        local_844 = (param_1->m_XbmContext).CaptureFileIndex;
+        local_848 = (param_1->m_XbmContext).CaptureFileOffset;
       }
       else {
         local_848 = 0x800;
         local_844 = 0;
       }
-      (pCVar12->m_XbmContext).Overlapped.Offset = 0;
-      (pCVar12->m_XbmContext).Overlapped.OffsetHigh = 0;
-      WriteFile((pCVar12->m_XbmContext).CaptureFile[0],&local_850,0x800,auStack_8c0,
-                &(pCVar12->m_XbmContext).Overlapped);
-      WaitForSingleObject((pCVar12->m_XbmContext).Overlapped.hEvent,0xffffffff);
-      CloseHandle((pCVar12->m_XbmContext).Overlapped.hEvent);
+      (param_1->m_XbmContext).Overlapped.Offset = 0;
+      (param_1->m_XbmContext).Overlapped.OffsetHigh = 0;
+      WriteFile((param_1->m_XbmContext).CaptureFile[0],&local_850,0x800,auStack_8c0,
+                &(param_1->m_XbmContext).Overlapped);
+      WaitForSingleObject((param_1->m_XbmContext).Overlapped.hEvent,0xffffffff);
+      CloseHandle((param_1->m_XbmContext).Overlapped.hEvent);
     }
-    uVar17 = 0;
-    ppvVar18 = (pCVar12->m_XbmContext).CaptureFile;
+    uVar15 = 0;
+    ppvVar17 = (param_1->m_XbmContext).CaptureFile;
     do {
-      if (*ppvVar18 == (void *)0xffffffff) break;
-      CloseHandle(*ppvVar18);
-      uVar17 = uVar17 + 1;
-      ppvVar18 = ppvVar18 + 1;
-    } while (uVar17 < 0x29);
+      if (*ppvVar17 == (void *)0xffffffff) break;
+      CloseHandle(*ppvVar17);
+      uVar15 = uVar15 + 1;
+      ppvVar17 = ppvVar17 + 1;
+    } while (uVar15 < 0x29);
   }
   if (_DAT_00000266 == (int *)0x0) {
     if (_DAT_00000059 == 0) goto LAB_82890de0;
@@ -938,18 +943,19 @@ void D3D::XBMEndCapture(CDevice *param_1)
           ) goto LAB_82890de0;
   (*pcVar5)(0x1b,0xffffffff821fa210);
 LAB_82890de0:
-  XBMDestroyContext(pCVar12);
+  XBMDestroyContext(param_1);
   ObDeleteSymbolicLink(0xffffffff829a8270);
   g_XbmContextActive = false;
   g_XbmEndCapture = false;
   g_XbmCaptureActive = false;
-  __restgprlr_23();
   return;
 }
 
 
 // 828911E0  XBMCaptureFrame  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/movie.cpp:975)
 
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 
 void D3D::XBMCaptureFrame(CDevice *param_1,D3DBaseTexture *param_2)
@@ -962,291 +968,289 @@ void D3D::XBMCaptureFrame(CDevice *param_1,D3DBaseTexture *param_2)
   _D3DPWLGAMMA *p_Var4;
   undefined4 *puVar6;
   void *pvVar7;
-  XBMContext *pXVar8;
-  bool bVar9;
-  CDevice *this;
-  ulong64 uVar10;
-  ulong *puVar11;
-  uint *puVar12;
-  ulong uVar13;
+  bool bVar8;
+  ulong64 uVar9;
+  ulong *puVar10;
+  uint *puVar11;
+  ulong uVar12;
+  ulonglong uVar13;
+  float fVar15;
   ulonglong uVar14;
-  float fVar16;
-  ulonglong uVar15;
-  longlong lVar17;
-  int iVar18;
-  uint uVar19;
-  ulonglong uVar20;
-  uint uVar21;
+  longlong lVar16;
+  int iVar17;
+  uint uVar18;
+  ulonglong uVar19;
+  uint uVar20;
+  XBMContext *pXVar21;
   char in_RESERVE;
   byte bVar22;
   uint local_60 [24];
   
-  this = (CDevice *)__savegprlr_22(param_1);
-  pXVar8 = &this->m_XbmContext;
-  D3DDevice_SetShaderGPRAllocation((D3DDevice *)this,0,0x70,0x10);
-  uVar5 = (this->m_CpuDrPix).DrawApiCalls;
-  uVar14 = *(ulonglong *)&this->field_0x10;
-  (this->m_CpuDrPix).DrawApiCalls = uVar5 + 1;
-  if (uVar14 != 0) {
-    if ((*(ulonglong *)&this->field_0x28 & uVar14) != 0) {
-      uVar10 = SetPending_Predicated(this,uVar14,*(ulong *)&this->field_0x2940);
-      *(ulong64 *)&this->field_0x10 = uVar10;
+  pXVar21 = &param_1->m_XbmContext;
+  D3DDevice_SetShaderGPRAllocation((D3DDevice *)param_1,0,0x70,0x10);
+  uVar5 = (param_1->m_CpuDrPix).DrawApiCalls;
+  uVar13 = *(ulonglong *)&param_1->field_0x10;
+  (param_1->m_CpuDrPix).DrawApiCalls = uVar5 + 1;
+  if (uVar13 != 0) {
+    if ((*(ulonglong *)&param_1->field_0x28 & uVar13) != 0) {
+      uVar9 = SetPending_Predicated(param_1,uVar13,*(ulong *)&param_1->field_0x2940);
+      *(ulong64 *)&param_1->field_0x10 = uVar9;
     }
-    if ((*(ulonglong *)&this->field_0x10 & 0xfff) != 0) {
+    if ((*(ulonglong *)&param_1->field_0x10 & 0xfff) != 0) {
       SetPending_RenderStates
-                (this,*(ulonglong *)&this->field_0x10 << 0x34,0x2200,&this->field_0x2934);
-      *(ulonglong *)&this->field_0x10 = *(ulonglong *)&this->field_0x10 & 0xfffffffffffff000;
+                (param_1,*(ulonglong *)&param_1->field_0x10 << 0x34,0x2200,&param_1->field_0x2934);
+      *(ulonglong *)&param_1->field_0x10 = *(ulonglong *)&param_1->field_0x10 & 0xfffffffffffff000;
     }
-    if ((*(ulonglong *)&this->field_0x10 & 0x1f000) != 0) {
+    if ((*(ulonglong *)&param_1->field_0x10 & 0x1f000) != 0) {
       SetPending_RenderStates
-                (this,(*(ulonglong *)&this->field_0x10 & 0x1f000) << 0x2f,0x2180,&this->field_0x2920
-                );
-      *(ulonglong *)&this->field_0x10 = *(ulonglong *)&this->field_0x10 & 0xfffffffffffe0fff;
+                (param_1,(*(ulonglong *)&param_1->field_0x10 & 0x1f000) << 0x2f,0x2180,
+                 &param_1->field_0x2920);
+      *(ulonglong *)&param_1->field_0x10 = *(ulonglong *)&param_1->field_0x10 & 0xfffffffffffe0fff;
     }
-    if ((*(ulonglong *)&this->field_0x10 & 0x3fffc0000000000) != 0) {
+    if ((*(ulonglong *)&param_1->field_0x10 & 0x3fffc0000000000) != 0) {
       SetPending_RenderStates
-                (this,(*(ulonglong *)&this->field_0x10 & 0x3fffc0000000000) << 6,0x2000,
-                 &this->field_0x2880);
-      *(ulonglong *)&this->field_0x10 = *(ulonglong *)&this->field_0x10 & 0xfc0003ffffffffff;
+                (param_1,(*(ulonglong *)&param_1->field_0x10 & 0x3fffc0000000000) << 6,0x2000,
+                 &param_1->field_0x2880);
+      *(ulonglong *)&param_1->field_0x10 = *(ulonglong *)&param_1->field_0x10 & 0xfc0003ffffffffff;
     }
-    if ((*(ulonglong *)&this->field_0x10 & 0x3ffffe00000) != 0) {
+    if ((*(ulonglong *)&param_1->field_0x10 & 0x3ffffe00000) != 0) {
       SetPending_RenderStates
-                (this,(*(ulonglong *)&this->field_0x10 & 0x3ffffe00000) << 0x16,0x2100,
-                 &this->field_0x28cc);
-      *(ulonglong *)&this->field_0x10 = *(ulonglong *)&this->field_0x10 & 0xfffffc00001fffff;
+                (param_1,(*(ulonglong *)&param_1->field_0x10 & 0x3ffffe00000) << 0x16,0x2100,
+                 &param_1->field_0x28cc);
+      *(ulonglong *)&param_1->field_0x10 = *(ulonglong *)&param_1->field_0x10 & 0xfffffc00001fffff;
     }
   }
-  uVar14 = *(ulonglong *)&this->field_0x18;
-  if ((uVar14 != 0) && ((uVar14 & 0x7ffffc00000000) != 0)) {
-    SetPending_RenderStates(this,(uVar14 & 0x7ffffc00000000) << 9,0x2280,&this->field_0x2964);
-    *(ulonglong *)&this->field_0x18 = *(ulonglong *)&this->field_0x18 & 0xff800003ffffffff;
+  uVar13 = *(ulonglong *)&param_1->field_0x18;
+  if ((uVar13 != 0) && ((uVar13 & 0x7ffffc00000000) != 0)) {
+    SetPending_RenderStates(param_1,(uVar13 & 0x7ffffc00000000) << 9,0x2280,&param_1->field_0x2964);
+    *(ulonglong *)&param_1->field_0x18 = *(ulonglong *)&param_1->field_0x18 & 0xff800003ffffffff;
   }
-  uVar14 = *(ulonglong *)&this->field_0x20;
-  if ((uVar14 != 0) && ((uVar14 & 0x3fffffffff) != 0)) {
-    SetPending_RenderStates(this,uVar14 << 0x1a,0x2300,&this->field_0x29b8);
-    *(ulonglong *)&this->field_0x20 = *(ulonglong *)&this->field_0x20 & 0xffffffc000000000;
+  uVar13 = *(ulonglong *)&param_1->field_0x20;
+  if ((uVar13 != 0) && ((uVar13 & 0x3fffffffff) != 0)) {
+    SetPending_RenderStates(param_1,uVar13 << 0x1a,0x2300,&param_1->field_0x29b8);
+    *(ulonglong *)&param_1->field_0x20 = *(ulonglong *)&param_1->field_0x20 & 0xffffffc000000000;
   }
-  iVar18 = *(int *)&(this->m_XbmContext).field_0x25c >> 0x1d;
-  if (iVar18 == 0) {
-    uVar21 = 0x20d;
-    uVar19 = 0x7000015;
+  iVar17 = *(int *)&(param_1->m_XbmContext).field_0x25c >> 0x1d;
+  if (iVar17 == 0) {
+    uVar20 = 0x20d;
+    uVar18 = 0x7000015;
   }
-  else if (iVar18 == 1) {
-    uVar21 = 0x3a5;
-    uVar19 = 0x7000013;
+  else if (iVar17 == 1) {
+    uVar20 = 0x3a5;
+    uVar18 = 0x7000013;
   }
   else {
-    uVar21 = local_60[0];
-    uVar19 = local_60[0];
-    if (iVar18 == 2) {
-      uVar21 = 0xd2;
-      uVar19 = 0x700000f;
+    uVar20 = local_60[0];
+    uVar18 = local_60[0];
+    if (iVar17 == 2) {
+      uVar20 = 0xd2;
+      uVar18 = 0x700000f;
     }
   }
-  puVar11 = CDevice::BeginRingBig(this,uVar21 + 5);
-  puVar11[1] = 0xc0003b00;
-  puVar11[2] = 0x300;
-  puVar11[3] = (uVar21 + 1) * 0x10000 & 0x3fff0000 | 0xc0002b00;
+  puVar10 = CDevice::BeginRingBig(param_1,uVar20 + 5);
+  puVar10[1] = 0xc0003b00;
+  puVar10[2] = 0x300;
+  puVar10[3] = (uVar20 + 1) * 0x10000 & 0x3fff0000 | 0xc0002b00;
+  puVar10[4] = 0;
+  puVar10[5] = uVar20 & 0x3fff;
+  memcpy();
+  puVar11 = puVar10 + 5 + uVar20;
+  *(uint **)&param_1->field_0x30 = puVar11;
+  if (*(uint **)&param_1->field_0x38 < puVar11) {
+    puVar11 = CDevice::KickOff(param_1);
+  }
+  puVar11[1] = 0xc0102b00;
+  puVar11[2] = 1;
+  puVar11[3] = 0xf;
+  memcpy();
+  puVar11[0x13] = 0x12180;
+  puVar11[0x14] = uVar18 | 0x10000000;
+  puVar11 = puVar11 + 0x15;
+  *puVar11 = 0;
+  *(uint **)&param_1->field_0x30 = puVar11;
+  if (*(uint **)&param_1->field_0x38 < puVar11) {
+    puVar11 = CDevice::KickOff(param_1);
+  }
+  puVar11[1] = 0x22100;
+  puVar11[2] = 0xffff;
+  puVar11[3] = 0;
   puVar11[4] = 0;
-  puVar11[5] = uVar21 & 0x3fff;
-  memcpy();
-  puVar12 = puVar11 + 5 + uVar21;
-  *(uint **)&this->field_0x30 = puVar12;
-  if (*(uint **)&this->field_0x38 < puVar12) {
-    puVar12 = CDevice::KickOff(this);
+  puVar11[5] = 0x2293;
+  puVar11[6] = 0;
+  puVar11[7] = 0x22204;
+  puVar11[8] = 0x10000;
+  puVar11[9] = 0x10000;
+  puVar11[10] = 0x300;
+  puVar11[0xb] = 0x2312;
+  puVar11[0xc] = 0xffff;
+  puVar11[0xd] = 0x200d;
+  puVar11[0xe] = 0;
+  puVar11[0xf] = 0x2200;
+  puVar11 = puVar11 + 0x10;
+  *puVar11 = 0;
+  *(uint **)&param_1->field_0x30 = puVar11;
+  if (*(uint **)&param_1->field_0x38 < puVar11) {
+    puVar11 = CDevice::KickOff(param_1);
   }
-  puVar12[1] = 0xc0102b00;
-  puVar12[2] = 1;
-  puVar12[3] = 0xf;
-  memcpy();
-  puVar12[0x13] = 0x12180;
-  puVar12[0x14] = uVar19 | 0x10000000;
-  puVar12 = puVar12 + 0x15;
-  *puVar12 = 0;
-  *(uint **)&this->field_0x30 = puVar12;
-  if (*(uint **)&this->field_0x38 < puVar12) {
-    puVar12 = CDevice::KickOff(this);
-  }
-  puVar12[1] = 0x22100;
-  puVar12[2] = 0xffff;
-  puVar12[3] = 0;
-  puVar12[4] = 0;
-  puVar12[5] = 0x2293;
-  puVar12[6] = 0;
-  puVar12[7] = 0x22204;
-  puVar12[8] = 0x10000;
-  puVar12[9] = 0x10000;
-  puVar12[10] = 0x300;
-  puVar12[0xb] = 0x2312;
-  puVar12[0xc] = 0xffff;
-  puVar12[0xd] = 0x200d;
-  puVar12[0xe] = 0;
-  puVar12[0xf] = 0x2200;
-  puVar12 = puVar12 + 0x10;
-  *puVar12 = 0;
-  *(uint **)&this->field_0x30 = puVar12;
-  if (*(uint **)&this->field_0x38 < puVar12) {
-    puVar12 = CDevice::KickOff(this);
-  }
-  puVar12[1] = 0x54800;
-  puVar12[2] = ((this->m_XbmContext).FrontBufferWidthTA & 0x7fe0) << 0x11 |
+  puVar11[1] = 0x54800;
+  puVar11[2] = ((param_1->m_XbmContext).FrontBufferWidthTA & 0x7fe0) << 0x11 |
                (param_2->Format).dword[0] & 0x3fc | 0x80004802;
-  puVar12[3] = (((param_2->Format).dword[1] >> 0x14) + 0x200 & 0x1000) +
+  puVar11[3] = (((param_2->Format).dword[1] >> 0x14) + 0x200 & 0x1000) +
                ((param_2->Format).dword[1] & 0x1fffffff);
-  *(<unnamed_type_Size> *)(puVar12 + 4) = (param_2->Format)._s_0.Size;
-  puVar12[5] = (param_2->Format).dword[3] & 0x8007ffff | 0x1000000;
-  puVar12[6] = (param_2->Format).dword[4];
-  puVar12[7] = (param_2->Format).dword[5];
-  *(uint **)&this->field_0x30 = puVar12 + 7;
-  uVar1 = *(undefined4 *)&(this->m_XbmContext).field_0x254;
-  uVar21 = ZPULL(uVar1,0x1e,2);
-  uVar14 = ZEXT48(pXVar8->pFrameData[(this->m_XbmContext).CaptureFrame & 1]);
-  iVar18 = *(int *)&(this->m_XbmContext).field_0x25c >> 0x1d;
-  uVar20 = (ulonglong)((uint)uVar1 >> 0x1f) * 0x600 +
-           (((ulonglong)uVar21 & 1) * 0x38 + 0x20f & 0xfffffe00) + uVar14;
-  if ((iVar18 == 0) || (iVar18 == 1)) {
-    fVar16 = (float)((uint)(this->m_XbmContext).ShaderConstant[0].z & 0xc0f8 | 0x4b000600);
+  *(<unnamed_type_Size> *)(puVar11 + 4) = (param_2->Format)._s_0.Size;
+  puVar11[5] = (param_2->Format).dword[3] & 0x8007ffff | 0x1000000;
+  puVar11[6] = (param_2->Format).dword[4];
+  puVar11[7] = (param_2->Format).dword[5];
+  *(uint **)&param_1->field_0x30 = puVar11 + 7;
+  uVar1 = *(undefined4 *)&(param_1->m_XbmContext).field_0x254;
+  uVar20 = ZPULL(uVar1,0x1e,2);
+  uVar13 = ZEXT48(pXVar21->pFrameData[(param_1->m_XbmContext).CaptureFrame & 1]);
+  iVar17 = *(int *)&(param_1->m_XbmContext).field_0x25c >> 0x1d;
+  uVar19 = (ulonglong)((uint)uVar1 >> 0x1f) * 0x600 +
+           (((ulonglong)uVar20 & 1) * 0x38 + 0x20f & 0xfffffe00) + uVar13;
+  if ((iVar17 == 0) || (iVar17 == 1)) {
+    fVar15 = (float)((uint)(param_1->m_XbmContext).ShaderConstant[0].z & 0xc0f8 | 0x4b000600);
   }
   else {
-    if (iVar18 != 2) goto LAB_828916e8;
-    fVar16 = (float)((uint)(this->m_XbmContext).ShaderConstant[0].z & 0xc0f8 | 0x4b000a00);
+    if (iVar17 != 2) goto LAB_828916e8;
+    fVar15 = (float)((uint)(param_1->m_XbmContext).ShaderConstant[0].z & 0xc0f8 | 0x4b000a00);
   }
-  uVar19 = (this->m_XbmContext).MaxExportIndex;
-  (this->m_XbmContext).ShaderConstant[0].z = fVar16;
-  (this->m_XbmContext).ShaderConstant[0].x = 2.0;
-  (this->m_XbmContext).ShaderConstant[0].y = 8388608.0;
-  (this->m_XbmContext).ShaderConstant[0].w = (float)(uVar19 & 0x7fffff | 0x4b000000);
+  uVar18 = (param_1->m_XbmContext).MaxExportIndex;
+  (param_1->m_XbmContext).ShaderConstant[0].z = fVar15;
+  (param_1->m_XbmContext).ShaderConstant[0].x = 2.0;
+  (param_1->m_XbmContext).ShaderConstant[0].y = 8388608.0;
+  (param_1->m_XbmContext).ShaderConstant[0].w = (float)(uVar18 & 0x7fffff | 0x4b000000);
 LAB_828916e8:
-  puVar11 = CDevice::BeginRingBig(this,0x31);
-  puVar11[1] = 0x2f4000;
+  puVar10 = CDevice::BeginRingBig(param_1,0x31);
+  puVar10[1] = 0x2f4000;
   memcpy();
-  *(ulong **)&this->field_0x30 = puVar11 + 0x31;
-  bVar9 = !(this->m_XbmContext).FrameWritten;
-  bVar22 = bVar9 << 1;
-  if (!bVar9) {
-    WaitForSingleObject((this->m_XbmContext).Overlapped.hEvent,0xffffffff);
+  *(ulong **)&param_1->field_0x30 = puVar10 + 0x31;
+  bVar8 = !(param_1->m_XbmContext).FrameWritten;
+  bVar22 = bVar8 << 1;
+  if (!bVar8) {
+    WaitForSingleObject((param_1->m_XbmContext).Overlapped.hEvent,0xffffffff);
   }
-  lVar17 = (ulonglong)(this->m_XbmContext).FrameVideoSizeInSectors * 0x200 + uVar20;
+  lVar16 = (ulonglong)(param_1->m_XbmContext).FrameVideoSizeInSectors * 0x200 + uVar19;
   do {
-    uVar15 = (ulonglong)(uint)XBM__AudioSampleBuffer;
+    uVar14 = (ulonglong)(uint)XBM__AudioSampleBuffer;
     if (in_RESERVE != '\0') {
-      XBM__AudioSampleBuffer = storeWordConditionalIndexed(lVar17,0,0xffffffff829a8258);
+      XBM__AudioSampleBuffer = storeWordConditionalIndexed(lVar16,0,0xffffffff829a8258);
       bVar22 = 2;
     }
   } while (!(bool)(bVar22 >> 1 & 1));
-  uVar15 = (uVar15 - ZEXT48((this->m_XbmContext).pFrameAudioData) & 0xffffffff) / 0x1800;
-  iVar18 = (int)uVar15;
-  if (0xd < uVar15) {
-    iVar18 = 0xe;
+  uVar14 = (uVar14 - ZEXT48((param_1->m_XbmContext).pFrameAudioData) & 0xffffffff) / 0x1800;
+  iVar17 = (int)uVar14;
+  if (0xd < uVar14) {
+    iVar17 = 0xe;
   }
-  (this->m_XbmContext).pFrameAudioData = (uchar *)lVar17;
-  uVar2 = (this->m_XbmContext).SwapTimeStamp;
-  puVar11 = *(ulong **)&this->field_0x30;
-  puVar3 = *(ulong **)&this->field_0x38;
+  (param_1->m_XbmContext).pFrameAudioData = (uchar *)lVar16;
+  uVar2 = (param_1->m_XbmContext).SwapTimeStamp;
+  puVar10 = *(ulong **)&param_1->field_0x30;
+  puVar3 = *(ulong **)&param_1->field_0x38;
   puVar6 = *(undefined4 **)
-            ((int)pXVar8->pFrameData + (((this->m_XbmContext).CaptureFrame - 1) * 4 & 4));
-  *(uint *)&this->field_0x2898 =
-       ((int)((uVar20 & 0xffffffff) >> 0x14) + 0x200U & 0x1000) + ((uint)uVar20 & 0x1fffffff);
+            ((int)pXVar21->pFrameData + (((param_1->m_XbmContext).CaptureFrame - 1) * 4 & 4));
+  *(uint *)&param_1->field_0x2898 =
+       ((int)((uVar19 & 0xffffffff) >> 0x14) + 0x200U & 0x1000) + ((uint)uVar19 & 0x1fffffff);
   *puVar6 = 0x9b58e71a;
-  puVar6[1] = (this->m_XbmContext).FrameFlagsPrev;
+  puVar6[1] = (param_1->m_XbmContext).FrameFlagsPrev;
   puVar6[2] = uVar2;
-  puVar6[3] = iVar18;
-  if (puVar3 < puVar11) {
-    puVar11 = CDevice::KickOff(this);
+  puVar6[3] = iVar17;
+  if (puVar3 < puVar10) {
+    puVar10 = CDevice::KickOff(param_1);
   }
-  puVar11[1] = 0x2006;
-  lVar17 = 0;
-  puVar11[2] = 0;
-  *(ulong **)&this->field_0x30 = puVar11 + 2;
-  this->m_ActiveExports = this->m_ActiveExports + 1;
-  uVar20 = (ulonglong)(this->m_XbmContext).VertexCount;
+  puVar10[1] = 0x2006;
+  lVar16 = 0;
+  puVar10[2] = 0;
+  *(ulong **)&param_1->field_0x30 = puVar10 + 2;
+  param_1->m_ActiveExports = param_1->m_ActiveExports + 1;
+  uVar19 = (ulonglong)(param_1->m_XbmContext).VertexCount;
   while( true ) {
-    puVar11 = *(ulong **)&this->field_0x30;
-    if (*(ulong **)&this->field_0x38 < puVar11) {
-      puVar11 = CDevice::KickOff(this);
+    puVar10 = *(ulong **)&param_1->field_0x30;
+    if (*(ulong **)&param_1->field_0x38 < puVar10) {
+      puVar10 = CDevice::KickOff(param_1);
     }
-    puVar11[1] = 0x2102;
-    puVar11[2] = (ulong)lVar17;
-    uVar15 = uVar20;
-    if (0xffff < (uVar20 & 0xffffffff)) {
-      uVar15 = 0xfffe;
+    puVar10[1] = 0x2102;
+    puVar10[2] = (ulong)lVar16;
+    uVar14 = uVar19;
+    if (0xffff < (uVar19 & 0xffffffff)) {
+      uVar14 = 0xfffe;
     }
-    puVar11[3] = 0xc0003601;
-    uVar20 = uVar20 - uVar15;
-    puVar11 = puVar11 + 4;
-    *puVar11 = (uint)((uVar15 & 0xffffffff) << 0x10) | 0x81;
-    *(ulong **)&this->field_0x30 = puVar11;
-    if (uVar20 == 0) break;
-    lVar17 = uVar15 + lVar17;
+    puVar10[3] = 0xc0003601;
+    uVar19 = uVar19 - uVar14;
+    puVar10 = puVar10 + 4;
+    *puVar10 = (uint)((uVar14 & 0xffffffff) << 0x10) | 0x81;
+    *(ulong **)&param_1->field_0x30 = puVar10;
+    if (uVar19 == 0) break;
+    lVar16 = uVar14 + lVar16;
   }
-  *(undefined4 *)&this->field_0x2898 = 0;
-  if (*(ulong **)&this->field_0x38 < puVar11) {
-    puVar11 = CDevice::KickOff(this);
+  *(undefined4 *)&param_1->field_0x2898 = 0;
+  if (*(ulong **)&param_1->field_0x38 < puVar10) {
+    puVar10 = CDevice::KickOff(param_1);
   }
-  puVar11[1] = 0x2006;
-  puVar11 = puVar11 + 2;
-  *puVar11 = 0;
-  *(ulong **)&this->field_0x30 = puVar11;
-  this->m_ActiveExports = this->m_ActiveExports - 1;
-  if (*(ulong **)&this->field_0x38 < puVar11) {
-    puVar11 = CDevice::KickOff(this);
+  puVar10[1] = 0x2006;
+  puVar10 = puVar10 + 2;
+  *puVar10 = 0;
+  *(ulong **)&param_1->field_0x30 = puVar10;
+  param_1->m_ActiveExports = param_1->m_ActiveExports - 1;
+  if (*(ulong **)&param_1->field_0x38 < puVar10) {
+    puVar10 = CDevice::KickOff(param_1);
   }
-  puVar11[1] = 0xc0004600;
-  puVar11[2] = 6;
-  *(ulong **)&this->field_0x30 = puVar11 + 2;
-  uVar20 = *(ulonglong *)&this->field_0x10;
-  *(ulonglong *)&this->field_0x10 = uVar20 | 8;
-  *(ulonglong *)&this->field_0x10 = uVar20 | 0x80008;
-  *(ulonglong *)&this->field_0x10 = uVar20 | 0x180008;
-  *(ulonglong *)&this->field_0x18 = *(ulonglong *)&this->field_0x18 | 0xfe000000;
-  uVar20 = *(ulonglong *)&this->field_0x10;
-  *(ulonglong *)&this->field_0x10 = uVar20 | 0x800;
-  *(ulonglong *)&this->field_0x10 = uVar20 | 0x900;
-  uVar2 = (this->m_XbmContext).CaptureFence;
-  uVar13 = D3DDevice_InsertFence((D3DDevice *)this);
-  (this->m_XbmContext).CaptureFence = uVar13;
-  D3DDevice_SetShaderGPRAllocation((D3DDevice *)this,0,0,0);
-  D3DDevice_SetShaderGPRAllocation((D3DDevice *)this,0,0,0);
-  lVar17 = uVar14 + 0x10;
-  *(uint *)&(this->m_XbmContext).field_0x254 =
-       uVar21 << 0x1c | *(uint *)&(this->m_XbmContext).field_0x254 & 0xcfffffff;
-  if ((uVar21 & 1) != 0) {
+  puVar10[1] = 0xc0004600;
+  puVar10[2] = 6;
+  *(ulong **)&param_1->field_0x30 = puVar10 + 2;
+  uVar19 = *(ulonglong *)&param_1->field_0x10;
+  *(ulonglong *)&param_1->field_0x10 = uVar19 | 8;
+  *(ulonglong *)&param_1->field_0x10 = uVar19 | 0x80008;
+  *(ulonglong *)&param_1->field_0x10 = uVar19 | 0x180008;
+  *(ulonglong *)&param_1->field_0x18 = *(ulonglong *)&param_1->field_0x18 | 0xfe000000;
+  uVar19 = *(ulonglong *)&param_1->field_0x10;
+  *(ulonglong *)&param_1->field_0x10 = uVar19 | 0x800;
+  *(ulonglong *)&param_1->field_0x10 = uVar19 | 0x900;
+  uVar2 = (param_1->m_XbmContext).CaptureFence;
+  uVar12 = D3DDevice_InsertFence((D3DDevice *)param_1);
+  (param_1->m_XbmContext).CaptureFence = uVar12;
+  D3DDevice_SetShaderGPRAllocation((D3DDevice *)param_1,0,0,0);
+  D3DDevice_SetShaderGPRAllocation((D3DDevice *)param_1,0,0,0);
+  lVar16 = uVar13 + 0x10;
+  *(uint *)&(param_1->m_XbmContext).field_0x254 =
+       uVar20 << 0x1c | *(uint *)&(param_1->m_XbmContext).field_0x254 & 0xcfffffff;
+  if ((uVar20 & 1) != 0) {
     memcpy();
-    lVar17 = uVar14 + 0x48;
+    lVar16 = uVar13 + 0x48;
   }
-  lVar17 = ((lVar17 - uVar14) + 0x1ff & 0xfffffe00) + uVar14;
-  if ((uVar21 & 2) != 0) {
-    p_Var4 = (_D3DPWLGAMMA *)(this->m_XbmContext).pGammaRamp;
-    if ((this->m_XbmContext).UsePWLGamma) {
+  lVar16 = ((lVar16 - uVar13) + 0x1ff & 0xfffffe00) + uVar13;
+  if ((uVar20 & 2) != 0) {
+    p_Var4 = (_D3DPWLGAMMA *)(param_1->m_XbmContext).pGammaRamp;
+    if ((param_1->m_XbmContext).UsePWLGamma) {
       GammaPWLCorrected(p_Var4,p_Var4,1);
     }
     else {
       GammaRampCorrected((_D3DGAMMARAMP *)p_Var4,(_D3DGAMMARAMP *)p_Var4,1);
     }
     memcpy();
-    lVar17 = lVar17 + 0x600;
+    lVar16 = lVar16 + 0x600;
   }
-  uVar13 = (iVar18 * 0xc + (uint)(this->m_XbmContext).FrameSizeInSectors) * 0x200;
-  pvVar7 = pXVar8->pFrameData[(this->m_XbmContext).CaptureFrame & 1];
-  *(uint *)&(this->m_XbmContext).field_0x254 =
-       uVar21 << 0x1a | *(uint *)&(this->m_XbmContext).field_0x254 & 0x3fffffff;
-  (this->m_XbmContext).FrameSizeInSectors =
-       (short)((lVar17 - ZEXT48(pvVar7) & 0xffffffff) >> 9) +
-       (this->m_XbmContext).FrameVideoSizeInSectors;
-  if ((this->m_XbmContext).FrameExported) {
-    uVar21 = (this->m_XbmContext).CaptureFileOffset;
-    (this->m_XbmContext).Overlapped.OffsetHigh = 0;
-    (this->m_XbmContext).Overlapped.Offset = uVar21;
+  uVar12 = (iVar17 * 0xc + (uint)(param_1->m_XbmContext).FrameSizeInSectors) * 0x200;
+  pvVar7 = pXVar21->pFrameData[(param_1->m_XbmContext).CaptureFrame & 1];
+  *(uint *)&(param_1->m_XbmContext).field_0x254 =
+       uVar20 << 0x1a | *(uint *)&(param_1->m_XbmContext).field_0x254 & 0x3fffffff;
+  (param_1->m_XbmContext).FrameSizeInSectors =
+       (short)((lVar16 - ZEXT48(pvVar7) & 0xffffffff) >> 9) +
+       (param_1->m_XbmContext).FrameVideoSizeInSectors;
+  if ((param_1->m_XbmContext).FrameExported) {
+    uVar20 = (param_1->m_XbmContext).CaptureFileOffset;
+    (param_1->m_XbmContext).Overlapped.OffsetHigh = 0;
+    (param_1->m_XbmContext).Overlapped.Offset = uVar20;
     D3DDevice_BlockOnFence(uVar2);
-    WriteFile(pXVar8->CaptureFile[(this->m_XbmContext).CaptureFileIndex],
-              *(void **)((int)pXVar8->pFrameData + (((this->m_XbmContext).CaptureFrame - 1) * 4 & 4)
-                        ),uVar13,local_60,&(this->m_XbmContext).Overlapped);
-    (this->m_XbmContext).FrameWritten = true;
-    XBMAdvanceCaptureFile(pXVar8,uVar13);
+    WriteFile(pXVar21->CaptureFile[(param_1->m_XbmContext).CaptureFileIndex],
+              *(void **)((int)pXVar21->pFrameData +
+                        (((param_1->m_XbmContext).CaptureFrame - 1) * 4 & 4)),uVar12,local_60,
+              &(param_1->m_XbmContext).Overlapped);
+    (param_1->m_XbmContext).FrameWritten = true;
+    XBMAdvanceCaptureFile(pXVar21,uVar12);
   }
-  (this->m_XbmContext).FrameExported = true;
-  (this->m_XbmContext).CaptureFrame = (this->m_XbmContext).CaptureFrame + 1;
-  __restgprlr_22();
+  (param_1->m_XbmContext).FrameExported = true;
+  (param_1->m_XbmContext).CaptureFrame = (param_1->m_XbmContext).CaptureFrame + 1;
   return;
 }
 

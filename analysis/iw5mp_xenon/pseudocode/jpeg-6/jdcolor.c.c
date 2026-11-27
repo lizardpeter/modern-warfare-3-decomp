@@ -2,56 +2,61 @@
 
 // 827BD510  build_ycc_rgb_table  (jpeg-6/jdcolor.c:71)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void build_ycc_rgb_table(jpeg_decompress_struct *param_1)
 
 {
-  int iVar1;
+  jpeg_color_deconverter *pjVar1;
   int iVar2;
   int iVar3;
-  int iVar4;
-  undefined4 uVar5;
+  _func___cdecl_void_jpeg_decompress_struct_ptr *p_Var4;
+  _func___cdecl_void_jpeg_decompress_struct_ptr_uchar_ptr_ptr_ptr_uint_uchar_ptr_ptr_int *p_Var5;
   int iVar6;
   int iVar7;
   int iVar8;
   int iVar9;
-  longlong lVar10;
+  int iVar10;
+  longlong lVar11;
   
-  iVar4 = __savegprlr_29(param_1);
-  iVar1 = *(int *)(iVar4 + 0x1ac);
-  uVar5 = (*(code *)**(undefined4 **)(iVar4 + 4))(iVar4,1,0x400);
-  *(undefined4 *)(iVar1 + 8) = uVar5;
-  uVar5 = (*(code *)**(undefined4 **)(iVar4 + 4))(iVar4,1,0x400);
-  *(undefined4 *)(iVar1 + 0xc) = uVar5;
-  uVar5 = (*(code *)**(undefined4 **)(iVar4 + 4))(iVar4,1,0x400);
-  *(undefined4 *)(iVar1 + 0x10) = uVar5;
-  uVar5 = (*(code *)**(undefined4 **)(iVar4 + 4))(iVar4,1,0x400);
-  *(undefined4 *)(iVar1 + 0x14) = uVar5;
-  lVar10 = 0x100;
-  iVar9 = 0;
-  iVar6 = 0x5b6900;
-  iVar7 = -0xe25100;
-  iVar8 = -0xb2f480;
-  iVar4 = 0x2c8d00;
+  pjVar1 = param_1->cconvert;
+  p_Var4 = (*param_1->mem->alloc_small)((jpeg_common_struct *)param_1,1,0x400);
+  pjVar1[1].start_pass = p_Var4;
+  p_Var5 = (*param_1->mem->alloc_small)((jpeg_common_struct *)param_1,1,0x400);
+  pjVar1[1].color_convert = p_Var5;
+  p_Var4 = (*param_1->mem->alloc_small)((jpeg_common_struct *)param_1,1,0x400);
+  pjVar1[2].start_pass = p_Var4;
+  p_Var5 = (*param_1->mem->alloc_small)((jpeg_common_struct *)param_1,1,0x400);
+  pjVar1[2].color_convert = p_Var5;
+  lVar11 = 0x100;
+  iVar10 = 0;
+  iVar7 = 0x5b6900;
+  iVar8 = -0xe25100;
+  iVar9 = -0xb2f480;
+  iVar6 = 0x2c8d00;
   do {
-    iVar2 = iVar8 >> 0x10;
-    iVar3 = iVar7 >> 0x10;
-    iVar8 = iVar8 + 0x166e9;
-    iVar7 = iVar7 + 0x1c5a2;
-    *(int *)(iVar9 + *(int *)(iVar1 + 8)) = iVar2;
-    *(int *)(*(int *)(iVar1 + 0xc) + iVar9) = iVar3;
-    *(int *)(iVar9 + *(int *)(iVar1 + 0x10)) = iVar6;
-    iVar6 = iVar6 + -0xb6d2;
-    *(int *)(*(int *)(iVar1 + 0x14) + iVar9) = iVar4;
-    iVar4 = iVar4 + -0x581a;
-    iVar9 = iVar9 + 4;
-    lVar10 = lVar10 + -1;
-  } while (lVar10 != 0);
-  __restgprlr_29();
+    iVar2 = iVar9 >> 0x10;
+    iVar3 = iVar8 >> 0x10;
+    iVar9 = iVar9 + 0x166e9;
+    iVar8 = iVar8 + 0x1c5a2;
+    *(int *)(pjVar1[1].start_pass + iVar10) = iVar2;
+    *(int *)(pjVar1[1].color_convert + iVar10) = iVar3;
+    *(int *)(pjVar1[2].start_pass + iVar10) = iVar7;
+    iVar7 = iVar7 + -0xb6d2;
+    *(int *)(pjVar1[2].color_convert + iVar10) = iVar6;
+    iVar6 = iVar6 + -0x581a;
+    iVar10 = iVar10 + 4;
+    lVar11 = lVar11 + -1;
+  } while (lVar11 != 0);
   return;
 }
 
 
 // 827BD630  ycc_rgb_convert  (jpeg-6/jdcolor.c:123)
+
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
 
 void ycc_rgb_convert(jpeg_decompress_struct *param_1,uchar ***param_2,uint param_3,uchar **param_4,
                     int param_5)
@@ -60,64 +65,62 @@ void ycc_rgb_convert(jpeg_decompress_struct *param_1,uchar ***param_2,uint param
   byte bVar1;
   byte bVar2;
   byte bVar3;
-  int iVar4;
+  jpeg_color_deconverter *pjVar4;
   uint uVar5;
-  int iVar6;
-  int iVar7;
-  int iVar8;
-  int iVar9;
-  int iVar10;
-  int iVar11;
-  undefined1 *puVar12;
-  byte *pbVar13;
-  longlong lVar14;
-  longlong lVar15;
-  longlong lVar16;
-  ulonglong uVar17;
+  uchar *puVar6;
+  _func___cdecl_void_jpeg_decompress_struct_ptr *p_Var7;
+  _func___cdecl_void_jpeg_decompress_struct_ptr_uchar_ptr_ptr_ptr_uint_uchar_ptr_ptr_int *p_Var8;
+  _func___cdecl_void_jpeg_decompress_struct_ptr *p_Var9;
+  _func___cdecl_void_jpeg_decompress_struct_ptr_uchar_ptr_ptr_ptr_uint_uchar_ptr_ptr_int *p_Var10;
+  int *piVar11;
+  int *piVar12;
+  int iVar13;
+  int iVar14;
+  uchar *puVar15;
+  byte *pbVar16;
+  longlong lVar17;
+  uchar **ppuVar18;
+  int iVar19;
+  ulonglong uVar20;
   
-  lVar14 = (longlong)param_5;
-  lVar15 = (longlong)(int)param_4;
-  uVar17 = (ulonglong)(int)param_3;
-  iVar10 = __savegprlr_23(param_1);
-  iVar4 = *(int *)(iVar10 + 0x1ac);
-  lVar14 = lVar14 + -1;
-  uVar5 = *(uint *)(iVar10 + 100);
-  iVar10 = *(int *)(iVar10 + 0x128);
-  iVar6 = *(int *)(iVar4 + 8);
-  iVar7 = *(int *)(iVar4 + 0xc);
-  iVar8 = *(int *)(iVar4 + 0x10);
-  iVar4 = *(int *)(iVar4 + 0x14);
-  if (-1 < lVar14) {
-    lVar16 = (uVar17 & 0x3fffffff) << 2;
-    lVar15 = lVar15 + -4;
+  pjVar4 = param_1->cconvert;
+  lVar17 = (longlong)param_5 + -1;
+  uVar5 = param_1->output_width;
+  puVar6 = param_1->sample_range_limit;
+  p_Var7 = pjVar4[1].start_pass;
+  p_Var8 = pjVar4[1].color_convert;
+  p_Var9 = pjVar4[2].start_pass;
+  p_Var10 = pjVar4[2].color_convert;
+  if (-1 < lVar17) {
+    iVar19 = param_3 << 2;
+    ppuVar18 = param_4 + -1;
     do {
-      lVar15 = lVar15 + 4;
-      iVar11 = (int)lVar16;
-      pbVar13 = *(byte **)(iVar11 + (int)param_2[1]);
-      lVar16 = lVar16 + 4;
+      ppuVar18 = ppuVar18 + 1;
+      piVar11 = (int *)((int)*param_2 + iVar19);
+      pbVar16 = *(byte **)(iVar19 + (int)param_2[1]);
+      piVar12 = (int *)((int)param_2[2] + iVar19);
+      iVar19 = iVar19 + 4;
       if ((ulonglong)uVar5 != 0) {
-        puVar12 = (undefined1 *)(*(int *)lVar15 + -3);
-        iVar9 = *(int *)((int)*param_2 + iVar11) - (int)pbVar13;
-        iVar11 = *(int *)((int)param_2[2] + iVar11) - (int)pbVar13;
-        uVar17 = (ulonglong)uVar5;
+        puVar15 = *ppuVar18 + -3;
+        iVar14 = *piVar11 - (int)pbVar16;
+        iVar13 = *piVar12 - (int)pbVar16;
+        uVar20 = (ulonglong)uVar5;
         do {
-          bVar2 = pbVar13[iVar11];
-          bVar3 = pbVar13[iVar9];
-          bVar1 = *pbVar13;
-          pbVar13 = pbVar13 + 1;
-          puVar12[5] = *(undefined1 *)(*(int *)((uint)bVar2 * 4 + iVar6) + (uint)bVar3 + iVar10);
-          puVar12[4] = *(undefined1 *)
-                        ((*(int *)((uint)bVar1 * 4 + iVar4) + *(int *)((uint)bVar2 * 4 + iVar8) >>
-                         0x10) + (uint)bVar3 + iVar10);
-          puVar12 = puVar12 + 3;
-          *puVar12 = *(undefined1 *)(*(int *)((uint)bVar1 * 4 + iVar7) + (uint)bVar3 + iVar10);
-          uVar17 = uVar17 - 1;
-        } while (uVar17 != 0);
+          bVar2 = pbVar16[iVar13];
+          bVar3 = pbVar16[iVar14];
+          bVar1 = *pbVar16;
+          pbVar16 = pbVar16 + 1;
+          puVar15[5] = puVar6[*(int *)(p_Var7 + (uint)bVar2 * 4) + (uint)bVar3];
+          puVar15[4] = puVar6[(*(int *)(p_Var10 + (uint)bVar1 * 4) +
+                               *(int *)(p_Var9 + (uint)bVar2 * 4) >> 0x10) + (uint)bVar3];
+          puVar15 = puVar15 + 3;
+          *puVar15 = puVar6[*(int *)(p_Var8 + (uint)bVar1 * 4) + (uint)bVar3];
+          uVar20 = uVar20 - 1;
+        } while (uVar20 != 0);
       }
-      lVar14 = lVar14 + -1;
-    } while (-1 < lVar14);
+      lVar17 = lVar17 + -1;
+    } while (-1 < lVar17);
   }
-  __restgprlr_23();
   return;
 }
 
@@ -231,6 +234,9 @@ void gray_rgb_convert(jpeg_decompress_struct *param_1,uchar ***param_2,uint para
 
 // 827BD810  ycck_cmyk_convert  (jpeg-6/jdcolor.c:248)
 
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
+
 void ycck_cmyk_convert(jpeg_decompress_struct *param_1,uchar ***param_2,uint param_3,uchar **param_4
                       ,int param_5)
 
@@ -238,71 +244,70 @@ void ycck_cmyk_convert(jpeg_decompress_struct *param_1,uchar ***param_2,uint par
   byte bVar1;
   byte bVar2;
   byte bVar3;
-  int iVar4;
+  jpeg_color_deconverter *pjVar4;
   uint uVar5;
-  int iVar6;
-  int iVar7;
-  int iVar8;
-  int iVar9;
-  int iVar10;
-  byte *pbVar11;
-  int iVar12;
-  int iVar13;
-  byte *pbVar14;
-  byte *pbVar15;
-  longlong lVar16;
-  longlong lVar17;
-  longlong lVar18;
-  ulonglong uVar19;
+  uchar *puVar6;
+  _func___cdecl_void_jpeg_decompress_struct_ptr *p_Var7;
+  _func___cdecl_void_jpeg_decompress_struct_ptr_uchar_ptr_ptr_ptr_uint_uchar_ptr_ptr_int *p_Var8;
+  _func___cdecl_void_jpeg_decompress_struct_ptr *p_Var9;
+  _func___cdecl_void_jpeg_decompress_struct_ptr_uchar_ptr_ptr_ptr_uint_uchar_ptr_ptr_int *p_Var10;
+  int *piVar11;
+  int *piVar12;
+  int *piVar13;
+  int iVar14;
+  int iVar15;
+  byte *pbVar16;
+  int iVar17;
+  byte *pbVar18;
+  byte *pbVar19;
+  longlong lVar20;
+  uchar **ppuVar21;
+  int iVar22;
+  ulonglong uVar23;
   
-  lVar16 = (longlong)param_5;
-  lVar17 = (longlong)(int)param_4;
-  uVar19 = (ulonglong)(int)param_3;
-  iVar12 = __savegprlr_22(param_1);
-  iVar4 = *(int *)(iVar12 + 0x1ac);
-  lVar16 = lVar16 + -1;
-  uVar5 = *(uint *)(iVar12 + 100);
-  iVar12 = *(int *)(iVar12 + 0x128);
-  iVar6 = *(int *)(iVar4 + 8);
-  iVar7 = *(int *)(iVar4 + 0xc);
-  iVar8 = *(int *)(iVar4 + 0x10);
-  iVar4 = *(int *)(iVar4 + 0x14);
-  if (-1 < lVar16) {
-    lVar18 = (uVar19 & 0x3fffffff) << 2;
-    lVar17 = lVar17 + -4;
+  pjVar4 = param_1->cconvert;
+  lVar20 = (longlong)param_5 + -1;
+  uVar5 = param_1->output_width;
+  puVar6 = param_1->sample_range_limit;
+  p_Var7 = pjVar4[1].start_pass;
+  p_Var8 = pjVar4[1].color_convert;
+  p_Var9 = pjVar4[2].start_pass;
+  p_Var10 = pjVar4[2].color_convert;
+  if (-1 < lVar20) {
+    iVar22 = param_3 << 2;
+    ppuVar21 = param_4 + -1;
     do {
-      lVar17 = lVar17 + 4;
-      iVar13 = (int)lVar18;
-      pbVar15 = *(byte **)(iVar13 + (int)param_2[1]);
-      lVar18 = lVar18 + 4;
+      ppuVar21 = ppuVar21 + 1;
+      piVar11 = (int *)((int)*param_2 + iVar22);
+      pbVar19 = *(byte **)(iVar22 + (int)param_2[1]);
+      piVar12 = (int *)((int)param_2[2] + iVar22);
+      piVar13 = (int *)(iVar22 + (int)param_2[3]);
+      iVar22 = iVar22 + 4;
       if ((ulonglong)uVar5 != 0) {
-        pbVar14 = (byte *)(*(int *)lVar17 + -1);
-        iVar10 = *(int *)((int)*param_2 + iVar13) - (int)pbVar15;
-        iVar9 = *(int *)((int)param_2[2] + iVar13) - (int)pbVar15;
-        iVar13 = *(int *)(iVar13 + (int)param_2[3]) - (int)pbVar15;
-        uVar19 = (ulonglong)uVar5;
+        pbVar18 = *ppuVar21 + -1;
+        iVar15 = *piVar11 - (int)pbVar19;
+        iVar14 = *piVar12 - (int)pbVar19;
+        iVar17 = *piVar13 - (int)pbVar19;
+        uVar23 = (ulonglong)uVar5;
         do {
-          bVar2 = pbVar15[iVar9];
-          bVar1 = *pbVar15;
-          bVar3 = pbVar15[iVar10];
-          pbVar14[1] = *(byte *)(((iVar12 - *(int *)((uint)bVar2 * 4 + iVar6)) - (uint)bVar3) + 0xff
-                                );
-          pbVar14[2] = *(byte *)(((iVar12 - (*(int *)((uint)bVar1 * 4 + iVar4) +
-                                             *(int *)((uint)bVar2 * 4 + iVar8) >> 0x10)) -
-                                 (uint)bVar3) + 0xff);
-          pbVar14[3] = *(byte *)(((iVar12 - *(int *)((uint)bVar1 * 4 + iVar7)) - (uint)bVar3) + 0xff
-                                );
-          pbVar11 = pbVar15 + iVar13;
-          pbVar15 = pbVar15 + 1;
-          pbVar14 = pbVar14 + 4;
-          *pbVar14 = *pbVar11;
-          uVar19 = uVar19 - 1;
-        } while (uVar19 != 0);
+          bVar2 = pbVar19[iVar14];
+          bVar1 = *pbVar19;
+          bVar3 = pbVar19[iVar15];
+          pbVar18[1] = puVar6[(-(uint)bVar3 - *(int *)(p_Var7 + (uint)bVar2 * 4)) + 0xff];
+          pbVar18[2] = puVar6[(-(uint)bVar3 -
+                              (*(int *)(p_Var10 + (uint)bVar1 * 4) +
+                               *(int *)(p_Var9 + (uint)bVar2 * 4) >> 0x10)) + 0xff];
+          pbVar18[3] = puVar6[(-(uint)bVar3 - *(int *)(p_Var8 + (uint)bVar1 * 4)) + 0xff];
+          pbVar16 = pbVar19 + iVar17;
+          pbVar19 = pbVar19 + 1;
+          pbVar18 = pbVar18 + 4;
+          *pbVar18 = *pbVar16;
+          uVar23 = uVar23 - 1;
+        } while (uVar23 != 0);
       }
-      lVar16 = lVar16 + -1;
-    } while (-1 < lVar16);
+      lVar20 = lVar20 + -1;
+    } while (-1 < lVar20);
   }
-  __restgprlr_22();
   return;
 }
 
@@ -318,95 +323,94 @@ void start_pass_dcolor(jpeg_decompress_struct *param_1)
 
 // 827BD908  jinit_color_deconverter  (jpeg-6/jdcolor.c:305)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void jinit_color_deconverter(jpeg_decompress_struct *param_1)
 
 {
   J_COLOR_SPACE JVar1;
-  jpeg_decompress_struct *pjVar2;
-  jpeg_color_deconverter *pjVar3;
+  jpeg_color_deconverter *pjVar2;
+  int iVar3;
   int iVar4;
-  int iVar5;
   
-  pjVar2 = (jpeg_decompress_struct *)__savegprlr_29(param_1);
-  pjVar3 = (*pjVar2->mem->alloc_small)((jpeg_common_struct *)pjVar2,1,0x18);
-  pjVar2->cconvert = pjVar3;
-  pjVar3->start_pass = start_pass_dcolor;
-  JVar1 = pjVar2->jpeg_color_space;
+  pjVar2 = (*param_1->mem->alloc_small)((jpeg_common_struct *)param_1,1,0x18);
+  param_1->cconvert = pjVar2;
+  pjVar2->start_pass = start_pass_dcolor;
+  JVar1 = param_1->jpeg_color_space;
   if (JVar1 - JCS_GRAYSCALE < 5) {
     if ((JVar1 == JCS_RGB) || (JVar1 == JCS_YCbCr)) {
-      if (pjVar2->num_components != 3) goto LAB_827bd9a8;
+      if (param_1->num_components != 3) goto LAB_827bd9a8;
     }
     else if ((JVar1 == JCS_CMYK) || (JVar1 != JCS_GRAYSCALE)) {
-      if (pjVar2->num_components != 4) goto LAB_827bd9a8;
+      if (param_1->num_components != 4) goto LAB_827bd9a8;
     }
-    else if (pjVar2->num_components != 1) {
+    else if (param_1->num_components != 1) {
 LAB_827bd9a8:
-      pjVar2->err->msg_code = 10;
-      (*pjVar2->err->error_exit)((jpeg_common_struct *)pjVar2);
+      param_1->err->msg_code = 10;
+      (*param_1->err->error_exit)((jpeg_common_struct *)param_1);
     }
   }
-  else if (pjVar2->num_components < 1) goto LAB_827bd9a8;
-  JVar1 = pjVar2->out_color_space;
+  else if (param_1->num_components < 1) goto LAB_827bd9a8;
+  JVar1 = param_1->out_color_space;
   if (JVar1 == JCS_GRAYSCALE) {
-    pjVar2->out_color_components = 1;
-    if ((pjVar2->jpeg_color_space == JCS_GRAYSCALE) || (pjVar2->jpeg_color_space == JCS_YCbCr)) {
-      iVar5 = 1;
-      pjVar3->color_convert = grayscale_convert;
-      if (1 < pjVar2->num_components) {
-        iVar4 = 0x54;
+    param_1->out_color_components = 1;
+    if ((param_1->jpeg_color_space == JCS_GRAYSCALE) || (param_1->jpeg_color_space == JCS_YCbCr)) {
+      iVar4 = 1;
+      pjVar2->color_convert = grayscale_convert;
+      if (1 < param_1->num_components) {
+        iVar3 = 0x54;
         do {
-          iVar5 = iVar5 + 1;
-          (&pjVar2->comp_info->component_needed)[iVar4] = '\0';
-          iVar4 = iVar4 + 0x54;
-        } while (iVar5 < pjVar2->num_components);
+          iVar4 = iVar4 + 1;
+          (&param_1->comp_info->component_needed)[iVar3] = '\0';
+          iVar3 = iVar3 + 0x54;
+        } while (iVar4 < param_1->num_components);
       }
       goto LAB_827bdb2c;
     }
   }
   else if (JVar1 == JCS_RGB) {
-    JVar1 = pjVar2->jpeg_color_space;
-    pjVar2->out_color_components = 3;
+    JVar1 = param_1->jpeg_color_space;
+    param_1->out_color_components = 3;
     if (JVar1 == JCS_YCbCr) {
-      pjVar3->color_convert = ycc_rgb_convert;
-      build_ycc_rgb_table(pjVar2);
+      pjVar2->color_convert = ycc_rgb_convert;
+      build_ycc_rgb_table(param_1);
       goto LAB_827bdb2c;
     }
     if (JVar1 == JCS_GRAYSCALE) {
-      pjVar3->color_convert = gray_rgb_convert;
+      pjVar2->color_convert = gray_rgb_convert;
       goto LAB_827bdb2c;
     }
     if (JVar1 == JCS_RGB) {
-      pjVar3->color_convert = null_convert;
+      pjVar2->color_convert = null_convert;
       goto LAB_827bdb2c;
     }
   }
   else if (JVar1 == JCS_CMYK) {
-    pjVar2->out_color_components = 4;
-    if (pjVar2->jpeg_color_space == JCS_YCCK) {
-      pjVar3->color_convert = ycck_cmyk_convert;
-      build_ycc_rgb_table(pjVar2);
+    param_1->out_color_components = 4;
+    if (param_1->jpeg_color_space == JCS_YCCK) {
+      pjVar2->color_convert = ycck_cmyk_convert;
+      build_ycc_rgb_table(param_1);
       goto LAB_827bdb2c;
     }
-    if (pjVar2->jpeg_color_space == JCS_CMYK) {
-      pjVar3->color_convert = null_convert;
+    if (param_1->jpeg_color_space == JCS_CMYK) {
+      pjVar2->color_convert = null_convert;
       goto LAB_827bdb2c;
     }
   }
-  else if (JVar1 == pjVar2->jpeg_color_space) {
-    pjVar2->out_color_components = pjVar2->num_components;
-    pjVar3->color_convert = null_convert;
+  else if (JVar1 == param_1->jpeg_color_space) {
+    param_1->out_color_components = param_1->num_components;
+    pjVar2->color_convert = null_convert;
     goto LAB_827bdb2c;
   }
-  pjVar2->err->msg_code = 0x1b;
-  (*pjVar2->err->error_exit)((jpeg_common_struct *)pjVar2);
+  param_1->err->msg_code = 0x1b;
+  (*param_1->err->error_exit)((jpeg_common_struct *)param_1);
 LAB_827bdb2c:
-  if (pjVar2->quantize_colors == '\0') {
-    pjVar2->output_components = pjVar2->out_color_components;
-    __restgprlr_29();
+  if (param_1->quantize_colors == '\0') {
+    param_1->output_components = param_1->out_color_components;
     return;
   }
-  pjVar2->output_components = 1;
-  __restgprlr_29();
+  param_1->output_components = 1;
   return;
 }
 

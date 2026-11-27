@@ -2,35 +2,37 @@
 
 // 8282C7E0  vp8_init_mode_costs  (WebM_atvi_opt/vpx/vp8/encoder/modecosts.c:23)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 void vp8_init_mode_costs(VP8_COMP *param_1)
 
 {
-  int iVar1;
-  ulonglong uVar2;
+  ulonglong uVar1;
+  longlong lVar2;
   longlong lVar3;
-  longlong lVar4;
+  uint *puVar4;
   
-  iVar1 = __savegprlr_26(param_1);
-  lVar3 = 0;
+  lVar2 = 0;
   do {
-    lVar4 = 0;
+    lVar3 = 0;
     do {
-      uVar2 = lVar3 + lVar4;
-      vp8_cost_tokens((int *)((int)((uVar2 + (uVar2 & 0x3fffffff) * 4 & 0xffffffff) << 3) + iVar1 +
-                             0x18dc0),
-                      (uchar *)((int)uVar2 + (int)((uVar2 & 0xffffffff) << 3) + iVar1 + 0x20fb1),"")
-      ;
-      lVar4 = lVar4 + 1;
-    } while ((int)lVar4 < 10);
-    lVar3 = lVar3 + 10;
-  } while ((int)lVar3 < 100);
-  vp8_cost_tokens((int *)(iVar1 + 0x19d60),(uchar *)(iVar1 + 0x217bb),"");
-  vp8_cost_tokens((int *)(iVar1 + 0x19d60),(uchar *)(iVar1 + 0x217cb),&vp8_sub_mv_ref_tree);
-  vp8_cost_tokens((int *)(iVar1 + 0x18d48),(uchar *)(iVar1 + 0x217c4),"");
-  vp8_cost_tokens((int *)(iVar1 + 0x18d20),(uchar *)(iVar1 + 0x21335),&vp8_kf_ymode_tree);
-  vp8_cost_tokens((int *)(iVar1 + 0x18d98),(uchar *)(iVar1 + 0x217c8),"");
-  vp8_cost_tokens((int *)(iVar1 + 0x18d70),(uchar *)(iVar1 + 0x21339),"");
-  __restgprlr_26();
+      uVar1 = lVar2 + lVar3;
+      vp8_cost_tokens((int *)((int)(param_1->mb).bmode_costs[0][0] +
+                             (int)((uVar1 + (uVar1 & 0x3fffffff) * 4 & 0xffffffff) << 3)),
+                      (param_1->common).kf_bmode_prob[0][0] +
+                      (int)uVar1 + (int)((uVar1 & 0xffffffff) << 3),"");
+      lVar3 = lVar3 + 1;
+    } while ((int)lVar3 < 10);
+    lVar2 = lVar2 + 10;
+  } while ((int)lVar2 < 100);
+  puVar4 = (param_1->mb).inter_bmode_costs;
+  vp8_cost_tokens((int *)puVar4,(param_1->common).fc.bmode_prob,"");
+  vp8_cost_tokens((int *)puVar4,(param_1->common).fc.sub_mv_ref_prob,&vp8_sub_mv_ref_tree);
+  vp8_cost_tokens((param_1->mb).mbmode_cost[1],(param_1->common).fc.ymode_prob,"");
+  vp8_cost_tokens((param_1->mb).mbmode_cost[0],(param_1->common).kf_ymode_prob,&vp8_kf_ymode_tree);
+  vp8_cost_tokens((param_1->mb).intra_uv_mode_cost[1],(param_1->common).fc.uv_mode_prob,"");
+  vp8_cost_tokens((param_1->mb).intra_uv_mode_cost[0],(param_1->common).kf_uv_mode_prob,"");
   return;
 }
 

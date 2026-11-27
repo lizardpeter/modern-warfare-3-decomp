@@ -44,12 +44,14 @@ void __thiscall D3D::Hang::Out(Hang *this,char *param_1)
 
 // 8287C830  HangStateDump  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/debug.cpp:164)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
+
 void D3D::HangStateDump(Hang *param_1)
 
 {
   char cVar1;
   bool bVar2;
-  Hang *this;
   ulong uVar3;
   ulonglong uVar4;
   char *pcVar5;
@@ -61,43 +63,42 @@ void D3D::HangStateDump(Hang *param_1)
   ulong *puVar11;
   char local_120 [288];
   
-  this = (Hang *)__savegprlr_23(param_1);
-  uVar3 = (*this->m_pReadReg)(0x5d0);
+  uVar3 = (*param_1->m_pReadReg)(0x5d0);
   bVar2 = false;
-  Hang::Out(this,"   %25s: 0x%08x (");
+  Hang::Out(param_1,"   %25s: 0x%08x (");
   lVar6 = 0xb;
   ppcVar9 = &g_StatusRegister[0].Description;
   do {
     if ((((StatusRegister *)(ppcVar9 + -1))->Mask & uVar3) != 0) {
       if (bVar2) {
-        Hang::Out(this,", ");
+        Hang::Out(param_1,", ");
       }
-      Hang::Out(this,*ppcVar9);
+      Hang::Out(param_1,*ppcVar9);
       bVar2 = true;
     }
     lVar6 = lVar6 + -1;
     ppcVar9 = ppcVar9 + 2;
   } while (lVar6 != 0);
   if (!bVar2) {
-    Hang::Out(this,"CPU Synchronization");
+    Hang::Out(param_1,"CPU Synchronization");
   }
-  Hang::Out(this,")\n");
-  (*this->m_pWriteReg)(0xf11,0);
+  Hang::Out(param_1,")\n");
+  (*param_1->m_pWriteReg)(0xf11,0);
   Sleep(1);
-  (*this->m_pReadReg)(0xf12);
-  Hang::Out(this,"   %25s: 0x%08x\n");
+  (*param_1->m_pReadReg)(0xf12);
+  Hang::Out(param_1,"   %25s: 0x%08x\n");
   lVar6 = 0x1e;
   iVar10 = -0x7d65926c;
   do {
-    (*this->m_pReadReg)(*(ulong *)(iVar10 + 4));
+    (*param_1->m_pReadReg)(*(ulong *)(iVar10 + 4));
     iVar10 = iVar10 + 8;
-    Hang::Out(this,"   %25s: 0x%08x\n");
+    Hang::Out(param_1,"   %25s: 0x%08x\n");
     lVar6 = lVar6 + -1;
   } while (lVar6 != 0);
   puVar11 = &g_HangGroups[0].Count;
   lVar6 = 5;
   do {
-    Hang::Out(this,"\n");
+    Hang::Out(param_1,"\n");
     uVar7 = 0;
     if (*puVar11 != 0) {
       do {
@@ -109,11 +110,11 @@ void D3D::HangStateDump(Hang *param_1)
             uVar4 = uVar8;
           }
           if ((uVar4 & 0xffffffff) <= (uVar7 & 0xffffffff)) break;
-          (*this->m_pWriteReg)
+          (*param_1->m_pWriteReg)
                     (((HangGroup *)(puVar11 + -4))->ControlRegister,
                      (int)uVar7 << (puVar11[-1] & 0x3f) | puVar11[-2]);
           Sleep(1);
-          uVar3 = (*this->m_pReadReg)(puVar11[-3]);
+          uVar3 = (*param_1->m_pReadReg)(puVar11[-3]);
           pcVar5 = local_120;
           do {
             cVar1 = *pcVar5;
@@ -122,112 +123,109 @@ void D3D::HangStateDump(Hang *param_1)
           RtlSprintf(pcVar5 + (int)(local_120 + (-1 - (int)local_120)),0xffffffff821f5764,uVar3);
           uVar7 = uVar7 + 1;
         }
-        Hang::Out(this,"%s\n");
+        Hang::Out(param_1,"%s\n");
         uVar7 = uVar8;
       } while ((uVar8 & 0xffffffff) < (ulonglong)*puVar11);
     }
     lVar6 = lVar6 + -1;
     puVar11 = puVar11 + 6;
   } while (lVar6 != 0);
-  __restgprlr_23();
   return;
 }
 
 
 // 8287CB00  HangCommandBufferDump  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/debug.cpp:238)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
+
 void D3D::HangCommandBufferDump(Hang *param_1,ulong param_2,int param_3)
 
 {
   undefined4 *puVar1;
-  int iVar2;
-  Hang *this;
-  char *pcVar3;
-  ulonglong uVar4;
-  ulonglong uVar5;
-  uint uVar6;
+  char *pcVar2;
+  ulong uVar3;
+  uint uVar4;
   
-  uVar5 = (ulonglong)(int)param_2;
-  this = (Hang *)__savegprlr_25(param_1);
-  uVar4 = 0;
-  iVar2 = (int)uVar5;
-  if ((((uVar5 & 1) == 0) || ((uVar5 & 2) != 0)) || ((uVar5 & 0xfffffffc) == 0)) {
-    if ((((uVar5 & 2) != 0) && ((uVar5 & 1) == 0)) && ((uVar5 & 0xfffffffc) != 0)) {
-      Hang::Out(this,
+  uVar3 = 0;
+  if ((((param_2 & 1) == 0) || ((param_2 & 2) != 0)) || ((param_2 & 0xfffffffc) == 0)) {
+    if ((((param_2 & 2) != 0) && ((param_2 & 1) == 0)) && ((param_2 & 0xfffffffc) != 0)) {
+      Hang::Out(param_1,
                 "\n  o The GPU appears to have hung while executing an asynchronous\n    command buffer call (D3DAsyncCommandBufferCall) at address 0x%08p\n"
                );
-      Hang::Out(this,"  o This async call object was fixed up to call %d D3DCommandBuffer(s):\n");
-      uVar6 = 0;
-      if (*(int *)(iVar2 + 0x7a) != 0) {
+      Hang::Out(param_1,"  o This async call object was fixed up to call %d D3DCommandBuffer(s):\n")
+      ;
+      uVar4 = 0;
+      if (*(int *)(param_2 + 0x7a) != 0) {
         do {
-          Hang::Out(this,"    - Command buffer at 0x%08p, with PredicationSelect 0x%08x\n");
-          uVar6 = uVar6 + 1;
-        } while (uVar6 < *(uint *)(iVar2 + 0x7a));
+          Hang::Out(param_1,"    - Command buffer at 0x%08p, with PredicationSelect 0x%08x\n");
+          uVar4 = uVar4 + 1;
+        } while (uVar4 < *(uint *)(param_2 + 0x7a));
       }
       goto LAB_8287cc14;
     }
-    pcVar3 = 
+    pcVar2 = 
     "\n  o The GPU appears to have hung while executing the command buffer\n    represented by the D3DCommandBuffer structure at address 0x%x.\n"
     ;
+    uVar3 = param_2;
   }
   else {
-    uVar5 = (ulonglong)*(uint *)(iVar2 + -1);
-    if (uVar5 == 0) {
-      Hang::Out(this,
+    uVar3 = *(ulong *)(param_2 - 1);
+    if (uVar3 == 0) {
+      Hang::Out(param_1,
                 "\n  o The GPU appears to have hung while executing an asynchronous\n    command buffer which was patched to NULL.\n"
                );
-      uVar4 = uVar5;
       goto LAB_8287cc14;
     }
-    pcVar3 = 
+    pcVar2 = 
     "\n  o The GPU appears to have hung while executing an asynchronous\n    command buffer set to the D3DCommandBuffer structure at address 0x%x.\n"
     ;
   }
-  Hang::Out(this,pcVar3);
-  uVar4 = uVar5;
+  Hang::Out(param_1,pcVar2);
 LAB_8287cc14:
-  if ((param_3 == 0) && ((uVar4 & 0xffffffff) != 0)) {
-    iVar2 = (int)uVar4;
-    if (*(int *)(iVar2 + 0x98) == 0) {
-      Hang::Out(this,
+  if ((param_3 == 0) && (uVar3 != 0)) {
+    if (*(int *)(uVar3 + 0x98) == 0) {
+      Hang::Out(param_1,
                 "    It was a growable command buffer with its D3DALLOCATECALLBACK routine\n    at address 0x%x and a callback context of 0x%x.\n"
                );
     }
-    Hang::Out(this,
+    Hang::Out(param_1,
               "    Could the contents have become corrupted?  The list of indirect\n    buffer physical addresses and dword counts are as follows:\n"
              );
-    for (puVar1 = *(undefined4 **)(iVar2 + 0x74); puVar1 != (undefined4 *)0x0;
+    for (puVar1 = *(undefined4 **)(uVar3 + 0x74); puVar1 != (undefined4 *)0x0;
         puVar1 = (undefined4 *)*puVar1) {
-      uVar6 = 0;
+      uVar4 = 0;
       if (puVar1[1] != 0) {
         do {
-          Hang::Out(this,"        0x%x 0x%x\n");
-          uVar6 = uVar6 + 1;
-        } while (uVar6 < (uint)puVar1[1]);
+          Hang::Out(param_1,"        0x%x 0x%x\n");
+          uVar4 = uVar4 + 1;
+        } while (uVar4 < (uint)puVar1[1]);
       }
     }
-    if (*(int *)(iVar2 + 0x98) == 0) {
-      Hang::Out(this,
+    if (*(int *)(uVar3 + 0x98) == 0) {
+      Hang::Out(param_1,
                 "\n    A likely potential reason for the hang is a bad growable command\n    allocator.  To rule out that possibility, try creating all growable\n"
                );
-      Hang::Out(this,
+      Hang::Out(param_1,
                 "    command buffers with the D3DCREATECB_DEBUG_ALLOCATOR flag set and\n    build using instrumented or debug versions of the D3D library.\n"
                );
     }
   }
-  __restgprlr_25();
   return;
 }
 
 
 // 8287CCF0  HangRecognizer  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/debug.cpp:354)
 
+/* WARNING: Function: __savegprlr_19 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_19 replaced with injection: xenon_save_restore */
+
 void D3D::HangRecognizer(D3DDevice *param_1,_func___cdecl_void_char_ptr *param_2,
                         _func___cdecl_ulong_ulong *param_3,_func___cdecl_void_ulong_ulong *param_4)
 
 {
   bool bVar1;
-  int iVar2;
+  ulonglong uVar2;
   ulong uVar3;
   ulong uVar4;
   ulong uVar5;
@@ -235,38 +233,34 @@ void D3D::HangRecognizer(D3DDevice *param_1,_func___cdecl_void_char_ptr *param_2
   ulong uVar7;
   ulong uVar8;
   char *pcVar9;
-  ulonglong uVar10;
-  ulonglong uVar11;
-  int iVar12;
+  int iVar10;
   Hang local_90;
   ulong local_80 [32];
   
-  uVar11 = (ulonglong)(int)param_4;
-  uVar10 = (ulonglong)(int)param_3;
-  local_90.m_pHangCallback = param_2;
-  iVar2 = __savegprlr_19(param_1);
-  local_90.m_pWriteReg = (_func___cdecl_void_ulong_ulong *)uVar11;
-  local_90.m_pReadReg = (_func___cdecl_ulong_ulong *)uVar10;
-  iVar12 = 1;
-  if (((uVar10 & 0xffffffff) == 0) || ((uVar11 & 0xffffffff) == 0)) {
-    local_90.m_pReadReg = ReadMMRegUlong;
-    local_90.m_pWriteReg = WriteMMRegUlong;
-    iVar12 = 0;
+  iVar10 = 1;
+  if ((param_3 == (_func___cdecl_ulong_ulong *)0x0) ||
+     (param_4 == (_func___cdecl_void_ulong_ulong *)0x0)) {
+    iVar10 = 0;
+    param_3 = ReadMMRegUlong;
+    param_4 = WriteMMRegUlong;
   }
-  uVar3 = (*local_90.m_pReadReg)(0x5d0);
-  (*local_90.m_pReadReg)(0xf26);
-  uVar4 = (*local_90.m_pReadReg)(0x1c0);
-  uVar5 = (*local_90.m_pReadReg)(0x57b);
-  uVar6 = (*local_90.m_pReadReg)(0x57c);
-  (*local_90.m_pReadReg)(0x57d);
-  uVar7 = (*local_90.m_pReadReg)(0x57a);
-  (*local_90.m_pWriteReg)(0xc80,0xc);
-  uVar8 = (*local_90.m_pReadReg)(0xc81);
-  local_80[0] = (*local_90.m_pReadReg)(0xc81);
-  local_80[1] = (*local_90.m_pReadReg)(0xc81);
-  local_80[2] = (*local_90.m_pReadReg)(0xc81);
-  local_80[3] = (*local_90.m_pReadReg)(0xc81);
-  if (iVar2 != 0) {
+  uVar3 = (*param_3)(0x5d0);
+  (*param_3)(0xf26);
+  uVar4 = (*param_3)(0x1c0);
+  uVar5 = (*param_3)(0x57b);
+  uVar6 = (*param_3)(0x57c);
+  (*param_3)(0x57d);
+  uVar7 = (*param_3)(0x57a);
+  (*param_4)(0xc80,0xc);
+  uVar8 = (*param_3)(0xc81);
+  local_80[0] = (*param_3)(0xc81);
+  local_80[1] = (*param_3)(0xc81);
+  local_80[2] = (*param_3)(0xc81);
+  local_80[3] = (*param_3)(0xc81);
+  local_90.m_pHangCallback = param_2;
+  local_90.m_pReadReg = param_3;
+  local_90.m_pWriteReg = param_4;
+  if (param_1 != (D3DDevice *)0x0) {
     Hang::Out(&local_90,"ERR[D3D]: The GPU is hung!\n\n");
     Hang::Out(&local_90,"D3D version %i.%i %s, kernel %i, frame %i,\n");
     Hang::Out(&local_90,"Device 0x%x, Snooped 0x%x, NonSnooped 0x%x,\n");
@@ -276,31 +270,34 @@ void D3D::HangRecognizer(D3DDevice *param_1,_func___cdecl_void_char_ptr *param_2
     Hang::Out(&local_90,
               "It appears that a callback routine invoked by InsertCallback never\nreturned.  The callback routine is at address 0x%x and was passed\na context value of 0x%x.\n\n"
              );
-    goto LAB_8287d150;
+    return;
   }
-  uVar10 = (longlong)(int)uVar7 & 0xf8000000;
-  if (uVar10 == 0x8000000) {
-    if ((iVar2 != 0) && (*(int *)(iVar2 + 0x5f30) != 0)) {
+  uVar2 = (longlong)(int)uVar7 & 0xf8000000;
+  if (uVar2 == 0x8000000) {
+    if ((param_1 != (D3DDevice *)0x0) &&
+       (*(int *)((int)&param_1[2].m_Constants.field1_0x300 + 0x1b0) != 0)) {
       Hang::Out(&local_90,
                 "It appears that there is a deadlock on an asynchronous resources block.\nThe D3DASYNCBLOCK involved (0x%016I64x) hasn\'t been signaled via the\nSignalAsyncResources API.\n\n"
                );
-      goto LAB_8287d150;
+      return;
     }
     pcVar9 = 
     "It appears that there is a deadlock on an asynchronous resources block.\nThe D3DASYNCBLOCK involved hasn\'t been signaled via the\nSignalAsyncResources API.\n\n"
     ;
     goto LAB_8287d148;
   }
-  if (uVar10 == 0x10000000) {
-    if (iVar2 == 0) goto LAB_8287d150;
+  if (uVar2 == 0x10000000) {
+    if (param_1 == (D3DDevice *)0x0) {
+      return;
+    }
     pcVar9 = 
     "It appears there is a deadlock on an asynchronous command buffer.\nThe D3DASYNCCBBLOCK involved (0x%08x) hasn\'t been signaled via the\nSetAsyncCommandBuffer API.\n\n"
     ;
   }
   else {
-    if (uVar10 != 0x18000000) {
-      uVar10 = (longlong)(int)uVar7 & 0xc0000000;
-      if (uVar10 == 0x80000000) {
+    if (uVar2 != 0x18000000) {
+      uVar2 = (longlong)(int)uVar7 & 0xc0000000;
+      if (uVar2 == 0x80000000) {
         Hang::Out(&local_90,
                   "It appears there is a deadlock on an asynchronous command buffer call.\nThe IDirect3DAsyncCommandBufferCall9 involved (0x%p) hasn\'t been signaled.\n"
                  );
@@ -309,7 +306,7 @@ void D3D::HangRecognizer(D3DDevice *param_1,_func___cdecl_void_char_ptr *param_2
         ;
       }
       else {
-        if (uVar10 == 0xc0000000) {
+        if (uVar2 == 0xc0000000) {
           pcVar9 = 
           "It appears there is a deadlock on a NUI internal asynchronous\ncommand buffer lock. The Call involved (0x%p) hasn\'t been signaled.\n\n"
           ;
@@ -363,7 +360,7 @@ void D3D::HangRecognizer(D3DDevice *param_1,_func___cdecl_void_char_ptr *param_2
           bVar1 = true;
         }
         if (uVar5 != 0) {
-          HangCommandBufferDump(&local_90,uVar5,iVar12);
+          HangCommandBufferDump(&local_90,uVar5,iVar10);
         }
         if (bVar1) {
           pcVar9 = 
@@ -378,17 +375,17 @@ void D3D::HangRecognizer(D3DDevice *param_1,_func___cdecl_void_char_ptr *param_2
       }
 LAB_8287d148:
       Hang::Out(&local_90,pcVar9);
-      goto LAB_8287d150;
+      return;
     }
-    if (iVar2 == 0) goto LAB_8287d150;
+    if (param_1 == (D3DDevice *)0x0) {
+      return;
+    }
     pcVar9 = 
     "It appears there is a deadlock on a NUI internal asynchronous lock.\nThe semaphore involved (0x%08x) hasn\'t been signaled.\n\n"
     ;
   }
 LAB_8287cfc4:
   Hang::Out(&local_90,pcVar9);
-LAB_8287d150:
-  __restgprlr_19();
   return;
 }
 

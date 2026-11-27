@@ -20,41 +20,36 @@ void __thiscall D3D::CArena::~CArena(CArena *this)
 
 // 8289D138  Alloc  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/graphmicrocodebuilder.cpp:38)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void * __thiscall D3D::CArena::Alloc(CArena *this,ulong param_1)
 
 {
-  ulonglong uVar1;
-  undefined4 *puVar2;
+  void *pvVar1;
+  uint uVar2;
   undefined4 *puVar3;
-  int iVar4;
-  void *pvVar5;
-  longlong lVar6;
-  ulong uVar7;
+  ulong uVar4;
   
-  lVar6 = (longlong)(int)param_1;
-  puVar2 = (undefined4 *)__savegprlr_29(this);
-  uVar1 = lVar6 + 0xfU & 0xfffffff0;
-  if ((uint)puVar2[2] < uVar1) {
-    uVar7 = (ulong)(uVar1 + 0x10);
-    if ((uVar1 + 0x10 & 0xffffffff) < 0xfe70) {
-      uVar7 = 0xfe70;
+  uVar2 = param_1 + 0xf & 0xfffffff0;
+  if (this->m_Space < uVar2) {
+    uVar4 = uVar2 + 0x10;
+    if (uVar4 < 0xfe70) {
+      uVar4 = 0xfe70;
     }
-    puVar3 = XMemAlloc(uVar7,0x64800000);
+    puVar3 = XMemAlloc(uVar4,0x64800000);
     if (puVar3 == (undefined4 *)0x0) {
-      iVar4 = 0;
-      goto LAB_8289d1d4;
+      return (void *)0x0;
     }
-    *puVar3 = *puVar2;
-    *puVar2 = puVar3;
-    puVar2[1] = puVar3 + 4;
-    puVar2[2] = uVar7 - 0x10;
+    *puVar3 = this->m_Root;
+    this->m_Root = puVar3;
+    this->m_Current = puVar3 + 4;
+    this->m_Space = uVar4 - 0x10;
   }
-  iVar4 = puVar2[1];
-  puVar2[1] = iVar4 + (int)uVar1;
-  puVar2[2] = puVar2[2] - (int)uVar1;
-LAB_8289d1d4:
-  pvVar5 = (void *)__restgprlr_29(iVar4);
-  return pvVar5;
+  pvVar1 = this->m_Current;
+  this->m_Current = (void *)((int)pvVar1 + uVar2);
+  this->m_Space = this->m_Space - uVar2;
+  return pvVar1;
 }
 
 
@@ -128,138 +123,129 @@ FlowNode * __thiscall D3D::GraphMicrocodeBuilder::NewFlowNode(GraphMicrocodeBuil
 
 // 8289DB88  GMB_CSG_Callback  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/graphmicrocodebuilder.cpp:135)
 
-undefined4
-D3D::GMB_CSG_Callback(ulong param_1,ulong param_2,GPUSHADER_INSTRUCTION *param_3,void *param_4)
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
+int D3D::GMB_CSG_Callback(ulong param_1,ulong param_2,GPUSHADER_INSTRUCTION *param_3,void *param_4)
 
 {
   uint uVar1;
-  ulonglong uVar2;
-  FlowNode *pFVar3;
-  ALUNode *pAVar4;
-  undefined4 uVar5;
-  ulonglong uVar6;
-  ulonglong uVar7;
-  uint local_40 [16];
+  FlowNode *pFVar2;
+  ALUNode *pAVar3;
+  int iVar4;
+  int local_40 [16];
   
-  uVar6 = (ulonglong)(int)param_2;
-  uVar2 = __savegprlr_27(param_1);
-  uVar7 = 0;
+  iVar4 = 0;
   local_40[0] = 0;
-  if ((uVar2 & 0x40) == 0) {
-    if ((uVar2 & 1) == 0) {
-      pAVar4 = GraphMicrocodeBuilder::NewALUNode(*(GraphMicrocodeBuilder **)((int)param_4 + 0x18));
-      if (pAVar4 == (ALUNode *)0x0) {
-        uVar7 = 0xffffffff8007000e;
+  if ((param_1 & 0x40) == 0) {
+    if ((param_1 & 1) == 0) {
+      pAVar3 = GraphMicrocodeBuilder::NewALUNode(*(GraphMicrocodeBuilder **)((int)param_4 + 0x18));
+      if (pAVar3 == (ALUNode *)0x0) {
+        iVar4 = -0x7ff8fff2;
       }
       else {
-        uVar1 = *(uint *)&pAVar4->field_0x10;
-        (pAVar4->instruction).FlowPair.dword[0] = (param_3->FlowPair).dword[0];
-        (pAVar4->instruction).FlowPair.dword[1] = (param_3->FlowPair).dword[1];
-        (pAVar4->instruction).FlowPair.dword[2] = (param_3->FlowPair).dword[2];
-        *(uint *)&pAVar4->field_0x10 =
-             (uint)(((uVar2 & 0xffffffff) >> 3 & 2 | (uVar2 & 0xffffffff) >> 5 & 1) << 0x1d) |
-             (uint)((uVar2 & 0xffffffff) << 0x1e) & 0x80000000 | uVar1 & 0x1fffffff;
+        uVar1 = *(uint *)&pAVar3->field_0x10;
+        (pAVar3->instruction).FlowPair.dword[0] = (param_3->FlowPair).dword[0];
+        (pAVar3->instruction).FlowPair.dword[1] = (param_3->FlowPair).dword[1];
+        (pAVar3->instruction).FlowPair.dword[2] = (param_3->FlowPair).dword[2];
+        *(ulong *)&pAVar3->field_0x10 =
+             (param_1 >> 3 & 2 | param_1 >> 5 & 1) << 0x1d |
+             (param_1 & 2) << 0x1e | uVar1 & 0x1fffffff;
         if (*(undefined4 **)((int)param_4 + 8) == (undefined4 *)0x0) {
-          *(ALUNode **)(*(int *)((int)param_4 + 4) + 0x10) = pAVar4;
+          *(ALUNode **)(*(int *)((int)param_4 + 4) + 0x10) = pAVar3;
         }
         else {
-          **(undefined4 **)((int)param_4 + 8) = pAVar4;
+          **(undefined4 **)((int)param_4 + 8) = pAVar3;
         }
-        *(ALUNode **)((int)param_4 + 8) = pAVar4;
+        *(ALUNode **)((int)param_4 + 8) = pAVar3;
       }
     }
     else {
-      pFVar3 = GraphMicrocodeBuilder::NewFlowNode(*(GraphMicrocodeBuilder **)((int)param_4 + 0x18));
-      if (pFVar3 == (FlowNode *)0x0) {
-        uVar7 = 0xffffffff8007000e;
+      pFVar2 = GraphMicrocodeBuilder::NewFlowNode(*(GraphMicrocodeBuilder **)((int)param_4 + 0x18));
+      if (pFVar2 == (FlowNode *)0x0) {
+        iVar4 = -0x7ff8fff2;
       }
       else {
         if (*(int *)param_4 == 0) {
-          *(FlowNode **)param_4 = pFVar3;
+          *(FlowNode **)param_4 = pFVar2;
         }
         else {
-          **(undefined4 **)((int)param_4 + 4) = pFVar3;
+          **(undefined4 **)((int)param_4 + 4) = pFVar2;
         }
-        *(FlowNode **)((int)param_4 + 4) = pFVar3;
-        (pFVar3->instruction).dword[0] = (param_3->FlowPair).dword[0];
-        (pFVar3->instruction).dword[1] = (param_3->FlowPair).dword[1];
-        *(int *)((int)param_4 + 8) = 0;
-        if ((ulonglong)*(uint *)((int)param_4 + 0x10) <= (uVar6 & 0xffffffff)) {
-          D3DFastVector<D3D::FlowNode_*,&D3D::MemAlloc,&D3D::MemFree>::resize
-                    ((int *)((int)param_4 + 0xc),(int)uVar6 + 1,local_40);
-          uVar7 = (ulonglong)local_40[0];
-          if ((int)local_40[0] < 0) goto LAB_8289dcd8;
+        *(FlowNode **)((int)param_4 + 4) = pFVar2;
+        (pFVar2->instruction)._s_0._padding_ = (param_3->FlowPair).dword[0];
+        (pFVar2->instruction).dword[1] = (param_3->FlowPair).dword[1];
+        *(undefined4 *)((int)param_4 + 8) = 0;
+        if ((param_2 < *(uint *)((int)param_4 + 0x10)) ||
+           (D3DFastVector<D3D::FlowNode_*,&D3D::MemAlloc,&D3D::MemFree>::resize
+                      ((void *)((int)param_4 + 0xc),param_2 + 1,local_40), iVar4 = local_40[0],
+           -1 < local_40[0])) {
+          *(FlowNode **)(param_2 * 4 + *(int *)((int)param_4 + 0xc)) = pFVar2;
         }
-        *(FlowNode **)((int)((uVar6 & 0xffffffff) << 2) + *(int *)((int)param_4 + 0xc)) = pFVar3;
       }
     }
   }
   else {
-    uVar7 = 0xfffffffffffff002;
+    iVar4 = -0xffe;
   }
-LAB_8289dcd8:
-  uVar5 = __restgprlr_27(uVar7);
-  return uVar5;
+  return iVar4;
 }
 
 
 // 8289DCE0  ConvertShaderToGraph  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/graphmicrocodebuilder.cpp:197)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Removing unreachable block (ram,0x8289dd60) */
 /* WARNING: Removing unreachable block (ram,0x8289dd7c) */
 /* WARNING: Removing unreachable block (ram,0x8289dd90) */
 /* WARNING: Removing unreachable block (ram,0x8289dd9c) */
 /* WARNING: Removing unreachable block (ram,0x8289ddb8) */
 
-undefined4 __thiscall
+int __thiscall
 D3D::GraphMicrocodeBuilder::ConvertShaderToGraph
           (GraphMicrocodeBuilder *this,void *param_1,ulong param_2)
 
 {
   int iVar1;
-  int iVar2;
-  undefined4 uVar3;
   void *in_stack_ffffff68;
   
-  iVar1 = __savegprlr_29(this);
-  iVar2 = XMicrocodeShaderForEachInstruction
+  iVar1 = XMicrocodeShaderForEachInstruction
                     (param_1,param_2,(ulong *)0x0,0,(ulong *)0x0,(ulong *)0x0,0x27,GMB_CSG_Callback,
                      in_stack_ffffff68);
-  if (-1 < iVar2) {
-    *(undefined4 *)(iVar1 + 0xc) = 0;
-    *(undefined4 *)(iVar1 + 0x10) = 0;
+  if (-1 < iVar1) {
+    this->m_pShader = (FlowNode *)0x0;
+    this->m_pShaderEnd = (FlowNode *)0x0;
   }
-  uVar3 = __restgprlr_29(iVar2);
-  return uVar3;
+  return iVar1;
 }
 
 
 // 8289CFA0  GetShaderSize_Imp  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/graphmicrocodebuilder.cpp:233)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void D3D::GetShaderSize_Imp(FlowNode *param_1,ulong *param_2,ulong *param_3)
 
 {
-  undefined4 *puVar1;
-  undefined4 *puVar2;
-  int iVar3;
-  ulonglong uVar4;
+  ALUNode *pAVar1;
+  int iVar2;
+  uint uVar3;
   
-  puVar2 = (undefined4 *)__savegprlr_29(param_1);
-  iVar3 = 0;
-  uVar4 = 0;
-  for (; puVar2 != (undefined4 *)0x0; puVar2 = (undefined4 *)*puVar2) {
-    uVar4 = uVar4 + 1;
-    if ((1 << ((uint)puVar2[2] >> 0xc & 0xf) & 0x607eU) != 0) {
-      for (puVar1 = (undefined4 *)puVar2[4]; puVar1 != (undefined4 *)0x0;
-          puVar1 = (undefined4 *)*puVar1) {
-        iVar3 = iVar3 + 1;
+  iVar2 = 0;
+  uVar3 = 0;
+  for (; param_1 != (FlowNode *)0x0; param_1 = param_1->m_Next) {
+    uVar3 = uVar3 + 1;
+    if ((1 << ((param_1->instruction).dword[1] >> 0xc & 0xf) & 0x607eU) != 0) {
+      for (pAVar1 = param_1->m_Child; pAVar1 != (ALUNode *)0x0; pAVar1 = pAVar1->m_Next) {
+        iVar2 = iVar2 + 1;
       }
     }
   }
-  uVar4 = (uVar4 & 1) + uVar4;
-  *param_2 = ((int)((uVar4 & 0xffffffff) >> 1) + iVar3 + 1) * 0xc;
-  *param_3 = (ulong)uVar4;
-  __restgprlr_29();
+  uVar3 = (uVar3 & 1) + uVar3;
+  *param_2 = ((uVar3 >> 1) + iVar2 + 1) * 0xc;
+  *param_3 = uVar3;
   return;
 }
 
@@ -279,190 +265,186 @@ ulong __thiscall D3D::GraphMicrocodeBuilder::GetShaderSize(GraphMicrocodeBuilder
 
 // 8289D2F8  ConvertGraphToShader  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/graphmicrocodebuilder.cpp:270)
 
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
+
 undefined4 __thiscall
 D3D::GraphMicrocodeBuilder::ConvertGraphToShader
           (GraphMicrocodeBuilder *this,void *param_1,ulong param_2)
 
 {
-  undefined4 *puVar1;
-  int *piVar2;
-  uint uVar3;
-  bool bVar4;
+  FlowNode *pFVar1;
+  ALUNode *pAVar2;
+  undefined4 uVar3;
+  byte bVar4;
   bool bVar5;
-  uint uVar6;
-  int iVar7;
-  uint *puVar8;
-  undefined4 uVar9;
+  bool bVar6;
+  uint uVar7;
+  uint uVar8;
+  GPUFLOW_INSTRUCTION *pGVar9;
   uint uVar10;
   int iVar11;
   ulonglong uVar12;
-  longlong lVar13;
-  longlong lVar14;
+  int iVar13;
+  uint uVar14;
   ulonglong uVar15;
-  uint uVar16;
-  undefined8 uVar17;
-  int *piVar18;
-  int iVar19;
-  longlong lVar20;
-  int *piVar21;
+  ulong uVar16;
+  undefined4 uVar17;
+  ulong *puVar18;
   uint local_80;
   uint local_7c [3];
-  int local_70 [28];
+  ulong local_70;
+  uint local_6c;
+  uint local_68;
+  int local_64;
   
-  uVar12 = (ulonglong)(int)param_2;
-  lVar20 = (longlong)(int)param_1;
-  iVar7 = __savegprlr_22(this);
   uVar17 = 0;
-  GetShaderSize_Imp(*(FlowNode **)(iVar7 + 0xc),&local_80,local_7c);
+  GetShaderSize_Imp(this->m_pShader,&local_80,local_7c);
   if (local_80 < 0xc001) {
-    if ((uVar12 & 0xffffffff) < (ulonglong)local_80) {
-      uVar17 = 0xffffffff80004005;
+    if (param_2 < local_80) {
+      uVar17 = 0x80004005;
     }
     else {
-      lVar13 = 0;
+      iVar13 = 0;
       iVar11 = 0;
-      for (puVar1 = *(undefined4 **)(iVar7 + 0xc); puVar1 != (undefined4 *)0x0;
-          puVar1 = (undefined4 *)*puVar1) {
-        puVar1[5] = iVar11 << 0x13 | puVar1[5] & 0x7ffff;
+      for (pFVar1 = this->m_pShader; pFVar1 != (FlowNode *)0x0; pFVar1 = pFVar1->m_Next) {
+        uVar14 = (pFVar1->instruction).dword[1];
+        pFVar1->m_Address = iVar11;
         iVar11 = iVar11 + 1;
-        if (((1 << ((uint)puVar1[2] >> 0xc & 0xf) & 0x607eU) != 0) &&
-           (piVar21 = (int *)puVar1[4], piVar21 != (int *)0x0)) {
-          lVar14 = (lVar13 + (ulonglong)(local_7c[0] >> 1) & 0x7fff) << 0x11;
+        if (((1 << (uVar14 >> 0xc & 0xf) & 0x607eU) != 0) &&
+           (pAVar2 = pFVar1->m_Child, pAVar2 != (ALUNode *)0x0)) {
+          uVar14 = (iVar13 + (local_7c[0] >> 1)) * 0x20000;
           do {
-            lVar13 = lVar13 + 1;
-            uVar16 = (uint)lVar14;
-            lVar14 = lVar14 + 0x20000;
-            piVar21[4] = uVar16 & 0x1ffe0000 | piVar21[4] & 0xe001ffffU;
-            piVar21 = (int *)*piVar21;
-          } while (piVar21 != (int *)0x0);
+            iVar13 = iVar13 + 1;
+            pAVar2->m_Address = uVar14 >> 0x11;
+            pAVar2 = pAVar2->m_Next;
+            uVar14 = uVar14 + 0x20000;
+          } while (pAVar2 != (ALUNode *)0x0);
         }
       }
-      piVar21 = *(int **)(iVar7 + 0xc);
-      iVar7 = 0;
-      lVar13 = (ulonglong)(local_7c[0] >> 1) * 0xc + lVar20;
-      if (piVar21 != (int *)0x0) {
+      pFVar1 = this->m_pShader;
+      iVar11 = 0;
+      puVar18 = (ulong *)((local_7c[0] >> 1) * 0xc + (int)param_1);
+      if (pFVar1 != (FlowNode *)0x0) {
         do {
-          uVar16 = 1 << ((uint)piVar21[2] >> 0xc & 0xf);
-          if ((uVar16 & 0xb80) == 0) {
-            if ((uVar16 & 0x607e) != 0) {
-              piVar2 = (int *)piVar21[4];
-              puVar8 = (uint *)(piVar21 + 1);
-              if (piVar2 == (int *)0x0) {
-                *puVar8 = *puVar8 & 0xfffff000;
+          uVar14 = 1 << ((pFVar1->instruction).dword[1] >> 0xc & 0xf);
+          if ((uVar14 & 0xb80) == 0) {
+            if ((uVar14 & 0x607e) != 0) {
+              pAVar2 = pFVar1->m_Child;
+              pGVar9 = &pFVar1->instruction;
+              if (pAVar2 == (ALUNode *)0x0) {
+                pGVar9->dword[0] = pGVar9->dword[0] & 0xfffff000;
               }
               else {
-                *puVar8 = (uint)piVar2[4] >> 0x11 & 0xfff | *puVar8 & 0xfffff000;
+                pGVar9->dword[0] = pAVar2->m_Address | pGVar9->dword[0] & 0xfffff000;
               }
               uVar15 = 0;
               uVar12 = 0;
-              uVar16 = 0;
-              iVar11 = 1;
-              if (piVar2 != (int *)0x0) {
+              uVar14 = 0;
+              iVar13 = 1;
+              if (pAVar2 != (ALUNode *)0x0) {
                 uVar10 = 0;
                 do {
                   if (0xb < uVar10) break;
-                  uVar3 = piVar2[4];
-                  uVar15 = ((uint)((uVar3 & 0x80000000) != 0) | uVar3 >> 0x1c & 2) <<
+                  uVar3 = *(undefined4 *)&pAVar2->field_0x10;
+                  bVar4 = *(byte *)((int)&pAVar2->instruction + 8) & 0x1f;
+                  uVar15 = ((uint)(SPULL(uVar3,0x1f,1) != 0) | (uint)uVar3 >> 0x1c & 2) <<
                            (uVar10 & 0x3f) | uVar15;
-                  uVar12 = (uVar3 >> 0x1e & 1) << (uVar16 & 0x3f) | uVar12;
-                  if (((*(byte *)(piVar2 + 3) & 0x1f) < 0x14) ||
-                     (bVar5 = true, 0x17 < (*(byte *)(piVar2 + 3) & 0x1f))) {
+                  uVar12 = ((uint)uVar3 >> 0x1e & 1) << (uVar14 & 0x3f) | uVar12;
+                  uVar7 = (pAVar2->instruction).FlowPair.dword[0] >> 0x1a;
+                  if ((bVar4 < 0x14) || (bVar6 = true, 0x17 < bVar4)) {
+                    bVar6 = false;
+                  }
+                  if ((uVar7 < 0x1b) || (bVar5 = true, 0x22 < uVar7)) {
                     bVar5 = false;
                   }
-                  if (((uint)piVar2[1] >> 0x1a < 0x1b) ||
-                     (bVar4 = true, 0x22 < (uint)piVar2[1] >> 0x1a)) {
-                    bVar4 = false;
+                  if ((bVar6) || (bVar5)) {
+                    iVar13 = 0;
                   }
-                  if ((bVar5) || (bVar4)) {
-                    iVar11 = 0;
-                  }
-                  uVar16 = uVar16 + 1;
+                  uVar14 = uVar14 + 1;
                   uVar10 = uVar10 + 2;
-                  piVar18 = (int *)lVar13;
-                  *piVar18 = piVar2[1];
-                  piVar18[1] = piVar2[2];
-                  piVar18[2] = piVar2[3];
-                  lVar13 = lVar13 + 0xc;
-                  piVar2 = (int *)*piVar2;
-                } while (piVar2 != (int *)0x0);
-                if (6 < uVar16) {
-                  uVar17 = 0xfffffffffffff001;
-                  goto LAB_8289d69c;
+                  *puVar18 = (pAVar2->instruction).FlowPair.dword[0];
+                  puVar18[1] = (pAVar2->instruction).FlowPair.dword[1];
+                  puVar18[2] = (pAVar2->instruction).FlowPair.dword[2];
+                  puVar18 = puVar18 + 3;
+                  pAVar2 = pAVar2->m_Next;
+                } while (pAVar2 != (ALUNode *)0x0);
+                if (6 < uVar14) {
+                  return 0xfffff001;
                 }
               }
-              uVar10 = piVar21[2];
-              uVar3 = (uint)(uVar12 >> 4) & 3;
-              piVar21[2] = uVar3 | uVar10 & 0xfffffffc;
-              uVar6 = uVar10 >> 0xc & 0xf;
-              *puVar8 = (uint)((((uVar12 & 0xffff) << 0xc | uVar15 & 0xffffffff00000fff) << 4 |
-                               (ulonglong)uVar16 & 7) << 0xc) | *puVar8 & 0x8fff;
-              if (uVar6 < 7) {
-                if (uVar6 < 5) {
-                  if (uVar6 != 0) {
-                    if (uVar6 < 3) goto LAB_8289d5a0;
-                    if (uVar6 == 3) goto LAB_8289d5d4;
-                    if (uVar6 == 4) goto LAB_8289d5bc;
+              uVar10 = (pFVar1->instruction).dword[1];
+              uVar7 = (uint)(uVar12 >> 4) & 3;
+              (pFVar1->instruction).dword[1] = uVar7 | uVar10 & 0xfffffffc;
+              uVar8 = uVar10 >> 0xc & 0xf;
+              pGVar9->dword[0] =
+                   (uint)((((uVar12 & 0xffff) << 0xc | uVar15 & 0xffffffff00000fff) << 4 |
+                          (ulonglong)uVar14 & 7) << 0xc) | pGVar9->dword[0] & 0x8fff;
+              if (uVar8 < 7) {
+                if (uVar8 < 5) {
+                  if (uVar8 != 0) {
+                    if (uVar8 < 3) goto LAB_8289d5a0;
+                    if (uVar8 == 3) goto LAB_8289d5d4;
+                    if (uVar8 == 4) goto LAB_8289d5bc;
                   }
                   goto LAB_8289d5f0;
                 }
 LAB_8289d5a0:
-                uVar16 = iVar11 << 9 | uVar3 | uVar10 & 0xfffffdfc;
+                uVar16 = iVar13 << 9 | uVar7 | uVar10 & 0xfffffdfc;
               }
               else {
-                if (uVar6 == 0xd) {
+                if (uVar8 == 0xd) {
 LAB_8289d5d4:
-                  uVar16 = (-(uint)(iVar11 != 0) & 10) + 3;
+                  uVar14 = (-(uint)(iVar13 != 0) & 10) + 3;
                 }
                 else {
-                  if (uVar6 != 0xe) goto LAB_8289d5f0;
+                  if (uVar8 != 0xe) goto LAB_8289d5f0;
 LAB_8289d5bc:
-                  uVar16 = (-(uint)(iVar11 != 0) & 10) + 4;
+                  uVar14 = (-(uint)(iVar13 != 0) & 10) + 4;
                 }
-                uVar16 = (uVar16 & 0xf) << 0xc | uVar3 | uVar10 & 0xffff0ffc;
+                uVar16 = (uVar14 & 0xf) << 0xc | uVar7 | uVar10 & 0xffff0ffc;
               }
-              piVar21[2] = uVar16;
+              (pFVar1->instruction).dword[1] = uVar16;
             }
           }
           else {
-            piVar21[1] = *(uint *)(piVar21[3] + 0x14) >> 0x13 | piVar21[1] & 0xffffe000U;
+            (pFVar1->instruction).dword[0] =
+                 pFVar1->m_Destination->m_Address | (pFVar1->instruction).dword[0] & 0xffffe000;
           }
 LAB_8289d5f0:
-          iVar11 = piVar21[2];
-          iVar19 = iVar7 + 1;
-          local_70[iVar7 * 2] = piVar21[1];
-          local_70[iVar7 * 2 + 1] = iVar11;
-          iVar7 = iVar19;
-          if (iVar19 == 2) {
-            iVar7 = 0;
-            piVar2 = (int *)lVar20;
-            piVar2[1] = local_70[2] << 0x10 | local_70[1] & 0xffffU;
-            piVar2[2] = (uint)local_70[2] >> 0x10 | local_70[3] << 0x10;
-            *piVar2 = local_70[0];
-            lVar20 = lVar20 + 0xc;
+          uVar16 = (pFVar1->instruction).dword[1];
+          iVar13 = iVar11 + 1;
+          (&local_70)[iVar11 * 2] = (pFVar1->instruction)._s_0._padding_;
+          (&local_70)[iVar11 * 2 + 1] = uVar16;
+          iVar11 = iVar13;
+          if (iVar13 == 2) {
+            iVar11 = 0;
+            *(uint *)((int)param_1 + 4) = local_68 << 0x10 | local_6c & 0xffff;
+            *(uint *)((int)param_1 + 8) = local_68 >> 0x10 | local_64 << 0x10;
+            *(ulong *)param_1 = local_70;
+            param_1 = (void *)((int)param_1 + 0xc);
           }
-          piVar21 = (int *)*piVar21;
-        } while (piVar21 != (int *)0x0);
-        if (iVar7 == 1) {
-          local_70[2] = 0;
-          local_70[3] = 0;
-          piVar21 = (int *)lVar20;
-          *piVar21 = local_70[0];
-          piVar21[1] = local_70[1] & 0xffff;
-          piVar21[2] = 0;
+          pFVar1 = pFVar1->m_Next;
+        } while (pFVar1 != (FlowNode *)0x0);
+        if (iVar11 == 1) {
+          *(ulong *)param_1 = local_70;
+          *(uint *)((int)param_1 + 4) = local_6c & 0xffff;
+          *(ulong *)((int)param_1 + 8) = 0;
         }
       }
     }
   }
   else {
-    uVar17 = 0xfffffffffffff000;
+    uVar17 = 0xfffff000;
   }
-LAB_8289d69c:
-  uVar9 = __restgprlr_22(uVar17);
-  return uVar9;
+  return uVar17;
 }
 
 
 // 8289D6B8  AddFlowAfter  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/graphmicrocodebuilder.cpp:420)
+
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 
 undefined4 __thiscall
 D3D::GraphMicrocodeBuilder::AddFlowAfter
@@ -471,130 +453,111 @@ D3D::GraphMicrocodeBuilder::AddFlowAfter
 
 {
   bool bVar1;
-  GraphMicrocodeBuilder *this_00;
   FlowNode *pFVar2;
   undefined4 uVar3;
-  ulonglong uVar4;
-  ulonglong uVar5;
-  undefined8 uVar6;
   
-  uVar5 = (ulonglong)(int)param_3;
-  uVar4 = (ulonglong)(int)param_1;
-  this_00 = (GraphMicrocodeBuilder *)__savegprlr_27(this);
-  uVar6 = 0;
-  pFVar2 = NewFlowNode(this_00);
+  uVar3 = 0;
+  pFVar2 = NewFlowNode(this);
   if (pFVar2 == (FlowNode *)0x0) {
-    uVar6 = 0xffffffff8007000e;
+    uVar3 = 0x8007000e;
   }
   else {
-    (pFVar2->instruction).dword[0] = (param_2->_s_0)._padding_;
+    (pFVar2->instruction)._s_0._padding_ = (param_2->_s_0)._padding_;
     (pFVar2->instruction).dword[1] = param_2->dword[1];
-    if ((uVar4 & 0xffffffff) == 0) {
-      pFVar2->m_Next = this_00->m_pShader;
-      this_00->m_pShader = pFVar2;
-      bVar1 = this_00->m_pShaderEnd == (FlowNode *)0x0;
+    if (param_1 == (FlowNode *)0x0) {
+      pFVar2->m_Next = this->m_pShader;
+      this->m_pShader = pFVar2;
+      bVar1 = this->m_pShaderEnd == (FlowNode *)0x0;
     }
     else {
-      pFVar2->m_Next = (FlowNode *)*(undefined4 *)uVar4;
-      *(undefined4 *)uVar4 = pFVar2;
-      bVar1 = (uVar4 & 0xffffffff) == ZEXT48(this_00->m_pShaderEnd);
+      pFVar2->m_Next = param_1->m_Next;
+      param_1->m_Next = pFVar2;
+      bVar1 = param_1 == this->m_pShaderEnd;
     }
     if (bVar1) {
-      this_00->m_pShaderEnd = pFVar2;
+      this->m_pShaderEnd = pFVar2;
     }
-    if ((uVar5 & 0xffffffff) != 0) {
-      *(undefined4 *)uVar5 = pFVar2;
+    if (param_3 != (FlowNode **)0x0) {
+      *param_3 = pFVar2;
     }
   }
-  uVar3 = __restgprlr_27(uVar6);
   return uVar3;
 }
 
 
 // 8289D9B8  AddALUAfter  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/graphmicrocodebuilder.cpp:489)
 
-undefined4 __thiscall
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
+
+int __thiscall
 D3D::GraphMicrocodeBuilder::AddALUAfter
           (GraphMicrocodeBuilder *this,FlowNode *param_1,ALUNode *param_2,bool param_3,bool param_4,
           GPUSHADER_INSTRUCTION *param_5,FlowNode **param_6,ALUNode **param_7)
 
 {
-  GraphMicrocodeBuilder *this_00;
   ALUNode *pAVar1;
   int iVar2;
-  undefined4 uVar3;
-  ulonglong uVar4;
-  FlowNode *pFVar5;
-  ulonglong uVar6;
-  ulonglong uVar7;
-  ulonglong uVar8;
-  ulonglong uVar9;
-  ulonglong uVar10;
   FlowNode *pFStack0000001c;
   FlowNode *local_60 [24];
   
-  uVar9 = (ulonglong)(int)param_7;
-  uVar8 = (ulonglong)(int)param_6;
-  uVar7 = (ulonglong)param_4;
-  uVar6 = (ulonglong)param_3;
-  uVar10 = (ulonglong)(int)param_2;
-  uVar4 = (ulonglong)(int)param_1;
-  this_00 = (GraphMicrocodeBuilder *)__savegprlr_22(this);
-  pFVar5 = (FlowNode *)uVar4;
   iVar2 = 0;
-  pFStack0000001c = pFVar5;
-  pAVar1 = NewALUNode(this_00);
+  pFStack0000001c = param_1;
+  pAVar1 = NewALUNode(this);
   if (pAVar1 == (ALUNode *)0x0) {
     iVar2 = -0x7ff8fff2;
   }
   else {
-    pAVar1->isVertexFetch = uVar7;
-    pAVar1->isFetch = uVar6;
+    pAVar1->isVertexFetch = (int)param_4;
+    pAVar1->isFetch = (int)param_3;
     (pAVar1->instruction).FlowPair.dword[0] = (param_5->FlowPair).dword[0];
     (pAVar1->instruction).FlowPair.dword[1] = (param_5->FlowPair).dword[1];
     (pAVar1->instruction).FlowPair.dword[2] = (param_5->FlowPair).dword[2];
-    if ((((uVar4 & 0xffffffff) != 0) &&
-        ((1 << ((pFVar5->instruction).dword[1] >> 0xc & 0xf) & 0x607eU) != 0)) ||
-       (iVar2 = CreateExecAfter(this_00,pFVar5,&stack0x0000001c), pFVar5 = pFStack0000001c,
+    if (((param_1 != (FlowNode *)0x0) &&
+        ((1 << ((param_1->instruction).dword[1] >> 0xc & 0xf) & 0x607eU) != 0)) ||
+       (iVar2 = CreateExecAfter(this,param_1,&stack0x0000001c), param_1 = pFStack0000001c,
        -1 < iVar2)) {
-      if (((pFVar5->instruction).dword[0] & 0x7000) == 0x6000) {
-        iVar2 = SplitExecBlock(this_00,pFVar5,(ALUNode *)uVar10,local_60);
-        if (iVar2 < 0) goto LAB_8289db1c;
-        if (((pFVar5->instruction).dword[0] & 0x7000) == 0x6000) {
-          uVar10 = 0;
-          pFVar5 = local_60[0];
+      if (((param_1->instruction).dword[0] & 0x7000) == 0x6000) {
+        iVar2 = SplitExecBlock(this,param_1,param_2,local_60);
+        if (iVar2 < 0) {
+          return iVar2;
+        }
+        if (((param_1->instruction).dword[0] & 0x7000) == 0x6000) {
+          param_2 = (ALUNode *)0x0;
+          param_1 = local_60[0];
         }
       }
-      if ((uVar10 & 0xffffffff) == 0) {
-        pAVar1->m_Next = pFVar5->m_Child;
-        pFVar5->m_Child = pAVar1;
+      if (param_2 == (ALUNode *)0x0) {
+        pAVar1->m_Next = param_1->m_Child;
+        param_1->m_Child = pAVar1;
       }
       else {
-        pAVar1->m_Next = (ALUNode *)*(undefined4 *)uVar10;
-        *(undefined4 *)uVar10 = pAVar1;
+        pAVar1->m_Next = param_2->m_Next;
+        param_2->m_Next = pAVar1;
       }
-      (pFVar5->instruction).dword[0] =
-           (pFVar5->instruction).dword[0] & 0xffff8fff |
-           ((pFVar5->instruction).dword[0] & 0xfffff000) + 0x1000 & 0x7000;
+      (param_1->instruction).dword[0] =
+           (param_1->instruction).dword[0] & 0xffff8fff |
+           ((param_1->instruction).dword[0] & 0xfffff000) + 0x1000 & 0x7000;
       if (-1 < iVar2) {
-        if ((uVar8 & 0xffffffff) != 0) {
-          *(undefined4 *)uVar8 = pFVar5;
+        if (param_6 != (FlowNode **)0x0) {
+          *param_6 = param_1;
         }
-        if ((uVar9 & 0xffffffff) != 0) {
-          *(undefined4 *)uVar9 = pAVar1;
+        if (param_7 != (ALUNode **)0x0) {
+          *param_7 = pAVar1;
         }
       }
     }
   }
-LAB_8289db1c:
-  uVar3 = __restgprlr_22(iVar2);
-  return uVar3;
+  return iVar2;
 }
 
 
 // 8289D858  SplitExecBlock  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/graphmicrocodebuilder.cpp:562)
 
-undefined4 __thiscall
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
+int __thiscall
 D3D::GraphMicrocodeBuilder::SplitExecBlock
           (GraphMicrocodeBuilder *this,FlowNode *param_1,ALUNode *param_2,FlowNode **param_3)
 
@@ -602,24 +565,19 @@ D3D::GraphMicrocodeBuilder::SplitExecBlock
   uint uVar1;
   uint uVar2;
   uint uVar3;
-  GraphMicrocodeBuilder *this_00;
   int iVar4;
-  undefined4 uVar5;
-  ulonglong uVar6;
-  ulonglong uVar7;
-  int iVar8;
-  GPUFLOW_INSTRUCTION *pGVar9;
-  GPUFLOW_INSTRUCTION *pGVar10;
-  ALUNode *pAVar11;
+  int iVar5;
+  GPUFLOW_INSTRUCTION *pGVar6;
+  GPUFLOW_INSTRUCTION *pGVar7;
+  ALUNode *pAVar8;
   FlowNode *local_30 [12];
   
-  uVar7 = (ulonglong)(int)param_3;
-  uVar6 = (ulonglong)(int)param_2;
-  this_00 = (GraphMicrocodeBuilder *)__savegprlr_28(this);
-  iVar4 = CreateExecAfter(this_00,param_1,local_30);
-  if (iVar4 < 0) goto LAB_8289d9a4;
-  pGVar9 = &param_1->instruction;
-  pGVar10 = &local_30[0]->instruction;
+  iVar4 = CreateExecAfter(this,param_1,local_30);
+  if (iVar4 < 0) {
+    return iVar4;
+  }
+  pGVar6 = &param_1->instruction;
+  pGVar7 = &local_30[0]->instruction;
   (local_30[0]->instruction).dword[1] =
        (param_1->instruction).dword[1] & 0xf000 | (local_30[0]->instruction).dword[1] & 0xffff0fff;
   uVar1 = (param_1->instruction).dword[1];
@@ -627,146 +585,130 @@ D3D::GraphMicrocodeBuilder::SplitExecBlock
        ((byte)(&DAT_821fccbc)[uVar1 >> 0xc & 0xf] & 0xf) << 0xc | uVar1 & 0xffff0fff;
   uVar2 = (local_30[0]->instruction).dword[1];
   uVar3 = uVar2 >> 0xc & 0xf;
-  if (2 < uVar3) {
-    if (uVar3 < 5) {
-LAB_8289d8f8:
+  if (uVar3 < 3) goto LAB_8289d90c;
+  if (4 < uVar3) {
+    if (uVar3 < 7) {
       (local_30[0]->instruction).dword[1] = uVar2 & 0xfffffbff | uVar1 & 0x400;
-      (local_30[0]->instruction).dword[1] =
-           uVar2 & 0xfffff803 | uVar1 & 0x400 | (param_1->instruction).dword[1] & 0x3fc;
+      goto LAB_8289d90c;
     }
-    else if (uVar3 < 7) {
-      (local_30[0]->instruction).dword[1] = uVar2 & 0xfffffbff | uVar1 & 0x400;
-    }
-    else if ((0xc < uVar3) && (uVar3 < 0xf)) goto LAB_8289d8f8;
+    if ((uVar3 < 0xd) || (0xe < uVar3)) goto LAB_8289d90c;
   }
-  if ((uVar6 & 0xffffffff) == 0) {
+  (local_30[0]->instruction).dword[1] = uVar2 & 0xfffffbff | uVar1 & 0x400;
+  (local_30[0]->instruction).dword[1] =
+       uVar2 & 0xfffff803 | uVar1 & 0x400 | (param_1->instruction).dword[1] & 0x3fc;
+LAB_8289d90c:
+  if (param_2 == (ALUNode *)0x0) {
     local_30[0]->m_Child = param_1->m_Child;
     param_1->m_Child = (ALUNode *)0x0;
-    pGVar10->dword[0] = pGVar9->dword[0] & 0x7000 | pGVar10->dword[0] & 0xffff8fff;
-    pGVar9->dword[0] = pGVar9->dword[0] & 0xffff8fff;
+    pGVar7->dword[0] = pGVar6->dword[0] & 0x7000 | pGVar7->dword[0] & 0xffff8fff;
+    pGVar6->dword[0] = pGVar6->dword[0] & 0xffff8fff;
   }
   else {
-    pAVar11 = (ALUNode *)*(int *)uVar6;
-    if (pAVar11 != (ALUNode *)0x0) {
-      iVar8 = 0;
-      local_30[0]->m_Child = pAVar11;
-      *(int *)uVar6 = 0;
+    pAVar8 = param_2->m_Next;
+    if (pAVar8 != (ALUNode *)0x0) {
+      iVar5 = 0;
+      local_30[0]->m_Child = pAVar8;
+      param_2->m_Next = (ALUNode *)0x0;
       do {
-        pAVar11 = pAVar11->m_Next;
-        iVar8 = iVar8 + 1;
-      } while (pAVar11 != (ALUNode *)0x0);
-      pGVar9->dword[0] = pGVar9->dword[0] & 0xffff8fff | pGVar9->dword[0] + iVar8 * -0x1000 & 0x7000
+        pAVar8 = pAVar8->m_Next;
+        iVar5 = iVar5 + 1;
+      } while (pAVar8 != (ALUNode *)0x0);
+      pGVar6->dword[0] = pGVar6->dword[0] & 0xffff8fff | pGVar6->dword[0] + iVar5 * -0x1000 & 0x7000
       ;
-      pGVar10->dword[0] = iVar8 * 0x1000 & 0x7000U | pGVar10->dword[0] & 0xffff8fff;
+      pGVar7->dword[0] = iVar5 * 0x1000 & 0x7000U | pGVar7->dword[0] & 0xffff8fff;
     }
   }
-  if ((uVar7 & 0xffffffff) != 0) {
-    *(int *)uVar7 = (int)local_30[0];
+  if (param_3 != (FlowNode **)0x0) {
+    *param_3 = local_30[0];
   }
-LAB_8289d9a4:
-  uVar5 = __restgprlr_28(iVar4);
-  return uVar5;
+  return iVar4;
 }
 
 
 // 8289D088  ComputeSwizzle  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/graphmicrocodebuilder.cpp:666)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 ulong D3D::GraphMicrocodeBuilder::ComputeSwizzle
                 (ulong param_1,ulong param_2,ulong param_3,ulong param_4)
 
 {
-  ulonglong uVar1;
-  ulong uVar2;
-  longlong lVar3;
-  longlong lVar4;
-  longlong lVar5;
-  
-  lVar5 = (longlong)(int)param_4;
-  lVar4 = (longlong)(int)param_3;
-  lVar3 = (longlong)(int)param_2;
-  uVar1 = __savegprlr_28(param_1,lVar3,lVar4,lVar5);
-  uVar2 = __restgprlr_28(((lVar4 - 2U & 3) << 2 | lVar3 - 1U & 3) << 2 | (lVar5 + 1U & 3) << 6 |
-                         uVar1 & 3);
-  return uVar2;
+  return ((param_3 - 2 & 3) << 2 | param_2 - 1 & 3) << 2 | (param_4 + 1) * 0x40 & 0xc0 | param_1 & 3
+  ;
 }
 
 
 // 8289D760  CreateExecAfter  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/graphmicrocodebuilder.cpp:681)
+
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 
 undefined4 __thiscall
 D3D::GraphMicrocodeBuilder::CreateExecAfter
           (GraphMicrocodeBuilder *this,FlowNode *param_1,FlowNode **param_2)
 
 {
-  GraphMicrocodeBuilder *this_00;
   T_HRESULT TVar1;
-  undefined4 uVar2;
   GPUFLOW_INSTRUCTION local_30 [6];
   
-  this_00 = (GraphMicrocodeBuilder *)__savegprlr_29(this);
   local_30[0] = (GPUFLOW_INSTRUCTION)0x1000;
-  TVar1 = AddFlowAfter(this_00,param_1,local_30,param_2);
-  uVar2 = __restgprlr_29(TVar1);
-  return uVar2;
+  TVar1 = AddFlowAfter(this,param_1,local_30,param_2);
+  return TVar1;
 }
 
 
 // 8289DB30  resize  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/xgshared.hpp:881)
+
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 
 void __thiscall
 D3D::D3DFastVector<D3D::FlowNode_*,&D3D::MemAlloc,&D3D::MemFree>::resize
           (void *this,ulong param_1,T_HRESULT *param_2)
 
 {
-  void *this_00;
-  ulonglong uVar1;
-  
-  uVar1 = (ulonglong)(int)param_1;
-  this_00 = (void *)__savegprlr_29(this);
-  if ((ulonglong)*(uint *)((int)this_00 + 8) < (uVar1 & 0xffffffff)) {
-    ensure2(this_00,(ulong)uVar1,param_2);
+  if (*(uint *)((int)this + 8) < param_1) {
+    ensure2(this,param_1,param_2);
   }
   if (-1 < (int)*param_2) {
-    *(ulong *)((int)this_00 + 4) = (ulong)uVar1;
+    *(ulong *)((int)this + 4) = param_1;
   }
-  __restgprlr_29();
   return;
 }
 
 
 // 8289D7C0  ensure2  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/xgshared.hpp:914)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void __thiscall
 D3D::D3DFastVector<D3D::FlowNode_*,&D3D::MemAlloc,&D3D::MemFree>::ensure2
           (void *this,ulong param_1,T_HRESULT *param_2)
 
 {
-  int *piVar1;
-  void *pvVar2;
-  ulonglong uVar3;
-  ulonglong uVar4;
+  void *pvVar1;
+  uint uVar2;
   
-  uVar3 = (ulonglong)(int)param_1;
-  piVar1 = (int *)__savegprlr_28(this);
-  if ((ulonglong)(uint)piVar1[2] < (uVar3 & 0xffffffff)) {
-    uVar4 = ((ulonglong)(uint)piVar1[2] & 0x7fffffff) << 1;
-    if (uVar4 < (uVar3 & 0xffffffff)) {
-      uVar4 = uVar3;
+  if (*(uint *)((int)this + 8) < param_1) {
+    uVar2 = *(uint *)((int)this + 8) << 1;
+    if (uVar2 < param_1) {
+      uVar2 = param_1;
     }
-    pvVar2 = XMemAlloc((ulong)((uVar4 & 0xffffffff) << 2),0x64800000);
-    if (pvVar2 == (void *)0x0) {
+    pvVar1 = XMemAlloc(uVar2 << 2,0x64800000);
+    if (pvVar1 == (void *)0x0) {
       *param_2 = 0x8007000e;
     }
     else {
-      piVar1[2] = (int)uVar4;
-      if (*piVar1 != 0) {
+      *(uint *)((int)this + 8) = uVar2;
+      if (*(int *)this != 0) {
         memcpy();
-        XMemFree((void *)*piVar1,0x24800000);
+        XMemFree(*(void **)this,0x24800000);
       }
-      *piVar1 = (int)pvVar2;
+      *(void **)this = pvVar1;
     }
   }
-  __restgprlr_28();
   return;
 }
 

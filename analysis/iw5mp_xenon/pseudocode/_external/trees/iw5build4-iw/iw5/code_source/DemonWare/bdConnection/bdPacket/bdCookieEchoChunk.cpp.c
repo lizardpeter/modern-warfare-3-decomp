@@ -16,42 +16,41 @@ bdCookieEchoChunk * __thiscall bdCookieEchoChunk::bdCookieEchoChunk(bdCookieEcho
 
 // 82939A08  bdCookieEchoChunk  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdconnection/bdpacket/bdcookieechochunk.cpp:24)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 bdCookieEchoChunk * __thiscall
 bdCookieEchoChunk::bdCookieEchoChunk(bdCookieEchoChunk *this,bdReference<bdByteBuffer> param_1)
 
 {
-  bdChunkTypes bVar1;
+  bdByteBuffer *pbVar1;
   uint uVar2;
-  bdChunk *this_00;
-  bdCookieEchoChunk *pbVar3;
-  longlong lVar4;
-  uint *puVar5;
+  longlong lVar3;
+  uint *puVar4;
   char in_RESERVE;
   byte in_cr0;
-  bdByteBuffer *pbStack0000001c;
+  bdReference<bdByteBuffer> bStack0000001c;
   
-  this_00 = (bdChunk *)__savegprlr_29(this);
-  pbStack0000001c = param_1.m_ptr;
-  bdChunk::bdChunk(this_00,BD_CT_COOKIE_ECHO);
-  this_00[1]._padding_ = 0;
-  this_00->_padding_ = (int)&_vftable_;
-  this_00[1]._padding_ = 0;
-  bVar1 = (param_1.m_ptr)->_padding_;
-  this_00[1].m_type = bVar1;
-  if ((ulonglong)bVar1 != 0) {
-    lVar4 = (ulonglong)bVar1 + 4;
+  bStack0000001c.m_ptr = param_1.m_ptr;
+  bdChunk::bdChunk((bdChunk *)this,BD_CT_COOKIE_ECHO);
+  this->m_flags = BD_CE_NO_FLAGS;
+  this->_padding_ = (int)&_vftable_;
+  (this->m_cookie).m_ptr = (bdCookie *)0x0;
+  pbVar1 = (bdByteBuffer *)(param_1.m_ptr)->_padding_;
+  (this->m_cookieBuffer).m_ptr = pbVar1;
+  if (ZEXT48(pbVar1) != 0) {
+    lVar3 = ZEXT48(pbVar1) + 4;
     do {
-      puVar5 = (uint *)lVar4;
+      puVar4 = (uint *)lVar3;
       if (in_RESERVE != '\0') {
-        uVar2 = storeWordConditionalIndexed((ulonglong)*puVar5 + 1,0,lVar4);
-        *puVar5 = uVar2;
+        uVar2 = storeWordConditionalIndexed((ulonglong)*puVar4 + 1,0,lVar3);
+        *puVar4 = uVar2;
         in_cr0 = 2;
       }
     } while (!(bool)(in_cr0 >> 1 & 1));
   }
   bdReference<bdByteBuffer>::~bdReference<bdByteBuffer>((bdReference<bdByteBuffer> *)param_1.m_ptr);
-  pbVar3 = (bdCookieEchoChunk *)__restgprlr_29(this_00);
-  return pbVar3;
+  return this;
 }
 
 
@@ -85,95 +84,99 @@ bool __thiscall bdCookieEchoChunk::getCookie(bdCookieEchoChunk *this,bdReference
 
 // 82939AC8  serialize  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdconnection/bdpacket/bdcookieechochunk.cpp:49)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 uint __thiscall bdCookieEchoChunk::serialize(bdCookieEchoChunk *this,uchar *param_1,uint param_2)
 
 {
-  undefined1 *puVar1;
-  bdChunk *this_00;
-  bool bVar3;
-  bool bVar4;
-  uint uVar2;
-  ulonglong uVar5;
-  uchar *puVar6;
+  bdByteBuffer *pbVar1;
+  uchar *puVar2;
+  undefined1 *puVar3;
+  bool bVar5;
+  bool bVar6;
+  uint uVar4;
   uchar *puVar7;
   uint uVar8;
   uint *puVar9;
-  undefined1 *puVar10;
-  int iVar11;
-  longlong lVar12;
+  int iVar10;
+  longlong lVar11;
   undefined1 local_40 [2];
   undefined2 local_3e;
   undefined1 uStack_3c;
-  undefined1 local_3b [3];
+  uchar local_3b [3];
   uint local_38;
   uint local_34 [13];
   
-  uVar5 = (ulonglong)(int)param_1;
-  this_00 = (bdChunk *)__savegprlr_28(this);
   local_38 = 0;
-  if ((this_00[1]._padding_ == 0) && (this_00[1].m_type == BD_CT_INVALID)) goto LAB_82939c60;
-  puVar6 = (uchar *)uVar5;
-  local_38 = bdChunk::serialize(this_00,puVar6,param_2);
-  local_40[0] = (undefined1)this_00[1]._padding_;
-  bVar3 = bdBytePacker::appendBuffer(puVar6,param_2,local_38,&local_38,local_40,1);
-  if (this_00[1].m_type == BD_CT_INVALID) {
+  if (((this->m_cookie).m_ptr == (bdCookie *)0x0) &&
+     ((this->m_cookieBuffer).m_ptr == (bdByteBuffer *)0x0)) {
+    return 0;
+  }
+  local_38 = bdChunk::serialize((bdChunk *)this,param_1,param_2);
+  local_40[0] = (undefined1)this->m_flags;
+  bVar5 = bdBytePacker::appendBuffer(param_1,param_2,local_38,&local_38,local_40,1);
+  pbVar1 = (this->m_cookieBuffer).m_ptr;
+  if (pbVar1 == (bdByteBuffer *)0x0) {
     local_34[0] = local_38;
     local_38 = local_38 + 2;
-    puVar7 = puVar6 + local_38;
-    if ((uVar5 & 0xffffffff) == 0) {
+    puVar7 = param_1 + local_38;
+    if (param_1 == (uchar *)0x0) {
       puVar7 = (uchar *)0x0;
     }
-    uVar2 = bdCookie::serialize((bdCookie *)this_00[1]._padding_,puVar7,param_2 - local_38);
-    local_3e = (short)uVar2;
-    local_38 = (uVar2 & 0xffff) + local_38;
-    if (!bVar3) goto LAB_82939c60;
-    iVar11 = 0;
+    uVar4 = bdCookie::serialize((this->m_cookie).m_ptr,puVar7,param_2 - local_38);
+    local_38 = (uVar4 & 0xffff) + local_38;
+    local_3e = (short)uVar4;
+    if (!bVar5) {
+      return local_38;
+    }
+    iVar10 = 0;
     puVar9 = &local_38;
-    lVar12 = 2;
+    lVar11 = 2;
     do {
-      puVar10 = (undefined1 *)((int)&local_3e + iVar11);
-      iVar11 = iVar11 + 1;
+      puVar3 = (undefined1 *)((int)&local_3e + iVar10);
+      iVar10 = iVar10 + 1;
       puVar9 = (uint *)((int)puVar9 + -1);
-      *(undefined1 *)puVar9 = *puVar10;
-      lVar12 = lVar12 + -1;
-    } while (lVar12 != 0);
-    uVar2 = 2;
-    puVar10 = local_3b + 1;
+      *(undefined1 *)puVar9 = *puVar3;
+      lVar11 = lVar11 + -1;
+    } while (lVar11 != 0);
+    uVar4 = 2;
+    puVar7 = local_3b + 1;
     puVar9 = local_34;
     uVar8 = local_34[0];
+    goto LAB_82939c54;
+  }
+  uVar4 = pbVar1->m_size;
+  local_3e = (short)uVar4;
+  if (bVar5) {
+    iVar10 = 0;
+    puVar7 = local_3b + 1;
+    lVar11 = 2;
+    do {
+      puVar2 = (uchar *)((int)&local_3e + iVar10);
+      iVar10 = iVar10 + 1;
+      puVar7 = puVar7 + -1;
+      *puVar7 = *puVar2;
+      lVar11 = lVar11 + -1;
+    } while (lVar11 != 0);
+    bVar6 = bdBytePacker::appendBuffer(param_1,param_2,local_38,&local_38,&uStack_3c,2);
+    bVar5 = true;
+    if (!bVar6) goto LAB_82939bb4;
   }
   else {
-    uVar2 = *(uint *)(this_00[1].m_type + BD_CT_ABORT);
-    local_3e = (short)uVar2;
-    if (bVar3) {
-      iVar11 = 0;
-      puVar10 = local_3b + 1;
-      lVar12 = 2;
-      do {
-        puVar1 = (undefined1 *)((int)&local_3e + iVar11);
-        iVar11 = iVar11 + 1;
-        puVar10 = puVar10 + -1;
-        *puVar10 = *puVar1;
-        lVar12 = lVar12 + -1;
-      } while (lVar12 != 0);
-      bVar4 = bdBytePacker::appendBuffer(puVar6,param_2,local_38,&local_38,&uStack_3c,2);
-      bVar3 = true;
-      if (!bVar4) goto LAB_82939bb4;
-    }
-    else {
 LAB_82939bb4:
-      bVar3 = false;
-    }
-    if (!bVar3) goto LAB_82939c60;
-    uVar2 = uVar2 & 0xffff;
-    puVar9 = &local_38;
-    puVar10 = *(undefined1 **)(this_00[1].m_type + BD_CT_ERROR);
-    uVar8 = local_38;
+    bVar5 = false;
   }
-  bdBytePacker::appendBuffer(puVar6,param_2,uVar8,puVar9,puVar10,uVar2);
-LAB_82939c60:
-  uVar2 = __restgprlr_28(local_38);
-  return uVar2;
+  if (!bVar5) {
+    return local_38;
+  }
+  uVar4 = uVar4 & 0xffff;
+  puVar9 = &local_38;
+  puVar7 = ((this->m_cookieBuffer).m_ptr)->m_data;
+  uVar8 = local_38;
+LAB_82939c54:
+  bdBytePacker::appendBuffer(param_1,param_2,uVar8,puVar9,puVar7,uVar4);
+  return local_38;
 }
 
 
@@ -268,47 +271,47 @@ bdReference<bdCookie>::operator=(bdReference<bdCookie> *this,bdReference<bdCooki
 
 // 82939C78  deserialize  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdconnection/bdpacket/bdcookieechochunk.cpp:93)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
+
 bool __thiscall
 bdCookieEchoChunk::deserialize(bdCookieEchoChunk *this,uchar *param_1,uint param_2,uint *param_3)
 
 {
-  bool bVar1;
-  bdChunk *this_00;
+  uint uVar1;
   bool bVar3;
+  bool bVar4;
   bdCookie *pbVar2;
-  undefined1 uVar4;
-  longlong lVar5;
-  uint uVar6;
+  bdCookieEchoFlags bVar5;
   byte local_50 [2];
   ushort local_4e;
   uint local_4c;
   bdCookie *local_48;
   
-  this_00 = (bdChunk *)__savegprlr_25(this);
   local_4c = *param_3;
-  bVar3 = bdChunk::deserialize(this_00,param_1,param_2,&local_4c);
-  uVar6 = 0;
+  bVar3 = bdChunk::deserialize((bdChunk *)this,param_1,param_2,&local_4c);
+  bVar5 = BD_CE_NO_FLAGS;
   if (bVar3) {
     bVar3 = bdBytePacker::removeBuffer(param_1,param_2,local_4c,&local_4c,local_50,1);
     if (bVar3) {
-      uVar6 = (uint)local_50[0];
+      bVar5 = (bdCookieEchoFlags)local_50[0];
     }
-    bVar1 = true;
+    bVar4 = true;
     if (!bVar3) goto LAB_82939cf4;
   }
   else {
 LAB_82939cf4:
-    bVar1 = false;
+    bVar4 = false;
   }
-  this_00[1]._padding_ = uVar6;
+  this->m_flags = bVar5;
   local_4e = 0;
-  if (bVar1) {
-    bVar3 = bdBytePacker::removeBasicType<unsigned_short>
+  if (bVar4) {
+    bVar4 = bdBytePacker::removeBasicType<unsigned_short>
                       (param_1,param_2,local_4c,&local_4c,&local_4e);
-    lVar5 = 1;
-    if (bVar3) goto LAB_82939d38;
+    bVar3 = true;
+    if (bVar4) goto LAB_82939d38;
   }
-  lVar5 = 0;
+  bVar3 = false;
 LAB_82939d38:
   local_48 = bdMemory::allocate(0x18);
   if (local_48 == (bdCookie *)0x0) {
@@ -317,22 +320,21 @@ LAB_82939d38:
   else {
     pbVar2 = bdCookie::bdCookie(local_48);
   }
-  bdReference<bdCookie>::operator=((bdReference<bdCookie> *)&this_00[1]._padding_,pbVar2);
-  uVar6 = local_4c;
-  if (lVar5 != 0) {
-    bVar3 = bdCookie::deserialize((bdCookie *)this_00[1]._padding_,param_1,param_2,&local_4c);
-    if ((bVar3) && (local_4c - uVar6 != (uint)local_4e)) {
+  bdReference<bdCookie>::operator=(&this->m_cookie,pbVar2);
+  uVar1 = local_4c;
+  if (bVar3) {
+    bVar4 = bdCookie::deserialize((this->m_cookie).m_ptr,param_1,param_2,&local_4c);
+    if ((bVar4) && (local_4c - uVar1 != (uint)local_4e)) {
       bdLogMessage(BD_LOG_WARNING,"warn/","bdConnection/packet",
                    "c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdConnection\\bdPacket\\bdCookieEchoChunk.cpp"
                    ,"bdCookieEchoChunk::deserialize",0x70,"Invalid cookie echo.");
-      lVar5 = 0;
+      bVar3 = false;
     }
   }
-  if (lVar5 != 0) {
+  if (bVar3) {
     *param_3 = local_4c;
   }
-  uVar4 = __restgprlr_25(lVar5);
-  return (bool)uVar4;
+  return bVar3;
 }
 
 

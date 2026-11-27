@@ -21,6 +21,8 @@ void __tzset(void)
 
 // 82922BB8  _tzset_nolock  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/tzset.c:124)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void _tzset_nolock(void)
@@ -35,7 +37,6 @@ void _tzset_nolock(void)
   int local_2c;
   long local_28 [10];
   
-  __savegprlr_29();
   local_30 = 0;
   local_2c = 0;
   local_28[0] = 0;
@@ -84,7 +85,6 @@ void _tzset_nolock(void)
       plVar4 = __dstbias();
       *plVar4 = lVar1;
       FUN_82922d5c();
-      __restgprlr_29();
       return;
     }
                     /* WARNING: Subroutine does not return */
@@ -97,100 +97,94 @@ void _tzset_nolock(void)
 
 // 82922D80  cvtdate  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/tzset.c:283)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Removing unreachable block (ram,0x82922f98) */
 
 void cvtdate(int param_1,int param_2,int param_3,int param_4,int param_5,int param_6,int param_7,
             int param_8,int param_9,int param_10,int param_11)
 
 {
-  int iVar1;
-  ulonglong uVar2;
-  ulonglong uVar3;
+  longlong lVar1;
+  int_0_ *piVar2;
+  int iVar3;
   int iVar4;
-  int iVar5;
-  int_0_ *piVar6;
-  uint uVar7;
-  int iVar8;
-  longlong lVar9;
-  int iVar10;
+  uint uVar5;
+  int iVar6;
+  longlong lVar7;
   int in_stack_00000054;
   int in_stack_0000005c;
   int in_stack_00000064;
   long local_40 [16];
   
-  uVar3 = (ulonglong)param_4;
-  uVar2 = (ulonglong)param_3;
-  iVar1 = __savegprlr_26(param_1);
+  lVar1 = (longlong)param_3;
   local_40[0] = 0;
-  iVar10 = (int)uVar2;
   if (param_2 == 1) {
-    lVar9 = uVar2 + ((longlong)(iVar10 >> 2) + (ulonglong)(iVar10 < 0 && (uVar2 & 3) != 0) &
+    lVar7 = lVar1 + ((longlong)(param_3 >> 2) + (ulonglong)(param_3 < 0 && (param_3 & 3U) != 0) &
                     0x3fffffff) * -4;
-    iVar5 = (int)uVar3;
-    if (((lVar9 == 0) && (uVar2 != (longlong)(iVar10 / 100) * 100)) ||
-       (uVar2 + 0x76c == (longlong)((int)(uVar2 + 0x76c) / 400) * 400)) {
-      piVar6 = &_lpdays + iVar5 * 4;
+    if (((lVar7 == 0) && (lVar1 != (longlong)(param_3 / 100) * 100)) ||
+       (lVar1 + 0x76c == (longlong)((int)(lVar1 + 0x76c) / 400) * 400)) {
+      piVar2 = &_lpdays + param_4 * 4;
     }
     else {
-      piVar6 = &_days + iVar5 * 4;
+      piVar2 = &_days + param_4 * 4;
     }
-    uVar7 = iVar10 - 1;
-    iVar4 = (int)(((iVar10 + 299) / 400 - (int)uVar7 / 100) +
-                  ((int)uVar7 >> 2) + (uint)((int)uVar7 < 0 && (uVar7 & 3) != 0) + iVar10 * 0x16d +
-                  *(int *)(piVar6 + -4) + 1 + -0x63db) % 7;
-    iVar8 = (param_5 * 7 - iVar4) + *(int *)(piVar6 + -4) + 1 + param_6;
-    if (iVar4 <= param_6) {
-      iVar8 = iVar8 + -7;
+    uVar5 = param_3 - 1;
+    iVar3 = (int)(((param_3 + 299) / 400 - (int)uVar5 / 100) +
+                  ((int)uVar5 >> 2) + (uint)((int)uVar5 < 0 && (uVar5 & 3) != 0) + param_3 * 0x16d +
+                  *(int *)(piVar2 + -4) + 1 + -0x63db) % 7;
+    iVar6 = (param_5 * 7 - iVar3) + *(int *)(piVar2 + -4) + 1 + param_6;
+    if (iVar3 <= param_6) {
+      iVar6 = iVar6 + -7;
     }
     if (param_5 == 5) {
-      if ((((int)lVar9 == 0) && (uVar2 != (longlong)(iVar10 / 100) * 100)) ||
-         (uVar2 + 0x76c == (longlong)((int)(uVar2 + 0x76c) / 400) * 400)) {
-        iVar5 = *(int *)(&_lpdays + iVar5 * 4);
+      if ((((int)lVar7 == 0) && (lVar1 != (longlong)(param_3 / 100) * 100)) ||
+         (lVar1 + 0x76c == (longlong)((int)(lVar1 + 0x76c) / 400) * 400)) {
+        iVar3 = *(int *)(&_lpdays + param_4 * 4);
       }
       else {
-        iVar5 = *(int *)(&_days + iVar5 * 4);
+        iVar3 = *(int *)(&_days + param_4 * 4);
       }
-      if (iVar5 < iVar8) {
-        iVar8 = iVar8 + -7;
+      if (iVar3 < iVar6) {
+        iVar6 = iVar6 + -7;
       }
     }
   }
   else {
-    if (((uVar2 == ((longlong)(iVar10 >> 2) + (ulonglong)(iVar10 < 0 && (uVar2 & 3) != 0) &
-                   0x3fffffff) << 2) && (uVar2 != (longlong)(iVar10 / 100) * 100)) ||
-       (uVar2 + 0x76c == (longlong)((int)(uVar2 + 0x76c) / 400) * 400)) {
-      piVar6 = &_lpdays;
+    if (((lVar1 == ((longlong)(param_3 >> 2) + (ulonglong)(param_3 < 0 && (param_3 & 3U) != 0) &
+                   0x3fffffff) << 2) && (lVar1 != (longlong)(param_3 / 100) * 100)) ||
+       (lVar1 + 0x76c == (longlong)((int)(lVar1 + 0x76c) / 400) * 400)) {
+      piVar2 = &_lpdays;
     }
     else {
-      piVar6 = &_days;
+      piVar2 = &_days;
     }
-    iVar8 = *(int *)(piVar6 + (int)((uVar3 & 0xffffffff) << 2) + -4) + param_7;
+    iVar6 = *(int *)(piVar2 + param_4 * 4 + -4) + param_7;
   }
   iVar4 = ((param_8 * 0x3c + in_stack_00000054) * 0x3c + in_stack_0000005c) * 1000 +
           in_stack_00000064;
-  iVar5 = iVar10;
-  if (iVar1 != 1) {
-    dstend.yd = iVar8;
+  iVar3 = param_3;
+  if (param_1 != 1) {
+    dstend.yd = iVar6;
     dstend.ms = iVar4;
-    iVar1 = _get_dstbias(local_40);
-    if (iVar1 != 0) {
+    iVar6 = _get_dstbias(local_40);
+    if (iVar6 != 0) {
                     /* WARNING: Subroutine does not return */
       _invoke_watson((wchar_t *)0x0,(wchar_t *)0x0,(wchar_t *)0x0,0,0);
     }
     dstend.ms = local_40[0] * 1000 + dstend.ms;
-    iVar5 = dststart.yr;
-    iVar8 = dststart.yd;
+    iVar3 = dststart.yr;
+    iVar6 = dststart.yd;
     iVar4 = dststart.ms;
-    dstend.yr = iVar10;
+    dstend.yr = param_3;
     if (86399999 < dstend.ms) {
       dstend.yd = dstend.yd + 1;
       dstend.ms = dstend.ms + -86400000;
     }
   }
   dststart.ms = iVar4;
-  dststart.yd = iVar8;
-  dststart.yr = iVar5;
-  __restgprlr_26();
+  dststart.yd = iVar6;
+  dststart.yr = iVar3;
   return;
 }
 
@@ -211,99 +205,97 @@ int _isindst(tm *param_1)
 
 // 82922FF8  _isindst_nolock  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/tzset.c:428)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 int _isindst_nolock(tm *param_1)
 
 {
-  uint uVar1;
-  uint *puVar3;
-  int iVar4;
-  ulonglong uVar2;
+  int iVar1;
+  int iVar2;
+  int iVar3;
+  ulonglong uVar4;
   int iVar5;
   int iVar6;
-  int iVar7;
   int in_stack_ffffff58;
   int in_stack_ffffff5c;
   int in_stack_ffffff60;
   int local_40 [16];
   
-  puVar3 = (uint *)__savegprlr_27(param_1);
   local_40[0] = 0;
-  iVar4 = _get_daylight(local_40);
-  if (iVar4 != 0) {
+  iVar1 = _get_daylight(local_40);
+  if (iVar1 != 0) {
                     /* WARNING: Subroutine does not return */
     _invoke_watson((wchar_t *)0x0,(wchar_t *)0x0,(wchar_t *)0x0,0,0);
   }
   if (local_40[0] != 0) {
-    uVar1 = puVar3[5];
-    if ((uVar1 != dststart.yr) || (uVar1 != dstend.yr)) {
+    iVar1 = param_1->tm_year;
+    if ((iVar1 != dststart.yr) || (iVar1 != dstend.yr)) {
       if (DAT_84895ec4 == 0) {
-        iVar4 = 3;
-        iVar5 = 2;
-        iVar7 = 0xb;
-        iVar6 = 1;
-        if ((int)uVar1 < 0x6b) {
-          iVar4 = 4;
-          iVar5 = 1;
-          iVar7 = 10;
-          iVar6 = 5;
+        iVar2 = 3;
+        iVar3 = 2;
+        iVar6 = 0xb;
+        iVar5 = 1;
+        if (iVar1 < 0x6b) {
+          iVar2 = 4;
+          iVar3 = 1;
+          iVar6 = 10;
+          iVar5 = 5;
         }
-        cvtdate(1,1,uVar1,iVar4,iVar5,0,0,2,in_stack_ffffff58,in_stack_ffffff5c,in_stack_ffffff60);
-        cvtdate(0,1,puVar3[5],iVar7,iVar6,0,0,2,in_stack_ffffff58,in_stack_ffffff5c,
+        cvtdate(1,1,iVar1,iVar2,iVar3,0,0,2,in_stack_ffffff58,in_stack_ffffff5c,in_stack_ffffff60);
+        cvtdate(0,1,param_1->tm_year,iVar6,iVar5,0,0,2,in_stack_ffffff58,in_stack_ffffff5c,
                 in_stack_ffffff60);
       }
       else {
         if (tzinfo.DaylightDate.wYear == 0) {
-          cvtdate(1,1,uVar1,(uint)tzinfo.DaylightDate.wMonth,(uint)tzinfo.DaylightDate.wDay,
+          cvtdate(1,1,iVar1,(uint)tzinfo.DaylightDate.wMonth,(uint)tzinfo.DaylightDate.wDay,
                   (uint)tzinfo.DaylightDate.wDayOfWeek,0,(uint)tzinfo.DaylightDate.wHour,
                   in_stack_ffffff58,in_stack_ffffff5c,in_stack_ffffff60);
         }
         else {
-          cvtdate(1,0,uVar1,(uint)tzinfo.DaylightDate.wMonth,0,0,(uint)tzinfo.DaylightDate.wDay,
+          cvtdate(1,0,iVar1,(uint)tzinfo.DaylightDate.wMonth,0,0,(uint)tzinfo.DaylightDate.wDay,
                   (uint)tzinfo.DaylightDate.wHour,in_stack_ffffff58,in_stack_ffffff5c,
                   in_stack_ffffff60);
         }
         if (tzinfo.StandardDate.wYear == 0) {
-          cvtdate(0,1,puVar3[5],(uint)tzinfo.StandardDate.wMonth,(uint)tzinfo.StandardDate.wDay,
-                  (uint)tzinfo.StandardDate.wDayOfWeek,0,(uint)tzinfo.StandardDate.wHour,
-                  in_stack_ffffff58,in_stack_ffffff5c,in_stack_ffffff60);
-        }
-        else {
-          cvtdate(0,0,puVar3[5],(uint)tzinfo.StandardDate.wMonth,0,0,(uint)tzinfo.StandardDate.wDay,
+          cvtdate(0,1,param_1->tm_year,(uint)tzinfo.StandardDate.wMonth,
+                  (uint)tzinfo.StandardDate.wDay,(uint)tzinfo.StandardDate.wDayOfWeek,0,
                   (uint)tzinfo.StandardDate.wHour,in_stack_ffffff58,in_stack_ffffff5c,
                   in_stack_ffffff60);
         }
+        else {
+          cvtdate(0,0,param_1->tm_year,(uint)tzinfo.StandardDate.wMonth,0,0,
+                  (uint)tzinfo.StandardDate.wDay,(uint)tzinfo.StandardDate.wHour,in_stack_ffffff58,
+                  in_stack_ffffff5c,in_stack_ffffff60);
+        }
       }
     }
-    uVar1 = puVar3[7];
+    iVar1 = param_1->tm_yday;
     if (dststart.yd < dstend.yd) {
-      if ((dststart.yd <= (int)uVar1) && ((int)uVar1 <= dstend.yd)) {
-        if (((int)uVar1 <= dststart.yd) || (dstend.yd <= (int)uVar1)) {
-LAB_82923260:
-          uVar2 = (((ulonglong)puVar3[2] * 0x3c + (ulonglong)puVar3[1]) * 0x3c + (ulonglong)*puVar3)
-                  * 1000;
-          if (uVar1 == dststart.yd) {
-            uVar2 = (ulonglong)((uint)dststart.ms >> 0x1f) + (longlong)((int)uVar2 >> 0x1f) +
-                    (ulonglong)((uint)dststart.ms <= uVar2);
-          }
-          else {
-            uVar2 = ((~((uint)dstend.ms ^ uVar2) & 0xffffffff) >> 0x1f) +
-                    (ulonglong)((uint)dstend.ms <= uVar2) & 1;
-          }
-          goto LAB_82923030;
+      if ((dststart.yd <= iVar1) && (iVar1 <= dstend.yd)) {
+        if ((dststart.yd < iVar1) && (iVar1 < dstend.yd)) {
+          return 1;
         }
-LAB_82923238:
-        uVar2 = 1;
-        goto LAB_82923030;
+LAB_82923260:
+        uVar4 = (((ulonglong)(uint)param_1->tm_hour * 0x3c + (ulonglong)(uint)param_1->tm_min) *
+                 0x3c + (ulonglong)(uint)param_1->tm_sec) * 1000;
+        if (iVar1 != dststart.yd) {
+          return (int)((~((uint)dstend.ms ^ uVar4) & 0xffffffff) >> 0x1f) +
+                 (uint)((uint)dstend.ms <= uVar4) & 1;
+        }
+        return (((int)uVar4 >> 0x1f) - (dststart.ms >> 0x1f)) + (uint)((uint)dststart.ms <= uVar4);
       }
     }
     else {
-      if (((int)uVar1 < dstend.yd) || (dststart.yd < (int)uVar1)) goto LAB_82923238;
-      if (((int)uVar1 <= dstend.yd) || (dststart.yd <= (int)uVar1)) goto LAB_82923260;
+      if (iVar1 < dstend.yd) {
+        return 1;
+      }
+      if (dststart.yd < iVar1) {
+        return 1;
+      }
+      if ((iVar1 <= dstend.yd) || (dststart.yd <= iVar1)) goto LAB_82923260;
     }
   }
-  uVar2 = 0;
-LAB_82923030:
-  iVar4 = __restgprlr_27(uVar2);
-  return iVar4;
+  return 0;
 }
 

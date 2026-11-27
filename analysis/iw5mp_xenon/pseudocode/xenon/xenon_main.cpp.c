@@ -48,6 +48,7 @@ void Sys_OutOfMemErrorInternal(int param_1)
 // 8264EE18  Sys_Quit  (xenon/xenon_main.cpp:173)
 
 /* WARNING: Control flow encountered bad instruction data */
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void Sys_Quit(void)
@@ -55,7 +56,6 @@ void Sys_Quit(void)
 {
   bool bVar1;
   
-  __savegprlr_29();
   IN_Shutdown();
   Key_Shutdown();
   RefreshQuitOnErrorCondition();
@@ -181,14 +181,15 @@ int Sys_SetClipboardData(char *param_1)
 
 // 8264E540  Sys_QueEvent  (xenon/xenon_main.cpp:364)
 
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
+
 void Sys_QueEvent(int param_1,sysEventType_t param_2,int param_3,int param_4,int param_5,int param_6
                  ,void *param_7)
 
 {
   uint uVar1;
-  int iVar2;
   
-  iVar2 = __savegprlr_22(param_1);
   uVar1 = eventHead & 0xff;
   if (0xff < eventHead - eventTail) {
     Com_Printf(0x10,"Sys_QueEvent: overflow\n");
@@ -199,23 +200,24 @@ void Sys_QueEvent(int param_1,sysEventType_t param_2,int param_3,int param_4,int
     eventTail = eventTail + 1;
   }
   eventHead = eventHead + 1;
-  if (iVar2 == 0) {
-    iVar2 = Sys_Milliseconds();
+  if (param_1 == 0) {
+    param_1 = Sys_Milliseconds();
   }
-  eventQue[uVar1].evTime = iVar2;
+  eventQue[uVar1].evTime = param_1;
   eventQue[uVar1].evType = param_2;
   eventQue[uVar1].evValue = param_3;
   eventQue[uVar1].evValue2 = param_4;
   eventQue[uVar1].evPtrLength = param_6;
   eventQue[uVar1].evPtr = param_7;
   eventQue[uVar1].evPortIndex = param_5;
-  __restgprlr_22();
   return;
 }
 
 
 // 8264E628  Sys_ShutdownEvents  (xenon/xenon_main.cpp:394)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void Sys_ShutdownEvents(void)
@@ -224,7 +226,6 @@ void Sys_ShutdownEvents(void)
   uint uVar1;
   int iVar2;
   
-  __savegprlr_29();
   iVar2 = eventHead;
   if (eventTail < eventHead) {
     do {
@@ -236,7 +237,6 @@ void Sys_ShutdownEvents(void)
       }
     } while (eventTail < iVar2);
   }
-  __restgprlr_29();
   return;
 }
 
@@ -541,39 +541,36 @@ void free(void *param_1)
 
 // 8264ECB0  Sys_GetTextSection  (xenon/xenon_main.cpp:730)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "SectionFlags": Some values do not have unique names */
 
 bool Sys_GetTextSection(uint *param_1,uint *param_2)
 
 {
-  undefined4 *puVar1;
+  int iVar1;
   int iVar2;
-  undefined1 uVar3;
-  int iVar4;
-  IMAGE_SECTION_HEADER *pIVar5;
+  IMAGE_SECTION_HEADER *pIVar3;
   
-  puVar1 = (undefined4 *)__savegprlr_25(param_1);
-  iVar4 = 0;
-  pIVar5 = &IMAGE_SECTION_HEADER_82000208;
-  while (((pIVar5->Characteristics & IMAGE_SCN_MEM_EXECUTE) == 0 ||
-         (iVar2 = I_strcmp(pIVar5->Name,".text"), iVar2 != 0))) {
-    iVar4 = iVar4 + 1;
-    pIVar5 = pIVar5 + 1;
-    if (0xc < iVar4) {
-      uVar3 = __restgprlr_25(0);
-      return (bool)uVar3;
+  iVar2 = 0;
+  pIVar3 = &IMAGE_SECTION_HEADER_82000208;
+  while (((pIVar3->Characteristics & IMAGE_SCN_MEM_EXECUTE) == 0 ||
+         (iVar1 = I_strcmp(pIVar3->Name,".text"), iVar1 != 0))) {
+    iVar2 = iVar2 + 1;
+    pIVar3 = pIVar3 + 1;
+    if (0xc < iVar2) {
+      return false;
     }
   }
-  *puVar1 = IMAGE_DOS_HEADER_82000000.e_magic +
-            ((uint)*(byte *)((int)&pIVar5->VirtualAddress + 3) << 0x18 |
-             (uint)*(byte *)((int)&pIVar5->VirtualAddress + 2) << 0x10 |
-             (uint)*(byte *)((int)&pIVar5->VirtualAddress + 1) << 8 |
-            (uint)*(byte *)&pIVar5->VirtualAddress);
-  *param_2 = (uint)(byte)pIVar5->SizeOfRawData << 0x18 |
-             (uint)*(byte *)((int)&pIVar5->SizeOfRawData + 2) << 0x10 |
-             (uint)*(byte *)((int)&pIVar5->SizeOfRawData + 1) << 8 |
-             (uint)*(byte *)&pIVar5->SizeOfRawData;
-  uVar3 = __restgprlr_25(1);
-  return (bool)uVar3;
+  *param_1 = (uint)(IMAGE_DOS_HEADER_82000000.e_magic +
+                   ((uint)*(byte *)((int)&pIVar3->VirtualAddress + 3) << 0x18 |
+                    (uint)*(byte *)((int)&pIVar3->VirtualAddress + 2) << 0x10 |
+                    (uint)*(byte *)((int)&pIVar3->VirtualAddress + 1) << 8 |
+                   (uint)*(byte *)&pIVar3->VirtualAddress));
+  *param_2 = (uint)(byte)pIVar3->SizeOfRawData << 0x18 |
+             (uint)*(byte *)((int)&pIVar3->SizeOfRawData + 2) << 0x10 |
+             (uint)*(byte *)((int)&pIVar3->SizeOfRawData + 1) << 8 |
+             (uint)*(byte *)&pIVar3->SizeOfRawData;
+  return true;
 }
 

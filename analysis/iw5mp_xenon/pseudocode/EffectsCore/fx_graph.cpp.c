@@ -44,6 +44,11 @@ void FX_IntegrateGraphPartialInterval3D
 
 // 82430510  FX_IntegrateGraph1D  (EffectsCore/fx_graph.cpp:38)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 float FX_IntegrateGraph1D(FxGraph1D *param_1,float param_2,float param_3)
 
 {
@@ -52,112 +57,105 @@ float FX_IntegrateGraph1D(FxGraph1D *param_1,float param_2,float param_3)
   float fVar3;
   float fVar4;
   int iVar5;
-  int *piVar6;
-  longlong lVar7;
-  ulonglong uVar8;
-  longlong lVar9;
-  float *pfVar10;
-  ulonglong uVar11;
-  uint uVar12;
-  double extraout_f1;
+  longlong lVar6;
+  ulonglong uVar7;
+  longlong lVar8;
+  float *pfVar9;
+  ulonglong uVar10;
+  uint uVar11;
+  double dVar12;
   double dVar13;
   double dVar14;
-  double dVar15;
   
-  dVar14 = (double)param_3;
-  __savegprlr_27((double)param_2,param_1);
-  piVar6 = (int *)__savefpr_28();
-  dVar13 = extraout_f1;
-  if (piVar6 == (int *)0x0) {
+  dVar12 = (double)param_2;
+  dVar13 = (double)param_3;
+  if (param_1 == (FxGraph1D *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_graph.cpp",0x34
                     ,0,"%s");
   }
-  if (((dVar13 < 0.0) || (dVar14 <= dVar13)) || (1.0 < dVar14)) {
+  if (((dVar12 < 0.0) || (dVar13 <= dVar12)) || (1.0 < dVar13)) {
     va("%g, %g");
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_graph.cpp",0x35
                     ,0,"%s\n\t%s");
   }
-  iVar5 = *piVar6;
+  iVar5 = param_1->intervalCount;
   if (iVar5 == 0) {
-    __restfpr_28((double)((float)(dVar14 - dVar13) * (float)piVar6[1]));
-    dVar13 = (double)__restgprlr_27();
-    return (float)dVar13;
+    return (float)(dVar13 - dVar12) * (param_1->u).constantValue;
   }
   if (iVar5 == 1) {
-    fVar2 = ((float *)piVar6[1])[1];
-    __restfpr_28((double)(((*(float *)piVar6[1] - fVar2) * (float)(dVar13 + dVar14) * 0.5 + fVar2) *
-                         (float)(dVar14 - dVar13)));
-    dVar13 = (double)__restgprlr_27();
-    return (float)dVar13;
+    fVar2 = (param_1->u).sampleValue[1];
+    return ((*(param_1->u).sampleValue - fVar2) * (float)(dVar12 + dVar13) * 0.5 + fVar2) *
+           (float)(dVar13 - dVar12);
   }
   if (iVar5 < 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_graph.cpp",0x3d
                     ,1,"%s\n\t(graph->intervalCount) = %i");
   }
-  dVar15 = (double)(float)((double)(longlong)*piVar6 * dVar13);
-  dVar13 = floor(dVar15);
-  uVar1 = (uint)dVar13;
-  dVar14 = (double)(float)((double)(longlong)*piVar6 * dVar14);
-  dVar15 = (double)(float)(dVar15 - (double)(longlong)(int)uVar1);
-  dVar13 = ceil(dVar14);
-  uVar11 = (ulonglong)(uint)(int)dVar13 - 1;
-  uVar12 = (uint)uVar11;
-  dVar13 = (double)(float)(dVar14 - (double)(longlong)(int)uVar12);
-  if ((int)uVar12 < (int)uVar1) {
+  dVar14 = (double)(float)((double)(longlong)param_1->intervalCount * dVar12);
+  dVar12 = floor(dVar14);
+  uVar1 = (uint)dVar12;
+  dVar13 = (double)(float)((double)(longlong)param_1->intervalCount * dVar13);
+  dVar14 = (double)(float)(dVar14 - (double)(longlong)(int)uVar1);
+  dVar12 = ceil(dVar13);
+  uVar10 = (ulonglong)(uint)(int)dVar12 - 1;
+  uVar11 = (uint)uVar10;
+  dVar12 = (double)(float)(dVar13 - (double)(longlong)(int)uVar11);
+  if ((int)uVar11 < (int)uVar1) {
     va("%i > %i for %g to %g on %i intervals");
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_graph.cpp",0x47
                     ,1,"%s\n\t%s");
   }
-  if (((int)uVar1 < 0) || (*piVar6 <= (int)uVar1)) {
+  if (((int)uVar1 < 0) || (param_1->intervalCount <= (int)uVar1)) {
     va("%i for %g on %i intervals");
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_graph.cpp",0x48
                     ,1,
                     "%s\n\t(va( \"%i for %g on %i intervals\", startIndex, timeStart, graph->intervalCount )) = %i"
                    );
   }
-  if (((int)uVar12 < 0) || (*piVar6 <= (int)uVar12)) {
+  if (((int)uVar11 < 0) || (param_1->intervalCount <= (int)uVar11)) {
     va("%i for %g on %i intervals");
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_graph.cpp",0x49
                     ,1,
                     "%s\n\t(va( \"%i for %g on %i intervals\", endIndex, timeEnd, graph->intervalCount )) = %i"
                    );
   }
-  if (uVar1 == uVar12) {
-    pfVar10 = (float *)(uVar1 * 4 + piVar6[1]);
-    fVar2 = pfVar10[1];
-    fVar2 = ((*pfVar10 - fVar2) * (float)(dVar13 + dVar15) * 0.5 + fVar2) * (float)(dVar13 - dVar15)
-    ;
+  if (uVar1 == uVar11) {
+    fVar2 = ((param_1->u).sampleValue + uVar1)[1];
+    fVar2 = (((param_1->u).sampleValue[uVar1] - fVar2) * (float)(dVar12 + dVar14) * 0.5 + fVar2) *
+            (float)(dVar12 - dVar14);
   }
   else {
-    pfVar10 = (float *)(uVar1 * 4 + piVar6[1]);
-    uVar8 = (ulonglong)uVar1 + 1;
-    fVar2 = *pfVar10;
-    fVar3 = pfVar10[1];
+    uVar7 = (ulonglong)uVar1 + 1;
+    fVar2 = (param_1->u).sampleValue[uVar1];
+    fVar3 = ((param_1->u).sampleValue + uVar1)[1];
     fVar2 = fVar2 * 0.5 -
-            (float)((double)((float)((double)(fVar3 - fVar2) * dVar15) * 0.5 + fVar3) * dVar15);
-    if ((uint)uVar8 != uVar12) {
-      lVar7 = uVar11 - uVar8;
-      lVar9 = (uVar8 & 0x3fffffff) << 2;
+            (float)((double)((float)((double)(fVar3 - fVar2) * dVar14) * 0.5 + fVar3) * dVar14);
+    if ((uint)uVar7 != uVar11) {
+      lVar6 = uVar10 - uVar7;
+      lVar8 = (uVar7 & 0x3fffffff) << 2;
       do {
-        iVar5 = (int)lVar9;
-        lVar9 = lVar9 + 4;
-        fVar2 = *(float *)(iVar5 + piVar6[1]) + fVar2;
-        lVar7 = lVar7 + -1;
-      } while (lVar7 != 0);
+        iVar5 = (int)lVar8;
+        lVar8 = lVar8 + 4;
+        fVar2 = *(float *)(iVar5 + (int)(param_1->u).sampleValue) + fVar2;
+        lVar6 = lVar6 + -1;
+      } while (lVar6 != 0);
     }
-    pfVar10 = (float *)((int)((uVar11 & 0xffffffff) << 2) + piVar6[1]);
-    fVar3 = *pfVar10;
-    fVar4 = pfVar10[1];
-    fVar2 = (float)((double)((float)((double)(fVar3 - fVar4) * dVar13) * 0.5 + fVar4) * dVar13 +
+    pfVar9 = (float *)((int)((uVar10 & 0xffffffff) << 2) + (int)(param_1->u).sampleValue);
+    fVar3 = *pfVar9;
+    fVar4 = pfVar9[1];
+    fVar2 = (float)((double)((float)((double)(fVar3 - fVar4) * dVar12) * 0.5 + fVar4) * dVar12 +
                    (double)(fVar3 * 0.5)) + fVar2;
   }
-  __restfpr_28((double)(fVar2 / (float)(longlong)*piVar6));
-  dVar13 = (double)__restgprlr_27();
-  return (float)dVar13;
+  return fVar2 / (float)(longlong)param_1->intervalCount;
 }
 
 
 // 82430900  FX_IntegrateGraph3D  (EffectsCore/fx_graph.cpp:98)
+
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 
 void FX_IntegrateGraph3D(FxGraph3D *param_1,float param_2,float param_3,float *param_4)
 
@@ -168,118 +166,110 @@ void FX_IntegrateGraph3D(FxGraph3D *param_1,float param_2,float param_3,float *p
   float fVar4;
   float fVar5;
   float fVar6;
-  int *piVar7;
+  float (*pafVar7) [3];
   float *in_r6;
   int iVar8;
   int iVar9;
   float *pfVar10;
-  int iVar11;
-  double extraout_f1;
+  double dVar11;
   double dVar12;
   double dVar13;
   double dVar14;
   double dVar15;
-  double dVar16;
   
-  dVar15 = (double)param_3;
-  __savegprlr_26((double)param_2,param_1,param_4);
-  piVar7 = (int *)__savefpr_26();
-  dVar12 = extraout_f1;
-  if (piVar7 == (int *)0x0) {
+  dVar14 = (double)param_3;
+  dVar11 = (double)param_2;
+  if (param_1 == (FxGraph3D *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_graph.cpp",0x70
                     ,0,"%s");
   }
-  dVar14 = 1.0;
-  if (((dVar12 < 0.0) || (dVar15 <= dVar12)) || (1.0 < dVar15)) {
+  dVar13 = 1.0;
+  if (((dVar11 < 0.0) || (dVar14 <= dVar11)) || (1.0 < dVar14)) {
     va("%g, %g");
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_graph.cpp",0x71
                     ,0,"%s\n\t%s");
   }
-  iVar9 = *piVar7;
+  iVar9 = param_1->intervalCount;
   if (iVar9 == 0) {
-    fVar1 = (float)(dVar15 - dVar12);
-    *in_r6 = fVar1 * (float)piVar7[1];
-    in_r6[1] = (float)piVar7[2] * fVar1;
-    in_r6[2] = (float)piVar7[3] * fVar1;
-    __restfpr_26();
-    __restgprlr_26();
+    fVar1 = (float)(dVar14 - dVar11);
+    *in_r6 = fVar1 * (param_1->u).constantValue[0];
+    in_r6[1] = (param_1->u).constantValue[1] * fVar1;
+    in_r6[2] = (param_1->u).constantValue[2] * fVar1;
     return;
   }
   if (iVar9 == 1) {
-    pfVar10 = (float *)piVar7[1];
-    fVar1 = (float)(dVar15 - dVar12);
-    fVar2 = pfVar10[1];
-    fVar3 = pfVar10[2];
-    fVar4 = pfVar10[4];
-    fVar5 = pfVar10[5];
-    fVar6 = (float)(dVar12 + dVar15) * 0.5;
-    *in_r6 = fVar1 * ((pfVar10[3] - *pfVar10) * fVar6 + *pfVar10);
+    pafVar7 = (param_1->u).sampleValue;
+    fVar1 = (float)(dVar14 - dVar11);
+    fVar2 = (*pafVar7)[1];
+    fVar3 = (*pafVar7)[2];
+    fVar4 = pafVar7[1][1];
+    fVar5 = pafVar7[1][2];
+    fVar6 = (float)(dVar11 + dVar14) * 0.5;
+    *in_r6 = fVar1 * ((pafVar7[1][0] - (*pafVar7)[0]) * fVar6 + (*pafVar7)[0]);
     in_r6[1] = fVar1 * ((fVar4 - fVar2) * fVar6 + fVar2);
     in_r6[2] = fVar1 * ((fVar5 - fVar3) * fVar6 + fVar3);
-    __restfpr_26();
-    __restgprlr_26();
     return;
   }
   if (iVar9 < 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_graph.cpp",0x7f
                     ,1,"%s\n\t(graph->intervalCount) = %i");
   }
-  dVar16 = (double)(float)((double)(longlong)*piVar7 * dVar12);
-  dVar12 = floor(dVar16);
-  iVar9 = (int)dVar12;
-  dVar13 = (double)(float)((double)(longlong)*piVar7 * dVar15);
-  dVar15 = (double)(float)(dVar16 - (double)(longlong)iVar9);
-  dVar12 = ceil(dVar13);
-  iVar11 = (int)dVar12 + -1;
-  dVar13 = (double)(float)(dVar13 - (double)(longlong)iVar11);
-  if (iVar11 < iVar9) {
+  dVar15 = (double)(float)((double)(longlong)param_1->intervalCount * dVar11);
+  dVar11 = floor(dVar15);
+  iVar9 = (int)dVar11;
+  dVar12 = (double)(float)((double)(longlong)param_1->intervalCount * dVar14);
+  dVar14 = (double)(float)(dVar15 - (double)(longlong)iVar9);
+  dVar11 = ceil(dVar12);
+  iVar8 = (int)dVar11 + -1;
+  dVar12 = (double)(float)(dVar12 - (double)(longlong)iVar8);
+  if (iVar8 < iVar9) {
     va("%i > %i for %g to %g on %i intervals");
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_graph.cpp",0x89
                     ,1,"%s\n\t%s");
   }
-  if ((iVar9 < 0) || (*piVar7 <= iVar9)) {
+  if ((iVar9 < 0) || (param_1->intervalCount <= iVar9)) {
     va("%i for %g on %i intervals");
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_graph.cpp",0x8a
                     ,1,
                     "%s\n\t(va( \"%i for %g on %i intervals\", startIndex, timeStart, graph->intervalCount )) = %i"
                    );
   }
-  if ((iVar11 < 0) || (*piVar7 <= iVar11)) {
+  if ((iVar8 < 0) || (param_1->intervalCount <= iVar8)) {
     va("%i for %g on %i intervals");
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_graph.cpp",0x8b
                     ,1,
                     "%s\n\t(va( \"%i for %g on %i intervals\", endIndex, timeEnd, graph->intervalCount )) = %i"
                    );
   }
-  pfVar10 = (float *)(iVar9 * 0xc + piVar7[1]);
-  if (iVar9 == iVar11) {
-    fVar2 = *pfVar10;
-    fVar1 = (float)(dVar13 - dVar15);
-    fVar3 = pfVar10[2];
-    fVar4 = pfVar10[3];
-    fVar5 = pfVar10[5];
-    fVar6 = (float)(dVar13 + dVar15) * 0.5;
-    in_r6[1] = ((pfVar10[4] - pfVar10[1]) * fVar6 + pfVar10[1]) * fVar1;
+  pafVar7 = (param_1->u).sampleValue + iVar9;
+  if (iVar9 == iVar8) {
+    fVar2 = (*pafVar7)[0];
+    fVar1 = (float)(dVar12 - dVar14);
+    fVar3 = (*pafVar7)[2];
+    fVar4 = pafVar7[1][0];
+    fVar5 = pafVar7[1][2];
+    fVar6 = (float)(dVar12 + dVar14) * 0.5;
+    in_r6[1] = ((pafVar7[1][1] - (*pafVar7)[1]) * fVar6 + (*pafVar7)[1]) * fVar1;
     *in_r6 = ((fVar4 - fVar2) * fVar6 + fVar2) * fVar1;
     in_r6[2] = ((fVar5 - fVar3) * fVar6 + fVar3) * fVar1;
   }
   else {
-    fVar1 = (float)(dVar15 * 0.5);
-    dVar15 = -dVar15;
-    fVar2 = pfVar10[4];
-    fVar3 = pfVar10[1];
+    fVar1 = (float)(dVar14 * 0.5);
+    dVar14 = -dVar14;
+    fVar2 = pafVar7[1][1];
+    fVar3 = (*pafVar7)[1];
     iVar9 = iVar9 + 1;
-    fVar4 = pfVar10[5];
-    fVar5 = pfVar10[2];
-    *in_r6 = *pfVar10 * 0.5 +
-             (float)((double)((pfVar10[3] - *pfVar10) * fVar1 + pfVar10[3]) * dVar15);
-    in_r6[1] = pfVar10[1] * 0.5 + (float)((double)((fVar2 - fVar3) * fVar1 + fVar2) * dVar15);
-    in_r6[2] = pfVar10[2] * 0.5 + (float)((double)((fVar4 - fVar5) * fVar1 + fVar4) * dVar15);
-    if (iVar9 != iVar11) {
-      iVar8 = iVar11 - iVar9;
+    fVar4 = pafVar7[1][2];
+    fVar5 = (*pafVar7)[2];
+    *in_r6 = (*pafVar7)[0] * 0.5 +
+             (float)((double)((pafVar7[1][0] - (*pafVar7)[0]) * fVar1 + pafVar7[1][0]) * dVar14);
+    in_r6[1] = (*pafVar7)[1] * 0.5 + (float)((double)((fVar2 - fVar3) * fVar1 + fVar2) * dVar14);
+    in_r6[2] = (*pafVar7)[2] * 0.5 + (float)((double)((fVar4 - fVar5) * fVar1 + fVar4) * dVar14);
+    if (iVar9 != iVar8) {
+      iVar8 = iVar8 - iVar9;
       iVar9 = iVar9 * 0xc;
       do {
-        pfVar10 = (float *)(iVar9 + piVar7[1]);
+        pfVar10 = (float *)((int)*(param_1->u).sampleValue + iVar9);
         iVar9 = iVar9 + 0xc;
         *in_r6 = *pfVar10 + *in_r6;
         in_r6[1] = pfVar10[1] + in_r6[1];
@@ -287,29 +277,27 @@ void FX_IntegrateGraph3D(FxGraph3D *param_1,float param_2,float param_3,float *p
         iVar8 = iVar8 + -1;
       } while (iVar8 != 0);
     }
-    fVar3 = (float)(dVar13 * 0.5);
-    pfVar10 = (float *)((iVar11 + ((int)dVar12 + -1) * 2) * 4 + piVar7[1]);
-    fVar2 = pfVar10[4];
-    fVar4 = pfVar10[1];
-    fVar5 = pfVar10[5];
-    fVar6 = pfVar10[2];
-    fVar1 = (float)((double)(fVar3 * (*pfVar10 - pfVar10[3]) + pfVar10[3]) * dVar13 + (double)*in_r6
-                   );
+    fVar3 = (float)(dVar12 * 0.5);
+    pafVar7 = (param_1->u).sampleValue + -1 + (int)dVar11;
+    fVar2 = pafVar7[1][1];
+    fVar4 = (*pafVar7)[1];
+    fVar5 = pafVar7[1][2];
+    fVar6 = (*pafVar7)[2];
+    fVar1 = (float)((double)(fVar3 * ((*pafVar7)[0] - pafVar7[1][0]) + pafVar7[1][0]) * dVar12 +
+                   (double)*in_r6);
     *in_r6 = fVar1;
-    fVar2 = (float)((double)((fVar4 - fVar2) * fVar3 + fVar2) * dVar13 + (double)in_r6[1]);
+    fVar2 = (float)((double)((fVar4 - fVar2) * fVar3 + fVar2) * dVar12 + (double)in_r6[1]);
     in_r6[1] = fVar2;
-    fVar3 = (float)((double)((fVar6 - fVar5) * fVar3 + fVar5) * dVar13 + (double)in_r6[2]);
+    fVar3 = (float)((double)((fVar6 - fVar5) * fVar3 + fVar5) * dVar12 + (double)in_r6[2]);
     in_r6[2] = fVar3;
-    *in_r6 = *pfVar10 * 0.5 + fVar1;
-    in_r6[1] = pfVar10[1] * 0.5 + fVar2;
-    in_r6[2] = pfVar10[2] * 0.5 + fVar3;
+    *in_r6 = (*pafVar7)[0] * 0.5 + fVar1;
+    in_r6[1] = (*pafVar7)[1] * 0.5 + fVar2;
+    in_r6[2] = (*pafVar7)[2] * 0.5 + fVar3;
   }
-  fVar1 = (float)(dVar14 / (double)(longlong)*piVar7);
+  fVar1 = (float)(dVar13 / (double)(longlong)param_1->intervalCount);
   *in_r6 = *in_r6 * fVar1;
   in_r6[1] = in_r6[1] * fVar1;
   in_r6[2] = in_r6[2] * fVar1;
-  __restfpr_26();
-  __restgprlr_26();
   return;
 }
 

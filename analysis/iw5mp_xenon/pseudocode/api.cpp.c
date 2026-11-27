@@ -30,112 +30,90 @@ ulong XAudioVoice_Release(IXAudioVoice *param_1)
 
 // 828CD5D8  XAudioVoice_SetEffectParam  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/api.cpp:62)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 undefined4
 XAudioVoice_SetEffectParam
           (IXAudioVoice *param_1,uchar param_2,uchar param_3,uchar param_4,XAUDIOFXPARAM *param_5)
 
 {
-  int *piVar2;
-  undefined8 uVar1;
-  undefined4 uVar3;
-  longlong lVar4;
-  longlong lVar5;
-  longlong lVar6;
-  longlong lVar7;
+  undefined4 uVar1;
   
-  lVar7 = (longlong)(int)param_5;
-  lVar6 = (longlong)(char)param_4;
-  lVar5 = (longlong)(char)param_3;
-  lVar4 = (longlong)(char)param_2;
-  piVar2 = (int *)__savegprlr_26(param_1,lVar4,lVar5,lVar6,lVar7);
   RtlEnterCriticalSection(0xffffffff829afeb4);
-  uVar1 = (**(code **)(*piVar2 + 0x20))(piVar2,lVar4,lVar5,lVar6,lVar7);
+  uVar1 = (**(code **)(*(int *)param_1 + 0x20))(param_1,param_2,param_3,param_4,param_5);
   RtlLeaveCriticalSection(0xffffffff829afeb4);
-  uVar3 = __restgprlr_26(uVar1);
-  return uVar3;
+  return uVar1;
 }
 
 
 // 828CD648  XAudioVoice_SetVoiceOutput  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/api.cpp:68)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 undefined4 XAudioVoice_SetVoiceOutput(IXAudioVoice *param_1,XAUDIOVOICEOUTPUT *param_2)
 
 {
-  int *piVar2;
-  undefined8 uVar1;
-  undefined4 uVar3;
-  longlong lVar4;
+  undefined4 uVar1;
   
-  lVar4 = (longlong)(int)param_2;
-  piVar2 = (int *)__savegprlr_29(param_1,lVar4);
   RtlEnterCriticalSection(0xffffffff829afeb4);
-  uVar1 = (**(code **)(*piVar2 + 0x24))(piVar2,lVar4);
+  uVar1 = (**(code **)(*(int *)param_1 + 0x24))(param_1,param_2);
   RtlLeaveCriticalSection(0xffffffff829afeb4);
-  uVar3 = __restgprlr_29(uVar1);
-  return uVar3;
+  return uVar1;
 }
 
 
 // 828CD6A0  XAudioVoice_SetVoiceOutputVolume  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/api.cpp:74)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 undefined4 XAudioVoice_SetVoiceOutputVolume(IXAudioVoice *param_1,XAUDIOVOICEOUTPUTVOLUME *param_2)
 
 {
-  int *piVar2;
-  undefined8 uVar1;
-  undefined4 uVar3;
-  longlong lVar4;
+  undefined4 uVar1;
   
-  lVar4 = (longlong)(int)param_2;
-  piVar2 = (int *)__savegprlr_29(param_1,lVar4);
   RtlEnterCriticalSection(0xffffffff829afeb4);
-  uVar1 = (**(code **)(*piVar2 + 0x28))(piVar2,lVar4);
+  uVar1 = (**(code **)(*(int *)param_1 + 0x28))(param_1,param_2);
   RtlLeaveCriticalSection(0xffffffff829afeb4);
-  uVar3 = __restgprlr_29(uVar1);
-  return uVar3;
+  return uVar1;
 }
 
 
 // 828CD6F8  XAudioVoice_GetVoiceState  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/api.cpp:86)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 undefined4 XAudioVoice_GetVoiceState(IXAudioVoice *param_1,uchar *param_2)
 
 {
-  int *piVar2;
-  undefined8 uVar1;
-  undefined4 uVar3;
-  longlong lVar4;
+  undefined4 uVar1;
   
-  lVar4 = (longlong)(int)param_2;
-  piVar2 = (int *)__savegprlr_29(param_1,lVar4);
   RtlEnterCriticalSection(0xffffffff829afeb4);
-  uVar1 = (**(code **)(*piVar2 + 0x30))(piVar2,lVar4);
+  uVar1 = (**(code **)(*(int *)param_1 + 0x30))(param_1,param_2);
   RtlLeaveCriticalSection(0xffffffff829afeb4);
-  uVar3 = __restgprlr_29(uVar1);
-  return uVar3;
+  return uVar1;
 }
 
 
 // 828CD750  XAudioSourceVoice_SubmitPacket  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/api.cpp:114)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 undefined4
 XAudioSourceVoice_SubmitPacket(IXAudioSourceVoice *param_1,XAUDIOPACKET *param_2,uchar param_3)
 
 {
-  int iVar2;
-  undefined8 uVar1;
-  undefined4 uVar3;
-  longlong lVar4;
-  longlong lVar5;
+  undefined4 uVar1;
   
-  lVar5 = (longlong)(char)param_3;
-  lVar4 = (longlong)(int)param_2;
-  iVar2 = __savegprlr_28(param_1,lVar4,lVar5);
   RtlEnterCriticalSection(0xffffffff829afeb4);
-  uVar1 = (**(code **)(**(int **)(iVar2 + 0x4c) + 0x1c))(*(int **)(iVar2 + 0x4c),lVar4,lVar5);
+  uVar1 = (**(code **)(**(int **)(param_1 + 0x4c) + 0x1c))
+                    (*(int **)(param_1 + 0x4c),param_2,param_3);
   RtlLeaveCriticalSection(0xffffffff829afeb4);
-  uVar3 = __restgprlr_28(uVar1);
-  return uVar3;
+  return uVar1;
 }
 
 
@@ -155,39 +133,35 @@ undefined4 XAudioSourceVoice_FlushPackets(IXAudioSourceVoice *param_1)
 
 // 828CD808  XAudioSourceVoice_Start  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/api.cpp:138)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 undefined4 XAudioSourceVoice_Start(IXAudioSourceVoice *param_1,uchar param_2)
 
 {
-  CSourceVoice *this;
   T_HRESULT TVar1;
-  undefined4 uVar2;
   
-  this = (CSourceVoice *)__savegprlr_29(param_1);
   RtlEnterCriticalSection(0xffffffff829afeb4);
-  TVar1 = XAUDIO::CSourceVoice::Start(this,param_2);
+  TVar1 = XAUDIO::CSourceVoice::Start((CSourceVoice *)param_1,param_2);
   RtlLeaveCriticalSection(0xffffffff829afeb4);
-  uVar2 = __restgprlr_29(TVar1);
-  return uVar2;
+  return TVar1;
 }
 
 
 // 828CD850  XAudioSourceVoice_Stop  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/api.cpp:144)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 undefined4 XAudioSourceVoice_Stop(IXAudioSourceVoice *param_1,uchar param_2)
 
 {
-  int *piVar2;
-  undefined8 uVar1;
-  undefined4 uVar3;
-  longlong lVar4;
+  undefined4 uVar1;
   
-  lVar4 = (longlong)(char)param_2;
-  piVar2 = (int *)__savegprlr_29(param_1,lVar4);
   RtlEnterCriticalSection(0xffffffff829afeb4);
-  uVar1 = (**(code **)(*piVar2 + 0x3c))(piVar2,lVar4);
+  uVar1 = (**(code **)(*(int *)param_1 + 0x3c))(param_1,param_2);
   RtlLeaveCriticalSection(0xffffffff829afeb4);
-  uVar3 = __restgprlr_29(uVar1);
-  return uVar3;
+  return uVar1;
 }
 
 
@@ -207,100 +181,86 @@ undefined4 XAudioSourceVoice_Discontinuity(IXAudioSourceVoice *param_1)
 
 // 828CD910  XAudioSourceVoice_GetPacketPosition  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/api.cpp:156)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 undefined4
 XAudioSourceVoice_GetPacketPosition(IXAudioSourceVoice *param_1,XAUDIOPACKETPOSITION *param_2)
 
 {
-  int iVar2;
-  undefined8 uVar1;
-  undefined4 uVar3;
-  longlong lVar4;
+  undefined4 uVar1;
   
-  lVar4 = (longlong)(int)param_2;
-  iVar2 = __savegprlr_29(param_1,lVar4);
   RtlEnterCriticalSection(0xffffffff829afeb4);
-  uVar1 = (**(code **)(**(int **)(iVar2 + 0x4c) + 0x3c))(*(int **)(iVar2 + 0x4c),lVar4);
+  uVar1 = (**(code **)(**(int **)(param_1 + 0x4c) + 0x3c))(*(int **)(param_1 + 0x4c),param_2);
   RtlLeaveCriticalSection(0xffffffff829afeb4);
-  uVar3 = __restgprlr_29(uVar1);
-  return uVar3;
+  return uVar1;
 }
 
 
 // 828CD968  XAudioSourceVoice_SetPacketPosition  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/api.cpp:162)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 undefined4
 XAudioSourceVoice_SetPacketPosition(IXAudioSourceVoice *param_1,XAUDIOPACKETPOSITION *param_2)
 
 {
-  int iVar2;
-  undefined8 uVar1;
-  undefined4 uVar3;
-  longlong lVar4;
+  undefined4 uVar1;
   
-  lVar4 = (longlong)(int)param_2;
-  iVar2 = __savegprlr_29(param_1,lVar4);
   RtlEnterCriticalSection(0xffffffff829afeb4);
-  uVar1 = (**(code **)(**(int **)(iVar2 + 0x4c) + 0x40))(*(int **)(iVar2 + 0x4c),lVar4);
+  uVar1 = (**(code **)(**(int **)(param_1 + 0x4c) + 0x40))(*(int **)(param_1 + 0x4c),param_2);
   RtlLeaveCriticalSection(0xffffffff829afeb4);
-  uVar3 = __restgprlr_29(uVar1);
-  return uVar3;
+  return uVar1;
 }
 
 
 // 828CD9C0  XAudioSourceVoice_SetPacketLoopCount  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/api.cpp:174)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 undefined4 XAudioSourceVoice_SetPacketLoopCount(IXAudioSourceVoice *param_1,ulong param_2)
 
 {
-  int iVar2;
-  undefined8 uVar1;
-  undefined4 uVar3;
-  longlong lVar4;
+  undefined4 uVar1;
   
-  lVar4 = (longlong)(int)param_2;
-  iVar2 = __savegprlr_29(param_1,lVar4);
   RtlEnterCriticalSection(0xffffffff829afeb4);
-  uVar1 = (**(code **)(**(int **)(iVar2 + 0x4c) + 0x48))(*(int **)(iVar2 + 0x4c),lVar4);
+  uVar1 = (**(code **)(**(int **)(param_1 + 0x4c) + 0x48))(*(int **)(param_1 + 0x4c),param_2);
   RtlLeaveCriticalSection(0xffffffff829afeb4);
-  uVar3 = __restgprlr_29(uVar1);
-  return uVar3;
+  return uVar1;
 }
 
 
 // 828CDA18  XAudioSourceVoice_GetStreamPosition  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/api.cpp:186)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 undefined4 XAudioSourceVoice_GetStreamPosition(IXAudioSourceVoice *param_1,ulong *param_2)
 
 {
-  int iVar2;
-  undefined8 uVar1;
-  undefined4 uVar3;
-  longlong lVar4;
+  undefined4 uVar1;
   
-  lVar4 = (longlong)(int)param_2;
-  iVar2 = __savegprlr_29(param_1,lVar4);
   RtlEnterCriticalSection(0xffffffff829afeb4);
-  uVar1 = (**(code **)(**(int **)(iVar2 + 0x4c) + 0x50))(*(int **)(iVar2 + 0x4c),lVar4);
+  uVar1 = (**(code **)(**(int **)(param_1 + 0x4c) + 0x50))(*(int **)(param_1 + 0x4c),param_2);
   RtlLeaveCriticalSection(0xffffffff829afeb4);
-  uVar3 = __restgprlr_29(uVar1);
-  return uVar3;
+  return uVar1;
 }
 
 
 // 828CDA70  XAudioSourceVoice_GetVolume  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/api.cpp:192)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 undefined4 XAudioSourceVoice_GetVolume(IXAudioSourceVoice *param_1,float *param_2)
 
 {
-  int iVar1;
-  undefined4 uVar2;
-  
-  iVar1 = __savegprlr_29(param_1);
   RtlEnterCriticalSection(0xffffffff829afeb4);
-  *param_2 = *(float *)(iVar1 + 0x8c);
+  *param_2 = *(float *)(param_1 + 0x8c);
   RtlLeaveCriticalSection(0xffffffff829afeb4);
-  uVar2 = __restgprlr_29(0);
-  return uVar2;
+  return 0;
 }
 
 
@@ -351,40 +311,37 @@ undefined4 XAudioInitialize(XAUDIOENGINEINIT *param_1)
 
 // 828CDBA0  XAudioInitializeEx  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/api.cpp:301)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 undefined4 XAudioInitializeEx(XAUDIOENGINEINIT *param_1,IXAudioBatchAllocator *param_2)
 
 {
-  XAUDIOENGINEINIT *pXVar1;
-  undefined4 uVar2;
   _func___cdecl_T_HRESULT_void_ptr_ptr_void_ptr_ptr_XAUDIOENGINEINIT_ptr_IXAudioBatchAllocator_ptr
-  **pp_Var3;
-  T_HRESULT TVar4;
-  longlong lVar5;
+  **pp_Var1;
+  T_HRESULT TVar2;
   XAUDIOENGINEINIT local_30 [4];
   
-  lVar5 = (longlong)(int)param_2;
-  pXVar1 = (XAUDIOENGINEINIT *)__savegprlr_29(param_1,lVar5);
   RtlEnterCriticalSection(0xffffffff829afeb4);
   if (XAUDIO::g_pEngine != (CEngine *)0x0) {
     (**(code **)(*(int *)XAUDIO::g_pEngine + 4))();
     RtlLeaveCriticalSection(0xffffffff829afeb4);
-    uVar2 = __restgprlr_29(0);
-    return uVar2;
+    return 0;
   }
-  if (pXVar1 == (XAUDIOENGINEINIT *)0x0) {
-    pXVar1 = local_30;
+  if (param_1 == (XAUDIOENGINEINIT *)0x0) {
+    param_1 = local_30;
+    local_30[0].pMasteringVoiceInit = (XAUDIOMASTERINGVOICEINIT *)0x0;
   }
-  pp_Var3 = &__pfnXHVXAudioInit;
+  pp_Var1 = &__pfnXHVXAudioInit;
   do {
-    if (*pp_Var3 !=
+    if (*pp_Var1 !=
         (_func___cdecl_T_HRESULT_void_ptr_ptr_void_ptr_ptr_XAUDIOENGINEINIT_ptr_IXAudioBatchAllocator_ptr
          *)0x0) break;
-    pp_Var3 = pp_Var3 + 1;
-  } while (pp_Var3 < &__pfnXaudioInit_z);
-  TVar4 = (**pp_Var3)(pp_Var3,&__pfnXaudioInit_z,pXVar1,(IXAudioBatchAllocator *)lVar5);
+    pp_Var1 = pp_Var1 + 1;
+  } while (pp_Var1 < &__pfnXaudioInit_z);
+  TVar2 = (**pp_Var1)(pp_Var1,&__pfnXaudioInit_z,param_1,param_2);
   RtlLeaveCriticalSection(0xffffffff829afeb4);
-  uVar2 = __restgprlr_29(TVar4);
-  return uVar2;
+  return TVar2;
 }
 
 
@@ -448,44 +405,42 @@ undefined4 XAudioRegisterEffects(XAUDIOFXREGISTER *param_1)
 
 // 828CDD88  XAudioCreateSourceVoice  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/api.cpp:660)
 
-undefined4 XAudioCreateSourceVoice(XAUDIOSOURCEVOICEINIT *param_1,IXAudioSourceVoice **param_2)
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
+int XAudioCreateSourceVoice(XAUDIOSOURCEVOICEINIT *param_1,IXAudioSourceVoice **param_2)
 
 {
-  XAUDIOSOURCEVOICEINIT *pXVar1;
-  int iVar2;
-  undefined4 uVar3;
+  int iVar1;
   CSourceVoice *local_30 [12];
   
-  pXVar1 = (XAUDIOSOURCEVOICEINIT *)__savegprlr_29(param_1);
   RtlEnterCriticalSection(0xffffffff829afeb4);
-  iVar2 = XAUDIO::CSourceVoice::CreateObject(pXVar1,(IXAudioBatchAllocator *)0x0,local_30);
-  if (-1 < iVar2) {
+  iVar1 = XAUDIO::CSourceVoice::CreateObject(param_1,(IXAudioBatchAllocator *)0x0,local_30);
+  if (-1 < iVar1) {
     *param_2 = (IXAudioSourceVoice *)local_30[0];
   }
   RtlLeaveCriticalSection(0xffffffff829afeb4);
-  uVar3 = __restgprlr_29(iVar2);
-  return uVar3;
+  return iVar1;
 }
 
 
 // 828CDDE8  XAudioCreateSubmixVoice  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/api.cpp:727)
 
-undefined4 XAudioCreateSubmixVoice(XAUDIOSUBMIXVOICEINIT *param_1,IXAudioSubmixVoice **param_2)
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
+int XAudioCreateSubmixVoice(XAUDIOSUBMIXVOICEINIT *param_1,IXAudioSubmixVoice **param_2)
 
 {
-  XAUDIOSUBMIXVOICEINIT *pXVar1;
-  int iVar2;
-  undefined4 uVar3;
+  int iVar1;
   CSubmixVoice *local_30 [12];
   
-  pXVar1 = (XAUDIOSUBMIXVOICEINIT *)__savegprlr_29(param_1);
   RtlEnterCriticalSection(0xffffffff829afeb4);
-  iVar2 = XAUDIO::CSubmixVoice::CreateObject(pXVar1,(IXAudioBatchAllocator *)0x0,local_30);
-  if (-1 < iVar2) {
+  iVar1 = XAUDIO::CSubmixVoice::CreateObject(param_1,(IXAudioBatchAllocator *)0x0,local_30);
+  if (-1 < iVar1) {
     *param_2 = (IXAudioSubmixVoice *)local_30[0];
   }
   RtlLeaveCriticalSection(0xffffffff829afeb4);
-  uVar3 = __restgprlr_29(iVar2);
-  return uVar3;
+  return iVar1;
 }
 

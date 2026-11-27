@@ -40,16 +40,18 @@ void DB_SetStreamIndex(uint param_1)
 
 // 823F6820  DB_PushStreamPos  (database/db_stream.cpp:78)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void DB_PushStreamPos(uint param_1)
 
 {
   bool bVar1;
-  uint uVar2;
+  int iVar2;
   uint uVar3;
-  ulonglong uVar4;
+  uint uVar4;
   
-  uVar3 = __savegprlr_27(param_1);
-  if (6 < uVar3) {
+  if (6 < param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_stream.cpp",0x4f,0
                     ,"%s");
   }
@@ -57,23 +59,22 @@ void DB_PushStreamPos(uint param_1)
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_stream.cpp",0x50,0
                     ,"%s");
   }
-  uVar4 = (ulonglong)g_streamPosStackIndex;
-  if (0x3f < uVar4) {
+  if (0x3f < g_streamPosStackIndex) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_stream.cpp",0x51,0
                     ,"%s");
-    uVar4 = (ulonglong)g_streamPosStackIndex;
   }
-  uVar2 = g_streamPosIndex;
-  bVar1 = uVar3 != g_streamPosIndex;
-  g_streamPosStackIndex = (uint)(uVar4 + 1);
-  *(uint *)(&DAT_83231c24 + (int)(uVar4 << 3)) = g_streamPosIndex;
+  uVar3 = g_streamPosIndex;
+  iVar2 = g_streamPosStackIndex * 8;
+  uVar4 = g_streamPosStackIndex + 1;
+  bVar1 = param_1 != g_streamPosIndex;
+  g_streamPosStackIndex = uVar4;
+  *(uint *)(&DAT_83231c24 + iVar2) = g_streamPosIndex;
   if (bVar1) {
-    g_streamPosIndex = uVar3;
-    g_streamPosArray[uVar2] = g_streamPos;
-    g_streamPos = g_streamPosArray[uVar3];
+    g_streamPosIndex = param_1;
+    g_streamPosArray[uVar3] = g_streamPos;
+    g_streamPos = g_streamPosArray[param_1];
   }
-  *(uchar **)((int)g_streamPosArray + (int)((uVar4 + 1 & 0xffffffff) << 3) + 0x18) = g_streamPos;
-  __restgprlr_27();
+  g_streamPosArray[uVar4 * 2 + 6] = g_streamPos;
   return;
 }
 
@@ -133,23 +134,22 @@ uchar * DB_AllocStreamPos(int param_1)
 
 // 823F6A20  DB_IncStreamPos  (database/db_stream.cpp:129)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void DB_IncStreamPos(int param_1)
 
 {
-  int iVar1;
-  
-  iVar1 = __savegprlr_28(param_1);
   if (g_streamPos == (uchar *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_stream.cpp",0x82,0
                     ,"%s");
   }
   if (g_streamZoneMem->blocks[g_streamPosIndex].data +
-      g_streamZoneMem->blocks[g_streamPosIndex].size < g_streamPos + iVar1) {
+      g_streamZoneMem->blocks[g_streamPosIndex].size < g_streamPos + param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_stream.cpp",0x84,0
                     ,"%s");
   }
-  g_streamPos = g_streamPos + iVar1;
-  __restgprlr_28();
+  g_streamPos = g_streamPos + param_1;
   return;
 }
 

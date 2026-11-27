@@ -2,6 +2,8 @@
 
 // 82916764  __savefpr_15  (line unknown)
 
+/* WARNING: This is an inlined function */
+
 void __savefpr_15(void)
 
 {
@@ -47,6 +49,8 @@ void __savefpr_15(void)
 
 // 82916768  __savefpr_16  (line unknown)
 
+/* WARNING: This is an inlined function */
+
 void __savefpr_16(void)
 
 {
@@ -90,6 +94,8 @@ void __savefpr_16(void)
 
 // 8291676C  __savefpr_17  (line unknown)
 
+/* WARNING: This is an inlined function */
+
 void __savefpr_17(void)
 
 {
@@ -131,6 +137,8 @@ void __savefpr_17(void)
 
 // 82916770  __savefpr_18  (line unknown)
 
+/* WARNING: This is an inlined function */
+
 void __savefpr_18(void)
 
 {
@@ -170,6 +178,8 @@ void __savefpr_18(void)
 
 // 82916774  __savefpr_19  (line unknown)
 
+/* WARNING: This is an inlined function */
+
 void __savefpr_19(void)
 
 {
@@ -207,6 +217,8 @@ void __savefpr_19(void)
 
 // 82916778  __savefpr_20  (line unknown)
 
+/* WARNING: This is an inlined function */
+
 void __savefpr_20(void)
 
 {
@@ -242,6 +254,8 @@ void __savefpr_20(void)
 
 // 8291677C  __savefpr_21  (line unknown)
 
+/* WARNING: This is an inlined function */
+
 void __savefpr_21(void)
 
 {
@@ -275,6 +289,8 @@ void __savefpr_21(void)
 
 // 82916780  __savefpr_22  (line unknown)
 
+/* WARNING: This is an inlined function */
+
 void __savefpr_22(void)
 
 {
@@ -306,6 +322,8 @@ void __savefpr_22(void)
 
 // 82916784  __savefpr_23  (line unknown)
 
+/* WARNING: This is an inlined function */
+
 void __savefpr_23(void)
 
 {
@@ -335,6 +353,8 @@ void __savefpr_23(void)
 
 // 82916788  __savefpr_24  (line unknown)
 
+/* WARNING: This is an inlined function */
+
 void __savefpr_24(void)
 
 {
@@ -362,6 +382,8 @@ void __savefpr_24(void)
 
 // 8291678C  __savefpr_25  (line unknown)
 
+/* WARNING: This is an inlined function */
+
 void __savefpr_25(void)
 
 {
@@ -387,6 +409,8 @@ void __savefpr_25(void)
 
 // 82916790  __savefpr_26  (line unknown)
 
+/* WARNING: This is an inlined function */
+
 void __savefpr_26(void)
 
 {
@@ -410,6 +434,8 @@ void __savefpr_26(void)
 
 // 82916794  __savefpr_27  (line unknown)
 
+/* WARNING: This is an inlined function */
+
 void __savefpr_27(void)
 
 {
@@ -431,6 +457,8 @@ void __savefpr_27(void)
 
 // 82916798  __savefpr_28  (line unknown)
 
+/* WARNING: This is an inlined function */
+
 void __savefpr_28(void)
 
 {
@@ -450,6 +478,8 @@ void __savefpr_28(void)
 
 // 829167B0  __restfpr_15  (line unknown)
 
+/* WARNING: This is an inlined function */
+
 void __restfpr_15(void)
 
 {
@@ -458,6 +488,8 @@ void __restfpr_15(void)
 
 
 // 829167B4  __restfpr_16  (line unknown)
+
+/* WARNING: This is an inlined function */
 
 void __restfpr_16(void)
 
@@ -468,6 +500,8 @@ void __restfpr_16(void)
 
 // 829167B8  __restfpr_17  (line unknown)
 
+/* WARNING: This is an inlined function */
+
 void __restfpr_17(void)
 
 {
@@ -476,6 +510,8 @@ void __restfpr_17(void)
 
 
 // 829167BC  __restfpr_18  (line unknown)
+
+/* WARNING: This is an inlined function */
 
 void __restfpr_18(void)
 
@@ -486,6 +522,8 @@ void __restfpr_18(void)
 
 // 829167C0  __restfpr_19  (line unknown)
 
+/* WARNING: This is an inlined function */
+
 void __restfpr_19(void)
 
 {
@@ -494,6 +532,8 @@ void __restfpr_19(void)
 
 
 // 829167C4  __restfpr_20  (line unknown)
+
+/* WARNING: This is an inlined function */
 
 void __restfpr_20(void)
 
@@ -504,6 +544,8 @@ void __restfpr_20(void)
 
 // 829167C8  __restfpr_21  (line unknown)
 
+/* WARNING: This is an inlined function */
+
 void __restfpr_21(void)
 
 {
@@ -512,6 +554,8 @@ void __restfpr_21(void)
 
 
 // 829167CC  __restfpr_22  (line unknown)
+
+/* WARNING: This is an inlined function */
 
 void __restfpr_22(void)
 
@@ -522,6 +566,8 @@ void __restfpr_22(void)
 
 // 829167D0  __restfpr_23  (line unknown)
 
+/* WARNING: This is an inlined function */
+
 void __restfpr_23(void)
 
 {
@@ -530,6 +576,8 @@ void __restfpr_23(void)
 
 
 // 829167D4  __restfpr_24  (line unknown)
+
+/* WARNING: This is an inlined function */
 
 void __restfpr_24(void)
 
@@ -540,6 +588,8 @@ void __restfpr_24(void)
 
 // 829167D8  __restfpr_25  (line unknown)
 
+/* WARNING: This is an inlined function */
+
 void __restfpr_25(void)
 
 {
@@ -548,6 +598,8 @@ void __restfpr_25(void)
 
 
 // 829167DC  __restfpr_26  (line unknown)
+
+/* WARNING: This is an inlined function */
 
 void __restfpr_26(void)
 
@@ -558,6 +610,8 @@ void __restfpr_26(void)
 
 // 829167E0  __restfpr_27  (line unknown)
 
+/* WARNING: This is an inlined function */
+
 void __restfpr_27(void)
 
 {
@@ -566,6 +620,8 @@ void __restfpr_27(void)
 
 
 // 829167E4  __restfpr_28  (line unknown)
+
+/* WARNING: This is an inlined function */
 
 void __restfpr_28(void)
 

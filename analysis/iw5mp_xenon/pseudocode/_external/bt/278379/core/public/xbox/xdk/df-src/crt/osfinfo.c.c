@@ -2,79 +2,77 @@
 
 // 82929B20  _alloc_osfhnd  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/osfinfo.c:52)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 int _alloc_osfhnd(void)
 
 {
-  int iVar2;
-  ulonglong uVar1;
-  undefined4 *puVar3;
-  uint uVar4;
+  int iVar1;
+  undefined4 *puVar2;
+  uint uVar3;
   uint local_60;
   
-  __savegprlr_24();
   local_60 = 0xffffffff;
-  iVar2 = _mtinitlocknum(0xb);
-  if (iVar2 == 0) {
-    uVar1 = 0xffffffffffffffff;
+  iVar1 = _mtinitlocknum(0xb);
+  if (iVar1 == 0) {
+    local_60 = 0xffffffff;
   }
   else {
     _lock(0xb);
-    for (uVar4 = 0; (int)uVar4 < 0x40; uVar4 = uVar4 + 1) {
-      iVar2 = uVar4 * 4;
-      puVar3 = *(undefined4 **)(&__pioinfo + iVar2);
-      if (puVar3 == (undefined4 *)0x0) {
-        puVar3 = calloc(0x20,0x48);
-        if (puVar3 != (undefined4 *)0x0) {
-          *(undefined4 **)(&__pioinfo + iVar2) = puVar3;
+    for (uVar3 = 0; (int)uVar3 < 0x40; uVar3 = uVar3 + 1) {
+      iVar1 = uVar3 * 4;
+      puVar2 = *(undefined4 **)(&__pioinfo + iVar1);
+      if (puVar2 == (undefined4 *)0x0) {
+        puVar2 = calloc(0x20,0x48);
+        if (puVar2 != (undefined4 *)0x0) {
+          *(undefined4 **)(&__pioinfo + iVar1) = puVar2;
           _nhandle = _nhandle + 0x20;
-          for (; puVar3 < (undefined4 *)(*(int *)(&__pioinfo + iVar2) + 0x900);
-              puVar3 = puVar3 + 0x12) {
-            *(undefined1 *)(puVar3 + 1) = 0;
-            *puVar3 = 0xffffffff;
-            *(undefined1 *)((int)puVar3 + 5) = 10;
-            puVar3[2] = 0;
+          for (; puVar2 < (undefined4 *)(*(int *)(&__pioinfo + iVar1) + 0x900);
+              puVar2 = puVar2 + 0x12) {
+            *(undefined1 *)(puVar2 + 1) = 0;
+            *puVar2 = 0xffffffff;
+            *(undefined1 *)((int)puVar2 + 5) = 10;
+            puVar2[2] = 0;
           }
-          local_60 = uVar4 << 5;
-          *(undefined1 *)(*(int *)(&__pioinfo + ((int)(local_60 | uVar4 >> 0x1b) >> 5) * 4) + 4) = 1
+          local_60 = uVar3 << 5;
+          *(undefined1 *)(*(int *)(&__pioinfo + ((int)(local_60 | uVar3 >> 0x1b) >> 5) * 4) + 4) = 1
           ;
-          iVar2 = __lock_fhandle(local_60);
-          if (iVar2 == 0) {
+          iVar1 = __lock_fhandle(local_60);
+          if (iVar1 == 0) {
             local_60 = 0xffffffff;
           }
         }
         break;
       }
-      for (; puVar3 < (undefined4 *)(*(int *)(&__pioinfo + uVar4 * 4) + 0x900);
-          puVar3 = puVar3 + 0x12) {
-        if ((*(byte *)(puVar3 + 1) & 1) == 0) {
-          if (puVar3[2] == 0) {
+      for (; puVar2 < (undefined4 *)(*(int *)(&__pioinfo + uVar3 * 4) + 0x900);
+          puVar2 = puVar2 + 0x12) {
+        if ((*(byte *)(puVar2 + 1) & 1) == 0) {
+          if (puVar2[2] == 0) {
             _lock(10);
-            if ((puVar3[2] == 0) &&
-               (iVar2 = __crtInitCritSecAndSpinCount((_RTL_CRITICAL_SECTION *)(puVar3 + 3),4000),
-               iVar2 != 0)) {
-              puVar3[2] = puVar3[2] + 1;
+            if ((puVar2[2] == 0) &&
+               (iVar1 = __crtInitCritSecAndSpinCount((_RTL_CRITICAL_SECTION *)(puVar2 + 3),4000),
+               iVar1 != 0)) {
+              puVar2[2] = puVar2[2] + 1;
             }
             FUN_82929d5c();
           }
-          RtlEnterCriticalSection(puVar3 + 3);
-          if ((*(byte *)(puVar3 + 1) & 1) == 0) {
-            *(undefined1 *)(puVar3 + 1) = 1;
-            *puVar3 = 0xffffffff;
-            local_60 = ((int)puVar3 - *(int *)(&__pioinfo + uVar4 * 4)) / 0x48 + uVar4 * 0x20;
+          RtlEnterCriticalSection(puVar2 + 3);
+          if ((*(byte *)(puVar2 + 1) & 1) == 0) {
+            *(undefined1 *)(puVar2 + 1) = 1;
+            *puVar2 = 0xffffffff;
+            local_60 = ((int)puVar2 - *(int *)(&__pioinfo + uVar3 * 4)) / 0x48 + uVar3 * 0x20;
             break;
           }
-          RtlLeaveCriticalSection(puVar3 + 3);
+          RtlLeaveCriticalSection(puVar2 + 3);
         }
       }
       if (local_60 != 0xffffffff) break;
     }
     FUN_82929d38();
-    uVar1 = (ulonglong)local_60;
   }
-  iVar2 = __restgprlr_24(uVar1);
-  return iVar2;
+  return local_60;
 }
 
 
@@ -165,32 +163,34 @@ int _get_osfhandle(int param_1)
 
 // 829299F0  __lock_fhandle  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/osfinfo.c:395)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 int __lock_fhandle(int param_1)
 
 {
   ulonglong uVar1;
-  int iVar2;
-  ioinfo___0_ *piVar3;
-  uint uStack00000014;
+  ioinfo___0_ *piVar2;
+  int iVar3;
+  int iStack00000014;
   
-  uVar1 = __savegprlr_29(param_1);
-  uStack00000014 = (uint)uVar1;
-  piVar3 = &__pioinfo;
-  iVar2 = *(int *)(&__pioinfo + ((int)uStack00000014 >> 5) * 4) + (uStack00000014 & 0x1f) * 0x48;
-  if (*(int *)(iVar2 + 8) == 0) {
+  uVar1 = (ulonglong)param_1;
+  piVar2 = &__pioinfo;
+  iVar3 = *(int *)(&__pioinfo + (param_1 >> 5) * 4) + (param_1 & 0x1fU) * 0x48;
+  iStack00000014 = param_1;
+  if (*(int *)(iVar3 + 8) == 0) {
     _lock(10);
-    piVar3 = *(ioinfo___0_ **)(iVar2 + 8);
-    if (piVar3 == (ioinfo___0_ *)0x0) {
-      __crtInitCritSecAndSpinCount((_RTL_CRITICAL_SECTION *)(iVar2 + 0xc),4000);
-      piVar3 = (ioinfo___0_ *)(*(int *)(iVar2 + 8) + 1);
-      *(ioinfo___0_ **)(iVar2 + 8) = piVar3;
+    piVar2 = *(ioinfo___0_ **)(iVar3 + 8);
+    if (piVar2 == (ioinfo___0_ *)0x0) {
+      __crtInitCritSecAndSpinCount((_RTL_CRITICAL_SECTION *)(iVar3 + 0xc),4000);
+      piVar2 = (ioinfo___0_ *)(*(int *)(iVar3 + 8) + 1);
+      *(ioinfo___0_ **)(iVar3 + 8) = piVar2;
     }
     uVar1 = FUN_82929ab8();
   }
   RtlEnterCriticalSection
-            ((ulonglong)*(uint *)(piVar3 + ((int)uVar1 >> 5) * 4) + (uVar1 & 0x1f) * 0x48 + 0xc);
-  iVar2 = __restgprlr_29(1);
-  return iVar2;
+            ((ulonglong)*(uint *)(piVar2 + ((int)uVar1 >> 5) * 4) + (uVar1 & 0x1f) * 0x48 + 0xc);
+  return 1;
 }
 
 

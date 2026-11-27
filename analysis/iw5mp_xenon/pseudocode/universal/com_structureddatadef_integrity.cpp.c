@@ -95,45 +95,47 @@ void StructuredData_ValidateResetDvars(void)
 
 // 825ED010  StructuredData_IsDataOutsideCompareBounds  (universal/com_structureddatadef_integrity.cpp:120)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 int StructuredData_IsDataOutsideCompareBounds(CompareSettings *param_1)
 
 {
-  StructuredDataLookup *pSVar1;
+  uint uVar1;
   uint uVar2;
   uint uVar3;
   int iVar4;
-  StructuredDataDef *pSVar5;
   
-  pSVar1 = (StructuredDataLookup *)__savegprlr_28(param_1);
-  if (pSVar1 == (StructuredDataLookup *)0x0) {
+  if (param_1 == (CompareSettings *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_structureddatadef_integrity.cpp"
                     ,0x7e,0,"%s");
   }
-  uVar2 = StructuredData_GetLookupDataSize(pSVar1);
-  if (uVar2 == 0) {
+  uVar1 = StructuredData_GetLookupDataSize(&param_1->lookup);
+  if (uVar1 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_structureddatadef_integrity.cpp"
                     ,0x81,0,"%s");
   }
-  uVar3 = StructuredData_GetByteOffset(pSVar1->offset,pSVar1->type);
-  pSVar5 = (StructuredDataDef *)0x0;
-  if (pSVar1[2].def != (StructuredDataDef *)0x0) {
+  uVar2 = StructuredData_GetByteOffset((param_1->lookup).offset,(param_1->lookup).type);
+  uVar3 = 0;
+  if (param_1->dataRangeCount != 0) {
     iVar4 = 0;
     do {
-      if ((*(uint *)(iVar4 + pSVar1[1].error) < uVar3 + uVar2) &&
-         (uVar3 < *(uint *)(iVar4 + pSVar1[1].error + 4))) {
-        iVar4 = __restgprlr_28(0);
-        return iVar4;
+      if ((*(uint *)((int)&param_1->dataRanges->startByteOffset + iVar4) < uVar2 + uVar1) &&
+         (uVar2 < *(uint *)((int)&param_1->dataRanges->endByteOffset + iVar4))) {
+        return 0;
       }
-      pSVar5 = (StructuredDataDef *)((int)&pSVar5->version + 1);
+      uVar3 = uVar3 + 1;
       iVar4 = iVar4 + 8;
-    } while (pSVar5 < pSVar1[2].def);
+    } while (uVar3 < param_1->dataRangeCount);
   }
-  iVar4 = __restgprlr_28(1);
-  return iVar4;
+  return 1;
 }
 
 
 // 825ED0F0  StructuredData_GetOptimizedFirstLastIndices  (universal/com_structureddatadef_integrity.cpp:146)
+
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
 
 void StructuredData_GetOptimizedFirstLastIndices
                (CompareSettings *param_1,uint param_2,uint param_3,StructuredDataType *param_4,
@@ -142,158 +144,139 @@ void StructuredData_GetOptimizedFirstLastIndices
 {
   uint uVar1;
   uint uVar2;
+  longlong lVar3;
+  uint uVar5;
   ulonglong uVar4;
-  ulonglong uVar5;
-  ulonglong uVar6;
-  uint *puVar7;
-  ulonglong uVar8;
-  uint *puVar9;
-  uint uVar11;
-  ulonglong uVar10;
-  StructuredDataDef *pSVar12;
-  int iVar13;
-  uint *puVar14;
-  longlong lVar15;
-  StructuredDataLookup *pSVar3;
+  uint uVar6;
+  int iVar7;
+  uint *puVar8;
+  longlong lVar9;
   
-  uVar8 = (ulonglong)(int)param_6;
-  uVar6 = (ulonglong)(int)param_5;
-  uVar5 = (ulonglong)(int)param_3;
-  uVar4 = (ulonglong)(int)param_2;
-  uVar10 = (ulonglong)(int)param_1;
-  __savegprlr();
-  if ((uVar10 & 0xffffffff) == 0) {
+  lVar3 = (longlong)(int)param_2;
+  if (param_1 == (CompareSettings *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_structureddatadef_integrity.cpp"
                     ,0x99,0,"%s");
   }
-  if ((uVar6 & 0xffffffff) == 0) {
+  if (param_5 == (uint *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_structureddatadef_integrity.cpp"
                     ,0x9a,0,"%s");
   }
-  if ((uVar8 & 0xffffffff) == 0) {
+  if (param_6 == (uint *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_structureddatadef_integrity.cpp"
                     ,0x9b,0,"%s");
   }
-  if ((uVar4 & 0xffffffff) == 0) {
+  if (param_2 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_structureddatadef_integrity.cpp"
                     ,0x9c,0,"%s");
   }
-  puVar7 = (uint *)uVar6;
-  *puVar7 = (uint)uVar5;
-  puVar9 = (uint *)uVar8;
-  *puVar9 = 0;
-  pSVar3 = (StructuredDataLookup *)uVar10;
-  uVar2 = StructuredData_GetLookupDataSize(pSVar3);
-  pSVar12 = (StructuredDataDef *)0x0;
-  if (pSVar3[2].def != (StructuredDataDef *)0x0) {
-    iVar13 = 0;
+  *param_5 = param_3;
+  *param_6 = 0;
+  uVar2 = StructuredData_GetLookupDataSize(&param_1->lookup);
+  uVar6 = 0;
+  if (param_1->dataRangeCount != 0) {
+    iVar7 = 0;
     do {
-      uVar11 = pSVar3->offset;
-      puVar14 = (uint *)(pSVar3[1].error + iVar13);
-      uVar1 = *(uint *)(pSVar3[1].error + iVar13);
-      if ((uVar1 < uVar11 + uVar2) && (uVar11 < puVar14[1])) {
-        if (*puVar7 != 0) {
-          if (uVar11 < uVar1) {
-            if ((uVar4 & 0xffffffff) == 0) {
+      uVar5 = (param_1->lookup).offset;
+      puVar8 = (uint *)((int)&param_1->dataRanges->startByteOffset + iVar7);
+      uVar1 = *(uint *)((int)&param_1->dataRanges->startByteOffset + iVar7);
+      if ((uVar1 < uVar5 + uVar2) && (uVar5 < puVar8[1])) {
+        if (*param_5 != 0) {
+          if (uVar5 < uVar1) {
+            if (param_2 == 0) {
               MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_structureddatadef_integrity.cpp"
                               ,0xb6,0,"%s");
             }
-            uVar10 = (ulonglong)*puVar14 - (ulonglong)pSVar3->offset;
-            if ((longlong)uVar10 < 1) {
+            uVar4 = (ulonglong)*puVar8 - (ulonglong)(param_1->lookup).offset;
+            if ((longlong)uVar4 < 1) {
               MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_structureddatadef_integrity.cpp"
                               ,0xb8,0,"relativeOffset > 0\n\t%i, %i");
             }
-            uVar10 = (uVar10 & 0xffffffff) / (uVar4 & 0xffffffff);
-            uVar11 = (uint)uVar10;
-            trapWord(6,uVar4,0);
+            uVar4 = (uVar4 & 0xffffffff) / (ulonglong)param_2;
+            uVar5 = (uint)uVar4;
+            trapWord(6,lVar3,0);
             if (param_4->type == DATA_BOOL) {
-              uVar11 = (uint)(uVar10 << 3);
+              uVar5 = (uint)(uVar4 << 3);
             }
-            if ((int)*puVar7 <= (int)uVar11) {
-              uVar11 = *puVar7;
+            if ((int)*param_5 <= (int)uVar5) {
+              uVar5 = *param_5;
             }
-            *puVar7 = uVar11;
+            *param_5 = uVar5;
           }
           else {
-            *puVar7 = 0;
+            *param_5 = 0;
           }
         }
-        if ((ulonglong)*puVar9 != (uVar5 & 0xffffffff)) {
-          if (puVar14[1] < pSVar3->offset + uVar2) {
-            if (puVar14[1] <= pSVar3->offset) {
+        if (*param_6 != param_3) {
+          uVar5 = (param_1->lookup).offset;
+          if (puVar8[1] < uVar5 + uVar2) {
+            if (puVar8[1] <= uVar5) {
               MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_structureddatadef_integrity.cpp"
                               ,0xc9,0,
                               "dataRange->endByteOffset > compareSettings->lookup.offset\n\t%i, %i")
               ;
             }
-            lVar15 = (ulonglong)puVar14[1] - (ulonglong)pSVar3->offset;
-            if (lVar15 < 1) {
+            lVar9 = (ulonglong)puVar8[1] - (ulonglong)(param_1->lookup).offset;
+            if (lVar9 < 1) {
               MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_structureddatadef_integrity.cpp"
                               ,0xcb,1,"%s");
             }
-            if ((uVar4 & 0xffffffff) == 0) {
+            if (param_2 == 0) {
               MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_structureddatadef_integrity.cpp"
                               ,0xcc,0,"%s");
             }
-            trapWord(6,uVar4,0);
-            uVar10 = ((lVar15 + uVar4) - 1 & 0xffffffff) / (uVar4 & 0xffffffff);
-            uVar11 = (uint)uVar10;
+            trapWord(6,lVar3,0);
+            uVar4 = ((lVar9 + lVar3) - 1U & 0xffffffff) / (ulonglong)param_2;
+            uVar5 = (uint)uVar4;
             if (param_4->type == DATA_BOOL) {
-              uVar11 = (uint)(uVar10 << 3);
+              uVar5 = (uint)(uVar4 << 3);
             }
-            if ((int)uVar11 <= (int)*puVar9) {
-              uVar11 = *puVar9;
+            if ((int)uVar5 <= (int)*param_6) {
+              uVar5 = *param_6;
             }
-            *puVar9 = uVar11;
+            *param_6 = uVar5;
           }
           else {
-            *puVar9 = (uint)uVar5;
+            *param_6 = param_3;
           }
         }
       }
-      pSVar12 = (StructuredDataDef *)((int)&pSVar12->version + 1);
-      iVar13 = iVar13 + 8;
-    } while (pSVar12 < pSVar3[2].def);
+      uVar6 = uVar6 + 1;
+      iVar7 = iVar7 + 8;
+    } while (uVar6 < param_1->dataRangeCount);
   }
-  if (*puVar9 <= *puVar7) {
+  if (*param_6 <= *param_5) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_structureddatadef_integrity.cpp"
                     ,0xd6,0,"(*outStartIndex) doesn\'t index (*outLastIndex)\n\t%i not in [0, %i)");
   }
-  if ((*puVar9 == 0) || ((uVar5 & 0xffffffff) < (ulonglong)*puVar9)) {
+  if ((*param_6 == 0) || (param_3 < *param_6)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_structureddatadef_integrity.cpp"
                     ,0xd7,0,"(*outLastIndex) not in [1, elementCount]\n\t%i not in [%i, %i]");
   }
-  __restgprlr();
   return;
 }
 
 
 // 825ED3F0  StructuredData_UpdateValidation  (universal/com_structureddatadef_integrity.cpp:220)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void StructuredData_UpdateValidation
                (char *param_1,StructuredDataValidationType *param_2,
                StructuredDataValidationType *param_3)
 
 {
-  ulonglong uVar1;
-  ulonglong uVar2;
-  uint *puVar3;
-  
-  uVar2 = (ulonglong)(int)param_3;
-  uVar1 = (ulonglong)(int)param_2;
-  __savegprlr_27(param_1);
-  if ((uVar1 & 0xffffffff) == 0) {
+  if (param_2 == (StructuredDataValidationType *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_structureddatadef_integrity.cpp"
                     ,0xdd,0,"%s");
   }
-  if ((uVar2 & 0xffffffff) == 0) {
+  if (param_3 == (StructuredDataValidationType *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_structureddatadef_integrity.cpp"
                     ,0xde,0,"%s");
   }
-  puVar3 = (uint *)uVar2;
-  if (*(uint *)uVar1 != 0) {
-    if (*puVar3 == 0) {
-      *puVar3 = *(uint *)uVar1;
+  if (*param_2 != VALIDATION_NONE) {
+    if (*param_3 == VALIDATION_NONE) {
+      *param_3 = *param_2;
     }
     else {
       Com_PrintWarning(0xc,
@@ -301,134 +284,118 @@ void StructuredData_UpdateValidation
                       );
     }
   }
-  if (*puVar3 == 0) {
+  if (*param_3 == VALIDATION_NONE) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_structureddatadef_integrity.cpp"
                     ,0xec,0,"%s");
   }
-  if (6 < *puVar3) {
+  if (VALIDATION_XP < *param_3) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_structureddatadef_integrity.cpp"
                     ,0xed,0,
                     "*compareValidation doesn\'t index VALIDATION_COUNT\n\t%i not in [0, %i)");
   }
-  __restgprlr_27();
   return;
 }
 
 
 // 825ED4F8  StructuredData_ClampValueInt  (universal/com_structureddatadef_integrity.cpp:242)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 int StructuredData_ClampValueInt(char *param_1,int *param_2)
 
 {
-  int iVar1;
-  dvar_t *pdVar2;
-  ulonglong uVar3;
+  dvar_t *pdVar1;
   char acStack_430 [1072];
   
-  uVar3 = (ulonglong)(int)param_2;
-  iVar1 = __savegprlr_28(param_1);
-  if (iVar1 == 0) {
+  if (param_1 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_structureddatadef_integrity.cpp"
                     ,0xf6,0,"%s");
   }
   Com_sprintf(acStack_430,0x400,"validate_clamp_%s");
-  pdVar2 = Dvar_FindVar(acStack_430);
-  if (pdVar2 != (dvar_t *)0x0) {
-    if ((uVar3 & 0xffffffff) == 0) {
+  pdVar1 = Dvar_FindVar(acStack_430);
+  if (pdVar1 != (dvar_t *)0x0) {
+    if (param_2 == (int *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_structureddatadef_integrity.cpp"
                       ,0xfc,0,"%s");
     }
-    *(int *)uVar3 = (pdVar2->current).integer;
-    iVar1 = __restgprlr_28(1);
-    return iVar1;
+    *param_2 = (pdVar1->current).integer;
+    return 1;
   }
-  iVar1 = __restgprlr_28(0);
-  return iVar1;
+  return 0;
 }
 
 
 // 825ED5B0  StructuredData_ClampValueFloat  (universal/com_structureddatadef_integrity.cpp:262)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 int StructuredData_ClampValueFloat(char *param_1,float *param_2)
 
 {
-  int iVar1;
-  dvar_t *pdVar2;
-  ulonglong uVar3;
+  dvar_t *pdVar1;
   char acStack_430 [1072];
   
-  uVar3 = (ulonglong)(int)param_2;
-  iVar1 = __savegprlr_28(param_1);
-  if (iVar1 == 0) {
+  if (param_1 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_structureddatadef_integrity.cpp"
                     ,0x10a,0,"%s");
   }
   Com_sprintf(acStack_430,0x400,"validate_clamp_%s");
-  pdVar2 = Dvar_FindVar(acStack_430);
-  if (pdVar2 != (dvar_t *)0x0) {
-    if ((uVar3 & 0xffffffff) == 0) {
+  pdVar1 = Dvar_FindVar(acStack_430);
+  if (pdVar1 != (dvar_t *)0x0) {
+    if (param_2 == (float *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_structureddatadef_integrity.cpp"
                       ,0x110,0,"%s");
     }
-    *(int *)uVar3 = (pdVar2->current).integer;
-    iVar1 = __restgprlr_28(1);
-    return iVar1;
+    *param_2 = (float)(pdVar1->current).integer;
+    return 1;
   }
-  iVar1 = __restgprlr_28(0);
-  return iVar1;
+  return 0;
 }
 
 
 // 825ED668  StructuredData_CompareSpecial_XP  (universal/com_structureddatadef_integrity.cpp:282)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 int StructuredData_CompareSpecial_XP(int param_1,int param_2)
 
 {
-  int iVar1;
-  uint uVar2;
-  int iVar3;
-  ulonglong uVar4;
-  int iVar5;
+  uint uVar1;
+  int iVar2;
   int local_30 [12];
   
-  uVar4 = (ulonglong)param_2;
-  iVar1 = __savegprlr_29(param_1);
-  uVar2 = CL_GetMaxXPMP();
-  iVar5 = (int)uVar4;
-  if ((iVar1 < (int)uVar2) || (iVar5 < (int)uVar2)) {
+  uVar1 = CL_GetMaxXPMP();
+  if ((param_1 < (int)uVar1) || (param_2 < (int)uVar1)) {
     local_30[0] = 0;
-    iVar3 = StructuredData_ClampValueInt("experience",local_30);
-    if ((iVar3 != 0) && (local_30[0] + iVar1 < iVar5)) {
-      iVar1 = __restgprlr_29(0);
-      return iVar1;
+    iVar2 = StructuredData_ClampValueInt("experience",local_30);
+    if ((iVar2 != 0) && (local_30[0] + param_1 < param_2)) {
+      return 0;
     }
-    if (iVar5 < iVar1) {
-      iVar1 = __restgprlr_29((ulonglong)(uVar2 >> 0x1f) + (longlong)(iVar5 >> 0x1f) +
-                             (ulonglong)((ulonglong)(longlong)(int)uVar2 <= uVar4));
-      return iVar1;
+    if (param_2 < param_1) {
+      return ((param_2 >> 0x1f) - ((int)uVar1 >> 0x1f)) + (uint)(uVar1 <= (uint)param_2);
     }
   }
-  iVar1 = __restgprlr_29(1);
-  return iVar1;
+  return 1;
 }
 
 
 // 825ED700  StructuredData_ValidateInt  (universal/com_structureddatadef_integrity.cpp:316)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
+
 int StructuredData_ValidateInt(char *param_1,int param_2,int param_3,CompareSettings *param_4)
 
 {
-  StructuredDataDef *pSVar1;
+  StructuredDataValidationType SVar1;
   uint uVar2;
-  StructuredDataLookup *pSVar3;
-  char *pcVar4;
-  int iVar5;
-  ulonglong uVar6;
+  int iVar3;
   int local_50 [20];
   
-  uVar6 = (ulonglong)(int)param_4;
-  pcVar4 = (char *)__savegprlr_24(param_1);
-  if ((uVar6 & 0xffffffff) == 0) {
+  if (param_4 == (CompareSettings *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_structureddatadef_integrity.cpp"
                     ,0x13f,0,"%s");
   }
@@ -440,117 +407,119 @@ int StructuredData_ValidateInt(char *param_1,int param_2,int param_3,CompareSett
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_structureddatadef_integrity.cpp"
                     ,0x141,0,"%s");
   }
-  pSVar3 = (StructuredDataLookup *)uVar6;
-  pSVar1 = pSVar3[1].def;
+  SVar1 = param_4->validation;
   local_50[0] = 0;
-  if ((undefined1 *)0x5 < (undefined1 *)((int)&pSVar1[-1].size + 3U)) {
-    if (alwaysfails == 0) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_structureddatadef_integrity.cpp"
-                      ,0x193,0,"Unhandled validationType");
+  if (5 < SVar1 - VALIDATION_CONSTANT) {
+    if (alwaysfails != 0) {
+      return 0;
     }
-    goto LAB_825eda14;
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_structureddatadef_integrity.cpp"
+                    ,0x193,0,"Unhandled validationType");
+    return 0;
   }
-  if (pSVar1 == (StructuredDataDef *)0x2) {
-    iVar5 = StructuredData_ClampValueInt(pcVar4,local_50);
-    if ((iVar5 == 0) || (iVar5 = local_50[0] + param_2, param_3 <= iVar5)) goto LAB_825ed89c;
+  if (SVar1 == VALIDATION_INCREASECLAMP) {
+    iVar3 = StructuredData_ClampValueInt(param_1,local_50);
+    if ((iVar3 == 0) || (iVar3 = local_50[0] + param_2, param_3 <= iVar3)) goto LAB_825ed89c;
 LAB_825ed844:
     if ((validate_apply_revert->current).enabled != false) {
-      StructuredData_SetInt(pSVar3,(StructuredDataBuffer *)pSVar3[1].offset,param_2);
-      iVar5 = __restgprlr_24(0);
-      return iVar5;
+      StructuredData_SetInt(&param_4->lookup,param_4->bufferNew,param_2);
+      return 0;
     }
   }
   else {
-    if (pSVar1 == (StructuredDataDef *)0x3) {
+    if (SVar1 == VALIDATION_INCREASESTRICT) {
 LAB_825ed89c:
       if (param_2 <= param_3) {
-LAB_825ed9e0:
-        iVar5 = __restgprlr_24(1);
-        return iVar5;
+        return 1;
       }
-      if (((validate_apply_revert->current).enabled != false) ||
-         ((validate_apply_clamps->current).enabled != false)) {
-        StructuredData_SetInt(pSVar3,(StructuredDataBuffer *)pSVar3[1].offset,param_2);
-        iVar5 = __restgprlr_24(0);
-        return iVar5;
+      if (((validate_apply_revert->current).enabled == false) &&
+         ((validate_apply_clamps->current).enabled == false)) {
+        return 0;
       }
-      goto LAB_825eda14;
+      StructuredData_SetInt(&param_4->lookup,param_4->bufferNew,param_2);
+      return 0;
     }
-    if (pSVar1 != (StructuredDataDef *)0x4) {
-      if (pSVar1 == (StructuredDataDef *)0x5) {
-        iVar5 = StructuredData_ClampValueInt(pcVar4,local_50);
-        if ((iVar5 == 0) ||
-           (uVar2 = param_3 - param_2 >> 0x1f,
-           (int)((param_3 - param_2 ^ uVar2) - uVar2) <= local_50[0])) goto LAB_825ed9e0;
-        if (((validate_apply_revert->current).enabled != false) ||
-           ((validate_apply_clamps->current).enabled != false)) {
-          StructuredData_SetInt(pSVar3,(StructuredDataBuffer *)pSVar3[1].offset,param_2);
-          iVar5 = __restgprlr_24(0);
-          return iVar5;
+    if (SVar1 != VALIDATION_DELTACLAMP) {
+      if (SVar1 == VALIDATION_DELTASTRICT) {
+        iVar3 = StructuredData_ClampValueInt(param_1,local_50);
+        if (iVar3 == 0) {
+          return 1;
         }
-      }
-      else if (pSVar1 == (StructuredDataDef *)0x1) {
-        if (param_3 == param_2) goto LAB_825ed9e0;
-        if (((validate_apply_revert->current).enabled != false) ||
-           ((validate_apply_clamps->current).enabled != false)) {
-          StructuredData_SetInt(pSVar3,(StructuredDataBuffer *)pSVar3[1].offset,param_2);
-          iVar5 = __restgprlr_24(0);
-          return iVar5;
+        uVar2 = param_3 - param_2 >> 0x1f;
+        if (local_50[0] < (int)((param_3 - param_2 ^ uVar2) - uVar2)) {
+          if (((validate_apply_revert->current).enabled == false) &&
+             ((validate_apply_clamps->current).enabled == false)) {
+            return 0;
+          }
+          StructuredData_SetInt(&param_4->lookup,param_4->bufferNew,param_2);
+          return 0;
         }
+        return 1;
       }
-      else {
-        iVar5 = StructuredData_CompareSpecial_XP(param_2,param_3);
-        if (iVar5 != 0) goto LAB_825ed9e0;
-        if (((validate_apply_revert->current).enabled != false) ||
-           ((validate_apply_clamps->current).enabled != false)) {
-          StructuredData_SetInt(pSVar3,(StructuredDataBuffer *)pSVar3[1].offset,param_2);
-          iVar5 = __restgprlr_24(0);
-          return iVar5;
+      if (SVar1 != VALIDATION_CONSTANT) {
+        iVar3 = StructuredData_CompareSpecial_XP(param_2,param_3);
+        if (iVar3 != 0) {
+          return 1;
         }
+        if (((validate_apply_revert->current).enabled == false) &&
+           ((validate_apply_clamps->current).enabled == false)) {
+          return 0;
+        }
+        StructuredData_SetInt(&param_4->lookup,param_4->bufferNew,param_2);
+        return 0;
       }
-      goto LAB_825eda14;
+      if (param_3 == param_2) {
+        return 1;
+      }
+      if (((validate_apply_revert->current).enabled == false) &&
+         ((validate_apply_clamps->current).enabled == false)) {
+        return 0;
+      }
+      StructuredData_SetInt(&param_4->lookup,param_4->bufferNew,param_2);
+      return 0;
     }
-    iVar5 = StructuredData_ClampValueInt(pcVar4,local_50);
-    if (iVar5 == 0) goto LAB_825ed9e0;
-    iVar5 = local_50[0] + param_2;
-    if (iVar5 < param_3) goto LAB_825ed844;
-    if (param_2 - local_50[0] <= param_3) goto LAB_825ed9e0;
-    iVar5 = param_2 - local_50[0];
+    iVar3 = StructuredData_ClampValueInt(param_1,local_50);
+    if (iVar3 == 0) {
+      return 1;
+    }
+    iVar3 = local_50[0] + param_2;
+    if (iVar3 < param_3) goto LAB_825ed844;
+    if (param_2 - local_50[0] <= param_3) {
+      return 1;
+    }
+    iVar3 = param_2 - local_50[0];
     if ((validate_apply_revert->current).enabled != false) goto LAB_825ed880;
   }
-  param_2 = iVar5;
-  if ((validate_apply_clamps->current).enabled != false) {
-LAB_825ed880:
-    StructuredData_SetInt(pSVar3,(StructuredDataBuffer *)pSVar3[1].offset,param_2);
-    iVar5 = __restgprlr_24(0);
-    return iVar5;
+  param_2 = iVar3;
+  if ((validate_apply_clamps->current).enabled == false) {
+    return 0;
   }
-LAB_825eda14:
-  iVar5 = __restgprlr_24(0);
-  return iVar5;
+LAB_825ed880:
+  StructuredData_SetInt(&param_4->lookup,param_4->bufferNew,param_2);
+  return 0;
 }
 
 
 // 825EDA20  StructuredData_ValidateFloat  (universal/com_structureddatadef_integrity.cpp:412)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 int StructuredData_ValidateFloat(char *param_1,float param_2,float param_3,CompareSettings *param_4)
 
 {
   StructuredDataDef *pSVar1;
-  StructuredDataLookup *pSVar2;
+  int iVar2;
+  StructuredDataLookup *in_r6;
   char *pcVar3;
-  int iVar4;
-  ulonglong in_r6;
-  double extraout_f1;
+  double dVar4;
   double dVar5;
   double dVar6;
-  double dVar7;
   float local_50 [20];
   
-  dVar7 = (double)param_3;
-  pcVar3 = (char *)__savegprlr_26((double)param_2,param_1,param_4);
-  dVar5 = extraout_f1;
-  if ((in_r6 & 0xffffffff) == 0) {
+  dVar4 = (double)param_2;
+  dVar6 = (double)param_3;
+  if (in_r6 == (StructuredDataLookup *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_structureddatadef_integrity.cpp"
                     ,0x19f,0,"%s");
   }
@@ -562,458 +531,446 @@ int StructuredData_ValidateFloat(char *param_1,float param_2,float param_3,Compa
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_structureddatadef_integrity.cpp"
                     ,0x1a1,0,"%s");
   }
-  pSVar2 = (StructuredDataLookup *)in_r6;
-  pSVar1 = pSVar2[1].def;
+  pSVar1 = in_r6[1].def;
   local_50[0] = 0.0;
   if ((undefined1 *)((int)&pSVar1[-1].size + 3U) < (undefined1 *)0x6) {
     if (pSVar1 == (StructuredDataDef *)0x2) {
-      iVar4 = StructuredData_ClampValueFloat(pcVar3,local_50);
-      if ((iVar4 != 0) && (dVar6 = (double)(float)((double)local_50[0] + dVar5), dVar6 < dVar7)) {
+      iVar2 = StructuredData_ClampValueFloat(param_1,local_50);
+      if ((iVar2 != 0) && (dVar5 = (double)(float)((double)local_50[0] + dVar4), dVar5 < dVar6)) {
 LAB_825edb78:
         if ((validate_apply_revert->current).enabled != false) {
-          StructuredData_SetFloat(pSVar2,(StructuredDataBuffer *)pSVar2[1].offset,(float)dVar5);
-          iVar4 = __restgprlr_26(0);
-          return iVar4;
+          StructuredData_SetFloat(in_r6,(StructuredDataBuffer *)in_r6[1].offset,(float)dVar4);
+          return 0;
         }
 LAB_825edbac:
-        dVar5 = dVar6;
-        if ((validate_apply_clamps->current).enabled != false) {
-LAB_825edbbc:
-          StructuredData_SetFloat(pSVar2,(StructuredDataBuffer *)pSVar2[1].offset,(float)dVar5);
-          iVar4 = __restgprlr_26(0);
-          return iVar4;
+        dVar4 = dVar5;
+        if ((validate_apply_clamps->current).enabled == false) {
+          return 0;
         }
-        goto LAB_825edd38;
+LAB_825edbbc:
+        StructuredData_SetFloat(in_r6,(StructuredDataBuffer *)in_r6[1].offset,(float)dVar4);
+        return 0;
       }
     }
     else if (pSVar1 != (StructuredDataDef *)0x3) {
       if (pSVar1 == (StructuredDataDef *)0x4) {
-        iVar4 = StructuredData_ClampValueFloat(pcVar3,local_50);
-        if (iVar4 == 0) goto LAB_825edcdc;
-        dVar6 = (double)(float)((double)local_50[0] + dVar5);
-        if (dVar6 < dVar7) goto LAB_825edb78;
-        dVar6 = (double)(float)(dVar5 - (double)local_50[0]);
-        if (dVar6 <= dVar7) goto LAB_825edcdc;
+        iVar2 = StructuredData_ClampValueFloat(param_1,local_50);
+        if (iVar2 == 0) {
+          return 1;
+        }
+        dVar5 = (double)(float)((double)local_50[0] + dVar4);
+        if (dVar5 < dVar6) goto LAB_825edb78;
+        dVar5 = (double)(float)(dVar4 - (double)local_50[0]);
+        if (dVar5 <= dVar6) {
+          return 1;
+        }
         if ((validate_apply_revert->current).enabled != false) goto LAB_825edbbc;
         goto LAB_825edbac;
       }
       if (pSVar1 == (StructuredDataDef *)0x5) {
-        iVar4 = StructuredData_ClampValueFloat(pcVar3,local_50);
-        if ((iVar4 == 0) || (ABS((float)(dVar7 - dVar5)) <= local_50[0])) goto LAB_825edcdc;
-        if (((validate_apply_revert->current).enabled != false) ||
-           ((validate_apply_clamps->current).enabled != false)) {
-          StructuredData_SetFloat(pSVar2,(StructuredDataBuffer *)pSVar2[1].offset,(float)dVar5);
-          iVar4 = __restgprlr_26(0);
-          return iVar4;
+        iVar2 = StructuredData_ClampValueFloat(param_1,local_50);
+        if (iVar2 == 0) {
+          return 1;
         }
-        goto LAB_825edd38;
+        if (local_50[0] < ABS((float)(dVar6 - dVar4))) {
+          if (((validate_apply_revert->current).enabled == false) &&
+             ((validate_apply_clamps->current).enabled == false)) {
+            return 0;
+          }
+          StructuredData_SetFloat(in_r6,(StructuredDataBuffer *)in_r6[1].offset,(float)dVar4);
+          return 0;
+        }
+        return 1;
       }
       if (pSVar1 == (StructuredDataDef *)0x1) {
-        if (dVar7 == dVar5) goto LAB_825edcdc;
-        if (((validate_apply_revert->current).enabled != false) ||
-           ((validate_apply_clamps->current).enabled != false)) {
-          StructuredData_SetFloat(pSVar2,(StructuredDataBuffer *)pSVar2[1].offset,(float)dVar5);
-          iVar4 = __restgprlr_26(0);
-          return iVar4;
+        if (dVar6 == dVar4) {
+          return 1;
         }
-        goto LAB_825edd38;
+        if (((validate_apply_revert->current).enabled == false) &&
+           ((validate_apply_clamps->current).enabled == false)) {
+          return 0;
+        }
+        StructuredData_SetFloat(in_r6,(StructuredDataBuffer *)in_r6[1].offset,(float)dVar4);
+        return 0;
       }
-      if (alwaysfails != 0) goto LAB_825edd38;
-      iVar4 = 0x1ea;
+      if (alwaysfails != 0) {
+        return 0;
+      }
+      iVar2 = 0x1ea;
       pcVar3 = "Unhandled validationType - Floats can not be checked for xp";
       goto LAB_825edd2c;
     }
-    if (dVar5 <= dVar7) {
-LAB_825edcdc:
-      iVar4 = __restgprlr_26(1);
-      return iVar4;
+    if (dVar4 <= dVar6) {
+      return 1;
     }
     if (((validate_apply_revert->current).enabled != false) ||
        ((validate_apply_clamps->current).enabled != false)) {
-      StructuredData_SetFloat(pSVar2,(StructuredDataBuffer *)pSVar2[1].offset,(float)dVar5);
-      iVar4 = __restgprlr_26(0);
-      return iVar4;
+      StructuredData_SetFloat(in_r6,(StructuredDataBuffer *)in_r6[1].offset,(float)dVar4);
+      return 0;
     }
   }
   else {
-    if (alwaysfails != 0) goto LAB_825edd38;
-    iVar4 = 0x1ee;
+    if (alwaysfails != 0) {
+      return 0;
+    }
+    iVar2 = 0x1ee;
     pcVar3 = "Unhandled validationType";
 LAB_825edd2c:
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_structureddatadef_integrity.cpp"
-                    ,iVar4,0,pcVar3);
+                    ,iVar2,0,pcVar3);
   }
-LAB_825edd38:
-  iVar4 = __restgprlr_26(0);
-  return iVar4;
+  return 0;
 }
 
 
 // 825EDD50  StructuredData_ValidateString  (universal/com_structureddatadef_integrity.cpp:503)
+
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 
 int StructuredData_ValidateString
               (char *param_1,char *param_2,char *param_3,CompareSettings *param_4)
 
 {
   char cVar1;
-  StructuredDataDef *pSVar2;
-  StructuredDataLookup *pSVar3;
+  char cVar2;
+  int iVar3;
   char *pcVar4;
-  int iVar5;
-  ulonglong uVar6;
-  char *pcVar8;
-  ulonglong uVar7;
-  char *pcVar9;
   
-  uVar6 = (ulonglong)(int)param_3;
-  uVar7 = (ulonglong)(int)param_2;
-  pcVar4 = (char *)__savegprlr_27(param_1,uVar7,uVar6,param_4);
-  if (pcVar4 == (char *)0x0) {
+  if (param_1 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_structureddatadef_integrity.cpp"
                     ,0x1f8,0,"%s");
   }
-  if ((uVar7 & 0xffffffff) == 0) {
+  if (param_2 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_structureddatadef_integrity.cpp"
                     ,0x1f9,0,"%s");
   }
-  if ((uVar6 & 0xffffffff) == 0) {
+  if (param_3 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_structureddatadef_integrity.cpp"
                     ,0x1fa,0,"%s");
   }
-  pSVar3 = (StructuredDataLookup *)uVar6;
-  pSVar2 = pSVar3[1].def;
-  if ((undefined1 *)((int)&pSVar2[-1].size + 3U) < (undefined1 *)0x6) {
-    if ((pSVar2 == (StructuredDataDef *)0x2) || (pSVar2 == (StructuredDataDef *)0x3)) {
-      if (alwaysfails != 0) goto LAB_825edf1c;
-      iVar5 = 0x209;
+  iVar3 = *(int *)(param_3 + 0x10);
+  if (iVar3 - 1U < 6) {
+    if ((iVar3 == 2) || (iVar3 == 3)) {
+      if (alwaysfails != 0) {
+        return 0;
+      }
+      iVar3 = 0x209;
       pcVar4 = "Unhandled validationType - Strings can not be checked for progress";
     }
-    else if ((pSVar2 == (StructuredDataDef *)0x4) || (pSVar2 == (StructuredDataDef *)0x5)) {
-      if (alwaysfails != 0) goto LAB_825edf1c;
-      iVar5 = 0x20e;
+    else if ((iVar3 == 4) || (iVar3 == 5)) {
+      if (alwaysfails != 0) {
+        return 0;
+      }
+      iVar3 = 0x20e;
       pcVar4 = "Unhandled validationType - Strings can not be checked for delta";
     }
     else {
-      pcVar9 = pcVar4;
-      if (pSVar2 == (StructuredDataDef *)0x1) {
+      pcVar4 = param_1;
+      if (iVar3 == 1) {
         do {
-          cVar1 = *pcVar9;
-          pcVar8 = (char *)uVar7;
+          cVar1 = *pcVar4;
+          cVar2 = *param_2;
           if (cVar1 == '\0') break;
-          uVar7 = uVar7 + 1;
-          pcVar9 = pcVar9 + 1;
-        } while (cVar1 == *pcVar8);
-        if (cVar1 == *pcVar8) {
-          iVar5 = __restgprlr_27(1);
-          return iVar5;
+          param_2 = param_2 + 1;
+          pcVar4 = pcVar4 + 1;
+        } while (cVar1 == cVar2);
+        if (cVar1 == cVar2) {
+          return 1;
         }
-        if (((validate_apply_revert->current).enabled != false) ||
-           ((validate_apply_clamps->current).enabled != false)) {
-          StructuredData_SetString(pSVar3,(StructuredDataBuffer *)pSVar3[1].offset,pcVar4);
-          iVar5 = __restgprlr_27(0);
-          return iVar5;
+        if (((validate_apply_revert->current).enabled == false) &&
+           ((validate_apply_clamps->current).enabled == false)) {
+          return 0;
         }
-        goto LAB_825edf1c;
+        StructuredData_SetString
+                  ((StructuredDataLookup *)param_3,*(StructuredDataBuffer **)(param_3 + 0x18),
+                   param_1);
+        return 0;
       }
-      if (alwaysfails != 0) goto LAB_825edf1c;
-      iVar5 = 0x212;
+      if (alwaysfails != 0) {
+        return 0;
+      }
+      iVar3 = 0x212;
       pcVar4 = "Unhandled validationType - Strings can not be checked for xp";
     }
   }
   else {
-    if (alwaysfails != 0) goto LAB_825edf1c;
-    iVar5 = 0x216;
+    if (alwaysfails != 0) {
+      return 0;
+    }
+    iVar3 = 0x216;
     pcVar4 = "Unhandled validationType";
   }
   MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_structureddatadef_integrity.cpp"
-                  ,iVar5,0,pcVar4);
-LAB_825edf1c:
-  iVar5 = __restgprlr_27(0);
-  return iVar5;
+                  ,iVar3,0,pcVar4);
+  return 0;
 }
 
 
 // 825EDF28  StructuredData_ValidateStats_ResultTypes  (universal/com_structureddatadef_integrity.cpp:543)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 int StructuredData_ValidateStats_ResultTypes(char *param_1,char *param_2,CompareSettings *param_3)
 
 {
-  int iVar1;
-  LookupResultDataType LVar2;
-  int iVar4;
+  LookupResultDataType LVar1;
+  int iVar2;
+  int iVar3;
+  bool bVar8;
   bool bVar9;
-  bool bVar10;
+  char *pcVar4;
   char *pcVar5;
-  char *pcVar6;
+  short sVar6;
   short sVar7;
-  short sVar8;
-  CompareSettings *pCVar11;
-  ulonglong uVar12;
+  CompareSettings *pCVar10;
   CompareSettings *in_r6;
-  double dVar13;
-  float fVar14;
-  CompareSettings *pCVar3;
+  double dVar11;
+  float fVar12;
   
-  uVar12 = (ulonglong)(int)param_3;
-  iVar1 = __savegprlr_27(param_1);
-  if (iVar1 == 0) {
+  if (param_1 == (char *)0x0) {
     in_r6 = (CompareSettings *)"%s";
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_structureddatadef_integrity.cpp"
                     ,0x22d,0,"%s");
   }
-  if ((uVar12 & 0xffffffff) == 0) {
+  if (param_3 == (CompareSettings *)0x0) {
     in_r6 = (CompareSettings *)"%s";
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_structureddatadef_integrity.cpp"
                     ,0x22e,0,"%s");
   }
-  pCVar3 = (CompareSettings *)uVar12;
-  LVar2 = StructuredData_GetLookupResultType(&pCVar3->lookup);
-  if (LVar2 < LOOKUP_RESULT_SHORT) {
-    if (LVar2 == LOOKUP_RESULT_BOOL) {
-      bVar9 = StructuredData_GetBool(&pCVar3->lookup,pCVar3->bufferOld);
-      bVar10 = StructuredData_GetBool(&pCVar3->lookup,pCVar3->bufferNew);
-      iVar1 = StructuredData_ValidateInt(param_2,(uint)bVar9,(uint)bVar10,pCVar3);
-      if (iVar1 != 0) {
+  LVar1 = StructuredData_GetLookupResultType(&param_3->lookup);
+  if (LVar1 < LOOKUP_RESULT_SHORT) {
+    if (LVar1 == LOOKUP_RESULT_BOOL) {
+      bVar8 = StructuredData_GetBool(&param_3->lookup,param_3->bufferOld);
+      bVar9 = StructuredData_GetBool(&param_3->lookup,param_3->bufferNew);
+      iVar2 = StructuredData_ValidateInt(param_2,(uint)bVar8,(uint)bVar9,param_3);
+      if (iVar2 != 0) {
         Com_Printf(0xe,"%s%s success: bool values (%i, %i) %i\n");
-        iVar1 = __restgprlr_27(iVar1);
-        return iVar1;
+        return iVar2;
       }
-      pcVar5 = "INTEGRITY: %s failed: bool values (%i, %i) %i\n";
+      pcVar4 = "INTEGRITY: %s failed: bool values (%i, %i) %i\n";
     }
-    else if (LVar2 == LOOKUP_RESULT_STRING) {
-      pcVar5 = StructuredData_GetString(&pCVar3->lookup,pCVar3->bufferOld);
-      pcVar6 = StructuredData_GetString(&pCVar3->lookup,pCVar3->bufferNew);
-      iVar1 = StructuredData_ValidateString(pcVar5,pcVar6,(char *)pCVar3,in_r6);
-      if (iVar1 != 0) {
+    else if (LVar1 == LOOKUP_RESULT_STRING) {
+      pcVar4 = StructuredData_GetString(&param_3->lookup,param_3->bufferOld);
+      pcVar5 = StructuredData_GetString(&param_3->lookup,param_3->bufferNew);
+      iVar2 = StructuredData_ValidateString(pcVar4,pcVar5,(char *)param_3,in_r6);
+      if (iVar2 != 0) {
         Com_Printf(0xe,"%s%s success: string values (%s, %s) %i\n");
-        iVar1 = __restgprlr_27(iVar1);
-        return iVar1;
+        return iVar2;
       }
-      pcVar5 = "INTEGRITY: %s failed: str values (%s, %s) %i\n";
+      pcVar4 = "INTEGRITY: %s failed: str values (%s, %s) %i\n";
     }
     else {
-      if (LVar2 != LOOKUP_RESULT_INT) {
-        fVar14 = StructuredData_GetFloat(&pCVar3->lookup,pCVar3->bufferOld);
-        dVar13 = (double)fVar14;
-        pCVar11 = (CompareSettings *)pCVar3->bufferNew;
-        fVar14 = StructuredData_GetFloat(&pCVar3->lookup,(StructuredDataBuffer *)pCVar11);
-        iVar1 = StructuredData_ValidateFloat(param_2,(float)dVar13,fVar14,pCVar11);
-        if (iVar1 != 0) {
+      if (LVar1 != LOOKUP_RESULT_INT) {
+        fVar12 = StructuredData_GetFloat(&param_3->lookup,param_3->bufferOld);
+        dVar11 = (double)fVar12;
+        pCVar10 = (CompareSettings *)param_3->bufferNew;
+        fVar12 = StructuredData_GetFloat(&param_3->lookup,(StructuredDataBuffer *)pCVar10);
+        iVar2 = StructuredData_ValidateFloat(param_2,(float)dVar11,fVar12,pCVar10);
+        if (iVar2 != 0) {
           Com_Printf(0xe,"%s%s success: float values (%f, %f) %i\n");
-          iVar1 = __restgprlr_27(iVar1);
-          return iVar1;
+          return iVar2;
         }
         Com_Printf(0xe,"INTEGRITY: %s failed: float values (%f, %f) %i\n");
         goto LAB_825ee028;
       }
-      iVar1 = StructuredData_GetInt(&pCVar3->lookup,pCVar3->bufferOld);
-      iVar4 = StructuredData_GetInt(&pCVar3->lookup,pCVar3->bufferNew);
-      iVar1 = StructuredData_ValidateInt(param_2,iVar1,iVar4,pCVar3);
-      if (iVar1 != 0) {
+      iVar2 = StructuredData_GetInt(&param_3->lookup,param_3->bufferOld);
+      iVar3 = StructuredData_GetInt(&param_3->lookup,param_3->bufferNew);
+      iVar2 = StructuredData_ValidateInt(param_2,iVar2,iVar3,param_3);
+      if (iVar2 != 0) {
         Com_Printf(0xe,"%s%s success: int values (%i, %i) %i\n");
-        iVar1 = __restgprlr_27(iVar1);
-        return iVar1;
+        return iVar2;
       }
-      pcVar5 = "INTEGRITY: %s failed: int values (%i, %i) %i\n";
+      pcVar4 = "INTEGRITY: %s failed: int values (%i, %i) %i\n";
     }
   }
   else {
-    if (LVar2 != LOOKUP_RESULT_SHORT) {
+    if (LVar1 != LOOKUP_RESULT_SHORT) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_structureddatadef_integrity.cpp"
                       ,0x27d,0,"resultDataTypeLookup == LOOKUP_RESULT_SHORT\n\t%i, %i");
     }
-    sVar7 = StructuredData_GetShort(&pCVar3->lookup,pCVar3->bufferOld);
-    sVar8 = StructuredData_GetShort(&pCVar3->lookup,pCVar3->bufferNew);
-    iVar1 = StructuredData_ValidateInt(param_2,(int)sVar7,(int)sVar8,pCVar3);
-    if (iVar1 != 0) {
+    sVar6 = StructuredData_GetShort(&param_3->lookup,param_3->bufferOld);
+    sVar7 = StructuredData_GetShort(&param_3->lookup,param_3->bufferNew);
+    iVar2 = StructuredData_ValidateInt(param_2,(int)sVar6,(int)sVar7,param_3);
+    if (iVar2 != 0) {
       Com_Printf(0xe,"%s%s success: short values (%i, %i) %i\n");
-      iVar1 = __restgprlr_27(iVar1);
-      return iVar1;
+      return iVar2;
     }
-    pcVar5 = "INTEGRITY: %s failed: short values (%i, %i) %i\n";
+    pcVar4 = "INTEGRITY: %s failed: short values (%i, %i) %i\n";
   }
-  Com_Printf(0xe,pcVar5);
+  Com_Printf(0xe,pcVar4);
 LAB_825ee028:
   Com_PrintError(0xe,"Failed integrity check for stat \'%s\' (%s) at offset %i\n");
-  iVar1 = __restgprlr_27(0);
-  return iVar1;
+  return 0;
 }
 
 
 // 825EE330  StructuredData_ValidateStats_StructIterate  (universal/com_structureddatadef_integrity.cpp:668)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
+
 int StructuredData_ValidateStats_StructIterate
               (uint param_1,char *param_2,char *param_3,CompareSettings *param_4)
 
 {
-  int *piVar1;
-  int iVar2;
-  uint uVar3;
-  ulonglong uVar4;
-  ulonglong uVar5;
-  undefined4 *puVar6;
-  longlong lVar7;
-  uint uVar8;
-  int iVar9;
-  uint *puVar10;
-  uint uVar11;
-  undefined4 *puVar12;
-  longlong lVar13;
+  uint uVar1;
+  undefined4 *puVar2;
+  char *pcVar3;
+  uint uVar4;
+  int iVar5;
+  uint *puVar6;
+  uint uVar7;
+  undefined4 *puVar8;
+  longlong lVar9;
   undefined4 uStack_74;
   CompareSettings local_70 [3];
   
-  uVar5 = (ulonglong)(int)param_3;
-  uVar4 = (ulonglong)(int)param_2;
-  iVar2 = __savegprlr_25(param_1,uVar4,uVar5,param_4);
-  if ((uVar4 & 0xffffffff) == 0) {
+  if (param_2 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_structureddatadef_integrity.cpp"
                     ,0x2a3,0,"%s");
   }
-  if ((uVar5 & 0xffffffff) == 0) {
+  if (param_3 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_structureddatadef_integrity.cpp"
                     ,0x2a4,0,"%s");
   }
-  piVar1 = (int *)uVar5;
-  if (*(int *)piVar1[1] != 5) {
+  if (**(int **)(param_3 + 4) != 5) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_structureddatadef_integrity.cpp"
                     ,0x2a5,0,"%s");
   }
-  if (6 < (uint)piVar1[4]) {
+  if (6 < *(uint *)(param_3 + 0x10)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_structureddatadef_integrity.cpp"
                     ,0x2a6,0,
                     "compareSettings->validation doesn\'t index VALIDATION_COUNT\n\t%i not in [0, %i)"
                    );
   }
   Com_Printf(0xe,"%s%s %s\n");
-  if (*(uint *)(*piVar1 + 0x10) <= *(uint *)(piVar1[1] + 4)) {
+  if (*(uint *)(*(int *)param_3 + 0x10) <= *(uint *)(*(int *)(param_3 + 4) + 4)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_structureddatadef_integrity.cpp"
                     ,0x2ac,0,
                     "compareSettings->lookup.type->u.structIndex doesn\'t index compareSettings->lookup.def->structCount\n\t%i not in [0, %i)"
                    );
   }
-  uVar8 = 1;
-  uVar11 = 0;
-  iVar9 = *(int *)(piVar1[1] + 4) * 0x10;
-  puVar10 = (uint *)(iVar9 + *(int *)(*piVar1 + 0x14));
-  if (*(int *)(iVar9 + *(int *)(*piVar1 + 0x14)) != 0) {
-    iVar9 = 0;
+  uVar4 = 1;
+  uVar7 = 0;
+  iVar5 = *(int *)(*(int *)(param_3 + 4) + 4) * 0x10;
+  puVar6 = (uint *)(iVar5 + *(int *)(*(int *)param_3 + 0x14));
+  if (*(int *)(iVar5 + *(int *)(*(int *)param_3 + 0x14)) != 0) {
+    iVar5 = 0;
     do {
-      puVar12 = (undefined4 *)(puVar10[1] + iVar9);
-      if ((piVar1[4] != 0) || (puVar12[4] != 0)) {
-        puVar6 = &uStack_74;
-        lVar7 = uVar5 - 4;
-        lVar13 = 9;
+      puVar8 = (undefined4 *)(puVar6[1] + iVar5);
+      if ((*(int *)(param_3 + 0x10) != 0) || (puVar8[4] != 0)) {
+        puVar2 = &uStack_74;
+        pcVar3 = param_3 + -4;
+        lVar9 = 9;
         do {
-          lVar7 = lVar7 + 4;
-          puVar6 = puVar6 + 1;
-          *puVar6 = *(undefined4 *)lVar7;
-          lVar13 = lVar13 + -1;
-        } while (lVar13 != 0);
-        StructuredData_LookupWithIntStringType(&local_70[0].lookup,uVar11);
-        StructuredData_UpdateValidation((char *)*puVar12,puVar12 + 4,&local_70[0].validation);
-        uVar3 = StructuredData_ValidateStats_r(iVar2 + 1,(char *)*puVar12,(char *)*puVar12,local_70)
+          pcVar3 = pcVar3 + 4;
+          puVar2 = puVar2 + 1;
+          *puVar2 = *(undefined4 *)pcVar3;
+          lVar9 = lVar9 + -1;
+        } while (lVar9 != 0);
+        StructuredData_LookupWithIntStringType(&local_70[0].lookup,uVar7);
+        StructuredData_UpdateValidation((char *)*puVar8,puVar8 + 4,&local_70[0].validation);
+        uVar1 = StructuredData_ValidateStats_r(param_1 + 1,(char *)*puVar8,(char *)*puVar8,local_70)
         ;
-        uVar8 = uVar3 & uVar8;
+        uVar4 = uVar1 & uVar4;
       }
-      uVar11 = uVar11 + 1;
-      iVar9 = iVar9 + 0x14;
-    } while (uVar11 < *puVar10);
+      uVar7 = uVar7 + 1;
+      iVar5 = iVar5 + 0x14;
+    } while (uVar7 < *puVar6);
   }
-  iVar2 = __restgprlr_25(uVar8);
-  return iVar2;
+  return uVar4;
 }
 
 
 // 825EE518  StructuredData_ValidateStats_ArrayIterate  (universal/com_structureddatadef_integrity.cpp:708)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
+
 int StructuredData_ValidateStats_ArrayIterate
               (uint param_1,char *param_2,char *param_3,CompareSettings *param_4)
 
 {
-  CompareSettings *pCVar1;
-  int iVar2;
-  uint uVar3;
-  ulonglong uVar4;
-  ulonglong uVar5;
-  undefined4 *puVar6;
+  uint uVar1;
+  uint *puVar2;
+  uint *puVar3;
+  uint uVar4;
+  StructuredDataIndexedArray *pSVar5;
+  uint uVar6;
   longlong lVar7;
-  uint uVar8;
-  StructuredDataIndexedArray *pSVar9;
-  uint uVar10;
-  longlong lVar11;
   uint local_a0;
   uint local_9c [3];
   char acStack_90 [28];
-  undefined4 uStack_74;
+  uint uStack_74;
   CompareSettings local_70 [3];
   
-  uVar5 = (ulonglong)(int)param_4;
-  uVar4 = (ulonglong)(int)param_2;
-  iVar2 = __savegprlr_25(param_1);
-  if ((uVar4 & 0xffffffff) == 0) {
+  if (param_2 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_structureddatadef_integrity.cpp"
                     ,0x2cd,0,"%s");
   }
-  if ((uVar5 & 0xffffffff) == 0) {
+  if (param_4 == (CompareSettings *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_structureddatadef_integrity.cpp"
                     ,0x2ce,0,"%s");
   }
-  pCVar1 = (CompareSettings *)uVar5;
-  if (((pCVar1->lookup).type)->type != DATA_INDEXED_ARRAY) {
+  if (((param_4->lookup).type)->type != DATA_INDEXED_ARRAY) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_structureddatadef_integrity.cpp"
                     ,0x2cf,0,"%s");
   }
-  if (VALIDATION_XP < pCVar1->validation) {
+  if (VALIDATION_XP < param_4->validation) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_structureddatadef_integrity.cpp"
                     ,0x2d0,0,
                     "compareSettings->validation doesn\'t index VALIDATION_COUNT\n\t%i not in [0, %i)"
                    );
   }
-  if (pCVar1->validation == VALIDATION_NONE) {
+  if (param_4->validation == VALIDATION_NONE) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_structureddatadef_integrity.cpp"
                     ,0x2d1,0,"compareSettings->validation != VALIDATION_NONE\n\t%i, %i");
   }
-  if ((uint)((pCVar1->lookup).def)->indexedArrayCount <=
-      (((pCVar1->lookup).type)->u).stringDataLength) {
+  if ((uint)((param_4->lookup).def)->indexedArrayCount <=
+      (((param_4->lookup).type)->u).stringDataLength) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_structureddatadef_integrity.cpp"
                     ,0x2d3,0,
                     "compareSettings->lookup.type->u.indexedArrayIndex doesn\'t index compareSettings->lookup.def->indexedArrayCount\n\t%i not in [0, %i)"
                    );
   }
-  pSVar9 = ((pCVar1->lookup).def)->indexedArrays + (((pCVar1->lookup).type)->u).stringDataLength;
-  if (pSVar9->elementSize == 0) {
+  pSVar5 = ((param_4->lookup).def)->indexedArrays + (((param_4->lookup).type)->u).stringDataLength;
+  if (pSVar5->elementSize == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_structureddatadef_integrity.cpp"
                     ,0x2d5,0,"%s");
   }
   Com_Printf(0xe,"%s%s %s\n");
-  uVar8 = 1;
+  uVar4 = 1;
   StructuredData_GetOptimizedFirstLastIndices
-            (pCVar1,pSVar9->elementSize,pSVar9->arraySize,&pSVar9->elementType,&local_a0,local_9c);
+            (param_4,pSVar5->elementSize,pSVar5->arraySize,&pSVar5->elementType,&local_a0,local_9c);
   if (local_a0 < local_9c[0]) {
-    uVar10 = local_a0;
+    uVar6 = local_a0;
     do {
       Com_sprintf(acStack_90,0x20,"[%d]");
-      puVar6 = &uStack_74;
-      lVar7 = uVar5 - 4;
-      lVar11 = 9;
+      puVar2 = &uStack_74;
+      puVar3 = &param_4[-1].dataRangeCount;
+      lVar7 = 9;
       do {
-        lVar7 = lVar7 + 4;
-        puVar6 = puVar6 + 1;
-        *puVar6 = *(undefined4 *)lVar7;
-        lVar11 = lVar11 + -1;
-      } while (lVar11 != 0);
-      StructuredData_LookupWithInt(&local_70[0].lookup,uVar10);
-      uVar3 = StructuredData_ValidateStats_r(iVar2 + 1,acStack_90,param_3,local_70);
-      uVar10 = uVar10 + 1;
-      uVar8 = uVar3 & uVar8;
-    } while (uVar10 < local_9c[0]);
+        puVar3 = puVar3 + 1;
+        puVar2 = puVar2 + 1;
+        *puVar2 = *puVar3;
+        lVar7 = lVar7 + -1;
+      } while (lVar7 != 0);
+      StructuredData_LookupWithInt(&local_70[0].lookup,uVar6);
+      uVar1 = StructuredData_ValidateStats_r(param_1 + 1,acStack_90,param_3,local_70);
+      uVar6 = uVar6 + 1;
+      uVar4 = uVar1 & uVar4;
+    } while (uVar6 < local_9c[0]);
   }
-  iVar2 = __restgprlr_25(uVar8);
-  return iVar2;
+  return uVar4;
 }
 
 
 // 825EE758  StructuredData_ValidateStats_EnumIterate  (universal/com_structureddatadef_integrity.cpp:750)
+
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 
 int StructuredData_ValidateStats_EnumIterate
               (uint param_1,char *param_2,char *param_3,CompareSettings *param_4)
@@ -1021,96 +978,87 @@ int StructuredData_ValidateStats_EnumIterate
 {
   int iVar1;
   StructuredDataEnum *pSVar2;
-  CompareSettings *pCVar3;
-  int iVar4;
-  uint uVar5;
-  ulonglong uVar6;
-  ulonglong uVar7;
-  longlong lVar8;
-  undefined4 *puVar9;
-  uint uVar10;
-  StructuredDataEnumedArray *pSVar11;
-  uint uVar12;
-  longlong lVar13;
+  uint uVar3;
+  uint *puVar4;
+  uint *puVar5;
+  uint uVar6;
+  StructuredDataEnumedArray *pSVar7;
+  uint uVar8;
+  longlong lVar9;
   uint local_a0;
   uint local_9c [3];
   char acStack_90 [28];
-  undefined4 uStack_74;
+  uint uStack_74;
   CompareSettings local_70 [3];
   
-  uVar7 = (ulonglong)(int)param_4;
-  uVar6 = (ulonglong)(int)param_2;
-  iVar4 = __savegprlr_24(param_1);
-  if ((uVar6 & 0xffffffff) == 0) {
+  if (param_2 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_structureddatadef_integrity.cpp"
                     ,0x2f8,0,"%s");
   }
-  if ((uVar7 & 0xffffffff) == 0) {
+  if (param_4 == (CompareSettings *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_structureddatadef_integrity.cpp"
                     ,0x2f9,0,"%s");
   }
-  pCVar3 = (CompareSettings *)uVar7;
-  if (((pCVar3->lookup).type)->type != DATA_ENUM_ARRAY) {
+  if (((param_4->lookup).type)->type != DATA_ENUM_ARRAY) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_structureddatadef_integrity.cpp"
                     ,0x2fa,0,"%s");
   }
-  if (VALIDATION_XP < pCVar3->validation) {
+  if (VALIDATION_XP < param_4->validation) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_structureddatadef_integrity.cpp"
                     ,0x2fb,0,
                     "compareSettings->validation doesn\'t index VALIDATION_COUNT\n\t%i not in [0, %i)"
                    );
   }
-  if (pCVar3->validation == VALIDATION_NONE) {
+  if (param_4->validation == VALIDATION_NONE) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_structureddatadef_integrity.cpp"
                     ,0x2fc,0,"compareSettings->validation != VALIDATION_NONE\n\t%i, %i");
   }
   Com_Printf(0xe,"%s%s %s\n");
-  if ((uint)((pCVar3->lookup).def)->enumedArrayCount <=
-      (((pCVar3->lookup).type)->u).stringDataLength) {
+  if ((uint)((param_4->lookup).def)->enumedArrayCount <=
+      (((param_4->lookup).type)->u).stringDataLength) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_structureddatadef_integrity.cpp"
                     ,0x302,0,
                     "compareSettings->lookup.type->u.enumedArrayIndex doesn\'t index compareSettings->lookup.def->enumedArrayCount\n\t%i not in [0, %i)"
                    );
   }
-  pSVar11 = ((pCVar3->lookup).def)->enumedArrays + (((pCVar3->lookup).type)->u).stringDataLength;
-  if (pSVar11->elementSize == 0) {
+  pSVar7 = ((param_4->lookup).def)->enumedArrays + (((param_4->lookup).type)->u).stringDataLength;
+  if (pSVar7->elementSize == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_structureddatadef_integrity.cpp"
                     ,0x304,0,"%s");
   }
-  if ((uint)((pCVar3->lookup).def)->enumCount <= (uint)pSVar11->enumIndex) {
+  if ((uint)((param_4->lookup).def)->enumCount <= (uint)pSVar7->enumIndex) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_structureddatadef_integrity.cpp"
                     ,0x306,0,
                     "lookupEnumedArrayData->enumIndex doesn\'t index compareSettings->lookup.def->enumCount\n\t%i not in [0, %i)"
                    );
   }
-  iVar1 = pSVar11->enumIndex;
-  pSVar2 = ((pCVar3->lookup).def)->enums;
-  uVar10 = 1;
+  iVar1 = pSVar7->enumIndex;
+  pSVar2 = ((param_4->lookup).def)->enums;
+  uVar6 = 1;
   StructuredData_GetOptimizedFirstLastIndices
-            (pCVar3,pSVar11->elementSize,pSVar2[iVar1].entryCount,&pSVar11->elementType,&local_a0,
+            (param_4,pSVar7->elementSize,pSVar2[iVar1].entryCount,&pSVar7->elementType,&local_a0,
              local_9c);
   if (local_a0 < local_9c[0]) {
-    uVar12 = local_a0;
+    uVar8 = local_a0;
     do {
-      StructuredData_GetEnumEntryAtIndex(pSVar2 + iVar1,uVar12);
+      StructuredData_GetEnumEntryAtIndex(pSVar2 + iVar1,uVar8);
       Com_sprintf(acStack_90,0x20,"[%i %s]");
-      puVar9 = &uStack_74;
-      lVar8 = uVar7 - 4;
-      lVar13 = 9;
+      puVar5 = &uStack_74;
+      puVar4 = &param_4[-1].dataRangeCount;
+      lVar9 = 9;
       do {
-        lVar8 = lVar8 + 4;
-        puVar9 = puVar9 + 1;
-        *puVar9 = *(undefined4 *)lVar8;
-        lVar13 = lVar13 + -1;
-      } while (lVar13 != 0);
-      StructuredData_LookupWithIntStringType(&local_70[0].lookup,uVar12);
-      uVar5 = StructuredData_ValidateStats_r(iVar4 + 1,acStack_90,param_3,local_70);
-      uVar12 = uVar12 + 1;
-      uVar10 = uVar5 & uVar10;
-    } while (uVar12 < local_9c[0]);
+        puVar4 = puVar4 + 1;
+        puVar5 = puVar5 + 1;
+        *puVar5 = *puVar4;
+        lVar9 = lVar9 + -1;
+      } while (lVar9 != 0);
+      StructuredData_LookupWithIntStringType(&local_70[0].lookup,uVar8);
+      uVar3 = StructuredData_ValidateStats_r(param_1 + 1,acStack_90,param_3,local_70);
+      uVar8 = uVar8 + 1;
+      uVar6 = uVar3 & uVar6;
+    } while (uVar8 < local_9c[0]);
   }
-  iVar4 = __restgprlr_24(uVar10);
-  return iVar4;
+  return uVar6;
 }
 
 
@@ -1140,210 +1088,186 @@ void StructuredData_UpdateVerboseIndent(uint param_1)
 
 // 825EEA38  StructuredData_ValidateStats_r  (universal/com_structureddatadef_integrity.cpp:815)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 int StructuredData_ValidateStats_r
               (uint param_1,char *param_2,char *param_3,CompareSettings *param_4)
 
 {
   StructuredDataTypeCategory SVar1;
-  uint uVar2;
-  LookupState LVar3;
-  int iVar4;
-  char *pcVar5;
-  ulonglong uVar6;
-  ulonglong uVar7;
-  CompareSettings *pCVar8;
-  char *pcVar9;
-  undefined1 *puVar10;
-  longlong lVar11;
+  LookupState LVar2;
+  int iVar3;
+  char *pcVar4;
+  undefined1 *puVar5;
+  longlong lVar6;
   
-  uVar7 = (ulonglong)(int)param_4;
-  uVar6 = (ulonglong)(int)param_2;
-  uVar2 = __savegprlr_26(param_1);
-  pCVar8 = (CompareSettings *)uVar7;
-  pcVar9 = (char *)pCVar8;
-  if ((uVar6 & 0xffffffff) == 0) {
-    pcVar9 = "%s";
+  pcVar4 = (char *)param_4;
+  if (param_2 == (char *)0x0) {
+    pcVar4 = "%s";
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_structureddatadef_integrity.cpp"
                     ,0x332,0,"%s");
   }
-  if ((uVar7 & 0xffffffff) == 0) {
-    pcVar9 = "%s";
+  if (param_4 == (CompareSettings *)0x0) {
+    pcVar4 = "%s";
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_structureddatadef_integrity.cpp"
                     ,0x333,0,"%s");
   }
-  if (pCVar8->bufferOld->size != pCVar8->bufferNew->size) {
-    pcVar9 = "compareSettings->bufferOld->size == compareSettings->bufferNew->size\n\t%i, %i";
+  if (param_4->bufferOld->size != param_4->bufferNew->size) {
+    pcVar4 = "compareSettings->bufferOld->size == compareSettings->bufferNew->size\n\t%i, %i";
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_structureddatadef_integrity.cpp"
                     ,0x334,0,
                     "compareSettings->bufferOld->size == compareSettings->bufferNew->size\n\t%i, %i"
                    );
   }
-  puVar10 = (undefined1 *)((int)&validate_drop_on_fail + 3);
-  lVar11 = 0x10;
+  puVar5 = (undefined1 *)((int)&validate_drop_on_fail + 3);
+  lVar6 = 0x10;
   do {
-    puVar10 = puVar10 + 1;
-    *puVar10 = 0x20;
-    lVar11 = lVar11 + -1;
-  } while (lVar11 != 0);
-  if (uVar2 * 2 < 0x10) {
-    g_indent[uVar2 * 2] = '\0';
+    puVar5 = puVar5 + 1;
+    *puVar5 = 0x20;
+    lVar6 = lVar6 + -1;
+  } while (lVar6 != 0);
+  if (param_1 * 2 < 0x10) {
+    g_indent[param_1 * 2] = '\0';
   }
   else {
     g_indent[0xf] = '\0';
   }
-  LVar3 = StructuredData_GetLookupState(&pCVar8->lookup);
-  if (LVar3 == LOOKUP_ERROR) {
-    StructuredData_GetLookupError(&pCVar8->lookup);
+  LVar2 = StructuredData_GetLookupState(&param_4->lookup);
+  if (LVar2 == LOOKUP_ERROR) {
+    StructuredData_GetLookupError(&param_4->lookup);
     va("ValidateStats: %s is invalid: couldn\'t get value: %s\n");
-    pcVar9 = "%s\n\t%s";
+    pcVar4 = "%s\n\t%s";
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_structureddatadef_integrity.cpp"
                     ,0x33b,0,"%s\n\t%s");
   }
-  iVar4 = StructuredData_IsDataOutsideCompareBounds(pCVar8);
-  if (iVar4 != 0) {
-    iVar4 = __restgprlr_26(1);
-    return iVar4;
+  iVar3 = StructuredData_IsDataOutsideCompareBounds(param_4);
+  if (iVar3 != 0) {
+    return 1;
   }
-  pcVar5 = (char *)uVar6;
-  if (LVar3 == LOOKUP_FINISHED) {
-    iVar4 = StructuredData_ValidateStats_ResultTypes(pcVar5,param_3,pCVar8);
-    iVar4 = __restgprlr_26(iVar4);
-    return iVar4;
+  if (LVar2 == LOOKUP_FINISHED) {
+    iVar3 = StructuredData_ValidateStats_ResultTypes(param_2,param_3,param_4);
+    return iVar3;
   }
-  if (LVar3 != LOOKUP_IN_PROGRESS) {
-    pcVar9 = "lookupState == LOOKUP_IN_PROGRESS\n\t%i, %i";
+  if (LVar2 != LOOKUP_IN_PROGRESS) {
+    pcVar4 = "lookupState == LOOKUP_IN_PROGRESS\n\t%i, %i";
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_structureddatadef_integrity.cpp"
                     ,0x343,0,"lookupState == LOOKUP_IN_PROGRESS\n\t%i, %i");
   }
-  SVar1 = ((pCVar8->lookup).type)->type;
+  SVar1 = ((param_4->lookup).type)->type;
   if (SVar1 != DATA_STRUCT) {
     if (SVar1 == DATA_INDEXED_ARRAY) {
-      iVar4 = StructuredData_ValidateStats_ArrayIterate(uVar2,pcVar5,param_3,pCVar8);
-      iVar4 = __restgprlr_26(iVar4);
-      return iVar4;
+      iVar3 = StructuredData_ValidateStats_ArrayIterate(param_1,param_2,param_3,param_4);
+      return iVar3;
     }
     if (SVar1 != DATA_ENUM_ARRAY) {
       if (alwaysfails == 0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_structureddatadef_integrity.cpp"
                         ,0x351,0,"Unhandled lookup type");
       }
-      iVar4 = __restgprlr_26(0);
-      return iVar4;
+      return 0;
     }
-    iVar4 = StructuredData_ValidateStats_EnumIterate(uVar2,pcVar5,param_3,pCVar8);
-    iVar4 = __restgprlr_26(iVar4);
-    return iVar4;
+    iVar3 = StructuredData_ValidateStats_EnumIterate(param_1,param_2,param_3,param_4);
+    return iVar3;
   }
-  iVar4 = StructuredData_ValidateStats_StructIterate
-                    (uVar2,pcVar5,(char *)pCVar8,(CompareSettings *)pcVar9);
-  iVar4 = __restgprlr_26(iVar4);
-  return iVar4;
+  iVar3 = StructuredData_ValidateStats_StructIterate
+                    (param_1,param_2,(char *)param_4,(CompareSettings *)pcVar4);
+  return iVar3;
 }
 
 
 // 825EEC88  StructuredData_ValidateData  (universal/com_structureddatadef_integrity.cpp:858)
+
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 
 int StructuredData_ValidateData
               (StructuredDataBuffer *param_1,StructuredDataBuffer *param_2,
               DataIntegrityRange *param_3,uint param_4)
 
 {
-  StructuredDataBuffer *pSVar1;
-  StructuredDataDef *pSVar2;
-  int iVar3;
-  ulonglong uVar4;
-  ulonglong uVar5;
-  ulonglong uVar6;
+  StructuredDataDef *pSVar1;
+  int iVar2;
   CompareSettings aCStack_60 [2];
   
-  uVar6 = (ulonglong)(int)param_4;
-  uVar5 = (ulonglong)(int)param_3;
-  uVar4 = (ulonglong)(int)param_2;
-  pSVar1 = (StructuredDataBuffer *)__savegprlr_26(param_1);
-  if (pSVar1 == (StructuredDataBuffer *)0x0) {
+  if (param_1 == (StructuredDataBuffer *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_structureddatadef_integrity.cpp"
                     ,0x35f,0,"%s");
   }
-  if ((uVar4 & 0xffffffff) == 0) {
+  if (param_2 == (StructuredDataBuffer *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_structureddatadef_integrity.cpp"
                     ,0x360,0,"%s");
   }
-  if ((uVar5 & 0xffffffff) == 0) {
+  if (param_3 == (DataIntegrityRange *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_structureddatadef_integrity.cpp"
                     ,0x361,0,"%s");
   }
-  if ((uVar6 & 0xffffffff) == 0) {
+  if (param_4 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_structureddatadef_integrity.cpp"
                     ,0x362,0,"%s");
   }
-  pSVar2 = StructuredDataDef_GetAsset("mp/playerdata.def",0x2ffc);
-  StructuredData_InitializeLookup(pSVar2,&aCStack_60[0].lookup);
-  aCStack_60[0].dataRanges = (DataIntegrityRange *)uVar5;
-  aCStack_60[0].dataRangeCount = (uint)uVar6;
+  pSVar1 = StructuredDataDef_GetAsset("mp/playerdata.def",0x2ffc);
+  StructuredData_InitializeLookup(pSVar1,&aCStack_60[0].lookup);
   aCStack_60[0].validation = VALIDATION_NONE;
-  aCStack_60[0].bufferOld = pSVar1;
-  aCStack_60[0].bufferNew = (StructuredDataBuffer *)uVar4;
-  iVar3 = StructuredData_ValidateStats_r(0,"Root","Root",aCStack_60);
-  if (iVar3 == 0) {
+  aCStack_60[0].bufferOld = param_1;
+  aCStack_60[0].bufferNew = param_2;
+  aCStack_60[0].dataRanges = param_3;
+  aCStack_60[0].dataRangeCount = param_4;
+  iVar2 = StructuredData_ValidateStats_r(0,"Root","Root",aCStack_60);
+  if (iVar2 == 0) {
     Com_Printf(0xe,"Invalid Data - Dumping player stats - new buffer followed by old buffer\n");
-    StructuredData_PrintAllData(pSVar2,(StructuredDataBuffer *)uVar4);
-    StructuredData_PrintAllData(pSVar2,pSVar1);
+    StructuredData_PrintAllData(pSVar1,param_2);
+    StructuredData_PrintAllData(pSVar1,param_1);
   }
-  iVar3 = __restgprlr_26(iVar3);
-  return iVar3;
+  return iVar2;
 }
 
 
 // 825EEDD0  StructuredData_ValidatePersistentDataIntegrityRange  (universal/com_structureddatadef_integrity.cpp:893)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
+
 int StructuredData_ValidatePersistentDataIntegrityRange
               (uchar *param_1,uchar *param_2,DataIntegrityRange *param_3,uint param_4)
 
 {
-  uchar *puVar1;
+  int iVar1;
   int iVar2;
-  int iVar3;
-  ulonglong uVar4;
-  ulonglong uVar5;
-  ulonglong uVar6;
   StructuredDataBuffer local_60;
   StructuredDataBuffer local_58 [11];
   
-  uVar6 = (ulonglong)(int)param_4;
-  uVar5 = (ulonglong)(int)param_3;
-  uVar4 = (ulonglong)(int)param_2;
-  puVar1 = (uchar *)__savegprlr_23(param_1);
-  if (puVar1 == (uchar *)0x0) {
+  if (param_1 == (uchar *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_structureddatadef_integrity.cpp"
                     ,0x382,0,"%s");
   }
-  if ((uVar4 & 0xffffffff) == 0) {
+  if (param_2 == (uchar *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_structureddatadef_integrity.cpp"
                     ,899,0,"%s");
   }
-  if ((uVar5 & 0xffffffff) == 0) {
+  if (param_3 == (DataIntegrityRange *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_structureddatadef_integrity.cpp"
                     ,900,0,"%s");
   }
-  if ((uVar6 & 0xffffffff) == 0) {
+  if (param_4 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_structureddatadef_integrity.cpp"
                     ,0x385,0,"%s");
   }
-  if (puVar1 == (uchar *)0x0) {
+  if (param_1 == (uchar *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../universal/com_structureddatadef.h"
                     ,0x54,0,"%s");
   }
   local_58[0].size = 0x2ffc;
-  local_58[0].data = puVar1;
-  if ((uVar4 & 0xffffffff) == 0) {
+  local_58[0].data = param_1;
+  if (param_2 == (uchar *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\../universal/com_structureddatadef.h"
                     ,0x54,0,"%s");
   }
-  local_60.data = (uchar *)uVar4;
   local_60.size = 0x2ffc;
-  iVar2 = StructuredData_GetDataVersion(&local_60);
-  iVar3 = StructuredData_GetDataVersion(local_58);
-  if (iVar3 != iVar2) {
+  local_60.data = param_2;
+  iVar1 = StructuredData_GetDataVersion(&local_60);
+  iVar2 = StructuredData_GetDataVersion(local_58);
+  if (iVar2 != iVar1) {
     StructuredData_GetDataVersion(&local_60);
     StructuredData_GetDataVersion(local_58);
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_structureddatadef_integrity.cpp"
@@ -1351,36 +1275,33 @@ int StructuredData_ValidatePersistentDataIntegrityRange
                     "StructuredData_GetDataVersion( &oldBuffer ) == StructuredData_GetDataVersion( &newBuffer )\n\t%i, %i"
                    );
   }
-  iVar2 = StructuredData_ValidateData(local_58,&local_60,(DataIntegrityRange *)uVar5,(uint)uVar6);
-  iVar2 = __restgprlr_23(iVar2);
-  return iVar2;
+  iVar1 = StructuredData_ValidateData(local_58,&local_60,param_3,param_4);
+  return iVar1;
 }
 
 
 // 825EEF60  StructuredData_ValidatePersistentDataIntegrityFull  (universal/com_structureddatadef_integrity.cpp:923)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 int StructuredData_ValidatePersistentDataIntegrityFull(uchar *param_1,uchar *param_2)
 
 {
-  uchar *puVar1;
-  int iVar2;
-  ulonglong uVar3;
+  int iVar1;
   DataIntegrityRange local_30 [6];
   
-  uVar3 = (ulonglong)(int)param_2;
-  puVar1 = (uchar *)__savegprlr_28(param_1);
-  if (puVar1 == (uchar *)0x0) {
+  if (param_1 == (uchar *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_structureddatadef_integrity.cpp"
                     ,0x39e,0,"%s");
   }
-  if ((uVar3 & 0xffffffff) == 0) {
+  if (param_2 == (uchar *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_structureddatadef_integrity.cpp"
                     ,0x39f,0,"%s");
   }
   local_30[0].startByteOffset = 0;
   local_30[0].endByteOffset = 0x2ffc;
-  iVar2 = StructuredData_ValidatePersistentDataIntegrityRange(puVar1,(uchar *)uVar3,local_30,1);
-  iVar2 = __restgprlr_28(iVar2);
-  return iVar2;
+  iVar1 = StructuredData_ValidatePersistentDataIntegrityRange(param_1,param_2,local_30,1);
+  return iVar1;
 }
 

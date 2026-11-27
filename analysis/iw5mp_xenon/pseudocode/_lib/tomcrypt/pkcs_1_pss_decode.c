@@ -2,126 +2,118 @@
 
 // 82254C88  pkcs_1_pss_decode  (line unknown)
 
-void pkcs_1_pss_decode(undefined8 param_1,undefined8 param_2,byte *param_3,ulonglong param_4,
-                      ulonglong param_5,undefined8 param_6,ulonglong param_7,undefined4 *param_8)
+/* WARNING: Function: __savegprlr_15 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_15 replaced with injection: xenon_save_restore */
+
+undefined8
+pkcs_1_pss_decode(undefined8 param_1,undefined8 param_2,byte *param_3,uint param_4,uint param_5,
+                 int param_6,uint param_7,undefined4 *param_8)
 
 {
-  uint uVar1;
-  undefined8 uVar2;
+  int iVar1;
+  uint uVar2;
   byte *pbVar3;
-  byte *pbVar5;
-  void *pvVar6;
-  byte *pbVar7;
-  int iVar8;
+  byte *pbVar4;
+  void *pvVar5;
+  byte *pbVar6;
+  int iVar7;
+  byte *pbVar8;
   byte *pbVar9;
-  longlong lVar10;
-  byte *pbVar11;
-  ulonglong uVar12;
-  ulonglong uVar13;
-  ulonglong uVar14;
-  undefined8 uVar15;
+  int iVar10;
+  uint uVar12;
+  undefined8 uVar11;
+  longlong lVar13;
   undefined1 auStack_100 [256];
-  uint uVar4;
   
-  uVar2 = __savegprlr_15();
   *param_8 = 0;
-  iVar8 = (int)param_6;
-  if (((iVar8 < 0) || (0x1f < iVar8)) ||
-     (iVar8 = iVar8 * 0x68, *(int *)(&hash_descriptor + iVar8) == 0)) {
-    __restgprlr_15(0xb);
-    return;
+  if (((param_6 < 0) || (0x1f < param_6)) ||
+     (iVar10 = param_6 * 0x68, *(int *)(&hash_descriptor + iVar10) == 0)) {
+    return 0xb;
   }
-  uVar14 = (ulonglong)((param_7 & 7) != 0) + ((param_7 & 0xffffffff) >> 3);
-  uVar1 = *(uint *)(&DAT_84896150 + iVar8);
-  uVar12 = (ulonglong)uVar1;
-  if (((uVar14 < (param_5 & 0xffffffff)) || (uVar14 < (uVar12 + param_5 + 2 & 0xffffffff))) ||
-     ((param_4 & 0xffffffff) != uVar14)) {
-    __restgprlr_15(0x16);
-    return;
+  uVar12 = (uint)((param_7 & 7) != 0) + (param_7 >> 3);
+  iVar1 = *(int *)(&DAT_84896150 + iVar10);
+  if (((uVar12 < param_5) || (uVar12 < iVar1 + param_5 + 2)) || (param_4 != uVar12)) {
+    return 0x16;
   }
-  uVar4 = (uint)uVar14;
-  pbVar3 = tom_game_malloc(uVar4);
-  pbVar5 = tom_game_malloc(uVar4);
-  pvVar6 = tom_game_malloc(uVar4);
-  pbVar7 = tom_game_malloc(uVar4);
+  pbVar3 = tom_game_malloc(uVar12);
+  pbVar4 = tom_game_malloc(uVar12);
+  pvVar5 = tom_game_malloc(uVar12);
+  pbVar6 = tom_game_malloc(uVar12);
   if (pbVar3 == (byte *)0x0) {
 LAB_82254fcc:
-    if (pbVar5 != (byte *)0x0) {
-      tom_game_free(pbVar5);
+    if (pbVar4 != (byte *)0x0) {
+      tom_game_free(pbVar4);
     }
-    if (pvVar6 != (void *)0x0) {
-      tom_game_free(pvVar6);
+    if (pvVar5 != (void *)0x0) {
+      tom_game_free(pvVar5);
     }
-    if (pbVar7 != (byte *)0x0) {
-      tom_game_free(pbVar7);
+    if (pbVar6 != (byte *)0x0) {
+      tom_game_free(pbVar6);
     }
-    __restgprlr_15(0xd);
-    return;
+    return 0xd;
   }
-  if (((pbVar5 == (byte *)0x0) || (pvVar6 == (void *)0x0)) || (pbVar7 == (byte *)0x0)) {
+  if (((pbVar4 == (byte *)0x0) || (pvVar5 == (void *)0x0)) || (pbVar6 == (byte *)0x0)) {
     tom_game_free(pbVar3);
     goto LAB_82254fcc;
   }
-  if (param_3[(int)param_4 + -1] == 0xbc) {
-    uVar13 = (uVar14 - uVar12) - 1;
+  if (param_3[param_4 - 1] == 0xbc) {
+    iVar7 = (uVar12 - iVar1) + -1;
     memcpy();
     memcpy();
-    uVar4 = 0xff >> ((uVar4 * 8 - (int)param_7) + 1 & 0x3f);
-    if (((uint)*param_3 & ~uVar4) == 0) {
-      uVar15 = pkcs_1_mgf1(param_6,pbVar7,uVar12,pbVar5,uVar13);
-      if ((int)uVar15 != 0) goto LAB_82254f98;
-      if ((uVar13 & 0xffffffff) != 0) {
-        lVar10 = (longlong)(int)pbVar3;
+    uVar2 = 0xff >> ((uVar12 * 8 - param_7) + 1 & 0x3f);
+    if (((uint)*param_3 & ~uVar2) == 0) {
+      uVar11 = pkcs_1_mgf1(param_6,pbVar6,iVar1,pbVar4,iVar7);
+      if ((int)uVar11 != 0) goto LAB_82254f98;
+      if (iVar7 != 0) {
+        pbVar9 = pbVar3;
         do {
-          pbVar11 = (byte *)lVar10;
-          *pbVar11 = pbVar11[(int)pbVar5 - (int)pbVar3] ^ *pbVar11;
-          lVar10 = lVar10 + 1;
-          uVar13 = uVar13 - 1;
-        } while (uVar13 != 0);
+          *pbVar9 = pbVar9[(int)pbVar4 - (int)pbVar3] ^ *pbVar9;
+          pbVar9 = pbVar9 + 1;
+          iVar7 = iVar7 + -1;
+        } while (iVar7 != 0);
       }
-      uVar13 = 0;
-      uVar14 = ((uVar14 - uVar12) - param_5) - 2;
-      *pbVar3 = *pbVar3 & (byte)uVar4;
-      if (uVar14 != 0) {
+      iVar7 = (uVar12 - iVar1) - param_5;
+      uVar12 = 0;
+      *pbVar3 = *pbVar3 & (byte)uVar2;
+      if (iVar7 != 2) {
         do {
-          if (pbVar3[(int)uVar13] != 0) goto LAB_82254d8c;
-          uVar13 = uVar13 + 1;
-        } while ((uVar13 & 0xffffffff) < (uVar14 & 0xffffffff));
+          if (pbVar3[uVar12] != 0) goto LAB_82254d8c;
+          uVar12 = uVar12 + 1;
+        } while (uVar12 < iVar7 - 2U);
       }
-      if (pbVar3[(int)uVar13] == 1) {
-        uVar15 = (**(code **)(&DAT_8489619c + iVar8))(auStack_100);
-        if ((int)uVar15 == 0) {
-          pbVar11 = pbVar5 + -1;
-          lVar10 = 8;
+      if (pbVar3[uVar12] == 1) {
+        uVar11 = (**(code **)(&DAT_8489619c + iVar10))(auStack_100);
+        if ((int)uVar11 == 0) {
+          pbVar9 = pbVar4 + -1;
+          lVar13 = 8;
           do {
-            pbVar11 = pbVar11 + 1;
-            *pbVar11 = 0;
-            lVar10 = lVar10 + -1;
-          } while (lVar10 != 0);
-          uVar15 = (**(code **)(&DAT_848961a0 + iVar8))(auStack_100,pbVar5,8);
-          if (((((int)uVar15 == 0) &&
-               (uVar15 = (**(code **)(&DAT_848961a0 + iVar8))(auStack_100,uVar2,param_2),
-               (int)uVar15 == 0)) &&
-              (uVar15 = (**(code **)(&DAT_848961a0 + iVar8))
-                                  (auStack_100,uVar13 + 1 + (longlong)(int)pbVar3,param_5),
-              (int)uVar15 == 0)) &&
-             (uVar15 = (**(code **)(&DAT_848961a4 + iVar8))(auStack_100,pbVar5), (int)uVar15 == 0))
+            pbVar9 = pbVar9 + 1;
+            *pbVar9 = 0;
+            lVar13 = lVar13 + -1;
+          } while (lVar13 != 0);
+          uVar11 = (**(code **)(&DAT_848961a0 + iVar10))(auStack_100,pbVar4,8);
+          if (((((int)uVar11 == 0) &&
+               (uVar11 = (**(code **)(&DAT_848961a0 + iVar10))(auStack_100,param_1,param_2),
+               (int)uVar11 == 0)) &&
+              (uVar11 = (**(code **)(&DAT_848961a0 + iVar10))
+                                  (auStack_100,pbVar3 + uVar12 + 1,param_5), (int)uVar11 == 0)) &&
+             (uVar11 = (**(code **)(&DAT_848961a4 + iVar10))(auStack_100,pbVar4), (int)uVar11 == 0))
           {
-            lVar10 = 0;
-            if (uVar12 != 0) {
-              pbVar11 = pbVar5;
-              pbVar9 = pbVar7;
+            lVar13 = 0;
+            if (iVar1 != 0) {
+              pbVar9 = pbVar4;
+              pbVar8 = pbVar6;
               do {
-                lVar10 = (ulonglong)*pbVar11 - (ulonglong)*pbVar9;
-                if (lVar10 != 0) break;
-                pbVar11 = pbVar11 + 1;
+                lVar13 = (ulonglong)*pbVar9 - (ulonglong)*pbVar8;
+                if (lVar13 != 0) break;
                 pbVar9 = pbVar9 + 1;
-              } while (pbVar11 != pbVar5 + uVar1);
+                pbVar8 = pbVar8 + 1;
+              } while (pbVar9 != pbVar4 + iVar1);
             }
-            if ((int)lVar10 == 0) {
+            if ((int)lVar13 == 0) {
               *param_8 = 1;
             }
-            uVar15 = 0;
+            uVar11 = 0;
           }
         }
         goto LAB_82254f98;
@@ -129,13 +121,12 @@ LAB_82254fcc:
     }
   }
 LAB_82254d8c:
-  uVar15 = 7;
+  uVar11 = 7;
 LAB_82254f98:
-  tom_game_free(pbVar7);
-  tom_game_free(pvVar6);
-  tom_game_free(pbVar5);
+  tom_game_free(pbVar6);
+  tom_game_free(pvVar5);
+  tom_game_free(pbVar4);
   tom_game_free(pbVar3);
-  __restgprlr_15(uVar15);
-  return;
+  return uVar11;
 }
 

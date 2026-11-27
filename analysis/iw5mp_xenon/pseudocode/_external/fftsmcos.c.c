@@ -2,8 +2,11 @@
 
 // 828C7500  FftSumCosOlAdd  (<external>/Xenon/mar09/core/private/xam/codecs/nci/dec/src/fftsmcos.c:83)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
-/* WARNING: Restarted to delay deadcode elimination for space: stack */
 
 void FftSumCosOlAdd(float param_1,int param_2,int param_3,short *param_4,float *param_5,
                    float *param_6,float *param_7,float *param_8,float param_9,float param_10)
@@ -12,148 +15,135 @@ void FftSumCosOlAdd(float param_1,int param_2,int param_3,short *param_4,float *
   double dVar1;
   float fVar2;
   float fVar3;
-  undefined4 uVar4;
-  int iVar5;
-  uint uVar6;
-  float fVar7;
+  float fVar4;
+  float fVar5;
+  float fVar6;
+  int iVar7;
   float fVar8;
   float fVar9;
   float fVar10;
-  float fVar11;
-  int iVar12;
+  uint uVar11;
+  float *pfVar12;
   float *pfVar13;
-  undefined4 *puVar14;
-  float *pfVar15;
-  undefined4 *puVar16;
   int in_r10;
-  undefined1 (*pauVar17) [16];
-  float *pfVar21;
+  float *pfVar14;
+  undefined1 (*pauVar15) [16];
+  float *pfVar17;
+  longlong lVar16;
   longlong lVar18;
-  float *pfVar22;
-  longlong lVar19;
-  longlong lVar20;
-  longlong lVar23;
-  longlong lVar24;
-  double dVar25;
-  double dVar26;
-  double dVar27;
-  undefined1 auVar28 [16];
-  undefined1 auVar29 [16];
-  undefined1 auVar30 [16];
+  double dVar19;
+  double dVar20;
+  double dVar21;
+  undefined1 auVar22 [16];
+  undefined1 auVar23 [16];
+  undefined1 auVar24 [16];
   undefined1 local_9e0 [16];
   undefined1 local_9d0 [16];
   float local_9c0 [79];
-  undefined4 uStack_884;
+  float fStack_884;
   float local_880 [215];
   float afStack_524 [44];
-  undefined4 uStack_474;
+  float fStack_474;
   float local_470 [215];
   float afStack_114 [69];
   
-  auVar30 = local_9e0;
-  dVar26 = (double)param_10;
-  lVar18 = (longlong)(int)param_8;
-  lVar20 = (longlong)(int)param_7;
-  lVar19 = (longlong)(int)param_5;
-  lVar24 = (longlong)(int)param_4;
-  lVar23 = (longlong)param_3;
-  __savegprlr_25((double)param_1,param_2,lVar23,lVar24,lVar19,param_6);
-  iVar12 = (int)lVar24;
-  dVar25 = (double)__savefpr_28();
-  dVar27 = dVar25;
+  auVar24 = local_9e0;
+  dVar20 = (double)param_10;
+  dVar19 = (double)param_1;
+  lVar16 = (longlong)(int)param_5;
+  lVar18 = (longlong)param_3;
+  dVar21 = dVar19;
   (*memsetfunc)(local_880,0,0x404);
   (*memsetfunc)(local_470,0,0x404);
   pfVar13 = cosTBL_32;
-  pfVar15 = sinTBL_32;
-  if (0 < (int)lVar23) {
-    iVar5 = (int)lVar18;
+  pfVar12 = sinTBL_32;
+  if (0 < param_3) {
+    iVar7 = in_r10 - (int)param_8;
     do {
-      pfVar21 = (float *)lVar18;
-      dVar1 = dVar27 + 0.5;
-      fVar7 = *(float *)((in_r10 - iVar5) + (int)pfVar21) * 0.5;
-      dVar27 = (double)(float)(dVar27 + dVar25);
-      lVar18 = lVar18 + 4;
-      uVar6 = (int)(*pfVar21 * 40.743664 + 0.5) & 0xff;
-      local_880[(int)dVar1] = pfVar13[uVar6] * fVar7;
-      local_470[(int)dVar1] = pfVar15[uVar6] * fVar7;
-      lVar23 = lVar23 + -1;
-    } while (lVar23 != 0);
+      fVar2 = *param_8;
+      dVar1 = dVar21 + 0.5;
+      fVar3 = *(float *)(iVar7 + (int)param_8) * 0.5;
+      dVar21 = (double)(float)(dVar21 + dVar19);
+      param_8 = param_8 + 1;
+      uVar11 = (int)(fVar2 * 40.743664 + 0.5) & 0xff;
+      local_880[(int)dVar1] = pfVar13[uVar11] * fVar3;
+      local_470[(int)dVar1] = pfVar12[uVar11] * fVar3;
+      lVar18 = lVar18 + -1;
+    } while (lVar18 != 0);
   }
   inverseRealFft(local_880,local_470,0x200);
-  fVar7 = 1.0;
-  fVar11 = 0.0;
-  fVar9 = fVar11;
-  if (0 < iVar12 >> 1) {
-    local_9e0._0_4_ = iVar12 >> 0x1f;
-    fVar9 = 1.0 / (float)CONCAT44(local_9e0._0_4_,iVar12 >> 1);
+  fVar2 = 1.0;
+  fVar3 = 0.0;
+  fVar9 = fVar3;
+  if (0 < (int)param_4 >> 1) {
+    local_9e0._0_4_ = (int)param_4 >> 0x1f;
+    fVar9 = 1.0 / (float)CONCAT44(local_9e0._0_4_,(int)param_4 >> 1);
   }
-  pfVar15 = afStack_524;
+  pfVar12 = afStack_524;
   pfVar13 = afStack_114;
-  pfVar21 = local_9c0;
-  lVar24 = 0x28;
-  lVar23 = lVar20;
+  pfVar14 = local_9c0;
+  lVar18 = 0x28;
+  pfVar17 = param_7;
   do {
-    fVar10 = fVar11 + fVar9;
-    pfVar15 = pfVar15 + 1;
+    fVar10 = fVar3 + fVar9;
+    pfVar12 = pfVar12 + 1;
     pfVar13 = pfVar13 + 1;
-    fVar2 = *pfVar13;
-    fVar8 = fVar7 - fVar9;
-    pfVar22 = (float *)lVar23;
-    fVar3 = pfVar22[1];
-    lVar23 = lVar23 + 8;
-    *pfVar21 = *pfVar22 * fVar7 + *pfVar15 * fVar11;
-    fVar11 = fVar10 + fVar9;
-    fVar7 = fVar8 - fVar9;
-    pfVar21[1] = fVar3 * fVar8 + fVar2 * fVar10;
-    pfVar21 = pfVar21 + 2;
-    lVar24 = lVar24 + -1;
-  } while (lVar24 != 0);
-  pauVar17 = (undefined1 (*) [16])local_9c0;
-  lVar23 = 0x14;
-  if (dVar26 == 32767.0) {
+    fVar5 = *pfVar13;
+    fVar8 = fVar2 - fVar9;
+    fVar4 = *pfVar17;
+    fVar6 = pfVar17[1];
+    pfVar17 = pfVar17 + 2;
+    *pfVar14 = fVar4 * fVar2 + *pfVar12 * fVar3;
+    fVar3 = fVar10 + fVar9;
+    fVar2 = fVar8 - fVar9;
+    pfVar14[1] = fVar6 * fVar8 + fVar5 * fVar10;
+    pfVar14 = pfVar14 + 2;
+    lVar18 = lVar18 + -1;
+  } while (lVar18 != 0);
+  pauVar15 = (undefined1 (*) [16])local_9c0;
+  lVar18 = 0x14;
+  if (dVar20 == 32767.0) {
     do {
-      auVar30 = vectorConvertToSignedFixedPointWordSaturate128(*pauVar17,0);
-      pauVar17 = pauVar17 + 1;
-      auVar28 = vectorPackSignedWordSignedSaturate(auVar30,auVar30);
-      auVar30 = vectorSplatWord(auVar28,0);
-      auVar28 = vectorSplatWord(auVar28,1);
-      storeVectorElementWordIndexed(auVar30,lVar19);
-      storeVectorElementWordIndexed(auVar28,lVar19 + 4);
-      lVar19 = lVar19 + 8;
-      lVar23 = lVar23 + -1;
-    } while (lVar23 != 0);
+      auVar24 = vectorConvertToSignedFixedPointWordSaturate128(*pauVar15,0);
+      pauVar15 = pauVar15 + 1;
+      auVar22 = vectorPackSignedWordSignedSaturate(auVar24,auVar24);
+      auVar24 = vectorSplatWord(auVar22,0);
+      auVar22 = vectorSplatWord(auVar22,1);
+      storeVectorElementWordIndexed(auVar24,lVar16);
+      storeVectorElementWordIndexed(auVar22,lVar16 + 4);
+      lVar16 = lVar16 + 8;
+      lVar18 = lVar18 + -1;
+    } while (lVar18 != 0);
   }
   else {
     do {
-      auVar28 = *pauVar17;
-      pauVar17 = pauVar17 + 1;
-      auVar28 = vectorMultiplyFloatingPoint(auVar28,auVar30);
-      auVar28 = vectorMultiplyFloatingPoint(auVar28,___vmx_38000100380001003800010038000100);
-      auVar28 = vectorMultiplyFloatingPoint(auVar28,local_9d0);
-      auVar28 = vectorConvertToSignedFixedPointWordSaturate128(auVar28,0);
-      auVar29 = vectorPackSignedWordSignedSaturate(auVar28,auVar28);
-      auVar28 = vectorSplatWord(auVar29,0);
-      auVar29 = vectorSplatWord(auVar29,1);
-      storeVectorElementWordIndexed(auVar28,lVar19);
-      storeVectorElementWordIndexed(auVar29,lVar19 + 4);
-      lVar19 = lVar19 + 8;
-      lVar23 = lVar23 + -1;
-    } while (lVar23 != 0);
+      auVar22 = *pauVar15;
+      pauVar15 = pauVar15 + 1;
+      auVar22 = vectorMultiplyFloatingPoint(auVar22,auVar24);
+      auVar22 = vectorMultiplyFloatingPoint(auVar22,___vmx_38000100380001003800010038000100);
+      auVar22 = vectorMultiplyFloatingPoint(auVar22,local_9d0);
+      auVar22 = vectorConvertToSignedFixedPointWordSaturate128(auVar22,0);
+      auVar23 = vectorPackSignedWordSignedSaturate(auVar22,auVar22);
+      auVar22 = vectorSplatWord(auVar23,0);
+      auVar23 = vectorSplatWord(auVar23,1);
+      storeVectorElementWordIndexed(auVar22,lVar16);
+      storeVectorElementWordIndexed(auVar23,lVar16 + 4);
+      lVar16 = lVar16 + 8;
+      lVar18 = lVar18 + -1;
+    } while (lVar18 != 0);
   }
-  puVar16 = &uStack_474;
-  puVar14 = &uStack_884;
-  lVar23 = 0x28;
+  pfVar13 = &fStack_474;
+  pfVar12 = &fStack_884;
+  lVar18 = 0x28;
   do {
-    puVar14 = puVar14 + 1;
-    puVar16 = puVar16 + 1;
-    uVar4 = *puVar16;
-    *(undefined4 *)lVar20 = *puVar14;
-    ((undefined4 *)lVar20)[1] = uVar4;
-    lVar20 = lVar20 + 8;
-    lVar23 = lVar23 + -1;
-  } while (lVar23 != 0);
-  __restfpr_28();
-  __restgprlr_25();
+    pfVar12 = pfVar12 + 1;
+    pfVar13 = pfVar13 + 1;
+    fVar2 = *pfVar13;
+    *param_7 = *pfVar12;
+    param_7[1] = fVar2;
+    param_7 = param_7 + 2;
+    lVar18 = lVar18 + -1;
+  } while (lVar18 != 0);
   return;
 }
 

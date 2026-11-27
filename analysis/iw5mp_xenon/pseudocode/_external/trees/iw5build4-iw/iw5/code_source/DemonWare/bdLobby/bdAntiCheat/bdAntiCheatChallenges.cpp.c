@@ -15,23 +15,23 @@ bdAntiCheatChallenges::bdAntiCheatChallenges(bdAntiCheatChallenges *this)
 
 // 8290D108  ~bdAntiCheatChallenges  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdanticheat/bdanticheatchallenges.cpp:19)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void __thiscall bdAntiCheatChallenges::~bdAntiCheatChallenges(bdAntiCheatChallenges *this)
 
 {
   bdArray<bdAntiCheatChallenge> *this_00;
-  bdReferencable *this_01;
-  bdReferencable *pbStack00000014;
+  bdAntiCheatChallenges *pbStack00000014;
   
-  this_01 = (bdReferencable *)__savegprlr_29(this);
-  this_01->_padding_ = (int)&_vftable_;
-  this_00 = (bdArray<bdAntiCheatChallenge> *)this_01[1]._padding_;
-  pbStack00000014 = this_01;
+  this->_padding_ = (int)&_vftable_;
+  this_00 = this->m_challenges;
+  pbStack00000014 = this;
   if (this_00 != (bdArray<bdAntiCheatChallenge> *)0x0) {
     bdArray<bdAntiCheatChallenge>::clear(this_00);
     bdMemory::deallocate(this_00);
   }
-  bdReferencable::~bdReferencable(this_01);
-  __restgprlr_29();
+  bdReferencable::~bdReferencable((bdReferencable *)this);
   return;
 }
 
@@ -47,82 +47,77 @@ void bdAntiCheatChallenge::operator_delete(void *param_1,void *param_2)
 
 // 8290CF40  deserialize  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdanticheat/bdanticheatchallenges.cpp:27)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 bool __thiscall
 bdAntiCheatChallenges::deserialize(bdAntiCheatChallenges *this,bdReference<bdByteBuffer> param_1)
 
 {
-  int iVar1;
-  uint uVar2;
-  int iVar3;
-  bool bVar6;
-  bdArray<bdAntiCheatChallenge> *pbVar4;
-  bdAntiCheatChallenge *pbVar5;
-  char cVar7;
-  undefined1 uVar8;
-  uint uVar10;
-  longlong lVar9;
-  uint *puVar11;
-  bool bVar12;
+  uint uVar1;
+  bool bVar2;
+  bool bVar5;
+  bdArray<bdAntiCheatChallenge> *pbVar3;
+  bdAntiCheatChallenge *pbVar4;
+  char cVar6;
+  uint uVar8;
+  longlong lVar7;
+  uint *puVar9;
   char in_RESERVE;
-  byte bVar13;
-  bdByteBuffer *pbStack0000001c;
+  byte bVar10;
+  bdReference<bdByteBuffer> bStack0000001c;
   ushort local_60 [2];
   bdArray<bdAntiCheatChallenge> *local_5c [3];
   bdAntiCheatChallenge abStack_50 [2];
   
-  iVar3 = __savegprlr_28(this);
-  iVar1 = *(int *)(iVar3 + 8);
+  pbVar3 = this->m_challenges;
   local_60[0] = 0;
-  pbStack0000001c = param_1.m_ptr;
+  bStack0000001c.m_ptr = param_1.m_ptr;
   bdAntiCheatChallenge::bdAntiCheatChallenge(abStack_50);
-  if (iVar1 == 0) {
-    bVar6 = bdByteBuffer::readUInt16((bdByteBuffer *)(param_1.m_ptr)->_padding_,local_60);
-    bVar12 = true;
-    if (bVar6) goto LAB_8290cf9c;
+  if (pbVar3 == (bdArray<bdAntiCheatChallenge> *)0x0) {
+    bVar5 = bdByteBuffer::readUInt16((bdByteBuffer *)(param_1.m_ptr)->_padding_,local_60);
+    bVar2 = true;
+    if (bVar5) goto LAB_8290cf9c;
   }
-  bVar12 = false;
+  bVar2 = false;
 LAB_8290cf9c:
-  if (bVar12 != false) {
+  if (bVar2) {
     local_5c[0] = bdMemory::allocate(0xc);
     if (local_5c[0] == (bdArray<bdAntiCheatChallenge> *)0x0) {
-      pbVar4 = (bdArray<bdAntiCheatChallenge> *)0x0;
+      pbVar3 = (bdArray<bdAntiCheatChallenge> *)0x0;
     }
     else {
-      pbVar4 = bdArray<bdAntiCheatChallenge>::bdArray<bdAntiCheatChallenge>
+      pbVar3 = bdArray<bdAntiCheatChallenge>::bdArray<bdAntiCheatChallenge>
                          (local_5c[0],(uint)local_60[0],abStack_50);
     }
-    *(bdArray<bdAntiCheatChallenge> **)(iVar3 + 8) = pbVar4;
+    this->m_challenges = pbVar3;
   }
-  uVar10 = 0;
+  uVar8 = 0;
   if (local_60[0] != 0) {
     do {
-      bVar6 = bVar12 == false;
-      bVar13 = bVar6 << 1;
-      bVar12 = false;
-      if (bVar6) break;
-      pbVar5 = bdArray<bdAntiCheatChallenge>::operator[]
-                         (*(bdArray<bdAntiCheatChallenge> **)(iVar3 + 8),uVar10);
+      bVar10 = !bVar2 << 1;
+      if (!bVar2) break;
+      pbVar4 = bdArray<bdAntiCheatChallenge>::operator[](this->m_challenges,uVar8);
       local_5c[0] = (bdArray<bdAntiCheatChallenge> *)(param_1.m_ptr)->_padding_;
       if (ZEXT48(local_5c[0]) != 0) {
-        lVar9 = ZEXT48(local_5c[0]) + 4;
+        lVar7 = ZEXT48(local_5c[0]) + 4;
         do {
-          puVar11 = (uint *)lVar9;
+          puVar9 = (uint *)lVar7;
           if (in_RESERVE != '\0') {
-            uVar2 = storeWordConditionalIndexed((ulonglong)*puVar11 + 1,0,lVar9);
-            *puVar11 = uVar2;
-            bVar13 = 2;
+            uVar1 = storeWordConditionalIndexed((ulonglong)*puVar9 + 1,0,lVar7);
+            *puVar9 = uVar1;
+            bVar10 = 2;
           }
-        } while (!(bool)(bVar13 >> 1 & 1));
+        } while (!(bool)(bVar10 >> 1 & 1));
       }
-      cVar7 = (**(code **)(pbVar5->_padding_ + 4))(pbVar5,local_5c);
-      bVar12 = cVar7 != '\0';
-      uVar10 = uVar10 + 1 & 0xffff;
-    } while (uVar10 < local_60[0]);
+      cVar6 = (**(code **)(pbVar4->_padding_ + 4))(pbVar4,local_5c);
+      bVar2 = cVar6 != '\0';
+      uVar8 = uVar8 + 1 & 0xffff;
+    } while (uVar8 < local_60[0]);
   }
   bdAntiCheatChallenge::~bdAntiCheatChallenge(abStack_50);
   bdReference<bdByteBuffer>::~bdReference<bdByteBuffer>((bdReference<bdByteBuffer> *)param_1.m_ptr);
-  uVar8 = __restgprlr_28(bVar12);
-  return (bool)uVar8;
+  return bVar2;
 }
 
 
@@ -199,35 +194,30 @@ void __thiscall bdArray<bdAntiCheatChallenge>::clear(bdArray<bdAntiCheatChalleng
 
 // 8290CCF8  copyConstructArrayObject  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdcontainers/bdarray.inl:479)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void __thiscall
 bdArray<bdAntiCheatChallenge>::copyConstructArrayObject
           (bdArray<bdAntiCheatChallenge> *this,bdAntiCheatChallenge *param_1,
           bdAntiCheatChallenge *param_2,uint param_3)
 
 {
-  bdAntiCheatChallenge *pbVar2;
   longlong lVar1;
-  longlong lVar3;
-  ulonglong uVar4;
-  ulonglong uVar5;
-  undefined4 uStack0000001c;
+  ulonglong uVar2;
+  bdAntiCheatChallenge *pbStack0000001c;
   
-  uVar4 = (ulonglong)(int)param_3;
-  lVar3 = (longlong)(int)param_1;
-  pbVar2 = (bdAntiCheatChallenge *)__savegprlr_27(this);
-  uVar5 = 0;
-  uStack0000001c = (undefined4)lVar3;
-  if ((uVar4 & 0xffffffff) != 0) {
+  uVar2 = 0;
+  pbStack0000001c = param_1;
+  if (param_3 != 0) {
     do {
-      lVar1 = uVar5 * 0x28 + lVar3;
-      pbVar2 = (bdAntiCheatChallenge *)0x0;
+      lVar1 = uVar2 * 0x28 + (longlong)(int)param_1;
       if (lVar1 != 0) {
-        pbVar2 = bdAntiCheatChallenge::bdAntiCheatChallenge((bdAntiCheatChallenge *)lVar1,param_2);
+        bdAntiCheatChallenge::bdAntiCheatChallenge((bdAntiCheatChallenge *)lVar1,param_2);
       }
-      uVar5 = uVar5 + 1;
-    } while ((uVar5 & 0xffffffff) < (uVar4 & 0xffffffff));
+      uVar2 = uVar2 + 1;
+    } while ((uVar2 & 0xffffffff) < (ulonglong)param_3);
   }
-  __restgprlr_27(pbVar2);
   return;
 }
 

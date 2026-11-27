@@ -2,267 +2,255 @@
 
 // 8243DA40  FX_EffectToHandle  (EffectsCore/fx_system_handle.h:6)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 ushort FX_EffectToHandle(FxSystem *param_1,FxEffect *param_2)
 
 {
-  int iVar1;
-  ushort uVar2;
-  ulonglong uVar3;
+  uint uVar1;
   
-  uVar3 = (ulonglong)(int)param_2;
-  iVar1 = __savegprlr_28(param_1);
-  if (iVar1 == 0) {
+  if (param_1 == (FxSystem *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\fx_system_handle.h"
                     ,7,0,"%s");
   }
-  if ((uVar3 & 0xffffffff) == 0) {
+  if (param_2 == (FxEffect *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\fx_system_handle.h"
                     ,8,0,"%s");
   }
-  else if (((ulonglong)*(uint *)(iVar1 + 0x10) <= (uVar3 & 0xffffffff)) &&
-          ((uVar3 & 0xffffffff) < (ulonglong)(*(uint *)(iVar1 + 0x10) + 0x24000)))
-  goto LAB_8243db04;
+  else if ((param_1->effects <= param_2) && (param_2 < param_1->effects + 0x400)) goto LAB_8243db04;
   va("%p %p");
   MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\fx_system_handle.h",
                   0x12,0,"%s\n\t%s");
 LAB_8243db04:
-  uVar3 = uVar3 - *(uint *)(iVar1 + 0x10);
-  iVar1 = (int)uVar3;
-  uVar2 = __restgprlr_28((longlong)(iVar1 >> 2) + (ulonglong)(iVar1 < 0 && (uVar3 & 3) != 0) &
-                         0xffff);
-  return uVar2;
+  uVar1 = (int)param_2 - (int)param_1->effects;
+  return (short)((int)uVar1 >> 2) + (ushort)((int)uVar1 < 0 && (uVar1 & 3) != 0);
 }
 
 
 // 8243DF80  FXI_AllocPool_Generic<FxTrail>  (EffectsCore/fx_pool.h:6)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 FxTrail * FXI_AllocPool_Generic<FxTrail>(int *param_1,FxPool<FxTrail> *param_2)
 
 {
-  uint uVar1;
-  uint *puVar2;
-  FxTrail *pFVar3;
-  longlong lVar4;
+  int iVar1;
+  FxTrail *pFVar2;
   
-  lVar4 = (longlong)(int)param_2;
-  puVar2 = (uint *)__savegprlr_27(param_1);
-  uVar1 = *puVar2;
-  if (((int)uVar1 < -1) || (0x7f < (int)uVar1)) {
+  iVar1 = *param_1;
+  if ((iVar1 < -1) || (0x7f < iVar1)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\fx_pool.h",0xd,0,
                     "%s");
   }
-  if (uVar1 == 0xffffffff) {
-    pFVar3 = (FxTrail *)__restgprlr_27(0);
-    return pFVar3;
+  if (iVar1 == -1) {
+    return (FxTrail *)0x0;
   }
-  lVar4 = ((ulonglong)uVar1 & 0xfffffff) * 0x10 + lVar4;
-  uVar1 = *(uint *)lVar4;
-  if (((int)uVar1 < -1) || (0x7f < (int)uVar1)) {
+  pFVar2 = (FxTrail *)(param_2 + iVar1);
+  iVar1._0_2_ = pFVar2->nextTrailHandle;
+  iVar1._2_2_ = pFVar2->firstTrailElemHandle;
+  if ((iVar1 < -1) || (0x7f < iVar1)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\fx_pool.h",0x11,0,
                     "%s");
   }
-  *puVar2 = uVar1;
-  pFVar3 = (FxTrail *)__restgprlr_27(lVar4);
-  return pFVar3;
+  *param_1 = iVar1;
+  return pFVar2;
 }
 
 
 // 8243E030  FXI_AllocPool_Generic<FxSparkFountain>  (EffectsCore/fx_pool.h:6)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 FxSparkFountain *
 FXI_AllocPool_Generic<FxSparkFountain>(int *param_1,FxPool<FxSparkFountain> *param_2)
 
 {
-  uint uVar1;
-  uint *puVar2;
-  FxSparkFountain *pFVar3;
-  longlong lVar4;
+  int iVar1;
+  FxSparkFountain *pFVar2;
   
-  lVar4 = (longlong)(int)param_2;
-  puVar2 = (uint *)__savegprlr_27(param_1);
-  uVar1 = *puVar2;
-  if (((int)uVar1 < -1) || (0x3f < (int)uVar1)) {
+  iVar1 = *param_1;
+  if ((iVar1 < -1) || (0x3f < iVar1)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\fx_pool.h",0xd,0,
                     "%s");
   }
-  if (uVar1 == 0xffffffff) {
-    pFVar3 = (FxSparkFountain *)__restgprlr_27(0);
-    return pFVar3;
+  if (iVar1 == -1) {
+    return (FxSparkFountain *)0x0;
   }
-  lVar4 = ((ulonglong)uVar1 & 0x3ffffff) * 0x40 + lVar4;
-  uVar1 = *(uint *)lVar4;
-  if (((int)uVar1 < -1) || (0x3f < (int)uVar1)) {
+  pFVar2 = (FxSparkFountain *)(param_2 + iVar1);
+  iVar1._0_2_ = (pFVar2->header).defIndex;
+  iVar1._2_2_ = (pFVar2->header).nextFountainInEffect;
+  if ((iVar1 < -1) || (0x3f < iVar1)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\fx_pool.h",0x11,0,
                     "%s");
   }
-  *puVar2 = uVar1;
-  pFVar3 = (FxSparkFountain *)__restgprlr_27(lVar4);
-  return pFVar3;
+  *param_1 = iVar1;
+  return pFVar2;
 }
 
 
 // 8243E0E0  FXI_AllocPool_Generic<FxSparkFountainCluster>  (EffectsCore/fx_pool.h:6)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 FxSparkFountainCluster *
 FXI_AllocPool_Generic<FxSparkFountainCluster>(int *param_1,FxPool<FxSparkFountainCluster> *param_2)
 
 {
-  uint uVar1;
-  uint *puVar2;
-  FxSparkFountainCluster *pFVar3;
-  longlong lVar4;
+  int iVar1;
+  int iVar2;
   
-  lVar4 = (longlong)(int)param_2;
-  puVar2 = (uint *)__savegprlr_27(param_1);
-  uVar1 = *puVar2;
-  if (((int)uVar1 < -1) || (0x5f < (int)uVar1)) {
+  iVar1 = *param_1;
+  if ((iVar1 < -1) || (0x5f < iVar1)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\fx_pool.h",0xd,0,
                     "%s");
   }
-  if (uVar1 == 0xffffffff) {
-    pFVar3 = (FxSparkFountainCluster *)__restgprlr_27(0);
-    return pFVar3;
+  if (iVar1 == -1) {
+    return (FxSparkFountainCluster *)0x0;
   }
-  lVar4 = (ulonglong)uVar1 * 0x1c00 + lVar4;
-  uVar1 = *(uint *)lVar4;
-  if (((int)uVar1 < -1) || (0x5f < (int)uVar1)) {
+  iVar2 = param_2[iVar1].field0_0x0.nextFree;
+  if ((iVar2 < -1) || (0x5f < iVar2)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\fx_pool.h",0x11,0,
                     "%s");
   }
-  *puVar2 = uVar1;
-  pFVar3 = (FxSparkFountainCluster *)__restgprlr_27(lVar4);
-  return pFVar3;
+  *param_1 = iVar2;
+  return (FxSparkFountainCluster *)(param_2 + iVar1);
 }
 
 
 // 8243E190  FXI_AllocPool_Generic<FxBolt>  (EffectsCore/fx_pool.h:6)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 FxBolt * FXI_AllocPool_Generic<FxBolt>(int *param_1,FxPool<FxBolt> *param_2)
 
 {
-  uint uVar1;
-  uint *puVar2;
-  FxBolt *pFVar3;
-  longlong lVar4;
+  int iVar1;
+  int iVar2;
   
-  lVar4 = (longlong)(int)param_2;
-  puVar2 = (uint *)__savegprlr_27(param_1);
-  uVar1 = *puVar2;
-  if (((int)uVar1 < -1) || (0xfe < (int)uVar1)) {
+  iVar1 = *param_1;
+  if ((iVar1 < -1) || (0xfe < iVar1)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\fx_pool.h",0xd,0,
                     "%s");
   }
-  if (uVar1 == 0xffffffff) {
-    pFVar3 = (FxBolt *)__restgprlr_27(0);
-    return pFVar3;
+  if (iVar1 == -1) {
+    return (FxBolt *)0x0;
   }
-  lVar4 = ((ulonglong)uVar1 & 0x7ffffff) * 0x20 + lVar4;
-  uVar1 = *(uint *)lVar4;
-  if (((int)uVar1 < -1) || (0xfe < (int)uVar1)) {
+  iVar2 = *(int *)(param_2 + iVar1);
+  if ((iVar2 < -1) || (0xfe < iVar2)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\fx_pool.h",0x11,0,
                     "%s");
   }
-  *puVar2 = uVar1;
-  pFVar3 = (FxBolt *)__restgprlr_27(lVar4);
-  return pFVar3;
+  *param_1 = iVar2;
+  return (FxBolt *)(param_2 + iVar1);
 }
 
 
 // 8243E240  FXI_FreePool_Generic<FxBolt>  (EffectsCore/fx_pool.h:25)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void FXI_FreePool_Generic<FxBolt>(FxBolt *param_1,int *param_2,FxPool<FxBolt> *param_3)
 
 {
-  uint uVar1;
+  int iVar1;
   uint uVar2;
-  uint *puVar3;
   
-  puVar3 = (uint *)__savegprlr_27(param_1);
-  uVar2 = (int)puVar3 - (int)param_3 >> 5;
+  uVar2 = (int)param_1 - (int)param_3 >> 5;
   if (0xfe < uVar2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\fx_pool.h",0x25,0,
                     "freedIndex doesn\'t index ITEM_TYPE::POOL_SIZE\n\t%i not in [0, %i)");
   }
-  uVar1 = *param_2;
-  if (((int)uVar1 < -1) || (0xfe < (int)uVar1)) {
+  iVar1 = *param_2;
+  if ((iVar1 < -1) || (0xfe < iVar1)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\fx_pool.h",0x28,0,
                     "%s");
   }
-  *puVar3 = uVar1;
+  *(int *)param_1 = iVar1;
   *param_2 = uVar2;
-  __restgprlr_27();
   return;
 }
 
 
 // 8243DB20  FXI_EffectAffectsGameplay  (EffectsCore/fx_spawn_effect_alloc.cpp:26)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
+
 int FXI_EffectAffectsGameplay(FxEffectDef *param_1)
 
 {
-  int iVar1;
-  int iVar2;
-  int iVar3;
-  undefined8 uVar4;
-  ulonglong uVar5;
+  char cVar1;
+  FxElemDef *pFVar2;
+  FxEffectDef *pFVar3;
+  int iVar4;
+  int iVar5;
   ulonglong uVar6;
-  int iVar7;
-  undefined4 *puVar8;
-  uint uVar9;
+  ulonglong uVar7;
+  int iVar8;
+  undefined4 *puVar9;
+  uint uVar10;
   
-  iVar1 = __savegprlr_24(param_1);
-  if (iVar1 == 0) {
+  if (param_1 == (FxEffectDef *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_spawn_effect_alloc.cpp"
                     ,0x28,0,"%s");
   }
-  uVar4 = 0;
-  uVar6 = 0;
-  uVar5 = (ulonglong)*(uint *)(iVar1 + 0x18) + (ulonglong)*(uint *)(iVar1 + 0x14) +
-          (ulonglong)*(uint *)(iVar1 + 0x10);
-  if (uVar5 != 0) {
-    iVar7 = 0;
+  iVar5 = 0;
+  uVar7 = 0;
+  uVar6 = (ulonglong)(uint)param_1->elemDefCountEmission +
+          (ulonglong)(uint)param_1->elemDefCountOneShot +
+          (ulonglong)(uint)param_1->elemDefCountLooping;
+  if (uVar6 != 0) {
+    iVar8 = 0;
     do {
-      iVar3 = iVar7 + *(int *)(iVar1 + 0x30);
-      if (((((*(uint *)(iVar7 + *(int *)(iVar1 + 0x30)) & 0x1000) != 0) ||
-           ((*(FxEffectDef **)(iVar3 + 0xdc) != (FxEffectDef *)0x0 &&
-            (iVar2 = FXI_EffectAffectsGameplay(*(FxEffectDef **)(iVar3 + 0xdc)), iVar2 != 0)))) ||
-          ((*(FxEffectDef **)(iVar3 + 0xd8) != (FxEffectDef *)0x0 &&
-           (iVar2 = FXI_EffectAffectsGameplay(*(FxEffectDef **)(iVar3 + 0xd8)), iVar2 != 0)))) ||
-         ((*(FxEffectDef **)(iVar3 + 0xe0) != (FxEffectDef *)0x0 &&
-          (iVar2 = FXI_EffectAffectsGameplay(*(FxEffectDef **)(iVar3 + 0xe0)), iVar2 != 0)))) {
-LAB_8243dc08:
-        iVar1 = __restgprlr_24(1);
-        return iVar1;
+      pFVar2 = param_1->elemDefs;
+      if (((((*(uint *)((int)&((FxElemDef *)(pFVar2->spawnOrigin + -7))->flags + iVar8) & 0x1000) !=
+             0) || ((pFVar3 = *(FxEffectDef **)((int)(&pFVar2->collBounds + 1) + iVar8 + 4),
+                    pFVar3 != (FxEffectDef *)0x0 &&
+                    (iVar4 = FXI_EffectAffectsGameplay(pFVar3), iVar4 != 0)))) ||
+          ((pFVar3 = *(FxEffectDef **)((int)(&pFVar2->collBounds + 1) + iVar8),
+           pFVar3 != (FxEffectDef *)0x0 && (iVar4 = FXI_EffectAffectsGameplay(pFVar3), iVar4 != 0)))
+          ) || ((pFVar3 = *(FxEffectDef **)((int)(&pFVar2->collBounds + 1) + iVar8 + 8),
+                pFVar3 != (FxEffectDef *)0x0 &&
+                (iVar4 = FXI_EffectAffectsGameplay(pFVar3), iVar4 != 0)))) {
+        return 1;
       }
-      if (*(char *)(iVar3 + 0xb0) == '\f') {
-        if (*(char *)(iVar3 + 0xb1) == '\x01') {
-          iVar3 = FXI_EffectAffectsGameplay(*(FxEffectDef **)(iVar3 + 0xbc));
-          if (iVar3 != 0) goto LAB_8243dc08;
+      if (*(char *)((int)(pFVar2->collBounds).midPoint + iVar8 + -0x10) == '\f') {
+        cVar1 = *(char *)((int)(pFVar2->collBounds).midPoint + iVar8 + -0xf);
+        if (cVar1 == '\x01') {
+          iVar4 = FXI_EffectAffectsGameplay
+                            (*(FxEffectDef **)((int)(pFVar2->collBounds).midPoint + iVar8 + -4));
+          if (iVar4 != 0) {
+            return 1;
+          }
         }
         else {
-          puVar8 = *(undefined4 **)(iVar3 + 0xbc);
-          uVar9 = 0;
-          if (*(char *)(iVar3 + 0xb1) != '\0') {
+          puVar9 = *(undefined4 **)((int)(pFVar2->collBounds).midPoint + iVar8 + -4);
+          uVar10 = 0;
+          if (cVar1 != '\0') {
             do {
-              iVar2 = FXI_EffectAffectsGameplay((FxEffectDef *)*puVar8);
-              if (iVar2 != 0) {
-                uVar4 = 1;
+              iVar4 = FXI_EffectAffectsGameplay((FxEffectDef *)*puVar9);
+              if (iVar4 != 0) {
+                iVar5 = 1;
                 break;
               }
-              uVar9 = uVar9 + 1;
-              puVar8 = puVar8 + 1;
-            } while (uVar9 < *(byte *)(iVar3 + 0xb1));
+              uVar10 = uVar10 + 1;
+              puVar9 = puVar9 + 1;
+            } while (uVar10 < *(byte *)((int)(pFVar2->collBounds).midPoint + iVar8 + -0xf));
           }
         }
       }
-      uVar6 = uVar6 + 1;
-      iVar7 = iVar7 + 0x100;
-    } while ((uVar6 & 0xffffffff) < (uVar5 & 0xffffffff));
+      uVar7 = uVar7 + 1;
+      iVar8 = iVar8 + 0x100;
+    } while ((uVar7 & 0xffffffff) < (uVar6 & 0xffffffff));
   }
-  iVar1 = __restgprlr_24(uVar4);
-  return iVar1;
+  return iVar5;
 }
 
 
@@ -410,42 +398,39 @@ int FXI_IsSpotLightEffect(FxSystem *param_1,FxEffectDef *param_2)
 
 // 8243DD50  FXI_SpawnEffect_AllocSpotLightEffect  (EffectsCore/fx_spawn_effect_alloc.cpp:156)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void FXI_SpawnEffect_AllocSpotLightEffect
                (FxSystem *param_1,FxEffect *param_2,ushort param_3,FxEffectDef *param_4)
 
 {
-  int iVar1;
-  ulonglong uVar2;
-  longlong lVar3;
-  int iVar4;
+  longlong lVar1;
+  int iVar2;
   
-  uVar2 = (ulonglong)(int)param_4;
-  iVar1 = __savegprlr_24(param_1);
-  if ((uVar2 & 0xffffffff) == 0) {
+  if (param_4 == (FxEffectDef *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_spawn_effect_alloc.cpp"
                     ,0xb6,0,"%s");
   }
-  iVar4 = (int)uVar2;
-  lVar3 = (ulonglong)*(uint *)(iVar4 + 0x18) + (ulonglong)*(uint *)(iVar4 + 0x14) +
-          (ulonglong)*(uint *)(iVar4 + 0x10);
-  if (lVar3 != 0) {
-    iVar4 = 0;
+  lVar1 = (ulonglong)(uint)param_4->elemDefCountEmission +
+          (ulonglong)(uint)param_4->elemDefCountOneShot +
+          (ulonglong)(uint)param_4->elemDefCountLooping;
+  if (lVar1 != 0) {
+    iVar2 = 0;
     do {
-      if (*(char *)((int)(param_2->def->elemDefs->collBounds).midPoint + iVar4 + -0x10) == '\t') {
-        if (0 < *(int *)(iVar1 + 0x78)) {
+      if (*(char *)((int)(param_2->def->elemDefs->collBounds).midPoint + iVar2 + -0x10) == '\t') {
+        if (0 < param_1->activeSpotLightEffectCount) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_spawn_effect_alloc.cpp"
                           ,0xbf,0,"%s");
         }
-        *(ushort *)(iVar1 + 0x80) = param_3;
-        *(int *)(iVar1 + 0x78) = *(int *)(iVar1 + 0x78) + 1;
+        param_1->activeSpotLightEffectHandle = param_3;
+        param_1->activeSpotLightEffectCount = param_1->activeSpotLightEffectCount + 1;
       }
-      lVar3 = lVar3 + -1;
-      iVar4 = iVar4 + 0x100;
-    } while (lVar3 != 0);
+      lVar1 = lVar1 + -1;
+      iVar2 = iVar2 + 0x100;
+    } while (lVar1 != 0);
   }
-  __restgprlr_24();
   return;
 }
 
@@ -470,6 +455,8 @@ uchar FX_BoltToHandle(FxSystem *param_1,FxBolt *param_2)
 
 // 8243E2D0  FXW_SpawnEffect_AllocTrailsAndFountains  (EffectsCore/fx_spawn_effect_alloc.cpp:202)
 
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void FXW_SpawnEffect_AllocTrailsAndFountains
@@ -478,25 +465,22 @@ void FXW_SpawnEffect_AllocTrailsAndFountains
 {
   char cVar1;
   FxElemDef *pFVar2;
-  int iVar3;
+  bool bVar3;
   bool bVar4;
-  bool bVar5;
-  FxTrail *pFVar6;
-  ushort uVar9;
-  FxSparkFountain *pFVar7;
-  FxSparkFountainCluster *pFVar8;
-  uint uVar10;
-  int iVar11;
-  uchar *puVar12;
+  FxTrail *pFVar5;
+  ushort uVar8;
+  FxSparkFountain *pFVar6;
+  FxSparkFountainCluster *pFVar7;
+  uint uVar9;
+  int iVar10;
+  uchar *puVar11;
+  ulonglong uVar12;
   ulonglong uVar13;
-  ulonglong uVar14;
-  uint uVar15;
-  double dVar16;
+  uint uVar14;
+  double dVar15;
   int local_ac;
   
-  uVar13 = (ulonglong)(int)param_3;
-  __savegprlr();
-  if ((uVar13 & 0xffffffff) == 0) {
+  if (param_3 == (FxEffectDef *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_spawn_effect_alloc.cpp"
                     ,0xd1,0,"%s");
   }
@@ -508,174 +492,167 @@ void FXW_SpawnEffect_AllocTrailsAndFountains
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_spawn_effect_alloc.cpp"
                     ,0xd3,0,"%s");
   }
-  iVar3 = (int)uVar13;
-  iVar11 = 0;
+  iVar10 = 0;
+  bVar3 = false;
   bVar4 = false;
-  bVar5 = false;
-  uVar13 = (ulonglong)*(uint *)(iVar3 + 0x18) + (ulonglong)*(uint *)(iVar3 + 0x14) +
-           (ulonglong)*(uint *)(iVar3 + 0x10);
-  if (uVar13 != 0) {
+  uVar12 = (ulonglong)(uint)param_3->elemDefCountEmission +
+           (ulonglong)(uint)param_3->elemDefCountOneShot +
+           (ulonglong)(uint)param_3->elemDefCountLooping;
+  if (uVar12 != 0) {
     local_ac = 0;
-    dVar16 = 0.0;
-    uVar14 = uVar13;
+    dVar15 = 0.0;
+    uVar13 = uVar12;
     do {
       pFVar2 = param_2->def->elemDefs;
       cVar1 = *(char *)((int)(pFVar2->collBounds).midPoint + local_ac + -0x10);
       if (cVar1 == '\x03') {
-        if (!bVar4) {
-          pFVar6 = FXI_AllocPool_Generic<FxTrail>(&param_1->firstFreeTrail,param_1->trails);
-          if (pFVar6 == (FxTrail *)0x0) {
-            bVar4 = true;
+        if (!bVar3) {
+          pFVar5 = FXI_AllocPool_Generic<FxTrail>(&param_1->firstFreeTrail,param_1->trails);
+          if (pFVar5 == (FxTrail *)0x0) {
+            bVar3 = true;
           }
           else {
             param_1->activeTrailCount = param_1->activeTrailCount + 1;
-            pFVar6->nextTrailHandle = param_2->firstTrailHandle;
-            pFVar6->defIndex = (char)iVar11;
-            if ((char)iVar11 != iVar11) {
+            pFVar5->nextTrailHandle = param_2->firstTrailHandle;
+            pFVar5->defIndex = (char)iVar10;
+            if ((char)iVar10 != iVar10) {
               MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_spawn_effect_alloc.cpp"
                               ,0xf2,0,"%s\n\t(elemDefIter) = %i");
             }
-            pFVar6->distanceAccumulator = (float)dVar16;
-            pFVar6->firstTrailElemHandle = 0xffff;
-            pFVar6->lastTrailElemHandle = 0xffff;
-            pFVar6->sequence = '\0';
-            uVar9 = FX_TrailToHandle(param_1,pFVar6);
-            param_2->firstTrailHandle = uVar9;
+            pFVar5->distanceAccumulator = (float)dVar15;
+            pFVar5->firstTrailElemHandle = 0xffff;
+            pFVar5->lastTrailElemHandle = 0xffff;
+            pFVar5->sequence = '\0';
+            uVar8 = FX_TrailToHandle(param_1,pFVar5);
+            param_2->firstTrailHandle = uVar8;
           }
         }
       }
-      else if ((cVar1 == '\x06') && (!bVar5)) {
-        pFVar7 = FXI_AllocPool_Generic<FxSparkFountain>
+      else if ((cVar1 == '\x06') && (!bVar4)) {
+        pFVar6 = FXI_AllocPool_Generic<FxSparkFountain>
                            (&param_1->firstFreeSparkFountain,param_1->sparkFountains);
-        if (pFVar7 == (FxSparkFountain *)0x0) {
-          bVar5 = true;
+        if (pFVar6 == (FxSparkFountain *)0x0) {
+          bVar4 = true;
         }
         else {
           param_1->activeSparkFountainCount = param_1->activeSparkFountainCount + 1;
-          (pFVar7->header).defIndex = (short)iVar11;
-          (pFVar7->header).nextFountainInEffect = param_2->firstSparkFountainHandle;
-          (pFVar7->header).isValid = '\0';
-          (pFVar7->header).computedClusterCount = '\0';
-          (pFVar7->header).computedClusterPortion = '\0';
-          uVar10 = *(int *)(*(int *)((int)(&pFVar2->collBounds + 2) + local_ac + 4) + 0x14) + 0x3f;
-          uVar10 = ((int)uVar10 >> 6) + (uint)((int)uVar10 < 0 && (uVar10 & 0x3f) != 0);
-          if (0x10 < (int)uVar10) {
-            uVar10 = 0x10;
+          (pFVar6->header).defIndex = (short)iVar10;
+          (pFVar6->header).nextFountainInEffect = param_2->firstSparkFountainHandle;
+          (pFVar6->header).isValid = '\0';
+          (pFVar6->header).computedClusterCount = '\0';
+          (pFVar6->header).computedClusterPortion = '\0';
+          uVar9 = *(int *)(*(int *)((int)(&pFVar2->collBounds + 2) + local_ac + 4) + 0x14) + 0x3f;
+          uVar9 = ((int)uVar9 >> 6) + (uint)((int)uVar9 < 0 && (uVar9 & 0x3f) != 0);
+          if (0x10 < (int)uVar9) {
+            uVar9 = 0x10;
           }
-          uVar15 = 0;
-          if (uVar10 != 0) {
-            puVar12 = &(pFVar7->header).computedClusterCount;
+          uVar14 = 0;
+          if (uVar9 != 0) {
+            puVar11 = &(pFVar6->header).computedClusterCount;
             do {
-              pFVar8 = FXI_AllocPool_Generic<FxSparkFountainCluster>
+              pFVar7 = FXI_AllocPool_Generic<FxSparkFountainCluster>
                                  (&param_1->firstFreeSparkFountainCluster,
                                   param_1->sparkFountainClusters);
-              if (pFVar8 == (FxSparkFountainCluster *)0x0) break;
+              if (pFVar7 == (FxSparkFountainCluster *)0x0) break;
               param_1->activeSparkFountainClusterCount =
                    param_1->activeSparkFountainClusterCount + 1;
-              if (0xf < (int)uVar15) {
+              if (0xf < (int)uVar14) {
                 MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_spawn_effect_alloc.cpp"
                                 ,0x130,0,"%s");
               }
-              uVar9 = FX_PoolToHandle_Generic<FxSparkFountainCluster>
-                                (param_1->sparkFountainClusters,pFVar8);
-              uVar15 = uVar15 + 1;
-              puVar12 = puVar12 + 2;
-              *(ushort *)puVar12 = uVar9;
-            } while (uVar15 != uVar10);
-            uVar14 = uVar13 & 0xffffffff;
+              uVar8 = FX_PoolToHandle_Generic<FxSparkFountainCluster>
+                                (param_1->sparkFountainClusters,pFVar7);
+              uVar14 = uVar14 + 1;
+              puVar11 = puVar11 + 2;
+              *(ushort *)puVar11 = uVar8;
+            } while (uVar14 != uVar9);
+            uVar13 = uVar12 & 0xffffffff;
           }
-          if (uVar15 != (uVar15 & 0xff)) {
+          if (uVar14 != (uVar14 & 0xff)) {
             MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\../universal/assertive.h"
                             ,0x1ce,0,"i == static_cast< Type >( i )\n\t%i, %i");
           }
-          (pFVar7->header).clusterCount = (uchar)uVar15;
-          if (0x10 < (uVar15 & 0xff)) {
+          (pFVar6->header).clusterCount = (uchar)uVar14;
+          if (0x10 < (uVar14 & 0xff)) {
             MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_spawn_effect_alloc.cpp"
                             ,0x135,0,"%s");
           }
-          uVar9 = FX_PoolToHandle_Generic<FxSparkFountain>(param_1->sparkFountains,pFVar7);
-          param_2->firstSparkFountainHandle = uVar9;
+          uVar8 = FX_PoolToHandle_Generic<FxSparkFountain>(param_1->sparkFountains,pFVar6);
+          param_2->firstSparkFountainHandle = uVar8;
         }
       }
-      iVar11 = iVar11 + 1;
+      iVar10 = iVar10 + 1;
       local_ac = local_ac + 0x100;
-    } while (iVar11 != (int)uVar14);
+    } while (iVar10 != (int)uVar13);
   }
-  __restgprlr();
   return;
 }
 
 
 // 8243E610  FXIW_SpawnEffect  (EffectsCore/fx_spawn_effect_alloc.cpp:320)
 
+/* WARNING: Function: __savegprlr_18 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_18 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 FxEffect * FXIW_SpawnEffect(FxSystem *param_1,int param_2,FXSpawnCmd *param_3)
 
 {
-  char cVar1;
+  bool bVar1;
   ushort uVar2;
   ushort uVar3;
   FxSystem *pFVar4;
   int iVar5;
   undefined4 uVar6;
   uint uVar7;
-  FxSystem *pFVar8;
-  int iVar9;
+  int iVar8;
+  FxBolt *pFVar9;
   FxEffect *pFVar10;
-  FxBolt *pFVar11;
-  FxEffect *pFVar12;
-  uint uVar13;
-  uchar uVar14;
-  FxEffectDef *pFVar15;
-  longlong lVar16;
-  int *piVar17;
-  FxSpatialFrame *pFVar18;
-  FxBolt *pFVar19;
-  float *pfVar20;
-  longlong lVar21;
-  longlong lVar22;
+  FxEffect *pFVar11;
+  uint uVar12;
+  uchar uVar13;
+  FxEffectDef *pFVar14;
+  FxSpatialFrame *pFVar15;
+  FxBolt *pFVar16;
+  FXSpawnCmd *pFVar17;
+  float *pfVar18;
+  longlong lVar19;
   
-  lVar16 = (longlong)(int)param_3;
-  pFVar8 = (FxSystem *)__savegprlr_18(param_1);
-  pFVar15 = (FxEffectDef *)param_2;
-  if (pFVar8 == (FxSystem *)0x0) {
-    pFVar15 = (FxEffectDef *)0x155;
+  pFVar14 = (FxEffectDef *)param_2;
+  if (param_1 == (FxSystem *)0x0) {
+    pFVar14 = (FxEffectDef *)0x155;
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_spawn_effect_alloc.cpp"
                     ,0x155,0,"%s");
   }
-  if ((pFVar8->systemFlags & 0x20) != 0) {
-    pFVar15 = (FxEffectDef *)&DAT_00000156;
+  if ((param_1->systemFlags & 0x20) != 0) {
+    pFVar14 = (FxEffectDef *)&DAT_00000156;
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_spawn_effect_alloc.cpp"
                     ,0x156,0,"%s");
   }
-  piVar17 = (int *)lVar16;
-  if (*piVar17 == 0) {
-    pFVar15 = (FxEffectDef *)0x157;
+  if ((param_3->info).remoteDef == (FxEffectDef *)0x0) {
+    pFVar14 = (FxEffectDef *)0x157;
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_spawn_effect_alloc.cpp"
                     ,0x157,0,"%s");
   }
-  pFVar4 = (FxSystem *)*piVar17;
-  iVar9 = FXI_IsSpotLightEffect(pFVar4,pFVar15);
-  if ((iVar9 != 0) && (0 < pFVar8->activeSpotLightEffectCount)) {
+  pFVar4 = (FxSystem *)(param_3->info).remoteDef;
+  iVar8 = FXI_IsSpotLightEffect(pFVar4,pFVar14);
+  if ((iVar8 != 0) && (0 < param_1->activeSpotLightEffectCount)) {
     R_WarnOncePerFrame(R_WARN_SPOT_LIGHT_LIMIT);
-    pFVar10 = (FxEffect *)__restgprlr_18(0);
-    return pFVar10;
+    return (FxEffect *)0x0;
   }
-  pFVar11 = (FxBolt *)0x0;
-  if ((piVar17[0x10] != 0xfff) &&
-     (pFVar11 = FXI_AllocPool_Generic<FxBolt>(&pFVar8->firstFreeBolt,pFVar8->bolts),
-     pFVar11 == (FxBolt *)0x0)) {
+  pFVar9 = (FxBolt *)0x0;
+  if (((param_3->info).dobjHandle != 0xfff) &&
+     (pFVar9 = FXI_AllocPool_Generic<FxBolt>(&param_1->firstFreeBolt,param_1->bolts),
+     pFVar9 == (FxBolt *)0x0)) {
     R_WarnOncePerFrame(R_WARN_FX_BOLT_LIMIT);
-    pFVar10 = (FxEffect *)__restgprlr_18(0);
-    return pFVar10;
+    return (FxEffect *)0x0;
   }
-  uVar13 = pFVar8->firstFreeEffect;
-  if (uVar13 - pFVar8->firstActiveEffect != 0x400) {
-    pFVar8->firstFreeEffect = uVar13 + 1;
-    uVar3 = pFVar8->allEffectHandles[uVar13 & 0x3ff];
-    pFVar10 = FX_EffectFromHandle(pFVar8,uVar3);
-    pFVar10->def = (FxEffectDef *)*piVar17;
+  uVar12 = param_1->firstFreeEffect;
+  if (uVar12 - param_1->firstActiveEffect != 0x400) {
+    param_1->firstFreeEffect = uVar12 + 1;
+    uVar3 = param_1->allEffectHandles[uVar12 & 0x3ff];
+    pFVar10 = FX_EffectFromHandle(param_1,uVar3);
+    pFVar10->def = (param_3->info).remoteDef;
     pFVar10->status = (-(uint)((pFVar4->sprite).name != (char *)0x0) & 0x4001) + 1;
     pFVar10->firstElemHandle[0] = 0xffff;
     pFVar10->firstElemHandle[1] = 0xffff;
@@ -687,9 +664,9 @@ FxEffect * FXIW_SpawnEffect(FxSystem *param_1,int param_2,FXSpawnCmd *param_3)
       pFVar10->lighting[2] = 0xff;
     }
     else {
-      FX_CalculateLighting((float *)(piVar17 + 5),pFVar10->lighting);
+      FX_CalculateLighting((param_3->info).frame.origin,pFVar10->lighting);
     }
-    iVar5 = piVar17[0xf];
+    iVar5 = (param_3->info).msecBegin;
     pFVar10->updateCount = 0;
     pFVar10->msecBegin = iVar5;
     pFVar10->distanceTravelled = 0.0;
@@ -697,9 +674,9 @@ FxEffect * FXIW_SpawnEffect(FxSystem *param_1,int param_2,FXSpawnCmd *param_3)
     FXI_SetEffectRandomSeed(pFVar10,(FxEffectDef *)pFVar4);
     pFVar10->firstTrailHandle = 0xffff;
     pFVar10->firstSparkFountainHandle = 0xffff;
-    FXW_SpawnEffect_AllocTrailsAndFountains(pFVar8,pFVar10,(FxEffectDef *)pFVar4);
-    if (iVar9 != 0) {
-      FXI_SpawnEffect_AllocSpotLightEffect(pFVar8,pFVar10,uVar3,(FxEffectDef *)pFVar4);
+    FXW_SpawnEffect_AllocTrailsAndFountains(param_1,pFVar10,(FxEffectDef *)pFVar4);
+    if (iVar8 != 0) {
+      FXI_SpawnEffect_AllocSpotLightEffect(param_1,pFVar10,uVar3,(FxEffectDef *)pFVar4);
     }
     pFVar10->occlusionQueryHandle = 0xffff;
     pFVar10->occlusionFade = 1.0;
@@ -707,137 +684,135 @@ FxEffect * FXIW_SpawnEffect(FxSystem *param_1,int param_2,FXSpawnCmd *param_3)
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_spawn_effect_alloc.cpp"
                       ,0x1b2,0,"%s\n\t(localEffect->status) = %i");
     }
-    uVar2 = *(ushort *)(piVar17 + 0x13);
+    uVar2 = (param_3->info).owner;
     if (uVar2 == 0xffff) {
       pFVar10->owner = uVar3;
       pFVar10->status = pFVar10->status | 0x4000000;
     }
     else {
       pFVar10->owner = uVar2;
-      pFVar12 = FX_EffectFromHandle(pFVar8,uVar2);
-      if (pFVar12 == (FxEffect *)0x0) {
+      pFVar11 = FX_EffectFromHandle(param_1,uVar2);
+      if (pFVar11 == (FxEffect *)0x0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_spawn_effect_alloc.cpp"
                         ,0x1bd,0,"%s");
       }
-      uVar13 = FXW_GetEffectStatus(pFVar8,pFVar12);
-      if (0x1ff7fff < (uVar13 & 0x1ff8000)) {
+      uVar12 = FXW_GetEffectStatus(param_1,pFVar11);
+      if (0x1ff7fff < (uVar12 & 0x1ff8000)) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_spawn_effect_alloc.cpp"
                         ,0x1c1,0,
                         "%s\n\t((status & FX_STATUS_OWNED_EFFECTS_MASK) >> FX_STATUS_OWNED_EFFECTS_SHIFT) = %i"
                        );
       }
-      FXW_PutEffectStatus(pFVar8,pFVar12,uVar13 + 0x8000);
+      FXW_PutEffectStatus(param_1,pFVar11,uVar12 + 0x8000);
     }
-    if (pFVar11 == (FxBolt *)0x0) {
+    if (pFVar9 == (FxBolt *)0x0) {
       pFVar10->bolt = 0xff;
     }
     else {
-      pFVar8->activeBoltCount = pFVar8->activeBoltCount + 1;
-      if (((uint)pFVar11 & 0xf) != 0) {
+      param_1->activeBoltCount = param_1->activeBoltCount + 1;
+      if (((uint)pFVar9 & 0xf) != 0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_spawn_effect_alloc.cpp"
                         ,0x1cf,0,"%s");
       }
-      if (((uint)pFVar11 & 0xf) != 0) {
+      if (((uint)pFVar9 & 0xf) != 0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_spawn_effect_alloc.cpp"
                         ,0x1d0,0,"%s");
       }
-      if (piVar17[0x10] < 0) {
+      if ((param_3->info).dobjHandle < 0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_spawn_effect_alloc.cpp"
                         ,0x1d1,0,"%s");
       }
-      if (piVar17[0x11] == 0x7ff) {
+      if ((param_3->info).boneIndex == 0x7ff) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_spawn_effect_alloc.cpp"
                         ,0x1d2,0,"%s\n\t(info->dobjHandle) = %i");
       }
-      iVar9 = piVar17[0x10];
-      pFVar11->boneIndex = piVar17[0x11];
-      pFVar11->dobjHandle = iVar9;
-      uVar13 = FX_GetBoltTemporalBits(pFVar8->localClientNum,iVar9);
-      lVar22 = lVar16 + 0x1c;
-      lVar21 = 7;
-      pFVar11->rewindBits = 0;
-      pFVar11->temporalBits = uVar13;
-      pFVar19 = pFVar11;
+      iVar8 = (param_3->info).dobjHandle;
+      pFVar9->boneIndex = (param_3->info).boneIndex;
+      pFVar9->dobjHandle = iVar8;
+      uVar12 = FX_GetBoltTemporalBits(param_1->localClientNum,iVar8);
+      pfVar18 = (param_3->info).frame.origin + 2;
+      lVar19 = 7;
+      pFVar9->rewindBits = 0;
+      pFVar9->temporalBits = uVar12;
+      pFVar16 = pFVar9;
       do {
-        lVar22 = lVar22 + 4;
-        pFVar19 = (FxBolt *)&pFVar19->offset;
-        ((FxSpatialFrame *)pFVar19)->quat[0] = *(float *)lVar22;
-        lVar21 = lVar21 + -1;
-      } while (lVar21 != 0);
-      if (pFVar11->dobjHandle != piVar17[0x10]) {
+        pfVar18 = pfVar18 + 1;
+        pFVar16 = (FxBolt *)&pFVar16->offset;
+        ((FxSpatialFrame *)pFVar16)->quat[0] = *pfVar18;
+        lVar19 = lVar19 + -1;
+      } while (lVar19 != 0);
+      if (pFVar9->dobjHandle != (param_3->info).dobjHandle) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_spawn_effect_alloc.cpp"
                         ,0x1df,0,"%s\n\t(info->dobjHandle) = %i");
       }
-      if (pFVar11->boneIndex != piVar17[0x11]) {
+      if (pFVar9->boneIndex != (param_3->info).boneIndex) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_spawn_effect_alloc.cpp"
                         ,0x1e0,0,"%s\n\t(info->boneIndex) = %i");
       }
-      uVar14 = FX_BoltToHandle(pFVar8,pFVar11);
-      pFVar10->bolt = uVar14;
+      uVar13 = FX_BoltToHandle(param_1,pFVar9);
+      pFVar10->bolt = uVar13;
     }
-    uVar13 = piVar17[0x14];
-    if (uVar13 != (uVar13 & 0xffff)) {
+    uVar12 = (param_3->info).markEntnum;
+    if (uVar12 != (uVar12 & 0xffff)) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\../universal/assertive.h"
                       ,0x1ce,0,"i == static_cast< Type >( i )\n\t%i, %i");
     }
-    uVar7 = piVar17[0x12];
-    pFVar10->markEntnum = (ushort)uVar13;
+    uVar7 = (param_3->info).runnerSortOrder;
+    pFVar10->markEntnum = (ushort)uVar12;
     if (uVar7 != (uVar7 & 0xff)) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\../universal/assertive.h"
                       ,0x1ce,0,"i == static_cast< Type >( i )\n\t%i, %i");
     }
-    cVar1 = *(char *)(piVar17 + 0x15);
+    bVar1 = (param_3->info).markGivenModelsOnly;
     pFVar10->runnerSortOrder = (uchar)uVar7;
     pFVar10->flags = 0;
-    if (cVar1 != '\0') {
+    if (bVar1 != false) {
       pFVar10->flags = 2;
     }
-    if (*(char *)((int)piVar17 + 0x55) != '\0') {
+    if ((param_3->info).markViewmodel != false) {
       pFVar10->flags = pFVar10->flags | 1;
     }
-    uVar13 = piVar17[0x16];
-    if (uVar13 != (uVar13 & 0xff)) {
+    uVar12 = (param_3->info).markViewmodelClientIndex;
+    if (uVar12 != (uVar12 & 0xff)) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\../universal/assertive.h"
                       ,0x1ce,0,"i == static_cast< Type >( i )\n\t%i, %i");
     }
-    pFVar10->markViewmodelClientIndex = (uchar)uVar13;
-    pFVar18 = (FxSpatialFrame *)&pFVar10->msecLastUpdate;
-    lVar21 = 7;
-    lVar22 = lVar16;
+    pFVar10->markViewmodelClientIndex = (uchar)uVar12;
+    pFVar15 = (FxSpatialFrame *)&pFVar10->msecLastUpdate;
+    lVar19 = 7;
+    pFVar17 = param_3;
     do {
-      lVar22 = lVar22 + 4;
-      pFVar18 = (FxSpatialFrame *)(pFVar18->quat + 1);
-      pFVar18->quat[0] = *(float *)lVar22;
-      lVar21 = lVar21 + -1;
-    } while (lVar21 != 0);
-    pfVar20 = (pFVar10->frameNow).origin + 2;
-    lVar21 = 7;
-    lVar22 = lVar16;
+      pFVar17 = (FXSpawnCmd *)&(pFVar17->info).frame;
+      pFVar15 = (FxSpatialFrame *)(pFVar15->quat + 1);
+      pFVar15->quat[0] = ((FxSpatialFrame *)pFVar17)->quat[0];
+      lVar19 = lVar19 + -1;
+    } while (lVar19 != 0);
+    pfVar18 = (pFVar10->frameNow).origin + 2;
+    lVar19 = 7;
+    pFVar17 = param_3;
     do {
-      lVar22 = lVar22 + 4;
-      pfVar20 = pfVar20 + 1;
-      *pfVar20 = *(float *)lVar22;
-      lVar21 = lVar21 + -1;
-    } while (lVar21 != 0);
-    pfVar20 = (pFVar10->frameAtSpawn).origin + 2;
-    lVar22 = 7;
+      pFVar17 = (FXSpawnCmd *)&(pFVar17->info).frame;
+      pfVar18 = pfVar18 + 1;
+      *pfVar18 = ((FxSpatialFrame *)pFVar17)->quat[0];
+      lVar19 = lVar19 + -1;
+    } while (lVar19 != 0);
+    pfVar18 = (pFVar10->frameAtSpawn).origin + 2;
+    lVar19 = 7;
     do {
-      lVar16 = lVar16 + 4;
-      pfVar20 = pfVar20 + 1;
-      *pfVar20 = *(float *)lVar16;
-      lVar22 = lVar22 + -1;
-    } while (lVar22 != 0);
+      param_3 = (FXSpawnCmd *)&(param_3->info).frame;
+      pfVar18 = pfVar18 + 1;
+      *pfVar18 = ((FxSpatialFrame *)param_3)->quat[0];
+      lVar19 = lVar19 + -1;
+    } while (lVar19 != 0);
     sync(1);
-    pFVar8->firstNewEffect = pFVar8->firstFreeEffect;
-    FXW_StartNewEffect(pFVar8,param_2,pFVar10,uVar3);
-    pFVar10 = (FxEffect *)__restgprlr_18(pFVar10);
+    param_1->firstNewEffect = param_1->firstFreeEffect;
+    FXW_StartNewEffect(param_1,param_2,pFVar10,uVar3);
     return pFVar10;
   }
-  if (pFVar11 != (FxBolt *)0x0) {
-    FXI_FreePool_Generic<FxBolt>(pFVar11,&pFVar8->firstFreeBolt,pFVar8->bolts);
+  if (pFVar9 != (FxBolt *)0x0) {
+    FXI_FreePool_Generic<FxBolt>(pFVar9,&param_1->firstFreeBolt,param_1->bolts);
   }
-  pFVar10 = (FxEffect *)__restgprlr_18(0);
-  return pFVar10;
+  return (FxEffect *)0x0;
 }
 
 
@@ -975,6 +950,8 @@ void ResetSpawnCmds(FxSystem *param_1)
 
 // 8243EC20  FXW_CreateNewEffects  (EffectsCore/fx_spawn_effect_alloc.cpp:565)
 
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 
@@ -988,40 +965,36 @@ int FXW_CreateNewEffects(FxSystem *param_1,int param_2,ushort *param_3,int param
   int iVar5;
   FxEffect *pFVar6;
   FxElem *pFVar7;
-  ushort uVar12;
+  ushort uVar11;
   uint uVar8;
   FxEffect *pFVar9;
   centity_s *pcVar10;
-  int iVar11;
-  ulonglong uVar13;
-  longlong lVar14;
-  ulonglong uVar15;
-  FXSpawnCmd *pFVar16;
+  int iVar12;
+  ushort *puVar13;
+  ushort *puVar14;
+  FXSpawnCmd *pFVar15;
   char in_RESERVE;
   byte in_cr0;
   
-  uVar15 = (ulonglong)param_4;
-  uVar13 = (ulonglong)(int)param_3;
-  __savegprlr();
-  iVar11 = 0;
+  iVar12 = 0;
   uVar8 = 0;
   iVar5 = FXI_GetSpawnCmdRead(param_1);
   if (-1 < iVar5) {
-    lVar14 = (uVar15 & 0x7fffffff) * 2 + uVar13 + -2;
+    puVar14 = param_3 + param_4 + -1;
     do {
-      pFVar16 = param_1->spawnCmdList + iVar5;
-      pFVar6 = FXIW_SpawnEffect(param_1,param_2,pFVar16);
+      pFVar15 = param_1->spawnCmdList + iVar5;
+      pFVar6 = FXIW_SpawnEffect(param_1,param_2,pFVar15);
       if (pFVar6 == (FxEffect *)0x0) {
-        uVar12 = (pFVar16->info).owner;
-        if (uVar12 != 0xffff) {
-          pFVar6 = FX_EffectFromHandle(param_1,uVar12);
+        uVar11 = (pFVar15->info).owner;
+        if (uVar11 != 0xffff) {
+          pFVar6 = FX_EffectFromHandle(param_1,uVar11);
           FXW_DelRefToEffect(param_1,pFVar6);
         }
-        if ((pFVar16->elemHandle != 0xffff) &&
-           (pFVar7 = FX_PoolFromHandle_Generic<FxElem>(param_1->elems,pFVar16->elemHandle),
+        if ((pFVar15->elemHandle != 0xffff) &&
+           (pFVar7 = FX_PoolFromHandle_Generic<FxElem>(param_1->elems,pFVar15->elemHandle),
            pFVar7->valid)) {
-          pFVar6 = FX_EffectFromHandle(param_1,pFVar16->elemParent);
-          FXW_FreeElem(param_1,pFVar16->elemHandle,pFVar6,pFVar16->elemParent,pFVar16->elemClass);
+          pFVar6 = FX_EffectFromHandle(param_1,pFVar15->elemParent);
+          FXW_FreeElem(param_1,pFVar15->elemHandle,pFVar6,pFVar15->elemParent,pFVar15->elemClass);
         }
         do {
           uVar2 = *param_1->spawnCmdWrite;
@@ -1046,15 +1019,16 @@ int FXW_CreateNewEffects(FxSystem *param_1,int param_2,ushort *param_3,int param
         } while (uVar2 != uVar1);
       }
       else {
-        if ((((uVar13 & 0xffffffff) != 0) && ((param_1->systemFlags & 1) == 0)) &&
-           ((pFVar16->info).msecBegin <= param_1->msecNow)) {
-          uVar12 = FX_EffectToHandle(param_1,pFVar6);
-          uVar15 = uVar15 + 1;
-          lVar14 = lVar14 + 2;
-          *(ushort *)lVar14 = uVar12;
-          iVar11 = iVar11 + 1;
-          if ((int)uVar15 < 0x400) {
-            ((ushort *)lVar14)[1] = 0xffff;
+        puVar13 = puVar14;
+        if (((param_3 != (ushort *)0x0) && ((param_1->systemFlags & 1) == 0)) &&
+           ((pFVar15->info).msecBegin <= param_1->msecNow)) {
+          uVar11 = FX_EffectToHandle(param_1,pFVar6);
+          param_4 = param_4 + 1;
+          puVar13 = puVar14 + 1;
+          *puVar13 = uVar11;
+          iVar12 = iVar12 + 1;
+          if (param_4 < 0x400) {
+            puVar14[2] = 0xffff;
           }
           else {
             MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_spawn_effect_alloc.cpp"
@@ -1065,38 +1039,38 @@ int FXW_CreateNewEffects(FxSystem *param_1,int param_2,ushort *param_3,int param
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_spawn_effect_alloc.cpp"
                           ,0x273,0,"%s");
         }
-        if (pFVar16->removeRef != 0) {
+        if (pFVar15->removeRef != 0) {
           uVar8 = FXW_DelRefToEffect(param_1,pFVar6);
         }
-        if (pFVar16->elemHandle != 0xffff) {
-          if (pFVar16->removeRef == 0) {
+        if (pFVar15->elemHandle != 0xffff) {
+          if (pFVar15->removeRef == 0) {
             uVar8 = pFVar6->status;
           }
           if ((uVar8 & 0x1fff) == 0) {
-            pFVar7 = FX_PoolFromHandle_Generic<FxElem>(param_1->elems,pFVar16->elemHandle);
+            pFVar7 = FX_PoolFromHandle_Generic<FxElem>(param_1->elems,pFVar15->elemHandle);
             if (pFVar7->valid) {
-              pFVar9 = FX_EffectFromHandle(param_1,pFVar16->elemParent);
-              FXW_FreeElem(param_1,pFVar16->elemHandle,pFVar9,pFVar16->elemParent,pFVar16->elemClass
+              pFVar9 = FX_EffectFromHandle(param_1,pFVar15->elemParent);
+              FXW_FreeElem(param_1,pFVar15->elemHandle,pFVar9,pFVar15->elemParent,pFVar15->elemClass
                           );
             }
           }
           else {
-            uVar12 = FXW_GetEffectFlags(param_1,pFVar6);
-            FXW_PutEffectFlags(param_1,pFVar6,uVar12 | 0x4000);
+            uVar11 = FXW_GetEffectFlags(param_1,pFVar6);
+            FXW_PutEffectFlags(param_1,pFVar6,uVar11 | 0x4000);
             FX_AddRefToEffect(param_1,pFVar6);
-            uVar12 = FX_EffectToHandle(param_1,pFVar6);
-            FX_SetElemChild(param_1,pFVar16->elemHandle,uVar12);
+            uVar11 = FX_EffectToHandle(param_1,pFVar6);
+            FX_SetElemChild(param_1,pFVar15->elemHandle,uVar11);
           }
         }
-        if (-1 < pFVar16->entnum) {
-          uVar12 = FXW_GetEffectFlags(param_1,pFVar6);
-          FXW_PutEffectFlags(param_1,pFVar6,uVar12 | 0x8000);
-          pcVar10 = CG_GetEntity(param_1->localClientNum,pFVar16->entnum);
+        if (-1 < pFVar15->entnum) {
+          uVar11 = FXW_GetEffectFlags(param_1,pFVar6);
+          FXW_PutEffectFlags(param_1,pFVar6,uVar11 | 0x8000);
+          pcVar10 = CG_GetEntity(param_1->localClientNum,pFVar15->entnum);
           if (pcVar10 == (centity_s *)0x0) {
             MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_spawn_effect_alloc.cpp"
                             ,0x299,0,"%s");
           }
-          (pcVar10->pose).field9_0x2c.player.control = (clientControllers_t *)pFVar16->timeValue;
+          (pcVar10->pose).field9_0x2c.player.control = (clientControllers_t *)pFVar15->timeValue;
           (pcVar10->pose).field9_0x2c.fx.effect = pFVar6;
         }
         do {
@@ -1119,12 +1093,12 @@ int FXW_CreateNewEffects(FxSystem *param_1,int param_2,ushort *param_3,int param
               in_cr0 = 2;
             }
           } while (!(bool)(in_cr0 >> 1 & 1));
+          puVar14 = puVar13;
         } while (uVar2 != uVar1);
       }
       iVar5 = FXI_GetSpawnCmdRead(param_1);
     } while (-1 < iVar5);
   }
-  __restgprlr();
-  return iVar11;
+  return iVar12;
 }
 

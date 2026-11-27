@@ -45,6 +45,8 @@ bool R_CullSphereFromLightRegionHull(GfxLightRegionHull *param_1,float *param_2,
 
 // 82762980  R_ShadowedSpotLightScore  (gfx_d3d/r_primarylights.cpp:45)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 float R_ShadowedSpotLightScore(GfxViewParms *param_1,GfxLight *param_2)
@@ -53,44 +55,39 @@ float R_ShadowedSpotLightScore(GfxViewParms *param_1,GfxLight *param_2)
   float fVar1;
   float fVar2;
   float fVar3;
-  int iVar4;
+  double dVar4;
   double dVar5;
-  double dVar6;
   
-  iVar4 = __savegprlr_27(param_1);
-  dVar6 = 0.0;
+  dVar5 = 0.0;
   if ((((uint)scene.sceneSMLightScoreEyeProjectDist & 0x7f800000) == 0x7f800000) ||
      (scene.sceneSMLightScoreEyeProjectDist < 0.0)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_primarylights.cpp",
                     0x34,0,"%s\n\t(scene.sceneSMLightScoreEyeProjectDist) = %g");
   }
-  dVar5 = (double)scene.sceneSMlightScorespotProjectFrac;
-  if ((((uint)scene.sceneSMlightScorespotProjectFrac & 0x7f800000) == 0x7f800000) || (dVar5 < dVar6)
+  dVar4 = (double)scene.sceneSMlightScorespotProjectFrac;
+  if ((((uint)scene.sceneSMlightScorespotProjectFrac & 0x7f800000) == 0x7f800000) || (dVar4 < dVar5)
      ) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_primarylights.cpp",
                     0x35,0,"%s\n\t(scene.sceneSMlightScorespotProjectFrac) = %g");
-    dVar5 = (double)scene.sceneSMlightScorespotProjectFrac;
+    dVar4 = (double)scene.sceneSMlightScorespotProjectFrac;
   }
-  fVar1 = -(float)((double)param_2->radius * dVar5);
+  fVar1 = -(float)((double)param_2->radius * dVar4);
   fVar3 = param_2->dir[1] * fVar1 +
           (param_2->origin[1] -
-          (*(float *)(iVar4 + 0x110) * scene.sceneSMLightScoreEyeProjectDist +
-          *(float *)(iVar4 + 0x104)));
+          ((param_1->camera).axis[0][1] * scene.sceneSMLightScoreEyeProjectDist +
+          (param_1->camera).origin[1]));
   fVar2 = param_2->dir[2] * fVar1 +
           (param_2->origin[2] -
-          (*(float *)(iVar4 + 0x114) * scene.sceneSMLightScoreEyeProjectDist +
-          *(float *)(iVar4 + 0x108)));
+          ((param_1->camera).axis[0][2] * scene.sceneSMLightScoreEyeProjectDist +
+          (param_1->camera).origin[2]));
   fVar1 = param_2->dir[0] * fVar1 +
           (param_2->origin[0] -
-          (*(float *)(iVar4 + 0x10c) * scene.sceneSMLightScoreEyeProjectDist +
-          *(float *)(iVar4 + 0x100)));
-  dVar6 = (double)__restgprlr_27((double)((float)((double)(param_2->color[2] * 0.114 +
-                                                          param_2->color[1] * 0.587 +
-                                                          param_2->color[0] * 0.299) *
-                                                 (double)param_2->radius) /
-                                         (SQRT(fVar1 * fVar1 + fVar2 * fVar2 + fVar3 * fVar3) + 1.0)
-                                         ));
-  return (float)dVar6;
+          ((param_1->camera).axis[0][0] * scene.sceneSMLightScoreEyeProjectDist +
+          (param_1->camera).origin[0]));
+  return (float)((double)(param_2->color[2] * 0.114 +
+                         param_2->color[1] * 0.587 + param_2->color[0] * 0.299) *
+                (double)param_2->radius) /
+         (SQRT(fVar1 * fVar1 + fVar2 * fVar2 + fVar3 * fVar3) + 1.0);
 }
 
 
@@ -124,48 +121,47 @@ bool Com_CullSphereFromPrimaryLight(ComPrimaryLight *param_1,float *param_2,floa
 
 // 82762840  R_CullSphereFromLightRegion  (gfx_d3d/r_primarylights_cull.h:53)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 bool R_CullSphereFromLightRegion
                (GfxLightRegion *param_1,float *param_2,float *param_3,float param_4)
 
 {
   uint uVar1;
-  uint uVar2;
-  uint *puVar3;
-  undefined1 uVar4;
-  bool bVar5;
-  uint uVar6;
-  int iVar7;
-  double extraout_f1;
-  double dVar8;
+  GfxLightRegionHull *pGVar2;
+  bool bVar3;
+  uint uVar4;
+  int iVar5;
+  double dVar6;
   float local_40;
   float local_3c;
   float local_38;
   
-  puVar3 = (uint *)__savegprlr_28((double)param_4,param_1);
-  uVar1 = *puVar3;
+  dVar6 = (double)param_4;
+  uVar1 = param_1->hullCount;
   if (uVar1 == 0) {
-LAB_82762860:
-    uVar4 = __restgprlr_28(0);
-    return (bool)uVar4;
+    return false;
   }
-  uVar6 = 0;
+  uVar4 = 0;
   local_40 = *param_3 - *param_2;
   local_3c = param_3[1] - param_2[1];
   local_38 = param_3[2] - param_2[2];
   if (uVar1 != 0) {
-    uVar2 = puVar3[1];
-    iVar7 = 0;
-    dVar8 = extraout_f1;
+    pGVar2 = param_1->hulls;
+    iVar5 = 0;
     do {
-      bVar5 = R_CullSphereFromLightRegionHull
-                        ((GfxLightRegionHull *)(iVar7 + uVar2),&local_40,(float)dVar8);
-      if (!bVar5) goto LAB_82762860;
-      uVar6 = uVar6 + 1;
-      iVar7 = iVar7 + 0x50;
-    } while (uVar6 < uVar1);
+      bVar3 = R_CullSphereFromLightRegionHull
+                        ((GfxLightRegionHull *)((int)pGVar2->kdopMidPoint + iVar5),&local_40,
+                         (float)dVar6);
+      if (!bVar3) {
+        return false;
+      }
+      uVar4 = uVar4 + 1;
+      iVar5 = iVar5 + 0x50;
+    } while (uVar4 < uVar1);
   }
-  uVar4 = __restgprlr_28(1);
-  return (bool)uVar4;
+  return true;
 }
 
 
@@ -192,6 +188,8 @@ bool R_DoesLightDirMatchSunShadowLightDir(uint param_1,GfxViewInfo *param_2)
 
 // 82762BF0  R_AddPotentiallyShadowedLight  (gfx_d3d/r_primarylights.cpp:76)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
@@ -200,143 +198,126 @@ uint R_AddPotentiallyShadowedLight
                float param_5)
 
 {
-  int iVar1;
-  uint *puVar2;
-  GfxViewParms *pGVar3;
-  bool bVar6;
-  uint uVar4;
-  ComPrimaryLight *pCVar5;
-  GfxViewInfo *pGVar7;
-  GfxViewInfo *pGVar8;
-  longlong lVar9;
-  ulonglong uVar10;
-  ulonglong uVar11;
-  longlong lVar12;
-  double extraout_f1;
-  double dVar13;
-  double dVar14;
-  float fVar15;
+  GfxCandidateShadowedLight *pGVar1;
+  bool bVar4;
+  uint uVar2;
+  ComPrimaryLight *pCVar3;
+  GfxViewInfo *pGVar5;
+  GfxCandidateShadowedLight *pGVar6;
+  GfxCamera *pGVar7;
+  double dVar8;
+  double dVar9;
+  float fVar10;
   
-  uVar10 = (ulonglong)(int)param_4;
-  lVar9 = (longlong)(int)param_3;
-  uVar11 = (ulonglong)(int)param_2;
-  pGVar3 = (GfxViewParms *)__savegprlr_25((double)param_5,param_1);
-  pGVar7 = (GfxViewInfo *)uVar11;
-  dVar13 = extraout_f1;
-  pGVar8 = pGVar7;
+  dVar8 = (double)param_5;
+  pGVar5 = (GfxViewInfo *)param_2;
   if (frontEndDataOut == (GfxBackEndData *)0x0) {
-    pGVar8 = (GfxViewInfo *)0x53;
+    pGVar5 = (GfxViewInfo *)0x53;
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_primarylights.cpp",
                     0x53,0,"%s");
   }
-  if ((uVar11 & 0xffffffff) != 0) {
-    if ((ulonglong)(rgp.world)->lastSunPrimaryLightIndex < (uVar11 & 0xffffffff)) {
-      if ((((GfxLight *)(frontEndDataOut->smodelSurfVisData + (int)pGVar7->drawList * 0x4c + 0x55e0)
-           )->canUseShadowMap != '\0') && ((sm_spotEnable->current).enabled != false)) {
-        fVar15 = R_ShadowedSpotLightScore
-                           (pGVar3,(GfxLight *)
-                                   (frontEndDataOut->smodelSurfVisData +
-                                   (int)pGVar7->drawList * 0x4c + 0x55e0));
-        dVar13 = (double)(float)((double)fVar15 * dVar13);
-        if ((double)(sm_minSpotLightScore->current).value <= dVar13) {
+  if (param_2 != 0) {
+    if ((rgp.world)->lastSunPrimaryLightIndex < param_2) {
+      if ((frontEndDataOut->sceneLights[param_2].canUseShadowMap != '\0') &&
+         ((sm_spotEnable->current).enabled != false)) {
+        fVar10 = R_ShadowedSpotLightScore
+                           (&param_1->viewParms,frontEndDataOut->sceneLights + param_2);
+        dVar8 = (double)(float)((double)fVar10 * dVar8);
+        if ((double)(sm_minSpotLightScore->current).value <= dVar8) {
           if (((sm_spotDistCull->current).enabled != false) &&
-             (uVar4 = Com_GetPrimaryLightCount(), (uVar11 & 0xffffffff) < (ulonglong)uVar4)) {
-            dVar14 = (double)((sm_sunSampleSizeNear->current).value * 1048576.0);
-            pCVar5 = Com_GetPrimaryLight((uint)pGVar7);
-            if ((pCVar5->type != '\x02') && (pCVar5->type != '\x03')) {
+             (uVar2 = Com_GetPrimaryLightCount(), param_2 < uVar2)) {
+            dVar9 = (double)((sm_sunSampleSizeNear->current).value * 1048576.0);
+            pCVar3 = Com_GetPrimaryLight(param_2);
+            if ((pCVar3->type != '\x02') && (pCVar3->type != '\x03')) {
               MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_primarylights.cpp"
                               ,0x71,0,"%s\n\t(primaryLight->type) = %i");
             }
-            bVar6 = Com_CullSphereFromPrimaryLight(pCVar5,(pGVar3->camera).origin,(float)dVar14);
-            if ((bVar6) ||
-               (bVar6 = R_CullSphereFromLightRegion
-                                  ((GfxLightRegion *)
-                                   ((int)&(rgp.world)->lightRegion->hullCount +
-                                   (int)((uVar11 & 0xffffffff) << 3)),pCVar5->origin,
-                                   (pGVar3->camera).origin,(float)dVar14), bVar6))
-            goto LAB_82762c9c;
+            pGVar7 = &(param_1->viewParms).camera;
+            bVar4 = Com_CullSphereFromPrimaryLight(pCVar3,pGVar7->origin,(float)dVar9);
+            if (bVar4) {
+              return param_4;
+            }
+            bVar4 = R_CullSphereFromLightRegion
+                              ((rgp.world)->lightRegion + param_2,pCVar3->origin,pGVar7->origin,
+                               (float)dVar9);
+            if (bVar4) {
+              return param_4;
+            }
           }
-          uVar11 = uVar10;
-          if ((uVar10 & 0xffffffff) != 0) {
-            lVar12 = (uVar10 + 1 & 0x1fffffff) * 8 + lVar9;
+          uVar2 = param_4;
+          if (param_4 != 0) {
+            pGVar6 = param_3 + param_4 + 1;
             do {
-              iVar1 = (int)lVar12;
-              if (dVar13 <= (double)*(float *)(iVar1 + -0xc)) break;
-              uVar11 = uVar11 - 1;
-              lVar12 = lVar12 + -8;
-              *(undefined8 *)lVar12 = *(undefined8 *)(iVar1 + -0x10);
-            } while (uVar11 != 0);
+              if (dVar8 <= (double)pGVar6[-2].score) break;
+              pGVar1 = pGVar6 + -2;
+              uVar2 = uVar2 - 1;
+              pGVar6 = pGVar6 + -1;
+              *pGVar6 = *pGVar1;
+            } while (uVar2 != 0);
           }
-          puVar2 = (uint *)((int)((uVar11 & 0xffffffff) << 3) + (int)lVar9);
-          puVar2[1] = (uint)(float)dVar13;
-          *puVar2 = (uint)pGVar7;
-          uVar11 = (ulonglong)(uint)(sm_maxLights->current).integer;
-          if ((int)(uVar10 + 1) < (sm_maxLights->current).integer) {
-            uVar11 = uVar10 + 1;
+          param_3[uVar2].score = (float)dVar8;
+          param_3[uVar2].sceneLightIndex = param_2;
+          uVar2 = (sm_maxLights->current).integer;
+          if ((int)(param_4 + 1) < (sm_maxLights->current).integer) {
+            uVar2 = param_4 + 1;
           }
-          if ((sm_spotLimit->current).integer <= (int)uVar11) {
-            uVar11 = (ulonglong)(uint)(sm_spotLimit->current).integer;
+          if ((int)(sm_spotLimit->current).unsignedInt <= (int)uVar2) {
+            uVar2 = (sm_spotLimit->current).unsignedInt;
           }
-          uVar4 = __restgprlr_25(uVar11);
-          return uVar4;
+          return uVar2;
         }
       }
     }
     else {
-      bVar6 = R_DoesLightDirMatchSunShadowLightDir((uint)pGVar7,pGVar8);
-      if (bVar6) {
-        Com_BitSetAssert(frontEndDataOut->sceneLightHasShadowMap,(int)pGVar7,0x20);
+      bVar4 = R_DoesLightDirMatchSunShadowLightDir(param_2,pGVar5);
+      if (bVar4) {
+        Com_BitSetAssert(frontEndDataOut->sceneLightHasShadowMap,param_2,0x20);
       }
     }
   }
-LAB_82762c9c:
-  uVar4 = __restgprlr_25(uVar10);
-  return uVar4;
+  return param_4;
 }
 
 
 // 82764328  R_AddShadowsForLight  (gfx_d3d/r_primarylights.cpp:135)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void R_AddShadowsForLight(GfxViewInfo *param_1,uint param_2,float param_3)
 
 {
-  uint uVar1;
-  GfxViewInfo *pGVar2;
-  ulonglong uVar3;
-  double extraout_f1;
-  double dVar4;
+  double dVar1;
   
-  uVar3 = (ulonglong)(int)param_2;
-  pGVar2 = (GfxViewInfo *)__savegprlr_27((double)param_3,param_1);
-  dVar4 = extraout_f1;
+  dVar1 = (double)param_3;
   if (frontEndDataOut == (GfxBackEndData *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_primarylights.cpp",
                     0x88,0,"%s");
   }
-  if (pGVar2->useShadows == false) {
+  if (param_1->useShadows == false) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_primarylights.cpp",
                     0x89,0,"%s");
   }
-  if (((uVar3 & 0xffffffff) < (ulonglong)pGVar2->sceneLightCount) &&
-     (uVar1 = (uint)uVar3, frontEndDataOut->sceneLights[uVar1].canUseShadowMap != '\0')) {
-    R_AddSpotShadowsForLight(pGVar2,frontEndDataOut->sceneLights + uVar1,uVar1,(float)dVar4);
-    Com_BitSetAssert(frontEndDataOut->sceneLightHasShadowMap,uVar1,0x20);
-    __restgprlr_27();
+  if ((param_2 < param_1->sceneLightCount) &&
+     (frontEndDataOut->sceneLights[param_2].canUseShadowMap != '\0')) {
+    R_AddSpotShadowsForLight(param_1,frontEndDataOut->sceneLights + param_2,param_2,(float)dVar1);
+    Com_BitSetAssert(frontEndDataOut->sceneLightHasShadowMap,param_2,0x20);
     return;
   }
-  if ((uVar3 & 0xffffffff) < (ulonglong)(rgp.world)->primaryLightCount) {
+  if (param_2 < (rgp.world)->primaryLightCount) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_primarylights.cpp",
                     0x8f,0,"%s");
   }
-  __restgprlr_27();
   return;
 }
 
 
 // 82762E50  R_AddShadowedLightToShadowHistory  (gfx_d3d/r_primarylights.cpp:153)
+
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 
 void R_AddShadowedLightToShadowHistory
                (GfxShadowedLightHistory *param_1,uint param_2,float param_3,float param_4)
@@ -346,133 +327,125 @@ void R_AddShadowedLightToShadowHistory
   undefined4 uVar2;
   undefined4 uVar3;
   undefined4 uVar4;
-  uint *puVar5;
-  int iVar6;
-  float fVar7;
-  longlong lVar8;
-  int iVar9;
+  int iVar5;
+  float fVar6;
+  longlong lVar7;
+  int iVar8;
+  longlong lVar9;
   ulonglong uVar10;
   longlong lVar11;
   ulonglong uVar12;
-  longlong lVar13;
-  ulonglong uVar14;
-  double extraout_f1;
-  double dVar15;
+  double dVar13;
   
-  dVar15 = (double)param_4;
-  uVar10 = (ulonglong)(int)param_2;
-  lVar8 = __savegprlr_27((double)param_3,param_1);
-  puVar5 = (uint *)lVar8;
-  uVar12 = (ulonglong)puVar5[0x14];
-  uVar14 = 0;
-  if (uVar12 != 0) {
-    lVar11 = lVar8 + 0x20;
+  dVar13 = (double)param_4;
+  lVar7 = (longlong)(int)param_1;
+  uVar10 = (ulonglong)param_1->entryCount;
+  uVar12 = 0;
+  if (uVar10 != 0) {
+    lVar9 = lVar7 + 0x20;
     do {
-      if ((ulonglong)*(byte *)lVar11 == (uVar10 & 0xffffffff)) {
-        lVar11 = (uVar14 + (uVar14 & 0x7fffffff) * 2 & 0x3fffffff) * 4 + lVar8;
-        iVar6 = (int)lVar11;
-        *(undefined1 *)(iVar6 + 0x21) = 0;
-        fVar1 = (float)((double)*(float *)(iVar6 + 0x28) + dVar15);
-        *(float *)((int)((uVar14 + 3 + (uVar14 + 3 & 0x7fffffff) * 2 & 0xffffffff) << 2) +
-                  (int)puVar5) = (float)extraout_f1;
-        fVar7 = 1.0;
+      if (*(byte *)lVar9 == param_2) {
+        lVar9 = (uVar12 + (uVar12 & 0x7fffffff) * 2 & 0x3fffffff) * 4 + lVar7;
+        iVar5 = (int)lVar9;
+        *(undefined1 *)(iVar5 + 0x21) = 0;
+        fVar1 = (float)((double)*(float *)(iVar5 + 0x28) + dVar13);
+        *(float *)((int)param_1->sceneLightWasUsed +
+                  (int)((uVar12 + 3 + (uVar12 + 3 & 0x7fffffff) * 2 & 0xffffffff) << 2)) = param_3;
+        fVar6 = 1.0;
         if (fVar1 - 1.0 < 0.0) {
-          fVar7 = fVar1;
+          fVar6 = fVar1;
         }
-        *(float *)(iVar6 + 0x28) = fVar7;
+        *(float *)(iVar5 + 0x28) = fVar6;
         goto LAB_82762f5c;
       }
-      uVar14 = uVar14 + 1;
-      lVar11 = lVar11 + 0xc;
-    } while ((uVar14 & 0xffffffff) != (ulonglong)puVar5[0x14]);
+      uVar12 = uVar12 + 1;
+      lVar9 = lVar9 + 0xc;
+    } while ((uVar12 & 0xffffffff) != (ulonglong)param_1->entryCount);
   }
-  if ((uVar12 < (sm_maxLights->current).unsignedInt) &&
-     (uVar12 < (sm_spotLimit->current).unsignedInt)) {
-    lVar11 = (uVar12 + ((ulonglong)puVar5[0x14] & 0x7fffffff) * 2 & 0x3fffffff) * 4 + lVar8;
-    *(float *)((int)((uVar12 + 3 + (uVar12 + 3 & 0x7fffffff) * 2 & 0xffffffff) << 2) + (int)puVar5)
-         = (float)extraout_f1;
-    iVar6 = (int)lVar11;
-    *(char *)(iVar6 + 0x20) = (char)uVar10;
-    if ((uVar10 & 0xff) != (uVar10 & 0xffffffff)) {
+  if ((uVar10 < (sm_maxLights->current).unsignedInt) &&
+     (uVar10 < (sm_spotLimit->current).unsignedInt)) {
+    lVar9 = (uVar10 + ((ulonglong)param_1->entryCount & 0x7fffffff) * 2 & 0x3fffffff) * 4 + lVar7;
+    *(float *)((int)param_1->sceneLightWasUsed +
+              (int)((uVar10 + 3 + (uVar10 + 3 & 0x7fffffff) * 2 & 0xffffffff) << 2)) = param_3;
+    iVar5 = (int)lVar9;
+    *(char *)(iVar5 + 0x20) = (char)param_2;
+    if ((param_2 & 0xff) != param_2) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_primarylights.cpp"
                       ,0xb1,0,"%s");
     }
-    *(undefined1 *)(iVar6 + 0x21) = 0;
-    iVar9 = Com_BitCheckAssert(puVar5,(int)uVar10,0x20);
-    if (iVar9 == 0) {
-      dVar15 = 1.0;
+    *(undefined1 *)(iVar5 + 0x21) = 0;
+    iVar8 = Com_BitCheckAssert(param_1->sceneLightWasUsed,param_2,0x20);
+    if (iVar8 == 0) {
+      dVar13 = 1.0;
     }
-    *(float *)(iVar6 + 0x28) = (float)dVar15;
-    puVar5[0x14] = puVar5[0x14] + 1;
-    uVar14 = uVar12;
+    *(float *)(iVar5 + 0x28) = (float)dVar13;
+    param_1->entryCount = param_1->entryCount + 1;
+    uVar12 = uVar10;
 LAB_82762f5c:
-    if ((uVar14 & 0xffffffff) != 0) {
-      lVar13 = (uVar14 + 2 + (uVar14 + 2 & 0x7fffffff) * 2 & 0x3fffffff) * 4 + lVar8;
+    if ((uVar12 & 0xffffffff) != 0) {
+      lVar11 = (uVar12 + 2 + (uVar12 + 2 & 0x7fffffff) * 2 & 0x3fffffff) * 4 + lVar7;
       do {
-        if (((float *)lVar13)[3] <= *(float *)lVar13) break;
-        uVar14 = uVar14 - 1;
-        iVar6 = (int)lVar11;
-        lVar13 = lVar13 + -0xc;
-        uVar2 = *(undefined4 *)(iVar6 + 0x20);
-        uVar3 = *(undefined4 *)(iVar6 + 0x24);
-        uVar4 = *(undefined4 *)(iVar6 + 0x28);
-        *(undefined4 *)(iVar6 + 0x20) = *(undefined4 *)(iVar6 + 0x14);
-        *(undefined4 *)(iVar6 + 0x24) = *(undefined4 *)(iVar6 + 0x18);
-        *(undefined4 *)(iVar6 + 0x28) = *(undefined4 *)(iVar6 + 0x1c);
-        lVar11 = (uVar14 + (uVar14 & 0x7fffffff) * 2 & 0x3fffffff) * 4 + lVar8;
-        iVar6 = (int)lVar11;
-        *(undefined4 *)(iVar6 + 0x20) = uVar2;
-        *(undefined4 *)(iVar6 + 0x24) = uVar3;
-        *(undefined4 *)(iVar6 + 0x28) = uVar4;
-      } while (uVar14 != 0);
+        if (((float *)lVar11)[3] <= *(float *)lVar11) {
+          return;
+        }
+        uVar12 = uVar12 - 1;
+        iVar5 = (int)lVar9;
+        lVar11 = lVar11 + -0xc;
+        uVar2 = *(undefined4 *)(iVar5 + 0x20);
+        uVar3 = *(undefined4 *)(iVar5 + 0x24);
+        uVar4 = *(undefined4 *)(iVar5 + 0x28);
+        *(undefined4 *)(iVar5 + 0x20) = *(undefined4 *)(iVar5 + 0x14);
+        *(undefined4 *)(iVar5 + 0x24) = *(undefined4 *)(iVar5 + 0x18);
+        *(undefined4 *)(iVar5 + 0x28) = *(undefined4 *)(iVar5 + 0x1c);
+        lVar9 = (uVar12 + (uVar12 & 0x7fffffff) * 2 & 0x3fffffff) * 4 + lVar7;
+        iVar5 = (int)lVar9;
+        *(undefined4 *)(iVar5 + 0x20) = uVar2;
+        *(undefined4 *)(iVar5 + 0x24) = uVar3;
+        *(undefined4 *)(iVar5 + 0x28) = uVar4;
+      } while (uVar12 != 0);
     }
   }
-  __restgprlr_27();
   return;
 }
 
 
 // 82763028  R_FadeOutShadowHistoryEntries  (gfx_d3d/r_primarylights.cpp:196)
 
+/* WARNING: Function: __savegprlr_17 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_17 replaced with injection: xenon_save_restore */
+
 void R_FadeOutShadowHistoryEntries(uint *param_1,GfxShadowedLightHistory *param_2,float param_3)
 
 {
   byte bVar1;
   float fVar2;
-  int iVar3;
-  int iVar4;
-  int iVar5;
-  int iVar6;
-  longlong lVar7;
-  longlong lVar8;
+  uint uVar3;
+  GfxShadowedLightEntry *pGVar4;
+  bool bVar5;
+  undefined2 uVar6;
+  uint uVar7;
+  undefined1 *puVar8;
   float *pfVar9;
-  longlong lVar10;
-  byte *pbVar11;
-  double extraout_f1;
+  GfxShadowedLightEntry *pGVar10;
+  double dVar11;
   double dVar12;
   double dVar13;
-  double dVar14;
   
-  lVar7 = (longlong)(int)param_2;
-  iVar4 = __savegprlr_17((double)param_3,param_1);
-  iVar3 = (int)lVar7;
-  iVar6 = 0;
-  if (*(int *)(iVar3 + 0x50) != 0) {
-    dVar14 = 0.009999999776482582;
+  dVar11 = (double)param_3;
+  uVar7 = 0;
+  if (param_2->entryCount != 0) {
+    dVar13 = 0.009999999776482582;
     dVar12 = 0.0;
-    lVar10 = lVar7 + 0x20;
-    lVar8 = lVar7 + 0x28;
-    lVar7 = lVar7 + 0x15;
-    dVar13 = extraout_f1;
+    pGVar10 = param_2->entries;
+    pfVar9 = &param_2->entries[0].fade;
+    puVar8 = (undefined1 *)((int)param_2->sceneLightWasUsed + 0x15);
     do {
-      pfVar9 = (float *)lVar8;
       if ((double)*pfVar9 <= dVar12) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_primarylights.cpp"
                         ,0xca,0,"%s");
       }
-      pbVar11 = (byte *)lVar10;
-      bVar1 = *pbVar11;
-      if (iVar4 == 0) {
+      bVar1 = pGVar10->sceneLightIndex;
+      if (param_1 == (uint *)0x0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_bitops.h",
                         0xb,0,"%s");
       }
@@ -480,34 +453,37 @@ void R_FadeOutShadowHistoryEntries(uint *param_1,GfxShadowedLightHistory *param_
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_bitops.h",
                         0xc,0,"bitNum doesn\'t index size * 8\n\t%i not in [0, %i)");
       }
-      if ((1 << (bVar1 & 0x1f) & *(uint *)(((int)(uint)bVar1 >> 5) * 4 + iVar4)) == 0) {
+      if ((1 << (bVar1 & 0x1f) & param_1[(int)(uint)bVar1 >> 5]) == 0) {
 LAB_82763188:
-        iVar5 = *(int *)(iVar3 + 0x50) + -1;
-        *(int *)(iVar3 + 0x50) = iVar5;
-        iVar5 = iVar5 * 0xc + iVar3;
-        *(undefined4 *)pbVar11 = *(undefined4 *)(iVar5 + 0x20);
-        *(undefined4 *)(pbVar11 + 4) = *(undefined4 *)(iVar5 + 0x24);
-        *(undefined4 *)(pbVar11 + 8) = *(undefined4 *)(iVar5 + 0x28);
+        uVar3 = param_2->entryCount;
+        param_2->entryCount = uVar3 - 1;
+        pGVar4 = param_2->entries + (uVar3 - 1);
+        bVar5 = pGVar4->isFadingOut;
+        uVar6 = *(undefined2 *)&pGVar4->field_0x2;
+        pGVar10->sceneLightIndex = pGVar4->sceneLightIndex;
+        pGVar10->isFadingOut = bVar5;
+        *(undefined2 *)&pGVar10->field_0x2 = uVar6;
+        pGVar10->score = param_2->entries[uVar3 - 1].score;
+        pGVar10->fade = param_2->entries[uVar3 - 1].fade;
       }
-      else if (*(char *)((int)lVar7 + 0xc) == '\0') {
-        iVar6 = iVar6 + 1;
-        lVar7 = lVar7 + 0xc;
-        *(undefined1 *)lVar7 = 1;
-        lVar8 = lVar8 + 0xc;
-        lVar10 = lVar10 + 0xc;
+      else if (puVar8[0xc] == '\0') {
+        uVar7 = uVar7 + 1;
+        puVar8 = puVar8 + 0xc;
+        *puVar8 = 1;
+        pfVar9 = pfVar9 + 3;
+        pGVar10 = pGVar10 + 1;
       }
       else {
         fVar2 = *pfVar9;
-        *pfVar9 = (float)((double)fVar2 - dVar13);
-        if ((double)(float)((double)fVar2 - dVar13) < dVar14) goto LAB_82763188;
-        iVar6 = iVar6 + 1;
-        lVar7 = lVar7 + 0xc;
-        lVar8 = lVar8 + 0xc;
-        lVar10 = lVar10 + 0xc;
+        *pfVar9 = (float)((double)fVar2 - dVar11);
+        if ((double)(float)((double)fVar2 - dVar11) < dVar13) goto LAB_82763188;
+        uVar7 = uVar7 + 1;
+        puVar8 = puVar8 + 0xc;
+        pfVar9 = pfVar9 + 3;
+        pGVar10 = pGVar10 + 1;
       }
-    } while (iVar6 != *(int *)(iVar3 + 0x50));
+    } while (uVar7 != param_2->entryCount);
   }
-  __restgprlr_17();
   return;
 }
 
@@ -528,18 +504,17 @@ void R_ClearShadowedPrimaryLightHistory(LocalClientNum_t param_1)
 
 // 82763208  R_AddDynamicSceneLight  (gfx_d3d/r_primarylights.cpp:238)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 uint R_AddDynamicSceneLight(GfxViewInfo *param_1,GfxLight *param_2)
 
 {
-  int iVar1;
-  int iVar2;
-  uint uVar3;
+  uint uVar1;
   
-  iVar2 = __savegprlr_28(param_1,param_2);
-  if (0xfc < *(uint *)(iVar2 + 0x1b0)) {
+  if (0xfc < param_1->sceneLightCount) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_primarylights.cpp",
                     0xf1,0,
                     "viewInfo->sceneLightCount doesn\'t index GFX_MAX_SCENE_LIGHTS\n\t%i not in [0, %i)"
@@ -549,11 +524,10 @@ uint R_AddDynamicSceneLight(GfxViewInfo *param_1,GfxLight *param_2)
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_primarylights.cpp",
                     0xf2,0,"%s");
   }
-  iVar1 = *(int *)(iVar2 + 0x1b0);
-  *(int *)(iVar2 + 0x1b0) = iVar1 + 1;
+  uVar1 = param_1->sceneLightCount;
+  param_1->sceneLightCount = uVar1 + 1;
   memcpy();
-  uVar3 = __restgprlr_28(iVar1);
-  return uVar3;
+  return uVar1;
 }
 
 
@@ -568,6 +542,8 @@ int R_IsPrimaryLight(uint param_1)
 
 // 82764458  R_ChooseShadowedLights  (gfx_d3d/r_primarylights.cpp:258)
 
+/* WARNING: Function: __savegprlr_15 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_15 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
@@ -576,168 +552,165 @@ void R_ChooseShadowedLights(uint *param_1,uint *param_2,GfxViewInfo *param_3)
 {
   uchar uVar1;
   int iVar2;
-  int iVar3;
-  float fVar4;
-  float *pfVar5;
-  GfxShadowedLightEntry *pGVar6;
-  uint *puVar7;
-  int iVar8;
-  bool bVar10;
-  uint uVar9;
+  float fVar3;
+  float *pfVar4;
+  GfxShadowedLightEntry *pGVar5;
+  int iVar6;
+  bool bVar8;
+  uint uVar7;
+  ulonglong uVar9;
+  uint uVar10;
   ulonglong uVar11;
-  uint uVar12;
-  ulonglong uVar13;
-  uint *puVar14;
+  uint *puVar12;
+  longlong lVar13;
+  uint uVar14;
   uint *puVar15;
-  longlong lVar16;
+  ulonglong uVar16;
   uint uVar17;
-  ulonglong uVar18;
-  uint uVar19;
-  float *pfVar20;
-  longlong lVar21;
+  float *pfVar18;
+  longlong lVar19;
+  double dVar20;
+  double dVar21;
   double dVar22;
-  double dVar23;
-  double dVar24;
   uint uStack_f4;
   uint local_f0 [7];
   float fStack_d4;
   GfxCandidateShadowedLight local_d0 [26];
   
-  uVar18 = (ulonglong)(int)param_2;
-  puVar7 = (uint *)__savegprlr_15(param_1);
-  uVar11 = uVar18;
+  uVar16 = (ulonglong)(int)param_2;
+  uVar9 = uVar16;
   if (frontEndDataOut == (GfxBackEndData *)0x0) {
-    uVar11 = 0x114;
+    uVar9 = 0x114;
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_primarylights.cpp",
                     0x114,0,"%s");
   }
   iVar2 = param_3->viewInfoIndex;
-  uVar12 = (param_3->sceneDef).time;
-  uVar13 = (ulonglong)uVar12 - (ulonglong)s_shadowHistory[iVar2].lastUpdateTime;
-  if (uVar13 == 0) {
-    uVar18 = 1;
+  uVar10 = (param_3->sceneDef).time;
+  uVar11 = (ulonglong)uVar10 - (ulonglong)s_shadowHistory[iVar2].lastUpdateTime;
+  if (uVar11 == 0) {
+    uVar16 = 1;
     if ((rgp.world)->lastSunPrimaryLightIndex != 0) {
       do {
-        uVar12 = (uint)uVar18;
+        uVar10 = (uint)uVar16;
         if (((param_3->forceSunShadowsGenerate == '\0') &&
-            (uVar11 = uVar18, iVar8 = Com_BitCheckAssert(puVar7,uVar12,0xfffffff), iVar8 != 0)) ||
-           (bVar10 = false, param_3->forceSunShadowsGenerate == '\x01')) {
-          bVar10 = true;
+            (uVar9 = uVar16, iVar6 = Com_BitCheckAssert(param_1,uVar10,0xfffffff), iVar6 != 0)) ||
+           (bVar8 = false, param_3->forceSunShadowsGenerate == '\x01')) {
+          bVar8 = true;
         }
-        if ((bVar10) &&
-           (bVar10 = R_DoesLightDirMatchSunShadowLightDir(uVar12,(GfxViewInfo *)uVar11), bVar10)) {
-          uVar11 = uVar18;
-          Com_BitSetAssert(frontEndDataOut->sceneLightHasShadowMap,uVar12,0x20);
+        if ((bVar8) &&
+           (bVar8 = R_DoesLightDirMatchSunShadowLightDir(uVar10,(GfxViewInfo *)uVar9), bVar8)) {
+          uVar9 = uVar16;
+          Com_BitSetAssert(frontEndDataOut->sceneLightHasShadowMap,uVar10,0x20);
         }
-        uVar18 = uVar18 + 1;
-      } while ((uVar18 & 0xffffffff) <= (ulonglong)(rgp.world)->lastSunPrimaryLightIndex);
+        uVar16 = uVar16 + 1;
+      } while ((uVar16 & 0xffffffff) <= (ulonglong)(rgp.world)->lastSunPrimaryLightIndex);
     }
   }
   else {
-    s_shadowHistory[iVar2].lastUpdateTime = uVar12;
-    fVar4 = (0.001 / (sm_spotShadowFadeTime->current).value) * (float)(uVar13 & 0xffffffff);
-    dVar23 = (double)fVar4;
-    R_FadeOutShadowHistoryEntries(puVar7,s_shadowHistory + iVar2,fVar4);
-    puVar14 = &uStack_f4;
-    puVar15 = puVar7 + -1;
-    lVar21 = 8;
+    s_shadowHistory[iVar2].lastUpdateTime = uVar10;
+    fVar3 = (0.001 / (sm_spotShadowFadeTime->current).value) * (float)(uVar11 & 0xffffffff);
+    dVar21 = (double)fVar3;
+    R_FadeOutShadowHistoryEntries(param_1,s_shadowHistory + iVar2,fVar3);
+    puVar12 = &uStack_f4;
+    puVar15 = param_1 + -1;
+    lVar19 = 8;
     do {
       puVar15 = puVar15 + 1;
-      puVar14 = puVar14 + 1;
-      *puVar14 = *puVar15;
-      lVar21 = lVar21 + -1;
-    } while (lVar21 != 0);
-    uVar11 = 0;
+      puVar12 = puVar12 + 1;
+      *puVar12 = *puVar15;
+      lVar19 = lVar19 + -1;
+    } while (lVar19 != 0);
+    uVar9 = 0;
     if (param_3->sceneLightCount < (rgp.world)->primaryLightCount) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_primarylights.cpp"
                       ,0x12f,0,"%s");
     }
-    uVar13 = ((ulonglong)param_3->sceneLightCount + 0x1f & 0xffffffff) >> 5;
-    if (uVar13 != 0) {
-      lVar21 = 0;
-      dVar24 = 1.0;
-      iVar8 = (int)uVar18;
+    uVar11 = ((ulonglong)param_3->sceneLightCount + 0x1f & 0xffffffff) >> 5;
+    if (uVar11 != 0) {
+      lVar19 = 0;
+      dVar22 = 1.0;
       do {
         uVar1 = param_3->forceSunShadowsGenerate;
-        uVar19 = *(uint *)(((int)puVar7 - iVar8) + (int)(uint *)uVar18);
-        uVar12 = *(uint *)uVar18;
+        uVar17 = *(uint *)(((int)param_1 - (int)param_2) + (int)(uint *)uVar16);
+        uVar10 = *(uint *)uVar16;
         if ((uVar1 != '\0') &&
-           (lVar16 = ((ulonglong)(rgp.world)->lastSunPrimaryLightIndex - lVar21) + 1, -1 < lVar16))
+           (lVar13 = ((ulonglong)(rgp.world)->lastSunPrimaryLightIndex - lVar19) + 1, -1 < lVar13))
         {
-          iVar3 = 1 << ((uint)lVar16 & 0x3f);
+          iVar6 = 1 << ((uint)lVar13 & 0x3f);
           if (uVar1 == '\x01') {
-            uVar19 = iVar3 - 1U | uVar19;
+            uVar17 = iVar6 - 1U | uVar17;
           }
           else {
             if (uVar1 != '\x02') {
               MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_primarylights.cpp"
                               ,0x144,0,"%s\n\t(viewInfo->forceSunShadowsGenerate) = %i");
             }
-            uVar19 = uVar19 & ~(iVar3 - 1U);
+            uVar17 = uVar17 & ~(iVar6 - 1U);
           }
         }
-        while (LZCOUNT(uVar19) != 0x20) {
-          uVar17 = 0x1f - (int)LZCOUNT(uVar19);
-          uVar9 = 1 << (uVar17 & 0x3f);
-          uVar19 = uVar19 & ~uVar9;
-          dVar22 = dVar24;
-          if ((uVar9 & uVar12) != 0) {
-            dVar22 = (double)(sm_spotLightScoreModelScale->current).value;
+        while (LZCOUNT(uVar17) != 0x20) {
+          uVar14 = 0x1f - (int)LZCOUNT(uVar17);
+          uVar7 = 1 << (uVar14 & 0x3f);
+          uVar17 = uVar17 & ~uVar7;
+          dVar20 = dVar22;
+          if ((uVar7 & uVar10) != 0) {
+            dVar20 = (double)(sm_spotLightScoreModelScale->current).value;
           }
-          uVar9 = R_AddPotentiallyShadowedLight
-                            (param_3,(int)lVar21 + uVar17,local_d0,(uint)uVar11,(float)dVar22);
-          uVar11 = (ulonglong)(int)uVar9;
+          uVar7 = R_AddPotentiallyShadowedLight
+                            (param_3,(int)lVar19 + uVar14,local_d0,(uint)uVar9,(float)dVar20);
+          uVar9 = (ulonglong)(int)uVar7;
         }
-        uVar13 = uVar13 - 1;
-        uVar18 = uVar18 + 4;
-        lVar21 = lVar21 + 0x20;
-      } while (uVar13 != 0);
-    }
-    if ((uVar11 & 0xffffffff) != 0) {
-      pfVar20 = &fStack_d4;
-      do {
-        pfVar5 = pfVar20 + 1;
-        pfVar20 = pfVar20 + 2;
-        R_AddShadowedLightToShadowHistory
-                  (s_shadowHistory + iVar2,(uint)*pfVar5,*pfVar20,(float)dVar23);
         uVar11 = uVar11 - 1;
+        uVar16 = uVar16 + 4;
+        lVar19 = lVar19 + 0x20;
       } while (uVar11 != 0);
     }
-    puVar7 = &uStack_f4;
-    puVar15 = (uint *)(iVar2 * 0x58 + -0x7b9d76bc);
-    lVar21 = 8;
+    if ((uVar9 & 0xffffffff) != 0) {
+      pfVar18 = &fStack_d4;
+      do {
+        pfVar4 = pfVar18 + 1;
+        pfVar18 = pfVar18 + 2;
+        R_AddShadowedLightToShadowHistory
+                  (s_shadowHistory + iVar2,(uint)*pfVar4,*pfVar18,(float)dVar21);
+        uVar9 = uVar9 - 1;
+      } while (uVar9 != 0);
+    }
+    puVar15 = &uStack_f4;
+    puVar12 = (uint *)(iVar2 * 0x58 + -0x7b9d76bc);
+    lVar19 = 8;
     do {
-      puVar7 = puVar7 + 1;
       puVar15 = puVar15 + 1;
-      *puVar15 = *puVar7;
-      lVar21 = lVar21 + -1;
-    } while (lVar21 != 0);
+      puVar12 = puVar12 + 1;
+      *puVar12 = *puVar15;
+      lVar19 = lVar19 + -1;
+    } while (lVar19 != 0);
   }
   if (frontEndDataOut->spotShadowCount != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_primarylights.cpp",
                     0x162,1,"frontEndDataOut->spotShadowCount == 0\n\t%i, %i");
   }
   if ((((sm_qualitySpotShadow->current).enabled != false) && (rg.qualitySpotShadow == 0)) &&
-     (bVar10 = R_AnySunHasShadowMap(frontEndDataOut), !bVar10)) {
+     (bVar8 = R_AnySunHasShadowMap(frontEndDataOut), !bVar8)) {
     rg.qualitySpotShadow = 1;
   }
-  uVar12 = 0;
+  uVar10 = 0;
   if (s_shadowHistory[iVar2].entryCount != 0) {
-    pfVar20 = (float *)(s_shadowHistory[iVar2].sceneLightWasUsed + 7);
+    pfVar18 = (float *)(s_shadowHistory[iVar2].sceneLightWasUsed + 7);
     do {
-      pGVar6 = (GfxShadowedLightEntry *)(pfVar20 + 1);
-      pfVar20 = pfVar20 + 3;
-      R_AddShadowsForLight(param_3,(uint)pGVar6->sceneLightIndex,*pfVar20);
-      uVar12 = uVar12 + 1;
-    } while (uVar12 < s_shadowHistory[iVar2].entryCount);
+      pGVar5 = (GfxShadowedLightEntry *)(pfVar18 + 1);
+      pfVar18 = pfVar18 + 3;
+      R_AddShadowsForLight(param_3,(uint)pGVar5->sceneLightIndex,*pfVar18);
+      uVar10 = uVar10 + 1;
+    } while (uVar10 < s_shadowHistory[iVar2].entryCount);
   }
-  __restgprlr_15();
   return;
 }
 
 
 // 827632D0  R_HasShadowedLightForModelsOnly  (gfx_d3d/r_primarylights.cpp:373)
 
+/* WARNING: Function: __savegprlr_21 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_21 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
@@ -746,24 +719,21 @@ bool R_HasShadowedLightForModelsOnly(uint *param_1,GfxViewInfo *param_2)
 {
   byte bVar1;
   int iVar2;
-  int iVar3;
-  undefined1 uVar4;
-  uint uVar5;
-  GfxShadowedLightEntry *pGVar6;
+  uint uVar3;
+  GfxShadowedLightEntry *pGVar4;
   
-  iVar3 = __savegprlr_21(param_1);
   if (0.0 < (sm_spotLightScoreModelScale->current).value) {
     if (frontEndDataOut == (GfxBackEndData *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_primarylights.cpp"
                       ,0x17b,0,"%s");
     }
     iVar2 = param_2->viewInfoIndex;
-    uVar5 = 0;
+    uVar3 = 0;
     if (s_shadowHistory[iVar2].entryCount != 0) {
-      pGVar6 = s_shadowHistory[iVar2].entries;
+      pGVar4 = s_shadowHistory[iVar2].entries;
       do {
-        bVar1 = pGVar6->sceneLightIndex;
-        if (iVar3 == 0) {
+        bVar1 = pGVar4->sceneLightIndex;
+        if (param_1 == (uint *)0x0) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_bitops.h",
                           0xb,0,"%s");
         }
@@ -771,144 +741,134 @@ bool R_HasShadowedLightForModelsOnly(uint *param_1,GfxViewInfo *param_2)
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_bitops.h",
                           0xc,0,"bitNum doesn\'t index size * 8\n\t%i not in [0, %i)");
         }
-        if ((1 << (bVar1 & 0x1f) & *(uint *)(((int)(uint)bVar1 >> 5) * 4 + iVar3)) != 0) {
-          uVar4 = __restgprlr_21(1);
-          return (bool)uVar4;
+        if ((1 << (bVar1 & 0x1f) & param_1[(int)(uint)bVar1 >> 5]) != 0) {
+          return true;
         }
-        uVar5 = uVar5 + 1;
-        pGVar6 = pGVar6 + 1;
-      } while (uVar5 < s_shadowHistory[iVar2].entryCount);
+        uVar3 = uVar3 + 1;
+        pGVar4 = pGVar4 + 1;
+      } while (uVar3 < s_shadowHistory[iVar2].entryCount);
     }
   }
-  uVar4 = __restgprlr_21(0);
-  return (bool)uVar4;
+  return false;
 }
 
 
 // 82763418  R_GetPrimaryLightEntityShadowBit  (gfx_d3d/r_primarylights.cpp:399)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 uint R_GetPrimaryLightEntityShadowBit(uint param_1,uint param_2,uint param_3)
 
 {
   int iVar1;
-  uint uVar2;
-  longlong lVar3;
-  ulonglong uVar4;
-  longlong lVar5;
   
-  uVar4 = (ulonglong)(int)param_3;
-  lVar3 = (longlong)(int)param_2;
-  iVar1 = __savegprlr_28(param_1,lVar3);
-  if (((uVar4 & 0xffffffff) < (ulonglong)((rgp.world)->lastSunPrimaryLightIndex + 1)) ||
-     ((ulonglong)((rgp.world)->primaryLightCount - 1) < (uVar4 & 0xffffffff))) {
+  if ((param_3 < (rgp.world)->lastSunPrimaryLightIndex + 1) ||
+     ((rgp.world)->primaryLightCount - 1 < param_3)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_primarylights.cpp",
                     0x194,0,
                     "primaryLightIndex not in [rgp.world->lastSunPrimaryLightIndex + 1, rgp.world->primaryLightCount - 1]\n\t%i not in [%i, %i]"
                    );
   }
-  lVar5 = (ulonglong)(rgp.world)->lastSunPrimaryLightIndex + 1;
-  uVar2 = __restgprlr_28(((longlong)(int)(gfxCfg.entCount * iVar1 + (int)lVar3) *
-                          (longlong)(int)((rgp.world)->primaryLightCount - (int)lVar5) - lVar5) +
-                         uVar4);
-  return uVar2;
+  iVar1 = (rgp.world)->lastSunPrimaryLightIndex + 1;
+  return ((gfxCfg.entCount * param_1 + param_2) * ((rgp.world)->primaryLightCount - iVar1) - iVar1)
+         + param_3;
 }
 
 
 // 827634C0  R_GetPrimaryLightDynEntShadowBit  (gfx_d3d/r_primarylights.cpp:414)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 uint R_GetPrimaryLightDynEntShadowBit(uint param_1,uint param_2)
 
 {
   int iVar1;
-  uint uVar2;
-  ulonglong uVar3;
-  longlong lVar4;
   
-  uVar3 = (ulonglong)(int)param_2;
-  iVar1 = __savegprlr_29(param_1);
-  if ((uVar3 & 0xffffffff) <= (ulonglong)(rgp.world)->lastSunPrimaryLightIndex) {
+  if (param_2 <= (rgp.world)->lastSunPrimaryLightIndex) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_primarylights.cpp",
                     0x1a3,0,"primaryLightIndex > rgp.world->lastSunPrimaryLightIndex\n\t%i, %i");
   }
-  lVar4 = (ulonglong)(rgp.world)->lastSunPrimaryLightIndex + 1;
-  uVar2 = __restgprlr_29(((longlong)(int)((rgp.world)->primaryLightCount - (int)lVar4) *
-                          (longlong)iVar1 - lVar4) + uVar3);
-  return uVar2;
+  iVar1 = (rgp.world)->lastSunPrimaryLightIndex + 1;
+  return (((rgp.world)->primaryLightCount - iVar1) * param_1 - iVar1) + param_2;
 }
 
 
 // 82763538  R_LinkSphereEntityToPrimaryLights  (gfx_d3d/r_primarylights.cpp:429)
+
+/* WARNING: Function: __savegprlr_15 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_15 replaced with injection: xenon_save_restore */
 
 void R_LinkSphereEntityToPrimaryLights(uint param_1,uint param_2,float *param_3,float param_4)
 
 {
   char cVar1;
   uint uVar2;
-  uint uVar3;
-  bool bVar4;
-  float *pfVar5;
-  int iVar6;
-  float *pfVar7;
-  char *pcVar8;
-  double extraout_f1;
+  bool bVar3;
+  float *pfVar4;
+  int iVar5;
+  float *pfVar6;
+  char *pcVar7;
+  double dVar8;
   double dVar9;
-  double dVar10;
   
-  uVar2 = __savegprlr_15((double)param_4,param_1);
-  pfVar7 = (float *)((rgp.world)->lastSunPrimaryLightIndex + 1);
+  dVar8 = (double)param_4;
+  pfVar6 = (float *)((rgp.world)->lastSunPrimaryLightIndex + 1);
   if ((rgp.world)->lastSunPrimaryLightIndex + 1 < (rgp.world)->primaryLightCount) {
-    iVar6 = (int)pfVar7 * 0x50;
+    iVar5 = (int)pfVar6 * 0x50;
     dVar9 = 0.0;
-    dVar10 = extraout_f1;
     do {
-      pfVar5 = pfVar7;
-      uVar3 = R_GetPrimaryLightEntityShadowBit(uVar2,param_2,(uint)pfVar7);
+      pfVar4 = pfVar6;
+      uVar2 = R_GetPrimaryLightEntityShadowBit(param_1,param_2,(uint)pfVar6);
       if (comWorld.isInUse == 0) {
-        pfVar5 = (float *)0x0;
+        pfVar4 = (float *)0x0;
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\../qcommon/com_bsp_api.h"
                         ,0x1f,0,"%s");
       }
-      if (comWorld.primaryLightCount <= pfVar7) {
-        pfVar5 = (float *)0x0;
+      if (comWorld.primaryLightCount <= pfVar6) {
+        pfVar4 = (float *)0x0;
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\../qcommon/com_bsp_api.h"
                         ,0x20,0,
                         "primaryLightIndex doesn\'t index comWorld.primaryLightCount\n\t%i not in [0, %i)"
                        );
       }
-      pcVar8 = (char *)((int)(comWorld.primaryLights)->color + iVar6 + -4);
-      cVar1 = *(char *)((int)(comWorld.primaryLights)->color + iVar6 + -4);
+      pcVar7 = (char *)((int)(comWorld.primaryLights)->color + iVar5 + -4);
+      cVar1 = *(char *)((int)(comWorld.primaryLights)->color + iVar5 + -4);
       if ((cVar1 != '\x02') && (cVar1 != '\x03')) {
-        pfVar5 = (float *)0x0;
+        pfVar4 = (float *)0x0;
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_primarylights.cpp"
                         ,0x1b7,0,"%s\n\t(light->type) = %i");
       }
-      if ((param_3[1] - *(float *)(pcVar8 + 0x2c)) * (param_3[1] - *(float *)(pcVar8 + 0x2c)) +
-          (*param_3 - *(float *)(pcVar8 + 0x28)) * (*param_3 - *(float *)(pcVar8 + 0x28)) +
-          (param_3[2] - *(float *)(pcVar8 + 0x30)) * (param_3[2] - *(float *)(pcVar8 + 0x30)) <
-          (float)((double)*(float *)(pcVar8 + 0x34) + dVar10) *
-          (float)((double)*(float *)(pcVar8 + 0x34) + dVar10)) {
-        if (((*pcVar8 != '\x02') || ((double)*(float *)(pcVar8 + 0x40) < dVar9)) ||
-           (bVar4 = CullSphereFromCone((float *)(pcVar8 + 0x28),(float *)(pcVar8 + 0x10),
-                                       *(float *)(pcVar8 + 0x40),pfVar5,(float)dVar10), !bVar4)) {
-          Com_BitSetAssert((rgp.world)->primaryLightEntityShadowVis,uVar3,0xfffffff);
+      if ((param_3[1] - *(float *)(pcVar7 + 0x2c)) * (param_3[1] - *(float *)(pcVar7 + 0x2c)) +
+          (*param_3 - *(float *)(pcVar7 + 0x28)) * (*param_3 - *(float *)(pcVar7 + 0x28)) +
+          (param_3[2] - *(float *)(pcVar7 + 0x30)) * (param_3[2] - *(float *)(pcVar7 + 0x30)) <
+          (float)((double)*(float *)(pcVar7 + 0x34) + dVar8) *
+          (float)((double)*(float *)(pcVar7 + 0x34) + dVar8)) {
+        if (((*pcVar7 != '\x02') || ((double)*(float *)(pcVar7 + 0x40) < dVar9)) ||
+           (bVar3 = CullSphereFromCone((float *)(pcVar7 + 0x28),(float *)(pcVar7 + 0x10),
+                                       *(float *)(pcVar7 + 0x40),pfVar4,(float)dVar8), !bVar3)) {
+          Com_BitSetAssert((rgp.world)->primaryLightEntityShadowVis,uVar2,0xfffffff);
         }
         else {
-          Com_BitClearAssert((rgp.world)->primaryLightEntityShadowVis,uVar3,0xfffffff);
+          Com_BitClearAssert((rgp.world)->primaryLightEntityShadowVis,uVar2,0xfffffff);
         }
       }
       else {
-        Com_BitClearAssert((rgp.world)->primaryLightEntityShadowVis,uVar3,0xfffffff);
+        Com_BitClearAssert((rgp.world)->primaryLightEntityShadowVis,uVar2,0xfffffff);
       }
-      pfVar7 = (float *)((int)pfVar7 + 1);
-      iVar6 = iVar6 + 0x50;
-    } while (pfVar7 < (float *)(rgp.world)->primaryLightCount);
+      pfVar6 = (float *)((int)pfVar6 + 1);
+      iVar5 = iVar5 + 0x50;
+    } while (pfVar6 < (float *)(rgp.world)->primaryLightCount);
   }
-  __restgprlr_15();
   return;
 }
 
 
 // 82763750  R_LinkBoxEntityToPrimaryLights  (gfx_d3d/r_primarylights.cpp:459)
+
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
 
 void R_LinkBoxEntityToPrimaryLights(uint param_1,uint param_2,Bounds *param_3)
 
@@ -928,13 +888,12 @@ void R_LinkBoxEntityToPrimaryLights(uint param_1,uint param_2,Bounds *param_3)
   double dVar13;
   uint uStack0000001c;
   
-  __savegprlr();
   uVar9 = (ulonglong)(rgp.world)->lastSunPrimaryLightIndex + 1;
-  uStack0000001c = param_2;
   if ((uVar9 & 0xffffffff) < (ulonglong)(rgp.world)->primaryLightCount) {
     dVar13 = 0.0;
     lVar7 = (uVar9 + (uVar9 & 0x3fffffff) * 4 & 0xfffffff) << 4;
     lVar8 = (uVar9 & 0x1fffffff) << 3;
+    uStack0000001c = param_2;
     do {
       pBVar6 = (Bounds *)uVar9;
       uVar4 = R_GetPrimaryLightEntityShadowBit(param_1,uStack0000001c,(uint)pBVar6);
@@ -1002,153 +961,148 @@ void R_LinkBoxEntityToPrimaryLights(uint param_1,uint param_2,Bounds *param_3)
       lVar8 = lVar8 + 8;
     } while ((uVar9 & 0xffffffff) < (ulonglong)(rgp.world)->primaryLightCount);
   }
-  __restgprlr();
   return;
 }
 
 
 // 82764830  R_LinkDynEntToPrimaryLights  (gfx_d3d/r_primarylights.cpp:495)
 
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
+
 void R_LinkDynEntToPrimaryLights(uint param_1,DynEntityDrawType param_2,Bounds *param_3)
 
 {
   char cVar1;
-  uint *puVar2;
-  int iVar3;
+  float fVar2;
+  float fVar3;
   float fVar4;
-  float fVar5;
-  float fVar6;
-  GfxWorld *pGVar7;
-  uint uVar8;
-  bool bVar9;
-  longlong lVar10;
-  longlong lVar11;
+  GfxWorld *pGVar5;
+  uint uVar6;
+  bool bVar7;
+  longlong lVar8;
+  Bounds *pBVar9;
+  int iVar10;
+  undefined8 uVar11;
   Bounds *pBVar12;
-  int iVar13;
-  undefined8 uVar14;
-  Bounds *pBVar15;
-  uint uVar16;
-  longlong lVar17;
-  longlong lVar18;
-  undefined8 uVar19;
-  ulonglong uVar20;
-  char *pcVar22;
-  ulonglong uVar21;
-  double dVar23;
-  double dVar24;
-  double dVar25;
+  uint uVar13;
+  longlong lVar14;
+  longlong lVar15;
+  undefined8 uVar16;
+  ulonglong uVar17;
+  char *pcVar18;
+  double dVar19;
+  double dVar20;
+  double dVar21;
   uint uStack00000014;
-  int iStack0000001c;
+  DynEntityDrawType DStack0000001c;
   uint local_b0;
   
-  lVar10 = (longlong)(int)param_2;
-  uVar21 = (ulonglong)(int)param_1;
-  __savegprlr();
-  uStack00000014 = (uint)uVar21;
-  iStack0000001c = (int)lVar10;
   local_b0 = 0;
-  dVar25 = 3.4028234663852886e+38;
-  uVar20 = (ulonglong)(rgp.world)->lastSunPrimaryLightIndex + 1;
-  uVar16 = 0;
-  if ((uVar20 & 0xffffffff) < (ulonglong)(rgp.world)->primaryLightCount) {
-    lVar17 = (uVar20 + (uVar20 & 0x3fffffff) * 4 & 0xfffffff) << 4;
-    dVar24 = 0.0;
-    uVar14 = 0xffffffff82000000;
-    lVar11 = -0x7dfea50c;
-    lVar18 = (uVar20 & 0x1fffffff) << 3;
-    uVar19 = 0xfffffff;
+  dVar21 = 3.4028234663852886e+38;
+  uVar17 = (ulonglong)(rgp.world)->lastSunPrimaryLightIndex + 1;
+  uVar13 = 0;
+  uStack00000014 = param_1;
+  DStack0000001c = param_2;
+  if ((uVar17 & 0xffffffff) < (ulonglong)(rgp.world)->primaryLightCount) {
+    lVar14 = (uVar17 + (uVar17 & 0x3fffffff) * 4 & 0xfffffff) << 4;
+    dVar20 = 0.0;
+    uVar11 = 0xffffffff82000000;
+    lVar8 = -0x7dfea50c;
+    lVar15 = (uVar17 & 0x1fffffff) << 3;
+    uVar16 = 0xfffffff;
     do {
-      pBVar12 = (Bounds *)lVar11;
-      pBVar15 = (Bounds *)uVar14;
-      if ((uVar20 & 0xffffffff) <= (ulonglong)(rgp.world)->lastSunPrimaryLightIndex) {
-        pBVar15 = (Bounds *)0x0;
-        pBVar12 = (Bounds *)0x1a3;
+      uVar13 = uStack00000014;
+      pBVar9 = (Bounds *)lVar8;
+      pBVar12 = (Bounds *)uVar11;
+      if ((uVar17 & 0xffffffff) <= (ulonglong)(rgp.world)->lastSunPrimaryLightIndex) {
+        pBVar12 = (Bounds *)0x0;
+        pBVar9 = (Bounds *)0x1a3;
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_primarylights.cpp"
                         ,0x1a3,0,"primaryLightIndex > rgp.world->lastSunPrimaryLightIndex\n\t%i, %i"
                        );
       }
-      lVar11 = (ulonglong)(rgp.world)->lastSunPrimaryLightIndex + 1;
-      lVar11 = ((longlong)(int)((rgp.world)->primaryLightCount - (int)lVar11) *
-                (longlong)(int)uVar21 - lVar11) + uVar20;
+      lVar8 = (ulonglong)(rgp.world)->lastSunPrimaryLightIndex + 1;
+      lVar8 = ((longlong)(int)((rgp.world)->primaryLightCount - (int)lVar8) * (longlong)(int)uVar13
+              - lVar8) + uVar17;
       if (comWorld.isInUse == 0) {
-        pBVar15 = (Bounds *)0x0;
-        pBVar12 = (Bounds *)0x1f;
+        pBVar12 = (Bounds *)0x0;
+        pBVar9 = (Bounds *)0x1f;
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\../qcommon/com_bsp_api.h"
                         ,0x1f,0,"%s");
       }
-      if ((ulonglong)comWorld.primaryLightCount <= (uVar20 & 0xffffffff)) {
-        pBVar15 = (Bounds *)0x0;
-        pBVar12 = (Bounds *)0x20;
+      if ((ulonglong)comWorld.primaryLightCount <= (uVar17 & 0xffffffff)) {
+        pBVar12 = (Bounds *)0x0;
+        pBVar9 = (Bounds *)0x20;
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\../qcommon/com_bsp_api.h"
                         ,0x20,0,
                         "primaryLightIndex doesn\'t index comWorld.primaryLightCount\n\t%i not in [0, %i)"
                        );
       }
-      pcVar22 = (char *)((int)(comWorld.primaryLights)->color + (int)lVar17 + -4);
-      cVar1 = *(char *)((int)(comWorld.primaryLights)->color + (int)lVar17 + -4);
+      pcVar18 = (char *)((int)(comWorld.primaryLights)->color + (int)lVar14 + -4);
+      cVar1 = *(char *)((int)(comWorld.primaryLights)->color + (int)lVar14 + -4);
       if ((cVar1 != '\x02') && (cVar1 != '\x03')) {
-        pBVar15 = (Bounds *)0x0;
-        pBVar12 = (Bounds *)0x1fd;
+        pBVar12 = (Bounds *)0x0;
+        pBVar9 = (Bounds *)0x1fd;
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_primarylights.cpp"
                         ,0x1fd,0,"%s\n\t(light->type) = %i");
       }
-      if ((*pcVar22 != '\x02') || ((double)*(float *)(pcVar22 + 0x40) < dVar24)) {
-        bVar9 = CullBoxFromSphere((float *)(pcVar22 + 0x28),*(float *)(pcVar22 + 0x34),pBVar12);
+      if ((*pcVar18 != '\x02') || ((double)*(float *)(pcVar18 + 0x40) < dVar20)) {
+        bVar7 = CullBoxFromSphere((float *)(pcVar18 + 0x28),*(float *)(pcVar18 + 0x34),pBVar9);
       }
       else {
-        bVar9 = CullBoxFromConicSectionOfSphere
-                          ((float *)(pcVar22 + 0x28),(float *)(pcVar22 + 0x10),
-                           *(float *)(pcVar22 + 0x40),*(float *)(pcVar22 + 0x34),pBVar15);
+        bVar7 = CullBoxFromConicSectionOfSphere
+                          ((float *)(pcVar18 + 0x28),(float *)(pcVar18 + 0x10),
+                           *(float *)(pcVar18 + 0x40),*(float *)(pcVar18 + 0x34),pBVar12);
       }
-      pGVar7 = rgp.world;
-      iVar13 = (int)lVar11;
-      iVar3 = (int)((lVar10 + 0x86U & 0x3fffffff) << 2);
-      uVar14 = uVar19;
-      if (bVar9 == false) {
-        bVar9 = R_CullBoxFromLightRegion
+      pGVar5 = rgp.world;
+      iVar10 = (int)lVar8;
+      uVar11 = uVar16;
+      if (bVar7 == false) {
+        bVar7 = R_CullBoxFromLightRegion
                           ((GfxLightRegion *)
-                           ((int)&(rgp.world)->lightRegion->hullCount + (int)lVar18),
-                           (float *)(pcVar22 + 0x28),param_3);
-        puVar2 = *(uint **)((int)&pGVar7->name + iVar3);
-        if (bVar9) {
-          Com_BitClearAssert(puVar2,iVar13,0xfffffff);
+                           ((int)&(rgp.world)->lightRegion->hullCount + (int)lVar15),
+                           (float *)(pcVar18 + 0x28),param_3);
+        if (bVar7) {
+          Com_BitClearAssert(pGVar5->primaryLightDynEntShadowVis[param_2],iVar10,0xfffffff);
         }
         else {
-          Com_BitSetAssert(puVar2,iVar13,0xfffffff);
-          fVar4 = param_3->midPoint[2] - *(float *)(pcVar22 + 0x30);
-          fVar5 = param_3->midPoint[0] - *(float *)(pcVar22 + 0x28);
-          fVar6 = param_3->midPoint[1] - *(float *)(pcVar22 + 0x2c);
-          dVar23 = (double)(fVar6 * fVar6 + fVar5 * fVar5 + fVar4 * fVar4);
-          if (dVar23 < dVar25) {
-            local_b0 = (uint)uVar20;
-            dVar25 = dVar23;
+          Com_BitSetAssert(pGVar5->primaryLightDynEntShadowVis[param_2],iVar10,0xfffffff);
+          fVar2 = param_3->midPoint[2] - *(float *)(pcVar18 + 0x30);
+          fVar3 = param_3->midPoint[0] - *(float *)(pcVar18 + 0x28);
+          fVar4 = param_3->midPoint[1] - *(float *)(pcVar18 + 0x2c);
+          dVar19 = (double)(fVar4 * fVar4 + fVar3 * fVar3 + fVar2 * fVar2);
+          if (dVar19 < dVar21) {
+            local_b0 = (uint)uVar17;
+            dVar21 = dVar19;
           }
         }
       }
       else {
-        Com_BitClearAssert(*(uint **)((int)&(rgp.world)->name + iVar3),iVar13,0xfffffff);
+        Com_BitClearAssert((rgp.world)->primaryLightDynEntShadowVis[param_2],iVar10,0xfffffff);
       }
-      uVar20 = uVar20 + 1;
-      uVar21 = (ulonglong)uStack00000014;
-      lVar17 = lVar17 + 0x50;
-      lVar18 = lVar18 + 8;
-      uVar16 = local_b0;
-    } while ((uVar20 & 0xffffffff) < (ulonglong)(rgp.world)->primaryLightCount);
+      uVar17 = uVar17 + 1;
+      lVar14 = lVar14 + 0x50;
+      lVar15 = lVar15 + 8;
+      uVar13 = local_b0;
+    } while ((uVar17 & 0xffffffff) < (ulonglong)(rgp.world)->primaryLightCount);
   }
-  uVar8 = uStack00000014;
-  if (iStack0000001c == 0) {
-    if (uVar16 != (uVar16 & 0xff)) {
+  uVar6 = uStack00000014;
+  if (DStack0000001c == DYNENT_DRAW_MODEL) {
+    if (uVar13 != (uVar13 & 0xff)) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\../universal/assertive.h"
                       ,0x1ce,0,"i == static_cast< Type >( i )\n\t%i, %i");
     }
-    (rgp.world)->nonSunPrimaryLightForModelDynEnt[uVar8] = (uchar)uVar16;
+    (rgp.world)->nonSunPrimaryLightForModelDynEnt[uVar6] = (uchar)uVar13;
   }
-  __restgprlr();
   return;
 }
 
 
 // 827639B8  R_UnlinkEntityFromPrimaryLights  (gfx_d3d/r_primarylights.cpp:540)
+
+/* WARNING: Function: __savegprlr_20 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_20 replaced with injection: xenon_save_restore */
 
 void R_UnlinkEntityFromPrimaryLights(uint param_1,uint param_2)
 
@@ -1156,14 +1110,52 @@ void R_UnlinkEntityFromPrimaryLights(uint param_1,uint param_2)
   uint *puVar1;
   uint uVar2;
   uint uVar3;
+  
+  uVar3 = (rgp.world)->lastSunPrimaryLightIndex + 1;
+  if (uVar3 < (rgp.world)->primaryLightCount) {
+    do {
+      uVar2 = R_GetPrimaryLightEntityShadowBit(param_1,param_2,uVar3);
+      puVar1 = (rgp.world)->primaryLightEntityShadowVis;
+      if (puVar1 == (uint *)0x0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_bitops.h",
+                        0x19,0,"%s");
+      }
+      if (0x7ffffff7 < uVar2) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_bitops.h",
+                        0x1a,0,"bitNum doesn\'t index size * 8\n\t%i not in [0, %i)");
+      }
+      uVar3 = uVar3 + 1;
+      puVar1[(int)uVar2 >> 5] = puVar1[(int)uVar2 >> 5] & ~(1 << (uVar2 & 0x1f));
+    } while (uVar3 < (rgp.world)->primaryLightCount);
+  }
+  return;
+}
+
+
+// 82763AB0  R_UnlinkDynEntFromPrimaryLights  (gfx_d3d/r_primarylights.cpp:554)
+
+/* WARNING: Function: __savegprlr_18 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_18 replaced with injection: xenon_save_restore */
+
+void R_UnlinkDynEntFromPrimaryLights(uint param_1,DynEntityDrawType param_2)
+
+{
+  uint *puVar1;
+  int iVar2;
+  uint uVar3;
   uint uVar4;
   
-  uVar2 = __savegprlr_20(param_1);
   uVar4 = (rgp.world)->lastSunPrimaryLightIndex + 1;
   if ((rgp.world)->lastSunPrimaryLightIndex + 1 < (rgp.world)->primaryLightCount) {
     do {
-      uVar3 = R_GetPrimaryLightEntityShadowBit(uVar2,param_2,uVar4);
-      puVar1 = (rgp.world)->primaryLightEntityShadowVis;
+      if (uVar4 <= (rgp.world)->lastSunPrimaryLightIndex) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_primarylights.cpp"
+                        ,0x1a3,0,"primaryLightIndex > rgp.world->lastSunPrimaryLightIndex\n\t%i, %i"
+                       );
+      }
+      iVar2 = (rgp.world)->lastSunPrimaryLightIndex + 1;
+      puVar1 = (rgp.world)->primaryLightDynEntShadowVis[param_2];
+      uVar3 = (((rgp.world)->primaryLightCount - iVar2) * param_1 - iVar2) + uVar4;
       if (puVar1 == (uint *)0x0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_bitops.h",
                         0x19,0,"%s");
@@ -1176,50 +1168,6 @@ void R_UnlinkEntityFromPrimaryLights(uint param_1,uint param_2)
       puVar1[(int)uVar3 >> 5] = puVar1[(int)uVar3 >> 5] & ~(1 << (uVar3 & 0x1f));
     } while (uVar4 < (rgp.world)->primaryLightCount);
   }
-  __restgprlr_20();
-  return;
-}
-
-
-// 82763AB0  R_UnlinkDynEntFromPrimaryLights  (gfx_d3d/r_primarylights.cpp:554)
-
-void R_UnlinkDynEntFromPrimaryLights(uint param_1,DynEntityDrawType param_2)
-
-{
-  int iVar1;
-  int iVar2;
-  longlong lVar3;
-  int iVar4;
-  uint uVar5;
-  uint uVar6;
-  
-  lVar3 = (longlong)(int)param_2;
-  iVar2 = __savegprlr_18(param_1);
-  uVar6 = (rgp.world)->lastSunPrimaryLightIndex + 1;
-  if ((rgp.world)->lastSunPrimaryLightIndex + 1 < (rgp.world)->primaryLightCount) {
-    do {
-      if (uVar6 <= (rgp.world)->lastSunPrimaryLightIndex) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_primarylights.cpp"
-                        ,0x1a3,0,"primaryLightIndex > rgp.world->lastSunPrimaryLightIndex\n\t%i, %i"
-                       );
-      }
-      iVar4 = (rgp.world)->lastSunPrimaryLightIndex + 1;
-      iVar1 = *(int *)((int)&(rgp.world)->name + (int)((lVar3 + 0x86U & 0xffffffff) << 2));
-      uVar5 = (((rgp.world)->primaryLightCount - iVar4) * iVar2 - iVar4) + uVar6;
-      if (iVar1 == 0) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_bitops.h",
-                        0x19,0,"%s");
-      }
-      if (0x7ffffff7 < uVar5) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_bitops.h",
-                        0x1a,0,"bitNum doesn\'t index size * 8\n\t%i not in [0, %i)");
-      }
-      iVar4 = ((int)uVar5 >> 5) * 4;
-      uVar6 = uVar6 + 1;
-      *(uint *)(iVar4 + iVar1) = *(uint *)(iVar4 + iVar1) & ~(1 << (uVar5 & 0x1f));
-    } while (uVar6 < (rgp.world)->primaryLightCount);
-  }
-  __restgprlr_18();
   return;
 }
 
@@ -1269,6 +1217,8 @@ int R_IsEntityVisibleToShadowedPrimaryLight(uint param_1,uint param_2)
 
 // 82763CB8  R_IsEntityVisibleToAnyShadowedPrimaryLight  (gfx_d3d/r_primarylights.cpp:597)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
@@ -1286,12 +1236,11 @@ int R_IsEntityVisibleToAnyShadowedPrimaryLight(GfxViewInfo *param_1,uint param_2
   uint uVar9;
   int iVar10;
   
-  iVar2 = __savegprlr_27(param_1);
   if (frontEndDataOut == (GfxBackEndData *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_primarylights.cpp",
                     0x25b,0,"%s");
   }
-  iVar2 = *(int *)(iVar2 + 0x930) * gfxCfg.entCount;
+  iVar2 = param_1->clientIndex * gfxCfg.entCount;
   iVar5 = (rgp.world)->lastSunPrimaryLightIndex + 1;
   iVar4 = (rgp.world)->primaryLightCount - iVar5;
   if (iVar4 + 1U < frontEndDataOut->spotShadowCount) {
@@ -1312,16 +1261,14 @@ int R_IsEntityVisibleToAnyShadowedPrimaryLight(GfxViewInfo *param_1,uint param_2
          (iVar3 = Com_BitCheckAssert(pGVar7->primaryLightEntityShadowVis,
                                      (uint)bVar1 + ((iVar2 + param_2) * iVar4 - iVar5),0xfffffff),
          pGVar8 = frontEndDataOut, pGVar7 = rgp.world, iVar3 != 0)) {
-        iVar2 = __restgprlr_27(1);
-        return iVar2;
+        return 1;
       }
       uVar9 = uVar9 + 1;
       pGVar6 = (GfxBackEndData *)(pGVar8->sceneLightTechType[1] + iVar10 + 0xd0);
       iVar10 = iVar10 + 0x1d0;
     } while (uVar9 < pGVar8->spotShadowCount);
   }
-  iVar2 = __restgprlr_27(0);
-  return iVar2;
+  return 0;
 }
 
 
@@ -1343,6 +1290,8 @@ int R_IsDynEntVisibleToShadowedPrimaryLight(uint param_1,DynEntityDrawType param
 
 // 82763E30  R_IsDynEntVisibleToAnyShadowedPrimaryLight  (gfx_d3d/r_primarylights.cpp:637)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 
@@ -1352,219 +1301,203 @@ int R_IsDynEntVisibleToAnyShadowedPrimaryLight(uint param_1,DynEntityDrawType pa
   byte bVar1;
   int iVar2;
   int iVar3;
-  longlong lVar4;
-  int iVar5;
-  int iVar6;
+  int iVar4;
+  GfxBackEndData *pGVar5;
+  GfxWorld *pGVar6;
   GfxBackEndData *pGVar7;
-  GfxWorld *pGVar8;
-  GfxBackEndData *pGVar9;
-  uint uVar10;
-  int iVar11;
+  uint uVar8;
+  int iVar9;
   
-  lVar4 = (longlong)(int)param_2;
-  iVar2 = __savegprlr_26(param_1);
   if (frontEndDataOut == (GfxBackEndData *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_primarylights.cpp",
                     0x283,0,"%s");
   }
-  iVar6 = (rgp.world)->lastSunPrimaryLightIndex + 1;
-  iVar5 = (rgp.world)->primaryLightCount - iVar6;
-  if (iVar5 + 1U < frontEndDataOut->spotShadowCount) {
+  iVar4 = (rgp.world)->lastSunPrimaryLightIndex + 1;
+  iVar3 = (rgp.world)->primaryLightCount - iVar4;
+  if (iVar3 + 1U < frontEndDataOut->spotShadowCount) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_primarylights.cpp",
                     0x289,0,
                     "relevantPrimaryLightCount + GFX_MAX_EMISSIVE_SPOT_LIGHTS >= frontEndDataOut->spotShadowCount\n\t%i, %i"
                    );
   }
-  uVar10 = 0;
+  uVar8 = 0;
   if (frontEndDataOut->spotShadowCount != 0) {
-    pGVar9 = frontEndDataOut;
     pGVar7 = frontEndDataOut;
-    iVar11 = 0;
-    pGVar8 = rgp.world;
+    pGVar5 = frontEndDataOut;
+    iVar9 = 0;
+    pGVar6 = rgp.world;
     do {
-      bVar1 = pGVar7->spotShadows[0].sceneLightIndex;
-      if (((uint)bVar1 < pGVar8->primaryLightCount) &&
-         (iVar3 = Com_BitCheckAssert(*(uint **)((int)&pGVar8->name +
-                                               (int)((lVar4 + 0x86U & 0xffffffff) << 2)),
-                                     (uint)bVar1 + (iVar5 * iVar2 - iVar6),0xfffffff),
-         pGVar9 = frontEndDataOut, pGVar8 = rgp.world, iVar3 != 0)) {
-        iVar2 = __restgprlr_26(1);
-        return iVar2;
+      bVar1 = pGVar5->spotShadows[0].sceneLightIndex;
+      if (((uint)bVar1 < pGVar6->primaryLightCount) &&
+         (iVar2 = Com_BitCheckAssert(pGVar6->primaryLightDynEntShadowVis[param_2],
+                                     (uint)bVar1 + (iVar3 * param_1 - iVar4),0xfffffff),
+         pGVar7 = frontEndDataOut, pGVar6 = rgp.world, iVar2 != 0)) {
+        return 1;
       }
-      uVar10 = uVar10 + 1;
-      pGVar7 = (GfxBackEndData *)(pGVar9->sceneLightTechType[1] + iVar11 + 0xd0);
-      iVar11 = iVar11 + 0x1d0;
-    } while (uVar10 < pGVar9->spotShadowCount);
+      uVar8 = uVar8 + 1;
+      pGVar5 = (GfxBackEndData *)(pGVar7->sceneLightTechType[1] + iVar9 + 0xd0);
+      iVar9 = iVar9 + 0x1d0;
+    } while (uVar8 < pGVar7->spotShadowCount);
   }
-  iVar2 = __restgprlr_26(0);
-  return iVar2;
+  return 0;
 }
 
 
 // 82763F58  R_GetNonSunPrimaryLightForBox  (gfx_d3d/r_primarylights.cpp:663)
+
+/* WARNING: Function: __savegprlr_17 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_17 replaced with injection: xenon_save_restore */
 
 uint R_GetNonSunPrimaryLightForBox(Bounds *param_1)
 
 {
   char cVar1;
   GfxWorld *pGVar2;
-  undefined8 uVar3;
-  bool bVar5;
-  uint uVar4;
+  bool bVar3;
+  longlong lVar4;
+  longlong lVar5;
   longlong lVar6;
-  undefined8 uVar7;
-  longlong lVar8;
+  longlong lVar7;
+  ulonglong uVar8;
   longlong lVar9;
-  ulonglong uVar10;
-  longlong lVar11;
-  char *pcVar12;
-  double dVar13;
+  char *pcVar10;
+  double dVar11;
   
-  uVar3 = __savegprlr_17(param_1);
-  uVar10 = (ulonglong)(rgp.world)->lastSunPrimaryLightIndex + 1;
-  if ((uVar10 & 0xffffffff) < (ulonglong)(rgp.world)->primaryLightCount) {
-    lVar6 = -0x7dff0000;
-    uVar7 = 0xffffffff821c0000;
-    lVar9 = (uVar10 + (uVar10 & 0x3fffffff) * 4 & 0xfffffff) << 4;
-    dVar13 = 0.0;
-    lVar8 = (uVar10 & 0x1fffffff) << 3;
+  uVar8 = (ulonglong)(rgp.world)->lastSunPrimaryLightIndex + 1;
+  if ((uVar8 & 0xffffffff) < (ulonglong)(rgp.world)->primaryLightCount) {
+    lVar4 = -0x7dff0000;
+    lVar5 = -0x7de40000;
+    lVar7 = (uVar8 + (uVar8 & 0x3fffffff) * 4 & 0xfffffff) << 4;
+    dVar11 = 0.0;
+    lVar6 = (uVar8 & 0x1fffffff) << 3;
     do {
       if (comWorld.isInUse == 0) {
-        uVar7 = 0;
-        lVar6 = 0x1f;
+        lVar5 = 0;
+        lVar4 = 0x1f;
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\../qcommon/com_bsp_api.h"
                         ,0x1f,0,"%s");
       }
-      if ((ulonglong)comWorld.primaryLightCount <= (uVar10 & 0xffffffff)) {
-        uVar7 = 0;
-        lVar6 = 0x20;
+      if ((ulonglong)comWorld.primaryLightCount <= (uVar8 & 0xffffffff)) {
+        lVar5 = 0;
+        lVar4 = 0x20;
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\../qcommon/com_bsp_api.h"
                         ,0x20,0,
                         "primaryLightIndex doesn\'t index comWorld.primaryLightCount\n\t%i not in [0, %i)"
                        );
       }
-      lVar11 = lVar9 + ZEXT48(comWorld.primaryLights);
-      cVar1 = *(char *)((int)(comWorld.primaryLights)->color + (int)lVar9 + -4);
+      lVar9 = lVar7 + ZEXT48(comWorld.primaryLights);
+      cVar1 = *(char *)((int)(comWorld.primaryLights)->color + (int)lVar7 + -4);
       if ((cVar1 != '\x02') && (cVar1 != '\x03')) {
-        uVar7 = 0;
-        lVar6 = 0x29f;
+        lVar5 = 0;
+        lVar4 = 0x29f;
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_primarylights.cpp"
                         ,0x29f,0,"%s\n\t(light->type) = %i");
       }
-      pcVar12 = (char *)lVar11;
-      if ((*pcVar12 != '\x02') || ((double)*(float *)(pcVar12 + 0x40) < dVar13)) {
-        uVar7 = uVar3;
-        bVar5 = CullBoxFromSphere((float *)(pcVar12 + 0x28),*(float *)(pcVar12 + 0x34),
-                                  (Bounds *)lVar6);
+      pcVar10 = (char *)lVar9;
+      if ((*pcVar10 != '\x02') || ((double)*(float *)(pcVar10 + 0x40) < dVar11)) {
+        lVar5 = (longlong)(int)param_1;
+        bVar3 = CullBoxFromSphere((float *)(pcVar10 + 0x28),*(float *)(pcVar10 + 0x34),
+                                  (Bounds *)lVar4);
       }
       else {
-        lVar6 = lVar11 + 0x10;
-        bVar5 = CullBoxFromConicSectionOfSphere
-                          ((float *)(pcVar12 + 0x28),(float *)lVar6,*(float *)(pcVar12 + 0x40),
-                           *(float *)(pcVar12 + 0x34),(Bounds *)uVar7);
+        lVar4 = lVar9 + 0x10;
+        bVar3 = CullBoxFromConicSectionOfSphere
+                          ((float *)(pcVar10 + 0x28),(float *)lVar4,*(float *)(pcVar10 + 0x40),
+                           *(float *)(pcVar10 + 0x34),(Bounds *)lVar5);
       }
       pGVar2 = rgp.world;
-      lVar11 = lVar11 + 0x28;
-      if ((bVar5 == false) &&
-         (uVar7 = uVar3,
-         bVar5 = R_CullBoxFromLightRegion
+      lVar9 = lVar9 + 0x28;
+      if ((bVar3 == false) &&
+         (lVar5 = (longlong)(int)param_1,
+         bVar3 = R_CullBoxFromLightRegion
                            ((GfxLightRegion *)
-                            ((int)&(rgp.world)->lightRegion->hullCount + (int)lVar8),(float *)lVar11
-                            ,(Bounds *)uVar3), lVar6 = lVar11, !bVar5)) {
-        uVar4 = __restgprlr_17(uVar10);
-        return uVar4;
+                            ((int)&(rgp.world)->lightRegion->hullCount + (int)lVar6),(float *)lVar9,
+                            param_1), lVar4 = lVar9, !bVar3)) {
+        return (uint)uVar8;
       }
-      uVar10 = uVar10 + 1;
-      lVar9 = lVar9 + 0x50;
-      lVar8 = lVar8 + 8;
-    } while ((uVar10 & 0xffffffff) < (ulonglong)pGVar2->primaryLightCount);
+      uVar8 = uVar8 + 1;
+      lVar7 = lVar7 + 0x50;
+      lVar6 = lVar6 + 8;
+    } while ((uVar8 & 0xffffffff) < (ulonglong)pGVar2->primaryLightCount);
   }
-  uVar4 = __restgprlr_17(0);
-  return uVar4;
+  return 0;
 }
 
 
 // 82764110  R_GetNonSunPrimaryLightForSphere  (gfx_d3d/r_primarylights.cpp:685)
 
+/* WARNING: Function: __savegprlr_17 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_17 replaced with injection: xenon_save_restore */
+
 uint R_GetNonSunPrimaryLightForSphere(float *param_1,float param_2)
 
 {
   char cVar1;
-  float *pfVar2;
-  char *pcVar3;
-  undefined8 uVar4;
-  bool bVar6;
-  uint uVar5;
-  undefined8 uVar7;
-  longlong lVar8;
-  longlong lVar9;
-  ulonglong uVar10;
-  double extraout_f1;
-  double dVar11;
-  double dVar12;
+  char *pcVar2;
+  bool bVar3;
+  longlong lVar4;
+  longlong lVar5;
+  longlong lVar6;
+  ulonglong uVar7;
+  double dVar8;
+  double dVar9;
   
-  uVar4 = __savegprlr_17((double)param_2,param_1);
-  uVar10 = (ulonglong)(rgp.world)->lastSunPrimaryLightIndex + 1;
-  if ((uVar10 & 0xffffffff) < (ulonglong)(rgp.world)->primaryLightCount) {
-    lVar9 = (uVar10 + (uVar10 & 0x3fffffff) * 4 & 0xfffffff) << 4;
-    uVar7 = 0xffffffff821d0000;
-    dVar11 = 0.0;
-    lVar8 = (uVar10 & 0x1fffffff) << 3;
-    dVar12 = extraout_f1;
+  dVar8 = (double)param_2;
+  uVar7 = (ulonglong)(rgp.world)->lastSunPrimaryLightIndex + 1;
+  if ((uVar7 & 0xffffffff) < (ulonglong)(rgp.world)->primaryLightCount) {
+    lVar6 = (uVar7 + (uVar7 & 0x3fffffff) * 4 & 0xfffffff) << 4;
+    lVar4 = -0x7de30000;
+    dVar9 = 0.0;
+    lVar5 = (uVar7 & 0x1fffffff) << 3;
     do {
       if (comWorld.isInUse == 0) {
-        uVar7 = 0;
+        lVar4 = 0;
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\../qcommon/com_bsp_api.h"
                         ,0x1f,0,"%s");
       }
-      if ((ulonglong)comWorld.primaryLightCount <= (uVar10 & 0xffffffff)) {
-        uVar7 = 0;
+      if ((ulonglong)comWorld.primaryLightCount <= (uVar7 & 0xffffffff)) {
+        lVar4 = 0;
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\../qcommon/com_bsp_api.h"
                         ,0x20,0,
                         "primaryLightIndex doesn\'t index comWorld.primaryLightCount\n\t%i not in [0, %i)"
                        );
       }
-      pcVar3 = (char *)((int)(comWorld.primaryLights)->color + (int)lVar9 + -4);
-      cVar1 = *(char *)((int)(comWorld.primaryLights)->color + (int)lVar9 + -4);
+      pcVar2 = (char *)((int)(comWorld.primaryLights)->color + (int)lVar6 + -4);
+      cVar1 = *(char *)((int)(comWorld.primaryLights)->color + (int)lVar6 + -4);
       if ((cVar1 != '\x02') && (cVar1 != '\x03')) {
-        uVar7 = 0;
+        lVar4 = 0;
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_primarylights.cpp"
                         ,0x2b5,0,"%s\n\t(light->type) = %i");
       }
-      pfVar2 = (float *)uVar4;
-      if ((pfVar2[1] - *(float *)(pcVar3 + 0x2c)) * (pfVar2[1] - *(float *)(pcVar3 + 0x2c)) +
-          (*pfVar2 - *(float *)(pcVar3 + 0x28)) * (*pfVar2 - *(float *)(pcVar3 + 0x28)) +
-          (pfVar2[2] - *(float *)(pcVar3 + 0x30)) * (pfVar2[2] - *(float *)(pcVar3 + 0x30)) <
-          (float)((double)*(float *)(pcVar3 + 0x34) + dVar12) *
-          (float)((double)*(float *)(pcVar3 + 0x34) + dVar12)) {
-        if ((*pcVar3 != '\x02') || ((double)*(float *)(pcVar3 + 0x40) < dVar11)) {
-          bVar6 = false;
+      if ((param_1[1] - *(float *)(pcVar2 + 0x2c)) * (param_1[1] - *(float *)(pcVar2 + 0x2c)) +
+          (*param_1 - *(float *)(pcVar2 + 0x28)) * (*param_1 - *(float *)(pcVar2 + 0x28)) +
+          (param_1[2] - *(float *)(pcVar2 + 0x30)) * (param_1[2] - *(float *)(pcVar2 + 0x30)) <
+          (float)((double)*(float *)(pcVar2 + 0x34) + dVar8) *
+          (float)((double)*(float *)(pcVar2 + 0x34) + dVar8)) {
+        if ((*pcVar2 != '\x02') || ((double)*(float *)(pcVar2 + 0x40) < dVar9)) {
+          bVar3 = false;
         }
         else {
-          bVar6 = CullSphereFromCone((float *)(pcVar3 + 0x28),(float *)(pcVar3 + 0x10),
-                                     *(float *)(pcVar3 + 0x40),(float *)uVar7,(float)dVar12);
+          bVar3 = CullSphereFromCone((float *)(pcVar2 + 0x28),(float *)(pcVar2 + 0x10),
+                                     *(float *)(pcVar2 + 0x40),(float *)lVar4,(float)dVar8);
         }
       }
       else {
-        bVar6 = true;
+        bVar3 = true;
       }
-      if (bVar6 == false) {
-        uVar7 = uVar4;
-        bVar6 = R_CullSphereFromLightRegion
-                          ((GfxLightRegion *)
-                           ((int)&(rgp.world)->lightRegion->hullCount + (int)lVar8),
-                           (float *)(pcVar3 + 0x28),pfVar2,(float)dVar12);
-        if (!bVar6) {
-          uVar5 = __restgprlr_17(uVar10);
-          return uVar5;
-        }
+      if ((bVar3 == false) &&
+         (lVar4 = (longlong)(int)param_1,
+         bVar3 = R_CullSphereFromLightRegion
+                           ((GfxLightRegion *)
+                            ((int)&(rgp.world)->lightRegion->hullCount + (int)lVar5),
+                            (float *)(pcVar2 + 0x28),param_1,(float)dVar8), !bVar3)) {
+        return (uint)uVar7;
       }
-      uVar10 = uVar10 + 1;
-      lVar9 = lVar9 + 0x50;
-      lVar8 = lVar8 + 8;
-    } while ((uVar10 & 0xffffffff) < (ulonglong)(rgp.world)->primaryLightCount);
+      uVar7 = uVar7 + 1;
+      lVar6 = lVar6 + 0x50;
+      lVar5 = lVar5 + 8;
+    } while ((uVar7 & 0xffffffff) < (ulonglong)(rgp.world)->primaryLightCount);
   }
-  uVar5 = __restgprlr_17(0);
-  return uVar5;
+  return 0;
 }
 

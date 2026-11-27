@@ -2,6 +2,9 @@
 
 // 828CB290  BitUnpackCBuffer  (<external>/Xenon/mar09/core/private/xam/codecs/nci/dec/src/bitunpackc.c:98)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void BitUnpackCBuffer(C_BUFFER_TYPE *param_1,uchar *param_2,int param_3)
 
 {
@@ -10,26 +13,22 @@ void BitUnpackCBuffer(C_BUFFER_TYPE *param_1,uchar *param_2,int param_3)
   ushort uVar3;
   ushort *puVar4;
   byte *pbVar5;
-  int *piVar6;
-  longlong lVar7;
-  ulonglong uVar8;
-  byte *pbVar9;
-  int iVar10;
+  uint uVar6;
+  byte *pbVar7;
+  int iVar8;
   
-  lVar7 = (longlong)param_3;
-  piVar6 = (int *)__savegprlr_29(param_1);
-  puVar4 = (ushort *)piVar6[2];
-  pbVar5 = (byte *)piVar6[3];
-  iVar10 = (1 << ((uint)lVar7 & 0x3f)) + -1;
+  puVar4 = param_1->pBufferReadByteOffset;
+  pbVar5 = param_1->pBufferReadBitOffset;
+  iVar8 = (1 << (param_3 & 0x3fU)) + -1;
   bVar1 = *pbVar5;
-  pbVar9 = (byte *)((uint)*puVar4 + *piVar6);
-  uVar2 = *(ushort *)(piVar6 + 1);
-  uVar8 = (ulonglong)bVar1 + lVar7;
-  if ((uVar8 & 0xfffffff8) == 0) {
-    *param_2 = (byte)iVar10 & *pbVar9 >> (bVar1 & 0x3f);
-    if ((int)uVar8 == 8) {
+  pbVar7 = param_1->pBuffer + *puVar4;
+  uVar2 = param_1->wBufferSize;
+  uVar6 = (uint)bVar1 + param_3;
+  if ((uVar6 & 0xfffffff8) == 0) {
+    *param_2 = *pbVar7 >> (bVar1 & 0x3f) & (byte)iVar8;
+    if (uVar6 == 8) {
       uVar3 = *puVar4;
-      uVar8 = 0;
+      uVar6 = 0;
       *puVar4 = uVar3 + 1;
       if (uVar2 <= (ushort)(uVar3 + 1)) {
         *puVar4 = 0;
@@ -37,20 +36,19 @@ void BitUnpackCBuffer(C_BUFFER_TYPE *param_1,uchar *param_2,int param_3)
     }
   }
   else {
-    *param_2 = *pbVar9 >> (bVar1 & 0x3f);
-    pbVar9 = pbVar9 + 1;
+    *param_2 = *pbVar7 >> (bVar1 & 0x3f);
+    pbVar7 = pbVar7 + 1;
     uVar3 = *puVar4;
     *puVar4 = uVar3 + 1;
     if (uVar2 <= (ushort)(uVar3 + 1)) {
       *puVar4 = 0;
-      pbVar9 = (byte *)*piVar6;
+      pbVar7 = param_1->pBuffer;
     }
-    uVar8 = uVar8 - 8;
-    *param_2 = (byte)((iVar10 >> (8 - bVar1 & 0x3f) & (uint)*pbVar9) << (8 - bVar1 & 0x3f)) |
+    uVar6 = uVar6 - 8;
+    *param_2 = (byte)((iVar8 >> (8 - bVar1 & 0x3f) & (uint)*pbVar7) << (8 - bVar1 & 0x3f)) |
                *param_2;
   }
-  *pbVar5 = (byte)uVar8;
-  __restgprlr_29();
+  *pbVar5 = (byte)uVar6;
   return;
 }
 

@@ -2,54 +2,43 @@
 
 // 828A2720  WideCharToMultiByte  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/xrtl/widechartomultibyte.c:26)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 int WideCharToMultiByte(uint param_1,ulong param_2,wchar_t *param_3,int param_4,char *param_5,
                        int param_6,char *param_7,int *param_8)
 
 {
-  int iVar1;
-  uint uVar2;
+  uint uVar1;
+  int iVar2;
   ulong uVar3;
-  longlong lVar4;
-  int iVar5;
-  longlong lVar6;
-  longlong lVar7;
-  ulonglong uVar8;
-  ulonglong uVar9;
   
-  uVar8 = (ulonglong)(int)param_8;
-  lVar7 = (longlong)param_6;
-  lVar6 = (longlong)(int)param_5;
-  uVar9 = (ulonglong)param_4;
-  lVar4 = (longlong)(int)param_3;
-  iVar1 = __savegprlr_26(param_1,param_2);
-  if ((uVar8 & 0xffffffff) != 0) {
-    *(undefined4 *)uVar8 = 0;
+  if (param_8 != (int *)0x0) {
+    *param_8 = 0;
   }
-  iVar5 = (int)lVar7;
-  if (iVar1 == 0xfde9) {
-    iVar1 = UnicodeToUTF8((wchar_t *)lVar4,(int)uVar9,(char *)lVar6,iVar5);
-    uVar9 = (ulonglong)iVar1;
+  if (param_1 == 0xfde9) {
+    param_4 = UnicodeToUTF8(param_3,param_4,param_5,param_6);
   }
   else {
-    if ((int)uVar9 == -1) {
-      uVar2 = wcslen((wchar_t *)lVar4);
-      uVar9 = (longlong)(int)uVar2 + 1;
+    if (param_4 == -1) {
+      uVar1 = wcslen(param_3);
+      param_4 = uVar1 + 1;
     }
-    if (iVar5 != 0) {
-      if (((int)uVar9 < 0) || (iVar5 < (int)uVar9)) {
+    if (param_6 != 0) {
+      if ((param_4 < 0) || (param_6 < param_4)) {
         uVar3 = 0x7a;
       }
       else {
-        iVar1 = RtlUnicodeToMultiByteN(lVar6,lVar7,0,lVar4,(uVar9 & 0x7fffffff) << 1);
-        if (-1 < iVar1) goto LAB_828a27e8;
+        iVar2 = RtlUnicodeToMultiByteN(param_5,param_6,0,param_3,param_4 << 1);
+        if (-1 < iVar2) {
+          return param_4;
+        }
         uVar3 = RtlNtStatusToDosError();
       }
       SetLastError(uVar3);
-      uVar9 = 0;
+      param_4 = 0;
     }
   }
-LAB_828a27e8:
-  iVar1 = __restgprlr_26(uVar9);
-  return iVar1;
+  return param_4;
 }
 

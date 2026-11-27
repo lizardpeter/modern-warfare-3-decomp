@@ -45,6 +45,8 @@ void CM_InitThreadData(int param_1)
 
 // 824C3BE0  CM_InitAllThreadData  (qcommon/cm_load.cpp:89)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void CM_InitAllThreadData(void)
@@ -56,7 +58,6 @@ void CM_InitAllThreadData(void)
   uint uVar4;
   TraceThreadInfo *pTVar5;
   
-  __savegprlr_23();
   CM_InitThreadData(0);
   CM_InitThreadData(1);
   uVar4 = 2;
@@ -81,13 +82,14 @@ void CM_InitAllThreadData(void)
   g_traceThreadInfo[5].checkcount.partitions =
        Hunk_Alloc(cm.partitionCount << 2,"CM_InitThreadData",0x1c);
   g_traceThreadInfo[5].results = Hunk_AllocAlign(0x40,0x80,"CM_InitThreadData",0x1c);
-  __restgprlr_23();
   return;
 }
 
 
 // 824C3CD8  CM_LoadMapData_FastFile  (qcommon/cm_load.cpp:147)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "XAssetType": Some values do not have unique names */
 /* WARNING: Enum "nodeType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
@@ -97,12 +99,10 @@ void CM_InitAllThreadData(void)
 void CM_LoadMapData_FastFile(char *param_1)
 
 {
-  char *pcVar1;
-  XAssetHeader XVar2;
+  XAssetHeader XVar1;
   
-  pcVar1 = (char *)__savegprlr_29(param_1);
-  XVar2 = DB_FindXAssetHeader(ASSET_TYPE_CLIPMAP,pcVar1,1);
-  if ((clipMap_t *)XVar2.physPreset != &cm) {
+  XVar1 = DB_FindXAssetHeader(ASSET_TYPE_CLIPMAP,param_1,1);
+  if ((clipMap_t *)XVar1.physPreset != &cm) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_load.cpp",0x9b,0,
                     "%s");
   }
@@ -110,7 +110,6 @@ void CM_LoadMapData_FastFile(char *param_1)
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_load.cpp",0x9c,0,
                     "%s");
   }
-  __restgprlr_29();
   return;
 }
 
@@ -132,6 +131,8 @@ void CM_LoadMap(char *param_1,int *param_2)
 
 // 824C3DE0  CM_LoadAddonMapEnts_FastFile  (qcommon/cm_load.cpp:193)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "XAssetType": Some values do not have unique names */
 /* WARNING: Enum "nodeType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
@@ -141,10 +142,7 @@ void CM_LoadMap(char *param_1,int *param_2)
 void CM_LoadAddonMapEnts_FastFile(char *param_1)
 
 {
-  char *pcVar1;
-  
-  pcVar1 = (char *)__savegprlr_28(param_1);
-  g_addonMapEnts = (AddonMapEnts *)DB_FindXAssetHeader(ASSET_TYPE_ADDON_MAP_ENTS,pcVar1,0);
+  g_addonMapEnts = (AddonMapEnts *)DB_FindXAssetHeader(ASSET_TYPE_ADDON_MAP_ENTS,param_1,0);
   if ((PhysPreset *)g_addonMapEnts == (PhysPreset *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_load.cpp",0xc5,0,
                     "%s");
@@ -158,7 +156,6 @@ void CM_LoadAddonMapEnts_FastFile(char *param_1)
     cm.cmodels = g_addonMapEnts->cmodels;
     cm.numSubModels = g_addonMapEnts->numSubModels;
   }
-  __restgprlr_28();
   return;
 }
 
@@ -197,69 +194,71 @@ void CM_LoadAddOnMapEnts(char *param_1)
 
 // 824C3F68  CM_Unload  (qcommon/cm_load.cpp:266)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void CM_Unload(clipMap_t *param_1)
 
 {
-  undefined4 uVar1;
-  undefined4 *puVar2;
+  char *pcVar1;
   
-  puVar2 = (undefined4 *)__savegprlr_28(param_1);
-  if (puVar2[1] == 0) {
+  if (param_1->isInUse == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_load.cpp",0x10e,0,
                     "%s");
   }
-  uVar1 = *puVar2;
+  pcVar1 = param_1->name;
   Com_Memset(&cm,0,0x100);
-  *puVar2 = uVar1;
-  if (puVar2[1] != 0) {
+  param_1->name = pcVar1;
+  if (param_1->isInUse != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_load.cpp",0x113,0,
                     "%s");
   }
-  __restgprlr_28();
   return;
 }
 
 
 // 824C4000  CM_BrushModelBounds  (qcommon/cm_load.cpp:284)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void CM_BrushModelBounds(uint param_1,Bounds *param_2)
 
 {
-  uint uVar1;
-  longlong lVar2;
-  int *piVar3;
-  longlong lVar4;
+  float *pfVar1;
+  int *piVar2;
+  longlong lVar3;
   
-  lVar2 = (longlong)(int)param_2;
-  uVar1 = __savegprlr_29(param_1);
-  if (cm.numSubModels <= uVar1) {
+  if (cm.numSubModels <= param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_load.cpp",0x12a,0,
                     "bmodelIndex doesn\'t index cm.numSubModels\n\t%i not in [0, %i)");
   }
-  lVar2 = lVar2 + -4;
-  lVar4 = 6;
-  piVar3 = &cm.cmodels[uVar1 - 1].leaf.leafBrushNode;
+  pfVar1 = param_2[-1].halfSize + 2;
+  lVar3 = 6;
+  piVar2 = &cm.cmodels[param_1 - 1].leaf.leafBrushNode;
   do {
-    piVar3 = piVar3 + 1;
-    lVar2 = lVar2 + 4;
-    *(int *)lVar2 = *piVar3;
-    lVar4 = lVar4 + -1;
-  } while (lVar4 != 0);
-  __restgprlr_29();
+    piVar2 = piVar2 + 1;
+    pfVar1 = pfVar1 + 1;
+    *pfVar1 = (float)*piVar2;
+    lVar3 = lVar3 + -1;
+  } while (lVar3 != 0);
   return;
 }
 
 
 // 824C4268  CM_TriggerModelBounds  (qcommon/cm_load.cpp:307)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void CM_TriggerModelBounds(uint param_1,Bounds *param_2)
 
 {
-  uint uVar1;
-  MapTriggers *pMVar2;
-  TriggerModel *pTVar3;
+  MapTriggers *pMVar1;
+  TriggerModel *pTVar2;
+  longlong lVar3;
   longlong lVar4;
-  longlong lVar5;
+  uint uVar5;
   longlong lVar6;
   longlong lVar7;
   longlong lVar8;
@@ -272,32 +271,31 @@ void CM_TriggerModelBounds(uint param_1,Bounds *param_2)
   undefined1 auVar15 [16];
   undefined1 auVar16 [16];
   
-  lVar4 = (longlong)(int)param_2;
-  uVar1 = __savegprlr_28(param_1);
-  pMVar2 = CM_TriggerSource(uVar1);
-  pTVar3 = CM_GetTriggerModel(uVar1);
-  if (pTVar3->hullCount == 0) {
+  lVar3 = (longlong)(int)param_2;
+  pMVar1 = CM_TriggerSource(param_1);
+  pTVar2 = CM_GetTriggerModel(param_1);
+  if (pTVar2->hullCount == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_load.cpp",0x13c,0,
                     "%s");
   }
-  lVar5 = lVar4 + -4;
-  lVar7 = (ulonglong)pTVar3->firstHull * 0x20 + ZEXT48(pMVar2->hulls);
+  lVar4 = lVar3 + -4;
+  lVar7 = (ulonglong)pTVar2->firstHull * 0x20 + ZEXT48(pMVar1->hulls);
   lVar8 = 6;
   lVar6 = lVar7 + -4;
   do {
     lVar6 = lVar6 + 4;
-    lVar5 = lVar5 + 4;
-    *(undefined4 *)lVar5 = *(undefined4 *)lVar6;
+    lVar4 = lVar4 + 4;
+    *(undefined4 *)lVar4 = *(undefined4 *)lVar6;
     lVar8 = lVar8 + -1;
   } while (lVar8 != 0);
-  uVar1 = 1;
-  if (1 < pTVar3->hullCount) {
+  uVar5 = 1;
+  if (1 < pTVar2->hullCount) {
     do {
-      auVar16 = loadVectorRightIndexed(lVar4 + 0x10);
-      auVar15 = loadVectorLeftIndexed(lVar4);
-      uVar1 = uVar1 + 1;
-      auVar14 = loadVectorRightIndexed(lVar4 + 0x1c);
-      auVar13 = loadVectorLeftIndexed(lVar4 + 0xc);
+      auVar16 = loadVectorRightIndexed(lVar3 + 0x10);
+      auVar15 = loadVectorLeftIndexed(lVar3);
+      uVar5 = uVar5 + 1;
+      auVar14 = loadVectorRightIndexed(lVar3 + 0x1c);
+      auVar13 = loadVectorLeftIndexed(lVar3 + 0xc);
       auVar12 = loadVectorLeftIndexed(lVar7 + 0x20);
       auVar11 = loadVectorRightIndexed(lVar7 + 0x30);
       auVar10 = loadVectorLeftIndexed(lVar7 + 0x2c);
@@ -318,19 +316,18 @@ void CM_TriggerModelBounds(uint param_1,Bounds *param_2)
       auVar15 = vectorSplatWord(auVar9,0);
       auVar13 = vectorSplatWord(auVar9,1);
       auVar9 = vectorSplatWord(auVar9,2);
-      storeVectorElementWordIndexed(auVar15,lVar4);
-      storeVectorElementWordIndexed(auVar13,lVar4 + 4);
-      storeVectorElementWordIndexed(auVar9,lVar4 + 8);
+      storeVectorElementWordIndexed(auVar15,lVar3);
+      storeVectorElementWordIndexed(auVar13,lVar3 + 4);
+      storeVectorElementWordIndexed(auVar9,lVar3 + 8);
       auVar15 = vectorSplatWord(auVar10,0);
       auVar13 = vectorSplatWord(auVar10,1);
       auVar9 = vectorSplatWord(auVar10,2);
-      storeVectorElementWordIndexed(auVar15,lVar4 + 0xc);
-      storeVectorElementWordIndexed(auVar13,lVar4 + 0x10);
-      storeVectorElementWordIndexed(auVar9,lVar4 + 0x14);
+      storeVectorElementWordIndexed(auVar15,lVar3 + 0xc);
+      storeVectorElementWordIndexed(auVar13,lVar3 + 0x10);
+      storeVectorElementWordIndexed(auVar9,lVar3 + 0x14);
       lVar7 = lVar7 + 0x20;
-    } while (uVar1 < pTVar3->hullCount);
+    } while (uVar5 < pTVar2->hullCount);
   }
-  __restgprlr_28();
   return;
 }
 
@@ -363,22 +360,22 @@ uint CM_TriggerModelCount(void)
 
 // 824C40D0  CM_TriggerSource  (qcommon/cm_load.cpp:350)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 MapTriggers * CM_TriggerSource(uint param_1)
 
 {
   MapEnts *pMVar1;
-  uint uVar2;
-  MapTriggers *pMVar3;
   
-  uVar2 = __savegprlr_28(param_1);
   pMVar1 = cm.mapEnts;
-  if (((cm.mapEnts)->trigger).count <= uVar2) {
+  if (((cm.mapEnts)->trigger).count <= param_1) {
     if (g_addonMapEnts == (AddonMapEnts *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_load.cpp",0x163,0
                       ,"%s");
     }
     pMVar1 = (MapEnts *)g_addonMapEnts;
-    if ((g_addonMapEnts->trigger).count <= uVar2 - ((cm.mapEnts)->trigger).count) {
+    if ((g_addonMapEnts->trigger).count <= param_1 - ((cm.mapEnts)->trigger).count) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_load.cpp",0x166,0
                       ,
                       "triggerIndex doesn\'t index g_addonMapEnts->trigger.count\n\t%i not in [0, %i)"
@@ -386,38 +383,34 @@ MapTriggers * CM_TriggerSource(uint param_1)
       pMVar1 = (MapEnts *)g_addonMapEnts;
     }
   }
-  pMVar3 = (MapTriggers *)__restgprlr_28(&pMVar1->trigger);
-  return pMVar3;
+  return &pMVar1->trigger;
 }
 
 
 // 824C4178  CM_GetTriggerModel  (qcommon/cm_load.cpp:369)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 TriggerModel * CM_GetTriggerModel(uint param_1)
 
 {
-  ulonglong uVar1;
-  TriggerModel *pTVar2;
+  uint uVar1;
   
-  uVar1 = __savegprlr_28(param_1);
-  if ((uVar1 & 0xffffffff) < (ulonglong)((cm.mapEnts)->trigger).count) {
-    pTVar2 = (TriggerModel *)
-             __restgprlr_28(ZEXT48(((cm.mapEnts)->trigger).models) + (uVar1 & 0x1fffffff) * 8);
-    return pTVar2;
+  if (param_1 < ((cm.mapEnts)->trigger).count) {
+    return ((cm.mapEnts)->trigger).models + param_1;
   }
   if (g_addonMapEnts == (AddonMapEnts *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_load.cpp",0x176,0,
                     "%s");
   }
-  uVar1 = uVar1 - ((cm.mapEnts)->trigger).count;
-  if ((ulonglong)(g_addonMapEnts->trigger).count <= (uVar1 & 0xffffffff)) {
+  uVar1 = param_1 - ((cm.mapEnts)->trigger).count;
+  if ((g_addonMapEnts->trigger).count <= uVar1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_load.cpp",0x179,0,
                     "triggerIndex doesn\'t index g_addonMapEnts->trigger.count\n\t%i not in [0, %i)"
                    );
   }
-  pTVar2 = (TriggerModel *)
-           __restgprlr_28(ZEXT48((g_addonMapEnts->trigger).models) + (uVar1 & 0x1fffffff) * 8);
-  return pTVar2;
+  return (g_addonMapEnts->trigger).models + uVar1;
 }
 
 

@@ -2,54 +2,48 @@
 
 // 8291C748  _beginthreadex  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/threadex.c:102)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
+
 uint _beginthreadex(void *param_1,uint param_2,_func___cdecl_uint_void_ptr *param_3,void *param_4,
                    uint param_5,uint *param_6)
 
 {
-  void *pvVar1;
-  int *piVar2;
-  _tiddata *p_Var3;
+  int *piVar1;
+  _tiddata *p_Var2;
+  void *pvVar3;
   ulong uVar4;
-  uint uVar5;
-  ulonglong uVar6;
-  ulonglong uVar7;
-  ulong *puVar8;
   ulong auStack_50 [20];
   
-  uVar7 = (ulonglong)(int)param_6;
-  uVar6 = (ulonglong)(int)param_3;
-  pvVar1 = (void *)__savegprlr_24(param_1);
-  puVar8 = (ulong *)uVar7;
   uVar4 = 0;
-  if ((uVar6 & 0xffffffff) == 0) {
-    piVar2 = _errno();
-    *piVar2 = 0x16;
+  if (param_3 == (_func___cdecl_uint_void_ptr *)0x0) {
+    piVar1 = _errno();
+    *piVar1 = 0x16;
     _invalid_parameter_noinfo();
   }
   else {
     __set_flsgetvalue();
-    p_Var3 = calloc(1,0xc4);
-    if (p_Var3 != (_tiddata *)0x0) {
-      _initptd(p_Var3,(threadlocaleinfostruct *)0x0);
-      p_Var3->_initaddr = (void *)uVar6;
-      p_Var3->_initarg = param_4;
-      p_Var3->_thandle = 0xffffffff;
-      if ((uVar7 & 0xffffffff) == 0) {
-        puVar8 = auStack_50;
+    p_Var2 = calloc(1,0xc4);
+    if (p_Var2 != (_tiddata *)0x0) {
+      _initptd(p_Var2,(threadlocaleinfostruct *)0x0);
+      p_Var2->_initaddr = param_3;
+      p_Var2->_initarg = param_4;
+      p_Var2->_thandle = 0xffffffff;
+      if (param_6 == (uint *)0x0) {
+        param_6 = auStack_50;
       }
-      pvVar1 = CreateThread(pvVar1,param_2,_threadstartex,p_Var3,param_5,puVar8);
-      if (pvVar1 != (void *)0x0) goto LAB_8291c818;
+      pvVar3 = CreateThread(param_1,param_2,_threadstartex,p_Var2,param_5,param_6);
+      if (pvVar3 != (void *)0x0) {
+        return (uint)pvVar3;
+      }
       uVar4 = GetLastError();
     }
-    free(p_Var3);
+    free(p_Var2);
     if (uVar4 != 0) {
       _dosmaperr(uVar4);
     }
   }
-  pvVar1 = (void *)0x0;
-LAB_8291c818:
-  uVar5 = __restgprlr_24(pvVar1);
-  return uVar5;
+  return 0;
 }
 
 

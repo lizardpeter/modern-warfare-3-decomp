@@ -2,44 +2,45 @@
 
 // 82946190  pushmalloc  (line unknown)
 
-void pushmalloc(undefined8 param_1,longlong param_2)
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
+
+void pushmalloc(undefined4 param_1,longlong param_2)
 
 {
-  ulonglong uVar1;
-  int iVar2;
+  int iVar1;
+  ulonglong uVar2;
   int iVar3;
   undefined *puVar4;
   undefined *puVar5;
-  undefined4 uVar6;
-  undefined *puVar7;
+  undefined *puVar6;
   
-  uVar6 = __savegprlr_24();
-  puVar7 = PTR_DAT_8489beb4;
+  puVar6 = PTR_DAT_8489beb4;
   puVar5 = PTR_DAT_8489beb8;
   if (DAT_8489bebc == DAT_8489beb0) {
-    puVar7 = (undefined *)radmalloc(DAT_8489bebc << 4);
-    iVar2 = DAT_8489bebc;
+    puVar6 = (undefined *)radmalloc(DAT_8489bebc << 4);
+    iVar1 = DAT_8489bebc;
     puVar4 = PTR_DAT_8489beb4;
     iVar3 = DAT_8489bebc * 8;
     memcpy();
     memcpy();
-    DAT_8489bebc = iVar2 << 1;
-    puVar5 = puVar7 + iVar3;
+    DAT_8489bebc = iVar1 << 1;
+    puVar5 = puVar6 + iVar3;
     if (DAT_8489bebc != 0x40) {
       radfree(puVar4);
     }
   }
   PTR_DAT_8489beb8 = puVar5;
-  PTR_DAT_8489beb4 = puVar7;
-  puVar7 = PTR_DAT_8489beb4;
+  PTR_DAT_8489beb4 = puVar6;
+  puVar6 = PTR_DAT_8489beb4;
   iVar3 = DAT_8489beb0 * 4;
   DAT_8489beb0 = DAT_8489beb0 + 1;
-  uVar1 = param_2 + 0x1fU & 0xffffffe0;
-  iVar2 = (((DAT_8489beac >> 5) - (int)(uVar1 >> 5)) + 1 & 0x1f) * 0x20 + (int)uVar1;
-  DAT_8489beac = DAT_8489beac + iVar2;
-  *(int *)(PTR_DAT_8489beb8 + iVar3) = iVar2;
-  *(undefined4 *)(puVar7 + iVar3) = uVar6;
-  __restgprlr_24();
+  uVar2 = param_2 + 0x1fU & 0xffffffe0;
+  iVar1 = ((uint)((((ulonglong)(DAT_8489beac >> 5) - (uVar2 >> 5)) + 1 & 0xffffffff) << 5) & 0x3e0)
+          + (int)uVar2;
+  *(int *)(PTR_DAT_8489beb8 + iVar3) = iVar1;
+  *(undefined4 *)(puVar6 + iVar3) = param_1;
+  DAT_8489beac = DAT_8489beac + iVar1;
   return;
 }
 

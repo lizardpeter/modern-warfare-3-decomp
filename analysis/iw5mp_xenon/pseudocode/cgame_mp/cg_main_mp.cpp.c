@@ -62,17 +62,16 @@ int CG_GetClientNumForLocalClient(int param_1)
 
 // 822D5990  CG_IsRagdollTrajectory  (cgame_mp/cg_main_mp.cpp:549)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 
 bool CG_IsRagdollTrajectory(trajectory_t *param_1)
 
 {
-  int *piVar1;
-  undefined1 uVar2;
-  undefined8 uVar3;
+  bool bVar1;
   
-  piVar1 = (int *)__savegprlr_28(param_1);
-  if (piVar1 == (int *)0x0) {
+  if (param_1 == (trajectory_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_main_mp.cpp",0x226
                     ,0,"%s");
   }
@@ -80,17 +79,20 @@ bool CG_IsRagdollTrajectory(trajectory_t *param_1)
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_main_mp.cpp",0x227
                     ,0,"%s");
   }
-  if ((((ragdoll_enable->current).enabled == false) || (*piVar1 < 10)) || (uVar3 = 1, 0xc < *piVar1)
-     ) {
-    uVar3 = 0;
+  if ((((ragdoll_enable->current).enabled == false) || ((int)param_1->trType < 10)) ||
+     (bVar1 = true, 0xc < (int)param_1->trType)) {
+    bVar1 = false;
   }
-  uVar2 = __restgprlr_28(uVar3);
-  return (bool)uVar2;
+  return bVar1;
 }
 
 
 // 822D5A38  CG_RegisterDvars  (cgame_mp/cg_main_mp.cpp:579)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_15 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_15 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void CG_RegisterDvars(void)
@@ -119,8 +121,6 @@ void CG_RegisterDvars(void)
   double dVar21;
   double dVar22;
   
-  __savegprlr_28();
-  __savefpr_15();
   cg_drawGun = Dvar_RegisterBool("cg_drawGun",true,4,"Draw the view model");
   cg_cursorHints =
        Dvar_RegisterInt("cg_cursorHints",4,0,4,0,
@@ -812,8 +812,6 @@ void CG_RegisterDvars(void)
   cg_ColorBlind_MyParty =
        Dvar_RegisterColor("cg_ColorBlind_MyParty",(float)dVar22,(float)dVar21,0.7,(float)dVar20,0,
                           "the motion tracker after being detected");
-  __restfpr_15();
-  __restgprlr_28();
   return;
 }
 
@@ -843,6 +841,8 @@ void TRACK_cg_main(void)
 
 // 822D8098  CG_AllocateClientMemory  (cgame_mp/cg_main_mp.cpp:1061)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
@@ -850,27 +850,24 @@ void TRACK_cg_main(void)
 void CG_AllocateClientMemory(int param_1)
 
 {
-  longlong lVar1;
-  int iVar2;
-  dvar_t *pdVar3;
-  dvar_t **ppdVar4;
+  dvar_t *pdVar1;
+  dvar_t **ppdVar2;
+  longlong lVar3;
   
-  lVar1 = __savegprlr_29(param_1);
-  iVar2 = (int)lVar1;
-  cg_maxLocalClients = iVar2;
-  cgArray = PMem_AllocFromSource_NoDebug(iVar2 * 0x108600,4,4,PMEM_SOURCE_DATABASE);
-  cgsArray = PMem_AllocFromSource_NoDebug(iVar2 * 0x4098,4,4,PMEM_SOURCE_DATABASE);
-  if (0 < iVar2) {
-    ppdVar4 = &cg_showmiss;
+  lVar3 = (longlong)param_1;
+  cg_maxLocalClients = param_1;
+  cgArray = PMem_AllocFromSource_NoDebug(param_1 * 0x108600,4,4,PMEM_SOURCE_DATABASE);
+  cgsArray = PMem_AllocFromSource_NoDebug(param_1 * 0x4098,4,4,PMEM_SOURCE_DATABASE);
+  if (0 < param_1) {
+    ppdVar2 = &cg_showmiss;
     do {
-      pdVar3 = PMem_AllocFromSource_NoDebug(0x6000,4,4,PMEM_SOURCE_DATABASE);
-      lVar1 = lVar1 + -1;
-      ppdVar4 = ppdVar4 + 1;
-      *ppdVar4 = pdVar3;
-    } while (lVar1 != 0);
+      pdVar1 = PMem_AllocFromSource_NoDebug(0x6000,4,4,PMEM_SOURCE_DATABASE);
+      lVar3 = lVar3 + -1;
+      ppdVar2 = ppdVar2 + 1;
+      *ppdVar2 = pdVar1;
+    } while (lVar3 != 0);
   }
-  cg_entitiesArray = PMem_AllocFromSource_NoDebug(iVar2 * 0xf6000,4,4,PMEM_SOURCE_DATABASE);
-  __restgprlr_29();
+  cg_entitiesArray = PMem_AllocFromSource_NoDebug(param_1 * 0xf6000,4,4,PMEM_SOURCE_DATABASE);
   return;
 }
 
@@ -924,6 +921,8 @@ int CG_GetGameTime(LocalClientNum_t param_1)
 
 // 822D8270  CG_CloseSplashes  (cgame_mp/cg_main_mp.cpp:1112)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -931,29 +930,26 @@ int CG_GetGameTime(LocalClientNum_t param_1)
 void CG_CloseSplashes(LocalClientNum_t param_1)
 
 {
-  LocalClientNum_t LVar1;
-  cg_s *pcVar2;
-  char *pcVar3;
-  longlong lVar4;
-  int *piVar5;
+  cg_s *pcVar1;
+  char *pcVar2;
+  longlong lVar3;
+  int *piVar4;
   StringTable *local_50 [20];
   
-  LVar1 = __savegprlr_25(param_1);
-  pcVar2 = CG_GetLocalClientGlobals(LVar1);
-  lVar4 = 4;
-  piVar5 = &pcVar2->splashes[0].splashStartTime;
+  pcVar1 = CG_GetLocalClientGlobals(param_1);
+  lVar3 = 4;
+  piVar4 = &pcVar1->splashes[0].splashStartTime;
   do {
-    if ((*piVar5 != 0) && (piVar5[1] + *piVar5 < pcVar2->time)) {
-      *piVar5 = 0;
+    if ((*piVar4 != 0) && (piVar4[1] + *piVar4 < pcVar1->time)) {
+      *piVar4 = 0;
       StringTable_GetAsset("mp/splashTable.csv",local_50);
-      pcVar3 = StringTable_GetColumnValueForRow
-                         (local_50[0],((HudSplash *)(piVar5 + -1))->splashIndex,0xb);
-      UI_CloseMenu(LVar1,pcVar3);
+      pcVar2 = StringTable_GetColumnValueForRow
+                         (local_50[0],((HudSplash *)(piVar4 + -1))->splashIndex,0xb);
+      UI_CloseMenu(param_1,pcVar2);
     }
-    lVar4 = lVar4 + -1;
-    piVar5 = piVar5 + 4;
-  } while (lVar4 != 0);
-  __restgprlr_25();
+    lVar3 = lVar3 + -1;
+    piVar4 = piVar4 + 4;
+  } while (lVar3 != 0);
   return;
 }
 
@@ -1021,6 +1017,8 @@ void CG_Frame(LocalClientNum_t param_1)
 
 // 822D8408  CG_GetDObjOrientation  (cgame_mp/cg_main_mp.cpp:1178)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
@@ -1028,54 +1026,46 @@ void CG_Frame(LocalClientNum_t param_1)
 void CG_GetDObjOrientation(LocalClientNum_t param_1,int param_2,float (*param_3) [3],float *param_4)
 
 {
-  float *pfVar1;
-  LocalClientNum_t LVar2;
-  centity_s *pcVar3;
-  cg_s *pcVar4;
-  ulonglong uVar5;
-  ulonglong uVar6;
+  centity_s *pcVar1;
+  cg_s *pcVar2;
   
-  uVar6 = (ulonglong)(int)param_4;
-  uVar5 = (ulonglong)(int)param_3;
-  LVar2 = __savegprlr_25(param_1);
   if ((param_2 < 0) || (0x801 < param_2)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_main_mp.cpp",0x49e
                     ,0,"%s\n\t(dobjHandle) = %i");
   }
-  if ((uVar5 & 0xffffffff) == 0) {
+  if (param_3 == (float (*) [3])0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_main_mp.cpp",0x49f
                     ,0,"%s");
   }
-  if ((uVar6 & 0xffffffff) == 0) {
+  if (param_4 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_main_mp.cpp",0x4a0
                     ,0,"%s");
   }
-  pfVar1 = (float *)uVar6;
   if (param_2 < 0x800) {
-    pcVar3 = CG_GetEntity(LVar2,param_2);
-    AnglesToAxis((pcVar3->pose).angles,(float (*) [3])uVar5);
-    *pfVar1 = (pcVar3->pose).origin[0];
-    pfVar1[1] = (pcVar3->pose).origin[1];
-    pfVar1[2] = (pcVar3->pose).origin[2];
-    __restgprlr_25();
+    pcVar1 = CG_GetEntity(param_1,param_2);
+    AnglesToAxis((pcVar1->pose).angles,param_3);
+    *param_4 = (pcVar1->pose).origin[0];
+    param_4[1] = (pcVar1->pose).origin[1];
+    param_4[2] = (pcVar1->pose).origin[2];
     return;
   }
   if (0xef < param_2 + -0x800) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_main_mp.cpp",0x4a9
                     ,0,"%s\n\t(dobjHandle) = %i");
   }
-  pcVar4 = CG_GetLocalClientGlobals(LVar2);
-  AxisCopy(pcVar4->viewModelAxis,(float (*) [3])uVar5);
-  *pfVar1 = pcVar4->viewModelAxis[3][0];
-  pfVar1[1] = pcVar4->viewModelAxis[3][1];
-  pfVar1[2] = pcVar4->viewModelAxis[3][2];
-  __restgprlr_25();
+  pcVar2 = CG_GetLocalClientGlobals(param_1);
+  AxisCopy(pcVar2->viewModelAxis,param_3);
+  *param_4 = pcVar2->viewModelAxis[3][0];
+  param_4[1] = pcVar2->viewModelAxis[3][1];
+  param_4[2] = pcVar2->viewModelAxis[3][2];
   return;
 }
 
 
 // 822D8568  CG_CopyEntityOrientation  (cgame_mp/cg_main_mp.cpp:1203)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 
@@ -1083,30 +1073,21 @@ void CG_CopyEntityOrientation
                (LocalClientNum_t param_1,int param_2,float *param_3,float (*param_4) [3])
 
 {
-  LocalClientNum_t LVar1;
-  centity_s *pcVar2;
-  ulonglong uVar3;
-  float *pfVar4;
-  ulonglong uVar5;
+  centity_s *pcVar1;
   
-  uVar5 = (ulonglong)(int)param_4;
-  uVar3 = (ulonglong)(int)param_3;
-  LVar1 = __savegprlr_26(param_1);
-  if ((uVar3 & 0xffffffff) == 0) {
+  if (param_3 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_main_mp.cpp",0x4b6
                     ,0,"%s");
   }
-  if ((uVar5 & 0xffffffff) == 0) {
+  if (param_4 == (float (*) [3])0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_main_mp.cpp",0x4b7
                     ,0,"%s");
   }
-  pcVar2 = CG_GetEntity(LVar1,param_2);
-  pfVar4 = (float *)uVar3;
-  *pfVar4 = (pcVar2->pose).origin[0];
-  pfVar4[1] = (pcVar2->pose).origin[1];
-  pfVar4[2] = (pcVar2->pose).origin[2];
-  AnglesToAxis((pcVar2->pose).angles,(float (*) [3])uVar5);
-  __restgprlr_26();
+  pcVar1 = CG_GetEntity(param_1,param_2);
+  *param_3 = (pcVar1->pose).origin[0];
+  param_3[1] = (pcVar1->pose).origin[1];
+  param_3[2] = (pcVar1->pose).origin[2];
+  AnglesToAxis((pcVar1->pose).angles,param_4);
   return;
 }
 
@@ -1130,6 +1111,8 @@ void CG_CopySoundEntityOrientation
 
 // 822D8640  CG_GetSoundEntityOrientation  (cgame_mp/cg_main_mp.cpp:1233)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -1137,38 +1120,36 @@ void CG_CopySoundEntityOrientation
 void CG_GetSoundEntityOrientation(SndEntHandle param_1,float *param_2,float (*param_3) [3])
 
 {
-  uint uVar1;
-  bool bVar4;
-  cg_s *pcVar2;
-  LocalClientNum_t LVar3;
+  bool bVar3;
+  cg_s *pcVar1;
+  LocalClientNum_t LVar2;
   
-  uVar1 = __savegprlr_26(param_1.handle);
-  if (((uVar1 & 0x20000) == 0) && (LVar3 = LOCAL_CLIENT_0, 0 < cl_maxLocalClients)) {
+  if (((param_1.handle & 0x20000U) == 0) && (LVar2 = LOCAL_CLIENT_0, 0 < cl_maxLocalClients)) {
     do {
-      bVar4 = CL_IsLocalClientActive(LVar3);
-      if ((bVar4) && (pcVar2 = CG_GetLocalClientGlobals(LVar3), pcVar2->inKillCam == 0)) {
-        if (uVar1 >> 0x14 < 0x800) goto LAB_822d86f4;
+      bVar3 = CL_IsLocalClientActive(LVar2);
+      if ((bVar3) && (pcVar1 = CG_GetLocalClientGlobals(LVar2), pcVar1->inKillCam == 0)) {
+        if ((uint)param_1.handle >> 0x14 < 0x800) goto LAB_822d86f4;
         goto LAB_822d86c4;
       }
-      LVar3 = LVar3 + LOCAL_CLIENT_1;
-    } while ((int)LVar3 < cl_maxLocalClients);
+      LVar2 = LVar2 + LOCAL_CLIENT_1;
+    } while ((int)LVar2 < cl_maxLocalClients);
   }
-  if (uVar1 >> 0x14 < 0x800) {
-    LVar3 = uVar1 >> 0x12 & LOCAL_CLIENT_3;
+  if ((uint)param_1.handle >> 0x14 < 0x800) {
+    LVar2 = (uint)param_1.handle >> 0x12 & LOCAL_CLIENT_3;
 LAB_822d86f4:
-    CG_CopyEntityOrientation(LVar3,uVar1 >> 0x14,param_2,param_3);
-    __restgprlr_26();
+    CG_CopyEntityOrientation(LVar2,(uint)param_1.handle >> 0x14,param_2,param_3);
     return;
   }
 LAB_822d86c4:
-  CG_CopyClientSideSoundEntityOrientation((uVar1 >> 0x14) - 0x800,param_2,param_3);
-  __restgprlr_26();
+  CG_CopyClientSideSoundEntityOrientation(((uint)param_1.handle >> 0x14) - 0x800,param_2,param_3);
   return;
 }
 
 
 // 822D8710  CG_GetPredictedPlayerState  (cgame_mp/cg_main_mp.cpp:1261)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -1176,23 +1157,18 @@ LAB_822d86c4:
 playerState_s * CG_GetPredictedPlayerState(LocalClientNum_t param_1)
 
 {
-  LocalClientNum_t LVar1;
-  playerState_s *ppVar2;
-  
-  LVar1 = __savegprlr_29(param_1);
   if (cgArray == (cg_s *)0x0) {
-    CL_GetLocalClientConnectionState(LVar1);
+    CL_GetLocalClientConnectionState(param_1);
     va("Trying to access unallocated cgArray when connectionstate is %i for localClientNum %i");
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\../cgame_mp/cg_local_mp.h"
                     ,0x682,0,"%s\n\t%s");
   }
-  if (LOCAL_CLIENT_3 < LVar1) {
+  if (LOCAL_CLIENT_3 < param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\../cgame_mp/cg_local_mp.h"
                     ,0x684,0,
                     "localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)");
   }
-  ppVar2 = (playerState_s *)__restgprlr_29((longlong)(int)LVar1 * 0x108600 + ZEXT48(cgArray));
-  return ppVar2;
+  return &cgArray[param_1].predictedPlayerState;
 }
 
 
@@ -1267,23 +1243,23 @@ XAnim_s * CG_GetHelicopterAnims(void)
 
 // 822D87B0  CG_RegisterGraphics  (cgame_mp/cg_main_mp.cpp:1324)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void CG_RegisterGraphics(LocalClientNum_t param_1,char *param_2)
 
 {
-  LocalClientNum_t LVar1;
-  cgs_t *pcVar2;
-  char *pcVar3;
-  XModel *pXVar4;
-  FxEffectDef *pFVar5;
-  int iVar6;
-  shellshock_parms_t *psVar7;
-  int iVar8;
-  XModel **ppXVar9;
-  FxEffectDef **ppFVar10;
+  cgs_t *pcVar1;
+  char *pcVar2;
+  XModel *pXVar3;
+  FxEffectDef *pFVar4;
+  int iVar5;
+  shellshock_parms_t *psVar6;
+  int iVar7;
+  XModel **ppXVar8;
+  FxEffectDef **ppFVar9;
   
-  LVar1 = __savegprlr_23(param_1);
   cgMedia.lagometerMaterial = Material_RegisterHandle("lagometer",7);
   cgMedia.youInKillCamMaterial = Material_RegisterHandle("headiconyouinkillcam",7);
   Material_RegisterHandle("killiconmelee",7);
@@ -1418,59 +1394,59 @@ void CG_RegisterGraphics(LocalClientNum_t param_1,char *param_2)
   cgMedia.balloonMaterial = Material_RegisterHandle("headicontalkballoon",7);
   CG_RegisterScoreboardGraphics();
   CG_PrecacheWeaponAnimations();
-  pcVar2 = CG_GetLocalClientStaticGlobals(LVar1);
-  iVar8 = 1;
-  ppXVar9 = pcVar2->gameModels;
+  pcVar1 = CG_GetLocalClientStaticGlobals(param_1);
+  iVar7 = 1;
+  ppXVar8 = pcVar1->gameModels;
   do {
-    ppXVar9 = ppXVar9 + 1;
-    pcVar3 = CL_GetConfigString(iVar8 + 0x404);
-    if (*pcVar3 != '\0') {
-      pXVar4 = R_RegisterModel(pcVar3);
-      *ppXVar9 = pXVar4;
+    ppXVar8 = ppXVar8 + 1;
+    pcVar2 = CL_GetConfigString(iVar7 + 0x404);
+    if (*pcVar2 != '\0') {
+      pXVar3 = R_RegisterModel(pcVar2);
+      *ppXVar8 = pXVar3;
     }
-    iVar8 = iVar8 + 1;
-  } while (iVar8 < 0x400);
+    iVar7 = iVar7 + 1;
+  } while (iVar7 < 0x400);
   memset();
-  iVar8 = 1;
-  ppFVar10 = cgMedia.fxs + 1;
+  iVar7 = 1;
+  ppFVar9 = cgMedia.fxs + 1;
   do {
-    pcVar3 = CL_GetConfigString(iVar8 + 0x9a4);
-    if (*pcVar3 != '\0') {
-      pFVar5 = FX_Register(pcVar3);
-      *ppFVar10 = pFVar5;
-      if (pFVar5 == (FxEffectDef *)0x0) {
+    pcVar2 = CL_GetConfigString(iVar7 + 0x9a4);
+    if (*pcVar2 != '\0') {
+      pFVar4 = FX_Register(pcVar2);
+      *ppFVar9 = pFVar4;
+      if (pFVar4 == (FxEffectDef *)0x0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_main_mp.cpp",
                         0x5bb,0,"%s");
       }
     }
-    ppFVar10 = ppFVar10 + 1;
-    iVar8 = iVar8 + 1;
-  } while ((int)ppFVar10 < -0x7d5c31e0);
-  pFVar5 = FX_Register("props/american_smoke_grenade_mp");
-  pcVar2->smokeGrenadeFx = pFVar5;
-  if (pFVar5 == (FxEffectDef *)0x0) {
+    ppFVar9 = ppFVar9 + 1;
+    iVar7 = iVar7 + 1;
+  } while ((int)ppFVar9 < -0x7d5c31e0);
+  pFVar4 = FX_Register("props/american_smoke_grenade_mp");
+  pcVar1->smokeGrenadeFx = pFVar4;
+  if (pFVar4 == (FxEffectDef *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_main_mp.cpp",0x5bf
                     ,0,"%s");
   }
-  iVar8 = 1;
+  iVar7 = 1;
   do {
-    pcVar3 = CL_GetConfigString(iVar8 + 0xba4);
-    if (*pcVar3 != '\0') {
-      iVar6 = BG_LoadShellShockDvars(pcVar3);
-      if (iVar6 == 0) {
+    pcVar2 = CL_GetConfigString(iVar7 + 0xba4);
+    if (*pcVar2 != '\0') {
+      iVar5 = BG_LoadShellShockDvars(pcVar2);
+      if (iVar5 == 0) {
         Com_Error(ERR_DROP,"\x15couldn\'t register shell shock \'%s\' -- see console\n");
       }
-      psVar7 = BG_GetShellshockParms(iVar8);
-      BG_SetShellShockParmsFromDvars(psVar7);
+      psVar6 = BG_GetShellshockParms(iVar7);
+      BG_SetShellShockParmsFromDvars(psVar6);
     }
-    iVar8 = iVar8 + 1;
-  } while (iVar8 < 0x10);
-  iVar8 = BG_LoadShellShockDvars("hold_breath");
-  if (iVar8 == 0) {
+    iVar7 = iVar7 + 1;
+  } while (iVar7 < 0x10);
+  iVar7 = BG_LoadShellShockDvars("hold_breath");
+  if (iVar7 == 0) {
     Com_Error(ERR_DROP,"Couldn\'t find shock file [hold_breath.shock]\n");
   }
-  BG_SetShellShockParmsFromDvars(&pcVar2->holdBreathParams);
-  CG_RegisterRumbles(LVar1);
+  BG_SetShellShockParmsFromDvars(&pcVar1->holdBreathParams);
+  CG_RegisterRumbles(param_1);
   cgMedia.fx = CG_RegisterImpactEffects(param_2);
   if (cgMedia.fx == (FxImpactTable *)0x0) {
     Com_Error(ERR_DROP,"\x15Error reading CSV files in the fx directory to identify impact effects")
@@ -1494,7 +1470,6 @@ void CG_RegisterGraphics(LocalClientNum_t param_1,char *param_2)
   cgMedia.glassPieceBreak = FX_Register("code/glass_shatter_piece");
   cgMedia.glassShatter = FX_Register("code/glass_shatter_64x64");
   cgMedia.glassShatterSmall = FX_Register("code/glass_shatter_32x32");
-  __restgprlr_23();
   return;
 }
 
@@ -1514,113 +1489,111 @@ void CG_StartAmbient(LocalClientNum_t param_1)
 
 // 822D9210  CG_StartAmbientWithConfig  (cgame_mp/cg_main_mp.cpp:1526)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void CG_StartAmbientWithConfig(LocalClientNum_t param_1,int param_2)
 
 {
   char cVar1;
-  LocalClientNum_t LVar2;
+  char *pcVar2;
   char *pcVar3;
-  char *pcVar4;
-  uint uVar5;
-  int iVar6;
-  snd_alias_system_t sVar7;
-  snd_alias_t *psVar8;
-  IMAGE_DOS_HEADER *pIVar9;
-  char *pcVar10;
-  snd_alias_system_t sVar11;
-  int iVar12;
+  uint uVar4;
+  int iVar5;
+  snd_alias_system_t sVar6;
+  snd_alias_t *psVar7;
+  IMAGE_DOS_HEADER *pIVar8;
+  char *pcVar9;
+  snd_alias_system_t sVar10;
+  int iVar11;
+  double dVar12;
   double dVar13;
   double dVar14;
-  double dVar15;
   
-  LVar2 = __savegprlr_26(param_1);
   if (((param_2 != 0x3d6) && (param_2 != 0x3d7)) && (param_2 != 0x3d8)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_main_mp.cpp",0x5f7
                     ,0,"%s\n\t(configStringIndex) = %i");
   }
-  pcVar3 = CL_GetConfigString(param_2);
-  pcVar4 = pcVar3;
+  pcVar2 = CL_GetConfigString(param_2);
+  pcVar3 = pcVar2;
   do {
-    cVar1 = *pcVar4;
-    pcVar4 = pcVar4 + 1;
+    cVar1 = *pcVar3;
+    pcVar3 = pcVar3 + 1;
   } while (cVar1 != '\0');
-  if ((int)pcVar4 - (int)pcVar3 == 1) goto LAB_822d94a8;
-  pcVar4 = Info_ValueForKey(pcVar3,"t");
-  uVar5 = atoi(pcVar4);
-  uVar5 = -((int)uVar5 >> 0x1f) - 1U & uVar5;
-  pcVar4 = Info_ValueForKey(pcVar3,"v");
-  iVar6 = atoi(pcVar4);
-  pIVar9 = &IMAGE_DOS_HEADER_82000000;
-  dVar14 = (double)((float)(longlong)iVar6 * 0.001);
-  dVar13 = 1.0;
-  if ((float)(dVar14 - 1.0) < 0.0) {
-    dVar13 = dVar14;
+  if ((int)pcVar3 - (int)pcVar2 == 1) {
+    return;
   }
-  dVar15 = 0.0;
-  if (-dVar14 < 0.0) {
-    dVar15 = dVar13;
+  pcVar3 = Info_ValueForKey(pcVar2,"t");
+  uVar4 = atoi(pcVar3);
+  uVar4 = -((int)uVar4 >> 0x1f) - 1U & uVar4;
+  pcVar3 = Info_ValueForKey(pcVar2,"v");
+  iVar5 = atoi(pcVar3);
+  pIVar8 = &IMAGE_DOS_HEADER_82000000;
+  dVar13 = (double)((float)(longlong)iVar5 * 0.001);
+  dVar12 = 1.0;
+  if ((float)(dVar13 - 1.0) < 0.0) {
+    dVar12 = dVar13;
   }
-  pcVar4 = Info_ValueForKey(pcVar3,"e");
-  sVar7 = atoi(pcVar4);
-  if ((int)sVar7 < 1) {
-    sVar11 = SASYS_UI;
-    if (0 < (int)sVar7) goto LAB_822d934c;
+  dVar14 = 0.0;
+  if (-dVar13 < 0.0) {
+    dVar14 = dVar12;
+  }
+  pcVar3 = Info_ValueForKey(pcVar2,"e");
+  sVar6 = atoi(pcVar3);
+  if ((int)sVar6 < 1) {
+    sVar10 = SASYS_UI;
+    if (0 < (int)sVar6) goto LAB_822d934c;
   }
   else {
-    sVar7 = SASYS_CGAME;
+    sVar6 = SASYS_CGAME;
 LAB_822d934c:
-    sVar11 = sVar7;
+    sVar10 = sVar6;
   }
-  pcVar4 = Info_ValueForKey(pcVar3,"s");
-  iVar6 = atoi(pcVar4);
-  if (iVar6 < 1) {
-    iVar12 = 0;
-    if (0 < iVar6) goto LAB_822d9384;
+  pcVar3 = Info_ValueForKey(pcVar2,"s");
+  iVar5 = atoi(pcVar3);
+  if (iVar5 < 1) {
+    iVar11 = 0;
+    if (iVar5 < 1) goto LAB_822d9388;
   }
   else {
-    iVar6 = 1;
-LAB_822d9384:
-    iVar12 = iVar6;
+    iVar5 = 1;
   }
-  pcVar3 = Info_ValueForKey(pcVar3,"n");
-  pcVar4 = pcVar3;
+  iVar11 = iVar5;
+LAB_822d9388:
+  pcVar2 = Info_ValueForKey(pcVar2,"n");
+  pcVar3 = pcVar2;
   do {
-    cVar1 = *pcVar4;
-    pcVar4 = pcVar4 + 1;
+    cVar1 = *pcVar3;
+    pcVar3 = pcVar3 + 1;
   } while (cVar1 != '\0');
-  pcVar10 = pcVar3;
-  if ((int)pcVar4 - (int)pcVar3 == 1) {
-    SND_StopAmbient(uVar5);
-    __restgprlr_26();
+  pcVar9 = pcVar2;
+  if ((int)pcVar3 - (int)pcVar2 == 1) {
+    SND_StopAmbient(uVar4);
     return;
   }
   do {
-    cVar1 = *pcVar10;
-    pcVar10 = pcVar10 + 1;
+    cVar1 = *pcVar9;
+    pcVar9 = pcVar9 + 1;
   } while (cVar1 != '\0');
-  pcVar4 = pcVar3;
-  if (((int)pcVar10 - (int)pcVar3 != 1) && (iVar12 != 0)) {
-    SND_StopAmbientAlias(pcVar3,uVar5);
-    __restgprlr_26();
+  pcVar3 = pcVar2;
+  if (((int)pcVar9 - (int)pcVar2 != 1) && (iVar11 != 0)) {
+    SND_StopAmbientAlias(pcVar2,uVar4);
     return;
   }
   do {
-    cVar1 = *pcVar4;
-    pcVar4 = pcVar4 + 1;
+    cVar1 = *pcVar3;
+    pcVar3 = pcVar3 + 1;
   } while (cVar1 != '\0');
-  if (((int)pcVar4 - (int)pcVar3 == 1) || (iVar12 != 0)) {
-    pIVar9 = (IMAGE_DOS_HEADER *)0x0;
+  if (((int)pcVar3 - (int)pcVar2 == 1) || (iVar11 != 0)) {
+    pIVar8 = (IMAGE_DOS_HEADER *)0x0;
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_main_mp.cpp",0x62b
                     ,0,"%s");
   }
-  psVar8 = CL_PickSoundAlias(pcVar3);
-  iVar6 = R_PopRemoteScreenUpdate();
-  SND_PlayAmbientAlias(LVar2,psVar8,(float)dVar15,(int)pIVar9,uVar5,sVar11);
-  R_PushRemoteScreenUpdate(iVar6);
-LAB_822d94a8:
-  __restgprlr_26();
+  psVar7 = CL_PickSoundAlias(pcVar2);
+  iVar5 = R_PopRemoteScreenUpdate();
+  SND_PlayAmbientAlias(param_1,psVar7,(float)dVar14,(int)pIVar8,uVar4,sVar10);
+  R_PushRemoteScreenUpdate(iVar5);
   return;
 }
 
@@ -1667,22 +1640,21 @@ int CG_PlayClientSoundAliasByName(LocalClientNum_t param_1,int param_2)
 
 // 822DB8D0  CG_PlayEntitySoundAlias  (cgame_mp/cg_main_mp.cpp:1619)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 
 int CG_PlayEntitySoundAlias(LocalClientNum_t param_1,int param_2,snd_alias_list_t *param_3)
 
 {
-  LocalClientNum_t LVar1;
-  centity_s *pcVar2;
-  int iVar3;
+  centity_s *pcVar1;
+  int iVar2;
   
-  LVar1 = __savegprlr_29(param_1);
-  pcVar2 = CG_GetEntity(LVar1,param_2);
-  iVar3 = CG_PlaySoundAliasScaled(LVar1,param_2,(pcVar2->nextState).lerp.pos.trBase,param_3,1.0,1.0)
-  ;
-  iVar3 = __restgprlr_29(iVar3);
-  return iVar3;
+  pcVar1 = CG_GetEntity(param_1,param_2);
+  iVar2 = CG_PlaySoundAliasScaled
+                    (param_1,param_2,(pcVar1->nextState).lerp.pos.trBase,param_3,1.0,1.0);
+  return iVar2;
 }
 
 
@@ -1704,6 +1676,8 @@ int CG_PlayEntitySoundAliasCompassPing
 
 // 822DB940  CG_PlayEntitySoundAliasFootstep  (cgame_mp/cg_main_mp.cpp:1643)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
@@ -1714,69 +1688,63 @@ int CG_PlayEntitySoundAliasFootstep
 {
   team_t tVar1;
   bool bVar2;
-  LocalClientNum_t LVar3;
-  cg_s *pcVar4;
-  int iVar5;
-  ulonglong uVar6;
-  dvar_t *pdVar7;
-  double dVar8;
-  double dVar9;
+  cg_s *pcVar3;
+  int iVar4;
+  dvar_t *pdVar5;
+  double dVar6;
+  double dVar7;
   
-  uVar6 = (ulonglong)param_4;
-  LVar3 = __savegprlr_25(param_1);
-  pcVar4 = CG_GetLocalClientGlobals(LVar3);
+  pcVar3 = CG_GetLocalClientGlobals(param_1);
   if ((param_2->flags & 1U) == 0) {
     va("entnum %i, isPlayerView: %s");
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_main_mp.cpp",0x675
                     ,0,"%s\n\t%s");
   }
-  dVar8 = 1.0;
-  if (pcVar4 == (cg_s *)0xfffffb14) {
+  dVar6 = 1.0;
+  if (pcVar3 == (cg_s *)0xfffffb14) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\../bgame/bg_perks.h",
                     0x4f,0,"%s");
   }
-  dVar9 = dVar8;
-  if (((pcVar4->predictedPlayerState).perks[1] & 0x80) != 0) {
-    pdVar7 = perk_footstepVolumePlayer;
-    if ((uVar6 & 0xff) == 0) {
-      tVar1 = (pcVar4->bgs).clientinfo[(param_2->nextState).clientNum].team;
+  dVar7 = dVar6;
+  if (((pcVar3->predictedPlayerState).perks[1] & 0x80) != 0) {
+    pdVar5 = perk_footstepVolumePlayer;
+    if (!param_4) {
+      tVar1 = (pcVar3->bgs).clientinfo[(param_2->nextState).clientNum].team;
       if ((tVar1 == TEAM_FREE) ||
          (bVar2 = true,
-         tVar1 != (pcVar4->bgs).clientinfo[(pcVar4->predictedPlayerState).clientNum].team)) {
+         tVar1 != (pcVar3->bgs).clientinfo[(pcVar3->predictedPlayerState).clientNum].team)) {
         bVar2 = false;
       }
-      pdVar7 = perk_footstepVolumeEnemy;
+      pdVar5 = perk_footstepVolumeEnemy;
       if (bVar2) {
-        pdVar7 = perk_footstepVolumeAlly;
+        pdVar5 = perk_footstepVolumeAlly;
       }
     }
-    dVar9 = (double)(pdVar7->current).value;
+    dVar7 = (double)(pdVar5->current).value;
   }
-  iVar5 = CG_PlaySoundAliasScaled
-                    (LVar3,(param_2->nextState).number,(param_2->nextState).lerp.pos.trBase,param_3,
-                     (float)dVar9,(float)dVar8);
-  iVar5 = __restgprlr_25(iVar5);
-  return iVar5;
+  iVar4 = CG_PlaySoundAliasScaled
+                    (param_1,(param_2->nextState).number,(param_2->nextState).lerp.pos.trBase,
+                     param_3,(float)dVar7,(float)dVar6);
+  return iVar4;
 }
 
 
 // 822DBAC8  CG_PlayEntitySoundAliasByName  (cgame_mp/cg_main_mp.cpp:1679)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 
 int CG_PlayEntitySoundAliasByName(LocalClientNum_t param_1,int param_2,int param_3)
 
 {
-  LocalClientNum_t LVar1;
-  centity_s *pcVar2;
-  int iVar3;
+  centity_s *pcVar1;
+  int iVar2;
   
-  LVar1 = __savegprlr_29(param_1);
-  pcVar2 = CG_GetEntity(LVar1,param_2);
-  iVar3 = CG_PlaySoundAliasByName(LVar1,param_2,(pcVar2->nextState).lerp.pos.trBase,param_3);
-  iVar3 = __restgprlr_29(iVar3);
-  return iVar3;
+  pcVar1 = CG_GetEntity(param_1,param_2);
+  iVar2 = CG_PlaySoundAliasByName(param_1,param_2,(pcVar1->nextState).lerp.pos.trBase,param_3);
+  return iVar2;
 }
 
 
@@ -1814,26 +1782,27 @@ void CG_StopSoundsOnEnt(LocalClientNum_t param_1,int param_2)
 
 // 822D9528  CG_StopSoundAliasByName  (cgame_mp/cg_main_mp.cpp:1709)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void CG_StopSoundAliasByName(LocalClientNum_t param_1,int param_2,int param_3)
 
 {
-  LocalClientNum_t LVar1;
-  char *pcVar2;
-  SndEntHandle SVar3;
+  char *pcVar1;
+  SndEntHandle SVar2;
   
-  LVar1 = __savegprlr_29(param_1);
-  pcVar2 = CL_GetConfigString(param_3 + 0x824);
-  SVar3 = CG_GenerateSndEntHandle(LVar1,param_2);
-  SND_StopSoundAliasOnEnt(SVar3,pcVar2);
-  __restgprlr_29();
+  pcVar1 = CL_GetConfigString(param_3 + 0x824);
+  SVar2 = CG_GenerateSndEntHandle(param_1,param_2);
+  SND_StopSoundAliasOnEnt(SVar2,pcVar1);
   return;
 }
 
 
 // 822D9568  CG_StopClientSoundAliasByName  (cgame_mp/cg_main_mp.cpp:1720)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -1842,24 +1811,23 @@ void CG_StopClientSoundAliasByName(LocalClientNum_t param_1,int param_2)
 
 {
   int iVar1;
-  LocalClientNum_t LVar2;
-  cg_s *pcVar3;
-  char *pcVar4;
-  SndEntHandle SVar5;
+  cg_s *pcVar2;
+  char *pcVar3;
+  SndEntHandle SVar4;
   
-  LVar2 = __savegprlr_29(param_1);
-  pcVar3 = CG_GetLocalClientGlobals(LVar2);
-  iVar1 = (pcVar3->predictedPlayerState).clientNum;
-  pcVar4 = CL_GetConfigString(param_2 + 0x824);
-  SVar5 = CG_GenerateSndEntHandle(LVar2,iVar1);
-  SND_StopSoundAliasOnEnt(SVar5,pcVar4);
-  __restgprlr_29();
+  pcVar2 = CG_GetLocalClientGlobals(param_1);
+  iVar1 = (pcVar2->predictedPlayerState).clientNum;
+  pcVar3 = CL_GetConfigString(param_2 + 0x824);
+  SVar4 = CG_GenerateSndEntHandle(param_1,iVar1);
+  SND_StopSoundAliasOnEnt(SVar4,pcVar3);
   return;
 }
 
 
 // 822D95B0  CG_ShouldPlaySoundOnLocalClient  (cgame_mp/cg_main_mp.cpp:1729)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -1868,75 +1836,63 @@ bool CG_ShouldPlaySoundOnLocalClient
                (LocalClientNum_t param_1,int param_2,float *param_3,char *param_4)
 
 {
-  LocalClientNum_t LVar1;
-  int iVar2;
-  undefined1 uVar6;
-  cg_s *pcVar3;
-  bool bVar7;
-  float fVar4;
-  int iVar5;
-  LocalClientNum_t LVar8;
-  float *pfVar9;
+  int iVar1;
+  cg_s *pcVar2;
+  bool bVar4;
+  int iVar3;
+  LocalClientNum_t LVar5;
+  float *pfVar6;
   
-  LVar1 = __savegprlr_25(param_1);
-  iVar2 = CL_GetLocalClientActiveCount();
-  if (iVar2 == 1) {
-    uVar6 = __restgprlr_25();
-    return (bool)uVar6;
+  iVar1 = CL_GetLocalClientActiveCount();
+  if (iVar1 == 1) {
+    return true;
   }
-  pcVar3 = CG_GetLocalClientGlobals(LVar1);
-  if ((pcVar3->inKillCam == 0) && (LVar8 = LOCAL_CLIENT_0, 0 < cl_maxLocalClients)) {
+  pcVar2 = CG_GetLocalClientGlobals(param_1);
+  if ((pcVar2->inKillCam == 0) && (LVar5 = LOCAL_CLIENT_0, 0 < cl_maxLocalClients)) {
     do {
-      bVar7 = CL_IsLocalClientActive(LVar8);
-      if ((bVar7) && (fVar4 = (float)CG_GetClientNumForLocalClient(LVar8), fVar4 == (float)param_2))
-      {
-        uVar6 = __restgprlr_25(LVar1 == LVar8);
-        return (bool)uVar6;
+      bVar4 = CL_IsLocalClientActive(LVar5);
+      if ((bVar4) && (iVar1 = CG_GetClientNumForLocalClient(LVar5), iVar1 == param_2)) {
+        return param_1 == LVar5;
       }
-      LVar8 = LVar8 + LOCAL_CLIENT_1;
-    } while ((int)LVar8 < cl_maxLocalClients);
+      LVar5 = LVar5 + LOCAL_CLIENT_1;
+    } while ((int)LVar5 < cl_maxLocalClients);
   }
-  iVar2 = 0;
-  pfVar9 = cg_SoundPlaybackTracking[0].origin + 2;
+  iVar1 = 0;
+  pfVar6 = cg_SoundPlaybackTracking[0].origin + 2;
   while( true ) {
-    if ((char *)pfVar9[1] == (char *)0x0) {
-      uVar6 = __restgprlr_25(iVar2 < 0x40);
-      return (bool)uVar6;
+    if ((char *)pfVar6[1] == (char *)0x0) {
+      return iVar1 < 0x40;
     }
-    if ((((param_2 == ((CgSoundPlaybackTrackingInfo *)(pfVar9 + -3))->entitynum) &&
-         ((float)pcVar3->inKillCam == pfVar9[2])) && (*param_3 == pfVar9[-2])) &&
-       (((param_3[1] == pfVar9[-1] && (param_3[2] == *pfVar9)) &&
-        (iVar5 = I_stricmp(param_4,(char *)pfVar9[1]), iVar5 == 0)))) break;
-    pfVar9 = pfVar9 + 6;
-    iVar2 = iVar2 + 1;
-    if (-0x7d5c2bad < (int)pfVar9) {
-      uVar6 = __restgprlr_25(0);
-      return (bool)uVar6;
+    if ((((param_2 == ((CgSoundPlaybackTrackingInfo *)(pfVar6 + -3))->entitynum) &&
+         ((float)pcVar2->inKillCam == pfVar6[2])) && (*param_3 == pfVar6[-2])) &&
+       (((param_3[1] == pfVar6[-1] && (param_3[2] == *pfVar6)) &&
+        (iVar3 = I_stricmp(param_4,(char *)pfVar6[1]), iVar3 == 0)))) break;
+    pfVar6 = pfVar6 + 6;
+    iVar1 = iVar1 + 1;
+    if (-0x7d5c2bad < (int)pfVar6) {
+      return false;
     }
   }
-  uVar6 = __restgprlr_25(0);
-  return (bool)uVar6;
+  return false;
 }
 
 
 // 822D9720  CG_SubtitlePrint  (cgame_mp/cg_main_mp.cpp:1772)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void CG_SubtitlePrint(int param_1,snd_alias_t *param_2)
 
 {
   int iVar1;
-  int iVar3;
-  cgs_t *pcVar4;
-  ulonglong uVar5;
-  int iVar6;
-  double dVar7;
+  cgs_t *pcVar3;
+  int iVar4;
+  double dVar5;
   dvar_t *pdVar2;
   
-  uVar5 = (ulonglong)(int)param_2;
-  iVar3 = __savegprlr_25(param_1);
-  if ((uVar5 & 0xffffffff) == 0) {
+  if (param_2 == (snd_alias_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_main_mp.cpp",0x6f0
                     ,0,"%s");
   }
@@ -1952,27 +1908,28 @@ void CG_SubtitlePrint(int param_1,snd_alias_t *param_2)
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_main_mp.cpp",0x6f3
                     ,0,"%s");
   }
-  if ((iVar3 != 0) && (*(int *)((int)uVar5 + 4) != 0)) {
-    pcVar4 = CG_GetLocalClientStaticGlobals(LOCAL_CLIENT_0);
+  if ((param_1 != 0) && (param_2->subtitle != (char *)0x0)) {
+    pcVar3 = CG_GetLocalClientStaticGlobals(LOCAL_CLIENT_0);
     pdVar2 = cg_subtitleWidthStandard;
-    if (1.3333334 < pcVar4->viewAspect) {
+    if (1.3333334 < pcVar3->viewAspect) {
       pdVar2 = cg_subtitleWidthWidescreen;
     }
     iVar1 = (pdVar2->current).integer;
-    dVar7 = floor((double)((cg_subtitleMinTime->current).value * 1000.0 + 0.5));
-    iVar6 = (int)dVar7;
-    if ((int)dVar7 < iVar3) {
-      iVar6 = iVar3;
+    dVar5 = floor((double)((cg_subtitleMinTime->current).value * 1000.0 + 0.5));
+    iVar4 = (int)dVar5;
+    if ((int)dVar5 < param_1) {
+      iVar4 = param_1;
     }
-    CL_SubtitlePrint(LOCAL_CLIENT_0,*(char **)((int)uVar5 + 4),iVar6,iVar1);
+    CL_SubtitlePrint(LOCAL_CLIENT_0,param_2->subtitle,iVar4,iVar1);
   }
-  __restgprlr_25();
   return;
 }
 
 
 // 822D9888  CG_SubtitleSndLengthNotify  (cgame_mp/cg_main_mp.cpp:1794)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* void __cdecl CG_SubtitleSndLengthNotify(int,void *) */
 
@@ -1980,16 +1937,12 @@ void CG_SubtitleSndLengthNotify(int param_1,void *param_2)
 
 {
   int iVar1;
-  int iVar3;
-  cgs_t *pcVar4;
-  ulonglong uVar5;
-  int iVar6;
-  double dVar7;
+  cgs_t *pcVar3;
+  int iVar4;
+  double dVar5;
   dvar_t *pdVar2;
   
-  uVar5 = (ulonglong)(int)param_2;
-  iVar3 = __savegprlr_25(param_1);
-  if ((uVar5 & 0xffffffff) == 0) {
+  if (param_2 == (void *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_main_mp.cpp",0x6f0
                     ,0,"%s");
   }
@@ -2005,27 +1958,28 @@ void CG_SubtitleSndLengthNotify(int param_1,void *param_2)
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_main_mp.cpp",0x6f3
                     ,0,"%s");
   }
-  if ((iVar3 != 0) && (*(int *)((int)uVar5 + 4) != 0)) {
-    pcVar4 = CG_GetLocalClientStaticGlobals(LOCAL_CLIENT_0);
+  if ((param_1 != 0) && (*(int *)((int)param_2 + 4) != 0)) {
+    pcVar3 = CG_GetLocalClientStaticGlobals(LOCAL_CLIENT_0);
     pdVar2 = cg_subtitleWidthStandard;
-    if (1.3333334 < pcVar4->viewAspect) {
+    if (1.3333334 < pcVar3->viewAspect) {
       pdVar2 = cg_subtitleWidthWidescreen;
     }
     iVar1 = (pdVar2->current).integer;
-    dVar7 = floor((double)((cg_subtitleMinTime->current).value * 1000.0 + 0.5));
-    iVar6 = (int)dVar7;
-    if ((int)dVar7 < iVar3) {
-      iVar6 = iVar3;
+    dVar5 = floor((double)((cg_subtitleMinTime->current).value * 1000.0 + 0.5));
+    iVar4 = (int)dVar5;
+    if ((int)dVar5 < param_1) {
+      iVar4 = param_1;
     }
-    CL_SubtitlePrint(LOCAL_CLIENT_0,*(char **)((int)uVar5 + 4),iVar6,iVar1);
+    CL_SubtitlePrint(LOCAL_CLIENT_0,*(char **)((int)param_2 + 4),iVar4,iVar1);
   }
-  __restgprlr_25();
   return;
 }
 
 
 // 822D9890  CG_EntityCustomSndLengthNotify  (cgame_mp/cg_main_mp.cpp:1800)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 
@@ -2035,12 +1989,10 @@ void CG_EntityCustomSndLengthNotify(int param_1,void *param_2)
   bool bVar1;
   ushort uVar2;
   void *pvVar3;
-  int iVar4;
-  centity_s *pcVar5;
+  centity_s *pcVar4;
   ushort uStack0000001c;
   ushort uStack0000001e;
   
-  iVar4 = __savegprlr_28(param_1);
   uStack0000001c = (ushort)((uint)param_2 >> 0x10);
   uVar2 = uStack0000001c;
   bVar1 = 0x11 < uStack0000001c;
@@ -2058,26 +2010,26 @@ void CG_EntityCustomSndLengthNotify(int param_1,void *param_2)
                     "customData.entityData[ENTITYCUSTOMDATA_ENTNUM] doesn\'t index MAX_GENTITIES\n\t%i not in [0, %i)"
                    );
   }
-  pcVar5 = CG_GetEntity((uint)uVar2,(uint)pvVar3 & 0xffff);
-  if (pcVar5 == (centity_s *)0x0) {
+  pcVar4 = CG_GetEntity((uint)uVar2,(uint)pvVar3 & 0xffff);
+  if (pcVar4 == (centity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_main_mp.cpp",0x710
                     ,1,"%s");
   }
-  if ((pcVar5->nextState).eType != 0xb) {
+  if ((pcVar4->nextState).eType != 0xb) {
     Com_DPrintf(9,
                 "WARNING: CG_EntityCustomSndLengthNotify received for unsupported entity type %i.\n"
                );
-    __restgprlr_28();
     return;
   }
-  CG_Turret_SoundNotify(pcVar5,iVar4);
-  __restgprlr_28();
+  CG_Turret_SoundNotify(pcVar4,param_1);
   return;
 }
 
 
 // 822D9978  CG_AddFXSoundAlias  (cgame_mp/cg_main_mp.cpp:1824)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -2086,26 +2038,25 @@ void CG_AddFXSoundAlias(LocalClientNum_t param_1,float *param_2,snd_alias_list_t
                        int param_4)
 
 {
-  LocalClientNum_t LVar1;
-  cg_s *pcVar2;
-  snd_alias_t *psVar3;
-  SndEntHandle SVar4;
+  cg_s *pcVar1;
+  snd_alias_t *psVar2;
+  SndEntHandle SVar3;
   
-  LVar1 = __savegprlr_28(param_1);
-  pcVar2 = CG_GetLocalClientGlobals(LVar1);
-  if ((pcVar2->oldTime <= param_4) &&
-     (psVar3 = Com_PickSoundAliasFromList(param_3), psVar3 != (snd_alias_t *)0x0)) {
-    Snd_AssertAliasValid(psVar3);
-    SVar4 = CG_GenerateSndEntHandle(LVar1,0x7fe);
-    SND_AddPlayFXSoundAlias(psVar3,SVar4,param_2);
+  pcVar1 = CG_GetLocalClientGlobals(param_1);
+  if ((pcVar1->oldTime <= param_4) &&
+     (psVar2 = Com_PickSoundAliasFromList(param_3), psVar2 != (snd_alias_t *)0x0)) {
+    Snd_AssertAliasValid(psVar2);
+    SVar3 = CG_GenerateSndEntHandle(param_1,0x7fe);
+    SND_AddPlayFXSoundAlias(psVar2,SVar3,param_2);
   }
-  __restgprlr_28();
   return;
 }
 
 
 // 822D99E8  CG_UpdateSoundPlaybackTracking  (cgame_mp/cg_main_mp.cpp:1849)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -2114,53 +2065,51 @@ void CG_UpdateSoundPlaybackTracking
                (LocalClientNum_t param_1,int param_2,float *param_3,char *param_4)
 
 {
-  LocalClientNum_t LVar1;
-  int iVar2;
-  cg_s *pcVar3;
-  char **ppcVar4;
+  int iVar1;
+  cg_s *pcVar2;
+  char **ppcVar3;
   
-  LVar1 = __savegprlr_28(param_1);
-  iVar2 = CL_GetLocalClientActiveCount();
-  if (iVar2 != 1) {
-    pcVar3 = CG_GetLocalClientGlobals(LVar1);
-    iVar2 = 0;
-    ppcVar4 = &cg_SoundPlaybackTracking[1].aliasname;
-    while (ppcVar4[-6] != (char *)0x0) {
-      if (*ppcVar4 == (char *)0x0) {
-        iVar2 = iVar2 + 1;
+  iVar1 = CL_GetLocalClientActiveCount();
+  if (iVar1 != 1) {
+    pcVar2 = CG_GetLocalClientGlobals(param_1);
+    iVar1 = 0;
+    ppcVar3 = &cg_SoundPlaybackTracking[1].aliasname;
+    while (ppcVar3[-6] != (char *)0x0) {
+      if (*ppcVar3 == (char *)0x0) {
+        iVar1 = iVar1 + 1;
         break;
       }
-      if (ppcVar4[6] == (char *)0x0) {
-        iVar2 = iVar2 + 2;
+      if (ppcVar3[6] == (char *)0x0) {
+        iVar1 = iVar1 + 2;
         break;
       }
-      if (ppcVar4[0xc] == (char *)0x0) {
-        iVar2 = iVar2 + 3;
+      if (ppcVar3[0xc] == (char *)0x0) {
+        iVar1 = iVar1 + 3;
         break;
       }
-      ppcVar4 = ppcVar4 + 0x18;
-      iVar2 = iVar2 + 4;
-      if (-0x7d5c2b91 < (int)ppcVar4) {
-        __restgprlr_28();
+      ppcVar3 = ppcVar3 + 0x18;
+      iVar1 = iVar1 + 4;
+      if (-0x7d5c2b91 < (int)ppcVar3) {
         return;
       }
     }
-    if (iVar2 < 0x40) {
-      cg_SoundPlaybackTracking[iVar2].entitynum = param_2;
-      cg_SoundPlaybackTracking[iVar2].aliasname = param_4;
-      cg_SoundPlaybackTracking[iVar2].wasInKillcam = pcVar3->inKillCam;
-      cg_SoundPlaybackTracking[iVar2].origin[0] = *param_3;
-      cg_SoundPlaybackTracking[iVar2].origin[1] = param_3[1];
-      cg_SoundPlaybackTracking[iVar2].origin[2] = param_3[2];
+    if (iVar1 < 0x40) {
+      cg_SoundPlaybackTracking[iVar1].entitynum = param_2;
+      cg_SoundPlaybackTracking[iVar1].aliasname = param_4;
+      cg_SoundPlaybackTracking[iVar1].wasInKillcam = pcVar2->inKillCam;
+      cg_SoundPlaybackTracking[iVar1].origin[0] = *param_3;
+      cg_SoundPlaybackTracking[iVar1].origin[1] = param_3[1];
+      cg_SoundPlaybackTracking[iVar1].origin[2] = param_3[2];
     }
   }
-  __restgprlr_28();
   return;
 }
 
 
 // 822D9AD8  CG_PlaySoundAliasScaled  (cgame_mp/cg_main_mp.cpp:1879)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 int CG_PlaySoundAliasScaled
@@ -2168,43 +2117,33 @@ int CG_PlaySoundAliasScaled
               float param_5,float param_6)
 
 {
-  LocalClientNum_t LVar1;
-  bool bVar5;
-  snd_alias_t *psVar2;
-  SndEntHandle SVar3;
-  int iVar4;
-  SndEntHandle SVar6;
-  float *pfVar7;
-  ulonglong uVar8;
-  snd_alias_list_t *psVar9;
-  double extraout_f1;
-  double dVar10;
-  double dVar11;
+  bool bVar4;
+  snd_alias_t *psVar1;
+  SndEntHandle SVar2;
+  int iVar3;
+  SndEntHandle SVar5;
+  float *pfVar6;
+  double dVar7;
+  double dVar8;
   
-  dVar10 = (double)param_6;
-  uVar8 = (ulonglong)(int)param_4;
-  LVar1 = __savegprlr_26((double)param_5,param_1);
-  if ((uVar8 & 0xffffffff) != 0) {
-    psVar9 = (snd_alias_list_t *)uVar8;
-    if (((psVar9->aliasName != (char *)0x0) &&
-        (dVar11 = extraout_f1, pfVar7 = param_3,
-        bVar5 = CG_ShouldPlaySoundOnLocalClient(LVar1,param_2,param_3,psVar9->aliasName), bVar5)) &&
-       (psVar2 = Com_PickSoundAliasFromList(psVar9), psVar2 != (snd_alias_t *)0x0)) {
-      SVar6.handle = param_2;
-      SVar3 = CG_GenerateSndEntHandle(LVar1,param_2);
-      iVar4 = SND_PlayScaledSoundAlias
-                        (psVar2,(float)dVar11,(float)dVar10,SVar6,pfVar7,SVar3.handle,
-                         (snd_alias_system_t)param_3);
-      SND_AddLengthNotify(iVar4,psVar2,SndLengthNotify_Subtitle,0);
-      if (iVar4 != -1) {
-        CG_UpdateSoundPlaybackTracking(LVar1,param_2,param_3,psVar9->aliasName);
-      }
-      iVar4 = __restgprlr_26(iVar4);
-      return iVar4;
+  dVar8 = (double)param_6;
+  dVar7 = (double)param_5;
+  if ((((param_4 != (snd_alias_list_t *)0x0) && (param_4->aliasName != (char *)0x0)) &&
+      (pfVar6 = param_3,
+      bVar4 = CG_ShouldPlaySoundOnLocalClient(param_1,param_2,param_3,param_4->aliasName), bVar4))
+     && (psVar1 = Com_PickSoundAliasFromList(param_4), psVar1 != (snd_alias_t *)0x0)) {
+    SVar5.handle = param_2;
+    SVar2 = CG_GenerateSndEntHandle(param_1,param_2);
+    iVar3 = SND_PlayScaledSoundAlias
+                      (psVar1,(float)dVar7,(float)dVar8,SVar5,pfVar6,SVar2.handle,
+                       (snd_alias_system_t)param_3);
+    SND_AddLengthNotify(iVar3,psVar1,SndLengthNotify_Subtitle,0);
+    if (iVar3 != -1) {
+      CG_UpdateSoundPlaybackTracking(param_1,param_2,param_3,param_4->aliasName);
     }
+    return iVar3;
   }
-  iVar4 = __restgprlr_26(0xffffffffffffffff);
-  return iVar4;
+  return -1;
 }
 
 
@@ -2224,6 +2163,8 @@ int CG_PlaySoundAlias(LocalClientNum_t param_1,int param_2,float *param_3,snd_al
 
 // 822D9BD0  CG_PlaySoundAliasAtTime  (cgame_mp/cg_main_mp.cpp:1914)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -2233,24 +2174,22 @@ int CG_PlaySoundAliasAtTime
               int param_5)
 
 {
-  LocalClientNum_t LVar1;
-  cg_s *pcVar2;
-  int iVar3;
+  cg_s *pcVar1;
+  int iVar2;
   
-  LVar1 = __savegprlr_27(param_1);
-  pcVar2 = CG_GetLocalClientGlobals(LVar1);
-  if (param_5 < pcVar2->oldTime) {
-    iVar3 = __restgprlr_27(0xffffffffffffffff);
-    return iVar3;
+  pcVar1 = CG_GetLocalClientGlobals(param_1);
+  if (param_5 < pcVar1->oldTime) {
+    return -1;
   }
-  iVar3 = CG_PlaySoundAliasScaled(LVar1,param_2,param_3,param_4,1.0,1.0);
-  iVar3 = __restgprlr_27(iVar3);
-  return iVar3;
+  iVar2 = CG_PlaySoundAliasScaled(param_1,param_2,param_3,param_4,1.0,1.0);
+  return iVar2;
 }
 
 
 // 822D9C40  CG_PlaySoundAliasWithPitch  (cgame_mp/cg_main_mp.cpp:1927)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 int CG_PlaySoundAliasWithPitch
@@ -2258,164 +2197,138 @@ int CG_PlaySoundAliasWithPitch
               float param_5)
 
 {
-  LocalClientNum_t LVar1;
-  bool bVar5;
-  snd_alias_t *psVar2;
-  SndEntHandle SVar3;
-  int iVar4;
-  SndEntHandle SVar6;
-  ulonglong uVar7;
-  snd_alias_list_t *psVar8;
-  double extraout_f1;
-  double dVar9;
+  bool bVar4;
+  snd_alias_t *psVar1;
+  SndEntHandle SVar2;
+  int iVar3;
+  SndEntHandle SVar5;
+  double dVar6;
   
-  uVar7 = (ulonglong)(int)param_4;
-  LVar1 = __savegprlr_26((double)param_5,param_1);
-  if ((uVar7 & 0xffffffff) != 0) {
-    psVar8 = (snd_alias_list_t *)uVar7;
-    if (psVar8->aliasName != (char *)0x0) {
-      dVar9 = extraout_f1;
-      bVar5 = CG_ShouldPlaySoundOnLocalClient(LVar1,param_2,param_3,psVar8->aliasName);
-      if ((bVar5) && (psVar2 = Com_PickSoundAliasFromList(psVar8), psVar2 != (snd_alias_t *)0x0)) {
-        SVar6.handle = param_2;
-        SVar3 = CG_GenerateSndEntHandle(LVar1,param_2);
-        iVar4 = SND_PlaySoundAliasWithPitch
-                          (psVar2,(float)dVar9,SVar6,SVar3.handle,(int)param_3,SASYS_UI);
-        SND_AddLengthNotify(iVar4,psVar2,SndLengthNotify_Subtitle,0);
-        if (iVar4 != -1) {
-          CG_UpdateSoundPlaybackTracking(LVar1,param_2,param_3,psVar8->aliasName);
-        }
-        iVar4 = __restgprlr_26(iVar4);
-        return iVar4;
-      }
+  dVar6 = (double)param_5;
+  if ((((param_4 != (snd_alias_list_t *)0x0) && (param_4->aliasName != (char *)0x0)) &&
+      (bVar4 = CG_ShouldPlaySoundOnLocalClient(param_1,param_2,param_3,param_4->aliasName), bVar4))
+     && (psVar1 = Com_PickSoundAliasFromList(param_4), psVar1 != (snd_alias_t *)0x0)) {
+    SVar5.handle = param_2;
+    SVar2 = CG_GenerateSndEntHandle(param_1,param_2);
+    iVar3 = SND_PlaySoundAliasWithPitch
+                      (psVar1,(float)dVar6,SVar5,SVar2.handle,(int)param_3,SASYS_UI);
+    SND_AddLengthNotify(iVar3,psVar1,SndLengthNotify_Subtitle,0);
+    if (iVar3 != -1) {
+      CG_UpdateSoundPlaybackTracking(param_1,param_2,param_3,param_4->aliasName);
     }
+    return iVar3;
   }
-  iVar4 = __restgprlr_26(0xffffffffffffffff);
-  return iVar4;
+  return -1;
 }
 
 
 // 822D9D18  CG_PlaySoundAliasByName  (cgame_mp/cg_main_mp.cpp:1953)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 int CG_PlaySoundAliasByName(LocalClientNum_t param_1,int param_2,float *param_3,int param_4)
 
 {
-  LocalClientNum_t LVar1;
-  char *pcVar2;
-  bool bVar6;
-  snd_alias_t *psVar3;
-  SndEntHandle SVar4;
-  int iVar5;
+  char *pcVar1;
+  bool bVar5;
+  snd_alias_t *psVar2;
+  SndEntHandle SVar3;
+  int iVar4;
   
-  LVar1 = __savegprlr_26(param_1);
-  pcVar2 = CL_GetConfigString(param_4 + 0x824);
-  if (pcVar2 != (char *)0x0) {
-    bVar6 = CG_ShouldPlaySoundOnLocalClient(LVar1,param_2,param_3,pcVar2);
-    if ((bVar6) && (psVar3 = CL_PickSoundAlias(pcVar2), psVar3 != (snd_alias_t *)0x0)) {
-      SVar4 = CG_GenerateSndEntHandle(LVar1,param_2);
-      iVar5 = SND_PlaySoundAlias(psVar3,SVar4,param_3,0,SASYS_CGAME);
-      SND_AddLengthNotify(iVar5,psVar3,SndLengthNotify_Subtitle,0);
-      if (iVar5 != -1) {
-        CG_UpdateSoundPlaybackTracking(LVar1,param_2,param_3,pcVar2);
-      }
-      iVar5 = __restgprlr_26(iVar5);
-      return iVar5;
+  pcVar1 = CL_GetConfigString(param_4 + 0x824);
+  if (((pcVar1 != (char *)0x0) &&
+      (bVar5 = CG_ShouldPlaySoundOnLocalClient(param_1,param_2,param_3,pcVar1), bVar5)) &&
+     (psVar2 = CL_PickSoundAlias(pcVar1), psVar2 != (snd_alias_t *)0x0)) {
+    SVar3 = CG_GenerateSndEntHandle(param_1,param_2);
+    iVar4 = SND_PlaySoundAlias(psVar2,SVar3,param_3,0,SASYS_CGAME);
+    SND_AddLengthNotify(iVar4,psVar2,SndLengthNotify_Subtitle,0);
+    if (iVar4 != -1) {
+      CG_UpdateSoundPlaybackTracking(param_1,param_2,param_3,pcVar1);
     }
+    return iVar4;
   }
-  iVar5 = __restgprlr_26(0xffffffffffffffff);
-  return iVar5;
+  return -1;
 }
 
 
 // 822D9DE8  CG_PlaySoundAliasAsMasterByName  (cgame_mp/cg_main_mp.cpp:1982)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 int CG_PlaySoundAliasAsMasterByName(LocalClientNum_t param_1,int param_2,float *param_3,int param_4)
 
 {
-  LocalClientNum_t LVar1;
-  char *pcVar2;
-  bool bVar6;
-  snd_alias_t *psVar3;
-  SndEntHandle SVar4;
-  int iVar5;
+  char *pcVar1;
+  bool bVar5;
+  snd_alias_t *psVar2;
+  SndEntHandle SVar3;
+  int iVar4;
   
-  LVar1 = __savegprlr_26(param_1);
-  pcVar2 = CL_GetConfigString(param_4 + 0x824);
-  if (pcVar2 != (char *)0x0) {
-    bVar6 = CG_ShouldPlaySoundOnLocalClient(LVar1,param_2,param_3,pcVar2);
-    if ((bVar6) && (psVar3 = CL_PickSoundAlias(pcVar2), psVar3 != (snd_alias_t *)0x0)) {
-      SVar4 = CG_GenerateSndEntHandle(LVar1,param_2);
-      iVar5 = SND_PlaySoundAliasAsMaster(psVar3,SVar4,param_3,0,SASYS_CGAME);
-      SND_AddLengthNotify(iVar5,psVar3,SndLengthNotify_Subtitle,0);
-      if (iVar5 != -1) {
-        CG_UpdateSoundPlaybackTracking(LVar1,param_2,param_3,pcVar2);
-      }
-      iVar5 = __restgprlr_26(iVar5);
-      return iVar5;
+  pcVar1 = CL_GetConfigString(param_4 + 0x824);
+  if (((pcVar1 != (char *)0x0) &&
+      (bVar5 = CG_ShouldPlaySoundOnLocalClient(param_1,param_2,param_3,pcVar1), bVar5)) &&
+     (psVar2 = CL_PickSoundAlias(pcVar1), psVar2 != (snd_alias_t *)0x0)) {
+    SVar3 = CG_GenerateSndEntHandle(param_1,param_2);
+    iVar4 = SND_PlaySoundAliasAsMaster(psVar2,SVar3,param_3,0,SASYS_CGAME);
+    SND_AddLengthNotify(iVar4,psVar2,SndLengthNotify_Subtitle,0);
+    if (iVar4 != -1) {
+      CG_UpdateSoundPlaybackTracking(param_1,param_2,param_3,pcVar1);
     }
+    return iVar4;
   }
-  iVar5 = __restgprlr_26(0xffffffffffffffff);
-  return iVar5;
+  return -1;
 }
 
 
 // 822D9EB8  CG_PlaySoundAliasByName2  (cgame_mp/cg_main_mp.cpp:2010)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 int CG_PlaySoundAliasByName2(LocalClientNum_t param_1,int param_2,float *param_3,char *param_4)
 
 {
-  LocalClientNum_t LVar1;
-  bool bVar5;
-  snd_alias_t *psVar2;
-  SndEntHandle SVar3;
-  int iVar4;
-  ulonglong uVar6;
-  char *pcVar7;
+  bool bVar4;
+  snd_alias_t *psVar1;
+  SndEntHandle SVar2;
+  int iVar3;
   
-  uVar6 = (ulonglong)(int)param_4;
-  LVar1 = __savegprlr_26(param_1);
-  if ((uVar6 & 0xffffffff) != 0) {
-    pcVar7 = (char *)uVar6;
-    bVar5 = CG_ShouldPlaySoundOnLocalClient(LVar1,param_2,param_3,pcVar7);
-    if ((bVar5) && (psVar2 = CL_PickSoundAlias(pcVar7), psVar2 != (snd_alias_t *)0x0)) {
-      SVar3 = CG_GenerateSndEntHandle(LVar1,param_2);
-      iVar4 = SND_PlaySoundAlias(psVar2,SVar3,param_3,0,SASYS_CGAME);
-      SND_AddLengthNotify(iVar4,psVar2,SndLengthNotify_Subtitle,0);
-      if (iVar4 != -1) {
-        CG_UpdateSoundPlaybackTracking(LVar1,param_2,param_3,pcVar7);
-      }
-      iVar4 = __restgprlr_26(iVar4);
-      return iVar4;
+  if (((param_4 != (char *)0x0) &&
+      (bVar4 = CG_ShouldPlaySoundOnLocalClient(param_1,param_2,param_3,param_4), bVar4)) &&
+     (psVar1 = CL_PickSoundAlias(param_4), psVar1 != (snd_alias_t *)0x0)) {
+    SVar2 = CG_GenerateSndEntHandle(param_1,param_2);
+    iVar3 = SND_PlaySoundAlias(psVar1,SVar2,param_3,0,SASYS_CGAME);
+    SND_AddLengthNotify(iVar3,psVar1,SndLengthNotify_Subtitle,0);
+    if (iVar3 != -1) {
+      CG_UpdateSoundPlaybackTracking(param_1,param_2,param_3,param_4);
     }
+    return iVar3;
   }
-  iVar4 = __restgprlr_26(0xffffffffffffffff);
-  return iVar4;
+  return -1;
 }
 
 
 // 822D9F70  CG_PlayEntitySoundAliasByName2  (cgame_mp/cg_main_mp.cpp:2037)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 
 int CG_PlayEntitySoundAliasByName2(LocalClientNum_t param_1,int param_2,char *param_3)
 
 {
-  LocalClientNum_t LVar1;
-  centity_s *pcVar2;
-  int iVar3;
+  centity_s *pcVar1;
+  int iVar2;
   
-  LVar1 = __savegprlr_29(param_1);
-  pcVar2 = CG_GetEntity(LVar1,param_2);
-  iVar3 = CG_PlaySoundAliasByName2(LVar1,param_2,(pcVar2->nextState).lerp.pos.trBase,param_3);
-  iVar3 = __restgprlr_29(iVar3);
-  return iVar3;
+  pcVar1 = CG_GetEntity(param_1,param_2);
+  iVar2 = CG_PlaySoundAliasByName2(param_1,param_2,(pcVar1->nextState).lerp.pos.trBase,param_3);
+  return iVar2;
 }
 
 
@@ -2441,100 +2354,98 @@ int CG_PlayClientSoundAliasByName2(LocalClientNum_t param_1,char *param_2)
 
 // 822DA000  CG_PlayBoltedFxFromConfigstring  (cgame_mp/cg_main_mp.cpp:2058)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void CG_PlayBoltedFxFromConfigstring(LocalClientNum_t param_1,int param_2,int param_3)
 
 {
   FxEffectDef *pFVar1;
-  LocalClientNum_t LVar2;
-  char *pcVar3;
-  uint uVar4;
-  ulonglong uVar5;
+  char *pcVar2;
+  uint uVar3;
+  ulonglong uVar4;
   ushort local_40 [32];
   
-  LVar2 = __savegprlr_26(param_1);
-  pcVar3 = CL_GetConfigString(param_3);
-  if ((pcVar3 != (char *)0x0) && (*pcVar3 != '\0')) {
-    if ((pcVar3[1] == '\0') || (pcVar3[2] == '\0')) {
+  pcVar2 = CL_GetConfigString(param_3);
+  if ((pcVar2 != (char *)0x0) && (*pcVar2 != '\0')) {
+    if ((pcVar2[1] == '\0') || (pcVar2[2] == '\0')) {
       va("tagAndEffect: \'%s\'");
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_main_mp.cpp",
                       0x817,0,"%s\n\t%s");
     }
-    uVar5 = ((longlong)*pcVar3 + ((longlong)*pcVar3 & 0x3fffffffU) * 4 & 0x7fffffff) * 2 +
-            (longlong)pcVar3[1];
-    uVar5 = ((uVar5 + (uVar5 & 0x3fffffff) * 4 & 0x7fffffff) * 2 + (longlong)pcVar3[2]) - 0x14d0;
-    if (((longlong)uVar5 < 1) || (0xff < (int)uVar5)) {
+    uVar4 = ((longlong)*pcVar2 + ((longlong)*pcVar2 & 0x3fffffffU) * 4 & 0x7fffffff) * 2 +
+            (longlong)pcVar2[1];
+    uVar4 = ((uVar4 + (uVar4 & 0x3fffffff) * 4 & 0x7fffffff) * 2 + (longlong)pcVar2[2]) - 0x14d0;
+    if (((longlong)uVar4 < 1) || (0xff < (int)uVar4)) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_main_mp.cpp",
                       0x819,0,"%s");
     }
-    pFVar1 = *(FxEffectDef **)((int)cgMedia.fxs + (int)((uVar5 & 0xffffffff) << 2));
+    pFVar1 = *(FxEffectDef **)((int)cgMedia.fxs + (int)((uVar4 & 0xffffffff) << 2));
     if (pFVar1 == (FxEffectDef *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_main_mp.cpp",
                       0x81c,0,"%s");
     }
-    uVar4 = SL_GetString(pcVar3 + 3,0);
-    local_40[0] = (ushort)uVar4;
-    CG_PlayBoltedEffect(LVar2,pFVar1,param_2,uVar4 & 0xffff);
+    uVar3 = SL_GetString(pcVar2 + 3,0);
+    local_40[0] = (ushort)uVar3;
+    CG_PlayBoltedEffect(param_1,pFVar1,param_2,uVar3 & 0xffff);
     Scr_SetString(local_40,0);
-    __restgprlr_26();
     return;
   }
   Com_PrintError(0xe,"Error in CG_PlayBoltedFxFromConfigstring(), unknown effect at index %i\n");
-  __restgprlr_26();
   return;
 }
 
 
 // 822DA188  CG_StopBoltedFxFromConfigstring  (cgame_mp/cg_main_mp.cpp:2090)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void CG_StopBoltedFxFromConfigstring(LocalClientNum_t param_1,int param_2,int param_3)
 
 {
   FxEffectDef *pFVar1;
-  LocalClientNum_t LVar2;
-  char *pcVar3;
-  uint uVar4;
-  ulonglong uVar5;
+  char *pcVar2;
+  uint uVar3;
+  ulonglong uVar4;
   ushort local_40 [32];
   
-  LVar2 = __savegprlr_26(param_1);
-  pcVar3 = CL_GetConfigString(param_3);
-  if ((pcVar3 != (char *)0x0) && (*pcVar3 != '\0')) {
-    if ((pcVar3[1] == '\0') || (pcVar3[2] == '\0')) {
+  pcVar2 = CL_GetConfigString(param_3);
+  if ((pcVar2 != (char *)0x0) && (*pcVar2 != '\0')) {
+    if ((pcVar2[1] == '\0') || (pcVar2[2] == '\0')) {
       va("tagAndEffect: \'%s\'");
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_main_mp.cpp",
                       0x837,0,"%s\n\t%s");
     }
-    uVar5 = ((longlong)*pcVar3 + ((longlong)*pcVar3 & 0x3fffffffU) * 4 & 0x7fffffff) * 2 +
-            (longlong)pcVar3[1];
-    uVar5 = ((uVar5 + (uVar5 & 0x3fffffff) * 4 & 0x7fffffff) * 2 + (longlong)pcVar3[2]) - 0x14d0;
-    if (((longlong)uVar5 < 1) || (0xff < (int)uVar5)) {
+    uVar4 = ((longlong)*pcVar2 + ((longlong)*pcVar2 & 0x3fffffffU) * 4 & 0x7fffffff) * 2 +
+            (longlong)pcVar2[1];
+    uVar4 = ((uVar4 + (uVar4 & 0x3fffffff) * 4 & 0x7fffffff) * 2 + (longlong)pcVar2[2]) - 0x14d0;
+    if (((longlong)uVar4 < 1) || (0xff < (int)uVar4)) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_main_mp.cpp",
                       0x839,0,"%s");
     }
-    pFVar1 = *(FxEffectDef **)((int)cgMedia.fxs + (int)((uVar5 & 0xffffffff) << 2));
+    pFVar1 = *(FxEffectDef **)((int)cgMedia.fxs + (int)((uVar4 & 0xffffffff) << 2));
     if (pFVar1 == (FxEffectDef *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_main_mp.cpp",
                       0x83c,0,"%s");
     }
-    uVar4 = SL_GetString(pcVar3 + 3,0);
-    local_40[0] = (ushort)uVar4;
-    CG_StopBoltedEffects(LVar2,pFVar1,param_2,uVar4 & 0xffff);
+    uVar3 = SL_GetString(pcVar2 + 3,0);
+    local_40[0] = (ushort)uVar3;
+    CG_StopBoltedEffects(param_1,pFVar1,param_2,uVar3 & 0xffff);
     Scr_SetString(local_40,0);
-    __restgprlr_26();
     return;
   }
   Com_PrintError(0xe,"Error in CG_StopBoltedFxFromConfigstring(), unknown effect at index %i\n");
-  __restgprlr_26();
   return;
 }
 
 
 // 822DA310  CG_RewindKillcamEffects  (cgame_mp/cg_main_mp.cpp:2127)
 
+/* WARNING: Function: __savegprlr_19 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_19 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -2545,62 +2456,61 @@ void CG_RewindKillcamEffects(LocalClientNum_t param_1)
   snapshot_s *psVar1;
   int iVar2;
   uint uVar3;
-  LocalClientNum_t LVar4;
-  cgs_t *pcVar5;
-  cg_s *pcVar6;
-  int iVar7;
-  int *piVar8;
+  cgs_t *pcVar4;
+  cg_s *pcVar5;
+  int iVar6;
+  int *piVar7;
   float afStack_a0 [3];
   float afStack_94 [3];
   float afStack_88 [34];
   
-  LVar4 = __savegprlr_19(param_1);
-  pcVar5 = CG_GetLocalClientStaticGlobals(LVar4);
-  if (pcVar5->smokeGrenadeFx != (FxEffectDef *)0x0) {
+  pcVar4 = CG_GetLocalClientStaticGlobals(param_1);
+  if (pcVar4->smokeGrenadeFx != (FxEffectDef *)0x0) {
     Phys_EndFrame();
-    pcVar6 = CG_GetLocalClientGlobals(LVar4);
+    pcVar5 = CG_GetLocalClientGlobals(param_1);
     Com_Printf(0xe,"Playing smoke grenades at time %i\n");
-    FX_KillEffectDef(LVar4,pcVar5->smokeGrenadeFx);
-    FX_RewindTo(LVar4,pcVar6->time,0);
-    iVar7 = 0;
-    psVar1 = pcVar6->nextSnap;
+    FX_KillEffectDef(param_1,pcVar4->smokeGrenadeFx);
+    FX_RewindTo(param_1,pcVar5->time,0);
+    iVar6 = 0;
+    psVar1 = pcVar5->nextSnap;
     if (0 < psVar1->numEntities) {
-      piVar8 = &psVar1->entities[0].eType;
+      piVar7 = &psVar1->entities[0].eType;
       do {
-        if ((((((LerpEntityState *)(piVar8 + 1))->eFlags & 0x40U) != 0) &&
-            (iVar2 = pcVar6->time, iVar2 <= piVar8[0x1c])) &&
-           ((((LerpEntityStateTypeUnion *)(piVar8 + 0x14))->player).movementDir <= iVar2)) {
-          if (*piVar8 != 0) {
+        if ((((((LerpEntityState *)(piVar7 + 1))->eFlags & 0x40U) != 0) &&
+            (iVar2 = pcVar5->time, iVar2 <= piVar7[0x1c])) &&
+           ((((LerpEntityStateTypeUnion *)(piVar7 + 0x14))->player).movementDir <= iVar2)) {
+          if (*piVar7 != 0) {
             MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_main_mp.cpp"
                             ,0x870,0,"%s\n\t(es->eType) = %i");
           }
-          uVar3 = piVar8[0x28] - 1U & 3;
-          if ((piVar8[uVar3 + 0x29] < 0x49) || (0x50 < piVar8[uVar3 + 0x29])) {
+          uVar3 = piVar7[0x28] - 1U & 3;
+          if ((piVar7[uVar3 + 0x29] < 0x49) || (0x50 < piVar7[uVar3 + 0x29])) {
             MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_main_mp.cpp"
                             ,0x872,0,
                             "es->events[eventIndex] not in [EV_GRENADE_EXPLODE, EV_CUSTOM_EXPLODE_NOMARKS]\n\t%i not in [%i, %i]"
                            );
           }
-          ByteToDir(piVar8[uVar3 + 0x2d],afStack_a0);
+          ByteToDir(piVar7[uVar3 + 0x2d],afStack_a0);
           Vec3Basis_RightHanded(afStack_a0,afStack_94,afStack_88);
           Com_Printf(0xe,"Restarting smoke grenade at time %i at ( %f, %f, %f )\n");
           FX_PlayOrientedEffect
-                    (LVar4,pcVar5->smokeGrenadeFx,
-                     (((LerpEntityStateTypeUnion *)(piVar8 + 0x14))->player).movementDir,
-                     (float *)(piVar8 + 5),&afStack_a0);
+                    (param_1,pcVar4->smokeGrenadeFx,
+                     (((LerpEntityStateTypeUnion *)(piVar7 + 0x14))->player).movementDir,
+                     (float *)(piVar7 + 5),&afStack_a0);
         }
-        iVar7 = iVar7 + 1;
-        piVar8 = piVar8 + 0x40;
-      } while (iVar7 < psVar1->numEntities);
+        iVar6 = iVar6 + 1;
+        piVar7 = piVar7 + 0x40;
+      } while (iVar6 < psVar1->numEntities);
     }
   }
-  __restgprlr_19();
   return;
 }
 
 
 // 822DA4E8  CG_LoadHudMenu  (cgame_mp/cg_main_mp.cpp:2187)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
@@ -2608,75 +2518,72 @@ void CG_RewindKillcamEffects(LocalClientNum_t param_1)
 void CG_LoadHudMenu(LocalClientNum_t param_1)
 
 {
-  LocalClientNum_t LVar1;
-  int iVar2;
-  ClientViewParams *pCVar3;
-  char *pcVar4;
-  MenuList *pMVar5;
-  UiContext *pUVar6;
-  menuDef_t *pmVar7;
-  cgs_t *pcVar8;
+  int iVar1;
+  ClientViewParams *pCVar2;
+  char *pcVar3;
+  MenuList *pMVar4;
+  menuDef_t *pmVar5;
+  cgs_t *pcVar6;
+  UiContext *pUVar7;
+  int iVar8;
   int iVar9;
-  int iVar10;
-  double dVar11;
+  double dVar10;
   
-  LVar1 = __savegprlr_25(param_1);
-  iVar2 = CL_GetLocalClientActiveCount();
-  if (iVar2 < 2) {
+  iVar1 = CL_GetLocalClientActiveCount();
+  if (iVar1 < 2) {
     if ((com_hiDef->current).enabled == false) {
-      pcVar4 = "ui_mp/hud_480.txt";
+      pcVar3 = "ui_mp/hud_480.txt";
     }
     else {
-      pcVar4 = "ui_mp/hud_720.txt";
+      pcVar3 = "ui_mp/hud_720.txt";
     }
   }
   else {
-    pCVar3 = CG_GetLocalClientViewParams(LVar1);
-    if (pCVar3 == (ClientViewParams *)0x0) {
+    pCVar2 = CG_GetLocalClientViewParams(param_1);
+    if (pCVar2 == (ClientViewParams *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_main_mp.cpp",
                       0x89b,0,"%s");
     }
-    dVar11 = 1.0;
-    if ((pCVar3->width != 0.5) && (pCVar3->width != 1.0)) {
+    dVar10 = 1.0;
+    if ((pCVar2->width != 0.5) && (pCVar2->width != 1.0)) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_main_mp.cpp",
                       0x89c,0,"%s\n\t(viewParms->width) = %g");
     }
-    pcVar4 = g_splitscreen_hud_menus[(com_hiDef->current).color[0]][(double)pCVar3->width == dVar11]
+    pcVar3 = g_splitscreen_hud_menus[(com_hiDef->current).color[0]][(double)pCVar2->width == dVar10]
     ;
   }
-  pMVar5 = UI_LoadMenus(pcVar4,7);
-  pUVar6 = cgDC + LVar1;
-  UI_AddMenuList(pUVar6,pMVar5,0);
-  iVar2 = R_PopRemoteScreenUpdate();
-  iVar10 = 0;
-  if (0 < pMVar5->menuCount) {
-    iVar9 = 0;
+  pMVar4 = UI_LoadMenus(pcVar3,7);
+  pUVar7 = cgDC + param_1;
+  UI_AddMenuList(pUVar7,pMVar4,0);
+  iVar1 = R_PopRemoteScreenUpdate();
+  iVar9 = 0;
+  if (0 < pMVar4->menuCount) {
+    iVar8 = 0;
     do {
-      Menus_RunOnOpenScript(pUVar6,*(menuDef_t **)((int)pMVar5->menus + iVar9));
-      iVar10 = iVar10 + 1;
-      iVar9 = iVar9 + 4;
-    } while (iVar10 < pMVar5->menuCount);
+      Menus_RunOnOpenScript(pUVar7,*(menuDef_t **)((int)pMVar4->menus + iVar8));
+      iVar9 = iVar9 + 1;
+      iVar8 = iVar8 + 4;
+    } while (iVar9 < pMVar4->menuCount);
   }
-  R_PushRemoteScreenUpdate(iVar2);
-  iVar2 = CL_GetLocalClientActiveCount();
-  if (iVar2 == 1) {
-    pcVar4 = "Compass";
+  R_PushRemoteScreenUpdate(iVar1);
+  iVar1 = CL_GetLocalClientActiveCount();
+  if (iVar1 == 1) {
+    pcVar3 = "Compass";
   }
   else {
-    pcVar4 = "Compass_mp";
+    pcVar3 = "Compass_mp";
   }
-  pmVar7 = Menus_FindByName(pUVar6,pcVar4);
-  if (pmVar7 != (menuDef_t *)0x0) {
-    if (pmVar7 == (menuDef_t *)0xfffffffc) {
+  pmVar5 = Menus_FindByName(pUVar7,pcVar3);
+  if (pmVar5 != (menuDef_t *)0x0) {
+    if (pmVar5 == (menuDef_t *)0xfffffffc) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_utils_api.h",0x24,0,
                       "%s");
     }
-    pcVar8 = CG_GetLocalClientStaticGlobals(LVar1);
-    pcVar8->compassWidth = (pmVar7->window).rect.w;
-    pcVar8->compassHeight = (pmVar7->window).rect.h;
-    pcVar8->compassY = (pmVar7->window).rect.y;
+    pcVar6 = CG_GetLocalClientStaticGlobals(param_1);
+    pcVar6->compassWidth = (pmVar5->window).rect.w;
+    pcVar6->compassHeight = (pmVar5->window).rect.h;
+    pcVar6->compassY = (pmVar5->window).rect.y;
   }
-  __restgprlr_25();
   return;
 }
 
@@ -2700,6 +2607,8 @@ ushort CG_GetWeaponAttachBone(clientInfo_t *param_1,weapType_t param_2,PlayerHan
 
 // 822DA748  CG_AttachWeapon  (cgame_mp/cg_main_mp.cpp:2300)
 
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
 
 ushort CG_AttachWeapon(DObjModel_s *param_1,ushort param_2,clientInfo_t *param_3,Weapon param_4,
@@ -2715,31 +2624,26 @@ ushort CG_AttachWeapon(DObjModel_s *param_1,ushort param_2,clientInfo_t *param_3
   Weapon WVar7;
   weapType_t wVar8;
   Weapon WVar9;
-  ulonglong uVar10;
-  ulonglong uVar11;
-  ulonglong uVar12;
-  ushort uVar13;
-  DObjModel_s *pDVar14;
-  int iVar15;
-  int iVar16;
+  uint uVar10;
+  ushort uVar11;
+  DObjModel_s *pDVar12;
+  int iVar13;
+  int iVar14;
+  uint uVar15;
+  uint uVar16;
+  ushort uVar18;
   uint uVar17;
-  uint uVar18;
-  ushort uVar20;
-  uint uVar19;
   Weapon WStack0000002c;
-  undefined4 *puStack0000003c;
+  uint *puStack0000003c;
   
-  uVar12 = (ulonglong)(int)param_6;
-  uVar11 = (ulonglong)(int)param_5;
-  uVar10 = (ulonglong)(short)param_2;
-  __savegprlr();
-  puStack0000003c = (undefined4 *)uVar12;
+  uVar10 = (uint)(short)param_2;
   WStack0000002c = param_4;
-  if ((uVar11 & 0xffffffff) == 0) {
+  puStack0000003c = (uint *)param_6;
+  if (param_5 == (int *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_main_mp.cpp",0x907
                     ,0,"%s");
   }
-  if ((uVar12 & 0xffffffff) == 0) {
+  if (param_6 == (int *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_main_mp.cpp",0x908
                     ,0,"%s");
   }
@@ -2749,13 +2653,13 @@ ushort CG_AttachWeapon(DObjModel_s *param_1,ushort param_2,clientInfo_t *param_3
     WVar7 = BG_GetAlternateWeapon(param_3->iDObjWeapon,false);
     pWVar5 = bg_weaponCompleteDefs[WVar7.data & 0xff];
     wVar8 = BG_GetWeaponType(param_3->iDObjWeapon,false);
-    if ((param_3->dualWielding == 0) || (iVar15 = 1, param_3->usingKnife != false)) {
-      iVar15 = 0;
+    if ((param_3->dualWielding == 0) || (iVar13 = 1, param_3->usingKnife != false)) {
+      iVar13 = 0;
     }
     if (*(int *)(((param_3->iDObjWeapon).data >> 6 & 0x3c) + (int)pWVar4->worldModel) != 0) {
-      *(uint *)uVar11 = (uint)uVar10 & 0xffff;
+      *param_5 = (uint)param_2;
     }
-    iVar16 = 0;
+    iVar14 = 0;
     do {
       if (((wVar8 != WEAPTYPE_RIOTSHIELD) &&
           (*(int *)(((param_3->iDObjWeapon).data >> 6 & 0x3c) + (int)pWVar4->worldModel) != 0)) &&
@@ -2764,16 +2668,16 @@ ushort CG_AttachWeapon(DObjModel_s *param_1,ushort param_2,clientInfo_t *param_3
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_main_mp.cpp"
                           ,0x91e,0,"%s");
         }
-        pDVar14 = param_1 + ((uint)uVar10 & 0xffff);
-        pDVar14->model =
+        pDVar12 = param_1 + (uVar10 & 0xffff);
+        pDVar12->model =
              *(XModel **)(((param_3->iDObjWeapon).data >> 6 & 0x3c) + (int)pWVar4->worldModel);
-        uVar13 = scr_const.tag_inhand;
-        if (((wVar8 != WEAPTYPE_GRENADE) && (uVar13 = scr_const.tag_weapon_left, iVar16 == 0)) &&
+        uVar11 = scr_const.tag_inhand;
+        if (((wVar8 != WEAPTYPE_GRENADE) && (uVar11 = scr_const.tag_weapon_left, iVar14 == 0)) &&
            (param_3->leftHandGun == 0)) {
-          uVar13 = scr_const.tag_weapon_right;
+          uVar11 = scr_const.tag_weapon_right;
         }
-        pDVar14->boneName = uVar13;
-        pDVar14->ignoreCollision = false;
+        pDVar12->boneName = uVar11;
+        pDVar12->ignoreCollision = false;
         uVar10 = (uVar10 & 0xffff) + 1 & 0xffff;
         if (((param_3->iDObjWeapon).data & 0x7000) != 0) {
           if (0x1f < uVar10) {
@@ -2787,11 +2691,11 @@ ushort CG_AttachWeapon(DObjModel_s *param_1,ushort param_2,clientInfo_t *param_3
           }
           pXVar6 = *(XModel **)(((param_3->iDObjWeapon).data >> 6 & 0x3c) + *(int *)(iVar1 + 0x14));
           if (pXVar6 != (XModel *)0x0) {
-            pDVar14 = param_1 + (int)uVar10;
+            pDVar12 = param_1 + uVar10;
             uVar10 = uVar10 + 1 & 0xffff;
-            pDVar14->model = pXVar6;
-            pDVar14->boneName = 0;
-            pDVar14->ignoreCollision = false;
+            pDVar12->model = pXVar6;
+            pDVar12->boneName = 0;
+            pDVar12->ignoreCollision = false;
           }
         }
         if (((param_3->iDObjWeapon).data & 0x18000) != 0) {
@@ -2807,23 +2711,23 @@ ushort CG_AttachWeapon(DObjModel_s *param_1,ushort param_2,clientInfo_t *param_3
           }
           pXVar6 = *(XModel **)(((param_3->iDObjWeapon).data >> 6 & 0x3c) + *(int *)(iVar1 + 0x14));
           if (pXVar6 != (XModel *)0x0) {
-            pDVar14 = param_1 + (int)uVar10;
+            pDVar12 = param_1 + uVar10;
             uVar10 = uVar10 + 1 & 0xffff;
-            pDVar14->model = pXVar6;
-            pDVar14->boneName = 0;
-            pDVar14->ignoreCollision = false;
+            pDVar12->model = pXVar6;
+            pDVar12->boneName = 0;
+            pDVar12->ignoreCollision = false;
           }
         }
         if (((param_3->iDObjWeapon).data & 0x1e0000) != 0) {
-          uVar17 = 1;
-          uVar18 = 0;
+          uVar15 = 1;
+          uVar16 = 0;
           do {
-            if (((param_3->iDObjWeapon).data >> 0x11 & uVar17 & 0xf) != 0) {
+            if (((param_3->iDObjWeapon).data >> 0x11 & uVar15 & 0xf) != 0) {
               if (0x1f < uVar10) {
                 MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_main_mp.cpp"
                                 ,0x949,0,"%s");
               }
-              iVar1 = *(int *)((int)pWVar5->others + uVar18);
+              iVar1 = *(int *)((int)pWVar5->others + uVar16);
               if (iVar1 == 0) {
                 MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_main_mp.cpp"
                                 ,0x94b,1,"%s");
@@ -2831,72 +2735,72 @@ ushort CG_AttachWeapon(DObjModel_s *param_1,ushort param_2,clientInfo_t *param_3
               pXVar6 = *(XModel **)
                         (((param_3->iDObjWeapon).data >> 6 & 0x3c) + *(int *)(iVar1 + 0x14));
               if (pXVar6 != (XModel *)0x0) {
-                pDVar14 = param_1 + (int)uVar10;
+                pDVar12 = param_1 + uVar10;
                 uVar10 = uVar10 + 1 & 0xffff;
-                pDVar14->model = pXVar6;
-                pDVar14->boneName = 0;
-                pDVar14->ignoreCollision = false;
+                pDVar12->model = pXVar6;
+                pDVar12->boneName = 0;
+                pDVar12->ignoreCollision = false;
               }
             }
-            uVar18 = uVar18 + 4;
-            uVar17 = uVar17 << 1;
-          } while (uVar18 < 0x10);
+            uVar16 = uVar16 + 4;
+            uVar15 = uVar15 << 1;
+          } while (uVar16 < 0x10);
         }
       }
-      iVar16 = iVar16 + 1;
-    } while (iVar16 <= iVar15);
+      iVar14 = iVar14 + 1;
+    } while (iVar14 <= iVar13);
     if ((pWVar4->worldKnifeModel != (XModel *)0x0) && (param_3->usingKnife != false)) {
       if (0x1f < (uVar10 & 0xffff)) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_main_mp.cpp",
                         0x95b,0,"%s");
       }
-      pDVar14 = param_1 + ((uint)uVar10 & 0xffff);
+      pDVar12 = param_1 + (uVar10 & 0xffff);
       uVar10 = (uVar10 & 0xffff) + 1 & 0xffff;
-      pDVar14->model = pWVar4->worldKnifeModel;
-      uVar13 = scr_const.tag_inhand;
-      pDVar14->ignoreCollision = false;
-      pDVar14->boneName = uVar13;
+      pDVar12->model = pWVar4->worldKnifeModel;
+      uVar11 = scr_const.tag_inhand;
+      pDVar12->ignoreCollision = false;
+      pDVar12->boneName = uVar11;
     }
   }
   WVar7 = WStack0000002c;
-  uVar13 = (ushort)uVar10;
+  uVar11 = (ushort)uVar10;
   if ((WStack0000002c.data & 0xff) != 0) {
     WVar9 = BG_GetAlternateWeapon(WStack0000002c,false);
     pWVar4 = bg_weaponDefs[WVar9.data & 0xff];
     WVar9 = BG_GetAlternateWeapon(WVar7,false);
     pWVar5 = bg_weaponCompleteDefs[WVar9.data & 0xff];
-    uVar20 = pWVar4->stowTag;
+    uVar18 = pWVar4->stowTag;
     if (pWVar4->stowTag == 0) {
-      uVar20 = scr_const.tag_stowed_back;
+      uVar18 = scr_const.tag_stowed_back;
     }
     if (pWVar4->stowOffsetModel != (XModel *)0x0) {
       if (0x1f < (uVar10 & 0xffff)) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_main_mp.cpp",
                         0x971,0,"%s");
       }
-      pDVar14 = param_1 + ((uint)uVar10 & 0xffff);
+      pDVar12 = param_1 + (uVar10 & 0xffff);
       uVar10 = (uVar10 & 0xffff) + 1 & 0xffff;
-      pDVar14->model = pWVar4->stowOffsetModel;
-      uVar13 = scr_const.tag_stowed_back;
-      pDVar14->ignoreCollision = true;
-      pDVar14->boneName = uVar13;
+      pDVar12->model = pWVar4->stowOffsetModel;
+      uVar11 = scr_const.tag_stowed_back;
+      pDVar12->ignoreCollision = true;
+      pDVar12->boneName = uVar11;
     }
-    uVar13 = (ushort)uVar10;
-    uVar17 = WVar7.data >> 6 & 0x3c;
-    if ((*(int *)(uVar17 + (int)pWVar4->worldModel) != 0) &&
+    uVar11 = (ushort)uVar10;
+    uVar15 = WVar7.data >> 6 & 0x3c;
+    if ((*(int *)(uVar15 + (int)pWVar4->worldModel) != 0) &&
        ((pWVar4->stowOffsetModel == (XModel *)0x0 || (pWVar4->stowOffsetModel->radius == 0.0)))) {
-      uVar11 = uVar10 & 0xffff;
-      if (0x1f < uVar11) {
+      uVar16 = uVar10 & 0xffff;
+      if (0x1f < uVar16) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_main_mp.cpp",
                         0x979,0,"%s");
       }
-      pDVar14 = param_1 + ((uint)uVar10 & 0xffff);
-      pXVar6 = *(XModel **)(uVar17 + (int)pWVar4->worldModel);
-      uVar10 = uVar11 + 1 & 0xffff;
-      pDVar14->boneName = uVar20;
-      pDVar14->ignoreCollision = true;
-      pDVar14->model = pXVar6;
-      *puStack0000003c = (int)uVar11;
+      pDVar12 = param_1 + (uVar10 & 0xffff);
+      pXVar6 = *(XModel **)(uVar15 + (int)pWVar4->worldModel);
+      uVar10 = uVar16 + 1 & 0xffff;
+      pDVar12->boneName = uVar18;
+      pDVar12->ignoreCollision = true;
+      pDVar12->model = pXVar6;
+      *puStack0000003c = uVar16;
       if ((WVar7.data >> 0xc & 7) != 0) {
         if (0x1f < uVar10) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_main_mp.cpp"
@@ -2908,12 +2812,12 @@ ushort CG_AttachWeapon(DObjModel_s *param_1,ushort param_2,clientInfo_t *param_3
                           ,0x985,1,"%s");
         }
         ppXVar3 = pWVar2->worldModels;
-        if (*(int *)((int)ppXVar3 + uVar17) != 0) {
-          pDVar14 = param_1 + (int)uVar10;
+        if (*(int *)((int)ppXVar3 + uVar15) != 0) {
+          pDVar12 = param_1 + uVar10;
           uVar10 = uVar10 + 1 & 0xffff;
-          pDVar14->model = *(XModel **)((int)ppXVar3 + uVar17);
-          pDVar14->boneName = 0;
-          pDVar14->ignoreCollision = false;
+          pDVar12->model = *(XModel **)((int)ppXVar3 + uVar15);
+          pDVar12->boneName = 0;
+          pDVar12->ignoreCollision = false;
         }
       }
       if ((WVar7.data >> 0xf & 3) != 0) {
@@ -2927,84 +2831,78 @@ ushort CG_AttachWeapon(DObjModel_s *param_1,ushort param_2,clientInfo_t *param_3
                           ,0x993,1,"%s");
         }
         ppXVar3 = pWVar2->worldModels;
-        if (*(int *)((int)ppXVar3 + uVar17) != 0) {
-          pDVar14 = param_1 + (int)uVar10;
+        if (*(int *)((int)ppXVar3 + uVar15) != 0) {
+          pDVar12 = param_1 + uVar10;
           uVar10 = uVar10 + 1 & 0xffff;
-          pDVar14->model = *(XModel **)((int)ppXVar3 + uVar17);
-          pDVar14->boneName = 0;
-          pDVar14->ignoreCollision = false;
+          pDVar12->model = *(XModel **)((int)ppXVar3 + uVar15);
+          pDVar12->boneName = 0;
+          pDVar12->ignoreCollision = false;
         }
       }
       if ((WVar7.data >> 0x11 & 0xf) != 0) {
-        uVar18 = 1;
-        uVar19 = 0;
+        uVar16 = 1;
+        uVar17 = 0;
         do {
-          if ((WVar7.data >> 0x11 & uVar18 & 0xf) != 0) {
+          if ((WVar7.data >> 0x11 & uVar16 & 0xf) != 0) {
             if (0x1f < uVar10) {
               MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_main_mp.cpp"
                               ,0x9a3,0,"%s");
             }
-            iVar15 = *(int *)((int)pWVar5->others + uVar19);
-            if (iVar15 == 0) {
+            iVar13 = *(int *)((int)pWVar5->others + uVar17);
+            if (iVar13 == 0) {
               MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_main_mp.cpp"
                               ,0x9a5,1,"%s");
             }
-            iVar15 = *(int *)(iVar15 + 0x14);
-            if (*(int *)(iVar15 + uVar17) != 0) {
-              pDVar14 = param_1 + (int)uVar10;
+            iVar13 = *(int *)(iVar13 + 0x14);
+            if (*(int *)(iVar13 + uVar15) != 0) {
+              pDVar12 = param_1 + uVar10;
               uVar10 = uVar10 + 1 & 0xffff;
-              pDVar14->model = *(XModel **)(iVar15 + uVar17);
-              pDVar14->boneName = 0;
-              pDVar14->ignoreCollision = false;
+              pDVar12->model = *(XModel **)(iVar13 + uVar15);
+              pDVar12->boneName = 0;
+              pDVar12->ignoreCollision = false;
             }
           }
-          uVar19 = uVar19 + 4;
-          uVar18 = uVar18 << 1;
-        } while (uVar19 < 0x10);
+          uVar17 = uVar17 + 4;
+          uVar16 = uVar16 << 1;
+        } while (uVar17 < 0x10);
       }
-      uVar13 = (ushort)uVar10;
-      __restgprlr();
-      return uVar13;
+      return (ushort)uVar10;
     }
   }
-  __restgprlr();
-  return uVar13;
+  return uVar11;
 }
 
 
 // 822DAEE0  CG_CreateDObj  (cgame_mp/cg_main_mp.cpp:2523)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 DObj * CG_CreateDObj(DObjModel_s *param_1,ushort param_2,XAnimTree *param_3,int param_4,
                     LocalClientNum_t param_5,int param_6)
 
 {
-  int iVar1;
-  DObjModel_s *pDVar2;
-  DObj *pDVar3;
-  ulonglong uVar4;
-  undefined4 *puVar5;
+  DObj *pDVar1;
+  float (*pafVar2) [3];
   
-  uVar4 = (ulonglong)(int)param_5;
-  pDVar2 = (DObjModel_s *)__savegprlr_28(param_1);
-  pDVar3 = Com_ClientDObjCreate(pDVar2,param_2,param_3,param_4,(LocalClientNum_t)uVar4);
-  iVar1 = (int)((uVar4 & 0xffffffff) << 2);
-  if (*(int *)((int)cg_entityOriginArray + iVar1) == 0) {
+  pDVar1 = Com_ClientDObjCreate(param_1,param_2,param_3,param_4,param_5);
+  if (cg_entityOriginArray[param_5] == (float (*) [3])0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_main_mp.cpp",0x9e0
                     ,0,"%s");
   }
-  puVar5 = (undefined4 *)(param_6 * 0xc + *(int *)((int)cg_entityOriginArray + iVar1));
-  *puVar5 = 0x48000000;
-  puVar5[1] = 0x48000000;
-  puVar5[2] = 0x48000000;
-  pDVar3 = (DObj *)__restgprlr_28(pDVar3);
-  return pDVar3;
+  pafVar2 = cg_entityOriginArray[param_5] + param_6;
+  (*pafVar2)[0] = 131072.0;
+  (*pafVar2)[1] = 131072.0;
+  (*pafVar2)[2] = 131072.0;
+  return pDVar1;
 }
 
 
 // 822DBB08  CG_LoadAnimTreeInstances  (cgame_mp/cg_main_mp.cpp:2554)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -3013,41 +2911,40 @@ void CG_LoadAnimTreeInstances(LocalClientNum_t param_1)
 
 {
   XAnim_s *pXVar1;
-  LocalClientNum_t LVar2;
-  cg_s *pcVar3;
-  XAnimTree *pXVar4;
-  cgs_t *pcVar5;
-  animScriptCommand_t *paVar6;
-  float *pfVar7;
-  longlong lVar8;
+  cg_s *pcVar2;
+  XAnimTree *pXVar3;
+  cgs_t *pcVar4;
+  animScriptCommand_t *paVar5;
+  float *pfVar6;
+  longlong lVar7;
   
-  LVar2 = __savegprlr_28(param_1);
-  pcVar3 = CG_GetLocalClientGlobals(LVar2);
-  lVar8 = 0x12;
-  paVar6 = (pcVar3->bgs).animScriptData.scriptItems[0x487].commands + 8;
-  pXVar1 = (pcVar3->bgs).generic_human.tree.anims;
+  pcVar2 = CG_GetLocalClientGlobals(param_1);
+  lVar7 = 0x12;
+  paVar5 = (pcVar2->bgs).animScriptData.scriptItems[0x487].commands + 8;
+  pXVar1 = (pcVar2->bgs).generic_human.tree.anims;
   do {
-    pXVar4 = XAnimCreateTree(pXVar1,Hunk_AllocXAnimClient);
-    lVar8 = lVar8 + -1;
-    paVar6 = (animScriptCommand_t *)((int)(paVar6 + 0x76) + 8);
-    *(XAnimTree **)paVar6 = pXVar4;
-  } while (lVar8 != 0);
-  pcVar5 = CG_GetLocalClientStaticGlobals(LVar2);
-  lVar8 = 8;
-  pfVar7 = (pcVar5->holdBreathParams).sound.channelvolume + 0x2e;
+    pXVar3 = XAnimCreateTree(pXVar1,Hunk_AllocXAnimClient);
+    lVar7 = lVar7 + -1;
+    paVar5 = (animScriptCommand_t *)((int)(paVar5 + 0x76) + 8);
+    *(XAnimTree **)paVar5 = pXVar3;
+  } while (lVar7 != 0);
+  pcVar4 = CG_GetLocalClientStaticGlobals(param_1);
+  lVar7 = 8;
+  pfVar6 = (pcVar4->holdBreathParams).sound.channelvolume + 0x2e;
   do {
-    pXVar4 = XAnimCreateTree(pXVar1,Hunk_AllocXAnimClient);
-    lVar8 = lVar8 + -1;
-    pfVar7 = pfVar7 + 0x164;
-    *pfVar7 = (float)pXVar4;
-  } while (lVar8 != 0);
-  __restgprlr_28();
+    pXVar3 = XAnimCreateTree(pXVar1,Hunk_AllocXAnimClient);
+    lVar7 = lVar7 + -1;
+    pfVar6 = pfVar6 + 0x164;
+    *pfVar6 = (float)pXVar3;
+  } while (lVar7 != 0);
   return;
 }
 
 
 // 822DAF78  CG_FreeAnimTreeInstances  (cgame_mp/cg_main_mp.cpp:2580)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -3055,68 +2952,64 @@ void CG_LoadAnimTreeInstances(LocalClientNum_t param_1)
 void CG_FreeAnimTreeInstances(LocalClientNum_t param_1)
 
 {
-  LocalClientNum_t LVar1;
-  cg_s *pcVar2;
-  cgs_t *pcVar3;
-  longlong lVar4;
-  XAnimTree **ppXVar5;
+  cg_s *pcVar1;
+  cgs_t *pcVar2;
+  longlong lVar3;
+  XAnimTree **ppXVar4;
   
-  LVar1 = __savegprlr_28(param_1);
-  pcVar2 = CG_GetLocalClientGlobals(LVar1);
-  lVar4 = 0x12;
-  ppXVar5 = &(pcVar2->bgs).clientinfo[0].pXAnimTree;
+  pcVar1 = CG_GetLocalClientGlobals(param_1);
+  lVar3 = 0x12;
+  ppXVar4 = &(pcVar1->bgs).clientinfo[0].pXAnimTree;
   do {
-    if (*ppXVar5 != (XAnimTree *)0x0) {
-      XAnimFreeTree(*ppXVar5,(_func___cdecl_void_void_ptr_int *)0x0);
-      *ppXVar5 = (XAnimTree *)0x0;
+    if (*ppXVar4 != (XAnimTree *)0x0) {
+      XAnimFreeTree(*ppXVar4,(_func___cdecl_void_void_ptr_int *)0x0);
+      *ppXVar4 = (XAnimTree *)0x0;
     }
-    lVar4 = lVar4 + -1;
-    ppXVar5 = ppXVar5 + 0x164;
-  } while (lVar4 != 0);
-  pcVar3 = CG_GetLocalClientStaticGlobals(LVar1);
-  lVar4 = 8;
-  ppXVar5 = &pcVar3->corpseinfo[0].pXAnimTree;
+    lVar3 = lVar3 + -1;
+    ppXVar4 = ppXVar4 + 0x164;
+  } while (lVar3 != 0);
+  pcVar2 = CG_GetLocalClientStaticGlobals(param_1);
+  lVar3 = 8;
+  ppXVar4 = &pcVar2->corpseinfo[0].pXAnimTree;
   do {
-    if (*ppXVar5 != (XAnimTree *)0x0) {
-      XAnimFreeTree(*ppXVar5,(_func___cdecl_void_void_ptr_int *)0x0);
-      *ppXVar5 = (XAnimTree *)0x0;
+    if (*ppXVar4 != (XAnimTree *)0x0) {
+      XAnimFreeTree(*ppXVar4,(_func___cdecl_void_void_ptr_int *)0x0);
+      *ppXVar4 = (XAnimTree *)0x0;
     }
-    lVar4 = lVar4 + -1;
-    ppXVar5 = ppXVar5 + 0x164;
-  } while (lVar4 != 0);
-  __restgprlr_28();
+    lVar3 = lVar3 + -1;
+    ppXVar4 = ppXVar4 + 0x164;
+  } while (lVar3 != 0);
   return;
 }
 
 
 // 822DB000  CG_InitViewDimensions  (cgame_mp/cg_main_mp.cpp:2609)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void CG_InitViewDimensions(LocalClientNum_t param_1)
 
 {
-  LocalClientNum_t LVar1;
-  cgs_t *pcVar2;
+  cgs_t *pcVar1;
   
-  LVar1 = __savegprlr_28(param_1);
-  pcVar2 = CG_GetLocalClientStaticGlobals(LVar1);
-  pcVar2->viewMult = 1.0;
-  pcVar2->viewX = 0;
-  CL_GetScreenDimensions(&pcVar2->viewWidth,&pcVar2->viewHeight,&pcVar2->viewAspect);
-  if (pcVar2->viewWidth < 1) {
+  pcVar1 = CG_GetLocalClientStaticGlobals(param_1);
+  pcVar1->viewMult = 1.0;
+  pcVar1->viewX = 0;
+  CL_GetScreenDimensions(&pcVar1->viewWidth,&pcVar1->viewHeight,&pcVar1->viewAspect);
+  if (pcVar1->viewWidth < 1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_main_mp.cpp",0xa3b
                     ,1,"%s\n\t(cgs->viewWidth) = %i");
   }
-  if (pcVar2->viewHeight < 1) {
+  if (pcVar1->viewHeight < 1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_main_mp.cpp",0xa3c
                     ,1,"%s\n\t(cgs->viewHeight) = %i");
   }
-  if (pcVar2->viewAspect <= 0.0) {
+  if (pcVar1->viewAspect <= 0.0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_main_mp.cpp",0xa3d
                     ,1,"%s\n\t(cgs->viewAspect) = %g");
   }
-  __restgprlr_28();
   return;
 }
 
@@ -3139,34 +3032,30 @@ int CG_GetClientNum(LocalClientNum_t param_1)
 
 // 822DB110  CG_GetEntityType  (cgame_mp/cg_main_mp.cpp:2632)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 
 int CG_GetEntityType(LocalClientNum_t param_1,int param_2)
 
 {
-  LocalClientNum_t LVar1;
-  centity_s *pcVar2;
-  int iVar3;
-  ulonglong uVar4;
+  centity_s *pcVar1;
   
-  uVar4 = (ulonglong)param_2;
-  LVar1 = __savegprlr_29(param_1);
-  if ((uint)cl_maxLocalClients <= LVar1) {
+  if ((uint)cl_maxLocalClients <= param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_main_mp.cpp",0xa4b
                     ,0,"localClientNum doesn\'t index MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)");
   }
-  if (0x7ff < (uVar4 & 0xffffffff)) {
+  if (0x7ff < (uint)param_2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_main_mp.cpp",0xa4c
                     ,0,"entNum doesn\'t index MAX_GENTITIES\n\t%i not in [0, %i)");
   }
-  pcVar2 = CG_GetEntity(LVar1,(int)uVar4);
-  if (pcVar2 == (centity_s *)0x0) {
+  pcVar1 = CG_GetEntity(param_1,param_2);
+  if (pcVar1 == (centity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_main_mp.cpp",0xa4f
                     ,0,"%s");
   }
-  iVar3 = __restgprlr_29((pcVar2->nextState).eType);
-  return iVar3;
+  return (pcVar1->nextState).eType;
 }
 
 
@@ -3187,6 +3076,8 @@ void CG_InitDof(GfxDepthOfField *param_1)
 
 // 822DBB88  CG_Init  (cgame_mp/cg_main_mp.cpp:2667)
 
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -3199,25 +3090,23 @@ void CG_Init(LocalClientNum_t param_1,int param_2,int param_3,int param_4)
 {
   char cVar1;
   char cVar2;
-  ulonglong uVar3;
-  loadAnim_t *plVar4;
-  bool bVar14;
-  LocalClientNum_t LVar5;
-  int iVar6;
-  cg_s *pcVar7;
-  cgs_t *pcVar8;
-  char *pcVar9;
-  XAnim_s *pXVar10;
-  int iVar11;
-  clientActive_t *pcVar12;
-  char *pcVar13;
-  longlong lVar15;
-  _XSESSION_INFO *p_Var16;
-  byte *pbVar17;
+  loadAnim_t *plVar3;
+  bool bVar12;
+  int iVar4;
+  cg_s *pcVar5;
+  cgs_t *pcVar6;
+  char *pcVar7;
+  XAnim_s *pXVar8;
+  int iVar9;
+  clientActive_t *pcVar10;
+  char *pcVar11;
+  longlong lVar13;
+  _XSESSION_INFO *p_Var14;
+  dvar_t **ppdVar15;
+  byte *pbVar16;
   undefined8 in_r13;
-  int *piVar18;
-  uint uVar19;
-  longlong lVar20;
+  int *piVar17;
+  uint uVar18;
   uint local_370 [2];
   LargeLocal LStack_368;
   byte local_360 [16];
@@ -3227,22 +3116,19 @@ void CG_Init(LocalClientNum_t param_1,int param_2,int param_3,int param_4)
   char acStack_2e0 [64];
   char acStack_2a0 [672];
   
-  uVar3 = (ulonglong)(int)param_1;
-  __savegprlr();
   LargeLocal::LargeLocal(&LStack_368,0x9000);
-  plVar4 = LargeLocal::GetBuf(&LStack_368);
-  bVar14 = Sys_IsMainThread();
-  if (!bVar14) {
+  plVar3 = LargeLocal::GetBuf(&LStack_368);
+  bVar12 = Sys_IsMainThread();
+  if (!bVar12) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_main_mp.cpp",0xa80
                     ,0,"%s");
   }
   DB_SyncXAssets();
-  LVar5 = (LocalClientNum_t)uVar3;
-  if ((((((onlinegame->current).enabled != false) && (bVar14 = CL_Demo_IsPlaying(LVar5), !bVar14))
+  if ((((((onlinegame->current).enabled != false) && (bVar12 = CL_Demo_IsPlaying(param_1), !bVar12))
        && ((systemlink->current).enabled == false)) &&
       (((splitscreen->current).enabled == false || ((onlinegame->current).enabled != false)))) &&
-     (iVar6 = Live_OnlinePlayEvenIfDown(), iVar6 == 0)) {
-    pbVar17 = local_360;
+     (iVar4 = Live_OnlinePlayEvenIfDown(), iVar4 == 0)) {
+    pbVar16 = local_360;
     local_360[0] = 0;
     local_360[1] = 0;
     local_360[2] = 0;
@@ -3251,21 +3137,21 @@ void CG_Init(LocalClientNum_t param_1,int param_2,int param_3,int param_4)
     local_360[5] = 0;
     local_360[6] = 0;
     local_360[7] = 0;
-    p_Var16 = &g_serverSession.dyn.sessionInfo;
+    p_Var14 = &g_serverSession.dyn.sessionInfo;
     do {
-      lVar15 = (ulonglong)*pbVar17 - (ulonglong)(p_Var16->sessionID).ab[0];
-      if (lVar15 != 0) break;
-      pbVar17 = pbVar17 + 1;
-      p_Var16 = (_XSESSION_INFO *)((p_Var16->sessionID).ab + 1);
-    } while (pbVar17 != local_360 + 8);
-    if ((int)lVar15 == 0) {
+      lVar13 = (ulonglong)*pbVar16 - (ulonglong)(p_Var14->sessionID).ab[0];
+      if (lVar13 != 0) break;
+      pbVar16 = pbVar16 + 1;
+      p_Var14 = (_XSESSION_INFO *)((p_Var14->sessionID).ab + 1);
+    } while (pbVar16 != local_360 + 8);
+    if ((int)lVar13 == 0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_main_mp.cpp",
                       0xa9b,0,"%s");
     }
   }
-  pcVar7 = CG_GetLocalClientGlobals(LVar5);
-  pcVar8 = CG_GetLocalClientStaticGlobals(LVar5);
-  if ((ulonglong)(uint)cg_maxLocalClients <= (uVar3 & 0xffffffff)) {
+  pcVar5 = CG_GetLocalClientGlobals(param_1);
+  pcVar6 = CG_GetLocalClientStaticGlobals(param_1);
+  if ((uint)cg_maxLocalClients <= param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_main_mp.cpp",0xaa5
                     ,0,"localClientNum doesn\'t index cg_maxLocalClients\n\t%i not in [0, %i)");
   }
@@ -3273,48 +3159,48 @@ void CG_Init(LocalClientNum_t param_1,int param_2,int param_3,int param_4)
   memset();
   memset();
   memset();
-  lVar15 = (uVar3 + (uVar3 & 0x3fffffff) * 4 & 0x1fffffff) * 8 + -0x7d5c2b3c;
-  lVar20 = 10;
+  ppdVar15 = &cg_footsteps + param_1 * 10;
+  lVar13 = 10;
   do {
-    lVar15 = lVar15 + 4;
-    *(undefined4 *)lVar15 = 0;
-    lVar20 = lVar20 + -1;
-  } while (lVar20 != 0);
-  cgDC[LVar5].localClientNum = LVar5;
+    ppdVar15 = ppdVar15 + 1;
+    *ppdVar15 = (dvar_t *)0x0;
+    lVar13 = lVar13 + -1;
+  } while (lVar13 != 0);
+  cgDC[param_1].localClientNum = param_1;
   CG_ClearCompassPingData();
   CG_Veh_Init();
   CG_ClearOverheadFade();
-  (pcVar7->refdef).dof.nearStart = 0.0;
-  (pcVar7->refdef).dof.nearEnd = 0.0;
-  (pcVar7->refdef).dof.farStart = 5000.0;
-  (pcVar7->refdef).dof.farEnd = 5000.0;
-  (pcVar7->refdef).dof.nearBlur = 6.0;
-  (pcVar7->refdef).dof.farBlur = 0.0;
+  (pcVar5->refdef).dof.nearStart = 0.0;
+  (pcVar5->refdef).dof.nearEnd = 0.0;
+  (pcVar5->refdef).dof.farStart = 5000.0;
+  (pcVar5->refdef).dof.farEnd = 5000.0;
+  (pcVar5->refdef).dof.nearBlur = 6.0;
+  (pcVar5->refdef).dof.farBlur = 0.0;
   Ragdoll_Init();
   Phys_InitClient();
-  pcVar7->localClientNum = LVar5;
-  (pcVar7->viewModelPose).eType = '\x12';
-  pcVar7->prevViewIndex = -1;
-  CL_SetStance(LVar5,CL_STANCE_STAND);
-  CL_SetADS(LVar5,false);
-  pcVar7->clientNum = param_4;
-  pcVar7->objectiveText[0] = '\0';
-  (pcVar7->bgs).GetXModel = CG_GetXModel;
-  (pcVar7->bgs).CreateDObj = CG_CreateDObj;
-  (pcVar7->bgs).AttachWeapon = CG_AttachWeapon;
-  pcVar7->lastHealthLerpDelay = 1;
-  (pcVar7->bgs).anim_user = 0;
-  (pcVar7->bgs).GetDObj = CG_GetDObj;
-  (pcVar7->bgs).SafeDObjFree = Com_SafeClientDObjFree;
-  (pcVar7->bgs).AllocXAnim = Hunk_AllocXAnimClient;
-  pcVar7->showHud = 1;
-  pcVar8->processedSnapshotNum = param_2;
-  pcVar8->serverCommandSequence = param_3;
-  pcVar8->localServer = (uint)(com_sv_running->current).color[0];
-  CG_ParseServerInfo(LVar5);
-  CG_ParseCodInfo(LVar5);
+  pcVar5->localClientNum = param_1;
+  (pcVar5->viewModelPose).eType = '\x12';
+  pcVar5->prevViewIndex = -1;
+  CL_SetStance(param_1,CL_STANCE_STAND);
+  CL_SetADS(param_1,false);
+  pcVar5->clientNum = param_4;
+  pcVar5->objectiveText[0] = '\0';
+  (pcVar5->bgs).GetXModel = CG_GetXModel;
+  (pcVar5->bgs).CreateDObj = CG_CreateDObj;
+  (pcVar5->bgs).AttachWeapon = CG_AttachWeapon;
+  pcVar5->lastHealthLerpDelay = 1;
+  (pcVar5->bgs).anim_user = 0;
+  (pcVar5->bgs).GetDObj = CG_GetDObj;
+  (pcVar5->bgs).SafeDObjFree = Com_SafeClientDObjFree;
+  (pcVar5->bgs).AllocXAnim = Hunk_AllocXAnimClient;
+  pcVar5->showHud = 1;
+  pcVar6->processedSnapshotNum = param_2;
+  pcVar6->serverCommandSequence = param_3;
+  pcVar6->localServer = (uint)(com_sv_running->current).color[0];
+  CG_ParseServerInfo(param_1);
+  CG_ParseCodInfo(param_1);
   R_BeginRemoteScreenUpdate();
-  UI_LoadIngameMenus(LVar5);
+  UI_LoadIngameMenus(param_1);
   cgMedia.whiteMaterial = Material_RegisterHandle("white",7);
   cgMedia.smallDevFont = CL_RegisterFont("fonts/smallDevFont",1);
   cgMedia.bigDevFont = CL_RegisterFont("fonts/bigDevFont",1);
@@ -3345,22 +3231,22 @@ void CG_Init(LocalClientNum_t param_1,int param_2,int param_3,int param_4)
   Material_RegisterHandle("killiconheadshot",7);
   Material_RegisterHandle("killiconmelee",7);
   CG_InitConsoleCommands();
-  CG_InitViewDimensions(LVar5);
-  pcVar9 = CL_GetConfigString(2);
-  pcVar13 = "cod";
+  CG_InitViewDimensions(param_1);
+  pcVar7 = CL_GetConfigString(2);
+  pcVar11 = "cod";
   do {
-    cVar1 = *pcVar9;
-    cVar2 = *pcVar13;
+    cVar1 = *pcVar7;
+    cVar2 = *pcVar11;
     if (cVar1 == '\0') break;
-    pcVar9 = pcVar9 + 1;
-    pcVar13 = pcVar13 + 1;
+    pcVar7 = pcVar7 + 1;
+    pcVar11 = pcVar11 + 1;
   } while (cVar1 == cVar2);
   if (cVar1 != cVar2) {
     Com_Error(ERR_DROP,"\x15Client/Server game mismatch: %s/%s");
   }
-  pcVar9 = CL_GetConfigString(0x1a2);
-  iVar6 = atoi(pcVar9);
-  pcVar8->redCrosshair = iVar6;
+  pcVar7 = CL_GetConfigString(0x1a2);
+  iVar4 = atoi(pcVar7);
+  pcVar6->redCrosshair = iVar4;
   if (com_sv_running == (dvar_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_main_mp.cpp",0xb24
                     ,0,"%s");
@@ -3372,129 +3258,130 @@ void CG_Init(LocalClientNum_t param_1,int param_2,int param_3,int param_4)
     Com_SetWeaponInfoMemory(2);
     BG_ClearWeaponDef();
   }
-  uVar19 = 1;
+  uVar18 = 1;
   do {
-    CG_SetupWeaponDef(LVar5,uVar19);
-    piVar18 = (int *)in_r13;
-    uVar19 = uVar19 + 1;
-  } while (uVar19 < 0xf0);
+    CG_SetupWeaponDef(param_1,uVar18);
+    piVar17 = (int *)in_r13;
+    uVar18 = uVar18 + 1;
+  } while (uVar18 < 0xf0);
   CGScr_LoadAnimTrees();
-  iVar6 = *piVar18;
-  if (*(int *)(iVar6 + 8) != 0) {
+  iVar4 = *piVar17;
+  if (*(int *)(iVar4 + 8) != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_main_mp.cpp",0xb3e
                     ,0,"%s\n\t(bgs) = %p");
   }
-  *(bgs_t **)(iVar6 + 8) = &pcVar7->bgs;
+  *(bgs_t **)(iVar4 + 8) = &pcVar5->bgs;
   BG_CheckThread();
-  if (*(int *)(iVar6 + 8) == 0) {
+  if (*(int *)(iVar4 + 8) == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_main_mp.cpp",0xb44
                     ,0,"%s");
   }
   BG_FindAnims();
   local_370[0] = 0;
-  BG_AnimParseAnimScript(*(animScriptData_t **)(iVar6 + 8),plVar4,local_370);
+  BG_AnimParseAnimScript(*(animScriptData_t **)(iVar4 + 8),plVar3,local_370);
   Scr_PrecacheAnimTrees
-            (*(_func___cdecl_void_ptr_int **)(*(int *)(iVar6 + 8) + 0x863e4),
-             *(int *)(*(int *)(iVar6 + 8) + 0x863cc));
+            (*(_func___cdecl_void_ptr_int **)(*(int *)(iVar4 + 8) + 0x863e4),
+             *(int *)(*(int *)(iVar4 + 8) + 0x863cc));
   BG_FindAnimTrees();
   Scr_EndLoadAnimTrees();
   BG_FinalizePlayerAnims();
-  CG_LoadAnimTreeInstances(LVar5);
-  if (pcVar8->localServer == 0) {
+  CG_LoadAnimTreeInstances(param_1);
+  if (pcVar6->localServer == 0) {
     GScr_LoadConsts();
     BG_LoadPenetrationDepthTable();
   }
-  pXVar10 = CG_GetHelicopterAnims();
-  pcVar8->helicopterAnims = pXVar10;
-  pcVar9 = pcVar8->mapname;
-  CL_CM_LoadMap(pcVar9);
-  Menu_Setup(cgDC + LVar5);
-  CG_ParsePlayerInfos(LVar5);
+  pXVar8 = CG_GetHelicopterAnims();
+  pcVar6->helicopterAnims = pXVar8;
+  pcVar7 = pcVar6->mapname;
+  CL_CM_LoadMap(pcVar7);
+  Menu_Setup(cgDC + param_1);
+  CG_ParsePlayerInfos(param_1);
   if (g_mapLoaded == false) {
-    FX_LoadWorld(pcVar9);
-    iVar11 = LoadWorld(pcVar9);
+    FX_LoadWorld(pcVar7);
+    iVar9 = LoadWorld(pcVar7);
     g_mapLoaded = true;
-    pcVar12 = CL_GetLocalClientGlobals(LVar5);
-    if (pcVar8->localServer == 0) {
-      bVar14 = CL_Demo_IsPlaying(LVar5);
-      if ((!bVar14) && (pcVar12->mapcrc != iVar11)) {
+    pcVar10 = CL_GetLocalClientGlobals(param_1);
+    if (pcVar6->localServer == 0) {
+      bVar12 = CL_Demo_IsPlaying(param_1);
+      if ((!bVar12) && (pcVar10->mapcrc != iVar9)) {
         Com_sprintf(acStack_320,0x20,"%d");
         Com_sprintf(acStack_300,0x20,"%d");
         local_350.args[0] = acStack_320;
         local_350.args[1] = acStack_300;
         local_350.argCount = 2;
-        pcVar13 = UI_SafeTranslateString("MP_MAPDIFFERSFROMSERVERDEV");
-        UI_ReplaceConversions(pcVar13,&local_350,acStack_2a0,0x200);
+        pcVar11 = UI_SafeTranslateString("MP_MAPDIFFERSFROMSERVERDEV");
+        UI_ReplaceConversions(pcVar11,&local_350,acStack_2a0,0x200);
         Com_Error(ERR_DROP,acStack_2a0);
       }
     }
-    else if (iVar11 != pcVar12->mapcrc) {
+    else if (iVar9 != pcVar10->mapcrc) {
       va("checksum is %d, mapcrc is %d");
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_main_mp.cpp",
                       0xb77,0,"%s\n\t%s");
     }
   }
-  iVar11 = I_strnicmp(pcVar9,"maps/",5);
-  if (iVar11 != 0) {
+  iVar9 = I_strnicmp(pcVar7,"maps/",5);
+  if (iVar9 != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_main_mp.cpp",0xb96
                     ,0,"%s");
   }
-  Com_StripExtension(pcVar8->mapname + 5,acStack_2e0);
+  Com_StripExtension(pcVar6->mapname + 5,acStack_2e0);
   ProfLoad_Begin("Init effects system");
-  FX_InitSystem(LVar5);
-  bVar14 = CL_IsFirstActiveLocalClient(LVar5);
-  if (bVar14) {
+  FX_InitSystem(param_1);
+  bVar12 = CL_IsFirstActiveLocalClient(param_1);
+  if (bVar12) {
     CG_Glass_Init(true);
   }
   ProfLoad_End();
-  CG_InitItemsUnlocked(LVar5);
-  CG_RegisterGraphics(LVar5,acStack_2e0);
+  CG_InitItemsUnlocked(param_1);
+  CG_RegisterGraphics(param_1,acStack_2e0);
   VehicleCl_InitGlobals();
-  VehicleCl_InitLocalClient(LVar5);
-  CG_LoadHudMenu(LVar5);
-  CG_InitLocalEntities(LVar5);
-  DynEntCl_InitEntities(LVar5);
-  CG_StartClientSideTriggers(LVar5);
-  CG_SetConfigValues(LVar5,true);
-  CG_NorthDirectionChanged(LVar5);
-  CG_ThermalBodyMaterialChanged(LVar5);
+  VehicleCl_InitLocalClient(param_1);
+  CG_LoadHudMenu(param_1);
+  CG_InitLocalEntities(param_1);
+  DynEntCl_InitEntities(param_1);
+  CG_StartClientSideTriggers(param_1);
+  CG_SetConfigValues(param_1,true);
+  CG_NorthDirectionChanged(param_1);
+  CG_ThermalBodyMaterialChanged(param_1);
   if (g_mapLoaded == false) {
     SND_StopSounds(SND_STOP_ALL);
   }
-  CG_ParseFog(LVar5);
-  R_InitPrimaryLights((pcVar7->refdef).primaryLights);
-  R_ClearShadowedPrimaryLightHistory(LVar5);
+  CG_ParseFog(param_1);
+  R_InitPrimaryLights((pcVar5->refdef).primaryLights);
+  R_ClearShadowedPrimaryLightHistory(param_1);
   if (g_ambientStarted == false) {
-    CG_StartAmbientWithConfig(LVar5,0x3d6);
-    CG_StartAmbientWithConfig(LVar5,0x3d7);
+    CG_StartAmbientWithConfig(param_1,0x3d6);
+    CG_StartAmbientWithConfig(param_1,0x3d7);
     g_ambientStarted = true;
   }
-  CG_ParseSunLight(LVar5);
-  pcVar9 = Com_GetFilenameSubString(acStack_2e0);
-  SND_SetSoundOcclusionPreset(pcVar9,1);
-  CL_SetADS(LVar5,false);
-  AimTarget_Init(LVar5);
-  AimAssist_Init(LVar5);
-  CG_InitDevguiRumbleGraph(LVar5);
-  CG_ModelPreviewerCreateDevGui(LVar5);
+  CG_ParseSunLight(param_1);
+  pcVar7 = Com_GetFilenameSubString(acStack_2e0);
+  SND_SetSoundOcclusionPreset(pcVar7,1);
+  CL_SetADS(param_1,false);
+  AimTarget_Init(param_1);
+  AimAssist_Init(param_1);
+  CG_InitDevguiRumbleGraph(param_1);
+  CG_ModelPreviewerCreateDevGui(param_1);
   DevSoundMixer_CreateDevGUI();
-  CG_StartClientSideEffects(LVar5);
-  if ((bgs_t *)*(undefined1 **)(iVar6 + 8) != &pcVar7->bgs) {
+  CG_StartClientSideEffects(param_1);
+  if ((bgs_t *)*(undefined1 **)(iVar4 + 8) != &pcVar5->bgs) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_main_mp.cpp",0xbf7
                     ,0,"%s\n\t(bgs) = %p");
   }
-  *(undefined4 *)(iVar6 + 8) = 0;
+  *(undefined4 *)(iVar4 + 8) = 0;
   R_EndRemoteScreenUpdate();
   LightEdit_MapLoad();
   PlayerCard_InitGame();
   LargeLocal::~LargeLocal(&LStack_368);
-  __restgprlr();
   return;
 }
 
 
 // 822DB200  CG_FreeWeapons  (cgame_mp/cg_main_mp.cpp:3088)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
@@ -3502,37 +3389,36 @@ void CG_FreeWeapons(LocalClientNum_t param_1)
 
 {
   XAnimTree *pXVar1;
-  LocalClientNum_t LVar2;
-  int iVar3;
-  dvar_t **ppdVar4;
-  PlayerHandIndex PVar5;
-  longlong lVar6;
+  int iVar2;
+  dvar_t **ppdVar3;
+  PlayerHandIndex PVar4;
+  longlong lVar5;
   
-  LVar2 = __savegprlr_28(param_1);
-  PVar5 = WEAPON_HAND_DEFAULT;
+  PVar4 = WEAPON_HAND_DEFAULT;
   do {
-    iVar3 = CG_WeaponDObjHandle(PVar5);
-    Com_SafeClientDObjFree(iVar3,LVar2);
-    pXVar1 = cg_viewModelHand[LVar2][PVar5].tree;
+    iVar2 = CG_WeaponDObjHandle(PVar4);
+    Com_SafeClientDObjFree(iVar2,param_1);
+    pXVar1 = cg_viewModelHand[param_1][PVar4].tree;
     if (pXVar1 != (XAnimTree *)0x0) {
       Com_XAnimFreeSmallTree(pXVar1);
     }
-    PVar5 = PVar5 + WEAPON_HAND_LEFT;
-  } while ((int)PVar5 < 2);
-  lVar6 = 10;
-  ppdVar4 = &cg_footsteps + LVar2 * 10;
+    PVar4 = PVar4 + WEAPON_HAND_LEFT;
+  } while ((int)PVar4 < 2);
+  lVar5 = 10;
+  ppdVar3 = &cg_footsteps + param_1 * 10;
   do {
-    ppdVar4 = ppdVar4 + 1;
-    *ppdVar4 = (dvar_t *)0x0;
-    lVar6 = lVar6 + -1;
-  } while (lVar6 != 0);
-  __restgprlr_28();
+    ppdVar3 = ppdVar3 + 1;
+    *ppdVar3 = (dvar_t *)0x0;
+    lVar5 = lVar5 + -1;
+  } while (lVar5 != 0);
   return;
 }
 
 
 // 822DB290  CG_FreeRagdolls  (cgame_mp/cg_main_mp.cpp:3111)
 
+/* WARNING: Function: __savegprlr_21 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_21 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PhysWorld": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -3541,41 +3427,39 @@ void CG_FreeRagdolls(LocalClientNum_t param_1)
 
 {
   int iVar1;
-  int iVar2;
-  centity_s *pcVar3;
+  centity_s *pcVar2;
+  int iVar3;
   uint uVar4;
-  uint uVar5;
   char in_RESERVE;
   byte in_cr0;
   
-  uVar4 = __savegprlr_21(param_1);
-  uVar5 = 0;
+  uVar4 = 0;
   do {
-    if (0x7ff < uVar5) {
+    if (0x7ff < uVar4) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_local_mp.h",
                       0x6b4,0,"entityIndex doesn\'t index MAX_GENTITIES\n\t%i not in [0, %i)");
     }
-    if ((uint)cg_maxLocalClients <= uVar4) {
+    if ((uint)cg_maxLocalClients <= param_1) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_local_mp.h",
                       0x6b9,0,
                       "localClientNum doesn\'t index cg_maxLocalClients\n\t%i not in [0, %i)");
     }
-    pcVar3 = cg_entitiesArray;
-    iVar2 = uVar4 * 0x800 + uVar5;
-    iVar1 = cg_entitiesArray[iVar2].pose.ragdollHandle;
+    pcVar2 = cg_entitiesArray;
+    iVar3 = param_1 * 0x800 + uVar4;
+    iVar1 = cg_entitiesArray[iVar3].pose.ragdollHandle;
     if ((iVar1 != 0) && (iVar1 != -1)) {
       Ragdoll_Remove(iVar1);
-      pcVar3[iVar2].pose.ragdollHandle = 0;
+      pcVar2[iVar3].pose.ragdollHandle = 0;
     }
-    iVar1 = pcVar3[iVar2].pose.killcamRagdollHandle;
+    iVar1 = pcVar2[iVar3].pose.killcamRagdollHandle;
     if ((iVar1 != 0) && (iVar1 != -1)) {
       Ragdoll_Remove(iVar1);
-      pcVar3[iVar2].pose.killcamRagdollHandle = 0;
+      pcVar2[iVar3].pose.killcamRagdollHandle = 0;
     }
-    iVar1 = pcVar3[iVar2].pose.physObjId;
+    iVar1 = pcVar2[iVar3].pose.physObjId;
     if ((iVar1 != 0) && (iVar1 != -1)) {
       Phys_ObjDestroy(PHYS_WORLD_FX,iVar1);
-      pcVar3[iVar2].pose.physObjId = 0;
+      pcVar2[iVar3].pose.physObjId = 0;
       do {
         if (in_RESERVE != '\0') {
           g_centPhysObjCount =
@@ -3585,9 +3469,8 @@ void CG_FreeRagdolls(LocalClientNum_t param_1)
         }
       } while (!(bool)(in_cr0 >> 1 & 1));
     }
-    uVar5 = uVar5 + 1;
-  } while ((int)uVar5 < 0x800);
-  __restgprlr_21();
+    uVar4 = uVar4 + 1;
+  } while ((int)uVar4 < 0x800);
   return;
 }
 

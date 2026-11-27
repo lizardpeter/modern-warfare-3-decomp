@@ -20,82 +20,73 @@ uint PlayerCards_GetRowCount(char *param_1)
 
 // 826E6A70  PlayerCards_GetTableString  (playercards/playercards_data.cpp:28)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 char * PlayerCards_GetTableString(char *param_1,uint param_2,uint param_3)
 
 {
-  char *pcVar1;
-  uint uVar2;
-  ulonglong uVar3;
+  uint uVar1;
+  char *pcVar2;
   StringTable *local_40 [16];
   
-  uVar3 = (ulonglong)(int)param_2;
-  pcVar1 = (char *)__savegprlr_27(param_1);
-  if (pcVar1 == (char *)0x0) {
+  if (param_1 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\playercards\\playercards_data.cpp"
                     ,0x20,0,"%s");
   }
-  StringTable_GetAsset(pcVar1,local_40);
+  StringTable_GetAsset(param_1,local_40);
   if (local_40[0] == (StringTable *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\playercards\\playercards_data.cpp"
                     ,0x23,1,"%s");
   }
-  uVar2 = StringTable_GetRowCount(local_40[0]);
-  if ((ulonglong)uVar2 <= (uVar3 & 0xffffffff)) {
+  uVar1 = StringTable_GetRowCount(local_40[0]);
+  if (uVar1 <= param_2) {
     StringTable_GetRowCount(local_40[0]);
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\playercards\\playercards_data.cpp"
                     ,0x25,0,
                     "rowNum doesn\'t index StringTable_GetRowCount( table )\n\t%i not in [0, %i)");
   }
-  pcVar1 = StringTable_GetColumnValueForRow(local_40[0],(int)uVar3,param_3);
-  if (pcVar1 == (char *)0x0) {
+  pcVar2 = StringTable_GetColumnValueForRow(local_40[0],param_2,param_3);
+  if (pcVar2 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\playercards\\playercards_data.cpp"
                     ,0x28,1,"%s");
   }
-  pcVar1 = (char *)__restgprlr_27(pcVar1);
-  return pcVar1;
+  return pcVar2;
 }
 
 
 // 826E6B70  PlayerCards_GetRowNumberFromHandle  (playercards/playercards_data.cpp:47)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 uint PlayerCards_GetRowNumberFromHandle(char *param_1,char *param_2,uint param_3,uint param_4)
 
 {
-  char *pcVar1;
-  int iVar2;
-  uint uVar3;
-  longlong lVar4;
-  longlong lVar5;
-  longlong lVar6;
+  uint uVar1;
   StringTable *local_40 [16];
   
-  lVar6 = (longlong)(int)param_4;
-  lVar5 = (longlong)(int)param_3;
-  lVar4 = (longlong)(int)param_2;
-  pcVar1 = (char *)__savegprlr_26(param_1,lVar4,lVar5,lVar6);
-  if (pcVar1 == (char *)0x0) {
+  if (param_1 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\playercards\\playercards_data.cpp"
                     ,0x33,0,"%s");
   }
-  if (*pcVar1 == '\0') {
+  if (*param_1 == '\0') {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\playercards\\playercards_data.cpp"
                     ,0x34,0,"%s");
   }
-  StringTable_GetAsset((char *)lVar4,local_40);
+  StringTable_GetAsset(param_2,local_40);
   if (local_40[0] == (StringTable *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\playercards\\playercards_data.cpp"
                     ,0x37,1,"%s");
   }
-  iVar2 = StringTable_LookupRowNumForValue(local_40[0],(int)lVar5,pcVar1);
-  lVar4 = (longlong)iVar2;
-  if (iVar2 < 0) {
+  uVar1 = StringTable_LookupRowNumForValue(local_40[0],param_3,param_1);
+  if ((int)uVar1 < 0) {
     Com_PrintWarning(1,
                      "PlayerCards::GetRowNumberFromHandle: can\'t find information on handle \'%s\'. playerData enum values also need to be in %s.\n"
                     );
-    lVar4 = lVar6;
+    uVar1 = param_4;
   }
-  uVar3 = __restgprlr_26(lVar4);
-  return uVar3;
+  return uVar1;
 }
 
 

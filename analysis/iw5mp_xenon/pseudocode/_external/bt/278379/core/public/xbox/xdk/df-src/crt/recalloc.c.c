@@ -2,37 +2,33 @@
 
 // 829283F8  _recalloc  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/recalloc.c:54)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void * _recalloc(void *param_1,uint param_2,uint param_3)
 
 {
-  void *pvVar1;
-  int *piVar2;
-  uint uVar3;
-  ulonglong uVar4;
-  ulonglong uVar5;
-  uint uVar6;
+  int *piVar1;
+  uint uVar2;
+  void *pvVar3;
   
-  uVar5 = (ulonglong)(int)param_3;
-  uVar4 = (ulonglong)(int)param_2;
-  pvVar1 = (void *)__savegprlr_29(param_1);
-  uVar3 = 0;
-  if (((uVar4 & 0xffffffff) == 0) ||
-     (trapWord(6,uVar4,0), (uVar5 & 0xffffffff) <= 0xfffff000 / (uVar4 & 0xffffffff))) {
-    uVar6 = (int)uVar4 * (int)uVar5;
-    if (pvVar1 != (void *)0x0) {
-      uVar3 = _msize(pvVar1);
+  uVar2 = 0;
+  if ((param_2 == 0) ||
+     (trapWord(6,(longlong)(int)param_2,0), (ulonglong)param_3 <= 0xfffff000 / (ulonglong)param_2))
+  {
+    if (param_1 != (void *)0x0) {
+      uVar2 = _msize(param_1);
     }
-    pvVar1 = realloc(pvVar1,uVar6);
-    if ((pvVar1 != (void *)0x0) && (uVar3 < uVar6)) {
+    pvVar3 = realloc(param_1,param_2 * param_3);
+    if ((pvVar3 != (void *)0x0) && (uVar2 < param_2 * param_3)) {
       memset();
     }
   }
   else {
-    piVar2 = _errno();
-    pvVar1 = (void *)0x0;
-    *piVar2 = 0xc;
+    piVar1 = _errno();
+    pvVar3 = (void *)0x0;
+    *piVar1 = 0xc;
   }
-  pvVar1 = (void *)__restgprlr_29(pvVar1);
-  return pvVar1;
+  return pvVar3;
 }
 

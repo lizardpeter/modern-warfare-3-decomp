@@ -14,6 +14,8 @@ void TRACK_rb_showcollision(void)
 
 // 827AAEC8  BuildFrustumPlanes  (gfx_d3d/rb_showcollision.cpp:57)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Removing unreachable block (ram,0x827aaffc) */
 
 void BuildFrustumPlanes(GfxViewParms *param_1,cplane_s *param_2)
@@ -23,87 +25,81 @@ void BuildFrustumPlanes(GfxViewParms *param_1,cplane_s *param_2)
   float fVar2;
   float fVar3;
   float *pfVar4;
-  int iVar5;
-  ulonglong uVar6;
-  undefined8 *puVar7;
-  undefined1 uVar8;
-  float *pfVar9;
-  longlong lVar10;
-  longlong lVar11;
-  double dVar12;
-  double dVar13;
+  uchar uVar5;
+  float *pfVar6;
+  longlong lVar7;
+  double dVar8;
+  double dVar9;
   float local_f0;
   float local_ec;
   float local_e8 [2];
   GfxMatrix local_e0;
   DpvsPlane local_a0 [10];
   
-  uVar6 = (ulonglong)(int)param_2;
-  iVar5 = __savegprlr_25(param_1);
-  if (iVar5 == 0) {
+  if (param_1 == (GfxViewParms *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_showcollision.cpp",
                     0x3f,0,"%s");
   }
-  if ((uVar6 & 0xffffffff) == 0) {
+  if (param_2 == (cplane_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_showcollision.cpp",
                     0x40,0,"%s");
   }
-  pfVar9 = local_e8;
-  puVar7 = (undefined8 *)(iVar5 + 0x78);
-  lVar11 = 8;
+  pfVar4 = local_e8;
+  pfVar6 = (param_1->projectionMatrix).m[3] + 2;
+  lVar7 = 8;
   do {
-    puVar7 = puVar7 + 1;
-    pfVar9 = pfVar9 + 2;
-    *(undefined8 *)pfVar9 = *puVar7;
-    lVar11 = lVar11 + -1;
-  } while (lVar11 != 0);
-  local_f0 = -*(float *)(iVar5 + 0x100);
-  local_ec = -*(float *)(iVar5 + 0x104);
-  local_e8[0] = -*(float *)(iVar5 + 0x108);
-  dVar13 = 1.0;
+    pfVar6 = pfVar6 + 2;
+    pfVar4 = pfVar4 + 2;
+    *(undefined8 *)pfVar4 = *(undefined8 *)pfVar6;
+    lVar7 = lVar7 + -1;
+  } while (lVar7 != 0);
+  local_f0 = -(param_1->camera).origin[0];
+  local_ec = -(param_1->camera).origin[1];
+  local_e8[0] = -(param_1->camera).origin[2];
+  dVar9 = 1.0;
   local_e8[1] = 1.0;
-  MatrixTransformVector44(&local_f0,(float (*) [4])(iVar5 + 0x80),local_e0.m[3]);
+  MatrixTransformVector44(&local_f0,(float (*) [4])&param_1->viewProjectionMatrix,local_e0.m[3]);
   R_FrustumClipPlanes(&local_e0,frustumSidePlanes,5,local_a0);
-  lVar10 = uVar6 + 0xc;
-  pfVar9 = local_a0[0].coeffs + 2;
-  lVar11 = 5;
-  dVar12 = -1.0;
+  pfVar4 = &param_2->dist;
+  pfVar6 = local_a0[0].coeffs + 2;
+  lVar7 = 5;
+  dVar8 = -1.0;
   do {
-    fVar1 = pfVar9[1];
-    pfVar4 = (float *)lVar10;
-    fVar2 = ((DpvsPlane *)(pfVar9 + -2))->coeffs[0];
-    fVar3 = *pfVar9;
-    pfVar4[-2] = pfVar9[-1];
-    pfVar4[-3] = fVar2;
+    fVar1 = pfVar6[1];
+    fVar2 = ((DpvsPlane *)(pfVar6 + -2))->coeffs[0];
+    fVar3 = *pfVar6;
+    pfVar4[-2] = pfVar6[-1];
+    ((cplane_s *)(pfVar4 + -3))->normal[0] = fVar2;
     pfVar4[-1] = fVar3;
     *pfVar4 = fVar1;
     fVar1 = ((cplane_s *)(pfVar4 + -3))->normal[0];
-    *pfVar4 = (float)((double)*pfVar4 * dVar12);
-    if ((double)fVar1 == dVar13) {
-      uVar8 = 0;
+    *pfVar4 = (float)((double)*pfVar4 * dVar8);
+    if ((double)fVar1 == dVar9) {
+      uVar5 = '\0';
     }
-    else if ((double)pfVar4[-2] == dVar13) {
-      uVar8 = 1;
+    else if ((double)pfVar4[-2] == dVar9) {
+      uVar5 = '\x01';
     }
     else {
-      uVar8 = 2;
-      if ((double)pfVar4[-1] != dVar13) {
-        uVar8 = 3;
+      uVar5 = '\x02';
+      if ((double)pfVar4[-1] != dVar9) {
+        uVar5 = '\x03';
       }
     }
-    *(undefined1 *)(pfVar4 + 1) = uVar8;
+    *(uchar *)(pfVar4 + 1) = uVar5;
     SetPlaneSignbits((cplane_s *)(pfVar4 + -3));
-    lVar11 = lVar11 + -1;
-    pfVar9 = pfVar9 + 4;
-    lVar10 = lVar10 + 0x14;
-  } while (lVar11 != 0);
-  __restgprlr_25();
+    lVar7 = lVar7 + -1;
+    pfVar6 = pfVar6 + 4;
+    pfVar4 = pfVar4 + 5;
+  } while (lVar7 != 0);
   return;
 }
 
 
 // 827AB088  RB_DrawCollisionPoly  (gfx_d3d/rb_showcollision.cpp:87)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 /* WARNING: Enum "GfxPrimStatsTarget": Some values do not have unique names */
 
@@ -111,26 +107,22 @@ void RB_DrawCollisionPoly(int param_1,float (*param_2) [3],float *param_3)
 
 {
   short sVar1;
-  longlong lVar2;
-  uint uVar3;
-  uint uVar4;
+  uint uVar2;
+  short sVar4;
+  longlong lVar3;
   ulonglong uVar5;
-  short sVar7;
-  longlong lVar6;
-  ulonglong uVar8;
-  ulonglong uVar9;
-  int iVar10;
-  longlong lVar11;
+  float (*pafVar6) [3];
+  int iVar7;
+  longlong lVar8;
+  longlong lVar9;
   GfxColor local_50 [20];
   
-  uVar5 = (ulonglong)(int)param_2;
-  lVar2 = __savegprlr_24(param_1);
-  uVar3 = (uint)lVar2;
-  if ((int)uVar3 < 3) {
+  lVar8 = (longlong)param_1;
+  if (param_1 < 3) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_showcollision.cpp",
                     0x5e,0,"%s");
   }
-  if ((uVar5 & 0xffffffff) == 0) {
+  if (param_2 == (float (*) [3])0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_showcollision.cpp",
                     0x5f,0,"%s");
   }
@@ -138,55 +130,54 @@ void RB_DrawCollisionPoly(int param_1,float (*param_2) [3],float *param_3)
      ((r_showCollisionPolyType->current).integer == 0)) {
     R_ConvertColorToBytes(param_3,local_50[0].array);
     RB_BeginSurface(rgp.whiteMaterial,TECHNIQUE_UNLIT,GFX_PRIM_STATS_DEBUG);
-    uVar8 = lVar2 - 2;
-    RB_CheckTessOverflow(uVar3,(int)uVar8 + (int)((uVar8 & 0xffffffff) << 1));
-    iVar10 = 0;
-    uVar9 = uVar5;
-    if (0 < (int)uVar3) {
+    uVar5 = lVar8 - 2;
+    RB_CheckTessOverflow(param_1,(int)uVar5 + (int)((uVar5 & 0xffffffff) << 1));
+    iVar7 = 0;
+    pafVar6 = param_2;
+    if (0 < param_1) {
       do {
-        RB_SetPolyVert((float *)uVar9,local_50[0],tess.vertexCount + iVar10);
-        iVar10 = iVar10 + 1;
-        uVar9 = uVar9 + 0xc;
-      } while (iVar10 < (int)uVar3);
+        RB_SetPolyVert(*pafVar6,local_50[0],tess.vertexCount + iVar7);
+        iVar7 = iVar7 + 1;
+        pafVar6 = pafVar6 + 1;
+      } while (iVar7 < param_1);
     }
-    sVar7 = 2;
-    if (2 < (int)uVar3) {
-      iVar10 = tess.indexCount << 1;
+    sVar4 = 2;
+    if (2 < param_1) {
+      iVar7 = tess.indexCount << 1;
       do {
-        *(short *)((int)tess.indices + iVar10) = (short)tess.vertexCount;
-        tess.indices[tess.indexCount + 1] = (short)tess.vertexCount + sVar7;
-        sVar1 = (short)tess.vertexCount + sVar7;
-        sVar7 = sVar7 + 1;
+        *(short *)((int)tess.indices + iVar7) = (short)tess.vertexCount;
+        tess.indices[tess.indexCount + 1] = (short)tess.vertexCount + sVar4;
+        sVar1 = (short)tess.vertexCount + sVar4;
+        sVar4 = sVar4 + 1;
         tess.indices[tess.indexCount + 2] = sVar1 - 1;
         tess.indexCount = tess.indexCount + 3;
-        iVar10 = tess.indexCount * 2;
-        uVar8 = uVar8 - 1;
-      } while (uVar8 != 0);
+        iVar7 = tess.indexCount * 2;
+        uVar5 = uVar5 - 1;
+      } while (uVar5 != 0);
     }
-    tess.vertexCount = tess.vertexCount + uVar3;
+    tess.vertexCount = tess.vertexCount + param_1;
     RB_EndTessSurface();
   }
   if (((r_showCollisionPolyType->current).integer == 1) ||
      ((r_showCollisionPolyType->current).integer == 0)) {
     R_ConvertColorToBytes(param_3,local_50[0].array);
-    uVar4 = 0;
-    if (0 < (int)uVar3) {
-      lVar6 = ((lVar2 - 1U) + (lVar2 - 1U & 0x7fffffff) * 2 & 0x3fffffff) << 2;
-      lVar11 = 0;
+    uVar2 = 0;
+    if (0 < param_1) {
+      lVar3 = ((lVar8 - 1U) + (lVar8 - 1U & 0x7fffffff) * 2 & 0x3fffffff) << 2;
+      lVar9 = 0;
       do {
-        uVar4 = RB_AddDebugLine((float *)((int)lVar6 + (int)uVar5),
-                                (float *)((int)lVar11 + (int)uVar5),local_50[0],
-                                (r_showCollisionDepthTest->current).enabled,uVar4,0x400,
+        uVar2 = RB_AddDebugLine((float *)((int)*param_2 + (int)lVar3),
+                                (float *)((int)*param_2 + (int)lVar9),local_50[0],
+                                (r_showCollisionDepthTest->current).enabled,uVar2,0x400,
                                 debugLineVerts);
-        lVar2 = lVar2 + -1;
-        lVar6 = lVar11;
-        lVar11 = lVar11 + 0xc;
-      } while (lVar2 != 0);
+        lVar8 = lVar8 + -1;
+        lVar3 = lVar9;
+        lVar9 = lVar9 + 0xc;
+      } while (lVar8 != 0);
     }
     RB_EndDebugLines((r_showCollisionDepthTest->current).enabled,
-                     ((int)uVar4 >> 1) + (uint)((int)uVar4 < 0 && (uVar4 & 1) != 0),debugLineVerts);
+                     ((int)uVar2 >> 1) + (uint)((int)uVar2 < 0 && (uVar2 & 1) != 0),debugLineVerts);
   }
-  __restgprlr_24();
   return;
 }
 

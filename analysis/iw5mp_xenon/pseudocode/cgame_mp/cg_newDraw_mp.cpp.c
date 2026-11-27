@@ -2,6 +2,8 @@
 
 // 822E5C50  CG_AntiBurnInHUD_RegisterDvars  (cgame_mp/cg_newDraw_mp.cpp:96)
 
+/* WARNING: Function: __savefpr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void CG_AntiBurnInHUD_RegisterDvars(void)
@@ -19,7 +21,6 @@ void CG_AntiBurnInHUD_RegisterDvars(void)
   double dVar8;
   double dVar9;
   
-  __savefpr_27();
   dVar9 = 0.0;
   dVar6 = 30.0;
   hud_fade_ammodisplay = Dvar_RegisterFloat("hud_fade_ammodisplay",0.0,0.0,30.0,in_r4,in_r5);
@@ -77,7 +78,6 @@ void CG_AntiBurnInHUD_RegisterDvars(void)
                          "The color of the sprint meter when the sprint meter is disabled");
   cg_drawTalk = Dvar_RegisterEnum("cg_drawTalk",cg_drawTalkNames,1,0,
                                   "Controls which icons CG_TALKER ownerdraw draws");
-  __restfpr_27();
   return;
 }
 
@@ -107,6 +107,8 @@ bool CG_ShouldDrawHud(LocalClientNum_t param_1)
 
 // 822E6038  CG_FadeHudMenu  (cgame_mp/cg_newDraw_mp.cpp:147)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -114,37 +116,32 @@ bool CG_ShouldDrawHud(LocalClientNum_t param_1)
 float CG_FadeHudMenu(LocalClientNum_t param_1,dvar_t *param_2,int param_3,int param_4)
 
 {
-  LocalClientNum_t LVar1;
-  bool bVar4;
-  cg_s *pcVar2;
-  float *pfVar3;
-  double dVar5;
-  undefined8 uVar6;
+  bool bVar3;
+  cg_s *pcVar1;
+  float *pfVar2;
+  double dVar4;
   
-  LVar1 = __savegprlr_28(param_1);
-  bVar4 = CG_ShouldDrawHud(LVar1);
-  if (!bVar4) {
-    dVar5 = (double)__restgprlr_28(0);
-    return (float)dVar5;
+  bVar3 = CG_ShouldDrawHud(param_1);
+  if (!bVar3) {
+    return 0.0;
   }
-  uVar6 = 0;
+  dVar4 = 0.0;
   if ((param_2->current).value == 0.0) {
-    dVar5 = (double)__restgprlr_28(0x3ff0000000000000);
-    return (float)dVar5;
+    return 1.0;
   }
-  pcVar2 = CG_GetLocalClientGlobals(LVar1);
-  pfVar3 = CG_FadeColor(pcVar2->time,param_3,param_4,700);
-  if (pfVar3 == (float *)0x0) {
-    dVar5 = (double)__restgprlr_28(uVar6);
-    return (float)dVar5;
+  pcVar1 = CG_GetLocalClientGlobals(param_1);
+  pfVar2 = CG_FadeColor(pcVar1->time,param_3,param_4,700);
+  if (pfVar2 == (float *)0x0) {
+    return (float)dVar4;
   }
-  dVar5 = (double)__restgprlr_28((double)pfVar3[3]);
-  return (float)dVar5;
+  return pfVar2[3];
 }
 
 
 // 822E60F0  CG_GetHUDAlphaAmmo  (cgame_mp/cg_newDraw_mp.cpp:168)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -152,17 +149,14 @@ float CG_FadeHudMenu(LocalClientNum_t param_1,dvar_t *param_2,int param_3,int pa
 float CG_GetHUDAlphaAmmo(LocalClientNum_t param_1)
 
 {
-  LocalClientNum_t LVar1;
-  cg_s *pcVar2;
-  double dVar3;
-  float fVar4;
+  cg_s *pcVar1;
+  double dVar2;
+  float fVar3;
   
-  LVar1 = __savegprlr_29(param_1);
-  pcVar2 = CG_GetLocalClientGlobals(LVar1);
-  dVar3 = floor((double)((hud_fade_ammodisplay->current).value * 1000.0 + 0.5));
-  fVar4 = CG_FadeHudMenu(LVar1,hud_fade_ammodisplay,pcVar2->ammoFadeTime,(int)dVar3);
-  dVar3 = (double)__restgprlr_29((double)fVar4);
-  return (float)dVar3;
+  pcVar1 = CG_GetLocalClientGlobals(param_1);
+  dVar2 = floor((double)((hud_fade_ammodisplay->current).value * 1000.0 + 0.5));
+  fVar3 = CG_FadeHudMenu(param_1,hud_fade_ammodisplay,pcVar1->ammoFadeTime,(int)dVar2);
+  return fVar3;
 }
 
 
@@ -212,6 +206,8 @@ Weapon CG_GetSelectedWeapon(cg_s *param_1)
 
 // 822E6218  CG_CheckPlayerForLowAmmoSpecific  (cgame_mp/cg_newDraw_mp.cpp:214)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
@@ -219,40 +215,33 @@ Weapon CG_GetSelectedWeapon(cg_s *param_1)
 bool CG_CheckPlayerForLowAmmoSpecific(cg_s *param_1,Weapon param_2)
 
 {
-  playerState_s *ppVar2;
-  int iVar3;
-  int iVar4;
-  undefined8 uVar1;
-  undefined1 uVar5;
-  ulonglong uVar6;
-  bool bVar7;
+  int iVar1;
+  int iVar2;
+  bool bVar3;
   
-  uVar6 = (ulonglong)(int)param_2.data;
-  ppVar2 = (playerState_s *)__savegprlr_27(param_1);
-  if ((ppVar2 == (playerState_s *)0x0) ||
-     (bVar7 = true, ((ppVar2->weapCommon).weapFlags & 0x8000U) == 0)) {
-    bVar7 = false;
+  if ((param_1 == (cg_s *)0x0) ||
+     (bVar3 = true, ((param_1->predictedPlayerState).weapCommon.weapFlags & 0x8000U) == 0)) {
+    bVar3 = false;
   }
-  if ((uVar6 & 0xff) != 0) {
-    iVar3 = BG_GetTotalAmmoReserve(ppVar2,(Weapon)(uint)uVar6,bVar7);
-    if (999 < iVar3) {
-      iVar3 = 999;
+  if ((param_2.data & 0xff) != 0) {
+    iVar1 = BG_GetTotalAmmoReserve(&param_1->predictedPlayerState,param_2,bVar3);
+    if (999 < iVar1) {
+      iVar1 = 999;
     }
-    iVar4 = BG_GetAmmoPlayerMax(ppVar2,(Weapon)(uint)uVar6,bVar7,(Weapon)0x0);
-    if (iVar4 < 1000) {
-      if (iVar4 < 0) goto LAB_822e62ec;
+    iVar2 = BG_GetAmmoPlayerMax(&param_1->predictedPlayerState,param_2,bVar3,(Weapon)0x0);
+    if (iVar2 < 1000) {
+      if (iVar2 < 0) {
+        return false;
+      }
     }
     else {
-      iVar4 = 999;
+      iVar2 = 999;
     }
-    uVar1 = 1;
-    if ((float)(longlong)iVar3 <= (float)(longlong)iVar4 * 0.2) goto LAB_822e62f0;
+    if ((float)(longlong)iVar1 <= (float)(longlong)iVar2 * 0.2) {
+      return true;
+    }
   }
-LAB_822e62ec:
-  uVar1 = 0;
-LAB_822e62f0:
-  uVar5 = __restgprlr_27(uVar1);
-  return (bool)uVar5;
+  return false;
 }
 
 
@@ -286,30 +275,29 @@ bool CG_CheckPlayerForLowAmmo(cg_s *param_1)
 
 // 822E5BC0  MemFile_ArchiveFloat  (universal/memfile.h:256)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void MemFile_ArchiveFloat(MemoryFile *param_1,float *param_2)
 
 {
-  MemoryFile *pMVar1;
-  ulonglong uVar2;
-  
-  uVar2 = (ulonglong)(int)param_2;
-  pMVar1 = (MemoryFile *)__savegprlr_29(param_1);
-  MemFile_ArchiveData(pMVar1,4,(uint *)uVar2);
-  if ((uVar2 & 0xffffffff) == 0) {
+  MemFile_ArchiveData(param_1,4,param_2);
+  if (param_2 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\../universal/memfile.h"
                     ,0x102,0,"%s");
   }
-  if ((*(uint *)uVar2 & 0x7f800000) == 0x7f800000) {
+  if (((uint)*param_2 & 0x7f800000) == 0x7f800000) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\../universal/memfile.h"
                     ,0x103,0,"%s");
   }
-  __restgprlr_29();
   return;
 }
 
 
 // 822E6368  CG_CheckPlayerForLowClipSpecific  (cgame_mp/cg_newDraw_mp.cpp:256)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
@@ -320,42 +308,39 @@ bool CG_CheckPlayerForLowClipSpecific
 
 {
   WeaponDef *pWVar1;
-  playerState_s *ppVar3;
-  Weapon WVar4;
-  int iVar5;
-  int iVar6;
-  undefined8 uVar2;
-  undefined1 uVar7;
+  Weapon WVar2;
+  int iVar3;
+  int iVar4;
   
-  ppVar3 = (playerState_s *)__savegprlr_27(param_1);
-  WVar4 = BG_GetAlternateWeapon(param_2,param_3);
-  pWVar1 = bg_weaponDefs[WVar4.data & 0xff];
+  WVar2 = BG_GetAlternateWeapon(param_2,param_3);
+  pWVar1 = bg_weaponDefs[WVar2.data & 0xff];
   if ((pWVar1->bClipOnly == false) &&
-     (iVar5 = BG_GetAmmoInClipForWeapon(ppVar3,param_2,param_3,param_4), -1 < iVar5)) {
-    if (999 < iVar5) {
-      iVar5 = 999;
+     (iVar3 = BG_GetAmmoInClipForWeapon(&param_1->predictedPlayerState,param_2,param_3,param_4),
+     -1 < iVar3)) {
+    if (999 < iVar3) {
+      iVar3 = 999;
     }
-    iVar6 = BG_GetClipSize(ppVar3,param_2,param_3);
-    if (iVar6 < 1000) {
-      if (iVar6 < 1) goto LAB_822e643c;
+    iVar4 = BG_GetClipSize(&param_1->predictedPlayerState,param_2,param_3);
+    if (iVar4 < 1000) {
+      if (iVar4 < 1) {
+        return false;
+      }
     }
     else {
-      iVar6 = 999;
+      iVar4 = 999;
     }
-    uVar2 = 1;
-    if ((float)(longlong)iVar5 <= pWVar1->lowAmmoWarningThreshold * (float)(longlong)iVar6)
-    goto LAB_822e6440;
+    if ((float)(longlong)iVar3 <= pWVar1->lowAmmoWarningThreshold * (float)(longlong)iVar4) {
+      return true;
+    }
   }
-LAB_822e643c:
-  uVar2 = 0;
-LAB_822e6440:
-  uVar7 = __restgprlr_27(uVar2);
-  return (bool)uVar7;
+  return false;
 }
 
 
 // 822E6448  CG_CheckPlayerForLowClip  (cgame_mp/cg_newDraw_mp.cpp:286)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
@@ -364,36 +349,36 @@ bool CG_CheckPlayerForLowClip(cg_s *param_1,PlayerHandIndex param_2)
 
 {
   Weapon WVar1;
-  cg_s *pcVar2;
-  uint uVar3;
-  int iVar4;
-  undefined1 uVar5;
-  bool bVar6;
+  uint uVar2;
+  int iVar3;
+  bool bVar4;
   
-  pcVar2 = (cg_s *)__savegprlr_29(param_1);
-  uVar3 = BG_GetNumWeapons();
-  if (((pcVar2->weaponSelect)._s_0.weaponIdx < uVar3) &&
-     (iVar4 = BG_PlayerHasWeapon((playerState_s *)pcVar2,pcVar2->weaponSelect), iVar4 != 0)) {
-    WVar1 = pcVar2->weaponSelect;
+  uVar2 = BG_GetNumWeapons();
+  if (((param_1->weaponSelect)._s_0.weaponIdx < uVar2) &&
+     (iVar3 = BG_PlayerHasWeapon(&param_1->predictedPlayerState,param_1->weaponSelect), iVar3 != 0))
+  {
+    WVar1 = param_1->weaponSelect;
   }
   else {
-    WVar1 = (pcVar2->predictedPlayerState).weapCommon.weapon;
+    WVar1 = (param_1->predictedPlayerState).weapCommon.weapon;
   }
-  iVar4 = BG_GetEquippedWeaponIndex((playerState_s *)pcVar2,WVar1);
-  if (iVar4 < 0) {
-    uVar5 = __restgprlr_29(0);
-    return (bool)uVar5;
+  iVar3 = BG_GetEquippedWeaponIndex(&param_1->predictedPlayerState,WVar1);
+  if (iVar3 < 0) {
+    return false;
   }
-  bVar6 = CG_CheckPlayerForLowClipSpecific
-                    (pcVar2,WVar1,(pcVar2->predictedPlayerState).weapEquippedData[iVar4].inAltMode,
-                     param_2);
-  uVar5 = __restgprlr_29(bVar6);
-  return (bool)uVar5;
+  bVar4 = CG_CheckPlayerForLowClipSpecific
+                    (param_1,WVar1,(param_1->predictedPlayerState).weapEquippedData[iVar3].inAltMode
+                     ,param_2);
+  return bVar4;
 }
 
 
 // 822E64E0  CG_DrawPlayerAmmoBackdrop  (cgame_mp/cg_newDraw_mp.cpp:302)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -402,49 +387,46 @@ void CG_DrawPlayerAmmoBackdrop
                (LocalClientNum_t param_1,rectDef_s *param_2,float *param_3,Material *param_4)
 
 {
-  LocalClientNum_t LVar1;
-  cg_s *pcVar2;
-  ScreenPlacement *pSVar3;
-  dvar_t *pdVar4;
-  int iVar5;
-  IMAGE_DOS_HEADER *pIVar6;
-  Material *pMVar7;
+  cg_s *pcVar1;
+  ScreenPlacement *pSVar2;
+  dvar_t *pdVar3;
+  int iVar4;
+  IMAGE_DOS_HEADER *pIVar5;
+  Material *pMVar6;
+  double dVar7;
   double dVar8;
   double dVar9;
   double dVar10;
-  double dVar11;
-  float fVar12;
+  float fVar11;
   
-  __savegprlr_26(param_1);
-  LVar1 = __savefpr_28();
-  pcVar2 = CG_GetLocalClientGlobals(LVar1);
-  if ((((pcVar2->predictedPlayerState).eFlags & 0x200000U) == 0) &&
-     ((pcVar2->predictedPlayerState).weapCommon.weapon._s_0.weaponIdx != 0)) {
-    dVar8 = floor((double)((hud_fade_ammodisplay->current).value * 1000.0 + 0.5));
-    pMVar7 = (Material *)0x79810;
-    iVar5 = pcVar2->ammoFadeTime;
-    pdVar4 = hud_fade_ammodisplay;
-    fVar12 = CG_FadeHudMenu(LVar1,hud_fade_ammodisplay,iVar5,(int)dVar8);
-    pIVar6 = &IMAGE_DOS_HEADER_82000000;
-    if (fVar12 != 0.0) {
-      CG_CheckPlayerForLowAmmo(pcVar2);
-      dVar11 = (double)param_2->h;
-      dVar10 = (double)param_2->w;
-      dVar9 = (double)param_2->y;
-      dVar8 = (double)param_2->x;
-      pSVar3 = ScrPlace_GetActivePlacement(LVar1);
-      UI_DrawHandlePic(pSVar3,(float)dVar8,(float)dVar9,(float)dVar10,(float)dVar11,(int)pdVar4,
-                       iVar5,(float *)pIVar6,pMVar7);
+  pcVar1 = CG_GetLocalClientGlobals(param_1);
+  if ((((pcVar1->predictedPlayerState).eFlags & 0x200000U) == 0) &&
+     ((pcVar1->predictedPlayerState).weapCommon.weapon._s_0.weaponIdx != 0)) {
+    dVar7 = floor((double)((hud_fade_ammodisplay->current).value * 1000.0 + 0.5));
+    pMVar6 = (Material *)0x79810;
+    iVar4 = pcVar1->ammoFadeTime;
+    pdVar3 = hud_fade_ammodisplay;
+    fVar11 = CG_FadeHudMenu(param_1,hud_fade_ammodisplay,iVar4,(int)dVar7);
+    pIVar5 = &IMAGE_DOS_HEADER_82000000;
+    if (fVar11 != 0.0) {
+      CG_CheckPlayerForLowAmmo(pcVar1);
+      dVar10 = (double)param_2->h;
+      dVar9 = (double)param_2->w;
+      dVar8 = (double)param_2->y;
+      dVar7 = (double)param_2->x;
+      pSVar2 = ScrPlace_GetActivePlacement(param_1);
+      UI_DrawHandlePic(pSVar2,(float)dVar7,(float)dVar8,(float)dVar9,(float)dVar10,(int)pdVar3,iVar4
+                       ,(float *)pIVar5,pMVar6);
     }
   }
-  __restfpr_28();
-  __restgprlr_26();
   return;
 }
 
 
 // 822E6628  CG_DrawPlayerAmmoValue  (cgame_mp/cg_newDraw_mp.cpp:330)
 
+/* WARNING: Function: __savegprlr_20 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_20 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -455,35 +437,28 @@ void CG_DrawPlayerAmmoValue
 
 {
   Weapon WVar1;
-  float *pfVar2;
+  bool bVar2;
   bool bVar3;
-  bool bVar4;
-  LocalClientNum_t LVar5;
-  cg_s *pcVar6;
-  centity_s *pcVar7;
-  uint uVar8;
-  int iVar9;
-  int iVar10;
-  bool bVar12;
-  bool bVar13;
-  ScreenPlacement *pSVar11;
-  longlong lVar14;
-  longlong lVar15;
-  Font_s *pFVar16;
-  longlong lVar17;
-  undefined8 uVar18;
-  int iVar19;
-  char *pcVar20;
-  undefined8 uVar21;
-  undefined4 *puVar22;
-  int *piVar23;
-  PlayerHandIndex PVar24;
-  double extraout_f1;
-  double dVar25;
-  double dVar26;
-  double dVar27;
-  float fVar28;
-  undefined4 local_2a0;
+  cg_s *pcVar4;
+  centity_s *pcVar5;
+  uint uVar6;
+  int iVar7;
+  int iVar8;
+  bool bVar10;
+  bool bVar11;
+  ScreenPlacement *pSVar9;
+  undefined8 uVar12;
+  int iVar13;
+  char *pcVar14;
+  undefined8 uVar15;
+  char **ppcVar16;
+  int *piVar17;
+  PlayerHandIndex PVar18;
+  double dVar19;
+  double dVar20;
+  double dVar21;
+  float fVar22;
+  char *local_2a0;
   undefined4 local_29c;
   undefined4 local_298;
   undefined4 local_294;
@@ -494,164 +469,159 @@ void CG_DrawPlayerAmmoValue
   char acStack_280 [256];
   char acStack_180 [384];
   
-  lVar17 = (longlong)(int)param_6;
-  lVar15 = (longlong)(int)param_3;
-  lVar14 = (longlong)(int)param_2;
-  LVar5 = __savegprlr_20((double)param_4,param_1,lVar14,lVar15,param_5,lVar17,param_7,param_8);
-  dVar27 = extraout_f1;
-  pcVar6 = CG_GetLocalClientGlobals(LVar5);
-  if ((((pcVar6->predictedPlayerState).eFlags & 0x200000U) != 0) ||
-     ((pcVar6->predictedPlayerState).weapCommon.weapon._s_0.weaponIdx == 0)) goto LAB_822e6c18;
-  dVar26 = 0.5;
-  dVar25 = floor((double)((hud_fade_ammodisplay->current).value * 1000.0 + 0.5));
-  uVar21 = 0x70000;
-  uVar18 = 0x79810;
-  fVar28 = CG_FadeHudMenu(LVar5,hud_fade_ammodisplay,pcVar6->ammoFadeTime,(int)dVar25);
-  puVar22 = (undefined4 *)lVar17;
-  puVar22[3] = fVar28;
-  if (fVar28 == 0.0) goto LAB_822e6c18;
-  if (pcVar6->nextSnap == (snapshot_s *)0x0) {
-    uVar18 = 0xffffffff82002858;
+  dVar19 = (double)param_4;
+  pcVar4 = CG_GetLocalClientGlobals(param_1);
+  if (((pcVar4->predictedPlayerState).eFlags & 0x200000U) != 0) {
+    return;
+  }
+  if ((pcVar4->predictedPlayerState).weapCommon.weapon._s_0.weaponIdx == 0) {
+    return;
+  }
+  dVar21 = 0.5;
+  dVar20 = floor((double)((hud_fade_ammodisplay->current).value * 1000.0 + 0.5));
+  uVar15 = 0x70000;
+  uVar12 = 0x79810;
+  fVar22 = CG_FadeHudMenu(param_1,hud_fade_ammodisplay,pcVar4->ammoFadeTime,(int)dVar20);
+  *(float *)((int)&(param_6->info).drawSurf + 4) = fVar22;
+  if (fVar22 == 0.0) {
+    return;
+  }
+  if (pcVar4->nextSnap == (snapshot_s *)0x0) {
+    uVar12 = 0xffffffff82002858;
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_newDraw_mp.cpp",
                     0x169,0,"%s");
   }
-  pcVar7 = CG_GetEntity(LVar5,(pcVar6->predictedPlayerState).clientNum);
-  if (((pcVar6->predictedPlayerState).otherFlags & 0x1000U) == 0) {
-LAB_822e674c:
-    WVar1 = (pcVar7->nextState).weapon;
+  pcVar5 = CG_GetEntity(param_1,(pcVar4->predictedPlayerState).clientNum);
+  if (((pcVar4->predictedPlayerState).otherFlags & 0x1000U) != 0) {
+    WVar1 = pcVar4->weaponSelect;
+    uVar6 = BG_GetNumWeapons();
+    if ((WVar1.data & 0xff) < uVar6) goto LAB_822e6750;
   }
-  else {
-    WVar1 = pcVar6->weaponSelect;
-    uVar8 = BG_GetNumWeapons();
-    if (uVar8 <= (WVar1.data & 0xff)) goto LAB_822e674c;
-  }
+  WVar1 = (pcVar5->nextState).weapon;
+LAB_822e6750:
   if ((WVar1.data & 0xff) != 0) {
-    bVar3 = true;
-    bVar13 = false;
-    bVar4 = false;
-    iVar9 = BG_GetTotalAmmoReserve
-                      (&pcVar6->predictedPlayerState,WVar1,
-                       (bool)((byte)((uint)(pcVar6->predictedPlayerState).weapCommon.weapFlags >>
+    bVar2 = true;
+    bVar11 = false;
+    bVar3 = false;
+    iVar7 = BG_GetTotalAmmoReserve
+                      (&pcVar4->predictedPlayerState,WVar1,
+                       (bool)((byte)((uint)(pcVar4->predictedPlayerState).weapCommon.weapFlags >>
                                     0xf) & 1));
-    iVar10 = BG_WeaponIsClipOnly(WVar1,(bool)((byte)((uint)(pcVar6->predictedPlayerState).weapCommon
-                                                           .weapFlags >> 0xf) & 1));
-    if ((iVar10 != 0) ||
-       (iVar10 = BG_GetAmmoInClipForWeapon
-                           (&pcVar6->predictedPlayerState,WVar1,
-                            (bool)((byte)((uint)(pcVar6->predictedPlayerState).weapCommon.weapFlags
-                                         >> 0xf) & 1),WEAPON_HAND_DEFAULT), iVar10 < 0)) {
-      bVar3 = false;
+    iVar8 = BG_WeaponIsClipOnly(WVar1,(bool)((byte)((uint)(pcVar4->predictedPlayerState).weapCommon.
+                                                          weapFlags >> 0xf) & 1));
+    if ((iVar8 != 0) ||
+       (iVar8 = BG_GetAmmoInClipForWeapon
+                          (&pcVar4->predictedPlayerState,WVar1,
+                           (bool)((byte)((uint)(pcVar4->predictedPlayerState).weapCommon.weapFlags
+                                        >> 0xf) & 1),WEAPON_HAND_DEFAULT), iVar8 < 0)) {
+      bVar2 = false;
     }
-    iVar19 = (int)uVar18;
-    iVar10 = (int)uVar21;
-    uVar8 = 0xffffffffU - (iVar9 >> 0x1f) & 1;
-    if (bVar3) {
+    iVar13 = (int)uVar12;
+    iVar8 = (int)uVar15;
+    uVar6 = 0xffffffffU - (iVar7 >> 0x1f) & 1;
+    if (bVar2) {
       sprintf(acStack_280,"%2i");
-      iVar19 = (int)uVar18;
-      iVar10 = (int)uVar21;
-      PVar24 = WEAPON_HAND_DEFAULT;
-      if (-1 < (int)(pcVar6->predictedPlayerState).weapCommon.lastWeaponHand) {
+      iVar13 = (int)uVar12;
+      iVar8 = (int)uVar15;
+      PVar18 = WEAPON_HAND_DEFAULT;
+      if (-1 < (int)(pcVar4->predictedPlayerState).weapCommon.lastWeaponHand) {
         do {
-          bVar12 = CG_CheckPlayerForLowClip(pcVar6,PVar24);
-          iVar19 = (int)uVar18;
-          iVar10 = (int)uVar21;
-          if (bVar12) {
-            bVar4 = true;
+          bVar10 = CG_CheckPlayerForLowClip(pcVar4,PVar18);
+          iVar13 = (int)uVar12;
+          iVar8 = (int)uVar15;
+          if (bVar10) {
+            bVar3 = true;
             break;
           }
-          PVar24 = PVar24 + WEAPON_HAND_LEFT;
-        } while ((int)PVar24 <= (int)(pcVar6->predictedPlayerState).weapCommon.lastWeaponHand);
+          PVar18 = PVar18 + WEAPON_HAND_LEFT;
+        } while ((int)PVar18 <= (int)(pcVar4->predictedPlayerState).weapCommon.lastWeaponHand);
       }
     }
-    if (uVar8 != 0) {
+    if (uVar6 != 0) {
       sprintf(acStack_180,"%3i");
-      bVar13 = CG_CheckPlayerForLowAmmo(pcVar6);
+      bVar11 = CG_CheckPlayerForLowAmmo(pcVar4);
     }
-    if (bVar4) {
-      piVar23 = &pcVar6->lastClipFlashTime;
-      iVar9 = pcVar6->time;
-      if ((iVar9 < *piVar23) || (*piVar23 + 800 < iVar9)) {
-        *piVar23 = iVar9;
+    if (bVar3) {
+      piVar17 = &pcVar4->lastClipFlashTime;
+      iVar7 = pcVar4->time;
+      if ((iVar7 < *piVar17) || (*piVar17 + 800 < iVar7)) {
+        *piVar17 = iVar7;
       }
       local_290 = 0x3f63d70a;
       local_28c = 0x3e3851ec;
       local_288 = 0x3c23d70a;
-      iVar10 = pcVar6->time;
-      iVar19 = (*piVar23 - iVar10) + 800;
-      local_284 = (float)(longlong)iVar19 * 0.00125;
-      if ((float)puVar22[3] < (float)(longlong)iVar19 * 0.00125) {
-        local_284 = (float)puVar22[3];
+      iVar8 = pcVar4->time;
+      iVar13 = (*piVar17 - iVar8) + 800;
+      fVar22 = *(float *)((int)&(param_6->info).drawSurf + 4);
+      local_284 = (float)(longlong)iVar13 * 0.00125;
+      if (fVar22 < (float)(longlong)iVar13 * 0.00125) {
+        local_284 = fVar22;
       }
     }
-    if (bVar13 == false) {
-      local_2a0 = *puVar22;
-      local_29c = puVar22[1];
-      local_298 = puVar22[2];
+    if (bVar11 == false) {
+      local_2a0 = (param_6->info).name;
+      local_29c._0_1_ = (param_6->info).gameFlags;
+      local_29c._1_1_ = (param_6->info).sortKey;
+      local_29c._2_1_ = (param_6->info).textureAtlasRowCount;
+      local_29c._3_1_ = (param_6->info).textureAtlasColumnCount;
+      local_298 = *(undefined4 *)&(param_6->info).drawSurf;
     }
     else {
-      local_2a0 = 0x3f63d70a;
+      local_2a0 = (char *)0x3f63d70a;
       local_29c = 0x3e3851ec;
       local_298 = 0x3c23d70a;
     }
-    local_294 = puVar22[3];
-    pSVar11 = ScrPlace_GetActivePlacement(LVar5);
-    pFVar16 = (Font_s *)lVar15;
-    pfVar2 = (float *)lVar14;
-    if (bVar3) {
-      if (uVar8 != 0) {
-        UI_DrawText(pSVar11,acStack_280,0x7fffffff,pFVar16,*pfVar2,pfVar2[1],iVar19,iVar10,
-                    (float)dVar27,(float *)(uint)*(byte *)(pfVar2 + 4),
-                    (uint)*(byte *)((int)pfVar2 + 0x11));
-        if (bVar4) {
-          UI_DrawText(pSVar11,acStack_280,0x7fffffff,pFVar16,*pfVar2,pfVar2[1],iVar19,iVar10,
-                      (float)dVar27,(float *)(uint)*(byte *)(pfVar2 + 4),
-                      (uint)*(byte *)((int)pfVar2 + 0x11));
+    local_294 = *(undefined4 *)((int)&(param_6->info).drawSurf + 4);
+    pSVar9 = ScrPlace_GetActivePlacement(param_1);
+    if (bVar2) {
+      if (uVar6 != 0) {
+        UI_DrawText(pSVar9,acStack_280,0x7fffffff,param_3,param_2->x,param_2->y,iVar13,iVar8,
+                    (float)dVar19,(float *)(uint)param_2->horzAlign,(uint)param_2->vertAlign);
+        if (bVar3) {
+          UI_DrawText(pSVar9,acStack_280,0x7fffffff,param_3,param_2->x,param_2->y,iVar13,iVar8,
+                      (float)dVar19,(float *)(uint)param_2->horzAlign,(uint)param_2->vertAlign);
         }
-        dVar25 = (double)(*pfVar2 + pfVar2[2]);
-        iVar9 = UI_TextWidth(acStack_180,0,pFVar16,(float)dVar27);
-        puVar22 = &local_2a0;
-        UI_DrawText(pSVar11,acStack_180,0x7fffffff,pFVar16,(float)(dVar25 - (double)(longlong)iVar9)
-                    ,pfVar2[1],iVar19,(int)puVar22,(float)dVar27,
-                    (float *)(uint)*(byte *)(pfVar2 + 4),(uint)*(byte *)((int)pfVar2 + 0x11));
-        pcVar20 = "the motion tracker after being detected";
-        iVar9 = UI_TextWidth("|",0,pFVar16,(float)dVar27);
-        UI_DrawText(pSVar11,"|",0x7fffffff,pFVar16,
-                    (float)((double)(pfVar2[2] - (float)(longlong)iVar9) * dVar26 + (double)*pfVar2)
-                    - 5.0,pfVar2[1],(int)pcVar20,(int)puVar22,(float)dVar27,
-                    (float *)(uint)*(byte *)(pfVar2 + 4),(uint)*(byte *)((int)pfVar2 + 0x11));
-        __restgprlr_20();
+        dVar20 = (double)(param_2->x + param_2->w);
+        iVar7 = UI_TextWidth(acStack_180,0,param_3,(float)dVar19);
+        ppcVar16 = &local_2a0;
+        UI_DrawText(pSVar9,acStack_180,0x7fffffff,param_3,(float)(dVar20 - (double)(longlong)iVar7),
+                    param_2->y,iVar13,(int)ppcVar16,(float)dVar19,(float *)(uint)param_2->horzAlign,
+                    (uint)param_2->vertAlign);
+        pcVar14 = "the motion tracker after being detected";
+        iVar7 = UI_TextWidth("|",0,param_3,(float)dVar19);
+        UI_DrawText(pSVar9,"|",0x7fffffff,param_3,
+                    (float)((double)(param_2->w - (float)(longlong)iVar7) * dVar21 +
+                           (double)param_2->x) - 5.0,param_2->y,(int)pcVar14,(int)ppcVar16,
+                    (float)dVar19,(float *)(uint)param_2->horzAlign,(uint)param_2->vertAlign);
         return;
       }
-      iVar9 = UI_TextWidth(acStack_280,0,pFVar16,(float)dVar27);
-      fVar28 = (float)((double)(pfVar2[2] - (float)(longlong)iVar9) * dVar26 + (double)*pfVar2);
-      dVar25 = (double)fVar28;
-      UI_DrawText(pSVar11,acStack_280,0x7fffffff,pFVar16,fVar28,pfVar2[1],iVar19,iVar10,
-                  (float)dVar27,(float *)(uint)*(byte *)(pfVar2 + 4),
-                  (uint)*(byte *)((int)pfVar2 + 0x11));
-      if (bVar4) {
-        UI_DrawText(pSVar11,acStack_280,0x7fffffff,pFVar16,(float)dVar25,pfVar2[1],iVar19,iVar10,
-                    (float)dVar27,(float *)(uint)*(byte *)(pfVar2 + 4),
-                    (uint)*(byte *)((int)pfVar2 + 0x11));
-        __restgprlr_20();
+      iVar7 = UI_TextWidth(acStack_280,0,param_3,(float)dVar19);
+      fVar22 = (float)((double)(param_2->w - (float)(longlong)iVar7) * dVar21 + (double)param_2->x);
+      dVar20 = (double)fVar22;
+      UI_DrawText(pSVar9,acStack_280,0x7fffffff,param_3,fVar22,param_2->y,iVar13,iVar8,(float)dVar19
+                  ,(float *)(uint)param_2->horzAlign,(uint)param_2->vertAlign);
+      if (bVar3) {
+        UI_DrawText(pSVar9,acStack_280,0x7fffffff,param_3,(float)dVar20,param_2->y,iVar13,iVar8,
+                    (float)dVar19,(float *)(uint)param_2->horzAlign,(uint)param_2->vertAlign);
         return;
       }
     }
-    else if (uVar8 != 0) {
-      iVar9 = UI_TextWidth(acStack_180,0,pFVar16,(float)dVar27);
-      UI_DrawText(pSVar11,acStack_180,0x7fffffff,pFVar16,
-                  (float)((double)(pfVar2[2] - (float)(longlong)iVar9) * dVar26 + (double)*pfVar2),
-                  pfVar2[1],iVar19,(int)&local_2a0,(float)dVar27,
-                  (float *)(uint)*(byte *)(pfVar2 + 4),(uint)*(byte *)((int)pfVar2 + 0x11));
+    else if (uVar6 != 0) {
+      iVar7 = UI_TextWidth(acStack_180,0,param_3,(float)dVar19);
+      UI_DrawText(pSVar9,acStack_180,0x7fffffff,param_3,
+                  (float)((double)(param_2->w - (float)(longlong)iVar7) * dVar21 +
+                         (double)param_2->x),param_2->y,iVar13,(int)&local_2a0,(float)dVar19,
+                  (float *)(uint)param_2->horzAlign,(uint)param_2->vertAlign);
     }
   }
-LAB_822e6c18:
-  __restgprlr_20();
   return;
 }
 
 
 // 822E6C30  CG_DrawPlayerWeaponNameNoFade  (cgame_mp/cg_newDraw_mp.cpp:463)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -663,50 +633,44 @@ void CG_DrawPlayerWeaponNameNoFade
 {
   byte bVar1;
   byte bVar2;
-  float *pfVar3;
-  LocalClientNum_t LVar4;
-  cg_s *pcVar5;
-  Weapon WVar6;
-  int iVar7;
-  ScreenPlacement *pSVar8;
-  longlong lVar9;
-  longlong lVar10;
+  cg_s *pcVar3;
+  Weapon WVar4;
+  int iVar5;
+  ScreenPlacement *pSVar6;
   int in_r8;
-  double extraout_f1;
-  double dVar11;
-  double dVar12;
-  double dVar13;
+  double dVar7;
+  double dVar8;
+  double dVar9;
   char acStack_460 [1120];
   
-  lVar10 = (longlong)(int)param_3;
-  lVar9 = (longlong)(int)param_2;
-  LVar4 = __savegprlr_25((double)param_4,param_1,lVar9,lVar10,param_5);
-  dVar13 = extraout_f1;
-  pcVar5 = CG_GetLocalClientGlobals(LVar4);
-  if (((((pcVar5->predictedPlayerState).eFlags & 0x200000U) == 0) &&
-      (((pcVar5->predictedPlayerState).weapCommon.weapFlags & 0x80U) == 0)) &&
-     (WVar6 = CG_GetSelectedWeapon(pcVar5), (WVar6.data & 0xff) != 0)) {
+  dVar7 = (double)param_4;
+  pcVar3 = CG_GetLocalClientGlobals(param_1);
+  if (((((pcVar3->predictedPlayerState).eFlags & 0x200000U) == 0) &&
+      (((pcVar3->predictedPlayerState).weapCommon.weapFlags & 0x80U) == 0)) &&
+     (WVar4 = CG_GetSelectedWeapon(pcVar3), (WVar4.data & 0xff) != 0)) {
     CG_GetWeaponDisplayName
-              (WVar6,(bool)((byte)((uint)(pcVar5->predictedPlayerState).weapCommon.weapFlags >> 0xf)
+              (WVar4,(bool)((byte)((uint)(pcVar3->predictedPlayerState).weapCommon.weapFlags >> 0xf)
                            & 1),acStack_460,0x400);
-    pfVar3 = (float *)lVar9;
-    dVar12 = (double)(pfVar3[2] + *pfVar3);
-    iVar7 = UI_TextWidth(acStack_460,0,(Font_s *)lVar10,(float)dVar13);
-    bVar1 = *(byte *)((int)pfVar3 + 0x11);
-    bVar2 = *(byte *)(pfVar3 + 4);
-    dVar11 = (double)pfVar3[1];
-    dVar12 = (double)((float)(dVar12 - (double)(longlong)iVar7) - 28.0);
-    pSVar8 = ScrPlace_GetActivePlacement(LVar4);
-    UI_DrawText(pSVar8,acStack_460,0x7fffffff,(Font_s *)lVar10,(float)dVar12,(float)dVar11,param_6,
-                in_r8,(float)dVar13,(float *)(uint)bVar2,(uint)bVar1);
+    dVar9 = (double)(param_2->w + param_2->x);
+    iVar5 = UI_TextWidth(acStack_460,0,param_3,(float)dVar7);
+    bVar1 = param_2->vertAlign;
+    bVar2 = param_2->horzAlign;
+    dVar8 = (double)param_2->y;
+    dVar9 = (double)((float)(dVar9 - (double)(longlong)iVar5) - 28.0);
+    pSVar6 = ScrPlace_GetActivePlacement(param_1);
+    UI_DrawText(pSVar6,acStack_460,0x7fffffff,param_3,(float)dVar9,(float)dVar8,param_6,in_r8,
+                (float)dVar7,(float *)(uint)bVar2,(uint)bVar1);
   }
-  __restgprlr_25();
   return;
 }
 
 
 // 822E6D48  CG_DrawPlayerWeaponNameBackNoFade  (cgame_mp/cg_newDraw_mp.cpp:494)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -716,56 +680,44 @@ void CG_DrawPlayerWeaponNameBackNoFade
                float *param_5,Material *param_6)
 
 {
-  LocalClientNum_t LVar1;
-  cg_s *pcVar2;
-  Weapon WVar3;
-  int iVar4;
-  ScreenPlacement *pSVar5;
-  longlong lVar6;
-  float *pfVar7;
-  int iVar8;
-  longlong lVar9;
-  Font_s *pFVar10;
-  float *pfVar11;
-  double extraout_f1;
-  double dVar12;
-  double dVar13;
-  double dVar14;
-  double dVar15;
+  cg_s *pcVar1;
+  Weapon WVar2;
+  int iVar3;
+  ScreenPlacement *pSVar4;
+  int iVar5;
+  float *pfVar6;
+  double dVar7;
+  double dVar8;
+  double dVar9;
+  double dVar10;
   char acStack_460 [1120];
   
-  lVar9 = (longlong)(int)param_3;
-  lVar6 = (longlong)(int)param_2;
-  __savegprlr_26((double)param_4,param_1,lVar6,lVar9,param_5);
-  pfVar7 = (float *)lVar6;
-  pFVar10 = (Font_s *)lVar9;
-  LVar1 = __savefpr_28();
-  dVar12 = extraout_f1;
-  pcVar2 = CG_GetLocalClientGlobals(LVar1);
-  if ((((pcVar2->predictedPlayerState).eFlags & 0x200000U) == 0) &&
-     (WVar3 = CG_GetSelectedWeapon(pcVar2), (WVar3.data & 0xff) != 0)) {
-    pfVar11 = (float *)0x400;
+  dVar7 = (double)param_4;
+  pcVar1 = CG_GetLocalClientGlobals(param_1);
+  if ((((pcVar1->predictedPlayerState).eFlags & 0x200000U) == 0) &&
+     (WVar2 = CG_GetSelectedWeapon(pcVar1), (WVar2.data & 0xff) != 0)) {
+    pfVar6 = (float *)0x400;
     CG_GetWeaponDisplayName
-              (WVar3,(bool)((byte)((uint)(pcVar2->predictedPlayerState).weapCommon.weapFlags >> 0xf)
+              (WVar2,(bool)((byte)((uint)(pcVar1->predictedPlayerState).weapCommon.weapFlags >> 0xf)
                            & 1),acStack_460,0x400);
-    iVar8 = 0;
-    iVar4 = UI_TextWidth(acStack_460,0,pFVar10,(float)dVar12);
-    dVar15 = (double)pfVar7[3];
-    dVar14 = (double)pfVar7[1];
-    dVar13 = (double)((float)(longlong)iVar4 + 36.0);
-    dVar12 = (double)(float)((double)(pfVar7[2] + *pfVar7) - dVar13);
-    pSVar5 = ScrPlace_GetActivePlacement(LVar1);
-    UI_DrawHandlePic(pSVar5,(float)dVar12,(float)dVar14,(float)dVar13,(float)dVar15,iVar8,
-                     (int)pFVar10,pfVar11,param_6);
+    iVar5 = 0;
+    iVar3 = UI_TextWidth(acStack_460,0,param_3,(float)dVar7);
+    dVar10 = (double)param_2->h;
+    dVar9 = (double)param_2->y;
+    dVar8 = (double)((float)(longlong)iVar3 + 36.0);
+    dVar7 = (double)(float)((double)(param_2->w + param_2->x) - dVar8);
+    pSVar4 = ScrPlace_GetActivePlacement(param_1);
+    UI_DrawHandlePic(pSVar4,(float)dVar7,(float)dVar9,(float)dVar8,(float)dVar10,iVar5,(int)param_3,
+                     pfVar6,param_6);
   }
-  __restfpr_28();
-  __restgprlr_26();
   return;
 }
 
 
 // 822E6E40  CG_DrawPlayerWeaponNameFade  (cgame_mp/cg_newDraw_mp.cpp:524)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -775,43 +727,36 @@ void CG_DrawPlayerWeaponNameFade
                float *param_5,int param_6)
 
 {
-  LocalClientNum_t LVar1;
-  cg_s *pcVar2;
+  cg_s *pcVar1;
+  float *pfVar2;
   float *pfVar3;
-  longlong lVar4;
-  longlong lVar5;
-  float *pfVar6;
-  double extraout_f1;
-  double dVar7;
+  double dVar4;
   undefined4 local_50;
   undefined4 local_4c;
   undefined4 local_48;
   float local_44;
   
-  lVar5 = (longlong)(int)param_3;
-  lVar4 = (longlong)(int)param_2;
-  LVar1 = __savegprlr_27((double)param_4,param_1,lVar4,lVar5,param_5);
-  dVar7 = extraout_f1;
-  pcVar2 = CG_GetLocalClientGlobals(LVar1);
-  if (((pcVar2->predictedPlayerState).eFlags & 0x200000U) == 0) {
-    pfVar6 = (float *)0x2bc;
-    pfVar3 = CG_FadeColor(pcVar2->time,pcVar2->weaponSelectTime,0x708,700);
-    if (pfVar3 != (float *)0x0) {
-      local_44 = pfVar3[3];
+  dVar4 = (double)param_4;
+  pcVar1 = CG_GetLocalClientGlobals(param_1);
+  if (((pcVar1->predictedPlayerState).eFlags & 0x200000U) == 0) {
+    pfVar3 = (float *)0x2bc;
+    pfVar2 = CG_FadeColor(pcVar1->time,pcVar1->weaponSelectTime,0x708,700);
+    if (pfVar2 != (float *)0x0) {
+      local_44 = pfVar2[3];
       local_50 = *(undefined4 *)param_6;
       local_4c = *(undefined4 *)(param_6 + 4);
       local_48 = *(undefined4 *)(param_6 + 8);
-      CG_DrawPlayerWeaponNameNoFade
-                (LVar1,(rectDef_s *)lVar4,(Font_s *)lVar5,(float)dVar7,pfVar6,(int)&local_50);
+      CG_DrawPlayerWeaponNameNoFade(param_1,param_2,param_3,(float)dVar4,pfVar3,(int)&local_50);
     }
   }
-  __restgprlr_27();
   return;
 }
 
 
 // 822E6EF0  CG_DrawPlayerWeaponNameBackFade  (cgame_mp/cg_newDraw_mp.cpp:549)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -821,25 +766,18 @@ void CG_DrawPlayerWeaponNameBackFade
                float *param_5,Material *param_6)
 
 {
-  LocalClientNum_t LVar1;
-  cg_s *pcVar2;
-  longlong lVar3;
-  longlong lVar4;
-  float *pfVar5;
-  double extraout_f1;
-  double dVar6;
+  cg_s *pcVar1;
+  float *pfVar2;
+  double dVar3;
   char *local_50;
   undefined4 local_4c;
   GfxDrawSurf local_48 [9];
   
-  lVar4 = (longlong)(int)param_3;
-  lVar3 = (longlong)(int)param_2;
-  LVar1 = __savegprlr_27((double)param_4,param_1,lVar3,lVar4,param_5);
-  dVar6 = extraout_f1;
-  pcVar2 = CG_GetLocalClientGlobals(LVar1);
-  if (((pcVar2->predictedPlayerState).eFlags & 0x200000U) == 0) {
-    pfVar5 = (float *)0x708;
-    local_48[0]._4_4_ = CG_FadeHudMenu(LVar1,hud_fade_ammodisplay,pcVar2->weaponSelectTime,0x708);
+  dVar3 = (double)param_4;
+  pcVar1 = CG_GetLocalClientGlobals(param_1);
+  if (((pcVar1->predictedPlayerState).eFlags & 0x200000U) == 0) {
+    pfVar2 = (float *)0x708;
+    local_48[0]._4_4_ = CG_FadeHudMenu(param_1,hud_fade_ammodisplay,pcVar1->weaponSelectTime,0x708);
     if ((float)local_48[0]._4_4_ != 0.0) {
       local_50 = (param_6->info).name;
       local_4c._0_1_ = (param_6->info).gameFlags;
@@ -848,17 +786,17 @@ void CG_DrawPlayerWeaponNameBackFade
       local_4c._3_1_ = (param_6->info).textureAtlasColumnCount;
       local_48[0]._0_4_ = *(undefined4 *)&(param_6->info).drawSurf;
       CG_DrawPlayerWeaponNameBackNoFade
-                (LVar1,(rectDef_s *)lVar3,(Font_s *)lVar4,(float)dVar6,pfVar5,(Material *)&local_50)
-      ;
+                (param_1,param_2,param_3,(float)dVar3,pfVar2,(Material *)&local_50);
     }
   }
-  __restgprlr_27();
   return;
 }
 
 
 // 822E6FA8  CG_CalcPlayerSprintColor  (cgame_mp/cg_newDraw_mp.cpp:571)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
@@ -868,56 +806,56 @@ void CG_CalcPlayerSprintColor(cg_s *param_1,playerState_s *param_2,float *param_
 {
   float fVar1;
   int iVar2;
-  dvar_t *pdVar3;
-  int iVar4;
+  int iVar3;
+  dvar_t *pdVar4;
   int iVar5;
   bool bVar7;
   int iVar6;
   
-  iVar4 = __savegprlr_28(param_1);
   iVar5 = BG_GetMaxSprintTime(param_2);
   iVar6 = DAT_82a4d210;
   if ((param_2->pm_type == 8) || (iVar5 == 0)) {
     *param_3 = *(float *)(DAT_82a4d210 + 0xc);
     param_3[1] = *(float *)(iVar6 + 0x10);
     param_3[2] = *(float *)(iVar6 + 0x14);
-    __restgprlr_28();
     return;
   }
   bVar7 = PM_IsSprinting(param_2);
   if (bVar7) {
-    iVar6 = PM_GetSprintLeft(param_2,*(int *)(iVar4 + 0x6b98c));
+    iVar6 = PM_GetSprintLeft(param_2,param_1->time);
   }
   else {
     iVar6 = PM_GetSprintLeftLastTime(param_2);
   }
-  pdVar3 = cg_sprintMeterDisabledColor;
-  iVar2 = DAT_82a4d210;
-  iVar4 = DAT_82a4d200;
+  pdVar4 = cg_sprintMeterDisabledColor;
+  iVar3 = DAT_82a4d210;
+  iVar2 = DAT_82a4d200;
   if (iVar6 != 0) {
     fVar1 = (float)(longlong)iVar6 / (float)(longlong)iVar5;
     *param_3 = (*(float *)(DAT_82a4d210 + 0xc) - *(float *)(DAT_82a4d200 + 0xc)) * fVar1 +
                *(float *)(DAT_82a4d200 + 0xc);
-    param_3[1] = (*(float *)(iVar2 + 0x10) - *(float *)(iVar4 + 0x10)) * fVar1 +
-                 *(float *)(iVar4 + 0x10);
-    param_3[2] = (*(float *)(iVar2 + 0x14) - *(float *)(iVar4 + 0x14)) * fVar1 +
-                 *(float *)(iVar4 + 0x14);
-    param_3[3] = (*(float *)(iVar2 + 0x18) - *(float *)(iVar4 + 0x18)) * fVar1 +
-                 *(float *)(iVar4 + 0x18);
-    __restgprlr_28();
+    param_3[1] = (*(float *)(iVar3 + 0x10) - *(float *)(iVar2 + 0x10)) * fVar1 +
+                 *(float *)(iVar2 + 0x10);
+    param_3[2] = (*(float *)(iVar3 + 0x14) - *(float *)(iVar2 + 0x14)) * fVar1 +
+                 *(float *)(iVar2 + 0x14);
+    param_3[3] = (*(float *)(iVar3 + 0x18) - *(float *)(iVar2 + 0x18)) * fVar1 +
+                 *(float *)(iVar2 + 0x18);
     return;
   }
   *param_3 = (float)(cg_sprintMeterDisabledColor->current).integer;
-  param_3[1] = (pdVar3->current).vector[1];
-  param_3[2] = (pdVar3->current).vector[2];
-  param_3[3] = (pdVar3->current).vector[3];
-  __restgprlr_28();
+  param_3[1] = (pdVar4->current).vector[1];
+  param_3[2] = (pdVar4->current).vector[2];
+  param_3[3] = (pdVar4->current).vector[3];
   return;
 }
 
 
 // 822E7108  CG_DrawPlayerSprintBack  (cgame_mp/cg_newDraw_mp.cpp:844)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -926,49 +864,48 @@ void CG_DrawPlayerSprintBack
                (LocalClientNum_t param_1,rectDef_s *param_2,Material *param_3,float *param_4)
 
 {
-  LocalClientNum_t LVar1;
-  cg_s *pcVar2;
-  ScreenPlacement *pSVar3;
-  dvar_t *pdVar4;
-  int iVar5;
-  IMAGE_DOS_HEADER *pIVar6;
-  Material *pMVar7;
+  cg_s *pcVar1;
+  ScreenPlacement *pSVar2;
+  dvar_t *pdVar3;
+  int iVar4;
+  IMAGE_DOS_HEADER *pIVar5;
+  Material *pMVar6;
+  double dVar7;
   double dVar8;
   double dVar9;
   double dVar10;
   double dVar11;
-  double dVar12;
-  float fVar13;
+  float fVar12;
   
-  __savegprlr_26(param_1);
-  LVar1 = __savefpr_27();
-  pcVar2 = CG_GetLocalClientGlobals(LVar1);
-  if (((pcVar2->predictedPlayerState).eFlags & 0x200000U) == 0) {
-    dVar8 = floor((double)((hud_fade_sprint->current).value * 1000.0 + 0.5));
-    pMVar7 = (Material *)0x79814;
-    iVar5 = pcVar2->sprintFadeTime;
-    pdVar4 = hud_fade_sprint;
-    fVar13 = CG_FadeHudMenu(LVar1,hud_fade_sprint,iVar5,(int)dVar8);
-    pIVar6 = &IMAGE_DOS_HEADER_82000000;
-    dVar8 = 0.0;
-    if (fVar13 != 0.0) {
-      dVar12 = (double)param_2->h;
-      dVar11 = (double)param_2->w;
-      dVar10 = (double)param_2->y;
-      dVar9 = (double)param_2->x;
-      pSVar3 = ScrPlace_GetActivePlacement(LVar1);
-      CL_DrawStretchPic(pSVar3,(float)dVar9,(float)dVar10,(float)dVar11,(float)dVar12,(int)pdVar4,
-                        iVar5,(float)dVar8,(float)dVar8,1.0,1.0,(float *)pIVar6,pMVar7);
+  pcVar1 = CG_GetLocalClientGlobals(param_1);
+  if (((pcVar1->predictedPlayerState).eFlags & 0x200000U) == 0) {
+    dVar7 = floor((double)((hud_fade_sprint->current).value * 1000.0 + 0.5));
+    pMVar6 = (Material *)0x79814;
+    iVar4 = pcVar1->sprintFadeTime;
+    pdVar3 = hud_fade_sprint;
+    fVar12 = CG_FadeHudMenu(param_1,hud_fade_sprint,iVar4,(int)dVar7);
+    pIVar5 = &IMAGE_DOS_HEADER_82000000;
+    dVar7 = 0.0;
+    if (fVar12 != 0.0) {
+      dVar11 = (double)param_2->h;
+      dVar10 = (double)param_2->w;
+      dVar9 = (double)param_2->y;
+      dVar8 = (double)param_2->x;
+      pSVar2 = ScrPlace_GetActivePlacement(param_1);
+      CL_DrawStretchPic(pSVar2,(float)dVar8,(float)dVar9,(float)dVar10,(float)dVar11,(int)pdVar3,
+                        iVar4,(float)dVar7,(float)dVar7,1.0,1.0,(float *)pIVar5,pMVar6);
     }
   }
-  __restfpr_27();
-  __restgprlr_26();
   return;
 }
 
 
 // 822E7238  CG_DrawPlayerSprintMeter  (cgame_mp/cg_newDraw_mp.cpp:866)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -977,51 +914,46 @@ void CG_DrawPlayerSprintMeter
                (LocalClientNum_t param_1,rectDef_s *param_2,Material *param_3,float *param_4)
 
 {
-  LocalClientNum_t LVar1;
-  cg_s *pcVar2;
+  cg_s *pcVar1;
+  int iVar2;
   int iVar3;
-  int iVar4;
-  ScreenPlacement *pSVar5;
-  IMAGE_DOS_HEADER *pIVar6;
-  longlong lVar7;
-  Material *pMVar8;
+  ScreenPlacement *pSVar4;
+  IMAGE_DOS_HEADER *pIVar5;
+  longlong lVar6;
+  Material *pMVar7;
+  double dVar8;
   double dVar9;
   double dVar10;
   double dVar11;
   double dVar12;
   double dVar13;
-  double dVar14;
-  float fVar15;
+  float fVar14;
   
-  __savegprlr_26(param_1);
-  LVar1 = __savefpr_25();
-  pcVar2 = CG_GetLocalClientGlobals(LVar1);
-  if (((pcVar2->predictedPlayerState).eFlags & 0x200000U) == 0) {
-    dVar9 = floor((double)((hud_fade_sprint->current).value * 1000.0 + 0.5));
-    fVar15 = CG_FadeHudMenu(LVar1,hud_fade_sprint,pcVar2->sprintFadeTime,(int)dVar9);
-    pIVar6 = &IMAGE_DOS_HEADER_82000000;
-    dVar9 = 0.0;
-    if (fVar15 != 0.0) {
-      iVar3 = PM_GetSprintLeft(&pcVar2->predictedPlayerState,pcVar2->time);
-      iVar4 = BG_GetMaxSprintTime(&pcVar2->predictedPlayerState);
-      lVar7 = (longlong)iVar4;
-      dVar14 = (double)((float)(longlong)iVar3 / (float)lVar7);
-      if (dVar9 < dVar14) {
-        dVar13 = (double)param_2->x;
-        dVar12 = (double)(float)((double)param_2->w * dVar14);
-        dVar11 = (double)param_2->y;
-        dVar10 = (double)param_2->h;
-        CG_CalcPlayerSprintColor(pcVar2,&pcVar2->predictedPlayerState,param_4);
-        pMVar8 = (Material *)lVar7;
-        pSVar5 = ScrPlace_GetActivePlacement(LVar1);
-        CL_DrawStretchPic(pSVar5,(float)dVar13,(float)dVar11,(float)dVar12,(float)dVar10,(int)pcVar2
-                          ,(int)param_4,(float)dVar9,(float)dVar9,(float)dVar14,1.0,(float *)pIVar6,
-                          pMVar8);
+  pcVar1 = CG_GetLocalClientGlobals(param_1);
+  if (((pcVar1->predictedPlayerState).eFlags & 0x200000U) == 0) {
+    dVar8 = floor((double)((hud_fade_sprint->current).value * 1000.0 + 0.5));
+    fVar14 = CG_FadeHudMenu(param_1,hud_fade_sprint,pcVar1->sprintFadeTime,(int)dVar8);
+    pIVar5 = &IMAGE_DOS_HEADER_82000000;
+    dVar8 = 0.0;
+    if (fVar14 != 0.0) {
+      iVar2 = PM_GetSprintLeft(&pcVar1->predictedPlayerState,pcVar1->time);
+      iVar3 = BG_GetMaxSprintTime(&pcVar1->predictedPlayerState);
+      lVar6 = (longlong)iVar3;
+      dVar13 = (double)((float)(longlong)iVar2 / (float)lVar6);
+      if (dVar8 < dVar13) {
+        dVar12 = (double)param_2->x;
+        dVar11 = (double)(float)((double)param_2->w * dVar13);
+        dVar10 = (double)param_2->y;
+        dVar9 = (double)param_2->h;
+        CG_CalcPlayerSprintColor(pcVar1,&pcVar1->predictedPlayerState,param_4);
+        pMVar7 = (Material *)lVar6;
+        pSVar4 = ScrPlace_GetActivePlacement(param_1);
+        CL_DrawStretchPic(pSVar4,(float)dVar12,(float)dVar10,(float)dVar11,(float)dVar9,(int)pcVar1,
+                          (int)param_4,(float)dVar8,(float)dVar8,(float)dVar13,1.0,(float *)pIVar5,
+                          pMVar7);
       }
     }
   }
-  __restfpr_25();
-  __restgprlr_26();
   return;
 }
 
@@ -1055,6 +987,10 @@ float CG_CalcPlayerHealth(playerState_s *param_1)
 
 // 822E7460  CG_DrawPlayerBarHealth  (cgame_mp/cg_newDraw_mp.cpp:930)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -1063,12 +999,146 @@ void CG_DrawPlayerBarHealth
                (LocalClientNum_t param_1,rectDef_s *param_2,Material *param_3,float *param_4)
 
 {
-  LocalClientNum_t LVar1;
-  cg_s *pcVar2;
-  ScreenPlacement *pSVar3;
-  dvar_t *pdVar4;
-  ulonglong uVar5;
-  int iVar6;
+  cg_s *pcVar1;
+  ScreenPlacement *pSVar2;
+  dvar_t *pdVar3;
+  ulonglong uVar4;
+  int iVar5;
+  IMAGE_DOS_HEADER *pIVar6;
+  Material *pMVar7;
+  int *piVar8;
+  double dVar9;
+  double dVar10;
+  double dVar11;
+  double dVar12;
+  double dVar13;
+  double dVar14;
+  double dVar15;
+  double dVar16;
+  double dVar17;
+  float fVar18;
+  
+  if ((cg_drawHealth->current).enabled == false) {
+    return;
+  }
+  pcVar1 = CG_GetLocalClientGlobals(param_1);
+  fVar18 = CG_CalcPlayerHealth(&pcVar1->predictedPlayerState);
+  dVar9 = (double)fVar18;
+  dVar16 = 0.5;
+  dVar10 = floor((double)((hud_fade_healthbar->current).value * 1000.0 + 0.5));
+  pMVar7 = (Material *)0x7980c;
+  uVar4 = (ulonglong)(uint)pcVar1->healthFadeTime;
+  pdVar3 = hud_fade_healthbar;
+  fVar18 = CG_FadeHudMenu(param_1,hud_fade_healthbar,pcVar1->healthFadeTime,(int)dVar10);
+  pIVar6 = &IMAGE_DOS_HEADER_82000000;
+  param_4[3] = fVar18;
+  dVar10 = 0.0;
+  if (fVar18 == 0.0) {
+    return;
+  }
+  dVar15 = 1.0;
+  dVar11 = dVar15;
+  if ((float)(dVar9 - 1.0) < 0.0) {
+    dVar11 = dVar9;
+  }
+  dVar13 = dVar10;
+  if (-dVar9 < 0.0) {
+    dVar13 = dVar11;
+  }
+  if (0.0 < dVar9) {
+    dVar17 = (double)param_2->x;
+    dVar14 = (double)(float)((double)param_2->w * dVar9);
+    dVar12 = (double)param_2->y;
+    dVar11 = (double)param_2->h;
+    if (dVar13 <= dVar16) {
+      param_4[1] = (float)(dVar13 + 0.20000000298023224) * param_4[1] + 0.3;
+    }
+    else {
+      *param_4 = (float)(1.0 - dVar13) * *param_4 * 2.0;
+      param_4[2] = (float)(1.0 - dVar13) * param_4[2] * 2.0;
+    }
+    pIVar6 = &IMAGE_DOS_HEADER_82000000;
+    pSVar2 = ScrPlace_GetActivePlacement(param_1);
+    CL_DrawStretchPic(pSVar2,(float)dVar17,(float)dVar12,(float)dVar14,(float)dVar11,(int)pdVar3,
+                      (int)uVar4,(float)dVar10,(float)dVar10,(float)dVar9,(float)dVar15,
+                      (float *)pIVar6,pMVar7);
+  }
+  iVar5 = (pcVar1->predictedPlayerState).clientNum;
+  if (pcVar1->lastHealthClient == iVar5) {
+    dVar16 = (double)pcVar1->lastHealth;
+    if (dVar16 <= dVar9) {
+      pcVar1->lastHealthLerpDelay = 1;
+    }
+    else {
+      piVar8 = &pcVar1->lastHealthLerpDelay;
+      if (*piVar8 != 0) {
+        pMVar7 = (Material *)0x6b988;
+        pIVar6 = (IMAGE_DOS_HEADER *)pcVar1->frametime;
+        uVar4 = (ulonglong)(uint)*piVar8 - ZEXT48(pIVar6);
+        *piVar8 = (int)uVar4;
+        if ((longlong)uVar4 < 0) {
+          *piVar8 = 0;
+        }
+        goto LAB_822e76b8;
+      }
+      pMVar7 = (Material *)0x6b988;
+      pIVar6 = (IMAGE_DOS_HEADER *)pcVar1->frametime;
+      uVar4 = (ulonglong)(int)pIVar6;
+      dVar16 = -(double)(float)((double)(longlong)uVar4 * 0.0012000000569969416 - dVar16);
+      pcVar1->lastHealth = (float)dVar16;
+      if (dVar9 < dVar16) goto LAB_822e76b8;
+      *piVar8 = 1;
+      pMVar7 = (Material *)0x6b988;
+    }
+  }
+  else {
+    pcVar1->lastHealthClient = iVar5;
+    pcVar1->lastHealthLerpDelay = 1;
+    pMVar7 = (Material *)0x1;
+  }
+  pcVar1->lastHealth = (float)dVar9;
+LAB_822e76b8:
+  iVar5 = (int)uVar4;
+  dVar16 = (double)pcVar1->lastHealth;
+  if (dVar9 < dVar16) {
+    fVar18 = param_2->w;
+    dVar14 = (double)param_2->y;
+    dVar12 = (double)(float)((double)fVar18 * dVar9 + (double)param_2->x);
+    dVar13 = (double)param_2->h;
+    param_4[1] = (float)dVar10;
+    param_4[2] = (float)dVar10;
+    *param_4 = (float)dVar15;
+    dVar11 = (double)pcVar1->lastHealth;
+    dVar16 = (double)(float)((double)(float)(dVar16 - dVar9) * (double)fVar18);
+    pSVar2 = ScrPlace_GetActivePlacement(param_1);
+    CL_DrawStretchPic(pSVar2,(float)dVar12,(float)dVar14,(float)dVar16,(float)dVar13,(int)pdVar3,
+                      iVar5,(float)dVar9,(float)dVar10,(float)dVar11,(float)dVar15,(float *)pIVar6,
+                      pMVar7);
+  }
+  return;
+}
+
+
+// 822E7748  CG_DrawPlayerBarHealthBack  (cgame_mp/cg_newDraw_mp.cpp:1023)
+
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
+
+void CG_DrawPlayerBarHealthBack
+               (LocalClientNum_t param_1,rectDef_s *param_2,Material *param_3,float *param_4)
+
+{
+  cg_s *pcVar1;
+  ScreenPlacement *pSVar2;
+  dvar_t *pdVar3;
+  int iVar4;
+  int iVar5;
+  char *pcVar6;
   IMAGE_DOS_HEADER *pIVar7;
   Material *pMVar8;
   int *piVar9;
@@ -1081,212 +1151,74 @@ void CG_DrawPlayerBarHealth
   double dVar16;
   double dVar17;
   double dVar18;
-  float fVar19;
-  
-  __savegprlr_25(param_1);
-  LVar1 = __savefpr_24();
-  if ((cg_drawHealth->current).enabled == false) goto LAB_822e7734;
-  pcVar2 = CG_GetLocalClientGlobals(LVar1);
-  fVar19 = CG_CalcPlayerHealth(&pcVar2->predictedPlayerState);
-  dVar10 = (double)fVar19;
-  dVar17 = 0.5;
-  dVar11 = floor((double)((hud_fade_healthbar->current).value * 1000.0 + 0.5));
-  pMVar8 = (Material *)0x7980c;
-  uVar5 = (ulonglong)(uint)pcVar2->healthFadeTime;
-  pdVar4 = hud_fade_healthbar;
-  fVar19 = CG_FadeHudMenu(LVar1,hud_fade_healthbar,pcVar2->healthFadeTime,(int)dVar11);
-  pIVar7 = &IMAGE_DOS_HEADER_82000000;
-  param_4[3] = fVar19;
-  dVar11 = 0.0;
-  if (fVar19 == 0.0) goto LAB_822e7734;
-  dVar16 = 1.0;
-  dVar12 = dVar16;
-  if ((float)(dVar10 - 1.0) < 0.0) {
-    dVar12 = dVar10;
-  }
-  dVar14 = dVar11;
-  if (-dVar10 < 0.0) {
-    dVar14 = dVar12;
-  }
-  if (0.0 < dVar10) {
-    dVar18 = (double)param_2->x;
-    dVar15 = (double)(float)((double)param_2->w * dVar10);
-    dVar13 = (double)param_2->y;
-    dVar12 = (double)param_2->h;
-    if (dVar14 <= dVar17) {
-      param_4[1] = (float)(dVar14 + 0.20000000298023224) * param_4[1] + 0.3;
-    }
-    else {
-      *param_4 = (float)(1.0 - dVar14) * *param_4 * 2.0;
-      param_4[2] = (float)(1.0 - dVar14) * param_4[2] * 2.0;
-    }
-    pIVar7 = &IMAGE_DOS_HEADER_82000000;
-    pSVar3 = ScrPlace_GetActivePlacement(LVar1);
-    CL_DrawStretchPic(pSVar3,(float)dVar18,(float)dVar13,(float)dVar15,(float)dVar12,(int)pdVar4,
-                      (int)uVar5,(float)dVar11,(float)dVar11,(float)dVar10,(float)dVar16,
-                      (float *)pIVar7,pMVar8);
-  }
-  iVar6 = (pcVar2->predictedPlayerState).clientNum;
-  if (pcVar2->lastHealthClient == iVar6) {
-    dVar17 = (double)pcVar2->lastHealth;
-    if (dVar17 <= dVar10) {
-      pcVar2->lastHealthLerpDelay = 1;
-      goto LAB_822e76b4;
-    }
-    piVar9 = &pcVar2->lastHealthLerpDelay;
-    if (*piVar9 == 0) {
-      pMVar8 = (Material *)0x6b988;
-      pIVar7 = (IMAGE_DOS_HEADER *)pcVar2->frametime;
-      uVar5 = (ulonglong)(int)pIVar7;
-      dVar17 = -(double)(float)((double)(longlong)uVar5 * 0.0012000000569969416 - dVar17);
-      pcVar2->lastHealth = (float)dVar17;
-      if (dVar17 <= dVar10) {
-        *piVar9 = 1;
-        pMVar8 = (Material *)0x6b988;
-        goto LAB_822e76b4;
-      }
-    }
-    else {
-      pMVar8 = (Material *)0x6b988;
-      pIVar7 = (IMAGE_DOS_HEADER *)pcVar2->frametime;
-      uVar5 = (ulonglong)(uint)*piVar9 - ZEXT48(pIVar7);
-      *piVar9 = (int)uVar5;
-      if ((longlong)uVar5 < 0) {
-        *piVar9 = 0;
-      }
-    }
-  }
-  else {
-    pcVar2->lastHealthClient = iVar6;
-    pcVar2->lastHealthLerpDelay = 1;
-    pMVar8 = (Material *)0x1;
-LAB_822e76b4:
-    pcVar2->lastHealth = (float)dVar10;
-  }
-  iVar6 = (int)uVar5;
-  dVar17 = (double)pcVar2->lastHealth;
-  if (dVar10 < dVar17) {
-    fVar19 = param_2->w;
-    dVar15 = (double)param_2->y;
-    dVar13 = (double)(float)((double)fVar19 * dVar10 + (double)param_2->x);
-    dVar14 = (double)param_2->h;
-    param_4[1] = (float)dVar11;
-    param_4[2] = (float)dVar11;
-    *param_4 = (float)dVar16;
-    dVar12 = (double)pcVar2->lastHealth;
-    dVar17 = (double)(float)((double)(float)(dVar17 - dVar10) * (double)fVar19);
-    pSVar3 = ScrPlace_GetActivePlacement(LVar1);
-    CL_DrawStretchPic(pSVar3,(float)dVar13,(float)dVar15,(float)dVar17,(float)dVar14,(int)pdVar4,
-                      iVar6,(float)dVar10,(float)dVar11,(float)dVar12,(float)dVar16,(float *)pIVar7,
-                      pMVar8);
-  }
-LAB_822e7734:
-  __restfpr_24();
-  __restgprlr_25();
-  return;
-}
-
-
-// 822E7748  CG_DrawPlayerBarHealthBack  (cgame_mp/cg_newDraw_mp.cpp:1023)
-
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
-/* WARNING: Enum "trType_t": Some values do not have unique names */
-
-void CG_DrawPlayerBarHealthBack
-               (LocalClientNum_t param_1,rectDef_s *param_2,Material *param_3,float *param_4)
-
-{
-  LocalClientNum_t LVar1;
-  cg_s *pcVar2;
-  ScreenPlacement *pSVar3;
-  dvar_t *pdVar4;
-  int iVar5;
-  int iVar6;
-  char *pcVar7;
-  IMAGE_DOS_HEADER *pIVar8;
-  Material *pMVar9;
-  int *piVar10;
-  double dVar11;
-  double dVar12;
-  double dVar13;
-  double dVar14;
-  double dVar15;
-  double dVar16;
-  double dVar17;
-  double dVar18;
   double dVar19;
-  double dVar20;
-  float fVar21;
+  float fVar20;
   
-  __savegprlr_25(param_1);
-  LVar1 = __savefpr_23();
   if ((cg_drawHealth->current).enabled != false) {
-    pcVar2 = CG_GetLocalClientGlobals(LVar1);
-    dVar14 = 1000.0;
-    dVar13 = 0.5;
-    dVar11 = floor((double)((hud_fade_healthbar->current).value * 1000.0 + 0.5));
-    pMVar9 = (Material *)0x7980c;
-    iVar6 = pcVar2->healthFadeTime;
-    pdVar4 = hud_fade_healthbar;
-    fVar21 = CG_FadeHudMenu(LVar1,hud_fade_healthbar,iVar6,(int)dVar11);
-    dVar11 = (double)fVar21;
-    pIVar8 = &IMAGE_DOS_HEADER_82000000;
-    dVar20 = 0.0;
-    if (dVar11 != 0.0) {
-      param_4[3] = fVar21;
-      dVar18 = (double)param_2->x;
-      dVar17 = (double)param_2->y;
-      dVar16 = (double)param_2->w;
-      dVar15 = (double)param_2->h;
-      pSVar3 = ScrPlace_GetActivePlacement(LVar1);
-      dVar19 = 1.0;
-      CL_DrawStretchPic(pSVar3,(float)dVar18,(float)dVar17,(float)dVar16,(float)dVar15,(int)pdVar4,
-                        iVar6,(float)dVar20,(float)dVar20,1.0,1.0,(float *)pIVar8,pMVar9);
-      fVar21 = CG_CalcPlayerHealth(&pcVar2->predictedPlayerState);
-      dVar12 = (double)fVar21;
-      if (dVar12 != dVar20) {
-        if ((double)(hud_health_startpulse_critical->current).value <= dVar12) {
-          if ((double)(hud_health_startpulse_injured->current).value <= dVar12) goto LAB_822e79c4;
-          dVar13 = floor((double)(float)((double)(float)((double)(hud_health_pulserate_injured->
-                                                                 current).value * dVar14) + dVar13))
+    pcVar1 = CG_GetLocalClientGlobals(param_1);
+    dVar13 = 1000.0;
+    dVar12 = 0.5;
+    dVar10 = floor((double)((hud_fade_healthbar->current).value * 1000.0 + 0.5));
+    pMVar8 = (Material *)0x7980c;
+    iVar5 = pcVar1->healthFadeTime;
+    pdVar3 = hud_fade_healthbar;
+    fVar20 = CG_FadeHudMenu(param_1,hud_fade_healthbar,iVar5,(int)dVar10);
+    dVar10 = (double)fVar20;
+    pIVar7 = &IMAGE_DOS_HEADER_82000000;
+    dVar19 = 0.0;
+    if (dVar10 != 0.0) {
+      param_4[3] = fVar20;
+      dVar17 = (double)param_2->x;
+      dVar16 = (double)param_2->y;
+      dVar15 = (double)param_2->w;
+      dVar14 = (double)param_2->h;
+      pSVar2 = ScrPlace_GetActivePlacement(param_1);
+      dVar18 = 1.0;
+      CL_DrawStretchPic(pSVar2,(float)dVar17,(float)dVar16,(float)dVar15,(float)dVar14,(int)pdVar3,
+                        iVar5,(float)dVar19,(float)dVar19,1.0,1.0,(float *)pIVar7,pMVar8);
+      fVar20 = CG_CalcPlayerHealth(&pcVar1->predictedPlayerState);
+      dVar11 = (double)fVar20;
+      if (dVar11 != dVar19) {
+        if ((double)(hud_health_startpulse_critical->current).value <= dVar11) {
+          if ((double)(hud_health_startpulse_injured->current).value <= dVar11) {
+            return;
+          }
+          dVar12 = floor((double)(float)((double)(float)((double)(hud_health_pulserate_injured->
+                                                                 current).value * dVar13) + dVar12))
           ;
         }
         else {
-          dVar13 = floor((double)(float)((double)(float)((double)(hud_health_pulserate_critical->
-                                                                 current).value * dVar14) + dVar13))
+          dVar12 = floor((double)(float)((double)(float)((double)(hud_health_pulserate_critical->
+                                                                 current).value * dVar13) + dVar12))
           ;
         }
-        iVar6 = (int)dVar13;
-        if (iVar6 != 0) {
-          piVar10 = &pcVar2->lastHealthPulseTime;
-          pMVar9 = (Material *)&pcVar2->time;
-          iVar5 = *(int *)pMVar9;
-          if ((iVar5 < *piVar10) || (*piVar10 + iVar6 < iVar5)) {
-            *piVar10 = iVar5;
+        iVar5 = (int)dVar12;
+        if (iVar5 != 0) {
+          piVar9 = &pcVar1->lastHealthPulseTime;
+          pMVar8 = (Material *)&pcVar1->time;
+          iVar4 = *(int *)pMVar8;
+          if ((iVar4 < *piVar9) || (*piVar9 + iVar5 < iVar4)) {
+            *piVar9 = iVar4;
           }
-          pIVar8 = &IMAGE_DOS_HEADER_82000000;
-          pcVar7 = "the motion tracker after being detected";
+          pIVar7 = &IMAGE_DOS_HEADER_82000000;
+          pcVar6 = "the motion tracker after being detected";
           param_4[1] = 0.18;
           param_4[2] = 0.01;
           *param_4 = 0.89;
-          iVar5 = *(int *)pMVar9;
-          fVar21 = (float)(longlong)((*piVar10 - iVar5) + iVar6) / (float)(longlong)iVar6;
-          param_4[3] = fVar21;
-          if (dVar11 < (double)fVar21) {
-            param_4[3] = (float)dVar11;
+          iVar4 = *(int *)pMVar8;
+          fVar20 = (float)(longlong)((*piVar9 - iVar4) + iVar5) / (float)(longlong)iVar5;
+          param_4[3] = fVar20;
+          if (dVar10 < (double)fVar20) {
+            param_4[3] = (float)dVar10;
           }
-          pSVar3 = ScrPlace_GetActivePlacement(LVar1);
-          CL_DrawStretchPic(pSVar3,(float)dVar18,(float)dVar17,(float)dVar16,(float)dVar15,iVar5,
-                            (int)pcVar7,(float)dVar20,(float)dVar20,(float)dVar19,(float)dVar19,
-                            (float *)pIVar8,pMVar9);
+          pSVar2 = ScrPlace_GetActivePlacement(param_1);
+          CL_DrawStretchPic(pSVar2,(float)dVar17,(float)dVar16,(float)dVar15,(float)dVar14,iVar4,
+                            (int)pcVar6,(float)dVar19,(float)dVar19,(float)dVar18,(float)dVar18,
+                            (float *)pIVar7,pMVar8);
         }
       }
     }
   }
-LAB_822e79c4:
-  __restfpr_23();
-  __restgprlr_25();
   return;
 }
 
@@ -1368,6 +1300,10 @@ void CG_BloodOverlayUpdate(cg_s *param_1,float param_2)
 
 // 822E7BF8  CG_BloodOverlayDraw  (cgame_mp/cg_newDraw_mp.cpp:1140)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -1376,45 +1312,40 @@ void CG_BloodOverlayDraw(LocalClientNum_t param_1,rectDef_s *param_2,Material *p
                         float *param_4)
 
 {
-  LocalClientNum_t LVar1;
-  bool bVar5;
+  bool bVar4;
+  cg_s *pcVar1;
   cg_s *pcVar2;
-  cg_s *pcVar3;
-  ScreenPlacement *pSVar4;
-  rectDef_s *prVar6;
-  float *pfVar7;
+  ScreenPlacement *pSVar3;
+  rectDef_s *prVar5;
+  float *pfVar6;
   Material *in_r7;
+  double dVar7;
   double dVar8;
   double dVar9;
   double dVar10;
   double dVar11;
-  double dVar12;
-  float fVar13;
+  float fVar12;
   
-  __savegprlr_27(param_1);
-  LVar1 = __savefpr_27();
-  prVar6 = param_2;
-  pfVar7 = param_4;
-  bVar5 = CG_BloodOverlayIsVisible(LVar1);
-  if (bVar5) {
-    pcVar2 = CG_GetLocalClientGlobals(LVar1);
-    pcVar3 = pcVar2;
-    fVar13 = CG_CalcPlayerHealth(&pcVar2->predictedPlayerState);
-    CG_BloodOverlayUpdate(pcVar3,fVar13);
-    dVar12 = 0.0;
-    if (pcVar2->bloodOverlayAlpha != 0.0) {
-      param_4[3] = pcVar2->bloodOverlayAlpha;
-      dVar11 = (double)param_2->h;
-      dVar10 = (double)param_2->w;
-      dVar9 = (double)param_2->y;
-      dVar8 = (double)param_2->x;
-      pSVar4 = ScrPlace_GetActivePlacement(LVar1);
-      CL_DrawStretchPic(pSVar4,(float)dVar8,(float)dVar9,(float)dVar10,(float)dVar11,(int)prVar6,
-                        (int)param_3,(float)dVar12,(float)dVar12,1.0,1.0,pfVar7,in_r7);
+  prVar5 = param_2;
+  pfVar6 = param_4;
+  bVar4 = CG_BloodOverlayIsVisible(param_1);
+  if (bVar4) {
+    pcVar1 = CG_GetLocalClientGlobals(param_1);
+    pcVar2 = pcVar1;
+    fVar12 = CG_CalcPlayerHealth(&pcVar1->predictedPlayerState);
+    CG_BloodOverlayUpdate(pcVar2,fVar12);
+    dVar11 = 0.0;
+    if (pcVar1->bloodOverlayAlpha != 0.0) {
+      param_4[3] = pcVar1->bloodOverlayAlpha;
+      dVar10 = (double)param_2->h;
+      dVar9 = (double)param_2->w;
+      dVar8 = (double)param_2->y;
+      dVar7 = (double)param_2->x;
+      pSVar3 = ScrPlace_GetActivePlacement(param_1);
+      CL_DrawStretchPic(pSVar3,(float)dVar7,(float)dVar8,(float)dVar9,(float)dVar10,(int)prVar5,
+                        (int)param_3,(float)dVar11,(float)dVar11,1.0,1.0,pfVar6,in_r7);
     }
   }
-  __restfpr_27();
-  __restgprlr_27();
   return;
 }
 
@@ -1473,34 +1404,28 @@ int CG_ServerMaterialName(LocalClientNum_t param_1,int param_2,char *param_3,uin
 
 // 822E7E08  CG_ObjectiveIcon  (cgame_mp/cg_newDraw_mp.cpp:1200)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 Material * CG_ObjectiveIcon(LocalClientNum_t param_1,int param_2,int param_3)
 
 {
-  LocalClientNum_t LVar1;
-  int iVar2;
-  Material *pMVar3;
-  ulonglong uVar4;
+  int iVar1;
+  Material *pMVar2;
   char acStack_60 [96];
   
-  uVar4 = (ulonglong)param_3;
-  LVar1 = __savegprlr_29(param_1);
-  if (((int)uVar4 < 0) || ((uVar4 & 0xffffffff) != 0)) {
+  if ((param_3 < 0) || (param_3 != 0)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_newDraw_mp.cpp",
                     0x4b4,0,"%s");
   }
-  if ((param_2 != 0) && (iVar2 = CG_ServerMaterialName(LVar1,param_2,acStack_60,0x40), iVar2 != 0))
-  {
-    iVar2 = CL_ControllerIndexFromClientNum(LVar1);
-    pMVar3 = Colorblind_GetMaterialByStringTable(iVar2,acStack_60);
-    pMVar3 = (Material *)__restgprlr_29(pMVar3);
-    return pMVar3;
+  if ((param_2 != 0) && (iVar1 = CG_ServerMaterialName(param_1,param_2,acStack_60,0x40), iVar1 != 0)
+     ) {
+    iVar1 = CL_ControllerIndexFromClientNum(param_1);
+    pMVar2 = Colorblind_GetMaterialByStringTable(iVar1,acStack_60);
+    return pMVar2;
   }
-  pMVar3 = (Material *)
-           __restgprlr_29(*(undefined4 *)
-                           ((int)cgMedia.objectiveMaterials + (int)((uVar4 & 0xffffffff) << 2)));
-  return pMVar3;
+  return cgMedia.objectiveMaterials[param_3];
 }
 
 
@@ -1532,6 +1457,8 @@ Material * CG_MaterialHandleForIndex(LocalClientNum_t param_1,int param_2)
 
 // 822E7F40  CG_UpdateCursorHints  (cgame_mp/cg_newDraw_mp.cpp:1235)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -1543,39 +1470,35 @@ void CG_UpdateCursorHints(LocalClientNum_t param_1)
   int iVar2;
   int iVar3;
   int iVar4;
-  LocalClientNum_t LVar5;
-  cg_s *pcVar6;
-  centity_s *pcVar7;
+  cg_s *pcVar5;
+  centity_s *pcVar6;
   
-  LVar5 = __savegprlr_26(param_1);
-  pcVar6 = CG_GetLocalClientGlobals(LVar5);
-  if (pcVar6->renderingThirdPerson == 0) {
-    iVar1 = (pcVar6->predictedPlayerState).cursorHint;
-    if (iVar1 != 0) {
-      iVar2 = (pcVar6->predictedPlayerState).cursorHintString;
-      iVar3 = (pcVar6->predictedPlayerState).cursorHintDualWield;
-      iVar4 = (pcVar6->predictedPlayerState).cursorHintEntIndex;
-      pcVar6->cursorHintTime = pcVar6->time;
-      pcVar6->cursorHintFade = (cg_hintFadeTime->current).integer;
-      pcVar6->cursorHintType = iVar1;
-      pcVar6->cursorHintString = iVar2;
-      pcVar6->cursorHintDualWield = iVar3;
-      pcVar7 = CG_GetEntity(LVar5,iVar4);
-      if ((pcVar7->flags & 1U) != 0) {
-        pcVar6->cursorHintEntType = (pcVar7->nextState).eType;
-        __restgprlr_26();
-        return;
-      }
-      pcVar6->cursorHintEntType = 3;
+  pcVar5 = CG_GetLocalClientGlobals(param_1);
+  if ((pcVar5->renderingThirdPerson == 0) &&
+     (iVar1 = (pcVar5->predictedPlayerState).cursorHint, iVar1 != 0)) {
+    iVar2 = (pcVar5->predictedPlayerState).cursorHintString;
+    iVar3 = (pcVar5->predictedPlayerState).cursorHintDualWield;
+    iVar4 = (pcVar5->predictedPlayerState).cursorHintEntIndex;
+    pcVar5->cursorHintTime = pcVar5->time;
+    pcVar5->cursorHintFade = (cg_hintFadeTime->current).integer;
+    pcVar5->cursorHintType = iVar1;
+    pcVar5->cursorHintString = iVar2;
+    pcVar5->cursorHintDualWield = iVar3;
+    pcVar6 = CG_GetEntity(param_1,iVar4);
+    if ((pcVar6->flags & 1U) != 0) {
+      pcVar5->cursorHintEntType = (pcVar6->nextState).eType;
+      return;
     }
+    pcVar5->cursorHintEntType = 3;
   }
-  __restgprlr_26();
   return;
 }
 
 
 // 822E8018  CG_GetWeaponUseString  (cgame_mp/cg_newDraw_mp.cpp:1267)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -1585,62 +1508,58 @@ char * CG_GetWeaponUseString(LocalClientNum_t param_1,char *param_2)
 
 {
   Weapon WVar1;
-  LocalClientNum_t LVar2;
-  cg_s *pcVar3;
-  centity_s *pcVar4;
-  Weapon WVar5;
-  int iVar6;
-  char *pcVar7;
-  weapClass_t wVar8;
-  ulonglong uVar9;
+  cg_s *pcVar2;
+  centity_s *pcVar3;
+  Weapon WVar4;
+  int iVar5;
+  char *pcVar6;
+  weapClass_t wVar7;
   char acStack_130 [304];
   
-  uVar9 = (ulonglong)(int)param_2;
-  LVar2 = __savegprlr_27(param_1);
-  if ((uVar9 & 0xffffffff) == 0) {
+  if (param_2 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_newDraw_mp.cpp",
                     0x4fc,0,"%s");
   }
-  pcVar3 = CG_GetLocalClientGlobals(LVar2);
-  if (pcVar3->cursorHintType != 5) {
+  pcVar2 = CG_GetLocalClientGlobals(param_1);
+  if (pcVar2->cursorHintType != 5) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_newDraw_mp.cpp",
                     0x4ff,0,"%s");
   }
-  *(char *)uVar9 = '\0';
-  pcVar4 = CG_GetEntity(LVar2,(pcVar3->predictedPlayerState).cursorHintEntIndex);
-  WVar1 = (pcVar4->nextState).weapon;
-  WVar5 = BG_GetAlternateWeapon(WVar1,false);
-  if (bg_weaponDefs[WVar5.data & 0xff]->inventoryType == WEAPINVENTORY_PRIMARY) {
-    UI_GetKeyBindingLocalizedString(LVar2,"+activate",acStack_130,0x100);
-    iVar6 = BG_PlayerWeaponCountPrimaryTypes(&pcVar3->predictedPlayerState);
-    if (iVar6 < 2) {
-      pcVar7 = UI_SafeTranslateString("PLATFORM_PICKUPNEWWEAPON");
+  *param_2 = '\0';
+  pcVar3 = CG_GetEntity(param_1,(pcVar2->predictedPlayerState).cursorHintEntIndex);
+  WVar1 = (pcVar3->nextState).weapon;
+  WVar4 = BG_GetAlternateWeapon(WVar1,false);
+  if (bg_weaponDefs[WVar4.data & 0xff]->inventoryType == WEAPINVENTORY_PRIMARY) {
+    UI_GetKeyBindingLocalizedString(param_1,"+activate",acStack_130,0x100);
+    iVar5 = BG_PlayerWeaponCountPrimaryTypes(&pcVar2->predictedPlayerState);
+    if (iVar5 < 2) {
+      pcVar6 = UI_SafeTranslateString("PLATFORM_PICKUPNEWWEAPON");
     }
     else {
-      pcVar7 = UI_SafeTranslateString("PLATFORM_SWAPWEAPONS");
+      pcVar6 = UI_SafeTranslateString("PLATFORM_SWAPWEAPONS");
     }
   }
   else {
-    if ((pcVar3->cursorHintEntType == 4) &&
-       (wVar8 = BG_GetWeaponClass(WVar1,false), wVar8 != WEAPCLASS_THROWINGKNIFE)) {
-      pcVar7 = UI_SafeTranslateString("PLATFORM_THROWBACKGRENADE");
-      UI_GetKeyBindingLocalizedString(LVar2,"+frag",acStack_130,0x100);
-      pcVar7 = UI_ReplaceConversionString(pcVar7,acStack_130);
-      pcVar7 = (char *)__restgprlr_27(pcVar7);
-      return pcVar7;
+    if ((pcVar2->cursorHintEntType == 4) &&
+       (wVar7 = BG_GetWeaponClass(WVar1,false), wVar7 != WEAPCLASS_THROWINGKNIFE)) {
+      pcVar6 = UI_SafeTranslateString("PLATFORM_THROWBACKGRENADE");
+      UI_GetKeyBindingLocalizedString(param_1,"+frag",acStack_130,0x100);
+      pcVar6 = UI_ReplaceConversionString(pcVar6,acStack_130);
+      return pcVar6;
     }
-    pcVar7 = UI_SafeTranslateString("PLATFORM_PICKUPNEWWEAPON");
-    UI_GetKeyBindingLocalizedString(LVar2,"+activate",acStack_130,0x100);
+    pcVar6 = UI_SafeTranslateString("PLATFORM_PICKUPNEWWEAPON");
+    UI_GetKeyBindingLocalizedString(param_1,"+activate",acStack_130,0x100);
   }
-  CG_GetWeaponDisplayName(WVar1,false,(char *)uVar9,0x400);
-  pcVar7 = UI_ReplaceConversionString(pcVar7,acStack_130);
-  pcVar7 = (char *)__restgprlr_27(pcVar7);
-  return pcVar7;
+  CG_GetWeaponDisplayName(WVar1,false,param_2,0x400);
+  pcVar6 = UI_ReplaceConversionString(pcVar6,acStack_130);
+  return pcVar6;
 }
 
 
 // 822E81E0  CG_GetUseString  (cgame_mp/cg_newDraw_mp.cpp:1325)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -1648,41 +1567,41 @@ char * CG_GetWeaponUseString(LocalClientNum_t param_1,char *param_2)
 char * CG_GetUseString(LocalClientNum_t param_1)
 
 {
-  LocalClientNum_t LVar1;
-  cg_s *pcVar2;
-  char *pcVar3;
-  int iVar4;
-  char *pcVar5;
+  cg_s *pcVar1;
+  char *pcVar2;
+  int iVar3;
+  char *pcVar4;
   char acStack_520 [256];
   char acStack_420 [1056];
   
-  LVar1 = __savegprlr_29(param_1);
-  pcVar2 = CG_GetLocalClientGlobals(LVar1);
-  if (pcVar2->cursorHintString < 0) {
+  pcVar1 = CG_GetLocalClientGlobals(param_1);
+  if (pcVar1->cursorHintString < 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_newDraw_mp.cpp",
                     0x534,0,"%s");
   }
-  pcVar3 = CL_GetConfigString(pcVar2->cursorHintString + 0xe8b);
-  if ((pcVar3 != (char *)0x0) && (*pcVar3 != '\0')) {
-    iVar4 = UI_GetKeyBindingLocalizedString(LVar1,"+activate",acStack_520,0x100);
-    if (iVar4 == 0) {
-      pcVar5 = UI_SafeTranslateString("KEY_USE");
-      I_strncpyz(acStack_520,pcVar5,0x100);
+  pcVar2 = CL_GetConfigString(pcVar1->cursorHintString + 0xe8b);
+  if ((pcVar2 != (char *)0x0) && (*pcVar2 != '\0')) {
+    iVar3 = UI_GetKeyBindingLocalizedString(param_1,"+activate",acStack_520,0x100);
+    if (iVar3 == 0) {
+      pcVar4 = UI_SafeTranslateString("KEY_USE");
+      I_strncpyz(acStack_520,pcVar4,0x100);
     }
-    pcVar3 = SEH_LocalizeTextMessage(pcVar3,"Hint String",LOCMSG_SAFE);
-    pcVar3 = UI_ReplaceConversionString(pcVar3,acStack_520);
-    UI_ReplaceDirective(LVar1,pcVar3,acStack_420,0x400);
-    pcVar3 = va("%s");
-    pcVar3 = (char *)__restgprlr_29(pcVar3);
-    return pcVar3;
+    pcVar2 = SEH_LocalizeTextMessage(pcVar2,"Hint String",LOCMSG_SAFE);
+    pcVar2 = UI_ReplaceConversionString(pcVar2,acStack_520);
+    UI_ReplaceDirective(param_1,pcVar2,acStack_420,0x400);
+    pcVar2 = va("%s");
+    return pcVar2;
   }
-  pcVar3 = (char *)__restgprlr_29(0);
-  return pcVar3;
+  return (char *)0x0;
 }
 
 
 // 822E82E0  CG_DrawCursorhint  (cgame_mp/cg_newDraw_mp.cpp:1365)
 
+/* WARNING: Function: __savegprlr_21 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_20 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_20 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_21 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -1699,27 +1618,26 @@ void CG_DrawCursorhint(LocalClientNum_t param_1,rectDef_s *param_2,Font_s *param
   weaponIconRatioType_t wVar5;
   WeaponDef *pWVar6;
   int iVar7;
-  LocalClientNum_t LVar8;
-  cg_s *pcVar9;
-  centity_s *pcVar10;
-  Weapon WVar11;
-  weapClass_t wVar12;
+  cg_s *pcVar8;
+  centity_s *pcVar9;
+  Weapon WVar10;
+  weapClass_t wVar11;
+  char *pcVar12;
   char *pcVar13;
-  char *pcVar14;
-  ScreenPlacement *pSVar15;
-  int iVar16;
+  ScreenPlacement *pSVar14;
+  int iVar15;
+  char *pcVar16;
   char *pcVar17;
-  longlong lVar18;
-  float *pfVar19;
-  longlong lVar20;
-  char *pcVar21;
-  char *pcVar22;
-  Font_s *pFVar23;
-  char *pcVar24;
-  Material *pMVar25;
-  IMAGE_DOS_HEADER *pIVar26;
-  int *piVar27;
-  double extraout_f1;
+  char *pcVar18;
+  char *pcVar19;
+  Material *pMVar20;
+  IMAGE_DOS_HEADER *pIVar21;
+  int *piVar22;
+  double dVar23;
+  double dVar24;
+  double dVar25;
+  double dVar26;
+  double dVar27;
   double dVar28;
   double dVar29;
   double dVar30;
@@ -1727,276 +1645,267 @@ void CG_DrawCursorhint(LocalClientNum_t param_1,rectDef_s *param_2,Font_s *param
   double dVar32;
   double dVar33;
   double dVar34;
-  double dVar35;
-  double dVar36;
-  double dVar37;
-  double dVar38;
-  double dVar39;
-  float fVar40;
+  float fVar35;
   char acStack_5c0 [256];
   char acStack_4c0 [1216];
   
-  lVar20 = (longlong)(int)param_3;
-  lVar18 = (longlong)(int)param_2;
-  __savegprlr_21((double)param_4,param_1,lVar18,lVar20,param_5);
-  pfVar19 = (float *)lVar18;
-  pFVar23 = (Font_s *)lVar20;
-  LVar8 = __savefpr_20();
-  if ((cg_cursorHints->current).integer == 0) goto LAB_822e8b50;
-  dVar29 = extraout_f1;
-  pcVar9 = CG_GetLocalClientGlobals(LVar8);
-  CG_UpdateCursorHints(LVar8);
-  piVar27 = &pcVar9->time;
-  pcVar22 = (char *)0x64;
-  pcVar21 = (char *)pcVar9->cursorHintFade;
-  pcVar17 = (char *)pcVar9->cursorHintTime;
-  fVar40 = CG_FadeAlpha(*piVar27,(int)pcVar17,(int)pcVar21,100);
-  fVar40 = fVar40 * *(float *)(param_6 + 0xc);
-  *(float *)(param_6 + 0xc) = fVar40;
-  dVar39 = 0.0;
-  if (fVar40 == 0.0) {
-    pcVar9->cursorHintType = 0;
-    __restfpr_20();
-    __restgprlr_21();
+  dVar24 = (double)param_4;
+  if ((cg_cursorHints->current).integer == 0) {
     return;
   }
-  pIVar26 = (IMAGE_DOS_HEADER *)0x82020000;
+  pcVar8 = CG_GetLocalClientGlobals(param_1);
+  CG_UpdateCursorHints(param_1);
+  piVar22 = &pcVar8->time;
+  pcVar18 = (char *)0x64;
+  pcVar17 = (char *)pcVar8->cursorHintFade;
+  pcVar16 = (char *)pcVar8->cursorHintTime;
+  fVar35 = CG_FadeAlpha(*piVar22,(int)pcVar16,(int)pcVar17,100);
+  fVar35 = fVar35 * *(float *)(param_6 + 0xc);
+  *(float *)(param_6 + 0xc) = fVar35;
+  dVar34 = 0.0;
+  if (fVar35 == 0.0) {
+    pcVar8->cursorHintType = 0;
+    return;
+  }
+  pIVar21 = (IMAGE_DOS_HEADER *)0x82020000;
+  pcVar12 = (char *)0x0;
   pcVar13 = (char *)0x0;
-  pcVar14 = (char *)0x0;
-  pcVar24 = (cg_cursorHints->current).string;
-  dVar38 = 1.0;
-  dVar36 = 0.5;
-  dVar34 = 0.006666666828095913;
-  dVar37 = dVar38;
-  dVar35 = dVar39;
+  pcVar19 = (cg_cursorHints->current).string;
+  dVar33 = 1.0;
+  dVar31 = 0.5;
+  dVar29 = 0.006666666828095913;
+  dVar32 = dVar33;
+  dVar30 = dVar34;
   pdVar3 = cg_cursorHints;
-  if ((Material *)pcVar24 == (Material *)0x3) {
-    pIVar26 = (IMAGE_DOS_HEADER *)0x82020000;
-    dVar28 = sin((double)(float)((double)(longlong)*piVar27 * 0.006666666828095913));
+  if ((Material *)pcVar19 == (Material *)0x3) {
+    pIVar21 = (IMAGE_DOS_HEADER *)0x82020000;
+    dVar23 = sin((double)(float)((double)(longlong)*piVar22 * 0.006666666828095913));
     pdVar3 = cg_cursorHints;
     *(float *)(param_6 + 0xc) =
-         (float)((double)((float)((double)(float)dVar28 + dVar37) * *(float *)(param_6 + 0xc)) *
-                dVar36);
+         (float)((double)((float)((double)(float)dVar23 + dVar32) * *(float *)(param_6 + 0xc)) *
+                dVar31);
   }
-  dVar28 = dVar35;
+  dVar23 = dVar30;
   if ((pdVar3->current).integer < 3) {
     if ((pdVar3->current).integer == 2) {
-      iVar16 = pcVar9->cursorHintTime;
-      pIVar26 = &IMAGE_DOS_HEADER_82000000;
-      pcVar24 = (char *)0x10624dd3;
-      pcVar22 = (char *)((ulonglong)((longlong)iVar16 * 0x10624dd3) >> 0x20);
-      iVar7 = iVar16 / 1000 + (iVar16 >> 0x1f);
-      pcVar21 = (char *)(iVar7 - (iVar7 >> 0x1f));
-      pcVar17 = (char *)((int)pcVar21 * 1000);
-      fVar40 = (float)(longlong)(iVar16 + (int)pcVar21 * -1000) * 0.01;
+      iVar15 = pcVar8->cursorHintTime;
+      pIVar21 = &IMAGE_DOS_HEADER_82000000;
+      pcVar19 = (char *)0x10624dd3;
+      pcVar18 = (char *)((ulonglong)((longlong)iVar15 * 0x10624dd3) >> 0x20);
+      iVar7 = iVar15 / 1000 + (iVar15 >> 0x1f);
+      pcVar17 = (char *)(iVar7 - (iVar7 >> 0x1f));
+      pcVar16 = (char *)((int)pcVar17 * 1000);
+      fVar35 = (float)(longlong)(iVar15 + (int)pcVar17 * -1000) * 0.01;
     }
     else {
-      dVar35 = sin((double)(float)((double)(longlong)*piVar27 * dVar34));
-      fVar40 = (float)((double)(float)((double)(float)dVar35 + dVar37) * dVar36) * 10.0;
+      dVar30 = sin((double)(float)((double)(longlong)*piVar22 * dVar29));
+      fVar35 = (float)((double)(float)((double)(float)dVar30 + dVar32) * dVar31) * 10.0;
     }
-    dVar35 = (double)(float)((double)fVar40 * dVar36);
-    dVar28 = (double)fVar40;
+    dVar30 = (double)(float)((double)fVar35 * dVar31);
+    dVar23 = (double)fVar35;
   }
-  iVar16 = pcVar9->cursorHintType;
-  if ((iVar16 == 1) || (iVar16 == 2)) {
-    if ((-1 < pcVar9->cursorHintString) &&
-       ((pcVar17 = CG_GetUseString(LVar8), pcVar17 != (char *)0x0 && (*pcVar17 != '\0')))) {
-      iVar16 = UI_TextWidth(pcVar17,0,pFVar23,(float)dVar29);
-      dVar35 = (double)(longlong)iVar16;
-      iVar16 = UI_TextHeight(pFVar23,(float)dVar29);
-      bVar1 = *(byte *)((int)pfVar19 + 0x11);
-      bVar2 = *(byte *)(pfVar19 + 4);
-      dVar37 = (double)pfVar19[1];
-      dVar39 = (double)(longlong)iVar16;
-      pSVar15 = ScrPlace_GetActivePlacement(LVar8);
-      UI_DrawText(pSVar15,pcVar17,0x7fffffff,pFVar23,(float)(dVar35 + dVar28) * -0.5,
-                  (float)(dVar39 * dVar36 + dVar37),(int)pcVar24,(int)pIVar26,(float)dVar29,
-                  (float *)(uint)bVar2,(uint)bVar1);
+  iVar15 = pcVar8->cursorHintType;
+  if ((iVar15 == 1) || (iVar15 == 2)) {
+    if (pcVar8->cursorHintString < 0) {
+      return;
     }
-    goto LAB_822e8b50;
+    pcVar16 = CG_GetUseString(param_1);
+    if (pcVar16 == (char *)0x0) {
+      return;
+    }
+    if (*pcVar16 == '\0') {
+      return;
+    }
+    iVar15 = UI_TextWidth(pcVar16,0,param_3,(float)dVar24);
+    dVar30 = (double)(longlong)iVar15;
+    iVar15 = UI_TextHeight(param_3,(float)dVar24);
+    bVar1 = param_2->vertAlign;
+    bVar2 = param_2->horzAlign;
+    dVar32 = (double)param_2->y;
+    dVar34 = (double)(longlong)iVar15;
+    pSVar14 = ScrPlace_GetActivePlacement(param_1);
+    UI_DrawText(pSVar14,pcVar16,0x7fffffff,param_3,(float)(dVar30 + dVar23) * -0.5,
+                (float)(dVar34 * dVar31 + dVar32),(int)pcVar19,(int)pIVar21,(float)dVar24,
+                (float *)(uint)bVar2,(uint)bVar1);
+    return;
   }
-  dVar34 = -0.5;
-  if (iVar16 == 5) {
-    pcVar10 = CG_GetEntity(LVar8,(pcVar9->predictedPlayerState).cursorHintEntIndex);
-    WVar4 = (pcVar10->nextState).weapon;
-    if ((cgMedia.hintMaterials[(WVar4.data & 0xff) + 4] == (Material *)0x0) &&
-       ((WVar4.data & 0xff) == 0)) goto LAB_822e8b50;
-    WVar11 = BG_GetAlternateWeapon(WVar4,false);
-    pWVar6 = bg_weaponDefs[WVar11.data & 0xff];
-    pMVar25 = pWVar6->pickupIcon;
-    if (pMVar25 == (Material *)0x0) {
-      if (pWVar6->hudIcon == (Material *)0x0) {
-        BG_GetWeaponName(WVar4,acStack_4c0,0x400);
-        pcVar21 = acStack_4c0;
-        Com_PrintWarning(0xe,"Missing drawCursorHint icon for weapon \'%s\'.\n");
-      }
-      else {
-        wVar5 = pWVar6->hudIconRatio;
-        if (wVar5 != WEAPON_ICON_RATIO_1TO1) {
-          if (wVar5 == WEAPON_ICON_RATIO_2TO1) goto LAB_822e85ec;
-          if (wVar5 != WEAPON_ICON_RATIO_4TO1) {
-            pcVar24 = "weapDef->hudIconRatio == WEAPON_ICON_RATIO_4TO1";
-            pcVar22 = "%s";
-            pcVar21 = (char *)0x0;
-            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_newDraw_mp.cpp"
-                            ,0x5d4,0,"%s");
-          }
-          dVar39 = (double)(float)((double)pfVar19[2] * dVar34);
-          dVar38 = 2.0;
-          dVar37 = dVar36;
-        }
+  dVar29 = -0.5;
+  if (iVar15 != 5) {
+    if (cgMedia.hintMaterials[iVar15] == (Material *)0x0) {
+      return;
+    }
+    pMVar20 = (Material *)pcVar8->cursorHintString;
+    if ((int)pMVar20 < 0) {
+      if (iVar15 == 3) {
+        pcVar18 = (char *)0x100;
+        pcVar17 = acStack_5c0;
+        UI_GetKeyBindingLocalizedString(param_1,"+activate",pcVar17,0x100);
+        pcVar12 = UI_SafeTranslateString("PLATFORM_PICKUPHEALTH");
+        pcVar16 = acStack_5c0;
+        pcVar12 = UI_ReplaceConversionString(pcVar12,pcVar16);
       }
     }
     else {
-      wVar5 = pWVar6->pickupIconRatio;
-      if (wVar5 != WEAPON_ICON_RATIO_1TO1) {
-        if (wVar5 == WEAPON_ICON_RATIO_2TO1) {
-LAB_822e85ec:
-          dVar39 = (double)(float)((double)pfVar19[2] * dVar34);
-          dVar38 = 2.0;
-        }
-        else {
-          if (wVar5 != WEAPON_ICON_RATIO_4TO1) {
-            pcVar24 = "weapDef->pickupIconRatio == WEAPON_ICON_RATIO_4TO1";
-            pcVar22 = "%s";
-            pcVar21 = (char *)0x0;
-            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_newDraw_mp.cpp"
-                            ,0x5c2,0,"%s");
-          }
-          dVar39 = (double)(float)((double)pfVar19[2] * dVar34);
-          dVar38 = 2.0;
-          dVar37 = dVar36;
-        }
-      }
+      pcVar12 = CG_GetUseString(param_1);
     }
-    wVar12 = BG_GetWeaponClass(WVar4,false);
-    if (wVar12 == WEAPCLASS_TURRET) {
-      if (-1 < pcVar9->cursorHintString) {
-        pcVar13 = CG_GetUseString(LVar8);
-      }
-      pcVar22 = (char *)0x400;
-      pcVar21 = acStack_4c0;
-      pcVar17 = (char *)0x0;
-      pcVar14 = CG_GetWeaponDisplayName(WVar4,false,pcVar21,0x400);
-    }
-    else {
+    goto LAB_822e86fc;
+  }
+  pcVar9 = CG_GetEntity(param_1,(pcVar8->predictedPlayerState).cursorHintEntIndex);
+  WVar4 = (pcVar9->nextState).weapon;
+  if ((cgMedia.hintMaterials[(WVar4.data & 0xff) + 4] == (Material *)0x0) &&
+     ((WVar4.data & 0xff) == 0)) {
+    return;
+  }
+  WVar10 = BG_GetAlternateWeapon(WVar4,false);
+  pWVar6 = bg_weaponDefs[WVar10.data & 0xff];
+  pMVar20 = pWVar6->pickupIcon;
+  if (pMVar20 == (Material *)0x0) {
+    if (pWVar6->hudIcon == (Material *)0x0) {
+      BG_GetWeaponName(WVar4,acStack_4c0,0x400);
       pcVar17 = acStack_4c0;
-      pcVar13 = CG_GetWeaponUseString(LVar8,pcVar17);
-      pcVar14 = acStack_4c0;
+      Com_PrintWarning(0xe,"Missing drawCursorHint icon for weapon \'%s\'.\n");
+    }
+    else {
+      wVar5 = pWVar6->hudIconRatio;
+      if (wVar5 != WEAPON_ICON_RATIO_1TO1) {
+        if (wVar5 == WEAPON_ICON_RATIO_2TO1) goto LAB_822e85ec;
+        if (wVar5 != WEAPON_ICON_RATIO_4TO1) {
+          pcVar19 = "weapDef->hudIconRatio == WEAPON_ICON_RATIO_4TO1";
+          pcVar18 = "%s";
+          pcVar17 = (char *)0x0;
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_newDraw_mp.cpp"
+                          ,0x5d4,0,"%s");
+        }
+        dVar34 = (double)(float)((double)param_2->w * dVar29);
+        dVar33 = 2.0;
+        dVar32 = dVar31;
+      }
     }
   }
   else {
-    if (cgMedia.hintMaterials[iVar16] == (Material *)0x0) goto LAB_822e8b50;
-    pMVar25 = (Material *)pcVar9->cursorHintString;
-    if ((int)pMVar25 < 0) {
-      if (iVar16 == 3) {
-        pcVar22 = (char *)0x100;
-        pcVar21 = acStack_5c0;
-        UI_GetKeyBindingLocalizedString(LVar8,"+activate",pcVar21,0x100);
-        pcVar13 = UI_SafeTranslateString("PLATFORM_PICKUPHEALTH");
-        pcVar17 = acStack_5c0;
-        pcVar13 = UI_ReplaceConversionString(pcVar13,pcVar17);
+    wVar5 = pWVar6->pickupIconRatio;
+    if (wVar5 != WEAPON_ICON_RATIO_1TO1) {
+      if (wVar5 == WEAPON_ICON_RATIO_2TO1) {
+LAB_822e85ec:
+        dVar34 = (double)(float)((double)param_2->w * dVar29);
+        dVar33 = 2.0;
+      }
+      else {
+        if (wVar5 != WEAPON_ICON_RATIO_4TO1) {
+          pcVar19 = "weapDef->pickupIconRatio == WEAPON_ICON_RATIO_4TO1";
+          pcVar18 = "%s";
+          pcVar17 = (char *)0x0;
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_newDraw_mp.cpp"
+                          ,0x5c2,0,"%s");
+        }
+        dVar34 = (double)(float)((double)param_2->w * dVar29);
+        dVar33 = 2.0;
+        dVar32 = dVar31;
       }
     }
-    else {
-      pcVar13 = CG_GetUseString(LVar8);
-    }
   }
-  pSVar15 = ScrPlace_GetActivePlacement(LVar8);
-  if ((pcVar13 == (char *)0x0) || (*pcVar13 == '\0')) {
-    UI_DrawHandlePic(pSVar15,-(float)((double)(float)((double)(float)((double)pfVar19[2] + dVar35) +
-                                                     dVar39) * dVar36 - (double)*pfVar19),
-                     -(float)(dVar35 * dVar37 - (double)pfVar19[1]),
-                     (float)((double)pfVar19[2] * dVar38 + dVar28),
-                     (float)((double)pfVar19[3] * dVar37 + dVar28),(int)pcVar17,(int)pcVar21,
-                     (float *)pcVar22,(Material *)pcVar24);
-    __restfpr_20();
-    __restgprlr_21();
+  wVar11 = BG_GetWeaponClass(WVar4,false);
+  if (wVar11 == WEAPCLASS_TURRET) {
+    if (-1 < pcVar8->cursorHintString) {
+      pcVar12 = CG_GetUseString(param_1);
+    }
+    pcVar18 = (char *)0x400;
+    pcVar17 = acStack_4c0;
+    pcVar16 = (char *)0x0;
+    pcVar13 = CG_GetWeaponDisplayName(WVar4,false,pcVar17,0x400);
+  }
+  else {
+    pcVar16 = acStack_4c0;
+    pcVar12 = CG_GetWeaponUseString(param_1,pcVar16);
+    pcVar13 = acStack_4c0;
+  }
+LAB_822e86fc:
+  pSVar14 = ScrPlace_GetActivePlacement(param_1);
+  if ((pcVar12 == (char *)0x0) || (*pcVar12 == '\0')) {
+    UI_DrawHandlePic(pSVar14,-(float)((double)(float)((double)(float)((double)param_2->w + dVar30) +
+                                                     dVar34) * dVar31 - (double)param_2->x),
+                     -(float)(dVar30 * dVar32 - (double)param_2->y),
+                     (float)((double)param_2->w * dVar33 + dVar23),
+                     (float)((double)param_2->h * dVar32 + dVar23),(int)pcVar16,(int)pcVar17,
+                     (float *)pcVar18,(Material *)pcVar19);
     return;
   }
-  iVar16 = UI_TextWidth(pcVar13,0,pFVar23,(float)dVar29);
-  dVar35 = (double)(longlong)iVar16;
-  iVar16 = UI_TextHeight(pFVar23,(float)dVar29);
-  dVar39 = (double)(longlong)iVar16;
-  if ((pcVar14 != (char *)0x0) && ((cg_weaponHintsCoD1Style->current).enabled != false)) {
-    iVar16 = UI_TextWidth(pcVar14,0,pFVar23,(float)dVar29);
-    dVar32 = (double)(float)(dVar39 * dVar36);
-    dVar33 = -(double)(float)((double)(float)(dVar37 * (double)pfVar19[3]) * dVar36 -
-                             (double)pfVar19[1]);
-    fVar40 = (float)((double)(float)((double)(longlong)iVar16 + dVar35) * dVar34);
-    dVar31 = (double)fVar40;
-    UI_DrawText(pSVar15,pcVar13,0x7fffffff,pFVar23,fVar40,(float)(dVar32 + (double)pfVar19[1]),
-                (int)pcVar24,(int)pMVar25,(float)dVar29,(float *)(uint)*(byte *)(pfVar19 + 4),
-                (uint)*(byte *)((int)pfVar19 + 0x11));
-    bVar1 = *(byte *)((int)pfVar19 + 0x11);
-    dVar30 = (double)pfVar19[1];
-    bVar2 = *(byte *)(pfVar19 + 4);
-    pcVar17 = va(" %s");
-    iVar16 = 0x7fffffff;
-    UI_DrawText(pSVar15,pcVar17,0x7fffffff,pFVar23,(float)(dVar31 + dVar35),(float)(dVar32 + dVar30)
-                ,(int)pcVar24,(int)pMVar25,(float)dVar29,(float *)(uint)bVar2,(uint)bVar1);
-    if (pcVar9->cursorHintDualWield != 0) {
-      dVar29 = (double)(float)(dVar37 * (double)pfVar19[3]);
-      pIVar26 = &IMAGE_DOS_HEADER_82000000;
-      dVar35 = -1.0;
-      dVar39 = (double)((float)(dVar39 * dVar38) * 1.5);
-      dVar34 = (double)(float)((double)(float)(dVar29 - (double)(float)((double)pfVar19[2] * dVar38)
-                                              ) * dVar36);
-      CG_DrawRotatedPic(pSVar15,(float)((double)(float)(dVar29 + dVar28) * -1.0 + dVar34),
-                        (float)(dVar39 + dVar33),
-                        (float)((double)(float)((double)pfVar19[2] * dVar38) + dVar28),
-                        (float)(dVar29 + dVar28),(int)pcVar17,iVar16,90.0,(float *)pFVar23,
-                        (Material *)&IMAGE_DOS_HEADER_82000000);
-      CG_DrawRotatedPic(pSVar15,(float)((double)(float)((double)(float)(dVar37 * (double)pfVar19[3])
-                                                       + dVar28) - dVar34),(float)(dVar39 + dVar33),
-                        (float)((double)(float)((double)pfVar19[2] * dVar38 + dVar28) * dVar35),
-                        (float)((double)(float)(dVar37 * (double)pfVar19[3]) + dVar28),(int)pcVar17,
-                        iVar16,-90.0,(float *)0x82010000,(Material *)pIVar26);
-      __restfpr_20();
-      __restgprlr_21();
+  iVar15 = UI_TextWidth(pcVar12,0,param_3,(float)dVar24);
+  dVar30 = (double)(longlong)iVar15;
+  iVar15 = UI_TextHeight(param_3,(float)dVar24);
+  dVar34 = (double)(longlong)iVar15;
+  if ((pcVar13 != (char *)0x0) && ((cg_weaponHintsCoD1Style->current).enabled != false)) {
+    iVar15 = UI_TextWidth(pcVar13,0,param_3,(float)dVar24);
+    dVar27 = (double)(float)(dVar34 * dVar31);
+    dVar28 = -(double)(float)((double)(float)(dVar32 * (double)param_2->h) * dVar31 -
+                             (double)param_2->y);
+    fVar35 = (float)((double)(float)((double)(longlong)iVar15 + dVar30) * dVar29);
+    dVar26 = (double)fVar35;
+    UI_DrawText(pSVar14,pcVar12,0x7fffffff,param_3,fVar35,(float)(dVar27 + (double)param_2->y),
+                (int)pcVar19,(int)pMVar20,(float)dVar24,(float *)(uint)param_2->horzAlign,
+                (uint)param_2->vertAlign);
+    bVar1 = param_2->vertAlign;
+    dVar25 = (double)param_2->y;
+    bVar2 = param_2->horzAlign;
+    pcVar16 = va(" %s");
+    iVar15 = 0x7fffffff;
+    UI_DrawText(pSVar14,pcVar16,0x7fffffff,param_3,(float)(dVar26 + dVar30),(float)(dVar27 + dVar25)
+                ,(int)pcVar19,(int)pMVar20,(float)dVar24,(float *)(uint)bVar2,(uint)bVar1);
+    if (pcVar8->cursorHintDualWield == 0) {
+      dVar24 = (double)(float)((double)param_2->w * dVar33);
+      UI_DrawHandlePic(pSVar14,(float)((double)(float)(dVar24 + dVar23) * dVar29),
+                       (float)(dVar34 * 1.5 + dVar28),(float)(dVar24 + dVar23),
+                       (float)(dVar32 * (double)param_2->h + dVar23),(int)pcVar16,iVar15,
+                       (float *)param_3,(Material *)0x0);
       return;
     }
-    UI_DrawHandlePic(pSVar15,(float)((double)(float)((double)(float)((double)pfVar19[2] * dVar38) +
-                                                    dVar28) * dVar34),(float)(dVar39 * 1.5 + dVar33)
-                     ,(float)((double)(float)((double)pfVar19[2] * dVar38) + dVar28),
-                     (float)(dVar37 * (double)pfVar19[3] + dVar28),(int)pcVar17,iVar16,
-                     (float *)pFVar23,(Material *)0x0);
-    __restfpr_20();
-    __restgprlr_21();
+    dVar30 = (double)(float)(dVar32 * (double)param_2->h);
+    dVar24 = (double)(float)((double)param_2->w * dVar33);
+    pIVar21 = &IMAGE_DOS_HEADER_82000000;
+    dVar29 = -1.0;
+    dVar34 = (double)((float)(dVar34 * dVar33) * 1.5);
+    dVar31 = (double)(float)((double)(float)(dVar30 - dVar24) * dVar31);
+    CG_DrawRotatedPic(pSVar14,(float)((double)(float)(dVar30 + dVar23) * -1.0 + dVar31),
+                      (float)(dVar34 + dVar28),(float)(dVar24 + dVar23),(float)(dVar30 + dVar23),
+                      (int)pcVar16,iVar15,90.0,(float *)param_3,
+                      (Material *)&IMAGE_DOS_HEADER_82000000);
+    dVar24 = (double)(float)(dVar32 * (double)param_2->h);
+    CG_DrawRotatedPic(pSVar14,(float)((double)(float)(dVar24 + dVar23) - dVar31),
+                      (float)(dVar34 + dVar28),
+                      (float)((double)(float)((double)param_2->w * dVar33 + dVar23) * dVar29),
+                      (float)(dVar24 + dVar23),(int)pcVar16,iVar15,-90.0,(float *)0x82010000,
+                      (Material *)pIVar21);
     return;
   }
-  iVar16 = 0x7fffffff;
-  dVar30 = -(double)(float)((double)(float)(dVar37 * (double)pfVar19[3]) * dVar36 -
-                           (double)pfVar19[1]);
-  fVar40 = (float)((double)(float)((double)(float)((double)pfVar19[2] * dVar38 + dVar35) + dVar28) *
-                  dVar34);
-  dVar34 = (double)fVar40;
-  UI_DrawText(pSVar15,pcVar13,0x7fffffff,pFVar23,fVar40,
-              (float)(dVar39 * dVar36 + (double)pfVar19[1]),(int)pcVar24,(int)pMVar25,(float)dVar29,
-              (float *)(uint)*(byte *)(pfVar19 + 4),(uint)*(byte *)((int)pfVar19 + 0x11));
-  UI_DrawHandlePic(pSVar15,(float)(dVar34 + dVar35),(float)dVar30,
-                   (float)((double)pfVar19[2] * dVar38 + dVar28),
-                   (float)(dVar37 * (double)pfVar19[3] + dVar28),(int)pcVar13,iVar16,
-                   (float *)pFVar23,(Material *)pcVar24);
-  if (pcVar9->cursorHintDualWield != 0) {
-    UI_DrawHandlePic(pSVar15,(float)((double)(float)((double)(float)((double)(float)((double)pfVar19
-                                                  [2] * dVar38) + dVar34) + dVar28) + dVar35),
-                     (float)dVar30,(float)((double)(float)((double)pfVar19[2] * dVar38) + dVar28),
-                     (float)(dVar37 * (double)pfVar19[3] + dVar28),(int)pcVar13,iVar16,
-                     (float *)pFVar23,(Material *)pcVar24);
-    __restfpr_20();
-    __restgprlr_21();
+  iVar15 = 0x7fffffff;
+  dVar25 = -(double)(float)((double)(float)(dVar32 * (double)param_2->h) * dVar31 -
+                           (double)param_2->y);
+  fVar35 = (float)((double)(float)((double)(float)((double)param_2->w * dVar33 + dVar30) + dVar23) *
+                  dVar29);
+  dVar29 = (double)fVar35;
+  UI_DrawText(pSVar14,pcVar12,0x7fffffff,param_3,fVar35,
+              (float)(dVar34 * dVar31 + (double)param_2->y),(int)pcVar19,(int)pMVar20,(float)dVar24,
+              (float *)(uint)param_2->horzAlign,(uint)param_2->vertAlign);
+  UI_DrawHandlePic(pSVar14,(float)(dVar29 + dVar30),(float)dVar25,
+                   (float)((double)param_2->w * dVar33 + dVar23),
+                   (float)(dVar32 * (double)param_2->h + dVar23),(int)pcVar12,iVar15,
+                   (float *)param_3,(Material *)pcVar19);
+  if (pcVar8->cursorHintDualWield == 0) {
     return;
   }
-LAB_822e8b50:
-  __restfpr_20();
-  __restgprlr_21();
+  dVar24 = (double)(float)((double)param_2->w * dVar33);
+  UI_DrawHandlePic(pSVar14,(float)((double)(float)((double)(float)(dVar24 + dVar29) + dVar23) +
+                                  dVar30),(float)dVar25,(float)(dVar24 + dVar23),
+                   (float)(dVar32 * (double)param_2->h + dVar23),(int)pcVar12,iVar15,
+                   (float *)param_3,(Material *)pcVar19);
   return;
 }
 
 
 // 822E8B60  CG_DrawSpectatorControls  (cgame_mp/cg_newDraw_mp.cpp:1616)
 
+/* WARNING: Function: __savegprlr_19 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_19 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -2006,139 +1915,133 @@ void CG_DrawSpectatorControls
                float *param_5,int param_6,int param_7)
 
 {
-  rectDef_s *prVar1;
-  LocalClientNum_t LVar2;
-  bool bVar9;
-  cg_s *pcVar3;
-  ScreenPlacement *pSVar4;
-  Font_s *pFVar5;
-  int iVar6;
-  int iVar7;
-  char *pcVar8;
+  bool bVar7;
+  cg_s *pcVar1;
+  ScreenPlacement *pSVar2;
+  Font_s *pFVar3;
+  int iVar4;
+  int iVar5;
+  char *pcVar6;
+  undefined8 uVar8;
+  longlong lVar9;
   longlong lVar10;
-  undefined8 uVar11;
-  longlong lVar12;
-  longlong lVar13;
-  uint uVar14;
-  int iVar15;
-  double extraout_f1;
-  double dVar16;
-  double dVar17;
+  uint uVar11;
+  int iVar12;
+  double dVar13;
+  double dVar14;
   undefined1 in_stack_fffffdab;
   char *local_1e0 [8];
   char *local_1c0 [8];
   undefined1 auStack_1a0 [32];
   char acStack_180 [384];
   
-  lVar10 = (longlong)(int)param_2;
-  LVar2 = __savegprlr_19((double)param_4,param_1,lVar10,param_3,param_5);
+  dVar13 = (double)param_4;
   if ((cg_descriptiveText->current).enabled != false) {
-    dVar17 = extraout_f1;
-    bVar9 = Key_IsCatcherActive(LVar2,0x10);
-    if (!bVar9) {
-      pcVar3 = CG_GetLocalClientGlobals(LVar2);
-      if (pcVar3->nextSnap == (snapshot_s *)0x0) {
+    bVar7 = Key_IsCatcherActive(param_1,0x10);
+    if (!bVar7) {
+      pcVar1 = CG_GetLocalClientGlobals(param_1);
+      if (pcVar1->nextSnap == (snapshot_s *)0x0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_newDraw_mp.cpp"
                         ,0x66e,0,"%s");
       }
-      if (((pcVar3->predictedPlayerState).otherFlags & 0x6000U) != 0) {
-        pSVar4 = ScrPlace_GetActivePlacement(LVar2);
-        pFVar5 = UI_GetFontHandle(pSVar4,0,(float)dVar17);
-        uVar14 = (pcVar3->predictedPlayerState).otherFlags;
+      if (((pcVar1->predictedPlayerState).otherFlags & 0x6000U) != 0) {
+        pSVar2 = ScrPlace_GetActivePlacement(param_1);
+        pFVar3 = UI_GetFontHandle(pSVar2,0,(float)dVar13);
+        uVar11 = (pcVar1->predictedPlayerState).otherFlags;
         local_1c0[0] = "togglemenu";
         local_1e0[0] = "PLATFORM_MP_OPEN_MENU";
-        lVar13 = 1;
-        if ((uVar14 & 0x800) == 0) {
+        lVar10 = 1;
+        if ((uVar11 & 0x800) == 0) {
           local_1c0[1] = "";
-          lVar13 = 2;
+          lVar10 = 2;
           local_1e0[1] = "PLATFORM_FOLLOWSTART";
         }
         else {
-          if ((uVar14 & 0x2000) != 0) {
+          if ((uVar11 & 0x2000) != 0) {
             local_1c0[1] = "";
             local_1c0[2] = "";
             local_1e0[1] = "PLATFORM_FOLLOWNEXTPLAYER";
-            lVar13 = 3;
+            lVar10 = 3;
             local_1e0[2] = "PLATFORM_FOLLOWPREVPLAYER";
           }
-          if ((uVar14 & 0x4000) == 0) {
-            bVar9 = CL_IsRenderingSplitScreen();
-            if ((!bVar9) && ((camera_thirdPerson->current).enabled == false)) {
-              iVar6 = pcVar3->renderingThirdPerson;
-              iVar15 = (int)(lVar13 << 2);
-              *(char **)((int)local_1c0 + iVar15) = "";
-              if (iVar6 == 0) {
-                lVar13 = lVar13 + 1;
-                *(char **)((int)local_1e0 + iVar15) = "PLATFORM_THIRDPERSON";
+          if ((uVar11 & 0x4000) == 0) {
+            bVar7 = CL_IsRenderingSplitScreen();
+            if ((!bVar7) && ((camera_thirdPerson->current).enabled == false)) {
+              iVar4 = pcVar1->renderingThirdPerson;
+              iVar12 = (int)(lVar10 << 2);
+              *(char **)((int)local_1c0 + iVar12) = "";
+              if (iVar4 == 0) {
+                lVar10 = lVar10 + 1;
+                *(char **)((int)local_1e0 + iVar12) = "PLATFORM_THIRDPERSON";
               }
               else {
-                lVar13 = lVar13 + 1;
-                *(char **)((int)local_1e0 + iVar15) = "PLATFORM_FIRSTPERSON";
+                lVar10 = lVar10 + 1;
+                *(char **)((int)local_1e0 + iVar12) = "PLATFORM_FIRSTPERSON";
               }
             }
           }
           else {
-            iVar6 = (int)(lVar13 << 2);
-            *(char **)((int)local_1c0 + iVar6) = "";
-            bVar9 = CL_IsRenderingSplitScreen();
-            if (bVar9) {
-              lVar13 = lVar13 + 1;
-              *(char **)((int)local_1e0 + iVar6) = "PLATFORM_FOLLOWSTOP";
+            iVar4 = (int)(lVar10 << 2);
+            *(char **)((int)local_1c0 + iVar4) = "";
+            bVar7 = CL_IsRenderingSplitScreen();
+            if (bVar7) {
+              lVar10 = lVar10 + 1;
+              *(char **)((int)local_1e0 + iVar4) = "PLATFORM_FOLLOWSTOP";
             }
-            else if (pcVar3->renderingThirdPerson == 0) {
-              lVar13 = lVar13 + 1;
-              *(char **)((int)local_1e0 + iVar6) = "PLATFORM_FOLLOWSTOP";
+            else if (pcVar1->renderingThirdPerson == 0) {
+              lVar10 = lVar10 + 1;
+              *(char **)((int)local_1e0 + iVar4) = "PLATFORM_FOLLOWSTOP";
             }
             else {
-              lVar13 = lVar13 + 1;
-              *(char **)((int)local_1e0 + iVar6) = "PLATFORM_FIRSTPERSON";
+              lVar10 = lVar10 + 1;
+              *(char **)((int)local_1e0 + iVar4) = "PLATFORM_FIRSTPERSON";
             }
           }
         }
-        iVar6 = (int)(lVar13 << 2);
-        lVar12 = ZEXT48(&stack0x00000000) - 0x1e0;
-        uVar11 = 0xffffffff82020000;
-        uVar14 = (int)lVar13 + 1;
-        *(char **)((int)local_1c0 + iVar6) = "togglescores";
-        *(char **)(iVar6 + (int)lVar12) = "PLATFORM_SCOREBOARD";
-        if (7 < uVar14) {
-          uVar11 = 0xffffffff82020aa8;
+        iVar4 = (int)(lVar10 << 2);
+        lVar9 = ZEXT48(&stack0x00000000) - 0x1e0;
+        uVar8 = 0xffffffff82020000;
+        uVar11 = (int)lVar10 + 1;
+        *(char **)((int)local_1c0 + iVar4) = "togglescores";
+        *(char **)(iVar4 + (int)lVar9) = "PLATFORM_SCOREBOARD";
+        if (7 < uVar11) {
+          uVar8 = 0xffffffff82020aa8;
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_newDraw_mp.cpp"
                           ,0x6c8,0,"%s");
         }
-        iVar6 = UI_TextHeight(pFVar5,(float)dVar17);
-        prVar1 = (rectDef_s *)lVar10;
-        iVar15 = 0;
-        dVar16 = (double)(prVar1->h + (float)(longlong)iVar6);
-        if ((int)lVar13 != -1) {
-          iVar6 = 0;
+        iVar4 = UI_TextHeight(pFVar3,(float)dVar13);
+        iVar12 = 0;
+        dVar14 = (double)(param_2->h + (float)(longlong)iVar4);
+        if ((int)lVar10 != -1) {
+          iVar4 = 0;
           do {
-            iVar7 = UI_GetKeyBindingLocalizedString
-                              (LVar2,*(char **)((int)local_1c0 + iVar6),acStack_180,0x100);
-            if (iVar7 == 0) {
-              pcVar8 = UI_SafeTranslateString("KEY_UNBOUND");
-              I_strncpyz(acStack_180,pcVar8,0x100);
+            iVar5 = UI_GetKeyBindingLocalizedString
+                              (param_1,*(char **)((int)local_1c0 + iVar4),acStack_180,0x100);
+            if (iVar5 == 0) {
+              pcVar6 = UI_SafeTranslateString("KEY_UNBOUND");
+              I_strncpyz(acStack_180,pcVar6,0x100);
             }
-            pcVar8 = UI_SafeTranslateString(*(char **)((int)local_1e0 + iVar6));
-            pcVar8 = UI_ReplaceConversionString(pcVar8,acStack_180);
-            UI_DrawWrappedText(pSVar4,pcVar8,prVar1,pFVar5,prVar1->x,
-                               (float)((double)(longlong)iVar15 * dVar16 + (double)prVar1->y),
-                               (float)dVar17,(float *)uVar11,(int)lVar12,(int)auStack_1a0,
+            pcVar6 = UI_SafeTranslateString(*(char **)((int)local_1e0 + iVar4));
+            pcVar6 = UI_ReplaceConversionString(pcVar6,acStack_180);
+            UI_DrawWrappedText(pSVar2,pcVar6,param_2,pFVar3,param_2->x,
+                               (float)((double)(longlong)iVar12 * dVar14 + (double)param_2->y),
+                               (float)dVar13,(float *)uVar8,(int)lVar9,(int)auStack_1a0,
                                (rectDef_s *)param_6,(bool)in_stack_fffffdab);
-            iVar15 = iVar15 + 1;
-            iVar6 = iVar6 + 4;
-          } while (iVar15 < (int)uVar14);
+            iVar12 = iVar12 + 1;
+            iVar4 = iVar4 + 4;
+          } while (iVar12 < (int)uVar11);
         }
       }
     }
   }
-  __restgprlr_19();
   return;
 }
 
 
 // 822E8EF0  CG_DrawSpectatorFollowing  (cgame_mp/cg_newDraw_mp.cpp:1764)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -2148,58 +2051,48 @@ void CG_DrawSpectatorFollowing
                float *param_5,int param_6,int param_7)
 
 {
-  rectDef_s *prVar1;
-  LocalClientNum_t LVar2;
-  cg_s *pcVar3;
-  int iVar4;
-  char *pcVar5;
-  ScreenPlacement *pSVar6;
-  longlong lVar7;
-  longlong lVar8;
-  Font_s *pFVar9;
-  float *pfVar10;
-  float *pfVar11;
-  double extraout_f1;
-  double dVar12;
+  cg_s *pcVar1;
+  int iVar2;
+  char *pcVar3;
+  ScreenPlacement *pSVar4;
+  float *pfVar5;
+  float *pfVar6;
+  double dVar7;
   undefined1 in_stack_fffffeeb;
   float afStack_a0 [8];
   char acStack_80 [128];
   
-  lVar8 = (longlong)(int)param_3;
-  lVar7 = (longlong)(int)param_2;
-  LVar2 = __savegprlr_24((double)param_4,param_1,lVar7,lVar8,param_5);
-  dVar12 = extraout_f1;
-  pcVar3 = CG_GetLocalClientGlobals(LVar2);
-  if (((pcVar3->predictedPlayerState).otherFlags & 0x800U) != 0) {
-    pfVar10 = (float *)(pcVar3->predictedPlayerState).clientNum;
-    if ((float *)0x11 < pfVar10) {
+  dVar7 = (double)param_4;
+  pcVar1 = CG_GetLocalClientGlobals(param_1);
+  if (((pcVar1->predictedPlayerState).otherFlags & 0x800U) != 0) {
+    pfVar5 = (float *)(pcVar1->predictedPlayerState).clientNum;
+    if ((float *)0x11 < pfVar5) {
       param_7 = 0x12;
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_newDraw_mp.cpp",
                       0x6f2,0,"ps->clientNum doesn\'t index MAX_CLIENTS\n\t%i not in [0, %i)");
     }
-    iVar4 = CL_GetClientName(LVar2,(pcVar3->predictedPlayerState).clientNum,acStack_80,0x2a);
-    if (iVar4 == 0) {
+    iVar2 = CL_GetClientName(param_1,(pcVar1->predictedPlayerState).clientNum,acStack_80,0x2a);
+    if (iVar2 == 0) {
       Com_sprintf(acStack_80,0x2a,"?");
     }
-    pcVar5 = SEH_LocalizeTextMessage("CGAME_FOLLOWING\x15","spectator follow string",LOCMSG_SAFE);
-    pSVar6 = ScrPlace_GetActivePlacement(LVar2);
-    pfVar11 = afStack_a0;
-    prVar1 = (rectDef_s *)lVar7;
-    pFVar9 = (Font_s *)lVar8;
-    UI_DrawWrappedText(pSVar6,pcVar5,prVar1,pFVar9,prVar1->x,prVar1->y,(float)dVar12,pfVar10,param_7
-                       ,(int)pfVar11,(rectDef_s *)param_6,(bool)in_stack_fffffeeb);
-    iVar4 = UI_TextHeight(pFVar9,(float)dVar12);
-    UI_DrawWrappedText(pSVar6,acStack_80,prVar1,pFVar9,prVar1->x,(float)(longlong)iVar4 + prVar1->y,
-                       (float)dVar12,afStack_a0,iVar4,(int)pfVar11,(rectDef_s *)param_6,
-                       (bool)in_stack_fffffeeb);
+    pcVar3 = SEH_LocalizeTextMessage("CGAME_FOLLOWING\x15","spectator follow string",LOCMSG_SAFE);
+    pSVar4 = ScrPlace_GetActivePlacement(param_1);
+    pfVar6 = afStack_a0;
+    UI_DrawWrappedText(pSVar4,pcVar3,param_2,param_3,param_2->x,param_2->y,(float)dVar7,pfVar5,
+                       param_7,(int)pfVar6,(rectDef_s *)param_6,(bool)in_stack_fffffeeb);
+    iVar2 = UI_TextHeight(param_3,(float)dVar7);
+    UI_DrawWrappedText(pSVar4,acStack_80,param_2,param_3,param_2->x,
+                       (float)(longlong)iVar2 + param_2->y,(float)dVar7,afStack_a0,iVar2,(int)pfVar6
+                       ,(rectDef_s *)param_6,(bool)in_stack_fffffeeb);
   }
-  __restgprlr_24();
   return;
 }
 
 
 // 822E9058  CG_DrawChangeZoomHint  (cgame_mp/cg_newDraw_mp.cpp:1791)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -2211,59 +2104,51 @@ void CG_DrawChangeZoomHint
 {
   byte bVar1;
   byte bVar2;
-  LocalClientNum_t LVar3;
-  cg_s *pcVar4;
-  Weapon WVar5;
-  bool bVar9;
-  char *pcVar6;
-  int iVar7;
-  ScreenPlacement *pSVar8;
-  longlong lVar10;
-  float *pfVar11;
-  longlong lVar12;
-  IMAGE_DOS_HEADER *pIVar13;
-  double extraout_f1;
-  double dVar14;
-  double dVar15;
-  double dVar16;
+  cg_s *pcVar3;
+  Weapon WVar4;
+  bool bVar8;
+  char *pcVar5;
+  int iVar6;
+  ScreenPlacement *pSVar7;
+  IMAGE_DOS_HEADER *pIVar9;
+  double dVar10;
+  double dVar11;
+  double dVar12;
   char acStack_150 [336];
   
-  lVar12 = (longlong)(int)param_3;
-  lVar10 = (longlong)(int)param_2;
-  LVar3 = __savegprlr_26((double)param_4,param_1,lVar10,lVar12,param_5);
+  dVar10 = (double)param_4;
   if ((cg_drawZoomHint->current).enabled != false) {
-    dVar16 = extraout_f1;
-    pcVar4 = CG_GetLocalClientGlobals(LVar3);
-    WVar5 = BG_GetViewmodelWeapon(&pcVar4->predictedPlayerState);
-    if ((((WVar5.data & 0xff) != 0) &&
-        ((pcVar4->predictedPlayerState).weapCommon.fWeaponPosFrac == 1.0)) &&
-       (bVar9 = BG_CanVariableZoom(WVar5,(bool)((byte)((uint)(pcVar4->predictedPlayerState).
+    pcVar3 = CG_GetLocalClientGlobals(param_1);
+    WVar4 = BG_GetViewmodelWeapon(&pcVar3->predictedPlayerState);
+    if ((((WVar4.data & 0xff) != 0) &&
+        ((pcVar3->predictedPlayerState).weapCommon.fWeaponPosFrac == 1.0)) &&
+       (bVar8 = BG_CanVariableZoom(WVar4,(bool)((byte)((uint)(pcVar3->predictedPlayerState).
                                                              weapCommon.weapFlags >> 0xf) & 1)),
-       bVar9)) {
-      UI_GetKeyBindingLocalizedString(LVar3,"+changezoom",acStack_150,0x100);
-      pcVar6 = UI_SafeTranslateString("PLATFORM_CHANGE_ZOOM");
-      pcVar6 = UI_ReplaceConversionString(pcVar6,acStack_150);
-      iVar7 = UI_TextWidth(pcVar6,0,(Font_s *)lVar12,(float)dVar16);
-      pIVar13 = &IMAGE_DOS_HEADER_82000000;
-      dVar14 = floor((double)((float)(longlong)iVar7 * 0.5 + 0.5));
-      pfVar11 = (float *)lVar10;
-      bVar1 = *(byte *)((int)pfVar11 + 0x11);
-      bVar2 = *(byte *)(pfVar11 + 4);
-      dVar15 = (double)pfVar11[1];
-      iVar7 = (int)dVar14;
-      dVar14 = (double)(*pfVar11 - (float)(longlong)iVar7);
-      pSVar8 = ScrPlace_GetActivePlacement(LVar3);
-      UI_DrawText(pSVar8,pcVar6,0x7fffffff,(Font_s *)lVar12,(float)dVar14,(float)dVar15,iVar7,
-                  (int)pIVar13,(float)dVar16,(float *)(uint)bVar2,(uint)bVar1);
+       bVar8)) {
+      UI_GetKeyBindingLocalizedString(param_1,"+changezoom",acStack_150,0x100);
+      pcVar5 = UI_SafeTranslateString("PLATFORM_CHANGE_ZOOM");
+      pcVar5 = UI_ReplaceConversionString(pcVar5,acStack_150);
+      iVar6 = UI_TextWidth(pcVar5,0,param_3,(float)dVar10);
+      pIVar9 = &IMAGE_DOS_HEADER_82000000;
+      dVar11 = floor((double)((float)(longlong)iVar6 * 0.5 + 0.5));
+      bVar1 = param_2->vertAlign;
+      bVar2 = param_2->horzAlign;
+      dVar12 = (double)param_2->y;
+      iVar6 = (int)dVar11;
+      dVar11 = (double)(param_2->x - (float)(longlong)iVar6);
+      pSVar7 = ScrPlace_GetActivePlacement(param_1);
+      UI_DrawText(pSVar7,pcVar5,0x7fffffff,param_3,(float)dVar11,(float)dVar12,iVar6,(int)pIVar9,
+                  (float)dVar10,(float *)(uint)bVar2,(uint)bVar1);
     }
   }
-  __restgprlr_26();
   return;
 }
 
 
 // 822E91E8  CG_DrawHoldBreathHint  (cgame_mp/cg_newDraw_mp.cpp:1828)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -2275,58 +2160,53 @@ void CG_DrawHoldBreathHint
 {
   byte bVar1;
   byte bVar2;
-  LocalClientNum_t LVar3;
-  cg_s *pcVar4;
-  int iVar5;
-  char *pcVar6;
-  ScreenPlacement *pSVar7;
-  longlong lVar8;
-  float *pfVar9;
-  longlong lVar10;
-  IMAGE_DOS_HEADER *pIVar11;
-  double extraout_f1;
-  double dVar12;
-  double dVar13;
-  double dVar14;
+  cg_s *pcVar3;
+  int iVar4;
+  char *pcVar5;
+  ScreenPlacement *pSVar6;
+  IMAGE_DOS_HEADER *pIVar7;
+  double dVar8;
+  double dVar9;
+  double dVar10;
   usercmd_s uStack_180;
   char acStack_150 [336];
   
-  lVar10 = (longlong)(int)param_3;
-  lVar8 = (longlong)(int)param_2;
-  LVar3 = __savegprlr_26((double)param_4,param_1,lVar8,lVar10,param_5);
+  dVar8 = (double)param_4;
   if (((((cg_drawBreathHint->current).enabled != false) &&
-       (dVar14 = extraout_f1, pcVar4 = CG_GetLocalClientGlobals(LVar3),
-       ((pcVar4->predictedPlayerState).weapCommon.weapFlags & 4U) == 0)) &&
-      ((pcVar4->predictedPlayerState).weapCommon.fWeaponPosFrac == 1.0)) &&
-     (iVar5 = BG_HasHoldBreathAbility(&pcVar4->predictedPlayerState), iVar5 != 0)) {
-    iVar5 = CL_GetCurrentCmdNumber(LVar3);
-    CL_GetUserCmd(LVar3,iVar5,&uStack_180);
+       (pcVar3 = CG_GetLocalClientGlobals(param_1),
+       ((pcVar3->predictedPlayerState).weapCommon.weapFlags & 4U) == 0)) &&
+      ((pcVar3->predictedPlayerState).weapCommon.fWeaponPosFrac == 1.0)) &&
+     (iVar4 = BG_HasHoldBreathAbility(&pcVar3->predictedPlayerState), iVar4 != 0)) {
+    iVar4 = CL_GetCurrentCmdNumber(param_1);
+    CL_GetUserCmd(param_1,iVar4,&uStack_180);
     if (((uStack_180.buttons & 0x2000U) == 0) &&
-       (iVar5 = BG_HoldingBreath(&pcVar4->predictedPlayerState), iVar5 == 0)) {
-      UI_GetKeyBindingLocalizedString(LVar3,"+holdbreath",acStack_150,0x100);
-      pcVar6 = UI_SafeTranslateString("PLATFORM_HOLD_BREATH");
-      pcVar6 = UI_ReplaceConversionString(pcVar6,acStack_150);
-      iVar5 = UI_TextWidth(pcVar6,0,(Font_s *)lVar10,(float)dVar14);
-      pIVar11 = &IMAGE_DOS_HEADER_82000000;
-      dVar12 = floor((double)((float)(longlong)iVar5 * 0.5 + 0.5));
-      pfVar9 = (float *)lVar8;
-      bVar1 = *(byte *)((int)pfVar9 + 0x11);
-      bVar2 = *(byte *)(pfVar9 + 4);
-      dVar13 = (double)pfVar9[1];
-      iVar5 = (int)dVar12;
-      dVar12 = (double)(*pfVar9 - (float)(longlong)iVar5);
-      pSVar7 = ScrPlace_GetActivePlacement(LVar3);
-      UI_DrawText(pSVar7,pcVar6,0x7fffffff,(Font_s *)lVar10,(float)dVar12,(float)dVar13,iVar5,
-                  (int)pIVar11,(float)dVar14,(float *)(uint)bVar2,(uint)bVar1);
+       (iVar4 = BG_HoldingBreath(&pcVar3->predictedPlayerState), iVar4 == 0)) {
+      UI_GetKeyBindingLocalizedString(param_1,"+holdbreath",acStack_150,0x100);
+      pcVar5 = UI_SafeTranslateString("PLATFORM_HOLD_BREATH");
+      pcVar5 = UI_ReplaceConversionString(pcVar5,acStack_150);
+      iVar4 = UI_TextWidth(pcVar5,0,param_3,(float)dVar8);
+      pIVar7 = &IMAGE_DOS_HEADER_82000000;
+      dVar9 = floor((double)((float)(longlong)iVar4 * 0.5 + 0.5));
+      bVar1 = param_2->vertAlign;
+      bVar2 = param_2->horzAlign;
+      dVar10 = (double)param_2->y;
+      iVar4 = (int)dVar9;
+      dVar9 = (double)(param_2->x - (float)(longlong)iVar4);
+      pSVar6 = ScrPlace_GetActivePlacement(param_1);
+      UI_DrawText(pSVar6,pcVar5,0x7fffffff,param_3,(float)dVar9,(float)dVar10,iVar4,(int)pIVar7,
+                  (float)dVar8,(float *)(uint)bVar2,(uint)bVar1);
     }
   }
-  __restgprlr_26();
   return;
 }
 
 
 // 822E93A8  CG_DrawMantleHint  (cgame_mp/cg_newDraw_mp.cpp:1868)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -2337,64 +2217,51 @@ void CG_DrawMantleHint(LocalClientNum_t param_1,rectDef_s *param_2,Font_s *param
 {
   byte bVar1;
   byte bVar2;
-  LocalClientNum_t LVar3;
-  cg_s *pcVar4;
-  char *pcVar5;
-  int iVar6;
-  ScreenPlacement *pSVar7;
-  float *pfVar8;
-  longlong lVar9;
-  Font_s *pFVar10;
-  IMAGE_DOS_HEADER *pIVar11;
-  longlong lVar12;
-  double extraout_f1;
+  cg_s *pcVar3;
+  char *pcVar4;
+  int iVar5;
+  ScreenPlacement *pSVar6;
+  IMAGE_DOS_HEADER *pIVar7;
+  longlong lVar8;
+  double dVar9;
+  double dVar10;
+  double dVar11;
+  double dVar12;
   double dVar13;
-  double dVar14;
-  double dVar15;
-  double dVar16;
-  double dVar17;
   char acStack_180 [384];
   
-  lVar9 = (longlong)(int)param_3;
-  lVar12 = (longlong)(int)param_2;
-  __savegprlr_23((double)param_4,param_1,lVar12,lVar9,param_5);
-  pfVar8 = (float *)lVar12;
-  pFVar10 = (Font_s *)lVar9;
-  LVar3 = __savefpr_27();
-  dVar14 = extraout_f1;
+  dVar10 = (double)param_4;
   if (cgMedia.mantleHint == (Material *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_newDraw_mp.cpp",
                     0x755,0,"%s");
   }
   if (((cg_drawMantleHint->current).enabled != false) &&
-     (pcVar4 = CG_GetLocalClientGlobals(LVar3),
-     ((pcVar4->predictedPlayerState).mantleState.flags & 8U) != 0)) {
-    UI_GetKeyBindingLocalizedString(LVar3,"+gostand",acStack_180,0x100);
-    pcVar5 = UI_SafeTranslateString("PLATFORM_MANTLE");
-    pcVar5 = UI_ReplaceConversionString(pcVar5,acStack_180);
-    iVar6 = UI_TextWidth(pcVar5,0,pFVar10,(float)dVar14);
-    dVar16 = (double)(longlong)iVar6;
-    iVar6 = UI_TextHeight(pFVar10,(float)dVar14);
-    lVar12 = (longlong)iVar6;
-    pIVar11 = &IMAGE_DOS_HEADER_82000000;
-    dVar17 = 0.5;
-    bVar1 = *(byte *)((int)pfVar8 + 0x11);
-    dVar15 = -(double)((float)((double)pfVar8[2] + dVar16) * 0.5 - *pfVar8);
-    bVar2 = *(byte *)(pfVar8 + 4);
-    dVar13 = (double)(float)((double)lVar12 * 0.5 + (double)pfVar8[1]);
-    pSVar7 = ScrPlace_GetActivePlacement(LVar3);
-    iVar6 = 0x7fffffff;
-    UI_DrawText(pSVar7,pcVar5,0x7fffffff,pFVar10,(float)dVar15,(float)dVar13,(int)pIVar11,
-                (int)lVar12,(float)dVar14,(float *)(uint)bVar2,(uint)bVar1);
-    dVar13 = (double)pfVar8[3];
-    dVar14 = (double)pfVar8[2];
-    dVar17 = -(double)(float)(dVar13 * dVar17 - (double)pfVar8[1]);
-    pSVar7 = ScrPlace_GetActivePlacement(LVar3);
-    UI_DrawHandlePic(pSVar7,(float)(dVar15 + dVar16),(float)dVar17,(float)dVar14,(float)dVar13,
-                     (int)pcVar5,iVar6,(float *)pFVar10,(Material *)pIVar11);
+     (pcVar3 = CG_GetLocalClientGlobals(param_1),
+     ((pcVar3->predictedPlayerState).mantleState.flags & 8U) != 0)) {
+    UI_GetKeyBindingLocalizedString(param_1,"+gostand",acStack_180,0x100);
+    pcVar4 = UI_SafeTranslateString("PLATFORM_MANTLE");
+    pcVar4 = UI_ReplaceConversionString(pcVar4,acStack_180);
+    iVar5 = UI_TextWidth(pcVar4,0,param_3,(float)dVar10);
+    dVar12 = (double)(longlong)iVar5;
+    iVar5 = UI_TextHeight(param_3,(float)dVar10);
+    lVar8 = (longlong)iVar5;
+    pIVar7 = &IMAGE_DOS_HEADER_82000000;
+    dVar13 = 0.5;
+    bVar1 = param_2->vertAlign;
+    dVar11 = -(double)((float)((double)param_2->w + dVar12) * 0.5 - param_2->x);
+    bVar2 = param_2->horzAlign;
+    dVar9 = (double)(float)((double)lVar8 * 0.5 + (double)param_2->y);
+    pSVar6 = ScrPlace_GetActivePlacement(param_1);
+    iVar5 = 0x7fffffff;
+    UI_DrawText(pSVar6,pcVar4,0x7fffffff,param_3,(float)dVar11,(float)dVar9,(int)pIVar7,(int)lVar8,
+                (float)dVar10,(float *)(uint)bVar2,(uint)bVar1);
+    dVar9 = (double)param_2->h;
+    dVar10 = (double)param_2->w;
+    dVar13 = -(double)(float)(dVar9 * dVar13 - (double)param_2->y);
+    pSVar6 = ScrPlace_GetActivePlacement(param_1);
+    UI_DrawHandlePic(pSVar6,(float)(dVar11 + dVar12),(float)dVar13,(float)dVar10,(float)dVar9,
+                     (int)pcVar4,iVar5,(float *)param_3,(Material *)pIVar7);
   }
-  __restfpr_27();
-  __restgprlr_23();
   return;
 }
 
@@ -2426,6 +2293,8 @@ char * CG_ScriptMainMenu(LocalClientNum_t param_1)
 
 // 822E9598  CG_DrawInvalidCmdHint  (cgame_mp/cg_newDraw_mp.cpp:1926)
 
+/* WARNING: Function: __savegprlr_21 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_21 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -2439,102 +2308,91 @@ void CG_DrawInvalidCmdHint
   byte bVar2;
   uint uVar3;
   InvalidCmdHintType IVar4;
-  LocalClientNum_t LVar5;
-  cg_s *pcVar6;
-  bool bVar10;
-  char *pcVar7;
-  int iVar8;
-  ScreenPlacement *pSVar9;
+  cg_s *pcVar5;
+  bool bVar9;
+  char *pcVar6;
+  int iVar7;
+  ScreenPlacement *pSVar8;
+  IMAGE_DOS_HEADER *pIVar10;
   ulonglong uVar11;
-  float *pfVar12;
-  longlong lVar13;
-  ulonglong uVar14;
-  IMAGE_DOS_HEADER *pIVar15;
-  ulonglong uVar16;
-  longlong lVar17;
-  double extraout_f1;
-  double dVar18;
-  double dVar19;
-  double dVar20;
+  longlong lVar12;
+  double dVar13;
+  double dVar14;
+  double dVar15;
   char acStack_180 [384];
   
-  uVar14 = (ulonglong)param_6;
-  lVar13 = (longlong)(int)param_3;
-  uVar11 = (ulonglong)(int)param_2;
-  LVar5 = __savegprlr_21((double)param_4,param_1,uVar11,lVar13,param_5);
-  dVar20 = extraout_f1;
-  if ((uVar11 & 0xffffffff) == 0) {
+  dVar13 = (double)param_4;
+  if (param_2 == (rectDef_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_newDraw_mp.cpp",
                     0x78d,0,"%s");
   }
-  if ((uVar14 & 0xffffffff) == 0) {
+  if (param_6 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_newDraw_mp.cpp",
                     0x78e,0,"%s");
   }
-  pcVar6 = CG_GetLocalClientGlobals(LVar5);
-  if ((int)((cg_invalidCmdHintDuration->current).string + pcVar6->invalidCmdHintTime) < pcVar6->time
+  pcVar5 = CG_GetLocalClientGlobals(param_1);
+  if ((int)((cg_invalidCmdHintDuration->current).string + pcVar5->invalidCmdHintTime) < pcVar5->time
      ) {
-    pcVar6->invalidCmdHintType = INVALID_CMD_NONE;
+    pcVar5->invalidCmdHintType = INVALID_CMD_NONE;
   }
-  IVar4 = pcVar6->invalidCmdHintType;
+  IVar4 = pcVar5->invalidCmdHintType;
   if (8 < IVar4 - INVALID_CMD_NO_AMMO_BULLETS) {
     if (IVar4 != INVALID_CMD_NONE) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_newDraw_mp.cpp",
                       0x797,0,"%s");
     }
-    __restgprlr_21();
     return;
   }
   if (IVar4 == INVALID_CMD_NO_AMMO_GRENADE) {
     Com_sprintf(acStack_180,0x100,"WEAPON_NO_WEAPON_AMMO_MP");
-    pcVar7 = UI_SafeLocalizeTextMessage(acStack_180);
+    pcVar6 = UI_SafeLocalizeTextMessage(acStack_180);
   }
   else {
     if (IVar4 == INVALID_CMD_STAND_BLOCKED) {
-      bVar10 = BG_WeaponBlocksProne(pcVar6->invalidCmdHintWeapon,false);
-      if (bVar10) {
-        pcVar7 = "GAME_STAND_BLOCKED_WEAPON";
+      bVar9 = BG_WeaponBlocksProne(pcVar5->invalidCmdHintWeapon,false);
+      if (bVar9) {
+        pcVar6 = "GAME_STAND_BLOCKED_WEAPON";
       }
       else {
-        pcVar7 = "GAME_STAND_BLOCKED";
+        pcVar6 = "GAME_STAND_BLOCKED";
       }
     }
     else if (IVar4 == INVALID_CMD_CROUCH_BLOCKED) {
-      bVar10 = BG_WeaponBlocksProne(pcVar6->invalidCmdHintWeapon,false);
-      if (bVar10) {
-        pcVar7 = "GAME_CROUCH_BLOCKED_WEAPON";
+      bVar9 = BG_WeaponBlocksProne(pcVar5->invalidCmdHintWeapon,false);
+      if (bVar9) {
+        pcVar6 = "GAME_CROUCH_BLOCKED_WEAPON";
       }
       else {
-        pcVar7 = "GAME_CROUCH_BLOCKED";
+        pcVar6 = "GAME_CROUCH_BLOCKED";
       }
     }
     else if (IVar4 == INVALID_CMD_PRONE_BLOCKED) {
-      bVar10 = BG_WeaponBlocksProne(pcVar6->invalidCmdHintWeapon,false);
-      if (bVar10) {
-        pcVar7 = "CGAME_PRONE_BLOCKED_WEAPON";
+      bVar9 = BG_WeaponBlocksProne(pcVar5->invalidCmdHintWeapon,false);
+      if (bVar9) {
+        pcVar6 = "CGAME_PRONE_BLOCKED_WEAPON";
       }
       else {
-        pcVar7 = "CGAME_PRONE_BLOCKED";
+        pcVar6 = "CGAME_PRONE_BLOCKED";
       }
     }
     else if (IVar4 == INVALID_CMD_TARGET_TOO_CLOSE) {
-      pcVar7 = "WEAPON_TARGET_TOO_CLOSE";
+      pcVar6 = "WEAPON_TARGET_TOO_CLOSE";
     }
     else if (IVar4 == INVALID_CMD_LOCKON_REQUIRED) {
-      pcVar7 = "WEAPON_LOCKON_REQUIRED";
+      pcVar6 = "WEAPON_LOCKON_REQUIRED";
     }
     else if (IVar4 == INVALID_CMD_NOT_ENOUGH_CLEARANCE) {
-      pcVar7 = "WEAPON_TARGET_NOT_ENOUGH_CLEARANCE";
+      pcVar6 = "WEAPON_TARGET_NOT_ENOUGH_CLEARANCE";
     }
     else {
       if (IVar4 != INVALID_CMD_NO_AMMO_BULLETS) {
         Com_sprintf(acStack_180,0x100,"WEAPON_NO_SPECIAL_GRENADE");
-        pcVar7 = UI_SafeLocalizeTextMessage(acStack_180);
+        pcVar6 = UI_SafeLocalizeTextMessage(acStack_180);
         goto LAB_822e97b8;
       }
-      pcVar7 = "WEAPON_NO_AMMO";
+      pcVar6 = "WEAPON_NO_AMMO";
     }
-    pcVar7 = UI_SafeTranslateString(pcVar7);
+    pcVar6 = UI_SafeTranslateString(pcVar6);
   }
 LAB_822e97b8:
   uVar3 = (cg_invalidCmdHintBlinkInterval->current).integer;
@@ -2542,33 +2400,33 @@ LAB_822e97b8:
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_newDraw_mp.cpp",
                     0x7d6,0,"%s");
   }
-  uVar16 = (ulonglong)(uint)pcVar6->time - (ulonglong)(uint)pcVar6->invalidCmdHintTime;
+  uVar11 = (ulonglong)(uint)pcVar5->time - (ulonglong)(uint)pcVar5->invalidCmdHintTime;
   trapWord(6,(ulonglong)uVar3,0);
-  trapWord(5,(ulonglong)uVar3 & ~(((uVar16 & 0x7fffffff) << 1 | (uVar16 & 0xffffffff) >> 0x1f) - 1),
+  trapWord(5,(ulonglong)uVar3 & ~(((uVar11 & 0x7fffffff) << 1 | (uVar11 & 0xffffffff) >> 0x1f) - 1),
            0xffff);
-  *(float *)((int)uVar14 + 0xc) =
-       (float)(longlong)(int)((int)uVar16 - ((int)uVar16 / (int)uVar3) * uVar3) /
+  *(float *)(param_6 + 0xc) =
+       (float)(longlong)(int)((int)uVar11 - ((int)uVar11 / (int)uVar3) * uVar3) /
        (float)(longlong)(int)uVar3;
-  iVar8 = UI_TextWidth(pcVar7,0,(Font_s *)lVar13,(float)dVar20);
-  lVar17 = (longlong)iVar8;
-  pIVar15 = &IMAGE_DOS_HEADER_82000000;
-  dVar18 = floor((double)((float)lVar17 * 0.5 + 0.5));
-  iVar8 = (int)lVar17;
-  pfVar12 = (float *)uVar11;
-  bVar1 = *(byte *)((int)pfVar12 + 0x11);
-  bVar2 = *(byte *)(pfVar12 + 4);
-  dVar19 = (double)pfVar12[1];
-  dVar18 = (double)(*pfVar12 - (float)(longlong)(int)dVar18);
-  pSVar9 = ScrPlace_GetActivePlacement(LVar5);
-  UI_DrawText(pSVar9,pcVar7,0x7fffffff,(Font_s *)lVar13,(float)dVar18,(float)dVar19,(int)pIVar15,
-              iVar8,(float)dVar20,(float *)(uint)bVar2,(uint)bVar1);
-  __restgprlr_21();
+  iVar7 = UI_TextWidth(pcVar6,0,param_3,(float)dVar13);
+  lVar12 = (longlong)iVar7;
+  pIVar10 = &IMAGE_DOS_HEADER_82000000;
+  dVar14 = floor((double)((float)lVar12 * 0.5 + 0.5));
+  iVar7 = (int)lVar12;
+  bVar1 = param_2->vertAlign;
+  bVar2 = param_2->horzAlign;
+  dVar15 = (double)param_2->y;
+  dVar14 = (double)(param_2->x - (float)(longlong)(int)dVar14);
+  pSVar8 = ScrPlace_GetActivePlacement(param_1);
+  UI_DrawText(pSVar8,pcVar6,0x7fffffff,param_3,(float)dVar14,(float)dVar15,(int)pIVar10,iVar7,
+              (float)dVar13,(float *)(uint)bVar2,(uint)bVar1);
   return;
 }
 
 
 // 822E9940  DrawAirburstDistance  (cgame_mp/cg_newDraw_mp.cpp:2025)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void DrawAirburstDistance
@@ -2576,66 +2434,62 @@ void DrawAirburstDistance
                Material *param_5)
 
 {
-  float fVar1;
-  float *pfVar2;
-  ulonglong uVar3;
-  bool bVar5;
-  ScreenPlacement *pSVar4;
+  ulonglong uVar1;
+  float fVar2;
+  bool bVar4;
+  ScreenPlacement *pSVar3;
+  ulonglong uVar5;
   ulonglong uVar6;
-  ulonglong uVar7;
+  Material *pMVar7;
   ulonglong uVar8;
-  ulonglong uVar9;
-  Material *pMVar10;
-  double dVar11;
-  double dVar12;
+  double dVar9;
+  double dVar10;
   
-  uVar9 = (ulonglong)(int)param_5;
-  uVar7 = (ulonglong)(int)param_3;
-  uVar3 = __savegprlr_23(param_1);
+  uVar8 = (ulonglong)(int)param_1;
   if ((_S1 & 1) == 0) {
     _S1 = _S1 | 1;
     UV_OFFSET = 0.1;
   }
-  if ((uVar7 & 0xffffffff) == 0) {
+  if (param_3 == (rectDef_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_newDraw_mp.cpp",
                     0x7f1,0,"%s");
   }
-  if ((uVar9 & 0xffffffff) == 0) {
+  if (param_5 == (Material *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_newDraw_mp.cpp",
                     0x7f2,0,"%s");
   }
-  bVar5 = Material_Is2D((Material *)uVar9);
-  if (!bVar5) {
+  bVar4 = Material_Is2D(param_5);
+  if (!bVar4) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_newDraw_mp.cpp",
                     0x7f3,0,"%s");
   }
-  pSVar4 = ScrPlace_GetActivePlacement(param_2);
-  if (pSVar4 == (ScreenPlacement *)0x0) {
+  pSVar3 = ScrPlace_GetActivePlacement(param_2);
+  if (pSVar3 == (ScreenPlacement *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_newDraw_mp.cpp",
                     0x7f6,0,"%s");
   }
-  pMVar10 = (Material *)0x0;
-  dVar11 = 1.0;
-  dVar12 = 0.0;
+  pMVar7 = (Material *)0x0;
+  dVar9 = 1.0;
+  dVar10 = 0.0;
   do {
-    pfVar2 = (float *)uVar7;
-    uVar9 = (uVar3 & 0xffffffff) / 10;
-    uVar8 = uVar9 * 10 & 0xfffffffe;
-    uVar6 = uVar3 - uVar8;
-    uVar3 = (uVar3 & 0xffffffff) / 10;
-    fVar1 = UV_OFFSET * (float)(uVar6 & 0xffffffff);
-    CL_DrawStretchPic(pSVar4,-((float)pMVar10 * pfVar2[2] - *pfVar2),pfVar2[1],pfVar2[2],pfVar2[3],
-                      (int)uVar6,(int)uVar8,fVar1,(float)dVar12,fVar1 + UV_OFFSET,(float)dVar11,
-                      (float *)((int)uVar9 * 5),pMVar10);
-    pMVar10 = (Material *)((int)&(pMVar10->info).name + 1);
-  } while (uVar3 != 0);
-  __restgprlr_23();
+    uVar1 = (uVar8 & 0xffffffff) / 10;
+    uVar6 = uVar1 * 10 & 0xfffffffe;
+    uVar5 = uVar8 - uVar6;
+    uVar8 = (uVar8 & 0xffffffff) / 10;
+    fVar2 = UV_OFFSET * (float)(uVar5 & 0xffffffff);
+    CL_DrawStretchPic(pSVar3,-((float)pMVar7 * param_3->w - param_3->x),param_3->y,param_3->w,
+                      param_3->h,(int)uVar5,(int)uVar6,fVar2,(float)dVar10,fVar2 + UV_OFFSET,
+                      (float)dVar9,(float *)((int)uVar1 * 5),pMVar7);
+    pMVar7 = (Material *)((int)&(pMVar7->info).name + 1);
+  } while (uVar8 != 0);
   return;
 }
 
 
 // 822E9B10  CG_DrawAirburstCurrentDistance  (cgame_mp/cg_newDraw_mp.cpp:2069)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -2644,25 +2498,24 @@ void CG_DrawAirburstCurrentDistance
                (LocalClientNum_t param_1,rectDef_s *param_2,float *param_3,Material *param_4)
 
 {
-  LocalClientNum_t LVar1;
-  cg_s *pcVar2;
+  cg_s *pcVar1;
   uint uStack_3c;
   
-  LVar1 = __savegprlr_27(param_1);
-  pcVar2 = CG_GetLocalClientGlobals(LVar1);
-  if (pcVar2 == (cg_s *)0x0) {
+  pcVar1 = CG_GetLocalClientGlobals(param_1);
+  if (pcVar1 == (cg_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_newDraw_mp.cpp",
                     0x81b,0,"%s");
   }
-  uStack_3c = (uint)(longlong)((float)pcVar2->crosshairTraceDistance * 0.0254);
-  DrawAirburstDistance(uStack_3c,LVar1,param_2,param_3,param_4);
-  __restgprlr_27();
+  uStack_3c = (uint)(longlong)((float)pcVar1->crosshairTraceDistance * 0.0254);
+  DrawAirburstDistance(uStack_3c,param_1,param_2,param_3,param_4);
   return;
 }
 
 
 // 822E9BB0  CG_DrawAirburstMarkDistance  (cgame_mp/cg_newDraw_mp.cpp:2085)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -2671,25 +2524,26 @@ void CG_DrawAirburstMarkDistance
                (LocalClientNum_t param_1,rectDef_s *param_2,float *param_3,Material *param_4)
 
 {
-  LocalClientNum_t LVar1;
-  cg_s *pcVar2;
+  cg_s *pcVar1;
   uint uStack_3c;
   
-  LVar1 = __savegprlr_27(param_1);
-  pcVar2 = CG_GetLocalClientGlobals(LVar1);
-  if (pcVar2 == (cg_s *)0x0) {
+  pcVar1 = CG_GetLocalClientGlobals(param_1);
+  if (pcVar1 == (cg_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_newDraw_mp.cpp",
                     0x82c,0,"%s");
   }
-  uStack_3c = (uint)(longlong)((float)(pcVar2->predictedPlayerState).airburstMarkDistance * 0.0254);
-  DrawAirburstDistance(uStack_3c,LVar1,param_2,param_3,param_4);
-  __restgprlr_27();
+  uStack_3c = (uint)(longlong)((float)(pcVar1->predictedPlayerState).airburstMarkDistance * 0.0254);
+  DrawAirburstDistance(uStack_3c,param_1,param_2,param_3,param_4);
   return;
 }
 
 
 // 822E9C48  CG_DrawDemoControls  (cgame_mp/cg_newDraw_mp.cpp:2103)
 
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -2784,8 +2638,6 @@ void CG_DrawDemoControls(LocalClientNum_t param_1,rectDef_s *param_2,float *para
   float afStack_540 [4];
   char acStack_530 [1328];
   
-  __savegprlr();
-  __savefpr();
   dVar42 = 1.0;
   local_5d0 = (GfxStateBits *)0x3e20c49c;
   local_5cc = (char **)0x3e3126e9;
@@ -2853,11 +2705,29 @@ void CG_DrawDemoControls(LocalClientNum_t param_1,rectDef_s *param_2,float *para
   local_5d8.packed._0_4_ = 0;
   local_5d8.packed._4_4_ = 0x3f800000;
   bVar10 = CL_Demo_IsPlaying(param_1);
-  if (((((!bVar10) || (bVar10 = CL_Demo_IsPlaybackMemoryAllocated(), !bVar10)) ||
-       (bVar10 = CL_Demo_IsPauseMenuOpen(param_1), bVar10)) ||
-      ((bVar10 = CL_Demo_IsSaveDialogOpen(param_1), bVar10 ||
-       (bVar10 = CL_Demo_IsErrorDialogOpen(param_1), bVar10)))) ||
-     (bVar10 = CL_Demo_IsDemoHudHidden(), bVar10)) goto LAB_822eb6dc;
+  if (!bVar10) {
+    return;
+  }
+  bVar10 = CL_Demo_IsPlaybackMemoryAllocated();
+  if (!bVar10) {
+    return;
+  }
+  bVar10 = CL_Demo_IsPauseMenuOpen(param_1);
+  if (bVar10) {
+    return;
+  }
+  bVar10 = CL_Demo_IsSaveDialogOpen(param_1);
+  if (bVar10) {
+    return;
+  }
+  bVar10 = CL_Demo_IsErrorDialogOpen(param_1);
+  if (bVar10) {
+    return;
+  }
+  bVar10 = CL_Demo_IsDemoHudHidden();
+  if (bVar10) {
+    return;
+  }
   pcVar1 = CG_GetLocalClientGlobals(param_1);
   pSVar2 = ScrPlace_GetActivePlacement(param_1);
   pFVar3 = UI_GetFontHandle(pSVar2,3,0.375);
@@ -2965,15 +2835,13 @@ void CG_DrawDemoControls(LocalClientNum_t param_1,rectDef_s *param_2,float *para
   }
   iVar5 = (int)local_630 - local_660[0];
   bVar10 = CL_Demo_IsCompleted();
-  if (bVar10) {
-LAB_822ea1fc:
-    dVar34 = dVar42;
-  }
-  else {
+  if (!bVar10) {
     local_658 = (longlong)(iVar6 - local_660[0]);
     dVar34 = (double)((float)local_658 / (float)(longlong)iVar5);
-    if (dVar42 < (double)((float)local_658 / (float)(longlong)iVar5)) goto LAB_822ea1fc;
+    if ((double)((float)local_658 / (float)(longlong)iVar5) <= dVar42) goto LAB_822ea200;
   }
+  dVar34 = dVar42;
+LAB_822ea200:
   iVar6 = iVar5 % 60000;
   Com_sprintf(acStack_650,8,"%02i:%02i");
   lVar11 = ZEXT48(&stack0x00000000) - 0x650;
@@ -3115,7 +2983,7 @@ LAB_822ea1fc:
   iVar6 = UI_TextWidth(pcVar4,0x7fffffff,pFVar3,(float)dVar40);
   pcVar23 = "the motion tracker after being detected";
   dVar38 = 14.399999618530273;
-  local_638 = CONCAT44((float)(dVar28 + 14.399999618530273),local_638._4_4_);
+  local_638 = CONCAT44((MaterialTextureDef *)(float)(dVar28 + 14.399999618530273),local_638._4_4_);
   UI_DrawText(pSVar2,pcVar4,0x7fffffff,pFVar3,
               (float)((double)(float)(dVar30 - (double)(longlong)iVar6) * dVar33 + dVar39),
               (float)(dVar28 + 14.399999618530273),(int)pMVar21,-0x7dfe0000,(float)dVar40,
@@ -3477,15 +3345,16 @@ LAB_822ea1fc:
               (float)((double)(float)(dVar36 - (double)(longlong)iVar6) * dVar33 + dVar25),
               (float)dVar37,(int)pcVar23,(int)puVar24,(float)dVar40,
               (float *)(uint)param_2->horzAlign,(uint)param_2->vertAlign);
-LAB_822eb6dc:
-  __restfpr();
-  __restgprlr();
   return;
 }
 
 
 // 822EB6F0  CG_DrawTalkerNum  (cgame_mp/cg_newDraw_mp.cpp:2611)
 
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -3498,119 +3367,121 @@ void CG_DrawTalkerNum(LocalClientNum_t param_1,int param_2,rectDef_s *param_3,Fo
   byte bVar2;
   team_t tVar3;
   bool bVar4;
-  LocalClientNum_t LVar5;
-  int iVar6;
-  cg_s *pcVar7;
-  bool bVar11;
-  char *pcVar8;
-  int iVar9;
-  ScreenPlacement *pSVar10;
-  int iVar12;
-  ulonglong uVar13;
-  float *pfVar14;
-  char *pcVar15;
-  char *pcVar16;
-  ulonglong uVar17;
-  undefined4 *puVar18;
-  Material *pMVar19;
-  double extraout_f1;
+  int iVar5;
+  cg_s *pcVar6;
+  bool bVar10;
+  char *pcVar7;
+  int iVar8;
+  ScreenPlacement *pSVar9;
+  int iVar11;
+  char *pcVar12;
+  char *pcVar13;
+  Material *pMVar14;
+  double dVar15;
+  double dVar16;
+  double dVar17;
+  double dVar18;
+  double dVar19;
   double dVar20;
-  double dVar21;
-  double dVar22;
-  double dVar23;
-  double dVar24;
-  double dVar25;
-  Material local_a0;
+  undefined1 local_a0 [8];
+  GfxDrawSurf local_98 [19];
   
-  uVar17 = (ulonglong)(int)param_5;
-  uVar13 = (ulonglong)(int)param_3;
-  __savegprlr_22((double)param_6,param_1);
-  LVar5 = __savefpr_26();
-  pfVar14 = (float *)uVar13;
-  dVar25 = extraout_f1;
-  pcVar16 = (char *)param_4;
-  pcVar15 = (char *)pfVar14;
-  if ((uVar17 & 0xffffffff) == 0) {
-    pcVar15 = (char *)0x0;
-    pcVar16 = "%s";
+  dVar15 = (double)param_6;
+  pcVar12 = (char *)param_3;
+  pcVar13 = (char *)param_4;
+  if (param_5 == (float *)0x0) {
+    pcVar12 = (char *)0x0;
+    pcVar13 = "%s";
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_newDraw_mp.cpp",
                     0xa3d,0,"%s");
   }
-  if ((uVar13 & 0xffffffff) == 0) {
-    pcVar15 = (char *)0x0;
-    pcVar16 = "%s";
+  if (param_3 == (rectDef_s *)0x0) {
+    pcVar12 = (char *)0x0;
+    pcVar13 = "%s";
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_newDraw_mp.cpp",
                     0xa3e,0,"%s");
   }
-  iVar9 = (cg_drawTalk->current).integer;
-  if ((iVar9 == 0) || (iVar6 = CL_Demo_IsRenderingMovie(LVar5), iVar6 != 0)) goto LAB_822eb9bc;
-  pcVar7 = CG_GetLocalClientGlobals(LVar5);
-  iVar6 = UI_GetTalkerClientNum(LVar5,param_2);
-  if (iVar6 < 0) goto LAB_822eb9bc;
-  pMVar19 = (Material *)(pcVar7->bgs).clientinfo[iVar6].infoValid;
-  if (pMVar19 == (Material *)0x0) goto LAB_822eb9bc;
-  tVar3 = (pcVar7->bgs).clientinfo[pcVar7->clientNum].team;
-  if (tVar3 == TEAM_FREE) {
-LAB_822eb820:
-    bVar4 = false;
+  iVar8 = (cg_drawTalk->current).integer;
+  if (iVar8 == 0) {
+    return;
   }
-  else {
+  iVar5 = CL_Demo_IsRenderingMovie(param_1);
+  if (iVar5 != 0) {
+    return;
+  }
+  pcVar6 = CG_GetLocalClientGlobals(param_1);
+  iVar5 = UI_GetTalkerClientNum(param_1,param_2);
+  if (iVar5 < 0) {
+    return;
+  }
+  pMVar14 = (Material *)(pcVar6->bgs).clientinfo[iVar5].infoValid;
+  if (pMVar14 == (Material *)0x0) {
+    return;
+  }
+  tVar3 = (pcVar6->bgs).clientinfo[pcVar6->clientNum].team;
+  if (tVar3 != TEAM_FREE) {
     bVar4 = true;
-    bVar11 = (pcVar7->bgs).clientinfo[iVar6].team == tVar3;
-    pMVar19 = (Material *)(uint)bVar11;
-    if (bVar11) goto LAB_822eb820;
+    bVar10 = (pcVar6->bgs).clientinfo[iVar5].team == tVar3;
+    pMVar14 = (Material *)(uint)bVar10;
+    if (!bVar10) goto LAB_822eb824;
   }
-  if (iVar9 == 2) {
-    if (bVar4) goto LAB_822eb9bc;
+  bVar4 = false;
+LAB_822eb824:
+  if (iVar8 == 2) {
+    if (bVar4) {
+      return;
+    }
   }
-  else if ((iVar9 == 3) && (!bVar4)) goto LAB_822eb9bc;
-  puVar18 = (undefined4 *)uVar17;
-  local_a0.info.name = (char *)*puVar18;
-  local_a0.info._4_4_ = puVar18[1];
-  local_a0.info.drawSurf.packed._0_4_ = puVar18[2];
-  local_a0.info.drawSurf.packed._4_4_ = puVar18[3];
-  if ((((pcVar7->predictedPlayerState).pm_type == 6) || (!bVar4)) ||
-     (bVar11 = BG_HasPerk((pcVar7->predictedPlayerState).perks,0x1e), !bVar11)) {
-    pcVar8 = "voice_on";
+  else if ((iVar8 == 3) && (!bVar4)) {
+    return;
+  }
+  local_a0._0_4_ = *param_5;
+  local_a0._4_4_ = param_5[1];
+  local_98[0]._0_4_ = param_5[2];
+  local_98[0]._4_4_ = param_5[3];
+  if ((((pcVar6->predictedPlayerState).pm_type == 6) || (!bVar4)) ||
+     (bVar10 = BG_HasPerk((pcVar6->predictedPlayerState).perks,0x1e), !bVar10)) {
+    pcVar7 = "voice_on";
   }
   else {
-    pcVar16 = "cg_ColorBlind";
-    pcVar15 = "cg_TeamColor";
-    pMVar19 = &local_a0;
-    CG_RelativeTeamColor(LVar5,iVar6,"cg_TeamColor","cg_ColorBlind",(float *)pMVar19);
-    pcVar8 = (perk_parabolicIcon->current).string;
+    pcVar13 = "cg_ColorBlind";
+    pcVar12 = "cg_TeamColor";
+    pMVar14 = (Material *)local_a0;
+    CG_RelativeTeamColor(param_1,iVar5,"cg_TeamColor","cg_ColorBlind",(float *)pMVar14);
+    pcVar7 = (perk_parabolicIcon->current).string;
   }
-  iVar12 = 7;
-  Material_RegisterHandle(pcVar8,7);
-  iVar9 = UI_TextHeight(param_4,(float)dVar25);
-  dVar23 = (double)pfVar14[3];
-  dVar22 = (double)pfVar14[2];
-  dVar21 = (double)pfVar14[1];
-  dVar20 = (double)*pfVar14;
-  pSVar10 = ScrPlace_GetActivePlacement(LVar5);
-  UI_DrawHandlePic(pSVar10,(float)dVar20,(float)dVar21,(float)dVar22,(float)dVar23,iVar12,
-                   (int)pcVar15,(float *)pcVar16,pMVar19);
-  bVar1 = *(byte *)((int)pfVar14 + 0x11);
-  dVar24 = (double)pfVar14[3];
-  bVar2 = *(byte *)(pfVar14 + 4);
-  dVar23 = (double)pfVar14[1];
-  dVar22 = (double)*pfVar14;
-  dVar21 = (double)(longlong)iVar9;
-  dVar20 = (double)pfVar14[2];
-  pSVar10 = ScrPlace_GetActivePlacement(LVar5);
-  UI_DrawText(pSVar10,(pcVar7->bgs).clientinfo[iVar6].name,0x20,param_4,
-              (float)(dVar22 + dVar20) + 2.0,
-              (float)((double)(float)((double)(float)(dVar24 - dVar21) * 0.5 + dVar21) + dVar23),
-              (int)pMVar19,(int)&local_a0,(float)dVar25,(float *)(uint)bVar2,(uint)bVar1);
-LAB_822eb9bc:
-  __restfpr_26();
-  __restgprlr_22();
+  iVar11 = 7;
+  Material_RegisterHandle(pcVar7,7);
+  iVar8 = UI_TextHeight(param_4,(float)dVar15);
+  dVar19 = (double)param_3->h;
+  dVar18 = (double)param_3->w;
+  dVar17 = (double)param_3->y;
+  dVar16 = (double)param_3->x;
+  pSVar9 = ScrPlace_GetActivePlacement(param_1);
+  UI_DrawHandlePic(pSVar9,(float)dVar16,(float)dVar17,(float)dVar18,(float)dVar19,iVar11,
+                   (int)pcVar12,(float *)pcVar13,pMVar14);
+  bVar1 = param_3->vertAlign;
+  dVar20 = (double)param_3->h;
+  bVar2 = param_3->horzAlign;
+  dVar19 = (double)param_3->y;
+  dVar18 = (double)param_3->x;
+  dVar17 = (double)(longlong)iVar8;
+  dVar16 = (double)param_3->w;
+  pSVar9 = ScrPlace_GetActivePlacement(param_1);
+  UI_DrawText(pSVar9,(pcVar6->bgs).clientinfo[iVar5].name,0x20,param_4,
+              (float)(dVar18 + dVar16) + 2.0,
+              (float)((double)(float)((double)(float)(dVar20 - dVar17) * 0.5 + dVar17) + dVar19),
+              (int)pMVar14,(int)local_a0,(float)dVar15,(float *)(uint)bVar2,(uint)bVar1);
   return;
 }
 
 
 // 822EB9D0  CG_OwnerDraw  (cgame_mp/cg_newDraw_mp.cpp:2675)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -3623,25 +3494,21 @@ void CG_OwnerDraw(LocalClientNum_t param_1,rectDef_s param_2,float param_3,float
 {
   OffhandClass OVar1;
   OffhandClass OVar2;
-  LocalClientNum_t LVar3;
-  playerState_s *ppVar4;
-  cg_s *pcVar5;
-  uiMenuCommand_t uVar6;
+  playerState_s *ppVar3;
+  cg_s *pcVar4;
+  uiMenuCommand_t uVar5;
+  CompassType CVar6;
   longlong lVar7;
-  CompassType CVar8;
+  float *pfVar8;
   longlong lVar9;
-  float *pfVar10;
-  longlong lVar11;
-  Material *pMVar12;
-  double extraout_f1;
+  Material *pMVar10;
+  double dVar11;
+  double dVar12;
   double dVar13;
   double dVar14;
   double dVar15;
   double dVar16;
   double dVar17;
-  double dVar18;
-  double dVar19;
-  float in_stack_00000024;
   longlong lStack00000028;
   longlong lStack00000030;
   uint in_stack_0000005c;
@@ -3654,517 +3521,380 @@ void CG_OwnerDraw(LocalClientNum_t param_1,rectDef_s param_2,float param_3,float
   undefined1 in_stack_ffffff1b;
   rectDef_s local_90 [7];
   
-  dVar16 = (double)param_9;
-  dVar17 = (double)param_10;
-  dVar18 = (double)param_15;
-  dVar15 = (double)param_6;
-  dVar14 = (double)param_5;
-  dVar13 = (double)param_4;
-  lVar11 = (longlong)param_11;
-  lVar9 = (longlong)param_8;
-  lVar7 = (longlong)param_7;
-  __savegprlr_25((double)param_3,param_1);
-  LVar3 = __savefpr_25();
-  dVar19 = extraout_f1;
-  _param_19 = lVar7;
-  lStack00000028 = lVar9;
-  lStack00000030 = lVar11;
-  ppVar4 = CG_GetPredictedPlayerState(LVar3);
-  pfVar10 = (float *)lVar9;
-  pMVar12 = (Material *)lVar11;
-  if (ppVar4 == (playerState_s *)0x0) {
-    pfVar10 = (float *)0x0;
-    pMVar12 = (Material *)"%s";
+  dVar15 = (double)param_9;
+  dVar16 = (double)param_10;
+  dVar17 = (double)param_15;
+  dVar14 = (double)param_6;
+  dVar13 = (double)param_5;
+  dVar12 = (double)param_4;
+  dVar11 = (double)param_3;
+  lVar9 = (longlong)param_11;
+  lVar7 = (longlong)param_8;
+  _param_19 = (longlong)param_7;
+  lStack00000028 = lVar7;
+  lStack00000030 = lVar9;
+  ppVar3 = CG_GetPredictedPlayerState(param_1);
+  pfVar8 = (float *)lVar7;
+  pMVar10 = (Material *)lVar9;
+  if (ppVar3 == (playerState_s *)0x0) {
+    pfVar8 = (float *)0x0;
+    pMVar10 = (Material *)"%s";
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_newDraw_mp.cpp",
                     0xa7b,0,"%s");
   }
-  OVar1 = (ppVar4->weapCommon).offhandSecondary;
-  OVar2 = (ppVar4->weapCommon).offhandPrimary;
-  local_90[0].x = (float)dVar19;
-  local_90[0].y = (float)dVar13;
+  OVar1 = (ppVar3->weapCommon).offhandSecondary;
+  OVar2 = (ppVar3->weapCommon).offhandPrimary;
+  local_90[0].x = (float)dVar11;
+  local_90[0].y = (float)dVar12;
   local_90[0].horzAlign = (uchar)in_stack_0000005c;
-  local_90[0].w = (float)dVar14;
-  local_90[0].h = (float)dVar15;
+  local_90[0].w = (float)dVar13;
+  local_90[0].h = (float)dVar14;
   local_90[0].vertAlign = (uchar)in_stack_00000064;
   if ((in_stack_0000005c & 0xff) != in_stack_0000005c) {
-    pfVar10 = (float *)0x0;
-    pMVar12 = (Material *)"%s";
+    pfVar8 = (float *)0x0;
+    pMVar10 = (Material *)"%s";
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_newDraw_mp.cpp",
                     0xa86,0,"%s");
   }
   if (local_90[0].vertAlign != in_stack_00000064) {
-    pfVar10 = (float *)0x0;
-    pMVar12 = (Material *)"%s";
+    pfVar8 = (float *)0x0;
+    pMVar10 = (Material *)"%s";
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_newDraw_mp.cpp",
                     0xa87,0,"%s");
   }
   switch(in_stack_0000007c) {
   case 5:
     CG_DrawPlayerAmmoValue
-              (LVar3,local_90,in_stack_00000094,(float)dVar18,(float *)pMVar12,in_stack_000000a4,
+              (param_1,local_90,in_stack_00000094,(float)dVar17,(float *)pMVar10,in_stack_000000a4,
                in_stack_000000b4,(int)param_16);
-    __restfpr_25();
-    __restgprlr_25();
     return;
   case 6:
-    CG_DrawPlayerAmmoBackdrop(LVar3,local_90,(float *)in_stack_000000a4,in_stack_000000ac);
-    __restfpr_25();
-    __restgprlr_25();
+    CG_DrawPlayerAmmoBackdrop(param_1,local_90,(float *)in_stack_000000a4,in_stack_000000ac);
     return;
   default:
-    pcVar5 = CG_GetLocalClientGlobals(LVar3);
-    if ((pcVar5->inKillCam != 0) && (uVar6 = UI_GetActiveMenu(LVar3), uVar6 != UIMENU_INGAME))
-    goto switchD_822ebae8_caseD_a7;
+    pcVar4 = CG_GetLocalClientGlobals(param_1);
+    if ((pcVar4->inKillCam != 0) && (uVar5 = UI_GetActiveMenu(param_1), uVar5 != UIMENU_INGAME)) {
+      return;
+    }
     switch(in_stack_0000007c) {
     case 0xb4:
       CG_CompassDrawPlayerBack
-                (LVar3,COMPASS_TYPE_FULL,(rectDef_s *)&param_19,local_90,in_stack_000000ac,
+                (param_1,COMPASS_TYPE_FULL,(rectDef_s *)&param_19,local_90,in_stack_000000ac,
                  (float *)in_stack_000000a4);
-      __restfpr_25();
-      __restgprlr_25();
       return;
     case 0xb5:
       CG_CompassDrawPlayerMap
-                (LVar3,COMPASS_TYPE_FULL,(rectDef_s *)&param_19,local_90,in_stack_000000ac,
+                (param_1,COMPASS_TYPE_FULL,(rectDef_s *)&param_19,local_90,in_stack_000000ac,
                  (float *)in_stack_000000a4);
-      __restfpr_25();
-      __restgprlr_25();
       return;
     case 0xb6:
       CG_CompassDrawPlayerPointers_MP
-                (LVar3,COMPASS_TYPE_FULL,(rectDef_s *)&param_19,local_90,in_stack_000000ac,
+                (param_1,COMPASS_TYPE_FULL,(rectDef_s *)&param_19,local_90,in_stack_000000ac,
                  (float *)in_stack_000000a4);
-      __restfpr_25();
-      __restgprlr_25();
       return;
     case 0xb7:
       CG_CompassDrawPlayer
-                (LVar3,COMPASS_TYPE_FULL,(rectDef_s *)&param_19,local_90,(float *)in_stack_000000a4)
-      ;
-      __restfpr_25();
-      __restgprlr_25();
+                (param_1,COMPASS_TYPE_FULL,(rectDef_s *)&param_19,local_90,
+                 (float *)in_stack_000000a4);
       return;
     default:
       goto switchD_822ebae8_caseD_a7;
     case 0xb9:
       CG_CompassDrawFriendlies
-                (LVar3,COMPASS_TYPE_FULL,(rectDef_s *)&param_19,local_90,(float *)in_stack_000000a4)
-      ;
-      __restfpr_25();
-      __restgprlr_25();
+                (param_1,COMPASS_TYPE_FULL,(rectDef_s *)&param_19,local_90,
+                 (float *)in_stack_000000a4);
       return;
     case 0xba:
       CG_CompassDrawPlayerMapLocationSelector
-                (LVar3,COMPASS_TYPE_FULL,(rectDef_s *)&param_19,local_90,in_stack_000000ac,
+                (param_1,COMPASS_TYPE_FULL,(rectDef_s *)&param_19,local_90,in_stack_000000ac,
                  (float *)in_stack_000000a4);
-      __restfpr_25();
-      __restgprlr_25();
       return;
     case 0xbb:
       CG_CompassDrawBorder
-                (LVar3,COMPASS_TYPE_FULL,(rectDef_s *)&param_19,local_90,in_stack_000000ac,
+                (param_1,COMPASS_TYPE_FULL,(rectDef_s *)&param_19,local_90,in_stack_000000ac,
                  (float *)in_stack_000000a4);
-      __restfpr_25();
-      __restgprlr_25();
       return;
     case 0xbc:
       CG_CompassDrawEnemies
-                (LVar3,COMPASS_TYPE_FULL,(rectDef_s *)&param_19,local_90,(float *)in_stack_000000a4)
-      ;
-      __restfpr_25();
-      __restgprlr_25();
+                (param_1,COMPASS_TYPE_FULL,(rectDef_s *)&param_19,local_90,
+                 (float *)in_stack_000000a4);
       return;
     case 0xbd:
-      Compass_TurretDraw(LVar3,COMPASS_TYPE_FULL,(rectDef_s *)&param_19,local_90,
+      Compass_TurretDraw(param_1,COMPASS_TYPE_FULL,(rectDef_s *)&param_19,local_90,
                          (float *)in_stack_000000a4);
-      __restfpr_25();
-      __restgprlr_25();
       return;
     case 0xbe:
-      CVar8 = COMPASS_TYPE_FULL;
+      CVar6 = COMPASS_TYPE_FULL;
       break;
     case 0xbf:
       CG_CompassDrawPlanes
-                (LVar3,COMPASS_TYPE_FULL,(rectDef_s *)&param_19,local_90,(float *)in_stack_000000a4)
-      ;
-      __restfpr_25();
-      __restgprlr_25();
+                (param_1,COMPASS_TYPE_FULL,(rectDef_s *)&param_19,local_90,
+                 (float *)in_stack_000000a4);
       return;
     case 0xc0:
       Compass_PortableRadarDraw
-                (LVar3,COMPASS_TYPE_FULL,(rectDef_s *)&param_19,local_90,(float *)in_stack_000000a4)
-      ;
-      __restfpr_25();
-      __restgprlr_25();
+                (param_1,COMPASS_TYPE_FULL,(rectDef_s *)&param_19,local_90,
+                 (float *)in_stack_000000a4);
       return;
     case 0xc2:
       Compass_ScramblerDraw
-                (LVar3,COMPASS_TYPE_FULL,(rectDef_s *)&param_19,local_90,(float *)in_stack_000000a4)
-      ;
-      __restfpr_25();
-      __restgprlr_25();
+                (param_1,COMPASS_TYPE_FULL,(rectDef_s *)&param_19,local_90,
+                 (float *)in_stack_000000a4);
       return;
     }
     break;
   case 0x3c:
     CG_DrawSpectatorFollowing
-              (LVar3,local_90,in_stack_00000094,(float)dVar18,(float *)pMVar12,
+              (param_1,local_90,in_stack_00000094,(float)dVar17,(float *)pMVar10,
                (int)in_stack_000000a4,in_stack_000000b4);
-    __restfpr_25();
-    __restgprlr_25();
     return;
   case 0x3d:
     CG_DrawSpectatorControls
-              (LVar3,local_90,in_stack_00000094,(float)dVar18,(float *)pMVar12,
+              (param_1,local_90,in_stack_00000094,(float)dVar17,(float *)pMVar10,
                (int)in_stack_000000a4,in_stack_000000b4);
-    __restfpr_25();
-    __restgprlr_25();
     return;
   case 0x46:
-    CG_DrawChangeZoomHint(LVar3,local_90,in_stack_00000094,(float)dVar18,(int)pMVar12);
-    __restfpr_25();
-    __restgprlr_25();
+    CG_DrawChangeZoomHint(param_1,local_90,in_stack_00000094,(float)dVar17,(int)pMVar10);
     return;
   case 0x47:
-    CG_DrawHoldBreathHint(LVar3,local_90,in_stack_00000094,(float)dVar18,(int)pMVar12);
-    __restfpr_25();
-    __restgprlr_25();
+    CG_DrawHoldBreathHint(param_1,local_90,in_stack_00000094,(float)dVar17,(int)pMVar10);
     return;
   case 0x48:
-    CG_DrawCursorhint(LVar3,local_90,in_stack_00000094,(float)dVar18,(float *)pMVar12,
+    CG_DrawCursorhint(param_1,local_90,in_stack_00000094,(float)dVar17,(float *)pMVar10,
                       (int)in_stack_000000a4);
-    __restfpr_25();
-    __restgprlr_25();
     return;
   case 0x4f:
-    CG_DrawPlayerBarHealth(LVar3,local_90,in_stack_000000ac,(float *)in_stack_000000a4);
-    __restfpr_25();
-    __restgprlr_25();
+    CG_DrawPlayerBarHealth(param_1,local_90,in_stack_000000ac,(float *)in_stack_000000a4);
     return;
   case 0x50:
-    CG_DrawMantleHint(LVar3,local_90,in_stack_00000094,(float)dVar18,(float *)pMVar12,
+    CG_DrawMantleHint(param_1,local_90,in_stack_00000094,(float)dVar17,(float *)pMVar10,
                       (int)in_stack_000000a4);
-    __restfpr_25();
-    __restgprlr_25();
     return;
   case 0x51:
     CG_DrawPlayerWeaponNameFade
-              (LVar3,local_90,in_stack_00000094,(float)dVar18,(float *)pMVar12,
+              (param_1,local_90,in_stack_00000094,(float)dVar17,(float *)pMVar10,
                (int)in_stack_000000a4);
-    __restfpr_25();
-    __restgprlr_25();
     return;
   case 0x52:
     CG_DrawPlayerWeaponNameBackFade
-              (LVar3,local_90,in_stack_00000094,(float)dVar18,(float *)pMVar12,in_stack_000000a4);
-    __restfpr_25();
-    __restgprlr_25();
+              (param_1,local_90,in_stack_00000094,(float)dVar17,(float *)pMVar10,in_stack_000000a4);
     return;
   case 0x53:
     CG_DrawPlayerWeaponNameNoFade
-              (LVar3,local_90,in_stack_00000094,(float)dVar18,(float *)pMVar12,
+              (param_1,local_90,in_stack_00000094,(float)dVar17,(float *)pMVar10,
                (int)in_stack_000000a4);
-    __restfpr_25();
-    __restgprlr_25();
     return;
   case 0x54:
     CG_DrawPlayerWeaponNameBackNoFade
-              (LVar3,local_90,in_stack_00000094,(float)dVar18,(float *)pMVar12,in_stack_000000a4);
-    __restfpr_25();
-    __restgprlr_25();
+              (param_1,local_90,in_stack_00000094,(float)dVar17,(float *)pMVar10,in_stack_000000a4);
     return;
   case 0x5a:
-    CG_DrawCenterString(LVar3,local_90,in_stack_00000094,(float)dVar18,(float *)pMVar12,
+    CG_DrawCenterString(param_1,local_90,in_stack_00000094,(float)dVar17,(float *)pMVar10,
                         (int)in_stack_000000a4);
-    __restfpr_25();
-    __restgprlr_25();
     return;
   case 0x62:
-    CG_DrawPlayerBarHealthBack(LVar3,local_90,in_stack_000000ac,(float *)in_stack_000000a4);
-    __restfpr_25();
-    __restgprlr_25();
+    CG_DrawPlayerBarHealthBack(param_1,local_90,in_stack_000000ac,(float *)in_stack_000000a4);
     return;
   case 0x67:
-    CG_DrawOffHandIcon(LVar3,local_90,(float)dVar18,pfVar10,in_stack_000000a4,
+    CG_DrawOffHandIcon(param_1,local_90,(float)dVar17,pfVar8,in_stack_000000a4,
                        (OffhandClass)in_stack_000000ac,OVar2);
-    __restfpr_25();
-    __restgprlr_25();
     return;
   case 0x68:
-    CG_DrawOffHandIcon(LVar3,local_90,(float)dVar18,pfVar10,in_stack_000000a4,
+    CG_DrawOffHandIcon(param_1,local_90,(float)dVar17,pfVar8,in_stack_000000a4,
                        (OffhandClass)in_stack_000000ac,OVar1);
-    __restfpr_25();
-    __restgprlr_25();
     return;
   case 0x69:
-    CG_DrawOffHandAmmo(LVar3,local_90,in_stack_00000094,(float)dVar18,(float *)pMVar12,
+    CG_DrawOffHandAmmo(param_1,local_90,in_stack_00000094,(float)dVar17,(float *)pMVar10,
                        (int)in_stack_000000a4,in_stack_000000b4);
-    __restfpr_25();
-    __restgprlr_25();
     return;
   case 0x6a:
-    CG_DrawOffHandAmmo(LVar3,local_90,in_stack_00000094,(float)dVar18,(float *)pMVar12,
+    CG_DrawOffHandAmmo(param_1,local_90,in_stack_00000094,(float)dVar17,(float *)pMVar10,
                        (int)in_stack_000000a4,in_stack_000000b4);
-    __restfpr_25();
-    __restgprlr_25();
     return;
   case 0x6b:
-    CG_DrawOffHandName(LVar3,local_90,in_stack_00000094,(float)dVar18,(float *)pMVar12,
+    CG_DrawOffHandName(param_1,local_90,in_stack_00000094,(float)dVar17,(float *)pMVar10,
                        (int)in_stack_000000a4,in_stack_000000b4);
-    __restfpr_25();
-    __restgprlr_25();
     return;
   case 0x6c:
-    CG_DrawOffHandName(LVar3,local_90,in_stack_00000094,(float)dVar18,(float *)pMVar12,
+    CG_DrawOffHandName(param_1,local_90,in_stack_00000094,(float)dVar17,(float *)pMVar10,
                        (int)in_stack_000000a4,in_stack_000000b4);
-    __restfpr_25();
-    __restgprlr_25();
     return;
   case 0x6d:
     CG_DrawOffHandHighlight
-              (LVar3,local_90,(float)dVar18,pfVar10,in_stack_000000a4,
+              (param_1,local_90,(float)dVar17,pfVar8,in_stack_000000a4,
                (OffhandClass)in_stack_000000ac);
-    __restfpr_25();
-    __restgprlr_25();
     return;
   case 0x6e:
     CG_DrawOffHandHighlight
-              (LVar3,local_90,(float)dVar18,pfVar10,in_stack_000000a4,
+              (param_1,local_90,(float)dVar17,pfVar8,in_stack_000000a4,
                (OffhandClass)in_stack_000000ac);
-    __restfpr_25();
-    __restgprlr_25();
     return;
   case 0x70:
-    CG_BloodOverlayDraw(LVar3,local_90,in_stack_000000ac,(float *)in_stack_000000a4);
-    __restfpr_25();
-    __restgprlr_25();
+    CG_BloodOverlayDraw(param_1,local_90,in_stack_000000ac,(float *)in_stack_000000a4);
     return;
   case 0x71:
     CG_DrawInvalidCmdHint
-              (LVar3,local_90,in_stack_00000094,(float)dVar18,(float *)pMVar12,
+              (param_1,local_90,in_stack_00000094,(float)dVar17,(float *)pMVar10,
                (int)in_stack_000000a4);
-    __restfpr_25();
-    __restgprlr_25();
     return;
   case 0x72:
-    CG_DrawPlayerSprintMeter(LVar3,local_90,in_stack_000000ac,(float *)in_stack_000000a4);
-    __restfpr_25();
-    __restgprlr_25();
+    CG_DrawPlayerSprintMeter(param_1,local_90,in_stack_000000ac,(float *)in_stack_000000a4);
     return;
   case 0x73:
-    CG_DrawPlayerSprintBack(LVar3,local_90,in_stack_000000ac,(float *)in_stack_000000a4);
-    __restfpr_25();
-    __restgprlr_25();
+    CG_DrawPlayerSprintBack(param_1,local_90,in_stack_000000ac,(float *)in_stack_000000a4);
     return;
   case 0x74:
-    CG_DrawPlayerWeaponBackground(LVar3,local_90,(float *)in_stack_000000a4,in_stack_000000ac);
-    __restfpr_25();
-    __restgprlr_25();
+    CG_DrawPlayerWeaponBackground(param_1,local_90,(float *)in_stack_000000a4,in_stack_000000ac);
     return;
   case 0x75:
     CG_DrawPlayerWeaponAmmoClipGraphic
-              (LVar3,local_90,(float *)in_stack_000000a4,WEAPON_HAND_DEFAULT);
-    __restfpr_25();
-    __restgprlr_25();
+              (param_1,local_90,(float *)in_stack_000000a4,WEAPON_HAND_DEFAULT);
     return;
   case 0x76:
-    CG_DrawPlayerWeaponIcon(LVar3,local_90,(float *)in_stack_000000a4);
-    __restfpr_25();
-    __restgprlr_25();
+    CG_DrawPlayerWeaponIcon(param_1,local_90,(float *)in_stack_000000a4);
     return;
   case 0x77:
     CG_DrawPlayerWeaponAmmoStock
-              (LVar3,local_90,in_stack_00000094,(float)dVar18,(float *)pMVar12,in_stack_000000a4,
+              (param_1,local_90,in_stack_00000094,(float)dVar17,(float *)pMVar10,in_stack_000000a4,
                (int)in_stack_000000ac);
-    __restfpr_25();
-    __restgprlr_25();
     return;
   case 0x78:
     CG_DrawPlayerWeaponLowAmmoWarning
-              (LVar3,local_90,in_stack_00000094,(float)dVar18,(int)pMVar12,(float)dVar16,
-               (float)dVar17,in_stack_000000b4,(Material *)param_14);
-    __restfpr_25();
-    __restgprlr_25();
+              (param_1,local_90,in_stack_00000094,(float)dVar17,(int)pMVar10,(float)dVar15,
+               (float)dVar16,in_stack_000000b4,(Material *)param_14);
     return;
   case 0x79:
-    CG_DrawPlayerWeaponAmmoClipGraphic(LVar3,local_90,(float *)in_stack_000000a4,WEAPON_HAND_LEFT);
-    __restfpr_25();
-    __restgprlr_25();
+    CG_DrawPlayerWeaponAmmoClipGraphic(param_1,local_90,(float *)in_stack_000000a4,WEAPON_HAND_LEFT)
+    ;
     return;
   case 0x91:
     CG_CompassDrawTickertape
-              (LVar3,COMPASS_TYPE_PARTIAL,(rectDef_s *)&param_19,local_90,in_stack_000000ac,
-               (float *)in_stack_000000a4,in_stack_00000094,(float)dVar18,1,(bool)in_stack_ffffff1b)
+              (param_1,COMPASS_TYPE_PARTIAL,(rectDef_s *)&param_19,local_90,in_stack_000000ac,
+               (float *)in_stack_000000a4,in_stack_00000094,(float)dVar17,1,(bool)in_stack_ffffff1b)
     ;
-    __restfpr_25();
-    __restgprlr_25();
     return;
   case 0x92:
     CG_CompassDrawTickertape
-              (LVar3,COMPASS_TYPE_PARTIAL,(rectDef_s *)&param_19,local_90,in_stack_000000ac,
-               (float *)in_stack_000000a4,in_stack_00000094,(float)dVar18,0,(bool)in_stack_ffffff1b)
+              (param_1,COMPASS_TYPE_PARTIAL,(rectDef_s *)&param_19,local_90,in_stack_000000ac,
+               (float *)in_stack_000000a4,in_stack_00000094,(float)dVar17,0,(bool)in_stack_ffffff1b)
     ;
-    __restfpr_25();
-    __restgprlr_25();
     return;
   case 0x96:
     CG_CompassDrawPlayer
-              (LVar3,COMPASS_TYPE_PARTIAL,(rectDef_s *)&param_19,local_90,(float *)in_stack_000000a4
-              );
-    __restfpr_25();
-    __restgprlr_25();
+              (param_1,COMPASS_TYPE_PARTIAL,(rectDef_s *)&param_19,local_90,
+               (float *)in_stack_000000a4);
     return;
   case 0x97:
     CG_CompassDrawPlayerBack
-              (LVar3,COMPASS_TYPE_PARTIAL,(rectDef_s *)&param_19,local_90,in_stack_000000ac,
+              (param_1,COMPASS_TYPE_PARTIAL,(rectDef_s *)&param_19,local_90,in_stack_000000ac,
                (float *)in_stack_000000a4);
-    __restfpr_25();
-    __restgprlr_25();
     return;
   case 0x98:
     CG_CompassDrawPlayerPointers_MP
-              (LVar3,COMPASS_TYPE_PARTIAL,(rectDef_s *)&param_19,local_90,in_stack_000000ac,
+              (param_1,COMPASS_TYPE_PARTIAL,(rectDef_s *)&param_19,local_90,in_stack_000000ac,
                (float *)in_stack_000000a4);
-    __restfpr_25();
-    __restgprlr_25();
     return;
   case 0x9b:
-    CVar8 = COMPASS_TYPE_PARTIAL;
+    CVar6 = COMPASS_TYPE_PARTIAL;
     break;
   case 0x9c:
     CG_CompassDrawPlanes
-              (LVar3,COMPASS_TYPE_PARTIAL,(rectDef_s *)&param_19,local_90,(float *)in_stack_000000a4
-              );
-    __restfpr_25();
-    __restgprlr_25();
+              (param_1,COMPASS_TYPE_PARTIAL,(rectDef_s *)&param_19,local_90,
+               (float *)in_stack_000000a4);
     return;
   case 0x9d:
     Compass_PortableRadarDraw
-              (LVar3,COMPASS_TYPE_PARTIAL,(rectDef_s *)&param_19,local_90,(float *)in_stack_000000a4
-              );
-    __restfpr_25();
-    __restgprlr_25();
+              (param_1,COMPASS_TYPE_PARTIAL,(rectDef_s *)&param_19,local_90,
+               (float *)in_stack_000000a4);
     return;
   case 0x9e:
     CG_CompassDrawFriendlies
-              (LVar3,COMPASS_TYPE_PARTIAL,(rectDef_s *)&param_19,local_90,(float *)in_stack_000000a4
-              );
-    __restfpr_25();
-    __restgprlr_25();
+              (param_1,COMPASS_TYPE_PARTIAL,(rectDef_s *)&param_19,local_90,
+               (float *)in_stack_000000a4);
     return;
   case 0x9f:
     CG_CompassDrawPlayerMap
-              (LVar3,COMPASS_TYPE_PARTIAL,(rectDef_s *)&param_19,local_90,in_stack_000000ac,
+              (param_1,COMPASS_TYPE_PARTIAL,(rectDef_s *)&param_19,local_90,in_stack_000000ac,
                (float *)in_stack_000000a4);
-    __restfpr_25();
-    __restgprlr_25();
     return;
   case 0xa0:
     CG_CompassDrawPlayerNorthCoord
-              (LVar3,COMPASS_TYPE_PARTIAL,(rectDef_s *)&param_19,local_90,in_stack_00000094,
+              (param_1,COMPASS_TYPE_PARTIAL,(rectDef_s *)&param_19,local_90,in_stack_00000094,
                in_stack_000000ac,(float *)in_stack_000000a4,in_stack_000000b4);
-    __restfpr_25();
-    __restgprlr_25();
     return;
   case 0xa1:
     CG_CompassDrawPlayerEastCoord
-              (LVar3,COMPASS_TYPE_PARTIAL,(rectDef_s *)&param_19,local_90,in_stack_00000094,
+              (param_1,COMPASS_TYPE_PARTIAL,(rectDef_s *)&param_19,local_90,in_stack_00000094,
                in_stack_000000ac,(float *)in_stack_000000a4,in_stack_000000b4);
-    __restfpr_25();
-    __restgprlr_25();
     return;
   case 0xa2:
     CG_CompassDrawPlayerNCoordScroll
-              (LVar3,COMPASS_TYPE_PARTIAL,(rectDef_s *)&param_19,local_90,in_stack_00000094,
+              (param_1,COMPASS_TYPE_PARTIAL,(rectDef_s *)&param_19,local_90,in_stack_00000094,
                in_stack_000000ac,(float *)in_stack_000000a4,in_stack_000000b4);
-    __restfpr_25();
-    __restgprlr_25();
     return;
   case 0xa3:
     CG_CompassDrawPlayerECoordScroll
-              (LVar3,COMPASS_TYPE_PARTIAL,(rectDef_s *)&param_19,local_90,in_stack_00000094,
+              (param_1,COMPASS_TYPE_PARTIAL,(rectDef_s *)&param_19,local_90,in_stack_00000094,
                in_stack_000000ac,(float *)in_stack_000000a4,in_stack_000000b4);
-    __restfpr_25();
-    __restgprlr_25();
     return;
   case 0xa5:
-    Compass_TurretDraw(LVar3,COMPASS_TYPE_PARTIAL,(rectDef_s *)&param_19,local_90,
+    Compass_TurretDraw(param_1,COMPASS_TYPE_PARTIAL,(rectDef_s *)&param_19,local_90,
                        (float *)in_stack_000000a4);
-    __restfpr_25();
-    __restgprlr_25();
     return;
   case 0xa6:
-    CG_CompassDrawSimple(LVar3,local_90,in_stack_000000ac,(float *)in_stack_000000a4);
-    __restfpr_25();
-    __restgprlr_25();
+    CG_CompassDrawSimple(param_1,local_90,in_stack_000000ac,(float *)in_stack_000000a4);
     return;
   case 0xa7:
     goto switchD_822ebae8_caseD_a7;
   case 0xa8:
     Compass_ScramblerDraw
-              (LVar3,COMPASS_TYPE_PARTIAL,(rectDef_s *)&param_19,local_90,(float *)in_stack_000000a4
-              );
-    __restfpr_25();
-    __restgprlr_25();
+              (param_1,COMPASS_TYPE_PARTIAL,(rectDef_s *)&param_19,local_90,
+               (float *)in_stack_000000a4);
     return;
   case 0xaa:
-    CG_DrawPlayerActionSlotDpad(LVar3,local_90,(float *)in_stack_000000a4,in_stack_000000ac);
-    __restfpr_25();
-    __restgprlr_25();
+    CG_DrawPlayerActionSlotDpad(param_1,local_90,(float *)in_stack_000000a4,in_stack_000000ac);
     return;
   case 0xab:
   case 0xac:
   case 0xad:
   case 0xae:
     CG_DrawPlayerActionSlot
-              (LVar3,local_90,(float)dVar16,(float)dVar17,(uint)pfVar10,(float *)pMVar12,
-               (Font_s *)(in_stack_0000007c + -0xab),(float)dVar18,(int)in_stack_000000a4,
+              (param_1,local_90,(float)dVar15,(float)dVar16,(uint)pfVar8,(float *)pMVar10,
+               (Font_s *)(in_stack_0000007c + -0xab),(float)dVar17,(int)in_stack_000000a4,
                (int)in_stack_00000094);
-    __restfpr_25();
-    __restgprlr_25();
     return;
   case 0xaf:
     CG_CompassDrawEnemies
-              (LVar3,COMPASS_TYPE_PARTIAL,(rectDef_s *)&param_19,local_90,(float *)in_stack_000000a4
-              );
-    __restfpr_25();
-    __restgprlr_25();
+              (param_1,COMPASS_TYPE_PARTIAL,(rectDef_s *)&param_19,local_90,
+               (float *)in_stack_000000a4);
     return;
   case 0xcb:
   case 0xcc:
   case 0xcd:
   case 0xce:
-    CG_DrawTalkerNum(LVar3,in_stack_0000007c + -0xcb,local_90,in_stack_00000094,
-                     (float *)in_stack_000000a4,(float)dVar18,(int)param_14);
-    __restfpr_25();
-    __restgprlr_25();
+    CG_DrawTalkerNum(param_1,in_stack_0000007c + -0xcb,local_90,in_stack_00000094,
+                     (float *)in_stack_000000a4,(float)dVar17,(int)param_14);
     return;
   case 0xd1:
-    CG_DrawAirburstCurrentDistance(LVar3,local_90,(float *)in_stack_000000a4,in_stack_000000ac);
-    __restfpr_25();
-    __restgprlr_25();
+    CG_DrawAirburstCurrentDistance(param_1,local_90,(float *)in_stack_000000a4,in_stack_000000ac);
     return;
   case 0xd2:
-    CG_DrawAirburstMarkDistance(LVar3,local_90,(float *)in_stack_000000a4,in_stack_000000ac);
-    __restfpr_25();
-    __restgprlr_25();
+    CG_DrawAirburstMarkDistance(param_1,local_90,(float *)in_stack_000000a4,in_stack_000000ac);
     return;
   case 0xd3:
-    CG_DrawDemoControls(LVar3,local_90,(float *)in_stack_000000a4,pMVar12);
-    __restfpr_25();
-    __restgprlr_25();
+    CG_DrawDemoControls(param_1,local_90,(float *)in_stack_000000a4,pMVar10);
     return;
   }
-  VehicleHud_DrawCompass(LVar3,CVar8,(rectDef_s *)&param_19,local_90,(float *)in_stack_000000a4);
+  VehicleHud_DrawCompass(param_1,CVar6,(rectDef_s *)&param_19,local_90,(float *)in_stack_000000a4);
 switchD_822ebae8_caseD_a7:
-  __restfpr_25();
-  __restgprlr_25();
   return;
 }
 
 
 // 822ECA78  CG_ArchiveState  (cgame_mp/cg_newDraw_mp.cpp:2960)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -4172,34 +3902,31 @@ switchD_822ebae8_caseD_a7:
 void CG_ArchiveState(LocalClientNum_t param_1,MemoryFile *param_2)
 
 {
-  LocalClientNum_t LVar1;
-  cg_s *pcVar2;
+  cg_s *pcVar1;
   
-  LVar1 = __savegprlr_29(param_1);
-  pcVar2 = CG_GetLocalClientGlobals(LVar1);
-  CG_ArchiveShellShock(LVar1,param_2);
-  MemFile_ArchiveData(param_2,4,&pcVar2->healthFadeTime);
-  MemFile_ArchiveData(param_2,4,&pcVar2->ammoFadeTime);
-  MemFile_ArchiveData(param_2,4,&pcVar2->compassFadeTime);
-  MemFile_ArchiveData(param_2,4,&pcVar2->offhandFadeTime);
-  MemFile_ArchiveData(param_2,4,&pcVar2->sprintFadeTime);
-  MemFile_ArchiveData(param_2,1,&(pcVar2->cvsData).painVisionActive);
-  MemFile_ArchiveFloat(param_2,&(pcVar2->cvsData).painVisionLerp);
-  MemFile_ArchiveData(param_2,1,&pcVar2->painVisionSoundActive);
-  MemFile_ArchiveData(param_2,4,&pcVar2->showHud);
-  MemFile_ArchiveData(param_2,0x400,pcVar2->objectiveText);
-  MemFile_ArchiveData(param_2,0x100,pcVar2->scriptMainMenu);
-  MemFile_ArchiveData(param_2,0x390,(pcVar2->cvsData).visionSetFrom);
-  MemFile_ArchiveData(param_2,0x390,(pcVar2->cvsData).visionSetTo);
-  MemFile_ArchiveData(param_2,0x390,(pcVar2->cvsData).visionSetCurrent);
-  MemFile_ArchiveData(param_2,0x48,(pcVar2->cvsData).visionSetLerpData);
-  MemFile_ArchiveData(param_2,0x180,(pcVar2->cvsData).visionName);
-  MemFile_ArchiveData(param_2,0x80,pcVar2->hudElemSound);
-  MemFile_ArchiveData(param_2,1,&(pcVar2->cvsData).remoteMissileCam);
-  MemFile_ArchiveData(param_2,1,&pcVar2->remoteMissileCamInitialized);
-  MemFile_ArchiveData(param_2,0xc,pcVar2->remoteMissileCamAngles);
-  MemFile_ArchiveData(param_2,1,&pcVar2->breathPressedLastFrame);
-  __restgprlr_29();
+  pcVar1 = CG_GetLocalClientGlobals(param_1);
+  CG_ArchiveShellShock(param_1,param_2);
+  MemFile_ArchiveData(param_2,4,&pcVar1->healthFadeTime);
+  MemFile_ArchiveData(param_2,4,&pcVar1->ammoFadeTime);
+  MemFile_ArchiveData(param_2,4,&pcVar1->compassFadeTime);
+  MemFile_ArchiveData(param_2,4,&pcVar1->offhandFadeTime);
+  MemFile_ArchiveData(param_2,4,&pcVar1->sprintFadeTime);
+  MemFile_ArchiveData(param_2,1,&(pcVar1->cvsData).painVisionActive);
+  MemFile_ArchiveFloat(param_2,&(pcVar1->cvsData).painVisionLerp);
+  MemFile_ArchiveData(param_2,1,&pcVar1->painVisionSoundActive);
+  MemFile_ArchiveData(param_2,4,&pcVar1->showHud);
+  MemFile_ArchiveData(param_2,0x400,pcVar1->objectiveText);
+  MemFile_ArchiveData(param_2,0x100,pcVar1->scriptMainMenu);
+  MemFile_ArchiveData(param_2,0x390,(pcVar1->cvsData).visionSetFrom);
+  MemFile_ArchiveData(param_2,0x390,(pcVar1->cvsData).visionSetTo);
+  MemFile_ArchiveData(param_2,0x390,(pcVar1->cvsData).visionSetCurrent);
+  MemFile_ArchiveData(param_2,0x48,(pcVar1->cvsData).visionSetLerpData);
+  MemFile_ArchiveData(param_2,0x180,(pcVar1->cvsData).visionName);
+  MemFile_ArchiveData(param_2,0x80,pcVar1->hudElemSound);
+  MemFile_ArchiveData(param_2,1,&(pcVar1->cvsData).remoteMissileCam);
+  MemFile_ArchiveData(param_2,1,&pcVar1->remoteMissileCamInitialized);
+  MemFile_ArchiveData(param_2,0xc,pcVar1->remoteMissileCamAngles);
+  MemFile_ArchiveData(param_2,1,&pcVar1->breathPressedLastFrame);
   return;
 }
 

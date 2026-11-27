@@ -16,6 +16,8 @@ void D3DDevice_GpuDisownAll(D3DDevice *param_1)
 
 // 82866780  D3DDevice_GpuBeginShaderConstantF4  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/gpu.cpp:618)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 
 __vector4 *
@@ -24,35 +26,27 @@ D3DDevice_GpuBeginShaderConstantF4(D3DDevice *param_1,int param_2,uint param_3,u
 {
   ulong *puVar1;
   uint *puVar2;
-  CDevice *this;
-  ulong *puVar3;
-  uint *puVar4;
+  ulonglong uVar3;
+  ulong *puVar4;
   __vector4 *p_Var5;
-  ulonglong uVar6;
-  longlong lVar7;
-  ulonglong uVar8;
   
-  uVar8 = (ulonglong)(int)param_4;
-  lVar7 = (longlong)(int)param_3;
-  uVar6 = (ulonglong)param_2;
-  this = (CDevice *)__savegprlr_28(param_1);
-  uVar8 = uVar8 & 0x3fffffff;
-  puVar3 = D3D::CDevice::BeginRingBig(this,(int)(uVar8 << 2) + 5);
-  if (puVar3 == (ulong *)0x0) {
-    puVar4 = (uint *)0x0;
+  uVar3 = (ulonglong)param_4 & 0x3fffffff;
+  puVar4 = D3D::CDevice::BeginRingBig((CDevice *)param_1,(int)(uVar3 << 2) + 5);
+  if (puVar4 == (ulong *)0x0) {
+    p_Var5 = (__vector4 *)0x0;
   }
   else {
-    puVar1 = puVar3 + 1;
+    puVar1 = puVar4 + 1;
     *puVar1 = 0x80000000;
-    puVar3[2] = 0x80000000;
-    puVar3[3] = 0x80000000;
+    puVar4[2] = 0x80000000;
+    puVar4[3] = 0x80000000;
     puVar2 = (uint *)((int)puVar1 + (0xfffffff8U - (int)puVar1 & 0xf));
-    *puVar2 = this->m_GpuPacket3Predication | (uint)(uVar8 << 0x12) | 0xc0002d00;
-    puVar4 = puVar2 + 2;
-    puVar2[1] = (uint)((lVar7 + (uVar6 & 0xffffff) * -0x100 & 0xffffffff) << 2) & 0x7fc;
-    *(int *)&this->field_0x30 = (int)puVar4 + (int)(uVar8 << 4) + -4;
+    *puVar2 = *(uint *)((int)&param_1[1].m_Constants.field1_0x300 + 0x24) | (uint)(uVar3 << 0x12) |
+              0xc0002d00;
+    p_Var5 = (__vector4 *)(puVar2 + 2);
+    puVar2[1] = (param_3 + (param_2 & 0xffffffU) * -0x100 & 0x1ff) << 2;
+    param_1->m_pRing = (ulong *)((int)p_Var5 + (int)(uVar3 << 4) + -4);
   }
-  p_Var5 = (__vector4 *)__restgprlr_28(puVar4);
   return p_Var5;
 }
 

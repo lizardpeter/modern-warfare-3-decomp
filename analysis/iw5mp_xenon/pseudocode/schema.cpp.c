@@ -2,17 +2,17 @@
 
 // 828BB7E8  BindToSchema  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/online/common/schema.cpp:29)
 
-undefined4 __thiscall
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
+int __thiscall
 CSchemaAccess::BindToSchema(CSchemaAccess *this,CSchemaData *param_1,ulong param_2,int param_3)
 
 {
-  CBaseEndianBuffer *this_00;
   int iVar1;
-  undefined4 uVar2;
   SCHEMA_TABLE_ENTRY local_40 [2];
   
-  this_00 = (CBaseEndianBuffer *)__savegprlr_28(this);
-  this_00[1].m_pbBuffer = (uchar *)param_1;
+  this->m_pSchemaData = param_1;
   iVar1 = CSchemaData::GetSchemaEntry(param_1,param_2,local_40);
   if (-1 < iVar1) {
     if (param_3 != 0) {
@@ -21,11 +21,10 @@ CSchemaAccess::BindToSchema(CSchemaAccess *this,CSchemaData *param_1,ulong param
     }
     iVar1 = 0;
     CBaseEndianBuffer::Bind
-              (this_00,param_1->m_lpSchemaData + local_40[0].ResponseSchemaOffset,
+              ((CBaseEndianBuffer *)this,param_1->m_lpSchemaData + local_40[0].ResponseSchemaOffset,
                (uint)local_40[0].ResponseSchemaSize,(uint)local_40[0].ResponseSchemaSize,1);
   }
-  uVar2 = __restgprlr_28(iVar1);
-  return uVar2;
+  return iVar1;
 }
 
 
@@ -93,27 +92,29 @@ CSchemaAccess::GetConformingInfo(CSchemaAccess *this,SCHEMA_CONFORMING_INFO *par
 
 // 828BB2F8  GetUnionInfo  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/online/common/schema.cpp:84)
 
-undefined4 __thiscall
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
+int __thiscall
 CSchemaAccess::GetUnionInfo(CSchemaAccess *this,SCHEMA_UNION_INFO *param_1,ushort *param_2)
 
 {
-  CBaseEndianBuffer *this_00;
   int iVar1;
-  undefined4 uVar2;
   ulong local_30 [12];
   
-  this_00 = (CBaseEndianBuffer *)__savegprlr_29(this);
   local_30[0] = 2;
-  iVar1 = CBaseEndianBuffer::GetData(this_00,(uchar *)param_1,local_30);
+  iVar1 = CBaseEndianBuffer::GetData((CBaseEndianBuffer *)this,(uchar *)param_1,local_30);
   if ((-1 < iVar1) && (param_1->SwitchIsMasked != '\0')) {
-    iVar1 = CBaseEndianBuffer::GetWord(this_00,param_2);
+    iVar1 = CBaseEndianBuffer::GetWord((CBaseEndianBuffer *)this,param_2);
   }
-  uVar2 = __restgprlr_29(iVar1);
-  return uVar2;
+  return iVar1;
 }
 
 
 // 828BB348  SkipScope  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/online/common/schema.cpp:93)
+
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 
 undefined4 __thiscall CSchemaAccess::SkipScope(CSchemaAccess *this,ulong param_1)
 
@@ -121,12 +122,9 @@ undefined4 __thiscall CSchemaAccess::SkipScope(CSchemaAccess *this,ulong param_1
   bool bVar1;
   ulong uVar2;
   byte bVar3;
-  CSchemaAccess *this_00;
   int iVar4;
-  undefined4 uVar5;
-  ulonglong uVar6;
-  ushort uVar7;
-  uint uVar8;
+  ushort uVar5;
+  uint uVar6;
   byte local_60;
   byte local_5f;
   byte local_5e;
@@ -139,122 +137,149 @@ undefined4 __thiscall CSchemaAccess::SkipScope(CSchemaAccess *this,ulong param_1
   byte *local_4c;
   SCHEMA_CONFORMANCE_INFO aSStack_48 [18];
   
-  uVar6 = (ulonglong)(int)param_1;
-  this_00 = (CSchemaAccess *)__savegprlr_26(this);
-  if ((uVar6 & 0xffffffff) < 0x10) {
+  if (param_1 < 0x10) {
     local_54 = 1;
-    iVar4 = CBaseEndianBuffer::GetData((CBaseEndianBuffer *)this_00,&local_5f,&local_54);
-    if (iVar4 < 0) goto LAB_828bb4d4;
+    iVar4 = CBaseEndianBuffer::GetData((CBaseEndianBuffer *)this,&local_5f,&local_54);
+    if (iVar4 < 0) {
+      return iVar4;
+    }
     bVar3 = local_5f >> 2 & 3;
     if ((bVar3 != 0) && ((bVar3 == 1 || (bVar3 < 3)))) {
-      iVar4 = CBaseEndianBuffer::GetWord((CBaseEndianBuffer *)this_00,&local_5c);
-      if (-1 < iVar4) {
-        if ((local_5f & 0x80) != 0) {
-          local_54 = 1;
-          iVar4 = CBaseEndianBuffer::GetData((CBaseEndianBuffer *)this_00,&uStack_5d,&local_54);
-          if (iVar4 < 0) goto LAB_828bb4d4;
-        }
-        if (((local_5f & 0x40) == 0) ||
-           (iVar4 = CBaseEndianBuffer::GetWord((CBaseEndianBuffer *)this_00,&local_5c), -1 < iVar4))
-        {
-          if ((local_5f & 0x20) != 0) {
-            local_54 = 2;
-            iVar4 = CBaseEndianBuffer::GetData((CBaseEndianBuffer *)this_00,local_5a,&local_54);
-            if ((iVar4 < 0) ||
-               (((local_5a[0] & 0x80) != 0 &&
-                (iVar4 = CBaseEndianBuffer::GetWord((CBaseEndianBuffer *)this_00,&local_5c),
-                iVar4 < 0)))) goto LAB_828bb4d4;
-          }
-          if ((local_5f & 0xc) == 8) {
-            iVar4 = GetUnionInfo(this_00,local_58,&local_5c);
-            if (iVar4 < 0) goto LAB_828bb4d4;
-          }
-          else {
-            local_58[0] = (SCHEMA_UNION_INFO)0x0;
-          }
-          uVar7 = 0;
-          do {
-            if ((local_5f & 0xc) == 8) {
-              if (uVar7 < ((ushort)local_58[0] & 0xff)) {
-                iVar4 = CBaseEndianBuffer::GetByte((CBaseEndianBuffer *)this_00,&local_5e);
-                if (iVar4 < 0) break;
-                uVar8 = 0;
-                if (local_5e != 0) {
-                  do {
-                    iVar4 = CBaseEndianBuffer::GetWord((CBaseEndianBuffer *)this_00,&local_5c);
-                    if (iVar4 < 0) goto LAB_828bb4d4;
-                    uVar8 = uVar8 + 1;
-                  } while (uVar8 < local_5e);
-                }
-                iVar4 = CBaseEndianBuffer::GetWord((CBaseEndianBuffer *)this_00,&local_5c);
-                if (iVar4 < 0) break;
-                local_50 = (uint)local_5c;
-                iVar4 = CBaseEndianBuffer::_GetDataPointer_CBaseEndianBuffer__QAAJPAPAEPAK_Z
-                                  ((CBaseEndianBuffer *)this_00,&local_4c,&local_50);
-                if (iVar4 < 0) break;
-                local_60 = *local_4c;
-              }
-              else {
-                local_54 = 1;
-                iVar4 = CBaseEndianBuffer::GetData((CBaseEndianBuffer *)this_00,&local_60,&local_54)
-                ;
-                if (iVar4 < 0) break;
-                bVar1 = (local_60 & 0xc) == 0xc;
-LAB_828bb4c8:
-                if (!bVar1) goto LAB_828bb4cc;
-              }
-            }
-            else {
-              local_54 = 1;
-              uVar2 = this_00->_padding_;
-              iVar4 = CBaseEndianBuffer::GetData((CBaseEndianBuffer *)this_00,&local_60,&local_54);
-              if (iVar4 < 0) break;
-              bVar3 = local_60 >> 2 & 3;
-              if (bVar3 == 0) {
-                if ((local_60 & 0x80) != 0) {
-                  local_54 = 1;
-                  iVar4 = CBaseEndianBuffer::GetData
-                                    ((CBaseEndianBuffer *)this_00,&uStack_5d,&local_54);
-                  if (iVar4 < 0) break;
-                }
-                if (((local_60 & 0x40) != 0) &&
-                   (iVar4 = CBaseEndianBuffer::GetWord((CBaseEndianBuffer *)this_00,&local_5c),
-                   iVar4 < 0)) break;
-                if ((local_60 & 0x20) != 0) {
-                  local_54 = 2;
-                  iVar4 = CBaseEndianBuffer::GetData
-                                    ((CBaseEndianBuffer *)this_00,local_5a,&local_54);
-                  if ((iVar4 < 0) ||
-                     (((local_5a[0] & 0x80) != 0 &&
-                      (iVar4 = CBaseEndianBuffer::GetWord((CBaseEndianBuffer *)this_00,&local_5c),
-                      iVar4 < 0)))) break;
-                }
-                if ((local_60 & 0x10) == 0) goto LAB_828bb5b8;
-                iVar4 = GetConformanceInfo(this_00,aSStack_48);
-              }
-              else {
-                bVar1 = bVar3 == 3;
-                if (2 < bVar3) goto LAB_828bb4c8;
-                CBaseEndianBuffer::SeekTo((CBaseEndianBuffer *)this_00,uVar2);
-                iVar4 = SkipScope(this_00,(int)uVar6 + 1);
-              }
-              if (iVar4 < 0) break;
-            }
-LAB_828bb5b8:
-            if ((local_5f & 0xc) == 8) {
-              uVar7 = uVar7 + 1;
-            }
-          } while ((local_60 & 0xc) != 0xc);
+      iVar4 = CBaseEndianBuffer::GetWord((CBaseEndianBuffer *)this,&local_5c);
+      if (iVar4 < 0) {
+        return iVar4;
+      }
+      if ((local_5f & 0x80) != 0) {
+        local_54 = 1;
+        iVar4 = CBaseEndianBuffer::GetData((CBaseEndianBuffer *)this,&uStack_5d,&local_54);
+        if (iVar4 < 0) {
+          return iVar4;
         }
       }
-      goto LAB_828bb4d4;
+      if (((local_5f & 0x40) != 0) &&
+         (iVar4 = CBaseEndianBuffer::GetWord((CBaseEndianBuffer *)this,&local_5c), iVar4 < 0)) {
+        return iVar4;
+      }
+      if ((local_5f & 0x20) != 0) {
+        local_54 = 2;
+        iVar4 = CBaseEndianBuffer::GetData((CBaseEndianBuffer *)this,local_5a,&local_54);
+        if (iVar4 < 0) {
+          return iVar4;
+        }
+        if (((local_5a[0] & 0x80) != 0) &&
+           (iVar4 = CBaseEndianBuffer::GetWord((CBaseEndianBuffer *)this,&local_5c), iVar4 < 0)) {
+          return iVar4;
+        }
+      }
+      if ((local_5f & 0xc) == 8) {
+        iVar4 = GetUnionInfo(this,local_58,&local_5c);
+        if (iVar4 < 0) {
+          return iVar4;
+        }
+      }
+      else {
+        local_58[0] = (SCHEMA_UNION_INFO)0x0;
+      }
+      uVar5 = 0;
+      do {
+        if ((local_5f & 0xc) == 8) {
+          if (uVar5 < ((ushort)local_58[0] & 0xff)) {
+            iVar4 = CBaseEndianBuffer::GetByte((CBaseEndianBuffer *)this,&local_5e);
+            if (iVar4 < 0) {
+              return iVar4;
+            }
+            uVar6 = 0;
+            if (local_5e != 0) {
+              do {
+                iVar4 = CBaseEndianBuffer::GetWord((CBaseEndianBuffer *)this,&local_5c);
+                if (iVar4 < 0) {
+                  return iVar4;
+                }
+                uVar6 = uVar6 + 1;
+              } while (uVar6 < local_5e);
+            }
+            iVar4 = CBaseEndianBuffer::GetWord((CBaseEndianBuffer *)this,&local_5c);
+            if (iVar4 < 0) {
+              return iVar4;
+            }
+            local_50 = (uint)local_5c;
+            iVar4 = CBaseEndianBuffer::_GetDataPointer_CBaseEndianBuffer__QAAJPAPAEPAK_Z
+                              ((CBaseEndianBuffer *)this,&local_4c,&local_50);
+            if (iVar4 < 0) {
+              return iVar4;
+            }
+            local_60 = *local_4c;
+          }
+          else {
+            local_54 = 1;
+            iVar4 = CBaseEndianBuffer::GetData((CBaseEndianBuffer *)this,&local_60,&local_54);
+            if (iVar4 < 0) {
+              return iVar4;
+            }
+            bVar1 = (local_60 & 0xc) == 0xc;
+LAB_828bb4c8:
+            if (!bVar1) {
+              return 0x80004005;
+            }
+          }
+        }
+        else {
+          local_54 = 1;
+          uVar2 = this->_padding_;
+          iVar4 = CBaseEndianBuffer::GetData((CBaseEndianBuffer *)this,&local_60,&local_54);
+          if (iVar4 < 0) {
+            return iVar4;
+          }
+          bVar3 = local_60 >> 2 & 3;
+          if (bVar3 == 0) {
+            if ((local_60 & 0x80) != 0) {
+              local_54 = 1;
+              iVar4 = CBaseEndianBuffer::GetData((CBaseEndianBuffer *)this,&uStack_5d,&local_54);
+              if (iVar4 < 0) {
+                return iVar4;
+              }
+            }
+            if (((local_60 & 0x40) != 0) &&
+               (iVar4 = CBaseEndianBuffer::GetWord((CBaseEndianBuffer *)this,&local_5c), iVar4 < 0))
+            {
+              return iVar4;
+            }
+            if ((local_60 & 0x20) != 0) {
+              local_54 = 2;
+              iVar4 = CBaseEndianBuffer::GetData((CBaseEndianBuffer *)this,local_5a,&local_54);
+              if (iVar4 < 0) {
+                return iVar4;
+              }
+              if (((local_5a[0] & 0x80) != 0) &&
+                 (iVar4 = CBaseEndianBuffer::GetWord((CBaseEndianBuffer *)this,&local_5c), iVar4 < 0
+                 )) {
+                return iVar4;
+              }
+            }
+            if ((local_60 & 0x10) == 0) goto LAB_828bb5b8;
+            iVar4 = GetConformanceInfo(this,aSStack_48);
+          }
+          else {
+            bVar1 = bVar3 == 3;
+            if (2 < bVar3) goto LAB_828bb4c8;
+            CBaseEndianBuffer::SeekTo((CBaseEndianBuffer *)this,uVar2);
+            iVar4 = SkipScope(this,param_1 + 1);
+          }
+          if (iVar4 < 0) {
+            return iVar4;
+          }
+        }
+LAB_828bb5b8:
+        if ((local_5f & 0xc) == 8) {
+          uVar5 = uVar5 + 1;
+        }
+        if ((local_60 & 0xc) == 0xc) {
+          return iVar4;
+        }
+      } while( true );
     }
   }
-LAB_828bb4cc:
-  iVar4 = -0x7fffbffb;
-LAB_828bb4d4:
-  uVar5 = __restgprlr_26(iVar4);
-  return uVar5;
+  return 0x80004005;
 }
 
 
@@ -293,48 +318,47 @@ CSchemaData::LookupConstantFromTable(CSchemaData *this,ushort param_1,ulong *par
 
 // 828BB720  Bind  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/online/common/schema.cpp:465)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 undefined4 __thiscall CSchemaInMemory::Bind(CSchemaInMemory *this,uchar *param_1,ulong param_2)
 
 {
   ushort uVar1;
-  ushort uVar2;
-  int iVar3;
-  undefined4 uVar4;
-  longlong lVar5;
-  int iVar6;
-  int iVar7;
-  undefined8 uVar8;
+  uint uVar2;
+  uchar *puVar3;
+  int iVar4;
+  undefined4 uVar5;
   
-  lVar5 = (longlong)(int)param_1;
-  iVar3 = __savegprlr_29(this,lVar5,param_2);
-  uVar8 = 0;
+  uVar5 = 0;
   memcpy();
-  iVar6 = (int)lVar5 + 0x2c;
-  if ((*(uint *)(iVar3 + 8) & 1) == 0) {
-    uVar1 = *(ushort *)(iVar3 + 0x26);
-    if (uVar1 != 0) {
-      *(int *)(iVar3 + 0x3c) = iVar6;
-      iVar6 = (uint)uVar1 + iVar6;
+  puVar3 = param_1 + 0x2c;
+  if ((*(uint *)&this->field_0x8 & 1) == 0) {
+    uVar2 = (uint)*(ushort *)&this->field_0x26;
+    if (uVar2 != 0) {
+      *(uchar **)&this->field_0x3c = puVar3;
+      puVar3 = puVar3 + uVar2;
     }
-    uVar2 = *(ushort *)(iVar3 + 0x28);
-    *(int *)(iVar3 + 0x2c) = iVar6;
-    iVar7 = (uint)*(ushort *)(iVar3 + 0x2a) * (uint)uVar2;
-    iVar6 = (uint)uVar2 * 4 + iVar6;
-    *(int *)(iVar3 + 0x30) = iVar6;
-    iVar6 = iVar7 + iVar6;
-    iVar7 = (((*(int *)(iVar3 + 0x14) + (uint)uVar2 * -4) - (uint)uVar1) - iVar7) + -0x2c;
-    *(int *)(iVar3 + 0x34) = iVar6;
-    *(int *)(iVar3 + 0x38) = iVar7;
-    iVar7 = iVar7 + iVar6;
-    *(int *)(iVar3 + 0x40) = iVar7;
-    iVar7 = (uint)*(ushort *)(iVar3 + 0x1a) * (uint)*(ushort *)(iVar3 + 0x18) + iVar7;
-    *(int *)(iVar3 + 0x44) = iVar7;
-    *(uint *)(iVar3 + 0x48) = (uint)*(ushort *)(iVar3 + 0x20) * 2 + iVar7;
+    uVar1 = *(ushort *)&this->field_0x28;
+    *(uchar **)&this->field_0x2c = puVar3;
+    iVar4 = (uint)*(ushort *)&this->field_0x2a * (uint)uVar1;
+    puVar3 = puVar3 + (uint)uVar1 * 4;
+    *(uchar **)&this->field_0x30 = puVar3;
+    puVar3 = puVar3 + iVar4;
+    iVar4 = (((*(int *)&this->field_0x14 + (uint)uVar1 * -4) - uVar2) - iVar4) + -0x2c;
+    *(uchar **)&this->field_0x34 = puVar3;
+    *(int *)&this->field_0x38 = iVar4;
+    puVar3 = puVar3 + iVar4;
+    *(uchar **)&this->field_0x40 = puVar3;
+    *(uchar **)&this->field_0x44 =
+         puVar3 + (uint)*(ushort *)&this->field_0x1a * (uint)*(ushort *)&this->field_0x18;
+    *(uchar **)&this->field_0x48 =
+         puVar3 + (uint)*(ushort *)&this->field_0x1a * (uint)*(ushort *)&this->field_0x18 +
+         (uint)*(ushort *)&this->field_0x20 * 2;
   }
   else {
-    uVar8 = 0xffffffff80004005;
+    uVar5 = 0x80004005;
   }
-  uVar4 = __restgprlr_29(uVar8);
-  return uVar4;
+  return uVar5;
 }
 

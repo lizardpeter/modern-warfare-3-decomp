@@ -2,57 +2,55 @@
 
 // 82900E58  bdRemoteTaskManager  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdremotetaskmanager/bdremotetaskmanager.cpp:26)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 bdRemoteTaskManager * __thiscall
 bdRemoteTaskManager::bdRemoteTaskManager
           (bdRemoteTaskManager *this,bdReference<bdLobbyConnection> param_1,bool param_2)
 
 {
-  uint uVar1;
-  undefined4 *puVar2;
-  bdRemoteTaskManager *pbVar3;
-  longlong lVar4;
-  uint *puVar5;
+  bdLobbyConnection *pbVar1;
+  uint uVar2;
+  longlong lVar3;
+  uint *puVar4;
   char in_RESERVE;
   byte in_cr0;
-  double dVar6;
-  undefined4 *puStack00000014;
-  bdLobbyConnection *pbStack0000001c;
+  double dVar5;
+  bdRemoteTaskManager *pbStack00000014;
+  bdReference<bdLobbyConnection> bStack0000001c;
   
-  puVar2 = (undefined4 *)__savegprlr_27(this);
-  *puVar2 = &_vftable_;
-  puVar2[2] = 0;
-  puVar2[3] = 0;
-  puVar2[4] = 0;
-  puVar2[0xb] = 0;
-  dVar6 = 0.75;
-  puStack00000014 = puVar2;
-  pbStack0000001c = param_1.m_ptr;
+  this->_padding_ = (int)&_vftable_;
+  (this->m_tasks).m_head = (Node *)0x0;
+  (this->m_tasks).m_tail = (Node *)0x0;
+  (this->m_tasks).m_size = 0;
+  (this->m_asyncTasks).m_numIterators = 0;
+  dVar5 = 0.75;
+  pbStack00000014 = this;
+  bStack0000001c.m_ptr = param_1.m_ptr;
   bdHashMap<unsigned___int64,bdReference<bdRemoteTask>,bdHashingClass>::createMap
-            ((bdHashMap<unsigned___int64,bdReference<bdRemoteTask>,bdHashingClass> *)(puVar2 + 5),4,
-             0.75);
-  puVar2[0x12] = 0;
+            (&this->m_asyncTasks,4,0.75);
+  (this->m_asyncResults).m_numIterators = 0;
   bdHashMap<unsigned___int64,bdReference<bdByteBuffer>,bdHashingClass>::createMap
-            ((bdHashMap<unsigned___int64,bdReference<bdByteBuffer>,bdHashingClass> *)(puVar2 + 0xc),
-             4,(float)dVar6);
-  uVar1 = (param_1.m_ptr)->_padding_;
-  puVar2[0x13] = uVar1;
-  if ((ulonglong)uVar1 != 0) {
-    lVar4 = (ulonglong)uVar1 + 4;
+            (&this->m_asyncResults,4,(float)dVar5);
+  pbVar1 = (bdLobbyConnection *)(param_1.m_ptr)->_padding_;
+  (this->m_lobbyConnection).m_ptr = pbVar1;
+  if (ZEXT48(pbVar1) != 0) {
+    lVar3 = ZEXT48(pbVar1) + 4;
     do {
-      puVar5 = (uint *)lVar4;
+      puVar4 = (uint *)lVar3;
       if (in_RESERVE != '\0') {
-        uVar1 = storeWordConditionalIndexed((ulonglong)*puVar5 + 1,0,lVar4);
-        *puVar5 = uVar1;
+        uVar2 = storeWordConditionalIndexed((ulonglong)*puVar4 + 1,0,lVar3);
+        *puVar4 = uVar2;
         in_cr0 = 2;
       }
     } while (!(bool)(in_cr0 >> 1 & 1));
   }
-  *(bool *)(puVar2 + 0x14) = param_2;
-  *(undefined8 *)(puVar2 + 0x16) = 0;
+  this->m_encryptedConnection = param_2;
+  this->m_connectionID = 0;
   bdReference<bdLobbyConnection>::~bdReference<bdLobbyConnection>
             ((bdReference<bdLobbyConnection> *)param_1.m_ptr);
-  pbVar3 = (bdRemoteTaskManager *)__restgprlr_27(puVar2);
-  return pbVar3;
+  return this;
 }
 
 
@@ -86,69 +84,64 @@ bdHashMap<unsigned___int64,bdReference<bdByteBuffer>,bdHashingClass>::
 
 // 82900FC0  ~bdRemoteTaskManager  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdremotetaskmanager/bdremotetaskmanager.cpp:30)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void __thiscall bdRemoteTaskManager::~bdRemoteTaskManager(bdRemoteTaskManager *this)
 
 {
-  undefined4 *puVar1;
   bdLinkedList<bdReference<bdRemoteTask>_> *this_00;
-  bdReference<bdRemoteTask> *pbVar2;
-  undefined4 *puStack00000014;
+  bdReference<bdRemoteTask> *pbVar1;
+  bdRemoteTaskManager *pbStack00000014;
   Node *local_30 [12];
   
-  puVar1 = (undefined4 *)__savegprlr_29(this);
-  *puVar1 = &_vftable_;
-  puStack00000014 = puVar1;
-  if (puVar1[4] != 0) {
-    this_00 = (bdLinkedList<bdReference<bdRemoteTask>_> *)(puVar1 + 2);
+  this->_padding_ = (int)&_vftable_;
+  pbStack00000014 = this;
+  if ((this->m_tasks).m_size != 0) {
+    this_00 = &this->m_tasks;
     do {
-      pbVar2 = bdLinkedList<bdReference<bdRemoteTask>_>::getHead(this_00);
-      pbVar2->m_ptr->m_errorCode = BD_START_TASK_FAILED;
-      pbVar2 = bdLinkedList<bdReference<bdRemoteTask>_>::getHead(this_00);
-      pbVar2->m_ptr->m_status = BD_FAILED;
+      pbVar1 = bdLinkedList<bdReference<bdRemoteTask>_>::getHead(this_00);
+      pbVar1->m_ptr->m_errorCode = BD_START_TASK_FAILED;
+      pbVar1 = bdLinkedList<bdReference<bdRemoteTask>_>::getHead(this_00);
+      pbVar1->m_ptr->m_status = BD_FAILED;
       local_30[0] = this_00->m_head;
       bdLinkedList<bdReference<bdRemoteTask>_>::removeAt(this_00,local_30);
-    } while (puVar1[4] != 0);
+    } while ((this->m_tasks).m_size != 0);
   }
-  bdReference<bdLobbyConnection>::~bdReference<bdLobbyConnection>
-            ((bdReference<bdLobbyConnection> *)(puVar1 + 0x13));
-  bdHashMap<unsigned___int64,bdReference<bdByteBuffer>,bdHashingClass>::clear
-            ((bdHashMap<unsigned___int64,bdReference<bdByteBuffer>,bdHashingClass> *)(puVar1 + 0xc))
+  bdReference<bdLobbyConnection>::~bdReference<bdLobbyConnection>(&this->m_lobbyConnection);
+  bdHashMap<unsigned___int64,bdReference<bdByteBuffer>,bdHashingClass>::clear(&this->m_asyncResults)
   ;
-  bdMemory::deallocate((void *)puVar1[0x10]);
-  bdHashMap<unsigned___int64,bdReference<bdRemoteTask>,bdHashingClass>::clear
-            ((bdHashMap<unsigned___int64,bdReference<bdRemoteTask>,bdHashingClass> *)(puVar1 + 5));
-  bdMemory::deallocate((void *)puVar1[9]);
-  bdLinkedList<bdReference<bdRemoteTask>_>::clear
-            ((bdLinkedList<bdReference<bdRemoteTask>_> *)(puVar1 + 2));
-  __restgprlr_29();
+  bdMemory::deallocate((this->m_asyncResults).m_map);
+  bdHashMap<unsigned___int64,bdReference<bdRemoteTask>,bdHashingClass>::clear(&this->m_asyncTasks);
+  bdMemory::deallocate((this->m_asyncTasks).m_map);
+  bdLinkedList<bdReference<bdRemoteTask>_>::clear(&this->m_tasks);
   return;
 }
 
 
 // 829007E0  clear  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdcontainers/bdlinkedlist.inl:39)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void __thiscall
 bdLinkedList<bdReference<bdRemoteTask>_>::clear(bdLinkedList<bdReference<bdRemoteTask>_> *this)
 
 {
-  bdReference<bdRemoteTask> *this_00;
-  bdRemoteTask *pbVar1;
-  int *piVar2;
+  Node *this_00;
+  Node *pNVar1;
   
-  piVar2 = (int *)__savegprlr_29(this);
-  while( true ) {
-    if (*piVar2 == 0) break;
-    this_00 = (bdReference<bdRemoteTask> *)*piVar2;
-    pbVar1 = this_00[1].m_ptr;
-    if (this_00 != (bdReference<bdRemoteTask> *)0x0) {
-      bdReference<bdRemoteTask>::~bdReference<bdRemoteTask>(this_00);
+  while (this->m_head != (Node *)0x0) {
+    this_00 = this->m_head;
+    pNVar1 = this_00->m_next;
+    if (this_00 != (Node *)0x0) {
+      bdReference<bdRemoteTask>::~bdReference<bdRemoteTask>(&this_00->m_data);
       bdMemory::deallocate(this_00);
     }
-    *piVar2 = (int)pbVar1;
+    this->m_head = pNVar1;
   }
-  piVar2[1] = 0;
-  piVar2[2] = 0;
-  __restgprlr_29();
+  this->m_tail = (Node *)0x0;
+  this->m_size = 0;
   return;
 }
 
@@ -170,6 +163,8 @@ void bdRemoteTaskManager::initTaskBuffer
 
 // 828FFF08  clear  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdcontainers/bdhashmap.inl:46)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Type propagation algorithm not settling */
 
 void __thiscall
@@ -179,20 +174,18 @@ bdHashMap<unsigned___int64,bdReference<bdRemoteTask>,bdHashingClass>::clear
 {
   bdReference<bdRemoteTask> bVar1;
   bdReference<bdRemoteTask> this_00;
-  undefined4 *puVar2;
-  uint uVar3;
-  int iVar4;
+  uint uVar2;
+  int iVar3;
   
-  puVar2 = (undefined4 *)__savegprlr_26(this);
-  if (puVar2[6] != 0) {
+  if (this->m_numIterators != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdCore/bdContainers/bdHashMap.inl"
                     ,0x31,0,"%s\n\t%s");
   }
-  uVar3 = 0;
-  if (puVar2[1] != 0) {
-    iVar4 = 0;
+  uVar2 = 0;
+  if (this->m_capacity != 0) {
+    iVar3 = 0;
     do {
-      this_00.m_ptr = *(bdRemoteTask **)(puVar2[4] + iVar4);
+      this_00.m_ptr = *(bdRemoteTask **)((int)this->m_map + iVar3);
       while (this_00.m_ptr != (bdRemoteTask *)0x0) {
         bVar1.m_ptr = ((bdReference<bdRemoteTask> *)&(this_00.m_ptr)->m_timeout)->m_ptr;
         bdReference<bdRemoteTask>::~bdReference<bdRemoteTask>
@@ -200,19 +193,20 @@ bdHashMap<unsigned___int64,bdReference<bdRemoteTask>,bdHashingClass>::clear
         bdMemory::deallocate(this_00.m_ptr);
         this_00.m_ptr = bVar1.m_ptr;
       }
-      uVar3 = uVar3 + 1;
-      *(undefined4 *)(puVar2[4] + iVar4) = 0;
-      iVar4 = iVar4 + 4;
-    } while (uVar3 < (uint)puVar2[1]);
+      uVar2 = uVar2 + 1;
+      *(undefined4 *)((int)this->m_map + iVar3) = 0;
+      iVar3 = iVar3 + 4;
+    } while (uVar2 < this->m_capacity);
   }
-  *puVar2 = 0;
-  __restgprlr_26();
+  this->m_size = 0;
   return;
 }
 
 
 // 82900610  clear  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdcontainers/bdhashmap.inl:46)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Type propagation algorithm not settling */
 
 void __thiscall
@@ -222,20 +216,18 @@ bdHashMap<unsigned___int64,bdReference<bdByteBuffer>,bdHashingClass>::clear
 {
   bdReference<bdByteBuffer> bVar1;
   bdReference<bdByteBuffer> this_00;
-  undefined4 *puVar2;
-  uint uVar3;
-  int iVar4;
+  uint uVar2;
+  int iVar3;
   
-  puVar2 = (undefined4 *)__savegprlr_26(this);
-  if (puVar2[6] != 0) {
+  if (this->m_numIterators != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdCore/bdContainers/bdHashMap.inl"
                     ,0x31,0,"%s\n\t%s");
   }
-  uVar3 = 0;
-  if (puVar2[1] != 0) {
-    iVar4 = 0;
+  uVar2 = 0;
+  if (this->m_capacity != 0) {
+    iVar3 = 0;
     do {
-      this_00.m_ptr = *(bdByteBuffer **)(puVar2[4] + iVar4);
+      this_00.m_ptr = *(bdByteBuffer **)((int)this->m_map + iVar3);
       while (this_00.m_ptr != (bdByteBuffer *)0x0) {
         bVar1.m_ptr = ((bdReference<bdByteBuffer> *)&(this_00.m_ptr)->m_readPtr)->m_ptr;
         bdReference<bdByteBuffer>::~bdReference<bdByteBuffer>
@@ -243,18 +235,20 @@ bdHashMap<unsigned___int64,bdReference<bdByteBuffer>,bdHashingClass>::clear
         bdMemory::deallocate(this_00.m_ptr);
         this_00.m_ptr = bVar1.m_ptr;
       }
-      uVar3 = uVar3 + 1;
-      *(undefined4 *)(puVar2[4] + iVar4) = 0;
-      iVar4 = iVar4 + 4;
-    } while (uVar3 < (uint)puVar2[1]);
+      uVar2 = uVar2 + 1;
+      *(undefined4 *)((int)this->m_map + iVar3) = 0;
+      iVar3 = iVar3 + 4;
+    } while (uVar2 < this->m_capacity);
   }
-  *puVar2 = 0;
-  __restgprlr_26();
+  this->m_size = 0;
   return;
 }
 
 
 // 82901138  startTask  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdremotetaskmanager/bdremotetaskmanager.cpp:49)
+
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 
 bdLobbyErrorCode __thiscall
 bdRemoteTaskManager::startTask
@@ -263,7 +257,6 @@ bdRemoteTaskManager::startTask
 
 {
   uint uVar1;
-  bdRemoteTaskManager *this_00;
   bdRemoteTask *pbVar2;
   bdLobbyErrorCode bVar3;
   longlong lVar4;
@@ -272,7 +265,6 @@ bdRemoteTaskManager::startTask
   byte bVar6;
   bdRemoteTask *local_30 [12];
   
-  this_00 = (bdRemoteTaskManager *)__savegprlr_28(this);
   local_30[0] = bdMemory::allocate(0x40);
   bVar6 = (local_30[0] == (bdRemoteTask *)0x0) << 1;
   if (local_30[0] == (bdRemoteTask *)0x0) {
@@ -294,8 +286,7 @@ bdRemoteTaskManager::startTask
       }
     } while (!(bool)(bVar6 >> 1 & 1));
   }
-  bVar3 = sendTask(this_00,(bdRemoteTask *)local_30,param_2);
-  bVar3 = __restgprlr_28(bVar3);
+  bVar3 = sendTask(this,(bdRemoteTask *)local_30,param_2);
   return bVar3;
 }
 
@@ -316,29 +307,30 @@ bdLinkedList<bdReference<bdRemoteTask>_>::getHead(bdLinkedList<bdReference<bdRem
 
 // 82900350  get  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdcontainers/bdhashmap.inl:72)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 bool __thiscall
 bdHashMap<unsigned___int64,bdReference<bdRemoteTask>,bdHashingClass>::get
           (bdHashMap<unsigned___int64,bdReference<bdRemoteTask>,bdHashingClass> *this,
           ulong64 *param_1,bdReference<bdRemoteTask> *param_2)
 
 {
-  bdHashMap<unsigned___int64,bdReference<bdRemoteTask>,bdHashingClass> *this_00;
   bdReference<bdRemoteTask> *pbVar1;
-  undefined1 uVar2;
   
-  this_00 = (bdHashMap<unsigned___int64,bdReference<bdRemoteTask>,bdHashingClass> *)
-            __savegprlr_29(this);
-  pbVar1 = getIterator(this_00,param_1);
+  pbVar1 = getIterator(this,param_1);
   if (pbVar1 != (bdReference<bdRemoteTask> *)0x0) {
     bdReference<bdRemoteTask>::operator=(param_2,pbVar1);
-    releaseIterator(this_00,pbVar1);
+    releaseIterator(this,pbVar1);
   }
-  uVar2 = __restgprlr_29(pbVar1 != (bdReference<bdRemoteTask> *)0x0);
-  return (bool)uVar2;
+  return pbVar1 != (bdReference<bdRemoteTask> *)0x0;
 }
 
 
 // 828FFBE0  put  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdcontainers/bdhashmap.inl:89)
+
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 
 bool __thiscall
 bdHashMap<unsigned___int64,bdReference<bdByteBuffer>,bdHashingClass>::put
@@ -347,84 +339,77 @@ bdHashMap<unsigned___int64,bdReference<bdByteBuffer>,bdHashingClass>::put
 
 {
   bdByteBuffer *pbVar1;
-  uint uVar2;
-  uint uVar3;
-  bool bVar4;
-  bdHashMap<unsigned___int64,bdReference<bdByteBuffer>,bdHashingClass> *this_00;
+  Node *pNVar2;
+  bool bVar3;
+  Node *pNVar4;
   uint *puVar6;
-  undefined8 uVar5;
-  undefined1 uVar7;
-  uint *puVar9;
-  ulong64 uVar8;
-  int iVar10;
-  ulonglong uVar11;
-  ulonglong uVar12;
+  ulong64 uVar5;
+  int iVar7;
+  uint uVar8;
+  uint uVar9;
   char in_RESERVE;
-  longlong lVar13;
+  longlong lVar10;
   
-  this_00 = (bdHashMap<unsigned___int64,bdReference<bdByteBuffer>,bdHashingClass> *)
-            __savegprlr_27(this);
-  if (this_00->m_numIterators != 0) {
+  if (this->m_numIterators != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdCore/bdContainers/bdHashMap.inl"
                     ,0x5b,0,"%s\n\t%s");
   }
-  uVar12 = 0;
-  iVar10 = 0;
-  lVar13 = 8;
+  uVar9 = 0;
+  iVar7 = 0;
+  lVar10 = 8;
   do {
-    uVar12 = (ulonglong)*(byte *)(iVar10 + (int)param_1) + uVar12 * 0x1f;
-    iVar10 = iVar10 + 1;
-    lVar13 = lVar13 + -1;
-  } while (lVar13 != 0);
-  uVar11 = (ulonglong)this_00->m_capacity - 1 & uVar12;
-  iVar10 = *(int *)((int)((uVar11 & 0xffffffff) << 2) + (int)this_00->m_map);
-  if (iVar10 != 0) {
+    uVar9 = (uint)*(byte *)(iVar7 + (int)param_1) + uVar9 * 0x1f;
+    iVar7 = iVar7 + 1;
+    lVar10 = lVar10 + -1;
+  } while (lVar10 != 0);
+  uVar8 = this->m_capacity - 1 & uVar9;
+  pNVar4 = this->m_map[uVar8];
+  if (pNVar4 != (Node *)0x0) {
     do {
-      if (*param_1 == *(ulong64 *)(iVar10 + 8)) {
-        uVar5 = 0;
-        goto LAB_828ffd48;
+      if (*param_1 == pNVar4->m_key) {
+        return false;
       }
-      iVar10 = *(int *)(iVar10 + 0x10);
-    } while (iVar10 != 0);
+      pNVar4 = pNVar4->m_next;
+    } while (pNVar4 != (Node *)0x0);
   }
-  if (this_00->m_threshold < this_00->m_size + 1) {
-    resize(this_00,this_00->m_capacity << 1);
-    uVar11 = (ulonglong)this_00->m_capacity - 1 & uVar12;
+  if (this->m_threshold < this->m_size + 1) {
+    resize(this,this->m_capacity << 1);
+    uVar8 = this->m_capacity - 1 & uVar9;
   }
-  this_00->m_size = this_00->m_size + 1;
-  puVar6 = bdMemory::allocate(0x18);
-  if (puVar6 == (uint *)0x0) {
-    puVar6 = (uint *)0x0;
+  this->m_size = this->m_size + 1;
+  pNVar4 = bdMemory::allocate(0x18);
+  if (pNVar4 == (Node *)0x0) {
+    pNVar4 = (Node *)0x0;
   }
   else {
     pbVar1 = param_2->m_ptr;
-    uVar2 = *(uint *)((int)((uVar11 & 0xffffffff) << 2) + (int)this_00->m_map);
-    *puVar6 = (uint)pbVar1;
+    pNVar2 = this->m_map[uVar8];
+    (pNVar4->m_data).m_ptr = pbVar1;
     if (ZEXT48(pbVar1) != 0) {
-      lVar13 = ZEXT48(pbVar1) + 4;
-      bVar4 = false;
+      lVar10 = ZEXT48(pbVar1) + 4;
+      bVar3 = false;
       do {
-        puVar9 = (uint *)lVar13;
+        puVar6 = (uint *)lVar10;
         if (in_RESERVE != '\0') {
-          uVar3 = storeWordConditionalIndexed((ulonglong)*puVar9 + 1,0,lVar13);
-          *puVar9 = uVar3;
-          bVar4 = true;
+          uVar9 = storeWordConditionalIndexed((ulonglong)*puVar6 + 1,0,lVar10);
+          *puVar6 = uVar9;
+          bVar3 = true;
         }
-      } while (!bVar4);
+      } while (!bVar3);
     }
-    uVar8 = *param_1;
-    puVar6[4] = uVar2;
-    *(ulong64 *)(puVar6 + 2) = uVar8;
+    uVar5 = *param_1;
+    pNVar4->m_next = pNVar2;
+    pNVar4->m_key = uVar5;
   }
-  uVar5 = 1;
-  *(uint **)((int)((uVar11 & 0xffffffff) << 2) + (int)this_00->m_map) = puVar6;
-LAB_828ffd48:
-  uVar7 = __restgprlr_27(uVar5);
-  return (bool)uVar7;
+  this->m_map[uVar8] = pNVar4;
+  return true;
 }
 
 
 // 829003A0  put  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdcontainers/bdhashmap.inl:89)
+
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 
 bool __thiscall
 bdHashMap<unsigned___int64,bdReference<bdRemoteTask>,bdHashingClass>::put
@@ -433,84 +418,77 @@ bdHashMap<unsigned___int64,bdReference<bdRemoteTask>,bdHashingClass>::put
 
 {
   bdRemoteTask *pbVar1;
-  uint uVar2;
-  uint uVar3;
-  bool bVar4;
-  bdHashMap<unsigned___int64,bdReference<bdRemoteTask>,bdHashingClass> *this_00;
+  Node *pNVar2;
+  bool bVar3;
+  Node *pNVar4;
   uint *puVar6;
-  undefined8 uVar5;
-  undefined1 uVar7;
-  uint *puVar9;
-  ulong64 uVar8;
-  int iVar10;
-  ulonglong uVar11;
-  ulonglong uVar12;
+  ulong64 uVar5;
+  int iVar7;
+  uint uVar8;
+  uint uVar9;
   char in_RESERVE;
-  longlong lVar13;
+  longlong lVar10;
   
-  this_00 = (bdHashMap<unsigned___int64,bdReference<bdRemoteTask>,bdHashingClass> *)
-            __savegprlr_27(this);
-  if (this_00->m_numIterators != 0) {
+  if (this->m_numIterators != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdCore/bdContainers/bdHashMap.inl"
                     ,0x5b,0,"%s\n\t%s");
   }
-  uVar12 = 0;
-  iVar10 = 0;
-  lVar13 = 8;
+  uVar9 = 0;
+  iVar7 = 0;
+  lVar10 = 8;
   do {
-    uVar12 = (ulonglong)*(byte *)(iVar10 + (int)param_1) + uVar12 * 0x1f;
-    iVar10 = iVar10 + 1;
-    lVar13 = lVar13 + -1;
-  } while (lVar13 != 0);
-  uVar11 = (ulonglong)this_00->m_capacity - 1 & uVar12;
-  iVar10 = *(int *)((int)((uVar11 & 0xffffffff) << 2) + (int)this_00->m_map);
-  if (iVar10 != 0) {
+    uVar9 = (uint)*(byte *)(iVar7 + (int)param_1) + uVar9 * 0x1f;
+    iVar7 = iVar7 + 1;
+    lVar10 = lVar10 + -1;
+  } while (lVar10 != 0);
+  uVar8 = this->m_capacity - 1 & uVar9;
+  pNVar4 = this->m_map[uVar8];
+  if (pNVar4 != (Node *)0x0) {
     do {
-      if (*param_1 == *(ulong64 *)(iVar10 + 8)) {
-        uVar5 = 0;
-        goto LAB_82900508;
+      if (*param_1 == pNVar4->m_key) {
+        return false;
       }
-      iVar10 = *(int *)(iVar10 + 0x10);
-    } while (iVar10 != 0);
+      pNVar4 = pNVar4->m_next;
+    } while (pNVar4 != (Node *)0x0);
   }
-  if (this_00->m_threshold < this_00->m_size + 1) {
-    resize(this_00,this_00->m_capacity << 1);
-    uVar11 = (ulonglong)this_00->m_capacity - 1 & uVar12;
+  if (this->m_threshold < this->m_size + 1) {
+    resize(this,this->m_capacity << 1);
+    uVar8 = this->m_capacity - 1 & uVar9;
   }
-  this_00->m_size = this_00->m_size + 1;
-  puVar6 = bdMemory::allocate(0x18);
-  if (puVar6 == (uint *)0x0) {
-    puVar6 = (uint *)0x0;
+  this->m_size = this->m_size + 1;
+  pNVar4 = bdMemory::allocate(0x18);
+  if (pNVar4 == (Node *)0x0) {
+    pNVar4 = (Node *)0x0;
   }
   else {
     pbVar1 = param_2->m_ptr;
-    uVar2 = *(uint *)((int)((uVar11 & 0xffffffff) << 2) + (int)this_00->m_map);
-    *puVar6 = (uint)pbVar1;
+    pNVar2 = this->m_map[uVar8];
+    (pNVar4->m_data).m_ptr = pbVar1;
     if (ZEXT48(pbVar1) != 0) {
-      lVar13 = ZEXT48(pbVar1) + 4;
-      bVar4 = false;
+      lVar10 = ZEXT48(pbVar1) + 4;
+      bVar3 = false;
       do {
-        puVar9 = (uint *)lVar13;
+        puVar6 = (uint *)lVar10;
         if (in_RESERVE != '\0') {
-          uVar3 = storeWordConditionalIndexed((ulonglong)*puVar9 + 1,0,lVar13);
-          *puVar9 = uVar3;
-          bVar4 = true;
+          uVar9 = storeWordConditionalIndexed((ulonglong)*puVar6 + 1,0,lVar10);
+          *puVar6 = uVar9;
+          bVar3 = true;
         }
-      } while (!bVar4);
+      } while (!bVar3);
     }
-    uVar8 = *param_1;
-    puVar6[4] = uVar2;
-    *(ulong64 *)(puVar6 + 2) = uVar8;
+    uVar5 = *param_1;
+    pNVar4->m_next = pNVar2;
+    pNVar4->m_key = uVar5;
   }
-  uVar5 = 1;
-  *(uint **)((int)((uVar11 & 0xffffffff) << 2) + (int)this_00->m_map) = puVar6;
-LAB_82900508:
-  uVar7 = __restgprlr_27(uVar5);
-  return (bool)uVar7;
+  this->m_map[uVar8] = pNVar4;
+  return true;
 }
 
 
 // 829009C8  sendTask  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdremotetaskmanager/bdremotetaskmanager.cpp:102)
+
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 
 bdLobbyErrorCode __thiscall
 bdRemoteTaskManager::sendTask
@@ -518,69 +496,66 @@ bdRemoteTaskManager::sendTask
           bdReference<bdTaskByteBuffer> *param_2)
 
 {
-  undefined1 uVar1;
-  int *piVar2;
-  int iVar3;
-  int iVar4;
-  bool bVar7;
-  uint uVar5;
-  char cVar8;
-  bdLobbyErrorCode bVar6;
-  longlong lVar9;
-  uint *puVar10;
-  undefined8 uVar11;
+  bdLobbyConnection *pbVar1;
+  int iVar2;
+  bool bVar4;
+  uint uVar3;
+  char cVar5;
+  longlong lVar6;
+  uint *puVar7;
+  bdLobbyErrorCode bVar8;
   char in_RESERVE;
-  bdRemoteTask *pbStack0000001c;
+  bdReference<bdRemoteTask> bStack0000001c;
   bdTaskByteBuffer *local_50;
   bdTaskByteBuffer **local_4c;
   
-  iVar4 = __savegprlr_25(this);
-  uVar11 = 0;
-  pbStack0000001c = param_1.m_ptr;
-  bVar7 = bdByteBuffer::writeNoType((bdByteBuffer *)param_2->m_ptr);
-  bVar7 = !bVar7;
-  if (!bVar7) {
+  bVar8 = BD_NO_ERROR;
+  bStack0000001c.m_ptr = param_1.m_ptr;
+  bVar4 = bdByteBuffer::writeNoType((bdByteBuffer *)param_2->m_ptr);
+  bVar4 = !bVar4;
+  if (!bVar4) {
     local_50 = param_2->m_ptr;
     local_4c = &local_50;
-    piVar2 = *(int **)(iVar4 + 0x4c);
+    pbVar1 = (this->m_lobbyConnection).m_ptr;
     if (ZEXT48(local_50) != 0) {
-      lVar9 = ZEXT48(local_50) + 4;
+      lVar6 = ZEXT48(local_50) + 4;
       do {
-        puVar10 = (uint *)lVar9;
+        puVar7 = (uint *)lVar6;
         if (in_RESERVE != '\0') {
-          uVar5 = storeWordConditionalIndexed((ulonglong)*puVar10 + 1,0,lVar9);
-          *puVar10 = uVar5;
-          bVar7 = true;
+          uVar3 = storeWordConditionalIndexed((ulonglong)*puVar7 + 1,0,lVar6);
+          *puVar7 = uVar3;
+          bVar4 = true;
         }
-      } while (!bVar7);
+      } while (!bVar4);
     }
-    iVar3 = *piVar2;
-    uVar1 = *(undefined1 *)(iVar4 + 0x50);
-    uVar5 = bdByteBuffer::getDataSize((bdByteBuffer *)param_2->m_ptr);
-    cVar8 = (**(code **)(iVar3 + 4))(piVar2,&local_50,uVar5,uVar1);
-    bVar7 = true;
-    if (cVar8 != '\0') goto LAB_82900a78;
+    iVar2 = pbVar1->_padding_;
+    bVar4 = this->m_encryptedConnection;
+    uVar3 = bdByteBuffer::getDataSize((bdByteBuffer *)param_2->m_ptr);
+    cVar5 = (**(code **)(iVar2 + 4))(pbVar1,&local_50,uVar3,bVar4);
+    bVar4 = true;
+    if (cVar5 != '\0') goto LAB_82900a78;
   }
-  bVar7 = false;
+  bVar4 = false;
 LAB_82900a78:
-  if (bVar7) {
+  if (bVar4) {
     bdLinkedList<bdReference<bdRemoteTask>_>::insertAfter
-              ((bdLinkedList<bdReference<bdRemoteTask>_> *)(iVar4 + 8),*(void **)(iVar4 + 0xc),
-               (bdReference<bdRemoteTask> *)param_1.m_ptr);
+              (&this->m_tasks,(this->m_tasks).m_tail,(bdReference<bdRemoteTask> *)param_1.m_ptr);
     (**(code **)(*(int *)(param_1.m_ptr)->_padding_ + 0xc))(0);
   }
   else {
-    uVar11 = 3;
+    bVar8 = BD_SEND_FAILED;
     *(undefined4 *)((param_1.m_ptr)->_padding_ + 0x14) = 3;
     *(undefined4 *)((param_1.m_ptr)->_padding_ + 0x38) = 3;
   }
   bdReference<bdRemoteTask>::~bdReference<bdRemoteTask>((bdReference<bdRemoteTask> *)param_1.m_ptr);
-  bVar6 = __restgprlr_25(uVar11);
-  return bVar6;
+  return bVar8;
 }
 
 
 // 82901200  handleLSGTaskReply  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdremotetaskmanager/bdremotetaskmanager.cpp:130)
+
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 
 void __thiscall
 bdRemoteTaskManager::handleLSGTaskReply(bdRemoteTaskManager *this,bdReference<bdByteBuffer> param_1)
@@ -588,81 +563,77 @@ bdRemoteTaskManager::handleLSGTaskReply(bdRemoteTaskManager *this,bdReference<bd
 {
   bdRemoteTask *this_00;
   uint uVar1;
-  int iVar2;
   bdLinkedList<bdReference<bdRemoteTask>_> *this_01;
-  bdReference<bdRemoteTask> *pbVar3;
-  int iVar4;
-  bool bVar5;
-  uint *puVar7;
-  longlong lVar6;
-  ulonglong uVar8;
+  bdReference<bdRemoteTask> *pbVar2;
+  int iVar3;
+  bool bVar4;
+  uint *puVar6;
+  longlong lVar5;
+  ulonglong uVar7;
   char in_RESERVE;
   byte in_cr0;
-  bdByteBuffer *pbStack0000001c;
+  bdReference<bdByteBuffer> bStack0000001c;
   bdReference<bdByteBuffer> local_40;
   bdReference<bdRemoteTask> local_3c;
   ulong64 local_38 [7];
   
-  iVar2 = __savegprlr_27(this);
-  this_01 = (bdLinkedList<bdReference<bdRemoteTask>_> *)(iVar2 + 8);
-  pbStack0000001c = param_1.m_ptr;
-  pbVar3 = bdLinkedList<bdReference<bdRemoteTask>_>::getHead(this_01);
-  this_00 = pbVar3->m_ptr;
-  uVar8 = ZEXT48(this_00);
-  if (uVar8 != 0) {
+  this_01 = &this->m_tasks;
+  bStack0000001c.m_ptr = param_1.m_ptr;
+  pbVar2 = bdLinkedList<bdReference<bdRemoteTask>_>::getHead(this_01);
+  this_00 = pbVar2->m_ptr;
+  uVar7 = ZEXT48(this_00);
+  if (uVar7 != 0) {
     do {
-      puVar7 = (uint *)(uVar8 + 4);
+      puVar6 = (uint *)(uVar7 + 4);
       if (in_RESERVE != '\0') {
-        uVar1 = storeWordConditionalIndexed((ulonglong)*puVar7 + 1,0,uVar8 + 4);
-        *puVar7 = uVar1;
+        uVar1 = storeWordConditionalIndexed((ulonglong)*puVar6 + 1,0,uVar7 + 4);
+        *puVar6 = uVar1;
         in_cr0 = 2;
       }
     } while (!(bool)(in_cr0 >> 1 & 1));
   }
   local_3c.m_ptr = this_00;
   if ((this_00 != (bdRemoteTask *)0x0) &&
-     (iVar4 = (**(code **)(this_00->_padding_ + 4))(uVar8), iVar4 == 1)) {
+     (iVar3 = (**(code **)(this_00->_padding_ + 4))(uVar7), iVar3 == 1)) {
     local_40.m_ptr = (bdByteBuffer *)(param_1.m_ptr)->_padding_;
     if (ZEXT48(local_40.m_ptr) != 0) {
-      lVar6 = ZEXT48(local_40.m_ptr) + 4;
+      lVar5 = ZEXT48(local_40.m_ptr) + 4;
       do {
-        puVar7 = (uint *)lVar6;
+        puVar6 = (uint *)lVar5;
         if (in_RESERVE != '\0') {
-          uVar1 = storeWordConditionalIndexed((ulonglong)*puVar7 + 1,0,lVar6);
-          *puVar7 = uVar1;
+          uVar1 = storeWordConditionalIndexed((ulonglong)*puVar6 + 1,0,lVar5);
+          *puVar6 = uVar1;
           in_cr0 = 2;
         }
       } while (!(bool)(in_cr0 >> 1 & 1));
     }
     bdRemoteTask::handleTaskReply(this_00,(bdByteBuffer *)&local_40);
-    iVar4 = (**(code **)(this_00->_padding_ + 4))(uVar8);
-    if (iVar4 == 1) {
+    iVar3 = (**(code **)(this_00->_padding_ + 4))(uVar7);
+    if (iVar3 == 1) {
       local_40.m_ptr = (bdByteBuffer *)0x0;
       local_38[0] = bdRemoteTask::getTransactionID(this_00);
-      bVar5 = bdHashMap<unsigned___int64,bdReference<bdByteBuffer>,bdHashingClass>::remove
-                        ((bdHashMap<unsigned___int64,bdReference<bdByteBuffer>,bdHashingClass> *)
-                         (iVar2 + 0x30),local_38,&local_40);
-      if (bVar5) {
+      bVar4 = bdHashMap<unsigned___int64,bdReference<bdByteBuffer>,bdHashingClass>::remove
+                        (&this->m_asyncResults,local_38,&local_40);
+      if (bVar4) {
         local_38[0] = CONCAT44(local_40.m_ptr,local_38[0]._4_4_);
         if (ZEXT48(local_40.m_ptr) != 0) {
-          lVar6 = ZEXT48(local_40.m_ptr) + 4;
-          bVar5 = false;
+          lVar5 = ZEXT48(local_40.m_ptr) + 4;
+          bVar4 = false;
           do {
-            puVar7 = (uint *)lVar6;
+            puVar6 = (uint *)lVar5;
             if (in_RESERVE != '\0') {
-              uVar1 = storeWordConditionalIndexed((ulonglong)*puVar7 + 1,0,lVar6);
-              *puVar7 = uVar1;
-              bVar5 = true;
+              uVar1 = storeWordConditionalIndexed((ulonglong)*puVar6 + 1,0,lVar5);
+              *puVar6 = uVar1;
+              bVar4 = true;
             }
-          } while (!bVar5);
+          } while (!bVar4);
         }
-        (**(code **)(this_00->_padding_ + 8))(uVar8,local_38);
+        (**(code **)(this_00->_padding_ + 8))(uVar7,local_38);
       }
       else {
         local_38[0] = bdRemoteTask::getTransactionID(this_00);
         bdHashMap<unsigned___int64,bdReference<bdRemoteTask>,bdHashingClass>::put
-                  ((bdHashMap<unsigned___int64,bdReference<bdRemoteTask>,bdHashingClass> *)
-                   (iVar2 + 0x14),local_38,&local_3c);
+                  (&this->m_asyncTasks,local_38,&local_3c);
       }
       bdReference<bdByteBuffer>::~bdReference<bdByteBuffer>(&local_40);
     }
@@ -671,14 +642,14 @@ bdRemoteTaskManager::handleLSGTaskReply(bdRemoteTaskManager *this,bdReference<bd
   bdLinkedList<bdReference<bdRemoteTask>_>::removeAt(this_01,(void **)local_38);
   bdReference<bdRemoteTask>::~bdReference<bdRemoteTask>(&local_3c);
   bdReference<bdByteBuffer>::~bdReference<bdByteBuffer>((bdReference<bdByteBuffer> *)param_1.m_ptr);
-  __restgprlr_27();
   return;
 }
 
 
 // 82900510  remove  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdcontainers/bdhashmap.inl:154)
 
-/* WARNING: Type propagation algorithm not settling */
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 
 bool __thiscall
 bdHashMap<unsigned___int64,bdReference<bdRemoteTask>,bdHashingClass>::remove
@@ -686,61 +657,55 @@ bdHashMap<unsigned___int64,bdReference<bdRemoteTask>,bdHashingClass>::remove
           ulong64 *param_1)
 
 {
-  bdReference<bdRemoteTask> bVar1;
-  int *piVar3;
-  undefined8 uVar2;
-  undefined1 uVar4;
-  bdRemoteTask *pbVar5;
-  int iVar6;
-  uint uVar7;
-  bdRemoteTask *this_00;
-  longlong lVar8;
+  Node *pNVar1;
+  Node *pNVar2;
+  int iVar3;
+  uint uVar4;
+  Node *this_00;
+  longlong lVar5;
   
-  piVar3 = (int *)__savegprlr_29(this);
-  if (piVar3[6] != 0) {
+  if (this->m_numIterators != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdCore/bdContainers/bdHashMap.inl"
                     ,0x9d,0,"%s\n\t%s");
   }
-  uVar7 = 0;
-  iVar6 = 0;
-  lVar8 = 8;
+  uVar4 = 0;
+  iVar3 = 0;
+  lVar5 = 8;
   do {
-    uVar7 = (uint)*(byte *)(iVar6 + (int)param_1) + uVar7 * 0x1f;
-    iVar6 = iVar6 + 1;
-    lVar8 = lVar8 + -1;
-  } while (lVar8 != 0);
-  iVar6 = (piVar3[1] - 1U & uVar7) * 4;
-  bVar1.m_ptr = *(bdRemoteTask **)(iVar6 + piVar3[4]);
-  if (bVar1.m_ptr != (bdRemoteTask *)0x0) {
-    pbVar5 = (bdRemoteTask *)(bdReference<bdRemoteTask> *)0x0;
+    uVar4 = (uint)*(byte *)(iVar3 + (int)param_1) + uVar4 * 0x1f;
+    iVar3 = iVar3 + 1;
+    lVar5 = lVar5 + -1;
+  } while (lVar5 != 0);
+  uVar4 = this->m_capacity - 1 & uVar4;
+  pNVar1 = this->m_map[uVar4];
+  if (pNVar1 != (Node *)0x0) {
+    pNVar2 = (Node *)0x0;
     do {
-      this_00 = bVar1.m_ptr;
-      if (*param_1 == *(ulong64 *)&this_00->m_timer) {
-        if (pbVar5 == (bdRemoteTask *)0x0) {
-          *(float *)(iVar6 + piVar3[4]) = this_00->m_timeout;
+      this_00 = pNVar1;
+      if (*param_1 == this_00->m_key) {
+        if (pNVar2 == (Node *)0x0) {
+          this->m_map[uVar4] = this_00->m_next;
         }
         else {
-          ((bdReference<bdRemoteTask> *)((int)pbVar5 + 0x10))->m_ptr =
-               (bdRemoteTask *)this_00->m_timeout;
+          pNVar2->m_next = this_00->m_next;
         }
-        bdReference<bdRemoteTask>::~bdReference<bdRemoteTask>((bdReference<bdRemoteTask> *)this_00);
+        bdReference<bdRemoteTask>::~bdReference<bdRemoteTask>(&this_00->m_data);
         bdMemory::deallocate(this_00);
-        uVar2 = 1;
-        *piVar3 = *piVar3 + -1;
-        goto LAB_829005c8;
+        this->m_size = this->m_size - 1;
+        return true;
       }
-      bVar1.m_ptr = ((bdReference<bdRemoteTask> *)&this_00->m_timeout)->m_ptr;
-      pbVar5 = this_00;
-    } while (bVar1.m_ptr != (bdRemoteTask *)0x0);
+      pNVar1 = this_00->m_next;
+      pNVar2 = this_00;
+    } while (this_00->m_next != (Node *)0x0);
   }
-  uVar2 = 0;
-LAB_829005c8:
-  uVar4 = __restgprlr_29(uVar2);
-  return (bool)uVar4;
+  return false;
 }
 
 
 // 82901428  handleTaskReply  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdremotetaskmanager/bdremotetaskmanager.cpp:159)
+
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 
 void __thiscall
 bdRemoteTaskManager::handleTaskReply(bdRemoteTaskManager *this,bdReference<bdByteBuffer> param_1)
@@ -748,25 +713,24 @@ bdRemoteTaskManager::handleTaskReply(bdRemoteTaskManager *this,bdReference<bdByt
 {
   bdRemoteTask *this_00;
   uint uVar1;
-  int iVar2;
   bdLinkedList<bdReference<bdRemoteTask>_> *this_01;
-  bdReference<bdRemoteTask> *pbVar3;
+  bdReference<bdRemoteTask> *pbVar2;
+  int iVar3;
   bool bVar4;
   uint *puVar6;
   longlong lVar5;
   ulonglong uVar7;
   char in_RESERVE;
   byte in_cr0;
-  bdByteBuffer *pbStack0000001c;
+  bdReference<bdByteBuffer> bStack0000001c;
   Node *local_50;
   bdReference<bdRemoteTask> local_4c;
   ulong64 local_48 [9];
   
-  iVar2 = __savegprlr_26(this);
-  this_01 = (bdLinkedList<bdReference<bdRemoteTask>_> *)(iVar2 + 8);
-  pbStack0000001c = param_1.m_ptr;
-  pbVar3 = bdLinkedList<bdReference<bdRemoteTask>_>::getHead(this_01);
-  this_00 = pbVar3->m_ptr;
+  this_01 = &this->m_tasks;
+  bStack0000001c.m_ptr = param_1.m_ptr;
+  pbVar2 = bdLinkedList<bdReference<bdRemoteTask>_>::getHead(this_01);
+  this_00 = pbVar2->m_ptr;
   uVar7 = ZEXT48(this_00);
   if (uVar7 != 0) {
     do {
@@ -780,7 +744,7 @@ bdRemoteTaskManager::handleTaskReply(bdRemoteTaskManager *this,bdReference<bdByt
   }
   local_4c.m_ptr = this_00;
   if ((this_00 != (bdRemoteTask *)0x0) &&
-     (iVar2 = (**(code **)(this_00->_padding_ + 4))(uVar7), iVar2 == 1)) {
+     (iVar3 = (**(code **)(this_00->_padding_ + 4))(uVar7), iVar3 == 1)) {
     local_48[0] = 0;
     bVar4 = bdByteBuffer::read<unsigned___int64>
                       ((bdByteBuffer *)(param_1.m_ptr)->_padding_,local_48);
@@ -815,12 +779,14 @@ bdRemoteTaskManager::handleTaskReply(bdRemoteTaskManager *this,bdReference<bdByt
   bdLinkedList<bdReference<bdRemoteTask>_>::removeAt(this_01,&local_50);
   bdReference<bdRemoteTask>::~bdReference<bdRemoteTask>(&local_4c);
   bdReference<bdByteBuffer>::~bdReference<bdByteBuffer>((bdReference<bdByteBuffer> *)param_1.m_ptr);
-  __restgprlr_26();
   return;
 }
 
 
 // 82900B38  handleAsyncResult  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdremotetaskmanager/bdremotetaskmanager.cpp:183)
+
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 
 void __thiscall
 bdRemoteTaskManager::handleAsyncResult(bdRemoteTaskManager *this,bdReference<bdByteBuffer> param_1)
@@ -828,31 +794,28 @@ bdRemoteTaskManager::handleAsyncResult(bdRemoteTaskManager *this,bdReference<bdB
 {
   uint uVar1;
   bdReference<bdRemoteTask> bVar2;
+  bool bVar4;
   int iVar3;
-  bool bVar5;
-  int iVar4;
-  longlong lVar6;
-  uint *puVar7;
+  longlong lVar5;
+  uint *puVar6;
   char in_RESERVE;
-  byte bVar8;
-  bdByteBuffer *pbStack0000001c;
+  byte bVar7;
+  bdReference<bdByteBuffer> bStack0000001c;
   bdReference<bdRemoteTask> local_40;
   uint local_3c;
   ulong64 local_38 [7];
   
-  iVar3 = __savegprlr_28(this);
   local_38[0] = 0;
   local_40.m_ptr = (bdRemoteTask *)0x0;
-  pbStack0000001c = param_1.m_ptr;
-  bVar5 = bdByteBuffer::readUInt64((bdByteBuffer *)(param_1.m_ptr)->_padding_,local_38);
-  if (bVar5) {
-    bVar5 = bdHashMap<unsigned___int64,bdReference<bdRemoteTask>,bdHashingClass>::get
-                      ((bdHashMap<unsigned___int64,bdReference<bdRemoteTask>,bdHashingClass> *)
-                       (iVar3 + 0x14),local_38,&local_40);
+  bStack0000001c.m_ptr = param_1.m_ptr;
+  bVar4 = bdByteBuffer::readUInt64((bdByteBuffer *)(param_1.m_ptr)->_padding_,local_38);
+  if (bVar4) {
+    bVar4 = bdHashMap<unsigned___int64,bdReference<bdRemoteTask>,bdHashingClass>::get
+                      (&this->m_asyncTasks,local_38,&local_40);
     bVar2.m_ptr = local_40.m_ptr;
-    bVar8 = !bVar5 << 1;
-    if (!bVar5) {
-      if (*(int *)(iVar3 + 0x10) == 0) {
+    bVar7 = !bVar4 << 1;
+    if (!bVar4) {
+      if ((this->m_tasks).m_size == 0) {
         bdLogMessage(BD_LOG_WARNING,"warn/","lobby/remotetaskmanager",
                      "c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdLobby\\bdRemoteTaskManager\\bdRemoteTaskManager.cpp"
                      ,"bdRemoteTaskManager::handleAsyncResult",0xe2,
@@ -865,31 +828,29 @@ bdRemoteTaskManager::handleAsyncResult(bdRemoteTaskManager *this,bdReference<bdB
                      "Received asynchronous result for task that might not be complete yet.  Storing for later (transaction ID: %I64u)"
                     );
         bdHashMap<unsigned___int64,bdReference<bdByteBuffer>,bdHashingClass>::put
-                  ((bdHashMap<unsigned___int64,bdReference<bdByteBuffer>,bdHashingClass> *)
-                   (iVar3 + 0x30),local_38,(bdReference<bdByteBuffer> *)param_1.m_ptr);
+                  (&this->m_asyncResults,local_38,(bdReference<bdByteBuffer> *)param_1.m_ptr);
       }
     }
     else {
-      iVar4 = (**(code **)((local_40.m_ptr)->_padding_ + 4))(local_40.m_ptr);
-      if (iVar4 == 1) {
+      iVar3 = (**(code **)((local_40.m_ptr)->_padding_ + 4))(local_40.m_ptr);
+      if (iVar3 == 1) {
         local_3c = (param_1.m_ptr)->_padding_;
         if ((ulonglong)local_3c != 0) {
-          lVar6 = (ulonglong)local_3c + 4;
+          lVar5 = (ulonglong)local_3c + 4;
           do {
-            puVar7 = (uint *)lVar6;
+            puVar6 = (uint *)lVar5;
             if (in_RESERVE != '\0') {
-              uVar1 = storeWordConditionalIndexed((ulonglong)*puVar7 + 1,0,lVar6);
-              *puVar7 = uVar1;
-              bVar8 = 2;
+              uVar1 = storeWordConditionalIndexed((ulonglong)*puVar6 + 1,0,lVar5);
+              *puVar6 = uVar1;
+              bVar7 = 2;
             }
-          } while (!(bool)(bVar8 >> 1 & 1));
+          } while (!(bool)(bVar7 >> 1 & 1));
         }
         (**(code **)((bVar2.m_ptr)->_padding_ + 8))(bVar2.m_ptr,&local_3c);
-        iVar4 = (**(code **)((bVar2.m_ptr)->_padding_ + 4))(bVar2.m_ptr);
-        if (iVar4 != 1) {
+        iVar3 = (**(code **)((bVar2.m_ptr)->_padding_ + 4))(bVar2.m_ptr);
+        if (iVar3 != 1) {
           bdHashMap<unsigned___int64,bdReference<bdRemoteTask>,bdHashingClass>::remove
-                    ((bdHashMap<unsigned___int64,bdReference<bdRemoteTask>,bdHashingClass> *)
-                     (iVar3 + 0x14),local_38);
+                    (&this->m_asyncTasks,local_38);
         }
       }
       else {
@@ -909,14 +870,14 @@ bdRemoteTaskManager::handleAsyncResult(bdRemoteTaskManager *this,bdReference<bdB
   }
   bdReference<bdRemoteTask>::~bdReference<bdRemoteTask>(&local_40);
   bdReference<bdByteBuffer>::~bdReference<bdByteBuffer>((bdReference<bdByteBuffer> *)param_1.m_ptr);
-  __restgprlr_28();
   return;
 }
 
 
 // 829006C8  remove  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdcontainers/bdhashmap.inl:198)
 
-/* WARNING: Type propagation algorithm not settling */
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 
 bool __thiscall
 bdHashMap<unsigned___int64,bdReference<bdByteBuffer>,bdHashingClass>::remove
@@ -924,58 +885,49 @@ bdHashMap<unsigned___int64,bdReference<bdByteBuffer>,bdHashingClass>::remove
           ulong64 *param_1,bdReference<bdByteBuffer> *param_2)
 
 {
-  bdReference<bdByteBuffer> bVar1;
-  int *piVar3;
-  undefined8 uVar2;
-  undefined1 uVar4;
-  int iVar5;
-  uint uVar6;
-  bdByteBuffer *pbVar7;
-  bdByteBuffer *this_00;
-  longlong lVar8;
+  Node *pNVar1;
+  int iVar2;
+  uint uVar3;
+  Node *pNVar4;
+  Node *this_00;
+  longlong lVar5;
   
-  piVar3 = (int *)__savegprlr_26(this);
-  uVar6 = 0;
-  iVar5 = 0;
-  lVar8 = 8;
+  uVar3 = 0;
+  iVar2 = 0;
+  lVar5 = 8;
   do {
-    uVar6 = (uint)*(byte *)(iVar5 + (int)param_1) + uVar6 * 0x1f;
-    iVar5 = iVar5 + 1;
-    lVar8 = lVar8 + -1;
-  } while (lVar8 != 0);
-  iVar5 = (piVar3[1] - 1U & uVar6) * 4;
-  bVar1.m_ptr = *(bdByteBuffer **)(iVar5 + piVar3[4]);
-  if (piVar3[6] != 0) {
+    uVar3 = (uint)*(byte *)(iVar2 + (int)param_1) + uVar3 * 0x1f;
+    iVar2 = iVar2 + 1;
+    lVar5 = lVar5 + -1;
+  } while (lVar5 != 0);
+  uVar3 = this->m_capacity - 1 & uVar3;
+  pNVar1 = this->m_map[uVar3];
+  if (this->m_numIterators != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdCore/bdContainers/bdHashMap.inl"
                     ,0xce,0,"%s\n\t%s");
   }
-  if (bVar1.m_ptr != (bdByteBuffer *)0x0) {
-    pbVar7 = (bdByteBuffer *)(bdReference<bdByteBuffer> *)0x0;
+  if (pNVar1 != (Node *)0x0) {
+    pNVar4 = (Node *)0x0;
     do {
-      this_00 = bVar1.m_ptr;
-      if (*param_1 == *(ulong64 *)&this_00->m_size) {
-        if (pbVar7 == (bdByteBuffer *)0x0) {
-          *(uchar **)(iVar5 + piVar3[4]) = this_00->m_readPtr;
+      this_00 = pNVar1;
+      if (*param_1 == this_00->m_key) {
+        if (pNVar4 == (Node *)0x0) {
+          this->m_map[uVar3] = this_00->m_next;
         }
         else {
-          ((bdReference<bdByteBuffer> *)((int)pbVar7 + 0x10))->m_ptr =
-               (bdByteBuffer *)this_00->m_readPtr;
+          pNVar4->m_next = this_00->m_next;
         }
-        bdReference<bdByteBuffer>::operator=(param_2,(bdReference<bdByteBuffer> *)this_00);
-        bdReference<bdByteBuffer>::~bdReference<bdByteBuffer>((bdReference<bdByteBuffer> *)this_00);
+        bdReference<bdByteBuffer>::operator=(param_2,&this_00->m_data);
+        bdReference<bdByteBuffer>::~bdReference<bdByteBuffer>(&this_00->m_data);
         bdMemory::deallocate(this_00);
-        uVar2 = 1;
-        *piVar3 = *piVar3 + -1;
-        goto LAB_82900784;
+        this->m_size = this->m_size - 1;
+        return true;
       }
-      bVar1.m_ptr = ((bdReference<bdByteBuffer> *)&this_00->m_readPtr)->m_ptr;
-      pbVar7 = this_00;
-    } while (bVar1.m_ptr != (bdByteBuffer *)0x0);
+      pNVar1 = this_00->m_next;
+      pNVar4 = this_00;
+    } while (this_00->m_next != (Node *)0x0);
   }
-  uVar2 = 0;
-LAB_82900784:
-  uVar4 = __restgprlr_26(uVar2);
-  return (bool)uVar4;
+  return false;
 }
 
 
@@ -1013,23 +965,23 @@ bdLinkedList<bdReference<bdRemoteTask>_>::removeAt
 
 // 82901600  cleanUpAsyncState  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdremotetaskmanager/bdremotetaskmanager.cpp:236)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
+
 void __thiscall bdRemoteTaskManager::cleanUpAsyncState(bdRemoteTaskManager *this)
 
 {
-  undefined4 *puVar1;
-  int iVar2;
   bdHashMap<unsigned___int64,bdReference<bdRemoteTask>,bdHashingClass> *this_00;
-  int iVar3;
+  int iVar1;
   bdHashMap<unsigned___int64,bdReference<bdByteBuffer>,bdHashingClass> *this_01;
   undefined4 *local_50 [20];
   
-  iVar2 = __savegprlr_24(this);
-  this_00 = (bdHashMap<unsigned___int64,bdReference<bdRemoteTask>,bdHashingClass> *)(iVar2 + 0x14);
+  this_00 = &this->m_asyncTasks;
   local_50[0] = bdHashMap<unsigned___int64,bdReference<bdRemoteTask>,bdHashingClass>::getIterator
                           (this_00);
   while (local_50[0] != (undefined4 *)0x0) {
-    iVar3 = (**(code **)(*(int *)*local_50[0] + 4))();
-    if (iVar3 == 1) {
+    iVar1 = (**(code **)(*(int *)*local_50[0] + 4))();
+    if (iVar1 == 1) {
       bdHashMap<unsigned___int64,bdReference<bdRemoteTask>,bdHashingClass>::next(this_00,local_50);
     }
     else {
@@ -1042,10 +994,8 @@ void __thiscall bdRemoteTaskManager::cleanUpAsyncState(bdRemoteTaskManager *this
       ;
     }
   }
-  puVar1 = (undefined4 *)0x0;
-  if (((*(int *)(iVar2 + 0x10) == 0) && (this_00->m_size == 0)) &&
-     (this_01 = (bdHashMap<unsigned___int64,bdReference<bdByteBuffer>,bdHashingClass> *)
-                (iVar2 + 0x30), 0 < *(int *)(iVar2 + 0x30))) {
+  if ((((this->m_tasks).m_size == 0) && (this_00->m_size == 0)) &&
+     (this_01 = &this->m_asyncResults, 0 < (int)(this->m_asyncResults).m_size)) {
     local_50[0] = bdHashMap<unsigned___int64,bdReference<bdByteBuffer>,bdHashingClass>::getIterator
                             (this_01);
     while (local_50[0] != (undefined4 *)0x0) {
@@ -1056,15 +1006,15 @@ void __thiscall bdRemoteTaskManager::cleanUpAsyncState(bdRemoteTaskManager *this
       bdHashMap<unsigned___int64,bdReference<bdByteBuffer>,bdHashingClass>::next(this_01,local_50);
     }
     bdHashMap<unsigned___int64,bdReference<bdByteBuffer>,bdHashingClass>::clear(this_01);
-    puVar1 = local_50[0];
   }
-  local_50[0] = puVar1;
-  __restgprlr_24();
   return;
 }
 
 
 // 82900D80  remove  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdcontainers/bdhashmap.inl:241)
+
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 
 bool __thiscall
 bdHashMap<unsigned___int64,bdReference<bdRemoteTask>,bdHashingClass>::remove
@@ -1074,29 +1024,24 @@ bdHashMap<unsigned___int64,bdReference<bdRemoteTask>,bdHashingClass>::remove
 {
   void *pvVar1;
   uint uVar2;
-  bdHashMap<unsigned___int64,bdReference<bdRemoteTask>,bdHashingClass> *this_00;
   bool bVar3;
-  undefined1 uVar4;
-  uint *puVar5;
+  uint *puVar4;
   void *local_30 [12];
   
-  this_00 = (bdHashMap<unsigned___int64,bdReference<bdRemoteTask>,bdHashingClass> *)
-            __savegprlr_29(this);
-  puVar5 = &this_00->m_numIterators;
-  if (this_00->m_numIterators != 1) {
+  puVar4 = &this->m_numIterators;
+  if (this->m_numIterators != 1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdCore/bdContainers/bdHashMap.inl"
                     ,0xf4,0,"%s\n\t%s");
   }
   local_30[0] = *param_1;
-  next(this_00,local_30);
+  next(this,local_30);
   pvVar1 = *param_1;
   *param_1 = local_30[0];
-  uVar2 = *puVar5;
-  *puVar5 = 0;
-  bVar3 = remove(this_00,(ulong64 *)((int)pvVar1 + 8));
-  *puVar5 = uVar2;
-  uVar4 = __restgprlr_29(bVar3);
-  return (bool)uVar4;
+  uVar2 = *puVar4;
+  *puVar4 = 0;
+  bVar3 = remove(this,(ulong64 *)((int)pvVar1 + 8));
+  *puVar4 = uVar2;
+  return bVar3;
 }
 
 
@@ -1206,6 +1151,9 @@ bdHashMap<unsigned___int64,bdReference<bdRemoteTask>,bdHashingClass>::getIterato
 
 // 828FFDF0  insertAfter  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdcontainers/bdlinkedlist.inl:346)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void __thiscall
 bdLinkedList<bdReference<bdRemoteTask>_>::insertAfter
           (bdLinkedList<bdReference<bdRemoteTask>_> *this,void *param_1,
@@ -1213,68 +1161,62 @@ bdLinkedList<bdReference<bdRemoteTask>_>::insertAfter
 
 {
   bdRemoteTask *pbVar1;
-  uint uVar2;
+  Node *pNVar2;
   uint uVar3;
   bool bVar4;
-  undefined4 *puVar5;
-  uint *puVar6;
-  ulonglong uVar7;
-  longlong lVar8;
-  uint *puVar9;
+  Node *pNVar5;
+  longlong lVar6;
+  uint *puVar7;
   char in_RESERVE;
   
-  uVar7 = (ulonglong)(int)param_1;
-  puVar5 = (undefined4 *)__savegprlr_29(this);
-  puVar6 = bdMemory::allocate(0xc);
-  if (puVar6 == (uint *)0x0) {
-    puVar6 = (uint *)0x0;
+  pNVar5 = bdMemory::allocate(0xc);
+  if (pNVar5 == (Node *)0x0) {
+    pNVar5 = (Node *)0x0;
   }
   else {
     pbVar1 = param_2->m_ptr;
-    *puVar6 = (uint)pbVar1;
+    (pNVar5->m_data).m_ptr = pbVar1;
     if (ZEXT48(pbVar1) != 0) {
-      lVar8 = ZEXT48(pbVar1) + 4;
+      lVar6 = ZEXT48(pbVar1) + 4;
       bVar4 = false;
       do {
-        puVar9 = (uint *)lVar8;
+        puVar7 = (uint *)lVar6;
         if (in_RESERVE != '\0') {
-          uVar2 = storeWordConditionalIndexed((ulonglong)*puVar9 + 1,0,lVar8);
-          *puVar9 = uVar2;
+          uVar3 = storeWordConditionalIndexed((ulonglong)*puVar7 + 1,0,lVar6);
+          *puVar7 = uVar3;
           bVar4 = true;
         }
       } while (!bVar4);
     }
   }
-  if ((uVar7 & 0xffffffff) == 0) {
-    puVar6[1] = 0;
-    puVar6[2] = puVar5[1];
-    if (puVar5[1] == 0) {
-      *puVar5 = puVar6;
+  if (param_1 == (void *)0x0) {
+    pNVar5->m_next = (Node *)0x0;
+    pNVar5->m_prev = this->m_tail;
+    if (this->m_tail == (Node *)0x0) {
+      this->m_head = pNVar5;
     }
     else {
-      *(uint **)(puVar5[1] + 4) = puVar6;
+      this->m_tail->m_next = pNVar5;
     }
-    puVar5[1] = puVar6;
+    this->m_tail = pNVar5;
   }
   else {
-    uVar3 = (uint)uVar7;
-    uVar2 = *(uint *)(uVar3 + 4);
-    puVar6[2] = uVar3;
-    puVar6[1] = uVar2;
-    if (*(int *)(uVar3 + 4) == 0) {
-      if ((uVar7 & 0xffffffff) != (ulonglong)(uint)puVar5[1]) {
+    pNVar2 = *(Node **)((int)param_1 + 4);
+    pNVar5->m_prev = param_1;
+    pNVar5->m_next = pNVar2;
+    if (*(int *)((int)param_1 + 4) == 0) {
+      if (param_1 != this->m_tail) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdCore/bdContainers/bdLinkedList.inl"
                         ,0x16b,0,"%s\n\t%s");
       }
-      puVar5[1] = puVar6;
+      this->m_tail = pNVar5;
     }
     else {
-      *(uint **)(*(int *)(uVar3 + 4) + 8) = puVar6;
+      *(Node **)(*(int *)((int)param_1 + 4) + 8) = pNVar5;
     }
-    *(uint **)(uVar3 + 4) = puVar6;
+    *(Node **)((int)param_1 + 4) = pNVar5;
   }
-  puVar5[2] = puVar5[2] + 1;
-  __restgprlr_29();
+  this->m_size = this->m_size + 1;
   return;
 }
 
@@ -1459,6 +1401,9 @@ bdHashMap<unsigned___int64,bdReference<bdByteBuffer>,bdHashingClass>::createMap
 
 // 82900238  resize  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdcontainers/bdhashmap.inl:521)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 void __thiscall
 bdHashMap<unsigned___int64,bdReference<bdByteBuffer>,bdHashingClass>::resize
           (bdHashMap<unsigned___int64,bdReference<bdByteBuffer>,bdHashingClass> *this,uint param_1)
@@ -1467,28 +1412,25 @@ bdHashMap<unsigned___int64,bdReference<bdByteBuffer>,bdHashingClass>::resize
   Node **ppNVar1;
   Node *pNVar2;
   Node *this_00;
-  bdHashMap<unsigned___int64,bdReference<bdByteBuffer>,bdHashingClass> *this_01;
   uint uVar3;
   Node **ppNVar4;
   ulonglong uVar5;
   
-  this_01 = (bdHashMap<unsigned___int64,bdReference<bdByteBuffer>,bdHashingClass> *)
-            __savegprlr_26(this);
-  ppNVar1 = this_01->m_map;
-  uVar5 = (ulonglong)this_01->m_capacity;
+  ppNVar1 = this->m_map;
+  uVar5 = (ulonglong)this->m_capacity;
   uVar3 = bdBitOperations::nextPowerOf2(param_1);
-  if (this_01->m_capacity < uVar3) {
-    this_01->m_capacity = uVar3;
-    this_01->m_threshold = (uint)(longlong)(this_01->m_loadFactor * (float)uVar3);
+  if (this->m_capacity < uVar3) {
+    this->m_capacity = uVar3;
+    this->m_threshold = (uint)(longlong)(this->m_loadFactor * (float)uVar3);
     ppNVar4 = bdMemory::allocate(uVar3 << 2);
-    this_01->m_map = ppNVar4;
-    this_01->m_size = 0;
+    this->m_map = ppNVar4;
+    this->m_size = 0;
     memset();
     ppNVar4 = ppNVar1;
     for (; uVar5 != 0; uVar5 = uVar5 - 1) {
       this_00 = *ppNVar4;
       while (this_00 != (Node *)0x0) {
-        put(this_01,&this_00->m_key,&this_00->m_data);
+        put(this,&this_00->m_key,&this_00->m_data);
         pNVar2 = this_00->m_next;
         bdReference<bdByteBuffer>::~bdReference<bdByteBuffer>(&this_00->m_data);
         bdMemory::deallocate(this_00);
@@ -1498,12 +1440,14 @@ bdHashMap<unsigned___int64,bdReference<bdByteBuffer>,bdHashingClass>::resize
     }
     bdMemory::deallocate(ppNVar1);
   }
-  __restgprlr_26();
   return;
 }
 
 
 // 829008E0  resize  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdcontainers/bdhashmap.inl:521)
+
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 
 void __thiscall
 bdHashMap<unsigned___int64,bdReference<bdRemoteTask>,bdHashingClass>::resize
@@ -1513,28 +1457,25 @@ bdHashMap<unsigned___int64,bdReference<bdRemoteTask>,bdHashingClass>::resize
   Node **ppNVar1;
   Node *pNVar2;
   Node *this_00;
-  bdHashMap<unsigned___int64,bdReference<bdRemoteTask>,bdHashingClass> *this_01;
   uint uVar3;
   Node **ppNVar4;
   ulonglong uVar5;
   
-  this_01 = (bdHashMap<unsigned___int64,bdReference<bdRemoteTask>,bdHashingClass> *)
-            __savegprlr_26(this);
-  ppNVar1 = this_01->m_map;
-  uVar5 = (ulonglong)this_01->m_capacity;
+  ppNVar1 = this->m_map;
+  uVar5 = (ulonglong)this->m_capacity;
   uVar3 = bdBitOperations::nextPowerOf2(param_1);
-  if (this_01->m_capacity < uVar3) {
-    this_01->m_capacity = uVar3;
-    this_01->m_threshold = (uint)(longlong)(this_01->m_loadFactor * (float)uVar3);
+  if (this->m_capacity < uVar3) {
+    this->m_capacity = uVar3;
+    this->m_threshold = (uint)(longlong)(this->m_loadFactor * (float)uVar3);
     ppNVar4 = bdMemory::allocate(uVar3 << 2);
-    this_01->m_map = ppNVar4;
-    this_01->m_size = 0;
+    this->m_map = ppNVar4;
+    this->m_size = 0;
     memset();
     ppNVar4 = ppNVar1;
     for (; uVar5 != 0; uVar5 = uVar5 - 1) {
       this_00 = *ppNVar4;
       while (this_00 != (Node *)0x0) {
-        put(this_01,&this_00->m_key,&this_00->m_data);
+        put(this,&this_00->m_key,&this_00->m_data);
         pNVar2 = this_00->m_next;
         bdReference<bdRemoteTask>::~bdReference<bdRemoteTask>(&this_00->m_data);
         bdMemory::deallocate(this_00);
@@ -1544,7 +1485,6 @@ bdHashMap<unsigned___int64,bdReference<bdRemoteTask>,bdHashingClass>::resize
     }
     bdMemory::deallocate(ppNVar1);
   }
-  __restgprlr_26();
   return;
 }
 

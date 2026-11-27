@@ -2,90 +2,84 @@
 
 // 8292B3A0  _chsize_nolock  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/chsize.c:81)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 int _chsize_nolock(int param_1,long64 param_2)
 
 {
-  int iVar3;
   long64 lVar1;
   long64 lVar2;
-  void *pvVar4;
-  int *piVar5;
+  void *pvVar3;
+  int *piVar4;
+  int iVar5;
   int iVar6;
-  int iVar7;
-  int iVar8;
-  ulong *puVar9;
-  void *pvVar10;
-  ulong uVar11;
-  longlong lVar12;
-  uint uVar13;
+  ulong *puVar7;
+  void *pvVar8;
+  int iVar9;
+  ulong uVar10;
+  longlong lVar11;
+  uint uVar12;
   
-  iVar3 = __savegprlr_26(param_1);
-  iVar6 = 0;
-  lVar1 = _lseeki64_nolock(iVar3,0,1);
-  if ((lVar1 != -1) && (lVar2 = _lseeki64_nolock(iVar3,0,2), lVar2 != -1)) {
-    lVar12 = param_2 - lVar2;
-    if (lVar12 < 1) {
-      if (lVar12 < 0) {
-        lVar2 = _lseeki64_nolock(iVar3,param_2,0);
-        if (lVar2 == -1) goto LAB_8292b418;
-        pvVar4 = (void *)_get_osfhandle(iVar3);
-        iVar6 = SetEndOfFile(pvVar4);
-        if (iVar6 == 0) {
-          piVar5 = _errno();
-          *piVar5 = 0xd;
-          puVar9 = __doserrno();
-          uVar11 = GetLastError();
-          *puVar9 = uVar11;
-          iVar6 = -1;
-          goto LAB_8292b50c;
-        }
-      }
-LAB_8292b514:
-      lVar1 = _lseeki64_nolock(iVar3,lVar1,0);
-      if (lVar1 != -1) {
-        iVar6 = 0;
-        goto LAB_8292b420;
-      }
-    }
-    else {
-      pvVar4 = GetProcessHeap();
-      pvVar4 = RtlAllocateHeap(pvVar4,8,0x1000);
-      if (pvVar4 == (void *)0x0) {
-        piVar5 = _errno();
-        *piVar5 = 0xc;
-      }
-      else {
-        iVar7 = _setmode_nolock(iVar3,0x8000);
-        do {
-          uVar13 = 0x1000;
-          if (lVar12 < 0x1000) {
-            uVar13 = (uint)lVar12;
-          }
-          iVar8 = _write_nolock(iVar3,pvVar4,uVar13);
-          if (iVar8 == -1) {
-            puVar9 = __doserrno();
-            if (*puVar9 == 5) {
-              piVar5 = _errno();
-              *piVar5 = 0xd;
-            }
-            iVar6 = -1;
-            break;
-          }
-          lVar12 = lVar12 - iVar8;
-        } while (0 < lVar12);
-        _setmode_nolock(iVar3,iVar7);
-        pvVar10 = GetProcessHeap();
-        RtlFreeHeap(pvVar10,0,pvVar4);
-LAB_8292b50c:
-        if (iVar6 != -1) goto LAB_8292b514;
+  iVar9 = 0;
+  lVar1 = _lseeki64_nolock(param_1,0,1);
+  if ((lVar1 == -1) || (lVar2 = _lseeki64_nolock(param_1,0,2), lVar2 == -1)) goto LAB_8292b418;
+  lVar11 = param_2 - lVar2;
+  if (lVar11 < 1) {
+    if (lVar11 < 0) {
+      lVar2 = _lseeki64_nolock(param_1,param_2,0);
+      if (lVar2 == -1) goto LAB_8292b418;
+      pvVar3 = (void *)_get_osfhandle(param_1);
+      iVar9 = SetEndOfFile(pvVar3);
+      if (iVar9 == 0) {
+        piVar4 = _errno();
+        *piVar4 = 0xd;
+        puVar7 = __doserrno();
+        uVar10 = GetLastError();
+        *puVar7 = uVar10;
+        iVar9 = -1;
+        goto LAB_8292b50c;
       }
     }
   }
+  else {
+    pvVar3 = GetProcessHeap();
+    pvVar3 = RtlAllocateHeap(pvVar3,8,0x1000);
+    if (pvVar3 == (void *)0x0) {
+      piVar4 = _errno();
+      *piVar4 = 0xc;
+      goto LAB_8292b418;
+    }
+    iVar5 = _setmode_nolock(param_1,0x8000);
+    do {
+      uVar12 = 0x1000;
+      if (lVar11 < 0x1000) {
+        uVar12 = (uint)lVar11;
+      }
+      iVar6 = _write_nolock(param_1,pvVar3,uVar12);
+      if (iVar6 == -1) {
+        puVar7 = __doserrno();
+        if (*puVar7 == 5) {
+          piVar4 = _errno();
+          *piVar4 = 0xd;
+        }
+        iVar9 = -1;
+        break;
+      }
+      lVar11 = lVar11 - iVar6;
+    } while (0 < lVar11);
+    _setmode_nolock(param_1,iVar5);
+    pvVar8 = GetProcessHeap();
+    RtlFreeHeap(pvVar8,0,pvVar3);
+LAB_8292b50c:
+    if (iVar9 == -1) goto LAB_8292b418;
+  }
+  lVar1 = _lseeki64_nolock(param_1,lVar1,0);
+  if (lVar1 != -1) {
+    return 0;
+  }
 LAB_8292b418:
-  piVar5 = _errno();
-  iVar6 = *piVar5;
-LAB_8292b420:
-  iVar6 = __restgprlr_26(iVar6);
-  return iVar6;
+  piVar4 = _errno();
+  return *piVar4;
 }
 

@@ -2,15 +2,17 @@
 
 // 824C8A68  CM_TraceStaticModel  (qcommon/cm_staticmodel.cpp:53)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void CM_TraceStaticModel(cStaticModel_s *param_1,trace_t *param_2,float *param_3,float *param_4,
                         int param_5)
 
 {
   float fVar1;
   float fVar2;
-  undefined4 *puVar3;
-  int iVar4;
-  float (*pafVar5) [3];
+  int iVar3;
+  float (*pafVar4) [3];
   float local_70;
   float local_6c;
   float local_68;
@@ -20,20 +22,19 @@ void CM_TraceStaticModel(cStaticModel_s *param_1,trace_t *param_2,float *param_3
   float afStack_50 [4];
   float afStack_40 [16];
   
-  puVar3 = (undefined4 *)__savegprlr_27(param_1);
-  pafVar5 = (float (*) [3])(puVar3 + 4);
-  local_70 = *param_3 - (float)puVar3[1];
-  local_6c = param_3[1] - (float)puVar3[2];
-  local_68 = param_3[2] - (float)puVar3[3];
-  MatrixTransformVector(&local_70,pafVar5,afStack_40);
-  local_70 = *param_4 - (float)puVar3[1];
-  local_6c = param_4[1] - (float)puVar3[2];
-  local_68 = param_4[2] - (float)puVar3[3];
-  MatrixTransformVector(&local_70,pafVar5,afStack_50);
-  iVar4 = XModelTraceLine((XModel *)*puVar3,param_2,afStack_40,afStack_50,param_5);
-  if (-1 < iVar4) {
+  pafVar4 = param_1->invScaledAxis;
+  local_70 = *param_3 - param_1->origin[0];
+  local_6c = param_3[1] - param_1->origin[1];
+  local_68 = param_3[2] - param_1->origin[2];
+  MatrixTransformVector(&local_70,pafVar4,afStack_40);
+  local_70 = *param_4 - param_1->origin[0];
+  local_6c = param_4[1] - param_1->origin[1];
+  local_68 = param_4[2] - param_1->origin[2];
+  MatrixTransformVector(&local_70,pafVar4,afStack_50);
+  iVar3 = XModelTraceLine(param_1->xmodel,param_2,afStack_40,afStack_50,param_5);
+  if (-1 < iVar3) {
     Trace_SetHitId(param_2,TRACE_HITTYPE_ENTITY,0x7fe);
-    MatrixTransposeTransformVector(param_2->normal,pafVar5,&local_60);
+    MatrixTransposeTransformVector(param_2->normal,pafVar4,&local_60);
     fVar2 = SQRT(local_60 * local_60 + local_58 * local_58 + local_5c * local_5c);
     fVar1 = 1.0;
     if (-fVar2 < 0.0) {
@@ -44,19 +45,19 @@ void CM_TraceStaticModel(cStaticModel_s *param_1,trace_t *param_2,float *param_3
     param_2->normal[1] = local_5c * fVar1;
     param_2->normal[2] = local_58 * fVar1;
   }
-  __restgprlr_27();
   return;
 }
 
 
 // 824C8BA0  CM_TraceStaticModelComplete  (qcommon/cm_staticmodel.cpp:93)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 int CM_TraceStaticModelComplete(cStaticModel_s *param_1,float *param_2,float *param_3,int param_4)
 
 {
-  undefined4 *puVar1;
-  uint uVar2;
-  int iVar3;
+  uint uVar1;
   float local_90;
   float local_8c;
   float local_88;
@@ -64,18 +65,16 @@ int CM_TraceStaticModelComplete(cStaticModel_s *param_1,float *param_2,float *pa
   float afStack_70 [4];
   trace_t local_60;
   
-  puVar1 = (undefined4 *)__savegprlr_28(param_1);
-  local_90 = *param_2 - (float)puVar1[1];
-  local_8c = param_2[1] - (float)puVar1[2];
-  local_88 = param_2[2] - (float)puVar1[3];
-  MatrixTransformVector(&local_90,(float (*) [3])(puVar1 + 4),afStack_70);
-  local_90 = *param_3 - (float)puVar1[1];
-  local_8c = param_3[1] - (float)puVar1[2];
-  local_88 = param_3[2] - (float)puVar1[3];
-  MatrixTransformVector(&local_90,(float (*) [3])(puVar1 + 4),afStack_80);
+  local_90 = *param_2 - param_1->origin[0];
+  local_8c = param_2[1] - param_1->origin[1];
+  local_88 = param_2[2] - param_1->origin[2];
+  MatrixTransformVector(&local_90,param_1->invScaledAxis,afStack_70);
+  local_90 = *param_3 - param_1->origin[0];
+  local_8c = param_3[1] - param_1->origin[1];
+  local_88 = param_3[2] - param_1->origin[2];
+  MatrixTransformVector(&local_90,param_1->invScaledAxis,afStack_80);
   local_60.fraction = 1.0;
-  uVar2 = XModelTraceLine((XModel *)*puVar1,&local_60,afStack_70,afStack_80,param_4);
-  iVar3 = __restgprlr_28(uVar2 >> 0x1f);
-  return iVar3;
+  uVar1 = XModelTraceLine(param_1->xmodel,&local_60,afStack_70,afStack_80,param_4);
+  return uVar1 >> 0x1f;
 }
 

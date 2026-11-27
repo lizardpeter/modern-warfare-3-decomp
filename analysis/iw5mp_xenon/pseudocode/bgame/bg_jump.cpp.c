@@ -58,47 +58,38 @@ void Jump_ClearState(playerState_s *param_1)
 
 // 8226D388  Jump_GetStepHeight  (bgame/bg_jump.cpp:142)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
 bool Jump_GetStepHeight(playerState_s *param_1,float *param_2,float *param_3)
 
 {
   float fVar1;
-  float fVar2;
-  dvar_t *pdVar3;
-  int iVar4;
-  undefined1 uVar5;
-  ulonglong uVar6;
-  ulonglong uVar7;
+  dvar_t *pdVar2;
   
-  uVar7 = (ulonglong)(int)param_3;
-  uVar6 = (ulonglong)(int)param_2;
-  iVar4 = __savegprlr_27(param_1);
-  if ((*(uint *)(iVar4 + 0xc) & 0x2000) == 0) {
+  if ((param_1->pm_flags & 0x2000U) == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_jump.cpp",0x8f,0,"%s"
                    );
   }
-  if ((uVar6 & 0xffffffff) == 0) {
+  if (param_2 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_jump.cpp",0x90,0,"%s"
                    );
   }
-  if ((uVar7 & 0xffffffff) == 0) {
+  if (param_3 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_jump.cpp",0x91,0,"%s"
                    );
   }
-  pdVar3 = jump_height;
-  if (*(float *)((int)uVar6 + 8) < (jump_height->current).value + *(float *)(iVar4 + 0x80)) {
+  pdVar2 = jump_height;
+  if (param_2[2] < (jump_height->current).value + param_1->jumpOriginZ) {
     fVar1 = *(float *)(DAT_829c4000 + 0xc);
-    *(float *)uVar7 = fVar1;
-    fVar2 = *(float *)((int)uVar6 + 8);
-    if (*(float *)(iVar4 + 0x80) + (pdVar3->current).value < fVar1 + fVar2) {
-      *(float *)uVar7 = (*(float *)(iVar4 + 0x80) + (pdVar3->current).value) - fVar2;
+    *param_3 = fVar1;
+    if (param_1->jumpOriginZ + (pdVar2->current).value < fVar1 + param_2[2]) {
+      *param_3 = (param_1->jumpOriginZ + (pdVar2->current).value) - param_2[2];
     }
-    uVar5 = __restgprlr_27(1);
-    return (bool)uVar5;
+    return true;
   }
-  uVar5 = __restgprlr_27(0);
-  return (bool)uVar5;
+  return false;
 }
 
 
@@ -177,35 +168,28 @@ void Jump_ApplySlowdown(playerState_s *param_1)
 
 // 8226D670  Jump_GetSlowdownFriction  (bgame/bg_jump.cpp:228)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
 float Jump_GetSlowdownFriction(playerState_s *param_1)
 
 {
-  int iVar1;
-  double dVar2;
-  
-  iVar1 = __savegprlr_29(param_1);
-  if ((*(uint *)(iVar1 + 0xc) & 0x2000) == 0) {
+  if ((param_1->pm_flags & 0x2000U) == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_jump.cpp",0xe5,0,"%s"
                    );
   }
-  if (0x708 < *(int *)(iVar1 + 8)) {
+  if (0x708 < param_1->pm_time) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_jump.cpp",0xe6,0,"%s"
                    );
   }
-  if (((jump_slowdownEnable->current).enabled != false) &&
-     ((*(uint *)(iVar1 + 0xc) & 0x400000) == 0)) {
-    if (0x6a3 < *(int *)(iVar1 + 8)) {
-      dVar2 = (double)__restgprlr_29(0x4004000000000000);
-      return (float)dVar2;
+  if (((jump_slowdownEnable->current).enabled != false) && ((param_1->pm_flags & 0x400000U) == 0)) {
+    if (0x6a3 < param_1->pm_time) {
+      return 2.5;
     }
-    dVar2 = (double)__restgprlr_29((double)((float)(longlong)*(int *)(iVar1 + 8) * 0.00088235294 +
-                                           1.0));
-    return (float)dVar2;
+    return (float)(longlong)param_1->pm_time * 0.00088235294 + 1.0;
   }
-  dVar2 = (double)__restgprlr_29(0x3ff0000000000000);
-  return (float)dVar2;
+  return 1.0;
 }
 
 
@@ -234,73 +218,62 @@ float Jump_ReduceFriction(playerState_s *param_1)
 
 // 8226D810  Jump_ClampVelocity  (bgame/bg_jump.cpp:274)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
 void Jump_ClampVelocity(playerState_s *param_1,float *param_2)
 
 {
   float fVar1;
-  int iVar2;
-  ulonglong uVar3;
   
-  uVar3 = (ulonglong)(int)param_2;
-  iVar2 = __savegprlr_28(param_1);
-  if ((*(uint *)(iVar2 + 0xc) & 0x2000) == 0) {
+  if ((param_1->pm_flags & 0x2000U) == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_jump.cpp",0x116,0,
                     "%s");
   }
-  if ((uVar3 & 0xffffffff) == 0) {
+  if (param_2 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_jump.cpp",0x117,0,
                     "%s");
   }
-  if (0.0 < *(float *)(iVar2 + 0x24) - *(float *)((int)uVar3 + 8)) {
-    fVar1 = ((jump_height->current).value + *(float *)(iVar2 + 0x80)) - *(float *)(iVar2 + 0x24);
+  if (0.0 < param_1->origin[2] - param_2[2]) {
+    fVar1 = ((jump_height->current).value + param_1->jumpOriginZ) - param_1->origin[2];
     if (fVar1 < 0.1) {
-      *(undefined4 *)(iVar2 + 0x30) = 0;
-      __restgprlr_28();
+      param_1->velocity[2] = 0.0;
       return;
     }
-    fVar1 = SQRT((float)(longlong)*(int *)(iVar2 + 0x58) * fVar1 * 2.0);
-    if (fVar1 < *(float *)(iVar2 + 0x30)) {
-      *(float *)(iVar2 + 0x30) = fVar1;
+    fVar1 = SQRT((float)(longlong)param_1->gravity * fVar1 * 2.0);
+    if (fVar1 < param_1->velocity[2]) {
+      param_1->velocity[2] = fVar1;
     }
   }
-  __restgprlr_28();
   return;
 }
 
 
 // 8226D918  Jump_GetLandFactor  (bgame/bg_jump.cpp:304)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
 float Jump_GetLandFactor(playerState_s *param_1)
 
 {
-  int iVar1;
-  double dVar2;
-  
-  iVar1 = __savegprlr_29(param_1);
-  if ((*(uint *)(iVar1 + 0xc) & 0x2000) == 0) {
+  if ((param_1->pm_flags & 0x2000U) == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_jump.cpp",0x131,0,
                     "%s");
   }
-  if (0x708 < *(int *)(iVar1 + 8)) {
+  if (0x708 < param_1->pm_time) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_jump.cpp",0x132,0,
                     "%s");
   }
-  if (((jump_slowdownEnable->current).enabled != false) &&
-     ((*(uint *)(iVar1 + 0xc) & 0x400000) == 0)) {
-    if (0x6a3 < *(int *)(iVar1 + 8)) {
-      dVar2 = (double)__restgprlr_29(0x4004000000000000);
-      return (float)dVar2;
+  if (((jump_slowdownEnable->current).enabled != false) && ((param_1->pm_flags & 0x400000U) == 0)) {
+    if (0x6a3 < param_1->pm_time) {
+      return 2.5;
     }
-    dVar2 = (double)__restgprlr_29((double)((float)(longlong)*(int *)(iVar1 + 8) * 0.00088235294 +
-                                           1.0));
-    return (float)dVar2;
+    return (float)(longlong)param_1->pm_time * 0.00088235294 + 1.0;
   }
-  dVar2 = (double)__restgprlr_29(0x3ff0000000000000);
-  return (float)dVar2;
+  return 1.0;
 }
 
 
@@ -389,99 +362,93 @@ int BG_GetMoveDirection(float *param_1,float param_2)
 
 // 8226DBA8  Jump_CheckDive  (bgame/bg_jump.cpp:372)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
 bool Jump_CheckDive(pmove_t *param_1,pml_t *param_2,playerState_s *param_3)
 
 {
   float fVar1;
-  int iVar2;
-  pmove_t *ppVar3;
-  undefined1 uVar4;
-  longlong lVar5;
+  double dVar2;
+  double dVar3;
+  double dVar4;
+  double dVar5;
   double dVar6;
   double dVar7;
-  double dVar8;
-  double dVar9;
-  double dVar10;
-  double dVar11;
   float local_d8;
   float local_d4;
   float local_d0;
   Bounds local_c0;
   trace_t local_a0 [3];
   
-  lVar5 = (longlong)(int)param_3;
-  __savegprlr_26(param_1);
-  ppVar3 = (pmove_t *)__savefpr_27();
-  if (lVar5 == -0x4ec) {
+  if (param_3 == (playerState_s *)0xfffffb14) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\../bgame/bg_perks.h",
                     0x4f,0,"%s");
   }
-  iVar2 = (int)lVar5;
-  if (((*(uint *)(iVar2 + 0x4f0) & 2) != 0) &&
-     (((*(uint *)(iVar2 + 0xc) & 0x2000) == 0 || (*(int *)(iVar2 + 8) < 800)))) {
-    dVar7 = 0.0;
-    dVar9 = (double)((float)(longlong)(ppVar3->cmd).rightmove * 0.007874016);
-    dVar10 = (double)((float)(longlong)(ppVar3->cmd).forwardmove * 0.007874016);
-    if (dVar10 < 0.0) {
-      dVar10 = (double)(float)(dVar10 * 0.30000001192092896);
+  if (((param_3->perks[1] & 2) != 0) &&
+     (((param_3->pm_flags & 0x2000U) == 0 || (param_3->pm_time < 800)))) {
+    dVar3 = 0.0;
+    dVar5 = (double)((float)(longlong)(param_1->cmd).rightmove * 0.007874016);
+    dVar6 = (double)((float)(longlong)(param_1->cmd).forwardmove * 0.007874016);
+    if (dVar6 < 0.0) {
+      dVar6 = (double)(float)(dVar6 * 0.30000001192092896);
     }
-    dVar8 = 1.0;
-    dVar6 = 0.0020000000949949026;
+    dVar4 = 1.0;
+    dVar2 = 0.0020000000949949026;
     if (0.002 <= ABS((param_2->forward[2] * param_2->forward[2] +
                      param_2->forward[0] * param_2->forward[0] +
                      param_2->forward[1] * param_2->forward[1]) - 1.0)) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_jump.cpp",0x18b,0,
                       "%s");
     }
-    if (dVar6 <= ABS((double)(float)((double)(param_2->right[2] * param_2->right[2] +
+    if (dVar2 <= ABS((double)(float)((double)(param_2->right[2] * param_2->right[2] +
                                              param_2->right[0] * param_2->right[0] +
-                                             param_2->right[1] * param_2->right[1]) - dVar8))) {
+                                             param_2->right[1] * param_2->right[1]) - dVar4))) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_jump.cpp",0x18c,0,
                       "%s");
     }
-    dVar11 = (double)(float)((double)param_2->right[0] * dVar9 +
-                            (double)(float)((double)param_2->forward[0] * dVar10));
-    dVar6 = (double)(float)(dVar9 * (double)param_2->right[1] +
-                           (double)(float)(dVar10 * (double)param_2->forward[1]));
-    dVar10 = (double)SQRT((float)(dVar6 * dVar6 + (double)(float)(dVar11 * dVar11)));
-    dVar9 = dVar8;
-    if (-dVar10 < 0.0) {
-      dVar9 = dVar10;
+    dVar7 = (double)(float)((double)param_2->right[0] * dVar5 +
+                           (double)(float)((double)param_2->forward[0] * dVar6));
+    dVar2 = (double)(float)(dVar5 * (double)param_2->right[1] +
+                           (double)(float)(dVar6 * (double)param_2->forward[1]));
+    dVar6 = (double)SQRT((float)(dVar2 * dVar2 + (double)(float)(dVar7 * dVar7)));
+    dVar5 = dVar4;
+    if (-dVar6 < 0.0) {
+      dVar5 = dVar6;
     }
-    dVar9 = (double)(float)(dVar8 / dVar9);
-    if (0.10000000149011612 <= dVar10) {
-      local_c0.midPoint[0] = (float)dVar7;
-      local_c0.midPoint[1] = (float)dVar7;
+    dVar5 = (double)(float)(dVar4 / dVar5);
+    if (0.10000000149011612 <= dVar6) {
+      local_c0.midPoint[0] = (float)dVar3;
+      local_c0.midPoint[1] = (float)dVar3;
       local_c0.midPoint[2] = 44.0;
       local_c0.halfSize[0] = 15.0;
       local_c0.halfSize[1] = 15.0;
       local_c0.halfSize[2] = 26.0;
       fVar1 = (perk_diveDistanceCheck->current).value;
-      local_d8 = fVar1 * (float)(dVar9 * dVar11) + *(float *)(iVar2 + 0x1c);
-      local_d4 = (float)(dVar6 * dVar9) * fVar1 + *(float *)(iVar2 + 0x20);
-      local_d0 = (float)(dVar9 * dVar7) * fVar1 + *(float *)(iVar2 + 0x24);
-      PM_trace(ppVar3,local_a0,(float *)(iVar2 + 0x1c),&local_d8,&local_c0,*(int *)(iVar2 + 0x150),
-               ppVar3->tracemask);
-      if (dVar8 <= (double)local_a0[0].fraction) {
+      local_d8 = fVar1 * (float)(dVar5 * dVar7) + param_3->origin[0];
+      local_d4 = (float)(dVar2 * dVar5) * fVar1 + param_3->origin[1];
+      local_d0 = (float)(dVar5 * dVar3) * fVar1 + param_3->origin[2];
+      PM_trace(param_1,local_a0,param_3->origin,&local_d8,&local_c0,param_3->clientNum,
+               param_1->tracemask);
+      if (dVar4 <= (double)local_a0[0].fraction) {
         fVar1 = (perk_diveVelocity->current).value;
-        *(float *)(iVar2 + 0x28) = (float)(dVar11 * (double)fVar1);
-        *(float *)(iVar2 + 0x2c) = (float)(dVar6 * (double)fVar1);
-        __restfpr_27(1);
-        uVar4 = __restgprlr_26();
-        return (bool)uVar4;
+        param_3->velocity[0] = (float)(dVar7 * (double)fVar1);
+        param_3->velocity[1] = (float)(dVar2 * (double)fVar1);
+        return true;
       }
     }
   }
-  __restfpr_27(0);
-  uVar4 = __restgprlr_26();
-  return (bool)uVar4;
+  return false;
 }
 
 
 // 8226DE48  Jump_Start  (bgame/bg_jump.cpp:429)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
 void Jump_Start(pmove_t *param_1,pml_t *param_2,float param_3)
@@ -491,31 +458,28 @@ void Jump_Start(pmove_t *param_1,pml_t *param_2,float param_3)
   uint uVar2;
   uint uVar3;
   dvar_t *pdVar4;
-  pmove_t *ppVar5;
-  bool bVar7;
-  int iVar6;
-  double extraout_f1;
+  bool bVar6;
+  int iVar5;
+  double dVar7;
   double dVar8;
-  double dVar9;
-  float fVar10;
+  float fVar9;
   
-  ppVar5 = (pmove_t *)__savegprlr_26((double)param_3,param_1);
-  ppVar1 = ppVar5->ps;
-  dVar9 = extraout_f1;
+  dVar8 = (double)param_3;
+  ppVar1 = param_1->ps;
   if (ppVar1 == (playerState_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_jump.cpp",0x1b4,0,
                     "%s");
   }
-  dVar9 = (double)((float)(longlong)ppVar1->gravity * (float)(dVar9 * 2.0));
-  bVar7 = Jump_CheckDive(ppVar5,param_2,ppVar1);
-  if ((((ppVar1->pm_flags & 0x2000U) != 0) && (ppVar1->pm_time < 0x709)) && (!bVar7)) {
-    fVar10 = Jump_GetLandFactor(ppVar1);
-    dVar8 = (double)fVar10;
-    if (dVar8 == 0.0) {
+  dVar8 = (double)((float)(longlong)ppVar1->gravity * (float)(dVar8 * 2.0));
+  bVar6 = Jump_CheckDive(param_1,param_2,ppVar1);
+  if ((((ppVar1->pm_flags & 0x2000U) != 0) && (ppVar1->pm_time < 0x709)) && (!bVar6)) {
+    fVar9 = Jump_GetLandFactor(ppVar1);
+    dVar7 = (double)fVar9;
+    if (dVar7 == 0.0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_jump.cpp",0x1bf,0,
                       "%s");
     }
-    dVar9 = (double)(float)(dVar9 / dVar8);
+    dVar8 = (double)(float)(dVar8 / dVar7);
   }
   param_2->groundPlane = 0;
   param_2->almostGroundPlane = 0;
@@ -523,30 +487,28 @@ void Jump_Start(pmove_t *param_1,pml_t *param_2,float param_3)
   ppVar1->groundEntityNum = 0x7ff;
   pdVar4 = jump_spreadAdd;
   uVar2 = ppVar1->pm_flags;
-  iVar6 = (ppVar5->cmd).serverTime;
+  iVar5 = (param_1->cmd).serverTime;
   ppVar1->jumpOriginZ = ppVar1->origin[2];
   uVar3 = uVar2 & 0xfffffe7f;
-  ppVar1->velocity[2] = (float)SQRT(dVar9);
+  ppVar1->velocity[2] = (float)SQRT(dVar8);
   ppVar1->pm_time = 0;
-  fVar10 = (ppVar1->weapCommon).aimSpreadScale;
+  fVar9 = (ppVar1->weapCommon).aimSpreadScale;
   (ppVar1->sprintState).sprintButtonUpRequired = 0;
-  ppVar1->jumpTime = iVar6;
+  ppVar1->jumpTime = iVar5;
   ppVar1->pm_flags = uVar3 | 0x2000;
-  fVar10 = (pdVar4->current).value + fVar10;
-  if (255.0 - fVar10 < 0.0) {
-    fVar10 = 255.0;
+  fVar9 = (pdVar4->current).value + fVar9;
+  if (255.0 - fVar9 < 0.0) {
+    fVar9 = 255.0;
   }
-  (ppVar1->weapCommon).aimSpreadScale = fVar10;
-  if (bVar7) {
-    fVar10 = ppVar1->viewangles[1];
+  (ppVar1->weapCommon).aimSpreadScale = fVar9;
+  if (bVar6) {
+    fVar9 = ppVar1->viewangles[1];
     ppVar1->pm_flags = uVar3 | 0x402000;
-    iVar6 = BG_GetMoveDirection(ppVar1->velocity,fVar10);
-    ppVar1->diveDirection = iVar6;
-    __restgprlr_26();
+    iVar5 = BG_GetMoveDirection(ppVar1->velocity,fVar9);
+    ppVar1->diveDirection = iVar5;
     return;
   }
   ppVar1->pm_flags = uVar2 & 0xffbffe7f | 0x2000;
-  __restgprlr_26();
   return;
 }
 
@@ -629,6 +591,8 @@ void Jump_AddSurfaceEvent(playerState_s *param_1,pml_t *param_2)
 
 // 8226E1C0  Jump_Check  (bgame/bg_jump.cpp:552)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 
@@ -638,58 +602,56 @@ bool Jump_Check(pmove_t *param_1,pml_t *param_2)
   ushort uVar1;
   playerState_s *ppVar2;
   uint uVar3;
-  pmove_t *ppVar4;
-  undefined1 uVar7;
-  EffectiveStance EVar5;
-  entityState_s *peVar6;
-  scriptAnimEventTypes_t sVar8;
+  EffectiveStance EVar4;
+  entityState_s *peVar5;
+  scriptAnimEventTypes_t sVar6;
   
-  ppVar4 = (pmove_t *)__savegprlr_26(param_1);
-  if (ppVar4 == (pmove_t *)0x0) {
+  if (param_1 == (pmove_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_jump.cpp",0x22e,0,
                     "%s");
   }
-  ppVar2 = ppVar4->ps;
+  ppVar2 = param_1->ps;
   if (ppVar2 == (playerState_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_jump.cpp",0x231,0,
                     "%s");
   }
   uVar3 = ppVar2->pm_flags;
-  if (((((uVar3 & 0x40000) == 0) && (499 < (ppVar4->cmd).serverTime - ppVar2->jumpTime)) &&
-      ((uVar3 & 0x400) == 0)) && (((uVar3 & 4) == 0 && (ppVar2->pm_type < 8)))) {
-    EVar5 = PM_GetEffectiveStance(ppVar2);
-    if ((EVar5 == PM_EFF_STANCE_DEFAULT) && (uVar3 = (ppVar4->cmd).buttons, (uVar3 & 0x400) != 0)) {
-      if (((ppVar4->oldcmd).buttons & 0x400U) != 0) {
-        (ppVar4->cmd).buttons = uVar3 & 0xfffffbff;
-        uVar7 = __restgprlr_26();
-        return (bool)uVar7;
-      }
-      uVar1 = (param_2->groundTrace).hitId;
-      if (uVar1 != 0x7ff) {
-        peVar6 = BG_GetEntityState(ppVar4->handler,(uint)uVar1);
-        if (peVar6 == (entityState_s *)0x0) {
-          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_jump.cpp",599,0
-                          ,"%s");
-        }
-        if ((peVar6->eType == 0xc) || (peVar6->eType == 0xe)) goto LAB_8226e240;
-      }
-      Jump_Start(ppVar4,param_2,(jump_height->current).value);
-      Jump_AddSurfaceEvent(ppVar2,param_2);
-      if ((ppVar2->pm_flags & 8U) != 0) {
-        Jump_PushOffLadder(ppVar2,param_2);
-      }
-      BG_AnimUpdatePlayerStateConditions(ppVar4);
-      sVar8 = ANIM_ET_JUMP;
-      if (0x7f < (byte)(ppVar4->cmd).forwardmove) {
-        sVar8 = ANIM_ET_JUMPBK;
-      }
-      BG_AnimScriptEvent(ppVar2,sVar8,0,1,&param_2->holdrand);
-      uVar7 = __restgprlr_26(1);
-      return (bool)uVar7;
+  if (((((uVar3 & 0x40000) == 0) && (499 < (param_1->cmd).serverTime - ppVar2->jumpTime)) &&
+      ((uVar3 & 0x400) == 0)) &&
+     ((((uVar3 & 4) == 0 && (ppVar2->pm_type < 8)) &&
+      ((EVar4 = PM_GetEffectiveStance(ppVar2), EVar4 == PM_EFF_STANCE_DEFAULT &&
+       (uVar3 = (param_1->cmd).buttons, (uVar3 & 0x400) != 0)))))) {
+    if (((param_1->oldcmd).buttons & 0x400U) != 0) {
+      (param_1->cmd).buttons = uVar3 & 0xfffffbff;
+      return false;
     }
+    uVar1 = (param_2->groundTrace).hitId;
+    if (uVar1 != 0x7ff) {
+      peVar5 = BG_GetEntityState(param_1->handler,(uint)uVar1);
+      if (peVar5 == (entityState_s *)0x0) {
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_jump.cpp",599,0,
+                        "%s");
+      }
+      if (peVar5->eType == 0xc) {
+        return false;
+      }
+      if (peVar5->eType == 0xe) {
+        return false;
+      }
+    }
+    Jump_Start(param_1,param_2,(jump_height->current).value);
+    Jump_AddSurfaceEvent(ppVar2,param_2);
+    if ((ppVar2->pm_flags & 8U) != 0) {
+      Jump_PushOffLadder(ppVar2,param_2);
+    }
+    BG_AnimUpdatePlayerStateConditions(param_1);
+    sVar6 = ANIM_ET_JUMP;
+    if (0x7f < (byte)(param_1->cmd).forwardmove) {
+      sVar6 = ANIM_ET_JUMPBK;
+    }
+    BG_AnimScriptEvent(ppVar2,sVar6,0,1,&param_2->holdrand);
+    return true;
   }
-LAB_8226e240:
-  uVar7 = __restgprlr_26(0);
-  return (bool)uVar7;
+  return false;
 }
 

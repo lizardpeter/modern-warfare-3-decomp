@@ -87,113 +87,100 @@ SocialPresence * Social_getCurrentPresenceStruct(int param_1)
 
 // 82707098  Social_FormatPresenceStatus  (social/social_presence.cpp:233)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 void Social_FormatPresenceStatus(int param_1,int param_2,int param_3,char *param_4,int param_5)
 
 {
-  undefined4 uVar1;
+  char *pcVar1;
   char *pcVar2;
-  char *pcVar3;
-  ulonglong uVar4;
-  ulonglong uVar5;
   ConversionArguments local_60 [2];
   
-  uVar4 = (ulonglong)param_3;
-  uVar5 = (ulonglong)param_2;
-  uVar1 = __savegprlr_26(param_1);
   local_60[0].args[1] = (char *)0x0;
   local_60[0].args[2] = (char *)0x0;
   local_60[0].args[3] = (char *)0x0;
   local_60[0].args[4] = (char *)0x0;
-  pcVar3 = (char *)0x0;
+  pcVar2 = (char *)0x0;
   local_60[0].args[5] = (char *)0x0;
   local_60[0].args[6] = (char *)0x0;
   local_60[0].args[7] = (char *)0x0;
   local_60[0].args[8] = (char *)0x0;
   local_60[0].argCount = 0;
   local_60[0].args[0] = (char *)0x0;
-  switch(uVar1) {
+  switch(param_1) {
   case 0:
   case 5:
-    pcVar3 = "PRESENCE_NOTINGAME";
+    pcVar2 = "PRESENCE_NOTINGAME";
     break;
   case 1:
-    pcVar3 = UI_SafeTranslateString("PRESENCE_PLAYINGMP");
-    if (0xf < (uVar4 & 0xffffffff)) {
+    pcVar2 = UI_SafeTranslateString("PRESENCE_PLAYINGMP");
+    if (0xf < (uint)param_3) {
       Com_PrintWarning(0x10,"WARNING: Presence gametype index %i is invalid\n");
-      uVar4 = 0;
+      param_3 = 0;
     }
-    if (0x10 < (uVar5 & 0xffffffff)) {
+    if (0x10 < (uint)param_2) {
       Com_PrintWarning(0x10,"WARNING: Presence map index %i is invalid\n");
-      uVar5 = 0;
+      param_2 = 0;
     }
     local_60[0].argCount = 2;
-    local_60[0].args[0] =
-         UI_SafeTranslateString
-                   (*(char **)((int)gametypePresenceNameReference + (int)((uVar4 & 0xffffffff) << 2)
-                              ));
-    pcVar2 = UI_SafeTranslateString
-                       (*(char **)((int)mapPresenceNameReferenceMP +
-                                  (int)((uVar5 & 0xffffffff) << 2)));
-    local_60[0].args[1] = pcVar2;
+    local_60[0].args[0] = UI_SafeTranslateString(gametypePresenceNameReference[param_3]);
+    pcVar1 = UI_SafeTranslateString(mapPresenceNameReferenceMP[param_2]);
+    local_60[0].args[1] = pcVar1;
     goto switchD_827070f4_default;
   case 2:
-    pcVar3 = UI_SafeTranslateString("PRESENCE_PLAYINGSP");
-    if (0x13 < (uVar5 & 0xffffffff)) {
+    pcVar2 = UI_SafeTranslateString("PRESENCE_PLAYINGSP");
+    if (0x13 < (uint)param_2) {
       Com_PrintWarning(0x10,"WARNING: Presence map index %i is invalid\n");
-      uVar5 = 0;
+      param_2 = 0;
     }
     local_60[0].argCount = 1;
-    local_60[0].args[0] =
-         UI_SafeTranslateString
-                   (*(char **)((int)mapPresenceNameReferenceSP + (int)((uVar5 & 0xffffffff) << 2)));
+    local_60[0].args[0] = UI_SafeTranslateString(mapPresenceNameReferenceSP[param_2]);
     goto switchD_827070f4_default;
   case 3:
-    pcVar3 = "PRESENCE_LOBBY";
+    pcVar2 = "PRESENCE_LOBBY";
     break;
   case 4:
-    pcVar3 = "PRESENCE_PARTY";
+    pcVar2 = "PRESENCE_PARTY";
     break;
   case 6:
-    pcVar3 = UI_SafeTranslateString("PRESENCE_PLAYINGSO");
-    if (0x10 < (uVar5 & 0xffffffff)) {
+    pcVar2 = UI_SafeTranslateString("PRESENCE_PLAYINGSO");
+    if (0x10 < (uint)param_2) {
       Com_PrintWarning(0x10,"WARNING: Presence map index %i is invalid\n");
-      uVar5 = 0;
+      param_2 = 0;
     }
     local_60[0].argCount = 1;
-    local_60[0].args[0] =
-         UI_SafeTranslateString
-                   (*(char **)((int)mapPresenceNameReferenceSO + (int)((uVar5 & 0xffffffff) << 2)));
+    local_60[0].args[0] = UI_SafeTranslateString(mapPresenceNameReferenceSO[param_2]);
     goto switchD_827070f4_default;
   case 7:
-    pcVar3 = "PRESENCE_SO_LOBBY";
+    pcVar2 = "PRESENCE_SO_LOBBY";
     break;
   case 8:
-    pcVar3 = UI_SafeTranslateString("PRESENCE_PLAYINGSO_SURVIVAL");
-    if (0x10 < (uVar5 & 0xffffffff)) {
+    pcVar2 = UI_SafeTranslateString("PRESENCE_PLAYINGSO_SURVIVAL");
+    if (0x10 < (uint)param_2) {
       Com_PrintWarning(0x10,"WARNING: Presence map index %i is invalid\n");
-      uVar5 = 0;
+      param_2 = 0;
     }
     local_60[0].argCount = 1;
-    local_60[0].args[0] =
-         UI_SafeTranslateString
-                   (*(char **)((int)mapPresenceNameReferenceMP + (int)((uVar5 & 0xffffffff) << 2)));
+    local_60[0].args[0] = UI_SafeTranslateString(mapPresenceNameReferenceMP[param_2]);
     goto switchD_827070f4_default;
   case 9:
-    pcVar3 = "PRESENCE_PLAYINGTHEATRE";
+    pcVar2 = "PRESENCE_PLAYINGTHEATRE";
     break;
   default:
     goto switchD_827070f4_default;
   }
-  pcVar3 = UI_SafeTranslateString(pcVar3);
+  pcVar2 = UI_SafeTranslateString(pcVar2);
 switchD_827070f4_default:
-  UI_ReplaceConversions(pcVar3,local_60,param_4,param_5);
-  __restgprlr_26();
+  UI_ReplaceConversions(pcVar2,local_60,param_4,param_5);
   return;
 }
 
 
 // 827081F8  Social_InitPresence  (social/social_presence.cpp:321)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void Social_InitPresence(void)
@@ -207,8 +194,7 @@ void Social_InitPresence(void)
   char in_RESERVE;
   byte in_cr0;
   
-  __savegprlr_28();
-  bVar2 = s_dwPresenceSetTask;
+  bVar2.m_ptr = s_dwPresenceSetTask.m_ptr;
   if (ZEXT48(s_dwPresenceSetTask.m_ptr) != 0) {
     lVar3 = ZEXT48(s_dwPresenceSetTask.m_ptr) + 4;
     do {
@@ -251,7 +237,6 @@ void Social_InitPresence(void)
     (&DAT_8455ff30)[iVar5] = 0xff;
     iVar5 = iVar5 + 0x10;
   } while (iVar5 < 0x40);
-  __restgprlr_28();
   return;
 }
 
@@ -304,6 +289,8 @@ bool Social_PresenceNeeded(int param_1)
 
 // 82708368  Social_UpdatePresenceSet  (social/social_presence.cpp:373)
 
+/* WARNING: Function: __savegprlr_20 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_20 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
@@ -332,7 +319,6 @@ void Social_UpdatePresenceSet(void)
   bdReference<bdRemoteTask> local_b0 [4];
   bdRichPresenceInfo abStack_a0 [3];
   
-  __savegprlr_20();
   if (s_dwPresenceSetTask.m_ptr != (bdRemoteTask *)0x0) {
     iVar3 = (**(code **)((s_dwPresenceSetTask.m_ptr)->_padding_ + 4))();
     if (iVar3 != 1) {
@@ -357,7 +343,9 @@ void Social_UpdatePresenceSet(void)
       DAT_8455ff2c = 4;
       bdReference<bdRemoteTask>::operator=(&s_dwPresenceSetTask,(bdRemoteTask *)0x0);
     }
-    if (s_dwPresenceSetTask.m_ptr != (bdRemoteTask *)0x0) goto LAB_827086d0;
+    if (s_dwPresenceSetTask.m_ptr != (bdRemoteTask *)0x0) {
+      return;
+    }
   }
   if (dw_presence_put_rate == (dvar_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\social_presence.cpp",
@@ -416,29 +404,29 @@ LAB_8270857c:
     piVar16 = piVar16 + 1;
     uVar15 = uVar15 + 1;
     iVar17 = iVar17 + 0x10;
-  } while ((int)piVar16 < -0x7baa00d4);
-  if (((int)uVar14 < 4) &&
-     (pbVar9 = (bdRichPresenceInfo *)dwGetRichPresence(uVar14), pbVar9 != (bdRichPresenceInfo *)0x0)
-     ) {
-    bdRichPresenceInfo::bdRichPresenceInfo(abStack_a0,&s_currentPresence[uVar14].version,0x10);
-    bVar10 = bdRichPresenceService::setInfo((bdRichPresenceService *)local_b0,pbVar9);
-    bdReference<bdRemoteTask>::operator=
-              (&s_dwPresenceSetTask,(bdReference<bdRemoteTask> *)bVar10.m_ptr);
-    bdReference<bdRemoteTask>::~bdReference<bdRemoteTask>(local_b0);
-    if (s_dwPresenceSetTask.m_ptr != (bdRemoteTask *)0x0) {
-      Com_Memcpy(local_b0,&s_currentPresence[uVar14].sessionId,8);
-      Com_Printf(0x10,
-                 "Setting demonware presence for ctrl %d: version %d, context %d, gametype %d, mapIndex %d, sessionId %llx, sessionFlags 0x%08x\n"
-                );
-      DAT_8455ff2c = uVar14;
-      s_presenceUpdateTime[uVar14] = iVar5;
-      Com_Memcpy(&DAT_8455ff30 + uVar14 * 0x10,s_currentPresence + uVar14,0x10);
+    if (-0x7baa00d5 < (int)piVar16) {
+      if (((int)uVar14 < 4) &&
+         (pbVar9 = (bdRichPresenceInfo *)dwGetRichPresence(uVar14),
+         pbVar9 != (bdRichPresenceInfo *)0x0)) {
+        bdRichPresenceInfo::bdRichPresenceInfo(abStack_a0,&s_currentPresence[uVar14].version,0x10);
+        bVar10 = bdRichPresenceService::setInfo((bdRichPresenceService *)local_b0,pbVar9);
+        bdReference<bdRemoteTask>::operator=
+                  (&s_dwPresenceSetTask,(bdReference<bdRemoteTask> *)bVar10.m_ptr);
+        bdReference<bdRemoteTask>::~bdReference<bdRemoteTask>(local_b0);
+        if (s_dwPresenceSetTask.m_ptr != (bdRemoteTask *)0x0) {
+          Com_Memcpy(local_b0,&s_currentPresence[uVar14].sessionId,8);
+          Com_Printf(0x10,
+                     "Setting demonware presence for ctrl %d: version %d, context %d, gametype %d, mapIndex %d, sessionId %llx, sessionFlags 0x%08x\n"
+                    );
+          DAT_8455ff2c = uVar14;
+          s_presenceUpdateTime[uVar14] = iVar5;
+          Com_Memcpy(&DAT_8455ff30 + uVar14 * 0x10,s_currentPresence + uVar14,0x10);
+        }
+        bdTaskResult::~bdTaskResult((bdTaskResult *)abStack_a0);
+      }
+      return;
     }
-    bdTaskResult::~bdTaskResult((bdTaskResult *)abStack_a0);
-  }
-LAB_827086d0:
-  __restgprlr_20();
-  return;
+  } while( true );
 }
 
 
@@ -465,92 +453,92 @@ bool Social_HasPlatformPresence(int param_1,ulong64 param_2)
 
 // 82707488  Social_GatherPresenceUsers  (social/social_presence.cpp:514)
 
+/* WARNING: Function: __savegprlr_19 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_19 replaced with injection: xenon_save_restore */
+
 void Social_GatherPresenceUsers(int param_1,ulong64 *param_2,int *param_3)
 
 {
   int iVar1;
-  int iVar2;
-  FriendStatus FVar3;
-  uint uVar4;
-  longlong lVar5;
-  ulonglong uVar6;
-  longlong lVar7;
-  int iVar8;
-  int iVar9;
-  ulong64 uVar10;
+  FriendStatus FVar2;
+  uint uVar3;
+  longlong lVar4;
+  ulonglong uVar5;
+  int iVar6;
+  int iVar7;
+  ulong64 uVar8;
   
-  lVar7 = (longlong)(int)param_2;
-  iVar1 = __savegprlr_19(param_1);
-  uVar6 = 0;
-  iVar8 = 0;
-  if (0 < g_FacebookFriendStore[iVar1].facebookFriendCount) {
-    iVar9 = 0;
-    lVar5 = lVar7 + -8;
-    iVar2 = iVar1 * 0x70a0;
+  uVar5 = 0;
+  iVar6 = 0;
+  if (0 < g_FacebookFriendStore[param_1].facebookFriendCount) {
+    iVar7 = 0;
+    lVar4 = (longlong)(int)param_2 + -8;
+    iVar1 = param_1 * 0x70a0;
     do {
-      uVar10 = *(ulong64 *)(g_FacebookFriendStore[0].facebookFriends[0].m_userName + iVar2 + -8);
-      iVar2 = Friends_FindIndex(iVar1,uVar10);
-      if ((iVar2 == -1) || (FVar3 = FriendsMenu_GetStatus(iVar1,iVar2), (int)FVar3 < 2)) {
-        uVar4 = Xenon_PresenceIndex(iVar1,uVar10);
-        uVar4 = uVar4 >> 0x1f ^ 1;
+      uVar8 = *(ulong64 *)(g_FacebookFriendStore[0].facebookFriends[0].m_userName + iVar1 + -8);
+      iVar1 = Friends_FindIndex(param_1,uVar8);
+      if ((iVar1 == -1) || (FVar2 = FriendsMenu_GetStatus(param_1,iVar1), (int)FVar2 < 2)) {
+        uVar3 = Xenon_PresenceIndex(param_1,uVar8);
+        uVar3 = uVar3 >> 0x1f ^ 1;
       }
       else {
-        uVar4 = 1;
+        uVar3 = 1;
       }
-      if ((uVar4 == 0) && (iVar2 = MeetPlayer_GetPositionByXuid(iVar1,uVar10), iVar2 < 0)) {
-        uVar6 = uVar6 + 1;
-        lVar5 = lVar5 + 8;
-        *(ulong64 *)lVar5 = uVar10;
-        if (((longlong)uVar6 < 0) || (200 < (int)uVar6)) {
+      if ((uVar3 == 0) && (iVar1 = MeetPlayer_GetPositionByXuid(param_1,uVar8), iVar1 < 0)) {
+        uVar5 = uVar5 + 1;
+        lVar4 = lVar4 + 8;
+        *(ulong64 *)lVar4 = uVar8;
+        if (((longlong)uVar5 < 0) || (200 < (int)uVar5)) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\social_presence.cpp"
                           ,0x227,0,
                           "userCount not in [0, MAX_DW_PRESENCE_FRIENDS]\n\t%i not in [%i, %i]");
         }
       }
-      iVar8 = iVar8 + 1;
-      iVar9 = iVar9 + 0x120;
-      iVar2 = iVar9 + iVar1 * 0x70a0;
-    } while (iVar8 < g_FacebookFriendStore[iVar1].facebookFriendCount);
+      iVar6 = iVar6 + 1;
+      iVar7 = iVar7 + 0x120;
+      iVar1 = iVar7 + param_1 * 0x70a0;
+    } while (iVar6 < g_FacebookFriendStore[param_1].facebookFriendCount);
   }
-  iVar8 = 0;
-  if (0 < g_EliteClanStore[iVar1].numMembers) {
-    iVar9 = 0;
-    lVar7 = (uVar6 & 0x1fffffff) * 8 + lVar7 + -8;
-    iVar2 = iVar1 * 0x66b8;
+  iVar6 = 0;
+  if (0 < g_EliteClanStore[param_1].numMembers) {
+    iVar7 = 0;
+    lVar4 = (uVar5 & 0x1fffffff) * 8 + (longlong)(int)param_2 + -8;
+    iVar1 = param_1 * 0x66b8;
     do {
-      uVar10 = *(ulong64 *)(g_EliteClanStore[0].members[0].m_userName + iVar2 + -8);
-      iVar2 = Friends_FindIndex(iVar1,uVar10);
-      if ((iVar2 == -1) || (FVar3 = FriendsMenu_GetStatus(iVar1,iVar2), (int)FVar3 < 2)) {
-        uVar4 = Xenon_PresenceIndex(iVar1,uVar10);
-        uVar4 = uVar4 >> 0x1f ^ 1;
+      uVar8 = *(ulong64 *)(g_EliteClanStore[0].members[0].m_userName + iVar1 + -8);
+      iVar1 = Friends_FindIndex(param_1,uVar8);
+      if ((iVar1 == -1) || (FVar2 = FriendsMenu_GetStatus(param_1,iVar1), (int)FVar2 < 2)) {
+        uVar3 = Xenon_PresenceIndex(param_1,uVar8);
+        uVar3 = uVar3 >> 0x1f ^ 1;
       }
       else {
-        uVar4 = 1;
+        uVar3 = 1;
       }
-      if (((uVar4 == 0) && (iVar2 = MeetPlayer_GetPositionByXuid(iVar1,uVar10), iVar2 < 0)) &&
-         (iVar2 = Facebook_GetPositionByXuid(iVar1,uVar10), iVar2 < 0)) {
-        uVar6 = uVar6 + 1;
-        lVar7 = lVar7 + 8;
-        *(ulong64 *)lVar7 = uVar10;
-        if (((longlong)uVar6 < 0) || (200 < (int)uVar6)) {
+      if (((uVar3 == 0) && (iVar1 = MeetPlayer_GetPositionByXuid(param_1,uVar8), iVar1 < 0)) &&
+         (iVar1 = Facebook_GetPositionByXuid(param_1,uVar8), iVar1 < 0)) {
+        uVar5 = uVar5 + 1;
+        lVar4 = lVar4 + 8;
+        *(ulong64 *)lVar4 = uVar8;
+        if (((longlong)uVar5 < 0) || (200 < (int)uVar5)) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\social_presence.cpp"
                           ,0x241,0,
                           "userCount not in [0, MAX_DW_PRESENCE_FRIENDS]\n\t%i not in [%i, %i]");
         }
       }
-      iVar8 = iVar8 + 1;
-      iVar9 = iVar9 + 0x60;
-      iVar2 = iVar9 + iVar1 * 0x66b8;
-    } while (iVar8 < g_EliteClanStore[iVar1].numMembers);
+      iVar6 = iVar6 + 1;
+      iVar7 = iVar7 + 0x60;
+      iVar1 = iVar7 + param_1 * 0x66b8;
+    } while (iVar6 < g_EliteClanStore[param_1].numMembers);
   }
-  *param_3 = (int)uVar6;
-  __restgprlr_19();
+  *param_3 = (int)uVar5;
   return;
 }
 
 
 // 827086D8  Social_UpdatePresenceGet  (social/social_presence.cpp:586)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void Social_UpdatePresenceGet(void)
@@ -567,7 +555,6 @@ void Social_UpdatePresenceGet(void)
   int *piVar9;
   bdReference<bdRemoteTask> abStack_50 [20];
   
-  __savegprlr_24();
   piVar9 = s_presenceFetchTime;
   if (s_dwPresenceGetTask.m_ptr != (bdRemoteTask *)0x0) {
     iVar1 = (**(code **)((s_dwPresenceGetTask.m_ptr)->_padding_ + 4))();
@@ -613,7 +600,9 @@ void Social_UpdatePresenceGet(void)
       DAT_84560380 = 4;
       bdReference<bdRemoteTask>::operator=(&s_dwPresenceGetTask,(bdRemoteTask *)0x0);
     }
-    if (s_dwPresenceGetTask.m_ptr != (bdRemoteTask *)0x0) goto LAB_82708a74;
+    if (s_dwPresenceGetTask.m_ptr != (bdRemoteTask *)0x0) {
+      return;
+    }
   }
   if (dw_presence_get_rate == (dvar_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\social_presence.cpp",
@@ -668,8 +657,6 @@ void Social_UpdatePresenceGet(void)
       s_presenceFetchTime[uVar3] = iVar4;
     }
   }
-LAB_82708a74:
-  __restgprlr_24();
   return;
 }
 
@@ -702,32 +689,30 @@ void Social_UpdatePresence(void)
 
 // 827076A8  Social_GetDWPresence  (social/social_presence.cpp:686)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 bdRichPresenceInfo * Social_GetDWPresence(int param_1,ulong64 param_2)
 
 {
   int iVar1;
-  bdRichPresenceInfo *pbVar2;
-  int iVar3;
   
-  iVar1 = __savegprlr_29(param_1);
   if (dw_presence_active == (dvar_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\social_presence.cpp",
                     0x2b1,0,"%s");
   }
   if ((dw_presence_active->current).integer != 0) {
-    iVar3 = 0;
-    if (0 < s_dwPresenceStore[iVar1].count) {
+    iVar1 = 0;
+    if (0 < s_dwPresenceStore[param_1].count) {
       do {
-        if (s_dwPresenceStore[iVar1].userId[iVar3] == param_2) {
-          pbVar2 = (bdRichPresenceInfo *)__restgprlr_29(s_dwPresenceStore[iVar1].presence + iVar3);
-          return pbVar2;
+        if (s_dwPresenceStore[param_1].userId[iVar1] == param_2) {
+          return s_dwPresenceStore[param_1].presence + iVar1;
         }
-        iVar3 = iVar3 + 1;
-      } while (iVar3 < s_dwPresenceStore[iVar1].count);
+        iVar1 = iVar1 + 1;
+      } while (iVar1 < s_dwPresenceStore[param_1].count);
     }
   }
-  pbVar2 = (bdRichPresenceInfo *)__restgprlr_29(0);
-  return pbVar2;
+  return (bdRichPresenceInfo *)0x0;
 }
 
 
@@ -750,83 +735,76 @@ SocialPresence * Social_GetPresence(int param_1,ulong64 param_2)
 
 // 827077A8  Social_GetPresenceString  (social/social_presence.cpp:717)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 char * Social_GetPresenceString(int param_1,ulong64 param_2)
 
 {
   ulonglong uVar1;
-  uint uVar2;
-  int iVar3;
-  FriendStatus FVar4;
-  char *pcVar5;
-  _XONLINE_PRESENCE *p_Var6;
-  bdRichPresenceInfo *pbVar7;
+  int iVar2;
+  FriendStatus FVar3;
+  _XONLINE_PRESENCE *p_Var4;
+  bdRichPresenceInfo *pbVar5;
+  char *pcVar6;
   
-  uVar2 = __savegprlr_29(param_1);
-  if (3 < uVar2) {
+  if (3 < (uint)param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\social_presence.cpp",
                     0x2d3,0,"controllerIndex doesn\'t index MAX_GPAD_COUNT\n\t%i not in [0, %i)");
   }
-  iVar3 = Friends_FindIndex(uVar2,param_2);
-  if ((iVar3 != -1) && (FVar4 = FriendsMenu_GetStatus(uVar2,iVar3), 1 < (int)FVar4)) {
-    Friends_GetPresence(uVar2,param_2,s_presenceString,0x400);
-    pcVar5 = (char *)__restgprlr_29(0xffffffff8455ff70);
-    return pcVar5;
+  iVar2 = Friends_FindIndex(param_1,param_2);
+  if ((iVar2 != -1) && (FVar3 = FriendsMenu_GetStatus(param_1,iVar2), 1 < (int)FVar3)) {
+    Friends_GetPresence(param_1,param_2,s_presenceString,0x400);
+    return s_presenceString;
   }
-  p_Var6 = MeetPlayer_GetPresence(uVar2,param_2);
-  if ((p_Var6 != (_XONLINE_PRESENCE *)0x0) ||
-     (p_Var6 = LiveParty_GetPresence(param_2), p_Var6 != (_XONLINE_PRESENCE *)0x0)) {
-    Xenon_GetPresenceString(p_Var6,s_presenceString,0x400);
-    pcVar5 = (char *)__restgprlr_29(0xffffffff8455ff70);
-    return pcVar5;
+  p_Var4 = MeetPlayer_GetPresence(param_1,param_2);
+  if ((p_Var4 != (_XONLINE_PRESENCE *)0x0) ||
+     (p_Var4 = LiveParty_GetPresence(param_2), p_Var4 != (_XONLINE_PRESENCE *)0x0)) {
+    Xenon_GetPresenceString(p_Var4,s_presenceString,0x400);
+    return s_presenceString;
   }
-  pbVar7 = Social_GetDWPresence(uVar2,param_2);
-  if (pbVar7 != (bdRichPresenceInfo *)0x0) {
-    if (pbVar7->m_online != false) {
+  pbVar5 = Social_GetDWPresence(param_1,param_2);
+  if (pbVar5 != (bdRichPresenceInfo *)0x0) {
+    if (pbVar5->m_online != false) {
       Social_FormatPresenceStatus
-                ((uint)pbVar7->m_richPresence[1],(uint)pbVar7->m_richPresence[3],
-                 (uint)pbVar7->m_richPresence[2],s_presenceString,0x400);
-      pcVar5 = (char *)__restgprlr_29(0xffffffff8455ff70);
-      return pcVar5;
+                ((uint)pbVar5->m_richPresence[1],(uint)pbVar5->m_richPresence[3],
+                 (uint)pbVar5->m_richPresence[2],s_presenceString,0x400);
+      return s_presenceString;
     }
-    pcVar5 = SEH_SafeTranslateString("XBOXLIVE_OFFLINE");
-    pcVar5 = (char *)__restgprlr_29(pcVar5);
-    return pcVar5;
+    pcVar6 = SEH_SafeTranslateString("XBOXLIVE_OFFLINE");
+    return pcVar6;
   }
   if ((dw_presence_active->current).integer == 0) {
-    pcVar5 = SEH_SafeTranslateString("XBOXLIVE_AWAY");
-    pcVar5 = (char *)__restgprlr_29(pcVar5);
-    return pcVar5;
+    pcVar6 = SEH_SafeTranslateString("XBOXLIVE_AWAY");
+    return pcVar6;
   }
-  iVar3 = Sys_Milliseconds();
+  iVar2 = Sys_Milliseconds();
   uVar1 = ((param_2 & 7) + 0x1e) * 10;
   trapDoubleWordImmediate(6,uVar1,0);
-  uVar1 = (ulonglong)(longlong)iVar3 / uVar1 & 3;
+  uVar1 = (ulonglong)(longlong)iVar2 / uVar1 & 3;
   if (uVar1 != 0) {
     if (uVar1 == 1) {
-      pcVar5 = (char *)__restgprlr_29(0xffffffff820185b8);
-      return pcVar5;
+      return "..";
     }
     if (2 < uVar1) {
-      pcVar5 = (char *)__restgprlr_29(0xffffffff820068af);
-      return pcVar5;
+      return "";
     }
-    pcVar5 = (char *)__restgprlr_29(0xffffffff820185b4);
-    return pcVar5;
+    return ".";
   }
-  pcVar5 = (char *)__restgprlr_29(0xffffffff820185bc);
-  return pcVar5;
+  return "...";
 }
 
 
 // 82707980  Social_PresenceChanged  (social/social_presence.cpp:797)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void Social_PresenceChanged(int param_1)
 
 {
   int iVar1;
-  int iVar2;
   
-  iVar1 = __savegprlr_27(param_1);
   if (dw_presence_put_rate == (dvar_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\social_presence.cpp",
                     0x31e,0,"%s");
@@ -835,16 +813,15 @@ void Social_PresenceChanged(int param_1)
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\social_presence.cpp",
                     799,0,"%s");
   }
-  iVar2 = Sys_Milliseconds();
-  if ((int)((dw_presence_put_rate->current).string + s_presenceUpdateTime[iVar1]) <
-      (int)((dw_presence_put_delay->current).string + iVar2)) {
-    s_presenceUpdateTime[iVar1] =
+  iVar1 = Sys_Milliseconds();
+  if ((int)((dw_presence_put_rate->current).string + s_presenceUpdateTime[param_1]) <
+      (int)((dw_presence_put_delay->current).string + iVar1)) {
+    s_presenceUpdateTime[param_1] =
          (int)((dw_presence_put_delay->current).string +
-              (iVar2 - (dw_presence_put_rate->current).integer));
+              (iVar1 - (dw_presence_put_rate->current).integer));
     Com_Printf(0x10,"Delaying social presence update until %d -- currentTime:%d delay:%d rate:%d\n")
     ;
   }
-  __restgprlr_27();
   return;
 }
 
@@ -938,6 +915,8 @@ void Social_SetGameTypePresence(int param_1,int param_2)
 
 // 82707B68  Social_IsAlreadyConnected  (social/social_presence.cpp:924)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
@@ -945,9 +924,7 @@ bool Social_IsAlreadyConnected(int param_1,XNKID param_2,ulong64 param_3,char **
 
 {
   int iVar1;
-  undefined1 uVar2;
   
-  __savegprlr_29(param_1);
   iVar1 = Party_InParty(&g_partyData);
   if (iVar1 != 0) {
     if (g_partyData.session == (SessionData *)0x0) {
@@ -959,13 +936,11 @@ bool Social_IsAlreadyConnected(int param_1,XNKID param_2,ulong64 param_3,char **
   }
   iVar1 = Session_FindRegisteredUser(&g_serverSession,param_3);
   if (iVar1 < 0) {
-    uVar2 = __restgprlr_29(0);
-    return (bool)uVar2;
+    return false;
   }
 LAB_82707bd8:
   *param_4 = "MENU_FRIEND_ALREADY_CONNECTED";
-  uVar2 = __restgprlr_29(1);
-  return (bool)uVar2;
+  return true;
 }
 
 
@@ -1023,55 +998,48 @@ bool Social_IsPresenceJoinable(SocialPresence *param_1,bool param_2,char **param
 
 // 82707CF8  Social_IsUserJoinable  (social/social_presence.cpp:997)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 bool Social_IsUserJoinable(int param_1,XNKID param_2,ulong64 param_3,char **param_4)
 
 {
   uchar uVar1;
   uchar uVar2;
-  int iVar3;
-  undefined1 uVar4;
-  bool bVar5;
-  ulonglong uVar6;
-  char **ppcVar7;
-  uchar *puVar8;
-  uchar *puVar9;
+  bool bVar3;
+  uchar *puVar4;
+  uchar *puVar5;
   uchar local_50 [8];
   uchar local_48 [9] [8];
   
-  uVar6 = (ulonglong)(int)param_4;
-  iVar3 = __savegprlr_26(param_1);
-  if ((uVar6 & 0xffffffff) == 0) {
+  if (param_4 == (char **)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\social_presence.cpp",
                     0x3e6,0,"%s");
   }
   local_48[0] = param_2.ab;
   Com_Memset(local_50,0,8);
-  puVar9 = local_50;
-  puVar8 = local_48[0];
+  puVar5 = local_50;
+  puVar4 = local_48[0];
   do {
-    uVar1 = *puVar9;
-    uVar2 = *puVar8;
+    uVar1 = *puVar5;
+    uVar2 = *puVar4;
     if (uVar1 != uVar2) break;
-    puVar9 = puVar9 + 1;
-    puVar8 = puVar8 + 1;
-  } while ((uchar (*) [8])puVar9 != local_48);
-  ppcVar7 = (char **)uVar6;
+    puVar5 = puVar5 + 1;
+    puVar4 = puVar4 + 1;
+  } while ((uchar (*) [8])puVar5 != local_48);
   if (uVar1 == uVar2) {
-    *ppcVar7 = "MENU_JOIN_SESSION_INVALID";
-    uVar4 = __restgprlr_26(0);
-    return (bool)uVar4;
+    *param_4 = "MENU_JOIN_SESSION_INVALID";
+    return false;
   }
-  bVar5 = Social_IsAlreadyConnected(iVar3,param_2,param_3,ppcVar7);
-  if (bVar5) {
-    if (*ppcVar7 == (char *)0x0) {
+  bVar3 = Social_IsAlreadyConnected(param_1,param_2,param_3,param_4);
+  if (bVar3) {
+    if (*param_4 == (char *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\social_presence.cpp",
                       0x3f0,0,"%s");
     }
-    uVar4 = __restgprlr_26(0);
-    return (bool)uVar4;
+    return false;
   }
-  uVar4 = __restgprlr_26(1);
-  return (bool)uVar4;
+  return true;
 }
 
 
@@ -1155,98 +1123,87 @@ LAB_82707f4c:
 
 // 82707FD8  Social_JoinPlayer  (social/social_presence.cpp:1065)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void Social_JoinPlayer(int param_1,ulong64 param_2,SocialPresence *param_3)
 
 {
-  SocialPresence *pSVar1;
-  uint uVar2;
-  bool bVar3;
-  ulonglong uVar4;
-  XNKID XVar5;
+  bool bVar1;
+  XNKID XVar2;
   char *local_30 [12];
   
-  uVar4 = (ulonglong)(int)param_3;
-  uVar2 = __savegprlr_29(param_1);
-  if (3 < uVar2) {
+  if (3 < (uint)param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\social\\social_presence.cpp",
                     0x42c,0,"controllerIndex doesn\'t index MAX_GPAD_COUNT\n\t%i not in [0, %i)");
   }
   local_30[0] = "XBOXLIVE_CANTJOINSESSION";
-  if ((uVar4 & 0xffffffff) == 0) {
+  if (param_3 == (SocialPresence *)0x0) {
     Com_PrintError(0x10,"Social_JoinPlayer() failed because the friend info was not found.\n");
     FriendsMenu_ShowErrorMessage("MENU_JOIN_SESSION_INVALID");
-    __restgprlr_29();
     return;
   }
-  pSVar1 = (SocialPresence *)uVar4;
-  bVar3 = Social_IsUserJoinable(uVar2,(XNKID)*&(pSVar1->sessionId).ab,param_2,local_30);
-  if (!bVar3) {
+  bVar1 = Social_IsUserJoinable(param_1,(XNKID)*&(param_3->sessionId).ab,param_2,local_30);
+  if (!bVar1) {
     Com_PrintError(0x10,"Social_JoinPlayer() failed because the player is not available.\n");
     FriendsMenu_ShowErrorMessage(local_30[0]);
-    __restgprlr_29();
     return;
   }
-  XVar5.ab = (uchar  [8])(ZEXT48(&stack0x00000000) - 0x30);
-  bVar3 = Social_IsPresenceJoinable(pSVar1,false,XVar5.ab._4_4_);
-  if (!bVar3) {
+  XVar2.ab = (uchar  [8])(ZEXT48(&stack0x00000000) - 0x30);
+  bVar1 = Social_IsPresenceJoinable(param_3,false,XVar2.ab._4_4_);
+  if (!bVar1) {
     Com_PrintError(0x10,"Social_JoinPlayer() failed because the player presence is not joinable\n");
     FriendsMenu_ShowErrorMessage(local_30[0]);
-    __restgprlr_29();
     return;
   }
-  bVar3 = FriendsMenu_IsAllowedToJoin_Platform(uVar2,local_30);
-  if (!bVar3) {
+  bVar1 = FriendsMenu_IsAllowedToJoin_Platform(param_1,local_30);
+  if (!bVar1) {
     Com_PrintError(0x10,"Social_JoinPlayer() failed because the player is not joinable.\n");
     FriendsMenu_ShowErrorMessage(local_30[0]);
-    __restgprlr_29();
     return;
   }
-  Social_StartJoiningFriend(uVar2,*(ulong64 *)(pSVar1->sessionId).ab,XVar5);
-  __restgprlr_29();
+  Social_StartJoiningFriend(param_1,*(ulong64 *)(param_3->sessionId).ab,XVar2);
   return;
 }
 
 
 // 82708120  Social_InvitePlayer  (social/social_presence.cpp:1109)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void Social_InvitePlayer(int param_1,ulong64 param_2,SocialPresence *param_3)
 
 {
-  int iVar1;
   bool bVar2;
-  ulonglong uVar3;
+  int iVar1;
   char *local_30 [12];
   
-  uVar3 = (ulonglong)(int)param_3;
-  iVar1 = __savegprlr_28(param_1);
   local_30[0] = "PLATFORM_INVITE_SYSTEM_ERROR";
-  bVar2 = FriendsMenu_IsAllowedToInvite(iVar1,local_30);
+  bVar2 = FriendsMenu_IsAllowedToInvite(param_1,local_30);
   if (!bVar2) {
     Com_PrintError(0x10,
                    "Social_InvitePlayer() failed because we are not allowed to invite anyone right now.\n"
                   );
     FriendsMenu_ShowErrorMessage(local_30[0]);
-    __restgprlr_28();
     return;
   }
-  if (((uVar3 & 0xffffffff) != 0) &&
-     (bVar2 = Social_IsAlreadyConnected
-                        (iVar1,(XNKID)*(uchar (*) [8])((int)uVar3 + 4),param_2,local_30), bVar2)) {
+  if ((param_3 != (SocialPresence *)0x0) &&
+     (bVar2 = Social_IsAlreadyConnected(param_1,(XNKID)*&(param_3->sessionId).ab,param_2,local_30),
+     bVar2)) {
     Com_PrintError(0x10,
                    "MeetPlayer_FeederOnInviteRequest() failed because the player is already connected.\n"
                   );
     FriendsMenu_ShowErrorMessage(local_30[0]);
-    __restgprlr_28();
     return;
   }
-  iVar1 = Friends_SendInviteMessage_Platform(iVar1,param_2);
+  iVar1 = Friends_SendInviteMessage_Platform(param_1,param_2);
   if (iVar1 < 0) {
     Com_PrintError(0x10,
                    "FriendsMenu_FeederOnInviteRequest() FriendsMenu_SendInviteMessage_Platform failed with error code %x.\n"
                   );
     FriendsMenu_ShowErrorMessage("PLATFORM_INVITE_SYSTEM_ERROR");
   }
-  __restgprlr_28();
   return;
 }
 

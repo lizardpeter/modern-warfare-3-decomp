@@ -2,30 +2,30 @@
 
 // 828C6450  NellyPackSC3  (<external>/Xenon/mar09/core/private/xam/codecs/nci/enc/src/packsc.c:92)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void NellyPackSC3(int *param_1,uchar *param_2,ushort *param_3,uchar *param_4,int param_5,int param_6
                  )
 
 {
-  int iVar1;
-  uint *puVar2;
-  short *psVar3;
+  uint *puVar1;
+  short *psVar2;
   C_BUFFER_TYPE local_40 [2];
   
+  psVar2 = BitTable_SC3;
+  param_1[0xf] = 0;
+  param_1[0x10] = param_6 & 0xffff;
+  puVar1 = (uint *)(param_1 + -1);
   local_40[0].wBufferSize = (ushort)param_5;
+  local_40[0].pBuffer = param_2;
   local_40[0].pBufferWriteByteOffset = param_3;
   local_40[0].pBufferWriteBitOffset = param_4;
-  local_40[0].pBuffer = param_2;
-  iVar1 = __savegprlr_29(param_1);
-  psVar3 = BitTable_SC3;
-  *(undefined4 *)(iVar1 + 0x3c) = 0;
-  *(uint *)(iVar1 + 0x40) = param_6 & 0xffff;
-  puVar2 = (uint *)(iVar1 + -4);
   do {
-    puVar2 = puVar2 + 1;
-    BitPackCBuffer(local_40,*puVar2 & 0xff,(int)*psVar3);
-    psVar3 = psVar3 + 1;
-  } while ((int)psVar3 < -0x7ddfd8ce);
-  __restgprlr_29();
+    puVar1 = puVar1 + 1;
+    BitPackCBuffer(local_40,*puVar1 & 0xff,(int)*psVar2);
+    psVar2 = psVar2 + 1;
+  } while ((int)psVar2 < -0x7ddfd8ce);
   return;
 }
 

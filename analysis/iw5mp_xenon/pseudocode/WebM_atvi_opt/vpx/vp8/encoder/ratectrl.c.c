@@ -46,33 +46,33 @@ void vp8_restore_coding_context(VP8_COMP *param_1)
 
 // 82836168  vp8_setup_key_frame  (WebM_atvi_opt/vpx/vp8/encoder/ratectrl.c:309)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void vp8_setup_key_frame(VP8_COMP *param_1)
 
 {
   uint uVar1;
-  int iVar2;
+  mv_context *pmVar2;
   int iVar3;
   int local_30 [12];
   
-  iVar2 = __savegprlr_29(param_1);
-  vp8_default_coef_probs((VP8Common *)(iVar2 + 0x1afe0));
-  vp8_kf_default_bmode_probs((uchar (*) [10] [9])(iVar2 + 0x20fb1));
-  vpx_memcpy((mv_context *)(iVar2 + 0x21bee),vp8_default_mv_context,0x26);
+  vp8_default_coef_probs(&param_1->common);
+  vp8_kf_default_bmode_probs((param_1->common).kf_bmode_prob);
+  pmVar2 = (param_1->common).fc.mvc;
+  vpx_memcpy(pmVar2,vp8_default_mv_context,0x26);
   local_30[0] = 1;
   local_30[1] = 1;
-  vp8_build_component_cost_table
-            ((int **)(iVar2 + 0x14d10),(int **)(iVar2 + 0x18d18),(mv_context *)(iVar2 + 0x21bee),
-             local_30);
-  vpx_memset((void *)(iVar2 + 0x21c14),0,0x26);
-  uVar1 = *(int *)(iVar2 + 0x1e728) * 3;
-  *(uint *)(iVar2 + 0x20f70) = ((int)uVar1 >> 3) + (uint)((int)uVar1 < 0 && (uVar1 & 7) != 0);
+  vp8_build_component_cost_table((param_1->mb).mvcost,(param_1->mb).mvsadcost,pmVar2,local_30);
+  vpx_memset((param_1->common).fc.pre_mvc,0,0x26);
+  uVar1 = (param_1->common).base_qindex * 3;
+  (param_1->common).filter_level = ((int)uVar1 >> 3) + (uint)((int)uVar1 < 0 && (uVar1 & 7) != 0);
   iVar3 = 0x26eec;
-  if (*(int *)(iVar2 + 0x2e7fc) == 0) {
+  if (param_1->auto_gold == 0) {
     iVar3 = 0x2e808;
   }
-  *(undefined4 *)(iVar2 + 0x26ea8) = *(undefined4 *)(iVar2 + iVar3);
-  *(undefined4 *)(iVar2 + 0x20f80) = 1;
-  __restgprlr_29();
+  param_1->frames_till_gf_update_due = *(int *)((int)param_1->Y1quant[0] + iVar3);
+  (param_1->common).refresh_golden_frame = 1;
   return;
 }
 
@@ -114,6 +114,9 @@ void vp8_calc_auto_iframe_target_size(VP8_COMP *param_1)
 
 // 82836258  calc_gf_params  (WebM_atvi_opt/vpx/vp8/encoder/ratectrl.c:408)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void calc_gf_params(VP8_COMP *param_1)
 
 {
@@ -121,87 +124,85 @@ void calc_gf_params(VP8_COMP *param_1)
   int iVar2;
   int iVar3;
   int iVar4;
-  ulonglong uVar5;
-  longlong lVar6;
-  ulonglong uVar7;
-  int iVar8;
-  uint uVar9;
-  int *piVar10;
-  uint uVar11;
-  ulonglong uVar12;
+  longlong lVar5;
+  ulonglong uVar6;
+  int iVar7;
+  uint uVar8;
+  int *piVar9;
+  uint uVar10;
+  ulonglong uVar11;
   
-  iVar4 = __savegprlr_28(param_1);
-  iVar2 = *(int *)(iVar4 + 0x229d0);
+  iVar2 = (param_1->oxcf).fixed_q;
   iVar3 = iVar2;
   if (iVar2 < 0) {
-    iVar3 = *(int *)(iVar4 + 0x26e7c);
+    iVar3 = param_1->last_q[1];
   }
-  uVar11 = *(int *)(iVar4 + 0x30e10) * 100;
-  lVar6 = (ulonglong)*(uint *)(iVar4 + 0x2e864) + (ulonglong)*(uint *)(iVar4 + 0x2e860);
-  uVar12 = (longlong)*(int *)(iVar4 + 0x1e70c) * (longlong)*(int *)(iVar4 + 0x1e708);
-  uVar7 = (ulonglong)*(uint *)(iVar4 + 0x2e85c) + (ulonglong)*(uint *)(iVar4 + 0x2e858) + lVar6;
-  uVar5 = 0;
-  iVar1 = (int)uVar11 / (int)uVar12;
-  trapWord(6,uVar12,0);
-  trapWord(5,uVar12 & ~((((ulonglong)uVar11 & 0x7fffffff) << 1 | (ulonglong)(uVar11 >> 0x1f)) - 1),
+  uVar10 = param_1->gf_active_count * 100;
+  lVar5 = (ulonglong)(uint)param_1->recent_ref_frame_usage[3] +
+          (ulonglong)(uint)param_1->recent_ref_frame_usage[2];
+  uVar11 = (longlong)(param_1->common).mb_cols * (longlong)(param_1->common).mb_rows;
+  uVar6 = (ulonglong)(uint)param_1->recent_ref_frame_usage[1] +
+          (ulonglong)(uint)param_1->recent_ref_frame_usage[0] + lVar5;
+  iVar4 = 0;
+  iVar1 = (int)uVar10 / (int)uVar11;
+  trapWord(6,uVar11,0);
+  trapWord(5,uVar11 & ~((((ulonglong)uVar10 & 0x7fffffff) << 1 | (ulonglong)(uVar10 >> 0x1f)) - 1),
            0xffff);
-  if (uVar7 != 0) {
-    uVar12 = lVar6 * 100;
-    uVar5 = (ulonglong)((int)uVar12 / (int)uVar7);
-    trapWord(6,uVar7,0);
-    trapWord(5,uVar7 & ~(((uVar12 & 0x7fffffff) << 1 | (uVar12 & 0xffffffff) >> 0x1f) - 1),0xffff);
+  if (uVar6 != 0) {
+    uVar11 = lVar5 * 100;
+    iVar4 = (int)uVar11 / (int)uVar6;
+    trapWord(6,uVar6,0);
+    trapWord(5,uVar6 & ~(((uVar11 & 0x7fffffff) << 1 | (uVar11 & 0xffffffff) >> 0x1f) - 1),0xffff);
   }
-  if ((int)uVar5 < iVar1) {
-    uVar5 = (longlong)iVar1;
+  if (iVar4 < iVar1) {
+    iVar4 = iVar1;
   }
-  iVar1 = *(int *)(iVar4 + 0x2e82c);
+  iVar1 = param_1->pass;
   if (iVar1 != 2) {
-    iVar8 = *(int *)(iVar4 + 0x2e878);
-    if (0xe < iVar8) {
-      iVar8 = 0xe;
+    iVar7 = param_1->this_frame_percent_intra;
+    if (0xe < iVar7) {
+      iVar7 = 0xe;
     }
-    uVar11 = (((vp8_gf_intra_useage_adjustment[iVar8] * vp8_gf_boost_qadjustment[iVar3]) / 100) *
-             *(int *)((int)vp8_gf_adjust_table + (int)((uVar5 & 0xffffffff) << 2))) / 100;
-    if ((*(int *)(iVar4 + 0x2f0a0) == 0) && (*(int *)(iVar4 + 0x2e7f4) == 2)) {
-      uVar11 = ((int)uVar11 >> 1) + (uint)((int)uVar11 < 0 && (uVar11 & 1) != 0);
+    uVar10 = (((vp8_gf_intra_useage_adjustment[iVar7] * vp8_gf_boost_qadjustment[iVar3]) / 100) *
+             vp8_gf_adjust_table[iVar4]) / 100;
+    if (((param_1->sf).recode_loop == 0) && (param_1->compressor_speed == 2)) {
+      uVar10 = ((int)uVar10 >> 1) + (uint)((int)uVar10 < 0 && (uVar10 & 1) != 0);
     }
-    uVar9 = vp8_kf_gf_boost_qlimits[iVar3];
-    if ((((int)uVar11 <= (int)uVar9) || (iVar1 != 0)) && (uVar9 = uVar11, (int)uVar11 < 0x6e)) {
-      uVar9 = 0x6e;
+    uVar8 = vp8_kf_gf_boost_qlimits[iVar3];
+    if ((((int)uVar10 <= (int)uVar8) || (iVar1 != 0)) && (uVar8 = uVar10, (int)uVar10 < 0x6e)) {
+      uVar8 = 0x6e;
     }
-    *(uint *)(iVar4 + 0x2e744) = uVar9;
+    param_1->last_boost = uVar8;
   }
   if ((iVar2 == -1) && (iVar1 != 2)) {
-    iVar2 = *(int *)(iVar4 + 0x2e744);
-    piVar10 = (int *)(iVar4 + 0x26ea8);
-    *piVar10 = *(int *)(iVar4 + 0x26eec);
+    iVar2 = param_1->last_boost;
+    piVar9 = &param_1->frames_till_gf_update_due;
+    *piVar9 = param_1->baseline_gf_interval;
     if (0x2ee < iVar2) {
-      *piVar10 = *(int *)(iVar4 + 0x26eec) + 1;
+      *piVar9 = param_1->baseline_gf_interval + 1;
     }
     if (1000 < iVar2) {
-      *piVar10 = *piVar10 + 1;
+      *piVar9 = *piVar9 + 1;
     }
     if (0x4e2 < iVar2) {
-      *piVar10 = *piVar10 + 1;
+      *piVar9 = *piVar9 + 1;
     }
     if (0x5db < iVar2) {
-      *piVar10 = *piVar10 + 1;
+      *piVar9 = *piVar9 + 1;
     }
-    iVar2 = *(int *)((int)vp8_gf_interval_table + (int)((uVar5 & 0xffffffff) << 2));
-    if (*piVar10 < iVar2) {
-      *piVar10 = iVar2;
+    if (*piVar9 < vp8_gf_interval_table[iVar4]) {
+      *piVar9 = vp8_gf_interval_table[iVar4];
     }
-    if (*(int *)(iVar4 + 0x26ee8) < *piVar10) {
-      *piVar10 = *(int *)(iVar4 + 0x26ee8);
+    if (param_1->max_gf_interval < *piVar9) {
+      *piVar9 = param_1->max_gf_interval;
     }
   }
   else {
-    *(undefined4 *)(iVar4 + 0x26ea8) = *(undefined4 *)(iVar4 + 0x26eec);
+    param_1->frames_till_gf_update_due = param_1->baseline_gf_interval;
   }
   if (iVar1 != 2) {
-    *(undefined4 *)(iVar4 + 0x22a90) = 0;
+    param_1->source_alt_ref_pending = 0;
   }
-  __restgprlr_28();
   return;
 }
 
@@ -281,618 +282,605 @@ void vp8_calc_iframe_target_size(VP8_COMP *param_1)
 
 // 82836738  vp8_calc_pframe_target_size  (WebM_atvi_opt/vpx/vp8/encoder/ratectrl.c:665)
 
+/* WARNING: Function: __savegprlr_18 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_18 replaced with injection: xenon_save_restore */
+
 void vp8_calc_pframe_target_size(VP8_COMP *param_1)
 
 {
   int iVar1;
-  VP8_COMP *pVVar2;
-  ulonglong uVar3;
+  ulonglong uVar2;
+  int iVar3;
   int iVar4;
   int iVar5;
-  int iVar6;
-  uint uVar7;
-  int *piVar9;
-  ulonglong uVar8;
-  int iVar10;
-  longlong lVar11;
-  int iVar12;
+  uint uVar6;
+  int *piVar8;
+  ulonglong uVar7;
+  int iVar9;
+  longlong lVar10;
+  int iVar11;
+  uint uVar12;
   uint uVar13;
-  uint uVar14;
+  int *piVar14;
   int *piVar15;
   int *piVar16;
-  int *piVar17;
   
-  pVVar2 = (VP8_COMP *)__savegprlr_18(param_1);
-  piVar15 = &pVVar2->pass;
-  iVar10 = *piVar15;
-  iVar4 = 0;
-  if (iVar10 == 2) {
-    iVar1 = pVVar2->av_per_frame_bandwidth >> 5;
-    lVar11 = (longlong)iVar1;
-    iVar4 = pVVar2->min_frame_bandwidth;
-    if (iVar4 < iVar1) {
+  piVar14 = &param_1->pass;
+  iVar9 = *piVar14;
+  iVar3 = 0;
+  if (iVar9 == 2) {
+    iVar1 = param_1->av_per_frame_bandwidth >> 5;
+    lVar10 = (longlong)iVar1;
+    iVar3 = param_1->min_frame_bandwidth;
+    if (iVar3 < iVar1) {
 LAB_828367a0:
-      iVar4 = (int)lVar11;
+      iVar3 = (int)lVar10;
     }
   }
   else {
-    uVar13 = pVVar2->per_frame_bandwidth;
-    lVar11 = (longlong)((int)uVar13 >> 2) + (ulonglong)((int)uVar13 < 0 && (uVar13 & 3) != 0);
-    if (0 < lVar11) goto LAB_828367a0;
+    uVar12 = param_1->per_frame_bandwidth;
+    lVar10 = (longlong)((int)uVar12 >> 2) + (ulonglong)((int)uVar12 < 0 && (uVar12 & 3) != 0);
+    if (0 < lVar10) goto LAB_828367a0;
   }
-  iVar1 = (pVVar2->common).refresh_alt_ref_frame;
+  iVar1 = (param_1->common).refresh_alt_ref_frame;
   if (iVar1 == 0) {
-    if (iVar10 == 2) {
-      pVVar2->this_frame_target = pVVar2->per_frame_bandwidth;
+    if (iVar9 == 2) {
+      param_1->this_frame_target = param_1->per_frame_bandwidth;
     }
     else {
-      iVar6 = pVVar2->kf_overspend_bits;
-      if (iVar6 < 1) {
-        pVVar2->this_frame_target = pVVar2->per_frame_bandwidth;
+      iVar5 = param_1->kf_overspend_bits;
+      if (iVar5 < 1) {
+        param_1->this_frame_target = param_1->per_frame_bandwidth;
       }
       else {
-        iVar12 = pVVar2->kf_bitrate_adjustment;
-        if (iVar6 < pVVar2->kf_bitrate_adjustment) {
-          iVar12 = iVar6;
+        iVar11 = param_1->kf_bitrate_adjustment;
+        if (iVar5 < param_1->kf_bitrate_adjustment) {
+          iVar11 = iVar5;
         }
-        iVar5 = pVVar2->per_frame_bandwidth - iVar4;
-        if (iVar5 < iVar12) {
-          iVar12 = iVar5;
+        iVar4 = param_1->per_frame_bandwidth - iVar3;
+        if (iVar4 < iVar11) {
+          iVar11 = iVar4;
         }
-        iVar5 = pVVar2->per_frame_bandwidth - iVar12;
-        pVVar2->this_frame_target = iVar5;
-        pVVar2->kf_overspend_bits = iVar6 - iVar12;
-        if (iVar5 < iVar4) {
-          pVVar2->this_frame_target = iVar4;
+        iVar4 = param_1->per_frame_bandwidth - iVar11;
+        param_1->this_frame_target = iVar4;
+        param_1->kf_overspend_bits = iVar5 - iVar11;
+        if (iVar4 < iVar3) {
+          param_1->this_frame_target = iVar3;
         }
       }
-      piVar9 = &pVVar2->this_frame_target;
-      iVar6 = pVVar2->gf_overspend_bits;
-      if ((0 < iVar6) && (iVar12 = *piVar9, iVar4 < iVar12)) {
-        iVar5 = pVVar2->non_gf_bitrate_adjustment;
-        if (iVar6 < pVVar2->non_gf_bitrate_adjustment) {
-          iVar5 = iVar6;
+      piVar8 = &param_1->this_frame_target;
+      iVar5 = param_1->gf_overspend_bits;
+      if ((0 < iVar5) && (iVar11 = *piVar8, iVar3 < iVar11)) {
+        iVar4 = param_1->non_gf_bitrate_adjustment;
+        if (iVar5 < param_1->non_gf_bitrate_adjustment) {
+          iVar4 = iVar5;
         }
-        if (iVar12 - iVar4 < iVar5) {
-          iVar5 = iVar12 - iVar4;
+        if (iVar11 - iVar3 < iVar4) {
+          iVar4 = iVar11 - iVar3;
         }
-        pVVar2->gf_overspend_bits = iVar6 - iVar5;
-        *piVar9 = iVar12 - iVar5;
+        param_1->gf_overspend_bits = iVar5 - iVar4;
+        *piVar8 = iVar11 - iVar4;
       }
-      if (((0x96 < pVVar2->last_boost) && (0 < pVVar2->frames_till_gf_update_due)) &&
-         (iVar6 = pVVar2->current_gf_interval, 7 < iVar6)) {
-        iVar12 = pVVar2->last_boost + -100 >> 5;
-        if (iVar12 < 1) {
-          iVar12 = 1;
+      if (((0x96 < param_1->last_boost) && (0 < param_1->frames_till_gf_update_due)) &&
+         (iVar5 = param_1->current_gf_interval, 7 < iVar5)) {
+        iVar11 = param_1->last_boost + -100 >> 5;
+        if (iVar11 < 1) {
+          iVar11 = 1;
         }
-        else if (10 < iVar12) {
-          iVar12 = 10;
+        else if (10 < iVar11) {
+          iVar11 = 10;
         }
-        iVar12 = (iVar12 * *piVar9) / 100;
-        iVar5 = *piVar9 - iVar4;
-        if (iVar5 < iVar12) {
-          iVar12 = iVar5;
+        iVar11 = (iVar11 * *piVar8) / 100;
+        iVar4 = *piVar8 - iVar3;
+        if (iVar4 < iVar11) {
+          iVar11 = iVar4;
         }
-        if ((pVVar2->common).frames_since_golden == iVar6 >> 1) {
-          *piVar9 = (iVar6 + -1) * iVar12 + *piVar9;
+        if ((param_1->common).frames_since_golden == iVar5 >> 1) {
+          *piVar8 = (iVar5 + -1) * iVar11 + *piVar8;
         }
         else {
-          *piVar9 = *piVar9 - iVar12;
+          *piVar8 = *piVar8 - iVar11;
         }
       }
     }
   }
-  else if (iVar10 == 2) {
-    pVVar2->per_frame_bandwidth = pVVar2->gf_bits;
-    pVVar2->this_frame_target = pVVar2->gf_bits;
+  else if (iVar9 == 2) {
+    param_1->per_frame_bandwidth = param_1->gf_bits;
+    param_1->this_frame_target = param_1->gf_bits;
   }
-  iVar6 = (pVVar2->oxcf).under_shoot_pct;
-  if ((0 < iVar6) && (iVar6 < 0x65)) {
-    pVVar2->this_frame_target = (iVar6 * pVVar2->this_frame_target) / 100;
+  iVar5 = (param_1->oxcf).under_shoot_pct;
+  if ((0 < iVar5) && (iVar5 < 0x65)) {
+    param_1->this_frame_target = (iVar5 * param_1->this_frame_target) / 100;
   }
-  piVar9 = &pVVar2->this_frame_target;
-  if (pVVar2->this_frame_target < iVar4) {
-    *piVar9 = iVar4;
+  piVar8 = &param_1->this_frame_target;
+  if (param_1->this_frame_target < iVar3) {
+    *piVar8 = iVar3;
   }
   if (iVar1 == 0) {
-    pVVar2->inter_frame_target = *piVar9;
+    param_1->inter_frame_target = *piVar8;
   }
-  if (iVar10 != 0) goto LAB_82836cb0;
-  if (pVVar2->buffered_mode == 0) {
-    pVVar2->active_worst_quality = pVVar2->worst_quality;
+  if (iVar9 != 0) goto LAB_82836cb0;
+  if (param_1->buffered_mode == 0) {
+    param_1->active_worst_quality = param_1->worst_quality;
     goto LAB_82836cb0;
   }
-  uVar13 = pVVar2->buffer_level;
-  uVar7 = (pVVar2->oxcf).optimal_buffer_level;
-  uVar3 = (longlong)((int)uVar7 / 100) + 1;
-  if ((int)uVar13 < (int)uVar7) {
+  uVar12 = param_1->buffer_level;
+  uVar6 = (param_1->oxcf).optimal_buffer_level;
+  uVar2 = (longlong)((int)uVar6 / 100) + 1;
+  if ((int)uVar12 < (int)uVar6) {
 LAB_82836ad0:
-    iVar4 = (pVVar2->oxcf).end_usage;
-    uVar14 = 0;
-    if ((iVar4 == 0) && ((int)uVar13 < (int)uVar7)) {
-      uVar8 = (ulonglong)uVar7 - (ulonglong)uVar13;
-      trapWord(6,uVar3,0);
-      uVar14 = (int)uVar8 / (int)uVar3;
-      trapWord(5,uVar3 & ~(((uVar8 & 0x7fffffff) << 1 | (uVar8 & 0xffffffff) >> 0x1f) - 1),0xffff);
-      if ((int)uVar14 < 0x65) {
-        if ((int)uVar14 < 0) {
-          uVar14 = 0;
+    iVar3 = (param_1->oxcf).end_usage;
+    uVar13 = 0;
+    if ((iVar3 == 0) && ((int)uVar12 < (int)uVar6)) {
+      uVar7 = (ulonglong)uVar6 - (ulonglong)uVar12;
+      trapWord(6,uVar2,0);
+      uVar13 = (int)uVar7 / (int)uVar2;
+      trapWord(5,uVar2 & ~(((uVar7 & 0x7fffffff) << 1 | (uVar7 & 0xffffffff) >> 0x1f) - 1),0xffff);
+      if ((int)uVar13 < 0x65) {
+        if ((int)uVar13 < 0) {
+          uVar13 = 0;
         }
       }
       else {
-        uVar14 = 100;
+        uVar13 = 100;
       }
     }
-    else if (pVVar2->bits_off_target < 0) {
-      uVar8 = (ulonglong)(pVVar2->bits_off_target * -100);
-      uVar3 = pVVar2->total_byte_count << 3;
-      trapDoubleWordImmediate(6,uVar3,0);
-      uVar14 = (uint)((longlong)uVar8 / (longlong)uVar3);
-      trapDoubleWordImmediate(5,uVar3 & ~((uVar8 << 1 | uVar8 >> 0x3f) - 1),0xffff);
-      if ((int)uVar14 < 0x65) {
-        uVar14 = -((int)uVar14 >> 0x1f) - 1U & uVar14;
-      }
-      else {
-        uVar14 = 100;
-      }
-    }
-    *piVar9 = (int)((100 - (((int)uVar14 >> 1) + (uint)((int)uVar14 < 0 && (uVar14 & 1) != 0))) *
-                   *piVar9) / 100;
-    if (pVVar2->auto_worst_q == 0) {
-LAB_82836c60:
-      iVar4 = 0x26fbc;
-      goto LAB_82836c64;
-    }
-    uVar14 = pVVar2->bits_off_target;
-    if ((iVar4 == 0) && ((int)uVar13 < (int)uVar14)) {
-      uVar14 = uVar13;
-    }
-    if ((int)uVar7 <= (int)uVar14) {
-      iVar4 = 0x26f68;
-      goto LAB_82836c64;
-    }
-    iVar4 = ((int)uVar7 >> 2) + (uint)((int)uVar7 < 0 && (uVar7 & 3) != 0);
-    if ((int)uVar14 <= iVar4) goto LAB_82836c60;
-    uVar7 = uVar7 * 3;
-    uVar3 = (longlong)((int)uVar7 >> 2) + (ulonglong)((int)uVar7 < 0 && (uVar7 & 3) != 0);
-    uVar13 = (pVVar2->worst_quality - pVVar2->ni_av_qi) * (uVar14 - iVar4);
-    trapWord(6,uVar3,0);
-    pVVar2->active_worst_quality = pVVar2->worst_quality - (int)uVar13 / (int)uVar3;
-    trapWord(5,uVar3 & ~((((ulonglong)uVar13 & 0x7fffffff) << 1 | (ulonglong)(uVar13 >> 0x1f)) - 1),
-             0xffff);
-  }
-  else {
-    iVar4 = pVVar2->bits_off_target;
-    if (iVar4 < (int)uVar7) goto LAB_82836ad0;
-    if ((int)uVar7 < iVar4) {
-      uVar8 = (ulonglong)(int)((iVar4 - uVar7) * 100);
-      uVar3 = pVVar2->total_byte_count << 3;
-      uVar13 = (uint)((longlong)uVar8 / (longlong)uVar3);
-      trapDoubleWordImmediate(6,uVar3,0);
-      trapDoubleWordImmediate(5,uVar3 & ~((uVar8 << 1 | uVar8 >> 0x3f) - 1),0xffff);
+    else if (param_1->bits_off_target < 0) {
+      uVar7 = (ulonglong)(param_1->bits_off_target * -100);
+      uVar2 = param_1->total_byte_count << 3;
+      trapDoubleWordImmediate(6,uVar2,0);
+      uVar13 = (uint)((longlong)uVar7 / (longlong)uVar2);
+      trapDoubleWordImmediate(5,uVar2 & ~((uVar7 << 1 | uVar7 >> 0x3f) - 1),0xffff);
       if ((int)uVar13 < 0x65) {
         uVar13 = -((int)uVar13 >> 0x1f) - 1U & uVar13;
       }
       else {
         uVar13 = 100;
       }
-      *piVar9 = (int)((((int)uVar13 >> 1) + (uint)((int)uVar13 < 0 && (uVar13 & 1) != 0) + 100) *
-                     *piVar9) / 100;
     }
-    if (pVVar2->auto_worst_q == 0) goto LAB_82836c60;
-    iVar4 = 0x26f68;
-LAB_82836c64:
-    pVVar2->active_worst_quality = *(int *)((int)pVVar2->Y1quant[0] + iVar4);
+    *piVar8 = (int)((100 - (((int)uVar13 >> 1) + (uint)((int)uVar13 < 0 && (uVar13 & 1) != 0))) *
+                   *piVar8) / 100;
+    if (param_1->auto_worst_q == 0) {
+LAB_82836c60:
+      iVar3 = 0x26fbc;
+      goto LAB_82836c64;
+    }
+    uVar13 = param_1->bits_off_target;
+    if ((iVar3 == 0) && ((int)uVar12 < (int)uVar13)) {
+      uVar13 = uVar12;
+    }
+    if ((int)uVar6 <= (int)uVar13) {
+      iVar3 = 0x26f68;
+      goto LAB_82836c64;
+    }
+    iVar3 = ((int)uVar6 >> 2) + (uint)((int)uVar6 < 0 && (uVar6 & 3) != 0);
+    if ((int)uVar13 <= iVar3) goto LAB_82836c60;
+    uVar6 = uVar6 * 3;
+    uVar2 = (longlong)((int)uVar6 >> 2) + (ulonglong)((int)uVar6 < 0 && (uVar6 & 3) != 0);
+    uVar12 = (param_1->worst_quality - param_1->ni_av_qi) * (uVar13 - iVar3);
+    trapWord(6,uVar2,0);
+    param_1->active_worst_quality = param_1->worst_quality - (int)uVar12 / (int)uVar2;
+    trapWord(5,uVar2 & ~((((ulonglong)uVar12 & 0x7fffffff) << 1 | (ulonglong)(uVar12 >> 0x1f)) - 1),
+             0xffff);
   }
-  iVar4 = pVVar2->best_quality;
-  pVVar2->active_best_quality = iVar4;
-  if (pVVar2->active_worst_quality <= iVar4) {
-    pVVar2->active_worst_quality = iVar4 + 1;
+  else {
+    iVar3 = param_1->bits_off_target;
+    if (iVar3 < (int)uVar6) goto LAB_82836ad0;
+    if ((int)uVar6 < iVar3) {
+      uVar7 = (ulonglong)(int)((iVar3 - uVar6) * 100);
+      uVar2 = param_1->total_byte_count << 3;
+      uVar12 = (uint)((longlong)uVar7 / (longlong)uVar2);
+      trapDoubleWordImmediate(6,uVar2,0);
+      trapDoubleWordImmediate(5,uVar2 & ~((uVar7 << 1 | uVar7 >> 0x3f) - 1),0xffff);
+      if ((int)uVar12 < 0x65) {
+        uVar12 = -((int)uVar12 >> 0x1f) - 1U & uVar12;
+      }
+      else {
+        uVar12 = 100;
+      }
+      *piVar8 = (int)((((int)uVar12 >> 1) + (uint)((int)uVar12 < 0 && (uVar12 & 1) != 0) + 100) *
+                     *piVar8) / 100;
+    }
+    if (param_1->auto_worst_q == 0) goto LAB_82836c60;
+    iVar3 = 0x26f68;
+LAB_82836c64:
+    param_1->active_worst_quality = *(int *)((int)param_1->Y1quant[0] + iVar3);
+  }
+  iVar3 = param_1->best_quality;
+  param_1->active_best_quality = iVar3;
+  if (param_1->active_worst_quality <= iVar3) {
+    param_1->active_worst_quality = iVar3 + 1;
   }
 LAB_82836cb0:
-  if ((((pVVar2->drop_frames_allowed != 0) && (pVVar2->buffered_mode != 0)) &&
-      ((pVVar2->oxcf).end_usage == 0)) && ((pVVar2->common).frame_type != KEY_FRAME)) {
-    if (pVVar2->buffer_level < 0) {
-      pVVar2->drop_frame = 1;
+  if ((((param_1->drop_frames_allowed != 0) && (param_1->buffered_mode != 0)) &&
+      ((param_1->oxcf).end_usage == 0)) && ((param_1->common).frame_type != KEY_FRAME)) {
+    if (param_1->buffer_level < 0) {
+      param_1->drop_frame = 1;
     }
-    if (pVVar2->drop_frame == 0) {
-      pVVar2->drop_count = 0;
+    if (param_1->drop_frame == 0) {
+      param_1->drop_count = 0;
     }
     else {
-      iVar4 = pVVar2->av_per_frame_bandwidth + pVVar2->bits_off_target;
-      pVVar2->bits_off_target = iVar4;
-      pVVar2->buffer_level = iVar4;
+      iVar3 = param_1->av_per_frame_bandwidth + param_1->bits_off_target;
+      param_1->bits_off_target = iVar3;
+      param_1->buffer_level = iVar3;
     }
   }
-  if ((((pVVar2->oxcf).error_resilient_mode == 0) &&
-      (piVar16 = &pVVar2->frames_till_gf_update_due, pVVar2->frames_till_gf_update_due == 0)) &&
-     (pVVar2->drop_frame == 0)) {
-    piVar17 = &(pVVar2->oxcf).fixed_q;
-    iVar4 = *piVar17;
-    if (iVar4 < 0) {
-      iVar4 = pVVar2->last_q[1];
+  if ((((param_1->oxcf).error_resilient_mode == 0) &&
+      (piVar15 = &param_1->frames_till_gf_update_due, param_1->frames_till_gf_update_due == 0)) &&
+     (param_1->drop_frame == 0)) {
+    piVar16 = &(param_1->oxcf).fixed_q;
+    iVar3 = *piVar16;
+    if (iVar3 < 0) {
+      iVar3 = param_1->last_q[1];
     }
-    uVar13 = pVVar2->gf_active_count * 100;
-    uVar3 = (longlong)(pVVar2->common).mb_cols * (longlong)(pVVar2->common).mb_rows;
-    lVar11 = (ulonglong)(uint)pVVar2->recent_ref_frame_usage[3] +
-             (ulonglong)(uint)pVVar2->recent_ref_frame_usage[2];
-    uVar8 = (ulonglong)(uint)pVVar2->recent_ref_frame_usage[1] +
-            (ulonglong)(uint)pVVar2->recent_ref_frame_usage[0] + lVar11;
-    iVar6 = 0;
-    iVar1 = (int)uVar13 / (int)uVar3;
-    trapWord(6,uVar3,0);
-    trapWord(5,uVar3 & ~((((ulonglong)uVar13 & 0x7fffffff) << 1 | (ulonglong)(uVar13 >> 0x1f)) - 1),
+    uVar12 = param_1->gf_active_count * 100;
+    uVar2 = (longlong)(param_1->common).mb_cols * (longlong)(param_1->common).mb_rows;
+    lVar10 = (ulonglong)(uint)param_1->recent_ref_frame_usage[3] +
+             (ulonglong)(uint)param_1->recent_ref_frame_usage[2];
+    uVar7 = (ulonglong)(uint)param_1->recent_ref_frame_usage[1] +
+            (ulonglong)(uint)param_1->recent_ref_frame_usage[0] + lVar10;
+    iVar5 = 0;
+    iVar1 = (int)uVar12 / (int)uVar2;
+    trapWord(6,uVar2,0);
+    trapWord(5,uVar2 & ~((((ulonglong)uVar12 & 0x7fffffff) << 1 | (ulonglong)(uVar12 >> 0x1f)) - 1),
              0xffff);
-    if (uVar8 != 0) {
-      uVar3 = lVar11 * 100;
-      iVar6 = (int)uVar3 / (int)uVar8;
-      trapWord(6,uVar8,0);
-      trapWord(5,uVar8 & ~(((uVar3 & 0x7fffffff) << 1 | (uVar3 & 0xffffffff) >> 0x1f) - 1),0xffff);
+    if (uVar7 != 0) {
+      uVar2 = lVar10 * 100;
+      iVar5 = (int)uVar2 / (int)uVar7;
+      trapWord(6,uVar7,0);
+      trapWord(5,uVar7 & ~(((uVar2 & 0x7fffffff) << 1 | (uVar2 & 0xffffffff) >> 0x1f) - 1),0xffff);
     }
-    if (iVar6 < iVar1) {
-      iVar6 = iVar1;
+    if (iVar5 < iVar1) {
+      iVar5 = iVar1;
     }
-    if ((pVVar2->auto_gold == 0) ||
-       (((iVar10 == 0 && ((pVVar2->this_frame_percent_intra < 0xf || (4 < iVar6)))) || (iVar10 == 2)
-        ))) {
-      (pVVar2->common).refresh_golden_frame = 1;
+    if ((param_1->auto_gold == 0) ||
+       (((iVar9 == 0 && ((param_1->this_frame_percent_intra < 0xf || (4 < iVar5)))) || (iVar9 == 2))
+       )) {
+      (param_1->common).refresh_golden_frame = 1;
     }
-    if ((pVVar2->common).refresh_golden_frame == 1) {
-      pVVar2->initial_gf_use = 0;
-      if (pVVar2->auto_adjust_gold_quantizer != 0) {
-        calc_gf_params(pVVar2);
+    if ((param_1->common).refresh_golden_frame == 1) {
+      param_1->initial_gf_use = 0;
+      if (param_1->auto_adjust_gold_quantizer != 0) {
+        calc_gf_params(param_1);
       }
-      if (pVVar2->source_alt_ref_active == 0) {
-        if (-1 < *piVar17) {
-          iVar10 = (pVVar2->common).MBs;
-          iVar4 = vp8_bits_per_mb[1][iVar4];
-          if (0x800 < iVar10) {
-            pVVar2->current_gf_interval = *piVar16;
-            *piVar9 = (pVVar2->last_boost * (iVar4 >> 9) * iVar10) / 100;
-            __restgprlr_18();
+      if (param_1->source_alt_ref_active == 0) {
+        if (-1 < *piVar16) {
+          iVar9 = (param_1->common).MBs;
+          iVar3 = vp8_bits_per_mb[1][iVar3];
+          if (0x800 < iVar9) {
+            param_1->current_gf_interval = *piVar15;
+            *piVar8 = (param_1->last_boost * (iVar3 >> 9) * iVar9) / 100;
             return;
           }
-          pVVar2->current_gf_interval = *piVar16;
-          *piVar9 = (pVVar2->last_boost * (iVar4 * iVar10 >> 9)) / 100;
-          __restgprlr_18();
+          param_1->current_gf_interval = *piVar15;
+          *piVar8 = (param_1->last_boost * (iVar3 * iVar9 >> 9)) / 100;
           return;
         }
-        if (*piVar15 == 2) {
-          *piVar9 = pVVar2->per_frame_bandwidth;
-          pVVar2->current_gf_interval = *piVar16;
-          __restgprlr_18();
+        if (*piVar14 == 2) {
+          *piVar8 = param_1->per_frame_bandwidth;
+          param_1->current_gf_interval = *piVar15;
           return;
         }
-        uVar13 = pVVar2->last_boost;
-        uVar3 = (ulonglong)uVar13;
-        uVar7 = pVVar2->inter_frame_target * (int)((ulonglong)(uint)*piVar16 + 1);
-        uVar8 = (((ulonglong)(uint)*piVar16 + 1) * 100 + uVar3) - 100;
-        while (iVar10 = (int)uVar8, 1000 < (int)uVar13) {
-          uVar3 = (longlong)((int)uVar3 >> 1) + (ulonglong)((int)uVar3 < 0 && (uVar3 & 1) != 0);
-          uVar8 = (longlong)(iVar10 >> 1) + (ulonglong)(iVar10 < 0 && (uVar8 & 1) != 0);
-          uVar13 = (uint)uVar3;
+        uVar12 = param_1->last_boost;
+        uVar2 = (ulonglong)uVar12;
+        uVar6 = param_1->inter_frame_target * (int)((ulonglong)(uint)*piVar15 + 1);
+        uVar7 = (((ulonglong)(uint)*piVar15 + 1) * 100 + uVar2) - 100;
+        while (iVar9 = (int)uVar7, 1000 < (int)uVar12) {
+          uVar2 = (longlong)((int)uVar2 >> 1) + (ulonglong)((int)uVar2 < 0 && (uVar2 & 1) != 0);
+          uVar7 = (longlong)(iVar9 >> 1) + (ulonglong)(iVar9 < 0 && (uVar7 & 1) != 0);
+          uVar12 = (uint)uVar2;
         }
-        trapWord(6,uVar8,0);
-        if (iVar10 < (int)uVar7 >> 7) {
-          *piVar9 = ((int)uVar7 / iVar10) * uVar13;
-          pVVar2->current_gf_interval = *piVar16;
-          trapWord(5,uVar8 & ~((((ulonglong)uVar7 & 0x7fffffff) << 1 | (ulonglong)(uVar7 >> 0x1f)) -
+        trapWord(6,uVar7,0);
+        if (iVar9 < (int)uVar6 >> 7) {
+          *piVar8 = ((int)uVar6 / iVar9) * uVar12;
+          param_1->current_gf_interval = *piVar15;
+          trapWord(5,uVar7 & ~((((ulonglong)uVar6 & 0x7fffffff) << 1 | (ulonglong)(uVar6 >> 0x1f)) -
                               1),0xffff);
-          __restgprlr_18();
           return;
         }
-        uVar3 = (longlong)(int)uVar7 * (longlong)(int)uVar13;
-        *piVar9 = (int)uVar3 / iVar10;
-        trapWord(5,uVar8 & ~(((uVar3 & 0x7fffffff) << 1 | (uVar3 & 0xffffffff) >> 0x1f) - 1),0xffff)
+        uVar2 = (longlong)(int)uVar6 * (longlong)(int)uVar12;
+        *piVar8 = (int)uVar2 / iVar9;
+        trapWord(5,uVar7 & ~(((uVar2 & 0x7fffffff) << 1 | (uVar2 & 0xffffffff) >> 0x1f) - 1),0xffff)
         ;
-        pVVar2->current_gf_interval = *piVar16;
-        __restgprlr_18();
+        param_1->current_gf_interval = *piVar15;
         return;
       }
-      *piVar9 = 0;
-      pVVar2->current_gf_interval = *piVar16;
+      *piVar8 = 0;
+      param_1->current_gf_interval = *piVar15;
     }
   }
-  __restgprlr_18();
   return;
 }
 
 
 // 82837038  vp8_update_rate_correction_factors  (WebM_atvi_opt/vpx/vp8/encoder/ratectrl.c:1146)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 void vp8_update_rate_correction_factors(VP8_COMP *param_1,int param_2)
 
 {
-  int iVar1;
+  FRAME_TYPE FVar1;
   int iVar2;
-  ulonglong uVar3;
-  uint uVar4;
-  int iVar5;
-  ulonglong uVar6;
-  ulonglong uVar7;
+  uint uVar3;
+  ulonglong uVar4;
+  ulonglong uVar5;
+  double dVar6;
+  double dVar7;
   double dVar8;
-  double dVar9;
-  double dVar10;
   
-  uVar3 = (ulonglong)param_2;
-  iVar2 = __savegprlr_26(param_1);
-  iVar1 = *(int *)(iVar2 + 0x1e6f8);
-  iVar5 = 100;
-  if (iVar1 == 0) {
-    dVar10 = *(double *)(iVar2 + 0x26e90);
+  FVar1 = (param_1->common).frame_type;
+  iVar2 = 100;
+  if (FVar1 == KEY_FRAME) {
+    dVar8 = param_1->key_frame_rate_correction_factor;
   }
-  else if ((*(int *)(iVar2 + 0x20f84) == 0) && (*(int *)(iVar2 + 0x20f80) == 0)) {
-    dVar10 = *(double *)(iVar2 + 0x26e88);
+  else if (((param_1->common).refresh_alt_ref_frame == 0) &&
+          ((param_1->common).refresh_golden_frame == 0)) {
+    dVar8 = param_1->rate_correction_factor;
   }
   else {
-    dVar10 = *(double *)(iVar2 + 0x26e98);
+    dVar8 = param_1->gf_rate_correction_factor;
   }
-  uVar6 = (ulonglong)*(uint *)(iVar2 + 0x26f78);
-  uVar7 = (ulonglong)
-          (uint)(int)(((double)(longlong)vp8_bits_per_mb[iVar1][*(int *)(iVar2 + 0x1e728)] * dVar10
-                      + 0.5) * (double)(longlong)*(int *)(iVar2 + 0x1e704) * 0.001953125);
-  if (0 < (int)*(uint *)(iVar2 + 0x26f78)) {
-    dVar8 = 0.99;
+  uVar4 = (ulonglong)(uint)param_1->zbin_over_quant;
+  uVar5 = (ulonglong)
+          (uint)(int)(((double)(longlong)vp8_bits_per_mb[FVar1][(param_1->common).base_qindex] *
+                       dVar8 + 0.5) * (double)(longlong)(param_1->common).MBs * 0.001953125);
+  if (0 < param_1->zbin_over_quant) {
+    dVar6 = 0.99;
     do {
-      dVar9 = dVar8 + 3.90625e-05;
-      uVar7 = (ulonglong)(uint)(int)((double)(longlong)(int)uVar7 * dVar8);
-      dVar8 = dVar9;
-      if (0.999 <= dVar9) {
-        dVar8 = 0.999;
+      dVar7 = dVar6 + 3.90625e-05;
+      uVar5 = (ulonglong)(uint)(int)((double)(longlong)(int)uVar5 * dVar6);
+      dVar6 = dVar7;
+      if (0.999 <= dVar7) {
+        dVar6 = 0.999;
       }
-      uVar6 = uVar6 - 1;
-    } while (uVar6 != 0);
+      uVar4 = uVar4 - 1;
+    } while (uVar4 != 0);
   }
-  if (0 < (int)uVar7) {
-    trapWord(6,uVar7,0);
-    uVar4 = *(int *)(iVar2 + 0x26e74) * 100;
-    iVar5 = (int)uVar4 / (int)uVar7;
-    trapWord(5,uVar7 & ~((((ulonglong)uVar4 & 0x7fffffff) << 1 | (ulonglong)(uVar4 >> 0x1f)) - 1),
+  if (0 < (int)uVar5) {
+    trapWord(6,uVar5,0);
+    uVar3 = param_1->projected_frame_size * 100;
+    iVar2 = (int)uVar3 / (int)uVar5;
+    trapWord(5,uVar5 & ~((((ulonglong)uVar3 & 0x7fffffff) << 1 | (ulonglong)(uVar3 >> 0x1f)) - 1),
              0xffff);
   }
-  if ((uVar3 & 0xffffffff) == 0) {
-    dVar8 = 0.75;
+  if (param_2 == 0) {
+    dVar6 = 0.75;
   }
-  else if ((uVar3 & 0xffffffff) == 1) {
-    dVar8 = 0.375;
-  }
-  else {
-    dVar8 = 0.25;
-  }
-  if (iVar5 < 0x67) {
-    if (0x62 < iVar5) goto LAB_828372ac;
-    dVar9 = 0.01;
-    dVar10 = (double)(longlong)(int)-((double)(longlong)(100 - iVar5) * dVar8 - 100.5) * dVar10 *
-             0.01;
-    if (0.01 <= dVar10) goto LAB_828372ac;
+  else if (param_2 == 1) {
+    dVar6 = 0.375;
   }
   else {
-    dVar9 = 50.0;
-    dVar10 = (double)(longlong)(int)((double)(longlong)(iVar5 + -100) * dVar8 + 100.5) * dVar10 *
-             0.01;
-    if (dVar10 <= 50.0) goto LAB_828372ac;
+    dVar6 = 0.25;
   }
-  dVar10 = dVar9;
+  if (iVar2 < 0x67) {
+    if (0x62 < iVar2) goto LAB_828372ac;
+    dVar7 = 0.01;
+    dVar8 = (double)(longlong)(int)-((double)(longlong)(100 - iVar2) * dVar6 - 100.5) * dVar8 * 0.01
+    ;
+    if (0.01 <= dVar8) goto LAB_828372ac;
+  }
+  else {
+    dVar7 = 50.0;
+    dVar8 = (double)(longlong)(int)((double)(longlong)(iVar2 + -100) * dVar6 + 100.5) * dVar8 * 0.01
+    ;
+    if (dVar8 <= 50.0) goto LAB_828372ac;
+  }
+  dVar8 = dVar7;
 LAB_828372ac:
-  if (iVar1 == 0) {
-    *(double *)(iVar2 + 0x26e90) = dVar10;
-    __restgprlr_26();
+  if (FVar1 == KEY_FRAME) {
+    param_1->key_frame_rate_correction_factor = dVar8;
     return;
   }
-  if ((*(int *)(iVar2 + 0x20f84) == 0) && (*(int *)(iVar2 + 0x20f80) == 0)) {
-    *(double *)(iVar2 + 0x26e88) = dVar10;
-    __restgprlr_26();
+  if (((param_1->common).refresh_alt_ref_frame == 0) &&
+     ((param_1->common).refresh_golden_frame == 0)) {
+    param_1->rate_correction_factor = dVar8;
     return;
   }
-  *(double *)(iVar2 + 0x26e98) = dVar10;
-  __restgprlr_26();
+  param_1->gf_rate_correction_factor = dVar8;
   return;
 }
 
 
 // 828372E8  vp8_regulate_q  (WebM_atvi_opt/vpx/vp8/encoder/ratectrl.c:1265)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 int vp8_regulate_q(VP8_COMP *param_1,int param_2)
 
 {
-  int iVar1;
+  FRAME_TYPE FVar1;
   uint uVar2;
   int iVar3;
   int iVar4;
-  ulonglong uVar5;
+  int iVar5;
   int iVar6;
+  int iVar7;
   int iVar8;
-  ulonglong uVar7;
-  int iVar9;
-  int iVar10;
-  int *piVar11;
-  int iVar12;
-  double dVar13;
-  double dVar14;
+  int *piVar9;
+  double dVar10;
+  double dVar11;
   
-  uVar5 = (ulonglong)param_2;
-  iVar3 = __savegprlr_27(param_1);
-  piVar11 = (int *)(iVar3 + 0x26f78);
-  iVar4 = *(int *)(iVar3 + 0x26fc0);
-  iVar12 = *(int *)(iVar3 + 0x229d0);
-  *piVar11 = 0;
-  if (iVar12 < 0) {
-    iVar1 = *(int *)(iVar3 + 0x1e6f8);
-    iVar12 = 0x7fffffff;
-    if (iVar1 == 0) {
-      iVar8 = 0x26e90;
+  piVar9 = &param_1->zbin_over_quant;
+  iVar3 = (param_1->oxcf).fixed_q;
+  *piVar9 = 0;
+  if (iVar3 < 0) {
+    FVar1 = (param_1->common).frame_type;
+    iVar7 = 0x7fffffff;
+    if (FVar1 == KEY_FRAME) {
+      iVar5 = 0x26e90;
     }
-    else if ((*(int *)(iVar3 + 0x20f84) == 0) && (*(int *)(iVar3 + 0x20f80) == 0)) {
-      iVar8 = 0x26e88;
+    else if (((param_1->common).refresh_alt_ref_frame == 0) &&
+            ((param_1->common).refresh_golden_frame == 0)) {
+      iVar5 = 0x26e88;
     }
     else {
-      iVar8 = 0x26e98;
+      iVar5 = 0x26e98;
     }
-    if ((int)uVar5 < 0x3fffff) {
-      uVar7 = (uVar5 & 0x7fffff) << 9;
-      uVar2 = *(uint *)(iVar3 + 0x1e704);
+    if (param_2 < 0x3fffff) {
+      uVar2 = (param_1->common).MBs;
       trapWord(6,(ulonglong)uVar2,0);
-      iVar6 = (int)uVar7 / (int)uVar2;
-      trapWord(5,(ulonglong)uVar2 & ~(((uVar7 & 0x7fffffff) << 1 | (uVar5 & 0x7fffff) >> 0x16) - 1),
-               0xffff);
-    }
-    else {
-      uVar2 = *(uint *)(iVar3 + 0x1e704);
-      trapWord(6,(ulonglong)uVar2,0);
-      iVar6 = (int)uVar5 / (int)uVar2 << 9;
+      iVar4 = (int)(((ulonglong)(uint)param_2 & 0x7fffff) << 9) / (int)uVar2;
       trapWord(5,(ulonglong)uVar2 &
-                 ~(((uVar5 & 0x7fffffff) << 1 | (uVar5 & 0xffffffff) >> 0x1f) - 1),0xffff);
+                 ~((((ulonglong)(uint)param_2 & 0x3fffff) << 10 |
+                   ((ulonglong)(uint)param_2 & 0x7fffff) >> 0x16) - 1),0xffff);
     }
-    iVar10 = *(int *)(iVar3 + 0x26fc8);
+    else {
+      uVar2 = (param_1->common).MBs;
+      trapWord(6,(ulonglong)uVar2,0);
+      iVar4 = param_2 / (int)uVar2 << 9;
+      trapWord(5,(ulonglong)uVar2 &
+                 ~((((ulonglong)(uint)param_2 & 0x7fffffff) << 1 |
+                   (ulonglong)((uint)param_2 >> 0x1f)) - 1),0xffff);
+    }
+    iVar8 = param_1->active_best_quality;
     do {
-      iVar9 = (int)((double)(longlong)vp8_bits_per_mb[iVar1][iVar10] * *(double *)(iVar3 + iVar8) +
-                   0.5);
-      if (iVar9 <= iVar6) {
-        iVar4 = iVar10;
-        if (iVar12 < iVar6 - iVar9) {
-          iVar4 = iVar10 + -1;
+      iVar6 = (int)((double)(longlong)vp8_bits_per_mb[FVar1][iVar8] *
+                    *(double *)((int)param_1->Y1quant[0] + iVar5) + 0.5);
+      if (iVar6 <= iVar4) {
+        iVar3 = iVar8;
+        if (iVar7 < iVar4 - iVar6) {
+          iVar3 = iVar8 + -1;
         }
         break;
       }
-      iVar10 = iVar10 + 1;
-      iVar12 = iVar9 - iVar6;
-    } while (iVar10 <= iVar4);
-    iVar12 = iVar4;
-    if (0x7e < iVar4) {
-      dVar13 = 0.99;
-      if (iVar1 == 0) {
-        iVar4 = 0;
+      iVar8 = iVar8 + 1;
+      iVar7 = iVar6 - iVar4;
+      iVar3 = param_1->active_worst_quality;
+    } while (iVar8 <= param_1->active_worst_quality);
+    if (0x7e < iVar3) {
+      dVar10 = 0.99;
+      if (FVar1 == KEY_FRAME) {
+        iVar7 = 0;
       }
-      else if ((*(int *)(iVar3 + 0x20f84) == 0) &&
-              ((*(int *)(iVar3 + 0x20f80) == 0 || (*(int *)(iVar3 + 0x22a94) != 0)))) {
-        iVar4 = 0xc0;
+      else if (((param_1->common).refresh_alt_ref_frame == 0) &&
+              (((param_1->common).refresh_golden_frame == 0 || (param_1->source_alt_ref_active != 0)
+               ))) {
+        iVar7 = 0xc0;
       }
       else {
-        iVar4 = 0x10;
+        iVar7 = 0x10;
       }
-      if (iVar4 != 0) {
+      if (iVar7 != 0) {
         while( true ) {
-          iVar3 = *piVar11;
-          *piVar11 = iVar3 + 1;
-          if (iVar4 < iVar3 + 1) {
-            *piVar11 = iVar4;
+          iVar5 = *piVar9;
+          *piVar9 = iVar5 + 1;
+          if (iVar7 < iVar5 + 1) {
+            *piVar9 = iVar7;
           }
-          dVar14 = dVar13 + 3.90625e-05;
-          iVar9 = (int)((double)(longlong)iVar9 * dVar13);
-          dVar13 = dVar14;
-          if (0.999 <= dVar14) {
-            dVar13 = 0.999;
+          dVar11 = dVar10 + 3.90625e-05;
+          iVar6 = (int)((double)(longlong)iVar6 * dVar10);
+          dVar10 = dVar11;
+          if (0.999 <= dVar11) {
+            dVar10 = 0.999;
           }
-          if (iVar9 <= iVar6) break;
-          if (iVar4 <= *piVar11) {
-            iVar4 = __restgprlr_27();
-            return iVar4;
+          if (iVar6 <= iVar4) break;
+          if (iVar7 <= *piVar9) {
+            return iVar3;
           }
         }
       }
     }
   }
   else {
-    if (*(int *)(iVar3 + 0x1e6f8) == 0) {
-      iVar4 = __restgprlr_27(*(undefined4 *)(iVar3 + 0x22a08));
-      return iVar4;
+    if ((param_1->common).frame_type == KEY_FRAME) {
+      return (param_1->oxcf).key_q;
     }
-    if (*(int *)(iVar3 + 0x20f84) != 0) {
-      iVar4 = __restgprlr_27(*(undefined4 *)(iVar3 + 0x22a04));
-      return iVar4;
+    if ((param_1->common).refresh_alt_ref_frame != 0) {
+      return (param_1->oxcf).alt_q;
     }
-    if (*(int *)(iVar3 + 0x20f80) != 0) {
-      iVar4 = __restgprlr_27(*(undefined4 *)(iVar3 + 0x22a0c));
-      return iVar4;
+    if ((param_1->common).refresh_golden_frame != 0) {
+      return (param_1->oxcf).gold_q;
     }
   }
-  iVar4 = __restgprlr_27(iVar12);
-  return iVar4;
+  return iVar3;
 }
 
 
 // 828375B8  vp8_adjust_key_frame_context  (WebM_atvi_opt/vpx/vp8/encoder/ratectrl.c:1427)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void vp8_adjust_key_frame_context(VP8_COMP *param_1)
 
 {
   int *piVar1;
-  int iVar2;
-  int *piVar3;
-  int iVar4;
+  int *piVar2;
+  uint uVar3;
+  ulonglong uVar4;
   ulonglong uVar5;
-  ulonglong uVar6;
-  GPUANISOFILTER *pGVar7;
-  int iVar8;
-  uint uVar9;
-  int iVar10;
-  int *piVar11;
-  uint uVar12;
-  longlong *plVar13;
-  longlong lVar14;
+  GPUANISOFILTER *pGVar6;
+  int iVar7;
+  uint uVar8;
+  int iVar9;
+  int *piVar10;
+  long64 *plVar11;
+  longlong lVar12;
   
-  iVar2 = __savegprlr_29(param_1);
-  piVar3 = (int *)(iVar2 + 0x26e74);
-  plVar13 = (longlong *)(iVar2 + 0x26ef8);
-  uVar6 = 0;
+  piVar2 = &param_1->projected_frame_size;
+  plVar11 = &param_1->key_frame_count;
   uVar5 = 0;
-  *(longlong *)(iVar2 + 0x26f00) = (longlong)*piVar3 + *(longlong *)(iVar2 + 0x26f00);
-  if (*plVar13 == 1) {
-    uVar5 = ((ulonglong)(uint)(int)*(double *)(iVar2 + 0x26f48) & 0x7fffffff) << 1;
+  uVar4 = 0;
+  param_1->tot_key_frame_bits = (longlong)*piVar2 + param_1->tot_key_frame_bits;
+  if (*plVar11 == 1) {
+    uVar4 = ((ulonglong)(uint)(int)param_1->output_frame_rate & 0x7fffffff) << 1;
   }
   else {
-    iVar4 = *(int *)(iVar2 + 0x22b40);
-    if (iVar4 == 0) {
-      iVar4 = 1;
+    uVar3 = param_1->frames_since_key;
+    if (uVar3 == 0) {
+      uVar3 = 1;
     }
-    iVar8 = 0;
-    pGVar7 = anisoFilterMap + 0x10;
-    lVar14 = 5;
-    piVar11 = (int *)(iVar2 + 0x26f08);
+    iVar7 = 0;
+    pGVar6 = anisoFilterMap + 0x10;
+    lVar12 = 5;
+    piVar10 = param_1->prior_key_frame_size;
     do {
-      if (iVar8 < 4) {
-        iVar10 = piVar11[1];
-        piVar11[5] = piVar11[6];
+      if (iVar7 < 4) {
+        iVar9 = piVar10[1];
+        piVar10[5] = piVar10[6];
       }
       else {
-        iVar10 = *piVar3;
-        piVar11[5] = iVar4;
+        iVar9 = *piVar2;
+        piVar10[5] = uVar3;
       }
-      piVar1 = piVar11 + 5;
-      iVar8 = iVar8 + 1;
-      *piVar11 = iVar10;
-      piVar11 = piVar11 + 1;
-      pGVar7 = pGVar7 + 1;
-      uVar6 = *pGVar7 + uVar6;
-      uVar5 = (longlong)(int)*pGVar7 * (longlong)*piVar1 + uVar5;
-      lVar14 = lVar14 + -1;
-    } while (lVar14 != 0);
-    uVar5 = (uVar5 & 0xffffffff) / (uVar6 & 0xffffffff);
-    trapWord(6,uVar6,0);
+      piVar1 = piVar10 + 5;
+      iVar7 = iVar7 + 1;
+      *piVar10 = iVar9;
+      piVar10 = piVar10 + 1;
+      pGVar6 = pGVar6 + 1;
+      uVar5 = *pGVar6 + uVar5;
+      uVar4 = (longlong)(int)*pGVar6 * (longlong)*piVar1 + uVar4;
+      lVar12 = lVar12 + -1;
+    } while (lVar12 != 0);
+    uVar4 = (uVar4 & 0xffffffff) / (uVar5 & 0xffffffff);
+    trapWord(6,uVar5,0);
   }
-  if (*(int *)(iVar2 + 0x2e82c) != 2) {
-    if (*(int *)(iVar2 + 0x26f30) < *piVar3) {
-      uVar9 = *piVar3 - *(int *)(iVar2 + 0x26f30);
-      uVar12 = uVar9 * 7;
-      uVar12 = ((int)uVar12 >> 3) + (uint)((int)uVar12 < 0 && (uVar12 & 7) != 0) +
-               *(uint *)(iVar2 + 0x26ee0);
-      *(uint *)(iVar2 + 0x26ee0) = uVar12;
-      *(int *)(iVar2 + 0x26eb0) =
-           ((int)uVar9 >> 3) + (uint)((int)uVar9 < 0 && (uVar9 & 7) != 0) +
-           *(int *)(iVar2 + 0x26eb0);
-      if (uVar5 == 0) {
-        uVar5 = 0x3c;
+  if (param_1->pass != 2) {
+    if (param_1->per_frame_bandwidth < *piVar2) {
+      uVar8 = *piVar2 - param_1->per_frame_bandwidth;
+      uVar3 = uVar8 * 7;
+      uVar3 = ((int)uVar3 >> 3) + (uint)((int)uVar3 < 0 && (uVar3 & 7) != 0) +
+              param_1->kf_overspend_bits;
+      param_1->kf_overspend_bits = uVar3;
+      param_1->gf_overspend_bits =
+           ((int)uVar8 >> 3) + (uint)((int)uVar8 < 0 && (uVar8 & 7) != 0) +
+           param_1->gf_overspend_bits;
+      if (uVar4 == 0) {
+        uVar4 = 0x3c;
       }
-      trapWord(6,uVar5,0);
-      trapWord(5,uVar5 & ~((((ulonglong)uVar12 & 0x7fffffff) << 1 | (ulonglong)(uVar12 >> 0x1f)) - 1
-                          ),0xffff);
-      *(int *)(iVar2 + 0x26ee4) = (int)uVar12 / (int)uVar5;
+      trapWord(6,uVar4,0);
+      trapWord(5,uVar4 & ~((((ulonglong)uVar3 & 0x7fffffff) << 1 | (ulonglong)(uVar3 >> 0x1f)) - 1),
+               0xffff);
+      param_1->kf_bitrate_adjustment = (int)uVar3 / (int)uVar4;
     }
   }
-  *(undefined4 *)(iVar2 + 0x22b40) = 0;
-  *plVar13 = *plVar13 + 1;
-  *(int *)(iVar2 + 0x26f3c) = *piVar3;
-  __restgprlr_29();
+  param_1->frames_since_key = 0;
+  *plVar11 = *plVar11 + 1;
+  param_1->last_key_frame_size = *piVar2;
   return;
 }
 

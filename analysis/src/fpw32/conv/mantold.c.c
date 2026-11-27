@@ -2,29 +2,30 @@
 
 // 829294B0  __mtold12  (<external>/bt/278379/vctools/crt/src/fpw32/include/mantold.inl:39)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void __mtold12(char *param_1,uint param_2,_LDBL12 *param_3)
 
 {
   int iVar1;
-  char *pcVar2;
+  bool bVar2;
   uint uVar3;
   uint uVar4;
-  bool bVar5;
+  uint uVar5;
   uint uVar6;
-  uint uVar7;
-  short sVar8;
-  ulonglong uVar9;
+  short sVar7;
+  longlong lVar8;
   int local_40;
   uint local_3c;
   uint local_38;
   
-  uVar9 = (ulonglong)(int)param_2;
-  pcVar2 = (char *)__savegprlr_27(param_1);
+  lVar8 = (longlong)(int)param_2;
   param_3->ld12[8] = '\0';
   param_3->ld12[9] = '\0';
   param_3->ld12[10] = '\0';
   param_3->ld12[0xb] = '\0';
-  sVar8 = 0x404e;
+  sVar7 = 0x404e;
   param_3->ld12[4] = '\0';
   param_3->ld12[5] = '\0';
   param_3->ld12[6] = '\0';
@@ -33,98 +34,97 @@ void __mtold12(char *param_1,uint param_2,_LDBL12 *param_3)
   param_3->ld12[1] = '\0';
   param_3->ld12[2] = '\0';
   param_3->ld12[3] = '\0';
-  if ((uVar9 & 0xffffffff) != 0) {
+  if (param_2 != 0) {
     do {
       memcpy();
       uVar4 = *(uint *)(param_3->ld12 + 8);
-      uVar6 = *(uint *)(param_3->ld12 + 4);
-      bVar5 = false;
-      uVar3 = *(int *)param_3->ld12 << 1 | uVar6 >> 0x1f;
-      *(uint *)(param_3->ld12 + 4) = uVar6 << 1 | uVar4 >> 0x1f;
+      uVar5 = *(uint *)(param_3->ld12 + 4);
+      bVar2 = false;
+      uVar3 = *(int *)param_3->ld12 << 1 | uVar5 >> 0x1f;
+      *(uint *)(param_3->ld12 + 4) = uVar5 << 1 | uVar4 >> 0x1f;
       *(uint *)param_3->ld12 = uVar3;
-      uVar7 = uVar4 * 4;
-      uVar3 = uVar3 << 1 | (uint)(((ulonglong)uVar6 & 0x7fffffff) >> 0x1e);
-      uVar6 = (uVar6 << 1 & 0x7fffffff | uVar4 >> 0x1f) << 1 | uVar4 >> 0x1e & 1;
+      uVar6 = uVar4 * 4;
+      uVar3 = uVar3 << 1 | (uint)(((ulonglong)uVar5 & 0x7fffffff) >> 0x1e);
+      uVar5 = (uVar5 << 1 & 0x7fffffff | uVar4 >> 0x1f) << 1 | uVar4 >> 0x1e & 1;
       *(uint *)(param_3->ld12 + 8) = uVar4 << 1;
-      uVar4 = uVar7 + local_38;
-      *(uint *)(param_3->ld12 + 8) = uVar7;
-      *(uint *)(param_3->ld12 + 4) = uVar6;
+      uVar4 = uVar6 + local_38;
+      *(uint *)(param_3->ld12 + 8) = uVar6;
+      *(uint *)(param_3->ld12 + 4) = uVar5;
       *(uint *)param_3->ld12 = uVar3;
-      if ((uVar4 < uVar7) || (uVar4 < local_38)) {
-        bVar5 = true;
+      if ((uVar4 < uVar6) || (uVar4 < local_38)) {
+        bVar2 = true;
       }
       *(uint *)(param_3->ld12 + 8) = uVar4;
-      if (bVar5) {
-        uVar7 = uVar6 + 1;
-        bVar5 = false;
-        if ((uVar7 < uVar6) || (uVar7 == 0)) {
-          bVar5 = true;
+      if (bVar2) {
+        uVar6 = uVar5 + 1;
+        bVar2 = false;
+        if ((uVar6 < uVar5) || (uVar6 == 0)) {
+          bVar2 = true;
         }
-        *(uint *)(param_3->ld12 + 4) = uVar7;
-        if (bVar5) {
+        *(uint *)(param_3->ld12 + 4) = uVar6;
+        if (bVar2) {
           *(uint *)param_3->ld12 = uVar3 + 1;
         }
       }
-      bVar5 = false;
-      uVar6 = *(uint *)(param_3->ld12 + 4) + local_3c;
-      if ((uVar6 < *(uint *)(param_3->ld12 + 4)) || (uVar6 < local_3c)) {
-        bVar5 = true;
+      bVar2 = false;
+      uVar5 = *(uint *)(param_3->ld12 + 4) + local_3c;
+      if ((uVar5 < *(uint *)(param_3->ld12 + 4)) || (uVar5 < local_3c)) {
+        bVar2 = true;
       }
-      *(uint *)(param_3->ld12 + 4) = uVar6;
-      if (bVar5) {
+      *(uint *)(param_3->ld12 + 4) = uVar5;
+      if (bVar2) {
         *(int *)param_3->ld12 = *(int *)param_3->ld12 + 1;
       }
       iVar1 = *(int *)param_3->ld12;
-      uVar7 = uVar4 * 2;
-      *(uint *)(param_3->ld12 + 8) = uVar7;
-      uVar3 = *(int *)(param_3->ld12 + 4) << 1 | uVar4 >> 0x1f;
-      uVar4 = (iVar1 + local_40) * 2 | uVar6 >> 0x1f;
-      *(uint *)(param_3->ld12 + 4) = uVar3;
-      bVar5 = false;
-      *(uint *)param_3->ld12 = uVar4;
-      uVar6 = uVar7 + (int)*pcVar2;
-      local_38 = (uint)*pcVar2;
-      if ((uVar6 < uVar7) || (uVar6 < local_38)) {
-        bVar5 = true;
-      }
+      uVar6 = uVar4 * 2;
       *(uint *)(param_3->ld12 + 8) = uVar6;
-      if (bVar5) {
-        uVar6 = uVar3 + 1;
-        bVar5 = false;
-        if ((uVar6 < uVar3) || (uVar6 == 0)) {
-          bVar5 = true;
+      uVar3 = *(int *)(param_3->ld12 + 4) << 1 | uVar4 >> 0x1f;
+      uVar4 = (iVar1 + local_40) * 2 | uVar5 >> 0x1f;
+      *(uint *)(param_3->ld12 + 4) = uVar3;
+      bVar2 = false;
+      *(uint *)param_3->ld12 = uVar4;
+      uVar5 = uVar6 + (int)*param_1;
+      local_38 = (uint)*param_1;
+      if ((uVar5 < uVar6) || (uVar5 < local_38)) {
+        bVar2 = true;
+      }
+      *(uint *)(param_3->ld12 + 8) = uVar5;
+      if (bVar2) {
+        uVar5 = uVar3 + 1;
+        bVar2 = false;
+        if ((uVar5 < uVar3) || (uVar5 == 0)) {
+          bVar2 = true;
         }
-        *(uint *)(param_3->ld12 + 4) = uVar6;
-        if (bVar5) {
+        *(uint *)(param_3->ld12 + 4) = uVar5;
+        if (bVar2) {
           *(uint *)param_3->ld12 = uVar4 + 1;
         }
       }
-      uVar9 = uVar9 - 1;
-      pcVar2 = pcVar2 + 1;
-    } while (uVar9 != 0);
+      lVar8 = lVar8 + -1;
+      param_1 = param_1 + 1;
+    } while (lVar8 != 0);
     if (*(int *)param_3->ld12 != 0) goto LAB_8292972c;
   }
   do {
     uVar4 = *(uint *)(param_3->ld12 + 8);
-    uVar6 = *(uint *)(param_3->ld12 + 4);
+    uVar5 = *(uint *)(param_3->ld12 + 4);
     *(uint *)(param_3->ld12 + 8) = uVar4 << 0x10;
-    uVar3 = uVar6 >> 0x10;
+    uVar3 = uVar5 >> 0x10;
     *(uint *)param_3->ld12 = uVar3;
-    sVar8 = sVar8 + -0x10;
-    *(uint *)(param_3->ld12 + 4) = uVar6 << 0x10 | uVar4 >> 0x10;
+    sVar7 = sVar7 + -0x10;
+    *(uint *)(param_3->ld12 + 4) = uVar5 << 0x10 | uVar4 >> 0x10;
   } while (uVar3 == 0);
 LAB_8292972c:
   while ((*(uint *)param_3->ld12 & 0x8000) == 0) {
     uVar4 = *(uint *)(param_3->ld12 + 8);
-    uVar6 = *(uint *)(param_3->ld12 + 4);
+    uVar5 = *(uint *)(param_3->ld12 + 4);
     iVar1 = *(int *)param_3->ld12;
     *(uint *)(param_3->ld12 + 8) = uVar4 << 1;
-    sVar8 = sVar8 + -1;
-    *(uint *)(param_3->ld12 + 4) = uVar6 << 1 | uVar4 >> 0x1f;
-    *(uint *)param_3->ld12 = iVar1 << 1 | uVar6 >> 0x1f;
+    sVar7 = sVar7 + -1;
+    *(uint *)(param_3->ld12 + 4) = uVar5 << 1 | uVar4 >> 0x1f;
+    *(uint *)param_3->ld12 = iVar1 << 1 | uVar5 >> 0x1f;
   }
-  *(short *)param_3->ld12 = sVar8;
-  __restgprlr_27();
+  *(short *)param_3->ld12 = sVar7;
   return;
 }
 

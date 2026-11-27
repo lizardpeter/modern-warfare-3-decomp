@@ -1766,7 +1766,7 @@ LAB_82606f34:
   82606F54  7C0903A6             mtspr CTR,r0
 switchD:
   82606F58  4E800420             bctr
-caseD_0:
+caseD_80:
   82606FAC  4BF13805             bl 0x8251a7b0
   82606FB0  546B063E             rlwinm r11,r3,0x0,0x18,0x1f
   82606FB4  2B0B0000             cmplwi cr6,r11,0x0
@@ -1846,7 +1846,7 @@ LAB_82607098:
   826070C8  7FE3FB78             or r3,r31,r31
   826070CC  38210090             addi r1,r1,0x90
   826070D0  4830F62C             b 0x829166fc
-caseD_1:
+caseD_81:
   826070D4  4BF137BD             bl 0x8251a890
   826070D8  546B063E             rlwinm r11,r3,0x0,0x18,0x1f
   826070DC  2B0B0000             cmplwi cr6,r11,0x0
@@ -1855,7 +1855,7 @@ caseD_1:
   826070E8  3880057A             li r4,0x57a
   826070EC  38EB0B48             addi r7,r11,0xb48
   826070F0  48000148             b 0x82607238
-caseD_2:
+caseD_82:
   826070F4  816D0000             lwz r11,0x0(r13)
   826070F8  394000FC             li r10,0xfc
   826070FC  7D2A582E             lwzx r9,r10,r11
@@ -1923,7 +1923,7 @@ LAB_826071dc:
   826071E0  419A00BC             beq cr6,0x8260729c
   826071E4  937FFFFC             stw r27,-0x4(r31)
   826071E8  480000AC             b 0x82607294
-caseD_13:
+caseD_93:
   826071EC  3D608401             lis r11,-0x7bff
   826071F0  816B3128             lwz r11,0x3128(r11)
   826071F4  2F0B0000             cmpwi cr6,r11,0x0
@@ -1937,7 +1937,7 @@ caseD_13:
 LAB_82607214:
   82607214  3BE00000             li r31,0x0
   82607218  48000084             b 0x8260729c
-caseD_3:
+caseD_83:
   8260721C  4BF13605             bl 0x8251a820
   82607220  546B063E             rlwinm r11,r3,0x0,0x18,0x1f
   82607224  2B0B0000             cmplwi cr6,r11,0x0

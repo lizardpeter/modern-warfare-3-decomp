@@ -36,205 +36,206 @@ void __thiscall bdAuthTicket::~bdAuthTicket(bdAuthTicket *this)
 
 // 82901F70  serialize  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdauthticket.cpp:35)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void __thiscall bdAuthTicket::serialize(bdAuthTicket *this,void *param_1)
 
 {
-  undefined1 *puVar1;
-  int iVar2;
+  int iVar1;
+  bool bVar2;
   bool bVar3;
-  bool bVar4;
-  uint *puVar5;
-  undefined1 *puVar6;
-  int iVar7;
-  longlong lVar8;
-  undefined1 local_80 [4];
+  uint *puVar4;
+  char *pcVar5;
+  int iVar6;
+  longlong lVar7;
+  uchar local_80 [4];
   uint local_7c;
   bdHashTiger192 bStack_78;
   undefined1 auStack_74 [3];
-  undefined1 local_71 [4];
-  undefined1 local_6d [4];
-  undefined1 local_69 [4];
+  char local_71 [4];
+  char local_6d [4];
+  char local_69 [4];
   undefined1 local_65;
   uint local_64;
-  int local_60;
+  uchar *local_60;
   undefined1 auStack_58 [7];
-  undefined1 local_51 [8];
-  undefined1 local_49 [9];
+  char local_51 [8];
+  char local_49 [9];
   uchar local_40;
-  undefined1 local_3f;
-  undefined1 local_3e;
-  undefined1 local_3d;
+  uchar local_3f;
+  uchar local_3e;
+  uchar local_3d;
   
-  iVar2 = __savegprlr_28(this);
   local_7c = 0;
-  iVar7 = 0;
-  puVar6 = local_71 + 1;
-  lVar8 = 4;
+  iVar6 = 0;
+  pcVar5 = local_71 + 1;
+  lVar7 = 4;
   do {
-    puVar1 = (undefined1 *)(iVar7 + iVar2);
-    iVar7 = iVar7 + 1;
-    puVar6 = puVar6 + -1;
-    *puVar6 = *puVar1;
-    lVar8 = lVar8 + -1;
-  } while (lVar8 != 0);
-  bVar3 = bdBytePacker::appendBuffer(param_1,0x80,0,&local_7c,auStack_74,4);
-  if (bVar3) {
-    local_80[0] = *(undefined1 *)(iVar2 + 4);
-    local_60 = iVar2 + 4;
-    bVar4 = bdBytePacker::appendBuffer(param_1,0x80,local_7c,&local_7c,local_80,1);
-    bVar3 = true;
-    if (!bVar4) goto LAB_82902018;
+    iVar1 = iVar6 + -0x28;
+    iVar6 = iVar6 + 1;
+    pcVar5 = pcVar5 + -1;
+    *pcVar5 = this->m_username[iVar1];
+    lVar7 = lVar7 + -1;
+  } while (lVar7 != 0);
+  bVar2 = bdBytePacker::appendBuffer(param_1,0x80,0,&local_7c,auStack_74,4);
+  if (bVar2) {
+    local_80[0] = this->m_type;
+    local_60 = &this->m_type;
+    bVar3 = bdBytePacker::appendBuffer(param_1,0x80,local_7c,&local_7c,local_80,1);
+    bVar2 = true;
+    if (!bVar3) goto LAB_82902018;
   }
   else {
 LAB_82902018:
-    bVar3 = false;
+    bVar2 = false;
   }
-  if (bVar3) {
-    iVar7 = 0;
-    puVar6 = local_6d + 1;
-    lVar8 = 4;
+  if (bVar2) {
+    iVar6 = 0;
+    pcVar5 = local_6d + 1;
+    lVar7 = 4;
     do {
-      puVar1 = (undefined1 *)(iVar7 + iVar2 + 8);
-      iVar7 = iVar7 + 1;
-      puVar6 = puVar6 + -1;
-      *puVar6 = *puVar1;
-      lVar8 = lVar8 + -1;
-    } while (lVar8 != 0);
-    bVar4 = bdBytePacker::appendBuffer(param_1,0x80,local_7c,&local_7c,local_71 + 1,4);
-    bVar3 = true;
-    if (!bVar4) goto LAB_82902070;
+      iVar1 = iVar6 + -0x20;
+      iVar6 = iVar6 + 1;
+      pcVar5 = pcVar5 + -1;
+      *pcVar5 = this->m_username[iVar1];
+      lVar7 = lVar7 + -1;
+    } while (lVar7 != 0);
+    bVar3 = bdBytePacker::appendBuffer(param_1,0x80,local_7c,&local_7c,local_71 + 1,4);
+    bVar2 = true;
+    if (!bVar3) goto LAB_82902070;
   }
   else {
 LAB_82902070:
-    bVar3 = false;
+    bVar2 = false;
   }
-  if (bVar3) {
-    iVar7 = 0;
-    puVar6 = local_69 + 1;
-    lVar8 = 4;
+  if (bVar2) {
+    iVar6 = 0;
+    pcVar5 = local_69 + 1;
+    lVar7 = 4;
     do {
-      puVar1 = (undefined1 *)(iVar7 + iVar2 + 0xc);
-      iVar7 = iVar7 + 1;
-      puVar6 = puVar6 + -1;
-      *puVar6 = *puVar1;
-      lVar8 = lVar8 + -1;
-    } while (lVar8 != 0);
-    bVar4 = bdBytePacker::appendBuffer(param_1,0x80,local_7c,&local_7c,local_6d + 1,4);
-    bVar3 = true;
-    if (!bVar4) goto LAB_829020c8;
+      iVar1 = iVar6 + -0x1c;
+      iVar6 = iVar6 + 1;
+      pcVar5 = pcVar5 + -1;
+      *pcVar5 = this->m_username[iVar1];
+      lVar7 = lVar7 + -1;
+    } while (lVar7 != 0);
+    bVar3 = bdBytePacker::appendBuffer(param_1,0x80,local_7c,&local_7c,local_6d + 1,4);
+    bVar2 = true;
+    if (!bVar3) goto LAB_829020c8;
   }
   else {
 LAB_829020c8:
-    bVar3 = false;
+    bVar2 = false;
   }
-  if (bVar3) {
-    iVar7 = 0;
-    puVar5 = &local_64;
-    lVar8 = 4;
+  if (bVar2) {
+    iVar6 = 0;
+    puVar4 = &local_64;
+    lVar7 = 4;
     do {
-      puVar6 = (undefined1 *)(iVar7 + iVar2 + 0x10);
-      iVar7 = iVar7 + 1;
-      puVar5 = (uint *)((int)puVar5 + -1);
-      *(undefined1 *)puVar5 = *puVar6;
-      lVar8 = lVar8 + -1;
-    } while (lVar8 != 0);
-    bVar4 = bdBytePacker::appendBuffer(param_1,0x80,local_7c,&local_7c,local_69 + 1,4);
-    bVar3 = true;
-    if (!bVar4) goto LAB_82902120;
+      iVar1 = iVar6 + -0x18;
+      iVar6 = iVar6 + 1;
+      puVar4 = (uint *)((int)puVar4 + -1);
+      *(char *)puVar4 = this->m_username[iVar1];
+      lVar7 = lVar7 + -1;
+    } while (lVar7 != 0);
+    bVar3 = bdBytePacker::appendBuffer(param_1,0x80,local_7c,&local_7c,local_69 + 1,4);
+    bVar2 = true;
+    if (!bVar3) goto LAB_82902120;
   }
   else {
 LAB_82902120:
-    bVar3 = false;
+    bVar2 = false;
   }
-  if (bVar3) {
-    iVar7 = 0;
-    puVar6 = local_51 + 1;
-    lVar8 = 8;
+  if (bVar2) {
+    iVar6 = 0;
+    pcVar5 = local_51 + 1;
+    lVar7 = 8;
     do {
-      puVar1 = (undefined1 *)(iVar7 + iVar2 + 0x18);
-      iVar7 = iVar7 + 1;
-      puVar6 = puVar6 + -1;
-      *puVar6 = *puVar1;
-      lVar8 = lVar8 + -1;
-    } while (lVar8 != 0);
-    bVar4 = bdBytePacker::appendBuffer(param_1,0x80,local_7c,&local_7c,auStack_58,8);
-    bVar3 = true;
-    if (!bVar4) goto LAB_82902178;
+      iVar1 = iVar6 + -0x10;
+      iVar6 = iVar6 + 1;
+      pcVar5 = pcVar5 + -1;
+      *pcVar5 = this->m_username[iVar1];
+      lVar7 = lVar7 + -1;
+    } while (lVar7 != 0);
+    bVar3 = bdBytePacker::appendBuffer(param_1,0x80,local_7c,&local_7c,auStack_58,8);
+    bVar2 = true;
+    if (!bVar3) goto LAB_82902178;
   }
   else {
 LAB_82902178:
-    bVar3 = false;
+    bVar2 = false;
   }
-  if (bVar3) {
-    iVar7 = 0;
-    puVar6 = local_49 + 1;
-    lVar8 = 8;
+  if (bVar2) {
+    iVar6 = 0;
+    pcVar5 = local_49 + 1;
+    lVar7 = 8;
     do {
-      puVar1 = (undefined1 *)(iVar7 + iVar2 + 0x20);
-      iVar7 = iVar7 + 1;
-      puVar6 = puVar6 + -1;
-      *puVar6 = *puVar1;
-      lVar8 = lVar8 + -1;
-    } while (lVar8 != 0);
-    bVar4 = bdBytePacker::appendBuffer(param_1,0x80,local_7c,&local_7c,local_51 + 1,8);
-    bVar3 = true;
-    if (!bVar4) goto LAB_829021d0;
+      iVar1 = iVar6 + -8;
+      iVar6 = iVar6 + 1;
+      pcVar5 = pcVar5 + -1;
+      *pcVar5 = this->m_username[iVar1];
+      lVar7 = lVar7 + -1;
+    } while (lVar7 != 0);
+    bVar3 = bdBytePacker::appendBuffer(param_1,0x80,local_7c,&local_7c,local_51 + 1,8);
+    bVar2 = true;
+    if (!bVar3) goto LAB_829021d0;
   }
   else {
 LAB_829021d0:
-    bVar3 = false;
+    bVar2 = false;
   }
-  if (bVar3) {
-    bVar4 = bdBytePacker::appendBuffer(param_1,0x80,local_7c,&local_7c,(void *)(iVar2 + 0x28),0x40);
-    bVar3 = true;
-    if (!bVar4) goto LAB_82902204;
+  if (bVar2) {
+    bVar3 = bdBytePacker::appendBuffer(param_1,0x80,local_7c,&local_7c,this->m_username,0x40);
+    bVar2 = true;
+    if (!bVar3) goto LAB_82902204;
   }
   else {
 LAB_82902204:
-    bVar3 = false;
+    bVar2 = false;
   }
-  if (bVar3) {
-    bVar4 = bdBytePacker::appendBuffer(param_1,0x80,local_7c,&local_7c,(void *)(iVar2 + 0x68),0x18);
-    bVar3 = true;
-    if (!bVar4) goto LAB_82902238;
+  if (bVar2) {
+    bVar3 = bdBytePacker::appendBuffer(param_1,0x80,local_7c,&local_7c,this->m_sessionKey,0x18);
+    bVar2 = true;
+    if (!bVar3) goto LAB_82902238;
   }
   else {
 LAB_82902238:
-    bVar3 = false;
+    bVar2 = false;
   }
-  if (bVar3) {
-    bVar4 = bdBytePacker::appendBuffer(param_1,0x80,local_7c,&local_7c,(void *)(iVar2 + 0x80),3);
-    bVar3 = true;
-    if (!bVar4) goto LAB_8290226c;
+  if (bVar2) {
+    bVar3 = bdBytePacker::appendBuffer
+                      (param_1,0x80,local_7c,&local_7c,this->m_usingHashMagicNumber,3);
+    bVar2 = true;
+    if (!bVar3) goto LAB_8290226c;
   }
   else {
 LAB_8290226c:
-    bVar3 = false;
+    bVar2 = false;
   }
   bdHashTiger192::bdHashTiger192(&bStack_78);
   local_64 = 0x18;
   bdHashTiger192::hash(&bStack_78,param_1,0x79,&local_40,&local_64);
-  *(uchar *)(iVar2 + 0x83) = local_40;
-  *(undefined1 *)(iVar2 + 0x84) = local_3f;
-  *(undefined1 *)(iVar2 + 0x85) = local_3e;
-  *(undefined1 *)(iVar2 + 0x86) = local_3d;
-  if (bVar3) {
-    bVar4 = bdBytePacker::appendBuffer(param_1,0x80,local_7c,&local_7c,(void *)(iVar2 + 0x83),4);
-    bVar3 = true;
-    if (bVar4) goto LAB_829022f4;
+  this->m_hash[0] = local_40;
+  this->m_hash[1] = local_3f;
+  this->m_hash[2] = local_3e;
+  this->m_hash[3] = local_3d;
+  if (bVar2) {
+    bVar3 = bdBytePacker::appendBuffer(param_1,0x80,local_7c,&local_7c,this->m_hash,4);
+    bVar2 = true;
+    if (bVar3) goto LAB_829022f4;
   }
-  bVar3 = false;
+  bVar2 = false;
 LAB_829022f4:
   if (local_7c != 0x80) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdLobby\\bdAuthTicket.cpp"
                     ,0x40,0,"%s\n\t%s");
   }
-  if (!bVar3) {
+  if (!bVar2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdLobby\\bdAuthTicket.cpp"
                     ,0x41,0,"%s\n\t%s");
   }
   bdHashTiger192::~bdHashTiger192(&bStack_78);
-  __restgprlr_28();
   return;
 }
 

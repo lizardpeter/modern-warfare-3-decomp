@@ -2,92 +2,92 @@
 
 // 827C9668  select_ncolors  (jpeg-6/jquant1.c:190)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 int select_ncolors(jpeg_decompress_struct *param_1,int *param_2)
 
 {
   uint uVar1;
-  uint uVar2;
-  int *piVar4;
-  ulonglong uVar3;
-  int iVar5;
-  longlong lVar6;
-  bool bVar7;
-  int *piVar8;
-  longlong lVar9;
+  int iVar2;
+  uint uVar3;
+  bool bVar4;
+  uint uVar5;
+  int *piVar6;
+  int iVar7;
+  longlong lVar8;
+  int iVar9;
   int iVar10;
   int iVar11;
+  uint uVar12;
+  ulonglong uVar13;
   ulonglong uVar14;
-  ulonglong uVar15;
-  int iVar12;
-  int iVar13;
   
-  lVar6 = (longlong)(int)param_2;
-  piVar4 = (int *)__savegprlr_27(param_1);
-  uVar1 = piVar4[0x1b];
-  uVar14 = (ulonglong)uVar1;
-  iVar5 = piVar4[0x17];
-  iVar12 = 1;
+  uVar1 = param_1->out_color_components;
+  uVar13 = (ulonglong)uVar1;
+  iVar2 = param_1->desired_number_of_colors;
   iVar11 = 1;
+  iVar7 = 1;
   do {
-    iVar13 = iVar11;
-    iVar12 = iVar12 + 1;
-    iVar11 = iVar13 + 1;
-    iVar10 = iVar11;
+    iVar10 = iVar7;
+    iVar11 = iVar11 + 1;
+    iVar7 = iVar10 + 1;
+    iVar9 = iVar7;
     if (1 < (int)uVar1) {
-      lVar9 = uVar14 - 1;
+      lVar8 = uVar13 - 1;
       do {
-        iVar10 = iVar10 * iVar12;
-        lVar9 = lVar9 + -1;
-      } while (lVar9 != 0);
+        iVar9 = iVar9 * iVar11;
+        lVar8 = lVar8 + -1;
+      } while (lVar8 != 0);
     }
-  } while (iVar10 <= iVar5);
-  if (iVar13 < 2) {
-    *(undefined4 *)(*piVar4 + 0x14) = 0x38;
-    *(int *)(*piVar4 + 0x18) = iVar10;
-    (**(code **)*piVar4)(piVar4);
+  } while (iVar9 <= iVar2);
+  if (iVar10 < 2) {
+    param_1->err->msg_code = 0x38;
+    (param_1->err->msg_parm).i[0] = iVar9;
+    (*param_1->err->error_exit)((jpeg_common_struct *)param_1);
   }
-  uVar3 = 1;
+  uVar5 = 1;
   if (0 < (int)uVar1) {
-    lVar9 = lVar6 + -4;
-    uVar15 = uVar14;
+    piVar6 = param_2 + -1;
+    uVar14 = uVar13;
     if (uVar1 != 0) {
       do {
-        lVar9 = lVar9 + 4;
-        *(int *)lVar9 = iVar13;
-        uVar15 = uVar15 - 1;
-      } while (uVar15 != 0);
+        piVar6 = piVar6 + 1;
+        *piVar6 = iVar10;
+        uVar14 = uVar14 - 1;
+      } while (uVar14 != 0);
     }
     do {
-      uVar14 = uVar14 - 1;
-      uVar3 = (longlong)(int)uVar3 * (longlong)iVar13;
-    } while (uVar14 != 0);
+      uVar13 = uVar13 - 1;
+      uVar5 = uVar5 * iVar10;
+    } while (uVar13 != 0);
   }
   do {
-    bVar7 = false;
-    iVar11 = 0;
-    piVar8 = RGB_order;
+    bVar4 = false;
+    iVar7 = 0;
+    piVar6 = RGB_order;
     if (0 < (int)uVar1) {
       do {
-        iVar12 = iVar11;
-        if (piVar4[0xd] == 2) {
-          iVar12 = *piVar8;
+        iVar11 = iVar7;
+        if (param_1->out_color_space == JCS_RGB) {
+          iVar11 = *piVar6;
         }
-        uVar2 = *(uint *)(iVar12 * 4 + (int)lVar6);
-        trapWord(6,(ulonglong)uVar2,0);
-        uVar14 = (longlong)((int)uVar3 / (int)uVar2) * (longlong)(int)(uVar2 + 1);
-        trapWord(5,(ulonglong)uVar2 &
-                   ~(((uVar3 & 0x7fffffff) << 1 | (uVar3 & 0xffffffff) >> 0x1f) - 1),0xffff);
-        if (iVar5 < (int)uVar14) break;
-        iVar11 = iVar11 + 1;
-        *(uint *)(iVar12 * 4 + (int)lVar6) = uVar2 + 1;
-        bVar7 = true;
-        uVar3 = uVar14;
-        piVar8 = piVar8 + 1;
-      } while (iVar11 < (int)uVar1);
+        uVar3 = param_2[iVar11];
+        trapWord(6,(ulonglong)uVar3,0);
+        uVar12 = ((int)uVar5 / (int)uVar3) * (uVar3 + 1);
+        trapWord(5,(ulonglong)uVar3 &
+                   ~((((ulonglong)uVar5 & 0x7fffffff) << 1 | (ulonglong)(uVar5 >> 0x1f)) - 1),0xffff
+                );
+        if (iVar2 < (int)uVar12) break;
+        iVar7 = iVar7 + 1;
+        param_2[iVar11] = uVar3 + 1;
+        bVar4 = true;
+        uVar5 = uVar12;
+        piVar6 = piVar6 + 1;
+      } while (iVar7 < (int)uVar1);
     }
-    if (!bVar7) {
-      iVar5 = __restgprlr_27();
-      return iVar5;
+    if (!bVar4) {
+      return uVar5;
     }
   } while( true );
 }
@@ -128,6 +128,9 @@ int largest_input_value(jpeg_decompress_struct *param_1,int param_2,int param_3,
 
 // 827C9810  create_colormap  (jpeg-6/jquant1.c:274)
 
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
+
 void create_colormap(jpeg_decompress_struct *param_1)
 
 {
@@ -135,195 +138,194 @@ void create_colormap(jpeg_decompress_struct *param_1)
   jpeg_color_quantizer *pjVar2;
   jpeg_error_mgr *pjVar3;
   _func___cdecl_void_jpeg_decompress_struct_ptr_uchar *p_Var4;
-  jpeg_decompress_struct *pjVar6;
   ulonglong uVar5;
-  uchar **ppuVar8;
-  longlong lVar9;
-  int iVar10;
-  ulonglong uVar11;
-  uchar **ppuVar12;
-  longlong lVar13;
-  uint uVar14;
-  ulonglong uVar15;
-  int iVar16;
-  ulonglong uVar17;
+  uchar **ppuVar7;
+  longlong lVar8;
+  int iVar9;
+  ulonglong uVar10;
+  uchar **ppuVar11;
+  longlong lVar12;
+  uint uVar13;
+  ulonglong uVar14;
+  int iVar15;
+  ulonglong uVar16;
+  int iVar17;
   int iVar18;
-  int iVar19;
-  jpeg_color_quantizer *pjVar20;
-  _func___cdecl_void_jpeg_common_struct_ptr_int *p_Var22;
-  ulonglong uVar21;
-  _func___cdecl_void_jpeg_decompress_struct_ptr_uchar_ptr_ptr_uchar_ptr_ptr_int *p_Var7;
+  jpeg_color_quantizer *pjVar19;
+  _func___cdecl_void_jpeg_common_struct_ptr_int *p_Var21;
+  ulonglong uVar20;
+  _func___cdecl_void_jpeg_decompress_struct_ptr_uchar_ptr_ptr_uchar_ptr_ptr_int *p_Var6;
   
-  pjVar6 = (jpeg_decompress_struct *)__savegprlr_22(param_1);
-  pjVar2 = pjVar6->cquantize;
-  pjVar20 = pjVar2 + 2;
-  p_Var7 = (_func___cdecl_void_jpeg_decompress_struct_ptr_uchar_ptr_ptr_uchar_ptr_ptr_int *)
-           select_ncolors(pjVar6,(int *)pjVar20);
-  uVar5 = (ulonglong)(int)p_Var7;
-  pjVar3 = pjVar6->err;
-  if (pjVar6->out_color_components == 3) {
-    (pjVar3->msg_parm).i[0] = (int)p_Var7;
-    (pjVar3->msg_parm).i[1] = (int)pjVar20->start_pass;
+  pjVar2 = param_1->cquantize;
+  pjVar19 = pjVar2 + 2;
+  p_Var6 = (_func___cdecl_void_jpeg_decompress_struct_ptr_uchar_ptr_ptr_uchar_ptr_ptr_int *)
+           select_ncolors(param_1,(int *)pjVar19);
+  uVar5 = (ulonglong)(int)p_Var6;
+  pjVar3 = param_1->err;
+  if (param_1->out_color_components == 3) {
+    (pjVar3->msg_parm).i[0] = (int)p_Var6;
+    (pjVar3->msg_parm).i[1] = (int)pjVar19->start_pass;
     (pjVar3->msg_parm).i[2] = (int)pjVar2[2].color_quantize;
     (pjVar3->msg_parm).i[3] = (int)pjVar2[2].finish_pass;
-    pjVar6->err->msg_code = 0x5e;
-    p_Var22 = pjVar6->err->emit_message;
+    param_1->err->msg_code = 0x5e;
+    p_Var21 = param_1->err->emit_message;
   }
   else {
     pjVar3->msg_code = 0x5f;
-    (pjVar6->err->msg_parm).i[0] = (int)p_Var7;
-    p_Var22 = pjVar6->err->emit_message;
+    (param_1->err->msg_parm).i[0] = (int)p_Var6;
+    p_Var21 = param_1->err->emit_message;
   }
-  (*p_Var22)((jpeg_common_struct *)pjVar6,1);
-  ppuVar8 = (*pjVar6->mem->alloc_sarray)
-                      ((jpeg_common_struct *)pjVar6,1,(uint)p_Var7,pjVar6->out_color_components);
-  iVar16 = 0;
-  ppuVar12 = ppuVar8;
-  if (0 < pjVar6->out_color_components) {
+  (*p_Var21)((jpeg_common_struct *)param_1,1);
+  ppuVar7 = (*param_1->mem->alloc_sarray)
+                      ((jpeg_common_struct *)param_1,1,(uint)p_Var6,param_1->out_color_components);
+  iVar15 = 0;
+  ppuVar11 = ppuVar7;
+  if (0 < param_1->out_color_components) {
     do {
-      p_Var4 = pjVar20->start_pass;
-      uVar15 = ZEXT48(p_Var4);
+      p_Var4 = pjVar19->start_pass;
+      uVar14 = ZEXT48(p_Var4);
       iVar1 = (int)uVar5 / (int)p_Var4;
-      uVar11 = (ulonglong)iVar1;
-      trapWord(6,uVar15,0);
-      trapWord(5,uVar15 & ~(((uVar5 & 0x7fffffff) << 1 | (uVar5 & 0xffffffff) >> 0x1f) - 1),0xffff);
+      uVar10 = (ulonglong)iVar1;
+      trapWord(6,uVar14,0);
+      trapWord(5,uVar14 & ~(((uVar5 & 0x7fffffff) << 1 | (uVar5 & 0xffffffff) >> 0x1f) - 1),0xffff);
       if (0 < (int)p_Var4) {
-        uVar17 = uVar15 - 1;
-        lVar9 = 0;
-        iVar18 = (int)uVar17;
-        iVar19 = 0;
+        uVar16 = uVar14 - 1;
+        lVar8 = 0;
+        iVar17 = (int)uVar16;
+        iVar18 = 0;
         do {
-          uVar14 = iVar19 + (iVar18 >> 1) + (uint)(iVar18 < 0 && (uVar17 & 1) != 0);
-          trapWord(6,uVar17,0);
-          iVar10 = (int)lVar9;
-          trapWord(5,uVar17 & ~((((ulonglong)uVar14 & 0x7fffffff) << 1 | (ulonglong)(uVar14 >> 0x1f)
+          uVar13 = iVar18 + (iVar17 >> 1) + (uint)(iVar17 < 0 && (uVar16 & 1) != 0);
+          trapWord(6,uVar16,0);
+          iVar9 = (int)lVar8;
+          trapWord(5,uVar16 & ~((((ulonglong)uVar13 & 0x7fffffff) << 1 | (ulonglong)(uVar13 >> 0x1f)
                                 ) - 1),0xffff);
-          lVar13 = lVar9;
-          while (iVar10 < (int)p_Var7) {
+          lVar12 = lVar8;
+          while (iVar9 < (int)p_Var6) {
             if (0 < iVar1) {
-              uVar21 = uVar11;
-              iVar10 = 0;
+              uVar20 = uVar10;
+              iVar9 = 0;
               do {
-                (*ppuVar12)[(int)lVar13 + iVar10] = (uchar)((int)uVar14 / iVar18);
-                uVar21 = uVar21 - 1;
-                iVar10 = iVar10 + 1;
-              } while (uVar21 != 0);
+                (*ppuVar11)[(int)lVar12 + iVar9] = (uchar)((int)uVar13 / iVar17);
+                uVar20 = uVar20 - 1;
+                iVar9 = iVar9 + 1;
+              } while (uVar20 != 0);
             }
-            lVar13 = lVar13 + uVar5;
-            iVar10 = (int)lVar13;
+            lVar12 = lVar12 + uVar5;
+            iVar9 = (int)lVar12;
           }
-          uVar15 = uVar15 - 1;
-          iVar19 = iVar19 + 0xff;
-          lVar9 = lVar9 + uVar11;
-        } while (uVar15 != 0);
+          uVar14 = uVar14 - 1;
+          iVar18 = iVar18 + 0xff;
+          lVar8 = lVar8 + uVar10;
+        } while (uVar14 != 0);
       }
-      iVar16 = iVar16 + 1;
-      pjVar20 = (jpeg_color_quantizer *)&pjVar20->color_quantize;
-      uVar5 = uVar11;
-      ppuVar12 = ppuVar12 + 1;
-    } while (iVar16 < pjVar6->out_color_components);
+      iVar15 = iVar15 + 1;
+      pjVar19 = (jpeg_color_quantizer *)&pjVar19->color_quantize;
+      uVar5 = uVar10;
+      ppuVar11 = ppuVar11 + 1;
+    } while (iVar15 < param_1->out_color_components);
   }
-  pjVar2[1].color_quantize = p_Var7;
-  pjVar2[1].start_pass = (_func___cdecl_void_jpeg_decompress_struct_ptr_uchar *)ppuVar8;
-  __restgprlr_22();
+  pjVar2[1].color_quantize = p_Var6;
+  pjVar2[1].start_pass = (_func___cdecl_void_jpeg_decompress_struct_ptr_uchar *)ppuVar7;
   return;
 }
 
 
 // 827C99B0  create_colorindex  (jpeg-6/jquant1.c:334)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 void create_colorindex(jpeg_decompress_struct *param_1)
 
 {
   bool bVar1;
-  int iVar2;
+  jpeg_color_quantizer *pjVar2;
   uint uVar3;
   undefined1 *puVar4;
   uint uVar5;
-  int iVar6;
-  undefined4 uVar7;
-  int iVar8;
-  ulonglong uVar9;
+  uchar **ppuVar6;
+  int iVar7;
+  ulonglong uVar8;
+  int iVar9;
   int iVar10;
-  int iVar11;
-  ulonglong uVar12;
-  longlong lVar13;
-  undefined1 *puVar14;
-  ulonglong uVar15;
-  longlong lVar16;
+  ulonglong uVar11;
+  longlong lVar12;
+  undefined1 *puVar13;
+  ulonglong uVar14;
+  longlong lVar15;
+  int iVar16;
   int iVar17;
-  int iVar18;
-  uint uVar19;
+  _func___cdecl_void_jpeg_decompress_struct_ptr_uchar_ptr_ptr_uchar_ptr_ptr_int *p_Var18;
   
-  iVar6 = __savegprlr_26(param_1);
-  iVar2 = *(int *)(iVar6 + 0x1b0);
-  bVar1 = *(int *)(iVar6 + 0x54) != 1;
+  pjVar2 = param_1->cquantize;
+  bVar1 = param_1->dither_mode != JDITHER_ORDERED;
   if (bVar1) {
-    iVar18 = 0;
+    iVar17 = 0;
   }
   else {
-    iVar18 = 0x1fe;
+    iVar17 = 0x1fe;
   }
-  *(bool *)(iVar2 + 0x1c) = !bVar1;
-  uVar7 = (**(code **)(*(int *)(iVar6 + 4) + 8))
-                    (iVar6,1,iVar18 + 0x100,*(undefined4 *)(iVar6 + 0x6c));
-  *(undefined4 *)(iVar2 + 0x18) = uVar7;
-  iVar17 = 0;
-  uVar19 = *(uint *)(iVar2 + 0x14);
-  if (0 < *(int *)(iVar6 + 0x6c)) {
-    iVar8 = 0;
+  *(bool *)&pjVar2[1].new_color_map = !bVar1;
+  ppuVar6 = (*param_1->mem->alloc_sarray)
+                      ((jpeg_common_struct *)param_1,1,iVar17 + 0x100,param_1->out_color_components)
+  ;
+  pjVar2[1].finish_pass = (_func___cdecl_void_jpeg_decompress_struct_ptr *)ppuVar6;
+  iVar16 = 0;
+  p_Var18 = pjVar2[1].color_quantize;
+  if (0 < param_1->out_color_components) {
+    iVar7 = 0;
     do {
-      uVar5 = uVar19 >> 0x1f;
-      uVar9 = (ulonglong)uVar19;
-      uVar3 = *(uint *)(iVar2 + 0x20 + iVar8);
-      uVar15 = (ulonglong)uVar3;
-      uVar19 = (int)uVar19 / (int)uVar3;
-      trapWord(6,uVar15,0);
-      trapWord(5,uVar15 & ~(((uVar9 & 0x7fffffff) << 1 | (ulonglong)uVar5) - 1),0xffff);
-      if (iVar18 != 0) {
-        *(int *)(*(int *)(iVar2 + 0x18) + iVar8) = *(int *)(*(int *)(iVar2 + 0x18) + iVar8) + 0xff;
+      uVar5 = (uint)p_Var18 >> 0x1f;
+      uVar8 = ZEXT48(p_Var18);
+      uVar3 = *(uint *)((int)&pjVar2[2].start_pass + iVar7);
+      uVar14 = (ulonglong)uVar3;
+      p_Var18 = (_func___cdecl_void_jpeg_decompress_struct_ptr_uchar_ptr_ptr_uchar_ptr_ptr_int *)
+                ((int)p_Var18 / (int)uVar3);
+      trapWord(6,uVar14,0);
+      trapWord(5,uVar14 & ~(((uVar8 & 0x7fffffff) << 1 | (ulonglong)uVar5) - 1),0xffff);
+      if (iVar17 != 0) {
+        *(int *)(pjVar2[1].finish_pass + iVar7) = *(int *)(pjVar2[1].finish_pass + iVar7) + 0xff;
       }
-      lVar13 = 0;
-      uVar9 = uVar15 + 0xfe;
-      uVar12 = (uVar15 - 1 & 0x7fffffff) << 1;
-      puVar4 = *(undefined1 **)(*(int *)(iVar2 + 0x18) + iVar8);
-      iVar10 = (int)uVar9 / (int)uVar12;
-      trapWord(6,uVar12,0);
-      iVar11 = 0;
-      trapWord(5,uVar12 & ~(((uVar9 & 0x7fffffff) << 1 | (uVar9 & 0xffffffff) >> 0x1f) - 1),0xffff);
+      lVar12 = 0;
+      uVar8 = uVar14 + 0xfe;
+      uVar11 = (uVar14 - 1 & 0x7fffffff) << 1;
+      puVar4 = *(undefined1 **)(pjVar2[1].finish_pass + iVar7);
+      iVar9 = (int)uVar8 / (int)uVar11;
+      trapWord(6,uVar11,0);
+      iVar10 = 0;
+      trapWord(5,uVar11 & ~(((uVar8 & 0x7fffffff) << 1 | (uVar8 & 0xffffffff) >> 0x1f) - 1),0xffff);
       do {
-        if (iVar10 < iVar11) {
-          lVar16 = lVar13 * 0x1fe;
+        if (iVar9 < iVar10) {
+          lVar15 = lVar12 * 0x1fe;
           do {
-            lVar16 = lVar16 + 0x1fe;
-            lVar13 = lVar13 + 1;
-            trapWord(6,uVar12,0);
-            uVar9 = lVar16 + (uVar15 - 1) + 0xff;
-            iVar10 = (int)uVar9 / (int)uVar12;
-            trapWord(5,uVar12 & ~(((uVar9 & 0x7fffffff) << 1 | (uVar9 & 0xffffffff) >> 0x1f) - 1),
+            lVar15 = lVar15 + 0x1fe;
+            lVar12 = lVar12 + 1;
+            trapWord(6,uVar11,0);
+            uVar8 = lVar15 + (uVar14 - 1) + 0xff;
+            iVar9 = (int)uVar8 / (int)uVar11;
+            trapWord(5,uVar11 & ~(((uVar8 & 0x7fffffff) << 1 | (uVar8 & 0xffffffff) >> 0x1f) - 1),
                      0xffff);
-          } while (iVar10 < iVar11);
+          } while (iVar9 < iVar10);
         }
-        puVar4[iVar11] = (char)lVar13 * (char)uVar19;
-        iVar11 = iVar11 + 1;
-      } while (iVar11 < 0x100);
-      if (iVar18 != 0) {
-        iVar10 = 1;
-        lVar13 = 0xff;
-        puVar14 = puVar4;
+        puVar4[iVar10] = (char)lVar12 * (char)p_Var18;
+        iVar10 = iVar10 + 1;
+      } while (iVar10 < 0x100);
+      if (iVar17 != 0) {
+        iVar9 = 1;
+        lVar12 = 0xff;
+        puVar13 = puVar4;
         do {
-          puVar14 = puVar14 + -1;
-          *puVar14 = *puVar4;
-          (puVar4 + 0xff)[iVar10] = puVar4[0xff];
-          iVar10 = iVar10 + 1;
-          lVar13 = lVar13 + -1;
-        } while (lVar13 != 0);
+          puVar13 = puVar13 + -1;
+          *puVar13 = *puVar4;
+          (puVar4 + 0xff)[iVar9] = puVar4[0xff];
+          iVar9 = iVar9 + 1;
+          lVar12 = lVar12 + -1;
+        } while (lVar12 != 0);
       }
-      iVar17 = iVar17 + 1;
-      iVar8 = iVar8 + 4;
-    } while (iVar17 < *(int *)(iVar6 + 0x6c));
+      iVar16 = iVar16 + 1;
+      iVar7 = iVar7 + 4;
+    } while (iVar16 < param_1->out_color_components);
   }
-  __restgprlr_26();
   return;
 }
 
@@ -367,148 +369,152 @@ int (*) [16] make_odither_array(jpeg_decompress_struct *param_1,int param_2)
 
 // 827C9BE8  create_odither_tables  (jpeg-6/jquant1.c:433)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
+
 void create_odither_tables(jpeg_decompress_struct *param_1)
 
 {
-  int iVar1;
-  uint uVar2;
-  int iVar3;
-  int iVar4;
+  jpeg_color_quantizer *pjVar1;
+  _func___cdecl_void_jpeg_decompress_struct_ptr_uchar *p_Var2;
+  _func___cdecl_void_jpeg_decompress_struct_ptr_uchar_ptr_ptr_uchar_ptr_ptr_int *p_Var3;
+  ulonglong uVar4;
   int iVar5;
-  ulonglong uVar6;
-  int iVar7;
+  int iVar6;
+  jpeg_color_quantizer *pjVar7;
   int iVar8;
-  uint *puVar9;
   int iVar10;
-  ulonglong uVar11;
-  int *piVar12;
-  int iVar13;
-  longlong lVar14;
+  ulonglong uVar9;
+  jpeg_color_quantizer *pjVar11;
+  int iVar12;
+  longlong lVar13;
   
-  iVar3 = __savegprlr_25(param_1);
-  iVar1 = *(int *)(iVar3 + 0x1b0);
-  iVar13 = 0;
-  if (0 < *(int *)(iVar3 + 0x6c)) {
-    piVar12 = (int *)(iVar1 + 0x30);
+  pjVar1 = param_1->cquantize;
+  iVar12 = 0;
+  if (0 < param_1->out_color_components) {
+    pjVar11 = pjVar1 + 3;
     do {
-      uVar2 = piVar12[-4];
-      iVar4 = 0;
-      if (0 < iVar13) {
-        puVar9 = (uint *)(iVar1 + 0x20);
+      p_Var2 = pjVar11[-1].start_pass;
+      iVar10 = 0;
+      if (0 < iVar12) {
+        pjVar7 = pjVar1 + 2;
         do {
-          if (uVar2 == *puVar9) {
-            iVar4 = *(int *)((iVar4 + 0xd) * 4 + iVar1);
-            if (iVar4 != 0) goto LAB_827c9cec;
+          if (p_Var2 == pjVar7->start_pass) {
+            p_Var3 = (&pjVar1[3].color_quantize)[iVar10];
+            if (p_Var3 != (_func___cdecl_void_jpeg_decompress_struct_ptr_uchar_ptr_ptr_uchar_ptr_ptr_int
+                           *)0x0) goto LAB_827c9cec;
             break;
           }
-          iVar4 = iVar4 + 1;
-          puVar9 = puVar9 + 1;
-        } while (iVar4 < iVar13);
-      }
-      iVar4 = (*(code *)**(undefined4 **)(iVar3 + 4))(iVar3,1,0x400);
-      iVar5 = 0;
-      uVar6 = ((ulonglong)uVar2 & 0x7fffff) * 0x200 - 0x200;
-      do {
-        iVar10 = 0;
-        lVar14 = 0x10;
-        iVar8 = iVar5;
-        do {
-          trapWord(6,uVar6,0);
-          uVar11 = (ulonglong)base_dither_matrix[0][iVar8] * -0x1fe + 0xfe01;
-          iVar7 = iVar5 + iVar10;
-          trapWord(5,uVar6 & ~(((uVar11 & 0x7fffffff) << 1 | (uVar11 & 0xffffffff) >> 0x1f) - 1),
-                   0xffff);
           iVar10 = iVar10 + 1;
-          iVar8 = iVar5 + iVar10;
-          *(int *)(iVar7 * 4 + iVar4) = (int)uVar11 / (int)uVar6;
-          lVar14 = lVar14 + -1;
-        } while (lVar14 != 0);
-        iVar5 = iVar5 + 0x10;
-      } while (iVar5 < 0x100);
+          pjVar7 = (jpeg_color_quantizer *)&pjVar7->color_quantize;
+        } while (iVar10 < iVar12);
+      }
+      p_Var3 = (*param_1->mem->alloc_small)((jpeg_common_struct *)param_1,1,0x400);
+      iVar10 = 0;
+      uVar4 = (ZEXT48(p_Var2) & 0x7fffff) * 0x200 - 0x200;
+      do {
+        iVar8 = 0;
+        lVar13 = 0x10;
+        iVar6 = iVar10;
+        do {
+          trapWord(6,uVar4,0);
+          uVar9 = (ulonglong)base_dither_matrix[0][iVar6] * -0x1fe + 0xfe01;
+          iVar5 = iVar10 + iVar8;
+          trapWord(5,uVar4 & ~(((uVar9 & 0x7fffffff) << 1 | (uVar9 & 0xffffffff) >> 0x1f) - 1),
+                   0xffff);
+          iVar8 = iVar8 + 1;
+          iVar6 = iVar10 + iVar8;
+          *(int *)(p_Var3 + iVar5 * 4) = (int)uVar9 / (int)uVar4;
+          lVar13 = lVar13 + -1;
+        } while (lVar13 != 0);
+        iVar10 = iVar10 + 0x10;
+      } while (iVar10 < 0x100);
 LAB_827c9cec:
-      iVar13 = iVar13 + 1;
-      piVar12 = piVar12 + 1;
-      *piVar12 = iVar4;
-    } while (iVar13 < *(int *)(iVar3 + 0x6c));
+      iVar12 = iVar12 + 1;
+      pjVar11 = (jpeg_color_quantizer *)&pjVar11->color_quantize;
+      *(_func___cdecl_void_jpeg_decompress_struct_ptr_uchar_ptr_ptr_uchar_ptr_ptr_int **)pjVar11 =
+           p_Var3;
+    } while (iVar12 < param_1->out_color_components);
   }
-  __restgprlr_25();
   return;
 }
 
 
 // 827C9D08  color_quantize  (jpeg-6/jquant1.c:462)
 
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
+
 void color_quantize(jpeg_decompress_struct *param_1,uchar **param_2,uchar **param_3,int param_4)
 
 {
   uint uVar1;
   int iVar2;
-  int iVar3;
-  int *piVar4;
-  byte *pbVar5;
+  _func___cdecl_void_jpeg_decompress_struct_ptr *p_Var3;
+  int iVar4;
+  code *pcVar5;
   byte *pbVar6;
-  int iVar7;
+  byte *pbVar7;
   char cVar8;
   char cVar9;
   char cVar10;
-  int *piVar11;
+  code *pcVar11;
   int iVar12;
   byte *pbVar13;
   longlong lVar14;
-  longlong lVar15;
-  char *pcVar16;
-  ulonglong uVar17;
+  uchar *puVar15;
+  ulonglong uVar16;
   
   lVar14 = (longlong)param_4;
-  lVar15 = (longlong)(int)param_3;
-  iVar7 = __savegprlr_22(param_1);
-  uVar1 = *(uint *)(iVar7 + 100);
-  iVar2 = *(int *)(iVar7 + 0x6c);
-  iVar7 = *(int *)(*(int *)(iVar7 + 0x1b0) + 0x18);
-  if (0 < (int)lVar14) {
-    iVar3 = (int)lVar15;
+  uVar1 = param_1->output_width;
+  iVar2 = param_1->out_color_components;
+  p_Var3 = param_1->cquantize[1].finish_pass;
+  if (0 < param_4) {
+    iVar4 = (int)param_2 - (int)param_3;
     do {
       if ((ulonglong)uVar1 != 0) {
-        pcVar16 = (char *)(*(int *)lVar15 + -1);
-        pbVar13 = (byte *)(*(int *)(((int)param_2 - iVar3) + (int)(int *)lVar15) + -1);
-        uVar17 = (ulonglong)uVar1;
+        puVar15 = *param_3 + -1;
+        pbVar13 = (byte *)(*(int *)(iVar4 + (int)param_3) + -1);
+        uVar16 = (ulonglong)uVar1;
         do {
           cVar10 = '\0';
           cVar9 = '\0';
           cVar8 = '\0';
           iVar12 = 0;
           if (1 < iVar2) {
-            piVar11 = (int *)(iVar7 + -4);
+            pcVar11 = p_Var3 + -4;
             do {
-              piVar4 = piVar11 + 1;
+              pcVar5 = pcVar11 + 4;
               iVar12 = iVar12 + 2;
-              pbVar5 = pbVar13 + 1;
-              pbVar6 = pbVar13 + 2;
+              pbVar6 = pbVar13 + 1;
+              pbVar7 = pbVar13 + 2;
               pbVar13 = pbVar13 + 2;
-              piVar11 = piVar11 + 2;
-              cVar10 = *(char *)((uint)*pbVar5 + *piVar4) + cVar10;
-              cVar9 = *(char *)((uint)*pbVar6 + *piVar11) + cVar9;
+              pcVar11 = pcVar11 + 8;
+              cVar10 = *(char *)((uint)*pbVar6 + *(int *)pcVar5) + cVar10;
+              cVar9 = *(char *)((uint)*pbVar7 + *(int *)pcVar11) + cVar9;
             } while (iVar12 < iVar2 + -1);
           }
           if (iVar12 < iVar2) {
             pbVar13 = pbVar13 + 1;
-            cVar8 = *(char *)(*(int *)(iVar12 * 4 + iVar7) + (uint)*pbVar13);
+            cVar8 = *(char *)(*(int *)(p_Var3 + iVar12 * 4) + (uint)*pbVar13);
           }
-          pcVar16 = pcVar16 + 1;
-          *pcVar16 = cVar9 + cVar10 + cVar8;
-          uVar17 = uVar17 - 1;
-        } while (uVar17 != 0);
+          puVar15 = puVar15 + 1;
+          *puVar15 = cVar9 + cVar10 + cVar8;
+          uVar16 = uVar16 - 1;
+        } while (uVar16 != 0);
       }
       lVar14 = lVar14 + -1;
-      lVar15 = lVar15 + 4;
+      param_3 = param_3 + 1;
     } while (lVar14 != 0);
   }
-  __restgprlr_22();
   return;
 }
 
 
 // 827C9DE0  color_quantize3  (jpeg-6/jquant1.c:490)
+
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 
 void color_quantize3(jpeg_decompress_struct *param_1,uchar **param_2,uchar **param_3,int param_4)
 
@@ -517,128 +523,125 @@ void color_quantize3(jpeg_decompress_struct *param_1,uchar **param_2,uchar **par
   byte *pbVar2;
   byte bVar3;
   uint uVar4;
-  int *piVar5;
+  _func___cdecl_void_jpeg_decompress_struct_ptr *p_Var5;
   int iVar6;
   int iVar7;
   int iVar8;
   int iVar9;
   longlong lVar10;
-  longlong lVar11;
-  char *pcVar12;
-  byte *pbVar13;
-  ulonglong uVar14;
+  uchar *puVar11;
+  byte *pbVar12;
+  ulonglong uVar13;
   
-  lVar11 = (longlong)param_4;
-  lVar10 = (longlong)(int)param_3;
-  iVar9 = __savegprlr_28(param_1);
-  uVar4 = *(uint *)(iVar9 + 100);
-  piVar5 = *(int **)(*(int *)(iVar9 + 0x1b0) + 0x18);
-  iVar9 = *piVar5;
-  iVar6 = piVar5[1];
-  iVar7 = piVar5[2];
-  if (0 < (int)lVar11) {
-    iVar8 = (int)lVar10;
+  lVar10 = (longlong)param_4;
+  uVar4 = param_1->output_width;
+  p_Var5 = param_1->cquantize[1].finish_pass;
+  iVar6 = *(int *)p_Var5;
+  iVar7 = *(int *)(p_Var5 + 4);
+  iVar8 = *(int *)(p_Var5 + 8);
+  if (0 < param_4) {
+    iVar9 = (int)param_2 - (int)param_3;
     do {
-      pbVar13 = *(byte **)(((int)param_2 - iVar8) + (int)(int *)lVar10);
+      pbVar12 = *(byte **)(iVar9 + (int)param_3);
       if ((ulonglong)uVar4 != 0) {
-        pcVar12 = (char *)(*(int *)lVar10 + -1);
-        uVar14 = (ulonglong)uVar4;
+        puVar11 = *param_3 + -1;
+        uVar13 = (ulonglong)uVar4;
         do {
-          bVar3 = *pbVar13;
-          pbVar1 = pbVar13 + 1;
-          pbVar2 = pbVar13 + 2;
-          pbVar13 = pbVar13 + 3;
-          pcVar12 = pcVar12 + 1;
-          *pcVar12 = *(char *)((uint)*pbVar2 + iVar7) +
-                     *(char *)((uint)*pbVar1 + iVar6) + *(char *)((uint)bVar3 + iVar9);
-          uVar14 = uVar14 - 1;
-        } while (uVar14 != 0);
+          bVar3 = *pbVar12;
+          pbVar1 = pbVar12 + 1;
+          pbVar2 = pbVar12 + 2;
+          pbVar12 = pbVar12 + 3;
+          puVar11 = puVar11 + 1;
+          *puVar11 = *(char *)((uint)*pbVar2 + iVar8) +
+                     *(char *)((uint)*pbVar1 + iVar7) + *(char *)((uint)bVar3 + iVar6);
+          uVar13 = uVar13 - 1;
+        } while (uVar13 != 0);
       }
-      lVar11 = lVar11 + -1;
-      lVar10 = lVar10 + 4;
-    } while (lVar11 != 0);
+      lVar10 = lVar10 + -1;
+      param_3 = param_3 + 1;
+    } while (lVar10 != 0);
   }
-  __restgprlr_28();
   return;
 }
 
 
 // 827C9E68  quantize_ord_dither  (jpeg-6/jquant1.c:518)
 
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
+
 void quantize_ord_dither(jpeg_decompress_struct *param_1,uchar **param_2,uchar **param_3,int param_4
                         )
 
 {
-  int iVar1;
+  jpeg_color_quantizer *pjVar1;
   int iVar2;
   uint uVar3;
-  int iVar4;
+  _func___cdecl_void_jpeg_decompress_struct_ptr_uchar *p_Var4;
   int iVar5;
   int iVar6;
   int iVar7;
-  int *piVar8;
-  char *pcVar9;
-  int iVar10;
+  int iVar8;
+  int *piVar9;
+  uchar *puVar10;
   int iVar11;
   byte *pbVar12;
-  char *pcVar13;
+  uchar *puVar13;
   uint uVar14;
   longlong lVar15;
   int iVar16;
-  int *piVar18;
-  longlong lVar17;
-  ulonglong uVar19;
+  ulonglong uVar17;
   
   lVar15 = (longlong)param_4;
-  lVar17 = (longlong)(int)param_3;
-  iVar10 = __savegprlr_22(param_1);
-  iVar1 = *(int *)(iVar10 + 0x1b0);
-  iVar2 = *(int *)(iVar10 + 0x6c);
-  uVar3 = *(uint *)(iVar10 + 100);
-  if (0 < (int)lVar15) {
-    iVar10 = (int)lVar17;
+  pjVar1 = param_1->cquantize;
+  iVar2 = param_1->out_color_components;
+  uVar3 = param_1->output_width;
+  if (0 < param_4) {
+    iVar8 = (int)param_2 - (int)param_3;
     do {
-      piVar18 = (int *)lVar17;
-      jzero_far((void *)*piVar18,uVar3);
+      jzero_far(*param_3,uVar3);
       iVar16 = 0;
-      iVar4 = *(int *)(iVar1 + 0x30);
+      p_Var4 = pjVar1[3].start_pass;
       if (0 < iVar2) {
         iVar11 = 0;
         do {
           uVar14 = 0;
-          iVar5 = *(int *)(iVar1 + 0x34 + iVar11);
-          iVar6 = *(int *)(*(int *)(iVar1 + 0x18) + iVar11);
+          iVar5 = *(int *)((int)&pjVar1[3].color_quantize + iVar11);
+          iVar6 = *(int *)(pjVar1[1].finish_pass + iVar11);
           if ((ulonglong)uVar3 != 0) {
-            pcVar13 = (char *)(*piVar18 + -1);
-            pbVar12 = (byte *)((*(int *)(((int)param_2 - iVar10) + (int)piVar18) + iVar16) - iVar2);
+            puVar13 = *param_3 + -1;
+            pbVar12 = (byte *)((*(int *)(iVar8 + (int)param_3) + iVar16) - iVar2);
             iVar7 = 0;
-            uVar19 = (ulonglong)uVar3;
+            uVar17 = (ulonglong)uVar3;
             do {
-              piVar8 = (int *)(iVar7 + iVar5 + iVar4 * 0x40);
+              piVar9 = (int *)(iVar7 + iVar5 + (int)p_Var4 * 0x40);
               pbVar12 = pbVar12 + iVar2;
-              pcVar9 = pcVar13 + 1;
+              puVar10 = puVar13 + 1;
               uVar14 = uVar14 + 1 & 0xf;
               iVar7 = uVar14 << 2;
-              pcVar13 = pcVar13 + 1;
-              *pcVar13 = *(char *)(*piVar8 + (uint)*pbVar12 + iVar6) + *pcVar9;
-              uVar19 = uVar19 - 1;
-            } while (uVar19 != 0);
+              puVar13 = puVar13 + 1;
+              *puVar13 = *(char *)(*piVar9 + (uint)*pbVar12 + iVar6) + *puVar10;
+              uVar17 = uVar17 - 1;
+            } while (uVar17 != 0);
           }
           iVar16 = iVar16 + 1;
           iVar11 = iVar11 + 4;
         } while (iVar16 < iVar2);
       }
       lVar15 = lVar15 + -1;
-      lVar17 = lVar17 + 4;
-      *(uint *)(iVar1 + 0x30) = iVar4 + 1U & 0xf;
+      param_3 = param_3 + 1;
+      pjVar1[3].start_pass =
+           (_func___cdecl_void_jpeg_decompress_struct_ptr_uchar *)((uint)(p_Var4 + 1) & 0xf);
     } while (lVar15 != 0);
   }
-  __restgprlr_22();
   return;
 }
 
 
 // 827C9F58  quantize3_ord_dither  (jpeg-6/jquant1.c:568)
+
+/* WARNING: Function: __savegprlr_18 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_18 replaced with injection: xenon_save_restore */
 
 void quantize3_ord_dither
                (jpeg_decompress_struct *param_1,uchar **param_2,uchar **param_3,int param_4)
@@ -647,87 +650,86 @@ void quantize3_ord_dither
   byte *pbVar1;
   byte *pbVar2;
   byte bVar3;
-  int iVar4;
+  jpeg_color_quantizer *pjVar4;
   uint uVar5;
-  int *piVar6;
+  _func___cdecl_void_jpeg_decompress_struct_ptr *p_Var6;
   int iVar7;
   int iVar8;
   int iVar9;
-  int iVar10;
-  int iVar11;
-  int iVar12;
+  _func___cdecl_void_jpeg_decompress_struct_ptr_uchar *p_Var10;
+  _func___cdecl_void_jpeg_decompress_struct_ptr_uchar_ptr_ptr_uchar_ptr_ptr_int *p_Var11;
+  _func___cdecl_void_jpeg_decompress_struct_ptr *p_Var12;
   int iVar13;
   int iVar14;
-  int iVar15;
-  char *pcVar16;
-  uint uVar17;
-  byte *pbVar18;
-  int iVar19;
-  longlong lVar20;
-  longlong lVar21;
-  ulonglong uVar22;
+  uchar *puVar15;
+  uint uVar16;
+  byte *pbVar17;
+  int iVar18;
+  longlong lVar19;
+  ulonglong uVar20;
   
-  lVar20 = (longlong)param_4;
-  lVar21 = (longlong)(int)param_3;
-  iVar15 = __savegprlr_18(param_1);
-  iVar4 = *(int *)(iVar15 + 0x1b0);
-  uVar5 = *(uint *)(iVar15 + 100);
-  piVar6 = *(int **)(iVar4 + 0x18);
-  iVar15 = *piVar6;
-  iVar7 = piVar6[1];
-  iVar8 = piVar6[2];
-  if (0 < (int)lVar20) {
-    iVar14 = (int)lVar21;
+  lVar19 = (longlong)param_4;
+  pjVar4 = param_1->cquantize;
+  uVar5 = param_1->output_width;
+  p_Var6 = pjVar4[1].finish_pass;
+  iVar7 = *(int *)p_Var6;
+  iVar8 = *(int *)(p_Var6 + 4);
+  iVar9 = *(int *)(p_Var6 + 8);
+  if (0 < param_4) {
+    iVar14 = (int)param_2 - (int)param_3;
     do {
-      iVar9 = *(int *)(iVar4 + 0x30);
-      uVar17 = 0;
-      iVar10 = *(int *)(iVar4 + 0x34);
-      iVar13 = iVar9 * 0x40;
-      iVar11 = *(int *)(iVar4 + 0x38);
-      iVar12 = *(int *)(iVar4 + 0x3c);
-      pbVar18 = *(byte **)(((int)param_2 - iVar14) + (int)(int *)lVar21);
+      p_Var10 = pjVar4[3].start_pass;
+      uVar16 = 0;
+      p_Var11 = pjVar4[3].color_quantize;
+      iVar13 = (int)p_Var10 * 0x40;
+      p_Var6 = pjVar4[3].finish_pass;
+      p_Var12 = pjVar4[3].new_color_map;
+      pbVar17 = *(byte **)(iVar14 + (int)param_3);
       if ((ulonglong)uVar5 != 0) {
-        pcVar16 = (char *)(*(int *)lVar21 + -1);
-        uVar22 = (ulonglong)uVar5;
+        puVar15 = *param_3 + -1;
+        uVar20 = (ulonglong)uVar5;
         do {
-          iVar19 = uVar17 * 4;
-          bVar3 = *pbVar18;
-          pbVar1 = pbVar18 + 1;
-          uVar17 = uVar17 + 1 & 0xf;
-          pbVar2 = pbVar18 + 2;
-          pbVar18 = pbVar18 + 3;
-          pcVar16 = pcVar16 + 1;
-          *pcVar16 = *(char *)(*(int *)(iVar19 + iVar12 + iVar13) + (uint)*pbVar2 + iVar8) +
-                     *(char *)(*(int *)(iVar19 + iVar11 + iVar13) + (uint)*pbVar1 + iVar7) +
-                     *(char *)(*(int *)(iVar19 + iVar10 + iVar13) + (uint)bVar3 + iVar15);
-          uVar22 = uVar22 - 1;
-        } while (uVar22 != 0);
+          iVar18 = uVar16 * 4;
+          bVar3 = *pbVar17;
+          pbVar1 = pbVar17 + 1;
+          uVar16 = uVar16 + 1 & 0xf;
+          pbVar2 = pbVar17 + 2;
+          pbVar17 = pbVar17 + 3;
+          puVar15 = puVar15 + 1;
+          *puVar15 = *(char *)(*(int *)(p_Var12 + iVar18 + iVar13) + (uint)*pbVar2 + iVar9) +
+                     *(char *)(*(int *)(p_Var6 + iVar18 + iVar13) + (uint)*pbVar1 + iVar8) +
+                     *(char *)(*(int *)(p_Var11 + iVar18 + iVar13) + (uint)bVar3 + iVar7);
+          uVar20 = uVar20 - 1;
+        } while (uVar20 != 0);
       }
-      lVar20 = lVar20 + -1;
-      lVar21 = lVar21 + 4;
-      *(uint *)(iVar4 + 0x30) = iVar9 + 1U & 0xf;
-    } while (lVar20 != 0);
+      lVar19 = lVar19 + -1;
+      param_3 = param_3 + 1;
+      pjVar4[3].start_pass =
+           (_func___cdecl_void_jpeg_decompress_struct_ptr_uchar *)((uint)(p_Var10 + 1) & 0xf);
+    } while (lVar19 != 0);
   }
-  __restgprlr_18();
   return;
 }
 
 
 // 827CA038  quantize_fs_dither  (jpeg-6/jquant1.c:613)
 
+/* WARNING: Function: __savegprlr_17 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_17 replaced with injection: xenon_save_restore */
+
 void quantize_fs_dither(jpeg_decompress_struct *param_1,uchar **param_2,uchar **param_3,int param_4)
 
 {
   byte bVar1;
   byte bVar2;
-  int iVar3;
+  jpeg_color_quantizer *pjVar3;
   int iVar4;
   uint uVar5;
-  int iVar6;
+  uchar *puVar6;
   int iVar7;
   int iVar8;
-  short sVar9;
-  int iVar10;
+  int iVar9;
+  short sVar10;
   int iVar11;
   byte *pbVar12;
   short sVar14;
@@ -735,117 +737,115 @@ void quantize_fs_dither(jpeg_decompress_struct *param_1,uchar **param_2,uchar **
   int iVar15;
   int iVar16;
   short *psVar17;
-  char *pcVar18;
+  uchar *puVar18;
   longlong lVar19;
-  undefined4 *puVar21;
-  longlong lVar20;
+  int iVar20;
+  int iVar21;
   int iVar22;
   int iVar23;
-  int iVar24;
-  int iVar25;
-  uint uVar26;
+  uint uVar24;
   
   lVar19 = (longlong)param_4;
-  lVar20 = (longlong)(int)param_3;
-  iVar10 = __savegprlr_17(param_1);
-  iVar3 = *(int *)(iVar10 + 0x1b0);
-  iVar4 = *(int *)(iVar10 + 0x6c);
-  uVar5 = *(uint *)(iVar10 + 100);
-  iVar10 = *(int *)(iVar10 + 0x128);
-  if (0 < (int)lVar19) {
-    iVar8 = (int)lVar20;
+  pjVar3 = param_1->cquantize;
+  iVar4 = param_1->out_color_components;
+  uVar5 = param_1->output_width;
+  puVar6 = param_1->sample_range_limit;
+  if (0 < param_4) {
+    iVar9 = (int)param_2 - (int)param_3;
     do {
-      puVar21 = (undefined4 *)lVar20;
-      jzero_far((void *)*puVar21,uVar5);
-      iVar22 = 0;
+      jzero_far(*param_3,uVar5);
+      iVar20 = 0;
       if (0 < iVar4) {
-        iVar23 = 0;
+        iVar21 = 0;
         do {
-          pcVar18 = (char *)*puVar21;
-          iVar11 = *(int *)(((int)param_2 - iVar8) + (int)puVar21) + iVar22;
-          if (*(char *)(iVar3 + 0x54) == '\0') {
-            psVar17 = *(short **)(iVar3 + 0x44 + iVar23);
-            iVar25 = 1;
-            iVar24 = iVar4;
+          puVar18 = *param_3;
+          iVar11 = *(int *)(iVar9 + (int)param_3) + iVar20;
+          if (*(char *)&pjVar3[5].color_quantize == '\0') {
+            psVar17 = *(short **)((int)&pjVar3[4].color_quantize + iVar21);
+            iVar23 = 1;
+            iVar22 = iVar4;
           }
           else {
-            pcVar18 = pcVar18 + (uVar5 - 1);
+            puVar18 = puVar18 + (uVar5 - 1);
             iVar11 = (uVar5 - 1) * iVar4 + iVar11;
-            iVar25 = -1;
-            psVar17 = (short *)(*(int *)(iVar3 + 0x44 + iVar23) + (uVar5 + 1) * 2);
-            iVar24 = -iVar4;
+            iVar23 = -1;
+            psVar17 = (short *)(*(int *)((int)&pjVar3[4].color_quantize + iVar21) + (uVar5 + 1) * 2)
+            ;
+            iVar22 = -iVar4;
           }
           iVar15 = 0;
           iVar13 = 0;
           sVar14 = 0;
-          iVar6 = *(int *)(*(int *)(iVar3 + 0x18) + iVar23);
-          iVar7 = *(int *)(iVar23 + *(int *)(iVar3 + 0x10));
+          iVar7 = *(int *)(pjVar3[1].finish_pass + iVar21);
+          iVar8 = *(int *)(pjVar3[1].start_pass + iVar21);
           if (uVar5 != 0) {
-            pbVar12 = (byte *)(iVar11 - iVar24);
-            uVar26 = uVar5;
+            pbVar12 = (byte *)(iVar11 - iVar22);
+            uVar24 = uVar5;
             iVar11 = 0;
             do {
-              pbVar12 = pbVar12 + iVar24;
-              bVar1 = *(byte *)((psVar17[iVar25] + iVar15 + 8 >> 4) + (uint)*pbVar12 + iVar10);
-              bVar2 = *(byte *)((uint)bVar1 + iVar6);
-              *pcVar18 = *pcVar18 + bVar2;
-              pcVar18 = pcVar18 + iVar25;
-              iVar16 = (uint)bVar1 - (uint)*(byte *)((uint)bVar2 + iVar7);
-              sVar9 = (short)iVar13;
+              pbVar12 = pbVar12 + iVar22;
+              bVar1 = puVar6[(psVar17[iVar23] + iVar15 + 8 >> 4) + (uint)*pbVar12];
+              bVar2 = *(byte *)((uint)bVar1 + iVar7);
+              *puVar18 = *puVar18 + bVar2;
+              puVar18 = puVar18 + iVar23;
+              iVar16 = (uint)bVar1 - (uint)*(byte *)((uint)bVar2 + iVar8);
+              sVar10 = (short)iVar13;
               iVar13 = iVar11 + iVar16 * 5;
               sVar14 = (short)iVar13;
-              *psVar17 = sVar9 + (short)iVar16 * 3;
+              *psVar17 = sVar10 + (short)iVar16 * 3;
               iVar15 = iVar16 * 7;
-              psVar17 = psVar17 + iVar25;
-              uVar26 = uVar26 - 1;
+              psVar17 = psVar17 + iVar23;
+              uVar24 = uVar24 - 1;
               iVar11 = iVar16;
-            } while (uVar26 != 0);
+            } while (uVar24 != 0);
           }
-          iVar22 = iVar22 + 1;
+          iVar20 = iVar20 + 1;
           *psVar17 = sVar14;
-          iVar23 = iVar23 + 4;
-        } while (iVar22 < iVar4);
+          iVar21 = iVar21 + 4;
+        } while (iVar20 < iVar4);
       }
       lVar19 = lVar19 + -1;
-      lVar20 = lVar20 + 4;
-      *(bool *)(iVar3 + 0x54) = *(char *)(iVar3 + 0x54) == '\0';
+      param_3 = param_3 + 1;
+      *(bool *)&pjVar3[5].color_quantize = *(char *)&pjVar3[5].color_quantize == '\0';
     } while (lVar19 != 0);
   }
-  __restgprlr_17();
   return;
 }
 
 
 // 827CA1B0  alloc_fs_workspace  (jpeg-6/jquant1.c:723)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void alloc_fs_workspace(jpeg_decompress_struct *param_1)
 
 {
   uint uVar1;
-  int iVar2;
-  undefined4 uVar3;
-  undefined4 *puVar4;
-  int iVar5;
+  _func___cdecl_void_jpeg_decompress_struct_ptr_uchar_ptr_ptr_uchar_ptr_ptr_int *p_Var2;
+  jpeg_color_quantizer *pjVar3;
+  int iVar4;
   
-  iVar2 = __savegprlr_28(param_1);
-  uVar1 = *(uint *)(iVar2 + 100);
-  iVar5 = 0;
-  if (0 < *(int *)(iVar2 + 0x6c)) {
-    puVar4 = (undefined4 *)(*(int *)(iVar2 + 0x1b0) + 0x40);
+  uVar1 = param_1->output_width;
+  iVar4 = 0;
+  if (0 < param_1->out_color_components) {
+    pjVar3 = param_1->cquantize + 4;
     do {
-      uVar3 = (**(code **)(*(int *)(iVar2 + 4) + 4))
-                        (iVar2,1,((ulonglong)uVar1 + 2 & 0x7fffffff) << 1);
-      iVar5 = iVar5 + 1;
-      puVar4 = puVar4 + 1;
-      *puVar4 = uVar3;
-    } while (iVar5 < *(int *)(iVar2 + 0x6c));
+      p_Var2 = (*param_1->mem->alloc_large)((jpeg_common_struct *)param_1,1,(uVar1 + 2) * 2);
+      iVar4 = iVar4 + 1;
+      pjVar3 = (jpeg_color_quantizer *)&pjVar3->color_quantize;
+      *(_func___cdecl_void_jpeg_decompress_struct_ptr_uchar_ptr_ptr_uchar_ptr_ptr_int **)pjVar3 =
+           p_Var2;
+    } while (iVar4 < param_1->out_color_components);
   }
-  __restgprlr_28();
   return;
 }
 
 
 // 827CA220  start_pass_1_quant  (jpeg-6/jquant1.c:742)
+
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 
 void start_pass_1_quant(jpeg_decompress_struct *param_1,uchar param_2)
 
@@ -853,72 +853,65 @@ void start_pass_1_quant(jpeg_decompress_struct *param_1,uchar param_2)
   char cVar1;
   J_DITHER_MODE JVar2;
   uint uVar3;
-  jpeg_decompress_struct *pjVar4;
-  code *pcVar5;
-  jpeg_color_quantizer *pjVar6;
-  int iVar7;
+  code *pcVar4;
+  jpeg_color_quantizer *pjVar5;
+  int iVar6;
   
-  pjVar4 = (jpeg_decompress_struct *)__savegprlr_28(param_1,param_2);
-  pjVar6 = pjVar4->cquantize;
-  JVar2 = pjVar4->dither_mode;
-  pjVar4->colormap = (uchar **)pjVar6[1].start_pass;
-  pjVar4->actual_number_of_colors = (int)pjVar6[1].color_quantize;
+  pjVar5 = param_1->cquantize;
+  JVar2 = param_1->dither_mode;
+  param_1->colormap = (uchar **)pjVar5[1].start_pass;
+  param_1->actual_number_of_colors = (int)pjVar5[1].color_quantize;
   if (JVar2 == JDITHER_NONE) {
-    if (pjVar4->out_color_components == 3) {
-      pjVar6->color_quantize = color_quantize3;
-      __restgprlr_28();
+    if (param_1->out_color_components == 3) {
+      pjVar5->color_quantize = color_quantize3;
       return;
     }
-    pjVar6->color_quantize = color_quantize;
+    pjVar5->color_quantize = color_quantize;
   }
   else if (JVar2 == JDITHER_ORDERED) {
-    if (pjVar4->out_color_components == 3) {
-      pcVar5 = quantize3_ord_dither;
+    if (param_1->out_color_components == 3) {
+      pcVar4 = quantize3_ord_dither;
     }
     else {
-      pcVar5 = quantize_ord_dither;
+      pcVar4 = quantize_ord_dither;
     }
-    pjVar6->color_quantize = pcVar5;
-    cVar1 = *(char *)&pjVar6[1].new_color_map;
-    pjVar6[3].start_pass = (_func___cdecl_void_jpeg_decompress_struct_ptr_uchar *)0x0;
+    pjVar5->color_quantize = pcVar4;
+    cVar1 = *(char *)&pjVar5[1].new_color_map;
+    pjVar5[3].start_pass = (_func___cdecl_void_jpeg_decompress_struct_ptr_uchar *)0x0;
     if (cVar1 == '\0') {
-      create_colorindex(pjVar4);
+      create_colorindex(param_1);
     }
-    if (pjVar6[3].color_quantize ==
+    if (pjVar5[3].color_quantize ==
         (_func___cdecl_void_jpeg_decompress_struct_ptr_uchar_ptr_ptr_uchar_ptr_ptr_int *)0x0) {
-      create_odither_tables(pjVar4);
-      __restgprlr_28();
+      create_odither_tables(param_1);
       return;
     }
   }
   else {
     if (JDITHER_FS < JVar2) {
-      pjVar4->err->msg_code = 0x30;
-      (*pjVar4->err->error_exit)((jpeg_common_struct *)pjVar4);
-      __restgprlr_28();
+      param_1->err->msg_code = 0x30;
+      (*param_1->err->error_exit)((jpeg_common_struct *)param_1);
       return;
     }
-    *(undefined1 *)&pjVar6[5].color_quantize = 0;
-    pjVar6->color_quantize = quantize_fs_dither;
-    if (pjVar6[4].color_quantize ==
+    *(undefined1 *)&pjVar5[5].color_quantize = 0;
+    pjVar5->color_quantize = quantize_fs_dither;
+    if (pjVar5[4].color_quantize ==
         (_func___cdecl_void_jpeg_decompress_struct_ptr_uchar_ptr_ptr_uchar_ptr_ptr_int *)0x0) {
-      alloc_fs_workspace(pjVar4);
+      alloc_fs_workspace(param_1);
     }
-    uVar3 = pjVar4->output_width;
-    iVar7 = 0;
-    if (0 < pjVar4->out_color_components) {
-      pjVar6 = pjVar6 + 4;
+    uVar3 = param_1->output_width;
+    iVar6 = 0;
+    if (0 < param_1->out_color_components) {
+      pjVar5 = pjVar5 + 4;
       do {
-        pjVar6 = (jpeg_color_quantizer *)&pjVar6->color_quantize;
+        pjVar5 = (jpeg_color_quantizer *)&pjVar5->color_quantize;
         jzero_far(*(_func___cdecl_void_jpeg_decompress_struct_ptr_uchar_ptr_ptr_uchar_ptr_ptr_int **
-                   )pjVar6,(uVar3 + 2) * 2);
-        iVar7 = iVar7 + 1;
-      } while (iVar7 < pjVar4->out_color_components);
-      __restgprlr_28();
+                   )pjVar5,(uVar3 + 2) * 2);
+        iVar6 = iVar6 + 1;
+      } while (iVar6 < param_1->out_color_components);
       return;
     }
   }
-  __restgprlr_28();
   return;
 }
 

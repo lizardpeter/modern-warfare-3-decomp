@@ -124,41 +124,33 @@ uint bdStrnlen(char *param_1,uint param_2)
 
 // 828F65B0  writeArrayStart  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdcontainers/bdbytebuffer.cpp:74)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 bool __thiscall
 bdByteBuffer::writeArrayStart(bdByteBuffer *this,uchar param_1,uint param_2,uint param_3)
 
 {
-  bdByteBuffer *this_00;
   bool bVar1;
   bool bVar2;
-  undefined1 uVar3;
-  undefined8 uVar4;
   
-  this_00 = (bdByteBuffer *)__savegprlr_28(this);
-  bVar1 = this_00->m_typeChecked;
-  this_00->m_typeChecked = false;
-  this_00->m_typeCheckedCopy = bVar1;
-  bVar1 = writeUByte8(this_00,param_1 + 'd');
-  this_00->m_typeChecked = true;
+  bVar1 = this->m_typeChecked;
+  this->m_typeChecked = false;
+  this->m_typeCheckedCopy = bVar1;
+  bVar1 = writeUByte8(this,param_1 + 'd');
+  this->m_typeChecked = true;
   if (bVar1) {
-    bVar2 = writeUInt32(this_00,param_2 * param_3);
+    bVar2 = writeUInt32(this,param_2 * param_3);
     bVar1 = true;
-    if (!bVar2) goto LAB_828f6610;
+    if (bVar2) goto LAB_828f6614;
   }
-  else {
-LAB_828f6610:
-    bVar1 = false;
+  bVar1 = false;
+LAB_828f6614:
+  this->m_typeChecked = false;
+  if ((bVar1) && (bVar1 = writeUInt32(this,param_2), bVar1)) {
+    return true;
   }
-  this_00->m_typeChecked = false;
-  if (bVar1) {
-    bVar1 = writeUInt32(this_00,param_2);
-    uVar4 = 1;
-    if (bVar1) goto LAB_828f663c;
-  }
-  uVar4 = 0;
-LAB_828f663c:
-  uVar3 = __restgprlr_28(uVar4);
-  return (bool)uVar3;
+  return false;
 }
 
 
@@ -174,60 +166,51 @@ void __thiscall bdByteBuffer::writeArrayEnd(bdByteBuffer *this)
 
 // 828F6648  readArrayStart  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdcontainers/bdbytebuffer.cpp:96)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 bool __thiscall bdByteBuffer::readArrayStart(bdByteBuffer *this,uchar param_1,uint *param_2)
 
 {
-  bdByteBuffer *this_00;
   bool bVar1;
   bool bVar2;
-  undefined1 uVar3;
-  uint uVar4;
   byte local_40 [4];
   uint auStack_3c [15];
   
-  uVar4 = (uint)(char)param_1;
-  this_00 = (bdByteBuffer *)__savegprlr_27(this);
-  bVar1 = this_00->m_typeChecked;
-  this_00->m_typeChecked = false;
-  this_00->m_typeCheckedCopy = bVar1;
-  bVar1 = readUByte8(this_00,local_40);
+  bVar1 = this->m_typeChecked;
+  this->m_typeChecked = false;
+  this->m_typeCheckedCopy = bVar1;
+  bVar1 = readUByte8(this,local_40);
   if (!bVar1) {
     bdLogMessage(BD_LOG_WARNING,"warn/","warn",
                  "c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdCore\\bdContainers\\bdByteBuffer.cpp"
                  ,"bdByteBuffer::readArrayStart",0x6b,"readArrayStart: No array %d\n");
     *param_2 = 0;
-    goto LAB_828f6780;
+    return bVar1;
   }
-  if (local_40[0] - 100 != (uVar4 & 0xff)) {
+  if (local_40[0] - 100 != (uint)param_1) {
     bdLogMessage(BD_LOG_ERROR,"err/","err",
                  "c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdCore\\bdContainers\\bdByteBuffer.cpp"
                  ,"bdByteBuffer::readArrayStart",0x72,
                  "readArrayStart: Expected type %d but read type %d\n");
     bVar1 = false;
   }
-  bVar2 = bVar1 == false;
-  bVar1 = false;
-  if (bVar2) goto LAB_828f6780;
-  this_00->m_typeChecked = false;
-  bVar1 = readUByte8(this_00,local_40);
-  if (bVar1) {
-    bVar2 = readUInt32(this_00,auStack_3c);
-    bVar1 = true;
-    if (!bVar2) goto LAB_828f6754;
+  if (bVar1 == false) {
+    return false;
   }
-  else {
-LAB_828f6754:
-    bVar1 = false;
-  }
+  this->m_typeChecked = false;
+  bVar1 = readUByte8(this,local_40);
   if (bVar1) {
-    bVar2 = readUInt32(this_00,param_2);
+    bVar2 = readUInt32(this,auStack_3c);
     bVar1 = true;
-    if (bVar2) goto LAB_828f6780;
+    if (bVar2) goto LAB_828f6758;
   }
   bVar1 = false;
-LAB_828f6780:
-  uVar3 = __restgprlr_27(bVar1);
-  return (bool)uVar3;
+LAB_828f6758:
+  if ((bVar1) && (bVar1 = readUInt32(this,param_2), bVar1)) {
+    return true;
+  }
+  return false;
 }
 
 
@@ -763,137 +746,116 @@ bool __thiscall bdByteBuffer::writeUInt64(bdByteBuffer *this,ulong64 param_1)
 
 // 828F6370  writeString  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdcontainers/bdbytebuffer.cpp:303)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 bool __thiscall bdByteBuffer::writeString(bdByteBuffer *this,char *param_1,uint param_2)
 
 {
-  bdByteBuffer *this_00;
   bool bVar2;
   uint uVar1;
   bool bVar3;
-  bool bVar4;
-  undefined1 uVar5;
-  ulonglong uVar6;
-  ulonglong uVar7;
+  uint uVar4;
   undefined1 local_40;
   undefined1 local_3f [63];
   
-  uVar7 = (ulonglong)(int)param_2;
-  uVar6 = (ulonglong)(int)param_1;
-  this_00 = (bdByteBuffer *)__savegprlr_27(this);
-  if ((uVar6 & 0xffffffff) == 0) {
-    bVar2 = writeNAN(this_00);
-    goto LAB_828f648c;
+  if (param_1 == (char *)0x0) {
+    bVar2 = writeNAN(this);
+    return bVar2;
   }
   bVar2 = true;
   local_40 = 0x10;
-  if (this_00->m_typeChecked != false) {
-    bVar2 = write(this_00,&local_40,1);
+  if (this->m_typeChecked != false) {
+    bVar2 = write(this,&local_40,1);
   }
-  uVar1 = bdStrnlen((char *)uVar6,(uint)uVar7);
-  bVar4 = (uVar7 & 0xffffffff) <= (ulonglong)uVar1;
-  if (bVar4) {
-    uVar1 = (uint)uVar7 - 1;
+  uVar1 = bdStrnlen(param_1,param_2);
+  if (param_2 <= uVar1) {
+    uVar4 = param_2 - 1;
     bdLogMessage(BD_LOG_WARNING,"warn/","core/bytebuffer",
                  "c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdCore\\bdContainers\\bdByteBuffer.cpp"
                  ,"bdByteBuffer::writeString",0x14c,
                  "String was not null terminated. Data will be truncated.");
   }
   else {
-    uVar1 = uVar1 + 1;
+    uVar4 = uVar1 + 1;
   }
-  if (bVar2 == false) {
-LAB_828f6444:
-    bVar2 = false;
+  if (bVar2 != false) {
+    bVar2 = write(this,param_1,uVar4);
+    bVar3 = true;
+    if (bVar2) goto LAB_828f6448;
   }
-  else {
-    bVar3 = write(this_00,(char *)uVar6,uVar1);
-    bVar2 = true;
-    if (!bVar3) goto LAB_828f6444;
-  }
-  if (bVar4) {
-    if (bVar2 != false) {
+  bVar3 = false;
+LAB_828f6448:
+  if (param_2 <= uVar1) {
+    if (bVar3 != false) {
       local_3f[0] = 0;
-      bVar4 = write(this_00,local_3f,1);
-      bVar2 = true;
-      if (bVar4) goto LAB_828f648c;
+      bVar2 = write(this,local_3f,1);
+      if (bVar2) {
+        return true;
+      }
     }
-    bVar2 = false;
+    bVar3 = false;
   }
-LAB_828f648c:
-  uVar5 = __restgprlr_27(bVar2);
-  return (bool)uVar5;
+  return bVar3;
 }
 
 
 // 828F6498  writeBlob  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdcontainers/bdbytebuffer.cpp:348)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 bool __thiscall bdByteBuffer::writeBlob(bdByteBuffer *this,void *param_1,uint param_2)
 
 {
-  bdByteBuffer *this_00;
   bool bVar1;
   bool bVar2;
-  undefined1 uVar3;
-  undefined8 uVar4;
   undefined1 local_30 [48];
   
-  this_00 = (bdByteBuffer *)__savegprlr_29(this);
   local_30[0] = 0x13;
   bVar1 = true;
-  if (this_00->m_typeChecked != false) {
-    bVar1 = write(this_00,local_30,1);
+  if (this->m_typeChecked != false) {
+    bVar1 = write(this,local_30,1);
   }
-  if (bVar1 == false) {
-LAB_828f64f8:
-    bVar1 = false;
-  }
-  else {
-    bVar2 = writeUInt32(this_00,param_2);
+  if (bVar1 != false) {
+    bVar2 = writeUInt32(this,param_2);
     bVar1 = true;
-    if (!bVar2) goto LAB_828f64f8;
+    if (bVar2) goto LAB_828f64fc;
   }
-  if (bVar1) {
-    bVar1 = write(this_00,param_1,param_2);
-    uVar4 = 1;
-    if (bVar1) goto LAB_828f6524;
+  bVar1 = false;
+LAB_828f64fc:
+  if ((bVar1) && (bVar1 = write(this,param_1,param_2), bVar1)) {
+    return true;
   }
-  uVar4 = 0;
-LAB_828f6524:
-  uVar3 = __restgprlr_29(uVar4);
-  return (bool)uVar3;
+  return false;
 }
 
 
 // 828F5238  read  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdcontainers/bdbytebuffer.cpp:357)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 bool __thiscall bdByteBuffer::read(bdByteBuffer *this,void *param_1,uint param_2)
 
 {
-  int iVar1;
-  bool bVar2;
-  undefined1 uVar3;
-  ulonglong uVar4;
-  ulonglong uVar5;
+  bool bVar1;
   uint auStack_30 [12];
   
-  uVar4 = (ulonglong)(int)param_2;
-  iVar1 = __savegprlr_29(this);
-  bVar2 = false;
-  uVar5 = ((ulonglong)*(uint *)(iVar1 + 0xc) + (ulonglong)*(uint *)(iVar1 + 8)) -
-          ZEXT48(*(void **)(iVar1 + 0x10));
-  if ((uVar5 & 0xffffffff) < (uVar4 & 0xffffffff)) {
+  bVar1 = false;
+  if (this->m_data + (this->m_size - (int)this->m_readPtr) < param_2) {
     bdLogMessage(BD_LOG_WARNING,"warn/","core/bytebuffer",
                  "c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdCore\\bdContainers\\bdByteBuffer.cpp"
                  ,"bdByteBuffer::read",0x170,
                  "Could not read data from buffer. Insufficient data available.\n");
   }
   else {
-    bVar2 = bdBytePacker::removeBuffer
-                      (*(void **)(iVar1 + 0x10),(uint)uVar5,0,auStack_30,param_1,(uint)uVar4);
-    *(uint *)(iVar1 + 0x10) = (uint)uVar4 + *(int *)(iVar1 + 0x10);
+    bVar1 = bdBytePacker::removeBuffer
+                      (this->m_readPtr,(uint)(this->m_data + (this->m_size - (int)this->m_readPtr)),
+                       0,auStack_30,param_1,param_2);
+    this->m_readPtr = this->m_readPtr + param_2;
   }
-  uVar3 = __restgprlr_29(bVar2);
-  return (bool)uVar3;
+  return bVar1;
 }
 
 
@@ -1043,70 +1005,63 @@ bool __thiscall bdByteBuffer::readFloat32(bdByteBuffer *this,float *param_1)
 
 // 828F5E70  readString  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdcontainers/bdbytebuffer.cpp:512)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 bool __thiscall bdByteBuffer::readString(bdByteBuffer *this,char *param_1,uint param_2)
 
 {
-  bdByteBuffer *this_00;
   bool bVar1;
-  undefined1 uVar2;
-  ulonglong uVar3;
-  ulonglong uVar4;
-  ulonglong uVar5;
+  uint uVar2;
   char local_40 [64];
   
-  uVar4 = (ulonglong)(int)param_2;
-  uVar3 = (ulonglong)(int)param_1;
-  this_00 = (bdByteBuffer *)__savegprlr_27(this);
-  bVar1 = readDataType(this_00,BD_BB_SIGNED_CHAR8_STRING_TYPE);
-  if ((bVar1) && ((uVar3 & 0xffffffff) != 0)) {
-    uVar5 = 0;
+  bVar1 = readDataType(this,BD_BB_SIGNED_CHAR8_STRING_TYPE);
+  if ((bVar1) && (param_1 != (char *)0x0)) {
+    uVar2 = 0;
     do {
       local_40[0] = '\0';
-      bVar1 = read(this_00,local_40,1);
-      if ((uVar5 & 0xffffffff) < (uVar4 & 0xffffffff)) {
-        *(char *)((int)uVar5 + (int)uVar3) = local_40[0];
+      bVar1 = read(this,local_40,1);
+      if (uVar2 < param_2) {
+        param_1[uVar2] = local_40[0];
       }
       if ((bVar1) && (local_40[0] != '\0')) {
-        uVar5 = uVar5 + 1;
+        uVar2 = uVar2 + 1;
       }
     } while ((bVar1) && (local_40[0] != '\0'));
-    if ((uVar4 & 0xffffffff) != 0) {
-      *(undefined1 *)((int)uVar3 + (int)uVar4 + -1) = 0;
+    if (param_2 != 0) {
+      param_1[param_2 - 1] = '\0';
     }
   }
-  uVar2 = __restgprlr_27();
-  return (bool)uVar2;
+  return bVar1;
 }
 
 
 // 828F5F08  readBlob  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdcontainers/bdbytebuffer.cpp:553)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 bool __thiscall bdByteBuffer::readBlob(bdByteBuffer *this,uchar *param_1,uint *param_2)
 
 {
   uint uVar1;
-  bdByteBuffer *this_00;
   bool bVar2;
   bool bVar3;
-  undefined1 uVar4;
-  ulonglong uVar5;
-  uint uVar6;
+  uint uVar4;
   uint local_40 [16];
   
-  uVar5 = (ulonglong)(int)param_1;
-  this_00 = (bdByteBuffer *)__savegprlr_27(this);
-  bVar2 = readDataType(this_00,BD_BB_BLOB_TYPE);
+  bVar2 = readDataType(this,BD_BB_BLOB_TYPE);
   bVar3 = false;
   if (bVar2) {
     local_40[0] = 0;
-    bVar3 = readUInt32(this_00,local_40);
+    bVar3 = readUInt32(this,local_40);
     uVar1 = local_40[0];
-    if ((bVar3) && ((uVar5 & 0xffffffff) != 0)) {
-      uVar6 = *param_2;
+    if ((bVar3) && (param_1 != (uchar *)0x0)) {
+      uVar4 = *param_2;
       if (local_40[0] <= *param_2) {
-        uVar6 = local_40[0];
+        uVar4 = local_40[0];
       }
-      bVar3 = read(this_00,(void *)uVar5,uVar6);
+      bVar3 = read(this,param_1,uVar4);
       if (*param_2 < uVar1) {
         bdLogMessage(BD_LOG_WARNING,"warn/","core/bytebuffer",
                      "c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdCore\\bdContainers\\bdByteBuffer.cpp"
@@ -1116,70 +1071,68 @@ bool __thiscall bdByteBuffer::readBlob(bdByteBuffer *this,uchar *param_1,uint *p
     }
     *param_2 = uVar1;
   }
-  uVar4 = __restgprlr_27(bVar3);
-  return (bool)uVar4;
+  return bVar3;
 }
 
 
 // 828F5FD8  readAndAllocateBlob  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdcontainers/bdbytebuffer.cpp:580)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
+
 bool __thiscall bdByteBuffer::readAndAllocateBlob(bdByteBuffer *this,uchar **param_1,uint *param_2)
 
 {
-  bdByteBuffer *this_00;
   bool bVar2;
   bool bVar3;
   uchar *puVar1;
-  undefined1 uVar4;
-  uint uVar5;
+  uint uVar4;
   uint local_50 [20];
   
-  this_00 = (bdByteBuffer *)__savegprlr_25(this);
-  uVar5 = 0;
+  uVar4 = 0;
   local_50[0] = 0;
   puVar1 = (uchar *)0x0;
-  bVar2 = readDataType(this_00,BD_BB_BLOB_TYPE);
+  bVar2 = readDataType(this,BD_BB_BLOB_TYPE);
   bVar3 = false;
-  if (((bVar2) && (bVar3 = readUInt32(this_00,local_50), uVar5 = local_50[0], bVar3)) &&
+  if (((bVar2) && (bVar3 = readUInt32(this,local_50), uVar4 = local_50[0], bVar3)) &&
      (puVar1 = bdMemory::allocate(local_50[0]), puVar1 != (uchar *)0x0)) {
-    bVar3 = read(this_00,puVar1,uVar5);
+    bVar3 = read(this,puVar1,uVar4);
   }
   if (bVar3 == false) {
     bdMemory::deallocate(puVar1);
   }
   else {
     *param_1 = puVar1;
-    *param_2 = uVar5;
+    *param_2 = uVar4;
   }
-  uVar4 = __restgprlr_25(bVar3);
-  return (bool)uVar4;
+  return bVar3;
 }
 
 
 // 828F52D8  readDataType  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdcontainers/bdbytebuffer.cpp:659)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 bool __thiscall bdByteBuffer::readDataType(bdByteBuffer *this,bdBitBufferDataType param_1)
 
 {
   byte bVar1;
-  bdByteBuffer *this_00;
   bool bVar2;
-  undefined1 uVar3;
-  bool bVar4;
+  bool bVar3;
   byte local_90 [16];
   char acStack_80 [48];
   char acStack_50 [80];
   
-  this_00 = (bdByteBuffer *)__savegprlr_29(this);
-  bVar4 = true;
-  if (this_00->m_typeChecked != false) {
+  bVar3 = true;
+  if (this->m_typeChecked != false) {
     local_90[0] = 0;
-    bVar2 = read(this_00,local_90,1);
+    bVar2 = read(this,local_90,1);
     bVar1 = local_90[0];
-    bVar4 = false;
+    bVar3 = false;
     if (bVar2) {
-      bVar4 = param_1 == local_90[0];
-      if (!bVar4) {
+      bVar3 = param_1 == local_90[0];
+      if (!bVar3) {
         bdBitBuffer::typeToString(param_1,acStack_50,0x28);
         bdBitBuffer::typeToString((uint)bVar1,acStack_80,0x28);
         bdLogMessage(BD_LOG_ERROR,"err/","core/bytebuffer",
@@ -1188,8 +1141,7 @@ bool __thiscall bdByteBuffer::readDataType(bdByteBuffer *this,bdBitBufferDataTyp
       }
     }
   }
-  uVar3 = __restgprlr_29(bVar4);
-  return (bool)uVar3;
+  return bVar3;
 }
 
 

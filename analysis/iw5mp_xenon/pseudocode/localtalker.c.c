@@ -2,40 +2,36 @@
 
 // 828C27F0  LTpFindProcMode  (<external>/Xenon/mar09/core/private/xam/apps/uvbase/xhv/localtalker.c:40)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 IProcMode * LTpFindProcMode(LOCALTALKER *param_1,void *param_2)
 
 {
-  int iVar2;
-  ulonglong uVar1;
-  undefined4 uVar3;
-  IProcMode *pIVar4;
-  ulonglong uVar5;
-  undefined4 *puVar6;
-  uint uVar7;
+  _func___cdecl_T_HRESULT_XHVENGINE_ptr_void_ptr_uchar_IProcMode_ptr_ptr *p_Var1;
+  IProcMode **ppIVar2;
+  uint uVar3;
   
-  uVar5 = (ulonglong)(int)param_2;
-  iVar2 = __savegprlr_28(param_1);
-  uVar7 = 0;
-  if (*(int *)(iVar2 + 0x20) != 0) {
-    puVar6 = (undefined4 *)(iVar2 + 0xc);
-    do {
-      uVar1 = (**(code **)(*(int *)*puVar6 + 0x18))();
-      if ((uVar5 & 0xffffffff) == (uVar1 & 0xffffffff)) {
-        uVar3 = *(undefined4 *)((uVar7 + 3) * 4 + iVar2);
-        goto LAB_828c284c;
-      }
-      uVar7 = uVar7 + 1;
-      puVar6 = puVar6 + 1;
-    } while (uVar7 < *(uint *)(iVar2 + 0x20));
-  }
   uVar3 = 0;
-LAB_828c284c:
-  pIVar4 = (IProcMode *)__restgprlr_28(uVar3);
-  return pIVar4;
+  if (param_1->NumProcModes != 0) {
+    ppIVar2 = param_1->ProcModes;
+    do {
+      p_Var1 = (*(*ppIVar2)->lpVtbl->GetCreationWrapper)(*ppIVar2);
+      if (param_2 == p_Var1) {
+        return param_1->ProcModes[uVar3];
+      }
+      uVar3 = uVar3 + 1;
+      ppIVar2 = ppIVar2 + 1;
+    } while (uVar3 < param_1->NumProcModes);
+  }
+  return (IProcMode *)0x0;
 }
 
 
 // 828C2868  LTpUpdateVoiceSettings  (<external>/Xenon/mar09/core/private/xam/apps/uvbase/xhv/localtalker.c:69)
+
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 
 void LTpUpdateVoiceSettings(LOCALTALKER *param_1)
 
@@ -44,314 +40,315 @@ void LTpUpdateVoiceSettings(LOCALTALKER *param_1)
   REMOTETALKER *pRVar2;
   bool bVar3;
   bool bVar4;
-  LOCALTALKER *pLVar5;
-  int iVar6;
-  ulong uVar7;
-  ulonglong uVar8;
+  int iVar5;
+  ulong uVar6;
+  ulonglong uVar7;
+  uint uVar8;
   uint uVar9;
-  uint uVar10;
   int local_50 [2];
   ulonglong local_48;
   
-  pLVar5 = (LOCALTALKER *)__savegprlr_26(param_1);
   bVar4 = false;
   bVar3 = false;
-  iVar6 = XamVoiceHeadsetPresent(pLVar5->Headset);
-  if (pLVar5->HeadsetPresent == 0) {
+  iVar5 = XamVoiceHeadsetPresent(param_1->Headset);
+  if (param_1->HeadsetPresent == 0) {
 LAB_828c28a8:
-    if (iVar6 != 0) {
+    if (iVar5 != 0) {
 LAB_828c28b0:
       bVar4 = true;
       bVar3 = true;
     }
   }
   else {
-    if (iVar6 == 0) goto LAB_828c28b0;
-    if (pLVar5->HeadsetPresent == 0) goto LAB_828c28a8;
+    if (iVar5 == 0) goto LAB_828c28b0;
+    if (param_1->HeadsetPresent == 0) goto LAB_828c28a8;
   }
-  pLVar5->HeadsetPresent = iVar6;
-  if ((pLVar5->XHVEngine->SettingsDirty == 0) && (pLVar5->SettingsPending == 0)) {
+  param_1->HeadsetPresent = iVar5;
+  if ((param_1->XHVEngine->SettingsDirty == 0) && (param_1->SettingsPending == 0)) {
 LAB_828c2a58:
     if (!bVar3) goto LAB_828c2a98;
   }
   else {
-    iVar6 = XamUserGetSigninState(pLVar5->Port);
-    if (pLVar5->SettingsPending != 0) {
-      uVar7 = XGetOverlappedResult(&pLVar5->xoverlapped,(ulong *)0x0,0);
-      if ((iVar6 == 0) || (uVar7 != 0)) {
-        if ((pLVar5->xoverlapped).InternalLow != 0x3e5) {
-          pLVar5->SettingsPending = 0;
+    iVar5 = XamUserGetSigninState(param_1->Port);
+    if (param_1->SettingsPending != 0) {
+      uVar6 = XGetOverlappedResult(&param_1->xoverlapped,(ulong *)0x0,0);
+      if ((iVar5 == 0) || (uVar6 != 0)) {
+        if ((param_1->xoverlapped).InternalLow != 0x3e5) {
+          param_1->SettingsPending = 0;
           goto LAB_828c2a3c;
         }
       }
       else {
-        pLVar5->SettingsPending = 0;
-        uVar10 = 0;
-        if (pLVar5->ProfileSettings->dwSettingsLen != 0) {
-          iVar6 = 0;
+        param_1->SettingsPending = 0;
+        uVar9 = 0;
+        if (param_1->ProfileSettings->dwSettingsLen != 0) {
+          iVar5 = 0;
           do {
-            p_Var1 = pLVar5->ProfileSettings->pSettings;
-            uVar8 = (ulonglong)*(uint *)((int)&p_Var1->dwSettingId + iVar6) - 0x1004000c;
-            if (uVar8 == 0) {
-              if (*(int *)((int)&(p_Var1->data).field1_0x8 + iVar6) == 0) {
-                uVar9 = pLVar5->VoiceSettings & 0xfffffffe;
+            p_Var1 = param_1->ProfileSettings->pSettings;
+            uVar7 = (ulonglong)*(uint *)((int)&p_Var1->dwSettingId + iVar5) - 0x1004000c;
+            if (uVar7 == 0) {
+              if (*(int *)((int)&(p_Var1->data).field1_0x8 + iVar5) == 0) {
+                uVar8 = param_1->VoiceSettings & 0xfffffffe;
               }
               else {
-                uVar9 = pLVar5->VoiceSettings | 1;
+                uVar8 = param_1->VoiceSettings | 1;
               }
 LAB_828c2a0c:
-              pLVar5->VoiceSettings = uVar9;
+              param_1->VoiceSettings = uVar8;
             }
             else {
-              if ((uVar8 & 0xffffffff) == 1) {
-                if (*(int *)((int)&(p_Var1->data).field1_0x8 + iVar6) == 0) {
-                  uVar9 = pLVar5->VoiceSettings & 0xfffffffd;
+              if ((uVar7 & 0xffffffff) == 1) {
+                if (*(int *)((int)&(p_Var1->data).field1_0x8 + iVar5) == 0) {
+                  uVar8 = param_1->VoiceSettings & 0xfffffffd;
                 }
                 else {
-                  uVar9 = pLVar5->VoiceSettings | 2;
+                  uVar8 = param_1->VoiceSettings | 2;
                 }
-                pLVar5->VoiceSettings = uVar9;
-                if (*(int *)((int)&(p_Var1->data).field1_0x8 + iVar6) == 1) {
-                  uVar9 = uVar9 & 0xfffffffb;
+                param_1->VoiceSettings = uVar8;
+                if (*(int *)((int)&(p_Var1->data).field1_0x8 + iVar5) == 1) {
+                  uVar8 = uVar8 & 0xfffffffb;
                 }
                 else {
-                  uVar9 = uVar9 | 4;
+                  uVar8 = uVar8 | 4;
                 }
                 bVar3 = true;
                 goto LAB_828c2a0c;
               }
-              if ((uVar8 & 0xffffffff) == 2) {
-                if (100 < *(int *)((int)&(p_Var1->data).field1_0x8 + iVar6)) {
-                  *(undefined4 *)((int)&(p_Var1->data).field1_0x8 + iVar6) = 100;
+              if ((uVar7 & 0xffffffff) == 2) {
+                if (100 < *(int *)((int)&(p_Var1->data).field1_0x8 + iVar5)) {
+                  *(undefined4 *)((int)&(p_Var1->data).field1_0x8 + iVar5) = 100;
                 }
-                local_48 = (ulonglong)*(int *)((int)&(p_Var1->data).field1_0x8 + iVar6);
-                if ((float)(longlong)local_48 != pLVar5->Volume) {
-                  *(undefined1 *)((int)&pLVar5->VoiceSettings + 2) = 0;
+                local_48 = (ulonglong)*(int *)((int)&(p_Var1->data).field1_0x8 + iVar5);
+                if ((float)(longlong)local_48 != param_1->Volume) {
+                  *(undefined1 *)((int)&param_1->VoiceSettings + 2) = 0;
                   bVar4 = true;
-                  uVar9 = *(int *)((int)&(p_Var1->data).field1_0x8 + iVar6) << 8 |
-                          pLVar5->VoiceSettings;
+                  uVar8 = *(int *)((int)&(p_Var1->data).field1_0x8 + iVar5) << 8 |
+                          param_1->VoiceSettings;
                   goto LAB_828c2a0c;
                 }
               }
             }
-            uVar10 = uVar10 + 1;
-            iVar6 = iVar6 + 0x28;
-          } while (uVar10 < pLVar5->ProfileSettings->dwSettingsLen);
+            uVar9 = uVar9 + 1;
+            iVar5 = iVar5 + 0x28;
+          } while (uVar9 < param_1->ProfileSettings->dwSettingsLen);
         }
       }
       goto LAB_828c2a58;
     }
-    if (iVar6 == 0) {
+    if (iVar5 == 0) {
 LAB_828c2a3c:
-      if (pLVar5->VoiceSettings != 0x26404) {
-        pLVar5->VoiceSettings = 0x26404;
+      if (param_1->VoiceSettings != 0x26404) {
+        param_1->VoiceSettings = 0x26404;
         bVar4 = true;
       }
       goto LAB_828c2a58;
     }
-    iVar6 = XamUserReadProfileSettings
-                      (0xfffffffffffe07d1,pLVar5->Port,0,0,3,0xffffffff829af990,
-                       &pLVar5->SettingsBufferSize,pLVar5->ProfileSettings);
-    if ((iVar6 == 0) || (iVar6 == 0x3e5)) {
-      pLVar5->SettingsPending = 1;
+    iVar5 = XamUserReadProfileSettings
+                      (0xfffffffffffe07d1,param_1->Port,0,0,3,0xffffffff829af990,
+                       (longlong)(int)param_1 + 0xb4,param_1->ProfileSettings);
+    if ((iVar5 == 0) || (iVar5 == 0x3e5)) {
+      param_1->SettingsPending = 1;
     }
-    else if (pLVar5->VoiceSettings != 0x26404) {
-      pLVar5->VoiceSettings = 0x26404;
+    else if (param_1->VoiceSettings != 0x26404) {
+      param_1->VoiceSettings = 0x26404;
     }
-    iVar6 = XamUserCheckPrivilege(pLVar5->Port,0xfc,local_50);
-    if ((iVar6 == 0) && (local_50[0] != 1)) {
-      iVar6 = XamUserCheckPrivilege(pLVar5->Port,0xfb,local_50);
-      if ((iVar6 == 0) && (local_50[0] == 1)) {
-        uVar10 = 0x10000;
+    iVar5 = XamUserCheckPrivilege(param_1->Port,0xfc,local_50);
+    if ((iVar5 == 0) && (local_50[0] != 1)) {
+      iVar5 = XamUserCheckPrivilege(param_1->Port,0xfb,local_50);
+      if ((iVar5 == 0) && (local_50[0] == 1)) {
+        uVar9 = 0x10000;
       }
       else {
-        uVar10 = 0;
+        uVar9 = 0;
       }
     }
     else {
-      uVar10 = 0x20000;
+      uVar9 = 0x20000;
     }
-    if ((pLVar5->XHVEngine->InitParams).bRelaxPrivileges != 0) {
-      uVar10 = 0x20000;
+    if ((param_1->XHVEngine->InitParams).bRelaxPrivileges != 0) {
+      uVar9 = 0x20000;
     }
-    pLVar5->VoiceSettings = pLVar5->VoiceSettings & 0xfff0ffff | uVar10;
+    param_1->VoiceSettings = param_1->VoiceSettings & 0xfff0ffff | uVar9;
   }
-  uVar10 = 0x468;
+  uVar9 = 0x468;
   do {
-    pRVar2 = *(REMOTETALKER **)((int)pLVar5->XHVEngine->Silence + (uVar10 - 0x44));
+    pRVar2 = *(REMOTETALKER **)((int)param_1->XHVEngine->Silence + (uVar9 - 0x44));
     if ((pRVar2 != (REMOTETALKER *)0x0) && (pRVar2->Xuid != 0)) {
       RemoteTalkerSetOutputVolumes(pRVar2);
     }
-    uVar10 = uVar10 + 4;
-  } while (uVar10 < 0x4f0);
+    uVar9 = uVar9 + 4;
+  } while (uVar9 < 0x4f0);
   bVar4 = true;
 LAB_828c2a98:
   if (bVar4) {
-    local_48 = (ulonglong)*(byte *)((int)&pLVar5->VoiceSettings + 2);
-    pLVar5->Volume = (float)local_48 * 0.01;
-    XHVEngineSetLocalTalkerOutput(pLVar5->XHVEngine,pLVar5);
+    local_48 = (ulonglong)*(byte *)((int)&param_1->VoiceSettings + 2);
+    param_1->Volume = (float)local_48 * 0.01;
+    XHVEngineSetLocalTalkerOutput(param_1->XHVEngine,param_1);
   }
-  __restgprlr_26();
   return;
 }
 
 
 // 828C2BD0  LocalTalkerHeadphoneWrite  (<external>/Xenon/mar09/core/private/xam/apps/uvbase/xhv/localtalker.c:472)
 
+/* WARNING: Function: __savegprlr_20 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_20 replaced with injection: xenon_save_restore */
+
 ulong LocalTalkerHeadphoneWrite(LOCALTALKER *param_1,uchar *param_2,ulong param_3)
 
 {
-  uint uVar1;
-  int iVar2;
-  int *piVar3;
-  uint uVar4;
-  int iVar5;
-  bool bVar6;
-  longlong lVar7;
-  undefined8 uVar8;
-  ulong uVar9;
-  ulonglong uVar10;
-  ulonglong uVar11;
-  ulonglong uVar12;
-  longlong lVar13;
-  uint *puVar14;
-  int *piVar15;
-  ulonglong uVar16;
-  ulonglong uVar17;
-  int *piVar18;
+  XMEDIAPACKET *pXVar1;
+  PACKET_CONTEXT *pPVar2;
+  bool bVar3;
+  XMEDIAPACKET **ppXVar4;
+  undefined8 uVar5;
+  uint uVar6;
+  uint uVar7;
+  ulonglong uVar8;
+  longlong lVar9;
+  uint *puVar10;
+  longlong lVar11;
+  PACKET_QUEUE *pPVar12;
+  ulong uVar13;
+  uint uVar14;
+  PACKET_CONTEXT *pPVar15;
   char in_RESERVE;
   byte in_cr0;
   
-  uVar12 = (ulonglong)(int)param_3;
-  lVar7 = __savegprlr_20(param_1,param_2);
-  lVar13 = lVar7 + 0x48;
+  lVar9 = (longlong)(int)param_1 + 0x48;
   do {
-    puVar14 = (uint *)lVar13;
-    uVar1 = *puVar14;
-    if (uVar1 != 1) {
+    puVar10 = (uint *)lVar9;
+    uVar14 = *puVar10;
+    if (uVar14 != 1) {
       if (in_RESERVE != '\0') {
-        uVar4 = storeWordConditionalIndexed((ulonglong)uVar1,0,lVar13);
-        *puVar14 = uVar4;
+        uVar7 = storeWordConditionalIndexed((ulonglong)uVar14,0,lVar9);
+        *puVar10 = uVar7;
         in_cr0 = 2;
       }
       break;
     }
     if (in_RESERVE != '\0') {
-      uVar4 = storeWordConditionalIndexed(2,0,lVar13);
-      *puVar14 = uVar4;
+      uVar7 = storeWordConditionalIndexed(2,0,lVar9);
+      *puVar10 = uVar7;
       in_cr0 = 2;
     }
   } while (!(bool)(in_cr0 >> 1 & 1));
-  uVar16 = 0;
-  if (((uVar1 == 1) && (iVar5 = (int)lVar7, uVar16 = uVar12, *(int *)(iVar5 + 8) != 0)) &&
-     (bVar6 = (*(uint *)(iVar5 + 0xc4) & 0xf0000) == 0, in_cr0 = bVar6 << 1, !bVar6)) {
-    lVar7 = lVar7 + 0x44;
-    uVar16 = 0;
-    uVar8 = KfAcquireSpinLock(lVar7);
-    piVar18 = *(int **)(iVar5 + 0x34);
-    piVar15 = (int *)(iVar5 + 0x34);
-    for (uVar17 = 0; (piVar18 != (int *)0x0 && ((uVar17 & 0xffffffff) < (uVar12 & 0xffffffff)));
-        uVar17 = ((ulonglong)*(uint *)(iVar2 + 0xc) - (ulonglong)*(uint *)(iVar2 + 4)) + uVar17) {
-      iVar2 = *piVar18;
-      piVar18 = (int *)piVar18[1];
+  uVar13 = 0;
+  if (((uVar14 == 1) && (uVar13 = param_3, param_1->Headset != (void *)0x0)) &&
+     (bVar3 = (param_1->VoiceSettings & 0xf0000) == 0, in_cr0 = bVar3 << 1, !bVar3)) {
+    lVar11 = (longlong)(int)param_1 + 0x44;
+    uVar13 = 0;
+    uVar5 = KfAcquireSpinLock(lVar11,param_2);
+    pPVar15 = (param_1->FreeHeadphonePackets).Head;
+    pPVar12 = &param_1->FreeHeadphonePackets;
+    for (uVar14 = 0; (pPVar15 != (PACKET_CONTEXT *)0x0 && (uVar14 < param_3));
+        uVar14 = ((*ppXVar4)->Length - (*ppXVar4)->Offset) + uVar14) {
+      ppXVar4 = &pPVar15->Packet;
+      pPVar15 = pPVar15->Next;
     }
-    KfReleaseSpinLock(lVar7,uVar8);
-    if ((uVar12 & 0xffffffff) <= (uVar17 & 0xffffffff)) {
-      piVar18 = (int *)*piVar15;
-      while (((piVar18 != (int *)0x0 && ((uVar16 & 0xffffffff) < (uVar12 & 0xffffffff))) &&
-             (*puVar14 != 3))) {
-        uVar10 = (ulonglong)*(uint *)(*piVar18 + 0xc) - (ulonglong)*(uint *)(*piVar18 + 4);
-        uVar17 = uVar12 - uVar16;
-        if ((uVar10 & 0xffffffff) <= (uVar12 - uVar16 & 0xffffffff)) {
-          uVar17 = uVar10;
+    KfReleaseSpinLock(lVar11,uVar5);
+    if (param_3 <= uVar14) {
+      pPVar15 = pPVar12->Head;
+      while (((pPVar15 != (PACKET_CONTEXT *)0x0 && (uVar13 < param_3)) && (*puVar10 != 3))) {
+        uVar7 = pPVar15->Packet->Length - pPVar15->Packet->Offset;
+        uVar14 = param_3 - uVar13;
+        if (uVar7 <= param_3 - uVar13) {
+          uVar14 = uVar7;
         }
         memcpy();
-        iVar2 = *piVar18;
-        uVar11 = *(uint *)(iVar2 + 4) + uVar17;
-        uVar10 = (ulonglong)*(uint *)(iVar2 + 0xc);
-        if ((uVar11 & 0xffffffff) < (ulonglong)*(uint *)(iVar2 + 0xc)) {
-          uVar10 = uVar11;
+        pXVar1 = pPVar15->Packet;
+        uVar6 = pXVar1->Offset + uVar14;
+        uVar7 = pXVar1->Length;
+        if (uVar6 < pXVar1->Length) {
+          uVar7 = uVar6;
         }
-        *(int *)(iVar2 + 4) = (int)uVar10;
-        if ((uVar10 & 0xffffffff) == (ulonglong)*(uint *)(*piVar18 + 0xc)) {
-          uVar8 = KfAcquireSpinLock(lVar7);
-          piVar3 = (int *)*piVar15;
-          if (piVar3 != (int *)0x0) {
-            if (piVar3 == *(int **)(iVar5 + 0x38)) {
-              *(undefined4 *)(iVar5 + 0x38) = 0;
+        pXVar1->Offset = uVar7;
+        if (uVar7 == pPVar15->Packet->Length) {
+          uVar5 = KfAcquireSpinLock(lVar11);
+          pPVar2 = pPVar12->Head;
+          if (pPVar2 != (PACKET_CONTEXT *)0x0) {
+            if (pPVar2 == (param_1->FreeHeadphonePackets).Tail) {
+              (param_1->FreeHeadphonePackets).Tail = (PACKET_CONTEXT *)0x0;
             }
-            *piVar15 = piVar3[1];
-            piVar3[1] = 0;
+            pPVar12->Head = pPVar2->Next;
+            pPVar2->Next = (PACKET_CONTEXT *)0x0;
           }
-          if (piVar18 == piVar3) {
-            piVar18[1] = 0;
-            if (*(int *)(iVar5 + 0x40) == 0) {
-              *(int **)(iVar5 + 0x3c) = piVar18;
+          if (pPVar15 == pPVar2) {
+            pPVar15->Next = (PACKET_CONTEXT *)0x0;
+            pPVar2 = (param_1->FullHeadphonePackets).Tail;
+            if (pPVar2 == (PACKET_CONTEXT *)0x0) {
+              (param_1->FullHeadphonePackets).Head = pPVar15;
             }
             else {
-              *(int **)(*(int *)(iVar5 + 0x40) + 4) = piVar18;
+              pPVar2->Next = pPVar15;
             }
-            *(int **)(iVar5 + 0x40) = piVar18;
+            (param_1->FullHeadphonePackets).Tail = pPVar15;
           }
-          KfReleaseSpinLock(lVar7,uVar8);
-          piVar18 = (int *)*piVar15;
+          KfReleaseSpinLock(lVar11,uVar5);
+          pPVar15 = pPVar12->Head;
         }
-        uVar16 = uVar17 + uVar16;
+        uVar13 = uVar14 + uVar13;
       }
     }
   }
   do {
-    uVar12 = (ulonglong)*puVar14;
-    if (*puVar14 != 3) {
+    uVar8 = (ulonglong)*puVar10;
+    if (*puVar10 != 3) {
       if (in_RESERVE != '\0') {
-        uVar1 = storeWordConditionalIndexed(uVar12,0,lVar13);
-        *puVar14 = uVar1;
+        uVar14 = storeWordConditionalIndexed(uVar8,0,lVar9);
+        *puVar10 = uVar14;
         in_cr0 = 2;
       }
       break;
     }
     if (in_RESERVE != '\0') {
-      uVar1 = storeWordConditionalIndexed(0,0,lVar13);
-      *puVar14 = uVar1;
+      uVar14 = storeWordConditionalIndexed(0,0,lVar9);
+      *puVar10 = uVar14;
       in_cr0 = 2;
     }
   } while (!(bool)(in_cr0 >> 1 & 1));
   do {
-    if ((int)uVar12 == 3) {
-LAB_828c2e60:
-      uVar9 = __restgprlr_20(uVar16);
-      return uVar9;
+    if ((int)uVar8 == 3) {
+      return uVar13;
     }
     do {
-      uVar1 = *puVar14;
-      if (uVar1 != 2) {
+      uVar14 = *puVar10;
+      if (uVar14 != 2) {
         if (in_RESERVE != '\0') {
-          uVar4 = storeWordConditionalIndexed((ulonglong)uVar1,0,lVar13);
-          *puVar14 = uVar4;
+          uVar7 = storeWordConditionalIndexed((ulonglong)uVar14,0,lVar9);
+          *puVar10 = uVar7;
           in_cr0 = 2;
         }
         break;
       }
       if (in_RESERVE != '\0') {
-        uVar4 = storeWordConditionalIndexed(1,0,lVar13);
-        *puVar14 = uVar4;
+        uVar7 = storeWordConditionalIndexed(1,0,lVar9);
+        *puVar10 = uVar7;
         in_cr0 = 2;
       }
     } while (!(bool)(in_cr0 >> 1 & 1));
-    if (((uVar1 == 2) || (uVar1 == 1)) || (uVar1 == 0)) goto LAB_828c2e60;
+    if (uVar14 == 2) {
+      return uVar13;
+    }
+    if (uVar14 == 1) {
+      return uVar13;
+    }
+    if (uVar14 == 0) {
+      return uVar13;
+    }
     do {
-      uVar12 = (ulonglong)*puVar14;
-      if (*puVar14 != 3) {
+      uVar8 = (ulonglong)*puVar10;
+      if (*puVar10 != 3) {
         if (in_RESERVE != '\0') {
-          uVar1 = storeWordConditionalIndexed(uVar12,0,lVar13);
-          *puVar14 = uVar1;
+          uVar14 = storeWordConditionalIndexed(uVar8,0,lVar9);
+          *puVar10 = uVar14;
           in_cr0 = 2;
         }
         break;
       }
       if (in_RESERVE != '\0') {
-        uVar1 = storeWordConditionalIndexed(0,0,lVar13);
-        *puVar14 = uVar1;
+        uVar14 = storeWordConditionalIndexed(0,0,lVar9);
+        *puVar10 = uVar14;
         in_cr0 = 2;
       }
     } while (!(bool)(in_cr0 >> 1 & 1));
@@ -361,126 +358,127 @@ LAB_828c2e60:
 
 // 828C34B8  LocalTalkerRegister  (<external>/Xenon/mar09/core/private/xam/apps/uvbase/xhv/localtalker.c:795)
 
-undefined4 LocalTalkerRegister(LOCALTALKER *param_1,ulong param_2)
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
+int LocalTalkerRegister(LOCALTALKER *param_1,ulong param_2)
 
 {
-  longlong lVar1;
-  LOCALTALKER *pLVar2;
-  int iVar3;
-  undefined4 uVar4;
-  longlong lVar5;
-  int *piVar6;
+  undefined4 uVar1;
+  int iVar2;
+  longlong lVar3;
+  longlong lVar4;
+  int *piVar5;
   char in_RESERVE;
-  byte bVar7;
+  byte bVar6;
   
-  lVar5 = (longlong)(int)param_2;
-  lVar1 = __savegprlr_28(param_1);
-  pLVar2 = (LOCALTALKER *)lVar1;
-  LocalTalkerUnregister(pLVar2);
-  iVar3 = XamVoiceCreate(lVar5,0xf,lVar1 + 8);
-  bVar7 = (iVar3 == 0) << 1;
-  if (-1 < iVar3) {
-    iVar3 = MicProxyRegister(pLVar2->MicProxy,(ulong)lVar5);
-    pLVar2->Port = (ulong)lVar5;
-    pLVar2->VoiceSettings = 0x26404;
+  LocalTalkerUnregister(param_1);
+  lVar4 = (longlong)(int)param_1 + 8;
+  iVar2 = XamVoiceCreate(param_2,0xf,lVar4);
+  bVar6 = (iVar2 == 0) << 1;
+  if (-1 < iVar2) {
+    iVar2 = MicProxyRegister(param_1->MicProxy,param_2);
+    param_1->Port = param_2;
+    param_1->VoiceSettings = 0x26404;
+    lVar3 = (longlong)(int)param_1 + 0x48;
     do {
       if (in_RESERVE != '\0') {
-        uVar4 = storeWordConditionalIndexed(1,0,lVar1 + 0x48);
-        *(undefined4 *)(lVar1 + 0x48) = uVar4;
-        bVar7 = 2;
+        uVar1 = storeWordConditionalIndexed(1,0,lVar3);
+        *(undefined4 *)lVar3 = uVar1;
+        bVar6 = 2;
       }
-    } while (!(bool)(bVar7 >> 1 & 1));
+    } while (!(bool)(bVar6 >> 1 & 1));
     memcpy();
-    if (-1 < iVar3) goto LAB_828c3560;
+    if (-1 < iVar2) {
+      return iVar2;
+    }
   }
-  piVar6 = (int *)(lVar1 + 8);
-  if (*piVar6 != 0) {
+  piVar5 = (int *)lVar4;
+  if (*piVar5 != 0) {
     XamVoiceClose();
-    *piVar6 = 0;
+    *piVar5 = 0;
   }
-LAB_828c3560:
-  uVar4 = __restgprlr_28(iVar3);
-  return uVar4;
+  return iVar2;
 }
 
 
 // 828C2E70  LocalTalkerUnregister  (<external>/Xenon/mar09/core/private/xam/apps/uvbase/xhv/localtalker.c:883)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void LocalTalkerUnregister(LOCALTALKER *param_1)
 
 {
   uint uVar1;
-  undefined4 *puVar2;
+  uint uVar2;
   longlong lVar3;
-  uint uVar4;
-  longlong lVar5;
-  uint *puVar6;
-  uint uVar7;
+  uint *puVar5;
+  longlong lVar4;
+  uint uVar6;
   char in_RESERVE;
   byte in_cr0;
   
-  lVar3 = __savegprlr_29(param_1);
-  lVar5 = lVar3 + 0x48;
-  XMsgCancelIORequest(lVar3 + 0x94,1);
-  puVar2 = (undefined4 *)lVar3;
-  uVar7 = 0;
-  uVar4 = puVar2[0x12];
-  while (uVar4 != 0) {
+  lVar4 = (longlong)(int)param_1;
+  lVar3 = lVar4 + 0x48;
+  XMsgCancelIORequest(lVar4 + 0x94,1);
+  uVar6 = 0;
+  uVar2 = param_1->HeadphoneWriteLock;
+  while (uVar2 != 0) {
     do {
-      puVar6 = (uint *)lVar5;
-      uVar4 = *puVar6;
-      if (uVar4 != 2) {
+      puVar5 = (uint *)lVar3;
+      uVar2 = *puVar5;
+      if (uVar2 != 2) {
         if (in_RESERVE != '\0') {
-          uVar1 = storeWordConditionalIndexed((ulonglong)uVar4,0,lVar5);
-          *puVar6 = uVar1;
+          uVar1 = storeWordConditionalIndexed((ulonglong)uVar2,0,lVar3);
+          *puVar5 = uVar1;
           in_cr0 = 2;
         }
         break;
       }
       if (in_RESERVE != '\0') {
-        uVar1 = storeWordConditionalIndexed(3,0,lVar5);
-        *puVar6 = uVar1;
+        uVar1 = storeWordConditionalIndexed(3,0,lVar3);
+        *puVar5 = uVar1;
         in_cr0 = 2;
       }
     } while (!(bool)(in_cr0 >> 1 & 1));
-    if (uVar4 == 2) goto LAB_828c2f1c;
+    if (uVar2 == 2) goto LAB_828c2f1c;
     do {
-      if (*puVar6 != 1) {
+      if (*puVar5 != 1) {
         if (in_RESERVE != '\0') {
-          uVar4 = storeWordConditionalIndexed((ulonglong)*puVar6,0,lVar5);
-          *puVar6 = uVar4;
+          uVar2 = storeWordConditionalIndexed((ulonglong)*puVar5,0,lVar3);
+          *puVar5 = uVar2;
           in_cr0 = 2;
         }
         break;
       }
       if (in_RESERVE != '\0') {
-        uVar4 = storeWordConditionalIndexed(0,0,lVar5);
-        *puVar6 = uVar4;
+        uVar2 = storeWordConditionalIndexed(0,0,lVar3);
+        *puVar5 = uVar2;
         in_cr0 = 2;
       }
     } while (!(bool)(in_cr0 >> 1 & 1));
-    uVar4 = *puVar6;
+    uVar2 = *puVar5;
   }
 LAB_828c2f28:
-  if (puVar2[2] != 0) {
+  if (param_1->Headset != (void *)0x0) {
     XamVoiceClose();
-    puVar2[2] = 0;
+    param_1->Headset = (void *)0x0;
   }
-  MicProxyUnregister((MICPROXY *)puVar2[1]);
-  *puVar2 = 4;
-  if (puVar2[8] != 0) {
-    lVar3 = lVar3 + 8;
+  MicProxyUnregister(param_1->MicProxy);
+  param_1->Port = 4;
+  if (param_1->NumProcModes != 0) {
+    lVar4 = lVar4 + 8;
     do {
-      lVar3 = lVar3 + 4;
-      (**(code **)(*(int *)*(undefined4 *)lVar3 + 0xc))();
-      uVar7 = uVar7 + 1;
-    } while (uVar7 < (uint)puVar2[8]);
+      lVar4 = lVar4 + 4;
+      (**(code **)(*(int *)*(undefined4 *)lVar4 + 0xc))();
+      uVar6 = uVar6 + 1;
+    } while (uVar6 < param_1->NumProcModes);
   }
-  __restgprlr_29();
   return;
 LAB_828c2f1c:
   do {
-  } while (*puVar6 != 0);
+  } while (*puVar5 != 0);
   goto LAB_828c2f28;
 }
 
@@ -496,99 +494,99 @@ int LocalTalkerIsHeadsetPresent(LOCALTALKER *param_1)
 
 // 828C2F88  LocalTalkerStartModes  (<external>/Xenon/mar09/core/private/xam/apps/uvbase/xhv/localtalker.c:999)
 
-undefined4 LocalTalkerStartModes(LOCALTALKER *param_1,void **param_2,ulong param_3)
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
+int LocalTalkerStartModes(LOCALTALKER *param_1,void **param_2,ulong param_3)
 
 {
-  LOCALTALKER *pLVar1;
-  IProcMode *pIVar2;
-  int iVar3;
-  undefined4 uVar4;
-  ulonglong uVar5;
-  ulonglong uVar6;
-  longlong lVar7;
+  IProcMode *pIVar1;
+  int iVar2;
+  uint uVar3;
   
-  uVar5 = (ulonglong)(int)param_3;
-  lVar7 = (longlong)(int)param_2;
-  pLVar1 = (LOCALTALKER *)__savegprlr_27(param_1);
-  uVar6 = 0;
-  iVar3 = -0x7ff8ffa9;
-  if ((uVar5 & 0xffffffff) != 0) {
+  uVar3 = 0;
+  iVar2 = -0x7ff8ffa9;
+  if (param_3 != 0) {
     do {
-      pIVar2 = LTpFindProcMode(pLVar1,(void *)*(undefined4 *)lVar7);
-      if ((pIVar2 == (IProcMode *)0x0) || (iVar3 = (*pIVar2->lpVtbl->Start)(pIVar2), iVar3 < 0))
-      break;
-      uVar6 = uVar6 + 1;
-      lVar7 = lVar7 + 4;
-    } while ((uVar6 & 0xffffffff) < (uVar5 & 0xffffffff));
+      pIVar1 = LTpFindProcMode(param_1,*param_2);
+      if (pIVar1 == (IProcMode *)0x0) {
+        return iVar2;
+      }
+      iVar2 = (*pIVar1->lpVtbl->Start)(pIVar1);
+      if (iVar2 < 0) {
+        return iVar2;
+      }
+      uVar3 = uVar3 + 1;
+      param_2 = param_2 + 1;
+    } while (uVar3 < param_3);
   }
-  uVar4 = __restgprlr_27(iVar3);
-  return uVar4;
+  return iVar2;
 }
 
 
 // 828C3000  LocalTalkerStopModes  (<external>/Xenon/mar09/core/private/xam/apps/uvbase/xhv/localtalker.c:1048)
 
-undefined4 LocalTalkerStopModes(LOCALTALKER *param_1,void **param_2,ulong param_3)
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
+int LocalTalkerStopModes(LOCALTALKER *param_1,void **param_2,ulong param_3)
 
 {
-  LOCALTALKER *pLVar1;
-  IProcMode *pIVar2;
-  int iVar3;
-  undefined4 uVar4;
-  ulonglong uVar5;
-  ulonglong uVar6;
-  longlong lVar7;
+  IProcMode *pIVar1;
+  int iVar2;
+  uint uVar3;
   
-  uVar5 = (ulonglong)(int)param_3;
-  lVar7 = (longlong)(int)param_2;
-  pLVar1 = (LOCALTALKER *)__savegprlr_27(param_1);
-  uVar6 = 0;
-  iVar3 = -0x7ff8ffa9;
-  if ((uVar5 & 0xffffffff) != 0) {
+  uVar3 = 0;
+  iVar2 = -0x7ff8ffa9;
+  if (param_3 != 0) {
     do {
-      pIVar2 = LTpFindProcMode(pLVar1,(void *)*(undefined4 *)lVar7);
-      if ((pIVar2 == (IProcMode *)0x0) || (iVar3 = (*pIVar2->lpVtbl->Stop)(pIVar2), iVar3 < 0))
-      break;
-      uVar6 = uVar6 + 1;
-      lVar7 = lVar7 + 4;
-    } while ((uVar6 & 0xffffffff) < (uVar5 & 0xffffffff));
+      pIVar1 = LTpFindProcMode(param_1,*param_2);
+      if (pIVar1 == (IProcMode *)0x0) {
+        return iVar2;
+      }
+      iVar2 = (*pIVar1->lpVtbl->Stop)(pIVar1);
+      if (iVar2 < 0) {
+        return iVar2;
+      }
+      uVar3 = uVar3 + 1;
+      param_2 = param_2 + 1;
+    } while (uVar3 < param_3);
   }
-  uVar4 = __restgprlr_27(iVar3);
-  return uVar4;
+  return iVar2;
 }
 
 
 // 828C3078  LocalTalkerProcess  (<external>/Xenon/mar09/core/private/xam/apps/uvbase/xhv/localtalker.c:1092)
 
-undefined4 LocalTalkerProcess(LOCALTALKER *param_1)
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
+
+int LocalTalkerProcess(LOCALTALKER *param_1)
 
 {
   PACKET_CONTEXT *pPVar1;
   XMEDIAPACKET *pXVar2;
   PACKET_CONTEXT *pPVar3;
   uchar *puVar4;
-  LOCALTALKER *pLVar6;
-  PACKET_QUEUE *pPVar7;
+  PACKET_QUEUE *pPVar6;
   undefined8 uVar5;
-  ulong uVar8;
-  int iVar9;
-  undefined4 uVar10;
-  PACKET_QUEUE *pPVar11;
-  ulong *puVar12;
-  IProcMode **ppIVar13;
-  uint uVar14;
+  ulong uVar7;
+  int iVar8;
+  PACKET_QUEUE *pPVar9;
+  ulong *puVar10;
+  IProcMode **ppIVar11;
+  uint uVar12;
   
-  pLVar6 = (LOCALTALKER *)__savegprlr_25(param_1);
-  LTpUpdateVoiceSettings(pLVar6);
-  pPVar11 = &pLVar6->InFlightPackets;
-  pPVar1 = (pLVar6->InFlightPackets).Head;
+  LTpUpdateVoiceSettings(param_1);
+  pPVar9 = &param_1->InFlightPackets;
+  pPVar1 = (param_1->InFlightPackets).Head;
   while ((pPVar1 != (PACKET_CONTEXT *)0x0 && (pPVar1->Packet->Status != 0x103))) {
-    pPVar3 = pPVar11->Head;
+    pPVar3 = pPVar9->Head;
     if (pPVar3 != (PACKET_CONTEXT *)0x0) {
-      if (pPVar3 == (pLVar6->InFlightPackets).Tail) {
-        (pLVar6->InFlightPackets).Tail = (PACKET_CONTEXT *)0x0;
+      if (pPVar3 == (param_1->InFlightPackets).Tail) {
+        (param_1->InFlightPackets).Tail = (PACKET_CONTEXT *)0x0;
       }
-      pPVar11->Head = pPVar3->Next;
+      pPVar9->Head = pPVar3->Next;
       pPVar3->Next = (PACKET_CONTEXT *)0x0;
     }
     pXVar2 = pPVar1->Packet;
@@ -597,152 +595,144 @@ undefined4 LocalTalkerProcess(LOCALTALKER *param_1)
       pPVar1->Packet->Format = XMEDIAFORMAT_PCM;
     }
     pPVar1->Packet->Offset = 0;
-    uVar5 = KfAcquireSpinLock(&pLVar6->HeadphoneQueueLock);
+    uVar5 = KfAcquireSpinLock(&param_1->HeadphoneQueueLock);
     pPVar1->Next = (PACKET_CONTEXT *)0x0;
-    pPVar3 = (pLVar6->FreeHeadphonePackets).Tail;
+    pPVar3 = (param_1->FreeHeadphonePackets).Tail;
     if (pPVar3 == (PACKET_CONTEXT *)0x0) {
-      (pLVar6->FreeHeadphonePackets).Head = pPVar1;
+      (param_1->FreeHeadphonePackets).Head = pPVar1;
     }
     else {
       pPVar3->Next = pPVar1;
     }
-    (pLVar6->FreeHeadphonePackets).Tail = pPVar1;
-    KfReleaseSpinLock(&pLVar6->HeadphoneQueueLock,uVar5);
-    pPVar1 = pPVar11->Head;
+    (param_1->FreeHeadphonePackets).Tail = pPVar1;
+    KfReleaseSpinLock(&param_1->HeadphoneQueueLock,uVar5);
+    pPVar1 = pPVar9->Head;
   }
-  pPVar1 = (pLVar6->FullHeadphonePackets).Head;
-  pPVar7 = &pLVar6->FullHeadphonePackets;
+  pPVar1 = (param_1->FullHeadphonePackets).Head;
+  pPVar6 = &param_1->FullHeadphonePackets;
   while( true ) {
     if ((pPVar1 == (PACKET_CONTEXT *)0x0) || (pPVar1->Packet->Length != pPVar1->Packet->Offset))
     goto LAB_828c3268;
-    puVar12 = &pLVar6->HeadphoneQueueLock;
-    uVar5 = KfAcquireSpinLock(puVar12);
-    uVar8 = PacketQueueLength(pPVar11);
-    if ((uVar8 == 0) && (uVar8 = PacketQueueLength(pPVar7), uVar8 < 2)) break;
-    pPVar3 = pPVar7->Head;
+    puVar10 = &param_1->HeadphoneQueueLock;
+    uVar5 = KfAcquireSpinLock(puVar10);
+    uVar7 = PacketQueueLength(pPVar9);
+    if ((uVar7 == 0) && (uVar7 = PacketQueueLength(pPVar6), uVar7 < 2)) break;
+    pPVar3 = pPVar6->Head;
     if (pPVar3 != (PACKET_CONTEXT *)0x0) {
-      if (pPVar3 == (pLVar6->FullHeadphonePackets).Tail) {
-        (pLVar6->FullHeadphonePackets).Tail = (PACKET_CONTEXT *)0x0;
+      if (pPVar3 == (param_1->FullHeadphonePackets).Tail) {
+        (param_1->FullHeadphonePackets).Tail = (PACKET_CONTEXT *)0x0;
       }
-      pPVar7->Head = pPVar3->Next;
+      pPVar6->Head = pPVar3->Next;
       pPVar3->Next = (PACKET_CONTEXT *)0x0;
     }
-    KfReleaseSpinLock(puVar12,uVar5);
+    KfReleaseSpinLock(puVar10,uVar5);
     pPVar1->Next = (PACKET_CONTEXT *)0x0;
-    pPVar3 = (pLVar6->InFlightPackets).Tail;
+    pPVar3 = (param_1->InFlightPackets).Tail;
     if (pPVar3 == (PACKET_CONTEXT *)0x0) {
-      pPVar11->Head = pPVar1;
+      pPVar9->Head = pPVar1;
     }
     else {
       pPVar3->Next = pPVar1;
     }
-    (pLVar6->InFlightPackets).Tail = pPVar1;
+    (param_1->InFlightPackets).Tail = pPVar1;
     puVar4 = pPVar1->Packet->Buffer;
-    g726adpcm(0,(char *)puVar4,(char *)puVar4,pPVar1->Packet->Length >> 1,&pLVar6->g726State);
+    g726adpcm(0,(char *)puVar4,(char *)puVar4,pPVar1->Packet->Length >> 1,&param_1->g726State);
     pPVar1->Packet->Length = pPVar1->Packet->Length >> 2;
     pPVar1->Packet->Format = XMEDIAFORMAT_G726;
-    iVar9 = XamVoiceSubmitPacket(pLVar6->Headset,0,pPVar1->Packet);
-    if (iVar9 < 0) {
+    iVar8 = XamVoiceSubmitPacket(param_1->Headset,0,pPVar1->Packet);
+    if (iVar8 < 0) {
       pPVar1->Packet->Status = 0;
       goto LAB_828c3268;
     }
-    pPVar1 = pPVar7->Head;
+    pPVar1 = pPVar6->Head;
   }
-  KfReleaseSpinLock(puVar12,uVar5);
+  KfReleaseSpinLock(puVar10,uVar5);
 LAB_828c3268:
-  iVar9 = MicProxyProcess(pLVar6->MicProxy);
-  if ((-1 < iVar9) && (uVar14 = 0, pLVar6->NumProcModes != 0)) {
-    ppIVar13 = &pLVar6->Headset;
+  iVar8 = MicProxyProcess(param_1->MicProxy);
+  if ((-1 < iVar8) && (uVar12 = 0, param_1->NumProcModes != 0)) {
+    ppIVar11 = &param_1->Headset;
     do {
-      ppIVar13 = ppIVar13 + 1;
-      (*(*ppIVar13)->lpVtbl->Process)(*ppIVar13);
-      uVar14 = uVar14 + 1;
-    } while (uVar14 < pLVar6->NumProcModes);
+      ppIVar11 = ppIVar11 + 1;
+      (*(*ppIVar11)->lpVtbl->Process)(*ppIVar11);
+      uVar12 = uVar12 + 1;
+    } while (uVar12 < param_1->NumProcModes);
   }
-  uVar10 = __restgprlr_25(iVar9);
-  return uVar10;
+  return iVar8;
 }
 
 
 // 828C32C0  LocalTalkerGetNotificationData  (<external>/Xenon/mar09/core/private/xam/apps/uvbase/xhv/localtalker.c:1340)
+
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 
 undefined4
 LocalTalkerGetNotificationData
           (LOCALTALKER *param_1,void *param_2,uchar *param_3,ulong *param_4,ulong *param_5)
 
 {
-  LOCALTALKER *pLVar1;
-  IProcMode *pIVar2;
-  T_HRESULT TVar3;
-  undefined4 uVar4;
-  longlong lVar5;
-  longlong lVar6;
-  longlong lVar7;
-  longlong lVar8;
+  IProcMode *pIVar1;
+  T_HRESULT TVar2;
   
-  lVar8 = (longlong)(int)param_5;
-  lVar7 = (longlong)(int)param_4;
-  lVar6 = (longlong)(int)param_3;
-  lVar5 = (longlong)(int)param_2;
-  pLVar1 = (LOCALTALKER *)__savegprlr_28(param_1,lVar5,lVar6,lVar7,lVar8);
-  TVar3 = 0x80070057;
-  pIVar2 = LTpFindProcMode(pLVar1,(void *)lVar5);
-  if (pIVar2 != (IProcMode *)0x0) {
-    TVar3 = (*pIVar2->lpVtbl->GetNotificationData)
-                      (pIVar2,(uchar *)lVar6,(ulong *)lVar7,(ulong *)lVar8);
+  TVar2 = 0x80070057;
+  pIVar1 = LTpFindProcMode(param_1,param_2);
+  if (pIVar1 != (IProcMode *)0x0) {
+    TVar2 = (*pIVar1->lpVtbl->GetNotificationData)(pIVar1,param_3,param_4,param_5);
   }
-  uVar4 = __restgprlr_28(TVar3);
-  return uVar4;
+  return TVar2;
 }
 
 
 // 828C3318  LocalTalkerCodecWork  (<external>/Xenon/mar09/core/private/xam/apps/uvbase/xhv/localtalker.c:1378)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void LocalTalkerCodecWork(LOCALTALKER *param_1,ulong *param_2)
 
 {
-  int iVar1;
-  int iVar2;
-  int iVar3;
-  void *pvVar4;
-  uint uVar5;
-  int *piVar6;
-  uint uVar7;
-  int *piVar8;
+  CODEC_PROCESSOR *pCVar1;
+  ulong uVar2;
+  ulong uVar3;
+  uint uVar4;
+  int *piVar5;
+  uint uVar6;
+  CODEC_PROCESSOR **ppCVar7;
   
-  iVar3 = __savegprlr_27(param_1);
-  pvVar4 = XMemSet(param_2,0,0xc);
-  uVar7 = 0;
-  if (*(int *)(iVar3 + 0x2c) != 0) {
-    piVar8 = (int *)(iVar3 + 0x24);
+  XMemSet(param_2,0,0xc);
+  uVar6 = 0;
+  if (param_1->NumCodecs != 0) {
+    ppCVar7 = param_1->Codecs;
     do {
-      iVar1 = *piVar8;
-      uVar5 = 0;
-      piVar6 = (int *)(iVar1 + 0x10);
-      iVar2 = *(int *)(*(int *)(iVar1 + 0x18) + 0xc);
+      pCVar1 = *ppCVar7;
+      uVar4 = 0;
+      piVar5 = pCVar1->Running;
+      uVar2 = pCVar1->CodecType->CodecTypeIndex;
       do {
-        if ((piVar6[-2] != 0) && (*piVar6 == 1)) {
-          pvVar4 = (void *)PacketQueueLength((PACKET_QUEUE *)(*(int *)(iVar1 + 4) + 8));
+        if (((PACKET_PROCESSOR *)piVar5[-2] != (PACKET_PROCESSOR *)0x0) && (*piVar5 == 1)) {
+          uVar3 = PacketQueueLength(&pCVar1->InputPackets->InFlight);
           goto LAB_828c3390;
         }
-        uVar5 = uVar5 + 1;
-        piVar6 = piVar6 + 1;
-      } while (uVar5 < 2);
-      pvVar4 = (void *)0x0;
+        uVar4 = uVar4 + 1;
+        piVar5 = piVar5 + 1;
+      } while (uVar4 < 2);
+      uVar3 = 0;
 LAB_828c3390:
-      uVar7 = uVar7 + 1;
-      piVar8 = piVar8 + 1;
-      param_2[iVar2] = (ulong)pvVar4;
-    } while (uVar7 < *(uint *)(iVar3 + 0x2c));
+      uVar6 = uVar6 + 1;
+      ppCVar7 = ppCVar7 + 1;
+      param_2[uVar2] = uVar3;
+    } while (uVar6 < param_1->NumCodecs);
   }
-  __restgprlr_27(pvVar4);
   return;
 }
 
 
 // 828C3570  LocalTalkerCreate  (<external>/Xenon/mar09/core/private/xam/apps/uvbase/xhv/localtalker.c:1448)
 
-undefined4 LocalTalkerCreate(XHVENGINE *param_1,void **param_2,ulong param_3,LOCALTALKER **param_4)
+/* WARNING: Function: __savegprlr_18 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_18 replaced with injection: xenon_save_restore */
+
+int LocalTalkerCreate(XHVENGINE *param_1,void **param_2,ulong param_3,LOCALTALKER **param_4)
 
 {
   PACKET_BUFFER *pPVar1;
@@ -750,216 +740,203 @@ undefined4 LocalTalkerCreate(XHVENGINE *param_1,void **param_2,ulong param_3,LOC
   IProcMode *pIVar3;
   int *piVar4;
   undefined4 *puVar5;
-  undefined8 uVar6;
-  LOCALTALKER *pLVar7;
-  int iVar8;
-  _XUSER_READ_PROFILE_SETTING_RESULT *p_Var9;
-  undefined4 uVar10;
-  ulonglong uVar11;
-  int iVar12;
-  long *plVar14;
-  ulonglong uVar13;
-  PACKET_CONTEXT *pPVar15;
-  XHVENGINE *pXVar16;
+  LOCALTALKER *pLVar6;
+  int iVar7;
+  _XUSER_READ_PROFILE_SETTING_RESULT *p_Var8;
+  int iVar9;
+  long *plVar10;
+  PACKET_CONTEXT *pPVar11;
+  int *piVar12;
+  int *piVar13;
+  ulong uVar14;
+  CODEC_PROCESSOR **ppCVar15;
+  ulong *puVar16;
   uint uVar17;
-  int *piVar18;
-  int *piVar19;
-  CODEC_PROCESSOR **ppCVar20;
+  uint uVar18;
+  IProcMode **ppIVar19;
+  int *piVar20;
   longlong lVar21;
-  ulong *puVar22;
-  uint uVar23;
-  ulonglong uVar24;
-  IProcMode **ppIVar26;
-  int *piVar27;
-  longlong lVar28;
   PROCMODE_CODEC_INFO local_b0;
   ulonglong local_a8;
   int local_a0 [4];
   int local_90 [36];
-  ulong uVar25;
   
-  uVar11 = (ulonglong)(int)param_3;
-  lVar21 = (longlong)(int)param_2;
-  uVar6 = __savegprlr_18(param_1);
-  pLVar7 = XMemAlloc(0x1d0,0x618a800b);
-  if (pLVar7 == (LOCALTALKER *)0x0) {
+  pLVar6 = XMemAlloc(0x1d0,0x618a800b);
+  if (pLVar6 == (LOCALTALKER *)0x0) {
 LAB_828c35a8:
-    iVar8 = -0x7ff8fff2;
+    iVar7 = -0x7ff8fff2;
   }
   else {
-    pXVar16 = (XHVENGINE *)uVar6;
-    pLVar7->XHVEngine = pXVar16;
-    pLVar7->HeadphoneQueueLock = 0;
-    pLVar7->VoiceSettings = 0x26404;
-    local_a8 = (ulonglong)*(byte *)((int)&pLVar7->VoiceSettings + 2);
-    pLVar7->Volume = (float)local_a8 * 0.01;
-    iVar8 = XamUserReadProfileSettings
-                      (0xfffffffffffe07d1,0xff,0,0,3,0xffffffff829af990,&pLVar7->SettingsBufferSize,
+    pLVar6->XHVEngine = param_1;
+    pLVar6->HeadphoneQueueLock = 0;
+    pLVar6->VoiceSettings = 0x26404;
+    local_a8 = (ulonglong)*(byte *)((int)&pLVar6->VoiceSettings + 2);
+    pLVar6->Volume = (float)local_a8 * 0.01;
+    iVar7 = XamUserReadProfileSettings
+                      (0xfffffffffffe07d1,0xff,0,0,3,0xffffffff829af990,&pLVar6->SettingsBufferSize,
                        0);
-    if (iVar8 == 0x7a) {
-      p_Var9 = XMemAlloc(pLVar7->SettingsBufferSize,0x608a2002);
-      pLVar7->ProfileSettings = p_Var9;
-      if (p_Var9 == (_XUSER_READ_PROFILE_SETTING_RESULT *)0x0) goto LAB_828c35a8;
-      iVar8 = PacketBufferCreate(0x100,0x20,5,0,&pLVar7->HeadphonePackets);
-      if (-1 < iVar8) {
-        iVar12 = 0;
-        lVar28 = 5;
+    if (iVar7 == 0x7a) {
+      p_Var8 = XMemAlloc(pLVar6->SettingsBufferSize,0x608a2002);
+      pLVar6->ProfileSettings = p_Var8;
+      if (p_Var8 == (_XUSER_READ_PROFILE_SETTING_RESULT *)0x0) goto LAB_828c35a8;
+      iVar7 = PacketBufferCreate(0x100,0x20,5,0,&pLVar6->HeadphonePackets);
+      if (-1 < iVar7) {
+        iVar9 = 0;
+        lVar21 = 5;
         do {
-          pPVar1 = pLVar7->HeadphonePackets;
-          plVar14 = (long *)((int)&pPVar1->Packets->Status + pPVar1->PacketDescriptorSize * iVar12);
-          pPVar15 = (PACKET_CONTEXT *)(plVar14 + 6);
-          plVar14[6] = (long)plVar14;
-          plVar14[7] = 0;
-          pPVar2 = (pLVar7->FreeHeadphonePackets).Tail;
+          pPVar1 = pLVar6->HeadphonePackets;
+          plVar10 = (long *)((int)&pPVar1->Packets->Status + pPVar1->PacketDescriptorSize * iVar9);
+          pPVar11 = (PACKET_CONTEXT *)(plVar10 + 6);
+          plVar10[6] = (long)plVar10;
+          plVar10[7] = 0;
+          pPVar2 = (pLVar6->FreeHeadphonePackets).Tail;
           if (pPVar2 == (PACKET_CONTEXT *)0x0) {
-            (pLVar7->FreeHeadphonePackets).Head = pPVar15;
+            (pLVar6->FreeHeadphonePackets).Head = pPVar11;
           }
           else {
-            pPVar2->Next = pPVar15;
+            pPVar2->Next = pPVar11;
           }
-          (pLVar7->FreeHeadphonePackets).Tail = pPVar15;
-          iVar12 = iVar12 + 1;
-          lVar28 = lVar28 + -1;
-        } while (lVar28 != 0);
+          (pLVar6->FreeHeadphonePackets).Tail = pPVar11;
+          iVar9 = iVar9 + 1;
+          lVar21 = lVar21 + -1;
+        } while (lVar21 != 0);
         XMemSet(local_90,0,0x18);
         XMemSet(local_a0,0,0xc);
-        uVar24 = 0;
-        uVar25 = 0;
-        if ((uVar11 & 0xffffffff) != 0) {
-          ppIVar26 = pLVar7->ProcModes;
+        uVar18 = 0;
+        if (param_3 != 0) {
+          ppIVar19 = pLVar6->ProcModes;
+          uVar18 = 0;
           do {
-            uVar25 = (ulong)uVar24;
-            if (1 < (uVar24 & 0xffffffff)) break;
-            iVar8 = (*(code *)*(undefined4 *)lVar21)(uVar6,pLVar7,0,ppIVar26);
-            if (iVar8 < 0) break;
-            (*(*ppIVar26)->lpVtbl->GetCodecInfo)(*ppIVar26,&local_b0);
-            lVar21 = lVar21 + 4;
-            uVar13 = ((ulonglong)(local_b0.CodecType)->CodecTypeIndex & 0x7fffffff) * 2 + uVar24;
-            uVar24 = uVar24 + 1;
-            uVar25 = (ulong)uVar24;
+            if (1 < uVar18) break;
+            iVar7 = (**param_2)(param_1,pLVar6,0,ppIVar19);
+            if (iVar7 < 0) break;
+            (*(*ppIVar19)->lpVtbl->GetCodecInfo)(*ppIVar19,&local_b0);
+            param_2 = param_2 + 1;
+            iVar9 = (local_b0.CodecType)->CodecTypeIndex * 2 + uVar18;
+            uVar18 = uVar18 + 1;
             local_a0[(local_b0.CodecType)->CodecTypeIndex] = (int)local_b0.CodecType;
-            pIVar3 = *ppIVar26;
-            ppIVar26 = ppIVar26 + 1;
-            *(IProcMode **)((int)local_90 + (int)((uVar13 & 0xffffffff) << 2)) = pIVar3;
-          } while ((uVar24 & 0xffffffff) < (uVar11 & 0xffffffff));
+            pIVar3 = *ppIVar19;
+            ppIVar19 = ppIVar19 + 1;
+            local_90[iVar9] = (int)pIVar3;
+          } while (uVar18 < param_3);
         }
-        ppCVar20 = (CODEC_PROCESSOR **)&pLVar7->NumProcModes;
-        pLVar7->NumProcModes = uVar25;
-        if (-1 < iVar8) {
-          uVar25 = 0;
-          uVar17 = 0;
-          piVar18 = local_a0;
-          piVar27 = local_90;
+        ppCVar15 = (CODEC_PROCESSOR **)&pLVar6->NumProcModes;
+        pLVar6->NumProcModes = uVar18;
+        if (-1 < iVar7) {
+          uVar14 = 0;
+          uVar18 = 0;
+          piVar12 = local_a0;
+          piVar20 = local_90;
           do {
-            iVar12 = 0;
+            iVar9 = 0;
             XMemSet(&local_a8,0,8);
-            puVar22 = &local_b0.MaxPackets;
+            puVar16 = &local_b0.MaxPackets;
             lVar21 = 2;
-            piVar19 = piVar27;
+            piVar13 = piVar20;
             do {
-              piVar4 = (int *)*piVar19;
+              piVar4 = (int *)*piVar13;
               if (piVar4 != (int *)0x0) {
                 (**(code **)(*piVar4 + 0x14))(piVar4,&local_b0);
-                iVar12 = iVar12 + 1;
-                puVar22 = puVar22 + 1;
-                *puVar22 = local_b0.MaxPackets;
+                iVar9 = iVar9 + 1;
+                puVar16 = puVar16 + 1;
+                *puVar16 = local_b0.MaxPackets;
               }
               lVar21 = lVar21 + -1;
-              piVar19 = piVar19 + 1;
+              piVar13 = piVar13 + 1;
             } while (lVar21 != 0);
-            if (iVar12 != 0) {
-              iVar8 = CodecCreate(pXVar16,(CODEC_TYPE *)*piVar18,10,(ulong *)&local_a8,ppCVar20 + 1)
+            if (iVar9 != 0) {
+              iVar7 = CodecCreate(param_1,(CODEC_TYPE *)*piVar12,10,(ulong *)&local_a8,ppCVar15 + 1)
               ;
-              if (iVar8 < 0) break;
-              uVar25 = uVar25 + 1;
-              ppCVar20 = ppCVar20 + 1;
+              if (iVar7 < 0) break;
+              uVar14 = uVar14 + 1;
+              ppCVar15 = ppCVar15 + 1;
               lVar21 = 0;
-              uVar23 = 0;
+              uVar17 = 0;
               do {
-                puVar5 = (undefined4 *)*piVar27;
+                puVar5 = (undefined4 *)*piVar20;
                 if (puVar5 != (undefined4 *)0x0) {
-                  iVar8 = (**(code **)*puVar5)(puVar5,uVar6,*ppCVar20,lVar21);
-                  if (iVar8 < 0) goto LAB_828c388c;
+                  iVar7 = (**(code **)*puVar5)(puVar5,param_1,*ppCVar15,lVar21);
+                  if (iVar7 < 0) goto LAB_828c388c;
                   lVar21 = lVar21 + 1;
                 }
-                uVar23 = uVar23 + 1;
-                piVar27 = piVar27 + 1;
-              } while (uVar23 < 2);
+                uVar17 = uVar17 + 1;
+                piVar20 = piVar20 + 1;
+              } while (uVar17 < 2);
             }
-            uVar17 = uVar17 + 1;
-            piVar18 = piVar18 + 1;
-            piVar27 = piVar19;
-          } while (uVar17 < 3);
+            uVar18 = uVar18 + 1;
+            piVar12 = piVar12 + 1;
+            piVar20 = piVar13;
+          } while (uVar18 < 3);
 LAB_828c388c:
-          pLVar7->NumCodecs = uVar25;
-          if (-1 < iVar8) {
-            iVar8 = MicProxyCreate(pXVar16,pLVar7,10,pLVar7->Codecs,uVar25,&pLVar7->MicProxy);
-            pLVar7->Port = 4;
-            pLVar7->RecordingFormat = XMEDIAFORMAT_G726;
-            if (-1 < iVar8) goto LAB_828c38d8;
+          pLVar6->NumCodecs = uVar14;
+          if (-1 < iVar7) {
+            iVar7 = MicProxyCreate(param_1,pLVar6,10,pLVar6->Codecs,uVar14,&pLVar6->MicProxy);
+            pLVar6->Port = 4;
+            pLVar6->RecordingFormat = XMEDIAFORMAT_G726;
+            if (-1 < iVar7) goto LAB_828c38d8;
           }
         }
       }
     }
     else {
-      iVar8 = -0x7fffbffb;
+      iVar7 = -0x7fffbffb;
     }
   }
-  LocalTalkerDestroy(pLVar7);
-  pLVar7 = (LOCALTALKER *)0x0;
+  LocalTalkerDestroy(pLVar6);
+  pLVar6 = (LOCALTALKER *)0x0;
 LAB_828c38d8:
-  *param_4 = pLVar7;
-  uVar10 = __restgprlr_18(iVar8);
-  return uVar10;
+  *param_4 = pLVar6;
+  return iVar7;
 }
 
 
 // 828C33C8  LocalTalkerDestroy  (<external>/Xenon/mar09/core/private/xam/apps/uvbase/xhv/localtalker.c:1746)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void LocalTalkerDestroy(LOCALTALKER *param_1)
 
 {
-  void *pvVar1;
-  uint uVar2;
-  undefined4 *puVar3;
+  uint uVar1;
+  CODEC_PROCESSOR **ppCVar2;
+  IProcMode **ppIVar3;
   
-  pvVar1 = (void *)__savegprlr_28(param_1);
-  if (pvVar1 != (void *)0x0) {
-    if (*(int *)((int)pvVar1 + 8) != 0) {
+  if (param_1 != (LOCALTALKER *)0x0) {
+    if (param_1->Headset != (void *)0x0) {
       XamVoiceClose();
-      *(undefined4 *)((int)pvVar1 + 8) = 0;
+      param_1->Headset = (void *)0x0;
     }
-    MicProxyDestroy(*(MICPROXY **)((int)pvVar1 + 4));
-    uVar2 = 0;
-    *(undefined4 *)((int)pvVar1 + 4) = 0;
-    if (*(int *)((int)pvVar1 + 0x2c) != 0) {
-      puVar3 = (undefined4 *)((int)pvVar1 + 0x20);
+    MicProxyDestroy(param_1->MicProxy);
+    uVar1 = 0;
+    param_1->MicProxy = (MICPROXY *)0x0;
+    if (param_1->NumCodecs != 0) {
+      ppCVar2 = (CODEC_PROCESSOR **)&param_1->NumProcModes;
       do {
-        CodecDestroy((CODEC_PROCESSOR *)puVar3[1]);
-        uVar2 = uVar2 + 1;
-        puVar3 = puVar3 + 1;
-        *puVar3 = 0;
-      } while (uVar2 < *(uint *)((int)pvVar1 + 0x2c));
+        CodecDestroy(ppCVar2[1]);
+        uVar1 = uVar1 + 1;
+        ppCVar2 = ppCVar2 + 1;
+        *ppCVar2 = (CODEC_PROCESSOR *)0x0;
+      } while (uVar1 < param_1->NumCodecs);
     }
-    uVar2 = 0;
-    if (*(int *)((int)pvVar1 + 0x20) != 0) {
-      puVar3 = (undefined4 *)((int)pvVar1 + 8);
+    uVar1 = 0;
+    if (param_1->NumProcModes != 0) {
+      ppIVar3 = &param_1->Headset;
       do {
-        (**(code **)(*(int *)puVar3[1] + 4))();
-        uVar2 = uVar2 + 1;
-        puVar3 = puVar3 + 1;
-        *puVar3 = 0;
-      } while (uVar2 < *(uint *)((int)pvVar1 + 0x20));
+        (*ppIVar3[1]->lpVtbl->Destroy)(ppIVar3[1]);
+        uVar1 = uVar1 + 1;
+        ppIVar3 = ppIVar3 + 1;
+        *ppIVar3 = (IProcMode *)0x0;
+      } while (uVar1 < param_1->NumProcModes);
     }
-    PacketBufferDestroy(*(PACKET_BUFFER **)((int)pvVar1 + 0x30));
-    XMsgCancelIORequest((int)pvVar1 + 0x94,1);
-    if (*(void **)((int)pvVar1 + 0xb0) != (void *)0x0) {
-      XMemFree(*(void **)((int)pvVar1 + 0xb0),0x608a2002);
-      *(undefined4 *)((int)pvVar1 + 0xb0) = 0;
+    PacketBufferDestroy(param_1->HeadphonePackets);
+    XMsgCancelIORequest(&param_1->xoverlapped,1);
+    if (param_1->ProfileSettings != (_XUSER_READ_PROFILE_SETTING_RESULT *)0x0) {
+      XMemFree(param_1->ProfileSettings,0x608a2002);
+      param_1->ProfileSettings = (_XUSER_READ_PROFILE_SETTING_RESULT *)0x0;
     }
-    XMemFree(pvVar1,0x618a800b);
+    XMemFree(param_1,0x618a800b);
   }
-  __restgprlr_28();
   return;
 }
 

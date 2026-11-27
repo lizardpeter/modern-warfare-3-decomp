@@ -347,6 +347,8 @@ vpx_dec_err_t vpx_dec_xma_init_ver(vpx_codec_ctx *param_1,vpx_codec_iface *param
 
 // 8283DCB8  vpx_dec_get_mem_map  (WebM_atvi_opt/vpx/vpx/src/vpx_decoder_compat.c:149)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "vpx_kf_mode": Some values do not have unique names */
 
 vpx_dec_err_t
@@ -354,89 +356,80 @@ vpx_dec_get_mem_map(vpx_codec_ctx *param_1,vpx_codec_mmap *param_2,vpx_codec_str
                    void **param_4)
 
 {
-  int iVar1;
-  void *pvVar2;
-  undefined4 uVar3;
-  vpx_dec_err_t vVar4;
-  ulonglong uVar5;
-  ulonglong uVar6;
-  ulonglong uVar7;
+  vpx_codec_dec_cfg *pvVar1;
+  vpx_dec_err_t vVar2;
   
-  uVar7 = (ulonglong)(int)param_4;
-  uVar6 = (ulonglong)(int)param_3;
-  uVar5 = (ulonglong)(int)param_2;
-  iVar1 = __savegprlr_28(param_1);
-  if ((((iVar1 == 0) || ((uVar5 & 0xffffffff) == 0)) || ((uVar6 & 0xffffffff) == 0)) ||
-     (((uVar7 & 0xffffffff) == 0 || (*(int *)(iVar1 + 4) == 0)))) {
-    uVar3 = 8;
+  if ((((param_1 == (vpx_codec_ctx *)0x0) || (param_2 == (vpx_codec_mmap *)0x0)) ||
+      (param_3 == (vpx_codec_stream_info *)0x0)) ||
+     ((param_4 == (void **)0x0 || (param_1->iface == (vpx_codec_iface *)0x0)))) {
+    vVar2 = VPX_DEC_INVALID_PARAM;
   }
-  else if ((*(uint *)(*(int *)(iVar1 + 4) + 8) & 4) == 0) {
-    uVar3 = 1;
+  else if ((param_1->iface->caps & 4U) == 0) {
+    vVar2 = VPX_DEC_ERROR;
   }
   else {
-    if (*(int *)(iVar1 + 0x14) == 0) {
-      pvVar2 = malloc(0xc);
-      *(void **)(iVar1 + 0x14) = pvVar2;
-      *(undefined4 *)((int)pvVar2 + 4) = *(undefined4 *)((int)uVar6 + 4);
-      *(undefined4 *)(*(int *)(iVar1 + 0x14) + 8) = *(undefined4 *)((int)uVar6 + 8);
+    if ((param_1->config).dec == (vpx_codec_dec_cfg *)0x0) {
+      pvVar1 = malloc(0xc);
+      (param_1->config).dec = pvVar1;
+      pvVar1->w = param_3->w;
+      ((param_1->config).dec)->h = param_3->h;
     }
-    uVar3 = (**(code **)(*(int *)(iVar1 + 4) + 0x18))(iVar1,uVar5,uVar7);
+    vVar2 = (*param_1->iface->get_mmap)(param_1,param_2,param_4);
   }
-  if (iVar1 != 0) {
-    *(undefined4 *)(iVar1 + 8) = uVar3;
+  if (param_1 != (vpx_codec_ctx *)0x0) {
+    param_1->err = vVar2;
   }
-  vVar4 = __restgprlr_28();
-  return vVar4;
+  return vVar2;
 }
 
 
 // 8283DD80  vpx_dec_set_mem_map  (WebM_atvi_opt/vpx/vpx/src/vpx_decoder_compat.c:176)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "vpx_kf_mode": Some values do not have unique names */
 
 vpx_dec_err_t vpx_dec_set_mem_map(vpx_codec_ctx *param_1,vpx_codec_mmap *param_2,uint param_3)
 
 {
-  int iVar1;
+  vpx_dec_err_t vVar1;
   vpx_dec_err_t vVar2;
-  ulonglong uVar3;
-  void *pvVar4;
-  undefined8 uVar5;
-  ulonglong uVar6;
-  ulonglong uVar7;
+  void *pvVar3;
+  uint uVar4;
   
-  uVar3 = (ulonglong)(int)param_3;
-  uVar6 = (ulonglong)(int)param_2;
-  iVar1 = __savegprlr_26(param_1);
-  uVar5 = 2;
-  if (((iVar1 == 0) || ((uVar6 & 0xffffffff) == 0)) || (*(int *)(iVar1 + 4) == 0)) {
-    uVar5 = 8;
+  vVar2 = VPX_DEC_MEM_ERROR;
+  if (((param_1 == (vpx_codec_ctx *)0x0) || (param_2 == (vpx_codec_mmap *)0x0)) ||
+     (param_1->iface == (vpx_codec_iface *)0x0)) {
+    vVar2 = VPX_DEC_INVALID_PARAM;
   }
-  else if ((*(uint *)(*(int *)(iVar1 + 4) + 8) & 4) == 0) {
-    uVar5 = 1;
+  else if ((param_1->iface->caps & 4U) == 0) {
+    vVar2 = VPX_DEC_ERROR;
   }
   else {
-    pvVar4 = (void *)0x0;
-    if (*(int *)(iVar1 + 0x18) == 0) {
-      pvVar4 = *(void **)(iVar1 + 0x14);
+    pvVar3 = (void *)0x0;
+    if (param_1->priv == (vpx_codec_priv *)0x0) {
+      pvVar3 = (param_1->config).raw;
     }
-    uVar7 = 0;
-    if ((uVar3 & 0xffffffff) != 0) {
+    uVar4 = 0;
+    vVar1 = VPX_DEC_MEM_ERROR;
+    if (param_3 != 0) {
       do {
-        if ((*(int *)((int)uVar6 + 0x10) == 0) ||
-           (uVar5 = (**(code **)(*(int *)(iVar1 + 4) + 0x1c))(iVar1,uVar6), (int)uVar5 != 0)) break;
-        uVar7 = uVar7 + 1;
-        uVar6 = uVar6 + 0x1c;
-      } while ((uVar7 & 0xffffffff) < (uVar3 & 0xffffffff));
+        vVar2 = vVar1;
+        if (param_2->base == (void *)0x0) break;
+        vVar2 = (*param_1->iface->set_mmap)(param_1,param_2);
+        if (vVar2 != VPX_DEC_OK) break;
+        uVar4 = uVar4 + 1;
+        param_2 = param_2 + 1;
+        vVar1 = vVar2;
+      } while (uVar4 < param_3);
     }
-    if (pvVar4 != (void *)0x0) {
-      free(pvVar4);
+    if (pvVar3 != (void *)0x0) {
+      free(pvVar3);
     }
   }
-  if (iVar1 != 0) {
-    *(int *)(iVar1 + 8) = (int)uVar5;
+  if (param_1 != (vpx_codec_ctx *)0x0) {
+    param_1->err = vVar2;
   }
-  vVar2 = __restgprlr_26(uVar5);
   return vVar2;
 }
 

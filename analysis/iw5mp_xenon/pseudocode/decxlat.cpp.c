@@ -12,77 +12,71 @@ void XCOMPRESS::init_decoder_translation(t_decoder_context *param_1)
 
 // 828B60B0  decoder_translate_e8  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/compression/codec/lzx/decoder/decxlat.cpp:36)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void XCOMPRESS::decoder_translate_e8(t_decoder_context *param_1,uchar *param_2,long param_3)
 
 {
-  char cVar1;
-  int iVar2;
-  int iVar3;
+  uchar uVar1;
+  ulonglong uVar2;
+  longlong lVar3;
   ulonglong uVar4;
-  longlong lVar5;
-  ulonglong uVar6;
-  longlong lVar7;
-  ulonglong uVar8;
-  undefined1 *puVar9;
+  ulong uVar5;
+  uchar *puVar6;
   
-  lVar7 = (longlong)param_3;
-  uVar8 = (ulonglong)(int)param_2;
-  iVar3 = __savegprlr_27(param_1);
-  if ((int)lVar7 < 7) {
-    *(int *)(iVar3 + 0x2ec0) = *(int *)(iVar3 + 0x2ec0) + (int)lVar7;
+  if (param_3 < 7) {
+    param_1->dec_instr_pos = param_1->dec_instr_pos + param_3;
   }
   else {
     memcpy();
     memset();
-    lVar7 = (ulonglong)*(uint *)(iVar3 + 0x2ec0) + lVar7;
+    uVar5 = param_1->dec_instr_pos + param_3;
     while( true ) {
-      lVar5 = 0;
-      uVar6 = uVar8 + 0xf & 0xfffffff0;
-      for (; ((uVar8 & 0xffffffff) < uVar6 && (*(char *)uVar8 != -0x18)); uVar8 = uVar8 + 1) {
-        lVar5 = lVar5 + 1;
+      puVar6 = param_2 + 0xf;
+      lVar3 = 0;
+      for (; (param_2 < (uchar *)((uint)puVar6 & 0xfffffff0) && (*param_2 != 0xe8));
+          param_2 = param_2 + 1) {
+        lVar3 = lVar3 + 1;
       }
-      if ((uVar8 & 0xffffffff) == uVar6) {
+      if (param_2 == (uchar *)((uint)puVar6 & 0xfffffff0)) {
         do {
           vectorCompareEqualToUnsignedByte
-                    (*(undefined1 (*) [16])((uint)uVar8 & 0xfffffff0),
+                    (*(undefined1 (*) [16])((uint)param_2 & 0xfffffff0),
                      (undefined1  [16])E8h_vc.field0_0x0);
-          uVar8 = uVar8 + 0x10;
+          param_2 = param_2 + 0x10;
         } while( true );
       }
-      cVar1 = *(char *)uVar8;
-      while (cVar1 != -0x18) {
-        uVar8 = uVar8 + 1;
-        lVar5 = lVar5 + 1;
-        cVar1 = *(char *)uVar8;
+      uVar1 = *param_2;
+      while (uVar1 != 0xe8) {
+        param_2 = param_2 + 1;
+        lVar3 = lVar3 + 1;
+        uVar1 = *param_2;
       }
-      iVar2 = (int)uVar8;
-      puVar9 = (undefined1 *)(iVar2 + 1);
-      uVar6 = (ulonglong)*(uint *)(iVar3 + 0x2ec0) + lVar5;
-      *(int *)(iVar3 + 0x2ec0) = (int)uVar6;
-      if ((lVar7 - 10U & 0xffffffff) <= (uVar6 & 0xffffffff)) break;
-      uVar4 = (ulonglong)
-              CONCAT31(CONCAT21(CONCAT11(*(undefined1 *)(iVar2 + 4),*(undefined1 *)(iVar2 + 3)),
-                                *(undefined1 *)(iVar2 + 2)),*puVar9);
-      if (uVar4 < *(uint *)(iVar3 + 0x2ebc)) {
-        lVar5 = uVar4 - uVar6;
-        *puVar9 = (char)lVar5;
+      puVar6 = param_2 + 1;
+      uVar4 = (ulonglong)param_1->dec_instr_pos + lVar3;
+      param_1->dec_instr_pos = (ulong)uVar4;
+      if ((ulonglong)(uVar5 - 10) <= (uVar4 & 0xffffffff)) break;
+      uVar2 = (ulonglong)CONCAT31(CONCAT21(CONCAT11(param_2[4],param_2[3]),param_2[2]),*puVar6);
+      if (uVar2 < param_1->dec_current_file_size) {
+        lVar3 = uVar2 - uVar4;
+        *puVar6 = (uchar)lVar3;
 LAB_828b61fc:
-        *(char *)(iVar2 + 2) = (char)((ulonglong)lVar5 >> 8);
-        *(char *)(iVar2 + 3) = (char)((ulonglong)lVar5 >> 0x10);
-        *(char *)(iVar2 + 4) = (char)((ulonglong)lVar5 >> 0x18);
+        param_2[2] = (uchar)((ulonglong)lVar3 >> 8);
+        param_2[3] = (uchar)((ulonglong)lVar3 >> 0x10);
+        param_2[4] = (uchar)((ulonglong)lVar3 >> 0x18);
       }
-      else if ((-uVar4 & 0xffffffff) <= (uVar6 & 0xffffffff)) {
-        lVar5 = *(uint *)(iVar3 + 0x2ebc) + uVar4;
-        *puVar9 = (char)lVar5;
+      else if ((-uVar2 & 0xffffffff) <= (uVar4 & 0xffffffff)) {
+        lVar3 = param_1->dec_current_file_size + uVar2;
+        *puVar6 = (uchar)lVar3;
         goto LAB_828b61fc;
       }
-      uVar8 = uVar8 + 5;
-      *(int *)(iVar3 + 0x2ec0) = (int)uVar6 + 5;
+      param_2 = param_2 + 5;
+      param_1->dec_instr_pos = (ulong)uVar4 + 5;
     }
-    *(int *)(iVar3 + 0x2ec0) = (int)lVar7;
+    param_1->dec_instr_pos = uVar5;
     memcpy();
   }
-  __restgprlr_27();
   return;
 }
 

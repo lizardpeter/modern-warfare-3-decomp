@@ -217,6 +217,8 @@ void R_InitDrawMethod(void)
 
 // 82735710  R_UpdateDrawMethod  (gfx_d3d/r_draw_method.cpp:215)
 
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 
@@ -224,55 +226,52 @@ void R_UpdateDrawMethod(GfxBackEndData *param_1,GfxViewInfo *param_2)
 
 {
   int iVar1;
-  int iVar2;
+  undefined1 *puVar2;
   undefined1 *puVar3;
-  undefined1 *puVar4;
-  int *piVar5;
+  GfxLightDef **ppGVar4;
+  uint uVar5;
   uint uVar6;
-  uint uVar7;
-  longlong lVar8;
+  longlong lVar7;
   
-  iVar1 = __savegprlr_22(param_1);
   if (0xfd < param_2->sceneLightCount) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_draw_method.cpp",
                     0xe0,0,"%s\n\t(viewInfo->sceneLightCount) = %i");
   }
-  uVar6 = 0;
+  uVar5 = 0;
   if (param_2->sceneLightCount != 0) {
-    piVar5 = (int *)(iVar1 + 0x89c48);
+    ppGVar4 = &param_1->sceneLights[0].def;
     do {
-      uVar7 = (uint)*(byte *)(piVar5 + -0x12);
+      uVar6 = (uint)((GfxLight *)(ppGVar4 + -0x12))->type;
       if ((param_2->useShadows != false) &&
-         (iVar2 = Com_BitCheckAssert((uint *)(iVar1 + 0x1524),uVar6,0x20), iVar2 != 0)) {
-        if (uVar7 == 0) {
+         (iVar1 = Com_BitCheckAssert(param_1->sceneLightHasShadowMap,uVar5,0x20), iVar1 != 0)) {
+        if (uVar6 == 0) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_draw_method.cpp"
                           ,0xe7,0,"%s");
         }
-        uVar7 = uVar7 + 3;
+        uVar6 = uVar6 + 3;
       }
-      if (uVar7 == 5) {
-        if (*piVar5 == 0) {
+      if (uVar6 == 5) {
+        if (*ppGVar4 == (GfxLightDef *)0x0) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_draw_method.cpp"
                           ,0xed,0,"%s");
         }
-        if (*(int *)(*piVar5 + 0xc) != 0) {
-          uVar7 = 7;
+        if (((*ppGVar4)->cucoloris).image != (GfxImage *)0x0) {
+          uVar6 = 7;
         }
       }
-      puVar3 = (undefined1 *)(uVar6 + iVar1 + -0x100);
-      puVar4 = (undefined1 *)((int)(gfxDrawMethod.litTechType + -1) + uVar7);
-      lVar8 = 0xd;
+      puVar2 = (undefined1 *)((int)param_1 + (uVar5 - 0x100));
+      puVar3 = (undefined1 *)((int)(gfxDrawMethod.litTechType + -1) + uVar6);
+      lVar7 = 0xd;
       do {
-        puVar4 = puVar4 + 8;
-        puVar3 = puVar3 + 0x100;
-        *puVar3 = *puVar4;
-        lVar8 = lVar8 + -1;
-      } while (lVar8 != 0);
-      uVar6 = uVar6 + 1;
-      piVar5 = piVar5 + 0x13;
-    } while (uVar6 < param_2->sceneLightCount);
+        puVar3 = puVar3 + 8;
+        puVar2 = puVar2 + 0x100;
+        *puVar2 = *puVar3;
+        lVar7 = lVar7 + -1;
+      } while (lVar7 != 0);
+      uVar5 = uVar5 + 1;
+      ppGVar4 = ppGVar4 + 0x13;
+    } while (uVar5 < param_2->sceneLightCount);
   }
-  __restgprlr_22();
   return;
 }
 

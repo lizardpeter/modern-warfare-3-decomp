@@ -2,15 +2,15 @@
 
 // 826EBD90  dwRecordEventHandleTaskError  (DW/dwRecordEvent.cpp:14)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 taskCompleteResults dwRecordEventHandleTaskError(overlappedTask *param_1,bdLobbyErrorCode param_2)
 
 {
-  int iVar1;
-  taskCompleteResults tVar2;
   char acStack_70 [112];
   
-  iVar1 = __savegprlr_28(param_1);
-  if (iVar1 == 0) {
+  if (param_1 == (overlappedTask *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DW\\dwRecordEvent.cpp",0xf,0,
                     "%s");
   }
@@ -22,125 +22,115 @@ taskCompleteResults dwRecordEventHandleTaskError(overlappedTask *param_1,bdLobby
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DW\\dwRecordEvent.cpp",0x22,0
                       ,"%s");
     }
-    tVar2 = __restgprlr_28(2);
-    return tVar2;
+    return TASK_ERROR;
   }
   Com_Printf(0x10,
              "\t Task start requested while not connected! DW record event task type %d errorCode %i - \'%s\'\n"
             );
-  tVar2 = __restgprlr_28(2);
-  return tVar2;
+  return TASK_ERROR;
 }
 
 
 // 826EBE70  dwRecordEvent  (DW/dwRecordEvent.cpp:41)
+
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 
 int dwRecordEvent(overlappedTask *param_1,uchar *param_2,int param_3,DWRecordEventType param_4,
                  bdEventLogID *param_5)
 
 {
   bdRemoteTask *pbVar1;
-  overlappedTask *poVar2;
-  DWOnlineStatus DVar3;
-  int iVar4;
+  DWOnlineStatus DVar2;
   bdLobbyService *this;
-  bool bVar7;
-  bdEventLog *pbVar5;
-  bdReference<bdRemoteTask> bVar6;
-  ulonglong uVar8;
+  bool bVar5;
+  bdEventLog *pbVar3;
+  bdReference<bdRemoteTask> bVar4;
+  int iVar6;
   bdReference<bdRemoteTask> abStack_60 [2];
   ulong64 auStack_58 [11];
   
-  uVar8 = (ulonglong)(int)param_2;
-  poVar2 = (overlappedTask *)__savegprlr_24(param_1);
-  if (poVar2 == (overlappedTask *)0x0) {
+  if (param_1 == (overlappedTask *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DW\\dwRecordEvent.cpp",0x2c,0,
                     "%s");
   }
-  if ((uVar8 & 0xffffffff) == 0) {
+  if (param_2 == (uchar *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DW\\dwRecordEvent.cpp",0x2d,0,
                     "%s");
   }
-  if ((bdEventLogID *)param_4 == (bdEventLogID *)0x0) {
-    iVar4 = 0x2e;
+  if (param_4 == DW_EVENT_UNKNOWN) {
+    iVar6 = 0x2e;
   }
   else {
     if ((int)param_4 < 4) goto LAB_826ebf38;
-    iVar4 = 0x2f;
+    iVar6 = 0x2f;
   }
-  MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DW\\dwRecordEvent.cpp",iVar4,0,
+  MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DW\\dwRecordEvent.cpp",iVar6,0,
                   "%s\n\t%s");
 LAB_826ebf38:
-  DVar3 = dwGetLogOnStatus((uint)poVar2->controllerIndex);
-  if (DVar3 != DW_LIVE_CONNECTED) {
-    TaskManager_ClearTask(poVar2);
+  DVar2 = dwGetLogOnStatus((uint)param_1->controllerIndex);
+  if (DVar2 != DW_LIVE_CONNECTED) {
+    TaskManager_ClearTask(param_1);
     Com_Printf(0x10,"Warning: An error occurred when uploading title data: NOT CONNECTED.\n");
-    iVar4 = __restgprlr_24(0);
-    return iVar4;
+    return 0;
   }
-  this = dwGetLobbyService((uint)poVar2->controllerIndex);
-  if ((this == (bdLobbyService *)0x0) || (bVar7 = bdLobbyService::isConnected(this), !bVar7)) {
-    TaskManager_ClearTask(poVar2);
+  this = dwGetLobbyService((uint)param_1->controllerIndex);
+  if ((this == (bdLobbyService *)0x0) || (bVar5 = bdLobbyService::isConnected(this), !bVar5)) {
+    TaskManager_ClearTask(param_1);
     Com_Printf(0x10,
                "Error occurred when uploading title data: dwGetLobbyService() == NULL or !isConnected()\n"
               );
-    iVar4 = __restgprlr_24(0);
-    return iVar4;
+    return 0;
   }
-  bVar7 = dwGetOnlineUserID((uint)poVar2->controllerIndex,auStack_58);
-  if (!bVar7) {
-    TaskManager_ClearTask(poVar2);
+  bVar5 = dwGetOnlineUserID((uint)param_1->controllerIndex,auStack_58);
+  if (!bVar5) {
+    TaskManager_ClearTask(param_1);
     Com_Printf(0x10,"Error occurred when uploading title data: dwGetOnlineUserID() == NULL\n");
-    iVar4 = __restgprlr_24(0);
-    return iVar4;
+    return 0;
   }
-  pbVar5 = bdLobbyService::getEventLog(this);
-  if (pbVar5 == (bdEventLog *)0x0) {
+  pbVar3 = bdLobbyService::getEventLog(this);
+  if (pbVar3 == (bdEventLog *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DW\\dwRecordEvent.cpp",0x4b,0,
                     "%s");
   }
-  bVar6 = bdEventLog::recordEventBin
-                    ((bdEventLog *)abStack_60,pbVar5,(uint)uVar8,param_3,(bdEventLogID *)param_4);
-  pbVar1 = (bdRemoteTask *)(bVar6.m_ptr)->_padding_;
+  bVar4 = bdEventLog::recordEventBin
+                    ((bdEventLog *)abStack_60,pbVar3,(uint)param_2,param_3,(bdEventLogID *)param_4);
+  pbVar1 = (bdRemoteTask *)(bVar4.m_ptr)->_padding_;
   bdReference<bdRemoteTask>::~bdReference<bdRemoteTask>(abStack_60);
   if (pbVar1 == (bdRemoteTask *)0x0) {
-    TaskManager_ClearTask(poVar2);
+    TaskManager_ClearTask(param_1);
     Com_Printf(0x10,"Error occurred when uploading title data: recordEventBin( size %d) == NULL\n");
-    iVar4 = __restgprlr_24(0);
-    return iVar4;
+    return 0;
   }
-  bdReference<bdRemoteTask>::operator=(&(poVar2->u).remoteTask,pbVar1);
-  iVar4 = __restgprlr_24(1);
-  return iVar4;
+  bdReference<bdRemoteTask>::operator=(&(param_1->u).remoteTask,pbVar1);
+  return 1;
 }
 
 
 // 826EC098  dwRecordStringEvent  (DW/dwRecordEvent.cpp:90)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 int dwRecordStringEvent(overlappedTask *param_1,char *param_2,DWRecordStringEventType param_3)
 
 {
-  bdRemoteTask *pbVar1;
-  overlappedTask *poVar2;
+  char cVar1;
+  bdRemoteTask *pbVar2;
   DWOnlineStatus DVar3;
-  int iVar4;
   bdLobbyService *this;
-  bool bVar7;
-  bdEventLog *pbVar5;
-  bdReference<bdRemoteTask> bVar6;
-  char *pcVar10;
-  ulonglong uVar8;
-  ulonglong uVar9;
+  bool bVar6;
+  bdEventLog *pbVar4;
+  bdReference<bdRemoteTask> bVar5;
+  char *pcVar7;
   bdReference<bdRemoteTask> abStack_50 [2];
   ulong64 auStack_48 [9];
   
-  uVar9 = (ulonglong)(int)param_2;
-  poVar2 = (overlappedTask *)__savegprlr_26(param_1);
-  if (poVar2 == (overlappedTask *)0x0) {
+  if (param_1 == (overlappedTask *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DW\\dwRecordEvent.cpp",0x5d,0,
                     "%s");
   }
-  if ((uVar9 & 0xffffffff) == 0) {
+  if (param_2 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DW\\dwRecordEvent.cpp",0x5e,0,
                     "%s");
   }
@@ -148,144 +138,136 @@ int dwRecordStringEvent(overlappedTask *param_1,char *param_2,DWRecordStringEven
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DW\\dwRecordEvent.cpp",0x5f,0,
                     "%s\n\t%s");
   }
-  DVar3 = dwGetLogOnStatus((uint)poVar2->controllerIndex);
+  DVar3 = dwGetLogOnStatus((uint)param_1->controllerIndex);
   if (DVar3 != DW_LIVE_CONNECTED) {
-    TaskManager_ClearTask(poVar2);
+    TaskManager_ClearTask(param_1);
     Com_Printf(0x10,"Warning: An error occurred when uploading title data: NOT CONNECTED.\n");
-    iVar4 = __restgprlr_26(0);
-    return iVar4;
+    return 0;
   }
-  this = dwGetLobbyService((uint)poVar2->controllerIndex);
-  if ((this == (bdLobbyService *)0x0) || (bVar7 = bdLobbyService::isConnected(this), !bVar7)) {
-    TaskManager_ClearTask(poVar2);
+  this = dwGetLobbyService((uint)param_1->controllerIndex);
+  if ((this == (bdLobbyService *)0x0) || (bVar6 = bdLobbyService::isConnected(this), !bVar6)) {
+    TaskManager_ClearTask(param_1);
     Com_Printf(0x10,
                "Error occurred when uploading title data: dwGetLobbyService() == NULL or !isConnected()\n"
               );
-    iVar4 = __restgprlr_26(0);
-    return iVar4;
+    return 0;
   }
-  bVar7 = dwGetOnlineUserID((uint)poVar2->controllerIndex,auStack_48);
-  if (!bVar7) {
-    TaskManager_ClearTask(poVar2);
+  bVar6 = dwGetOnlineUserID((uint)param_1->controllerIndex,auStack_48);
+  if (!bVar6) {
+    TaskManager_ClearTask(param_1);
     Com_Printf(0x10,"Error occurred when uploading title data: dwGetOnlineUserID() == NULL\n");
-    iVar4 = __restgprlr_26(0);
-    return iVar4;
+    return 0;
   }
-  pbVar5 = bdLobbyService::getEventLog(this);
-  uVar8 = uVar9;
-  if (pbVar5 == (bdEventLog *)0x0) {
+  pbVar4 = bdLobbyService::getEventLog(this);
+  pcVar7 = param_2;
+  if (pbVar4 == (bdEventLog *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DW\\dwRecordEvent.cpp",0x7b,0,
                     "%s");
   }
   do {
-    pcVar10 = (char *)uVar8;
-    uVar8 = uVar8 + 1;
-  } while (*pcVar10 != '\0');
-  bVar6 = bdEventLog::recordEvent
-                    ((bdEventLog *)abStack_50,(char *)pbVar5,(uint)uVar9,(int)uVar8 - (uint)uVar9,
-                     (bdEventLogID *)param_3);
-  pbVar1 = (bdRemoteTask *)(bVar6.m_ptr)->_padding_;
+    cVar1 = *pcVar7;
+    pcVar7 = pcVar7 + 1;
+  } while (cVar1 != '\0');
+  bVar5 = bdEventLog::recordEvent
+                    ((bdEventLog *)abStack_50,(char *)pbVar4,(uint)param_2,
+                     (int)pcVar7 - (int)param_2,(bdEventLogID *)param_3);
+  pbVar2 = (bdRemoteTask *)(bVar5.m_ptr)->_padding_;
   bdReference<bdRemoteTask>::~bdReference<bdRemoteTask>(abStack_50);
-  if (pbVar1 != (bdRemoteTask *)0x0) {
-    bdReference<bdRemoteTask>::operator=(&(poVar2->u).remoteTask,pbVar1);
-    iVar4 = __restgprlr_26(1);
-    return iVar4;
+  if (pbVar2 != (bdRemoteTask *)0x0) {
+    bdReference<bdRemoteTask>::operator=(&(param_1->u).remoteTask,pbVar2);
+    return 1;
   }
-  TaskManager_ClearTask(poVar2);
+  TaskManager_ClearTask(param_1);
   do {
-    pcVar10 = (char *)uVar9;
-    uVar9 = uVar9 + 1;
-  } while (*pcVar10 != '\0');
+    cVar1 = *param_2;
+    param_2 = param_2 + 1;
+  } while (cVar1 != '\0');
   Com_Printf(0x10,"Error occurred when uploading data: recordEvent. str = %s ( size %d) == NULL\n");
-  iVar4 = __restgprlr_26(0);
-  return iVar4;
+  return 0;
 }
 
 
 // 826EC2E0  dwRecordEvents  (DW/dwRecordEvent.cpp:138)
+
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 
 int dwRecordEvents(overlappedTask *param_1,int param_2,uchar **param_3,uint *param_4,
                   DWRecordEventType param_5)
 
 {
   bdRemoteTask *pbVar1;
-  overlappedTask *poVar2;
-  DWOnlineStatus DVar3;
-  int iVar4;
+  DWOnlineStatus DVar2;
   bdLobbyService *this;
-  bool bVar7;
-  bdEventLog *pbVar5;
-  bdReference<bdRemoteTask> bVar6;
-  ulonglong uVar8;
+  bool bVar5;
+  bdEventLog *pbVar3;
+  bdReference<bdRemoteTask> bVar4;
+  int iVar6;
   bdReference<bdRemoteTask> abStack_60 [2];
   ulong64 auStack_58 [11];
   
-  uVar8 = (ulonglong)(int)param_3;
-  poVar2 = (overlappedTask *)__savegprlr_24(param_1);
-  if (poVar2 == (overlappedTask *)0x0) {
+  if (param_1 == (overlappedTask *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DW\\dwRecordEvent.cpp",0x8d,0,
                     "%s");
   }
-  if ((uVar8 & 0xffffffff) == 0) {
+  if (param_3 == (uchar **)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DW\\dwRecordEvent.cpp",0x8e,0,
                     "%s");
   }
-  if ((bdEventLogID *)param_5 == (bdEventLogID *)0x0) {
-    iVar4 = 0x8f;
+  if (param_5 == DW_EVENT_UNKNOWN) {
+    iVar6 = 0x8f;
   }
   else {
     if ((int)param_5 < 4) goto LAB_826ec3a8;
-    iVar4 = 0x90;
+    iVar6 = 0x90;
   }
-  MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DW\\dwRecordEvent.cpp",iVar4,0,
+  MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DW\\dwRecordEvent.cpp",iVar6,0,
                   "%s\n\t%s");
 LAB_826ec3a8:
-  DVar3 = dwGetLogOnStatus((uint)poVar2->controllerIndex);
-  if (DVar3 != DW_LIVE_CONNECTED) {
-    TaskManager_ClearTask(poVar2);
+  DVar2 = dwGetLogOnStatus((uint)param_1->controllerIndex);
+  if (DVar2 != DW_LIVE_CONNECTED) {
+    TaskManager_ClearTask(param_1);
     Com_Printf(0x10,"Warning: An error occurred when uploading title data: NOT CONNECTED.\n");
-    iVar4 = __restgprlr_24(0);
-    return iVar4;
+    return 0;
   }
-  this = dwGetLobbyService((uint)poVar2->controllerIndex);
-  if ((this == (bdLobbyService *)0x0) || (bVar7 = bdLobbyService::isConnected(this), !bVar7)) {
-    TaskManager_ClearTask(poVar2);
+  this = dwGetLobbyService((uint)param_1->controllerIndex);
+  if ((this == (bdLobbyService *)0x0) || (bVar5 = bdLobbyService::isConnected(this), !bVar5)) {
+    TaskManager_ClearTask(param_1);
     Com_Printf(0x10,
                "Error occurred when uploading title data: dwGetLobbyService() == NULL or !isConnected()\n"
               );
-    iVar4 = __restgprlr_24(0);
-    return iVar4;
+    return 0;
   }
-  bVar7 = dwGetOnlineUserID((uint)poVar2->controllerIndex,auStack_58);
-  if (!bVar7) {
-    TaskManager_ClearTask(poVar2);
+  bVar5 = dwGetOnlineUserID((uint)param_1->controllerIndex,auStack_58);
+  if (!bVar5) {
+    TaskManager_ClearTask(param_1);
     Com_Printf(0x10,"Error occurred when uploading title data: dwGetOnlineUserID() == NULL\n");
-    iVar4 = __restgprlr_24(0);
-    return iVar4;
+    return 0;
   }
-  pbVar5 = bdLobbyService::getEventLog(this);
-  if (pbVar5 == (bdEventLog *)0x0) {
+  pbVar3 = bdLobbyService::getEventLog(this);
+  if (pbVar3 == (bdEventLog *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DW\\dwRecordEvent.cpp",0xac,0,
                     "%s");
   }
-  bVar6 = bdEventLog::recordEventsBin
-                    ((bdEventLog *)abStack_60,&pbVar5->m_remoteTaskManager,(uint *)uVar8,
+  bVar4 = bdEventLog::recordEventsBin
+                    ((bdEventLog *)abStack_60,&pbVar3->m_remoteTaskManager,(uint *)param_3,
                      (uint)param_4,param_2,(bdEventLogID *)param_5);
-  pbVar1 = (bdRemoteTask *)(bVar6.m_ptr)->_padding_;
+  pbVar1 = (bdRemoteTask *)(bVar4.m_ptr)->_padding_;
   bdReference<bdRemoteTask>::~bdReference<bdRemoteTask>(abStack_60);
   if (pbVar1 == (bdRemoteTask *)0x0) {
-    TaskManager_ClearTask(poVar2);
+    TaskManager_ClearTask(param_1);
     Com_Printf(0x10,"Error occurred when uploading title data: recordEventBin( size %d) == NULL\n");
-    iVar4 = __restgprlr_24(0);
-    return iVar4;
+    return 0;
   }
-  bdReference<bdRemoteTask>::operator=(&(poVar2->u).remoteTask,pbVar1);
-  iVar4 = __restgprlr_24(1);
-  return iVar4;
+  bdReference<bdRemoteTask>::operator=(&(param_1->u).remoteTask,pbVar1);
+  return 1;
 }
 
 
 // 826EC508  dwRecordStringEvents  (DW/dwRecordEvent.cpp:188)
+
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 
 int dwRecordStringEvents
               (overlappedTask *param_1,int param_2,char **param_3,uint *param_4,
@@ -293,30 +275,23 @@ int dwRecordStringEvents
 
 {
   bdRemoteTask *pbVar1;
-  overlappedTask *poVar2;
-  DWOnlineStatus DVar3;
-  int iVar4;
+  DWOnlineStatus DVar2;
   bdLobbyService *this;
-  bool bVar7;
-  bdEventLog *pbVar5;
-  bdReference<bdRemoteTask> bVar6;
-  ulonglong uVar8;
-  ulonglong uVar9;
+  bool bVar5;
+  bdEventLog *pbVar3;
+  bdReference<bdRemoteTask> bVar4;
   bdReference<bdRemoteTask> abStack_60 [2];
   ulong64 auStack_58 [11];
   
-  uVar9 = (ulonglong)(int)param_4;
-  uVar8 = (ulonglong)(int)param_3;
-  poVar2 = (overlappedTask *)__savegprlr_24(param_1);
-  if (poVar2 == (overlappedTask *)0x0) {
+  if (param_1 == (overlappedTask *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DW\\dwRecordEvent.cpp",0xbf,0,
                     "%s");
   }
-  if ((uVar8 & 0xffffffff) == 0) {
+  if (param_3 == (char **)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DW\\dwRecordEvent.cpp",0xc0,0,
                     "%s");
   }
-  if ((uVar9 & 0xffffffff) == 0) {
+  if (param_4 == (uint *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DW\\dwRecordEvent.cpp",0xc1,0,
                     "%s");
   }
@@ -324,207 +299,188 @@ int dwRecordStringEvents
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DW\\dwRecordEvent.cpp",0xc2,0,
                     "%s\n\t%s");
   }
-  DVar3 = dwGetLogOnStatus((uint)poVar2->controllerIndex);
-  if (DVar3 != DW_LIVE_CONNECTED) {
-    TaskManager_ClearTask(poVar2);
+  DVar2 = dwGetLogOnStatus((uint)param_1->controllerIndex);
+  if (DVar2 != DW_LIVE_CONNECTED) {
+    TaskManager_ClearTask(param_1);
     Com_Printf(0x10,"Warning: An error occurred when uploading title data: NOT CONNECTED.\n");
-    iVar4 = __restgprlr_24(0);
-    return iVar4;
+    return 0;
   }
-  this = dwGetLobbyService((uint)poVar2->controllerIndex);
-  if ((this == (bdLobbyService *)0x0) || (bVar7 = bdLobbyService::isConnected(this), !bVar7)) {
-    TaskManager_ClearTask(poVar2);
+  this = dwGetLobbyService((uint)param_1->controllerIndex);
+  if ((this == (bdLobbyService *)0x0) || (bVar5 = bdLobbyService::isConnected(this), !bVar5)) {
+    TaskManager_ClearTask(param_1);
     Com_Printf(0x10,
                "Error occurred when uploading title data: dwGetLobbyService() == NULL or !isConnected()\n"
               );
-    iVar4 = __restgprlr_24(0);
-    return iVar4;
+    return 0;
   }
-  bVar7 = dwGetOnlineUserID((uint)poVar2->controllerIndex,auStack_58);
-  if (!bVar7) {
-    TaskManager_ClearTask(poVar2);
+  bVar5 = dwGetOnlineUserID((uint)param_1->controllerIndex,auStack_58);
+  if (!bVar5) {
+    TaskManager_ClearTask(param_1);
     Com_Printf(0x10,"Error occurred when uploading title data: dwGetOnlineUserID() == NULL\n");
-    iVar4 = __restgprlr_24(0);
-    return iVar4;
+    return 0;
   }
-  pbVar5 = bdLobbyService::getEventLog(this);
-  if (pbVar5 == (bdEventLog *)0x0) {
+  pbVar3 = bdLobbyService::getEventLog(this);
+  if (pbVar3 == (bdEventLog *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DW\\dwRecordEvent.cpp",0xde,0,
                     "%s");
   }
-  bVar6 = bdEventLog::recordEvents
-                    ((bdEventLog *)abStack_60,(char **)pbVar5,(uint *)uVar8,(uint)uVar9,param_2,
+  bVar4 = bdEventLog::recordEvents
+                    ((bdEventLog *)abStack_60,(char **)pbVar3,(uint *)param_3,(uint)param_4,param_2,
                      (bdEventLogID *)param_5);
-  pbVar1 = (bdRemoteTask *)(bVar6.m_ptr)->_padding_;
+  pbVar1 = (bdRemoteTask *)(bVar4.m_ptr)->_padding_;
   bdReference<bdRemoteTask>::~bdReference<bdRemoteTask>(abStack_60);
   if (pbVar1 == (bdRemoteTask *)0x0) {
-    TaskManager_ClearTask(poVar2);
+    TaskManager_ClearTask(param_1);
     Com_Printf(0x10,"Error occurred when uploading data: recordEvents. num strs = %d\n");
-    iVar4 = __restgprlr_24(0);
-    return iVar4;
+    return 0;
   }
-  bdReference<bdRemoteTask>::operator=(&(poVar2->u).remoteTask,pbVar1);
-  iVar4 = __restgprlr_24(1);
-  return iVar4;
+  bdReference<bdRemoteTask>::operator=(&(param_1->u).remoteTask,pbVar1);
+  return 1;
 }
 
 
 // 826EC740  dwRecordEventComplete  (DW/dwRecordEvent.cpp:237)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 taskCompleteResults dwRecordEventComplete(overlappedTask *param_1)
 
 {
-  overlappedTask *poVar1;
-  bdTitleUtilities *pbVar2;
-  bdStatus bVar3;
-  bdLobbyErrorCode bVar4;
-  taskCompleteResults tVar5;
+  bdTitleUtilities *pbVar1;
+  bdStatus bVar2;
+  bdLobbyErrorCode bVar3;
+  taskCompleteResults tVar4;
   
-  poVar1 = (overlappedTask *)__savegprlr_29(param_1);
-  if (poVar1 == (overlappedTask *)0x0) {
+  if (param_1 == (overlappedTask *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DW\\dwRecordEvent.cpp",0xee,0,
                     "%s");
   }
-  if ((poVar1->u).remoteTask.m_ptr == (bdRemoteTask *)0x0) {
+  if ((param_1->u).remoteTask.m_ptr == (bdRemoteTask *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DW\\dwRecordEvent.cpp",0xef,0,
                     "%s");
   }
-  pbVar2 = dwGetTitleUtilities((uint)poVar1->controllerIndex);
-  if ((pbVar2 != (bdTitleUtilities *)0x0) && ((poVar1->u).remoteTask.m_ptr != (bdRemoteTask *)0x0))
+  pbVar1 = dwGetTitleUtilities((uint)param_1->controllerIndex);
+  if ((pbVar1 != (bdTitleUtilities *)0x0) && ((param_1->u).remoteTask.m_ptr != (bdRemoteTask *)0x0))
   {
-    dwLobbyPump((uint)poVar1->controllerIndex);
-    bVar3 = (**(code **)(((poVar1->u).remoteTask.m_ptr)->_padding_ + 4))();
-    if ((bVar3 == BD_DONE) &&
-       (bVar4 = bdRemoteTask::getErrorCode((poVar1->u).remoteTask.m_ptr), bVar4 != BD_NO_ERROR)) {
-      tVar5 = dwRecordEventHandleTaskError(poVar1,bVar4);
-      tVar5 = __restgprlr_29(tVar5);
-      return tVar5;
+    dwLobbyPump((uint)param_1->controllerIndex);
+    bVar2 = (**(code **)(((param_1->u).remoteTask.m_ptr)->_padding_ + 4))();
+    if ((bVar2 == BD_DONE) &&
+       (bVar3 = bdRemoteTask::getErrorCode((param_1->u).remoteTask.m_ptr), bVar3 != BD_NO_ERROR)) {
+      tVar4 = dwRecordEventHandleTaskError(param_1,bVar3);
+      return tVar4;
     }
-    tVar5 = dwTaskStatusConvert(bVar3,BD_NO_ERROR);
-    tVar5 = __restgprlr_29(tVar5);
-    return tVar5;
+    tVar4 = dwTaskStatusConvert(bVar2,BD_NO_ERROR);
+    return tVar4;
   }
   Com_Printf(0x10,"Failed to retrieve bdTitleUtilities for record event complete.\n");
-  tVar5 = __restgprlr_29(2);
-  return tVar5;
+  return TASK_ERROR;
 }
 
 
 // 826EC858  dwSetTagsEventRecord  (DW/dwRecordEvent.cpp:275)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 int dwSetTagsEventRecord(overlappedTask *param_1,bdTag *param_2,int param_3,bdEventLogID *param_4)
 
 {
   bdRemoteTask *pbVar1;
-  overlappedTask *poVar2;
-  DWOnlineStatus DVar3;
-  int iVar4;
-  bdLobbyService *pbVar5;
-  bool bVar8;
-  bdTags *pbVar6;
-  bdReference<bdRemoteTask> bVar7;
-  ulonglong uVar9;
-  ulonglong uVar10;
+  DWOnlineStatus DVar2;
+  bdLobbyService *pbVar3;
+  bool bVar6;
+  bdTags *pbVar4;
+  bdReference<bdRemoteTask> bVar5;
   bdReference<bdRemoteTask> abStack_90 [2];
   ulong64 uStack_88;
   char acStack_80 [128];
   
-  uVar10 = (ulonglong)(int)param_4;
-  uVar9 = (ulonglong)(int)param_2;
-  poVar2 = (overlappedTask *)__savegprlr_26(param_1);
-  if (poVar2 == (overlappedTask *)0x0) {
+  if (param_1 == (overlappedTask *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DW\\dwRecordEvent.cpp",0x116,0,
                     "%s");
   }
-  if ((uVar10 & 0xffffffff) == 0) {
+  if (param_4 == (bdEventLogID *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DW\\dwRecordEvent.cpp",0x117,0,
                     "%s");
   }
-  if ((uVar9 & 0xffffffff) == 0) {
+  if (param_2 == (bdTag *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DW\\dwRecordEvent.cpp",0x118,0,
                     "%s");
   }
-  DVar3 = dwGetLogOnStatus((uint)poVar2->controllerIndex);
-  if (DVar3 != DW_LIVE_CONNECTED) {
-    TaskManager_ClearTask(poVar2);
+  DVar2 = dwGetLogOnStatus((uint)param_1->controllerIndex);
+  if (DVar2 != DW_LIVE_CONNECTED) {
+    TaskManager_ClearTask(param_1);
     Com_Printf(0x10,"Warning: An error occurred when uploading title data: NOT CONNECTED.\n");
-    iVar4 = __restgprlr_26(0);
-    return iVar4;
+    return 0;
   }
-  pbVar5 = dwGetLobbyService((uint)poVar2->controllerIndex);
-  if (pbVar5 == (bdLobbyService *)0x0) {
-    TaskManager_ClearTask(poVar2);
+  pbVar3 = dwGetLobbyService((uint)param_1->controllerIndex);
+  if (pbVar3 == (bdLobbyService *)0x0) {
+    TaskManager_ClearTask(param_1);
     Com_Printf(0x10,"Error occurred when uploading title data: dwGetLobbyService() == NULL\n");
-    iVar4 = __restgprlr_26(0);
-    return iVar4;
+    return 0;
   }
-  bVar8 = dwGetOnlineUserID((uint)poVar2->controllerIndex,&uStack_88);
-  if (!bVar8) {
-    TaskManager_ClearTask(poVar2);
+  bVar6 = dwGetOnlineUserID((uint)param_1->controllerIndex,&uStack_88);
+  if (!bVar6) {
+    TaskManager_ClearTask(param_1);
     Com_Printf(0x10,"Error occurred when uploading title data: dwGetOnlineUserID() == NULL\n");
-    iVar4 = __restgprlr_26(0);
-    return iVar4;
+    return 0;
   }
-  pbVar6 = dwGetTagService((uint)poVar2->controllerIndex);
-  if (pbVar6 == (bdTags *)0x0) {
-    dwRecordEventHandleTaskError(poVar2,BD_NOT_CONNECTED);
-    iVar4 = __restgprlr_26(0);
-    return iVar4;
+  pbVar4 = dwGetTagService((uint)param_1->controllerIndex);
+  if (pbVar4 == (bdTags *)0x0) {
+    dwRecordEventHandleTaskError(param_1,BD_NOT_CONNECTED);
+    return 0;
   }
-  bVar7 = bdTags::setTagsForEntityID
-                    ((bdTags *)abStack_90,(uint)pbVar6,2,(uint)*(undefined8 *)((int)uVar10 + 8),
+  bVar5 = bdTags::setTagsForEntityID
+                    ((bdTags *)abStack_90,(uint)pbVar4,2,(uint)param_4->m_eventLogID,
                      (bdTag *)param_3);
-  pbVar1 = (bdRemoteTask *)(bVar7.m_ptr)->_padding_;
+  pbVar1 = (bdRemoteTask *)(bVar5.m_ptr)->_padding_;
   bdReference<bdRemoteTask>::~bdReference<bdRemoteTask>(abStack_90);
   if (pbVar1 == (bdRemoteTask *)0x0) {
     Com_Printf(0x10,"%s()\n");
     dwLobbyErrorCodeToString(BD_START_TASK_FAILED,acStack_80,0x40);
     Com_PrintError(0x10,"\t DW record event task type %d errorCode %i - \'%s\'\n");
-    iVar4 = __restgprlr_26(0);
-    return iVar4;
+    return 0;
   }
-  bdReference<bdRemoteTask>::operator=(&(poVar2->u).remoteTask,pbVar1);
-  iVar4 = __restgprlr_26(1);
-  return iVar4;
+  bdReference<bdRemoteTask>::operator=(&(param_1->u).remoteTask,pbVar1);
+  return 1;
 }
 
 
 // 826ECA58  dwRecordEventSetTagsComplete  (DW/dwRecordEvent.cpp:331)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 taskCompleteResults dwRecordEventSetTagsComplete(overlappedTask *param_1)
 
 {
-  overlappedTask *poVar1;
-  bdLobbyService *pbVar2;
-  bdStatus bVar3;
-  bdLobbyErrorCode bVar4;
-  taskCompleteResults tVar5;
+  bdLobbyService *pbVar1;
+  bdStatus bVar2;
+  bdLobbyErrorCode bVar3;
+  taskCompleteResults tVar4;
   
-  poVar1 = (overlappedTask *)__savegprlr_29(param_1);
-  if (poVar1 == (overlappedTask *)0x0) {
+  if (param_1 == (overlappedTask *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DW\\dwRecordEvent.cpp",0x14c,0,
                     "%s");
   }
-  if ((poVar1->u).remoteTask.m_ptr == (bdRemoteTask *)0x0) {
+  if ((param_1->u).remoteTask.m_ptr == (bdRemoteTask *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DW\\dwRecordEvent.cpp",0x14d,0,
                     "%s");
   }
-  pbVar2 = dwGetLobbyService((uint)poVar1->controllerIndex);
-  if ((pbVar2 != (bdLobbyService *)0x0) && ((poVar1->u).remoteTask.m_ptr != (bdRemoteTask *)0x0)) {
-    dwLobbyPump((uint)poVar1->controllerIndex);
-    bVar3 = (**(code **)(((poVar1->u).remoteTask.m_ptr)->_padding_ + 4))();
-    if ((bVar3 == BD_DONE) &&
-       (bVar4 = bdRemoteTask::getErrorCode((poVar1->u).remoteTask.m_ptr), bVar4 != BD_NO_ERROR)) {
-      tVar5 = dwRecordEventHandleTaskError(poVar1,bVar4);
-      tVar5 = __restgprlr_29(tVar5);
-      return tVar5;
+  pbVar1 = dwGetLobbyService((uint)param_1->controllerIndex);
+  if ((pbVar1 != (bdLobbyService *)0x0) && ((param_1->u).remoteTask.m_ptr != (bdRemoteTask *)0x0)) {
+    dwLobbyPump((uint)param_1->controllerIndex);
+    bVar2 = (**(code **)(((param_1->u).remoteTask.m_ptr)->_padding_ + 4))();
+    if ((bVar2 == BD_DONE) &&
+       (bVar3 = bdRemoteTask::getErrorCode((param_1->u).remoteTask.m_ptr), bVar3 != BD_NO_ERROR)) {
+      tVar4 = dwRecordEventHandleTaskError(param_1,bVar3);
+      return tVar4;
     }
-    tVar5 = dwTaskStatusConvert(bVar3,BD_NO_ERROR);
-    tVar5 = __restgprlr_29(tVar5);
-    return tVar5;
+    tVar4 = dwTaskStatusConvert(bVar2,BD_NO_ERROR);
+    return tVar4;
   }
   Com_Printf(0x10,"Failed to retrieve lobbey service for set tags complete.\n");
-  tVar5 = __restgprlr_29(2);
-  return tVar5;
+  return TASK_ERROR;
 }
 

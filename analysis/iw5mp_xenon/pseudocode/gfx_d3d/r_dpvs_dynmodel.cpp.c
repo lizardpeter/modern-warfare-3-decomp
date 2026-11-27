@@ -2,6 +2,9 @@
 
 // 82731B70  R_CullDynModelInCell  (gfx_d3d/r_dpvs_dynmodel.cpp:33)
 
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
+
 void R_CullDynModelInCell
                (uint *param_1,uint param_2,DynEntityPose *param_3,DpvsPlane *param_4,int param_5,
                uchar *param_6)
@@ -9,70 +12,63 @@ void R_CullDynModelInCell
 {
   uint uVar1;
   int iVar2;
-  float *pfVar3;
-  ulonglong uVar4;
-  longlong lVar5;
-  int iVar6;
-  longlong lVar7;
-  longlong lVar8;
-  ulonglong uVar9;
-  uint uVar10;
-  ulonglong uVar11;
-  double dVar12;
+  int iVar3;
+  float *pfVar4;
+  uint uVar5;
+  uint uVar6;
+  ulonglong uVar7;
+  double dVar8;
   
-  lVar5 = (longlong)(int)param_4;
-  uVar4 = (ulonglong)(int)param_2;
-  lVar8 = (longlong)(int)param_1;
-  __savegprlr();
-  uVar9 = 0;
-  if ((uVar4 & 0xffffffff) != 0) {
-    dVar12 = 0.0;
+  uVar5 = 0;
+  if (param_2 != 0) {
+    dVar8 = 0.0;
     do {
-      uVar10 = *(uint *)lVar8;
-      uVar11 = LZCOUNT(uVar10);
-      if (uVar11 < 0x20) {
+      uVar6 = *param_1;
+      uVar7 = LZCOUNT(uVar6);
+      if (uVar7 < 0x20) {
         do {
-          iVar2 = (int)uVar9 * 0x20 + (int)uVar11;
-          if (0x20 < uVar11) {
+          iVar2 = uVar5 * 0x20 + (int)uVar7;
+          if (0x20 < uVar7) {
             MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_math.h",
                             0x475,0,"count doesn\'t index 33\n\t%i not in [0, %i)");
           }
-          uVar1 = *(uint *)(&g_bitShift + (int)(uVar11 << 2));
-          if ((uVar1 & uVar10) == 0) {
+          uVar1 = *(uint *)(&g_bitShift + (int)(uVar7 << 2));
+          if ((uVar1 & uVar6) == 0) {
             MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dpvs_dynmodel.cpp"
                             ,0x36,0,"%s");
           }
-          uVar10 = uVar10 & ~uVar1;
+          uVar6 = uVar6 & ~uVar1;
           if (param_6[iVar2] == '\0') {
-            iVar6 = 0;
+            iVar3 = 0;
             if (0 < param_5) {
-              lVar7 = lVar5 + 8;
+              pfVar4 = param_4->coeffs + 2;
               do {
-                pfVar3 = (float *)lVar7;
-                if ((double)(*pfVar3 * param_3[iVar2].pose.origin[2] +
-                             pfVar3[-2] * param_3[iVar2].pose.origin[0] +
-                             pfVar3[-1] * param_3[iVar2].pose.origin[1] + pfVar3[1] +
-                            param_3[iVar2].radius) <= dVar12) goto LAB_82731cc0;
-                iVar6 = iVar6 + 1;
-                lVar7 = lVar7 + 0x10;
-              } while (iVar6 < param_5);
+                if ((double)(*pfVar4 * param_3[iVar2].pose.origin[2] +
+                             ((DpvsPlane *)(pfVar4 + -2))->coeffs[0] * param_3[iVar2].pose.origin[0]
+                             + pfVar4[-1] * param_3[iVar2].pose.origin[1] + pfVar4[1] +
+                            param_3[iVar2].radius) <= dVar8) goto LAB_82731cc0;
+                iVar3 = iVar3 + 1;
+                pfVar4 = pfVar4 + 4;
+              } while (iVar3 < param_5);
             }
             param_6[iVar2] = '\x01';
           }
 LAB_82731cc0:
-          uVar11 = LZCOUNT(uVar10);
-        } while (uVar11 < 0x20);
+          uVar7 = LZCOUNT(uVar6);
+        } while (uVar7 < 0x20);
       }
-      uVar9 = uVar9 + 1;
-      lVar8 = lVar8 + 4;
-    } while ((uVar9 & 0xffffffff) < (uVar4 & 0xffffffff));
+      uVar5 = uVar5 + 1;
+      param_1 = param_1 + 1;
+    } while (uVar5 < param_2);
   }
-  __restgprlr();
   return;
 }
 
 
 // 82731CE8  R_AddCellDynModelSurfacesInFrustumCmd  (gfx_d3d/r_dpvs_dynmodel.cpp:97)
+
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 
 void R_AddCellDynModelSurfacesInFrustumCmd(void *param_1)
 
@@ -84,30 +80,27 @@ void R_AddCellDynModelSurfacesInFrustumCmd(void *param_1)
   DpvsPlane *pDVar5;
   uchar *puVar6;
   GfxWorld *pGVar7;
-  undefined4 *puVar8;
-  DynEntityPose *pDVar9;
-  GfxWorldDpvsDynamic *pGVar10;
+  DynEntityPose *pDVar8;
+  GfxWorldDpvsDynamic *pGVar9;
   
-  puVar8 = (undefined4 *)__savegprlr_27(param_1);
   pGVar7 = rgp.world;
   if ((r_drawDynEnts->current).enabled != false) {
-    pGVar10 = &(rgp.world)->dpvsDyn;
-    if ((uint)((rgp.world)->dpvsPlanes).cellCount <= (uint)puVar8[1]) {
+    pGVar9 = &(rgp.world)->dpvsDyn;
+    if ((uint)((rgp.world)->dpvsPlanes).cellCount <= *(uint *)((int)param_1 + 4)) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dpvs_dynmodel.cpp"
                       ,0x88,0,
                       "dpvsCell->cellIndex doesn\'t index rgp.world->dpvsPlanes.cellCount\n\t%i not in [0, %i)"
                      );
     }
-    iVar2 = puVar8[1];
-    uVar3 = pGVar10->dynEntClientWordCount[0];
+    iVar2 = *(int *)((int)param_1 + 4);
+    uVar3 = pGVar9->dynEntClientWordCount[0];
     puVar4 = (pGVar7->dpvsDyn).dynEntCellBits[0];
-    bVar1 = *(byte *)(puVar8 + 2);
-    pDVar5 = (DpvsPlane *)*puVar8;
-    puVar6 = pGVar10->dynEntVisData[0][*(ushort *)((int)puVar8 + 10)];
-    pDVar9 = DynEnt_GetClientModelPoseList();
-    R_CullDynModelInCell(puVar4 + iVar2 * uVar3,uVar3,pDVar9,pDVar5,(uint)bVar1,puVar6);
+    bVar1 = *(byte *)((int)param_1 + 8);
+    pDVar5 = *(DpvsPlane **)param_1;
+    puVar6 = pGVar9->dynEntVisData[0][*(ushort *)((int)param_1 + 10)];
+    pDVar8 = DynEnt_GetClientModelPoseList();
+    R_CullDynModelInCell(puVar4 + iVar2 * uVar3,uVar3,pDVar8,pDVar5,(uint)bVar1,puVar6);
   }
-  __restgprlr_27();
   return;
 }
 

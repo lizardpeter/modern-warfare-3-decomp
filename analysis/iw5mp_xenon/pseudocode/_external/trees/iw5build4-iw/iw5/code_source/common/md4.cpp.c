@@ -17,39 +17,32 @@ void MD4Init(MD4_CTX *param_1)
 
 // 826AA378  MD4Update  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/common/md4.cpp:108)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 void MD4Update(MD4_CTX *param_1,uchar *param_2,uint param_3)
 
 {
-  uint uVar1;
-  longlong lVar2;
-  ulong *puVar3;
-  ulonglong uVar4;
-  uint uVar5;
-  ulonglong uVar6;
+  int iVar1;
+  uint uVar2;
+  uint uVar3;
   
-  uVar4 = (ulonglong)(int)param_3;
-  puVar3 = (ulong *)__savegprlr_26(param_1);
-  uVar1 = puVar3[4];
-  uVar5 = (int)((uVar4 & 0xffffffff) << 3) + uVar1;
-  puVar3[4] = uVar5;
-  if ((ulonglong)uVar5 < (uVar4 & 0x1fffffff) << 3) {
-    puVar3[5] = puVar3[5] + 1;
+  uVar3 = param_1->count[0];
+  uVar2 = param_3 * 8 + uVar3;
+  param_1->count[0] = uVar2;
+  if (uVar2 < param_3 << 3) {
+    param_1->count[1] = param_1->count[1] + 1;
   }
-  lVar2 = -((ulonglong)(uVar1 >> 3) & 0x3f);
-  puVar3[5] = ((uint)uVar4 >> 0x1d) + puVar3[5];
-  if ((lVar2 + 0x40U & 0xffffffff) <= (uVar4 & 0xffffffff)) {
+  iVar1 = -(uVar3 >> 3 & 0x3f);
+  param_1->count[1] = (param_3 >> 0x1d) + param_1->count[1];
+  if (iVar1 + 0x40U <= param_3) {
     memcpy();
-    MD4Transform(puVar3,(uchar *)(puVar3 + 6));
-    uVar6 = lVar2 + 0x7f;
-    if ((uVar6 & 0xffffffff) < (uVar4 & 0xffffffff)) {
-      do {
-        MD4Transform(puVar3,param_2 + (int)uVar6 + -0x3f);
-        uVar6 = uVar6 + 0x40;
-      } while ((uVar6 & 0xffffffff) < (uVar4 & 0xffffffff));
+    MD4Transform(param_1->state,param_1->buffer);
+    for (uVar3 = iVar1 + 0x7f; uVar3 < param_3; uVar3 = uVar3 + 0x40) {
+      MD4Transform(param_1->state,param_2 + (uVar3 - 0x3f));
     }
   }
   memcpy();
-  __restgprlr_26();
   return;
 }
 
@@ -112,6 +105,9 @@ void MD4Final(uchar *param_1,MD4_CTX *param_2)
 
 // 826A9D18  MD4Transform  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/common/md4.cpp:168)
 
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
+
 void MD4Transform(ulong *param_1,uchar *param_2)
 
 {
@@ -152,7 +148,6 @@ void MD4Transform(ulong *param_1,uchar *param_2)
   uint local_a8;
   uint local_a4;
   
-  __savegprlr();
   uVar1 = param_1[1];
   uVar8 = (ulonglong)uVar1;
   uVar2 = param_1[2];
@@ -281,7 +276,6 @@ void MD4Transform(ulong *param_1,uchar *param_2)
   uVar8 = (uVar11 ^ (uVar8 & 0xffffffff | uVar9) ^ uVar13) + (ulonglong)local_a4 + uVar16 +
           0x6ed9eba1;
   param_1[1] = ((uint)((uVar8 & 0xffffffff) << 0xf) | (uint)uVar8 >> 0x11) + uVar1;
-  __restgprlr();
   return;
 }
 
@@ -348,48 +342,48 @@ void Decode(ulong *param_1,uchar *param_2,uint param_3)
 
 // 826AA560  Com_BlockChecksum128  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/common/md4.cpp:265)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void Com_BlockChecksum128(void *param_1,int param_2,int param_3,uint *param_4)
 
 {
-  uchar *puVar1;
   int iStack00000024;
   MD4_CTX local_80;
   
-  iStack00000024 = param_3;
-  puVar1 = (uchar *)__savegprlr_29(param_1);
   local_80.count[1] = 0;
   local_80.state[1] = 0xefcdab89;
   local_80.state[2] = 0x98badcfe;
   local_80.state[3] = 0x10325476;
   local_80.count[0] = 0;
   local_80.state[0] = 0x67452301;
+  iStack00000024 = param_3;
   MD4Update(&local_80,(uchar *)&stack0x00000024,4);
-  MD4Update(&local_80,puVar1,param_2);
+  MD4Update(&local_80,param_1,param_2);
   MD4Final((uchar *)param_4,&local_80);
-  __restgprlr_29();
   return;
 }
 
 
 // 826AA5F0  Com_BlockChecksum128Cat  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/common/md4.cpp:275)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void Com_BlockChecksum128Cat(void *param_1,int param_2,void *param_3,int param_4,uint *param_5)
 
 {
-  uchar *puVar1;
   MD4_CTX local_80;
   
-  puVar1 = (uchar *)__savegprlr_29(param_1);
   local_80.state[1] = 0xefcdab89;
   local_80.state[0] = 0x67452301;
   local_80.count[1] = 0;
   local_80.count[0] = 0;
   local_80.state[2] = 0x98badcfe;
   local_80.state[3] = 0x10325476;
-  MD4Update(&local_80,puVar1,param_2);
+  MD4Update(&local_80,param_1,param_2);
   MD4Update(&local_80,param_3,param_4);
   MD4Final((uchar *)param_5,&local_80);
-  __restgprlr_29();
   return;
 }
 

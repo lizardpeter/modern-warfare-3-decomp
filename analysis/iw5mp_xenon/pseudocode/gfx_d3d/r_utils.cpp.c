@@ -13,33 +13,32 @@ void TRACK_r_utils(void)
 
 // 82787CA8  R_HashAssetName  (gfx_d3d/r_utils.cpp:52)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
+
 uint R_HashAssetName(char *param_1)
 
 {
   char cVar1;
-  char *pcVar2;
-  uint uVar3;
-  ulonglong uVar4;
+  uint uVar2;
   
-  pcVar2 = (char *)__savegprlr_25(param_1);
-  uVar4 = 0;
-  cVar1 = *pcVar2;
+  uVar2 = 0;
+  cVar1 = *param_1;
   while (cVar1 != '\0') {
-    if (('@' < *pcVar2) && (*pcVar2 < '[')) {
+    if (('@' < *param_1) && (*param_1 < '[')) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_utils.cpp",0x3c,0,
                       "%s\n\t(name) = %s");
     }
-    if (*pcVar2 == '\\') {
+    if (*param_1 == '\\') {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_utils.cpp",0x3d,0,
                       "%s\n\t(name) = %s");
     }
-    cVar1 = *pcVar2;
-    pcVar2 = pcVar2 + 1;
-    uVar4 = (uVar4 & 0x7ffffff) * 0x20 + uVar4 ^ (longlong)cVar1;
-    cVar1 = *pcVar2;
+    cVar1 = *param_1;
+    param_1 = param_1 + 1;
+    uVar2 = uVar2 * 0x21 ^ (int)cVar1;
+    cVar1 = *param_1;
   }
-  uVar3 = __restgprlr_25(uVar4);
-  return uVar3;
+  return uVar2;
 }
 
 
@@ -69,17 +68,17 @@ uint R_HashString(char *param_1)
 
 // 82787DB8  R_AllocGlobalVariable  (gfx_d3d/r_utils.cpp:89)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void * R_AllocGlobalVariable(uint param_1,char *param_2)
 
 {
-  uint uVar1;
-  void *pvVar2;
+  void *pvVar1;
   
-  uVar1 = __savegprlr_29(param_1);
-  pvVar2 = PMem_Alloc_NoDebug(uVar1,0x80,4);
-  track_static_alloc_internal(pvVar2,uVar1,param_2,0x12);
-  pvVar2 = (void *)__restgprlr_29(pvVar2);
-  return pvVar2;
+  pvVar1 = PMem_Alloc_NoDebug(param_1,0x80,4);
+  track_static_alloc_internal(pvVar1,param_1,param_2,0x12);
+  return pvVar1;
 }
 
 
@@ -127,6 +126,9 @@ void R_ConvertColorToBytes(float *param_1,uchar *param_2)
 
 // 82787E78  R_PickMaterialText  (gfx_d3d/r_utils.cpp:151)
 
+/* WARNING: Function: __savegprlr_18 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_18 replaced with injection: xenon_save_restore */
+
 int R_PickMaterialText(trace_t *param_1,char *param_2,char *param_3,char *param_4,int param_5)
 
 {
@@ -134,118 +136,108 @@ int R_PickMaterialText(trace_t *param_1,char *param_2,char *param_3,char *param_
   uint uVar2;
   uint uVar3;
   char *pcVar4;
-  int iVar5;
-  char *pcVar6;
-  longlong lVar7;
-  longlong lVar8;
-  longlong lVar9;
-  char *pcVar10;
-  int iVar11;
-  ulonglong uVar12;
-  ulonglong uVar13;
-  int iVar14;
-  longlong lVar15;
-  longlong lVar16;
+  char *pcVar5;
+  int iVar6;
+  int iVar7;
+  char *pcVar8;
+  char *pcVar9;
   
-  lVar8 = (longlong)(int)param_4;
-  lVar7 = (longlong)(int)param_3;
-  lVar9 = (longlong)(int)param_2;
-  iVar5 = __savegprlr_18(param_1);
-  lVar9 = lVar9 + -1;
-  pcVar10 = (char *)(*(int *)(iVar5 + 0x18) + -1);
+  pcVar4 = param_2 + -1;
+  pcVar5 = param_1->material + -1;
   do {
-    pcVar10 = pcVar10 + 1;
-    cVar1 = *pcVar10;
-    lVar9 = lVar9 + 1;
-    *(char *)lVar9 = cVar1;
+    pcVar5 = pcVar5 + 1;
+    cVar1 = *pcVar5;
+    pcVar4 = pcVar4 + 1;
+    *pcVar4 = cVar1;
   } while (cVar1 != '\0');
-  pcVar10 = (char *)lVar7;
-  pcVar4 = (char *)lVar8;
-  *pcVar10 = '\0';
-  pcVar10[param_5 - 1] = '\0';
-  *pcVar4 = '\0';
-  pcVar4[param_5 - 1] = '\0';
-  uVar2 = *(int *)(iVar5 + 0x10) >> 0x14;
+  *param_3 = '\0';
+  param_3[param_5 + -1] = '\0';
+  *param_4 = '\0';
+  param_4[param_5 + -1] = '\0';
+  uVar2 = param_1->surfaceFlags >> 0x14;
   uVar3 = uVar2 & 0x1f;
   if ((uVar3 == 0) || (0x1e < uVar3)) {
-    pcVar6 = "^1default^7";
+    pcVar5 = "^1default^7";
   }
   else {
-    pcVar6 = demoExeModeNames[uVar3 + (uVar2 & 0x1f) * 4 + 1];
+    pcVar5 = demoExeModeNames[uVar3 + (uVar2 & 0x1f) * 4 + 1];
   }
-  strncpy(pcVar10,pcVar6,param_5);
-  lVar9 = lVar7;
-  if (pcVar10[param_5 - 1] == '\0') {
+  strncpy(param_3,pcVar5,param_5);
+  pcVar5 = param_3;
+  if (param_3[param_5 + -1] == '\0') {
     do {
-      pcVar6 = (char *)lVar9;
-      lVar9 = lVar9 + 1;
-    } while (*pcVar6 != '\0');
-    uVar12 = (lVar9 - lVar7) - 1U & 0xffffffff;
-    if ((*(uint *)(iVar5 + 0x14) & 1) == 0) {
-      pcVar6 = "^3nonsolid^7";
+      cVar1 = *pcVar5;
+      pcVar5 = pcVar5 + 1;
+    } while (cVar1 != '\0');
+    pcVar5 = pcVar5 + (-1 - (int)param_3);
+    if ((param_1->contents & 1U) == 0) {
+      pcVar4 = "^3nonsolid^7";
     }
     else {
-      pcVar6 = "solid";
+      pcVar4 = "solid";
     }
-    strncpy(pcVar4,pcVar6,param_5);
-    lVar9 = lVar8;
-    if (pcVar4[param_5 - 1] == '\0') {
+    strncpy(param_4,pcVar4,param_5);
+    pcVar4 = param_4;
+    if (param_4[param_5 + -1] == '\0') {
       do {
-        pcVar6 = (char *)lVar9;
-        lVar9 = lVar9 + 1;
-      } while (*pcVar6 != '\0');
-      iVar11 = 0x1e;
-      uVar13 = (lVar9 - lVar8) - 1U & 0xffffffff;
+        cVar1 = *pcVar4;
+        pcVar4 = pcVar4 + 1;
+      } while (cVar1 != '\0');
+      iVar6 = 0x1e;
+      pcVar4 = pcVar4 + (-1 - (int)param_4);
       if (PTR_s_opaqueglass_829942c8 != (undefined *)0x0) {
-        iVar14 = 600;
+        iVar7 = 600;
         do {
-          if ((*(uint *)((int)&DAT_82994078 + iVar14) & *(uint *)(iVar5 + 0x10)) != 0) {
-            pcVar10[(int)uVar12] = ' ';
-            lVar16 = uVar12 + 1;
-            lVar15 = lVar16 + lVar7;
-            strncpy((char *)lVar15,*(char **)(&infoParms + iVar14),param_5 - (int)lVar16);
-            lVar9 = lVar15;
-            if (pcVar10[param_5 - 1] != '\0') goto LAB_82787f2c;
+          if ((*(uint *)((int)&DAT_82994078 + iVar7) & param_1->surfaceFlags) != 0) {
+            param_3[(int)pcVar5] = ' ';
+            pcVar9 = pcVar5 + 1;
+            pcVar8 = param_3 + (int)pcVar9;
+            strncpy(pcVar8,*(char **)(&infoParms + iVar7),param_5 - (int)pcVar9);
+            pcVar5 = pcVar8;
+            if (param_3[param_5 + -1] != '\0') {
+              return 0;
+            }
             do {
-              pcVar6 = (char *)lVar9;
-              lVar9 = lVar9 + 1;
-            } while (*pcVar6 != '\0');
-            uVar12 = ((lVar9 - lVar15) - 1U & 0xffffffff) + lVar16;
+              cVar1 = *pcVar5;
+              pcVar5 = pcVar5 + 1;
+            } while (cVar1 != '\0');
+            pcVar5 = pcVar5 + (int)(pcVar9 + (-1 - (int)pcVar8));
           }
-          if ((*(uint *)(iVar14 + -0x7d66bf84) & *(uint *)(iVar5 + 0x14)) != 0) {
-            pcVar4[(int)uVar13] = ' ';
-            lVar16 = uVar13 + 1;
-            lVar15 = lVar16 + lVar8;
-            strncpy((char *)lVar15,*(char **)(&infoParms + iVar14),param_5 - (int)lVar16);
-            lVar9 = lVar15;
-            if (pcVar4[param_5 - 1] != '\0') goto LAB_82787f2c;
+          if ((*(uint *)(iVar7 + -0x7d66bf84) & param_1->contents) != 0) {
+            param_4[(int)pcVar4] = ' ';
+            pcVar9 = pcVar4 + 1;
+            pcVar8 = param_4 + (int)pcVar9;
+            strncpy(pcVar8,*(char **)(&infoParms + iVar7),param_5 - (int)pcVar9);
+            pcVar4 = pcVar8;
+            if (param_4[param_5 + -1] != '\0') {
+              return 0;
+            }
             do {
-              pcVar6 = (char *)lVar9;
-              lVar9 = lVar9 + 1;
-            } while (*pcVar6 != '\0');
-            uVar13 = ((lVar9 - lVar15) - 1U & 0xffffffff) + lVar16;
+              cVar1 = *pcVar4;
+              pcVar4 = pcVar4 + 1;
+            } while (cVar1 != '\0');
+            pcVar4 = pcVar4 + (int)(pcVar9 + (-1 - (int)pcVar8));
           }
-          iVar11 = iVar11 + 1;
-          iVar14 = iVar11 * 0x14;
-        } while (*(int *)(&infoParms + iVar14) != 0);
+          iVar6 = iVar6 + 1;
+          iVar7 = iVar6 * 0x14;
+        } while (*(int *)(&infoParms + iVar7) != 0);
       }
-      iVar5 = __restgprlr_18(1);
-      return iVar5;
+      return 1;
     }
   }
-LAB_82787f2c:
-  iVar5 = __restgprlr_18(0);
-  return iVar5;
+  return 0;
 }
 
 
 // 827880C0  R_PickMaterial  (gfx_d3d/r_utils.cpp:211)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 int R_PickMaterial(bool param_1,int param_2,float *param_3,float *param_4,float *param_5,
                   char *param_6,char *param_7,char *param_8,int param_9)
 
 {
-  char cVar2;
   int iVar1;
   int in_stack_00000054;
   float local_80;
@@ -253,15 +245,14 @@ int R_PickMaterial(bool param_1,int param_2,float *param_3,float *param_4,float 
   float local_78;
   trace_t local_70 [2];
   
-  cVar2 = __savegprlr_27(param_1);
   local_80 = *param_4 * 262144.0 + *param_3;
   local_7c = param_4[1] * 262144.0 + param_3[1];
   local_78 = param_4[2] * 262144.0 + param_3[2];
-  if (cVar2 == '\0') {
-    CG_WorldTrace(local_70,param_3,&local_80,&bounds_origin,param_2);
+  if (param_1) {
+    CG_LocationalTrace(local_70,param_3,&local_80,-1,param_2);
   }
   else {
-    CG_LocationalTrace(local_70,param_3,&local_80,-1,param_2);
+    CG_WorldTrace(local_70,param_3,&local_80,&bounds_origin,param_2);
   }
   if ((((local_70[0].startsolid == false) && (local_70[0].allsolid == false)) &&
       (local_70[0].fraction != 1.0)) && (local_70[0].material != (char *)0x0)) {
@@ -269,11 +260,9 @@ int R_PickMaterial(bool param_1,int param_2,float *param_3,float *param_4,float 
     param_5[1] = (local_7c - param_3[1]) * local_70[0].fraction + param_3[1];
     param_5[2] = (local_78 - param_3[2]) * local_70[0].fraction + param_3[2];
     iVar1 = R_PickMaterialText(local_70,param_6,param_7,param_8,in_stack_00000054);
-    iVar1 = __restgprlr_27(iVar1);
     return iVar1;
   }
-  iVar1 = __restgprlr_27(0);
-  return iVar1;
+  return 0;
 }
 
 
@@ -288,18 +277,19 @@ int R_PickMaterialFromRenderBrushCallback(int param_1,void *param_2)
 
 // 827881F8  R_PickMaterialFromRender  (gfx_d3d/r_utils.cpp:240)
 
+/* WARNING: Function: __savegprlr_19 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_19 replaced with injection: xenon_save_restore */
+
 int R_PickMaterialFromRender
               (bool param_1,int param_2,float *param_3,float *param_4,float *param_5,char *param_6,
               char *param_7,char *param_8,int param_9)
 
 {
-  char cVar2;
   int iVar1;
-  char *pcVar3;
-  longlong lVar4;
-  uint uVar5;
-  int iVar6;
-  GfxSurface **ppGVar7;
+  char *pcVar2;
+  uint uVar3;
+  int iVar4;
+  GfxSurface **ppGVar5;
   int in_stack_00000054;
   uint local_4270 [2];
   float local_4268;
@@ -320,16 +310,14 @@ int R_PickMaterialFromRender
   uint auStack_4070 [2048];
   uint auStack_2070 [2076];
   
-  lVar4 = (longlong)(int)param_6;
-  cVar2 = __savegprlr_19(param_1);
   local_4268 = *param_4 * 262144.0 + *param_3;
   local_4264 = param_4[1] * 262144.0 + param_3[1];
   local_4260 = param_4[2] * 262144.0 + param_3[2];
-  if (cVar2 == '\0') {
-    CG_WorldTrace(&local_4230,param_3,&local_4268,&bounds_origin,param_2);
+  if (param_1) {
+    CG_LocationalTrace(&local_4230,param_3,&local_4268,-1,param_2);
   }
   else {
-    CG_LocationalTrace(&local_4230,param_3,&local_4268,-1,param_2);
+    CG_WorldTrace(&local_4230,param_3,&local_4268,&bounds_origin,param_2);
   }
   if ((((local_4230.startsolid == false) && (local_4230.allsolid == false)) &&
       (local_4230.fraction != 1.0)) && (local_4230.material != (char *)0x0)) {
@@ -351,13 +339,12 @@ int R_PickMaterialFromRender
     local_4250.origin[2] = param_5[2];
     local_4250.radius = sphereRadius;
     R_SphereSurfaces(&local_4250,auStack_4070,allowSurf,(void *)0x0,local_423c,0x10,local_4270,1);
-    pcVar3 = (char *)lVar4;
     if (local_4270[0] != 0) {
-      *pcVar3 = '\0';
+      *param_6 = '\0';
       local_41f0 = local_4230.normal[0];
       local_41ec = local_4230.normal[1];
       local_41e8 = local_4230.normal[2];
-      pcVar3[in_stack_00000054 + -1] = '\0';
+      param_6[in_stack_00000054 + -1] = '\0';
       AxisRandomAroundForward(&local_41f0,afStack_41e4,afStack_41d8);
       local_4250.origin[0] = *param_5;
       local_4250.origin[1] = param_5[1];
@@ -366,54 +353,50 @@ int R_PickMaterialFromRender
       local_4250.radius = clipRadius;
       R_GetMarkFragmentClipPlanes
                 (&local_4250,(float (*) [3])&local_41f0,(float (*) [4])afStack_40d0);
-      uVar5 = 0;
+      uVar3 = 0;
       if (local_4270[0] != 0) {
-        ppGVar7 = local_4110;
+        ppGVar5 = local_4110;
         do {
           iVar1 = R_TestIntersect_SphereWorldBrush
-                            (*ppGVar7,(float (*) [4])afStack_40d0,local_4230.normal);
+                            (*ppGVar5,(float (*) [4])afStack_40d0,local_4230.normal);
           if (iVar1 != 0) {
-            if (*pcVar3 == '\0') {
-              I_strncat(pcVar3,in_stack_00000054,"\n");
+            if (*param_6 == '\0') {
+              I_strncat(param_6,in_stack_00000054,"\n");
             }
             sprintf(acStack_41c8,"%d: ");
-            I_strncat(pcVar3,in_stack_00000054,acStack_41c8);
-            I_strncat(pcVar3,in_stack_00000054,((*ppGVar7)->material->info).name);
-            I_strncat(pcVar3,in_stack_00000054,"\n");
+            I_strncat(param_6,in_stack_00000054,acStack_41c8);
+            I_strncat(param_6,in_stack_00000054,((*ppGVar5)->material->info).name);
+            I_strncat(param_6,in_stack_00000054,"\n");
             iVar1 = 0;
-            if ((*ppGVar7)->material->layerCount != '\0') {
-              iVar6 = 0;
+            if ((*ppGVar5)->material->layerCount != '\0') {
+              iVar4 = 0;
               do {
-                if (*(int *)((int)(*ppGVar7)->material->subMaterials + iVar6) != 0) {
-                  I_strncat(pcVar3,in_stack_00000054,"  - ");
-                  I_strncat(pcVar3,in_stack_00000054,
-                            *(char **)((int)(*ppGVar7)->material->subMaterials + iVar6));
-                  I_strncat(pcVar3,in_stack_00000054,"\n");
+                if (*(int *)((int)(*ppGVar5)->material->subMaterials + iVar4) != 0) {
+                  I_strncat(param_6,in_stack_00000054,"  - ");
+                  I_strncat(param_6,in_stack_00000054,
+                            *(char **)((int)(*ppGVar5)->material->subMaterials + iVar4));
+                  I_strncat(param_6,in_stack_00000054,"\n");
                 }
                 iVar1 = iVar1 + 1;
-                iVar6 = iVar6 + 4;
-              } while (iVar1 < (int)(uint)(*ppGVar7)->material->layerCount);
+                iVar4 = iVar4 + 4;
+              } while (iVar1 < (int)(uint)(*ppGVar5)->material->layerCount);
             }
           }
-          uVar5 = uVar5 + 1;
-          ppGVar7 = ppGVar7 + 1;
-        } while (uVar5 < local_4270[0]);
+          uVar3 = uVar3 + 1;
+          ppGVar5 = ppGVar5 + 1;
+        } while (uVar3 < local_4270[0]);
       }
       do {
-        pcVar3 = (char *)lVar4;
-        lVar4 = lVar4 + 1;
-      } while (*pcVar3 != '\0');
-      iVar1 = R_PickMaterialText(&local_4230,(char *)((int)lVar4 + -1),param_7,param_8,
-                                 in_stack_00000054);
-      iVar1 = __restgprlr_19(iVar1);
+        pcVar2 = param_6;
+        param_6 = pcVar2 + 1;
+      } while (*pcVar2 != '\0');
+      iVar1 = R_PickMaterialText(&local_4230,pcVar2,param_7,param_8,in_stack_00000054);
       return iVar1;
     }
-    iVar1 = R_PickMaterialText(&local_4230,pcVar3,param_7,param_8,in_stack_00000054);
-    iVar1 = __restgprlr_19(iVar1);
+    iVar1 = R_PickMaterialText(&local_4230,param_6,param_7,param_8,in_stack_00000054);
     return iVar1;
   }
-  iVar1 = __restgprlr_19(0);
-  return iVar1;
+  return 0;
 }
 
 
@@ -432,24 +415,24 @@ void Byte4UnpackBgra(uchar *param_1,float *param_2)
 
 // 827885E0  R_LightEditTrace_SingleTriangle  (gfx_d3d/r_utils.cpp:330)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 int R_LightEditTrace_SingleTriangle
               (float *param_1,float *param_2,float *param_3,float *param_4,float *param_5,
               float *param_6,float *param_7,float *param_8,GfxLightEditTrace *param_9)
 
 {
   float fVar1;
-  float *pfVar2;
-  bool bVar4;
-  int iVar3;
+  bool bVar2;
   int in_stack_00000054;
   float local_30;
   float local_2c;
   float local_28 [10];
   
-  pfVar2 = (float *)__savegprlr_29(param_1);
-  bVar4 = CM_RayTriangleIntersect
-                    (pfVar2,param_2,param_3,param_4,param_5,&local_30,&local_2c,local_28);
-  if (((bVar4) && ((r_znear->current).value < local_30)) &&
+  bVar2 = CM_RayTriangleIntersect
+                    (param_1,param_2,param_3,param_4,param_5,&local_30,&local_2c,local_28);
+  if (((bVar2) && ((r_znear->current).value < local_30)) &&
      (local_30 < *(float *)(in_stack_00000054 + 4))) {
     *(float *)(in_stack_00000054 + 4) = local_30;
     fVar1 = (1.0 - local_2c) - local_28[0];
@@ -457,15 +440,16 @@ int R_LightEditTrace_SingleTriangle
          *param_8 * local_28[0] + *param_6 * fVar1 + *param_7 * local_2c;
     *(float *)(in_stack_00000054 + 0xc) =
          param_8[1] * local_28[0] + param_6[1] * fVar1 + param_7[1] * local_2c;
-    iVar3 = __restgprlr_29(1);
-    return iVar3;
+    return 1;
   }
-  iVar3 = __restgprlr_29(0);
-  return iVar3;
+  return 0;
 }
 
 
 // 827886A8  R_LightEditTrace_TriangleSurface  (gfx_d3d/r_utils.cpp:349)
+
+/* WARNING: Function: __savegprlr_20 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_20 replaced with injection: xenon_save_restore */
 
 int R_LightEditTrace_TriangleSurface
               (float *param_1,float *param_2,GfxSurface *param_3,GfxLightEditTrace *param_4)
@@ -474,59 +458,55 @@ int R_LightEditTrace_TriangleSurface
   uint uVar1;
   GfxWorldVertex *pGVar2;
   float fVar3;
-  float *pfVar4;
-  bool bVar6;
-  int iVar5;
-  ulonglong uVar7;
-  ulonglong uVar8;
-  uint uVar9;
-  ushort *puVar10;
+  bool bVar4;
+  uint uVar5;
+  uint uVar6;
+  uint uVar7;
+  ushort *puVar8;
+  GfxWorldVertex *pGVar9;
+  GfxWorldVertex *pGVar10;
   GfxWorldVertex *pGVar11;
-  GfxWorldVertex *pGVar12;
-  GfxWorldVertex *pGVar13;
-  double dVar14;
-  double dVar15;
+  double dVar12;
+  double dVar13;
   float local_80;
   float local_7c;
   float local_78 [30];
   
-  pfVar4 = (float *)__savegprlr_20(param_1);
   uVar1 = (param_3->tris).firstVertex;
   pGVar2 = ((rgp.world)->draw).vd.vertices;
-  uVar8 = 0;
-  uVar9 = 0;
+  uVar6 = 0;
+  uVar7 = 0;
   if ((param_3->tris).triCount != 0) {
-    puVar10 = ((rgp.world)->draw).indices + (param_3->tris).baseIndex + 2;
-    dVar15 = 1.0;
+    puVar8 = ((rgp.world)->draw).indices + (param_3->tris).baseIndex + 2;
+    dVar13 = 1.0;
     do {
-      pGVar12 = pGVar2 + uVar1 + puVar10[-1];
-      pGVar11 = pGVar2 + uVar1 + *puVar10;
-      pGVar13 = pGVar2 + uVar1 + puVar10[-2];
-      bVar6 = CM_RayTriangleIntersect
-                        (pfVar4,param_2,pGVar11->xyz,pGVar12->xyz,pGVar13->xyz,&local_80,&local_7c,
+      pGVar10 = pGVar2 + uVar1 + puVar8[-1];
+      pGVar9 = pGVar2 + uVar1 + *puVar8;
+      pGVar11 = pGVar2 + uVar1 + puVar8[-2];
+      bVar4 = CM_RayTriangleIntersect
+                        (param_1,param_2,pGVar9->xyz,pGVar10->xyz,pGVar11->xyz,&local_80,&local_7c,
                          local_78);
-      if (((!bVar6) || (local_80 <= (r_znear->current).value)) || (param_4->dist <= local_80)) {
-        uVar7 = 0;
+      if (((!bVar4) || (local_80 <= (r_znear->current).value)) || (param_4->dist <= local_80)) {
+        uVar5 = 0;
       }
       else {
         param_4->dist = local_80;
-        uVar7 = 1;
-        dVar14 = (double)local_7c;
-        fVar3 = (float)(dVar15 - dVar14) - local_78[0];
+        uVar5 = 1;
+        dVar12 = (double)local_7c;
+        fVar3 = (float)(dVar13 - dVar12) - local_78[0];
         param_4->coords[0] =
-             (float)(dVar14 * (double)pGVar12->lmapCoord[0] +
-                    (double)(pGVar13->lmapCoord[0] * local_78[0] + fVar3 * pGVar11->lmapCoord[0]));
+             (float)(dVar12 * (double)pGVar10->lmapCoord[0] +
+                    (double)(pGVar11->lmapCoord[0] * local_78[0] + fVar3 * pGVar9->lmapCoord[0]));
         param_4->coords[1] =
-             pGVar13->lmapCoord[1] * local_78[0] +
-             pGVar11->lmapCoord[1] * fVar3 + (float)((double)pGVar12->lmapCoord[1] * dVar14);
+             pGVar11->lmapCoord[1] * local_78[0] +
+             pGVar9->lmapCoord[1] * fVar3 + (float)((double)pGVar10->lmapCoord[1] * dVar12);
       }
-      uVar9 = uVar9 + 1;
-      uVar8 = uVar7 | uVar8;
-      puVar10 = puVar10 + 3;
-    } while (uVar9 < (param_3->tris).triCount);
+      uVar7 = uVar7 + 1;
+      uVar6 = uVar5 | uVar6;
+      puVar8 = puVar8 + 3;
+    } while (uVar7 < (param_3->tris).triCount);
   }
-  iVar5 = __restgprlr_20(uVar8);
-  return iVar5;
+  return uVar6;
 }
 
 
@@ -591,57 +571,58 @@ int R_LightEditTrace_Box(float *param_1,float *param_2,Bounds *param_3,GfxLightE
 
 // 82788910  R_LightEditTrace  (gfx_d3d/r_utils.cpp:430)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
+
 void R_LightEditTrace(float *param_1,float *param_2,GfxLightEditTrace *param_3)
 
 {
-  float *pfVar1;
-  int iVar2;
-  float *pfVar3;
-  GfxLightEditTrace *pGVar4;
-  ulonglong uVar5;
-  uint uVar6;
+  int iVar1;
+  float *pfVar2;
+  GfxLightEditTrace *pGVar3;
+  ulonglong uVar4;
+  uint uVar5;
+  int iVar6;
   int iVar7;
-  int iVar8;
-  GfxSurface *pGVar9;
+  GfxSurface *pGVar8;
   
-  pfVar1 = (float *)__savegprlr_24(param_1);
   if (rgp.world == (GfxWorld *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_utils.cpp",0x1b3,0,
                     "%s");
   }
-  uVar6 = 0;
+  uVar5 = 0;
   param_3->surface = (GfxSurface *)0x0;
   param_3->dist = 3.4028235e+38;
-  uVar5 = ZEXT48(rgp.world);
+  uVar4 = ZEXT48(rgp.world);
   if ((rgp.world)->surfaceCount != 0) {
-    iVar8 = 0;
     iVar7 = 0;
+    iVar6 = 0;
     do {
-      pGVar9 = (GfxSurface *)(*(int *)((int)uVar5 + 0x27c) + iVar7);
-      if ((pGVar9->laf).fields.lightmapIndex != '\x1f') {
-        pfVar3 = param_2;
-        pGVar4 = param_3;
-        iVar2 = R_LightEditTrace_Box
-                          (pfVar1,param_2,(Bounds *)(*(int *)((int)uVar5 + 0x280) + iVar8),param_3);
-        if (iVar2 != 0) {
-          iVar2 = R_LightEditTrace_TriangleSurface(pfVar1,pfVar3,pGVar9,pGVar4);
-          if (iVar2 != 0) {
-            param_3->surface = pGVar9;
-          }
-          uVar5 = ZEXT48(rgp.world);
+      pGVar8 = (GfxSurface *)(*(int *)((int)uVar4 + 0x27c) + iVar6);
+      if (((pGVar8->laf).fields.lightmapIndex != '\x1f') &&
+         (pfVar2 = param_2, pGVar3 = param_3,
+         iVar1 = R_LightEditTrace_Box
+                           (param_1,param_2,(Bounds *)(*(int *)((int)uVar4 + 0x280) + iVar7),param_3
+                           ), iVar1 != 0)) {
+        iVar1 = R_LightEditTrace_TriangleSurface(param_1,pfVar2,pGVar8,pGVar3);
+        if (iVar1 != 0) {
+          param_3->surface = pGVar8;
         }
+        uVar4 = ZEXT48(rgp.world);
       }
-      uVar6 = uVar6 + 1;
-      iVar7 = iVar7 + 0x18;
-      iVar8 = iVar8 + 0x20;
-    } while (uVar6 < *(uint *)((int)uVar5 + 0x10));
+      uVar5 = uVar5 + 1;
+      iVar6 = iVar6 + 0x18;
+      iVar7 = iVar7 + 0x20;
+    } while (uVar5 < *(uint *)((int)uVar4 + 0x10));
   }
-  __restgprlr_24();
   return;
 }
 
 
 // 82788A00  FresnelTerm  (gfx_d3d/r_utils.cpp:458)
+
+/* WARNING: Function: __savefpr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_26 replaced with injection: xenon_save_restore */
 
 float FresnelTerm(float param_1,float param_2,float param_3)
 
@@ -653,50 +634,49 @@ float FresnelTerm(float param_1,float param_2,float param_3)
   double dVar5;
   double dVar6;
   
-  dVar3 = (double)param_3;
+  dVar2 = (double)param_3;
   dVar4 = (double)param_2;
-  dVar2 = (double)__savefpr_26((double)param_1);
-  if (dVar3 < -1.0) {
+  dVar3 = (double)param_1;
+  if (dVar2 < -1.0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_utils.cpp",0x1d6,1,
                     "%s\n\t(cosIncidentAngle) = %g");
   }
   dVar5 = 1.0;
-  if (1.0 < dVar3) {
+  if (1.0 < dVar2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_utils.cpp",0x1d7,1,
                     "%s\n\t(cosIncidentAngle) = %g");
   }
-  dVar3 = acos(ABS(dVar3));
-  dVar6 = (double)(float)dVar3;
-  dVar3 = sin(dVar6);
+  dVar2 = acos(ABS(dVar2));
+  dVar6 = (double)(float)dVar2;
+  dVar2 = sin(dVar6);
   dVar1 = 1.0;
-  dVar3 = dVar3 * (double)(float)(dVar2 / dVar4);
-  if ((1.0 < dVar3) || (dVar1 = -1.0, dVar3 < -1.0)) {
-    dVar3 = dVar1;
+  dVar2 = dVar2 * (double)(float)(dVar3 / dVar4);
+  if ((1.0 < dVar2) || (dVar1 = -1.0, dVar2 < -1.0)) {
+    dVar2 = dVar1;
   }
-  dVar2 = asin(dVar3);
-  dVar1 = dVar2 + dVar6;
+  dVar3 = asin(dVar2);
+  dVar1 = dVar3 + dVar6;
   dVar4 = sin(dVar1);
-  dVar3 = 0.0;
+  dVar2 = 0.0;
   if (dVar4 == 0.0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_utils.cpp",0x1e4,1,
                     "%s\n\t(sinSum) = %g");
   }
-  dVar6 = dVar6 - dVar2;
-  dVar2 = sin(dVar6);
-  dVar2 = dVar2 / dVar4;
+  dVar6 = dVar6 - dVar3;
+  dVar3 = sin(dVar6);
+  dVar3 = dVar3 / dVar4;
   dVar4 = tan(dVar1);
-  if (dVar4 == dVar3) {
+  if (dVar4 == dVar2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_utils.cpp",0x1ea,1,
                     "%s\n\t(tanSum) = %g");
   }
-  dVar3 = tan(dVar6);
-  dVar4 = (double)(float)(((dVar3 / dVar4) * (dVar3 / dVar4) + dVar2 * dVar2) * 0.5);
-  dVar2 = 0.0;
-  if ((0.0 <= dVar4) && (dVar2 = dVar4, dVar5 < dVar4)) {
-    dVar2 = dVar5;
+  dVar2 = tan(dVar6);
+  dVar4 = (double)(float)(((dVar2 / dVar4) * (dVar2 / dVar4) + dVar3 * dVar3) * 0.5);
+  dVar3 = 0.0;
+  if ((0.0 <= dVar4) && (dVar3 = dVar4, dVar5 < dVar4)) {
+    dVar3 = dVar5;
   }
-  dVar2 = (double)__restfpr_26(dVar2);
-  return (float)dVar2;
+  return (float)dVar3;
 }
 
 

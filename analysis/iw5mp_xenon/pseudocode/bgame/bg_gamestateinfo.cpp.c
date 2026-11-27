@@ -203,6 +203,8 @@ GameStateInfo * GameStateInfo_Get(void)
 
 // 827FB600  CL_ReceiveGameStateInfoMessage  (bgame/bg_gamestateinfo.cpp:174)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "MatchRulesReturnCode": Some values do not have unique names */
 
@@ -216,23 +218,19 @@ CL_ReceiveGameStateInfoMessage(netadr_t param_1,msg_t *param_2,clientConnection_
   uint uVar4;
   uint uVar5;
   uint uVar6;
-  MatchRulesReturnCode MVar7;
-  char *pcVar8;
+  char *pcVar7;
+  uint uVar8;
   uint uVar9;
-  uint uVar10;
-  StructuredDataDef *pSVar11;
-  char *pcVar12;
+  StructuredDataDef *pSVar10;
+  char *pcVar11;
   msg_t *in_r5;
   int in_r6;
   
-  __savegprlr_24(param_2,param_3);
   pGVar1 = GameStateInfo_Get();
   iVar2 = MSG_ReadBit(in_r5);
   pGVar1->usingRecipe = (uint)(iVar2 != 0);
   if (iVar2 == 0) {
-LAB_827fb864:
-    MVar7 = __restgprlr_24(1);
-    return MVar7;
+    return MR_RETCODE_COMPLETE;
   }
   uVar3 = MSG_ReadLong(in_r5);
   uVar4 = MSG_ReadShort(in_r5);
@@ -240,17 +238,17 @@ LAB_827fb864:
   uVar6 = MSG_ReadShort(in_r5);
   if (uVar6 == *(uint *)(in_r6 + 0x65668)) {
     if (uVar6 == 0) {
-      pcVar8 = BG_MatchRulesData_GetGameTypeFromIndex(uVar4);
-      iVar2 = LoadMatchRulesDefaultFromFF(pGVar1->matchRules,pcVar8);
+      pcVar7 = BG_MatchRulesData_GetGameTypeFromIndex(uVar4);
+      iVar2 = LoadMatchRulesDefaultFromFF(pGVar1->matchRules,pcVar7);
       if (iVar2 == 0) {
         Com_PrintWarning(0x19,"Couldn\'t load defaults ff for matchrules %s\n");
       }
     }
     if (in_r5->readcount != in_r5->cursize + in_r5->splitSize) {
       do {
+        uVar8 = MSG_ReadShort(in_r5);
         uVar9 = MSG_ReadShort(in_r5);
-        uVar10 = MSG_ReadShort(in_r5);
-        if (0xbff < (uVar9 & 0xffff) + (uVar10 & 0xffff)) {
+        if (0xbff < (uVar8 & 0xffff) + (uVar9 & 0xffff)) {
           Com_PrintError(0x19,
                          "Malformed network packet, tried to write beyond length of match rules\n");
           if (alwaysfails == 0) {
@@ -259,36 +257,34 @@ LAB_827fb864:
                             "Malformed network packet, tried to write beyond length of match rules\n"
                            );
           }
-          MVar7 = __restgprlr_24(0xffffffffffffffff);
-          return MVar7;
+          return MR_RETCODE_ERROR;
         }
-        MSG_ReadData(in_r5,pGVar1->matchRules->data + (uVar9 & 0xffff),uVar10 & 0xffff);
+        MSG_ReadData(in_r5,pGVar1->matchRules->data + (uVar8 & 0xffff),uVar9 & 0xffff);
       } while (in_r5->readcount != in_r5->cursize + in_r5->splitSize);
     }
     *(uint *)(in_r6 + 0x65668) = uVar6 + 1;
     if (uVar5 <= uVar6 + 1) {
-      pSVar11 = StructuredDataDef_GetAsset("mp/recipes.def",0xc00);
-      uVar5 = Com_BlockChecksumKey32(pGVar1->matchRules,pSVar11->size,0);
+      pSVar10 = StructuredDataDef_GetAsset("mp/recipes.def",0xc00);
+      uVar5 = Com_BlockChecksumKey32(pGVar1->matchRules,pSVar10->size,0);
       pGVar1->matchRules->checksum = uVar5;
-      if (pGVar1->matchRules->checksum != uVar3) {
-        Com_PrintError(0x19,"Match rules does not match checksum after applying received delta.\n");
-        if (alwaysfails == 0) {
+      if (pGVar1->matchRules->checksum == uVar3) {
+        pcVar7 = BG_MatchRulesData_GetGameType(pGVar1->matchRules);
+        pcVar11 = BG_MatchRulesData_GetGameTypeFromIndex(uVar4);
+        iVar2 = I_strcmp(pcVar11,pcVar7);
+        if (iVar2 != 0) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_gamestateinfo.cpp"
-                          ,0xe9,0,
-                          "Match rules does not match checksum after applying received delta.\n");
+                          ,0xed,0,"%s");
         }
-        MVar7 = __restgprlr_24(0xffffffffffffffff);
-        return MVar7;
+        MatchRulesChanged(pGVar1->matchRules);
+        return MR_RETCODE_COMPLETE;
       }
-      pcVar8 = BG_MatchRulesData_GetGameType(pGVar1->matchRules);
-      pcVar12 = BG_MatchRulesData_GetGameTypeFromIndex(uVar4);
-      iVar2 = I_strcmp(pcVar12,pcVar8);
-      if (iVar2 != 0) {
+      Com_PrintError(0x19,"Match rules does not match checksum after applying received delta.\n");
+      if (alwaysfails == 0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_gamestateinfo.cpp"
-                        ,0xed,0,"%s");
+                        ,0xe9,0,
+                        "Match rules does not match checksum after applying received delta.\n");
       }
-      MatchRulesChanged(pGVar1->matchRules);
-      goto LAB_827fb864;
+      return MR_RETCODE_ERROR;
     }
   }
   else {
@@ -296,58 +292,56 @@ LAB_827fb864:
                      "Got out of order mruleResponse packet %d which will be discarded, expected %d. \n"
                     );
   }
-  MVar7 = __restgprlr_24(0);
-  return MVar7;
+  return MR_RETCODE_FALSE;
 }
 
 
 // 827FB870  SV_SendGameStateInfoMessage  (bgame/bg_gamestateinfo.cpp:245)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 void SV_SendGameStateInfoMessage(netadr_t param_1,msg_t *param_2)
 
 {
   uchar *puVar1;
-  uchar *puVar2;
-  uint uVar3;
-  GameStateInfo *pGVar4;
-  MatchRulesSnapshotDelta *pMVar5;
-  uint uVar6;
+  uint uVar2;
+  GameStateInfo *pGVar3;
+  MatchRulesSnapshotDelta *pMVar4;
+  uint uVar5;
   int in_r4;
   msg_t *in_r5;
   netadr_t in_stack_ffffff38;
   LargeLocal aLStack_80 [2];
   msg_t amStack_70 [2];
   
-  puVar1 = (uchar *)__savegprlr_26(param_2);
   LargeLocal::LargeLocal(aLStack_80,0x10000);
-  puVar2 = LargeLocal::GetBuf(aLStack_80);
-  uVar3 = MSG_ReadByte(in_r5);
-  pMVar5 = (MatchRulesSnapshotDelta *)0x0;
-  pGVar4 = GameStateInfo_Get();
-  if ((pGVar4->usingRecipe == 0) ||
-     (pMVar5 = PartyHost_GetMatchRulesSnapshotDeltaFromDefault(), uVar3 < pMVar5->partitionCount)) {
-    MSG_Init(amStack_70,puVar2,0x10000);
+  puVar1 = LargeLocal::GetBuf(aLStack_80);
+  uVar2 = MSG_ReadByte(in_r5);
+  pMVar4 = (MatchRulesSnapshotDelta *)0x0;
+  pGVar3 = GameStateInfo_Get();
+  if ((pGVar3->usingRecipe == 0) ||
+     (pMVar4 = PartyHost_GetMatchRulesSnapshotDeltaFromDefault(), uVar2 < pMVar4->partitionCount)) {
+    MSG_Init(amStack_70,puVar1,0x10000);
     MSG_WriteString(amStack_70,"mruleResponse");
-    MSG_WriteBool(amStack_70,pGVar4->usingRecipe == 1);
-    if (pGVar4->usingRecipe != 0) {
-      if (pMVar5 == (MatchRulesSnapshotDelta *)0x0) {
+    MSG_WriteBool(amStack_70,pGVar3->usingRecipe == 1);
+    if (pGVar3->usingRecipe != 0) {
+      if (pMVar4 == (MatchRulesSnapshotDelta *)0x0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_gamestateinfo.cpp"
                         ,0x10a,0,"%s");
       }
-      MSG_WriteLong(amStack_70,pGVar4->matchRules->checksum);
-      uVar6 = BG_MatchRulesData_GetGameTypeIndex(pGVar4->matchRules);
-      MSG_WriteShort(amStack_70,uVar6);
-      MSG_WriteShort(amStack_70,(uint)pMVar5->partitionCount);
-      MSG_WriteShort(amStack_70,uVar3);
-      MSG_WriteData(amStack_70,pMVar5->partition[uVar3].data,pMVar5->partition[uVar3].len);
+      MSG_WriteLong(amStack_70,pGVar3->matchRules->checksum);
+      uVar5 = BG_MatchRulesData_GetGameTypeIndex(pGVar3->matchRules);
+      MSG_WriteShort(amStack_70,uVar5);
+      MSG_WriteShort(amStack_70,(uint)pMVar4->partitionCount);
+      MSG_WriteShort(amStack_70,uVar2);
+      MSG_WriteData(amStack_70,pMVar4->partition[uVar2].data,pMVar4->partition[uVar2].len);
     }
     Com_DPrintf(0x19,"mruleResponse pt %i: msg.cursize = %d\n");
-    NET_OutOfBandData(NS_MAXCLIENTS,in_stack_ffffff38,puVar1,in_r4);
+    NET_OutOfBandData(NS_MAXCLIENTS,in_stack_ffffff38,(uchar *)param_2,in_r4);
   }
   LargeLocal::~LargeLocal(aLStack_80);
-  __restgprlr_26();
   return;
 }
 

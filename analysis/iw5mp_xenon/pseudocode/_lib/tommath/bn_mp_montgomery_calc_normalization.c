@@ -2,69 +2,71 @@
 
 // 822584B0  mp_montgomery_calc_normalization  (line unknown)
 
-void mp_montgomery_calc_normalization(undefined8 param_1,undefined8 param_2)
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
+undefined8 mp_montgomery_calc_normalization(uint *param_1,uint *param_2)
 
 {
   uint uVar1;
-  uint *puVar3;
-  int iVar4;
   undefined8 uVar2;
-  ulonglong uVar5;
-  undefined4 *puVar6;
-  longlong lVar7;
-  uint uVar8;
+  int iVar3;
+  ulonglong uVar4;
+  undefined4 *puVar5;
+  longlong lVar6;
+  uint uVar7;
   
-  puVar3 = (uint *)__savegprlr_29();
-  uVar1 = *(uint *)param_2;
+  uVar1 = *param_2;
   if (uVar1 == 0) {
-    lVar7 = 0;
+    lVar6 = 0;
   }
   else {
-    lVar7 = (ulonglong)uVar1 * 0x1c + -0x1c;
-    for (uVar5 = (ulonglong)*(uint *)(uVar1 * 4 + ((uint *)param_2)[3] + -4); uVar5 != 0;
-        uVar5 = uVar5 >> 1) {
-      lVar7 = lVar7 + 1;
+    lVar6 = (ulonglong)uVar1 * 0x1c + -0x1c;
+    for (uVar4 = (ulonglong)*(uint *)(uVar1 * 4 + param_2[3] + -4); uVar4 != 0; uVar4 = uVar4 >> 1)
+    {
+      lVar6 = lVar6 + 1;
     }
   }
-  uVar8 = (uint)lVar7;
-  lVar7 = lVar7 + ((longlong)((int)uVar8 / 0x1c + ((int)uVar8 >> 0x1f)) + (ulonglong)(uVar8 >> 0x1f)
+  uVar7 = (uint)lVar6;
+  lVar6 = lVar6 + ((longlong)((int)uVar7 / 0x1c + ((int)uVar7 >> 0x1f)) + (ulonglong)(uVar7 >> 0x1f)
                   ) * -0x1c;
   if ((int)uVar1 < 2) {
-    iVar4 = 0;
-    puVar3[2] = 0;
-    *puVar3 = 0;
-    if (0 < (int)puVar3[1]) {
-      puVar6 = (undefined4 *)(puVar3[3] - 4);
+    iVar3 = 0;
+    param_1[2] = 0;
+    *param_1 = 0;
+    if (0 < (int)param_1[1]) {
+      puVar5 = (undefined4 *)(param_1[3] - 4);
       do {
-        iVar4 = iVar4 + 1;
-        puVar6 = puVar6 + 1;
-        *puVar6 = 0;
-      } while (iVar4 < (int)puVar3[1]);
+        iVar3 = iVar3 + 1;
+        puVar5 = puVar5 + 1;
+        *puVar5 = 0;
+      } while (iVar3 < (int)param_1[1]);
     }
-    lVar7 = 1;
-    *(undefined4 *)puVar3[3] = 1;
-    *puVar3 = (uint)(*(int *)puVar3[3] != 0);
+    lVar6 = 1;
+    *(undefined4 *)param_1[3] = 1;
+    *param_1 = (uint)(*(int *)param_1[3] != 0);
   }
   else {
-    iVar4 = mp_2expt(puVar3,(ulonglong)uVar1 * 0x1c + lVar7 + -0x1d);
-    if (iVar4 != 0) {
-      __restgprlr_29();
-      return;
+    uVar2 = mp_2expt(param_1,(ulonglong)uVar1 * 0x1c + lVar6 + -0x1d);
+    if ((int)uVar2 != 0) {
+      return uVar2;
     }
   }
-  lVar7 = lVar7 + -1;
-  iVar4 = (int)lVar7;
-  while (iVar4 < 0x1c) {
-    uVar2 = mp_mul_2(puVar3,puVar3);
-    if (((int)uVar2 != 0) ||
-       ((iVar4 = mp_cmp_mag(puVar3,param_2), iVar4 != -1 &&
-        (uVar2 = s_mp_sub(puVar3), (int)uVar2 != 0)))) goto LAB_82258608;
-    lVar7 = lVar7 + 1;
-    iVar4 = (int)lVar7;
+  lVar6 = lVar6 + -1;
+  iVar3 = (int)lVar6;
+  while( true ) {
+    if (0x1b < iVar3) {
+      return 0;
+    }
+    uVar2 = mp_mul_2(param_1,param_1);
+    if ((int)uVar2 != 0) break;
+    iVar3 = mp_cmp_mag(param_1,param_2);
+    if ((iVar3 != -1) && (uVar2 = s_mp_sub(param_1), (int)uVar2 != 0)) {
+      return uVar2;
+    }
+    lVar6 = lVar6 + 1;
+    iVar3 = (int)lVar6;
   }
-  uVar2 = 0;
-LAB_82258608:
-  __restgprlr_29(uVar2);
-  return;
+  return uVar2;
 }
 

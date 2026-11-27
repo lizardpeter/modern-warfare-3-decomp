@@ -2,30 +2,28 @@
 
 // 8291DB70  `eh_vector_constructor_iterator'  (line unknown)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 void _eh_vector_constructor_iterator_
                (void *param_1,uint param_2,int param_3,_func___cdecl_void_void_ptr *param_4,
                _func___cdecl_void_void_ptr *param_5)
 
 {
-  longlong lVar1;
-  longlong lVar2;
-  int iVar3;
-  undefined4 uStack00000014;
-  undefined4 uStack0000001c;
+  void *pvVar1;
+  int iVar2;
+  void *pvStack00000014;
+  uint uStack0000001c;
   _func___cdecl_void_void_ptr *p_Stack00000034;
   
-  lVar2 = (longlong)(int)param_2;
+  pvStack00000014 = param_1;
+  uStack0000001c = param_2;
   p_Stack00000034 = param_5;
-  lVar1 = __savegprlr_26(param_1);
-  uStack00000014 = (undefined4)lVar1;
-  uStack0000001c = (undefined4)lVar2;
-  for (iVar3 = 0; iVar3 < param_3; iVar3 = iVar3 + 1) {
-    (*param_4)((void *)lVar1);
-    lVar1 = lVar1 + lVar2;
-    uStack00000014 = (undefined4)lVar1;
+  for (iVar2 = 0; pvVar1 = pvStack00000014, iVar2 < param_3; iVar2 = iVar2 + 1) {
+    (*param_4)(pvStack00000014);
+    pvStack00000014 = (void *)((int)pvVar1 + param_2);
   }
   FUN_8291dc20();
-  __restgprlr_26();
   return;
 }
 

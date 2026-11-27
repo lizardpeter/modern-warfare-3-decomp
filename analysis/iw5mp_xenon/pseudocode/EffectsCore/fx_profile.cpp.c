@@ -2,49 +2,44 @@
 
 // 82438B78  FX_GetProfileEntry  (EffectsCore/fx_profile.cpp:83)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 FxProfileEntry * FX_GetProfileEntry(FxEffectDef *param_1,FxProfileEntry *param_2,int *param_3)
 
 {
-  int iVar1;
+  FxProfileEntry *pFVar1;
   int iVar2;
-  FxProfileEntry *pFVar3;
-  longlong lVar4;
-  longlong lVar5;
-  uint uVar6;
   
-  lVar4 = (longlong)(int)param_2;
-  iVar2 = __savegprlr_27(param_1);
-  uVar6 = 0;
-  lVar5 = lVar4;
+  iVar2 = 0;
+  pFVar1 = param_2;
   if (0 < *param_3) {
     do {
-      if (*(int *)lVar5 == iVar2) {
-        pFVar3 = (FxProfileEntry *)__restgprlr_27(((ulonglong)uVar6 & 0x7ffffff) * 0x20 + lVar4);
-        return pFVar3;
+      if (pFVar1->effectDef == param_1) {
+        return param_2 + iVar2;
       }
-      uVar6 = uVar6 + 1;
-      lVar5 = lVar5 + 0x20;
-    } while ((int)uVar6 < *param_3);
+      iVar2 = iVar2 + 1;
+      pFVar1 = pFVar1 + 1;
+    } while (iVar2 < *param_3);
   }
-  if (uVar6 != *param_3) {
+  if (iVar2 != *param_3) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_profile.cpp",
                     0x5c,0,"entryIndex == *entryCount\n\t%i, %i");
   }
-  iVar1 = uVar6 * 0x20 + (int)lVar4;
+  pFVar1 = param_2 + iVar2;
   *param_3 = *param_3 + 1;
-  *(int *)(uVar6 * 0x20 + (int)lVar4) = iVar2;
-  *(undefined4 *)(iVar1 + 4) = 0;
-  *(undefined4 *)(iVar1 + 8) = 0;
-  *(undefined4 *)(iVar1 + 0xc) = 0;
-  *(undefined4 *)(iVar1 + 0x10) = 0;
-  *(undefined2 *)(iVar1 + 0x14) = 0;
-  *(undefined2 *)(iVar1 + 0x16) = 0;
-  *(undefined2 *)(iVar1 + 0x18) = 0;
-  *(undefined2 *)(iVar1 + 0x1a) = 0;
-  *(undefined2 *)(iVar1 + 0x1c) = 0;
-  *(undefined2 *)(iVar1 + 0x1e) = 0;
-  pFVar3 = (FxProfileEntry *)__restgprlr_27();
-  return pFVar3;
+  param_2[iVar2].effectDef = param_1;
+  pFVar1->latestMsecBegin = 0;
+  pFVar1->effectCount = 0;
+  pFVar1->activeElemCount = 0;
+  pFVar1->pendingElemCount = 0;
+  pFVar1->boltCount = 0;
+  pFVar1->trailCount = 0;
+  pFVar1->activeTrailElemCount = 0;
+  pFVar1->pendingTrailElemCount = 0;
+  pFVar1->sparkFountainCount = 0;
+  pFVar1->sparkFountainClusterCount = 0;
+  return pFVar1;
 }
 
 
@@ -65,6 +60,8 @@ FX_PoolFromHandle_Generic<FxSparkFountain>(FxPool<FxSparkFountain> *param_1,usho
 
 // 824395C8  FX_ProfileSingleEffect  (EffectsCore/fx_profile.cpp:112)
 
+/* WARNING: Function: __savegprlr_18 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_18 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void FX_ProfileSingleEffect(FxSystem *param_1,FxEffect *param_2,FxProfileEntry *param_3)
@@ -74,105 +71,98 @@ void FX_ProfileSingleEffect(FxSystem *param_1,FxEffect *param_2,FxProfileEntry *
   FxPool<FxTrail> *pFVar2;
   FxPool<FxTrailElem> *pFVar3;
   FxPool<FxSparkFountain> *pFVar4;
-  int iVar5;
-  ushort *puVar6;
-  uint uVar7;
-  FxSystem *pFVar8;
-  ushort uVar9;
-  longlong lVar10;
-  longlong lVar11;
-  uint uVar12;
+  uint uVar5;
+  ushort uVar6;
+  longlong lVar7;
+  ushort *puVar8;
+  uint uVar9;
   
-  lVar11 = (longlong)(int)param_2;
-  pFVar8 = (FxSystem *)__savegprlr_18(param_1);
   param_3->effectCount = param_3->effectCount + 1;
-  iVar5 = (int)lVar11;
-  if (param_3->latestMsecBegin < *(int *)(iVar5 + 0x2c)) {
-    param_3->latestMsecBegin = *(int *)(iVar5 + 0x2c);
+  if (param_3->latestMsecBegin < param_2->msecBegin) {
+    param_3->latestMsecBegin = param_2->msecBegin;
   }
-  if (*(char *)(iVar5 + 0x26) != -1) {
+  if (param_2->bolt != 0xff) {
     param_3->boltCount = param_3->boltCount + 1;
   }
-  lVar11 = lVar11 + 8;
-  lVar10 = 3;
+  puVar8 = param_2->firstElemHandle;
+  lVar7 = 3;
   do {
-    uVar12 = (uint)*(ushort *)lVar11;
-    uVar7 = uVar12;
-    while (uVar7 != 0xffff) {
-      if (pFVar8 == (FxSystem *)0x0) {
+    uVar9 = (uint)*puVar8;
+    uVar5 = uVar9;
+    while (uVar5 != 0xffff) {
+      if (param_1 == (FxSystem *)0x0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\fx_system_handle.h"
                         ,0x62,0,"%s");
       }
-      pFVar1 = pFVar8->elems;
-      if ((0x3fff < uVar7) || ((uVar7 & 7) != 0)) {
+      pFVar1 = param_1->elems;
+      if ((0x3fff < uVar5) || ((uVar5 & 7) != 0)) {
         va("%p %i");
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\fx_system_handle.h"
                         ,0x54,0,"%s\n\t%s");
       }
-      if (pFVar8->msecNow < *(int *)((int)&pFVar1->field0_0x0 + uVar7 * 4 + 4)) {
+      if (param_1->msecNow < *(int *)((int)&pFVar1->field0_0x0 + uVar5 * 4 + 4)) {
         param_3->pendingElemCount = param_3->pendingElemCount + 1;
       }
       else {
         param_3->activeElemCount = param_3->activeElemCount + 1;
       }
-      uVar9 = FX_GetNextElemInEffect(pFVar8,(ushort)uVar12);
-      uVar12 = (uint)(short)uVar9;
-      uVar7 = (uint)uVar9;
+      uVar6 = FX_GetNextElemInEffect(param_1,(ushort)uVar9);
+      uVar9 = (uint)(short)uVar6;
+      uVar5 = (uint)uVar6;
     }
-    lVar10 = lVar10 + -1;
-    lVar11 = lVar11 + 2;
-  } while (lVar10 != 0);
-  uVar9 = *(ushort *)(iVar5 + 0x10);
-  while (uVar7 = (uint)uVar9, uVar7 != 0xffff) {
-    if (pFVar8 == (FxSystem *)0x0) {
+    lVar7 = lVar7 + -1;
+    puVar8 = puVar8 + 1;
+  } while (lVar7 != 0);
+  uVar6 = param_2->firstTrailHandle;
+  while (uVar5 = (uint)uVar6, uVar5 != 0xffff) {
+    if (param_1 == (FxSystem *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\fx_system_handle.h"
                       ,0x85,0,"%s");
     }
-    pFVar2 = pFVar8->trails;
-    if ((0x1ff < uVar7) || ((uVar9 & 3) != 0)) {
+    pFVar2 = param_1->trails;
+    if ((0x1ff < uVar5) || ((uVar6 & 3) != 0)) {
       va("%p %i");
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\fx_system_handle.h"
                       ,0x54,0,"%s\n\t%s");
     }
-    puVar6 = (ushort *)((int)&pFVar2->field0_0x0 + uVar7 * 4);
+    puVar8 = (ushort *)((int)&pFVar2->field0_0x0 + uVar5 * 4);
     param_3->trailCount = param_3->trailCount + 1;
-    uVar9 = puVar6[1];
-    while (uVar7 = (uint)uVar9, uVar7 != 0xffff) {
-      pFVar3 = pFVar8->trailElems;
-      if ((0x3fff < uVar7) || ((uVar9 & 7) != 0)) {
+    uVar6 = puVar8[1];
+    while (uVar5 = (uint)uVar6, uVar5 != 0xffff) {
+      pFVar3 = param_1->trailElems;
+      if ((0x3fff < uVar5) || ((uVar6 & 7) != 0)) {
         va("%p %i");
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\fx_system_handle.h"
                         ,0x54,0,"%s\n\t%s");
       }
-      if (pFVar8->msecNow < *(int *)((int)&pFVar3->field0_0x0 + uVar7 * 4 + 0x10)) {
+      if (param_1->msecNow < *(int *)((int)&pFVar3->field0_0x0 + uVar5 * 4 + 0x10)) {
         param_3->pendingTrailElemCount = param_3->pendingTrailElemCount + 1;
       }
       else {
         param_3->activeTrailElemCount = param_3->activeTrailElemCount + 1;
       }
-      uVar9 = *(ushort *)((int)&pFVar3->field0_0x0 + uVar7 * 4 + 0x14);
+      uVar6 = *(ushort *)((int)&pFVar3->field0_0x0 + uVar5 * 4 + 0x14);
     }
-    uVar9 = *puVar6;
+    uVar6 = *puVar8;
   }
-  uVar9 = *(ushort *)(iVar5 + 0x12);
-  while (uVar7 = (uint)uVar9, uVar7 != 0xffff) {
-    if (pFVar8 == (FxSystem *)0x0) {
+  uVar6 = param_2->firstSparkFountainHandle;
+  while (uVar5 = (uint)uVar6, uVar5 != 0xffff) {
+    if (param_1 == (FxSystem *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\fx_system_handle.h"
                       ,0xbd,0,"%s");
     }
-    pFVar4 = pFVar8->sparkFountains;
-    if ((0xfff < uVar7) || ((uVar9 & 0x3f) != 0)) {
+    pFVar4 = param_1->sparkFountains;
+    if ((0xfff < uVar5) || ((uVar6 & 0x3f) != 0)) {
       va("%p %i");
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\fx_system_handle.h"
                       ,0x54,0,"%s\n\t%s");
     }
     param_3->sparkFountainCount = param_3->sparkFountainCount + 1;
     param_3->sparkFountainClusterCount =
-         (ushort)*(byte *)((int)&pFVar4->field0_0x0 + uVar7 + 5) +
+         (ushort)*(byte *)((int)&pFVar4->field0_0x0 + uVar5 + 5) +
          param_3->sparkFountainClusterCount;
-    uVar9 = *(ushort *)((int)&pFVar4->field0_0x0 + uVar7 + 2);
+    uVar6 = *(ushort *)((int)&pFVar4->field0_0x0 + uVar5 + 2);
   }
-  __restgprlr_18();
   return;
 }
 
@@ -295,6 +285,8 @@ int FX_CompareProfileEntries_Age(void *param_1,void *param_2)
 
 // 824399F8  FX_DrawProfile  (EffectsCore/fx_profile.cpp:224)
 
+/* WARNING: Function: __savegprlr_21 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_21 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void FX_DrawProfile(LocalClientNum_t param_1,
@@ -314,22 +306,20 @@ void FX_DrawProfile(LocalClientNum_t param_1,
   FxProfileEntry *pFVar11;
   char *pcVar12;
   char *pcVar13;
-  code *pcVar14;
-  longlong lVar15;
-  code *pcVar16;
-  longlong lVar17;
-  int iVar18;
-  ulonglong uVar19;
-  int iVar20;
+  longlong lVar14;
+  code *pcVar15;
+  longlong lVar16;
+  int iVar17;
+  ulonglong uVar18;
+  int iVar19;
+  longlong lVar20;
   double dVar21;
   
-  lVar15 = (longlong)(int)param_3;
-  lVar17 = (longlong)(int)param_2;
-  __savegprlr_21(param_1,lVar17,lVar15);
-  pcVar14 = (code *)lVar17;
-  lVar17 = -0x8100;
-  uVar8 = _RtlCheckStack12();
-  iVar6 = (int)(ZEXT48(&stack0x00000000) + lVar17);
+  lVar14 = (longlong)(int)param_3;
+  lVar20 = (longlong)(int)param_2;
+  lVar16 = -0x8100;
+  uVar8 = _RtlCheckStack12(param_1,lVar20,lVar14);
+  iVar6 = (int)(ZEXT48(&stack0x00000000) + lVar16);
   *(BADSPACEBASE **)iVar6 = register0x0000000c;
   pFVar9 = FX_GetSystemConst((int)uVar8);
   if (pFVar9 == (FxSystem *)0x0) {
@@ -337,31 +327,31 @@ void FX_DrawProfile(LocalClientNum_t param_1,
                     0xef,0,"%s");
   }
   FX_WaitEnterReadSystemLock(pFVar9->lock);
-  iVar18 = pFVar9->firstNewEffect;
-  uVar19 = 0;
+  iVar17 = pFVar9->firstNewEffect;
+  uVar18 = 0;
   *(undefined4 *)(iVar6 + 0x88) = 0;
-  iVar20 = pFVar9->firstActiveEffect;
-  if (iVar20 != iVar18) {
+  iVar19 = pFVar9->firstActiveEffect;
+  if (iVar19 != iVar17) {
     do {
-      *(int *)(iVar6 + 0x80) = iVar20;
+      *(int *)(iVar6 + 0x80) = iVar19;
       pFVar10 = FX_EffectFromHandleConst
                           (pFVar9,pFVar9->allEffectHandles[*(uint *)(iVar6 + 0x80) & 0x3ff]);
       pFVar11 = FX_GetProfileEntry(pFVar10->def,(FxProfileEntry *)(iVar6 + 0x90),
                                    (int *)(iVar6 + 0x88));
       FX_ProfileSingleEffect(pFVar9,pFVar10,pFVar11);
-      iVar20 = iVar20 + 1;
-    } while (iVar20 != pFVar9->firstNewEffect);
-    uVar19 = (ulonglong)*(uint *)(iVar6 + 0x88);
+      iVar19 = iVar19 + 1;
+    } while (iVar19 != pFVar9->firstNewEffect);
+    uVar18 = (ulonglong)*(uint *)(iVar6 + 0x88);
   }
   FX_ExitReadSystemLock(pFVar9->lock);
   uVar4 = (fx_profileSort->current).unsignedInt;
   if (uVar4 != 0) {
     if (uVar4 == 1) {
-      pcVar16 = FX_CompareProfileEntries_Name;
+      pcVar15 = FX_CompareProfileEntries_Name;
       goto LAB_82439b2c;
     }
     if (uVar4 < 3) {
-      pcVar16 = FX_CompareProfileEntries_Age;
+      pcVar15 = FX_CompareProfileEntries_Age;
       goto LAB_82439b2c;
     }
     if (alwaysfails == 0) {
@@ -370,81 +360,83 @@ void FX_DrawProfile(LocalClientNum_t param_1,
                       0xff,0,pcVar12);
     }
   }
-  pcVar16 = FX_CompareProfileEntries_Cost;
+  pcVar15 = FX_CompareProfileEntries_Cost;
 LAB_82439b2c:
-  qsort((void *)(iVar6 + 0x90),(uint)uVar19,0x20,pcVar16);
+  qsort((void *)(iVar6 + 0x90),(uint)uVar18,0x20,pcVar15);
   *(longlong *)(iVar6 + 0x80) = (longlong)(pFVar9->firstNewEffect - pFVar9->firstActiveEffect);
   *(double *)(iVar6 + 0x28) = (double)((float)*(longlong *)(iVar6 + 0x80) * 0.09765625);
   pcVar12 = va("%4i of %4i effect objects    (%.0f%%; %i free)");
-  (*pcVar14)(uVar8,pcVar12,lVar15);
+  pcVar15 = (code *)lVar20;
+  (*pcVar15)(uVar8,pcVar12,lVar14);
   *(longlong *)(iVar6 + 0x80) = (longlong)pFVar9->activeBoltCount;
   *(double *)(iVar6 + 0x28) = (double)((float)*(longlong *)(iVar6 + 0x80) * 0.39215687);
   pcVar12 = va("%4i of %4i bolts             (%.0f%%; %i free)");
-  (*pcVar14)(uVar8,pcVar12,lVar15);
+  (*pcVar15)(uVar8,pcVar12,lVar14);
   *(longlong *)(iVar6 + 0x80) = (longlong)pFVar9->activeTrailCount;
   *(double *)(iVar6 + 0x28) = (double)((float)*(longlong *)(iVar6 + 0x80) * 0.78125);
   pcVar12 = va("%4i of %4i trails            (%.0f%%; %i free)");
-  (*pcVar14)(uVar8,pcVar12,lVar15);
+  (*pcVar15)(uVar8,pcVar12,lVar14);
   *(longlong *)(iVar6 + 0x80) = (longlong)pFVar9->activeElemCount;
   dVar21 = 0.048828125;
   *(double *)(iVar6 + 0x28) = (double)(float)((double)*(longlong *)(iVar6 + 0x80) * 0.048828125);
   pcVar12 = va("%4i of %4i effect elements   (%.0f%%; %i free)");
-  (*pcVar14)(uVar8,pcVar12,lVar15);
+  (*pcVar15)(uVar8,pcVar12,lVar14);
   *(longlong *)(iVar6 + 0x80) = (longlong)pFVar9->activeTrailElemCount;
   *(double *)(iVar6 + 0x28) = (double)(float)((double)*(longlong *)(iVar6 + 0x80) * dVar21);
   pcVar12 = va("%4i of %4i trail elements    (%.0f%%; %i free)");
-  (*pcVar14)(uVar8,pcVar12,lVar15);
+  (*pcVar15)(uVar8,pcVar12,lVar14);
   *(longlong *)(iVar6 + 0x80) = (longlong)pFVar9->activeSparkCloudCount;
   *(double *)(iVar6 + 0x28) = (double)((float)*(longlong *)(iVar6 + 0x80) * 3.125);
   pcVar12 = va("%4i of %4i spark clouds      (%.0f%%; %i free)");
-  (*pcVar14)(uVar8,pcVar12,lVar15);
+  (*pcVar15)(uVar8,pcVar12,lVar14);
   *(longlong *)(iVar6 + 0x80) = (longlong)pFVar9->activeSparkFountainCount;
   *(double *)(iVar6 + 0x28) = (double)((float)*(longlong *)(iVar6 + 0x80) * 1.5625);
   pcVar12 = va("%4i of %4i spark fountains   (%.0f%%; %i free)");
-  (*pcVar14)(uVar8,pcVar12,lVar15);
+  (*pcVar15)(uVar8,pcVar12,lVar14);
   *(longlong *)(iVar6 + 0x80) = (longlong)pFVar9->activeSparkFountainClusterCount;
   *(double *)(iVar6 + 0x28) = (double)((float)*(longlong *)(iVar6 + 0x80) * 1.0416666);
   pcVar12 = va("%4i of %4i fountain clusters (%.0f%%; %i free)");
-  (*pcVar14)(uVar8,pcVar12,lVar15);
+  (*pcVar15)(uVar8,pcVar12,lVar14);
   *(longlong *)(iVar6 + 0x80) = (longlong)pFVar9->activeSpotLightEffectCount;
   *(double *)(iVar6 + 0x28) = (double)((float)*(longlong *)(iVar6 + 0x80) * 100.0);
   pcVar12 = va("%4i of %4i spot lights       (%.0f%%; %i free)");
-  (*pcVar14)(uVar8,pcVar12,lVar15);
+  (*pcVar15)(uVar8,pcVar12,lVar14);
   *(longlong *)(iVar6 + 0x80) = (longlong)pFVar9->gfxCloudCount;
   *(double *)(iVar6 + 0x28) = (double)((float)*(longlong *)(iVar6 + 0x80) * 0.390625);
   pcVar12 = va("%4i of %4i cloud elements    (%.0f%%; %i free)");
-  (*pcVar14)(uVar8,pcVar12,lVar15);
-  (*pcVar14)(uVar8,0xffffffff820068af,lVar15);
+  (*pcVar15)(uVar8,pcVar12,lVar14);
+  (*pcVar15)(uVar8,0xffffffff820068af,lVar14);
   pcVar12 = va("Effects, sorted by %s (fx_profileSort)");
-  (*pcVar14)(uVar8,pcVar12,lVar15);
+  (*pcVar15)(uVar8,pcVar12,lVar14);
   *(char **)(iVar6 + 0x54) = "actv";
   *(char **)(iVar6 + 0x5c) = "pend";
   *(char **)(iVar6 + 0x74) = "effectname";
   *(char **)(iVar6 + 0x6c) = "sf c";
   *(char **)(iVar6 + 100) = "sf  ";
   pcVar12 = va("%4s  %4s (%4s/%4s)  %4s  %4s  %4s (%4s/%4s)  %4s  %4s  %s");
-  (*pcVar14)(uVar8,pcVar12,lVar15);
-  (*pcVar14)(uVar8,0xffffffff82066798,lVar15);
+  (*pcVar15)(uVar8,pcVar12,lVar14);
+  (*pcVar15)(uVar8,0xffffffff82066798,lVar14);
   pcVar12 = (fx_profileFilter->current).string;
-  iVar18 = (fx_profileSkip->current).integer;
+  iVar17 = (fx_profileSkip->current).integer;
   if (*pcVar12 == '\0') {
     pcVar12 = (char *)0x0;
   }
   else {
     pcVar13 = va("FILTERING; SHOWING ONLY EFFECTS WITH \'%s\' IN NAME (fx_profileFilter)");
-    (*pcVar14)(uVar8,pcVar13,lVar15);
+    (*pcVar15)(uVar8,pcVar13,lVar14);
   }
-  if (iVar18 != 0) {
+  if (iVar17 != 0) {
     pcVar13 = va("SKIPPING %i ROWS (fx_profileSkip)");
-    (*pcVar14)(uVar8,pcVar13,lVar15);
+    (*pcVar15)(uVar8,pcVar13,lVar14);
   }
-  if (0 < (int)(uint)uVar19) {
-    lVar17 = ZEXT48(&stack0x00000000) + lVar17 + 0xaa;
+  if (0 < (int)(uint)uVar18) {
+    lVar20 = ZEXT48(&stack0x00000000) + lVar16 + 0xaa;
     do {
-      puVar7 = (ushort *)lVar17;
-      if (pcVar12 == (char *)0x0) {
-LAB_8243a040:
-        if (iVar18 == 0) {
+      puVar7 = (ushort *)lVar20;
+      if ((pcVar12 == (char *)0x0) ||
+         (pcVar13 = strstr((char *)**(undefined4 **)(puVar7 + -0xd),pcVar12), pcVar13 != (char *)0x0
+         )) {
+        if (iVar17 == 0) {
           uVar1 = puVar7[2];
           uVar2 = puVar7[1];
           uVar3 = *puVar7;
@@ -455,21 +447,16 @@ LAB_8243a040:
           *(uint *)(iVar6 + 100) = (uint)uVar2;
           *(uint *)(iVar6 + 0x5c) = (uint)uVar3;
           pcVar13 = va("%4i  %4i (%4i/%4i)  %4i  %4i  %4i (%4i/%4i)  %4i  %4i  %s");
-          (*pcVar14)(uVar8,pcVar13,lVar15);
+          (*pcVar15)(uVar8,pcVar13,lVar14);
         }
         else {
-          iVar18 = iVar18 + -1;
+          iVar17 = iVar17 + -1;
         }
       }
-      else {
-        pcVar13 = strstr((char *)**(undefined4 **)(puVar7 + -0xd),pcVar12);
-        if (pcVar13 != (char *)0x0) goto LAB_8243a040;
-      }
-      uVar19 = uVar19 - 1;
-      lVar17 = lVar17 + 0x20;
-    } while (uVar19 != 0);
+      uVar18 = uVar18 - 1;
+      lVar20 = lVar20 + 0x20;
+    } while (uVar18 != 0);
   }
-  __restgprlr_21();
   return;
 }
 
@@ -504,6 +491,8 @@ char * typeAsString(uchar param_1)
 
 // 82438DD0  FX_DrawMarkProfile_MarkPrint  (EffectsCore/fx_profile.cpp:387)
 
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void FX_DrawMarkProfile_MarkPrint
@@ -512,16 +501,14 @@ void FX_DrawMarkProfile_MarkPrint
                float *param_7)
 
 {
-  ushort *puVar1;
-  FxMarksSystem *pFVar2;
-  ushort uVar4;
-  char *pcVar3;
-  ulonglong uVar5;
-  ulonglong uVar6;
-  int iVar7;
-  ushort uVar8;
-  longlong lVar9;
-  GfxMarkContext *pGVar10;
+  FxMarksSystem *pFVar1;
+  ushort uVar3;
+  char *pcVar2;
+  uint uVar4;
+  int iVar5;
+  ushort uVar6;
+  FxMark *pFVar7;
+  GfxMarkContext *pGVar8;
   LocalClientNum_t LStack00000014;
   FxMarksSystem *pFStack0000001c;
   char *pcStack0000002c;
@@ -531,11 +518,9 @@ void FX_DrawMarkProfile_MarkPrint
   uchar local_b0;
   ushort local_ae;
   
-  uVar5 = (ulonglong)(short)param_3;
-  __savegprlr();
-  iVar7 = 0;
-  uVar6 = uVar5 & 0xffff;
-  uVar8 = 0xffff;
+  iVar5 = 0;
+  uVar4 = (uint)param_3;
+  uVar6 = 0xffff;
   local_b0 = '\0';
   LStack00000014 = param_1;
   pFStack0000001c = param_2;
@@ -543,68 +528,67 @@ void FX_DrawMarkProfile_MarkPrint
   uStack00000034 = param_5;
   p_Stack0000003c = param_6;
   pfStack00000044 = param_7;
-  uVar4 = (ushort)uVar5;
-  if (uVar6 != 0xffff) {
+  uVar3 = param_3;
+  if (uVar4 != 0xffff) {
     do {
-      local_ae = uVar4;
-      if (0x1ff < uVar6) {
+      local_ae = uVar3;
+      if (0x1ff < uVar4) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\fx_marks.h",
                         0xad,0,"handle doesn\'t index FX_MARKS_LIMIT\n\t%i not in [0, %i)");
       }
-      pFVar2 = pFStack0000001c;
+      pFVar1 = pFStack0000001c;
       if (pFStack0000001c == (FxMarksSystem *)0x0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\fx_marks.h",
                         0xae,0,"%s");
       }
-      lVar9 = uVar6 * 0x40 + ZEXT48(pFVar2->marks);
-      puVar1 = (ushort *)lVar9;
-      if (*(int *)(puVar1 + 2) == -1) {
+      pFVar7 = pFVar1->marks + uVar4;
+      if (pFVar7->timeDrawn == -1) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_profile.cpp"
                         ,0x19c,0,"%s");
       }
-      if (*puVar1 != uVar8) {
+      if (pFVar7->prevMark != uVar6) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_profile.cpp"
                         ,0x19d,0,"%s");
       }
-      lVar9 = lVar9 + 0x30;
-      if (lVar9 == 0) {
+      pGVar8 = &pFVar7->context;
+      if (pGVar8 == (GfxMarkContext *)0x0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\../renderer/tr_types.h"
                         ,0x3b2,0,"%s");
       }
-      pGVar10 = (GfxMarkContext *)lVar9;
-      if (iVar7 == 0) {
-        local_b0 = pGVar10->modelType;
+      if (iVar5 == 0) {
+        local_b0 = pGVar8->modelType;
       }
-      if (local_b0 != pGVar10->modelType) {
+      if (local_b0 != pGVar8->modelType) {
         va("%i %i");
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_profile.cpp"
                         ,0x1a3,0,"%s\n\t%s");
       }
       if (((local_b0 == '\0') || (local_b0 == '\x01')) &&
-         (uVar4 = FX_GetMarkContext_ModelIndex(pGVar10), uVar4 != uStack00000034)) {
-        FX_GetMarkContext_ModelIndex(pGVar10);
+         (uVar3 = FX_GetMarkContext_ModelIndex(pGVar8), uVar3 != uStack00000034)) {
+        FX_GetMarkContext_ModelIndex(pGVar8);
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_profile.cpp"
                         ,0x1a5,0,"FX_GetMarkContext_ModelIndex( &mark->context ) == index\n\t%i, %i"
                        );
       }
-      uVar6 = (ulonglong)puVar1[1];
-      iVar7 = iVar7 + 1;
-      uVar4 = puVar1[1];
-      uVar8 = local_ae;
-    } while (uVar6 != 0xffff);
-    if (iVar7 != 0) {
+      uVar4 = (uint)pFVar7->nextMark;
+      iVar5 = iVar5 + 1;
+      uVar3 = pFVar7->nextMark;
+      uVar6 = local_ae;
+    } while (uVar4 != 0xffff);
+    if (iVar5 != 0) {
       typeAsString(local_b0);
-      pcVar3 = va("%s%5i %s %i (%i pts, %i tris)");
-      (*p_Stack0000003c)(LStack00000014,pcVar3,pfStack00000044);
+      pcVar2 = va("%s%5i %s %i (%i pts, %i tris)");
+      (*p_Stack0000003c)(LStack00000014,pcVar2,pfStack00000044);
     }
   }
-  __restgprlr();
   return;
 }
 
 
 // 82439070  FX_DrawMarkProfile  (EffectsCore/fx_profile.cpp:435)
 
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void FX_DrawMarkProfile(LocalClientNum_t param_1,
@@ -625,7 +609,6 @@ void FX_DrawMarkProfile(LocalClientNum_t param_1,
   ushort *puVar11;
   GfxMarkContext *pGVar12;
   
-  __savegprlr();
   pFVar5 = FX_GetMarksSystem(param_1);
   iVar9 = 0;
   uVar7 = pFVar5->firstFreeMarkHandle;
@@ -722,7 +705,6 @@ void FX_DrawMarkProfile(LocalClientNum_t param_1,
       pGVar12 = (GfxMarkContext *)((int)(pGVar12 + 9) + 1);
     } while ((FxMark *)(puVar11 + 1) != pFVar5->marks + 0x200);
   }
-  __restgprlr();
   return;
 }
 

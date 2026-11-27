@@ -2,100 +2,93 @@
 
 // 829258E0  _lseek  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/lseek.c:60)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
+
 long _lseek(int param_1,long param_2,int param_3)
 
 {
   int iVar1;
-  int iVar2;
-  uint uVar4;
-  ulong *puVar5;
-  int *piVar6;
-  ulonglong uVar3;
-  long lVar7;
-  uint uStack00000014;
-  uint local_50;
+  ulong *puVar2;
+  int *piVar3;
+  int iVar4;
+  int iStack00000014;
+  long local_50;
   
-  uVar4 = __savegprlr_25(param_1);
-  uStack00000014 = uVar4;
-  if (uVar4 == 0xfffffffe) {
-    puVar5 = __doserrno();
-    *puVar5 = 0;
-    piVar6 = _errno();
-    uVar3 = 0xffffffffffffffff;
-    *piVar6 = 9;
+  iStack00000014 = param_1;
+  if (param_1 == -2) {
+    puVar2 = __doserrno();
+    *puVar2 = 0;
+    piVar3 = _errno();
+    *piVar3 = 9;
   }
   else {
-    if ((-1 < (int)uVar4) && (uVar4 < (uint)_nhandle)) {
-      iVar1 = ((int)uVar4 >> 5) * 4;
-      iVar2 = (uVar4 & 0x1f) * 0x48;
-      if ((*(byte *)(*(int *)(&__pioinfo + iVar1) + iVar2 + 4) & 1) != 0) {
-        __lock_fhandle(uVar4);
-        if ((*(byte *)(*(int *)(&__pioinfo + iVar1) + iVar2 + 4) & 1) == 0) {
-          piVar6 = _errno();
-          *piVar6 = 9;
-          puVar5 = __doserrno();
-          *puVar5 = 0;
-          local_50 = 0xffffffff;
+    if ((-1 < param_1) && ((uint)param_1 < (uint)_nhandle)) {
+      iVar1 = (param_1 >> 5) * 4;
+      iVar4 = (param_1 & 0x1fU) * 0x48;
+      if ((*(byte *)(*(int *)(&__pioinfo + iVar1) + iVar4 + 4) & 1) != 0) {
+        __lock_fhandle(param_1);
+        if ((*(byte *)(*(int *)(&__pioinfo + iVar1) + iVar4 + 4) & 1) == 0) {
+          piVar3 = _errno();
+          *piVar3 = 9;
+          puVar2 = __doserrno();
+          *puVar2 = 0;
+          local_50 = -1;
         }
         else {
-          local_50 = _lseek_nolock(uVar4,param_2,param_3);
+          local_50 = _lseek_nolock(param_1,param_2,param_3);
         }
         FUN_82925a24();
-        uVar3 = (ulonglong)local_50;
-        goto LAB_829259fc;
+        return local_50;
       }
     }
-    puVar5 = __doserrno();
-    *puVar5 = 0;
-    piVar6 = _errno();
-    *piVar6 = 9;
+    puVar2 = __doserrno();
+    *puVar2 = 0;
+    piVar3 = _errno();
+    *piVar3 = 9;
     _invalid_parameter_noinfo();
-    uVar3 = 0xffffffffffffffff;
   }
-LAB_829259fc:
-  lVar7 = __restgprlr_25(uVar3);
-  return lVar7;
+  return -1;
 }
 
 
 // 82925820  _lseek_nolock  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/lseek.c:93)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 long _lseek_nolock(int param_1,long param_2,int param_3)
 
 {
-  int iVar1;
-  uint uVar2;
-  void *pvVar3;
-  int *piVar4;
-  ulong uVar5;
-  ulong uVar6;
-  long lVar7;
+  void *pvVar1;
+  int *piVar2;
+  ulong uVar3;
+  ulong uVar4;
+  int iVar5;
   
-  uVar2 = __savegprlr_29(param_1);
-  pvVar3 = (void *)_get_osfhandle(uVar2);
-  if (pvVar3 == (void *)0xffffffff) {
-    piVar4 = _errno();
-    uVar5 = 0xffffffff;
-    *piVar4 = 9;
+  pvVar1 = (void *)_get_osfhandle(param_1);
+  if (pvVar1 == (void *)0xffffffff) {
+    piVar2 = _errno();
+    uVar3 = 0xffffffff;
+    *piVar2 = 9;
   }
   else {
-    uVar5 = SetFilePointer(pvVar3,param_2,(long *)0x0,param_3);
-    if (uVar5 == 0xffffffff) {
-      uVar6 = GetLastError();
+    uVar3 = SetFilePointer(pvVar1,param_2,(long *)0x0,param_3);
+    if (uVar3 == 0xffffffff) {
+      uVar4 = GetLastError();
     }
     else {
-      uVar6 = 0;
+      uVar4 = 0;
     }
-    if (uVar6 == 0) {
-      iVar1 = *(int *)(&__pioinfo + ((int)uVar2 >> 5) * 4) + (uVar2 & 0x1f) * 0x48;
-      *(byte *)(iVar1 + 4) = *(byte *)(iVar1 + 4) & 0xfd;
+    if (uVar4 == 0) {
+      iVar5 = *(int *)(&__pioinfo + (param_1 >> 5) * 4) + (param_1 & 0x1fU) * 0x48;
+      *(byte *)(iVar5 + 4) = *(byte *)(iVar5 + 4) & 0xfd;
     }
     else {
-      _dosmaperr(uVar6);
-      uVar5 = 0xffffffff;
+      _dosmaperr(uVar4);
+      uVar3 = 0xffffffff;
     }
   }
-  lVar7 = __restgprlr_29(uVar5);
-  return lVar7;
+  return uVar3;
 }
 

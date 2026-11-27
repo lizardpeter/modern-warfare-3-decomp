@@ -2,43 +2,33 @@
 
 // 8291CEE0  _vscprintf_helper  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/vsprintf.c:394)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 int _vscprintf_helper(_func___cdecl_int__iobuf_ptr_char_ptr_localeinfo_struct_ptr_char_ptr *param_1,
                      char *param_2,localeinfo_struct *param_3,char *param_4)
 
 {
-  code *pcVar2;
-  int *piVar3;
-  undefined8 uVar1;
-  int iVar4;
-  ulonglong uVar5;
-  longlong lVar6;
-  longlong lVar7;
-  undefined4 local_50;
-  undefined4 local_4c;
-  undefined4 local_48;
-  undefined4 local_44;
+  int *piVar1;
+  int iVar2;
+  _iobuf local_50 [2];
   
-  lVar7 = (longlong)(int)param_4;
-  lVar6 = (longlong)(int)param_3;
-  uVar5 = (ulonglong)(int)param_2;
-  pcVar2 = (code *)__savegprlr_27(param_1,uVar5,lVar6,lVar7);
-  local_50 = 0;
+  local_50[0]._ptr = (char *)0x0;
   memset();
-  if ((uVar5 & 0xffffffff) == 0) {
-    piVar3 = _errno();
-    *piVar3 = 0x16;
+  if (param_2 == (char *)0x0) {
+    piVar1 = _errno();
+    *piVar1 = 0x16;
     _invalid_parameter_noinfo();
-    uVar1 = 0xffffffffffffffff;
+    iVar2 = -1;
   }
   else {
-    local_48 = 0;
-    local_50 = 0;
-    local_44 = 0x42;
-    local_4c = 0x7fffffff;
-    uVar1 = (*pcVar2)(&local_50,uVar5,lVar6,lVar7);
+    local_50[0]._base = (char *)0x0;
+    local_50[0]._ptr = (char *)0x0;
+    local_50[0]._flag = 0x42;
+    local_50[0]._cnt = 0x7fffffff;
+    iVar2 = (*param_1)(local_50,param_2,param_3,param_4);
   }
-  iVar4 = __restgprlr_27(uVar1);
-  return iVar4;
+  return iVar2;
 }
 
 

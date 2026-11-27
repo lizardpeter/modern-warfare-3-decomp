@@ -51,38 +51,27 @@ void Turret_PlaceSentry_RegisterDvars(void)
 
 // 826E1120  Turret_PlaceSentry_Trace  (turret/turret_placement.cpp:85)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
+
 void Turret_PlaceSentry_Trace
                (turret_handler param_1,trace_t *param_2,float *param_3,float *param_4,
                Bounds *param_5,int param_6,int param_7)
 
 {
-  uint uVar1;
-  longlong lVar2;
-  longlong lVar3;
-  longlong lVar4;
-  longlong lVar5;
-  longlong lVar6;
-  longlong lVar7;
-  
-  lVar7 = (longlong)param_7;
-  lVar6 = (longlong)param_6;
-  lVar5 = (longlong)(int)param_5;
-  lVar4 = (longlong)(int)param_4;
-  lVar3 = (longlong)(int)param_3;
-  lVar2 = (longlong)(int)param_2;
-  uVar1 = __savegprlr_25(param_1,lVar2,lVar3,lVar4,lVar5,lVar6,lVar7);
-  if (1 < uVar1) {
+  if (TURRET_HANDLER_SERVER < param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\turret\\turret_placement.cpp",
                     0x56,0,"handler doesn\'t index TURRET_HANDLER_COUNT\n\t%i not in [0, %i)");
   }
-  (*turretTraceHandlers[uVar1])
-            ((trace_t *)lVar2,(float *)lVar3,(float *)lVar4,(Bounds *)lVar5,(int)lVar6,(int)lVar7);
-  __restgprlr_25();
+  (*turretTraceHandlers[param_1])(param_2,param_3,param_4,param_5,param_6,param_7);
   return;
 }
 
 
 // 826E11B0  Turret_PlaceSentry_UpdateFooting  (turret/turret_placement.cpp:122)
+
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
 
 int Turret_PlaceSentry_UpdateFooting
               (turret_handler param_1,int param_2,trace_t *param_3,float *param_4,
@@ -101,23 +90,17 @@ int Turret_PlaceSentry_UpdateFooting
   float fVar10;
   float *pfVar11;
   dvar_t *pdVar12;
-  ulonglong uVar13;
-  int iVar14;
-  ulonglong uVar15;
+  float (*pafVar13) [3];
+  ulonglong uVar14;
+  float *pfVar15;
   float *pfVar16;
-  ulonglong uVar17;
-  float *pfVar18;
+  uint uVar17;
+  float (*pafVar18) [3];
   float *pfVar19;
-  ulonglong uVar20;
-  float *pfVar21;
-  float *pfVar22;
-  uint uVar23;
-  float *pfVar24;
-  float *pfVar25;
-  double dVar26;
-  double dVar27;
-  double dVar28;
-  uint uStack00000014;
+  double dVar20;
+  double dVar21;
+  double dVar22;
+  turret_handler tStack00000014;
   int iStack0000001c;
   undefined4 local_130;
   char *local_12c;
@@ -150,132 +133,125 @@ int Turret_PlaceSentry_UpdateFooting
   float local_b8;
   float local_b4;
   
-  uVar17 = (ulonglong)(int)param_5;
-  uVar20 = (ulonglong)(int)param_4;
-  uVar15 = (ulonglong)(int)param_3;
-  uVar13 = (ulonglong)(int)param_1;
-  __savegprlr();
-  uStack00000014 = (uint)uVar13;
   local_12c = "c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\turret\\turret_placement.cpp";
+  tStack00000014 = param_1;
   iStack0000001c = param_2;
-  if ((uVar15 & 0xffffffff) == 0) {
+  if (param_3 == (trace_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\turret\\turret_placement.cpp",
                     0x85,0,"%s");
   }
-  if ((uVar20 & 0xffffffff) == 0) {
+  if (param_4 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\turret\\turret_placement.cpp",
                     0x86,0,"%s");
   }
-  if ((uVar17 & 0xffffffff) == 0) {
+  if (param_5 == (float (*) [3])0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\turret\\turret_placement.cpp",
                     0x87,0,"%s");
   }
-  pfVar16 = (float *)uVar20;
-  local_130 = *pfVar16;
+  local_130 = *param_4;
   if (((((uint)local_130 & 0x7f800000) == 0x7f800000) ||
-      (local_130 = pfVar16[1], ((uint)local_130 & 0x7f800000) == 0x7f800000)) ||
-     (local_130 = pfVar16[2], ((uint)local_130 & 0x7f800000) == 0x7f800000)) {
+      (local_130 = param_4[1], ((uint)local_130 & 0x7f800000) == 0x7f800000)) ||
+     (local_130 = param_4[2], ((uint)local_130 & 0x7f800000) == 0x7f800000)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\turret\\turret_placement.cpp",
                     0x88,0,"%s");
   }
-  pfVar18 = (float *)uVar17;
-  local_130 = *pfVar18;
+  local_130 = (*param_5)[0];
   if (((((uint)local_130 & 0x7f800000) == 0x7f800000) ||
-      (local_130 = pfVar18[1], ((uint)local_130 & 0x7f800000) == 0x7f800000)) ||
-     (local_130 = pfVar18[2], ((uint)local_130 & 0x7f800000) == 0x7f800000)) {
+      (local_130 = (*param_5)[1], ((uint)local_130 & 0x7f800000) == 0x7f800000)) ||
+     (local_130 = (*param_5)[2], ((uint)local_130 & 0x7f800000) == 0x7f800000)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\turret\\turret_placement.cpp",
                     0x89,0,"%s");
   }
-  local_130 = pfVar18[3];
-  pfVar19 = pfVar18 + 3;
+  local_130 = param_5[1][0];
+  pafVar13 = param_5 + 1;
   if (((((uint)local_130 & 0x7f800000) == 0x7f800000) ||
-      (local_130 = pfVar18[4], ((uint)local_130 & 0x7f800000) == 0x7f800000)) ||
-     (local_130 = pfVar18[5], ((uint)local_130 & 0x7f800000) == 0x7f800000)) {
+      (local_130 = param_5[1][1], ((uint)local_130 & 0x7f800000) == 0x7f800000)) ||
+     (local_130 = param_5[1][2], ((uint)local_130 & 0x7f800000) == 0x7f800000)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\turret\\turret_placement.cpp",
                     0x8a,0,"%s");
   }
-  local_130 = pfVar18[6];
-  pfVar24 = pfVar18 + 6;
+  local_130 = param_5[2][0];
+  pafVar18 = param_5 + 2;
   if (((((uint)local_130 & 0x7f800000) == 0x7f800000) ||
-      (local_130 = pfVar18[7], ((uint)local_130 & 0x7f800000) == 0x7f800000)) ||
-     (local_130 = pfVar18[8], ((uint)local_130 & 0x7f800000) == 0x7f800000)) {
+      (local_130 = param_5[2][1], ((uint)local_130 & 0x7f800000) == 0x7f800000)) ||
+     (local_130 = param_5[2][2], ((uint)local_130 & 0x7f800000) == 0x7f800000)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\turret\\turret_placement.cpp",
                     0x8b,0,"%s");
   }
-  fVar2 = *pfVar18;
-  fVar3 = pfVar18[1];
-  fVar4 = pfVar18[2];
-  pfVar22 = &fStack_114;
-  fVar5 = *pfVar24;
+  fVar2 = (*param_5)[0];
+  fVar3 = (*param_5)[1];
+  fVar4 = (*param_5)[2];
+  pfVar16 = &fStack_114;
+  fVar5 = (*pafVar18)[0];
   fVar6 = (sentry_placement_feet_offset->current).value;
-  uVar20 = 0;
+  uVar14 = 0;
   fVar7 = (sentry_placement_feet_offset->current).vector[1];
-  uVar23 = 0;
-  fVar8 = pfVar18[7];
-  pfVar25 = &local_e0;
-  fVar9 = pfVar18[8];
+  uVar17 = 0;
+  fVar8 = param_5[2][1];
+  pfVar19 = &local_e0;
+  fVar9 = param_5[2][2];
   fVar10 = (sentry_placement_feet_offset->current).vector[2];
-  local_e0 = fVar5 * fVar10 + *pfVar19 * fVar7 + fVar2 * fVar6 + *pfVar16;
-  local_dc = fVar8 * fVar10 + pfVar18[4] * fVar7 + fVar3 * fVar6 + pfVar16[1];
-  local_d8 = fVar9 * fVar10 + pfVar18[5] * fVar7 + fVar4 * fVar6 + pfVar16[2];
+  local_e0 = fVar5 * fVar10 + (*pafVar13)[0] * fVar7 + fVar2 * fVar6 + *param_4;
+  local_dc = fVar8 * fVar10 + param_5[1][1] * fVar7 + fVar3 * fVar6 + param_4[1];
+  local_d8 = fVar9 * fVar10 + param_5[1][2] * fVar7 + fVar4 * fVar6 + param_4[2];
   fVar6 = (sentry_placement_feet_offset->current).value * -2.0;
   local_d4 = fVar2 * fVar6 + local_e0;
   local_d0 = fVar3 * fVar6 + local_dc;
   local_cc = fVar4 * fVar6 + local_d8;
   fVar6 = (sentry_placement_feet_offset->current).vector[1] * -2.0;
-  local_c8 = *pfVar19 * fVar6 + local_d4;
-  local_c4 = pfVar18[4] * fVar6 + local_d0;
-  local_c0 = pfVar18[5] * fVar6 + local_cc;
+  local_c8 = (*pafVar13)[0] * fVar6 + local_d4;
+  local_c4 = param_5[1][1] * fVar6 + local_d0;
+  local_c0 = param_5[1][2] * fVar6 + local_cc;
   fVar6 = (sentry_placement_feet_offset->current).value * 2.0;
-  dVar27 = 0.0;
+  dVar21 = 0.0;
   local_bc = fVar2 * fVar6 + local_c8;
   local_b8 = fVar3 * fVar6 + local_c4;
   local_b4 = fVar4 * fVar6 + local_c0;
-  dVar28 = -1.0;
+  dVar22 = -1.0;
   local_124 = colorGreen;
   local_128 = colorRed;
   do {
-    pfVar21 = pfVar25 + 2;
-    fVar2 = (float)((double)(sentry_placement_feet_trace_dist_z->current).value * dVar28);
-    local_120 = fVar5 * fVar2 + *pfVar25;
-    local_11c = fVar8 * fVar2 + pfVar25[1];
-    local_118 = fVar9 * fVar2 + pfVar25[2];
-    if (1 < uStack00000014) {
+    pfVar15 = pfVar19 + 2;
+    fVar2 = (float)((double)(sentry_placement_feet_trace_dist_z->current).value * dVar22);
+    local_120 = fVar5 * fVar2 + *pfVar19;
+    local_11c = fVar8 * fVar2 + pfVar19[1];
+    local_118 = fVar9 * fVar2 + pfVar19[2];
+    if (TURRET_HANDLER_SERVER < tStack00000014) {
       MyAssertHandler(local_12c,0x56,0,
                       "handler doesn\'t index TURRET_HANDLER_COUNT\n\t%i not in [0, %i)");
     }
-    (**(code **)((int)turretTraceHandlers + (int)((uVar13 & 0xffffffff) << 2)))
-              (uVar15,pfVar25,&local_120,0xffffffff82174a3c,iStack0000001c,0x2810011);
+    (*turretTraceHandlers[param_1])
+              (param_3,pfVar19,&local_120,&bounds_origin,iStack0000001c,0x2810011);
     pdVar12 = sentry_placement_feet_offset;
-    if (((float *)uVar15)[7] == 0.0) {
+    if (param_3->hitType == TRACE_HITTYPE_NONE) {
       cVar1 = (sentry_placement_debug->current).enabled;
-      pfVar22[1] = (float)dVar27;
-      uVar20 = uVar20 + 1;
-      *(undefined1 *)((int)&local_130 + uVar23) = 0;
+      pfVar16[1] = (float)dVar21;
+      uVar14 = uVar14 + 1;
+      *(undefined1 *)((int)&local_130 + uVar17) = 0;
       pfVar11 = local_128;
     }
     else {
-      fVar2 = *(float *)uVar15;
+      fVar2 = param_3->fraction;
       cVar1 = (sentry_placement_debug->current).enabled;
       fVar3 = (sentry_placement_feet_trace_dist_z->current).value;
-      *(undefined1 *)((int)&local_130 + uVar23) = 1;
-      pfVar22[1] = fVar3 * fVar2 - (pdVar12->current).vector[2];
+      *(undefined1 *)((int)&local_130 + uVar17) = 1;
+      pfVar16[1] = fVar3 * fVar2 - (pdVar12->current).vector[2];
       pfVar11 = local_124;
     }
     if (cVar1 != '\0') {
-      G_DebugLine(pfVar25,&local_120,pfVar11,0);
+      G_DebugLine(pfVar19,&local_120,pfVar11,0);
     }
-    pfVar22 = pfVar22 + 1;
-    uVar23 = uVar23 + 1;
-    fVar2 = (float)((double)*pfVar22 * dVar28);
-    fVar5 = *pfVar24;
-    fVar8 = pfVar18[7];
-    fVar9 = pfVar18[8];
-    *pfVar25 = fVar5 * fVar2 + *pfVar25;
-    pfVar25[1] = fVar8 * fVar2 + pfVar25[1];
-    pfVar25 = pfVar25 + 3;
-    *pfVar21 = fVar9 * fVar2 + *pfVar21;
-  } while (uVar23 < 4);
+    pfVar16 = pfVar16 + 1;
+    uVar17 = uVar17 + 1;
+    fVar2 = (float)((double)*pfVar16 * dVar22);
+    fVar5 = (*pafVar18)[0];
+    fVar8 = param_5[2][1];
+    fVar9 = param_5[2][2];
+    *pfVar19 = fVar5 * fVar2 + *pfVar19;
+    pfVar19[1] = fVar8 * fVar2 + pfVar19[1];
+    pfVar19 = pfVar19 + 3;
+    *pfVar15 = fVar9 * fVar2 + *pfVar15;
+  } while (uVar17 < 4);
   fVar2 = local_110;
   if (local_130._0_1_ == '\0') {
     fVar2 = local_108;
@@ -294,18 +270,18 @@ int Turret_PlaceSentry_UpdateFooting
   local_100 = local_e0 - local_c8;
   local_fc = local_dc - local_c4;
   local_f8 = local_d8 - local_c0;
-  dVar26 = (double)((fVar3 + local_104) * 0.5);
-  dVar27 = (double)((fVar2 + fVar4) * 0.5);
+  dVar20 = (double)((fVar3 + local_104) * 0.5);
+  dVar21 = (double)((fVar2 + fVar4) * 0.5);
   local_f4 = local_d4 - local_bc;
   local_f0 = local_d0 - local_b8;
   local_ec = local_cc - local_b4;
-  if ((float)(dVar27 - dVar26) < 0.0) {
-    dVar27 = dVar26;
+  if ((float)(dVar21 - dVar20) < 0.0) {
+    dVar21 = dVar20;
   }
-  fVar2 = (float)(dVar27 * dVar28);
-  *pfVar16 = fVar5 * fVar2 + *pfVar16;
-  pfVar16[1] = pfVar18[7] * fVar2 + pfVar16[1];
-  pfVar16[2] = fVar2 * pfVar18[8] + pfVar16[2];
+  fVar2 = (float)(dVar21 * dVar22);
+  *param_4 = fVar5 * fVar2 + *param_4;
+  param_4[1] = param_5[2][1] * fVar2 + param_4[1];
+  param_4[2] = fVar2 * param_5[2][2] + param_4[2];
   Vec3Cross(&local_100,&local_f4,&local_110);
   fVar3 = SQRT(local_110 * local_110 + local_108 * local_108 + local_10c * local_10c);
   fVar2 = 1.0;
@@ -313,19 +289,19 @@ int Turret_PlaceSentry_UpdateFooting
     fVar2 = fVar3;
   }
   fVar2 = 1.0 / fVar2;
-  *pfVar24 = local_110 * fVar2;
-  pfVar18[7] = local_10c * fVar2;
-  pfVar18[8] = local_108 * fVar2;
-  Vec3Cross(pfVar24,pfVar18,pfVar19);
-  Vec3Cross(pfVar19,pfVar24,pfVar18);
-  iVar14 = -((1 < uVar20) - 1);
-  __restgprlr();
-  return iVar14;
+  (*pafVar18)[0] = local_110 * fVar2;
+  param_5[2][1] = local_10c * fVar2;
+  param_5[2][2] = local_108 * fVar2;
+  Vec3Cross(*pafVar18,*param_5,*pafVar13);
+  Vec3Cross(*pafVar13,*pafVar18,*param_5);
+  return -((1 < uVar14) - 1);
 }
 
 
 // 826E1840  Turret_PlaceSentry_Internal  (turret/turret_placement.cpp:216)
 
+/* WARNING: Function: __savegprlr_21 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_21 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 int Turret_PlaceSentry_Internal
@@ -334,20 +310,14 @@ int Turret_PlaceSentry_Internal
 
 {
   float fVar1;
-  float *pfVar2;
+  dvar_t *pdVar2;
   dvar_t *pdVar3;
   dvar_t *pdVar4;
-  dvar_t *pdVar5;
-  turret_handler tVar6;
-  ushort uVar8;
-  int iVar7;
-  ulonglong uVar9;
-  float *pfVar10;
-  float *pfVar11;
-  ulonglong uVar12;
-  ulonglong uVar13;
-  double dVar14;
-  double dVar15;
+  ushort uVar6;
+  int iVar5;
+  float *pfVar7;
+  double dVar8;
+  double dVar9;
   float local_150;
   float local_14c;
   float local_148;
@@ -373,119 +343,112 @@ int Turret_PlaceSentry_Internal
   undefined4 local_c0;
   trace_t local_b0 [3];
   
-  uVar13 = (ulonglong)(int)param_8;
-  uVar12 = (ulonglong)(int)param_7;
-  uVar9 = (ulonglong)param_3;
-  tVar6 = __savegprlr_21(param_1,param_2);
-  if (0x11 < (uVar9 & 0xffffffff)) {
+  if (0x11 < (uint)param_3) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\turret\\turret_placement.cpp",
                     0xe4,0,"moverEntNum doesn\'t index MAX_CLIENTS\n\t%i not in [0, %i)");
   }
-  if ((uVar12 & 0xffffffff) == 0) {
+  if (param_7 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\turret\\turret_placement.cpp",
                     0xe5,0,"%s");
   }
-  if ((uVar13 & 0xffffffff) == 0) {
+  if (param_8 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\turret\\turret_placement.cpp",
                     0xe6,0,"%s");
   }
-  dVar15 = 0.0;
-  pfVar2 = (float *)uVar13;
-  pfVar2[1] = 0.0;
-  pdVar3 = sentry_placement_trace_radius_canon_safety;
-  *pfVar2 = 0.0;
-  pdVar5 = sentry_placement_trace_dist;
-  pfVar2[2] = 0.0;
-  pdVar4 = sentry_placement_trace_pitch;
-  pfVar2[1] = param_6[1];
+  dVar9 = 0.0;
+  param_8[1] = 0.0;
+  pdVar2 = sentry_placement_trace_radius_canon_safety;
+  *param_8 = 0.0;
+  pdVar4 = sentry_placement_trace_dist;
+  param_8[2] = 0.0;
+  pdVar3 = sentry_placement_trace_pitch;
+  param_8[1] = param_6[1];
   local_c4 = param_6[1];
-  dVar14 = (double)((pdVar3->current).value + (pdVar5->current).value);
-  local_c8 = (float)(pdVar4->current).integer;
+  dVar8 = (double)((pdVar2->current).value + (pdVar4->current).value);
+  local_c8 = (float)(pdVar3->current).integer;
   local_c0 = 0;
   AngleVectors(&local_c8,&local_130,(float *)0x0,(float *)0x0);
-  pfVar10 = colorBlue;
-  local_150 = (float)((double)local_130 * dVar14 + (double)*param_4);
-  local_14c = (float)((double)local_12c * dVar14 + (double)param_4[1]);
-  local_148 = (float)((double)local_128 * dVar14 + (double)(param_4[2] + 60.0));
+  pfVar7 = colorBlue;
+  local_150 = (float)((double)local_130 * dVar8 + (double)*param_4);
+  local_14c = (float)((double)local_12c * dVar8 + (double)param_4[1]);
+  local_148 = (float)((double)local_128 * dVar8 + (double)(param_4[2] + 60.0));
   local_138 = local_148 - 60.0;
   local_108 = (float)((double)local_130 * (double)(sentry_placement_trace_radius->current).value +
                      (double)local_150);
   local_104 = (float)((double)local_12c * (double)(sentry_placement_trace_radius->current).value +
                      (double)local_14c);
-  local_120.midPoint[0] = (float)dVar15;
-  local_120.midPoint[1] = (float)dVar15;
-  local_120.midPoint[2] = (float)dVar15;
-  local_120.halfSize[0] = (float)dVar15;
-  local_120.halfSize[1] = (float)dVar15;
-  local_120.halfSize[2] = (float)dVar15;
+  local_120.midPoint[0] = (float)dVar9;
+  local_120.midPoint[1] = (float)dVar9;
+  local_120.midPoint[2] = (float)dVar9;
+  local_120.halfSize[0] = (float)dVar9;
+  local_120.halfSize[1] = (float)dVar9;
+  local_120.halfSize[2] = (float)dVar9;
   local_140 = local_150;
   local_13c = local_14c;
   local_100 = local_148;
   if ((sentry_placement_debug->current).enabled != false) {
     G_DebugLine(param_5,&local_108,colorBlue,0);
   }
-  iVar7 = (int)uVar9;
-  Turret_PlaceSentry_Trace(tVar6,local_b0,param_5,&local_108,&local_120,iVar7,0x2810011);
-  pfVar11 = (float *)uVar12;
+  Turret_PlaceSentry_Trace(param_1,local_b0,param_5,&local_108,&local_120,param_3,0x2810011);
   if (((local_b0[0].startsolid == false) && (local_b0[0].allsolid == false)) &&
-     (uVar8 = Trace_GetEntityHitId(local_b0), uVar8 == 0x7ff)) {
+     (uVar6 = Trace_GetEntityHitId(local_b0), uVar6 == 0x7ff)) {
     local_120.halfSize[0] = (float)(sentry_placement_trace_radius->current).integer;
     local_120.halfSize[1] = local_120.halfSize[0];
     local_120.halfSize[2] = local_120.halfSize[0];
     if ((sentry_placement_debug->current).enabled != false) {
       G_DebugLine(&local_150,&local_140,colorBlue,0);
-      G_DebugBox(&local_150,&local_120,param_6[1],pfVar10,-0x7de7e7c8,0);
-      G_DebugBox(&local_140,&local_120,param_6[1],pfVar10,-0x7de7e808,0);
+      G_DebugBox(&local_150,&local_120,param_6[1],pfVar7,-0x7de7e7c8,0);
+      G_DebugBox(&local_140,&local_120,param_6[1],pfVar7,-0x7de7e808,0);
     }
-    Turret_PlaceSentry_Trace(tVar6,local_b0,&local_150,&local_140,&local_120,iVar7,0x2810011);
-    *pfVar11 = (local_140 - local_150) * local_b0[0].fraction + local_150;
-    pfVar11[1] = (local_13c - local_14c) * local_b0[0].fraction + local_14c;
+    Turret_PlaceSentry_Trace(param_1,local_b0,&local_150,&local_140,&local_120,param_3,0x2810011);
+    *param_7 = (local_140 - local_150) * local_b0[0].fraction + local_150;
+    param_7[1] = (local_13c - local_14c) * local_b0[0].fraction + local_14c;
     fVar1 = (local_138 - local_148) * local_b0[0].fraction + local_148;
-    pfVar11[2] = fVar1;
+    param_7[2] = fVar1;
     if (((local_b0[0].startsolid == false) && (local_b0[0].allsolid == false)) &&
        ((sentry_placement_trace_min_normal->current).value <= local_b0[0].normal[2])) {
-      pfVar11[2] = fVar1 - (sentry_placement_trace_radius->current).value;
-      uVar8 = Trace_GetEntityHitId(local_b0);
-      if (0x7ff < uVar8) {
+      param_7[2] = fVar1 - (sentry_placement_trace_radius->current).value;
+      uVar6 = Trace_GetEntityHitId(local_b0);
+      if (0x7ff < uVar6) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\turret\\turret_placement.cpp"
                         ,0x12d,0,"hitEntId doesn\'t index MAX_GENTITIES\n\t%i not in [0, %i)");
       }
-      if (uVar8 == 0x7fe) {
-        local_f0 = local_130;
-        local_ec = local_12c;
-        local_e8 = local_128;
-        local_d8 = local_b0[0].normal[0];
-        local_d4 = local_b0[0].normal[1];
-        local_d0 = local_b0[0].normal[2];
-        Vec3Cross(&local_d8,&local_f0,afStack_e4);
-        Vec3Cross(afStack_e4,&local_d8,&local_f0);
-        AxisToAngles((float (*) [3])&local_f0,pfVar2);
-        iVar7 = Turret_PlaceSentry_UpdateFooting
-                          (tVar6,iVar7,local_b0,pfVar11,(float (*) [3])&local_f0);
-        if (iVar7 != 0) {
-          AxisToAngles((float (*) [3])&local_f0,pfVar2);
-          iVar7 = __restgprlr_21(1);
-          return iVar7;
-        }
+      if (uVar6 != 0x7fe) {
+        return 0;
       }
-      goto LAB_826e1c70;
+      local_f0 = local_130;
+      local_ec = local_12c;
+      local_e8 = local_128;
+      local_d8 = local_b0[0].normal[0];
+      local_d4 = local_b0[0].normal[1];
+      local_d0 = local_b0[0].normal[2];
+      Vec3Cross(&local_d8,&local_f0,afStack_e4);
+      Vec3Cross(afStack_e4,&local_d8,&local_f0);
+      AxisToAngles((float (*) [3])&local_f0,param_8);
+      iVar5 = Turret_PlaceSentry_UpdateFooting
+                        (param_1,param_3,local_b0,param_7,(float (*) [3])&local_f0);
+      if (iVar5 == 0) {
+        return 0;
+      }
+      AxisToAngles((float (*) [3])&local_f0,param_8);
+      return 1;
     }
     fVar1 = param_4[2];
   }
   else {
     fVar1 = param_4[2];
-    *pfVar11 = local_150;
-    pfVar11[1] = local_14c;
+    *param_7 = local_150;
+    param_7[1] = local_14c;
   }
-  pfVar11[2] = fVar1;
-LAB_826e1c70:
-  iVar7 = __restgprlr_21(0);
-  return iVar7;
+  param_7[2] = fVar1;
+  return 0;
 }
 
 
 // 826E1C88  Turret_PlaceSentry_Client  (turret/turret_placement.cpp:339)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
@@ -496,15 +459,10 @@ void Turret_PlaceSentry_Client
 {
   uint uVar1;
   uint uVar2;
-  LocalClientNum_t LVar3;
-  cg_s *pcVar4;
-  bool bVar8;
-  centity_s *pcVar5;
-  clientInfo_t *pcVar6;
-  int iVar7;
-  ulonglong uVar9;
-  ulonglong uVar10;
-  ulonglong uVar11;
+  cg_s *pcVar3;
+  bool bVar6;
+  centity_s *pcVar4;
+  clientInfo_t *pcVar5;
   float local_80;
   float local_7c;
   float local_78;
@@ -515,94 +473,85 @@ void Turret_PlaceSentry_Client
   float local_5c;
   float local_58;
   
-  uVar11 = (ulonglong)(int)param_4;
-  uVar10 = (ulonglong)(int)param_3;
-  uVar9 = (ulonglong)(int)param_2;
-  LVar3 = __savegprlr_24(param_1);
-  if ((uVar9 & 0xffffffff) == 0) {
+  if (param_2 == (entityState_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\turret\\turret_placement.cpp",
                     0x15f,0,"%s");
   }
-  if ((uVar10 & 0xffffffff) == 0) {
+  if (param_3 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\turret\\turret_placement.cpp",
                     0x160,0,"%s");
   }
-  if ((uVar11 & 0xffffffff) == 0) {
+  if (param_4 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\turret\\turret_placement.cpp",
                     0x161,0,"%s");
   }
-  if (*(char *)((int)uVar9 + 0x70) != '\0') {
-    uVar1 = *(uint *)((int)uVar9 + 0x78);
-    if ((uint)cl_maxLocalClients <= LVar3) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\turret\\turret_placement.cpp"
-                      ,0x171,0,
-                      "localClientNum doesn\'t index MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)");
-    }
-    pcVar4 = CG_GetLocalClientGlobals(LVar3);
-    if (pcVar4 == (cg_s *)0x0) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\turret\\turret_placement.cpp"
-                      ,0x173,0,"%s");
-    }
-    if (0x11 < uVar1) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\turret\\turret_placement.cpp"
-                      ,0x176,0,"carrierEntNum doesn\'t index MAX_CLIENTS\n\t%i not in [0, %i)");
-    }
-    if (((uVar1 != (pcVar4->predictedPlayerState).clientNum) || (pcVar4->renderingThirdPerson != 0))
-       || (bVar8 = BG_IsThirdPersonMode(&pcVar4->predictedPlayerState), bVar8)) {
-      pcVar5 = CG_GetEntity(LVar3,uVar1);
-      if (pcVar5 == (centity_s *)0x0) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\turret\\turret_placement.cpp"
-                        ,0x188,1,"%s");
-      }
-      pcVar6 = CG_GetClientInfo(LVar3,pcVar5);
-      if ((pcVar6 == (clientInfo_t *)0x0) || (pcVar6->infoValid == 0)) {
-        Com_PrintWarning(0x11,
-                         "Sentry [%d] isBeingCarried but the client info [%d] is invalid! Script should ensure that this doesn\'t happen.\n"
-                        );
-        goto LAB_826e1f68;
-      }
-      local_80 = (pcVar5->pose).origin[0];
-      local_70 = pcVar6->playerAngles[0];
-      local_6c = pcVar6->playerAngles[1];
-      local_68 = pcVar6->playerAngles[2];
-      local_5c = (pcVar5->pose).origin[1];
-      local_58 = (pcVar5->pose).origin[2];
-      local_7c = (pcVar5->pose).origin[1];
-      uVar2 = (pcVar5->nextState).lerp.eFlags;
-      if ((uVar2 & 8) == 0) {
-        if ((uVar2 & 4) == 0) {
-          local_78 = 60.0;
-        }
-        else {
-          local_78 = 40.0;
-        }
-      }
-      else {
-        local_78 = 11.0;
-      }
-      local_78 = (pcVar5->pose).origin[2] + local_78;
-      local_60 = local_80;
-    }
-    else {
-      local_80 = (pcVar4->predictedPlayerState).origin[0];
-      local_7c = (pcVar4->predictedPlayerState).origin[1];
-      local_78 = (pcVar4->predictedPlayerState).viewHeightCurrent +
-                 (pcVar4->predictedPlayerState).origin[2];
-      local_60 = (pcVar4->predictedPlayerState).origin[0];
-      local_5c = (pcVar4->predictedPlayerState).origin[1];
-      local_58 = (pcVar4->predictedPlayerState).origin[2];
-      local_70 = (pcVar4->predictedPlayerState).viewangles[0];
-      local_6c = (pcVar4->predictedPlayerState).viewangles[1];
-      local_68 = (pcVar4->predictedPlayerState).viewangles[2];
-    }
-    iVar7 = Turret_PlaceSentry_Internal
-                      (TURRET_HANDLER_CLIENT,LVar3,uVar1,&local_60,&local_80,&local_70,
-                       (float *)uVar10,(float *)uVar11);
-    __restgprlr_24(iVar7);
+  if ((param_2->staticState).turret.isBeingCarried == false) {
     return;
   }
-LAB_826e1f68:
-  __restgprlr_24();
+  uVar1 = param_2->otherEntityNum;
+  if ((uint)cl_maxLocalClients <= param_1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\turret\\turret_placement.cpp",
+                    0x171,0,"localClientNum doesn\'t index MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)");
+  }
+  pcVar3 = CG_GetLocalClientGlobals(param_1);
+  if (pcVar3 == (cg_s *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\turret\\turret_placement.cpp",
+                    0x173,0,"%s");
+  }
+  if (0x11 < uVar1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\turret\\turret_placement.cpp",
+                    0x176,0,"carrierEntNum doesn\'t index MAX_CLIENTS\n\t%i not in [0, %i)");
+  }
+  if (((uVar1 != (pcVar3->predictedPlayerState).clientNum) || (pcVar3->renderingThirdPerson != 0))
+     || (bVar6 = BG_IsThirdPersonMode(&pcVar3->predictedPlayerState), bVar6)) {
+    pcVar4 = CG_GetEntity(param_1,uVar1);
+    if (pcVar4 == (centity_s *)0x0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\turret\\turret_placement.cpp"
+                      ,0x188,1,"%s");
+    }
+    pcVar5 = CG_GetClientInfo(param_1,pcVar4);
+    if ((pcVar5 == (clientInfo_t *)0x0) || (pcVar5->infoValid == 0)) {
+      Com_PrintWarning(0x11,
+                       "Sentry [%d] isBeingCarried but the client info [%d] is invalid! Script should ensure that this doesn\'t happen.\n"
+                      );
+      return;
+    }
+    local_80 = (pcVar4->pose).origin[0];
+    local_70 = pcVar5->playerAngles[0];
+    local_6c = pcVar5->playerAngles[1];
+    local_68 = pcVar5->playerAngles[2];
+    local_5c = (pcVar4->pose).origin[1];
+    local_58 = (pcVar4->pose).origin[2];
+    local_7c = (pcVar4->pose).origin[1];
+    uVar2 = (pcVar4->nextState).lerp.eFlags;
+    if ((uVar2 & 8) == 0) {
+      if ((uVar2 & 4) == 0) {
+        local_78 = 60.0;
+      }
+      else {
+        local_78 = 40.0;
+      }
+    }
+    else {
+      local_78 = 11.0;
+    }
+    local_78 = (pcVar4->pose).origin[2] + local_78;
+    local_60 = local_80;
+  }
+  else {
+    local_80 = (pcVar3->predictedPlayerState).origin[0];
+    local_7c = (pcVar3->predictedPlayerState).origin[1];
+    local_78 = (pcVar3->predictedPlayerState).viewHeightCurrent +
+               (pcVar3->predictedPlayerState).origin[2];
+    local_60 = (pcVar3->predictedPlayerState).origin[0];
+    local_5c = (pcVar3->predictedPlayerState).origin[1];
+    local_58 = (pcVar3->predictedPlayerState).origin[2];
+    local_70 = (pcVar3->predictedPlayerState).viewangles[0];
+    local_6c = (pcVar3->predictedPlayerState).viewangles[1];
+    local_68 = (pcVar3->predictedPlayerState).viewangles[2];
+  }
+  Turret_PlaceSentry_Internal
+            (TURRET_HANDLER_CLIENT,param_1,uVar1,&local_60,&local_80,&local_70,param_3,param_4);
   return;
 }
 
@@ -634,6 +583,8 @@ void Turret_PlaceSentry_MakeSolid(gentity_s *param_1)
 
 // 826E2020  Turret_PlaceSentry_Server  (turret/turret_placement.cpp:486)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
@@ -642,21 +593,19 @@ int Turret_PlaceSentry_Server(playerState_s *param_1,float *param_2,float *param
 {
   int iVar1;
   float local_30;
-  undefined4 local_2c;
+  float local_2c;
   float local_28;
   
-  iVar1 = __savegprlr_29(param_1);
-  if (iVar1 == 0) {
+  if (param_1 == (playerState_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\turret\\turret_placement.cpp",
                     0x1e9,0,"%s");
   }
-  local_30 = *(float *)(iVar1 + 0x1c);
-  local_28 = *(float *)(iVar1 + 0x24) + *(float *)(iVar1 + 0x168);
-  local_2c = *(undefined4 *)(iVar1 + 0x20);
+  local_30 = param_1->origin[0];
+  local_28 = param_1->origin[2] + param_1->viewHeightCurrent;
+  local_2c = param_1->origin[1];
   iVar1 = Turret_PlaceSentry_Internal
-                    (TURRET_HANDLER_SERVER,LOCAL_CLIENT_INVALID,*(int *)(iVar1 + 0x150),
-                     (float *)(iVar1 + 0x1c),&local_30,(float *)(iVar1 + 0x158),param_2,param_3);
-  iVar1 = __restgprlr_29(iVar1);
+                    (TURRET_HANDLER_SERVER,LOCAL_CLIENT_INVALID,param_1->clientNum,param_1->origin,
+                     &local_30,param_1->viewangles,param_2,param_3);
   return iVar1;
 }
 

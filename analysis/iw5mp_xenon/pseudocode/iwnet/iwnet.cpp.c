@@ -20,106 +20,103 @@ void IWNet_CloseTask(IWNetCommandData *param_1)
 
 // 826E2130  IWNet_CancelTask  (iwnet/iwnet.cpp:133)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "IWNetCommand": Some values do not have unique names */
 /* WARNING: Enum "IWNetClientNetworkMessage": Some values do not have unique names */
 
 void IWNet_CancelTask(IWNetCommandData *param_1)
 
 {
-  IWNetCommandData *pIVar1;
-  bool bVar2;
+  bool bVar1;
   
-  pIVar1 = (IWNetCommandData *)__savegprlr_29(param_1);
-  if (pIVar1 == (IWNetCommandData *)0x0) {
+  if (param_1 == (IWNetCommandData *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\iwnet\\iwnet.cpp",0x86,0,"%s");
   }
-  if (pIVar1->active == false) {
+  if (param_1->active == false) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\iwnet\\iwnet.cpp",0x87,0,"%s");
   }
-  bVar2 = IWNet_Storage_IsStorageCommand(pIVar1);
-  if (bVar2) {
-    IWNet_Storage_Cancel((pIVar1->params).storageParams);
+  bVar1 = IWNet_Storage_IsStorageCommand(param_1);
+  if (bVar1) {
+    IWNet_Storage_Cancel((param_1->params).storageParams);
   }
   Com_Printf(0x19,"Cancelling task %i\n");
-  IWNet_CloseTask(pIVar1);
-  __restgprlr_29();
+  IWNet_CloseTask(param_1);
   return;
 }
 
 
 // 826E21E0  IWNet_CancelStorageTask  (iwnet/iwnet.cpp:154)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "IWNetCommand": Some values do not have unique names */
 /* WARNING: Enum "IWNetClientNetworkMessage": Some values do not have unique names */
 
 void IWNet_CancelStorageTask(IWNetStorageTaskState *param_1)
 
 {
-  IWNetStorageTaskState *pIVar1;
-  bool bVar2;
-  int iVar3;
-  longlong lVar4;
-  IWNetCommandData *pIVar5;
+  bool bVar1;
+  int iVar2;
+  longlong lVar3;
+  IWNetCommandData *pIVar4;
   
-  pIVar1 = (IWNetStorageTaskState *)__savegprlr_28(param_1);
-  iVar3 = 0;
-  pIVar5 = s_iwNetCommands;
-  lVar4 = 0x18;
+  iVar2 = 0;
+  pIVar4 = s_iwNetCommands;
+  lVar3 = 0x18;
   do {
-    if (((pIVar5->active != false) && (bVar2 = IWNet_Storage_IsStorageCommand(pIVar5), bVar2)) &&
-       ((pIVar5->params).storageParams == pIVar1)) {
-      IWNet_CancelTask(pIVar5);
-      iVar3 = iVar3 + 1;
+    if (((pIVar4->active != false) && (bVar1 = IWNet_Storage_IsStorageCommand(pIVar4), bVar1)) &&
+       ((pIVar4->params).storageParams == param_1)) {
+      IWNet_CancelTask(pIVar4);
+      iVar2 = iVar2 + 1;
     }
-    lVar4 = lVar4 + -1;
-    pIVar5 = pIVar5 + 1;
-  } while (lVar4 != 0);
-  if (iVar3 != 1) {
+    lVar3 = lVar3 + -1;
+    pIVar4 = pIVar4 + 1;
+  } while (lVar3 != 0);
+  if (iVar2 != 1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\iwnet\\iwnet.cpp",0xa8,0,
                     "%s\n\t(cancelCount) = %i");
   }
-  __restgprlr_28();
   return;
 }
 
 
 // 826E2280  IWNet_CancelCommand  (iwnet/iwnet.cpp:174)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "IWNetCommand": Some values do not have unique names */
 /* WARNING: Enum "IWNetClientNetworkMessage": Some values do not have unique names */
 
 void IWNet_CancelCommand(IWNetCommand param_1)
 
 {
-  IWNetCommand IVar1;
-  bool bVar2;
-  longlong lVar3;
-  IWNetCommandData *pIVar4;
+  bool bVar1;
+  longlong lVar2;
+  IWNetCommandData *pIVar3;
   
-  IVar1 = __savegprlr_24(param_1);
-  pIVar4 = s_iwNetCommands;
-  lVar3 = 0x18;
+  pIVar3 = s_iwNetCommands;
+  lVar2 = 0x18;
   do {
-    if ((pIVar4->command == IVar1) && (pIVar4->active != false)) {
-      if (pIVar4 == (IWNetCommandData *)0x0) {
+    if ((pIVar3->command == param_1) && (pIVar3->active != false)) {
+      if (pIVar3 == (IWNetCommandData *)0x0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\iwnet\\iwnet.cpp",0x86,0,
                         "%s");
       }
-      if (pIVar4->active == false) {
+      if (pIVar3->active == false) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\iwnet\\iwnet.cpp",0x87,0,
                         "%s");
       }
-      bVar2 = IWNet_Storage_IsStorageCommand(pIVar4);
-      if (bVar2) {
-        IWNet_Storage_Cancel((pIVar4->params).storageParams);
+      bVar1 = IWNet_Storage_IsStorageCommand(pIVar3);
+      if (bVar1) {
+        IWNet_Storage_Cancel((pIVar3->params).storageParams);
       }
       Com_Printf(0x19,"Cancelling task %i\n");
-      IWNet_CloseTask(pIVar4);
+      IWNet_CloseTask(pIVar3);
     }
-    lVar3 = lVar3 + -1;
-    pIVar4 = pIVar4 + 1;
-  } while (lVar3 != 0);
-  __restgprlr_24();
+    lVar2 = lVar2 + -1;
+    pIVar3 = pIVar3 + 1;
+  } while (lVar2 != 0);
   return;
 }
 
@@ -194,6 +191,8 @@ IWNetCommandData * IWNet_GetCommandSlotByIndex(int param_1)
 
 // 826E2470  IWNet_GetCommandIndex  (iwnet/iwnet.cpp:216)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "IWNetCommand": Some values do not have unique names */
 /* WARNING: Enum "IWNetClientNetworkMessage": Some values do not have unique names */
 
@@ -202,15 +201,13 @@ int IWNet_GetCommandIndex(IWNetCommandData *param_1)
 {
   int iVar1;
   
-  iVar1 = __savegprlr_29(param_1);
-  iVar1 = (iVar1 + 0x7bb30d88) / 0x1c;
+  iVar1 = (int)&param_1[0x46af757].command / 0x1c;
   if (iVar1 < 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\iwnet\\iwnet.cpp",0xd9,0,"%s");
   }
   if (0x17 < iVar1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\iwnet\\iwnet.cpp",0xda,0,"%s");
   }
-  iVar1 = __restgprlr_29(iVar1);
   return iVar1;
 }
 
@@ -281,6 +278,8 @@ IWNetCommandData * IWNet_FindFreeCommand(void)
 
 // 826E25A8  IWNet_AddCommand  (iwnet/iwnet.cpp:256)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "IWNetCommand": Some values do not have unique names */
 /* WARNING: Enum "IWNetClientNetworkMessage": Some values do not have unique names */
 
@@ -288,48 +287,42 @@ bool IWNet_AddCommand(int param_1,IWNetCommand param_2,IWNetParameters *param_3)
 
 {
   int iVar1;
-  undefined1 uVar2;
-  ulonglong uVar3;
-  uchar *puVar4;
-  IWNetCommandData *pIVar5;
-  int iVar6;
-  longlong lVar7;
+  uchar *puVar2;
+  IWNetCommandData *pIVar3;
+  int iVar4;
+  longlong lVar5;
   
-  uVar3 = (ulonglong)(int)param_3;
-  iVar1 = __savegprlr_28(param_1);
-  pIVar5 = s_iwNetCommands;
+  pIVar3 = s_iwNetCommands;
   do {
-    if (pIVar5->active == false) {
-      puVar4 = &pIVar5[-1].internalData.numSendFailures;
-      lVar7 = 7;
+    if (pIVar3->active == false) {
+      puVar2 = &pIVar3[-1].internalData.numSendFailures;
+      lVar5 = 7;
       do {
-        puVar4 = puVar4 + 4;
-        *(undefined4 *)puVar4 = 0;
-        lVar7 = lVar7 + -1;
-      } while (lVar7 != 0);
-      pIVar5->command = param_2;
-      (pIVar5->internalData).localControllerIndex = iVar1;
-      pIVar5->active = true;
-      pIVar5->sequenceNumber = 0;
-      if ((uVar3 & 0xffffffff) != 0) {
-        pIVar5->params = *(IWNetParameters *)uVar3;
+        puVar2 = puVar2 + 4;
+        *(undefined4 *)puVar2 = 0;
+        lVar5 = lVar5 + -1;
+      } while (lVar5 != 0);
+      pIVar3->command = param_2;
+      (pIVar3->internalData).localControllerIndex = param_1;
+      pIVar3->active = true;
+      pIVar3->sequenceNumber = 0;
+      if (param_3 != (IWNetParameters *)0x0) {
+        pIVar3->params = *param_3;
       }
-      uVar2 = __restgprlr_28(1);
-      return (bool)uVar2;
+      return true;
     }
-    pIVar5 = pIVar5 + 1;
-  } while ((int)pIVar5 < -0x7bb30ae8);
+    pIVar3 = pIVar3 + 1;
+  } while ((int)pIVar3 < -0x7bb30ae8);
   iVar1 = IWNet_GetActiveCmdCount();
   Com_PrintError(0x19,"We can\'t allocate a new IWNet command, we have %i pending commands:\n");
-  iVar6 = 0;
+  iVar4 = 0;
   if (0 < iVar1) {
     do {
       Com_Printf(0x19,"%i. Cmd %i\n");
-      iVar6 = iVar6 + 1;
-    } while (iVar6 < iVar1);
+      iVar4 = iVar4 + 1;
+    } while (iVar4 < iVar1);
   }
-  uVar2 = __restgprlr_28(0);
-  return (bool)uVar2;
+  return false;
 }
 
 
@@ -407,39 +400,38 @@ void IWNet_Frame(void)
 
 // 826E2758  IWNet_CancelTasksForController  (iwnet/iwnet.cpp:562)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "IWNetCommand": Some values do not have unique names */
 /* WARNING: Enum "IWNetClientNetworkMessage": Some values do not have unique names */
 
 void IWNet_CancelTasksForController(int param_1)
 
 {
-  int iVar2;
   ulonglong uVar1;
-  IWNetCommandData *pIVar3;
+  IWNetCommandData *pIVar2;
+  ulonglong uVar3;
   ulonglong uVar4;
-  ulonglong uVar5;
-  bool bVar6;
+  bool bVar5;
   
-  iVar2 = __savegprlr_26(param_1);
-  uVar4 = 0xffffffff844cf278;
-  uVar5 = 0;
+  uVar3 = 0xffffffff844cf278;
+  uVar4 = 0;
   while( true ) {
-    if ((int)uVar5 < 0) {
+    if ((int)uVar4 < 0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\iwnet\\iwnet.cpp",0xd0,0,
                       "%s\n\t(index) = %i");
     }
-    uVar1 = uVar5 & 0xffffffff;
-    bVar6 = uVar5 < 0x18;
-    uVar5 = uVar5 + 1;
-    uVar1 = -((uVar1 >> 0x1f) + (ulonglong)bVar6) & uVar4;
-    uVar4 = uVar4 + 0x1c;
+    uVar1 = uVar4 & 0xffffffff;
+    bVar5 = uVar4 < 0x18;
+    uVar4 = uVar4 + 1;
+    uVar1 = -((uVar1 >> 0x1f) + (ulonglong)bVar5) & uVar3;
+    uVar3 = uVar3 + 0x1c;
     if ((uVar1 & 0xffffffff) == 0) break;
-    pIVar3 = (IWNetCommandData *)uVar1;
-    if ((pIVar3->active != false) && ((pIVar3->internalData).localControllerIndex == iVar2)) {
-      IWNet_CancelTask(pIVar3);
+    pIVar2 = (IWNetCommandData *)uVar1;
+    if ((pIVar2->active != false) && ((pIVar2->internalData).localControllerIndex == param_1)) {
+      IWNet_CancelTask(pIVar2);
     }
   }
-  __restgprlr_26();
   return;
 }
 

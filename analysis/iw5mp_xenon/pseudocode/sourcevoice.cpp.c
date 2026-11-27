@@ -2,59 +2,58 @@
 
 // 828D7740  CreateObject  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/sourcevoice.cpp:40)
 
-undefined4
-XAUDIO::CSourceVoice::CreateObject
-          (XAUDIOSOURCEVOICEINIT *param_1,IXAudioBatchAllocator *param_2,CSourceVoice **param_3)
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
+int XAUDIO::CSourceVoice::CreateObject
+              (XAUDIOSOURCEVOICEINIT *param_1,IXAudioBatchAllocator *param_2,CSourceVoice **param_3)
 
 {
-  XAUDIOSOURCEVOICEINIT *pXVar1;
-  int iVar2;
-  CSourceVoice *pCVar3;
-  undefined4 uVar4;
+  int iVar1;
+  CSourceVoice *pCVar2;
   IXAudioBatchAllocator *pIStack0000001c;
   ulong local_30 [12];
   
   pIStack0000001c = param_2;
-  pXVar1 = (XAUDIOSOURCEVOICEINIT *)__savegprlr_28(param_1);
-  iVar2 = GetObjectAdditionalSize(pXVar1,local_30);
-  if ((-1 < iVar2) &&
-     (iVar2 = XAudioPrepareBatchAllocator(0x61820006,local_30[0] + 0x94,&stack0x0000001c),
-     -1 < iVar2)) {
-    pCVar3 = (CSourceVoice *)(**(code **)((int)*pIStack0000001c + 0x14))(pIStack0000001c,0x94);
-    if ((pCVar3 == (CSourceVoice *)0x0) ||
-       (pCVar3 = CSourceVoice(pCVar3,pIStack0000001c,'\0'), pCVar3 == (CSourceVoice *)0x0)) {
-      iVar2 = -0x7ff8fff2;
+  iVar1 = GetObjectAdditionalSize(param_1,local_30);
+  if ((-1 < iVar1) &&
+     (iVar1 = XAudioPrepareBatchAllocator(0x61820006,local_30[0] + 0x94,&stack0x0000001c),
+     -1 < iVar1)) {
+    pCVar2 = (CSourceVoice *)(**(code **)((int)*pIStack0000001c + 0x14))(pIStack0000001c,0x94);
+    if ((pCVar2 == (CSourceVoice *)0x0) ||
+       (pCVar2 = CSourceVoice(pCVar2,pIStack0000001c,'\0'), pCVar2 == (CSourceVoice *)0x0)) {
+      iVar1 = -0x7ff8fff2;
     }
     else {
-      iVar2 = Initialize(pCVar3,pXVar1);
-      if (iVar2 < 0) {
-        (**(code **)(pCVar3->_padding_ + 0xc))(pCVar3);
+      iVar1 = Initialize(pCVar2,param_1);
+      if (iVar1 < 0) {
+        (**(code **)(pCVar2->_padding_ + 0xc))(pCVar2);
       }
       else {
-        *param_3 = pCVar3;
+        *param_3 = pCVar2;
       }
     }
   }
   if (pIStack0000001c != (IXAudioBatchAllocator *)0x0) {
     (**(code **)((int)*pIStack0000001c + 4))();
   }
-  uVar4 = __restgprlr_28(iVar2);
-  return uVar4;
+  return iVar1;
 }
 
 
 // 828D6D50  GetObjectAdditionalSize  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/sourcevoice.cpp:124)
+
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 
 undefined4
 XAUDIO::CSourceVoice::GetObjectAdditionalSize(XAUDIOSOURCEVOICEINIT *param_1,ulong *param_2)
 
 {
   IXAudioEffectManager *pIVar1;
-  XAUDIOSOURCEVOICEINIT *pXVar2;
-  int iVar3;
-  undefined4 uVar4;
-  uchar *puVar5;
-  longlong lVar6;
+  int iVar2;
+  uchar *puVar3;
+  longlong lVar4;
   ulong local_a0;
   ulong local_9c [3];
   XAUDIOROUTEDVOICEINIT XStack_90;
@@ -65,35 +64,32 @@ XAUDIO::CSourceVoice::GetObjectAdditionalSize(XAUDIOSOURCEVOICEINIT *param_1,ulo
   _func___cdecl_void_XAUDIOVOICEPACKETCALLBACK_ptr *local_28;
   _func___cdecl_void_XAUDIOVOICEPACKETCALLBACK_ptr *local_24;
   
-  pXVar2 = (XAUDIOSOURCEVOICEINIT *)__savegprlr_29(param_1);
   pIVar1 = g_pEngine->m_pEffectManager;
-  ConvertInit(pXVar2,&XStack_90);
-  iVar3 = CRoutedVoice::GetObjectAdditionalSize(&XStack_90,&local_a0);
-  if (-1 < iVar3) {
-    puVar5 = &XStack_90.MaxOutputVoiceCount;
-    lVar6 = 10;
+  ConvertInit(param_1,&XStack_90);
+  iVar2 = CRoutedVoice::GetObjectAdditionalSize(&XStack_90,&local_a0);
+  if (-1 < iVar2) {
+    puVar3 = &XStack_90.MaxOutputVoiceCount;
+    lVar4 = 10;
     do {
-      puVar5 = puVar5 + 8;
-      *(undefined8 *)puVar5 = 0;
-      lVar6 = lVar6 + -1;
-    } while (lVar6 != 0);
-    local_70[0].pContext = pXVar2->pContext;
+      puVar3 = puVar3 + 8;
+      *(undefined8 *)puVar3 = 0;
+      lVar4 = lVar4 + -1;
+    } while (lVar4 != 0);
+    local_70[0].pContext = param_1->pContext;
     local_70[0].EffectId = '\0';
     memcpy();
-    local_2c = pXVar2->MaxPacketCount;
-    local_30 = pXVar2->MaxPitchShift;
-    local_2b = pXVar2->Flags;
-    local_28 = pXVar2->pfnPacketCompletionCallback;
-    local_24 = pXVar2->pfnPacketLoopCallback;
-    iVar3 = XAudioEffectManager_QueryEffectSize(pIVar1,local_70,local_9c);
-    if (-1 < iVar3) {
+    local_2c = param_1->MaxPacketCount;
+    local_30 = param_1->MaxPitchShift;
+    local_2b = param_1->Flags;
+    local_28 = param_1->pfnPacketCompletionCallback;
+    local_24 = param_1->pfnPacketLoopCallback;
+    iVar2 = XAudioEffectManager_QueryEffectSize(pIVar1,local_70,local_9c);
+    if (-1 < iVar2) {
       *param_2 = local_9c[0] + local_a0;
-      uVar4 = __restgprlr_29(0);
-      return uVar4;
+      return 0;
     }
   }
-  uVar4 = __restgprlr_29(0);
-  return uVar4;
+  return 0;
 }
 
 
@@ -119,54 +115,53 @@ undefined4 __thiscall XAUDIO::CVoice::GetVoiceType(CVoice *this,uchar *param_1)
 
 // 828D7338  CSourceVoice  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/sourcevoice.cpp:191)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 CSourceVoice * __thiscall
 XAUDIO::CSourceVoice::CSourceVoice(CSourceVoice *this,IXAudioBatchAllocator *param_1,uchar param_2)
 
 {
   CEngine *pCVar1;
-  CRoutedVoice *this_00;
   CRoutedVoice *pCVar2;
-  uchar uVar4;
-  CSourceVoice *pCVar3;
-  undefined4 *puVar6;
-  ulonglong uVar5;
+  uchar uVar3;
+  undefined4 *puVar5;
+  ulonglong uVar4;
   void *in_r13;
-  void *pvVar7;
-  CEngineVoiceList *pCVar8;
+  void *pvVar6;
+  CEngineVoiceList *pCVar7;
   
-  this_00 = (CRoutedVoice *)__savegprlr_27(this);
-  pCVar2 = CRoutedVoice::CRoutedVoice(this_00,param_1,param_2);
-  this_00->_padding_ = (int)&_vftable_;
-  this_00[1]._padding_ = 0x3f800000;
+  pCVar2 = CRoutedVoice::CRoutedVoice((CRoutedVoice *)this,param_1,param_2);
+  this->_padding_ = (int)&_vftable_;
+  this->m_Volume = 1.0;
   pCVar1 = g_pEngine;
-  pCVar8 = &g_pEngine->m_SourceVoiceList;
-  uVar4 = KeRaiseIrqlToDpcLevel(pCVar2);
-  pvVar7 = in_r13;
+  pCVar7 = &g_pEngine->m_SourceVoiceList;
+  uVar3 = KeRaiseIrqlToDpcLevel(pCVar2);
+  pvVar6 = in_r13;
   if ((g_XAudioSpinLock.m_LockCount == 0) || (in_r13 != g_XAudioSpinLock.m_pOwningThread)) {
     KeAcquireSpinLockAtRaisedIrql(0xffffffff848958d8);
     g_XAudioSpinLock.m_pOwningThread = in_r13;
-    g_XAudioSpinLock.m_PreviousIrql = uVar4;
+    g_XAudioSpinLock.m_PreviousIrql = uVar3;
   }
   g_XAudioSpinLock.m_LockCount = g_XAudioSpinLock.m_LockCount + 1;
-  puVar6 = (undefined4 *)
-           ((int)&this_00->_padding_ + *(int *)&(pCVar1->m_SourceVoiceList).m_Master.field_0x8);
-  *puVar6 = pCVar8;
-  puVar6[1] = *(undefined4 *)&(pCVar1->m_SourceVoiceList).m_Master.field_0x4;
-  *(undefined4 **)&(pCVar1->m_SourceVoiceList).m_Master.field_0x4 = puVar6;
-  *(undefined4 **)puVar6[1] = puVar6;
-  uVar4 = g_XAudioSpinLock.m_PreviousIrql;
-  uVar5 = (ulonglong)(uint)g_XAudioSpinLock.m_LockCount;
-  if ((g_XAudioSpinLock.m_LockCount != 0) && (pvVar7 == g_XAudioSpinLock.m_pOwningThread)) {
-    g_XAudioSpinLock.m_LockCount = (long)(uVar5 - 1);
-    if (uVar5 - 1 == 0) {
+  puVar5 = (undefined4 *)
+           ((int)&this->_padding_ + *(int *)&(pCVar1->m_SourceVoiceList).m_Master.field_0x8);
+  *puVar5 = pCVar7;
+  puVar5[1] = *(undefined4 *)&(pCVar1->m_SourceVoiceList).m_Master.field_0x4;
+  *(undefined4 **)&(pCVar1->m_SourceVoiceList).m_Master.field_0x4 = puVar5;
+  *(undefined4 **)puVar5[1] = puVar5;
+  uVar3 = g_XAudioSpinLock.m_PreviousIrql;
+  uVar4 = (ulonglong)(uint)g_XAudioSpinLock.m_LockCount;
+  if ((g_XAudioSpinLock.m_LockCount != 0) && (pvVar6 == g_XAudioSpinLock.m_pOwningThread)) {
+    g_XAudioSpinLock.m_LockCount = (long)(uVar4 - 1);
+    if (uVar4 - 1 == 0) {
       g_XAudioSpinLock.m_pOwningThread = (void *)0x0;
       g_XAudioSpinLock.m_PreviousIrql = '\0';
       KeReleaseSpinLockFromRaisedIrql(0xffffffff848958d8);
-      KfLowerIrql(uVar4);
+      KfLowerIrql(uVar3);
     }
   }
-  pCVar3 = (CSourceVoice *)__restgprlr_27(this_00);
-  return pCVar3;
+  return this;
 }
 
 
@@ -181,12 +176,14 @@ undefined4 __thiscall XAUDIO::CSourceVoice::Start(CSourceVoice *this)
 
 // 828D6F00  ~CSourceVoice  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/sourcevoice.cpp:219)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void __thiscall XAUDIO::CSourceVoice::~CSourceVoice(CSourceVoice *this)
 
 {
   IXAudioEffect *pIVar1;
   CEngine *pCVar2;
-  CSourceVoice *this_00;
   ulong uVar3;
   uchar uVar4;
   ulonglong uVar5;
@@ -194,11 +191,10 @@ void __thiscall XAUDIO::CSourceVoice::~CSourceVoice(CSourceVoice *this)
   void *in_r13;
   void *pvVar7;
   
-  this_00 = (CSourceVoice *)__savegprlr_27(this);
-  this_00->_padding_ = (int)&_vftable_;
-  uVar3 = Stop(this_00,'\x01');
+  this->_padding_ = (int)&_vftable_;
+  uVar3 = Stop(this,'\x01');
   if (-1 < (int)uVar3) {
-    pIVar1 = (this_00->m_SourceEffect).pEffect;
+    pIVar1 = (this->m_SourceEffect).pEffect;
     uVar3 = 0;
     if (pIVar1 != (IXAudioEffect *)0x0) {
       uVar3 = (*pIVar1->lpVtbl[1].Release)(pIVar1);
@@ -214,8 +210,7 @@ void __thiscall XAUDIO::CSourceVoice::~CSourceVoice(CSourceVoice *this)
   }
   uVar5 = (ulonglong)(uint)g_XAudioSpinLock.m_LockCount + 1;
   g_XAudioSpinLock.m_LockCount = (long)uVar5;
-  piVar6 = (int *)((int)&this_00->_padding_ +
-                  *(int *)&(pCVar2->m_SourceVoiceList).m_Master.field_0x8);
+  piVar6 = (int *)((int)&this->_padding_ + *(int *)&(pCVar2->m_SourceVoiceList).m_Master.field_0x8);
   if ((int *)*piVar6 != piVar6) {
     ((int *)*piVar6)[1] = piVar6[1];
     *(int *)piVar6[1] = *piVar6;
@@ -233,13 +228,12 @@ void __thiscall XAUDIO::CSourceVoice::~CSourceVoice(CSourceVoice *this)
       KfLowerIrql(uVar4);
     }
   }
-  pIVar1 = (this_00->m_SourceEffect).pEffect;
+  pIVar1 = (this->m_SourceEffect).pEffect;
   if (pIVar1 != (IXAudioEffect *)0x0) {
     (*pIVar1->lpVtbl->Release)(pIVar1);
-    (this_00->m_SourceEffect).pEffect = (IXAudioEffect *)0x0;
+    (this->m_SourceEffect).pEffect = (IXAudioEffect *)0x0;
   }
-  CRoutedVoice::~CRoutedVoice((CRoutedVoice *)this_00);
-  __restgprlr_27();
+  CRoutedVoice::~CRoutedVoice((CRoutedVoice *)this);
   return;
 }
 
@@ -327,160 +321,160 @@ undefined4 __thiscall XAUDIO::CSourceVoice::Start(CSourceVoice *this,uchar param
 
 // 828D7460  SynchStart  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/sourcevoice.cpp:464)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 undefined4 __thiscall XAUDIO::CSourceVoice::SynchStart(CSourceVoice *this)
 
 {
   CEngine *pCVar1;
-  int iVar2;
-  uchar uVar4;
-  undefined4 uVar3;
-  ulonglong uVar5;
-  undefined4 *puVar6;
+  uchar uVar2;
+  ulonglong uVar3;
+  undefined4 *puVar4;
   void *in_r13;
-  void *pvVar7;
-  void *pvVar8;
-  undefined8 uVar9;
+  void *pvVar5;
+  void *pvVar6;
+  undefined4 uVar7;
   
-  iVar2 = __savegprlr_26(this);
-  uVar9 = 0;
-  uVar4 = KeRaiseIrqlToDpcLevel();
-  pvVar7 = in_r13;
+  uVar7 = 0;
+  uVar2 = KeRaiseIrqlToDpcLevel();
+  pvVar5 = in_r13;
   if ((g_XAudioSpinLock.m_LockCount == 0) || (in_r13 != g_XAudioSpinLock.m_pOwningThread)) {
     KeAcquireSpinLockAtRaisedIrql(0xffffffff848958d8);
     g_XAudioSpinLock.m_pOwningThread = in_r13;
-    g_XAudioSpinLock.m_PreviousIrql = uVar4;
+    g_XAudioSpinLock.m_PreviousIrql = uVar2;
   }
-  uVar5 = (ulonglong)(uint)g_XAudioSpinLock.m_LockCount + 1;
-  g_XAudioSpinLock.m_LockCount = (long)uVar5;
-  if ((*(byte *)(iVar2 + 0x3d) & 1) == 0) {
-    if ((*(byte *)(iVar2 + 0x3d) & 0x40) == 0) {
-      uVar4 = KeRaiseIrqlToDpcLevel();
-      pvVar8 = pvVar7;
-      if ((g_XAudioSpinLock.m_LockCount == 0) || (pvVar7 != g_XAudioSpinLock.m_pOwningThread)) {
+  uVar3 = (ulonglong)(uint)g_XAudioSpinLock.m_LockCount + 1;
+  g_XAudioSpinLock.m_LockCount = (long)uVar3;
+  if ((this->_padding_ & 0x10000) == 0) {
+    if ((this->_padding_ & 0x400000) == 0) {
+      uVar2 = KeRaiseIrqlToDpcLevel();
+      pvVar6 = pvVar5;
+      if ((g_XAudioSpinLock.m_LockCount == 0) || (pvVar5 != g_XAudioSpinLock.m_pOwningThread)) {
         KeAcquireSpinLockAtRaisedIrql(0xffffffff848958d8);
-        g_XAudioSpinLock.m_pOwningThread = pvVar7;
-        g_XAudioSpinLock.m_PreviousIrql = uVar4;
+        g_XAudioSpinLock.m_pOwningThread = pvVar5;
+        g_XAudioSpinLock.m_PreviousIrql = uVar2;
       }
       g_XAudioSpinLock.m_LockCount = g_XAudioSpinLock.m_LockCount + 1;
-      *(byte *)(iVar2 + 0x3d) = *(byte *)(iVar2 + 0x3d) | 0x40;
-      uVar4 = g_XAudioSpinLock.m_PreviousIrql;
-      uVar5 = (ulonglong)(uint)g_XAudioSpinLock.m_LockCount;
-      if ((g_XAudioSpinLock.m_LockCount != 0) && (pvVar8 == g_XAudioSpinLock.m_pOwningThread)) {
-        g_XAudioSpinLock.m_LockCount = (long)(uVar5 - 1);
-        if (uVar5 - 1 == 0) {
+      *(byte *)((int)&this->_padding_ + 1) = *(byte *)((int)&this->_padding_ + 1) | 0x40;
+      uVar2 = g_XAudioSpinLock.m_PreviousIrql;
+      uVar3 = (ulonglong)(uint)g_XAudioSpinLock.m_LockCount;
+      if ((g_XAudioSpinLock.m_LockCount != 0) && (pvVar6 == g_XAudioSpinLock.m_pOwningThread)) {
+        g_XAudioSpinLock.m_LockCount = (long)(uVar3 - 1);
+        if (uVar3 - 1 == 0) {
           g_XAudioSpinLock.m_pOwningThread = (void *)0x0;
           g_XAudioSpinLock.m_PreviousIrql = '\0';
           KeReleaseSpinLockFromRaisedIrql(0xffffffff848958d8);
-          KfLowerIrql(uVar4);
+          KfLowerIrql(uVar2);
         }
       }
       pCVar1 = g_pEngine;
-      uVar4 = KeRaiseIrqlToDpcLevel();
-      pvVar7 = pvVar8;
-      if ((g_XAudioSpinLock.m_LockCount == 0) || (pvVar8 != g_XAudioSpinLock.m_pOwningThread)) {
+      uVar2 = KeRaiseIrqlToDpcLevel();
+      pvVar5 = pvVar6;
+      if ((g_XAudioSpinLock.m_LockCount == 0) || (pvVar6 != g_XAudioSpinLock.m_pOwningThread)) {
         KeAcquireSpinLockAtRaisedIrql(0xffffffff848958d8);
-        g_XAudioSpinLock.m_pOwningThread = pvVar8;
-        g_XAudioSpinLock.m_PreviousIrql = uVar4;
+        g_XAudioSpinLock.m_pOwningThread = pvVar6;
+        g_XAudioSpinLock.m_PreviousIrql = uVar2;
       }
       g_XAudioSpinLock.m_LockCount = g_XAudioSpinLock.m_LockCount + 1;
-      puVar6 = (undefined4 *)(*(int *)&(pCVar1->m_SynchSourceVoiceList).field_0x8 + iVar2);
-      *puVar6 = &pCVar1->m_SynchSourceVoiceList;
-      puVar6[1] = *(undefined4 *)&(pCVar1->m_SynchSourceVoiceList).field_0x4;
-      *(undefined4 **)&(pCVar1->m_SynchSourceVoiceList).field_0x4 = puVar6;
-      *(undefined4 **)puVar6[1] = puVar6;
-      uVar4 = g_XAudioSpinLock.m_PreviousIrql;
-      uVar5 = (ulonglong)(uint)g_XAudioSpinLock.m_LockCount;
-      if ((g_XAudioSpinLock.m_LockCount != 0) && (pvVar7 == g_XAudioSpinLock.m_pOwningThread)) {
-        uVar5 = uVar5 - 1;
-        g_XAudioSpinLock.m_LockCount = (long)uVar5;
-        if (uVar5 == 0) {
+      puVar4 = (undefined4 *)
+               ((int)&this->_padding_ + *(int *)&(pCVar1->m_SynchSourceVoiceList).field_0x8);
+      *puVar4 = &pCVar1->m_SynchSourceVoiceList;
+      puVar4[1] = *(undefined4 *)&(pCVar1->m_SynchSourceVoiceList).field_0x4;
+      *(undefined4 **)&(pCVar1->m_SynchSourceVoiceList).field_0x4 = puVar4;
+      *(undefined4 **)puVar4[1] = puVar4;
+      uVar2 = g_XAudioSpinLock.m_PreviousIrql;
+      uVar3 = (ulonglong)(uint)g_XAudioSpinLock.m_LockCount;
+      if ((g_XAudioSpinLock.m_LockCount != 0) && (pvVar5 == g_XAudioSpinLock.m_pOwningThread)) {
+        uVar3 = uVar3 - 1;
+        g_XAudioSpinLock.m_LockCount = (long)uVar3;
+        if (uVar3 == 0) {
           g_XAudioSpinLock.m_pOwningThread = (void *)0x0;
           g_XAudioSpinLock.m_PreviousIrql = '\0';
           KeReleaseSpinLockFromRaisedIrql(0xffffffff848958d8);
-          KfLowerIrql(uVar4);
-          uVar5 = (ulonglong)(uint)g_XAudioSpinLock.m_LockCount;
+          KfLowerIrql(uVar2);
+          uVar3 = (ulonglong)(uint)g_XAudioSpinLock.m_LockCount;
         }
       }
     }
   }
   else {
-    uVar9 = 0xffffffff8000ffff;
+    uVar7 = 0x8000ffff;
   }
-  uVar4 = g_XAudioSpinLock.m_PreviousIrql;
-  if (((int)uVar5 != 0) && (pvVar7 == g_XAudioSpinLock.m_pOwningThread)) {
-    g_XAudioSpinLock.m_LockCount = (long)(uVar5 - 1);
-    if (uVar5 - 1 == 0) {
+  uVar2 = g_XAudioSpinLock.m_PreviousIrql;
+  if (((int)uVar3 != 0) && (pvVar5 == g_XAudioSpinLock.m_pOwningThread)) {
+    g_XAudioSpinLock.m_LockCount = (long)(uVar3 - 1);
+    if (uVar3 - 1 == 0) {
       g_XAudioSpinLock.m_PreviousIrql = '\0';
       g_XAudioSpinLock.m_pOwningThread = (void *)0x0;
       KeReleaseSpinLockFromRaisedIrql(0xffffffff848958d8);
-      KfLowerIrql(uVar4);
+      KfLowerIrql(uVar2);
     }
   }
-  uVar3 = __restgprlr_26(uVar9);
-  return uVar3;
+  return uVar7;
 }
 
 
 // 828D7690  Stop  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/sourcevoice.cpp:509)
 
-undefined4 __thiscall XAUDIO::CSourceVoice::Stop(CSourceVoice *this,uchar param_1)
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
+int __thiscall XAUDIO::CSourceVoice::Stop(CSourceVoice *this,uchar param_1)
 
 {
   IXAudioEffect *pIVar1;
-  CSourceVoice *this_00;
   int iVar2;
-  undefined4 uVar3;
   IXAudioFrameBuffer *in_r5;
   XAUDIOFXPARAM *in_r6;
-  ulonglong uVar4;
   undefined1 *local_80 [20];
   byte local_30;
   
-  uVar4 = (ulonglong)(char)param_1;
-  this_00 = (CSourceVoice *)__savegprlr_29(this);
   local_80[0] = (undefined1 *)register0x0000000c;
-  iVar2 = SynchStop(this_00);
+  iVar2 = SynchStop(this);
   if (iVar2 == -0x7fffbffc) {
-    pIVar1 = (this_00->m_SourceEffect).pEffect;
+    pIVar1 = (this->m_SourceEffect).pEffect;
     if (pIVar1 != (IXAudioEffect *)0x0) {
-      iVar2 = (*pIVar1->lpVtbl[1].Process)(pIVar1,(IXAudioFrameBuffer *)uVar4,in_r5);
-      if (iVar2 < 0) goto LAB_828d7734;
-      if ((uVar4 & 1) == 0) {
-        pIVar1 = (this_00->m_SourceEffect).pEffect;
+      iVar2 = (*pIVar1->lpVtbl[1].Process)(pIVar1,(IXAudioFrameBuffer *)(int)(char)param_1,in_r5);
+      if (iVar2 < 0) {
+        return iVar2;
+      }
+      if ((param_1 & 1) == 0) {
+        pIVar1 = (this->m_SourceEffect).pEffect;
         iVar2 = (*pIVar1->lpVtbl[1].SetParam)(pIVar1,(char)local_80 + 'P',(uchar)in_r5,in_r6);
-        if (iVar2 < 0) goto LAB_828d7734;
+        if (iVar2 < 0) {
+          return iVar2;
+        }
         if ((local_30 & 1) == 0) {
-          uVar4 = uVar4 & 0xff | 1;
+          param_1 = param_1 | 1;
         }
       }
     }
-    iVar2 = CVoice::Stop((CVoice *)this_00,(uchar)uVar4);
+    iVar2 = CVoice::Stop((CVoice *)this,param_1);
   }
-LAB_828d7734:
-  uVar3 = __restgprlr_29(iVar2);
-  return uVar3;
+  return iVar2;
 }
 
 
 // 828D70A8  SynchStop  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/sourcevoice.cpp:584)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 undefined4 __thiscall XAUDIO::CSourceVoice::SynchStop(CSourceVoice *this)
 
 {
   CEngine *pCVar1;
-  CVoice *pCVar3;
   ulonglong uVar2;
-  undefined4 uVar4;
-  uchar uVar5;
-  int iVar6;
-  int *piVar7;
+  uchar uVar3;
+  int iVar4;
+  int *piVar5;
   void *in_r13;
-  void *pvVar8;
-  void *pvVar9;
+  void *pvVar6;
+  void *pvVar7;
   
-  pCVar3 = (CVoice *)__savegprlr_27(this);
   uVar2 = KeRaiseIrqlToDpcLevel();
-  pvVar8 = in_r13;
+  pvVar6 = in_r13;
   if ((g_XAudioSpinLock.m_LockCount == 0) || (in_r13 != g_XAudioSpinLock.m_pOwningThread)) {
     KeAcquireSpinLockAtRaisedIrql(0xffffffff848958d8);
     g_XAudioSpinLock.m_PreviousIrql = (uchar)uVar2;
@@ -489,84 +483,82 @@ undefined4 __thiscall XAUDIO::CSourceVoice::SynchStop(CSourceVoice *this)
   else {
     uVar2 = (ulonglong)g_XAudioSpinLock.m_PreviousIrql;
   }
-  iVar6 = g_XAudioSpinLock.m_LockCount + 1;
-  if ((pCVar3->m_VoiceState & 0x40) == 0) {
-    if (((iVar6 != 0) && (pvVar8 == g_XAudioSpinLock.m_pOwningThread)) &&
-       (iVar6 = g_XAudioSpinLock.m_LockCount, g_XAudioSpinLock.m_LockCount == 0)) {
+  iVar4 = g_XAudioSpinLock.m_LockCount + 1;
+  if ((this->_padding_ & 0x400000) == 0) {
+    if (((iVar4 != 0) && (pvVar6 == g_XAudioSpinLock.m_pOwningThread)) &&
+       (iVar4 = g_XAudioSpinLock.m_LockCount, g_XAudioSpinLock.m_LockCount == 0)) {
       g_XAudioSpinLock.m_PreviousIrql = '\0';
       g_XAudioSpinLock.m_pOwningThread = (void *)0x0;
       KeReleaseSpinLockFromRaisedIrql(0xffffffff848958d8);
       KfLowerIrql(uVar2);
-      iVar6 = g_XAudioSpinLock.m_LockCount;
+      iVar4 = g_XAudioSpinLock.m_LockCount;
     }
-    g_XAudioSpinLock.m_LockCount = iVar6;
-    uVar4 = __restgprlr_27(0xffffffff80004004);
-    return uVar4;
+    g_XAudioSpinLock.m_LockCount = iVar4;
+    return 0x80004004;
   }
-  g_XAudioSpinLock.m_LockCount = iVar6;
-  CEngine::BlockOnActiveVoice(g_pEngine,pCVar3);
+  g_XAudioSpinLock.m_LockCount = iVar4;
+  CEngine::BlockOnActiveVoice(g_pEngine,(CVoice *)this);
   pCVar1 = g_pEngine;
-  uVar5 = KeRaiseIrqlToDpcLevel();
-  pvVar9 = pvVar8;
-  if ((g_XAudioSpinLock.m_LockCount == 0) || (pvVar8 != g_XAudioSpinLock.m_pOwningThread)) {
+  uVar3 = KeRaiseIrqlToDpcLevel();
+  pvVar7 = pvVar6;
+  if ((g_XAudioSpinLock.m_LockCount == 0) || (pvVar6 != g_XAudioSpinLock.m_pOwningThread)) {
     KeAcquireSpinLockAtRaisedIrql(0xffffffff848958d8);
-    g_XAudioSpinLock.m_pOwningThread = pvVar8;
-    g_XAudioSpinLock.m_PreviousIrql = uVar5;
+    g_XAudioSpinLock.m_pOwningThread = pvVar6;
+    g_XAudioSpinLock.m_PreviousIrql = uVar3;
   }
   uVar2 = (ulonglong)(uint)g_XAudioSpinLock.m_LockCount + 1;
   g_XAudioSpinLock.m_LockCount = (long)uVar2;
-  piVar7 = (int *)(&pCVar3->field_0x0 + *(int *)&(pCVar1->m_SynchSourceVoiceList).field_0x8);
-  if ((int *)*piVar7 != piVar7) {
-    ((int *)*piVar7)[1] = piVar7[1];
-    *(int *)piVar7[1] = *piVar7;
-    piVar7[1] = (int)piVar7;
-    *piVar7 = (int)piVar7;
+  piVar5 = (int *)((int)&this->_padding_ + *(int *)&(pCVar1->m_SynchSourceVoiceList).field_0x8);
+  if ((int *)*piVar5 != piVar5) {
+    ((int *)*piVar5)[1] = piVar5[1];
+    *(int *)piVar5[1] = *piVar5;
+    piVar5[1] = (int)piVar5;
+    *piVar5 = (int)piVar5;
     uVar2 = (ulonglong)(uint)g_XAudioSpinLock.m_LockCount;
   }
-  uVar5 = g_XAudioSpinLock.m_PreviousIrql;
-  if (((int)uVar2 != 0) && (pvVar9 == g_XAudioSpinLock.m_pOwningThread)) {
+  uVar3 = g_XAudioSpinLock.m_PreviousIrql;
+  if (((int)uVar2 != 0) && (pvVar7 == g_XAudioSpinLock.m_pOwningThread)) {
     g_XAudioSpinLock.m_LockCount = (long)(uVar2 - 1);
     if (uVar2 - 1 == 0) {
       g_XAudioSpinLock.m_PreviousIrql = '\0';
       g_XAudioSpinLock.m_pOwningThread = (void *)0x0;
       KeReleaseSpinLockFromRaisedIrql(0xffffffff848958d8);
-      KfLowerIrql(uVar5);
+      KfLowerIrql(uVar3);
     }
   }
-  uVar5 = KeRaiseIrqlToDpcLevel();
-  pvVar8 = pvVar9;
-  if ((g_XAudioSpinLock.m_LockCount == 0) || (pvVar9 != g_XAudioSpinLock.m_pOwningThread)) {
+  uVar3 = KeRaiseIrqlToDpcLevel();
+  pvVar6 = pvVar7;
+  if ((g_XAudioSpinLock.m_LockCount == 0) || (pvVar7 != g_XAudioSpinLock.m_pOwningThread)) {
     KeAcquireSpinLockAtRaisedIrql(0xffffffff848958d8);
-    g_XAudioSpinLock.m_pOwningThread = pvVar9;
-    g_XAudioSpinLock.m_PreviousIrql = uVar5;
+    g_XAudioSpinLock.m_pOwningThread = pvVar7;
+    g_XAudioSpinLock.m_PreviousIrql = uVar3;
   }
   g_XAudioSpinLock.m_LockCount = g_XAudioSpinLock.m_LockCount + 1;
-  pCVar3->m_VoiceState = pCVar3->m_VoiceState & 0xbf;
-  uVar5 = g_XAudioSpinLock.m_PreviousIrql;
+  *(byte *)((int)&this->_padding_ + 1) = *(byte *)((int)&this->_padding_ + 1) & 0xbf;
+  uVar3 = g_XAudioSpinLock.m_PreviousIrql;
   uVar2 = (ulonglong)(uint)g_XAudioSpinLock.m_LockCount;
-  if ((g_XAudioSpinLock.m_LockCount != 0) && (pvVar8 == g_XAudioSpinLock.m_pOwningThread)) {
+  if ((g_XAudioSpinLock.m_LockCount != 0) && (pvVar6 == g_XAudioSpinLock.m_pOwningThread)) {
     uVar2 = uVar2 - 1;
     g_XAudioSpinLock.m_LockCount = (long)uVar2;
     if (uVar2 == 0) {
       g_XAudioSpinLock.m_pOwningThread = (void *)0x0;
       g_XAudioSpinLock.m_PreviousIrql = '\0';
       KeReleaseSpinLockFromRaisedIrql(0xffffffff848958d8);
-      KfLowerIrql(uVar5);
+      KfLowerIrql(uVar3);
       uVar2 = (ulonglong)(uint)g_XAudioSpinLock.m_LockCount;
     }
   }
-  uVar5 = g_XAudioSpinLock.m_PreviousIrql;
-  if (((int)uVar2 != 0) && (pvVar8 == g_XAudioSpinLock.m_pOwningThread)) {
+  uVar3 = g_XAudioSpinLock.m_PreviousIrql;
+  if (((int)uVar2 != 0) && (pvVar6 == g_XAudioSpinLock.m_pOwningThread)) {
     g_XAudioSpinLock.m_LockCount = (long)(uVar2 - 1);
     if (uVar2 - 1 == 0) {
       g_XAudioSpinLock.m_pOwningThread = (void *)0x0;
       g_XAudioSpinLock.m_PreviousIrql = '\0';
       KeReleaseSpinLockFromRaisedIrql(0xffffffff848958d8);
-      KfLowerIrql(uVar5);
+      KfLowerIrql(uVar3);
     }
   }
-  uVar4 = __restgprlr_27(0);
-  return uVar4;
+  return 0;
 }
 
 
@@ -591,44 +583,49 @@ ulong __thiscall XAUDIO::CSourceVoice::FlushPackets(CSourceVoice *this)
 
 // 828D6A40  GetVoiceState  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/sourcevoice.cpp:670)
 
-undefined4 __thiscall XAUDIO::CSourceVoice::GetVoiceState(CSourceVoice *this,uchar *param_1)
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
+int __thiscall XAUDIO::CSourceVoice::GetVoiceState(CSourceVoice *this,uchar *param_1)
 
 {
+  IXAudioEffect *pIVar1;
+  uchar uVar3;
   int iVar2;
-  uchar uVar4;
-  undefined8 uVar1;
-  undefined4 uVar3;
-  ulonglong uVar5;
+  uchar in_r5;
+  XAUDIOFXPARAM *in_r6;
+  ulonglong uVar4;
   void *in_r13;
-  void *pvVar6;
-  byte local_40 [64];
+  void *pvVar5;
+  undefined1 *local_90 [20];
+  byte local_40;
   
-  iVar2 = __savegprlr_27(this);
-  uVar4 = KeRaiseIrqlToDpcLevel();
-  pvVar6 = in_r13;
+  local_90[0] = (undefined1 *)register0x0000000c;
+  uVar3 = KeRaiseIrqlToDpcLevel();
+  pvVar5 = in_r13;
   if ((g_XAudioSpinLock.m_LockCount == 0) || (in_r13 != g_XAudioSpinLock.m_pOwningThread)) {
     KeAcquireSpinLockAtRaisedIrql(0xffffffff848958d8);
     g_XAudioSpinLock.m_pOwningThread = in_r13;
-    g_XAudioSpinLock.m_PreviousIrql = uVar4;
+    g_XAudioSpinLock.m_PreviousIrql = uVar3;
   }
   g_XAudioSpinLock.m_LockCount = g_XAudioSpinLock.m_LockCount + 1;
-  uVar1 = (**(code **)(**(int **)(iVar2 + 0x4c) + 0x2c))(*(int **)(iVar2 + 0x4c),local_40);
-  if (-1 < (int)uVar1) {
-    *param_1 = *(byte *)(iVar2 + 0x3d) | local_40[0];
+  pIVar1 = (this->m_SourceEffect).pEffect;
+  iVar2 = (*pIVar1->lpVtbl[1].SetParam)(pIVar1,(char)local_90 + 'P',in_r5,in_r6);
+  if (-1 < iVar2) {
+    *param_1 = *(byte *)((int)&this->_padding_ + 1) | local_40;
   }
-  uVar4 = g_XAudioSpinLock.m_PreviousIrql;
-  uVar5 = (ulonglong)(uint)g_XAudioSpinLock.m_LockCount;
-  if ((g_XAudioSpinLock.m_LockCount != 0) && (pvVar6 == g_XAudioSpinLock.m_pOwningThread)) {
-    g_XAudioSpinLock.m_LockCount = (long)(uVar5 - 1);
-    if (uVar5 - 1 == 0) {
+  uVar3 = g_XAudioSpinLock.m_PreviousIrql;
+  uVar4 = (ulonglong)(uint)g_XAudioSpinLock.m_LockCount;
+  if ((g_XAudioSpinLock.m_LockCount != 0) && (pvVar5 == g_XAudioSpinLock.m_pOwningThread)) {
+    g_XAudioSpinLock.m_LockCount = (long)(uVar4 - 1);
+    if (uVar4 - 1 == 0) {
       g_XAudioSpinLock.m_pOwningThread = (void *)0x0;
       g_XAudioSpinLock.m_PreviousIrql = '\0';
       KeReleaseSpinLockFromRaisedIrql(0xffffffff848958d8);
-      KfLowerIrql(uVar4);
+      KfLowerIrql(uVar3);
     }
   }
-  uVar3 = __restgprlr_27(uVar1);
-  return uVar3;
+  return iVar2;
 }
 
 
@@ -645,34 +642,40 @@ IXAudioFrameBuffer * __thiscall XAUDIO::CSourceVoice::GetFrameBuffer(CSourceVoic
 
 // 828D6B48  ProcessEffects  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/sourcevoice.cpp:735)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 undefined4 __thiscall
 XAUDIO::CSourceVoice::ProcessEffects(CSourceVoice *this,IXAudioFrameBuffer **param_1)
 
 {
-  int *piVar1;
-  CRoutedVoice *this_00;
+  IXAudioEffect *pIVar1;
   int iVar2;
   T_HRESULT TVar3;
-  undefined4 uVar4;
-  byte local_30 [48];
+  uchar uVar4;
+  XAUDIOFXPARAM *pXVar5;
+  undefined1 *local_80 [20];
+  byte local_30;
   
-  this_00 = (CRoutedVoice *)__savegprlr_29(this);
-  if (((1 << (this_00[1].m_MaxOutputVoiceCount & 0x3f) & g_pEngine->m_CategoryVolumeChangeMask) == 0
-      ) || (iVar2 = (**(code **)(this_00->_padding_ + 0x5c))(), -1 < iVar2)) {
-    iVar2 = CVoice::ProcessEffect((CVoice *)this_00,(XAUDIOVOICEFXCTX *)(this_00 + 1),param_1);
+  uVar4 = (uchar)param_1;
+  pXVar5 = (XAUDIOFXPARAM *)(1 << (this->m_Category & 0x3f) & g_pEngine->m_CategoryVolumeChangeMask)
+  ;
+  local_80[0] = (undefined1 *)register0x0000000c;
+  if ((pXVar5 == (XAUDIOFXPARAM *)0x0) ||
+     (iVar2 = (**(code **)(this->_padding_ + 0x5c))(), -1 < iVar2)) {
+    iVar2 = CVoice::ProcessEffect((CVoice *)this,&this->m_SourceEffect,param_1);
     if (((-1 < iVar2) &&
-        (((iVar2 = CRoutedVoice::ProcessEffects(this_00,param_1), -1 < iVar2 &&
-          (piVar1 = (int *)this_00[1]._padding_,
-          iVar2 = (**(code **)(*piVar1 + 0x2c))(piVar1,local_30), -1 < iVar2)) &&
-         (XAudPixIncrementCounter(XAUDIOPIXCOUNTER_ACTIVEVOICES_SOURCE,1), (local_30[0] & 1) == 0)))
-        ) && ((this_00->_padding_ & 0x40000) == 0)) {
-      TVar3 = CVoice::Stop((CVoice *)this_00,'\0');
-      uVar4 = __restgprlr_29(TVar3);
-      return uVar4;
+        (((iVar2 = CRoutedVoice::ProcessEffects((CRoutedVoice *)this,param_1), -1 < iVar2 &&
+          (pIVar1 = (this->m_SourceEffect).pEffect,
+          iVar2 = (*pIVar1->lpVtbl[1].SetParam)(pIVar1,(char)local_80 + 'P',uVar4,pXVar5),
+          -1 < iVar2)) &&
+         (XAudPixIncrementCounter(XAUDIOPIXCOUNTER_ACTIVEVOICES_SOURCE,1), (local_30 & 1) == 0))))
+       && ((this->_padding_ & 0x40000) == 0)) {
+      TVar3 = CVoice::Stop((CVoice *)this,'\0');
+      return TVar3;
     }
   }
-  uVar4 = __restgprlr_29(iVar2);
-  return uVar4;
+  return iVar2;
 }
 
 

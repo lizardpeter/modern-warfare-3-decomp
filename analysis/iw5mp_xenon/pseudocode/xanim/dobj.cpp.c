@@ -59,65 +59,64 @@ void DObjShutdown(void)
 
 // 8261A0E0  DObjDumpInfo  (xanim/dobj.cpp:71)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 void DObjDumpInfo(DObj *param_1)
 
 {
   byte bVar1;
   XModel *pXVar2;
-  DObj *pDVar3;
-  char *pcVar4;
-  XModel **ppXVar5;
-  ulonglong uVar6;
-  int iVar7;
-  byte *pbVar8;
+  char *pcVar3;
+  XModel **ppXVar4;
+  ulonglong uVar5;
+  int iVar6;
+  byte *pbVar7;
   
-  pDVar3 = (DObj *)__savegprlr_26(param_1);
-  if (pDVar3 == (DObj *)0x0) {
+  if (param_1 == (DObj *)0x0) {
     Com_Printf(0x13,"No Dobj\n");
-    __restgprlr_26();
     return;
   }
   Com_Printf(0x13,"\nModels:\n");
-  uVar6 = (ulonglong)pDVar3->numModels;
-  if (pDVar3->numModels != 0) {
-    ppXVar5 = pDVar3->models + -1;
+  uVar5 = (ulonglong)param_1->numModels;
+  if (param_1->numModels != 0) {
+    ppXVar4 = param_1->models + -1;
     do {
-      ppXVar5 = ppXVar5 + 1;
-      pXVar2 = *ppXVar5;
+      ppXVar4 = ppXVar4 + 1;
+      pXVar2 = *ppXVar4;
       Com_Printf(0x13,"%d: \'%s\'\n");
       XModelNumBones(pXVar2);
-      uVar6 = uVar6 - 1;
-    } while (uVar6 != 0);
+      uVar5 = uVar5 - 1;
+    } while (uVar5 != 0);
   }
   Com_Printf(0x13,"\nBones:\n");
-  iVar7 = 0;
-  bVar1 = pDVar3->numBones;
+  iVar6 = 0;
+  bVar1 = param_1->numBones;
   if (bVar1 != 0) {
     do {
-      DObjGetBoneName(pDVar3,iVar7);
+      DObjGetBoneName(param_1,iVar6);
       Com_Printf(0x13,"Bone %d: \'%s\'\n");
-      iVar7 = iVar7 + 1;
-    } while (iVar7 < (int)(uint)bVar1);
+      iVar6 = iVar6 + 1;
+    } while (iVar6 < (int)(uint)bVar1);
   }
-  if (pDVar3->duplicateParts == 0) {
+  if (param_1->duplicateParts == 0) {
     Com_Printf(0x13,"\nNo part duplicates.\n");
   }
   else {
     Com_Printf(0x13,"\nPart duplicates:\n");
-    pcVar4 = SL_ConvertToString((uint)pDVar3->duplicateParts);
-    pbVar8 = (byte *)(pcVar4 + 0x18);
-    bVar1 = *pbVar8;
+    pcVar3 = SL_ConvertToString((uint)param_1->duplicateParts);
+    pbVar7 = (byte *)(pcVar3 + 0x18);
+    bVar1 = *pbVar7;
     while (bVar1 != 0) {
-      bVar1 = *pbVar8;
-      DObjGetBoneName(pDVar3,pbVar8[1] - 1);
-      DObjGetBoneName(pDVar3,bVar1 - 1);
+      bVar1 = *pbVar7;
+      DObjGetBoneName(param_1,pbVar7[1] - 1);
+      DObjGetBoneName(param_1,bVar1 - 1);
       Com_Printf(0x13,"%d (\'%s\') -> %d (\'%s\')\n");
-      pbVar8 = pbVar8 + 2;
-      bVar1 = *pbVar8;
+      pbVar7 = pbVar7 + 2;
+      bVar1 = *pbVar7;
     }
   }
   Com_Printf(0x13,"\n");
-  __restgprlr_26();
   return;
 }
 
@@ -133,72 +132,73 @@ bool DObjIgnoreCollision(DObj *param_1,int param_2)
 
 // 82615F48  DObjDumpCreationInfo  (xanim/dobj.cpp:147)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
+
 void DObjDumpCreationInfo(DObjModel_s *param_1,uint param_2)
 
 {
   XModel *pXVar1;
-  ulonglong uVar2;
-  undefined4 *puVar3;
-  int iVar4;
-  ulonglong uVar5;
-  longlong lVar6;
+  int iVar2;
+  longlong lVar3;
+  longlong lVar4;
   
-  uVar5 = (ulonglong)(int)param_2;
-  puVar3 = (undefined4 *)__savegprlr_24(param_1);
-  uVar2 = uVar5 & 0xffffffff;
-  while (uVar2 != 0) {
-    pXVar1 = (XModel *)*puVar3;
-    XModelGetName(pXVar1);
-    Com_Printf(0x13,"Model \'%s\':\n");
-    iVar4 = XModelNumBones(pXVar1);
-    lVar6 = (longlong)iVar4;
-    if (0 < iVar4) {
-      iVar4 = 0;
-      do {
-        SL_ConvertToString((uint)*(ushort *)((int)pXVar1->boneNames + iVar4));
-        Com_Printf(0x13,"Bone %d: \'%s\'\n");
-        lVar6 = lVar6 + -1;
-        iVar4 = iVar4 + 2;
-      } while (lVar6 != 0);
-    }
-    puVar3 = puVar3 + 2;
-    uVar5 = uVar5 - 1;
-    uVar2 = uVar5;
+  lVar3 = (longlong)(int)param_2;
+  if (param_2 != 0) {
+    do {
+      pXVar1 = param_1->model;
+      XModelGetName(pXVar1);
+      Com_Printf(0x13,"Model \'%s\':\n");
+      iVar2 = XModelNumBones(pXVar1);
+      lVar4 = (longlong)iVar2;
+      if (0 < iVar2) {
+        iVar2 = 0;
+        do {
+          SL_ConvertToString((uint)*(ushort *)((int)pXVar1->boneNames + iVar2));
+          Com_Printf(0x13,"Bone %d: \'%s\'\n");
+          lVar4 = lVar4 + -1;
+          iVar2 = iVar2 + 2;
+        } while (lVar4 != 0);
+      }
+      lVar3 = lVar3 + -1;
+      param_1 = param_1 + 1;
+    } while (lVar3 != 0);
   }
-  __restgprlr_24();
   return;
 }
 
 
 // 82615FF0  DObjCreateDuplicateParts  (xanim/dobj.cpp:176)
 
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
+
 void DObjCreateDuplicateParts(DObj *param_1,DObjModel_s *param_2,uint param_3,uchar *param_4)
 
 {
-  char cVar1;
+  bool bVar1;
   byte bVar2;
   ushort uVar3;
   XModel *pXVar4;
-  uint uVar5;
-  bool bVar6;
+  ushort *puVar5;
+  uint uVar6;
   int iVar7;
   char *pcVar8;
   int iVar9;
-  void *pvVar10;
-  uint uVar11;
-  ulonglong uVar12;
+  int iVar10;
+  XModel **ppXVar11;
+  uint uVar12;
   ulonglong uVar13;
-  ulonglong uVar14;
-  ushort *puVar15;
-  int iVar16;
-  uchar *puVar17;
-  ulonglong uVar18;
-  longlong lVar19;
-  uint uVar20;
-  int iStack00000014;
+  ushort *puVar14;
+  uchar *puVar15;
+  ulonglong uVar16;
+  ulonglong uVar17;
+  longlong lVar18;
+  uint uVar19;
+  DObj *pDStack00000014;
   DObjModel_s *pDStack0000001c;
   uint uStack00000024;
-  uint uStack0000002c;
+  uchar *puStack0000002c;
   byte local_870 [4];
   int local_86c;
   ushort *local_868;
@@ -223,24 +223,18 @@ void DObjCreateDuplicateParts(DObj *param_1,DObjModel_s *param_2,uint param_3,uc
   uint local_700 [6];
   char acStack_6e8 [1768];
   
-  uVar13 = (ulonglong)(int)param_4;
-  uVar18 = (ulonglong)(int)param_3;
-  uVar14 = (ulonglong)(int)param_2;
-  uVar12 = (ulonglong)(int)param_1;
-  __savegprlr();
-  iVar7 = (int)uVar12;
-  pDStack0000001c = (DObjModel_s *)uVar14;
-  uStack00000024 = (uint)uVar18;
-  uStack0000002c = (uint)uVar13;
-  iStack00000014 = iVar7;
-  if ((uVar12 & 0xffffffff) == 0) {
+  pDStack00000014 = param_1;
+  pDStack0000001c = param_2;
+  uStack00000024 = param_3;
+  puStack0000002c = param_4;
+  if (param_1 == (DObj *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj.cpp",0xc6,0,"%s");
   }
-  if ((uVar14 & 0xffffffff) == 0) {
+  if (param_2 == (DObjModel_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj.cpp",199,0,"%s");
   }
   Profile_Begin(0x140);
-  uVar12 = 0;
+  uVar13 = 0;
   local_86c = 0;
   local_864 = 1;
   local_700[0] = 0;
@@ -249,10 +243,9 @@ void DObjCreateDuplicateParts(DObj *param_1,DObjModel_s *param_2,uint param_3,uc
   local_700[3] = 0;
   local_700[4] = 0;
   local_700[5] = 0;
-  uVar11 = 0;
-  if ((uVar18 & 0xffffffff) != 0) {
-    uVar14 = uVar14 + 4;
-    local_868 = (ushort *)uVar14;
+  uVar12 = 0;
+  if (param_3 != 0) {
+    puVar14 = &param_2->boneName;
     local_83c = 
     "WARNING: Attempting to meld model, but root part \'%s\' of model \'%s\' not found in model \'%s\' or any of its descendants\n"
     ;
@@ -269,16 +262,16 @@ void DObjCreateDuplicateParts(DObj *param_1,DObjModel_s *param_2,uint param_3,uc
     local_838 = "currNumModels";
     local_830 = "model";
     do {
-      puVar15 = (ushort *)uVar14;
-      pXVar4 = *(XModel **)(puVar15 + -2);
+      pXVar4 = ((DObjModel_s *)(puVar14 + -2))->model;
+      local_868 = puVar14;
       if (pXVar4 == (XModel *)0x0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj.cpp",0xd8,0,
                         "%s");
       }
       iVar7 = XModelNumBones(pXVar4);
-      local_860 = iVar7 + uVar11;
+      local_860 = iVar7 + uVar12;
       if (0xc0 < (int)local_860) {
-        if ((uVar12 & 0xffffffff) == 0) {
+        if ((uVar13 & 0xffffffff) == 0) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj.cpp",0xdd,0,
                           "%s");
         }
@@ -286,39 +279,38 @@ void DObjCreateDuplicateParts(DObj *param_1,DObjModel_s *param_2,uint param_3,uc
                     /* WARNING: Subroutine does not return */
         Sys_Error(local_850);
       }
-      iVar9 = (int)((uVar12 & 0xffffffff) << 2);
-      iVar16 = (int)uVar12;
-      puVar17 = local_820 + iVar16;
+      iVar9 = (int)((uVar13 & 0xffffffff) << 2);
       iVar7 = (int)uVar13;
-      *(undefined1 *)(iVar16 + iVar7) = 0xff;
-      cVar1 = *(char *)(puVar15 + 1);
+      puVar15 = local_820 + iVar7;
+      param_4[iVar7] = 0xff;
+      bVar1 = *(bool *)(puVar14 + 1);
       *(XModel **)((int)local_800 + iVar9) = pXVar4;
-      *puVar17 = 0xff;
-      *(uint *)((int)local_780 + iVar9) = uVar11;
-      if (cVar1 != '\0') {
-        *(uint *)(iStack00000014 + 0xc) = *(uint *)(iStack00000014 + 0xc) | local_864;
+      *puVar15 = 0xff;
+      *(uint *)((int)local_780 + iVar9) = uVar12;
+      if (bVar1 != false) {
+        pDStack00000014->ignoreCollision = pDStack00000014->ignoreCollision | local_864;
       }
-      if ((uVar12 & 0xffffffff) != 0) {
-        uVar3 = *puVar15;
+      if ((uVar13 & 0xffffffff) != 0) {
+        uVar3 = *puVar14;
         if ((uVar3 == 0) || (pcVar8 = SL_ConvertToString((uint)uVar3), *pcVar8 == '\0')) {
           bVar2 = pXVar4->numBones;
-          bVar6 = false;
-          puVar15 = pXVar4->boneNames;
-          iVar7 = 0;
+          bVar1 = false;
+          puVar5 = pXVar4->boneNames;
+          iVar9 = 0;
           if (bVar2 != 0) {
-            uVar18 = uVar12 - 1;
+            uVar16 = uVar13 - 1;
             pcVar8 = acStack_6e8 + local_86c;
-            iVar9 = 0;
+            iVar10 = 0;
             do {
-              uVar3 = *(ushort *)(iVar9 + (int)puVar15);
-              if (-1 < (int)uVar18) {
-                lVar19 = (uVar18 & 0x3fffffff) << 2;
-                uVar14 = uVar18;
+              uVar3 = *(ushort *)(iVar10 + (int)puVar5);
+              if (-1 < (int)uVar16) {
+                lVar18 = (uVar16 & 0x3fffffff) << 2;
+                uVar17 = uVar16;
                 do {
-                  iVar9 = XModelGetBoneIndex(*(XModel **)((int)local_800 + (int)lVar19),(uint)uVar3,
-                                             *(uint *)((int)local_780 + (int)lVar19),local_870);
-                  if (iVar9 != 0) {
-                    *(char *)(iVar16 + uStack0000002c) = (char)uVar14;
+                  iVar10 = XModelGetBoneIndex(*(XModel **)((int)local_800 + (int)lVar18),(uint)uVar3
+                                              ,*(uint *)((int)local_780 + (int)lVar18),local_870);
+                  if (iVar10 != 0) {
+                    puStack0000002c[iVar7] = (uchar)uVar17;
                     if (local_870[0] == 0xff) {
                       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj.cpp"
                                       ,0x116,0,"%s\n\t(parentIndex) = %i");
@@ -327,15 +319,15 @@ void DObjCreateDuplicateParts(DObj *param_1,DObjModel_s *param_2,uint param_3,uc
                       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj.cpp"
                                       ,0x117,0,"%s\n\t(parentIndex) = %i");
                     }
-                    uVar20 = iVar7 + uVar11;
-                    if (local_870[0] == uVar20) {
+                    uVar19 = iVar9 + uVar12;
+                    if (local_870[0] == uVar19) {
                       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj.cpp"
                                       ,0x118,0,"%s");
                     }
-                    if (iVar7 == 0) {
-                      bVar6 = true;
+                    if (iVar9 == 0) {
+                      bVar1 = true;
                     }
-                    if (0xff < (int)(iVar7 + uVar11 + 1)) {
+                    if (0xff < (int)(iVar9 + uVar12 + 1)) {
                       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj.cpp"
                                       ,0x11e,0,"%s");
                     }
@@ -343,143 +335,141 @@ void DObjCreateDuplicateParts(DObj *param_1,DObjModel_s *param_2,uint param_3,uc
                       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj.cpp"
                                       ,0x11f,0,"%s");
                     }
-                    if ((int)uVar20 <= (int)(uint)local_870[0]) {
+                    if ((int)uVar19 <= (int)(uint)local_870[0]) {
                       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj.cpp"
                                       ,0x120,0,"%s");
                     }
-                    uVar5 = *(uint *)(&g_bitShift + (uVar20 * 4 & 0x7c));
-                    *pcVar8 = (char)uVar20 + '\x01';
-                    local_700[(int)uVar20 >> 5] = uVar5 | local_700[(int)uVar20 >> 5];
+                    uVar6 = *(uint *)(&g_bitShift + (uVar19 * 4 & 0x7c));
+                    *pcVar8 = (char)uVar19 + '\x01';
+                    local_700[(int)uVar19 >> 5] = uVar6 | local_700[(int)uVar19 >> 5];
                     if (*pcVar8 == '\0') {
                       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj.cpp"
                                       ,0x125,0,"%s");
                     }
-                    iVar9 = local_86c;
+                    iVar10 = local_86c;
                     pcVar8[1] = local_870[0] + 1;
                     if ((byte)(local_870[0] + 1) == '\0') {
                       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj.cpp"
                                       ,0x128,0,"%s");
                     }
-                    local_86c = iVar9 + 2;
+                    local_86c = iVar10 + 2;
                     pcVar8 = pcVar8 + 2;
                     break;
                   }
-                  uVar14 = uVar14 - 1;
-                  lVar19 = lVar19 + -4;
-                } while (-1 < (longlong)uVar14);
+                  uVar17 = uVar17 - 1;
+                  lVar18 = lVar18 + -4;
+                } while (-1 < (longlong)uVar17);
               }
-              iVar7 = iVar7 + 1;
-              iVar9 = iVar7 * 2;
-            } while (iVar7 < (int)(uint)bVar2);
+              iVar9 = iVar9 + 1;
+              iVar10 = iVar9 * 2;
+            } while (iVar9 < (int)(uint)bVar2);
           }
-          if (!bVar6) {
-            SL_ConvertToString((uint)*puVar15);
+          puVar14 = local_868;
+          param_4 = puStack0000002c;
+          if (!bVar1) {
+            SL_ConvertToString((uint)*puVar5);
             Com_PrintWarning(0x13,local_83c);
+            puVar14 = local_868;
+            param_4 = puStack0000002c;
           }
-          uVar13 = (ulonglong)uStack0000002c;
-          puVar15 = local_868;
         }
         else {
-          uVar18 = uVar12 - 1;
-          if (-1 < (longlong)uVar18) {
-            lVar19 = (uVar18 & 0x3fffffff) << 2;
+          uVar16 = uVar13 - 1;
+          if (-1 < (longlong)uVar16) {
+            lVar18 = (uVar16 & 0x3fffffff) << 2;
             do {
-              iVar9 = XModelGetBoneIndex(*(XModel **)((int)local_800 + (int)lVar19),(uint)uVar3,
-                                         *(uint *)((int)local_780 + (int)lVar19),puVar17);
+              iVar9 = XModelGetBoneIndex(*(XModel **)((int)local_800 + (int)lVar18),(uint)uVar3,
+                                         *(uint *)((int)local_780 + (int)lVar18),puVar15);
               if (iVar9 != 0) {
-                *(char *)(iVar16 + iVar7) = (char)uVar18;
+                param_4[iVar7] = (uchar)uVar16;
                 goto LAB_82616570;
               }
-              uVar18 = uVar18 - 1;
-              lVar19 = lVar19 + -4;
-            } while (-1 < (longlong)uVar18);
+              uVar16 = uVar16 - 1;
+              lVar18 = lVar18 + -4;
+            } while (-1 < (longlong)uVar16);
           }
           SL_ConvertToString((uint)uVar3);
           Com_PrintWarning(0x13,local_82c);
-          if (*puVar17 != 0xff) {
+          if (*puVar15 != 0xff) {
             MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj.cpp",0xfb,0
                             ,"%s");
           }
-          if (*(char *)(iVar16 + iVar7) != -1) {
+          if (param_4[iVar7] != 0xff) {
             MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj.cpp",0xfc,0
                             ,"%s");
           }
         }
       }
 LAB_82616570:
-      uVar12 = uVar12 + 1;
-      local_868 = puVar15 + 4;
+      uVar13 = uVar13 + 1;
+      puVar14 = puVar14 + 4;
       local_864 = local_864 << 1 | local_864 >> 0x1f;
-      if ((ulonglong)uStack00000024 <= (uVar12 & 0xffffffff)) goto code_r0x82616598;
-      uVar14 = ZEXT48(local_868);
-      uVar11 = local_860;
-    } while( true );
+      uVar12 = local_860;
+    } while ((uVar13 & 0xffffffff) < (ulonglong)uStack00000024);
+    param_1 = pDStack00000014;
+    iVar7 = local_86c;
+    local_868 = puVar14;
+    param_3 = uStack00000024;
+    if (uStack00000024 != 0) goto LAB_826165d8;
   }
-LAB_826165b4:
-  iVar16 = local_86c;
+  iVar7 = local_86c;
   MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj.cpp",0x135,0,
                   "%s\n\t(numModels) = %i");
 LAB_826165d8:
-  if ((uVar18 & 0xffffffff) != (uVar18 & 0xff)) {
+  if (param_3 != (param_3 & 0xff)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj.cpp",0x136,0,"%s");
   }
-  *(char *)(iVar7 + 9) = (char)uVar18;
-  if ((int)uVar11 < 1) {
+  param_1->numModels = (uchar)param_3;
+  if ((int)uVar12 < 1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj.cpp",0x139,0,
                     "%s\n\t(boneCount) = %i");
   }
-  if (uVar11 != (uVar11 & 0xff)) {
+  if (uVar12 != (uVar12 & 0xff)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj.cpp",0x13a,0,"%s");
   }
-  *(char *)(iVar7 + 10) = (char)uVar11;
-  pvVar10 = MT_Alloc((int)uVar18 + (int)((uVar18 & 0xffffffff) << 2),0xe);
-  *(void **)(iVar7 + 0x98) = pvVar10;
+  param_1->numBones = (uchar)uVar12;
+  ppXVar11 = MT_Alloc(param_3 * 5,0xe);
+  param_1->models = ppXVar11;
   memcpy();
   memcpy();
   if (g_empty == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj.cpp",0x151,0,"%s");
   }
-  if (*(short *)(iVar7 + 4) != 0) {
+  if (param_1->duplicateParts != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj.cpp",0x152,0,"%s");
   }
-  uVar11 = g_empty;
-  if (iVar16 == 0) {
-    *(undefined1 *)(iVar7 + 8) = 0x19;
-    *(short *)(iVar7 + 4) = (short)uVar11;
+  uVar12 = g_empty;
+  if (iVar7 == 0) {
+    param_1->duplicatePartsSize = '\x19';
+    param_1->duplicateParts = (ushort)uVar12;
     Profile_EndInternal((double *)0x0);
-    __restgprlr();
     return;
   }
-  uVar11 = iVar16 + 0x19;
-  *(char *)(iVar7 + 8) = (char)uVar11;
-  acStack_6e8[iVar16] = '\0';
-  if ((uVar11 & 0xff) != uVar11) {
+  uVar12 = iVar7 + 0x19;
+  param_1->duplicatePartsSize = (uchar)uVar12;
+  acStack_6e8[iVar7] = '\0';
+  if ((uVar12 & 0xff) != uVar12) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj.cpp",0x15b,0,"%s");
   }
-  uVar11 = SL_GetStringOfSize((char *)local_700,0,(uint)*(byte *)(iVar7 + 8),0xd);
-  *(short *)(iVar7 + 4) = (short)uVar11;
+  uVar12 = SL_GetStringOfSize((char *)local_700,0,(uint)param_1->duplicatePartsSize,0xd);
+  param_1->duplicateParts = (ushort)uVar12;
   Profile_EndInternal((double *)0x0);
-  __restgprlr();
   return;
-code_r0x82616598:
-  uVar18 = (ulonglong)uStack00000024;
-  uVar11 = local_860;
-  iVar16 = local_86c;
-  iVar7 = iStack00000014;
-  if (uStack00000024 != 0) goto LAB_826165d8;
-  goto LAB_826165b4;
 }
 
 
 // 82616770  DObjGetHierarchyBits  (xanim/dobj.cpp:366)
+
+/* WARNING: Function: __savegprlr_15 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_15 replaced with injection: xenon_save_restore */
 
 void DObjGetHierarchyBits(DObj *param_1,int param_2,int *param_3)
 
 {
   byte bVar1;
   byte bVar2;
-  uint uVar3;
-  int iVar4;
+  XModel **ppXVar3;
+  uint uVar4;
   int iVar5;
   char *pcVar6;
   longlong lVar7;
@@ -492,12 +482,11 @@ void DObjGetHierarchyBits(DObj *param_1,int param_2,int *param_3)
   uint local_110 [68];
   
   uVar11 = (ulonglong)param_2;
-  iVar5 = __savegprlr_15(param_1);
   Profile_Begin(0x144);
-  if (iVar5 == 0) {
+  if (param_1 == (DObj *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj.cpp",0x182,0,"%s");
   }
-  if ((ulonglong)*(byte *)(iVar5 + 10) <= (uVar11 & 0xffffffff)) {
+  if ((uint)param_1->numBones <= (uint)param_2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj.cpp",0x184,0,
                     "boneIndex doesn\'t index obj->numBones\n\t%i not in [0, %i)");
   }
@@ -507,33 +496,32 @@ void DObjGetHierarchyBits(DObj *param_1,int param_2,int *param_3)
   param_3[3] = 0;
   param_3[4] = 0;
   param_3[5] = 0;
-  bVar1 = *(byte *)(iVar5 + 9);
+  bVar1 = param_1->numModels;
   if (bVar1 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj.cpp",0x18e,0,"%s");
   }
-  if (*(short *)(iVar5 + 4) == 0) {
+  if (param_1->duplicateParts == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj.cpp",400,0,"%s");
   }
-  pcVar6 = SL_ConvertToString((uint)*(ushort *)(iVar5 + 4));
-  iVar5 = *(int *)(iVar5 + 0x98);
+  pcVar6 = SL_ConvertToString((uint)param_1->duplicateParts);
+  ppXVar3 = param_1->models;
   iVar8 = 0;
   iVar12 = 0;
   uVar9 = 0;
   if (bVar1 != 0) {
     lVar7 = ZEXT48(&stack0x00000000) - 0x110;
     do {
-      iVar12 = *(int *)((iVar5 - (int)local_110) + (int)(int *)lVar7);
+      iVar12 = *(int *)(((int)ppXVar3 - (int)local_110) + (int)(int *)lVar7);
       *(int *)lVar7 = iVar8;
       iVar8 = (uint)*(byte *)(iVar12 + 4) + iVar8;
-      if ((int)uVar11 < iVar8) break;
+      if (param_2 < iVar8) break;
       uVar9 = uVar9 + 1;
       lVar7 = lVar7 + 4;
     } while ((int)uVar9 < (int)(uint)bVar1);
   }
   if ((uint)uVar9 == (uint)bVar1) {
 LAB_82616964:
-    iVar5 = Profile_EndInternal((double *)0x0);
-    __restgprlr_15(iVar5);
+    Profile_EndInternal((double *)0x0);
     return;
   }
   *param_3 = -0x80000000;
@@ -546,14 +534,14 @@ LAB_826168f0:
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj.cpp",0x1b6,0,"%s"
                      );
     }
-    iVar4 = (int)uVar11 >> 5;
-    uVar3 = *(uint *)(&g_bitShift + ((uint)((uVar11 & 0xffffffff) << 2) & 0x7c));
-    param_3[iVar4] = uVar3 | param_3[iVar4];
+    iVar5 = (int)uVar11 >> 5;
+    uVar4 = *(uint *)(&g_bitShift + ((uint)((uVar11 & 0xffffffff) << 2) & 0x7c));
+    param_3[iVar5] = uVar4 | param_3[iVar5];
     pbVar13 = (byte *)(pcVar6 + 0x18);
-    if ((*(uint *)(pcVar6 + iVar4 * 4) & uVar3) == 0) {
+    if ((*(uint *)(pcVar6 + iVar5 * 4) & uVar4) == 0) {
       lVar7 = lVar7 - (ulonglong)*(byte *)(iVar12 + 5);
       if (-1 < lVar7) break;
-      bVar2 = *(byte *)((int)uVar9 + (uint)bVar1 * 4 + iVar5);
+      bVar2 = *(byte *)((int)ppXVar3 + (int)uVar9 + (uint)bVar1 * 4);
       uVar11 = (ulonglong)bVar2;
       if (bVar2 == 0xff) goto LAB_82616964;
     }
@@ -579,7 +567,7 @@ LAB_826168f0:
       lVar7 = uVar11 - *(uint *)lVar10;
     } while (lVar7 < 0);
     lVar10 = (uVar9 & 0x3fffffff) << 2;
-    iVar12 = *(int *)((int)lVar10 + iVar5);
+    iVar12 = *(int *)((int)lVar10 + (int)ppXVar3);
     iVar8 = *(int *)(iVar12 + 0x28);
   } while( true );
   uVar11 = uVar11 - *(byte *)(iVar8 + (int)lVar7);
@@ -606,295 +594,284 @@ void DObjSetTree(DObj *param_1,XAnimTree *param_2)
 
 // 82616A30  DObjComputeBounds  (xanim/dobj.cpp:507)
 
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
+
 void DObjComputeBounds(DObj *param_1,uchar *param_2)
 
 {
   byte bVar1;
-  int iVar2;
+  XModel **ppXVar2;
   XModel *pXVar3;
-  int iVar4;
-  float *pfVar5;
-  int iVar6;
+  float *pfVar4;
+  int iVar5;
+  double dVar6;
   double dVar7;
-  undefined8 in_f31;
-  double dVar8;
-  float fVar9;
-  float local_e0 [32];
-  undefined8 local_60;
+  float fVar8;
+  float local_e0 [56];
   
-  iVar4 = __savegprlr_22(param_1);
-  local_60 = in_f31;
-  if (iVar4 == 0) {
+  if (param_1 == (DObj *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj.cpp",0x205,0,"%s");
   }
-  bVar1 = *(byte *)(iVar4 + 9);
-  iVar2 = *(int *)(iVar4 + 0x98);
-  iVar6 = 0;
-  dVar8 = 0.0;
+  bVar1 = param_1->numModels;
+  ppXVar2 = param_1->models;
+  iVar5 = 0;
+  dVar7 = 0.0;
   if (bVar1 != 0) {
-    pfVar5 = local_e0;
+    pfVar4 = local_e0;
     do {
-      pXVar3 = *(XModel **)((iVar2 - (int)local_e0) + (int)pfVar5);
+      pXVar3 = *(XModel **)(((int)ppXVar2 - (int)local_e0) + (int)pfVar4);
       if (pXVar3 == (XModel *)0x0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj.cpp",0x20e,0,
                         "%s");
       }
-      fVar9 = XModelGetRadius(pXVar3);
-      dVar7 = (double)fVar9;
-      if (param_2[iVar6] != 0xff) {
-        dVar7 = (double)(float)((double)local_e0[param_2[iVar6]] + dVar7);
+      fVar8 = XModelGetRadius(pXVar3);
+      dVar6 = (double)fVar8;
+      if (param_2[iVar5] != 0xff) {
+        dVar6 = (double)(float)((double)local_e0[param_2[iVar5]] + dVar6);
       }
-      iVar6 = iVar6 + 1;
-      *pfVar5 = (float)dVar7;
-      pfVar5 = pfVar5 + 1;
-      if ((float)(dVar8 - dVar7) < 0.0) {
-        dVar8 = dVar7;
+      iVar5 = iVar5 + 1;
+      *pfVar4 = (float)dVar6;
+      pfVar4 = pfVar4 + 1;
+      if ((float)(dVar7 - dVar6) < 0.0) {
+        dVar7 = dVar6;
       }
-    } while (iVar6 < (int)(uint)bVar1);
+    } while (iVar5 < (int)(uint)bVar1);
   }
-  *(float *)(iVar4 + 0x7c) = (float)dVar8;
-  __restgprlr_22();
+  param_1->radius = (float)dVar7;
   return;
 }
 
 
 // 82616B20  DObjCreate  (xanim/dobj.cpp:549)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
+
 void DObjCreate(DObjModel_s *param_1,uint param_2,XAnimTree *param_3,char *param_4,uint param_5)
 
 {
-  DObj *pDVar1;
-  DObjModel_s *pDVar2;
-  int iVar3;
-  ulonglong uVar4;
-  ulonglong uVar5;
-  ulonglong uVar6;
-  ushort uVar7;
-  longlong lVar8;
-  longlong lVar9;
+  char *pcVar1;
+  longlong lVar2;
   uchar auStack_60 [96];
   
-  uVar7 = (ushort)param_5;
-  uVar6 = (ulonglong)(int)param_4;
-  uVar5 = (ulonglong)(int)param_3;
-  uVar4 = (ulonglong)(int)param_2;
-  pDVar2 = (DObjModel_s *)__savegprlr_25(param_1);
   Profile_Begin(0x141);
-  if (pDVar2 == (DObjModel_s *)0x0) {
+  if (param_1 == (DObjModel_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj.cpp",0x22b,0,"%s");
   }
-  if ((uVar4 & 0xffffffff) == 0) {
+  if (param_2 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj.cpp",0x22c,0,"%s");
   }
-  if (0x20 < (uVar4 & 0xffffffff)) {
+  if (0x20 < param_2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj.cpp",0x22d,0,"%s");
   }
-  if ((uVar6 & 0xffffffff) == 0) {
+  if (param_4 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj.cpp",0x230,0,"%s");
   }
   memset();
-  pDVar1 = (DObj *)uVar6;
-  pDVar1->entnum = uVar7;
-  lVar8 = uVar6 + 0x7c;
-  pDVar1->duplicatePartsSize = '\0';
-  pDVar1->duplicateParts = 0;
-  pDVar1->ignoreCollision = 0;
-  lVar9 = 6;
-  pDVar1->locked = 0;
-  pDVar1->flags = '\0';
+  *(short *)(param_4 + 6) = (short)param_5;
+  pcVar1 = param_4 + 0x7c;
+  param_4[8] = '\0';
+  param_4[4] = '\0';
+  param_4[5] = '\0';
+  param_4[0xc] = '\0';
+  param_4[0xd] = '\0';
+  param_4[0xe] = '\0';
+  param_4[0xf] = '\0';
+  lVar2 = 6;
+  param_4[0x10] = '\0';
+  param_4[0x11] = '\0';
+  param_4[0x12] = '\0';
+  param_4[0x13] = '\0';
+  param_4[0xb] = '\0';
   do {
-    lVar8 = lVar8 + 4;
-    *(undefined4 *)lVar8 = 0;
-    lVar9 = lVar9 + -1;
-  } while (lVar9 != 0);
-  DObjCreateDuplicateParts(pDVar1,pDVar2,(uint)uVar4,auStack_60);
-  DObjComputeBounds(pDVar1,auStack_60);
-  pDVar1->tree = (XAnimTree *)uVar5;
-  if (((uVar5 & 0xffffffff) != 0) && (uVar7 = ((XAnimTree *)uVar5)->children, uVar7 != 0)) {
-    XAnimResetAnimMap(pDVar1,(uint)uVar7);
+    pcVar1 = pcVar1 + 4;
+    pcVar1[0] = '\0';
+    pcVar1[1] = '\0';
+    pcVar1[2] = '\0';
+    pcVar1[3] = '\0';
+    lVar2 = lVar2 + -1;
+  } while (lVar2 != 0);
+  DObjCreateDuplicateParts((DObj *)param_4,param_1,param_2,auStack_60);
+  DObjComputeBounds((DObj *)param_4,auStack_60);
+  *(XAnimTree **)param_4 = param_3;
+  if ((param_3 != (XAnimTree *)0x0) && (param_3->children != 0)) {
+    XAnimResetAnimMap((DObj *)param_4,(uint)param_3->children);
   }
-  iVar3 = Profile_EndInternal((double *)0x0);
-  __restgprlr_25(iVar3);
+  Profile_EndInternal((double *)0x0);
   return;
 }
 
 
 // 82616C78  DObjClone  (xanim/dobj.cpp:587)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void DObjClone(DObj *param_1,char *param_2)
 
 {
   ushort uVar1;
-  undefined4 *puVar2;
-  int iVar3;
-  void *pvVar4;
-  ulonglong uVar5;
+  void *pvVar2;
   
-  uVar5 = (ulonglong)(int)param_2;
-  iVar3 = __savegprlr_29(param_1);
-  if ((uVar5 & 0xffffffff) == 0) {
+  if (param_2 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj.cpp",0x24f,0,"%s");
   }
   memcpy();
-  puVar2 = (undefined4 *)uVar5;
-  puVar2[4] = 0;
+  param_2[0x10] = '\0';
+  param_2[0x11] = '\0';
+  param_2[0x12] = '\0';
+  param_2[0x13] = '\0';
   memset();
-  uVar1 = *(ushort *)(puVar2 + 1);
+  uVar1 = *(ushort *)(param_2 + 4);
   if ((uVar1 != 0) && (uVar1 != g_empty)) {
     SL_AddRefToString((uint)uVar1);
   }
-  *puVar2 = 0;
-  pvVar4 = MT_Alloc((uint)*(byte *)(iVar3 + 9) + (uint)*(byte *)(iVar3 + 9) * 4,0xe);
-  puVar2[0x26] = pvVar4;
+  param_2[0] = '\0';
+  param_2[1] = '\0';
+  param_2[2] = '\0';
+  param_2[3] = '\0';
+  pvVar2 = MT_Alloc((uint)param_1->numModels + (uint)param_1->numModels * 4,0xe);
+  *(void **)(param_2 + 0x98) = pvVar2;
   memcpy();
-  __restgprlr_29();
   return;
 }
 
 
 // 82616D38  DObjFree  (xanim/dobj.cpp:621)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void DObjFree(DObj *param_1)
 
 {
   ushort uVar1;
-  int *piVar2;
-  int iVar3;
   
-  piVar2 = (int *)__savegprlr_27(param_1);
   Profile_Begin(0x142);
-  if (piVar2 == (int *)0x0) {
+  if (param_1 == (DObj *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj.cpp",0x273,0,"%s");
   }
-  if ((void *)piVar2[0x26] != (void *)0x0) {
-    MT_Free((void *)piVar2[0x26],
-            (uint)*(byte *)((int)piVar2 + 9) + (uint)*(byte *)((int)piVar2 + 9) * 4);
-    piVar2[0x26] = 0;
+  if (param_1->models != (XModel **)0x0) {
+    MT_Free(param_1->models,(uint)param_1->numModels + (uint)param_1->numModels * 4);
+    param_1->models = (XModel **)0x0;
   }
-  if ((int *)*piVar2 != (int *)0x0) {
-    if (*(int *)*piVar2 == 0) {
+  if (param_1->tree != (XAnimTree *)0x0) {
+    if (param_1->tree->anims == (XAnim_s *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj.cpp",0x27f,0,"%s"
                      );
     }
-    *piVar2 = 0;
+    param_1->tree = (XAnimTree *)0x0;
   }
   if (g_empty == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj.cpp",0x283,0,"%s");
   }
-  uVar1 = *(ushort *)(piVar2 + 1);
+  uVar1 = param_1->duplicateParts;
   if (uVar1 != 0) {
     if (uVar1 != g_empty) {
-      SL_RemoveRefToStringOfSize((uint)uVar1,(uint)*(byte *)(piVar2 + 2));
+      SL_RemoveRefToStringOfSize((uint)uVar1,(uint)param_1->duplicatePartsSize);
     }
-    *(undefined1 *)(piVar2 + 2) = 0;
-    *(undefined2 *)(piVar2 + 1) = 0;
+    param_1->duplicatePartsSize = '\0';
+    param_1->duplicateParts = 0;
   }
-  iVar3 = Profile_EndInternal((double *)0x0);
-  __restgprlr_27(iVar3);
+  Profile_EndInternal((double *)0x0);
   return;
 }
 
 
 // 82616E48  DObjGetCreateParms  (xanim/dobj.cpp:657)
 
+/* WARNING: Function: __savegprlr_16 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_16 replaced with injection: xenon_save_restore */
+
 void DObjGetCreateParms(DObj *param_1,DObjModel_s *param_2,ushort *param_3,XAnimTree **param_4,
                        ushort *param_5)
 
 {
   byte bVar1;
-  uint uVar2;
+  XModel **ppXVar2;
   XModel *pXVar3;
-  undefined4 uVar4;
-  undefined4 *puVar5;
-  int iVar6;
-  int iVar7;
-  ushort *puVar8;
-  ulonglong uVar9;
-  ulonglong uVar10;
+  int iVar4;
+  int iVar5;
+  ushort *puVar6;
+  ulonglong uVar7;
+  longlong lVar8;
+  longlong lVar9;
+  int iVar10;
   longlong lVar11;
-  longlong lVar12;
-  int iVar13;
-  longlong lVar14;
-  ulonglong uVar15;
-  ulonglong uVar16;
-  int iVar17;
-  int iVar18;
-  longlong lVar19;
-  undefined4 *puVar20;
-  longlong lVar21;
-  ushort *puVar22;
+  ulonglong uVar12;
+  ulonglong uVar13;
+  int iVar14;
+  int iVar15;
+  longlong lVar16;
+  undefined4 *puVar17;
+  ushort *puVar18;
   int aiStack_110 [68];
   
-  uVar9 = (ulonglong)(int)param_4;
-  uVar15 = (ulonglong)(int)param_3;
-  uVar10 = (ulonglong)(int)param_2;
-  puVar5 = (undefined4 *)__savegprlr_16(param_1);
-  if (puVar5 == (undefined4 *)0x0) {
+  if (param_1 == (DObj *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj.cpp",0x29d,0,"%s");
   }
-  if ((*(byte *)((int)puVar5 + 9) == 0) || (0x20 < *(byte *)((int)puVar5 + 9))) {
+  if ((param_1->numModels == 0) || (0x20 < param_1->numModels)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj.cpp",0x29e,0,"%s");
   }
-  if ((uVar10 & 0xffffffff) == 0) {
+  if (param_2 == (DObjModel_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj.cpp",0x29f,0,"%s");
   }
-  if ((uVar15 & 0xffffffff) == 0) {
+  if (param_3 == (ushort *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj.cpp",0x2a0,0,"%s");
   }
-  if ((uVar9 & 0xffffffff) == 0) {
+  if (param_4 == (XAnimTree **)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj.cpp",0x2a1,0,"%s");
   }
-  uVar16 = 1;
-  iVar17 = 0;
-  iVar13 = 0;
-  *(ushort *)uVar15 = (ushort)*(byte *)((int)puVar5 + 9);
-  *(undefined4 *)uVar9 = *puVar5;
-  *param_5 = *(ushort *)((int)puVar5 + 6);
-  uVar2 = puVar5[0x26];
-  uVar15 = (ulonglong)uVar2;
-  lVar11 = (ulonglong)*(byte *)((int)puVar5 + 9) * 4 + uVar15;
-  if ((ulonglong)*(byte *)((int)puVar5 + 9) != 0) {
-    lVar12 = -1 - lVar11;
-    lVar21 = uVar10 + 4;
-    lVar14 = (ZEXT48(&stack0x00000000) - 0x110) - uVar15;
+  uVar13 = 1;
+  iVar14 = 0;
+  iVar10 = 0;
+  *param_3 = (ushort)param_1->numModels;
+  *param_4 = param_1->tree;
+  *param_5 = param_1->entnum;
+  ppXVar2 = param_1->models;
+  uVar12 = ZEXT48(ppXVar2);
+  lVar8 = (ulonglong)param_1->numModels * 4 + uVar12;
+  if ((ulonglong)param_1->numModels != 0) {
+    lVar9 = -1 - lVar8;
+    puVar18 = &param_2->boneName;
+    lVar11 = (ZEXT48(&stack0x00000000) - 0x110) - uVar12;
     do {
-      puVar20 = (undefined4 *)uVar15;
-      pXVar3 = (XModel *)*puVar20;
-      lVar19 = lVar14 + uVar15;
-      *(int *)((int)lVar14 + (int)puVar20) = iVar17;
-      iVar6 = XModelNumBones(pXVar3);
-      uVar4 = *puVar20;
-      iVar17 = iVar6 + iVar17;
-      puVar22 = (ushort *)lVar21;
-      *puVar22 = 0;
-      *(undefined4 *)(puVar22 + -2) = uVar4;
-      *(char *)(puVar22 + 1) = '\x01' - (((uint)puVar5[3] & uVar16) == 0);
-      bVar1 = *(byte *)lVar11;
+      puVar17 = (undefined4 *)uVar12;
+      pXVar3 = (XModel *)*puVar17;
+      lVar16 = lVar11 + uVar12;
+      *(int *)((int)lVar11 + (int)puVar17) = iVar14;
+      iVar4 = XModelNumBones(pXVar3);
+      pXVar3 = (XModel *)*puVar17;
+      iVar14 = iVar4 + iVar14;
+      *puVar18 = 0;
+      ((DObjModel_s *)(puVar18 + -2))->model = pXVar3;
+      *(char *)(puVar18 + 1) = '\x01' - ((param_1->ignoreCollision & uVar13) == 0);
+      bVar1 = *(byte *)lVar8;
       if (bVar1 != 0xff) {
-        for (uVar10 = lVar12 + lVar11; -1 < (longlong)uVar10; uVar10 = uVar10 - 1) {
-          lVar19 = lVar19 + -4;
-          if (*(int *)lVar19 <= (int)(uint)bVar1) {
-            iVar6 = (int)((uVar10 & 0x3fffffff) << 2);
-            iVar18 = (uint)bVar1 - *(int *)((int)aiStack_110 + iVar6);
-            iVar7 = XModelNumBones(*(XModel **)(iVar6 + uVar2));
-            if (iVar7 <= iVar18) {
+        for (uVar7 = lVar9 + lVar8; -1 < (longlong)uVar7; uVar7 = uVar7 - 1) {
+          lVar16 = lVar16 + -4;
+          if (*(int *)lVar16 <= (int)(uint)bVar1) {
+            iVar4 = (int)((uVar7 & 0x3fffffff) << 2);
+            iVar15 = (uint)bVar1 - *(int *)((int)aiStack_110 + iVar4);
+            iVar5 = XModelNumBones(*(XModel **)(iVar4 + (int)ppXVar2));
+            if (iVar5 <= iVar15) {
               MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj.cpp",
                               0x2bd,0,"%s");
             }
-            puVar8 = XModelBoneNames(*(XModel **)(iVar6 + uVar2));
-            *puVar22 = puVar8[iVar18];
+            puVar6 = XModelBoneNames(*(XModel **)(iVar4 + (int)ppXVar2));
+            *puVar18 = puVar6[iVar15];
             break;
           }
         }
       }
-      iVar13 = iVar13 + 1;
-      uVar15 = uVar15 + 4;
-      lVar11 = lVar11 + 1;
-      uVar16 = (uVar16 & 0x7fffffff) << 1 | uVar16 >> 0x1f;
-      lVar21 = lVar21 + 8;
-    } while (iVar13 < (int)(uint)*(byte *)((int)puVar5 + 9));
+      iVar10 = iVar10 + 1;
+      uVar12 = uVar12 + 4;
+      lVar8 = lVar8 + 1;
+      uVar13 = (uVar13 & 0x7fffffff) << 1 | uVar13 >> 0x1f;
+      puVar18 = puVar18 + 4;
+    } while (iVar10 < (int)(uint)param_1->numModels);
   }
-  __restgprlr_16();
   return;
 }
 
@@ -963,21 +940,23 @@ void DObjArchive(DObj *param_1)
 
 // 8261A288  DObjUnarchive  (xanim/dobj.cpp:768)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void DObjUnarchive(DObj *param_1)
 
 {
   undefined4 uVar1;
-  DObj *pDVar2;
-  ulonglong uVar3;
-  undefined4 *puVar4;
-  undefined2 *puVar5;
-  ulonglong uVar6;
-  float *pfVar7;
-  char *pcVar8;
-  XAnimTree **ppXVar9;
+  ulonglong uVar2;
+  undefined4 *puVar3;
+  undefined2 *puVar4;
+  ulonglong uVar5;
+  float *pfVar6;
+  char *pcVar7;
+  XAnimTree **ppXVar8;
+  ulonglong uVar9;
   ulonglong uVar10;
-  ulonglong uVar11;
-  longlong lVar12;
+  longlong lVar11;
   undefined2 uStack_1c2;
   undefined2 local_1c0 [32];
   void *local_180;
@@ -991,70 +970,68 @@ void DObjUnarchive(DObj *param_1)
   char acStack_132 [2];
   DObjModel_s local_130 [38];
   
-  pDVar2 = (DObj *)__savegprlr_27(param_1);
   memcpy();
-  uVar6 = 1;
-  uVar10 = (ulonglong)local_174;
-  if (uVar10 != 0) {
-    puVar5 = &uStack_1c2;
-    puVar4 = (undefined4 *)((int)local_180 + -4);
-    pcVar8 = acStack_132;
-    uVar11 = uVar10;
+  uVar5 = 1;
+  uVar9 = (ulonglong)local_174;
+  if (uVar9 != 0) {
+    puVar4 = &uStack_1c2;
+    puVar3 = (undefined4 *)((int)local_180 + -4);
+    pcVar7 = acStack_132;
+    uVar10 = uVar9;
     do {
-      uVar3 = uVar6 & local_178;
-      puVar5 = puVar5 + 1;
+      uVar2 = uVar5 & local_178;
       puVar4 = puVar4 + 1;
-      uVar1 = *puVar4;
-      uVar6 = (uVar6 & 0x7fffffff) << 1 | uVar6 >> 0x1f;
-      *(undefined2 *)(pcVar8 + 6) = *puVar5;
-      *(undefined4 *)(pcVar8 + 2) = uVar1;
-      pcVar8 = pcVar8 + 8;
-      *pcVar8 = '\x01' - (uVar3 == 0);
-      uVar11 = uVar11 - 1;
-    } while (uVar11 != 0);
+      puVar3 = puVar3 + 1;
+      uVar1 = *puVar3;
+      uVar5 = (uVar5 & 0x7fffffff) << 1 | uVar5 >> 0x1f;
+      *(undefined2 *)(pcVar7 + 6) = *puVar4;
+      *(undefined4 *)(pcVar7 + 2) = uVar1;
+      pcVar7 = pcVar7 + 8;
+      *pcVar7 = '\x01' - (uVar2 == 0);
+      uVar10 = uVar10 - 1;
+    } while (uVar10 != 0);
   }
   MT_Free(local_180,(uint)local_174 + (uint)local_174 * 4);
   Profile_Begin(0x141);
-  if (uVar10 == 0) {
+  if (uVar9 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj.cpp",0x22c,0,"%s");
   }
   if (0x20 < local_174) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj.cpp",0x22d,0,"%s");
   }
   memset();
-  pDVar2->entnum = local_172;
-  pDVar2->duplicatePartsSize = '\0';
-  pDVar2->duplicateParts = 0;
-  pfVar7 = &pDVar2->radius;
-  pDVar2->ignoreCollision = 0;
-  lVar12 = 6;
-  pDVar2->locked = 0;
-  pDVar2->flags = '\0';
+  param_1->entnum = local_172;
+  param_1->duplicatePartsSize = '\0';
+  param_1->duplicateParts = 0;
+  pfVar6 = &param_1->radius;
+  param_1->ignoreCollision = 0;
+  lVar11 = 6;
+  param_1->locked = 0;
+  param_1->flags = '\0';
   do {
-    pfVar7 = pfVar7 + 1;
-    *pfVar7 = 0.0;
-    lVar12 = lVar12 + -1;
-  } while (lVar12 != 0);
-  DObjCreateDuplicateParts(pDVar2,local_130,(uint)local_174,auStack_150);
-  DObjComputeBounds(pDVar2,auStack_150);
-  pDVar2->tree = local_170;
+    pfVar6 = pfVar6 + 1;
+    *pfVar6 = 0.0;
+    lVar11 = lVar11 + -1;
+  } while (lVar11 != 0);
+  DObjCreateDuplicateParts(param_1,local_130,(uint)local_174,auStack_150);
+  DObjComputeBounds(param_1,auStack_150);
+  param_1->tree = local_170;
   if ((local_170 != (XAnimTree *)0x0) && (local_170->children != 0)) {
-    XAnimResetAnimMap(pDVar2,(uint)local_170->children);
+    XAnimResetAnimMap(param_1,(uint)local_170->children);
   }
   Profile_EndInternal((double *)0x0);
-  ppXVar9 = &local_170;
-  pfVar7 = &pDVar2->radius;
-  lVar12 = 6;
+  ppXVar8 = &local_170;
+  pfVar6 = &param_1->radius;
+  lVar11 = 6;
   do {
-    ppXVar9 = ppXVar9 + 1;
-    pfVar7 = pfVar7 + 1;
-    *pfVar7 = (float)*ppXVar9;
-    lVar12 = lVar12 + -1;
-  } while (lVar12 != 0);
+    ppXVar8 = ppXVar8 + 1;
+    pfVar6 = pfVar6 + 1;
+    *pfVar6 = (float)*ppXVar8;
+    lVar11 = lVar11 + -1;
+  } while (lVar11 != 0);
   if (local_17c != 0) {
-    DObjLock(pDVar2);
+    DObjLock(param_1);
   }
-  __restgprlr_27();
   return;
 }
 
@@ -1134,20 +1111,19 @@ void DObjGetBounds(DObj *param_1,Bounds *param_2)
 
 // 826172E0  DObjPhysicsGetBounds  (xanim/dobj.cpp:850)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void DObjPhysicsGetBounds(DObj *param_1,Bounds *param_2)
 
 {
-  int iVar1;
-  
-  iVar1 = __savegprlr_28(param_1);
-  if (iVar1 == 0) {
+  if (param_1 == (DObj *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj.cpp",0x353,0,"%s");
   }
-  if (**(int **)(iVar1 + 0x98) == 0) {
+  if (*param_1->models == (XModel *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj.cpp",0x354,0,"%s");
   }
-  XModelGetBounds((XModel *)**(undefined4 **)(iVar1 + 0x98),param_2);
-  __restgprlr_28();
+  XModelGetBounds(*param_1->models,param_2);
   return;
 }
 
@@ -1163,19 +1139,22 @@ XModel * DObjGetFirstModel(DObj *param_1)
 
 // 82617380  DObjGetVisibleBounds  (xanim/dobj.cpp:865)
 
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
+
 void DObjGetVisibleBounds(DObj *param_1,Bounds *param_2)
 
 {
-  int iVar1;
+  XModel *pXVar1;
   uint uVar2;
   ulonglong uVar3;
-  int iVar4;
+  longlong lVar4;
   longlong lVar5;
   undefined4 *puVar6;
-  longlong lVar7;
-  int iVar8;
-  uint uVar9;
-  longlong lVar10;
+  int iVar7;
+  uint uVar8;
+  longlong lVar9;
+  undefined1 auVar10 [16];
   undefined1 auVar11 [16];
   undefined1 auVar12 [16];
   undefined1 auVar13 [16];
@@ -1183,80 +1162,75 @@ void DObjGetVisibleBounds(DObj *param_1,Bounds *param_2)
   undefined1 auVar15 [16];
   undefined1 auVar16 [16];
   undefined1 auVar17 [16];
-  undefined1 auVar18 [16];
   float local_64;
   float local_60;
   float local_5c;
   
-  lVar5 = (longlong)(int)param_2;
+  lVar4 = (longlong)(int)param_2;
   uVar3 = ZEXT48(&stack0x00000000);
-  iVar4 = __savegprlr_22(param_1);
-  uVar9 = 0;
-  iVar1 = **(int **)(iVar4 + 0x98);
-  puVar6 = (undefined4 *)lVar5;
-  *puVar6 = 0;
-  puVar6[1] = 0;
-  puVar6[2] = 0;
-  puVar6[3] = 0xc8000000;
-  puVar6[4] = 0xc8000000;
-  puVar6[5] = 0xc8000000;
-  if (*(char *)(iVar1 + 4) != '\0') {
-    iVar8 = 0;
+  uVar8 = 0;
+  pXVar1 = *param_1->models;
+  param_2->midPoint[0] = 0.0;
+  param_2->midPoint[1] = 0.0;
+  param_2->midPoint[2] = 0.0;
+  param_2->halfSize[0] = -131072.0;
+  param_2->halfSize[1] = -131072.0;
+  param_2->halfSize[2] = -131072.0;
+  if (pXVar1->numBones != '\0') {
+    iVar7 = 0;
     uVar2 = 0;
     do {
-      if ((*(uint *)((((int)uVar9 >> 5) + 0x20) * 4 + iVar4) &
-          *(uint *)(&g_bitShift + (uVar2 & 0x7c))) == 0) {
-        lVar7 = uVar3 - 0x74;
-        puVar6 = (undefined4 *)(*(int *)(iVar1 + 0xf0) + iVar8 + -4);
-        lVar10 = 6;
+      if ((param_1->hidePartBits[(int)uVar8 >> 5] & *(uint *)(&g_bitShift + (uVar2 & 0x7c))) == 0) {
+        lVar5 = uVar3 - 0x74;
+        puVar6 = (undefined4 *)((int)(pXVar1->boneInfo->bounds).midPoint + iVar7 + -4);
+        lVar9 = 6;
         do {
           puVar6 = puVar6 + 1;
-          lVar7 = lVar7 + 4;
-          *(undefined4 *)lVar7 = *puVar6;
-          lVar10 = lVar10 + -1;
-        } while (lVar10 != 0);
+          lVar5 = lVar5 + 4;
+          *(undefined4 *)lVar5 = *puVar6;
+          lVar9 = lVar9 + -1;
+        } while (lVar9 != 0);
         if (((local_64 != 0.0) && (local_60 != 0.0)) && (local_5c != 0.0)) {
-          auVar18 = loadVectorLeftIndexed(lVar5);
-          auVar17 = loadVectorLeftIndexed(lVar5 + 0xc);
-          auVar16 = loadVectorRightIndexed(lVar5 + 0x10);
-          auVar15 = loadVectorLeftIndexed(uVar3 - 100);
-          auVar11 = loadVectorRightIndexed(uVar3 - 0x54);
-          auVar14 = loadVectorRightIndexed(lVar5 + 0x1c);
-          auVar13 = loadVectorRightIndexed(uVar3 - 0x60);
-          auVar12 = loadVectorLeftIndexed(uVar3 - 0x70);
-          auVar16 = (auVar18 | auVar16) & (undefined1  [16])g_keepXYZ.field0_0x0;
-          auVar14 = (auVar17 | auVar14) & (undefined1  [16])g_keepXYZ.field0_0x0;
-          auVar13 = (auVar12 | auVar13) & (undefined1  [16])g_keepXYZ.field0_0x0;
-          auVar11 = (auVar15 | auVar11) & (undefined1  [16])g_keepXYZ.field0_0x0;
-          auVar12 = vectorSubtractFloatingPoint128(auVar16,auVar14);
-          auVar16 = vectorAddFloatingPoint128(auVar16,auVar14);
-          auVar14 = vectorSubtractFloatingPoint128(auVar13,auVar11);
-          auVar11 = vectorAddFloatingPoint128(auVar13,auVar11);
-          auVar14 = vectorMinimumFloatingPoint128(auVar14,auVar12);
-          auVar11 = vectorMaximumFloatingPoint128(auVar11,auVar16);
-          auVar11 = vectorAddFloatingPoint128(auVar14,auVar11);
-          auVar11 = vectorMultiplyFloatingPoint(auVar11,(undefined1  [16])g_oneHalf.field0_0x0);
-          auVar12 = vectorSubtractFloatingPoint128(auVar11,auVar14);
-          auVar16 = vectorSplatWord(auVar11,0);
-          auVar14 = vectorSplatWord(auVar11,1);
-          auVar11 = vectorSplatWord(auVar11,2);
-          storeVectorElementWordIndexed(auVar16,lVar5);
-          storeVectorElementWordIndexed(auVar14,lVar5 + 4);
-          storeVectorElementWordIndexed(auVar11,lVar5 + 8);
-          auVar16 = vectorSplatWord(auVar12,0);
-          auVar14 = vectorSplatWord(auVar12,1);
-          auVar11 = vectorSplatWord(auVar12,2);
-          storeVectorElementWordIndexed(auVar16,lVar5 + 0xc);
-          storeVectorElementWordIndexed(auVar14,lVar5 + 0x10);
-          storeVectorElementWordIndexed(auVar11,lVar5 + 0x14);
+          auVar17 = loadVectorLeftIndexed(lVar4);
+          auVar16 = loadVectorLeftIndexed(lVar4 + 0xc);
+          auVar15 = loadVectorRightIndexed(lVar4 + 0x10);
+          auVar14 = loadVectorLeftIndexed(uVar3 - 100);
+          auVar10 = loadVectorRightIndexed(uVar3 - 0x54);
+          auVar13 = loadVectorRightIndexed(lVar4 + 0x1c);
+          auVar12 = loadVectorRightIndexed(uVar3 - 0x60);
+          auVar11 = loadVectorLeftIndexed(uVar3 - 0x70);
+          auVar15 = (auVar17 | auVar15) & (undefined1  [16])g_keepXYZ.field0_0x0;
+          auVar13 = (auVar16 | auVar13) & (undefined1  [16])g_keepXYZ.field0_0x0;
+          auVar12 = (auVar11 | auVar12) & (undefined1  [16])g_keepXYZ.field0_0x0;
+          auVar10 = (auVar14 | auVar10) & (undefined1  [16])g_keepXYZ.field0_0x0;
+          auVar11 = vectorSubtractFloatingPoint128(auVar15,auVar13);
+          auVar15 = vectorAddFloatingPoint128(auVar15,auVar13);
+          auVar13 = vectorSubtractFloatingPoint128(auVar12,auVar10);
+          auVar10 = vectorAddFloatingPoint128(auVar12,auVar10);
+          auVar13 = vectorMinimumFloatingPoint128(auVar13,auVar11);
+          auVar10 = vectorMaximumFloatingPoint128(auVar10,auVar15);
+          auVar10 = vectorAddFloatingPoint128(auVar13,auVar10);
+          auVar10 = vectorMultiplyFloatingPoint(auVar10,(undefined1  [16])g_oneHalf.field0_0x0);
+          auVar11 = vectorSubtractFloatingPoint128(auVar10,auVar13);
+          auVar15 = vectorSplatWord(auVar10,0);
+          auVar13 = vectorSplatWord(auVar10,1);
+          auVar10 = vectorSplatWord(auVar10,2);
+          storeVectorElementWordIndexed(auVar15,lVar4);
+          storeVectorElementWordIndexed(auVar13,lVar4 + 4);
+          storeVectorElementWordIndexed(auVar10,lVar4 + 8);
+          auVar15 = vectorSplatWord(auVar11,0);
+          auVar13 = vectorSplatWord(auVar11,1);
+          auVar10 = vectorSplatWord(auVar11,2);
+          storeVectorElementWordIndexed(auVar15,lVar4 + 0xc);
+          storeVectorElementWordIndexed(auVar13,lVar4 + 0x10);
+          storeVectorElementWordIndexed(auVar10,lVar4 + 0x14);
         }
       }
-      uVar9 = uVar9 + 1;
-      iVar8 = iVar8 + 0x1c;
-      uVar2 = uVar9 * 4;
-    } while (uVar9 < *(byte *)(iVar1 + 4));
+      uVar8 = uVar8 + 1;
+      iVar7 = iVar7 + 0x1c;
+      uVar2 = uVar8 * 4;
+    } while (uVar8 < pXVar1->numBones);
   }
-  __restgprlr_22();
   return;
 }
 
@@ -1275,47 +1249,43 @@ float DObjGetRadius(DObj *param_1)
 
 // 826175C8  DObjGetPhysPreset  (xanim/dobj.cpp:903)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 PhysPreset * DObjGetPhysPreset(DObj *param_1)
 
 {
-  int iVar1;
-  PhysPreset *pPVar2;
-  
-  iVar1 = __savegprlr_29(param_1);
-  if (iVar1 == 0) {
+  if (param_1 == (DObj *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj.cpp",0x388,0,"%s");
   }
-  if (*(char *)(iVar1 + 9) == '\0') {
+  if (param_1->numModels == '\0') {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj.cpp",0x389,0,"%s");
   }
-  if (**(int **)(iVar1 + 0x98) == 0) {
+  if (*param_1->models == (XModel *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj.cpp",0x38a,0,"%s");
   }
-  pPVar2 = (PhysPreset *)__restgprlr_29(*(undefined4 *)(**(int **)(iVar1 + 0x98) + 0x118));
-  return pPVar2;
+  return (*param_1->models)->physPreset;
 }
 
 
 // 82617678  DObjGetName  (xanim/dobj.cpp:913)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 char * DObjGetName(DObj *param_1)
 
 {
-  int iVar1;
-  char *pcVar2;
-  
-  iVar1 = __savegprlr_29(param_1);
-  if (iVar1 == 0) {
+  if (param_1 == (DObj *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj.cpp",0x392,0,"%s");
   }
-  if (*(char *)(iVar1 + 9) == '\0') {
+  if (param_1->numModels == '\0') {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj.cpp",0x393,0,"%s");
   }
-  if (**(int **)(iVar1 + 0x98) == 0) {
+  if (*param_1->models == (XModel *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj.cpp",0x394,0,"%s");
   }
-  pcVar2 = (char *)__restgprlr_29(*(undefined4 *)**(undefined4 **)(iVar1 + 0x98));
-  return pcVar2;
+  return (*param_1->models)->name;
 }
 
 
@@ -1353,6 +1323,8 @@ int DObjGetNumSurfaces(DObj *param_1,char *param_2)
 
 // 826177E8  DObjGetBoneName  (xanim/dobj.cpp:1024)
 
+/* WARNING: Function: __savegprlr_19 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_19 replaced with injection: xenon_save_restore */
 /* WARNING: Removing unreachable block (ram,0x8261789c) */
 
 char * DObjGetBoneName(DObj *param_1,int param_2)
@@ -1360,67 +1332,63 @@ char * DObjGetBoneName(DObj *param_1,int param_2)
 {
   byte bVar1;
   byte bVar2;
-  int iVar3;
-  int iVar4;
-  char *pcVar5;
-  longlong lVar6;
-  int *piVar7;
-  longlong lVar8;
-  ulonglong uVar9;
+  ushort *puVar3;
+  char *pcVar4;
+  int iVar5;
+  XModel **ppXVar6;
+  longlong lVar7;
+  ulonglong uVar8;
   
-  lVar6 = (longlong)param_2;
-  iVar4 = __savegprlr_19(param_1);
-  if (iVar4 == 0) {
+  if (param_1 == (DObj *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj.cpp",0x40a,0,"%s");
   }
-  bVar1 = *(byte *)(iVar4 + 9);
-  lVar8 = 0;
-  piVar7 = *(int **)(iVar4 + 0x98);
-  iVar4 = 0;
+  bVar1 = param_1->numModels;
+  lVar7 = 0;
+  ppXVar6 = param_1->models;
+  iVar5 = 0;
   if (bVar1 != 0) {
     do {
-      uVar9 = lVar6 - lVar8;
-      iVar3 = *(int *)(*piVar7 + 0x24);
-      bVar2 = *(byte *)(*piVar7 + 4);
-      if ((longlong)uVar9 < 0) {
+      uVar8 = param_2 - lVar7;
+      puVar3 = (*ppXVar6)->boneNames;
+      bVar2 = (*ppXVar6)->numBones;
+      if ((longlong)uVar8 < 0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj.cpp",0x416,0,
                         "%s");
       }
-      if ((int)uVar9 < (int)(uint)bVar2) {
-        pcVar5 = SL_ConvertToString((uint)*(ushort *)((int)((uVar9 & 0xffffffff) << 1) + iVar3));
-        pcVar5 = (char *)__restgprlr_19(pcVar5);
-        return pcVar5;
+      if ((int)uVar8 < (int)(uint)bVar2) {
+        pcVar4 = SL_ConvertToString((uint)*(ushort *)
+                                           ((int)((uVar8 & 0xffffffff) << 1) + (int)puVar3));
+        return pcVar4;
       }
-      iVar4 = iVar4 + 1;
-      lVar8 = (ulonglong)bVar2 + lVar8;
-      piVar7 = piVar7 + 1;
-    } while (iVar4 < (int)(uint)bVar1);
+      iVar5 = iVar5 + 1;
+      lVar7 = (ulonglong)bVar2 + lVar7;
+      ppXVar6 = ppXVar6 + 1;
+    } while (iVar5 < (int)(uint)bVar1);
   }
-  pcVar5 = (char *)__restgprlr_19(0);
-  return pcVar5;
+  return (char *)0x0;
 }
 
 
 // 826178F0  DObjGetModelParentBoneName  (xanim/dobj.cpp:1057)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 char * DObjGetModelParentBoneName(DObj *param_1,int param_2)
 
 {
-  DObj *pDVar1;
-  char *pcVar2;
+  char *pcVar1;
   
-  pDVar1 = (DObj *)__savegprlr_29(param_1);
-  if (pDVar1 == (DObj *)0x0) {
+  if (param_1 == (DObj *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj.cpp",0x425,0,"%s");
   }
-  if ((int)(uint)pDVar1->numModels <= param_2) {
+  if ((int)(uint)param_1->numModels <= param_2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj.cpp",0x426,0,
                     "%s\n\t(modelIndex) = %i");
   }
-  pcVar2 = DObjGetBoneName(pDVar1,(uint)*(byte *)((int)pDVar1->models +
-                                                 param_2 + (uint)pDVar1->numModels * 4));
-  pcVar2 = (char *)__restgprlr_29(pcVar2);
-  return pcVar2;
+  pcVar1 = DObjGetBoneName(param_1,(uint)*(byte *)((int)param_1->models +
+                                                  param_2 + (uint)param_1->numModels * 4));
+  return pcVar1;
 }
 
 
@@ -1438,6 +1406,9 @@ XAnimTree * DObjGetTree(DObj *param_1)
 
 // 826179E0  LocalInvMatrixTransformVectorQuatTrans  (xanim/dobj.cpp:1094)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void LocalInvMatrixTransformVectorQuatTrans(float *param_1,DObjAnimMat *param_2,float *param_3)
 
 {
@@ -1449,15 +1420,13 @@ void LocalInvMatrixTransformVectorQuatTrans(float *param_1,DObjAnimMat *param_2,
   float fVar6;
   float fVar7;
   float fVar8;
-  float *pfVar9;
+  double dVar9;
   double dVar10;
   double dVar11;
-  double dVar12;
   
-  pfVar9 = (float *)__savegprlr_27(param_1);
-  dVar12 = (double)(*pfVar9 - param_2->trans[0]);
-  dVar11 = (double)(pfVar9[1] - param_2->trans[1]);
-  dVar10 = (double)(pfVar9[2] - param_2->trans[2]);
+  dVar11 = (double)(*param_1 - param_2->trans[0]);
+  dVar10 = (double)(param_1[1] - param_2->trans[1]);
+  dVar9 = (double)(param_1[2] - param_2->trans[2]);
   if ((((((uint)param_2->quat[0] & 0x7f800000) == 0x7f800000) ||
        (((uint)param_2->quat[1] & 0x7f800000) == 0x7f800000)) ||
       (((uint)param_2->quat[2] & 0x7f800000) == 0x7f800000)) ||
@@ -1478,22 +1447,26 @@ void LocalInvMatrixTransformVectorQuatTrans(float *param_1,DObjAnimMat *param_2,
   fVar5 = fVar1 * fVar1 * fVar2;
   fVar6 = param_2->quat[0] * fVar8;
   fVar2 = fVar4 * fVar1 * fVar2;
-  *param_3 = (float)((double)(1.0 - (fVar5 + fVar3 * fVar7)) * dVar12 +
-                    (double)(float)((double)(fVar1 * fVar8 - fVar4 * fVar7) * dVar10 +
-                                   (double)(float)((double)(fVar2 + fVar3 * fVar8) * dVar11)));
-  param_3[2] = (float)((double)(fVar4 * fVar7 + fVar1 * fVar8) * dVar12 +
-                      (double)(float)((double)(1.0 - (fVar3 * fVar7 + fVar6)) * dVar10 +
+  *param_3 = (float)((double)(1.0 - (fVar5 + fVar3 * fVar7)) * dVar11 +
+                    (double)(float)((double)(fVar1 * fVar8 - fVar4 * fVar7) * dVar9 +
+                                   (double)(float)((double)(fVar2 + fVar3 * fVar8) * dVar10)));
+  param_3[2] = (float)((double)(fVar4 * fVar7 + fVar1 * fVar8) * dVar11 +
+                      (double)(float)((double)(1.0 - (fVar3 * fVar7 + fVar6)) * dVar9 +
                                      (double)(float)((double)(fVar1 * fVar7 - fVar4 * fVar8) *
-                                                    dVar11)));
-  param_3[1] = (float)((double)(fVar3 * fVar8 - fVar2) * dVar12 +
-                      (double)(float)((double)(fVar1 * fVar7 + fVar4 * fVar8) * dVar10 +
-                                     (double)(float)((double)(1.0 - (fVar5 + fVar6)) * dVar11)));
-  __restgprlr_27();
+                                                    dVar10)));
+  param_3[1] = (float)((double)(fVar3 * fVar8 - fVar2) * dVar11 +
+                      (double)(float)((double)(fVar1 * fVar7 + fVar4 * fVar8) * dVar9 +
+                                     (double)(float)((double)(1.0 - (fVar5 + fVar6)) * dVar10)));
   return;
 }
 
 
 // 82617BA8  DObjTraceline  (xanim/dobj.cpp:1108)
+
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
 
 void DObjTraceline(DObj *param_1,float *param_2,float *param_3,uchar *param_4,DObjTrace_s *param_5)
 
@@ -1577,8 +1550,6 @@ void DObjTraceline(DObj *param_1,float *param_2,float *param_3,uchar *param_4,DO
   undefined1 local_2f0 [62];
   ushort auStack_2b2 [345];
   
-  __savegprlr();
-  __savefpr();
   pfStack0000001c = param_2;
   pfStack00000024 = param_3;
   puStack0000002c = param_4;
@@ -1974,13 +1945,14 @@ LAB_826187b0:
   }
 LAB_826189d0:
   Profile_EndInternal((double *)0x0);
-  __restfpr();
-  __restgprlr();
   return;
 }
 
 
 // 826189E8  DObjTracelinePartBits  (xanim/dobj.cpp:1416)
+
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 
 void DObjTracelinePartBits(DObj *param_1,int *param_2)
 
@@ -1988,129 +1960,124 @@ void DObjTracelinePartBits(DObj *param_1,int *param_2)
   XModel *pXVar1;
   ulonglong uVar2;
   int iVar3;
-  int *piVar4;
-  DObj *pDVar5;
+  ulonglong uVar4;
+  XModel **ppXVar5;
   int iVar6;
-  longlong lVar7;
+  ulonglong uVar7;
+  int *piVar10;
   ulonglong uVar8;
-  XModel **ppXVar9;
-  ulonglong uVar10;
+  ulonglong uVar9;
   longlong lVar11;
-  ulonglong uVar12;
-  ulonglong uVar13;
-  longlong lVar14;
   
-  lVar7 = (longlong)(int)param_2;
-  pDVar5 = (DObj *)__savegprlr_29(param_1);
   Profile_Begin(0x132);
-  lVar11 = lVar7 + -4;
-  lVar14 = 6;
+  piVar10 = param_2 + -1;
+  lVar11 = 6;
   do {
-    lVar11 = lVar11 + 4;
-    *(undefined4 *)lVar11 = 0;
-    lVar14 = lVar14 + -1;
-  } while (lVar14 != 0);
-  uVar10 = 0;
-  ppXVar9 = pDVar5->models;
-  uVar8 = 1;
-  piVar4 = (int *)lVar7;
-  for (uVar12 = (ulonglong)pDVar5->numModels; uVar12 != 0; uVar12 = uVar12 - 1) {
-    pXVar1 = *ppXVar9;
-    uVar13 = (ulonglong)pXVar1->numBones;
-    if ((pDVar5->ignoreCollision & (uint)uVar8) == 0) {
-      if (uVar13 != 0) {
+    piVar10 = piVar10 + 1;
+    *piVar10 = 0;
+    lVar11 = lVar11 + -1;
+  } while (lVar11 != 0);
+  uVar7 = 0;
+  ppXVar5 = param_1->models;
+  uVar4 = 1;
+  for (uVar8 = (ulonglong)param_1->numModels; uVar8 != 0; uVar8 = uVar8 - 1) {
+    pXVar1 = *ppXVar5;
+    uVar9 = (ulonglong)pXVar1->numBones;
+    if ((param_1->ignoreCollision & (uint)uVar4) == 0) {
+      if (uVar9 != 0) {
         iVar6 = 0;
         do {
           if (*(int *)((int)(&pXVar1->boneInfo->bounds + 1) + iVar6) != 0) {
-            uVar2 = (uVar10 & 0xffffffff) >> 5;
-            if ((pDVar5->hidePartBits[(int)uVar2] &
-                *(uint *)(&g_bitShift + ((uint)((uVar10 & 0xffffffff) << 2) & 0x7c))) == 0) {
+            uVar2 = (uVar7 & 0xffffffff) >> 5;
+            if ((param_1->hidePartBits[(int)uVar2] &
+                *(uint *)(&g_bitShift + ((uint)((uVar7 & 0xffffffff) << 2) & 0x7c))) == 0) {
               iVar3 = (int)(uVar2 << 2);
-              *(uint *)(iVar3 + (int)piVar4) =
-                   *(uint *)(iVar3 + (int)piVar4) |
-                   *(uint *)(&g_bitShift + ((uint)((uVar10 & 0xffffffff) << 2) & 0x7c));
+              *(uint *)(iVar3 + (int)param_2) =
+                   *(uint *)(iVar3 + (int)param_2) |
+                   *(uint *)(&g_bitShift + ((uint)((uVar7 & 0xffffffff) << 2) & 0x7c));
             }
           }
           iVar6 = iVar6 + 0x1c;
-          uVar10 = uVar10 + 1;
-          uVar13 = uVar13 - 1;
-        } while (uVar13 != 0);
+          uVar7 = uVar7 + 1;
+          uVar9 = uVar9 - 1;
+        } while (uVar9 != 0);
       }
     }
     else {
-      uVar10 = uVar13 + uVar10;
+      uVar7 = uVar9 + uVar7;
     }
-    ppXVar9 = ppXVar9 + 1;
-    uVar8 = (uVar8 & 0x7fffffff) << 1 | uVar8 >> 0x1f;
+    ppXVar5 = ppXVar5 + 1;
+    uVar4 = (uVar4 & 0x7fffffff) << 1 | uVar4 >> 0x1f;
   }
-  DObjCompleteHierarchyBits(pDVar5,piVar4);
-  iVar6 = Profile_EndInternal((double *)0x0);
-  __restgprlr_29(iVar6);
+  DObjCompleteHierarchyBits(param_1,param_2);
+  Profile_EndInternal((double *)0x0);
   return;
 }
 
 
 // 82618AF8  DObjGeomTraceline  (xanim/dobj.cpp:1467)
 
+/* WARNING: Function: __savegprlr_17 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_17 replaced with injection: xenon_save_restore */
+
 void DObjGeomTraceline(DObj *param_1,float *param_2,float *param_3,int param_4,DObjTrace_s *param_5)
 
 {
   byte bVar1;
   XModel *pXVar2;
-  DObj *pDVar3;
-  DObjAnimMat *pDVar4;
-  int iVar5;
-  uint uVar6;
-  XModel **ppXVar7;
-  int iVar8;
-  uint uVar9;
+  DObjAnimMat *pDVar3;
+  int iVar4;
+  uint uVar5;
+  XModel **ppXVar6;
+  int iVar7;
+  uint uVar8;
+  double dVar9;
   double dVar10;
-  double dVar11;
   trace_t local_d0 [4];
   
-  pDVar3 = (DObj *)__savegprlr_17(param_1);
   local_d0[0].fraction = param_5->fraction;
-  uVar9 = 0;
+  uVar8 = 0;
   param_5->modelIndex = 0;
-  dVar11 = 0.0;
-  dVar10 = 1.0;
+  dVar10 = 0.0;
+  dVar9 = 1.0;
   param_5->partName = 0;
   param_5->partGroup = 0;
   if ((local_d0[0].fraction < 0.0) || (1.0 < local_d0[0].fraction)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj.cpp",0x5ca,1,
                     "%s\n\t(trace.fraction) = %g");
   }
-  local_d0[0].normal[0] = (float)dVar11;
+  local_d0[0].normal[0] = (float)dVar10;
   local_d0[0].surfaceFlags = 0;
-  local_d0[0].normal[1] = (float)dVar11;
-  local_d0[0].normal[2] = (float)dVar11;
-  pDVar4 = DObjGetRotTransArray(pDVar3);
-  if (pDVar4 != (DObjAnimMat *)0x0) {
-    bVar1 = pDVar3->numModels;
-    iVar8 = 0;
-    ppXVar7 = pDVar3->models;
+  local_d0[0].normal[1] = (float)dVar10;
+  local_d0[0].normal[2] = (float)dVar10;
+  pDVar3 = DObjGetRotTransArray(param_1);
+  if (pDVar3 != (DObjAnimMat *)0x0) {
+    bVar1 = param_1->numModels;
+    iVar7 = 0;
+    ppXVar6 = param_1->models;
     if (bVar1 != 0) {
       do {
-        pXVar2 = *ppXVar7;
-        iVar5 = XModelTraceLineAnimated(pDVar3,uVar9,iVar8,local_d0,pDVar4,param_2,param_3,param_4);
-        if (-1 < iVar5) {
-          param_5->modelIndex = (ushort)uVar9;
-          if ((uVar9 & 0xffff) != uVar9) {
+        pXVar2 = *ppXVar6;
+        iVar4 = XModelTraceLineAnimated(param_1,uVar8,iVar7,local_d0,pDVar3,param_2,param_3,param_4)
+        ;
+        if (-1 < iVar4) {
+          param_5->modelIndex = (ushort)uVar8;
+          if ((uVar8 & 0xffff) != uVar8) {
             MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj.cpp",0x5dd,
                             1,"%s");
           }
-          param_5->partName = pXVar2->boneNames[iVar5];
+          param_5->partName = pXVar2->boneNames[iVar4];
         }
-        uVar6 = (uint)pXVar2->numBones;
-        uVar9 = uVar9 + 1;
-        ppXVar7 = ppXVar7 + 1;
-        iVar8 = uVar6 + iVar8;
-        pDVar4 = pDVar4 + uVar6;
-      } while (uVar9 < bVar1);
+        uVar5 = (uint)pXVar2->numBones;
+        uVar8 = uVar8 + 1;
+        ppXVar6 = ppXVar6 + 1;
+        iVar7 = uVar5 + iVar7;
+        pDVar3 = pDVar3 + uVar5;
+      } while (uVar8 < bVar1);
     }
   }
   param_5->fraction = local_d0[0].fraction;
-  if (((double)local_d0[0].fraction < dVar11) || (dVar10 < (double)local_d0[0].fraction)) {
+  if (((double)local_d0[0].fraction < dVar10) || (dVar9 < (double)local_d0[0].fraction)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj.cpp",0x5e3,1,
                     "%s\n\t(results->fraction) = %g");
   }
@@ -2118,12 +2085,14 @@ void DObjGeomTraceline(DObj *param_1,float *param_2,float *param_3,int param_4,D
   param_5->normal[0] = local_d0[0].normal[0];
   param_5->normal[1] = local_d0[0].normal[1];
   param_5->normal[2] = local_d0[0].normal[2];
-  __restgprlr_17();
   return;
 }
 
 
 // 82618CD0  DObjGeomTracelineInBasePose  (xanim/dobj.cpp:1515)
+
+/* WARNING: Function: __savegprlr_20 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_20 replaced with injection: xenon_save_restore */
 
 void DObjGeomTracelineInBasePose
                (DObj *param_1,float *param_2,float *param_3,int param_4,DObjTrace_s *param_5)
@@ -2132,14 +2101,13 @@ void DObjGeomTracelineInBasePose
   byte bVar1;
   XModel *pXVar2;
   int iVar3;
-  undefined4 *puVar4;
+  XModel **ppXVar4;
   uint uVar5;
   double dVar6;
   double dVar7;
   double dVar8;
   trace_t local_b0 [3];
   
-  iVar3 = __savegprlr_20(param_1);
   local_b0[0].fraction = param_5->fraction;
   dVar6 = (double)local_b0[0].fraction;
   uVar5 = 0;
@@ -2153,15 +2121,15 @@ void DObjGeomTracelineInBasePose
                     "%s\n\t(trace.fraction) = %g");
     dVar6 = (double)local_b0[0].fraction;
   }
-  bVar1 = *(byte *)(iVar3 + 9);
+  bVar1 = param_1->numModels;
   local_b0[0].normal[0] = (float)dVar8;
-  puVar4 = *(undefined4 **)(iVar3 + 0x98);
+  ppXVar4 = param_1->models;
   local_b0[0].normal[1] = (float)dVar8;
   local_b0[0].normal[2] = (float)dVar8;
   local_b0[0].surfaceFlags = 0;
   if (bVar1 != 0) {
     do {
-      pXVar2 = (XModel *)*puVar4;
+      pXVar2 = *ppXVar4;
       if (((pXVar2->contents & param_4) != 0) &&
          (iVar3 = XModelTraceLine(pXVar2,local_b0,param_2,param_3,param_4), -1 < iVar3)) {
         param_5->modelIndex = (ushort)uVar5;
@@ -2172,7 +2140,7 @@ void DObjGeomTracelineInBasePose
         param_5->partName = pXVar2->boneNames[iVar3];
       }
       uVar5 = uVar5 + 1;
-      puVar4 = puVar4 + 1;
+      ppXVar4 = ppXVar4 + 1;
     } while (uVar5 < bVar1);
     dVar6 = (double)local_b0[0].fraction;
   }
@@ -2185,50 +2153,47 @@ void DObjGeomTracelineInBasePose
   param_5->normal[0] = local_b0[0].normal[0];
   param_5->normal[1] = local_b0[0].normal[1];
   param_5->normal[2] = local_b0[0].normal[2];
-  __restgprlr_20();
   return;
 }
 
 
 // 82618E88  DObjGeomTracelinePartBits  (xanim/dobj.cpp:1564)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
+
 void DObjGeomTracelinePartBits(DObj *param_1,int param_2,int *param_3)
 
 {
   byte bVar1;
   XModel *pXVar2;
-  DObj *pDVar3;
-  longlong lVar4;
-  longlong lVar5;
-  XModel **ppXVar6;
-  int iVar7;
-  uint uVar8;
-  longlong lVar9;
+  int *piVar3;
+  XModel **ppXVar4;
+  int iVar5;
+  uint uVar6;
+  longlong lVar7;
   
-  lVar4 = (longlong)(int)param_3;
-  pDVar3 = (DObj *)__savegprlr_24(param_1);
-  lVar5 = lVar4 + -4;
-  lVar9 = 6;
+  piVar3 = param_3 + -1;
+  lVar7 = 6;
   do {
-    lVar5 = lVar5 + 4;
-    *(undefined4 *)lVar5 = 0;
-    lVar9 = lVar9 + -1;
-  } while (lVar9 != 0);
-  bVar1 = pDVar3->numModels;
-  iVar7 = 0;
-  uVar8 = 0;
+    piVar3 = piVar3 + 1;
+    *piVar3 = 0;
+    lVar7 = lVar7 + -1;
+  } while (lVar7 != 0);
+  bVar1 = param_1->numModels;
+  iVar5 = 0;
+  uVar6 = 0;
   if (bVar1 != 0) {
-    ppXVar6 = pDVar3->models + -1;
+    ppXVar4 = param_1->models + -1;
     do {
-      ppXVar6 = ppXVar6 + 1;
-      pXVar2 = *ppXVar6;
-      XModelTraceLineAnimatedPartBits(pXVar2,pDVar3,uVar8,iVar7,param_2,(int *)lVar4);
-      uVar8 = uVar8 + 1;
-      iVar7 = (uint)pXVar2->numBones + iVar7;
-    } while (uVar8 < bVar1);
+      ppXVar4 = ppXVar4 + 1;
+      pXVar2 = *ppXVar4;
+      XModelTraceLineAnimatedPartBits(pXVar2,param_1,uVar6,iVar5,param_2,param_3);
+      uVar6 = uVar6 + 1;
+      iVar5 = (uint)pXVar2->numBones + iVar5;
+    } while (uVar6 < bVar1);
   }
-  DObjCompleteHierarchyBits(pDVar3,(int *)lVar4);
-  __restgprlr_24();
+  DObjCompleteHierarchyBits(param_1,param_3);
   return;
 }
 
@@ -2258,29 +2223,29 @@ int DObjHasContents(DObj *param_1,int param_2)
 
 // 82618F68  DObjGetContents  (xanim/dobj.cpp:1696)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 int DObjGetContents(DObj *param_1)
 
 {
-  int iVar1;
+  uint uVar1;
   uint uVar2;
-  uint uVar3;
+  int iVar3;
   int iVar4;
-  int iVar5;
   
-  iVar1 = __savegprlr_28(param_1);
-  uVar3 = 0;
-  iVar5 = 0;
-  if (*(char *)(iVar1 + 9) != '\0') {
-    iVar4 = 0;
+  uVar2 = 0;
+  iVar4 = 0;
+  if (param_1->numModels != '\0') {
+    iVar3 = 0;
     do {
-      uVar2 = XModelGetContents(*(XModel **)(*(int *)(iVar1 + 0x98) + iVar4));
-      iVar5 = iVar5 + 1;
-      uVar3 = uVar2 | uVar3;
-      iVar4 = iVar4 + 4;
-    } while (iVar5 < (int)(uint)*(byte *)(iVar1 + 9));
+      uVar1 = XModelGetContents(*(XModel **)((int)param_1->models + iVar3));
+      iVar4 = iVar4 + 1;
+      uVar2 = uVar1 | uVar2;
+      iVar3 = iVar3 + 4;
+    } while (iVar4 < (int)(uint)param_1->numModels);
   }
-  iVar1 = __restgprlr_28(uVar3);
-  return iVar1;
+  return uVar2;
 }
 
 
@@ -2312,25 +2277,27 @@ int DObjGetContentsLocal(DObj *param_1)
 
 // 82618FF8  DObjSetLocalBoneIndex  (xanim/dobj.cpp:1727)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 int DObjSetLocalBoneIndex(DObj *param_1,int *param_2,int param_3,float *param_4,float *param_5)
 
 {
-  DObj *pDVar1;
-  int iVar2;
+  int iVar1;
   
-  pDVar1 = (DObj *)__savegprlr_28(param_1);
-  iVar2 = DObjSetRotTransIndex(pDVar1,param_2,param_3);
-  if (iVar2 == 0) {
-    iVar2 = __restgprlr_28();
-    return iVar2;
+  iVar1 = DObjSetRotTransIndex(param_1,param_2,param_3);
+  if (iVar1 == 0) {
+    return 0;
   }
-  DObjSetLocalTagInternal(pDVar1,param_4,param_5,param_3);
-  iVar2 = __restgprlr_28(1);
-  return iVar2;
+  DObjSetLocalTagInternal(param_1,param_4,param_5,param_3);
+  return 1;
 }
 
 
 // 82619048  DObjGetBoneIndex  (xanim/dobj.cpp:1739)
+
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 
 int DObjGetBoneIndex(DObj *param_1,uint param_2,uchar *param_3)
 
@@ -2339,77 +2306,73 @@ int DObjGetBoneIndex(DObj *param_1,uint param_2,uchar *param_3)
   XModel *pXVar2;
   int iVar3;
   int iVar4;
-  ulonglong uVar6;
-  uint uVar7;
-  int *piVar8;
-  int *piVar9;
-  uint uVar10;
   uint uVar5;
+  XModel **ppXVar6;
+  XModel **ppXVar7;
+  uint uVar8;
   
-  uVar6 = (ulonglong)(int)param_2;
-  iVar3 = __savegprlr_24(param_1);
-  if (iVar3 == 0) {
+  if (param_1 == (DObj *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj.cpp",0x6d3,0,"%s");
   }
-  if ((uVar6 & 0xffffffff) == 0) {
+  if (param_2 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj.cpp",0x6d4,0,"%s");
   }
-  uVar5 = (uint)uVar6;
-  iVar4 = SL_IsLowercaseString(uVar5);
-  if (iVar4 == 0) {
-    SL_ConvertToString(uVar5);
+  iVar3 = SL_IsLowercaseString(param_2);
+  if (iVar3 == 0) {
+    SL_ConvertToString(param_2);
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj.cpp",0x6d7,0,
                     "%s\n\t(SL_ConvertToString( name )) = %s");
   }
-  uVar10 = (uint)*param_3;
-  if (uVar10 != 0xff) {
-    piVar9 = *(int **)(iVar3 + 0x98);
-    bVar1 = *(byte *)(iVar3 + 9);
-    if (piVar9 == (int *)0x0) {
+  uVar8 = (uint)*param_3;
+  if (uVar8 != 0xff) {
+    ppXVar7 = param_1->models;
+    bVar1 = param_1->numModels;
+    if (ppXVar7 == (XModel **)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj.cpp",0x6e1,0,"%s"
                      );
     }
-    if (uVar10 < *(byte *)(iVar3 + 10)) {
+    if (uVar8 < param_1->numBones) {
       iVar3 = 0;
-      piVar8 = piVar9;
+      ppXVar6 = ppXVar7;
       if (bVar1 != 0) {
         do {
-          uVar7 = (uint)*(byte *)(*piVar8 + 4);
-          if (uVar10 < uVar7) {
-            if ((uVar6 & 0xffffffff) ==
-                (ulonglong)*(ushort *)(*(int *)(*piVar8 + 0x24) + uVar10 * 2)) goto LAB_826191dc;
+          uVar5 = (uint)(*ppXVar6)->numBones;
+          if (uVar8 < uVar5) {
+            if (param_2 == (*ppXVar6)->boneNames[uVar8]) {
+              return 1;
+            }
             break;
           }
           iVar3 = iVar3 + 1;
-          uVar10 = uVar10 - uVar7;
-          piVar8 = piVar8 + 1;
+          uVar8 = uVar8 - uVar5;
+          ppXVar6 = ppXVar6 + 1;
         } while (iVar3 < (int)(uint)bVar1);
       }
     }
-    uVar10 = 0;
+    uVar8 = 0;
     iVar3 = 0;
     if (bVar1 != 0) {
       do {
-        pXVar2 = (XModel *)*piVar9;
-        iVar4 = XModelGetBoneIndex(pXVar2,uVar5,uVar10,param_3);
+        pXVar2 = *ppXVar7;
+        iVar4 = XModelGetBoneIndex(pXVar2,param_2,uVar8,param_3);
         if (iVar4 != 0) {
-LAB_826191dc:
-          iVar3 = __restgprlr_24(1);
-          return iVar3;
+          return 1;
         }
         iVar3 = iVar3 + 1;
-        piVar9 = piVar9 + 1;
-        uVar10 = pXVar2->numBones + uVar10;
+        ppXVar7 = ppXVar7 + 1;
+        uVar8 = pXVar2->numBones + uVar8;
       } while (iVar3 < (int)(uint)bVar1);
     }
     *param_3 = 0xff;
   }
-  iVar3 = __restgprlr_24(0);
-  return iVar3;
+  return 0;
 }
 
 
 // 826191E8  DObjGetBoneIndexFromStartModel  (xanim/dobj.cpp:1790)
+
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
 
 int DObjGetBoneIndexFromStartModel(DObj *param_1,uint param_2,int param_3,uchar *param_4)
 
@@ -2418,527 +2381,484 @@ int DObjGetBoneIndexFromStartModel(DObj *param_1,uint param_2,int param_3,uchar 
   XModel *pXVar2;
   int iVar3;
   int iVar4;
-  ulonglong uVar6;
-  int *piVar7;
-  int *piVar8;
-  uint uVar9;
-  uint uVar5;
+  XModel **ppXVar5;
+  XModel **ppXVar6;
+  uint uVar7;
   
-  uVar6 = (ulonglong)(int)param_2;
-  iVar3 = __savegprlr_23(param_1);
-  if (iVar3 == 0) {
+  if (param_1 == (DObj *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj.cpp",0x706,0,"%s");
   }
-  if ((uVar6 & 0xffffffff) == 0) {
+  if (param_2 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj.cpp",0x707,0,"%s");
   }
-  uVar5 = (uint)uVar6;
-  iVar4 = SL_IsLowercaseString(uVar5);
-  if (iVar4 == 0) {
-    SL_ConvertToString(uVar5);
+  iVar3 = SL_IsLowercaseString(param_2);
+  if (iVar3 == 0) {
+    SL_ConvertToString(param_2);
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj.cpp",0x709,0,
                     "%s\n\t(SL_ConvertToString( name )) = %s");
   }
-  uVar9 = (uint)*param_4;
-  if (uVar9 != 0xff) {
-    bVar1 = *(byte *)(iVar3 + 9);
-    piVar8 = *(int **)(iVar3 + 0x98);
+  uVar7 = (uint)*param_4;
+  if (uVar7 != 0xff) {
+    bVar1 = param_1->numModels;
+    ppXVar6 = param_1->models;
     if ((int)(uint)bVar1 <= param_3) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj.cpp",0x712,0,"%s"
                      );
     }
-    if ((uVar9 < *(byte *)(iVar3 + 10)) && (iVar3 = 0, piVar7 = piVar8, bVar1 != 0)) {
+    if ((uVar7 < param_1->numBones) && (iVar3 = 0, ppXVar5 = ppXVar6, bVar1 != 0)) {
       do {
-        iVar4 = *piVar7;
-        if ((param_3 <= iVar3) && (uVar9 < *(byte *)(iVar4 + 4))) {
-          if ((uVar6 & 0xffffffff) == (ulonglong)*(ushort *)(*(int *)(iVar4 + 0x24) + uVar9 * 2))
-          goto LAB_82619394;
+        pXVar2 = *ppXVar5;
+        if ((param_3 <= iVar3) && (uVar7 < pXVar2->numBones)) {
+          if (param_2 == pXVar2->boneNames[uVar7]) {
+            return 1;
+          }
           break;
         }
         iVar3 = iVar3 + 1;
-        uVar9 = uVar9 - *(byte *)(iVar4 + 4);
-        piVar7 = piVar7 + 1;
+        uVar7 = uVar7 - pXVar2->numBones;
+        ppXVar5 = ppXVar5 + 1;
       } while (iVar3 < (int)(uint)bVar1);
     }
-    uVar9 = 0;
+    uVar7 = 0;
     iVar3 = 0;
     if (bVar1 != 0) {
       do {
-        pXVar2 = (XModel *)*piVar8;
+        pXVar2 = *ppXVar6;
         if ((param_3 <= iVar3) &&
-           (iVar4 = XModelGetBoneIndex(pXVar2,uVar5,uVar9,param_4), iVar4 != 0)) {
-LAB_82619394:
-          iVar3 = __restgprlr_23(1);
-          return iVar3;
+           (iVar4 = XModelGetBoneIndex(pXVar2,param_2,uVar7,param_4), iVar4 != 0)) {
+          return 1;
         }
         iVar3 = iVar3 + 1;
-        piVar8 = piVar8 + 1;
-        uVar9 = pXVar2->numBones + uVar9;
+        ppXVar6 = ppXVar6 + 1;
+        uVar7 = pXVar2->numBones + uVar7;
       } while (iVar3 < (int)(uint)bVar1);
     }
     *param_4 = 0xff;
   }
-  iVar3 = __restgprlr_23(0);
-  return iVar3;
+  return 0;
 }
 
 
 // 826193A0  DObjGetNextChildBoneIndex  (xanim/dobj.cpp:1843)
+
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 
 int DObjGetNextChildBoneIndex(DObj *param_1,uchar param_2,uchar *param_3)
 
 {
   byte bVar1;
   int iVar2;
-  int iVar3;
-  ulonglong uVar4;
-  ulonglong uVar5;
-  ulonglong uVar6;
-  undefined4 *puVar7;
-  longlong lVar8;
+  uint uVar3;
+  uint uVar4;
+  int iVar5;
+  uint uVar6;
+  XModel **ppXVar7;
+  uint uVar8;
   
-  uVar4 = (ulonglong)(char)param_2;
-  iVar2 = __savegprlr_24(param_1);
-  if (iVar2 == 0) {
+  uVar3 = (uint)(char)param_2;
+  if (param_1 == (DObj *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj.cpp",0x73c,0,"%s");
   }
-  uVar6 = (ulonglong)*param_3;
+  uVar6 = (uint)*param_3;
   if (uVar6 == 0xff) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj.cpp",0x73f,0,"%s");
   }
-  bVar1 = *(byte *)(iVar2 + 9);
-  lVar8 = 0;
-  puVar7 = *(undefined4 **)(iVar2 + 0x98);
-  iVar2 = 0;
+  bVar1 = param_1->numModels;
+  uVar8 = 0;
+  ppXVar7 = param_1->models;
+  iVar5 = 0;
   if (uVar6 == 0xfe) {
     if (bVar1 != 0) {
       while( true ) {
-        uVar6 = (ulonglong)((XModel *)*puVar7)->numBones;
-        if (((uVar4 & 0xff) < uVar6) &&
-           (iVar3 = XModelGetNextChildBoneIndex((XModel *)*puVar7,(uchar)uVar4,(uint)lVar8,param_3),
-           iVar3 != 0)) break;
-        iVar2 = iVar2 + 1;
-        uVar4 = (uVar4 & 0xff) - uVar6 & 0xff;
-        lVar8 = uVar6 + lVar8;
-        puVar7 = puVar7 + 1;
-        if ((int)(uint)bVar1 <= iVar2) {
+        uVar6 = (uint)(*ppXVar7)->numBones;
+        if (((uVar3 & 0xff) < uVar6) &&
+           (iVar2 = XModelGetNextChildBoneIndex(*ppXVar7,(uchar)uVar3,uVar8,param_3), iVar2 != 0))
+        break;
+        iVar5 = iVar5 + 1;
+        uVar3 = (uVar3 & 0xff) - uVar6 & 0xff;
+        uVar8 = uVar6 + uVar8;
+        ppXVar7 = ppXVar7 + 1;
+        if ((int)(uint)bVar1 <= iVar5) {
           *param_3 = 0xff;
-          iVar2 = __restgprlr_24(0);
-          return iVar2;
+          return 0;
         }
       }
-LAB_82619490:
-      iVar2 = __restgprlr_24(1);
-      return iVar2;
+      return 1;
     }
   }
   else if (bVar1 != 0) {
     do {
-      uVar5 = (ulonglong)((XModel *)*puVar7)->numBones;
-      if ((((uVar6 & 0xffffffff) < uVar5) && ((uVar4 & 0xff) < uVar5)) &&
-         (iVar3 = XModelGetNextChildBoneIndex((XModel *)*puVar7,(uchar)uVar4,(uint)lVar8,param_3),
-         iVar3 != 0)) goto LAB_82619490;
-      iVar2 = iVar2 + 1;
-      uVar6 = uVar6 - uVar5;
-      uVar4 = (uVar4 & 0xff) - uVar5 & 0xff;
-      lVar8 = uVar5 + lVar8;
-      puVar7 = puVar7 + 1;
-    } while (iVar2 < (int)(uint)bVar1);
+      uVar4 = (uint)(*ppXVar7)->numBones;
+      if (((uVar6 < uVar4) && ((uVar3 & 0xff) < uVar4)) &&
+         (iVar2 = XModelGetNextChildBoneIndex(*ppXVar7,(uchar)uVar3,uVar8,param_3), iVar2 != 0)) {
+        return 1;
+      }
+      iVar5 = iVar5 + 1;
+      uVar6 = uVar6 - uVar4;
+      uVar3 = (uVar3 & 0xff) - uVar4 & 0xff;
+      uVar8 = uVar4 + uVar8;
+      ppXVar7 = ppXVar7 + 1;
+    } while (iVar5 < (int)(uint)bVar1);
   }
   *param_3 = 0xff;
-  iVar2 = __restgprlr_24(0);
-  return iVar2;
+  return 0;
 }
 
 
 // 82619518  DObjGetReverseBoneIndex  (xanim/dobj.cpp:1901)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 uchar DObjGetReverseBoneIndex(DObj *param_1,uint param_2)
 
 {
   int iVar1;
-  int iVar2;
-  uchar uVar4;
-  uint uVar5;
-  longlong lVar6;
-  ulonglong uVar7;
+  uint uVar2;
+  longlong lVar3;
+  ulonglong uVar4;
   uchar local_30 [48];
-  uint uVar3;
   
-  uVar7 = (ulonglong)(int)param_2;
-  iVar1 = __savegprlr_28(param_1);
-  if (iVar1 == 0) {
+  if (param_1 == (DObj *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj.cpp",0x775,0,"%s");
   }
-  if ((uVar7 & 0xffffffff) == 0) {
+  if (param_2 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj.cpp",0x776,0,"%s");
   }
-  uVar3 = (uint)uVar7;
-  iVar2 = SL_IsLowercaseString(uVar3);
-  if (iVar2 == 0) {
-    SL_ConvertToString(uVar3);
+  iVar1 = SL_IsLowercaseString(param_2);
+  if (iVar1 == 0) {
+    SL_ConvertToString(param_2);
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj.cpp",0x777,0,
                     "%s\n\t(SL_ConvertToString( name )) = %s");
   }
-  uVar5 = (uint)*(byte *)(iVar1 + 10);
-  uVar7 = (ulonglong)*(byte *)(iVar1 + 9) - 1;
-  if (-1 < (longlong)uVar7) {
-    lVar6 = (uVar7 & 0x3fffffff) * 4 + (ulonglong)*(uint *)(iVar1 + 0x98);
+  uVar2 = (uint)param_1->numBones;
+  uVar4 = (ulonglong)param_1->numModels - 1;
+  if (-1 < (longlong)uVar4) {
+    lVar3 = (uVar4 & 0x3fffffff) * 4 + ZEXT48(param_1->models);
     do {
-      uVar5 = uVar5 - ((XModel *)*(undefined4 *)lVar6)->numBones;
-      iVar1 = XModelGetBoneIndex((XModel *)*(undefined4 *)lVar6,uVar3,uVar5,local_30);
+      uVar2 = uVar2 - ((XModel *)*(undefined4 *)lVar3)->numBones;
+      iVar1 = XModelGetBoneIndex((XModel *)*(undefined4 *)lVar3,param_2,uVar2,local_30);
       if (iVar1 != 0) {
-        uVar4 = __restgprlr_28(local_30[0]);
-        return uVar4;
+        return local_30[0];
       }
-      uVar7 = uVar7 - 1;
-      lVar6 = lVar6 + -4;
-    } while (-1 < (longlong)uVar7);
+      uVar4 = uVar4 - 1;
+      lVar3 = lVar3 + -4;
+    } while (-1 < (longlong)uVar4);
   }
-  uVar4 = __restgprlr_28(0xff);
-  return uVar4;
+  return 0xff;
 }
 
 
 // 82619628  DObjGetNextBoneIndex  (xanim/dobj.cpp:1931)
+
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 
 uchar DObjGetNextBoneIndex(DObj *param_1,uint param_2,uchar param_3)
 
 {
   XModel *pXVar1;
   int iVar2;
-  int iVar3;
-  uchar uVar5;
-  ulonglong uVar6;
-  ulonglong uVar7;
-  uint uVar8;
-  undefined4 *puVar9;
-  uint uVar10;
+  uint uVar3;
+  XModel **ppXVar4;
+  uint uVar5;
   uchar local_50 [80];
-  uint uVar4;
   
-  uVar7 = (ulonglong)(char)param_3;
-  uVar6 = (ulonglong)(int)param_2;
-  iVar2 = __savegprlr_25(param_1);
-  if (iVar2 == 0) {
+  if (param_1 == (DObj *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj.cpp",0x792,0,"%s");
   }
-  if ((uVar6 & 0xffffffff) == 0) {
+  if (param_2 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj.cpp",0x793,0,"%s");
   }
-  uVar4 = (uint)uVar6;
-  iVar3 = SL_IsLowercaseString(uVar4);
-  if (iVar3 == 0) {
-    SL_ConvertToString(uVar4);
+  iVar2 = SL_IsLowercaseString(param_2);
+  if (iVar2 == 0) {
+    SL_ConvertToString(param_2);
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj.cpp",0x794,0,
                     "%s\n\t(SL_ConvertToString( name )) = %s");
   }
-  uVar10 = 0;
-  puVar9 = *(undefined4 **)(iVar2 + 0x98);
-  uVar8 = 0;
-  if (*(char *)(iVar2 + 9) != '\0') {
+  uVar5 = 0;
+  ppXVar4 = param_1->models;
+  uVar3 = 0;
+  if (param_1->numModels != '\0') {
     do {
-      pXVar1 = (XModel *)*puVar9;
-      if ((((uVar7 & 0xff) == 0xfe) || ((uVar7 & 0xff) < (ulonglong)uVar10)) &&
-         (iVar3 = XModelGetBoneIndex(pXVar1,uVar4,uVar10,local_50), iVar3 != 0)) {
-        uVar5 = __restgprlr_25(local_50[0]);
-        return uVar5;
+      pXVar1 = *ppXVar4;
+      if (((param_3 == 0xfe) || (param_3 < uVar5)) &&
+         (iVar2 = XModelGetBoneIndex(pXVar1,param_2,uVar5,local_50), iVar2 != 0)) {
+        return local_50[0];
       }
-      uVar8 = uVar8 + 1;
-      puVar9 = puVar9 + 1;
-      uVar10 = pXVar1->numBones + uVar10;
-    } while (uVar8 < *(byte *)(iVar2 + 9));
+      uVar3 = uVar3 + 1;
+      ppXVar4 = ppXVar4 + 1;
+      uVar5 = pXVar1->numBones + uVar5;
+    } while (uVar3 < param_1->numModels);
   }
-  uVar5 = __restgprlr_25(0xff);
-  return uVar5;
+  return 0xff;
 }
 
 
 // 82619758  DObjGetNextModelBoneIndex  (xanim/dobj.cpp:1960)
+
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 
 uchar DObjGetNextModelBoneIndex(DObj *param_1,char *param_2,uint param_3,uchar param_4)
 
 {
   XModel *pXVar1;
   int iVar2;
-  int iVar3;
-  uchar uVar5;
-  ulonglong uVar6;
-  ulonglong uVar7;
-  uint uVar8;
-  undefined4 *puVar9;
-  uint uVar10;
+  uint uVar3;
+  XModel **ppXVar4;
+  uint uVar5;
   uchar local_50 [80];
-  uint uVar4;
   
-  uVar7 = (ulonglong)(char)param_4;
-  uVar6 = (ulonglong)(int)param_3;
-  iVar2 = __savegprlr_24(param_1);
-  if (iVar2 == 0) {
+  if (param_1 == (DObj *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj.cpp",0x7af,0,"%s");
   }
-  if ((uVar6 & 0xffffffff) == 0) {
+  if (param_3 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj.cpp",0x7b0,0,"%s");
   }
-  uVar4 = (uint)uVar6;
-  iVar3 = SL_IsLowercaseString(uVar4);
-  if (iVar3 == 0) {
-    SL_ConvertToString(uVar4);
+  iVar2 = SL_IsLowercaseString(param_3);
+  if (iVar2 == 0) {
+    SL_ConvertToString(param_3);
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj.cpp",0x7b1,0,
                     "%s\n\t(SL_ConvertToString( name )) = %s");
   }
-  uVar10 = 0;
-  puVar9 = *(undefined4 **)(iVar2 + 0x98);
-  uVar8 = 0;
-  if (*(char *)(iVar2 + 9) != '\0') {
+  uVar5 = 0;
+  ppXVar4 = param_1->models;
+  uVar3 = 0;
+  if (param_1->numModels != '\0') {
     do {
-      pXVar1 = (XModel *)*puVar9;
-      if (((((uVar7 & 0xff) == 0xfe) || ((uVar7 & 0xff) < (ulonglong)uVar10)) &&
-          (iVar3 = I_stricmp(param_2,pXVar1->name), iVar3 == 0)) &&
-         (iVar3 = XModelGetBoneIndex(pXVar1,uVar4,uVar10,local_50), iVar3 != 0)) {
-        uVar5 = __restgprlr_24(local_50[0]);
-        return uVar5;
+      pXVar1 = *ppXVar4;
+      if ((((param_4 == 0xfe) || (param_4 < uVar5)) &&
+          (iVar2 = I_stricmp(param_2,pXVar1->name), iVar2 == 0)) &&
+         (iVar2 = XModelGetBoneIndex(pXVar1,param_3,uVar5,local_50), iVar2 != 0)) {
+        return local_50[0];
       }
-      uVar8 = uVar8 + 1;
-      puVar9 = puVar9 + 1;
-      uVar10 = pXVar1->numBones + uVar10;
-    } while (uVar8 < *(byte *)(iVar2 + 9));
+      uVar3 = uVar3 + 1;
+      ppXVar4 = ppXVar4 + 1;
+      uVar5 = pXVar1->numBones + uVar5;
+    } while (uVar3 < param_1->numModels);
   }
-  uVar5 = __restgprlr_24(0xff);
-  return uVar5;
+  return 0xff;
 }
 
 
 // 826198A0  DObjGetModelBoneIndex  (xanim/dobj.cpp:1999)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
+
 int DObjGetModelBoneIndex(DObj *param_1,char *param_2,uint param_3,uchar *param_4)
 
 {
   byte bVar1;
-  undefined4 *puVar2;
-  XModel *pXVar3;
+  XModel *pXVar2;
+  int iVar3;
   int iVar4;
-  int iVar5;
-  ulonglong uVar7;
-  int *piVar8;
-  uint uVar9;
-  int *piVar10;
+  XModel **ppXVar5;
   uint uVar6;
+  XModel **ppXVar7;
   
-  uVar7 = (ulonglong)(int)param_3;
-  iVar4 = __savegprlr_24(param_1);
-  if (iVar4 == 0) {
+  if (param_1 == (DObj *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj.cpp",0x7d7,0,"%s");
   }
-  if ((uVar7 & 0xffffffff) == 0) {
+  if (param_3 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj.cpp",0x7d8,0,"%s");
   }
-  uVar6 = (uint)uVar7;
-  iVar5 = SL_IsLowercaseString(uVar6);
-  if (iVar5 == 0) {
-    SL_ConvertToString(uVar6);
+  iVar3 = SL_IsLowercaseString(param_3);
+  if (iVar3 == 0) {
+    SL_ConvertToString(param_3);
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj.cpp",0x7da,0,
                     "%s\n\t(SL_ConvertToString( name )) = %s");
   }
-  uVar9 = (uint)*param_4;
-  if (uVar9 != 0xff) {
-    bVar1 = *(byte *)(iVar4 + 9);
-    piVar10 = *(int **)(iVar4 + 0x98);
-    if (uVar9 < *(byte *)(iVar4 + 10)) {
-      iVar4 = 0;
-      piVar8 = piVar10;
+  uVar6 = (uint)*param_4;
+  if (uVar6 != 0xff) {
+    bVar1 = param_1->numModels;
+    ppXVar7 = param_1->models;
+    if (uVar6 < param_1->numBones) {
+      iVar3 = 0;
+      ppXVar5 = ppXVar7;
       if (bVar1 != 0) {
         do {
-          puVar2 = (undefined4 *)*piVar8;
-          if (uVar9 < *(byte *)(puVar2 + 1)) {
-            if (((uVar7 & 0xffffffff) == (ulonglong)*(ushort *)(puVar2[9] + uVar9 * 2)) &&
-               (iVar4 = I_stricmp(param_2,(char *)*puVar2), iVar4 == 0)) goto LAB_82619a3c;
+          pXVar2 = *ppXVar5;
+          if (uVar6 < pXVar2->numBones) {
+            if ((param_3 == pXVar2->boneNames[uVar6]) &&
+               (iVar3 = I_stricmp(param_2,pXVar2->name), iVar3 == 0)) {
+              return 1;
+            }
             break;
           }
-          iVar4 = iVar4 + 1;
-          uVar9 = uVar9 - *(byte *)(puVar2 + 1);
-          piVar8 = piVar8 + 1;
-        } while (iVar4 < (int)(uint)bVar1);
+          iVar3 = iVar3 + 1;
+          uVar6 = uVar6 - pXVar2->numBones;
+          ppXVar5 = ppXVar5 + 1;
+        } while (iVar3 < (int)(uint)bVar1);
       }
     }
-    uVar9 = 0;
-    iVar4 = 0;
+    uVar6 = 0;
+    iVar3 = 0;
     if (bVar1 != 0) {
       do {
-        pXVar3 = (XModel *)*piVar10;
-        iVar5 = I_stricmp(param_2,pXVar3->name);
-        if ((iVar5 == 0) && (iVar5 = XModelGetBoneIndex(pXVar3,uVar6,uVar9,param_4), iVar5 != 0)) {
-LAB_82619a3c:
-          iVar4 = __restgprlr_24(1);
-          return iVar4;
+        pXVar2 = *ppXVar7;
+        iVar4 = I_stricmp(param_2,pXVar2->name);
+        if ((iVar4 == 0) && (iVar4 = XModelGetBoneIndex(pXVar2,param_3,uVar6,param_4), iVar4 != 0))
+        {
+          return 1;
         }
-        iVar4 = iVar4 + 1;
-        piVar10 = piVar10 + 1;
-        uVar9 = pXVar3->numBones + uVar9;
-      } while (iVar4 < (int)(uint)bVar1);
+        iVar3 = iVar3 + 1;
+        ppXVar7 = ppXVar7 + 1;
+        uVar6 = pXVar2->numBones + uVar6;
+      } while (iVar3 < (int)(uint)bVar1);
     }
     *param_4 = 0xff;
   }
-  iVar4 = __restgprlr_24(0);
-  return iVar4;
+  return 0;
 }
 
 
 // 82619A48  DObjGetReverseModelBoneIndex  (xanim/dobj.cpp:2052)
+
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 
 uchar DObjGetReverseModelBoneIndex(DObj *param_1,char *param_2,uint param_3)
 
 {
   XModel *pXVar1;
   int iVar2;
-  int iVar3;
-  uchar uVar5;
-  ulonglong uVar6;
-  longlong lVar7;
-  uint uVar8;
+  ulonglong uVar3;
+  longlong lVar4;
+  uint uVar5;
   uchar local_40 [64];
-  uint uVar4;
   
-  uVar6 = (ulonglong)(int)param_3;
-  iVar2 = __savegprlr_26(param_1);
-  if (iVar2 == 0) {
+  if (param_1 == (DObj *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj.cpp",0x80c,0,"%s");
   }
-  if ((uVar6 & 0xffffffff) == 0) {
+  if (param_3 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj.cpp",0x80d,0,"%s");
   }
-  uVar4 = (uint)uVar6;
-  iVar3 = SL_IsLowercaseString(uVar4);
-  if (iVar3 == 0) {
-    SL_ConvertToString(uVar4);
+  iVar2 = SL_IsLowercaseString(param_3);
+  if (iVar2 == 0) {
+    SL_ConvertToString(param_3);
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj.cpp",0x80f,0,
                     "%s\n\t(SL_ConvertToString( name )) = %s");
   }
-  uVar8 = (uint)*(byte *)(iVar2 + 10);
-  uVar6 = (ulonglong)*(byte *)(iVar2 + 9) - 1;
-  if (-1 < (longlong)uVar6) {
-    lVar7 = (uVar6 & 0x3fffffff) * 4 + (ulonglong)*(uint *)(iVar2 + 0x98);
+  uVar5 = (uint)param_1->numBones;
+  uVar3 = (ulonglong)param_1->numModels - 1;
+  if (-1 < (longlong)uVar3) {
+    lVar4 = (uVar3 & 0x3fffffff) * 4 + ZEXT48(param_1->models);
     do {
-      pXVar1 = (XModel *)*(undefined4 *)lVar7;
-      uVar8 = uVar8 - pXVar1->numBones;
+      pXVar1 = (XModel *)*(undefined4 *)lVar4;
+      uVar5 = uVar5 - pXVar1->numBones;
       iVar2 = I_stricmp(param_2,pXVar1->name);
-      if ((iVar2 == 0) && (iVar2 = XModelGetBoneIndex(pXVar1,uVar4,uVar8,local_40), iVar2 != 0)) {
-        uVar5 = __restgprlr_26(local_40[0]);
-        return uVar5;
+      if ((iVar2 == 0) && (iVar2 = XModelGetBoneIndex(pXVar1,param_3,uVar5,local_40), iVar2 != 0)) {
+        return local_40[0];
       }
-      uVar6 = uVar6 - 1;
-      lVar7 = lVar7 + -4;
-    } while (-1 < (longlong)uVar6);
+      uVar3 = uVar3 - 1;
+      lVar4 = lVar4 + -4;
+    } while (-1 < (longlong)uVar3);
   }
-  uVar5 = __restgprlr_26(0xff);
-  return uVar5;
+  return 0xff;
 }
 
 
 // 82619B70  DObjGetModelRootBoneIndex  (xanim/dobj.cpp:2086)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 uchar DObjGetModelRootBoneIndex(DObj *param_1,int param_2)
 
 {
-  int *piVar1;
-  int iVar2;
-  uint uVar3;
-  uchar uVar4;
-  int iVar5;
+  XModel **ppXVar1;
+  uint uVar2;
+  int iVar3;
+  int iVar4;
+  XModel **ppXVar5;
   int iVar6;
-  int *piVar7;
-  int iVar8;
   
-  iVar2 = __savegprlr_28(param_1);
-  if (iVar2 == 0) {
+  if (param_1 == (DObj *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj.cpp",0x82b,0,"%s");
   }
-  if ((int)(uint)*(byte *)(iVar2 + 9) <= param_2) {
+  if ((int)(uint)param_1->numModels <= param_2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj.cpp",0x82c,0,"%s");
   }
+  iVar4 = 0;
+  iVar3 = 0;
+  uVar2 = 0;
   iVar6 = 0;
-  iVar5 = 0;
-  uVar3 = 0;
-  iVar8 = 0;
   if (1 < param_2) {
-    piVar7 = (int *)(*(int *)(iVar2 + 0x98) + -4);
+    ppXVar5 = param_1->models + -1;
     do {
-      piVar1 = piVar7 + 1;
-      iVar8 = iVar8 + 2;
-      piVar7 = piVar7 + 2;
-      iVar6 = (uint)*(byte *)(*piVar1 + 4) + iVar6;
-      iVar5 = (uint)*(byte *)(*piVar7 + 4) + iVar5;
-    } while (iVar8 < param_2 + -1);
+      ppXVar1 = ppXVar5 + 1;
+      iVar6 = iVar6 + 2;
+      ppXVar5 = ppXVar5 + 2;
+      iVar4 = (uint)(*ppXVar1)->numBones + iVar4;
+      iVar3 = (uint)(*ppXVar5)->numBones + iVar3;
+    } while (iVar6 < param_2 + -1);
   }
-  if (iVar8 < param_2) {
-    uVar3 = (uint)*(byte *)(*(int *)(iVar8 * 4 + *(int *)(iVar2 + 0x98)) + 4);
+  if (iVar6 < param_2) {
+    uVar2 = (uint)param_1->models[iVar6]->numBones;
   }
-  uVar3 = iVar5 + iVar6 + uVar3;
-  if (0xff < uVar3) {
+  uVar2 = iVar3 + iVar4 + uVar2;
+  if (0xff < uVar2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj.cpp",0x836,0,"%s");
   }
-  uVar4 = __restgprlr_28(uVar3 & 0xff);
-  return uVar4;
+  return (uchar)uVar2;
 }
 
 
 // 82619C78  DObjGetBasePoseMatrix  (xanim/dobj.cpp:2114)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void DObjGetBasePoseMatrix(DObj *param_1,uchar param_2,DObjAnimMat *param_3)
 
 {
-  int iVar1;
-  ulonglong uVar2;
-  DObj *pDVar3;
-  DObjAnimMat *pDVar4;
-  ulonglong uVar5;
-  ulonglong uVar6;
-  longlong lVar7;
-  longlong lVar8;
-  longlong lVar9;
+  uint uVar1;
+  DObjAnimMat *pDVar2;
+  float *pfVar3;
+  float *pfVar4;
+  longlong lVar5;
+  int aiStack_1850 [7];
+  float fStack_1834;
+  DObjAnimMat aDStack_1830 [193];
   
-  uVar6 = (ulonglong)(int)param_3;
-  uVar5 = (ulonglong)(char)param_2;
-  pDVar3 = (DObj *)__savegprlr_27(param_1);
-  iVar1 = (int)(ZEXT48(&stack0x00000000) - 0x18a0);
-  *(BADSPACEBASE **)iVar1 = register0x0000000c;
-  if (pDVar3 == (DObj *)0x0) {
+  if (param_1 == (DObj *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj.cpp",0x846,0,"%s");
   }
-  if ((uVar6 & 0xffffffff) == 0) {
+  if (param_3 == (DObjAnimMat *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj.cpp",0x847,0,"%s");
   }
-  uVar2 = uVar5 & 0xff;
-  if (pDVar3->numBones <= uVar2) {
+  uVar1 = (uint)param_2;
+  if (param_1->numBones <= uVar1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj.cpp",0x848,0,
                     "boneIndex doesn\'t index obj->numBones\n\t%i not in [0, %i)");
   }
-  if (uVar2 < (*pDVar3->models)->numBones) {
-    pDVar4 = XModelGetBasePose(*pDVar3->models);
-    lVar7 = uVar6 - 4;
-    lVar8 = (longlong)(int)pDVar4 + (uVar5 & 0xff) * 0x20 + -4;
-    lVar9 = 8;
+  if (uVar1 < (*param_1->models)->numBones) {
+    pDVar2 = XModelGetBasePose(*param_1->models);
+    pfVar3 = &param_3[-1].transWeight;
+    pfVar4 = &pDVar2[uVar1 - 1].transWeight;
+    lVar5 = 8;
     do {
-      lVar8 = lVar8 + 4;
-      lVar7 = lVar7 + 4;
-      *(undefined4 *)lVar7 = *(undefined4 *)lVar8;
-      lVar9 = lVar9 + -1;
-    } while (lVar9 != 0);
-    __restgprlr_27();
+      pfVar4 = pfVar4 + 1;
+      pfVar3 = pfVar3 + 1;
+      *pfVar3 = *pfVar4;
+      lVar5 = lVar5 + -1;
+    } while (lVar5 != 0);
     return;
   }
-  DObjGetHierarchyBits(pDVar3,(int)uVar2,(int *)(iVar1 + 0x50));
-  DObjCalcBaseSkel(pDVar3,(DObjAnimMat *)(iVar1 + 0x70),(int *)(iVar1 + 0x50));
-  lVar7 = uVar6 - 4;
-  lVar8 = (uVar5 & 0xff) * 0x20 + (ZEXT48(&stack0x00000000) - 0x18a0) + 0x6c;
-  lVar9 = 8;
+  DObjGetHierarchyBits(param_1,(uint)param_2,aiStack_1850);
+  DObjCalcBaseSkel(param_1,aDStack_1830,aiStack_1850);
+  pfVar3 = &param_3[-1].transWeight;
+  pfVar4 = &fStack_1834 + uVar1 * 8;
+  lVar5 = 8;
   do {
-    lVar8 = lVar8 + 4;
-    lVar7 = lVar7 + 4;
-    *(undefined4 *)lVar7 = *(undefined4 *)lVar8;
-    lVar9 = lVar9 + -1;
-  } while (lVar9 != 0);
-  __restgprlr_27();
+    pfVar4 = pfVar4 + 1;
+    pfVar3 = pfVar3 + 1;
+    *pfVar3 = *pfVar4;
+    lVar5 = lVar5 + -1;
+  } while (lVar5 != 0);
   return;
 }
 
@@ -2976,119 +2896,119 @@ void DObjSetHidePartBits(DObj *param_1,uint *param_2)
 
 // 82619DE0  DObjGetSurfaceData  (xanim/dobj.cpp:2163)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
+
 void DObjGetSurfaceData(DObj *param_1,float *param_2,char *param_3)
 
 {
   float fVar1;
   float fVar2;
-  DObj *pDVar3;
-  bool bVar8;
-  int iVar4;
-  XModel *pXVar5;
-  uint uVar6;
-  int iVar7;
-  int iVar9;
+  bool bVar7;
+  int iVar3;
+  XModel *pXVar4;
+  uint uVar5;
+  int iVar6;
+  int iVar8;
+  double dVar9;
   double dVar10;
   double dVar11;
   double dVar12;
   double dVar13;
-  double dVar14;
   
-  __savegprlr_23(param_1);
-  pDVar3 = (DObj *)__savefpr_27();
-  bVar8 = Sys_IsMainThread();
-  if (!bVar8) {
+  bVar7 = Sys_IsMainThread();
+  if (!bVar7) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj.cpp",0x88a,0,"%s");
   }
-  if (pDVar3 == (DObj *)0x0) {
+  if (param_1 == (DObj *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj.cpp",0x88b,0,"%s");
   }
-  iVar4 = DObjGetNumModels(pDVar3);
-  if (0x20 < iVar4) {
+  iVar3 = DObjGetNumModels(param_1);
+  if (0x20 < iVar3) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj.cpp",0x88e,1,"%s");
   }
-  dVar10 = (double)(rg.invViewScale * 2.0);
+  dVar9 = (double)(rg.invViewScale * 2.0);
   if (rg.lodParms.valid == false) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj.cpp",0x895,0,"%s");
   }
-  iVar9 = 0;
-  dVar14 = (double)SQRT((rg.lodParms.origin[1] - param_2[1]) * (rg.lodParms.origin[1] - param_2[1])
+  iVar8 = 0;
+  dVar13 = (double)SQRT((rg.lodParms.origin[1] - param_2[1]) * (rg.lodParms.origin[1] - param_2[1])
                         + (rg.lodParms.origin[0] - *param_2) * (rg.lodParms.origin[0] - *param_2) +
                           (rg.lodParms.origin[2] - param_2[2]) *
                           (rg.lodParms.origin[2] - param_2[2]));
-  dVar13 = (double)(float)((double)rg.lodParms.cappedLodScale * dVar14);
-  dVar12 = (double)(float)((double)rg.lodParms.invFovScale * dVar14);
-  if (0 < iVar4) {
-    dVar11 = 256.0;
+  dVar12 = (double)(float)((double)rg.lodParms.cappedLodScale * dVar13);
+  dVar11 = (double)(float)((double)rg.lodParms.invFovScale * dVar13);
+  if (0 < iVar3) {
+    dVar10 = 256.0;
     do {
-      pXVar5 = DObjGetModel(pDVar3,iVar9);
-      bVar8 = Sys_IsMainThread();
-      if (!bVar8) {
+      pXVar4 = DObjGetModel(param_1,iVar8);
+      bVar7 = Sys_IsMainThread();
+      if (!bVar7) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj.cpp",0x8ae,0,
                         "%s");
       }
-      uVar6 = DB_GetXModelIndex(pXVar5);
-      fVar1 = (float)((double)(float)((double)(float)(dVar14 - (double)pXVar5->radius) + dVar11) *
-                     dVar10);
-      fVar2 = g_stream.cachedModelDist[uVar6];
-      if (fVar1 - g_stream.cachedModelDist[uVar6] < 0.0) {
+      uVar5 = DB_GetXModelIndex(pXVar4);
+      fVar1 = (float)((double)(float)((double)(float)(dVar13 - (double)pXVar4->radius) + dVar10) *
+                     dVar9);
+      fVar2 = g_stream.cachedModelDist[uVar5];
+      if (fVar1 - g_stream.cachedModelDist[uVar5] < 0.0) {
         fVar2 = fVar1;
       }
-      g_stream.cachedModelDist[uVar6] = fVar2;
-      iVar7 = XModelGetLodForDist(pXVar5,(float)dVar12,(float)dVar13);
-      param_3[iVar9] = (char)iVar7;
-      iVar9 = iVar9 + 1;
-    } while (iVar9 < iVar4);
+      g_stream.cachedModelDist[uVar5] = fVar2;
+      iVar6 = XModelGetLodForDist(pXVar4,(float)dVar11,(float)dVar12);
+      param_3[iVar8] = (char)iVar6;
+      iVar8 = iVar8 + 1;
+    } while (iVar8 < iVar3);
   }
-  __restfpr_27();
-  __restgprlr_23();
   return;
 }
 
 
 // 82619FD8  DObjTouchXModelsBase  (xanim/dobj.cpp:2246)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void DObjTouchXModelsBase(DObj *param_1)
 
 {
   uint uVar1;
-  DObj *pDVar2;
-  bool bVar6;
-  int iVar3;
-  XModel *pXVar4;
-  uint uVar5;
-  int iVar7;
+  bool bVar5;
+  int iVar2;
+  XModel *pXVar3;
+  uint uVar4;
+  int iVar6;
+  double dVar7;
   double dVar8;
-  double dVar9;
   
-  pDVar2 = (DObj *)__savegprlr_27(param_1);
-  bVar6 = Sys_IsMainThread();
-  if (!bVar6) {
+  bVar5 = Sys_IsMainThread();
+  if (!bVar5) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj.cpp",0x8cc,0,"%s");
   }
-  if (pDVar2 == (DObj *)0x0) {
+  if (param_1 == (DObj *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\dobj.cpp",0x8cd,0,"%s");
   }
-  iVar3 = DObjGetNumModels(pDVar2);
-  iVar7 = 0;
-  if (0 < iVar3) {
-    dVar9 = 500000.0;
+  iVar2 = DObjGetNumModels(param_1);
+  iVar6 = 0;
+  if (0 < iVar2) {
+    dVar8 = 500000.0;
     do {
-      pXVar4 = DObjGetModel(pDVar2,iVar7);
-      uVar5 = DB_GetXModelIndex(pXVar4);
-      uVar1 = uVar5 >> 3 & 0x1ffffffc;
-      iVar7 = iVar7 + 1;
+      pXVar3 = DObjGetModel(param_1,iVar6);
+      uVar4 = DB_GetXModelIndex(pXVar3);
+      uVar1 = uVar4 >> 3 & 0x1ffffffc;
+      iVar6 = iVar6 + 1;
       *(uint *)((int)g_stream.cachedModelBaseTouch + uVar1) =
-           *(uint *)(&g_bitShift + (uVar5 & 0x1f) * 4) |
+           *(uint *)(&g_bitShift + (uVar4 & 0x1f) * 4) |
            *(uint *)((int)g_stream.cachedModelBaseTouch + uVar1);
-      dVar8 = (double)g_stream.cachedModelDist[uVar5];
-      if ((float)(dVar9 - (double)g_stream.cachedModelDist[uVar5]) < 0.0) {
-        dVar8 = dVar9;
+      dVar7 = (double)g_stream.cachedModelDist[uVar4];
+      if ((float)(dVar8 - (double)g_stream.cachedModelDist[uVar4]) < 0.0) {
+        dVar7 = dVar8;
       }
-      g_stream.cachedModelDist[uVar5] = (float)dVar8;
-    } while (iVar7 < iVar3);
+      g_stream.cachedModelDist[uVar4] = (float)dVar7;
+    } while (iVar6 < iVar2);
   }
-  __restgprlr_27();
   return;
 }
 

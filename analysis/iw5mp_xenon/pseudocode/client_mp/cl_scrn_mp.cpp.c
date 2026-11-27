@@ -13,6 +13,8 @@ void TRACK_cl_srcn(void)
 
 // 82353430  SCR_DrawSmallStringExt  (client_mp/cl_scrn_mp.cpp:76)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 
@@ -20,14 +22,11 @@ void SCR_DrawSmallStringExt(int param_1,int param_2,char *param_3,float *param_4
 
 {
   int iVar1;
-  int iVar2;
   
-  iVar1 = __savegprlr_27(param_1);
-  iVar2 = R_TextHeight(cls.consoleFont);
-  R_AddCmdDrawText(param_3,0x7fffffff,cls.consoleFont,(float)(longlong)iVar1,
-                   (float)(longlong)iVar2 + (float)(longlong)param_2,1.0,1.0,0.0,
+  iVar1 = R_TextHeight(cls.consoleFont);
+  R_AddCmdDrawText(param_3,0x7fffffff,cls.consoleFont,(float)(longlong)param_1,
+                   (float)(longlong)iVar1 + (float)(longlong)param_2,1.0,1.0,0.0,
                    (float *)&IMAGE_DOS_HEADER_82000000,-0x7e000000);
-  __restgprlr_27();
   return;
 }
 
@@ -131,6 +130,8 @@ void CL_SavePlayerState(LocalClientNum_t param_1)
 
 // 823536C8  CL_CGameRendering  (client_mp/cl_scrn_mp.cpp:189)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -138,46 +139,40 @@ void CL_SavePlayerState(LocalClientNum_t param_1)
 int CL_CGameRendering(LocalClientNum_t param_1,uint param_2)
 
 {
-  LocalClientNum_t LVar1;
-  clientMigState_t cVar2;
-  clientActive_t *pcVar3;
-  bool bVar5;
-  int iVar4;
-  DemoType DVar6;
+  clientMigState_t cVar1;
+  clientActive_t *pcVar2;
+  bool bVar4;
+  int iVar3;
+  DemoType DVar5;
   
-  LVar1 = __savegprlr_28(param_1);
   Phys_EndFrame();
-  if (LOCAL_CLIENT_3 < LVar1) {
+  if (LOCAL_CLIENT_3 < param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\client_mp.h",0x4aa,0
                     ,"localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)");
   }
-  if (clientUIActives[LVar1].connectionState == CA_ACTIVE) {
-    cVar2 = CL_GetLocalClientMigrationState(LVar1);
-    if (cVar2 != CMSTATE_LIMBO) {
-      pcVar3 = CL_GetLocalClientGlobals(LVar1);
-      if (cl_multi_gamepads_enabled == 0) {
-        bVar5 = CL_Demo_IsPlaying(LOCAL_CLIENT_0);
-        DVar6 = (DemoType)bVar5;
-      }
-      else {
-        DVar6 = DEMO_TYPE_NONE;
-      }
-      iVar4 = UI_IsFullscreen(LVar1);
-      iVar4 = CG_DrawActiveFrame(LVar1,pcVar3->serverTime,DVar6,CUBEMAPSHOT_NONE,0,
-                                 (uint)LZCOUNT(iVar4) >> 5,param_2);
-      if (iVar4 != 0) {
-        UI_UpdateTime(LVar1,cls.realtime);
-        UI_RefreshViewport(LVar1);
-        R_AddCmdEndOfList();
-        iVar4 = __restgprlr_28(1);
-        return iVar4;
-      }
-      CL_CreateCmdsNoActiveFrame(LVar1);
-      CL_SendCmd(LVar1);
+  if ((clientUIActives[param_1].connectionState == CA_ACTIVE) &&
+     (cVar1 = CL_GetLocalClientMigrationState(param_1), cVar1 != CMSTATE_LIMBO)) {
+    pcVar2 = CL_GetLocalClientGlobals(param_1);
+    if (cl_multi_gamepads_enabled == 0) {
+      bVar4 = CL_Demo_IsPlaying(LOCAL_CLIENT_0);
+      DVar5 = (DemoType)bVar4;
     }
+    else {
+      DVar5 = DEMO_TYPE_NONE;
+    }
+    iVar3 = UI_IsFullscreen(param_1);
+    iVar3 = CG_DrawActiveFrame(param_1,pcVar2->serverTime,DVar5,CUBEMAPSHOT_NONE,0,
+                               (uint)LZCOUNT(iVar3) >> 5,param_2);
+    if (iVar3 != 0) {
+      UI_UpdateTime(param_1,cls.realtime);
+      UI_RefreshViewport(param_1);
+      R_AddCmdEndOfList();
+      return 1;
+    }
+    CL_CreateCmdsNoActiveFrame(param_1);
+    CL_SendCmd(param_1);
   }
-  iVar4 = __restgprlr_28(0);
-  return iVar4;
+  return 0;
 }
 
 
@@ -257,6 +252,8 @@ void SCR_ClearScreen(void)
 
 // 82353918  SCR_DrawScreenField  (client_mp/cl_scrn_mp.cpp:316)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -264,50 +261,47 @@ void SCR_ClearScreen(void)
 void SCR_DrawScreenField(LocalClientNum_t param_1,int param_2)
 
 {
-  LocalClientNum_t LVar1;
-  int iVar2;
-  bool bVar5;
-  connstate_t cVar3;
+  int iVar1;
+  bool bVar4;
+  connstate_t cVar2;
   uchar in_r5;
   LocalClientNum_t local_30 [12];
-  LocalClientNum_t LVar4;
+  LocalClientNum_t LVar3;
   
-  LVar1 = __savegprlr_29(param_1);
   ScrPlace_BeginFullScreen();
   R_BeginSharedCmdList();
   R_AddCmdProjectionSet2D();
   if (cls.uiStarted == 0) {
     R_AddCmdClearScreen(0xf,colorBlack,0.0,in_r5);
-    __restgprlr_29();
     return;
   }
-  UI_UpdateTime(LVar1,cls.realtime);
-  iVar2 = CL_GetLocalClientActiveCount();
-  LVar4 = LVar1;
-  if (iVar2 != 0) {
-    iVar2 = CL_ControllerIndexFromActiveClient(LOCAL_CLIENT_0);
-    bVar5 = CL_DoesControllerIndexHaveALocalClientNum(iVar2,local_30);
-    local_30[0] = -(uint)bVar5 & local_30[0];
-    LVar4 = local_30[0];
+  UI_UpdateTime(param_1,cls.realtime);
+  iVar1 = CL_GetLocalClientActiveCount();
+  LVar3 = param_1;
+  if (iVar1 != 0) {
+    iVar1 = CL_ControllerIndexFromActiveClient(LOCAL_CLIENT_0);
+    bVar4 = CL_DoesControllerIndexHaveALocalClientNum(iVar1,local_30);
+    local_30[0] = -(uint)bVar4 & local_30[0];
+    LVar3 = local_30[0];
   }
-  cVar3 = CL_GetLocalClientConnectionState(LVar4);
-  iVar2 = UI_IsFullscreen(LVar1);
-  if (iVar2 == 0) {
-    switch(cVar3) {
+  cVar2 = CL_GetLocalClientConnectionState(LVar3);
+  iVar1 = UI_IsFullscreen(param_1);
+  if (iVar1 == 0) {
+    switch(cVar2) {
     case CA_DISCONNECTED:
       R_AddCmdClearScreen(0xf,colorBlack,0.0,in_r5);
       SND_StopSounds(SND_STOP_ALL);
-      bVar5 = Sys_IsMainThread();
-      if (bVar5) {
-        bVar5 = CL_AllLocalClientsDisconnected();
-        if (!bVar5) {
+      bVar4 = Sys_IsMainThread();
+      if (bVar4) {
+        bVar4 = CL_AllLocalClientsDisconnected();
+        if (!bVar4) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_scrn_mp.cpp"
                           ,0x17a,0,"%s");
         }
       }
       else {
-        bVar5 = CL_AnyLocalClientChallenging();
-        if (bVar5) {
+        bVar4 = CL_AnyLocalClientChallenging();
+        if (bVar4) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_scrn_mp.cpp"
                           ,0x177,0,"%s");
         }
@@ -315,11 +309,11 @@ void SCR_DrawScreenField(LocalClientNum_t param_1,int param_2)
       break;
     case CA_CINEMATIC:
       R_AddCmdClearScreen(0xf,colorBlack,0.0,in_r5);
-      SCR_DrawCinematic(LVar1);
+      SCR_DrawCinematic(param_1);
       break;
     case CA_LOGO:
       R_AddCmdClearScreen(0xf,colorBlack,0.0,in_r5);
-      CL_DrawLogo(LVar1);
+      CL_DrawLogo(param_1);
       break;
     case CA_CONNECTING:
     case CA_CHALLENGING:
@@ -329,12 +323,12 @@ void SCR_DrawScreenField(LocalClientNum_t param_1,int param_2)
     case CA_LOADING:
     case CA_PRIMED:
       R_AddCmdClearScreen(0xf,colorBlack,0.0,in_r5);
-      UI_RefreshViewport(LVar1);
-      UI_DrawConnectScreen(LVar1);
+      UI_RefreshViewport(param_1);
+      UI_DrawConnectScreen(param_1);
       goto LAB_82353c00;
     case CA_ACTIVE:
-      bVar5 = Sys_IsRenderThread();
-      if ((bVar5) && (iVar2 = RB_IsInRemoteScreenUpdate(), iVar2 != 0)) {
+      bVar4 = Sys_IsRenderThread();
+      if ((bVar4) && (iVar1 = RB_IsInRemoteScreenUpdate(), iVar1 != 0)) {
         R_AddCmdClearScreen(0xf,colorBlack,0.0,in_r5);
       }
       SCR_DrawDemoRecording();
@@ -345,22 +339,21 @@ switchD_823539ec_default:
     }
   }
   else {
-    if (CA_PRIMED < cVar3) {
-      if (cVar3 != CA_ACTIVE) goto switchD_823539ec_default;
-      bVar5 = Sys_IsRenderThread();
-      if ((!bVar5) || (iVar2 = RB_IsInRemoteScreenUpdate(), iVar2 == 0)) goto LAB_82353bd8;
+    if (CA_PRIMED < cVar2) {
+      if (cVar2 != CA_ACTIVE) goto switchD_823539ec_default;
+      bVar4 = Sys_IsRenderThread();
+      if ((!bVar4) || (iVar1 = RB_IsInRemoteScreenUpdate(), iVar1 == 0)) goto LAB_82353bd8;
     }
     R_AddCmdClearScreen(0xf,colorBlack,0.0,in_r5);
   }
 LAB_82353bd8:
-  if ((param_2 == 0) && (bVar5 = Key_IsCatcherActive(LVar1,0x10), bVar5)) {
-    UI_RefreshViewport(LVar1);
+  if ((param_2 == 0) && (bVar4 = Key_IsCatcherActive(param_1,0x10), bVar4)) {
+    UI_RefreshViewport(param_1);
   }
 LAB_82353c00:
   if ((net_showprofile->current).integer != 0) {
-    Net_DisplayProfile(LVar1);
+    Net_DisplayProfile(param_1);
   }
-  __restgprlr_29();
   return;
 }
 
@@ -388,6 +381,8 @@ float CL_GetMenuBlurRadius(LocalClientNum_t param_1)
 
 // 82353CA0  SCR_UpdateRumble  (client_mp/cl_scrn_mp.cpp:462)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
@@ -399,7 +394,6 @@ void SCR_UpdateRumble(void)
   int iVar3;
   LocalClientNum_t LVar4;
   
-  __savegprlr_26();
   if (cl_paused == (dvar_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_scrn_mp.cpp",
                     0x1d4,0,"%s");
@@ -419,7 +413,6 @@ void SCR_UpdateRumble(void)
       }
       iVar3 = iVar3 + 1;
     } while (iVar3 < 4);
-    __restgprlr_26();
     return;
   }
   LVar4 = LOCAL_CLIENT_0;
@@ -442,13 +435,14 @@ void SCR_UpdateRumble(void)
     pcVar2 = pcVar2 + 0x79;
     LVar4 = LVar4 + LOCAL_CLIENT_1;
   } while ((int)pcVar2 < -0x7d4c1324);
-  __restgprlr_26();
   return;
 }
 
 
 // 82353DF0  SCR_UpdateFrame  (client_mp/cl_scrn_mp.cpp:515)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
@@ -469,7 +463,6 @@ void SCR_UpdateFrame(void)
   connstate_t *pcVar13;
   bool bVar8;
   
-  __savegprlr_24();
   bVar7 = Sys_IsMainThread();
   if ((!bVar7) && (bVar7 = Sys_IsRenderThread(), !bVar7)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_mp\\cl_scrn_mp.cpp",
@@ -609,7 +602,6 @@ LAB_8235405c:
   ScrPlace_EndFrame();
   R_EndFrame();
   R_IssueRenderCommandsEnd();
-  __restgprlr_24();
   return;
 }
 
@@ -664,6 +656,8 @@ void CL_CubemapShotUsage(void)
 
 // 82354270  CL_CubemapShot_f  (client_mp/cl_scrn_mp.cpp:785)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
@@ -691,12 +685,10 @@ void CL_CubemapShot_f(void)
   float local_98;
   char acStack_90 [144];
   
-  __savegprlr_26();
   LVar3 = Cmd_LocalClientNum();
   iVar4 = CL_IsCgameInitialized(LVar3);
   if (iVar4 == 0) {
     Com_Printf(0,"must be in a map to use this command\n");
-    __restgprlr_26();
     return;
   }
   iVar4 = Cmd_Argc();
@@ -775,7 +767,6 @@ LAB_82354460:
               iVar4 = iVar4 + 4;
               CVar11 = CVar11 + CUBEMAPSHOT_RIGHT;
             } while (iVar4 < -0x7d69a27c);
-            __restgprlr_26();
             return;
           }
         }
@@ -803,7 +794,6 @@ LAB_82354460:
     }
   }
   CL_CubemapShotUsage();
-  __restgprlr_26();
   return;
 }
 

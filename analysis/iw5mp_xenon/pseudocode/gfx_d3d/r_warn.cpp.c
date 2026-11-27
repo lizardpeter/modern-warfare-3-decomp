@@ -2,44 +2,45 @@
 
 // 82788F00  R_UpdateFrameRate  (gfx_d3d/r_warn.cpp:166)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 float R_UpdateFrameRate(void)
 
 {
   int iVar1;
-  longlong lVar2;
-  double dVar3;
+  ulonglong uVar2;
+  longlong lVar3;
   
-  __savegprlr_29();
   if (frameCount == rg.frontEndFrameCount) {
-    dVar3 = (double)__restgprlr_29((double)frameRate);
-    return (float)dVar3;
+    return frameRate;
   }
-  if (frameCount == 0) {
-    previous = Sys_Milliseconds();
+  if (frameCount != 0) {
+    if (frameCount + 1 != rg.frontEndFrameCount) {
+      frameRate = 0.0;
+      frameCount = rg.frontEndFrameCount;
+      return 0.0;
+    }
+    iVar1 = Sys_Milliseconds();
+    uVar2 = (ulonglong)(uint)previous;
+    previous = iVar1;
+    lVar3 = (longlong)iVar1 - uVar2;
+    if (lVar3 == 0) {
+      lVar3 = 1;
+    }
+    else if ((int)lVar3 < 0) {
+      frameRate = 0.0;
+      frameCount = rg.frontEndFrameCount;
+      return 0.0;
+    }
     frameCount = rg.frontEndFrameCount;
-    dVar3 = (double)__restgprlr_29((double)frameRate);
-    return (float)dVar3;
+    frameRate = 1000.0 / (float)(longlong)(int)lVar3;
+    return frameRate;
   }
-  if (frameCount + 1 != rg.frontEndFrameCount) {
-LAB_82788f64:
-    frameRate = 0.0;
-    frameCount = rg.frontEndFrameCount;
-    dVar3 = (double)__restgprlr_29();
-    return (float)dVar3;
-  }
-  iVar1 = Sys_Milliseconds();
-  lVar2 = (longlong)iVar1 - (ulonglong)(uint)previous;
-  previous = iVar1;
-  if (lVar2 == 0) {
-    lVar2 = 1;
-  }
-  else if ((int)lVar2 < 0) goto LAB_82788f64;
+  previous = Sys_Milliseconds();
   frameCount = rg.frontEndFrameCount;
-  frameRate = 1000.0 / (float)(longlong)(int)lVar2;
-  dVar3 = (double)__restgprlr_29();
-  return (float)dVar3;
+  return frameRate;
 }
 
 

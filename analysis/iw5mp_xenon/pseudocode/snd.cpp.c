@@ -2,36 +2,36 @@
 
 // 82846AF0  MemFile_ReadVec3  (universal/memfile.h:204)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 void MemFile_ReadVec3(MemoryFile *param_1,float *param_2)
 
 {
-  MemoryFile *pMVar1;
   float local_40;
   float local_3c;
   
-  pMVar1 = (MemoryFile *)__savegprlr_26(param_1);
-  MemFile_ReadData(pMVar1,4,&local_40);
+  MemFile_ReadData(param_1,4,&local_40);
   local_3c = local_40;
   if (((uint)local_40 & 0x7f800000) == 0x7f800000) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal/memfile.h",0xc6,0,
                     "%s");
   }
   *param_2 = local_40;
-  MemFile_ReadData(pMVar1,4,&local_40);
+  MemFile_ReadData(param_1,4,&local_40);
   local_3c = local_40;
   if (((uint)local_40 & 0x7f800000) == 0x7f800000) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal/memfile.h",0xc6,0,
                     "%s");
   }
   param_2[1] = local_40;
-  MemFile_ReadData(pMVar1,4,&local_40);
+  MemFile_ReadData(param_1,4,&local_40);
   local_3c = local_40;
   if (((uint)local_40 & 0x7f800000) == 0x7f800000) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal/memfile.h",0xc6,0,
                     "%s");
   }
   param_2[2] = local_40;
-  __restgprlr_26();
   return;
 }
 
@@ -99,158 +99,152 @@ EntityOcclusionInfo * SND_InitOcclusionInfoEntry(uint param_1,uint param_2)
 
 // 82846D70  SND_GetEntityOcclusionInfo  (snd.cpp:566)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
+
 EntityOcclusionInfo * SND_GetEntityOcclusionInfo(uint param_1)
 
 {
   ushort uVar1;
-  uint uVar2;
-  EntityOcclusionInfo *pEVar3;
-  int iVar4;
-  int *piVar5;
-  uint uVar6;
+  int iVar2;
+  int *piVar3;
+  uint uVar4;
+  uint uVar5;
+  int iVar6;
   uint uVar7;
-  int iVar8;
-  uint uVar9;
   
-  uVar2 = __savegprlr_25(param_1);
-  if (0xbff < uVar2) {
+  if (0xbff < param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x23e,0,
                     "entIndex doesn\'t index MAX_SOUND_ENTITIES\n\t%i not in [0, %i)");
   }
-  iVar4 = g_snd.time;
-  uVar1 = (&DAT_8488e1a0)[uVar2];
-  if (g_sndOcclusionInfo[uVar1].entIndex == uVar2) {
+  iVar2 = g_snd.time;
+  uVar1 = (&DAT_8488e1a0)[param_1];
+  if (g_sndOcclusionInfo[uVar1].entIndex == param_1) {
     g_sndOcclusionUpdateTime[uVar1] = g_snd.time;
-    pEVar3 = (EntityOcclusionInfo *)__restgprlr_25(g_sndOcclusionInfo + uVar1);
-    return pEVar3;
+    return g_sndOcclusionInfo + uVar1;
   }
-  iVar8 = 0x7fffffff;
-  uVar9 = 0;
-  piVar5 = g_sndOcclusionUpdateTime + 1;
-  uVar6 = 2;
+  iVar6 = 0x7fffffff;
+  uVar7 = 0;
+  piVar3 = g_sndOcclusionUpdateTime + 1;
+  uVar4 = 2;
   do {
-    if (piVar5[-1] - g_snd.time < iVar8) {
-      uVar9 = uVar6 - 2;
-      iVar8 = piVar5[-1] - g_snd.time;
+    if (piVar3[-1] - g_snd.time < iVar6) {
+      uVar7 = uVar4 - 2;
+      iVar6 = piVar3[-1] - g_snd.time;
     }
-    if (*piVar5 - g_snd.time < iVar8) {
-      uVar9 = uVar6 - 1;
-      iVar8 = *piVar5 - g_snd.time;
+    if (*piVar3 - g_snd.time < iVar6) {
+      uVar7 = uVar4 - 1;
+      iVar6 = *piVar3 - g_snd.time;
     }
-    if (piVar5[1] - g_snd.time < iVar8) {
-      iVar8 = piVar5[1] - g_snd.time;
-      uVar9 = uVar6;
+    if (piVar3[1] - g_snd.time < iVar6) {
+      iVar6 = piVar3[1] - g_snd.time;
+      uVar7 = uVar4;
     }
-    if (piVar5[2] - g_snd.time < iVar8) {
-      uVar9 = uVar6 + 1;
-      iVar8 = piVar5[2] - g_snd.time;
+    if (piVar3[2] - g_snd.time < iVar6) {
+      uVar7 = uVar4 + 1;
+      iVar6 = piVar3[2] - g_snd.time;
     }
-    piVar5 = piVar5 + 4;
-    uVar7 = uVar6 + 2;
-    uVar6 = uVar6 + 4;
-  } while (uVar7 < 0x80);
-  (&DAT_8488e1a0)[uVar2] = (short)uVar9;
-  if (0x7f < uVar9) {
+    piVar3 = piVar3 + 4;
+    uVar5 = uVar4 + 2;
+    uVar4 = uVar4 + 4;
+  } while (uVar5 < 0x80);
+  (&DAT_8488e1a0)[param_1] = (short)uVar7;
+  if (0x7f < uVar7) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x222,0,
                     "occlusionIndex doesn\'t index MAX_SOUND_OCCLUSION\n\t%i not in [0, %i)");
-    iVar4 = g_snd.time;
+    iVar2 = g_snd.time;
   }
-  g_sndOcclusionUpdateTime[uVar9] = iVar4;
-  g_sndOcclusionInfo[uVar9].entIndex = uVar2;
-  g_sndOcclusionInfo[uVar9].occlusionLerp.goalvalue = 0.0;
-  g_sndOcclusionInfo[uVar9].lastLerpUpdateTime = 0;
-  g_sndOcclusionInfo[uVar9].occlusionLerp.value = 0.0;
-  g_sndOcclusionInfo[uVar9].nextOcclusionTime = 0;
-  g_sndOcclusionInfo[uVar9].occlusionLerp.goalrate = 0.0;
-  pEVar3 = (EntityOcclusionInfo *)__restgprlr_25();
-  return pEVar3;
+  g_sndOcclusionUpdateTime[uVar7] = iVar2;
+  g_sndOcclusionInfo[uVar7].entIndex = param_1;
+  g_sndOcclusionInfo[uVar7].occlusionLerp.goalvalue = 0.0;
+  g_sndOcclusionInfo[uVar7].lastLerpUpdateTime = 0;
+  g_sndOcclusionInfo[uVar7].occlusionLerp.value = 0.0;
+  g_sndOcclusionInfo[uVar7].nextOcclusionTime = 0;
+  g_sndOcclusionInfo[uVar7].occlusionLerp.goalrate = 0.0;
+  return g_sndOcclusionInfo + uVar7;
 }
 
 
 // 82846F18  SND_HasFreeVoice  (snd.cpp:605)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 bool SND_HasFreeVoice(int param_1)
 
 {
-  int iVar1;
-  undefined1 uVar2;
-  longlong lVar3;
-  ulonglong uVar4;
-  int *piVar6;
-  ulonglong uVar5;
-  longlong lVar7;
+  longlong lVar1;
+  ulonglong uVar2;
+  int *piVar4;
+  ulonglong uVar3;
+  longlong lVar5;
   
-  iVar1 = __savegprlr_27(param_1);
-  if ((iVar1 < 0) || (g_snd.entchannel_count <= iVar1)) {
+  if ((param_1 < 0) || (g_snd.entchannel_count <= param_1)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x261,0,
                     "%s\n\t(entchannel) = %i");
   }
-  if (g_snd.entchaninfo[iVar1].maxVoices < 1) {
+  if (g_snd.entchaninfo[param_1].maxVoices < 1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x262,0,
                     "%s\n\t(g_snd.entchaninfo[entchannel].maxVoices) = %i");
   }
-  lVar3 = 0;
-  piVar6 = &g_snd.chaninfo[0x28].entchannel;
-  lVar7 = 7;
+  lVar1 = 0;
+  piVar4 = &g_snd.chaninfo[0x28].entchannel;
+  lVar5 = 7;
   do {
-    if (((((snd_channel_info_t *)(piVar6 + -4))->soundFileInfo).loadingState == SFLS_LOADING) &&
-       (iVar1 == *piVar6)) {
-      lVar3 = lVar3 + 1;
+    if (((((snd_channel_info_t *)(piVar4 + -4))->soundFileInfo).loadingState == SFLS_LOADING) &&
+       (param_1 == *piVar4)) {
+      lVar1 = lVar1 + 1;
     }
-    if ((piVar6[0x2c] == 1) && (iVar1 == piVar6[0x30])) {
-      lVar3 = lVar3 + 1;
+    if ((piVar4[0x2c] == 1) && (param_1 == piVar4[0x30])) {
+      lVar1 = lVar1 + 1;
     }
-    piVar6 = piVar6 + 0x60;
-    lVar7 = lVar7 + -1;
-  } while (lVar7 != 0);
-  uVar4 = (ulonglong)(uint)g_snd.entchaninfo[iVar1].maxVoices;
-  uVar5 = (ulonglong)(uint)g_snd.entchaninfo[iVar1].voiceCount + lVar3;
-  uVar2 = __restgprlr_27(((~(uVar4 ^ uVar5) & 0xffffffff) >> 0x1f) + (ulonglong)(uVar4 <= uVar5) & 1
-                        );
-  return (bool)uVar2;
+    piVar4 = piVar4 + 0x60;
+    lVar5 = lVar5 + -1;
+  } while (lVar5 != 0);
+  uVar2 = (ulonglong)(uint)g_snd.entchaninfo[param_1].maxVoices;
+  uVar3 = (ulonglong)(uint)g_snd.entchaninfo[param_1].voiceCount + lVar1;
+  return (bool)((char)((~(uVar2 ^ uVar3) & 0xffffffff) >> 0x1f) + (uVar2 <= uVar3) & 1);
 }
 
 
 // 82847038  SND_AddVoice  (snd.cpp:626)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void SND_AddVoice(int param_1)
 
 {
-  int iVar1;
-  
-  iVar1 = __savegprlr_28(param_1);
-  if ((iVar1 < 0) || (g_snd.entchannel_count <= iVar1)) {
+  if ((param_1 < 0) || (g_snd.entchannel_count <= param_1)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x273,0,
                     "%s\n\t(entchannel) = %i");
   }
-  if (g_snd.entchaninfo[iVar1].maxVoices <= g_snd.entchaninfo[iVar1].voiceCount) {
+  if (g_snd.entchaninfo[param_1].maxVoices <= g_snd.entchaninfo[param_1].voiceCount) {
     va("Not enough voices: entchannel = %s, maxvoices = %i");
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x274,0,"%s\n\t%s");
   }
-  g_snd.entchaninfo[iVar1].voiceCount = g_snd.entchaninfo[iVar1].voiceCount + 1;
-  __restgprlr_28();
+  g_snd.entchaninfo[param_1].voiceCount = g_snd.entchaninfo[param_1].voiceCount + 1;
   return;
 }
 
 
 // 82847110  SND_RemoveVoice  (snd.cpp:635)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void SND_RemoveVoice(int param_1)
 
 {
-  int iVar1;
-  
-  iVar1 = __savegprlr_29(param_1);
-  if ((iVar1 < 0) || (g_snd.entchannel_count <= iVar1)) {
+  if ((param_1 < 0) || (g_snd.entchannel_count <= param_1)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x27c,0,
                     "%s\n\t(entchannel) = %i");
   }
-  if (g_snd.entchaninfo[iVar1].voiceCount < 1) {
+  if (g_snd.entchaninfo[param_1].voiceCount < 1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x27d,0,
                     "%s\n\t(g_snd.entchaninfo[entchannel].voiceCount) = %i");
   }
-  g_snd.entchaninfo[iVar1].voiceCount = g_snd.entchaninfo[iVar1].voiceCount + -1;
-  __restgprlr_29();
+  g_snd.entchaninfo[param_1].voiceCount = g_snd.entchaninfo[param_1].voiceCount + -1;
   return;
 }
 
@@ -338,33 +332,32 @@ char * SND_GetVolModName(int param_1)
 
 // 82847520  SND_GetVolModIndexFromName  (snd.cpp:686)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 int SND_GetVolModIndexFromName(char *param_1)
 
 {
-  char *pcVar1;
+  int iVar1;
   int iVar2;
-  longlong lVar3;
-  snd_volmod_info_t *psVar4;
+  snd_volmod_info_t *psVar3;
   
-  pcVar1 = (char *)__savegprlr_28(param_1);
-  if (pcVar1 == (char *)0x0) {
+  if (param_1 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x2af,0,"%s");
   }
-  lVar3 = 0;
+  iVar2 = 0;
   if (0 < g_snd.volmod_count) {
-    psVar4 = g_snd.volmodinfo;
+    psVar3 = g_snd.volmodinfo;
     do {
-      iVar2 = I_stricmp(pcVar1,psVar4->name);
-      if (iVar2 == 0) {
-        iVar2 = __restgprlr_28(lVar3);
+      iVar1 = I_stricmp(param_1,psVar3->name);
+      if (iVar1 == 0) {
         return iVar2;
       }
-      lVar3 = lVar3 + 1;
-      psVar4 = psVar4 + 1;
-    } while ((int)lVar3 < g_snd.volmod_count);
+      iVar2 = iVar2 + 1;
+      psVar3 = psVar3 + 1;
+    } while (iVar2 < g_snd.volmod_count);
   }
-  iVar2 = __restgprlr_28(0xffffffffffffffff);
-  return iVar2;
+  return -1;
 }
 
 
@@ -383,135 +376,131 @@ char * SND_GetEntChannelName(int param_1)
 
 // 82847660  SND_GetEntChannelFromName  (snd.cpp:707)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 int SND_GetEntChannelFromName(char *param_1)
 
 {
-  char *pcVar1;
+  int iVar1;
   int iVar2;
-  longlong lVar3;
-  snd_entchannel_info_t *psVar4;
+  snd_entchannel_info_t *psVar3;
   
-  pcVar1 = (char *)__savegprlr_28(param_1);
-  if (pcVar1 == (char *)0x0) {
+  if (param_1 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x2c6,0,"%s");
   }
-  lVar3 = 0;
+  iVar2 = 0;
   if (0 < g_snd.entchannel_count) {
-    psVar4 = g_snd.entchaninfo;
+    psVar3 = g_snd.entchaninfo;
     do {
-      iVar2 = I_stricmp(pcVar1,psVar4->name);
-      if (iVar2 == 0) {
-        iVar2 = __restgprlr_28(lVar3);
+      iVar1 = I_stricmp(param_1,psVar3->name);
+      if (iVar1 == 0) {
         return iVar2;
       }
-      lVar3 = lVar3 + 1;
-      psVar4 = psVar4 + 1;
-    } while ((int)lVar3 < g_snd.entchannel_count);
+      iVar2 = iVar2 + 1;
+      psVar3 = psVar3 + 1;
+    } while (iVar2 < g_snd.entchannel_count);
   }
-  iVar2 = __restgprlr_28(0xffffffffffffffff);
-  return iVar2;
+  return -1;
 }
 
 
 // 82847710  SND_ValidateEnvEffectsPriorityValue  (snd.cpp:725)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 bool SND_ValidateEnvEffectsPriorityValue(char *param_1,int *param_2)
 
 {
-  char *pcVar1;
+  int iVar1;
   int iVar2;
-  undefined1 uVar3;
-  ulonglong uVar4;
-  int iVar5;
-  char **ppcVar7;
-  longlong lVar6;
+  char **ppcVar4;
+  longlong lVar3;
   char *local_3c [15];
   
-  uVar4 = (ulonglong)(int)param_2;
-  pcVar1 = (char *)__savegprlr_28(param_1);
   local_3c[0] = "level";
   local_3c[1] = "shellshock";
   local_3c[2] = "remotecamera";
   local_3c[3] = "painvision";
-  if (pcVar1 == (char *)0x0) {
+  if (param_1 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x2e3,0,"%s");
   }
-  if ((uVar4 & 0xffffffff) == 0) {
+  if (param_2 == (int *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x2e4,0,"%s");
   }
-  iVar5 = 1;
-  ppcVar7 = local_3c;
+  iVar2 = 1;
+  ppcVar4 = local_3c;
   do {
-    iVar2 = I_stricmp(pcVar1,*ppcVar7);
-    if (iVar2 == 0) {
-      *(int *)uVar4 = iVar5;
-      uVar3 = __restgprlr_28(1);
-      return (bool)uVar3;
+    iVar1 = I_stricmp(param_1,*ppcVar4);
+    if (iVar1 == 0) {
+      *param_2 = iVar2;
+      return true;
     }
-    iVar5 = iVar5 + 1;
-    ppcVar7 = ppcVar7 + 1;
-  } while (iVar5 < 5);
+    iVar2 = iVar2 + 1;
+    ppcVar4 = ppcVar4 + 1;
+  } while (iVar2 < 5);
   Com_Printf(9,"invalid priority string \'%s\', it must be one of the following strings:\n");
-  lVar6 = 4;
+  lVar3 = 4;
   do {
     Com_Printf(9,"  %s\n");
-    lVar6 = lVar6 + -1;
-  } while (lVar6 != 0);
-  *(int *)uVar4 = 0;
-  uVar3 = __restgprlr_28(0);
-  return (bool)uVar3;
+    lVar3 = lVar3 + -1;
+  } while (lVar3 != 0);
+  *param_2 = 0;
+  return false;
 }
 
 
 // 82847848  SND_RoomtypeFromString  (snd.cpp:761)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 int SND_RoomtypeFromString(char *param_1)
 
 {
   char *pcVar1;
-  char *pcVar2;
-  int iVar3;
-  int iVar4;
-  char **ppcVar5;
-  char **ppcVar6;
+  int iVar2;
+  char **ppcVar3;
+  char **ppcVar4;
+  int iVar5;
   
-  pcVar2 = (char *)__savegprlr_29(param_1);
-  if (pcVar2 == (char *)0x0) {
+  if (param_1 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x2fc,0,"%s");
   }
-  iVar4 = 0;
-  ppcVar6 = snd_roomStrings;
-  ppcVar5 = ppcVar6;
+  iVar5 = 0;
+  ppcVar4 = snd_roomStrings;
+  ppcVar3 = ppcVar4;
   pcVar1 = snd_roomStrings[0];
   while( true ) {
     if (pcVar1 == (char *)0x0) {
       Com_Printf(9,"invalid roomtype string \'%s\', it must be one of the following strings:\n");
-      iVar4 = 0;
-      pcVar2 = snd_roomStrings[0];
-      while (pcVar2 != (char *)0x0) {
-        if (**ppcVar6 != '\0') {
+      iVar5 = 0;
+      pcVar1 = snd_roomStrings[0];
+      while (pcVar1 != (char *)0x0) {
+        if (**ppcVar4 != '\0') {
           Com_Printf(9,"  %s\n");
         }
-        iVar4 = iVar4 + 1;
-        ppcVar6 = snd_roomStrings + iVar4;
-        pcVar2 = *ppcVar6;
+        iVar5 = iVar5 + 1;
+        ppcVar4 = snd_roomStrings + iVar5;
+        pcVar1 = *ppcVar4;
       }
-      iVar4 = __restgprlr_29(0);
-      return iVar4;
+      return 0;
     }
-    iVar3 = I_stricmp(pcVar2,*ppcVar5);
-    if (iVar3 == 0) break;
-    iVar4 = iVar4 + 1;
-    ppcVar5 = snd_roomStrings + iVar4;
-    pcVar1 = *ppcVar5;
+    iVar2 = I_stricmp(param_1,*ppcVar3);
+    if (iVar2 == 0) break;
+    iVar5 = iVar5 + 1;
+    ppcVar3 = snd_roomStrings + iVar5;
+    pcVar1 = *ppcVar3;
   }
-  iVar4 = __restgprlr_29(iVar4);
-  return iVar4;
+  return iVar5;
 }
 
 
 // 82856170  SND_SetEnvironmentEffects_f  (snd.cpp:785)
 
+/* WARNING: Function: __savefpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void SND_SetEnvironmentEffects_f(void)
@@ -528,7 +517,6 @@ void SND_SetEnvironmentEffects_f(void)
   double dVar8;
   int local_40 [12];
   
-  __savefpr_28();
   iVar1 = Cmd_Argc();
   if (iVar1 == 6) {
     pcVar2 = Cmd_Argv(1);
@@ -570,7 +558,6 @@ void SND_SetEnvironmentEffects_f(void)
                "USAGE: snd_setEnvironmentEffects <const char *priority> <const char *roomstring> <float drylevel> <float wetlevel> <int fademsec>\n"
               );
   }
-  __restfpr_28();
   return;
 }
 
@@ -609,104 +596,93 @@ void SND_DeactivateEnvironmentEffects_f(void)
 
 // 82847948  SND_EqTypeFromString  (snd.cpp:858)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "SND_EQTYPE": Some values do not have unique names */
 
 SND_EQTYPE SND_EqTypeFromString(char *param_1)
 
 {
   char *pcVar1;
-  char *pcVar2;
-  int iVar3;
-  SND_EQTYPE SVar4;
-  char **ppcVar5;
-  char **ppcVar6;
-  int iVar7;
+  int iVar2;
+  char **ppcVar3;
+  char **ppcVar4;
+  SND_EQTYPE SVar5;
   
-  pcVar2 = (char *)__savegprlr_29(param_1);
-  if (pcVar2 == (char *)0x0) {
+  if (param_1 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x35d,0,"%s");
   }
-  iVar7 = 0;
-  ppcVar6 = snd_eqTypeStrings;
-  ppcVar5 = ppcVar6;
+  SVar5 = SND_EQTYPE_FIRST;
+  ppcVar4 = snd_eqTypeStrings;
+  ppcVar3 = ppcVar4;
   pcVar1 = snd_eqTypeStrings[0];
   while( true ) {
     if (pcVar1 == (char *)0x0) {
       Com_Printf(9,"invalid eq type string \'%s\', it must be one of the following strings:\n");
-      iVar7 = 0;
-      pcVar2 = snd_eqTypeStrings[0];
-      while (pcVar2 != (char *)0x0) {
-        if (**ppcVar6 != '\0') {
+      iVar2 = 0;
+      pcVar1 = snd_eqTypeStrings[0];
+      while (pcVar1 != (char *)0x0) {
+        if (**ppcVar4 != '\0') {
           Com_Printf(9,"  %s\n");
         }
-        iVar7 = iVar7 + 1;
-        ppcVar6 = snd_eqTypeStrings + iVar7;
-        pcVar2 = *ppcVar6;
+        iVar2 = iVar2 + 1;
+        ppcVar4 = snd_eqTypeStrings + iVar2;
+        pcVar1 = *ppcVar4;
       }
-      SVar4 = __restgprlr_29(5);
-      return SVar4;
+      return SND_EQTYPE_COUNT;
     }
-    iVar3 = I_stricmp(pcVar2,*ppcVar5);
-    if (iVar3 == 0) break;
-    iVar7 = iVar7 + 1;
-    ppcVar5 = snd_eqTypeStrings + iVar7;
-    pcVar1 = *ppcVar5;
+    iVar2 = I_stricmp(param_1,*ppcVar3);
+    if (iVar2 == 0) break;
+    SVar5 = SVar5 + SND_EQTYPE_HIGHPASS;
+    ppcVar3 = snd_eqTypeStrings + SVar5;
+    pcVar1 = *ppcVar3;
   }
-  SVar4 = __restgprlr_29(iVar7);
-  return SVar4;
+  return SVar5;
 }
 
 
 // 82847A48  SND_ParseChannelAndBand_f  (snd.cpp:881)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 bool SND_ParseChannelAndBand_f(int *param_1,int *param_2,int *param_3)
 
 {
-  int *piVar1;
-  char *pcVar2;
-  int iVar3;
-  undefined1 uVar4;
-  ulonglong uVar5;
-  ulonglong uVar6;
+  char *pcVar1;
+  int iVar2;
   
-  uVar6 = (ulonglong)(int)param_3;
-  uVar5 = (ulonglong)(int)param_2;
-  piVar1 = (int *)__savegprlr_27(param_1);
-  if (piVar1 == (int *)0x0) {
+  if (param_1 == (int *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x374,0,"%s");
   }
-  if ((uVar6 & 0xffffffff) == 0) {
+  if (param_3 == (int *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x375,0,"%s");
   }
-  if ((uVar5 & 0xffffffff) == 0) {
+  if (param_2 == (int *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x376,0,"%s");
   }
-  pcVar2 = Cmd_Argv(1);
-  iVar3 = SND_GetEntChannelFromName(pcVar2);
-  *piVar1 = iVar3;
-  if (iVar3 == -1) {
+  pcVar1 = Cmd_Argv(1);
+  iVar2 = SND_GetEntChannelFromName(pcVar1);
+  *param_1 = iVar2;
+  if (iVar2 == -1) {
     Com_Printf(9,"Unknown channel name (%s), please check channel definitions file\n");
-    uVar4 = __restgprlr_27(0);
-    return (bool)uVar4;
+    return false;
   }
-  pcVar2 = Cmd_Argv(2);
-  iVar3 = atoi(pcVar2);
-  *(int *)uVar5 = iVar3;
-  if ((iVar3 < 0) || (1 < iVar3)) {
+  pcVar1 = Cmd_Argv(2);
+  iVar2 = atoi(pcVar1);
+  *param_2 = iVar2;
+  if ((iVar2 < 0) || (1 < iVar2)) {
     Com_Printf(9,"invalid \'eqIndex\' %i, must be >= 0 and < %i\n");
-    uVar4 = __restgprlr_27(0);
-    return (bool)uVar4;
+    return false;
   }
-  pcVar2 = Cmd_Argv(3);
-  iVar3 = atoi(pcVar2);
-  *(int *)uVar6 = iVar3;
-  if ((-1 < iVar3) && (iVar3 < 3)) {
-    uVar4 = __restgprlr_27(1);
-    return (bool)uVar4;
+  pcVar1 = Cmd_Argv(3);
+  iVar2 = atoi(pcVar1);
+  *param_3 = iVar2;
+  if ((-1 < iVar2) && (iVar2 < 3)) {
+    return true;
   }
   Com_Printf(9,"invalid \'band\' %i, must be >= 0 and < %i\n");
-  uVar4 = __restgprlr_27(0);
-  return (bool)uVar4;
+  return false;
 }
 
 
@@ -960,6 +936,8 @@ void SND_DeactivateEq_f(void)
 
 // 82856390  SND_SoloChannel_f  (snd.cpp:1107)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void SND_SoloChannel_f(void)
@@ -973,7 +951,6 @@ void SND_SoloChannel_f(void)
   double dVar6;
   double dVar7;
   
-  __savegprlr_29();
   iVar1 = Cmd_Argc();
   if (iVar1 == 2) {
     pcVar2 = Cmd_Argv(1);
@@ -992,11 +969,9 @@ void SND_SoloChannel_f(void)
         iVar1 = iVar1 + 1;
       } while (iVar1 < g_snd.entchannel_count);
     }
-    __restgprlr_29();
     return;
   }
   Com_Printf(9,"USAGE: snd_soloChannel <string channelName>\n");
-  __restgprlr_29();
   return;
 }
 
@@ -1072,6 +1047,8 @@ void SND_ClearDrawOnlyChannel_f(void)
 
 // 82848060  SND_DumpTimeScale_f  (snd.cpp:1190)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void SND_DumpTimeScale_f(void)
@@ -1079,7 +1056,6 @@ void SND_DumpTimeScale_f(void)
 {
   int iVar1;
   
-  __savegprlr_24();
   iVar1 = 0;
   if (0 < g_snd.entchannel_count) {
     do {
@@ -1091,7 +1067,6 @@ void SND_DumpTimeScale_f(void)
       iVar1 = iVar1 + 1;
     } while (iVar1 < g_snd.entchannel_count);
   }
-  __restgprlr_24();
   return;
 }
 
@@ -1225,88 +1200,92 @@ int SND_GetListenerIndexNearestToOrigin(float *param_1)
 
 // 82856510  SND_DisconnectListener  (snd.cpp:1258)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void SND_DisconnectListener(LocalClientNum_t param_1)
 
 {
-  uint uVar1;
-  bool bVar2;
-  char cVar4;
-  int iVar3;
+  bool bVar1;
+  char cVar3;
+  int iVar2;
   
-  uVar1 = __savegprlr_29(param_1);
-  if (3 < uVar1) {
+  if (LOCAL_CLIENT_3 < param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x4ee,0,
                     "localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)");
   }
-  cVar4 = g_snd.listeners[uVar1].active;
-  if ((uVar1 != 0) &&
-     (((bool)cVar4 == false || (cVar4 = '\x01', g_snd.listeners[0].active != false)))) {
-    cVar4 = '\0';
+  cVar3 = g_snd.listeners[param_1].active;
+  if ((param_1 != LOCAL_CLIENT_0) &&
+     (((bool)cVar3 == false || (cVar3 = '\x01', g_snd.listeners[0].active != false)))) {
+    cVar3 = '\0';
   }
-  if ((uVar1 != 1) && ((cVar4 == '\0' || (cVar4 = '\x01', g_snd.listeners[1].active != false)))) {
-    cVar4 = '\0';
+  if ((param_1 != LOCAL_CLIENT_1) &&
+     ((cVar3 == '\0' || (cVar3 = '\x01', g_snd.listeners[1].active != false)))) {
+    cVar3 = '\0';
   }
-  if ((uVar1 != 2) && ((cVar4 == '\0' || (cVar4 = '\x01', g_snd.listeners[2].active != false)))) {
-    cVar4 = '\0';
+  if ((param_1 != LOCAL_CLIENT_2) &&
+     ((cVar3 == '\0' || (cVar3 = '\x01', g_snd.listeners[2].active != false)))) {
+    cVar3 = '\0';
   }
-  if ((uVar1 != 3) && ((cVar4 == '\0' || (cVar4 = '\x01', g_snd.listeners[3].active != false)))) {
-    cVar4 = '\0';
+  if ((param_1 != LOCAL_CLIENT_3) &&
+     ((cVar3 == '\0' || (cVar3 = '\x01', g_snd.listeners[3].active != false)))) {
+    cVar3 = '\0';
   }
   memset();
-  if ((cVar4 != '\0') && (g_snd.Initialized2d != false)) {
+  if ((cVar3 != '\0') && (g_snd.Initialized2d != false)) {
     Sys_EnterCriticalSection(CRITSECT_SOUND_UPDATE);
-    iVar3 = 0;
+    iVar2 = 0;
     if (0 < g_snd.max_2D_channels) {
       do {
-        bVar2 = SND_Is2DChannelFree(iVar3);
-        if (!bVar2) {
-          SND_Stop2DChannel(iVar3);
+        bVar1 = SND_Is2DChannelFree(iVar2);
+        if (!bVar1) {
+          SND_Stop2DChannel(iVar2);
         }
-        iVar3 = iVar3 + 1;
-      } while (iVar3 < g_snd.max_2D_channels);
+        iVar2 = iVar2 + 1;
+      } while (iVar2 < g_snd.max_2D_channels);
     }
-    iVar3 = 8;
+    iVar2 = 8;
     if (8 < g_snd.max_3D_channels + 8) {
       do {
-        bVar2 = SND_Is3DChannelFree(iVar3);
-        if (!bVar2) {
-          SND_Stop3DChannel(iVar3);
+        bVar1 = SND_Is3DChannelFree(iVar2);
+        if (!bVar1) {
+          SND_Stop3DChannel(iVar2);
         }
-        iVar3 = iVar3 + 1;
-      } while (iVar3 < g_snd.max_3D_channels + 8);
+        iVar2 = iVar2 + 1;
+      } while (iVar2 < g_snd.max_3D_channels + 8);
     }
-    iVar3 = 0x28;
+    iVar2 = 0x28;
     if (0x28 < g_snd.max_stream_channels + 0x28) {
       do {
-        bVar2 = SND_IsStreamChannelFree(iVar3);
-        if (!bVar2) {
-          SND_StopStreamChannel(iVar3);
+        bVar1 = SND_IsStreamChannelFree(iVar2);
+        if (!bVar1) {
+          SND_StopStreamChannel(iVar2);
         }
-        iVar3 = iVar3 + 1;
-      } while (iVar3 < g_snd.max_stream_channels + 0x28);
+        iVar2 = iVar2 + 1;
+      } while (iVar2 < g_snd.max_stream_channels + 0x28);
     }
-    iVar3 = 1;
+    iVar2 = 1;
     do {
-      SND_DeactivateEnvironmentEffects(iVar3,0);
-      iVar3 = iVar3 + 1;
-    } while (iVar3 < 5);
-    iVar3 = 1;
+      SND_DeactivateEnvironmentEffects(iVar2,0);
+      iVar2 = iVar2 + 1;
+    } while (iVar2 < 5);
+    iVar2 = 1;
     do {
-      SND_DeactivateChannelVolumes(iVar3,0);
-      iVar3 = iVar3 + 1;
-    } while (iVar3 < 4);
+      SND_DeactivateChannelVolumes(iVar2,0);
+      iVar2 = iVar2 + 1;
+    } while (iVar2 < 4);
     SND_DeactivateAllFilters();
     Sys_LeaveCriticalSection(CRITSECT_SOUND_UPDATE);
   }
-  __restgprlr_29();
   return;
 }
 
 
 // 828484D8  SND_SetListener  (snd.cpp:1281)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void SND_SetListener(LocalClientNum_t param_1,int param_2,float *param_3,float (*param_4) [3],
@@ -1316,43 +1295,34 @@ void SND_SetListener(LocalClientNum_t param_1,int param_2,float *param_3,float (
   float fVar1;
   float fVar2;
   float fVar3;
-  uint uVar4;
-  ulonglong uVar5;
-  float *pfVar6;
-  ulonglong uVar7;
   
-  uVar7 = (ulonglong)(int)param_4;
-  uVar5 = (ulonglong)(int)param_3;
-  uVar4 = __savegprlr_24(param_1);
-  if (g_snd.Initialized2d != false) {
-    if ((uVar5 & 0xffffffff) == 0) {
+  if (g_snd.Initialized2d) {
+    if (param_3 == (float *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x505,0,"%s");
     }
-    if ((uVar7 & 0xffffffff) == 0) {
+    if (param_4 == (float (*) [3])0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x506,0,"%s");
     }
-    if (3 < uVar4) {
+    if (LOCAL_CLIENT_3 < param_1) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x507,0,
                       "localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)")
       ;
     }
-    AxisCopy((float (*) [3])uVar7,g_snd.listeners[uVar4].orient.axis);
-    pfVar6 = (float *)uVar5;
-    g_snd.listeners[uVar4].orient.origin[0] = *pfVar6;
-    g_snd.listeners[uVar4].orient.origin[1] = pfVar6[1];
-    g_snd.listeners[uVar4].orient.origin[2] = pfVar6[2];
+    AxisCopy(param_4,g_snd.listeners[param_1].orient.axis);
+    g_snd.listeners[param_1].orient.origin[0] = *param_3;
+    g_snd.listeners[param_1].orient.origin[1] = param_3[1];
+    g_snd.listeners[param_1].orient.origin[2] = param_3[2];
     fVar1 = *param_5;
     fVar2 = param_5[2];
     fVar3 = param_5[1];
-    g_snd.listeners[uVar4].clientNum = param_2;
-    g_snd.listeners[uVar4].active = true;
+    g_snd.listeners[param_1].clientNum = param_2;
+    g_snd.listeners[param_1].active = true;
     fVar1 = SQRT(fVar2 * fVar2 + fVar1 * fVar1 + fVar3 * fVar3);
-    g_snd.listeners[uVar4].velocity = fVar1;
+    g_snd.listeners[param_1].velocity = fVar1;
     if (fVar1 < 0.0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x510,0,"%s");
     }
   }
-  __restgprlr_24();
   return;
 }
 
@@ -1398,35 +1368,34 @@ int SND_SetPlaybackIdNotPlayed(int param_1)
 
 // 828487B0  SND_AcquirePlaybackId  (snd.cpp:1327)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 int SND_AcquirePlaybackId(int param_1,int param_2)
 
 {
-  int iVar1;
-  
-  iVar1 = __savegprlr_27(param_1);
-  if ((iVar1 < 0) || (0x35 < iVar1)) {
+  if ((param_1 < 0) || (0x35 < param_1)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x532,0,"%s");
   }
-  if (g_snd.chaninfo[iVar1].soundFileInfo.loadingState == SFLS_UNLOADED) {
+  if (g_snd.chaninfo[param_1].soundFileInfo.loadingState == SFLS_UNLOADED) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x536,0,"%s");
   }
-  if (g_snd.chaninfo[iVar1].alias0 == (snd_alias_t *)0x0) {
+  if (g_snd.chaninfo[param_1].alias0 == (snd_alias_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x537,0,"%s");
   }
-  if (((g_snd.chaninfo[iVar1].alias0)->flags & 1U) == 0) {
-    g_snd.chaninfo[iVar1].totalMsec = param_2;
-    g_snd.chaninfo[iVar1].playbackId = g_snd.playbackIdCounter;
+  if (((g_snd.chaninfo[param_1].alias0)->flags & 1U) == 0) {
+    g_snd.chaninfo[param_1].totalMsec = param_2;
+    g_snd.chaninfo[param_1].playbackId = g_snd.playbackIdCounter;
     g_snd.playbackIdCounter = g_snd.playbackIdCounter + 1;
   }
   else {
-    g_snd.chaninfo[iVar1].totalMsec = 0;
-    g_snd.chaninfo[iVar1].playbackId = 0;
+    g_snd.chaninfo[param_1].totalMsec = 0;
+    g_snd.chaninfo[param_1].playbackId = 0;
   }
   if (g_snd.playbackIdCounter < 1) {
     g_snd.playbackIdCounter = 1;
   }
-  iVar1 = __restgprlr_27(g_snd.chaninfo[iVar1].playbackId);
-  return iVar1;
+  return g_snd.chaninfo[param_1].playbackId;
 }
 
 
@@ -1458,496 +1427,465 @@ void DoLengthNotify(int param_1,void *param_2,SndLengthId param_3,ushort param_4
 
 // 82848958  SND_DoAllLengthNotify  (snd.cpp:1381)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
+
 void SND_DoAllLengthNotify(sndLengthNotifyInfo *param_1)
 
 {
-  uint uVar1;
-  uint *puVar2;
-  char *pcVar3;
-  int iVar4;
-  uint *puVar5;
+  SndLengthId SVar1;
+  char *pcVar2;
+  int iVar3;
+  sndLengthNotifyInfo *psVar4;
   
-  puVar2 = (uint *)__savegprlr_24(param_1);
-  iVar4 = 0;
-  puVar5 = puVar2;
-  if (0 < (int)puVar2[8]) {
+  iVar3 = 0;
+  psVar4 = param_1;
+  if (0 < param_1->count) {
     do {
-      uVar1 = *puVar5;
-      if (1 < uVar1) {
+      SVar1 = psVar4->id[0];
+      if (SndLengthNotify_EntityCustom < SVar1) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x56c,0,
                         "id doesn\'t index SndLengthNotifyCount\n\t%i not in [0, %i)");
       }
-      if (uVar1 == 0) {
-        CG_SubtitleSndLengthNotify(0,(void *)puVar5[4]);
+      if (SVar1 == SndLengthNotify_Subtitle) {
+        CG_SubtitleSndLengthNotify(0,psVar4->data[0]);
       }
-      else if (uVar1 == 1) {
-        CG_EntityCustomSndLengthNotify(0,(void *)puVar5[4]);
+      else if (SVar1 == SndLengthNotify_EntityCustom) {
+        CG_EntityCustomSndLengthNotify(0,psVar4->data[0]);
       }
       else if (alwaysfails == 0) {
-        pcVar3 = va("Unknown snd length notify id: %i\n");
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x55f,0,pcVar3);
+        pcVar2 = va("Unknown snd length notify id: %i\n");
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x55f,0,pcVar2);
       }
-      iVar4 = iVar4 + 1;
-      puVar5 = puVar5 + 1;
-    } while (iVar4 < (int)puVar2[8]);
+      iVar3 = iVar3 + 1;
+      psVar4 = (sndLengthNotifyInfo *)(psVar4->id + 1);
+    } while (iVar3 < param_1->count);
   }
-  __restgprlr_24();
   return;
 }
 
 
 // 82848A30  SND_AddLengthNotifyInternal  (snd.cpp:1403)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
+
 void SND_AddLengthNotifyInternal
                (int param_1,void *param_2,SndLengthId param_3,ushort param_4,int param_5,int param_6
                )
 
 {
-  int iVar1;
-  char *pcVar2;
-  ulonglong uVar3;
-  ulonglong uVar4;
-  SndLengthId SVar5;
-  ulonglong uVar6;
-  ushort uVar7;
-  snd_local_t *psVar8;
+  char *pcVar1;
+  int iVar2;
+  ushort uVar3;
+  snd_local_t *psVar4;
+  int iVar5;
+  int *piVar6;
+  void **ppvVar7;
+  uint uVar8;
   int iVar9;
-  int *piVar10;
-  void **ppvVar11;
-  uint uVar12;
-  int iVar13;
   
-  uVar6 = (ulonglong)(short)param_4;
-  uVar4 = (ulonglong)(int)param_3;
-  uVar3 = (ulonglong)(int)param_2;
-  psVar8 = (snd_local_t *)param_6;
-  iVar1 = __savegprlr_25(param_1);
-  uVar7 = (ushort)uVar6;
-  SVar5 = (SndLengthId)uVar4;
-  if (1 < (uVar4 & 0xffffffff)) {
-    uVar7 = 0xf814;
-    psVar8 = (snd_local_t *)0x2;
-    param_5 = SVar5;
+  uVar3 = param_4;
+  psVar4 = (snd_local_t *)param_6;
+  if (SndLengthNotify_EntityCustom < param_3) {
+    uVar3 = 0xf814;
+    psVar4 = (snd_local_t *)0x2;
+    param_5 = param_3;
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x580,0,
                     "id doesn\'t index SndLengthNotifyCount\n\t%i not in [0, %i)");
   }
-  if ((iVar1 == -1) || (iVar1 == 0)) {
-LAB_82848c60:
-    iVar1 = 0;
-  }
-  else {
-    iVar9 = 0;
-    psVar8 = &g_snd;
-    piVar10 = &g_snd.chaninfo[1].playbackId;
+  if ((param_1 != -1) && (param_1 != 0)) {
+    iVar5 = 0;
+    psVar4 = &g_snd;
+    piVar6 = &g_snd.chaninfo[1].playbackId;
     do {
-      if (piVar10[-0x30] == iVar1) break;
-      if (*piVar10 == iVar1) {
-        iVar9 = iVar9 + 1;
+      if (piVar6[-0x30] == param_1) break;
+      if (*piVar6 == param_1) {
+        iVar5 = iVar5 + 1;
         break;
       }
-      if (piVar10[0x30] == iVar1) {
-        iVar9 = iVar9 + 2;
+      if (piVar6[0x30] == param_1) {
+        iVar5 = iVar5 + 2;
         break;
       }
-      if (piVar10[0x60] == iVar1) {
-        iVar9 = iVar9 + 3;
+      if (piVar6[0x60] == param_1) {
+        iVar5 = iVar5 + 3;
         break;
       }
-      if (piVar10[0x90] == iVar1) {
-        iVar9 = iVar9 + 4;
+      if (piVar6[0x90] == param_1) {
+        iVar5 = iVar5 + 4;
         break;
       }
-      if (piVar10[0xc0] == iVar1) {
-        iVar9 = iVar9 + 5;
+      if (piVar6[0xc0] == param_1) {
+        iVar5 = iVar5 + 5;
         break;
       }
-      piVar10 = piVar10 + 0x120;
-      iVar9 = iVar9 + 6;
-    } while ((int)piVar10 < -0x7b77558c);
-    if (iVar9 == 0x36) goto LAB_82848c60;
-    psVar8 = (snd_local_t *)0x821f0000;
-    iVar13 = iVar9 * 0xc0 + -0x7b777eec;
-    pcVar2 = va("adding length notify %i\n");
-    param_5 = 0x84880000;
-    iVar1 = I_stricmp((snd_debugAlias->current).string,(g_snd.chaninfo[iVar9].alias0)->aliasName);
-    if (iVar1 == 0) {
-      uVar7 = (ushort)pcVar2;
-      Com_DPrintf(9,"^5SND_DEBUG_ALIAS (%s): %s\n");
-    }
-    iVar1 = g_snd.chaninfo[iVar9].totalMsec;
-    if (iVar1 < 0) {
-      uVar12 = 0;
-      if (0 < g_snd.chaninfo[iVar9].lengthNotifyInfo.count) {
-        ppvVar11 = g_snd.chaninfo[iVar9].lengthNotifyInfo.data;
-        do {
-          if ((((sndLengthNotifyInfo *)(ppvVar11 + -4))->id[0] == SVar5) &&
-             (ZEXT48(*ppvVar11) == (uVar3 & 0xffffffff))) goto LAB_82848c70;
-          uVar12 = uVar12 + 1;
-          ppvVar11 = ppvVar11 + 1;
-        } while ((int)uVar12 < g_snd.chaninfo[iVar9].lengthNotifyInfo.count);
-        if (3 < uVar12) {
-          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x5b0,0,
-                          "lengthNotifyIndex doesn\'t index SND_LENGTHNOTIFY_COUNT\n\t%i not in [0, %i)"
-                         );
+      piVar6 = piVar6 + 0x120;
+      iVar5 = iVar5 + 6;
+    } while ((int)piVar6 < -0x7b77558c);
+    if (iVar5 != 0x36) {
+      psVar4 = (snd_local_t *)0x821f0000;
+      iVar9 = iVar5 * 0xc0 + -0x7b777eec;
+      pcVar1 = va("adding length notify %i\n");
+      param_5 = 0x84880000;
+      iVar2 = I_stricmp((snd_debugAlias->current).string,(g_snd.chaninfo[iVar5].alias0)->aliasName);
+      if (iVar2 == 0) {
+        uVar3 = (ushort)pcVar1;
+        Com_DPrintf(9,"^5SND_DEBUG_ALIAS (%s): %s\n");
+      }
+      iVar2 = g_snd.chaninfo[iVar5].totalMsec;
+      if (iVar2 < 0) {
+        uVar8 = 0;
+        if (0 < g_snd.chaninfo[iVar5].lengthNotifyInfo.count) {
+          ppvVar7 = g_snd.chaninfo[iVar5].lengthNotifyInfo.data;
+          do {
+            if ((((sndLengthNotifyInfo *)(ppvVar7 + -4))->id[0] == param_3) && (*ppvVar7 == param_2)
+               ) {
+              return;
+            }
+            uVar8 = uVar8 + 1;
+            ppvVar7 = ppvVar7 + 1;
+          } while ((int)uVar8 < g_snd.chaninfo[iVar5].lengthNotifyInfo.count);
+          if (3 < uVar8) {
+            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x5b0,0,
+                            "lengthNotifyIndex doesn\'t index SND_LENGTHNOTIFY_COUNT\n\t%i not in [0, %i)"
+                           );
+          }
         }
-      }
-      g_snd.chaninfo[iVar9].lengthNotifyInfo.count =
-           g_snd.chaninfo[iVar9].lengthNotifyInfo.count + 1;
-      *(SndLengthId *)((uVar12 + 9) * 4 + iVar13) = SVar5;
-      *(void **)((uVar12 + 0xd) * 4 + iVar13) = (void *)uVar3;
-      if ((uVar6 & 0xffff) != 0) {
+        g_snd.chaninfo[iVar5].lengthNotifyInfo.count =
+             g_snd.chaninfo[iVar5].lengthNotifyInfo.count + 1;
+        *(SndLengthId *)((uVar8 + 9) * 4 + iVar9) = param_3;
+        *(void **)((uVar8 + 0xd) * 4 + iVar9) = param_2;
+        if (param_4 == 0) {
+          return;
+        }
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x5bb,0,"%s");
-        __restgprlr_25();
         return;
       }
-      goto LAB_82848c70;
+      goto LAB_82848c64;
     }
   }
-  DoLengthNotify(iVar1,(void *)uVar3,SVar5,uVar7,param_5,(int)psVar8);
-LAB_82848c70:
-  __restgprlr_25();
+  iVar2 = 0;
+LAB_82848c64:
+  DoLengthNotify(iVar2,param_2,param_3,uVar3,param_5,(int)psVar4);
   return;
 }
 
 
 // 82848C78  SND_AddLengthNotify  (snd.cpp:1473)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* void __cdecl SND_AddLengthNotify(int,void *,enum SndLengthId,unsigned short) */
 
 void SND_AddLengthNotify(int param_1,void *param_2,SndLengthId param_3,ushort param_4)
 
 {
-  int iVar1;
-  char *pcVar2;
-  ulonglong uVar3;
-  SndLengthId SVar5;
-  ulonglong uVar4;
-  ushort uVar7;
-  ulonglong uVar6;
+  char *pcVar1;
+  int iVar2;
+  ushort uVar3;
   SndLengthId in_r7;
   snd_local_t *in_r8;
+  int iVar4;
+  int *piVar5;
+  void **ppvVar6;
+  uint uVar7;
   int iVar8;
-  int *piVar9;
-  void **ppvVar10;
-  uint uVar11;
-  int iVar12;
   
-  uVar6 = (ulonglong)(short)param_4;
-  uVar4 = (ulonglong)(int)param_3;
-  uVar3 = (ulonglong)(int)param_2;
-  iVar1 = __savegprlr_25(param_1);
-  uVar7 = (ushort)uVar6;
-  SVar5 = (SndLengthId)uVar4;
-  if (1 < (uVar4 & 0xffffffff)) {
-    uVar7 = 0xf814;
+  uVar3 = param_4;
+  if (SndLengthNotify_EntityCustom < param_3) {
+    uVar3 = 0xf814;
     in_r8 = (snd_local_t *)0x2;
-    in_r7 = SVar5;
+    in_r7 = param_3;
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x580,0,
                     "id doesn\'t index SndLengthNotifyCount\n\t%i not in [0, %i)");
   }
-  if ((iVar1 == -1) || (iVar1 == 0)) {
-LAB_82848c60:
-    iVar1 = 0;
-  }
-  else {
-    iVar8 = 0;
+  if ((param_1 != -1) && (param_1 != 0)) {
+    iVar4 = 0;
     in_r8 = &g_snd;
-    piVar9 = &g_snd.chaninfo[1].playbackId;
+    piVar5 = &g_snd.chaninfo[1].playbackId;
     do {
-      if (piVar9[-0x30] == iVar1) break;
-      if (*piVar9 == iVar1) {
-        iVar8 = iVar8 + 1;
+      if (piVar5[-0x30] == param_1) break;
+      if (*piVar5 == param_1) {
+        iVar4 = iVar4 + 1;
         break;
       }
-      if (piVar9[0x30] == iVar1) {
-        iVar8 = iVar8 + 2;
+      if (piVar5[0x30] == param_1) {
+        iVar4 = iVar4 + 2;
         break;
       }
-      if (piVar9[0x60] == iVar1) {
-        iVar8 = iVar8 + 3;
+      if (piVar5[0x60] == param_1) {
+        iVar4 = iVar4 + 3;
         break;
       }
-      if (piVar9[0x90] == iVar1) {
-        iVar8 = iVar8 + 4;
+      if (piVar5[0x90] == param_1) {
+        iVar4 = iVar4 + 4;
         break;
       }
-      if (piVar9[0xc0] == iVar1) {
-        iVar8 = iVar8 + 5;
+      if (piVar5[0xc0] == param_1) {
+        iVar4 = iVar4 + 5;
         break;
       }
-      piVar9 = piVar9 + 0x120;
-      iVar8 = iVar8 + 6;
-    } while ((int)piVar9 < -0x7b77558c);
-    if (iVar8 == 0x36) goto LAB_82848c60;
-    in_r8 = (snd_local_t *)0x821f0000;
-    iVar12 = iVar8 * 0xc0 + -0x7b777eec;
-    pcVar2 = va("adding length notify %i\n");
-    in_r7 = 0x84880000;
-    iVar1 = I_stricmp((snd_debugAlias->current).string,(g_snd.chaninfo[iVar8].alias0)->aliasName);
-    if (iVar1 == 0) {
-      uVar7 = (ushort)pcVar2;
-      Com_DPrintf(9,"^5SND_DEBUG_ALIAS (%s): %s\n");
-    }
-    iVar1 = g_snd.chaninfo[iVar8].totalMsec;
-    if (iVar1 < 0) {
-      uVar11 = 0;
-      if (0 < g_snd.chaninfo[iVar8].lengthNotifyInfo.count) {
-        ppvVar10 = g_snd.chaninfo[iVar8].lengthNotifyInfo.data;
-        do {
-          if ((((sndLengthNotifyInfo *)(ppvVar10 + -4))->id[0] == SVar5) &&
-             (ZEXT48(*ppvVar10) == (uVar3 & 0xffffffff))) goto LAB_82848c70;
-          uVar11 = uVar11 + 1;
-          ppvVar10 = ppvVar10 + 1;
-        } while ((int)uVar11 < g_snd.chaninfo[iVar8].lengthNotifyInfo.count);
-        if (3 < uVar11) {
-          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x5b0,0,
-                          "lengthNotifyIndex doesn\'t index SND_LENGTHNOTIFY_COUNT\n\t%i not in [0, %i)"
-                         );
+      piVar5 = piVar5 + 0x120;
+      iVar4 = iVar4 + 6;
+    } while ((int)piVar5 < -0x7b77558c);
+    if (iVar4 != 0x36) {
+      in_r8 = (snd_local_t *)0x821f0000;
+      iVar8 = iVar4 * 0xc0 + -0x7b777eec;
+      pcVar1 = va("adding length notify %i\n");
+      in_r7 = 0x84880000;
+      iVar2 = I_stricmp((snd_debugAlias->current).string,(g_snd.chaninfo[iVar4].alias0)->aliasName);
+      if (iVar2 == 0) {
+        uVar3 = (ushort)pcVar1;
+        Com_DPrintf(9,"^5SND_DEBUG_ALIAS (%s): %s\n");
+      }
+      iVar2 = g_snd.chaninfo[iVar4].totalMsec;
+      if (iVar2 < 0) {
+        uVar7 = 0;
+        if (0 < g_snd.chaninfo[iVar4].lengthNotifyInfo.count) {
+          ppvVar6 = g_snd.chaninfo[iVar4].lengthNotifyInfo.data;
+          do {
+            if ((((sndLengthNotifyInfo *)(ppvVar6 + -4))->id[0] == param_3) && (*ppvVar6 == param_2)
+               ) {
+              return;
+            }
+            uVar7 = uVar7 + 1;
+            ppvVar6 = ppvVar6 + 1;
+          } while ((int)uVar7 < g_snd.chaninfo[iVar4].lengthNotifyInfo.count);
+          if (3 < uVar7) {
+            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x5b0,0,
+                            "lengthNotifyIndex doesn\'t index SND_LENGTHNOTIFY_COUNT\n\t%i not in [0, %i)"
+                           );
+          }
         }
-      }
-      g_snd.chaninfo[iVar8].lengthNotifyInfo.count =
-           g_snd.chaninfo[iVar8].lengthNotifyInfo.count + 1;
-      *(SndLengthId *)((uVar11 + 9) * 4 + iVar12) = SVar5;
-      *(void **)((uVar11 + 0xd) * 4 + iVar12) = (void *)uVar3;
-      if ((uVar6 & 0xffff) != 0) {
+        g_snd.chaninfo[iVar4].lengthNotifyInfo.count =
+             g_snd.chaninfo[iVar4].lengthNotifyInfo.count + 1;
+        *(SndLengthId *)((uVar7 + 9) * 4 + iVar8) = param_3;
+        *(void **)((uVar7 + 0xd) * 4 + iVar8) = param_2;
+        if (param_4 == 0) {
+          return;
+        }
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x5bb,0,"%s");
-        __restgprlr_25();
         return;
       }
-      goto LAB_82848c70;
+      goto LAB_82848c64;
     }
   }
-  DoLengthNotify(iVar1,(void *)uVar3,SVar5,uVar7,in_r7,(int)in_r8);
-LAB_82848c70:
-  __restgprlr_25();
+  iVar2 = 0;
+LAB_82848c64:
+  DoLengthNotify(iVar2,param_2,param_3,uVar3,in_r7,(int)in_r8);
   return;
 }
 
 
 // 82848C80  SND_AddLengthNotifyLocalSound  (snd.cpp:1479)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* void __cdecl SND_AddLengthNotifyLocalSound(int,void *,enum SndLengthId,unsigned short) */
 
 void SND_AddLengthNotifyLocalSound(int param_1,void *param_2,SndLengthId param_3,ushort param_4)
 
 {
-  int iVar1;
-  char *pcVar2;
-  ulonglong uVar3;
-  SndLengthId SVar5;
-  ulonglong uVar4;
-  ushort uVar7;
-  ulonglong uVar6;
+  char *pcVar1;
+  int iVar2;
+  ushort uVar3;
   SndLengthId in_r7;
   snd_local_t *in_r8;
+  int iVar4;
+  int *piVar5;
+  void **ppvVar6;
+  uint uVar7;
   int iVar8;
-  int *piVar9;
-  void **ppvVar10;
-  uint uVar11;
-  int iVar12;
   
-  uVar6 = (ulonglong)(short)param_4;
-  uVar4 = (ulonglong)(int)param_3;
-  uVar3 = (ulonglong)(int)param_2;
-  iVar1 = __savegprlr_25(param_1);
-  uVar7 = (ushort)uVar6;
-  SVar5 = (SndLengthId)uVar4;
-  if (1 < (uVar4 & 0xffffffff)) {
-    uVar7 = 0xf814;
+  uVar3 = param_4;
+  if (SndLengthNotify_EntityCustom < param_3) {
+    uVar3 = 0xf814;
     in_r8 = (snd_local_t *)0x2;
-    in_r7 = SVar5;
+    in_r7 = param_3;
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x580,0,
                     "id doesn\'t index SndLengthNotifyCount\n\t%i not in [0, %i)");
   }
-  if ((iVar1 == -1) || (iVar1 == 0)) {
-LAB_82848c60:
-    iVar1 = 0;
-  }
-  else {
-    iVar8 = 0;
+  if ((param_1 != -1) && (param_1 != 0)) {
+    iVar4 = 0;
     in_r8 = &g_snd;
-    piVar9 = &g_snd.chaninfo[1].playbackId;
+    piVar5 = &g_snd.chaninfo[1].playbackId;
     do {
-      if (piVar9[-0x30] == iVar1) break;
-      if (*piVar9 == iVar1) {
-        iVar8 = iVar8 + 1;
+      if (piVar5[-0x30] == param_1) break;
+      if (*piVar5 == param_1) {
+        iVar4 = iVar4 + 1;
         break;
       }
-      if (piVar9[0x30] == iVar1) {
-        iVar8 = iVar8 + 2;
+      if (piVar5[0x30] == param_1) {
+        iVar4 = iVar4 + 2;
         break;
       }
-      if (piVar9[0x60] == iVar1) {
-        iVar8 = iVar8 + 3;
+      if (piVar5[0x60] == param_1) {
+        iVar4 = iVar4 + 3;
         break;
       }
-      if (piVar9[0x90] == iVar1) {
-        iVar8 = iVar8 + 4;
+      if (piVar5[0x90] == param_1) {
+        iVar4 = iVar4 + 4;
         break;
       }
-      if (piVar9[0xc0] == iVar1) {
-        iVar8 = iVar8 + 5;
+      if (piVar5[0xc0] == param_1) {
+        iVar4 = iVar4 + 5;
         break;
       }
-      piVar9 = piVar9 + 0x120;
-      iVar8 = iVar8 + 6;
-    } while ((int)piVar9 < -0x7b77558c);
-    if (iVar8 == 0x36) goto LAB_82848c60;
-    in_r8 = (snd_local_t *)0x821f0000;
-    iVar12 = iVar8 * 0xc0 + -0x7b777eec;
-    pcVar2 = va("adding length notify %i\n");
-    in_r7 = 0x84880000;
-    iVar1 = I_stricmp((snd_debugAlias->current).string,(g_snd.chaninfo[iVar8].alias0)->aliasName);
-    if (iVar1 == 0) {
-      uVar7 = (ushort)pcVar2;
-      Com_DPrintf(9,"^5SND_DEBUG_ALIAS (%s): %s\n");
-    }
-    iVar1 = g_snd.chaninfo[iVar8].totalMsec;
-    if (iVar1 < 0) {
-      uVar11 = 0;
-      if (0 < g_snd.chaninfo[iVar8].lengthNotifyInfo.count) {
-        ppvVar10 = g_snd.chaninfo[iVar8].lengthNotifyInfo.data;
-        do {
-          if ((((sndLengthNotifyInfo *)(ppvVar10 + -4))->id[0] == SVar5) &&
-             (ZEXT48(*ppvVar10) == (uVar3 & 0xffffffff))) goto LAB_82848c70;
-          uVar11 = uVar11 + 1;
-          ppvVar10 = ppvVar10 + 1;
-        } while ((int)uVar11 < g_snd.chaninfo[iVar8].lengthNotifyInfo.count);
-        if (3 < uVar11) {
-          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x5b0,0,
-                          "lengthNotifyIndex doesn\'t index SND_LENGTHNOTIFY_COUNT\n\t%i not in [0, %i)"
-                         );
+      piVar5 = piVar5 + 0x120;
+      iVar4 = iVar4 + 6;
+    } while ((int)piVar5 < -0x7b77558c);
+    if (iVar4 != 0x36) {
+      in_r8 = (snd_local_t *)0x821f0000;
+      iVar8 = iVar4 * 0xc0 + -0x7b777eec;
+      pcVar1 = va("adding length notify %i\n");
+      in_r7 = 0x84880000;
+      iVar2 = I_stricmp((snd_debugAlias->current).string,(g_snd.chaninfo[iVar4].alias0)->aliasName);
+      if (iVar2 == 0) {
+        uVar3 = (ushort)pcVar1;
+        Com_DPrintf(9,"^5SND_DEBUG_ALIAS (%s): %s\n");
+      }
+      iVar2 = g_snd.chaninfo[iVar4].totalMsec;
+      if (iVar2 < 0) {
+        uVar7 = 0;
+        if (0 < g_snd.chaninfo[iVar4].lengthNotifyInfo.count) {
+          ppvVar6 = g_snd.chaninfo[iVar4].lengthNotifyInfo.data;
+          do {
+            if ((((sndLengthNotifyInfo *)(ppvVar6 + -4))->id[0] == param_3) && (*ppvVar6 == param_2)
+               ) {
+              return;
+            }
+            uVar7 = uVar7 + 1;
+            ppvVar6 = ppvVar6 + 1;
+          } while ((int)uVar7 < g_snd.chaninfo[iVar4].lengthNotifyInfo.count);
+          if (3 < uVar7) {
+            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x5b0,0,
+                            "lengthNotifyIndex doesn\'t index SND_LENGTHNOTIFY_COUNT\n\t%i not in [0, %i)"
+                           );
+          }
         }
-      }
-      g_snd.chaninfo[iVar8].lengthNotifyInfo.count =
-           g_snd.chaninfo[iVar8].lengthNotifyInfo.count + 1;
-      *(SndLengthId *)((uVar11 + 9) * 4 + iVar12) = SVar5;
-      *(void **)((uVar11 + 0xd) * 4 + iVar12) = (void *)uVar3;
-      if ((uVar6 & 0xffff) != 0) {
+        g_snd.chaninfo[iVar4].lengthNotifyInfo.count =
+             g_snd.chaninfo[iVar4].lengthNotifyInfo.count + 1;
+        *(SndLengthId *)((uVar7 + 9) * 4 + iVar8) = param_3;
+        *(void **)((uVar7 + 0xd) * 4 + iVar8) = param_2;
+        if (param_4 == 0) {
+          return;
+        }
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x5bb,0,"%s");
-        __restgprlr_25();
         return;
       }
-      goto LAB_82848c70;
+      goto LAB_82848c64;
     }
   }
-  DoLengthNotify(iVar1,(void *)uVar3,SVar5,uVar7,in_r7,(int)in_r8);
-LAB_82848c70:
-  __restgprlr_25();
+  iVar2 = 0;
+LAB_82848c64:
+  DoLengthNotify(iVar2,param_2,param_3,uVar3,in_r7,(int)in_r8);
   return;
 }
 
 
 // 82848C88  SND_AddLengthNotifyForClient  (snd.cpp:1485)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* void __cdecl SND_AddLengthNotifyForClient(int,void *,enum SndLengthId,unsigned short,int) */
 
 void SND_AddLengthNotifyForClient
                (int param_1,void *param_2,SndLengthId param_3,ushort param_4,int param_5)
 
 {
-  int iVar1;
-  char *pcVar2;
-  ulonglong uVar3;
-  SndLengthId SVar5;
-  ulonglong uVar4;
-  ushort uVar7;
-  ulonglong uVar6;
+  char *pcVar1;
+  int iVar2;
+  ushort uVar3;
   snd_local_t *in_r8;
+  int iVar4;
+  int *piVar5;
+  void **ppvVar6;
+  uint uVar7;
   int iVar8;
-  int *piVar9;
-  void **ppvVar10;
-  uint uVar11;
-  int iVar12;
   
-  uVar6 = (ulonglong)(short)param_4;
-  uVar4 = (ulonglong)(int)param_3;
-  uVar3 = (ulonglong)(int)param_2;
-  iVar1 = __savegprlr_25(param_1);
-  uVar7 = (ushort)uVar6;
-  SVar5 = (SndLengthId)uVar4;
-  if (1 < (uVar4 & 0xffffffff)) {
-    uVar7 = 0xf814;
+  uVar3 = param_4;
+  if (SndLengthNotify_EntityCustom < param_3) {
+    uVar3 = 0xf814;
     in_r8 = (snd_local_t *)0x2;
-    param_5 = SVar5;
+    param_5 = param_3;
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x580,0,
                     "id doesn\'t index SndLengthNotifyCount\n\t%i not in [0, %i)");
   }
-  if ((iVar1 == -1) || (iVar1 == 0)) {
-LAB_82848c60:
-    iVar1 = 0;
-  }
-  else {
-    iVar8 = 0;
+  if ((param_1 != -1) && (param_1 != 0)) {
+    iVar4 = 0;
     in_r8 = &g_snd;
-    piVar9 = &g_snd.chaninfo[1].playbackId;
+    piVar5 = &g_snd.chaninfo[1].playbackId;
     do {
-      if (piVar9[-0x30] == iVar1) break;
-      if (*piVar9 == iVar1) {
-        iVar8 = iVar8 + 1;
+      if (piVar5[-0x30] == param_1) break;
+      if (*piVar5 == param_1) {
+        iVar4 = iVar4 + 1;
         break;
       }
-      if (piVar9[0x30] == iVar1) {
-        iVar8 = iVar8 + 2;
+      if (piVar5[0x30] == param_1) {
+        iVar4 = iVar4 + 2;
         break;
       }
-      if (piVar9[0x60] == iVar1) {
-        iVar8 = iVar8 + 3;
+      if (piVar5[0x60] == param_1) {
+        iVar4 = iVar4 + 3;
         break;
       }
-      if (piVar9[0x90] == iVar1) {
-        iVar8 = iVar8 + 4;
+      if (piVar5[0x90] == param_1) {
+        iVar4 = iVar4 + 4;
         break;
       }
-      if (piVar9[0xc0] == iVar1) {
-        iVar8 = iVar8 + 5;
+      if (piVar5[0xc0] == param_1) {
+        iVar4 = iVar4 + 5;
         break;
       }
-      piVar9 = piVar9 + 0x120;
-      iVar8 = iVar8 + 6;
-    } while ((int)piVar9 < -0x7b77558c);
-    if (iVar8 == 0x36) goto LAB_82848c60;
-    in_r8 = (snd_local_t *)0x821f0000;
-    iVar12 = iVar8 * 0xc0 + -0x7b777eec;
-    pcVar2 = va("adding length notify %i\n");
-    param_5 = 0x84880000;
-    iVar1 = I_stricmp((snd_debugAlias->current).string,(g_snd.chaninfo[iVar8].alias0)->aliasName);
-    if (iVar1 == 0) {
-      uVar7 = (ushort)pcVar2;
-      Com_DPrintf(9,"^5SND_DEBUG_ALIAS (%s): %s\n");
-    }
-    iVar1 = g_snd.chaninfo[iVar8].totalMsec;
-    if (iVar1 < 0) {
-      uVar11 = 0;
-      if (0 < g_snd.chaninfo[iVar8].lengthNotifyInfo.count) {
-        ppvVar10 = g_snd.chaninfo[iVar8].lengthNotifyInfo.data;
-        do {
-          if ((((sndLengthNotifyInfo *)(ppvVar10 + -4))->id[0] == SVar5) &&
-             (ZEXT48(*ppvVar10) == (uVar3 & 0xffffffff))) goto LAB_82848c70;
-          uVar11 = uVar11 + 1;
-          ppvVar10 = ppvVar10 + 1;
-        } while ((int)uVar11 < g_snd.chaninfo[iVar8].lengthNotifyInfo.count);
-        if (3 < uVar11) {
-          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x5b0,0,
-                          "lengthNotifyIndex doesn\'t index SND_LENGTHNOTIFY_COUNT\n\t%i not in [0, %i)"
-                         );
+      piVar5 = piVar5 + 0x120;
+      iVar4 = iVar4 + 6;
+    } while ((int)piVar5 < -0x7b77558c);
+    if (iVar4 != 0x36) {
+      in_r8 = (snd_local_t *)0x821f0000;
+      iVar8 = iVar4 * 0xc0 + -0x7b777eec;
+      pcVar1 = va("adding length notify %i\n");
+      param_5 = 0x84880000;
+      iVar2 = I_stricmp((snd_debugAlias->current).string,(g_snd.chaninfo[iVar4].alias0)->aliasName);
+      if (iVar2 == 0) {
+        uVar3 = (ushort)pcVar1;
+        Com_DPrintf(9,"^5SND_DEBUG_ALIAS (%s): %s\n");
+      }
+      iVar2 = g_snd.chaninfo[iVar4].totalMsec;
+      if (iVar2 < 0) {
+        uVar7 = 0;
+        if (0 < g_snd.chaninfo[iVar4].lengthNotifyInfo.count) {
+          ppvVar6 = g_snd.chaninfo[iVar4].lengthNotifyInfo.data;
+          do {
+            if ((((sndLengthNotifyInfo *)(ppvVar6 + -4))->id[0] == param_3) && (*ppvVar6 == param_2)
+               ) {
+              return;
+            }
+            uVar7 = uVar7 + 1;
+            ppvVar6 = ppvVar6 + 1;
+          } while ((int)uVar7 < g_snd.chaninfo[iVar4].lengthNotifyInfo.count);
+          if (3 < uVar7) {
+            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x5b0,0,
+                            "lengthNotifyIndex doesn\'t index SND_LENGTHNOTIFY_COUNT\n\t%i not in [0, %i)"
+                           );
+          }
         }
-      }
-      g_snd.chaninfo[iVar8].lengthNotifyInfo.count =
-           g_snd.chaninfo[iVar8].lengthNotifyInfo.count + 1;
-      *(SndLengthId *)((uVar11 + 9) * 4 + iVar12) = SVar5;
-      *(void **)((uVar11 + 0xd) * 4 + iVar12) = (void *)uVar3;
-      if ((uVar6 & 0xffff) != 0) {
+        g_snd.chaninfo[iVar4].lengthNotifyInfo.count =
+             g_snd.chaninfo[iVar4].lengthNotifyInfo.count + 1;
+        *(SndLengthId *)((uVar7 + 9) * 4 + iVar8) = param_3;
+        *(void **)((uVar7 + 0xd) * 4 + iVar8) = param_2;
+        if (param_4 == 0) {
+          return;
+        }
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x5bb,0,"%s");
-        __restgprlr_25();
         return;
       }
-      goto LAB_82848c70;
+      goto LAB_82848c64;
     }
   }
-  DoLengthNotify(iVar1,(void *)uVar3,SVar5,uVar7,param_5,(int)in_r8);
-LAB_82848c70:
-  __restgprlr_25();
+  iVar2 = 0;
+LAB_82848c64:
+  DoLengthNotify(iVar2,param_2,param_3,uVar3,param_5,(int)in_r8);
   return;
 }
 
@@ -2003,52 +1941,52 @@ bool SND_GetKnownLength(int param_1,int *param_2)
 
 // 82848DD8  SND_LengthNotify  (snd.cpp:1522)
 
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
+
 void SND_LengthNotify(int param_1,int param_2)
 
 {
-  uint uVar1;
+  SndLengthId SVar1;
   int iVar2;
-  int iVar3;
-  char *pcVar4;
-  int iVar5;
-  undefined4 *puVar6;
+  char *pcVar3;
+  int iVar4;
+  void **ppvVar5;
   
-  iVar2 = __savegprlr_22(param_1);
-  if ((iVar2 < 0) || (0x35 < iVar2)) {
+  if ((param_1 < 0) || (0x35 < param_1)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x5f8,0,"%s");
   }
   va("snd length notify %i msec. %i notfies");
-  iVar3 = I_stricmp((snd_debugAlias->current).string,(g_snd.chaninfo[iVar2].alias0)->aliasName);
-  if (iVar3 == 0) {
+  iVar2 = I_stricmp((snd_debugAlias->current).string,(g_snd.chaninfo[param_1].alias0)->aliasName);
+  if (iVar2 == 0) {
     Com_DPrintf(9,"^5SND_DEBUG_ALIAS (%s): %s\n");
   }
-  iVar3 = g_snd.chaninfo[iVar2].lengthNotifyInfo.count;
-  g_snd.chaninfo[iVar2].totalMsec = param_2;
-  iVar5 = 0;
-  if (0 < iVar3) {
-    puVar6 = (undefined4 *)(iVar2 * 0xc0 + -0x7b777eb8);
+  iVar2 = g_snd.chaninfo[param_1].lengthNotifyInfo.count;
+  g_snd.chaninfo[param_1].totalMsec = param_2;
+  iVar4 = 0;
+  if (0 < iVar2) {
+    ppvVar5 = g_snd.chaninfo[param_1].lengthNotifyInfo.data;
     do {
-      uVar1 = puVar6[-4];
-      if (1 < uVar1) {
+      SVar1 = ((sndLengthNotifyInfo *)(ppvVar5 + -4))->id[0];
+      if (SndLengthNotify_EntityCustom < SVar1) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x604,0,
                         "id doesn\'t index SndLengthNotifyCount\n\t%i not in [0, %i)");
       }
-      if (uVar1 == 0) {
-        CG_SubtitleSndLengthNotify(param_2,(void *)*puVar6);
+      if (SVar1 == SndLengthNotify_Subtitle) {
+        CG_SubtitleSndLengthNotify(param_2,*ppvVar5);
       }
-      else if (uVar1 == 1) {
-        CG_EntityCustomSndLengthNotify(param_2,(void *)*puVar6);
+      else if (SVar1 == SndLengthNotify_EntityCustom) {
+        CG_EntityCustomSndLengthNotify(param_2,*ppvVar5);
       }
       else if (alwaysfails == 0) {
-        pcVar4 = va("Unknown snd length notify id: %i\n");
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x55f,0,pcVar4);
+        pcVar3 = va("Unknown snd length notify id: %i\n");
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x55f,0,pcVar3);
       }
-      iVar5 = iVar5 + 1;
-      puVar6 = puVar6 + 1;
-    } while (iVar5 < g_snd.chaninfo[iVar2].lengthNotifyInfo.count);
+      iVar4 = iVar4 + 1;
+      ppvVar5 = ppvVar5 + 1;
+    } while (iVar4 < g_snd.chaninfo[param_1].lengthNotifyInfo.count);
   }
-  g_snd.chaninfo[iVar2].lengthNotifyInfo.count = 0;
-  __restgprlr_22();
+  g_snd.chaninfo[param_1].lengthNotifyInfo.count = 0;
   return;
 }
 
@@ -2064,47 +2002,45 @@ bool SND_IsMasterPriority(uchar param_1)
 
 // 82848F90  SND_GetMasterPriority  (snd.cpp:1571)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 uchar SND_GetMasterPriority(snd_channel_info_t *param_1)
 
 {
-  int iVar1;
-  uchar uVar2;
   uchar local_30 [48];
   
-  iVar1 = __savegprlr_29(param_1);
-  if (iVar1 == 0) {
+  if (param_1 == (snd_channel_info_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x626,0,"%s");
   }
-  if (*(int *)(iVar1 + 0x70) == 0) {
+  if (param_1->alias0 == (snd_alias_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x627,0,"%s");
   }
-  local_30[0] = *(uchar *)(iVar1 + 0xb4);
-  DevSoundMixer_ApplyMasterPriorityOffset(*(snd_alias_t **)(iVar1 + 0x70),local_30);
-  uVar2 = __restgprlr_29(local_30[0]);
-  return uVar2;
+  local_30[0] = param_1->masterPriority;
+  DevSoundMixer_ApplyMasterPriorityOffset(param_1->alias0,local_30);
+  return local_30[0];
 }
 
 
 // 82849020  SND_GetMasterPercent  (snd.cpp:1588)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 float SND_GetMasterPercent(snd_channel_info_t *param_1)
 
 {
-  int iVar1;
-  double dVar2;
   float local_30 [12];
   
-  iVar1 = __savegprlr_29(param_1);
-  if (iVar1 == 0) {
+  if (param_1 == (snd_channel_info_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x637,0,"%s");
   }
-  if (*(int *)(iVar1 + 0x70) == 0) {
+  if (param_1->alias0 == (snd_alias_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x638,0,"%s");
   }
-  local_30[0] = (*(snd_alias_t **)(iVar1 + 0x70))->masterPercentage;
-  DevSoundMixer_ApplyGroupMasterPercentModifier(*(snd_alias_t **)(iVar1 + 0x70),local_30);
-  dVar2 = (double)__restgprlr_29((double)local_30[0]);
-  return (float)dVar2;
+  local_30[0] = param_1->alias0->masterPercentage;
+  DevSoundMixer_ApplyGroupMasterPercentModifier(param_1->alias0,local_30);
+  return local_30[0];
 }
 
 
@@ -2126,172 +2062,160 @@ float SND_GetSlavePercent(snd_alias_t *param_1)
 
 // 82849140  SND_ApplyMasterPriorityVolumeInternal  (snd.cpp:1623)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void SND_ApplyMasterPriorityVolumeInternal(snd_alias_t *param_1,float param_2,float *param_3)
 
 {
-  snd_alias_t *psVar1;
-  ulonglong in_r5;
-  double extraout_f1;
+  float *in_r5;
+  double dVar1;
   double dVar2;
   double dVar3;
-  double dVar4;
-  float fVar5;
+  float fVar4;
   
-  psVar1 = (snd_alias_t *)__savegprlr_28((double)param_2,param_1,param_3);
-  dVar2 = extraout_f1;
-  if (psVar1 == (snd_alias_t *)0x0) {
+  dVar1 = (double)param_2;
+  if (param_1 == (snd_alias_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x65b,0,"%s");
   }
-  if ((in_r5 & 0xffffffff) == 0) {
+  if (in_r5 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x65c,0,"%s");
   }
-  dVar4 = 0.0;
-  if (0.0 < dVar2) {
-    fVar5 = SND_GetSlavePercent(psVar1);
-    dVar3 = (double)(*(float *)in_r5 * (float)((double)fVar5 * dVar2 + (double)(float)(1.0 - dVar2))
-                    );
-    dVar2 = 1.0;
-    if ((float)(dVar3 - 1.0) < 0.0) {
-      dVar2 = dVar3;
+  dVar3 = 0.0;
+  if (0.0 < dVar1) {
+    fVar4 = SND_GetSlavePercent(param_1);
+    dVar2 = (double)(*in_r5 * (float)((double)fVar4 * dVar1 + (double)(float)(1.0 - dVar1)));
+    dVar1 = 1.0;
+    if ((float)(dVar2 - 1.0) < 0.0) {
+      dVar1 = dVar2;
     }
-    if (-dVar3 < 0.0) {
-      dVar4 = dVar2;
+    if (-dVar2 < 0.0) {
+      dVar3 = dVar1;
     }
-    *(float *)in_r5 = (float)dVar4;
+    *in_r5 = (float)dVar3;
   }
-  __restgprlr_28();
   return;
 }
 
 
 // 82849210  SND_ApplyStartAliasMasterPriorityVolume  (snd.cpp:1641)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void SND_ApplyStartAliasMasterPriorityVolume(SndStartAliasInfo *param_1,float *param_2)
 
 {
-  int *piVar1;
-  ulonglong uVar2;
-  float *pfVar3;
+  float *pfVar1;
   
-  uVar2 = (ulonglong)(int)param_2;
-  piVar1 = (int *)__savegprlr_28(param_1);
-  pfVar3 = (float *)uVar2;
-  if (piVar1 == (int *)0x0) {
-    pfVar3 = (float *)0x66a;
+  pfVar1 = param_2;
+  if (param_1 == (SndStartAliasInfo *)0x0) {
+    pfVar1 = (float *)0x66a;
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x66a,0,"%s");
   }
-  if (*piVar1 == 0) {
-    pfVar3 = (float *)0x66b;
+  if (param_1->alias0 == (snd_alias_t *)0x0) {
+    pfVar1 = (float *)0x66b;
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x66b,0,"%s");
   }
-  if ((uVar2 & 0xffffffff) == 0) {
-    pfVar3 = (float *)0x66c;
+  if (param_2 == (float *)0x0) {
+    pfVar1 = (float *)0x66c;
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x66c,0,"%s");
   }
-  SND_ApplyMasterPriorityVolumeInternal((snd_alias_t *)*piVar1,(float)piVar1[0x13],pfVar3);
-  __restgprlr_28();
+  SND_ApplyMasterPriorityVolumeInternal(param_1->alias0,param_1->slaveLerp,pfVar1);
   return;
 }
 
 
 // 828492C0  SND_ApplyChannelMasterPriorityVolume  (snd.cpp:1651)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void SND_ApplyChannelMasterPriorityVolume(snd_channel_info_t *param_1,float *param_2)
 
 {
-  int iVar1;
-  ulonglong uVar2;
-  float *pfVar3;
+  float *pfVar1;
   
-  uVar2 = (ulonglong)(int)param_2;
-  iVar1 = __savegprlr_28(param_1);
-  pfVar3 = (float *)uVar2;
-  if (iVar1 == 0) {
-    pfVar3 = (float *)0x674;
+  pfVar1 = param_2;
+  if (param_1 == (snd_channel_info_t *)0x0) {
+    pfVar1 = (float *)0x674;
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x674,0,"%s");
   }
-  if (*(int *)(iVar1 + 0x70) == 0) {
-    pfVar3 = (float *)0x675;
+  if (param_1->alias0 == (snd_alias_t *)0x0) {
+    pfVar1 = (float *)0x675;
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x675,0,"%s");
   }
-  if ((uVar2 & 0xffffffff) == 0) {
-    pfVar3 = (float *)0x676;
+  if (param_2 == (float *)0x0) {
+    pfVar1 = (float *)0x676;
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x676,0,"%s");
   }
-  SND_ApplyMasterPriorityVolumeInternal
-            (*(snd_alias_t **)(iVar1 + 0x70),*(float *)(iVar1 + 0xb8),pfVar3);
-  __restgprlr_28();
+  SND_ApplyMasterPriorityVolumeInternal(param_1->alias0,param_1->slaveLerp,pfVar1);
   return;
 }
 
 
 // 82849370  SND_ApplyGroupVolumeModifier  (snd.cpp:1661)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void SND_ApplyGroupVolumeModifier(snd_alias_t *param_1,float *param_2)
 
 {
-  snd_alias_t *psVar1;
-  ulonglong uVar2;
-  
-  uVar2 = (ulonglong)(int)param_2;
-  psVar1 = (snd_alias_t *)__savegprlr_28(param_1);
-  if (psVar1 == (snd_alias_t *)0x0) {
+  if (param_1 == (snd_alias_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x67e,0,"%s");
   }
-  if ((uVar2 & 0xffffffff) == 0) {
+  if (param_2 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x67f,0,"%s");
   }
-  DevSoundMixer_ApplyGroupVolumeModifier(psVar1,(float *)uVar2);
-  __restgprlr_28();
+  DevSoundMixer_ApplyGroupVolumeModifier(param_1,param_2);
   return;
 }
 
 
 // 828493F0  SND_Attenuate  (snd.cpp:1672)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 float SND_Attenuate(SndCurve *param_1,float param_2,float param_3,float param_4)
 
 {
-  SndCurve *pSVar1;
-  double extraout_f1;
+  double dVar1;
   double dVar2;
   double dVar3;
-  undefined8 uVar4;
-  double dVar5;
-  float fVar6;
+  double dVar4;
+  float fVar5;
   
-  dVar3 = (double)param_4;
-  dVar2 = (double)param_3;
-  __savegprlr_29((double)param_2,param_1);
-  pSVar1 = (SndCurve *)__savefpr_28();
-  dVar5 = extraout_f1;
-  if (pSVar1 == (SndCurve *)0x0) {
+  dVar2 = (double)param_4;
+  dVar1 = (double)param_3;
+  dVar3 = (double)param_2;
+  if (param_1 == (SndCurve *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x689,0,"%s");
   }
-  dVar5 = (double)(float)(dVar5 - dVar2);
-  uVar4 = 0;
-  if (dVar5 <= 0.0) {
-    __restfpr_28(0x3ff0000000000000);
-    dVar5 = (double)__restgprlr_29();
-    return (float)dVar5;
+  dVar4 = (double)(float)(dVar3 - dVar1);
+  dVar3 = 0.0;
+  if (dVar4 <= 0.0) {
+    return 1.0;
   }
-  if (dVar3 <= dVar2) {
+  if (dVar2 <= dVar1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x68f,0,"%s");
   }
-  fVar6 = (float)(dVar5 / (double)(float)(dVar3 - dVar2));
-  if (1.0 <= fVar6) {
-    __restfpr_28(uVar4);
-    dVar5 = (double)__restgprlr_29();
-    return (float)dVar5;
+  fVar5 = (float)(dVar4 / (double)(float)(dVar2 - dVar1));
+  if (1.0 <= fVar5) {
+    return (float)dVar3;
   }
-  fVar6 = Com_GetVolumeFalloffCurveValue(pSVar1,fVar6);
-  __restfpr_28((double)fVar6);
-  dVar5 = (double)__restgprlr_29();
-  return (float)dVar5;
+  fVar5 = Com_GetVolumeFalloffCurveValue(param_1,fVar5);
+  return fVar5;
 }
 
 
 // 828494E0  SND_GetCurrent3DPosition  (snd.cpp:1690)
+
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 
 void SND_GetCurrent3DPosition(SndEntHandle param_1,float *param_2,float *param_3)
 
@@ -2299,10 +2223,6 @@ void SND_GetCurrent3DPosition(SndEntHandle param_1,float *param_2,float *param_3
   float fVar1;
   float fVar2;
   float fVar3;
-  SndEntHandle SVar4;
-  ulonglong uVar5;
-  float *pfVar6;
-  ulonglong uVar7;
   float local_70;
   float local_6c;
   float local_68;
@@ -2316,59 +2236,56 @@ void SND_GetCurrent3DPosition(SndEntHandle param_1,float *param_2,float *param_3
   float local_44;
   float local_40;
   
-  uVar7 = (ulonglong)(int)param_3;
-  uVar5 = (ulonglong)(int)param_2;
-  SVar4.handle = __savegprlr_27(param_1.handle);
-  if ((uVar5 & 0xffffffff) == 0) {
+  if (param_2 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x69e,0,"%s");
   }
-  if ((uVar7 & 0xffffffff) == 0) {
+  if (param_3 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x69f,0,"%s");
   }
-  CG_GetSoundEntityOrientation(SVar4,&local_70,(float (*) [3])&local_60);
-  pfVar6 = (float *)uVar5;
-  fVar1 = *pfVar6;
-  fVar2 = pfVar6[1];
-  fVar3 = pfVar6[2];
-  pfVar6 = (float *)uVar7;
-  *pfVar6 = local_48 * fVar3 + local_54 * fVar2 + local_60 * fVar1 + local_70;
-  pfVar6[1] = local_44 * fVar3 + local_50 * fVar2 + local_5c * fVar1 + local_6c;
-  pfVar6[2] = local_40 * fVar3 + local_4c * fVar2 + local_58 * fVar1 + local_68;
-  __restgprlr_27();
+  CG_GetSoundEntityOrientation(param_1,&local_70,(float (*) [3])&local_60);
+  fVar1 = *param_2;
+  fVar2 = param_2[1];
+  fVar3 = param_2[2];
+  *param_3 = local_48 * fVar3 + local_54 * fVar2 + local_60 * fVar1 + local_70;
+  param_3[1] = local_44 * fVar3 + local_50 * fVar2 + local_5c * fVar1 + local_6c;
+  param_3[2] = local_40 * fVar3 + local_4c * fVar2 + local_58 * fVar1 + local_68;
   return;
 }
 
 
 // 828495D8  SND_ResetChannelInfo  (snd.cpp:1706)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void SND_ResetChannelInfo(int param_1)
 
 {
   int iVar1;
-  int iVar2;
   
-  iVar2 = __savegprlr_28(param_1);
-  iVar1 = g_snd.chaninfo[iVar2].entchannel;
+  iVar1 = g_snd.chaninfo[param_1].entchannel;
   if ((iVar1 < 0) || (g_snd.entchannel_count <= iVar1)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x6ab,0,
                     "%s\n\t(g_snd.chaninfo[index].entchannel) = %i");
   }
-  if (g_snd.chaninfo[iVar2].totalMsec != 0) {
-    if (g_snd.chaninfo[iVar2].alias0 == (snd_alias_t *)0x0) {
+  if (g_snd.chaninfo[param_1].totalMsec != 0) {
+    if (g_snd.chaninfo[param_1].alias0 == (snd_alias_t *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x6af,0,"%s");
     }
-    SND_LengthNotify(iVar2,0);
+    SND_LengthNotify(param_1,0);
   }
-  g_snd.chaninfo[iVar2].paused = false;
-  g_snd.chaninfo[iVar2].startDelay = 0;
-  g_snd.chaninfo[iVar2].soundFileInfo.loadingState = SFLS_UNLOADED;
-  g_snd.chaninfo[iVar2].alias0 = (snd_alias_t *)0x0;
-  __restgprlr_28();
+  g_snd.chaninfo[param_1].paused = false;
+  g_snd.chaninfo[param_1].startDelay = 0;
+  g_snd.chaninfo[param_1].soundFileInfo.loadingState = SFLS_UNLOADED;
+  g_snd.chaninfo[param_1].alias0 = (snd_alias_t *)0x0;
   return;
 }
 
 
 // 828567B0  SND_SetChannelStartInfo  (snd.cpp:1726)
+
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 
 void SND_SetChannelStartInfo(int param_1,SndStartAliasInfo *param_2)
 
@@ -2377,12 +2294,11 @@ void SND_SetChannelStartInfo(int param_1,SndStartAliasInfo *param_2)
   uint uVar2;
   float fVar3;
   float fVar4;
-  int iVar5;
-  bool bVar7;
-  EntityOcclusionInfo *pEVar6;
-  undefined4 *puVar8;
-  longlong lVar9;
-  double dVar10;
+  bool bVar6;
+  EntityOcclusionInfo *pEVar5;
+  sndLengthNotifyInfo *psVar7;
+  longlong lVar8;
+  double dVar9;
   float local_88;
   float local_84;
   float local_80;
@@ -2396,8 +2312,7 @@ void SND_SetChannelStartInfo(int param_1,SndStartAliasInfo *param_2)
   float local_54;
   float local_50;
   
-  iVar5 = __savegprlr_26(param_1);
-  if ((iVar5 < 0) || (0x35 < iVar5)) {
+  if ((param_1 < 0) || (0x35 < param_1)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x6c2,0,"%s");
   }
   if (((int)param_2->system < 0) || (2 < (int)param_2->system)) {
@@ -2414,12 +2329,12 @@ void SND_SetChannelStartInfo(int param_1,SndStartAliasInfo *param_2)
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x6c6,0,
                     "%s\n\t(SndStartAliasInfo->startDelay) = %i");
   }
-  dVar10 = 0.0;
+  dVar9 = 0.0;
   if (((param_2->sndEnt).handle == 0xffff) ||
-     (bVar7 = SND_IsAliasChannel3D(param_2->alias0->flags >> 9 & 0x3f), !bVar7)) {
-    g_snd.chaninfo[iVar5].offset[0] = (float)dVar10;
-    g_snd.chaninfo[iVar5].offset[1] = (float)dVar10;
-    g_snd.chaninfo[iVar5].offset[2] = (float)dVar10;
+     (bVar6 = SND_IsAliasChannel3D(param_2->alias0->flags >> 9 & 0x3f), !bVar6)) {
+    g_snd.chaninfo[param_1].offset[0] = (float)dVar9;
+    g_snd.chaninfo[param_1].offset[1] = (float)dVar9;
+    g_snd.chaninfo[param_1].offset[2] = (float)dVar9;
   }
   else {
     CG_GetSoundEntityOrientation(param_2->sndEnt,&local_88,(float (*) [3])&local_70);
@@ -2433,232 +2348,221 @@ void SND_SetChannelStartInfo(int param_1,SndStartAliasInfo *param_2)
     local_80 = param_2->org[2] - local_80;
     fVar4 = local_68 * local_80 + local_6c * local_84 + local_70 * local_88;
     fVar3 = local_5c * local_80 + local_60 * local_84 + local_64 * local_88;
-    g_snd.chaninfo[iVar5].offset[0] = fVar4;
+    g_snd.chaninfo[param_1].offset[0] = fVar4;
     fVar1 = local_50 * local_80 + local_54 * local_84 + local_58 * local_88;
-    g_snd.chaninfo[iVar5].offset[1] = fVar3;
-    g_snd.chaninfo[iVar5].offset[2] = fVar1;
+    g_snd.chaninfo[param_1].offset[1] = fVar3;
+    g_snd.chaninfo[param_1].offset[2] = fVar1;
     if (((((uint)fVar4 & 0x7f800000) == 0x7f800000) || (((uint)fVar3 & 0x7f800000) == 0x7f800000))
        || (((uint)fVar1 & 0x7f800000) == 0x7f800000)) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x6db,0,"%s");
     }
   }
-  g_snd.chaninfo[iVar5].sndEnt = param_2->sndEnt;
-  g_snd.chaninfo[iVar5].entchannel = param_2->alias0->flags >> 9 & 0x3f;
-  g_snd.chaninfo[iVar5].mixvolume = param_2->mixvolume;
-  g_snd.chaninfo[iVar5].attenuation = param_2->attenuation;
-  g_snd.chaninfo[iVar5].basevolume = param_2->basevolume;
-  SND_InitParameter(&g_snd.chaninfo[iVar5].volumeInfo,param_2->volume);
-  SND_InitParameter(&g_snd.chaninfo[iVar5].pitchInfo,param_2->pitch);
+  g_snd.chaninfo[param_1].sndEnt = param_2->sndEnt;
+  g_snd.chaninfo[param_1].entchannel = param_2->alias0->flags >> 9 & 0x3f;
+  g_snd.chaninfo[param_1].mixvolume = param_2->mixvolume;
+  g_snd.chaninfo[param_1].attenuation = param_2->attenuation;
+  g_snd.chaninfo[param_1].basevolume = param_2->basevolume;
+  SND_InitParameter(&g_snd.chaninfo[param_1].volumeInfo,param_2->volume);
+  SND_InitParameter(&g_snd.chaninfo[param_1].pitchInfo,param_2->pitch);
   fVar1 = param_2->basepitch;
-  g_snd.chaninfo[iVar5].basepitch = fVar1;
+  g_snd.chaninfo[param_1].basepitch = fVar1;
   if (((uint)fVar1 & 0x7f800000) == 0x7f800000) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x6e9,0,"%s");
   }
-  g_snd.chaninfo[iVar5].alias0 = param_2->alias0;
-  g_snd.chaninfo[iVar5].alias1 = param_2->alias1;
-  g_snd.chaninfo[iVar5].lerp = param_2->lerp;
-  g_snd.chaninfo[iVar5].startDelay = param_2->startDelay;
-  g_snd.chaninfo[iVar5].looptime = g_snd.looptime;
+  g_snd.chaninfo[param_1].alias0 = param_2->alias0;
+  g_snd.chaninfo[param_1].alias1 = param_2->alias1;
+  g_snd.chaninfo[param_1].lerp = param_2->lerp;
+  g_snd.chaninfo[param_1].startDelay = param_2->startDelay;
+  g_snd.chaninfo[param_1].looptime = g_snd.looptime;
   if ((param_2->forcePaused != false) ||
-     ((g_snd.paused != false && (bVar7 = SND_IsPausable(param_2->alias0->flags >> 9 & 0x3f), bVar7))
+     ((g_snd.paused != false && (bVar6 = SND_IsPausable(param_2->alias0->flags >> 9 & 0x3f), bVar6))
      )) {
-    bVar7 = true;
+    bVar6 = true;
   }
   else {
-    bVar7 = false;
+    bVar6 = false;
   }
-  uVar2 = g_snd.chaninfo[iVar5].sndEnt.handle;
-  g_snd.chaninfo[iVar5].paused = bVar7;
-  g_snd.chaninfo[iVar5].masterPriority = param_2->masterPriority;
-  g_snd.chaninfo[iVar5].slaveLerp = param_2->slaveLerp;
-  g_snd.chaninfo[iVar5].system = param_2->system;
-  g_snd.chaninfo[iVar5].timescaleLerp = param_2->timescaleLerp;
+  uVar2 = g_snd.chaninfo[param_1].sndEnt.handle;
+  g_snd.chaninfo[param_1].paused = bVar6;
+  g_snd.chaninfo[param_1].masterPriority = param_2->masterPriority;
+  g_snd.chaninfo[param_1].slaveLerp = param_2->slaveLerp;
+  g_snd.chaninfo[param_1].system = param_2->system;
+  g_snd.chaninfo[param_1].timescaleLerp = param_2->timescaleLerp;
   if (uVar2 == 0xffff) {
-    SND_InitParameter(&g_snd.chaninfo[iVar5].occlusionLerp,(float)dVar10);
-    g_snd.chaninfo[iVar5].nextOcclusionTime = 0;
+    SND_InitParameter(&g_snd.chaninfo[param_1].occlusionLerp,(float)dVar9);
+    g_snd.chaninfo[param_1].nextOcclusionTime = 0;
   }
   else {
     uVar2 = uVar2 >> 0x14;
     if (uVar2 == 0x7fe) {
-      g_snd.chaninfo[iVar5].nextOcclusionTime = 0;
-      SND_SoundOcclusionTrace(g_snd.chaninfo + iVar5,0);
+      g_snd.chaninfo[param_1].nextOcclusionTime = 0;
+      SND_SoundOcclusionTrace(g_snd.chaninfo + param_1,0);
     }
     else {
-      pEVar6 = SND_GetEntityOcclusionInfo(uVar2);
-      pEVar6->nextOcclusionTime = 0;
+      pEVar5 = SND_GetEntityOcclusionInfo(uVar2);
+      pEVar5->nextOcclusionTime = 0;
     }
-    SND_ForceToGoalOcclusion(g_snd.chaninfo + iVar5);
+    SND_ForceToGoalOcclusion(g_snd.chaninfo + param_1);
   }
-  puVar8 = (undefined4 *)(iVar5 * 0xc0 + -0x7b777ecc);
-  lVar9 = 9;
+  psVar7 = (sndLengthNotifyInfo *)&g_snd.chaninfo[param_1].playbackId;
+  lVar8 = 9;
   do {
-    puVar8 = puVar8 + 1;
-    *puVar8 = 0;
-    lVar9 = lVar9 + -1;
-  } while (lVar9 != 0);
-  __restgprlr_26();
+    psVar7 = (sndLengthNotifyInfo *)(psVar7->id + 1);
+    psVar7->id[0] = SndLengthNotify_Subtitle;
+    lVar8 = lVar8 + -1;
+  } while (lVar8 != 0);
   return;
 }
 
 
 // 828496E0  SND_SetSoundFileChannelInfo  (snd.cpp:1814)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void SND_SetSoundFileChannelInfo(int param_1,int param_2,int param_3,SndFileLoadingState param_4)
 
 {
-  int iVar1;
-  
-  iVar1 = __savegprlr_28(param_1);
-  if ((iVar1 < 0) || (0x35 < iVar1)) {
+  if ((param_1 < 0) || (0x35 < param_1)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x717,0,"%s");
   }
-  g_snd.chaninfo[iVar1].soundFileInfo.loadingState = param_4;
-  g_snd.chaninfo[iVar1].soundFileInfo.srcChannelCount = param_2;
-  g_snd.chaninfo[iVar1].soundFileInfo.baserate = param_3;
-  __restgprlr_28();
+  g_snd.chaninfo[param_1].soundFileInfo.loadingState = param_4;
+  g_snd.chaninfo[param_1].soundFileInfo.srcChannelCount = param_2;
+  g_snd.chaninfo[param_1].soundFileInfo.baserate = param_3;
   return;
 }
 
 
 // 82849770  SND_ComputeStartAliasMixVolume  (snd.cpp:1824)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 void SND_ComputeStartAliasMixVolume(SndStartAliasInfo *param_1,int param_2)
 
 {
-  int iVar1;
-  SndStartAliasInfo *pSVar2;
-  ulonglong uVar3;
-  double dVar4;
-  double dVar5;
-  double dVar6;
+  double dVar1;
+  double dVar2;
+  double dVar3;
   float local_60 [24];
   
-  uVar3 = (ulonglong)param_2;
-  pSVar2 = (SndStartAliasInfo *)__savegprlr_26(param_1);
-  if (pSVar2 == (SndStartAliasInfo *)0x0) {
+  if (param_1 == (SndStartAliasInfo *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x723,0,"%s");
   }
-  if ((ulonglong)(uint)g_snd.entchannel_count <= (uVar3 & 0xffffffff)) {
+  if ((uint)g_snd.entchannel_count <= (uint)param_2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x724,0,
                     "entchannel doesn\'t index g_snd.entchannel_count\n\t%i not in [0, %i)");
   }
-  dVar6 = (double)pSVar2->volume;
-  dVar5 = 0.0;
-  dVar4 = 1.0;
-  if ((dVar6 < 0.0) || (1.0 < dVar6)) {
+  dVar3 = (double)param_1->volume;
+  dVar2 = 0.0;
+  dVar1 = 1.0;
+  if ((dVar3 < 0.0) || (1.0 < dVar3)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x727,0,
                     "%s\n\t(mixvolume) = %g");
   }
-  iVar1 = (int)((uVar3 + (uVar3 & 0x7fffffff) * 2 & 0xffffffff) << 2);
-  dVar6 = (double)(float)((double)*(float *)((int)&(g_snd.channelvol)->channelvol[0].value + iVar1)
-                         * dVar6);
-  if ((dVar6 < dVar5) || (dVar4 < dVar6)) {
+  dVar3 = (double)(float)((double)(g_snd.channelvol)->channelvol[param_2].value * dVar3);
+  if ((dVar3 < dVar2) || (dVar1 < dVar3)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x729,0,
                     "%s\n\t(mixvolume) = %g");
   }
-  dVar6 = (double)(float)((double)*(float *)((int)&g_snd.channelVolGlobal.channelvol[0].value +
-                                            iVar1) * dVar6);
-  if ((dVar6 < dVar5) || (dVar4 < dVar6)) {
+  dVar3 = (double)(float)((double)g_snd.channelVolGlobal.channelvol[param_2].value * dVar3);
+  if ((dVar3 < dVar2) || (dVar1 < dVar3)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x72b,0,
                     "%s\n\t(mixvolume) = %g");
   }
-  dVar6 = (double)(float)((double)g_snd.volmods[pSVar2->alias0->volModIndex].value * dVar6);
-  if ((dVar6 < dVar5) || (dVar4 < dVar6)) {
+  dVar3 = (double)(float)((double)g_snd.volmods[param_1->alias0->volModIndex].value * dVar3);
+  if ((dVar3 < dVar2) || (dVar1 < dVar3)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x72d,0,
                     "%s\n\t(mixvolume) = %g");
   }
-  local_60[0] = (float)((double)g_snd.volume * dVar6);
-  if (((double)local_60[0] < dVar5) || (dVar4 < (double)local_60[0])) {
+  local_60[0] = (float)((double)g_snd.volume * dVar3);
+  if (((double)local_60[0] < dVar2) || (dVar1 < (double)local_60[0])) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x733,0,
                     "%s\n\t(mixvolume) = %g");
   }
-  SND_ApplyStartAliasMasterPriorityVolume(pSVar2,local_60);
-  dVar6 = (double)local_60[0];
-  if ((dVar6 < dVar5) || (dVar4 < dVar6)) {
+  SND_ApplyStartAliasMasterPriorityVolume(param_1,local_60);
+  dVar3 = (double)local_60[0];
+  if ((dVar3 < dVar2) || (dVar1 < dVar3)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x736,0,
                     "%s\n\t(mixvolume) = %g");
   }
-  pSVar2->mixvolume = (float)dVar6;
-  __restgprlr_26();
+  param_1->mixvolume = (float)dVar3;
   return;
 }
 
 
 // 828499E0  SND_Get3DDistanceAttenuation  (snd.cpp:1852)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 float SND_Get3DDistanceAttenuation(float *param_1,SndCurve *param_2,float param_3,float param_4)
 
 {
   float fVar1;
   float fVar2;
-  float *pfVar3;
-  int iVar4;
-  ulonglong uVar5;
-  double extraout_f1;
+  int iVar3;
+  double dVar4;
+  double dVar5;
   double dVar6;
-  double dVar7;
-  double dVar8;
-  float fVar9;
+  float fVar7;
   
-  dVar7 = (double)param_4;
-  uVar5 = (ulonglong)(int)param_2;
-  pfVar3 = (float *)__savegprlr_28((double)param_3,param_1);
-  dVar6 = extraout_f1;
-  if ((uVar5 & 0xffffffff) == 0) {
+  dVar4 = (double)param_3;
+  dVar5 = (double)param_4;
+  if (param_2 == (SndCurve *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x741,0,"%s");
   }
-  dVar8 = 0.0;
-  if (dVar6 < 0.0) {
+  dVar6 = 0.0;
+  if (dVar4 < 0.0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x742,0,"%s");
   }
-  if (dVar7 < dVar8) {
+  if (dVar5 < dVar6) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x743,0,"%s");
   }
-  if (dVar7 <= dVar6) {
+  if (dVar5 <= dVar4) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x744,0,"%s");
   }
-  iVar4 = SND_GetListenerIndexNearestToOrigin(pfVar3);
-  fVar9 = g_snd.listeners[iVar4].orient.origin[2] - pfVar3[2];
-  fVar1 = g_snd.listeners[iVar4].orient.origin[0] - *pfVar3;
-  fVar2 = g_snd.listeners[iVar4].orient.origin[1] - pfVar3[1];
-  fVar9 = SND_Attenuate((SndCurve *)uVar5,SQRT(fVar2 * fVar2 + fVar1 * fVar1 + fVar9 * fVar9),
-                        (float)dVar6,(float)dVar7);
-  dVar6 = (double)__restgprlr_28((double)fVar9);
-  return (float)dVar6;
+  iVar3 = SND_GetListenerIndexNearestToOrigin(param_1);
+  fVar7 = g_snd.listeners[iVar3].orient.origin[2] - param_1[2];
+  fVar1 = g_snd.listeners[iVar3].orient.origin[0] - *param_1;
+  fVar2 = g_snd.listeners[iVar3].orient.origin[1] - param_1[1];
+  fVar7 = SND_Attenuate(param_2,SQRT(fVar2 * fVar2 + fVar1 * fVar1 + fVar7 * fVar7),(float)dVar4,
+                        (float)dVar5);
+  return fVar7;
 }
 
 
 // 82849B28  SND_FindReplaceableChannel  (snd.cpp:1871)
 
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
+
 int SND_FindReplaceableChannel(SndStartAliasInfo *param_1,int param_2,int param_3,int param_4)
 
 {
-  int *piVar1;
-  int iVar2;
+  char *pcVar1;
+  snd_alias_t *psVar2;
   int iVar3;
   int iVar4;
-  ulonglong uVar5;
-  ulonglong uVar6;
-  longlong lVar7;
+  int iVar5;
+  int *piVar6;
+  double dVar7;
   double dVar8;
   double dVar9;
   double dVar10;
   double dVar11;
-  double dVar12;
-  float fVar13;
+  float fVar12;
   
-  uVar6 = (ulonglong)param_3;
-  __savegprlr_22(param_1);
-  piVar1 = (int *)__savefpr_27();
-  if (piVar1 == (int *)0x0) {
+  if (param_1 == (SndStartAliasInfo *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x758,0,"%s");
   }
-  iVar3 = (int)uVar6;
-  if ((iVar3 < 0) || (0x35 < iVar3)) {
+  if ((param_3 < 0) || (0x35 < param_3)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x759,0,
                     "%s\n\t(first) = %i");
   }
-  if ((param_4 < 0) || (0x36 - iVar3 < param_4)) {
+  if ((param_4 < 0) || (0x36 - param_3 < param_4)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x75a,0,
                     "%s\n\t(count) = %i");
   }
@@ -2666,215 +2570,213 @@ int SND_FindReplaceableChannel(SndStartAliasInfo *param_1,int param_2,int param_
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x75b,0,
                     "%s\n\t(entchannel) = %i");
   }
-  if (*piVar1 == 0) {
+  if (param_1->alias0 == (snd_alias_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x75c,0,"%s");
   }
-  dVar12 = 0.0;
-  dVar10 = 1.0;
-  if (((float)piVar1[10] < 0.0) || (1.0 < (float)piVar1[10])) {
+  dVar11 = 0.0;
+  dVar9 = 1.0;
+  if ((param_1->mixvolume < 0.0) || (1.0 < param_1->mixvolume)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x75d,0,
                     "%s\n\t(startAliasInfo->mixvolume) = %g");
   }
-  if (((double)(float)piVar1[0xb] < dVar12) || (dVar10 < (double)(float)piVar1[0xb])) {
+  if (((double)param_1->attenuation < dVar11) || (dVar9 < (double)param_1->attenuation)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x75e,0,
                     "%s\n\t(startAliasInfo->attenuation) = %g");
   }
-  iVar2 = SND_GetPriority(param_2);
-  dVar11 = 9.999999747378752e-05;
-  dVar12 = (double)((float)(longlong)iVar2 * (float)piVar1[10] * (float)piVar1[0xb]);
-  if (dVar12 <= 9.999999747378752e-05) {
-    __restfpr_27(0xffffffffffffffff);
-    iVar3 = __restgprlr_22();
+  iVar3 = SND_GetPriority(param_2);
+  dVar10 = 9.999999747378752e-05;
+  dVar11 = (double)((float)(longlong)iVar3 * param_1->mixvolume * param_1->attenuation);
+  if (9.999999747378752e-05 < dVar11) {
+    iVar5 = param_3 + param_4;
+    iVar3 = -1;
+    pcVar1 = param_1->alias0->subtitle;
+    if (param_3 < iVar5) {
+      piVar6 = &g_snd.chaninfo[param_3].entchannel;
+      iVar3 = -1;
+      do {
+        psVar2 = (snd_alias_t *)piVar6[0x18];
+        if (psVar2 == (snd_alias_t *)0x0) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x76d,0,"%s");
+        }
+        if ((((snd_channel_info_t *)(piVar6 + -4))->soundFileInfo).loadingState == SFLS_UNLOADED) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x76e,0,"%s");
+        }
+        if ((((((snd_channel_info_t *)(piVar6 + -4))->soundFileInfo).loadingState == SFLS_LOADED) &&
+            ((psVar2->flags & 1U) == 0)) &&
+           (fVar12 = SND_GetChannelFractionPlayed(param_3,false), dVar9 <= (double)fVar12)) {
+          return param_3;
+        }
+        if ((pcVar1 != (char *)0x0) || (psVar2->subtitle == (char *)0x0)) {
+          dVar8 = (double)(float)piVar6[0xf];
+          dVar7 = (double)(float)piVar6[0x10];
+          iVar4 = SND_GetPriority(*piVar6);
+          dVar7 = (double)(float)((double)(float)((double)(longlong)iVar4 * dVar8) * dVar7);
+          if (dVar7 <= dVar10) {
+            return param_3;
+          }
+          if (dVar7 <= dVar11) {
+            dVar11 = dVar7;
+            iVar3 = param_3;
+          }
+        }
+        param_3 = param_3 + 1;
+        piVar6 = piVar6 + 0x30;
+      } while (param_3 < iVar5);
+    }
     return iVar3;
   }
-  uVar5 = 0xffffffffffffffff;
-  iVar2 = *(int *)(*piVar1 + 4);
-  if (iVar3 < iVar3 + param_4) {
-    lVar7 = (uVar6 + (uVar6 & 0x7fffffff) * 2 & 0x3ffffff) * 0x40 + -0x7b777edc;
-    do {
-      piVar1 = (int *)lVar7;
-      iVar4 = piVar1[0x18];
-      if (iVar4 == 0) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x76d,0,"%s");
-      }
-      if (piVar1[-4] == 0) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x76e,0,"%s");
-      }
-      if (((piVar1[-4] == 2) && ((*(uint *)(iVar4 + 0x3c) & 1) == 0)) &&
-         (fVar13 = SND_GetChannelFractionPlayed((int)uVar6,false), dVar10 <= (double)fVar13)) {
-LAB_82849e74:
-        __restfpr_27(uVar6);
-        iVar3 = __restgprlr_22();
-        return iVar3;
-      }
-      if ((iVar2 != 0) || (*(int *)(iVar4 + 4) == 0)) {
-        dVar9 = (double)(float)piVar1[0xf];
-        dVar8 = (double)(float)piVar1[0x10];
-        iVar4 = SND_GetPriority(*piVar1);
-        dVar8 = (double)(float)((double)(float)((double)(longlong)iVar4 * dVar9) * dVar8);
-        if (dVar8 <= dVar11) goto LAB_82849e74;
-        if (dVar8 <= dVar12) {
-          uVar5 = uVar6;
-          dVar12 = dVar8;
-        }
-      }
-      uVar6 = uVar6 + 1;
-      lVar7 = lVar7 + 0xc0;
-    } while ((int)uVar6 < iVar3 + param_4);
-  }
-  __restfpr_27(uVar5);
-  iVar3 = __restgprlr_22();
-  return iVar3;
+  return -1;
 }
 
 
 // 82849E88  SND_FindFree2DChannel  (snd.cpp:1937)
 
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
+
 int SND_FindFree2DChannel(SndStartAliasInfo *param_1,int param_2)
 
 {
   snd_alias_t *psVar1;
-  SndStartAliasInfo *pSVar2;
-  bool bVar6;
-  int iVar3;
-  char *pcVar4;
-  int iVar5;
-  longlong lVar7;
-  float fVar8;
+  bool bVar5;
+  int iVar2;
+  char *pcVar3;
+  int iVar4;
+  float fVar6;
   
-  pSVar2 = (SndStartAliasInfo *)__savegprlr_22(param_1);
   SND_GetEntChannelName(param_2);
   va("Max voices reached for entchannel %s");
-  psVar1 = pSVar2->alias0;
-  bVar6 = SND_HasFreeVoice(param_2);
-  if ((!bVar6) &&
-     (iVar3 = I_stricmp((snd_debugAlias->current).string,psVar1->aliasName), iVar3 == 0)) {
+  psVar1 = param_1->alias0;
+  bVar5 = SND_HasFreeVoice(param_2);
+  if ((!bVar5) &&
+     (iVar2 = I_stricmp((snd_debugAlias->current).string,psVar1->aliasName), iVar2 == 0)) {
     Com_DPrintf(9,"^5SND_DEBUG_ALIAS (%s): %s\n");
   }
-  bVar6 = SND_HasFreeVoice(param_2);
-  if (!bVar6) {
-    iVar3 = __restgprlr_22(0xffffffffffffffff);
-    return iVar3;
+  bVar5 = SND_HasFreeVoice(param_2);
+  if (!bVar5) {
+    return -1;
   }
-  lVar7 = 0;
+  iVar2 = 0;
   if (0 < g_snd.max_2D_channels) {
     do {
-      bVar6 = SND_Is2DChannelFree((int)lVar7);
-      if (bVar6) {
-        iVar3 = __restgprlr_22(lVar7);
-        return iVar3;
+      bVar5 = SND_Is2DChannelFree(iVar2);
+      if (bVar5) {
+        return iVar2;
       }
-      lVar7 = lVar7 + 1;
-    } while ((int)lVar7 < g_snd.max_2D_channels);
+      iVar2 = iVar2 + 1;
+    } while (iVar2 < g_snd.max_2D_channels);
   }
-  iVar3 = SND_FindReplaceableChannel(pSVar2,param_2,0,g_snd.max_2D_channels);
-  if (-1 < iVar3) {
-    bVar6 = SND_Is2DChannelFree(iVar3);
-    if (!bVar6) {
-      SND_GetPriority(g_snd.chaninfo[iVar3].entchannel);
+  iVar2 = SND_FindReplaceableChannel(param_1,param_2,0,g_snd.max_2D_channels);
+  if (-1 < iVar2) {
+    bVar5 = SND_Is2DChannelFree(iVar2);
+    if (!bVar5) {
+      SND_GetPriority(g_snd.chaninfo[iVar2].entchannel);
       SND_GetPriority(param_2);
-      pcVar4 = va("(prio %i) => Replacing \'%s\' (prio: %i)");
-      psVar1 = pSVar2->alias0;
-      bVar6 = SND_Is2DChannelFree(iVar3);
-      SND_DebugAliasPrint(!bVar6,psVar1,pcVar4);
+      pcVar3 = va("(prio %i) => Replacing \'%s\' (prio: %i)");
+      psVar1 = param_1->alias0;
+      bVar5 = SND_Is2DChannelFree(iVar2);
+      SND_DebugAliasPrint(!bVar5,psVar1,pcVar3);
       SND_GetPriority(param_2);
-      SND_GetPriority(g_snd.chaninfo[iVar3].entchannel);
-      pcVar4 = va("(prio %i ) => Replaced by \'%s\' (prio: %i)");
-      psVar1 = g_snd.chaninfo[iVar3].alias0;
-      bVar6 = SND_Is2DChannelFree(iVar3);
-      SND_DebugAliasPrint(!bVar6,psVar1,pcVar4);
+      SND_GetPriority(g_snd.chaninfo[iVar2].entchannel);
+      pcVar3 = va("(prio %i ) => Replaced by \'%s\' (prio: %i)");
+      psVar1 = g_snd.chaninfo[iVar2].alias0;
+      bVar5 = SND_Is2DChannelFree(iVar2);
+      SND_DebugAliasPrint(!bVar5,psVar1,pcVar3);
       if (((snd_debugReplace->current).enabled != false) &&
-         ((((g_snd.chaninfo[iVar3].alias0)->flags & 1U) != 0 ||
-          (fVar8 = SND_GetChannelFractionPlayed(iVar3,false), 1.0 <= fVar8)))) {
+         ((((g_snd.chaninfo[iVar2].alias0)->flags & 1U) != 0 ||
+          (fVar6 = SND_GetChannelFractionPlayed(iVar2,false), 1.0 <= fVar6)))) {
         SND_GetPriority(param_2);
-        SND_GetChannelFractionPlayed(iVar3,false);
-        SND_GetPriority(g_snd.chaninfo[iVar3].entchannel);
+        SND_GetChannelFractionPlayed(iVar2,false);
+        SND_GetPriority(g_snd.chaninfo[iVar2].entchannel);
         Com_Printf(0xe,
                    "Stopping 2d sound channel that\'s playing \'%s\' (prio: %i, %.0f%% played) so we can play \'%s\' (prio: %i) instead\n"
                   );
       }
     }
-    SND_Stop2DChannel(iVar3);
+    SND_Stop2DChannel(iVar2);
   }
-  if ((iVar3 < 0) &&
-     (iVar5 = I_stricmp((snd_debugAlias->current).string,pSVar2->alias0->aliasName), iVar5 == 0)) {
+  if ((iVar2 < 0) &&
+     (iVar4 = I_stricmp((snd_debugAlias->current).string,param_1->alias0->aliasName), iVar4 == 0)) {
     Com_DPrintf(9,"^5SND_DEBUG_ALIAS (%s): %s\n");
   }
-  iVar3 = __restgprlr_22(iVar3);
-  return iVar3;
+  return iVar2;
 }
 
 
 // 8284A188  SND_FindFree3DChannel  (snd.cpp:1972)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
+
 int SND_FindFree3DChannel(SndStartAliasInfo *param_1,int param_2)
 
 {
   snd_alias_t *psVar1;
-  SndStartAliasInfo *pSVar2;
-  bool bVar6;
-  int iVar3;
+  bool bVar5;
+  int iVar2;
+  char *pcVar3;
   int iVar4;
-  char *pcVar5;
-  float fVar7;
+  float fVar6;
   
-  pSVar2 = (SndStartAliasInfo *)__savegprlr_23(param_1);
-  bVar6 = SND_HasFreeVoice(param_2);
-  if (!bVar6) {
-    iVar3 = __restgprlr_23(0xffffffffffffffff);
-    return iVar3;
+  bVar5 = SND_HasFreeVoice(param_2);
+  if (!bVar5) {
+    return -1;
   }
-  iVar3 = 0;
+  iVar2 = 0;
   if (0 < g_snd.max_3D_channels) {
     do {
-      iVar4 = iVar3 + 8;
-      bVar6 = SND_Is3DChannelFree(iVar4);
-      if (bVar6) goto LAB_8284a44c;
-      iVar3 = iVar3 + 1;
-    } while (iVar3 < g_snd.max_3D_channels);
+      bVar5 = SND_Is3DChannelFree(iVar2 + 8);
+      if (bVar5) {
+        return iVar2 + 8;
+      }
+      iVar2 = iVar2 + 1;
+    } while (iVar2 < g_snd.max_3D_channels);
   }
-  iVar4 = SND_FindReplaceableChannel(pSVar2,param_2,8,g_snd.max_3D_channels);
-  if (-1 < iVar4) {
-    bVar6 = SND_Is3DChannelFree(iVar4);
-    if (!bVar6) {
-      SND_GetPriority(g_snd.chaninfo[iVar4].entchannel);
+  iVar2 = SND_FindReplaceableChannel(param_1,param_2,8,g_snd.max_3D_channels);
+  if (-1 < iVar2) {
+    bVar5 = SND_Is3DChannelFree(iVar2);
+    if (!bVar5) {
+      SND_GetPriority(g_snd.chaninfo[iVar2].entchannel);
       SND_GetPriority(param_2);
-      pcVar5 = va("(prio %i) => Replacing \'%s\' (prio: %i)");
-      psVar1 = pSVar2->alias0;
-      bVar6 = SND_Is3DChannelFree(iVar4);
-      SND_DebugAliasPrint(!bVar6,psVar1,pcVar5);
+      pcVar3 = va("(prio %i) => Replacing \'%s\' (prio: %i)");
+      psVar1 = param_1->alias0;
+      bVar5 = SND_Is3DChannelFree(iVar2);
+      SND_DebugAliasPrint(!bVar5,psVar1,pcVar3);
       SND_GetPriority(param_2);
-      SND_GetPriority(g_snd.chaninfo[iVar4].entchannel);
-      pcVar5 = va("(prio %i ) => Replaced by \'%s\' (prio: %i)");
-      psVar1 = g_snd.chaninfo[iVar4].alias0;
-      bVar6 = SND_Is3DChannelFree(iVar4);
-      SND_DebugAliasPrint(!bVar6,psVar1,pcVar5);
+      SND_GetPriority(g_snd.chaninfo[iVar2].entchannel);
+      pcVar3 = va("(prio %i ) => Replaced by \'%s\' (prio: %i)");
+      psVar1 = g_snd.chaninfo[iVar2].alias0;
+      bVar5 = SND_Is3DChannelFree(iVar2);
+      SND_DebugAliasPrint(!bVar5,psVar1,pcVar3);
       if (((snd_debugReplace->current).enabled != false) &&
-         ((((g_snd.chaninfo[iVar4].alias0)->flags & 1U) != 0 ||
-          (fVar7 = SND_GetChannelFractionPlayed(iVar4,false), 1.0 <= fVar7)))) {
-        SND_DistSqToNearestListener(pSVar2->org);
+         ((((g_snd.chaninfo[iVar2].alias0)->flags & 1U) != 0 ||
+          (fVar6 = SND_GetChannelFractionPlayed(iVar2,false), 1.0 <= fVar6)))) {
+        SND_DistSqToNearestListener(param_1->org);
         SND_GetPriority(param_2);
-        SND_DistSqToNearestListener(g_snd.chaninfo[iVar4].org);
-        SND_GetChannelFractionPlayed(iVar4,false);
-        SND_GetPriority(g_snd.chaninfo[iVar4].entchannel);
+        SND_DistSqToNearestListener(g_snd.chaninfo[iVar2].org);
+        SND_GetChannelFractionPlayed(iVar2,false);
+        SND_GetPriority(g_snd.chaninfo[iVar2].entchannel);
         Com_DPrintf(0xe,
                     "Stopping 3d sound channel that\'s playing \'%s\' (prio: %i, %.0f%% played, dist: %f) so we can play \'%s\' (prio: %i, dist: %f) instead\n"
                    );
       }
     }
-    SND_Stop3DChannel(iVar4);
+    SND_Stop3DChannel(iVar2);
   }
-  if ((iVar4 < 0) &&
-     (iVar3 = I_stricmp((snd_debugAlias->current).string,pSVar2->alias0->aliasName), iVar3 == 0)) {
+  if ((iVar2 < 0) &&
+     (iVar4 = I_stricmp((snd_debugAlias->current).string,param_1->alias0->aliasName), iVar4 == 0)) {
     Com_DPrintf(9,"^5SND_DEBUG_ALIAS (%s): %s\n");
   }
-LAB_8284a44c:
-  iVar3 = __restgprlr_23(iVar4);
-  return iVar3;
+  return iVar2;
 }
 
 
 // 8284A468  SND_FindFreeStreamChannel  (snd.cpp:2006)
+
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
 
 int SND_FindFreeStreamChannel(SndStartAliasInfo *param_1,int param_2)
 
@@ -2885,72 +2787,64 @@ int SND_FindFreeStreamChannel(SndStartAliasInfo *param_1,int param_2)
   float fVar4;
   float fVar5;
   uint uVar6;
-  SndStartAliasInfo *pSVar7;
-  bool bVar11;
-  int iVar8;
-  char *pcVar9;
-  int iVar10;
-  longlong lVar12;
-  float fVar13;
+  bool bVar10;
+  int iVar7;
+  char *pcVar8;
+  int iVar9;
+  float fVar11;
   
-  __savegprlr_23(param_1);
-  pSVar7 = (SndStartAliasInfo *)__savefpr_27();
-  bVar11 = SND_HasFreeVoice(param_2);
-  if (!bVar11) {
-    __restfpr_27(0xffffffffffffffff);
-    iVar8 = __restgprlr_23();
-    return iVar8;
+  bVar10 = SND_HasFreeVoice(param_2);
+  if (!bVar10) {
+    return -1;
   }
-  lVar12 = 6;
+  iVar7 = 6;
   if (6 < g_snd.max_stream_channels) {
     do {
-      bVar11 = SND_IsStreamChannelFree((int)(lVar12 + 0x28));
-      if (bVar11) {
-        __restfpr_27(lVar12 + 0x28);
-        iVar8 = __restgprlr_23();
-        return iVar8;
+      bVar10 = SND_IsStreamChannelFree(iVar7 + 0x28);
+      if (bVar10) {
+        return iVar7 + 0x28;
       }
-      lVar12 = lVar12 + 1;
-    } while ((int)lVar12 < g_snd.max_stream_channels);
+      iVar7 = iVar7 + 1;
+    } while (iVar7 < g_snd.max_stream_channels);
   }
-  iVar8 = SND_FindReplaceableChannel(pSVar7,param_2,0x2e,g_snd.max_stream_channels + -6);
-  if (-1 < iVar8) {
-    if (g_snd.chaninfo[iVar8].alias0 == pSVar7->alias0) {
-      uVar6 = (uint)(pSVar7->sndEnt).handle >> 0x12 & 3;
-      fVar13 = g_snd.listeners[uVar6].orient.origin[1];
-      fVar3 = fVar13 - pSVar7->org[1];
-      fVar13 = fVar13 - g_snd.chaninfo[iVar8].org[1];
+  iVar7 = SND_FindReplaceableChannel(param_1,param_2,0x2e,g_snd.max_stream_channels + -6);
+  if (-1 < iVar7) {
+    if (g_snd.chaninfo[iVar7].alias0 == param_1->alias0) {
+      uVar6 = (uint)(param_1->sndEnt).handle >> 0x12 & 3;
+      fVar11 = g_snd.listeners[uVar6].orient.origin[1];
+      fVar3 = fVar11 - param_1->org[1];
+      fVar11 = fVar11 - g_snd.chaninfo[iVar7].org[1];
       fVar1 = g_snd.listeners[uVar6].orient.origin[2];
       fVar2 = g_snd.listeners[uVar6].orient.origin[0];
-      fVar4 = fVar1 - pSVar7->org[2];
-      fVar5 = fVar2 - pSVar7->org[0];
-      fVar1 = fVar1 - g_snd.chaninfo[iVar8].org[2];
-      fVar2 = fVar2 - g_snd.chaninfo[iVar8].org[0];
-      if (fVar2 * fVar2 + fVar1 * fVar1 + fVar13 * fVar13 <=
+      fVar4 = fVar1 - param_1->org[2];
+      fVar5 = fVar2 - param_1->org[0];
+      fVar1 = fVar1 - g_snd.chaninfo[iVar7].org[2];
+      fVar2 = fVar2 - g_snd.chaninfo[iVar7].org[0];
+      if (fVar2 * fVar2 + fVar1 * fVar1 + fVar11 * fVar11 <=
           fVar5 * fVar5 + fVar4 * fVar4 + fVar3 * fVar3) {
-        iVar8 = -1;
+        iVar7 = -1;
         goto LAB_8284a7a0;
       }
     }
-    SND_StopStreamChannel(iVar8);
-    bVar11 = SND_IsStreamChannelFree(iVar8);
-    if (!bVar11) {
-      SND_GetPriority(g_snd.chaninfo[iVar8].entchannel);
+    SND_StopStreamChannel(iVar7);
+    bVar10 = SND_IsStreamChannelFree(iVar7);
+    if (!bVar10) {
+      SND_GetPriority(g_snd.chaninfo[iVar7].entchannel);
       SND_GetPriority(param_2);
-      pcVar9 = va("(prio %i) => Replacing \'%s\' (prio: %i)");
-      SND_DebugAliasPrint(true,pSVar7->alias0,pcVar9);
+      pcVar8 = va("(prio %i) => Replacing \'%s\' (prio: %i)");
+      SND_DebugAliasPrint(true,param_1->alias0,pcVar8);
       SND_GetPriority(param_2);
-      SND_GetPriority(g_snd.chaninfo[iVar8].entchannel);
-      pcVar9 = va("(prio %i ) => Replaced by \'%s\' (prio: %i)");
-      SND_DebugAliasPrint(true,g_snd.chaninfo[iVar8].alias0,pcVar9);
+      SND_GetPriority(g_snd.chaninfo[iVar7].entchannel);
+      pcVar8 = va("(prio %i ) => Replaced by \'%s\' (prio: %i)");
+      SND_DebugAliasPrint(true,g_snd.chaninfo[iVar7].alias0,pcVar8);
       if (((snd_debugReplace->current).enabled != false) &&
-         ((((g_snd.chaninfo[iVar8].alias0)->flags & 1U) != 0 ||
-          (fVar13 = SND_GetChannelFractionPlayed(iVar8,false), 1.0 <= fVar13)))) {
-        SND_GetListenerIndexNearestToOrigin(pSVar7->org);
+         ((((g_snd.chaninfo[iVar7].alias0)->flags & 1U) != 0 ||
+          (fVar11 = SND_GetChannelFractionPlayed(iVar7,false), 1.0 <= fVar11)))) {
+        SND_GetListenerIndexNearestToOrigin(param_1->org);
         SND_GetPriority(param_2);
-        SND_DistSqToNearestListener(g_snd.chaninfo[iVar8].org);
-        SND_GetChannelFractionPlayed(iVar8,false);
-        SND_GetPriority(g_snd.chaninfo[iVar8].entchannel);
+        SND_DistSqToNearestListener(g_snd.chaninfo[iVar7].org);
+        SND_GetChannelFractionPlayed(iVar7,false);
+        SND_GetPriority(g_snd.chaninfo[iVar7].entchannel);
         Com_DPrintf(9,
                     "Stopping stream sound channel that\'s playing \'%s\' (prio: %i, %.0f%% played, dist: %f) so we can play \'%s\' (prio: %i, dist: %f) instead\n"
                    );
@@ -2958,235 +2852,222 @@ int SND_FindFreeStreamChannel(SndStartAliasInfo *param_1,int param_2)
     }
   }
 LAB_8284a7a0:
-  if ((iVar8 < 0) &&
-     (iVar10 = I_stricmp((snd_debugAlias->current).string,pSVar7->alias0->aliasName), iVar10 == 0))
-  {
+  if ((iVar7 < 0) &&
+     (iVar9 = I_stricmp((snd_debugAlias->current).string,param_1->alias0->aliasName), iVar9 == 0)) {
     Com_DPrintf(9,"^5SND_DEBUG_ALIAS (%s): %s\n");
   }
-  __restfpr_27(iVar8);
-  iVar8 = __restgprlr_23();
-  return iVar8;
+  return iVar7;
 }
 
 
 // 8284A7F8  SND_StopEntityChannel  (snd.cpp:2061)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
+
 void SND_StopEntityChannel(SndEntHandle param_1,int param_2)
 
 {
+  bool bVar2;
   int iVar1;
-  bool bVar3;
-  int iVar2;
-  int iVar4;
-  int *piVar5;
+  int iVar3;
+  int *piVar4;
   
-  iVar1 = __savegprlr_23(param_1.handle);
-  iVar4 = 8;
+  iVar3 = 8;
   if (8 < g_snd.max_3D_channels + 8) {
-    piVar5 = &g_snd.chaninfo[8].entchannel;
+    piVar4 = &g_snd.chaninfo[8].entchannel;
     do {
-      if (((((SndEntHandle *)(piVar5 + -1))->handle == iVar1) && (*piVar5 == param_2)) &&
-         (bVar3 = SND_Is3DChannelFree(iVar4), !bVar3)) {
-        SND_DebugAliasPrint(true,(snd_alias_t *)piVar5[0x18],"stopped on entchannel");
-        SND_Stop3DChannel(iVar4);
+      if (((((SndEntHandle *)(piVar4 + -1))->handle == param_1.handle) && (*piVar4 == param_2)) &&
+         (bVar2 = SND_Is3DChannelFree(iVar3), !bVar2)) {
+        SND_DebugAliasPrint(true,(snd_alias_t *)piVar4[0x18],"stopped on entchannel");
+        SND_Stop3DChannel(iVar3);
       }
-      iVar4 = iVar4 + 1;
-      piVar5 = piVar5 + 0x30;
-    } while (iVar4 < g_snd.max_3D_channels + 8);
+      iVar3 = iVar3 + 1;
+      piVar4 = piVar4 + 0x30;
+    } while (iVar3 < g_snd.max_3D_channels + 8);
   }
-  iVar4 = 0x28;
+  iVar3 = 0x28;
   if (0x28 < g_snd.max_stream_channels + 0x28) {
-    piVar5 = &g_snd.chaninfo[0x28].entchannel;
+    piVar4 = &g_snd.chaninfo[0x28].entchannel;
     do {
-      if (((((SndEntHandle *)(piVar5 + -1))->handle == iVar1) && (*piVar5 == param_2)) &&
-         (bVar3 = SND_IsStreamChannelFree(iVar4), !bVar3)) {
-        iVar2 = I_stricmp((snd_debugAlias->current).string,((snd_alias_t *)piVar5[0x18])->aliasName)
+      if (((((SndEntHandle *)(piVar4 + -1))->handle == param_1.handle) && (*piVar4 == param_2)) &&
+         (bVar2 = SND_IsStreamChannelFree(iVar3), !bVar2)) {
+        iVar1 = I_stricmp((snd_debugAlias->current).string,((snd_alias_t *)piVar4[0x18])->aliasName)
         ;
-        if (iVar2 == 0) {
+        if (iVar1 == 0) {
           Com_DPrintf(9,"^5SND_DEBUG_ALIAS (%s): %s\n");
         }
-        SND_StopStreamChannel(iVar4);
+        SND_StopStreamChannel(iVar3);
       }
-      iVar4 = iVar4 + 1;
-      piVar5 = piVar5 + 0x30;
-    } while (iVar4 < g_snd.max_stream_channels + 0x28);
+      iVar3 = iVar3 + 1;
+      piVar4 = piVar4 + 0x30;
+    } while (iVar3 < g_snd.max_stream_channels + 0x28);
   }
-  iVar4 = 0;
+  iVar3 = 0;
   if (0 < g_snd.max_2D_channels) {
-    piVar5 = &g_snd.chaninfo[0].entchannel;
+    piVar4 = &g_snd.chaninfo[0].entchannel;
     do {
-      if (((((SndEntHandle *)(piVar5 + -1))->handle == iVar1) && (*piVar5 == param_2)) &&
-         (bVar3 = SND_Is2DChannelFree(iVar4), !bVar3)) {
-        iVar2 = I_stricmp((snd_debugAlias->current).string,((snd_alias_t *)piVar5[0x18])->aliasName)
+      if (((((SndEntHandle *)(piVar4 + -1))->handle == param_1.handle) && (*piVar4 == param_2)) &&
+         (bVar2 = SND_Is2DChannelFree(iVar3), !bVar2)) {
+        iVar1 = I_stricmp((snd_debugAlias->current).string,((snd_alias_t *)piVar4[0x18])->aliasName)
         ;
-        if (iVar2 == 0) {
+        if (iVar1 == 0) {
           Com_DPrintf(9,"^5SND_DEBUG_ALIAS (%s): %s\n");
         }
-        SND_Stop2DChannel(iVar4);
+        SND_Stop2DChannel(iVar3);
       }
-      iVar4 = iVar4 + 1;
-      piVar5 = piVar5 + 0x30;
-    } while (iVar4 < g_snd.max_2D_channels);
+      iVar3 = iVar3 + 1;
+      piVar4 = piVar4 + 0x30;
+    } while (iVar3 < g_snd.max_2D_channels);
   }
-  __restgprlr_23();
   return;
 }
 
 
 // 8284AA00  SND_StartAliasSample  (snd.cpp:2097)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 int SND_StartAliasSample(SndStartAliasInfo *param_1,int *param_2)
 
 {
   snd_alias_t *psVar1;
-  SndStartAliasInfo *pSVar2;
-  int iVar3;
-  bool bVar4;
-  ulonglong uVar5;
-  int *piVar6;
-  bool *pbVar7;
+  bool bVar3;
+  int iVar2;
+  bool *pbVar4;
   char acStack_b0 [176];
   
-  uVar5 = (ulonglong)(int)param_2;
-  pSVar2 = (SndStartAliasInfo *)__savegprlr_28(param_1);
-  if (pSVar2->alias0 == (snd_alias_t *)0x0) {
+  if (param_1->alias0 == (snd_alias_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x834,0,"%s");
   }
-  if ((pSVar2->alias0->flags & 0x180U) != 0x80) {
+  if ((param_1->alias0->flags & 0x180U) != 0x80) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x835,0,"%s");
   }
-  if (pSVar2->alias1 == (snd_alias_t *)0x0) {
+  if (param_1->alias1 == (snd_alias_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x836,0,"%s");
   }
-  if ((pSVar2->alias1->flags & 0x180U) != 0x80) {
+  if ((param_1->alias1->flags & 0x180U) != 0x80) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x837,0,"%s");
   }
-  psVar1 = pSVar2->alias0;
-  piVar6 = (int *)uVar5;
+  psVar1 = param_1->alias0;
   if (psVar1->soundFile->exists == '\0') {
     Com_GetSoundFileName(psVar1,acStack_b0,0x80);
     Com_DPrintf(9,
                 "Tried to play sound \'%s\' from alias \'%s\', but it was not successfully loaded.\n"
                );
-    if ((uVar5 & 0xffffffff) != 0) {
-      *piVar6 = -1;
+    if (param_2 != (int *)0x0) {
+      *param_2 = -1;
     }
   }
   else {
-    bVar4 = SND_IsAliasChannel3D(psVar1->flags >> 9 & 0x3f);
-    if (bVar4) {
+    bVar3 = SND_IsAliasChannel3D(psVar1->flags >> 9 & 0x3f);
+    if (bVar3) {
       if ((snd_enable3D->current).enabled != false) {
-        pbVar7 = &g_snd.listeners[0].active;
+        pbVar4 = &g_snd.listeners[0].active;
         do {
-          if (*pbVar7 != false) {
-            bVar4 = true;
+          if (*pbVar4 != false) {
+            bVar3 = true;
             goto LAB_8284ab90;
           }
-          pbVar7 = pbVar7 + 0x3c;
-        } while ((int)pbVar7 < -0x7b7794e0);
-        bVar4 = false;
+          pbVar4 = pbVar4 + 0x3c;
+        } while ((int)pbVar4 < -0x7b7794e0);
+        bVar3 = false;
 LAB_8284ab90:
-        if (!bVar4) {
+        if (!bVar3) {
           Com_Error(ERR_DROP,
                     "attempted to play spatialized alias \'%s\' while there is no active listener. Most likely this means you tried to play a spatialized sound while not in a level.\n"
                    );
-          iVar3 = __restgprlr_28(0xffffffffffffffff);
-          return iVar3;
+          return -1;
         }
-        iVar3 = SND_StartAlias3DSample(pSVar2,piVar6);
-        iVar3 = __restgprlr_28(iVar3);
-        return iVar3;
+        iVar2 = SND_StartAlias3DSample(param_1,param_2);
+        return iVar2;
       }
     }
     else if ((snd_enable2D->current).enabled != false) {
-      iVar3 = SND_StartAlias2DSample(pSVar2,piVar6);
-      iVar3 = __restgprlr_28(iVar3);
-      return iVar3;
+      iVar2 = SND_StartAlias2DSample(param_1,param_2);
+      return iVar2;
     }
   }
-  iVar3 = __restgprlr_28(0xffffffffffffffff);
-  return iVar3;
+  return -1;
 }
 
 
 // 8284AC08  SND_StartAliasStream  (snd.cpp:2149)
+
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 
 int SND_StartAliasStream(SndStartAliasInfo *param_1,int *param_2)
 
 {
   snd_alias_t *psVar1;
   uint uVar2;
-  SndStartAliasInfo *pSVar3;
-  bool bVar5;
-  int iVar4;
-  ulonglong uVar6;
-  bool *pbVar7;
-  float fVar8;
+  bool bVar4;
+  int iVar3;
+  bool *pbVar5;
+  float fVar6;
   
-  uVar6 = (ulonglong)(int)param_2;
-  pSVar3 = (SndStartAliasInfo *)__savegprlr_27(param_1);
-  if (pSVar3->alias0 == (snd_alias_t *)0x0) {
+  if (param_1->alias0 == (snd_alias_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x86b,0,"%s");
   }
-  if ((pSVar3->alias0->flags & 0x180U) != 0x100) {
+  if ((param_1->alias0->flags & 0x180U) != 0x100) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x86c,0,"%s");
   }
-  if (pSVar3->alias1 == (snd_alias_t *)0x0) {
+  if (param_1->alias1 == (snd_alias_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x86d,0,"%s");
   }
-  if ((pSVar3->alias1->flags & 0x180U) != 0x100) {
+  if ((param_1->alias1->flags & 0x180U) != 0x100) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x86e,0,"%s");
   }
-  uVar2 = pSVar3->alias0->flags >> 9 & 0x3f;
-  SND_ComputeStartAliasMixVolume(pSVar3,uVar2);
-  bVar5 = SND_IsAliasChannel3D(uVar2);
-  if (bVar5) {
-    fVar8 = pSVar3->lerp;
-    psVar1 = pSVar3->alias0;
-    fVar8 = SND_Get3DDistanceAttenuation
-                      (pSVar3->org,psVar1->volumeFalloffCurve,
-                       pSVar3->alias1->distMin * fVar8 + psVar1->distMin * (1.0 - fVar8),
-                       pSVar3->alias1->distMax * fVar8 + psVar1->distMax * (1.0 - fVar8));
-    pSVar3->attenuation = fVar8;
+  uVar2 = param_1->alias0->flags >> 9 & 0x3f;
+  SND_ComputeStartAliasMixVolume(param_1,uVar2);
+  bVar4 = SND_IsAliasChannel3D(uVar2);
+  if (bVar4) {
+    fVar6 = param_1->lerp;
+    psVar1 = param_1->alias0;
+    fVar6 = SND_Get3DDistanceAttenuation
+                      (param_1->org,psVar1->volumeFalloffCurve,
+                       param_1->alias1->distMin * fVar6 + psVar1->distMin * (1.0 - fVar6),
+                       param_1->alias1->distMax * fVar6 + psVar1->distMax * (1.0 - fVar6));
+    param_1->attenuation = fVar6;
   }
   else {
-    pSVar3->attenuation = 1.0;
+    param_1->attenuation = 1.0;
   }
-  iVar4 = SND_FindFreeStreamChannel(pSVar3,uVar2);
-  if ((uVar6 & 0xffffffff) != 0) {
-    *(int *)uVar6 = iVar4;
+  iVar3 = SND_FindFreeStreamChannel(param_1,uVar2);
+  if (param_2 != (int *)0x0) {
+    *param_2 = iVar3;
   }
-  if (-1 < iVar4) {
-    if ((iVar4 < 0x28) || (g_snd.max_stream_channels + 0x28 <= iVar4)) {
+  if (-1 < iVar3) {
+    if ((iVar3 < 0x28) || (g_snd.max_stream_channels + 0x28 <= iVar3)) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x885,0,
                       "%s\n\t(index) = %i");
     }
     if ((snd_enableStream->current).enabled != false) {
-      bVar5 = SND_IsAliasChannel3D(pSVar3->alias0->flags >> 9 & 0x3f);
-      if (bVar5) {
-        pbVar7 = &g_snd.listeners[0].active;
+      bVar4 = SND_IsAliasChannel3D(param_1->alias0->flags >> 9 & 0x3f);
+      if (bVar4) {
+        pbVar5 = &g_snd.listeners[0].active;
         do {
-          if (*pbVar7 != false) {
-            bVar5 = true;
+          if (*pbVar5 != false) {
+            bVar4 = true;
             goto LAB_8284ae38;
           }
-          pbVar7 = pbVar7 + 0x3c;
-        } while ((int)pbVar7 < -0x7b7794e0);
-        bVar5 = false;
+          pbVar5 = pbVar5 + 0x3c;
+        } while ((int)pbVar5 < -0x7b7794e0);
+        bVar4 = false;
 LAB_8284ae38:
-        if (!bVar5) {
+        if (!bVar4) {
           Com_Error(ERR_DROP,
                     "attempted to play spatialized alias \'%s\' while there is no active listener. Most likely this means you tried to play a spatialized sound while not in a level.\n"
                    );
         }
       }
-      iVar4 = SND_StartAliasStreamOnChannel(pSVar3,iVar4);
-      iVar4 = __restgprlr_27(iVar4);
-      return iVar4;
+      iVar3 = SND_StartAliasStreamOnChannel(param_1,iVar3);
+      return iVar3;
     }
   }
-  iVar4 = __restgprlr_27(0xffffffffffffffff);
-  return iVar4;
+  return -1;
 }
 
 
@@ -3201,6 +3082,8 @@ int SND_StartAliasVoiced(SndStartAliasInfo *param_1,int *param_2)
 
 // 8284AE80  SND_Archive  (snd.cpp:2200)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "XAssetType": Some values do not have unique names */
 /* WARNING: Enum "nodeType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
@@ -3211,69 +3094,67 @@ void SND_Archive(snd_channel_info_t *param_1)
 
 {
   snd_alias_t *psVar1;
-  int iVar2;
-  XAssetHeader XVar3;
-  int iVar4;
+  XAssetHeader XVar2;
+  int iVar3;
   
-  iVar2 = __savegprlr_26(param_1);
-  psVar1 = *(snd_alias_t **)(iVar2 + 0x70);
+  psVar1 = param_1->alias0;
   if (psVar1 != (snd_alias_t *)0x0) {
-    XVar3 = DB_FindXAssetHeader(ASSET_TYPE_SOUND,psVar1->aliasName,1);
-    if (XVar3.physPreset == (PhysPreset *)0x0) {
+    XVar2 = DB_FindXAssetHeader(ASSET_TYPE_SOUND,psVar1->aliasName,1);
+    if (XVar2.physPreset == (PhysPreset *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x8a0,0,"%s");
     }
-    iVar4 = SND_GetAliasOffset(psVar1);
-    *(int *)(iVar2 + 0x78) = iVar4;
-    *(XAssetHeader *)(iVar2 + 0x70) = XVar3;
+    iVar3 = SND_GetAliasOffset(psVar1);
+    param_1->saveIndex0 = iVar3;
+    param_1->alias0 = (snd_alias_t *)XVar2;
   }
-  psVar1 = *(snd_alias_t **)(iVar2 + 0x74);
+  psVar1 = param_1->alias1;
   if (psVar1 != (snd_alias_t *)0x0) {
-    XVar3 = DB_FindXAssetHeader(ASSET_TYPE_SOUND,psVar1->aliasName,1);
-    if (XVar3.physPreset == (PhysPreset *)0x0) {
+    XVar2 = DB_FindXAssetHeader(ASSET_TYPE_SOUND,psVar1->aliasName,1);
+    if (XVar2.physPreset == (PhysPreset *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x8aa,0,"%s");
     }
-    iVar4 = SND_GetAliasOffset(psVar1);
-    *(int *)(iVar2 + 0x7c) = iVar4;
-    *(XAssetHeader *)(iVar2 + 0x74) = XVar3;
+    iVar3 = SND_GetAliasOffset(psVar1);
+    param_1->saveIndex1 = iVar3;
+    param_1->alias1 = (snd_alias_t *)XVar2;
   }
-  __restgprlr_26();
   return;
 }
 
 
 // 8284AF50  SND_Unarchive  (snd.cpp:2227)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void SND_Unarchive(snd_channel_info_t *param_1)
 
 {
-  undefined4 *puVar1;
-  int iVar2;
-  snd_alias_t *psVar3;
+  snd_alias_t *psVar1;
   
-  iVar2 = __savegprlr_27(param_1);
-  puVar1 = *(undefined4 **)(iVar2 + 0x70);
-  if (puVar1 != (undefined4 *)0x0) {
-    if (puVar1[1] == 0) {
+  psVar1 = param_1->alias0;
+  if (psVar1 != (snd_alias_t *)0x0) {
+    if (psVar1->subtitle == (char *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x8b9,0,"%s");
     }
-    psVar3 = SND_GetAliasWithOffset((char *)*puVar1,*(int *)(iVar2 + 0x78));
-    *(snd_alias_t **)(iVar2 + 0x70) = psVar3;
+    psVar1 = SND_GetAliasWithOffset(psVar1->aliasName,param_1->saveIndex0);
+    param_1->alias0 = psVar1;
   }
-  puVar1 = *(undefined4 **)(iVar2 + 0x74);
-  if (puVar1 != (undefined4 *)0x0) {
-    if (puVar1[1] == 0) {
+  psVar1 = param_1->alias1;
+  if (psVar1 != (snd_alias_t *)0x0) {
+    if (psVar1->subtitle == (char *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x8c4,0,"%s");
     }
-    psVar3 = SND_GetAliasWithOffset((char *)*puVar1,*(int *)(iVar2 + 0x7c));
-    *(snd_alias_t **)(iVar2 + 0x74) = psVar3;
+    psVar1 = SND_GetAliasWithOffset(psVar1->aliasName,param_1->saveIndex1);
+    param_1->alias1 = psVar1;
   }
-  __restgprlr_27();
   return;
 }
 
 
 // 8284B000  DB_SaveSounds  (snd.cpp:2255)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "XAssetType": Some values do not have unique names */
 /* WARNING: Enum "nodeType": Some values do not have unique names */
@@ -3289,7 +3170,6 @@ void DB_SaveSounds(void)
   XAssetHeader XVar3;
   XAssetHeader *pXVar4;
   
-  __savegprlr_25();
   pXVar4 = (XAssetHeader *)&g_snd.chaninfo[0].alias0;
   do {
     psVar1 = (snd_alias_t *)pXVar4->physPreset;
@@ -3314,13 +3194,14 @@ void DB_SaveSounds(void)
     }
     pXVar4 = pXVar4 + 0x30;
   } while ((int)pXVar4 < -0x7b7755fc);
-  __restgprlr_25();
   return;
 }
 
 
 // 8284B0F0  DB_LoadSounds  (snd.cpp:2264)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void DB_LoadSounds(void)
@@ -3329,7 +3210,6 @@ void DB_LoadSounds(void)
   snd_alias_t *psVar1;
   snd_alias_t **ppsVar2;
   
-  __savegprlr_24();
   ppsVar2 = &g_snd.chaninfo[0].alias0;
   do {
     psVar1 = *ppsVar2;
@@ -3350,105 +3230,94 @@ void DB_LoadSounds(void)
     }
     ppsVar2 = ppsVar2 + 0x30;
   } while ((int)ppsVar2 < -0x7b7755fc);
-  __restgprlr_24();
   return;
 }
 
 
 // 8284B1D0  SND_ChoosePitchAndVolume  (snd.cpp:2275)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 void SND_ChoosePitchAndVolume
                (snd_alias_t *param_1,snd_alias_t *param_2,float param_3,float param_4,float *param_5
                ,float *param_6)
 
 {
-  int iVar1;
-  int iVar2;
-  ulonglong uVar3;
-  ulonglong in_r7;
-  ulonglong in_r8;
-  double extraout_f1;
+  float *in_r7;
+  float *in_r8;
+  double dVar1;
+  double dVar2;
+  double dVar3;
   double dVar4;
   double dVar5;
   double dVar6;
   double dVar7;
-  double dVar8;
-  double dVar9;
-  double dVar10;
-  float fVar11;
+  float fVar8;
   
-  dVar4 = (double)param_4;
-  uVar3 = (ulonglong)(int)param_2;
-  __savegprlr_26((double)param_3,param_1,uVar3,param_5,param_6);
-  iVar2 = __savefpr_26();
-  dVar5 = extraout_f1;
-  if (iVar2 == 0) {
+  dVar1 = (double)param_4;
+  dVar2 = (double)param_3;
+  if (param_1 == (snd_alias_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x8e9,0,"%s");
   }
-  if ((uVar3 & 0xffffffff) == 0) {
+  if (param_2 == (snd_alias_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x8ea,0,"%s");
   }
-  if ((in_r7 & 0xffffffff) == 0) {
+  if (in_r7 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x8eb,0,"%s");
   }
-  if ((in_r8 & 0xffffffff) == 0) {
+  if (in_r8 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x8ec,0,"%s");
   }
-  iVar1 = (int)uVar3;
-  dVar9 = 1.0;
-  fVar11 = (float)(1.0 - dVar5);
-  dVar10 = (double)(*(float *)(iVar2 + 0x1c) * fVar11 +
-                   (float)((double)*(float *)(iVar1 + 0x1c) * dVar5));
-  dVar8 = (double)(*(float *)(iVar2 + 0x20) * fVar11 +
-                  (float)((double)*(float *)(iVar1 + 0x20) * dVar5));
-  dVar7 = (double)(*(float *)(iVar2 + 0x28) * fVar11 +
-                  (float)((double)*(float *)(iVar1 + 0x28) * dVar5));
-  dVar6 = (double)(*(float *)(iVar2 + 0x2c) * fVar11 +
-                  (float)((double)*(float *)(iVar1 + 0x2c) * dVar5));
-  fVar11 = random();
-  dVar5 = (double)(float)((double)(float)((double)fVar11 * (double)(float)(dVar8 - dVar10) + dVar10)
-                         * dVar4);
-  if ((float)(dVar5 - dVar9) < 0.0) {
-    dVar9 = dVar5;
+  dVar6 = 1.0;
+  fVar8 = (float)(1.0 - dVar2);
+  dVar7 = (double)(param_1->volMin * fVar8 + (float)((double)param_2->volMin * dVar2));
+  dVar5 = (double)(param_1->volMax * fVar8 + (float)((double)param_2->volMax * dVar2));
+  dVar4 = (double)(param_1->pitchMin * fVar8 + (float)((double)param_2->pitchMin * dVar2));
+  dVar3 = (double)(param_1->pitchMax * fVar8 + (float)((double)param_2->pitchMax * dVar2));
+  fVar8 = random();
+  dVar2 = (double)(float)((double)(float)((double)fVar8 * (double)(float)(dVar5 - dVar7) + dVar7) *
+                         dVar1);
+  if ((float)(dVar2 - dVar6) < 0.0) {
+    dVar6 = dVar2;
   }
-  dVar4 = 0.0;
-  if (-dVar5 < 0.0) {
-    dVar4 = dVar9;
+  dVar1 = 0.0;
+  if (-dVar2 < 0.0) {
+    dVar1 = dVar6;
   }
-  *(float *)in_r7 = (float)dVar4;
-  fVar11 = random();
-  *(float *)in_r8 = (float)((double)fVar11 * (double)(float)(dVar6 - dVar7) + dVar7);
-  __restfpr_26();
-  __restgprlr_26();
+  *in_r7 = (float)dVar1;
+  fVar8 = random();
+  *in_r8 = (float)((double)fVar8 * (double)(float)(dVar3 - dVar4) + dVar4);
   return;
 }
 
 
 // 8284B338  SND_SetPitch_Internal  (snd.cpp:2299)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void SND_SetPitch_Internal(int param_1,float param_2,_func___cdecl_void_int_int *param_3)
 
 {
   float fVar1;
-  uint uVar2;
-  ulonglong in_r5;
-  double extraout_f1;
-  double dVar3;
+  code *in_r5;
+  double dVar2;
   
-  uVar2 = __savegprlr_29((double)param_2,param_1,param_3);
-  dVar3 = extraout_f1;
-  if (0x35 < uVar2) {
+  dVar2 = (double)param_2;
+  if (0x35 < (uint)param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x900,0,
                     "chanIndex doesn\'t index SND_MAX_CHANNELS\n\t%i not in [0, %i)");
   }
-  if ((in_r5 & 0xffffffff) == 0) {
+  if (in_r5 == (code *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x901,0,"%s");
   }
-  fVar1 = g_snd.chaninfo[uVar2].timescaleLerp;
-  dVar3 = floor((double)((float)((double)(g_snd.timescale * fVar1 + (1.0 - fVar1)) * dVar3) *
-                         (float)(longlong)g_snd.chaninfo[uVar2].soundFileInfo.baserate + 0.5));
-  (*(code *)in_r5)(uVar2,(int)dVar3);
-  __restgprlr_29();
+  fVar1 = g_snd.chaninfo[param_1].timescaleLerp;
+  dVar2 = floor((double)((float)((double)(g_snd.timescale * fVar1 + (1.0 - fVar1)) * dVar2) *
+                         (float)(longlong)g_snd.chaninfo[param_1].soundFileInfo.baserate + 0.5));
+  (*in_r5)(param_1,(int)dVar2);
   return;
 }
 
@@ -3491,6 +3360,11 @@ void SND_SetStreamChannelPitch(int param_1,float param_2)
 
 // 8284B470  SND_ContinueLoopingSound_Internal  (snd.cpp:2336)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void SND_ContinueLoopingSound_Internal(int param_1,float param_2,float param_3,float param_4)
 
 {
@@ -3499,47 +3373,43 @@ void SND_ContinueLoopingSound_Internal(int param_1,float param_2,float param_3,f
   snd_alias_t *psVar3;
   snd_alias_t *psVar4;
   float fVar5;
-  int iVar6;
-  double extraout_f1;
+  double dVar6;
   double dVar7;
   double dVar8;
   double dVar9;
   double dVar10;
   double dVar11;
   double dVar12;
-  double dVar13;
   
   dVar8 = (double)param_4;
+  dVar6 = (double)param_2;
   dVar7 = (double)param_3;
-  __savegprlr_28((double)param_2,param_1);
-  iVar6 = __savefpr_27();
-  dVar13 = extraout_f1;
-  if ((iVar6 < 0) || (0x35 < iVar6)) {
+  if ((param_1 < 0) || (0x35 < param_1)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x923,0,
                     "%s\n\t(chanIndex) = %i");
   }
   dVar11 = 0.0;
   dVar12 = 1.0;
-  if ((dVar13 < 0.0) || (1.0 < dVar13)) {
+  if ((dVar6 < 0.0) || (1.0 < dVar6)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x924,0,
                     "%s\n\t(lerp) = %g");
   }
-  if (g_snd.chaninfo[iVar6].alias0 == (snd_alias_t *)0x0) {
+  if (g_snd.chaninfo[param_1].alias0 == (snd_alias_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x927,0,"%s");
   }
-  if (g_snd.chaninfo[iVar6].alias1 == (snd_alias_t *)0x0) {
+  if (g_snd.chaninfo[param_1].alias1 == (snd_alias_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x928,0,"%s");
   }
-  psVar3 = g_snd.chaninfo[iVar6].alias0;
-  psVar4 = g_snd.chaninfo[iVar6].alias1;
+  psVar3 = g_snd.chaninfo[param_1].alias0;
+  psVar4 = g_snd.chaninfo[param_1].alias1;
   if (psVar3 != psVar4) {
     fVar1 = psVar4->volMin;
     fVar2 = psVar3->volMin;
-    g_snd.chaninfo[iVar6].volumeInfo.goalrate = (float)dVar11;
-    fVar1 = (float)((double)(fVar2 * (float)(dVar12 - dVar13) + (float)((double)fVar1 * dVar13)) *
+    g_snd.chaninfo[param_1].volumeInfo.goalrate = (float)dVar11;
+    fVar1 = (float)((double)(fVar2 * (float)(dVar12 - dVar6) + (float)((double)fVar1 * dVar6)) *
                    dVar7);
     dVar10 = (double)fVar1;
-    g_snd.chaninfo[iVar6].volumeInfo.value = fVar1;
+    g_snd.chaninfo[param_1].volumeInfo.value = fVar1;
     dVar7 = dVar12;
     if ((float)(dVar10 - dVar12) < 0.0) {
       dVar7 = dVar10;
@@ -3548,14 +3418,14 @@ void SND_ContinueLoopingSound_Internal(int param_1,float param_2,float param_3,f
     if (-dVar10 < 0.0) {
       dVar9 = dVar7;
     }
-    g_snd.chaninfo[iVar6].volumeInfo.value = (float)dVar9;
-    g_snd.chaninfo[iVar6].volumeInfo.goalvalue = (float)dVar9;
+    g_snd.chaninfo[param_1].volumeInfo.value = (float)dVar9;
+    g_snd.chaninfo[param_1].volumeInfo.goalvalue = (float)dVar9;
     fVar1 = psVar3->pitchMin;
     fVar2 = psVar4->pitchMin;
-    g_snd.chaninfo[iVar6].pitchInfo.goalrate = (float)dVar11;
-    fVar1 = (float)((double)(fVar1 * (float)(dVar12 - dVar13) + (float)((double)fVar2 * dVar13)) *
+    g_snd.chaninfo[param_1].pitchInfo.goalrate = (float)dVar11;
+    fVar1 = (float)((double)(fVar1 * (float)(dVar12 - dVar6) + (float)((double)fVar2 * dVar6)) *
                    dVar8);
-    g_snd.chaninfo[iVar6].pitchInfo.value = fVar1;
+    g_snd.chaninfo[param_1].pitchInfo.value = fVar1;
     fVar2 = 2.0;
     if (fVar1 - 2.0 < 0.0) {
       fVar2 = fVar1;
@@ -3564,140 +3434,127 @@ void SND_ContinueLoopingSound_Internal(int param_1,float param_2,float param_3,f
     if (0.001 - fVar1 < 0.0) {
       fVar5 = fVar2;
     }
-    g_snd.chaninfo[iVar6].pitchInfo.value = fVar5;
-    g_snd.chaninfo[iVar6].pitchInfo.goalvalue = fVar5;
+    g_snd.chaninfo[param_1].pitchInfo.value = fVar5;
+    g_snd.chaninfo[param_1].pitchInfo.goalvalue = fVar5;
   }
-  g_snd.chaninfo[iVar6].looptime = g_snd.looptime;
-  g_snd.chaninfo[iVar6].lerp = (float)dVar13;
-  __restfpr_27();
-  __restgprlr_28();
+  g_snd.chaninfo[param_1].looptime = g_snd.looptime;
+  g_snd.chaninfo[param_1].lerp = (float)dVar6;
   return;
 }
 
 
 // 8284B658  SND_ContinueLoopingSound  (snd.cpp:2368)
 
+/* WARNING: Function: __savegprlr_20 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_20 replaced with injection: xenon_save_restore */
+
 bool SND_ContinueLoopingSound
                (snd_alias_t *param_1,snd_alias_t *param_2,float param_3,float param_4,float param_5,
                SndEntHandle param_6,float *param_7,int *param_8)
 
 {
-  int *piVar1;
-  bool bVar2;
-  undefined1 uVar3;
-  longlong lVar4;
-  int *piVar5;
+  bool bVar1;
   int in_r8;
   float *in_r9;
-  ulonglong in_r10;
-  int *piVar6;
-  int iVar7;
-  int iVar8;
-  snd_alias_t **ppsVar9;
-  double extraout_f1;
-  double dVar10;
-  double dVar11;
-  double dVar12;
+  int *in_r10;
+  int iVar2;
+  int iVar3;
+  snd_alias_t **ppsVar4;
+  double dVar5;
+  double dVar6;
+  double dVar7;
   
-  dVar11 = (double)param_5;
-  dVar10 = (double)param_4;
-  lVar4 = (longlong)(int)param_2;
-  piVar1 = (int *)__savegprlr_20((double)param_3,param_1,lVar4,param_6.handle,param_7,param_8);
-  iVar8 = 8;
-  piVar5 = (int *)lVar4;
-  piVar6 = (int *)in_r10;
-  dVar12 = extraout_f1;
+  dVar7 = (double)param_5;
+  dVar6 = (double)param_4;
+  dVar5 = (double)param_3;
+  iVar3 = 8;
   if (8 < g_snd.max_3D_channels + 8) {
-    ppsVar9 = &g_snd.chaninfo[8].alias0;
-    iVar7 = g_snd.max_3D_channels;
+    ppsVar4 = &g_snd.chaninfo[8].alias0;
+    iVar2 = g_snd.max_3D_channels;
     do {
-      if ((((SndEntHandle *)(ppsVar9 + -0x19))->handle == in_r8) &&
-         (bVar2 = SND_Is3DChannelFree(iVar8), iVar7 = g_snd.max_3D_channels, !bVar2)) {
-        if (*ppsVar9 == (snd_alias_t *)0x0) {
+      if ((((SndEntHandle *)(ppsVar4 + -0x19))->handle == in_r8) &&
+         (bVar1 = SND_Is3DChannelFree(iVar3), iVar2 = g_snd.max_3D_channels, !bVar1)) {
+        if (*ppsVar4 == (snd_alias_t *)0x0) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x949,0,"%s");
         }
-        if (ppsVar9[1] == (snd_alias_t *)0x0) {
+        if (ppsVar4[1] == (snd_alias_t *)0x0) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x94a,0,"%s");
         }
-        iVar7 = g_snd.max_3D_channels;
-        if (((((*ppsVar9)->flags & 1U) != 0) && ((*ppsVar9)->aliasName == (char *)*piVar1)) &&
-           (ppsVar9[1]->aliasName == (char *)*piVar5)) {
-          SND_ContinueLoopingSound_Internal(iVar8,(float)dVar12,(float)dVar10,(float)dVar11);
-          SND_Set3DPosition(iVar8,in_r9);
-          if ((in_r10 & 0xffffffff) != 0) {
-            *piVar6 = iVar8;
+        iVar2 = g_snd.max_3D_channels;
+        if (((((*ppsVar4)->flags & 1U) != 0) && ((*ppsVar4)->aliasName == param_1->aliasName)) &&
+           (ppsVar4[1]->aliasName == param_2->aliasName)) {
+          SND_ContinueLoopingSound_Internal(iVar3,(float)dVar5,(float)dVar6,(float)dVar7);
+          SND_Set3DPosition(iVar3,in_r9);
+          if (in_r10 == (int *)0x0) {
+            return true;
           }
-          goto LAB_8284b9a0;
+          *in_r10 = iVar3;
+          return true;
         }
       }
-      iVar8 = iVar8 + 1;
-      ppsVar9 = ppsVar9 + 0x30;
-    } while (iVar8 < iVar7 + 8);
+      iVar3 = iVar3 + 1;
+      ppsVar4 = ppsVar4 + 0x30;
+    } while (iVar3 < iVar2 + 8);
   }
-  iVar8 = 0;
+  iVar3 = 0;
   if (0 < g_snd.max_2D_channels) {
-    ppsVar9 = &g_snd.chaninfo[0].alias0;
-    iVar7 = g_snd.max_2D_channels;
+    ppsVar4 = &g_snd.chaninfo[0].alias0;
+    iVar2 = g_snd.max_2D_channels;
     do {
-      if ((((SndEntHandle *)(ppsVar9 + -0x19))->handle == in_r8) &&
-         (bVar2 = SND_Is2DChannelFree(iVar8), iVar7 = g_snd.max_2D_channels, !bVar2)) {
-        if (*ppsVar9 == (snd_alias_t *)0x0) {
+      if ((((SndEntHandle *)(ppsVar4 + -0x19))->handle == in_r8) &&
+         (bVar1 = SND_Is2DChannelFree(iVar3), iVar2 = g_snd.max_2D_channels, !bVar1)) {
+        if (*ppsVar4 == (snd_alias_t *)0x0) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x961,0,"%s");
         }
-        if (ppsVar9[1] == (snd_alias_t *)0x0) {
+        if (ppsVar4[1] == (snd_alias_t *)0x0) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x962,0,"%s");
         }
-        iVar7 = g_snd.max_2D_channels;
-        if (((((*ppsVar9)->flags & 1U) != 0) && ((*ppsVar9)->aliasName == (char *)*piVar1)) &&
-           (ppsVar9[1]->aliasName == (char *)*piVar5)) {
-          SND_ContinueLoopingSound_Internal(iVar8,(float)dVar12,(float)dVar10,(float)dVar11);
-          if ((in_r10 & 0xffffffff) != 0) {
-            *piVar6 = iVar8;
-            uVar3 = __restgprlr_20(1);
-            return (bool)uVar3;
+        iVar2 = g_snd.max_2D_channels;
+        if (((((*ppsVar4)->flags & 1U) != 0) && ((*ppsVar4)->aliasName == param_1->aliasName)) &&
+           (ppsVar4[1]->aliasName == param_2->aliasName)) {
+          SND_ContinueLoopingSound_Internal(iVar3,(float)dVar5,(float)dVar6,(float)dVar7);
+          if (in_r10 == (int *)0x0) {
+            return true;
           }
-LAB_8284b9a0:
-          uVar3 = __restgprlr_20(1);
-          return (bool)uVar3;
+          *in_r10 = iVar3;
+          return true;
         }
       }
-      iVar8 = iVar8 + 1;
-      ppsVar9 = ppsVar9 + 0x30;
-    } while (iVar8 < iVar7);
+      iVar3 = iVar3 + 1;
+      ppsVar4 = ppsVar4 + 0x30;
+    } while (iVar3 < iVar2);
   }
-  iVar8 = 0x28;
+  iVar3 = 0x28;
   if (0x28 < g_snd.max_stream_channels + 0x28) {
-    ppsVar9 = &g_snd.chaninfo[0x28].alias0;
-    iVar7 = g_snd.max_stream_channels;
+    ppsVar4 = &g_snd.chaninfo[0x28].alias0;
+    iVar2 = g_snd.max_stream_channels;
     do {
-      if ((((SndEntHandle *)(ppsVar9 + -0x19))->handle == in_r8) &&
-         (bVar2 = SND_IsStreamChannelFree(iVar8), iVar7 = g_snd.max_stream_channels, !bVar2)) {
-        if (*ppsVar9 == (snd_alias_t *)0x0) {
+      if ((((SndEntHandle *)(ppsVar4 + -0x19))->handle == in_r8) &&
+         (bVar1 = SND_IsStreamChannelFree(iVar3), iVar2 = g_snd.max_stream_channels, !bVar1)) {
+        if (*ppsVar4 == (snd_alias_t *)0x0) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x978,0,"%s");
         }
-        if (ppsVar9[1] == (snd_alias_t *)0x0) {
+        if (ppsVar4[1] == (snd_alias_t *)0x0) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x979,0,"%s");
         }
-        iVar7 = g_snd.max_stream_channels;
-        if (((((*ppsVar9)->flags & 1U) != 0) && ((*ppsVar9)->aliasName == (char *)*piVar1)) &&
-           (ppsVar9[1]->aliasName == (char *)*piVar5)) {
-          SND_ContinueLoopingSound_Internal(iVar8,(float)dVar12,(float)dVar10,(float)dVar11);
-          g_snd.chaninfo[iVar8].org[0] = *in_r9;
-          g_snd.chaninfo[iVar8].org[1] = in_r9[1];
-          g_snd.chaninfo[iVar8].org[2] = in_r9[2];
-          if ((in_r10 & 0xffffffff) != 0) {
-            *piVar6 = iVar8;
+        iVar2 = g_snd.max_stream_channels;
+        if (((((*ppsVar4)->flags & 1U) != 0) && ((*ppsVar4)->aliasName == param_1->aliasName)) &&
+           (ppsVar4[1]->aliasName == param_2->aliasName)) {
+          SND_ContinueLoopingSound_Internal(iVar3,(float)dVar5,(float)dVar6,(float)dVar7);
+          g_snd.chaninfo[iVar3].org[0] = *in_r9;
+          g_snd.chaninfo[iVar3].org[1] = in_r9[1];
+          g_snd.chaninfo[iVar3].org[2] = in_r9[2];
+          if (in_r10 != (int *)0x0) {
+            *in_r10 = iVar3;
           }
-          uVar3 = __restgprlr_20(1);
-          return (bool)uVar3;
+          return true;
         }
       }
-      iVar8 = iVar8 + 1;
-      ppsVar9 = ppsVar9 + 0x30;
-    } while (iVar8 < iVar7 + 0x28);
+      iVar3 = iVar3 + 1;
+      ppsVar4 = ppsVar4 + 0x30;
+    } while (iVar3 < iVar2 + 0x28);
   }
-  uVar3 = __restgprlr_20(0);
-  return (bool)uVar3;
+  return false;
 }
 
 
@@ -3728,68 +3585,67 @@ int SND_IsNullSoundFile(SoundFile *param_1)
 
 // 8284BB10  InRange  (snd.cpp:2464)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 bool InRange(snd_alias_t *param_1,snd_alias_t *param_2,float param_3,float *param_4)
 
 {
   float fVar1;
   float fVar2;
   float fVar3;
-  snd_alias_t *psVar4;
-  bool bVar7;
-  undefined1 uVar8;
-  int iVar5;
-  char *pcVar6;
+  bool bVar6;
+  int iVar4;
+  char *pcVar5;
   float *in_r6;
-  longlong lVar9;
-  double extraout_f1;
-  double dVar10;
-  double dVar11;
-  double dVar12;
+  double dVar7;
+  double dVar8;
+  double dVar9;
   
-  lVar9 = (longlong)(int)param_2;
-  psVar4 = (snd_alias_t *)__savegprlr_27((double)param_3,param_1,lVar9,param_4);
-  iVar5 = (int)lVar9;
-  dVar10 = extraout_f1;
-  if (psVar4->volumeFalloffCurve != *(SndCurve **)(iVar5 + 0x5c)) {
+  dVar7 = (double)param_3;
+  if (param_1->volumeFalloffCurve != param_2->volumeFalloffCurve) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x9a8,0,"%s");
   }
-  if (psVar4->volumeFalloffCurve == (SndCurve *)0x0) {
+  if (param_1->volumeFalloffCurve == (SndCurve *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x9a9,0,"%s");
   }
-  bVar7 = SND_IsAliasChannel3D(psVar4->flags >> 9 & 0x3f);
-  if ((!bVar7) && ((psVar4->flags & 0x40U) == 0)) {
-    uVar8 = __restgprlr_27(1);
-    return (bool)uVar8;
+  bVar6 = SND_IsAliasChannel3D(param_1->flags >> 9 & 0x3f);
+  if ((!bVar6) && ((param_1->flags & 0x40U) == 0)) {
+    return true;
   }
-  dVar11 = (double)(psVar4->distMax * (float)(1.0 - dVar10) +
-                   (float)((double)*(float *)(iVar5 + 0x34) * dVar10));
-  dVar10 = (double)(psVar4->distMin * (float)(1.0 - dVar10) +
-                   (float)((double)*(float *)(iVar5 + 0x30) * dVar10));
-  iVar5 = SND_GetListenerIndexNearestToOrigin(in_r6);
-  fVar1 = g_snd.listeners[iVar5].orient.origin[2] - in_r6[2];
-  fVar2 = g_snd.listeners[iVar5].orient.origin[0] - *in_r6;
-  fVar3 = g_snd.listeners[iVar5].orient.origin[1] - in_r6[1];
-  dVar12 = (double)(fVar3 * fVar3 + fVar2 * fVar2 + fVar1 * fVar1);
-  if (g_snd.listeners[iVar5].velocity < 0.0) {
+  dVar8 = (double)(param_1->distMax * (float)(1.0 - dVar7) +
+                  (float)((double)param_2->distMax * dVar7));
+  dVar7 = (double)(param_1->distMin * (float)(1.0 - dVar7) +
+                  (float)((double)param_2->distMin * dVar7));
+  iVar4 = SND_GetListenerIndexNearestToOrigin(in_r6);
+  fVar1 = g_snd.listeners[iVar4].orient.origin[2] - in_r6[2];
+  fVar2 = g_snd.listeners[iVar4].orient.origin[0] - *in_r6;
+  fVar3 = g_snd.listeners[iVar4].orient.origin[1] - in_r6[1];
+  dVar9 = (double)(fVar3 * fVar3 + fVar2 * fVar2 + fVar1 * fVar1);
+  if (g_snd.listeners[iVar4].velocity < 0.0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x9b4,0,"%s");
   }
-  if (((((psVar4->flags & 0x40U) != 0) && (dVar12 < (double)(float)(dVar10 * dVar10))) ||
-      ((double)(float)(dVar11 * dVar11) < dVar12)) ||
-     (lVar9 = 1, g_snd.listeners[iVar5].velocity < psVar4->velocityMin)) {
-    lVar9 = 0;
+  if (((((param_1->flags & 0x40U) != 0) && (dVar9 < (double)(float)(dVar7 * dVar7))) ||
+      ((double)(float)(dVar8 * dVar8) < dVar9)) ||
+     (bVar6 = true, g_snd.listeners[iVar4].velocity < param_1->velocityMin)) {
+    bVar6 = false;
   }
   if (*(snd_debugAlias->current).string != '\0') {
-    pcVar6 = va(
+    pcVar5 = va(
                "Not playing, sound has 0 volume based on volume falloff curve (%s).  dist = %.2f, min = %.2f, max = %.2f.  velocity = %.2f, min = %.2f"
                );
-    SND_DebugAliasPrint(lVar9 == 0,psVar4,pcVar6);
+    SND_DebugAliasPrint(!bVar6,param_1,pcVar5);
   }
-  uVar8 = __restgprlr_27(lVar9);
-  return (bool)uVar8;
+  return bVar6;
 }
 
 
 // 8284BD70  SND_PlaySecondaryAlias  (snd.cpp:2498)
+
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 
 void SND_PlaySecondaryAlias
                (snd_alias_t *param_1,float param_2,float param_3,float param_4,SndEntHandle param_5,
@@ -3797,77 +3653,62 @@ void SND_PlaySecondaryAlias
                int param_11)
 
 {
-  int iVar1;
-  snd_alias_t *psVar2;
-  bool bVar4;
-  int iVar3;
-  int iVar5;
-  undefined1 uVar6;
-  double extraout_f1;
-  double dVar7;
-  double dVar8;
-  double dVar9;
-  double dVar10;
+  snd_alias_t *psVar1;
+  bool bVar2;
+  double dVar3;
+  double dVar4;
+  double dVar5;
+  double dVar6;
   int *in_stack_0000005c;
   int in_stack_00000064;
   int in_stack_ffffff38;
   
-  dVar9 = (double)param_9;
-  dVar7 = (double)param_3;
-  dVar8 = (double)param_4;
-  uVar6 = (undefined1)param_10;
-  iVar5 = (int)param_8;
-  __savegprlr_26((double)param_2,param_1,param_5.handle);
-  iVar1 = __savefpr_28();
-  iVar3 = 0;
-  if (*(char **)(iVar1 + 8) != (char *)0x0) {
-    dVar10 = extraout_f1;
-    psVar2 = Com_PickSoundAlias(*(char **)(iVar1 + 8));
-    if (psVar2 == (snd_alias_t *)0x0) {
+  dVar6 = (double)param_9;
+  dVar3 = (double)param_2;
+  dVar4 = (double)param_3;
+  dVar5 = (double)param_4;
+  if (param_1->secondaryAliasName != (char *)0x0) {
+    psVar1 = Com_PickSoundAlias(param_1->secondaryAliasName);
+    if (psVar1 == (snd_alias_t *)0x0) {
       Com_PrintError(9,"Error: unable to find \'%s\' alias\n");
-      __restfpr_28();
-      __restgprlr_26();
       return;
     }
-    if ((*(uint *)(iVar1 + 0x3c) & 1) == 0) {
-      if ((psVar2->flags & 1U) != 0) {
+    if ((param_1->flags & 1U) == 0) {
+      if ((psVar1->flags & 1U) != 0) {
         Com_PrintError(9,
                        "Error: a non-looping alias cannot have a looping secondary alias.\nAlias sequence: \'%s\'->\'%s\'\n"
                       );
-        __restfpr_28();
-        __restgprlr_26();
         return;
       }
     }
-    else if (((psVar2->flags & 1U) != 0) &&
-            (bVar4 = Com_AliasNameRefersToSingleAlias(*(char **)(iVar1 + 8)), !bVar4)) {
+    else if (((psVar1->flags & 1U) != 0) &&
+            (bVar2 = Com_AliasNameRefersToSingleAlias(param_1->secondaryAliasName), !bVar2)) {
       Com_PrintError(9,
                      "Error: a looping alias cannot have a looping secondary aliasName that refers to multiple aliases.\nAlias sequence: \'%s\'->\'%s\'\n"
                     );
-      __restfpr_28();
-      __restgprlr_26();
       return;
     }
     if (10 < in_stack_00000064) {
       Com_PrintError(9,
                      "Error: exceeded max number of secondary aliases (%i).  Possible infinite loop.\nAlias sequence: \'%s\'->\'%s\'\n"
                     );
-      __restfpr_28();
-      __restgprlr_26();
       return;
     }
-    iVar3 = SND_PlaySoundAlias_Internal
-                      (psVar2,psVar2,(float)dVar10,(float)dVar7,(float)dVar8,(SndEntHandle)param_6,
-                       (float *)param_7,in_stack_0000005c,iVar5,(bool)uVar6,(float)dVar9,SASYS_UI,
-                       in_stack_ffffff38);
+    SND_PlaySoundAlias_Internal
+              (psVar1,psVar1,(float)dVar3,(float)dVar4,(float)dVar5,(SndEntHandle)param_6,
+               (float *)param_7,in_stack_0000005c,(int)param_8,SUB41(param_10,0),(float)dVar6,
+               SASYS_UI,in_stack_ffffff38);
   }
-  __restfpr_28(iVar3);
-  __restgprlr_26();
   return;
 }
 
 
 // 8284BF08  SND_PlaySoundAlias_Internal  (snd.cpp:2630)
+
+/* WARNING: Function: __savegprlr_20 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_20 replaced with injection: xenon_save_restore */
 
 int SND_PlaySoundAlias_Internal
               (snd_alias_t *param_1,snd_alias_t *param_2,float param_3,float param_4,float param_5,
@@ -3876,241 +3717,213 @@ int SND_PlaySoundAlias_Internal
 
 {
   uint uVar1;
-  snd_alias_t *psVar2;
-  int iVar3;
-  bool bVar5;
-  char *pcVar4;
-  ulonglong uVar6;
-  SndEntHandle SVar7;
-  SndEntHandle SVar8;
-  SndEntHandle SVar9;
-  float *pfVar10;
-  ulonglong uVar11;
-  float *pfVar12;
-  ulonglong uVar13;
-  SndEntHandle SVar14;
-  longlong lVar15;
-  double extraout_f1;
-  double dVar16;
-  double dVar17;
-  double dVar18;
-  double dVar19;
-  double dVar20;
-  float fVar21;
+  bool bVar4;
+  int iVar2;
+  char *pcVar3;
+  SndEntHandle SVar5;
+  float *pfVar6;
+  longlong lVar7;
+  double dVar8;
+  double dVar9;
+  double dVar10;
+  double dVar11;
+  double dVar12;
+  float fVar13;
   int in_stack_00000054;
   char in_stack_0000005f;
   int in_stack_00000074;
   SndStartAliasInfo local_e0 [2];
   
-  dVar18 = (double)param_11;
-  dVar17 = (double)param_5;
-  dVar16 = (double)param_4;
-  uVar13 = (ulonglong)(int)param_12;
-  uVar11 = (ulonglong)param_10;
-  lVar15 = (longlong)param_6.handle;
-  uVar6 = (ulonglong)(int)param_2;
-  pcVar4 = (char *)param_8;
-  __savegprlr_20((double)param_3,param_1,uVar6,lVar15,param_7);
-  SVar9.handle = (int)lVar15;
-  psVar2 = (snd_alias_t *)__savefpr_27();
-  SVar14.handle = (int)uVar13;
-  pfVar12 = (float *)uVar11;
-  SVar7.handle = (int)uVar6;
-  dVar20 = extraout_f1;
-  if (psVar2 == (snd_alias_t *)0x0) {
-    pcVar4 = "alias0";
-    SVar9.handle = 0;
+  dVar11 = (double)param_11;
+  dVar10 = (double)param_5;
+  dVar9 = (double)param_4;
+  dVar8 = (double)param_3;
+  pfVar6 = (float *)(int)param_10;
+  pcVar3 = (char *)param_8;
+  if (param_1 == (snd_alias_t *)0x0) {
+    pcVar3 = "alias0";
+    param_6.handle = 0;
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0xa4b,0,"%s");
   }
-  if ((uVar6 & 0xffffffff) == 0) {
-    pcVar4 = "alias1";
-    SVar9.handle = 0;
+  if (param_2 == (snd_alias_t *)0x0) {
+    pcVar3 = "alias1";
+    param_6.handle = 0;
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0xa4c,0,"%s");
   }
-  if ((uVar11 & 0xffffffff) == 0) {
-    pcVar4 = "org";
-    SVar9.handle = 0;
+  if (!param_10) {
+    pcVar3 = "org";
+    param_6.handle = 0;
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0xa4d,0,"%s");
   }
-  lVar15 = -1;
+  lVar7 = -1;
   if (g_snd.Initialized2d == false) {
-LAB_8284bfd4:
-    __restfpr_27(0xffffffffffffffff);
-    iVar3 = __restgprlr_20();
-    return iVar3;
+    return -1;
   }
-  if ((uVar13 & 0xffffffff) != 0) {
-    *(undefined4 *)SVar14 = 0xffffffff;
+  if (param_12 != SASYS_UI) {
+    *(undefined4 *)param_12 = 0xffffffff;
   }
-  SVar8.handle = SVar7.handle;
-  pfVar10 = pfVar12;
-  bVar5 = InRange(psVar2,(snd_alias_t *)SVar7,(float)dVar20,(float *)SVar9);
-  if (bVar5) {
-    SVar8.handle = SVar7.handle;
-    bVar5 = SND_ContinueLoopingSound
-                      (psVar2,(snd_alias_t *)SVar7,(float)dVar20,(float)dVar16,(float)dVar17,SVar9,
-                       pfVar10,(int *)pcVar4);
-    if (bVar5) {
+  SVar5 = (SndEntHandle)param_2;
+  bVar4 = InRange(param_1,param_2,(float)dVar8,(float *)param_6);
+  if (bVar4) {
+    SVar5 = (SndEntHandle)param_2;
+    bVar4 = SND_ContinueLoopingSound
+                      (param_1,param_2,(float)dVar8,(float)dVar9,(float)dVar10,param_6,pfVar6,
+                       (int *)pcVar3);
+    if (bVar4) {
       SND_PlaySecondaryAlias
-                (psVar2,(float)dVar20,(float)dVar16,(float)dVar17,SVar8,(float *)SVar9,
-                 in_stack_00000074 + 1,SUB41(param_9,0),(float)dVar18,(snd_alias_system_t)pfVar12,
+                (param_1,(float)dVar8,(float)dVar9,(float)dVar10,SVar5,(float *)param_6,
+                 in_stack_00000074 + 1,SUB41(param_9,0),(float)dVar11,(int)param_10,
                  in_stack_00000054);
-      __restfpr_27(0);
-      iVar3 = __restgprlr_20();
-      return iVar3;
+      return 0;
     }
-    uVar1 = psVar2->flags >> 9 & 0x3f;
-    bVar5 = SND_IsRestricted(uVar1);
-    if (bVar5) {
+    uVar1 = param_1->flags >> 9 & 0x3f;
+    bVar4 = SND_IsRestricted(uVar1);
+    if (bVar4) {
       SND_StopEntityChannel((SndEntHandle)param_9,uVar1);
     }
-    iVar3 = SND_IsNullSoundFile(psVar2->soundFile);
-    if (iVar3 != 0) goto LAB_8284bfd4;
-    SND_ChoosePitchAndVolume
-              (psVar2,(snd_alias_t *)SVar7,(float)dVar20,(float)dVar16,(float *)SVar9,pfVar10);
+    iVar2 = SND_IsNullSoundFile(param_1->soundFile);
+    if (iVar2 != 0) {
+      return -1;
+    }
+    SND_ChoosePitchAndVolume(param_1,param_2,(float)dVar8,(float)dVar9,(float *)param_6,pfVar6);
     local_e0[0].basepitch = local_e0[0].pitch;
     local_e0[0].basevolume = local_e0[0].volume;
     if (((uint)local_e0[0].pitch & 0x7f800000) == 0x7f800000) {
-      SVar9.handle = 0;
+      param_6.handle = 0;
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0xa77,0,"%s");
     }
-    local_e0[0].startDelay = psVar2->startDelay;
-    local_e0[0].org[0] = *pfVar12;
-    local_e0[0].pitch = (float)((double)local_e0[0].pitch * dVar17);
-    local_e0[0].org[1] = pfVar12[1];
-    local_e0[0].org[2] = pfVar12[2];
-    dVar19 = 0.0;
-    local_e0[0].lerp = (float)dVar20;
+    local_e0[0].startDelay = param_1->startDelay;
+    local_e0[0].org[0] = *(float *)(int)param_10;
+    local_e0[0].pitch = (float)((double)local_e0[0].pitch * dVar10);
+    local_e0[0].org[1] = *(float *)(param_10 + 4);
+    local_e0[0].org[2] = *(float *)(param_10 + 8);
+    dVar12 = 0.0;
+    local_e0[0].lerp = (float)dVar8;
     local_e0[0].fraction = 0.0;
-    local_e0[0].alias0 = psVar2;
-    local_e0[0].alias1 = (snd_alias_t *)SVar7.handle;
+    local_e0[0].alias0 = param_1;
+    local_e0[0].alias1 = param_2;
     local_e0[0].sndEnt.handle = param_9;
-    fVar21 = SND_GetTimescaleLerp(uVar1);
-    local_e0[0].timescaleLerp = (float)((double)fVar21 * dVar18);
+    fVar13 = SND_GetTimescaleLerp(uVar1);
+    local_e0[0].timescaleLerp = (float)((double)fVar13 * dVar11);
     local_e0[0].forcePaused = false;
     local_e0[0].masterPriority = 0xff;
     if (in_stack_0000005f == '\0') {
-      local_e0[0].masterPriority = psVar2->masterPriority;
+      local_e0[0].masterPriority = param_1->masterPriority;
     }
     if (local_e0[0].masterPriority < g_snd.masterPriority) {
       local_e0[0].slaveLerp = 1.0;
     }
     else {
-      local_e0[0].slaveLerp = (float)dVar19;
+      local_e0[0].slaveLerp = (float)dVar12;
     }
-    SVar8.handle = psVar2->flags >> 7 & 3;
-    if (SVar8.handle == 1) {
-      SVar8.handle = SVar14.handle;
-      iVar3 = SND_StartAliasSample(local_e0,SVar14.handle);
+    SVar5.handle = param_1->flags >> 7 & 3;
+    if (SVar5.handle == 1) {
+      SVar5 = (SndEntHandle)param_12;
+      iVar2 = SND_StartAliasSample(local_e0,(int *)param_12);
     }
     else {
-      if (SVar8.handle != 2) {
-        if ((SVar8.handle != 3) && (alwaysfails == 0)) {
-          pcVar4 = va("unhandled sound alias type %i");
-          SVar9.handle = 0;
-          SVar8.handle = 0xa9d;
-          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0xa9d,0,pcVar4);
+      if (SVar5.handle != 2) {
+        if ((SVar5.handle != 3) && (alwaysfails == 0)) {
+          pcVar3 = va("unhandled sound alias type %i");
+          param_6.handle = 0;
+          SVar5.handle = 0xa9d;
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0xa9d,0,pcVar3);
         }
-        lVar15 = -1;
+        lVar7 = -1;
         goto LAB_8284c268;
       }
-      SVar8.handle = SVar14.handle;
-      iVar3 = SND_StartAliasStream(local_e0,SVar14.handle);
+      SVar5 = (SndEntHandle)param_12;
+      iVar2 = SND_StartAliasStream(local_e0,(int *)param_12);
     }
-    lVar15 = (longlong)iVar3;
+    lVar7 = (longlong)iVar2;
   }
 LAB_8284c268:
   SND_PlaySecondaryAlias
-            (psVar2,(float)dVar20,(float)dVar16,(float)dVar17,SVar8,(float *)SVar9,
-             in_stack_00000074 + 1,SUB41(param_9,0),(float)dVar18,(snd_alias_system_t)pfVar12,
-             in_stack_00000054);
-  SND_DebugAliasPrint((bool)((char)(lVar15 + 1) - ((char)lVar15 + (lVar15 + 1 == 0))),psVar2,
-                      "Started");
-  __restfpr_27(lVar15);
-  iVar3 = __restgprlr_20();
-  return iVar3;
+            (param_1,(float)dVar8,(float)dVar9,(float)dVar10,SVar5,(float *)param_6,
+             in_stack_00000074 + 1,SUB41(param_9,0),(float)dVar11,(int)param_10,in_stack_00000054);
+  SND_DebugAliasPrint((bool)((char)(lVar7 + 1) - ((char)lVar7 + (lVar7 + 1 == 0))),param_1,"Started"
+                     );
+  return (int)lVar7;
 }
 
 
 // 8284C2D0  SND_SetParamValue  (snd.cpp:2813)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void SND_SetParamValue(snd_param_info_t *param_1,float param_2,float param_3,float param_4,
                       int param_5)
 
 {
-  float *pfVar1;
   int in_r7;
-  double extraout_f1;
+  double dVar1;
   double dVar2;
   double dVar3;
-  double dVar4;
   
   dVar3 = (double)param_4;
+  dVar1 = (double)param_2;
   dVar2 = (double)param_3;
-  pfVar1 = (float *)__savegprlr_28((double)param_2,param_1,param_5);
-  dVar4 = extraout_f1;
-  if (extraout_f1 < 0.0) {
+  if (dVar1 < 0.0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0xafe,0,"%s");
   }
-  if (pfVar1 == (float *)0x0) {
+  if (param_1 == (snd_param_info_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0xaff,0,"%s");
   }
   if (in_r7 < 1) {
     in_r7 = 1;
   }
-  if ((float)(dVar4 - dVar3) < 0.0) {
-    dVar3 = dVar4;
+  if ((float)(dVar1 - dVar3) < 0.0) {
+    dVar3 = dVar1;
   }
-  if ((float)(dVar2 - dVar4) < 0.0) {
+  if ((float)(dVar2 - dVar1) < 0.0) {
     dVar2 = dVar3;
   }
-  pfVar1[1] = (float)dVar2;
-  pfVar1[2] = (float)(dVar2 - (double)*pfVar1) / (float)(longlong)in_r7;
-  __restgprlr_28();
+  param_1->goalvalue = (float)dVar2;
+  param_1->goalrate = (float)(dVar2 - (double)param_1->value) / (float)(longlong)in_r7;
   return;
 }
 
 
 // 8284C3B8  SND_ScaleParamValue  (snd.cpp:2860)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void SND_ScaleParamValue(snd_param_info_t *param_1,float param_2,float param_3,float param_4,
                         int param_5,float param_6)
 
 {
-  float *pfVar1;
   int in_r7;
+  double dVar1;
   double dVar2;
-  double extraout_f1;
   double dVar3;
   double dVar4;
-  double dVar5;
   
-  dVar5 = (double)param_6;
-  dVar4 = (double)param_4;
-  dVar3 = (double)param_3;
-  __savegprlr_28((double)param_2,param_1,param_5);
-  pfVar1 = (float *)__savefpr_28();
-  dVar2 = extraout_f1;
-  if (extraout_f1 < 0.0) {
+  dVar4 = (double)param_6;
+  dVar3 = (double)param_4;
+  dVar2 = (double)param_3;
+  dVar1 = (double)param_2;
+  if (dVar1 < 0.0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0xb2d,0,"%s");
   }
-  if (pfVar1 == (float *)0x0) {
+  if (param_1 == (snd_param_info_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0xb2e,0,"%s");
   }
   if (in_r7 < 1) {
     in_r7 = 1;
   }
-  dVar2 = (double)(float)(dVar2 * dVar5);
-  if ((float)(dVar2 - dVar4) < 0.0) {
-    dVar4 = dVar2;
+  dVar1 = (double)(float)(dVar1 * dVar4);
+  if ((float)(dVar1 - dVar3) < 0.0) {
+    dVar3 = dVar1;
   }
-  if ((float)(dVar3 - dVar2) < 0.0) {
-    dVar3 = dVar4;
+  if ((float)(dVar2 - dVar1) < 0.0) {
+    dVar2 = dVar3;
   }
-  pfVar1[1] = (float)dVar3;
-  pfVar1[2] = (float)(dVar3 - (double)*pfVar1) / (float)(longlong)in_r7;
-  __restfpr_28();
-  __restgprlr_28();
+  param_1->goalvalue = (float)dVar2;
+  param_1->goalrate = (float)(dVar2 - (double)param_1->value) / (float)(longlong)in_r7;
   return;
 }
 
@@ -4168,33 +3981,32 @@ void SND_SetVolume(snd_channel_info_t *param_1,float param_2,int param_3)
 
 // 8284C538  SND_ChangeParameterOnEntInternal  (snd.cpp:2905)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void SND_ChangeParameterOnEntInternal
                (SndEntHandle param_1,float param_2,int param_3,
                _func___cdecl_void_snd_channel_info_t_ptr_float_int *param_4)
 
 {
+  code *in_r6;
   int iVar1;
-  ulonglong in_r6;
-  int iVar2;
-  undefined8 extraout_f1;
-  undefined8 uVar3;
+  double dVar2;
   
-  iVar1 = __savegprlr_27((double)param_2,param_1.handle,param_3);
-  uVar3 = extraout_f1;
+  dVar2 = (double)param_2;
   if ((int)param_4 < 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0xb5d,0,"%s");
   }
-  if ((in_r6 & 0xffffffff) == 0) {
+  if (in_r6 == (code *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0xb5e,0,"%s");
   }
-  iVar2 = -0x7b777eec;
+  iVar1 = -0x7b777eec;
   do {
-    if (*(int *)(iVar2 + 0xc) == iVar1) {
-      (*(code *)in_r6)(uVar3,iVar2);
+    if (*(int *)(iVar1 + 0xc) == param_1.handle) {
+      (*in_r6)(dVar2,iVar1);
     }
-    iVar2 = iVar2 + 0xc0;
-  } while (iVar2 < -0x7b77566c);
-  __restgprlr_27();
+    iVar1 = iVar1 + 0xc0;
+  } while (iVar1 < -0x7b77566c);
   return;
 }
 
@@ -4249,101 +4061,97 @@ void SND_SetVolumeOnEnt(SndEntHandle param_1,float param_2,int param_3)
 
 // 8284C650  SND_SetVolModValue  (snd.cpp:2997)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void SND_SetVolModValue(int param_1,float param_2,int param_3)
 
 {
-  uint uVar1;
-  double extraout_f1;
-  double dVar2;
+  double dVar1;
   
-  uVar1 = __savegprlr_29((double)param_2,param_1);
-  dVar2 = extraout_f1;
-  if ((uint)g_snd.volmod_count <= uVar1) {
+  dVar1 = (double)param_2;
+  if ((uint)g_snd.volmod_count <= (uint)param_1) {
     param_3 = 0xbb6;
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0xbb6,0,
                     "volmodindex doesn\'t index g_snd.volmod_count\n\t%i not in [0, %i)");
   }
-  SND_SetParamValue(g_snd.volmods + uVar1,(float)dVar2,0.0,1.0,param_3);
-  __restgprlr_29();
+  SND_SetParamValue(g_snd.volmods + param_1,(float)dVar1,0.0,1.0,param_3);
   return;
 }
 
 
 // 8284C6F8  SND_StopSoundsInternal  (snd.cpp:3010)
 
+/* WARNING: Function: __savegprlr_19 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_19 replaced with injection: xenon_save_restore */
+
 void SND_StopSoundsInternal(SndEntHandle param_1,char *param_2,int param_3)
 
 {
+  bool bVar2;
   int iVar1;
-  bool bVar3;
-  int iVar2;
-  ulonglong uVar4;
-  snd_alias_t *psVar5;
-  char *pcVar6;
-  code *pcVar7;
-  snd_alias_t **ppsVar8;
-  longlong lVar9;
+  snd_alias_t *psVar3;
+  char *pcVar4;
+  code *pcVar5;
+  snd_alias_t **ppsVar6;
+  longlong lVar7;
   
-  uVar4 = (ulonglong)(int)param_2;
-  iVar1 = __savegprlr_19(param_1.handle);
-  if (g_snd.Initialized2d != false) {
-    ppsVar8 = &g_snd.chaninfo[0].alias1;
-    pcVar7 = (code *)0x0;
-    lVar9 = 0;
+  if (g_snd.Initialized2d) {
+    ppsVar6 = &g_snd.chaninfo[0].alias1;
+    pcVar5 = (code *)0x0;
+    lVar7 = 0;
     do {
-      if ((((SndEntHandle *)(ppsVar8 + -0x1a))->handle == iVar1) &&
-         ((param_3 == -1 || (ppsVar8[-0x19] == (snd_alias_t *)param_3)))) {
-        iVar2 = (int)lVar9;
-        if ((iVar2 < 0) || (g_snd.max_2D_channels <= iVar2)) {
-          if ((iVar2 < 8) || (g_snd.max_3D_channels + 8 <= iVar2)) {
-            if ((0x27 < iVar2) && (iVar2 < g_snd.max_stream_channels + 0x28)) {
-              bVar3 = SND_IsStreamChannelFree(iVar2);
-              if (bVar3) goto LAB_8284c900;
-              pcVar7 = SND_StopStreamChannel;
+      if ((((SndEntHandle *)(ppsVar6 + -0x1a))->handle == param_1.handle) &&
+         ((param_3 == -1 || (ppsVar6[-0x19] == (snd_alias_t *)param_3)))) {
+        iVar1 = (int)lVar7;
+        if ((iVar1 < 0) || (g_snd.max_2D_channels <= iVar1)) {
+          if ((iVar1 < 8) || (g_snd.max_3D_channels + 8 <= iVar1)) {
+            if ((0x27 < iVar1) && (iVar1 < g_snd.max_stream_channels + 0x28)) {
+              bVar2 = SND_IsStreamChannelFree(iVar1);
+              if (bVar2) goto LAB_8284c900;
+              pcVar5 = SND_StopStreamChannel;
             }
           }
           else {
-            bVar3 = SND_Is3DChannelFree(iVar2);
-            if (bVar3) goto LAB_8284c900;
-            pcVar7 = SND_Stop3DChannel;
+            bVar2 = SND_Is3DChannelFree(iVar1);
+            if (bVar2) goto LAB_8284c900;
+            pcVar5 = SND_Stop3DChannel;
           }
         }
         else {
-          bVar3 = SND_Is2DChannelFree(iVar2);
-          if (bVar3) goto LAB_8284c900;
-          pcVar7 = SND_Stop2DChannel;
+          bVar2 = SND_Is2DChannelFree(iVar1);
+          if (bVar2) goto LAB_8284c900;
+          pcVar5 = SND_Stop2DChannel;
         }
-        if (pcVar7 == (code *)0x0) {
+        if (pcVar5 == (code *)0x0) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0xbeb,1,"%s");
         }
-        if ((uVar4 & 0xffffffff) == 0) {
-          psVar5 = ppsVar8[-1];
-          pcVar6 = "stopped all on entity";
-          bVar3 = true;
+        if (param_2 == (char *)0x0) {
+          psVar3 = ppsVar6[-1];
+          pcVar4 = "stopped all on entity";
+          bVar2 = true;
         }
         else {
-          pcVar6 = (char *)uVar4;
-          if (((ppsVar8[-1] == (snd_alias_t *)0x0) ||
-              (iVar2 = I_stricmp(ppsVar8[-1]->aliasName,pcVar6), iVar2 != 0)) &&
-             ((*ppsVar8 == (snd_alias_t *)0x0 ||
-              (iVar2 = I_stricmp((*ppsVar8)->aliasName,pcVar6), iVar2 != 0)))) goto LAB_8284c900;
-          psVar5 = ppsVar8[-1];
-          iVar2 = I_stricmp(psVar5->aliasName,pcVar6);
-          SND_DebugAliasPrint(iVar2 == 0,psVar5,"stopped on entity by name");
-          psVar5 = *ppsVar8;
-          iVar2 = I_stricmp(psVar5->aliasName,pcVar6);
-          bVar3 = iVar2 == 0;
-          pcVar6 = "stopped on entity by name";
+          if (((ppsVar6[-1] == (snd_alias_t *)0x0) ||
+              (iVar1 = I_stricmp(ppsVar6[-1]->aliasName,param_2), iVar1 != 0)) &&
+             ((*ppsVar6 == (snd_alias_t *)0x0 ||
+              (iVar1 = I_stricmp((*ppsVar6)->aliasName,param_2), iVar1 != 0)))) goto LAB_8284c900;
+          psVar3 = ppsVar6[-1];
+          iVar1 = I_stricmp(psVar3->aliasName,param_2);
+          SND_DebugAliasPrint(iVar1 == 0,psVar3,"stopped on entity by name");
+          psVar3 = *ppsVar6;
+          iVar1 = I_stricmp(psVar3->aliasName,param_2);
+          bVar2 = iVar1 == 0;
+          pcVar4 = "stopped on entity by name";
         }
-        SND_DebugAliasPrint(bVar3,psVar5,pcVar6);
-        (*pcVar7)(lVar9);
+        SND_DebugAliasPrint(bVar2,psVar3,pcVar4);
+        (*pcVar5)(lVar7);
       }
 LAB_8284c900:
-      ppsVar8 = ppsVar8 + 0x30;
-      lVar9 = lVar9 + 1;
-    } while ((int)ppsVar8 < -0x7b7755f8);
+      ppsVar6 = ppsVar6 + 0x30;
+      lVar7 = lVar7 + 1;
+    } while ((int)ppsVar6 < -0x7b7755f8);
   }
-  __restgprlr_19();
   return;
 }
 
@@ -4360,23 +4168,20 @@ void SND_StopSoundAliasOnEnt(SndEntHandle param_1,char *param_2)
 
 // 8284C928  SND_StopSoundChannelOnEnt  (snd.cpp:3079)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void SND_StopSoundChannelOnEnt(SndEntHandle param_1,int param_2)
 
 {
-  SndEntHandle SVar1;
-  ulonglong uVar2;
-  
-  uVar2 = (ulonglong)param_2;
-  SVar1.handle = __savegprlr_29(param_1.handle);
-  if ((int)uVar2 == -1) {
+  if (param_2 == -1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0xc08,0,"%s");
   }
-  if ((ulonglong)(uint)g_snd.entchannel_count <= (uVar2 & 0xffffffff)) {
+  if ((uint)g_snd.entchannel_count <= (uint)param_2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0xc09,0,
                     "channelNum doesn\'t index g_snd.entchannel_count\n\t%i not in [0, %i)");
   }
-  SND_StopSoundsInternal(SVar1,(char *)0x0,(int)uVar2);
-  __restgprlr_29();
+  SND_StopSoundsInternal(param_1,(char *)0x0,param_2);
   return;
 }
 
@@ -4446,6 +4251,8 @@ void Snd_AssertAliasValid(snd_alias_t *param_1)
 
 // 82856BF8  SND_PlayFXSounds  (snd.cpp:3126)
 
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void SND_PlayFXSounds(void)
@@ -4462,7 +4269,6 @@ void SND_PlayFXSounds(void)
   double dVar7;
   int in_stack_ffffff28;
   
-  __savegprlr_22();
   uVar4 = 0;
   if (g_FXPlaySoundCount != 0) {
     uVar3 = 0xffffffff82000000;
@@ -4489,415 +4295,408 @@ void SND_PlayFXSounds(void)
     } while (uVar4 < g_FXPlaySoundCount);
   }
   g_FXPlaySoundCount = 0;
-  __restgprlr_22();
   return;
 }
 
 
 // 8284CAE8  SND_PlaySoundAlias  (snd.cpp:3141)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 int SND_PlaySoundAlias(snd_alias_t *param_1,SndEntHandle param_2,float *param_3,int param_4,
                       snd_alias_system_t param_5)
 
 {
-  snd_alias_t *psVar1;
-  int iVar2;
-  ulonglong uVar3;
-  SndEntHandle SVar4;
-  char *pcVar5;
+  int iVar1;
+  SndEntHandle SVar2;
   int in_stack_ffffff58;
   
-  uVar3 = (ulonglong)(int)param_3;
-  pcVar5 = (char *)param_4;
-  psVar1 = (snd_alias_t *)__savegprlr_27(param_1);
-  SVar4.handle = (int)uVar3;
-  if ((uVar3 & 0xffffffff) == 0) {
-    pcVar5 = "%s";
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0xc46,SVar4.handle,
-                    "%s");
+  SVar2 = (SndEntHandle)param_3;
+  if (param_3 == (float *)0x0) {
+    param_4 = (int)"%s";
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0xc46,0,"%s");
   }
-  if (psVar1 == (snd_alias_t *)0x0) {
-    iVar2 = __restgprlr_27(0xffffffffffffffff);
-    return iVar2;
+  if (param_1 == (snd_alias_t *)0x0) {
+    return -1;
   }
-  iVar2 = SND_PlaySoundAlias_Internal
-                    (psVar1,psVar1,0.0,1.0,1.0,SVar4,(float *)pcVar5,
-                     (int *)&IMAGE_DOS_HEADER_82000000,param_2.handle,SUB81(uVar3,0),1.0,SASYS_UI,
+  iVar1 = SND_PlaySoundAlias_Internal
+                    (param_1,param_1,0.0,1.0,1.0,SVar2,(float *)param_4,
+                     (int *)&IMAGE_DOS_HEADER_82000000,param_2.handle,SUB41(param_3,0),1.0,SASYS_UI,
                      in_stack_ffffff58);
-  iVar2 = __restgprlr_27(iVar2);
-  return iVar2;
+  return iVar1;
 }
 
 
 // 8284CB90  SND_PlayScaledSoundAlias  (snd.cpp:3151)
+
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 
 int SND_PlayScaledSoundAlias
               (snd_alias_t *param_1,float param_2,float param_3,SndEntHandle param_4,float *param_5,
               int param_6,snd_alias_system_t param_7)
 
 {
-  snd_alias_t *psVar1;
-  int iVar2;
-  char *pcVar3;
-  ulonglong uVar4;
-  double extraout_f1;
-  double dVar5;
-  double dVar6;
+  int iVar1;
+  char *pcVar2;
+  double dVar3;
+  double dVar4;
   int in_stack_ffffff48;
   
-  dVar5 = (double)param_3;
-  uVar4 = (ulonglong)(int)param_7;
-  psVar1 = (snd_alias_t *)__savegprlr_27((double)param_2,param_1,param_4.handle);
-  dVar6 = extraout_f1;
-  pcVar3 = (char *)param_6;
-  if ((uVar4 & 0xffffffff) == 0) {
-    pcVar3 = "%s";
+  dVar3 = (double)param_2;
+  dVar4 = (double)param_3;
+  pcVar2 = (char *)param_6;
+  if (param_7 == SASYS_UI) {
+    pcVar2 = "%s";
     param_5 = (float *)0x0;
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0xc50,0,"%s");
   }
-  if (psVar1 == (snd_alias_t *)0x0) {
-    iVar2 = __restgprlr_27(0xffffffffffffffff);
-    return iVar2;
+  if (param_1 == (snd_alias_t *)0x0) {
+    return -1;
   }
-  iVar2 = SND_PlaySoundAlias_Internal
-                    (psVar1,psVar1,0.0,(float)dVar6,(float)dVar5,(SndEntHandle)param_5,
-                     (float *)pcVar3,(int *)&IMAGE_DOS_HEADER_82000000,param_6,SUB81(uVar4,0),1.0,
+  iVar1 = SND_PlaySoundAlias_Internal
+                    (param_1,param_1,0.0,(float)dVar3,(float)dVar4,(SndEntHandle)param_5,
+                     (float *)pcVar2,(int *)&IMAGE_DOS_HEADER_82000000,param_6,SUB41(param_7,0),1.0,
                      SASYS_UI,in_stack_ffffff48);
-  iVar2 = __restgprlr_27(iVar2);
-  return iVar2;
+  return iVar1;
 }
 
 
 // 8284CC60  SND_PlaySoundAliasWithPitch  (snd.cpp:3161)
+
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 
 int SND_PlaySoundAliasWithPitch
               (snd_alias_t *param_1,float param_2,SndEntHandle param_3,float *param_4,int param_5,
               snd_alias_system_t param_6)
 
 {
-  snd_alias_t *psVar1;
-  int iVar2;
-  SndEntHandle SVar3;
-  ulonglong uVar4;
-  char *pcVar5;
-  double extraout_f1;
-  double dVar6;
+  int iVar1;
+  SndEntHandle SVar2;
+  char *pcVar3;
+  double dVar4;
   int in_stack_ffffff58;
   
-  uVar4 = (ulonglong)param_5;
-  psVar1 = (snd_alias_t *)__savegprlr_27((double)param_2,param_1,param_3.handle);
-  pcVar5 = (char *)uVar4;
-  dVar6 = extraout_f1;
-  SVar3 = (SndEntHandle)param_4;
-  if ((uVar4 & 0xffffffff) == 0) {
-    pcVar5 = "%s";
-    SVar3.handle = 0;
+  dVar4 = (double)param_2;
+  SVar2 = (SndEntHandle)param_4;
+  pcVar3 = (char *)param_5;
+  if (param_5 == 0) {
+    pcVar3 = "%s";
+    SVar2.handle = 0;
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0xc5a,0,"%s");
   }
-  if (psVar1 == (snd_alias_t *)0x0) {
-    iVar2 = __restgprlr_27(0xffffffffffffffff);
-    return iVar2;
+  if (param_1 == (snd_alias_t *)0x0) {
+    return -1;
   }
-  iVar2 = SND_PlaySoundAlias_Internal
-                    (psVar1,psVar1,0.0,1.0,(float)dVar6,SVar3,(float *)pcVar5,
-                     (int *)&IMAGE_DOS_HEADER_82000000,(int)param_4,SUB81(uVar4,0),1.0,SASYS_UI,
+  iVar1 = SND_PlaySoundAlias_Internal
+                    (param_1,param_1,0.0,1.0,(float)dVar4,SVar2,(float *)pcVar3,
+                     (int *)&IMAGE_DOS_HEADER_82000000,(int)param_4,SUB41(param_5,0),1.0,SASYS_UI,
                      in_stack_ffffff58);
-  iVar2 = __restgprlr_27(iVar2);
-  return iVar2;
+  return iVar1;
 }
 
 
 // 8284CD20  SND_PlaySoundAliasAsMaster  (snd.cpp:3171)
+
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 
 int SND_PlaySoundAliasAsMaster
               (snd_alias_t *param_1,SndEntHandle param_2,float *param_3,int param_4,
               snd_alias_system_t param_5)
 
 {
-  snd_alias_t *psVar1;
-  int iVar2;
-  ulonglong uVar3;
-  SndEntHandle SVar4;
+  int iVar1;
+  SndEntHandle SVar2;
   int in_stack_ffffff58;
   
-  uVar3 = (ulonglong)(int)param_3;
-  psVar1 = (snd_alias_t *)__savegprlr_27(param_1);
-  SVar4.handle = (int)uVar3;
-  if ((uVar3 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0xc64,SVar4.handle,
-                    "%s");
+  SVar2 = (SndEntHandle)param_3;
+  if (param_3 == (float *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0xc64,0,"%s");
   }
-  if (psVar1 == (snd_alias_t *)0x0) {
-    iVar2 = __restgprlr_27(0xffffffffffffffff);
-    return iVar2;
+  if (param_1 == (snd_alias_t *)0x0) {
+    return -1;
   }
-  iVar2 = SND_PlaySoundAlias_Internal
-                    (psVar1,psVar1,0.0,1.0,1.0,SVar4,(float *)0x1,(int *)0x0,param_2.handle,
-                     SUB81(uVar3,0),1.0,SASYS_UI,in_stack_ffffff58);
-  iVar2 = __restgprlr_27(iVar2);
-  return iVar2;
+  iVar1 = SND_PlaySoundAlias_Internal
+                    (param_1,param_1,0.0,1.0,1.0,SVar2,(float *)0x1,(int *)0x0,param_2.handle,
+                     SUB41(param_3,0),1.0,SASYS_UI,in_stack_ffffff58);
+  return iVar1;
 }
 
 
 // 8284CDD0  SND_ValidateSoundAliasBlend  (snd.cpp:3181)
+
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 
 bool SND_ValidateSoundAliasBlend(snd_alias_t *param_1,snd_alias_t *param_2,bool param_3)
 
 {
   uint uVar1;
   uint uVar2;
-  int iVar3;
-  int iVar4;
-  uint uVar5;
-  ulonglong uVar6;
-  undefined1 uVar7;
-  ulonglong uVar8;
-  char *pcVar9;
-  ulonglong uVar10;
+  uint uVar3;
+  char *pcVar4;
   
-  uVar10 = (ulonglong)param_3;
-  uVar8 = (ulonglong)(int)param_2;
-  uVar6 = __savegprlr_27(param_1);
-  if ((uVar6 & 0xffffffff) == 0) {
+  if (param_1 == (snd_alias_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0xc6e,0,"%s");
   }
-  if ((uVar8 & 0xffffffff) == 0) {
+  if (param_2 == (snd_alias_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0xc6f,0,"%s");
   }
-  if ((uVar6 & 0xffffffff) == (uVar8 & 0xffffffff)) goto LAB_8284ce48;
-  iVar3 = (int)uVar6;
-  iVar4 = (int)uVar8;
-  if (*(int *)(iVar3 + 0x14) == *(int *)(iVar4 + 0x14)) {
-    if (*(float *)(iVar3 + 0x38) == *(float *)(iVar4 + 0x38)) {
-      if (*(int *)(iVar3 + 0x5c) == *(int *)(iVar4 + 0x5c)) {
-        if (*(int *)(iVar3 + 0x6c) == *(int *)(iVar4 + 0x6c)) {
-          uVar1 = *(uint *)(iVar3 + 0x3c);
-          uVar2 = *(uint *)(iVar4 + 0x3c);
-          uVar5 = uVar1 & 1;
-          if (uVar5 == (uVar2 & 1)) {
+  if (param_1 == param_2) {
+    return true;
+  }
+  if (param_1->soundFile == param_2->soundFile) {
+    if (param_1->velocityMin == param_2->velocityMin) {
+      if (param_1->volumeFalloffCurve == param_2->volumeFalloffCurve) {
+        if (param_1->speakerMap == param_2->speakerMap) {
+          uVar1 = param_1->flags;
+          uVar2 = param_2->flags;
+          uVar3 = uVar1 & 1;
+          if (uVar3 == (uVar2 & 1)) {
             if (((uVar2 ^ uVar1) & 0x180) == 0) {
               if (((uVar2 ^ uVar1) & 0x7e00) == 0) {
                 if (((uVar2 ^ uVar1) & 8) == 0) {
                   if (((uVar2 ^ uVar1) & 0x10) == 0) {
-                    if (*(char *)(iVar3 + 0x40) == *(char *)(iVar4 + 0x40)) {
-                      if (*(float *)(iVar3 + 0x44) == *(float *)(iVar4 + 0x44)) {
-                        if (*(float *)(iVar3 + 0x48) == *(float *)(iVar4 + 0x48)) {
-                          if (*(int *)(iVar3 + 0x58) == *(int *)(iVar4 + 0x58)) {
-                            if (uVar5 == 0) {
-LAB_8284d0e4:
-                              if ((*(int *)(iVar3 + 8) == 0) && (*(int *)(iVar4 + 8) == 0)) {
-LAB_8284ce48:
-                                uVar7 = __restgprlr_27(1);
-                                return (bool)uVar7;
+                    if (param_1->masterPriority == param_2->masterPriority) {
+                      if (param_1->masterPercentage == param_2->masterPercentage) {
+                        if (param_1->slavePercentage == param_2->slavePercentage) {
+                          if (param_1->startDelay == param_2->startDelay) {
+                            if (uVar3 != 0) {
+                              if ((param_1->pitchMin != param_1->pitchMax) ||
+                                 (param_2->pitchMin != param_2->pitchMax)) {
+                                if (!param_3) {
+                                  return false;
+                                }
+                                pcVar4 = 
+                                "\x15tried to blend between sound aliases \'%s\' and \'%s\', but they are looping and at least one of them has a random pitch\n"
+                                ;
+                                goto LAB_8284d110;
                               }
-                              if ((uVar10 & 0xff) == 0) goto LAB_8284d120;
-                              pcVar9 = 
-                              "\x15tried to blend between sound aliases \'%s\' and \'%s\', but one or both has a secondary alias.\n"
-                              ;
+                              if ((uVar3 != 0) &&
+                                 ((param_1->volMin != param_1->volMax ||
+                                  (param_2->volMin != param_2->volMax)))) {
+                                if (!param_3) {
+                                  return false;
+                                }
+                                pcVar4 = 
+                                "\x15tried to blend between sound aliases \'%s\' and \'%s\', but they are looping and at least one of them has a random volume\n"
+                                ;
+                                goto LAB_8284d110;
+                              }
                             }
-                            else if ((*(float *)(iVar3 + 0x28) == *(float *)(iVar3 + 0x2c)) &&
-                                    (*(float *)(iVar4 + 0x28) == *(float *)(iVar4 + 0x2c))) {
-                              if ((uVar5 == 0) ||
-                                 ((*(float *)(iVar3 + 0x1c) == *(float *)(iVar3 + 0x20) &&
-                                  (*(float *)(iVar4 + 0x1c) == *(float *)(iVar4 + 0x20)))))
-                              goto LAB_8284d0e4;
-                              if ((uVar10 & 0xff) == 0) goto LAB_8284d120;
-                              pcVar9 = 
-                              "\x15tried to blend between sound aliases \'%s\' and \'%s\', but they are looping and at least one of them has a random volume\n"
-                              ;
+                            if ((param_1->secondaryAliasName == (char *)0x0) &&
+                               (param_2->secondaryAliasName == (char *)0x0)) {
+                              return true;
                             }
-                            else {
-                              if ((uVar10 & 0xff) == 0) goto LAB_8284d120;
-                              pcVar9 = 
-                              "\x15tried to blend between sound aliases \'%s\' and \'%s\', but they are looping and at least one of them has a random pitch\n"
-                              ;
+                            if (!param_3) {
+                              return false;
                             }
+                            pcVar4 = 
+                            "\x15tried to blend between sound aliases \'%s\' and \'%s\', but one or both has a secondary alias.\n"
+                            ;
                           }
                           else {
-                            if ((uVar10 & 0xff) == 0) goto LAB_8284d120;
-                            pcVar9 = 
+                            if (!param_3) {
+                              return false;
+                            }
+                            pcVar4 = 
                             "\x15tried to blend between sound aliases \'%s\' and \'%s\', but they do not have the same start delay.\n"
                             ;
                           }
                         }
                         else {
-                          if ((uVar10 & 0xff) == 0) goto LAB_8284d120;
-                          pcVar9 = 
+                          if (!param_3) {
+                            return false;
+                          }
+                          pcVar4 = 
                           "\x15tried to blend between sound aliases \'%s\' and \'%s\', but they do not have the same slave percentages.\n"
                           ;
                         }
                       }
                       else {
-                        if ((uVar10 & 0xff) == 0) goto LAB_8284d120;
-                        pcVar9 = 
+                        if (!param_3) {
+                          return false;
+                        }
+                        pcVar4 = 
                         "\x15tried to blend between sound aliases \'%s\' and \'%s\', but they do not have the same master percentages.\n"
                         ;
                       }
                     }
                     else {
-                      if ((uVar10 & 0xff) == 0) goto LAB_8284d120;
-                      pcVar9 = 
+                      if (!param_3) {
+                        return false;
+                      }
+                      pcVar4 = 
                       "\x15tried to blend between sound aliases \'%s\' and \'%s\', but they do not have the same master priority\n"
                       ;
                     }
                   }
                   else {
-                    if ((uVar10 & 0xff) == 0) goto LAB_8284d120;
-                    pcVar9 = 
+                    if (!param_3) {
+                      return false;
+                    }
+                    pcVar4 = 
                     "\x15tried to blend between sound aliases \'%s\' and \'%s\', but they don\'t use the same nowetlevel setting\n"
                     ;
                   }
                 }
                 else {
-                  if ((uVar10 & 0xff) == 0) goto LAB_8284d120;
-                  pcVar9 = 
+                  if (!param_3) {
+                    return false;
+                  }
+                  pcVar4 = 
                   "\x15tried to blend between sound aliases \'%s\' and \'%s\', but they don\'t use the same fulldrylevel setting\n"
                   ;
                 }
               }
               else {
-                if ((uVar10 & 0xff) == 0) goto LAB_8284d120;
-                pcVar9 = 
+                if (!param_3) {
+                  return false;
+                }
+                pcVar4 = 
                 "\x15tried to blend between sound aliases \'%s\' and \'%s\', but they don\'t use the same channel\n"
                 ;
               }
             }
             else {
-              if ((uVar10 & 0xff) == 0) goto LAB_8284d120;
-              pcVar9 = 
+              if (!param_3) {
+                return false;
+              }
+              pcVar4 = 
               "\x15tried to blend between sound aliases \'%s\' and \'%s\', but they are not both loaded or both streamed\n"
               ;
             }
           }
           else {
-            if ((uVar10 & 0xff) == 0) goto LAB_8284d120;
-            pcVar9 = 
+            if (!param_3) {
+              return false;
+            }
+            pcVar4 = 
             "\x15tried to blend between sound aliases \'%s\' and \'%s\', but they do not have the same looping status\n"
             ;
           }
         }
         else {
-          if ((uVar10 & 0xff) == 0) goto LAB_8284d120;
-          pcVar9 = 
+          if (!param_3) {
+            return false;
+          }
+          pcVar4 = 
           "\x15tried to blend between sound aliases \'%s\' and \'%s\', but they do not have the same speaker map\n"
           ;
         }
       }
       else {
-        if ((uVar10 & 0xff) == 0) goto LAB_8284d120;
-        pcVar9 = 
+        if (!param_3) {
+          return false;
+        }
+        pcVar4 = 
         "\x15tried to blend between sound aliases \'%s\' and \'%s\', but they do not have the same volume falloff curve\n"
         ;
       }
     }
     else {
-      if ((uVar10 & 0xff) == 0) goto LAB_8284d120;
-      pcVar9 = 
+      if (!param_3) {
+        return false;
+      }
+      pcVar4 = 
       "\x15tried to blend between sound aliases \'%s\' and \'%s\', but they do not have the same velocity min.\n"
       ;
     }
   }
   else {
-    if ((uVar10 & 0xff) == 0) goto LAB_8284d120;
-    pcVar9 = 
+    if (!param_3) {
+      return false;
+    }
+    pcVar4 = 
     "\x15tried to blend between sound aliases \'%s\' and \'%s\', but they don\'t use the same sound file\n"
     ;
   }
-  Com_Error(ERR_DROP,pcVar9);
-LAB_8284d120:
-  uVar7 = __restgprlr_27(0);
-  return (bool)uVar7;
+LAB_8284d110:
+  Com_Error(ERR_DROP,pcVar4);
+  return false;
 }
 
 
 // 8284D130  SND_PlayBlendedSoundAliases  (snd.cpp:3307)
+
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 
 int SND_PlayBlendedSoundAliases
               (snd_alias_t *param_1,snd_alias_t *param_2,float param_3,float param_4,
               SndEntHandle param_5,float *param_6,int param_7,snd_alias_system_t param_8)
 
 {
-  snd_alias_t *psVar1;
-  int iVar2;
-  ulonglong uVar3;
-  SndEntHandle SVar4;
-  char *pcVar5;
-  ulonglong uVar6;
-  double extraout_f1;
-  double dVar7;
-  double dVar8;
+  int iVar1;
+  SndEntHandle SVar2;
+  double dVar3;
+  double dVar4;
   int in_stack_ffffff48;
   
-  dVar7 = (double)param_4;
-  uVar6 = (ulonglong)(int)param_8;
-  uVar3 = (ulonglong)(int)param_2;
-  pcVar5 = (char *)param_6;
-  psVar1 = (snd_alias_t *)__savegprlr_26((double)param_3,param_1,uVar3,param_5.handle);
-  dVar8 = extraout_f1;
-  if ((uVar6 & 0xffffffff) == 0) {
-    pcVar5 = "%s";
+  dVar3 = (double)param_3;
+  dVar4 = (double)param_4;
+  if (param_8 == SASYS_UI) {
+    param_6 = (float *)"%s";
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0xcec,0,"%s");
   }
-  if ((psVar1 != (snd_alias_t *)0x0) && ((uVar3 & 0xffffffff) != 0)) {
-    SVar4.handle = 1;
-    SND_ValidateSoundAliasBlend(psVar1,(snd_alias_t *)uVar3,true);
-    iVar2 = SND_PlaySoundAlias_Internal
-                      (psVar1,(snd_alias_t *)uVar3,(float)dVar8,(float)dVar7,1.0,SVar4,
-                       (float *)pcVar5,(int *)&IMAGE_DOS_HEADER_82000000,param_7,SUB81(uVar6,0),1.0,
-                       SASYS_UI,in_stack_ffffff48);
-    iVar2 = __restgprlr_26(iVar2);
-    return iVar2;
+  if ((param_1 != (snd_alias_t *)0x0) && (param_2 != (snd_alias_t *)0x0)) {
+    SVar2.handle = 1;
+    SND_ValidateSoundAliasBlend(param_1,param_2,true);
+    iVar1 = SND_PlaySoundAlias_Internal
+                      (param_1,param_2,(float)dVar3,(float)dVar4,1.0,SVar2,param_6,
+                       (int *)&IMAGE_DOS_HEADER_82000000,param_7,SUB41(param_8,0),1.0,SASYS_UI,
+                       in_stack_ffffff48);
+    return iVar1;
   }
-  iVar2 = __restgprlr_26(0xffffffffffffffff);
-  return iVar2;
+  return -1;
 }
 
 
 // 8284D218  SND_PlayBlendedSoundAliasesWithPitch  (snd.cpp:3318)
+
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 
 int SND_PlayBlendedSoundAliasesWithPitch
               (snd_alias_t *param_1,snd_alias_t *param_2,float param_3,float param_4,float param_5,
               SndEntHandle param_6,float *param_7,int param_8,snd_alias_system_t param_9)
 
 {
-  snd_alias_t *psVar1;
-  int iVar2;
-  ulonglong uVar3;
-  SndEntHandle SVar4;
-  ulonglong in_r9;
-  double extraout_f1;
+  int iVar1;
+  SndEntHandle SVar2;
+  int in_r9;
+  double dVar3;
+  double dVar4;
   double dVar5;
-  double dVar6;
-  double dVar7;
   float *in_stack_00000054;
   int in_stack_ffffff48;
   
-  dVar6 = (double)param_5;
-  dVar5 = (double)param_4;
-  uVar3 = (ulonglong)(int)param_2;
-  psVar1 = (snd_alias_t *)
-           __savegprlr_27((double)param_3,param_1,uVar3,param_6.handle,param_7,param_8);
-  dVar7 = extraout_f1;
-  if ((in_r9 & 0xffffffff) == 0) {
+  dVar5 = (double)param_5;
+  dVar4 = (double)param_4;
+  dVar3 = (double)param_3;
+  if (in_r9 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0xcf7,0,"%s");
   }
-  if ((psVar1 != (snd_alias_t *)0x0) && ((uVar3 & 0xffffffff) != 0)) {
-    SVar4.handle = 1;
-    SND_ValidateSoundAliasBlend(psVar1,(snd_alias_t *)uVar3,true);
-    iVar2 = SND_PlaySoundAlias_Internal
-                      (psVar1,(snd_alias_t *)uVar3,(float)dVar7,(float)dVar5,(float)dVar6,SVar4,
-                       in_stack_00000054,(int *)&IMAGE_DOS_HEADER_82000000,param_9,SUB81(in_r9,0),
+  if ((param_1 != (snd_alias_t *)0x0) && (param_2 != (snd_alias_t *)0x0)) {
+    SVar2.handle = 1;
+    SND_ValidateSoundAliasBlend(param_1,param_2,true);
+    iVar1 = SND_PlaySoundAlias_Internal
+                      (param_1,param_2,(float)dVar3,(float)dVar4,(float)dVar5,SVar2,
+                       in_stack_00000054,(int *)&IMAGE_DOS_HEADER_82000000,param_9,SUB41(in_r9,0),
                        1.0,SASYS_UI,in_stack_ffffff48);
-    iVar2 = __restgprlr_27(iVar2);
-    return iVar2;
+    return iVar1;
   }
-  iVar2 = __restgprlr_27(0xffffffffffffffff);
-  return iVar2;
+  return -1;
 }
 
 
 // 8284D310  SND_PlayLocalSoundAlias  (snd.cpp:3329)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 int SND_PlayLocalSoundAlias
@@ -4905,33 +4704,27 @@ int SND_PlayLocalSoundAlias
 
 {
   float *pfVar1;
-  uint uVar2;
-  int iVar3;
-  ulonglong uVar4;
-  SndEntHandle SVar5;
+  int iVar2;
   int in_stack_ffffff68;
   
-  uVar4 = (ulonglong)(int)param_3;
-  uVar2 = __savegprlr_28(param_1);
-  SVar5.handle = (int)uVar4;
-  if (2 < (uVar4 & 0xffffffff)) {
-    SVar5.handle = 0;
+  if (SASYS_GAME < param_3) {
+    param_3 = SASYS_UI;
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0xd2b,0,
                     "system doesn\'t index SASYS_COUNT\n\t%i not in [0, %i)");
   }
-  if (3 < uVar2) {
-    SVar5.handle = 0;
+  if (LOCAL_CLIENT_3 < param_1) {
+    param_3 = 0;
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0xd2c,0,
                     "localClientNum doesn\'t index ARRAY_COUNT( g_snd.listeners )\n\t%i not in [0, %i)"
                    );
   }
-  pfVar1 = (float *)g_snd.listeners[uVar2].clientNum;
-  iVar3 = SND_PlaySoundAlias_Internal
-                    (param_2,param_2,0.0,1.0,1.0,SVar5,pfVar1,(int *)&IMAGE_DOS_HEADER_82000000,
-                     ((int)pfVar1 << 2 | uVar2 & 3) << 0x12,(bool)((char)uVar2 * '<' + -8),1.0,
-                     SASYS_UI,in_stack_ffffff68);
-  iVar3 = __restgprlr_28(iVar3);
-  return iVar3;
+  pfVar1 = (float *)g_snd.listeners[param_1].clientNum;
+  iVar2 = SND_PlaySoundAlias_Internal
+                    (param_2,param_2,0.0,1.0,1.0,(SndEntHandle)param_3,pfVar1,
+                     (int *)&IMAGE_DOS_HEADER_82000000,
+                     ((int)pfVar1 << 2 | param_1 & LOCAL_CLIENT_3) << 0x12,
+                     (bool)((char)param_1 * '<' + -8),1.0,SASYS_UI,in_stack_ffffff68);
+  return iVar2;
 }
 
 
@@ -5040,6 +4833,8 @@ void SND_ResetTimeScaleDefaults(void)
 
 // 8284D660  SND_ResetPauseDefaults  (snd.cpp:3448)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void SND_ResetPauseDefaults(void)
@@ -5049,7 +4844,6 @@ void SND_ResetPauseDefaults(void)
   ulonglong uVar2;
   uint uVar3;
   
-  __savegprlr_26();
   uVar3 = 0;
   uVar2 = 1;
   pbVar1 = &g_snd.entchaninfo[0].isPausable;
@@ -5068,13 +4862,14 @@ void SND_ResetPauseDefaults(void)
     uVar3 = uVar3 + 1;
     uVar2 = (uVar2 & 0x7fffffff) << 1 | uVar2 >> 0x1f;
   } while ((int)pbVar1 < -0x7b777fb2);
-  __restgprlr_26();
   return;
 }
 
 
 // 8284D718  SND_PauseSounds  (snd.cpp:3462)
 
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void SND_PauseSounds(void)
@@ -5086,8 +4881,7 @@ void SND_PauseSounds(void)
   snd_alias_t **ppsVar4;
   int iVar5;
   
-  __savegprlr_22();
-  if ((g_snd.Initialized2d != false) && (g_snd.paused == false)) {
+  if ((g_snd.Initialized2d) && (!g_snd.paused)) {
     iVar5 = 0;
     if (0 < g_snd.max_2D_channels) {
       ppsVar4 = &g_snd.chaninfo[0].alias0;
@@ -5139,13 +4933,14 @@ void SND_PauseSounds(void)
     g_snd.paused = true;
     g_snd.pausetime = g_snd.time;
   }
-  __restgprlr_22();
   return;
 }
 
 
 // 8284D980  SND_UnpauseSounds  (snd.cpp:3495)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void SND_UnpauseSounds(void)
@@ -5156,8 +4951,7 @@ void SND_UnpauseSounds(void)
   bool *pbVar3;
   int iVar4;
   
-  __savegprlr_28();
-  if ((g_snd.Initialized2d != false) && (g_snd.paused != false)) {
+  if ((g_snd.Initialized2d) && (g_snd.paused)) {
     iVar4 = 0;
     iVar2 = g_snd.time - g_snd.pausetime;
     if (0 < g_snd.max_2D_channels) {
@@ -5198,62 +4992,54 @@ void SND_UnpauseSounds(void)
     g_snd.paused = false;
     g_snd.pausetime = 0;
   }
-  __restgprlr_28();
   return;
 }
 
 
 // 82856CF0  SND_StartBackground  (snd.cpp:3531)
 
+/* WARNING: Function: __savegprlr_21 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_21 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void SND_StartBackground(LocalClientNum_t param_1,int param_2,snd_alias_t *param_3,float param_4,
                         int param_5,float param_6,snd_alias_system_t param_7)
 
 {
-  snd_alias_t *psVar1;
+  uint uVar1;
+  bool bVar3;
   int iVar2;
-  int iVar3;
-  uint uVar4;
-  int iVar5;
-  bool bVar6;
-  ulonglong uVar7;
-  float *pfVar8;
-  ulonglong uVar9;
-  int iVar10;
+  snd_param_info_t *psVar4;
+  double dVar5;
+  double dVar6;
+  double dVar7;
+  double dVar8;
+  double dVar9;
+  double dVar10;
   double dVar11;
-  double extraout_f1;
   double dVar12;
-  double dVar13;
-  double dVar14;
-  double dVar15;
-  double dVar16;
-  double dVar17;
-  double dVar18;
-  float fVar19;
+  float fVar13;
   SndStartAliasInfo local_160;
   char acStack_110 [272];
   
-  dVar12 = (double)param_6;
-  uVar9 = (ulonglong)(int)param_3;
-  uVar7 = (ulonglong)param_2;
-  __savegprlr_21((double)param_4,param_1,uVar7,uVar9,param_5);
-  iVar5 = __savefpr_26();
-  dVar14 = extraout_f1;
-  if (((int)uVar7 < 0) || (5 < (int)uVar7)) {
+  dVar6 = (double)param_4;
+  dVar7 = (double)param_6;
+  if ((param_2 < 0) || (5 < param_2)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0xdd3,0,
                     "%s\n\t(track) = %i");
   }
-  dVar17 = 0.0;
-  dVar15 = 1.0;
-  if ((dVar12 < 0.0) || (1.0 < dVar12)) {
+  dVar11 = 0.0;
+  dVar9 = 1.0;
+  if ((dVar7 < 0.0) || (1.0 < dVar7)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0xdd4,0,
                     "%s\n\t(fraction) = %g");
   }
-  if ((uVar9 & 0xffffffff) == 0) {
+  if (param_3 == (snd_alias_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0xdd5,0,"%s");
   }
-  if (dVar14 < dVar17) {
+  if (dVar6 < dVar11) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0xdd6,0,
                     "%s\n\t(startVolumeScale) = %g");
   }
@@ -5261,122 +5047,116 @@ void SND_StartBackground(LocalClientNum_t param_1,int param_2,snd_alias_t *param
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0xdd7,0,
                     "%s\n\t(fadetime) = %i");
   }
-  psVar1 = (snd_alias_t *)uVar9;
-  uVar4 = psVar1->flags >> 9 & 0x3f;
-  bVar6 = SND_IsAliasChannel3D(uVar4);
-  if (bVar6) {
-    Com_GetSoundFileName(psVar1,acStack_110,0x80);
+  uVar1 = param_3->flags >> 9 & 0x3f;
+  bVar3 = SND_IsAliasChannel3D(uVar1);
+  if (bVar3) {
+    Com_GetSoundFileName(param_3,acStack_110,0x80);
     Com_Error(ERR_DROP,
               "\x15alias %s sound %s played as an ambient / music track uses a 3D channel type; should probably be channel \'local\'\n"
              );
   }
-  if ((psVar1->flags & 0x180U) != 0x100) {
-    Com_GetSoundFileName(psVar1,acStack_110,0x80);
+  if ((param_3->flags & 0x180U) != 0x100) {
+    Com_GetSoundFileName(param_3,acStack_110,0x80);
     Com_Error(ERR_DROP,
               "\x15alias %s sound %s played as an ambient / music track is not streamed; type must be \'streamed\'\n"
              );
   }
-  dVar18 = (double)psVar1->volMin;
-  fVar19 = random();
-  dVar16 = (double)psVar1->pitchMin;
-  dVar18 = (double)(float)((double)fVar19 * (double)(float)((double)psVar1->volMax - dVar18) +
-                          dVar18);
-  fVar19 = random();
-  uVar9 = uVar7 + 0x28;
-  iVar10 = (int)uVar9;
-  dVar16 = (double)(float)((double)fVar19 * (double)(float)((double)psVar1->pitchMax - dVar16) +
-                          dVar16);
-  if ((iVar10 < 0x28) || (g_snd.max_stream_channels + 0x28 <= iVar10)) {
+  dVar12 = (double)param_3->volMin;
+  fVar13 = random();
+  dVar10 = (double)param_3->pitchMin;
+  dVar12 = (double)(float)((double)fVar13 * (double)(float)((double)param_3->volMax - dVar12) +
+                          dVar12);
+  fVar13 = random();
+  iVar2 = param_2 + 0x28;
+  dVar10 = (double)(float)((double)fVar13 * (double)(float)((double)param_3->pitchMax - dVar10) +
+                          dVar10);
+  if ((iVar2 < 0x28) || (g_snd.max_stream_channels + 0x28 <= iVar2)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0xde9,0,
                     "%s\n\t(channel) = %i");
   }
-  bVar6 = SND_IsStreamChannelFree(iVar10);
-  if (!bVar6) {
-    SND_StopStreamChannel(iVar10);
+  bVar3 = SND_IsStreamChannelFree(iVar2);
+  if (!bVar3) {
+    SND_StopStreamChannel(iVar2);
   }
-  iVar2 = (int)((uVar9 + (uVar9 & 0x7fffffff) * 2 & 0x3ffffff) << 6);
-  *(float *)((int)g_snd.chaninfo[0].org + iVar2 + -0x24) = (float)dVar16;
-  if (((uint)(float)dVar16 & 0x7f800000) == 0x7f800000) {
+  g_snd.chaninfo[param_2 + 0x28].basepitch = (float)dVar10;
+  if (((uint)(float)dVar10 & 0x7f800000) == 0x7f800000) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0xdef,0,"%s");
   }
-  SND_InitParameter((snd_param_info_t *)((int)g_snd.chaninfo[0].org + iVar2 + -0x20),(float)dVar16);
-  dVar11 = (double)(float)(dVar18 * dVar14);
-  *(float *)((int)(&g_snd.chaninfo[0].lengthNotifyInfo + 1) + iVar2) = (float)dVar18;
-  dVar14 = dVar15;
-  if ((float)(dVar11 - dVar15) < 0.0) {
-    dVar14 = dVar11;
+  SND_InitParameter(&g_snd.chaninfo[param_2 + 0x28].pitchInfo,(float)dVar10);
+  dVar5 = (double)(float)(dVar12 * dVar6);
+  g_snd.chaninfo[param_2 + 0x28].basevolume = (float)dVar12;
+  dVar6 = dVar9;
+  if ((float)(dVar5 - dVar9) < 0.0) {
+    dVar6 = dVar5;
   }
-  dVar13 = dVar17;
-  if (-dVar11 < 0.0) {
-    dVar13 = dVar14;
+  dVar8 = dVar11;
+  if (-dVar5 < 0.0) {
+    dVar8 = dVar6;
   }
-  *(float *)((int)g_snd.chaninfo[0].org + iVar2 + -0x2c) = (float)dVar13;
-  iVar3 = (int)((uVar7 & 0x1fffffff) << 3);
-  *(float *)((int)&g_snd.background[0].goalvolume + iVar3) = (float)dVar13;
-  SND_InitParameter((snd_param_info_t *)((int)g_snd.chaninfo[0].offset + iVar2 + 0x10),(float)dVar17
-                   );
-  fVar19 = *(float *)((int)g_snd.chaninfo[0].org + iVar2 + -0x2c);
-  pfVar8 = (float *)((int)(&g_snd.chaninfo[0].lengthNotifyInfo + 1) + iVar2 + 0xc);
+  g_snd.chaninfo[param_2 + 0x28].volumeInfo.goalvalue = (float)dVar8;
+  g_snd.background[param_2].goalvolume = (float)dVar8;
+  SND_InitParameter(&g_snd.chaninfo[param_2 + 0x28].occlusionLerp,(float)dVar11);
+  fVar13 = g_snd.chaninfo[param_2 + 0x28].volumeInfo.goalvalue;
+  psVar4 = &g_snd.chaninfo[param_2 + 0x28].volumeInfo;
   if ((int)param_7 < 1) {
-    *pfVar8 = fVar19;
-    *(float *)((int)&g_snd.background[0].goalrate + iVar3) = (float)dVar17;
-    *(float *)((int)g_snd.chaninfo[0].org + iVar2 + -0x28) = (float)dVar17;
+    psVar4->value = fVar13;
+    g_snd.background[param_2].goalrate = (float)dVar11;
+    g_snd.chaninfo[param_2 + 0x28].volumeInfo.goalrate = (float)dVar11;
   }
   else {
-    fVar19 = fVar19 / (float)(longlong)(int)param_7;
-    *(float *)((int)g_snd.chaninfo[0].org + iVar2 + -0x28) = fVar19;
-    *(float *)((int)&g_snd.background[0].goalrate + iVar3) = fVar19;
-    *pfVar8 = (float)dVar17;
+    fVar13 = fVar13 / (float)(longlong)(int)param_7;
+    g_snd.chaninfo[param_2 + 0x28].volumeInfo.goalrate = fVar13;
+    g_snd.background[param_2].goalrate = fVar13;
+    psVar4->value = (float)dVar11;
   }
-  local_160.volume = *pfVar8;
-  local_160.lerp = (float)dVar17;
+  local_160.volume = psVar4->value;
+  local_160.lerp = (float)dVar11;
   local_160.sndEnt.handle = 0xffff;
-  local_160.org[0] = g_snd.listeners[iVar5].orient.origin[0];
-  local_160.org[1] = g_snd.listeners[iVar5].orient.origin[1];
-  local_160.org[2] = g_snd.listeners[iVar5].orient.origin[2];
-  local_160.alias0 = psVar1;
-  local_160.alias1 = psVar1;
-  if (((double)local_160.volume < dVar17) || (dVar15 < (double)local_160.volume)) {
+  local_160.org[0] = g_snd.listeners[param_1].orient.origin[0];
+  local_160.org[1] = g_snd.listeners[param_1].orient.origin[1];
+  local_160.org[2] = g_snd.listeners[param_1].orient.origin[2];
+  local_160.alias0 = param_3;
+  local_160.alias1 = param_3;
+  if (((double)local_160.volume < dVar11) || (dVar9 < (double)local_160.volume)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0xe16,0,
                     "%s\n\t(startAliasInfo.volume) = %g");
   }
-  local_160.startDelay = psVar1->startDelay;
-  local_160.basevolume = (float)dVar18;
-  local_160.basepitch = (float)dVar16;
+  local_160.startDelay = param_3->startDelay;
+  local_160.basevolume = (float)dVar12;
+  local_160.basepitch = (float)dVar10;
   local_160.timeshift = 0;
-  local_160.mixvolume = (float)dVar18;
-  local_160.attenuation = (float)dVar15;
-  local_160.pitch = (float)dVar16;
-  local_160.fraction = (float)dVar12;
-  local_160.timescaleLerp = SND_GetTimescaleLerp(uVar4);
-  local_160.masterPriority = psVar1->masterPriority;
+  local_160.mixvolume = (float)dVar12;
+  local_160.attenuation = (float)dVar9;
+  local_160.pitch = (float)dVar10;
+  local_160.fraction = (float)dVar7;
+  local_160.timescaleLerp = SND_GetTimescaleLerp(uVar1);
+  local_160.masterPriority = param_3->masterPriority;
   local_160.forcePaused = false;
   if (g_snd.masterPriority <= local_160.masterPriority) {
-    dVar15 = dVar17;
+    dVar9 = dVar11;
   }
-  local_160.slaveLerp = (float)dVar15;
+  local_160.slaveLerp = (float)dVar9;
   if ((snd_enableStream->current).enabled != false) {
-    iVar5 = SND_StartAliasStreamOnChannel(&local_160,iVar10);
-    SND_DebugAliasPrint((bool)((char)((longlong)iVar5 + 1) -
-                              ((char)iVar5 + ((longlong)iVar5 + 1 == 0))),psVar1,"Started");
+    iVar2 = SND_StartAliasStreamOnChannel(&local_160,iVar2);
+    SND_DebugAliasPrint((bool)((char)((longlong)iVar2 + 1) -
+                              ((char)iVar2 + ((longlong)iVar2 + 1 == 0))),param_3,"Started");
   }
-  __restfpr_26();
-  __restgprlr_21();
   return;
 }
 
 
 // 8284DB20  SND_StopBackground  (snd.cpp:3637)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void SND_StopBackground(int param_1,int param_2)
 
 {
   float fVar1;
-  int iVar2;
-  bool bVar3;
+  bool bVar2;
   
-  iVar2 = __savegprlr_29(param_1);
-  if ((iVar2 < 0) || (5 < iVar2)) {
+  if ((param_1 < 0) || (5 < param_1)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0xe36,0,
                     "%s\n\t(track) = %i");
   }
@@ -5384,20 +5164,18 @@ void SND_StopBackground(int param_1,int param_2)
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0xe37,0,
                     "%s\n\t(fadetime) = %i");
   }
-  bVar3 = SND_IsStreamChannelFree(iVar2 + 0x28);
-  if (!bVar3) {
+  bVar2 = SND_IsStreamChannelFree(param_1 + 0x28);
+  if (!bVar2) {
     if (param_2 == 0) {
-      SND_StopStreamChannel(iVar2 + 0x28);
-      __restgprlr_29();
+      SND_StopStreamChannel(param_1 + 0x28);
       return;
     }
-    fVar1 = g_snd.background[iVar2].goalvolume;
+    fVar1 = g_snd.background[param_1].goalvolume;
     if (0.0 < fVar1) {
-      g_snd.background[iVar2].goalvolume = 0.0;
-      g_snd.background[iVar2].goalrate = -(fVar1 / (float)(longlong)param_2);
+      g_snd.background[param_1].goalvolume = 0.0;
+      g_snd.background[param_1].goalrate = -(fVar1 / (float)(longlong)param_2);
     }
   }
-  __restgprlr_29();
   return;
 }
 
@@ -5430,31 +5208,31 @@ int SND_GetAmbientTrack(int param_1)
 
 // 8284DCF0  SND_SetBackgroundTrackVolumeScale  (snd.cpp:3681)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
+
 void SND_SetBackgroundTrackVolumeScale(int param_1,float param_2,int param_3)
 
 {
-  int iVar1;
-  bool bVar2;
+  bool bVar1;
   int in_r5;
+  int iVar2;
   int iVar3;
-  int iVar4;
-  float *pfVar5;
+  float *pfVar4;
+  double dVar5;
   double dVar6;
-  double extraout_f1;
   double dVar7;
   double dVar8;
   double dVar9;
   double dVar10;
-  double dVar11;
   
-  iVar1 = __savegprlr_25((double)param_2,param_1,param_3);
-  dVar9 = extraout_f1;
-  if ((((iVar1 != 2) && (iVar1 != 4)) && (iVar1 != 0)) && (iVar1 != 1)) {
+  dVar6 = (double)param_2;
+  if ((((param_1 != 2) && (param_1 != 4)) && (param_1 != 0)) && (param_1 != 1)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0xe6a,0,
                     "%s\n\t(track) = %i");
   }
-  dVar10 = 0.0;
-  if (dVar9 < 0.0) {
+  dVar9 = 0.0;
+  if (dVar6 < 0.0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0xe6b,0,
                     "%s\n\t(volumeScale) = %g");
   }
@@ -5462,270 +5240,255 @@ void SND_SetBackgroundTrackVolumeScale(int param_1,float param_2,int param_3)
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0xe6c,0,
                     "%s\n\t(fadeTime) = %i");
   }
-  iVar3 = 1;
-  if ((iVar1 == 2) || (iVar1 == 4)) {
-    iVar3 = 2;
+  iVar2 = 1;
+  if ((param_1 == 2) || (param_1 == 4)) {
+    iVar2 = 2;
   }
-  iVar4 = 0;
-  if (iVar3 != 0) {
-    pfVar5 = (float *)(iVar1 * 8 + -0x7b7796e8);
-    dVar11 = 1.0;
+  iVar3 = 0;
+  if (iVar2 != 0) {
+    pfVar4 = &g_snd.background[param_1].goalrate;
+    dVar10 = 1.0;
     do {
-      bVar2 = SND_IsStreamChannelFree(iVar1 + 0x28 + iVar4);
-      if (!bVar2) {
-        dVar8 = (double)(float)((double)g_snd.chaninfo[iVar4 + iVar1 + 0x28].basevolume * dVar9);
-        dVar7 = dVar11;
-        if ((float)(dVar8 - dVar11) < 0.0) {
+      bVar1 = SND_IsStreamChannelFree(param_1 + 0x28 + iVar3);
+      if (!bVar1) {
+        dVar8 = (double)(float)((double)g_snd.chaninfo[iVar3 + param_1 + 0x28].basevolume * dVar6);
+        dVar7 = dVar10;
+        if ((float)(dVar8 - dVar10) < 0.0) {
           dVar7 = dVar8;
         }
-        dVar6 = dVar10;
+        dVar5 = dVar9;
         if (-dVar8 < 0.0) {
-          dVar6 = dVar7;
+          dVar5 = dVar7;
         }
         if (in_r5 == 0) {
-          *pfVar5 = (float)dVar10;
+          *pfVar4 = (float)dVar9;
         }
         else {
-          *pfVar5 = (float)(dVar6 - (double)g_snd.chaninfo[iVar4 + iVar1 + 0x28].volumeInfo.value) /
-                    (float)(longlong)in_r5;
+          *pfVar4 = (float)(dVar5 - (double)g_snd.chaninfo[iVar3 + param_1 + 0x28].volumeInfo.value)
+                    / (float)(longlong)in_r5;
         }
-        pfVar5[-1] = (float)dVar6;
+        ((snd_background_info_t *)(pfVar4 + -1))->goalvolume = (float)dVar5;
       }
-      iVar4 = iVar4 + 1;
-      pfVar5 = pfVar5 + 2;
-    } while (iVar4 < iVar3);
+      iVar3 = iVar3 + 1;
+      pfVar4 = pfVar4 + 2;
+    } while (iVar3 < iVar2);
   }
-  __restgprlr_25();
   return;
 }
 
 
 // 8284DEB8  SND_GetNumFreeMusicTracks  (snd.cpp:3724)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 int SND_GetNumFreeMusicTracks(int *param_1)
 
 {
-  uint *puVar1;
-  bool bVar3;
+  bool bVar1;
   int iVar2;
-  longlong lVar4;
-  ulonglong uVar5;
+  ulonglong uVar3;
   
-  puVar1 = (uint *)__savegprlr_26(param_1);
-  *puVar1 = 0xffffffff;
-  lVar4 = 0;
-  uVar5 = 0;
+  *param_1 = -1;
+  iVar2 = 0;
+  uVar3 = 0;
   do {
-    if (1 < (uVar5 & 0xffffffff)) {
+    if (1 < (uVar3 & 0xffffffff)) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0xe4c,0,
                       "number doesn\'t index SND_NUM_MUSIC_TRACKS\n\t%i not in [0, %i)");
     }
-    bVar3 = SND_IsStreamChannelFree((uVar5 != 0) + 0x28);
-    if (bVar3) {
-      *puVar1 = (uint)(uVar5 != 0);
-      lVar4 = lVar4 + 1;
+    bVar1 = SND_IsStreamChannelFree((uVar3 != 0) + 0x28);
+    if (bVar1) {
+      *param_1 = (uint)(uVar3 != 0);
+      iVar2 = iVar2 + 1;
     }
-    uVar5 = uVar5 + 1;
-  } while ((int)uVar5 < 2);
-  iVar2 = __restgprlr_26(lVar4);
+    uVar3 = uVar3 + 1;
+  } while ((int)uVar3 < 2);
   return iVar2;
 }
 
 
 // 8284DF48  SND_GetNumFreeAmbientTracks  (snd.cpp:3748)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 int SND_GetNumFreeAmbientTracks(int *param_1)
 
 {
   uint uVar1;
-  int *piVar2;
-  bool bVar4;
+  bool bVar2;
   int iVar3;
-  longlong lVar5;
-  ulonglong uVar6;
+  ulonglong uVar4;
   
-  piVar2 = (int *)__savegprlr_26(param_1);
-  *piVar2 = -1;
-  lVar5 = 0;
-  uVar6 = 0;
+  *param_1 = -1;
+  iVar3 = 0;
+  uVar4 = 0;
   do {
-    if (1 < (uVar6 & 0xffffffff)) {
+    if (1 < (uVar4 & 0xffffffff)) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0xe58,0,
                       "number doesn\'t index SND_NUM_AMBIENT_TRACKS\n\t%i not in [0, %i)");
     }
-    uVar1 = -(uint)(uVar6 != 0) & 2;
-    bVar4 = SND_IsStreamChannelFree(uVar1 + 0x2a);
-    if (bVar4) {
-      *piVar2 = uVar1 + 2;
-      lVar5 = lVar5 + 1;
+    uVar1 = -(uint)(uVar4 != 0) & 2;
+    bVar2 = SND_IsStreamChannelFree(uVar1 + 0x2a);
+    if (bVar2) {
+      *param_1 = uVar1 + 2;
+      iVar3 = iVar3 + 1;
     }
-    uVar6 = uVar6 + 1;
-  } while ((int)uVar6 < 2);
-  iVar3 = __restgprlr_26(lVar5);
+    uVar4 = uVar4 + 1;
+  } while ((int)uVar4 < 2);
   return iVar3;
 }
 
 
 // 8284DFE0  SND_IsAliasPlayingOnTrack  (snd.cpp:3772)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 bool SND_IsAliasPlayingOnTrack(char *param_1,int param_2)
 
 {
-  char *pcVar2;
-  bool bVar4;
-  int iVar3;
-  undefined8 uVar1;
-  undefined1 uVar5;
-  longlong lVar6;
-  ulonglong uVar7;
+  bool bVar2;
+  int iVar1;
   
-  lVar6 = (longlong)param_2;
-  pcVar2 = (char *)__savegprlr_29(param_1);
-  if (pcVar2 == (char *)0x0) {
+  if (param_1 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0xec0,0,"%s");
   }
-  iVar3 = (int)lVar6;
-  if ((((iVar3 != 2) && (iVar3 != 4)) && (iVar3 != 0)) && (iVar3 != 1)) {
+  if ((((param_2 != 2) && (param_2 != 4)) && (param_2 != 0)) && (param_2 != 1)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0xec1,0,
                     "%s\n\t(track) = %i");
   }
-  uVar7 = lVar6 + 0x28;
-  bVar4 = SND_IsStreamChannelFree((int)uVar7);
-  if (!bVar4) {
-    iVar3 = I_strcmp((char *)**(undefined4 **)
-                               ((int)g_snd.chaninfo[0].org +
-                               (int)((uVar7 + (uVar7 & 0x7fffffff) * 2 & 0xffffffff) << 6) + -0x14),
-                     pcVar2);
-    uVar1 = 1;
-    if (iVar3 == 0) goto LAB_8284e0c0;
+  bVar2 = SND_IsStreamChannelFree(param_2 + 0x28);
+  if ((!bVar2) &&
+     (iVar1 = I_strcmp((g_snd.chaninfo[param_2 + 0x28].alias0)->aliasName,param_1), iVar1 == 0)) {
+    return true;
   }
-  uVar1 = 0;
-LAB_8284e0c0:
-  uVar5 = __restgprlr_29(uVar1);
-  return (bool)uVar5;
+  return false;
 }
 
 
 // 82857198  SND_PlayMusicAlias  (snd.cpp:3796)
 
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void SND_PlayMusicAlias(LocalClientNum_t param_1,snd_alias_t *param_2,float param_3,int param_4,
                        int param_5,snd_alias_system_t param_6)
 
 {
-  LocalClientNum_t LVar1;
+  int iVar1;
   int iVar2;
-  int iVar3;
-  bool bVar4;
-  ulonglong uVar5;
+  bool bVar3;
+  longlong lVar4;
+  char *pcVar5;
   longlong lVar6;
-  char *pcVar7;
-  snd_alias_system_t sVar8;
-  longlong lVar9;
-  longlong lVar10;
-  uint uVar11;
-  double extraout_f1;
-  double dVar12;
-  double dVar13;
+  int iVar7;
+  uint uVar8;
+  double dVar9;
+  double dVar10;
   uint local_70 [28];
   
-  lVar10 = (longlong)(int)param_6;
-  lVar9 = (longlong)param_5;
-  uVar5 = (ulonglong)(int)param_2;
-  LVar1 = __savegprlr_22((double)param_3,param_1,uVar5,param_4);
-  if ((g_snd.Initialized2d == false) || ((uVar5 & 0xffffffff) == 0)) goto LAB_82857458;
-  dVar12 = 0.0;
-  lVar6 = lVar9;
-  dVar13 = extraout_f1;
-  if (extraout_f1 < 0.0) {
-    lVar6 = -0x7de0f250;
+  dVar9 = (double)param_3;
+  lVar4 = (longlong)param_5;
+  if (!g_snd.Initialized2d) {
+    return;
+  }
+  if (param_2 == (snd_alias_t *)0x0) {
+    return;
+  }
+  dVar10 = 0.0;
+  if (dVar9 < 0.0) {
+    lVar4 = -0x7de0f250;
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0xede,0,
                     "%s\n\t(volumeScale) = %g");
   }
-  sVar8 = (snd_alias_system_t)lVar9;
-  if ((int)sVar8 < 0) {
-    lVar6 = -0x7de0f274;
+  if (param_5 < 0) {
+    lVar4 = -0x7de0f274;
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0xedf,0,
                     "%s\n\t(fadeTime) = %i");
   }
-  lVar9 = -0x7dfff068;
+  lVar6 = -0x7dfff068;
   if ((g_snd.music_track != 0) && (g_snd.music_track != 1)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0xee0,0,"%s");
-    lVar6 = lVar9;
+    lVar4 = lVar6;
   }
   local_70[0] = 0xffffffff;
-  iVar2 = SND_GetNumFreeMusicTracks((int *)local_70);
-  uVar11 = local_70[0];
-  pcVar7 = (char *)lVar6;
-  if (iVar2 == 2) {
-    if ((int)lVar10 != 0) {
-LAB_82857350:
-      if (local_70[0] == 0xffffffff) {
-        pcVar7 = "%s";
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0xf06,0,"%s");
-      }
-      SND_StopBackground(g_snd.music_track,sVar8);
-    }
-LAB_8285740c:
-    if (uVar11 == 0xffffffff) {
-      pcVar7 = "%s";
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0xf17,0,"%s");
-    }
+  iVar1 = SND_GetNumFreeMusicTracks((int *)local_70);
+  uVar8 = local_70[0];
+  pcVar5 = (char *)lVar4;
+  if (iVar1 == 2) {
+    if (param_6 != SASYS_UI) goto LAB_82857350;
   }
   else {
-    if ((int)lVar10 == 0) {
+    iVar7 = 0;
+    if (param_6 == SASYS_UI) {
       do {
-        iVar3 = SND_GetMusicTrack((int)lVar10);
-        bVar4 = SND_IsAliasPlayingOnTrack(((snd_alias_t *)uVar5)->aliasName,iVar3);
-        pcVar7 = (char *)lVar6;
-        if (bVar4) {
-          iVar2 = SND_GetMusicTrack((int)lVar10);
-          SND_SetBackgroundTrackVolumeScale(iVar2,(float)dVar13,iVar3);
-          __restgprlr_22();
+        iVar2 = SND_GetMusicTrack(iVar7);
+        bVar3 = SND_IsAliasPlayingOnTrack(param_2->aliasName,iVar2);
+        pcVar5 = (char *)lVar4;
+        if (bVar3) {
+          iVar1 = SND_GetMusicTrack(iVar7);
+          SND_SetBackgroundTrackVolumeScale(iVar1,(float)dVar9,iVar2);
           return;
         }
-        lVar10 = lVar10 + 1;
-      } while ((int)lVar10 < 2);
-      uVar11 = local_70[0];
-      if (iVar2 == 0) {
-        uVar11 = (uint)(g_snd.music_track == 0);
-        bVar4 = SND_IsStreamChannelFree(uVar11 + 0x28);
-        if (!bVar4) {
-          SND_StopStreamChannel(uVar11 + 0x28);
+        iVar7 = iVar7 + 1;
+      } while (iVar7 < 2);
+      uVar8 = local_70[0];
+      if (iVar1 == 0) {
+        uVar8 = (uint)(g_snd.music_track == 0);
+        bVar3 = SND_IsStreamChannelFree(uVar8 + 0x28);
+        if (!bVar3) {
+          SND_StopStreamChannel(uVar8 + 0x28);
         }
       }
-      goto LAB_8285740c;
-    }
-    if (iVar2 != 0) goto LAB_82857350;
-    if (g_snd.music_track == 0) {
-      bVar4 = SND_IsStreamChannelFree(0x29);
-      if (!bVar4) {
-        SND_StopStreamChannel(0x29);
-      }
-      SND_StopBackground(0,sVar8);
-      uVar11 = 1;
     }
     else {
-      bVar4 = SND_IsStreamChannelFree(0x28);
-      if (!bVar4) {
-        SND_StopStreamChannel(0x28);
+      if (iVar1 == 0) {
+        if (g_snd.music_track == 0) {
+          bVar3 = SND_IsStreamChannelFree(0x29);
+          if (!bVar3) {
+            SND_StopStreamChannel(0x29);
+          }
+          SND_StopBackground(0,param_5);
+          uVar8 = 1;
+        }
+        else {
+          bVar3 = SND_IsStreamChannelFree(0x28);
+          if (!bVar3) {
+            SND_StopStreamChannel(0x28);
+          }
+          SND_StopBackground(1,param_5);
+          uVar8 = 0;
+        }
+        goto LAB_8285742c;
       }
-      SND_StopBackground(1,sVar8);
-      uVar11 = 0;
+LAB_82857350:
+      if (local_70[0] == 0xffffffff) {
+        pcVar5 = "%s";
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0xf06,0,"%s");
+      }
+      SND_StopBackground(g_snd.music_track,param_5);
     }
   }
-  g_snd.music_track = uVar11;
-  SND_StartBackground(LVar1,uVar11,(snd_alias_t *)uVar5,(float)dVar13,(int)pcVar7,(float)dVar12,
-                      sVar8);
-LAB_82857458:
-  __restgprlr_22();
+  if (uVar8 == 0xffffffff) {
+    pcVar5 = "%s";
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0xf17,0,"%s");
+  }
+LAB_8285742c:
+  g_snd.music_track = uVar8;
+  SND_StartBackground(param_1,uVar8,param_2,(float)dVar9,(int)pcVar5,(float)dVar10,param_5);
   return;
 }
 
 
 // 82857468  SND_PlayAmbientAlias  (snd.cpp:3872)
 
+/* WARNING: Function: __savegprlr_21 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_21 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void SND_PlayAmbientAlias
@@ -5736,192 +5499,183 @@ void SND_PlayAmbientAlias
   float fVar1;
   snd_alias_t *psVar2;
   uint uVar3;
-  LocalClientNum_t LVar4;
-  int iVar5;
-  bool bVar6;
-  snd_alias_t *psVar7;
-  int iVar8;
-  snd_alias_system_t sVar10;
+  int iVar4;
+  bool bVar5;
+  int iVar6;
+  ulonglong uVar7;
+  snd_background_info_t *psVar8;
   ulonglong uVar9;
-  snd_background_info_t *psVar11;
-  ulonglong uVar12;
-  snd_alias_t **ppsVar13;
-  ulonglong uVar14;
-  double extraout_f1;
+  snd_alias_t **ppsVar10;
+  ulonglong uVar11;
+  double dVar12;
+  double dVar13;
+  double dVar14;
   double dVar15;
-  double dVar16;
-  double dVar17;
-  double dVar18;
-  float fVar19;
+  float fVar16;
   int local_a0 [2];
   snd_alias_t *local_98 [2];
   longlong local_90;
   
-  uVar9 = (ulonglong)param_5;
-  uVar14 = (ulonglong)(int)param_2;
-  __savegprlr_21((double)param_3,param_1,uVar14,param_4);
-  LVar4 = __savefpr_28();
-  if ((g_snd.Initialized2d == false) || ((uVar14 & 0xffffffff) == 0)) goto LAB_828578cc;
-  sVar10 = (snd_alias_system_t)uVar9;
-  dVar16 = extraout_f1;
-  if ((int)sVar10 < 0) {
-    uVar9 = 0xffffffff821f0d8c;
+  dVar12 = (double)param_3;
+  uVar7 = (ulonglong)param_5;
+  if (!g_snd.Initialized2d) {
+    return;
+  }
+  if (param_2 == (snd_alias_t *)0x0) {
+    return;
+  }
+  if (param_5 < 0) {
+    uVar7 = 0xffffffff821f0d8c;
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0xf32,0,
                     "%s\n\t(fadeTime) = %i");
   }
-  uVar12 = 0xffffffff82000f98;
+  uVar9 = 0xffffffff82000f98;
   if ((g_snd.ambient_track != 2) && (g_snd.ambient_track != 4)) {
-    uVar9 = uVar12;
+    uVar7 = uVar9;
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0xf33,0,"%s");
   }
   local_a0[0] = -1;
-  iVar5 = SND_GetNumFreeAmbientTracks(local_a0);
-  psVar7 = (snd_alias_t *)uVar14;
-  if (iVar5 != 2) {
-    uVar14 = 0;
+  iVar4 = SND_GetNumFreeAmbientTracks(local_a0);
+  if (iVar4 != 2) {
+    uVar11 = 0;
     do {
-      if (1 < (uVar14 & 0xffffffff)) {
-        uVar9 = 0xffffffff821f0d4c;
+      if (1 < (uVar11 & 0xffffffff)) {
+        uVar7 = 0xffffffff821f0d4c;
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0xe58,0,
                         "number doesn\'t index SND_NUM_AMBIENT_TRACKS\n\t%i not in [0, %i)");
       }
-      iVar8 = (-(uint)(uVar14 != 0) & 2) + 2;
-      bVar6 = SND_IsAliasPlayingOnTrack(psVar7->aliasName,iVar8);
-      if (bVar6) {
-        iVar5 = SND_GetAmbientTrack((int)uVar14);
-        SND_SetBackgroundTrackVolumeScale(iVar5,(float)dVar16,iVar8);
-        __restfpr_28();
-        __restgprlr_21();
+      iVar6 = (-(uint)(uVar11 != 0) & 2) + 2;
+      bVar5 = SND_IsAliasPlayingOnTrack(param_2->aliasName,iVar6);
+      if (bVar5) {
+        iVar4 = SND_GetAmbientTrack((int)uVar11);
+        SND_SetBackgroundTrackVolumeScale(iVar4,(float)dVar12,iVar6);
         return;
       }
-      uVar14 = uVar14 + 1;
-    } while ((int)uVar14 < 2);
+      uVar11 = uVar11 + 1;
+    } while ((int)uVar11 < 2);
   }
-  if (psVar7->secondaryAliasName == (char *)0x0) {
+  if (param_2->secondaryAliasName == (char *)0x0) {
     local_98[1] = (snd_alias_t *)0x0;
   }
   else {
-    local_98[1] = Com_PickSoundAlias(psVar7->secondaryAliasName);
+    local_98[1] = Com_PickSoundAlias(param_2->secondaryAliasName);
   }
-  local_98[0] = psVar7;
-  dVar17 = 0.0;
-  dVar18 = dVar17;
-  if ((psVar7->flags & 0x20U) != 0) {
-    fVar19 = random();
-    dVar18 = (double)fVar19;
+  local_98[0] = param_2;
+  dVar14 = 0.0;
+  dVar15 = dVar14;
+  if ((param_2->flags & 0x20U) != 0) {
+    fVar16 = random();
+    dVar15 = (double)fVar16;
   }
   if (param_6 == SASYS_UI) {
-    iVar8 = local_a0[0];
-    if (iVar5 == 0) {
-      iVar8 = 4;
+    iVar6 = local_a0[0];
+    if (iVar4 == 0) {
+      iVar6 = 4;
       if (g_snd.ambient_track != 2) {
-        iVar8 = 2;
+        iVar6 = 2;
       }
-      bVar6 = SND_IsStreamChannelFree(iVar8 + 0x28);
-      if (!bVar6) {
-        SND_StopStreamChannel(iVar8 + 0x28);
+      bVar5 = SND_IsStreamChannelFree(iVar6 + 0x28);
+      if (!bVar5) {
+        SND_StopStreamChannel(iVar6 + 0x28);
       }
-    }
-LAB_8285784c:
-    if (iVar8 == -1) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0xf9c,0,"%s");
-      uVar9 = uVar12;
     }
   }
   else {
-    if (iVar5 != 0) {
-      iVar5 = 0;
-      ppsVar13 = local_98;
-      do {
-        iVar8 = g_snd.ambient_track + iVar5;
-        bVar6 = SND_IsStreamChannelFree(iVar8 + 0x28);
-        if (!bVar6) {
-          psVar2 = g_snd.chaninfo[iVar8 + 0x28].alias0;
-          uVar9 = ZEXT48(psVar2->soundFile);
-          if (uVar9 == ZEXT48(psVar7->soundFile)) {
-            uVar3 = psVar2->flags ^ psVar7->flags;
-            uVar9 = (ulonglong)uVar3;
-            if (((((uVar3 & 1) != 0) || (psVar2->pitchMin != psVar7->pitchMin)) ||
-                (psVar2->pitchMax != psVar7->pitchMax)) ||
-               (bVar6 = true, ((psVar2->flags ^ psVar7->flags) & 0x7e00U) != 0)) goto LAB_82857788;
-          }
-          else {
+    if (iVar4 == 0) {
+      if (g_snd.ambient_track == 2) {
+        bVar5 = SND_IsStreamChannelFree(0x2c);
+        if (!bVar5) {
+          SND_StopStreamChannel(0x2c);
+        }
+        bVar5 = SND_IsStreamChannelFree(0x2d);
+        if (!bVar5) {
+          SND_StopStreamChannel(0x2d);
+        }
+        SND_StopBackground(2,param_5);
+        SND_StopBackground(3,param_5);
+        iVar6 = 4;
+      }
+      else {
+        bVar5 = SND_IsStreamChannelFree(0x2a);
+        if (!bVar5) {
+          SND_StopStreamChannel(0x2a);
+        }
+        bVar5 = SND_IsStreamChannelFree(0x2b);
+        if (!bVar5) {
+          SND_StopStreamChannel(0x2b);
+        }
+        SND_StopBackground(4,param_5);
+        SND_StopBackground(5,param_5);
+        iVar6 = 2;
+      }
+      goto LAB_82857870;
+    }
+    iVar4 = 0;
+    ppsVar10 = local_98;
+    do {
+      iVar6 = g_snd.ambient_track + iVar4;
+      bVar5 = SND_IsStreamChannelFree(iVar6 + 0x28);
+      if (!bVar5) {
+        psVar2 = g_snd.chaninfo[iVar6 + 0x28].alias0;
+        uVar7 = ZEXT48(psVar2->soundFile);
+        if (uVar7 == ZEXT48(param_2->soundFile)) {
+          uVar3 = psVar2->flags ^ param_2->flags;
+          uVar7 = (ulonglong)uVar3;
+          if (((((uVar3 & 1) != 0) || (psVar2->pitchMin != param_2->pitchMin)) ||
+              (psVar2->pitchMax != param_2->pitchMax)) ||
+             (bVar5 = true, ((psVar2->flags ^ param_2->flags) & 0x7e00U) != 0)) goto LAB_82857788;
+        }
+        else {
 LAB_82857788:
-            bVar6 = false;
-          }
-          if (bVar6) {
-            psVar2 = *ppsVar13;
-            g_snd.chaninfo[iVar8 + 0x28].alias0 = psVar2;
-            g_snd.chaninfo[iVar8 + 0x28].alias1 = psVar2;
-            dVar15 = (double)psVar2->volMin;
-            fVar19 = random();
-            iVar8 = g_snd.ambient_track + iVar5;
-            fVar19 = (float)((double)fVar19 * (double)(float)((double)psVar2->volMax - dVar15) +
-                            dVar15);
-            psVar11 = g_snd.background + iVar8;
-            if (sVar10 == SASYS_UI) {
-              g_snd.background[iVar8].goalrate = (float)dVar17;
-              psVar11->goalvolume = fVar19;
-            }
-            else {
-              fVar1 = psVar11->goalvolume;
-              psVar11->goalvolume = fVar19;
-              local_90 = (longlong)(int)sVar10;
-              g_snd.background[iVar8].goalrate = (fVar19 - fVar1) / (float)(longlong)(int)sVar10;
-            }
+          bVar5 = false;
+        }
+        if (bVar5) {
+          psVar2 = *ppsVar10;
+          g_snd.chaninfo[iVar6 + 0x28].alias0 = psVar2;
+          g_snd.chaninfo[iVar6 + 0x28].alias1 = psVar2;
+          dVar13 = (double)psVar2->volMin;
+          fVar16 = random();
+          iVar6 = g_snd.ambient_track + iVar4;
+          fVar16 = (float)((double)fVar16 * (double)(float)((double)psVar2->volMax - dVar13) +
+                          dVar13);
+          psVar8 = g_snd.background + iVar6;
+          if (param_5 == 0) {
+            g_snd.background[iVar6].goalrate = (float)dVar14;
+            psVar8->goalvolume = fVar16;
           }
           else {
-            SND_StopBackground(g_snd.ambient_track + iVar5,sVar10);
+            fVar1 = psVar8->goalvolume;
+            psVar8->goalvolume = fVar16;
+            local_90 = (longlong)param_5;
+            g_snd.background[iVar6].goalrate = (fVar16 - fVar1) / (float)(longlong)param_5;
           }
         }
-        iVar5 = iVar5 + 1;
-        ppsVar13 = ppsVar13 + 1;
-        iVar8 = local_a0[0];
-      } while (iVar5 < 2);
-      goto LAB_8285784c;
-    }
-    if (g_snd.ambient_track == 2) {
-      bVar6 = SND_IsStreamChannelFree(0x2c);
-      if (!bVar6) {
-        SND_StopStreamChannel(0x2c);
+        else {
+          SND_StopBackground(g_snd.ambient_track + iVar4,param_5);
+        }
       }
-      bVar6 = SND_IsStreamChannelFree(0x2d);
-      if (!bVar6) {
-        SND_StopStreamChannel(0x2d);
-      }
-      SND_StopBackground(2,sVar10);
-      SND_StopBackground(3,sVar10);
-      iVar8 = 4;
-    }
-    else {
-      bVar6 = SND_IsStreamChannelFree(0x2a);
-      if (!bVar6) {
-        SND_StopStreamChannel(0x2a);
-      }
-      bVar6 = SND_IsStreamChannelFree(0x2b);
-      if (!bVar6) {
-        SND_StopStreamChannel(0x2b);
-      }
-      SND_StopBackground(4,sVar10);
-      SND_StopBackground(5,sVar10);
-      iVar8 = 2;
-    }
+      iVar4 = iVar4 + 1;
+      ppsVar10 = ppsVar10 + 1;
+      iVar6 = local_a0[0];
+    } while (iVar4 < 2);
   }
-  iVar5 = 0;
-  ppsVar13 = local_98;
-  g_snd.ambient_track = iVar8;
+  if (iVar6 == -1) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0xf9c,0,"%s");
+    uVar7 = uVar9;
+  }
+LAB_82857870:
+  iVar4 = 0;
+  ppsVar10 = local_98;
+  g_snd.ambient_track = iVar6;
   do {
-    if (*ppsVar13 != (snd_alias_t *)0x0) {
-      SND_StartBackground(LVar4,iVar8 + iVar5,*ppsVar13,(float)dVar16,(int)uVar9,(float)dVar18,
-                          sVar10);
-      iVar8 = g_snd.ambient_track;
+    if (*ppsVar10 != (snd_alias_t *)0x0) {
+      SND_StartBackground(param_1,iVar6 + iVar4,*ppsVar10,(float)dVar12,(int)uVar7,(float)dVar15,
+                          param_5);
+      iVar6 = g_snd.ambient_track;
     }
-    iVar5 = iVar5 + 1;
-    ppsVar13 = ppsVar13 + 1;
-  } while (iVar5 < 2);
-LAB_828578cc:
-  __restfpr_28();
-  __restgprlr_21();
+    iVar4 = iVar4 + 1;
+    ppsVar10 = ppsVar10 + 1;
+  } while (iVar4 < 2);
   return;
 }
 
@@ -5941,41 +5695,40 @@ void SND_StopMusic(int param_1)
 
 // 8284E118  SND_StopMusicAlias  (snd.cpp:4021)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void SND_StopMusicAlias(char *param_1,int param_2)
 
 {
-  char *pcVar1;
-  bool bVar2;
-  ulonglong uVar3;
+  bool bVar1;
+  ulonglong uVar2;
   
-  pcVar1 = (char *)__savegprlr_27(param_1);
-  if (pcVar1 == (char *)0x0) {
+  if (param_1 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0xfb6,0,"%s");
   }
   if (param_2 < 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0xfb7,0,
                     "%s\n\t(fadeTime) = %i");
   }
-  uVar3 = 0;
+  uVar2 = 0;
   while( true ) {
-    if (1 < (uVar3 & 0xffffffff)) {
+    if (1 < (uVar2 & 0xffffffff)) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0xe4c,0,
                       "number doesn\'t index SND_NUM_MUSIC_TRACKS\n\t%i not in [0, %i)");
     }
-    bVar2 = SND_IsAliasPlayingOnTrack(pcVar1,(uint)(uVar3 != 0));
-    if (bVar2) break;
-    uVar3 = uVar3 + 1;
-    if (1 < (int)uVar3) {
-      __restgprlr_27();
+    bVar1 = SND_IsAliasPlayingOnTrack(param_1,(uint)(uVar2 != 0));
+    if (bVar1) break;
+    uVar2 = uVar2 + 1;
+    if (1 < (int)uVar2) {
       return;
     }
   }
-  if (1 < (uVar3 & 0xffffffff)) {
+  if (1 < (uVar2 & 0xffffffff)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0xe4c,0,
                     "number doesn\'t index SND_NUM_MUSIC_TRACKS\n\t%i not in [0, %i)");
   }
-  SND_StopBackground((uint)(uVar3 != 0),param_2);
-  __restgprlr_27();
+  SND_StopBackground((uint)(uVar2 != 0),param_2);
   return;
 }
 
@@ -6001,51 +5754,53 @@ void SND_StopAmbient(int param_1)
 
 // 8284E2C0  SND_StopAmbientAlias  (snd.cpp:4051)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void SND_StopAmbientAlias(char *param_1,int param_2)
 
 {
-  char *pcVar1;
-  bool bVar2;
-  ulonglong uVar3;
+  bool bVar1;
+  ulonglong uVar2;
   
-  pcVar1 = (char *)__savegprlr_27(param_1);
-  if (pcVar1 == (char *)0x0) {
+  if (param_1 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0xfd4,0,"%s");
   }
   if (param_2 < 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0xfd5,0,
                     "%s\n\t(fadeTime) = %i");
   }
-  uVar3 = 0;
+  uVar2 = 0;
   while( true ) {
-    if (1 < (uVar3 & 0xffffffff)) {
+    if (1 < (uVar2 & 0xffffffff)) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0xe58,0,
                       "number doesn\'t index SND_NUM_AMBIENT_TRACKS\n\t%i not in [0, %i)");
     }
-    bVar2 = SND_IsAliasPlayingOnTrack(pcVar1,(-(uint)(uVar3 != 0) & 2) + 2);
-    if (bVar2) break;
-    uVar3 = uVar3 + 1;
-    if (1 < (int)uVar3) {
-      __restgprlr_27();
+    bVar1 = SND_IsAliasPlayingOnTrack(param_1,(-(uint)(uVar2 != 0) & 2) + 2);
+    if (bVar1) break;
+    uVar2 = uVar2 + 1;
+    if (1 < (int)uVar2) {
       return;
     }
   }
-  if (1 < (uVar3 & 0xffffffff)) {
+  if (1 < (uVar2 & 0xffffffff)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0xe58,0,
                     "number doesn\'t index SND_NUM_AMBIENT_TRACKS\n\t%i not in [0, %i)");
   }
-  SND_StopBackground((-(uint)(uVar3 != 0) & 2) + 2,param_2);
-  if (1 < (uVar3 & 0xffffffff)) {
+  SND_StopBackground((-(uint)(uVar2 != 0) & 2) + 2,param_2);
+  if (1 < (uVar2 & 0xffffffff)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0xe58,0,
                     "number doesn\'t index SND_NUM_AMBIENT_TRACKS\n\t%i not in [0, %i)");
   }
-  SND_StopBackground((-(uint)(uVar3 != 0) & 2) + 3,param_2);
-  __restgprlr_27();
+  SND_StopBackground((-(uint)(uVar2 != 0) & 2) + 3,param_2);
   return;
 }
 
 
 // 82857928  SND_FadeAllSounds  (snd.cpp:4067)
+
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 
 void SND_FadeAllSounds(float param_1,int param_2)
 
@@ -6054,7 +5809,7 @@ void SND_FadeAllSounds(float param_1,int param_2)
   double dVar1;
   double dVar2;
   
-  dVar1 = (double)__savegprlr_29((double)param_1,param_2);
+  dVar1 = (double)param_1;
   dVar2 = 0.0;
   if (dVar1 < 0.0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0xfe4,0,"%s");
@@ -6066,37 +5821,35 @@ void SND_FadeAllSounds(float param_1,int param_2)
   g_snd.mastervol.goalvalue = (float)dVar1;
   if (in_r4 != 0) {
     g_snd.mastervol.goalrate = g_snd.mastervol.goalrate / (float)(longlong)in_r4;
-    __restgprlr_29();
     return;
   }
   if (dVar1 == dVar2) {
     SND_StopSounds(SND_STOP_ALL);
   }
-  __restgprlr_29();
   return;
 }
 
 
 // 8284E420  SND_SetChannelVolume  (snd.cpp:4116)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void SND_SetChannelVolume(int param_1,float param_2,int param_3)
 
 {
   float fVar1;
   int iVar2;
-  int iVar3;
   int in_r5;
-  double extraout_f1;
-  double dVar4;
+  double dVar3;
   
-  iVar2 = __savegprlr_27((double)param_2,param_1,param_3);
-  dVar4 = extraout_f1;
-  iVar3 = CL_GetLocalClientActiveCount();
-  if (iVar3 < 2) {
-    if ((iVar2 < 0) || (g_snd.entchannel_count <= iVar2)) {
+  dVar3 = (double)param_2;
+  iVar2 = CL_GetLocalClientActiveCount();
+  if (iVar2 < 2) {
+    if ((param_1 < 0) || (g_snd.entchannel_count <= param_1)) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x101a,0,"%s");
     }
-    if ((dVar4 < 0.0) || (1.0 < dVar4)) {
+    if ((dVar3 < 0.0) || (1.0 < dVar3)) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x101b,0,"%s");
     }
     if (in_r5 < 0) {
@@ -6105,17 +5858,19 @@ void SND_SetChannelVolume(int param_1,float param_2,int param_3)
     if (in_r5 < 1) {
       in_r5 = 1;
     }
-    fVar1 = g_snd.channelVolGlobal.channelvol[iVar2].value;
-    *(float *)((int)(&g_snd.restore + 1) + (iVar2 * 3 + 5) * 4) = (float)dVar4;
-    *(float *)((int)(&g_snd.restore + 1) + (iVar2 * 3 + 6) * 4) =
-         (float)(dVar4 - (double)fVar1) / (float)(longlong)in_r5;
+    fVar1 = g_snd.channelVolGlobal.channelvol[param_1].value;
+    *(float *)((int)(&g_snd.restore + 1) + (param_1 * 3 + 5) * 4) = (float)dVar3;
+    *(float *)((int)(&g_snd.restore + 1) + (param_1 * 3 + 6) * 4) =
+         (float)(dVar3 - (double)fVar1) / (float)(longlong)in_r5;
   }
-  __restgprlr_27();
   return;
 }
 
 
 // 8284E560  SND_SetChannelVolumes  (snd.cpp:4138)
+
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
 
 void SND_SetChannelVolumes(int param_1,float *param_2,int param_3)
 
@@ -6123,276 +5878,253 @@ void SND_SetChannelVolumes(int param_1,float *param_2,int param_3)
   float fVar1;
   snd_channelvolgroup *psVar2;
   int iVar3;
-  int iVar4;
-  ulonglong uVar5;
-  char *pcVar6;
-  snd_channelvolgroup *psVar7;
-  longlong lVar8;
-  float *pfVar9;
+  bool *pbVar4;
+  snd_channelvolgroup *psVar5;
+  float *pfVar6;
+  float *pfVar7;
+  double dVar8;
+  double dVar9;
   double dVar10;
-  double dVar11;
-  double dVar12;
-  double dVar13;
   
-  uVar5 = (ulonglong)(int)param_2;
-  iVar3 = __savegprlr_22(param_1);
-  iVar4 = CL_GetLocalClientActiveCount();
+  iVar3 = CL_GetLocalClientActiveCount();
   psVar2 = g_snd.channelvol;
-  if (iVar4 < 2) {
-    if ((iVar3 < 1) || (3 < iVar3)) {
+  if (iVar3 < 2) {
+    if ((param_1 < 1) || (3 < param_1)) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x1033,0,
                       "%s\n\t(priority) = %i");
     }
-    if ((uVar5 & 0xffffffff) == 0) {
+    if (param_2 == (float *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x1034,0,"%s");
     }
     if (param_3 < 0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x1035,0,"%s");
     }
-    psVar7 = (snd_channelvolgroup *)(iVar3 * 0x304 + -0x7b77a300);
-    g_snd.channelVolGroups[iVar3].active = true;
+    psVar5 = g_snd.channelVolGroups + param_1;
+    g_snd.channelVolGroups[param_1].active = true;
     if (param_3 < 1) {
       param_3 = 1;
     }
-    iVar4 = 0;
+    iVar3 = 0;
     if (0 < g_snd.entchannel_count) {
-      dVar12 = 1.0;
-      dVar13 = 0.0;
-      lVar8 = uVar5 - 4;
-      pfVar9 = (float *)(iVar3 * 0x304 + -0x7b77a2f8);
-      dVar11 = (double)(longlong)param_3;
+      dVar9 = 1.0;
+      dVar10 = 0.0;
+      pfVar6 = param_2 + -1;
+      pfVar7 = &g_snd.channelVolGroups[param_1].channelvol[0].goalrate;
+      dVar8 = (double)(longlong)param_3;
       do {
-        dVar10 = (double)*(float *)((int)lVar8 + 4);
-        if ((dVar10 < dVar13) || (dVar12 < dVar10)) {
+        if (((double)pfVar6[1] < dVar10) || (dVar9 < (double)pfVar6[1])) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x103f,0,"%s");
         }
-        pfVar9[-1] = *(float *)((int)lVar8 + 4);
-        iVar4 = iVar4 + 1;
-        fVar1 = *(float *)((-8 - (int)psVar7) + (int)pfVar9 + (int)g_snd.channelvol);
-        pfVar9[-2] = fVar1;
-        lVar8 = lVar8 + 4;
-        *pfVar9 = (float)((double)(*(float *)lVar8 - fVar1) / dVar11);
-        pfVar9 = pfVar9 + 3;
-      } while (iVar4 < g_snd.entchannel_count);
+        pfVar7[-1] = pfVar6[1];
+        iVar3 = iVar3 + 1;
+        fVar1 = *(float *)((-8 - (int)psVar5) + (int)pfVar7 + (int)g_snd.channelvol);
+        ((snd_param_info_t *)(pfVar7 + -2))->value = fVar1;
+        pfVar6 = pfVar6 + 1;
+        *pfVar7 = (float)((double)(*pfVar6 - fVar1) / dVar8);
+        pfVar7 = pfVar7 + 3;
+      } while (iVar3 < g_snd.entchannel_count);
     }
     psVar2 = g_snd.channelvol;
-    if (psVar7 != g_snd.channelvol) {
-      psVar2 = psVar7;
-      if (iVar3 + 1 < 4) {
-        pcVar6 = (char *)((iVar3 + 1) * 0x304 + -0x7b77a000);
-        do {
-          psVar2 = g_snd.channelvol;
-          if (*pcVar6 != '\0') break;
-          pcVar6 = pcVar6 + 0x304;
-          psVar2 = psVar7;
-        } while ((int)pcVar6 < -0x7b7793f0);
-      }
+    if ((psVar5 != g_snd.channelvol) && (psVar2 = psVar5, param_1 + 1 < 4)) {
+      pbVar4 = &g_snd.channelVolGroups[param_1 + 1].active;
+      do {
+        if (*pbVar4 != false) {
+          return;
+        }
+        pbVar4 = pbVar4 + 0x304;
+      } while ((int)pbVar4 < -0x7b7793f0);
     }
   }
   g_snd.channelvol = psVar2;
-  __restgprlr_22();
   return;
 }
 
 
 // 8284E780  SND_DeactivateChannelVolumes  (snd.cpp:4179)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 void SND_DeactivateChannelVolumes(int param_1,int param_2)
 
 {
-  longlong lVar1;
+  int iVar1;
   int iVar2;
-  int iVar3;
-  longlong lVar4;
-  int iVar5;
-  ulonglong uVar6;
+  longlong lVar3;
+  int iVar4;
+  ulonglong uVar5;
+  longlong lVar6;
   
-  lVar1 = __savegprlr_26(param_1);
-  if ((g_snd.Initialized2d != false) && (iVar2 = CL_GetLocalClientActiveCount(), iVar2 < 2)) {
-    if (((int)lVar1 < 1) || (3 < (int)lVar1)) {
+  if ((g_snd.Initialized2d) && (iVar1 = CL_GetLocalClientActiveCount(), iVar1 < 2)) {
+    if ((param_1 < 1) || (3 < param_1)) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x105f,0,
                       "%s\n\t(priority) = %i");
     }
     if (param_2 < 0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x1060,0,"%s");
     }
-    uVar6 = lVar1 * 0x304 - 0x7b77a300;
-    iVar2 = (int)uVar6;
-    *(undefined1 *)(iVar2 + 0x300) = 0;
-    if ((uVar6 & 0xffffffff) == ZEXT48(g_snd.channelvol)) {
-      lVar1 = lVar1 + -1;
-      if (-1 < lVar1) {
-        lVar4 = lVar1 * 0x304 + -0x7b77a000;
+    uVar5 = (longlong)param_1 * 0x304 - 0x7b77a300;
+    iVar1 = (int)uVar5;
+    *(undefined1 *)(iVar1 + 0x300) = 0;
+    if ((uVar5 & 0xffffffff) == ZEXT48(g_snd.channelvol)) {
+      lVar6 = (longlong)param_1 + -1;
+      if (-1 < lVar6) {
+        lVar3 = lVar6 * 0x304 + -0x7b77a000;
         do {
-          if (*(char *)lVar4 != '\0') {
-            if (-1 < (int)lVar1) goto LAB_8284e8a0;
+          if (*(char *)lVar3 != '\0') {
+            if (-1 < (int)lVar6) goto LAB_8284e8a0;
             break;
           }
-          lVar1 = lVar1 + -1;
-          lVar4 = lVar4 + -0x304;
-        } while (-1 < lVar1);
+          lVar6 = lVar6 + -1;
+          lVar3 = lVar3 + -0x304;
+        } while (-1 < lVar6);
       }
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x106d,0,"%s");
 LAB_8284e8a0:
       if (param_2 < 1) {
         param_2 = 1;
       }
-      uVar6 = lVar1 * 0x304 - 0x7b77a300;
-      iVar3 = 0;
-      g_snd.channelvol = (snd_channelvolgroup *)uVar6;
+      uVar5 = lVar6 * 0x304 - 0x7b77a300;
+      iVar2 = 0;
+      g_snd.channelvol = (snd_channelvolgroup *)uVar5;
       if (0 < g_snd.entchannel_count) {
-        iVar5 = 0;
+        iVar4 = 0;
         while( true ) {
-          *(undefined4 *)(iVar5 + (int)uVar6) = *(undefined4 *)(iVar5 + iVar2);
-          iVar3 = iVar3 + 1;
-          *(float *)((int)&(g_snd.channelvol)->channelvol[0].goalrate + iVar5) =
-               (*(float *)((int)&(g_snd.channelvol)->channelvol[0].goalvalue + iVar5) -
-               *(float *)(iVar5 + iVar2)) / (float)(longlong)param_2;
-          iVar5 = iVar5 + 0xc;
-          if (g_snd.entchannel_count <= iVar3) break;
-          uVar6 = ZEXT48(g_snd.channelvol);
+          *(undefined4 *)(iVar4 + (int)uVar5) = *(undefined4 *)(iVar4 + iVar1);
+          iVar2 = iVar2 + 1;
+          *(float *)((int)&(g_snd.channelvol)->channelvol[0].goalrate + iVar4) =
+               (*(float *)((int)&(g_snd.channelvol)->channelvol[0].goalvalue + iVar4) -
+               *(float *)(iVar4 + iVar1)) / (float)(longlong)param_2;
+          iVar4 = iVar4 + 0xc;
+          if (g_snd.entchannel_count <= iVar2) break;
+          uVar5 = ZEXT48(g_snd.channelvol);
         }
       }
     }
   }
-  __restgprlr_26();
   return;
 }
 
 
 // 8284E958  SND_UpdateLoopingSounds  (snd.cpp:4249)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void SND_UpdateLoopingSounds(void)
 
 {
-  int iVar1;
-  bool bVar2;
+  bool bVar1;
+  int iVar2;
   snd_alias_t **ppsVar3;
   
-  iVar1 = __savegprlr_26();
-  if ((g_snd.Initialized2d != false) && (g_snd.paused == false)) {
+  if ((g_snd.Initialized2d) && (!g_snd.paused)) {
     Profile_Begin(0x14e);
-    iVar1 = 8;
+    iVar2 = 8;
     if (8 < g_snd.max_3D_channels + 8) {
       ppsVar3 = &g_snd.chaninfo[8].alias0;
       do {
-        bVar2 = SND_Is3DChannelFree(iVar1);
-        if (!bVar2) {
+        bVar1 = SND_Is3DChannelFree(iVar2);
+        if (!bVar1) {
           if (*ppsVar3 == (snd_alias_t *)0x0) {
             MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x10ac,0,"%s")
             ;
           }
           if ((((*ppsVar3)->flags & 1U) != 0) && (ppsVar3[-0x16] != (snd_alias_t *)g_snd.looptime))
           {
-            SND_Stop3DChannel(iVar1);
+            SND_Stop3DChannel(iVar2);
           }
         }
-        iVar1 = iVar1 + 1;
+        iVar2 = iVar2 + 1;
         ppsVar3 = ppsVar3 + 0x30;
-      } while (iVar1 < g_snd.max_3D_channels + 8);
+      } while (iVar2 < g_snd.max_3D_channels + 8);
     }
-    iVar1 = 0;
+    iVar2 = 0;
     if (0 < g_snd.max_2D_channels) {
       ppsVar3 = &g_snd.chaninfo[0].alias0;
       do {
-        bVar2 = SND_Is2DChannelFree(iVar1);
-        if (!bVar2) {
+        bVar1 = SND_Is2DChannelFree(iVar2);
+        if (!bVar1) {
           if (*ppsVar3 == (snd_alias_t *)0x0) {
             MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x10b7,0,"%s")
             ;
           }
           if ((((*ppsVar3)->flags & 1U) != 0) && (ppsVar3[-0x16] != (snd_alias_t *)g_snd.looptime))
           {
-            SND_Stop2DChannel(iVar1);
+            SND_Stop2DChannel(iVar2);
           }
         }
-        iVar1 = iVar1 + 1;
+        iVar2 = iVar2 + 1;
         ppsVar3 = ppsVar3 + 0x30;
-      } while (iVar1 < g_snd.max_2D_channels);
+      } while (iVar2 < g_snd.max_2D_channels);
     }
-    iVar1 = 0x28;
+    iVar2 = 0x28;
     if (0x28 < g_snd.max_stream_channels + 0x28) {
       ppsVar3 = &g_snd.chaninfo[0x28].alias0;
       do {
-        bVar2 = SND_IsStreamChannelFree(iVar1);
-        if (!bVar2) {
+        bVar1 = SND_IsStreamChannelFree(iVar2);
+        if (!bVar1) {
           if (*ppsVar3 == (snd_alias_t *)0x0) {
             MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x10c2,0,"%s")
             ;
           }
           if ((((*ppsVar3)->flags & 1U) != 0) && (ppsVar3[-0x16] != (snd_alias_t *)g_snd.looptime))
           {
-            SND_StopStreamChannel(iVar1);
+            SND_StopStreamChannel(iVar2);
           }
         }
-        iVar1 = iVar1 + 1;
+        iVar2 = iVar2 + 1;
         ppsVar3 = ppsVar3 + 0x30;
-      } while (iVar1 < g_snd.max_stream_channels + 0x28);
+      } while (iVar2 < g_snd.max_stream_channels + 0x28);
     }
     g_snd.looptime = g_snd.time;
-    iVar1 = Profile_EndInternal((double *)0x0);
+    Profile_EndInternal((double *)0x0);
   }
-  __restgprlr_26(iVar1);
   return;
 }
 
 
 // 8284EBD8  SND_UpdateBackgroundVolume  (snd.cpp:4311)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 bool SND_UpdateBackgroundVolume(int param_1,int param_2)
 
 {
   float fVar1;
   float fVar2;
-  int iVar3;
+  float fVar3;
   int iVar4;
-  float fVar5;
-  int iVar6;
-  ulonglong uVar7;
-  bool bVar8;
-  undefined1 uVar9;
-  float *pfVar10;
-  ulonglong uVar11;
+  bool bVar5;
   
-  uVar7 = __savegprlr_26(param_1);
-  if (((int)uVar7 < 0) || (5 < (int)uVar7)) {
+  if ((param_1 < 0) || (5 < param_1)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x10db,0,
                     "%s\n\t(track) = %i");
   }
-  uVar11 = uVar7 + 0x28;
-  iVar3 = (int)((uVar11 + (uVar11 & 0x7fffffff) * 2 & 0x3ffffff) << 6);
-  bVar8 = SND_IsAliasChannel3D
-                    (*(int *)(*(int *)((int)g_snd.chaninfo[0].org + iVar3 + -0x14) + 0x3c) >> 9 &
-                     0x3f);
-  if (bVar8) {
+  bVar5 = SND_IsAliasChannel3D((g_snd.chaninfo[param_1 + 0x28].alias0)->flags >> 9 & 0x3f);
+  if (bVar5) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x10de,0,"%s");
   }
-  iVar6 = g_snd.looptime;
-  iVar4 = (int)((uVar7 & 0x1fffffff) << 3);
-  fVar2 = *(float *)((int)&g_snd.background[0].goalrate + iVar4);
-  pfVar10 = (float *)((int)&g_snd.background[0].goalvolume + iVar4);
-  fVar5 = (float)(longlong)param_2 * fVar2 +
-          *(float *)((int)(&g_snd.chaninfo[0].lengthNotifyInfo + 1) + iVar3 + 0xc);
-  fVar1 = *pfVar10;
+  iVar4 = g_snd.looptime;
+  fVar2 = g_snd.background[param_1].goalrate;
+  fVar3 = (float)(longlong)param_2 * fVar2 + g_snd.chaninfo[param_1 + 0x28].volumeInfo.value;
+  fVar1 = g_snd.background[param_1].goalvolume;
   if (fVar2 <= 0.0) {
-    if ((fVar5 < fVar1) && (fVar5 = fVar1, fVar1 == 0.0)) {
-      SND_StopStreamChannel((int)uVar11);
-      uVar9 = __restgprlr_26(0);
-      return (bool)uVar9;
+    if ((fVar3 < fVar1) && (fVar3 = fVar1, fVar1 == 0.0)) {
+      SND_StopStreamChannel(param_1 + 0x28);
+      return false;
     }
   }
-  else if (fVar1 < fVar5) {
-    fVar5 = fVar1;
+  else if (fVar1 < fVar3) {
+    fVar3 = fVar1;
   }
-  *(float *)((int)(&g_snd.chaninfo[0].lengthNotifyInfo + 1) + iVar3 + 0xc) = fVar5;
-  *(int *)((int)g_snd.chaninfo[0].lengthNotifyInfo.id + iVar3 + -0xc) = iVar6;
-  *(float *)((int)g_snd.chaninfo[0].org + iVar3 + -0x2c) = *pfVar10;
-  *(undefined4 *)((int)g_snd.chaninfo[0].org + iVar3 + -0x28) =
-       *(undefined4 *)((int)&g_snd.background[0].goalrate + iVar4);
-  uVar9 = __restgprlr_26(1);
-  return (bool)uVar9;
+  g_snd.chaninfo[param_1 + 0x28].volumeInfo.value = fVar3;
+  g_snd.chaninfo[param_1 + 0x28].looptime = iVar4;
+  g_snd.chaninfo[param_1 + 0x28].volumeInfo.goalvalue = g_snd.background[param_1].goalvolume;
+  g_snd.chaninfo[param_1 + 0x28].volumeInfo.goalrate = g_snd.background[param_1].goalrate;
+  return true;
 }
 
 
@@ -6416,96 +6148,96 @@ void SND_InitParameter(snd_param_info_t *param_1,float param_2)
 
 // 8284EDD0  SND_UpdateParameter  (snd.cpp:4364)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void SND_UpdateParameter(snd_param_info_t *param_1,int param_2)
 
 {
   float fVar1;
   float fVar2;
-  float *pfVar3;
-  double dVar4;
+  double dVar3;
   
-  pfVar3 = (float *)__savegprlr_29(param_1);
-  if (pfVar3 == (float *)0x0) {
+  if (param_1 == (snd_param_info_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x1113,0,"%s");
   }
   if (param_2 < 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x1114,0,
                     "%s\n\t(dt_msec) = %i");
   }
-  dVar4 = 0.0;
-  if (*pfVar3 < 0.0) {
+  dVar3 = 0.0;
+  if (param_1->value < 0.0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x1115,0,
                     "%s\n\t(paramInfo->value) = %g");
   }
-  fVar1 = (float)((double)(longlong)param_2 * (double)pfVar3[2] + (double)*pfVar3);
-  fVar2 = pfVar3[1];
-  *pfVar3 = fVar1;
-  if (dVar4 <= (double)pfVar3[2]) {
+  fVar1 = (float)((double)(longlong)param_2 * (double)param_1->goalrate + (double)param_1->value);
+  fVar2 = param_1->goalvalue;
+  param_1->value = fVar1;
+  if (dVar3 <= (double)param_1->goalrate) {
     if (fVar2 < fVar1) {
-      pfVar3[2] = (float)dVar4;
-      *pfVar3 = fVar2;
+      param_1->goalrate = (float)dVar3;
+      param_1->value = fVar2;
     }
   }
   else if (fVar1 < fVar2) {
-    pfVar3[2] = (float)dVar4;
-    *pfVar3 = fVar2;
-    __restgprlr_29();
+    param_1->goalrate = (float)dVar3;
+    param_1->value = fVar2;
     return;
   }
-  __restgprlr_29();
   return;
 }
 
 
 // 82857A30  SND_UpdateMasterVolumes  (snd.cpp:4438)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void SND_UpdateMasterVolumes(int param_1)
 
 {
-  int iVar1;
-  bool bVar2;
+  bool bVar1;
+  int iVar2;
   int iVar3;
-  int iVar4;
-  snd_param_info_t *psVar5;
-  double dVar6;
+  snd_param_info_t *psVar4;
+  double dVar5;
   
-  iVar1 = __savegprlr_28(param_1);
-  iVar3 = 0;
+  iVar2 = 0;
   if (0 < g_snd.entchannel_count) {
-    iVar4 = 0;
+    iVar3 = 0;
     do {
-      if ((g_snd.paused == false) || (bVar2 = SND_IsPausable(iVar3), !bVar2)) {
+      if ((g_snd.paused == false) || (bVar1 = SND_IsPausable(iVar2), !bVar1)) {
         SND_UpdateParameter((snd_param_info_t *)
-                            ((int)&g_snd.channelVolGlobal.channelvol[0].value + iVar4),iVar1);
+                            ((int)&g_snd.channelVolGlobal.channelvol[0].value + iVar3),param_1);
         SND_UpdateParameter((snd_param_info_t *)
-                            ((int)&(g_snd.channelvol)->channelvol[0].value + iVar4),iVar1);
+                            ((int)&(g_snd.channelvol)->channelvol[0].value + iVar3),param_1);
       }
-      iVar3 = iVar3 + 1;
-      iVar4 = iVar4 + 0xc;
-    } while (iVar3 < g_snd.entchannel_count);
+      iVar2 = iVar2 + 1;
+      iVar3 = iVar3 + 0xc;
+    } while (iVar2 < g_snd.entchannel_count);
   }
-  if ((g_snd.paused == false) && (iVar3 = 0, 0 < g_snd.volmod_count)) {
-    psVar5 = g_snd.volmods;
+  if ((g_snd.paused == false) && (iVar2 = 0, 0 < g_snd.volmod_count)) {
+    psVar4 = g_snd.volmods;
     do {
-      SND_UpdateParameter(psVar5,iVar1);
-      iVar3 = iVar3 + 1;
-      psVar5 = psVar5 + 1;
-    } while (iVar3 < g_snd.volmod_count);
+      SND_UpdateParameter(psVar4,param_1);
+      iVar2 = iVar2 + 1;
+      psVar4 = psVar4 + 1;
+    } while (iVar2 < g_snd.volmod_count);
   }
-  dVar6 = 0.0;
+  dVar5 = 0.0;
   if (g_snd.mastervol.goalrate == 0.0) {
-    if (snd_volume->modified == false) goto LAB_82857bd0;
+    if (snd_volume->modified == false) {
+      return;
+    }
   }
   else {
-    SND_UpdateParameter(&g_snd.mastervol,iVar1);
-    if (((double)g_snd.mastervol.value == dVar6) && ((double)g_snd.mastervol.goalrate == dVar6)) {
+    SND_UpdateParameter(&g_snd.mastervol,param_1);
+    if (((double)g_snd.mastervol.value == dVar5) && ((double)g_snd.mastervol.goalrate == dVar5)) {
       SND_StopSounds(SND_STOP_ALL);
     }
   }
   Dvar_ClearModified(snd_volume);
   g_snd.volume = (snd_volume->current).value * g_snd.mastervol.value * 0.4;
-LAB_82857bd0:
-  __restgprlr_28();
   return;
 }
 
@@ -6569,143 +6301,123 @@ bool SND_IsStreamChannelPlaying(int param_1)
 
 // 8284F128  SND_UpdatePerChannelMasterSettings  (snd.cpp:4505)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
+
 void SND_UpdatePerChannelMasterSettings
                (int param_1,int param_2,_func___cdecl_bool_int *param_3,uchar *param_4,
                float *param_5)
 
 {
-  byte bVar1;
-  ulonglong uVar2;
-  char cVar4;
+  bool bVar1;
+  byte bVar2;
   snd_channel_info_t *psVar3;
-  ulonglong uVar6;
-  ulonglong uVar7;
-  ulonglong uVar8;
-  ulonglong uVar9;
-  longlong lVar10;
-  float fVar11;
-  byte bVar5;
+  float fVar4;
   
-  uVar9 = (ulonglong)(int)param_5;
-  uVar8 = (ulonglong)(int)param_4;
-  uVar7 = (ulonglong)(int)param_3;
-  uVar6 = (ulonglong)param_2;
-  uVar2 = __savegprlr_25(param_1);
-  if (0x35 < (uVar2 & 0xffffffff)) {
+  if (0x35 < (uint)param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x119f,0,
                     "firstChanIdx doesn\'t index SND_MAX_CHANNELS\n\t%i not in [0, %i)");
   }
-  if (0x36 < (uVar6 & 0xffffffff)) {
+  if (0x36 < (uint)param_2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x11a0,0,
                     "lastChanIdx doesn\'t index SND_MAX_CHANNELS+1\n\t%i not in [0, %i)");
   }
-  if ((uVar7 & 0xffffffff) == 0) {
+  if (param_3 == (_func___cdecl_bool_int *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x11a1,0,"%s");
   }
-  if ((uVar8 & 0xffffffff) == 0) {
+  if (param_4 == (uchar *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x11a2,0,"%s");
   }
-  if ((uVar9 & 0xffffffff) == 0) {
+  if (param_5 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x11a3,0,"%s");
   }
-  if ((int)uVar2 < (int)uVar6) {
-    lVar10 = (uVar2 + (uVar2 & 0x7fffffff) * 2 & 0x3ffffff) * 0x40 + -0x7b777eec;
+  if (param_1 < param_2) {
+    psVar3 = (snd_channel_info_t *)(param_1 * 0xc0 + -0x7b777eec);
     do {
-      cVar4 = (*(code *)uVar7)(uVar2);
-      if (cVar4 != '\0') {
-        psVar3 = (snd_channel_info_t *)lVar10;
-        bVar5 = SND_GetMasterPriority(psVar3);
-        if (bVar5 != 0) {
-          bVar1 = *(byte *)uVar8;
-          if (bVar1 < bVar5) {
-            *(byte *)uVar8 = bVar5;
-            fVar11 = SND_GetMasterPercent(psVar3);
+      bVar1 = (*param_3)(param_1);
+      if (bVar1) {
+        bVar2 = SND_GetMasterPriority(psVar3);
+        if (bVar2 != 0) {
+          if (*param_4 < bVar2) {
+            *param_4 = bVar2;
+            fVar4 = SND_GetMasterPercent(psVar3);
           }
-          else if ((bVar5 != bVar1) ||
-                  (fVar11 = SND_GetMasterPercent(psVar3), fVar11 <= *(float *)uVar9))
+          else if ((bVar2 != *param_4) || (fVar4 = SND_GetMasterPercent(psVar3), fVar4 <= *param_5))
           goto LAB_8284f2a4;
-          *(float *)uVar9 = fVar11;
+          *param_5 = fVar4;
         }
       }
 LAB_8284f2a4:
-      uVar2 = uVar2 + 1;
-      lVar10 = lVar10 + 0xc0;
-    } while ((int)uVar2 < (int)uVar6);
+      param_1 = param_1 + 1;
+      psVar3 = psVar3 + 1;
+    } while (param_1 < param_2);
   }
-  __restgprlr_25();
   return;
 }
 
 
 // 8284F2C0  SND_UpdatePerChannelSlaveLerp  (snd.cpp:4546)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
+
 void SND_UpdatePerChannelSlaveLerp
                (int param_1,int param_2,_func___cdecl_bool_int *param_3,uchar param_4,float param_5)
 
 {
-  uint uVar1;
-  char cVar2;
-  byte bVar3;
-  ulonglong uVar4;
-  ulonglong uVar5;
-  ulonglong uVar6;
-  float *pfVar7;
-  double extraout_f1;
-  double dVar8;
-  double dVar9;
-  double dVar10;
-  double dVar11;
+  bool bVar1;
+  byte bVar2;
+  float *pfVar3;
+  double dVar4;
+  double dVar5;
+  double dVar6;
+  double dVar7;
   
-  uVar6 = (ulonglong)(char)param_4;
-  uVar5 = (ulonglong)(int)param_3;
-  uVar4 = (ulonglong)param_2;
-  __savegprlr_24((double)param_5,param_1);
-  uVar1 = __savefpr_27();
-  dVar9 = extraout_f1;
-  if (0x35 < uVar1) {
+  dVar4 = (double)param_5;
+  if (0x35 < (uint)param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x11c8,0,
                     "firstChanIdx doesn\'t index SND_MAX_CHANNELS\n\t%i not in [0, %i)");
   }
-  if (0x36 < (uVar4 & 0xffffffff)) {
+  if (0x36 < (uint)param_2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x11c9,0,
                     "lastChanIdx doesn\'t index SND_MAX_CHANNELS+1\n\t%i not in [0, %i)");
   }
-  if ((uVar5 & 0xffffffff) == 0) {
+  if (param_3 == (_func___cdecl_bool_int *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x11ca,0,"%s");
   }
-  if ((int)uVar1 < (int)uVar4) {
-    pfVar7 = (float *)(uVar1 * 0xc0 + -0x7b777e34);
-    dVar10 = 0.0;
-    dVar11 = 1.0;
+  if (param_1 < param_2) {
+    pfVar3 = &g_snd.chaninfo[param_1].slaveLerp;
+    dVar6 = 0.0;
+    dVar7 = 1.0;
     do {
-      cVar2 = (*(code *)uVar5)(uVar1);
-      if (cVar2 != '\0') {
-        bVar3 = SND_GetMasterPriority((snd_channel_info_t *)(pfVar7 + -0x2e));
-        if (((uVar6 & 0xff) == 0) || ((uVar6 & 0xff) <= (ulonglong)bVar3)) {
-          dVar8 = (double)(float)((double)*pfVar7 - dVar9);
-          if ((double)(float)((double)*pfVar7 - dVar9) < 0.0) {
-            dVar8 = dVar10;
+      bVar1 = (*param_3)(param_1);
+      if (bVar1) {
+        bVar2 = SND_GetMasterPriority((snd_channel_info_t *)(pfVar3 + -0x2e));
+        if ((param_4 == '\0') || (param_4 <= bVar2)) {
+          dVar5 = (double)(float)((double)*pfVar3 - dVar4);
+          if ((double)(float)((double)*pfVar3 - dVar4) < 0.0) {
+            dVar5 = dVar6;
           }
-          *pfVar7 = (float)dVar8;
+          *pfVar3 = (float)dVar5;
         }
         else {
-          dVar8 = (double)(float)((double)*pfVar7 + dVar9);
-          if ((float)(dVar11 - (double)(float)((double)*pfVar7 + dVar9)) < 0.0) {
-            dVar8 = dVar11;
+          dVar5 = (double)(float)((double)*pfVar3 + dVar4);
+          if ((float)(dVar7 - (double)(float)((double)*pfVar3 + dVar4)) < 0.0) {
+            dVar5 = dVar7;
           }
-          *pfVar7 = (float)dVar8;
+          *pfVar3 = (float)dVar5;
         }
-        if (((double)*pfVar7 < dVar10) || (dVar11 < (double)*pfVar7)) {
+        if (((double)*pfVar3 < dVar6) || (dVar7 < (double)*pfVar3)) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x11d9,0,
                           "chaninfo->slaveLerp not in [0.0f, 1.0f]\n\t%g not in [%g, %g]");
         }
       }
-      uVar1 = uVar1 + 1;
-      pfVar7 = pfVar7 + 0x30;
-    } while ((int)uVar1 < (int)uVar4);
+      param_1 = param_1 + 1;
+      pfVar3 = pfVar3 + 0x30;
+    } while (param_1 < param_2);
   }
-  __restfpr_27();
-  __restgprlr_24();
   return;
 }
 
@@ -6768,51 +6480,51 @@ void SND_UpdateMasterSlaveLerp(int param_1)
 
 // 8284F670  SND_UpdateAllChannels  (snd.cpp:4615)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void SND_UpdateAllChannels(int param_1)
 
 {
-  int iVar1;
-  bool bVar2;
-  int iVar3;
-  snd_channel_info_t *psVar4;
-  int iVar5;
+  bool bVar1;
+  int iVar2;
+  snd_channel_info_t *psVar3;
+  int iVar4;
   
-  iVar1 = __savegprlr_28(param_1);
-  SND_UpdateMasterSlaveLerp(iVar1);
-  iVar5 = 8;
+  SND_UpdateMasterSlaveLerp(param_1);
+  iVar4 = 8;
   if (8 < g_snd.max_3D_channels + 8) {
     do {
-      bVar2 = SND_Is3DChannelFree(iVar5);
-      if (!bVar2) {
-        SND_Update3DChannel(iVar5,iVar1);
+      bVar1 = SND_Is3DChannelFree(iVar4);
+      if (!bVar1) {
+        SND_Update3DChannel(iVar4,param_1);
       }
-      iVar5 = iVar5 + 1;
-    } while (iVar5 < g_snd.max_3D_channels + 8);
+      iVar4 = iVar4 + 1;
+    } while (iVar4 < g_snd.max_3D_channels + 8);
   }
-  iVar5 = 0x28;
+  iVar4 = 0x28;
   if (0x28 < g_snd.max_stream_channels + 0x28) {
-    psVar4 = g_snd.chaninfo + 0x28;
-    iVar3 = g_snd.max_stream_channels;
+    psVar3 = g_snd.chaninfo + 0x28;
+    iVar2 = g_snd.max_stream_channels;
     do {
-      if ((psVar4->soundFileInfo).loadingState != SFLS_UNLOADED) {
-        SND_UpdateStreamChannel(iVar5,iVar1);
-        iVar3 = g_snd.max_stream_channels;
+      if ((psVar3->soundFileInfo).loadingState != SFLS_UNLOADED) {
+        SND_UpdateStreamChannel(iVar4,param_1);
+        iVar2 = g_snd.max_stream_channels;
       }
-      iVar5 = iVar5 + 1;
-      psVar4 = psVar4 + 1;
-    } while (iVar5 < iVar3 + 0x28);
+      iVar4 = iVar4 + 1;
+      psVar3 = psVar3 + 1;
+    } while (iVar4 < iVar2 + 0x28);
   }
-  iVar5 = 0;
+  iVar4 = 0;
   if (0 < g_snd.max_2D_channels) {
     do {
-      bVar2 = SND_Is2DChannelFree(iVar5);
-      if (!bVar2) {
-        SND_Update2DChannel(iVar5,iVar1);
+      bVar1 = SND_Is2DChannelFree(iVar4);
+      if (!bVar1) {
+        SND_Update2DChannel(iVar4,param_1);
       }
-      iVar5 = iVar5 + 1;
-    } while (iVar5 < g_snd.max_2D_channels);
+      iVar4 = iVar4 + 1;
+    } while (iVar4 < g_snd.max_2D_channels);
   }
-  __restgprlr_28();
   return;
 }
 
@@ -6830,121 +6542,115 @@ bool SND_EnvironmentEffectsOverridden(void)
 
 // 8284F7B8  SND_SetEnvironmentEffects  (snd.cpp:4650)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void SND_SetEnvironmentEffects(int param_1,char *param_2,float param_3,float param_4,int param_5)
 
 {
   float fVar1;
   snd_enveffect *psVar2;
   int iVar3;
-  int iVar4;
-  ulonglong uVar5;
   int in_r7;
-  char *pcVar6;
-  snd_enveffect *psVar7;
-  double extraout_f1;
+  bool *pbVar4;
+  snd_enveffect *psVar5;
+  double dVar6;
+  double dVar7;
   double dVar8;
   double dVar9;
-  double dVar10;
-  double dVar11;
   
-  dVar8 = (double)param_4;
-  uVar5 = (ulonglong)(int)param_2;
-  __savegprlr_27((double)param_3,param_1,uVar5,param_5);
-  iVar3 = __savefpr_28();
-  dVar11 = extraout_f1;
-  iVar4 = CL_GetLocalClientActiveCount();
-  if (iVar4 < 2) {
-    if ((iVar3 < 1) || (4 < iVar3)) {
+  dVar7 = (double)param_4;
+  dVar6 = (double)param_3;
+  iVar3 = CL_GetLocalClientActiveCount();
+  if (iVar3 < 2) {
+    if ((param_1 < 1) || (4 < param_1)) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x1234,0,
                       "%s\n\t(priority) = %i");
     }
-    if ((uVar5 & 0xffffffff) == 0) {
+    if (param_2 == (char *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x1235,0,"%s");
     }
     if (in_r7 < 0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x1236,0,"%s");
     }
-    dVar10 = 0.0;
-    dVar9 = 1.0;
-    if ((dVar11 < 0.0) || (1.0 < dVar11)) {
+    dVar9 = 0.0;
+    dVar8 = 1.0;
+    if ((dVar6 < 0.0) || (1.0 < dVar6)) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x1237,0,"%s");
     }
-    if ((dVar8 < dVar10) || (dVar9 < dVar8)) {
+    if ((dVar7 < dVar9) || (dVar8 < dVar7)) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x1238,0,"%s");
     }
     if (g_snd.Initialized2d != false) {
-      psVar7 = (snd_enveffect *)(iVar3 * 0x20 + -0x7b7796ac);
-      g_snd.envEffects[iVar3].active = true;
-      iVar4 = SND_RoomtypeFromString((char *)uVar5);
-      psVar7->roomtype = iVar4;
+      psVar5 = g_snd.envEffects + param_1;
+      g_snd.envEffects[param_1].active = true;
+      iVar3 = SND_RoomtypeFromString(param_2);
+      psVar5->roomtype = iVar3;
       if (in_r7 < 1) {
         in_r7 = 1;
       }
-      g_snd.envEffects[iVar3].drygoal = (float)dVar11;
-      g_snd.envEffects[iVar3].drylevel = (g_snd.effect)->drylevel;
+      g_snd.envEffects[param_1].drygoal = (float)dVar6;
+      g_snd.envEffects[param_1].drylevel = (g_snd.effect)->drylevel;
       fVar1 = (g_snd.effect)->drylevel;
-      g_snd.envEffects[iVar3].wetgoal = (float)dVar8;
-      g_snd.envEffects[iVar3].dryrate = (float)(dVar11 - (double)fVar1) / (float)(longlong)in_r7;
-      g_snd.envEffects[iVar3].wetlevel = (g_snd.effect)->wetlevel;
-      g_snd.envEffects[iVar3].wetrate =
-           (float)(dVar8 - (double)(g_snd.effect)->wetlevel) / (float)(longlong)in_r7;
+      g_snd.envEffects[param_1].wetgoal = (float)dVar7;
+      g_snd.envEffects[param_1].dryrate = (float)(dVar6 - (double)fVar1) / (float)(longlong)in_r7;
+      g_snd.envEffects[param_1].wetlevel = (g_snd.effect)->wetlevel;
+      g_snd.envEffects[param_1].wetrate =
+           (float)(dVar7 - (double)(g_snd.effect)->wetlevel) / (float)(longlong)in_r7;
       psVar2 = g_snd.effect;
-      if (psVar7 != g_snd.effect) {
-        psVar2 = psVar7;
-        if (iVar3 + 1 < 5) {
-          pcVar6 = (char *)((iVar3 + 1) * 0x20 + -0x7b779690);
-          do {
-            if (*pcVar6 != '\0') goto LAB_8284fa00;
-            pcVar6 = pcVar6 + 0x20;
-          } while ((int)pcVar6 < -0x7b7795f0);
-        }
+      if ((psVar5 != g_snd.effect) && (psVar2 = psVar5, param_1 + 1 < 5)) {
+        pbVar4 = &g_snd.envEffects[param_1 + 1].active;
+        do {
+          if (*pbVar4 != false) {
+            return;
+          }
+          pbVar4 = pbVar4 + 0x20;
+        } while ((int)pbVar4 < -0x7b7795f0);
       }
       g_snd.effect = psVar2;
-      SND_SetRoomtype(iVar4);
+      SND_SetRoomtype(iVar3);
     }
   }
-LAB_8284fa00:
-  __restfpr_28();
-  __restgprlr_27();
   return;
 }
 
 
 // 8284FA10  SND_DeactivateEnvironmentEffects  (snd.cpp:4703)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 void SND_DeactivateEnvironmentEffects(int param_1,int param_2)
 
 {
-  ulonglong uVar1;
-  int iVar2;
-  longlong lVar3;
-  ulonglong uVar4;
+  int iVar1;
+  longlong lVar2;
+  ulonglong uVar3;
   
-  uVar1 = __savegprlr_26(param_1);
-  iVar2 = CL_GetLocalClientActiveCount();
-  if (iVar2 < 2) {
-    if (((int)uVar1 < 1) || (4 < (int)uVar1)) {
+  iVar1 = CL_GetLocalClientActiveCount();
+  if (iVar1 < 2) {
+    if ((param_1 < 1) || (4 < param_1)) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x1268,0,
                       "%s\n\t(priority) = %i");
     }
     if (param_2 < 0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x1269,0,"%s");
     }
-    uVar4 = (uVar1 & 0x7ffffff) * 0x20 - 0x7b7796ac;
-    iVar2 = (int)uVar4;
-    *(undefined1 *)(iVar2 + 0x1c) = 0;
-    if ((uVar4 & 0xffffffff) == ZEXT48(g_snd.effect)) {
-      uVar1 = uVar1 - 1;
-      if (-1 < (longlong)uVar1) {
-        lVar3 = (uVar1 & 0x7ffffff) * 0x20 + -0x7b779690;
+    g_snd.envEffects[param_1].active = false;
+    if (g_snd.envEffects + param_1 == g_snd.effect) {
+      uVar3 = (longlong)param_1 - 1;
+      if (-1 < (longlong)uVar3) {
+        lVar2 = (uVar3 & 0x7ffffff) * 0x20 + -0x7b779690;
         do {
-          if (*(char *)lVar3 != '\0') {
-            if (-1 < (int)uVar1) goto LAB_8284fb24;
+          if (*(char *)lVar2 != '\0') {
+            if (-1 < (int)uVar3) goto LAB_8284fb24;
             break;
           }
-          uVar1 = uVar1 - 1;
-          lVar3 = lVar3 + -0x20;
-        } while (-1 < (longlong)uVar1);
+          uVar3 = uVar3 - 1;
+          lVar2 = lVar2 + -0x20;
+        } while (-1 < (longlong)uVar3);
       }
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x1276,0,"%s");
 LAB_8284fb24:
@@ -6952,17 +6658,18 @@ LAB_8284fb24:
         param_2 = 1;
       }
       g_snd.effect = (snd_enveffect *)
-                     ((int)&g_snd.envEffects[0].roomtype + (int)((uVar1 & 0xffffffff) << 5));
+                     ((int)&g_snd.envEffects[0].roomtype + (int)((uVar3 & 0xffffffff) << 5));
       SND_SetRoomtype((g_snd.effect)->roomtype);
-      (g_snd.effect)->drylevel = *(float *)(iVar2 + 4);
+      (g_snd.effect)->drylevel = g_snd.envEffects[param_1].drylevel;
       (g_snd.effect)->dryrate =
-           ((g_snd.effect)->drygoal - *(float *)(iVar2 + 4)) / (float)(longlong)param_2;
-      (g_snd.effect)->wetlevel = *(float *)(iVar2 + 0x10);
+           ((g_snd.effect)->drygoal - g_snd.envEffects[param_1].drylevel) / (float)(longlong)param_2
+      ;
+      (g_snd.effect)->wetlevel = g_snd.envEffects[param_1].wetlevel;
       (g_snd.effect)->wetrate =
-           ((g_snd.effect)->wetgoal - *(float *)(iVar2 + 0x10)) / (float)(longlong)param_2;
+           ((g_snd.effect)->wetgoal - g_snd.envEffects[param_1].wetlevel) / (float)(longlong)param_2
+      ;
     }
   }
-  __restgprlr_26();
   return;
 }
 
@@ -7055,34 +6762,36 @@ LAB_8284fdb0:
 
 // 8284FE28  SND_SetEqForChannel  (snd.cpp:4823)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "SND_EQTYPE": Some values do not have unique names */
 
 void SND_SetEqForChannel(int param_1,int param_2,int param_3,SND_EQTYPE param_4,float param_5,
                         float param_6,float param_7)
 
 {
-  uint uVar1;
-  double extraout_f1;
+  double dVar1;
   double dVar2;
   double dVar3;
-  double dVar4;
   
   dVar3 = (double)param_7;
   dVar2 = (double)param_6;
-  uVar1 = __savegprlr_28((double)param_5,param_1);
-  dVar4 = extraout_f1;
-  if (0x3f < uVar1) {
+  dVar1 = (double)param_5;
+  if (0x3f < (uint)param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x12d8,0,
                     "entchannel doesn\'t index SND_MAX_ENTCHANNELS\n\t%i not in [0, %i)");
   }
-  SND_SetEqParams(uVar1,param_2,param_3,param_4,(float)dVar4,(float)dVar2,(float)dVar3);
-  __restgprlr_28();
+  SND_SetEqParams(param_1,param_2,param_3,param_4,(float)dVar1,(float)dVar2,(float)dVar3);
   return;
 }
 
 
 // 82857BE0  SND_SetPainVisionEq  (snd.cpp:4832)
 
+/* WARNING: Function: __savegprlr_20 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_20 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "SND_EQTYPE": Some values do not have unique names */
 
@@ -7097,8 +6806,6 @@ void SND_SetPainVisionEq(void)
   double dVar6;
   double dVar7;
   
-  __savegprlr_20();
-  __savefpr_27();
   ppcVar2 = painVisionEqChannels;
   dVar4 = -6.0;
   dVar3 = 1000.0;
@@ -7144,8 +6851,6 @@ LAB_82857c94:
     }
     ppcVar2 = ppcVar2 + 1;
     if (-0x7d659ac1 < (int)ppcVar2) {
-      __restfpr_27();
-      __restgprlr_20();
       return;
     }
   } while( true );
@@ -7154,6 +6859,8 @@ LAB_82857c94:
 
 // 82857E08  SND_ClearPainVisionEq  (snd.cpp:4854)
 
+/* WARNING: Function: __savegprlr_21 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_21 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "SND_EQTYPE": Some values do not have unique names */
 
@@ -7166,7 +6873,6 @@ void SND_ClearPainVisionEq(void)
   SND_EQTYPE *pSVar3;
   int iVar4;
   
-  __savegprlr_21();
   ppcVar2 = painVisionEqChannels;
   pSVar3 = &g_sndPainVisionOcclusionEntChanInfo[0].eqType;
   do {
@@ -7201,38 +6907,34 @@ void SND_ClearPainVisionEq(void)
     pSVar3 = pSVar3 + 5;
     ppcVar2 = ppcVar2 + 1;
   } while ((int)pSVar3 < -0x7b770298);
-  __restgprlr_21();
   return;
 }
 
 
 // 8284FEC0  SND_GetEqTypeFromName  (snd.cpp:4883)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "SND_EQTYPE": Some values do not have unique names */
 
 SND_EQTYPE SND_GetEqTypeFromName(char *param_1)
 
 {
-  char *pcVar1;
-  int iVar2;
-  SND_EQTYPE SVar3;
-  longlong lVar4;
-  char **ppcVar5;
+  int iVar1;
+  SND_EQTYPE SVar2;
+  char **ppcVar3;
   
-  pcVar1 = (char *)__savegprlr_28(param_1);
-  ppcVar5 = eqTypenames;
-  lVar4 = 0;
+  ppcVar3 = eqTypenames;
+  SVar2 = SND_EQTYPE_FIRST;
   do {
-    iVar2 = I_stricmp(pcVar1,*ppcVar5);
-    if (iVar2 == 0) {
-      SVar3 = __restgprlr_28(lVar4);
-      return SVar3;
+    iVar1 = I_stricmp(param_1,*ppcVar3);
+    if (iVar1 == 0) {
+      return SVar2;
     }
-    ppcVar5 = ppcVar5 + 1;
-    lVar4 = lVar4 + 1;
-  } while ((int)ppcVar5 < -0x7d659aac);
-  SVar3 = __restgprlr_28(5);
-  return SVar3;
+    ppcVar3 = ppcVar3 + 1;
+    SVar2 = SVar2 + SND_EQTYPE_HIGHPASS;
+  } while ((int)ppcVar3 < -0x7d659aac);
+  return SND_EQTYPE_COUNT;
 }
 
 
@@ -7278,34 +6980,34 @@ void SND_SetEntChanFilterMode(int param_1,SndEntChannelEqMode param_2)
 
 // 82850088  SND_SetOcclusionFilter  (snd.cpp:4931)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "SND_EQTYPE": Some values do not have unique names */
 
 void SND_SetOcclusionFilter
                (int param_1,float param_2,SND_EQTYPE param_3,float param_4,float param_5)
 
 {
-  uint uVar1;
-  uint uVar2;
+  int iVar1;
   SND_EQTYPE in_r5;
-  char **ppcVar3;
-  int iVar4;
-  double extraout_f1;
+  char **ppcVar2;
+  int iVar3;
+  double dVar4;
   double dVar5;
   double dVar6;
   double dVar7;
-  double dVar8;
   
+  dVar4 = (double)param_2;
   dVar5 = (double)param_4;
   dVar6 = (double)param_5;
-  __savegprlr_25((double)param_2,param_1,param_3);
-  uVar1 = __savefpr_28();
-  dVar8 = extraout_f1;
-  if (0x3f < uVar1) {
+  if (0x3f < (uint)param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x1347,0,
                     "entchannel doesn\'t index SND_MAX_ENTCHANNELS\n\t%i not in [0, %i)");
   }
   dVar7 = 0.0;
-  if ((dVar8 < 0.0) || (20000.0 < dVar8)) {
+  if ((dVar4 < 0.0) || (20000.0 < dVar4)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x1348,0,
                     "%s\n\t(freq) = %g");
   }
@@ -7313,236 +7015,230 @@ void SND_SetOcclusionFilter
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x1349,0,
                     "%s\n\t(q) = %g");
   }
-  iVar4 = 0;
-  ppcVar3 = painVisionEqChannels;
+  iVar3 = 0;
+  ppcVar2 = painVisionEqChannels;
   do {
-    uVar2 = SND_GetEntChannelFromName(*ppcVar3);
-    if (uVar2 == uVar1) {
-      g_sndPainVisionOcclusionEntChanInfo[iVar4].entchannel = uVar1;
-      g_sndPainVisionOcclusionEntChanInfo[iVar4].eqType = in_r5;
-      g_sndPainVisionOcclusionEntChanInfo[iVar4].freq = (float)dVar8;
-      g_sndPainVisionOcclusionEntChanInfo[iVar4].gain = (float)dVar5;
-      g_sndPainVisionOcclusionEntChanInfo[iVar4].q = (float)dVar6;
+    iVar1 = SND_GetEntChannelFromName(*ppcVar2);
+    if (iVar1 == param_1) {
+      g_sndPainVisionOcclusionEntChanInfo[iVar3].entchannel = param_1;
+      g_sndPainVisionOcclusionEntChanInfo[iVar3].eqType = in_r5;
+      g_sndPainVisionOcclusionEntChanInfo[iVar3].freq = (float)dVar4;
+      g_sndPainVisionOcclusionEntChanInfo[iVar3].gain = (float)dVar5;
+      g_sndPainVisionOcclusionEntChanInfo[iVar3].q = (float)dVar6;
       break;
     }
-    ppcVar3 = ppcVar3 + 1;
-    iVar4 = iVar4 + 1;
-  } while ((int)ppcVar3 < -0x7d659ac0);
-  if (0x3f < uVar1) {
+    ppcVar2 = ppcVar2 + 1;
+    iVar3 = iVar3 + 1;
+  } while ((int)ppcVar2 < -0x7d659ac0);
+  if (0x3f < (uint)param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x133c,0,
                     "entchannel doesn\'t index SND_MAX_ENTCHANNELS\n\t%i not in [0, %i)");
   }
-  iVar4 = 1;
-  g_snd.entchaninfo[uVar1].eqMode = OCCLUSION_MODE;
-  SND_SetEqParams(uVar1,0,0,in_r5,(float)dVar5,(float)dVar8,(float)dVar6);
+  iVar3 = 1;
+  g_snd.entchaninfo[param_1].eqMode = OCCLUSION_MODE;
+  SND_SetEqParams(param_1,0,0,in_r5,(float)dVar5,(float)dVar4,(float)dVar6);
   do {
-    SND_DisableEq(uVar1,1,iVar4);
-    iVar4 = iVar4 + 1;
-  } while (iVar4 < 3);
-  __restfpr_28();
-  __restgprlr_25();
+    SND_DisableEq(param_1,1,iVar3);
+    iVar3 = iVar3 + 1;
+  } while (iVar3 < 3);
   return;
 }
 
 
 // 82850260  SND_SetEqEntChannel  (snd.cpp:4967)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "SND_EQTYPE": Some values do not have unique names */
 
 void SND_SetEqEntChannel(int param_1,int param_2,int param_3,SND_EQTYPE param_4,float param_5,
                         float param_6,float param_7)
 
 {
-  int iVar1;
-  bool bVar2;
-  double extraout_f1;
+  bool bVar1;
+  double dVar2;
   double dVar3;
   double dVar4;
-  double dVar5;
   
   dVar4 = (double)param_7;
   dVar3 = (double)param_6;
-  iVar1 = __savegprlr_28((double)param_5,param_1);
-  if (iVar1 != -1) {
-    dVar5 = extraout_f1;
-    bVar2 = SND_IsEntChanInOcclusionMode(iVar1);
-    if (((bVar2) && (param_2 != 0)) && (param_3 != 0)) {
-      SND_DisableEq(iVar1,0,0);
+  dVar2 = (double)param_5;
+  if (param_1 != -1) {
+    bVar1 = SND_IsEntChanInOcclusionMode(param_1);
+    if (((bVar1) && (param_2 != 0)) && (param_3 != 0)) {
+      SND_DisableEq(param_1,0,0);
     }
-    SND_SetEntChanFilterMode(iVar1,EQ_MODE);
-    SND_SetEqForChannel(iVar1,param_2,param_3,param_4,(float)dVar5,(float)dVar3,(float)dVar4);
+    SND_SetEntChanFilterMode(param_1,EQ_MODE);
+    SND_SetEqForChannel(param_1,param_2,param_3,param_4,(float)dVar2,(float)dVar3,(float)dVar4);
   }
-  __restgprlr_28();
   return;
 }
 
 
 // 82850310  SND_SetEq  (snd.cpp:4983)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "SND_EQTYPE": Some values do not have unique names */
 
 void SND_SetEq(char *param_1,int param_2,int param_3,SND_EQTYPE param_4,float param_5,float param_6,
               float param_7)
 
 {
-  char *pcVar1;
-  int iVar2;
-  double extraout_f1;
+  int iVar1;
+  double dVar2;
   double dVar3;
   double dVar4;
-  double dVar5;
   
   dVar4 = (double)param_7;
+  dVar2 = (double)param_5;
   dVar3 = (double)param_6;
-  pcVar1 = (char *)__savegprlr_28((double)param_5,param_1);
-  dVar5 = extraout_f1;
-  iVar2 = SND_GetEntChannelFromName(pcVar1);
-  if (iVar2 == -1) {
+  iVar1 = SND_GetEntChannelFromName(param_1);
+  if (iVar1 == -1) {
     Com_PrintError(9,"Unknown channel name (%s), please check channel definitions file\n");
-    __restgprlr_28();
     return;
   }
-  SND_SetEqEntChannel(iVar2,param_2,param_3,param_4,(float)dVar5,(float)dVar3,(float)dVar4);
-  __restgprlr_28();
+  SND_SetEqEntChannel(iVar1,param_2,param_3,param_4,(float)dVar2,(float)dVar3,(float)dVar4);
   return;
 }
 
 
 // 828503A8  SND_DeactivateAllEq  (snd.cpp:4997)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
+
 void SND_DeactivateAllEq(int param_1)
 
 {
-  int iVar1;
-  SndEntChannelEqMode *pSVar2;
-  uint uVar3;
-  int iVar4;
+  SndEntChannelEqMode *pSVar1;
+  uint uVar2;
+  int iVar3;
   
-  iVar1 = __savegprlr_24(param_1);
-  uVar3 = 0;
-  pSVar2 = &g_snd.entchaninfo[0].eqMode;
+  uVar2 = 0;
+  pSVar1 = &g_snd.entchaninfo[0].eqMode;
   do {
-    if (0x3f < uVar3) {
+    if (0x3f < uVar2) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x132a,0,
                       "entchannel doesn\'t index SND_MAX_ENTCHANNELS\n\t%i not in [0, %i)");
     }
-    if (*pSVar2 == EQ_MODE) {
-      if (0x3f < uVar3) {
+    if (*pSVar1 == EQ_MODE) {
+      if (0x3f < uVar2) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x133c,0,
                         "entchannel doesn\'t index SND_MAX_ENTCHANNELS\n\t%i not in [0, %i)");
       }
-      iVar4 = 0;
-      *pSVar2 = NONE;
+      iVar3 = 0;
+      *pSVar1 = NONE;
       do {
-        SND_DisableEq(uVar3,iVar1,iVar4);
-        iVar4 = iVar4 + 1;
-      } while (iVar4 < 3);
+        SND_DisableEq(uVar2,param_1,iVar3);
+        iVar3 = iVar3 + 1;
+      } while (iVar3 < 3);
     }
-    pSVar2 = pSVar2 + 0x15;
-    uVar3 = uVar3 + 1;
-  } while ((int)pSVar2 < -0x7b777fa8);
-  __restgprlr_24();
+    pSVar1 = pSVar1 + 0x15;
+    uVar2 = uVar2 + 1;
+  } while ((int)pSVar1 < -0x7b777fa8);
   return;
 }
 
 
 // 82857F30  SND_DeactivateChannelEq  (snd.cpp:5014)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
+
 void SND_DeactivateChannelEq(char *param_1,int param_2)
 
 {
-  char *pcVar1;
-  uint uVar2;
-  int iVar3;
+  uint uVar1;
+  int iVar2;
   
-  pcVar1 = (char *)__savegprlr_24(param_1);
-  uVar2 = SND_GetEntChannelFromName(pcVar1);
-  if (uVar2 == 0xffffffff) {
+  uVar1 = SND_GetEntChannelFromName(param_1);
+  if (uVar1 == 0xffffffff) {
     Com_PrintError(9,"Unknown channel name (%s), please check channel definitions file\n");
-    __restgprlr_24();
     return;
   }
-  iVar3 = 0;
+  iVar2 = 0;
   do {
-    if (0x3f < uVar2) {
+    if (0x3f < uVar1) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x13a8,0,
                       "entchannel doesn\'t index SND_MAX_ENTCHANNELS\n\t%i not in [0, %i)");
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x132a,0,
                       "entchannel doesn\'t index SND_MAX_ENTCHANNELS\n\t%i not in [0, %i)");
     }
-    if (g_snd.entchaninfo[uVar2].eqMode == EQ_MODE) {
-      if (0x3f < uVar2) {
+    if (g_snd.entchaninfo[uVar1].eqMode == EQ_MODE) {
+      if (0x3f < uVar1) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x133c,0,
                         "entchannel doesn\'t index SND_MAX_ENTCHANNELS\n\t%i not in [0, %i)");
       }
-      g_snd.entchaninfo[uVar2].eqMode = NONE;
-      SND_DisableEq(uVar2,param_2,iVar3);
+      g_snd.entchaninfo[uVar1].eqMode = NONE;
+      SND_DisableEq(uVar1,param_2,iVar2);
     }
-    iVar3 = iVar3 + 1;
-  } while (iVar3 < 3);
-  __restgprlr_24();
+    iVar2 = iVar2 + 1;
+  } while (iVar2 < 3);
   return;
 }
 
 
 // 82850478  SND_DeactivateEqForChannel  (snd.cpp:5031)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void SND_DeactivateEqForChannel(int param_1,int param_2,int param_3)
 
 {
-  uint uVar1;
-  bool bVar2;
+  bool bVar1;
   
-  uVar1 = __savegprlr_29(param_1);
-  if (0x3f < uVar1) {
+  if (0x3f < (uint)param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x13a8,0,
                     "entchannel doesn\'t index SND_MAX_ENTCHANNELS\n\t%i not in [0, %i)");
   }
-  bVar2 = SND_IsEntChanInEqMode(uVar1);
-  if (bVar2) {
-    SND_SetEntChanFilterMode(uVar1,NONE);
-    SND_DisableEq(uVar1,param_2,param_3);
+  bVar1 = SND_IsEntChanInEqMode(param_1);
+  if (bVar1) {
+    SND_SetEntChanFilterMode(param_1,NONE);
+    SND_DisableEq(param_1,param_2,param_3);
   }
-  __restgprlr_29();
   return;
 }
 
 
 // 828504F8  SND_DeactivateOcclusionFilter  (snd.cpp:5043)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void SND_DeactivateOcclusionFilter(int param_1)
 
 {
-  uint uVar1;
-  bool bVar2;
+  bool bVar1;
+  int iVar2;
   int iVar3;
-  int iVar4;
   
-  uVar1 = __savegprlr_29(param_1);
-  if (0x3f < uVar1) {
+  if (0x3f < (uint)param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x13b7,0,
                     "entchannel doesn\'t index SND_MAX_ENTCHANNELS\n\t%i not in [0, %i)");
   }
-  bVar2 = SND_IsEntChanInOcclusionMode(uVar1);
-  if (bVar2) {
-    SND_SetEntChanFilterMode(uVar1,NONE);
-    iVar3 = 0;
+  bVar1 = SND_IsEntChanInOcclusionMode(param_1);
+  if (bVar1) {
+    SND_SetEntChanFilterMode(param_1,NONE);
+    iVar2 = 0;
     do {
-      iVar4 = 0;
+      iVar3 = 0;
       do {
-        SND_DisableEq(uVar1,iVar3,iVar4);
-        iVar4 = iVar4 + 1;
-      } while (iVar4 < 3);
-      iVar3 = iVar3 + 1;
-    } while (iVar3 < 2);
+        SND_DisableEq(param_1,iVar2,iVar3);
+        iVar3 = iVar3 + 1;
+      } while (iVar3 < 3);
+      iVar2 = iVar2 + 1;
+    } while (iVar2 < 2);
   }
-  __restgprlr_29();
   return;
 }
 
 
 // 82850590  SND_DeactivateAllFilters  (snd.cpp:5061)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void SND_DeactivateAllFilters(void)
@@ -7553,7 +7249,6 @@ void SND_DeactivateAllFilters(void)
   int iVar3;
   int iVar4;
   
-  __savegprlr_24();
   uVar2 = 0;
   pSVar1 = &g_snd.entchaninfo[0].eqMode;
   do {
@@ -7574,28 +7269,26 @@ void SND_DeactivateAllFilters(void)
     pSVar1 = pSVar1 + 0x15;
     uVar2 = uVar2 + 1;
   } while ((int)pSVar1 < -0x7b777fa8);
-  __restgprlr_24();
   return;
 }
 
 
 // 82850640  SND_DeactivateEq  (snd.cpp:5077)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void SND_DeactivateEq(char *param_1,int param_2,int param_3)
 
 {
-  char *pcVar1;
-  int iVar2;
+  int iVar1;
   
-  pcVar1 = (char *)__savegprlr_29(param_1);
-  iVar2 = SND_GetEntChannelFromName(pcVar1);
-  if (iVar2 == -1) {
+  iVar1 = SND_GetEntChannelFromName(param_1);
+  if (iVar1 == -1) {
     Com_PrintError(9,"Unknown channel name (%s), please check channel definitions file\n");
-    __restgprlr_29();
     return;
   }
-  SND_DeactivateEqForChannel(iVar2,param_2,param_3);
-  __restgprlr_29();
+  SND_DeactivateEqForChannel(iVar1,param_2,param_3);
   return;
 }
 
@@ -7660,70 +7353,69 @@ float SND_GetWhizbyRadius(int param_1)
 
 // 828508B8  SND_GetWhizbySpread  (snd.cpp:5228)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 float SND_GetWhizbySpread(int param_1,float param_2)
 
 {
   float fVar1;
-  uint uVar2;
+  int iVar2;
   int iVar3;
-  int iVar4;
+  double dVar4;
   double dVar5;
-  double extraout_f1;
   double dVar6;
   double dVar7;
-  double dVar8;
   
-  __savegprlr_29((double)param_2,param_1);
-  uVar2 = __savefpr_28();
-  dVar8 = extraout_f1;
-  if (2 < uVar2) {
+  dVar7 = (double)param_2;
+  if (2 < (uint)param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x1472,0,
                     "type doesn\'t index NUM_WHIZBY_TYPES\n\t%i not in [0, %i)");
   }
-  dVar6 = 0.0;
-  if (uVar2 == 1) {
-    dVar7 = (double)g_snd.whizbyParams.radius[1];
-    dVar5 = (double)g_snd.whizbyParams.radius[0];
-    if (dVar7 == dVar5) {
+  dVar5 = 0.0;
+  if (param_1 == 1) {
+    dVar6 = (double)g_snd.whizbyParams.radius[1];
+    dVar4 = (double)g_snd.whizbyParams.radius[0];
+    if (dVar6 == dVar4) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x1483,0,"%s");
-      dVar7 = (double)g_snd.whizbyParams.radius[1];
-      dVar5 = (double)g_snd.whizbyParams.radius[0];
+      dVar6 = (double)g_snd.whizbyParams.radius[1];
+      dVar4 = (double)g_snd.whizbyParams.radius[0];
     }
-    iVar4 = 0xf7ec;
-    iVar3 = 0xf7f0;
-    fVar1 = (float)(dVar8 - dVar5) / (float)(dVar7 - dVar5);
+    iVar3 = 0xf7ec;
+    iVar2 = 0xf7f0;
+    fVar1 = (float)(dVar7 - dVar4) / (float)(dVar6 - dVar4);
   }
   else {
-    if (uVar2 == 2) {
-      dVar6 = 0.0;
-      dVar7 = (double)g_snd.whizbyParams.spread[2];
-      dVar8 = dVar6;
-      dVar5 = dVar7;
+    if (param_1 == 2) {
+      dVar5 = 0.0;
+      dVar6 = (double)g_snd.whizbyParams.spread[2];
+      dVar7 = dVar5;
+      dVar4 = dVar6;
       goto LAB_82850a6c;
     }
-    dVar5 = (double)g_snd.whizbyParams.radius[0];
-    if (dVar5 == 0.0) {
+    dVar4 = (double)g_snd.whizbyParams.radius[0];
+    if (dVar4 == 0.0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x147d,0,"%s");
-      dVar5 = (double)g_snd.whizbyParams.radius[0];
+      dVar4 = (double)g_snd.whizbyParams.radius[0];
     }
-    fVar1 = (float)(dVar8 / dVar5);
-    iVar4 = 0xf7e8;
-    iVar3 = 0xf7ec;
+    fVar1 = (float)(dVar7 / dVar4);
+    iVar3 = 0xf7e8;
+    iVar2 = 0xf7ec;
   }
-  dVar8 = (double)fVar1;
-  dVar7 = (double)*(float *)(g_snd.restore.buffer + iVar3 + -0x1c);
-  dVar5 = (double)*(float *)(g_snd.restore.buffer + iVar4 + -0x1c);
-  if ((dVar8 < dVar6) || (1.0 < dVar8)) {
+  dVar7 = (double)fVar1;
+  dVar6 = (double)*(float *)(g_snd.restore.buffer + iVar2 + -0x1c);
+  dVar4 = (double)*(float *)(g_snd.restore.buffer + iVar3 + -0x1c);
+  if ((dVar7 < dVar5) || (1.0 < dVar7)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x148f,0,"%s");
   }
 LAB_82850a6c:
-  dVar8 = (double)(float)((double)(float)(dVar7 - dVar5) * dVar8 + dVar5);
-  if (dVar8 < 0.0) {
-    dVar8 = dVar6;
+  dVar7 = (double)(float)((double)(float)(dVar6 - dVar4) * dVar7 + dVar4);
+  if (dVar7 < 0.0) {
+    dVar7 = dVar5;
   }
-  __restfpr_28(dVar8);
-  dVar8 = (double)__restgprlr_29();
-  return (float)dVar8;
+  return (float)dVar7;
 }
 
 
@@ -7772,42 +7464,40 @@ void SND_InitWhizbyVariations(void)
 
 // 82850B70  SND_GetNextWhizbyVariationIndex  (snd.cpp:5299)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 int SND_GetNextWhizbyVariationIndex(int param_1)
 
 {
   uint uVar1;
   undefined4 uVar2;
   int iVar3;
-  ulonglong uVar4;
+  int iVar4;
   int iVar5;
-  int iVar6;
-  longlong lVar7;
+  longlong lVar6;
   
-  uVar4 = __savegprlr_26(param_1);
-  if (2 < (uVar4 & 0xffffffff)) {
+  if (2 < (uint)param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x14b6,0,
                     "whizbyType doesn\'t index NUM_WHIZBY_TYPES\n\t%i not in [0, %i)");
   }
-  iVar6 = (int)((uVar4 & 0x3fffffff) << 2);
-  if (*(int *)((int)g_snd.whizbyParams.lastPlayedIndex + iVar6) == 0) {
-    SND_ResetWhizbyType((int)uVar4);
+  if (g_snd.whizbyParams.lastPlayedIndex[param_1] == 0) {
+    SND_ResetWhizbyType(param_1);
   }
-  uVar1 = *(uint *)((int)g_snd.whizbyParams.lastPlayedIndex + iVar6);
+  uVar1 = g_snd.whizbyParams.lastPlayedIndex[param_1];
   if (uVar1 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x14c8,0,"%s");
   }
   iVar5 = irand(0,uVar1);
-  lVar7 = (uVar4 & 0xfffffff) * 0x10;
-  iVar5 = (int)((lVar7 + iVar5 & 0xffffffffU) << 2);
-  iVar3 = (int)((lVar7 + (ulonglong)uVar1 & 0xffffffff) << 2);
-  uVar2 = *(undefined4 *)((int)g_snd.whizbyParams.lastPlayedIndex + iVar3 + 8);
-  *(undefined4 *)((int)g_snd.whizbyParams.lastPlayedIndex + iVar3 + 8) =
-       *(undefined4 *)((int)g_snd.whizbyParams.shuffleIndices[0] + iVar5);
-  *(undefined4 *)((int)g_snd.whizbyParams.shuffleIndices[0] + iVar5) = uVar2;
-  *(int *)((int)g_snd.whizbyParams.lastPlayedIndex + iVar6) =
-       *(int *)((int)g_snd.whizbyParams.lastPlayedIndex + iVar6) + -1;
-  iVar6 = __restgprlr_26();
-  return iVar6;
+  lVar6 = ((ulonglong)(uint)param_1 & 0xfffffff) * 0x10;
+  iVar3 = (int)((lVar6 + iVar5 & 0xffffffffU) << 2);
+  iVar4 = (int)((lVar6 + (ulonglong)uVar1 & 0xffffffff) << 2);
+  iVar5 = *(int *)((int)g_snd.whizbyParams.shuffleIndices[0] + iVar3);
+  uVar2 = *(undefined4 *)((int)g_snd.whizbyParams.lastPlayedIndex + iVar4 + 8);
+  *(int *)((int)g_snd.whizbyParams.lastPlayedIndex + iVar4 + 8) = iVar5;
+  *(undefined4 *)((int)g_snd.whizbyParams.shuffleIndices[0] + iVar3) = uVar2;
+  g_snd.whizbyParams.lastPlayedIndex[param_1] = g_snd.whizbyParams.lastPlayedIndex[param_1] + -1;
+  return iVar5;
 }
 
 
@@ -7836,182 +7526,184 @@ void SND_SaveWhizbyData(MemoryFile *param_1)
 
 // 82850D68  SND_RestoreWhizbyData  (snd.cpp:5366)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 void SND_RestoreWhizbyData(MemoryFile *param_1)
 
 {
-  MemoryFile *pMVar1;
   float local_40;
   float local_3c [15];
   
-  pMVar1 = (MemoryFile *)__savegprlr_26(param_1);
-  MemFile_ReadData(pMVar1,4,&local_40);
+  MemFile_ReadData(param_1,4,&local_40);
   local_3c[0] = local_40;
   if (((uint)local_40 & 0x7f800000) == 0x7f800000) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal/memfile.h",0xc6,0,
                     "%s");
   }
   g_snd.whizbyParams.radius[0] = local_40;
-  MemFile_ReadData(pMVar1,4,&local_40);
+  MemFile_ReadData(param_1,4,&local_40);
   local_3c[0] = local_40;
   if (((uint)local_40 & 0x7f800000) == 0x7f800000) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal/memfile.h",0xc6,0,
                     "%s");
   }
   g_snd.whizbyParams.radius[1] = local_40;
-  MemFile_ReadData(pMVar1,4,&local_40);
+  MemFile_ReadData(param_1,4,&local_40);
   local_3c[0] = local_40;
   if (((uint)local_40 & 0x7f800000) == 0x7f800000) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal/memfile.h",0xc6,0,
                     "%s");
   }
   g_snd.whizbyParams.radius[2] = local_40;
-  MemFile_ReadData(pMVar1,4,&local_40);
+  MemFile_ReadData(param_1,4,&local_40);
   local_3c[0] = local_40;
   if (((uint)local_40 & 0x7f800000) == 0x7f800000) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal/memfile.h",0xc6,0,
                     "%s");
   }
   g_snd.whizbyParams.spread[0] = local_40;
-  MemFile_ReadData(pMVar1,4,&local_40);
+  MemFile_ReadData(param_1,4,&local_40);
   local_3c[0] = local_40;
   if (((uint)local_40 & 0x7f800000) == 0x7f800000) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal/memfile.h",0xc6,0,
                     "%s");
   }
   g_snd.whizbyParams.spread[1] = local_40;
-  MemFile_ReadData(pMVar1,4,&local_40);
+  MemFile_ReadData(param_1,4,&local_40);
   local_3c[0] = local_40;
   if (((uint)local_40 & 0x7f800000) == 0x7f800000) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal/memfile.h",0xc6,0,
                     "%s");
   }
   g_snd.whizbyParams.spread[2] = local_40;
-  MemFile_ReadData(pMVar1,4,local_3c);
+  MemFile_ReadData(param_1,4,local_3c);
   g_snd.whizbyParams.lastPlayedIndex[0] = (int)local_3c[0];
-  MemFile_ReadData(pMVar1,4,local_3c);
+  MemFile_ReadData(param_1,4,local_3c);
   g_snd.whizbyParams.lastPlayedIndex[1] = (int)local_3c[0];
-  MemFile_ReadData(pMVar1,4,local_3c);
+  MemFile_ReadData(param_1,4,local_3c);
   g_snd.whizbyParams.lastPlayedIndex[2] = (int)local_3c[0];
-  __restgprlr_26();
   return;
 }
 
 
 // 82850FE0  SND_SaveEntityOcclusion  (snd.cpp:5389)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "SND_EQTYPE": Some values do not have unique names */
 
 void SND_SaveEntityOcclusion(MemoryFile *param_1)
 
 {
   int iVar1;
-  MemoryFile *pMVar2;
-  dvar_t **ppdVar3;
-  snd_param_info_t *psVar4;
-  undefined2 *puVar5;
-  PainVisionOcclusionEntChanInfo *pPVar6;
-  SndEntChannelEqMode *pSVar7;
+  dvar_t **ppdVar2;
+  snd_param_info_t *psVar3;
+  undefined2 *puVar4;
+  PainVisionOcclusionEntChanInfo *pPVar5;
+  SndEntChannelEqMode *pSVar6;
   SndEntChannelEqMode local_40 [16];
   
-  pMVar2 = (MemoryFile *)__savegprlr_26(param_1);
   iVar1 = g_snd.time;
-  ppdVar3 = &snd_enable2D;
-  psVar4 = &g_sndOcclusionInfo[0].occlusionLerp;
+  ppdVar2 = &snd_enable2D;
+  psVar3 = &g_sndOcclusionInfo[0].occlusionLerp;
   do {
-    local_40[0] = *(SndEntChannelEqMode *)((int)(psVar4 + -1) + 8);
-    MemFile_WriteData(pMVar2,4,local_40);
-    MemFile_WriteData(pMVar2,0xc,psVar4);
-    local_40[0] = *(SndEntChannelEqMode *)(psVar4 + 1);
-    MemFile_WriteData(pMVar2,4,local_40);
-    local_40[0] = *(int *)((int)(psVar4 + 1) + 4);
-    MemFile_WriteData(pMVar2,4,local_40);
-    ppdVar3 = ppdVar3 + 1;
-    local_40[0] = (int)*ppdVar3 - iVar1;
-    MemFile_WriteData(pMVar2,4,local_40);
-    psVar4 = psVar4 + 2;
-  } while ((int)psVar4 < -0x7b771e5c);
-  puVar5 = &DAT_8488e1a0;
+    local_40[0] = *(SndEntChannelEqMode *)((int)(psVar3 + -1) + 8);
+    MemFile_WriteData(param_1,4,local_40);
+    MemFile_WriteData(param_1,0xc,psVar3);
+    local_40[0] = *(SndEntChannelEqMode *)(psVar3 + 1);
+    MemFile_WriteData(param_1,4,local_40);
+    local_40[0] = *(int *)((int)(psVar3 + 1) + 4);
+    MemFile_WriteData(param_1,4,local_40);
+    ppdVar2 = ppdVar2 + 1;
+    local_40[0] = (int)*ppdVar2 - iVar1;
+    MemFile_WriteData(param_1,4,local_40);
+    psVar3 = psVar3 + 2;
+  } while ((int)psVar3 < -0x7b771e5c);
+  puVar4 = &DAT_8488e1a0;
   do {
-    local_40[0] = CONCAT22(*puVar5,local_40[0]._2_2_);
-    MemFile_WriteData(pMVar2,2,local_40);
-    puVar5 = puVar5 + 1;
-  } while ((int)puVar5 < -0x7b770660);
-  pPVar6 = g_sndPainVisionOcclusionEntChanInfo;
+    local_40[0] = CONCAT22(*puVar4,local_40[0]._2_2_);
+    MemFile_WriteData(param_1,2,local_40);
+    puVar4 = puVar4 + 1;
+  } while ((int)puVar4 < -0x7b770660);
+  pPVar5 = g_sndPainVisionOcclusionEntChanInfo;
   do {
-    MemFile_WriteData(pMVar2,0x14,pPVar6);
-    pPVar6 = pPVar6 + 1;
-  } while ((int)pPVar6 < -0x7b7702a0);
-  pSVar7 = &g_snd.entchaninfo[0].eqMode;
+    MemFile_WriteData(param_1,0x14,pPVar5);
+    pPVar5 = pPVar5 + 1;
+  } while ((int)pPVar5 < -0x7b7702a0);
+  pSVar6 = &g_snd.entchaninfo[0].eqMode;
   do {
-    local_40[0] = *pSVar7;
-    MemFile_WriteData(pMVar2,4,local_40);
-    pSVar7 = pSVar7 + 0x15;
-  } while ((int)pSVar7 < -0x7b777fa8);
-  __restgprlr_26();
+    local_40[0] = *pSVar6;
+    MemFile_WriteData(param_1,4,local_40);
+    pSVar6 = pSVar6 + 0x15;
+  } while ((int)pSVar6 < -0x7b777fa8);
   return;
 }
 
 
 // 82851138  SND_RestoreEntityOcclusion  (snd.cpp:5427)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "SND_EQTYPE": Some values do not have unique names */
 
 void SND_RestoreEntityOcclusion(MemoryFile *param_1)
 
 {
   int iVar1;
-  MemoryFile *pMVar2;
-  dvar_t **ppdVar3;
-  snd_param_info_t *psVar4;
-  undefined2 *puVar5;
-  PainVisionOcclusionEntChanInfo *pPVar6;
-  SndEntChannelEqMode *pSVar7;
+  dvar_t **ppdVar2;
+  snd_param_info_t *psVar3;
+  undefined2 *puVar4;
+  PainVisionOcclusionEntChanInfo *pPVar5;
+  SndEntChannelEqMode *pSVar6;
   undefined4 local_50;
   int local_4c;
   int local_48;
   SndEntChannelEqMode local_44 [17];
   
-  pMVar2 = (MemoryFile *)__savegprlr_26(param_1);
   iVar1 = g_snd.time;
-  ppdVar3 = &snd_enable2D;
-  psVar4 = &g_sndOcclusionInfo[0].occlusionLerp;
+  ppdVar2 = &snd_enable2D;
+  psVar3 = &g_sndOcclusionInfo[0].occlusionLerp;
   do {
-    MemFile_ReadData(pMVar2,4,&local_50);
-    *(undefined4 *)((int)(psVar4 + -1) + 8) = local_50;
-    MemFile_ReadData(pMVar2,0xc,psVar4);
-    MemFile_ReadData(pMVar2,4,&local_4c);
-    *(int *)(psVar4 + 1) = local_4c;
-    MemFile_ReadData(pMVar2,4,&local_48);
-    *(int *)((int)(psVar4 + 1) + 4) = local_48;
-    MemFile_ReadData(pMVar2,4,local_44);
-    psVar4 = psVar4 + 2;
-    ppdVar3 = ppdVar3 + 1;
-    *ppdVar3 = (dvar_t *)(local_44[0] + iVar1);
-  } while ((int)psVar4 < -0x7b771e5c);
-  puVar5 = &DAT_8488e1a0;
+    MemFile_ReadData(param_1,4,&local_50);
+    *(undefined4 *)((int)(psVar3 + -1) + 8) = local_50;
+    MemFile_ReadData(param_1,0xc,psVar3);
+    MemFile_ReadData(param_1,4,&local_4c);
+    *(int *)(psVar3 + 1) = local_4c;
+    MemFile_ReadData(param_1,4,&local_48);
+    *(int *)((int)(psVar3 + 1) + 4) = local_48;
+    MemFile_ReadData(param_1,4,local_44);
+    psVar3 = psVar3 + 2;
+    ppdVar2 = ppdVar2 + 1;
+    *ppdVar2 = (dvar_t *)(local_44[0] + iVar1);
+  } while ((int)psVar3 < -0x7b771e5c);
+  puVar4 = &DAT_8488e1a0;
   do {
-    MemFile_ReadData(pMVar2,2,&local_50);
-    *puVar5 = local_50._0_2_;
-    puVar5 = puVar5 + 1;
-  } while ((int)puVar5 < -0x7b770660);
-  pPVar6 = g_sndPainVisionOcclusionEntChanInfo;
+    MemFile_ReadData(param_1,2,&local_50);
+    *puVar4 = local_50._0_2_;
+    puVar4 = puVar4 + 1;
+  } while ((int)puVar4 < -0x7b770660);
+  pPVar5 = g_sndPainVisionOcclusionEntChanInfo;
   do {
-    MemFile_ReadData(pMVar2,0x14,pPVar6);
-    pPVar6 = pPVar6 + 1;
-  } while ((int)pPVar6 < -0x7b7702a0);
-  pSVar7 = &g_snd.entchaninfo[0].eqMode;
+    MemFile_ReadData(param_1,0x14,pPVar5);
+    pPVar5 = pPVar5 + 1;
+  } while ((int)pPVar5 < -0x7b7702a0);
+  pSVar6 = &g_snd.entchaninfo[0].eqMode;
   do {
-    MemFile_ReadData(pMVar2,4,local_44);
-    *pSVar7 = local_44[0];
-    pSVar7 = pSVar7 + 0x15;
-  } while ((int)pSVar7 < -0x7b777fa8);
-  __restgprlr_26();
+    MemFile_ReadData(param_1,4,local_44);
+    *pSVar6 = local_44[0];
+    pSVar6 = pSVar6 + 0x15;
+  } while ((int)pSVar6 < -0x7b777fa8);
   return;
 }
 
 
 // 82851290  SND_UpdateTimeScale  (snd.cpp:5490)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void SND_UpdateTimeScale(void)
@@ -8028,8 +7720,6 @@ void SND_UpdateTimeScale(void)
   double dVar9;
   float fVar10;
   
-  __savegprlr_29();
-  __savefpr_27();
   fVar10 = Com_GetTimescaleForSnd();
   dVar6 = 0.0;
   dVar7 = 1.0;
@@ -8099,8 +7789,6 @@ void SND_UpdateTimeScale(void)
       } while (iVar4 < g_snd.max_2D_channels);
     }
   }
-  __restfpr_27();
-  __restgprlr_29();
   return;
 }
 
@@ -8119,6 +7807,11 @@ float FontSizeForDistance(float param_1)
 
 // 82858038  DebugDrawWorldSound3D  (snd.cpp:5543)
 
+/* WARNING: Function: __savegprlr_21 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_21 replaced with injection: xenon_save_restore */
+
 void DebugDrawWorldSound3D(int param_1,int param_2,int *param_3,int *param_4,float *param_5)
 
 {
@@ -8128,21 +7821,18 @@ void DebugDrawWorldSound3D(int param_1,int param_2,int *param_3,int *param_4,flo
   float fVar4;
   float fVar5;
   int iVar6;
-  int iVar7;
-  bool bVar9;
-  char *pcVar8;
+  bool bVar8;
+  char *pcVar7;
+  float *pfVar9;
   float *pfVar10;
-  float *pfVar11;
-  char *pcVar12;
-  ulonglong uVar13;
-  ulonglong uVar14;
-  undefined1 *puVar15;
-  undefined *puVar16;
-  float *pfVar17;
-  longlong lVar18;
-  double dVar19;
-  double dVar20;
-  double dVar21;
+  char *pcVar11;
+  undefined1 *puVar12;
+  undefined *puVar13;
+  float *pfVar14;
+  longlong lVar15;
+  double dVar16;
+  double dVar17;
+  double dVar18;
   float local_1a0;
   float local_19c;
   float local_198;
@@ -8150,24 +7840,20 @@ void DebugDrawWorldSound3D(int param_1,int param_2,int *param_3,int *param_4,flo
   undefined1 uStack_181;
   char local_180 [384];
   
-  uVar14 = (ulonglong)(int)param_5;
-  uVar13 = (ulonglong)(int)param_4;
-  __savegprlr_21(param_1);
-  iVar6 = __savefpr_28();
-  if ((iVar6 < 0) || (0x35 < iVar6)) {
+  if ((param_1 < 0) || (0x35 < param_1)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x15b2,0,
                     "%s\n\t(idx) = %i");
   }
-  if (g_snd.chaninfo[iVar6].alias0 == (snd_alias_t *)0x0) {
+  if (g_snd.chaninfo[param_1].alias0 == (snd_alias_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x15b5,0,"%s");
   }
-  pfVar11 = &local_1a0;
-  SND_GetCurrent3DPosition(g_snd.chaninfo[iVar6].sndEnt,g_snd.chaninfo[iVar6].offset,pfVar11);
-  iVar7 = SND_GetListenerIndexNearestToOrigin(&local_1a0);
-  dVar19 = (double)local_198;
-  fVar5 = g_snd.listeners[iVar7].orient.origin[0] - local_1a0;
-  fVar4 = g_snd.listeners[iVar7].orient.origin[1] - local_19c;
-  fVar1 = (float)((double)g_snd.listeners[iVar7].orient.origin[2] - dVar19);
+  pfVar10 = &local_1a0;
+  SND_GetCurrent3DPosition(g_snd.chaninfo[param_1].sndEnt,g_snd.chaninfo[param_1].offset,pfVar10);
+  iVar6 = SND_GetListenerIndexNearestToOrigin(&local_1a0);
+  dVar16 = (double)local_198;
+  fVar5 = g_snd.listeners[iVar6].orient.origin[0] - local_1a0;
+  fVar4 = g_snd.listeners[iVar6].orient.origin[1] - local_19c;
+  fVar1 = (float)((double)g_snd.listeners[iVar6].orient.origin[2] - dVar16);
   fVar1 = SQRT(fVar5 * fVar5 + fVar1 * fVar1 + fVar4 * fVar4);
   if (10.0 <= fVar1) {
     fVar1 = fVar1 * 0.00175;
@@ -8175,205 +7861,206 @@ void DebugDrawWorldSound3D(int param_1,int param_2,int *param_3,int *param_4,flo
   else {
     fVar1 = 0.05;
   }
-  dVar20 = (double)fVar1;
+  dVar17 = (double)fVar1;
   if (param_2 != 3) {
-    if ((uVar13 & 0xffffffff) == 0) {
-      pfVar11 = (float *)0x0;
+    if (param_4 == (int *)0x0) {
+      pfVar10 = (float *)0x0;
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x15c1,0,"%s");
-      dVar19 = (double)local_198;
+      dVar16 = (double)local_198;
     }
-    if ((uVar14 & 0xffffffff) == 0) {
-      pfVar11 = (float *)0x0;
+    if (param_5 == (float *)0x0) {
+      pfVar10 = (float *)0x0;
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x15c2,0,"%s");
-      dVar19 = (double)local_198;
+      dVar16 = (double)local_198;
     }
-    local_19c = local_19c - g_snd.listeners[iVar7].orient.origin[1];
-    fVar1 = (float)(dVar19 - (double)g_snd.listeners[iVar7].orient.origin[2]);
-    local_1a0 = local_1a0 - g_snd.listeners[iVar7].orient.origin[0];
+    local_19c = local_19c - g_snd.listeners[iVar6].orient.origin[1];
+    fVar1 = (float)(dVar16 - (double)g_snd.listeners[iVar6].orient.origin[2]);
+    local_1a0 = local_1a0 - g_snd.listeners[iVar6].orient.origin[0];
     fVar5 = SQRT(local_1a0 * local_1a0 + fVar1 * fVar1 + local_19c * local_19c);
     fVar4 = 1.0;
     if (-fVar5 < 0.0) {
       fVar4 = fVar5;
     }
     fVar4 = 1.0 / fVar4;
-    fVar1 = g_snd.listeners[iVar7].orient.axis[0][2] * fVar1 * fVar4 +
-            g_snd.listeners[iVar7].orient.axis[0][1] * local_19c * fVar4 +
-            g_snd.listeners[iVar7].orient.axis[0][0] * fVar4 * local_1a0;
-    if (*(float *)uVar14 < fVar1) {
-      *(int *)uVar13 = iVar6;
-      *(float *)uVar14 = fVar1;
+    fVar1 = g_snd.listeners[iVar6].orient.axis[0][2] * fVar1 * fVar4 +
+            g_snd.listeners[iVar6].orient.axis[0][1] * local_19c * fVar4 +
+            g_snd.listeners[iVar6].orient.axis[0][0] * fVar4 * local_1a0;
+    if (*param_5 < fVar1) {
+      *param_4 = param_1;
+      *param_5 = fVar1;
     }
   }
-  uVar3 = (uint)g_snd.chaninfo[iVar6].sndEnt.handle >> 0x14;
+  uVar3 = (uint)g_snd.chaninfo[param_1].sndEnt.handle >> 0x14;
   if (uVar3 == 0x7fe) {
-    pfVar17 = colorGreen;
+    pfVar14 = colorGreen;
   }
   else {
-    pfVar17 = colorLtCyan;
+    pfVar14 = colorLtCyan;
     local_190 = (longlong)param_3[uVar3];
-    local_198 = (float)((double)local_190 + dVar19);
+    local_198 = (float)((double)local_190 + dVar16);
   }
-  bVar9 = SND_GetIsGoalOccluded(g_snd.chaninfo + iVar6);
-  if (bVar9) {
-    pfVar17 = colorRed;
+  bVar8 = SND_GetIsGoalOccluded(g_snd.chaninfo + param_1);
+  if (bVar8) {
+    pfVar14 = colorRed;
   }
   if (param_2 != 1) {
     if (param_2 != 2) {
       if (param_2 == 3) {
-        dVar20 = (double)(float)(dVar20 * 0.8500000238418579);
-        pcVar8 = va("Alias: %s");
-        uVar3 = g_snd.chaninfo[iVar6].sndEnt.handle;
-        pfVar10 = (float *)(uVar3 >> 0x12 & 0x3ffc);
-        pfVar11 = colorWhiteFaded;
-        if (*(int *)((int)pfVar10 + (int)param_3) == 0) {
-          CL_AddDebugStarWithText(&local_1a0,pfVar17,colorWhiteFaded,pcVar8,(float)dVar20,uVar3,1);
+        dVar17 = (double)(float)(dVar17 * 0.8500000238418579);
+        pcVar7 = va("Alias: %s");
+        uVar3 = g_snd.chaninfo[param_1].sndEnt.handle;
+        pfVar9 = (float *)(uVar3 >> 0x12 & 0x3ffc);
+        pfVar10 = colorWhiteFaded;
+        if (*(int *)((int)pfVar9 + (int)param_3) == 0) {
+          CL_AddDebugStarWithText(&local_1a0,pfVar14,colorWhiteFaded,pcVar7,(float)dVar17,uVar3,1);
         }
         else {
-          pfVar11 = pfVar10;
-          CL_AddDebugString(&local_1a0,colorWhiteFaded,(float)dVar20,(char *)pfVar10,(int)pcVar8,0);
+          pfVar10 = pfVar9;
+          CL_AddDebugString(&local_1a0,colorWhiteFaded,(float)dVar17,(char *)pfVar9,(int)pcVar7,0);
         }
-        if ((g_snd.chaninfo[iVar6].alias0)->soundFile == (SoundFile *)0x0) {
-          pfVar11 = (float *)0x0;
+        if ((g_snd.chaninfo[param_1].alias0)->soundFile == (SoundFile *)0x0) {
+          pfVar10 = (float *)0x0;
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x15f5,0,"%s");
         }
-        dVar21 = (double)(float)(dVar20 * 12.0);
-        local_198 = (float)((double)local_198 - dVar21);
-        SND_GetEntChannelName(g_snd.chaninfo[iVar6].entchannel);
-        pcVar8 = va("Mix Channel: %s");
-        CL_AddDebugString(&local_1a0,colorWhiteFaded,(float)dVar20,(char *)pfVar11,(int)pcVar8,0);
-        local_198 = (float)((double)local_198 - dVar21);
-        puVar15 = &uStack_181;
-        puVar16 = &UNK_821f279f;
-        lVar18 = 7;
+        dVar18 = (double)(float)(dVar17 * 12.0);
+        local_198 = (float)((double)local_198 - dVar18);
+        SND_GetEntChannelName(g_snd.chaninfo[param_1].entchannel);
+        pcVar7 = va("Mix Channel: %s");
+        CL_AddDebugString(&local_1a0,colorWhiteFaded,(float)dVar17,(char *)pfVar10,(int)pcVar7,0);
+        local_198 = (float)((double)local_198 - dVar18);
+        puVar12 = &uStack_181;
+        puVar13 = &UNK_821f279f;
+        lVar15 = 7;
         do {
-          puVar16 = puVar16 + 1;
-          puVar15 = puVar15 + 1;
-          *puVar15 = *puVar16;
-          lVar18 = lVar18 + -1;
-        } while (lVar18 != 0);
-        pcVar8 = local_180;
+          puVar13 = puVar13 + 1;
+          puVar12 = puVar12 + 1;
+          *puVar12 = *puVar13;
+          lVar15 = lVar15 + -1;
+        } while (lVar15 != 0);
+        pcVar7 = local_180;
         do {
-          cVar2 = *pcVar8;
-          pcVar8 = pcVar8 + 1;
+          cVar2 = *pcVar7;
+          pcVar7 = pcVar7 + 1;
         } while (cVar2 != '\0');
-        pcVar12 = (char *)(0x100 - (int)(pcVar8 + (-1 - (int)local_180)));
+        pcVar11 = (char *)(0x100 - (int)(pcVar7 + (-1 - (int)local_180)));
         Com_GetSoundFileName
-                  (g_snd.chaninfo[iVar6].alias0,local_180 + (int)(pcVar8 + (-1 - (int)local_180)),
-                   (int)pcVar12);
-        CL_AddDebugString(&local_1a0,colorWhiteFaded,(float)dVar20,pcVar12,(int)local_180,0);
-        local_198 = (float)((double)local_198 - dVar21);
-        if ((uint)g_snd.chaninfo[iVar6].sndEnt.handle >> 0x14 == 0x7fe) {
-          pcVar8 = va("Owner: World");
+                  (g_snd.chaninfo[param_1].alias0,local_180 + (int)(pcVar7 + (-1 - (int)local_180)),
+                   (int)pcVar11);
+        CL_AddDebugString(&local_1a0,colorWhiteFaded,(float)dVar17,pcVar11,(int)local_180,0);
+        local_198 = (float)((double)local_198 - dVar18);
+        if ((uint)g_snd.chaninfo[param_1].sndEnt.handle >> 0x14 == 0x7fe) {
+          pcVar7 = va("Owner: World");
         }
         else {
-          pcVar8 = va("Owner: entity #%i");
+          pcVar7 = va("Owner: entity #%i");
         }
-        CL_AddDebugString(&local_1a0,colorWhiteFaded,(float)dVar20,pcVar12,(int)pcVar8,0);
-        local_198 = (float)((double)local_198 - dVar21);
-        pcVar12 = SUB84((double)(g_snd.chaninfo[iVar6].alias0)->distMax,0);
-        pcVar8 = va("Distance: %.0f / %.0f");
-        CL_AddDebugString(&local_1a0,colorWhiteFaded,(float)dVar20,pcVar12,(int)pcVar8,0);
-        local_198 = (float)((double)local_198 - dVar21);
-        SND_GetChannelFractionPlayed(iVar6,false);
-        pcVar8 = va("Played: %.1f%%");
-        CL_AddDebugString(&local_1a0,colorWhiteFaded,(float)dVar20,pcVar12,(int)pcVar8,0);
-        bVar9 = SND_GetIsGoalOccluded(g_snd.chaninfo + iVar6);
-        if (bVar9) {
-          local_198 = (float)((double)local_198 - dVar21);
-          pcVar8 = va("OCCLUDED");
-          CL_AddDebugString(&local_1a0,colorWhiteFaded,(float)dVar20,pcVar12,(int)pcVar8,0);
+        CL_AddDebugString(&local_1a0,colorWhiteFaded,(float)dVar17,pcVar11,(int)pcVar7,0);
+        local_198 = (float)((double)local_198 - dVar18);
+        pcVar11 = SUB84((double)(g_snd.chaninfo[param_1].alias0)->distMax,0);
+        pcVar7 = va("Distance: %.0f / %.0f");
+        CL_AddDebugString(&local_1a0,colorWhiteFaded,(float)dVar17,pcVar11,(int)pcVar7,0);
+        local_198 = (float)((double)local_198 - dVar18);
+        SND_GetChannelFractionPlayed(param_1,false);
+        pcVar7 = va("Played: %.1f%%");
+        CL_AddDebugString(&local_1a0,colorWhiteFaded,(float)dVar17,pcVar11,(int)pcVar7,0);
+        bVar8 = SND_GetIsGoalOccluded(g_snd.chaninfo + param_1);
+        if (bVar8) {
+          local_198 = (float)((double)local_198 - dVar18);
+          pcVar7 = va("OCCLUDED");
+          CL_AddDebugString(&local_1a0,colorWhiteFaded,(float)dVar17,pcVar11,(int)pcVar7,0);
         }
       }
       goto LAB_828585d0;
     }
-    CL_AddDebugString(&local_1a0,colorWhiteFaded,(float)dVar20,(char *)pfVar11,
-                      (int)(g_snd.chaninfo[iVar6].alias0)->aliasName,0);
+    CL_AddDebugString(&local_1a0,colorWhiteFaded,(float)dVar17,(char *)pfVar10,
+                      (int)(g_snd.chaninfo[param_1].alias0)->aliasName,0);
   }
-  if (*(int *)(((uint)g_snd.chaninfo[iVar6].sndEnt.handle >> 0x12 & 0x3ffc) + (int)param_3) == 0) {
-    CL_AddDebugStar(&local_1a0,pfVar17,1,0);
+  if (*(int *)(((uint)g_snd.chaninfo[param_1].sndEnt.handle >> 0x12 & 0x3ffc) + (int)param_3) == 0)
+  {
+    CL_AddDebugStar(&local_1a0,pfVar14,1,0);
   }
 LAB_828585d0:
-  uVar3 = (uint)g_snd.chaninfo[iVar6].sndEnt.handle >> 0x14;
+  uVar3 = (uint)g_snd.chaninfo[param_1].sndEnt.handle >> 0x14;
   if (uVar3 != 0x7fe) {
-    param_3[uVar3] = (int)(-(double)(float)(dVar20 * 15.0 - (double)local_198) - dVar19);
+    param_3[uVar3] = (int)(-(double)(float)(dVar17 * 15.0 - (double)local_198) - dVar16);
   }
-  __restfpr_28();
-  __restgprlr_21();
   return;
 }
 
 
 // 82858610  DebugDrawWorldSounds  (snd.cpp:5678)
 
+/* WARNING: Function: __savegprlr_21 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_21 replaced with injection: xenon_save_restore */
+
 void DebugDrawWorldSounds(int param_1)
 
 {
   uint uVar1;
-  int iVar2;
-  bool bVar3;
-  snd_alias_t **ppsVar4;
-  int iVar5;
+  bool bVar2;
+  snd_alias_t **ppsVar3;
+  int iVar4;
   float local_3070;
   int local_306c [3];
   int aiStack_3060 [3096];
   
-  iVar2 = __savegprlr_21(param_1);
-  if (g_snd.Initialized2d == false) {
+  if (!g_snd.Initialized2d) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x1636,0,"%s");
   }
-  if (iVar2 != 0) {
+  if (param_1 != 0) {
     local_306c[0] = -1;
     local_3070 = -2.0;
     memset();
-    iVar5 = 8;
+    iVar4 = 8;
     if (8 < g_snd.max_3D_channels + 8) {
-      ppsVar4 = &g_snd.chaninfo[8].alias0;
+      ppsVar3 = &g_snd.chaninfo[8].alias0;
       do {
-        bVar3 = SND_Is3DChannelFree(iVar5);
-        if ((!bVar3) &&
-           ((snd_drawOnlyChannel == -1 || (snd_drawOnlyChannel == ((*ppsVar4)->flags >> 9 & 0x3fU)))
+        bVar2 = SND_Is3DChannelFree(iVar4);
+        if ((!bVar2) &&
+           ((snd_drawOnlyChannel == -1 || (snd_drawOnlyChannel == ((*ppsVar3)->flags >> 9 & 0x3fU)))
            )) {
-          DebugDrawWorldSound3D(iVar5,iVar2,aiStack_3060,local_306c,&local_3070);
+          DebugDrawWorldSound3D(iVar4,param_1,aiStack_3060,local_306c,&local_3070);
         }
-        iVar5 = iVar5 + 1;
-        ppsVar4 = ppsVar4 + 0x30;
-      } while (iVar5 < g_snd.max_3D_channels + 8);
+        iVar4 = iVar4 + 1;
+        ppsVar3 = ppsVar3 + 0x30;
+      } while (iVar4 < g_snd.max_3D_channels + 8);
     }
-    iVar5 = 0x28;
+    iVar4 = 0x28;
     if (0x28 < g_snd.max_stream_channels + 0x28) {
-      ppsVar4 = &g_snd.chaninfo[0x28].alias0;
+      ppsVar3 = &g_snd.chaninfo[0x28].alias0;
       do {
-        bVar3 = SND_IsStreamChannelFree(iVar5);
-        if (!bVar3) {
-          if (*ppsVar4 == (snd_alias_t *)0x0) {
+        bVar2 = SND_IsStreamChannelFree(iVar4);
+        if (!bVar2) {
+          if (*ppsVar3 == (snd_alias_t *)0x0) {
             MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x164f,0,"%s")
             ;
           }
-          uVar1 = (*ppsVar4)->flags >> 9 & 0x3f;
+          uVar1 = (*ppsVar3)->flags >> 9 & 0x3f;
           if (g_snd.entchannel_count <= (int)uVar1) {
             MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x293,0,
                             "%s\n\t(entchannel) = %i");
           }
           if ((g_snd.entchaninfo[uVar1].is3d != false) &&
              ((snd_drawOnlyChannel == -1 || (snd_drawOnlyChannel == uVar1)))) {
-            DebugDrawWorldSound3D(iVar5,iVar2,aiStack_3060,local_306c,&local_3070);
+            DebugDrawWorldSound3D(iVar4,param_1,aiStack_3060,local_306c,&local_3070);
           }
         }
-        iVar5 = iVar5 + 1;
-        ppsVar4 = ppsVar4 + 0x30;
-      } while (iVar5 < g_snd.max_stream_channels + 0x28);
+        iVar4 = iVar4 + 1;
+        ppsVar3 = ppsVar3 + 0x30;
+      } while (iVar4 < g_snd.max_stream_channels + 0x28);
     }
     if ((local_306c[0] != -1) && (0.93 <= local_3070)) {
       DebugDrawWorldSound3D(local_306c[0],3,aiStack_3060,(int *)0x0,(float *)0x0);
     }
   }
-  __restgprlr_21();
   return;
 }
 
 
 // 82851588  SND_UpdatePhysics  (snd.cpp:5730)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void SND_UpdatePhysics(void)
@@ -8388,7 +8075,6 @@ void SND_UpdatePhysics(void)
   ulonglong uVar5;
   snd_alias_system_t sVar6;
   
-  __savegprlr_29();
   Sys_EnterCriticalSection(CRITSECT_AUDIO_PHYSICS);
   iVar2 = g_sndPhysics.count;
   pbVar4 = &g_snd.listeners[0].active;
@@ -8422,7 +8108,6 @@ LAB_828515e8:
     }
   }
   Sys_LeaveCriticalSection(CRITSECT_AUDIO_PHYSICS);
-  __restgprlr_29();
   return;
 }
 
@@ -8487,6 +8172,8 @@ bool SND_ExistsPendingRestore(void)
 
 // 82858890  SND_Update  (snd.cpp:5839)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -8502,8 +8189,12 @@ void SND_Update(void)
   byte in_cr0;
   MemoryFile aMStack_70 [3];
   
-  iVar1 = __savegprlr_24();
-  if ((g_snd.Initialized2d == false) || (cls.soundStarted == 0)) goto LAB_82858c28;
+  if (!g_snd.Initialized2d) {
+    return;
+  }
+  if (cls.soundStarted == 0) {
+    return;
+  }
   Profile_Begin(0x14e);
   g_snd.cpu = SND_GetDriverCPUPercentage();
   if ((com_statmon->current).enabled != false) {
@@ -8600,9 +8291,7 @@ LAB_828589bc:
   SND_UpdatePhysics();
   SND_DriverPostUpdate(iVar1);
   DebugDrawWorldSounds((snd_draw3D->current).integer);
-  iVar1 = Profile_EndInternal((double *)0x0);
-LAB_82858c28:
-  __restgprlr_24(iVar1);
+  Profile_EndInternal((double *)0x0);
   return;
 }
 
@@ -8637,79 +8326,79 @@ bool SND_IsMusicChannel(int param_1)
 
 // 828517F0  SND_StopSounds  (snd.cpp:5967)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void SND_StopSounds(snd_stopsounds_arg_t param_1)
 
 {
-  ulonglong uVar1;
-  bool bVar2;
-  int iVar3;
+  bool bVar1;
+  int iVar2;
   
-  uVar1 = __savegprlr_29(param_1);
-  if (g_snd.Initialized2d != false) {
+  if (g_snd.Initialized2d) {
     Sys_EnterCriticalSection(CRITSECT_SOUND_UPDATE);
-    if ((uVar1 & 8) == 0) {
-      iVar3 = 0;
+    if ((param_1 & SND_STOP_STREAMED) == SND_STOP_ALL) {
+      iVar2 = 0;
       if (0 < g_snd.max_2D_channels) {
         do {
-          bVar2 = SND_Is2DChannelFree(iVar3);
-          if (!bVar2) {
-            SND_Stop2DChannel(iVar3);
+          bVar1 = SND_Is2DChannelFree(iVar2);
+          if (!bVar1) {
+            SND_Stop2DChannel(iVar2);
           }
-          iVar3 = iVar3 + 1;
-        } while (iVar3 < g_snd.max_2D_channels);
+          iVar2 = iVar2 + 1;
+        } while (iVar2 < g_snd.max_2D_channels);
       }
-      iVar3 = 8;
+      iVar2 = 8;
       if (8 < g_snd.max_3D_channels + 8) {
         do {
-          bVar2 = SND_Is3DChannelFree(iVar3);
-          if (!bVar2) {
-            SND_Stop3DChannel(iVar3);
+          bVar1 = SND_Is3DChannelFree(iVar2);
+          if (!bVar1) {
+            SND_Stop3DChannel(iVar2);
           }
-          iVar3 = iVar3 + 1;
-        } while (iVar3 < g_snd.max_3D_channels + 8);
+          iVar2 = iVar2 + 1;
+        } while (iVar2 < g_snd.max_3D_channels + 8);
       }
     }
-    iVar3 = 0x28;
+    iVar2 = 0x28;
     if (0x28 < g_snd.max_stream_channels + 0x28) {
       do {
-        bVar2 = SND_IsStreamChannelFree(iVar3);
-        if (!bVar2) {
-          if ((uVar1 & 2) != 0) {
-            if ((iVar3 == 0x28) || (bVar2 = false, iVar3 == 0x29)) {
-              bVar2 = true;
+        bVar1 = SND_IsStreamChannelFree(iVar2);
+        if (!bVar1) {
+          if ((param_1 & SND_KEEP_MUSIC) != SND_STOP_ALL) {
+            if ((iVar2 == 0x28) || (bVar1 = false, iVar2 == 0x29)) {
+              bVar1 = true;
             }
-            if (bVar2) goto LAB_82851960;
+            if (bVar1) goto LAB_82851960;
           }
-          if ((uVar1 & 4) != 0) {
-            if ((iVar3 < 0x2a) || (bVar2 = true, 0x2d < iVar3)) {
-              bVar2 = false;
+          if ((param_1 & SND_KEEP_AMBIENT) != SND_STOP_ALL) {
+            if ((iVar2 < 0x2a) || (bVar1 = true, 0x2d < iVar2)) {
+              bVar1 = false;
             }
-            if (bVar2) goto LAB_82851960;
+            if (bVar1) goto LAB_82851960;
           }
-          SND_StopStreamChannel(iVar3);
+          SND_StopStreamChannel(iVar2);
         }
 LAB_82851960:
-        iVar3 = iVar3 + 1;
-      } while (iVar3 < g_snd.max_stream_channels + 0x28);
+        iVar2 = iVar2 + 1;
+      } while (iVar2 < g_snd.max_stream_channels + 0x28);
     }
-    if ((uVar1 & 1) == 0) {
-      iVar3 = 1;
+    if ((param_1 & SND_KEEP_REVERB) == SND_STOP_ALL) {
+      iVar2 = 1;
       do {
-        SND_DeactivateEnvironmentEffects(iVar3,0);
-        iVar3 = iVar3 + 1;
-      } while (iVar3 < 5);
+        SND_DeactivateEnvironmentEffects(iVar2,0);
+        iVar2 = iVar2 + 1;
+      } while (iVar2 < 5);
     }
-    if ((uVar1 & 0x10) == 0) {
-      iVar3 = 1;
+    if ((param_1 & SND_KEEP_CHANNEL_VOLUMES) == SND_STOP_ALL) {
+      iVar2 = 1;
       do {
-        SND_DeactivateChannelVolumes(iVar3,0);
-        iVar3 = iVar3 + 1;
-      } while (iVar3 < 4);
+        SND_DeactivateChannelVolumes(iVar2,0);
+        iVar2 = iVar2 + 1;
+      } while (iVar2 < 4);
     }
     SND_DeactivateAllFilters();
     Sys_LeaveCriticalSection(CRITSECT_SOUND_UPDATE);
   }
-  __restgprlr_29();
   return;
 }
 
@@ -8750,6 +8439,8 @@ void RelativeToListener(snd_listener *param_1,float param_2,float param_3,float 
 
 // 82851AB8  SND_PlayLocal_f  (snd.cpp:6081)
 
+/* WARNING: Function: __savefpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void SND_PlayLocal_f(void)
@@ -8772,7 +8463,6 @@ void SND_PlayLocal_f(void)
   float local_50;
   float local_4c;
   
-  __savefpr_28();
   dVar7 = 0.0;
   dVar9 = 100.0;
   dVar6 = dVar7;
@@ -8831,47 +8521,40 @@ void SND_PlayLocal_f(void)
     Cmd_Argv(0);
     Com_Printf(0,"USAGE: %s <sndalias> [<dist> <yaw> <pitch>]\n");
   }
-  __restfpr_28();
   return;
 }
 
 
 // 82851D00  SND_BooleanFromString  (snd.cpp:6159)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 bool SND_BooleanFromString(char *param_1,char *param_2,char *param_3,bool param_4)
 
 {
-  char *pcVar1;
-  int iVar2;
-  undefined1 uVar3;
-  longlong lVar4;
-  longlong lVar5;
-  longlong lVar6;
+  int iVar1;
   
-  lVar6 = (longlong)param_4;
-  lVar5 = (longlong)(int)param_3;
-  lVar4 = (longlong)(int)param_2;
-  pcVar1 = (char *)__savegprlr_28(param_1,lVar4,lVar5,lVar6);
-  if (*pcVar1 != '\0') {
-    iVar2 = I_stricmp(pcVar1,(char *)lVar4);
-    if (iVar2 == 0) {
-      uVar3 = __restgprlr_28(1);
-      return (bool)uVar3;
+  if (*param_1 != '\0') {
+    iVar1 = I_stricmp(param_1,param_2);
+    if (iVar1 == 0) {
+      return true;
     }
-    iVar2 = I_stricmp(pcVar1,(char *)lVar5);
-    if (iVar2 == 0) {
-      uVar3 = __restgprlr_28();
-      return (bool)uVar3;
+    iVar1 = I_stricmp(param_1,param_3);
+    if (iVar1 == 0) {
+      return false;
     }
     Com_PrintError(9,"unknown value (%s), should be either \'%s\' or \'%s\'.  using default: %d.\n")
     ;
   }
-  uVar3 = __restgprlr_28(lVar6);
-  return (bool)uVar3;
+  return param_4;
 }
 
 
 // 82851D88  SND_ParseVolumeModGroupFile  (snd.cpp:6191)
+
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 
 void SND_ParseVolumeModGroupFile(char *param_1)
 
@@ -8883,8 +8566,8 @@ void SND_ParseVolumeModGroupFile(char *param_1)
   double dVar5;
   char *pcStack00000014;
   
-  pcStack00000014 = (char *)__savegprlr_24(param_1);
-  if (pcStack00000014 == (char *)0x0) {
+  pcStack00000014 = param_1;
+  if (param_1 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x1832,0,"%s");
   }
   g_snd.volmod_count = 0;
@@ -8932,12 +8615,14 @@ void SND_ParseVolumeModGroupFile(char *param_1)
     }
   }
   Com_EndParseSession();
-  __restgprlr_24();
   return;
 }
 
 
 // 82852010  SND_ParseEntChannelFile  (snd.cpp:6262)
+
+/* WARNING: Function: __savegprlr_15 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_15 replaced with injection: xenon_save_restore */
 
 void SND_ParseEntChannelFile(char *param_1)
 
@@ -8954,8 +8639,8 @@ void SND_ParseEntChannelFile(char *param_1)
   byte bStack_d1;
   byte local_d0 [208];
   
-  pcStack00000014 = (char *)__savegprlr_15(param_1);
-  if (pcStack00000014 == (char *)0x0) {
+  pcStack00000014 = param_1;
+  if (param_1 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x187b,0,"%s");
   }
   g_snd.entchannel_count = 0;
@@ -9078,7 +8763,6 @@ LAB_828523b0:
     } while (pcStack00000014 != (char *)0x0);
   }
   Com_EndParseSession();
-  __restgprlr_15();
   return;
 }
 
@@ -9155,6 +8839,9 @@ void SND_InitVolumeModGroups(void)
 
 // 82858D18  SND_Reset  (snd.cpp:6395)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 void SND_Reset(int param_1)
 
 {
@@ -9166,7 +8853,6 @@ void SND_Reset(int param_1)
   double dVar6;
   double dVar7;
   
-  __savegprlr_26(param_1);
   SND_StopSounds(SND_STOP_ALL);
   iVar2 = (snd_levelFadeTime->current).integer;
   if (iVar2 == 0) {
@@ -9202,13 +8888,14 @@ void SND_Reset(int param_1)
     psVar5 = psVar5 + 1;
   } while ((int)pfVar4 < -0x7b773420);
   SND_InitOcclusionInfo();
-  __restgprlr_26();
   return;
 }
 
 
 // 82859758  SND_Init  (snd.cpp:6435)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void SND_Init(void)
@@ -9222,7 +8909,6 @@ void SND_Init(void)
   double dVar6;
   double dVar7;
   
-  __savegprlr_24();
   Com_Printf(9,"\n------- sound system initialization -------\n");
   snd_errorOnMissing =
        Dvar_RegisterBool("snd_errorOnMissing",false,0,
@@ -9361,7 +9047,6 @@ void SND_Init(void)
     ;
     Com_Printf(9,"------- sound system successfully initialized -------\n");
   }
-  __restgprlr_24();
   return;
 }
 
@@ -9465,101 +9150,94 @@ snd_alias_t * SND_RestoreSoundAlias(MemoryFile *param_1)
 
 // 82852798  SND_SaveLengthNotifyInfo  (snd.cpp:6686)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void SND_SaveLengthNotifyInfo(sndLengthNotifyInfo *param_1,MemoryFile *param_2)
 
 {
   snd_alias_t *psVar1;
-  int *piVar2;
-  MemoryFile *pMVar3;
-  int iVar4;
-  ulonglong uVar5;
-  int iVar6;
-  int *piVar7;
+  int iVar2;
+  int iVar3;
+  sndLengthNotifyInfo *psVar4;
   undefined1 local_40 [4];
   int local_3c [15];
   
-  uVar5 = (ulonglong)(int)param_2;
-  piVar2 = (int *)__savegprlr_27(param_1);
-  if (piVar2 == (int *)0x0) {
+  if (param_1 == (sndLengthNotifyInfo *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x1a1f,0,"%s");
   }
-  if (3 < (uint)piVar2[8]) {
+  if (3 < (uint)param_1->count) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x1a20,0,
                     "info->count doesn\'t index SND_LENGTHNOTIFY_COUNT\n\t%i not in [0, %i)");
   }
-  if ((uVar5 & 0xffffffff) == 0) {
+  if (param_2 == (MemoryFile *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x1a21,0,"%s");
   }
-  local_3c[0] = piVar2[8];
-  pMVar3 = (MemoryFile *)uVar5;
-  MemFile_WriteData(pMVar3,4,local_3c);
-  if ((piVar2[8] != 0) && (iVar6 = 0, piVar7 = piVar2, 0 < piVar2[8])) {
+  local_3c[0] = param_1->count;
+  MemFile_WriteData(param_2,4,local_3c);
+  if ((param_1->count != 0) && (iVar3 = 0, psVar4 = param_1, 0 < param_1->count)) {
     do {
-      local_40[0] = (undefined1)*piVar7;
-      MemFile_WriteData(pMVar3,1,local_40);
-      if (*piVar7 == 0) {
-        psVar1 = (snd_alias_t *)piVar7[4];
-        MemFile_WriteCString(pMVar3,psVar1->aliasName);
-        iVar4 = SND_GetAliasOffset(psVar1);
-        local_3c[0] = CONCAT22((short)iVar4,local_3c[0]._2_2_);
-        MemFile_WriteData(pMVar3,2,local_3c);
+      local_40[0] = (undefined1)psVar4->id[0];
+      MemFile_WriteData(param_2,1,local_40);
+      if (psVar4->id[0] == SndLengthNotify_Subtitle) {
+        psVar1 = psVar4->data[0];
+        MemFile_WriteCString(param_2,psVar1->aliasName);
+        iVar2 = SND_GetAliasOffset(psVar1);
+        local_3c[0] = CONCAT22((short)iVar2,local_3c[0]._2_2_);
+        MemFile_WriteData(param_2,2,local_3c);
       }
-      iVar6 = iVar6 + 1;
-      piVar7 = piVar7 + 1;
-    } while (iVar6 < piVar2[8]);
+      iVar3 = iVar3 + 1;
+      psVar4 = (sndLengthNotifyInfo *)(psVar4->id + 1);
+    } while (iVar3 < param_1->count);
   }
-  __restgprlr_27();
   return;
 }
 
 
 // 828528C8  SND_RestoreLengthNotifyInfo  (snd.cpp:6719)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
+
 void SND_RestoreLengthNotifyInfo(MemoryFile *param_1,sndLengthNotifyInfo *param_2)
 
 {
-  int iVar1;
-  byte bVar2;
-  MemoryFile *pMVar3;
-  snd_alias_t *psVar4;
-  int iVar5;
-  ulonglong uVar6;
+  byte bVar1;
+  snd_alias_t *psVar2;
+  int iVar3;
+  sndLengthNotifyInfo *psVar4;
   byte local_50 [4];
   uint local_4c [19];
   
-  uVar6 = (ulonglong)(int)param_2;
-  pMVar3 = (MemoryFile *)__savegprlr_25(param_1);
-  if ((uVar6 & 0xffffffff) == 0) {
+  if (param_2 == (sndLengthNotifyInfo *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x1a40,0,"%s");
   }
-  if (pMVar3 == (MemoryFile *)0x0) {
+  if (param_1 == (MemoryFile *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x1a41,0,"%s");
   }
-  MemFile_ReadData(pMVar3,4,local_4c);
-  iVar1 = (int)uVar6;
-  *(uint *)(iVar1 + 0x20) = local_4c[0];
+  MemFile_ReadData(param_1,4,local_4c);
+  param_2->count = local_4c[0];
   if (3 < local_4c[0]) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x1a47,0,
                     "info->count doesn\'t index SND_LENGTHNOTIFY_COUNT\n\t%i not in [0, %i)");
   }
-  if ((*(int *)(iVar1 + 0x20) != 0) && (iVar5 = 0, 0 < *(int *)(iVar1 + 0x20))) {
+  if ((param_2->count != 0) && (iVar3 = 0, psVar4 = param_2, 0 < param_2->count)) {
     do {
-      MemFile_ReadData(pMVar3,1,local_50);
-      bVar2 = local_50[0];
+      MemFile_ReadData(param_1,1,local_50);
+      bVar1 = local_50[0];
       if (1 < local_50[0]) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x1a4e,0,
                         "id doesn\'t index SndLengthNotifyCount\n\t%i not in [0, %i)");
       }
-      *(uint *)uVar6 = (uint)bVar2;
-      if (bVar2 == 0) {
-        psVar4 = SND_RestoreSoundAlias(pMVar3);
-        ((uint *)uVar6)[4] = (uint)psVar4;
+      psVar4->id[0] = (uint)bVar1;
+      if (bVar1 == SndLengthNotify_Subtitle) {
+        psVar2 = SND_RestoreSoundAlias(param_1);
+        psVar4->data[0] = psVar2;
       }
-      iVar5 = iVar5 + 1;
-      uVar6 = uVar6 + 4;
-    } while (iVar5 < *(int *)(iVar1 + 0x20));
+      iVar3 = iVar3 + 1;
+      psVar4 = (sndLengthNotifyInfo *)(psVar4->id + 1);
+    } while (iVar3 < param_2->count);
   }
-  __restgprlr_25();
   return;
 }
 
@@ -9588,24 +9266,24 @@ void SND_CopySndLengthInfo(sndLengthNotifyInfo *param_1,sndLengthNotifyInfo *par
 
 // 82852A20  SND_SaveVolMods  (snd.cpp:6764)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void SND_SaveVolMods(MemoryFile *param_1)
 
 {
-  MemoryFile *pMVar1;
-  int iVar2;
-  snd_param_info_t *psVar3;
+  int iVar1;
+  snd_param_info_t *psVar2;
   
-  pMVar1 = (MemoryFile *)__savegprlr_28(param_1);
-  iVar2 = 0;
+  iVar1 = 0;
   if (0 < g_snd.volmod_count) {
-    psVar3 = g_snd.volmods;
+    psVar2 = g_snd.volmods;
     do {
-      MemFile_WriteData(pMVar1,0xc,psVar3);
-      iVar2 = iVar2 + 1;
-      psVar3 = psVar3 + 1;
-    } while (iVar2 < g_snd.volmod_count);
+      MemFile_WriteData(param_1,0xc,psVar2);
+      iVar1 = iVar1 + 1;
+      psVar2 = psVar2 + 1;
+    } while (iVar1 < g_snd.volmod_count);
   }
-  __restgprlr_28();
   return;
 }
 
@@ -9622,24 +9300,24 @@ void SND_SaveChannelVolumes(MemoryFile *param_1)
 
 // 82852AA8  SND_RestoreVolMods  (snd.cpp:6779)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void SND_RestoreVolMods(MemoryFile *param_1)
 
 {
-  MemoryFile *pMVar1;
-  int iVar2;
-  snd_param_info_t *psVar3;
+  int iVar1;
+  snd_param_info_t *psVar2;
   
-  pMVar1 = (MemoryFile *)__savegprlr_28(param_1);
-  iVar2 = 0;
+  iVar1 = 0;
   if (0 < g_snd.volmod_count) {
-    psVar3 = g_snd.volmods;
+    psVar2 = g_snd.volmods;
     do {
-      MemFile_ReadData(pMVar1,0xc,psVar3);
-      iVar2 = iVar2 + 1;
-      psVar3 = psVar3 + 1;
-    } while (iVar2 < g_snd.volmod_count);
+      MemFile_ReadData(param_1,0xc,psVar2);
+      iVar1 = iVar1 + 1;
+      psVar2 = psVar2 + 1;
+    } while (iVar1 < g_snd.volmod_count);
   }
-  __restgprlr_28();
   return;
 }
 
@@ -9656,225 +9334,225 @@ void SND_RestoreChannelVolumes(MemoryFile *param_1)
 
 // 82852B30  SND_SaveChanInfo  (snd.cpp:6794)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void SND_SaveChanInfo(snd_channel_info_t *param_1,MemoryFile *param_2)
 
 {
-  int iVar1;
-  undefined4 local_30 [12];
+  int local_30 [12];
   
-  iVar1 = __savegprlr_29(param_1);
-  if (iVar1 == 0) {
+  if (param_1 == (snd_channel_info_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x1a8b,0,"%s");
   }
-  if (*(uint *)(iVar1 + 0xc) != (*(uint *)(iVar1 + 0xc) & 0xffff)) {
+  if ((param_1->sndEnt).handle != ((param_1->sndEnt).handle & 0xffffU)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x1a8c,0,
                     "%s\n\t(chaninfo->sndEnt.handle) = %i");
   }
-  if (*(uint *)(iVar1 + 0x10) != (*(uint *)(iVar1 + 0x10) & 0xff)) {
+  if (param_1->entchannel != (param_1->entchannel & 0xffU)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x1a8d,0,
                     "%s\n\t(chaninfo->entchannel) = %i");
   }
-  local_30[0] = CONCAT22((short)*(undefined4 *)(iVar1 + 0xc),local_30[0]._2_2_);
+  local_30[0] = CONCAT22((short)(param_1->sndEnt).handle,local_30[0]._2_2_);
   MemFile_WriteData(param_2,2,local_30);
-  local_30[0] = CONCAT13((char)*(undefined4 *)(iVar1 + 0x10),local_30[0]._1_3_);
+  local_30[0] = CONCAT13((char)param_1->entchannel,local_30[0]._1_3_);
   MemFile_WriteData(param_2,1,local_30);
-  local_30[0] = CONCAT13(*(undefined1 *)(iVar1 + 0xb4),local_30[0]._1_3_);
+  local_30[0] = CONCAT13(param_1->masterPriority,local_30[0]._1_3_);
   MemFile_WriteData(param_2,1,local_30);
-  MemFile_WriteFloat(param_2,*(float *)(iVar1 + 0xb8));
-  MemFile_WriteFloat(param_2,*(float *)(iVar1 + 0xb0));
-  local_30[0] = *(undefined4 *)(iVar1 + 0x14);
+  MemFile_WriteFloat(param_2,param_1->slaveLerp);
+  MemFile_WriteFloat(param_2,param_1->timescaleLerp);
+  local_30[0] = param_1->startDelay;
   MemFile_WriteData(param_2,4,local_30);
-  MemFile_WriteFloat(param_2,*(float *)(iVar1 + 0x60));
-  MemFile_WriteFloat(param_2,*(float *)(iVar1 + 100));
-  MemFile_WriteFloat(param_2,*(float *)(iVar1 + 0x68));
-  MemFile_WriteFloat(param_2,*(float *)(iVar1 + 0x6c));
-  MemFile_WriteFloat(param_2,*(float *)(iVar1 + 0x4c));
-  MemFile_WriteFloat(param_2,*(float *)(iVar1 + 0x50));
-  MemFile_WriteFloat(param_2,*(float *)(iVar1 + 0x48));
-  MemFile_WriteFloat(param_2,*(float *)(iVar1 + 0x54));
-  MemFile_WriteFloat(param_2,*(float *)(iVar1 + 0x58));
-  MemFile_WriteFloat(param_2,*(float *)(iVar1 + 0x5c));
-  MemFile_WriteFloat(param_2,*(float *)(iVar1 + 0x80));
-  local_30[0] = *(undefined4 *)(iVar1 + 0xac);
+  MemFile_WriteFloat(param_2,param_1->basepitch);
+  MemFile_WriteFloat(param_2,(param_1->pitchInfo).value);
+  MemFile_WriteFloat(param_2,(param_1->pitchInfo).goalvalue);
+  MemFile_WriteFloat(param_2,(param_1->pitchInfo).goalrate);
+  MemFile_WriteFloat(param_2,param_1->mixvolume);
+  MemFile_WriteFloat(param_2,param_1->attenuation);
+  MemFile_WriteFloat(param_2,param_1->basevolume);
+  MemFile_WriteFloat(param_2,(param_1->volumeInfo).value);
+  MemFile_WriteFloat(param_2,(param_1->volumeInfo).goalvalue);
+  MemFile_WriteFloat(param_2,(param_1->volumeInfo).goalrate);
+  MemFile_WriteFloat(param_2,param_1->lerp);
+  local_30[0] = param_1->nextOcclusionTime;
   MemFile_WriteData(param_2,4,local_30);
-  MemFile_WriteData(param_2,0xc,(void *)(iVar1 + 0x90));
-  SND_SaveLengthNotifyInfo((sndLengthNotifyInfo *)(iVar1 + 0x24),param_2);
-  __restgprlr_29();
+  MemFile_WriteData(param_2,0xc,param_1->offset);
+  SND_SaveLengthNotifyInfo(&param_1->lengthNotifyInfo,param_2);
   return;
 }
 
 
 // 82852D18  SND_RestoreChanInfo  (snd.cpp:6837)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 void SND_RestoreChanInfo(snd_channel_info_t *param_1,MemoryFile *param_2)
 
 {
-  int iVar1;
   byte local_50 [4];
-  uint local_4c;
-  uint local_48 [18];
+  float local_4c;
+  float local_48 [18];
   
-  iVar1 = __savegprlr_26(param_1);
   memset();
   MemFile_ReadData(param_2,2,&local_4c);
-  *(uint *)(iVar1 + 0xc) = local_4c >> 0x10;
+  (param_1->sndEnt).handle = (uint)local_4c >> 0x10;
   MemFile_ReadData(param_2,1,local_50);
-  *(uint *)(iVar1 + 0x10) = (uint)local_50[0];
+  param_1->entchannel = (uint)local_50[0];
   MemFile_ReadData(param_2,1,&local_4c);
-  *(undefined1 *)(iVar1 + 0xb4) = local_4c._0_1_;
+  param_1->masterPriority = local_4c._0_1_;
   MemFile_ReadData(param_2,4,local_48);
   local_4c = local_48[0];
-  if ((local_48[0] & 0x7f800000) == 0x7f800000) {
+  if (((uint)local_48[0] & 0x7f800000) == 0x7f800000) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal/memfile.h",0xc6,0,
                     "%s");
   }
-  *(uint *)(iVar1 + 0xb8) = local_48[0];
+  param_1->slaveLerp = local_48[0];
   MemFile_ReadData(param_2,4,local_48);
   local_4c = local_48[0];
-  if ((local_48[0] & 0x7f800000) == 0x7f800000) {
+  if (((uint)local_48[0] & 0x7f800000) == 0x7f800000) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal/memfile.h",0xc6,0,
                     "%s");
   }
-  *(uint *)(iVar1 + 0xb0) = local_48[0];
+  param_1->timescaleLerp = local_48[0];
   MemFile_ReadData(param_2,4,&local_4c);
-  *(uint *)(iVar1 + 0x14) = local_4c;
+  param_1->startDelay = (int)local_4c;
   MemFile_ReadData(param_2,4,local_48);
   local_4c = local_48[0];
-  if ((local_48[0] & 0x7f800000) == 0x7f800000) {
+  if (((uint)local_48[0] & 0x7f800000) == 0x7f800000) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal/memfile.h",0xc6,0,
                     "%s");
   }
-  *(uint *)(iVar1 + 0x60) = local_48[0];
+  param_1->basepitch = local_48[0];
   MemFile_ReadData(param_2,4,local_48);
   local_4c = local_48[0];
-  if ((local_48[0] & 0x7f800000) == 0x7f800000) {
+  if (((uint)local_48[0] & 0x7f800000) == 0x7f800000) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal/memfile.h",0xc6,0,
                     "%s");
   }
-  *(uint *)(iVar1 + 100) = local_48[0];
+  (param_1->pitchInfo).value = local_48[0];
   MemFile_ReadData(param_2,4,local_48);
   local_4c = local_48[0];
-  if ((local_48[0] & 0x7f800000) == 0x7f800000) {
+  if (((uint)local_48[0] & 0x7f800000) == 0x7f800000) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal/memfile.h",0xc6,0,
                     "%s");
   }
-  *(uint *)(iVar1 + 0x68) = local_48[0];
+  (param_1->pitchInfo).goalvalue = local_48[0];
   MemFile_ReadData(param_2,4,local_48);
   local_4c = local_48[0];
-  if ((local_48[0] & 0x7f800000) == 0x7f800000) {
+  if (((uint)local_48[0] & 0x7f800000) == 0x7f800000) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal/memfile.h",0xc6,0,
                     "%s");
   }
-  *(uint *)(iVar1 + 0x6c) = local_48[0];
+  (param_1->pitchInfo).goalrate = local_48[0];
   MemFile_ReadData(param_2,4,local_48);
   local_4c = local_48[0];
-  if ((local_48[0] & 0x7f800000) == 0x7f800000) {
+  if (((uint)local_48[0] & 0x7f800000) == 0x7f800000) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal/memfile.h",0xc6,0,
                     "%s");
   }
-  *(uint *)(iVar1 + 0x4c) = local_48[0];
+  param_1->mixvolume = local_48[0];
   MemFile_ReadData(param_2,4,local_48);
   local_4c = local_48[0];
-  if ((local_48[0] & 0x7f800000) == 0x7f800000) {
+  if (((uint)local_48[0] & 0x7f800000) == 0x7f800000) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal/memfile.h",0xc6,0,
                     "%s");
   }
-  *(uint *)(iVar1 + 0x50) = local_48[0];
+  param_1->attenuation = local_48[0];
   MemFile_ReadData(param_2,4,local_48);
   local_4c = local_48[0];
-  if ((local_48[0] & 0x7f800000) == 0x7f800000) {
+  if (((uint)local_48[0] & 0x7f800000) == 0x7f800000) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal/memfile.h",0xc6,0,
                     "%s");
   }
-  *(uint *)(iVar1 + 0x48) = local_48[0];
+  param_1->basevolume = local_48[0];
   MemFile_ReadData(param_2,4,local_48);
   local_4c = local_48[0];
-  if ((local_48[0] & 0x7f800000) == 0x7f800000) {
+  if (((uint)local_48[0] & 0x7f800000) == 0x7f800000) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal/memfile.h",0xc6,0,
                     "%s");
   }
-  *(uint *)(iVar1 + 0x54) = local_48[0];
+  (param_1->volumeInfo).value = local_48[0];
   MemFile_ReadData(param_2,4,local_48);
   local_4c = local_48[0];
-  if ((local_48[0] & 0x7f800000) == 0x7f800000) {
+  if (((uint)local_48[0] & 0x7f800000) == 0x7f800000) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal/memfile.h",0xc6,0,
                     "%s");
   }
-  *(uint *)(iVar1 + 0x58) = local_48[0];
+  (param_1->volumeInfo).goalvalue = local_48[0];
   MemFile_ReadData(param_2,4,local_48);
   local_4c = local_48[0];
-  if ((local_48[0] & 0x7f800000) == 0x7f800000) {
+  if (((uint)local_48[0] & 0x7f800000) == 0x7f800000) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal/memfile.h",0xc6,0,
                     "%s");
   }
-  *(uint *)(iVar1 + 0x5c) = local_48[0];
+  (param_1->volumeInfo).goalrate = local_48[0];
   MemFile_ReadData(param_2,4,local_48);
   local_4c = local_48[0];
-  if ((local_48[0] & 0x7f800000) == 0x7f800000) {
+  if (((uint)local_48[0] & 0x7f800000) == 0x7f800000) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal/memfile.h",0xc6,0,
                     "%s");
   }
-  *(uint *)(iVar1 + 0x80) = local_48[0];
+  param_1->lerp = local_48[0];
   MemFile_ReadData(param_2,4,local_48);
-  *(uint *)(iVar1 + 0xac) = local_48[0];
-  MemFile_ReadVec3(param_2,(float *)(iVar1 + 0x90));
-  SND_RestoreLengthNotifyInfo(param_2,(sndLengthNotifyInfo *)(iVar1 + 0x24));
-  __restgprlr_26();
+  param_1->nextOcclusionTime = (int)local_48[0];
+  MemFile_ReadVec3(param_2,param_1->offset);
+  SND_RestoreLengthNotifyInfo(param_2,&param_1->lengthNotifyInfo);
   return;
 }
 
 
 // 82853198  SND_Save3DChannel  (snd.cpp:6876)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void SND_Save3DChannel(int param_1,MemoryFile *param_2)
 
 {
+  bool bVar2;
   int iVar1;
-  bool bVar3;
-  int iVar2;
   snd_save_3D_sample_t asStack_40 [2];
   
-  iVar1 = __savegprlr_28(param_1);
-  if ((iVar1 < 8) || (g_snd.max_3D_channels + 8 <= iVar1)) {
+  if ((param_1 < 8) || (g_snd.max_3D_channels + 8 <= param_1)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x1adf,0,
                     "%s\n\t(chanIndex) = %i");
   }
-  bVar3 = SND_Is3DChannelFree(iVar1);
-  if (!bVar3) {
-    if (((g_snd.chaninfo[iVar1].system == SASYS_CGAME) &&
-        (iVar2 = SND_Get3DChannelLength(iVar1), iVar2 != 0)) &&
-       (iVar2 = SND_Get3DChannelPlaybackRate(iVar1), iVar2 != 0)) {
-      SND_Get3DChannelSaveInfo(iVar1,asStack_40);
-      SND_SaveSoundAlias(g_snd.chaninfo[iVar1].alias0,param_2);
-      SND_SaveSoundAlias(g_snd.chaninfo[iVar1].alias1,param_2);
-      SND_SaveChanInfo(g_snd.chaninfo + iVar1,param_2);
+  bVar2 = SND_Is3DChannelFree(param_1);
+  if (!bVar2) {
+    if (((g_snd.chaninfo[param_1].system == SASYS_CGAME) &&
+        (iVar1 = SND_Get3DChannelLength(param_1), iVar1 != 0)) &&
+       (iVar1 = SND_Get3DChannelPlaybackRate(param_1), iVar1 != 0)) {
+      SND_Get3DChannelSaveInfo(param_1,asStack_40);
+      SND_SaveSoundAlias(g_snd.chaninfo[param_1].alias0,param_2);
+      SND_SaveSoundAlias(g_snd.chaninfo[param_1].alias1,param_2);
+      SND_SaveChanInfo(g_snd.chaninfo + param_1,param_2);
       MemFile_WriteData(param_2,0x18,asStack_40);
     }
   }
-  __restgprlr_28();
   return;
 }
 
 
 // 828532B0  SND_Restore3DChannel  (snd.cpp:6899)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Type propagation algorithm not settling */
 
 bool SND_Restore3DChannel(MemoryFile *param_1)
 
 {
   SoundFile *pSVar1;
-  MemoryFile *pMVar2;
+  snd_alias_t *psVar2;
   snd_alias_t *psVar3;
-  undefined1 uVar7;
-  snd_alias_t *psVar4;
-  bool bVar8;
-  int iVar5;
-  char *pcVar6;
-  sndLengthNotifyInfo *psVar9;
-  sndLengthNotifyInfo *psVar10;
-  bool *pbVar11;
-  longlong lVar12;
+  bool bVar6;
+  int iVar4;
+  char *pcVar5;
+  sndLengthNotifyInfo *psVar7;
+  sndLengthNotifyInfo *psVar8;
+  bool *pbVar9;
+  longlong lVar10;
   int local_180 [4];
   SndStartAliasInfo local_170;
   float local_120 [3];
@@ -9883,41 +9561,39 @@ bool SND_Restore3DChannel(MemoryFile *param_1)
   float local_10c;
   snd_channel_info_t sStack_100;
   
-  pMVar2 = (MemoryFile *)__savegprlr_26(param_1);
-  if (g_snd.paused == false) {
+  if (!g_snd.paused) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x1afc,0,"%s");
   }
-  psVar3 = SND_RestoreSoundAlias(pMVar2);
-  if (psVar3 == (snd_alias_t *)0x0) {
-    uVar7 = __restgprlr_26();
-    return (bool)uVar7;
+  psVar2 = SND_RestoreSoundAlias(param_1);
+  if (psVar2 == (snd_alias_t *)0x0) {
+    return false;
   }
-  psVar4 = SND_RestoreSoundAlias(pMVar2);
-  if (psVar4 == (snd_alias_t *)0x0) {
+  psVar3 = SND_RestoreSoundAlias(param_1);
+  if (psVar3 == (snd_alias_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x1b03,0,"%s");
   }
-  SND_RestoreChanInfo(&sStack_100,pMVar2);
-  MemFile_ReadData(pMVar2,0x18,local_120);
-  if ((uint)psVar3->soundFile->type != (psVar3->flags >> 7 & 3U)) {
+  SND_RestoreChanInfo(&sStack_100,param_1);
+  MemFile_ReadData(param_1,0x18,local_120);
+  if ((uint)psVar2->soundFile->type != (psVar2->flags >> 7 & 3U)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x1b08,0,"%s");
   }
-  if ((uint)psVar4->soundFile->type != (psVar4->flags >> 7 & 3U)) {
+  if ((uint)psVar3->soundFile->type != (psVar3->flags >> 7 & 3U)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x1b09,0,"%s");
   }
-  pSVar1 = psVar3->soundFile;
-  if ((((pSVar1 == psVar4->soundFile) && (pSVar1->exists != '\0')) && (pSVar1->type == '\x01')) &&
-     (bVar8 = SND_ValidateSoundAliasBlend(psVar3,psVar4,false), bVar8)) {
-    pbVar11 = &g_snd.listeners[0].active;
+  pSVar1 = psVar2->soundFile;
+  if ((((pSVar1 == psVar3->soundFile) && (pSVar1->exists != '\0')) && (pSVar1->type == '\x01')) &&
+     (bVar6 = SND_ValidateSoundAliasBlend(psVar2,psVar3,false), bVar6)) {
+    pbVar9 = &g_snd.listeners[0].active;
     do {
-      if (*pbVar11 != false) {
-        bVar8 = true;
+      if (*pbVar9 != false) {
+        bVar6 = true;
         goto LAB_82853448;
       }
-      pbVar11 = pbVar11 + 0x3c;
-    } while ((int)pbVar11 < -0x7b7794e0);
-    bVar8 = false;
+      pbVar9 = pbVar9 + 0x3c;
+    } while ((int)pbVar9 < -0x7b7794e0);
+    bVar6 = false;
 LAB_82853448:
-    if (!bVar8) {
+    if (!bVar6) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x1b0e,0,"%s");
     }
     local_170.timeshift = 0;
@@ -9938,117 +9614,113 @@ LAB_82853448:
     local_170.fraction = local_120[0];
     local_170.slaveLerp = sStack_100.slaveLerp;
     local_170.timescaleLerp = sStack_100.timescaleLerp;
-    local_170.alias0 = psVar3;
-    local_170.alias1 = psVar4;
+    local_170.alias0 = psVar2;
+    local_170.alias1 = psVar3;
     if (((snd_enable3D->current).enabled != false) &&
-       (iVar5 = SND_StartAlias3DSample(&local_170,local_180), iVar5 != -1)) {
+       (iVar4 = SND_StartAlias3DSample(&local_170,local_180), iVar4 != -1)) {
       if ((local_180[0] < 8) || (g_snd.max_3D_channels + 8 <= local_180[0])) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x1b2e,0,
                         "%s\n\t(channel) = %i");
       }
-      pcVar6 = va("restarted at %.3f");
-      SND_DebugAliasPrint(true,local_170.alias0,pcVar6);
-      psVar9 = (sndLengthNotifyInfo *)&sStack_100.playbackId;
-      lVar12 = 9;
-      psVar10 = (sndLengthNotifyInfo *)&g_snd.chaninfo[local_180[0]].playbackId;
+      pcVar5 = va("restarted at %.3f");
+      SND_DebugAliasPrint(true,local_170.alias0,pcVar5);
+      psVar7 = (sndLengthNotifyInfo *)&sStack_100.playbackId;
+      lVar10 = 9;
+      psVar8 = (sndLengthNotifyInfo *)&g_snd.chaninfo[local_180[0]].playbackId;
       g_snd.chaninfo[local_180[0]].offset[0] = sStack_100.offset[0];
       g_snd.chaninfo[local_180[0]].offset[1] = sStack_100.offset[1];
       g_snd.chaninfo[local_180[0]].offset[2] = sStack_100.offset[2];
       do {
-        psVar9 = (sndLengthNotifyInfo *)(psVar9->id + 1);
-        psVar10 = (sndLengthNotifyInfo *)(psVar10->id + 1);
-        psVar10->id[0] = psVar9->id[0];
-        lVar12 = lVar12 + -1;
-      } while (lVar12 != 0);
-      uVar7 = __restgprlr_26(1);
-      return (bool)uVar7;
+        psVar7 = (sndLengthNotifyInfo *)(psVar7->id + 1);
+        psVar8 = (sndLengthNotifyInfo *)(psVar8->id + 1);
+        psVar8->id[0] = psVar7->id[0];
+        lVar10 = lVar10 + -1;
+      } while (lVar10 != 0);
+      return true;
     }
     SND_DoAllLengthNotify(&sStack_100.lengthNotifyInfo);
   }
-  uVar7 = __restgprlr_26(1);
-  return (bool)uVar7;
+  return true;
 }
 
 
 // 82853620  SND_Save2DChannel  (snd.cpp:6975)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void SND_Save2DChannel(int param_1,MemoryFile *param_2)
 
 {
+  bool bVar2;
   int iVar1;
-  bool bVar3;
-  int iVar2;
   snd_save_2D_sample_t asStack_40 [4];
   
-  iVar1 = __savegprlr_28(param_1);
-  if ((iVar1 < 0) || (g_snd.max_2D_channels <= iVar1)) {
+  if ((param_1 < 0) || (g_snd.max_2D_channels <= param_1)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x1b42,0,
                     "%s\n\t(chanIndex) = %i");
   }
-  bVar3 = SND_Is2DChannelFree(iVar1);
-  if (!bVar3) {
-    if (((g_snd.chaninfo[iVar1].system == SASYS_CGAME) &&
-        (iVar2 = SND_Get2DChannelLength(iVar1), iVar2 != 0)) &&
-       (iVar2 = SND_Get2DChannelPlaybackRate(iVar1), iVar2 != 0)) {
-      SND_Get2DChannelSaveInfo(iVar1,asStack_40);
-      SND_SaveSoundAlias(g_snd.chaninfo[iVar1].alias0,param_2);
-      SND_SaveSoundAlias(g_snd.chaninfo[iVar1].alias1,param_2);
-      SND_SaveChanInfo(g_snd.chaninfo + iVar1,param_2);
+  bVar2 = SND_Is2DChannelFree(param_1);
+  if (!bVar2) {
+    if (((g_snd.chaninfo[param_1].system == SASYS_CGAME) &&
+        (iVar1 = SND_Get2DChannelLength(param_1), iVar1 != 0)) &&
+       (iVar1 = SND_Get2DChannelPlaybackRate(param_1), iVar1 != 0)) {
+      SND_Get2DChannelSaveInfo(param_1,asStack_40);
+      SND_SaveSoundAlias(g_snd.chaninfo[param_1].alias0,param_2);
+      SND_SaveSoundAlias(g_snd.chaninfo[param_1].alias1,param_2);
+      SND_SaveChanInfo(g_snd.chaninfo + param_1,param_2);
       MemFile_WriteData(param_2,0x10,asStack_40);
     }
   }
-  __restgprlr_28();
   return;
 }
 
 
 // 82853738  SND_Restore2DChannel  (snd.cpp:6998)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Type propagation algorithm not settling */
 
 bool SND_Restore2DChannel(MemoryFile *param_1)
 
 {
   SoundFile *pSVar1;
-  MemoryFile *pMVar2;
+  snd_alias_t *psVar2;
   snd_alias_t *psVar3;
-  undefined1 uVar7;
-  snd_alias_t *psVar4;
-  bool bVar8;
-  int iVar5;
-  char *pcVar6;
-  sndLengthNotifyInfo *psVar9;
-  sndLengthNotifyInfo *psVar10;
-  longlong lVar11;
+  bool bVar6;
+  int iVar4;
+  char *pcVar5;
+  sndLengthNotifyInfo *psVar7;
+  sndLengthNotifyInfo *psVar8;
+  longlong lVar9;
   int local_170 [4];
   snd_save_2D_sample_t local_160;
   SndStartAliasInfo local_150;
   snd_channel_info_t sStack_100;
   
-  pMVar2 = (MemoryFile *)__savegprlr_26(param_1);
-  if (g_snd.paused == false) {
+  if (!g_snd.paused) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x1b5f,0,"%s");
   }
-  psVar3 = SND_RestoreSoundAlias(pMVar2);
-  if (psVar3 == (snd_alias_t *)0x0) {
-    uVar7 = __restgprlr_26();
-    return (bool)uVar7;
+  psVar2 = SND_RestoreSoundAlias(param_1);
+  if (psVar2 == (snd_alias_t *)0x0) {
+    return false;
   }
-  psVar4 = SND_RestoreSoundAlias(pMVar2);
-  if (psVar4 == (snd_alias_t *)0x0) {
+  psVar3 = SND_RestoreSoundAlias(param_1);
+  if (psVar3 == (snd_alias_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x1b66,0,"%s");
   }
-  SND_RestoreChanInfo(&sStack_100,pMVar2);
-  MemFile_ReadData(pMVar2,0x10,&local_160);
-  if ((uint)psVar3->soundFile->type != (psVar3->flags >> 7 & 3U)) {
+  SND_RestoreChanInfo(&sStack_100,param_1);
+  MemFile_ReadData(param_1,0x10,&local_160);
+  if ((uint)psVar2->soundFile->type != (psVar2->flags >> 7 & 3U)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x1b6b,0,"%s");
   }
-  if ((uint)psVar4->soundFile->type != (psVar4->flags >> 7 & 3U)) {
+  if ((uint)psVar3->soundFile->type != (psVar3->flags >> 7 & 3U)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x1b6c,0,"%s");
   }
-  pSVar1 = psVar3->soundFile;
-  if ((((pSVar1 == psVar4->soundFile) && (pSVar1->exists != '\0')) && (pSVar1->type == '\x01')) &&
-     (bVar8 = SND_ValidateSoundAliasBlend(psVar3,psVar4,false), bVar8)) {
+  pSVar1 = psVar2->soundFile;
+  if ((((pSVar1 == psVar3->soundFile) && (pSVar1->exists != '\0')) && (pSVar1->type == '\x01')) &&
+     (bVar6 = SND_ValidateSoundAliasBlend(psVar2,psVar3,false), bVar6)) {
     local_150.sndEnt = sStack_100.sndEnt;
     local_150.timeshift = 0;
     local_150.startDelay = sStack_100.startDelay;
@@ -10064,124 +9736,129 @@ bool SND_Restore2DChannel(MemoryFile *param_1)
     local_150.fraction = local_160.fraction;
     local_150.slaveLerp = sStack_100.slaveLerp;
     local_150.timescaleLerp = sStack_100.timescaleLerp;
-    local_150.alias0 = psVar3;
-    local_150.alias1 = psVar4;
+    local_150.alias0 = psVar2;
+    local_150.alias1 = psVar3;
     if (((snd_enable2D->current).enabled != false) &&
-       (iVar5 = SND_StartAlias2DSample(&local_150,local_170), iVar5 != -1)) {
+       (iVar4 = SND_StartAlias2DSample(&local_150,local_170), iVar4 != -1)) {
       if ((local_170[0] < 0) || (g_snd.max_2D_channels <= local_170[0])) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x1b8e,0,
                         "%s\n\t(channel) = %i");
       }
-      pcVar6 = va("restarted at %.3f");
-      SND_DebugAliasPrint(true,local_150.alias0,pcVar6);
+      pcVar5 = va("restarted at %.3f");
+      SND_DebugAliasPrint(true,local_150.alias0,pcVar5);
       SND_Set2DChannelFromSaveInfo(local_170[0],&local_160);
-      psVar9 = (sndLengthNotifyInfo *)&sStack_100.playbackId;
-      lVar11 = 9;
-      psVar10 = (sndLengthNotifyInfo *)&g_snd.chaninfo[local_170[0]].playbackId;
+      psVar7 = (sndLengthNotifyInfo *)&sStack_100.playbackId;
+      lVar9 = 9;
+      psVar8 = (sndLengthNotifyInfo *)&g_snd.chaninfo[local_170[0]].playbackId;
       g_snd.chaninfo[local_170[0]].offset[0] = sStack_100.offset[0];
       g_snd.chaninfo[local_170[0]].offset[1] = sStack_100.offset[1];
       g_snd.chaninfo[local_170[0]].offset[2] = sStack_100.offset[2];
       do {
-        psVar9 = (sndLengthNotifyInfo *)(psVar9->id + 1);
-        psVar10 = (sndLengthNotifyInfo *)(psVar10->id + 1);
-        psVar10->id[0] = psVar9->id[0];
-        lVar11 = lVar11 + -1;
-      } while (lVar11 != 0);
-      uVar7 = __restgprlr_26(1);
-      return (bool)uVar7;
+        psVar7 = (sndLengthNotifyInfo *)(psVar7->id + 1);
+        psVar8 = (sndLengthNotifyInfo *)(psVar8->id + 1);
+        psVar8->id[0] = psVar7->id[0];
+        lVar9 = lVar9 + -1;
+      } while (lVar9 != 0);
+      return true;
     }
     SND_DoAllLengthNotify(&sStack_100.lengthNotifyInfo);
   }
-  uVar7 = __restgprlr_26(1);
-  return (bool)uVar7;
+  return true;
 }
 
 
 // 82853A38  SND_SaveStreamChannel  (snd.cpp:7072)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void SND_SaveStreamChannel(int param_1,MemoryFile *param_2)
 
 {
-  int iVar1;
-  bool bVar2;
+  bool bVar1;
   snd_save_stream_t asStack_50 [2];
   
-  iVar1 = __savegprlr_28(param_1);
-  if ((iVar1 < 0x28) || (g_snd.max_stream_channels + 0x28 <= iVar1)) {
+  if ((param_1 < 0x28) || (g_snd.max_stream_channels + 0x28 <= param_1)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x1ba4,0,
                     "%s\n\t(chanIndex) = %i");
   }
-  if (iVar1 < 0x2e) {
-    if ((iVar1 < 0x2a) || (bVar2 = true, 0x2d < iVar1)) {
-      bVar2 = false;
+  if (param_1 < 0x2e) {
+    if ((param_1 < 0x2a) || (bVar1 = true, 0x2d < param_1)) {
+      bVar1 = false;
     }
-    if (bVar2) goto LAB_82853b30;
-    bVar2 = SND_IsStreamChannelFree(iVar1);
-    if (bVar2) {
+    if (bVar1) {
+      return;
+    }
+    bVar1 = SND_IsStreamChannelFree(param_1);
+    if (bVar1) {
       MemFile_WriteCString(param_2,"");
-      __restgprlr_28();
       return;
     }
   }
   else {
-    bVar2 = SND_IsStreamChannelFree(iVar1);
-    if (bVar2) goto LAB_82853b30;
+    bVar1 = SND_IsStreamChannelFree(param_1);
+    if (bVar1) {
+      return;
+    }
   }
-  if (g_snd.chaninfo[iVar1].system == SASYS_CGAME) {
-    SND_GetStreamChannelSaveInfo(iVar1,asStack_50);
-    SND_SaveSoundAlias(g_snd.chaninfo[iVar1].alias0,param_2);
-    SND_SaveSoundAlias(g_snd.chaninfo[iVar1].alias1,param_2);
-    SND_SaveChanInfo(g_snd.chaninfo + iVar1,param_2);
+  if (g_snd.chaninfo[param_1].system == SASYS_CGAME) {
+    SND_GetStreamChannelSaveInfo(param_1,asStack_50);
+    SND_SaveSoundAlias(g_snd.chaninfo[param_1].alias0,param_2);
+    SND_SaveSoundAlias(g_snd.chaninfo[param_1].alias1,param_2);
+    SND_SaveChanInfo(g_snd.chaninfo + param_1,param_2);
     MemFile_WriteData(param_2,0x20,asStack_50);
   }
-LAB_82853b30:
-  __restgprlr_28();
   return;
 }
 
 
 // 82853B88  SND_RestoreStreamChannel  (snd.cpp:7111)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Type propagation algorithm not settling */
 
 bool SND_RestoreStreamChannel(int param_1,MemoryFile *param_2)
 
 {
-  int iVar1;
+  snd_alias_t *psVar1;
   snd_alias_t *psVar2;
-  undefined1 uVar6;
-  snd_alias_t *psVar3;
-  bool bVar7;
-  int iVar4;
-  char *pcVar5;
-  sndLengthNotifyInfo *psVar8;
-  SndLengthId *pSVar9;
-  longlong lVar10;
-  double dVar11;
+  bool bVar5;
+  int iVar3;
+  char *pcVar4;
+  sndLengthNotifyInfo *psVar6;
+  sndLengthNotifyInfo *psVar7;
+  longlong lVar8;
+  double dVar9;
   int iStack00000014;
   SndStartAliasInfo local_170;
   snd_save_stream_t local_120;
   snd_channel_info_t sStack_100;
   
-  iVar1 = __savegprlr_25(param_1);
-  iStack00000014 = iVar1;
-  if (g_snd.paused == false) {
+  iStack00000014 = param_1;
+  if (!g_snd.paused) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x1bcf,0,"%s");
+  }
+  psVar1 = SND_RestoreSoundAlias(param_2);
+  if (psVar1 == (snd_alias_t *)0x0) {
+    return false;
   }
   psVar2 = SND_RestoreSoundAlias(param_2);
   if (psVar2 == (snd_alias_t *)0x0) {
-    uVar6 = __restgprlr_25();
-    return (bool)uVar6;
-  }
-  psVar3 = SND_RestoreSoundAlias(param_2);
-  if (psVar3 == (snd_alias_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x1bd6,0,"%s");
   }
   SND_RestoreChanInfo(&sStack_100,param_2);
   MemFile_ReadData(param_2,0x20,&local_120);
-  if (((psVar2->flags & 0x180U) != 0x100) || ((psVar3->flags & 0x180U) != 0x100)) goto LAB_82853ed8;
-  bVar7 = SND_ValidateSoundAliasBlend(psVar2,psVar3,false);
-  if (!bVar7) goto LAB_82853ed8;
+  if ((psVar1->flags & 0x180U) != 0x100) {
+    return true;
+  }
+  if ((psVar2->flags & 0x180U) != 0x100) {
+    return true;
+  }
+  bVar5 = SND_ValidateSoundAliasBlend(psVar1,psVar2,false);
+  if (!bVar5) {
+    return true;
+  }
   local_170.sndEnt = sStack_100.sndEnt;
   local_170.timeshift = 0;
   local_170.startDelay = sStack_100.startDelay;
@@ -10201,144 +9878,137 @@ bool SND_RestoreStreamChannel(int param_1,MemoryFile *param_2)
   local_170.fraction = local_120.fraction;
   local_170.timescaleLerp = sStack_100.timescaleLerp;
   local_170.slaveLerp = sStack_100.slaveLerp;
-  local_170.alias0 = psVar2;
-  local_170.alias1 = psVar3;
-  if (iVar1 < 0) {
-    iVar4 = SND_StartAliasStream(&local_170,&stack0x00000014);
-    iVar1 = iStack00000014;
-LAB_82853dc4:
-    if (iVar4 != -1) {
-      bVar7 = SND_IsStreamChannelFree(iVar1);
-      if (!bVar7) {
-        pcVar5 = va("restarted at %.3f");
-        SND_DebugAliasPrint(true,local_170.alias0,pcVar5);
-        SND_SetStreamChannelFromSaveInfo(iVar1,&local_120);
-        dVar11 = floor((double)(g_snd.chaninfo[iVar1].pitchInfo.value *
-                                (float)(longlong)local_120.rate * g_snd.timescale + 0.5));
-        SND_SetStreamChannelPlaybackRate(iVar1,(int)dVar11);
-        psVar8 = (sndLengthNotifyInfo *)&sStack_100.playbackId;
-        pSVar9 = (SndLengthId *)(iVar1 * 0xc0 + -0x7b777ecc);
-        g_snd.chaninfo[iVar1].offset[0] = sStack_100.offset[0];
-        g_snd.chaninfo[iVar1].offset[1] = sStack_100.offset[1];
-        lVar10 = 9;
-        g_snd.chaninfo[iVar1].offset[2] = sStack_100.offset[2];
-        do {
-          psVar8 = (sndLengthNotifyInfo *)(psVar8->id + 1);
-          pSVar9 = pSVar9 + 1;
-          *pSVar9 = psVar8->id[0];
-          lVar10 = lVar10 + -1;
-        } while (lVar10 != 0);
-        uVar6 = __restgprlr_25(1);
-        return (bool)uVar6;
-      }
-    }
+  local_170.alias0 = psVar1;
+  local_170.alias1 = psVar2;
+  if (param_1 < 0) {
+    iVar3 = SND_StartAliasStream(&local_170,&stack0x00000014);
+    param_1 = iStack00000014;
   }
   else {
-    bVar7 = SND_IsAliasChannel3D(psVar2->flags >> 9 & 0x3f);
-    if ((bVar7) || (0x2d < iVar1)) {
+    bVar5 = SND_IsAliasChannel3D(psVar1->flags >> 9 & 0x3f);
+    if ((bVar5) || (0x2d < param_1)) {
       va("sound alias \'%s\' on aliaschannel #%d tried to play on stream channel #%d");
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x1bfc,0,"%s\n\t%s")
       ;
     }
-    if ((snd_enableStream->current).enabled != false) {
-      iVar4 = SND_StartAliasStreamOnChannel(&local_170,iVar1);
-      goto LAB_82853dc4;
-    }
+    if ((snd_enableStream->current).enabled == false) goto LAB_82853ed0;
+    iVar3 = SND_StartAliasStreamOnChannel(&local_170,param_1);
   }
+  if ((iVar3 != -1) && (bVar5 = SND_IsStreamChannelFree(param_1), !bVar5)) {
+    pcVar4 = va("restarted at %.3f");
+    SND_DebugAliasPrint(true,local_170.alias0,pcVar4);
+    SND_SetStreamChannelFromSaveInfo(param_1,&local_120);
+    dVar9 = floor((double)(g_snd.chaninfo[param_1].pitchInfo.value * (float)(longlong)local_120.rate
+                           * g_snd.timescale + 0.5));
+    SND_SetStreamChannelPlaybackRate(param_1,(int)dVar9);
+    psVar6 = (sndLengthNotifyInfo *)&sStack_100.playbackId;
+    psVar7 = (sndLengthNotifyInfo *)&g_snd.chaninfo[param_1].playbackId;
+    g_snd.chaninfo[param_1].offset[0] = sStack_100.offset[0];
+    g_snd.chaninfo[param_1].offset[1] = sStack_100.offset[1];
+    lVar8 = 9;
+    g_snd.chaninfo[param_1].offset[2] = sStack_100.offset[2];
+    do {
+      psVar6 = (sndLengthNotifyInfo *)(psVar6->id + 1);
+      psVar7 = (sndLengthNotifyInfo *)(psVar7->id + 1);
+      psVar7->id[0] = psVar6->id[0];
+      lVar8 = lVar8 + -1;
+    } while (lVar8 != 0);
+    return true;
+  }
+LAB_82853ed0:
   SND_DoAllLengthNotify(&sStack_100.lengthNotifyInfo);
-LAB_82853ed8:
-  uVar6 = __restgprlr_25(1);
-  return (bool)uVar6;
+  return true;
 }
 
 
 // 82853EE8  SND_Save  (snd.cpp:7192)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void SND_Save(MemoryFile *param_1)
 
 {
-  MemoryFile *pMVar1;
-  snd_channelvolgroup *psVar2;
-  snd_enveffect *psVar3;
-  int iVar4;
+  snd_channelvolgroup *psVar1;
+  snd_enveffect *psVar2;
+  int iVar3;
   
-  pMVar1 = (MemoryFile *)__savegprlr_28(param_1);
-  psVar2 = g_snd.channelVolGroups + 1;
+  psVar1 = g_snd.channelVolGroups + 1;
   do {
-    MemFile_WriteData(pMVar1,0x304,psVar2);
+    MemFile_WriteData(param_1,0x304,psVar1);
+    psVar1 = psVar1 + 1;
+  } while ((int)psVar1 < -0x7b7796f0);
+  psVar2 = g_snd.envEffects + 1;
+  do {
+    MemFile_WriteData(param_1,0x20,psVar2);
     psVar2 = psVar2 + 1;
-  } while ((int)psVar2 < -0x7b7796f0);
-  psVar3 = g_snd.envEffects + 1;
-  do {
-    MemFile_WriteData(pMVar1,0x20,psVar3);
-    psVar3 = psVar3 + 1;
-  } while ((int)psVar3 < -0x7b77960c);
-  MemFile_WriteData(pMVar1,0x7fc,&g_sndAmbientConfigStrings);
-  MemFile_WriteData(pMVar1,0x108,&g_snd.entchanOverrides);
-  SND_SaveEq(pMVar1);
-  MemFile_WriteData(pMVar1,0x304,&g_snd.channelVolGlobal);
-  SND_SaveVolMods(pMVar1);
-  SND_SaveWhizbyData(pMVar1);
-  SND_SaveEntityOcclusion(pMVar1);
-  MemFile_WriteData(pMVar1,8,g_snd.background);
-  MemFile_WriteData(pMVar1,8,g_snd.background + 1);
+  } while ((int)psVar2 < -0x7b77960c);
+  MemFile_WriteData(param_1,0x7fc,&g_sndAmbientConfigStrings);
+  MemFile_WriteData(param_1,0x108,&g_snd.entchanOverrides);
+  SND_SaveEq(param_1);
+  MemFile_WriteData(param_1,0x304,&g_snd.channelVolGlobal);
+  SND_SaveVolMods(param_1);
+  SND_SaveWhizbyData(param_1);
+  SND_SaveEntityOcclusion(param_1);
+  MemFile_WriteData(param_1,8,g_snd.background);
+  MemFile_WriteData(param_1,8,g_snd.background + 1);
   if (g_snd.Initialized2d != false) {
-    iVar4 = 8;
+    iVar3 = 8;
     if (8 < g_snd.max_3D_channels + 8) {
       do {
-        SND_Save3DChannel(iVar4,pMVar1);
-        iVar4 = iVar4 + 1;
-      } while (iVar4 < g_snd.max_3D_channels + 8);
+        SND_Save3DChannel(iVar3,param_1);
+        iVar3 = iVar3 + 1;
+      } while (iVar3 < g_snd.max_3D_channels + 8);
     }
   }
-  MemFile_WriteCString(pMVar1,"");
+  MemFile_WriteCString(param_1,"");
   if (g_snd.Initialized2d != false) {
-    iVar4 = 0;
+    iVar3 = 0;
     if (0 < g_snd.max_2D_channels) {
       do {
-        SND_Save2DChannel(iVar4,pMVar1);
-        iVar4 = iVar4 + 1;
-      } while (iVar4 < g_snd.max_2D_channels);
+        SND_Save2DChannel(iVar3,param_1);
+        iVar3 = iVar3 + 1;
+      } while (iVar3 < g_snd.max_2D_channels);
     }
   }
-  MemFile_WriteCString(pMVar1,"");
+  MemFile_WriteCString(param_1,"");
   if (g_snd.Initialized2d != false) {
-    iVar4 = 0x28;
+    iVar3 = 0x28;
     if (0x28 < g_snd.max_stream_channels + 0x28) {
       do {
-        SND_SaveStreamChannel(iVar4,pMVar1);
-        iVar4 = iVar4 + 1;
-      } while (iVar4 < g_snd.max_stream_channels + 0x28);
+        SND_SaveStreamChannel(iVar3,param_1);
+        iVar3 = iVar3 + 1;
+      } while (iVar3 < g_snd.max_stream_channels + 0x28);
     }
   }
-  MemFile_WriteCString(pMVar1,"");
-  __restgprlr_28();
+  MemFile_WriteCString(param_1,"");
   return;
 }
 
 
 // 828540F8  SND_Restore  (snd.cpp:7254)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void SND_Restore(MemoryFile *param_1)
 
 {
-  MemoryFile *pMVar1;
-  bool bVar2;
-  snd_channelvolgroup *psVar4;
-  snd_enveffect *psVar5;
-  longlong lVar3;
-  int iVar6;
+  bool bVar1;
+  snd_channelvolgroup *psVar3;
+  snd_enveffect *psVar4;
+  longlong lVar2;
+  int iVar5;
   
-  pMVar1 = (MemoryFile *)__savegprlr_29(param_1);
-  if (g_snd.Initialized2d != false) {
-    if (g_snd.paused == false) {
+  if (g_snd.Initialized2d) {
+    if (!g_snd.paused) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x1c5f,0,"%s");
     }
-    psVar4 = g_snd.channelVolGroups + 1;
+    psVar3 = g_snd.channelVolGroups + 1;
     do {
-      MemFile_ReadData(pMVar1,0x304,psVar4);
-      psVar4 = psVar4 + 1;
-    } while ((int)psVar4 < -0x7b7796f0);
+      MemFile_ReadData(param_1,0x304,psVar3);
+      psVar3 = psVar3 + 1;
+    } while ((int)psVar3 < -0x7b7796f0);
     if (g_snd.channelVolGroups[0].active != false) {
       g_snd.channelvol = g_snd.channelVolGroups;
     }
@@ -10351,18 +10021,18 @@ void SND_Restore(MemoryFile *param_1)
     if (g_snd.channelVolGroups[3].active != false) {
       g_snd.channelvol = g_snd.channelVolGroups + 3;
     }
-    psVar5 = g_snd.envEffects + 1;
+    psVar4 = g_snd.envEffects + 1;
     do {
-      MemFile_ReadData(pMVar1,0x20,psVar5);
-      psVar5 = psVar5 + 1;
-    } while ((int)psVar5 < -0x7b77960c);
-    MemFile_ReadData(pMVar1,0x7fc,&g_sndAmbientConfigStrings);
-    MemFile_ReadData(pMVar1,0x108,&g_snd.entchanOverrides);
-    SND_RestoreEq(pMVar1);
-    MemFile_ReadData(pMVar1,0x304,&g_snd.channelVolGlobal);
-    SND_RestoreVolMods(pMVar1);
-    SND_RestoreWhizbyData(pMVar1);
-    SND_RestoreEntityOcclusion(pMVar1);
+      MemFile_ReadData(param_1,0x20,psVar4);
+      psVar4 = psVar4 + 1;
+    } while ((int)psVar4 < -0x7b77960c);
+    MemFile_ReadData(param_1,0x7fc,&g_sndAmbientConfigStrings);
+    MemFile_ReadData(param_1,0x108,&g_snd.entchanOverrides);
+    SND_RestoreEq(param_1);
+    MemFile_ReadData(param_1,0x304,&g_snd.channelVolGlobal);
+    SND_RestoreVolMods(param_1);
+    SND_RestoreWhizbyData(param_1);
+    SND_RestoreEntityOcclusion(param_1);
     if (g_snd.envEffects[0].active != false) {
       g_snd.effect = g_snd.envEffects;
     }
@@ -10379,43 +10049,42 @@ void SND_Restore(MemoryFile *param_1)
       g_snd.effect = g_snd.envEffects + 4;
     }
     SND_SetRoomtype((g_snd.effect)->roomtype);
-    MemFile_ReadData(pMVar1,8,g_snd.background);
-    MemFile_ReadData(pMVar1,8,g_snd.background + 1);
+    MemFile_ReadData(param_1,8,g_snd.background);
+    MemFile_ReadData(param_1,8,g_snd.background + 1);
     do {
-      bVar2 = SND_Restore3DChannel(pMVar1);
-    } while (bVar2);
+      bVar1 = SND_Restore3DChannel(param_1);
+    } while (bVar1);
     do {
-      bVar2 = SND_Restore2DChannel(pMVar1);
-    } while (bVar2);
-    iVar6 = 0x28;
-    lVar3 = 6;
+      bVar1 = SND_Restore2DChannel(param_1);
+    } while (bVar1);
+    iVar5 = 0x28;
+    lVar2 = 6;
     do {
-      if ((iVar6 < 0x2a) || (bVar2 = true, 0x2d < iVar6)) {
-        bVar2 = false;
+      if ((iVar5 < 0x2a) || (bVar1 = true, 0x2d < iVar5)) {
+        bVar1 = false;
       }
-      if (!bVar2) {
-        SND_RestoreStreamChannel(iVar6,pMVar1);
+      if (!bVar1) {
+        SND_RestoreStreamChannel(iVar5,param_1);
       }
-      lVar3 = lVar3 + -1;
-      iVar6 = iVar6 + 1;
-    } while (lVar3 != 0);
+      lVar2 = lVar2 + -1;
+      iVar5 = iVar5 + 1;
+    } while (lVar2 != 0);
     do {
-      bVar2 = SND_RestoreStreamChannel(-1,pMVar1);
-    } while (bVar2);
+      bVar1 = SND_RestoreStreamChannel(-1,param_1);
+    } while (bVar1);
   }
-  __restgprlr_29();
   return;
 }
 
 
 // 82854438  SND_RestoreEventually  (snd.cpp:7344)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void SND_RestoreEventually(MemoryFile *param_1)
 
 {
-  int iVar1;
-  
-  iVar1 = __savegprlr_28(param_1);
   if ((cl_paused->current).integer == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x1cb3,0,"%s");
   }
@@ -10425,131 +10094,124 @@ void SND_RestoreEventually(MemoryFile *param_1)
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x1cb8,0,"%s");
   }
   g_snd.restore.size = 0;
-  if (0x8000 < *(int *)(iVar1 + 0x18)) {
+  if (0x8000 < param_1->segmentFullLen) {
                     /* WARNING: Subroutine does not return */
     Sys_Error("SND_RESTORE_BUFFER_SIZE exceeded, 0x%x out of 0x%x");
   }
-  g_snd.restore.size = *(int *)(iVar1 + 0x18);
-  g_snd.restore.compress = *(bool *)(iVar1 + 0x1e);
+  g_snd.restore.size = param_1->segmentFullLen;
+  g_snd.restore.compress = param_1->compress;
   memcpy();
-  __restgprlr_28();
   return;
 }
 
 
 // 82854530  SND_GetSoundOverlayMasterPriority  (snd.cpp:7366)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void SND_GetSoundOverlayMasterPriority(snd_overlay_info_t *param_1,snd_channel_info_t *param_2)
 
 {
-  snd_channel_info_t *psVar1;
-  int iVar2;
-  uchar uVar3;
-  ulonglong uVar4;
-  float fVar5;
+  uchar uVar1;
+  float fVar2;
   
-  uVar4 = (ulonglong)(int)param_2;
-  iVar2 = __savegprlr_28(param_1);
-  if (iVar2 == 0) {
+  if (param_1 == (snd_overlay_info_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x1cc7,0,"%s");
   }
-  if ((uVar4 & 0xffffffff) == 0) {
+  if (param_2 == (snd_channel_info_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x1cc8,0,"%s");
   }
-  psVar1 = (snd_channel_info_t *)uVar4;
-  *(float *)(iVar2 + 0x110) = psVar1->slaveLerp;
-  fVar5 = SND_GetSlavePercent(psVar1->alias0);
-  *(float *)(iVar2 + 0x114) = fVar5;
-  uVar3 = SND_GetMasterPriority(psVar1);
-  *(uchar *)(iVar2 + 0x118) = uVar3;
-  __restgprlr_28();
+  param_1->fSlaveLerp = param_2->slaveLerp;
+  fVar2 = SND_GetSlavePercent(param_2->alias0);
+  param_1->fSlavePercent = fVar2;
+  uVar1 = SND_GetMasterPriority(param_2);
+  param_1->masterPriority = uVar1;
   return;
 }
 
 
 // 828545C8  SND_GetSoundOverlay2D  (snd.cpp:7377)
 
+/* WARNING: Function: __savegprlr_19 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_19 replaced with injection: xenon_save_restore */
+
 int SND_GetSoundOverlay2D(snd_overlay_info_t *param_1,int param_2)
 
 {
-  undefined4 uVar1;
-  int iVar2;
-  bool bVar3;
-  ulonglong uVar4;
-  int iVar5;
-  int *piVar6;
-  char *pcVar7;
-  double dVar8;
-  double dVar9;
-  float fVar10;
+  bool bVar2;
+  int iVar1;
+  int iVar3;
+  int *piVar4;
+  char *pcVar5;
+  double dVar6;
+  double dVar7;
+  float fVar8;
   
-  uVar4 = (ulonglong)param_2;
-  iVar2 = __savegprlr_19(param_1);
-  if (g_snd.max_2D_channels < (int)uVar4) {
-    uVar4 = (ulonglong)(uint)g_snd.max_2D_channels;
+  if (g_snd.max_2D_channels < param_2) {
+    param_2 = g_snd.max_2D_channels;
   }
-  iVar5 = 0;
-  if (0 < (int)uVar4) {
-    piVar6 = &g_snd.chaninfo[0].soundFileInfo.baserate;
-    dVar8 = 1.0;
-    dVar9 = 0.0;
-    pcVar7 = (char *)(iVar2 + 0xc0);
+  iVar3 = 0;
+  if (0 < param_2) {
+    piVar4 = &g_snd.chaninfo[0].soundFileInfo.baserate;
+    dVar6 = 1.0;
+    dVar7 = 0.0;
+    pcVar5 = param_1->entchannel;
     do {
-      bVar3 = SND_Is2DChannelFree(iVar5);
-      if ((bVar3) || (((SndFileSpecificChannelInfo *)(piVar6 + -2))->loadingState != SFLS_LOADED)) {
-        pcVar7[-0xc0] = '\0';
+      bVar2 = SND_Is2DChannelFree(iVar3);
+      if ((bVar2) || (((SndFileSpecificChannelInfo *)(piVar4 + -2))->loadingState != SFLS_LOADED)) {
+        ((snd_overlay_info_t *)(pcVar5 + -0xc0))->pszSampleName[0] = '\0';
       }
       else {
-        if (*piVar6 < 1) {
+        if (*piVar4 < 1) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x1ce2,0,"%s");
         }
-        if (piVar6[0x1a] == 0) {
+        if (piVar4[0x1a] == 0) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x1ce3,0,"%s");
         }
-        Com_GetSoundFileName((snd_alias_t *)piVar6[0x1a],pcVar7 + -0xc0,0x80);
-        Com_sprintf(pcVar7 + -0x40,0x40,"%s");
-        SND_GetEntChannelName(piVar6[2]);
-        Com_sprintf(pcVar7,0x40,"%s");
-        iVar2 = SND_Get2DChannelPlaybackRate(iVar5);
-        if (iVar2 == 0) {
-          iVar2 = *piVar6;
+        Com_GetSoundFileName((snd_alias_t *)piVar4[0x1a],pcVar5 + -0xc0,0x80);
+        Com_sprintf(pcVar5 + -0x40,0x40,"%s");
+        SND_GetEntChannelName(piVar4[2]);
+        Com_sprintf(pcVar5,0x40,"%s");
+        iVar1 = SND_Get2DChannelPlaybackRate(iVar3);
+        if (iVar1 == 0) {
+          iVar1 = *piVar4;
         }
-        *(float *)(pcVar7 + 0x4c) = (float)(longlong)iVar2 / (float)(longlong)*piVar6;
-        *(int *)(pcVar7 + 0x40) = piVar6[0x13];
-        fVar10 = SND_Get2DChannelVolume(iVar5);
-        *(float *)(pcVar7 + 0x44) = fVar10;
-        if ((double)g_snd.volume != dVar9) {
-          *(float *)(pcVar7 + 0x44) = (float)((double)fVar10 / (double)g_snd.volume);
+        *(float *)(pcVar5 + 0x4c) = (float)(longlong)iVar1 / (float)(longlong)*piVar4;
+        *(int *)(pcVar5 + 0x40) = piVar4[0x13];
+        fVar8 = SND_Get2DChannelVolume(iVar3);
+        *(float *)(pcVar5 + 0x44) = fVar8;
+        if ((double)g_snd.volume != dVar7) {
+          *(float *)(pcVar5 + 0x44) = (float)((double)fVar8 / (double)g_snd.volume);
         }
-        pcVar7[0x59] = '\0';
-        pcVar7[0x48] = -1;
-        pcVar7[0x49] = -1;
-        pcVar7[0x4a] = -1;
-        pcVar7[0x4b] = -1;
-        uVar1 = *(undefined4 *)(piVar6[0x1a] + 0x24);
-        *(float *)(pcVar7 + 0x60) = (float)dVar8;
-        *(undefined4 *)(pcVar7 + 0x5c) = uVar1;
+        pcVar5[0x59] = false;
+        *(int *)(pcVar5 + 0x48) = -1;
+        iVar1 = *(int *)(piVar4[0x1a] + 0x24);
+        *(float *)(pcVar5 + 0x60) = (float)dVar6;
+        *(int *)(pcVar5 + 0x5c) = iVar1;
         SND_GetSoundOverlayMasterPriority
-                  ((snd_overlay_info_t *)(pcVar7 + -0xc0),(snd_channel_info_t *)(piVar6 + -2));
+                  ((snd_overlay_info_t *)(pcVar5 + -0xc0),(snd_channel_info_t *)(piVar4 + -2));
       }
-      iVar5 = iVar5 + 1;
-      piVar6 = piVar6 + 0x30;
-      pcVar7 = pcVar7 + 0x124;
-    } while (iVar5 < (int)uVar4);
+      iVar3 = iVar3 + 1;
+      piVar4 = piVar4 + 0x30;
+      pcVar5 = pcVar5 + 0x124;
+    } while (iVar3 < param_2);
   }
-  iVar2 = __restgprlr_19(uVar4);
-  return iVar2;
+  return param_2;
 }
 
 
 // 82858E80  SND_GetSoundOverlay3D  (snd.cpp:7426)
 
+/* WARNING: Function: __savegprlr_17 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_17 replaced with injection: xenon_save_restore */
+
 int SND_GetSoundOverlay3D(snd_overlay_info_t *param_1,int param_2)
 
 {
-  int iVar1;
   bool bVar2;
-  ulonglong uVar3;
+  int iVar1;
+  int iVar3;
   ulonglong uVar4;
   int iVar5;
   int *piVar6;
@@ -10560,22 +10222,21 @@ int SND_GetSoundOverlay3D(snd_overlay_info_t *param_1,int param_2)
   float fVar11;
   float afStack_b0 [44];
   
-  uVar3 = (ulonglong)param_2;
-  iVar1 = __savegprlr_17(param_1);
-  if (g_snd.max_3D_channels < (int)uVar3) {
-    uVar3 = (ulonglong)(uint)g_snd.max_3D_channels;
+  uVar4 = (longlong)param_2;
+  if (g_snd.max_3D_channels < param_2) {
+    uVar4 = (ulonglong)(uint)g_snd.max_3D_channels;
   }
-  if (0 < (int)uVar3) {
+  iVar3 = (int)uVar4;
+  if (0 < iVar3) {
     piVar6 = &g_snd.chaninfo[8].soundFileInfo.baserate;
     dVar8 = 1.0;
     dVar9 = 0.0;
     iVar5 = 8;
-    pcVar7 = (char *)(iVar1 + 0xc0);
-    uVar4 = uVar3;
+    pcVar7 = param_1->entchannel;
     do {
       bVar2 = SND_Is3DChannelFree(iVar5);
       if ((bVar2) || (((SndFileSpecificChannelInfo *)(piVar6 + -2))->loadingState != SFLS_LOADED)) {
-        pcVar7[-0xc0] = '\0';
+        ((snd_overlay_info_t *)(pcVar7 + -0xc0))->pszSampleName[0] = '\0';
       }
       else {
         if (*piVar6 < 1) {
@@ -10610,18 +10271,15 @@ int SND_GetSoundOverlay3D(snd_overlay_info_t *param_1,int param_2)
         iVar1 = piVar6[0x1a];
         if (**(char **)(iVar1 + 0x6c) == '\0') {
           *(float *)(pcVar7 + 0x60) = (float)dVar8;
-          pcVar7[0x48] = -1;
-          pcVar7[0x49] = -1;
-          pcVar7[0x4a] = -1;
-          pcVar7[0x4b] = -1;
-          *(undefined4 *)(pcVar7 + 0x5c) = *(undefined4 *)(piVar6[0x1a] + 0x24);
+          *(int *)(pcVar7 + 0x48) = -1;
+          *(int *)(pcVar7 + 0x5c) = *(int *)(piVar6[0x1a] + 0x24);
         }
         else {
           fVar11 = SND_Attenuate(*(SndCurve **)(iVar1 + 0x5c),(float)dVar10,*(float *)(iVar1 + 0x30)
                                  ,*(float *)(iVar1 + 0x34));
           *(float *)(pcVar7 + 0x44) = fVar11 * *(float *)(pcVar7 + 0x44);
           *(int *)(pcVar7 + 0x60) = piVar6[0x12];
-          *(undefined4 *)(pcVar7 + 0x5c) = *(undefined4 *)(piVar6[0x1a] + 0x24);
+          *(int *)(pcVar7 + 0x5c) = *(int *)(piVar6[0x1a] + 0x24);
         }
       }
       uVar4 = uVar4 - 1;
@@ -10630,20 +10288,22 @@ int SND_GetSoundOverlay3D(snd_overlay_info_t *param_1,int param_2)
       pcVar7 = pcVar7 + 0x124;
     } while (uVar4 != 0);
   }
-  iVar1 = __restgprlr_17(uVar3);
-  return iVar1;
+  return iVar3;
 }
 
 
 // 82859110  SND_GetSoundOverlayStream  (snd.cpp:7497)
 
+/* WARNING: Function: __savegprlr_17 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_17 replaced with injection: xenon_save_restore */
+
 int SND_GetSoundOverlayStream(snd_overlay_info_t *param_1,int param_2)
 
 {
   snd_alias_t *psVar1;
-  int iVar2;
   bool bVar3;
-  ulonglong uVar4;
+  int iVar2;
+  int iVar4;
   ulonglong uVar5;
   int iVar6;
   snd_alias_t **ppsVar7;
@@ -10654,23 +10314,22 @@ int SND_GetSoundOverlayStream(snd_overlay_info_t *param_1,int param_2)
   float fVar12;
   float afStack_b0 [44];
   
-  uVar4 = (ulonglong)param_2;
-  iVar2 = __savegprlr_17(param_1);
-  if (g_snd.max_stream_channels < (int)uVar4) {
-    uVar4 = (ulonglong)(uint)g_snd.max_stream_channels;
+  uVar5 = (longlong)param_2;
+  if (g_snd.max_stream_channels < param_2) {
+    uVar5 = (ulonglong)(uint)g_snd.max_stream_channels;
   }
-  if (0 < (int)uVar4) {
+  iVar4 = (int)uVar5;
+  if (0 < iVar4) {
     ppsVar7 = &g_snd.chaninfo[0x28].alias0;
     dVar9 = 1.0;
     dVar10 = 0.0;
     iVar6 = 0x28;
-    pcVar8 = (char *)(iVar2 + 0xc0);
-    uVar5 = uVar4;
+    pcVar8 = param_1->entchannel;
     do {
       bVar3 = SND_IsStreamChannelFree(iVar6);
       if (bVar3) {
 LAB_828593b8:
-        pcVar8[-0xc0] = '\0';
+        ((snd_overlay_info_t *)(pcVar8 + -0xc0))->pszSampleName[0] = '\0';
       }
       else {
         if ((((snd_channel_info_t *)(ppsVar7 + -0x1c))->soundFileInfo).loadingState != SFLS_LOADED)
@@ -10707,18 +10366,12 @@ LAB_828593b8:
           pcVar8[0x59] = bVar3;
         }
         else {
-          pcVar8[0x59] = '\0';
-          pcVar8[0x48] = -1;
-          pcVar8[0x49] = -1;
-          pcVar8[0x4a] = -1;
-          pcVar8[0x4b] = -1;
+          pcVar8[0x59] = false;
+          *(int *)(pcVar8 + 0x48) = -1;
         }
         if ((*ppsVar7)->speakerMap->isDefault == false) {
           *(float *)(pcVar8 + 0x60) = (float)dVar9;
-          pcVar8[0x48] = -1;
-          pcVar8[0x49] = -1;
-          pcVar8[0x4a] = -1;
-          pcVar8[0x4b] = -1;
+          *(int *)(pcVar8 + 0x48) = -1;
           *(int *)(pcVar8 + 0x5c) = (*ppsVar7)->volModIndex;
         }
         else {
@@ -10739,74 +10392,62 @@ LAB_828593b8:
       pcVar8 = pcVar8 + 0x124;
     } while (uVar5 != 0);
   }
-  iVar2 = __restgprlr_17(uVar4);
-  return iVar2;
+  return iVar4;
 }
 
 
 // 828593E8  SND_GetSoundOverlay  (snd.cpp:7593)
+
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 
 int SND_GetSoundOverlay(snd_overlay_type_t param_1,snd_overlay_info_t *param_2,int param_3,
                        int *param_4,uchar *param_5,float *param_6)
 
 {
   longlong lVar1;
-  snd_overlay_info_t *psVar2;
-  int iVar3;
-  ulonglong uVar4;
-  ulonglong uVar5;
-  ulonglong uVar6;
-  ulonglong uVar7;
+  int iVar2;
   
-  uVar7 = (ulonglong)(int)param_6;
-  uVar6 = (ulonglong)(int)param_5;
-  uVar5 = (ulonglong)(int)param_4;
-  uVar4 = (ulonglong)(int)param_2;
-  lVar1 = __savegprlr_24(param_1);
-  if ((uVar4 & 0xffffffff) == 0) {
+  lVar1 = (longlong)(int)param_1;
+  if (param_2 == (snd_overlay_info_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x1daa,0,"%s");
   }
   if (param_3 < 1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x1dab,0,"%s");
   }
-  if ((uVar5 & 0xffffffff) == 0) {
+  if (param_4 == (int *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x1dac,0,"%s");
   }
-  if ((uVar6 & 0xffffffff) == 0) {
+  if (param_5 == (uchar *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x1dad,0,"%s");
   }
-  if ((uVar7 & 0xffffffff) == 0) {
+  if (param_6 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x1dae,0,"%s");
   }
   if (g_snd.Initialized2d != false) {
-    *(int *)uVar5 = g_snd.cpu;
-    *(uchar *)uVar6 = g_snd.masterPriority;
-    *(float *)uVar7 = g_snd.masterPercentage;
+    *param_4 = g_snd.cpu;
+    *param_5 = g_snd.masterPriority;
+    *param_6 = g_snd.masterPercentage;
     if ((lVar1 - 1U & 0xffffffff) < 6) {
-      psVar2 = (snd_overlay_info_t *)uVar4;
       if ((int)(lVar1 - 1U) != 0) {
         if (lVar1 == 2) {
 LAB_8285955c:
-          iVar3 = SND_GetSoundOverlayStream(psVar2,param_3);
-          iVar3 = __restgprlr_24(iVar3);
-          return iVar3;
+          iVar2 = SND_GetSoundOverlayStream(param_2,param_3);
+          return iVar2;
         }
         if (lVar1 != 3) {
           if (lVar1 == 4) goto LAB_82859548;
           if (lVar1 == 5) goto LAB_8285955c;
         }
-        iVar3 = SND_GetSoundOverlay2D(psVar2,param_3);
-        iVar3 = __restgprlr_24(iVar3);
-        return iVar3;
+        iVar2 = SND_GetSoundOverlay2D(param_2,param_3);
+        return iVar2;
       }
 LAB_82859548:
-      iVar3 = SND_GetSoundOverlay3D(psVar2,param_3);
-      iVar3 = __restgprlr_24(iVar3);
-      return iVar3;
+      iVar2 = SND_GetSoundOverlay3D(param_2,param_3);
+      return iVar2;
     }
   }
-  iVar3 = __restgprlr_24(0);
-  return iVar3;
+  return 0;
 }
 
 
@@ -10834,40 +10475,39 @@ void StopChannel(int param_1)
 
 // 82854880  SND_StopChannelAndPlayChainAlias  (snd.cpp:7638)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void SND_StopChannelAndPlayChainAlias(int param_1)
 
 {
   SndEntHandle SVar1;
-  int iVar2;
-  snd_alias_t *psVar3;
+  snd_alias_t *psVar2;
   float afStack_30 [12];
   
-  iVar2 = __savegprlr_29(param_1);
-  if ((iVar2 < 0) || (0x35 < iVar2)) {
+  if ((param_1 < 0) || (0x35 < param_1)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x1ddc,0,
                     "%s\n\t(chanId) = %i");
   }
-  if (g_snd.chaninfo[iVar2].alias0 == (snd_alias_t *)0x0) {
+  if (g_snd.chaninfo[param_1].alias0 == (snd_alias_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x1ddf,0,"%s");
   }
-  if ((g_snd.chaninfo[iVar2].alias0)->chainAliasName != (char *)0x0) {
-    SVar1 = g_snd.chaninfo[iVar2].sndEnt;
-    SND_GetCurrent3DPosition(SVar1,g_snd.chaninfo[iVar2].offset,afStack_30);
-    psVar3 = Com_PickSoundAlias((g_snd.chaninfo[iVar2].alias0)->chainAliasName);
-    if (psVar3 != g_snd.chaninfo[iVar2].alias0) {
-      StopChannel(iVar2);
-      if (psVar3 != (snd_alias_t *)0x0) {
-        SND_PlaySoundAlias(psVar3,SVar1,afStack_30,0,SASYS_CGAME);
+  if ((g_snd.chaninfo[param_1].alias0)->chainAliasName != (char *)0x0) {
+    SVar1 = g_snd.chaninfo[param_1].sndEnt;
+    SND_GetCurrent3DPosition(SVar1,g_snd.chaninfo[param_1].offset,afStack_30);
+    psVar2 = Com_PickSoundAlias((g_snd.chaninfo[param_1].alias0)->chainAliasName);
+    if (psVar2 != g_snd.chaninfo[param_1].alias0) {
+      StopChannel(param_1);
+      if (psVar2 != (snd_alias_t *)0x0) {
+        SND_PlaySoundAlias(psVar2,SVar1,afStack_30,0,SASYS_CGAME);
       }
-      __restgprlr_29();
       return;
     }
     Com_PrintError(9,
                    "Soundalias \"%s\" is trying to chain to itself - check sound .csv files and correct.\n"
                   );
   }
-  StopChannel(iVar2);
-  __restgprlr_29();
+  StopChannel(param_1);
   return;
 }
 
@@ -10946,6 +10586,8 @@ float SND_GetVolumeNormalized(void)
 
 // 82854BB8  SND_InitOcclusionInfo  (snd.cpp:7745)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void SND_InitOcclusionInfo(void)
@@ -10956,7 +10598,6 @@ void SND_InitOcclusionInfo(void)
   snd_param_info_t *psVar3;
   double dVar4;
   
-  __savegprlr_23();
   ppdVar1 = &snd_enable2D;
   dVar4 = 0.0;
   uVar2 = 0;
@@ -10977,13 +10618,14 @@ void SND_InitOcclusionInfo(void)
     ppdVar1 = ppdVar1 + 1;
     *ppdVar1 = (dvar_t *)g_snd.time;
   } while ((int)psVar3 < -0x7b771e5c);
-  __restgprlr_23();
   return;
 }
 
 
 // 82854C78  SND_InitPainVisionOcclusionEntChanInfo  (snd.cpp:8152)
 
+/* WARNING: Function: __savegprlr_21 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_21 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void SND_InitPainVisionOcclusionEntChanInfo(void)
@@ -10998,7 +10640,6 @@ void SND_InitPainVisionOcclusionEntChanInfo(void)
   double dVar7;
   double dVar8;
   
-  __savegprlr_21();
   ppcVar3 = painVisionEqChannels;
   pfVar4 = g_FXPlaySounds[0x1f].origin + 2;
   dVar8 = 0.0;
@@ -11028,7 +10669,6 @@ LAB_82854d50:
     pfVar4 = pfVar4 + 5;
     *pfVar4 = (float)dVar8;
     if (-0x7d659ac1 < (int)ppcVar3) {
-      __restgprlr_21();
       return;
     }
   } while( true );
@@ -11037,42 +10677,39 @@ LAB_82854d50:
 
 // 82854D88  SND_SetAmbientConfigString  (snd.cpp:8168)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void SND_SetAmbientConfigString(int param_1,char *param_2)
 
 {
   char cVar1;
   int iVar2;
-  uint uVar3;
-  ulonglong uVar4;
-  char *pcVar6;
-  ulonglong uVar5;
+  char *pcVar3;
   
-  uVar4 = (ulonglong)(int)param_2;
-  uVar3 = __savegprlr_28(param_1);
-  if (1 < uVar3) {
+  if (1 < (uint)param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x1fe9,0,
                     "index doesn\'t index MAX_AMBIENT_STRINGS\n\t%i not in [0, %i)");
   }
-  uVar5 = uVar4;
-  if ((uVar4 & 0xffffffff) == 0) {
+  pcVar3 = param_2;
+  if (param_2 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x1fea,0,"%s");
   }
   do {
-    pcVar6 = (char *)uVar5;
-    uVar5 = uVar5 + 1;
-  } while (*pcVar6 != '\0');
-  if (0x3f7 < ((uVar5 - uVar4) - 1 & 0xffffffff)) {
+    cVar1 = *pcVar3;
+    pcVar3 = pcVar3 + 1;
+  } while (cVar1 != '\0');
+  if ((char *)0x3f7 < pcVar3 + (-1 - (int)param_2)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x1feb,0,"%s");
   }
-  iVar2 = (int)uVar4;
+  iVar2 = param_1 * 0x3fc - (int)param_2;
   do {
-    cVar1 = *(char *)uVar4;
-    ((char *)uVar4)[(int)&g_sndAmbientConfigStrings + (uVar3 * 0x3fc - iVar2)] = cVar1;
-    uVar4 = uVar4 + 1;
+    cVar1 = *param_2;
+    param_2[(int)&g_sndAmbientConfigStrings + iVar2] = cVar1;
+    param_2 = param_2 + 1;
   } while (cVar1 != '\0');
-  g_sndAmbientConfigStrings.string[uVar3].generation = g_sndAmbientConfigStrings.generationCount;
+  g_sndAmbientConfigStrings.string[param_1].generation = g_sndAmbientConfigStrings.generationCount;
   g_sndAmbientConfigStrings.generationCount = g_sndAmbientConfigStrings.generationCount + 1;
-  __restgprlr_28();
   return;
 }
 
@@ -11103,35 +10740,34 @@ int SND_GetOldestAmbientTrack(void)
 
 // 82854F00  SND_UpdateOcclusionLerp  (snd.cpp:8196)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void SND_UpdateOcclusionLerp(snd_channel_info_t *param_1,int param_2,int param_3)
 
 {
   uint uVar1;
-  int iVar2;
-  EntityOcclusionInfo *pEVar3;
+  EntityOcclusionInfo *pEVar2;
   
-  iVar2 = __savegprlr_27(param_1);
-  if (iVar2 == 0) {
+  if (param_1 == (snd_channel_info_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x2007,0,"%s");
   }
   if (param_2 < 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x2008,0,"%s");
   }
-  if (*(int *)(iVar2 + 0xc) == 0xffff) {
+  if ((param_1->sndEnt).handle == 0xffff) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x2009,0,"%s");
   }
-  uVar1 = *(uint *)(iVar2 + 0xc) >> 0x14;
+  uVar1 = (uint)(param_1->sndEnt).handle >> 0x14;
   if (uVar1 == 0x7fe) {
-    SND_UpdateParameter((snd_param_info_t *)(iVar2 + 0xa0),param_2);
-    __restgprlr_27();
+    SND_UpdateParameter(&param_1->occlusionLerp,param_2);
     return;
   }
-  pEVar3 = SND_GetEntityOcclusionInfo(uVar1);
-  if (pEVar3->lastLerpUpdateTime < param_3) {
-    pEVar3->lastLerpUpdateTime = param_3;
-    SND_UpdateParameter(&pEVar3->occlusionLerp,param_2);
+  pEVar2 = SND_GetEntityOcclusionInfo(uVar1);
+  if (pEVar2->lastLerpUpdateTime < param_3) {
+    pEVar2->lastLerpUpdateTime = param_3;
+    SND_UpdateParameter(&pEVar2->occlusionLerp,param_2);
   }
-  __restgprlr_27();
   return;
 }
 
@@ -11161,101 +10797,94 @@ float SND_GetCurrentOcclusionLerp(snd_channel_info_t *param_1)
 
 // 82859580  SND_IsFilterEnabled  (snd.cpp:8250)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 bool SND_IsFilterEnabled(snd_channel_info_t *param_1,int param_2)
 
 {
-  snd_channel_info_t *psVar1;
-  bool bVar3;
-  int iVar2;
-  undefined1 uVar4;
+  bool bVar2;
+  int iVar1;
   
-  psVar1 = (snd_channel_info_t *)__savegprlr_29(param_1);
-  if (psVar1 == (snd_channel_info_t *)0x0) {
+  if (param_1 == (snd_channel_info_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x203d,0,"%s");
   }
-  bVar3 = SND_IsEntChanInEqMode(psVar1->entchannel);
-  if (!bVar3) {
-    bVar3 = SND_IsEntChanInOcclusionMode(psVar1->entchannel);
-    if ((!bVar3) || (iVar2 = SND_SoundOcclusionTrace(psVar1,param_2), iVar2 == 0)) {
-      bVar3 = SND_GetIsOccluded(psVar1);
-      if (bVar3) {
-        SND_SetIsOccluded(psVar1,false);
-      }
-      uVar4 = __restgprlr_29(0);
-      return (bool)uVar4;
+  bVar2 = SND_IsEntChanInEqMode(param_1->entchannel);
+  if ((!bVar2) &&
+     ((bVar2 = SND_IsEntChanInOcclusionMode(param_1->entchannel), !bVar2 ||
+      (iVar1 = SND_SoundOcclusionTrace(param_1,param_2), iVar1 == 0)))) {
+    bVar2 = SND_GetIsOccluded(param_1);
+    if (bVar2) {
+      SND_SetIsOccluded(param_1,false);
     }
+    return false;
   }
-  uVar4 = __restgprlr_29(1);
-  return (bool)uVar4;
+  return true;
 }
 
 
 // 82855090  SND_GetIsTimeForOcclusionTrace  (snd.cpp:8281)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 bool SND_GetIsTimeForOcclusionTrace(snd_channel_info_t *param_1,int param_2)
 
 {
   uint uVar1;
-  int iVar2;
-  EntityOcclusionInfo *pEVar3;
-  undefined1 uVar4;
-  ulonglong uVar5;
+  EntityOcclusionInfo *pEVar2;
   
-  uVar5 = (ulonglong)param_2;
-  iVar2 = __savegprlr_28(param_1);
-  if (iVar2 == 0) {
+  if (param_1 == (snd_channel_info_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x205d,0,"%s");
   }
-  if (*(int *)(iVar2 + 0xc) == 0xffff) {
+  if ((param_1->sndEnt).handle == 0xffff) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x205e,0,"%s");
   }
-  if ((int)uVar5 < 0) {
+  if (param_2 < 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x205f,0,
                     "%s\n\t(currentTime) = %i");
   }
-  uVar1 = *(uint *)(iVar2 + 0xc) >> 0x14;
+  uVar1 = (uint)(param_1->sndEnt).handle >> 0x14;
   if (uVar1 == 0x7fe) {
-    uVar1 = *(uint *)(iVar2 + 0xac);
+    uVar1 = param_1->nextOcclusionTime;
   }
   else {
-    pEVar3 = SND_GetEntityOcclusionInfo(uVar1);
-    uVar1 = pEVar3->nextOcclusionTime;
+    pEVar2 = SND_GetEntityOcclusionInfo(uVar1);
+    uVar1 = pEVar2->nextOcclusionTime;
   }
-  uVar4 = __restgprlr_28(((~(uVar5 ^ uVar1) & 0xffffffff) >> 0x1f) + (ulonglong)(uVar5 <= uVar1) & 1
-                        );
-  return (bool)uVar4;
+  return (bool)((char)((~((longlong)param_2 ^ (ulonglong)uVar1) & 0xffffffff) >> 0x1f) +
+                ((ulonglong)(longlong)param_2 <= (ulonglong)uVar1) & 1);
 }
 
 
 // 82855168  SND_SetNextOcclusionTime  (snd.cpp:8306)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void SND_SetNextOcclusionTime(snd_channel_info_t *param_1,int param_2)
 
 {
   uint uVar1;
-  int iVar2;
-  EntityOcclusionInfo *pEVar3;
+  EntityOcclusionInfo *pEVar2;
   
-  iVar2 = __savegprlr_28(param_1);
-  if (iVar2 == 0) {
+  if (param_1 == (snd_channel_info_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x2075,0,"%s");
   }
-  if (*(int *)(iVar2 + 0xc) == 0xffff) {
+  if ((param_1->sndEnt).handle == 0xffff) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x2076,0,"%s");
   }
   if (param_2 < 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x2077,0,
                     "%s\n\t(nextOcclusionTime) = %i");
   }
-  uVar1 = *(uint *)(iVar2 + 0xc) >> 0x14;
+  uVar1 = (uint)(param_1->sndEnt).handle >> 0x14;
   if (uVar1 == 0x7fe) {
-    *(int *)(iVar2 + 0xac) = param_2;
-    __restgprlr_28();
+    param_1->nextOcclusionTime = param_2;
     return;
   }
-  pEVar3 = SND_GetEntityOcclusionInfo(uVar1);
-  pEVar3->nextOcclusionTime = param_2;
-  __restgprlr_28();
+  pEVar2 = SND_GetEntityOcclusionInfo(uVar1);
+  pEVar2->nextOcclusionTime = param_2;
   return;
 }
 
@@ -11289,74 +10918,71 @@ bool SND_GetIsOccluded(snd_channel_info_t *param_1)
 
 // 828552E0  SND_SetGoalOcclusionLerp  (snd.cpp:8364)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void SND_SetGoalOcclusionLerp(snd_channel_info_t *param_1,float param_2)
 
 {
   uint uVar1;
-  int iVar2;
+  EntityOcclusionInfo *pEVar2;
   snd_param_info_t *psVar3;
-  EntityOcclusionInfo *pEVar4;
   int in_r4;
-  double extraout_f1;
+  double dVar4;
   double dVar5;
   double dVar6;
-  double dVar7;
   
-  iVar2 = __savegprlr_29((double)param_2,param_1);
-  dVar7 = extraout_f1;
-  if (iVar2 == 0) {
+  dVar4 = (double)param_2;
+  if (param_1 == (snd_channel_info_t *)0x0) {
     in_r4 = 0x20af;
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x20af,0,"%s");
   }
-  if (*(int *)(iVar2 + 0xc) == 0xffff) {
+  if ((param_1->sndEnt).handle == 0xffff) {
     in_r4 = 0x20b0;
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x20b0,0,"%s");
   }
   dVar5 = 0.0;
   dVar6 = 1.0;
-  if ((dVar7 < 0.0) || (1.0 < dVar7)) {
+  if ((dVar4 < 0.0) || (1.0 < dVar4)) {
     in_r4 = 0x20b1;
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x20b1,0,"%s");
   }
-  uVar1 = *(uint *)(iVar2 + 0xc) >> 0x14;
+  uVar1 = (uint)(param_1->sndEnt).handle >> 0x14;
   if (uVar1 == 0x7fe) {
-    psVar3 = (snd_param_info_t *)(iVar2 + 0xa0);
+    psVar3 = &param_1->occlusionLerp;
   }
   else {
-    pEVar4 = SND_GetEntityOcclusionInfo(uVar1);
-    psVar3 = &pEVar4->occlusionLerp;
+    pEVar2 = SND_GetEntityOcclusionInfo(uVar1);
+    psVar3 = &pEVar2->occlusionLerp;
   }
-  SND_SetParamValue(psVar3,(float)dVar7,(float)dVar5,(float)dVar6,in_r4);
-  __restgprlr_29();
+  SND_SetParamValue(psVar3,(float)dVar4,(float)dVar5,(float)dVar6,in_r4);
   return;
 }
 
 
 // 828553E8  SND_GetGoalOcclusionLerp  (snd.cpp:8386)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 float SND_GetGoalOcclusionLerp(snd_channel_info_t *param_1)
 
 {
   uint uVar1;
-  int iVar2;
-  EntityOcclusionInfo *pEVar3;
-  double dVar4;
+  EntityOcclusionInfo *pEVar2;
   
-  iVar2 = __savegprlr_29(param_1);
-  if (iVar2 == 0) {
+  if (param_1 == (snd_channel_info_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x20c6,0,"%s");
   }
-  if (*(int *)(iVar2 + 0xc) == 0xffff) {
+  if ((param_1->sndEnt).handle == 0xffff) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x20c7,0,"%s");
   }
-  uVar1 = *(uint *)(iVar2 + 0xc) >> 0x14;
+  uVar1 = (uint)(param_1->sndEnt).handle >> 0x14;
   if (uVar1 == 0x7fe) {
-    dVar4 = (double)__restgprlr_29((double)*(float *)(iVar2 + 0xa4));
-    return (float)dVar4;
+    return (param_1->occlusionLerp).goalvalue;
   }
-  pEVar3 = SND_GetEntityOcclusionInfo(uVar1);
-  dVar4 = (double)__restgprlr_29((double)(pEVar3->occlusionLerp).goalvalue);
-  return (float)dVar4;
+  pEVar2 = SND_GetEntityOcclusionInfo(uVar1);
+  return (pEVar2->occlusionLerp).goalvalue;
 }
 
 
@@ -11380,69 +11006,69 @@ bool SND_GetIsGoalOccluded(snd_channel_info_t *param_1)
 
 // 82855528  SND_ForceToGoalOcclusion  (snd.cpp:8425)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void SND_ForceToGoalOcclusion(snd_channel_info_t *param_1)
 
 {
   uint uVar1;
-  int iVar2;
-  EntityOcclusionInfo *pEVar3;
+  EntityOcclusionInfo *pEVar2;
   
-  iVar2 = __savegprlr_29(param_1);
-  if (iVar2 == 0) {
+  if (param_1 == (snd_channel_info_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x20ec,0,"%s");
   }
-  if (*(int *)(iVar2 + 0xc) == 0xffff) {
+  if ((param_1->sndEnt).handle == 0xffff) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x20ed,0,"%s");
   }
-  uVar1 = *(uint *)(iVar2 + 0xc) >> 0x14;
+  uVar1 = (uint)(param_1->sndEnt).handle >> 0x14;
   if (uVar1 == 0x7fe) {
-    *(undefined4 *)(iVar2 + 0xa0) = *(undefined4 *)(iVar2 + 0xa4);
-    *(undefined4 *)(iVar2 + 0xa8) = 0x3f800000;
-    __restgprlr_29();
+    (param_1->occlusionLerp).value = (param_1->occlusionLerp).goalvalue;
+    (param_1->occlusionLerp).goalrate = 1.0;
     return;
   }
-  pEVar3 = SND_GetEntityOcclusionInfo(uVar1);
-  (pEVar3->occlusionLerp).value = (pEVar3->occlusionLerp).goalvalue;
-  (pEVar3->occlusionLerp).goalrate = 1.0;
-  __restgprlr_29();
+  pEVar2 = SND_GetEntityOcclusionInfo(uVar1);
+  (pEVar2->occlusionLerp).value = (pEVar2->occlusionLerp).goalvalue;
+  (pEVar2->occlusionLerp).goalrate = 1.0;
   return;
 }
 
 
 // 828555E0  SND_SetIsOccluded  (snd.cpp:8448)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void SND_SetIsOccluded(snd_channel_info_t *param_1,bool param_2)
 
 {
   float fVar1;
-  snd_channel_info_t *psVar2;
-  bool bVar3;
-  ulonglong uVar4;
-  float fVar5;
+  bool bVar2;
+  float fVar3;
   
-  uVar4 = (ulonglong)param_2;
-  psVar2 = (snd_channel_info_t *)__savegprlr_28(param_1);
-  if (psVar2 == (snd_channel_info_t *)0x0) {
+  if (param_1 == (snd_channel_info_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x2105,0,"%s");
   }
-  if ((psVar2->sndEnt).handle == 0xffff) {
+  if ((param_1->sndEnt).handle == 0xffff) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x2106,0,"%s");
   }
-  bVar3 = SND_GetIsOccluded(psVar2);
-  fVar5 = SND_GetGoalOcclusionLerp(psVar2);
-  if (bVar3) {
-    if (((uVar4 & 0xff) != 0) || (fVar1 = 0.0, fVar5 == 0.0)) {
-      if (bVar3) goto LAB_828556bc;
-      goto LAB_82855694;
+  bVar2 = SND_GetIsOccluded(param_1);
+  fVar3 = SND_GetGoalOcclusionLerp(param_1);
+  if (bVar2) {
+    if ((param_2) || (fVar1 = 0.0, fVar3 == 0.0)) {
+      return;
     }
   }
   else {
-LAB_82855694:
-    if (((uVar4 & 0xff) == 0) || (fVar1 = 1.0, fVar5 == 1.0)) goto LAB_828556bc;
+    if (!param_2) {
+      return;
+    }
+    fVar1 = 1.0;
+    if (fVar3 == 1.0) {
+      return;
+    }
   }
-  SND_SetGoalOcclusionLerp(psVar2,fVar1);
-LAB_828556bc:
-  __restgprlr_28();
+  SND_SetGoalOcclusionLerp(param_1,fVar1);
   return;
 }
 
@@ -11458,35 +11084,37 @@ int SND_IsEntEqEnabled(snd_channel_info_t *param_1)
 
 // 828556D0  SND_GetTargetOcclusionPosition  (snd.cpp:8514)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void SND_GetTargetOcclusionPosition(snd_channel_info_t *param_1,float *param_2)
 
 {
   uint uVar1;
-  int iVar2;
   float afStack_50 [20];
   
-  iVar2 = __savegprlr_28(param_1);
-  if (iVar2 == 0) {
+  if (param_1 == (snd_channel_info_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x2143,0,"%s");
   }
-  if (*(int *)(iVar2 + 0xc) == 0xffff) {
+  if ((param_1->sndEnt).handle == 0xffff) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x2144,0,"%s");
   }
-  uVar1 = *(uint *)(iVar2 + 0xc) >> 0x14;
+  uVar1 = (uint)(param_1->sndEnt).handle >> 0x14;
   if (uVar1 < 0x800) {
-    SND_GetCurrent3DPosition(*(SndEntHandle *)(iVar2 + 0xc),(float *)(iVar2 + 0x90),param_2);
+    SND_GetCurrent3DPosition(param_1->sndEnt,param_1->offset,param_2);
   }
   else {
     CG_CopyClientSideSoundEntityOrientation(uVar1 - 0x800,param_2,(float (*) [3])afStack_50);
   }
   param_2[2] = param_2[2] + 10.0;
-  __restgprlr_28();
   return;
 }
 
 
 // 82855790  SND_IsTraceEntity  (snd.cpp:8548)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 
@@ -11494,30 +11122,25 @@ bool SND_IsTraceEntity(snd_channel_info_t *param_1,LocalClientNum_t param_2)
 
 {
   uint uVar1;
-  int iVar2;
-  centity_s *pcVar3;
-  undefined1 uVar4;
-  ulonglong uVar5;
+  centity_s *pcVar2;
   
-  uVar5 = (ulonglong)(int)param_2;
-  iVar2 = __savegprlr_28(param_1);
-  if (iVar2 == 0) {
+  if (param_1 == (snd_channel_info_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x2167,0,"%s");
   }
-  if (*(int *)(iVar2 + 0xc) == 0xffff) {
+  if ((param_1->sndEnt).handle == 0xffff) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x2168,0,"%s");
   }
-  if (3 < (uVar5 & 0xffffffff)) {
+  if (LOCAL_CLIENT_3 < param_2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x2169,0,
                     "localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)");
   }
-  uVar1 = *(uint *)(iVar2 + 0xc) >> 0x14;
+  uVar1 = (uint)(param_1->sndEnt).handle >> 0x14;
   if (uVar1 < 0x800) {
-    pcVar3 = CG_GetEntity((LocalClientNum_t)uVar5,uVar1);
-    if (pcVar3 == (centity_s *)0x0) {
+    pcVar2 = CG_GetEntity(param_2,uVar1);
+    if (pcVar2 == (centity_s *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x2178,0,"%s");
     }
-    uVar1 = (pcVar3->nextState).eType;
+    uVar1 = (pcVar2->nextState).eType;
     switch(uVar1) {
     case 0:
     case 1:
@@ -11532,96 +11155,86 @@ bool SND_IsTraceEntity(snd_channel_info_t *param_1,LocalClientNum_t param_2)
     case 0xe:
       break;
     default:
-      uVar4 = __restgprlr_28((longlong)((int)uVar1 >> 0x1f) + (ulonglong)(0x11 < uVar1) & 0xff);
-      return (bool)uVar4;
+      return (bool)((char)((int)uVar1 >> 0x1f) + (0x11 < uVar1));
     }
   }
-  uVar4 = __restgprlr_28(1);
-  return (bool)uVar4;
+  return true;
 }
 
 
 // 828558F8  SND_PerformOcclusionTrace  (snd.cpp:8604)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
 bool SND_PerformOcclusionTrace(snd_channel_info_t *param_1,LocalClientNum_t param_2)
 
 {
-  snd_channel_info_t *psVar2;
-  bool bVar4;
-  playerState_s *ppVar3;
-  undefined8 uVar1;
-  undefined1 uVar5;
-  ulonglong uVar6;
+  bool bVar2;
+  playerState_s *ppVar1;
   float local_98;
   float local_94;
   float local_90;
   float afStack_88 [6];
   trace_t atStack_70 [2];
   
-  uVar6 = (ulonglong)(int)param_2;
-  psVar2 = (snd_channel_info_t *)__savegprlr_27(param_1);
-  if (psVar2 == (snd_channel_info_t *)0x0) {
+  if (param_1 == (snd_channel_info_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x21a4,0,"%s");
   }
-  if ((psVar2->sndEnt).handle == 0xffff) {
+  if ((param_1->sndEnt).handle == 0xffff) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x21a5,0,"%s");
   }
-  if (3 < (uVar6 & 0xffffffff)) {
+  if (LOCAL_CLIENT_3 < param_2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x21a6,0,
                     "localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)");
   }
-  bVar4 = SND_IsTraceEntity(psVar2,(LocalClientNum_t)uVar6);
-  if (bVar4) {
-    SND_GetTargetOcclusionPosition(psVar2,afStack_88);
-    ppVar3 = CG_GetPredictedPlayerState((LocalClientNum_t)uVar6);
-    if (ppVar3 == (playerState_s *)0x0) {
+  bVar2 = SND_IsTraceEntity(param_1,param_2);
+  if (bVar2) {
+    SND_GetTargetOcclusionPosition(param_1,afStack_88);
+    ppVar1 = CG_GetPredictedPlayerState(param_2);
+    if (ppVar1 == (playerState_s *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x21af,0,"%s");
     }
-    if ((ppVar3->vehicleState).entity == 0x7ff) {
-      local_98 = ppVar3->origin[0];
-      local_94 = ppVar3->origin[1];
-      local_90 = ppVar3->origin[2];
+    if ((ppVar1->vehicleState).entity == 0x7ff) {
+      local_98 = ppVar1->origin[0];
+      local_94 = ppVar1->origin[1];
+      local_90 = ppVar1->origin[2];
     }
     else {
-      local_98 = (ppVar3->vehicleState).origin[0];
-      local_94 = (ppVar3->vehicleState).origin[1];
-      local_90 = (ppVar3->vehicleState).origin[2];
+      local_98 = (ppVar1->vehicleState).origin[0];
+      local_94 = (ppVar1->vehicleState).origin[1];
+      local_90 = (ppVar1->vehicleState).origin[2];
     }
-    local_90 = (float)(longlong)ppVar3->viewHeightTarget + local_90;
+    local_90 = (float)(longlong)ppVar1->viewHeightTarget + local_90;
     CG_WorldTrace(atStack_70,&local_98,afStack_88,&bounds_origin,1);
-    uVar1 = 1;
-    if (atStack_70[0].hitType != TRACE_HITTYPE_NONE) goto LAB_82855a74;
+    if (atStack_70[0].hitType != TRACE_HITTYPE_NONE) {
+      return true;
+    }
   }
-  uVar1 = 0;
-LAB_82855a74:
-  uVar5 = __restgprlr_27(uVar1);
-  return (bool)uVar5;
+  return false;
 }
 
 
 // 82855A80  SND_SoundOcclusionTrace  (snd.cpp:8653)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 int SND_SoundOcclusionTrace(snd_channel_info_t *param_1,int param_2)
 
 {
-  snd_channel_info_t *psVar1;
+  bool bVar3;
+  connstate_t cVar1;
   int iVar2;
-  bool bVar4;
-  bool bVar5;
-  connstate_t cVar3;
-  LocalClientNum_t LVar6;
+  LocalClientNum_t LVar4;
   char in_RESERVE;
   byte in_cr0;
   
-  psVar1 = (snd_channel_info_t *)__savegprlr_27(param_1);
-  if ((psVar1->sndEnt).handle == 0xffff) {
-    iVar2 = __restgprlr_27(0);
-    return iVar2;
+  if ((param_1->sndEnt).handle == 0xffff) {
+    return 0;
   }
   Profile2_UpdateEntry(5);
   do {
@@ -11633,25 +11246,27 @@ int SND_SoundOcclusionTrace(snd_channel_info_t *param_1,int param_2)
     }
   } while (!(bool)(in_cr0 >> 1 & 1));
   Profile_Begin(0x153);
-  bVar4 = SND_GetIsTimeForOcclusionTrace(psVar1,g_snd.time);
-  if (bVar4) {
-    bVar4 = false;
-    LVar6 = LOCAL_CLIENT_0;
+  bVar3 = SND_GetIsTimeForOcclusionTrace(param_1,g_snd.time);
+  if (bVar3) {
+    iVar2 = 0;
+    LVar4 = LOCAL_CLIENT_0;
     do {
-      bVar5 = CL_IsLocalClientActive(LVar6);
-      if ((bVar5) && (cVar3 = CL_GetLocalClientConnectionState(LVar6), 9 < (int)cVar3)) {
-        bVar4 = SND_PerformOcclusionTrace(psVar1,LVar6);
-        if (!bVar4) break;
+      bVar3 = CL_IsLocalClientActive(LVar4);
+      if ((bVar3) && (cVar1 = CL_GetLocalClientConnectionState(LVar4), 9 < (int)cVar1)) {
+        bVar3 = SND_PerformOcclusionTrace(param_1,LVar4);
+        iVar2 = (int)bVar3;
+        if (iVar2 == 0) break;
       }
-      LVar6 = LVar6 + LOCAL_CLIENT_1;
-    } while ((int)LVar6 < 4);
-    SND_SetNextOcclusionTime(psVar1,(int)((snd_occlusionDelay->current).string + g_snd.time));
+      LVar4 = LVar4 + LOCAL_CLIENT_1;
+    } while ((int)LVar4 < 4);
+    SND_SetNextOcclusionTime(param_1,(int)((snd_occlusionDelay->current).string + g_snd.time));
   }
   else {
-    SND_UpdateOcclusionLerp(psVar1,param_2,g_snd.time);
-    bVar4 = SND_GetIsOccluded(psVar1);
+    SND_UpdateOcclusionLerp(param_1,param_2,g_snd.time);
+    bVar3 = SND_GetIsOccluded(param_1);
+    iVar2 = (int)bVar3;
   }
-  SND_SetIsOccluded(psVar1,bVar4);
+  SND_SetIsOccluded(param_1,SUB41(iVar2,0));
   Profile_EndInternal((double *)0x0);
   Profile2_UpdateEntry(5);
   do {
@@ -11662,51 +11277,48 @@ int SND_SoundOcclusionTrace(snd_channel_info_t *param_1,int param_2)
       in_cr0 = 2;
     }
   } while (!(bool)(in_cr0 >> 1 & 1));
-  iVar2 = __restgprlr_27(bVar4);
   return iVar2;
 }
 
 
 // 82855BF8  SND_ParsePresetFileAndSetSoundOcclusion  (snd.cpp:8707)
 
+/* WARNING: Function: __savegprlr_20 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_20 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "SND_EQTYPE": Some values do not have unique names */
 
 bool SND_ParsePresetFileAndSetSoundOcclusion(StringTable *param_1,char *param_2)
 
 {
-  StringTable *pSVar1;
+  bool bVar1;
   char *pcVar2;
   int iVar3;
   SND_EQTYPE SVar4;
-  undefined1 uVar5;
-  ulonglong uVar6;
-  longlong lVar7;
-  SND_EQTYPE SVar8;
+  SND_EQTYPE SVar5;
+  double dVar6;
+  double dVar7;
+  double dVar8;
   double dVar9;
   double dVar10;
-  double dVar11;
-  double dVar12;
-  double dVar13;
   
-  uVar6 = (ulonglong)(int)param_2;
-  __savegprlr_20(param_1);
-  pSVar1 = (StringTable *)__savefpr_28();
-  if (pSVar1 == (StringTable *)0x0) {
+  if (param_1 == (StringTable *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x220e,0,"%s");
   }
-  if ((uVar6 & 0xffffffff) == 0) {
+  if (param_2 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x220f,0,"%s");
   }
-  lVar7 = 0;
-  SVar8 = SND_EQTYPE_FIRST;
-  if (0 < pSVar1->rowCount) {
-    dVar11 = 20000.0;
-    dVar12 = 0.0;
+  bVar1 = false;
+  SVar5 = SND_EQTYPE_FIRST;
+  if (0 < param_1->rowCount) {
+    dVar8 = 20000.0;
+    dVar9 = 0.0;
     do {
-      pcVar2 = StringTable_GetColumnValueForRow(pSVar1,SVar8,0);
-      iVar3 = I_stricmp(pcVar2,(char *)uVar6);
+      pcVar2 = StringTable_GetColumnValueForRow(param_1,SVar5,0);
+      iVar3 = I_stricmp(pcVar2,param_2);
       if (iVar3 == 0) {
-        pcVar2 = StringTable_GetColumnValueForRow(pSVar1,SVar8,1);
+        pcVar2 = StringTable_GetColumnValueForRow(param_1,SVar5,1);
         iVar3 = SND_GetEntChannelFromName(pcVar2);
         if (iVar3 == -1) {
           Com_PrintWarning(9,
@@ -11714,16 +11326,16 @@ bool SND_ParsePresetFileAndSetSoundOcclusion(StringTable *param_1,char *param_2)
                           );
         }
         else {
-          pcVar2 = StringTable_GetColumnValueForRow(pSVar1,SVar8,2);
-          dVar9 = atof(pcVar2);
-          dVar9 = (double)(float)dVar9;
-          if ((dVar9 < dVar12) || (dVar11 < dVar9)) {
+          pcVar2 = StringTable_GetColumnValueForRow(param_1,SVar5,2);
+          dVar6 = atof(pcVar2);
+          dVar6 = (double)(float)dVar6;
+          if ((dVar6 < dVar9) || (dVar8 < dVar6)) {
             Com_PrintWarning(9,
                              "WARNING: In occlusion preset file, \'%s\', preset \'%s\' has invalid frequency: \'%s\'.\n"
                             );
           }
           else {
-            pcVar2 = StringTable_GetColumnValueForRow(pSVar1,SVar8,3);
+            pcVar2 = StringTable_GetColumnValueForRow(param_1,SVar5,3);
             SVar4 = SND_GetEqTypeFromName(pcVar2);
             if (SVar4 == SND_EQTYPE_COUNT) {
               Com_PrintWarning(9,
@@ -11731,15 +11343,15 @@ bool SND_ParsePresetFileAndSetSoundOcclusion(StringTable *param_1,char *param_2)
                               );
             }
             else {
-              pcVar2 = StringTable_GetColumnValueForRow(pSVar1,SVar8,4);
-              dVar10 = atof(pcVar2);
-              dVar13 = (double)(float)dVar10;
-              SVar4 = SVar8;
-              pcVar2 = StringTable_GetColumnValueForRow(pSVar1,SVar8,5);
-              dVar10 = atof(pcVar2);
-              if (dVar12 < (double)(float)dVar10) {
-                lVar7 = 1;
-                SND_SetOcclusionFilter(iVar3,(float)dVar9,SVar4,(float)dVar13,(float)dVar10);
+              pcVar2 = StringTable_GetColumnValueForRow(param_1,SVar5,4);
+              dVar7 = atof(pcVar2);
+              dVar10 = (double)(float)dVar7;
+              SVar4 = SVar5;
+              pcVar2 = StringTable_GetColumnValueForRow(param_1,SVar5,5);
+              dVar7 = atof(pcVar2);
+              if (dVar9 < (double)(float)dVar7) {
+                bVar1 = true;
+                SND_SetOcclusionFilter(iVar3,(float)dVar6,SVar4,(float)dVar10,(float)dVar7);
               }
               else {
                 Com_PrintError(9,
@@ -11750,13 +11362,13 @@ bool SND_ParsePresetFileAndSetSoundOcclusion(StringTable *param_1,char *param_2)
           }
         }
       }
-      else if (lVar7 != 0) break;
-      SVar8 = SVar8 + SND_EQTYPE_HIGHPASS;
-    } while ((int)SVar8 < pSVar1->rowCount);
+      else if (bVar1) {
+        return true;
+      }
+      SVar5 = SVar5 + SND_EQTYPE_HIGHPASS;
+    } while ((int)SVar5 < param_1->rowCount);
   }
-  __restfpr_28(lVar7);
-  uVar5 = __restgprlr_20();
-  return (bool)uVar5;
+  return bVar1;
 }
 
 
@@ -11773,46 +11385,48 @@ char * SND_GetCurrentOcclusionPreset(void)
 
 // 82855E58  SND_SetSoundOcclusionPreset  (snd.cpp:8799)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void SND_SetSoundOcclusionPreset(char *param_1,int param_2)
 
 {
   char cVar1;
-  char *pcVar2;
-  bool bVar3;
-  char *pcVar4;
+  bool bVar2;
+  char *pcVar3;
   StringTable *local_30 [12];
   
-  pcVar2 = (char *)__savegprlr_28(param_1);
-  pcVar4 = pcVar2;
+  pcVar3 = param_1;
   do {
-    cVar1 = *pcVar4;
-    g_curOcclusionPresetName[(int)pcVar4 - (int)pcVar2] = cVar1;
-    pcVar4 = pcVar4 + 1;
+    cVar1 = *pcVar3;
+    pcVar3[(int)g_curOcclusionPresetName - (int)param_1] = cVar1;
+    pcVar3 = pcVar3 + 1;
   } while (cVar1 != '\0');
   SND_InitOcclusionInfo();
   SND_InitPainVisionOcclusionEntChanInfo();
   StringTable_GetAsset("soundtables/mp_common_occlusion.csv",local_30);
-  bVar3 = SND_ParsePresetFileAndSetSoundOcclusion(local_30[0],pcVar2);
-  if (!bVar3) {
+  bVar2 = SND_ParsePresetFileAndSetSoundOcclusion(local_30[0],param_1);
+  if (!bVar2) {
     if (param_2 != 0) {
-      bVar3 = SND_ParsePresetFileAndSetSoundOcclusion(local_30[0],"default");
-      if (!bVar3) {
+      bVar2 = SND_ParsePresetFileAndSetSoundOcclusion(local_30[0],"default");
+      if (!bVar2) {
         Com_PrintError(9,
                        "WARNING: In occlusion preset file, \'%s\', preset \'%s\' does not exist.\n")
         ;
       }
       builtin_strncpy(g_curOcclusionPresetName,"default",8);
-      __restgprlr_28();
       return;
     }
     Com_PrintError(9,"WARNING: In occlusion preset file, \'%s\', preset \'%s\' does not exist.\n");
   }
-  __restgprlr_28();
   return;
 }
 
 
 // 82855F38  SND_SV_InRange  (snd.cpp:8839)
+
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 
 int SND_SV_InRange(uint param_1,float *param_2,float (*param_3) [3],int param_4)
 
@@ -11820,116 +11434,103 @@ int SND_SV_InRange(uint param_1,float *param_2,float (*param_3) [3],int param_4)
   float fVar1;
   float fVar2;
   float fVar3;
-  uint uVar4;
-  float fVar5;
-  float fVar6;
-  float fVar7;
-  float fVar8;
-  float fVar9;
+  float fVar4;
+  float *pfVar5;
+  float *pfVar6;
+  float *pfVar7;
+  float *pfVar8;
+  float *pfVar9;
   float fVar10;
-  float fVar11;
-  float fVar12;
+  float *pfVar11;
+  float *pfVar12;
   float fVar13;
-  float fVar14;
-  float fVar15;
-  float fVar16;
-  int iVar17;
+  float *pfVar14;
+  float *pfVar15;
+  float *pfVar16;
+  float *pfVar17;
   float fVar18;
-  uint uVar19;
+  float fVar19;
   char *pcVar20;
   snd_alias_t *psVar21;
-  int iVar22;
-  bool bVar23;
-  ulonglong uVar24;
-  longlong lVar25;
-  longlong lVar26;
-  undefined8 uVar27;
-  longlong lVar28;
+  bool bVar22;
+  int iVar23;
+  float *pfVar24;
+  int iVar25;
   
-  lVar28 = (longlong)param_4;
-  lVar26 = (longlong)(int)param_3;
-  uVar19 = __savegprlr_28(param_1);
-  uVar4 = (int)lVar28 / 5 + ((int)lVar28 >> 0x1f);
-  uVar24 = (longlong)(int)uVar4 + (ulonglong)(uVar4 >> 0x1f);
-  lVar28 = lVar28 - (uVar24 + (uVar24 & 0x3fffffff) * 4);
-  pcVar20 = SL_ConvertToString(uVar19);
+  iVar25 = param_4 / 5 + (param_4 >> 0x1f);
+  iVar25 = param_4 + (iVar25 - (iVar25 >> 0x1f)) * -5;
+  pcVar20 = SL_ConvertToString(param_1);
   psVar21 = Com_PickSoundAlias(pcVar20);
   if (psVar21 == (snd_alias_t *)0x0) {
-    iVar22 = __restgprlr_28();
-    return iVar22;
+    return 0;
   }
-  bVar23 = SND_IsAliasChannel3D(psVar21->flags >> 9 & 0x3f);
-  if ((!bVar23) && ((psVar21->flags & 0x40U) == 0)) {
-    iVar22 = __restgprlr_28(1);
-    return iVar22;
+  bVar22 = SND_IsAliasChannel3D(psVar21->flags >> 9 & 0x3f);
+  if ((!bVar22) && ((psVar21->flags & 0x40U) == 0)) {
+    return 1;
   }
-  uVar24 = 0;
-  iVar22 = (int)lVar28;
-  fVar18 = 3.4028235e+38;
-  if (3 < iVar22) {
-    fVar1 = *param_2;
-    fVar2 = param_2[1];
-    lVar25 = lVar26 + -4;
-    fVar3 = param_2[2];
+  iVar23 = 0;
+  fVar1 = 3.4028235e+38;
+  if (3 < iVar25) {
+    fVar2 = *param_2;
+    fVar3 = param_2[1];
+    pfVar24 = param_3[-1] + 2;
+    fVar4 = param_2[2];
     do {
-      iVar17 = (int)lVar25;
-      uVar24 = uVar24 + 4;
-      fVar13 = *(float *)(iVar17 + 0xc) - fVar3;
-      fVar14 = *(float *)(iVar17 + 0x18) - fVar3;
-      fVar5 = *(float *)(iVar17 + 4) - fVar1;
-      fVar9 = *(float *)(iVar17 + 8) - fVar2;
-      fVar6 = *(float *)(iVar17 + 0x10) - fVar1;
-      fVar10 = *(float *)(iVar17 + 0x14) - fVar2;
-      fVar15 = *(float *)(iVar17 + 0x24) - fVar3;
-      fVar7 = *(float *)(iVar17 + 0x1c) - fVar1;
-      fVar8 = *(float *)(iVar17 + 0x28) - fVar1;
-      fVar11 = *(float *)(iVar17 + 0x20) - fVar2;
-      lVar25 = lVar25 + 0x30;
-      fVar16 = *(float *)lVar25 - fVar3;
-      fVar12 = *(float *)(iVar17 + 0x2c) - fVar2;
-      fVar5 = fVar9 * fVar9 + fVar5 * fVar5 + fVar13 * fVar13;
-      fVar6 = fVar10 * fVar10 + fVar6 * fVar6 + fVar14 * fVar14;
-      fVar7 = fVar11 * fVar11 + fVar7 * fVar7 + fVar15 * fVar15;
-      fVar8 = fVar12 * fVar12 + fVar8 * fVar8 + fVar16 * fVar16;
-      if (fVar5 - fVar18 < 0.0) {
-        fVar18 = fVar5;
+      pfVar5 = pfVar24 + 3;
+      iVar23 = iVar23 + 4;
+      pfVar6 = pfVar24 + 6;
+      pfVar7 = pfVar24 + 1;
+      pfVar8 = pfVar24 + 2;
+      pfVar9 = pfVar24 + 4;
+      pfVar11 = pfVar24 + 5;
+      pfVar12 = pfVar24 + 9;
+      pfVar14 = pfVar24 + 7;
+      pfVar15 = pfVar24 + 10;
+      pfVar16 = pfVar24 + 8;
+      pfVar17 = pfVar24 + 0xb;
+      pfVar24 = pfVar24 + 0xc;
+      fVar10 = (*pfVar8 - fVar3) * (*pfVar8 - fVar3) +
+               (*pfVar7 - fVar2) * (*pfVar7 - fVar2) + (*pfVar5 - fVar4) * (*pfVar5 - fVar4);
+      fVar13 = (*pfVar11 - fVar3) * (*pfVar11 - fVar3) +
+               (*pfVar9 - fVar2) * (*pfVar9 - fVar2) + (*pfVar6 - fVar4) * (*pfVar6 - fVar4);
+      fVar18 = (*pfVar16 - fVar3) * (*pfVar16 - fVar3) +
+               (*pfVar14 - fVar2) * (*pfVar14 - fVar2) + (*pfVar12 - fVar4) * (*pfVar12 - fVar4);
+      fVar19 = (*pfVar17 - fVar3) * (*pfVar17 - fVar3) +
+               (*pfVar15 - fVar2) * (*pfVar15 - fVar2) + (*pfVar24 - fVar4) * (*pfVar24 - fVar4);
+      if (fVar10 - fVar1 < 0.0) {
+        fVar1 = fVar10;
       }
-      if (fVar6 - fVar18 < 0.0) {
-        fVar18 = fVar6;
+      if (fVar13 - fVar1 < 0.0) {
+        fVar1 = fVar13;
       }
-      if (fVar7 - fVar18 < 0.0) {
-        fVar18 = fVar7;
+      if (fVar18 - fVar1 < 0.0) {
+        fVar1 = fVar18;
       }
-      if (fVar8 - fVar18 < 0.0) {
-        fVar18 = fVar8;
+      if (fVar19 - fVar1 < 0.0) {
+        fVar1 = fVar19;
       }
-    } while ((int)uVar24 < iVar22 + -3);
+    } while (iVar23 < iVar25 + -3);
   }
-  if ((int)uVar24 < iVar22) {
-    lVar28 = lVar28 - uVar24;
-    lVar26 = (uVar24 + (uVar24 & 0x7fffffff) * 2 & 0x3fffffff) * 4 + lVar26 + -4;
+  if (iVar23 < iVar25) {
+    iVar25 = iVar25 - iVar23;
+    pfVar24 = param_3[iVar23 + -1] + 2;
     do {
-      iVar22 = (int)lVar26;
-      fVar1 = *(float *)(iVar22 + 4) - *param_2;
-      lVar26 = lVar26 + 0xc;
-      fVar2 = *(float *)(iVar22 + 8) - param_2[1];
-      fVar3 = *(float *)lVar26 - param_2[2];
-      fVar1 = fVar2 * fVar2 + fVar1 * fVar1 + fVar3 * fVar3;
-      if (fVar1 - fVar18 < 0.0) {
-        fVar18 = fVar1;
+      pfVar5 = pfVar24 + 1;
+      pfVar6 = pfVar24 + 2;
+      pfVar24 = pfVar24 + 3;
+      fVar2 = (*pfVar6 - param_2[1]) * (*pfVar6 - param_2[1]) +
+              (*pfVar5 - *param_2) * (*pfVar5 - *param_2) +
+              (*pfVar24 - param_2[2]) * (*pfVar24 - param_2[2]);
+      if (fVar2 - fVar1 < 0.0) {
+        fVar1 = fVar2;
       }
-      lVar28 = lVar28 + -1;
-    } while (lVar28 != 0);
+      iVar25 = iVar25 + -1;
+    } while (iVar25 != 0);
   }
-  if ((psVar21->flags & 0x40U) == 0) {
-LAB_82856140:
-    uVar27 = 1;
-    if (fVar18 <= psVar21->distMax * psVar21->distMax) goto LAB_82856158;
+  if ((((psVar21->flags & 0x40U) != 0) && (fVar1 < psVar21->distMin * psVar21->distMin)) ||
+     (iVar25 = 1, psVar21->distMax * psVar21->distMax < fVar1)) {
+    iVar25 = 0;
   }
-  else if (psVar21->distMin * psVar21->distMin <= fVar18) goto LAB_82856140;
-  uVar27 = 0;
-LAB_82856158:
-  iVar22 = __restgprlr_28(uVar27);
-  return iVar22;
+  return iVar25;
 }
 

@@ -2,70 +2,69 @@
 
 // 82922A00  _getstream  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/stream.c:45)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 _iobuf * _getstream(void)
 
 {
   uint uVar1;
-  undefined4 *puVar2;
+  _iobuf *p_Var2;
   void **ppvVar3;
   int iVar4;
   void *pvVar5;
-  _iobuf *p_Var6;
-  int iVar7;
-  undefined4 *local_50;
+  int iVar6;
+  _iobuf *local_50;
   
-  __savegprlr_24();
-  local_50 = (undefined4 *)0x0;
+  local_50 = (_iobuf *)0x0;
   _lock(1);
-  iVar7 = 0;
+  iVar6 = 0;
   do {
     ppvVar3 = __piob;
-    puVar2 = local_50;
-    if (_nstream <= iVar7) {
+    p_Var2 = local_50;
+    if (_nstream <= iVar6) {
 LAB_82922b48:
-      local_50 = puVar2;
-      if (local_50 != (undefined4 *)0x0) {
-        local_50[3] = local_50[3] & 0x8000;
-        local_50[1] = 0;
-        local_50[2] = 0;
-        *local_50 = 0;
-        local_50[7] = 0;
-        local_50[4] = 0xffffffff;
+      local_50 = p_Var2;
+      if (local_50 != (_iobuf *)0x0) {
+        local_50->_flag = local_50->_flag & 0x8000;
+        local_50->_cnt = 0;
+        local_50->_base = (char *)0x0;
+        local_50->_ptr = (char *)0x0;
+        local_50->_tmpfname = (char *)0x0;
+        local_50->_file = -1;
       }
       FUN_82922b8c();
-      p_Var6 = (_iobuf *)__restgprlr_24(local_50);
-      return p_Var6;
+      return local_50;
     }
-    if (__piob[iVar7] == (void *)0x0) {
+    if (__piob[iVar6] == (void *)0x0) {
       pvVar5 = malloc(0x3c);
-      ppvVar3[iVar7] = pvVar5;
+      ppvVar3[iVar6] = pvVar5;
       if (pvVar5 != (void *)0x0) {
         iVar4 = __crtInitCritSecAndSpinCount
-                          ((_RTL_CRITICAL_SECTION *)((int)__piob[iVar7] + 0x20),4000);
+                          ((_RTL_CRITICAL_SECTION *)((int)__piob[iVar6] + 0x20),4000);
         if (iVar4 == 0) {
-          free(__piob[iVar7]);
-          __piob[iVar7] = (void *)0x0;
+          free(__piob[iVar6]);
+          __piob[iVar6] = (void *)0x0;
         }
         else {
-          RtlEnterCriticalSection(ZEXT48(__piob[iVar7]) + 0x20);
-          puVar2 = __piob[iVar7];
-          puVar2[3] = 0;
+          RtlEnterCriticalSection(ZEXT48(__piob[iVar6]) + 0x20);
+          p_Var2 = __piob[iVar6];
+          p_Var2->_flag = 0;
         }
       }
       goto LAB_82922b48;
     }
-    uVar1 = *(uint *)((int)__piob[iVar7] + 0xc);
+    uVar1 = *(uint *)((int)__piob[iVar6] + 0xc);
     if (((uVar1 & 0x83) == 0) && ((uVar1 & 0x8000) == 0)) {
-      if ((2 < iVar7) && ((iVar7 < 0x14 && (iVar4 = _mtinitlocknum(iVar7 + 0x10), iVar4 == 0))))
+      if ((2 < iVar6) && ((iVar6 < 0x14 && (iVar4 = _mtinitlocknum(iVar6 + 0x10), iVar4 == 0))))
       goto LAB_82922b48;
-      _lock_file2(iVar7,__piob[iVar7]);
-      puVar2 = __piob[iVar7];
-      if ((puVar2[3] & 0x83) == 0) goto LAB_82922b48;
-      _unlock_file2(iVar7,puVar2);
+      _lock_file2(iVar6,__piob[iVar6]);
+      p_Var2 = __piob[iVar6];
+      if ((p_Var2->_flag & 0x83U) == 0) goto LAB_82922b48;
+      _unlock_file2(iVar6,p_Var2);
     }
-    iVar7 = iVar7 + 1;
+    iVar6 = iVar6 + 1;
   } while( true );
 }
 

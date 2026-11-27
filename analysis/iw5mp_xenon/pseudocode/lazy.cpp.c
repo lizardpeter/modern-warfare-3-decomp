@@ -2,6 +2,8 @@
 
 // 82875CB0  SetPending_Split  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/lazy.cpp:52)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 
 ulong * D3D::SetPending_Split
@@ -9,57 +11,45 @@ ulong * D3D::SetPending_Split
                   ulong param_6)
 
 {
-  int iVar1;
+  ulonglong uVar1;
+  uint uVar3;
   ulonglong uVar2;
-  CDevice *this;
-  ulong *puVar3;
   longlong lVar4;
   ulonglong uVar5;
-  uint uVar7;
   ulonglong uVar6;
-  longlong lVar8;
-  ulonglong uVar9;
-  ulonglong uVar10;
-  ulonglong uVar11;
   
-  uVar5 = (ulonglong)(int)param_6;
-  uVar9 = (ulonglong)(int)param_5;
-  lVar4 = (longlong)(int)param_4;
-  lVar8 = (longlong)(int)param_3;
-  uVar10 = (ulonglong)(int)param_2;
-  this = (CDevice *)__savegprlr_26(param_1);
+  uVar5 = (ulonglong)(int)param_5;
+  lVar4 = (longlong)(int)param_3;
   while( true ) {
-    trapWord(6,uVar5,0);
-    uVar7 = (*(int *)&this->field_0x34 - (int)uVar10 >> 2) - 1;
-    iVar1 = (int)uVar7 / (int)uVar5;
-    trapWord(5,uVar5 & ~((((ulonglong)uVar7 & 0x7fffffff) << 1 | (ulonglong)(uVar7 >> 0x1f)) - 1),
-             0xffff);
-    if (0 < iVar1) {
-      uVar6 = (longlong)iVar1 * (longlong)(int)uVar5;
-      if ((uVar9 & 0xffffffff) <= (uVar6 & 0xffffffff)) {
-        uVar6 = uVar9;
+    trapWord(6,(longlong)(int)param_6,0);
+    uVar3 = (*(int *)&param_1->field_0x34 - (int)param_2 >> 2) - 1;
+    trapWord(5,(longlong)(int)param_6 &
+               ~((((ulonglong)uVar3 & 0x7fffffff) << 1 | (ulonglong)(uVar3 >> 0x1f)) - 1),0xffff);
+    if (0 < (int)uVar3 / (int)param_6) {
+      uVar2 = (longlong)((int)uVar3 / (int)param_6) * (longlong)(int)param_6;
+      if ((uVar5 & 0xffffffff) <= (uVar2 & 0xffffffff)) {
+        uVar2 = uVar5;
       }
-      uVar9 = uVar9 - uVar6;
-      uVar10 = uVar10 + 4;
-      *(uint *)uVar10 = (uint)((uVar6 - 1 & 0xffffffff) << 0x10) | (uint)lVar8;
-      uVar11 = uVar6;
-      uVar2 = uVar6 & 0xffffffff;
-      while (uVar2 != 0) {
-        lVar4 = lVar4 + 4;
-        uVar10 = uVar10 + 4;
-        *(undefined4 *)uVar10 = *(undefined4 *)lVar4;
-        uVar11 = uVar11 - 1;
-        uVar2 = uVar11;
+      uVar5 = uVar5 - uVar2;
+      param_2 = param_2 + 1;
+      *param_2 = (uint)((uVar2 - 1 & 0xffffffff) << 0x10) | (uint)lVar4;
+      uVar6 = uVar2;
+      uVar1 = uVar2 & 0xffffffff;
+      while (uVar1 != 0) {
+        param_4 = param_4 + 1;
+        param_2 = param_2 + 1;
+        *param_2 = *param_4;
+        uVar6 = uVar6 - 1;
+        uVar1 = uVar6;
       }
-      lVar8 = uVar6 + lVar8;
+      lVar4 = uVar2 + lVar4;
     }
-    if ((uVar9 & 0xffffffff) == 0) break;
-    *(int *)&this->field_0x30 = (int)uVar10;
-    CDevice::KickOff(this);
-    uVar10 = (ulonglong)*(uint *)&this->field_0x30;
+    if ((uVar5 & 0xffffffff) == 0) break;
+    *(ulong **)&param_1->field_0x30 = param_2;
+    CDevice::KickOff(param_1);
+    param_2 = *(ulong **)&param_1->field_0x30;
   }
-  puVar3 = (ulong *)__restgprlr_26(uVar10);
-  return puVar3;
+  return param_2;
 }
 
 
@@ -159,259 +149,246 @@ LAB_82875f50:
 
 // 82875F78  SetPending_Predicated  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/lazy.cpp:189)
 
+/* WARNING: Function: __savegprlr_20 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_20 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 
 ulong64 D3D::SetPending_Predicated(CDevice *param_1,ulong64 param_2,ulong param_3)
 
 {
-  ulonglong uVar1;
-  bool bVar2;
-  CDevice *this;
+  bool bVar1;
+  uint uVar2;
+  ulonglong uVar3;
   uint *puVar4;
-  ulong64 uVar3;
+  uint uVar6;
   ulonglong uVar5;
-  uint *puVar6;
-  uint uVar7;
+  uint *puVar7;
   uint uVar8;
   uint uVar9;
-  ulonglong uVar11;
-  ulonglong uVar12;
-  ulonglong uVar13;
+  ulong uVar10;
+  uint uVar12;
   uint local_70;
-  uint uVar10;
+  ulong uVar11;
   
-  uVar11 = (ulonglong)(int)param_3;
-  this = (CDevice *)__savegprlr_20(param_1);
-  puVar4 = *(uint **)&this->field_0x30;
-  if (*(uint **)&this->field_0x38 < puVar4) {
-    puVar4 = CDevice::KickOff(this);
+  puVar4 = *(uint **)&param_1->field_0x30;
+  if (*(uint **)&param_1->field_0x38 < puVar4) {
+    puVar4 = CDevice::KickOff(param_1);
   }
+  uVar11 = 0xffffffff;
   uVar10 = 0xffffffff;
   uVar9 = 0xffffffff;
   uVar8 = 0xffffffff;
-  uVar7 = 0xffffffff;
   if ((param_2 & 0x100) == 0) goto LAB_828761f4;
-  uVar9 = uVar10;
-  if (this->m_OnePassZPass) {
-    if (this->m_TilingSurfaceOverride) {
-      bVar2 = true;
+  uVar10 = uVar11;
+  if (param_1->m_OnePassZPass) {
+    if (param_1->m_TilingSurfaceOverride) {
+      bVar1 = true;
     }
-    else if ((((this->m_TilingBracket) &&
-              ((this->m_pTileSurfaces[0] == this->m_pRenderTarget[0] ||
-               (this->m_pRenderTarget[0] == (D3DSurface *)0x0)))) &&
-             ((this->m_pTileSurfaces[1] == this->m_pRenderTarget[1] ||
-              (this->m_pRenderTarget[1] == (D3DSurface *)0x0)))) &&
-            ((((this->m_pTileSurfaces[2] == this->m_pRenderTarget[2] ||
-               (this->m_pRenderTarget[2] == (D3DSurface *)0x0)) &&
-              ((this->m_pTileSurfaces[3] == this->m_pRenderTarget[3] ||
-               (this->m_pRenderTarget[3] == (D3DSurface *)0x0)))) &&
-             ((this->m_pTileDepthSurface == this->m_pDepthStencilSurface ||
-              (this->m_pDepthStencilSurface == (D3DSurface *)0x0)))))) {
-      bVar2 = true;
+    else if ((((param_1->m_TilingBracket) &&
+              ((param_1->m_pTileSurfaces[0] == param_1->m_pRenderTarget[0] ||
+               (param_1->m_pRenderTarget[0] == (D3DSurface *)0x0)))) &&
+             ((param_1->m_pTileSurfaces[1] == param_1->m_pRenderTarget[1] ||
+              (param_1->m_pRenderTarget[1] == (D3DSurface *)0x0)))) &&
+            ((((param_1->m_pTileSurfaces[2] == param_1->m_pRenderTarget[2] ||
+               (param_1->m_pRenderTarget[2] == (D3DSurface *)0x0)) &&
+              ((param_1->m_pTileSurfaces[3] == param_1->m_pRenderTarget[3] ||
+               (param_1->m_pRenderTarget[3] == (D3DSurface *)0x0)))) &&
+             ((param_1->m_pTileDepthSurface == param_1->m_pDepthStencilSurface ||
+              (param_1->m_pDepthStencilSurface == (D3DSurface *)0x0)))))) {
+      bVar1 = true;
     }
     else {
-      bVar2 = false;
+      bVar1 = false;
     }
-    if (!bVar2) goto LAB_828761b4;
+    if (!bVar1) goto LAB_828761b4;
     puVar4[1] = 0xc0006100;
     puVar4 = puVar4 + 2;
     *puVar4 = 0;
-    uVar13 = (ulonglong)this->m_Tiles - 1;
-    uVar5 = uVar11;
-    if ((longlong)uVar13 < 0) {
-      uVar12 = (ulonglong)local_70;
+    uVar5 = (ulonglong)param_1->m_Tiles;
+    while (uVar3 = uVar5 - 1, -1 < (longlong)uVar3) {
+      uVar6 = (param_1->m_StatePacket).HiZWriteEnable;
+      uVar2 = *(int *)(&param_1->field_0x0 + (int)((uVar5 + 0xd0b & 0xffffffff) << 2)) << 0x11;
+      uVar12 = uVar2 | param_3 & 0x1ffff;
+      if ((uVar6 == 0) ||
+         ((local_70 = uVar12, uVar6 == 2 &&
+          (((int)uVar3 != 0 || (!param_1->m_FirstTileInheritsDepthBuffer)))))) {
+        local_70 = uVar2 | param_3 & 0x1fffe;
+      }
+      puVar4[1] = 0xc0006000;
+      puVar4[2] = 3 << ((uint)((uVar3 & 0xffffffff) << 1) & 0x3e);
+      puVar4[3] = 0xc0012d01;
+      puVar4[4] = 0x40203;
+      puVar4 = puVar4 + 5;
+      *puVar4 = local_70;
+      *(uint **)&param_1->field_0x30 = puVar4;
+      param_3 = uVar12;
+      uVar5 = uVar3;
+      if (*(uint **)&param_1->field_0x38 < puVar4) {
+        puVar4 = CDevice::KickOff(param_1);
+      }
     }
-    else {
-      do {
-        uVar10 = (this->m_StatePacket).HiZWriteEnable;
-        uVar1 = ((ulonglong)*(uint *)(&this->field_0x0 + (int)((uVar13 + 0xd0c & 0xffffffff) << 2))
-                & 0x7fff) << 0x11;
-        uVar11 = uVar1 | uVar5 & 0xffffffff0001ffff;
-        if ((uVar10 == 0) ||
-           ((uVar12 = uVar11, uVar10 == 2 &&
-            (((int)uVar13 != 0 || (!this->m_FirstTileInheritsDepthBuffer)))))) {
-          uVar12 = uVar1 | uVar5 & 0x1fffe;
-        }
-        puVar4[1] = 0xc0006000;
-        puVar4[2] = 3 << ((uint)((uVar13 & 0xffffffff) << 1) & 0x3e);
-        puVar4[3] = 0xc0012d01;
-        puVar4[4] = 0x40203;
-        puVar4 = puVar4 + 5;
-        *puVar4 = (uint)uVar12;
-        *(uint **)&this->field_0x30 = puVar4;
-        if (*(uint **)&this->field_0x38 < puVar4) {
-          puVar4 = CDevice::KickOff(this);
-        }
-        uVar13 = uVar13 - 1;
-        uVar5 = uVar11;
-      } while (-1 < (longlong)uVar13);
-    }
-    if (((uVar12 & 0xffffffff) != (uVar11 & 0xffffffff)) && (this->m_ZPassBracket)) {
+    if ((local_70 != param_3) && (param_1->m_ZPassBracket)) {
       puVar4[1] = 0xc0006000;
       puVar4[2] = 1;
       puVar4[3] = 0xc0012d01;
       puVar4[4] = 0x40203;
       puVar4 = puVar4 + 5;
-      *puVar4 = (uint)uVar11;
+      *puVar4 = param_3;
     }
     puVar4[1] = 0xc0006000;
-    puVar4[2] = this->m_PredicationMaskLo;
+    puVar4[2] = param_1->m_PredicationMaskLo;
     puVar4[3] = 0xc0006100;
     puVar4 = puVar4 + 4;
-    *puVar4 = this->m_PredicationMaskHi;
+    *puVar4 = param_1->m_PredicationMaskHi;
   }
   else {
 LAB_828761b4:
-    uVar5 = uVar11;
-    if ((this->m_StatePacket).HiZWriteEnable == 0) {
-      uVar5 = uVar11 & 0xfffffffe;
+    uVar6 = param_3;
+    if ((param_1->m_StatePacket).HiZWriteEnable == 0) {
+      uVar6 = param_3 & 0xfffffffe;
     }
     puVar4[1] = 0x2203;
     puVar4 = puVar4 + 2;
-    *puVar4 = (uint)uVar5;
-    if (((uVar5 & 0xffffffff) != (uVar11 & 0xffffffff)) && (this->m_ZPassBracket)) {
-      uVar9 = (uint)uVar11;
+    *puVar4 = uVar6;
+    if ((uVar6 != param_3) && (param_1->m_ZPassBracket)) {
+      uVar10 = param_3;
     }
   }
   param_2 = param_2 & 0xfffffffffffffeff;
 LAB_828761f4:
-  uVar11 = *(ulonglong *)&this->field_0x28 & param_2;
-  if ((uVar11 & 0x200000000000000) != 0) {
-    uVar8 = *(uint *)&this->field_0x2880;
+  uVar5 = *(ulonglong *)&param_1->field_0x28 & param_2;
+  if ((uVar5 & 0x200000000000000) != 0) {
+    uVar9 = *(uint *)&param_1->field_0x2880;
     puVar4[1] = 0x2000;
     param_2 = param_2 & 0xfdffffffffffffff;
     puVar4 = puVar4 + 2;
-    *puVar4 = uVar8;
-    uVar8 = uVar8 & 0xffffc000 | this->m_TileZPassSurfacePitch & 0x3fff;
+    *puVar4 = uVar9;
+    uVar9 = uVar9 & 0xffffc000 | param_1->m_TileZPassSurfacePitch & 0x3fff;
   }
-  if ((uVar11 & 0x2000000000) != 0) {
+  if ((uVar5 & 0x2000000000) != 0) {
     puVar4[1] = 0x2104;
-    uVar7 = 0;
+    uVar8 = 0;
     param_2 = param_2 & 0xffffffdfffffffff;
     puVar4 = puVar4 + 2;
-    *puVar4 = *(uint *)&this->field_0x28dc;
+    *puVar4 = *(uint *)&param_1->field_0x28dc;
   }
-  if ((uVar7 & uVar8 & uVar9) != 0xffffffff) {
+  if ((uVar8 & uVar9 & uVar10) != 0xffffffff) {
     puVar4[1] = 0xc0006100;
     puVar4[2] = 0;
     puVar4[3] = 0xc0006000;
-    puVar6 = puVar4 + 4;
-    *puVar6 = 0x15555555;
-    if (uVar9 != 0xffffffff) {
+    puVar7 = puVar4 + 4;
+    *puVar7 = 0x15555555;
+    if (uVar10 != 0xffffffff) {
       puVar4[5] = 0xc0012d01;
       puVar4[6] = 0x40203;
-      puVar6 = puVar4 + 7;
-      *puVar6 = uVar9;
+      puVar7 = puVar4 + 7;
+      *puVar7 = uVar10;
+    }
+    if (uVar9 != 0xffffffff) {
+      puVar7[1] = 0xc0012d01;
+      puVar7[2] = 0x40000;
+      puVar7 = puVar7 + 3;
+      *puVar7 = uVar9;
     }
     if (uVar8 != 0xffffffff) {
-      puVar6[1] = 0xc0012d01;
-      puVar6[2] = 0x40000;
-      puVar6 = puVar6 + 3;
-      *puVar6 = uVar8;
+      puVar7[1] = 0xc0012d01;
+      puVar7[2] = 0x40104;
+      puVar7 = puVar7 + 3;
+      *puVar7 = uVar8;
     }
-    if (uVar7 != 0xffffffff) {
-      puVar6[1] = 0xc0012d01;
-      puVar6[2] = 0x40104;
-      puVar6 = puVar6 + 3;
-      *puVar6 = uVar7;
-    }
-    puVar6[1] = 0xc0006000;
-    puVar6[2] = this->m_PredicationMaskLo;
-    puVar6[3] = 0xc0006100;
-    puVar4 = puVar6 + 4;
-    *puVar4 = this->m_PredicationMaskHi;
+    puVar7[1] = 0xc0006000;
+    puVar7[2] = param_1->m_PredicationMaskLo;
+    puVar7[3] = 0xc0006100;
+    puVar4 = puVar7 + 4;
+    *puVar4 = param_1->m_PredicationMaskHi;
   }
-  *(uint **)&this->field_0x30 = puVar4;
-  uVar3 = __restgprlr_20(param_2);
-  return uVar3;
+  *(uint **)&param_1->field_0x30 = puVar4;
+  return param_2;
 }
 
 
 // 82876318  SetPending_RenderStates  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/lazy.cpp:416)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 
 void D3D::SetPending_RenderStates(CDevice *param_1,ulong64 param_2,ulong param_3,void *param_4)
 
 {
-  CDevice *pCVar1;
-  ulong *puVar2;
-  ulonglong uVar3;
-  ulong uVar4;
+  ulong *puVar1;
+  ulonglong uVar2;
+  ulong uVar3;
+  longlong lVar4;
   longlong lVar5;
   longlong lVar6;
   longlong lVar7;
   longlong lVar8;
-  longlong lVar9;
   
-  lVar8 = (longlong)(int)param_4;
-  lVar7 = (longlong)(int)param_3;
-  pCVar1 = (CDevice *)__savegprlr_26(param_1);
-  uVar3 = (ulonglong)*(uint *)&pCVar1->field_0x30;
-  lVar8 = lVar8 + -4;
+  lVar6 = (longlong)(int)param_3;
+  uVar2 = (ulonglong)*(uint *)&param_1->field_0x30;
+  lVar7 = (longlong)(int)param_4 + -4;
   do {
-    lVar5 = LZCOUNT(param_2);
-    param_2 = param_2 << lVar5;
-    lVar8 = lVar5 * 4 + lVar8;
-    lVar9 = LZCOUNT(~param_2);
-    uVar4 = (ulong)(lVar5 + lVar7);
-    if ((lVar9 * 4 + uVar3 & 0xffffffff) < (ulonglong)*(uint *)&pCVar1->field_0x34) {
-      uVar3 = uVar3 + 4;
-      *(uint *)uVar3 = (uint)((lVar9 - 1U & 0xffffffff) << 0x10) | uVar4;
-      lVar6 = lVar9;
+    lVar4 = LZCOUNT(param_2);
+    param_2 = param_2 << lVar4;
+    lVar7 = lVar4 * 4 + lVar7;
+    lVar8 = LZCOUNT(~param_2);
+    uVar3 = (ulong)(lVar4 + lVar6);
+    if ((lVar8 * 4 + uVar2 & 0xffffffff) < (ulonglong)*(uint *)&param_1->field_0x34) {
+      uVar2 = uVar2 + 4;
+      *(uint *)uVar2 = (uint)((lVar8 - 1U & 0xffffffff) << 0x10) | uVar3;
+      lVar5 = lVar8;
       do {
-        lVar8 = lVar8 + 4;
-        lVar6 = lVar6 + -1;
+        lVar7 = lVar7 + 4;
+        lVar5 = lVar5 + -1;
         param_2 = param_2 << 1;
-        uVar3 = uVar3 + 4;
-        *(undefined4 *)uVar3 = *(undefined4 *)lVar8;
-      } while (lVar6 != 0);
+        uVar2 = uVar2 + 4;
+        *(undefined4 *)uVar2 = *(undefined4 *)lVar7;
+      } while (lVar5 != 0);
     }
     else {
-      puVar2 = SetPending_Split(pCVar1,(ulong *)uVar3,uVar4,(ulong *)lVar8,(ulong)lVar9,1);
-      uVar3 = (ulonglong)(int)puVar2;
-      lVar8 = lVar9 * 4 + lVar8;
-      param_2 = param_2 << lVar9;
+      puVar1 = SetPending_Split(param_1,(ulong *)uVar2,uVar3,(ulong *)lVar7,(ulong)lVar8,1);
+      uVar2 = (ulonglong)(int)puVar1;
+      lVar7 = lVar8 * 4 + lVar7;
+      param_2 = param_2 << lVar8;
     }
-    lVar7 = lVar9 + lVar5 + lVar7;
+    lVar6 = lVar8 + lVar4 + lVar6;
   } while (param_2 != 0);
-  *(int *)&pCVar1->field_0x30 = (int)uVar3;
-  __restgprlr_26();
+  *(int *)&param_1->field_0x30 = (int)uVar2;
   return;
 }
 
 
 // 828763E8  SetPending_ClipPlanes  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/lazy.cpp:481)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 
 void D3D::SetPending_ClipPlanes(CDevice *param_1,ulong64 param_2)
 
 {
-  CDevice *this;
   int iVar1;
-  longlong lVar2;
-  ulonglong uVar3;
-  ulong *puVar4;
-  ulong uVar5;
-  longlong lVar6;
-  undefined8 uVar7;
+  ulonglong uVar2;
+  ulong *puVar3;
+  ulong uVar4;
+  longlong lVar5;
+  undefined8 uVar6;
+  longlong lVar7;
   longlong lVar8;
   longlong lVar9;
   
-  lVar2 = __savegprlr_25(param_1);
-  this = (CDevice *)lVar2;
-  lVar8 = 0x2388;
-  uVar3 = (ulonglong)*(uint *)&this->field_0x30;
-  if (*(uint *)&this->field_0x38 < uVar3) {
-    puVar4 = CDevice::KickOff(this);
-    uVar3 = (ulonglong)(int)puVar4;
+  lVar7 = 0x2388;
+  uVar2 = (ulonglong)*(uint *)&param_1->field_0x30;
+  if (*(uint *)&param_1->field_0x38 < uVar2) {
+    puVar3 = CDevice::KickOff(param_1);
+    uVar2 = (ulonglong)(int)puVar3;
   }
-  iVar1 = (int)uVar3;
+  iVar1 = (int)uVar2;
   *(undefined4 *)(iVar1 + 4) = 0x2007;
-  *(undefined4 *)(iVar1 + 8) = *(undefined4 *)&this->field_0x289c;
+  *(undefined4 *)(iVar1 + 8) = *(undefined4 *)&param_1->field_0x289c;
   *(undefined4 *)(iVar1 + 0xc) = 0xa31;
-  lVar2 = lVar2 + 0x281c;
+  lVar9 = (longlong)(int)param_1 + 0x281c;
   *(undefined4 *)(iVar1 + 0x10) = 0x10000;
   *(undefined4 *)(iVar1 + 0x14) = 0x10a2f;
   *(undefined4 *)(iVar1 + 0x18) = 0;
@@ -421,128 +398,127 @@ void D3D::SetPending_ClipPlanes(CDevice *param_1,ulong64 param_2)
   *(undefined4 *)(iVar1 + 0x28) = 0xa31;
   *(undefined4 *)(iVar1 + 0x2c) = 0;
   *(undefined4 *)(iVar1 + 0x30) = 0x80000000;
-  uVar3 = uVar3 + 0x34;
-  *(undefined4 *)uVar3 = 8;
-  *(undefined4 **)&this->field_0x30 = (undefined4 *)uVar3;
+  uVar2 = uVar2 + 0x34;
+  *(undefined4 *)uVar2 = 8;
+  *(undefined4 **)&param_1->field_0x30 = (undefined4 *)uVar2;
   do {
-    lVar6 = LZCOUNT(param_2);
-    param_2 = param_2 << lVar6;
-    lVar2 = lVar6 * 0x10 + lVar2;
-    lVar9 = LZCOUNT(~param_2);
-    lVar8 = lVar6 * 4 + lVar8;
-    lVar6 = lVar9 * 4;
-    uVar5 = (ulong)lVar8;
-    if ((lVar9 * 0x10 + uVar3 + 4 & 0xffffffff) < (ulonglong)*(uint *)&this->field_0x34) {
-      ((ulong *)uVar3)[1] = 0x80000000;
-      uVar3 = (uVar3 & 7) + uVar3 + 4;
-      *(uint *)uVar3 = (uint)((lVar6 - 1U & 0xffffffff) << 0x10) | uVar5;
+    lVar5 = LZCOUNT(param_2);
+    param_2 = param_2 << lVar5;
+    lVar9 = lVar5 * 0x10 + lVar9;
+    lVar8 = LZCOUNT(~param_2);
+    lVar7 = lVar5 * 4 + lVar7;
+    lVar5 = lVar8 * 4;
+    uVar4 = (ulong)lVar7;
+    if ((lVar8 * 0x10 + uVar2 + 4 & 0xffffffff) < (ulonglong)*(uint *)&param_1->field_0x34) {
+      ((ulong *)uVar2)[1] = 0x80000000;
+      uVar2 = (uVar2 & 7) + uVar2 + 4;
+      *(uint *)uVar2 = (uint)((lVar5 - 1U & 0xffffffff) << 0x10) | uVar4;
       do {
-        iVar1 = (int)lVar2;
-        lVar9 = lVar9 + -1;
-        uVar7 = *(undefined8 *)(iVar1 + 0xc);
-        lVar2 = lVar2 + 0x10;
+        iVar1 = (int)lVar9;
+        lVar8 = lVar8 + -1;
+        uVar6 = *(undefined8 *)(iVar1 + 0xc);
+        lVar9 = lVar9 + 0x10;
         param_2 = param_2 << 1;
-        *(undefined8 *)((int)uVar3 + 4) = *(undefined8 *)(iVar1 + 4);
-        *(undefined8 *)((int)uVar3 + 0xc) = uVar7;
-        uVar3 = uVar3 + 0x10;
-      } while (lVar9 != 0);
+        *(undefined8 *)((int)uVar2 + 4) = *(undefined8 *)(iVar1 + 4);
+        *(undefined8 *)((int)uVar2 + 0xc) = uVar6;
+        uVar2 = uVar2 + 0x10;
+      } while (lVar8 != 0);
     }
     else {
-      puVar4 = SetPending_Split(this,(ulong *)uVar3,uVar5,(ulong *)lVar2,(ulong)lVar6,4);
-      uVar3 = (ulonglong)(int)puVar4;
-      lVar2 = lVar9 * 0x10 + lVar2;
-      param_2 = param_2 << lVar9;
+      puVar3 = SetPending_Split(param_1,(ulong *)uVar2,uVar4,(ulong *)lVar9,(ulong)lVar5,4);
+      uVar2 = (ulonglong)(int)puVar3;
+      lVar9 = lVar8 * 0x10 + lVar9;
+      param_2 = param_2 << lVar8;
     }
-    lVar8 = lVar6 + lVar8;
+    lVar7 = lVar5 + lVar7;
   } while (param_2 != 0);
-  *(int *)&this->field_0x30 = (int)uVar3;
-  __restgprlr_25();
+  *(int *)&param_1->field_0x30 = (int)uVar2;
   return;
 }
 
 
 // 82876570  SetPending_FetchConstants  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/lazy.cpp:612)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 
 void D3D::SetPending_FetchConstants(CDevice *param_1,ulong64 param_2)
 
 {
-  CDevice *this;
   int iVar1;
   int iVar2;
-  longlong lVar3;
-  ulong *puVar4;
-  ulonglong uVar5;
+  ulong *puVar3;
+  ulonglong uVar4;
+  undefined8 uVar5;
   undefined8 uVar6;
-  undefined8 uVar7;
+  longlong lVar7;
   longlong lVar8;
   longlong lVar9;
   longlong lVar10;
   longlong lVar11;
   longlong lVar12;
   
-  lVar3 = __savegprlr_26(param_1);
-  this = (CDevice *)lVar3;
-  uVar5 = (ulonglong)*(uint *)&this->field_0x30;
-  lVar9 = 0x4800;
-  lVar3 = lVar3 + 0x47c;
+  uVar4 = (ulonglong)*(uint *)&param_1->field_0x30;
+  lVar8 = 0x4800;
+  lVar12 = (longlong)(int)param_1 + 0x47c;
   do {
     while( true ) {
-      lVar8 = LZCOUNT(param_2);
-      param_2 = param_2 << lVar8;
-      lVar11 = lVar8 * 6 + lVar9;
-      lVar10 = LZCOUNT(~param_2);
-      lVar12 = lVar10 * 6;
-      lVar3 = lVar8 * 0x18 + lVar3;
-      if (((lVar12 + 5) * 4 + uVar5 & 0xffffffff) < (ulonglong)*(uint *)&this->field_0x34) break;
-      puVar4 = SetPending_Split(this,(ulong *)uVar5,(ulong)lVar11,(ulong *)lVar3,(ulong)lVar12,6);
-      uVar5 = (ulonglong)(int)puVar4;
-      param_2 = param_2 << lVar10;
-      lVar3 = lVar10 * 0x18 + lVar3;
-      lVar9 = lVar12 + lVar11;
+      lVar7 = LZCOUNT(param_2);
+      param_2 = param_2 << lVar7;
+      lVar10 = lVar7 * 6 + lVar8;
+      lVar9 = LZCOUNT(~param_2);
+      lVar11 = lVar9 * 6;
+      lVar12 = lVar7 * 0x18 + lVar12;
+      if (((lVar11 + 5) * 4 + uVar4 & 0xffffffff) < (ulonglong)*(uint *)&param_1->field_0x34) break;
+      puVar3 = SetPending_Split(param_1,(ulong *)uVar4,(ulong)lVar10,(ulong *)lVar12,(ulong)lVar11,6
+                               );
+      uVar4 = (ulonglong)(int)puVar3;
+      param_2 = param_2 << lVar9;
+      lVar12 = lVar9 * 0x18 + lVar12;
+      lVar8 = lVar11 + lVar10;
       if (param_2 == 0) {
-        *(ulong **)&this->field_0x30 = puVar4;
-        if (*(ulong **)&this->field_0x38 < puVar4) {
-          puVar4 = CDevice::KickOff(this);
+        *(ulong **)&param_1->field_0x30 = puVar3;
+        if (*(ulong **)&param_1->field_0x38 < puVar3) {
+          puVar3 = CDevice::KickOff(param_1);
         }
-        puVar4[1] = 0x25000;
-        puVar4[2] = 0;
-        puVar4[3] = 0;
-        puVar4[4] = 0;
-        *(ulong **)&this->field_0x30 = puVar4 + 4;
-        goto LAB_828766c4;
+        puVar3[1] = 0x25000;
+        puVar3[2] = 0;
+        puVar3[3] = 0;
+        puVar3[4] = 0;
+        *(ulong **)&param_1->field_0x30 = puVar3 + 4;
+        return;
       }
     }
-    ((ulong *)uVar5)[1] = 0x80000000;
-    lVar9 = lVar12 + lVar11;
-    uVar5 = (uVar5 & 7) + uVar5 + 4;
-    *(uint *)uVar5 = (uint)((lVar12 - 1U & 0xffffffff) << 0x10) | (ulong)lVar11;
+    ((ulong *)uVar4)[1] = 0x80000000;
+    lVar8 = lVar11 + lVar10;
+    uVar4 = (uVar4 & 7) + uVar4 + 4;
+    *(uint *)uVar4 = (uint)((lVar11 - 1U & 0xffffffff) << 0x10) | (ulong)lVar10;
     do {
-      iVar1 = (int)lVar3;
-      lVar10 = lVar10 + -1;
-      uVar7 = *(undefined8 *)(iVar1 + 0xc);
+      iVar1 = (int)lVar12;
+      lVar9 = lVar9 + -1;
+      uVar6 = *(undefined8 *)(iVar1 + 0xc);
       param_2 = param_2 << 1;
-      uVar6 = *(undefined8 *)(iVar1 + 0x14);
-      lVar3 = lVar3 + 0x18;
-      iVar2 = (int)uVar5;
+      uVar5 = *(undefined8 *)(iVar1 + 0x14);
+      lVar12 = lVar12 + 0x18;
+      iVar2 = (int)uVar4;
       *(undefined8 *)(iVar2 + 4) = *(undefined8 *)(iVar1 + 4);
-      *(undefined8 *)(iVar2 + 0xc) = uVar7;
-      *(undefined8 *)(iVar2 + 0x14) = uVar6;
-      uVar5 = uVar5 + 0x18;
-    } while (lVar10 != 0);
+      *(undefined8 *)(iVar2 + 0xc) = uVar6;
+      *(undefined8 *)(iVar2 + 0x14) = uVar5;
+      uVar4 = uVar4 + 0x18;
+    } while (lVar9 != 0);
   } while (param_2 != 0);
-  *(int *)&this->field_0x30 = iVar2 + 0x28;
+  *(int *)&param_1->field_0x30 = iVar2 + 0x28;
   *(undefined8 *)(iVar2 + 0x1c) = 0x2500000000000;
   *(undefined8 *)(iVar2 + 0x24) = 0x2500000000000;
-LAB_828766c4:
-  __restgprlr_26();
   return;
 }
 
 
 // 828766D0  SetPending_AluConstants  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/lazy.cpp:767)
 
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 
 void D3D::SetPending_AluConstants(CDevice *param_1,ulong64 param_2,ulong param_3,void *param_4)
@@ -552,15 +528,15 @@ void D3D::SetPending_AluConstants(CDevice *param_1,ulong64 param_2,ulong param_3
   int iVar2;
   undefined4 *puVar3;
   ulonglong uVar4;
-  CDevice *pCVar5;
-  ulong *puVar6;
-  ulonglong uVar7;
-  ulong uVar8;
+  ulong *puVar5;
+  ulonglong uVar6;
+  ulong uVar7;
+  longlong lVar8;
   longlong lVar9;
   longlong lVar10;
   longlong lVar11;
   longlong lVar12;
-  longlong lVar13;
+  undefined4 uVar13;
   undefined4 uVar14;
   undefined4 uVar15;
   undefined4 uVar16;
@@ -575,99 +551,95 @@ void D3D::SetPending_AluConstants(CDevice *param_1,ulong64 param_2,ulong param_3
   undefined4 uVar25;
   undefined4 uVar26;
   undefined4 uVar27;
-  undefined4 uVar28;
   
-  lVar13 = (longlong)(int)param_4;
-  lVar10 = (longlong)(int)param_3;
-  pCVar5 = (CDevice *)__savegprlr_22(param_1);
-  uVar7 = (ulonglong)*(uint *)&pCVar5->field_0x30;
-  lVar13 = lVar13 + -4;
+  lVar9 = (longlong)(int)param_3;
+  uVar6 = (ulonglong)*(uint *)&param_1->field_0x30;
+  lVar12 = (longlong)(int)param_4 + -4;
   do {
-    lVar9 = LZCOUNT(param_2);
-    param_2 = param_2 << lVar9;
-    lVar13 = lVar9 * 0x40 + lVar13;
-    lVar11 = LZCOUNT(~param_2);
-    lVar12 = lVar11 * 0x10;
-    lVar10 = lVar9 * 0x10 + lVar10;
-    puVar6 = (ulong *)uVar7;
-    uVar8 = (ulong)lVar10;
-    if (((lVar12 + 3) * 4 + uVar7 & 0xffffffff) < (ulonglong)*(uint *)&pCVar5->field_0x34) {
-      uVar4 = uVar7 & 0xf;
+    lVar8 = LZCOUNT(param_2);
+    param_2 = param_2 << lVar8;
+    lVar12 = lVar8 * 0x40 + lVar12;
+    lVar10 = LZCOUNT(~param_2);
+    lVar11 = lVar10 * 0x10;
+    lVar9 = lVar8 * 0x10 + lVar9;
+    puVar5 = (ulong *)uVar6;
+    uVar7 = (ulong)lVar9;
+    if (((lVar11 + 3) * 4 + uVar6 & 0xffffffff) < (ulonglong)*(uint *)&param_1->field_0x34) {
+      uVar4 = uVar6 & 0xf;
       if (uVar4 == 4) {
-        uVar7 = uVar7 + 4;
-        *(undefined4 *)uVar7 = 0x80000000;
+        uVar6 = uVar6 + 4;
+        *(undefined4 *)uVar6 = 0x80000000;
       }
       else if (uVar4 == 0) {
-        puVar6[1] = 0x80000000;
-        uVar7 = uVar7 + 8;
-        *(undefined4 *)uVar7 = 0x80000000;
+        puVar5[1] = 0x80000000;
+        uVar6 = uVar6 + 8;
+        *(undefined4 *)uVar6 = 0x80000000;
       }
       else if (uVar4 == 0xc) {
-        puVar6[1] = 0x80000000;
-        puVar6[2] = 0x80000000;
-        uVar7 = uVar7 + 0xc;
-        *(undefined4 *)uVar7 = 0x80000000;
+        puVar5[1] = 0x80000000;
+        puVar5[2] = 0x80000000;
+        uVar6 = uVar6 + 0xc;
+        *(undefined4 *)uVar6 = 0x80000000;
       }
-      uVar7 = uVar7 + 4;
-      *(uint *)uVar7 = (uint)((lVar12 - 1U & 0xffffffff) << 0x10) | uVar8;
+      uVar6 = uVar6 + 4;
+      *(uint *)uVar6 = (uint)((lVar11 - 1U & 0xffffffff) << 0x10) | uVar7;
       do {
-        iVar2 = (int)lVar13;
+        iVar2 = (int)lVar12;
         puVar1 = (undefined4 *)(iVar2 + 4U & 0xfffffff0);
-        uVar26 = puVar1[1];
-        uVar27 = puVar1[2];
-        uVar28 = puVar1[3];
-        lVar11 = lVar11 + -1;
+        uVar25 = puVar1[1];
+        uVar26 = puVar1[2];
+        uVar27 = puVar1[3];
+        lVar10 = lVar10 + -1;
         puVar3 = (undefined4 *)(iVar2 + 0x14U & 0xfffffff0);
-        uVar22 = *puVar3;
-        uVar23 = puVar3[1];
-        uVar24 = puVar3[2];
-        uVar25 = puVar3[3];
+        uVar21 = *puVar3;
+        uVar22 = puVar3[1];
+        uVar23 = puVar3[2];
+        uVar24 = puVar3[3];
         param_2 = param_2 << 1;
         puVar3 = (undefined4 *)(iVar2 + 0x24U & 0xfffffff0);
-        uVar18 = *puVar3;
-        uVar19 = puVar3[1];
-        uVar20 = puVar3[2];
-        uVar21 = puVar3[3];
+        uVar17 = *puVar3;
+        uVar18 = puVar3[1];
+        uVar19 = puVar3[2];
+        uVar20 = puVar3[3];
         puVar3 = (undefined4 *)(iVar2 + 0x34U & 0xfffffff0);
-        uVar14 = *puVar3;
-        uVar15 = puVar3[1];
-        uVar16 = puVar3[2];
-        uVar17 = puVar3[3];
-        lVar13 = lVar13 + 0x40;
-        iVar2 = (int)uVar7;
+        uVar13 = *puVar3;
+        uVar14 = puVar3[1];
+        uVar15 = puVar3[2];
+        uVar16 = puVar3[3];
+        lVar12 = lVar12 + 0x40;
+        iVar2 = (int)uVar6;
         puVar3 = (undefined4 *)(iVar2 + 4U & 0xfffffff0);
         *puVar3 = *puVar1;
-        puVar3[1] = uVar26;
-        puVar3[2] = uVar27;
-        puVar3[3] = uVar28;
+        puVar3[1] = uVar25;
+        puVar3[2] = uVar26;
+        puVar3[3] = uVar27;
         puVar1 = (undefined4 *)(iVar2 + 0x14U & 0xfffffff0);
-        *puVar1 = uVar22;
-        puVar1[1] = uVar23;
-        puVar1[2] = uVar24;
-        puVar1[3] = uVar25;
+        *puVar1 = uVar21;
+        puVar1[1] = uVar22;
+        puVar1[2] = uVar23;
+        puVar1[3] = uVar24;
         puVar1 = (undefined4 *)(iVar2 + 0x24U & 0xfffffff0);
-        *puVar1 = uVar18;
-        puVar1[1] = uVar19;
-        puVar1[2] = uVar20;
-        puVar1[3] = uVar21;
+        *puVar1 = uVar17;
+        puVar1[1] = uVar18;
+        puVar1[2] = uVar19;
+        puVar1[3] = uVar20;
         puVar1 = (undefined4 *)(iVar2 + 0x34U & 0xfffffff0);
-        *puVar1 = uVar14;
-        puVar1[1] = uVar15;
-        puVar1[2] = uVar16;
-        puVar1[3] = uVar17;
-        uVar7 = uVar7 + 0x40;
-      } while (lVar11 != 0);
+        *puVar1 = uVar13;
+        puVar1[1] = uVar14;
+        puVar1[2] = uVar15;
+        puVar1[3] = uVar16;
+        uVar6 = uVar6 + 0x40;
+      } while (lVar10 != 0);
     }
     else {
-      puVar6 = SetPending_Split(pCVar5,puVar6,uVar8,(ulong *)lVar13,(ulong)lVar12,0x10);
-      uVar7 = (ulonglong)(int)puVar6;
-      lVar13 = lVar11 * 0x40 + lVar13;
-      param_2 = param_2 << lVar11;
+      puVar5 = SetPending_Split(param_1,puVar5,uVar7,(ulong *)lVar12,(ulong)lVar11,0x10);
+      uVar6 = (ulonglong)(int)puVar5;
+      lVar12 = lVar10 * 0x40 + lVar12;
+      param_2 = param_2 << lVar10;
     }
-    lVar10 = lVar12 + lVar10;
+    lVar9 = lVar11 + lVar9;
   } while (param_2 != 0);
-  *(int *)&pCVar5->field_0x30 = (int)uVar7;
-  __restgprlr_22();
+  *(int *)&param_1->field_0x30 = (int)uVar6;
   return;
 }
 
@@ -687,94 +659,88 @@ ulong D3D::CombineSwizzle(SwizzleVector param_1,ulong param_2)
 
 // 82876830  PatchVertexShaderToMatchVertexDeclaration  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/lazy.cpp:1057)
 
+/* WARNING: Function: __savegprlr_18 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_18 replaced with injection: xenon_save_restore */
+
 void D3D::PatchVertexShaderToMatchVertexDeclaration
                (CVertexShader *param_1,ulong *param_2,CVertexDeclaration *param_3,uchar *param_4,
                ulong param_5)
 
 {
   uint uVar1;
-  ulonglong uVar2;
-  int iVar3;
-  ulong uVar4;
-  ulong uVar5;
-  ulong uVar6;
+  uint uVar2;
+  uint uVar3;
+  ulonglong uVar4;
+  ulonglong uVar5;
+  uint *puVar6;
   ulong uVar7;
-  longlong lVar9;
-  ulonglong uVar10;
-  ulonglong uVar11;
-  longlong lVar12;
-  uint uVar14;
+  ulong uVar8;
+  ulong uVar9;
+  ulong uVar10;
+  uint *puVar12;
+  ushort *puVar14;
+  longlong lVar13;
+  uint uVar15;
   uint uVar16;
-  ulonglong uVar15;
   uint *puVar17;
-  int iVar20;
   ulonglong uVar18;
+  uint *puVar19;
+  int iVar20;
   uint *puVar21;
-  ulonglong uVar19;
-  uint *puVar22;
+  ulonglong uVar22;
   uint *puVar23;
-  ulonglong uVar24;
-  longlong lVar25;
-  uint *puVar26;
+  uint uVar24;
+  int iVar25;
+  ulonglong uVar26;
   uint uVar27;
-  longlong lVar28;
-  ulonglong uVar29;
-  uint uVar30;
-  uint uVar33;
-  ulonglong uVar31;
-  ulonglong uVar32;
+  uint *puVar28;
+  uint uVar29;
   ushort local_210;
+  undefined1 uStack_201;
   uint local_200 [128];
-  SwizzleVector SVar8;
-  ushort *puVar13;
+  SwizzleVector SVar11;
   
-  lVar12 = (longlong)(int)param_5;
-  lVar28 = (longlong)(int)param_3;
-  lVar9 = (longlong)(int)param_2;
-  uVar32 = ZEXT48(&stack0x00000000);
-  iVar3 = __savegprlr_18(param_1);
-  iVar20 = *(int *)((int)((lVar12 + 0x70U & 0xffffffff) << 3) + iVar3) + iVar3;
-  uVar30 = *(uint *)(iVar20 + 900);
-  uVar24 = (ulonglong)uVar30;
-  if (uVar24 != 0) {
-    uVar14 = *(uint *)((int)lVar28 + 0x18);
-    puVar22 = (uint *)((*(int *)(iVar20 + 0x380) + 9) * 4 + iVar20 + 0x368);
-    if (uVar24 != 0) {
-      uVar29 = (ulonglong)local_210;
-      lVar25 = uVar32 - 0x200;
-      iVar3 = ((int)lVar12 * 0x1a0 + iVar3 + 0x44) - (int)local_200;
-      puVar23 = puVar22;
+  iVar20 = *(int *)((int)param_1[1].m_Pass[0].m_OriginalFetchInstructions + param_5 * 8 + -0x2c);
+  uVar1 = *(uint *)((int)param_1[1].m_Pass[0].m_OriginalFetchInstructions + iVar20 + -0x28);
+  uVar22 = (ulonglong)uVar1;
+  if (uVar22 != 0) {
+    uVar15 = param_3->m_Count;
+    puVar28 = (uint *)((int)param_1[1].m_Pass[0].m_OriginalFetchInstructions +
+                      *(int *)((int)param_1[1].m_Pass[0].m_OriginalFetchInstructions +
+                              iVar20 + -0x2c) * 4 + iVar20 + -0x20);
+    if (uVar22 != 0) {
+      uVar26 = (ulonglong)local_210;
+      puVar23 = local_200;
+      iVar20 = (int)param_1 + ((param_5 * 0x1a0 + 0x44) - (int)local_200);
+      puVar21 = puVar28;
       do {
-        puVar26 = (uint *)lVar25;
         uVar16 = 0;
-        uVar27 = *(uint *)((int)puVar26 + iVar3 + 4);
-        uVar1 = *(uint *)((int)puVar26 + iVar3 + 8);
-        if (uVar14 == 0) {
+        uVar24 = *(uint *)((int)puVar23 + iVar20 + 4);
+        uVar27 = *(uint *)((int)puVar23 + iVar20 + 8);
+        if (uVar15 == 0) {
 LAB_82876914:
-          uVar16 = *(uint *)(iVar3 + (int)puVar26) & 0xc00fffff | 0x5f00000;
-          uVar18 = uVar29 & 0xf | 0x9250;
-          uVar33 = uVar27 & 0xbfc6cfff | 0x60000;
-          uVar27 = uVar1 & 0x80000000 | (uint)*param_4;
+          uVar16 = *(uint *)(iVar20 + (int)puVar23) & 0xc00fffff | 0x5f00000;
+          uVar18 = uVar26 & 0xf | 0x9250;
+          uVar29 = uVar24 & 0xbfc6cfff | 0x60000;
+          uVar24 = uVar27 & 0x80000000 | (uint)*param_4;
         }
         else {
-          lVar12 = lVar28 + 0x34;
+          puVar14 = (ushort *)&param_3->field_0x34;
           do {
-            puVar13 = (ushort *)lVar12;
-            if (((uint)*(byte *)((int)puVar13 + 9) == (*puVar23 >> 0xc & 0xf)) &&
-               ((uint)*(byte *)(puVar13 + 5) == (*puVar23 >> 0x10 & 0xf))) break;
+            if (((uint)*(byte *)((int)puVar14 + 9) == (*puVar21 >> 0xc & 0xf)) &&
+               ((uint)*(byte *)(puVar14 + 5) == (*puVar21 >> 0x10 & 0xf))) break;
             uVar16 = uVar16 + 1;
-            lVar12 = lVar12 + 0xc;
-            puVar13 = (ushort *)lVar12;
-          } while (uVar16 < uVar14);
-          if (uVar14 <= uVar16) goto LAB_82876914;
-          uVar33 = *(uint *)(puVar13 + 2);
-          uVar15 = (ulonglong)uVar33;
-          uVar19 = ((ulonglong)(uVar33 >> 10) & 0x38 | (ulonglong)(uVar33 >> 0x10) & 7) << 3 |
-                   (ulonglong)(uVar33 >> 0x13) & 7;
-          uVar18 = (uVar19 << 1 | uVar15 & 0x1c00) << 3 | uVar29 & 0xf;
-          if ((uVar33 & 0xc0) == 0x40) {
-            if ((uVar15 & 0x1c00) << 3 < 0x6001) {
-              uVar18 = (uVar15 & 0x1c00) << 3 ^ 0x2000 | uVar19 << 4 | uVar29 & 0xf;
+            puVar14 = puVar14 + 6;
+          } while (uVar16 < uVar15);
+          if (uVar15 <= uVar16) goto LAB_82876914;
+          uVar29 = *(uint *)(puVar14 + 2);
+          uVar4 = (ulonglong)uVar29;
+          uVar5 = ((ulonglong)(uVar29 >> 10) & 0x38 | (ulonglong)(uVar29 >> 0x10) & 7) << 3 |
+                  (ulonglong)(uVar29 >> 0x13) & 7;
+          uVar18 = (uVar5 << 1 | uVar4 & 0x1c00) << 3 | uVar26 & 0xf;
+          if ((uVar29 & 0xc0) == 0x40) {
+            if ((uVar4 & 0x1c00) << 3 < 0x6001) {
+              uVar18 = (uVar4 & 0x1c00) << 3 ^ 0x2000 | uVar5 << 4 | uVar26 & 0xf;
             }
             if ((uVar18 & 0x1c00) < 0xc01) {
               uVar18 = uVar18 & 0x1c00 ^ 0x400 | uVar18 & 0xe3ff;
@@ -786,215 +752,211 @@ LAB_82876914:
               uVar18 = uVar18 & 0x70 ^ 0x10 | uVar18 & 0xff8f;
             }
           }
-          uVar16 = (0x5f - (uint)*puVar13) * 0x1560056;
+          uVar16 = (0x5f - (uint)*puVar14) * 0x1560056;
           uVar16 = ((uVar16 & 0x1f00) << 0xb | uVar16 & 0x3000000) << 1 |
-                   *(uint *)(iVar3 + (int)puVar26) & 0xc00fffff;
-          uVar33 = ((uVar33 & 0x3f) << 0xc | uVar33 & 0x300) << 4 | uVar27 & 0xbfc0cfff;
-          uVar27 = (puVar13[1] & 0x1fffffc) << 6 | (uint)param_4[*puVar13] | uVar1 & 0x80000000;
+                   *(uint *)(iVar20 + (int)puVar23) & 0xc00fffff;
+          uVar29 = ((uVar29 & 0x3f) << 0xc | uVar29 & 0x300) << 4 | uVar24 & 0xbfc0cfff;
+          uVar24 = (puVar14[1] & 0x1fffffc) << 6 | (uint)param_4[*puVar14] | uVar27 & 0x80000000;
         }
-        uVar29 = uVar18 | 0xe;
-        SVar8.word = (ushort)uVar29;
-        uVar4 = CombineSwizzle(SVar8,uVar33 & 7);
-        uVar5 = CombineSwizzle(SVar8,(uVar33 & 0x38) >> 3);
-        uVar6 = CombineSwizzle(SVar8,(uVar33 & 0x1c0) >> 6);
-        uVar7 = CombineSwizzle(SVar8,(uVar33 & 0xe00) >> 9);
-        *puVar26 = uVar16;
-        uVar24 = uVar24 - 1;
-        puVar26[2] = uVar27;
-        puVar23 = puVar23 + 1;
-        puVar26[1] = (uVar7 & 7) << 9 |
-                     (uVar6 & 7) << 6 | (uVar5 & 7) << 3 | uVar33 & 0xfffff000 | uVar4 & 7;
-        lVar25 = lVar25 + 0xc;
-      } while (uVar24 != 0);
+        uVar26 = uVar18 | 0xe;
+        SVar11.word = (ushort)uVar26;
+        uVar7 = CombineSwizzle(SVar11,uVar29 & 7);
+        uVar8 = CombineSwizzle(SVar11,(uVar29 & 0x38) >> 3);
+        uVar9 = CombineSwizzle(SVar11,(uVar29 & 0x1c0) >> 6);
+        uVar10 = CombineSwizzle(SVar11,(uVar29 & 0xe00) >> 9);
+        *puVar23 = uVar16;
+        uVar22 = uVar22 - 1;
+        puVar23[2] = uVar24;
+        puVar21 = puVar21 + 1;
+        puVar23[1] = (uVar10 & 7) << 9 |
+                     (uVar9 & 7) << 6 | (uVar8 & 7) << 3 | uVar29 & 0xfffff000 | uVar7 & 7;
+        puVar23 = puVar23 + 3;
+      } while (uVar22 != 0);
     }
-    puVar26 = puVar22 + uVar30;
-    puVar23 = puVar22;
-    if (puVar22 < puVar26) {
-      while (puVar23 < puVar26) {
+    puVar21 = puVar28 + uVar1;
+    puVar23 = puVar28;
+    if (puVar28 < puVar21) {
+      while (puVar23 < puVar21) {
         do {
           if ((*puVar23 & 0x300000) != 0) break;
           puVar23 = puVar23 + 1;
-        } while (puVar23 < puVar26);
-        if ((puVar26 <= puVar23) || (puVar17 = puVar23 + 1, puVar26 <= puVar17)) break;
+        } while (puVar23 < puVar21);
+        if ((puVar21 <= puVar23) || (puVar19 = puVar23 + 1, puVar21 <= puVar19)) break;
         do {
-          if ((*puVar17 & 0x300000) != 0) break;
-          puVar17 = puVar17 + 1;
-        } while (puVar17 < puVar26);
-        if (puVar26 <= puVar17) break;
-        uVar15 = (ulonglong)((int)puVar17 - (int)puVar23 >> 2);
-        uVar29 = (longlong)((int)puVar23 - (int)puVar22 >> 2) * 0xc + (uVar32 - 0x200);
-        puVar23 = puVar17 + 1;
-        uVar30 = 0xffffffff;
-        uVar24 = uVar15 + 1;
-        uVar18 = uVar15;
-        if ((*puVar17 & 0x300000) == 0x300000) {
-          uVar18 = uVar15 - 1;
-          uVar30 = local_200[((int)puVar17 - (int)puVar22 >> 2) * 3] >> 0x12 & 0x7c |
-                   local_200[((int)puVar17 - (int)puVar22 >> 2) * 3] >> 0x19 & 3;
-          uVar24 = uVar15;
+          if ((*puVar19 & 0x300000) != 0) break;
+          puVar19 = puVar19 + 1;
+        } while (puVar19 < puVar21);
+        if (puVar21 <= puVar19) break;
+        uVar1 = (int)puVar19 - (int)puVar23 >> 2;
+        iVar20 = (int)puVar23 - (int)puVar28 >> 2;
+        puVar12 = local_200 + iVar20 * 3;
+        puVar23 = puVar19 + 1;
+        uVar27 = 0xffffffff;
+        uVar15 = uVar1 + 1;
+        uVar24 = uVar1;
+        if ((*puVar19 & 0x300000) == 0x300000) {
+          uVar24 = uVar1 - 1;
+          uVar27 = local_200[((int)puVar19 - (int)puVar28 >> 2) * 3] >> 0x12 & 0x7c |
+                   local_200[((int)puVar19 - (int)puVar28 >> 2) * 3] >> 0x19 & 3;
+          uVar15 = uVar1;
         }
-        if ((uVar18 & 0xffffffff) != 0) {
-          uVar31 = 1;
-          uVar19 = uVar29;
+        if (uVar24 != 0) {
+          uVar16 = 1;
+          puVar19 = puVar12;
           do {
-            if ((uVar31 & 0xffffffff) < (uVar24 & 0xffffffff)) {
-              lVar28 = uVar24 - uVar31;
-              uVar2 = uVar19;
+            if (uVar16 < uVar15) {
+              iVar25 = uVar15 - uVar16;
+              puVar6 = puVar19;
               do {
-                puVar21 = (uint *)uVar19;
-                puVar17 = (uint *)(uVar2 + 0xc);
-                uVar11 = (ulonglong)(*puVar21 >> 0x12) & 0x7c | (ulonglong)(*puVar21 >> 0x19) & 3;
-                uVar10 = (ulonglong)(*puVar17 >> 0x12) & 0x7c | (ulonglong)(*puVar17 >> 0x19) & 3;
-                lVar12 = uVar10 - uVar11;
-                iVar3 = (int)uVar2;
-                if (lVar12 == 0) {
-                  lVar12 = (longlong)((int)(puVar21[2] << 1 | puVar21[2] >> 0x1f) >> 9) -
-                           (longlong)
-                           ((int)(*(uint *)(iVar3 + 0x14) << 1 | *(uint *)(iVar3 + 0x14) >> 0x1f) >>
-                           9);
-                  if (lVar12 == 0) {
-                    lVar12 = (ulonglong)(byte)(&DAT_821f44e0)[*(ushort *)(puVar21 + 1) & 0x3f] -
-                             (ulonglong)(byte)(&DAT_821f44e0)[*(ushort *)(iVar3 + 0x10) & 0x3f];
+                puVar17 = puVar6 + 3;
+                uVar26 = (ulonglong)(*puVar19 >> 0x12) & 0x7c | (ulonglong)(*puVar19 >> 0x19) & 3;
+                uVar22 = (ulonglong)(*puVar17 >> 0x12) & 0x7c | (ulonglong)(*puVar17 >> 0x19) & 3;
+                lVar13 = uVar22 - uVar26;
+                if (lVar13 == 0) {
+                  lVar13 = (longlong)((int)(puVar19[2] << 1 | puVar19[2] >> 0x1f) >> 9) -
+                           (longlong)((int)(puVar6[5] << 1 | puVar6[5] >> 0x1f) >> 9);
+                  if (lVar13 == 0) {
+                    lVar13 = (ulonglong)(byte)(&DAT_821f44e0)[*(ushort *)(puVar19 + 1) & 0x3f] -
+                             (ulonglong)(byte)(&DAT_821f44e0)[*(ushort *)(puVar6 + 4) & 0x3f];
                   }
 LAB_82876c5c:
-                  if (0 < (int)lVar12) goto LAB_82876c64;
+                  if (0 < (int)lVar13) goto LAB_82876c64;
                 }
                 else {
-                  if (uVar30 != (uint)uVar11) {
-                    if (uVar30 == (uint)uVar10) {
-                      lVar12 = -1;
+                  if (uVar27 != (uint)uVar26) {
+                    if (uVar27 == (uint)uVar22) {
+                      lVar13 = -1;
                     }
                     goto LAB_82876c5c;
                   }
 LAB_82876c64:
-                  uVar14 = *puVar21;
-                  uVar27 = puVar21[1];
-                  uVar1 = puVar21[2];
-                  *puVar21 = *puVar17;
-                  puVar21[1] = *(uint *)(iVar3 + 0x10);
-                  puVar21[2] = *(uint *)(iVar3 + 0x14);
-                  *puVar17 = uVar14;
-                  *(uint *)(iVar3 + 0x10) = uVar27;
-                  *(uint *)(iVar3 + 0x14) = uVar1;
+                  uVar29 = *puVar19;
+                  uVar2 = puVar19[1];
+                  uVar3 = puVar19[2];
+                  *puVar19 = *puVar17;
+                  puVar19[1] = puVar6[4];
+                  puVar19[2] = puVar6[5];
+                  *puVar17 = uVar29;
+                  puVar6[4] = uVar2;
+                  puVar6[5] = uVar3;
                 }
-                lVar28 = lVar28 + -1;
-                uVar2 = uVar2 + 0xc;
-              } while (lVar28 != 0);
+                iVar25 = iVar25 + -1;
+                puVar6 = puVar17;
+              } while (iVar25 != 0);
             }
-            uVar18 = uVar18 - 1;
-            uVar19 = uVar19 + 0xc;
-            uVar31 = uVar31 + 1;
-          } while (uVar18 != 0);
+            uVar24 = uVar24 - 1;
+            puVar19 = puVar19 + 3;
+            uVar16 = uVar16 + 1;
+          } while (uVar24 != 0);
         }
-        uVar24 = (uVar15 + 1) * 0xc + uVar29;
-        uVar18 = uVar29 + 0xc;
-        if ((uVar18 & 0xffffffff) < (uVar24 & 0xffffffff)) {
-          lVar28 = ((uVar24 - uVar18) - 1 & 0xffffffff) / 0xc + 1;
+        puVar19 = local_200 + iVar20 * 3 + 3;
+        if (puVar19 < puVar12 + (uVar1 + 1) * 3) {
+          iVar20 = (uint)((int)(puVar12 + (uVar1 + 1) * 3) + (-1 - (int)puVar19)) / 0xc + 1;
           do {
-            puVar21 = (uint *)uVar18;
-            puVar17 = (uint *)uVar29;
-            uVar30 = *puVar17;
-            uVar24 = uVar18;
-            if ((uVar30 >> 7 & 0xc0000 | uVar30 & 0x1f00000) ==
-                (*puVar21 >> 7 & 0xc0000 | *puVar21 & 0x1f00000)) {
-              uVar14 = (int)(puVar17[2] << 1 | puVar17[2] >> 0x1f) >> 9;
-              uVar27 = (int)(puVar21[2] << 1 | puVar21[2] >> 0x1f) >> 9;
-              if ((uVar14 <= uVar27) &&
-                 (uVar27 = ((byte)(&DAT_821f44e0)[*(ushort *)(puVar21 + 1) & 0x3f] - uVar14) +
-                           uVar27, uVar27 < 9)) {
-                uVar14 = uVar30 >> 0x1b & 7;
-                uVar27 = uVar27 - 1;
-                if (uVar27 < uVar14) {
-                  uVar27 = uVar14;
+            uVar1 = *puVar12;
+            puVar6 = puVar19;
+            if ((uVar1 >> 7 & 0xc0000 | uVar1 & 0x1f00000) ==
+                (*puVar19 >> 7 & 0xc0000 | *puVar19 & 0x1f00000)) {
+              uVar15 = (int)(puVar12[2] << 1 | puVar12[2] >> 0x1f) >> 9;
+              uVar24 = (int)(puVar19[2] << 1 | puVar19[2] >> 0x1f) >> 9;
+              if ((uVar15 <= uVar24) &&
+                 (uVar24 = ((byte)(&DAT_821f44e0)[*(ushort *)(puVar19 + 1) & 0x3f] - uVar15) +
+                           uVar24, uVar24 < 9)) {
+                uVar15 = uVar1 >> 0x1b & 7;
+                uVar24 = uVar24 - 1;
+                if (uVar24 < uVar15) {
+                  uVar24 = uVar15;
                 }
-                *puVar17 = (uVar27 & 7) << 0x1b | uVar30 & 0xc7ffffff;
-                puVar21[1] = puVar21[1] | 0x40000000;
-                uVar24 = uVar29;
+                *puVar12 = (uVar24 & 7) << 0x1b | uVar1 & 0xc7ffffff;
+                puVar19[1] = puVar19[1] | 0x40000000;
+                puVar6 = puVar12;
               }
             }
-            uVar18 = uVar18 + 0xc;
-            lVar28 = lVar28 + -1;
-            uVar29 = uVar24;
-          } while (lVar28 != 0);
+            puVar12 = puVar6;
+            puVar19 = puVar19 + 3;
+            iVar20 = iVar20 + -1;
+          } while (iVar20 != 0);
         }
       }
     }
-    uVar32 = uVar32 - 0x200;
-    for (; puVar22 < puVar26; puVar22 = puVar22 + 1) {
-      if ((((ulonglong)*puVar22 & 0xfff) * 0xc + lVar9 & 0xffffffff) != (uVar32 & 0xffffffff)) {
+    puVar23 = local_200;
+    for (; puVar28 < puVar21; puVar28 = puVar28 + 1) {
+      if (param_2 + (*puVar28 & 0xfff) * 3 != puVar23) {
         memcpy();
       }
-      uVar32 = uVar32 + 0xc;
+      puVar23 = puVar23 + 3;
     }
   }
-  __restgprlr_18();
   return;
 }
 
 
 // 82876DD0  VertexShaderStubOutput  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/lazy.cpp:1334)
 
-/* WARNING: Restarted to delay deadcode elimination for space: stack */
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 
 void D3D::VertexShaderStubOutput
                (_UCODE_R500VSUCODE *param_1,GPUSHADER_INSTRUCTION *param_2,
                _UCODE_VSOUTPUTDECLARATION *param_3)
 
 {
-  int iVar1;
-  longlong lVar2;
-  uint *puVar3;
+  ulong *puVar1;
+  GPUSHADER_INSTRUCTION local_30 [4];
   
-  lVar2 = (longlong)(int)param_2;
-  iVar1 = __savegprlr_29(param_1);
-  puVar3 = (uint *)(((*(uint *)(iVar1 + 0x14) >> 5 & 0x1f) + (*(ushort *)param_3 & 0xfff) +
-                     *(int *)(iVar1 + 0x1c) + *(int *)(iVar1 + 0x18) + 9) * 4 + iVar1);
+  puVar1 = &param_1[1].common.PhysicalMicrocodeOffset +
+           ((param_1->common).interpolatorHeader.dword >> 5 & 0x1f) + (*(ushort *)param_3 & 0xfff) +
+           param_1->dwVSInputDeclarationCount + param_1->dwVSIndexDeclarationCount;
+  local_30[0].FlowPair.dword[2] = 0x2000000;
+  local_30[0].Flow0 = (GPUFLOW_INSTRUCTION)0xc800000000000000;
   while( true ) {
-    if ((((ulonglong)*puVar3 & 0xfff) * 0xc + lVar2 & 0xffffffff) !=
-        (ZEXT48(&stack0x00000000) - 0x30 & 0xffffffff)) {
+    if (param_2 + (*puVar1 & 0xfff) != local_30) {
       memcpy();
     }
-    if ((*puVar3 & 0x1000) != 0) break;
-    puVar3 = puVar3 + 1;
+    if ((*puVar1 & 0x1000) != 0) break;
+    puVar1 = puVar1 + 1;
   }
-  __restgprlr_29();
   return;
 }
 
 
 // 82876E98  VertexShaderRedirectOutput  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/lazy.cpp:1368)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void D3D::VertexShaderRedirectOutput
                (_UCODE_R500VSUCODE *param_1,GPUSHADER_INSTRUCTION *param_2,
                _UCODE_VSOUTPUTDECLARATION *param_3,_UCODE_PSINPUTDECLARATION *param_4)
 
 {
-  int iVar1;
-  longlong lVar2;
-  uint *puVar3;
-  ulonglong uVar4;
+  uint uVar1;
+  ulong *puVar2;
+  GPUSHADER_INSTRUCTION local_40 [5];
   
-  lVar2 = (longlong)(int)param_2;
-  iVar1 = __savegprlr_28(param_1);
-  puVar3 = (uint *)(((*(uint *)(iVar1 + 0x14) >> 5 & 0x1f) + (*(ushort *)param_3 & 0xfff) +
-                     *(int *)(iVar1 + 0x1c) + *(int *)(iVar1 + 0x18) + 9) * 4 + iVar1);
+  puVar2 = &param_1[1].common.PhysicalMicrocodeOffset +
+           ((param_1->common).interpolatorHeader.dword >> 5 & 0x1f) + (*(ushort *)param_3 & 0xfff) +
+           param_1->dwVSInputDeclarationCount + param_1->dwVSIndexDeclarationCount;
   while( true ) {
-    uVar4 = ((ulonglong)*puVar3 & 0xfff) * 0xc + lVar2;
-    if ((ZEXT48(&stack0x00000000) - 0x40 & 0xffffffff) != (uVar4 & 0xffffffff)) {
+    uVar1 = *puVar2;
+    if (local_40 != param_2 + (uVar1 & 0xfff)) {
       memcpy();
     }
-    if ((uVar4 & 0xffffffff) != (ZEXT48(&stack0x00000000) - 0x40 & 0xffffffff)) {
+    local_40[0]._0_4_ = param_4->dword >> 8 & 0xf | local_40[0].FlowPair.dword[0] & 0xfffffff0;
+    if (param_2 + (uVar1 & 0xfff) != local_40) {
       memcpy();
     }
-    if ((*puVar3 & 0x1000) != 0) break;
-    puVar3 = puVar3 + 1;
+    if ((*puVar2 & 0x1000) != 0) break;
+    puVar2 = puVar2 + 1;
   }
-  __restgprlr_28();
   return;
 }
 
 
 // 82876F60  PatchVertexShaderToMatchPixelShader  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/lazy.cpp:1547)
+
+/* WARNING: Function: __savegprlr_21 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_21 replaced with injection: xenon_save_restore */
 
 void D3D::PatchVertexShaderToMatchPixelShader
                (PIXPatchVertexShaderToMatchPixelShaderData *param_1,_UCODE_R500VSUCODE *param_2,
@@ -1004,78 +966,84 @@ void D3D::PatchVertexShaderToMatchPixelShader
 {
   byte bVar1;
   uint uVar2;
-  _UCODE_R500VSUCODE *p_Var3;
-  _UCODE_PSINPUTDECLARATION *p_Var4;
-  int *piVar5;
-  _UCODE_VSOUTPUTDECLARATION *p_Var6;
-  ulonglong uVar7;
-  uint uVar8;
-  ulonglong uVar9;
-  longlong lVar10;
-  ulonglong uVar11;
-  longlong lVar12;
+  _UCODE_VSOUTPUTDECLARATION_s_0 _Var3;
+  ulonglong uVar4;
+  uint uVar5;
+  ulonglong uVar6;
+  _UCODE_PSINPUTDECLARATION *p_Var7;
+  ulonglong uVar8;
+  longlong lVar9;
+  _UCODE_VSOUTPUTDECLARATION *p_Var10;
   
-  uVar7 = (ulonglong)(int)param_5;
-  lVar12 = (longlong)(int)param_2;
-  piVar5 = (int *)__savegprlr_21(param_1);
-  uVar11 = 0;
-  *piVar5 = 0;
-  piVar5[1] = 0;
-  piVar5[2] = 0;
-  piVar5[3] = 0;
-  piVar5[4] = 0;
-  p_Var3 = (_UCODE_R500VSUCODE *)lVar12;
-  if ((((*(byte *)&(p_Var3->common).ProgramControl & 7) != 7) &&
-      (uVar8 = (p_Var3->common).interpolatorHeader.dword, (uVar8 & 0x40000) == 0)) &&
-     (((uVar7 & 0xffffffff) == 0 || ((*(uint *)((int)uVar7 + 0x14) & 0x20000) == 0)))) {
-    uVar9 = (ulonglong)(uVar8 >> 5) & 0x1f;
-    lVar12 = ((ulonglong)p_Var3->dwVSInputDeclarationCount +
-              (ulonglong)p_Var3->dwVSIndexDeclarationCount + 9 & 0x3fffffff) * 4 + lVar12;
-    if ((uVar7 & 0xffffffff) == 0) {
-      lVar10 = 0;
-      uVar7 = 0;
-      uVar8 = 0;
+  uVar8 = 0;
+  param_1->NumberOfUnusedOutputs = 0;
+  param_1->UnusedOutputs[0] = '\0';
+  param_1->UnusedOutputs[1] = '\0';
+  param_1->UnusedOutputs[2] = '\0';
+  param_1->UnusedOutputs[3] = '\0';
+  param_1->UnusedOutputs[4] = '\0';
+  param_1->UnusedOutputs[5] = '\0';
+  param_1->UnusedOutputs[6] = '\0';
+  param_1->UnusedOutputs[7] = '\0';
+  param_1->UnusedOutputs[8] = '\0';
+  param_1->UnusedOutputs[9] = '\0';
+  param_1->UnusedOutputs[10] = '\0';
+  param_1->UnusedOutputs[0xb] = '\0';
+  param_1->UnusedOutputs[0xc] = '\0';
+  param_1->UnusedOutputs[0xd] = '\0';
+  param_1->UnusedOutputs[0xe] = '\0';
+  param_1->UnusedOutputs[0xf] = '\0';
+  if ((((*(byte *)&(param_2->common).ProgramControl & 7) != 7) &&
+      (uVar5 = (param_2->common).interpolatorHeader.dword, (uVar5 & 0x40000) == 0)) &&
+     ((param_5 == (_UCODE_R500PSUCODE *)0x0 ||
+      (((param_5->common).interpolatorHeader.dword & 0x20000) == 0)))) {
+    uVar6 = (ulonglong)(uVar5 >> 5) & 0x1f;
+    p_Var10 = (_UCODE_VSOUTPUTDECLARATION *)
+              (&param_2[1].common.PhysicalMicrocodeOffset +
+              param_2->dwVSInputDeclarationCount + param_2->dwVSIndexDeclarationCount);
+    if (param_5 == (_UCODE_R500PSUCODE *)0x0) {
+      p_Var7 = (_UCODE_PSINPUTDECLARATION *)0x0;
+      uVar4 = 0;
+      uVar5 = 0;
     }
     else {
-      uVar2 = *(uint *)((int)uVar7 + 0x14);
-      lVar10 = uVar7 + 0x20;
-      uVar8 = uVar2 & 0x1f;
-      uVar7 = (ulonglong)(uVar2 >> 5) & 0x1f;
+      uVar2 = (param_5->common).interpolatorHeader.dword;
+      p_Var7 = (_UCODE_PSINPUTDECLARATION *)(param_5 + 1);
+      uVar5 = uVar2 & 0x1f;
+      uVar4 = (ulonglong)(uVar2 >> 5) & 0x1f;
       if ((uVar2 & 0x1f) != 0) {
-        uVar8 = uVar8 - 1;
+        uVar5 = uVar5 - 1;
       }
     }
-    for (; uVar7 != 0; uVar7 = uVar7 - 1) {
-      p_Var4 = (_UCODE_PSINPUTDECLARATION *)lVar10;
-      bVar1 = (p_Var4->_s_0).usageAndIndex;
-      for (; (p_Var6 = (_UCODE_VSOUTPUTDECLARATION *)lVar12, (uVar11 & 0xffffffff) < uVar9 &&
-             ((p_Var6->_s_0).usageAndIndex < bVar1)); lVar12 = lVar12 + 4) {
-        VertexShaderStubOutput(p_Var3,param_3,p_Var6);
-        uVar11 = uVar11 + 1;
-        *(byte *)((int)piVar5 + *piVar5 + 4) = (p_Var6->_s_0).usageAndIndex;
-        *piVar5 = *piVar5 + 1;
+    for (; uVar4 != 0; uVar4 = uVar4 - 1) {
+      bVar1 = (p_Var7->_s_0).usageAndIndex;
+      for (; ((uVar8 & 0xffffffff) < uVar6 && ((p_Var10->_s_0).usageAndIndex < bVar1));
+          p_Var10 = p_Var10 + 1) {
+        VertexShaderStubOutput(param_2,param_3,p_Var10);
+        uVar8 = uVar8 + 1;
+        param_1->UnusedOutputs[param_1->NumberOfUnusedOutputs] = (p_Var10->_s_0).usageAndIndex;
+        param_1->NumberOfUnusedOutputs = param_1->NumberOfUnusedOutputs + 1;
       }
-      if (((p_Var6->dword ^ p_Var4->dword) & 0xf00) != 0) {
-        VertexShaderRedirectOutput(p_Var3,param_3,p_Var6,p_Var4);
+      if (((p_Var10->dword ^ p_Var7->dword) & 0xf00) != 0) {
+        VertexShaderRedirectOutput(param_2,param_3,p_Var10,p_Var7);
       }
-      lVar12 = lVar12 + 4;
-      lVar10 = lVar10 + 4;
-      uVar11 = uVar11 + 1;
+      p_Var10 = p_Var10 + 1;
+      p_Var7 = p_Var7 + 1;
+      uVar8 = uVar8 + 1;
     }
-    if ((uVar11 & 0xffffffff) < uVar9) {
-      lVar10 = uVar9 - uVar11;
+    if ((uVar8 & 0xffffffff) < uVar6) {
+      lVar9 = uVar6 - uVar8;
       do {
-        p_Var6 = (_UCODE_VSOUTPUTDECLARATION *)lVar12;
-        VertexShaderStubOutput(p_Var3,param_3,p_Var6);
-        lVar10 = lVar10 + -1;
-        lVar12 = lVar12 + 4;
-        *(byte *)((int)piVar5 + *piVar5 + 4) = (p_Var6->_s_0).usageAndIndex;
-        *piVar5 = *piVar5 + 1;
-      } while (lVar10 != 0);
+        VertexShaderStubOutput(param_2,param_3,p_Var10);
+        _Var3 = p_Var10->_s_0;
+        lVar9 = lVar9 + -1;
+        p_Var10 = p_Var10 + 1;
+        param_1->UnusedOutputs[param_1->NumberOfUnusedOutputs] = _Var3.usageAndIndex;
+        param_1->NumberOfUnusedOutputs = param_1->NumberOfUnusedOutputs + 1;
+      } while (lVar9 != 0);
     }
-    param_4->dword = (uVar8 & 0xf) << 0x14 | param_4->dword & 0xff0fffff;
+    param_4->dword = (uVar5 & 0xf) << 0x14 | param_4->dword & 0xff0fffff;
   }
-  __restgprlr_21();
   return;
 }
 
@@ -1216,12 +1184,13 @@ void D3D::PatchBoundInterpolatorHeadersToMatch
 
 // 82877118  PIXMetaLoadVertexShaderImp  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/lazy.cpp:1883)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 
 void D3D::PIXMetaLoadVertexShaderImp(CDevice *param_1,CVertexShader *param_2)
 
 {
-  CDevice *this;
   _UCODE_R500_DEBUGGER_HINT_HEADER *p_Var1;
   ulong64 uVar2;
   ulong *local_350 [4];
@@ -1229,13 +1198,12 @@ void D3D::PIXMetaLoadVertexShaderImp(CDevice *param_1,CVertexShader *param_2)
   ulong local_33c;
   ulong local_338;
   
-  this = (CDevice *)__savegprlr_28(param_1);
-  local_350[0] = CDevice::BeginRingBig(this,0x340);
+  local_350[0] = CDevice::BeginRingBig(param_1,0x340);
   if (local_350[0] != (ulong *)0x0) {
-    uVar2 = CONCAT44(this->m_Uniqueness,this->m_CpuSwapCount);
+    uVar2 = CONCAT44(param_1->m_Uniqueness,param_1->m_CpuSwapCount);
     if (param_2->m_LastDeviceAndFrameNumberLoaded == uVar2) {
-      CDevice::PutPix(this,local_350,PIXMeta_VertexShaderDebuggerHintShort,&param_2->m_Uniqueness,4)
-      ;
+      CDevice::PutPix(param_1,local_350,PIXMeta_VertexShaderDebuggerHintShort,&param_2->m_Uniqueness
+                      ,4);
     }
     else {
       p_Var1 = CVertexShader::GetDebuggerHint(param_2);
@@ -1246,25 +1214,25 @@ void D3D::PIXMetaLoadVertexShaderImp(CDevice *param_1,CVertexShader *param_2)
         local_33c = p_Var1->Timestamp;
         memcpy();
       }
-      CDevice::PutPix(this,local_350,PIXMeta_VertexShaderDebuggerHint,&local_340,
+      CDevice::PutPix(param_1,local_350,PIXMeta_VertexShaderDebuggerHint,&local_340,
                       local_338 + 0xf & 0xfffffffc);
       param_2->m_LastDeviceAndFrameNumberLoaded = uVar2;
     }
-    *(ulong **)&this->field_0x30 = local_350[0];
+    *(ulong **)&param_1->field_0x30 = local_350[0];
   }
-  __restgprlr_28();
   return;
 }
 
 
 // 82877208  PIXMetaLoadPixelShaderImp  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/lazy.cpp:1921)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 
 void D3D::PIXMetaLoadPixelShaderImp(CDevice *param_1,CPixelShader *param_2)
 
 {
-  CDevice *this;
   _UCODE_R500_DEBUGGER_HINT_HEADER *p_Var1;
   ulong64 uVar2;
   ulong *local_350 [4];
@@ -1272,12 +1240,12 @@ void D3D::PIXMetaLoadPixelShaderImp(CDevice *param_1,CPixelShader *param_2)
   ulong local_33c;
   ulong local_338;
   
-  this = (CDevice *)__savegprlr_28(param_1);
-  local_350[0] = CDevice::BeginRingBig(this,0x340);
+  local_350[0] = CDevice::BeginRingBig(param_1,0x340);
   if (local_350[0] != (ulong *)0x0) {
-    uVar2 = CONCAT44(this->m_Uniqueness,this->m_CpuSwapCount);
+    uVar2 = CONCAT44(param_1->m_Uniqueness,param_1->m_CpuSwapCount);
     if (param_2->m_LastDeviceAndFrameNumberLoaded == uVar2) {
-      CDevice::PutPix(this,local_350,PIXMeta_PixelShaderDebuggerHintShort,&param_2->m_Uniqueness,4);
+      CDevice::PutPix(param_1,local_350,PIXMeta_PixelShaderDebuggerHintShort,&param_2->m_Uniqueness,
+                      4);
     }
     else {
       p_Var1 = CPixelShader::GetDebuggerHint(param_2);
@@ -1288,19 +1256,20 @@ void D3D::PIXMetaLoadPixelShaderImp(CDevice *param_1,CPixelShader *param_2)
         local_33c = p_Var1->Timestamp;
         memcpy();
       }
-      CDevice::PutPix(this,local_350,PIXMeta_PixelShaderDebuggerHint,&local_340,
+      CDevice::PutPix(param_1,local_350,PIXMeta_PixelShaderDebuggerHint,&local_340,
                       local_338 + 0xf & 0xfffffffc);
       param_2->m_LastDeviceAndFrameNumberLoaded = uVar2;
     }
-    *(ulong **)&this->field_0x30 = local_350[0];
+    *(ulong **)&param_1->field_0x30 = local_350[0];
   }
-  __restgprlr_28();
   return;
 }
 
 
 // 828772F8  IncrementalShaderPatchAndLoad  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/lazy.cpp:1970)
 
+/* WARNING: Function: __savegprlr_20 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_20 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 
 void D3D::IncrementalShaderPatchAndLoad
@@ -1310,99 +1279,91 @@ void D3D::IncrementalShaderPatchAndLoad
 
 {
   undefined1 uVar1;
-  undefined2 uVar3;
   undefined2 uVar4;
-  uint *puVar2;
-  void *pvVar5;
-  uint uVar6;
-  int iVar7;
-  CDevice *this;
+  uint uVar2;
+  undefined2 uVar5;
+  uint *puVar3;
+  void *pvVar6;
+  uint uVar7;
   ulong *puVar8;
   ulong *puVar9;
-  longlong lVar10;
-  longlong lVar11;
-  ulong64 uVar12;
-  uint uVar13;
-  uint uVar14;
-  int iVar15;
-  uint *local_90 [4];
+  ulong64 uVar10;
+  ulong uVar11;
+  uint uVar12;
+  ulong *local_90 [4];
   PIXPatchVertexShaderToMatchPixelShaderData aPStack_80 [6];
   
-  lVar11 = (longlong)(int)param_8;
-  lVar10 = (longlong)param_2;
-  this = (CDevice *)__savegprlr_20(param_1);
-  if ((this->m_pCapture != (CCapture *)0x0) || (this->m_CommandBufferDevice)) {
-    PIXMetaLoadVertexShaderImp(this,param_3);
+  if ((param_1->m_pCapture != (CCapture *)0x0) || (param_1->m_CommandBufferDevice)) {
+    PIXMetaLoadVertexShaderImp(param_1,param_3);
   }
-  iVar15 = (int)lVar10;
-  if (iVar15 == 0) {
-    uVar3 = (this->m_CpuDrPix).ShaderPatches;
-    puVar9 = *(ulong **)&this->field_0x38;
-    puVar8 = *(ulong **)&this->field_0x30;
-    (this->m_CpuDrPix).ShaderPatches = uVar3 + 1;
+  if (param_2 == 0) {
+    uVar4 = (param_1->m_CpuDrPix).ShaderPatches;
+    puVar9 = *(ulong **)&param_1->field_0x38;
+    puVar8 = *(ulong **)&param_1->field_0x30;
+    (param_1->m_CpuDrPix).ShaderPatches = uVar4 + 1;
     if (puVar9 < puVar8) {
-      puVar8 = CDevice::KickOff(this);
+      puVar8 = CDevice::KickOff(param_1);
     }
     puVar8[1] = 0x57e;
-    uVar13 = 0x10018;
-    if (!this->m_CurrentVertexShaderOutputPatched) {
-      uVar13 = 0x10010;
+    uVar11 = 0x10018;
+    if (!param_1->m_CurrentVertexShaderOutputPatched) {
+      uVar11 = 0x10010;
     }
     local_90[0] = puVar8 + 2;
-    *local_90[0] = uVar13;
-    *(uint **)&this->field_0x30 = local_90[0];
+    *local_90[0] = uVar11;
+    *(ulong **)&param_1->field_0x30 = local_90[0];
   }
-  iVar7 = (int)((lVar11 + 0x70U & 0xffffffff) << 3);
-  uVar13 = *(uint *)((int)param_3[1].m_Pass[0].m_OriginalFetchInstructions +
-                    *(int *)((int)param_3->m_Pass[0].m_OriginalFetchInstructions + iVar7 + -0x44) +
-                    -0x40);
-  uVar6 = uVar13 >> 2;
-  puVar9 = CDevice::BeginRingBig(this,uVar6 + 5);
+  uVar2 = *(uint *)((int)param_3[1].m_Pass[0].m_OriginalFetchInstructions +
+                   *(int *)((int)param_3[1].m_Pass[0].m_OriginalFetchInstructions +
+                           param_8 * 8 + -0x2c) + -0x40);
+  uVar7 = uVar2 >> 2;
+  puVar9 = CDevice::BeginRingBig(param_1,uVar7 + 5);
   if (puVar9 != (ulong *)0x0) {
     puVar9[1] = 0xc0003b00;
     puVar9[2] = 0x100;
-    puVar9[3] = (uVar6 + 1) * 0x10000 & 0x3fff0000 | 0xc0002b00;
+    puVar9[3] = (uVar7 + 1) * 0x10000 & 0x3fff0000 | 0xc0002b00;
     puVar9[4] = 0;
     local_90[0] = puVar9 + 5;
-    *local_90[0] = uVar6 & 0x3fff;
-    uVar14 = *(int *)((int)param_3[1].m_Pass[0].m_OriginalFetchInstructions +
-                     *(int *)((int)param_3->m_Pass[0].m_OriginalFetchInstructions + iVar7 + -0x44) +
-                     -0x44) + param_3->m_dwPhysical;
-    pvVar5 = (void *)(((uVar14 >> 0x14) + 0x200 & 0x1000) + (uVar14 & 0x1fffffff) + -0x40000000);
+    *local_90[0] = uVar7 & 0x3fff;
+    uVar12 = *(int *)((int)param_3[1].m_Pass[0].m_OriginalFetchInstructions +
+                     *(int *)((int)param_3[1].m_Pass[0].m_OriginalFetchInstructions +
+                             param_8 * 8 + -0x2c) + -0x44) + param_3->m_dwPhysical;
+    pvVar6 = (void *)(((uVar12 >> 0x14) + 0x200 & 0x1000) + (uVar12 & 0x1fffffff) + -0x40000000);
     sync(0);
     memcpy();
-    FlushCachedMemory(pvVar5,(void *)((int)pvVar5 + uVar13),0);
-    if (iVar15 != 0) {
+    FlushCachedMemory(pvVar6,(void *)((int)pvVar6 + uVar2),0);
+    if (param_2 != 0) {
       PatchVertexShaderToMatchPixelShader
                 (aPStack_80,param_6,(GPUSHADER_INSTRUCTION *)(puVar9 + 6),param_4,param_7);
     }
-    this->m_CurrentVertexShaderOutputPatched = lVar10 != 0;
+    param_1->m_CurrentVertexShaderOutputPatched = param_2 != 0;
     PatchVertexShaderToMatchVertexDeclaration
-              (param_3,puVar9 + 6,param_5,(this->field11115_0x31e8).m_StreamStride,(ulong)lVar11);
-    local_90[0] = local_90[0] + uVar6;
-    *(uint **)&this->field_0x30 = local_90[0];
-    if (iVar15 != 0) {
-      uVar4 = (this->m_CpuDrPix).ShaderPatches;
-      puVar2 = *(uint **)&this->field_0x38;
-      (this->m_CpuDrPix).ShaderPatches = uVar4 + 1;
-      if (puVar2 < local_90[0]) {
-        local_90[0] = CDevice::KickOff(this);
+              (param_3,puVar9 + 6,param_5,(param_1->field11115_0x31e8).m_StreamStride,param_8);
+    local_90[0] = local_90[0] + uVar7;
+    *(ulong **)&param_1->field_0x30 = local_90[0];
+    if (param_2 != 0) {
+      uVar5 = (param_1->m_CpuDrPix).ShaderPatches;
+      puVar3 = *(uint **)&param_1->field_0x38;
+      (param_1->m_CpuDrPix).ShaderPatches = uVar5 + 1;
+      if (puVar3 < local_90[0]) {
+        local_90[0] = CDevice::KickOff(param_1);
       }
-      CDevice::PutPix(this,local_90,PIXMeta_PatchVertexShaderToMatchPixelShader,aPStack_80,0x14);
-      *(uint **)&this->field_0x30 = local_90[0];
+      CDevice::PutPix(param_1,local_90,PIXMeta_PatchVertexShaderToMatchPixelShader,aPStack_80,0x14);
+      *(ulong **)&param_1->field_0x30 = local_90[0];
     }
-    uVar12 = (this->field11115_0x31e8).m_StreamStride64[1];
-    (this->field11073_0x2f68).m_CurrentVertexShaderStride64[0] =
-         (this->field11115_0x31e8).m_StreamStride64[0];
-    (this->field11073_0x2f68).m_CurrentVertexShaderStride64[1] = uVar12;
+    uVar10 = (param_1->field11115_0x31e8).m_StreamStride64[1];
+    (param_1->field11073_0x2f68).m_CurrentVertexShaderStride64[0] =
+         (param_1->field11115_0x31e8).m_StreamStride64[0];
+    (param_1->field11073_0x2f68).m_CurrentVertexShaderStride64[1] = uVar10;
   }
-  __restgprlr_20();
   return;
 }
 
 
 // 82877540  SetLiteralShaderConstants  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/lazy.cpp:2163)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 
 void D3D::SetLiteralShaderConstants(CDevice *param_1,_UCODE_HEADER *param_2,void *param_3)
@@ -1410,65 +1371,61 @@ void D3D::SetLiteralShaderConstants(CDevice *param_1,_UCODE_HEADER *param_2,void
 {
   ushort uVar1;
   ushort uVar2;
-  ushort *puVar3;
+  ulong uVar3;
   void *pvVar4;
-  CDevice *this;
   int iVar5;
   ulong *puVar6;
-  longlong lVar7;
-  ulonglong uVar8;
-  longlong lVar9;
-  ulonglong uVar10;
-  ulonglong uVar11;
+  ushort *puVar7;
+  ushort *puVar8;
+  ushort *puVar9;
+  uint uVar10;
   
-  lVar7 = (longlong)(int)param_3;
-  lVar9 = (longlong)(int)param_2;
-  this = (CDevice *)__savegprlr_24(param_1);
-  uVar8 = (ulonglong)*(uint *)((int)lVar9 + 0x14);
-  if (uVar8 != 0) {
-    lVar9 = uVar8 + lVar9;
-    uVar10 = lVar9 + 0x14;
-    uVar8 = *(uint *)((int)lVar9 + 0x10) + uVar10;
-    while ((uVar10 & 0xffffffff) < (uVar8 & 0xffffffff)) {
-      puVar3 = (ushort *)uVar10;
-      uVar1 = puVar3[1];
-      uVar2 = *puVar3;
-      if (uVar1 == 0) break;
-      uVar10 = uVar10 + 8;
-      uVar11 = (ulonglong)*(uint *)(puVar3 + 2) + lVar7;
-      if ((this->m_CommandBufferDevice) && (iVar5 = KeGetCurrentProcessType(), iVar5 == 2)) {
-        puVar6 = CDevice::BeginRingBig(this,uVar1 + 1);
+  uVar3 = param_2->Pass[0].definitionTableOffset;
+  if (uVar3 != 0) {
+    puVar9 = (ushort *)((int)&param_2->Pass[0].definitionTableOffset + uVar3);
+    puVar8 = (ushort *)(*(int *)((int)param_2->Pass + (uVar3 - 4)) + (int)puVar9);
+    while (puVar9 < puVar8) {
+      uVar1 = puVar9[1];
+      puVar7 = puVar9 + 2;
+      uVar2 = *puVar9;
+      if (uVar1 == 0) {
+        return;
+      }
+      puVar9 = puVar9 + 4;
+      uVar10 = *(int *)puVar7 + (int)param_3;
+      if ((param_1->m_CommandBufferDevice) && (iVar5 = KeGetCurrentProcessType(), iVar5 == 2)) {
+        puVar6 = CDevice::BeginRingBig(param_1,uVar1 + 1);
         if (puVar6 != (ulong *)0x0) {
           sync(0);
           puVar6[1] = (uVar2 + 0x1000) * 4 | (uVar1 - 1) * 0x10000;
-          pvVar4 = (void *)(((int)((uVar11 & 0xffffffff) >> 0x14) + 0x200U & 0x1000) +
-                            ((uint)uVar11 & 0x1fffffff) + -0x40000000);
+          pvVar4 = (void *)(((uVar10 >> 0x14) + 0x200 & 0x1000) + (uVar10 & 0x1fffffff) +
+                           -0x40000000);
           memcpy();
           FlushCachedMemory(pvVar4,(void *)((uint)uVar1 * 4 + (int)pvVar4),0);
-          *(ulong **)&this->field_0x30 = puVar6 + 1 + uVar1;
+          *(ulong **)&param_1->field_0x30 = puVar6 + 1 + uVar1;
         }
       }
       else {
-        puVar6 = *(ulong **)&this->field_0x30;
-        if (*(ulong **)&this->field_0x38 < puVar6) {
-          puVar6 = CDevice::KickOff(this);
+        puVar6 = *(ulong **)&param_1->field_0x30;
+        if (*(ulong **)&param_1->field_0x38 < puVar6) {
+          puVar6 = CDevice::KickOff(param_1);
         }
         puVar6[1] = 0xc0022f00;
-        puVar6[2] = ((int)((uVar11 & 0xffffffff) >> 0x14) + 0x200U & 0x1000) +
-                    ((uint)uVar11 & 0x1fffffff);
+        puVar6[2] = ((uVar10 >> 0x14) + 0x200 & 0x1000) + (uVar10 & 0x1fffffff);
         puVar6[3] = (uint)uVar2 << 2;
         puVar6[4] = (uint)uVar1;
-        *(ulong **)&this->field_0x30 = puVar6 + 4;
+        *(ulong **)&param_1->field_0x30 = puVar6 + 4;
       }
     }
   }
-  __restgprlr_24();
   return;
 }
 
 
 // 82877690  DirectShaderPatch  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/lazy.cpp:2281)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 
 int D3D::DirectShaderPatch
@@ -1476,63 +1433,60 @@ int D3D::DirectShaderPatch
 
 {
   ulong uVar1;
-  ulong uVar2;
-  int iVar4;
-  undefined8 uVar3;
-  ulonglong uVar5;
-  longlong lVar6;
+  ulong64 uVar2;
+  ulonglong uVar3;
+  longlong lVar4;
   char in_RESERVE;
   byte in_cr0;
   
-  lVar6 = (longlong)(int)param_4;
-  iVar4 = __savegprlr_26(param_1);
-  uVar2 = (ulong)lVar6;
-  if ((param_2->m_Pass[uVar2].m_VertexDeclarationUniqueness != param_3->m_Uniqueness) ||
-     (((param_2->m_Pass[uVar2].field1_0x8.m_Stride64[0] ^ *(ulonglong *)(iVar4 + 0x31e8)) &
-      (param_3->field8_0x20).m_StreamMask64[0]) != 0 ||
-      ((param_2->m_Pass[uVar2].field1_0x8.m_Stride64[1] ^ *(ulonglong *)(iVar4 + 0x31f0)) &
-      (param_3->field8_0x20).m_StreamMask64[1]) != 0)) {
-    uVar1 = param_2->m_Pass[uVar2].m_PatchFence;
+  if ((param_2->m_Pass[param_4].m_VertexDeclarationUniqueness != param_3->m_Uniqueness) ||
+     (((param_2->m_Pass[param_4].field1_0x8.m_Stride64[0] ^
+       (param_1->field11115_0x31e8).m_StreamStride64[0]) & (param_3->field8_0x20).m_StreamMask64[0])
+      != 0 || ((param_2->m_Pass[param_4].field1_0x8.m_Stride64[1] ^
+               (param_1->field11115_0x31e8).m_StreamStride64[1]) &
+              (param_3->field8_0x20).m_StreamMask64[1]) != 0)) {
+    uVar1 = param_2->m_Pass[param_4].m_PatchFence;
     if ((uVar1 != 0) &&
-       (*(int *)(iVar4 + 0x2b1c) - uVar1 <
-        (uint)(*(int *)(iVar4 + 0x2b1c) - **(int **)(iVar4 + 0x2b10)))) {
-      uVar3 = 0;
-      goto LAB_828777dc;
+       (param_1->m_CpuFence - uVar1 < param_1->m_CpuFence - param_1->m_pWriteBacks->GpuFence)) {
+      return 0;
     }
     PatchVertexShaderToMatchVertexDeclaration
               (param_2,(ulong *)(*(int *)((int)param_2[1].m_Pass[0].m_OriginalFetchInstructions +
-                                         *(int *)((int)param_2->m_Pass[0].
+                                         *(int *)((int)param_2[1].m_Pass[0].
                                                        m_OriginalFetchInstructions +
-                                                 (int)((lVar6 + 0x70U & 0xffffffff) << 3) + -0x44) +
-                                         -0x44) + param_2->m_dwPhysical),param_3,
-               (uchar *)(iVar4 + 0x31e8),uVar2);
+                                                 param_4 * 8 + -0x2c) + -0x44) +
+                                param_2->m_dwPhysical),param_3,
+               (param_1->field11115_0x31e8).m_StreamStride,param_4);
     if (param_3->m_Uniqueness == 0) {
       do {
-        uVar5 = (ulonglong)`unsigned_long___cdecl_D3D::AssignUniqueness(void)'::__l2::Uniqueness;
-        lVar6 = uVar5 + 1;
+        uVar3 = (ulonglong)`unsigned_long___cdecl_D3D::AssignUniqueness(void)'::__l2::Uniqueness;
+        lVar4 = uVar3 + 1;
         if (in_RESERVE != '\0') {
           `unsigned_long___cdecl_D3D::AssignUniqueness(void)'::__l2::Uniqueness =
-               storeWordConditionalIndexed(lVar6,0,0xffffffff8488fed4);
+               storeWordConditionalIndexed(lVar4,0,0xffffffff8488fed4);
           in_cr0 = 2;
         }
-      } while ((!(bool)(in_cr0 >> 1 & 1)) || ((uVar5 + 2 & 0xffffffff) < 2));
-      param_3->m_Uniqueness = (ulong)lVar6;
+      } while ((!(bool)(in_cr0 >> 1 & 1)) || ((uVar3 + 2 & 0xffffffff) < 2));
+      param_3->m_Uniqueness = (ulong)lVar4;
     }
-    param_2->m_Pass[uVar2].m_VertexDeclarationUniqueness = param_3->m_Uniqueness;
-    param_2->m_Pass[uVar2].field1_0x8.m_Stride64[0] = *(ulong64 *)(iVar4 + 0x31e8);
-    param_2->m_Pass[uVar2].field1_0x8.m_Stride64[1] = *(ulong64 *)(iVar4 + 0x31f0);
+    param_2->m_Pass[param_4].m_VertexDeclarationUniqueness = param_3->m_Uniqueness;
+    param_2->m_Pass[param_4].field1_0x8.m_Stride64[0] =
+         (param_1->field11115_0x31e8).m_StreamStride64[0];
+    param_2->m_Pass[param_4].field1_0x8.m_Stride64[1] =
+         (param_1->field11115_0x31e8).m_StreamStride64[1];
   }
-  *(undefined8 *)(iVar4 + 0x2f68) = *(undefined8 *)(iVar4 + 0x31e8);
-  *(undefined8 *)(iVar4 + 0x2f70) = *(undefined8 *)(iVar4 + 0x31f0);
-  uVar3 = 1;
-LAB_828777dc:
-  iVar4 = __restgprlr_26(uVar3);
-  return iVar4;
+  uVar2 = (param_1->field11115_0x31e8).m_StreamStride64[1];
+  (param_1->field11073_0x2f68).m_CurrentVertexShaderStride64[0] =
+       (param_1->field11115_0x31e8).m_StreamStride64[0];
+  (param_1->field11073_0x2f68).m_CurrentVertexShaderStride64[1] = uVar2;
+  return 1;
 }
 
 
 // 828777E8  SetPending_Shaders  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/lazy.cpp:2375)
 
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 
 ulong64 D3D::SetPending_Shaders(CDevice *param_1,ulong64 param_2)
@@ -1570,7 +1524,6 @@ ulong64 D3D::SetPending_Shaders(CDevice *param_1,ulong64 param_2)
   uint local_ac;
   uint local_a8;
   
-  __savegprlr();
   uVar16 = 0;
   local_b8.dword = 0xffffffff;
   local_b4 = 0xffffffff;
@@ -1585,7 +1538,9 @@ ulong64 D3D::SetPending_Shaders(CDevice *param_1,ulong64 param_2)
   pCVar1 = param_1->m_pVertexShader;
   pCVar2 = param_1->m_pVertexDeclaration;
   pCVar3 = param_1->m_pPixelShader;
-  if (pCVar1 == (CVertexShader *)0x0) goto LAB_828781d4;
+  if (pCVar1 == (CVertexShader *)0x0) {
+    return param_2;
+  }
   iVar10 = *(int *)&pCVar1[1].m_LastDeviceAndFrameNumberLoaded;
   uVar21 = 0;
   p_Var22 = (_UCODE_R500VSUCODE *)
@@ -1711,14 +1666,14 @@ LAB_82877b78:
        0x10000000 < (uVar20 & 0x70000000) | param_1->m_WaitUntilIdleBeforeNextZPassDoubleDepth;
   uVar13 = (ulong)uVar21;
   if ((param_1->m_CurrentVertexShaderOutputPatched) || (uVar12 != 0)) {
-    if ((param_2 & 0x180000) != 0) {
-      param_1->field_0x2b3e = param_1->field_0x2b3e & 0xbf;
-      SetLiteralShaderConstants(param_1,(_UCODE_HEADER *)(pCVar1 + 1),(void *)pCVar1->m_dwPhysical);
+    if ((param_2 & 0x180000) == 0) goto LAB_82877d84;
+    param_1->field_0x2b3e = param_1->field_0x2b3e & 0xbf;
+    SetLiteralShaderConstants(param_1,(_UCODE_HEADER *)(pCVar1 + 1),(void *)pCVar1->m_dwPhysical);
 LAB_82877d68:
-      IncrementalShaderPatchAndLoad(param_1,uVar12,pCVar1,&local_bc,pCVar2,p_Var22,p_Var23,uVar13);
-    }
+    IncrementalShaderPatchAndLoad(param_1,uVar12,pCVar1,&local_bc,pCVar2,p_Var22,p_Var23,uVar13);
   }
-  else if ((param_2 & 0x80000) != 0) {
+  else {
+    if ((param_2 & 0x80000) == 0) goto LAB_82877d84;
     pCVar11 = pCVar1 + 1;
     SetLiteralShaderConstants(param_1,(_UCODE_HEADER *)pCVar11,(void *)pCVar1->m_dwPhysical);
     bVar14 = param_1->field_0x2b3e & 0xbf;
@@ -1729,12 +1684,7 @@ LAB_82877d68:
       (param_1->field11073_0x2f68).m_CurrentVertexShaderStride64[1] =
            pCVar1->m_Pass[uVar13].field1_0x8.m_Stride64[1];
       uVar18 = uVar21;
-      if ((((uVar24 ^ uVar4) & 7) != 0) && ((pCVar11->_padding_ & 0x20U) != 0)) {
-LAB_82877cec:
-        local_c0 = 1;
-        param_1->field_0x2b3e = bVar14 | 0x40;
-        uVar18 = uVar21;
-      }
+      if ((((uVar24 ^ uVar4) & 7) == 0) || ((pCVar11->_padding_ & 0x20U) == 0)) goto LAB_82877d84;
     }
     else {
       if (param_1->m_CommandBufferDevice) {
@@ -1747,13 +1697,15 @@ LAB_82877cec:
         uVar21 = uVar18;
       }
       uVar18 = uVar21;
-      if (((((uVar24 ^ uVar4) & 7) != 0) && ((pCVar11->_padding_ & 0x20U) != 0)) &&
-         (iVar10 = DirectShaderPatch(param_1,pCVar1,pCVar2,1), iVar10 != 0)) {
-        bVar14 = param_1->field_0x2b3e;
-        goto LAB_82877cec;
-      }
+      if (((((uVar24 ^ uVar4) & 7) == 0) || ((pCVar11->_padding_ & 0x20U) == 0)) ||
+         (iVar10 = DirectShaderPatch(param_1,pCVar1,pCVar2,1), iVar10 == 0)) goto LAB_82877d84;
+      bVar14 = param_1->field_0x2b3e;
     }
+    local_c0 = 1;
+    param_1->field_0x2b3e = bVar14 | 0x40;
+    uVar18 = uVar21;
   }
+LAB_82877d84:
   if ((param_2 & 0x180000) != 0) {
     *(uint *)&param_1->field_0x2924 = uVar5 | uVar16;
     param_2 = param_2 | 0x18000;
@@ -1894,13 +1846,14 @@ LAB_82877cec:
     pCVar1->m_Pass[iVar10].m_PatchFence = param_1->m_CpuFence;
     *(ulong **)&param_1->field_0x30 = puVar9 + 3;
   }
-LAB_828781d4:
-  __restgprlr();
   return param_2;
 }
 
 
 // 828781E8  D3DVertexShader_Bind  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/lazy.cpp:3674)
+
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 
 void D3DVertexShader_Bind
                (D3DVertexShader *param_1,ulong param_2,D3DVertexDeclaration *param_3,ulong *param_4,
@@ -1909,80 +1862,75 @@ void D3DVertexShader_Bind
 {
   uint uVar1;
   int iVar2;
-  CVertexShader *pCVar3;
-  _UCODE_R500VSUCODE *p_Var4;
-  ulong uVar5;
-  _UCODE_R500PSUCODE *p_Var6;
-  longlong lVar7;
-  uint uVar10;
-  ulonglong uVar8;
-  ulonglong uVar9;
-  ulong64 *puVar11;
-  PassData *pPVar12;
+  ulong uVar3;
+  _UCODE_R500PSUCODE *p_Var4;
+  uint *puVar5;
+  uint uVar9;
+  ulonglong uVar6;
+  ulonglong uVar7;
+  longlong lVar8;
+  int *piVar10;
+  _UCODE_R500VSUCODE *p_Var11;
+  undefined4 *puVar12;
   char in_RESERVE;
   byte bVar13;
   uchar local_70 [16];
   PIXPatchVertexShaderToMatchPixelShaderData aPStack_60 [4];
   
-  uVar8 = (ulonglong)(int)param_5;
-  lVar7 = (longlong)(int)param_4;
-  pCVar3 = (CVertexShader *)__savegprlr_25(param_1,param_2);
-  uVar1 = ((CVertexDeclaration *)param_3)->m_MaxStream;
-  uVar10 = 0;
-  lVar7 = lVar7 + -4;
+  uVar1 = *(uint *)&param_3[1].field_0x4;
+  uVar9 = 0;
+  puVar5 = param_4 + -1;
   do {
-    lVar7 = lVar7 + 4;
-    local_70[uVar10] = (uchar)(*(uint *)lVar7 >> 2);
-    uVar10 = uVar10 + 1;
-  } while (uVar10 <= uVar1);
-  if ((uVar8 & 0xffffffff) != 0) {
-    iVar2 = *(int *)&pCVar3[1].m_LastDeviceAndFrameNumberLoaded;
-    p_Var6 = (_UCODE_R500PSUCODE *)(*(int *)((int)uVar8 + 0x40) + (int)uVar8 + 0x28);
-    p_Var4 = (_UCODE_R500VSUCODE *)
-             ((int)pCVar3[1].m_Pass[0].m_OriginalFetchInstructions + iVar2 + -0x44);
-    uVar5 = D3D::CompareInterpolatorHeaders(p_Var4,p_Var6);
-    if ((uVar5 != 0) && (uVar5 == 1)) {
+    puVar5 = puVar5 + 1;
+    local_70[uVar9] = (uchar)(*puVar5 >> 2);
+    uVar9 = uVar9 + 1;
+  } while (uVar9 <= uVar1);
+  if (param_5 != (D3DPixelShader *)0x0) {
+    iVar2 = *(int *)&param_1[0x25].field_0x8;
+    p_Var4 = (_UCODE_R500PSUCODE *)(&param_5[1].field_0x10 + *(int *)&param_5[2].field_0x10);
+    p_Var11 = (_UCODE_R500VSUCODE *)(&param_1[0x24].field_0x8 + iVar2);
+    uVar3 = D3D::CompareInterpolatorHeaders(p_Var11,p_Var4);
+    if ((uVar3 != 0) && (uVar3 == 1)) {
       D3D::PatchVertexShaderToMatchPixelShader
-                (aPStack_60,p_Var4,
+                (aPStack_60,p_Var11,
                  (GPUSHADER_INSTRUCTION *)
-                 (pCVar3->m_dwPhysical + (p_Var4->common).PhysicalMicrocodeOffset),
-                 (GPU_PROGRAMCONTROL *)
-                 ((int)pCVar3[1].m_Pass[0].m_OriginalFetchInstructions + iVar2 + -0x3c),p_Var6);
-      D3D::PatchBoundInterpolatorHeadersToMatch(p_Var4,p_Var6);
+                 (*(int *)&param_1[1].field_0x8 + (p_Var11->common).PhysicalMicrocodeOffset),
+                 (GPU_PROGRAMCONTROL *)(&param_1[0x24].field_0x10 + iVar2),p_Var4);
+      D3D::PatchBoundInterpolatorHeadersToMatch(p_Var11,p_Var4);
     }
   }
-  uVar5 = 0;
-  uVar8 = (ulonglong)((pCVar3[1]._padding_ & 0x20U) == 0) ^ 1;
-  bVar13 = (uVar8 == 0xffffffffffffffff) << 1;
-  if (uVar8 != 0xffffffffffffffff) {
-    pPVar12 = pCVar3->m_Pass;
-    puVar11 = &pCVar3[1].m_LastDeviceAndFrameNumberLoaded;
+  uVar3 = 0;
+  uVar6 = (ulonglong)((*(uint *)&param_1[0x24].field_0x8 & 0x20) == 0) ^ 1;
+  bVar13 = (uVar6 == 0xffffffffffffffff) << 1;
+  if (uVar6 != 0xffffffffffffffff) {
+    puVar12 = (undefined4 *)&param_1[1].field_0x10;
+    piVar10 = (int *)&param_1[0x25].field_0x8;
     do {
       D3D::PatchVertexShaderToMatchVertexDeclaration
-                (pCVar3,(ulong *)(*(int *)((int)pCVar3[1].m_Pass[0].m_OriginalFetchInstructions +
-                                          *(int *)puVar11 + -0x44) + pCVar3->m_dwPhysical),
-                 (CVertexDeclaration *)param_3,local_70,uVar5);
+                ((CVertexShader *)param_1,
+                 (ulong *)(*(int *)(&param_1[0x24].field_0x8 + *piVar10) +
+                          *(int *)&param_1[1].field_0x8),(CVertexDeclaration *)param_3,local_70,
+                 uVar3);
       memcpy();
-      if (((CVertexDeclaration *)param_3)->m_Uniqueness == 0) {
+      if (*(int *)(param_3 + 2) == 0) {
         do {
-          uVar9 = (ulonglong)`unsigned_long___cdecl_D3D::AssignUniqueness(void)'::__l2::Uniqueness;
-          lVar7 = uVar9 + 1;
+          uVar7 = (ulonglong)`unsigned_long___cdecl_D3D::AssignUniqueness(void)'::__l2::Uniqueness;
+          lVar8 = uVar7 + 1;
           if (in_RESERVE != '\0') {
             `unsigned_long___cdecl_D3D::AssignUniqueness(void)'::__l2::Uniqueness =
-                 storeWordConditionalIndexed(lVar7,0,0xffffffff8488fed4);
+                 storeWordConditionalIndexed(lVar8,0,0xffffffff8488fed4);
             bVar13 = 2;
           }
-        } while ((!(bool)(bVar13 >> 1 & 1)) || ((uVar9 + 2 & 0xffffffff) < 2));
-        ((CVertexDeclaration *)param_3)->m_Uniqueness = (ulong)lVar7;
+        } while ((!(bool)(bVar13 >> 1 & 1)) || ((uVar7 + 2 & 0xffffffff) < 2));
+        *(int *)(param_3 + 2) = (int)lVar8;
       }
-      uVar5 = uVar5 + 1;
-      puVar11 = puVar11 + 1;
-      pPVar12->m_VertexDeclarationUniqueness = ((CVertexDeclaration *)param_3)->m_Uniqueness;
-      pPVar12 = pPVar12 + 1;
-    } while ((ulonglong)uVar5 < uVar8 + 1);
+      uVar3 = uVar3 + 1;
+      piVar10 = piVar10 + 2;
+      *puVar12 = *(undefined4 *)(param_3 + 2);
+      puVar12 = puVar12 + 0x68;
+    } while ((ulonglong)uVar3 < uVar6 + 1);
   }
-  pCVar3[1]._padding_ = pCVar3[1]._padding_ | 0x40;
-  __restgprlr_25();
+  *(uint *)&param_1[0x24].field_0x8 = *(uint *)&param_1[0x24].field_0x8 | 0x40;
   return;
 }
 

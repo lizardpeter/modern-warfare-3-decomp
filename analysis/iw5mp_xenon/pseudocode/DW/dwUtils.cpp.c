@@ -44,39 +44,31 @@ bdMessaging * dwGetMessaging(int param_1)
 
 // 826F44D8  bdStrlcpy  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdplatform/bdplatformstring/bdplatformstring.inl:149)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 uint bdStrlcpy(char *param_1,char *param_2,uint param_3)
 
 {
-  ulonglong uVar1;
-  int iVar2;
-  uint uVar3;
-  longlong lVar4;
-  ulonglong uVar5;
-  char *pcVar8;
-  longlong lVar6;
-  ulonglong uVar7;
-  int iVar9;
+  char cVar1;
+  char *pcVar2;
+  char *pcVar3;
   
-  uVar5 = (ulonglong)(int)param_3;
-  lVar4 = (longlong)(int)param_2;
-  iVar2 = __savegprlr_29(param_1);
-  lVar6 = lVar4;
+  pcVar2 = param_2;
   do {
-    pcVar8 = (char *)lVar6;
-    lVar6 = lVar6 + 1;
-  } while (*pcVar8 != '\0');
-  uVar7 = (lVar6 - lVar4) - 1;
-  uVar1 = uVar7 & 0xffffffff;
-  if (((uVar5 & 0xffffffff) != 0) && (iVar2 != 0)) {
-    iVar9 = (int)(uVar5 - 1);
-    if (uVar1 < (uVar5 - 1 & 0xffffffff)) {
-      iVar9 = (int)uVar7;
+    cVar1 = *pcVar2;
+    pcVar2 = pcVar2 + 1;
+  } while (cVar1 != '\0');
+  pcVar2 = pcVar2 + (-1 - (int)param_2);
+  if ((param_3 != 0) && (param_1 != (char *)0x0)) {
+    pcVar3 = (char *)(param_3 - 1);
+    if (pcVar2 < (char *)(param_3 - 1)) {
+      pcVar3 = pcVar2;
     }
     memcpy();
-    *(undefined1 *)(iVar9 + iVar2) = 0;
+    param_1[(int)pcVar3] = '\0';
   }
-  uVar3 = __restgprlr_29(uVar1);
-  return uVar3;
+  return (uint)pcVar2;
 }
 
 
@@ -123,6 +115,9 @@ bool dwGetConnectionID(int param_1,ulong64 *param_2)
 
 
 // 826F3300  dwLobbyErrorCodeToString  (DW/dwUtils.cpp:700)
+
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
 
 void dwLobbyErrorCodeToString(bdLobbyErrorCode param_1,char *param_2,uint param_3)
 
@@ -324,7 +319,6 @@ void dwLobbyErrorCodeToString(bdLobbyErrorCode param_1,char *param_2,uint param_
   char *local_a4;
   char *local_a0;
   
-  __savegprlr();
   local_690[2] = 2;
   local_690[0] = BD_NO_ERROR;
   local_690[3] = 3;
@@ -720,18 +714,17 @@ void dwLobbyErrorCodeToString(bdLobbyErrorCode param_1,char *param_2,uint param_
     cVar1 = *pcVar5;
     pcVar5 = pcVar5 + 1;
   } while (cVar1 != '\0');
-  bStack00000014 = param_1;
-  pcStack0000001c = param_2;
-  uStack00000024 = param_3;
   if ((param_3 != 0) && (param_2 != (char *)0x0)) {
     pcVar6 = (char *)(param_3 - 1);
     if (pcVar5 + (-1 - (int)pcVar3) < (char *)(param_3 - 1)) {
       pcVar6 = pcVar5 + (-1 - (int)pcVar3);
     }
+    bStack00000014 = param_1;
+    pcStack0000001c = param_2;
+    uStack00000024 = param_3;
     memcpy();
     param_2[(int)pcVar6] = '\0';
   }
-  __restgprlr();
   return;
 }
 
@@ -784,33 +777,35 @@ uint dwLobbyGetError(bdLobbyService *param_1)
 
 // 826F4438  publish  (DW/dwUtils.cpp:798)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void __thiscall
 DWLogging::publish(DWLogging *this,bdLogMessageType param_1,char *param_2,char *param_3,
                   char *param_4,uint param_5,char *param_6)
 
 {
   int iVar1;
-  ulonglong uVar2;
   
-  uVar2 = (ulonglong)(int)param_1;
-  iVar1 = __savegprlr_28(this,uVar2,param_2,param_3,param_4,param_5,param_6);
-  if ((uVar2 & 0xffffffff) == 0) {
-    if (*(int *)(iVar1 + 0x24) == -1) goto LAB_826f44d0;
-    Com_Printf(*(int *)(iVar1 + 0x24),"DW : (%s) %s\n");
-    iVar1 = *(int *)(iVar1 + 0x24);
+  if (param_1 == BD_LOG_INFO) {
+    if (this->m_channel_id == -1) {
+      return;
+    }
+    Com_Printf(this->m_channel_id,"DW : (%s) %s\n");
+    iVar1 = this->m_channel_id;
   }
-  else if ((uVar2 & 0xffffffff) == 1) {
+  else if (param_1 == BD_LOG_WARNING) {
     Com_Printf(0x19,"DW *WARN (%s) %s\n");
     iVar1 = 0x19;
   }
   else {
-    if (2 < (uVar2 & 0xffffffff)) goto LAB_826f44d0;
+    if (BD_LOG_ERROR < param_1) {
+      return;
+    }
     Com_Printf(1,"DW *ERR (%s) %s\n");
     iVar1 = 0x19;
   }
   Com_Printf(iVar1,"\tfile:%s func:%s : %d\n");
-LAB_826f44d0:
-  __restgprlr_28();
   return;
 }
 

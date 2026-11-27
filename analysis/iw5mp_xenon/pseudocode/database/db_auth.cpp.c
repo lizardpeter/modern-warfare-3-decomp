@@ -2,34 +2,30 @@
 
 // 823A21B8  DBX_AuthBoth_GenerateHash  (database/db_auth.cpp:179)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 void DBX_AuthBoth_GenerateHash(uchar *param_1,uint param_2,DB_AuthHash *param_3)
 
 {
-  undefined8 uVar1;
-  int iVar2;
-  longlong lVar3;
-  longlong lVar4;
+  int iVar1;
   undefined1 auStack_b0 [176];
   
-  lVar4 = (longlong)(int)param_3;
-  lVar3 = (longlong)(int)param_2;
-  uVar1 = __savegprlr_26(param_1,lVar3,lVar4);
-  iVar2 = sha256_init(auStack_b0);
-  if (iVar2 != 0) {
+  iVar1 = sha256_init(auStack_b0);
+  if (iVar1 != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_auth.cpp",0xb9,0,
                     "%s\n\t(result) = %i");
   }
-  iVar2 = sha256_process(auStack_b0,uVar1,lVar3);
-  if (iVar2 != 0) {
+  iVar1 = sha256_process(auStack_b0,param_1,param_2);
+  if (iVar1 != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_auth.cpp",0xbb,0,
                     "%s\n\t(result) = %i");
   }
-  iVar2 = sha256_done(auStack_b0,lVar4);
-  if (iVar2 != 0) {
+  iVar1 = sha256_done(auStack_b0,param_3);
+  if (iVar1 != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_auth.cpp",0xbd,0,
                     "%s\n\t(result) = %i");
   }
-  __restgprlr_26();
   return;
 }
 
@@ -61,44 +57,38 @@ bool DBX_AuthLoad_ValidateHash(uchar *param_1,uint param_2,DB_AuthHash *param_3)
 
 // 823A22E8  DBX_AuthLoad_ValidateSignature_Try  (database/db_auth.cpp:209)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 bool DBX_AuthLoad_ValidateSignature_Try(DB_AuthHash *param_1,DB_AuthSignature *param_2)
 
 {
   undefined8 uVar1;
-  undefined8 uVar2;
-  undefined1 uVar4;
-  int iVar3;
-  longlong lVar5;
+  int iVar2;
   int local_60 [4];
   undefined1 auStack_50 [80];
   
-  lVar5 = (longlong)(int)param_2;
-  uVar1 = __savegprlr_29(param_1,lVar5);
-  uVar2 = find_hash(0xffffffff8221ad8c);
-  if ((int)uVar2 == -1) {
+  uVar1 = find_hash(0xffffffff8221ad8c);
+  if ((int)uVar1 == -1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_auth.cpp",0xd8,0,
                     "%s");
-    uVar4 = __restgprlr_29(0);
-    return (bool)uVar4;
+    return false;
   }
-  iVar3 = rsa_import(0xffffffff82058ec8,0x10e,auStack_50);
-  if (iVar3 != 0) {
+  iVar2 = rsa_import(0xffffffff82058ec8,0x10e,auStack_50);
+  if (iVar2 != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_auth.cpp",0xde,0,
                     "%s\n\t(result) = %i");
-    uVar4 = __restgprlr_29(0);
-    return (bool)uVar4;
+    return false;
   }
   local_60[0] = 0;
-  iVar3 = rsa_verify_hash_ex(lVar5,0x100,uVar1,0x20,3,uVar2,8,local_60);
+  iVar2 = rsa_verify_hash_ex(param_2,0x100,param_1,0x20,3,uVar1,8,local_60);
   rsa_free(auStack_50);
-  if (iVar3 != 0) {
+  if (iVar2 != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_auth.cpp",0xe8,0,
                     "%s\n\t(result) = %i");
-    uVar4 = __restgprlr_29(0);
-    return (bool)uVar4;
+    return false;
   }
-  uVar4 = __restgprlr_29(local_60[0] == 1);
-  return (bool)uVar4;
+  return local_60[0] == 1;
 }
 
 
@@ -123,125 +113,118 @@ bool DBX_AuthLoad_ValidateSignature(DB_AuthHash *param_1,DB_AuthSignature *param
 
 // 823A2490  DBX_AuthLoad_ProcessHeader  (database/db_auth.cpp:260)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 bool DBX_AuthLoad_ProcessHeader(uchar *param_1)
 
 {
   byte bVar1;
   byte bVar2;
-  byte *pbVar3;
-  undefined1 uVar4;
-  bool bVar5;
-  byte *pbVar6;
-  byte *pbVar7;
-  char *pcVar8;
+  bool bVar3;
+  byte *pbVar4;
+  byte *pbVar5;
+  char *pcVar6;
   
-  pbVar3 = (byte *)__savegprlr_29(param_1);
-  pbVar7 = &s_IWffs100;
-  pbVar6 = pbVar3;
+  pbVar5 = &s_IWffs100;
+  pbVar4 = param_1;
   do {
-    bVar1 = *pbVar7;
-    bVar2 = *pbVar6;
+    bVar1 = *pbVar5;
+    bVar2 = *pbVar4;
     if ((ulonglong)bVar1 - (ulonglong)bVar2 != 0) break;
-    pbVar7 = pbVar7 + 1;
-    pbVar6 = pbVar6 + 1;
-  } while (pbVar7 != &DAT_82059154);
+    pbVar5 = pbVar5 + 1;
+    pbVar4 = pbVar4 + 1;
+  } while (pbVar5 != (byte *)0x82059154);
   if ((int)((ulonglong)bVar1 - (ulonglong)bVar2) != 0) {
     if (alwaysfails == 0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_auth.cpp",0x10c,
                       0,"DB_Auth: Missing magic (not an authenticated fastfile, or out of date?)\n")
       ;
     }
-    uVar4 = __restgprlr_29(0);
-    return (bool)uVar4;
+    return false;
   }
-  if (pbVar3[0x14b] != 0) {
+  if (param_1[0x14b] != '\0') {
     if (alwaysfails == 0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_auth.cpp",0x113,
                       0,"DB_Auth: Filename not zero-padded\n");
     }
-    uVar4 = __restgprlr_29(0);
-    return (bool)uVar4;
+    return false;
   }
-  pbVar6 = pbVar3 + 300;
-  bVar5 = DBX_AuthLoad_ValidateHash(pbVar6,0x1ea4,(DB_AuthHash *)(pbVar3 + 0xc));
-  if (!bVar5) {
+  pbVar4 = param_1 + 300;
+  bVar3 = DBX_AuthLoad_ValidateHash(pbVar4,0x1ea4,(DB_AuthHash *)(param_1 + 0xc));
+  if (!bVar3) {
     if (alwaysfails == 0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_auth.cpp",0x119,
                       0,"DB_Auth: Subheader hash validation failed.\n");
     }
-    uVar4 = __restgprlr_29(0);
-    return (bool)uVar4;
+    return false;
   }
-  bVar5 = DBX_AuthLoad_ValidateSignature
-                    ((DB_AuthHash *)(pbVar3 + 0xc),(DB_AuthSignature *)(pbVar3 + 0x2c));
-  if (!bVar5) {
+  bVar3 = DBX_AuthLoad_ValidateSignature
+                    ((DB_AuthHash *)(param_1 + 0xc),(DB_AuthSignature *)(param_1 + 0x2c));
+  if (!bVar3) {
     if (alwaysfails == 0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_auth.cpp",0x11f,
                       0,"DB_Auth: Subheader signature validation failed.\n");
     }
-    uVar4 = __restgprlr_29(0);
-    return (bool)uVar4;
+    return false;
   }
-  pcVar8 = g_authLoad.expectedFastfileName;
+  pcVar6 = g_authLoad.expectedFastfileName;
   do {
-    bVar1 = *pcVar8;
-    bVar2 = *pbVar6;
+    bVar1 = *pcVar6;
+    bVar2 = *pbVar4;
     if ((ulonglong)bVar1 - (ulonglong)bVar2 != 0) break;
-    pcVar8 = pcVar8 + 1;
-    pbVar6 = pbVar6 + 1;
-  } while ((DB_AuthHeader *)pcVar8 != &g_authLoad.header);
+    pcVar6 = pcVar6 + 1;
+    pbVar4 = pbVar4 + 1;
+  } while ((DB_AuthHeader *)pcVar6 != &g_authLoad.header);
   if ((int)((ulonglong)bVar1 - (ulonglong)bVar2) != 0) {
     if (alwaysfails == 0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_auth.cpp",0x126,
                       0,"DB_Auth: Filename didn\'t match.\n");
     }
-    uVar4 = __restgprlr_29(0);
-    return (bool)uVar4;
+    return false;
   }
   memcpy();
   g_authLoad.authedChunkInGroupCount = 0;
   g_authLoad.authedGroupCount = 1;
-  uVar4 = __restgprlr_29(1);
-  return (bool)uVar4;
+  return true;
 }
 
 
 // 823A26A0  DBX_AuthLoad_ProcessMasterBlock  (database/db_auth.cpp:710)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Type propagation algorithm not settling */
 
 bool DBX_AuthLoad_ProcessMasterBlock(uchar *param_1)
 
 {
   uint uVar1;
-  uchar *puVar2;
-  undefined1 uVar3;
-  longlong lVar4;
-  DB_AuthHash *pDVar5;
+  longlong lVar2;
+  uchar *puVar3;
+  DB_AuthHash *pDVar4;
   DB_AuthHash local_50 [2];
   
-  puVar2 = (uchar *)__savegprlr_27(param_1);
   if (g_authLoad.authedGroupCount == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_auth.cpp",0x2c9,0,
                     "%s");
   }
   uVar1 = g_authLoad.authedGroupCount;
-  pDVar5 = g_authLoad.header.subheader.masterBlockHashes + (g_authLoad.authedGroupCount - 1);
-  DBX_AuthBoth_GenerateHash(puVar2,0x2000,local_50);
-  puVar2 = local_50[0].bytes;
+  pDVar4 = g_authLoad.header.subheader.masterBlockHashes + (g_authLoad.authedGroupCount - 1);
+  DBX_AuthBoth_GenerateHash(param_1,0x2000,local_50);
+  puVar3 = local_50[0].bytes;
   do {
-    lVar4 = (ulonglong)pDVar5->bytes[0] - (ulonglong)*puVar2;
-    if (lVar4 != 0) break;
-    pDVar5 = (DB_AuthHash *)(pDVar5->bytes + 1);
-    puVar2 = puVar2 + 1;
-  } while (pDVar5 != g_authLoad.header.subheader.masterBlockHashes + uVar1);
-  if ((int)lVar4 != 0) {
+    lVar2 = (ulonglong)pDVar4->bytes[0] - (ulonglong)*puVar3;
+    if (lVar2 != 0) break;
+    pDVar4 = (DB_AuthHash *)(pDVar4->bytes + 1);
+    puVar3 = puVar3 + 1;
+  } while (pDVar4 != g_authLoad.header.subheader.masterBlockHashes + uVar1);
+  if ((int)lVar2 != 0) {
     if (alwaysfails == 0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_auth.cpp",0x2ce,
                       0,"DB_Auth: Master block hash validation failed.\n");
     }
-    uVar3 = __restgprlr_27(0);
-    return (bool)uVar3;
+    return false;
   }
   memcpy();
   if (g_authLoad.authedChunkInGroupCount != 0) {
@@ -249,12 +232,14 @@ bool DBX_AuthLoad_ProcessMasterBlock(uchar *param_1)
                     "%s");
   }
   g_authLoad.authedChunkInGroupCount = 1;
-  uVar3 = __restgprlr_27(1);
-  return (bool)uVar3;
+  return true;
 }
 
 
 // 823A27C8  DBX_AuthLoad_ProcessDataBlock  (database/db_auth.cpp:733)
+
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 
 bool DBX_AuthLoad_ProcessDataBlock(uchar *param_1)
 
@@ -263,43 +248,39 @@ bool DBX_AuthLoad_ProcessDataBlock(uchar *param_1)
   byte bVar2;
   uint uVar3;
   uchar *puVar4;
-  undefined1 uVar5;
-  uchar *puVar6;
+  uchar *puVar5;
   DB_AuthHash local_40 [2];
   
-  puVar4 = (uchar *)__savegprlr_29(param_1);
   if ((g_authLoad.authedChunkInGroupCount == 0) || (0xff < g_authLoad.authedChunkInGroupCount - 1))
   {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_auth.cpp",0x2e0,0,
                     "%s\n\t(g_authLoad.authedChunkInGroupCount) = %i");
   }
   uVar3 = g_authLoad.authedChunkInGroupCount;
-  puVar6 = g_authLoad.header.subheader.masterBlockHashes[g_authLoad.authedChunkInGroupCount + 0xf3].
+  puVar5 = g_authLoad.header.subheader.masterBlockHashes[g_authLoad.authedChunkInGroupCount + 0xf3].
            bytes + 0xc;
-  DBX_AuthBoth_GenerateHash(puVar4,0x2000,local_40);
+  DBX_AuthBoth_GenerateHash(param_1,0x2000,local_40);
   puVar4 = local_40[0].bytes;
   do {
-    bVar1 = *puVar6;
+    bVar1 = *puVar5;
     bVar2 = *puVar4;
     if ((ulonglong)bVar1 - (ulonglong)bVar2 != 0) break;
-    puVar6 = puVar6 + 1;
+    puVar5 = puVar5 + 1;
     puVar4 = puVar4 + 1;
-  } while ((DB_AuthHash *)puVar6 != g_authLoad.masterBlock.chunkHashes + uVar3);
+  } while ((DB_AuthHash *)puVar5 != g_authLoad.masterBlock.chunkHashes + uVar3);
   if ((int)((ulonglong)bVar1 - (ulonglong)bVar2) != 0) {
     if (alwaysfails == 0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_auth.cpp",0x2e5,
                       0,"DB_Auth: Data block hash validation failed.\n");
     }
-    uVar5 = __restgprlr_29(0);
-    return (bool)uVar5;
+    return false;
   }
   g_authLoad.authedChunkInGroupCount = g_authLoad.authedChunkInGroupCount + 1;
   if (g_authLoad.authedChunkInGroupCount == 0x101) {
     g_authLoad.authedGroupCount = g_authLoad.authedGroupCount + 1;
     g_authLoad.authedChunkInGroupCount = 0;
   }
-  uVar5 = __restgprlr_29(1);
-  return (bool)uVar5;
+  return true;
 }
 
 
@@ -354,113 +335,110 @@ void DB_AuthInitLZX(void)
 
 // 823A29C8  DB_AuthLoad_InflateLZX  (database/db_auth.cpp:791)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 int DB_AuthLoad_InflateLZX(db_z_stream_s *param_1)
 
 {
   int iVar1;
-  int *piVar3;
-  int iVar4;
-  undefined8 uVar2;
+  uint uVar2;
   ulong local_30;
-  ulong local_2c [11];
+  uint local_2c [11];
   
-  piVar3 = (int *)__savegprlr_28(param_1);
-  if ((void *)piVar3[3] == (void *)0x0) {
-    if (piVar3[4] != 0) {
-      do {
-        local_30 = piVar3[4];
-        local_2c[0] = piVar3[1];
-        if (0x10000 < local_30) {
-          local_30 = 0x10000;
-        }
-        iVar4 = XMemDecompressStream
-                          (g_lzxDecmpContext,db_zipMemory,&local_30,(void *)*piVar3,local_2c);
-        if ((local_2c[0] == 0) && (local_30 == 0)) break;
-        iVar1 = piVar3[4];
-        piVar3[4] = iVar1 - local_30;
-        piVar3[3] = local_30 + piVar3[3];
-        piVar3[1] = piVar3[1] - local_2c[0];
-        piVar3[5] = piVar3[5] + local_30;
-        *piVar3 = *piVar3 + local_2c[0];
-        piVar3[2] = local_2c[0] + piVar3[2];
-      } while (iVar1 - local_30 != 0);
-      goto LAB_823a2b18;
+  local_30 = param_1->avail_out;
+  if (param_1->next_out == (uchar *)0x0) {
+    if (local_30 == 0) {
+      return 0;
     }
+    do {
+      local_30 = param_1->avail_out;
+      local_2c[0] = param_1->avail_in;
+      if (0x10000 < local_30) {
+        local_30 = 0x10000;
+      }
+      iVar1 = XMemDecompressStream
+                        (g_lzxDecmpContext,db_zipMemory,&local_30,param_1->next_in,local_2c);
+      if ((local_2c[0] == 0) && (local_30 == 0)) break;
+      uVar2 = param_1->avail_out - local_30;
+      param_1->avail_out = uVar2;
+      param_1->next_out = param_1->next_out + local_30;
+      param_1->avail_in = param_1->avail_in - local_2c[0];
+      param_1->total_out = param_1->total_out + local_30;
+      param_1->next_in = param_1->next_in + local_2c[0];
+      param_1->total_in = local_2c[0] + param_1->total_in;
+    } while (uVar2 != 0);
   }
   else {
-    local_2c[0] = piVar3[1];
-    local_30 = piVar3[4];
-    iVar4 = XMemDecompressStream
-                      (g_lzxDecmpContext,(void *)piVar3[3],&local_30,(void *)*piVar3,local_2c);
-    piVar3[4] = piVar3[4] - local_30;
-    piVar3[3] = local_30 + piVar3[3];
-    piVar3[5] = piVar3[5] + local_30;
-    piVar3[1] = piVar3[1] - local_2c[0];
-    *piVar3 = *piVar3 + local_2c[0];
-    piVar3[2] = local_2c[0] + piVar3[2];
-LAB_823a2b18:
-    uVar2 = 0xfffffffffffffffd;
-    if (iVar4 != 0) goto LAB_823a2b28;
+    local_2c[0] = param_1->avail_in;
+    iVar1 = XMemDecompressStream
+                      (g_lzxDecmpContext,param_1->next_out,&local_30,param_1->next_in,local_2c);
+    param_1->avail_out = param_1->avail_out - local_30;
+    param_1->next_out = param_1->next_out + local_30;
+    param_1->total_out = param_1->total_out + local_30;
+    param_1->avail_in = param_1->avail_in - local_2c[0];
+    param_1->next_in = param_1->next_in + local_2c[0];
+    param_1->total_in = local_2c[0] + param_1->total_in;
   }
-  uVar2 = 0;
-LAB_823a2b28:
-  iVar4 = __restgprlr_28(uVar2);
-  return iVar4;
+  if (iVar1 == 0) {
+    return 0;
+  }
+  return -3;
 }
 
 
 // 823A2B30  DBX_AuthLoad_InflateCopyBuffer  (database/db_auth.cpp:847)
 
+/* WARNING: Function: __savegprlr_20 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_20 replaced with injection: xenon_save_restore */
+
 int DBX_AuthLoad_InflateCopyBuffer(db_z_stream_s *param_1,int param_2)
 
 {
   bool bVar1;
-  int *piVar2;
-  bool bVar4;
-  int iVar3;
+  bool bVar3;
+  int iVar2;
+  uint uVar4;
   
-  piVar2 = (int *)__savegprlr_20(param_1);
 LAB_823a2b88:
   do {
     if (g_authLoad.copyBufferEnd < 0x2000) {
-      iVar3 = piVar2[1];
-      if ((int)(0x2000 - g_authLoad.copyBufferEnd) < piVar2[1]) {
-        iVar3 = 0x2000 - g_authLoad.copyBufferEnd;
+      uVar4 = param_1->avail_in;
+      if ((int)(0x2000 - g_authLoad.copyBufferEnd) < (int)param_1->avail_in) {
+        uVar4 = 0x2000 - g_authLoad.copyBufferEnd;
       }
       memcpy();
-      piVar2[2] = piVar2[2] + iVar3;
-      *piVar2 = *piVar2 + iVar3;
-      piVar2[1] = piVar2[1] - iVar3;
-      g_authLoad.copyBufferEnd = g_authLoad.copyBufferEnd + iVar3;
+      param_1->total_in = param_1->total_in + uVar4;
+      param_1->next_in = param_1->next_in + uVar4;
+      param_1->avail_in = param_1->avail_in - uVar4;
+      g_authLoad.copyBufferEnd = g_authLoad.copyBufferEnd + uVar4;
       if (0x2000 < g_authLoad.copyBufferEnd) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_auth.cpp",
                         0x35f,0,"%s");
       }
       if (g_authLoad.copyBufferEnd < 0x2000) {
-        if (piVar2[1] != 0) {
-          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_auth.cpp",
-                          0x363,0,"%s");
-          iVar3 = __restgprlr_20(0);
-          return iVar3;
+        if (param_1->avail_in == 0) {
+          return 0;
         }
-        goto LAB_823a2d90;
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_auth.cpp",
+                        0x363,0,"%s");
+        return 0;
       }
       if (g_authLoad.authedGroupCount == 0) {
         bVar1 = true;
-        bVar4 = DBX_AuthLoad_ProcessHeader(g_authLoad.copyBuffer);
+        bVar3 = DBX_AuthLoad_ProcessHeader(g_authLoad.copyBuffer);
       }
       else if (g_authLoad.authedChunkInGroupCount == 0) {
         bVar1 = true;
-        bVar4 = DBX_AuthLoad_ProcessMasterBlock(g_authLoad.copyBuffer);
+        bVar3 = DBX_AuthLoad_ProcessMasterBlock(g_authLoad.copyBuffer);
       }
       else {
         bVar1 = false;
-        bVar4 = DBX_AuthLoad_ProcessDataBlock(g_authLoad.copyBuffer);
+        bVar3 = DBX_AuthLoad_ProcessDataBlock(g_authLoad.copyBuffer);
       }
-      if (bVar4 == false) {
+      if (bVar3 == false) {
         g_authLoad.copyBufferEnd = 0;
-        iVar3 = __restgprlr_20(0xfffffffffffffffa);
-        return iVar3;
+        return -6;
       }
       if (bVar1) {
         g_authLoad.copyBufferEnd = 0;
@@ -477,37 +455,34 @@ LAB_823a2b88:
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_auth.cpp",0x37b,
                       0,"%s");
     }
-    g_authLoad.stream.total_out = piVar2[5];
-    g_authLoad.stream.next_out = (uchar *)piVar2[3];
-    g_authLoad.stream.avail_out = piVar2[4];
+    g_authLoad.stream.total_out = param_1->total_out;
+    g_authLoad.stream.next_out = param_1->next_out;
+    g_authLoad.stream.avail_out = param_1->avail_out;
     if (g_compressor == DB_COMPRESSOR_ZLIB) {
-      iVar3 = db_inflate(&g_authLoad.stream,param_2);
+      iVar2 = db_inflate(&g_authLoad.stream,param_2);
     }
     else if (g_compressor == DB_COMPRESSOR_LZX) {
-      iVar3 = DB_AuthLoad_InflateLZX(&g_authLoad.stream);
+      iVar2 = DB_AuthLoad_InflateLZX(&g_authLoad.stream);
     }
     else {
-      iVar3 = -3;
+      iVar2 = -3;
     }
     if ((g_authLoad.stream.avail_out != 0) && (g_authLoad.stream.avail_in != 0)) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_auth.cpp",0x391,
                       0,"%s");
     }
-    piVar2[5] = g_authLoad.stream.total_out;
-    piVar2[3] = (int)g_authLoad.stream.next_out;
-    piVar2[4] = g_authLoad.stream.avail_out;
+    param_1->total_out = g_authLoad.stream.total_out;
+    param_1->next_out = g_authLoad.stream.next_out;
+    param_1->avail_out = g_authLoad.stream.avail_out;
     if (g_authLoad.stream.avail_in == 0) {
       g_authLoad.stream.next_in = (uchar *)g_authLoad.stream.avail_in;
       g_authLoad.copyBufferEnd = 0;
     }
-    if (iVar3 != 0) {
-      iVar3 = __restgprlr_20(iVar3);
-      return iVar3;
+    if (iVar2 != 0) {
+      return iVar2;
     }
     if (g_authLoad.stream.avail_out == 0) {
-LAB_823a2d90:
-      iVar3 = __restgprlr_20(0);
-      return iVar3;
+      return 0;
     }
   } while( true );
 }
@@ -515,13 +490,14 @@ LAB_823a2d90:
 
 // 823A2DF0  DB_AuthLoad_InflateInit  (database/db_auth.cpp:936)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 int DB_AuthLoad_InflateInit(db_z_stream_s *param_1,int param_2,char *param_3)
 
 {
-  db_z_stream_s *pdVar1;
-  int iVar2;
+  int iVar1;
   
-  pdVar1 = (db_z_stream_s *)__savegprlr_27(param_1);
   memset();
   memcpy();
   g_authLoad.stream.total_in = 0;
@@ -531,44 +507,38 @@ int DB_AuthLoad_InflateInit(db_z_stream_s *param_1,int param_2,char *param_3)
   I_strncpyz(g_authLoad.expectedFastfileName,param_3,0x20);
   if (g_authLoad.isSecure == 0) {
     if (g_compressor == DB_COMPRESSOR_ZLIB) {
-      DB_Zip_InitThreadMemory(pdVar1,db_zipMemory,0x10000);
+      DB_Zip_InitThreadMemory(param_1,db_zipMemory,0x10000);
 LAB_823a2f78:
-      iVar2 = db_inflateInit_(pdVar1,"1.1.4",0x30);
-      iVar2 = __restgprlr_27(iVar2);
-      return iVar2;
+      iVar1 = db_inflateInit_(param_1,"1.1.4",0x30);
+      return iVar1;
     }
     if ((g_compressor == DB_COMPRESSOR_LZX) &&
-       (iVar2 = XMemResetDecompressionContext(g_lzxDecmpContext), iVar2 == 0)) {
-      pdVar1->total_in = 0;
-      pdVar1->total_out = 0;
-      iVar2 = __restgprlr_27(0);
-      return iVar2;
+       (iVar1 = XMemResetDecompressionContext(g_lzxDecmpContext), iVar1 == 0)) {
+      param_1->total_in = 0;
+      param_1->total_out = 0;
+      return 0;
     }
   }
   else {
     memcpy();
-    iVar2 = register_hash(0xffffffff8221d908);
-    if (iVar2 == -1) {
+    iVar1 = register_hash(0xffffffff8221d908);
+    if (iVar1 == -1) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_auth.cpp",0x3cd,
                       0,"%s");
     }
     if (g_compressor == DB_COMPRESSOR_ZLIB) {
       DB_Zip_InitThreadMemory(&g_authLoad.stream,db_zipMemory,0x10000);
-      pdVar1 = &g_authLoad.stream;
+      param_1 = &g_authLoad.stream;
       goto LAB_823a2f78;
     }
-    if (g_compressor == DB_COMPRESSOR_LZX) {
-      iVar2 = XMemResetDecompressionContext(g_lzxDecmpContext);
-      if (iVar2 == 0) {
-        g_authLoad.stream.total_in = 0;
-        g_authLoad.stream.total_out = 0;
-        iVar2 = __restgprlr_27();
-        return iVar2;
-      }
+    if ((g_compressor == DB_COMPRESSOR_LZX) &&
+       (iVar1 = XMemResetDecompressionContext(g_lzxDecmpContext), iVar1 == 0)) {
+      g_authLoad.stream.total_in = 0;
+      g_authLoad.stream.total_out = 0;
+      return 0;
     }
   }
-  iVar2 = __restgprlr_27(0xfffffffffffffffd);
-  return iVar2;
+  return -3;
 }
 
 

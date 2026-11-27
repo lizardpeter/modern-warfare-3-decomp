@@ -27,41 +27,36 @@ void __thiscall bdFacebookTag::serialize(bdFacebookTag *this,bdByteBuffer *param
 
 // 8290BC68  deserialize  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdfacebook/bdfacebooktag.cpp:25)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 bool __thiscall bdFacebookTag::deserialize(bdFacebookTag *this,bdReference<bdByteBuffer> param_1)
 
 {
-  int iVar1;
+  bool bVar1;
   bool bVar2;
-  bool bVar3;
-  undefined1 uVar4;
-  undefined8 uVar5;
-  bdByteBuffer *pbStack0000001c;
+  bdReference<bdByteBuffer> bStack0000001c;
   
-  iVar1 = __savegprlr_29(this);
-  pbStack0000001c = param_1.m_ptr;
-  bVar2 = bdByteBuffer::readUInt64
-                    ((bdByteBuffer *)(param_1.m_ptr)->_padding_,(ulong64 *)(iVar1 + 8));
-  if (bVar2) {
-    bVar3 = bdByteBuffer::readUInt16
-                      ((bdByteBuffer *)(param_1.m_ptr)->_padding_,(ushort *)(iVar1 + 0x10));
-    bVar2 = true;
-    if (!bVar3) goto LAB_8290bcbc;
+  bStack0000001c.m_ptr = param_1.m_ptr;
+  bVar1 = bdByteBuffer::readUInt64((bdByteBuffer *)(param_1.m_ptr)->_padding_,&this->m_accountID);
+  if (bVar1) {
+    bVar2 = bdByteBuffer::readUInt16((bdByteBuffer *)(param_1.m_ptr)->_padding_,&this->m_x);
+    bVar1 = true;
+    if (!bVar2) goto LAB_8290bcbc;
   }
   else {
 LAB_8290bcbc:
-    bVar2 = false;
+    bVar1 = false;
   }
-  if (bVar2) {
-    bVar2 = bdByteBuffer::readUInt16
-                      ((bdByteBuffer *)(param_1.m_ptr)->_padding_,(ushort *)(iVar1 + 0x12));
-    uVar5 = 1;
-    if (bVar2) goto LAB_8290bce4;
+  if (bVar1) {
+    bVar1 = bdByteBuffer::readUInt16((bdByteBuffer *)(param_1.m_ptr)->_padding_,&this->m_y);
+    bVar2 = true;
+    if (bVar1) goto LAB_8290bce4;
   }
-  uVar5 = 0;
+  bVar2 = false;
 LAB_8290bce4:
   bdReference<bdByteBuffer>::~bdReference<bdByteBuffer>((bdReference<bdByteBuffer> *)param_1.m_ptr);
-  uVar4 = __restgprlr_29(uVar5);
-  return (bool)uVar4;
+  return bVar2;
 }
 
 

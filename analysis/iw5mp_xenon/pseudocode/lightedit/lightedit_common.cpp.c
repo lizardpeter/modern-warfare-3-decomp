@@ -15,31 +15,25 @@ void LightEdit_InitMsg(msg_t *param_1,LightEditMsg param_2)
 
 // 826DD460  LightEdit_SendMsg  (lightedit/lightedit_common.cpp:29)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 bool LightEdit_SendMsg(void *param_1,msg_t *param_2)
 
 {
-  void *pvVar1;
-  bool bVar2;
-  undefined1 uVar3;
-  ulonglong uVar4;
-  int *piVar5;
+  bool bVar1;
   
-  uVar4 = (ulonglong)(int)param_2;
-  pvVar1 = (void *)__savegprlr_28(param_1);
-  if ((uVar4 & 0xffffffff) == 0) {
+  if (param_2 == (msg_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\lightedit\\lightedit_common.cpp"
                     ,0x1e,0,"%s");
   }
-  piVar5 = (int *)uVar4;
-  if (*piVar5 != 0) {
+  if (param_2->overflowed != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\lightedit\\lightedit_common.cpp"
                     ,0x1f,0,"%s");
   }
-  bVar2 = NET_RemoteDbgSendMessageBlocking(pvVar1,10,(uchar *)piVar5[2],piVar5[5]);
-  uVar3 = __restgprlr_28(bVar2);
-  return (bool)uVar3;
+  bVar1 = NET_RemoteDbgSendMessageBlocking(param_1,10,param_2->data,param_2->cursize);
+  return bVar1;
 }
 
 

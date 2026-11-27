@@ -2,6 +2,8 @@
 
 // 8291803C  __savevmx_119  (line unknown)
 
+/* WARNING: This is an inlined function */
+
 void __savevmx_119(void)
 
 {
@@ -95,6 +97,8 @@ void __savevmx_119(void)
 
 // 82918044  __savevmx_120  (line unknown)
 
+/* WARNING: This is an inlined function */
+
 void __savevmx_120(void)
 
 {
@@ -179,6 +183,8 @@ void __savevmx_120(void)
 
 // 82918054  __savevmx_122  (line unknown)
 
+/* WARNING: This is an inlined function */
+
 void __savevmx_122(void)
 
 {
@@ -245,6 +251,8 @@ void __savevmx_122(void)
 
 // 8291805C  __savevmx_123  (line unknown)
 
+/* WARNING: This is an inlined function */
+
 void __savevmx_123(void)
 
 {
@@ -302,6 +310,8 @@ void __savevmx_123(void)
 
 // 82918064  __savevmx_124  (line unknown)
 
+/* WARNING: This is an inlined function */
+
 void __savevmx_124(void)
 
 {
@@ -350,6 +360,8 @@ void __savevmx_124(void)
 
 // 829182D4  __restvmx_119  (line unknown)
 
+/* WARNING: This is an inlined function */
+
 void __restvmx_119(void)
 
 {
@@ -358,6 +370,8 @@ void __restvmx_119(void)
 
 
 // 829182DC  __restvmx_120  (line unknown)
+
+/* WARNING: This is an inlined function */
 
 void __restvmx_120(void)
 
@@ -368,6 +382,8 @@ void __restvmx_120(void)
 
 // 829182EC  __restvmx_122  (line unknown)
 
+/* WARNING: This is an inlined function */
+
 void __restvmx_122(void)
 
 {
@@ -377,6 +393,8 @@ void __restvmx_122(void)
 
 // 829182F4  __restvmx_123  (line unknown)
 
+/* WARNING: This is an inlined function */
+
 void __restvmx_123(void)
 
 {
@@ -385,6 +403,8 @@ void __restvmx_123(void)
 
 
 // 829182FC  __restvmx_124  (line unknown)
+
+/* WARNING: This is an inlined function */
 
 void __restvmx_124(void)
 

@@ -32,6 +32,9 @@ float Phys_PenetrationIntoPlane
 
 // 8266AAD0  Phys_GetGlassWinding  (physics/phys_coll_glassbrush.cpp:32)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 uint Phys_GetGlassWinding
                (uint param_1,Poly *param_2,float *param_3,float param_4,float (*param_5) [3])
 
@@ -42,195 +45,185 @@ uint Phys_GetGlassWinding
   float fVar4;
   float fVar5;
   float fVar6;
-  float fVar7;
+  float (*pafVar7) [3];
   float fVar8;
   float fVar9;
-  int iVar10;
-  int *piVar11;
+  float fVar10;
+  int iVar11;
   int iVar12;
-  int iVar13;
+  float *pfVar13;
   int iVar14;
-  float *pfVar15;
-  int iVar16;
-  ulonglong uVar17;
-  uint uVar18;
+  uint uVar15;
   longlong in_r7;
-  float *pfVar19;
-  ulonglong uVar20;
-  float *pfVar21;
-  float *pfVar22;
+  float *pfVar16;
+  float *pfVar17;
+  ulonglong uVar18;
+  ulonglong uVar19;
+  float *pfVar20;
+  float (*pafVar21) [3];
+  longlong lVar22;
   longlong lVar23;
-  longlong lVar24;
-  double extraout_f1;
   
-  lVar24 = (longlong)(int)param_3;
-  lVar23 = (longlong)(int)param_2;
-  uVar17 = __savegprlr_28((double)param_4,param_1,lVar23,lVar24,param_5);
-  pfVar22 = (float *)lVar24;
-  fVar1 = (float)((double)*pfVar22 * extraout_f1);
-  fVar2 = (float)((double)pfVar22[1] * extraout_f1);
-  fVar3 = (float)((double)pfVar22[2] * extraout_f1);
-  piVar11 = (int *)lVar23;
-  pfVar22 = (float *)in_r7;
-  if ((uVar17 & 0xffffffff) == 0) {
-    uVar18 = piVar11[1];
-    uVar17 = (ulonglong)uVar18;
-    uVar20 = 0;
-    if (3 < (int)uVar18) {
-      iVar10 = *piVar11;
-      lVar23 = in_r7 + 0x14;
+  fVar8 = *param_3 * param_4;
+  fVar9 = param_3[1] * param_4;
+  fVar10 = param_3[2] * param_4;
+  pfVar16 = (float *)in_r7;
+  if (param_1 == 0) {
+    uVar15 = param_2->ptCount;
+    uVar18 = 0;
+    if (3 < (int)uVar15) {
+      pafVar7 = param_2->pts;
+      iVar14 = -(int)pfVar16;
+      lVar22 = in_r7 + 0x14;
       do {
-        pfVar15 = (float *)lVar23;
-        pfVar21 = (float *)((int)pfVar15 + iVar10 + (-0x14 - (int)pfVar22));
-        pfVar19 = (float *)((int)pfVar15 + iVar10 + (4 - (int)pfVar22));
-        uVar20 = uVar20 + 4;
-        fVar4 = pfVar21[1];
-        fVar5 = pfVar21[2];
-        pfVar15[-5] = *pfVar21 + fVar1;
-        fVar6 = pfVar21[3];
-        fVar7 = pfVar21[4];
-        fVar8 = pfVar21[5];
-        iVar12 = iVar10 + (0x10 - (int)pfVar22);
-        pfVar15[-4] = fVar4 + fVar2;
-        pfVar15[-3] = fVar5 + fVar3;
-        pfVar15[-2] = fVar6 + fVar1;
-        fVar4 = *pfVar19;
-        pfVar15[-1] = fVar7 + fVar2;
-        fVar5 = pfVar19[1];
-        *pfVar15 = fVar8 + fVar3;
-        fVar6 = pfVar19[2];
-        pfVar15[1] = fVar4 + fVar1;
-        fVar7 = *(float *)((int)pfVar15 + iVar10 + (0x10 - (int)pfVar22));
-        pfVar15[2] = fVar5 + fVar2;
-        fVar4 = *(float *)((int)pfVar15 + iVar12 + 4);
-        fVar5 = *(float *)((int)pfVar15 + iVar12 + 8);
-        pfVar15[3] = fVar6 + fVar3;
-        pfVar15[4] = fVar7 + fVar1;
-        pfVar15[5] = fVar4 + fVar2;
-        pfVar15[6] = fVar5 + fVar3;
-        lVar23 = lVar23 + 0x30;
-      } while ((uVar20 & 0xffffffff) < (uVar17 - 3 & 0xffffffff));
+        pfVar13 = (float *)lVar22;
+        pfVar20 = (float *)((int)pfVar13 + (int)pafVar7 + (-0x14 - (int)pfVar16));
+        pfVar17 = (float *)((int)pfVar13 + (int)pafVar7 + (4 - (int)pfVar16));
+        uVar18 = uVar18 + 4;
+        fVar1 = pfVar20[1];
+        fVar2 = pfVar20[2];
+        pfVar13[-5] = *pfVar20 + fVar8;
+        fVar3 = pfVar20[3];
+        fVar4 = pfVar20[4];
+        fVar5 = pfVar20[5];
+        pfVar13[-4] = fVar1 + fVar9;
+        pfVar13[-3] = fVar2 + fVar10;
+        pfVar13[-2] = fVar3 + fVar8;
+        fVar1 = *pfVar17;
+        pfVar13[-1] = fVar4 + fVar9;
+        fVar2 = pfVar17[1];
+        *pfVar13 = fVar5 + fVar10;
+        fVar3 = pfVar17[2];
+        pfVar13[1] = fVar1 + fVar8;
+        fVar4 = *(float *)((int)pfVar13 + (int)pafVar7 + iVar14 + 0x10);
+        pfVar13[2] = fVar2 + fVar9;
+        fVar1 = *(float *)((int)pfVar13 + (int)pafVar7 + iVar14 + 0x14);
+        fVar2 = *(float *)((int)pfVar13 + (int)pafVar7 + iVar14 + 0x18);
+        pfVar13[3] = fVar3 + fVar10;
+        pfVar13[4] = fVar4 + fVar8;
+        pfVar13[5] = fVar1 + fVar9;
+        pfVar13[6] = fVar2 + fVar10;
+        lVar22 = lVar22 + 0x30;
+      } while ((uVar18 & 0xffffffff) < ((ulonglong)uVar15 - 3 & 0xffffffff));
     }
-    if ((uVar20 & 0xffffffff) < (ulonglong)uVar18) {
-      iVar10 = *piVar11;
-      lVar23 = uVar17 - uVar20;
-      lVar24 = (uVar20 + (uVar20 & 0x7fffffff) * 2 & 0x3fffffff) * 4 + in_r7 + 8;
+    if ((uVar18 & 0xffffffff) < (ulonglong)uVar15) {
+      pafVar7 = param_2->pts;
+      lVar22 = uVar15 - uVar18;
+      lVar23 = (uVar18 + (uVar18 & 0x7fffffff) * 2 & 0x3fffffff) * 4 + in_r7 + 8;
       do {
-        pfVar15 = (float *)lVar24;
-        pfVar19 = (float *)((int)pfVar15 + iVar10 + (-8 - (int)pfVar22));
-        fVar4 = pfVar19[1];
-        fVar5 = pfVar19[2];
-        pfVar15[-2] = *pfVar19 + fVar1;
-        pfVar15[-1] = fVar4 + fVar2;
-        *pfVar15 = fVar5 + fVar3;
-        lVar24 = lVar24 + 0xc;
-        lVar23 = lVar23 + -1;
-      } while (lVar23 != 0);
-      uVar18 = __restgprlr_28();
-      return uVar18;
+        pfVar13 = (float *)lVar23;
+        pfVar17 = (float *)((int)pfVar13 + (int)pafVar7 + (-8 - (int)pfVar16));
+        fVar1 = pfVar17[1];
+        fVar2 = pfVar17[2];
+        pfVar13[-2] = *pfVar17 + fVar8;
+        pfVar13[-1] = fVar1 + fVar9;
+        *pfVar13 = fVar2 + fVar10;
+        lVar23 = lVar23 + 0xc;
+        lVar22 = lVar22 + -1;
+      } while (lVar22 != 0);
+      return uVar15;
     }
   }
-  else if ((uVar17 & 0xffffffff) == 1) {
-    uVar18 = piVar11[1];
-    uVar17 = (ulonglong)uVar18;
-    uVar20 = 0;
-    if (3 < (int)uVar18) {
-      iVar10 = *piVar11;
-      lVar23 = in_r7 + -4;
+  else if (param_1 == 1) {
+    uVar15 = param_2->ptCount;
+    uVar18 = (ulonglong)uVar15;
+    uVar19 = 0;
+    if (3 < (int)uVar15) {
+      pafVar7 = param_2->pts;
+      lVar22 = in_r7 + -4;
       do {
-        lVar24 = uVar17 - uVar20;
-        uVar20 = uVar20 + 4;
-        iVar12 = (int)lVar24 * 0xc + iVar10;
-        iVar14 = (int)(((lVar24 - 2U) + (lVar24 - 2U & 0x7fffffff) * 2 & 0x3fffffff) << 2);
-        iVar13 = iVar14 + iVar10;
-        fVar8 = *(float *)(iVar14 + iVar10);
-        fVar4 = *(float *)(iVar12 + -8);
-        fVar5 = *(float *)(iVar12 + -4);
-        fVar6 = *(float *)(iVar13 + 4);
-        fVar7 = *(float *)(iVar13 + 8);
-        iVar16 = (int)(((lVar24 - 3U) + (lVar24 - 3U & 0x7fffffff) * 2 & 0x3fffffff) << 2);
-        iVar14 = iVar16 + iVar10;
-        iVar13 = (int)lVar23;
-        *(float *)(iVar13 + 4) = *(float *)(iVar12 + -0xc) - fVar1;
-        *(float *)(iVar13 + 8) = fVar4 - fVar2;
-        *(float *)(iVar13 + 0xc) = fVar5 - fVar3;
-        *(float *)(iVar13 + 0x10) = fVar8 - fVar1;
-        fVar4 = *(float *)(iVar14 + 4);
-        fVar5 = *(float *)(iVar14 + 8);
-        iVar14 = (int)(((lVar24 - 4U) + (lVar24 - 4U & 0x7fffffff) * 2 & 0x3fffffff) << 2);
-        iVar12 = iVar14 + iVar10;
-        fVar8 = *(float *)(iVar16 + iVar10);
-        *(float *)(iVar13 + 0x14) = fVar6 - fVar2;
-        *(float *)(iVar13 + 0x18) = fVar7 - fVar3;
-        *(float *)(iVar13 + 0x1c) = fVar8 - fVar1;
-        fVar7 = *(float *)(iVar14 + iVar10);
-        fVar6 = *(float *)(iVar12 + 4);
-        *(float *)(iVar13 + 0x20) = fVar4 - fVar2;
-        fVar4 = *(float *)(iVar12 + 8);
-        *(float *)(iVar13 + 0x24) = fVar5 - fVar3;
-        *(float *)(iVar13 + 0x28) = fVar7 - fVar1;
-        *(float *)(iVar13 + 0x2c) = fVar6 - fVar2;
-        lVar23 = lVar23 + 0x30;
-        *(float *)lVar23 = fVar4 - fVar3;
-      } while ((uVar20 & 0xffffffff) < (uVar17 - 3 & 0xffffffff));
+        lVar23 = uVar18 - uVar19;
+        uVar19 = uVar19 + 4;
+        iVar12 = (int)lVar23;
+        iVar14 = (int)(((lVar23 - 2U) + (lVar23 - 2U & 0x7fffffff) * 2 & 0x3fffffff) << 2);
+        fVar5 = *(float *)((int)*pafVar7 + iVar14);
+        fVar1 = pafVar7[iVar12 + -1][1];
+        fVar2 = pafVar7[iVar12 + -1][2];
+        fVar3 = *(float *)((int)*pafVar7 + iVar14 + 4);
+        fVar4 = *(float *)((int)*pafVar7 + iVar14 + 8);
+        iVar11 = (int)(((lVar23 - 3U) + (lVar23 - 3U & 0x7fffffff) * 2 & 0x3fffffff) << 2);
+        iVar14 = (int)lVar22;
+        *(float *)(iVar14 + 4) = pafVar7[iVar12 + -1][0] - fVar8;
+        *(float *)(iVar14 + 8) = fVar1 - fVar9;
+        *(float *)(iVar14 + 0xc) = fVar2 - fVar10;
+        *(float *)(iVar14 + 0x10) = fVar5 - fVar8;
+        fVar1 = *(float *)((int)*pafVar7 + iVar11 + 4);
+        fVar2 = *(float *)((int)*pafVar7 + iVar11 + 8);
+        iVar12 = (int)(((lVar23 - 4U) + (lVar23 - 4U & 0x7fffffff) * 2 & 0x3fffffff) << 2);
+        fVar5 = *(float *)((int)*pafVar7 + iVar11);
+        *(float *)(iVar14 + 0x14) = fVar3 - fVar9;
+        *(float *)(iVar14 + 0x18) = fVar4 - fVar10;
+        *(float *)(iVar14 + 0x1c) = fVar5 - fVar8;
+        fVar4 = *(float *)((int)*pafVar7 + iVar12);
+        fVar3 = *(float *)((int)*pafVar7 + iVar12 + 4);
+        *(float *)(iVar14 + 0x20) = fVar1 - fVar9;
+        fVar1 = *(float *)((int)*pafVar7 + iVar12 + 8);
+        *(float *)(iVar14 + 0x24) = fVar2 - fVar10;
+        *(float *)(iVar14 + 0x28) = fVar4 - fVar8;
+        *(float *)(iVar14 + 0x2c) = fVar3 - fVar9;
+        lVar22 = lVar22 + 0x30;
+        *(float *)lVar22 = fVar1 - fVar10;
+      } while ((uVar19 & 0xffffffff) < (uVar18 - 3 & 0xffffffff));
     }
-    if ((uVar20 & 0xffffffff) < (ulonglong)uVar18) {
-      iVar10 = *piVar11;
-      lVar24 = uVar17 - uVar20;
-      lVar23 = (uVar20 + (uVar20 & 0x7fffffff) * 2 & 0x3fffffff) * 4 + in_r7 + -4;
+    if ((uVar19 & 0xffffffff) < (ulonglong)uVar15) {
+      pafVar7 = param_2->pts;
+      lVar23 = uVar18 - uVar19;
+      lVar22 = (uVar19 + (uVar19 & 0x7fffffff) * 2 & 0x3fffffff) * 4 + in_r7 + -4;
       do {
-        iVar12 = (int)uVar20;
-        uVar20 = uVar20 + 1;
-        pfVar22 = (float *)(((uVar18 - iVar12) + -1) * 0xc + iVar10);
-        fVar4 = pfVar22[1];
-        fVar5 = pfVar22[2];
-        *(float *)((int)lVar23 + 4) = *pfVar22 - fVar1;
-        *(float *)((int)lVar23 + 8) = fVar4 - fVar2;
-        lVar23 = lVar23 + 0xc;
-        *(float *)lVar23 = fVar5 - fVar3;
-        lVar24 = lVar24 + -1;
-      } while (lVar24 != 0);
-      uVar18 = __restgprlr_28();
-      return uVar18;
+        iVar14 = (int)uVar19;
+        uVar19 = uVar19 + 1;
+        pafVar21 = pafVar7 + (uVar15 - iVar14) + -1;
+        fVar1 = (*pafVar21)[1];
+        fVar2 = (*pafVar21)[2];
+        *(float *)((int)lVar22 + 4) = (*pafVar21)[0] - fVar8;
+        *(float *)((int)lVar22 + 8) = fVar1 - fVar9;
+        lVar22 = lVar22 + 0xc;
+        *(float *)lVar22 = fVar2 - fVar10;
+        lVar23 = lVar23 + -1;
+      } while (lVar23 != 0);
+      return uVar15;
     }
   }
   else {
-    uVar17 = uVar17 - 2;
-    uVar20 = uVar17;
-    if (uVar17 == 0) {
-      uVar20 = (ulonglong)(uint)piVar11[1];
+    uVar19 = (longlong)(int)param_1 - 2;
+    uVar18 = uVar19;
+    if (uVar19 == 0) {
+      uVar18 = (ulonglong)param_2->ptCount;
     }
-    pfVar15 = (float *)((int)uVar17 * 0xc + *piVar11);
-    pfVar19 = (float *)(((int)uVar20 + -1) * 0xc + *piVar11);
-    uVar17 = 4;
-    fVar4 = pfVar15[1];
-    fVar5 = pfVar19[1];
-    fVar6 = pfVar15[2];
-    fVar7 = pfVar19[2];
-    fVar8 = *pfVar15;
-    *pfVar22 = *pfVar19 - fVar1;
-    pfVar22[1] = fVar5 - fVar2;
-    pfVar22[2] = fVar7 - fVar3;
-    fVar5 = pfVar19[1];
-    pfVar22[3] = fVar8 - fVar1;
-    pfVar22[4] = fVar4 - fVar2;
-    pfVar22[5] = fVar6 - fVar3;
-    fVar7 = *pfVar19;
-    fVar9 = pfVar19[2];
-    pfVar22[6] = fVar8 + fVar1;
-    pfVar22[7] = fVar4 + fVar2;
-    pfVar22[8] = fVar6 + fVar3;
-    pfVar22[9] = fVar7 + fVar1;
-    pfVar22[10] = fVar5 + fVar2;
-    pfVar22[0xb] = fVar9 + fVar3;
+    pafVar7 = param_2->pts + (int)uVar19;
+    pafVar21 = param_2->pts + (int)uVar18 + -1;
+    uVar15 = 4;
+    fVar1 = (*pafVar7)[1];
+    fVar2 = (*pafVar21)[1];
+    fVar3 = (*pafVar7)[2];
+    fVar4 = (*pafVar21)[2];
+    fVar5 = (*pafVar7)[0];
+    *pfVar16 = (*pafVar21)[0] - fVar8;
+    pfVar16[1] = fVar2 - fVar9;
+    pfVar16[2] = fVar4 - fVar10;
+    fVar2 = (*pafVar21)[1];
+    pfVar16[3] = fVar5 - fVar8;
+    pfVar16[4] = fVar1 - fVar9;
+    pfVar16[5] = fVar3 - fVar10;
+    fVar4 = (*pafVar21)[0];
+    fVar6 = (*pafVar21)[2];
+    pfVar16[6] = fVar5 + fVar8;
+    pfVar16[7] = fVar1 + fVar9;
+    pfVar16[8] = fVar3 + fVar10;
+    pfVar16[9] = fVar4 + fVar8;
+    pfVar16[10] = fVar2 + fVar9;
+    pfVar16[0xb] = fVar6 + fVar10;
   }
-  uVar18 = __restgprlr_28(uVar17);
-  return uVar18;
+  return uVar15;
 }
 
 
 // 8266AE90  Phys_CollideGlassWithBrush  (physics/phys_coll_glassbrush.cpp:66)
 
+/* WARNING: Function: __savegprlr_20 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_20 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PhysWorld": Some values do not have unique names */
 
 void Phys_CollideGlassWithBrush(Bounds *param_1,cbrush_t *param_2,objInfo *param_3,Results *param_4)
@@ -247,28 +240,28 @@ void Phys_CollideGlassWithBrush(Bounds *param_1,cbrush_t *param_2,objInfo *param
   float fVar9;
   bool bVar10;
   ulonglong uVar11;
-  Bounds *pBVar12;
-  int iVar13;
-  Poly *pPVar14;
-  ulonglong uVar15;
-  char *pcVar16;
-  int iVar17;
+  int iVar12;
+  Poly *pPVar13;
+  ulonglong uVar14;
+  char *pcVar15;
+  int iVar16;
+  ulonglong uVar17;
   ulonglong uVar18;
-  ulonglong uVar19;
+  longlong lVar19;
+  cbrushside_t *pcVar21;
   longlong lVar20;
-  cbrushside_t *pcVar22;
-  longlong lVar21;
+  float *pfVar23;
   float *pfVar24;
-  float *pfVar25;
-  longlong lVar23;
-  ulonglong uVar26;
-  float (*pafVar27) [3];
+  longlong lVar22;
+  ulonglong uVar25;
+  float (*pafVar26) [3];
+  ulonglong uVar27;
   ulonglong uVar28;
-  ulonglong uVar29;
+  uint uVar29;
   uint uVar30;
-  uint uVar31;
-  int iVar32;
-  Poly *pPVar33;
+  int iVar31;
+  Poly *pPVar32;
+  double dVar33;
   double dVar34;
   double dVar35;
   double dVar36;
@@ -276,7 +269,6 @@ void Phys_CollideGlassWithBrush(Bounds *param_1,cbrush_t *param_2,objInfo *param
   double dVar38;
   double dVar39;
   double dVar40;
-  double dVar41;
   Poly local_2950;
   undefined8 local_2948;
   float local_2940;
@@ -295,404 +287,407 @@ void Phys_CollideGlassWithBrush(Bounds *param_1,cbrush_t *param_2,objInfo *param
   float local_ca0 [808];
   
   uVar11 = ZEXT48(&stack0x00000000);
-  __savegprlr_20(param_1);
-  pBVar12 = (Bounds *)__savefpr_26();
   pGVar6 = (param_3->u).glass;
   local_2950.pts = (float (*) [3])afStack_18a0;
-  uVar30 = pGVar6->convexHullMask;
-  dVar41 = (double)(param_3->R[0][0] * 0.03125);
+  uVar29 = pGVar6->convexHullMask;
+  dVar40 = (double)(param_3->R[0][0] * 0.03125);
   pFVar7 = pGVar6->glassSys->geoData;
-  dVar40 = (double)(param_3->R[0][1] * 0.03125);
+  dVar39 = (double)(param_3->R[0][1] * 0.03125);
   local_2950.ptCount = 0;
-  dVar39 = (double)(param_3->R[0][2] * 0.03125);
-  dVar38 = (double)(param_3->R[1][0] * 0.03125);
-  dVar37 = (double)(param_3->R[1][1] * 0.03125);
-  dVar36 = (double)(param_3->R[1][2] * 0.03125);
+  dVar38 = (double)(param_3->R[0][2] * 0.03125);
+  dVar37 = (double)(param_3->R[1][0] * 0.03125);
+  dVar36 = (double)(param_3->R[1][1] * 0.03125);
+  dVar35 = (double)(param_3->R[1][2] * 0.03125);
   uVar5 = pGVar6->glassSys->pieceStates[pGVar6->pieceIndex].geoDataStart;
   do {
-    if (0x20 < (ulonglong)LZCOUNT(uVar30)) {
+    if (0x20 < (ulonglong)LZCOUNT(uVar29)) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_math.h",0x475,
                       0,"count doesn\'t index 33\n\t%i not in [0, %i)");
     }
-    iVar17 = (int)(LZCOUNT(uVar30) << 2);
+    iVar16 = (int)(LZCOUNT(uVar29) << 2);
     fVar2 = param_3->pos[1];
     fVar3 = param_3->pos[2];
-    uVar31 = local_2950.ptCount + 1;
-    local_2928 = (longlong)(int)*(short *)((int)pFVar7 + iVar17 + (uint)uVar5 * 4);
-    local_2948 = (longlong)(int)*(short *)((int)pFVar7 + iVar17 + (uint)uVar5 * 4 + 2);
-    uVar30 = uVar30 & ~*(uint *)(&g_bitShift + iVar17);
-    dVar35 = (double)local_2928;
-    dVar34 = (double)local_2948;
+    uVar30 = local_2950.ptCount + 1;
+    local_2928 = (longlong)(int)*(short *)((int)pFVar7 + iVar16 + (uint)uVar5 * 4);
+    local_2948 = (longlong)(int)*(short *)((int)pFVar7 + iVar16 + (uint)uVar5 * 4 + 2);
+    uVar29 = uVar29 & ~*(uint *)(&g_bitShift + iVar16);
+    dVar34 = (double)local_2928;
+    dVar33 = (double)local_2948;
     afStack_18a0[local_2950.ptCount * 3] =
-         (float)(dVar34 * dVar38 + (double)(float)(dVar35 * dVar41)) + param_3->pos[0];
+         (float)(dVar33 * dVar37 + (double)(float)(dVar34 * dVar40)) + param_3->pos[0];
     afStack_18a0[local_2950.ptCount * 3 + 1] =
-         (float)(dVar37 * dVar34 + (double)(float)(dVar40 * dVar35)) + fVar2;
+         (float)(dVar36 * dVar33 + (double)(float)(dVar39 * dVar34)) + fVar2;
     afStack_18a0[local_2950.ptCount * 3 + 2] =
-         (float)(dVar36 * dVar34 + (double)(float)(dVar39 * dVar35)) + fVar3;
-    local_2950.ptCount = uVar31;
-  } while (uVar30 != 0);
-  uVar26 = 0;
-  CM_BuildAxialPlanes(pBVar12,(float (*) [4])local_2920);
-  dVar37 = (double)pGVar6->halfThickness;
+         (float)(dVar35 * dVar33 + (double)(float)(dVar38 * dVar34)) + fVar3;
+    local_2950.ptCount = uVar30;
+  } while (uVar29 != 0);
+  uVar25 = 0;
+  CM_BuildAxialPlanes(param_1,(float (*) [4])local_2920);
+  dVar36 = (double)pGVar6->halfThickness;
   fVar2 = param_3->R[2][1];
   fVar3 = param_3->R[2][0];
   fVar4 = param_3->R[2][2];
-  dVar36 = -3.4028234663852886e+38;
-  pafVar27 = param_3->R + 2;
-  uVar18 = 0;
-  lVar20 = uVar11 - 0x2918;
-  dVar39 = 3.4028234663852886e+38;
-  dVar38 = 0.0;
+  dVar35 = -3.4028234663852886e+38;
+  pafVar26 = param_3->R + 2;
+  uVar17 = 0;
+  lVar19 = uVar11 - 0x2918;
+  dVar38 = 3.4028234663852886e+38;
+  dVar37 = 0.0;
   do {
-    pfVar25 = (float *)lVar20;
-    uVar30 = 0;
-    dVar40 = dVar39;
-    pfVar24 = *local_2950.pts + 2;
+    pfVar24 = (float *)lVar19;
+    uVar29 = 0;
+    dVar39 = dVar38;
+    pfVar23 = *local_2950.pts + 2;
     do {
-      dVar41 = (double)((*pfVar24 * *pfVar25 +
-                        (*(float (*) [3])(pfVar24 + -2))[0] * pfVar25[-2] +
-                        pfVar25[-1] * pfVar24[-1]) -
-                       (float)(ABS((double)(fVar4 * *pfVar25 +
-                                           fVar3 * pfVar25[-2] + fVar2 * pfVar25[-1])) * dVar37 +
-                              (double)pfVar25[1]));
-      if (dVar41 < dVar40) {
-        dVar40 = dVar41;
+      dVar40 = (double)((*pfVar23 * *pfVar24 +
+                        (*(float (*) [3])(pfVar23 + -2))[0] * pfVar24[-2] +
+                        pfVar24[-1] * pfVar23[-1]) -
+                       (float)(ABS((double)(fVar4 * *pfVar24 +
+                                           fVar3 * pfVar24[-2] + fVar2 * pfVar24[-1])) * dVar36 +
+                              (double)pfVar24[1]));
+      if (dVar40 < dVar39) {
+        dVar39 = dVar40;
       }
-      uVar30 = uVar30 + 1;
-      pfVar24 = pfVar24 + 3;
-    } while (uVar30 != local_2950.ptCount);
-    if ((dVar36 < dVar40) && (uVar26 = uVar18, dVar36 = dVar40, 0.0 <= dVar40)) goto LAB_8266b95c;
-    uVar18 = uVar18 + 1;
-    lVar20 = lVar20 + 0x10;
-  } while ((uVar18 & 0xffffffff) < 6);
+      uVar29 = uVar29 + 1;
+      pfVar23 = pfVar23 + 3;
+    } while (uVar29 != local_2950.ptCount);
+    if ((dVar35 < dVar39) && (uVar25 = uVar17, dVar35 = dVar39, 0.0 <= dVar39)) {
+      return;
+    }
+    uVar17 = uVar17 + 1;
+    lVar19 = lVar19 + 0x10;
+  } while ((uVar17 & 0xffffffff) < 6);
   uVar5 = param_2->numsides;
-  uVar18 = 6;
-  uVar28 = (ulonglong)uVar5 + 6;
-  if (6 < uVar28) {
-    pcVar22 = param_2->sides;
+  uVar17 = 6;
+  uVar27 = (ulonglong)uVar5 + 6;
+  if (6 < uVar27) {
+    pcVar21 = param_2->sides;
     do {
-      pcVar8 = pcVar22->plane;
-      uVar30 = 0;
-      dVar40 = dVar39;
-      pfVar25 = *local_2950.pts + 2;
+      pcVar8 = pcVar21->plane;
+      uVar29 = 0;
+      dVar39 = dVar38;
+      pfVar24 = *local_2950.pts + 2;
       do {
-        dVar41 = (double)((*pfVar25 * pcVar8->normal[2] +
-                          (*(float (*) [3])(pfVar25 + -2))[0] * pcVar8->normal[0] +
-                          pfVar25[-1] * pcVar8->normal[1]) -
+        dVar40 = (double)((*pfVar24 * pcVar8->normal[2] +
+                          (*(float (*) [3])(pfVar24 + -2))[0] * pcVar8->normal[0] +
+                          pfVar24[-1] * pcVar8->normal[1]) -
                          (float)(ABS((double)(fVar4 * pcVar8->normal[2] +
                                              fVar3 * pcVar8->normal[0] + fVar2 * pcVar8->normal[1]))
-                                 * dVar37 + (double)pcVar8->dist));
-        if (dVar41 < dVar40) {
-          dVar40 = dVar41;
+                                 * dVar36 + (double)pcVar8->dist));
+        if (dVar40 < dVar39) {
+          dVar39 = dVar40;
         }
-        uVar30 = uVar30 + 1;
-        pfVar25 = pfVar25 + 3;
-      } while (uVar30 != local_2950.ptCount);
-      if ((dVar36 < dVar40) && (uVar26 = uVar18, dVar36 = dVar40, 0.0 <= dVar40)) goto LAB_8266b95c;
-      uVar18 = uVar18 + 1;
-      pcVar22 = pcVar22 + 1;
-    } while ((uVar18 & 0xffffffff) < uVar28);
+        uVar29 = uVar29 + 1;
+        pfVar24 = pfVar24 + 3;
+      } while (uVar29 != local_2950.ptCount);
+      if ((dVar35 < dVar39) && (uVar25 = uVar17, dVar35 = dVar39, 0.0 <= dVar39)) {
+        return;
+      }
+      uVar17 = uVar17 + 1;
+      pcVar21 = pcVar21 + 1;
+    } while ((uVar17 & 0xffffffff) < uVar27);
   }
+  uVar29 = 0;
   uVar30 = 0;
-  uVar31 = 0;
-  if (uVar28 != 0) {
-    lVar20 = uVar11 - 0x20a0;
+  if (uVar27 != 0) {
+    lVar19 = uVar11 - 0x20a0;
     do {
-      pPVar33 = (Poly *)lVar20;
-      pPVar33->pts = (float (*) [3])(local_ca0 + uVar30 * 3);
+      pPVar32 = (Poly *)lVar19;
+      pPVar32->pts = (float (*) [3])(local_ca0 + uVar29 * 3);
       Phys_GetWindingForBrushFace2
-                (pBVar12,param_2,uVar31,pPVar33,0x100 - uVar30,(float (*) [4])local_2920);
-      if ((pPVar33->ptCount != 0) && (uVar30 = pPVar33->ptCount + uVar30, 0x100 < uVar30)) {
+                (param_1,param_2,uVar30,pPVar32,0x100 - uVar29,(float (*) [4])local_2920);
+      if ((pPVar32->ptCount != 0) && (uVar29 = pPVar32->ptCount + uVar29, 0x100 < uVar29)) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_coll_glassbrush.cpp"
                         ,0xaa,0,"brushVertCount <= ARRAY_COUNT( brushVerts )\n\t%i, %i");
       }
-      uVar31 = uVar31 + 1;
-      lVar20 = lVar20 + 8;
-    } while (uVar31 < uVar28);
-    if (uVar30 != 0) {
-      local_28c0[0] = (*pafVar27)[0];
+      uVar30 = uVar30 + 1;
+      lVar19 = lVar19 + 8;
+    } while (uVar30 < uVar27);
+    if (uVar29 != 0) {
+      local_28c0[0] = (*pafVar26)[0];
       fVar2 = param_3->pos[0];
       local_28c0[4] = -local_28c0[0];
       local_28c0[1] = param_3->R[2][1];
       local_28c0[2] = param_3->R[2][2];
       local_28a8 = -local_28c0[2];
-      uVar29 = 0;
+      uVar28 = 0;
       local_28c0[5] = -local_28c0[1];
       local_28c0[3] =
            (float)((double)(param_3->pos[2] * local_28c0[2] +
-                           param_3->pos[1] * local_28c0[1] + fVar2 * local_28c0[0]) + dVar37);
+                           param_3->pos[1] * local_28c0[1] + fVar2 * local_28c0[0]) + dVar36);
       local_28a4 = (float)((double)(param_3->pos[2] * local_28a8 +
-                                   param_3->pos[1] * local_28c0[5] + fVar2 * local_28c0[4]) + dVar37
+                                   param_3->pos[1] * local_28c0[5] + fVar2 * local_28c0[4]) + dVar36
                           );
-      uVar18 = 0;
+      uVar17 = 0;
       if (local_2950.ptCount != 0) {
-        lVar20 = uVar11 - 0x2898;
-        dVar40 = 1.0;
-        iVar17 = 0;
-        iVar13 = (local_2950.ptCount - 1) * 0xc;
+        lVar19 = uVar11 - 0x2898;
+        dVar39 = 1.0;
+        iVar16 = 0;
+        iVar12 = (local_2950.ptCount - 1) * 0xc;
         do {
-          iVar32 = iVar17;
-          pfVar25 = (float *)lVar20;
-          local_2940 = *(float *)((int)*local_2950.pts + iVar32 + 8) -
-                       *(float *)((int)*local_2950.pts + iVar13 + 8);
-          local_2948 = CONCAT44(*(float *)((int)*local_2950.pts + iVar32) -
-                                *(float *)((int)*local_2950.pts + iVar13),
-                                *(float *)((int)*local_2950.pts + iVar32 + 4) -
-                                *(float *)((int)*local_2950.pts + iVar13 + 4));
-          Vec3Cross(*pafVar27,(float *)&local_2948,pfVar25 + -2);
-          fVar2 = pfVar25[-1];
-          fVar3 = pfVar25[-2];
-          fVar4 = *pfVar25;
-          uVar18 = (ulonglong)local_2950.ptCount;
-          uVar29 = uVar29 + 1;
-          dVar34 = (double)SQRT(fVar4 * fVar4 + fVar3 * fVar3 + fVar2 * fVar2);
-          dVar41 = dVar40;
-          if (-dVar34 < 0.0) {
-            dVar41 = dVar34;
-          }
-          fVar1 = (float)(dVar40 / dVar41);
-          pfVar25[-2] = fVar3 * fVar1;
-          pfVar25[-1] = fVar2 * fVar1;
-          *pfVar25 = fVar4 * fVar1;
-          pfVar25[1] = *(float *)((int)*local_2950.pts + iVar32 + 8) * fVar4 * fVar1 +
-                       fVar2 * fVar1 * *(float *)((int)*local_2950.pts + iVar32 + 4) +
-                       fVar3 * fVar1 * *(float *)((int)*local_2950.pts + iVar32);
-          lVar20 = lVar20 + 0x10;
-          iVar17 = iVar32 + 0xc;
-          iVar13 = iVar32;
-        } while ((uVar29 & 0xffffffff) != uVar18);
-      }
-      uVar15 = uVar18 + 2;
-      uVar29 = 0;
-      bVar10 = false;
-      uVar19 = 0;
-      if ((uVar15 & 0xffffffff) != 0) {
-        lVar20 = uVar11 - 0x28b4;
-        do {
-          pfVar25 = (float *)lVar20;
-          uVar31 = 0;
-          lVar23 = uVar11 - 0xc98;
+          iVar31 = iVar16;
+          pfVar24 = (float *)lVar19;
+          local_2940 = *(float *)((int)*local_2950.pts + iVar31 + 8) -
+                       *(float *)((int)*local_2950.pts + iVar12 + 8);
+          local_2948 = CONCAT44(*(float *)((int)*local_2950.pts + iVar31) -
+                                *(float *)((int)*local_2950.pts + iVar12),
+                                *(float *)((int)*local_2950.pts + iVar31 + 4) -
+                                *(float *)((int)*local_2950.pts + iVar12 + 4));
+          Vec3Cross(*pafVar26,(float *)&local_2948,pfVar24 + -2);
+          fVar2 = pfVar24[-1];
+          fVar3 = pfVar24[-2];
+          fVar4 = *pfVar24;
+          uVar17 = (ulonglong)local_2950.ptCount;
+          uVar28 = uVar28 + 1;
+          dVar33 = (double)SQRT(fVar4 * fVar4 + fVar3 * fVar3 + fVar2 * fVar2);
           dVar40 = dVar39;
-          do {
-            pfVar24 = (float *)lVar23;
-            dVar41 = (double)((pfVar25[-1] * *pfVar24 +
-                              pfVar25[-2] * pfVar24[-1] + pfVar24[-2] * pfVar25[-3]) - *pfVar25);
-            if (dVar41 < dVar40) {
-              dVar40 = dVar41;
-            }
-            uVar31 = uVar31 + 1;
-            lVar23 = lVar23 + 0xc;
-          } while (uVar31 != uVar30);
-          if (dVar36 < dVar40) {
-            if (dVar38 <= dVar40) goto LAB_8266b95c;
-            bVar10 = true;
-            uVar29 = uVar19;
-            dVar36 = dVar40;
+          if (-dVar33 < 0.0) {
+            dVar40 = dVar33;
           }
-          uVar19 = uVar19 + 1;
-          lVar20 = lVar20 + 0x10;
-        } while ((uVar19 & 0xffffffff) < (uVar15 & 0xffffffff));
+          fVar1 = (float)(dVar39 / dVar40);
+          pfVar24[-2] = fVar3 * fVar1;
+          pfVar24[-1] = fVar2 * fVar1;
+          *pfVar24 = fVar4 * fVar1;
+          pfVar24[1] = *(float *)((int)*local_2950.pts + iVar31 + 8) * fVar4 * fVar1 +
+                       fVar2 * fVar1 * *(float *)((int)*local_2950.pts + iVar31 + 4) +
+                       fVar3 * fVar1 * *(float *)((int)*local_2950.pts + iVar31);
+          lVar19 = lVar19 + 0x10;
+          iVar16 = iVar31 + 0xc;
+          iVar12 = iVar31;
+        } while ((uVar28 & 0xffffffff) != uVar17);
+      }
+      uVar14 = uVar17 + 2;
+      uVar28 = 0;
+      bVar10 = false;
+      uVar18 = 0;
+      if ((uVar14 & 0xffffffff) != 0) {
+        lVar19 = uVar11 - 0x28b4;
+        do {
+          pfVar24 = (float *)lVar19;
+          uVar30 = 0;
+          lVar22 = uVar11 - 0xc98;
+          dVar39 = dVar38;
+          do {
+            pfVar23 = (float *)lVar22;
+            dVar40 = (double)((pfVar24[-1] * *pfVar23 +
+                              pfVar24[-2] * pfVar23[-1] + pfVar23[-2] * pfVar24[-3]) - *pfVar24);
+            if (dVar40 < dVar39) {
+              dVar39 = dVar40;
+            }
+            uVar30 = uVar30 + 1;
+            lVar22 = lVar22 + 0xc;
+          } while (uVar30 != uVar29);
+          if (dVar35 < dVar39) {
+            if (dVar37 <= dVar39) {
+              return;
+            }
+            bVar10 = true;
+            uVar28 = uVar18;
+            dVar35 = dVar39;
+          }
+          uVar18 = uVar18 + 1;
+          lVar19 = lVar19 + 0x10;
+        } while ((uVar18 & 0xffffffff) < (uVar14 & 0xffffffff));
       }
       if ((bVar10) ||
-         (iVar17 = (int)((uVar26 & 0xffffffff) << 3),
-         *(int *)((int)&local_20a0[0].ptCount + iVar17) == 0)) {
-        uVar18 = 0;
+         (iVar16 = (int)((uVar25 & 0xffffffff) << 3),
+         *(int *)((int)&local_20a0[0].ptCount + iVar16) == 0)) {
+        uVar17 = 0;
         fVar2 = 2.0;
-        if (3 < (uint)uVar28) {
-          lVar20 = uVar11 - 0x2910;
-          iVar17 = -0x30;
+        if (3 < (uint)uVar27) {
+          lVar19 = uVar11 - 0x2910;
+          iVar16 = -0x30;
           do {
-            pfVar25 = (float *)lVar20;
-            if (*(int *)((int)local_206c + iVar17) != 0) {
-              if ((uVar18 & 0xffffffff) < 6) {
-                pfVar24 = pfVar25 + -4;
+            pfVar24 = (float *)lVar19;
+            if (*(int *)((int)local_206c + iVar16) != 0) {
+              if ((uVar17 & 0xffffffff) < 6) {
+                pfVar23 = pfVar24 + -4;
               }
               else {
-                pfVar24 = *(float **)((int)&param_2->sides->plane + iVar17);
+                pfVar23 = *(float **)((int)&param_2->sides->plane + iVar16);
               }
-              iVar13 = (int)((uVar29 & 0xfffffff) << 4);
-              fVar3 = *(float *)((int)local_28c0 + iVar13 + 8) * pfVar24[2] +
-                      *(float *)((int)local_28c0 + iVar13 + 4) * pfVar24[1] +
-                      *(float *)((int)local_28c0 + iVar13) * *pfVar24;
+              iVar12 = (int)((uVar28 & 0xfffffff) << 4);
+              fVar3 = *(float *)((int)local_28c0 + iVar12 + 8) * pfVar23[2] +
+                      *(float *)((int)local_28c0 + iVar12 + 4) * pfVar23[1] +
+                      *(float *)((int)local_28c0 + iVar12) * *pfVar23;
               if (fVar3 < fVar2) {
-                uVar26 = uVar18;
+                uVar25 = uVar17;
                 fVar2 = fVar3;
               }
             }
-            if (*(int *)((int)local_206c + iVar17 + 8) != 0) {
-              pfVar24 = pfVar25;
-              if (5 < (uVar18 + 1 & 0xffffffff)) {
-                pfVar24 = *(float **)((int)&param_2->sides[1].plane + iVar17);
+            if (*(int *)((int)local_206c + iVar16 + 8) != 0) {
+              pfVar23 = pfVar24;
+              if (5 < (uVar17 + 1 & 0xffffffff)) {
+                pfVar23 = *(float **)((int)&param_2->sides[1].plane + iVar16);
               }
-              iVar13 = (int)((uVar29 & 0xfffffff) << 4);
-              fVar3 = *(float *)((int)local_28c0 + iVar13 + 8) * pfVar24[2] +
-                      *(float *)((int)local_28c0 + iVar13 + 4) * pfVar24[1] +
-                      *(float *)((int)local_28c0 + iVar13) * *pfVar24;
+              iVar12 = (int)((uVar28 & 0xfffffff) << 4);
+              fVar3 = *(float *)((int)local_28c0 + iVar12 + 8) * pfVar23[2] +
+                      *(float *)((int)local_28c0 + iVar12 + 4) * pfVar23[1] +
+                      *(float *)((int)local_28c0 + iVar12) * *pfVar23;
               if (fVar3 < fVar2) {
-                uVar26 = uVar18 + 1;
+                uVar25 = uVar17 + 1;
                 fVar2 = fVar3;
               }
             }
-            if (*(int *)((int)local_206c + iVar17 + 0x10) != 0) {
-              if ((uVar18 & 0xffffffff) < 4) {
-                pfVar24 = pfVar25 + 4;
+            if (*(int *)((int)local_206c + iVar16 + 0x10) != 0) {
+              if ((uVar17 & 0xffffffff) < 4) {
+                pfVar23 = pfVar24 + 4;
               }
               else {
-                pfVar24 = *(float **)((int)&param_2->sides[2].plane + iVar17);
+                pfVar23 = *(float **)((int)&param_2->sides[2].plane + iVar16);
               }
-              iVar13 = (int)((uVar29 & 0xfffffff) << 4);
-              fVar3 = *(float *)((int)local_28c0 + iVar13 + 8) * pfVar24[2] +
-                      *(float *)((int)local_28c0 + iVar13 + 4) * pfVar24[1] +
-                      *(float *)((int)local_28c0 + iVar13) * *pfVar24;
+              iVar12 = (int)((uVar28 & 0xfffffff) << 4);
+              fVar3 = *(float *)((int)local_28c0 + iVar12 + 8) * pfVar23[2] +
+                      *(float *)((int)local_28c0 + iVar12 + 4) * pfVar23[1] +
+                      *(float *)((int)local_28c0 + iVar12) * *pfVar23;
               if (fVar3 < fVar2) {
-                uVar26 = uVar18 + 2;
+                uVar25 = uVar17 + 2;
                 fVar2 = fVar3;
               }
             }
-            if (*(int *)((int)local_206c + iVar17 + 0x18) != 0) {
-              if ((uVar18 + 3 & 0xffffffff) < 6) {
-                pfVar25 = pfVar25 + 8;
+            if (*(int *)((int)local_206c + iVar16 + 0x18) != 0) {
+              if ((uVar17 + 3 & 0xffffffff) < 6) {
+                pfVar24 = pfVar24 + 8;
               }
               else {
-                pfVar25 = *(float **)((int)&param_2->sides[3].plane + iVar17);
+                pfVar24 = *(float **)((int)&param_2->sides[3].plane + iVar16);
               }
-              iVar13 = (int)((uVar29 & 0xfffffff) << 4);
-              fVar3 = *(float *)((int)local_28c0 + iVar13 + 8) * pfVar25[2] +
-                      *(float *)((int)local_28c0 + iVar13 + 4) * pfVar25[1] +
-                      *(float *)((int)local_28c0 + iVar13) * *pfVar25;
+              iVar12 = (int)((uVar28 & 0xfffffff) << 4);
+              fVar3 = *(float *)((int)local_28c0 + iVar12 + 8) * pfVar24[2] +
+                      *(float *)((int)local_28c0 + iVar12 + 4) * pfVar24[1] +
+                      *(float *)((int)local_28c0 + iVar12) * *pfVar24;
               if (fVar3 < fVar2) {
-                uVar26 = uVar18 + 3;
+                uVar25 = uVar17 + 3;
                 fVar2 = fVar3;
               }
             }
-            uVar18 = uVar18 + 4;
-            iVar17 = iVar17 + 0x20;
-            lVar20 = lVar20 + 0x40;
-          } while ((uVar18 & 0xffffffff) < (ulonglong)uVar5 + 3);
+            uVar17 = uVar17 + 4;
+            iVar16 = iVar16 + 0x20;
+            lVar19 = lVar19 + 0x40;
+          } while ((uVar17 & 0xffffffff) < (ulonglong)uVar5 + 3);
         }
-        if ((uVar18 & 0xffffffff) < uVar28) {
-          lVar21 = uVar28 - uVar18;
-          lVar20 = (uVar18 & 0xfffffff) * 0x10 + (uVar11 - 0x2920);
-          lVar23 = (uVar18 - 6 & 0x1fffffff) << 3;
+        if ((uVar17 & 0xffffffff) < uVar27) {
+          lVar20 = uVar27 - uVar17;
+          lVar19 = (uVar17 & 0xfffffff) * 0x10 + (uVar11 - 0x2920);
+          lVar22 = (uVar17 - 6 & 0x1fffffff) << 3;
           do {
-            pfVar25 = (float *)lVar20;
-            if (*(int *)((int)local_206c + (int)lVar23) != 0) {
-              if (5 < (uVar18 & 0xffffffff)) {
-                pfVar25 = *(float **)((int)&param_2->sides->plane + (int)lVar23);
+            pfVar24 = (float *)lVar19;
+            if (*(int *)((int)local_206c + (int)lVar22) != 0) {
+              if (5 < (uVar17 & 0xffffffff)) {
+                pfVar24 = *(float **)((int)&param_2->sides->plane + (int)lVar22);
               }
-              iVar17 = (int)((uVar29 & 0xfffffff) << 4);
-              fVar3 = *(float *)((int)local_28c0 + iVar17 + 8) * pfVar25[2] +
-                      *(float *)((int)local_28c0 + iVar17 + 4) * pfVar25[1] +
-                      *(float *)((int)local_28c0 + iVar17) * *pfVar25;
+              iVar16 = (int)((uVar28 & 0xfffffff) << 4);
+              fVar3 = *(float *)((int)local_28c0 + iVar16 + 8) * pfVar24[2] +
+                      *(float *)((int)local_28c0 + iVar16 + 4) * pfVar24[1] +
+                      *(float *)((int)local_28c0 + iVar16) * *pfVar24;
               if (fVar3 < fVar2) {
-                uVar26 = uVar18;
+                uVar25 = uVar17;
                 fVar2 = fVar3;
               }
             }
-            uVar18 = uVar18 + 1;
-            lVar23 = lVar23 + 8;
-            lVar20 = lVar20 + 0x10;
-            lVar21 = lVar21 + -1;
-          } while (lVar21 != 0);
+            uVar17 = uVar17 + 1;
+            lVar22 = lVar22 + 8;
+            lVar19 = lVar19 + 0x10;
+            lVar20 = lVar20 + -1;
+          } while (lVar20 != 0);
         }
-        pcVar16 = (char *)uVar18;
-        iVar17 = (int)((uVar26 & 0xffffffff) << 3);
-        if (*(int *)((int)&local_20a0[0].ptCount + iVar17) == 0) {
-          pcVar16 = "%s";
+        pcVar15 = (char *)uVar17;
+        iVar16 = (int)((uVar25 & 0xffffffff) << 3);
+        if (*(int *)((int)&local_20a0[0].ptCount + iVar16) == 0) {
+          pcVar15 = "%s";
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_coll_glassbrush.cpp"
                           ,0xe5,0,"%s");
         }
         local_2950.ptCount =
              Phys_GetGlassWinding
-                       ((uint)uVar29,&local_2950,*pafVar27,(float)dVar37,(float (*) [3])pcVar16);
+                       ((uint)uVar28,&local_2950,*pafVar26,(float)dVar36,(float (*) [3])pcVar15);
         local_2950.pts = (float (*) [3])afStack_12a0;
-        iVar13 = Phys_GetSurfaceFlagsFromBrush(param_2,(int)uVar26);
-        pfVar24 = local_28c0 + (uint)uVar29 * 4;
-        pPVar14 = (Poly *)((int)&local_20a0[0].pts + iVar17);
-        pPVar33 = &local_2950;
-        pfVar25 = pfVar24;
+        iVar12 = Phys_GetSurfaceFlagsFromBrush(param_2,(int)uVar25);
+        pfVar23 = local_28c0 + (uint)uVar28 * 4;
+        pPVar13 = (Poly *)((int)&local_20a0[0].pts + iVar16);
+        pPVar32 = &local_2950;
+        pfVar24 = pfVar23;
       }
       else {
-        if ((uVar26 & 0xffffffff) < 6) {
-          pfVar25 = local_2920 + (int)uVar26 * 4;
+        if ((uVar25 & 0xffffffff) < 6) {
+          pfVar24 = local_2920 + (int)uVar25 * 4;
         }
         else {
-          pfVar25 = *(float **)((int)&param_2->sides->plane + (int)((uVar26 - 6 & 0xffffffff) << 3))
+          pfVar24 = *(float **)((int)&param_2->sides->plane + (int)((uVar25 - 6 & 0xffffffff) << 3))
           ;
         }
-        uVar28 = 0;
+        uVar27 = 0;
         fVar2 = 2.0;
-        if (3 < (int)(float (*) [3])uVar15) {
-          fVar3 = pfVar25[1];
-          fVar4 = *pfVar25;
-          lVar20 = uVar11 - 0x28b8;
-          fVar1 = pfVar25[2];
+        if (3 < (int)(float (*) [3])uVar14) {
+          fVar3 = pfVar24[1];
+          fVar4 = *pfVar24;
+          lVar19 = uVar11 - 0x28b8;
+          fVar1 = pfVar24[2];
           do {
-            pfVar24 = (float *)lVar20;
-            fVar9 = *pfVar24 * fVar1 + pfVar24[-2] * fVar4 + pfVar24[-1] * fVar3;
+            pfVar23 = (float *)lVar19;
+            fVar9 = *pfVar23 * fVar1 + pfVar23[-2] * fVar4 + pfVar23[-1] * fVar3;
             if (fVar9 < fVar2) {
-              uVar29 = uVar28;
+              uVar28 = uVar27;
               fVar2 = fVar9;
             }
-            fVar9 = pfVar24[4] * fVar1 + pfVar24[2] * fVar4 + pfVar24[3] * fVar3;
+            fVar9 = pfVar23[4] * fVar1 + pfVar23[2] * fVar4 + pfVar23[3] * fVar3;
             if (fVar9 < fVar2) {
-              uVar29 = uVar28 + 1;
+              uVar28 = uVar27 + 1;
               fVar2 = fVar9;
             }
-            fVar9 = pfVar24[8] * fVar1 + pfVar24[6] * fVar4 + pfVar24[7] * fVar3;
+            fVar9 = pfVar23[8] * fVar1 + pfVar23[6] * fVar4 + pfVar23[7] * fVar3;
             if (fVar9 < fVar2) {
-              uVar29 = uVar28 + 2;
+              uVar28 = uVar27 + 2;
               fVar2 = fVar9;
             }
-            fVar9 = pfVar24[0xc] * fVar1 + pfVar24[10] * fVar4 + pfVar24[0xb] * fVar3;
+            fVar9 = pfVar23[0xc] * fVar1 + pfVar23[10] * fVar4 + pfVar23[0xb] * fVar3;
             if (fVar9 < fVar2) {
-              uVar29 = uVar28 + 3;
+              uVar28 = uVar27 + 3;
               fVar2 = fVar9;
             }
-            uVar28 = uVar28 + 4;
-            lVar20 = lVar20 + 0x40;
-          } while ((uVar28 & 0xffffffff) < (uVar18 - 1 & 0xffffffff));
+            uVar27 = uVar27 + 4;
+            lVar19 = lVar19 + 0x40;
+          } while ((uVar27 & 0xffffffff) < (uVar17 - 1 & 0xffffffff));
         }
-        uVar30 = (uint)uVar29;
-        if ((uVar28 & 0xffffffff) < (uVar15 & 0xffffffff)) {
-          lVar20 = uVar15 - uVar28;
-          lVar23 = (uVar28 & 0xfffffff) * 0x10 + (uVar11 - 0x28b8);
+        uVar29 = (uint)uVar28;
+        if ((uVar27 & 0xffffffff) < (uVar14 & 0xffffffff)) {
+          lVar19 = uVar14 - uVar27;
+          lVar22 = (uVar27 & 0xfffffff) * 0x10 + (uVar11 - 0x28b8);
           do {
-            pfVar24 = (float *)lVar23;
-            fVar3 = *pfVar24 * pfVar25[2] + pfVar24[-2] * *pfVar25 + pfVar24[-1] * pfVar25[1];
+            pfVar23 = (float *)lVar22;
+            fVar3 = *pfVar23 * pfVar24[2] + pfVar23[-2] * *pfVar24 + pfVar23[-1] * pfVar24[1];
             if (fVar3 < fVar2) {
-              uVar29 = uVar28;
+              uVar28 = uVar27;
               fVar2 = fVar3;
             }
-            uVar30 = (uint)uVar29;
-            uVar28 = uVar28 + 1;
-            lVar23 = lVar23 + 0x10;
-            lVar20 = lVar20 + -1;
-          } while (lVar20 != 0);
+            uVar29 = (uint)uVar28;
+            uVar27 = uVar27 + 1;
+            lVar22 = lVar22 + 0x10;
+            lVar19 = lVar19 + -1;
+          } while (lVar19 != 0);
         }
         local_2950.ptCount =
-             Phys_GetGlassWinding(uVar30,&local_2950,*pafVar27,(float)dVar37,(float (*) [3])uVar15);
+             Phys_GetGlassWinding(uVar29,&local_2950,*pafVar26,(float)dVar36,(float (*) [3])uVar14);
         local_2950.pts = (float (*) [3])afStack_12a0;
-        iVar13 = Phys_GetSurfaceFlagsFromBrush(param_2,(int)uVar26);
-        local_2938 = -*pfVar25;
-        local_2934 = -pfVar25[1];
-        local_2930 = -pfVar25[2];
-        pfVar24 = &local_2938;
-        pPVar14 = &local_2950;
-        pPVar33 = (Poly *)((int)&local_20a0[0].pts + iVar17);
+        iVar12 = Phys_GetSurfaceFlagsFromBrush(param_2,(int)uVar25);
+        local_2938 = -*pfVar24;
+        local_2934 = -pfVar24[1];
+        local_2930 = -pfVar24[2];
+        pfVar23 = &local_2938;
+        pPVar13 = &local_2950;
+        pPVar32 = (Poly *)((int)&local_20a0[0].pts + iVar16);
       }
-      Phys_ProjectFaceOntoFaceAndClip(pfVar25,pPVar33,pPVar14,iVar13,param_4,pfVar24);
+      Phys_ProjectFaceOntoFaceAndClip(pfVar24,pPVar32,pPVar13,iVar12,param_4,pfVar23);
     }
   }
-LAB_8266b95c:
-  __restfpr_26();
-  __restgprlr_20();
   return;
 }
 
 
 // 8266B970  Phys_CollideGlassWithTriangleList  (physics/phys_coll_glassbrush.cpp:275)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PhysWorld": Some values do not have unique names */
 
 void Phys_CollideGlassWithTriangleList
@@ -700,10 +695,8 @@ void Phys_CollideGlassWithTriangleList
                Results *param_6)
 
 {
-  ushort *puVar1;
   objInfo oStack_e0;
   
-  puVar1 = (ushort *)__savegprlr_26(param_1);
   memcpy();
   oStack_e0.type = PHYS_GEOM_CYLINDER;
   oStack_e0.cylDirection = 3;
@@ -712,8 +705,7 @@ void Phys_CollideGlassWithTriangleList
        * 0.5;
   oStack_e0.u.sideExtents[2] = 0.5;
   oStack_e0.u.sideExtents[1] = oStack_e0.u.sideExtents[0];
-  Phys_CollideCylinderWithTriangleList(puVar1,param_2,param_3,&oStack_e0,param_5,param_6);
-  __restgprlr_26();
+  Phys_CollideCylinderWithTriangleList(param_1,param_2,param_3,&oStack_e0,param_5,param_6);
   return;
 }
 

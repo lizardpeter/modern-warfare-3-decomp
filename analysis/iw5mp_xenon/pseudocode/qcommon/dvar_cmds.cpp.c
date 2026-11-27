@@ -15,43 +15,40 @@ void TRACK_dvar_cmds(void)
 
 // 824FE388  Dvar_GetCombinedString  (qcommon/dvar_cmds.cpp:88)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void Dvar_GetCombinedString(char *param_1,int param_2)
 
 {
   char cVar1;
-  char *pcVar2;
-  int iVar3;
+  int iVar2;
+  char *pcVar3;
   char *pcVar4;
-  char *pcVar6;
-  longlong lVar7;
-  char *pcVar8;
-  int iVar5;
+  char *pcVar5;
   
-  lVar7 = (longlong)param_2;
-  pcVar2 = (char *)__savegprlr_27(param_1);
-  iVar3 = Cmd_Argc();
-  pcVar8 = (char *)0x0;
-  *pcVar2 = '\0';
-  iVar5 = (int)lVar7;
-  while (iVar5 < iVar3) {
-    iVar5 = (int)lVar7;
-    pcVar4 = Cmd_Argv(iVar5);
-    pcVar6 = pcVar4;
-    do {
-      cVar1 = *pcVar6;
-      pcVar6 = pcVar6 + 1;
-    } while (cVar1 != '\0');
-    pcVar8 = pcVar6 + ((int)pcVar8 - (int)pcVar4);
-    if (0xffd < (int)pcVar8) break;
-    pcVar6 = Cmd_Argv(iVar5);
-    I_strncat(pcVar2,0x1000,pcVar6);
-    if (iVar5 != iVar3 + -1) {
-      I_strncat(pcVar2,0x1000," ");
+  iVar2 = Cmd_Argc();
+  pcVar5 = (char *)0x0;
+  *param_1 = '\0';
+  while( true ) {
+    if (iVar2 <= param_2) {
+      return;
     }
-    lVar7 = lVar7 + 1;
-    iVar5 = (int)lVar7;
+    pcVar3 = Cmd_Argv(param_2);
+    pcVar4 = pcVar3;
+    do {
+      cVar1 = *pcVar4;
+      pcVar4 = pcVar4 + 1;
+    } while (cVar1 != '\0');
+    pcVar5 = pcVar4 + ((int)pcVar5 - (int)pcVar3);
+    if (0xffd < (int)pcVar5) break;
+    pcVar4 = Cmd_Argv(param_2);
+    I_strncat(param_1,0x1000,pcVar4);
+    if (param_2 != iVar2 + -1) {
+      I_strncat(param_1,0x1000," ");
+    }
+    param_2 = param_2 + 1;
   }
-  __restgprlr_27();
   return;
 }
 
@@ -191,107 +188,11 @@ LAB_824fe768:
 
 // 824FE788  Dvar_ToggleInternal  (qcommon/dvar_cmds.cpp:214)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 bool Dvar_ToggleInternal(void)
-
-{
-  char cVar1;
-  int iVar2;
-  char *pcVar3;
-  undefined1 uVar10;
-  dvar_t *pdVar4;
-  bool bVar11;
-  char *pcVar5;
-  int iVar6;
-  char *pcVar7;
-  char *pcVar8;
-  char *pcVar9;
-  int iVar12;
-  
-  __savegprlr_27();
-  iVar2 = Cmd_Argc();
-  if (iVar2 < 2) {
-    pcVar3 = Cmd_Argv(0);
-    if (pcVar3 == (char *)0x0) {
-      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\dvar_cmds.cpp",0xe0,
-                      0,"%s");
-    }
-    Cmd_Argv(0);
-    Com_Printf(0,"USAGE: %s <variable> <optional value sequence>\n");
-    uVar10 = __restgprlr_27(0);
-    return (bool)uVar10;
-  }
-  pcVar3 = Cmd_Argv(1);
-  if (pcVar3 == (char *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\dvar_cmds.cpp",0xe6,0,
-                    "%s");
-  }
-  pdVar4 = Dvar_FindVar(pcVar3);
-  if (pdVar4 == (dvar_t *)0x0) {
-    Com_Printf(0,"toggle failed: dvar \'%s\' not found.\n");
-    uVar10 = __restgprlr_27(0);
-    return (bool)uVar10;
-  }
-  iVar2 = Cmd_Argc();
-  if (iVar2 == 2) {
-    bVar11 = Dvar_ToggleSimple(pdVar4);
-    uVar10 = __restgprlr_27(bVar11);
-    return (bool)uVar10;
-  }
-  pcVar5 = Dvar_DisplayableValue(pdVar4);
-  iVar6 = Cmd_Argc();
-  iVar2 = 2;
-  if (3 < iVar6) {
-    do {
-      pcVar7 = Cmd_Argv(iVar2);
-      if (pdVar4->type == '\x06') {
-        pcVar8 = Dvar_IndexStringToEnumString(pdVar4,pcVar7);
-        pcVar9 = pcVar8;
-        do {
-          cVar1 = *pcVar9;
-          pcVar9 = pcVar9 + 1;
-        } while (cVar1 != '\0');
-        if ((int)pcVar9 - (int)pcVar8 != 1) {
-          pcVar7 = pcVar8;
-        }
-      }
-      iVar6 = I_stricmp(pcVar5,pcVar7);
-      if (iVar6 == 0) {
-        pcVar5 = Cmd_Argv(iVar2 + 1);
-        Dvar_SetCommand(pcVar3,pcVar5);
-        uVar10 = __restgprlr_27(1);
-        return (bool)uVar10;
-      }
-      iVar6 = Cmd_Argc();
-      iVar12 = iVar2 + 2;
-      iVar2 = iVar2 + 1;
-    } while (iVar12 < iVar6);
-  }
-  pcVar5 = Cmd_Argv(2);
-  if (pdVar4->type == '\x06') {
-    pcVar9 = Dvar_IndexStringToEnumString(pdVar4,pcVar5);
-    pcVar7 = pcVar9;
-    do {
-      cVar1 = *pcVar7;
-      pcVar7 = pcVar7 + 1;
-    } while (cVar1 != '\0');
-    if ((int)pcVar7 - (int)pcVar9 != 1) {
-      pcVar5 = pcVar9;
-    }
-  }
-  Dvar_SetCommand(pcVar3,pcVar5);
-  uVar10 = __restgprlr_27(1);
-  return (bool)uVar10;
-}
-
-
-// 824FE998  Dvar_Toggle_f  (qcommon/dvar_cmds.cpp:282)
-
-/* WARNING: Unknown calling convention -- yet parameter storage is locked */
-/* void __cdecl Dvar_Toggle_f(void) */
-
-void Dvar_Toggle_f(void)
 
 {
   char cVar1;
@@ -306,7 +207,6 @@ void Dvar_Toggle_f(void)
   char *pcVar9;
   int iVar11;
   
-  __savegprlr_27();
   iVar2 = Cmd_Argc();
   if (iVar2 < 2) {
     pcVar3 = Cmd_Argv(0);
@@ -316,8 +216,7 @@ void Dvar_Toggle_f(void)
     }
     Cmd_Argv(0);
     Com_Printf(0,"USAGE: %s <variable> <optional value sequence>\n");
-    __restgprlr_27(0);
-    return;
+    return false;
   }
   pcVar3 = Cmd_Argv(1);
   if (pcVar3 == (char *)0x0) {
@@ -327,14 +226,12 @@ void Dvar_Toggle_f(void)
   pdVar4 = Dvar_FindVar(pcVar3);
   if (pdVar4 == (dvar_t *)0x0) {
     Com_Printf(0,"toggle failed: dvar \'%s\' not found.\n");
-    __restgprlr_27(0);
-    return;
+    return false;
   }
   iVar2 = Cmd_Argc();
   if (iVar2 == 2) {
     bVar10 = Dvar_ToggleSimple(pdVar4);
-    __restgprlr_27(bVar10);
-    return;
+    return bVar10;
   }
   pcVar5 = Dvar_DisplayableValue(pdVar4);
   iVar6 = Cmd_Argc();
@@ -357,8 +254,7 @@ void Dvar_Toggle_f(void)
       if (iVar6 == 0) {
         pcVar5 = Cmd_Argv(iVar2 + 1);
         Dvar_SetCommand(pcVar3,pcVar5);
-        __restgprlr_27(1);
-        return;
+        return true;
       }
       iVar6 = Cmd_Argc();
       iVar11 = iVar2 + 2;
@@ -378,13 +274,106 @@ void Dvar_Toggle_f(void)
     }
   }
   Dvar_SetCommand(pcVar3,pcVar5);
-  __restgprlr_27(1);
+  return true;
+}
+
+
+// 824FE998  Dvar_Toggle_f  (qcommon/dvar_cmds.cpp:282)
+
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+/* void __cdecl Dvar_Toggle_f(void) */
+
+void Dvar_Toggle_f(void)
+
+{
+  char cVar1;
+  int iVar2;
+  char *pcVar3;
+  dvar_t *pdVar4;
+  char *pcVar5;
+  int iVar6;
+  char *pcVar7;
+  char *pcVar8;
+  char *pcVar9;
+  int iVar10;
+  
+  iVar2 = Cmd_Argc();
+  if (iVar2 < 2) {
+    pcVar3 = Cmd_Argv(0);
+    if (pcVar3 == (char *)0x0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\dvar_cmds.cpp",0xe0,
+                      0,"%s");
+    }
+    Cmd_Argv(0);
+    Com_Printf(0,"USAGE: %s <variable> <optional value sequence>\n");
+    return;
+  }
+  pcVar3 = Cmd_Argv(1);
+  if (pcVar3 == (char *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\dvar_cmds.cpp",0xe6,0,
+                    "%s");
+  }
+  pdVar4 = Dvar_FindVar(pcVar3);
+  if (pdVar4 == (dvar_t *)0x0) {
+    Com_Printf(0,"toggle failed: dvar \'%s\' not found.\n");
+    return;
+  }
+  iVar2 = Cmd_Argc();
+  if (iVar2 == 2) {
+    Dvar_ToggleSimple(pdVar4);
+    return;
+  }
+  pcVar5 = Dvar_DisplayableValue(pdVar4);
+  iVar6 = Cmd_Argc();
+  iVar2 = 2;
+  if (3 < iVar6) {
+    do {
+      pcVar7 = Cmd_Argv(iVar2);
+      if (pdVar4->type == '\x06') {
+        pcVar8 = Dvar_IndexStringToEnumString(pdVar4,pcVar7);
+        pcVar9 = pcVar8;
+        do {
+          cVar1 = *pcVar9;
+          pcVar9 = pcVar9 + 1;
+        } while (cVar1 != '\0');
+        if ((int)pcVar9 - (int)pcVar8 != 1) {
+          pcVar7 = pcVar8;
+        }
+      }
+      iVar6 = I_stricmp(pcVar5,pcVar7);
+      if (iVar6 == 0) {
+        pcVar5 = Cmd_Argv(iVar2 + 1);
+        Dvar_SetCommand(pcVar3,pcVar5);
+        return;
+      }
+      iVar6 = Cmd_Argc();
+      iVar10 = iVar2 + 2;
+      iVar2 = iVar2 + 1;
+    } while (iVar10 < iVar6);
+  }
+  pcVar5 = Cmd_Argv(2);
+  if (pdVar4->type == '\x06') {
+    pcVar9 = Dvar_IndexStringToEnumString(pdVar4,pcVar5);
+    pcVar7 = pcVar9;
+    do {
+      cVar1 = *pcVar7;
+      pcVar7 = pcVar7 + 1;
+    } while (cVar1 != '\0');
+    if ((int)pcVar7 - (int)pcVar9 != 1) {
+      pcVar5 = pcVar9;
+    }
+  }
+  Dvar_SetCommand(pcVar3,pcVar5);
   return;
 }
 
 
 // 824FE9A0  Dvar_TogglePrint_f  (qcommon/dvar_cmds.cpp:296)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void Dvar_TogglePrint_f(void)
@@ -395,7 +384,6 @@ void Dvar_TogglePrint_f(void)
   char *pcVar2;
   dvar_t *pdVar3;
   
-  __savegprlr_28();
   bVar4 = Dvar_ToggleInternal();
   if (bVar4) {
     iVar1 = Cmd_Argc();
@@ -421,7 +409,6 @@ void Dvar_TogglePrint_f(void)
     }
     Com_Printf(0,"%s toggled to %s\n");
   }
-  __restgprlr_28();
   return;
 }
 
@@ -492,6 +479,8 @@ void Dvar_RegisterBool_f(void)
 
 // 824FEC40  Dvar_RegisterInt_f  (qcommon/dvar_cmds.cpp:383)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void Dvar_RegisterInt_f(void)
@@ -505,12 +494,10 @@ void Dvar_RegisterInt_f(void)
   int iVar6;
   dvar_t *pdVar7;
   
-  __savegprlr_28();
   iVar2 = Cmd_Argc();
   if (iVar2 != 5) {
     Cmd_Argv(0);
     Com_Printf(0,"USAGE: %s <name> <default> <min> <max>\n");
-    __restgprlr_28();
     return;
   }
   pcVar3 = Cmd_Argv(1);
@@ -522,20 +509,17 @@ void Dvar_RegisterInt_f(void)
   iVar6 = atoi(pcVar4);
   if (iVar6 < iVar5) {
     Com_Printf(0,"dvar %s: min %i should not be greater than max %i\n");
-    __restgprlr_28();
     return;
   }
   pdVar7 = Dvar_FindVar(pcVar3);
   if ((pdVar7 == (dvar_t *)0x0) ||
      ((uVar1 = pdVar7->type, uVar1 == '\a' && ((pdVar7->flags & 0x100) != 0)))) {
-    pdVar7 = Dvar_RegisterInt(pcVar3,iVar2,iVar5,iVar6,0x100,"External Dvar");
+    Dvar_RegisterInt(pcVar3,iVar2,iVar5,iVar6,0x100,"External Dvar");
   }
   else if ((uVar1 != '\x05') && (uVar1 != '\x06')) {
     Com_Printf(0,"dvar \'%s\' is not an integer dvar\n");
-    __restgprlr_28();
     return;
   }
-  __restgprlr_28(pdVar7);
   return;
 }
 
@@ -592,6 +576,8 @@ void Dvar_RegisterFloat_f(void)
 
 // 824FEEB0  Dvar_RegisterVec3_f  (qcommon/dvar_cmds.cpp:459)
 
+/* WARNING: Function: __savefpr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void Dvar_RegisterVec3_f(void)
@@ -609,7 +595,6 @@ void Dvar_RegisterVec3_f(void)
   double dVar8;
   double dVar9;
   
-  __savefpr_27();
   iVar1 = Cmd_Argc();
   if (iVar1 == 7) {
     pcVar2 = Cmd_Argv(1);
@@ -646,7 +631,6 @@ void Dvar_RegisterVec3_f(void)
     Cmd_Argv(0);
     Com_Printf(0,"USAGE: %s <name> <defaultx> <defaulty> <defaultz>  <min> <max>\n");
   }
-  __restfpr_27();
   return;
 }
 
@@ -936,30 +920,30 @@ void Dvar_List_f(void)
 
 // 824FF5E8  Com_DvarDumpSingle  (qcommon/dvar_cmds.cpp:809)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void Com_DvarDumpSingle(dvar_t *param_1,void *param_2)
 
 {
-  dvar_t *pdVar1;
-  bool bVar2;
+  bool bVar1;
   char acStack_820 [2080];
   
-  pdVar1 = (dvar_t *)__savegprlr_29(param_1);
   *(int *)param_2 = *(int *)param_2 + 1;
   if ((*(char **)((int)param_2 + 8) == (char *)0x0) ||
-     (bVar2 = Com_Filter(*(char **)((int)param_2 + 8),pdVar1->name,0), bVar2)) {
-    bVar2 = Dvar_HasLatchedValue(pdVar1);
-    if (bVar2) {
-      Dvar_DisplayableLatchedValue(pdVar1);
-      Dvar_DisplayableValue(pdVar1);
+     (bVar1 = Com_Filter(*(char **)((int)param_2 + 8),param_1->name,0), bVar1)) {
+    bVar1 = Dvar_HasLatchedValue(param_1);
+    if (bVar1) {
+      Dvar_DisplayableLatchedValue(param_1);
+      Dvar_DisplayableValue(param_1);
       Com_sprintf(acStack_820,0x800,"      %s \"%s\" -- latched \"%s\"\n");
     }
     else {
-      Dvar_DisplayableValue(pdVar1);
+      Dvar_DisplayableValue(param_1);
       Com_sprintf(acStack_820,0x800,"      %s \"%s\"\n");
     }
     Com_PrintMessage(*(int *)((int)param_2 + 4),acStack_820,0);
   }
-  __restgprlr_29();
   return;
 }
 
@@ -1016,6 +1000,8 @@ void Dvar_Dump_f(void)
 
 // 824FF7C8  SV_SetConfigDvar  (qcommon/dvar_cmds.cpp:873)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "ConfigString": Some values do not have unique names */
 
 void SV_SetConfigDvar(dvar_t *param_1,void *param_2)
@@ -1023,19 +1009,16 @@ void SV_SetConfigDvar(dvar_t *param_1,void *param_2)
 {
   char *pcVar1;
   int iVar2;
-  dvar_t *pdVar3;
-  char *pcVar4;
-  ConfigString CVar5;
+  char *pcVar3;
+  ConfigString CVar4;
   
-  pdVar3 = (dvar_t *)__savegprlr_28(param_1);
-  if (((uint)pdVar3->flags & *(uint *)((int)param_2 + 8)) != 0) {
-    pcVar4 = Dvar_DisplayableValue(pdVar3);
-    pcVar1 = pdVar3->name;
+  if (((uint)param_1->flags & *(uint *)((int)param_2 + 8)) != 0) {
+    pcVar3 = Dvar_DisplayableValue(param_1);
+    pcVar1 = param_1->name;
     iVar2 = *(int *)((int)param_2 + 4);
-    CVar5 = ConfigStringFromIndex(*(int *)param_2);
-    SV_SetConfigValueForKey(CVar5,iVar2,pcVar1,pcVar4);
+    CVar4 = ConfigStringFromIndex(*(int *)param_2);
+    SV_SetConfigValueForKey(CVar4,iVar2,pcVar1,pcVar3);
   }
-  __restgprlr_28();
   return;
 }
 
@@ -1089,107 +1072,106 @@ void Dvar_InfoStringSingle_Big(dvar_t *param_1,void *param_2)
 
 // 824FF908  Dvar_InfoString  (qcommon/dvar_cmds.cpp:918)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 char * Dvar_InfoString(LocalClientNum_t param_1,int param_2)
 
 {
-  LocalClientNum_t LVar1;
-  int iVar2;
-  char *pcVar3;
-  bool bVar4;
-  char *pcVar5;
+  int iVar1;
+  char *pcVar2;
+  bool bVar3;
+  char *pcVar4;
   uint uStack0000001c;
   char acStack_40 [4];
   char acStack_3c [4];
   char acStack_38 [4];
   char acStack_34 [52];
   
-  uStack0000001c = param_2;
-  LVar1 = __savegprlr_27(param_1);
   info1[0] = '\0';
+  uStack0000001c = param_2;
   Dvar_ForEach(Dvar_InfoStringSingle,&stack0x0000001c);
   if ((uStack0000001c & 0x200) != 0) {
-    iVar2 = CL_ControllerIndexFromClientNum(LVar1);
-    pcVar3 = CL_GetUsernameForLocalClient(iVar2);
-    Info_SetValueForKey(info1,"name",pcVar3);
-    pcVar3 = GamerProfile_GetClanName(iVar2);
-    Info_SetValueForKey(info1,"clanAbbrev",pcVar3);
-    pcVar3 = CL_GetXuidForLocalClient(iVar2);
-    if (((onlinegame->current).enabled != false) && (bVar4 = Live_UserIsGuest(iVar2), !bVar4)) {
-      if (*pcVar3 != '0') {
+    iVar1 = CL_ControllerIndexFromClientNum(param_1);
+    pcVar2 = CL_GetUsernameForLocalClient(iVar1);
+    Info_SetValueForKey(info1,"name",pcVar2);
+    pcVar2 = GamerProfile_GetClanName(iVar1);
+    Info_SetValueForKey(info1,"clanAbbrev",pcVar2);
+    pcVar2 = CL_GetXuidForLocalClient(iVar1);
+    if (((onlinegame->current).enabled != false) && (bVar3 = Live_UserIsGuest(iVar1), !bVar3)) {
+      if (*pcVar2 != '0') {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\dvar_cmds.cpp",
                         0x3c5,0,"%s");
       }
-      if (pcVar3[1] != '0') {
+      if (pcVar2[1] != '0') {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\dvar_cmds.cpp",
                         0x3c6,0,"%s");
       }
-      if (pcVar3[2] != '0') {
+      if (pcVar2[2] != '0') {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\dvar_cmds.cpp",
                         0x3c7,0,"%s");
       }
-      if (pcVar3[3] != '9') {
+      if (pcVar2[3] != '9') {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\dvar_cmds.cpp",
                         0x3c8,0,"%s");
       }
     }
-    Info_SetValueForKey(info1,"xuid",pcVar3);
+    Info_SetValueForKey(info1,"xuid",pcVar2);
     Live_GetLocalNatType();
     Com_sprintf(acStack_40,2,"%i");
     Info_SetValueForKey(info1,"natType",acStack_40);
-    Live_GetRankMP(iVar2);
+    Live_GetRankMP(iVar1);
     Com_sprintf(acStack_38,4,"%i");
-    Live_GetPrestigeMP(iVar2);
+    Live_GetPrestigeMP(iVar1);
     Com_sprintf(acStack_3c,4,"%i");
     Info_SetValueForKey(info1,"rank",acStack_38);
     Info_SetValueForKey(info1,"prestige",acStack_3c);
-    bVar4 = GamerProfile_GetUsingEliteClanTag(iVar2);
-    pcVar5 = "1";
-    pcVar3 = pcVar5;
-    if (!bVar4) {
-      pcVar3 = "0";
+    bVar3 = GamerProfile_GetUsingEliteClanTag(iVar1);
+    pcVar4 = "1";
+    pcVar2 = pcVar4;
+    if (!bVar3) {
+      pcVar2 = "0";
     }
-    Info_SetValueForKey(info1,"ec_usingTag",pcVar3);
-    bVar4 = GamerProfile_GetUsingEliteClanTitle(iVar2);
-    if (!bVar4) {
-      pcVar5 = "0";
+    Info_SetValueForKey(info1,"ec_usingTag",pcVar2);
+    bVar3 = GamerProfile_GetUsingEliteClanTitle(iVar1);
+    if (!bVar3) {
+      pcVar4 = "0";
     }
-    Info_SetValueForKey(info1,"ec_usingTitle",pcVar5);
-    GamerProfile_GetEliteClanTitleBgIndex(iVar2);
+    Info_SetValueForKey(info1,"ec_usingTitle",pcVar4);
+    GamerProfile_GetEliteClanTitleBgIndex(iVar1);
     Com_sprintf(acStack_34,4,"%i");
     Info_SetValueForKey(info1,"ec_TitleBg",acStack_34);
-    pcVar3 = GamerProfile_GetEliteClanTitleText(iVar2);
-    Info_SetValueForKey(info1,"ec_TitleText",pcVar3);
-    pcVar3 = GamerProfile_GetEliteClanClanTagText(iVar2);
-    Info_SetValueForKey(info1,"ec_TagText",pcVar3);
-    GamerProfile_GetPrestigeBlackOps(iVar2);
+    pcVar2 = GamerProfile_GetEliteClanTitleText(iVar1);
+    Info_SetValueForKey(info1,"ec_TitleText",pcVar2);
+    pcVar2 = GamerProfile_GetEliteClanClanTagText(iVar1);
+    Info_SetValueForKey(info1,"ec_TagText",pcVar2);
+    GamerProfile_GetPrestigeBlackOps(iVar1);
     Com_sprintf(acStack_3c,4,"%i");
     Info_SetValueForKey(info1,"ptd_prestige_black_ops",acStack_3c);
-    GamerProfile_GetRankBlackOps(iVar2);
+    GamerProfile_GetRankBlackOps(iVar1);
     Com_sprintf(acStack_38,4,"%i");
     Info_SetValueForKey(info1,"ptd_rank_black_ops",acStack_38);
-    GamerProfile_GetPrestigeMW2(iVar2);
+    GamerProfile_GetPrestigeMW2(iVar1);
     Com_sprintf(acStack_3c,4,"%i");
     Info_SetValueForKey(info1,"ptd_prestige_mw2",acStack_3c);
-    GamerProfile_GetRankMW2(iVar2);
+    GamerProfile_GetRankMW2(iVar1);
     Com_sprintf(acStack_38,4,"%i");
     Info_SetValueForKey(info1,"ptd_rank_mw2",acStack_38);
-    GamerProfile_GetPrestigeWorldAtWar(iVar2);
+    GamerProfile_GetPrestigeWorldAtWar(iVar1);
     Com_sprintf(acStack_3c,4,"%i");
     Info_SetValueForKey(info1,"ptd_prestige_world_at_war",acStack_3c);
-    GamerProfile_GetRankWorldAtWar(iVar2);
+    GamerProfile_GetRankWorldAtWar(iVar1);
     Com_sprintf(acStack_38,4,"%i");
     Info_SetValueForKey(info1,"ptd_rank_world_at_war",acStack_38);
-    GamerProfile_GetPrestigeMW(iVar2);
+    GamerProfile_GetPrestigeMW(iVar1);
     Com_sprintf(acStack_3c,4,"%i");
     Info_SetValueForKey(info1,"ptd_prestige_mw",acStack_3c);
-    GamerProfile_GetRankMW(iVar2);
+    GamerProfile_GetRankMW(iVar1);
     Com_sprintf(acStack_38,4,"%i");
     Info_SetValueForKey(info1,"ptd_rank_mw",acStack_38);
   }
-  pcVar3 = (char *)__restgprlr_27(0xffffffff8366e538);
-  return pcVar3;
+  return info1;
 }
 
 

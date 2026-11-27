@@ -2,140 +2,119 @@
 
 // 82838458  vp8_sad16x16_c  (WebM_atvi_opt/vpx/vp8/encoder/sad_c.c:26)
 
+/* WARNING: Function: __savegprlr_16 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_16 replaced with injection: xenon_save_restore */
+
 uint vp8_sad16x16_c(uchar *param_1,int param_2,uchar *param_3,int param_4,int param_5)
 
 {
-  int iVar1;
-  int iVar2;
-  byte *pbVar3;
-  byte *pbVar4;
-  longlong lVar5;
-  longlong lVar6;
-  uint uVar7;
-  longlong lVar8;
-  longlong lVar9;
-  longlong lVar10;
-  longlong lVar11;
-  longlong lVar12;
-  longlong lVar13;
+  uint uVar1;
+  uint uVar2;
+  uint uVar3;
+  uint uVar4;
+  byte *pbVar5;
+  byte *pbVar6;
+  int iVar7;
+  int iVar8;
+  int iVar9;
+  int iVar10;
+  int iVar11;
+  int iVar12;
+  uint uVar13;
   int iVar14;
-  ulonglong uVar15;
-  ulonglong uVar16;
-  ulonglong uVar17;
-  ulonglong uVar18;
+  int iVar15;
+  int iVar16;
+  uchar *puVar17;
+  int iVar18;
   longlong lVar19;
-  ulonglong uVar20;
-  ulonglong uVar21;
-  ulonglong uVar22;
-  ulonglong uVar23;
-  longlong lVar24;
+  longlong lVar20;
   
-  lVar10 = (longlong)param_4;
-  lVar9 = (longlong)(int)param_3;
-  lVar8 = (longlong)param_2;
-  lVar5 = __savegprlr_16(param_1);
-  lVar6 = 0;
-  lVar5 = lVar5 + 2;
+  uVar13 = 0;
+  puVar17 = param_1 + 2;
   lVar19 = 0x10;
   do {
-    iVar1 = (int)lVar9;
-    iVar2 = (int)lVar5;
+    iVar18 = 0;
     iVar14 = 0;
-    lVar11 = 0;
-    lVar24 = 4;
-    lVar12 = 0;
-    lVar13 = 0;
+    lVar20 = 4;
+    iVar15 = 0;
+    iVar16 = 0;
     do {
-      uVar21 = (ulonglong)*(byte *)(iVar2 + -1 + iVar14) - (ulonglong)*(byte *)(iVar1 + 1 + iVar14);
-      uVar18 = (ulonglong)*(byte *)(iVar2 + iVar14) - (ulonglong)*(byte *)(iVar1 + 2 + iVar14);
-      pbVar3 = (byte *)(iVar2 + 1 + iVar14);
-      pbVar4 = (byte *)(iVar1 + 3 + iVar14);
-      uVar23 = (ulonglong)*(byte *)(iVar2 + -2 + iVar14) - (ulonglong)*(byte *)(iVar14 + iVar1);
-      iVar14 = iVar14 + 4;
-      uVar22 = (ulonglong)((int)uVar23 >> 0x1f);
-      uVar20 = (ulonglong)*pbVar3 - (ulonglong)*pbVar4;
-      uVar17 = (ulonglong)((int)uVar21 >> 0x1f);
-      uVar16 = (ulonglong)((int)uVar18 >> 0x1f);
-      uVar15 = (ulonglong)((int)uVar20 >> 0x1f);
-      lVar6 = ((uVar23 ^ uVar22) - uVar22) + lVar6;
-      lVar13 = ((uVar21 ^ uVar17) - uVar17) + lVar13;
-      lVar12 = ((uVar18 ^ uVar16) - uVar16) + lVar12;
-      lVar11 = ((uVar20 ^ uVar15) - uVar15) + lVar11;
-      lVar24 = lVar24 + -1;
-    } while (lVar24 != 0);
+      iVar8 = iVar18 + -1;
+      iVar7 = iVar18 + 2;
+      iVar9 = iVar18 + 1;
+      pbVar5 = puVar17 + iVar18;
+      pbVar6 = param_3 + iVar18;
+      iVar12 = iVar18 + -2;
+      iVar10 = iVar18 + 1;
+      iVar11 = iVar18 + 3;
+      iVar18 = iVar18 + 4;
+      uVar1 = (int)((uint)puVar17[iVar12] - (uint)*pbVar6) >> 0x1f;
+      uVar2 = (int)((uint)puVar17[iVar8] - (uint)param_3[iVar9]) >> 0x1f;
+      uVar3 = (int)((uint)*pbVar5 - (uint)param_3[iVar7]) >> 0x1f;
+      uVar4 = (int)((uint)puVar17[iVar10] - (uint)param_3[iVar11]) >> 0x1f;
+      uVar13 = (((uint)puVar17[iVar12] - (uint)*pbVar6 ^ uVar1) - uVar1) + uVar13;
+      iVar16 = (((uint)puVar17[iVar8] - (uint)param_3[iVar9] ^ uVar2) - uVar2) + iVar16;
+      iVar15 = (((uint)*pbVar5 - (uint)param_3[iVar7] ^ uVar3) - uVar3) + iVar15;
+      iVar14 = (((uint)puVar17[iVar10] - (uint)param_3[iVar11] ^ uVar4) - uVar4) + iVar14;
+      lVar20 = lVar20 + -1;
+    } while (lVar20 != 0);
     lVar19 = lVar19 + -1;
-    lVar5 = lVar5 + lVar8;
-    lVar6 = lVar11 + lVar12 + lVar13 + lVar6;
-    lVar9 = lVar9 + lVar10;
+    puVar17 = puVar17 + param_2;
+    uVar13 = iVar14 + iVar15 + iVar16 + uVar13;
+    param_3 = param_3 + param_4;
   } while (lVar19 != 0);
-  uVar7 = __restgprlr_16(lVar6);
-  return uVar7;
+  return uVar13;
 }
 
 
 // 82838540  sad_mx_n_c  (WebM_atvi_opt/vpx/vp8/encoder/sad_c.c:54)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
+
 uint sad_mx_n_c(uchar *param_1,int param_2,uchar *param_3,int param_4,int param_5,int param_6)
 
 {
-  int iVar1;
-  int iVar2;
-  longlong lVar3;
-  longlong lVar4;
-  uint uVar5;
-  longlong lVar6;
-  longlong lVar7;
+  uint uVar1;
+  uint uVar2;
+  uint uVar3;
+  int iVar4;
+  int iVar5;
+  int iVar6;
+  int iVar7;
   longlong lVar8;
-  longlong lVar9;
-  ulonglong uVar10;
-  ulonglong uVar11;
-  int iVar12;
-  int iVar13;
-  ulonglong uVar14;
-  ulonglong uVar15;
-  longlong lVar16;
-  longlong lVar17;
   
-  lVar17 = (longlong)param_6;
-  lVar8 = (longlong)param_4;
-  lVar7 = (longlong)(int)param_3;
-  lVar6 = (longlong)param_2;
-  lVar3 = __savegprlr_24(param_1);
-  lVar4 = 0;
-  if (0 < (int)lVar17) {
+  lVar8 = (longlong)param_6;
+  uVar3 = 0;
+  uVar2 = 0;
+  if (0 < param_6) {
     do {
-      lVar9 = 0;
-      lVar16 = 0;
-      iVar13 = 0;
-      iVar2 = (int)lVar7;
-      iVar1 = (int)lVar3;
+      iVar4 = 0;
+      iVar7 = 0;
+      iVar6 = 0;
       if (1 < param_5) {
-        iVar12 = iVar13;
+        iVar5 = iVar6;
         do {
-          iVar13 = iVar12 + 2;
-          uVar15 = (ulonglong)*(byte *)(iVar1 + 1 + iVar12) -
-                   (ulonglong)*(byte *)(iVar2 + 1 + iVar12);
-          uVar10 = (ulonglong)*(byte *)(iVar1 + iVar12) - (ulonglong)*(byte *)(iVar12 + iVar2);
-          uVar11 = (ulonglong)((int)uVar10 >> 0x1f);
-          uVar14 = (ulonglong)((int)uVar15 >> 0x1f);
-          lVar9 = ((uVar10 ^ uVar11) - uVar11) + lVar9;
-          lVar16 = ((uVar15 ^ uVar14) - uVar14) + lVar16;
-          iVar12 = iVar13;
-        } while (iVar13 < param_5 + -1);
+          iVar6 = iVar5 + 2;
+          uVar2 = (int)((uint)param_1[iVar5] - (uint)param_3[iVar5]) >> 0x1f;
+          uVar1 = (int)((uint)param_1[iVar5 + 1] - (uint)param_3[iVar5 + 1]) >> 0x1f;
+          iVar4 = (((uint)param_1[iVar5] - (uint)param_3[iVar5] ^ uVar2) - uVar2) + iVar4;
+          iVar7 = (((uint)param_1[iVar5 + 1] - (uint)param_3[iVar5 + 1] ^ uVar1) - uVar1) + iVar7;
+          iVar5 = iVar6;
+        } while (iVar6 < param_5 + -1);
       }
-      if (iVar13 < param_5) {
-        uVar11 = (ulonglong)*(byte *)(iVar13 + iVar1) - (ulonglong)*(byte *)(iVar13 + iVar2);
-        uVar10 = (ulonglong)((int)uVar11 >> 0x1f);
-        lVar4 = ((uVar11 ^ uVar10) - uVar10) + lVar4;
+      if (iVar6 < param_5) {
+        uVar2 = (int)((uint)param_1[iVar6] - (uint)param_3[iVar6]) >> 0x1f;
+        uVar3 = (((uint)param_1[iVar6] - (uint)param_3[iVar6] ^ uVar2) - uVar2) + uVar3;
       }
-      lVar3 = lVar3 + lVar6;
-      lVar4 = lVar16 + lVar9 + lVar4;
-      lVar7 = lVar7 + lVar8;
-      lVar17 = lVar17 + -1;
-    } while (lVar17 != 0);
+      param_1 = param_1 + param_2;
+      uVar2 = iVar7 + iVar4 + uVar3;
+      param_3 = param_3 + param_4;
+      lVar8 = lVar8 + -1;
+      uVar3 = uVar2;
+    } while (lVar8 != 0);
   }
-  uVar5 = __restgprlr_24(lVar4);
-  return uVar5;
+  return uVar2;
 }
 
 
@@ -189,384 +168,384 @@ uint vp8_sad4x4_c(uchar *param_1,int param_2,uchar *param_3,int param_4,int para
 
 // 82838648  vp8_sad16x16x3_c  (WebM_atvi_opt/vpx/vp8/encoder/sad_c.c:129)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 void vp8_sad16x16x3_c(uchar *param_1,int param_2,uchar *param_3,int param_4,uint *param_5)
 
 {
-  uchar *puVar1;
-  uint uVar2;
+  uint uVar1;
   
-  puVar1 = (uchar *)__savegprlr_26(param_1);
-  uVar2 = vp8_sad16x16_c(puVar1,param_2,param_3,param_4,0x7fffffff);
-  *param_5 = uVar2;
-  uVar2 = vp8_sad16x16_c(puVar1,param_2,param_3 + 1,param_4,0x7fffffff);
-  param_5[1] = uVar2;
-  uVar2 = vp8_sad16x16_c(puVar1,param_2,param_3 + 2,param_4,0x7fffffff);
-  param_5[2] = uVar2;
-  __restgprlr_26();
+  uVar1 = vp8_sad16x16_c(param_1,param_2,param_3,param_4,0x7fffffff);
+  *param_5 = uVar1;
+  uVar1 = vp8_sad16x16_c(param_1,param_2,param_3 + 1,param_4,0x7fffffff);
+  param_5[1] = uVar1;
+  uVar1 = vp8_sad16x16_c(param_1,param_2,param_3 + 2,param_4,0x7fffffff);
+  param_5[2] = uVar1;
   return;
 }
 
 
 // 828386B0  vp8_sad16x16x8_c  (WebM_atvi_opt/vpx/vp8/encoder/sad_c.c:142)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 void vp8_sad16x16x8_c(uchar *param_1,int param_2,uchar *param_3,int param_4,ushort *param_5)
 
 {
-  uchar *puVar1;
-  uint uVar2;
+  uint uVar1;
   
-  puVar1 = (uchar *)__savegprlr_26(param_1);
-  uVar2 = vp8_sad16x16_c(puVar1,param_2,param_3,param_4,0x7fffffff);
-  *param_5 = (ushort)uVar2;
-  uVar2 = vp8_sad16x16_c(puVar1,param_2,param_3 + 1,param_4,0x7fffffff);
-  param_5[1] = (ushort)uVar2;
-  uVar2 = vp8_sad16x16_c(puVar1,param_2,param_3 + 2,param_4,0x7fffffff);
-  param_5[2] = (ushort)uVar2;
-  uVar2 = vp8_sad16x16_c(puVar1,param_2,param_3 + 3,param_4,0x7fffffff);
-  param_5[3] = (ushort)uVar2;
-  uVar2 = vp8_sad16x16_c(puVar1,param_2,param_3 + 4,param_4,0x7fffffff);
-  param_5[4] = (ushort)uVar2;
-  uVar2 = vp8_sad16x16_c(puVar1,param_2,param_3 + 5,param_4,0x7fffffff);
-  param_5[5] = (ushort)uVar2;
-  uVar2 = vp8_sad16x16_c(puVar1,param_2,param_3 + 6,param_4,0x7fffffff);
-  param_5[6] = (ushort)uVar2;
-  uVar2 = vp8_sad16x16_c(puVar1,param_2,param_3 + 7,param_4,0x7fffffff);
-  param_5[7] = (ushort)uVar2;
-  __restgprlr_26();
+  uVar1 = vp8_sad16x16_c(param_1,param_2,param_3,param_4,0x7fffffff);
+  *param_5 = (ushort)uVar1;
+  uVar1 = vp8_sad16x16_c(param_1,param_2,param_3 + 1,param_4,0x7fffffff);
+  param_5[1] = (ushort)uVar1;
+  uVar1 = vp8_sad16x16_c(param_1,param_2,param_3 + 2,param_4,0x7fffffff);
+  param_5[2] = (ushort)uVar1;
+  uVar1 = vp8_sad16x16_c(param_1,param_2,param_3 + 3,param_4,0x7fffffff);
+  param_5[3] = (ushort)uVar1;
+  uVar1 = vp8_sad16x16_c(param_1,param_2,param_3 + 4,param_4,0x7fffffff);
+  param_5[4] = (ushort)uVar1;
+  uVar1 = vp8_sad16x16_c(param_1,param_2,param_3 + 5,param_4,0x7fffffff);
+  param_5[5] = (ushort)uVar1;
+  uVar1 = vp8_sad16x16_c(param_1,param_2,param_3 + 6,param_4,0x7fffffff);
+  param_5[6] = (ushort)uVar1;
+  uVar1 = vp8_sad16x16_c(param_1,param_2,param_3 + 7,param_4,0x7fffffff);
+  param_5[7] = (ushort)uVar1;
   return;
 }
 
 
 // 82838778  vp8_sad16x8x3_c  (WebM_atvi_opt/vpx/vp8/encoder/sad_c.c:160)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void vp8_sad16x8x3_c(uchar *param_1,int param_2,uchar *param_3,int param_4,uint *param_5)
 
 {
-  uchar *puVar1;
-  uint uVar2;
-  int iVar3;
+  uint uVar1;
+  int iVar2;
   
-  puVar1 = (uchar *)__savegprlr_27(param_1);
-  iVar3 = 0x10;
-  uVar2 = sad_mx_n_c(puVar1,param_2,param_3,param_4,0x10,8);
-  *param_5 = uVar2;
-  uVar2 = sad_mx_n_c(puVar1,param_2,param_3 + 1,param_4,iVar3,8);
-  param_5[1] = uVar2;
-  uVar2 = sad_mx_n_c(puVar1,param_2,param_3 + 2,param_4,iVar3,8);
-  param_5[2] = uVar2;
-  __restgprlr_27();
+  iVar2 = 0x10;
+  uVar1 = sad_mx_n_c(param_1,param_2,param_3,param_4,0x10,8);
+  *param_5 = uVar1;
+  uVar1 = sad_mx_n_c(param_1,param_2,param_3 + 1,param_4,iVar2,8);
+  param_5[1] = uVar1;
+  uVar1 = sad_mx_n_c(param_1,param_2,param_3 + 2,param_4,iVar2,8);
+  param_5[2] = uVar1;
   return;
 }
 
 
 // 828387D8  vp8_sad16x8x8_c  (WebM_atvi_opt/vpx/vp8/encoder/sad_c.c:173)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void vp8_sad16x8x8_c(uchar *param_1,int param_2,uchar *param_3,int param_4,ushort *param_5)
 
 {
-  uchar *puVar1;
-  uint uVar2;
-  int iVar3;
+  uint uVar1;
+  int iVar2;
   
-  puVar1 = (uchar *)__savegprlr_27(param_1);
-  iVar3 = 0x10;
-  uVar2 = sad_mx_n_c(puVar1,param_2,param_3,param_4,0x10,8);
-  *param_5 = (ushort)uVar2;
-  uVar2 = sad_mx_n_c(puVar1,param_2,param_3 + 1,param_4,iVar3,8);
-  param_5[1] = (ushort)uVar2;
-  uVar2 = sad_mx_n_c(puVar1,param_2,param_3 + 2,param_4,iVar3,8);
-  param_5[2] = (ushort)uVar2;
-  uVar2 = sad_mx_n_c(puVar1,param_2,param_3 + 3,param_4,iVar3,8);
-  param_5[3] = (ushort)uVar2;
-  uVar2 = sad_mx_n_c(puVar1,param_2,param_3 + 4,param_4,iVar3,8);
-  param_5[4] = (ushort)uVar2;
-  uVar2 = sad_mx_n_c(puVar1,param_2,param_3 + 5,param_4,iVar3,8);
-  param_5[5] = (ushort)uVar2;
-  uVar2 = sad_mx_n_c(puVar1,param_2,param_3 + 6,param_4,iVar3,8);
-  param_5[6] = (ushort)uVar2;
-  uVar2 = sad_mx_n_c(puVar1,param_2,param_3 + 7,param_4,iVar3,8);
-  param_5[7] = (ushort)uVar2;
-  __restgprlr_27();
+  iVar2 = 0x10;
+  uVar1 = sad_mx_n_c(param_1,param_2,param_3,param_4,0x10,8);
+  *param_5 = (ushort)uVar1;
+  uVar1 = sad_mx_n_c(param_1,param_2,param_3 + 1,param_4,iVar2,8);
+  param_5[1] = (ushort)uVar1;
+  uVar1 = sad_mx_n_c(param_1,param_2,param_3 + 2,param_4,iVar2,8);
+  param_5[2] = (ushort)uVar1;
+  uVar1 = sad_mx_n_c(param_1,param_2,param_3 + 3,param_4,iVar2,8);
+  param_5[3] = (ushort)uVar1;
+  uVar1 = sad_mx_n_c(param_1,param_2,param_3 + 4,param_4,iVar2,8);
+  param_5[4] = (ushort)uVar1;
+  uVar1 = sad_mx_n_c(param_1,param_2,param_3 + 5,param_4,iVar2,8);
+  param_5[5] = (ushort)uVar1;
+  uVar1 = sad_mx_n_c(param_1,param_2,param_3 + 6,param_4,iVar2,8);
+  param_5[6] = (ushort)uVar1;
+  uVar1 = sad_mx_n_c(param_1,param_2,param_3 + 7,param_4,iVar2,8);
+  param_5[7] = (ushort)uVar1;
   return;
 }
 
 
 // 828388A0  vp8_sad8x8x3_c  (WebM_atvi_opt/vpx/vp8/encoder/sad_c.c:191)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void vp8_sad8x8x3_c(uchar *param_1,int param_2,uchar *param_3,int param_4,uint *param_5)
 
 {
-  uchar *puVar1;
-  uint uVar2;
-  int iVar3;
+  uint uVar1;
+  int iVar2;
   
-  puVar1 = (uchar *)__savegprlr_27(param_1);
-  iVar3 = 8;
-  uVar2 = sad_mx_n_c(puVar1,param_2,param_3,param_4,8,8);
-  *param_5 = uVar2;
-  uVar2 = sad_mx_n_c(puVar1,param_2,param_3 + 1,param_4,iVar3,8);
-  param_5[1] = uVar2;
-  uVar2 = sad_mx_n_c(puVar1,param_2,param_3 + 2,param_4,iVar3,8);
-  param_5[2] = uVar2;
-  __restgprlr_27();
+  iVar2 = 8;
+  uVar1 = sad_mx_n_c(param_1,param_2,param_3,param_4,8,8);
+  *param_5 = uVar1;
+  uVar1 = sad_mx_n_c(param_1,param_2,param_3 + 1,param_4,iVar2,8);
+  param_5[1] = uVar1;
+  uVar1 = sad_mx_n_c(param_1,param_2,param_3 + 2,param_4,iVar2,8);
+  param_5[2] = uVar1;
   return;
 }
 
 
 // 82838900  vp8_sad8x8x8_c  (WebM_atvi_opt/vpx/vp8/encoder/sad_c.c:204)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void vp8_sad8x8x8_c(uchar *param_1,int param_2,uchar *param_3,int param_4,ushort *param_5)
 
 {
-  uchar *puVar1;
-  uint uVar2;
-  int iVar3;
+  uint uVar1;
+  int iVar2;
   
-  puVar1 = (uchar *)__savegprlr_27(param_1);
-  iVar3 = 8;
-  uVar2 = sad_mx_n_c(puVar1,param_2,param_3,param_4,8,8);
-  *param_5 = (ushort)uVar2;
-  uVar2 = sad_mx_n_c(puVar1,param_2,param_3 + 1,param_4,iVar3,8);
-  param_5[1] = (ushort)uVar2;
-  uVar2 = sad_mx_n_c(puVar1,param_2,param_3 + 2,param_4,iVar3,8);
-  param_5[2] = (ushort)uVar2;
-  uVar2 = sad_mx_n_c(puVar1,param_2,param_3 + 3,param_4,iVar3,8);
-  param_5[3] = (ushort)uVar2;
-  uVar2 = sad_mx_n_c(puVar1,param_2,param_3 + 4,param_4,iVar3,8);
-  param_5[4] = (ushort)uVar2;
-  uVar2 = sad_mx_n_c(puVar1,param_2,param_3 + 5,param_4,iVar3,8);
-  param_5[5] = (ushort)uVar2;
-  uVar2 = sad_mx_n_c(puVar1,param_2,param_3 + 6,param_4,iVar3,8);
-  param_5[6] = (ushort)uVar2;
-  uVar2 = sad_mx_n_c(puVar1,param_2,param_3 + 7,param_4,iVar3,8);
-  param_5[7] = (ushort)uVar2;
-  __restgprlr_27();
+  iVar2 = 8;
+  uVar1 = sad_mx_n_c(param_1,param_2,param_3,param_4,8,8);
+  *param_5 = (ushort)uVar1;
+  uVar1 = sad_mx_n_c(param_1,param_2,param_3 + 1,param_4,iVar2,8);
+  param_5[1] = (ushort)uVar1;
+  uVar1 = sad_mx_n_c(param_1,param_2,param_3 + 2,param_4,iVar2,8);
+  param_5[2] = (ushort)uVar1;
+  uVar1 = sad_mx_n_c(param_1,param_2,param_3 + 3,param_4,iVar2,8);
+  param_5[3] = (ushort)uVar1;
+  uVar1 = sad_mx_n_c(param_1,param_2,param_3 + 4,param_4,iVar2,8);
+  param_5[4] = (ushort)uVar1;
+  uVar1 = sad_mx_n_c(param_1,param_2,param_3 + 5,param_4,iVar2,8);
+  param_5[5] = (ushort)uVar1;
+  uVar1 = sad_mx_n_c(param_1,param_2,param_3 + 6,param_4,iVar2,8);
+  param_5[6] = (ushort)uVar1;
+  uVar1 = sad_mx_n_c(param_1,param_2,param_3 + 7,param_4,iVar2,8);
+  param_5[7] = (ushort)uVar1;
   return;
 }
 
 
 // 828389C8  vp8_sad8x16x3_c  (WebM_atvi_opt/vpx/vp8/encoder/sad_c.c:222)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void vp8_sad8x16x3_c(uchar *param_1,int param_2,uchar *param_3,int param_4,uint *param_5)
 
 {
-  uchar *puVar1;
-  uint uVar2;
-  int iVar3;
+  uint uVar1;
+  int iVar2;
   
-  puVar1 = (uchar *)__savegprlr_27(param_1);
-  iVar3 = 8;
-  uVar2 = sad_mx_n_c(puVar1,param_2,param_3,param_4,8,0x10);
-  *param_5 = uVar2;
-  uVar2 = sad_mx_n_c(puVar1,param_2,param_3 + 1,param_4,iVar3,0x10);
-  param_5[1] = uVar2;
-  uVar2 = sad_mx_n_c(puVar1,param_2,param_3 + 2,param_4,iVar3,0x10);
-  param_5[2] = uVar2;
-  __restgprlr_27();
+  iVar2 = 8;
+  uVar1 = sad_mx_n_c(param_1,param_2,param_3,param_4,8,0x10);
+  *param_5 = uVar1;
+  uVar1 = sad_mx_n_c(param_1,param_2,param_3 + 1,param_4,iVar2,0x10);
+  param_5[1] = uVar1;
+  uVar1 = sad_mx_n_c(param_1,param_2,param_3 + 2,param_4,iVar2,0x10);
+  param_5[2] = uVar1;
   return;
 }
 
 
 // 82838A28  vp8_sad8x16x8_c  (WebM_atvi_opt/vpx/vp8/encoder/sad_c.c:235)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void vp8_sad8x16x8_c(uchar *param_1,int param_2,uchar *param_3,int param_4,ushort *param_5)
 
 {
-  uchar *puVar1;
-  uint uVar2;
-  int iVar3;
+  uint uVar1;
+  int iVar2;
   
-  puVar1 = (uchar *)__savegprlr_27(param_1);
-  iVar3 = 8;
-  uVar2 = sad_mx_n_c(puVar1,param_2,param_3,param_4,8,0x10);
-  *param_5 = (ushort)uVar2;
-  uVar2 = sad_mx_n_c(puVar1,param_2,param_3 + 1,param_4,iVar3,0x10);
-  param_5[1] = (ushort)uVar2;
-  uVar2 = sad_mx_n_c(puVar1,param_2,param_3 + 2,param_4,iVar3,0x10);
-  param_5[2] = (ushort)uVar2;
-  uVar2 = sad_mx_n_c(puVar1,param_2,param_3 + 3,param_4,iVar3,0x10);
-  param_5[3] = (ushort)uVar2;
-  uVar2 = sad_mx_n_c(puVar1,param_2,param_3 + 4,param_4,iVar3,0x10);
-  param_5[4] = (ushort)uVar2;
-  uVar2 = sad_mx_n_c(puVar1,param_2,param_3 + 5,param_4,iVar3,0x10);
-  param_5[5] = (ushort)uVar2;
-  uVar2 = sad_mx_n_c(puVar1,param_2,param_3 + 6,param_4,iVar3,0x10);
-  param_5[6] = (ushort)uVar2;
-  uVar2 = sad_mx_n_c(puVar1,param_2,param_3 + 7,param_4,iVar3,0x10);
-  param_5[7] = (ushort)uVar2;
-  __restgprlr_27();
+  iVar2 = 8;
+  uVar1 = sad_mx_n_c(param_1,param_2,param_3,param_4,8,0x10);
+  *param_5 = (ushort)uVar1;
+  uVar1 = sad_mx_n_c(param_1,param_2,param_3 + 1,param_4,iVar2,0x10);
+  param_5[1] = (ushort)uVar1;
+  uVar1 = sad_mx_n_c(param_1,param_2,param_3 + 2,param_4,iVar2,0x10);
+  param_5[2] = (ushort)uVar1;
+  uVar1 = sad_mx_n_c(param_1,param_2,param_3 + 3,param_4,iVar2,0x10);
+  param_5[3] = (ushort)uVar1;
+  uVar1 = sad_mx_n_c(param_1,param_2,param_3 + 4,param_4,iVar2,0x10);
+  param_5[4] = (ushort)uVar1;
+  uVar1 = sad_mx_n_c(param_1,param_2,param_3 + 5,param_4,iVar2,0x10);
+  param_5[5] = (ushort)uVar1;
+  uVar1 = sad_mx_n_c(param_1,param_2,param_3 + 6,param_4,iVar2,0x10);
+  param_5[6] = (ushort)uVar1;
+  uVar1 = sad_mx_n_c(param_1,param_2,param_3 + 7,param_4,iVar2,0x10);
+  param_5[7] = (ushort)uVar1;
   return;
 }
 
 
 // 82838AF0  vp8_sad4x4x3_c  (WebM_atvi_opt/vpx/vp8/encoder/sad_c.c:253)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void vp8_sad4x4x3_c(uchar *param_1,int param_2,uchar *param_3,int param_4,uint *param_5)
 
 {
-  uchar *puVar1;
-  uint uVar2;
-  int iVar3;
+  uint uVar1;
+  int iVar2;
   
-  puVar1 = (uchar *)__savegprlr_27(param_1);
-  iVar3 = 4;
-  uVar2 = sad_mx_n_c(puVar1,param_2,param_3,param_4,4,4);
-  *param_5 = uVar2;
-  uVar2 = sad_mx_n_c(puVar1,param_2,param_3 + 1,param_4,iVar3,4);
-  param_5[1] = uVar2;
-  uVar2 = sad_mx_n_c(puVar1,param_2,param_3 + 2,param_4,iVar3,4);
-  param_5[2] = uVar2;
-  __restgprlr_27();
+  iVar2 = 4;
+  uVar1 = sad_mx_n_c(param_1,param_2,param_3,param_4,4,4);
+  *param_5 = uVar1;
+  uVar1 = sad_mx_n_c(param_1,param_2,param_3 + 1,param_4,iVar2,4);
+  param_5[1] = uVar1;
+  uVar1 = sad_mx_n_c(param_1,param_2,param_3 + 2,param_4,iVar2,4);
+  param_5[2] = uVar1;
   return;
 }
 
 
 // 82838B50  vp8_sad4x4x8_c  (WebM_atvi_opt/vpx/vp8/encoder/sad_c.c:266)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void vp8_sad4x4x8_c(uchar *param_1,int param_2,uchar *param_3,int param_4,ushort *param_5)
 
 {
-  uchar *puVar1;
-  uint uVar2;
-  int iVar3;
+  uint uVar1;
+  int iVar2;
   
-  puVar1 = (uchar *)__savegprlr_27(param_1);
-  iVar3 = 4;
-  uVar2 = sad_mx_n_c(puVar1,param_2,param_3,param_4,4,4);
-  *param_5 = (ushort)uVar2;
-  uVar2 = sad_mx_n_c(puVar1,param_2,param_3 + 1,param_4,iVar3,4);
-  param_5[1] = (ushort)uVar2;
-  uVar2 = sad_mx_n_c(puVar1,param_2,param_3 + 2,param_4,iVar3,4);
-  param_5[2] = (ushort)uVar2;
-  uVar2 = sad_mx_n_c(puVar1,param_2,param_3 + 3,param_4,iVar3,4);
-  param_5[3] = (ushort)uVar2;
-  uVar2 = sad_mx_n_c(puVar1,param_2,param_3 + 4,param_4,iVar3,4);
-  param_5[4] = (ushort)uVar2;
-  uVar2 = sad_mx_n_c(puVar1,param_2,param_3 + 5,param_4,iVar3,4);
-  param_5[5] = (ushort)uVar2;
-  uVar2 = sad_mx_n_c(puVar1,param_2,param_3 + 6,param_4,iVar3,4);
-  param_5[6] = (ushort)uVar2;
-  uVar2 = sad_mx_n_c(puVar1,param_2,param_3 + 7,param_4,iVar3,4);
-  param_5[7] = (ushort)uVar2;
-  __restgprlr_27();
+  iVar2 = 4;
+  uVar1 = sad_mx_n_c(param_1,param_2,param_3,param_4,4,4);
+  *param_5 = (ushort)uVar1;
+  uVar1 = sad_mx_n_c(param_1,param_2,param_3 + 1,param_4,iVar2,4);
+  param_5[1] = (ushort)uVar1;
+  uVar1 = sad_mx_n_c(param_1,param_2,param_3 + 2,param_4,iVar2,4);
+  param_5[2] = (ushort)uVar1;
+  uVar1 = sad_mx_n_c(param_1,param_2,param_3 + 3,param_4,iVar2,4);
+  param_5[3] = (ushort)uVar1;
+  uVar1 = sad_mx_n_c(param_1,param_2,param_3 + 4,param_4,iVar2,4);
+  param_5[4] = (ushort)uVar1;
+  uVar1 = sad_mx_n_c(param_1,param_2,param_3 + 5,param_4,iVar2,4);
+  param_5[5] = (ushort)uVar1;
+  uVar1 = sad_mx_n_c(param_1,param_2,param_3 + 6,param_4,iVar2,4);
+  param_5[6] = (ushort)uVar1;
+  uVar1 = sad_mx_n_c(param_1,param_2,param_3 + 7,param_4,iVar2,4);
+  param_5[7] = (ushort)uVar1;
   return;
 }
 
 
 // 82838C18  vp8_sad16x16x4d_c  (WebM_atvi_opt/vpx/vp8/encoder/sad_c.c:284)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 void vp8_sad16x16x4d_c(uchar *param_1,int param_2,uchar **param_3,int param_4,uint *param_5)
 
 {
-  uchar *puVar1;
-  uint uVar2;
+  uint uVar1;
   
-  puVar1 = (uchar *)__savegprlr_26(param_1);
-  uVar2 = vp8_sad16x16_c(puVar1,param_2,*param_3,param_4,0x7fffffff);
-  *param_5 = uVar2;
-  uVar2 = vp8_sad16x16_c(puVar1,param_2,param_3[1],param_4,0x7fffffff);
-  param_5[1] = uVar2;
-  uVar2 = vp8_sad16x16_c(puVar1,param_2,param_3[2],param_4,0x7fffffff);
-  param_5[2] = uVar2;
-  uVar2 = vp8_sad16x16_c(puVar1,param_2,param_3[3],param_4,0x7fffffff);
-  param_5[3] = uVar2;
-  __restgprlr_26();
+  uVar1 = vp8_sad16x16_c(param_1,param_2,*param_3,param_4,0x7fffffff);
+  *param_5 = uVar1;
+  uVar1 = vp8_sad16x16_c(param_1,param_2,param_3[1],param_4,0x7fffffff);
+  param_5[1] = uVar1;
+  uVar1 = vp8_sad16x16_c(param_1,param_2,param_3[2],param_4,0x7fffffff);
+  param_5[2] = uVar1;
+  uVar1 = vp8_sad16x16_c(param_1,param_2,param_3[3],param_4,0x7fffffff);
+  param_5[3] = uVar1;
   return;
 }
 
 
 // 82838C98  vp8_sad16x8x4d_c  (WebM_atvi_opt/vpx/vp8/encoder/sad_c.c:298)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void vp8_sad16x8x4d_c(uchar *param_1,int param_2,uchar **param_3,int param_4,uint *param_5)
 
 {
-  uchar *puVar1;
-  uint uVar2;
-  int iVar3;
+  uint uVar1;
+  int iVar2;
   
-  puVar1 = (uchar *)__savegprlr_27(param_1);
-  iVar3 = 0x10;
-  uVar2 = sad_mx_n_c(puVar1,param_2,*param_3,param_4,0x10,8);
-  *param_5 = uVar2;
-  uVar2 = sad_mx_n_c(puVar1,param_2,param_3[1],param_4,iVar3,8);
-  param_5[1] = uVar2;
-  uVar2 = sad_mx_n_c(puVar1,param_2,param_3[2],param_4,iVar3,8);
-  param_5[2] = uVar2;
-  uVar2 = sad_mx_n_c(puVar1,param_2,param_3[3],param_4,iVar3,8);
-  param_5[3] = uVar2;
-  __restgprlr_27();
+  iVar2 = 0x10;
+  uVar1 = sad_mx_n_c(param_1,param_2,*param_3,param_4,0x10,8);
+  *param_5 = uVar1;
+  uVar1 = sad_mx_n_c(param_1,param_2,param_3[1],param_4,iVar2,8);
+  param_5[1] = uVar1;
+  uVar1 = sad_mx_n_c(param_1,param_2,param_3[2],param_4,iVar2,8);
+  param_5[2] = uVar1;
+  uVar1 = sad_mx_n_c(param_1,param_2,param_3[3],param_4,iVar2,8);
+  param_5[3] = uVar1;
   return;
 }
 
 
 // 82838D10  vp8_sad8x8x4d_c  (WebM_atvi_opt/vpx/vp8/encoder/sad_c.c:312)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void vp8_sad8x8x4d_c(uchar *param_1,int param_2,uchar **param_3,int param_4,uint *param_5)
 
 {
-  uchar *puVar1;
-  uint uVar2;
-  int iVar3;
+  uint uVar1;
+  int iVar2;
   
-  puVar1 = (uchar *)__savegprlr_27(param_1);
-  iVar3 = 8;
-  uVar2 = sad_mx_n_c(puVar1,param_2,*param_3,param_4,8,8);
-  *param_5 = uVar2;
-  uVar2 = sad_mx_n_c(puVar1,param_2,param_3[1],param_4,iVar3,8);
-  param_5[1] = uVar2;
-  uVar2 = sad_mx_n_c(puVar1,param_2,param_3[2],param_4,iVar3,8);
-  param_5[2] = uVar2;
-  uVar2 = sad_mx_n_c(puVar1,param_2,param_3[3],param_4,iVar3,8);
-  param_5[3] = uVar2;
-  __restgprlr_27();
+  iVar2 = 8;
+  uVar1 = sad_mx_n_c(param_1,param_2,*param_3,param_4,8,8);
+  *param_5 = uVar1;
+  uVar1 = sad_mx_n_c(param_1,param_2,param_3[1],param_4,iVar2,8);
+  param_5[1] = uVar1;
+  uVar1 = sad_mx_n_c(param_1,param_2,param_3[2],param_4,iVar2,8);
+  param_5[2] = uVar1;
+  uVar1 = sad_mx_n_c(param_1,param_2,param_3[3],param_4,iVar2,8);
+  param_5[3] = uVar1;
   return;
 }
 
 
 // 82838D88  vp8_sad8x16x4d_c  (WebM_atvi_opt/vpx/vp8/encoder/sad_c.c:326)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void vp8_sad8x16x4d_c(uchar *param_1,int param_2,uchar **param_3,int param_4,uint *param_5)
 
 {
-  uchar *puVar1;
-  uint uVar2;
-  int iVar3;
+  uint uVar1;
+  int iVar2;
   
-  puVar1 = (uchar *)__savegprlr_27(param_1);
-  iVar3 = 8;
-  uVar2 = sad_mx_n_c(puVar1,param_2,*param_3,param_4,8,0x10);
-  *param_5 = uVar2;
-  uVar2 = sad_mx_n_c(puVar1,param_2,param_3[1],param_4,iVar3,0x10);
-  param_5[1] = uVar2;
-  uVar2 = sad_mx_n_c(puVar1,param_2,param_3[2],param_4,iVar3,0x10);
-  param_5[2] = uVar2;
-  uVar2 = sad_mx_n_c(puVar1,param_2,param_3[3],param_4,iVar3,0x10);
-  param_5[3] = uVar2;
-  __restgprlr_27();
+  iVar2 = 8;
+  uVar1 = sad_mx_n_c(param_1,param_2,*param_3,param_4,8,0x10);
+  *param_5 = uVar1;
+  uVar1 = sad_mx_n_c(param_1,param_2,param_3[1],param_4,iVar2,0x10);
+  param_5[1] = uVar1;
+  uVar1 = sad_mx_n_c(param_1,param_2,param_3[2],param_4,iVar2,0x10);
+  param_5[2] = uVar1;
+  uVar1 = sad_mx_n_c(param_1,param_2,param_3[3],param_4,iVar2,0x10);
+  param_5[3] = uVar1;
   return;
 }
 
 
 // 82838E00  vp8_sad4x4x4d_c  (WebM_atvi_opt/vpx/vp8/encoder/sad_c.c:340)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void vp8_sad4x4x4d_c(uchar *param_1,int param_2,uchar **param_3,int param_4,uint *param_5)
 
 {
-  uchar *puVar1;
-  uint uVar2;
-  int iVar3;
+  uint uVar1;
+  int iVar2;
   
-  puVar1 = (uchar *)__savegprlr_27(param_1);
-  iVar3 = 4;
-  uVar2 = sad_mx_n_c(puVar1,param_2,*param_3,param_4,4,4);
-  *param_5 = uVar2;
-  uVar2 = sad_mx_n_c(puVar1,param_2,param_3[1],param_4,iVar3,4);
-  param_5[1] = uVar2;
-  uVar2 = sad_mx_n_c(puVar1,param_2,param_3[2],param_4,iVar3,4);
-  param_5[2] = uVar2;
-  uVar2 = sad_mx_n_c(puVar1,param_2,param_3[3],param_4,iVar3,4);
-  param_5[3] = uVar2;
-  __restgprlr_27();
+  iVar2 = 4;
+  uVar1 = sad_mx_n_c(param_1,param_2,*param_3,param_4,4,4);
+  *param_5 = uVar1;
+  uVar1 = sad_mx_n_c(param_1,param_2,param_3[1],param_4,iVar2,4);
+  param_5[1] = uVar1;
+  uVar1 = sad_mx_n_c(param_1,param_2,param_3[2],param_4,iVar2,4);
+  param_5[2] = uVar1;
+  uVar1 = sad_mx_n_c(param_1,param_2,param_3[3],param_4,iVar2,4);
+  param_5[3] = uVar1;
   return;
 }
 

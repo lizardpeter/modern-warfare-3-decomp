@@ -2,650 +2,602 @@
 
 // 826EEDA0  dwFetchPublisherFile  (DW/dwStorage.cpp:21)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 int dwFetchPublisherFile(overlappedTask *param_1,dwFileTask *param_2)
 
 {
-  overlappedTask *poVar1;
-  bdStorage *pbVar2;
-  int iVar3;
-  ulonglong uVar4;
-  int *piVar5;
+  uint uVar1;
+  bdFileData *pbVar2;
+  bdStorage *pbVar3;
   bdReference<bdRemoteTask> local_80 [4];
   char acStack_70 [112];
   
-  uVar4 = (ulonglong)(int)param_2;
-  poVar1 = (overlappedTask *)__savegprlr_28(param_1);
-  if (poVar1 == (overlappedTask *)0x0) {
+  if (param_1 == (overlappedTask *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DW\\dwStorage.cpp",0x16,0,"%s")
     ;
   }
-  if ((uVar4 & 0xffffffff) == 0) {
+  if (param_2 == (dwFileTask *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DW\\dwStorage.cpp",0x17,0,"%s")
     ;
   }
-  piVar5 = (int *)uVar4;
-  if (*piVar5 == 0) {
+  if (param_2->m_filename == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DW\\dwStorage.cpp",0x18,0,"%s")
     ;
   }
-  if (piVar5[0x36] == 0) {
+  if (param_2->m_buffer == (void *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DW\\dwStorage.cpp",0x19,0,"%s")
     ;
   }
-  pbVar2 = dwGetStorage((uint)poVar1->controllerIndex);
-  if (pbVar2 == (bdStorage *)0x0) {
+  pbVar3 = dwGetStorage((uint)param_1->controllerIndex);
+  if (pbVar3 == (bdStorage *)0x0) {
     Com_Printf(0x10,"%s()\n");
     dwLobbyErrorCodeToString(BD_NOT_CONNECTED,acStack_70,0x40);
     Com_Printf(0x10,
                "\t Task start requested while not connected! DW storage task type %d errorCode %i - \'%s\'\n"
               );
-    TaskManager_ClearTask(poVar1);
-    iVar3 = __restgprlr_28(0);
-    return iVar3;
+    TaskManager_ClearTask(param_1);
+    return 0;
   }
-  piVar5[4] = 0;
-  piVar5[0x33] = piVar5[0x36];
-  piVar5[0x34] = piVar5[0x35];
-  bdStorage::getPublisherFile((bdStorage *)local_80,(char *)pbVar2,(bdFileData *)*piVar5);
+  uVar1 = param_2->m_bufferSize;
+  param_2->m_fileSize = 0;
+  pbVar2 = (bdFileData *)param_2->m_filename;
+  (param_2->m_dataResult).m_fileData = param_2->m_buffer;
+  (param_2->m_dataResult).m_fileSize = uVar1;
+  bdStorage::getPublisherFile((bdStorage *)local_80,(char *)pbVar3,pbVar2);
   if (local_80[0].m_ptr == (bdRemoteTask *)0x0) {
     Com_Printf(0x10,"%s()\n");
     dwLobbyErrorCodeToString(BD_START_TASK_FAILED,acStack_70,0x40);
     Com_PrintError(0x10,"\t DW storage task type %d errorCode %i - \'%s\'\n");
-    TaskManager_ClearTask(poVar1);
+    TaskManager_ClearTask(param_1);
     bdReference<bdRemoteTask>::~bdReference<bdRemoteTask>(local_80);
-    iVar3 = __restgprlr_28(0);
-    return iVar3;
+    return 0;
   }
-  bdReference<bdRemoteTask>::operator=(&(poVar1->u).remoteTask,local_80);
+  bdReference<bdRemoteTask>::operator=(&(param_1->u).remoteTask,local_80);
   bdReference<bdRemoteTask>::~bdReference<bdRemoteTask>(local_80);
-  iVar3 = __restgprlr_28(1);
-  return iVar3;
+  return 1;
 }
 
 
 // 826EEF80  dwFetchUserFile  (DW/dwStorage.cpp:51)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 int dwFetchUserFile(overlappedTask *param_1,dwFileTask *param_2)
 
 {
-  overlappedTask *poVar1;
-  bdStorage *pbVar2;
-  int iVar3;
+  uint uVar1;
+  bdFileData *pbVar2;
+  bdStorage *pbVar3;
   bool bVar4;
-  ulonglong uVar5;
-  int *piVar6;
   bdReference<bdRemoteTask> local_80 [2];
   ulong64 uStack_78;
   char acStack_70 [112];
   
-  uVar5 = (ulonglong)(int)param_2;
-  poVar1 = (overlappedTask *)__savegprlr_28(param_1);
-  if (poVar1 == (overlappedTask *)0x0) {
+  if (param_1 == (overlappedTask *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DW\\dwStorage.cpp",0x34,0,"%s")
     ;
   }
-  if ((uVar5 & 0xffffffff) == 0) {
+  if (param_2 == (dwFileTask *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DW\\dwStorage.cpp",0x35,0,"%s")
     ;
   }
-  piVar6 = (int *)uVar5;
-  if (*piVar6 == 0) {
+  if (param_2->m_filename == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DW\\dwStorage.cpp",0x36,0,"%s")
     ;
   }
-  if (piVar6[0x36] == 0) {
+  if (param_2->m_buffer == (void *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DW\\dwStorage.cpp",0x37,0,"%s")
     ;
   }
-  pbVar2 = dwGetStorage((uint)poVar1->controllerIndex);
+  pbVar3 = dwGetStorage((uint)param_1->controllerIndex);
+  if (pbVar3 == (bdStorage *)0x0) {
+    Com_Printf(0x10,"%s()\n");
+    dwLobbyErrorCodeToString(BD_NOT_CONNECTED,acStack_70,0x40);
+    Com_Printf(0x10,
+               "\t Task start requested while not connected! DW storage task type %d errorCode %i - \'%s\'\n"
+              );
+    TaskManager_ClearTask(param_1);
+    return 0;
+  }
+  bVar4 = dwGetOnlineUserID((uint)param_1->controllerIndex,&uStack_78);
+  if (!bVar4) {
+    Com_Printf(0x10,"%s()\n");
+    dwLobbyErrorCodeToString(BD_START_TASK_FAILED,acStack_70,0x40);
+    Com_PrintError(0x10,"\t DW storage task type %d errorCode %i - \'%s\'\n");
+    TaskManager_ClearTask(param_1);
+    return 0;
+  }
+  uVar1 = param_2->m_bufferSize;
+  param_2->m_fileID = 0;
+  param_2->m_fileSize = 0;
+  pbVar2 = (bdFileData *)param_2->m_filename;
+  (param_2->m_dataResult).m_fileData = param_2->m_buffer;
+  (param_2->m_dataResult).m_fileSize = uVar1;
+  bdStorage::getFile((bdStorage *)local_80,(char *)pbVar3,pbVar2,(longlong)(int)param_2 + 200);
+  if (local_80[0].m_ptr == (bdRemoteTask *)0x0) {
+    dwStorageHandleTaskError(param_1,BD_START_TASK_FAILED);
+    bdReference<bdRemoteTask>::~bdReference<bdRemoteTask>(local_80);
+    return 0;
+  }
+  bdReference<bdRemoteTask>::operator=(&(param_1->u).remoteTask,local_80);
+  bdReference<bdRemoteTask>::~bdReference<bdRemoteTask>(local_80);
+  return 1;
+}
+
+
+// 826EF198  dwFetchFileComplete  (DW/dwStorage.cpp:89)
+
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
+taskCompleteResults dwFetchFileComplete(overlappedTask *param_1,dwFileTask *param_2)
+
+{
+  bool bVar1;
+  bdStorage *pbVar2;
+  bdStatus bVar3;
+  bdLobbyErrorCode bVar4;
+  uint uVar5;
+  taskCompleteResults tVar6;
+  char acStack_70 [112];
+  
+  if (param_1 == (overlappedTask *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DW\\dwStorage.cpp",0x5a,0,"%s")
+    ;
+  }
+  if (param_2 == (dwFileTask *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DW\\dwStorage.cpp",0x5b,0,"%s")
+    ;
+  }
+  if ((param_1->u).remoteTask.m_ptr == (bdRemoteTask *)0x0) {
+    Com_Printf(0x10,"Failed to retrieve fetch file status\n");
+    Com_Printf(0x10,"%s()\n");
+    dwLobbyErrorCodeToString(BD_HANDLE_TASK_FAILED,acStack_70,0x40);
+    Com_PrintError(0x10,"\t DW storage task type %d errorCode %i - \'%s\'\n");
+    TaskManager_ClearTask(param_1);
+    return TASK_ERROR;
+  }
+  pbVar2 = dwGetStorage((uint)param_1->controllerIndex);
   if (pbVar2 == (bdStorage *)0x0) {
     Com_Printf(0x10,"%s()\n");
     dwLobbyErrorCodeToString(BD_NOT_CONNECTED,acStack_70,0x40);
     Com_Printf(0x10,
                "\t Task start requested while not connected! DW storage task type %d errorCode %i - \'%s\'\n"
               );
-    TaskManager_ClearTask(poVar1);
-    iVar3 = __restgprlr_28(0);
-    return iVar3;
+    TaskManager_ClearTask(param_1);
+    return TASK_ERROR;
   }
-  bVar4 = dwGetOnlineUserID((uint)poVar1->controllerIndex,&uStack_78);
-  if (!bVar4) {
-    Com_Printf(0x10,"%s()\n");
-    dwLobbyErrorCodeToString(BD_START_TASK_FAILED,acStack_70,0x40);
-    Com_PrintError(0x10,"\t DW storage task type %d errorCode %i - \'%s\'\n");
-    TaskManager_ClearTask(poVar1);
-    iVar3 = __restgprlr_28(0);
-    return iVar3;
+  dwLobbyPump((uint)param_1->controllerIndex);
+  bVar3 = (**(code **)(((param_1->u).remoteTask.m_ptr)->_padding_ + 4))();
+  bVar4 = bdRemoteTask::getErrorCode((param_1->u).remoteTask.m_ptr);
+  bVar1 = false;
+  param_2->m_error = bVar4;
+  if ((bVar3 == BD_DONE) &&
+     (uVar5 = bdRemoteTask::getNumResults((param_1->u).remoteTask.m_ptr), uVar5 == 1)) {
+    bVar1 = true;
+    param_2->m_fileSize = (param_2->m_dataResult).m_fileSize;
   }
-  piVar6[2] = 0;
-  piVar6[3] = 0;
-  piVar6[4] = 0;
-  piVar6[0x33] = piVar6[0x36];
-  piVar6[0x34] = piVar6[0x35];
-  bdStorage::getFile((bdStorage *)local_80,(char *)pbVar2,(bdFileData *)*piVar6,uVar5 + 200);
-  if (local_80[0].m_ptr == (bdRemoteTask *)0x0) {
-    dwStorageHandleTaskError(poVar1,BD_START_TASK_FAILED);
-    bdReference<bdRemoteTask>::~bdReference<bdRemoteTask>(local_80);
-    iVar3 = __restgprlr_28(0);
-    return iVar3;
+  if ((bVar4 != BD_NO_ERROR) && (bVar4 != BD_NO_FILE)) {
+    tVar6 = dwStorageHandleTaskError(param_1,bVar4);
+    return tVar6;
   }
-  bdReference<bdRemoteTask>::operator=(&(poVar1->u).remoteTask,local_80);
-  bdReference<bdRemoteTask>::~bdReference<bdRemoteTask>(local_80);
-  iVar3 = __restgprlr_28(1);
-  return iVar3;
-}
-
-
-// 826EF198  dwFetchFileComplete  (DW/dwStorage.cpp:89)
-
-taskCompleteResults dwFetchFileComplete(overlappedTask *param_1,dwFileTask *param_2)
-
-{
-  int iVar1;
-  bool bVar2;
-  overlappedTask *poVar3;
-  taskCompleteResults tVar4;
-  bdStorage *pbVar5;
-  bdStatus bVar6;
-  bdLobbyErrorCode bVar7;
-  uint uVar8;
-  ulonglong uVar9;
-  char acStack_70 [112];
-  
-  uVar9 = (ulonglong)(int)param_2;
-  poVar3 = (overlappedTask *)__savegprlr_27(param_1);
-  if (poVar3 == (overlappedTask *)0x0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DW\\dwStorage.cpp",0x5a,0,"%s")
-    ;
+  tVar6 = dwTaskStatusConvert(bVar3,bVar4);
+  if ((bVar3 == BD_DONE) && (!bVar1)) {
+    tVar6 = TASK_ERROR;
   }
-  if ((uVar9 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DW\\dwStorage.cpp",0x5b,0,"%s")
-    ;
-  }
-  if ((poVar3->u).remoteTask.m_ptr == (bdRemoteTask *)0x0) {
-    Com_Printf(0x10,"Failed to retrieve fetch file status\n");
-    Com_Printf(0x10,"%s()\n");
-    dwLobbyErrorCodeToString(BD_HANDLE_TASK_FAILED,acStack_70,0x40);
-    Com_PrintError(0x10,"\t DW storage task type %d errorCode %i - \'%s\'\n");
-    TaskManager_ClearTask(poVar3);
-    tVar4 = __restgprlr_27(2);
-    return tVar4;
-  }
-  pbVar5 = dwGetStorage((uint)poVar3->controllerIndex);
-  if (pbVar5 == (bdStorage *)0x0) {
-    Com_Printf(0x10,"%s()\n");
-    dwLobbyErrorCodeToString(BD_NOT_CONNECTED,acStack_70,0x40);
-    Com_Printf(0x10,
-               "\t Task start requested while not connected! DW storage task type %d errorCode %i - \'%s\'\n"
-              );
-    TaskManager_ClearTask(poVar3);
-    tVar4 = __restgprlr_27(2);
-    return tVar4;
-  }
-  dwLobbyPump((uint)poVar3->controllerIndex);
-  bVar6 = (**(code **)(((poVar3->u).remoteTask.m_ptr)->_padding_ + 4))();
-  bVar7 = bdRemoteTask::getErrorCode((poVar3->u).remoteTask.m_ptr);
-  bVar2 = false;
-  iVar1 = (int)uVar9;
-  *(bdLobbyErrorCode *)(iVar1 + 4) = bVar7;
-  if ((bVar6 == BD_DONE) &&
-     (uVar8 = bdRemoteTask::getNumResults((poVar3->u).remoteTask.m_ptr), uVar8 == 1)) {
-    bVar2 = true;
-    *(undefined4 *)(iVar1 + 0x10) = *(undefined4 *)(iVar1 + 0xd0);
-  }
-  if ((bVar7 != BD_NO_ERROR) && (bVar7 != BD_NO_FILE)) {
-    tVar4 = dwStorageHandleTaskError(poVar3,bVar7);
-    tVar4 = __restgprlr_27(tVar4);
-    return tVar4;
-  }
-  tVar4 = dwTaskStatusConvert(bVar6,bVar7);
-  if ((bVar6 == BD_DONE) && (!bVar2)) {
-    tVar4 = TASK_ERROR;
-  }
-  tVar4 = __restgprlr_27(tVar4);
-  return tVar4;
+  return tVar6;
 }
 
 
 // 826EF390  dwCreateFile  (DW/dwStorage.cpp:136)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 int dwCreateFile(overlappedTask *param_1,dwFileTask *param_2,void *param_3,uint param_4)
 
 {
   bdRemoteTask *pbVar1;
-  overlappedTask *poVar2;
-  bdStorage *pbVar3;
-  int iVar4;
-  bdReference<bdRemoteTask> bVar5;
-  ulonglong uVar6;
-  int *piVar7;
+  bdStorage *pbVar2;
+  bdReference<bdRemoteTask> bVar3;
   bdReference<bdRemoteTask> abStack_90 [4];
   char acStack_80 [128];
   
-  uVar6 = (ulonglong)(int)param_2;
-  poVar2 = (overlappedTask *)__savegprlr_26(param_1);
-  if (poVar2 == (overlappedTask *)0x0) {
+  if (param_1 == (overlappedTask *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DW\\dwStorage.cpp",0x89,0,"%s")
     ;
   }
-  if ((uVar6 & 0xffffffff) == 0) {
+  if (param_2 == (dwFileTask *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DW\\dwStorage.cpp",0x8a,0,"%s")
     ;
   }
-  piVar7 = (int *)uVar6;
-  if (*piVar7 == 0) {
+  if (param_2->m_filename == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DW\\dwStorage.cpp",0x8b,0,"%s")
     ;
   }
-  if (piVar7[0x36] == 0) {
+  if (param_2->m_buffer == (void *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DW\\dwStorage.cpp",0x8c,0,"%s")
     ;
   }
-  pbVar3 = dwGetStorage((uint)poVar2->controllerIndex);
-  if (pbVar3 == (bdStorage *)0x0) {
+  pbVar2 = dwGetStorage((uint)param_1->controllerIndex);
+  if (pbVar2 == (bdStorage *)0x0) {
     Com_Printf(0x10,"%s()\n");
     dwLobbyErrorCodeToString(BD_NOT_CONNECTED,acStack_80,0x40);
     Com_Printf(0x10,
                "\t Task start requested while not connected! DW storage task type %d errorCode %i - \'%s\'\n"
               );
-    TaskManager_ClearTask(poVar2);
-    iVar4 = __restgprlr_26(0);
-    return iVar4;
+    TaskManager_ClearTask(param_1);
+    return 0;
   }
   Com_Printf(0x10,"Starting creation of file: %s.\n");
-  bVar5 = bdStorage::uploadFile
-                    ((bdStorage *)abStack_90,(char *)pbVar3,(void *)*piVar7,(uint)param_3,param_4,1,
-                     (bdFileInfo *)0x0);
-  pbVar1 = (bdRemoteTask *)(bVar5.m_ptr)->_padding_;
+  bVar3 = bdStorage::uploadFile
+                    ((bdStorage *)abStack_90,(char *)pbVar2,param_2->m_filename,(uint)param_3,
+                     param_4,1,(bdFileInfo *)0x0);
+  pbVar1 = (bdRemoteTask *)(bVar3.m_ptr)->_padding_;
   bdReference<bdRemoteTask>::~bdReference<bdRemoteTask>(abStack_90);
   if (pbVar1 == (bdRemoteTask *)0x0) {
     Com_Printf(0x10,"%s()\n");
     dwLobbyErrorCodeToString(BD_START_TASK_FAILED,acStack_80,0x40);
     Com_PrintError(0x10,"\t DW storage task type %d errorCode %i - \'%s\'\n");
-    TaskManager_ClearTask(poVar2);
-    iVar4 = __restgprlr_26(0);
-    return iVar4;
+    TaskManager_ClearTask(param_1);
+    return 0;
   }
-  bdReference<bdRemoteTask>::operator=(&(poVar2->u).remoteTask,pbVar1);
-  iVar4 = __restgprlr_26(1);
-  return iVar4;
+  bdReference<bdRemoteTask>::operator=(&(param_1->u).remoteTask,pbVar1);
+  return 1;
 }
 
 
 // 826EF580  dwCreateFileComplete  (DW/dwStorage.cpp:167)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 taskCompleteResults dwCreateFileComplete(overlappedTask *param_1,dwFileTask *param_2)
 
 {
   uint uVar1;
-  overlappedTask *poVar2;
-  taskCompleteResults tVar3;
-  bdStorage *pbVar4;
-  bdStatus bVar5;
-  bdLobbyErrorCode bVar6;
+  bdStorage *pbVar2;
+  bdStatus bVar3;
+  bdLobbyErrorCode bVar4;
+  taskCompleteResults tVar5;
   char acStack_60 [96];
   
-  poVar2 = (overlappedTask *)__savegprlr_29(param_1);
-  if (poVar2 == (overlappedTask *)0x0) {
+  if (param_1 == (overlappedTask *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DW\\dwStorage.cpp",0xa8,0,"%s")
     ;
   }
-  if ((poVar2->u).remoteTask.m_ptr == (bdRemoteTask *)0x0) {
+  if ((param_1->u).remoteTask.m_ptr == (bdRemoteTask *)0x0) {
     Com_Printf(0x10,"Failed to retrieve create file status\n");
     Com_Printf(0x10,"%s()\n");
     dwLobbyErrorCodeToString(BD_HANDLE_TASK_FAILED,acStack_60,0x40);
     Com_PrintError(0x10,"\t DW storage task type %d errorCode %i - \'%s\'\n");
-    TaskManager_ClearTask(poVar2);
-    tVar3 = __restgprlr_29(2);
-    return tVar3;
+    TaskManager_ClearTask(param_1);
+    return TASK_ERROR;
   }
-  pbVar4 = dwGetStorage((uint)poVar2->controllerIndex);
-  if (pbVar4 == (bdStorage *)0x0) {
+  pbVar2 = dwGetStorage((uint)param_1->controllerIndex);
+  if (pbVar2 == (bdStorage *)0x0) {
     Com_Printf(0x10,"%s()\n");
     dwLobbyErrorCodeToString(BD_NOT_CONNECTED,acStack_60,0x40);
     Com_Printf(0x10,
                "\t Task start requested while not connected! DW storage task type %d errorCode %i - \'%s\'\n"
               );
-    TaskManager_ClearTask(poVar2);
-    tVar3 = __restgprlr_29(2);
-    return tVar3;
+    TaskManager_ClearTask(param_1);
+    return TASK_ERROR;
   }
-  dwLobbyPump((uint)poVar2->controllerIndex);
-  bVar5 = (**(code **)(((poVar2->u).remoteTask.m_ptr)->_padding_ + 4))();
-  bVar6 = bdRemoteTask::getErrorCode((poVar2->u).remoteTask.m_ptr);
-  param_2->m_error = bVar6;
-  if (bVar5 == BD_DONE) {
+  dwLobbyPump((uint)param_1->controllerIndex);
+  bVar3 = (**(code **)(((param_1->u).remoteTask.m_ptr)->_padding_ + 4))();
+  bVar4 = bdRemoteTask::getErrorCode((param_1->u).remoteTask.m_ptr);
+  param_2->m_error = bVar4;
+  if (bVar3 == BD_DONE) {
     uVar1 = (param_2->m_infoResult).m_fileSize;
     param_2->m_fileID = (param_2->m_infoResult).m_fileID;
     param_2->m_fileSize = uVar1;
   }
-  if (bVar6 != BD_NO_ERROR) {
-    tVar3 = dwStorageHandleTaskError(poVar2,bVar6);
-    tVar3 = __restgprlr_29(tVar3);
-    return tVar3;
+  if (bVar4 != BD_NO_ERROR) {
+    tVar5 = dwStorageHandleTaskError(param_1,bVar4);
+    return tVar5;
   }
-  tVar3 = dwTaskStatusConvert(bVar5,BD_NO_ERROR);
-  tVar3 = __restgprlr_29(tVar3);
-  return tVar3;
+  tVar5 = dwTaskStatusConvert(bVar3,BD_NO_ERROR);
+  return tVar5;
 }
 
 
 // 826EF718  dwUpdateFile  (DW/dwStorage.cpp:206)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 int dwUpdateFile(overlappedTask *param_1,dwFileTask *param_2,void *param_3,uint param_4)
 
 {
   bdRemoteTask *pbVar1;
-  overlappedTask *poVar2;
-  bdStorage *pbVar3;
-  int iVar4;
-  bdReference<bdRemoteTask> bVar5;
+  bdStorage *pbVar2;
+  bdReference<bdRemoteTask> bVar3;
   bdReference<bdRemoteTask> *this;
-  ulonglong uVar6;
-  int *piVar7;
   bdReference<bdRemoteTask> bStack_90;
   bdReference<bdRemoteTask> abStack_8c [3];
   char acStack_80 [128];
   
-  uVar6 = (ulonglong)(int)param_2;
-  poVar2 = (overlappedTask *)__savegprlr_26(param_1);
-  if (poVar2 == (overlappedTask *)0x0) {
+  if (param_1 == (overlappedTask *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DW\\dwStorage.cpp",0xcf,0,"%s")
     ;
   }
-  if ((uVar6 & 0xffffffff) == 0) {
+  if (param_2 == (dwFileTask *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DW\\dwStorage.cpp",0xd0,0,"%s")
     ;
   }
-  piVar7 = (int *)uVar6;
-  if (*piVar7 == 0) {
+  if (param_2->m_filename == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DW\\dwStorage.cpp",0xd1,0,"%s")
     ;
   }
-  if (piVar7[0x36] == 0) {
+  if (param_2->m_buffer == (void *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DW\\dwStorage.cpp",0xd2,0,"%s")
     ;
   }
-  pbVar3 = dwGetStorage((uint)poVar2->controllerIndex);
-  if (pbVar3 == (bdStorage *)0x0) {
+  pbVar2 = dwGetStorage((uint)param_1->controllerIndex);
+  if (pbVar2 == (bdStorage *)0x0) {
     Com_Printf(0x10,"%s()\n");
     dwLobbyErrorCodeToString(BD_NOT_CONNECTED,acStack_80,0x40);
     Com_Printf(0x10,
                "\t Task start requested while not connected! DW storage task type %d errorCode %i - \'%s\'\n"
               );
-    TaskManager_ClearTask(poVar2);
-    iVar4 = __restgprlr_26(0);
-    return iVar4;
+    TaskManager_ClearTask(param_1);
+    return 0;
   }
   Com_Printf(0x10,"Starting update of file: %llu, %s.\n");
-  if (*(longlong *)(piVar7 + 2) == 0) {
-    bVar5 = bdStorage::uploadFile
-                      ((bdStorage *)abStack_8c,(char *)pbVar3,(void *)*piVar7,(uint)param_3,param_4,
-                       1,(bdFileInfo *)0x0);
+  if (param_2->m_fileID == 0) {
+    bVar3 = bdStorage::uploadFile
+                      ((bdStorage *)abStack_8c,(char *)pbVar2,param_2->m_filename,(uint)param_3,
+                       param_4,1,(bdFileInfo *)0x0);
     this = abStack_8c;
   }
   else {
-    bVar5 = bdStorage::updateFile
-                      ((bdStorage *)&bStack_90,(longlong)(int)pbVar3,
-                       (void *)*(longlong *)(piVar7 + 2),(uint)param_3);
+    bVar3 = bdStorage::updateFile
+                      ((bdStorage *)&bStack_90,(longlong)(int)pbVar2,(void *)param_2->m_fileID,
+                       (uint)param_3);
     this = &bStack_90;
   }
-  pbVar1 = (bdRemoteTask *)(bVar5.m_ptr)->_padding_;
+  pbVar1 = (bdRemoteTask *)(bVar3.m_ptr)->_padding_;
   bdReference<bdRemoteTask>::~bdReference<bdRemoteTask>(this);
   if (pbVar1 == (bdRemoteTask *)0x0) {
     Com_Printf(0x10,"%s()\n");
     dwLobbyErrorCodeToString(BD_START_TASK_FAILED,acStack_80,0x40);
     Com_PrintError(0x10,"\t DW storage task type %d errorCode %i - \'%s\'\n");
-    TaskManager_ClearTask(poVar2);
-    iVar4 = __restgprlr_26(0);
-    return iVar4;
+    TaskManager_ClearTask(param_1);
+    return 0;
   }
-  bdReference<bdRemoteTask>::operator=(&(poVar2->u).remoteTask,pbVar1);
-  iVar4 = __restgprlr_26(1);
-  return iVar4;
+  bdReference<bdRemoteTask>::operator=(&(param_1->u).remoteTask,pbVar1);
+  return 1;
 }
 
 
 // 826EF928  dwUpdateFileComplete  (DW/dwStorage.cpp:247)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 taskCompleteResults dwUpdateFileComplete(overlappedTask *param_1,dwFileTask *param_2)
 
 {
-  overlappedTask *poVar1;
-  taskCompleteResults tVar2;
-  bdStorage *pbVar3;
-  bdStatus bVar4;
-  bdLobbyErrorCode bVar5;
+  bdStorage *pbVar1;
+  bdStatus bVar2;
+  bdLobbyErrorCode bVar3;
+  taskCompleteResults tVar4;
   char acStack_60 [96];
   
-  poVar1 = (overlappedTask *)__savegprlr_29(param_1);
-  if (poVar1 == (overlappedTask *)0x0) {
+  if (param_1 == (overlappedTask *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DW\\dwStorage.cpp",0xf8,0,"%s")
     ;
   }
-  if ((poVar1->u).remoteTask.m_ptr == (bdRemoteTask *)0x0) {
+  if ((param_1->u).remoteTask.m_ptr == (bdRemoteTask *)0x0) {
     Com_Printf(0x10,"Failed to retrieve update file status\n");
     Com_Printf(0x10,"%s()\n");
     dwLobbyErrorCodeToString(BD_HANDLE_TASK_FAILED,acStack_60,0x40);
     Com_PrintError(0x10,"\t DW storage task type %d errorCode %i - \'%s\'\n");
-    TaskManager_ClearTask(poVar1);
-    tVar2 = __restgprlr_29(2);
-    return tVar2;
+    TaskManager_ClearTask(param_1);
+    return TASK_ERROR;
   }
-  pbVar3 = dwGetStorage((uint)poVar1->controllerIndex);
-  if (pbVar3 == (bdStorage *)0x0) {
+  pbVar1 = dwGetStorage((uint)param_1->controllerIndex);
+  if (pbVar1 == (bdStorage *)0x0) {
     Com_Printf(0x10,"%s()\n");
     dwLobbyErrorCodeToString(BD_NOT_CONNECTED,acStack_60,0x40);
     Com_Printf(0x10,
                "\t Task start requested while not connected! DW storage task type %d errorCode %i - \'%s\'\n"
               );
-    TaskManager_ClearTask(poVar1);
-    tVar2 = __restgprlr_29(2);
-    return tVar2;
+    TaskManager_ClearTask(param_1);
+    return TASK_ERROR;
   }
-  dwLobbyPump((uint)poVar1->controllerIndex);
-  bVar4 = (**(code **)(((poVar1->u).remoteTask.m_ptr)->_padding_ + 4))();
-  bVar5 = bdRemoteTask::getErrorCode((poVar1->u).remoteTask.m_ptr);
-  param_2->m_error = bVar5;
-  if ((bVar4 == BD_DONE) && (param_2->m_fileID == 0)) {
+  dwLobbyPump((uint)param_1->controllerIndex);
+  bVar2 = (**(code **)(((param_1->u).remoteTask.m_ptr)->_padding_ + 4))();
+  bVar3 = bdRemoteTask::getErrorCode((param_1->u).remoteTask.m_ptr);
+  param_2->m_error = bVar3;
+  if ((bVar2 == BD_DONE) && (param_2->m_fileID == 0)) {
     param_2->m_fileID = (param_2->m_infoResult).m_fileID;
   }
-  if (bVar5 != BD_NO_ERROR) {
-    tVar2 = dwStorageHandleTaskError(poVar1,bVar5);
-    tVar2 = __restgprlr_29(tVar2);
-    return tVar2;
+  if (bVar3 != BD_NO_ERROR) {
+    tVar4 = dwStorageHandleTaskError(param_1,bVar3);
+    return tVar4;
   }
-  tVar2 = dwTaskStatusConvert(bVar4,BD_NO_ERROR);
-  tVar2 = __restgprlr_29(tVar2);
-  return tVar2;
+  tVar4 = dwTaskStatusConvert(bVar2,BD_NO_ERROR);
+  return tVar4;
 }
 
 
 // 826EFAC0  dwFetchFileInfoPersonalStorage  (DW/dwStorage.cpp:286)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 int dwFetchFileInfoPersonalStorage(overlappedTask *param_1,dwFileTask *param_2)
 
 {
   bdRemoteTask *pbVar1;
-  overlappedTask *poVar2;
-  bdStorage *pbVar3;
-  int iVar4;
-  bdReference<bdRemoteTask> bVar5;
-  ulonglong uVar6;
+  bdStorage *pbVar2;
+  bdReference<bdRemoteTask> bVar3;
   bdReference<bdRemoteTask> abStack_80 [4];
   char acStack_70 [112];
   
-  uVar6 = (ulonglong)(int)param_2;
-  poVar2 = (overlappedTask *)__savegprlr_28(param_1);
-  if (poVar2 == (overlappedTask *)0x0) {
+  if (param_1 == (overlappedTask *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DW\\dwStorage.cpp",0x11f,0,"%s"
                    );
   }
-  if ((uVar6 & 0xffffffff) == 0) {
+  if (param_2 == (dwFileTask *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DW\\dwStorage.cpp",0x120,0,"%s"
                    );
   }
-  if (*(int *)uVar6 == 0) {
+  if (param_2->m_filename == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DW\\dwStorage.cpp",0x121,0,"%s"
                    );
   }
-  pbVar3 = dwGetStorage((uint)poVar2->controllerIndex);
-  if (pbVar3 == (bdStorage *)0x0) {
+  pbVar2 = dwGetStorage((uint)param_1->controllerIndex);
+  if (pbVar2 == (bdStorage *)0x0) {
     Com_Printf(0x10,"%s()\n");
     dwLobbyErrorCodeToString(BD_NOT_CONNECTED,acStack_70,0x40);
     Com_Printf(0x10,
                "\t Task start requested while not connected! DW storage task type %d errorCode %i - \'%s\'\n"
               );
-    TaskManager_ClearTask(poVar2);
-    iVar4 = __restgprlr_28(0);
-    return iVar4;
+    TaskManager_ClearTask(param_1);
+    return 0;
   }
   Com_Printf(0x10,"Starting fetching info for file file: %s.\n");
-  if (*(int *)uVar6 != 0) {
-    bVar5 = bdStorage::listFilesByOwner
-                      ((bdStorage *)abStack_80,(longlong)(int)pbVar3,0,(bdFileInfo *)0x0,
-                       (short)uVar6 + 0x18,1,(char *)0x0);
-    pbVar1 = (bdRemoteTask *)(bVar5.m_ptr)->_padding_;
+  if (param_2->m_filename != (char *)0x0) {
+    bVar3 = bdStorage::listFilesByOwner
+                      ((bdStorage *)abStack_80,(longlong)(int)pbVar2,0,(bdFileInfo *)0x0,
+                       (short)param_2 + 0x18,1,(char *)0x0);
+    pbVar1 = (bdRemoteTask *)(bVar3.m_ptr)->_padding_;
     bdReference<bdRemoteTask>::~bdReference<bdRemoteTask>(abStack_80);
     if (pbVar1 != (bdRemoteTask *)0x0) {
-      bdReference<bdRemoteTask>::operator=(&(poVar2->u).remoteTask,pbVar1);
-      iVar4 = __restgprlr_28(1);
-      return iVar4;
+      bdReference<bdRemoteTask>::operator=(&(param_1->u).remoteTask,pbVar1);
+      return 1;
     }
   }
   Com_Printf(0x10,"%s()\n");
   dwLobbyErrorCodeToString(BD_START_TASK_FAILED,acStack_70,0x40);
   Com_PrintError(0x10,"\t DW storage task type %d errorCode %i - \'%s\'\n");
-  TaskManager_ClearTask(poVar2);
-  iVar4 = __restgprlr_28(0);
-  return iVar4;
+  TaskManager_ClearTask(param_1);
+  return 0;
 }
 
 
 // 826EFC88  dwFetchFileInfo  (DW/dwStorage.cpp:318)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 int dwFetchFileInfo(overlappedTask *param_1,dwFileTask *param_2)
 
 {
   bdRemoteTask *pbVar1;
-  overlappedTask *poVar2;
-  bdStorage *pbVar3;
-  int iVar4;
-  bdReference<bdRemoteTask> bVar5;
-  ulonglong uVar6;
+  bdStorage *pbVar2;
+  bdReference<bdRemoteTask> bVar3;
   bdReference<bdRemoteTask> abStack_80 [4];
   char acStack_70 [112];
   
-  uVar6 = (ulonglong)(int)param_2;
-  poVar2 = (overlappedTask *)__savegprlr_28(param_1);
-  if (poVar2 == (overlappedTask *)0x0) {
+  if (param_1 == (overlappedTask *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DW\\dwStorage.cpp",0x13f,0,"%s"
                    );
   }
-  if ((uVar6 & 0xffffffff) == 0) {
+  if (param_2 == (dwFileTask *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DW\\dwStorage.cpp",0x140,0,"%s"
                    );
   }
-  if (*(int *)uVar6 == 0) {
+  if (param_2->m_filename == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DW\\dwStorage.cpp",0x141,0,"%s"
                    );
   }
-  pbVar3 = dwGetStorage((uint)poVar2->controllerIndex);
-  if (pbVar3 == (bdStorage *)0x0) {
+  pbVar2 = dwGetStorage((uint)param_1->controllerIndex);
+  if (pbVar2 == (bdStorage *)0x0) {
     Com_Printf(0x10,"%s()\n");
     dwLobbyErrorCodeToString(BD_NOT_CONNECTED,acStack_70,0x40);
     Com_Printf(0x10,
                "\t Task start requested while not connected! DW storage task type %d errorCode %i - \'%s\'\n"
               );
-    TaskManager_ClearTask(poVar2);
-    iVar4 = __restgprlr_28(0);
-    return iVar4;
+    TaskManager_ClearTask(param_1);
+    return 0;
   }
   Com_Printf(0x10,"Starting fetching info for file file: %s.\n");
-  if (*(int *)uVar6 != 0) {
-    bVar5 = bdStorage::listAllPublisherFiles
-                      ((bdStorage *)abStack_80,(uint)pbVar3,(bdFileInfo *)0x0,(short)uVar6 + 0x18,1,
-                       (char *)0x0);
-    pbVar1 = (bdRemoteTask *)(bVar5.m_ptr)->_padding_;
+  if (param_2->m_filename != (char *)0x0) {
+    bVar3 = bdStorage::listAllPublisherFiles
+                      ((bdStorage *)abStack_80,(uint)pbVar2,(bdFileInfo *)0x0,(short)param_2 + 0x18,
+                       1,(char *)0x0);
+    pbVar1 = (bdRemoteTask *)(bVar3.m_ptr)->_padding_;
     bdReference<bdRemoteTask>::~bdReference<bdRemoteTask>(abStack_80);
     if (pbVar1 != (bdRemoteTask *)0x0) {
-      bdReference<bdRemoteTask>::operator=(&(poVar2->u).remoteTask,pbVar1);
-      iVar4 = __restgprlr_28(1);
-      return iVar4;
+      bdReference<bdRemoteTask>::operator=(&(param_1->u).remoteTask,pbVar1);
+      return 1;
     }
   }
   Com_Printf(0x10,"%s()\n");
   dwLobbyErrorCodeToString(BD_START_TASK_FAILED,acStack_70,0x40);
   Com_PrintError(0x10,"\t DW storage task type %d errorCode %i - \'%s\'\n");
-  TaskManager_ClearTask(poVar2);
-  iVar4 = __restgprlr_28(0);
-  return iVar4;
+  TaskManager_ClearTask(param_1);
+  return 0;
 }
 
 
 // 826EFE48  dwFetchFileInfoComplete  (DW/dwStorage.cpp:350)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 taskCompleteResults dwFetchFileInfoComplete(overlappedTask *param_1,dwFileTask *param_2)
 
 {
-  overlappedTask *poVar1;
-  taskCompleteResults tVar2;
-  bdStorage *pbVar3;
-  bdStatus bVar4;
-  bdLobbyErrorCode bVar5;
+  bdStorage *pbVar1;
+  bdStatus bVar2;
+  bdLobbyErrorCode bVar3;
+  taskCompleteResults tVar4;
   char acStack_60 [96];
   
-  poVar1 = (overlappedTask *)__savegprlr_29(param_1);
-  if (poVar1 == (overlappedTask *)0x0) {
+  if (param_1 == (overlappedTask *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DW\\dwStorage.cpp",0x15f,0,"%s"
                    );
   }
-  if ((poVar1->u).remoteTask.m_ptr == (bdRemoteTask *)0x0) {
+  if ((param_1->u).remoteTask.m_ptr == (bdRemoteTask *)0x0) {
     Com_Printf(0x10,"Failed to retrieve file info file status\n");
     Com_Printf(0x10,"%s()\n");
     dwLobbyErrorCodeToString(BD_HANDLE_TASK_FAILED,acStack_60,0x40);
     Com_PrintError(0x10,"\t DW storage task type %d errorCode %i - \'%s\'\n");
-    TaskManager_ClearTask(poVar1);
-    tVar2 = __restgprlr_29(2);
-    return tVar2;
+    TaskManager_ClearTask(param_1);
+    return TASK_ERROR;
   }
-  pbVar3 = dwGetStorage((uint)poVar1->controllerIndex);
-  if (pbVar3 == (bdStorage *)0x0) {
+  pbVar1 = dwGetStorage((uint)param_1->controllerIndex);
+  if (pbVar1 == (bdStorage *)0x0) {
     Com_Printf(0x10,"%s()\n");
     dwLobbyErrorCodeToString(BD_NOT_CONNECTED,acStack_60,0x40);
     Com_Printf(0x10,
                "\t Task start requested while not connected! DW storage task type %d errorCode %i - \'%s\'\n"
               );
-    TaskManager_ClearTask(poVar1);
-    tVar2 = __restgprlr_29(2);
-    return tVar2;
+    TaskManager_ClearTask(param_1);
+    return TASK_ERROR;
   }
-  dwLobbyPump((uint)poVar1->controllerIndex);
-  bVar4 = (**(code **)(((poVar1->u).remoteTask.m_ptr)->_padding_ + 4))();
-  bVar5 = bdRemoteTask::getErrorCode((poVar1->u).remoteTask.m_ptr);
-  param_2->m_error = bVar5;
-  if (bVar5 != BD_NO_ERROR) {
-    tVar2 = dwStorageHandleTaskError(poVar1,bVar5);
-    tVar2 = __restgprlr_29(tVar2);
-    return tVar2;
+  dwLobbyPump((uint)param_1->controllerIndex);
+  bVar2 = (**(code **)(((param_1->u).remoteTask.m_ptr)->_padding_ + 4))();
+  bVar3 = bdRemoteTask::getErrorCode((param_1->u).remoteTask.m_ptr);
+  param_2->m_error = bVar3;
+  if (bVar3 != BD_NO_ERROR) {
+    tVar4 = dwStorageHandleTaskError(param_1,bVar3);
+    return tVar4;
   }
-  tVar2 = dwTaskStatusConvert(bVar4,BD_NO_ERROR);
-  tVar2 = __restgprlr_29(tVar2);
-  return tVar2;
+  tVar4 = dwTaskStatusConvert(bVar2,BD_NO_ERROR);
+  return tVar4;
 }
 
 
 // 826EEB60  dwStorageHandleTaskError  (DW/dwStorage.cpp:384)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 taskCompleteResults dwStorageHandleTaskError(overlappedTask *param_1,bdLobbyErrorCode param_2)
 
 {
-  overlappedTask *poVar1;
-  taskCompleteResults tVar2;
   char acStack_70 [112];
   
-  poVar1 = (overlappedTask *)__savegprlr_28(param_1);
-  if (poVar1 == (overlappedTask *)0x0) {
+  if (param_1 == (overlappedTask *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DW\\dwStorage.cpp",0x181,0,"%s"
                    );
   }
@@ -659,156 +611,143 @@ taskCompleteResults dwStorageHandleTaskError(overlappedTask *param_1,bdLobbyErro
   else {
     Com_PrintError(0x10,"\t DW storage task type %d errorCode %i - \'%s\'\n");
   }
-  TaskManager_ClearTask(poVar1);
+  TaskManager_ClearTask(param_1);
   if (param_2 == BD_TOO_MANY_TASKS) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DW\\dwStorage.cpp",0x196,0,"%s"
                    );
   }
-  tVar2 = __restgprlr_28(2);
-  return tVar2;
+  return TASK_ERROR;
 }
 
 
 // 826EFFC8  dwDeleteFile  (DW/dwStorage.cpp:413)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 int dwDeleteFile(overlappedTask *param_1,char *param_2)
 
 {
-  overlappedTask *poVar1;
-  bdStorage *pbVar2;
-  int iVar3;
-  bool bVar4;
-  ulong64 uVar5;
+  bdStorage *pbVar1;
+  bool bVar2;
   bdReference<bdRemoteTask> local_70 [2];
   ulong64 uStack_68;
   char acStack_60 [96];
   
-  uVar5 = (ulong64)(int)param_2;
-  poVar1 = (overlappedTask *)__savegprlr_29(param_1);
-  if (poVar1 == (overlappedTask *)0x0) {
+  if (param_1 == (overlappedTask *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DW\\dwStorage.cpp",0x19e,0,"%s"
                    );
   }
-  pbVar2 = dwGetStorage((uint)poVar1->controllerIndex);
-  if (pbVar2 == (bdStorage *)0x0) {
+  pbVar1 = dwGetStorage((uint)param_1->controllerIndex);
+  if (pbVar1 == (bdStorage *)0x0) {
     Com_Printf(0x10,"%s()\n");
     dwLobbyErrorCodeToString(BD_NOT_CONNECTED,acStack_60,0x40);
     Com_Printf(0x10,
                "\t Task start requested while not connected! DW storage task type %d errorCode %i - \'%s\'\n"
               );
-    TaskManager_ClearTask(poVar1);
-    iVar3 = __restgprlr_29(0);
-    return iVar3;
+    TaskManager_ClearTask(param_1);
+    return 0;
   }
-  bVar4 = dwGetOnlineUserID((uint)poVar1->controllerIndex,&uStack_68);
-  if (!bVar4) {
+  bVar2 = dwGetOnlineUserID((uint)param_1->controllerIndex,&uStack_68);
+  if (!bVar2) {
     Com_Printf(0x10,"%s()\n");
     dwLobbyErrorCodeToString(BD_START_TASK_FAILED,acStack_60,0x40);
     Com_PrintError(0x10,"\t DW storage task type %d errorCode %i - \'%s\'\n");
-    TaskManager_ClearTask(poVar1);
-    iVar3 = __restgprlr_29(0);
-    return iVar3;
+    TaskManager_ClearTask(param_1);
+    return 0;
   }
-  bdStorage::removeFile((bdStorage *)local_70,(char *)pbVar2,uVar5);
+  bdStorage::removeFile((bdStorage *)local_70,(char *)pbVar1,(longlong)(int)param_2);
   if (local_70[0].m_ptr == (bdRemoteTask *)0x0) {
-    dwStorageHandleTaskError(poVar1,BD_START_TASK_FAILED);
+    dwStorageHandleTaskError(param_1,BD_START_TASK_FAILED);
     bdReference<bdRemoteTask>::~bdReference<bdRemoteTask>(local_70);
-    iVar3 = __restgprlr_29(0);
-    return iVar3;
+    return 0;
   }
-  bdReference<bdRemoteTask>::operator=(&(poVar1->u).remoteTask,local_70);
+  bdReference<bdRemoteTask>::operator=(&(param_1->u).remoteTask,local_70);
   bdReference<bdRemoteTask>::~bdReference<bdRemoteTask>(local_70);
-  iVar3 = __restgprlr_29(1);
-  return iVar3;
+  return 1;
 }
 
 
 // 826F0148  dwDeleteFileComplete  (DW/dwStorage.cpp:444)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 taskCompleteResults dwDeleteFileComplete(overlappedTask *param_1)
 
 {
   bool bVar1;
-  overlappedTask *poVar2;
-  taskCompleteResults tVar3;
-  bdStorage *pbVar4;
-  bdStatus bVar5;
-  bdLobbyErrorCode bVar6;
-  uint uVar7;
+  bdStorage *pbVar2;
+  bdStatus bVar3;
+  bdLobbyErrorCode bVar4;
+  uint uVar5;
+  taskCompleteResults tVar6;
   char acStack_70 [112];
   
-  poVar2 = (overlappedTask *)__savegprlr_28(param_1);
-  if (poVar2 == (overlappedTask *)0x0) {
+  if (param_1 == (overlappedTask *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DW\\dwStorage.cpp",0x1bd,0,"%s"
                    );
   }
-  if ((poVar2->u).remoteTask.m_ptr == (bdRemoteTask *)0x0) {
+  if ((param_1->u).remoteTask.m_ptr == (bdRemoteTask *)0x0) {
     Com_Printf(0x10,"Failed to retrieve fetch file status\n");
     Com_Printf(0x10,"%s()\n");
     dwLobbyErrorCodeToString(BD_HANDLE_TASK_FAILED,acStack_70,0x40);
     Com_PrintError(0x10,"\t DW storage task type %d errorCode %i - \'%s\'\n");
-    TaskManager_ClearTask(poVar2);
-    tVar3 = __restgprlr_28(2);
-    return tVar3;
+    TaskManager_ClearTask(param_1);
+    return TASK_ERROR;
   }
-  pbVar4 = dwGetStorage((uint)poVar2->controllerIndex);
-  if (pbVar4 == (bdStorage *)0x0) {
+  pbVar2 = dwGetStorage((uint)param_1->controllerIndex);
+  if (pbVar2 == (bdStorage *)0x0) {
     Com_Printf(0x10,"%s()\n");
     dwLobbyErrorCodeToString(BD_NOT_CONNECTED,acStack_70,0x40);
     Com_Printf(0x10,
                "\t Task start requested while not connected! DW storage task type %d errorCode %i - \'%s\'\n"
               );
-    TaskManager_ClearTask(poVar2);
-    tVar3 = __restgprlr_28(2);
-    return tVar3;
+    TaskManager_ClearTask(param_1);
+    return TASK_ERROR;
   }
-  dwLobbyPump((uint)poVar2->controllerIndex);
-  bVar5 = (**(code **)(((poVar2->u).remoteTask.m_ptr)->_padding_ + 4))();
-  bVar6 = bdRemoteTask::getErrorCode((poVar2->u).remoteTask.m_ptr);
+  dwLobbyPump((uint)param_1->controllerIndex);
+  bVar3 = (**(code **)(((param_1->u).remoteTask.m_ptr)->_padding_ + 4))();
+  bVar4 = bdRemoteTask::getErrorCode((param_1->u).remoteTask.m_ptr);
   bVar1 = false;
-  if ((bVar5 == BD_DONE) &&
-     (uVar7 = bdRemoteTask::getNumResults((poVar2->u).remoteTask.m_ptr), uVar7 == 1)) {
+  if ((bVar3 == BD_DONE) &&
+     (uVar5 = bdRemoteTask::getNumResults((param_1->u).remoteTask.m_ptr), uVar5 == 1)) {
     bVar1 = true;
   }
-  if ((bVar6 != BD_NO_ERROR) && (bVar6 != BD_NO_FILE)) {
-    tVar3 = dwStorageHandleTaskError(poVar2,bVar6);
-    tVar3 = __restgprlr_28(tVar3);
-    return tVar3;
+  if ((bVar4 != BD_NO_ERROR) && (bVar4 != BD_NO_FILE)) {
+    tVar6 = dwStorageHandleTaskError(param_1,bVar4);
+    return tVar6;
   }
-  tVar3 = dwTaskStatusConvert(bVar5,bVar6);
-  if ((bVar5 == BD_DONE) && (!bVar1)) {
-    tVar3 = TASK_ERROR;
+  tVar6 = dwTaskStatusConvert(bVar3,bVar4);
+  if ((bVar3 == BD_DONE) && (!bVar1)) {
+    tVar6 = TASK_ERROR;
   }
-  tVar3 = __restgprlr_28(tVar3);
-  return tVar3;
+  return tVar6;
 }
 
 
 // 826F0300  dwCSGetListing  (DW/dwStorage.cpp:492)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 int dwCSGetListing(overlappedTask *param_1,dwCSListTask *param_2)
 
 {
-  undefined4 *puVar1;
-  overlappedTask *poVar2;
-  bdContentStreaming *pbVar3;
-  int iVar4;
-  ulonglong uVar5;
+  bdContentStreaming *pbVar1;
   bdReference<bdRemoteTask> local_80 [4];
   char acStack_70 [112];
   
-  uVar5 = (ulonglong)(int)param_2;
-  poVar2 = (overlappedTask *)__savegprlr_28(param_1);
-  if (poVar2 == (overlappedTask *)0x0) {
+  if (param_1 == (overlappedTask *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DW\\dwStorage.cpp",0x1ed,0,"%s"
                    );
   }
-  if ((uVar5 & 0xffffffff) == 0) {
+  if (param_2 == (dwCSListTask *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DW\\dwStorage.cpp",0x1ee,0,"%s"
                    );
   }
-  pbVar3 = dwGetContentStreaming((uint)poVar2->controllerIndex);
-  if (pbVar3 == (bdContentStreaming *)0x0) {
+  pbVar1 = dwGetContentStreaming((uint)param_1->controllerIndex);
+  if (pbVar1 == (bdContentStreaming *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DW\\dwStorage.cpp",0x1f1,0,"%s"
                    );
     Com_Printf(0x10,"%s()\n");
@@ -816,149 +755,138 @@ int dwCSGetListing(overlappedTask *param_1,dwCSListTask *param_2)
     Com_Printf(0x10,
                "\t Task start requested while not connected! DW storage task type %d errorCode %i - \'%s\'\n"
               );
-    TaskManager_ClearTask(poVar2);
-    iVar4 = __restgprlr_28(0);
-    return iVar4;
+    TaskManager_ClearTask(param_1);
+    return 0;
   }
-  puVar1 = (undefined4 *)uVar5;
   bdContentStreaming::listFilesByOwner
-            ((bdContentStreaming *)local_80,(longlong)(int)pbVar3,(uint)*(undefined8 *)(puVar1 + 2),
-             (ushort)puVar1[4],(bdFileMetaData *)(uint)*(ushort *)(puVar1 + 6),(ushort)*puVar1,
-             *(ushort *)((int)puVar1 + 0x1a),(char *)(uint)*(ushort *)(puVar1 + 7));
+            ((bdContentStreaming *)local_80,(longlong)(int)pbVar1,(uint)param_2->m_ownerID,
+             (ushort)param_2->m_startDate,(bdFileMetaData *)(uint)param_2->m_category,
+             (ushort)param_2->m_descriptors,param_2->m_maxNumResults,(char *)(uint)param_2->m_offset
+            );
   if (local_80[0].m_ptr == (bdRemoteTask *)0x0) {
     Com_Printf(0x10,"%s()\n");
     dwLobbyErrorCodeToString(BD_START_TASK_FAILED,acStack_70,0x40);
     Com_PrintError(0x10,"\t DW storage task type %d errorCode %i - \'%s\'\n");
-    TaskManager_ClearTask(poVar2);
+    TaskManager_ClearTask(param_1);
     bdReference<bdRemoteTask>::~bdReference<bdRemoteTask>(local_80);
-    iVar4 = __restgprlr_28(0);
-    return iVar4;
+    return 0;
   }
-  bdReference<bdRemoteTask>::operator=(&(poVar2->u).remoteTask,local_80);
+  bdReference<bdRemoteTask>::operator=(&(param_1->u).remoteTask,local_80);
   bdReference<bdRemoteTask>::~bdReference<bdRemoteTask>(local_80);
-  iVar4 = __restgprlr_28(1);
-  return iVar4;
+  return 1;
 }
 
 
 // 826F04A8  dwCSGetListingComplete  (DW/dwStorage.cpp:518)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 taskCompleteResults dwCSGetListingComplete(overlappedTask *param_1,dwCSListTask *param_2)
 
 {
-  overlappedTask *poVar1;
-  taskCompleteResults tVar2;
-  bdStorage *pbVar3;
-  bdStatus bVar4;
-  bdLobbyErrorCode bVar5;
-  ulonglong uVar6;
+  bdStorage *pbVar1;
+  bdStatus bVar2;
+  bdLobbyErrorCode bVar3;
+  taskCompleteResults tVar4;
   char acStack_70 [112];
   
-  uVar6 = (ulonglong)(int)param_2;
-  poVar1 = (overlappedTask *)__savegprlr_28(param_1);
-  if (poVar1 == (overlappedTask *)0x0) {
+  if (param_1 == (overlappedTask *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DW\\dwStorage.cpp",0x207,0,"%s"
                    );
   }
-  if ((uVar6 & 0xffffffff) == 0) {
+  if (param_2 == (dwCSListTask *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DW\\dwStorage.cpp",0x208,0,"%s"
                    );
   }
-  if ((poVar1->u).remoteTask.m_ptr == (bdRemoteTask *)0x0) {
+  if ((param_1->u).remoteTask.m_ptr == (bdRemoteTask *)0x0) {
     Com_Printf(0x10,"Failed to retrieve update file status\n");
     Com_Printf(0x10,"%s()\n");
     dwLobbyErrorCodeToString(BD_HANDLE_TASK_FAILED,acStack_70,0x40);
     Com_PrintError(0x10,"\t DW storage task type %d errorCode %i - \'%s\'\n");
-    TaskManager_ClearTask(poVar1);
-    tVar2 = __restgprlr_28(2);
-    return tVar2;
+    TaskManager_ClearTask(param_1);
+    return TASK_ERROR;
   }
-  pbVar3 = dwGetStorage((uint)poVar1->controllerIndex);
-  if (pbVar3 == (bdStorage *)0x0) {
+  pbVar1 = dwGetStorage((uint)param_1->controllerIndex);
+  if (pbVar1 == (bdStorage *)0x0) {
     Com_Printf(0x10,"%s()\n");
     dwLobbyErrorCodeToString(BD_NOT_CONNECTED,acStack_70,0x40);
     Com_Printf(0x10,
                "\t Task start requested while not connected! DW storage task type %d errorCode %i - \'%s\'\n"
               );
-    TaskManager_ClearTask(poVar1);
-    tVar2 = __restgprlr_28(2);
-    return tVar2;
+    TaskManager_ClearTask(param_1);
+    return TASK_ERROR;
   }
-  dwLobbyPump((uint)poVar1->controllerIndex);
-  bVar4 = (**(code **)(((poVar1->u).remoteTask.m_ptr)->_padding_ + 4))();
-  bVar5 = bdRemoteTask::getErrorCode((poVar1->u).remoteTask.m_ptr);
-  *(bdLobbyErrorCode *)((int)uVar6 + 0x24) = bVar5;
-  tVar2 = dwTaskStatusConvert(bVar4,bVar5);
-  tVar2 = __restgprlr_28(tVar2);
-  return tVar2;
+  dwLobbyPump((uint)param_1->controllerIndex);
+  bVar2 = (**(code **)(((param_1->u).remoteTask.m_ptr)->_padding_ + 4))();
+  bVar3 = bdRemoteTask::getErrorCode((param_1->u).remoteTask.m_ptr);
+  param_2->m_error = bVar3;
+  tVar4 = dwTaskStatusConvert(bVar2,bVar3);
+  return tVar4;
 }
 
 
 // 826F0638  dwCSGetDescriptors  (DW/dwStorage.cpp:547)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 int dwCSGetDescriptors(overlappedTask *param_1,dwCSDescriptorsTask *param_2)
 
 {
   ulong64 *puVar1;
-  undefined8 *puVar2;
-  overlappedTask *poVar3;
+  bdFileID *pbVar2;
+  ulong64 *puVar3;
   bdContentStreaming *pbVar4;
-  int iVar5;
-  ulonglong uVar6;
-  int *piVar7;
-  undefined8 *puVar8;
-  int iVar9;
-  ulong64 *puVar10;
-  int iVar11;
+  ulong64 *puVar5;
+  bdFileID *pbVar6;
+  ulong64 *puVar7;
+  int iVar8;
   bdReference<bdRemoteTask> local_120 [4];
   char acStack_110 [56];
-  undefined8 uStack_d8;
-  undefined8 local_d0 [26];
+  ulong64 uStack_d8;
+  ulong64 local_d0 [26];
   
-  uVar6 = (ulonglong)(int)param_2;
-  poVar3 = (overlappedTask *)__savegprlr_28(param_1);
-  if (poVar3 == (overlappedTask *)0x0) {
+  if (param_1 == (overlappedTask *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DW\\dwStorage.cpp",0x224,0,"%s"
                    );
   }
-  if ((uVar6 & 0xffffffff) == 0) {
+  if (param_2 == (dwCSDescriptorsTask *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DW\\dwStorage.cpp",0x225,0,"%s"
                    );
   }
-  piVar7 = (int *)uVar6;
-  if (*piVar7 == 0) {
+  if (param_2->m_descriptors == (bdFileMetaData *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DW\\dwStorage.cpp",0x226,0,"%s"
                    );
   }
-  pbVar4 = dwGetContentStreaming((uint)poVar3->controllerIndex);
+  pbVar4 = dwGetContentStreaming((uint)param_1->controllerIndex);
   if (pbVar4 == (bdContentStreaming *)0x0) {
     Com_Printf(0x10,"%s()\n");
     dwLobbyErrorCodeToString(BD_NOT_CONNECTED,acStack_110,0x40);
     Com_Printf(0x10,
                "\t Task start requested while not connected! DW storage task type %d errorCode %i - \'%s\'\n"
               );
-    TaskManager_ClearTask(poVar3);
-    iVar5 = __restgprlr_28(0);
-    return iVar5;
+    TaskManager_ClearTask(param_1);
+    return 0;
   }
-  if (0x14 < (uint)piVar7[2]) {
-    piVar7[2] = 0x14;
+  if (0x14 < param_2->m_numFiles) {
+    param_2->m_numFiles = 0x14;
   }
-  puVar1 = (ulong64 *)piVar7[2];
-  puVar10 = (ulong64 *)0x0;
+  puVar1 = (ulong64 *)param_2->m_numFiles;
+  puVar7 = (ulong64 *)0x0;
   if (puVar1 != (ulong64 *)0x0) {
-    iVar5 = piVar7[1];
-    iVar11 = 0;
-    puVar8 = &uStack_d8;
-    iVar9 = iVar5;
+    pbVar2 = param_2->m_fileIDs;
+    puVar5 = &uStack_d8;
+    pbVar6 = pbVar2;
+    iVar8 = 0;
     do {
-      puVar2 = (undefined8 *)(iVar9 + 8);
-      puVar10 = (ulong64 *)((int)puVar10 + 1);
-      iVar11 = iVar11 + 0x10;
-      iVar9 = iVar11 + iVar5;
-      puVar8 = puVar8 + 1;
-      *puVar8 = *puVar2;
-    } while (puVar10 < puVar1);
+      puVar3 = &pbVar6->m_fileID;
+      puVar7 = (ulong64 *)((int)puVar7 + 1);
+      pbVar6 = (bdFileID *)((int)&pbVar2[1]._padding_ + iVar8);
+      puVar5 = puVar5 + 1;
+      *puVar5 = *puVar3;
+      iVar8 = iVar8 + 0x10;
+    } while (puVar7 < puVar1);
   }
   bdContentStreaming::getFileMetaDataByID
             ((bdContentStreaming *)local_120,(uint)pbVar4,puVar1,(bdFileMetaData *)local_d0);
@@ -966,102 +894,91 @@ int dwCSGetDescriptors(overlappedTask *param_1,dwCSDescriptorsTask *param_2)
     Com_Printf(0x10,"%s()\n");
     dwLobbyErrorCodeToString(BD_START_TASK_FAILED,acStack_110,0x40);
     Com_PrintError(0x10,"\t DW storage task type %d errorCode %i - \'%s\'\n");
-    TaskManager_ClearTask(poVar3);
+    TaskManager_ClearTask(param_1);
     bdReference<bdRemoteTask>::~bdReference<bdRemoteTask>(local_120);
-    iVar5 = __restgprlr_28(0);
-    return iVar5;
+    return 0;
   }
-  bdReference<bdRemoteTask>::operator=(&(poVar3->u).remoteTask,local_120);
+  bdReference<bdRemoteTask>::operator=(&(param_1->u).remoteTask,local_120);
   bdReference<bdRemoteTask>::~bdReference<bdRemoteTask>(local_120);
-  iVar5 = __restgprlr_28(1);
-  return iVar5;
+  return 1;
 }
 
 
 // 826F0828  dwCSGetDescriptorsComplete  (DW/dwStorage.cpp:583)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 taskCompleteResults dwCSGetDescriptorsComplete(overlappedTask *param_1,dwCSDescriptorsTask *param_2)
 
 {
-  overlappedTask *poVar1;
-  taskCompleteResults tVar2;
-  bdStorage *pbVar3;
-  bdStatus bVar4;
-  bdLobbyErrorCode bVar5;
-  ulonglong uVar6;
+  bdStorage *pbVar1;
+  bdStatus bVar2;
+  bdLobbyErrorCode bVar3;
+  taskCompleteResults tVar4;
   char acStack_70 [112];
   
-  uVar6 = (ulonglong)(int)param_2;
-  poVar1 = (overlappedTask *)__savegprlr_28(param_1);
-  if (poVar1 == (overlappedTask *)0x0) {
+  if (param_1 == (overlappedTask *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DW\\dwStorage.cpp",0x248,0,"%s"
                    );
   }
-  if ((uVar6 & 0xffffffff) == 0) {
+  if (param_2 == (dwCSDescriptorsTask *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DW\\dwStorage.cpp",0x249,0,"%s"
                    );
   }
-  if ((poVar1->u).remoteTask.m_ptr == (bdRemoteTask *)0x0) {
+  if ((param_1->u).remoteTask.m_ptr == (bdRemoteTask *)0x0) {
     Com_Printf(0x10,"Failed to retrieve update file status\n");
     Com_Printf(0x10,"%s()\n");
     dwLobbyErrorCodeToString(BD_HANDLE_TASK_FAILED,acStack_70,0x40);
     Com_PrintError(0x10,"\t DW storage task type %d errorCode %i - \'%s\'\n");
-    TaskManager_ClearTask(poVar1);
-    tVar2 = __restgprlr_28(2);
-    return tVar2;
+    TaskManager_ClearTask(param_1);
+    return TASK_ERROR;
   }
-  pbVar3 = dwGetStorage((uint)poVar1->controllerIndex);
-  if (pbVar3 == (bdStorage *)0x0) {
+  pbVar1 = dwGetStorage((uint)param_1->controllerIndex);
+  if (pbVar1 == (bdStorage *)0x0) {
     Com_Printf(0x10,"%s()\n");
     dwLobbyErrorCodeToString(BD_NOT_CONNECTED,acStack_70,0x40);
     Com_Printf(0x10,
                "\t Task start requested while not connected! DW storage task type %d errorCode %i - \'%s\'\n"
               );
-    TaskManager_ClearTask(poVar1);
-    tVar2 = __restgprlr_28(2);
-    return tVar2;
+    TaskManager_ClearTask(param_1);
+    return TASK_ERROR;
   }
-  dwLobbyPump((uint)poVar1->controllerIndex);
-  bVar4 = (**(code **)(((poVar1->u).remoteTask.m_ptr)->_padding_ + 4))();
-  bVar5 = bdRemoteTask::getErrorCode((poVar1->u).remoteTask.m_ptr);
-  *(bdLobbyErrorCode *)((int)uVar6 + 0x14) = bVar5;
-  tVar2 = dwTaskStatusConvert(bVar4,bVar5);
-  tVar2 = __restgprlr_28(tVar2);
-  return tVar2;
+  dwLobbyPump((uint)param_1->controllerIndex);
+  bVar2 = (**(code **)(((param_1->u).remoteTask.m_ptr)->_padding_ + 4))();
+  bVar3 = bdRemoteTask::getErrorCode((param_1->u).remoteTask.m_ptr);
+  param_2->m_error = bVar3;
+  tVar4 = dwTaskStatusConvert(bVar2,bVar3);
+  return tVar4;
 }
 
 
 // 826EEC40  dwCSGetProgress  (DW/dwStorage.cpp:612)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 int dwCSGetProgress(int param_1,uint *param_2,float *param_3)
 
 {
-  int iVar1;
   bdContentStreamingBase *this;
-  ulonglong uVar2;
-  ulonglong uVar3;
   
-  uVar3 = (ulonglong)(int)param_3;
-  uVar2 = (ulonglong)(int)param_2;
-  iVar1 = __savegprlr_27(param_1);
-  if ((uVar2 & 0xffffffff) == 0) {
+  if (param_2 == (uint *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DW\\dwStorage.cpp",0x265,0,"%s"
                    );
   }
-  if ((uVar3 & 0xffffffff) == 0) {
+  if (param_3 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DW\\dwStorage.cpp",0x266,0,"%s"
                    );
   }
-  this = (bdContentStreamingBase *)dwGetContentStreaming(iVar1);
+  this = (bdContentStreamingBase *)dwGetContentStreaming(param_1);
   if (this == (bdContentStreamingBase *)0x0) {
-    *(uint *)uVar2 = 0;
-    *(float *)uVar3 = 0.0;
-    iVar1 = __restgprlr_27();
-    return iVar1;
+    *param_2 = 0;
+    *param_3 = 0.0;
+    return 0;
   }
-  bdContentStreamingBase::checkProgress(this,(uint *)uVar2,(float *)uVar3);
-  iVar1 = __restgprlr_27(1);
-  return iVar1;
+  bdContentStreamingBase::checkProgress(this,param_2,param_3);
+  return 1;
 }
 
 
@@ -1085,346 +1002,317 @@ int dwCSGetLastHTTPError(int param_1)
 
 // 826F09B8  dwCSSearch  (DW/dwStorage.cpp:648)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 int dwCSSearch(overlappedTask *param_1,dwCSSearchTask *param_2)
 
 {
-  undefined4 *puVar1;
-  overlappedTask *poVar2;
-  bdTags *pbVar3;
-  int iVar4;
-  ulonglong uVar5;
+  bdTags *pbVar1;
   bdReference<bdRemoteTask> local_80 [4];
   char acStack_70 [112];
   
-  uVar5 = (ulonglong)(int)param_2;
-  poVar2 = (overlappedTask *)__savegprlr_28(param_1);
-  if (poVar2 == (overlappedTask *)0x0) {
+  if (param_1 == (overlappedTask *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DW\\dwStorage.cpp",0x289,0,"%s"
                    );
   }
-  if ((uVar5 & 0xffffffff) == 0) {
+  if (param_2 == (dwCSSearchTask *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DW\\dwStorage.cpp",0x28a,0,"%s"
                    );
   }
-  pbVar3 = dwGetTagService((uint)poVar2->controllerIndex);
-  if (pbVar3 == (bdTags *)0x0) {
+  pbVar1 = dwGetTagService((uint)param_1->controllerIndex);
+  if (pbVar1 == (bdTags *)0x0) {
     Com_Printf(0x10,"%s()\n");
     dwLobbyErrorCodeToString(BD_NOT_CONNECTED,acStack_70,0x40);
     Com_Printf(0x10,
                "\t Task start requested while not connected! DW storage task type %d errorCode %i - \'%s\'\n"
               );
-    TaskManager_ClearTask(poVar2);
-    iVar4 = __restgprlr_28(0);
-    return iVar4;
+    TaskManager_ClearTask(param_1);
+    return 0;
   }
-  puVar1 = (undefined4 *)uVar5;
   bdTags::searchByTags
-            ((bdTags *)local_80,(uint)pbVar3,1,puVar1[2],SUB41(puVar1[3],0),
-             (uint)*(byte *)(puVar1 + 7),(bdTag *)puVar1[4],(bdFileID *)*puVar1);
+            ((bdTags *)local_80,(uint)pbVar1,1,param_2->m_startIndex,
+             SUB41(param_2->m_maxNumResults,0),(uint)param_2->m_orderNewestFirst,
+             (bdTag *)param_2->m_numTags,(bdFileID *)param_2->m_tags);
   if (local_80[0].m_ptr == (bdRemoteTask *)0x0) {
     Com_Printf(0x10,"%s()\n");
     dwLobbyErrorCodeToString(BD_START_TASK_FAILED,acStack_70,0x40);
     Com_PrintError(0x10,"\t DW storage task type %d errorCode %i - \'%s\'\n");
-    TaskManager_ClearTask(poVar2);
+    TaskManager_ClearTask(param_1);
     bdReference<bdRemoteTask>::~bdReference<bdRemoteTask>(local_80);
-    iVar4 = __restgprlr_28(0);
-    return iVar4;
+    return 0;
   }
-  bdReference<bdRemoteTask>::operator=(&(poVar2->u).remoteTask,local_80);
+  bdReference<bdRemoteTask>::operator=(&(param_1->u).remoteTask,local_80);
   bdReference<bdRemoteTask>::~bdReference<bdRemoteTask>(local_80);
-  iVar4 = __restgprlr_28(1);
-  return iVar4;
+  return 1;
 }
 
 
 // 826F0B48  dwCSSearchComplete  (DW/dwStorage.cpp:675)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 taskCompleteResults dwCSSearchComplete(overlappedTask *param_1,dwCSSearchTask *param_2)
 
 {
-  overlappedTask *poVar1;
-  taskCompleteResults tVar2;
-  bdStorage *pbVar3;
-  bdStatus bVar4;
-  bdLobbyErrorCode bVar5;
-  ulonglong uVar6;
+  bdStorage *pbVar1;
+  bdStatus bVar2;
+  bdLobbyErrorCode bVar3;
+  taskCompleteResults tVar4;
   char acStack_70 [112];
   
-  uVar6 = (ulonglong)(int)param_2;
-  poVar1 = (overlappedTask *)__savegprlr_28(param_1);
-  if (poVar1 == (overlappedTask *)0x0) {
+  if (param_1 == (overlappedTask *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DW\\dwStorage.cpp",0x2a4,0,"%s"
                    );
   }
-  if ((uVar6 & 0xffffffff) == 0) {
+  if (param_2 == (dwCSSearchTask *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DW\\dwStorage.cpp",0x2a5,0,"%s"
                    );
   }
-  if ((poVar1->u).remoteTask.m_ptr == (bdRemoteTask *)0x0) {
+  if ((param_1->u).remoteTask.m_ptr == (bdRemoteTask *)0x0) {
     Com_Printf(0x10,"Failed to retrieve update file status\n");
     Com_Printf(0x10,"%s()\n");
     dwLobbyErrorCodeToString(BD_HANDLE_TASK_FAILED,acStack_70,0x40);
     Com_PrintError(0x10,"\t DW storage task type %d errorCode %i - \'%s\'\n");
-    TaskManager_ClearTask(poVar1);
-    tVar2 = __restgprlr_28(2);
-    return tVar2;
+    TaskManager_ClearTask(param_1);
+    return TASK_ERROR;
   }
-  pbVar3 = dwGetStorage((uint)poVar1->controllerIndex);
-  if (pbVar3 == (bdStorage *)0x0) {
+  pbVar1 = dwGetStorage((uint)param_1->controllerIndex);
+  if (pbVar1 == (bdStorage *)0x0) {
     Com_Printf(0x10,"%s()\n");
     dwLobbyErrorCodeToString(BD_NOT_CONNECTED,acStack_70,0x40);
     Com_Printf(0x10,
                "\t Task start requested while not connected! DW storage task type %d errorCode %i - \'%s\'\n"
               );
-    TaskManager_ClearTask(poVar1);
-    tVar2 = __restgprlr_28(2);
-    return tVar2;
+    TaskManager_ClearTask(param_1);
+    return TASK_ERROR;
   }
-  dwLobbyPump((uint)poVar1->controllerIndex);
-  bVar4 = (**(code **)(((poVar1->u).remoteTask.m_ptr)->_padding_ + 4))();
-  bVar5 = bdRemoteTask::getErrorCode((poVar1->u).remoteTask.m_ptr);
-  *(bdLobbyErrorCode *)((int)uVar6 + 0x20) = bVar5;
-  tVar2 = dwTaskStatusConvert(bVar4,bVar5);
-  tVar2 = __restgprlr_28(tVar2);
-  return tVar2;
+  dwLobbyPump((uint)param_1->controllerIndex);
+  bVar2 = (**(code **)(((param_1->u).remoteTask.m_ptr)->_padding_ + 4))();
+  bVar3 = bdRemoteTask::getErrorCode((param_1->u).remoteTask.m_ptr);
+  param_2->m_error = bVar3;
+  tVar4 = dwTaskStatusConvert(bVar2,bVar3);
+  return tVar4;
 }
 
 
 // 826F0CD8  dwCSReadFile  (DW/dwStorage.cpp:704)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 int dwCSReadFile(overlappedTask *param_1,dwCSReadFileTask *param_2)
 
 {
-  undefined8 *puVar1;
-  overlappedTask *poVar2;
-  bdContentStreaming *pbVar3;
-  int iVar4;
-  bdReference<bdRemoteTask> bVar5;
-  ulonglong uVar6;
+  bdContentStreaming *pbVar1;
+  bdReference<bdRemoteTask> bVar2;
+  bdDownloadInterceptor *pbVar3;
   bdReference<bdRemoteTask> local_80;
   bdReference<bdRemoteTask> abStack_7c [3];
   char acStack_70 [112];
   
-  uVar6 = (ulonglong)(int)param_2;
-  poVar2 = (overlappedTask *)__savegprlr_28(param_1);
-  if (poVar2 == (overlappedTask *)0x0) {
+  if (param_1 == (overlappedTask *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DW\\dwStorage.cpp",0x2c1,0,"%s"
                    );
   }
-  if ((uVar6 & 0xffffffff) == 0) {
+  if (param_2 == (dwCSReadFileTask *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DW\\dwStorage.cpp",0x2c2,0,"%s"
                    );
   }
-  pbVar3 = dwGetContentStreaming((uint)poVar2->controllerIndex);
-  if (pbVar3 == (bdContentStreaming *)0x0) {
+  pbVar1 = dwGetContentStreaming((uint)param_1->controllerIndex);
+  if (pbVar1 == (bdContentStreaming *)0x0) {
     Com_Printf(0x10,"%s()\n");
     dwLobbyErrorCodeToString(BD_NOT_CONNECTED,acStack_70,0x40);
     Com_Printf(0x10,
                "\t Task start requested while not connected! DW storage task type %d errorCode %i - \'%s\'\n"
               );
-    TaskManager_ClearTask(poVar2);
-    iVar4 = __restgprlr_28(0);
-    return iVar4;
+    TaskManager_ClearTask(param_1);
+    return 0;
   }
-  puVar1 = (undefined8 *)uVar6;
   local_80.m_ptr = (bdRemoteTask *)0x0;
-  if (*(bdFileMetaData **)((int)puVar1 + 0x7b4) == (bdFileMetaData *)0x0) {
-    bVar5 = bdContentStreaming::download
-                      ((bdContentStreaming *)abStack_7c,(longlong)(int)pbVar3,
-                       (bdDownloadInterceptor *)*puVar1,*(uint *)((int)puVar1 + 0x79c),
-                       *(bdFileMetaData **)((int)puVar1 + 0x7a4),(uint)(puVar1 + 1),0);
+  pbVar3 = (bdDownloadInterceptor *)param_2->m_fileID;
+  if ((bdFileMetaData *)param_2->m_downloadHandler == (bdFileMetaData *)0x0) {
+    bVar2 = bdContentStreaming::download
+                      ((bdContentStreaming *)abStack_7c,(longlong)(int)pbVar1,pbVar3,
+                       (uint)param_2->m_buffer,(bdFileMetaData *)param_2->m_bufferSize,
+                       (uint)&param_2->m_descriptor,0);
   }
   else {
-    bVar5 = bdContentStreaming::download
-                      ((bdContentStreaming *)abStack_7c,(longlong)(int)pbVar3,
-                       (bdDownloadInterceptor *)*puVar1,*(bdFileMetaData **)((int)puVar1 + 0x7b4),
-                       (uint)(puVar1 + 1),0);
+    bVar2 = bdContentStreaming::download
+                      ((bdContentStreaming *)abStack_7c,(longlong)(int)pbVar1,pbVar3,
+                       (bdFileMetaData *)param_2->m_downloadHandler,(uint)&param_2->m_descriptor,0);
   }
-  bdReference<bdRemoteTask>::operator=(&local_80,(bdReference<bdRemoteTask> *)bVar5.m_ptr);
+  bdReference<bdRemoteTask>::operator=(&local_80,(bdReference<bdRemoteTask> *)bVar2.m_ptr);
   bdReference<bdRemoteTask>::~bdReference<bdRemoteTask>(abStack_7c);
   if (local_80.m_ptr == (bdRemoteTask *)0x0) {
     Com_Printf(0x10,"%s()\n");
     dwLobbyErrorCodeToString(BD_START_TASK_FAILED,acStack_70,0x40);
     Com_PrintError(0x10,"\t DW storage task type %d errorCode %i - \'%s\'\n");
-    TaskManager_ClearTask(poVar2);
+    TaskManager_ClearTask(param_1);
     bdReference<bdRemoteTask>::~bdReference<bdRemoteTask>(&local_80);
-    iVar4 = __restgprlr_28(0);
-    return iVar4;
+    return 0;
   }
-  bdReference<bdRemoteTask>::operator=(&(poVar2->u).remoteTask,&local_80);
+  bdReference<bdRemoteTask>::operator=(&(param_1->u).remoteTask,&local_80);
   bdReference<bdRemoteTask>::~bdReference<bdRemoteTask>(&local_80);
-  iVar4 = __restgprlr_28(1);
-  return iVar4;
+  return 1;
 }
 
 
 // 826F0E98  dwCSReadFileComplete  (DW/dwStorage.cpp:739)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 taskCompleteResults dwCSReadFileComplete(overlappedTask *param_1,dwCSReadFileTask *param_2)
 
 {
-  overlappedTask *poVar1;
-  taskCompleteResults tVar2;
-  bdStorage *pbVar3;
-  bdStatus bVar4;
-  bdLobbyErrorCode bVar5;
-  ulonglong uVar6;
+  bdStorage *pbVar1;
+  bdStatus bVar2;
+  bdLobbyErrorCode bVar3;
+  taskCompleteResults tVar4;
   char acStack_70 [112];
   
-  uVar6 = (ulonglong)(int)param_2;
-  poVar1 = (overlappedTask *)__savegprlr_28(param_1);
-  if (poVar1 == (overlappedTask *)0x0) {
+  if (param_1 == (overlappedTask *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DW\\dwStorage.cpp",0x2e4,0,"%s"
                    );
   }
-  if ((uVar6 & 0xffffffff) == 0) {
+  if (param_2 == (dwCSReadFileTask *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DW\\dwStorage.cpp",0x2e5,0,"%s"
                    );
   }
-  if ((poVar1->u).remoteTask.m_ptr == (bdRemoteTask *)0x0) {
+  if ((param_1->u).remoteTask.m_ptr == (bdRemoteTask *)0x0) {
     Com_Printf(0x10,"Failed to retrieve update file status\n");
     Com_Printf(0x10,"%s()\n");
     dwLobbyErrorCodeToString(BD_HANDLE_TASK_FAILED,acStack_70,0x40);
     Com_PrintError(0x10,"\t DW storage task type %d errorCode %i - \'%s\'\n");
-    TaskManager_ClearTask(poVar1);
-    tVar2 = __restgprlr_28(2);
-    return tVar2;
+    TaskManager_ClearTask(param_1);
+    return TASK_ERROR;
   }
-  pbVar3 = dwGetStorage((uint)poVar1->controllerIndex);
-  if (pbVar3 == (bdStorage *)0x0) {
+  pbVar1 = dwGetStorage((uint)param_1->controllerIndex);
+  if (pbVar1 == (bdStorage *)0x0) {
     Com_Printf(0x10,"%s()\n");
     dwLobbyErrorCodeToString(BD_NOT_CONNECTED,acStack_70,0x40);
     Com_Printf(0x10,
                "\t Task start requested while not connected! DW storage task type %d errorCode %i - \'%s\'\n"
               );
-    TaskManager_ClearTask(poVar1);
-    tVar2 = __restgprlr_28(2);
-    return tVar2;
+    TaskManager_ClearTask(param_1);
+    return TASK_ERROR;
   }
-  dwLobbyPump((uint)poVar1->controllerIndex);
-  bVar4 = (**(code **)(((poVar1->u).remoteTask.m_ptr)->_padding_ + 4))();
-  bVar5 = bdRemoteTask::getErrorCode((poVar1->u).remoteTask.m_ptr);
-  *(bdLobbyErrorCode *)((int)uVar6 + 0x7b0) = bVar5;
-  tVar2 = dwTaskStatusConvert(bVar4,bVar5);
-  tVar2 = __restgprlr_28(tVar2);
-  return tVar2;
+  dwLobbyPump((uint)param_1->controllerIndex);
+  bVar2 = (**(code **)(((param_1->u).remoteTask.m_ptr)->_padding_ + 4))();
+  bVar3 = bdRemoteTask::getErrorCode((param_1->u).remoteTask.m_ptr);
+  param_2->m_error = bVar3;
+  tVar4 = dwTaskStatusConvert(bVar2,bVar3);
+  return tVar4;
 }
 
 
 // 826F1028  dwCSRemoveFile  (DW/dwStorage.cpp:768)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 int dwCSRemoveFile(overlappedTask *param_1,dwCSRemoveFileTask *param_2)
 
 {
-  overlappedTask *poVar1;
-  bdContentStreaming *pbVar2;
-  int iVar3;
-  ulonglong uVar4;
+  bdContentStreaming *pbVar1;
   bdReference<bdRemoteTask> local_80 [4];
   char acStack_70 [112];
   
-  uVar4 = (ulonglong)(int)param_2;
-  poVar1 = (overlappedTask *)__savegprlr_28(param_1);
-  if (poVar1 == (overlappedTask *)0x0) {
+  if (param_1 == (overlappedTask *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DW\\dwStorage.cpp",0x301,0,"%s"
                    );
   }
-  if ((uVar4 & 0xffffffff) == 0) {
+  if (param_2 == (dwCSRemoveFileTask *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DW\\dwStorage.cpp",0x302,0,"%s"
                    );
   }
-  pbVar2 = dwGetContentStreaming((uint)poVar1->controllerIndex);
-  if (pbVar2 == (bdContentStreaming *)0x0) {
+  pbVar1 = dwGetContentStreaming((uint)param_1->controllerIndex);
+  if (pbVar1 == (bdContentStreaming *)0x0) {
     Com_Printf(0x10,"%s()\n");
     dwLobbyErrorCodeToString(BD_NOT_CONNECTED,acStack_70,0x40);
     Com_Printf(0x10,
                "\t Task start requested while not connected! DW storage task type %d errorCode %i - \'%s\'\n"
               );
-    TaskManager_ClearTask(poVar1);
-    iVar3 = __restgprlr_28(0);
-    return iVar3;
+    TaskManager_ClearTask(param_1);
+    return 0;
   }
-  bdContentStreaming::removeFile((bdContentStreaming *)local_80,(ushort)pbVar2);
+  bdContentStreaming::removeFile((bdContentStreaming *)local_80,(ushort)pbVar1);
   if (local_80[0].m_ptr == (bdRemoteTask *)0x0) {
     Com_Printf(0x10,"%s()\n");
     dwLobbyErrorCodeToString(BD_START_TASK_FAILED,acStack_70,0x40);
     Com_PrintError(0x10,"\t DW storage task type %d errorCode %i - \'%s\'\n");
-    TaskManager_ClearTask(poVar1);
+    TaskManager_ClearTask(param_1);
     bdReference<bdRemoteTask>::~bdReference<bdRemoteTask>(local_80);
-    iVar3 = __restgprlr_28(0);
-    return iVar3;
+    return 0;
   }
-  bdReference<bdRemoteTask>::operator=(&(poVar1->u).remoteTask,local_80);
+  bdReference<bdRemoteTask>::operator=(&(param_1->u).remoteTask,local_80);
   bdReference<bdRemoteTask>::~bdReference<bdRemoteTask>(local_80);
-  iVar3 = __restgprlr_28(1);
-  return iVar3;
+  return 1;
 }
 
 
 // 826F1198  dwCSRemoveFileComplete  (DW/dwStorage.cpp:794)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 taskCompleteResults dwCSRemoveFileComplete(overlappedTask *param_1,dwCSRemoveFileTask *param_2)
 
 {
-  overlappedTask *poVar1;
-  taskCompleteResults tVar2;
-  bdStorage *pbVar3;
-  bdStatus bVar4;
-  bdLobbyErrorCode bVar5;
-  ulonglong uVar6;
+  bdStorage *pbVar1;
+  bdStatus bVar2;
+  bdLobbyErrorCode bVar3;
+  taskCompleteResults tVar4;
   char acStack_70 [112];
   
-  uVar6 = (ulonglong)(int)param_2;
-  poVar1 = (overlappedTask *)__savegprlr_28(param_1);
-  if (poVar1 == (overlappedTask *)0x0) {
+  if (param_1 == (overlappedTask *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DW\\dwStorage.cpp",0x31b,0,"%s"
                    );
   }
-  if ((uVar6 & 0xffffffff) == 0) {
+  if (param_2 == (dwCSRemoveFileTask *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DW\\dwStorage.cpp",0x31c,0,"%s"
                    );
   }
-  if ((poVar1->u).remoteTask.m_ptr == (bdRemoteTask *)0x0) {
+  if ((param_1->u).remoteTask.m_ptr == (bdRemoteTask *)0x0) {
     Com_Printf(0x10,"Failed to retrieve update file status\n");
     Com_Printf(0x10,"%s()\n");
     dwLobbyErrorCodeToString(BD_HANDLE_TASK_FAILED,acStack_70,0x40);
     Com_PrintError(0x10,"\t DW storage task type %d errorCode %i - \'%s\'\n");
-    TaskManager_ClearTask(poVar1);
-    tVar2 = __restgprlr_28(2);
-    return tVar2;
+    TaskManager_ClearTask(param_1);
+    return TASK_ERROR;
   }
-  pbVar3 = dwGetStorage((uint)poVar1->controllerIndex);
-  if (pbVar3 == (bdStorage *)0x0) {
+  pbVar1 = dwGetStorage((uint)param_1->controllerIndex);
+  if (pbVar1 == (bdStorage *)0x0) {
     Com_Printf(0x10,"%s()\n");
     dwLobbyErrorCodeToString(BD_NOT_CONNECTED,acStack_70,0x40);
     Com_Printf(0x10,
                "\t Task start requested while not connected! DW storage task type %d errorCode %i - \'%s\'\n"
               );
-    TaskManager_ClearTask(poVar1);
-    tVar2 = __restgprlr_28(2);
-    return tVar2;
+    TaskManager_ClearTask(param_1);
+    return TASK_ERROR;
   }
-  dwLobbyPump((uint)poVar1->controllerIndex);
-  bVar4 = (**(code **)(((poVar1->u).remoteTask.m_ptr)->_padding_ + 4))();
-  bVar5 = bdRemoteTask::getErrorCode((poVar1->u).remoteTask.m_ptr);
-  *(bdLobbyErrorCode *)((int)uVar6 + 4) = bVar5;
-  tVar2 = dwTaskStatusConvert(bVar4,bVar5);
-  tVar2 = __restgprlr_28(tVar2);
-  return tVar2;
+  dwLobbyPump((uint)param_1->controllerIndex);
+  bVar2 = (**(code **)(((param_1->u).remoteTask.m_ptr)->_padding_ + 4))();
+  bVar3 = bdRemoteTask::getErrorCode((param_1->u).remoteTask.m_ptr);
+  param_2->m_error = bVar3;
+  tVar4 = dwTaskStatusConvert(bVar2,bVar3);
+  return tVar4;
 }
 
 
 // 826F1328  dwCSWriteFile  (DW/dwStorage.cpp:823)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 int dwCSWriteFile(overlappedTask *param_1,dwCSWriteFileTask *param_2)
 
 {
-  overlappedTask *poVar1;
-  bdContentStreaming *pbVar2;
-  int iVar3;
-  bdReference<bdRemoteTask> bVar4;
-  ulonglong uVar5;
-  ushort uVar6;
+  bdContentStreaming *pbVar1;
+  bdReference<bdRemoteTask> bVar2;
+  ushort uVar3;
   uint in_stack_ffffff18;
   bdTag *in_stack_ffffff1c;
   bdFileID *in_stack_ffffff20;
@@ -1432,548 +1320,496 @@ int dwCSWriteFile(overlappedTask *param_1,dwCSWriteFileTask *param_2)
   bdReference<bdRemoteTask> abStack_7c [3];
   char acStack_70 [112];
   
-  uVar5 = (ulonglong)(int)param_2;
-  poVar1 = (overlappedTask *)__savegprlr_27(param_1);
-  if (poVar1 == (overlappedTask *)0x0) {
+  if (param_1 == (overlappedTask *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DW\\dwStorage.cpp",0x338,0,"%s"
                    );
   }
-  if ((uVar5 & 0xffffffff) == 0) {
+  if (param_2 == (dwCSWriteFileTask *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DW\\dwStorage.cpp",0x339,0,"%s"
                    );
   }
-  pbVar2 = dwGetContentStreaming((uint)poVar1->controllerIndex);
-  if (pbVar2 == (bdContentStreaming *)0x0) {
+  pbVar1 = dwGetContentStreaming((uint)param_1->controllerIndex);
+  if (pbVar1 == (bdContentStreaming *)0x0) {
     Com_Printf(0x10,"%s()\n");
     dwLobbyErrorCodeToString(BD_NOT_CONNECTED,acStack_70,0x40);
     Com_Printf(0x10,
                "\t Task start requested while not connected! DW storage task type %d errorCode %i - \'%s\'\n"
               );
-    TaskManager_ClearTask(poVar1);
-    iVar3 = __restgprlr_27(0);
-    return iVar3;
+    TaskManager_ClearTask(param_1);
+    return 0;
   }
-  iVar3 = (int)uVar5;
   local_80.m_ptr = (bdRemoteTask *)0x0;
-  uVar6 = (ushort)*(undefined4 *)(iVar3 + 0x24);
-  if (*(uint *)(iVar3 + 0x3c) == 0) {
-    bVar4 = bdContentStreaming::upload
-                      ((bdContentStreaming *)abStack_7c,(ushort)pbVar2,
-                       (bdUploadInterceptor *)(uint)*(ushort *)(iVar3 + 0x18),
-                       *(uint *)(iVar3 + 0x1c),*(char **)(iVar3 + 0x20),uVar6,
-                       (void *)(uint)*(ushort *)(iVar3 + 0x28),*(uint *)(iVar3 + 0x2c),
-                       in_stack_ffffff18,in_stack_ffffff1c,in_stack_ffffff20);
+  uVar3 = (ushort)param_2->m_fileName;
+  if (param_2->m_uploadHandler == (bdUploadInterceptor *)0x0) {
+    bVar2 = bdContentStreaming::upload
+                      ((bdContentStreaming *)abStack_7c,(ushort)pbVar1,
+                       (bdUploadInterceptor *)(uint)param_2->m_fileSlot,(uint)param_2->m_fileData,
+                       (char *)param_2->m_fileSize,uVar3,(void *)(uint)param_2->m_category,
+                       (uint)param_2->m_thumbData,in_stack_ffffff18,in_stack_ffffff1c,
+                       in_stack_ffffff20);
   }
   else {
-    bVar4 = bdContentStreaming::upload
-                      ((bdContentStreaming *)abStack_7c,(ushort)pbVar2,
-                       (bdUploadInterceptor *)(uint)*(ushort *)(iVar3 + 0x18),
-                       *(uint *)(iVar3 + 0x3c),(char *)0x0,uVar6,
-                       (void *)(uint)*(ushort *)(iVar3 + 0x28),*(uint *)(iVar3 + 0x2c),
+    bVar2 = bdContentStreaming::upload
+                      ((bdContentStreaming *)abStack_7c,(ushort)pbVar1,
+                       (bdUploadInterceptor *)(uint)param_2->m_fileSlot,
+                       (uint)param_2->m_uploadHandler,(char *)0x0,uVar3,
+                       (void *)(uint)param_2->m_category,(uint)param_2->m_thumbData,
                        in_stack_ffffff18,in_stack_ffffff1c,in_stack_ffffff20);
   }
-  bdReference<bdRemoteTask>::operator=(&local_80,(bdReference<bdRemoteTask> *)bVar4.m_ptr);
+  bdReference<bdRemoteTask>::operator=(&local_80,(bdReference<bdRemoteTask> *)bVar2.m_ptr);
   bdReference<bdRemoteTask>::~bdReference<bdRemoteTask>(abStack_7c);
   if (local_80.m_ptr == (bdRemoteTask *)0x0) {
     Com_Printf(0x10,"%s()\n");
     dwLobbyErrorCodeToString(BD_START_TASK_FAILED,acStack_70,0x40);
     Com_PrintError(0x10,"\t DW storage task type %d errorCode %i - \'%s\'\n");
-    TaskManager_ClearTask(poVar1);
+    TaskManager_ClearTask(param_1);
     bdReference<bdRemoteTask>::~bdReference<bdRemoteTask>(&local_80);
-    iVar3 = __restgprlr_27(0);
-    return iVar3;
+    return 0;
   }
-  bdReference<bdRemoteTask>::operator=(&(poVar1->u).remoteTask,&local_80);
+  bdReference<bdRemoteTask>::operator=(&(param_1->u).remoteTask,&local_80);
   bdReference<bdRemoteTask>::~bdReference<bdRemoteTask>(&local_80);
-  iVar3 = __restgprlr_27(1);
-  return iVar3;
+  return 1;
 }
 
 
 // 826F1510  dwCSWriteFileComplete  (DW/dwStorage.cpp:862)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 taskCompleteResults dwCSWriteFileComplete(overlappedTask *param_1,dwCSWriteFileTask *param_2)
 
 {
-  overlappedTask *poVar1;
-  taskCompleteResults tVar2;
-  bdStorage *pbVar3;
-  bdStatus bVar4;
-  bdLobbyErrorCode bVar5;
-  ulonglong uVar6;
+  bdStorage *pbVar1;
+  bdStatus bVar2;
+  bdLobbyErrorCode bVar3;
+  taskCompleteResults tVar4;
   char acStack_70 [112];
   
-  uVar6 = (ulonglong)(int)param_2;
-  poVar1 = (overlappedTask *)__savegprlr_28(param_1);
-  if (poVar1 == (overlappedTask *)0x0) {
+  if (param_1 == (overlappedTask *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DW\\dwStorage.cpp",0x35f,0,"%s"
                    );
   }
-  if ((uVar6 & 0xffffffff) == 0) {
+  if (param_2 == (dwCSWriteFileTask *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DW\\dwStorage.cpp",0x360,0,"%s"
                    );
   }
-  if ((poVar1->u).remoteTask.m_ptr == (bdRemoteTask *)0x0) {
+  if ((param_1->u).remoteTask.m_ptr == (bdRemoteTask *)0x0) {
     Com_Printf(0x10,"Failed to retrieve update file status\n");
     Com_Printf(0x10,"%s()\n");
     dwLobbyErrorCodeToString(BD_HANDLE_TASK_FAILED,acStack_70,0x40);
     Com_PrintError(0x10,"\t DW storage task type %d errorCode %i - \'%s\'\n");
-    TaskManager_ClearTask(poVar1);
-    tVar2 = __restgprlr_28(2);
-    return tVar2;
+    TaskManager_ClearTask(param_1);
+    return TASK_ERROR;
   }
-  pbVar3 = dwGetStorage((uint)poVar1->controllerIndex);
-  if (pbVar3 == (bdStorage *)0x0) {
+  pbVar1 = dwGetStorage((uint)param_1->controllerIndex);
+  if (pbVar1 == (bdStorage *)0x0) {
     Com_Printf(0x10,"%s()\n");
     dwLobbyErrorCodeToString(BD_NOT_CONNECTED,acStack_70,0x40);
     Com_Printf(0x10,
                "\t Task start requested while not connected! DW storage task type %d errorCode %i - \'%s\'\n"
               );
-    TaskManager_ClearTask(poVar1);
-    tVar2 = __restgprlr_28(2);
-    return tVar2;
+    TaskManager_ClearTask(param_1);
+    return TASK_ERROR;
   }
-  dwLobbyPump((uint)poVar1->controllerIndex);
-  bVar4 = (**(code **)(((poVar1->u).remoteTask.m_ptr)->_padding_ + 4))();
-  bVar5 = bdRemoteTask::getErrorCode((poVar1->u).remoteTask.m_ptr);
-  *(bdLobbyErrorCode *)((int)uVar6 + 0x38) = bVar5;
-  tVar2 = dwTaskStatusConvert(bVar4,bVar5);
-  tVar2 = __restgprlr_28(tVar2);
-  return tVar2;
+  dwLobbyPump((uint)param_1->controllerIndex);
+  bVar2 = (**(code **)(((param_1->u).remoteTask.m_ptr)->_padding_ + 4))();
+  bVar3 = bdRemoteTask::getErrorCode((param_1->u).remoteTask.m_ptr);
+  param_2->m_error = bVar3;
+  tVar4 = dwTaskStatusConvert(bVar2,bVar3);
+  return tVar4;
 }
 
 
 // 826F16A0  dwCSSetTags  (DW/dwStorage.cpp:891)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 int dwCSSetTags(overlappedTask *param_1,dwCSTagTask *param_2)
 
 {
-  overlappedTask *poVar1;
-  bdTags *pbVar2;
-  int iVar3;
-  ulonglong uVar4;
+  bdTags *pbVar1;
   bdReference<bdRemoteTask> local_80 [4];
   char acStack_70 [112];
   
-  uVar4 = (ulonglong)(int)param_2;
-  poVar1 = (overlappedTask *)__savegprlr_28(param_1);
-  if (poVar1 == (overlappedTask *)0x0) {
+  if (param_1 == (overlappedTask *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DW\\dwStorage.cpp",0x37c,0,"%s"
                    );
   }
-  if ((uVar4 & 0xffffffff) == 0) {
+  if (param_2 == (dwCSTagTask *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DW\\dwStorage.cpp",0x37d,0,"%s"
                    );
   }
-  pbVar2 = dwGetTagService((uint)poVar1->controllerIndex);
-  if (pbVar2 == (bdTags *)0x0) {
+  pbVar1 = dwGetTagService((uint)param_1->controllerIndex);
+  if (pbVar1 == (bdTags *)0x0) {
     Com_Printf(0x10,"%s()\n");
     dwLobbyErrorCodeToString(BD_NOT_CONNECTED,acStack_70,0x40);
     Com_Printf(0x10,
                "\t Task start requested while not connected! DW storage task type %d errorCode %i - \'%s\'\n"
               );
-    TaskManager_ClearTask(poVar1);
-    iVar3 = __restgprlr_28(0);
-    return iVar3;
+    TaskManager_ClearTask(param_1);
+    return 0;
   }
   bdTags::setTagsForEntityID
-            ((bdTags *)local_80,(uint)pbVar2,1,(uint)*(undefined8 *)uVar4,
-             *(bdTag **)((int)(undefined8 *)uVar4 + 0xc));
+            ((bdTags *)local_80,(uint)pbVar1,1,(uint)param_2->m_entityID,(bdTag *)param_2->m_numTags
+            );
   if (local_80[0].m_ptr == (bdRemoteTask *)0x0) {
     Com_Printf(0x10,"%s()\n");
     dwLobbyErrorCodeToString(BD_START_TASK_FAILED,acStack_70,0x40);
     Com_PrintError(0x10,"\t DW storage task type %d errorCode %i - \'%s\'\n");
-    TaskManager_ClearTask(poVar1);
+    TaskManager_ClearTask(param_1);
     bdReference<bdRemoteTask>::~bdReference<bdRemoteTask>(local_80);
-    iVar3 = __restgprlr_28(0);
-    return iVar3;
+    return 0;
   }
-  bdReference<bdRemoteTask>::operator=(&(poVar1->u).remoteTask,local_80);
+  bdReference<bdRemoteTask>::operator=(&(param_1->u).remoteTask,local_80);
   bdReference<bdRemoteTask>::~bdReference<bdRemoteTask>(local_80);
-  iVar3 = __restgprlr_28(1);
-  return iVar3;
+  return 1;
 }
 
 
 // 826F1820  dwCSSetTagsComplete  (DW/dwStorage.cpp:918)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 taskCompleteResults dwCSSetTagsComplete(overlappedTask *param_1,dwCSTagTask *param_2)
 
 {
-  overlappedTask *poVar1;
-  taskCompleteResults tVar2;
-  bdStorage *pbVar3;
-  bdStatus bVar4;
-  bdLobbyErrorCode bVar5;
-  ulonglong uVar6;
+  bdStorage *pbVar1;
+  bdStatus bVar2;
+  bdLobbyErrorCode bVar3;
+  taskCompleteResults tVar4;
   char acStack_70 [112];
   
-  uVar6 = (ulonglong)(int)param_2;
-  poVar1 = (overlappedTask *)__savegprlr_28(param_1);
-  if (poVar1 == (overlappedTask *)0x0) {
+  if (param_1 == (overlappedTask *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DW\\dwStorage.cpp",0x397,0,"%s"
                    );
   }
-  if ((uVar6 & 0xffffffff) == 0) {
+  if (param_2 == (dwCSTagTask *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DW\\dwStorage.cpp",0x398,0,"%s"
                    );
   }
-  if ((poVar1->u).remoteTask.m_ptr == (bdRemoteTask *)0x0) {
+  if ((param_1->u).remoteTask.m_ptr == (bdRemoteTask *)0x0) {
     Com_Printf(0x10,"Failed to retrieve update file status\n");
     Com_Printf(0x10,"%s()\n");
     dwLobbyErrorCodeToString(BD_HANDLE_TASK_FAILED,acStack_70,0x40);
     Com_PrintError(0x10,"\t DW storage task type %d errorCode %i - \'%s\'\n");
-    TaskManager_ClearTask(poVar1);
-    tVar2 = __restgprlr_28(2);
-    return tVar2;
+    TaskManager_ClearTask(param_1);
+    return TASK_ERROR;
   }
-  pbVar3 = dwGetStorage((uint)poVar1->controllerIndex);
-  if (pbVar3 == (bdStorage *)0x0) {
+  pbVar1 = dwGetStorage((uint)param_1->controllerIndex);
+  if (pbVar1 == (bdStorage *)0x0) {
     Com_Printf(0x10,"%s()\n");
     dwLobbyErrorCodeToString(BD_NOT_CONNECTED,acStack_70,0x40);
     Com_Printf(0x10,
                "\t Task start requested while not connected! DW storage task type %d errorCode %i - \'%s\'\n"
               );
-    TaskManager_ClearTask(poVar1);
-    tVar2 = __restgprlr_28(2);
-    return tVar2;
+    TaskManager_ClearTask(param_1);
+    return TASK_ERROR;
   }
-  dwLobbyPump((uint)poVar1->controllerIndex);
-  bVar4 = (**(code **)(((poVar1->u).remoteTask.m_ptr)->_padding_ + 4))();
-  bVar5 = bdRemoteTask::getErrorCode((poVar1->u).remoteTask.m_ptr);
-  *(bdLobbyErrorCode *)((int)uVar6 + 0x10) = bVar5;
-  tVar2 = dwTaskStatusConvert(bVar4,bVar5);
-  tVar2 = __restgprlr_28(tVar2);
-  return tVar2;
+  dwLobbyPump((uint)param_1->controllerIndex);
+  bVar2 = (**(code **)(((param_1->u).remoteTask.m_ptr)->_padding_ + 4))();
+  bVar3 = bdRemoteTask::getErrorCode((param_1->u).remoteTask.m_ptr);
+  param_2->m_error = bVar3;
+  tVar4 = dwTaskStatusConvert(bVar2,bVar3);
+  return tVar4;
 }
 
 
 // 826F19B0  dwCSCopyFromUserStorage  (DW/dwStorage.cpp:947)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 int dwCSCopyFromUserStorage(overlappedTask *param_1,dwCSCopyFileTask *param_2)
 
 {
-  undefined8 *puVar1;
-  overlappedTask *poVar2;
-  bdContentStreaming *pbVar3;
-  int iVar4;
-  ulonglong uVar5;
+  bdContentStreaming *pbVar1;
   bdTag *in_stack_ffffff18;
   bdFileID *in_stack_ffffff1c;
   bdReference<bdRemoteTask> local_80 [4];
   char acStack_70 [112];
   
-  uVar5 = (ulonglong)(int)param_2;
-  poVar2 = (overlappedTask *)__savegprlr_28(param_1);
-  if (poVar2 == (overlappedTask *)0x0) {
+  if (param_1 == (overlappedTask *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DW\\dwStorage.cpp",0x3b4,0,"%s"
                    );
   }
-  if ((uVar5 & 0xffffffff) == 0) {
+  if (param_2 == (dwCSCopyFileTask *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DW\\dwStorage.cpp",0x3b5,0,"%s"
                    );
   }
-  pbVar3 = dwGetContentStreaming((uint)poVar2->controllerIndex);
-  if (pbVar3 == (bdContentStreaming *)0x0) {
+  pbVar1 = dwGetContentStreaming((uint)param_1->controllerIndex);
+  if (pbVar1 == (bdContentStreaming *)0x0) {
     Com_Printf(0x10,"%s()\n");
     dwLobbyErrorCodeToString(BD_NOT_CONNECTED,acStack_70,0x40);
     Com_Printf(0x10,
                "\t Task start requested while not connected! DW storage task type %d errorCode %i - \'%s\'\n"
               );
-    TaskManager_ClearTask(poVar2);
-    iVar4 = __restgprlr_28(0);
-    return iVar4;
+    TaskManager_ClearTask(param_1);
+    return 0;
   }
-  puVar1 = (undefined8 *)uVar5;
   bdContentStreaming::copyFromUserStorage
-            ((bdContentStreaming *)local_80,(longlong)(int)pbVar3,(ushort)*puVar1,
-             (char *)(uint)*(ushort *)(puVar1 + 1),(ushort)*(undefined4 *)((int)puVar1 + 0xc),
-             (void *)(uint)*(ushort *)(puVar1 + 2),*(uint *)((int)puVar1 + 0x14),
-             *(uint *)(puVar1 + 3),in_stack_ffffff18,in_stack_ffffff1c);
+            ((bdContentStreaming *)local_80,(longlong)(int)pbVar1,(ushort)param_2->m_userFileID,
+             (char *)(uint)param_2->m_fileSlot,(ushort)param_2->m_fileName,
+             (void *)(uint)param_2->m_category,(uint)param_2->m_metaData,param_2->m_metaDataSize,
+             in_stack_ffffff18,in_stack_ffffff1c);
   if (local_80[0].m_ptr == (bdRemoteTask *)0x0) {
     Com_Printf(0x10,"%s()\n");
     dwLobbyErrorCodeToString(BD_START_TASK_FAILED,acStack_70,0x40);
     Com_PrintError(0x10,"\t DW storage task type %d errorCode %i - \'%s\'\n");
-    TaskManager_ClearTask(poVar2);
+    TaskManager_ClearTask(param_1);
     bdReference<bdRemoteTask>::~bdReference<bdRemoteTask>(local_80);
-    iVar4 = __restgprlr_28(0);
-    return iVar4;
+    return 0;
   }
-  bdReference<bdRemoteTask>::operator=(&(poVar2->u).remoteTask,local_80);
+  bdReference<bdRemoteTask>::operator=(&(param_1->u).remoteTask,local_80);
   bdReference<bdRemoteTask>::~bdReference<bdRemoteTask>(local_80);
-  iVar4 = __restgprlr_28(1);
-  return iVar4;
+  return 1;
 }
 
 
 // 826F1B50  dwCSCopyFromUserStorageComplete  (DW/dwStorage.cpp:980)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 taskCompleteResults
 dwCSCopyFromUserStorageComplete(overlappedTask *param_1,dwCSCopyFileTask *param_2)
 
 {
-  overlappedTask *poVar1;
-  taskCompleteResults tVar2;
-  bdStorage *pbVar3;
-  bdStatus bVar4;
-  bdLobbyErrorCode bVar5;
-  ulonglong uVar6;
+  bdStorage *pbVar1;
+  bdStatus bVar2;
+  bdLobbyErrorCode bVar3;
+  taskCompleteResults tVar4;
   char acStack_70 [112];
   
-  uVar6 = (ulonglong)(int)param_2;
-  poVar1 = (overlappedTask *)__savegprlr_28(param_1);
-  if (poVar1 == (overlappedTask *)0x0) {
+  if (param_1 == (overlappedTask *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DW\\dwStorage.cpp",0x3d5,0,"%s"
                    );
   }
-  if ((uVar6 & 0xffffffff) == 0) {
+  if (param_2 == (dwCSCopyFileTask *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DW\\dwStorage.cpp",0x3d6,0,"%s"
                    );
   }
-  if ((poVar1->u).remoteTask.m_ptr == (bdRemoteTask *)0x0) {
+  if ((param_1->u).remoteTask.m_ptr == (bdRemoteTask *)0x0) {
     Com_Printf(0x10,"Failed to copy file from another user\'s storage area.\n");
     Com_Printf(0x10,"%s()\n");
     dwLobbyErrorCodeToString(BD_HANDLE_TASK_FAILED,acStack_70,0x40);
     Com_PrintError(0x10,"\t DW storage task type %d errorCode %i - \'%s\'\n");
-    TaskManager_ClearTask(poVar1);
-    tVar2 = __restgprlr_28(2);
-    return tVar2;
+    TaskManager_ClearTask(param_1);
+    return TASK_ERROR;
   }
-  pbVar3 = dwGetStorage((uint)poVar1->controllerIndex);
-  if (pbVar3 == (bdStorage *)0x0) {
+  pbVar1 = dwGetStorage((uint)param_1->controllerIndex);
+  if (pbVar1 == (bdStorage *)0x0) {
     Com_Printf(0x10,"%s()\n");
     dwLobbyErrorCodeToString(BD_NOT_CONNECTED,acStack_70,0x40);
     Com_Printf(0x10,
                "\t Task start requested while not connected! DW storage task type %d errorCode %i - \'%s\'\n"
               );
-    TaskManager_ClearTask(poVar1);
-    tVar2 = __restgprlr_28(2);
-    return tVar2;
+    TaskManager_ClearTask(param_1);
+    return TASK_ERROR;
   }
-  dwLobbyPump((uint)poVar1->controllerIndex);
-  bVar4 = (**(code **)(((poVar1->u).remoteTask.m_ptr)->_padding_ + 4))();
-  bVar5 = bdRemoteTask::getErrorCode((poVar1->u).remoteTask.m_ptr);
-  *(bdLobbyErrorCode *)((int)uVar6 + 0x28) = bVar5;
-  tVar2 = dwTaskStatusConvert(bVar4,bVar5);
-  tVar2 = __restgprlr_28(tVar2);
-  return tVar2;
+  dwLobbyPump((uint)param_1->controllerIndex);
+  bVar2 = (**(code **)(((param_1->u).remoteTask.m_ptr)->_padding_ + 4))();
+  bVar3 = bdRemoteTask::getErrorCode((param_1->u).remoteTask.m_ptr);
+  param_2->m_error = bVar3;
+  tVar4 = dwTaskStatusConvert(bVar2,bVar3);
+  return tVar4;
 }
 
 
 // 826F1CE0  dwCSUploadSummaryMetaData  (DW/dwStorage.cpp:1009)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 int dwCSUploadSummaryMetaData(overlappedTask *param_1,dwCSUploadSummaryTask *param_2)
 
 {
-  undefined8 *puVar1;
-  overlappedTask *poVar2;
-  bdContentStreaming *pbVar3;
-  int iVar4;
-  ulonglong uVar5;
+  bdContentStreaming *pbVar1;
   bdReference<bdRemoteTask> local_80 [4];
   char acStack_70 [112];
   
-  uVar5 = (ulonglong)(int)param_2;
-  poVar2 = (overlappedTask *)__savegprlr_28(param_1);
-  if (poVar2 == (overlappedTask *)0x0) {
+  if (param_1 == (overlappedTask *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DW\\dwStorage.cpp",0x3f2,0,"%s"
                    );
   }
-  if ((uVar5 & 0xffffffff) == 0) {
+  if (param_2 == (dwCSUploadSummaryTask *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DW\\dwStorage.cpp",0x3f3,0,"%s"
                    );
   }
-  pbVar3 = dwGetContentStreaming((uint)poVar2->controllerIndex);
-  if (pbVar3 == (bdContentStreaming *)0x0) {
+  pbVar1 = dwGetContentStreaming((uint)param_1->controllerIndex);
+  if (pbVar1 == (bdContentStreaming *)0x0) {
     Com_Printf(0x10,"%s()\n");
     dwLobbyErrorCodeToString(BD_NOT_CONNECTED,acStack_70,0x40);
     Com_Printf(0x10,
                "\t Task start requested while not connected! DW storage task type %d errorCode %i - \'%s\'\n"
               );
-    TaskManager_ClearTask(poVar2);
-    iVar4 = __restgprlr_28(0);
-    return iVar4;
+    TaskManager_ClearTask(param_1);
+    return 0;
   }
-  puVar1 = (undefined8 *)uVar5;
   bdContentStreaming::uploadUserSummaryMetaData
-            ((bdContentStreaming *)local_80,(longlong)(int)pbVar3,(void *)*puVar1,
-             *(uint *)(puVar1 + 1),*(void **)((int)puVar1 + 0xc),*(uint *)(puVar1 + 2),
-             *(uint *)((int)puVar1 + 0x14),*(bdTag **)(puVar1 + 3));
+            ((bdContentStreaming *)local_80,(longlong)(int)pbVar1,(void *)param_2->m_fileID,
+             (uint)param_2->m_summaryData,(void *)param_2->m_summaryDataSize,
+             (uint)param_2->m_metaData,param_2->m_metaDataSize,(bdTag *)param_2->m_numTags);
   if (local_80[0].m_ptr == (bdRemoteTask *)0x0) {
     Com_Printf(0x10,"%s()\n");
     dwLobbyErrorCodeToString(BD_START_TASK_FAILED,acStack_70,0x40);
     Com_PrintError(0x10,"\t DW storage task type %d errorCode %i - \'%s\'\n");
-    TaskManager_ClearTask(poVar2);
+    TaskManager_ClearTask(param_1);
     bdReference<bdRemoteTask>::~bdReference<bdRemoteTask>(local_80);
-    iVar4 = __restgprlr_28(0);
-    return iVar4;
+    return 0;
   }
-  bdReference<bdRemoteTask>::operator=(&(poVar2->u).remoteTask,local_80);
+  bdReference<bdRemoteTask>::operator=(&(param_1->u).remoteTask,local_80);
   bdReference<bdRemoteTask>::~bdReference<bdRemoteTask>(local_80);
-  iVar4 = __restgprlr_28(1);
-  return iVar4;
+  return 1;
 }
 
 
 // 826F1E70  dwCSUploadSummaryMetaDataComplete  (DW/dwStorage.cpp:1041)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 taskCompleteResults
 dwCSUploadSummaryMetaDataComplete(overlappedTask *param_1,dwCSUploadSummaryTask *param_2)
 
 {
-  overlappedTask *poVar1;
-  taskCompleteResults tVar2;
-  bdStorage *pbVar3;
-  bdStatus bVar4;
-  bdLobbyErrorCode bVar5;
-  ulonglong uVar6;
+  bdStorage *pbVar1;
+  bdStatus bVar2;
+  bdLobbyErrorCode bVar3;
+  taskCompleteResults tVar4;
   char acStack_70 [112];
   
-  uVar6 = (ulonglong)(int)param_2;
-  poVar1 = (overlappedTask *)__savegprlr_28(param_1);
-  if (poVar1 == (overlappedTask *)0x0) {
+  if (param_1 == (overlappedTask *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DW\\dwStorage.cpp",0x412,0,"%s"
                    );
   }
-  if ((uVar6 & 0xffffffff) == 0) {
+  if (param_2 == (dwCSUploadSummaryTask *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DW\\dwStorage.cpp",0x413,0,"%s"
                    );
   }
-  if ((poVar1->u).remoteTask.m_ptr == (bdRemoteTask *)0x0) {
+  if ((param_1->u).remoteTask.m_ptr == (bdRemoteTask *)0x0) {
     Com_Printf(0x10,"Failed to upload summary and meta data.\n");
     Com_Printf(0x10,"%s()\n");
     dwLobbyErrorCodeToString(BD_HANDLE_TASK_FAILED,acStack_70,0x40);
     Com_PrintError(0x10,"\t DW storage task type %d errorCode %i - \'%s\'\n");
-    TaskManager_ClearTask(poVar1);
-    tVar2 = __restgprlr_28(2);
-    return tVar2;
+    TaskManager_ClearTask(param_1);
+    return TASK_ERROR;
   }
-  pbVar3 = dwGetStorage((uint)poVar1->controllerIndex);
-  if (pbVar3 == (bdStorage *)0x0) {
+  pbVar1 = dwGetStorage((uint)param_1->controllerIndex);
+  if (pbVar1 == (bdStorage *)0x0) {
     Com_Printf(0x10,"%s()\n");
     dwLobbyErrorCodeToString(BD_NOT_CONNECTED,acStack_70,0x40);
     Com_Printf(0x10,
                "\t Task start requested while not connected! DW storage task type %d errorCode %i - \'%s\'\n"
               );
-    TaskManager_ClearTask(poVar1);
-    tVar2 = __restgprlr_28(2);
-    return tVar2;
+    TaskManager_ClearTask(param_1);
+    return TASK_ERROR;
   }
-  dwLobbyPump((uint)poVar1->controllerIndex);
-  bVar4 = (**(code **)(((poVar1->u).remoteTask.m_ptr)->_padding_ + 4))();
-  bVar5 = bdRemoteTask::getErrorCode((poVar1->u).remoteTask.m_ptr);
-  *(bdLobbyErrorCode *)((int)uVar6 + 0x20) = bVar5;
-  tVar2 = dwTaskStatusConvert(bVar4,bVar5);
-  tVar2 = __restgprlr_28(tVar2);
-  return tVar2;
+  dwLobbyPump((uint)param_1->controllerIndex);
+  bVar2 = (**(code **)(((param_1->u).remoteTask.m_ptr)->_padding_ + 4))();
+  bVar3 = bdRemoteTask::getErrorCode((param_1->u).remoteTask.m_ptr);
+  param_2->m_error = bVar3;
+  tVar4 = dwTaskStatusConvert(bVar2,bVar3);
+  return tVar4;
 }
 
 
 // 826F2000  dwCSDownloadSummaryData  (DW/dwStorage.cpp:1070)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 int dwCSDownloadSummaryData(overlappedTask *param_1,dwCSDownloadSummaryTask *param_2)
 
 {
-  undefined8 *puVar1;
-  overlappedTask *poVar2;
-  bdContentStreaming *pbVar3;
-  int iVar4;
-  ulonglong uVar5;
+  bdContentStreaming *pbVar1;
   bdReference<bdRemoteTask> local_80 [4];
   char acStack_70 [112];
   
-  uVar5 = (ulonglong)(int)param_2;
-  poVar2 = (overlappedTask *)__savegprlr_28(param_1);
-  if (poVar2 == (overlappedTask *)0x0) {
+  if (param_1 == (overlappedTask *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DW\\dwStorage.cpp",0x42f,0,"%s"
                    );
   }
-  if ((uVar5 & 0xffffffff) == 0) {
+  if (param_2 == (dwCSDownloadSummaryTask *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DW\\dwStorage.cpp",0x430,0,"%s"
                    );
   }
-  pbVar3 = dwGetContentStreaming((uint)poVar2->controllerIndex);
-  if (pbVar3 == (bdContentStreaming *)0x0) {
+  pbVar1 = dwGetContentStreaming((uint)param_1->controllerIndex);
+  if (pbVar1 == (bdContentStreaming *)0x0) {
     Com_Printf(0x10,"%s()\n");
     dwLobbyErrorCodeToString(BD_NOT_CONNECTED,acStack_70,0x40);
     Com_Printf(0x10,
                "\t Task start requested while not connected! DW storage task type %d errorCode %i - \'%s\'\n"
               );
-    TaskManager_ClearTask(poVar2);
-    iVar4 = __restgprlr_28(0);
-    return iVar4;
+    TaskManager_ClearTask(param_1);
+    return 0;
   }
-  puVar1 = (undefined8 *)uVar5;
   bdContentStreaming::downloadUserSummary
-            ((bdContentStreaming *)local_80,(longlong)(int)pbVar3,(void *)*puVar1,
-             *(uint *)(puVar1 + 1),*(uint *)((int)puVar1 + 0xc),0);
+            ((bdContentStreaming *)local_80,(longlong)(int)pbVar1,(void *)param_2->m_fileID,
+             (uint)param_2->m_summaryData,param_2->m_summaryDataSize,0);
   if (local_80[0].m_ptr == (bdRemoteTask *)0x0) {
     Com_Printf(0x10,"%s()\n");
     dwLobbyErrorCodeToString(BD_START_TASK_FAILED,acStack_70,0x40);
     Com_PrintError(0x10,"\t DW storage task type %d errorCode %i - \'%s\'\n");
-    TaskManager_ClearTask(poVar2);
+    TaskManager_ClearTask(param_1);
     bdReference<bdRemoteTask>::~bdReference<bdRemoteTask>(local_80);
-    iVar4 = __restgprlr_28(0);
-    return iVar4;
+    return 0;
   }
-  bdReference<bdRemoteTask>::operator=(&(poVar2->u).remoteTask,local_80);
+  bdReference<bdRemoteTask>::operator=(&(param_1->u).remoteTask,local_80);
   bdReference<bdRemoteTask>::~bdReference<bdRemoteTask>(local_80);
-  iVar4 = __restgprlr_28(1);
-  return iVar4;
+  return 1;
 }
 
 
 // 826F2180  dwCSDownloadSummaryComplete  (DW/dwStorage.cpp:1098)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 taskCompleteResults
 dwCSDownloadSummaryComplete(overlappedTask *param_1,dwCSDownloadSummaryTask *param_2)
 
 {
-  overlappedTask *poVar1;
-  taskCompleteResults tVar2;
-  bdStorage *pbVar3;
-  bdStatus bVar4;
-  bdLobbyErrorCode bVar5;
-  ulonglong uVar6;
+  bdStorage *pbVar1;
+  bdStatus bVar2;
+  bdLobbyErrorCode bVar3;
+  taskCompleteResults tVar4;
   char acStack_70 [112];
   
-  uVar6 = (ulonglong)(int)param_2;
-  poVar1 = (overlappedTask *)__savegprlr_28(param_1);
-  if (poVar1 == (overlappedTask *)0x0) {
+  if (param_1 == (overlappedTask *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DW\\dwStorage.cpp",1099,0,"%s")
     ;
   }
-  if ((uVar6 & 0xffffffff) == 0) {
+  if (param_2 == (dwCSDownloadSummaryTask *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DW\\dwStorage.cpp",0x44c,0,"%s"
                    );
   }
-  if ((poVar1->u).remoteTask.m_ptr == (bdRemoteTask *)0x0) {
+  if ((param_1->u).remoteTask.m_ptr == (bdRemoteTask *)0x0) {
     Com_Printf(0x10,"Failed to upload summary and meta data.\n");
     Com_Printf(0x10,"%s()\n");
     dwLobbyErrorCodeToString(BD_HANDLE_TASK_FAILED,acStack_70,0x40);
     Com_PrintError(0x10,"\t DW storage task type %d errorCode %i - \'%s\'\n");
-    TaskManager_ClearTask(poVar1);
-    tVar2 = __restgprlr_28(2);
-    return tVar2;
+    TaskManager_ClearTask(param_1);
+    return TASK_ERROR;
   }
-  pbVar3 = dwGetStorage((uint)poVar1->controllerIndex);
-  if (pbVar3 == (bdStorage *)0x0) {
+  pbVar1 = dwGetStorage((uint)param_1->controllerIndex);
+  if (pbVar1 == (bdStorage *)0x0) {
     Com_Printf(0x10,"%s()\n");
     dwLobbyErrorCodeToString(BD_NOT_CONNECTED,acStack_70,0x40);
     Com_Printf(0x10,
                "\t Task start requested while not connected! DW storage task type %d errorCode %i - \'%s\'\n"
               );
-    TaskManager_ClearTask(poVar1);
-    tVar2 = __restgprlr_28(2);
-    return tVar2;
+    TaskManager_ClearTask(param_1);
+    return TASK_ERROR;
   }
-  dwLobbyPump((uint)poVar1->controllerIndex);
-  bVar4 = (**(code **)(((poVar1->u).remoteTask.m_ptr)->_padding_ + 4))();
-  bVar5 = bdRemoteTask::getErrorCode((poVar1->u).remoteTask.m_ptr);
-  *(bdLobbyErrorCode *)((int)uVar6 + 0x10) = bVar5;
-  tVar2 = dwTaskStatusConvert(bVar4,bVar5);
-  tVar2 = __restgprlr_28(tVar2);
-  return tVar2;
+  dwLobbyPump((uint)param_1->controllerIndex);
+  bVar2 = (**(code **)(((param_1->u).remoteTask.m_ptr)->_padding_ + 4))();
+  bVar3 = bdRemoteTask::getErrorCode((param_1->u).remoteTask.m_ptr);
+  param_2->m_error = bVar3;
+  tVar4 = dwTaskStatusConvert(bVar2,bVar3);
+  return tVar4;
 }
 
 

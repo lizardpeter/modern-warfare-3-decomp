@@ -44,23 +44,25 @@ void G_DebugStarWithText(float *param_1,float *param_2,float *param_3,char *para
 
 // 8246D318  G_DebugBox  (game/g_debug.cpp:51)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_21 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_21 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void G_DebugBox(float *param_1,Bounds *param_2,float param_3,float *param_4,int param_5,int param_6)
 
 {
   float fVar1;
   int *piVar2;
-  float *pfVar3;
-  float *pfVar4;
   int in_r8;
-  longlong lVar5;
-  int *piVar6;
-  double extraout_f1;
+  longlong lVar3;
+  int *piVar4;
+  double dVar5;
+  double dVar6;
   double dVar7;
   double dVar8;
   double dVar9;
   double dVar10;
-  double dVar11;
-  double dVar12;
   float local_f0 [4];
   float local_e0;
   float local_dc;
@@ -83,63 +85,60 @@ void G_DebugBox(float *param_1,Bounds *param_2,float param_3,float *param_4,int 
   float local_98;
   float local_94;
   
-  lVar5 = (longlong)(int)param_2;
-  __savegprlr_27((double)param_3,param_1,lVar5,param_4);
-  pfVar4 = (float *)lVar5;
-  pfVar3 = (float *)__savefpr_21();
-  dVar12 = (double)(float)(extraout_f1 * 0.01745329238474369);
-  dVar7 = sin(dVar12);
-  dVar11 = (double)(float)dVar7;
-  dVar7 = cos(dVar12);
-  dVar9 = (double)(float)dVar7;
-  dVar8 = (double)(pfVar4[1] - pfVar4[4]);
-  dVar7 = (double)(pfVar4[1] + pfVar4[4]);
-  dVar12 = (double)(*pfVar4 - pfVar4[3]);
-  dVar10 = (double)(*pfVar4 + pfVar4[3]);
-  local_c4 = pfVar4[2] - pfVar4[5];
-  local_94 = pfVar3[2];
-  fVar1 = pfVar4[2] + pfVar4[5];
-  local_9c = *pfVar3;
-  local_98 = pfVar3[1];
+  dVar10 = (double)(param_3 * 0.017453292);
+  dVar5 = sin(dVar10);
+  dVar9 = (double)(float)dVar5;
+  dVar5 = cos(dVar10);
+  dVar7 = (double)(float)dVar5;
+  dVar6 = (double)(param_2->midPoint[1] - param_2->halfSize[1]);
+  dVar5 = (double)(param_2->midPoint[1] + param_2->halfSize[1]);
+  dVar10 = (double)(param_2->midPoint[0] - param_2->halfSize[0]);
+  dVar8 = (double)(param_2->midPoint[0] + param_2->halfSize[0]);
+  local_c4 = param_2->midPoint[2] - param_2->halfSize[2];
+  local_94 = param_1[2];
+  fVar1 = param_2->midPoint[2] + param_2->halfSize[2];
+  local_9c = *param_1;
+  local_98 = param_1[1];
   local_f0[2] = local_94 + local_c4;
   local_dc = local_94 + local_c4;
   local_d0 = local_94 + local_c4;
   local_c4 = local_94 + local_c4;
   local_b8 = local_94 + fVar1;
-  local_f0[0] = local_9c + (float)(dVar12 * dVar9 - (double)(float)(dVar8 * dVar11));
-  local_f0[3] = local_9c + (float)(dVar10 * dVar9 - (double)(float)(dVar8 * dVar11));
-  local_cc = local_9c + (float)(dVar10 * dVar9 - (double)(float)(dVar7 * dVar11));
-  local_f0[1] = local_98 + (float)(dVar12 * dVar11 + (double)(float)(dVar8 * dVar9));
-  local_e0 = local_98 + (float)(dVar10 * dVar11 + (double)(float)(dVar8 * dVar9));
-  local_d8 = local_9c + (float)(dVar12 * dVar9 - (double)(float)(dVar7 * dVar11));
-  local_d4 = local_98 + (float)(dVar12 * dVar11 + (double)(float)(dVar7 * dVar9));
-  lVar5 = 0xc;
-  piVar6 = (int *)&UNK_8206f724;
+  local_f0[0] = local_9c + (float)(dVar10 * dVar7 - (double)(float)(dVar6 * dVar9));
+  local_f0[3] = local_9c + (float)(dVar8 * dVar7 - (double)(float)(dVar6 * dVar9));
+  local_cc = local_9c + (float)(dVar8 * dVar7 - (double)(float)(dVar5 * dVar9));
+  local_f0[1] = local_98 + (float)(dVar10 * dVar9 + (double)(float)(dVar6 * dVar7));
+  local_e0 = local_98 + (float)(dVar8 * dVar9 + (double)(float)(dVar6 * dVar7));
+  local_d8 = local_9c + (float)(dVar10 * dVar7 - (double)(float)(dVar5 * dVar9));
+  local_d4 = local_98 + (float)(dVar10 * dVar9 + (double)(float)(dVar5 * dVar7));
+  lVar3 = 0xc;
+  piVar4 = (int *)&UNK_8206f724;
   local_ac = local_94 + fVar1;
-  local_c8 = local_98 + (float)(dVar10 * dVar11 + (double)(float)(dVar7 * dVar9));
-  local_c0 = local_9c + (float)(dVar12 * dVar9 - (double)(float)(dVar8 * dVar11));
-  local_bc = local_98 + (float)(dVar12 * dVar11 + (double)(float)(dVar8 * dVar9));
+  local_c8 = local_98 + (float)(dVar8 * dVar9 + (double)(float)(dVar5 * dVar7));
+  local_c0 = local_9c + (float)(dVar10 * dVar7 - (double)(float)(dVar6 * dVar9));
+  local_bc = local_98 + (float)(dVar10 * dVar9 + (double)(float)(dVar6 * dVar7));
   local_a0 = local_94 + fVar1;
   local_94 = local_94 + fVar1;
-  local_b4 = local_9c + (float)(dVar10 * dVar9 - (double)(float)(dVar8 * dVar11));
-  local_b0 = local_98 + (float)(dVar10 * dVar11 + (double)(float)(dVar8 * dVar9));
-  local_a4 = local_98 + (float)(dVar12 * dVar11 + (double)(float)(dVar7 * dVar9));
-  local_a8 = local_9c + (float)(dVar12 * dVar9 - (double)(float)(dVar7 * dVar11));
-  local_9c = local_9c + (float)(dVar10 * dVar9 - (double)(float)(dVar7 * dVar11));
-  local_98 = local_98 + (float)(dVar10 * dVar11 + (double)(float)(dVar7 * dVar9));
+  local_b4 = local_9c + (float)(dVar8 * dVar7 - (double)(float)(dVar6 * dVar9));
+  local_b0 = local_98 + (float)(dVar8 * dVar9 + (double)(float)(dVar6 * dVar7));
+  local_a4 = local_98 + (float)(dVar10 * dVar9 + (double)(float)(dVar5 * dVar7));
+  local_a8 = local_9c + (float)(dVar10 * dVar7 - (double)(float)(dVar5 * dVar9));
+  local_9c = local_9c + (float)(dVar8 * dVar7 - (double)(float)(dVar5 * dVar9));
+  local_98 = local_98 + (float)(dVar8 * dVar9 + (double)(float)(dVar5 * dVar7));
   do {
-    piVar2 = piVar6 + 1;
-    piVar6 = piVar6 + 2;
-    CL_AddDebugLine(local_f0 + *piVar2 * 3,local_f0 + *piVar6 * 3,(float *)param_5,param_6,in_r8,1);
-    lVar5 = lVar5 + -1;
-  } while (lVar5 != 0);
-  __restfpr_21();
-  __restgprlr_27();
+    piVar2 = piVar4 + 1;
+    piVar4 = piVar4 + 2;
+    CL_AddDebugLine(local_f0 + *piVar2 * 3,local_f0 + *piVar4 * 3,(float *)param_5,param_6,in_r8,1);
+    lVar3 = lVar3 + -1;
+  } while (lVar3 != 0);
   return;
 }
 
 
 // 8246D580  G_DebugBoxOriented  (game/g_debug.cpp:93)
+
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
 
 void G_DebugBoxOriented(float *param_1,Bounds *param_2,float (*param_3) [3],float *param_4,
                        int param_5,int param_6)
@@ -149,63 +148,60 @@ void G_DebugBoxOriented(float *param_1,Bounds *param_2,float (*param_3) [3],floa
   float fVar2;
   int *piVar3;
   float *pfVar4;
-  float *pfVar5;
-  uint uVar7;
-  longlong lVar6;
-  float *pfVar8;
-  int *piVar9;
+  uint uVar6;
+  longlong lVar5;
+  float *pfVar7;
+  int *piVar8;
+  double dVar9;
   double dVar10;
   double dVar11;
-  double dVar12;
   float local_d0;
   float local_cc;
   float local_c8;
   float local_c0 [48];
   
-  pfVar4 = (float *)__savegprlr_23(param_1);
-  dVar11 = -1.0;
-  dVar12 = 1.0;
-  uVar7 = 0;
-  pfVar8 = local_c0 + 2;
+  dVar10 = -1.0;
+  dVar11 = 1.0;
+  uVar6 = 0;
+  pfVar7 = local_c0 + 2;
   do {
-    dVar10 = dVar11;
-    if ((uVar7 & 1) != 0) {
-      dVar10 = dVar12;
+    dVar9 = dVar10;
+    if ((uVar6 & 1) != 0) {
+      dVar9 = dVar11;
     }
-    pfVar5 = pfVar8 + -2;
-    pfVar8[-2] = (float)((double)param_2->halfSize[0] * dVar10 + (double)param_2->midPoint[0]);
-    dVar10 = dVar11;
-    if ((uVar7 & 2) != 0) {
-      dVar10 = dVar12;
+    pfVar4 = pfVar7 + -2;
+    pfVar7[-2] = (float)((double)param_2->halfSize[0] * dVar9 + (double)param_2->midPoint[0]);
+    dVar9 = dVar10;
+    if ((uVar6 & 2) != 0) {
+      dVar9 = dVar11;
     }
-    pfVar8[-1] = (float)((double)param_2->halfSize[1] * dVar10 + (double)param_2->midPoint[1]);
-    dVar10 = dVar11;
-    if ((uVar7 & 4) != 0) {
-      dVar10 = dVar12;
+    pfVar7[-1] = (float)((double)param_2->halfSize[1] * dVar9 + (double)param_2->midPoint[1]);
+    dVar9 = dVar10;
+    if ((uVar6 & 4) != 0) {
+      dVar9 = dVar11;
     }
-    *pfVar8 = (float)((double)param_2->halfSize[2] * dVar10 + (double)param_2->midPoint[2]);
-    MatrixTransformVector(pfVar5,param_3,&local_d0);
-    fVar1 = *pfVar4;
-    uVar7 = uVar7 + 1;
-    pfVar8[-1] = local_cc;
-    *pfVar8 = local_c8;
-    *pfVar5 = local_d0;
-    fVar2 = pfVar4[1];
-    *pfVar5 = local_d0 + fVar1;
-    fVar1 = pfVar4[2];
-    pfVar8[-1] = pfVar8[-1] + fVar2;
-    *pfVar8 = *pfVar8 + fVar1;
-    pfVar8 = pfVar8 + 3;
-  } while (uVar7 < 8);
-  lVar6 = 0xc;
-  piVar9 = iEdgePairs[0xb] + 1;
+    *pfVar7 = (float)((double)param_2->halfSize[2] * dVar9 + (double)param_2->midPoint[2]);
+    MatrixTransformVector(pfVar4,param_3,&local_d0);
+    fVar1 = *param_1;
+    uVar6 = uVar6 + 1;
+    pfVar7[-1] = local_cc;
+    *pfVar7 = local_c8;
+    *pfVar4 = local_d0;
+    fVar2 = param_1[1];
+    *pfVar4 = local_d0 + fVar1;
+    fVar1 = param_1[2];
+    pfVar7[-1] = pfVar7[-1] + fVar2;
+    *pfVar7 = *pfVar7 + fVar1;
+    pfVar7 = pfVar7 + 3;
+  } while (uVar6 < 8);
+  lVar5 = 0xc;
+  piVar8 = iEdgePairs[0xb] + 1;
   do {
-    piVar3 = piVar9 + 1;
-    piVar9 = piVar9 + 2;
-    CL_AddDebugLine(local_c0 + *piVar3 * 3,local_c0 + *piVar9 * 3,param_4,param_5,param_6,1);
-    lVar6 = lVar6 + -1;
-  } while (lVar6 != 0);
-  __restgprlr_23();
+    piVar3 = piVar8 + 1;
+    piVar8 = piVar8 + 2;
+    CL_AddDebugLine(local_c0 + *piVar3 * 3,local_c0 + *piVar8 * 3,param_4,param_5,param_6,1);
+    lVar5 = lVar5 + -1;
+  } while (lVar5 != 0);
   return;
 }
 
@@ -240,6 +236,11 @@ void G_DebugCircle(float *param_1,float param_2,float *param_3,int param_4,int p
 
 // 8246D718  G_DebugCircleEx  (game/g_debug.cpp:151)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 void G_DebugCircleEx(float *param_1,float param_2,float *param_3,float *param_4,int param_5,
                     int param_6)
 
@@ -248,11 +249,10 @@ void G_DebugCircleEx(float *param_1,float param_2,float *param_3,float *param_4,
   float fVar2;
   float fVar3;
   float *pfVar4;
-  float *pfVar5;
   int in_r8;
-  uint uVar6;
-  float *pfVar7;
-  double extraout_f1;
+  uint uVar5;
+  float *pfVar6;
+  double dVar7;
   double dVar8;
   double dVar9;
   double dVar10;
@@ -260,7 +260,6 @@ void G_DebugCircleEx(float *param_1,float param_2,float *param_3,float *param_4,
   double dVar12;
   double dVar13;
   double dVar14;
-  double dVar15;
   undefined8 local_160;
   float local_158;
   float local_150;
@@ -272,8 +271,7 @@ void G_DebugCircleEx(float *param_1,float param_2,float *param_3,float *param_4,
   float fStack_134;
   float local_130 [76];
   
-  __savegprlr_26((double)param_2,param_1,param_3);
-  pfVar5 = (float *)__savefpr_26();
+  dVar7 = (double)param_2;
   local_14c = param_4[1];
   local_150 = *param_4;
   fVar1 = param_4[2];
@@ -286,50 +284,52 @@ void G_DebugCircleEx(float *param_1,float param_2,float *param_3,float *param_4,
   local_150 = local_150 * local_148;
   local_14c = local_148 * local_14c;
   local_148 = local_148 * fVar1;
-  dVar15 = extraout_f1;
   PerpendicularVector(&local_150,&local_140);
   Vec3Cross(&local_150,&local_140,(float *)&local_160);
-  uVar6 = 0;
-  pfVar7 = &fStack_134;
+  uVar5 = 0;
+  pfVar6 = &fStack_134;
   dVar14 = 0.39269909262657166;
   dVar13 = (double)local_158;
   dVar12 = (double)local_160._4_4_;
   dVar11 = (double)local_160._0_4_;
   do {
-    local_160 = (ulonglong)uVar6;
+    local_160 = (ulonglong)uVar5;
     dVar9 = (double)(float)((double)local_160 * dVar14);
     dVar8 = sin(dVar9);
-    dVar10 = (double)(float)((double)(float)dVar8 * dVar15);
+    dVar10 = (double)(float)((double)(float)dVar8 * dVar7);
     dVar8 = cos(dVar9);
-    fVar1 = (float)(dVar11 * dVar10 + (double)*pfVar5);
-    fVar2 = pfVar5[1];
-    fVar3 = pfVar5[2];
-    pfVar7[1] = fVar1;
-    uVar6 = uVar6 + 1;
-    pfVar7[2] = (float)(dVar12 * dVar10 + (double)fVar2);
-    pfVar7[3] = (float)(dVar13 * dVar10 + (double)fVar3);
-    fVar2 = (float)((double)(float)dVar8 * dVar15);
-    pfVar7[1] = local_140 * fVar2 + fVar1;
-    pfVar7[2] = local_13c * fVar2 + pfVar7[2];
-    pfVar4 = pfVar7 + 3;
-    pfVar7 = pfVar7 + 3;
-    *pfVar7 = local_138 * fVar2 + *pfVar4;
-  } while (uVar6 < 0x10);
-  uVar6 = 0;
-  pfVar5 = local_130;
+    fVar1 = (float)(dVar11 * dVar10 + (double)*param_1);
+    fVar2 = param_1[1];
+    fVar3 = param_1[2];
+    pfVar6[1] = fVar1;
+    uVar5 = uVar5 + 1;
+    pfVar6[2] = (float)(dVar12 * dVar10 + (double)fVar2);
+    pfVar6[3] = (float)(dVar13 * dVar10 + (double)fVar3);
+    fVar2 = (float)((double)(float)dVar8 * dVar7);
+    pfVar6[1] = local_140 * fVar2 + fVar1;
+    pfVar6[2] = local_13c * fVar2 + pfVar6[2];
+    pfVar4 = pfVar6 + 3;
+    pfVar6 = pfVar6 + 3;
+    *pfVar6 = local_138 * fVar2 + *pfVar4;
+  } while (uVar5 < 0x10);
+  uVar5 = 0;
+  pfVar6 = local_130;
   do {
-    uVar6 = uVar6 + 1;
-    CL_AddDebugLine(pfVar5,local_130 + (uVar6 & 0xf) + (uVar6 & 0xf) * 2,(float *)param_5,param_6,
+    uVar5 = uVar5 + 1;
+    CL_AddDebugLine(pfVar6,local_130 + (uVar5 & 0xf) + (uVar5 & 0xf) * 2,(float *)param_5,param_6,
                     in_r8,1);
-    pfVar5 = pfVar5 + 3;
-  } while (uVar6 < 0x10);
-  __restfpr_26();
-  __restgprlr_26();
+    pfVar6 = pfVar6 + 3;
+  } while (uVar5 < 0x10);
   return;
 }
 
 
 // 8246D8C0  G_DebugArc  (game/g_debug.cpp:185)
+
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 
 void G_DebugArc(float *param_1,float param_2,float param_3,float param_4,float *param_5,int param_6,
                int param_7)
@@ -337,79 +337,70 @@ void G_DebugArc(float *param_1,float param_2,float param_3,float param_4,float *
 {
   float fVar1;
   float fVar2;
-  float *pfVar3;
   float *in_r7;
   int in_r8;
   int in_r9;
-  float *pfVar4;
-  uint uVar6;
-  longlong lVar5;
-  double extraout_f1;
+  float *pfVar3;
+  uint uVar5;
+  longlong lVar4;
+  double dVar6;
   double dVar7;
   double dVar8;
   double dVar9;
   double dVar10;
   double dVar11;
   double dVar12;
-  double dVar13;
   float fStack_134;
   float local_130 [76];
   
-  dVar13 = (double)param_3;
-  dVar8 = (double)param_4;
-  __savegprlr_26((double)param_2,param_1,param_5,param_6,param_7);
-  pfVar3 = (float *)__savefpr_26();
-  dVar12 = (double)((float)(dVar8 - dVar13) * 0.06666667);
-  if (dVar12 < 0.0) {
-    dVar13 = (double)(float)(dVar13 - 360.0);
-    dVar12 = (double)((float)(dVar8 - dVar13) * 0.06666667);
+  dVar6 = (double)param_2;
+  dVar12 = (double)param_3;
+  dVar11 = (double)((float)((double)param_4 - dVar12) * 0.06666667);
+  if (dVar11 < 0.0) {
+    dVar12 = (double)(float)(dVar12 - 360.0);
+    dVar11 = (double)((float)((double)param_4 - dVar12) * 0.06666667);
   }
-  uVar6 = 0;
-  pfVar4 = &fStack_134;
-  dVar11 = 0.01745329238474369;
-  dVar8 = extraout_f1;
+  uVar5 = 0;
+  pfVar3 = &fStack_134;
+  dVar10 = 0.01745329238474369;
   do {
-    dVar10 = (double)(float)((double)(float)((double)uVar6 * dVar12 + dVar13) * dVar11);
-    dVar7 = sin(dVar10);
-    dVar9 = (double)(float)dVar7;
-    dVar7 = cos(dVar10);
-    fVar1 = *pfVar3;
-    uVar6 = uVar6 + 1;
-    fVar2 = pfVar3[2];
-    pfVar4[2] = (float)(dVar9 * dVar8 + (double)pfVar3[1]);
-    pfVar4[1] = (float)((double)(float)dVar7 * dVar8 + (double)fVar1);
-    pfVar4 = pfVar4 + 3;
-    *pfVar4 = fVar2;
-  } while (uVar6 < 0x10);
-  lVar5 = 0xf;
+    dVar9 = (double)(float)((double)(float)((double)uVar5 * dVar11 + dVar12) * dVar10);
+    dVar7 = sin(dVar9);
+    dVar8 = (double)(float)dVar7;
+    dVar7 = cos(dVar9);
+    fVar1 = *param_1;
+    uVar5 = uVar5 + 1;
+    fVar2 = param_1[2];
+    pfVar3[2] = (float)(dVar8 * dVar6 + (double)param_1[1]);
+    pfVar3[1] = (float)((double)(float)dVar7 * dVar6 + (double)fVar1);
+    pfVar3 = pfVar3 + 3;
+    *pfVar3 = fVar2;
+  } while (uVar5 < 0x10);
+  lVar4 = 0xf;
   pfVar3 = local_130;
   do {
     CL_AddDebugLine(pfVar3,pfVar3 + 3,in_r7,in_r8,in_r9,1);
-    lVar5 = lVar5 + -1;
+    lVar4 = lVar4 + -1;
     pfVar3 = pfVar3 + 3;
-  } while (lVar5 != 0);
-  __restfpr_26();
-  __restgprlr_26();
+  } while (lVar4 != 0);
   return;
 }
 
 
 // 8246D9D8  G_DebugPlane  (game/g_debug.cpp:217)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void G_DebugPlane(float *param_1,float param_2,float *param_3,float *param_4,float param_5,
                  int param_6,int param_7)
 
 {
-  float *pfVar1;
-  float *pfVar2;
-  longlong lVar3;
-  longlong lVar4;
   int in_r8;
   int in_r9;
-  double extraout_f1;
-  double dVar5;
-  double dVar6;
-  float fVar7;
+  double dVar1;
+  double dVar2;
+  float fVar3;
   float local_80;
   float local_7c;
   float local_78;
@@ -425,56 +416,52 @@ void G_DebugPlane(float *param_1,float param_2,float *param_3,float *param_4,flo
   float local_44;
   float local_40;
   
-  dVar5 = (double)param_5;
-  lVar4 = (longlong)param_6;
-  lVar3 = (longlong)(int)param_4;
-  pfVar2 = (float *)__savegprlr_28((double)param_2,param_1,param_3,lVar3,lVar4,param_7);
-  local_7c = pfVar2[1];
-  pfVar1 = (float *)lVar3;
-  local_80 = *pfVar2;
-  dVar6 = (double)(float)(extraout_f1 - (double)(*pfVar1 * local_80 + pfVar1[1] * local_7c));
-  fVar7 = Vec2Normalize(&local_80);
-  fVar7 = (float)(dVar6 / (double)fVar7);
-  dVar6 = (double)(float)(dVar5 * 0.5);
-  local_48 = local_80 * fVar7 + *pfVar1;
-  local_44 = local_7c * fVar7 + pfVar1[1];
-  local_70 = (float)(dVar6 + (double)pfVar1[2]);
-  local_78 = -fVar7 * local_80 + local_48;
-  local_74 = -fVar7 * local_7c + local_44;
-  pfVar2 = (float *)lVar4;
+  dVar1 = (double)param_5;
+  local_7c = param_1[1];
+  local_80 = *param_1;
+  dVar2 = (double)(param_2 - (*param_4 * local_80 + param_4[1] * local_7c));
+  fVar3 = Vec2Normalize(&local_80);
+  fVar3 = (float)(dVar2 / (double)fVar3);
+  dVar2 = (double)(float)(dVar1 * 0.5);
+  local_48 = local_80 * fVar3 + *param_4;
+  local_44 = local_7c * fVar3 + param_4[1];
+  local_70 = (float)(dVar2 + (double)param_4[2]);
+  local_78 = -fVar3 * local_80 + local_48;
+  local_74 = -fVar3 * local_7c + local_44;
   local_40 = local_70;
-  CL_AddDebugLine(&local_48,&local_78,pfVar2,in_r8,in_r9,1);
-  local_70 = pfVar1[2];
-  local_68 = (float)(dVar6 * -(double)local_7c + (double)local_48);
-  local_78 = (float)((double)(float)(dVar5 * -0.5) * -(double)local_7c + (double)local_48);
-  local_64 = (float)(dVar6 * (double)local_80 + (double)local_44);
-  local_74 = (float)((double)(float)(dVar5 * -0.5) * (double)local_80 + (double)local_44);
+  CL_AddDebugLine(&local_48,&local_78,(float *)param_6,in_r8,in_r9,1);
+  local_70 = param_4[2];
+  local_68 = (float)(dVar2 * -(double)local_7c + (double)local_48);
+  local_78 = (float)((double)(float)(dVar1 * -0.5) * -(double)local_7c + (double)local_48);
+  local_64 = (float)(dVar2 * (double)local_80 + (double)local_44);
+  local_74 = (float)((double)(float)(dVar1 * -0.5) * (double)local_80 + (double)local_44);
   local_60 = local_70;
-  CL_AddDebugLine(&local_68,&local_78,pfVar2,in_r8,in_r9,1);
-  local_60 = (float)((double)local_60 + dVar5);
-  local_70 = (float)((double)local_70 + dVar5);
-  CL_AddDebugLine(&local_68,&local_78,pfVar2,in_r8,in_r9,1);
-  local_50 = (float)((double)local_60 - dVar5);
+  CL_AddDebugLine(&local_68,&local_78,(float *)param_6,in_r8,in_r9,1);
+  local_60 = (float)((double)local_60 + dVar1);
+  local_70 = (float)((double)local_70 + dVar1);
+  CL_AddDebugLine(&local_68,&local_78,(float *)param_6,in_r8,in_r9,1);
+  local_50 = (float)((double)local_60 - dVar1);
   local_58 = local_68;
   local_54 = local_64;
-  CL_AddDebugLine(&local_68,&local_58,pfVar2,in_r8,in_r9,1);
-  local_50 = (float)((double)local_70 - dVar5);
+  CL_AddDebugLine(&local_68,&local_58,(float *)param_6,in_r8,in_r9,1);
+  local_50 = (float)((double)local_70 - dVar1);
   local_58 = local_78;
   local_54 = local_74;
-  CL_AddDebugLine(&local_78,&local_58,pfVar2,in_r8,in_r9,1);
-  __restgprlr_28();
+  CL_AddDebugLine(&local_78,&local_58,(float *)param_6,in_r8,in_r9,1);
   return;
 }
 
 
 // 8246DBC0  DrawBrushPoly  (game/g_debug.cpp:285)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void DrawBrushPoly(int param_1,float (*param_2) [3],float *param_3)
 
 {
-  longlong lVar1;
-  float *pfVar2;
-  longlong lVar3;
+  float (*pafVar1) [3];
+  longlong lVar2;
   float local_50;
   undefined4 local_4c;
   undefined4 local_48;
@@ -482,71 +469,65 @@ void DrawBrushPoly(int param_1,float (*param_2) [3],float *param_3)
   undefined4 local_3c;
   undefined4 local_38;
   
-  lVar3 = (longlong)(int)param_2;
-  lVar1 = __savegprlr_27(param_1);
-  pfVar2 = (float *)lVar3;
-  MatrixTransformVector43(pfVar2,g_debugDrawBrushInfo.transform,&local_40);
-  lVar1 = lVar1 + -1;
-  if (0 < lVar1) {
+  MatrixTransformVector43(*param_2,g_debugDrawBrushInfo.transform,&local_40);
+  lVar2 = (longlong)param_1 + -1;
+  pafVar1 = param_2;
+  if (0 < lVar2) {
     do {
-      lVar3 = lVar3 + 0xc;
-      MatrixTransformVector43((float *)lVar3,g_debugDrawBrushInfo.transform,&local_50);
+      MatrixTransformVector43(pafVar1[1],g_debugDrawBrushInfo.transform,&local_50);
       CL_AddDebugLine(&local_40,&local_50,param_3,g_debugDrawBrushInfo.depthTest,
                       g_debugDrawBrushInfo.duration,1);
-      lVar1 = lVar1 + -1;
+      lVar2 = lVar2 + -1;
       local_40 = local_50;
       local_3c = local_4c;
       local_38 = local_48;
-    } while (lVar1 != 0);
+      pafVar1 = pafVar1 + 1;
+    } while (lVar2 != 0);
   }
-  MatrixTransformVector43(pfVar2,g_debugDrawBrushInfo.transform,&local_50);
+  MatrixTransformVector43(*param_2,g_debugDrawBrushInfo.transform,&local_50);
   CL_AddDebugLine(&local_40,&local_50,param_3,g_debugDrawBrushInfo.depthTest,
                   g_debugDrawBrushInfo.duration,1);
-  __restgprlr_27();
   return;
 }
 
 
 // 8246DC80  G_DebugDrawBrush_r  (game/g_debug.cpp:305)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 void G_DebugDrawBrush_r(ClipInfo *param_1,cLeafBrushNode_s *param_2,float *param_3)
 
 {
-  int iVar1;
+  ushort *puVar1;
   int iVar2;
-  ulonglong uVar3;
-  ushort *puVar4;
-  int iVar5;
   
-  uVar3 = (ulonglong)(int)param_2;
-  iVar2 = __savegprlr_26(param_1);
   while( true ) {
-    if ((uVar3 & 0xffffffff) == 0) {
+    if (param_2 == (cLeafBrushNode_s *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_debug.cpp",0x136,0,
                       "%s");
     }
-    iVar1 = (int)uVar3;
-    if (0 < *(short *)(iVar1 + 2)) break;
-    uVar3 = uVar3 + 0x14;
+    if (0 < param_2->leafBrushCount) break;
+    param_2 = param_2 + 1;
   }
-  iVar5 = 0;
-  if (0 < *(short *)(iVar1 + 2)) {
-    puVar4 = (ushort *)(*(int *)(iVar1 + 8) + -2);
+  iVar2 = 0;
+  if (0 < param_2->leafBrushCount) {
+    puVar1 = (param_2->data).leaf.brushes + -1;
     do {
-      puVar4 = puVar4 + 1;
+      puVar1 = puVar1 + 1;
       CM_ShowSingleBrushCollision
-                ((Bounds *)((uint)*puVar4 * 0x18 + *(int *)(iVar2 + 0x38)),
-                 (cbrush_t *)((uint)*puVar4 * 0x24 + *(int *)(iVar2 + 0x34)),param_3,DrawBrushPoly);
-      iVar5 = iVar5 + 1;
-    } while (iVar5 < *(short *)(iVar1 + 2));
+                (param_1->brushBounds + *puVar1,param_1->brushes + *puVar1,param_3,DrawBrushPoly);
+      iVar2 = iVar2 + 1;
+    } while (iVar2 < param_2->leafBrushCount);
   }
-  __restgprlr_26();
   return;
 }
 
 
 // 8246DD58  G_DebugDrawBrushModel  (game/g_debug.cpp:328)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
@@ -554,103 +535,97 @@ void G_DebugDrawBrushModel(gentity_s *param_1,float *param_2,int param_3,int par
 
 {
   uint uVar1;
-  int iVar2;
-  cmodel_t *pcVar3;
+  cmodel_t *pcVar2;
   
-  iVar2 = __savegprlr_24(param_1);
-  if (iVar2 == 0) {
+  if (param_1 == (gentity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_debug.cpp",0x14c,0,"%s"
                    );
   }
-  if (*(char *)(iVar2 + 0x101) != '\x04') {
+  if ((param_1->r).modelType != '\x04') {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_debug.cpp",0x14d,0,"%s"
                    );
   }
-  uVar1 = *(uint *)(iVar2 + 0x8c);
+  uVar1 = (param_1->s).index.brushModel;
   if (uVar1 != 0) {
     g_debugDrawBrushInfo.depthTest = param_3;
     g_debugDrawBrushInfo.duration = param_4;
-    AnglesToAxis((float *)(iVar2 + 0x144),g_debugDrawBrushInfo.transform);
-    g_debugDrawBrushInfo.transform[3][0] = *(float *)(iVar2 + 0x138);
-    g_debugDrawBrushInfo.transform[3][1] = *(float *)(iVar2 + 0x13c);
-    g_debugDrawBrushInfo.transform[3][2] = *(float *)(iVar2 + 0x140);
-    pcVar3 = CM_GetBrushModel(uVar1);
-    if (pcVar3 == (cmodel_t *)0x0) {
+    AnglesToAxis((param_1->r).currentAngles,g_debugDrawBrushInfo.transform);
+    g_debugDrawBrushInfo.transform[3][0] = (param_1->r).currentOrigin[0];
+    g_debugDrawBrushInfo.transform[3][1] = (param_1->r).currentOrigin[1];
+    g_debugDrawBrushInfo.transform[3][2] = (param_1->r).currentOrigin[2];
+    pcVar2 = CM_GetBrushModel(uVar1);
+    if (pcVar2 == (cmodel_t *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_debug.cpp",0x15a,0,
                       "%s");
     }
-    if (pcVar3->info == (ClipInfo *)0x0) {
+    if (pcVar2->info == (ClipInfo *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_debug.cpp",0x15b,0,
                       "%s");
     }
-    G_DebugDrawBrush_r(pcVar3->info,pcVar3->info->leafbrushNodes + (pcVar3->leaf).leafBrushNode,
+    G_DebugDrawBrush_r(pcVar2->info,pcVar2->info->leafbrushNodes + (pcVar2->leaf).leafBrushNode,
                        param_2);
   }
-  __restgprlr_24();
   return;
 }
 
 
 // 8246DE98  G_DebugDrawTriggerModel  (game/g_debug.cpp:353)
 
+/* WARNING: Function: __savegprlr_15 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_15 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
 void G_DebugDrawTriggerModel(gentity_s *param_1,float *param_2,int param_3,int param_4)
 
 {
-  int iVar1;
-  MapTriggers *pMVar2;
-  TriggerModel *pTVar3;
-  longlong lVar4;
-  longlong lVar5;
+  MapTriggers *pMVar1;
+  TriggerModel *pTVar2;
+  int iVar3;
+  uint uVar4;
+  TriggerHull *pTVar5;
   int iVar6;
-  uint uVar7;
-  TriggerHull *pTVar8;
-  int iVar9;
-  uint uVar10;
-  float *pfVar11;
-  float *pfVar12;
-  TriggerSlab *pTVar13;
-  double dVar14;
+  int iVar7;
+  uint uVar8;
+  float *pfVar9;
+  float *pfVar10;
+  TriggerSlab *pTVar11;
+  double dVar12;
   cbrush_t local_2c0;
   cbrushside_t acStack_290 [17];
   float afStack_208 [2];
   float local_200 [128];
   
-  lVar5 = (longlong)param_3;
-  lVar4 = (longlong)(int)param_2;
-  iVar1 = __savegprlr_15(param_1,lVar4,lVar5,param_4);
-  pMVar2 = CM_TriggerSource(*(uint *)(iVar1 + 0x8c));
-  pTVar3 = CM_GetTriggerModel(*(uint *)(iVar1 + 0x8c));
-  AnglesToAxis((float *)(iVar1 + 0x144),g_debugDrawBrushInfo.transform);
-  g_debugDrawBrushInfo.transform[3][0] = *(float *)(iVar1 + 0x138);
-  g_debugDrawBrushInfo.transform[3][1] = *(float *)(iVar1 + 0x13c);
-  g_debugDrawBrushInfo.transform[3][2] = *(float *)(iVar1 + 0x140);
-  g_debugDrawBrushInfo.depthTest = (int)lVar5;
-  if (pTVar3->hullCount != 0) {
-    dVar14 = -1.0;
-    uVar7 = 0;
+  pMVar1 = CM_TriggerSource((param_1->s).index.brushModel);
+  pTVar2 = CM_GetTriggerModel((param_1->s).index.brushModel);
+  AnglesToAxis((param_1->r).currentAngles,g_debugDrawBrushInfo.transform);
+  g_debugDrawBrushInfo.transform[3][0] = (param_1->r).currentOrigin[0];
+  g_debugDrawBrushInfo.transform[3][1] = (param_1->r).currentOrigin[1];
+  g_debugDrawBrushInfo.transform[3][2] = (param_1->r).currentOrigin[2];
+  g_debugDrawBrushInfo.depthTest = param_3;
+  if (pTVar2->hullCount != 0) {
+    dVar12 = -1.0;
+    uVar4 = 0;
     do {
-      if (pMVar2->hullCount <= pTVar3->firstHull + uVar7) {
+      if (pMVar1->hullCount <= pTVar2->firstHull + uVar4) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_debug.cpp",0x177,0,
                         "%s");
       }
       local_2c0.sides = acStack_290;
-      uVar10 = 0;
-      iVar1 = 0;
-      pTVar8 = pMVar2->hulls + pTVar3->firstHull + uVar7;
-      local_2c0.numsides = pTVar8->slabCount << 1;
-      if (pTVar8->slabCount != 0) {
-        iVar9 = 0;
-        pfVar12 = local_200;
-        pfVar11 = afStack_208;
+      uVar8 = 0;
+      iVar7 = 0;
+      pTVar5 = pMVar1->hulls + pTVar2->firstHull + uVar4;
+      local_2c0.numsides = pTVar5->slabCount << 1;
+      if (pTVar5->slabCount != 0) {
+        iVar6 = 0;
+        pfVar10 = local_200;
+        pfVar9 = afStack_208;
         do {
-          if (pMVar2->slabCount <= (uint)pTVar8->firstSlab + iVar1) {
+          if (pMVar1->slabCount <= (uint)pTVar5->firstSlab + iVar7) {
             MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_debug.cpp",
                             0x17f,0,"%s");
           }
-          if (0x11 < uVar10) {
+          if (0x11 < uVar8) {
             MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_debug.cpp",
                             0x180,0,
                             "planeIter doesn\'t index ARRAY_COUNT( sides )\n\t%i not in [0, %i)");
@@ -658,14 +633,14 @@ void G_DebugDrawTriggerModel(gentity_s *param_1,float *param_2,int param_3,int p
                             0x181,0,
                             "planeIter doesn\'t index ARRAY_COUNT( planes )\n\t%i not in [0, %i)");
           }
-          iVar6 = (uint)pTVar8->firstSlab + iVar1;
-          pTVar13 = pMVar2->slabs + iVar6;
-          *pfVar12 = pMVar2->slabs[iVar6].dir[0];
-          pfVar12[1] = pTVar13->dir[1];
-          pfVar12[2] = pTVar13->dir[2];
-          pfVar11[5] = pTVar13->halfSize + pTVar13->midPoint;
-          *(float **)((int)&(local_2c0.sides)->plane + iVar9) = pfVar12;
-          if (0x11 < uVar10 + 1) {
+          iVar3 = (uint)pTVar5->firstSlab + iVar7;
+          pTVar11 = pMVar1->slabs + iVar3;
+          *pfVar10 = pMVar1->slabs[iVar3].dir[0];
+          pfVar10[1] = pTVar11->dir[1];
+          pfVar10[2] = pTVar11->dir[2];
+          pfVar9[5] = pTVar11->halfSize + pTVar11->midPoint;
+          *(float **)((int)&(local_2c0.sides)->plane + iVar6) = pfVar10;
+          if (0x11 < uVar8 + 1) {
             MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_debug.cpp",
                             0x187,0,
                             "planeIter doesn\'t index ARRAY_COUNT( sides )\n\t%i not in [0, %i)");
@@ -673,29 +648,30 @@ void G_DebugDrawTriggerModel(gentity_s *param_1,float *param_2,int param_3,int p
                             0x188,0,
                             "planeIter doesn\'t index ARRAY_COUNT( planes )\n\t%i not in [0, %i)");
           }
-          pfVar12[5] = (float)((double)pTVar13->dir[0] * dVar14);
-          pfVar12[6] = (float)((double)pTVar13->dir[1] * dVar14);
-          iVar1 = iVar1 + 1;
-          pfVar12[7] = (float)((double)pTVar13->dir[2] * dVar14);
-          uVar10 = uVar10 + 2;
-          pfVar11 = pfVar11 + 10;
-          *pfVar11 = pTVar13->halfSize - pTVar13->midPoint;
-          *(float **)((int)&local_2c0.sides[1].plane + iVar9) = pfVar12 + 5;
-          pfVar12 = pfVar12 + 10;
-          iVar9 = iVar9 + 0x10;
-        } while (iVar1 < (int)(uint)pTVar8->slabCount);
+          pfVar10[5] = (float)((double)pTVar11->dir[0] * dVar12);
+          pfVar10[6] = (float)((double)pTVar11->dir[1] * dVar12);
+          iVar7 = iVar7 + 1;
+          pfVar10[7] = (float)((double)pTVar11->dir[2] * dVar12);
+          uVar8 = uVar8 + 2;
+          pfVar9 = pfVar9 + 10;
+          *pfVar9 = pTVar11->halfSize - pTVar11->midPoint;
+          *(float **)((int)&local_2c0.sides[1].plane + iVar6) = pfVar10 + 5;
+          pfVar10 = pfVar10 + 10;
+          iVar6 = iVar6 + 0x10;
+        } while (iVar7 < (int)(uint)pTVar5->slabCount);
       }
-      CM_ShowSingleBrushCollision(&pTVar8->bounds,&local_2c0,(float *)lVar4,DrawBrushPoly);
-      uVar7 = uVar7 + 1 & 0xffff;
-    } while (uVar7 < pTVar3->hullCount);
+      CM_ShowSingleBrushCollision(&pTVar5->bounds,&local_2c0,param_2,DrawBrushPoly);
+      uVar4 = uVar4 + 1 & 0xffff;
+    } while (uVar4 < pTVar2->hullCount);
   }
-  __restgprlr_15();
   return;
 }
 
 
 // 8246E158  G_DrawTriggerGeometry  (game/g_debug.cpp:404)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
@@ -704,13 +680,12 @@ void G_DrawTriggerGeometry(gentity_s *param_1,float param_2,float *param_3)
 {
   byte bVar1;
   float fVar2;
-  gentity_s *pgVar3;
-  float *pfVar4;
-  char *pcVar5;
-  float *pfVar6;
+  float *pfVar3;
+  char *pcVar4;
+  float *pfVar5;
   float *in_r5;
   int in_r6;
-  double dVar7;
+  double dVar6;
   float local_60 [4];
   float local_50;
   float local_4c;
@@ -719,49 +694,49 @@ void G_DrawTriggerGeometry(gentity_s *param_1,float param_2,float *param_3)
   float local_3c;
   float local_38;
   
-  pgVar3 = (gentity_s *)__savegprlr_28((double)param_2,param_1,param_3);
   bVar1 = (trigger_drawDepthTest->current).color[0];
-  pfVar4 = (float *)SL_ConvertToString((uint)pgVar3->classname);
-  pcVar5 = "trigger_radius";
-  pfVar6 = pfVar4;
+  pfVar3 = (float *)SL_ConvertToString((uint)param_1->classname);
+  pcVar4 = "trigger_radius";
+  pfVar5 = pfVar3;
   strncmp();
-  if (pcVar5 == (char *)0x0) {
-    local_38 = (pgVar3->r).currentOrigin[2];
-    local_50 = (pgVar3->r).currentOrigin[0];
-    local_4c = (pgVar3->r).currentOrigin[1];
-    local_48 = (pgVar3->r).box.halfSize[2] * 2.0 + local_38;
+  if (pcVar4 == (char *)0x0) {
+    local_38 = (param_1->r).currentOrigin[2];
+    local_50 = (param_1->r).currentOrigin[0];
+    local_4c = (param_1->r).currentOrigin[1];
+    local_48 = (param_1->r).box.halfSize[2] * 2.0 + local_38;
     local_60[0] = 0.0;
     local_60[1] = 0.0;
     local_60[2] = 1.0;
-    fVar2 = (pgVar3->r).box.halfSize[0];
-    dVar7 = (double)fVar2;
+    fVar2 = (param_1->r).box.halfSize[0];
+    dVar6 = (double)fVar2;
     local_40 = local_50;
     local_3c = local_4c;
-    G_DebugCircleEx(&local_40,fVar2,pfVar6,local_60,(int)in_r5,(uint)bVar1);
-    G_DebugCircleEx(&local_50,(float)dVar7,pfVar6,local_60,(int)in_r5,(uint)bVar1);
+    G_DebugCircleEx(&local_40,fVar2,pfVar5,local_60,(int)in_r5,(uint)bVar1);
+    G_DebugCircleEx(&local_50,(float)dVar6,pfVar5,local_60,(int)in_r5,(uint)bVar1);
     CL_AddDebugLine(&local_40,&local_50,in_r5,(uint)bVar1,0,1);
-    __restgprlr_28();
     return;
   }
-  pcVar5 = "trigger_disk";
+  pcVar4 = "trigger_disk";
   strncmp();
-  if (pcVar5 == (char *)0x0) {
+  if (pcVar4 == (char *)0x0) {
     local_60[0] = 0.0;
     local_60[1] = 0.0;
     local_60[2] = 1.0;
-    G_DebugCircleEx((pgVar3->r).currentOrigin,(pgVar3->r).box.halfSize[0],pfVar4,local_60,(int)in_r5
-                    ,(uint)bVar1);
-    __restgprlr_28();
+    G_DebugCircleEx((param_1->r).currentOrigin,(param_1->r).box.halfSize[0],pfVar3,local_60,
+                    (int)in_r5,(uint)bVar1);
     return;
   }
-  G_DebugDrawTriggerModel(pgVar3,in_r5,(uint)bVar1,in_r6);
-  __restgprlr_28();
+  G_DebugDrawTriggerModel(param_1,in_r5,(uint)bVar1,in_r6);
   return;
 }
 
 
 // 8246E2D8  G_DrawTriggers  (game/g_debug.cpp:442)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -774,20 +749,19 @@ void G_DrawTriggers(int param_1)
   float fVar3;
   float fVar4;
   float fVar5;
-  int iVar6;
-  cg_s *pcVar7;
-  longlong lVar8;
-  int iVar9;
-  gentity_s *pgVar10;
-  int iVar11;
-  float *pfVar12;
+  cg_s *pcVar6;
+  longlong lVar7;
+  int iVar8;
+  gentity_s *pgVar9;
+  int iVar10;
+  float *pfVar11;
+  double dVar12;
   double dVar13;
   double dVar14;
   double dVar15;
   double dVar16;
   double dVar17;
   double dVar18;
-  double dVar19;
   float local_d8;
   float local_d4;
   float local_d0;
@@ -803,13 +777,11 @@ void G_DrawTriggers(int param_1)
   float local_94;
   float local_90 [36];
   
-  __savegprlr_25(param_1);
-  iVar6 = __savefpr_25();
-  dVar18 = 1.0;
-  dVar13 = 0.0;
-  iVar9 = -1;
+  dVar17 = 1.0;
+  dVar12 = 0.0;
+  iVar8 = -1;
   local_a0 = 0x3f800000;
-  pgVar10 = (gentity_s *)0x0;
+  pgVar9 = (gentity_s *)0x0;
   local_9c = 0;
   local_98 = 0;
   local_94 = 0.75;
@@ -817,81 +789,79 @@ void G_DrawTriggers(int param_1)
   local_90[1] = 1.0;
   local_90[2] = 1.0;
   local_90[3] = 0.75;
-  dVar15 = 0.8191519975662231;
-  dVar19 = dVar13;
-  pcVar7 = CG_GetLocalClientGlobals(((g_entities[0].client)->ps).clientNum);
-  if (pcVar7 == (cg_s *)0x0) {
+  dVar14 = 0.8191519975662231;
+  dVar18 = dVar12;
+  pcVar6 = CG_GetLocalClientGlobals(((g_entities[0].client)->ps).clientNum);
+  if (pcVar6 == (cg_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_debug.cpp",0x1d8,0,"%s"
                    );
   }
-  G_GetPlayerViewOrigin(&pcVar7->predictedPlayerState,&local_c8);
-  lVar8 = ZEXT48(&stack0x00000000) - 0xd8;
-  BG_GetPlayerViewDirection(&pcVar7->predictedPlayerState,(float *)lVar8,(float *)0x0,(float *)0x0);
-  iVar11 = 1;
-  dVar14 = (double)SQRT(local_d8 * local_d8 + local_d0 * local_d0 + local_d4 * local_d4);
-  dVar16 = dVar18;
-  if (-dVar14 < 0.0) {
-    dVar16 = dVar14;
+  G_GetPlayerViewOrigin(&pcVar6->predictedPlayerState,&local_c8);
+  lVar7 = ZEXT48(&stack0x00000000) - 0xd8;
+  BG_GetPlayerViewDirection(&pcVar6->predictedPlayerState,(float *)lVar7,(float *)0x0,(float *)0x0);
+  iVar10 = 1;
+  dVar13 = (double)SQRT(local_d8 * local_d8 + local_d0 * local_d0 + local_d4 * local_d4);
+  dVar15 = dVar17;
+  if (-dVar13 < 0.0) {
+    dVar15 = dVar13;
   }
-  fVar1 = (float)(dVar18 / dVar16);
+  fVar1 = (float)(dVar17 / dVar15);
   if (1 < level.num_entities) {
-    pfVar12 = g_entities[1].r.currentOrigin + 2;
+    pfVar11 = g_entities[1].r.currentOrigin + 2;
     do {
-      if (((*(uchar *)((int)pfVar12 + -0x3d) != '\0') && (((uint)pfVar12[-9] & 0x405c0008) != 0)) &&
-         (pfVar12[-0x4f] != 4.2039e-45)) {
-        fVar3 = pfVar12[-1] - local_c4;
-        fVar4 = *pfVar12 - local_c0;
-        fVar5 = pfVar12[-2] - local_c8;
-        dVar19 = (double)SQRT(fVar5 * fVar5 + fVar4 * fVar4 + fVar3 * fVar3);
-        dVar16 = dVar18;
-        if (-dVar19 < 0.0) {
-          dVar16 = dVar19;
+      if (((*(uchar *)((int)pfVar11 + -0x3d) != '\0') && (((uint)pfVar11[-9] & 0x405c0008) != 0)) &&
+         (pfVar11[-0x4f] != 4.2039e-45)) {
+        fVar3 = pfVar11[-1] - local_c4;
+        fVar4 = *pfVar11 - local_c0;
+        fVar5 = pfVar11[-2] - local_c8;
+        dVar18 = (double)SQRT(fVar5 * fVar5 + fVar4 * fVar4 + fVar3 * fVar3);
+        dVar15 = dVar17;
+        if (-dVar18 < 0.0) {
+          dVar15 = dVar18;
         }
-        fVar2 = (float)(dVar18 / dVar16);
-        dVar17 = (double)(fVar2 * fVar5);
-        dVar14 = (double)(fVar3 * fVar2);
-        dVar16 = (double)(fVar4 * fVar2);
-        if (dVar19 <= (double)(longlong)(trigger_drawDistance->current).integer) {
-          lVar8 = ZEXT48(&stack0x00000000) - 0xa0;
-          CL_AddDebugStar(pfVar12 + -2,(float *)lVar8,0x14,1);
-          dVar16 = (double)(float)(dVar16 * (double)(local_d0 * fVar1) +
-                                  (double)(float)(dVar14 * (double)(local_d4 * fVar1) +
-                                                 (double)(float)(dVar17 * (double)(local_d8 * fVar1)
+        fVar2 = (float)(dVar17 / dVar15);
+        dVar16 = (double)(fVar2 * fVar5);
+        dVar13 = (double)(fVar3 * fVar2);
+        dVar15 = (double)(fVar4 * fVar2);
+        if (dVar18 <= (double)(longlong)(trigger_drawDistance->current).integer) {
+          lVar7 = ZEXT48(&stack0x00000000) - 0xa0;
+          CL_AddDebugStar(pfVar11 + -2,(float *)lVar7,0x14,1);
+          dVar15 = (double)(float)(dVar15 * (double)(local_d0 * fVar1) +
+                                  (double)(float)(dVar13 * (double)(local_d4 * fVar1) +
+                                                 (double)(float)(dVar16 * (double)(local_d8 * fVar1)
                                                                 )));
-          if (dVar15 < dVar16) {
-            pgVar10 = (gentity_s *)(pfVar12 + -0x50);
-            dVar13 = dVar19;
-            dVar15 = dVar16;
-            iVar9 = iVar11;
+          if (dVar14 < dVar15) {
+            pgVar9 = (gentity_s *)(pfVar11 + -0x50);
+            dVar12 = dVar18;
+            dVar14 = dVar15;
+            iVar8 = iVar10;
           }
-          if (iVar6 == 2) {
-            G_DrawTriggerGeometry((gentity_s *)(pfVar12 + -0x50),(float)dVar19,(float *)lVar8);
+          if (param_1 == 2) {
+            G_DrawTriggerGeometry((gentity_s *)(pfVar11 + -0x50),(float)dVar18,(float *)lVar7);
           }
         }
       }
-      iVar11 = iVar11 + 1;
-      pfVar12 = pfVar12 + 0xa0;
-    } while (iVar11 < level.num_entities);
-    if (iVar9 != -1) {
-      local_94 = (float)dVar18;
+      iVar10 = iVar10 + 1;
+      pfVar11 = pfVar11 + 0xa0;
+    } while (iVar10 < level.num_entities);
+    if (iVar8 != -1) {
+      local_94 = (float)dVar17;
       local_a0 = 0x3f666666;
       local_9c = 0x3f666666;
       local_98 = 0x3f666666;
-      G_DrawTriggerGeometry(pgVar10,(float)dVar13,(float *)lVar8);
-      local_b4 = (pgVar10->r).currentOrigin[1];
-      local_b0 = (pgVar10->r).currentOrigin[2];
-      local_b8 = (pgVar10->r).currentOrigin[0];
-      if (10.0 <= dVar19) {
-        fVar1 = (float)(dVar13 * 0.0017500000540167093);
+      G_DrawTriggerGeometry(pgVar9,(float)dVar12,(float *)lVar7);
+      local_b4 = (pgVar9->r).currentOrigin[1];
+      local_b0 = (pgVar9->r).currentOrigin[2];
+      local_b8 = (pgVar9->r).currentOrigin[0];
+      if (10.0 <= dVar18) {
+        fVar1 = (float)(dVar12 * 0.0017500000540167093);
       }
       else {
         fVar1 = 0.0175;
       }
-      Scr_DrawDebugVariablesForEntity((pgVar10->s).number,&local_b8,local_90,fVar1);
+      Scr_DrawDebugVariablesForEntity((pgVar9->s).number,&local_b8,local_90,fVar1);
     }
   }
-  __restfpr_25();
-  __restgprlr_25();
   return;
 }
 
@@ -926,55 +896,56 @@ void G_DebugDrawVolumeModel(gentity_s *param_1,float *param_2,int param_3,int pa
 
 // 8246E5F8  EntInfoLine  (game/g_debug.cpp:550)
 
+/* WARNING: Function: __savegprlr_20 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_20 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
 char * EntInfoLine(int param_1)
 
 {
-  int iVar1;
-  char *pcVar2;
+  char *pcVar1;
   char local_80 [128];
   
-  iVar1 = __savegprlr_20(param_1);
-  if (g_entities[iVar1].model != 0) {
-    G_GetModel((uint)g_entities[iVar1].model);
+  if (g_entities[param_1].model != 0) {
+    G_GetModel((uint)g_entities[param_1].model);
   }
-  if (g_entities[iVar1].client != (gclient_s *)0x0) {
-    CG_GetTeamName(((g_entities[iVar1].client)->sess).cs.team);
+  if (g_entities[param_1].client != (gclient_s *)0x0) {
+    CG_GetTeamName(((g_entities[param_1].client)->sess).cs.team);
   }
-  if (g_entities[iVar1].tagInfo == (tagInfo_s *)0x0) {
+  if (g_entities[param_1].tagInfo == (tagInfo_s *)0x0) {
     local_80[0] = '\0';
   }
   else {
     Com_sprintf(local_80,5,"%i");
   }
-  if (g_entities[iVar1].script_linkName != 0) {
-    SL_ConvertToString((uint)g_entities[iVar1].script_linkName);
+  if (g_entities[param_1].script_linkName != 0) {
+    SL_ConvertToString((uint)g_entities[param_1].script_linkName);
   }
-  if (g_entities[iVar1].target != 0) {
-    SL_ConvertToString((uint)g_entities[iVar1].target);
+  if (g_entities[param_1].target != 0) {
+    SL_ConvertToString((uint)g_entities[param_1].target);
   }
-  if (g_entities[iVar1].targetname != 0) {
-    SL_ConvertToString((uint)g_entities[iVar1].targetname);
+  if (g_entities[param_1].targetname != 0) {
+    SL_ConvertToString((uint)g_entities[param_1].targetname);
   }
-  if (g_entities[iVar1].script_classname != 0) {
-    SL_ConvertToString((uint)g_entities[iVar1].script_classname);
+  if (g_entities[param_1].script_classname != 0) {
+    SL_ConvertToString((uint)g_entities[param_1].script_classname);
   }
-  if (g_entities[iVar1].classname != 0) {
-    SL_ConvertToString((uint)g_entities[iVar1].classname);
+  if (g_entities[param_1].classname != 0) {
+    SL_ConvertToString((uint)g_entities[param_1].classname);
   }
-  if (g_entities[iVar1].s.eType < 0x12) {
-    G_GetEntityTypeName(g_entities + iVar1);
+  if (g_entities[param_1].s.eType < 0x12) {
+    G_GetEntityTypeName(g_entities + param_1);
   }
-  pcVar2 = va("%i,%s,%.0f,%s,%s,%s,%s,%s,%s,%s,%s,%s,%.0f %.0f %.0f,%.0f %.0f %.0f,%i\n");
-  pcVar2 = (char *)__restgprlr_20(pcVar2);
-  return pcVar2;
+  pcVar1 = va("%i,%s,%.0f,%s,%s,%s,%s,%s,%s,%s,%s,%s,%.0f %.0f %.0f,%.0f %.0f %.0f,%i\n");
+  return pcVar1;
 }
 
 
 // 8246E840  G_DumpEntityDebugInfoToCSV  (game/g_debug.cpp:606)
 
+/* WARNING: Function: __savegprlr_21 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_21 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
@@ -988,13 +959,11 @@ void G_DumpEntityDebugInfoToCSV(char *param_1)
   int iVar5;
   uchar *puVar6;
   
-  __savegprlr_21(param_1);
   pcVar2 = va("%s%s%s%s");
   Com_Printf(0xf,"Opening file \"%s\" for writing.\n");
   pvVar3 = FS_FOpenTextFileWrite(pcVar2);
   if (pvVar3 == (void *)0x0) {
     Com_PrintError(0xf,"Couldn\'t open file \"%s\" for writing.\n");
-    __restgprlr_21();
     return;
   }
   FS_Write("Number,Type,Distance,Classname,Code Classname,Model,Targetname,Target,Script Noteworthy,Script Linkname,Team,ParentNum,Origin,Angles,SentToClients\n"
@@ -1024,82 +993,79 @@ void G_DumpEntityDebugInfoToCSV(char *param_1)
   } while ((int)puVar6 < -0x7cb4c87d);
   FS_FCloseFile(pvVar3);
   Com_Printf(0xf,"Done writing file.\n");
-  __restgprlr_21();
   return;
 }
 
 
 // 8246E9E0  G_DumpEntityDebugInfoToConsole  (game/g_debug.cpp:645)
 
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
 void G_DumpEntityDebugInfoToConsole(bool param_1)
 
 {
-  ulonglong uVar1;
-  int iVar2;
-  char *pcVar3;
-  ushort *puVar4;
+  int iVar1;
+  char *pcVar2;
+  ushort *puVar3;
   char local_b0 [176];
   
-  uVar1 = (ulonglong)param_1;
-  __savegprlr();
-  iVar2 = (-(uint)((uVar1 & 0xff) != 0) & 0xfffffff7) + 0xf;
-  Com_Printf(iVar2,
+  iVar1 = (-(uint)param_1 & 0xfffffff7) + 0xf;
+  Com_Printf(iVar1,
              "=====================================================================================\n"
             );
-  Com_Printf(iVar2,"============(entity dump begin)\n");
-  Com_Printf(iVar2,
+  Com_Printf(iVar1,"============(entity dump begin)\n");
+  Com_Printf(iVar1,
              "Number,Type,Distance,Classname,Code Classname,Model,Targetname,Target,Script Noteworthy,Script Linkname,Team,ParentNum,Origin,Angles,SentToClients\n"
             );
-  puVar4 = &g_entities[0].model;
+  puVar3 = &g_entities[0].model;
   do {
-    if (*(uchar *)((int)puVar4 + -0x65) != '\0') {
-      if (*puVar4 != 0) {
-        G_GetModel((uint)*puVar4);
+    if (*(uchar *)((int)puVar3 + -0x65) != '\0') {
+      if (*puVar3 != 0) {
+        G_GetModel((uint)*puVar3);
       }
-      if (*(gclient_s **)(puVar4 + -8) != (gclient_s *)0x0) {
-        CG_GetTeamName(((*(gclient_s **)(puVar4 + -8))->sess).cs.team);
+      if (*(gclient_s **)(puVar3 + -8) != (gclient_s *)0x0) {
+        CG_GetTeamName(((*(gclient_s **)(puVar3 + -8))->sess).cs.team);
       }
-      if (*(tagInfo_s **)(puVar4 + 0x56) == (tagInfo_s *)0x0) {
+      if (*(tagInfo_s **)(puVar3 + 0x56) == (tagInfo_s *)0x0) {
         local_b0[0] = '\0';
       }
       else {
         Com_sprintf(local_b0,5,"%i");
       }
-      if (puVar4[7] != 0) {
-        SL_ConvertToString((uint)puVar4[7]);
+      if (puVar3[7] != 0) {
+        SL_ConvertToString((uint)puVar3[7]);
       }
-      if (puVar4[8] != 0) {
-        SL_ConvertToString((uint)puVar4[8]);
+      if (puVar3[8] != 0) {
+        SL_ConvertToString((uint)puVar3[8]);
       }
-      if (puVar4[9] != 0) {
-        SL_ConvertToString((uint)puVar4[9]);
+      if (puVar3[9] != 0) {
+        SL_ConvertToString((uint)puVar3[9]);
       }
-      if (puVar4[6] != 0) {
-        SL_ConvertToString((uint)puVar4[6]);
+      if (puVar3[6] != 0) {
+        SL_ConvertToString((uint)puVar3[6]);
       }
-      if (puVar4[5] != 0) {
-        SL_ConvertToString((uint)puVar4[5]);
+      if (puVar3[5] != 0) {
+        SL_ConvertToString((uint)puVar3[5]);
       }
-      if (*(int *)(puVar4 + -0xb2) < 0x12) {
-        G_GetEntityTypeName((gentity_s *)(puVar4 + -0xb4));
+      if (*(int *)(puVar3 + -0xb2) < 0x12) {
+        G_GetEntityTypeName((gentity_s *)(puVar3 + -0xb4));
       }
-      pcVar3 = va("%i,%s,%.0f,%s,%s,%s,%s,%s,%s,%s,%s,%s,%.0f %.0f %.0f,%.0f %.0f %.0f,%i\n");
-      if (pcVar3 == (char *)0x0) {
+      pcVar2 = va("%i,%s,%.0f,%s,%s,%s,%s,%s,%s,%s,%s,%s,%.0f %.0f %.0f,%.0f %.0f %.0f,%i\n");
+      if (pcVar2 == (char *)0x0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_debug.cpp",0x296,0,
                         "%s");
       }
-      Com_Printf(iVar2,pcVar3);
+      Com_Printf(iVar1,pcVar2);
     }
-    puVar4 = puVar4 + 0x140;
-  } while ((int)puVar4 < -0x7cb4c818);
-  Com_Printf(iVar2,"(end entity dump)============\n");
-  Com_Printf(iVar2,
+    puVar3 = puVar3 + 0x140;
+  } while ((int)puVar3 < -0x7cb4c818);
+  Com_Printf(iVar1,"(end entity dump)============\n");
+  Com_Printf(iVar1,
              "=====================================================================================\n"
             );
-  __restgprlr();
   return;
 }
 
@@ -1285,6 +1251,8 @@ char * GetName(int param_1)
 
 // 8246F070  G_LogDebugEntInfoResults  (game/g_debug.cpp:797)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 bool G_LogDebugEntInfoResults(void)
@@ -1292,59 +1260,55 @@ bool G_LogDebugEntInfoResults(void)
 {
   int iVar1;
   int iVar2;
-  int iVar3;
-  float fVar4;
+  float fVar3;
+  int iVar4;
   int iVar5;
   int iVar6;
-  undefined1 uVar7;
-  ulonglong uVar8;
-  char *pcVar9;
+  ulonglong uVar7;
+  char *pcVar8;
   
-  __savegprlr_27();
   iVar6 = DAT_8334622c;
   if (DAT_8334622c != 0) {
-    uVar8 = 0;
+    uVar7 = 0;
     do {
-      iVar5 = (int)uVar8;
+      iVar5 = (int)uVar7;
       if (iVar5 < 0x12) {
-        pcVar9 = *(char **)((int)entityTypeNames + (int)((uVar8 & 0xffffffff) << 2));
+        pcVar8 = *(char **)((int)entityTypeNames + (int)((uVar7 & 0xffffffff) << 2));
       }
       else if (iVar5 == 0x12) {
-        pcVar9 = "ET_EVENTS";
+        pcVar8 = "ET_EVENTS";
       }
       else if (iVar5 == 0x13) {
-        pcVar9 = "Total Standard Ents";
+        pcVar8 = "Total Standard Ents";
       }
       else {
-        pcVar9 = "FX-Entities";
+        pcVar8 = "FX-Entities";
         if (iVar5 != 0x14) {
-          pcVar9 = "UNKNOWN";
+          pcVar8 = "UNKNOWN";
         }
       }
-      g_debugEntInfoSummary[iVar5].name = pcVar9;
-      iVar3 = (int)((uVar8 & 0x3fffffff) << 2);
-      iVar1 = *(int *)((int)g_entLogHighPublic + iVar3);
-      iVar2 = *(int *)((int)g_entLogCountLimits + iVar3);
-      g_debugEntInfoSummary[iVar5].count = *(int *)(iVar3 + iVar6);
+      g_debugEntInfoSummary[iVar5].name = pcVar8;
+      iVar4 = (int)((uVar7 & 0x3fffffff) << 2);
+      iVar1 = *(int *)((int)g_entLogHighPublic + iVar4);
+      iVar2 = *(int *)((int)g_entLogCountLimits + iVar4);
+      g_debugEntInfoSummary[iVar5].count = *(int *)(iVar4 + iVar6);
       g_debugEntInfoSummary[iVar5].countHighest = iVar1;
       g_debugEntInfoSummary[iVar5].limit = iVar2;
-      fVar4 = 0.0;
+      fVar3 = 0.0;
       if (iVar2 != 0) {
-        fVar4 = (float)(longlong)*(int *)(iVar3 + iVar6) / (float)(longlong)iVar2;
+        fVar3 = (float)(longlong)*(int *)(iVar4 + iVar6) / (float)(longlong)iVar2;
       }
-      g_debugEntInfoSummary[iVar5].percent = fVar4;
-      fVar4 = 0.0;
+      g_debugEntInfoSummary[iVar5].percent = fVar3;
+      fVar3 = 0.0;
       if (iVar2 != 0) {
-        fVar4 = (float)(longlong)iVar1 / (float)(longlong)iVar2;
+        fVar3 = (float)(longlong)iVar1 / (float)(longlong)iVar2;
       }
-      uVar8 = uVar8 + 1;
-      g_debugEntInfoSummary[iVar5].percentHighest = fVar4;
-    } while ((int)uVar8 < 0x15);
-    uVar7 = __restgprlr_27(1);
-    return (bool)uVar7;
+      uVar7 = uVar7 + 1;
+      g_debugEntInfoSummary[iVar5].percentHighest = fVar3;
+    } while ((int)uVar7 < 0x15);
+    return true;
   }
-  uVar7 = __restgprlr_27();
-  return (bool)uVar7;
+  return false;
 }
 
 

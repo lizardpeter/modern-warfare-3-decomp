@@ -13,6 +13,8 @@ void DB_FileReadCompletion(ulong param_1,ulong param_2,_OVERLAPPED *param_3)
 
 // 823A3A10  DB_FinishLoadXFile  (database/db_file_load.cpp:178)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void DB_FinishLoadXFile(void)
@@ -20,7 +22,6 @@ void DB_FinishLoadXFile(void)
 {
   int iVar1;
   
-  __savegprlr_28();
   if (g_load.file == (DBFile *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_file_load.cpp",
                     0xb3,0,"%s");
@@ -35,13 +36,14 @@ void DB_FinishLoadXFile(void)
                     0xb8,0,"%s");
   }
   g_load.file = (DBFile *)0x0;
-  __restgprlr_28();
   return;
 }
 
 
 // 823A3AB8  DB_ReadXFileStage  (database/db_file_load.cpp:192)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void DB_ReadXFileStage(void)
@@ -52,7 +54,6 @@ void DB_ReadXFileStage(void)
   ulong uVar3;
   uint uVar4;
   
-  __savegprlr_26();
   if (g_loadOutstandingRead != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_file_load.cpp",
                     0xcb,0,"%s");
@@ -90,7 +91,6 @@ void DB_ReadXFileStage(void)
     uVar1 = (g_load.file)->memoryBufferSize;
     if (uVar1 == 0) {
       g_load.completedReadSize = 0;
-      __restgprlr_26();
       return;
     }
     if ((int)uVar1 < (int)uVar4) {
@@ -101,7 +101,6 @@ void DB_ReadXFileStage(void)
     (g_load.file)->memoryBuffer = (g_load.file)->memoryBuffer + uVar4;
     (g_load.file)->memoryBufferSize = (g_load.file)->memoryBufferSize - uVar4;
     g_load.completedReadSize = uVar4;
-    __restgprlr_26();
     return;
   }
   g_load.overlapped.Internal = 0;
@@ -139,7 +138,6 @@ void DB_ReadXFileStage(void)
   else {
     g_loadOutstandingRead = 1;
   }
-  __restgprlr_26();
   return;
 }
 
@@ -164,6 +162,8 @@ void DB_WaitXFileStageInternal(void)
 
 // 823A4638  DB_WaitXFileStage  (database/db_file_load.cpp:360)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void DB_WaitXFileStage(void)
@@ -172,7 +172,6 @@ void DB_WaitXFileStage(void)
   uint uVar1;
   uint uVar2;
   
-  __savegprlr_27();
   if (g_load.file == (DBFile *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_file_load.cpp",
                     0x170,0,"%s");
@@ -200,6 +199,7 @@ void DB_WaitXFileStage(void)
     if (uVar1 != 0x40000) {
       g_load.readSize = 0;
     }
+    g_load.stream.avail_in = uVar1;
     g_load.start_in = g_load.fileBuffer;
     g_load.stream.next_in = g_load.fileBuffer;
     g_load.fileBuffer = g_load.fileBuffer + 0x40000;
@@ -210,8 +210,6 @@ void DB_WaitXFileStage(void)
     if (0x1fffffff < g_loadedSize) {
       g_loadedSizeInc = 0;
     }
-    g_load.stream.avail_in = uVar1;
-    __restgprlr_27();
     return;
   }
   Com_Printf(8,"ERROR: Dirty disk: \'%s\'\n");
@@ -225,15 +223,16 @@ void DB_WaitXFileStage(void)
 
 // 823A3E20  DB_FlushOutstandingRead  (database/db_file_load.cpp:491)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void DB_FlushOutstandingRead(int param_1)
 
 {
   bool bVar1;
-  int iVar2;
   char in_RESERVE;
   byte in_cr0;
   
-  iVar2 = __savegprlr_29(param_1);
   if (g_loadOutstandingRead == 1) {
     do {
       if (in_RESERVE != '\0') {
@@ -252,12 +251,12 @@ void DB_FlushOutstandingRead(int param_1)
     } while (!(bool)(in_cr0 >> 1 & 1));
     bVar1 = true;
     while (bVar1) {
-      if (iVar2 != 0) {
+      if (param_1 != 0) {
         Sys_LeaveCriticalSection(CRITSECT_STREAMING);
       }
       Sys_NotifyDatabase();
       Sys_Sleep(1);
-      if (iVar2 != 0) {
+      if (param_1 != 0) {
         Sys_EnterCriticalSection(CRITSECT_STREAMING);
       }
       bVar1 = g_loadOutstandingRead == 1;
@@ -278,7 +277,6 @@ void DB_FlushOutstandingRead(int param_1)
       }
     } while (!(bool)(in_cr0 >> 1 & 1));
   }
-  __restgprlr_29();
   return;
 }
 
@@ -433,20 +431,21 @@ void DB_InflateShutdown(void)
 
 // 823A4A28  DB_ReadXFileUncompressed  (database/db_file_load.cpp:673)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
+
 void DB_ReadXFileUncompressed(uchar *param_1,int param_2)
 
 {
   uchar *puVar1;
-  int iVar2;
-  uint uVar3;
+  uint uVar2;
+  int iVar3;
   ulonglong uVar4;
   ulonglong uVar5;
   ulonglong uVar6;
   
   uVar4 = (ulonglong)param_2;
-  puVar1 = (uchar *)__savegprlr_24(param_1);
-  uVar3 = (uint)uVar4;
-  if (uVar3 == 0) {
+  if (param_2 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_file_load.cpp",
                     0x2a4,0,"%s");
   }
@@ -459,28 +458,32 @@ void DB_ReadXFileUncompressed(uchar *param_1,int param_2)
                     0x2a7,0,"%s");
   }
   uVar5 = (ulonglong)g_load.stream.avail_in;
-  if ((g_load.readSize + uVar5 & 0xffffffff) < (uVar4 & 0xffffffff)) {
+  puVar1 = param_1;
+  uVar2 = param_2;
+  if ((g_load.readSize + uVar5 & 0xffffffff) < (ulonglong)(uint)param_2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_file_load.cpp",
                     0x2a8,0,"%s");
     uVar5 = (ulonglong)g_load.stream.avail_in;
+    puVar1 = param_1;
+    uVar2 = param_2;
   }
   do {
-    g_load.stream.avail_out = uVar3;
+    g_load.stream.avail_out = uVar2;
     g_load.stream.next_out = puVar1;
     if (uVar5 != 0) {
       uVar6 = uVar5;
       if ((int)uVar4 < (int)uVar5) {
         uVar6 = uVar4;
       }
-      iVar2 = (int)uVar6;
+      iVar3 = (int)uVar6;
       if (g_load.stream.next_out != (uchar *)0x0) {
         memcpy();
         uVar4 = (ulonglong)g_load.stream.avail_out;
-        g_load.stream.next_out = g_load.stream.next_out + iVar2;
+        g_load.stream.next_out = g_load.stream.next_out + iVar3;
         uVar5 = (ulonglong)g_load.stream.avail_in;
       }
-      g_load.stream.avail_in = (int)uVar5 - iVar2;
-      g_load.stream.avail_out = (int)uVar4 - iVar2;
+      g_load.stream.avail_in = (int)uVar5 - iVar3;
+      g_load.stream.avail_out = (int)uVar4 - iVar3;
       uVar6 = ZEXT48(g_load.stream.next_in) + uVar6;
       g_load.stream.next_in = (uchar *)uVar6;
       if (g_load.file == (DBFile *)0x0) {
@@ -495,12 +498,11 @@ void DB_ReadXFileUncompressed(uchar *param_1,int param_2)
       }
       if (g_load.stream.avail_out == 0) {
         dataCacheBlockTouch(uVar6 + 0x1ff);
-        __restgprlr_24();
         return;
       }
     }
-    iVar2 = R_HasDeviceOwnership();
-    if (iVar2 != 0) {
+    iVar3 = R_HasDeviceOwnership();
+    if (iVar3 != 0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_file_load.cpp",
                       0x21f,0,"%s");
     }
@@ -512,21 +514,24 @@ void DB_ReadXFileUncompressed(uchar *param_1,int param_2)
     uVar4 = (ulonglong)g_load.stream.avail_out;
     uVar5 = (ulonglong)g_load.stream.avail_in;
     puVar1 = g_load.stream.next_out;
-    uVar3 = g_load.stream.avail_out;
+    uVar2 = g_load.stream.avail_out;
   } while( true );
 }
 
 
 // 823A4C40  DB_ReadXFile  (database/db_file_load.cpp:719)
 
+/* WARNING: Function: __savegprlr_18 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_18 replaced with injection: xenon_save_restore */
+
 void DB_ReadXFile(uchar *param_1,int param_2,int param_3)
 
 {
   uchar *puVar1;
-  int iVar2;
-  ulonglong uVar3;
+  uint uVar2;
+  int iVar3;
+  ulonglong uVar4;
   
-  puVar1 = (uchar *)__savegprlr_18(param_1);
   if (param_2 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_file_load.cpp",
                     0x2d2,0,"%s");
@@ -535,15 +540,19 @@ void DB_ReadXFile(uchar *param_1,int param_2,int param_3)
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_file_load.cpp",
                     0x2d4,0,"%s");
   }
+  puVar1 = param_1;
+  uVar2 = param_2;
   if (g_load.stream.avail_out != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_file_load.cpp",
                     0x2d5,0,"%s");
+    puVar1 = param_1;
+    uVar2 = param_2;
   }
   while( true ) {
-    g_load.stream.avail_out = param_2;
+    g_load.stream.avail_out = uVar2;
     g_load.stream.next_out = puVar1;
-    iVar2 = DB_AuthLoad_Inflate(&g_load.stream,2,param_3);
-    if ((iVar2 != 0) && (iVar2 != 1)) {
+    iVar3 = DB_AuthLoad_Inflate(&g_load.stream,2,param_3);
+    if ((iVar3 != 0) && (iVar3 != 1)) {
       Com_Printf(8,"ERROR: Dirty disk: \'%s\'\n");
       Content_CheckIfMountedContentPacksAreGone();
       Sys_Sleep(1000);
@@ -555,14 +564,14 @@ void DB_ReadXFile(uchar *param_1,int param_2,int param_3)
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_file_load.cpp",
                       0x2e1,0,"%s");
     }
-    uVar3 = ZEXT48(g_load.stream.next_in);
-    if (0x40000 < (uVar3 - ZEXT48(g_load.start_in) & 0xffffffff)) {
+    uVar4 = ZEXT48(g_load.stream.next_in);
+    if (0x40000 < (uVar4 - ZEXT48(g_load.start_in) & 0xffffffff)) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_file_load.cpp",
                       0x2e2,0,"%s");
-      uVar3 = ZEXT48(g_load.stream.next_in);
+      uVar4 = ZEXT48(g_load.stream.next_in);
     }
     if (g_load.stream.avail_out == 0) break;
-    if (iVar2 != 0) {
+    if (iVar3 != 0) {
       va("Invalid fast file \'%s\' (%d != DB_Z_OK), offset %d, size %d");
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_file_load.cpp",
                       0x2ea,0,"%s\n\t%s");
@@ -571,8 +580,8 @@ void DB_ReadXFile(uchar *param_1,int param_2,int param_3)
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_file_load.cpp",
                       0x2eb,0,"%s");
     }
-    iVar2 = R_HasDeviceOwnership();
-    if (iVar2 != 0) {
+    iVar3 = R_HasDeviceOwnership();
+    if (iVar3 != 0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_file_load.cpp",
                       0x21f,0,"%s");
     }
@@ -582,10 +591,9 @@ void DB_ReadXFile(uchar *param_1,int param_2,int param_3)
     }
     Sys_YieldWorkerCmd();
     puVar1 = g_load.stream.next_out;
-    param_2 = g_load.stream.avail_out;
+    uVar2 = g_load.stream.avail_out;
   }
-  dataCacheBlockTouch(uVar3 + 0x1ff);
-  __restgprlr_18();
+  dataCacheBlockTouch(uVar4 + 0x1ff);
   return;
 }
 
@@ -608,31 +616,30 @@ void DB_DirtyDiscError(void)
 
 // 823A40A8  DB_InitLoadXFile  (database/db_file_load.cpp:955)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void DB_InitLoadXFile(DBFile *param_1,uint param_2)
 
 {
-  DBFile *pDVar1;
-  
-  pDVar1 = (DBFile *)__savegprlr_28(param_1);
-  if (pDVar1 == (DBFile *)0x0) {
+  if (param_1 == (DBFile *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_file_load.cpp",
                     0x3bc,0,"%s");
   }
-  if ((pDVar1->memoryBuffer == (uchar *)0x0) && ((pDVar1->handle).handle == (void *)0x0)) {
+  if ((param_1->memoryBuffer == (uchar *)0x0) && ((param_1->handle).handle == (void *)0x0)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_file_load.cpp",
                     0x3be,0,"%s");
   }
   memset();
   g_load.readSize = 0x7fffffff;
   g_load.fileBuffer = g_fileBuf + 0x80;
-  g_load.file = pDVar1;
+  g_load.file = param_1;
   g_load.offset = param_2;
   DB_WaitXFileStageInternal();
   DB_ReadXFileStage();
   if (g_loadOutstandingRead == 0) {
     Com_Error(ERR_DROP,"Fastfile for zone \'%s\' is empty.");
   }
-  __restgprlr_28();
   return;
 }
 
@@ -702,18 +709,12 @@ int DB_CheckAvailIn(void)
 
 // 823A42E0  DB_PrefetchXFile  (database/db_file_load.cpp:1039)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
+
 int DB_PrefetchXFile(uint param_1,uint param_2)
 
 {
-  ulonglong uVar1;
-  int iVar2;
-  ulonglong uVar3;
-  ulonglong uVar4;
-  ulonglong uVar5;
-  uint uVar6;
-  
-  uVar3 = (ulonglong)(int)param_2;
-  uVar1 = __savegprlr_25(param_1);
   if ((g_load.lookaheadOffset & 0x7fff) != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_file_load.cpp",
                     0x410,0,"%s");
@@ -722,77 +723,66 @@ int DB_PrefetchXFile(uint param_1,uint param_2)
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_file_load.cpp",
                     0x411,0,"%s");
   }
-  uVar5 = (ulonglong)g_load.lookaheadOffset;
-  uVar4 = (ulonglong)g_load.lookaheadReadSize;
-  if (uVar4 == 0) {
-    if (((uVar1 & 0xffffffff) <= uVar5) && (uVar5 <= (uVar3 & 0xffffffff))) goto LAB_823a43c8;
-    uVar5 = uVar1 & 0xffff8000;
-    g_load.lookaheadOffset = (uint)uVar5;
+  if (g_load.lookaheadReadSize == 0) {
+    if ((param_1 <= g_load.lookaheadOffset) && (g_load.lookaheadOffset <= param_2))
+    goto LAB_823a43c8;
+    g_load.lookaheadOffset = param_1 & 0xffff8000;
   }
   else {
-    if ((uVar3 & 0xffffffff) < uVar5) {
+    if (param_2 < g_load.lookaheadOffset) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_file_load.cpp",
                       0x41a,0,"%s");
-      uVar5 = (ulonglong)g_load.lookaheadOffset;
-      uVar4 = (ulonglong)g_load.lookaheadReadSize;
     }
-    if (((uVar3 - uVar5) + 0x7fff & 0xffff8000) < uVar4) {
+    if (((param_2 - g_load.lookaheadOffset) + 0x7fff & 0xffff8000) < g_load.lookaheadReadSize) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_file_load.cpp",
                       0x41b,0,"%s");
-      uVar5 = (ulonglong)g_load.lookaheadOffset;
-      uVar4 = (ulonglong)g_load.lookaheadReadSize;
     }
-    if ((uVar4 + uVar5 + 0x80000 & 0xffffffff) < (uVar1 & 0xffff8000)) {
-      iVar2 = __restgprlr_25(1);
-      return iVar2;
+    if (g_load.lookaheadReadSize + g_load.lookaheadOffset + 0x80000 < (param_1 & 0xffff8000)) {
+      return 1;
     }
   }
-  if ((uVar3 & 0xffffffff) < uVar5) {
+  if (param_2 < g_load.lookaheadOffset) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_file_load.cpp",
                     0x421,0,"%s");
-    uVar5 = (ulonglong)g_load.lookaheadOffset;
-    uVar4 = (ulonglong)g_load.lookaheadReadSize;
   }
 LAB_823a43c8:
-  uVar6 = (uint)uVar5;
-  if (((uVar3 - uVar5) + 0x7fff & 0xffff8000) < uVar4) {
+  if (((param_2 - g_load.lookaheadOffset) + 0x7fff & 0xffff8000) < g_load.lookaheadReadSize) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_file_load.cpp",
                     0x422,0,"%s");
-    uVar6 = g_load.lookaheadOffset;
   }
-  g_load.lookaheadReadSize = ((int)uVar3 - uVar6) + 0x7fff & 0xffff8000;
-  iVar2 = __restgprlr_25(0);
-  return iVar2;
+  g_load.lookaheadReadSize = (param_2 - g_load.lookaheadOffset) + 0x7fff & 0xffff8000;
+  return 0;
 }
 
 
 // 823A4490  DB_InitLoadXFileStreaming  (database/db_file_load.cpp:1066)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void DB_InitLoadXFileStreaming(DBFile *param_1)
 
 {
-  DBFile *pDVar1;
-  
-  pDVar1 = (DBFile *)__savegprlr_29(param_1);
-  if (pDVar1 == (DBFile *)0x0) {
+  if (param_1 == (DBFile *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_file_load.cpp",
                     0x42b,0,"%s");
   }
-  if ((pDVar1->memoryBuffer == (uchar *)0x0) && ((pDVar1->handle).handle == (void *)0x0)) {
+  if ((param_1->memoryBuffer == (uchar *)0x0) && ((param_1->handle).handle == (void *)0x0)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_file_load.cpp",
                     0x42d,0,"%s");
   }
   memset();
+  g_load.file = param_1;
   g_load.offset = 0xffffffff;
   g_load.fileBuffer = g_fileBuf + 0x80;
-  g_load.file = pDVar1;
-  __restgprlr_29();
   return;
 }
 
 
 // 823A4548  DB_FinishLoadXFileStreaming  (database/db_file_load.cpp:1084)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void DB_FinishLoadXFileStreaming(void)
@@ -800,7 +790,6 @@ void DB_FinishLoadXFileStreaming(void)
 {
   int iVar1;
   
-  __savegprlr_28();
   if (g_load.file == (DBFile *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_file_load.cpp",
                     0x43d,0,"%s");
@@ -815,7 +804,6 @@ void DB_FinishLoadXFileStreaming(void)
                     0x440,0,"%s");
   }
   g_load.file = (DBFile *)0x0;
-  __restgprlr_28();
   return;
 }
 

@@ -2,61 +2,60 @@
 
 // 828CA858  nemAgcVadMain  (<external>/Xenon/mar09/core/private/xam/codecs/nci/enc/src/ncivad.c:494)
 
+/* WARNING: Function: __savefpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_28 replaced with injection: xenon_save_restore */
+
 ushort nemAgcVadMain(void *param_1,float param_2,float param_3)
 
 {
-  int iVar2;
   ulonglong uVar1;
+  short sVar3;
+  int iVar2;
   short sVar4;
-  int iVar3;
-  short sVar5;
-  ushort uVar6;
-  void *pvVar7;
-  double extraout_f1;
+  void *pvVar5;
+  double dVar6;
+  double dVar7;
   double dVar8;
   double dVar9;
-  double dVar10;
-  double dVar11;
-  float fVar12;
+  float fVar10;
   undefined1 uStack_39;
   
-  dVar10 = (double)param_3;
-  iVar2 = __savefpr_28((double)param_2,param_1);
-  *(float *)(iVar2 + 0xc) = (float)extraout_f1;
-  *(float *)(iVar2 + 0x10) = (float)dVar10;
-  uVar1 = ZEXT48(*(void **)(iVar2 + 8));
-  dVar11 = extraout_f1;
-  fVar12 = nemAgcGetMeanEnergy(*(void **)(iVar2 + 8));
-  dVar8 = (double)fVar12;
-  sVar5 = *(short *)(iVar2 + 0x16);
-  if (*(short *)(iVar2 + 0x18) == 0) {
-    *(undefined2 *)(iVar2 + 0x18) = 1;
+  dVar6 = (double)param_2;
+  dVar9 = (double)param_3;
+  *(float *)((int)param_1 + 0xc) = param_2;
+  *(float *)((int)param_1 + 0x10) = param_3;
+  uVar1 = ZEXT48(*(void **)((int)param_1 + 8));
+  fVar10 = nemAgcGetMeanEnergy(*(void **)((int)param_1 + 8));
+  dVar7 = (double)fVar10;
+  sVar4 = *(short *)((int)param_1 + 0x16);
+  if (*(short *)((int)param_1 + 0x18) == 0) {
+    *(undefined2 *)((int)param_1 + 0x18) = 1;
   }
-  if (*(short *)(iVar2 + 0x1a) == 0) {
-    *(undefined2 *)(iVar2 + 0x1a) = 0x5a;
+  if (*(short *)((int)param_1 + 0x1a) == 0) {
+    *(undefined2 *)((int)param_1 + 0x1a) = 0x5a;
   }
-  dVar9 = log10((double)(float)(dVar11 + 1.0));
-  pvVar7 = *(void **)(iVar2 + 4);
-  dVar9 = (double)((float)dVar9 * 28.333334);
-  nemVadBlockDec((float)dVar11,(void *)uVar1);
-  nemVadSpkrDec((float)dVar9,(float)dVar8,(short)uVar1,pvVar7);
-  nemVadUpdateNoiseFlr((float)dVar11,(void *)uVar1);
-  sVar4 = nemVadTransmit((float)dVar9,(short)uVar1,*(ushort *)(iVar2 + 0x18),
-                         (void *)(uint)*(ushort *)(iVar2 + 0x1a));
-  *(short *)(iVar2 + 0x1c) = sVar4;
-  iVar3 = nemVadVoicingDec(*(void **)(iVar2 + 4),(ushort)(sVar5 >> 0xf) >> 0xf ^ 1,(float)dVar10);
-  if (iVar3 == 0) {
-    nemAgcUpdateCounter(*(void **)(iVar2 + 8));
+  dVar8 = log10((double)(float)(dVar6 + 1.0));
+  pvVar5 = *(void **)((int)param_1 + 4);
+  dVar8 = (double)((float)dVar8 * 28.333334);
+  nemVadBlockDec((float)dVar6,(void *)uVar1);
+  nemVadSpkrDec((float)dVar8,(float)dVar7,(short)uVar1,pvVar5);
+  nemVadUpdateNoiseFlr((float)dVar6,(void *)uVar1);
+  sVar3 = nemVadTransmit((float)dVar8,(short)uVar1,*(ushort *)((int)param_1 + 0x18),
+                         (void *)(uint)*(ushort *)((int)param_1 + 0x1a));
+  *(short *)((int)param_1 + 0x1c) = sVar3;
+  iVar2 = nemVadVoicingDec(*(void **)((int)param_1 + 4),(ushort)(sVar4 >> 0xf) >> 0xf ^ 1,
+                           (float)dVar9);
+  if (iVar2 == 0) {
+    nemAgcUpdateCounter(*(void **)((int)param_1 + 8));
   }
   else {
-    uStack_39 = (uchar)(longlong)(dVar9 + 0.5);
-    nemAgcMeanEngLevel(uStack_39,*(void **)(iVar2 + 8));
-    if (*(char *)(iVar2 + 0x1e) != '\0') {
-      sVar5 = nemAgcCalc(*(void **)(iVar2 + 8),*(short *)(iVar2 + 0x16));
-      *(short *)(iVar2 + 0x14) = sVar5;
+    uStack_39 = (uchar)(longlong)(dVar8 + 0.5);
+    nemAgcMeanEngLevel(uStack_39,*(void **)((int)param_1 + 8));
+    if (*(char *)((int)param_1 + 0x1e) != '\0') {
+      sVar4 = nemAgcCalc(*(void **)((int)param_1 + 8),*(short *)((int)param_1 + 0x16));
+      *(short *)((int)param_1 + 0x14) = sVar4;
     }
   }
-  uVar6 = __restfpr_28(0);
-  return uVar6;
+  return 0;
 }
 

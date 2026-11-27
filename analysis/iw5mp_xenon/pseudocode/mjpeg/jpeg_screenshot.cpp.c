@@ -33,6 +33,9 @@ void jpeg_screenshot_set_frame_info
 
 // 827E9410  HiResScreenshot_Draw  (mjpeg/jpeg_screenshot.cpp:52)
 
+/* WARNING: Function: __savegprlr_17 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_17 replaced with injection: xenon_save_restore */
+
 void HiResScreenshot_Draw(D3DDevice *param_1,D3DTexture *param_2,D3DTexture *param_3,int param_4)
 
 {
@@ -44,12 +47,11 @@ void HiResScreenshot_Draw(D3DDevice *param_1,D3DTexture *param_2,D3DTexture *par
   float fVar6;
   ulonglong uVar7;
   float fVar8;
-  D3DDevice *pDVar9;
-  ulonglong uVar10;
+  ulonglong uVar9;
+  uint uVar10;
   uint uVar11;
   uint uVar12;
-  uint uVar13;
-  int iVar14;
+  int iVar13;
   _D3DLOCKED_RECT _Stack_c0;
   ulonglong local_b8;
   ulonglong local_b0;
@@ -58,8 +60,7 @@ void HiResScreenshot_Draw(D3DDevice *param_1,D3DTexture *param_2,D3DTexture *par
   undefined8 local_98;
   longlong local_90;
   
-  pDVar9 = (D3DDevice *)__savegprlr_17(param_1);
-  D3DDevice_BlockUntilIdle(pDVar9);
+  D3DDevice_BlockUntilIdle(param_1);
   D3DTexture_LockRect(param_2,0,&_Stack_c0,(tagRECT *)0x0,0x10);
   D3DTexture_LockRect(param_3,0,&_Stack_a8,(tagRECT *)0x0,0);
   hiResRGB2YUV.backBuffer = _Stack_c0.pBits;
@@ -70,31 +71,31 @@ void HiResScreenshot_Draw(D3DDevice *param_1,D3DTexture *param_2,D3DTexture *par
     if (16.0 < rg.hiResShotScaleY) {
       fVar5 = 16.0;
     }
-    uVar11 = (uint)(((float)(longlong)hiResRGB2YUV.x / (float)(longlong)hiResRGB2YUV.width) *
+    uVar10 = (uint)(((float)(longlong)hiResRGB2YUV.x / (float)(longlong)hiResRGB2YUV.width) *
                    (float)(longlong)hiResRGB2YUV.windowWidth);
-    local_b0 = (ulonglong)(int)uVar11;
+    local_b0 = (ulonglong)(int)uVar10;
     uVar1 = (uint)(((float)(longlong)hiResRGB2YUV.y / (float)(longlong)hiResRGB2YUV.height) *
                   (float)(longlong)hiResRGB2YUV.windowHeight);
     local_b8 = (ulonglong)(int)uVar1;
     fVar6 = 0.0;
-    iVar14 = hiResRGB2YUV.windowWidth;
+    iVar13 = hiResRGB2YUV.windowWidth;
     if (0.0 < (float)(longlong)hiResRGB2YUV.windowWidth) {
       do {
-        if (iVar14 <= (int)uVar11) break;
-        uVar10 = 0;
+        if (iVar13 <= (int)uVar10) break;
+        uVar9 = 0;
         fVar4 = 0.0;
-        uVar13 = uVar1;
+        uVar12 = uVar1;
         do {
-          local_b0 = uVar10 & 0xffffffff;
+          local_b0 = uVar9 & 0xffffffff;
           local_b8 = (ulonglong)(uint)hiResRGB2YUV.windowHeight;
           if ((float)local_b8 <= (float)local_b0 + fVar4) break;
           local_a0 = (ulonglong)fVar4;
           local_98 = (ulonglong)fVar6;
           fVar4 = fVar4 + fVar5;
-          uVar12 = iVar14 + 0x1fU >> 5;
-          uVar2 = ((uVar13 & 6) * 4 + (uVar11 & 7)) * 4;
+          uVar11 = iVar13 + 0x1fU >> 5;
+          uVar2 = ((uVar12 & 6) * 4 + (uVar10 & 7)) * 4;
           uVar3 = ((local_a0._4_4_ & 6) * 4 + (local_98._4_4_ & 7)) * 4;
-          uVar3 = ((local_a0._4_4_ >> 5) * uVar12 + (local_98._4_4_ >> 5)) * 0x200 +
+          uVar3 = ((local_a0._4_4_ >> 5) * uVar11 + (local_98._4_4_ >> 5)) * 0x200 +
                   ((local_a0._4_4_ & 1) * 8 + (uVar3 & 0xfffffff0)) * 2 +
                   (local_a0._4_4_ & 8) * 0x20 + (uVar3 & 0xf);
           uVar3 = *(uint *)((((local_a0._4_4_ & 0x10) * 0x10 + (uVar3 & 0xfffffe00)) * 2 +
@@ -102,36 +103,40 @@ void HiResScreenshot_Draw(D3DDevice *param_1,D3DTexture *param_2,D3DTexture *par
                             ((uint)(((local_a0 & 0x7ffffff8) * 2 + (local_98 & 0xffffffff) &
                                     0xffffffff) << 3) & 0xc0) + (uVar3 & 0x3f) +
                            (int)_Stack_c0.pBits);
-          uVar12 = ((uVar13 >> 5) * uVar12 + (uVar11 >> 5)) * 0x200 +
-                   ((uVar13 & 1) * 8 + (uVar2 & 0xfffffff0)) * 2 + (uVar13 & 8) * 0x20 +
+          uVar11 = ((uVar12 >> 5) * uVar11 + (uVar10 >> 5)) * 0x200 +
+                   ((uVar12 & 1) * 8 + (uVar2 & 0xfffffff0)) * 2 + (uVar12 & 8) * 0x20 +
                    (uVar2 & 0xf);
-          uVar2 = uVar13 & 0x10;
+          uVar2 = uVar12 & 0x10;
           uVar7 = (ulonglong)
                   (uint)((int)((uVar3 >> 0x10 & 0xff) + (uVar3 >> 8 & 0xff) + (uVar3 >> 0x18)) >> 2)
           ;
-          uVar3 = uVar13 & 0x7ffffff8;
-          uVar10 = uVar10 + 1;
-          uVar13 = uVar13 + 1;
-          *(uint *)(((uVar2 * 0x10 + (uVar12 & 0xfffffe00)) * 2 + (uVar12 & 0x1c0)) * 4 +
-                    (uVar3 * 2 + uVar11 & 0x18) * 8 + (uVar12 & 0x3f) + (int)_Stack_a8.pBits) =
+          uVar3 = uVar12 & 0x7ffffff8;
+          uVar9 = uVar9 + 1;
+          uVar12 = uVar12 + 1;
+          *(uint *)(((uVar2 * 0x10 + (uVar11 & 0xfffffe00)) * 2 + (uVar11 & 0x1c0)) * 4 +
+                    (uVar3 * 2 + uVar10 & 0x18) * 8 + (uVar11 & 0x3f) + (int)_Stack_a8.pBits) =
                (uint)(((uVar7 << 8 | uVar7) << 8 | uVar7) << 8) | 0xff;
-          iVar14 = hiResRGB2YUV.windowWidth;
+          iVar13 = hiResRGB2YUV.windowWidth;
         } while (fVar4 <= 16.0);
-        local_90 = (longlong)iVar14;
+        local_90 = (longlong)iVar13;
         fVar6 = fVar6 + fVar8;
-        uVar11 = uVar11 + 1;
+        uVar10 = uVar10 + 1;
       } while (fVar6 < (float)local_90);
     }
   }
   WaitForSingleObject(hiResRGB2YUV.hJpegDone,0xffffffff);
   D3DTexture_UnlockRect(param_2,0);
   D3DTexture_UnlockRect(param_3,0);
-  __restgprlr_17();
   return;
 }
 
 
 // 827E97C0  jpeg_screenshot_chunk  (mjpeg/jpeg_screenshot.cpp:97)
+
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
 
 uchar * jpeg_screenshot_chunk(uchar *param_1,int param_2,jpeg_encode *param_3)
 
@@ -201,8 +206,7 @@ uchar * jpeg_screenshot_chunk(uchar *param_1,int param_2,jpeg_encode *param_3)
   uchar auStack_170 [8];
   uchar auStack_168 [360];
   
-  __savegprlr();
-  puStack00000014 = (uchar *)__savefpr_22();
+  puStack00000014 = param_1;
   iStack0000001c = param_2;
   pjStack00000024 = param_3;
   WaitForSingleObject(hiResRGB2YUV.hScreenshotDone,0xffffffff);
@@ -408,8 +412,6 @@ uchar * jpeg_screenshot_chunk(uchar *param_1,int param_2,jpeg_encode *param_3)
     } while ((int)local_2f4 < iStack0000001c);
   }
   ReleaseSemaphore(hiResRGB2YUV.hJpegDone,1,(long *)0x0);
-  puVar13 = (uchar *)__restfpr_22(puStack00000014);
-  __restgprlr();
-  return puVar13;
+  return puStack00000014;
 }
 

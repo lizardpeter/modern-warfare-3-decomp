@@ -2,206 +2,202 @@
 
 // 828B6F40  special_decode_aligned_block  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/compression/codec/lzx/decoder/decalign.cpp:11)
 
+/* WARNING: Function: __savegprlr_18 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_18 replaced with injection: xenon_save_restore */
+
 long XCOMPRESS::special_decode_aligned_block(t_decoder_context *param_1,long param_2,int param_3)
 
 {
-  undefined1 uVar1;
+  uchar uVar1;
   byte bVar2;
   short sVar3;
-  undefined1 *puVar4;
-  int iVar5;
-  int iVar6;
-  uint uVar7;
-  undefined1 *puVar8;
-  int iVar9;
-  int *piVar10;
-  long lVar11;
-  longlong lVar12;
-  int iVar13;
-  longlong lVar14;
-  ulonglong uVar15;
-  ulonglong uVar16;
-  longlong lVar17;
-  ulonglong uVar18;
-  char cVar19;
-  ulonglong uVar20;
-  char cVar21;
-  uint uVar22;
-  int *piVar23;
-  undefined1 *puVar24;
+  uchar *puVar4;
+  uchar *puVar5;
+  ulong uVar6;
+  uchar *puVar7;
+  int iVar8;
+  longlong lVar9;
+  ulonglong uVar10;
+  ulonglong uVar11;
+  uint uVar12;
+  uint uVar13;
+  ulonglong uVar14;
+  char cVar16;
+  ulong uVar15;
+  ulonglong uVar17;
+  char cVar18;
+  ulong uVar19;
+  int iVar20;
+  ulong *puVar21;
+  uchar *puVar22;
   
-  lVar12 = (longlong)param_2;
-  piVar10 = (int *)__savegprlr_18(param_1);
-  puVar4 = (undefined1 *)piVar10[0xac2];
-  iVar5 = *piVar10;
-  iVar9 = (int)lVar12;
-  uVar20 = (ulonglong)*(byte *)(piVar10 + 0xbad);
-  uVar22 = piVar10[0xbac];
-  puVar24 = (undefined1 *)piVar10[0xac1];
-  piVar23 = piVar10 + 3;
-  do {
-    iVar13 = (int)lVar12;
-    if (iVar9 + param_3 <= iVar13) {
-      *(char *)(piVar10 + 0xbad) = (char)uVar20;
-      piVar10[0xbac] = uVar22;
-      piVar10[0xac1] = (int)puVar24;
-LAB_828b72a8:
-      lVar11 = __restgprlr_18(lVar12);
-      return lVar11;
+  puVar4 = param_1->dec_end_input_pos;
+  puVar5 = param_1->dec_mem_window;
+  iVar20 = param_2 + param_3;
+  uVar17 = (ulonglong)(byte)param_1->dec_bitcount;
+  uVar19 = param_1->dec_bitbuf;
+  puVar22 = param_1->dec_input_curpos;
+  puVar21 = param_1->dec_last_matchpos_offset;
+  while( true ) {
+    if (iVar20 <= param_2) {
+      param_1->dec_bitcount = (char)uVar17;
+      param_1->dec_bitbuf = uVar19;
+      param_1->dec_input_curpos = puVar22;
+      return param_2;
     }
-    sVar3 = *(short *)((int)piVar10 + (uVar22 >> 0x15 & 0x7fe) + 0x18);
-    uVar15 = (ulonglong)sVar3;
+    sVar3 = *(short *)((int)param_1->dec_main_tree_table + (uVar19 >> 0x15 & 0x7fe));
+    uVar10 = (ulonglong)sVar3;
     if (sVar3 < 0) {
-      uVar18 = 0x200000;
+      uVar14 = 0x200000;
       do {
-        uVar7 = (uint)uVar18;
-        uVar18 = uVar18 >> 1;
-        sVar3 = *(short *)((int)piVar10 +
-                          (int)((((ulonglong)((uVar7 & uVar22) == 0) ^ 1) +
-                                 (uVar15 & 0x7fffffff) * -2 & 0xffffffff) << 1) + 0xe3c);
-        uVar15 = (ulonglong)sVar3;
+        uVar12 = (uint)uVar14;
+        uVar14 = uVar14 >> 1;
+        sVar3 = *(short *)((int)param_1->dec_main_tree_left_right +
+                          (int)((((ulonglong)((uVar12 & uVar19) == 0) ^ 1) +
+                                 (uVar10 & 0x7fffffff) * -2 & 0xffffffff) << 1));
+        uVar10 = (ulonglong)sVar3;
       } while (sVar3 < 0);
     }
-    if (puVar4 <= puVar24) {
-      lVar12 = -1;
-      goto LAB_828b72a8;
+    if (puVar4 <= puVar22) break;
+    cVar18 = (char)uVar17 - param_1->dec_main_tree_len[(int)uVar10];
+    uVar19 = uVar19 << (param_1->dec_main_tree_len[(int)uVar10] & 0x3f);
+    uVar17 = (ulonglong)cVar18;
+    if ((longlong)uVar17 < 1) {
+      puVar7 = puVar22 + 1;
+      uVar1 = *puVar22;
+      puVar22 = puVar22 + 2;
+      uVar17 = (ulonglong)(char)(cVar18 + '\x10');
+      uVar19 = (uint)CONCAT11(*puVar7,uVar1) << (-(int)cVar18 & 0x3fU) | uVar19;
     }
-    bVar2 = *(byte *)((int)piVar10 + (int)uVar15 + 0xa18);
-    cVar21 = (char)uVar20 - bVar2;
-    uVar22 = uVar22 << (bVar2 & 0x3f);
-    uVar20 = (ulonglong)cVar21;
-    if ((longlong)uVar20 < 1) {
-      puVar8 = puVar24 + 1;
-      uVar1 = *puVar24;
-      puVar24 = puVar24 + 2;
-      uVar20 = (ulonglong)(char)(cVar21 + '\x10');
-      uVar22 = (uint)CONCAT11(*puVar8,uVar1) << (-(int)cVar21 & 0x3fU) | uVar22;
-    }
-    uVar15 = uVar15 - 0x100;
-    if ((longlong)uVar15 < 0) {
-      iVar6 = piVar10[1];
-      *(char *)(iVar5 + iVar13) = (char)uVar15;
-      *(char *)(iVar6 + iVar5 + iVar13) = (char)uVar15;
-      lVar12 = lVar12 + 1;
+    uVar10 = uVar10 - 0x100;
+    if ((longlong)uVar10 < 0) {
+      uVar15 = param_1->dec_window_size;
+      puVar5[param_2] = (uchar)uVar10;
+      puVar5[param_2 + uVar15] = (uchar)uVar10;
+      param_2 = param_2 + 1;
     }
     else {
-      uVar18 = uVar15 & 7;
-      if ((int)uVar18 == 7) {
-        sVar3 = *(short *)((int)piVar10 + (uVar22 >> 0x17 & 0x1fe) + 0x818);
-        uVar18 = (ulonglong)sVar3;
+      uVar14 = uVar10 & 7;
+      if ((int)uVar14 == 7) {
+        sVar3 = *(short *)((int)param_1->dec_secondary_length_tree_table + (uVar19 >> 0x17 & 0x1fe))
+        ;
+        uVar14 = (ulonglong)sVar3;
         if (sVar3 < 0) {
-          uVar16 = 0x800000;
+          uVar11 = 0x800000;
           do {
-            uVar7 = (uint)uVar16;
-            uVar16 = uVar16 >> 1;
-            sVar3 = *(short *)((int)piVar10 +
-                              (int)((((ulonglong)((uVar7 & uVar22) == 0) ^ 1) +
-                                     (uVar18 & 0x7fffffff) * -2 & 0xffffffff) << 1) + 0x233c);
-            uVar18 = (ulonglong)sVar3;
+            uVar12 = (uint)uVar11;
+            uVar11 = uVar11 >> 1;
+            sVar3 = *(short *)((int)param_1->dec_secondary_length_tree_left_right +
+                              (int)((((ulonglong)((uVar12 & uVar19) == 0) ^ 1) +
+                                     (uVar14 & 0x7fffffff) * -2 & 0xffffffff) << 1));
+            uVar14 = (ulonglong)sVar3;
           } while (sVar3 < 0);
         }
-        bVar2 = *(byte *)((int)piVar10 + (int)uVar18 + 0xcb8);
-        cVar21 = (char)uVar20 - bVar2;
-        uVar22 = uVar22 << (bVar2 & 0x3f);
-        uVar20 = (ulonglong)cVar21;
-        if ((longlong)uVar20 < 1) {
-          puVar8 = puVar24 + 1;
-          uVar1 = *puVar24;
-          puVar24 = puVar24 + 2;
-          uVar20 = (ulonglong)(char)(cVar21 + '\x10');
-          uVar22 = (uint)CONCAT11(*puVar8,uVar1) << (-(int)cVar21 & 0x3fU) | uVar22;
+        cVar18 = (char)uVar17 - param_1->dec_secondary_length_tree_len[(int)uVar14];
+        uVar19 = uVar19 << (param_1->dec_secondary_length_tree_len[(int)uVar14] & 0x3f);
+        uVar17 = (ulonglong)cVar18;
+        if ((longlong)uVar17 < 1) {
+          puVar7 = puVar22 + 1;
+          uVar1 = *puVar22;
+          puVar22 = puVar22 + 2;
+          uVar17 = (ulonglong)(char)(cVar18 + '\x10');
+          uVar19 = (uint)CONCAT11(*puVar7,uVar1) << (-(int)cVar18 & 0x3fU) | uVar19;
         }
-        uVar18 = uVar18 + 7;
+        uVar14 = uVar14 + 7;
       }
-      cVar19 = (char)uVar20;
-      cVar21 = (char)((int)uVar15 >> 3);
-      uVar15 = (ulonglong)cVar21;
-      if (cVar21 < '\x03') {
-        iVar13 = (int)((uVar15 & 0xffffffff) << 2);
-        uVar15 = (ulonglong)*(uint *)(iVar13 + (int)piVar23);
-        *(int *)(iVar13 + (int)piVar23) = *piVar23;
+      cVar16 = (char)uVar17;
+      cVar18 = (char)((int)uVar10 >> 3);
+      uVar10 = (ulonglong)cVar18;
+      if (cVar18 < '\x03') {
+        iVar8 = (int)((uVar10 & 0xffffffff) << 2);
+        uVar15 = *(ulong *)(iVar8 + (int)puVar21);
+        *(ulong *)(iVar8 + (int)puVar21) = *puVar21;
       }
       else {
-        bVar2 = *(byte *)((int)piVar10 + cVar21 + 0x2ee4);
+        bVar2 = param_1->dec_extra_bits_table[cVar18];
         if (bVar2 < 3) {
           if (bVar2 == 0) {
             uVar15 = 1;
           }
           else {
-            bVar2 = *(byte *)((int)piVar10 + cVar21 + 0x2ee4);
-            cVar19 = cVar19 - bVar2;
-            uVar20 = (ulonglong)cVar19;
-            uVar7 = uVar22 >> (0x20 - bVar2 & 0x3f);
-            uVar22 = uVar22 << (bVar2 & 0x3f);
-            if ((longlong)uVar20 < 1) {
-              puVar8 = puVar24 + 1;
-              uVar1 = *puVar24;
-              puVar24 = puVar24 + 2;
-              uVar20 = (ulonglong)(char)(cVar19 + '\x10');
-              uVar22 = (uint)CONCAT11(*puVar8,uVar1) << (-(int)cVar19 & 0x3fU) | uVar22;
+            bVar2 = param_1->dec_extra_bits_table[cVar18];
+            cVar16 = cVar16 - bVar2;
+            uVar17 = (ulonglong)cVar16;
+            uVar12 = uVar19 >> (0x20 - bVar2 & 0x3f);
+            uVar19 = uVar19 << (bVar2 & 0x3f);
+            if ((longlong)uVar17 < 1) {
+              puVar7 = puVar22 + 1;
+              uVar1 = *puVar22;
+              puVar22 = puVar22 + 2;
+              uVar17 = (ulonglong)(char)(cVar16 + '\x10');
+              uVar19 = (uint)CONCAT11(*puVar7,uVar1) << (-(int)cVar16 & 0x3fU) | uVar19;
             }
-            uVar15 = (ulonglong)*(uint *)((int)((uVar15 + 0xbc6 & 0xffffffff) << 2) + (int)piVar10)
-                     + (ulonglong)uVar7;
+            uVar15 = *(int *)((int)param_1->dec_last_matchpos_offset +
+                             (int)((uVar10 + 0xbc6 & 0xffffffff) << 2) + -0xc) + uVar12;
           }
         }
         else {
           if (bVar2 == 3) {
-            uVar16 = 0;
+            uVar12 = 0;
           }
           else {
-            bVar2 = *(byte *)((int)piVar10 + cVar21 + 0x2ee4);
-            cVar21 = cVar19 - bVar2;
-            cVar19 = cVar21 + '\x03';
-            uVar16 = (ulonglong)(uVar22 >> (0x23 - bVar2 & 0x3f));
-            uVar22 = uVar22 << (bVar2 - 3 & 0x3f);
-            if (cVar19 < '\x01') {
-              puVar8 = puVar24 + 1;
-              iVar13 = (int)cVar19;
-              uVar1 = *puVar24;
-              cVar19 = cVar21 + '\x13';
-              puVar24 = puVar24 + 2;
-              uVar22 = (uint)CONCAT11(*puVar8,uVar1) << (-iVar13 & 0x3fU) | uVar22;
+            bVar2 = param_1->dec_extra_bits_table[cVar18];
+            cVar18 = cVar16 - bVar2;
+            cVar16 = cVar18 + '\x03';
+            uVar12 = uVar19 >> (0x23 - bVar2 & 0x3f);
+            uVar19 = uVar19 << (bVar2 - 3 & 0x3f);
+            if (cVar16 < '\x01') {
+              puVar7 = puVar22 + 1;
+              iVar8 = (int)cVar16;
+              uVar1 = *puVar22;
+              cVar16 = cVar18 + '\x13';
+              puVar22 = puVar22 + 2;
+              uVar19 = (uint)CONCAT11(*puVar7,uVar1) << (-iVar8 & 0x3fU) | uVar19;
             }
           }
-          cVar21 = *(char *)((int)piVar10 + (uVar22 >> 0x19) + 0xdb4);
-          bVar2 = *(byte *)((int)piVar10 + cVar21 + 0xe34);
-          cVar19 = cVar19 - bVar2;
-          uVar22 = uVar22 << (bVar2 & 0x3f);
-          uVar20 = (ulonglong)cVar19;
-          if ((longlong)uVar20 < 1) {
-            puVar8 = puVar24 + 1;
-            uVar1 = *puVar24;
-            puVar24 = puVar24 + 2;
-            uVar20 = (ulonglong)(char)(cVar19 + '\x10');
-            uVar22 = (uint)CONCAT11(*puVar8,uVar1) << (-(int)cVar19 & 0x3fU) | uVar22;
+          uVar13 = uVar19 >> 0x19;
+          cVar16 = cVar16 - param_1->dec_aligned_len[param_1->dec_aligned_table[uVar13]];
+          uVar19 = uVar19 << (param_1->dec_aligned_len[param_1->dec_aligned_table[uVar13]] & 0x3f);
+          uVar17 = (ulonglong)cVar16;
+          if ((longlong)uVar17 < 1) {
+            puVar7 = puVar22 + 1;
+            uVar1 = *puVar22;
+            puVar22 = puVar22 + 2;
+            uVar17 = (ulonglong)(char)(cVar16 + '\x10');
+            uVar19 = (uint)CONCAT11(*puVar7,uVar1) << (-(int)cVar16 & 0x3fU) | uVar19;
           }
-          uVar15 = (ulonglong)*(uint *)((int)((uVar15 + 0xbc6 & 0xffffffff) << 2) + (int)piVar10) +
-                   (uVar16 & 0x1fffffff) * 8 + (longlong)cVar21;
+          uVar15 = *(int *)((int)param_1->dec_last_matchpos_offset +
+                           (int)((uVar10 + 0xbc6 & 0xffffffff) << 2) + -0xc) + uVar12 * 8 +
+                   (int)param_1->dec_aligned_table[uVar13];
         }
-        piVar10[5] = piVar10[4];
-        piVar10[4] = *piVar23;
+        uVar6 = *puVar21;
+        param_1->dec_last_matchpos_offset[2] = param_1->dec_last_matchpos_offset[1];
+        param_1->dec_last_matchpos_offset[1] = uVar6;
       }
-      uVar7 = piVar10[2];
-      lVar14 = uVar18 + 2;
-      *piVar23 = (int)uVar15;
-      lVar17 = lVar12 - uVar15;
+      uVar12 = param_1->dec_window_mask;
+      lVar9 = uVar14 + 2;
+      *puVar21 = uVar15;
+      uVar13 = param_2 - uVar15;
       do {
-        iVar13 = (int)lVar12;
-        uVar1 = *(undefined1 *)(((uint)lVar17 & uVar7) + iVar5);
-        *(undefined1 *)(iVar5 + iVar13) = uVar1;
-        if (iVar13 < 0x101) {
-          *(undefined1 *)(piVar10[1] + iVar5 + iVar13) = uVar1;
+        uVar1 = puVar5[uVar13 & uVar12];
+        puVar5[param_2] = uVar1;
+        if (param_2 < 0x101) {
+          puVar5[param_2 + param_1->dec_window_size] = uVar1;
         }
-        lVar14 = lVar14 + -1;
-        lVar12 = lVar12 + 1;
-        lVar17 = lVar17 + 1;
-      } while (0 < lVar14);
+        lVar9 = lVar9 + -1;
+        param_2 = param_2 + 1;
+        uVar13 = uVar13 + 1;
+      } while (0 < lVar9);
     }
-  } while( true );
+  }
+  return -1;
 }
 
 
 // 828B72B8  fast_decode_aligned_offset_block  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/compression/codec/lzx/decoder/decalign.cpp:160)
+
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
 
 long XCOMPRESS::fast_decode_aligned_offset_block
                (t_decoder_context *param_1,long param_2,int param_3)
@@ -215,9 +211,9 @@ long XCOMPRESS::fast_decode_aligned_offset_block
   uint uVar6;
   uint uVar7;
   uchar *puVar8;
-  XMVECTORU32 XVar9;
-  longlong lVar10;
-  int iVar11;
+  int iVar9;
+  XMVECTORU32 XVar10;
+  longlong lVar11;
   longlong lVar12;
   ulonglong uVar13;
   ulonglong uVar14;
@@ -239,11 +235,9 @@ long XCOMPRESS::fast_decode_aligned_offset_block
   undefined1 auVar30 [16];
   undefined1 auVar31 [16];
   
-  lVar10 = (longlong)param_2;
-  __savegprlr();
-  XVar9 = align_v;
-  iVar11 = (int)lVar10;
-  iVar23 = iVar11 + param_3;
+  XVar10.field0_0x0 = align_v.field0_0x0;
+  lVar11 = (longlong)param_2;
+  iVar23 = param_2 + param_3;
   puVar3 = param_1->dec_end_input_pos;
   puVar4 = param_1->dec_mem_window;
   uVar24 = ZEXT48(puVar4);
@@ -252,17 +246,15 @@ long XCOMPRESS::fast_decode_aligned_offset_block
   uVar21 = param_1->dec_bitbuf;
   puVar25 = param_1->dec_input_curpos;
   puVar22 = param_1->dec_last_matchpos_offset;
-  do {
-    uVar6 = (uint)lVar10;
-    if (iVar23 <= iVar11) {
-      iVar23 = uVar6 - iVar23;
+  while( true ) {
+    uVar6 = (uint)lVar11;
+    if (iVar23 <= param_2) {
       param_1->dec_bitcount = bVar18;
       param_1->dec_bitbuf = uVar21;
       param_1->dec_input_curpos = puVar25;
       param_1->dec_bufpos = param_1->dec_window_mask & uVar6;
-LAB_828b76d8:
-      __restgprlr();
-      return iVar23;
+                    /* WARNING: Read-only address (ram,0x822026a0) is written */
+      return uVar6 - iVar23;
     }
     sVar2 = *(short *)((int)param_1->dec_main_tree_table + (uVar21 >> 0x15 & 0x7fe));
     uVar13 = (ulonglong)sVar2;
@@ -277,10 +269,7 @@ LAB_828b76d8:
         uVar13 = (ulonglong)sVar2;
       } while (sVar2 < 0);
     }
-    if (puVar3 <= puVar25) {
-      iVar23 = -1;
-      goto LAB_828b76d8;
-    }
+    if (puVar3 <= puVar25) break;
     cVar17 = (char)uVar16 - param_1->dec_main_tree_len[(int)uVar13];
     uVar21 = uVar21 << (param_1->dec_main_tree_len[(int)uVar13] & 0x3f);
     uVar16 = (ulonglong)cVar17;
@@ -294,7 +283,7 @@ LAB_828b76d8:
     uVar13 = uVar13 - 0x100;
     if ((longlong)uVar13 < 0) {
       puVar4[uVar6] = (uchar)uVar13;
-      lVar10 = lVar10 + 1;
+      lVar11 = lVar11 + 1;
     }
     else {
       uVar19 = uVar13 & 7;
@@ -329,9 +318,9 @@ LAB_828b76d8:
       cVar20 = (char)((int)uVar13 >> 3);
       uVar13 = (ulonglong)cVar20;
       if (cVar20 < '\x03') {
-        iVar11 = (int)((uVar13 & 0xffffffff) << 2);
-        uVar13 = (ulonglong)*(uint *)(iVar11 + (int)puVar22);
-        *(ulong *)(iVar11 + (int)puVar22) = *puVar22;
+        iVar9 = (int)((uVar13 & 0xffffffff) << 2);
+        uVar13 = (ulonglong)*(uint *)(iVar9 + (int)puVar22);
+        *(ulong *)(iVar9 + (int)puVar22) = *puVar22;
       }
       else {
         bVar18 = param_1->dec_extra_bits_table[cVar20];
@@ -371,11 +360,11 @@ LAB_828b76d8:
             uVar21 = uVar21 << (bVar18 - 3 & 0x3f);
             if (cVar17 < '\x01') {
               puVar8 = puVar25 + 1;
-              iVar11 = (int)cVar17;
+              iVar9 = (int)cVar17;
               uVar1 = *puVar25;
               cVar17 = cVar20 + '\x13';
               puVar25 = puVar25 + 2;
-              uVar21 = (uint)CONCAT11(*puVar8,uVar1) << (-iVar11 & 0x3fU) | uVar21;
+              uVar21 = (uint)CONCAT11(*puVar8,uVar1) << (-iVar9 & 0x3fU) | uVar21;
             }
           }
           uVar6 = uVar21 >> 0x19;
@@ -400,24 +389,24 @@ LAB_828b76d8:
       }
       *puVar22 = (ulong)uVar13;
       uVar14 = uVar19 + 2;
-      uVar13 = lVar10 - uVar13 & (ulonglong)param_1->dec_window_mask;
-      if (((lVar10 - uVar13 & 0xffffffff) < (uVar14 & 0xffffffff)) &&
-         ((lVar10 - uVar13 & 0xffffffff) < 0x10)) {
+      uVar13 = lVar11 - uVar13 & (ulonglong)param_1->dec_window_mask;
+      if (((lVar11 - uVar13 & 0xffffffff) < (uVar14 & 0xffffffff)) &&
+         ((lVar11 - uVar13 & 0xffffffff) < 0x10)) {
         lVar15 = uVar13 + uVar24 + -1;
         do {
           lVar15 = lVar15 + 1;
           uVar14 = uVar14 - 1;
-          puVar4[(int)lVar10] = *(uchar *)lVar15;
-          lVar10 = lVar10 + 1;
+          puVar4[(int)lVar11] = *(uchar *)lVar15;
+          lVar11 = lVar11 + 1;
         } while (0 < (longlong)uVar14);
       }
       else {
         if (0x10 < (int)uVar14) {
-          lVar26 = uVar24 + lVar10;
+          lVar26 = uVar24 + lVar11;
           lVar15 = uVar13 + uVar24;
           lVar12 = ((uVar19 - 0xf & 0xffffffff) >> 4) + 1;
           uVar19 = lVar12 * 0x10 & 0xfffffff0;
-          lVar10 = uVar19 + lVar10;
+          lVar11 = uVar19 + lVar11;
           uVar14 = uVar14 - uVar19;
           uVar13 = uVar19 + uVar13;
           do {
@@ -431,60 +420,58 @@ LAB_828b76d8:
           } while (lVar12 != 0);
         }
         auVar31 = loadVectorLeftIndexed(uVar13 + uVar24);
-        lVar15 = uVar24 + lVar10;
-        auVar29 = loadVectorLeftIndexed(uVar24 + lVar10);
+        lVar15 = uVar24 + lVar11;
+        auVar29 = loadVectorLeftIndexed(uVar24 + lVar11);
         auVar27 = loadVectorRightIndexed(lVar15 + 0x10);
         auVar30 = loadVectorRightIndexed(uVar13 + uVar24 + 0x10);
         auVar28 = vectorCompareGreaterThanUnsignedByte
-                            ((undefined1  [16])XVar9.field0_0x0,
+                            ((undefined1  [16])XVar10.field0_0x0,
                              SUB3216(((undefined1  [32])0x1020304050607 << 0xc0 |
                                       (undefined1  [32])0x8090a0b0c0d0e0f << 0x80 |
                                       (undefined1  [32])0x1011121314151617 << 0x40 |
                                      (undefined1  [32])0x18191a1b1c1d1e1f) >>
                                      ((char)uVar14 - 1U & 0xf) * '\b',0));
         auVar28 = vectorConditionalSelect(auVar29 | auVar27,auVar31 | auVar30,auVar28);
-        storeVectorLeftIndexed(auVar28,uVar24 + lVar10);
-        lVar10 = uVar14 + lVar10;
+        storeVectorLeftIndexed(auVar28,uVar24 + lVar11);
+        lVar11 = uVar14 + lVar11;
         storeVectorRightIndexed(auVar28,lVar15 + 0x10);
       }
     }
     bVar18 = (byte)uVar16;
-    iVar11 = (int)lVar10;
-  } while( true );
+    param_2 = (long)lVar11;
+  }
+  return -1;
 }
 
 
 // 828B76E8  decode_aligned_offset_block  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/compression/codec/lzx/decoder/decalign.cpp:380)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 int XCOMPRESS::decode_aligned_offset_block(t_decoder_context *param_1,long param_2,int param_3)
 
 {
-  t_decoder_context *ptVar2;
-  longlong lVar1;
-  int iVar4;
-  longlong lVar5;
-  longlong lVar6;
-  long lVar3;
+  long lVar1;
+  longlong lVar2;
+  int iVar3;
+  longlong lVar4;
   
-  lVar6 = (longlong)param_3;
-  lVar5 = (longlong)param_2;
-  ptVar2 = (t_decoder_context *)__savegprlr_29(param_1);
-  lVar1 = lVar5;
-  if ((int)lVar5 < 0x101) {
-    lVar1 = 0x101 - lVar5;
-    if ((int)lVar6 <= (int)(0x101 - lVar5)) {
-      lVar1 = lVar6;
+  lVar4 = (longlong)param_3;
+  lVar2 = (longlong)param_2;
+  if (param_2 < 0x101) {
+    iVar3 = 0x101 - param_2;
+    if (param_3 <= 0x101 - param_2) {
+      iVar3 = param_3;
     }
-    lVar3 = special_decode_aligned_block(ptVar2,(int)lVar5,(int)lVar1);
-    lVar1 = (longlong)lVar3;
-    ptVar2->dec_bufpos = lVar3;
-    lVar6 = (lVar5 - lVar1) + lVar6;
-    if (lVar6 < 1) goto LAB_828b7750;
+    param_2 = special_decode_aligned_block(param_1,param_2,iVar3);
+    param_1->dec_bufpos = param_2;
+    lVar4 = (lVar2 - param_2) + lVar4;
+    if (lVar4 < 1) goto LAB_828b7750;
   }
-  lVar3 = fast_decode_aligned_offset_block(ptVar2,(long)lVar1,(int)lVar6);
-  lVar6 = (longlong)lVar3;
+  lVar1 = fast_decode_aligned_offset_block(param_1,param_2,(int)lVar4);
+  lVar4 = (longlong)lVar1;
 LAB_828b7750:
-  iVar4 = __restgprlr_29(lVar6);
-  return iVar4;
+  return (int)lVar4;
 }
 

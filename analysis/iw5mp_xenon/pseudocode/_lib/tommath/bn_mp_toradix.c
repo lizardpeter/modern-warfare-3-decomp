@@ -2,74 +2,68 @@
 
 // 82258610  mp_toradix  (line unknown)
 
-void mp_toradix(undefined8 param_1,longlong param_2,undefined8 param_3)
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
+
+undefined8 mp_toradix(int *param_1,char *param_2,undefined8 param_3)
 
 {
-  undefined1 uVar1;
-  int *piVar3;
+  char cVar1;
   undefined8 uVar2;
-  undefined1 *puVar4;
-  int iVar5;
-  longlong lVar6;
-  undefined1 *puVar7;
+  char *pcVar3;
+  int iVar4;
+  longlong lVar5;
+  char *pcVar6;
   int local_60 [4];
   int local_50 [2];
   int local_48;
   
-  piVar3 = (int *)__savegprlr_25();
   if (((int)param_3 < 2) || (0x40 < (int)param_3)) {
     uVar2 = 0xfffffffffffffffd;
   }
   else {
-    puVar4 = (undefined1 *)param_2;
-    if (*piVar3 == 0) {
-      *puVar4 = 0x30;
-      puVar4[1] = 0;
-      __restgprlr_25(0);
-      return;
+    if (*param_1 == 0) {
+      *param_2 = '0';
+      param_2[1] = '\0';
+      return 0;
     }
     uVar2 = mp_init(local_50);
-    if (((int)uVar2 == 0) && (uVar2 = mp_copy(piVar3,local_50), (int)uVar2 == 0)) {
+    if (((int)uVar2 == 0) && (uVar2 = mp_copy(param_1,local_50), (int)uVar2 == 0)) {
+      pcVar3 = param_2;
       if (local_48 == 1) {
         local_48 = 0;
-        param_2 = param_2 + 1;
-        *puVar4 = 0x2d;
+        pcVar3 = param_2 + 1;
+        *param_2 = '-';
       }
-      puVar7 = (undefined1 *)param_2;
-      lVar6 = 0;
-      puVar4 = puVar7;
+      lVar5 = 0;
+      pcVar6 = pcVar3;
       while( true ) {
         if (local_50[0] == 0) {
-          lVar6 = lVar6 + -1;
-          iVar5 = 0;
-          if (0 < lVar6) {
+          lVar5 = lVar5 + -1;
+          iVar4 = 0;
+          if (0 < lVar5) {
             do {
-              uVar1 = puVar7[iVar5];
-              puVar7[iVar5] = puVar7[(int)lVar6];
-              iVar5 = iVar5 + 1;
-              puVar7[(int)lVar6] = uVar1;
-              lVar6 = lVar6 + -1;
-            } while (iVar5 < (int)lVar6);
+              cVar1 = pcVar3[iVar4];
+              pcVar3[iVar4] = pcVar3[(int)lVar5];
+              iVar4 = iVar4 + 1;
+              pcVar3[(int)lVar5] = cVar1;
+              lVar5 = lVar5 + -1;
+            } while (iVar4 < (int)lVar5);
           }
-          *puVar4 = 0;
+          *pcVar6 = '\0';
           mp_clear(local_50);
-          __restgprlr_25(0);
-          return;
+          return 0;
         }
         uVar2 = mp_div_d(local_50,param_3,local_50,local_60);
         if ((int)uVar2 != 0) break;
-        lVar6 = lVar6 + 1;
-        *(char *)param_2 =
-             "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz+/"[local_60[0]];
-        param_2 = param_2 + 1;
-        puVar4 = (undefined1 *)param_2;
+        lVar5 = lVar5 + 1;
+        *pcVar6 = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz+/"[local_60[0]];
+        pcVar6 = pcVar6 + 1;
       }
       mp_clear(local_50);
-      __restgprlr_25(uVar2);
-      return;
+      return uVar2;
     }
   }
-  __restgprlr_25(uVar2);
-  return;
+  return uVar2;
 }
 

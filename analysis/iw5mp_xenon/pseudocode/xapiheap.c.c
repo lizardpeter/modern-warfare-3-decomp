@@ -2,40 +2,32 @@
 
 // 828A89D8  HeapCreate  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/xapiheap.c:62)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void * HeapCreate(ulong param_1,ulong param_2,ulong param_3)
 
 {
-  uint uVar1;
-  ulong uVar2;
-  void *pvVar3;
-  ulonglong uVar4;
-  ulonglong uVar5;
-  ulong uVar6;
+  ulong uVar1;
+  void *pvVar2;
   
-  uVar5 = (ulonglong)(int)param_3;
-  uVar4 = (ulonglong)(int)param_2;
-  uVar1 = __savegprlr_29(param_1);
-  uVar2 = uVar1 & 5 | 0x1000;
-  if ((uVar5 & 0xffffffff) < 0x10000) {
-    if ((uVar5 & 0xffffffff) == 0) {
-      uVar2 = uVar1 & 5 | 0x1002;
-      uVar6 = (ulong)uVar5;
+  uVar1 = param_1 & 5 | 0x1000;
+  if (param_3 < 0x10000) {
+    if (param_3 == 0) {
+      uVar1 = param_1 & 5 | 0x1002;
       goto LAB_828a8a28;
     }
-    uVar5 = 0x10000;
+    param_3 = 0x10000;
   }
-  uVar6 = (ulong)uVar5;
-  if ((uVar5 & 0xffffffff) < (uVar4 & 0xffffffff)) {
-    uVar6 = (ulong)uVar4;
+  if (param_3 < param_2) {
+    param_3 = param_2;
   }
 LAB_828a8a28:
-  pvVar3 = RtlCreateHeap(uVar2,(void *)0x0,uVar6,(ulong)uVar4,(void *)0x0,
-                         (_RTL_HEAP_PARAMETERS *)0x0);
-  if (pvVar3 == (void *)0x0) {
+  pvVar2 = RtlCreateHeap(uVar1,(void *)0x0,param_3,param_2,(void *)0x0,(_RTL_HEAP_PARAMETERS *)0x0);
+  if (pvVar2 == (void *)0x0) {
     SetLastError(8);
   }
-  pvVar3 = (void *)__restgprlr_29(pvVar3);
-  return pvVar3;
+  return pvVar2;
 }
 
 

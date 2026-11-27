@@ -104,62 +104,62 @@ void R_BeginPixOrGpadEvent(D3DDevice *param_1,char *param_2)
 
 // 827AA2C8  R_BeginPixOrGpadMaterial  (gfx_d3d/rb_shade.cpp:98)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 
 void R_BeginPixOrGpadMaterial(GfxCmdBufState *param_1)
 
 {
-  undefined4 *puVar1;
-  undefined4 *puVar2;
+  Material *pMVar1;
+  MaterialTechnique *pMVar2;
   D3DDevice *pDVar3;
-  int iVar4;
   
-  iVar4 = __savegprlr_26(param_1);
   if ((r_pix_material->current).integer == 0) {
-    *(undefined4 *)(iVar4 + 0xb4c) = 0;
-    *(undefined4 *)(iVar4 + 0xb50) = 0;
-    __restgprlr_26();
+    param_1->pixMaterial = (Material *)0x0;
+    param_1->pixTechnique = (MaterialTechnique *)0x0;
     return;
   }
-  puVar1 = *(undefined4 **)(iVar4 + 0xec);
-  puVar2 = *(undefined4 **)(iVar4 + 0xf4);
-  pDVar3 = *(D3DDevice **)(iVar4 + 0xc0);
-  if (*(undefined4 **)(iVar4 + 0xb4c) != puVar1) {
-    if (*(int *)(iVar4 + 0xb50) != 0) {
+  pMVar1 = param_1->material;
+  pMVar2 = param_1->technique;
+  pDVar3 = (param_1->prim).device;
+  if (param_1->pixMaterial != pMVar1) {
+    if (param_1->pixTechnique != (MaterialTechnique *)0x0) {
       if (pDVar3 != dx.device) {
         D3DDevice_PixEndNamedEvent(pDVar3);
       }
       PIXEndNamedEvent();
-      *(undefined4 *)(iVar4 + 0xb50) = 0;
+      param_1->pixTechnique = (MaterialTechnique *)0x0;
     }
-    if (*(int *)(iVar4 + 0xb4c) != 0) {
+    if (param_1->pixMaterial != (Material *)0x0) {
       if (pDVar3 != dx.device) {
         D3DDevice_PixEndNamedEvent(pDVar3);
       }
       PIXEndNamedEvent();
-      *(undefined4 *)(iVar4 + 0xb4c) = 0;
+      param_1->pixMaterial = (Material *)0x0;
     }
-    R_BeginPixOrGpadEvent(pDVar3,(char *)*puVar1);
+    R_BeginPixOrGpadEvent(pDVar3,(pMVar1->info).name);
   }
-  if (*(undefined4 **)(iVar4 + 0xb50) != puVar2) {
-    if (*(undefined4 **)(iVar4 + 0xb50) != (undefined4 *)0x0) {
+  if (param_1->pixTechnique != pMVar2) {
+    if (param_1->pixTechnique != (MaterialTechnique *)0x0) {
       if (pDVar3 != dx.device) {
         D3DDevice_PixEndNamedEvent(pDVar3);
       }
       PIXEndNamedEvent();
     }
-    R_BeginPixOrGpadEvent(pDVar3,(char *)*puVar2);
+    R_BeginPixOrGpadEvent(pDVar3,pMVar2->name);
   }
-  *(undefined4 **)(iVar4 + 0xb4c) = puVar1;
-  *(undefined4 **)(iVar4 + 0xb50) = puVar2;
-  __restgprlr_26();
+  param_1->pixMaterial = pMVar1;
+  param_1->pixTechnique = pMVar2;
   return;
 }
 
 
 // 827AA3C8  R_EndPixOrGpadMaterialInternal  (gfx_d3d/rb_shade.cpp:162)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 
@@ -167,25 +167,22 @@ void R_EndPixOrGpadMaterialInternal(GfxCmdBufState *param_1)
 
 {
   D3DDevice *pDVar1;
-  int iVar2;
   
-  iVar2 = __savegprlr_29(param_1);
-  pDVar1 = *(D3DDevice **)(iVar2 + 0xc0);
-  if (*(int *)(iVar2 + 0xb50) != 0) {
+  pDVar1 = (param_1->prim).device;
+  if (param_1->pixTechnique != (MaterialTechnique *)0x0) {
     if (pDVar1 != dx.device) {
       D3DDevice_PixEndNamedEvent(pDVar1);
     }
     PIXEndNamedEvent();
   }
-  if (*(int *)(iVar2 + 0xb4c) != 0) {
+  if (param_1->pixMaterial != (Material *)0x0) {
     if (pDVar1 != dx.device) {
       D3DDevice_PixEndNamedEvent(pDVar1);
     }
     PIXEndNamedEvent();
   }
-  *(undefined4 *)(iVar2 + 0xb50) = 0;
-  *(undefined4 *)(iVar2 + 0xb4c) = 0;
-  __restgprlr_29();
+  param_1->pixTechnique = (MaterialTechnique *)0x0;
+  param_1->pixMaterial = (Material *)0x0;
   return;
 }
 
@@ -207,6 +204,8 @@ void R_EndPixOrGpadMaterial(GfxCmdBufState *param_1)
 
 // 827AA458  R_SetPixOrGpadPrimarySortKey  (gfx_d3d/rb_shade.cpp:190)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 
@@ -214,29 +213,26 @@ void R_SetPixOrGpadPrimarySortKey(GfxCmdBufState *param_1,uint param_2)
 
 {
   D3DDevice *this;
-  GfxCmdBufState *pGVar1;
-  ulonglong uVar2;
   
-  uVar2 = (ulonglong)(int)param_2;
-  pGVar1 = (GfxCmdBufState *)__savegprlr_27(param_1);
-  if ((ulonglong)pGVar1->pixPrimarySortKey != (uVar2 & 0xffffffff)) {
-    R_EndPixOrGpadMaterialInternal(pGVar1);
-    pGVar1->pixPrimarySortKey = (uint)uVar2;
-    this = (pGVar1->prim).device;
+  if (param_1->pixPrimarySortKey != param_2) {
+    R_EndPixOrGpadMaterialInternal(param_1);
+    param_1->pixPrimarySortKey = param_2;
+    this = (param_1->prim).device;
     if (this != dx.device) {
       D3DDevice::PixBeginNamedEvent(this,0xffffffff,"key: %d");
       D3DDevice_PixEndNamedEvent(this);
     }
-    PIXBeginNamedEvent_Copy_Int(0xffffffff,"key: %d",pGVar1->pixPrimarySortKey);
+    PIXBeginNamedEvent_Copy_Int(0xffffffff,"key: %d",param_1->pixPrimarySortKey);
     PIXEndNamedEvent();
   }
-  __restgprlr_27();
   return;
 }
 
 
 // 827AA4E0  R_SetPixOrGpadSceneLightIndex  (gfx_d3d/rb_shade.cpp:221)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
@@ -245,16 +241,12 @@ void R_SetPixOrGpadSceneLightIndex(GfxBackEndData *param_1,GfxCmdBufState *param
 
 {
   D3DDevice *this;
-  int iVar1;
-  ulonglong uVar2;
   
-  uVar2 = (ulonglong)(int)param_3;
-  iVar1 = __savegprlr_27(param_1);
-  if ((ulonglong)param_2->pixSceneLightIndex != (uVar2 & 0xffffffff)) {
+  if (param_2->pixSceneLightIndex != param_3) {
     R_EndPixOrGpadMaterialInternal(param_2);
-    param_2->pixSceneLightIndex = (uint)uVar2;
+    param_2->pixSceneLightIndex = param_3;
     this = (param_2->prim).device;
-    Com_BitCheckAssert((uint *)(iVar1 + 0x1524),(uint)uVar2,0x20);
+    Com_BitCheckAssert(param_1->sceneLightHasShadowMap,param_3,0x20);
     if (this != dx.device) {
       D3DDevice::PixBeginNamedEvent(this,0xffffffff,"light: %d%s");
       D3DDevice_PixEndNamedEvent(this);
@@ -262,37 +254,34 @@ void R_SetPixOrGpadSceneLightIndex(GfxBackEndData *param_1,GfxCmdBufState *param
     PIXBeginNamedEvent_Copy_VarArgs(0xffffffff,"light: %d%s");
     PIXEndNamedEvent();
   }
-  __restgprlr_27();
   return;
 }
 
 
 // 827AA5A0  R_BeginPixOrGpadMaterials  (gfx_d3d/rb_shade.cpp:258)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 
 void R_BeginPixOrGpadMaterials(GfxCmdBufState *param_1)
 
 {
-  int iVar1;
-  
-  iVar1 = __savegprlr_29(param_1);
-  if (*(int *)(iVar1 + 0xb54) != 0) {
+  if (param_1->pixCombine != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_shade.cpp",0x103,0,
                     "%s");
   }
-  if (*(int *)(iVar1 + 0xb4c) != 0) {
+  if (param_1->pixMaterial != (Material *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_shade.cpp",0x104,0,
                     "%s");
   }
-  if (*(int *)(iVar1 + 0xb50) != 0) {
+  if (param_1->pixTechnique != (MaterialTechnique *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_shade.cpp",0x105,0,
                     "%s");
   }
-  *(undefined4 *)(iVar1 + 0xb44) = 0xffffffff;
-  *(undefined4 *)(iVar1 + 0xb54) = 1;
-  *(undefined4 *)(iVar1 + 0xb48) = 0xffffffff;
-  __restgprlr_29();
+  param_1->pixPrimarySortKey = 0xffffffff;
+  param_1->pixCombine = 1;
+  param_1->pixSceneLightIndex = 0xffffffff;
   return;
 }
 
@@ -334,6 +323,8 @@ void R_EndPixOrGpadMaterials(GfxCmdBufState *param_1)
 
 // 827AA718  R_DrawTessTechnique  (gfx_d3d/rb_shade.cpp:288)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
@@ -344,13 +335,10 @@ void R_DrawTessTechnique(GfxCmdBufContext param_1,GfxDrawPrimArgs *param_2)
   MaterialTechnique *pMVar1;
   D3DDevice *pDVar2;
   GfxCmdBufState *pGVar3;
-  GfxCmdBufContext GVar4;
-  int iVar5;
-  uint uVar6;
+  uint uVar4;
   GfxCmdBufContext GStack00000010;
   
-  GVar4 = (GfxCmdBufContext)__savegprlr_24();
-  GStack00000010 = GVar4;
+  GStack00000010 = param_1;
   Profile_Begin(0x56);
   if ((dx.d3d9 == (Direct3D *)0x0) || (dx.device == (D3DDevice *)0x0)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_shade.cpp",0x12d,0,
@@ -367,18 +355,18 @@ void R_DrawTessTechnique(GfxCmdBufContext param_1,GfxDrawPrimArgs *param_2)
                     "%s\n\t(context.state->material->info.name) = %s");
   }
   R_BeginPixOrGpadMaterial(pGVar3);
-  uVar6 = 0;
+  uVar4 = 0;
   if (pMVar1->passCount != 0) {
     do {
-      R_SetupPass(GVar4,uVar6);
+      R_SetupPass(param_1,uVar4);
       R_UpdateVertexDecl(pGVar3);
-      R_SetupPassCriticalPixelShaderArgs(GVar4);
+      R_SetupPassCriticalPixelShaderArgs(param_1);
       R_ClearAllStreamSources(&pGVar3->prim);
-      R_SetupPassPerObjectArgs(GVar4);
-      R_SetupPassPerPrimArgs(GVar4);
+      R_SetupPassPerObjectArgs(param_1);
+      R_SetupPassPerPrimArgs(param_1);
       R_DrawIndexedPrimitiveUP(pGVar3,param_2);
-      uVar6 = uVar6 + 1;
-    } while (uVar6 < pMVar1->passCount);
+      uVar4 = uVar4 + 1;
+    } while (uVar4 < pMVar1->passCount);
   }
   if (pGVar3->pixCombine == 0) {
     pDVar2 = (pGVar3->prim).device;
@@ -397,32 +385,29 @@ void R_DrawTessTechnique(GfxCmdBufContext param_1,GfxDrawPrimArgs *param_2)
     pGVar3->pixTechnique = (MaterialTechnique *)0x0;
     pGVar3->pixMaterial = (Material *)0x0;
   }
-  iVar5 = Profile_EndInternal((double *)0x0);
-  __restgprlr_24(iVar5);
+  Profile_EndInternal((double *)0x0);
   return;
 }
 
 
 // 827AADD8  RB_SetTessTechnique  (gfx_d3d/rb_shade.cpp:369)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "GfxPrimStatsTarget": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 
 void RB_SetTessTechnique(Material *param_1,MaterialTechniqueType param_2,GfxPrimStatsTarget param_3)
 
 {
-  Material *pMVar1;
-  
-  pMVar1 = (Material *)__savegprlr_29(param_1);
-  if (pMVar1 == (Material *)0x0) {
+  if (param_1 == (Material *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_shade.cpp",0x172,0,
                     "%s");
   }
-  if ((gfxCmdBufState.material != pMVar1) || (gfxCmdBufState.techType != param_2)) {
+  if ((gfxCmdBufState.material != param_1) || (gfxCmdBufState.techType != param_2)) {
     RB_EndSurfaceIfNeeded();
-    RB_BeginSurface(pMVar1,param_2,param_3);
+    RB_BeginSurface(param_1,param_2,param_3);
   }
-  __restgprlr_29();
   return;
 }
 
@@ -444,21 +429,19 @@ void RB_SetTessPrimType(uint param_1)
 
 // 827AA8C8  RB_BeginSurface  (gfx_d3d/rb_shade.cpp:404)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 /* WARNING: Enum "GfxPrimStatsTarget": Some values do not have unique names */
 
 void RB_BeginSurface(Material *param_1,MaterialTechniqueType param_2,GfxPrimStatsTarget param_3)
 
 {
-  Material *pMVar1;
-  int iVar2;
-  MaterialTechniqueSet *pMVar3;
-  longlong lVar4;
+  int iVar1;
+  MaterialTechniqueSet *pMVar2;
   
-  lVar4 = (longlong)(int)param_2;
-  pMVar1 = (Material *)__savegprlr_27(param_1,lVar4,param_3);
-  iVar2 = R_HasDeviceOwnership();
-  if (iVar2 == 0) {
+  iVar1 = R_HasDeviceOwnership();
+  if (iVar1 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_shade.cpp",0x196,0,
                     "%s");
   }
@@ -470,32 +453,30 @@ void RB_BeginSurface(Material *param_1,MaterialTechniqueType param_2,GfxPrimStat
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_shade.cpp",0x19b,0,
                     "%s\n\t(tess.vertexCount) = %i");
   }
-  if (pMVar1 == (Material *)0x0) {
+  if (param_1 == (Material *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_shade.cpp",0x19d,0,
                     "%s");
   }
   tess.firstVertex = 0;
   tess.lastVertex = 0;
-  iVar2 = DB_MaterialStreamingFail(pMVar1);
-  if (iVar2 != 0) {
+  iVar1 = DB_MaterialStreamingFail(param_1);
+  if (iVar1 != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_shade.cpp",0x1a9,0,
                     "%s\n\t(material->info.name) = %s");
   }
-  gfxCmdBufState.techType = (MaterialTechniqueType)lVar4;
   gfxCmdBufState.prim.vertDeclType = VERTDECL_GENERIC;
-  gfxCmdBufState.material = pMVar1;
-  pMVar3 = Material_GetTechniqueSet(pMVar1);
-  if (pMVar3 == (MaterialTechniqueSet *)0x0) {
+  gfxCmdBufState.material = param_1;
+  gfxCmdBufState.techType = param_2;
+  pMVar2 = Material_GetTechniqueSet(param_1);
+  if (pMVar2 == (MaterialTechniqueSet *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_material_inline.h",
                     0x76,0,"%s");
   }
-  gfxCmdBufState.technique =
-       *(MaterialTechnique **)(pMVar3->unused + (int)((lVar4 + 3U & 0xffffffff) << 2) + -5);
+  gfxCmdBufState.technique = pMVar2->techniques[param_2];
   if (gfxCmdBufState.technique == (MaterialTechnique *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_shade.cpp",0x1bc,0,
                     "%s\n\t(gfxCmdBufState.material->info.name) = %s");
   }
-  __restgprlr_27();
   return;
 }
 
@@ -521,12 +502,13 @@ void RB_EndSurfacePrologue(void)
 
 // 827AAB28  RB_EndSurfaceEpilogue  (gfx_d3d/rb_shade.cpp:464)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void RB_EndSurfaceEpilogue(void)
 
 {
-  __savegprlr_29();
   if (tess.vertexCount != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_shade.cpp",0x1d1,0,
                     "%s");
@@ -536,13 +518,14 @@ void RB_EndSurfaceEpilogue(void)
                     "%s");
   }
   tess.finishedFilling = false;
-  __restgprlr_29();
   return;
 }
 
 
 // 827AABC8  RB_DrawTessSurface  (gfx_d3d/rb_shade.cpp:541)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
@@ -554,7 +537,6 @@ void RB_DrawTessSurface(void)
   GfxDrawPrimArgs local_50;
   GfxViewport aGStack_40 [4];
   
-  __savegprlr_28();
   iVar1 = R_HasDeviceOwnership();
   if (iVar1 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_shade.cpp",0x221,0,
@@ -587,7 +569,6 @@ void RB_DrawTessSurface(void)
   R_DrawTessTechnique((GfxCmdBufContext)0x8484c7e08484df40,&local_50);
   tess.indexCount = 0;
   tess.vertexCount = 0;
-  __restgprlr_28();
   return;
 }
 

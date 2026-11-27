@@ -2,155 +2,150 @@
 
 // 82811008  vp8_update_mode_info_border  (WebM_atvi_opt/vpx/vp8/common/alloccommon.c:29)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void vp8_update_mode_info_border(MODE_INFO *param_1,int param_2,int param_3)
 
 {
-  longlong lVar1;
-  void *pvVar2;
-  longlong lVar3;
-  longlong lVar4;
+  MODE_INFO *pMVar1;
+  longlong lVar2;
   
-  lVar3 = (longlong)param_3;
-  lVar4 = (longlong)param_2;
-  lVar1 = __savegprlr_29(param_1);
-  pvVar2 = vpx_memset((void *)((int)lVar1 + ((int)lVar3 + 2) * -0x98),0,(int)(lVar3 * 0x98) + 0x98);
-  if (0 < (int)lVar4) {
-    lVar1 = lVar1 + -0x98;
+  lVar2 = (longlong)param_2;
+  vpx_memset(param_1 + -(param_3 + 2),0,param_3 * 0x98 + 0x98);
+  if (0 < param_2) {
+    pMVar1 = param_1 + -1;
     do {
-      pvVar2 = vpx_memset((void *)lVar1,0,0x98);
-      lVar4 = lVar4 + -1;
-      lVar1 = lVar1 + lVar3 * 0x98;
-    } while (lVar4 != 0);
+      vpx_memset(pMVar1,0,0x98);
+      lVar2 = lVar2 + -1;
+      pMVar1 = pMVar1 + param_3;
+    } while (lVar2 != 0);
   }
-  __restgprlr_29(pvVar2);
   return;
 }
 
 
 // 82811068  vp8_de_alloc_frame_buffers  (WebM_atvi_opt/vpx/vp8/common/alloccommon.c:40)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void vp8_de_alloc_frame_buffers(VP8Common *param_1)
 
 {
-  int iVar1;
-  YV12_BUFFER_CONFIG *pYVar2;
-  longlong lVar3;
+  YV12_BUFFER_CONFIG *pYVar1;
+  longlong lVar2;
   
-  iVar1 = __savegprlr_29(param_1);
-  pYVar2 = (YV12_BUFFER_CONFIG *)(iVar1 + 0x35bc);
-  lVar3 = 4;
+  pYVar1 = param_1->yv12_fb;
+  lVar2 = 4;
   do {
-    vp8_yv12_de_alloc_frame_buffer(pYVar2);
-    lVar3 = lVar3 + -1;
-    pYVar2 = pYVar2 + 1;
-  } while (lVar3 != 0);
-  vp8_yv12_de_alloc_frame_buffer((YV12_BUFFER_CONFIG *)(iVar1 + 0x36e0));
-  vp8_yv12_de_alloc_frame_buffer((YV12_BUFFER_CONFIG *)(iVar1 + 0x36ac));
-  vpx_free(*(void **)(iVar1 + 0x5fc4));
-  vpx_free(*(void **)(iVar1 + 0x376c));
-  *(undefined4 *)(iVar1 + 0x5fc4) = 0;
-  *(undefined4 *)(iVar1 + 0x376c) = 0;
-  __restgprlr_29();
+    vp8_yv12_de_alloc_frame_buffer(pYVar1);
+    lVar2 = lVar2 + -1;
+    pYVar1 = pYVar1 + 1;
+  } while (lVar2 != 0);
+  vp8_yv12_de_alloc_frame_buffer(&param_1->temp_scale_frame);
+  vp8_yv12_de_alloc_frame_buffer(&param_1->post_proc_buffer);
+  vpx_free(param_1->above_context);
+  vpx_free(param_1->mip);
+  param_1->above_context = (ENTROPY_CONTEXT_PLANES *)0x0;
+  param_1->mip = (MODE_INFO *)0x0;
   return;
 }
 
 
 // 828110C8  vp8_alloc_frame_buffers  (WebM_atvi_opt/vpx/vp8/common/alloccommon.c:58)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
+
 int vp8_alloc_frame_buffers(VP8Common *param_1,int param_2,int param_3)
 
 {
-  VP8Common *pVVar1;
+  int iVar1;
   int iVar2;
-  int iVar3;
-  MODE_INFO *pMVar4;
-  ENTROPY_CONTEXT_PLANES *pEVar5;
+  MODE_INFO *pMVar3;
+  ENTROPY_CONTEXT_PLANES *pEVar4;
+  YV12_BUFFER_CONFIG *pYVar5;
   YV12_BUFFER_CONFIG *pYVar6;
-  YV12_BUFFER_CONFIG *pYVar7;
-  longlong lVar8;
+  longlong lVar7;
   
-  pVVar1 = (VP8Common *)__savegprlr_25(param_1);
-  vp8_de_alloc_frame_buffers(pVVar1);
+  vp8_de_alloc_frame_buffers(param_1);
   if ((param_2 & 0xfU) != 0) {
     param_2 = (param_2 - (param_2 & 0xfU)) + 0x10;
   }
   if ((param_3 & 0xfU) != 0) {
     param_3 = (param_3 - (param_3 & 0xfU)) + 0x10;
   }
-  pYVar7 = pVVar1->yv12_fb;
-  iVar3 = 0;
-  pYVar6 = pYVar7;
+  pYVar6 = param_1->yv12_fb;
+  iVar2 = 0;
+  pYVar5 = pYVar6;
   do {
-    pVVar1->fb_idx_ref_cnt[0] = 0;
-    iVar2 = vp8_yv12_alloc_frame_buffer(pYVar6,param_2,param_3,0x20);
-    if (iVar2 < 0) {
-      lVar8 = 4;
+    param_1->fb_idx_ref_cnt[0] = 0;
+    iVar1 = vp8_yv12_alloc_frame_buffer(pYVar5,param_2,param_3,0x20);
+    if (iVar1 < 0) {
+      lVar7 = 4;
       do {
-        vp8_yv12_de_alloc_frame_buffer(pYVar7);
-        lVar8 = lVar8 + -1;
-        pYVar7 = pYVar7 + 1;
-      } while (lVar8 != 0);
-      vp8_yv12_de_alloc_frame_buffer(&pVVar1->temp_scale_frame);
-      vp8_yv12_de_alloc_frame_buffer(&pVVar1->post_proc_buffer);
-      vpx_free(pVVar1->above_context);
-      vpx_free(pVVar1->mip);
-      pVVar1->above_context = (ENTROPY_CONTEXT_PLANES *)0x0;
-      pVVar1->mip = (MODE_INFO *)0x0;
-      iVar3 = __restgprlr_25(0xfffffffffffffffe);
-      return iVar3;
+        vp8_yv12_de_alloc_frame_buffer(pYVar6);
+        lVar7 = lVar7 + -1;
+        pYVar6 = pYVar6 + 1;
+      } while (lVar7 != 0);
+      vp8_yv12_de_alloc_frame_buffer(&param_1->temp_scale_frame);
+      vp8_yv12_de_alloc_frame_buffer(&param_1->post_proc_buffer);
+      vpx_free(param_1->above_context);
+      vpx_free(param_1->mip);
+      param_1->above_context = (ENTROPY_CONTEXT_PLANES *)0x0;
+      param_1->mip = (MODE_INFO *)0x0;
+      return -2;
     }
-    iVar3 = iVar3 + 1;
-    pYVar6 = pYVar6 + 1;
-  } while (iVar3 < 4);
-  pVVar1->new_fb_idx = 0;
-  pVVar1->lst_fb_idx = 1;
-  pVVar1->gld_fb_idx = 2;
-  pVVar1->alt_fb_idx = 3;
-  pVVar1->fb_idx_ref_cnt[0] = 1;
-  pVVar1->fb_idx_ref_cnt[1] = 1;
-  pVVar1->fb_idx_ref_cnt[2] = 1;
-  pVVar1->fb_idx_ref_cnt[3] = 1;
-  iVar3 = vp8_yv12_alloc_frame_buffer(&pVVar1->temp_scale_frame,param_2,0x10,0x20);
-  if (iVar3 < 0) {
-    lVar8 = 4;
+    iVar2 = iVar2 + 1;
+    pYVar5 = pYVar5 + 1;
+  } while (iVar2 < 4);
+  param_1->new_fb_idx = 0;
+  param_1->lst_fb_idx = 1;
+  param_1->gld_fb_idx = 2;
+  param_1->alt_fb_idx = 3;
+  param_1->fb_idx_ref_cnt[0] = 1;
+  param_1->fb_idx_ref_cnt[1] = 1;
+  param_1->fb_idx_ref_cnt[2] = 1;
+  param_1->fb_idx_ref_cnt[3] = 1;
+  iVar2 = vp8_yv12_alloc_frame_buffer(&param_1->temp_scale_frame,param_2,0x10,0x20);
+  if (iVar2 < 0) {
+    lVar7 = 4;
     do {
-      vp8_yv12_de_alloc_frame_buffer(pYVar7);
-      lVar8 = lVar8 + -1;
-      pYVar7 = pYVar7 + 1;
-    } while (lVar8 != 0);
-    vp8_yv12_de_alloc_frame_buffer(&pVVar1->temp_scale_frame);
-    vp8_yv12_de_alloc_frame_buffer(&pVVar1->post_proc_buffer);
-    vpx_free(pVVar1->above_context);
-    vpx_free(pVVar1->mip);
-    pVVar1->above_context = (ENTROPY_CONTEXT_PLANES *)0x0;
-    pVVar1->mip = (MODE_INFO *)0x0;
-    iVar3 = __restgprlr_25(0xfffffffffffffffe);
-    return iVar3;
+      vp8_yv12_de_alloc_frame_buffer(pYVar6);
+      lVar7 = lVar7 + -1;
+      pYVar6 = pYVar6 + 1;
+    } while (lVar7 != 0);
+    vp8_yv12_de_alloc_frame_buffer(&param_1->temp_scale_frame);
+    vp8_yv12_de_alloc_frame_buffer(&param_1->post_proc_buffer);
+    vpx_free(param_1->above_context);
+    vpx_free(param_1->mip);
+    param_1->above_context = (ENTROPY_CONTEXT_PLANES *)0x0;
+    param_1->mip = (MODE_INFO *)0x0;
+    return -2;
   }
-  iVar3 = vp8_yv12_alloc_frame_buffer(&pVVar1->post_proc_buffer,param_2,param_3,0x20);
-  if (-1 < iVar3) {
-    iVar3 = param_3 >> 4;
-    iVar2 = param_2 >> 4;
-    pVVar1->mb_rows = iVar3;
-    pVVar1->mb_cols = iVar2;
-    pVVar1->mode_info_stride = iVar2 + 1;
-    pVVar1->MBs = iVar2 * iVar3;
-    pMVar4 = vpx_calloc((iVar3 + 1) * (iVar2 + 1),0x98);
-    pVVar1->mip = pMVar4;
-    if (pMVar4 != (MODE_INFO *)0x0) {
-      pVVar1->mi = pMVar4 + pVVar1->mode_info_stride + 1;
-      pEVar5 = vpx_calloc(pVVar1->mb_cols * 9,1);
-      pVVar1->above_context = pEVar5;
-      if (pEVar5 != (ENTROPY_CONTEXT_PLANES *)0x0) {
-        vp8_update_mode_info_border(pVVar1->mi,pVVar1->mb_rows,pVVar1->mb_cols);
-        iVar3 = __restgprlr_25(0);
-        return iVar3;
+  iVar2 = vp8_yv12_alloc_frame_buffer(&param_1->post_proc_buffer,param_2,param_3,0x20);
+  if (-1 < iVar2) {
+    iVar2 = param_3 >> 4;
+    iVar1 = param_2 >> 4;
+    param_1->mb_rows = iVar2;
+    param_1->mb_cols = iVar1;
+    param_1->mode_info_stride = iVar1 + 1;
+    param_1->MBs = iVar1 * iVar2;
+    pMVar3 = vpx_calloc((iVar2 + 1) * (iVar1 + 1),0x98);
+    param_1->mip = pMVar3;
+    if (pMVar3 != (MODE_INFO *)0x0) {
+      param_1->mi = pMVar3 + param_1->mode_info_stride + 1;
+      pEVar4 = vpx_calloc(param_1->mb_cols * 9,1);
+      param_1->above_context = pEVar4;
+      if (pEVar4 != (ENTROPY_CONTEXT_PLANES *)0x0) {
+        vp8_update_mode_info_border(param_1->mi,param_1->mb_rows,param_1->mb_cols);
+        return 0;
       }
     }
   }
-  vp8_de_alloc_frame_buffers(pVVar1);
-  iVar3 = __restgprlr_25(0xfffffffffffffffe);
-  return iVar3;
+  vp8_de_alloc_frame_buffers(param_1);
+  return -2;
 }
 
 

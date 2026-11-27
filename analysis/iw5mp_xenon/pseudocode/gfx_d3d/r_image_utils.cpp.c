@@ -2,32 +2,28 @@
 
 // 827482A0  R_DownsampleMipMapBilinear  (gfx_d3d/r_image_utils.cpp:6)
 
+/* WARNING: Function: __savegprlr_19 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_19 replaced with injection: xenon_save_restore */
+
 void R_DownsampleMipMapBilinear(uchar *param_1,int param_2,int param_3,int param_4,uchar *param_5)
 
 {
-  int iVar1;
-  undefined1 *puVar2;
-  byte *pbVar3;
-  int iVar4;
-  ulonglong uVar5;
-  ulonglong uVar6;
-  ulonglong uVar7;
+  byte *pbVar1;
+  byte *pbVar2;
+  int iVar3;
+  uchar *puVar4;
+  uchar *puVar5;
+  uchar *puVar6;
+  uchar *puVar7;
   longlong lVar8;
-  longlong lVar9;
+  int iVar9;
   longlong lVar10;
   longlong lVar11;
-  int iVar12;
-  longlong lVar13;
-  ulonglong uVar14;
-  longlong lVar15;
-  ulonglong uVar16;
-  int iVar17;
-  ulonglong uVar18;
+  uchar *puVar12;
+  int iVar13;
+  int iVar14;
   
-  uVar14 = (ulonglong)(int)param_5;
-  uVar7 = (ulonglong)param_4;
-  uVar5 = __savegprlr_19(param_1);
-  if ((uVar5 & 0xffffffff) == 0) {
+  if (param_1 == (uchar *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image_utils.cpp",
                     0x11,0,"%s");
   }
@@ -39,81 +35,77 @@ void R_DownsampleMipMapBilinear(uchar *param_1,int param_2,int param_3,int param
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image_utils.cpp",
                     0x13,0,"%s\n\t(srcHeight) = %i");
   }
-  iVar17 = (int)uVar7;
-  if (iVar17 < 1) {
+  if (param_4 < 1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image_utils.cpp",
                     0x14,0,"%s\n\t(texelPitch) = %i");
   }
-  if ((uVar14 & 0xffffffff) == 0) {
+  if (param_5 == (uchar *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_image_utils.cpp",
                     0x16,0,"%s");
   }
   if ((param_2 != 1) || (param_3 != 1)) {
-    iVar1 = param_2 >> 1;
-    lVar13 = (longlong)iVar1;
-    iVar12 = param_3 >> 1;
-    lVar10 = (longlong)iVar12;
-    if ((lVar13 == 0) || (iVar12 == 0)) {
-      lVar10 = lVar10 + lVar13;
-      if (0 < lVar10) {
+    iVar14 = param_2 >> 1;
+    lVar10 = (longlong)iVar14;
+    iVar9 = param_3 >> 1;
+    lVar8 = (longlong)iVar9;
+    if ((lVar10 == 0) || (iVar9 == 0)) {
+      lVar8 = lVar8 + lVar10;
+      if (0 < lVar8) {
         do {
-          iVar12 = 0;
-          if (0 < iVar17) {
-            uVar6 = uVar7;
+          iVar9 = 0;
+          if (0 < param_4) {
+            iVar14 = param_4;
             do {
-              puVar2 = (undefined1 *)(iVar12 + (int)uVar14);
-              pbVar3 = (byte *)((int)uVar5 + iVar17 + iVar12);
-              iVar12 = iVar12 + 1;
-              *puVar2 = (char)((int)((uint)(byte)puVar2[(int)uVar5 - (int)uVar14] + (uint)*pbVar3)
-                              >> 1);
-              uVar6 = uVar6 - 1;
-            } while (uVar6 != 0);
+              puVar4 = param_5 + iVar9;
+              iVar13 = iVar9 + param_4;
+              iVar9 = iVar9 + 1;
+              *puVar4 = (uchar)((int)((uint)puVar4[(int)param_1 - (int)param_5] +
+                                     (uint)param_1[iVar13]) >> 1);
+              iVar14 = iVar14 + -1;
+            } while (iVar14 != 0);
           }
-          lVar10 = lVar10 + -1;
-          uVar14 = uVar14 + uVar7;
-          uVar5 = (uVar7 & 0x7fffffff) * 2 + uVar5;
-        } while (lVar10 != 0);
+          lVar8 = lVar8 + -1;
+          param_5 = param_5 + param_4;
+          param_1 = param_1 + param_4 * 2;
+        } while (lVar8 != 0);
       }
     }
-    else if (0 < iVar12) {
+    else if (0 < iVar9) {
       do {
-        if (0 < iVar1) {
-          uVar6 = uVar14;
-          lVar15 = lVar13;
-          uVar16 = uVar5;
+        if (0 < iVar14) {
+          lVar11 = lVar10;
+          puVar4 = param_5;
+          puVar12 = param_1;
           do {
-            lVar11 = 0;
-            if (0 < iVar17) {
-              lVar9 = (longlong)param_2 * (longlong)iVar17 + uVar16;
-              lVar8 = lVar9;
-              uVar18 = uVar7;
+            iVar9 = 0;
+            if (0 < param_4) {
+              puVar6 = puVar12 + param_2 * param_4;
+              puVar5 = puVar6;
+              iVar13 = param_4;
               do {
-                iVar4 = (int)lVar11;
-                puVar2 = (undefined1 *)(iVar4 + (int)uVar6);
-                iVar12 = (int)lVar8;
-                lVar11 = lVar11 + 1;
-                lVar8 = lVar9 + lVar11;
-                *puVar2 = (char)((int)((uint)*(byte *)(iVar12 + iVar17) +
-                                       (uint)(byte)puVar2[(int)uVar16 - (int)uVar6] +
-                                       (uint)*(byte *)((int)uVar16 + iVar17 + iVar4) +
-                                      (uint)*(byte *)((int)lVar9 + iVar4)) >> 2);
-                uVar18 = uVar18 - 1;
-              } while (uVar18 != 0);
+                puVar7 = puVar4 + iVar9;
+                pbVar1 = puVar5 + param_4;
+                iVar3 = iVar9 + param_4;
+                pbVar2 = puVar6 + iVar9;
+                iVar9 = iVar9 + 1;
+                puVar5 = puVar6 + iVar9;
+                *puVar7 = (uchar)((int)((uint)*pbVar1 + (uint)puVar7[(int)puVar12 - (int)puVar4] +
+                                        (uint)puVar12[iVar3] + (uint)*pbVar2) >> 2);
+                iVar13 = iVar13 + -1;
+              } while (iVar13 != 0);
             }
-            lVar15 = lVar15 + -1;
-            uVar6 = uVar6 + uVar7;
-            uVar16 = (uVar7 & 0x7fffffff) * 2 + uVar16;
-          } while (lVar15 != 0);
+            lVar11 = lVar11 + -1;
+            puVar4 = puVar4 + param_4;
+            puVar12 = puVar12 + param_4 * 2;
+          } while (lVar11 != 0);
         }
-        lVar10 = lVar10 + -1;
-        uVar5 = ((longlong)param_2 * (longlong)iVar17 & 0x7fffffffU) * 2 + uVar5;
-        uVar14 = uVar14 + (longlong)iVar1 * (longlong)iVar17;
-      } while (lVar10 != 0);
-      __restgprlr_19();
+        lVar8 = lVar8 + -1;
+        param_1 = param_1 + param_2 * param_4 * 2;
+        param_5 = param_5 + iVar14 * param_4;
+      } while (lVar8 != 0);
       return;
     }
   }
-  __restgprlr_19();
   return;
 }
 

@@ -2,121 +2,113 @@
 
 // 828C9008  NellyFftCenter512  (<external>/Xenon/mar09/core/private/xam/codecs/nci/cmn/src/fftif.c:12)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void NellyFftCenter512(float *param_1,int param_2,int param_3,float *param_4,float *param_5)
 
 {
-  undefined4 uVar1;
+  float fVar1;
   uint uVar2;
-  undefined4 *puVar3;
+  ulonglong uVar3;
   longlong lVar4;
-  ulonglong uVar5;
+  longlong lVar5;
   longlong lVar6;
   longlong lVar7;
   longlong lVar8;
-  longlong lVar9;
-  longlong lVar10;
-  int iVar11;
-  longlong lVar12;
-  ulonglong uVar13;
+  int iVar9;
+  ulonglong uVar10;
   
-  lVar6 = (longlong)(int)param_5;
-  lVar4 = (longlong)(int)param_4;
-  puVar3 = (undefined4 *)__savegprlr_29(param_1);
-  lVar10 = (longlong)(param_2 >> 2);
-  uVar5 = 0x100 - lVar10;
-  lVar9 = (uVar5 & 0x3fffffff) * 4;
+  lVar8 = (longlong)(int)param_5;
+  lVar5 = (longlong)(int)param_4;
+  lVar7 = (longlong)(param_2 >> 2);
+  uVar3 = 0x100 - lVar7;
+  lVar6 = (uVar3 & 0x3fffffff) * 4;
   uVar2 = 1 << (param_3 & 0x3fU);
-  if (0 < lVar10) {
-    lVar7 = lVar9 + lVar6 + -4;
-    lVar9 = lVar9 + lVar4 + -4;
+  if (0 < lVar7) {
+    lVar4 = lVar6 + lVar8 + -4;
+    lVar6 = lVar6 + lVar5 + -4;
     do {
-      uVar1 = puVar3[1];
-      lVar9 = lVar9 + 4;
-      *(undefined4 *)lVar9 = *puVar3;
-      lVar7 = lVar7 + 4;
-      *(undefined4 *)lVar7 = uVar1;
-      puVar3 = puVar3 + 2;
-      lVar10 = lVar10 + -1;
-    } while (lVar10 != 0);
+      fVar1 = param_1[1];
+      lVar6 = lVar6 + 4;
+      *(float *)lVar6 = *param_1;
+      lVar4 = lVar4 + 4;
+      *(float *)lVar4 = fVar1;
+      param_1 = param_1 + 2;
+      lVar7 = lVar7 + -1;
+    } while (lVar7 != 0);
   }
-  lVar8 = (longlong)(param_2 + (param_2 >> 2) * -2 >> 1);
-  lVar10 = lVar4;
-  lVar7 = 0;
-  lVar9 = lVar6;
-  lVar12 = lVar8;
-  if (0 < lVar8) {
+  lVar4 = (longlong)(param_2 + (param_2 >> 2) * -2 >> 1);
+  lVar6 = 0;
+  lVar7 = lVar4;
+  if (0 < lVar4) {
     do {
-      uVar1 = puVar3[1];
-      *(undefined4 *)lVar10 = *puVar3;
-      lVar10 = lVar10 + 4;
-      *(undefined4 *)lVar9 = uVar1;
-      puVar3 = puVar3 + 2;
-      lVar9 = lVar9 + 4;
-      lVar12 = lVar12 + -1;
-      lVar7 = lVar8;
-    } while (lVar12 != 0);
+      fVar1 = param_1[1];
+      *(float *)lVar5 = *param_1;
+      lVar5 = lVar5 + 4;
+      *(float *)lVar8 = fVar1;
+      param_1 = param_1 + 2;
+      lVar8 = lVar8 + 4;
+      lVar7 = lVar7 + -1;
+      lVar6 = lVar4;
+    } while (lVar7 != 0);
   }
   if (param_2 != (param_2 >> 1) << 1) {
-    *(undefined4 *)lVar10 = *puVar3;
-    lVar10 = lVar10 + 4;
-    lVar7 = lVar7 + 1;
-    *(undefined4 *)lVar9 = 0;
-    lVar9 = lVar9 + 4;
+    *(float *)lVar5 = *param_1;
+    lVar5 = lVar5 + 4;
+    lVar6 = lVar6 + 1;
+    *(undefined4 *)lVar8 = 0;
+    lVar8 = lVar8 + 4;
   }
-  if ((int)lVar7 < (int)uVar5) {
-    lVar9 = lVar9 + -4;
-    for (uVar13 = uVar5 - lVar7 & 0x3fffffff; uVar13 != 0; uVar13 = uVar13 - 1) {
-      lVar9 = lVar9 + 4;
-      *(undefined4 *)lVar9 = 0;
+  if ((int)lVar6 < (int)uVar3) {
+    lVar8 = lVar8 + -4;
+    for (uVar10 = uVar3 - lVar6 & 0x3fffffff; uVar10 != 0; uVar10 = uVar10 - 1) {
+      lVar8 = lVar8 + 4;
+      *(undefined4 *)lVar8 = 0;
     }
-    lVar10 = lVar10 + -4;
-    for (uVar5 = uVar5 - lVar7 & 0x3fffffff; uVar5 != 0; uVar5 = uVar5 - 1) {
-      lVar10 = lVar10 + 4;
-      *(undefined4 *)lVar10 = 0;
+    lVar5 = lVar5 + -4;
+    for (uVar3 = uVar3 - lVar6 & 0x3fffffff; uVar3 != 0; uVar3 = uVar3 - 1) {
+      lVar5 = lVar5 + 4;
+      *(undefined4 *)lVar5 = 0;
     }
   }
-  iVar11 = ((int)uVar2 >> 1) + (uint)((int)uVar2 < 0 && (uVar2 & 1) != 0);
-  fftCore4CFGVector((float *)lVar4,(float *)lVar6,iVar11);
-  unpack2G((float *)lVar4,(float *)lVar6,iVar11);
-  __restgprlr_29();
+  iVar9 = ((int)uVar2 >> 1) + (uint)((int)uVar2 < 0 && (uVar2 & 1) != 0);
+  fftCore4CFGVector(param_4,param_5,iVar9);
+  unpack2G(param_4,param_5,iVar9);
   return;
 }
 
 
 // 828C8F88  realFft  (<external>/Xenon/mar09/core/private/xam/codecs/nci/cmn/src/fftif.c:67)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void realFft(float *param_1,float *param_2,int param_3)
 
 {
-  float *pfVar1;
-  ulonglong uVar2;
-  int iVar3;
+  int iVar1;
   
-  uVar2 = (ulonglong)param_3;
-  pfVar1 = (float *)__savegprlr_29(param_1);
-  iVar3 = ((int)uVar2 >> 1) + (uint)((int)uVar2 < 0 && (uVar2 & 1) != 0);
-  fftCore4CFGVector(pfVar1,param_2,iVar3);
-  unpack2G(pfVar1,param_2,iVar3);
-  __restgprlr_29();
+  iVar1 = (param_3 >> 1) + (uint)(param_3 < 0 && (param_3 & 1U) != 0);
+  fftCore4CFGVector(param_1,param_2,iVar1);
+  unpack2G(param_1,param_2,iVar1);
   return;
 }
 
 
 // 828C8FC8  inverseRealFft  (<external>/Xenon/mar09/core/private/xam/codecs/nci/cmn/src/fftif.c:76)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void inverseRealFft(float *param_1,float *param_2,int param_3)
 
 {
-  float *pfVar1;
-  ulonglong uVar2;
-  int iVar3;
+  int iVar1;
   
-  uVar2 = (ulonglong)param_3;
-  pfVar1 = (float *)__savegprlr_29(param_1);
-  iVar3 = ((int)uVar2 >> 1) + (uint)((int)uVar2 < 0 && (uVar2 & 1) != 0);
-  pack2G(pfVar1,param_2,iVar3);
-  fftCore4CFGVector(param_2,pfVar1,iVar3);
-  __restgprlr_29();
+  iVar1 = (param_3 >> 1) + (uint)(param_3 < 0 && (param_3 & 1U) != 0);
+  pack2G(param_1,param_2,iVar1);
+  fftCore4CFGVector(param_2,param_1,iVar1);
   return;
 }
 

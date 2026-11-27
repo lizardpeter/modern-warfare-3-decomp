@@ -33,25 +33,20 @@ void __thiscall bdHashTiger192::~bdHashTiger192(bdHashTiger192 *this)
 
 // 8292D0A8  hash  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdcrypto/bdhashtiger192.cpp:36)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
+
 bool __thiscall
 bdHashTiger192::hash(bdHashTiger192 *this,uchar *param_1,uint param_2,uchar *param_3,uint *param_4)
 
 {
   undefined8 uVar1;
   int iVar2;
-  undefined1 uVar3;
-  longlong lVar4;
-  longlong lVar5;
-  longlong lVar6;
-  uint uVar7;
-  char *pcVar8;
+  uint uVar3;
+  char *pcVar4;
   uint local_d0 [4];
   undefined1 auStack_c0 [192];
   
-  lVar6 = (longlong)(int)param_3;
-  lVar5 = (longlong)(int)param_2;
-  lVar4 = (longlong)(int)param_1;
-  __savegprlr_25(this,lVar4,lVar5,lVar6);
   tom_game_mem_begin(auStack_c0,0x74);
   if (0x18 < *param_4) {
     bdLogMessage(BD_LOG_WARNING,"warn/","hashtiger192",
@@ -62,28 +57,24 @@ bdHashTiger192::hash(bdHashTiger192 *this,uchar *param_1,uint param_2,uchar *par
   }
   local_d0[0] = *param_4;
   uVar1 = find_hash(0xffffffff8221d9cc);
-  iVar2 = hash_memory(uVar1,lVar4,lVar5,lVar6,local_d0);
+  iVar2 = hash_memory(uVar1,param_1,param_2,param_3,local_d0);
   if (iVar2 == 6) {
-    uVar7 = 0x36;
-    pcVar8 = "Unable to create tiger hash of less than 24 bytes in length!.";
+    uVar3 = 0x36;
+    pcVar4 = "Unable to create tiger hash of less than 24 bytes in length!.";
   }
   else {
     if (iVar2 == 0) {
       tom_game_mem_end();
-      uVar1 = 1;
       *param_4 = local_d0[0];
-      goto LAB_8292d1a4;
+      return true;
     }
-    uVar7 = 0x3b;
-    pcVar8 = "Unable to create hash.";
+    uVar3 = 0x3b;
+    pcVar4 = "Unable to create hash.";
   }
   bdLogMessage(BD_LOG_ERROR,"err/","hashtiger192",
                "c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdCore\\bdCrypto\\bdHashTiger192.cpp"
-               ,"bdHashTiger192::hash",uVar7,pcVar8);
-  uVar1 = 0;
-LAB_8292d1a4:
-  uVar3 = __restgprlr_25(uVar1);
-  return (bool)uVar3;
+               ,"bdHashTiger192::hash",uVar3,pcVar4);
+  return false;
 }
 
 

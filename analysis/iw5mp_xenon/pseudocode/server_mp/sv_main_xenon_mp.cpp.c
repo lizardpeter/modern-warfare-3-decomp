@@ -15,32 +15,34 @@ ClientTeamRank * SV_Live_GetTeamRankEntry(int param_1)
 
 // 8257B290  SV_Live_ClearTeamRankEntry  (server_mp/sv_main_xenon_mp.cpp:36)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void SV_Live_ClearTeamRankEntry(int param_1)
 
 {
-  uint uVar1;
-  ClientTeamRank *pCVar2;
+  ClientTeamRank *pCVar1;
   
-  uVar1 = __savegprlr_29(param_1);
-  if (0x11 < uVar1) {
+  if (0x11 < (uint)param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_main_xenon_mp.cpp"
                     ,0x27,0,"clientNum doesn\'t index MAX_CLIENTS\n\t%i not in [0, %i)");
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_main_xenon_mp.cpp"
                     ,0x1e,0,"clientNum doesn\'t index MAX_CLIENTS\n\t%i not in [0, %i)");
   }
-  pCVar2 = g_clientTeamRanks + uVar1;
-  pCVar2->valid = false;
-  *(undefined3 *)&pCVar2->field_0x1 = 0;
-  pCVar2->team = 0;
-  *(undefined8 *)&g_clientTeamRanks[uVar1].rank = 0;
-  g_clientTeamRanks[uVar1].xuid = 0;
-  __restgprlr_29();
+  pCVar1 = g_clientTeamRanks + param_1;
+  pCVar1->valid = false;
+  *(undefined3 *)&pCVar1->field_0x1 = 0;
+  pCVar1->team = 0;
+  *(undefined8 *)&g_clientTeamRanks[param_1].rank = 0;
+  g_clientTeamRanks[param_1].xuid = 0;
   return;
 }
 
 
 // 8257B320  SV_Live_ClearAllTeamRanks  (server_mp/sv_main_xenon_mp.cpp:46)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void SV_Live_ClearAllTeamRanks(void)
@@ -49,7 +51,6 @@ void SV_Live_ClearAllTeamRanks(void)
   uint uVar1;
   ClientTeamRank *pCVar2;
   
-  __savegprlr_26();
   pCVar2 = g_clientTeamRanks;
   uVar1 = 0;
   do {
@@ -67,28 +68,25 @@ void SV_Live_ClearAllTeamRanks(void)
     pCVar2->xuid = 0;
     pCVar2 = pCVar2 + 1;
   } while ((int)pCVar2 < -0x7c0e18a0);
-  __restgprlr_26();
   return;
 }
 
 
 // 8257B3B8  SV_Live_HasTeamRankStatsAvailable  (server_mp/sv_main_xenon_mp.cpp:55)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 bool SV_Live_HasTeamRankStatsAvailable(int param_1)
 
 {
-  uint uVar1;
-  undefined1 uVar2;
-  
-  uVar1 = __savegprlr_29(param_1);
-  if (0x11 < uVar1) {
+  if (0x11 < (uint)param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_main_xenon_mp.cpp"
                     ,0x3a,0,"clientNum doesn\'t index MAX_CLIENTS\n\t%i not in [0, %i)");
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_main_xenon_mp.cpp"
                     ,0x1e,0,"clientNum doesn\'t index MAX_CLIENTS\n\t%i not in [0, %i)");
   }
-  uVar2 = __restgprlr_29(g_clientTeamRanks[uVar1].valid);
-  return (bool)uVar2;
+  return g_clientTeamRanks[param_1].valid;
 }
 
 
@@ -111,24 +109,24 @@ bool SV_Live_ShouldReportTeamRanks(void)
 
 // 8257B490  SV_Live_ScrSetPlayerTeamRank  (server_mp/sv_main_xenon_mp.cpp:78)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 void SV_Live_ScrSetPlayerTeamRank(int param_1,int param_2,int param_3)
 
 {
-  uint uVar2;
-  bool bVar5;
-  int iVar3;
+  bool bVar4;
+  int iVar2;
   ulong64 uVar1;
-  ClientTeamRank *pCVar4;
+  ClientTeamRank *pCVar3;
   
-  uVar2 = __savegprlr_27(param_1);
-  bVar5 = Sys_IsServerThread();
-  if ((!bVar5) && (com_inServerFrame != 0)) {
+  bVar4 = Sys_IsServerThread();
+  if ((!bVar4) && (com_inServerFrame != 0)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_main_xenon_mp.cpp"
                     ,0x52,0,"%s");
   }
-  if (0x11 < uVar2) {
+  if (0x11 < (uint)param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\server_mp\\sv_main_xenon_mp.cpp"
                     ,0x53,0,"clientNum doesn\'t index MAX_CLIENTS\n\t%i not in [0, %i)");
   }
@@ -137,37 +135,34 @@ void SV_Live_ScrSetPlayerTeamRank(int param_1,int param_2,int param_3)
                     ,0x54,0,"%s\n\t(team) = %i");
   }
   if ((xblive_privatematch->current).enabled == false) {
-    bVar5 = Live_IsInLiveGame();
+    bVar4 = Live_IsInLiveGame();
   }
   else {
-    bVar5 = false;
+    bVar4 = false;
   }
-  if (bVar5 != false) {
-    iVar3 = SV_IsTestClient(uVar2);
-    if (iVar3 != 0) {
+  if (bVar4 != false) {
+    iVar2 = SV_IsTestClient(param_1);
+    if (iVar2 != 0) {
       Com_Printf(0xf,"SetPlayerTeamRank: Ignoring test client at index %i.\n");
-      __restgprlr_27();
       return;
     }
-    uVar1 = Session_GetXuidEvenIfInactive(&g_serverSession,uVar2);
+    uVar1 = Session_GetXuidEvenIfInactive(&g_serverSession,param_1);
     if (uVar1 == 0) {
       Com_PrintError(0xf,"SetPlayerTeamRank: No user registered at index %i.\n");
-      __restgprlr_27();
       return;
     }
-    pCVar4 = SV_Live_GetTeamRankEntry(uVar2);
-    if (pCVar4->valid != false) {
+    pCVar3 = SV_Live_GetTeamRankEntry(param_1);
+    if (pCVar3->valid != false) {
       Com_PrintError(0xf,"SetPlayerTeamRank: data already submitted for client %i.\n");
       Scr_Error("SetPlayerTeamRank called for client which already had its data set.");
     }
-    pCVar4->team = param_2;
-    pCVar4->rank = param_3;
-    pCVar4->xuid = uVar1;
+    pCVar3->team = param_2;
+    pCVar3->rank = param_3;
+    pCVar3->xuid = uVar1;
     sync(1);
-    pCVar4->valid = true;
+    pCVar3->valid = true;
     Com_Printf(0xf,"SetPlayerTeamRank: set for client %i (%i, %i)\n");
   }
-  __restgprlr_27();
   return;
 }
 

@@ -2,6 +2,8 @@
 
 // 824AD1C0  G_Trigger  (game/g_trigger.cpp:88)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
@@ -10,11 +12,9 @@ void G_Trigger(gentity_s *param_1,gentity_s *param_2)
 {
   trigger_info_t *ptVar1;
   int iVar2;
-  gentity_s *pgVar3;
-  int iVar4;
+  int iVar3;
   
-  pgVar3 = (gentity_s *)__savegprlr_28(param_1);
-  if ((pgVar3->r).isInUse == '\0') {
+  if ((param_1->r).isInUse == '\0') {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_trigger.cpp",0x5b,0,
                     "%s");
   }
@@ -22,27 +22,25 @@ void G_Trigger(gentity_s *param_1,gentity_s *param_2)
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_trigger.cpp",0x5c,0,
                     "%s");
   }
-  iVar4 = Scr_IsSystemActive('\x01');
+  iVar3 = Scr_IsSystemActive('\x01');
   iVar2 = level.pendingTriggerListSize;
-  if (iVar4 != 0) {
+  if (iVar3 != 0) {
     if (level.pendingTriggerListSize == 0x100) {
       if (alwaysfails == 0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_trigger.cpp",0x61,0
                         ,"MAX_TRIGGER_LIST_SIZE exceeded");
       }
       Scr_AddEntity(param_2);
-      Scr_Notify(pgVar3,scr_const.trigger,1);
-      __restgprlr_28();
+      Scr_Notify(param_1,scr_const.trigger,1);
       return;
     }
     ptVar1 = level.pendingTriggerList + level.pendingTriggerListSize;
     level.pendingTriggerListSize = level.pendingTriggerListSize + 1;
-    ptVar1->entnum = (ushort)(pgVar3->s).number;
+    ptVar1->entnum = (ushort)(param_1->s).number;
     level.pendingTriggerList[iVar2].otherEntnum = (ushort)(param_2->s).number;
-    level.pendingTriggerList[iVar2].useCount = pgVar3->useCount;
+    level.pendingTriggerList[iVar2].useCount = param_1->useCount;
     level.pendingTriggerList[iVar2].otherUseCount = param_2->useCount;
   }
-  __restgprlr_28();
   return;
 }
 
@@ -273,16 +271,15 @@ void SP_trigger_disk(gentity_s *param_1)
 
 // 824AD8A0  hurt_touch  (game/g_trigger.cpp:350)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
 void hurt_touch(gentity_s *param_1,gentity_s *param_2,int param_3)
 
 {
-  gentity_s *pgVar1;
-  gentity_s *pgVar2;
-  longlong lVar3;
-  int iVar4;
+  int iVar1;
   Weapon in_stack_ffffff58;
   undefined1 in_stack_ffffff5f;
   hitLocation_t in_stack_ffffff60;
@@ -290,34 +287,30 @@ void hurt_touch(gentity_s *param_1,gentity_s *param_2,int param_3)
   uint in_stack_ffffff68;
   int in_stack_ffffff6c;
   
-  lVar3 = (longlong)(int)param_2;
-  pgVar2 = (gentity_s *)__savegprlr_28(param_1,lVar3,param_3);
-  pgVar1 = (gentity_s *)lVar3;
-  if ((pgVar1->takedamage != '\0') &&
-     ((pgVar2->field31_0x1ac).item[0].clipAmmoCount[1] <= level.time)) {
-    G_Trigger(pgVar2,pgVar1);
-    iVar4 = pgVar1->health;
-    G_Damage(pgVar1,pgVar2,pgVar2,(float *)0x0,(float *)0x0,pgVar2->damage,0,0xd,in_stack_ffffff58,
-             (bool)in_stack_ffffff5f,in_stack_ffffff60,in_stack_ffffff64,in_stack_ffffff68,
-             in_stack_ffffff6c);
-    if (iVar4 != pgVar1->health) {
-      if ((pgVar2->spawnflags & 0x10U) == 0) {
-        iVar4 = level.time + 0x32;
+  if ((param_2->takedamage != '\0') &&
+     ((param_1->field31_0x1ac).item[0].clipAmmoCount[1] <= level.time)) {
+    G_Trigger(param_1,param_2);
+    iVar1 = param_2->health;
+    G_Damage(param_2,param_1,param_1,(float *)0x0,(float *)0x0,param_1->damage,0,0xd,
+             in_stack_ffffff58,(bool)in_stack_ffffff5f,in_stack_ffffff60,in_stack_ffffff64,
+             in_stack_ffffff68,in_stack_ffffff6c);
+    if (iVar1 != param_2->health) {
+      if ((param_1->spawnflags & 0x10U) == 0) {
+        iVar1 = level.time + 0x32;
       }
       else {
-        iVar4 = level.time + 1000;
+        iVar1 = level.time + 1000;
       }
-      (pgVar2->field31_0x1ac).item[0].clipAmmoCount[1] = iVar4;
+      (param_1->field31_0x1ac).item[0].clipAmmoCount[1] = iVar1;
     }
-    if ((pgVar2->spawnflags & 0x20U) != 0) {
-      if (pgVar2->handler != '\x03') {
+    if ((param_1->spawnflags & 0x20U) != 0) {
+      if (param_1->handler != '\x03') {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_trigger.cpp",0x18c,
                         0,"%s");
       }
-      pgVar2->handler = '\x02';
+      param_1->handler = '\x02';
     }
   }
-  __restgprlr_28();
   return;
 }
 
@@ -428,6 +421,8 @@ bool Respond_trigger_damage(gentity_s *param_1,int param_2)
 
 // 824ADC18  Activate_trigger_damage  (game/g_trigger.cpp:582)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
@@ -435,30 +430,25 @@ void Activate_trigger_damage(gentity_s *param_1,gentity_s *param_2,int param_3,i
 
 {
   int iVar1;
-  gentity_s *pgVar2;
-  bool bVar3;
-  int iVar4;
+  bool bVar2;
+  int iVar3;
   
-  pgVar2 = (gentity_s *)__savegprlr_28(param_1);
-  iVar1 = (pgVar2->field31_0x1ac).item[0].ammoCount;
-  if ((iVar1 < 1) || (iVar1 <= param_3)) {
-    bVar3 = Respond_trigger_damage(pgVar2,param_4);
-    if (bVar3) {
-      iVar1 = (pgVar2->field31_0x1ac).item[0].clipAmmoCount[0];
-      iVar4 = pgVar2->health - param_3;
-      pgVar2->health = iVar4;
-      if ((iVar1 == 0) || (iVar1 <= 32000 - iVar4)) {
-        if (param_4 != -1) {
-          G_Trigger(pgVar2,param_2);
-        }
-        pgVar2->health = 32000;
-        if ((pgVar2->spawnflags & 0x200U) != 0) {
-          pgVar2->flags = pgVar2->flags | 0x2000000;
-        }
+  iVar1 = (param_1->field31_0x1ac).item[0].ammoCount;
+  if (((iVar1 < 1) || (iVar1 <= param_3)) &&
+     (bVar2 = Respond_trigger_damage(param_1,param_4), bVar2)) {
+    iVar1 = (param_1->field31_0x1ac).item[0].clipAmmoCount[0];
+    iVar3 = param_1->health - param_3;
+    param_1->health = iVar3;
+    if ((iVar1 == 0) || (iVar1 <= 32000 - iVar3)) {
+      if (param_4 != -1) {
+        G_Trigger(param_1,param_2);
+      }
+      param_1->health = 32000;
+      if ((param_1->spawnflags & 0x200U) != 0) {
+        param_1->flags = param_1->flags | 0x2000000;
       }
     }
   }
-  __restgprlr_28();
   return;
 }
 
@@ -555,6 +545,8 @@ void SP_trigger_damage(gentity_s *param_1)
 
 // 824ADE60  G_CheckHitTriggerDamage  (game/g_trigger.cpp:684)
 
+/* WARNING: Function: __savegprlr_17 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_17 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
@@ -566,19 +558,12 @@ void G_CheckHitTriggerDamage
   float fVar1;
   float fVar2;
   float fVar3;
-  float *pfVar4;
-  float *pfVar5;
-  int iVar6;
-  gentity_s *pgVar7;
-  int iVar8;
-  int iVar9;
-  ulonglong uVar10;
-  ulonglong uVar11;
-  ulonglong uVar12;
-  longlong lVar13;
-  int *piVar14;
-  gentity_s *pgVar15;
-  double dVar16;
+  int iVar4;
+  int iVar5;
+  longlong lVar6;
+  int *piVar7;
+  gentity_s *pgVar8;
+  double dVar9;
   float local_20e0;
   float local_20dc;
   float local_20d8;
@@ -586,38 +571,31 @@ void G_CheckHitTriggerDamage
   Bounds local_20b0;
   int local_2090 [2084];
   
-  uVar12 = (ulonglong)param_6;
-  uVar11 = (ulonglong)(int)param_4;
-  uVar10 = (ulonglong)(int)param_3;
-  pgVar7 = (gentity_s *)__savegprlr_17(param_1);
-  if (0xf < (uVar12 & 0xffffffff)) {
+  if (0xf < (uint)param_6) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_trigger.cpp",0x2b5,0,
                     "iMOD doesn\'t index MOD_NUM\n\t%i not in [0, %i)");
   }
-  iVar6 = (int)((uVar12 & 0xffffffff) << 2);
-  if (**(short **)((int)modNames + iVar6) == 0) {
+  if (*modNames[param_6] == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_trigger.cpp",0x2b6,0,
                     "%s");
   }
-  if ((uVar10 & 0xffffffff) == 0) {
+  if (param_3 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_trigger.cpp",0x2b7,0,
                     "%s");
   }
-  if ((uVar11 & 0xffffffff) == 0) {
+  if (param_4 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_trigger.cpp",0x2b8,0,
                     "%s");
   }
-  pfVar4 = (float *)uVar10;
-  fVar1 = pfVar4[1];
-  pfVar5 = (float *)uVar11;
-  local_20dc = pfVar5[1] - fVar1;
-  fVar2 = pfVar4[2];
-  fVar3 = *pfVar4;
-  local_20d8 = pfVar5[2] - fVar2;
-  local_20e0 = *pfVar5 - fVar3;
-  local_20d0.midPoint[1] = (pfVar5[1] + fVar1) * 0.5;
-  local_20d0.midPoint[0] = (*pfVar5 + fVar3) * 0.5;
-  local_20d0.midPoint[2] = (pfVar5[2] + fVar2) * 0.5;
+  fVar1 = param_3[1];
+  local_20dc = param_4[1] - fVar1;
+  fVar2 = param_3[2];
+  fVar3 = *param_3;
+  local_20d8 = param_4[2] - fVar2;
+  local_20e0 = *param_4 - fVar3;
+  local_20d0.midPoint[1] = (param_4[1] + fVar1) * 0.5;
+  local_20d0.midPoint[0] = (*param_4 + fVar3) * 0.5;
+  local_20d0.midPoint[2] = (param_4[2] + fVar2) * 0.5;
   local_20d0.halfSize[1] = ABS(fVar1 - local_20d0.midPoint[1]);
   local_20d0.halfSize[0] = ABS(fVar3 - local_20d0.midPoint[0]);
   local_20d0.halfSize[2] = ABS(fVar2 - local_20d0.midPoint[2]);
@@ -630,52 +608,53 @@ void G_CheckHitTriggerDamage
   local_20e0 = fVar1 * local_20e0;
   local_20dc = local_20dc * fVar1;
   local_20d8 = local_20d8 * fVar1;
-  iVar8 = CM_AreaEntities(&local_20d0,local_2090,0x800,0x400000);
-  lVar13 = (longlong)iVar8;
-  if (0 < iVar8) {
-    piVar14 = local_2090;
-    dVar16 = 0.0;
+  iVar4 = CM_AreaEntities(&local_20d0,local_2090,0x800,0x400000);
+  lVar6 = (longlong)iVar4;
+  if (0 < iVar4) {
+    piVar7 = local_2090;
+    dVar9 = 0.0;
     do {
-      iVar8 = *piVar14;
-      pgVar15 = g_entities + iVar8;
-      if (g_entities[iVar8].classname == scr_const.trigger_damage) {
-        iVar9 = SV_SightTraceToEntity(pfVar4,pfVar5,(pgVar15->s).number,-1);
-        if (iVar9 != 0) {
-          iVar9 = Vec3Compare(pfVar4,param_2);
-          if (iVar9 == 0) {
-            local_20b0.midPoint[0] = *pfVar4;
-            local_20b0.midPoint[1] = pfVar4[1];
-            local_20b0.midPoint[2] = pfVar4[2];
-            local_20b0.halfSize[0] = (float)dVar16;
-            local_20b0.halfSize[1] = (float)dVar16;
-            local_20b0.halfSize[2] = (float)dVar16;
-            iVar9 = SV_EntityContactBounds(&local_20b0,pgVar15);
-            if (iVar9 != 0) goto LAB_824ae12c;
+      iVar4 = *piVar7;
+      pgVar8 = g_entities + iVar4;
+      if (g_entities[iVar4].classname == scr_const.trigger_damage) {
+        iVar5 = SV_SightTraceToEntity(param_3,param_4,(pgVar8->s).number,-1);
+        if (iVar5 != 0) {
+          iVar5 = Vec3Compare(param_3,param_2);
+          if (iVar5 == 0) {
+            local_20b0.midPoint[0] = *param_3;
+            local_20b0.midPoint[1] = param_3[1];
+            local_20b0.midPoint[2] = param_3[2];
+            local_20b0.halfSize[0] = (float)dVar9;
+            local_20b0.halfSize[1] = (float)dVar9;
+            local_20b0.halfSize[2] = (float)dVar9;
+            iVar5 = SV_EntityContactBounds(&local_20b0,pgVar8);
+            if (iVar5 != 0) goto LAB_824ae12c;
           }
-          Scr_AddConstString((uint)**(ushort **)((int)modNames + iVar6));
+          Scr_AddConstString((uint)*modNames[param_6]);
           Scr_AddVector(vec3_origin);
           Scr_AddVector(&local_20e0);
-          Scr_AddEntity(pgVar7);
+          Scr_AddEntity(param_1);
           Scr_AddInt(param_5);
-          Scr_Notify(pgVar15,scr_const.damage,5);
-          Activate_trigger_damage(pgVar15,pgVar7,param_5,(int)uVar12);
-          if (g_entities[iVar8].field31_0x1ac.item[0].clipAmmoCount[0] == 0) {
-            g_entities[iVar8].health = 32000;
+          Scr_Notify(pgVar8,scr_const.damage,5);
+          Activate_trigger_damage(pgVar8,param_1,param_5,param_6);
+          if (g_entities[iVar4].field31_0x1ac.item[0].clipAmmoCount[0] == 0) {
+            g_entities[iVar4].health = 32000;
           }
         }
       }
 LAB_824ae12c:
-      lVar13 = lVar13 + -1;
-      piVar14 = piVar14 + 1;
-    } while (lVar13 != 0);
+      lVar6 = lVar6 + -1;
+      piVar7 = piVar7 + 1;
+    } while (lVar6 != 0);
   }
-  __restgprlr_17();
   return;
 }
 
 
 // 824AE148  G_GrenadeTouchTriggerDamage  (game/g_trigger.cpp:756)
 
+/* WARNING: Function: __savegprlr_19 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_19 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
@@ -686,21 +665,17 @@ void G_GrenadeTouchTriggerDamage
   float fVar1;
   float fVar2;
   float fVar3;
-  gentity_s *pgVar4;
+  int iVar4;
   int iVar5;
-  int iVar6;
-  ulonglong uVar7;
-  longlong lVar8;
-  int *piVar9;
-  gentity_s *pgVar10;
+  longlong lVar6;
+  int *piVar7;
+  gentity_s *pgVar8;
   float local_20a0;
   float local_209c;
   float local_2098;
   Bounds local_2090;
   int local_2070 [2076];
   
-  uVar7 = (ulonglong)param_5;
-  pgVar4 = (gentity_s *)__savegprlr_19(param_1);
   fVar1 = param_2[1];
   local_209c = param_3[1] - fVar1;
   fVar2 = param_2[2];
@@ -722,40 +697,41 @@ void G_GrenadeTouchTriggerDamage
   local_20a0 = fVar1 * local_20a0;
   local_209c = local_209c * fVar1;
   local_2098 = local_2098 * fVar1;
-  iVar5 = CM_AreaEntities(&local_2090,local_2070,0x800,0x400000);
-  lVar8 = (longlong)iVar5;
-  if (0 < iVar5) {
-    piVar9 = local_2070;
+  iVar4 = CM_AreaEntities(&local_2090,local_2070,0x800,0x400000);
+  lVar6 = (longlong)iVar4;
+  if (0 < iVar4) {
+    piVar7 = local_2070;
     do {
-      iVar5 = *piVar9;
-      pgVar10 = g_entities + iVar5;
-      if ((g_entities[iVar5].classname == scr_const.trigger_damage) &&
-         ((g_entities[iVar5].flags & 0x4000U) != 0)) {
-        iVar6 = SV_SightTraceToEntity(param_2,param_3,(pgVar10->s).number,-1);
-        if (iVar6 != 0) {
-          Scr_AddConstString((uint)**(ushort **)((int)modNames + (int)((uVar7 & 0xffffffff) << 2)));
+      iVar4 = *piVar7;
+      pgVar8 = g_entities + iVar4;
+      if ((g_entities[iVar4].classname == scr_const.trigger_damage) &&
+         ((g_entities[iVar4].flags & 0x4000U) != 0)) {
+        iVar5 = SV_SightTraceToEntity(param_2,param_3,(pgVar8->s).number,-1);
+        if (iVar5 != 0) {
+          Scr_AddConstString((uint)*modNames[param_5]);
           Scr_AddVector(vec3_origin);
           Scr_AddVector(&local_20a0);
-          Scr_AddEntity(pgVar4);
+          Scr_AddEntity(param_1);
           Scr_AddInt(param_4);
-          Scr_Notify(pgVar10,scr_const.damage,5);
-          Activate_trigger_damage(pgVar10,pgVar4,param_4,(int)uVar7);
-          if (g_entities[iVar5].field31_0x1ac.item[0].clipAmmoCount[0] == 0) {
-            g_entities[iVar5].health = 32000;
+          Scr_Notify(pgVar8,scr_const.damage,5);
+          Activate_trigger_damage(pgVar8,param_1,param_4,param_5);
+          if (g_entities[iVar4].field31_0x1ac.item[0].clipAmmoCount[0] == 0) {
+            g_entities[iVar4].health = 32000;
           }
         }
       }
-      lVar8 = lVar8 + -1;
-      piVar9 = piVar9 + 1;
-    } while (lVar8 != 0);
+      lVar6 = lVar6 + -1;
+      piVar7 = piVar7 + 1;
+    } while (lVar6 != 0);
   }
-  __restgprlr_19();
   return;
 }
 
 
 // 824AE330  trigger_use_shared  (game/g_trigger.cpp:842)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "ConfigString": Some values do not have unique names */
@@ -764,104 +740,102 @@ void trigger_use_shared(gentity_s *param_1)
 
 {
   ushort uVar1;
-  gentity_s *pgVar2;
-  bool bVar4;
-  int iVar3;
-  char **ppcVar5;
+  bool bVar3;
+  int iVar2;
+  char **ppcVar4;
+  uint uVar5;
   uint uVar6;
-  uint uVar7;
-  ConfigString CVar8;
+  ConfigString CVar7;
   char *local_450 [4];
   char local_440 [1088];
   
-  pgVar2 = (gentity_s *)__savegprlr_26(param_1);
-  if ((pgVar2->s).eType == 4) {
+  if ((param_1->s).eType == 4) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_trigger.cpp",0x350,0,
                     "%s");
   }
-  bVar4 = SV_SetTriggerModel(pgVar2);
-  if (!bVar4) {
+  bVar3 = SV_SetTriggerModel(param_1);
+  if (!bVar3) {
     Com_PrintError(1,
                    "Killing trigger_use_shared at (%f %f %f) because the brush model is invalid.\n")
     ;
-    G_FreeEntity(pgVar2);
-    __restgprlr_26();
+    G_FreeEntity(param_1);
     return;
   }
-  (pgVar2->r).contents = 0x200000;
-  SV_LinkEntity(pgVar2);
-  (pgVar2->s).lerp.pos.trType = TR_STATIONARY;
-  uVar7 = 1;
-  (pgVar2->field31_0x1ac).trigger.singleUserEntIndex = 0x7ff;
-  (pgVar2->s).lerp.pos.trBase[0] = (pgVar2->r).currentOrigin[0];
-  (pgVar2->s).lerp.pos.trBase[1] = (pgVar2->r).currentOrigin[1];
-  (pgVar2->s).lerp.pos.trBase[2] = (pgVar2->r).currentOrigin[2];
-  (pgVar2->r).svFlags = '\x01';
-  uVar1 = pgVar2->model;
-  uVar6 = (pgVar2->s).lerp.eFlags;
-  (pgVar2->s).lerp.eFlags = uVar6 | 1;
+  (param_1->r).contents = 0x200000;
+  SV_LinkEntity(param_1);
+  (param_1->s).lerp.pos.trType = TR_STATIONARY;
+  uVar6 = 1;
+  (param_1->field31_0x1ac).trigger.singleUserEntIndex = 0x7ff;
+  (param_1->s).lerp.pos.trBase[0] = (param_1->r).currentOrigin[0];
+  (param_1->s).lerp.pos.trBase[1] = (param_1->r).currentOrigin[1];
+  (param_1->s).lerp.pos.trBase[2] = (param_1->r).currentOrigin[2];
+  (param_1->r).svFlags = '\x01';
+  uVar1 = param_1->model;
+  uVar5 = (param_1->s).lerp.eFlags;
+  (param_1->s).lerp.eFlags = uVar5 | 1;
   if (uVar1 == 0) {
-    (pgVar2->s).lerp.eFlags = uVar6 | 0x21;
+    (param_1->s).lerp.eFlags = uVar5 | 0x21;
   }
-  pgVar2->handler = '\0';
-  (pgVar2->s).un2.hintType = 1;
-  iVar3 = G_LevelSpawnString(0x313,"",local_450);
-  if (iVar3 != 0) {
-    iVar3 = I_stricmp(local_450[0],"HINT_INHERIT");
-    if (iVar3 == 0) {
-      (pgVar2->s).un2.hintType = -1;
+  param_1->handler = '\0';
+  (param_1->s).un2.hintType = 1;
+  iVar2 = G_LevelSpawnString(0x313,"",local_450);
+  if (iVar2 != 0) {
+    iVar2 = I_stricmp(local_450[0],"HINT_INHERIT");
+    if (iVar2 == 0) {
+      (param_1->s).un2.hintType = -1;
     }
     else {
-      ppcVar5 = hintStrings;
+      ppcVar4 = hintStrings;
       do {
-        ppcVar5 = ppcVar5 + 1;
-        iVar3 = I_stricmp(local_450[0],*ppcVar5);
-        if (iVar3 == 0) {
-          (pgVar2->s).un2.hintType = uVar7;
+        ppcVar4 = ppcVar4 + 1;
+        iVar2 = I_stricmp(local_450[0],*ppcVar4);
+        if (iVar2 == 0) {
+          (param_1->s).un2.hintType = uVar6;
           break;
         }
-        uVar7 = uVar7 + 1;
-      } while (uVar7 < 5);
+        uVar6 = uVar6 + 1;
+      } while (uVar6 < 5);
     }
   }
-  (pgVar2->s).un1.eventParm2 = 0xff;
-  iVar3 = G_LevelSpawnString(0x314,"",local_450);
-  if (iVar3 != 0) {
-    uVar6 = 0;
+  (param_1->s).un1.eventParm2 = 0xff;
+  iVar2 = G_LevelSpawnString(0x314,"",local_450);
+  if (iVar2 != 0) {
+    uVar5 = 0;
     do {
-      if (0x5f < (int)uVar6) {
+      if (0x5f < (int)uVar5) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\../bgame/bg_public.h"
                         ,0x285,0,"%s");
       }
-      CVar8 = uVar6 + CS_USE_TRIG_STRINGS;
-      SV_GetConfigstring(CVar8,local_440,0x400);
+      CVar7 = uVar5 + CS_USE_TRIG_STRINGS;
+      SV_GetConfigstring(CVar7,local_440,0x400);
       if (local_440[0] == '\0') {
-        if (0xeea < (int)CVar8) {
+        if (0xeea < (int)CVar7) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\../bgame/bg_public.h"
                           ,0x285,0,"%s");
         }
-        SV_SetConfigstring(CVar8,local_450[0]);
+        SV_SetConfigstring(CVar7,local_450[0]);
 LAB_824ae574:
-        (pgVar2->s).un1.eventParm2 = uVar6 & 0xff;
+        (param_1->s).un1.eventParm2 = uVar5 & 0xff;
         break;
       }
-      iVar3 = I_stricmp(local_450[0],local_440);
-      if (iVar3 == 0) goto LAB_824ae574;
-      uVar6 = uVar6 + 1;
-    } while (uVar6 < 0x60);
-    if (uVar6 == 0x60) {
+      iVar2 = I_stricmp(local_450[0],local_440);
+      if (iVar2 == 0) goto LAB_824ae574;
+      uVar5 = uVar5 + 1;
+    } while (uVar5 < 0x60);
+    if (uVar5 == 0x60) {
       Com_Error(ERR_DROP,
                 "\x15Too many different hintstring key values on trigger_use entities. Max allowed is %i different strings"
                );
     }
   }
-  __restgprlr_26();
   return;
 }
 
 
 // 824AE5A0  trigger_use  (game/g_trigger.cpp:927)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "ConfigString": Some values do not have unique names */
@@ -871,104 +845,102 @@ void trigger_use(gentity_s *param_1)
 
 {
   ushort uVar1;
-  gentity_s *pgVar2;
-  bool bVar4;
-  int iVar3;
-  char **ppcVar5;
+  bool bVar3;
+  int iVar2;
+  char **ppcVar4;
+  uint uVar5;
   uint uVar6;
-  uint uVar7;
-  ConfigString CVar8;
+  ConfigString CVar7;
   char *apcStack_450 [4];
   char acStack_440 [1088];
   
-  pgVar2 = (gentity_s *)__savegprlr_26(param_1);
-  if ((pgVar2->s).eType == 4) {
+  if ((param_1->s).eType == 4) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_trigger.cpp",0x350,0,
                     "%s");
   }
-  bVar4 = SV_SetTriggerModel(pgVar2);
-  if (!bVar4) {
+  bVar3 = SV_SetTriggerModel(param_1);
+  if (!bVar3) {
     Com_PrintError(1,
                    "Killing trigger_use_shared at (%f %f %f) because the brush model is invalid.\n")
     ;
-    G_FreeEntity(pgVar2);
-    __restgprlr_26();
+    G_FreeEntity(param_1);
     return;
   }
-  (pgVar2->r).contents = 0x200000;
-  SV_LinkEntity(pgVar2);
-  (pgVar2->s).lerp.pos.trType = TR_STATIONARY;
-  uVar7 = 1;
-  (pgVar2->field31_0x1ac).trigger.singleUserEntIndex = 0x7ff;
-  (pgVar2->s).lerp.pos.trBase[0] = (pgVar2->r).currentOrigin[0];
-  (pgVar2->s).lerp.pos.trBase[1] = (pgVar2->r).currentOrigin[1];
-  (pgVar2->s).lerp.pos.trBase[2] = (pgVar2->r).currentOrigin[2];
-  (pgVar2->r).svFlags = '\x01';
-  uVar1 = pgVar2->model;
-  uVar6 = (pgVar2->s).lerp.eFlags;
-  (pgVar2->s).lerp.eFlags = uVar6 | 1;
+  (param_1->r).contents = 0x200000;
+  SV_LinkEntity(param_1);
+  (param_1->s).lerp.pos.trType = TR_STATIONARY;
+  uVar6 = 1;
+  (param_1->field31_0x1ac).trigger.singleUserEntIndex = 0x7ff;
+  (param_1->s).lerp.pos.trBase[0] = (param_1->r).currentOrigin[0];
+  (param_1->s).lerp.pos.trBase[1] = (param_1->r).currentOrigin[1];
+  (param_1->s).lerp.pos.trBase[2] = (param_1->r).currentOrigin[2];
+  (param_1->r).svFlags = '\x01';
+  uVar1 = param_1->model;
+  uVar5 = (param_1->s).lerp.eFlags;
+  (param_1->s).lerp.eFlags = uVar5 | 1;
   if (uVar1 == 0) {
-    (pgVar2->s).lerp.eFlags = uVar6 | 0x21;
+    (param_1->s).lerp.eFlags = uVar5 | 0x21;
   }
-  pgVar2->handler = '\0';
-  (pgVar2->s).un2.hintType = 1;
-  iVar3 = G_LevelSpawnString(0x313,"",apcStack_450);
-  if (iVar3 != 0) {
-    iVar3 = I_stricmp(apcStack_450[0],"HINT_INHERIT");
-    if (iVar3 == 0) {
-      (pgVar2->s).un2.hintType = -1;
+  param_1->handler = '\0';
+  (param_1->s).un2.hintType = 1;
+  iVar2 = G_LevelSpawnString(0x313,"",apcStack_450);
+  if (iVar2 != 0) {
+    iVar2 = I_stricmp(apcStack_450[0],"HINT_INHERIT");
+    if (iVar2 == 0) {
+      (param_1->s).un2.hintType = -1;
     }
     else {
-      ppcVar5 = hintStrings;
+      ppcVar4 = hintStrings;
       do {
-        ppcVar5 = ppcVar5 + 1;
-        iVar3 = I_stricmp(apcStack_450[0],*ppcVar5);
-        if (iVar3 == 0) {
-          (pgVar2->s).un2.hintType = uVar7;
+        ppcVar4 = ppcVar4 + 1;
+        iVar2 = I_stricmp(apcStack_450[0],*ppcVar4);
+        if (iVar2 == 0) {
+          (param_1->s).un2.hintType = uVar6;
           break;
         }
-        uVar7 = uVar7 + 1;
-      } while (uVar7 < 5);
+        uVar6 = uVar6 + 1;
+      } while (uVar6 < 5);
     }
   }
-  (pgVar2->s).un1.eventParm2 = 0xff;
-  iVar3 = G_LevelSpawnString(0x314,"",apcStack_450);
-  if (iVar3 != 0) {
-    uVar6 = 0;
+  (param_1->s).un1.eventParm2 = 0xff;
+  iVar2 = G_LevelSpawnString(0x314,"",apcStack_450);
+  if (iVar2 != 0) {
+    uVar5 = 0;
     do {
-      if (0x5f < (int)uVar6) {
+      if (0x5f < (int)uVar5) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\../bgame/bg_public.h"
                         ,0x285,0,"%s");
       }
-      CVar8 = uVar6 + CS_USE_TRIG_STRINGS;
-      SV_GetConfigstring(CVar8,acStack_440,0x400);
+      CVar7 = uVar5 + CS_USE_TRIG_STRINGS;
+      SV_GetConfigstring(CVar7,acStack_440,0x400);
       if (acStack_440[0] == '\0') {
-        if (0xeea < (int)CVar8) {
+        if (0xeea < (int)CVar7) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\../bgame/bg_public.h"
                           ,0x285,0,"%s");
         }
-        SV_SetConfigstring(CVar8,apcStack_450[0]);
+        SV_SetConfigstring(CVar7,apcStack_450[0]);
 LAB_824ae574:
-        (pgVar2->s).un1.eventParm2 = uVar6 & 0xff;
+        (param_1->s).un1.eventParm2 = uVar5 & 0xff;
         break;
       }
-      iVar3 = I_stricmp(apcStack_450[0],acStack_440);
-      if (iVar3 == 0) goto LAB_824ae574;
-      uVar6 = uVar6 + 1;
-    } while (uVar6 < 0x60);
-    if (uVar6 == 0x60) {
+      iVar2 = I_stricmp(apcStack_450[0],acStack_440);
+      if (iVar2 == 0) goto LAB_824ae574;
+      uVar5 = uVar5 + 1;
+    } while (uVar5 < 0x60);
+    if (uVar5 == 0x60) {
       Com_Error(ERR_DROP,
                 "\x15Too many different hintstring key values on trigger_use entities. Max allowed is %i different strings"
                );
     }
   }
-  __restgprlr_26();
   return;
 }
 
 
 // 824AE5A8  trigger_use_touch  (game/g_trigger.cpp:933)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "ConfigString": Some values do not have unique names */
@@ -978,98 +950,94 @@ void trigger_use_touch(gentity_s *param_1)
 
 {
   ushort uVar1;
-  gentity_s *pgVar2;
-  bool bVar4;
-  int iVar3;
-  char **ppcVar5;
+  bool bVar3;
+  int iVar2;
+  char **ppcVar4;
+  uint uVar5;
   uint uVar6;
-  uint uVar7;
-  ConfigString CVar8;
+  ConfigString CVar7;
   char *apcStack_450 [4];
   char acStack_440 [1088];
   
-  pgVar2 = (gentity_s *)__savegprlr_26(param_1);
-  if ((pgVar2->s).eType == 4) {
+  if ((param_1->s).eType == 4) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_trigger.cpp",0x350,0,
                     "%s");
   }
-  bVar4 = SV_SetTriggerModel(pgVar2);
-  if (!bVar4) {
+  bVar3 = SV_SetTriggerModel(param_1);
+  if (!bVar3) {
     Com_PrintError(1,
                    "Killing trigger_use_shared at (%f %f %f) because the brush model is invalid.\n")
     ;
-    G_FreeEntity(pgVar2);
-    __restgprlr_26();
+    G_FreeEntity(param_1);
     return;
   }
-  (pgVar2->r).contents = 0x200000;
-  SV_LinkEntity(pgVar2);
-  (pgVar2->s).lerp.pos.trType = TR_STATIONARY;
-  uVar7 = 1;
-  (pgVar2->field31_0x1ac).trigger.singleUserEntIndex = 0x7ff;
-  (pgVar2->s).lerp.pos.trBase[0] = (pgVar2->r).currentOrigin[0];
-  (pgVar2->s).lerp.pos.trBase[1] = (pgVar2->r).currentOrigin[1];
-  (pgVar2->s).lerp.pos.trBase[2] = (pgVar2->r).currentOrigin[2];
-  (pgVar2->r).svFlags = '\x01';
-  uVar1 = pgVar2->model;
-  uVar6 = (pgVar2->s).lerp.eFlags;
-  (pgVar2->s).lerp.eFlags = uVar6 | 1;
+  (param_1->r).contents = 0x200000;
+  SV_LinkEntity(param_1);
+  (param_1->s).lerp.pos.trType = TR_STATIONARY;
+  uVar6 = 1;
+  (param_1->field31_0x1ac).trigger.singleUserEntIndex = 0x7ff;
+  (param_1->s).lerp.pos.trBase[0] = (param_1->r).currentOrigin[0];
+  (param_1->s).lerp.pos.trBase[1] = (param_1->r).currentOrigin[1];
+  (param_1->s).lerp.pos.trBase[2] = (param_1->r).currentOrigin[2];
+  (param_1->r).svFlags = '\x01';
+  uVar1 = param_1->model;
+  uVar5 = (param_1->s).lerp.eFlags;
+  (param_1->s).lerp.eFlags = uVar5 | 1;
   if (uVar1 == 0) {
-    (pgVar2->s).lerp.eFlags = uVar6 | 0x21;
+    (param_1->s).lerp.eFlags = uVar5 | 0x21;
   }
-  pgVar2->handler = '\0';
-  (pgVar2->s).un2.hintType = 1;
-  iVar3 = G_LevelSpawnString(0x313,"",apcStack_450);
-  if (iVar3 != 0) {
-    iVar3 = I_stricmp(apcStack_450[0],"HINT_INHERIT");
-    if (iVar3 == 0) {
-      (pgVar2->s).un2.hintType = -1;
+  param_1->handler = '\0';
+  (param_1->s).un2.hintType = 1;
+  iVar2 = G_LevelSpawnString(0x313,"",apcStack_450);
+  if (iVar2 != 0) {
+    iVar2 = I_stricmp(apcStack_450[0],"HINT_INHERIT");
+    if (iVar2 == 0) {
+      (param_1->s).un2.hintType = -1;
     }
     else {
-      ppcVar5 = hintStrings;
+      ppcVar4 = hintStrings;
       do {
-        ppcVar5 = ppcVar5 + 1;
-        iVar3 = I_stricmp(apcStack_450[0],*ppcVar5);
-        if (iVar3 == 0) {
-          (pgVar2->s).un2.hintType = uVar7;
+        ppcVar4 = ppcVar4 + 1;
+        iVar2 = I_stricmp(apcStack_450[0],*ppcVar4);
+        if (iVar2 == 0) {
+          (param_1->s).un2.hintType = uVar6;
           break;
         }
-        uVar7 = uVar7 + 1;
-      } while (uVar7 < 5);
+        uVar6 = uVar6 + 1;
+      } while (uVar6 < 5);
     }
   }
-  (pgVar2->s).un1.eventParm2 = 0xff;
-  iVar3 = G_LevelSpawnString(0x314,"",apcStack_450);
-  if (iVar3 != 0) {
-    uVar6 = 0;
+  (param_1->s).un1.eventParm2 = 0xff;
+  iVar2 = G_LevelSpawnString(0x314,"",apcStack_450);
+  if (iVar2 != 0) {
+    uVar5 = 0;
     do {
-      if (0x5f < (int)uVar6) {
+      if (0x5f < (int)uVar5) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\../bgame/bg_public.h"
                         ,0x285,0,"%s");
       }
-      CVar8 = uVar6 + CS_USE_TRIG_STRINGS;
-      SV_GetConfigstring(CVar8,acStack_440,0x400);
+      CVar7 = uVar5 + CS_USE_TRIG_STRINGS;
+      SV_GetConfigstring(CVar7,acStack_440,0x400);
       if (acStack_440[0] == '\0') {
-        if (0xeea < (int)CVar8) {
+        if (0xeea < (int)CVar7) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\../bgame/bg_public.h"
                           ,0x285,0,"%s");
         }
-        SV_SetConfigstring(CVar8,apcStack_450[0]);
+        SV_SetConfigstring(CVar7,apcStack_450[0]);
 LAB_824ae574:
-        (pgVar2->s).un1.eventParm2 = uVar6 & 0xff;
+        (param_1->s).un1.eventParm2 = uVar5 & 0xff;
         break;
       }
-      iVar3 = I_stricmp(apcStack_450[0],acStack_440);
-      if (iVar3 == 0) goto LAB_824ae574;
-      uVar6 = uVar6 + 1;
-    } while (uVar6 < 0x60);
-    if (uVar6 == 0x60) {
+      iVar2 = I_stricmp(apcStack_450[0],acStack_440);
+      if (iVar2 == 0) goto LAB_824ae574;
+      uVar5 = uVar5 + 1;
+    } while (uVar5 < 0x60);
+    if (uVar5 == 0x60) {
       Com_Error(ERR_DROP,
                 "\x15Too many different hintstring key values on trigger_use entities. Max allowed is %i different strings"
                );
     }
   }
-  __restgprlr_26();
   return;
 }
 

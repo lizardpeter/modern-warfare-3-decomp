@@ -2,6 +2,7 @@
 
 // 82916680  __savegprlr  (<external>/bt/278379/vctools/crt/xb/xbox/crtgpr.asm:20)
 
+/* WARNING: This is an inlined function */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void __savegprlr(void)
@@ -13,6 +14,7 @@ void __savegprlr(void)
 
 // 829166D0  __restgprlr  (<external>/bt/278379/vctools/crt/xb/xbox/crtgpr.asm:30)
 
+/* WARNING: This is an inlined function */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void __restgprlr(void)

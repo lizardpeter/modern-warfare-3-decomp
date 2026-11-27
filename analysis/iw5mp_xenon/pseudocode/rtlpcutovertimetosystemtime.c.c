@@ -2,6 +2,9 @@
 
 // 8292B9D8  RtlpCutoverTimeToSystemTime  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/xrtl/rtlpcutovertimetosystemtime.c:22)
 
+/* WARNING: Function: __savegprlr_20 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_20 replaced with injection: xenon_save_restore */
+
 uchar RtlpCutoverTimeToSystemTime
                 (_SYSTEMTIME *param_1,_LARGE_INTEGER *param_2,_LARGE_INTEGER *param_3,uchar param_4)
 
@@ -10,15 +13,11 @@ uchar RtlpCutoverTimeToSystemTime
   ushort uVar2;
   ushort uVar3;
   bool bVar4;
-  _SYSTEMTIME *p_Var6;
-  int iVar7;
-  undefined8 uVar5;
-  char cVar8;
-  uchar uVar9;
-  ulonglong uVar10;
-  short sVar11;
-  ushort uVar12;
-  short sVar13;
+  int iVar5;
+  char cVar6;
+  short sVar7;
+  ushort uVar8;
+  short sVar9;
   longlong local_b0 [2];
   ushort local_a0;
   ushort local_9e;
@@ -33,34 +32,32 @@ uchar RtlpCutoverTimeToSystemTime
   short local_7c;
   short local_72;
   
-  uVar10 = (ulonglong)(char)param_4;
-  p_Var6 = (_SYSTEMTIME *)__savegprlr_20(param_1);
   FileTimeToSystemTime((_FILETIME *)&param_3->_s_0,&local_90);
-  if (p_Var6->wYear == 0) {
-    uVar1 = p_Var6->wDay;
+  if (param_1->wYear == 0) {
+    uVar1 = param_1->wDay;
     if (((short)uVar1 < 6) && (uVar1 != 0)) {
-      uVar2 = p_Var6->wMonth;
-      uVar3 = p_Var6->wDayOfWeek;
+      uVar2 = param_1->wMonth;
+      uVar3 = param_1->wDayOfWeek;
       bVar4 = false;
-      uVar12 = local_90.wYear;
-      if ((uVar10 & 0xff) == 0) {
+      uVar8 = local_90.wYear;
+      if (param_4 == '\0') {
         if ((int)(short)uVar2 < (int)(uint)local_90.wMonth) {
-          uVar12 = local_90.wYear + 1;
+          uVar8 = local_90.wYear + 1;
         }
         else if ((int)(short)uVar2 <= (int)(uint)local_90.wMonth) {
           bVar4 = true;
         }
       }
-      local_9a = p_Var6->wHour;
-      local_98 = p_Var6->wMinute;
-      local_96 = p_Var6->wSecond;
-      local_94 = p_Var6->wMilliseconds;
+      local_9a = param_1->wHour;
+      local_98 = param_1->wMinute;
+      local_96 = param_1->wSecond;
+      local_94 = param_1->wMilliseconds;
       local_9c = 1;
       local_92 = 0;
-      local_a0 = uVar12;
+      local_a0 = uVar8;
       local_9e = uVar2;
-      cVar8 = RtlTimeFieldsToTime(&local_a0,local_b0);
-      while (cVar8 != '\0') {
+      cVar6 = RtlTimeFieldsToTime(&local_a0,local_b0);
+      while (cVar6 != '\0') {
         RtlTimeToTimeFields(local_b0,auStack_80);
         if ((short)uVar3 < local_72) {
           local_9c = (uVar3 - local_72) + local_9c + 7;
@@ -68,52 +65,49 @@ uchar RtlpCutoverTimeToSystemTime
         else if (local_72 < (short)uVar3) {
           local_9c = (uVar3 - local_72) + local_9c;
         }
-        sVar11 = 1;
-        sVar13 = local_9c;
+        sVar7 = 1;
+        sVar9 = local_9c;
         if (1 < (short)uVar1) {
           do {
             local_9c = local_9c + 7;
-            cVar8 = RtlTimeFieldsToTime(&local_a0,local_b0);
-            if (cVar8 == '\0') break;
+            cVar6 = RtlTimeFieldsToTime(&local_a0,local_b0);
+            if (cVar6 == '\0') break;
             RtlTimeToTimeFields(local_b0,auStack_80);
-            sVar11 = sVar11 + 1;
-            sVar13 = local_7c;
-          } while (sVar11 < (short)uVar1);
+            sVar7 = sVar7 + 1;
+            sVar9 = local_7c;
+          } while (sVar7 < (short)uVar1);
         }
-        local_9c = sVar13;
-        cVar8 = RtlTimeFieldsToTime(&local_a0,local_b0);
-        if (cVar8 == '\0') break;
+        local_9c = sVar9;
+        cVar6 = RtlTimeFieldsToTime(&local_a0,local_b0);
+        if (cVar6 == '\0') {
+          return '\0';
+        }
         if ((!bVar4) ||
            (((int)(uint)local_90.wDay <= (int)local_9c &&
             (((int)local_9c != (uint)local_90.wDay || (param_3->QuadPart <= local_b0[0])))))) {
           param_2->QuadPart = local_b0[0];
-          goto LAB_8292ba30;
+          return '\x01';
         }
-        local_98 = p_Var6->wMinute;
-        local_96 = p_Var6->wSecond;
-        uVar12 = uVar12 + 1;
-        local_94 = p_Var6->wMilliseconds;
-        local_9a = p_Var6->wHour;
+        local_98 = param_1->wMinute;
+        local_96 = param_1->wSecond;
+        uVar8 = uVar8 + 1;
+        local_94 = param_1->wMilliseconds;
+        local_9a = param_1->wHour;
         bVar4 = false;
         local_9c = 1;
         local_92 = 0;
-        local_a0 = uVar12;
+        local_a0 = uVar8;
         local_9e = uVar2;
-        cVar8 = RtlTimeFieldsToTime(&local_a0,local_b0);
+        cVar6 = RtlTimeFieldsToTime(&local_a0,local_b0);
       }
     }
   }
   else {
-    iVar7 = SystemTimeToFileTime(p_Var6,(_FILETIME *)&param_2->_s_0);
-    if ((iVar7 != 0) && (param_3->QuadPart <= param_2->QuadPart)) {
-LAB_8292ba30:
-      uVar5 = 1;
-      goto LAB_8292bc24;
+    iVar5 = SystemTimeToFileTime(param_1,(_FILETIME *)&param_2->_s_0);
+    if ((iVar5 != 0) && (param_3->QuadPart <= param_2->QuadPart)) {
+      return '\x01';
     }
   }
-  uVar5 = 0;
-LAB_8292bc24:
-  uVar9 = __restgprlr_20(uVar5);
-  return uVar9;
+  return '\0';
 }
 

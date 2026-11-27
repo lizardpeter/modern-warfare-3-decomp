@@ -2,6 +2,8 @@
 
 // 8243C0A8  FX_SpawnSparkFountain_AllocOrFindCachedSparkFountain  (EffectsCore/fx_sparkfountain.cpp:37)
 
+/* WARNING: Function: __savegprlr_18 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_18 replaced with injection: xenon_save_restore */
 /* WARNING: Removing unreachable block (ram,0x8243c1dc) */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
@@ -14,56 +16,46 @@ FX_SpawnSparkFountain_AllocOrFindCachedSparkFountain
   ushort uVar1;
   FxPool<FxSparkFountain> *pFVar2;
   uint uVar3;
-  FxSystem *pFVar4;
-  FindSlotResult FVar5;
-  ulonglong uVar6;
-  undefined4 *puVar7;
-  ushort *puVar8;
+  FxSparkFountain *pFVar4;
   
-  uVar6 = (ulonglong)(int)param_5;
-  pFVar4 = (FxSystem *)__savegprlr_18(param_1);
-  if ((uVar6 & 0xffffffff) == 0) {
+  if (param_5 == (FxSparkFountain **)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_sparkfountain.cpp"
                     ,0x29,0,"%s");
   }
   PIXBeginNamedEvent_Copy_NoVarArgs
             (0xffffffff,"FX_SpawnSparkFountain_AllocOrFindCachedSparkFountain");
   uVar1 = param_2->firstSparkFountainHandle;
-  puVar7 = (undefined4 *)uVar6;
   while( true ) {
     uVar3 = (uint)uVar1;
     if (uVar3 == 0xffff) {
       PIXEndNamedEvent();
-      FX_SetElemChild(pFVar4,param_4,0xffff);
-      *puVar7 = 0;
-      FVar5 = __restgprlr_18(2);
-      return FVar5;
+      FX_SetElemChild(param_1,param_4,0xffff);
+      *param_5 = (FxSparkFountain *)0x0;
+      return FINDSLOT_FOUND_NONE_AVAILABLE;
     }
-    if (pFVar4 == (FxSystem *)0x0) {
+    if (param_1 == (FxSystem *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\fx_system_handle.h"
                       ,0xc4,0,"%s");
     }
-    pFVar2 = pFVar4->sparkFountains;
+    pFVar2 = param_1->sparkFountains;
     if ((0xfff < uVar3) || ((uVar1 & 0x3f) != 0)) {
       va("%p %i");
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\fx_system_handle.h"
                       ,0x54,0,"%s\n\t%s");
     }
-    puVar8 = (ushort *)((int)&pFVar2->field0_0x0 + uVar3);
-    if (*puVar8 == param_3->defIndex) break;
-    uVar1 = puVar8[1];
+    pFVar4 = (FxSparkFountain *)((int)&pFVar2->field0_0x0 + uVar3);
+    if ((pFVar4->header).defIndex == param_3->defIndex) break;
+    uVar1 = (pFVar4->header).nextFountainInEffect;
   }
-  FX_SetElemChild(pFVar4,param_4,uVar1);
-  if (*(char *)(puVar8 + 2) == '\0') {
-    *puVar7 = puVar8;
+  FX_SetElemChild(param_1,param_4,uVar1);
+  if ((pFVar4->header).isValid == '\0') {
+    *param_5 = pFVar4;
     PIXEndNamedEvent();
-    FVar5 = __restgprlr_18(0);
-    return FVar5;
+    return FINDSLOT_FOUND_ALLOCED;
   }
   PIXEndNamedEvent();
-  *puVar7 = 0;
-  FVar5 = __restgprlr_18(1);
-  return FVar5;
+  *param_5 = (FxSparkFountain *)0x0;
+  return FINDSLOT_FOUND_CACHED;
 }
 
 
@@ -120,28 +112,28 @@ float frand(void)
 
 // 8243B1C8  Vec3Rand  (EffectsCore/fx_sparkfountain.cpp:92)
 
+/* WARNING: Function: __savefpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_28 replaced with injection: xenon_save_restore */
+
 void Vec3Rand(float *param_1)
 
 {
-  float *pfVar1;
-  int iVar2;
+  int iVar1;
+  double dVar2;
   double dVar3;
   double dVar4;
   double dVar5;
-  double dVar6;
   
-  pfVar1 = (float *)__savefpr_28(param_1);
-  iVar2 = rand();
-  dVar6 = 6.103701889514923e-05;
-  dVar5 = 1.0;
-  dVar4 = (double)(float)((double)(longlong)iVar2 * 6.103701889514923e-05 - 1.0);
-  iVar2 = rand();
-  dVar3 = (double)(float)((double)(longlong)iVar2 * dVar6 - dVar5);
-  iVar2 = rand();
-  pfVar1[1] = (float)dVar3;
-  pfVar1[2] = (float)dVar4;
-  *pfVar1 = (float)((double)(longlong)iVar2 * dVar6 - dVar5);
-  __restfpr_28();
+  iVar1 = rand();
+  dVar5 = 6.103701889514923e-05;
+  dVar4 = 1.0;
+  dVar3 = (double)(float)((double)(longlong)iVar1 * 6.103701889514923e-05 - 1.0);
+  iVar1 = rand();
+  dVar2 = (double)(float)((double)(longlong)iVar1 * dVar5 - dVar4);
+  iVar1 = rand();
+  param_1[1] = (float)dVar2;
+  param_1[2] = (float)dVar3;
+  *param_1 = (float)((double)(longlong)iVar1 * dVar5 - dVar4);
   return;
 }
 
@@ -260,6 +252,11 @@ FxSparkFountain * FX_SparkFountainFromHandle_Const(FxSystem *param_1,ushort para
 
 // 8243B450  CollideTrajectory  (EffectsCore/fx_sparkfountain.cpp:213)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
+
 bool CollideTrajectory(float *param_1,float *param_2,float *param_3,float param_4,float *param_5,
                       float *param_6,float *param_7,float *param_8)
 
@@ -273,24 +270,17 @@ bool CollideTrajectory(float *param_1,float *param_2,float *param_3,float param_
   float fVar7;
   float fVar8;
   float fVar9;
-  float *pfVar10;
-  undefined1 uVar11;
-  longlong lVar12;
-  float *pfVar13;
-  longlong lVar14;
-  float *pfVar15;
   float *in_r10;
+  double dVar10;
+  double dVar11;
+  double dVar12;
+  double dVar13;
+  double dVar14;
+  double dVar15;
   double dVar16;
   double dVar17;
-  double extraout_f1;
   double dVar18;
-  double dVar19;
-  double dVar20;
-  double dVar21;
-  double dVar22;
-  double dVar23;
-  double dVar24;
-  float fVar25;
+  float fVar19;
   float local_f0;
   float local_ec;
   float local_e8;
@@ -300,98 +290,86 @@ bool CollideTrajectory(float *param_1,float *param_2,float *param_3,float param_
   Bounds local_d0;
   trace_t local_b0 [3];
   
-  lVar14 = (longlong)(int)param_3;
-  lVar12 = (longlong)(int)param_2;
-  __savegprlr_25((double)param_4,param_1,lVar12,lVar14,param_5);
-  pfVar13 = (float *)lVar12;
-  pfVar15 = (float *)lVar14;
-  pfVar10 = (float *)__savefpr_25();
-  fVar25 = 20.0;
-  dVar22 = 0.0;
-  dVar20 = 3.0;
-  dVar19 = 1.0;
-  dVar21 = 0.5;
+  dVar12 = (double)param_4;
+  fVar19 = 20.0;
+  dVar16 = 0.0;
+  dVar14 = 3.0;
+  dVar13 = 1.0;
+  dVar15 = 0.5;
   local_d0.midPoint[0] = 0.0;
   local_d0.midPoint[1] = 0.0;
   local_d0.midPoint[2] = 0.0;
   local_d0.halfSize[0] = 0.0;
   local_d0.halfSize[1] = 0.0;
   local_d0.halfSize[2] = 0.0;
-  local_f0 = *pfVar13 * 10.0 + *pfVar15 * 50.0 + *pfVar10;
-  local_ec = pfVar15[1] * 50.0 + pfVar13[1] * 10.0 + pfVar10[1];
-  local_e8 = pfVar15[2] * 50.0 + pfVar13[2] * 10.0 + pfVar10[2];
-  dVar17 = 10.0;
-  dVar18 = extraout_f1;
+  local_f0 = *param_2 * 10.0 + *param_3 * 50.0 + *param_1;
+  local_ec = param_3[1] * 50.0 + param_2[1] * 10.0 + param_1[1];
+  local_e8 = param_3[2] * 50.0 + param_2[2] * 10.0 + param_1[2];
+  dVar11 = 10.0;
   while( true ) {
-    dVar23 = (double)fVar25;
-    if (dVar18 <= (double)fVar25) {
-      dVar23 = dVar18;
+    dVar17 = (double)fVar19;
+    if (dVar12 <= (double)fVar19) {
+      dVar17 = dVar12;
     }
-    fVar25 = (float)((double)(float)(dVar23 * dVar23) * dVar21);
-    local_dc = fVar25 * pfVar15[1] + (float)(dVar23 * (double)pfVar13[1]) + pfVar10[1];
-    local_d8 = pfVar15[2] * fVar25 + (float)((double)pfVar13[2] * dVar23) + pfVar10[2];
-    local_e0 = (float)((double)*pfVar13 * dVar23 + (double)(*pfVar15 * fVar25)) + *pfVar10;
+    fVar19 = (float)((double)(float)(dVar17 * dVar17) * dVar15);
+    local_dc = fVar19 * param_3[1] + (float)(dVar17 * (double)param_2[1]) + param_1[1];
+    local_d8 = param_3[2] * fVar19 + (float)((double)param_2[2] * dVar17) + param_1[2];
+    local_e0 = (float)((double)*param_2 * dVar17 + (double)(*param_3 * fVar19)) + *param_1;
     FX_WorldTrace(local_b0,&local_f0,&local_e0,&local_d0,0x2001);
-    dVar16 = (double)local_b0[0].fraction;
-    if (dVar16 != dVar19) break;
-    if (dVar23 == dVar18) {
-      __restfpr_25(0);
-      uVar11 = __restgprlr_25();
-      return (bool)uVar11;
+    dVar10 = (double)local_b0[0].fraction;
+    if (dVar10 != dVar13) break;
+    if (dVar17 == dVar12) {
+      return false;
     }
-    fVar25 = (float)(dVar23 * dVar20);
+    fVar19 = (float)(dVar17 * dVar14);
     local_f0 = local_e0;
     local_ec = local_dc;
     local_e8 = local_d8;
-    dVar17 = dVar23;
+    dVar11 = dVar17;
   }
-  dVar18 = (double)local_e8;
-  dVar20 = (double)(float)((double)(float)((double)local_d8 - dVar18) * dVar16 + dVar18);
-  dVar24 = (double)(float)((double)(float)((double)local_e0 - (double)local_f0) * dVar16 +
+  dVar12 = (double)local_e8;
+  dVar14 = (double)(float)((double)(float)((double)local_d8 - dVar12) * dVar10 + dVar12);
+  dVar18 = (double)(float)((double)(float)((double)local_e0 - (double)local_f0) * dVar10 +
                           (double)local_f0);
-  dVar23 = (double)(float)((double)(float)((double)local_dc - (double)local_ec) * dVar16 +
+  dVar17 = (double)(float)((double)(float)((double)local_dc - (double)local_ec) * dVar10 +
                           (double)local_ec);
-  fVar25 = SolveQuadraticForSmalestPositiveOrZero
-                     ((float)((double)pfVar15[2] * dVar21),
-                      (float)((double)pfVar15[2] * dVar17 + (double)pfVar13[2]),
-                      (float)(dVar18 - dVar20));
-  dVar18 = (double)(float)((double)fVar25 + dVar17);
-  *param_8 = (float)((double)fVar25 + dVar17);
-  fVar1 = pfVar13[1];
-  fVar2 = pfVar13[2];
-  fVar3 = *pfVar15;
-  fVar4 = pfVar15[1];
-  fVar5 = pfVar15[2];
-  fVar6 = *pfVar13;
-  fVar7 = *pfVar10;
-  fVar8 = pfVar10[1];
-  fVar9 = pfVar10[2];
-  fVar25 = (float)((double)(float)(dVar18 * dVar18) * dVar21);
-  *param_6 = (float)dVar24;
-  param_6[1] = (float)dVar23;
-  param_6[2] = (float)dVar20;
+  fVar19 = SolveQuadraticForSmalestPositiveOrZero
+                     ((float)((double)param_3[2] * dVar15),
+                      (float)((double)param_3[2] * dVar11 + (double)param_2[2]),
+                      (float)(dVar12 - dVar14));
+  dVar12 = (double)(float)((double)fVar19 + dVar11);
+  *param_8 = (float)((double)fVar19 + dVar11);
+  fVar1 = param_2[1];
+  fVar2 = param_2[2];
+  fVar3 = *param_3;
+  fVar4 = param_3[1];
+  fVar5 = param_3[2];
+  fVar6 = *param_2;
+  fVar7 = *param_1;
+  fVar8 = param_1[1];
+  fVar9 = param_1[2];
+  fVar19 = (float)((double)(float)(dVar12 * dVar12) * dVar15);
+  *param_6 = (float)dVar18;
+  param_6[1] = (float)dVar17;
+  param_6[2] = (float)dVar14;
   *param_7 = local_b0[0].normal[0];
   param_7[1] = local_b0[0].normal[1];
   param_7[2] = local_b0[0].normal[2];
-  if (dVar22 < dVar18) {
-    dVar17 = (double)(float)(dVar19 / dVar18);
-    dVar19 = -dVar17;
-    *in_r10 = (float)((double)((float)((double)fVar6 * dVar18 + (double)(fVar3 * fVar25)) + fVar7) *
-                      dVar19 + (double)(float)(dVar24 * dVar17)) + *pfVar13;
-    in_r10[1] = (float)((double)(fVar25 * fVar4 + (float)(dVar18 * (double)fVar1) + fVar8) * dVar19
-                       + (double)(float)(dVar23 * dVar17)) + pfVar13[1];
-    in_r10[2] = (float)((double)(fVar5 * fVar25 + (float)((double)fVar2 * dVar18) + fVar9) * dVar19
-                       + (double)(float)(dVar17 * dVar20)) + pfVar13[2];
-    __restfpr_25(1);
-    uVar11 = __restgprlr_25();
-    return (bool)uVar11;
+  if (dVar16 < dVar12) {
+    dVar11 = (double)(float)(dVar13 / dVar12);
+    dVar13 = -dVar11;
+    *in_r10 = (float)((double)((float)((double)fVar6 * dVar12 + (double)(fVar3 * fVar19)) + fVar7) *
+                      dVar13 + (double)(float)(dVar18 * dVar11)) + *param_2;
+    in_r10[1] = (float)((double)(fVar19 * fVar4 + (float)(dVar12 * (double)fVar1) + fVar8) * dVar13
+                       + (double)(float)(dVar17 * dVar11)) + param_2[1];
+    in_r10[2] = (float)((double)(fVar5 * fVar19 + (float)((double)fVar2 * dVar12) + fVar9) * dVar13
+                       + (double)(float)(dVar11 * dVar14)) + param_2[2];
+    return true;
   }
-  *in_r10 = *pfVar13;
-  in_r10[1] = pfVar13[1];
-  in_r10[2] = pfVar13[2];
-  __restfpr_25(1);
-  uVar11 = __restgprlr_25();
-  return (bool)uVar11;
+  *in_r10 = *param_2;
+  in_r10[1] = param_2[1];
+  in_r10[2] = param_2[2];
+  return true;
 }
 
 
@@ -448,22 +426,26 @@ FxElemDef * FXIW_GetUpdateElemDef(FxUpdateElem *param_1)
 
 // 8243B748  InitTrajectories  (EffectsCore/fx_sparkfountain.cpp:286)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void InitTrajectories(float *param_1,uint param_2,uint param_3,float *param_4,float param_5,
                      float param_6,float param_7,FxSpark *param_8)
 
 {
   float fVar1;
-  float *pfVar2;
-  int iVar3;
-  ulonglong uVar4;
-  ulonglong uVar5;
-  longlong lVar6;
-  longlong in_r10;
-  longlong lVar7;
+  int iVar2;
+  longlong lVar3;
+  longlong lVar4;
+  int in_r10;
+  float *pfVar5;
+  float *pfVar6;
+  float *pfVar7;
   longlong lVar8;
   float *pfVar9;
-  ulonglong uVar10;
-  double extraout_f1;
+  double dVar10;
   double dVar11;
   double dVar12;
   double dVar13;
@@ -475,141 +457,134 @@ void InitTrajectories(float *param_1,uint param_2,uint param_3,float *param_4,fl
   double dVar19;
   double dVar20;
   double dVar21;
-  double dVar22;
   float local_98;
   float local_94;
   float local_90;
   
-  dVar12 = (double)param_7;
-  dVar11 = (double)param_6;
-  uVar5 = (ulonglong)(int)param_3;
-  uVar4 = (ulonglong)(int)param_2;
-  __savegprlr_27((double)param_5,param_1);
-  iVar3 = __savefpr_22();
-  if ((uVar4 & 0xffffffff) != 0) {
-    in_r10 = in_r10 + 0x18;
-    dVar16 = (double)(float)(dVar11 - extraout_f1);
-    pfVar9 = (float *)(iVar3 + -4);
-    dVar15 = 3.4028234663852886e+38;
-    dVar17 = 3.0518509447574615e-05;
-    dVar22 = 0.0;
-    dVar18 = 1.0;
-    uVar10 = uVar4;
-    dVar11 = extraout_f1;
+  dVar11 = (double)param_7;
+  dVar10 = (double)param_5;
+  lVar3 = (longlong)(int)param_2;
+  if (param_2 != 0) {
+    pfVar9 = (float *)(in_r10 + 0x18);
+    dVar15 = (double)(float)((double)param_6 - dVar10);
+    pfVar7 = param_1 + -1;
+    dVar14 = 3.4028234663852886e+38;
+    dVar16 = 3.0518509447574615e-05;
+    dVar21 = 0.0;
+    dVar17 = 1.0;
+    lVar8 = lVar3;
     do {
-      dVar21 = (double)pfVar9[1];
-      dVar20 = (double)pfVar9[2];
-      pfVar9 = pfVar9 + 3;
-      dVar19 = (double)*pfVar9;
-      if (dVar12 == dVar18) {
+      dVar20 = (double)pfVar7[1];
+      dVar19 = (double)pfVar7[2];
+      pfVar7 = pfVar7 + 3;
+      dVar18 = (double)*pfVar7;
+      if (dVar11 == dVar17) {
         Vec3Rand(&local_98);
-        dVar14 = (double)SQRT(local_98 * local_98 + local_90 * local_90 + local_94 * local_94);
-        dVar13 = dVar18;
-        if (-dVar14 < 0.0) {
-          dVar13 = dVar14;
+        dVar13 = (double)SQRT(local_98 * local_98 + local_90 * local_90 + local_94 * local_94);
+        dVar12 = dVar17;
+        if (-dVar13 < 0.0) {
+          dVar12 = dVar13;
         }
-        fVar1 = (float)(dVar18 / dVar13);
+        fVar1 = (float)(dVar17 / dVar12);
         local_98 = local_98 * fVar1;
         local_94 = local_94 * fVar1;
         local_90 = local_90 * fVar1;
       }
       else {
-        RandomizeNormal(param_4,(float)dVar12,(float *)uVar4);
+        RandomizeNormal(param_4,(float)dVar11,(float *)lVar3);
       }
-      iVar3 = rand();
-      pfVar2 = (float *)in_r10;
-      pfVar2[-6] = (float)dVar22;
-      pfVar2[-2] = (float)dVar21;
-      pfVar2[-1] = (float)dVar20;
-      *pfVar2 = (float)dVar19;
-      fVar1 = (float)((double)(float)((double)(longlong)iVar3 * dVar16) * dVar17 + dVar11);
-      pfVar2[10] = fVar1 * local_98;
-      pfVar2[0xb] = local_94 * fVar1;
-      pfVar2[0xc] = local_90 * fVar1;
-      if ((uVar5 & 0xffffffff) != 1) {
-        lVar6 = uVar5 - 1;
-        lVar7 = in_r10 + -0x18;
-        lVar8 = in_r10 + 0x30;
+      iVar2 = rand();
+      pfVar9[-6] = (float)dVar21;
+      pfVar9[-2] = (float)dVar20;
+      pfVar9[-1] = (float)dVar19;
+      *pfVar9 = (float)dVar18;
+      fVar1 = (float)((double)(float)((double)(longlong)iVar2 * dVar15) * dVar16 + dVar10);
+      pfVar9[10] = fVar1 * local_98;
+      pfVar9[0xb] = local_94 * fVar1;
+      pfVar9[0xc] = local_90 * fVar1;
+      if (param_3 != 1) {
+        lVar4 = (longlong)(int)param_3 + -1;
+        pfVar5 = pfVar9 + -6;
+        pfVar6 = pfVar9 + 0xc;
         do {
-          lVar7 = lVar7 + 4;
-          *(float *)lVar7 = (float)dVar15;
-          iVar3 = (int)lVar8;
-          *(float *)(iVar3 + -0x2c) = (float)dVar22;
-          *(float *)(iVar3 + -0x28) = (float)dVar22;
-          *(float *)(iVar3 + -0x24) = (float)dVar22;
-          *(float *)(iVar3 + 4) = (float)dVar22;
-          *(float *)(iVar3 + 8) = (float)dVar22;
-          lVar8 = lVar8 + 0xc;
-          *(float *)lVar8 = (float)dVar22;
-          lVar6 = lVar6 + -1;
-        } while (lVar6 != 0);
+          pfVar5 = pfVar5 + 1;
+          *pfVar5 = (float)dVar14;
+          pfVar6[-0xb] = (float)dVar21;
+          pfVar6[-10] = (float)dVar21;
+          pfVar6[-9] = (float)dVar21;
+          pfVar6[1] = (float)dVar21;
+          pfVar6[2] = (float)dVar21;
+          pfVar6 = pfVar6 + 3;
+          *pfVar6 = (float)dVar21;
+          lVar4 = lVar4 + -1;
+        } while (lVar4 != 0);
       }
-      uVar10 = uVar10 - 1;
-      in_r10 = in_r10 + 0x70;
-    } while (uVar10 != 0);
+      lVar8 = lVar8 + -1;
+      pfVar9 = pfVar9 + 0x1c;
+    } while (lVar8 != 0);
   }
-  __restfpr_22();
-  __restgprlr_27();
   return;
 }
 
 
 // 8243B020  FX_SetElemChild  (EffectsCore/fx_system.h:302)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void FX_SetElemChild(FxSystem *param_1,ushort param_2,ushort param_3)
 
 {
-  int iVar1;
-  ulonglong uVar2;
+  ulonglong uVar1;
   
-  uVar2 = (ulonglong)(short)param_2;
-  iVar1 = __savegprlr_27(param_1);
-  uVar2 = (uVar2 & 0xffffffff) >> 3 & 0x1fff;
-  if (0x7ff < uVar2) {
+  uVar1 = ((longlong)(short)param_2 & 0xffffffffU) >> 3 & 0x1fff;
+  if (0x7ff < uVar1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\fx_system.h",0x12f
                     ,0,
                     "elemHandle * FxElem::HANDLE_SCALE / sizeof( FxElem ) doesn\'t index FX_ELEM_LIMIT\n\t%i not in [0, %i)"
                    );
   }
-  if (iVar1 == 0) {
+  if (param_1 == (FxSystem *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\fx_system.h",0x130
                     ,0,"%s");
   }
-  if (*(int *)(iVar1 + 0x40) == 0) {
+  if (param_1->elemChild == (FxElemChild *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\fx_system.h",0x131
                     ,0,"%s");
   }
-  *(ushort *)((int)(uVar2 << 1) + *(int *)(iVar1 + 0x40)) = param_3;
-  __restgprlr_27();
+  *(ushort *)((int)(uVar1 << 1) + (int)param_1->elemChild) = param_3;
   return;
 }
 
 
 // 8243B8C0  CollideTrajectories  (EffectsCore/fx_sparkfountain.cpp:335)
 
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_19 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_19 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
+
 void CollideTrajectories(uint param_1,uint param_2,float param_3,float param_4,float param_5,
                         float *param_6,FxSpark *param_7)
 
 {
-  int iVar1;
-  int iVar2;
-  bool bVar3;
-  ulonglong uVar4;
-  bool bVar5;
-  ulonglong uVar6;
-  float *pfVar7;
-  longlong lVar8;
+  bool bVar1;
+  bool bVar2;
+  float *pfVar3;
+  longlong lVar4;
   float *in_r8;
-  longlong in_r9;
-  longlong lVar9;
-  longlong lVar10;
-  longlong lVar11;
-  ulonglong uVar12;
-  longlong lVar13;
-  longlong lVar14;
-  double extraout_f1;
+  int in_r9;
+  longlong lVar5;
+  float *pfVar6;
+  float *pfVar7;
+  float *pfVar8;
+  uint uVar9;
+  float *pfVar10;
+  float *pfVar11;
+  float *pfVar12;
+  double dVar13;
+  double dVar14;
   double dVar15;
   double dVar16;
   double dVar17;
@@ -622,8 +597,6 @@ void CollideTrajectories(uint param_1,uint param_2,float param_3,float param_4,f
   double dVar24;
   double dVar25;
   double dVar26;
-  double dVar27;
-  double dVar28;
   float local_120 [2];
   float local_118;
   float local_114;
@@ -639,153 +612,148 @@ void CollideTrajectories(uint param_1,uint param_2,float param_3,float param_4,f
   float local_d4;
   float local_d0;
   
-  dVar16 = (double)param_5;
-  dVar15 = (double)param_4;
-  lVar8 = (longlong)(int)param_7;
-  uVar6 = (ulonglong)(int)param_2;
-  __savegprlr_22((double)param_3,param_1,uVar6,param_6);
-  uVar4 = __savefpr_19();
-  dVar21 = extraout_f1;
+  dVar15 = (double)param_5;
+  dVar13 = (double)param_3;
+  dVar14 = (double)param_4;
+  lVar4 = (longlong)(int)param_7;
+  lVar5 = (longlong)(int)param_1;
   PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffff,"Spark CollideTrajectories");
-  dVar23 = 0.0;
+  dVar21 = 0.0;
   local_108 = 0.0;
   local_104 = 0.0;
   local_100 = 0.0;
   local_e8[0] = 0.0;
   local_e8[1] = 0.0;
   local_e8[2] = 0.0;
-  if ((uVar4 & 0xffffffff) != 0) {
-    in_r9 = in_r9 + 0x18;
-    dVar24 = -2.0;
-    dVar22 = 3.4028234663852886e+38;
+  if (param_1 != 0) {
+    pfVar10 = (float *)(in_r9 + 0x18);
+    dVar22 = -2.0;
+    dVar20 = 3.4028234663852886e+38;
     do {
-      pfVar7 = (float *)in_r9;
-      local_f8 = pfVar7[-2];
-      dVar27 = (double)local_f8;
-      local_f4 = pfVar7[-1];
-      dVar26 = (double)local_f4;
-      local_f0 = *pfVar7;
-      dVar25 = (double)local_f0;
-      local_118 = pfVar7[10];
-      uVar12 = 0;
-      local_114 = pfVar7[0xb];
-      bVar3 = true;
-      local_110 = pfVar7[0xc];
-      lVar9 = in_r9 + -0x1c;
-      lVar13 = in_r9 + 0x24;
-      lVar14 = in_r9 + -0xc;
-      lVar10 = in_r9 + 0x1c;
-      dVar28 = dVar23;
+      local_f8 = pfVar10[-2];
+      dVar25 = (double)local_f8;
+      local_f4 = pfVar10[-1];
+      dVar24 = (double)local_f4;
+      local_f0 = *pfVar10;
+      dVar23 = (double)local_f0;
+      local_118 = pfVar10[10];
+      uVar9 = 0;
+      local_114 = pfVar10[0xb];
+      bVar1 = true;
+      local_110 = pfVar10[0xc];
+      pfVar6 = pfVar10 + -7;
+      pfVar11 = pfVar10 + 9;
+      pfVar12 = pfVar10 + -3;
+      dVar26 = dVar21;
+      pfVar7 = pfVar10 + 7;
       do {
         while( true ) {
-          uVar12 = uVar12 + 1;
-          lVar11 = lVar10 + 0xc;
-          iVar1 = (int)lVar14;
-          iVar2 = (int)lVar13;
-          if (!bVar3) break;
-          lVar9 = lVar9 + 4;
-          *(float *)lVar9 = (float)dVar28;
-          *(float *)(iVar1 + 4) = (float)dVar27;
-          *(float *)(iVar1 + 8) = (float)dVar26;
-          lVar14 = lVar14 + 0xc;
-          *(float *)lVar14 = (float)dVar25;
-          *(float *)(iVar2 + 4) = local_118;
-          *(float *)(iVar2 + 8) = local_114;
-          lVar13 = lVar13 + 0xc;
-          *(float *)lVar13 = local_110;
-          if ((uVar12 & 0xffffffff) == (uVar6 & 0xffffffff)) goto LAB_8243b9d8;
-          pfVar7 = &local_118;
-          bVar5 = CollideTrajectory(&local_f8,pfVar7,in_r8,(float)(dVar21 - dVar28),(float *)lVar8,
+          uVar9 = uVar9 + 1;
+          pfVar8 = pfVar7 + 3;
+          if (!bVar1) break;
+          pfVar6 = pfVar6 + 1;
+          *pfVar6 = (float)dVar26;
+          pfVar12[1] = (float)dVar25;
+          pfVar12[2] = (float)dVar24;
+          pfVar12 = pfVar12 + 3;
+          *pfVar12 = (float)dVar23;
+          pfVar11[1] = local_118;
+          pfVar11[2] = local_114;
+          pfVar11 = pfVar11 + 3;
+          *pfVar11 = local_110;
+          if (uVar9 == param_2) goto LAB_8243b9d8;
+          pfVar3 = &local_118;
+          bVar2 = CollideTrajectory(&local_f8,pfVar3,in_r8,(float)(dVar13 - dVar26),(float *)lVar4,
                                     &local_108,local_e8,local_120);
-          if (bVar5) {
-            *(float *)lVar11 = local_118;
-            *(float *)((int)lVar10 + 0x10) = local_114;
-            *(float *)((int)lVar10 + 0x14) = local_110;
-            dVar25 = (double)local_120[0];
-            dVar28 = (double)(float)(dVar25 + dVar28);
-            dVar20 = (double)(float)((double)*in_r8 * dVar25 + (double)local_118);
-            dVar19 = (double)(float)((double)in_r8[1] * dVar25 + (double)local_114);
-            dVar27 = (double)local_108;
-            dVar18 = (double)(float)((double)in_r8[2] * dVar25 + (double)local_110);
-            dVar26 = (double)local_104;
-            dVar25 = (double)local_100;
+          if (bVar2) {
+            *pfVar8 = local_118;
+            pfVar7[4] = local_114;
+            pfVar7[5] = local_110;
+            dVar23 = (double)local_120[0];
+            dVar26 = (double)(float)(dVar23 + dVar26);
+            dVar19 = (double)(float)((double)*in_r8 * dVar23 + (double)local_118);
+            dVar18 = (double)(float)((double)in_r8[1] * dVar23 + (double)local_114);
+            dVar25 = (double)local_108;
+            dVar17 = (double)(float)((double)in_r8[2] * dVar23 + (double)local_110);
+            dVar24 = (double)local_104;
+            dVar23 = (double)local_100;
             local_f8 = local_108;
             local_f4 = local_104;
             local_f0 = local_100;
-            RandomizeNormal(local_e8,(float)dVar16,pfVar7);
-            dVar17 = (double)(float)((double)(float)((double)(float)((double)local_d0 * dVar18 +
+            RandomizeNormal(local_e8,(float)dVar15,pfVar3);
+            dVar16 = (double)(float)((double)(float)((double)(float)((double)local_d0 * dVar17 +
                                                                     (double)(float)((double)local_d4
-                                                                                    * dVar19 +
+                                                                                    * dVar18 +
                                                                                    (double)(float)(
-                                                  dVar20 * (double)local_d8))) * dVar15) * dVar24);
-            local_118 = (float)(dVar17 * (double)local_d8 + (double)(float)(dVar20 * dVar15));
-            local_114 = (float)((double)local_d4 * dVar17 + (double)(float)(dVar19 * dVar15));
-            local_110 = (float)((double)local_d0 * dVar17 + (double)(float)(dVar18 * dVar15));
-            lVar10 = lVar11;
+                                                  dVar19 * (double)local_d8))) * dVar14) * dVar22);
+            local_118 = (float)(dVar16 * (double)local_d8 + (double)(float)(dVar19 * dVar14));
+            local_114 = (float)((double)local_d4 * dVar16 + (double)(float)(dVar18 * dVar14));
+            local_110 = (float)((double)local_d0 * dVar16 + (double)(float)(dVar17 * dVar14));
+            pfVar7 = pfVar8;
           }
           else {
-            bVar3 = false;
-            lVar10 = lVar11;
+            bVar1 = false;
+            pfVar7 = pfVar8;
           }
         }
-        *(float *)((int)lVar9 + 4) = (float)dVar22;
-        lVar9 = lVar9 + 4;
-        *(float *)(iVar1 + 4) = (float)dVar23;
-        *(float *)(iVar1 + 8) = (float)dVar23;
-        *(float *)(iVar1 + 0xc) = (float)dVar23;
-        lVar14 = lVar14 + 0xc;
-        *(float *)(iVar2 + 4) = (float)dVar23;
-        *(float *)(iVar2 + 8) = (float)dVar23;
-        *(float *)(iVar2 + 0xc) = (float)dVar23;
-        lVar13 = lVar13 + 0xc;
-        lVar10 = lVar11;
-      } while ((uVar12 & 0xffffffff) != (uVar6 & 0xffffffff));
+        pfVar6[1] = (float)dVar20;
+        pfVar6 = pfVar6 + 1;
+        pfVar12[1] = (float)dVar21;
+        pfVar12[2] = (float)dVar21;
+        pfVar12[3] = (float)dVar21;
+        pfVar12 = pfVar12 + 3;
+        pfVar11[1] = (float)dVar21;
+        pfVar11[2] = (float)dVar21;
+        pfVar11[3] = (float)dVar21;
+        pfVar11 = pfVar11 + 3;
+        pfVar7 = pfVar8;
+      } while (uVar9 != param_2);
 LAB_8243b9d8:
-      uVar4 = uVar4 - 1;
-      in_r9 = in_r9 + 0x70;
-    } while (uVar4 != 0);
+      lVar5 = lVar5 + -1;
+      pfVar10 = pfVar10 + 0x1c;
+    } while (lVar5 != 0);
   }
   PIXEndNamedEvent();
-  __restfpr_19();
-  __restgprlr_22();
   return;
 }
 
 
 // 8243BB08  FX_SparkFountain_DoClusterPortion  (EffectsCore/fx_sparkfountain.cpp:415)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 void FX_SparkFountain_DoClusterPortion
                (FxSparkFountainCluster *param_1,FxSparkFountainDef *param_2,int param_3,int param_4)
 
 {
-  int iVar1;
-  ulonglong uVar2;
-  FxSpark *pFVar3;
+  FxSpark *pFVar1;
   
-  uVar2 = (ulonglong)(int)param_2;
-  iVar1 = __savegprlr_26(param_1);
-  pFVar3 = (FxSpark *)param_4;
-  if (iVar1 == 0) {
+  pFVar1 = (FxSpark *)param_4;
+  if (param_1 == (FxSparkFountainCluster *)0x0) {
     param_3 = 0;
-    pFVar3 = (FxSpark *)"%s";
+    pFVar1 = (FxSpark *)"%s";
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_sparkfountain.cpp"
                     ,0x1a4,0,"%s");
   }
-  if ((uVar2 & 0xffffffff) == 0) {
+  if (param_2 == (FxSparkFountainDef *)0x0) {
     param_3 = 0;
-    pFVar3 = (FxSpark *)"%s";
+    pFVar1 = (FxSpark *)"%s";
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_sparkfountain.cpp"
                     ,0x1a5,0,"%s");
   }
-  CollideTrajectories(param_4,4,5000.0,*(float *)((int)uVar2 + 4),*(float *)((int)uVar2 + 8),
-                      (float *)param_3,pFVar3);
-  __restgprlr_26();
+  CollideTrajectories(param_4,4,5000.0,param_2->bounceFrac,param_2->bounceRand,(float *)param_3,
+                      pFVar1);
   return;
 }
 
 
 // 8243C268  FX_SpawnSparkFountain  (EffectsCore/fx_sparkfountain.cpp:437)
 
+/* WARNING: Function: __savegprlr_19 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_19 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 bool FX_SpawnSparkFountain
@@ -797,24 +765,24 @@ bool FX_SpawnSparkFountain
   byte bVar2;
   ushort uVar3;
   FxSparkFountainDef *pFVar4;
-  FxElemDef *pFVar5;
-  bool bVar6;
-  FxSparkFountain *pFVar7;
-  FxSystem *pFVar8;
-  FindSlotResult FVar9;
-  undefined1 uVar12;
-  FxSparkFountainCluster *pFVar10;
-  int iVar11;
-  float (*pafVar13) [3];
-  float *pfVar14;
-  ulonglong uVar15;
-  float *pfVar16;
-  ushort *puVar17;
-  float *pfVar18;
-  ulonglong uVar19;
-  float *pfVar20;
-  longlong lVar21;
-  longlong lVar22;
+  bool bVar5;
+  FxSparkFountain *pFVar6;
+  FindSlotResult FVar7;
+  FxSparkFountainCluster *pFVar8;
+  int iVar9;
+  float (*pafVar10) [3];
+  float *pfVar11;
+  ulonglong uVar12;
+  float *pfVar13;
+  ushort *puVar14;
+  float *pfVar15;
+  ulonglong uVar16;
+  float *pfVar17;
+  longlong lVar18;
+  longlong lVar19;
+  double dVar20;
+  double dVar21;
+  double dVar22;
   double dVar23;
   double dVar24;
   double dVar25;
@@ -824,9 +792,6 @@ bool FX_SpawnSparkFountain
   double dVar29;
   double dVar30;
   double dVar31;
-  double dVar32;
-  double dVar33;
-  double dVar34;
   float local_460;
   float local_45c;
   float local_458;
@@ -842,148 +807,142 @@ bool FX_SpawnSparkFountain
   undefined4 local_418;
   orientation_t aoStack_3f0 [21];
   
-  uVar15 = (ulonglong)(int)param_5;
-  __savegprlr_19(param_1);
-  pFVar8 = (FxSystem *)__savefpr_22();
   PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffff,"FX_SpawnSparkFountain");
-  if ((uVar15 & 0xffffffff) == 0) {
+  if (param_5 == (FxElemDef *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_sparkfountain.cpp"
                     ,0x1c7,0,"%s");
   }
-  pFVar5 = (FxElemDef *)uVar15;
-  if ((pFVar5->extended).trailDef == (FxTrailDef *)0x0) {
+  if ((param_5->extended).trailDef == (FxTrailDef *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_sparkfountain.cpp"
                     ,0x1c8,0,"%s");
   }
-  if (((pFVar5->flags & 0x80000000U) == 0) ||
-     (bVar6 = true, (pFVar5->effectEmitted).handle == (FxEffectDef *)0x0)) {
-    bVar6 = false;
+  if (((param_5->flags & 0x80000000U) == 0) ||
+     (bVar5 = true, (param_5->effectEmitted).handle == (FxEffectDef *)0x0)) {
+    bVar5 = false;
   }
-  if (bVar6) {
+  if (bVar5) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_sparkfountain.cpp"
                     ,0x1ca,0,"%s");
   }
-  FVar9 = FX_SpawnSparkFountain_AllocOrFindCachedSparkFountain
-                    (pFVar8,param_2,param_3,param_4,(FxSparkFountain **)&local_450);
-  if (FVar9 != FINDSLOT_FOUND_CACHED) {
-    if (FVar9 == FINDSLOT_FOUND_NONE_AVAILABLE) {
+  FVar7 = FX_SpawnSparkFountain_AllocOrFindCachedSparkFountain
+                    (param_1,param_2,param_3,param_4,(FxSparkFountain **)&local_450);
+  if (FVar7 != FINDSLOT_FOUND_CACHED) {
+    if (FVar7 == FINDSLOT_FOUND_NONE_AVAILABLE) {
       PIXEndNamedEvent();
-      __restfpr_22(0);
-      uVar12 = __restgprlr_19();
-      return (bool)uVar12;
+      return false;
     }
-    pafVar13 = (float (*) [3])param_6;
-    FX_GetOrientation(pFVar5,&param_2->frameAtSpawn,&param_2->frameNow,param_6,aoStack_3f0);
+    pafVar10 = (float (*) [3])param_6;
+    FX_GetOrientation(param_5,&param_2->frameAtSpawn,&param_2->frameNow,param_6,aoStack_3f0);
     FX_OrientationPosToWorldPos(aoStack_3f0,(param_3->field8_0x14).origin,&local_438);
-    dVar34 = 0.0;
-    FX_GetElemAxis(pFVar5,param_6,aoStack_3f0,0.0,pafVar13);
-    pFVar7 = local_450._0_4_;
+    dVar31 = 0.0;
+    FX_GetElemAxis(param_5,param_6,aoStack_3f0,0.0,pafVar10);
+    pFVar6 = local_450._0_4_;
     local_448 = local_420;
     local_444 = local_41c;
     bVar2 = ((local_450._0_4_)->header).clusterCount;
-    uVar15 = (ulonglong)bVar2;
+    uVar12 = (ulonglong)bVar2;
     local_440 = local_418;
-    pFVar4 = (pFVar5->extended).sparkFountainDef;
+    pFVar4 = (param_5->extended).sparkFountainDef;
     if (bVar2 != 0) {
-      dVar25 = 3.4028234663852886e+38;
-      dVar26 = 3.0518509447574615e-05;
-      puVar17 = (local_450._0_4_)->clusters;
-      dVar30 = 1.0;
+      dVar22 = 3.4028234663852886e+38;
+      dVar23 = 3.0518509447574615e-05;
+      puVar14 = (local_450._0_4_)->clusters;
+      dVar27 = 1.0;
       do {
-        uVar3 = *puVar17;
-        uVar19 = (ulonglong)uVar3;
-        if (pFVar8 == (FxSystem *)0x0) {
+        uVar3 = *puVar14;
+        uVar16 = (ulonglong)uVar3;
+        if (param_1 == (FxSystem *)0x0) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\fx_system_handle.h"
                           ,0xd9,0,"%s");
         }
-        pFVar10 = FX_PoolFromHandle_Generic<FxSparkFountainCluster>
-                            (pFVar8->sparkFountainClusters,uVar3);
-        pfVar18 = aoStack_3f0[0].axis[2] + 2;
-        lVar21 = 0x40;
+        pFVar8 = FX_PoolFromHandle_Generic<FxSparkFountainCluster>
+                           (param_1->sparkFountainClusters,uVar3);
+        pfVar15 = aoStack_3f0[0].axis[2] + 2;
+        lVar18 = 0x40;
         do {
-          pfVar18[1] = local_438;
-          pfVar18[2] = (float)local_434;
-          pfVar18 = pfVar18 + 3;
-          *pfVar18 = local_430;
-          lVar21 = lVar21 + -1;
-        } while (lVar21 != 0);
-        dVar29 = (double)pFVar4->velMin;
-        pfVar20 = pFVar10->sparks[0].pos[0] + 2;
-        dVar27 = (double)pFVar4->velConeFrac;
-        dVar28 = (double)(float)((double)pFVar4->velMax - dVar29);
-        pfVar18 = aoStack_3f0[0].axis[2] + 2;
-        lVar21 = 0x40;
+          pfVar15[1] = local_438;
+          pfVar15[2] = (float)local_434;
+          pfVar15 = pfVar15 + 3;
+          *pfVar15 = local_430;
+          lVar18 = lVar18 + -1;
+        } while (lVar18 != 0);
+        dVar26 = (double)pFVar4->velMin;
+        pfVar17 = pFVar8->sparks[0].pos[0] + 2;
+        dVar24 = (double)pFVar4->velConeFrac;
+        dVar25 = (double)(float)((double)pFVar4->velMax - dVar26);
+        pfVar15 = aoStack_3f0[0].axis[2] + 2;
+        lVar18 = 0x40;
         do {
-          dVar33 = (double)pfVar18[1];
-          dVar32 = (double)pfVar18[2];
-          pfVar18 = pfVar18 + 3;
-          dVar31 = (double)*pfVar18;
-          if (dVar27 == dVar30) {
+          dVar30 = (double)pfVar15[1];
+          dVar29 = (double)pfVar15[2];
+          pfVar15 = pfVar15 + 3;
+          dVar28 = (double)*pfVar15;
+          if (dVar24 == dVar27) {
             Vec3Rand(&local_460);
-            dVar24 = (double)SQRT(local_460 * local_460 +
+            dVar21 = (double)SQRT(local_460 * local_460 +
                                   local_458 * local_458 + local_45c * local_45c);
-            dVar23 = dVar30;
-            if (-dVar24 < 0.0) {
-              dVar23 = dVar24;
+            dVar20 = dVar27;
+            if (-dVar21 < 0.0) {
+              dVar20 = dVar21;
             }
-            fVar1 = (float)(dVar30 / dVar23);
+            fVar1 = (float)(dVar27 / dVar20);
             local_460 = local_460 * fVar1;
             local_45c = local_45c * fVar1;
             local_458 = local_458 * fVar1;
           }
           else {
-            RandomizeNormal(&local_448,(float)dVar27,(float *)uVar19);
+            RandomizeNormal(&local_448,(float)dVar24,(float *)uVar16);
           }
-          iVar11 = rand();
-          local_450 = (longlong)iVar11;
-          pfVar20[-6] = (float)dVar34;
-          pfVar14 = pfVar20 + -6;
-          (*(float (*) [3])(pfVar20 + -2))[0] = (float)dVar33;
-          pfVar16 = pfVar20 + 0xc;
-          pfVar20[-1] = (float)dVar32;
-          lVar22 = 3;
-          *pfVar20 = (float)dVar31;
-          fVar1 = (float)((double)(float)((double)local_450 * dVar28) * dVar26 + dVar29);
-          pfVar20[10] = fVar1 * local_460;
-          pfVar20[0xb] = local_45c * fVar1;
-          pfVar20[0xc] = local_458 * fVar1;
+          iVar9 = rand();
+          local_450 = (longlong)iVar9;
+          pfVar17[-6] = (float)dVar31;
+          pfVar11 = pfVar17 + -6;
+          (*(float (*) [3])(pfVar17 + -2))[0] = (float)dVar30;
+          pfVar13 = pfVar17 + 0xc;
+          pfVar17[-1] = (float)dVar29;
+          lVar19 = 3;
+          *pfVar17 = (float)dVar28;
+          fVar1 = (float)((double)(float)((double)local_450 * dVar25) * dVar23 + dVar26);
+          pfVar17[10] = fVar1 * local_460;
+          pfVar17[0xb] = local_45c * fVar1;
+          pfVar17[0xc] = local_458 * fVar1;
           do {
-            pfVar14 = pfVar14 + 1;
-            *pfVar14 = (float)dVar25;
-            pfVar16[-0xb] = (float)dVar34;
-            pfVar16[-10] = (float)dVar34;
-            pfVar16[-9] = (float)dVar34;
-            pfVar16[1] = (float)dVar34;
-            pfVar16[2] = (float)dVar34;
-            pfVar16 = pfVar16 + 3;
-            *pfVar16 = (float)dVar34;
-            lVar22 = lVar22 + -1;
-          } while (lVar22 != 0);
-          lVar21 = lVar21 + -1;
-          pfVar20 = pfVar20 + 0x1c;
-        } while (lVar21 != 0);
-        uVar15 = uVar15 - 1;
-        puVar17 = puVar17 + 1;
-      } while (uVar15 != 0);
+            pfVar11 = pfVar11 + 1;
+            *pfVar11 = (float)dVar22;
+            pfVar13[-0xb] = (float)dVar31;
+            pfVar13[-10] = (float)dVar31;
+            pfVar13[-9] = (float)dVar31;
+            pfVar13[1] = (float)dVar31;
+            pfVar13[2] = (float)dVar31;
+            pfVar13 = pfVar13 + 3;
+            *pfVar13 = (float)dVar31;
+            lVar19 = lVar19 + -1;
+          } while (lVar19 != 0);
+          lVar18 = lVar18 + -1;
+          pfVar17 = pfVar17 + 0x1c;
+        } while (lVar18 != 0);
+        uVar12 = uVar12 - 1;
+        puVar14 = puVar14 + 1;
+      } while (uVar12 != 0);
     }
-    if ((pFVar5->flags & 0x80000000U) == 0) {
-      (pFVar7->header).computedClusterCount = '\0';
+    if ((param_5->flags & 0x80000000U) == 0) {
+      (pFVar6->header).computedClusterCount = '\0';
     }
     else {
-      (pFVar7->header).computedClusterCount = (pFVar7->header).clusterCount;
+      (pFVar6->header).computedClusterCount = (pFVar6->header).clusterCount;
     }
-    (pFVar7->header).computedClusterPortion = '\0';
-    (pFVar7->header).isValid = '\x01';
+    (pFVar6->header).computedClusterPortion = '\0';
+    (pFVar6->header).isValid = '\x01';
   }
   PIXEndNamedEvent();
-  __restfpr_22(1);
-  uVar12 = __restgprlr_19();
-  return (bool)uVar12;
+  return true;
 }
 
 
 // 8243C600  FXW_UpdateElement_SparkFountain  (EffectsCore/fx_sparkfountain.cpp:517)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void FXW_UpdateElement_SparkFountain
@@ -991,55 +950,54 @@ void FXW_UpdateElement_SparkFountain
 
 {
   bool bVar1;
-  FxSystem *pFVar2;
-  FxElemDef *pFVar3;
-  ushort uVar6;
-  FxSparkFountain *pFVar4;
-  FxSparkFountainCluster *pFVar5;
-  longlong lVar7;
-  uchar uVar8;
-  uint uVar9;
+  FxElemDef *pFVar2;
+  ushort uVar5;
+  FxSparkFountain *pFVar3;
+  FxSparkFountainCluster *pFVar4;
+  uchar uVar6;
+  uint uVar7;
   
-  lVar7 = (longlong)(int)param_2;
-  pFVar2 = (FxSystem *)__savegprlr_28(param_1,lVar7,param_3);
   PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffff,"FX_UpdateElement_SparkFountain");
-  pFVar3 = FXIW_GetUpdateElemDef((FxUpdateElem *)lVar7);
-  if (((pFVar3->flags & 0x80000000U) == 0) ||
-     (bVar1 = true, (pFVar3->effectEmitted).handle == (FxEffectDef *)0x0)) {
+  pFVar2 = FXIW_GetUpdateElemDef(param_2);
+  if (((pFVar2->flags & 0x80000000U) == 0) ||
+     (bVar1 = true, (pFVar2->effectEmitted).handle == (FxEffectDef *)0x0)) {
     bVar1 = false;
   }
   if (bVar1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_sparkfountain.cpp"
                     ,0x219,0,"%s");
   }
-  uVar6 = FX_GetElemChild(pFVar2,param_4);
-  if (pFVar2 == (FxSystem *)0x0) {
+  uVar5 = FX_GetElemChild(param_1,param_4);
+  if (param_1 == (FxSystem *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\fx_system_handle.h"
                     ,0xc4,0,"%s");
   }
-  pFVar4 = FX_PoolFromHandle_Generic<FxSparkFountain>(pFVar2->sparkFountains,uVar6);
-  uVar9 = (uint)(pFVar4->header).computedClusterCount;
-  if (uVar9 != (pFVar4->header).clusterCount) {
-    pFVar5 = FX_SparkFountainClusterFromHandle(pFVar2,pFVar4->clusters[uVar9]);
-    pFVar3 = FXIW_GetUpdateElemDef((FxUpdateElem *)lVar7);
+  pFVar3 = FX_PoolFromHandle_Generic<FxSparkFountain>(param_1->sparkFountains,uVar5);
+  uVar7 = (uint)(pFVar3->header).computedClusterCount;
+  if (uVar7 != (pFVar3->header).clusterCount) {
+    pFVar4 = FX_SparkFountainClusterFromHandle(param_1,pFVar3->clusters[uVar7]);
+    pFVar2 = FXIW_GetUpdateElemDef(param_2);
     FX_SparkFountain_DoClusterPortion
-              (pFVar5,(pFVar3->extended).sparkFountainDef,
-               (uint)(pFVar4->header).computedClusterPortion,0x10);
-    uVar8 = (pFVar4->header).computedClusterPortion + '\x10';
-    (pFVar4->header).computedClusterPortion = uVar8;
-    if (uVar8 == '@') {
-      (pFVar4->header).computedClusterPortion = '\0';
-      (pFVar4->header).computedClusterCount = (pFVar4->header).computedClusterCount + '\x01';
+              (pFVar4,(pFVar2->extended).sparkFountainDef,
+               (uint)(pFVar3->header).computedClusterPortion,0x10);
+    uVar6 = (pFVar3->header).computedClusterPortion + '\x10';
+    (pFVar3->header).computedClusterPortion = uVar6;
+    if (uVar6 == '@') {
+      (pFVar3->header).computedClusterPortion = '\0';
+      (pFVar3->header).computedClusterCount = (pFVar3->header).computedClusterCount + '\x01';
     }
   }
   PIXEndNamedEvent();
-  __restgprlr_28();
   return;
 }
 
 
 // 8243BBC8  FX_DrawElem_SparkFountain_PopulateVertices  (EffectsCore/fx_sparkfountain.cpp:567)
 
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_21 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_21 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void FX_DrawElem_SparkFountain_PopulateVertices
@@ -1058,16 +1016,15 @@ void FX_DrawElem_SparkFountain_PopulateVertices
   float fVar9;
   float fVar10;
   GfxPosTexVertex *pGVar11;
-  int iVar12;
-  float *pfVar13;
+  FxCamera *pFVar12;
+  float (*pafVar13) [3];
   float *pfVar14;
-  longlong lVar15;
+  float *pfVar15;
   float *pfVar16;
   float *pfVar17;
-  longlong lVar18;
-  int iVar19;
+  int iVar18;
+  float *pfVar19;
   float *pfVar20;
-  double extraout_f1;
   double dVar21;
   double dVar22;
   double dVar23;
@@ -1092,100 +1049,98 @@ void FX_DrawElem_SparkFountain_PopulateVertices
   float local_c4;
   float local_c0;
   
-  dVar23 = (double)param_8;
-  dVar22 = (double)param_7;
-  dVar21 = (double)param_6;
-  lVar15 = (longlong)(int)param_4;
-  __savegprlr_22((double)param_5,param_1);
-  iVar12 = __savefpr_21();
+  dVar24 = (double)param_8;
+  dVar23 = (double)param_7;
+  dVar21 = (double)param_5;
+  dVar22 = (double)param_6;
   pGVar11 = *param_2;
-  dVar27 = 1.0;
-  lVar18 = lVar15 + 8;
-  iVar19 = 0;
-  dVar28 = (double)(*(float *)(iVar12 + 0x7c) * 0.5);
-  dVar26 = 0.009999999776482582;
-  dVar29 = extraout_f1;
+  dVar28 = 1.0;
+  pfVar17 = *param_4 + 2;
+  iVar18 = 0;
+  dVar29 = (double)((param_1->visState).size[0] * 0.5);
+  dVar27 = 0.009999999776482582;
   do {
-    pfVar20 = (float *)lVar18;
-    pfVar14 = *(float **)(iVar12 + 0x44);
-    local_11c = pfVar20[2] - pfVar20[-1];
-    pfVar13 = (float *)((int)local_110 + iVar19);
-    local_120 = pfVar20[1] - pfVar20[-2];
-    lVar18 = lVar18 + 0xc;
-    local_12c = pfVar14[1] - pfVar20[-1];
-    local_118 = *(float *)lVar18 - *pfVar20;
-    local_130 = *pfVar14 - pfVar20[-2];
-    local_128 = pfVar14[2] - *pfVar20;
-    dVar25 = (double)SQRT(local_120 * local_120 + local_118 * local_118 + local_11c * local_11c);
-    dVar24 = dVar27;
-    if (-dVar25 < 0.0) {
-      dVar24 = dVar25;
+    pfVar16 = pfVar17 + -1;
+    pFVar12 = param_1->camera;
+    local_11c = pfVar17[2] - *pfVar16;
+    pafVar13 = (float (*) [3])(pfVar17 + -2);
+    local_128 = *pfVar17;
+    pfVar19 = (float *)((int)local_110 + iVar18);
+    local_120 = pfVar17[1] - (*pafVar13)[0];
+    pfVar17 = pfVar17 + 3;
+    local_12c = pFVar12->origin[1] - *pfVar16;
+    local_118 = *pfVar17 - local_128;
+    local_130 = pFVar12->origin[0] - (*pafVar13)[0];
+    local_128 = pFVar12->origin[2] - local_128;
+    dVar26 = (double)SQRT(local_120 * local_120 + local_118 * local_118 + local_11c * local_11c);
+    dVar25 = dVar28;
+    if (-dVar26 < 0.0) {
+      dVar25 = dVar26;
     }
-    fVar1 = (float)(dVar27 / dVar24);
+    fVar1 = (float)(dVar28 / dVar25);
     local_120 = fVar1 * local_120;
     local_11c = local_11c * fVar1;
     local_118 = local_118 * fVar1;
-    Vec3Cross(&local_120,&local_130,pfVar13);
-    fVar1 = (float)((double)*pfVar13 + dVar26);
-    *pfVar13 = fVar1;
-    pfVar20 = (float *)((int)local_110 + iVar19 + 8);
-    pfVar14 = (float *)((int)local_e0 + iVar19);
-    fVar10 = *(float *)((int)local_110 + iVar19 + 8);
-    fVar3 = *(float *)((int)local_110 + iVar19 + 4);
-    dVar25 = (double)SQRT(fVar10 * fVar10 + fVar3 * fVar3 + fVar1 * fVar1);
-    dVar24 = dVar27;
-    if (-dVar25 < 0.0) {
-      dVar24 = dVar25;
+    Vec3Cross(&local_120,&local_130,pfVar19);
+    fVar1 = (float)((double)*pfVar19 + dVar27);
+    *pfVar19 = fVar1;
+    pfVar20 = (float *)((int)local_110 + iVar18 + 8);
+    pfVar16 = (float *)((int)local_e0 + iVar18);
+    fVar10 = *(float *)((int)local_110 + iVar18 + 8);
+    fVar3 = *(float *)((int)local_110 + iVar18 + 4);
+    dVar26 = (double)SQRT(fVar10 * fVar10 + fVar3 * fVar3 + fVar1 * fVar1);
+    dVar25 = dVar28;
+    if (-dVar26 < 0.0) {
+      dVar25 = dVar26;
     }
-    fVar2 = (float)(dVar27 / dVar24);
-    *pfVar13 = fVar2 * fVar1;
-    *(float *)((int)local_110 + iVar19 + 4) = fVar2 * fVar3;
-    *(float *)((int)local_110 + iVar19 + 8) = fVar2 * fVar10;
-    Vec3Cross(&local_130,pfVar13,pfVar14);
-    pfVar17 = (float *)((int)local_e0 + iVar19 + 8);
-    pfVar16 = (float *)((int)local_e0 + iVar19 + 4);
-    *pfVar13 = (float)((double)*pfVar13 * dVar28);
-    fVar1 = *pfVar17;
-    fVar3 = *pfVar14;
-    *(float *)((int)local_110 + iVar19 + 4) =
-         (float)(dVar28 * (double)*(float *)((int)local_110 + iVar19 + 4));
-    fVar10 = *pfVar16;
-    iVar19 = iVar19 + 0xc;
-    *pfVar20 = (float)((double)*pfVar20 * dVar28);
-    dVar25 = (double)SQRT(fVar10 * fVar10 + fVar3 * fVar3 + fVar1 * fVar1);
-    dVar24 = dVar27;
-    if (-dVar25 < 0.0) {
-      dVar24 = dVar25;
+    fVar2 = (float)(dVar28 / dVar25);
+    *pfVar19 = fVar2 * fVar1;
+    *(float *)((int)local_110 + iVar18 + 4) = fVar2 * fVar3;
+    *(float *)((int)local_110 + iVar18 + 8) = fVar2 * fVar10;
+    Vec3Cross(&local_130,pfVar19,pfVar16);
+    pfVar15 = (float *)((int)local_e0 + iVar18 + 8);
+    pfVar14 = (float *)((int)local_e0 + iVar18 + 4);
+    *pfVar19 = (float)((double)*pfVar19 * dVar29);
+    fVar1 = *pfVar15;
+    fVar3 = *pfVar16;
+    *(float *)((int)local_110 + iVar18 + 4) =
+         (float)(dVar29 * (double)*(float *)((int)local_110 + iVar18 + 4));
+    fVar10 = *pfVar14;
+    iVar18 = iVar18 + 0xc;
+    *pfVar20 = (float)((double)*pfVar20 * dVar29);
+    dVar26 = (double)SQRT(fVar10 * fVar10 + fVar3 * fVar3 + fVar1 * fVar1);
+    dVar25 = dVar28;
+    if (-dVar26 < 0.0) {
+      dVar25 = dVar26;
     }
-    fVar2 = (float)(dVar27 / dVar24);
-    *pfVar14 = fVar2 * fVar3;
-    *pfVar16 = fVar2 * fVar10;
-    *pfVar17 = fVar2 * fVar1;
-    *pfVar14 = (float)((double)(fVar2 * fVar3) * dVar28);
-    *pfVar16 = (float)((double)*pfVar16 * dVar28);
-    *pfVar17 = (float)((double)*pfVar17 * dVar28);
-  } while (iVar19 != 0x24);
-  pfVar14 = (float *)lVar15;
-  fVar2 = pfVar14[2];
-  fVar1 = (float)(dVar29 + dVar21);
-  fVar4 = *pfVar14;
-  fVar5 = pfVar14[1];
+    fVar2 = (float)(dVar28 / dVar25);
+    *pfVar16 = fVar2 * fVar3;
+    *pfVar14 = fVar2 * fVar10;
+    *pfVar15 = fVar2 * fVar1;
+    *pfVar16 = (float)((double)(fVar2 * fVar3) * dVar29);
+    *pfVar14 = (float)((double)*pfVar14 * dVar29);
+    *pfVar15 = (float)((double)*pfVar15 * dVar29);
+  } while (iVar18 != 0x24);
+  fVar2 = (*param_4)[2];
+  fVar1 = (float)(dVar21 + dVar22);
+  fVar4 = (*param_4)[0];
+  fVar5 = (*param_4)[1];
   fVar3 = *param_3;
   pGVar11->xyz[2] = (fVar2 - local_110[2]) - local_e0[2];
-  fVar3 = (float)((double)fVar3 * dVar23 + dVar22);
+  fVar3 = (float)((double)fVar3 * dVar24 + dVar23);
   pGVar11->xyz[0] = (fVar4 - local_110[0]) - local_e0[0];
-  fVar6 = pfVar14[3];
+  fVar6 = param_4[1][0];
   pGVar11->xyz[1] = (fVar5 - local_110[1]) - local_e0[1];
-  fVar7 = pfVar14[4];
-  fVar8 = pfVar14[5];
+  fVar7 = param_4[1][1];
+  fVar8 = param_4[1][2];
   pGVar11->texCoord[1] = fVar3;
-  pGVar11->texCoord[0] = (float)dVar29;
+  pGVar11->texCoord[0] = (float)dVar21;
   fVar10 = param_3[1];
   pGVar11[1].xyz[0] = fVar6 - local_110[3];
-  fVar10 = (float)((double)fVar10 * dVar23 + dVar22);
+  fVar10 = (float)((double)fVar10 * dVar24 + dVar23);
   pGVar11[1].xyz[1] = fVar7 - local_110[4];
   pGVar11[1].xyz[2] = fVar8 - local_110[5];
-  pGVar11[1].texCoord[0] = (float)dVar29;
+  pGVar11[1].texCoord[0] = (float)dVar21;
   pGVar11[1].texCoord[1] = fVar10;
   pGVar11[2].xyz[0] = (fVar4 + local_110[3]) - local_e0[0];
   pGVar11[2].xyz[1] = (fVar5 + local_110[4]) - local_e0[1];
@@ -1194,27 +1149,27 @@ void FX_DrawElem_SparkFountain_PopulateVertices
   pGVar11[2].texCoord[0] = fVar1;
   fVar3 = param_3[2];
   pGVar11[3].xyz[0] = local_110[3] + fVar6;
-  fVar3 = (float)((double)fVar3 * dVar23 + dVar22);
-  fVar4 = pfVar14[9];
-  fVar2 = (float)((double)param_3[3] * dVar23 + dVar22);
-  fVar5 = pfVar14[6];
-  fVar6 = pfVar14[7];
+  fVar3 = (float)((double)fVar3 * dVar24 + dVar23);
+  fVar4 = param_4[3][0];
+  fVar2 = (float)((double)param_3[3] * dVar24 + dVar23);
+  fVar5 = param_4[2][0];
+  fVar6 = param_4[2][1];
   pGVar11[3].xyz[1] = local_110[4] + fVar7;
   pGVar11[3].xyz[2] = fVar8 + local_110[5];
-  fVar7 = pfVar14[8];
-  fVar8 = pfVar14[10];
-  fVar9 = pfVar14[0xb];
+  fVar7 = param_4[2][2];
+  fVar8 = param_4[3][1];
+  fVar9 = param_4[3][2];
   pGVar11[3].texCoord[0] = fVar1;
   pGVar11[3].texCoord[1] = fVar10;
   pGVar11[4].xyz[0] = fVar5 - local_110[3];
   pGVar11[4].xyz[1] = fVar6 - local_110[4];
   pGVar11[4].xyz[2] = fVar7 - local_110[5];
-  pGVar11[4].texCoord[0] = (float)dVar29;
+  pGVar11[4].texCoord[0] = (float)dVar21;
   pGVar11[4].texCoord[1] = fVar3;
   pGVar11[5].xyz[0] = local_c8 + (fVar4 - local_f8);
   pGVar11[5].xyz[1] = local_c4 + (fVar8 - local_f4);
   pGVar11[5].xyz[2] = local_c0 + (fVar9 - local_f0);
-  pGVar11[5].texCoord[0] = (float)dVar29;
+  pGVar11[5].texCoord[0] = (float)dVar21;
   pGVar11[5].texCoord[1] = fVar2;
   pGVar11[6].xyz[0] = fVar5 + local_110[3];
   pGVar11[6].xyz[1] = fVar6 + local_110[4];
@@ -1227,13 +1182,14 @@ void FX_DrawElem_SparkFountain_PopulateVertices
   pGVar11[7].texCoord[0] = fVar1;
   pGVar11[7].texCoord[1] = fVar2;
   *param_2 = pGVar11 + 8;
-  __restfpr_21();
-  __restgprlr_22();
   return;
 }
 
 
 // 8243BFA8  FX_DrawElem_SparkFountain_GetBoostedTime  (EffectsCore/fx_sparkfountain.cpp:643)
+
+/* WARNING: Function: __savefpr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_26 replaced with injection: xenon_save_restore */
 
 void FX_DrawElem_SparkFountain_GetBoostedTime
                (float param_1,float param_2,float *param_3,float *param_4,float param_5)
@@ -1251,7 +1207,7 @@ void FX_DrawElem_SparkFountain_GetBoostedTime
   
   dVar2 = (double)param_5;
   dVar3 = (double)param_2;
-  dVar1 = (double)__savefpr_26((double)param_1,param_3,param_4);
+  dVar1 = (double)param_1;
   dVar5 = 0.0;
   if (0.0 < dVar1) {
     dVar4 = 1.5707963705062866;
@@ -1272,16 +1228,19 @@ void FX_DrawElem_SparkFountain_GetBoostedTime
                              (float)((double)(float)(dVar3 + dVar7) * dVar1)) + dVar5);
   }
   else {
-    *in_r5 = (float)dVar2;
+    *in_r5 = param_5;
     *in_r6 = 1.0;
   }
-  __restfpr_26();
   return;
 }
 
 
 // 8243C750  FX_DrawElem_SparkFountain  (EffectsCore/fx_sparkfountain.cpp:859)
 
+/* WARNING: Function: __savegprlr_21 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_21 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void FX_DrawElem_SparkFountain(FxDrawState *param_1)
@@ -1306,25 +1265,25 @@ void FX_DrawElem_SparkFountain(FxDrawState *param_1)
   float fVar17;
   float fVar18;
   int iVar19;
-  FxDrawState *pFVar20;
-  bool bVar25;
-  ushort uVar24;
-  FxSparkFountain *pFVar21;
-  FxElemVisuals FVar22;
-  FxSparkFountainCluster *pFVar23;
-  float *pfVar26;
-  ulonglong uVar27;
-  int iVar28;
-  longlong lVar29;
-  ulonglong uVar30;
-  int iVar31;
-  float *pfVar32;
-  int iVar33;
-  ushort *puVar34;
-  ulonglong uVar35;
-  uint uVar36;
-  longlong lVar37;
-  ulonglong uVar38;
+  bool bVar24;
+  ushort uVar23;
+  FxSparkFountain *pFVar20;
+  FxElemVisuals FVar21;
+  FxSparkFountainCluster *pFVar22;
+  float *pfVar25;
+  ulonglong uVar26;
+  int iVar27;
+  longlong lVar28;
+  ulonglong uVar29;
+  int iVar30;
+  float *pfVar31;
+  int iVar32;
+  ushort *puVar33;
+  ulonglong uVar34;
+  uint uVar35;
+  longlong lVar36;
+  ulonglong uVar37;
+  double dVar38;
   double dVar39;
   double dVar40;
   double dVar41;
@@ -1344,7 +1303,6 @@ void FX_DrawElem_SparkFountain(FxDrawState *param_1)
   double dVar55;
   double dVar56;
   double dVar57;
-  double dVar58;
   float local_190;
   float local_188;
   GfxPosTexVertex *local_184;
@@ -1354,151 +1312,149 @@ void FX_DrawElem_SparkFountain(FxDrawState *param_1)
   float afStack_14c [7];
   GfxParticleCloud aGStack_130 [4];
   
-  pFVar20 = (FxDrawState *)__savegprlr_21(param_1);
-  __savefpr();
   PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffff,"FX_DrawElem_SparkFountain");
-  FX_DrawElement_Setup_Time(pFVar20,pFVar20->elem->msecBegin,(float *)0x0);
-  FX_DrawElement_Setup_Position(pFVar20,(pFVar20->elem->field8_0x14).origin);
-  FX_DrawElement_Setup_VisualState(pFVar20);
-  bVar25 = FX_DrawElem_Cloud_ShouldBeDrawn(pFVar20);
-  if (bVar25) {
-    if ((pFVar20->elemDef->extended).trailDef == (FxTrailDef *)0x0) {
+  FX_DrawElement_Setup_Time(param_1,param_1->elem->msecBegin,(float *)0x0);
+  FX_DrawElement_Setup_Position(param_1,(param_1->elem->field8_0x14).origin);
+  FX_DrawElement_Setup_VisualState(param_1);
+  bVar24 = FX_DrawElem_Cloud_ShouldBeDrawn(param_1);
+  if (bVar24) {
+    if ((param_1->elemDef->extended).trailDef == (FxTrailDef *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_sparkfountain.cpp"
                       ,0x387,0,"%s");
     }
-    pFVar11 = pFVar20->elemDef;
+    pFVar11 = param_1->elemDef;
     pFVar12 = (pFVar11->extended).sparkFountainDef;
-    dVar47 = (double)pFVar12->gravity;
-    dVar57 = (double)pFVar12->sparkLength;
+    dVar46 = (double)pFVar12->gravity;
+    dVar56 = (double)pFVar12->sparkLength;
     if (pFVar12->sparkCount != 0) {
-      dVar49 = (double)pFVar12->loopTime;
-      dVar46 = (double)pFVar12->sparkSpacing;
+      dVar48 = (double)pFVar12->loopTime;
+      dVar45 = (double)pFVar12->sparkSpacing;
       if (((pFVar11->flags & 0x80000000U) == 0) ||
-         (bVar25 = true, (pFVar11->effectEmitted).handle == (FxEffectDef *)0x0)) {
-        bVar25 = false;
+         (bVar24 = true, (pFVar11->effectEmitted).handle == (FxEffectDef *)0x0)) {
+        bVar24 = false;
       }
-      if (bVar25) {
+      if (bVar24) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_sparkfountain.cpp"
                         ,0x396,0,"%s");
       }
-      uVar24 = FX_GetElemChild(pFVar20->system,pFVar20->elemHandle);
-      pFVar21 = FX_SparkFountainFromHandle_Const(pFVar20->system,uVar24);
-      if ((pFVar21->header).isValid != '\0') {
-        bVar3 = (pFVar21->header).clusterCount;
-        uVar38 = (ulonglong)bVar3;
-        if (uVar38 != 0) {
-          FX_DrawElem_Cloud_PopulateGfxParticleCloud(pFVar20,'\x04',aGStack_130);
-          pfVar26 = &local_188;
-          bVar25 = R_ReserveSparkMeshVerts((uint)bVar3 << 9,(int *)pfVar26);
-          if (bVar25) {
+      uVar23 = FX_GetElemChild(param_1->system,param_1->elemHandle);
+      pFVar20 = FX_SparkFountainFromHandle_Const(param_1->system,uVar23);
+      if ((pFVar20->header).isValid != '\0') {
+        bVar3 = (pFVar20->header).clusterCount;
+        uVar37 = (ulonglong)bVar3;
+        if (uVar37 != 0) {
+          FX_DrawElem_Cloud_PopulateGfxParticleCloud(param_1,'\x04',aGStack_130);
+          pfVar25 = &local_188;
+          bVar24 = R_ReserveSparkMeshVerts((uint)bVar3 << 9,(int *)pfVar25);
+          if (bVar24) {
             local_184 = R_GetSparkMeshVerts((int)local_188);
             FX_DrawElem_SparkFountain_GetBoostedTime
-                      (pFVar12->boostTime,pFVar12->boostFactor,local_184->xyz,pfVar26,
-                       pFVar20->msecElapsed);
-            dVar57 = (double)(float)((double)local_190 * dVar57);
-            FVar22 = FX_GetElemVisuals(pFVar20->elemDef,pFVar20->randomSeed);
-            if (FVar22.anonymous == (void *)0x0) {
+                      (pFVar12->boostTime,pFVar12->boostFactor,local_184->xyz,pfVar25,
+                       param_1->msecElapsed);
+            dVar56 = (double)(float)((double)local_190 * dVar56);
+            FVar21 = FX_GetElemVisuals(param_1->elemDef,param_1->randomSeed);
+            if (FVar21.anonymous == (void *)0x0) {
               MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_sparkfountain.cpp"
                               ,0x3b3,0,"%s");
             }
-            dVar50 = 1.0;
-            uVar13 = 1 << ((pFVar20->elemDef->atlas).rowIndexBits & 0x3f);
-            uVar14 = 1 << ((pFVar20->elemDef->atlas).colIndexBits & 0x3f);
-            uVar35 = (ulonglong)uVar14;
-            dVar52 = (double)(float)(1.0 / (double)(longlong)(int)uVar14);
-            dVar51 = (double)(float)(1.0 / (double)(longlong)(int)uVar13);
+            dVar49 = 1.0;
+            uVar13 = 1 << ((param_1->elemDef->atlas).rowIndexBits & 0x3f);
+            uVar14 = 1 << ((param_1->elemDef->atlas).colIndexBits & 0x3f);
+            uVar34 = (ulonglong)uVar14;
+            dVar51 = (double)(float)(1.0 / (double)(longlong)(int)uVar14);
+            dVar50 = (double)(float)(1.0 / (double)(longlong)(int)uVar13);
             if (0x10 < bVar3) {
               MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_sparkfountain.cpp"
                               ,0x3bc,0,"%s\n\t(sparkClusterCount) = %i");
             }
-            iVar33 = 0;
+            iVar32 = 0;
             if (bVar3 != 0) {
-              dVar48 = (double)local_180._0_4_;
-              puVar34 = pFVar21->clusters;
-              dVar54 = 0.5;
-              dVar53 = 0.3333333432674408;
-              dVar58 = 0.0;
+              dVar47 = (double)local_180._0_4_;
+              puVar33 = pFVar20->clusters;
+              dVar53 = 0.5;
+              dVar52 = 0.3333333432674408;
+              dVar57 = 0.0;
               do {
-                pFVar23 = FX_SparkFountainClusterFromHandle_Const(pFVar20->system,*puVar34);
-                lVar37 = (longlong)(int)pFVar23;
-                uVar36 = 0;
+                pFVar22 = FX_SparkFountainClusterFromHandle_Const(param_1->system,*puVar33);
+                lVar36 = (longlong)(int)pFVar22;
+                uVar35 = 0;
                 do {
-                  dVar41 = dVar48;
-                  if (dVar58 < dVar49) {
-                    for (; dVar49 < dVar41; dVar41 = (double)(float)(dVar41 - dVar49)) {
+                  dVar40 = dVar47;
+                  if (dVar57 < dVar48) {
+                    for (; dVar48 < dVar40; dVar40 = (double)(float)(dVar40 - dVar48)) {
                     }
                   }
-                  uVar30 = 0;
-                  lVar29 = lVar37;
+                  uVar29 = 0;
+                  lVar28 = lVar36;
                   do {
-                    if ((double)(float)(dVar41 - dVar57) < (double)*(float *)lVar29) break;
-                    uVar30 = uVar30 + 1;
-                    lVar29 = lVar29 + 4;
-                  } while ((int)uVar30 != 4);
-                  uVar27 = uVar30;
-                  if ((int)uVar30 != 4) {
-                    lVar29 = (uVar30 & 0x3fffffff) * 4 + lVar37;
+                    if ((double)(float)(dVar40 - dVar56) < (double)*(float *)lVar28) break;
+                    uVar29 = uVar29 + 1;
+                    lVar28 = lVar28 + 4;
+                  } while ((int)uVar29 != 4);
+                  uVar26 = uVar29;
+                  if ((int)uVar29 != 4) {
+                    lVar28 = (uVar29 & 0x3fffffff) * 4 + lVar36;
                     do {
-                      if (dVar41 < (double)*(float *)lVar29) break;
-                      uVar27 = uVar27 + 1;
-                      lVar29 = lVar29 + 4;
-                    } while ((int)uVar27 != 4);
+                      if (dVar40 < (double)*(float *)lVar28) break;
+                      uVar26 = uVar26 + 1;
+                      lVar28 = lVar28 + 4;
+                    } while ((int)uVar26 != 4);
                   }
-                  iVar28 = (int)uVar27;
-                  dVar40 = (double)(float)(dVar41 - dVar57);
-                  if ((int)uVar30 == 0) {
-                    if (iVar28 != 0) {
-                      uVar30 = 1;
-                      dVar40 = dVar58;
+                  iVar27 = (int)uVar26;
+                  dVar39 = (double)(float)(dVar40 - dVar56);
+                  if ((int)uVar29 == 0) {
+                    if (iVar27 != 0) {
+                      uVar29 = 1;
+                      dVar39 = dVar57;
                       goto LAB_8243ca78;
                     }
                   }
                   else {
 LAB_8243ca78:
-                    uVar1 = (int)uVar36 / (int)uVar14;
+                    uVar1 = (int)uVar35 / (int)uVar14;
                     local_180 = (longlong)(int)(uVar1 - ((int)uVar1 / (int)uVar13) * uVar13);
-                    trapWord(6,uVar35,0);
-                    trapWord(6,uVar35,0);
+                    trapWord(6,uVar34,0);
+                    trapWord(6,uVar34,0);
                     trapWord(6,(ulonglong)uVar13,0);
-                    trapWord(5,uVar35 & ~((((ulonglong)uVar36 & 0x7fffffff) << 1 |
-                                          (ulonglong)(uVar36 >> 0x1f)) - 1),0xffff);
-                    trapWord(5,uVar35 & ~((((ulonglong)uVar36 & 0x7fffffff) << 1 |
-                                          (ulonglong)(uVar36 >> 0x1f)) - 1),0xffff);
+                    trapWord(5,uVar34 & ~((((ulonglong)uVar35 & 0x7fffffff) << 1 |
+                                          (ulonglong)(uVar35 >> 0x1f)) - 1),0xffff);
+                    trapWord(5,uVar34 & ~((((ulonglong)uVar35 & 0x7fffffff) << 1 |
+                                          (ulonglong)(uVar35 >> 0x1f)) - 1),0xffff);
                     trapWord(5,(ulonglong)uVar13 &
                                ~((((ulonglong)uVar1 & 0x7fffffff) << 1 | (ulonglong)(uVar1 >> 0x1f))
                                 - 1),0xffff);
-                    iVar31 = (int)uVar30;
-                    iVar19 = (int)lVar37;
-                    if (iVar31 == iVar28) {
-                      iVar15 = iVar31 * 0xc + iVar19;
-                      if (iVar28 == 4) {
+                    iVar30 = (int)uVar29;
+                    iVar19 = (int)lVar36;
+                    if (iVar30 == iVar27) {
+                      iVar15 = iVar30 * 0xc + iVar19;
+                      if (iVar27 == 4) {
                         fVar4 = *(float *)(iVar15 + 4);
-                        pfVar32 = local_170 + 3;
+                        pfVar31 = local_170 + 3;
                         fVar5 = *(float *)(iVar15 + 8);
                         fVar6 = *(float *)(iVar15 + 0xc);
-                        lVar29 = 4;
+                        lVar28 = 4;
                         do {
-                          pfVar32[1] = fVar4;
-                          pfVar32[2] = fVar5;
-                          pfVar32 = pfVar32 + 3;
-                          *pfVar32 = fVar6;
-                          lVar29 = lVar29 + -1;
-                          pfVar26 = regularTimes;
-                        } while (lVar29 != 0);
+                          pfVar31[1] = fVar4;
+                          pfVar31[2] = fVar5;
+                          pfVar31 = pfVar31 + 3;
+                          *pfVar31 = fVar6;
+                          lVar28 = lVar28 + -1;
+                          pfVar25 = regularTimes;
+                        } while (lVar28 != 0);
                       }
                       else {
-                        dVar43 = dVar47;
-                        if (iVar31 == 4) {
-                          dVar43 = dVar58;
+                        dVar42 = dVar46;
+                        if (iVar30 == 4) {
+                          dVar42 = dVar57;
                         }
-                        pfVar26 = local_170 + 3;
-                        fVar4 = (float)(dVar40 - (double)*(float *)((int)((uVar30 & 0xffffffff) << 2
+                        pfVar25 = local_170 + 3;
+                        fVar4 = (float)(dVar39 - (double)*(float *)((int)((uVar29 & 0xffffffff) << 2
                                                                          ) + iVar19 + -4));
                         fVar5 = *(float *)(iVar15 + 0x34);
                         fVar6 = *(float *)(iVar15 + 4);
                         fVar7 = *(float *)(iVar15 + 0x38);
                         fVar8 = *(float *)(iVar15 + 8);
-                        lVar29 = 4;
+                        lVar28 = 4;
                         fVar9 = *(float *)(iVar15 + 0x3c);
                         fVar10 = *(float *)(iVar15 + 0xc);
                         do {
@@ -1506,73 +1462,73 @@ LAB_8243ca78:
                           fVar16 = fVar9 * fVar4;
                           fVar17 = fVar5 * fVar4;
                           fVar18 = fVar7 * fVar4;
-                          fVar4 = (float)((double)(float)(dVar41 - dVar40) * dVar53) + fVar4;
-                          dVar42 = (double)(float)((double)fVar2 * dVar54);
-                          fVar2 = (float)(dVar42 * dVar58);
-                          pfVar26[1] = fVar17 + fVar6 + fVar2;
-                          pfVar26[2] = fVar18 + fVar8 + fVar2;
-                          pfVar26 = pfVar26 + 3;
-                          *pfVar26 = (float)(dVar42 * dVar43 + (double)fVar16) + fVar10;
-                          lVar29 = lVar29 + -1;
-                        } while (lVar29 != 0);
-                        pfVar26 = regularTimes;
+                          fVar4 = (float)((double)(float)(dVar40 - dVar39) * dVar52) + fVar4;
+                          dVar41 = (double)(float)((double)fVar2 * dVar53);
+                          fVar2 = (float)(dVar41 * dVar57);
+                          pfVar25[1] = fVar17 + fVar6 + fVar2;
+                          pfVar25[2] = fVar18 + fVar8 + fVar2;
+                          pfVar25 = pfVar25 + 3;
+                          *pfVar25 = (float)(dVar41 * dVar42 + (double)fVar16) + fVar10;
+                          lVar28 = lVar28 + -1;
+                        } while (lVar28 != 0);
+                        pfVar25 = regularTimes;
                       }
                     }
                     else {
-                      dVar56 = (double)*(float *)((int)((uVar27 & 0xffffffff) << 2) + iVar19 + -4);
-                      dVar55 = (double)(float)(dVar50 / (double)(float)(dVar41 - dVar40));
-                      iVar15 = iVar31 * 0xc + iVar19;
-                      dVar43 = dVar40 - (double)*(float *)((int)((uVar30 & 0xffffffff) << 2) +
+                      dVar55 = (double)*(float *)((int)((uVar26 & 0xffffffff) << 2) + iVar19 + -4);
+                      dVar54 = (double)(float)(dVar49 / (double)(float)(dVar40 - dVar39));
+                      iVar15 = iVar30 * 0xc + iVar19;
+                      dVar42 = dVar39 - (double)*(float *)((int)((uVar29 & 0xffffffff) << 2) +
                                                            iVar19 + -4);
-                      iVar19 = iVar28 * 0xc + iVar19;
-                      dVar42 = (double)(float)((double)(float)(dVar56 - dVar40) * dVar54);
-                      dVar40 = dVar47;
-                      if (iVar31 == 4) {
-                        dVar40 = dVar58;
+                      iVar19 = iVar27 * 0xc + iVar19;
+                      dVar41 = (double)(float)((double)(float)(dVar55 - dVar39) * dVar53);
+                      dVar39 = dVar46;
+                      if (iVar30 == 4) {
+                        dVar39 = dVar57;
                       }
                       fVar4 = *(float *)(iVar15 + 0x34);
                       fVar5 = *(float *)(iVar15 + 4);
                       fVar6 = *(float *)(iVar15 + 0x38);
-                      pfVar26 = &fStack_174;
+                      pfVar25 = &fStack_174;
                       fVar7 = *(float *)(iVar15 + 8);
                       fVar8 = *(float *)(iVar15 + 0x3c);
-                      pfVar32 = local_170 + 3;
+                      pfVar31 = local_170 + 3;
                       fVar9 = *(float *)(iVar15 + 0xc);
-                      lVar29 = 2;
-                      dVar44 = dVar58;
+                      lVar28 = 2;
+                      dVar43 = dVar57;
                       do {
-                        dVar39 = (double)(float)dVar43;
-                        pfVar26 = pfVar26 + 1;
-                        *pfVar26 = (float)dVar44;
-                        dVar43 = dVar42 + dVar39;
-                        dVar44 = (double)(float)(dVar44 + (double)(float)(dVar42 * dVar55));
-                        dVar45 = (double)(float)((double)(float)(dVar39 * dVar39) * dVar54);
-                        fVar10 = (float)(dVar45 * dVar58);
-                        pfVar32[1] = (float)((double)fVar4 * dVar39 + (double)fVar5) + fVar10;
-                        pfVar32[2] = (float)((double)fVar6 * dVar39 + (double)fVar7) + fVar10;
-                        pfVar32 = pfVar32 + 3;
-                        *pfVar32 = (float)(dVar45 * dVar40 + (double)(float)((double)fVar8 * dVar39)
+                        dVar38 = (double)(float)dVar42;
+                        pfVar25 = pfVar25 + 1;
+                        *pfVar25 = (float)dVar43;
+                        dVar42 = dVar41 + dVar38;
+                        dVar43 = (double)(float)(dVar43 + (double)(float)(dVar41 * dVar54));
+                        dVar44 = (double)(float)((double)(float)(dVar38 * dVar38) * dVar53);
+                        fVar10 = (float)(dVar44 * dVar57);
+                        pfVar31[1] = (float)((double)fVar4 * dVar38 + (double)fVar5) + fVar10;
+                        pfVar31[2] = (float)((double)fVar6 * dVar38 + (double)fVar7) + fVar10;
+                        pfVar31 = pfVar31 + 3;
+                        *pfVar31 = (float)(dVar44 * dVar39 + (double)(float)((double)fVar8 * dVar38)
                                           ) + fVar9;
-                        lVar29 = lVar29 + -1;
-                      } while (lVar29 != 0);
-                      pfVar26 = local_170 + 1;
-                      pfVar32 = afStack_14c;
-                      lVar29 = 2;
-                      if (iVar28 == 4) {
+                        lVar28 = lVar28 + -1;
+                      } while (lVar28 != 0);
+                      pfVar25 = local_170 + 1;
+                      pfVar31 = afStack_14c;
+                      lVar28 = 2;
+                      if (iVar27 == 4) {
                         fVar4 = *(float *)(iVar19 + 4);
                         fVar5 = *(float *)(iVar19 + 8);
                         fVar6 = *(float *)(iVar19 + 0xc);
                         do {
-                          pfVar26 = pfVar26 + 1;
-                          *pfVar26 = (float)dVar44;
-                          dVar44 = (double)(float)((double)(float)((double)(float)(dVar41 - dVar56)
-                                                                  * dVar55) + dVar44);
-                          pfVar32[1] = fVar4;
-                          pfVar32[2] = fVar5;
-                          pfVar32 = pfVar32 + 3;
-                          *pfVar32 = fVar6;
-                          lVar29 = lVar29 + -1;
-                        } while (lVar29 != 0);
+                          pfVar25 = pfVar25 + 1;
+                          *pfVar25 = (float)dVar43;
+                          dVar43 = (double)(float)((double)(float)((double)(float)(dVar40 - dVar55)
+                                                                  * dVar54) + dVar43);
+                          pfVar31[1] = fVar4;
+                          pfVar31[2] = fVar5;
+                          pfVar31 = pfVar31 + 3;
+                          *pfVar31 = fVar6;
+                          lVar28 = lVar28 + -1;
+                        } while (lVar28 != 0);
                       }
                       else {
                         fVar4 = *(float *)(iVar19 + 0x34);
@@ -1581,45 +1537,45 @@ LAB_8243ca78:
                         fVar7 = *(float *)(iVar19 + 8);
                         fVar8 = *(float *)(iVar19 + 0x3c);
                         fVar9 = *(float *)(iVar19 + 0xc);
-                        dVar40 = dVar58;
+                        dVar39 = dVar57;
                         do {
-                          dVar45 = dVar40 * dVar40;
-                          pfVar26 = pfVar26 + 1;
-                          *pfVar26 = (float)dVar44;
-                          dVar43 = (double)fVar4 * dVar40;
-                          dVar42 = (double)fVar6 * dVar40;
-                          dVar39 = (double)fVar8 * dVar40;
-                          dVar40 = (double)(float)((double)(float)(dVar41 - dVar56) + dVar40);
-                          dVar44 = (double)(float)((double)(float)((double)(float)(dVar41 - dVar56)
-                                                                  * dVar55) + dVar44);
-                          fVar10 = (float)((double)(float)((double)(float)dVar45 * dVar54) * dVar58)
+                          dVar44 = dVar39 * dVar39;
+                          pfVar25 = pfVar25 + 1;
+                          *pfVar25 = (float)dVar43;
+                          dVar42 = (double)fVar4 * dVar39;
+                          dVar41 = (double)fVar6 * dVar39;
+                          dVar38 = (double)fVar8 * dVar39;
+                          dVar39 = (double)(float)((double)(float)(dVar40 - dVar55) + dVar39);
+                          dVar43 = (double)(float)((double)(float)((double)(float)(dVar40 - dVar55)
+                                                                  * dVar54) + dVar43);
+                          fVar10 = (float)((double)(float)((double)(float)dVar44 * dVar53) * dVar57)
                           ;
-                          pfVar32[1] = (float)(dVar43 + (double)fVar5) + fVar10;
-                          pfVar32[2] = (float)(dVar42 + (double)fVar7) + fVar10;
-                          pfVar32 = pfVar32 + 3;
-                          *pfVar32 = (float)(dVar39 + (double)fVar9) + fVar10;
-                          lVar29 = lVar29 + -1;
-                        } while (lVar29 != 0);
+                          pfVar31[1] = (float)(dVar42 + (double)fVar5) + fVar10;
+                          pfVar31[2] = (float)(dVar41 + (double)fVar7) + fVar10;
+                          pfVar31 = pfVar31 + 3;
+                          *pfVar31 = (float)(dVar38 + (double)fVar9) + fVar10;
+                          lVar28 = lVar28 + -1;
+                        } while (lVar28 != 0);
                       }
-                      pfVar26 = local_170;
+                      pfVar25 = local_170;
                     }
                     FX_DrawElem_SparkFountain_PopulateVertices
-                              (pFVar20,&local_184,pfVar26,(float (*) [3])(local_170 + 4),
+                              (param_1,&local_184,pfVar25,(float (*) [3])(local_170 + 4),
                                (float)((double)(longlong)
-                                               (int)(uVar36 - ((int)uVar36 / (int)uVar14) * uVar14)
-                                      * dVar52),(float)dVar52,(float)((double)local_180 * dVar51),
-                               (float)dVar51);
-                    lVar37 = lVar37 + 0x70;
-                    dVar48 = (double)(float)(dVar48 - dVar46);
-                    iVar33 = iVar33 + 1;
+                                               (int)(uVar35 - ((int)uVar35 / (int)uVar14) * uVar14)
+                                      * dVar51),(float)dVar51,(float)((double)local_180 * dVar50),
+                               (float)dVar50);
+                    lVar36 = lVar36 + 0x70;
+                    dVar47 = (double)(float)(dVar47 - dVar45);
+                    iVar32 = iVar32 + 1;
                   }
-                  uVar36 = uVar36 + 1;
-                } while (uVar36 != 0x40);
-                uVar38 = uVar38 - 1;
-                puVar34 = puVar34 + 1;
-              } while (uVar38 != 0);
+                  uVar35 = uVar35 + 1;
+                } while (uVar35 != 0x40);
+                uVar37 = uVar37 - 1;
+                puVar33 = puVar33 + 1;
+              } while (uVar37 != 0);
             }
-            R_AddSparkSurf(FVar22.material,(r_double_index_t *)0x0,iVar33 * 0x12,(uint)local_188,
+            R_AddSparkSurf(FVar21.material,(r_double_index_t *)0x0,iVar32 * 0x12,(uint)local_188,
                            aGStack_130);
           }
         }
@@ -1627,8 +1583,6 @@ LAB_8243ca78:
     }
   }
   PIXEndNamedEvent();
-  __restfpr();
-  __restgprlr_21();
   return;
 }
 

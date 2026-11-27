@@ -2,6 +2,8 @@
 
 // 82732178  R_AddCellSceneEntSurfacesInFrustumCmd  (gfx_d3d/r_dpvs_sceneent.cpp:60)
 
+/* WARNING: Function: __savegprlr_17 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_17 replaced with injection: xenon_save_restore */
 /* WARNING: Type propagation algorithm not settling */
 /* WARNING: Enum "WorkerCmdType": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
@@ -20,17 +22,16 @@ void R_AddCellSceneEntSurfacesInFrustumCmd(void *param_1)
   ushort *puVar9;
   ushort *puVar10;
   uchar *puVar11;
-  int *piVar12;
+  int iVar12;
   int iVar13;
-  int iVar14;
-  uint uVar15;
-  float *pfVar16;
-  GfxWorldDpvsPlanes *pGVar17;
-  uint uVar18;
-  int iVar19;
-  ulonglong uVar20;
-  int iVar21;
-  double dVar22;
+  uint uVar14;
+  float *pfVar15;
+  GfxWorldDpvsPlanes *pGVar16;
+  uint uVar17;
+  int iVar18;
+  ulonglong uVar19;
+  int iVar20;
+  double dVar21;
   int local_b0;
   int local_ac;
   ushort local_a8;
@@ -38,11 +39,10 @@ void R_AddCellSceneEntSurfacesInFrustumCmd(void *param_1)
   uchar *local_a4;
   SpuBitArrayIterator local_a0 [8];
   
-  piVar12 = (int *)__savegprlr_17(param_1);
   LVar8 = scene.dpvs.localClientNum;
   pGVar7 = rgp.world;
   uVar6 = gfxCfg.entCount >> 5;
-  pGVar17 = &(rgp.world)->dpvsPlanes;
+  pGVar16 = &(rgp.world)->dpvsPlanes;
   if (gfxCfg.maxClientViews <= scene.dpvs.localClientNum) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dpvs_sceneent.cpp",
                     0x8f,0,
@@ -50,53 +50,53 @@ void R_AddCellSceneEntSurfacesInFrustumCmd(void *param_1)
   }
   puVar10 = scene.dpvs.sceneDObjIndex;
   puVar9 = scene.dpvs.sceneXModelIndex;
-  uVar18 = piVar12[1];
-  uVar3 = *(ushort *)((int)piVar12 + 10);
-  iVar14 = *piVar12;
-  bVar1 = *(byte *)(piVar12 + 2);
-  bVar2 = *(byte *)((int)piVar12 + 9);
+  uVar17 = *(uint *)((int)param_1 + 4);
+  uVar3 = *(ushort *)((int)param_1 + 10);
+  iVar13 = *(int *)param_1;
+  bVar1 = *(byte *)((int)param_1 + 8);
+  bVar2 = *(byte *)((int)param_1 + 9);
   pGVar4 = scene.dpvs.entInfo[LVar8];
-  if ((uint)pGVar17->cellCount <= uVar18) {
+  if ((uint)pGVar16->cellCount <= uVar17) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dpvs_sceneent.cpp",
                     0x9b,0,
                     "cellIndex doesn\'t index worldDpvsPlanes->cellCount\n\t%i not in [0, %i)");
   }
   local_a8 = (ushort)bVar1;
-  local_a6 = (undefined2)uVar18;
-  uVar20 = (longlong)(int)uVar6 * (longlong)(int)LVar8;
+  local_a6 = (undefined2)uVar17;
+  uVar19 = (longlong)(int)uVar6 * (longlong)(int)LVar8;
   local_a4 = scene.dpvs.entVisData[uVar3];
-  local_ac = iVar14;
-  if (0xff < (uVar20 & 0xffffffff)) {
+  local_ac = iVar13;
+  if (0xff < (uVar19 & 0xffffffff)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dpvs_sceneent.cpp",
                     0xa4,0,"offset doesn\'t index MAX_TOTAL_ENT_COUNT >> 5\n\t%i not in [0, %i)");
   }
   puVar11 = local_a4;
-  uVar20 = ((ulonglong)uVar18 & 0xffffff) * 0x100 + uVar20;
+  uVar19 = ((ulonglong)uVar17 & 0xffffff) * 0x100 + uVar19;
   local_a0[0].wordIndex = 0;
   local_a0[0].bits = 0;
   local_a0[0].bitArray =
-       (uint *)((int)((uVar20 & 0xffffffff) << 2) + (int)(pGVar7->dpvsPlanes).sceneEntCellBits);
+       (uint *)((int)((uVar19 & 0xffffffff) << 2) + (int)(pGVar7->dpvsPlanes).sceneEntCellBits);
   if (uVar6 != 0) {
     local_a0[0].bits = *local_a0[0].bitArray;
   }
-  uVar18 = (uint)bVar1;
+  uVar17 = (uint)bVar1;
   local_a0[0].wordCount = uVar6;
-  if (uVar18 < bVar2) {
+  if (uVar17 < bVar2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_dpvs_sceneent.cpp",
                     0xbb,0,"%s");
   }
-  iVar21 = (uint)bVar1 - (uint)bVar2;
-  iVar19 = (uint)bVar2 * 0x10 + iVar14;
-  dVar22 = 0.0;
+  iVar20 = (uint)bVar1 - (uint)bVar2;
+  iVar18 = (uint)bVar2 * 0x10 + iVar13;
+  dVar21 = 0.0;
 LAB_8273231c:
   do {
     do {
-      iVar13 = SpuBitArrayIterator::Advance(local_a0);
-      if (iVar13 == 0) {
+      iVar12 = SpuBitArrayIterator::Advance(local_a0);
+      if (iVar12 == 0) {
         local_a0[0].wordIndex = 0;
         local_a0[0].bits = 0;
         local_a0[0].bitArray =
-             (uint *)((int)((((ulonglong)(uint)pGVar17->cellCount & 0xffffff) * 0x100 + uVar20 &
+             (uint *)((int)((((ulonglong)(uint)pGVar16->cellCount & 0xffffff) * 0x100 + uVar19 &
                             0xffffffff) << 2) + (int)(pGVar7->dpvsPlanes).sceneEntCellBits);
         local_a0[0].wordCount = uVar6;
         if (uVar6 != 0) {
@@ -105,82 +105,81 @@ LAB_8273231c:
 LAB_82732534:
         do {
           do {
-            iVar14 = SpuBitArrayIterator::Advance(local_a0);
-            if (iVar14 == 0) {
-              __restgprlr_17();
+            iVar13 = SpuBitArrayIterator::Advance(local_a0);
+            if (iVar13 == 0) {
               return;
             }
           } while (puVar11[local_a0[0].index] != '\0');
-          iVar14 = 0;
+          iVar13 = 0;
           pGVar5 = pGVar4[local_a0[0].index].bmodel;
-          if (0 < iVar21) {
-            pfVar16 = (float *)(iVar19 + 4);
+          if (0 < iVar20) {
+            pfVar15 = (float *)(iVar18 + 4);
             do {
-              if ((double)((pGVar5->writable).bounds.midPoint[1] * *pfVar16 +
-                           (pGVar5->writable).bounds.midPoint[2] * pfVar16[1] +
-                           (pGVar5->writable).bounds.midPoint[0] * pfVar16[-1] +
-                           ABS(*pfVar16) * (pGVar5->writable).bounds.halfSize[1] +
-                           ABS(pfVar16[-1]) * (pGVar5->writable).bounds.halfSize[0] +
-                           ABS(pfVar16[1]) * (pGVar5->writable).bounds.halfSize[2] + pfVar16[2]) <=
-                  dVar22) goto LAB_82732534;
-              iVar14 = iVar14 + 1;
-              pfVar16 = pfVar16 + 4;
-            } while (iVar14 < iVar21);
+              if ((double)((pGVar5->writable).bounds.midPoint[1] * *pfVar15 +
+                           (pGVar5->writable).bounds.midPoint[2] * pfVar15[1] +
+                           (pGVar5->writable).bounds.midPoint[0] * pfVar15[-1] +
+                           ABS(*pfVar15) * (pGVar5->writable).bounds.halfSize[1] +
+                           ABS(pfVar15[-1]) * (pGVar5->writable).bounds.halfSize[0] +
+                           ABS(pfVar15[1]) * (pGVar5->writable).bounds.halfSize[2] + pfVar15[2]) <=
+                  dVar21) goto LAB_82732534;
+              iVar13 = iVar13 + 1;
+              pfVar15 = pfVar15 + 4;
+            } while (iVar13 < iVar20);
           }
           local_a4[local_a0[0].index] = '\x01';
         } while( true );
       }
     } while (puVar11[local_a0[0].index] != '\0');
-    uVar15 = (uint)puVar10[local_a0[0].index];
-    if (uVar15 == 0xffff) {
-      uVar15 = (uint)puVar9[local_a0[0].index];
-      if (uVar15 != 0xffff) {
-        iVar13 = 0;
-        if (0 < iVar21) {
-          pfVar16 = (float *)(iVar19 + 8);
+    uVar14 = (uint)puVar10[local_a0[0].index];
+    if (uVar14 == 0xffff) {
+      uVar14 = (uint)puVar9[local_a0[0].index];
+      if (uVar14 != 0xffff) {
+        iVar12 = 0;
+        if (0 < iVar20) {
+          pfVar15 = (float *)(iVar18 + 8);
           do {
-            if ((double)(scene.sceneModel[uVar15].placement.base.origin[2] * *pfVar16 +
-                         scene.sceneModel[uVar15].placement.base.origin[0] * pfVar16[-2] +
-                         scene.sceneModel[uVar15].placement.base.origin[1] * pfVar16[-1] +
-                         pGVar4[local_a0[0].index].radius + pfVar16[1]) <= dVar22)
+            if ((double)(scene.sceneModel[uVar14].placement.base.origin[2] * *pfVar15 +
+                         scene.sceneModel[uVar14].placement.base.origin[0] * pfVar15[-2] +
+                         scene.sceneModel[uVar14].placement.base.origin[1] * pfVar15[-1] +
+                         pGVar4[local_a0[0].index].radius + pfVar15[1]) <= dVar21)
             goto LAB_8273231c;
-            iVar13 = iVar13 + 1;
-            pfVar16 = pfVar16 + 4;
-          } while (iVar13 < iVar21);
+            iVar12 = iVar12 + 1;
+            pfVar15 = pfVar15 + 4;
+          } while (iVar12 < iVar20);
         }
         local_a4[local_a0[0].index] = '\x01';
       }
       goto LAB_8273231c;
     }
-    iVar13 = 0;
-    if (0 < iVar21) {
-      pfVar16 = (float *)(iVar19 + 8);
+    iVar12 = 0;
+    if (0 < iVar20) {
+      pfVar15 = (float *)(iVar18 + 8);
       do {
-        if ((double)(scene.sceneDObj[uVar15].placement.origin[2] * *pfVar16 +
-                     scene.sceneDObj[uVar15].placement.origin[0] * pfVar16[-2] +
-                     scene.sceneDObj[uVar15].placement.origin[1] * pfVar16[-1] +
-                     pGVar4[local_a0[0].index].radius + pfVar16[1]) <= dVar22) goto LAB_8273231c;
-        iVar13 = iVar13 + 1;
-        pfVar16 = pfVar16 + 4;
-      } while (iVar13 < iVar21);
+        if ((double)(scene.sceneDObj[uVar14].placement.origin[2] * *pfVar15 +
+                     scene.sceneDObj[uVar14].placement.origin[0] * pfVar15[-2] +
+                     scene.sceneDObj[uVar14].placement.origin[1] * pfVar15[-1] +
+                     pGVar4[local_a0[0].index].radius + pfVar15[1]) <= dVar21) goto LAB_8273231c;
+        iVar12 = iVar12 + 1;
+        pfVar15 = pfVar15 + 4;
+      } while (iVar12 < iVar20);
     }
-    iVar13 = 0;
-    if (uVar18 != 0) {
-      pfVar16 = (float *)(iVar14 + 4);
+    iVar12 = 0;
+    if (uVar17 != 0) {
+      pfVar15 = (float *)(iVar13 + 4);
       do {
-        if ((double)(scene.sceneDObj[uVar15].cull.bounds.midPoint[1] * *pfVar16 +
-                     scene.sceneDObj[uVar15].cull.bounds.midPoint[2] * pfVar16[1] +
-                     scene.sceneDObj[uVar15].cull.bounds.midPoint[0] * pfVar16[-1] +
-                     ABS(*pfVar16) * scene.sceneDObj[uVar15].cull.bounds.halfSize[1] +
-                     ABS(pfVar16[-1]) * scene.sceneDObj[uVar15].cull.bounds.halfSize[0] +
-                     ABS(pfVar16[1]) * scene.sceneDObj[uVar15].cull.bounds.halfSize[2] + pfVar16[2])
-            <= dVar22) goto LAB_8273231c;
-        iVar13 = iVar13 + 1;
-        pfVar16 = pfVar16 + 4;
-      } while (iVar13 < (int)uVar18);
+        if ((double)(scene.sceneDObj[uVar14].cull.bounds.midPoint[1] * *pfVar15 +
+                     scene.sceneDObj[uVar14].cull.bounds.midPoint[2] * pfVar15[1] +
+                     scene.sceneDObj[uVar14].cull.bounds.midPoint[0] * pfVar15[-1] +
+                     ABS(*pfVar15) * scene.sceneDObj[uVar14].cull.bounds.halfSize[1] +
+                     ABS(pfVar15[-1]) * scene.sceneDObj[uVar14].cull.bounds.halfSize[0] +
+                     ABS(pfVar15[1]) * scene.sceneDObj[uVar14].cull.bounds.halfSize[2] + pfVar15[2])
+            <= dVar21) goto LAB_8273231c;
+        iVar12 = iVar12 + 1;
+        pfVar15 = pfVar15 + 4;
+      } while (iVar12 < (int)uVar17);
     }
-    local_b0 = uVar15 * 0x78 + -0x7b83bb04;
-    if (scene.sceneDObj[uVar15].cull.state < 2) {
+    local_b0 = uVar14 * 0x78 + -0x7b83bb04;
+    if (scene.sceneDObj[uVar14].cull.state < 2) {
       R_AddWorkerCmd(WRKCMD_DPVS_ENTITY,&local_b0);
     }
     else {

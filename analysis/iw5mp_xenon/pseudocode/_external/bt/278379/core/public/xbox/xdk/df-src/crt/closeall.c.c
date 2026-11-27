@@ -2,6 +2,8 @@
 
 // 82924B98  _fcloseall  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/closeall.c:43)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 int _fcloseall(void)
@@ -13,7 +15,6 @@ int _fcloseall(void)
   int iVar4;
   int local_40;
   
-  __savegprlr_26();
   iVar3 = 0;
   local_40 = 0;
   _lock(1);
@@ -31,7 +32,6 @@ int _fcloseall(void)
     }
   }
   FUN_82924c58();
-  iVar3 = __restgprlr_26(local_40);
-  return iVar3;
+  return local_40;
 }
 

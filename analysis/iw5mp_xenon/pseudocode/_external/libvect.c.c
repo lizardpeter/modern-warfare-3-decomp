@@ -108,150 +108,137 @@ void ScaleVector(float *param_1,int param_2,float param_3,float *param_4)
 
 // 828C9238  FindMaxValueFlt  (<external>/Xenon/mar09/core/private/xam/codecs/nci/cmn/src/libvect.c:334)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void FindMaxValueFlt(float *param_1,int param_2,int *param_3,float *param_4)
 
 {
   float fVar1;
-  float *pfVar2;
-  longlong lVar3;
-  int iVar4;
-  longlong lVar5;
-  longlong lVar6;
-  ulonglong uVar7;
-  ulonglong uVar8;
-  int iVar9;
-  ulonglong uVar10;
-  float fVar12;
-  ulonglong uVar13;
+  int iVar2;
+  int iVar3;
+  float *pfVar4;
+  int iVar5;
+  int iVar6;
+  int iVar7;
+  float fVar8;
   float local_30;
-  int iVar11;
   
-  lVar6 = (longlong)param_2;
-  lVar3 = __savegprlr_29(param_1);
-  local_30 = *(float *)lVar3;
-  uVar10 = 0;
-  iVar11 = 0;
-  uVar13 = 0;
-  uVar8 = 1;
-  iVar4 = (int)lVar6;
-  fVar12 = local_30;
+  local_30 = *param_1;
+  iVar7 = 0;
+  iVar6 = 0;
+  iVar5 = 1;
+  fVar8 = local_30;
   if ((int)local_30 < 0) {
-    uVar7 = 2;
-    lVar5 = lVar3 + 0xc;
+    iVar3 = 2;
+    pfVar4 = param_1 + 3;
+    iVar7 = 0;
     do {
-      if (iVar4 < (int)uVar7 + 3) break;
-      pfVar2 = (float *)lVar5;
-      fVar1 = pfVar2[-2];
+      if (param_2 < iVar3 + 3) break;
+      fVar1 = pfVar4[-2];
       if ((int)local_30 < (int)fVar1) {
-        uVar13 = uVar8;
+        local_30 = fVar1;
+        iVar6 = iVar5;
+      }
+      if ((int)fVar1 < (int)fVar8) {
+        fVar8 = fVar1;
+        iVar7 = iVar5;
+      }
+      fVar1 = pfVar4[-1];
+      if ((int)local_30 < (int)fVar1) {
+        local_30 = fVar1;
+        iVar6 = iVar3;
+      }
+      if ((int)fVar1 < (int)fVar8) {
+        fVar8 = fVar1;
+        iVar7 = iVar3;
+      }
+      fVar1 = *pfVar4;
+      if ((int)local_30 < (int)fVar1) {
+        iVar6 = iVar3 + 1;
         local_30 = fVar1;
       }
-      if ((int)fVar1 < (int)fVar12) {
-        uVar10 = uVar8;
-        fVar12 = fVar1;
+      if ((int)fVar1 < (int)fVar8) {
+        iVar7 = iVar3 + 1;
+        fVar8 = fVar1;
       }
-      fVar1 = pfVar2[-1];
+      fVar1 = pfVar4[1];
       if ((int)local_30 < (int)fVar1) {
-        uVar13 = uVar7;
+        iVar6 = iVar3 + 2;
         local_30 = fVar1;
       }
-      if ((int)fVar1 < (int)fVar12) {
-        uVar10 = uVar7;
-        fVar12 = fVar1;
+      if ((int)fVar1 < (int)fVar8) {
+        iVar7 = iVar3 + 2;
+        fVar8 = fVar1;
       }
-      fVar1 = *pfVar2;
-      if ((int)local_30 < (int)fVar1) {
-        uVar13 = uVar7 + 1;
-        local_30 = fVar1;
-      }
-      if ((int)fVar1 < (int)fVar12) {
-        uVar10 = uVar7 + 1;
-        fVar12 = fVar1;
-      }
-      fVar1 = pfVar2[1];
-      if ((int)local_30 < (int)fVar1) {
-        uVar13 = uVar7 + 2;
-        local_30 = fVar1;
-      }
-      if ((int)fVar1 < (int)fVar12) {
-        uVar10 = uVar7 + 2;
-        fVar12 = fVar1;
-      }
-      uVar8 = uVar8 + 4;
-      lVar5 = lVar5 + 0x10;
-      uVar7 = uVar7 + 4;
+      iVar5 = iVar5 + 4;
+      pfVar4 = pfVar4 + 4;
+      iVar3 = iVar3 + 4;
     } while ((int)local_30 < 0);
-    iVar11 = (int)uVar10;
     if ((int)local_30 < 0) {
-      lVar5 = (uVar8 & 0x3fffffff) * 4 + lVar3;
+      pfVar4 = param_1 + iVar5;
       do {
-        iVar11 = (int)uVar10;
-        if (iVar4 <= (int)uVar8) break;
-        fVar1 = *(float *)lVar5;
+        if (param_2 <= iVar5) break;
+        fVar1 = *pfVar4;
         if ((int)local_30 < (int)fVar1) {
-          uVar13 = uVar8;
           local_30 = fVar1;
+          iVar6 = iVar5;
         }
-        if ((int)fVar1 < (int)fVar12) {
-          uVar10 = uVar8;
-          fVar12 = fVar1;
+        if ((int)fVar1 < (int)fVar8) {
+          fVar8 = fVar1;
+          iVar7 = iVar5;
         }
-        iVar11 = (int)uVar10;
-        uVar8 = uVar8 + 1;
-        lVar5 = lVar5 + 4;
+        iVar5 = iVar5 + 1;
+        pfVar4 = pfVar4 + 1;
       } while ((int)local_30 < 0);
     }
   }
-  if ((int)(uVar8 + 4) <= iVar4) {
-    lVar5 = (uVar8 + 2 & 0x3fffffff) * 4 + lVar3;
-    uVar10 = uVar8 + 4;
-    uVar7 = uVar8;
+  if (iVar5 + 4 <= param_2) {
+    pfVar4 = param_1 + iVar5 + 2;
+    iVar3 = iVar5;
+    iVar2 = iVar5 + 4;
     do {
-      uVar8 = uVar10;
-      pfVar2 = (float *)lVar5;
-      if ((int)local_30 < (int)pfVar2[-2]) {
-        uVar13 = uVar7;
-        local_30 = pfVar2[-2];
+      iVar5 = iVar2;
+      if ((int)local_30 < (int)pfVar4[-2]) {
+        local_30 = pfVar4[-2];
+        iVar6 = iVar3;
       }
-      if ((int)local_30 < (int)pfVar2[-1]) {
-        uVar13 = uVar7 + 1;
-        local_30 = pfVar2[-1];
+      if ((int)local_30 < (int)pfVar4[-1]) {
+        iVar6 = iVar3 + 1;
+        local_30 = pfVar4[-1];
       }
-      if ((int)local_30 < (int)*pfVar2) {
-        uVar13 = uVar7 + 2;
-        local_30 = *pfVar2;
+      if ((int)local_30 < (int)*pfVar4) {
+        iVar6 = iVar3 + 2;
+        local_30 = *pfVar4;
       }
-      if ((int)local_30 < (int)pfVar2[1]) {
-        uVar13 = uVar7 + 3;
-        local_30 = pfVar2[1];
+      if ((int)local_30 < (int)pfVar4[1]) {
+        iVar6 = iVar3 + 3;
+        local_30 = pfVar4[1];
       }
-      lVar5 = lVar5 + 0x10;
-      uVar10 = uVar8 + 4;
-      uVar7 = uVar8;
-    } while ((int)(uVar8 + 4) <= iVar4);
+      pfVar4 = pfVar4 + 4;
+      iVar3 = iVar5;
+      iVar2 = iVar5 + 4;
+    } while (iVar5 + 4 <= param_2);
   }
-  iVar9 = (int)uVar13;
-  if ((int)uVar8 < iVar4) {
-    lVar6 = lVar6 - uVar8;
-    lVar3 = (uVar8 & 0x3fffffff) * 4 + lVar3;
+  if (iVar5 < param_2) {
+    iVar3 = param_2 - iVar5;
+    pfVar4 = param_1 + iVar5;
     do {
-      if ((int)local_30 < (int)*(float *)lVar3) {
-        uVar13 = uVar8;
-        local_30 = *(float *)lVar3;
+      if ((int)local_30 < (int)*pfVar4) {
+        local_30 = *pfVar4;
+        iVar6 = iVar5;
       }
-      iVar9 = (int)uVar13;
-      uVar8 = uVar8 + 1;
-      lVar3 = lVar3 + 4;
-      lVar6 = lVar6 + -1;
-    } while (lVar6 != 0);
+      iVar5 = iVar5 + 1;
+      pfVar4 = pfVar4 + 1;
+      iVar3 = iVar3 + -1;
+    } while (iVar3 != 0);
   }
   if ((int)local_30 < 0) {
-    iVar9 = iVar11;
-    local_30 = fVar12;
+    iVar6 = iVar7;
+    local_30 = fVar8;
   }
-  *param_3 = iVar9;
+  *param_3 = iVar6;
   *param_4 = local_30;
-  __restgprlr_29();
   return;
 }
 

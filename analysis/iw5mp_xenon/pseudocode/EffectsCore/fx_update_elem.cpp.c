@@ -40,22 +40,25 @@ void FXIW_IntegrateVelocityFromZeroInSegment
 
 // 8244C2B0  FXIW_IntegrateVelocityAcrossSegments  (EffectsCore/fx_update_elem.cpp:46)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 void FXIW_IntegrateVelocityAcrossSegments
                (int param_1,orientation_t *param_2,FxElemVelStateSample *param_3,
                FxElemVelStateSample *param_4,float param_5,float param_6,float *param_7,
                float param_8,float *param_9,float *param_10)
 
 {
-  ulonglong uVar1;
-  float *pfVar2;
+  float *pfVar1;
+  IMAGE_DOS_HEADER *pIVar2;
   double dVar3;
-  IMAGE_DOS_HEADER *pIVar4;
-  double extraout_f1;
+  double dVar4;
   double dVar5;
   double dVar6;
   double dVar7;
   double dVar8;
-  double dVar9;
   float *in_stack_00000054;
   float *in_stack_0000005c;
   float local_80;
@@ -63,45 +66,41 @@ void FXIW_IntegrateVelocityAcrossSegments
   float local_78;
   float local_74;
   
-  dVar6 = (double)param_8;
-  dVar5 = (double)param_6;
-  __savegprlr_26((double)param_5,param_1);
-  uVar1 = __savefpr_25();
-  pIVar4 = &IMAGE_DOS_HEADER_82000000;
-  dVar8 = 0.0;
-  dVar7 = 1.0;
-  dVar9 = extraout_f1;
-  if ((extraout_f1 < 0.0) || (1.0 < extraout_f1)) {
-    dVar3 = extraout_f1;
+  dVar5 = (double)param_8;
+  dVar4 = (double)param_6;
+  dVar3 = (double)param_5;
+  pIVar2 = &IMAGE_DOS_HEADER_82000000;
+  dVar7 = 0.0;
+  dVar6 = 1.0;
+  dVar8 = dVar3;
+  if ((dVar3 < 0.0) || (1.0 < dVar3)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_update_elem.cpp"
                     ,0x42,0,"t0 not in [0.0f, 1.0f]\n\t%g not in [%g, %g]");
-    pIVar4 = SUB84(dVar3,0);
+    pIVar2 = SUB84(dVar3,0);
   }
-  if ((dVar5 < dVar8) || (dVar7 < dVar5)) {
-    pIVar4 = SUB84(dVar5,0);
+  if ((dVar4 < dVar7) || (dVar6 < dVar4)) {
+    pIVar2 = SUB84(dVar4,0);
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_update_elem.cpp"
                     ,0x43,0,"t1 not in [0.0f, 1.0f]\n\t%g not in [%g, %g]");
   }
-  local_7c = (float)((double)(float)(dVar5 * dVar6) * dVar5) * 0.5;
-  local_74 = (float)(-(double)(float)(dVar9 * dVar6) * dVar9) * 0.5;
-  local_80 = (float)((double)(float)(dVar5 * dVar6) - (double)local_7c);
-  local_78 = (float)(-(double)(float)(dVar9 * dVar6) - (double)local_74);
-  if ((uVar1 & 0x1000000) != 0) {
-    pfVar2 = param_10;
+  local_7c = (float)((double)(float)(dVar4 * dVar5) * dVar4) * 0.5;
+  local_74 = (float)(-(double)(float)(dVar8 * dVar5) * dVar8) * 0.5;
+  local_80 = (float)((double)(float)(dVar4 * dVar5) - (double)local_7c);
+  local_78 = (float)(-(double)(float)(dVar8 * dVar5) - (double)local_74);
+  if ((param_1 & 0x1000000U) != 0) {
+    pfVar1 = param_10;
     FXIW_IntegrateVelocityFromZeroInSegment
-              (&param_4->local,&param_4[1].local,&local_80,param_10,(float)dVar6,(float *)pIVar4);
+              (&param_4->local,&param_4[1].local,&local_80,param_10,(float)dVar5,(float *)pIVar2);
     FXIW_IntegrateVelocityFromZeroInSegment
-              (&param_3->local,&param_3[1].local,&local_78,pfVar2,(float)-dVar6,(float *)pIVar4);
+              (&param_3->local,&param_3[1].local,&local_78,pfVar1,(float)-dVar5,(float *)pIVar2);
   }
   FX_OrientationPosToWorldPos(param_2,in_stack_00000054,in_stack_0000005c);
-  if ((uVar1 & 0x2000000) != 0) {
+  if ((param_1 & 0x2000000U) != 0) {
     FXIW_IntegrateVelocityFromZeroInSegment
-              (&param_4->world,&param_4[1].world,&local_80,param_10,(float)dVar6,(float *)pIVar4);
+              (&param_4->world,&param_4[1].world,&local_80,param_10,(float)dVar5,(float *)pIVar2);
     FXIW_IntegrateVelocityFromZeroInSegment
-              (&param_3->world,&param_3[1].world,&local_78,param_10,(float)-dVar6,(float *)pIVar4);
+              (&param_3->world,&param_3[1].world,&local_78,param_10,(float)-dVar5,(float *)pIVar2);
   }
-  __restfpr_25();
-  __restgprlr_26();
   return;
 }
 
@@ -136,64 +135,60 @@ void FXIW_IntegrateVelocityInSegmentInFrame
 
 // 8244C548  FXIW_IntegrateVelocityInSegment  (EffectsCore/fx_update_elem.cpp:107)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 void FXIW_IntegrateVelocityInSegment
                (int param_1,orientation_t *param_2,FxElemVelStateSample *param_3,float param_4,
                float param_5,float *param_6,float param_7,float *param_8,float *param_9)
 
 {
-  ulonglong uVar1;
-  longlong lVar2;
-  orientation_t *poVar3;
-  longlong lVar4;
-  FxElemVelStateInFrame *pFVar5;
   float *in_r10;
-  double extraout_f1;
-  double dVar6;
-  double dVar7;
-  double dVar8;
-  double dVar9;
-  double dVar10;
+  double dVar1;
+  double dVar2;
+  double dVar3;
+  double dVar4;
+  double dVar5;
   float *in_stack_00000054;
   float local_70;
   float local_6c;
   
-  dVar7 = (double)param_7;
-  dVar6 = (double)param_5;
-  lVar4 = (longlong)(int)param_3;
-  lVar2 = (longlong)(int)param_2;
-  __savegprlr_26((double)param_4,param_1,lVar2,lVar4,param_6,param_8);
-  poVar3 = (orientation_t *)lVar2;
-  pFVar5 = (FxElemVelStateInFrame *)lVar4;
-  uVar1 = __savefpr_27();
-  dVar9 = 0.0;
-  dVar8 = 1.0;
-  dVar10 = extraout_f1;
-  if ((extraout_f1 < 0.0) || (1.0 < extraout_f1)) {
+  dVar3 = (double)param_7;
+  dVar2 = (double)param_5;
+  dVar1 = (double)param_4;
+  dVar5 = 0.0;
+  dVar4 = 1.0;
+  if ((dVar1 < 0.0) || (1.0 < dVar1)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_update_elem.cpp"
                     ,0x78,0,"%s\n\t(t0) = %g");
   }
-  if ((dVar6 < dVar9) || (dVar8 < dVar6)) {
+  if ((dVar2 < dVar5) || (dVar4 < dVar2)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_update_elem.cpp"
                     ,0x79,0,"%s\n\t(t1) = %g");
   }
-  local_6c = (float)((double)(float)(dVar6 * dVar6 - (double)(float)(dVar10 * dVar10)) * dVar7) *
-             0.5;
-  local_70 = (float)((double)(float)(dVar6 - dVar10) * dVar7 - (double)local_6c);
-  if ((uVar1 & 0x1000000) != 0) {
-    FXIW_IntegrateVelocityInSegmentInFrame(pFVar5,pFVar5 + 2,&local_70,param_9,in_r10);
-  }
-  FX_OrientationPosToWorldPos(poVar3,in_r10,in_stack_00000054);
-  if ((uVar1 & 0x2000000) != 0) {
+  local_6c = (float)((double)(float)(dVar2 * dVar2 - (double)(float)(dVar1 * dVar1)) * dVar3) * 0.5;
+  local_70 = (float)((double)(float)(dVar2 - dVar1) * dVar3 - (double)local_6c);
+  if ((param_1 & 0x1000000U) != 0) {
     FXIW_IntegrateVelocityInSegmentInFrame
-              (pFVar5 + 1,pFVar5 + 3,&local_70,param_9,in_stack_00000054);
+              (&param_3->local,&param_3[1].local,&local_70,param_9,in_r10);
   }
-  __restfpr_27();
-  __restgprlr_26();
+  FX_OrientationPosToWorldPos(param_2,in_r10,in_stack_00000054);
+  if ((param_1 & 0x2000000U) != 0) {
+    FXIW_IntegrateVelocityInSegmentInFrame
+              (&param_3->world,&param_3[1].world,&local_70,param_9,in_stack_00000054);
+  }
   return;
 }
 
 
 // 8244C6A0  FXIW_IntegrateVelocity  (EffectsCore/fx_update_elem.cpp:137)
+
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
 
 void FXIW_IntegrateVelocity
                (FxUpdateElem *param_1,float param_2,float param_3,float *param_4,float *param_5)
@@ -203,215 +198,190 @@ void FXIW_IntegrateVelocity
   byte bVar2;
   FxElemVelStateSample *pFVar3;
   int iVar4;
-  FxUpdateElem *pFVar5;
-  FxElemDef *pFVar6;
-  float *pfVar7;
+  FxElemDef *pFVar5;
+  float *pfVar6;
   char *in_r6;
-  char *pcVar8;
-  uint uVar9;
-  double extraout_f1;
+  char *pcVar7;
+  uint uVar8;
+  double dVar9;
   double dVar10;
   double dVar11;
   double dVar12;
   double dVar13;
-  double dVar14;
   float local_98;
   undefined4 local_94;
   undefined4 local_90;
   
-  dVar11 = (double)param_3;
-  __savegprlr_22((double)param_2,param_1,param_4,param_5);
-  pFVar5 = (FxUpdateElem *)__savefpr_26();
-  dVar10 = extraout_f1;
-  if (pFVar5 == (FxUpdateElem *)0x0) {
+  dVar9 = (double)param_2;
+  dVar10 = (double)param_3;
+  if (param_1 == (FxUpdateElem *)0x0) {
     in_r6 = "%s";
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_update_elem.cpp"
                     ,0x99,0,"%s");
   }
-  pFVar6 = FXIW_GetUpdateElemDef(pFVar5);
-  if (pFVar6 == (FxElemDef *)0x0) {
+  pFVar5 = FXIW_GetUpdateElemDef(param_1);
+  if (pFVar5 == (FxElemDef *)0x0) {
     in_r6 = "%s";
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_update_elem.cpp"
                     ,0x9c,0,"%s");
   }
-  if (pFVar6->velSamples == (FxElemVelStateSample *)0x0) {
+  if (pFVar5->velSamples == (FxElemVelStateSample *)0x0) {
     in_r6 = "%s";
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_update_elem.cpp"
                     ,0x9d,0,"%s");
   }
-  if (pFVar6->velIntervalCount == '\0') {
+  if (pFVar5->velIntervalCount == '\0') {
     in_r6 = "%s\n\t(elemDef->velIntervalCount) = %i";
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_update_elem.cpp"
                     ,0x9e,0,"%s\n\t(elemDef->velIntervalCount) = %i");
   }
-  if (((dVar10 < 0.0) || (dVar11 <= dVar10)) || (1.0 < dVar11)) {
+  if (((dVar9 < 0.0) || (dVar10 <= dVar9)) || (1.0 < dVar10)) {
     va("%g, %g");
     in_r6 = "%s\n\t%s";
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_update_elem.cpp"
                     ,0x9f,0,"%s\n\t%s");
   }
-  bVar2 = pFVar6->velIntervalCount;
-  dVar12 = (double)pFVar5->msecLifeSpan;
-  pFVar3 = pFVar6->velSamples;
-  iVar4 = pFVar5->randomSeed * 4;
-  pfVar7 = (float *)&DAT_82066acc;
-  pcVar8 = &DAT_82066ad0;
+  bVar2 = pFVar5->velIntervalCount;
+  dVar11 = (double)param_1->msecLifeSpan;
+  pFVar3 = pFVar5->velSamples;
+  iVar4 = param_1->randomSeed * 4;
+  pfVar6 = (float *)&DAT_82066acc;
+  pcVar7 = &DAT_82066ad0;
   local_98 = *(float *)(&fx_randomTable + iVar4);
   local_94 = *(undefined4 *)(&DAT_82066acc + iVar4);
   local_90 = *(undefined4 *)(&DAT_82066ad0 + iVar4);
   if (bVar2 == 1) {
     FXIW_IntegrateVelocityInSegment
-              (pFVar6->flags,&pFVar5->orient,pFVar3,(float)dVar10,(float)dVar11,(float *)in_r6,
-               pFVar5->msecLifeSpan,(float *)&DAT_82066ad0,&local_98);
-    __restfpr_26();
-    __restgprlr_22();
+              (pFVar5->flags,&param_1->orient,pFVar3,(float)dVar9,(float)dVar10,(float *)in_r6,
+               param_1->msecLifeSpan,(float *)&DAT_82066ad0,&local_98);
     return;
   }
-  dVar14 = (double)bVar2;
-  dVar13 = (double)(float)(dVar14 * dVar10);
-  dVar10 = floor(dVar13);
-  dVar11 = (double)(float)(dVar14 * dVar11);
-  uVar1 = (uint)dVar10;
-  dVar13 = (double)(float)(dVar13 - (double)(longlong)(int)uVar1);
-  dVar10 = ceil(dVar11);
-  uVar9 = (int)dVar10 - 1;
-  dVar10 = (double)(float)(dVar11 - (double)(longlong)(int)uVar9);
-  if ((int)uVar9 < (int)uVar1) {
-    pfVar7 = (float *)va("%i > %i for %g to %g on %i intervals");
-    pcVar8 = "startIndex <= endIndex";
+  dVar13 = (double)bVar2;
+  dVar12 = (double)(float)(dVar13 * dVar9);
+  dVar9 = floor(dVar12);
+  dVar10 = (double)(float)(dVar13 * dVar10);
+  uVar1 = (uint)dVar9;
+  dVar12 = (double)(float)(dVar12 - (double)(longlong)(int)uVar1);
+  dVar9 = ceil(dVar10);
+  uVar8 = (int)dVar9 - 1;
+  dVar9 = (double)(float)(dVar10 - (double)(longlong)(int)uVar8);
+  if ((int)uVar8 < (int)uVar1) {
+    pfVar6 = (float *)va("%i > %i for %g to %g on %i intervals");
+    pcVar7 = "startIndex <= endIndex";
     in_r6 = "%s\n\t%s";
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_update_elem.cpp"
                     ,0xb6,1,"%s\n\t%s");
   }
   if (((int)uVar1 < 0) || ((int)(uint)bVar2 <= (int)uVar1)) {
-    pfVar7 = (float *)va("%i for %g on %i intervals");
-    pcVar8 = "(startIndex >= 0 && startIndex < intervalCount)";
+    pfVar6 = (float *)va("%i for %g on %i intervals");
+    pcVar7 = "(startIndex >= 0 && startIndex < intervalCount)";
     in_r6 = "%s\n\t(va( \"%i for %g on %i intervals\", startIndex, t0, intervalCount )) = %i";
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_update_elem.cpp"
                     ,0xb7,1,
                     "%s\n\t(va( \"%i for %g on %i intervals\", startIndex, t0, intervalCount )) = %i"
                    );
   }
-  if (((int)uVar9 < 0) || ((int)(uint)bVar2 <= (int)uVar9)) {
-    pfVar7 = (float *)va("%i for %g on %i intervals");
-    pcVar8 = "(endIndex >= 0 && endIndex < intervalCount)";
+  if (((int)uVar8 < 0) || ((int)(uint)bVar2 <= (int)uVar8)) {
+    pfVar6 = (float *)va("%i for %g on %i intervals");
+    pcVar7 = "(endIndex >= 0 && endIndex < intervalCount)";
     in_r6 = "%s\n\t(va( \"%i for %g on %i intervals\", endIndex, t1, intervalCount )) = %i";
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_update_elem.cpp"
                     ,0xb8,1,
                     "%s\n\t(va( \"%i for %g on %i intervals\", endIndex, t1, intervalCount )) = %i")
     ;
   }
-  if (uVar1 == uVar9) {
+  if (uVar1 == uVar8) {
     FXIW_IntegrateVelocityInSegment
-              (pFVar6->flags,&pFVar5->orient,
+              (pFVar5->flags,&param_1->orient,
                (FxElemVelStateSample *)
                ((int)(pFVar3->local).velocity.base +
                (int)(((ulonglong)uVar1 + ((ulonglong)uVar1 & 0x7fffffff) * 2 & 0xffffffff) << 5)),
-               (float)dVar13,(float)dVar10,(float *)in_r6,(float)dVar12,(float *)pcVar8,&local_98);
-    __restfpr_26();
-    __restgprlr_22();
+               (float)dVar12,(float)dVar9,(float *)in_r6,(float)dVar11,(float *)pcVar7,&local_98);
     return;
   }
   FXIW_IntegrateVelocityAcrossSegments
-            (pFVar6->flags,&pFVar5->orient,
+            (pFVar5->flags,&param_1->orient,
              (FxElemVelStateSample *)
              ((int)(pFVar3->local).velocity.base +
              (int)(((ulonglong)uVar1 + ((ulonglong)uVar1 & 0x7fffffff) * 2 & 0xffffffff) << 5)),
-             pFVar3 + uVar9,(float)dVar13,(float)dVar10,(float *)pcVar8,(float)dVar12,pfVar7,
+             pFVar3 + uVar8,(float)dVar12,(float)dVar9,(float *)pcVar7,(float)dVar11,pfVar6,
              &local_98);
-  __restfpr_26();
-  __restgprlr_22();
   return;
 }
 
 
 // 8244CA80  FXIW_NextElementPosition_NoExternalForces  (EffectsCore/fx_update_elem.cpp:194)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 void FXIW_NextElementPosition_NoExternalForces
                (FxUpdateElem *param_1,int param_2,int param_3,float *param_4,float *param_5)
 
 {
-  FxUpdateElem *pFVar1;
-  longlong lVar2;
-  longlong lVar3;
-  float *pfVar4;
-  longlong lVar5;
-  longlong lVar6;
-  float *pfVar7;
-  ulonglong uVar8;
+  float *pfVar1;
+  float *pfVar2;
   
-  uVar8 = (ulonglong)(int)param_4;
-  lVar5 = (longlong)param_3;
-  lVar2 = (longlong)param_2;
-  pFVar1 = (FxUpdateElem *)__savegprlr_26(param_1);
-  lVar3 = lVar2;
-  lVar6 = lVar5;
-  if (lVar5 - lVar2 < 1) {
+  pfVar1 = (float *)param_2;
+  pfVar2 = (float *)param_3;
+  if ((longlong)param_3 - (longlong)param_2 < 1) {
     va("[%g, %g]");
-    lVar6 = 0;
-    lVar3 = 0xc6;
+    pfVar2 = (float *)0x0;
+    pfVar1 = (float *)0xc6;
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_update_elem.cpp"
                     ,0xc6,0,"%s\n\t%s");
   }
-  pfVar7 = (float *)lVar6;
-  pfVar4 = (float *)lVar3;
-  if ((uVar8 & 0xffffffff) == 0) {
-    pfVar7 = (float *)0x0;
-    pfVar4 = (float *)0xc7;
+  if (param_4 == (float *)0x0) {
+    pfVar2 = (float *)0x0;
+    pfVar1 = (float *)0xc7;
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_update_elem.cpp"
                     ,199,0,"%s");
   }
   FXIW_IntegrateVelocity
-            (pFVar1,(float)(longlong)((int)lVar2 - pFVar1->msecElemBegin) * pFVar1->invMsecLifeSpan,
-             (float)(longlong)((int)lVar5 - pFVar1->msecElemBegin) * pFVar1->invMsecLifeSpan,pfVar4,
-             pfVar7);
-  __restgprlr_26();
+            (param_1,(float)(longlong)(param_2 - param_1->msecElemBegin) * param_1->invMsecLifeSpan,
+             (float)(longlong)(param_3 - param_1->msecElemBegin) * param_1->invMsecLifeSpan,pfVar1,
+             pfVar2);
   return;
 }
 
 
 // 8244CB60  FXIW_NextElementPosition  (EffectsCore/fx_update_elem.cpp:210)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void FXIW_NextElementPosition(FxUpdateElem *param_1,int param_2,int param_3)
 
 {
   float *pfVar1;
-  FxUpdateElem *pFVar2;
-  FxElemDef *pFVar3;
-  longlong lVar4;
-  longlong lVar5;
-  double dVar6;
-  double dVar7;
+  FxElemDef *pFVar2;
+  double dVar3;
+  double dVar4;
   float local_48;
   float local_44;
   float local_40;
   
-  lVar5 = (longlong)param_3;
-  lVar4 = (longlong)param_2;
-  pFVar2 = (FxUpdateElem *)__savegprlr_28(param_1);
-  if (lVar5 - lVar4 < 1) {
+  if ((longlong)param_3 - (longlong)param_2 < 1) {
     va("[%g, %g]");
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_update_elem.cpp"
                     ,0xd9,0,"%s\n\t%s");
   }
-  pfVar1 = pFVar2->elemOrigin;
+  pfVar1 = param_1->elemOrigin;
   local_48 = *pfVar1;
   local_44 = pfVar1[1];
   local_40 = pfVar1[2];
-  FXIW_NextElementPosition_NoExternalForces(pFVar2,(int)lVar4,(int)lVar5,&local_48,pFVar2->posWorld)
-  ;
-  pfVar1 = pFVar2->elemBaseVel;
-  dVar7 = (double)((float)(longlong)(int)(lVar5 - lVar4) * 0.001);
-  pFVar2->posWorld[0] = (float)((double)*pfVar1 * dVar7 + (double)pFVar2->posWorld[0]);
-  pFVar2->posWorld[1] = (float)((double)pfVar1[1] * dVar7 + (double)pFVar2->posWorld[1]);
-  pFVar2->posWorld[2] = (float)((double)pfVar1[2] * dVar7 + (double)pFVar2->posWorld[2]);
-  pFVar3 = FXIW_GetUpdateElemDef(pFVar2);
-  dVar6 = (double)((float)((double)(*(float *)(&DAT_82066b04 + pFVar2->randomSeed * 4) *
-                                    (pFVar3->gravity).amplitude + (pFVar3->gravity).base) * dVar7) *
+  FXIW_NextElementPosition_NoExternalForces(param_1,param_2,param_3,&local_48,param_1->posWorld);
+  pfVar1 = param_1->elemBaseVel;
+  dVar4 = (double)((float)(longlong)(int)((longlong)param_3 - (longlong)param_2) * 0.001);
+  param_1->posWorld[0] = (float)((double)*pfVar1 * dVar4 + (double)param_1->posWorld[0]);
+  param_1->posWorld[1] = (float)((double)pfVar1[1] * dVar4 + (double)param_1->posWorld[1]);
+  param_1->posWorld[2] = (float)((double)pfVar1[2] * dVar4 + (double)param_1->posWorld[2]);
+  pFVar2 = FXIW_GetUpdateElemDef(param_1);
+  dVar3 = (double)((float)((double)(*(float *)(&DAT_82066b04 + param_1->randomSeed * 4) *
+                                    (pFVar2->gravity).amplitude + (pFVar2->gravity).base) * dVar4) *
                   800.0);
-  pFVar2->elemBaseVel[2] = (float)((double)pFVar2->elemBaseVel[2] - dVar6);
-  pFVar2->posWorld[2] = -((float)(dVar6 * dVar7) * 0.5 - pFVar2->posWorld[2]);
-  __restgprlr_28();
+  param_1->elemBaseVel[2] = (float)((double)param_1->elemBaseVel[2] - dVar3);
+  param_1->posWorld[2] = -((float)(dVar3 * dVar4) * 0.5 - param_1->posWorld[2]);
   return;
 }
 
@@ -439,6 +409,9 @@ void FXIW_LerpSpatialFrame
 
 // 8244CCB8  FXIW_UpdateElement_SetupUpdate  (EffectsCore/fx_update_elem.cpp:234)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
+
 void FXIW_UpdateElement_SetupUpdate
                (FxEffect *param_1,ushort param_2,int param_3,int param_4,int param_5,int param_6,
                int param_7,bool param_8,int param_9,float *param_10,FxUpdateElem *param_11)
@@ -447,71 +420,63 @@ void FXIW_UpdateElement_SetupUpdate
   ushort uVar1;
   FxEffectDef *pFVar2;
   uint uVar3;
-  FxEffect *pFVar4;
+  ulonglong uVar4;
   FxElemDef *pFVar5;
-  ulonglong uVar6;
+  bool bVar6;
   ulonglong uVar7;
-  bool bVar8;
-  ulonglong uVar9;
-  longlong lVar10;
-  int iVar11;
+  longlong lVar8;
+  int iVar9;
   uint in_stack_00000054;
   float *in_stack_0000005c;
   FxUpdateElem *in_stack_00000064;
   
-  uVar9 = (ulonglong)param_8;
-  uVar7 = (ulonglong)param_7;
-  uVar6 = (ulonglong)param_5;
-  pFVar4 = (FxEffect *)__savegprlr_23(param_1);
   memset();
   in_stack_00000064->effectHandle = param_2;
-  in_stack_00000064->effect = pFVar4;
+  in_stack_00000064->effect = param_1;
   in_stack_00000064->msecUpdateBegin = param_3;
   in_stack_00000064->msecUpdateEnd = param_4;
-  in_stack_00000064->msecElemBegin = (int)uVar7;
+  in_stack_00000064->msecElemBegin = param_7;
   if (param_4 < param_3) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_update_elem.cpp"
                     ,0xf9,0,"update->msecUpdateBegin <= update->msecUpdateEnd\n\t%i, %i");
   }
-  pFVar2 = pFVar4->def;
-  if ((ulonglong)
-      (uint)(pFVar2->elemDefCountEmission + pFVar2->elemDefCountOneShot +
-            pFVar2->elemDefCountLooping) <= (uVar6 & 0xffffffff)) {
+  pFVar2 = param_1->def;
+  if ((uint)(pFVar2->elemDefCountEmission + pFVar2->elemDefCountOneShot +
+            pFVar2->elemDefCountLooping) <= (uint)param_5) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_update_elem.cpp"
                     ,0xfe,0,
                     "elemDefIndex doesn\'t index def->elemDefCountLooping + def->elemDefCountOneShot + def->elemDefCountEmission\n\t%i not in [0, %i)"
                    );
   }
-  in_stack_00000064->elemIndex = (int)uVar6;
+  in_stack_00000064->elemIndex = param_5;
   in_stack_00000064->atRestFraction = param_6;
   in_stack_00000064->onGround = false;
   in_stack_00000064->elemOrigin = in_stack_0000005c;
   pFVar5 = FXIW_GetUpdateElemDef(in_stack_00000064);
-  uVar1 = pFVar4->randomSeed;
+  uVar1 = param_1->randomSeed;
   uVar3 = pFVar5->randomSeed;
   in_stack_00000064->sequence = in_stack_00000054;
-  uVar9 = (ulonglong)uVar1 + (ulonglong)uVar3 + (ulonglong)in_stack_00000054 * 0x128 +
-          (-(ulonglong)((uVar9 & 0xff) == 0) & uVar7);
-  uVar6 = (uVar9 & 0xffffffff) * 0x11a3019b >> 0x20;
-  uVar6 = uVar9 + (((uVar9 - uVar6 & 0xffffffff) >> 1) + uVar6 >> 8) * -0x1df & 0xffff;
-  in_stack_00000064->randomSeed = (int)uVar6;
+  uVar7 = (ulonglong)uVar1 + (ulonglong)uVar3 + (ulonglong)in_stack_00000054 * 0x128 +
+          (-(ulonglong)!param_8 & (longlong)param_7);
+  uVar4 = (uVar7 & 0xffffffff) * 0x11a3019b >> 0x20;
+  uVar4 = uVar7 + (((uVar7 - uVar4 & 0xffffffff) >> 1) + uVar4 >> 8) * -0x1df & 0xffff;
+  in_stack_00000064->randomSeed = (int)uVar4;
   if (((pFVar5->effectEmitted).handle == (FxEffectDef *)0x0) ||
-     (bVar8 = true, (pFVar5->flags & 0x80000000U) != 0)) {
-    bVar8 = false;
+     (bVar6 = true, (pFVar5->flags & 0x80000000U) != 0)) {
+    bVar6 = false;
   }
-  in_stack_00000064->hasNonBoltedEmitter = bVar8;
-  lVar10 = (longlong)
-           ((int)((uint)*(ushort *)(&DAT_82066b0e + (int)(uVar6 << 2)) *
-                 ((pFVar5->lifeSpanMsec).amplitude + 1)) >> 0x10) +
-           (ulonglong)(uint)(pFVar5->lifeSpanMsec).base;
-  if (lVar10 < 0) {
+  in_stack_00000064->hasNonBoltedEmitter = bVar6;
+  lVar8 = (longlong)
+          ((int)((uint)*(ushort *)(&DAT_82066b0e + (int)(uVar4 << 2)) *
+                ((pFVar5->lifeSpanMsec).amplitude + 1)) >> 0x10) +
+          (ulonglong)(uint)(pFVar5->lifeSpanMsec).base;
+  if (lVar8 < 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_update_elem.cpp"
                     ,0x10e,0,"%s");
   }
-  iVar11 = (int)lVar10;
-  in_stack_00000064->msecElemEnd = iVar11 + (int)uVar7;
-  in_stack_00000064->msecLifeSpan = (float)(longlong)iVar11;
-  __restgprlr_23();
+  iVar9 = (int)lVar8;
+  in_stack_00000064->msecElemEnd = iVar9 + param_7;
+  in_stack_00000064->msecLifeSpan = (float)(longlong)iVar9;
   return;
 }
 
@@ -632,6 +597,8 @@ bool FXIW_TraceHitSomething(trace_t *param_1)
 
 // 8244D0E8  FXIW_SpawnImpactEffect  (EffectsCore/fx_update_elem.cpp:344)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void FXIW_SpawnImpactEffect
@@ -639,101 +606,93 @@ void FXIW_SpawnImpactEffect
                float *param_5)
 
 {
-  FxSystem *pFVar1;
   float local_50;
   float local_4c;
   float local_48;
   float afStack_44 [3];
   float afStack_38 [14];
   
-  pFVar1 = (FxSystem *)__savegprlr_28(param_1);
   local_50 = *param_5;
   local_4c = param_5[1];
   local_48 = param_5[2];
   Vec3Basis_RightHanded(&local_50,afStack_44,afStack_38);
   FXW_PlayEffectWithParent
-            (pFVar1,param_2->effect->owner,param_3,param_4,param_2->posWorld,
+            (param_1,param_2->effect->owner,param_3,param_4,param_2->posWorld,
              (float (*) [3])&local_50);
-  __restgprlr_28();
   return;
 }
 
 
 // 8244D158  FXIW_SurfaceEffectIndexFromName  (EffectsCore/fx_update_elem.cpp:355)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 int FXIW_SurfaceEffectIndexFromName(char *param_1)
 
 {
-  char *pcVar1;
+  int iVar1;
   int iVar2;
-  longlong lVar3;
-  undefined4 *puVar4;
+  undefined4 *puVar3;
   
-  pcVar1 = (char *)__savegprlr_28(param_1);
-  puVar4 = (undefined4 *)&g_SurfaceEffectNames;
-  lVar3 = 0;
+  puVar3 = (undefined4 *)&g_SurfaceEffectNames;
+  iVar2 = 0;
   do {
-    iVar2 = I_stricmp(pcVar1,(char *)*puVar4);
-    if (iVar2 == 0) {
-      iVar2 = __restgprlr_28(lVar3);
+    iVar1 = I_stricmp(param_1,(char *)*puVar3);
+    if (iVar1 == 0) {
       return iVar2;
     }
-    puVar4 = puVar4 + 1;
-    lVar3 = lVar3 + 1;
-  } while ((int)puVar4 < -0x7df973e0);
-  iVar2 = __restgprlr_28(0xffffffffffffffff);
-  return iVar2;
+    puVar3 = puVar3 + 1;
+    iVar2 = iVar2 + 1;
+  } while ((int)puVar3 < -0x7df973e0);
+  return -1;
 }
 
 
 // 8244D1B8  FXIW_GetImpactFxOverrideForSurface  (EffectsCore/fx_update_elem.cpp:372)
+
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 
 FxEffectDef ** FXIW_GetImpactFxOverrideForSurface(FxEffectDef *param_1,int param_2)
 
 {
   char cVar1;
   char *pcVar2;
-  undefined4 *puVar3;
-  uint uVar4;
-  FxEffectDef **ppFVar5;
-  ulonglong uVar6;
-  char *pcVar7;
+  uint uVar3;
+  char *pcVar4;
   
-  uVar6 = (ulonglong)param_2;
-  puVar3 = (undefined4 *)__savegprlr_29(param_1);
-  pcVar2 = (char *)*puVar3;
-  pcVar7 = pcVar2;
+  pcVar2 = param_1->name;
+  pcVar4 = pcVar2;
   do {
-    cVar1 = *pcVar7;
-    pcVar7 = pcVar7 + 1;
+    cVar1 = *pcVar4;
+    pcVar4 = pcVar4 + 1;
   } while (cVar1 != '\0');
-  if (0x80 < (uint)((int)pcVar7 - (int)pcVar2)) {
+  if (0x80 < (uint)((int)pcVar4 - (int)pcVar2)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_update_elem.cpp"
                     ,0x17e,0,"%s");
   }
-  uVar4 = FXIW_SurfaceEffectIndexFromName(pcVar2);
-  if ((int)uVar4 < 0) {
-    ppFVar5 = (FxEffectDef **)__restgprlr_29(0);
-    return ppFVar5;
+  uVar3 = FXIW_SurfaceEffectIndexFromName(pcVar2);
+  if ((int)uVar3 < 0) {
+    return (FxEffectDef **)0x0;
   }
-  if (0x1e < (uVar6 & 0xffffffff)) {
+  if (0x1e < (uint)param_2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_update_elem.cpp"
                     ,0x188,0,"surfType doesn\'t index SURF_TYPECOUNT\n\t%i not in [0, %i)");
   }
-  if (5 < uVar4) {
+  if (5 < uVar3) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_update_elem.cpp"
                     ,0x189,0,
                     "surfEffectIndex doesn\'t index FX_SURFACE_EFFECT_COUNT\n\t%i not in [0, %i)");
   }
-  ppFVar5 = (FxEffectDef **)
-            __restgprlr_29(((((ulonglong)uVar4 & 0x7ffffff) * 0x20 - (longlong)(int)uVar4) + uVar6 &
-                           0x3fffffff) * 4 + ZEXT48((cgMedia.surfaceFx)->table));
-  return ppFVar5;
+  return (cgMedia.surfaceFx)->table[uVar3].surfaceEffect + param_2;
 }
 
 
 // 8244D2C0  FXIW_SpawnSurfaceTypeImpactEffect  (EffectsCore/fx_update_elem.cpp:403)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void FXIW_SpawnSurfaceTypeImpactEffect
@@ -742,48 +701,44 @@ void FXIW_SpawnSurfaceTypeImpactEffect
 
 {
   FxEffectDef *pFVar1;
-  int iVar2;
-  uint uVar3;
-  FxSystem *pFVar4;
-  FxEffectDef **ppFVar5;
-  ulonglong uVar6;
+  uint uVar2;
+  FxEffectDef **ppFVar3;
   float local_60;
   float local_5c;
   float local_58;
   float afStack_54 [3];
   float afStack_48 [18];
   
-  uVar6 = (ulonglong)(int)param_5;
-  pFVar4 = (FxSystem *)__savegprlr_26(param_1);
-  if ((uVar6 & 0xffffffff) == 0) {
+  if (param_5 == (trace_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_update_elem.cpp"
                     ,0x198,0,"%s");
   }
-  iVar2 = (int)uVar6;
-  uVar3 = *(int *)(iVar2 + 0x10) >> 0x14 & 0x1f;
-  ppFVar5 = FXIW_GetImpactFxOverrideForSurface(param_3,uVar3);
-  if (ppFVar5 == (FxEffectDef **)0x0) {
-    Com_SurfaceTypeToName(uVar3);
+  uVar2 = param_5->surfaceFlags >> 0x14 & 0x1f;
+  ppFVar3 = FXIW_GetImpactFxOverrideForSurface(param_3,uVar2);
+  if (ppFVar3 == (FxEffectDef **)0x0) {
+    Com_SurfaceTypeToName(uVar2);
     Com_Error(ERR_DROP,
               "\x15Surface effect type not found for impact effect %s with surface type %s\n");
-    __restgprlr_26();
     return;
   }
-  pFVar1 = *ppFVar5;
-  local_60 = *(float *)(iVar2 + 4);
-  local_5c = *(float *)(iVar2 + 8);
-  local_58 = *(float *)(iVar2 + 0xc);
+  pFVar1 = *ppFVar3;
+  local_60 = param_5->normal[0];
+  local_5c = param_5->normal[1];
+  local_58 = param_5->normal[2];
   Vec3Basis_RightHanded(&local_60,afStack_54,afStack_48);
   FXW_PlayEffectWithParent
-            (pFVar4,param_2->effect->owner,pFVar1,param_4,param_2->posWorld,(float (*) [3])&local_60
-            );
-  __restgprlr_26();
+            (param_1,param_2->effect->owner,pFVar1,param_4,param_2->posWorld,
+             (float (*) [3])&local_60);
   return;
 }
 
 
 // 8244D3A8  FXIW_CollisionResponse  (EffectsCore/fx_update_elem.cpp:429)
 
+/* WARNING: Function: __savegprlr_18 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_18 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 int FXIW_CollisionResponse
@@ -794,68 +749,52 @@ int FXIW_CollisionResponse
   float fVar1;
   FxEffectDef *pFVar2;
   orientation_t *poVar3;
-  FxSystem *pFVar4;
-  FxElemDef *pFVar5;
+  FxElemDef *pFVar4;
+  float *pfVar5;
   int iVar6;
-  longlong lVar7;
-  float *pfVar8;
-  int iVar9;
-  longlong lVar10;
-  int iVar11;
-  double dVar12;
-  double dVar13;
-  double dVar14;
-  double dVar15;
-  float fVar16;
+  double dVar7;
+  double dVar8;
+  double dVar9;
+  double dVar10;
+  float fVar11;
   float local_a8;
   float local_a4;
   float local_a0;
   
-  lVar7 = (longlong)param_5;
-  lVar10 = (longlong)param_4;
-  __savegprlr_18(param_1);
-  pFVar4 = (FxSystem *)__savefpr_28();
-  pFVar5 = FXIW_GetUpdateElemDef(param_2);
-  iVar9 = (int)lVar7;
-  iVar6 = (int)lVar10;
-  if (iVar9 <= iVar6) {
+  pFVar4 = FXIW_GetUpdateElemDef(param_2);
+  if (param_5 <= param_4) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_update_elem.cpp"
                     ,0x1bc,0,"%s");
   }
-  fVar16 = param_3->fraction;
-  param_2->posWorld[0] = (param_2->posWorld[0] - *param_6) * fVar16 + *param_6;
-  param_2->posWorld[1] = (param_2->posWorld[1] - param_6[1]) * fVar16 + param_6[1];
-  param_2->posWorld[2] = (param_2->posWorld[2] - param_6[2]) * fVar16 + param_6[2];
-  dVar12 = floor((double)((float)(longlong)(iVar9 - iVar6) * param_3->fraction));
-  lVar10 = (ulonglong)(uint)(int)dVar12 + lVar10;
-  iVar11 = (int)lVar10;
-  if (iVar9 <= iVar11) {
+  fVar11 = param_3->fraction;
+  param_2->posWorld[0] = (param_2->posWorld[0] - *param_6) * fVar11 + *param_6;
+  param_2->posWorld[1] = (param_2->posWorld[1] - param_6[1]) * fVar11 + param_6[1];
+  param_2->posWorld[2] = (param_2->posWorld[2] - param_6[2]) * fVar11 + param_6[2];
+  dVar7 = floor((double)((float)(longlong)(param_5 - param_4) * param_3->fraction));
+  iVar6 = (int)dVar7 + param_4;
+  if (param_5 <= iVar6) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_update_elem.cpp"
                     ,0x1c0,0,"%s");
   }
-  if (((pFVar5->flags & 0x200U) != 0) || (iVar11 == param_2->msecElemEnd)) {
-    pFVar2 = (pFVar5->effectOnImpact).handle;
+  if (((pFVar4->flags & 0x200U) != 0) || (iVar6 == param_2->msecElemEnd)) {
+    pFVar2 = (pFVar4->effectOnImpact).handle;
     if (pFVar2 != (FxEffectDef *)0x0) {
-      if ((pFVar5->flags & 0x40000U) != 0) {
-        FXIW_SpawnSurfaceTypeImpactEffect(pFVar4,param_2,pFVar2,iVar11,param_3);
-        __restfpr_28(lVar10);
-        iVar6 = __restgprlr_18();
+      if ((pFVar4->flags & 0x40000U) != 0) {
+        FXIW_SpawnSurfaceTypeImpactEffect(param_1,param_2,pFVar2,iVar6,param_3);
         return iVar6;
       }
-      FXIW_SpawnImpactEffect(pFVar4,param_2,pFVar2,iVar11,param_3->normal);
+      FXIW_SpawnImpactEffect(param_1,param_2,pFVar2,iVar6,param_3->normal);
     }
-    __restfpr_28(lVar10);
-    iVar6 = __restgprlr_18();
     return iVar6;
   }
   poVar3 = (orientation_t *)(param_2->randomSeed * 4);
   param_2->elemBaseVel[2] =
-       (poVar3[-0x29fddc6].axis[2][0] * (pFVar5->gravity).amplitude + (pFVar5->gravity).base) *
-       (float)(longlong)(iVar9 - iVar11) * 0.8 + param_2->elemBaseVel[2];
-  pfVar8 = (float *)(iVar11 - param_2->msecElemBegin);
+       (poVar3[-0x29fddc6].axis[2][0] * (pFVar4->gravity).amplitude + (pFVar4->gravity).base) *
+       (float)(longlong)(param_5 - iVar6) * 0.8 + param_2->elemBaseVel[2];
+  pfVar5 = (float *)(iVar6 - param_2->msecElemBegin);
   FX_GetVelocityAtTime
-            (pFVar5,param_2->randomSeed,param_2->msecLifeSpan,(float)(longlong)(int)pfVar8,poVar3,
-             pfVar8,(param_2->orient).origin);
+            (pFVar4,param_2->randomSeed,param_2->msecLifeSpan,(float)(longlong)(int)pfVar5,poVar3,
+             pfVar5,(param_2->orient).origin);
   if (((uint)local_a8 & 0x7f800000) != 0x7f800000) {
     if (((uint)local_a4 & 0x7f800000) != 0x7f800000) {
       if (((uint)local_a0 & 0x7f800000) != 0x7f800000) goto LAB_8244d5d8;
@@ -869,55 +808,53 @@ LAB_8244d5d8:
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_update_elem.cpp"
                     ,0x1db,0,"%s\n\t%s");
   }
-  dVar15 = 1.0;
-  fVar16 = *(float *)(&DAT_82066b08 + param_2->randomSeed * 4) *
-           (pFVar5->reflectionFactor).amplitude + (pFVar5->reflectionFactor).base;
-  dVar14 = (double)(fVar16 * local_a8);
-  dVar13 = (double)(fVar16 * local_a4);
-  dVar12 = (double)(fVar16 * local_a0);
-  if (((pFVar5->effectOnImpact).handle != (FxEffectDef *)0x0) &&
+  dVar10 = 1.0;
+  fVar11 = *(float *)(&DAT_82066b08 + param_2->randomSeed * 4) *
+           (pFVar4->reflectionFactor).amplitude + (pFVar4->reflectionFactor).base;
+  dVar9 = (double)(fVar11 * local_a8);
+  dVar8 = (double)(fVar11 * local_a4);
+  dVar7 = (double)(fVar11 * local_a0);
+  if (((pFVar4->effectOnImpact).handle != (FxEffectDef *)0x0) &&
      (1.0 < local_a8 * local_a8 + local_a0 * local_a0 + local_a4 * local_a4)) {
-    FXIW_SpawnImpactEffect(pFVar4,param_2,(pFVar5->effectOnImpact).handle,iVar11,param_3->normal);
+    FXIW_SpawnImpactEffect(param_1,param_2,(pFVar4->effectOnImpact).handle,iVar6,param_3->normal);
     FXIW_GetUpdateElemDef(param_2);
   }
-  if (((iVar11 == iVar6) &&
-      (lVar10 = lVar10 + 1,
-      (double)(float)(dVar14 * dVar14 +
-                     (double)(float)(dVar12 * dVar12 + (double)(float)(dVar13 * dVar13))) <= dVar15)
-      ) && ((float)0x3f333333 < param_3->normal[2])) {
-    fVar16 = FXIW_GetAtRestFraction(param_2,(float)(longlong)(int)lVar10);
-    pfVar8 = param_2->elemBaseVel;
-    param_2->atRestFraction = (int)fVar16;
-    *pfVar8 = 0.0;
-    pfVar8[1] = 0.0;
-    pfVar8[2] = 0.0;
-    __restfpr_28(lVar7);
-    iVar6 = __restgprlr_18();
-    return iVar6;
+  if (((iVar6 == param_4) &&
+      (iVar6 = iVar6 + 1,
+      (double)(float)(dVar9 * dVar9 +
+                     (double)(float)(dVar7 * dVar7 + (double)(float)(dVar8 * dVar8))) <= dVar10)) &&
+     ((float)0x3f333333 < param_3->normal[2])) {
+    fVar11 = FXIW_GetAtRestFraction(param_2,(float)(longlong)iVar6);
+    pfVar5 = param_2->elemBaseVel;
+    param_2->atRestFraction = (int)fVar11;
+    *pfVar5 = 0.0;
+    pfVar5[1] = 0.0;
+    pfVar5[2] = 0.0;
+    return param_5;
   }
-  fVar16 = (float)((double)param_3->normal[2] * dVar12 +
-                  (double)(float)((double)param_3->normal[1] * dVar13 +
-                                 (double)(float)((double)param_3->normal[0] * dVar14)));
-  dVar15 = (double)fVar16;
-  if (((uint)fVar16 & 0x7f800000) == 0x7f800000) {
+  fVar11 = (float)((double)param_3->normal[2] * dVar7 +
+                  (double)(float)((double)param_3->normal[1] * dVar8 +
+                                 (double)(float)((double)param_3->normal[0] * dVar9)));
+  dVar10 = (double)fVar11;
+  if (((uint)fVar11 & 0x7f800000) == 0x7f800000) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_update_elem.cpp"
                     ,0x1f5,0,"%s");
   }
-  if (1000000.0 <= ABS(dVar15)) {
+  if (1000000.0 <= ABS(dVar10)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_update_elem.cpp"
                     ,0x1f6,0,"%s\n\t(velocityAlongNormal) = %g");
   }
-  fVar16 = param_3->normal[1];
-  pfVar8 = param_2->elemBaseVel;
+  fVar11 = param_3->normal[1];
+  pfVar5 = param_2->elemBaseVel;
   fVar1 = param_3->normal[2];
-  dVar15 = (double)(float)(dVar15 * -2.0);
-  *pfVar8 = *pfVar8 + ((float)((double)param_3->normal[0] * dVar15 + dVar14) - local_a8);
-  pfVar8[1] = pfVar8[1] + ((float)((double)fVar16 * dVar15 + dVar13) - local_a4);
-  pfVar8[2] = pfVar8[2] + ((float)((double)fVar1 * dVar15 + dVar12) - local_a0);
-  pfVar8 = param_2->elemBaseVel;
-  if (((((uint)*pfVar8 & 0x7f800000) == 0x7f800000) ||
-      (((uint)pfVar8[1] & 0x7f800000) == 0x7f800000)) ||
-     (((uint)pfVar8[2] & 0x7f800000) == 0x7f800000)) {
+  dVar10 = (double)(float)(dVar10 * -2.0);
+  *pfVar5 = *pfVar5 + ((float)((double)param_3->normal[0] * dVar10 + dVar9) - local_a8);
+  pfVar5[1] = pfVar5[1] + ((float)((double)fVar11 * dVar10 + dVar8) - local_a4);
+  pfVar5[2] = pfVar5[2] + ((float)((double)fVar1 * dVar10 + dVar7) - local_a0);
+  pfVar5 = param_2->elemBaseVel;
+  if (((((uint)*pfVar5 & 0x7f800000) == 0x7f800000) ||
+      (((uint)pfVar5[1] & 0x7f800000) == 0x7f800000)) ||
+     (((uint)pfVar5[2] & 0x7f800000) == 0x7f800000)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_update_elem.cpp"
                     ,0x1fb,0,"%s");
   }
@@ -925,14 +862,14 @@ LAB_8244d5d8:
   *param_6 = param_2->posWorld[0];
   param_6[1] = param_2->posWorld[1];
   param_6[2] = param_2->posWorld[2];
-  __restfpr_28(lVar10);
-  iVar6 = __restgprlr_18();
   return iVar6;
 }
 
 
 // 8244D948  FXIW_UpdateElementPosition_CollidingStep  (EffectsCore/fx_update_elem.cpp:516)
 
+/* WARNING: Function: __savegprlr_19 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_19 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 FxUpdateResult
@@ -942,63 +879,56 @@ FXIW_UpdateElementPosition_CollidingStep
 {
   FxElemDef *pFVar1;
   bool bVar2;
-  FxSystem *pFVar3;
-  FxElemDef *pFVar4;
+  FxElemDef *pFVar3;
+  float *pfVar4;
   int iVar5;
-  FxUpdateResult FVar6;
-  longlong lVar7;
-  float *pfVar8;
-  int iVar9;
-  double dVar10;
-  double dVar11;
+  double dVar6;
+  double dVar7;
   trace_t local_c0 [3];
   
-  lVar7 = (longlong)param_3;
-  pFVar3 = (FxSystem *)__savegprlr_19(param_1);
-  iVar9 = 0x811;
-  pFVar4 = FXIW_GetUpdateElemDef(param_2);
-  if (pFVar4->useItemClip != '\0') {
-    iVar9 = 0xc11;
+  iVar5 = 0x811;
+  pFVar3 = FXIW_GetUpdateElemDef(param_2);
+  if (pFVar3->useItemClip != '\0') {
+    iVar5 = 0xc11;
   }
-  dVar10 = 0.699999988079071;
-  pfVar8 = param_2->posWorld;
-  dVar11 = 1.0;
+  dVar6 = 0.699999988079071;
+  pfVar4 = param_2->posWorld;
+  dVar7 = 1.0;
   do {
     param_2->onGround = false;
-    FXIW_NextElementPosition(param_2,(int)lVar7,param_4);
-    FX_WorldTrace(local_c0,param_5,pfVar8,&pFVar4->collBounds,iVar9);
+    FXIW_NextElementPosition(param_2,param_3,param_4);
+    FX_WorldTrace(local_c0,param_5,pfVar4,&pFVar3->collBounds,iVar5);
     if (((local_c0[0].startsolid != false) || (local_c0[0].allsolid != false)) ||
-       (bVar2 = true, (double)local_c0[0].fraction == dVar11)) {
+       (bVar2 = true, (double)local_c0[0].fraction == dVar7)) {
       bVar2 = false;
     }
     if (!bVar2) break;
-    if (dVar10 < (double)local_c0[0].normal[2]) {
+    if (dVar6 < (double)local_c0[0].normal[2]) {
       param_2->onGround = true;
     }
-    iVar5 = FXIW_CollisionResponse(pFVar3,param_2,local_c0,(int)lVar7,param_4,param_5);
-    lVar7 = (longlong)iVar5;
+    param_3 = FXIW_CollisionResponse(param_1,param_2,local_c0,param_3,param_4,param_5);
     if (param_2->effect == (FxEffect *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\fx_update.h",
                       0xfa,0,"%s");
     }
     pFVar1 = param_2->effect->def->elemDefs;
-    pFVar4 = pFVar1 + param_2->elemIndex;
+    pFVar3 = pFVar1 + param_2->elemIndex;
     if ((pFVar1[param_2->elemIndex].flags & 0x200U) != 0) {
-      FVar6 = __restgprlr_19(0);
-      return FVar6;
+      return FX_UPDATE_REMOVE;
     }
-  } while (iVar5 != param_4);
-  FX_OrientationPosFromWorldPos(&param_2->orient,pfVar8,param_2->elemOrigin);
-  *param_5 = *pfVar8;
+  } while (param_3 != param_4);
+  FX_OrientationPosFromWorldPos(&param_2->orient,pfVar4,param_2->elemOrigin);
+  *param_5 = *pfVar4;
   param_5[1] = param_2->posWorld[1];
   param_5[2] = param_2->posWorld[2];
-  FVar6 = __restgprlr_19(1);
-  return FVar6;
+  return FX_UPDATE_KEEP;
 }
 
 
 // 8244DB00  FXIW_UpdateElementPosition_Colliding  (EffectsCore/fx_update_elem.cpp:555)
 
+/* WARNING: Function: __savegprlr_19 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_19 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 FxUpdateResult FXIW_UpdateElementPosition_Colliding(FxSystem *param_1,FxUpdateElem *param_2)
@@ -1006,82 +936,78 @@ FxUpdateResult FXIW_UpdateElementPosition_Colliding(FxSystem *param_1,FxUpdateEl
 {
   FxElemDef *pFVar1;
   bool bVar2;
-  FxSystem *pFVar3;
+  int iVar3;
   FxUpdateResult FVar4;
-  int iVar5;
-  float *pfVar6;
+  float *pfVar5;
+  int iVar6;
   int iVar7;
-  int iVar8;
-  FxElemDef *pFVar9;
+  FxElemDef *pFVar8;
+  double dVar9;
   double dVar10;
-  double dVar11;
   float local_d0;
   float local_cc;
   float local_c8;
   trace_t local_c0 [3];
   
-  pFVar3 = (FxSystem *)__savegprlr_19(param_1);
   if (param_2->atRestFraction != 0xff) {
     FX_OrientationPosToWorldPos(&param_2->orient,param_2->elemOrigin,param_2->posWorld);
-LAB_8244db38:
-    FVar4 = __restgprlr_19(1);
-    return FVar4;
+    return FX_UPDATE_KEEP;
   }
   FX_OrientationPosToWorldPos(&param_2->orient,param_2->elemOrigin,&local_d0);
-  iVar7 = param_2->msecUpdateBegin;
-  if (iVar7 + 0x32 < param_2->msecUpdateEnd) {
-    dVar10 = 0.699999988079071;
-    pfVar6 = param_2->posWorld;
-    dVar11 = 1.0;
-    iVar5 = iVar7;
-    iVar8 = iVar7 + 0x32;
+  iVar6 = param_2->msecUpdateBegin;
+  if (iVar6 + 0x32 < param_2->msecUpdateEnd) {
+    dVar9 = 0.699999988079071;
+    pfVar5 = param_2->posWorld;
+    dVar10 = 1.0;
+    iVar3 = iVar6;
+    iVar7 = iVar6 + 0x32;
     do {
-      iVar7 = iVar8;
-      iVar8 = 0x811;
+      iVar6 = iVar7;
+      iVar7 = 0x811;
       if (param_2->effect == (FxEffect *)0x0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\fx_update.h",
                         0xfa,0,"%s");
       }
-      pFVar9 = param_2->effect->def->elemDefs + param_2->elemIndex;
-      if (pFVar9->useItemClip != '\0') {
-        iVar8 = 0xc11;
+      pFVar8 = param_2->effect->def->elemDefs + param_2->elemIndex;
+      if (pFVar8->useItemClip != '\0') {
+        iVar7 = 0xc11;
       }
       do {
         param_2->onGround = false;
-        FXIW_NextElementPosition(param_2,iVar5,iVar7);
-        FX_WorldTrace(local_c0,&local_d0,pfVar6,&pFVar9->collBounds,iVar8);
+        FXIW_NextElementPosition(param_2,iVar3,iVar6);
+        FX_WorldTrace(local_c0,&local_d0,pfVar5,&pFVar8->collBounds,iVar7);
         if (((local_c0[0].startsolid != false) || (local_c0[0].allsolid != false)) ||
-           (bVar2 = true, (double)local_c0[0].fraction == dVar11)) {
+           (bVar2 = true, (double)local_c0[0].fraction == dVar10)) {
           bVar2 = false;
         }
         if (!bVar2) break;
-        if (dVar10 < (double)local_c0[0].normal[2]) {
+        if (dVar9 < (double)local_c0[0].normal[2]) {
           param_2->onGround = true;
         }
-        iVar5 = FXIW_CollisionResponse(pFVar3,param_2,local_c0,iVar5,iVar7,&local_d0);
+        iVar3 = FXIW_CollisionResponse(param_1,param_2,local_c0,iVar3,iVar6,&local_d0);
         if (param_2->effect == (FxEffect *)0x0) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\fx_update.h"
                           ,0xfa,0,"%s");
         }
         pFVar1 = param_2->effect->def->elemDefs;
-        pFVar9 = pFVar1 + param_2->elemIndex;
+        pFVar8 = pFVar1 + param_2->elemIndex;
         if ((pFVar1[param_2->elemIndex].flags & 0x200U) != 0) {
-          FVar4 = __restgprlr_19(0);
-          return FVar4;
+          return FX_UPDATE_REMOVE;
         }
-      } while (iVar5 != iVar7);
-      FX_OrientationPosFromWorldPos(&param_2->orient,pfVar6,param_2->elemOrigin);
-      local_d0 = *pfVar6;
+      } while (iVar3 != iVar6);
+      FX_OrientationPosFromWorldPos(&param_2->orient,pfVar5,param_2->elemOrigin);
+      local_d0 = *pfVar5;
       local_cc = param_2->posWorld[1];
       local_c8 = param_2->posWorld[2];
-      if (param_2->atRestFraction != 0xff) goto LAB_8244db38;
-      iVar5 = iVar7;
-      iVar8 = iVar7 + 0x32;
-    } while (iVar7 + 0x32 < param_2->msecUpdateEnd);
+      if (param_2->atRestFraction != 0xff) {
+        return FX_UPDATE_KEEP;
+      }
+      iVar3 = iVar6;
+      iVar7 = iVar6 + 0x32;
+    } while (iVar6 + 0x32 < param_2->msecUpdateEnd);
   }
   FVar4 = FXIW_UpdateElementPosition_CollidingStep
-                    (pFVar3,param_2,iVar7,param_2->msecUpdateEnd,&local_d0);
-  FVar4 = __restgprlr_19(FVar4);
+                    (param_1,param_2,iVar6,param_2->msecUpdateEnd,&local_d0);
   return FVar4;
 }
 
@@ -1119,58 +1045,52 @@ FxUpdateResult FXIW_UpdateElementPosition_Local(FxUpdateElem *param_1)
 
 // 8244DE98  FXIW_UpdateElementPosition  (EffectsCore/fx_update_elem.cpp:603)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 FxUpdateResult FXIW_UpdateElementPosition(FxSystem *param_1,FxUpdateElem *param_2)
 
 {
-  FxSystem *pFVar1;
-  FxElemDef *pFVar2;
-  FxUpdateResult FVar3;
+  FxElemDef *pFVar1;
+  FxUpdateResult FVar2;
   
-  pFVar1 = (FxSystem *)__savegprlr_29(param_1);
-  pFVar2 = FXIW_GetUpdateElemDef(param_2);
-  FX_GetOrientation(pFVar2,&param_2->effect->frameAtSpawn,&param_2->effect->frameNow,
+  pFVar1 = FXIW_GetUpdateElemDef(param_2);
+  FX_GetOrientation(pFVar1,&param_2->effect->frameAtSpawn,&param_2->effect->frameNow,
                     param_2->randomSeed,&param_2->orient);
-  if ((pFVar2->elemType == '\a') && ((pFVar2->flags & 0x8000000U) != 0)) {
-    FVar3 = __restgprlr_29(1);
-    return FVar3;
+  if ((pFVar1->elemType == '\a') && ((pFVar1->flags & 0x8000000U) != 0)) {
+    return FX_UPDATE_KEEP;
   }
-  if ((pFVar2->flags & 0x100U) != 0) {
-    FVar3 = FXIW_UpdateElementPosition_Colliding(pFVar1,param_2);
-    FVar3 = __restgprlr_29(FVar3);
-    return FVar3;
+  if ((pFVar1->flags & 0x100U) != 0) {
+    FVar2 = FXIW_UpdateElementPosition_Colliding(param_1,param_2);
+    return FVar2;
   }
-  if ((pFVar2->flags & 0x6000000U) != 0) {
-    FVar3 = FXIW_UpdateElementPosition_NonColliding(param_2);
-    FVar3 = __restgprlr_29(FVar3);
-    return FVar3;
+  if ((pFVar1->flags & 0x6000000U) != 0) {
+    FVar2 = FXIW_UpdateElementPosition_NonColliding(param_2);
+    return FVar2;
   }
-  FVar3 = FXIW_UpdateElementPosition_Local(param_2);
-  FVar3 = __restgprlr_29(FVar3);
-  return FVar3;
+  FVar2 = FXIW_UpdateElementPosition_Local(param_2);
+  return FVar2;
 }
 
 
 // 8244DF48  FXIW_UpdateElement_UpdatePositionWithBaseVel  (EffectsCore/fx_update_elem.cpp:626)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void FXIW_UpdateElement_UpdatePositionWithBaseVel
                (FxSystem *param_1,FxUpdateElem *param_2,float *param_3,FxUpdateResult *param_4)
 
 {
-  FxSystem *pFVar1;
-  FxUpdateResult FVar2;
-  int iVar3;
+  FxUpdateResult FVar1;
   
-  pFVar1 = (FxSystem *)__savegprlr_29(param_1);
   param_2->elemBaseVel = param_3;
   Profile_Begin(0xb5);
-  FVar2 = FXIW_UpdateElementPosition(pFVar1,param_2);
-  *param_4 = FVar2;
-  iVar3 = Profile_EndInternal((double *)0x0);
-  __restgprlr_29(iVar3);
+  FVar1 = FXIW_UpdateElementPosition(param_1,param_2);
+  *param_4 = FVar1;
+  Profile_EndInternal((double *)0x0);
   return;
 }
 
@@ -1216,6 +1136,10 @@ void FXIW_GetQuatForOrientation
 
 // 8244E088  FXIW_ProcessEmitting  (EffectsCore/fx_update_elem.cpp:665)
 
+/* WARNING: Function: __savegprlr_20 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_20 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 uchar FXIW_ProcessEmitting
@@ -1225,20 +1149,17 @@ uchar FXIW_ProcessEmitting
 {
   float fVar1;
   uint uVar2;
-  FxSystem *pFVar3;
-  uchar uVar6;
-  FxElemDef *pFVar4;
-  int iVar5;
-  ulonglong uVar7;
+  FxElemDef *pFVar3;
+  int iVar4;
+  double dVar5;
+  double dVar6;
+  double dVar7;
   double dVar8;
   double dVar9;
   double dVar10;
   double dVar11;
   double dVar12;
   double dVar13;
-  double dVar14;
-  double dVar15;
-  double dVar16;
   float local_100;
   float local_fc;
   float local_f8;
@@ -1252,104 +1173,99 @@ uchar FXIW_ProcessEmitting
   float afStack_d4 [3];
   float afStack_c8 [50];
   
-  uVar7 = (ulonglong)(char)param_3;
-  __savegprlr_20(param_1);
-  pFVar3 = (FxSystem *)__savefpr_23();
   local_dc = param_5->origin[1] - param_4->origin[1];
   local_d8 = param_5->origin[2] - param_4->origin[2];
   local_e0 = param_5->origin[0] - param_4->origin[0];
-  dVar12 = 1.0;
-  dVar10 = 0.0;
-  dVar15 = (double)SQRT(local_e0 * local_e0 + local_d8 * local_d8 + local_dc * local_dc);
-  dVar16 = dVar12;
-  if (-dVar15 < 0.0) {
-    dVar16 = dVar15;
+  dVar9 = 1.0;
+  dVar7 = 0.0;
+  dVar12 = (double)SQRT(local_e0 * local_e0 + local_d8 * local_d8 + local_dc * local_dc);
+  dVar13 = dVar9;
+  if (-dVar12 < 0.0) {
+    dVar13 = dVar12;
   }
-  fVar1 = (float)(1.0 / dVar16);
+  fVar1 = (float)(1.0 / dVar13);
   local_e0 = fVar1 * local_e0;
   local_dc = local_dc * fVar1;
   local_d8 = local_d8 * fVar1;
-  if (dVar15 == 0.0) {
-    __restfpr_23(uVar7);
-    uVar6 = __restgprlr_20();
-    return uVar6;
+  if (dVar12 == 0.0) {
+    return param_3;
   }
-  pFVar4 = FXIW_GetUpdateElemDef(param_2);
-  uVar2 = (uint)pFVar4->flags >> 0xf & 1;
+  pFVar3 = FXIW_GetUpdateElemDef(param_2);
+  uVar2 = (uint)pFVar3->flags >> 0xf & 1;
   if (uVar2 == 0) {
     PerpendicularVector(&local_e0,afStack_d4);
     Vec3Cross(&local_e0,afStack_d4,afStack_c8);
   }
-  dVar14 = (double)(*(float *)(&DAT_82066b18 + param_2->randomSeed * 4) *
-                    (pFVar4->emitDist).amplitude + (pFVar4->emitDistVariance).base +
-                   (pFVar4->emitDist).base);
-  dVar11 = (double)(float)((double)(pFVar4->emitDistVariance).amplitude + dVar14);
-  dVar16 = -(double)((float)((double)(uVar7 & 0xff) * dVar11) * 0.00390625);
-  iVar5 = rand();
-  dVar13 = 3.0517578125e-05;
-  dVar8 = (double)(float)((double)(float)((double)((float)(longlong)iVar5 *
-                                                  (pFVar4->emitDistVariance).amplitude) *
-                                          3.0517578125e-05 + dVar16) + dVar14);
-  if (dVar8 <= dVar15) {
-    dVar12 = (double)(float)(dVar12 / dVar15);
+  dVar11 = (double)(*(float *)(&DAT_82066b18 + param_2->randomSeed * 4) *
+                    (pFVar3->emitDist).amplitude + (pFVar3->emitDistVariance).base +
+                   (pFVar3->emitDist).base);
+  dVar8 = (double)(float)((double)(pFVar3->emitDistVariance).amplitude + dVar11);
+  dVar13 = -(double)((float)((double)param_3 * dVar8) * 0.00390625);
+  iVar4 = rand();
+  dVar10 = 3.0517578125e-05;
+  dVar5 = (double)(float)((double)(float)((double)((float)(longlong)iVar4 *
+                                                  (pFVar3->emitDistVariance).amplitude) *
+                                          3.0517578125e-05 + dVar13) + dVar11);
+  if (dVar5 <= dVar12) {
+    dVar9 = (double)(float)(dVar9 / dVar12);
     do {
-      dVar16 = dVar8;
-      if (dVar8 < 0.0) {
-        dVar16 = dVar10;
+      dVar13 = dVar5;
+      if (dVar5 < 0.0) {
+        dVar13 = dVar7;
       }
-      dVar9 = (double)(float)(dVar12 * dVar16);
-      dVar8 = floor((double)(float)((double)(longlong)
+      dVar6 = (double)(float)(dVar9 * dVar13);
+      dVar5 = floor((double)(float)((double)(longlong)
                                             (param_2->msecUpdateEnd - param_2->msecUpdateBegin) *
-                                   dVar9));
-      iVar5 = param_2->msecUpdateBegin;
+                                   dVar6));
+      iVar4 = param_2->msecUpdateBegin;
       local_f0 = (float)((double)(float)((double)param_5->origin[0] - (double)param_4->origin[0]) *
-                         dVar9 + (double)param_4->origin[0]);
+                         dVar6 + (double)param_4->origin[0]);
       local_e8 = (float)((double)(float)((double)param_5->origin[2] - (double)param_4->origin[2]) *
-                         dVar9 + (double)param_4->origin[2]);
+                         dVar6 + (double)param_4->origin[2]);
       local_ec = (float)((double)(float)((double)param_5->origin[1] - (double)param_4->origin[1]) *
-                         dVar9 + (double)param_4->origin[1]);
+                         dVar6 + (double)param_4->origin[1]);
       local_100 = (float)((double)(float)((double)param_5->quat[0] - (double)param_4->quat[0]) *
-                          dVar9 + (double)param_4->quat[0]);
+                          dVar6 + (double)param_4->quat[0]);
       local_fc = (float)((double)(float)((double)param_5->quat[1] - (double)param_4->quat[1]) *
-                         dVar9 + (double)param_4->quat[1]);
+                         dVar6 + (double)param_4->quat[1]);
       local_f8 = (float)((double)(float)((double)param_5->quat[2] - (double)param_4->quat[2]) *
-                         dVar9 + (double)param_4->quat[2]);
+                         dVar6 + (double)param_4->quat[2]);
       local_f4 = (float)((double)(float)((double)param_5->quat[3] - (double)param_4->quat[3]) *
-                         dVar9 + (double)param_4->quat[3]);
+                         dVar6 + (double)param_4->quat[3]);
       Vec4Normalize(&local_100);
       if (uVar2 != 0) {
         QuatToAxis(&local_100,(float (*) [3])&local_e0);
       }
       FXW_PlayEffectWithParent
-                (pFVar3,param_2->effect->owner,(pFVar4->effectEmitted).handle,(int)dVar8 + iVar5,
+                (param_1,param_2->effect->owner,(pFVar3->effectEmitted).handle,(int)dVar5 + iVar4,
                  &local_f0,(float (*) [3])&local_e0);
       if (param_2->effect == (FxEffect *)0x0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\fx_update.h",
                         0xfa,0,"%s");
       }
-      pFVar4 = param_2->effect->def->elemDefs + param_2->elemIndex;
-      iVar5 = rand();
-      dVar8 = (double)(float)((double)(float)((double)((float)(longlong)iVar5 *
-                                                      (pFVar4->emitDistVariance).amplitude) * dVar13
-                                             + dVar16) + dVar14);
-    } while (dVar8 <= dVar15);
+      pFVar3 = param_2->effect->def->elemDefs + param_2->elemIndex;
+      iVar4 = rand();
+      dVar5 = (double)(float)((double)(float)((double)((float)(longlong)iVar4 *
+                                                      (pFVar3->emitDistVariance).amplitude) * dVar10
+                                             + dVar13) + dVar11);
+    } while (dVar5 <= dVar12);
   }
-  dVar16 = (double)(float)(dVar15 - dVar16);
-  if ((dVar16 < -0.0010000000474974513) ||
-     ((double)(float)(dVar11 + 0.0010000000474974513) < dVar16)) {
+  dVar13 = (double)(float)(dVar12 - dVar13);
+  if ((dVar13 < -0.0010000000474974513) || ((double)(float)(dVar8 + 0.0010000000474974513) < dVar13)
+     ) {
     va("%g, %g");
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_update_elem.cpp"
                     ,0x2c2,0,"%s\n\t%s");
   }
-  dVar16 = floor((double)((float)(dVar16 / dVar11) * 256.0 + 0.5));
-  __restfpr_23((int)dVar16 & 0xff);
-  uVar6 = __restgprlr_20();
-  return uVar6;
+  dVar13 = floor((double)((float)(dVar13 / dVar8) * 256.0 + 0.5));
+  return (uchar)(int)dVar13;
 }
 
 
 // 8244E460  FXIW_UpdateElement_HandleEmitting  (EffectsCore/fx_update_elem.cpp:730)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void FXIW_UpdateElement_HandleEmitting
@@ -1360,14 +1276,13 @@ void FXIW_UpdateElement_HandleEmitting
   float fVar1;
   FxEffect *pFVar2;
   bool bVar3;
-  FxSystem *pFVar4;
-  FxElemDef *pFVar5;
-  ushort uVar7;
-  FxEffect *pFVar6;
-  uchar uVar8;
+  FxElemDef *pFVar4;
+  ushort uVar6;
+  FxEffect *pFVar5;
+  uchar uVar7;
+  float *pfVar8;
   float *pfVar9;
-  float *pfVar10;
-  longlong lVar11;
+  longlong lVar10;
   float local_190;
   float local_18c;
   float local_188;
@@ -1381,23 +1296,22 @@ void FXIW_UpdateElement_HandleEmitting
   float local_dc;
   float local_d8;
   
-  pFVar4 = (FxSystem *)__savegprlr_24(param_1);
-  pFVar5 = FXIW_GetUpdateElemDef(param_4);
+  pFVar4 = FXIW_GetUpdateElemDef(param_4);
   pFVar2 = param_4->effect;
-  if (((pFVar5->flags & 0x80000000U) == 0) ||
-     (bVar3 = true, (pFVar5->effectEmitted).handle == (FxEffectDef *)0x0)) {
+  if (((pFVar4->flags & 0x80000000U) == 0) ||
+     (bVar3 = true, (pFVar4->effectEmitted).handle == (FxEffectDef *)0x0)) {
     bVar3 = false;
   }
   if (bVar3) {
-    uVar7 = FX_GetElemChild(pFVar4,param_3);
-    if (uVar7 != 0xffff) {
-      uVar7 = FX_GetElemChild(pFVar4,param_3);
-      pFVar6 = FX_EffectFromHandle(pFVar4,uVar7);
+    uVar6 = FX_GetElemChild(param_1,param_3);
+    if (uVar6 != 0xffff) {
+      uVar6 = FX_GetElemChild(param_1,param_3);
+      pFVar5 = FX_EffectFromHandle(param_1,uVar6);
       local_e0 = param_4->posWorld[0];
       local_dc = param_4->posWorld[1];
       local_d8 = param_4->posWorld[2];
-      if ((pFVar5->flags & 0x8000U) == 0) {
-        FX_GetOrientation(pFVar5,&pFVar2->frameAtSpawn,&pFVar2->framePrev,param_4->randomSeed,
+      if ((pFVar4->flags & 0x8000U) == 0) {
+        FX_GetOrientation(pFVar4,&pFVar2->frameAtSpawn,&pFVar2->framePrev,param_4->randomSeed,
                           &oStack_120);
         FX_OrientationPosToWorldPos(&oStack_120,param_5,FStack_160.origin);
         FStack_160.origin[1] = param_4->posWorld[1] - FStack_160.origin[1];
@@ -1434,68 +1348,67 @@ void FXIW_UpdateElement_HandleEmitting
         AxisToQuat((float (*) [3])&local_190,local_f0);
       }
       else {
-        FXIW_GetQuatForOrientation(pFVar2,pFVar5,&pFVar2->frameNow,&param_4->orient,local_f0);
+        FXIW_GetQuatForOrientation(pFVar2,pFVar4,&pFVar2->frameNow,&param_4->orient,local_f0);
       }
-      pfVar10 = oStack_120.axis[2] + 2;
-      pfVar9 = (pFVar6->frameAtSpawn).origin + 2;
-      lVar11 = 7;
+      pfVar9 = oStack_120.axis[2] + 2;
+      pfVar8 = (pFVar5->frameAtSpawn).origin + 2;
+      lVar10 = 7;
       do {
-        pfVar10 = pfVar10 + 1;
         pfVar9 = pfVar9 + 1;
-        *pfVar9 = *pfVar10;
-        lVar11 = lVar11 + -1;
-      } while (lVar11 != 0);
-      __restgprlr_24();
+        pfVar8 = pfVar8 + 1;
+        *pfVar8 = *pfVar9;
+        lVar10 = lVar10 + -1;
+      } while (lVar10 != 0);
       return;
     }
   }
   else if (param_4->hasNonBoltedEmitter != false) {
-    FX_GetOrientation(pFVar5,&pFVar2->frameAtSpawn,&pFVar2->framePrev,param_4->randomSeed,
+    FX_GetOrientation(pFVar4,&pFVar2->frameAtSpawn,&pFVar2->framePrev,param_4->randomSeed,
                       &oStack_120);
     FX_OrientationPosToWorldPos(&oStack_120,param_5,FStack_160.origin);
-    FXIW_GetQuatForOrientation(pFVar2,pFVar5,&pFVar2->framePrev,&oStack_120,FStack_160.quat);
+    FXIW_GetQuatForOrientation(pFVar2,pFVar4,&pFVar2->framePrev,&oStack_120,FStack_160.quat);
     FStack_140.origin[0] = param_4->posWorld[0];
     FStack_140.origin[1] = param_4->posWorld[1];
     FStack_140.origin[2] = param_4->posWorld[2];
-    FXIW_GetQuatForOrientation(pFVar2,pFVar5,&pFVar2->frameNow,&param_4->orient,FStack_140.quat);
-    uVar8 = FXIW_ProcessEmitting(pFVar4,param_4,param_2->emitResidual,&FStack_160,&FStack_140);
-    param_2->emitResidual = uVar8;
+    FXIW_GetQuatForOrientation(pFVar2,pFVar4,&pFVar2->frameNow,&param_4->orient,FStack_140.quat);
+    uVar7 = FXIW_ProcessEmitting(param_1,param_4,param_2->emitResidual,&FStack_160,&FStack_140);
+    param_2->emitResidual = uVar7;
     if (param_4->msecUpdateEnd == param_4->msecElemEnd) {
       *param_6 = FX_UPDATE_REMOVE;
     }
   }
-  __restgprlr_24();
   return;
 }
 
 
 // 8244E718  FXIW_SpawnDeathEffect  (EffectsCore/fx_update_elem.cpp:810)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void FXIW_SpawnDeathEffect(FxSystem *param_1,FxUpdateElem *param_2)
 
 {
-  FxSystem *pFVar1;
-  FxElemDef *pFVar2;
+  FxElemDef *pFVar1;
   float afStack_60 [4];
   orientation_t oStack_50;
   
-  pFVar1 = (FxSystem *)__savegprlr_29(param_1);
-  pFVar2 = FXIW_GetUpdateElemDef(param_2);
-  FX_GetOrientation(pFVar2,&param_2->effect->frameAtSpawn,&param_2->effect->framePrev,
+  pFVar1 = FXIW_GetUpdateElemDef(param_2);
+  FX_GetOrientation(pFVar1,&param_2->effect->frameAtSpawn,&param_2->effect->framePrev,
                     param_2->randomSeed,&oStack_50);
   FX_OrientationPosToWorldPos(&oStack_50,param_2->elemOrigin,afStack_60);
   FXW_PlayEffectWithParent
-            (pFVar1,param_2->effect->owner,(pFVar2->effectOnDeath).handle,param_2->msecUpdateBegin,
+            (param_1,param_2->effect->owner,(pFVar1->effectOnDeath).handle,param_2->msecUpdateBegin,
              afStack_60,oStack_50.axis);
-  __restgprlr_29();
   return;
 }
 
 
 // 8244E900  FXIW_UpdateElement_RecordSparkCloud  (EffectsCore/fx_update_elem.cpp:823)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void FXIW_UpdateElement_RecordSparkCloud
@@ -1503,46 +1416,45 @@ void FXIW_UpdateElement_RecordSparkCloud
 
 {
   bool bVar1;
-  FxSystem *pFVar2;
-  FxElemDef *pFVar3;
-  ushort uVar5;
-  FxSparkCloud *pFVar4;
-  uint uVar6;
+  FxElemDef *pFVar2;
+  ushort uVar4;
+  FxSparkCloud *pFVar3;
+  uint uVar5;
   
-  pFVar2 = (FxSystem *)__savegprlr_26(param_1);
-  pFVar3 = FXIW_GetUpdateElemDef(param_2);
-  if (((pFVar3->flags & 0x80000000U) == 0) ||
-     (bVar1 = true, (pFVar3->effectEmitted).handle == (FxEffectDef *)0x0)) {
+  pFVar2 = FXIW_GetUpdateElemDef(param_2);
+  if (((pFVar2->flags & 0x80000000U) == 0) ||
+     (bVar1 = true, (pFVar2->effectEmitted).handle == (FxEffectDef *)0x0)) {
     bVar1 = false;
   }
   if (bVar1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_update_elem.cpp"
                     ,0x33c,0,"%s");
   }
-  uVar5 = FX_GetElemChild(pFVar2,param_4);
-  if (pFVar2 == (FxSystem *)0x0) {
+  uVar4 = FX_GetElemChild(param_1,param_4);
+  if (param_1 == (FxSystem *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\effectscore\\fx_system_handle.h"
                     ,0xa8,0,"%s");
   }
-  pFVar4 = FX_PoolFromHandle_Generic<FxSparkCloud>(pFVar2->sparkClouds,uVar5);
-  uVar6 = pFVar4->frameEnd;
-  if ((uVar6 == 0) || (16.666 <= param_2->msecElapsed - pFVar4->lastTime)) {
-    uVar6 = uVar6 + 1;
-    pFVar4->lastTime = param_2->msecElapsed;
-    pFVar4->frameEnd = uVar6;
-    if (0x20 < uVar6 - pFVar4->frameBegin) {
-      pFVar4->frameBegin = pFVar4->frameBegin + 1;
+  pFVar3 = FX_PoolFromHandle_Generic<FxSparkCloud>(param_1->sparkClouds,uVar4);
+  uVar5 = pFVar3->frameEnd;
+  if ((uVar5 == 0) || (16.666 <= param_2->msecElapsed - pFVar3->lastTime)) {
+    uVar5 = uVar5 + 1;
+    pFVar3->lastTime = param_2->msecElapsed;
+    pFVar3->frameEnd = uVar5;
+    if (0x20 < uVar5 - pFVar3->frameBegin) {
+      pFVar3->frameBegin = pFVar3->frameBegin + 1;
     }
   }
   FX_DrawElem_Cloud_PopulateGfxParticleSparkCloudFromUpdate
-            (pFVar2,param_2,param_3,param_4,pFVar4->frames + (uVar6 - 1 & 0x1f));
-  __restgprlr_26();
+            (param_1,param_2,param_3,param_4,pFVar3->frames + (uVar5 - 1 & 0x1f));
   return;
 }
 
 
 // 8244E788  FXW_UpdateTrailElement  (EffectsCore/fx_update_elem.cpp:846)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 FxUpdateResult
@@ -1551,10 +1463,9 @@ FXW_UpdateTrailElement
           int param_6,int param_7)
 
 {
-  FxSystem *pFVar1;
-  FxUpdateResult FVar2;
-  bool bVar4;
-  int iVar3;
+  bool bVar3;
+  FxUpdateResult FVar1;
+  int iVar2;
   int in_stack_fffffed8;
   float *in_stack_fffffedc;
   FxUpdateElem *in_stack_fffffee0;
@@ -1562,8 +1473,7 @@ FXW_UpdateTrailElement
   float local_b8 [6];
   FxUpdateElem FStack_a0;
   
-  pFVar1 = (FxSystem *)__savegprlr_29(param_1);
-  FVar2 = FX_UPDATE_KEEP;
+  FVar1 = FX_UPDATE_KEEP;
   local_c0 = CONCAT44(1,local_c0._4_4_);
   if (param_5->msecBegin <= param_7) {
     FXIW_UpdateElement_SetupUpdate
@@ -1571,8 +1481,7 @@ FXW_UpdateTrailElement
                in_stack_fffffed8,in_stack_fffffedc,in_stack_fffffee0);
     if (FStack_a0.msecElemEnd <= FStack_a0.msecUpdateEnd) {
       if (FStack_a0.hasNonBoltedEmitter == false) {
-        FVar2 = __restgprlr_29(0);
-        return FVar2;
+        return FX_UPDATE_REMOVE;
       }
       FStack_a0.msecUpdateEnd = FStack_a0.msecElemEnd;
       if (FStack_a0.msecElemEnd < FStack_a0.msecUpdateBegin) {
@@ -1580,10 +1489,9 @@ FXW_UpdateTrailElement
                         ,0x120,0,"update->msecUpdateBegin <= update->msecUpdateEnd\n\t%i, %i");
       }
     }
-    bVar4 = FXIW_UpdateElement_TruncateToElemBegin(&FStack_a0,(FxUpdateResult *)&local_c0);
-    if (!bVar4) {
-      FVar2 = __restgprlr_29(local_c0._0_4_);
-      return FVar2;
+    bVar3 = FXIW_UpdateElement_TruncateToElemBegin(&FStack_a0,(FxUpdateResult *)&local_c0);
+    if (!bVar3) {
+      return local_c0._0_4_;
     }
     local_c0 = (longlong)param_5->baseVelZ;
     FStack_a0.elemBaseVel = local_b8;
@@ -1591,19 +1499,20 @@ FXW_UpdateTrailElement
     local_b8[1] = 0.0;
     local_b8[2] = (float)local_c0 * 0.001;
     Profile_Begin(0xb5);
-    FVar2 = FXIW_UpdateElementPosition(pFVar1,&FStack_a0);
+    FVar1 = FXIW_UpdateElementPosition(param_1,&FStack_a0);
     Profile_EndInternal((double *)0x0);
     local_c0 = (longlong)(int)(local_b8[2] * 999.99994);
-    iVar3 = ClampInt((int)(local_b8[2] * 999.99994),-0x8000,0x7fff);
-    param_5->baseVelZ = (short)iVar3;
+    iVar2 = ClampInt((int)(local_b8[2] * 999.99994),-0x8000,0x7fff);
+    param_5->baseVelZ = (short)iVar2;
   }
-  FVar2 = __restgprlr_29(FVar2);
-  return FVar2;
+  return FVar1;
 }
 
 
 // 8244EA40  FXW_UpdateElement  (EffectsCore/fx_update_elem.cpp:880)
 
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 FxUpdateResult
@@ -1611,13 +1520,10 @@ FXW_UpdateElement(FxSystem *param_1,FxEffect *param_2,ushort param_3,FxElem *par
                  int param_6,int param_7)
 
 {
-  FxElem *pFVar1;
-  FxSystem *pFVar2;
+  bool bVar2;
+  FxElemDef *pFVar1;
   FxUpdateResult FVar3;
-  bool bVar5;
-  FxElemDef *pFVar4;
-  ulonglong uVar6;
-  float fVar7;
+  float fVar4;
   int in_stack_fffffe98;
   float *in_stack_fffffe9c;
   FxUpdateElem *in_stack_fffffea0;
@@ -1627,22 +1533,18 @@ FXW_UpdateElement(FxSystem *param_1,FxEffect *param_2,ushort param_3,FxElem *par
   float local_f0;
   FxUpdateElem FStack_e0;
   
-  uVar6 = (ulonglong)(int)param_4;
-  pFVar2 = (FxSystem *)__savegprlr_22(param_1);
-  if ((uVar6 & 0xffffffff) == 0) {
+  if (param_4 == (FxElem *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_update_elem.cpp"
                     ,0x377,0,"%s");
   }
-  pFVar1 = (FxElem *)uVar6;
-  if (param_7 < pFVar1->msecBegin) {
-    FVar3 = __restgprlr_22(1);
-    return FVar3;
+  if (param_7 < param_4->msecBegin) {
+    return FX_UPDATE_KEEP;
   }
-  pFVar2->numProf1PPU = pFVar2->numProf1PPU + 1;
+  param_1->numProf1PPU = param_1->numProf1PPU + 1;
   local_100._0_4_ = FX_UPDATE_KEEP;
   FXIW_UpdateElement_SetupUpdate
-            (param_2,param_3,param_6,param_7,pFVar1->defIndex,(uint)pFVar1->atRestFraction,
-             pFVar1->msecBegin,false,in_stack_fffffe98,in_stack_fffffe9c,in_stack_fffffea0);
+            (param_2,param_3,param_6,param_7,param_4->defIndex,(uint)param_4->atRestFraction,
+             param_4->msecBegin,false,in_stack_fffffe98,in_stack_fffffe9c,in_stack_fffffea0);
   if (FStack_e0.msecElemEnd <= FStack_e0.msecUpdateEnd) {
     if (FStack_e0.hasNonBoltedEmitter == false) {
       FVar3 = FX_UPDATE_REMOVE;
@@ -1654,55 +1556,51 @@ FXW_UpdateElement(FxSystem *param_1,FxEffect *param_2,ushort param_3,FxElem *par
                       ,0x120,0,"update->msecUpdateBegin <= update->msecUpdateEnd\n\t%i, %i");
     }
   }
-  bVar5 = FXIW_UpdateElement_TruncateToElemBegin(&FStack_e0,(FxUpdateResult *)&local_100);
-  if (!bVar5) {
-    FVar3 = __restgprlr_22(local_100._0_4_);
-    return FVar3;
+  bVar2 = FXIW_UpdateElement_TruncateToElemBegin(&FStack_e0,(FxUpdateResult *)&local_100);
+  if (!bVar2) {
+    return local_100._0_4_;
   }
-  FStack_e0.elemBaseVel = pFVar1->baseVel;
-  local_f8 = (float)(pFVar1->field8_0x14).physObjId;
-  local_f4 = (pFVar1->field8_0x14).origin[1];
-  local_f0 = (pFVar1->field8_0x14).origin[2];
+  FStack_e0.elemBaseVel = param_4->baseVel;
+  local_f8 = (float)(param_4->field8_0x14).physObjId;
+  local_f4 = (param_4->field8_0x14).origin[1];
+  local_f0 = (param_4->field8_0x14).origin[2];
   Profile_Begin(0xb5);
-  local_100._0_4_ = FXIW_UpdateElementPosition(pFVar2,&FStack_e0);
+  local_100._0_4_ = FXIW_UpdateElementPosition(param_1,&FStack_e0);
   Profile_EndInternal((double *)0x0);
   FXIW_UpdateElement_HandleEmitting
-            (pFVar2,pFVar1,param_5,&FStack_e0,&local_f8,(FxUpdateResult *)&local_100);
+            (param_1,param_4,param_5,&FStack_e0,&local_f8,(FxUpdateResult *)&local_100);
   FVar3 = local_100._0_4_;
 LAB_8244ebd4:
-  pFVar4 = FXIW_GetUpdateElemDef(&FStack_e0);
+  pFVar1 = FXIW_GetUpdateElemDef(&FStack_e0);
   if (FVar3 == FX_UPDATE_REMOVE) {
-    if ((pFVar4->effectOnDeath).handle != (FxEffectDef *)0x0) {
-      FXIW_SpawnDeathEffect(pFVar2,&FStack_e0);
-      FVar3 = __restgprlr_22(0);
-      return FVar3;
+    if ((pFVar1->effectOnDeath).handle != (FxEffectDef *)0x0) {
+      FXIW_SpawnDeathEffect(param_1,&FStack_e0);
+      return FX_UPDATE_REMOVE;
     }
   }
   else {
-    if (pFVar4->elemType == '\x05') {
-      FXIW_UpdateElement_RecordSparkCloud(pFVar2,&FStack_e0,pFVar1,param_5);
+    if (pFVar1->elemType == '\x05') {
+      FXIW_UpdateElement_RecordSparkCloud(param_1,&FStack_e0,param_4,param_5);
     }
-    else if (pFVar4->elemType == '\x06') {
-      FXW_UpdateElement_SparkFountain(pFVar2,&FStack_e0,pFVar1,param_5);
+    else if (pFVar1->elemType == '\x06') {
+      FXW_UpdateElement_SparkFountain(param_1,&FStack_e0,param_4,param_5);
     }
-    if (((((pFVar4->flags & 0x100U) == 0) || (FStack_e0.onGround == false)) ||
+    if (((((pFVar1->flags & 0x100U) == 0) || (FStack_e0.onGround == false)) ||
         (FStack_e0.atRestFraction != 0xff)) ||
-       ((((pFVar1->field8_0x14).origin[0] != local_f8 ||
-         ((pFVar1->field8_0x14).origin[1] != local_f4)) ||
-        (bVar5 = true, (pFVar1->field8_0x14).origin[2] != local_f0)))) {
-      bVar5 = false;
+       ((((param_4->field8_0x14).origin[0] != local_f8 ||
+         ((param_4->field8_0x14).origin[1] != local_f4)) ||
+        (bVar2 = true, (param_4->field8_0x14).origin[2] != local_f0)))) {
+      bVar2 = false;
     }
-    if (bVar5) {
+    if (bVar2) {
       local_100 = (longlong)FStack_e0.msecUpdateEnd;
-      fVar7 = FXIW_GetAtRestFraction(&FStack_e0,(float)local_100);
-      local_100 = (longlong)fVar7;
-      pFVar1->atRestFraction = (uchar)local_100;
-      FVar3 = __restgprlr_22(FVar3);
+      fVar4 = FXIW_GetAtRestFraction(&FStack_e0,(float)local_100);
+      local_100._7_1_ = (uchar)(longlong)fVar4;
+      param_4->atRestFraction = (uchar)local_100;
       return FVar3;
     }
-    pFVar1->atRestFraction = (uchar)FStack_e0.atRestFraction;
+    param_4->atRestFraction = (uchar)FStack_e0.atRestFraction;
   }
-  FVar3 = __restgprlr_22(FVar3);
   return FVar3;
 }
 

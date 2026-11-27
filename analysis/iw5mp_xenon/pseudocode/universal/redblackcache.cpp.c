@@ -60,19 +60,19 @@ RedBlackTreeNode * RedBlackCache_AllocNode(void)
 
 // 8260F230  RedBlackCache_FindOrInsertKey  (universal/redblackcache.cpp:49)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 RedBlackCacheNode * RedBlackCache_FindOrInsertKey(RedBlackCache *param_1,ulong64 param_2)
 
 {
-  RedBlackCache *pRVar1;
-  RedBlackTreeNode *pRVar2;
-  RedBlackCacheNode *pRVar3;
+  RedBlackCacheNode *pRVar1;
   
-  pRVar1 = (RedBlackCache *)__savegprlr_27(param_1);
-  if (pRVar1 == (RedBlackCache *)0x0) {
+  if (param_1 == (RedBlackCache *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\redblackcache.cpp",
                     0x35,0,"%s");
   }
-  if (pRVar1->isNewNode != false) {
+  if (param_1->isNewNode != false) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\redblackcache.cpp",
                     0x36,0,"%s");
   }
@@ -80,50 +80,44 @@ RedBlackCacheNode * RedBlackCache_FindOrInsertKey(RedBlackCache *param_1,ulong64
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\redblackcache.cpp",
                     0x38,0,"%s");
   }
-  s_activeCache = pRVar1;
-  pRVar2 = RedBlackTree_FindOrInsertKey((RedBlackTree *)pRVar1,param_2);
+  s_activeCache = param_1;
+  pRVar1 = (RedBlackCacheNode *)RedBlackTree_FindOrInsertKey(&param_1->rbTree,param_2);
   s_activeCache = (RedBlackCache *)0x0;
-  pRVar3 = (RedBlackCacheNode *)__restgprlr_27(pRVar2);
-  return pRVar3;
+  return pRVar1;
 }
 
 
 // 8260F2F0  RedBlackCache_Init  (universal/redblackcache.cpp:68)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
+
 void RedBlackCache_Init(RedBlackCache *param_1,RedBlackCacheNode *param_2,uint param_3,uint param_4,
                        uint param_5,_func___cdecl_void_RedBlackCacheNode_ptr *param_6)
 
 {
-  RedBlackTree *pRVar1;
-  ulonglong uVar2;
-  ulonglong uVar3;
-  
-  uVar3 = (ulonglong)(int)param_3;
-  uVar2 = (ulonglong)(int)param_2;
-  pRVar1 = (RedBlackTree *)__savegprlr_24(param_1);
-  if (pRVar1 == (RedBlackTree *)0x0) {
+  if (param_1 == (RedBlackCache *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\redblackcache.cpp",
                     0x45,0,"%s");
   }
-  if ((uVar2 & 0xffffffff) == 0) {
+  if (param_2 == (RedBlackCacheNode *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\redblackcache.cpp",
                     0x46,0,"%s");
   }
-  if ((uVar3 & 0xffffffff) < 0x20) {
+  if (param_3 < 0x20) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\redblackcache.cpp",
                     0x47,0,"%s");
   }
-  RedBlackTree_Init(pRVar1,RedBlackCache_AllocNode);
-  *(int *)&pRVar1[1].null.key = (int)uVar2;
-  *(int *)((int)&pRVar1[1].null.key + 4) = (int)uVar3;
-  pRVar1[1].null.color = param_4;
-  pRVar1[1].null.parent = (RedBlackTreeNode *)param_5;
-  pRVar1[1].null.child[0] = (RedBlackTreeNode *)0x0;
-  pRVar1[1].null.child[1] = (RedBlackTreeNode *)0x0;
-  *(undefined4 *)&pRVar1[1].root.key = 0;
-  *(undefined1 *)((int)&pRVar1[1].root.key + 4) = 0;
-  pRVar1[1].root.color = (uint)param_6;
-  __restgprlr_24();
+  RedBlackTree_Init(&param_1->rbTree,RedBlackCache_AllocNode);
+  param_1->firstNode = param_2;
+  param_1->sizeofNode = param_3;
+  param_1->nodeCount = param_4;
+  param_1->minTimeToFree = param_5;
+  param_1->allocCount = 0;
+  param_1->freeWalk = 0;
+  param_1->timeStamp = 0;
+  param_1->isNewNode = false;
+  param_1->FreeCallback = param_6;
   return;
 }
 

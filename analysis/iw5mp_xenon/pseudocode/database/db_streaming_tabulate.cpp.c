@@ -2,6 +2,8 @@
 
 // 82401068  DB_CreateMaterialStream  (database/db_streaming_tabulate.cpp:93)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "nodeType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
@@ -10,63 +12,61 @@
 void DB_CreateMaterialStream(XAssetHeader param_1,int param_2)
 
 {
-  Material *pMVar1;
-  uint uVar2;
-  ushort *puVar3;
-  uint uVar4;
-  int iVar5;
-  ushort *puVar6;
-  int iVar7;
-  ulonglong uVar8;
+  uint uVar1;
+  ushort *puVar2;
+  uint uVar3;
+  int iVar4;
+  ushort *puVar5;
+  int iVar6;
+  ulonglong uVar7;
   
-  pMVar1 = (Material *)__savegprlr_25(param_1.physPreset);
-  uVar2 = DB_GetMaterialIndex(pMVar1);
+  uVar1 = DB_GetMaterialIndex(param_1.material);
   if (param_2 != 0) {
-    uVar4 = uVar2 >> 3 & 0x1ffffffc;
-    *(uint *)((int)g_stream.materialTouch + uVar4) =
-         *(uint *)((int)g_stream.materialTouch + uVar4) &
-         ~*(uint *)(&g_bitShift + (uVar2 & 0x1f) * 4);
-    g_stream.defaultMaterialPriority[uVar2].base = 16.0;
-    g_stream.defaultMaterialPriority[uVar2].middle = 5.0;
-    g_materialStreamInfo.worldPriority[uVar2] = 512.0;
-    g_stream.baseMaterialPriority[uVar2] = 16.0;
+    uVar3 = uVar1 >> 3 & 0x1ffffffc;
+    *(uint *)((int)g_stream.materialTouch + uVar3) =
+         *(uint *)((int)g_stream.materialTouch + uVar3) &
+         ~*(uint *)(&g_bitShift + (uVar1 & 0x1f) * 4);
+    g_stream.defaultMaterialPriority[uVar1].base = 16.0;
+    g_stream.defaultMaterialPriority[uVar1].middle = 5.0;
+    g_materialStreamInfo.worldPriority[uVar1] = 512.0;
+    g_stream.baseMaterialPriority[uVar1] = 16.0;
   }
-  if (g_stream.material[uVar2].totalImages != (ushort *)0x0) {
+  if (g_stream.material[uVar1].totalImages != (ushort *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming_tabulate.cpp"
                     ,0x78,0,"%s");
   }
-  if (g_stream.material[uVar2].totalImageCount != 0) {
+  if (g_stream.material[uVar1].totalImageCount != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming_tabulate.cpp"
                     ,0x79,0,"%s");
   }
-  if (g_stream.material[uVar2].invMinTexLength != 0.0) {
+  if (g_stream.material[uVar1].invMinTexLength != 0.0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming_tabulate.cpp"
                     ,0x7a,0,"%s");
   }
-  uVar8 = (ulonglong)pMVar1->textureCount;
-  if (uVar8 != 0) {
-    puVar3 = DB_Alloc((uint)pMVar1->textureCount << 2,4);
-    iVar5 = 0;
-    if (uVar8 != 0) {
-      iVar7 = 0;
-      puVar6 = puVar3 + -1;
+  uVar7 = (ulonglong)(param_1.material)->textureCount;
+  if (uVar7 != 0) {
+    puVar2 = DB_Alloc((uint)(param_1.material)->textureCount << 2,4);
+    iVar4 = 0;
+    if (uVar7 != 0) {
+      iVar6 = 0;
+      puVar5 = puVar2 + -1;
       do {
-        if ((&pMVar1->textureTable->semantic)[iVar7] != '\v') {
-          uVar4 = DB_GetGfxImageIndex(*(GfxImage **)((int)&pMVar1->textureTable->u + iVar7));
-          iVar5 = iVar5 + 1;
-          puVar6 = puVar6 + 1;
-          *puVar6 = (ushort)uVar4;
+        if (*(char *)((int)(param_1.parts)->randomDataInt + iVar6 + 7) != '\v') {
+          uVar3 = DB_GetGfxImageIndex(*(GfxImage **)
+                                       ((int)(param_1.parts)->randomDataInt + iVar6 + 8));
+          iVar4 = iVar4 + 1;
+          puVar5 = puVar5 + 1;
+          *puVar5 = (ushort)uVar3;
         }
-        uVar8 = uVar8 - 1;
-        iVar7 = iVar7 + 0xc;
-      } while (uVar8 != 0);
-      if (iVar5 != 0) {
-        g_stream.material[uVar2].totalImages = puVar3;
-        g_stream.material[uVar2].totalImageCount = (ushort)iVar5;
+        uVar7 = uVar7 - 1;
+        iVar6 = iVar6 + 0xc;
+      } while (uVar7 != 0);
+      if (iVar4 != 0) {
+        g_stream.material[uVar1].totalImages = puVar2;
+        g_stream.material[uVar1].totalImageCount = (ushort)iVar4;
       }
     }
   }
-  __restgprlr_25();
   return;
 }
 
@@ -139,6 +139,8 @@ int SpuBitArrayIterator::Advance(SpuBitArrayIterator *param_1)
 
 // 82401220  DB_CloneMaterialStream  (database/db_streaming_tabulate.cpp:151)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "nodeType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
@@ -147,60 +149,56 @@ int SpuBitArrayIterator::Advance(SpuBitArrayIterator *param_1)
 int DB_CloneMaterialStream(XAssetHeader param_1,XAssetHeader param_2,DB_CloneType param_3)
 
 {
-  Material *pMVar1;
+  uint uVar1;
   uint uVar2;
-  uint uVar3;
-  int iVar4;
-  float *pfVar5;
-  float *pfVar6;
-  longlong lVar7;
-  float afStack_44 [17];
+  float *pfVar3;
+  float *pfVar4;
+  longlong lVar5;
+  float fStack_44;
+  float local_40 [16];
   
-  pMVar1 = (Material *)__savegprlr_29(param_1.physPreset);
-  uVar2 = DB_GetMaterialIndex(pMVar1);
-  uVar3 = DB_GetMaterialIndex(param_2.material);
+  uVar1 = DB_GetMaterialIndex(param_1.material);
+  uVar2 = DB_GetMaterialIndex(param_2.material);
   if (param_3 == DB_CLONE_SWAP) {
-    lVar7 = 7;
-    pfVar5 = afStack_44;
-    pfVar6 = &g_stream.material[uVar3 - 1].invMinTexLength;
+    lVar5 = 7;
+    pfVar3 = &fStack_44;
+    pfVar4 = &g_stream.material[uVar2 - 1].invMinTexLength;
     do {
-      pfVar6 = pfVar6 + 1;
-      pfVar5 = pfVar5 + 1;
-      *pfVar5 = *pfVar6;
-      lVar7 = lVar7 + -1;
-    } while (lVar7 != 0);
-    pfVar5 = &g_stream.material[uVar3 - 1].invMinTexLength;
-    lVar7 = 7;
-    pfVar6 = &g_stream.material[uVar2 - 1].invMinTexLength;
+      pfVar4 = pfVar4 + 1;
+      pfVar3 = pfVar3 + 1;
+      *pfVar3 = *pfVar4;
+      lVar5 = lVar5 + -1;
+    } while (lVar5 != 0);
+    pfVar3 = &g_stream.material[uVar2 - 1].invMinTexLength;
+    lVar5 = 7;
+    pfVar4 = &g_stream.material[uVar1 - 1].invMinTexLength;
     do {
-      pfVar6 = pfVar6 + 1;
-      pfVar5 = pfVar5 + 1;
-      *pfVar5 = *pfVar6;
-      lVar7 = lVar7 + -1;
-    } while (lVar7 != 0);
-    pfVar5 = &g_stream.material[uVar2 - 1].invMinTexLength;
-    pfVar6 = afStack_44;
-    lVar7 = 7;
+      pfVar4 = pfVar4 + 1;
+      pfVar3 = pfVar3 + 1;
+      *pfVar3 = *pfVar4;
+      lVar5 = lVar5 + -1;
+    } while (lVar5 != 0);
+    pfVar3 = &g_stream.material[uVar1 - 1].invMinTexLength;
+    pfVar4 = &fStack_44;
+    lVar5 = 7;
     do {
-      pfVar6 = pfVar6 + 1;
-      pfVar5 = pfVar5 + 1;
-      *pfVar5 = *pfVar6;
-      lVar7 = lVar7 + -1;
-    } while (lVar7 != 0);
-    iVar4 = __restgprlr_29(1);
-    return iVar4;
+      pfVar4 = pfVar4 + 1;
+      pfVar3 = pfVar3 + 1;
+      *pfVar3 = *pfVar4;
+      lVar5 = lVar5 + -1;
+    } while (lVar5 != 0);
+    return 1;
   }
-  pfVar6 = &g_stream.material[uVar2 - 1].invMinTexLength;
-  pfVar5 = &g_stream.material[uVar3 - 1].invMinTexLength;
-  lVar7 = 7;
+  pfVar4 = &g_stream.material[uVar1 - 1].invMinTexLength;
+  pfVar3 = &g_stream.material[uVar2 - 1].invMinTexLength;
+  lVar5 = 7;
   do {
-    pfVar6 = pfVar6 + 1;
-    pfVar5 = pfVar5 + 1;
-    *pfVar5 = *pfVar6;
-    lVar7 = lVar7 + -1;
-  } while (lVar7 != 0);
-  iVar4 = __restgprlr_29(1);
-  return iVar4;
+    pfVar4 = pfVar4 + 1;
+    pfVar3 = pfVar3 + 1;
+    *pfVar3 = *pfVar4;
+    lVar5 = lVar5 + -1;
+  } while (lVar5 != 0);
+  return 1;
 }
 
 
@@ -236,6 +234,8 @@ int CompareXModelStreamMaterial(void *param_1,void *param_2)
 
 // 82401388  DB_CreateXModelStream  (database/db_streaming_tabulate.cpp:198)
 
+/* WARNING: Function: __savegprlr_16 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_16 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "nodeType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
@@ -245,124 +245,120 @@ void DB_CreateXModelStream(XAssetHeader param_1,int param_2)
 
 {
   byte bVar1;
-  XModel *pXVar2;
-  uint uVar3;
-  XModelStreamMaterial *pXVar4;
+  uint uVar2;
+  XModelStreamMaterial *pXVar3;
+  uint uVar4;
   uint uVar5;
-  uint uVar6;
-  undefined2 *puVar7;
-  ulonglong uVar8;
+  undefined2 *puVar6;
+  ulonglong uVar7;
+  int iVar8;
   int iVar9;
-  int iVar10;
-  ulonglong uVar11;
-  uint uVar12;
+  ulonglong uVar10;
+  uint uVar11;
+  double dVar12;
   double dVar13;
   double dVar14;
-  double dVar15;
   
-  pXVar2 = (XModel *)__savegprlr_16(param_1.physPreset);
-  if (pXVar2->numLods < '\x01') {
+  if ((param_1.model)->numLods < '\x01') {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming_tabulate.cpp"
                     ,0xd2,0,"%s");
   }
-  uVar3 = DB_GetXModelIndex(pXVar2);
-  dVar13 = 0.0;
-  dVar15 = (double)pXVar2->lodInfo[pXVar2->numLods + -1].dist;
-  if (dVar15 <= 0.0) {
+  uVar2 = DB_GetXModelIndex(param_1.model);
+  dVar12 = 0.0;
+  dVar14 = (double)(&(param_1.physPreset)->explosiveForceScale)[(param_1.model)->numLods * 10];
+  if (dVar14 <= 0.0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming_tabulate.cpp"
                     ,0xd9,0,"%s\n\t(dist) = %g");
   }
-  dVar14 = 1000000.0;
-  if (1000000.0 < dVar15) {
+  dVar13 = 1000000.0;
+  if (1000000.0 < dVar14) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming_tabulate.cpp"
                     ,0xda,0,"%s\n\t(dist) = %g");
   }
-  if (dVar14 <= dVar15) {
-    g_stream.model[uVar3].field2_0x8.invLodOutDist = (float)dVar13;
+  if (dVar13 <= dVar14) {
+    g_stream.model[uVar2].field2_0x8.invLodOutDist = (float)dVar12;
   }
   else {
-    g_stream.model[uVar3].field2_0x8.invLodOutDist = (float)(1.0 / dVar15);
+    g_stream.model[uVar2].field2_0x8.invLodOutDist = (float)(1.0 / dVar14);
   }
-  g_stream.modelRadius[uVar3] = pXVar2->radius;
-  bVar1 = pXVar2->numsurfs;
-  uVar8 = (ulonglong)bVar1;
-  pXVar4 = DB_Alloc((uint)bVar1 << 2,4);
-  g_stream.model[uVar3].materials = pXVar4;
-  if (uVar8 != 0) {
+  g_stream.modelRadius[uVar2] = (param_1.model)->radius;
+  bVar1 = (param_1.model)->numsurfs;
+  uVar7 = (ulonglong)bVar1;
+  pXVar3 = DB_Alloc((uint)bVar1 << 2,4);
+  g_stream.model[uVar2].materials = pXVar3;
+  if (uVar7 != 0) {
+    iVar8 = 0;
+    uVar10 = uVar7;
     iVar9 = 0;
-    uVar11 = uVar8;
-    iVar10 = 0;
     do {
-      uVar5 = DB_GetMaterialIndex(*(Material **)((int)pXVar2->materialHandles + iVar10));
-      uVar11 = uVar11 - 1;
-      *(short *)((int)&(g_stream.model[uVar3].materials)->index + iVar10) = (short)uVar5;
-      puVar7 = (undefined2 *)(iVar9 + (int)pXVar2->invHighMipRadius);
-      iVar9 = iVar9 + 2;
-      *(undefined2 *)((int)&(g_stream.model[uVar3].materials)->invHighMipRadius + iVar10) = *puVar7;
-      iVar10 = iVar10 + 4;
-    } while (uVar11 != 0);
+      uVar4 = DB_GetMaterialIndex(*(Material **)((int)(param_1.parts)->dataInt + iVar9));
+      uVar10 = uVar10 - 1;
+      *(short *)((int)&(g_stream.model[uVar2].materials)->index + iVar9) = (short)uVar4;
+      puVar6 = (undefined2 *)(iVar8 + (int)(param_1.model)->invHighMipRadius);
+      iVar8 = iVar8 + 2;
+      *(undefined2 *)((int)&(g_stream.model[uVar2].materials)->invHighMipRadius + iVar9) = *puVar6;
+      iVar9 = iVar9 + 4;
+    } while (uVar10 != 0);
   }
-  qsort(g_stream.model[uVar3].materials,(uint)bVar1,4,CompareXModelStreamMaterial);
-  uVar6 = 0xffffffff;
-  uVar5 = 0;
-  if (uVar8 != 0) {
-    iVar10 = 0;
+  qsort(g_stream.model[uVar2].materials,(uint)bVar1,4,CompareXModelStreamMaterial);
+  uVar5 = 0xffffffff;
+  uVar4 = 0;
+  if (uVar7 != 0) {
     iVar9 = 0;
-    uVar11 = uVar8;
-    uVar5 = 0;
+    iVar8 = 0;
+    uVar10 = uVar7;
+    uVar4 = 0;
     do {
-      uVar12 = (uint)*(ushort *)((int)&(g_stream.model[uVar3].materials)->index + iVar9);
-      if (uVar6 != uVar12) {
-        if (uVar8 <= uVar5) {
+      uVar11 = (uint)*(ushort *)((int)&(g_stream.model[uVar2].materials)->index + iVar8);
+      if (uVar5 != uVar11) {
+        if (uVar7 <= uVar4) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming_tabulate.cpp"
                           ,0xf8,0,"currSurfIndex doesn\'t index numsurfs\n\t%i not in [0, %i)");
         }
-        if (0x165f < uVar12) {
+        if (0x165f < uVar11) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming_tabulate.cpp"
                           ,0xf9,0,"matIndex doesn\'t index MATERIAL_POOL_SIZE\n\t%i not in [0, %i)")
           ;
         }
-        pXVar4 = g_stream.model[uVar3].materials;
-        uVar5 = uVar5 + 1;
-        puVar7 = (undefined2 *)((int)&pXVar4->index + iVar10);
-        iVar10 = iVar10 + 4;
-        *puVar7 = *(undefined2 *)((int)&pXVar4->index + iVar9);
-        puVar7[1] = *(undefined2 *)((int)&pXVar4->invHighMipRadius + iVar9);
-        uVar6 = uVar12;
+        pXVar3 = g_stream.model[uVar2].materials;
+        uVar4 = uVar4 + 1;
+        puVar6 = (undefined2 *)((int)&pXVar3->index + iVar9);
+        iVar9 = iVar9 + 4;
+        *puVar6 = *(undefined2 *)((int)&pXVar3->index + iVar8);
+        puVar6[1] = *(undefined2 *)((int)&pXVar3->invHighMipRadius + iVar8);
+        uVar5 = uVar11;
       }
-      uVar11 = uVar11 - 1;
-      iVar9 = iVar9 + 4;
-    } while (uVar11 != 0);
+      uVar10 = uVar10 - 1;
+      iVar8 = iVar8 + 4;
+    } while (uVar10 != 0);
   }
-  g_stream.model[uVar3].materialCount = uVar5;
-  if (uVar5 == 0) {
-    g_stream.model[uVar3].materials = (XModelStreamMaterial *)0x0;
-    __restgprlr_16();
+  g_stream.model[uVar2].materialCount = uVar4;
+  if (uVar4 == 0) {
+    g_stream.model[uVar2].materials = (XModelStreamMaterial *)0x0;
     return;
   }
   if (param_2 != 0) {
-    uVar5 = uVar3 >> 3 & 0x1ffffffc;
-    iVar10 = (uVar3 & 0x1f) * 4;
-    if ((*(uint *)((int)g_stream.modelInuse + uVar5) & *(uint *)(&g_bitShift + iVar10)) != 0) {
+    uVar4 = uVar2 >> 3 & 0x1ffffffc;
+    iVar9 = (uVar2 & 0x1f) * 4;
+    if ((*(uint *)((int)g_stream.modelInuse + uVar4) & *(uint *)(&g_bitShift + iVar9)) != 0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming_tabulate.cpp"
                       ,0x108,0,"%s");
     }
-    uVar6 = *(uint *)(&g_bitShift + iVar10);
-    *(uint *)((int)g_stream.modelInuse + uVar5) =
-         *(uint *)((int)g_stream.modelInuse + uVar5) | uVar6;
-    uVar6 = ~uVar6;
-    *(uint *)((int)g_stream.modelBaseTouch + uVar5) =
-         *(uint *)((int)g_stream.modelBaseTouch + uVar5) & uVar6;
-    uVar12 = *(uint *)((int)g_stream.cachedModelBaseTouch + uVar5);
-    g_staticModelStreamDist[uVar3] = (float)dVar14;
-    *(uint *)((int)g_stream.cachedModelBaseTouch + uVar5) = uVar12 & uVar6;
-    *(uint *)((int)g_stream.modelTouch + uVar5) =
-         *(uint *)((int)g_stream.modelTouch + uVar5) & uVar6;
-    g_stream.modelDist[uVar3] = (float)dVar14;
-    g_stream.cachedModelDist[uVar3] = (float)dVar14;
-    g_stream.fxModelDist[uVar3] = (float)dVar14;
+    uVar5 = *(uint *)(&g_bitShift + iVar9);
+    *(uint *)((int)g_stream.modelInuse + uVar4) =
+         *(uint *)((int)g_stream.modelInuse + uVar4) | uVar5;
+    uVar5 = ~uVar5;
+    *(uint *)((int)g_stream.modelBaseTouch + uVar4) =
+         *(uint *)((int)g_stream.modelBaseTouch + uVar4) & uVar5;
+    uVar11 = *(uint *)((int)g_stream.cachedModelBaseTouch + uVar4);
+    g_staticModelStreamDist[uVar2] = (float)dVar13;
+    *(uint *)((int)g_stream.cachedModelBaseTouch + uVar4) = uVar11 & uVar5;
+    *(uint *)((int)g_stream.modelTouch + uVar4) =
+         *(uint *)((int)g_stream.modelTouch + uVar4) & uVar5;
+    g_stream.modelDist[uVar2] = (float)dVar13;
+    g_stream.cachedModelDist[uVar2] = (float)dVar13;
+    g_stream.fxModelDist[uVar2] = (float)dVar13;
   }
-  __restgprlr_16();
   return;
 }
 
@@ -390,6 +386,8 @@ void DB_ReleaseXModelStream(XAssetHeader param_1)
 
 // 82401768  DB_CloneXModelStream  (database/db_streaming_tabulate.cpp:291)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "nodeType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
@@ -402,46 +400,41 @@ int DB_CloneXModelStream(XAssetHeader param_1,XAssetHeader param_2,DB_CloneType 
   uint uVar2;
   XModelStreamMaterial *pXVar3;
   XModelStream_u_8 XVar4;
-  XModel *pXVar5;
+  uint uVar5;
   uint uVar6;
-  uint uVar7;
-  int iVar8;
   
-  pXVar5 = (XModel *)__savegprlr_28(param_1.physPreset);
-  uVar6 = DB_GetXModelIndex(pXVar5);
-  uVar7 = DB_GetXModelIndex(param_2.model);
+  uVar5 = DB_GetXModelIndex(param_1.model);
+  uVar6 = DB_GetXModelIndex(param_2.model);
   if (param_3 == DB_CLONE_SWAP) {
-    uVar2 = g_stream.model[uVar7].materialCount;
-    pXVar3 = g_stream.model[uVar7].materials;
-    XVar4 = g_stream.model[uVar7].field2_0x8;
-    g_stream.model[uVar7].materialCount = g_stream.model[uVar6].materialCount;
-    g_stream.model[uVar7].materials = g_stream.model[uVar6].materials;
-    g_stream.model[uVar7].field2_0x8 = g_stream.model[uVar6].field2_0x8;
-    g_stream.model[uVar6].materialCount = uVar2;
-    g_stream.model[uVar6].materials = pXVar3;
-    g_stream.model[uVar6].field2_0x8 = XVar4;
-    fVar1 = g_stream.modelRadius[uVar7];
-    g_stream.modelRadius[uVar7] = g_stream.modelRadius[uVar6];
-    g_stream.modelRadius[uVar6] = fVar1;
-    iVar8 = __restgprlr_28(1);
-    return iVar8;
+    uVar2 = g_stream.model[uVar6].materialCount;
+    pXVar3 = g_stream.model[uVar6].materials;
+    XVar4 = g_stream.model[uVar6].field2_0x8;
+    g_stream.model[uVar6].materialCount = g_stream.model[uVar5].materialCount;
+    g_stream.model[uVar6].materials = g_stream.model[uVar5].materials;
+    g_stream.model[uVar6].field2_0x8 = g_stream.model[uVar5].field2_0x8;
+    g_stream.model[uVar5].materialCount = uVar2;
+    g_stream.model[uVar5].materials = pXVar3;
+    g_stream.model[uVar5].field2_0x8 = XVar4;
+    fVar1 = g_stream.modelRadius[uVar6];
+    g_stream.modelRadius[uVar6] = g_stream.modelRadius[uVar5];
+    g_stream.modelRadius[uVar5] = fVar1;
+    return 1;
   }
-  if (((*(uint *)((int)g_stream.modelInuse + (uVar6 >> 3 & 0x1ffffffc)) &
-       *(uint *)(&g_bitShift + (uVar6 & 0x1f) * 4)) == 0) &&
-     ((*(uint *)((int)g_stream.modelInuse + (uVar7 >> 3 & 0x1ffffffc)) &
-      *(uint *)(&g_bitShift + (uVar7 & 0x1f) * 4)) == 0)) {
+  if (((*(uint *)((int)g_stream.modelInuse + (uVar5 >> 3 & 0x1ffffffc)) &
+       *(uint *)(&g_bitShift + (uVar5 & 0x1f) * 4)) == 0) &&
+     ((*(uint *)((int)g_stream.modelInuse + (uVar6 >> 3 & 0x1ffffffc)) &
+      *(uint *)(&g_bitShift + (uVar6 & 0x1f) * 4)) == 0)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming_tabulate.cpp"
                     ,0x138,0,"%s");
   }
-  uVar2 = uVar7 >> 3 & 0x1ffffffc;
+  uVar2 = uVar6 >> 3 & 0x1ffffffc;
   *(uint *)((int)g_stream.modelInuse + uVar2) =
-       *(uint *)(&g_bitShift + (uVar7 & 0x1f) * 4) | *(uint *)((int)g_stream.modelInuse + uVar2);
-  g_stream.model[uVar7].materialCount = g_stream.model[uVar6].materialCount;
-  g_stream.model[uVar7].materials = g_stream.model[uVar6].materials;
-  g_stream.model[uVar7].field2_0x8 = g_stream.model[uVar6].field2_0x8;
-  g_stream.modelRadius[uVar7] = g_stream.modelRadius[uVar6];
-  iVar8 = __restgprlr_28(1);
-  return iVar8;
+       *(uint *)(&g_bitShift + (uVar6 & 0x1f) * 4) | *(uint *)((int)g_stream.modelInuse + uVar2);
+  g_stream.model[uVar6].materialCount = g_stream.model[uVar5].materialCount;
+  g_stream.model[uVar6].materials = g_stream.model[uVar5].materials;
+  g_stream.model[uVar6].field2_0x8 = g_stream.model[uVar5].field2_0x8;
+  g_stream.modelRadius[uVar6] = g_stream.modelRadius[uVar5];
+  return 1;
 }
 
 
@@ -466,18 +459,19 @@ void DB_FreeXModelStream(XModel *param_1)
 
 // 824019D0  DB_TouchXModel  (database/db_streaming_tabulate.cpp:342)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void DB_TouchXModel(XModel *param_1)
 
 {
   uint uVar1;
   uint uVar2;
-  XModel *pXVar3;
-  bool bVar5;
-  uint uVar4;
+  bool bVar4;
+  uint uVar3;
   
-  pXVar3 = (XModel *)__savegprlr_28(param_1);
-  bVar5 = Sys_IsMainThread();
-  if (!bVar5) {
+  bVar4 = Sys_IsMainThread();
+  if (!bVar4) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming_tabulate.cpp"
                     ,0x159,0,"%s");
   }
@@ -485,36 +479,36 @@ void DB_TouchXModel(XModel *param_1)
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming_tabulate.cpp"
                     ,0x15a,0,"%s");
   }
-  if (pXVar3 == (XModel *)0x0) {
+  if (param_1 == (XModel *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming_tabulate.cpp"
                     ,0x15b,0,"%s");
   }
-  uVar4 = DB_GetXModelIndex(pXVar3);
-  uVar2 = uVar4 >> 3 & 0x1ffffffc;
-  uVar1 = *(uint *)(&g_bitShift + (uVar4 & 0x1f) * 4);
+  uVar3 = DB_GetXModelIndex(param_1);
+  uVar2 = uVar3 >> 3 & 0x1ffffffc;
+  uVar1 = *(uint *)(&g_bitShift + (uVar3 & 0x1f) * 4);
   *(uint *)((int)g_stream.modelTouch + uVar2) = *(uint *)((int)g_stream.modelTouch + uVar2) | uVar1;
   *(uint *)((int)g_stream.modelBaseTouch + uVar2) =
        *(uint *)((int)g_stream.modelBaseTouch + uVar2) | uVar1;
-  g_stream.modelDist[uVar4] = 0.0;
-  __restgprlr_28();
+  g_stream.modelDist[uVar3] = 0.0;
   return;
 }
 
 
 // 82401AE0  DB_TouchXModelBase  (database/db_streaming_tabulate.cpp:358)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void DB_TouchXModelBase(XModel *param_1)
 
 {
-  uint uVar1;
-  float fVar2;
-  XModel *pXVar3;
-  bool bVar5;
-  uint uVar4;
+  float fVar1;
+  uint uVar2;
+  bool bVar4;
+  uint uVar3;
   
-  pXVar3 = (XModel *)__savegprlr_28(param_1);
-  bVar5 = Sys_IsMainThread();
-  if (!bVar5) {
+  bVar4 = Sys_IsMainThread();
+  if (!bVar4) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming_tabulate.cpp"
                     ,0x169,0,"%s");
   }
@@ -522,52 +516,51 @@ void DB_TouchXModelBase(XModel *param_1)
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming_tabulate.cpp"
                     ,0x16a,0,"%s");
   }
-  if (pXVar3 == (XModel *)0x0) {
+  if (param_1 == (XModel *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming_tabulate.cpp"
                     ,0x16b,0,"%s");
   }
-  uVar4 = DB_GetXModelIndex(pXVar3);
-  uVar1 = uVar4 >> 3 & 0x1ffffffc;
-  *(uint *)((int)g_stream.modelBaseTouch + uVar1) =
-       *(uint *)(&g_bitShift + (uVar4 & 0x1f) * 4) | *(uint *)((int)g_stream.modelBaseTouch + uVar1)
+  uVar3 = DB_GetXModelIndex(param_1);
+  uVar2 = uVar3 >> 3 & 0x1ffffffc;
+  *(uint *)((int)g_stream.modelBaseTouch + uVar2) =
+       *(uint *)(&g_bitShift + (uVar3 & 0x1f) * 4) | *(uint *)((int)g_stream.modelBaseTouch + uVar2)
   ;
-  fVar2 = g_stream.modelDist[uVar4];
-  if (500000.0 - g_stream.modelDist[uVar4] < 0.0) {
-    fVar2 = 500000.0;
+  fVar1 = g_stream.modelDist[uVar3];
+  if (500000.0 - g_stream.modelDist[uVar3] < 0.0) {
+    fVar1 = 500000.0;
   }
-  g_stream.modelDist[uVar4] = fVar2;
-  __restgprlr_28();
+  g_stream.modelDist[uVar3] = fVar1;
   return;
 }
 
 
 // 82401BE8  DB_TouchMaterial  (database/db_streaming_tabulate.cpp:372)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void DB_TouchMaterial(Material *param_1)
 
 {
   uint uVar1;
-  Material *pMVar2;
-  bool bVar4;
-  uint uVar3;
+  bool bVar3;
+  uint uVar2;
   
-  pMVar2 = (Material *)__savegprlr_29(param_1);
-  bVar4 = Sys_IsMainThread();
-  if (!bVar4) {
+  bVar3 = Sys_IsMainThread();
+  if (!bVar3) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming_tabulate.cpp"
                     ,0x177,0,"%s");
   }
-  if (pMVar2 == (Material *)0x0) {
+  if (param_1 == (Material *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming_tabulate.cpp"
                     ,0x178,0,"%s");
   }
-  uVar3 = DB_GetMaterialIndex(pMVar2);
-  uVar1 = uVar3 >> 3 & 0x1ffffffc;
+  uVar2 = DB_GetMaterialIndex(param_1);
+  uVar1 = uVar2 >> 3 & 0x1ffffffc;
   *(uint *)((int)g_stream.materialTouch + uVar1) =
-       *(uint *)(&g_bitShift + (uVar3 & 0x1f) * 4) | *(uint *)((int)g_stream.materialTouch + uVar1);
-  g_materialStreamInfo.worldPriority[uVar3] = 0.0;
-  g_stream.baseMaterialPriority[uVar3] = 0.0;
-  __restgprlr_29();
+       *(uint *)(&g_bitShift + (uVar2 & 0x1f) * 4) | *(uint *)((int)g_stream.materialTouch + uVar1);
+  g_materialStreamInfo.worldPriority[uVar2] = 0.0;
+  g_stream.baseMaterialPriority[uVar2] = 0.0;
   return;
 }
 
@@ -619,6 +612,11 @@ int DB_UsingClientStream(void)
 
 // 82402568  DB_StreamAddViewPos  (database/db_streaming_tabulate.cpp:617)
 
+/* WARNING: Function: __savegprlr_16 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_16 replaced with injection: xenon_save_restore */
+
 void DB_StreamAddViewPos(float *param_1,float param_2,DB_StreamAddViewPosInfo *param_3)
 
 {
@@ -639,21 +637,19 @@ void DB_StreamAddViewPos(float *param_1,float param_2,DB_StreamAddViewPosInfo *p
   float fVar15;
   uint uVar16;
   float fVar17;
-  float *pfVar18;
-  int iVar19;
-  uint uVar20;
-  int iVar21;
+  int iVar18;
+  uint uVar19;
+  int iVar20;
   int *in_r5;
-  ulonglong uVar22;
-  longlong lVar23;
-  GfxSurfaceBounds *pGVar24;
-  GfxStaticModelDrawInst *pGVar25;
-  double extraout_f1;
+  ulonglong uVar21;
+  longlong lVar22;
+  GfxSurfaceBounds *pGVar23;
+  GfxStaticModelDrawInst *pGVar24;
+  double dVar25;
   double dVar26;
   double dVar27;
   double dVar28;
   double dVar29;
-  double dVar30;
   SpuBitArrayIterator local_4180;
   ulonglong local_4168;
   longlong local_4160;
@@ -661,10 +657,8 @@ void DB_StreamAddViewPos(float *param_1,float param_2,DB_StreamAddViewPosInfo *p
   uint local_40b0 [2048];
   uint auStack_20b0 [2092];
   
-  __savegprlr_16((double)param_2,param_1,param_3);
-  pfVar18 = (float *)__savefpr_27();
-  dVar26 = 0.0;
-  dVar27 = extraout_f1;
+  dVar26 = (double)param_2;
+  dVar25 = 0.0;
   if ((float)in_r5[6] <= 0.0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming_tabulate.cpp"
                     ,0x2b1,0,"%s\n\t(info->invViewScale) = %g");
@@ -675,22 +669,22 @@ void DB_StreamAddViewPos(float *param_1,float param_2,DB_StreamAddViewPosInfo *p
   else {
     fVar2 = 1.0;
   }
-  dVar28 = (double)fVar2;
+  dVar27 = (double)fVar2;
   local_4150.bspSetBits = auStack_20b0;
-  local_4150.sphere.origin[0] = *pfVar18;
+  local_4150.sphere.origin[0] = *param_1;
   local_4150.smodelSetBits = local_40b0;
-  local_4150.sphere.origin[1] = pfVar18[1];
-  local_4150.sphere.origin[2] = pfVar18[2];
-  local_4150.sphere.radiusSq = (float)(dVar27 * dVar27);
-  local_4150.sphere.radius = (float)dVar27;
+  local_4150.sphere.origin[1] = param_1[1];
+  local_4150.sphere.origin[2] = param_1[2];
+  local_4150.sphere.radiusSq = (float)(dVar26 * dVar26);
+  local_4150.sphere.radius = (float)dVar26;
   R_SetupSphereStaticGeo(&local_4150);
   PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffff,"stream view smodel");
-  dVar27 = (double)(float)(dVar28 * (double)(float)in_r5[6]);
+  dVar26 = (double)(float)(dVar27 * (double)(float)in_r5[6]);
   local_4180.wordIndex = 0;
   local_4180.bits = 0;
   local_4180.wordCount = g_worldDpvs->smodelCount + 0x1f >> 5;
   pGVar6 = g_worldDpvs->smodelDrawInsts;
-  iVar21 = *in_r5;
+  iVar20 = *in_r5;
   iVar7 = in_r5[2];
   iVar8 = in_r5[1];
   iVar9 = in_r5[3];
@@ -700,48 +694,48 @@ void DB_StreamAddViewPos(float *param_1,float param_2,DB_StreamAddViewPosInfo *p
   if (local_4180.wordCount != 0) {
     local_4180.bits = *local_4150.smodelSetBits;
   }
-  dVar28 = 256.0;
-  while (iVar19 = SpuBitArrayIterator::Advance(&local_4180), iVar19 != 0) {
-    pGVar25 = pGVar6 + local_4180.index;
+  dVar27 = 256.0;
+  while (iVar18 = SpuBitArrayIterator::Advance(&local_4180), iVar18 != 0) {
+    pGVar24 = pGVar6 + local_4180.index;
     if (*(char *)(local_4180.index + iVar9) == '\0') {
-      fVar2 = pfVar18[1] - (pGVar25->placement).origin[1];
-      fVar3 = pfVar18[2] - (pGVar25->placement).origin[2];
-      fVar15 = *pfVar18 - (pGVar25->placement).origin[0];
-      dVar30 = (double)(pGVar25->placement).scale;
-      dVar29 = (double)SQRT(fVar15 * fVar15 + fVar3 * fVar3 + fVar2 * fVar2);
-      if (dVar30 == dVar26) {
+      fVar2 = param_1[1] - (pGVar24->placement).origin[1];
+      fVar3 = param_1[2] - (pGVar24->placement).origin[2];
+      fVar15 = *param_1 - (pGVar24->placement).origin[0];
+      dVar29 = (double)(pGVar24->placement).scale;
+      dVar28 = (double)SQRT(fVar15 * fVar15 + fVar3 * fVar3 + fVar2 * fVar2);
+      if (dVar29 == dVar25) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_math.h",0xe5
                         ,0,"%s");
       }
-      uVar20 = DB_GetXModelIndex(pGVar25->model);
-      iVar19 = uVar20 * 4;
-      fVar3 = *(float *)(iVar19 + iVar21);
-      fVar2 = (float)((double)(float)((double)(float)((double)(float)(1.0 / dVar30) * dVar29 -
-                                                     (double)*(float *)(iVar19 + iVar7)) + dVar28) *
-                     dVar27);
+      uVar19 = DB_GetXModelIndex(pGVar24->model);
+      iVar18 = uVar19 * 4;
+      fVar3 = *(float *)(iVar18 + iVar20);
+      fVar2 = (float)((double)(float)((double)(float)((double)(float)(1.0 / dVar29) * dVar28 -
+                                                     (double)*(float *)(iVar18 + iVar7)) + dVar27) *
+                     dVar26);
       if (fVar2 - fVar3 < 0.0) {
         fVar3 = fVar2;
       }
-      *(float *)(iVar19 + iVar21) = fVar3;
+      *(float *)(iVar18 + iVar20) = fVar3;
     }
   }
   PIXEndNamedEvent();
   PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffff,"stream view bsp");
-  dVar27 = (double)(float)(dVar27 * 6.103515625e-05);
-  uVar22 = ((ulonglong)g_worldDpvs->staticSurfaceCount + 0x1f & 0xffffffff) >> 5;
+  dVar26 = (double)(float)(dVar26 * 6.103515625e-05);
+  uVar21 = ((ulonglong)g_worldDpvs->staticSurfaceCount + 0x1f & 0xffffffff) >> 5;
   puVar12 = g_worldDpvs->sortedSurfIndex;
   pGVar13 = g_worldDpvs->surfacesBounds;
   pGVar14 = g_worldDpvs->surfaceMaterials;
   memset();
-  uVar20 = (uint)uVar22;
+  uVar19 = (uint)uVar21;
   local_4180.wordIndex = 0;
   local_4180.bits = 0;
   local_4180.bitArray = local_4150.bspSetBits;
-  local_4180.wordCount = uVar20;
-  if (uVar22 != 0) {
+  local_4180.wordCount = uVar19;
+  if (uVar21 != 0) {
     local_4180.bits = *local_4150.bspSetBits;
   }
-  while (iVar21 = SpuBitArrayIterator::Advance(&local_4180), iVar21 != 0) {
+  while (iVar20 = SpuBitArrayIterator::Advance(&local_4180), iVar20 != 0) {
     uVar5 = puVar12[local_4180.index];
     bVar1 = *(byte *)((uint)uVar5 + iVar10);
     if (1 < bVar1) {
@@ -756,28 +750,28 @@ void DB_StreamAddViewPos(float *param_1,float param_2,DB_StreamAddViewPosInfo *p
   local_4180.bitArray = local_40b0;
   local_4180.wordIndex = 0;
   local_4180.bits = 0;
-  local_4180.wordCount = uVar20;
-  if (uVar22 != 0) {
+  local_4180.wordCount = uVar19;
+  if (uVar21 != 0) {
     local_4180.bits = local_40b0[0];
   }
-  while (iVar21 = SpuBitArrayIterator::Advance(&local_4180), iVar21 != 0) {
-    pGVar24 = pGVar13 + local_4180.index;
-    iVar21 = 0;
-    fVar2 = pfVar18[1] - (pGVar24->bounds).midPoint[1];
-    local_4160 = (longlong)(int)(uint)pGVar24->mipRadius;
-    fVar3 = pfVar18[2] - (pGVar24->bounds).midPoint[2];
-    uVar22 = pGVar14[local_4180.index].packed >> 0x1d;
-    fVar15 = *pfVar18 - (pGVar24->bounds).midPoint[0];
-    lVar23 = ((uVar22 & 0xfff) + (uVar22 & 0xfff) * 2) * 4 + (ulonglong)uVar11;
-    for (uVar22 = (ulonglong)*(ushort *)lVar23; uVar22 != 0; uVar22 = uVar22 - 1) {
-      local_4168 = (ulonglong)pGVar24->invHighMipRadius[iVar21];
-      iVar21 = iVar21 + 1;
-      lVar23 = lVar23 + 2;
-      iVar7 = (uint)*(ushort *)lVar23 * 4;
+  while (iVar20 = SpuBitArrayIterator::Advance(&local_4180), iVar20 != 0) {
+    pGVar23 = pGVar13 + local_4180.index;
+    iVar20 = 0;
+    fVar2 = param_1[1] - (pGVar23->bounds).midPoint[1];
+    local_4160 = (longlong)(int)(uint)pGVar23->mipRadius;
+    fVar3 = param_1[2] - (pGVar23->bounds).midPoint[2];
+    uVar21 = pGVar14[local_4180.index].packed >> 0x1d;
+    fVar15 = *param_1 - (pGVar23->bounds).midPoint[0];
+    lVar22 = ((uVar21 & 0xfff) + (uVar21 & 0xfff) * 2) * 4 + (ulonglong)uVar11;
+    for (uVar21 = (ulonglong)*(ushort *)lVar22; uVar21 != 0; uVar21 = uVar21 - 1) {
+      local_4168 = (ulonglong)pGVar23->invHighMipRadius[iVar20];
+      iVar20 = iVar20 + 1;
+      lVar22 = lVar22 + 2;
+      iVar7 = (uint)*(ushort *)lVar22 * 4;
       fVar4 = *(float *)(iVar7 + iVar8);
       fVar17 = (float)local_4168 *
                (float)((double)(float)((double)(SQRT(fVar15 * fVar15 + fVar3 * fVar3 + fVar2 * fVar2
-                                                    ) - (float)local_4160) + dVar28) * dVar27);
+                                                    ) - (float)local_4160) + dVar27) * dVar26);
       if (fVar17 - fVar4 < 0.0) {
         fVar4 = fVar17;
       }
@@ -785,8 +779,6 @@ void DB_StreamAddViewPos(float *param_1,float param_2,DB_StreamAddViewPosInfo *p
     }
   }
   PIXEndNamedEvent();
-  __restfpr_27();
-  __restgprlr_16();
   return;
 }
 
@@ -913,20 +905,22 @@ void _dynamic_initializer_for__g_streamBitMask7__(void)
 
 // 82401CF8  DB_StreamCheckPriority  (database/db_streaming_tabulate.cpp:886)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
 /* WARNING: Restarted to delay deadcode elimination for space: stack */
 
 int DB_StreamCheckPriority(int param_1,int *param_2,float *param_3,uint *param_4)
 
 {
-  uint uVar1;
-  uint uVar2;
-  int iVar3;
-  ulonglong uVar4;
-  ulonglong uVar5;
-  ulonglong uVar6;
+  float *pfVar1;
+  float *pfVar2;
+  float *pfVar3;
+  float *pfVar4;
+  longlong lVar5;
+  int *piVar6;
   longlong lVar7;
-  ulonglong uVar8;
-  longlong lVar9;
+  undefined1 auVar8 [16];
+  undefined1 auVar9 [16];
   undefined1 auVar10 [16];
   undefined1 auVar11 [16];
   undefined1 auVar12 [16];
@@ -945,116 +939,113 @@ int DB_StreamCheckPriority(int param_1,int *param_2,float *param_3,uint *param_4
   undefined1 auVar25 [16];
   undefined1 auVar26 [16];
   undefined1 auVar27 [16];
-  undefined1 auVar28 [16];
-  undefined1 auVar29 [16];
   int local_70;
   int iStack_6c;
   int iStack_68;
   int iStack_64;
   
-  lVar7 = (longlong)(int)param_4;
-  uVar5 = (ulonglong)(int)param_3;
-  uVar4 = (ulonglong)(int)param_2;
-  __savegprlr_23(param_1);
+  lVar5 = (longlong)(int)param_4;
   PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffff,"stream check");
-  auVar29 = vectorSplatImmediateSignedWord(0);
-  auVar28 = loadVectorLeftIndexed(ZEXT48(&stack0x00000000) - 0x80);
-  auVar28 = vectorSplatWord(auVar28,0);
-  auVar28 = vectorConvertFromSignedFixedPointWord128(auVar28,0xe);
-  lVar9 = 0x298;
-  uVar6 = uVar5;
-  uVar8 = uVar4;
+  auVar27 = vectorSplatImmediateSignedWord(0);
+  auVar26 = loadVectorLeftIndexed(ZEXT48(&stack0x00000000) - 0x80);
+  auVar26 = vectorSplatWord(auVar26,0);
+  auVar26 = vectorConvertFromSignedFixedPointWord128(auVar26,0xe);
+  lVar7 = 0x298;
+  piVar6 = param_2;
+  pfVar4 = param_3;
   do {
-    uVar2 = (uint)uVar6;
-    uVar1 = (uint)uVar8;
-    auVar26 = vectorConvertFromSignedFixedPointWord128
-                        (*(undefined1 (*) [16])(uVar1 & 0xfffffff0),0xe);
     auVar24 = vectorConvertFromSignedFixedPointWord128
-                        (*(undefined1 (*) [16])(uVar1 + 0x10 & 0xfffffff0),0xe);
-    auVar21 = vectorConvertFromSignedFixedPointWord128
-                        (*(undefined1 (*) [16])(uVar1 + 0x20 & 0xfffffff0),0xe);
-    auVar14 = vectorConvertFromSignedFixedPointWord128
-                        (*(undefined1 (*) [16])(uVar1 + 0x40 & 0xfffffff0),0xe);
-    auVar18 = vectorCompareGreaterThanFloatingPoint128
-                        (auVar28,*(undefined1 (*) [16])(uVar2 & 0xfffffff0));
-    auVar17 = vectorConvertFromSignedFixedPointWord128
-                        (*(undefined1 (*) [16])(uVar1 + 0x30 & 0xfffffff0),0xe);
-    auVar15 = loadVectorRightIndexed(lVar7 + 0x10);
-    auVar16 = vectorCompareGreaterThanFloatingPoint128
-                        (auVar28,*(undefined1 (*) [16])(uVar2 + 0x10 & 0xfffffff0));
-    auVar12 = loadVectorLeftIndexed(lVar7);
-    lVar7 = lVar7 + 4;
-    auVar11 = vectorCompareGreaterThanFloatingPoint128
-                        (auVar28,*(undefined1 (*) [16])(uVar2 + 0x20 & 0xfffffff0));
-    auVar10 = vectorConvertFromSignedFixedPointWord128
-                        (*(undefined1 (*) [16])(uVar1 + 0x50 & 0xfffffff0),0xe);
-    auVar13 = vectorConvertFromSignedFixedPointWord128
-                        (*(undefined1 (*) [16])(uVar1 + 0x60 & 0xfffffff0),0xe);
-    auVar23 = vectorCompareGreaterThanFloatingPoint128(auVar28,auVar26);
-    auVar19 = vectorCompareGreaterThanFloatingPoint128(auVar28,auVar24);
-    auVar21 = vectorCompareGreaterThanFloatingPoint128(auVar28,auVar21);
-    auVar27 = vectorCompareGreaterThanFloatingPoint128(auVar28,auVar14);
-    auVar25 = vectorCompareGreaterThanFloatingPoint128
-                        (auVar28,*(undefined1 (*) [16])(uVar2 + 0x30 & 0xfffffff0));
-    auVar14 = vectorSplatWord((undefined1  [16])g_negativeOne.field0_0x0 & ~(auVar12 | auVar15),0);
-    auVar15 = vectorCompareGreaterThanFloatingPoint128(auVar28,auVar17);
+                        (*(undefined1 (*) [16])((uint)piVar6 & 0xfffffff0),0xe);
     auVar22 = vectorConvertFromSignedFixedPointWord128
+                        (*(undefined1 (*) [16])((uint)(piVar6 + 4) & 0xfffffff0),0xe);
+    auVar19 = vectorConvertFromSignedFixedPointWord128
+                        (*(undefined1 (*) [16])((uint)(piVar6 + 8) & 0xfffffff0),0xe);
+    auVar12 = vectorConvertFromSignedFixedPointWord128
+                        (*(undefined1 (*) [16])((uint)(piVar6 + 0x10) & 0xfffffff0),0xe);
+    auVar16 = vectorCompareGreaterThanFloatingPoint128
+                        (auVar26,*(undefined1 (*) [16])((uint)pfVar4 & 0xfffffff0));
+    auVar15 = vectorConvertFromSignedFixedPointWord128
+                        (*(undefined1 (*) [16])((uint)(piVar6 + 0xc) & 0xfffffff0),0xe);
+    auVar13 = loadVectorRightIndexed(lVar5 + 0x10);
+    auVar14 = vectorCompareGreaterThanFloatingPoint128
+                        (auVar26,*(undefined1 (*) [16])((uint)(pfVar4 + 4) & 0xfffffff0));
+    auVar10 = loadVectorLeftIndexed(lVar5);
+    lVar5 = lVar5 + 4;
+    auVar9 = vectorCompareGreaterThanFloatingPoint128
+                       (auVar26,*(undefined1 (*) [16])((uint)(pfVar4 + 8) & 0xfffffff0));
+    auVar8 = vectorConvertFromSignedFixedPointWord128
+                       (*(undefined1 (*) [16])((uint)(piVar6 + 0x14) & 0xfffffff0),0xe);
+    auVar11 = vectorConvertFromSignedFixedPointWord128
+                        (*(undefined1 (*) [16])((uint)(piVar6 + 0x18) & 0xfffffff0),0xe);
+    auVar21 = vectorCompareGreaterThanFloatingPoint128(auVar26,auVar24);
+    auVar17 = vectorCompareGreaterThanFloatingPoint128(auVar26,auVar22);
+    auVar19 = vectorCompareGreaterThanFloatingPoint128(auVar26,auVar19);
+    auVar25 = vectorCompareGreaterThanFloatingPoint128(auVar26,auVar12);
+    pfVar1 = pfVar4 + 0x18;
+    auVar23 = vectorCompareGreaterThanFloatingPoint128
+                        (auVar26,*(undefined1 (*) [16])((uint)(pfVar4 + 0xc) & 0xfffffff0));
+    auVar12 = vectorSplatWord((undefined1  [16])g_negativeOne.field0_0x0 & ~(auVar10 | auVar13),0);
+    auVar13 = vectorCompareGreaterThanFloatingPoint128(auVar26,auVar15);
+    pfVar2 = pfVar4 + 0x10;
+    auVar20 = vectorConvertFromSignedFixedPointWord128
                         (*(undefined1 (*) [16])
-                          (((int)uVar4 - (int)uVar5) + uVar2 + 0x70 & 0xfffffff0),0xe);
-    auVar20 = vectorCompareGreaterThanFloatingPoint128
-                        (auVar28,*(undefined1 (*) [16])(uVar2 + 0x50 & 0xfffffff0));
-    uVar6 = uVar6 + 0x80;
-    auVar26 = vectorCompareGreaterThanFloatingPoint128
-                        (auVar28,*(undefined1 (*) [16])(uVar2 + 0x60 & 0xfffffff0));
-    uVar8 = uVar8 + 0x80;
-    auVar12 = vectorCompareGreaterThanFloatingPoint128
-                        (auVar28,*(undefined1 (*) [16])(uVar2 + 0x40 & 0xfffffff0));
-    auVar17 = vectorCompareGreaterThanFloatingPoint128
-                        (auVar28,*(undefined1 (*) [16])(uVar2 + 0x70 & 0xfffffff0));
-    auVar24 = vectorCompareGreaterThanFloatingPoint128(auVar28,auVar10);
-    auVar10 = vectorCompareGreaterThanFloatingPoint128(auVar28,auVar13);
-    auVar13 = vectorCompareGreaterThanFloatingPoint128(auVar28,auVar22);
-    auVar29 = auVar29 | auVar18 & ~auVar23 & (undefined1  [16])g_streamBitMask0.field0_0x0 & auVar14
-              | auVar16 & ~auVar19 & (undefined1  [16])g_streamBitMask1.field0_0x0 & auVar14 |
-              auVar11 & ~auVar21 & (undefined1  [16])g_streamBitMask2.field0_0x0 & auVar14 |
-              auVar25 & ~auVar15 & (undefined1  [16])g_streamBitMask3.field0_0x0 & auVar14 |
-              auVar12 & ~auVar27 & (undefined1  [16])g_streamBitMask4.field0_0x0 & auVar14 |
-              auVar20 & ~auVar24 & (undefined1  [16])g_streamBitMask5.field0_0x0 & auVar14 |
-              auVar26 & ~auVar10 & (undefined1  [16])g_streamBitMask6.field0_0x0 & auVar14 |
-              auVar17 & ~auVar13 & (undefined1  [16])g_streamBitMask7.field0_0x0 & auVar14;
-    lVar9 = lVar9 + -1;
-  } while (lVar9 != 0);
-  if ((uVar6 & 0xffffffff) != (uVar5 + 0x14c00 & 0xffffffff)) {
+                          ((int)pfVar4 + (int)param_2 + (0x70 - (int)param_3) & 0xfffffff0),0xe);
+    pfVar3 = pfVar4 + 0x1c;
+    auVar18 = vectorCompareGreaterThanFloatingPoint128
+                        (auVar26,*(undefined1 (*) [16])((uint)(pfVar4 + 0x14) & 0xfffffff0));
+    pfVar4 = pfVar4 + 0x20;
+    auVar24 = vectorCompareGreaterThanFloatingPoint128
+                        (auVar26,*(undefined1 (*) [16])((uint)pfVar1 & 0xfffffff0));
+    piVar6 = piVar6 + 0x20;
+    auVar10 = vectorCompareGreaterThanFloatingPoint128
+                        (auVar26,*(undefined1 (*) [16])((uint)pfVar2 & 0xfffffff0));
+    auVar15 = vectorCompareGreaterThanFloatingPoint128
+                        (auVar26,*(undefined1 (*) [16])((uint)pfVar3 & 0xfffffff0));
+    auVar22 = vectorCompareGreaterThanFloatingPoint128(auVar26,auVar8);
+    auVar8 = vectorCompareGreaterThanFloatingPoint128(auVar26,auVar11);
+    auVar11 = vectorCompareGreaterThanFloatingPoint128(auVar26,auVar20);
+    auVar27 = auVar27 | auVar16 & ~auVar21 & (undefined1  [16])g_streamBitMask0.field0_0x0 & auVar12
+              | auVar14 & ~auVar17 & (undefined1  [16])g_streamBitMask1.field0_0x0 & auVar12 |
+              auVar9 & ~auVar19 & (undefined1  [16])g_streamBitMask2.field0_0x0 & auVar12 |
+              auVar23 & ~auVar13 & (undefined1  [16])g_streamBitMask3.field0_0x0 & auVar12 |
+              auVar10 & ~auVar25 & (undefined1  [16])g_streamBitMask4.field0_0x0 & auVar12 |
+              auVar18 & ~auVar22 & (undefined1  [16])g_streamBitMask5.field0_0x0 & auVar12 |
+              auVar24 & ~auVar8 & (undefined1  [16])g_streamBitMask6.field0_0x0 & auVar12 |
+              auVar15 & ~auVar11 & (undefined1  [16])g_streamBitMask7.field0_0x0 & auVar12;
+    lVar7 = lVar7 + -1;
+  } while (lVar7 != 0);
+  if (pfVar4 != param_3 + 0x5300) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming_tabulate.cpp"
                     ,0x3e5,0,"%s");
   }
-  if ((uVar8 & 0xffffffff) != (uVar4 + 0x14c00 & 0xffffffff)) {
+  if (piVar6 != param_2 + 0x5300) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming_tabulate.cpp"
                     ,0x3e6,0,"%s");
   }
   PIXEndNamedEvent();
-  iStack_64 = auVar29._12_4_;
-  iStack_68 = auVar29._8_4_;
-  iStack_6c = auVar29._4_4_;
-  local_70 = auVar29._0_4_;
-  iVar3 = __restgprlr_23(((iStack_64 != 0 || iStack_68 != 0) || iStack_6c != 0) || local_70 != 0);
-  return iVar3;
+  iStack_64 = auVar27._12_4_;
+  iStack_68 = auVar27._8_4_;
+  iStack_6c = auVar27._4_4_;
+  local_70 = auVar27._0_4_;
+  return (uint)(((iStack_64 != 0 || iStack_68 != 0) || iStack_6c != 0) || local_70 != 0);
 }
 
 
 // 82401FD8  DB_StreamCheckPriority2  (database/db_streaming_tabulate.cpp:1011)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Restarted to delay deadcode elimination for space: stack */
 
 int DB_StreamCheckPriority2(int param_1,float *param_2,uint *param_3)
 
 {
-  uint uVar1;
-  int iVar2;
-  ulonglong uVar3;
-  ulonglong uVar4;
-  longlong lVar5;
-  longlong lVar6;
+  float *pfVar1;
+  longlong lVar2;
+  longlong lVar3;
+  undefined1 auVar4 [16];
+  undefined1 auVar5 [16];
+  undefined1 auVar6 [16];
   undefined1 auVar7 [16];
   undefined1 auVar8 [16];
   undefined1 auVar9 [16];
@@ -1063,68 +1054,61 @@ int DB_StreamCheckPriority2(int param_1,float *param_2,uint *param_3)
   undefined1 auVar12 [16];
   undefined1 auVar13 [16];
   undefined1 auVar14 [16];
-  undefined1 auVar15 [16];
-  undefined1 auVar16 [16];
-  undefined1 auVar17 [16];
   int local_50;
   int iStack_4c;
   int iStack_48;
   int iStack_44;
   
-  lVar5 = (longlong)(int)param_3;
-  uVar3 = (ulonglong)(int)param_2;
-  __savegprlr_27(param_1);
+  lVar2 = (longlong)(int)param_3;
   PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffff,"stream check2");
-  auVar17 = vectorSplatImmediateSignedWord(0);
-  lVar6 = 0x298;
-  auVar16 = loadVectorLeftIndexed(ZEXT48(&stack0x00000000) - 0x60);
-  auVar16 = vectorSplatWord(auVar16,0);
-  auVar16 = vectorConvertFromSignedFixedPointWord128(auVar16,0xe);
-  uVar4 = uVar3;
+  auVar14 = vectorSplatImmediateSignedWord(0);
+  lVar3 = 0x298;
+  auVar13 = loadVectorLeftIndexed(ZEXT48(&stack0x00000000) - 0x60);
+  auVar13 = vectorSplatWord(auVar13,0);
+  auVar13 = vectorConvertFromSignedFixedPointWord128(auVar13,0xe);
+  pfVar1 = param_2;
   do {
-    uVar1 = (uint)uVar4;
-    auVar15 = vectorCompareGreaterThanFloatingPoint128
-                        (auVar16,*(undefined1 (*) [16])(uVar1 & 0xfffffff0));
-    auVar14 = loadVectorRightIndexed(lVar5 + 0x10);
-    auVar13 = loadVectorLeftIndexed(lVar5);
-    lVar5 = lVar5 + 4;
     auVar12 = vectorCompareGreaterThanFloatingPoint128
-                        (auVar16,*(undefined1 (*) [16])(uVar1 + 0x10 & 0xfffffff0));
-    auVar11 = vectorCompareGreaterThanFloatingPoint128
-                        (auVar16,*(undefined1 (*) [16])(uVar1 + 0x20 & 0xfffffff0));
-    auVar10 = vectorCompareGreaterThanFloatingPoint128
-                        (auVar16,*(undefined1 (*) [16])(uVar1 + 0x30 & 0xfffffff0));
+                        (auVar13,*(undefined1 (*) [16])((uint)pfVar1 & 0xfffffff0));
+    auVar11 = loadVectorRightIndexed(lVar2 + 0x10);
+    auVar10 = loadVectorLeftIndexed(lVar2);
+    lVar2 = lVar2 + 4;
     auVar9 = vectorCompareGreaterThanFloatingPoint128
-                       (auVar16,*(undefined1 (*) [16])(uVar1 + 0x40 & 0xfffffff0));
+                       (auVar13,*(undefined1 (*) [16])((uint)(pfVar1 + 4) & 0xfffffff0));
     auVar8 = vectorCompareGreaterThanFloatingPoint128
-                       (auVar16,*(undefined1 (*) [16])(uVar1 + 0x50 & 0xfffffff0));
+                       (auVar13,*(undefined1 (*) [16])((uint)(pfVar1 + 8) & 0xfffffff0));
     auVar7 = vectorCompareGreaterThanFloatingPoint128
-                       (auVar16,*(undefined1 (*) [16])(uVar1 + 0x60 & 0xfffffff0));
-    auVar14 = vectorSplatWord((undefined1  [16])g_negativeOne.field0_0x0 & ~(auVar13 | auVar14),0);
-    auVar13 = vectorCompareGreaterThanFloatingPoint128
-                        (auVar16,*(undefined1 (*) [16])(uVar1 + 0x70 & 0xfffffff0));
-    uVar4 = uVar4 + 0x80;
-    auVar17 = auVar17 | auVar15 & (undefined1  [16])g_streamBitMask0.field0_0x0 & auVar14 |
-              auVar12 & (undefined1  [16])g_streamBitMask1.field0_0x0 & auVar14 |
-              auVar11 & (undefined1  [16])g_streamBitMask2.field0_0x0 & auVar14 |
-              auVar10 & (undefined1  [16])g_streamBitMask3.field0_0x0 & auVar14 |
-              auVar9 & (undefined1  [16])g_streamBitMask4.field0_0x0 & auVar14 |
-              auVar8 & (undefined1  [16])g_streamBitMask5.field0_0x0 & auVar14 |
-              auVar7 & (undefined1  [16])g_streamBitMask6.field0_0x0 & auVar14 |
-              auVar13 & (undefined1  [16])g_streamBitMask7.field0_0x0 & auVar14;
-    lVar6 = lVar6 + -1;
-  } while (lVar6 != 0);
-  if ((uVar4 & 0xffffffff) != (uVar3 + 0x14c00 & 0xffffffff)) {
+                       (auVar13,*(undefined1 (*) [16])((uint)(pfVar1 + 0xc) & 0xfffffff0));
+    auVar6 = vectorCompareGreaterThanFloatingPoint128
+                       (auVar13,*(undefined1 (*) [16])((uint)(pfVar1 + 0x10) & 0xfffffff0));
+    auVar5 = vectorCompareGreaterThanFloatingPoint128
+                       (auVar13,*(undefined1 (*) [16])((uint)(pfVar1 + 0x14) & 0xfffffff0));
+    auVar4 = vectorCompareGreaterThanFloatingPoint128
+                       (auVar13,*(undefined1 (*) [16])((uint)(pfVar1 + 0x18) & 0xfffffff0));
+    auVar11 = vectorSplatWord((undefined1  [16])g_negativeOne.field0_0x0 & ~(auVar10 | auVar11),0);
+    auVar10 = vectorCompareGreaterThanFloatingPoint128
+                        (auVar13,*(undefined1 (*) [16])((uint)(pfVar1 + 0x1c) & 0xfffffff0));
+    pfVar1 = pfVar1 + 0x20;
+    auVar14 = auVar14 | auVar12 & (undefined1  [16])g_streamBitMask0.field0_0x0 & auVar11 |
+              auVar9 & (undefined1  [16])g_streamBitMask1.field0_0x0 & auVar11 |
+              auVar8 & (undefined1  [16])g_streamBitMask2.field0_0x0 & auVar11 |
+              auVar7 & (undefined1  [16])g_streamBitMask3.field0_0x0 & auVar11 |
+              auVar6 & (undefined1  [16])g_streamBitMask4.field0_0x0 & auVar11 |
+              auVar5 & (undefined1  [16])g_streamBitMask5.field0_0x0 & auVar11 |
+              auVar4 & (undefined1  [16])g_streamBitMask6.field0_0x0 & auVar11 |
+              auVar10 & (undefined1  [16])g_streamBitMask7.field0_0x0 & auVar11;
+    lVar3 = lVar3 + -1;
+  } while (lVar3 != 0);
+  if (pfVar1 != param_2 + 0x5300) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming_tabulate.cpp"
                     ,0x43d,0,"%s");
   }
   PIXEndNamedEvent();
-  iStack_44 = auVar17._12_4_;
-  iStack_48 = auVar17._8_4_;
-  iStack_4c = auVar17._4_4_;
-  local_50 = auVar17._0_4_;
-  iVar2 = __restgprlr_27(((iStack_44 != 0 || iStack_48 != 0) || iStack_4c != 0) || local_50 != 0);
-  return iVar2;
+  iStack_44 = auVar14._12_4_;
+  iStack_48 = auVar14._8_4_;
+  iStack_4c = auVar14._4_4_;
+  local_50 = auVar14._0_4_;
+  return (uint)(((iStack_44 != 0 || iStack_48 != 0) || iStack_4c != 0) || local_50 != 0);
 }
 
 
@@ -1175,6 +1159,11 @@ void DB_StreamClearPriority(float *param_1)
 
 // 824029A8  DB_StreamCombineInternal  (database/db_streaming_tabulate.cpp:1214)
 
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
+
 void DB_StreamCombineInternal
                (StreamTabulationCmd *param_1,float *param_2,float *param_3,uint *param_4,
                float *param_5)
@@ -1219,8 +1208,6 @@ void DB_StreamCombineInternal
   float *pfStack00000034;
   SpuBitArrayIterator local_140 [16];
   
-  __savegprlr();
-  __savefpr();
   pfStack00000024 = param_3;
   puStack0000002c = param_4;
   pfStack00000034 = param_5;
@@ -1549,35 +1536,35 @@ void DB_StreamCombineInternal
   }
   memset();
   PIXEndNamedEvent();
-  __restfpr();
-  __restgprlr();
   return;
 }
 
 
 // 82402288  DB_StreamCheckAllPriority  (database/db_streaming_tabulate.cpp:1608)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Removing unreachable block (ram,0x824022cc) */
 
 void DB_StreamCheckAllPriority(StreamTabulationCmd *param_1,float *param_2)
 
 {
-  float *pfVar1;
-  int iVar2;
+  int iVar1;
   
-  pfVar1 = (float *)__savegprlr_28(param_1,param_2);
   if ((-1 < g_stream.abortPriority) &&
-     (iVar2 = DB_StreamCheckPriority
-                        (g_stream.abortPriority,g_stream2.priority,pfVar1,g_stream2.inuse),
-     iVar2 != 0)) {
+     (iVar1 = DB_StreamCheckPriority
+                        (g_stream.abortPriority,g_stream2.priority,(float *)param_1,g_stream2.inuse)
+     , iVar1 != 0)) {
     g_stream.abort2 = 1;
   }
-  __restgprlr_28();
   return;
 }
 
 
 // 824033C8  DB_StreamAddAllViewPos  (database/db_streaming_tabulate.cpp:1706)
+
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 
 void DB_StreamAddAllViewPos
                (GfxWorld *param_1,StreamTabulationCmd *param_2,float *param_3,float *param_4,
@@ -1590,12 +1577,10 @@ void DB_StreamAddAllViewPos
   uint uVar4;
   double dVar5;
   
-  dVar5 = (double)param_6;
   lVar1 = (longlong)(int)param_2;
-  __savegprlr_27((double)param_5,param_1,lVar1,param_3,param_4);
   iVar2 = 0;
   uVar3 = 0;
-  dVar5 = (double)(float)(dVar5 + 1024.0);
+  dVar5 = (double)(param_6 + 1024.0);
   do {
     uVar4 = 0;
     do {
@@ -1612,12 +1597,16 @@ void DB_StreamAddAllViewPos
     uVar3 = uVar3 + 0x12;
     iVar2 = iVar2 + 1;
   } while (uVar3 < 0x36);
-  __restgprlr_27();
   return;
 }
 
 
 // 824034A8  DB_StreamModels  (database/db_streaming_tabulate.cpp:1803)
+
+/* WARNING: Function: __savegprlr_16 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_16 replaced with injection: xenon_save_restore */
 
 void DB_StreamModels(StreamTabulationCmd *param_1,float *param_2,float *param_3,float *param_4,
                     uint *param_5,float param_6)
@@ -1631,45 +1620,39 @@ void DB_StreamModels(StreamTabulationCmd *param_1,float *param_2,float *param_3,
   ulonglong uVar6;
   XModelStreamMaterial *pXVar7;
   int iVar8;
-  int iVar9;
-  ulonglong uVar10;
-  XModelStreamMaterial *pXVar11;
+  ulonglong uVar9;
+  XModelStreamMaterial *pXVar10;
+  ulonglong uVar11;
   uint uVar12;
-  ulonglong uVar13;
-  ushort *puVar14;
+  ushort *puVar13;
+  double dVar14;
   double dVar15;
-  double extraout_f1;
   double dVar16;
   double dVar17;
   double dVar18;
   double dVar19;
   double dVar20;
-  double dVar21;
   SpuBitArrayIterator local_d0 [10];
   
-  __savegprlr_16((double)param_6,param_1);
-  iVar8 = __savefpr_26();
-  dVar16 = extraout_f1;
+  dVar14 = (double)param_6;
   PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffff,"stream models");
   local_d0[0].wordCount = 0x45;
   local_d0[0].bitArray = g_stream.modelInuse;
   local_d0[0].wordIndex = 0;
-  dVar18 = 1.52587890625e-05;
-  dVar19 = 1000000.0;
-  dVar17 = 0.0;
+  dVar17 = 1.52587890625e-05;
+  dVar18 = 1000000.0;
+  dVar16 = 0.0;
   local_d0[0].bits = g_stream.modelInuse[0];
   do {
     do {
-      iVar9 = SpuBitArrayIterator::Advance(local_d0);
+      iVar8 = SpuBitArrayIterator::Advance(local_d0);
       uVar12 = local_d0[0].index;
-      if (iVar9 == 0) {
+      if (iVar8 == 0) {
         PIXEndNamedEvent();
-        __restfpr_26();
-        __restgprlr_16();
         return;
       }
-      uVar10 = (ulonglong)g_stream.model[local_d0[0].index].materialCount;
-      if (uVar10 == 0) {
+      uVar9 = (ulonglong)g_stream.model[local_d0[0].index].materialCount;
+      if (uVar9 == 0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming_tabulate.cpp"
                         ,0x752,0,"%s");
       }
@@ -1678,93 +1661,95 @@ void DB_StreamModels(StreamTabulationCmd *param_1,float *param_2,float *param_3,
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming_tabulate.cpp"
                         ,0x755,0,"%s");
       }
-      dVar21 = (double)g_stream.modelDist[uVar12];
+      dVar20 = (double)g_stream.modelDist[uVar12];
       if ((float)((double)g_stream.fxModelDist[uVar12] - (double)g_stream.modelDist[uVar12]) < 0.0)
       {
-        dVar21 = (double)g_stream.fxModelDist[uVar12];
+        dVar20 = (double)g_stream.fxModelDist[uVar12];
       }
-      if ((float)((double)param_3[uVar12] - dVar21) < 0.0) {
-        dVar21 = (double)param_3[uVar12];
+      if ((float)((double)param_3[uVar12] - dVar20) < 0.0) {
+        dVar20 = (double)param_3[uVar12];
       }
-    } while (dVar21 == dVar19);
-    iVar9 = g_stream.model[uVar12].field2_0x8.invLodOutDistAsInt;
-    g_stream.modelDist[uVar12] = (float)dVar19;
-    g_stream.fxModelDist[uVar12] = (float)dVar19;
-    param_3[uVar12] = (float)dVar19;
-    if (iVar9 != 0) {
+    } while (dVar20 == dVar18);
+    iVar8 = g_stream.model[uVar12].field2_0x8.invLodOutDistAsInt;
+    g_stream.modelDist[uVar12] = (float)dVar18;
+    g_stream.fxModelDist[uVar12] = (float)dVar18;
+    param_3[uVar12] = (float)dVar18;
+    if (iVar8 != 0) {
       uVar5 = uVar12 >> 3 & 0x1ffffffc;
       uVar3 = *(uint *)(&g_bitShift + (uVar12 & 0x1f) * 4);
-      uVar6 = uVar10;
+      uVar6 = uVar9;
       pXVar7 = pXVar2;
       if ((uVar3 & *(uint *)((int)g_stream.modelBaseTouch + uVar5)) == 0) {
-        dVar20 = (double)((float)(dVar21 - dVar16) * g_stream.model[uVar12].field2_0x8.invLodOutDist
+        dVar19 = (double)((float)(dVar20 - dVar14) * g_stream.model[uVar12].field2_0x8.invLodOutDist
                          );
       }
       else {
         *(uint *)((int)g_stream.modelBaseTouch + uVar5) =
              ~uVar3 & *(uint *)((int)g_stream.modelBaseTouch + uVar5);
         uVar12 = *(uint *)((int)g_stream.modelTouch + uVar5);
-        dVar20 = dVar17;
+        dVar19 = dVar16;
         if ((uVar3 & uVar12) != 0) {
           *(uint *)((int)g_stream.modelTouch + uVar5) = ~uVar3 & uVar12;
-          uVar13 = uVar10;
-          pXVar11 = pXVar2;
-          if (uVar10 == 0) goto LAB_82403740;
+          uVar11 = uVar9;
+          pXVar10 = pXVar2;
+          if (uVar9 == 0) goto LAB_82403740;
           do {
-            uVar1 = pXVar11->index;
+            uVar1 = pXVar10->index;
             if (0x165f < uVar1) {
               MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming_tabulate.cpp"
                               ,0x77d,0,
                               "index doesn\'t index MATERIAL_POOL_SIZE\n\t%i not in [0, %i)");
             }
             uVar12 = uVar1 >> 3 & 0x1ffffffc;
-            uVar13 = uVar13 - 1;
+            uVar11 = uVar11 - 1;
             *(uint *)(uVar12 + (int)param_4) =
                  *(uint *)(&g_bitShift + (uVar1 & 0x1f) * 4) | *(uint *)(uVar12 + (int)param_4);
-            pXVar11 = pXVar11 + 1;
-          } while (uVar13 != 0);
+            pXVar10 = pXVar10 + 1;
+          } while (uVar11 != 0);
         }
       }
       while (uVar6 != 0) {
-        uVar1 = pXVar7->index;
-        if (0x165f < uVar1) {
+        uVar12 = (uint)pXVar7->index;
+        if (0x165f < uVar12) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming_tabulate.cpp"
                           ,0x791,0,"index doesn\'t index MATERIAL_POOL_SIZE\n\t%i not in [0, %i)");
         }
-        iVar9 = (uint)uVar1 * 4;
-        dVar15 = (double)*(float *)(iVar9 + iVar8);
-        if ((float)(dVar20 - dVar15) < 0.0) {
-          dVar15 = dVar20;
+        dVar15 = (double)(float)(&param_1->msec)[uVar12];
+        if ((float)(dVar19 - (double)(float)(&param_1->msec)[uVar12]) < 0.0) {
+          dVar15 = dVar19;
         }
-        *(float *)(iVar9 + iVar8) = (float)dVar15;
+        (&param_1->msec)[uVar12] = (int)(float)dVar15;
         uVar6 = uVar6 - 1;
         pXVar7 = pXVar7 + 1;
       }
     }
 LAB_82403740:
-    dVar21 = (double)(float)(dVar21 * dVar18);
-    if (uVar10 != 0) {
-      puVar14 = &pXVar2[-1].invHighMipRadius;
+    dVar20 = (double)(float)(dVar20 * dVar17);
+    if (uVar9 != 0) {
+      puVar13 = &pXVar2[-1].invHighMipRadius;
       do {
-        uVar12 = (uint)puVar14[1];
+        uVar12 = (uint)puVar13[1];
         if (0x165f < uVar12) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming_tabulate.cpp"
                           ,0x7a1,0,"index doesn\'t index MATERIAL_POOL_SIZE\n\t%i not in [0, %i)");
         }
-        puVar14 = puVar14 + 2;
-        uVar10 = uVar10 - 1;
+        puVar13 = puVar13 + 2;
+        uVar9 = uVar9 - 1;
         fVar4 = param_2[uVar12];
-        if ((float)((double)*puVar14 * dVar21) - param_2[uVar12] < 0.0) {
-          fVar4 = (float)((double)*puVar14 * dVar21);
+        if ((float)((double)*puVar13 * dVar20) - param_2[uVar12] < 0.0) {
+          fVar4 = (float)((double)*puVar13 * dVar20);
         }
         param_2[uVar12] = fVar4;
-      } while (uVar10 != 0);
+      } while (uVar9 != 0);
     }
   } while( true );
 }
 
 
 // 824037D0  DB_StreamBmodels  (database/db_streaming_tabulate.cpp:1970)
+
+/* WARNING: Function: __savegprlr_18 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_18 replaced with injection: xenon_save_restore */
 
 void DB_StreamBmodels(StreamTabulationCmd *param_1,GfxWorld *param_2,float *param_3,
                      MaterialStreamLayerInfo *param_4)
@@ -1774,124 +1759,121 @@ void DB_StreamBmodels(StreamTabulationCmd *param_1,GfxWorld *param_2,float *para
   byte bVar2;
   byte bVar3;
   float fVar4;
-  float fVar5;
+  ushort uVar5;
   ushort uVar6;
-  GfxSurfaceBounds *pGVar7;
-  GfxDrawSurf *pGVar8;
-  int iVar9;
-  int iVar10;
+  ushort uVar7;
+  ushort uVar8;
+  GfxSurfaceBounds *pGVar9;
+  GfxDrawSurf *pGVar10;
   int iVar11;
   int iVar12;
-  int iVar13;
-  int iVar14;
+  char *pcVar13;
+  uchar *puVar14;
   longlong lVar15;
-  longlong lVar16;
-  uchar *puVar17;
-  longlong lVar18;
-  ulonglong uVar19;
-  ulonglong uVar20;
-  ulonglong uVar21;
-  float *pfVar22;
-  ushort *puVar23;
-  GfxDrawSurf *pGVar24;
-  longlong lVar25;
+  ulonglong uVar16;
+  ulonglong uVar17;
+  ulonglong uVar18;
+  float *pfVar19;
+  ushort *puVar20;
+  GfxDrawSurf *pGVar21;
+  longlong lVar22;
   
-  lVar16 = (longlong)(int)param_3;
-  lVar15 = (longlong)(int)param_2;
-  iVar14 = __savegprlr_18(param_1,lVar15,lVar16,param_4);
   PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffff,"stream bmodels");
-  uVar20 = (ulonglong)*(uint *)(iVar14 + 0x134);
-  pGVar7 = g_worldDpvs->surfacesBounds;
-  pGVar8 = g_worldDpvs->surfaceMaterials;
-  if (uVar20 != 0) {
-    puVar23 = (ushort *)(*(int *)(iVar14 + 0x138) + 0x36);
-    pfVar22 = g_stream.bmodelDist;
+  uVar17 = ZEXT48(param_1[3].aabbTrees);
+  pGVar9 = g_worldDpvs->surfacesBounds;
+  pGVar10 = g_worldDpvs->surfaceMaterials;
+  if (uVar17 != 0) {
+    puVar20 = (ushort *)(*(int *)&param_1[3].glassSysInitCount + 0x36);
+    pfVar19 = g_stream.bmodelDist;
     do {
-      fVar4 = *pfVar22;
+      fVar4 = *pfVar19;
       if (fVar4 != 1e+06) {
-        uVar19 = (ulonglong)puVar23[-1];
-        *pfVar22 = 1e+06;
+        uVar16 = (ulonglong)puVar20[-1];
+        *pfVar19 = 1e+06;
         fVar4 = fVar4 * 6.1035156e-05;
-        if (uVar19 != 0) {
-          pGVar24 = pGVar8 + *puVar23;
-          puVar17 = pGVar7[*puVar23].invHighMipRadius + 1;
+        if (uVar16 != 0) {
+          pGVar21 = pGVar10 + *puVar20;
+          puVar14 = pGVar9[*puVar20].invHighMipRadius + 1;
           do {
-            uVar21 = 0;
-            lVar18 = ((pGVar24->packed >> 0x1d & 0xfff) + (pGVar24->packed >> 0x1d & 0xfff) * 2) * 4
+            uVar18 = 0;
+            lVar15 = ((pGVar21->packed >> 0x1d & 0xfff) + (pGVar21->packed >> 0x1d & 0xfff) * 2) * 4
             ;
-            lVar25 = lVar18 + lVar16;
-            uVar6 = *(ushort *)((int)lVar18 + (int)lVar16);
-            iVar14 = (int)lVar15;
-            if (3 < uVar6) {
-              lVar18 = lVar25;
+            lVar22 = lVar15 + (int)param_3;
+            uVar8 = *(ushort *)((int)lVar15 + (int)param_3);
+            if (3 < uVar8) {
+              lVar15 = lVar22;
               do {
-                iVar11 = (int)uVar21;
-                bVar1 = puVar17[iVar11 + 1];
-                bVar2 = puVar17[iVar11];
-                bVar3 = puVar17[iVar11 + 2];
-                uVar21 = uVar21 + 4;
-                iVar12 = (int)lVar18;
-                iVar9 = (uint)*(ushort *)(iVar12 + 2) * 4;
-                iVar13 = (uint)*(ushort *)(iVar12 + 4) * 4;
-                lVar18 = lVar18 + 8;
-                iVar12 = (uint)*(ushort *)(iVar12 + 6) * 4;
-                iVar10 = (uint)*(ushort *)lVar18 * 4;
-                fVar5 = *(float *)(iVar9 + iVar14);
-                if ((float)puVar17[iVar11 + -1] * fVar4 - fVar5 < 0.0) {
-                  fVar5 = (float)puVar17[iVar11 + -1] * fVar4;
+                iVar11 = (int)uVar18;
+                bVar1 = puVar14[iVar11 + 1];
+                bVar2 = puVar14[iVar11];
+                bVar3 = puVar14[iVar11 + 2];
+                uVar18 = uVar18 + 4;
+                iVar12 = (int)lVar15;
+                uVar5 = *(ushort *)(iVar12 + 4);
+                uVar6 = *(ushort *)(iVar12 + 6);
+                lVar15 = lVar15 + 8;
+                uVar7 = *(ushort *)lVar15;
+                pcVar13 = (&param_2->name)[*(ushort *)(iVar12 + 2)];
+                if ((float)puVar14[iVar11 + -1] * fVar4 -
+                    (float)(&param_2->name)[*(ushort *)(iVar12 + 2)] < 0.0) {
+                  pcVar13 = (char *)((float)puVar14[iVar11 + -1] * fVar4);
                 }
-                *(float *)(iVar9 + iVar14) = fVar5;
-                fVar5 = *(float *)(iVar13 + iVar14);
-                if ((float)bVar2 * fVar4 - fVar5 < 0.0) {
-                  fVar5 = (float)bVar2 * fVar4;
+                (&param_2->name)[*(ushort *)(iVar12 + 2)] = pcVar13;
+                pcVar13 = (&param_2->name)[uVar5];
+                if ((float)bVar2 * fVar4 - (float)(&param_2->name)[uVar5] < 0.0) {
+                  pcVar13 = (char *)((float)bVar2 * fVar4);
                 }
-                *(float *)(iVar13 + iVar14) = fVar5;
-                fVar5 = *(float *)(iVar12 + iVar14);
-                if ((float)bVar1 * fVar4 - fVar5 < 0.0) {
-                  fVar5 = (float)bVar1 * fVar4;
+                (&param_2->name)[uVar5] = pcVar13;
+                pcVar13 = (&param_2->name)[uVar6];
+                if ((float)bVar1 * fVar4 - (float)(&param_2->name)[uVar6] < 0.0) {
+                  pcVar13 = (char *)((float)bVar1 * fVar4);
                 }
-                *(float *)(iVar12 + iVar14) = fVar5;
-                fVar5 = *(float *)(iVar10 + iVar14);
-                if ((float)bVar3 * fVar4 - fVar5 < 0.0) {
-                  fVar5 = (float)bVar3 * fVar4;
+                (&param_2->name)[uVar6] = pcVar13;
+                pcVar13 = (&param_2->name)[uVar7];
+                if ((float)bVar3 * fVar4 - (float)(&param_2->name)[uVar7] < 0.0) {
+                  pcVar13 = (char *)((float)bVar3 * fVar4);
                 }
-                *(float *)(iVar10 + iVar14) = fVar5;
-              } while ((uVar21 & 0xffffffff) < ((ulonglong)uVar6 - 3 & 0xffffffff));
+                (&param_2->name)[uVar7] = pcVar13;
+              } while ((uVar18 & 0xffffffff) < ((ulonglong)uVar8 - 3 & 0xffffffff));
             }
-            if ((uVar21 & 0xffffffff) < (ulonglong)(uint)uVar6) {
-              lVar18 = uVar6 - uVar21;
-              lVar25 = (uVar21 & 0x7fffffff) * 2 + lVar25;
+            if ((uVar18 & 0xffffffff) < (ulonglong)(uint)uVar8) {
+              lVar15 = uVar8 - uVar18;
+              lVar22 = (uVar18 & 0x7fffffff) * 2 + lVar22;
               do {
-                iVar13 = (int)uVar21;
-                uVar21 = uVar21 + 1;
-                lVar25 = lVar25 + 2;
-                iVar9 = (uint)*(ushort *)lVar25 * 4;
-                fVar5 = *(float *)(iVar9 + iVar14);
-                if ((float)puVar17[iVar13 + -1] * fVar4 - fVar5 < 0.0) {
-                  fVar5 = (float)puVar17[iVar13 + -1] * fVar4;
+                iVar11 = (int)uVar18;
+                uVar18 = uVar18 + 1;
+                lVar22 = lVar22 + 2;
+                pcVar13 = (&param_2->name)[*(ushort *)lVar22];
+                if ((float)puVar14[iVar11 + -1] * fVar4 - (float)(&param_2->name)[*(ushort *)lVar22]
+                    < 0.0) {
+                  pcVar13 = (char *)((float)puVar14[iVar11 + -1] * fVar4);
                 }
-                *(float *)(iVar9 + iVar14) = fVar5;
-                lVar18 = lVar18 + -1;
-              } while (lVar18 != 0);
+                (&param_2->name)[*(ushort *)lVar22] = pcVar13;
+                lVar15 = lVar15 + -1;
+              } while (lVar15 != 0);
             }
-            uVar19 = uVar19 - 1;
-            puVar17 = puVar17 + 0x20;
-            pGVar24 = pGVar24 + 1;
-          } while (uVar19 != 0);
+            uVar16 = uVar16 - 1;
+            puVar14 = puVar14 + 0x20;
+            pGVar21 = pGVar21 + 1;
+          } while (uVar16 != 0);
         }
       }
-      uVar20 = uVar20 - 1;
-      pfVar22 = pfVar22 + 1;
-      puVar23 = puVar23 + 0x1c;
-    } while (uVar20 != 0);
+      uVar17 = uVar17 - 1;
+      pfVar19 = pfVar19 + 1;
+      puVar20 = puVar20 + 0x1c;
+    } while (uVar17 != 0);
   }
   PIXEndNamedEvent();
-  __restgprlr_18();
   return;
 }
 
 
 // 82402328  DB_StreamGlass  (database/db_streaming_tabulate.cpp:2068)
+
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
 
 void DB_StreamGlass(StreamTabulationCmd *param_1,float *param_2)
 
@@ -1899,96 +1881,93 @@ void DB_StreamGlass(StreamTabulationCmd *param_1,float *param_2)
   float fVar1;
   Material *pMVar2;
   FxGlassDef *pFVar3;
-  int iVar4;
-  uint uVar5;
-  float *pfVar6;
-  ulonglong uVar7;
-  Material **ppMVar8;
+  uint uVar4;
+  float *pfVar5;
+  ulonglong uVar6;
+  Material **ppMVar7;
+  double dVar8;
   double dVar9;
   double dVar10;
   double dVar11;
   double dVar12;
-  double dVar13;
   
-  __savegprlr_23(param_1,param_2);
-  iVar4 = __savefpr_28();
   PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffff,"stream glass");
   pFVar3 = fxWorld.glassSys.defs;
-  uVar7 = (ulonglong)fxWorld.glassSys.defCount;
+  uVar6 = (ulonglong)fxWorld.glassSys.defCount;
   if (glass_shattered_scale == (dvar_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming_tabulate.cpp"
                     ,0x82c,0,"%s");
   }
-  dVar11 = (double)(glass_shattered_scale->current).value;
-  if (dVar11 == 0.0) {
+  dVar10 = (double)(glass_shattered_scale->current).value;
+  if (dVar10 == 0.0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming_tabulate.cpp"
                     ,0x83c,0,"%s");
   }
-  if (uVar7 != 0) {
-    ppMVar8 = &pFVar3->material;
-    pfVar6 = g_stream.bufferedGlassDist;
-    dVar10 = 1000000.0;
+  if (uVar6 != 0) {
+    ppMVar7 = &pFVar3->material;
+    pfVar5 = g_stream.bufferedGlassDist;
+    dVar9 = 1000000.0;
     do {
-      dVar12 = (double)*pfVar6;
-      if (dVar12 != dVar10) {
-        pMVar2 = *ppMVar8;
-        dVar13 = (double)(float)((double)(float)ppMVar8[3] * dVar12);
+      dVar11 = (double)*pfVar5;
+      if (dVar11 != dVar9) {
+        pMVar2 = *ppMVar7;
+        dVar12 = (double)(float)((double)(float)ppMVar7[3] * dVar11);
         if (pMVar2 == (Material *)0x0) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming_tabulate.cpp"
                           ,0x84c,0,"%s");
         }
-        uVar5 = DB_GetMaterialIndex(pMVar2);
-        fVar1 = (float)ppMVar8[4];
-        pMVar2 = ppMVar8[1];
-        dVar9 = (double)*(float *)(uVar5 * 4 + iVar4);
-        if ((float)(dVar13 - dVar9) < 0.0) {
-          dVar9 = dVar13;
+        uVar4 = DB_GetMaterialIndex(pMVar2);
+        fVar1 = (float)ppMVar7[4];
+        pMVar2 = ppMVar7[1];
+        dVar8 = (double)(float)(&param_1->msec)[uVar4];
+        if ((float)(dVar12 - (double)(float)(&param_1->msec)[uVar4]) < 0.0) {
+          dVar8 = dVar12;
         }
-        *(float *)(uVar5 * 4 + iVar4) = (float)dVar9;
-        dVar12 = (double)(float)((double)(float)((double)fVar1 / dVar11) * dVar12);
+        (&param_1->msec)[uVar4] = (int)(float)dVar8;
+        dVar11 = (double)(float)((double)(float)((double)fVar1 / dVar10) * dVar11);
         if (pMVar2 == (Material *)0x0) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming_tabulate.cpp"
                           ,0x852,0,"%s");
         }
-        uVar5 = DB_GetMaterialIndex(pMVar2);
-        dVar13 = (double)*(float *)(uVar5 * 4 + iVar4);
-        if ((float)(dVar12 - dVar13) < 0.0) {
-          dVar13 = dVar12;
+        uVar4 = DB_GetMaterialIndex(pMVar2);
+        dVar12 = (double)(float)(&param_1->msec)[uVar4];
+        if ((float)(dVar11 - (double)(float)(&param_1->msec)[uVar4]) < 0.0) {
+          dVar12 = dVar11;
         }
-        *(float *)(uVar5 * 4 + iVar4) = (float)dVar13;
+        (&param_1->msec)[uVar4] = (int)(float)dVar12;
       }
-      uVar7 = uVar7 - 1;
-      pfVar6 = pfVar6 + 1;
-      ppMVar8 = ppMVar8 + 0xb;
-    } while (uVar7 != 0);
+      uVar6 = uVar6 - 1;
+      pfVar5 = pfVar5 + 1;
+      ppMVar7 = ppMVar7 + 0xb;
+    } while (uVar6 != 0);
   }
   PIXEndNamedEvent();
-  __restfpr_28();
-  __restgprlr_23();
   return;
 }
 
 
 // 82403A18  DB_StreamCombine  (database/db_streaming_tabulate.cpp:2144)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Removing unreachable block (ram,0x82403a48) */
 
 void DB_StreamCombine(StreamTabulationCmd *param_1,float *param_2,uint *param_3,float *param_4)
 
 {
-  StreamTabulationCmd *pSVar1;
-  StreamGlob *pSVar2;
+  StreamGlob *pSVar1;
   
-  pSVar1 = (StreamTabulationCmd *)__savegprlr_27(param_1);
-  pSVar2 = &g_stream;
-  DB_StreamCombineInternal(pSVar1,g_stream.priority2,param_2,param_3,param_4);
-  DB_StreamCheckAllPriority((StreamTabulationCmd *)&g_stream,pSVar2->priority2);
-  __restgprlr_27();
+  pSVar1 = &g_stream;
+  DB_StreamCombineInternal(param_1,g_stream.priority2,param_2,param_3,param_4);
+  DB_StreamCheckAllPriority((StreamTabulationCmd *)&g_stream,pSVar1->priority2);
   return;
 }
 
 
 // 82403A98  DB_StreamStaticModelRelated  (database/db_streaming_tabulate.cpp:2164)
+
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 
 void DB_StreamStaticModelRelated
                (StreamTabulationCmd *param_1,float *param_2,GfxWorld *param_3,
@@ -1996,47 +1975,42 @@ void DB_StreamStaticModelRelated
 
 {
   float fVar1;
-  int iVar2;
-  ulonglong uVar3;
-  MaterialStreamLayerInfo *pMVar4;
-  double dVar5;
+  MaterialStreamLayerInfo *pMVar2;
+  double dVar3;
   
-  uVar3 = (ulonglong)(int)param_3;
-  iVar2 = __savegprlr_28(param_1);
-  if (*(int *)(iVar2 + 0x4c) == 0) {
+  if (param_1->cumulativeTabulation == 0) {
     fVar1 = 0.0;
   }
   else {
     fVar1 = 3072.0;
   }
-  dVar5 = (double)fVar1;
-  pMVar4 = (MaterialStreamLayerInfo *)param_5;
-  if ((uVar3 & 0xffffffff) != 0) {
-    pMVar4 = param_4;
+  dVar3 = (double)fVar1;
+  pMVar2 = (MaterialStreamLayerInfo *)param_5;
+  if (param_3 != (GfxWorld *)0x0) {
+    pMVar2 = param_4;
     DB_StreamAddAllViewPos
-              ((GfxWorld *)param_2,(StreamTabulationCmd *)g_staticModelStreamDist,(float *)uVar3,
+              ((GfxWorld *)param_2,(StreamTabulationCmd *)g_staticModelStreamDist,(float *)param_3,
                (float *)param_4,rg.invViewScale,fVar1,param_4);
   }
   DB_StreamModels((StreamTabulationCmd *)param_6,param_2,g_staticModelStreamDist,(float *)param_5,
-                  (uint *)pMVar4,(float)dVar5);
-  __restgprlr_28();
+                  (uint *)pMVar2,(float)dVar3);
   return;
 }
 
 
 // 82403B28  DB_StreamTabulationCmd  (database/db_streaming_tabulate.cpp:2195)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
+
 void DB_StreamTabulationCmd(void *param_1)
 
 {
   int *piVar1;
   GfxWorld *pGVar2;
-  StreamTabulationCmd *pSVar3;
-  int iVar4;
-  MaterialStreamInfo *pMVar5;
-  MaterialStreamLayerInfo *pMVar6;
+  MaterialStreamInfo *pMVar3;
+  MaterialStreamLayerInfo *pMVar4;
   
-  pSVar3 = (StreamTabulationCmd *)__savegprlr_25(param_1);
   Profile_Begin(0x1b8);
   if (g_stream.updateLocked != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming_tabulate.cpp"
@@ -2044,26 +2018,26 @@ void DB_StreamTabulationCmd(void *param_1)
   }
   pGVar2 = rgp.world;
   g_stream.updateLocked = 1;
-  pMVar6 = g_materialStreamInfo.layer;
-  pMVar5 = &g_materialStreamInfo;
+  pMVar4 = g_materialStreamInfo.layer;
+  pMVar3 = &g_materialStreamInfo;
   DB_StreamStaticModelRelated
-            (pSVar3,g_materialStreamInfo.worldPriority,rgp.world,g_materialStreamInfo.layer,
+            (param_1,g_materialStreamInfo.worldPriority,rgp.world,g_materialStreamInfo.layer,
              g_stream.materialTouch,g_stream.baseMaterialPriority);
   if (pGVar2 != (GfxWorld *)0x0) {
-    pMVar5 = &g_materialStreamInfo;
+    pMVar3 = &g_materialStreamInfo;
     DB_StreamBmodels((StreamTabulationCmd *)pGVar2,(GfxWorld *)&g_materialStreamInfo,
-                     (float *)g_materialStreamInfo.layer,pMVar6);
+                     (float *)g_materialStreamInfo.layer,pMVar4);
   }
   if (fxWorld.glassSys.initCount != '\0') {
-    DB_StreamGlass((StreamTabulationCmd *)&g_materialStreamInfo,pMVar5->worldPriority);
+    DB_StreamGlass((StreamTabulationCmd *)&g_materialStreamInfo,pMVar3->worldPriority);
   }
-  DB_StreamCombine(pSVar3,g_stream.baseMaterialPriority,g_stream.materialTouch,
+  DB_StreamCombine(param_1,g_stream.baseMaterialPriority,g_stream.materialTouch,
                    g_materialStreamInfo.worldPriority);
   if (g_stream.updateLocked == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\database\\db_streaming_tabulate.cpp"
                     ,0x8d5,0,"%s");
   }
-  piVar1 = pSVar3->lock;
+  piVar1 = *(int **)((int)param_1 + 4);
   g_stream.updateLocked = 0;
   if (piVar1 != (int *)0x0) {
     if (*piVar1 == 0) {
@@ -2073,8 +2047,7 @@ void DB_StreamTabulationCmd(void *param_1)
     sync(1);
     *piVar1 = 0;
   }
-  iVar4 = Profile_EndInternal((double *)0x0);
-  __restgprlr_25(iVar4);
+  Profile_EndInternal((double *)0x0);
   return;
 }
 

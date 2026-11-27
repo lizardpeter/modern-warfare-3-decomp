@@ -2,6 +2,10 @@
 
 // 822A84E0  CG_CompassRegisterDvars  (cgame/cg_compass.cpp:113)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void CG_CompassRegisterDvars(void)
@@ -21,8 +25,6 @@ void CG_CompassRegisterDvars(void)
   double dVar12;
   double dVar13;
   
-  __savegprlr_28();
-  __savefpr_25();
   compass = Dvar_RegisterBool("compass",true,0x40,"Display Compass");
   pcVar4 = "c\\cgame_mp\\cg_local_mp.h";
   uVar3 = 0;
@@ -240,8 +242,6 @@ void CG_CompassRegisterDvars(void)
        Dvar_RegisterFloat("cg_hudMapBorderWidth",(float)dVar7,(float)dVar12,(float)dVar13,0,
                           (char *)&cgEntCollWorld[2].sectors[0x222].entListHead);
   CG_MotionTrackerRegisterDvars();
-  __restfpr_25();
-  __restgprlr_28();
   return;
 }
 
@@ -290,28 +290,21 @@ bool CG_IsSelectingDirection(LocalClientNum_t param_1)
 
 // 822A9060  CG_ApplySplitScreenCompassScale  (cgame/cg_compass.cpp:259)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
+
 void CG_ApplySplitScreenCompassScale
                (CompassType param_1,float *param_2,float *param_3,float *param_4,float *param_5)
 
 {
   float fVar1;
-  int iVar2;
-  bool bVar3;
-  ulonglong uVar4;
-  ulonglong uVar5;
-  ulonglong uVar6;
-  ulonglong uVar7;
+  bool bVar2;
   
-  uVar7 = (ulonglong)(int)param_5;
-  uVar6 = (ulonglong)(int)param_4;
-  uVar5 = (ulonglong)(int)param_3;
-  uVar4 = (ulonglong)(int)param_2;
-  iVar2 = __savegprlr_24(param_1);
-  if ((uVar6 & 0xffffffff) == 0) {
+  if (param_4 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_compass.cpp",0x107,0,
                     "%s");
   }
-  if ((uVar7 & 0xffffffff) == 0) {
+  if (param_5 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_compass.cpp",0x108,0,
                     "%s");
   }
@@ -319,24 +312,25 @@ void CG_ApplySplitScreenCompassScale
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_compass.cpp",0x109,0,
                     "%s");
   }
-  if ((iVar2 == 0) && (bVar3 = CL_IsRenderingSplitScreen(), bVar3)) {
+  if ((param_1 == COMPASS_TYPE_PARTIAL) && (bVar2 = CL_IsRenderingSplitScreen(), bVar2)) {
     fVar1 = (cg_hudSplitscreenCompassScale->current).value;
-    if ((uVar4 & 0xffffffff) != 0) {
-      *(float *)uVar4 = *(float *)uVar4 * fVar1;
+    if (param_2 != (float *)0x0) {
+      *param_2 = *param_2 * fVar1;
     }
-    if ((uVar5 & 0xffffffff) != 0) {
-      *(float *)uVar5 = *(float *)uVar5 * fVar1;
+    if (param_3 != (float *)0x0) {
+      *param_3 = *param_3 * fVar1;
     }
-    *(float *)uVar6 = *(float *)uVar6 * fVar1;
-    *(float *)uVar7 = *(float *)uVar7 * fVar1;
+    *param_4 = *param_4 * fVar1;
+    *param_5 = *param_5 * fVar1;
   }
-  __restgprlr_24();
   return;
 }
 
 
 // 822A9170  CG_WorldPosToCompass  (cgame/cg_compass.cpp:286)
 
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
@@ -349,131 +343,106 @@ bool CG_WorldPosToCompass
   float fVar1;
   float fVar2;
   float fVar3;
-  int iVar4;
-  float fVar5;
-  float fVar6;
-  int iVar8;
-  undefined8 uVar7;
-  undefined1 uVar9;
-  ulonglong uVar10;
-  ulonglong uVar11;
-  ulonglong uVar12;
-  ulonglong uVar13;
-  ulonglong uVar14;
-  ulonglong uVar15;
-  ulonglong uVar16;
-  float *pfVar17;
-  double dVar18;
-  double dVar19;
-  double dVar20;
+  float fVar4;
+  bool bVar5;
+  double dVar6;
+  double dVar7;
+  double dVar8;
   
-  uVar16 = (ulonglong)(int)param_8;
-  uVar15 = (ulonglong)(int)param_7;
-  uVar14 = (ulonglong)(int)param_6;
-  uVar13 = (ulonglong)(int)param_5;
-  uVar12 = (ulonglong)(int)param_4;
-  uVar11 = (ulonglong)(int)param_3;
-  uVar10 = (ulonglong)(int)param_2;
-  iVar8 = __savegprlr_22(param_1);
-  if ((uVar10 & 0xffffffff) == 0) {
+  if (param_2 == (cg_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_compass.cpp",0x125,0,
                     "%s");
   }
-  if ((uVar11 & 0xffffffff) == 0) {
+  if (param_3 == (rectDef_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_compass.cpp",0x126,0,
                     "%s");
   }
-  if ((uVar13 & 0xffffffff) == 0) {
+  if (param_5 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_compass.cpp",0x127,0,
                     "%s");
   }
-  if ((uVar14 & 0xffffffff) == 0) {
+  if (param_6 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_compass.cpp",0x128,0,
                     "%s");
   }
-  dVar19 = 0.0;
-  dVar20 = 0.5;
-  iVar4 = (int)uVar11;
-  pfVar17 = (float *)uVar14;
-  if (iVar8 == 0) {
-    if ((uVar12 & 0xffffffff) == 0) {
+  dVar7 = 0.0;
+  dVar8 = 0.5;
+  if (param_1 == COMPASS_TYPE_PARTIAL) {
+    if (param_4 == (float *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_compass.cpp",300,0,
                       "%s");
     }
-    if ((double)(compassMaxRange->current).value < dVar19) {
+    if ((double)(compassMaxRange->current).value < dVar7) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_compass.cpp",0x12e,
                       0,"%s\n\t(compassMaxRange->current.value) = %g");
     }
-    dVar18 = (double)*(float *)(iVar4 + 0xc);
-    fVar1 = (float)(dVar18 / (double)(compassMaxRange->current).value);
-    fVar2 = ((float *)uVar12)[1];
-    fVar3 = *(float *)uVar12;
-    fVar5 = (pfVar17[1] - ((float *)uVar13)[1]) * fVar1;
-    fVar1 = (*pfVar17 - *(float *)uVar13) * fVar1;
-    fVar6 = fVar2 * fVar1 - fVar3 * fVar5;
-    fVar1 = -(fVar3 * fVar1 - -(fVar2 * fVar5));
+    dVar6 = (double)param_3->h;
+    fVar1 = (float)(dVar6 / (double)(compassMaxRange->current).value);
+    fVar2 = (param_6[1] - param_5[1]) * fVar1;
+    fVar1 = (*param_6 - *param_5) * fVar1;
+    fVar4 = param_4[1] * fVar1 - *param_4 * fVar2;
+    fVar1 = -(*param_4 * fVar1 - -(param_4[1] * fVar2));
   }
   else {
-    if (iVar8 != 1) {
+    if (param_1 != COMPASS_TYPE_FULL) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_compass.cpp",0x13a,
                       0,"%s");
     }
-    iVar8 = (int)uVar10;
-    dVar18 = (double)*(float *)(iVar4 + 0xc);
-    fVar1 = pfVar17[1] - *(float *)(iVar8 + 0x797fc);
-    fVar2 = *pfVar17 - *(float *)(iVar8 + 0x797f8);
-    fVar6 = *(float *)(iVar4 + 8) *
-            (float)((double)((*(float *)(iVar8 + 0x797f0) * fVar2 -
-                             *(float *)(iVar8 + 0x797ec) * fVar1) / *(float *)(iVar8 + 0x79800)) -
-                   dVar20);
-    fVar1 = (float)(dVar18 * (double)(float)((double)(-(*(float *)(iVar8 + 0x797ec) * fVar2 -
-                                                       -(*(float *)(iVar8 + 0x797f0) * fVar1)) /
-                                                     *(float *)(iVar8 + 0x79804)) - dVar20));
+    dVar6 = (double)param_3->h;
+    fVar1 = param_6[1] - param_2->compassMapUpperLeft[1];
+    fVar2 = *param_6 - param_2->compassMapUpperLeft[0];
+    fVar4 = param_3->w *
+            (float)((double)((param_2->compassNorth[1] * fVar2 - param_2->compassNorth[0] * fVar1) /
+                            param_2->compassMapWorldSize[0]) - dVar8);
+    fVar1 = (float)(dVar6 * (double)(float)((double)(-(param_2->compassNorth[0] * fVar2 -
+                                                      -(param_2->compassNorth[1] * fVar1)) /
+                                                    param_2->compassMapWorldSize[1]) - dVar8));
   }
-  uVar7 = 0;
-  if ((((uVar16 & 0xffffffff) == 0) || ((double)*(float *)(iVar4 + 8) < dVar19)) ||
-     (dVar18 < dVar19)) goto LAB_822a9490;
-  pfVar17 = (float *)uVar16;
-  *pfVar17 = fVar6;
-  pfVar17[1] = fVar1;
-  fVar2 = (float)((double)*(float *)(iVar4 + 8) * dVar20);
-  if (fVar6 <= fVar2) {
-    if (fVar6 < (float)((double)*(float *)(iVar4 + 8) * -0.5)) {
-      *pfVar17 = -(fVar2 / fVar6) * fVar6;
-      pfVar17[1] = -(fVar2 / fVar6) * fVar1;
+  bVar5 = false;
+  if (((param_8 == (float *)0x0) || ((double)param_3->w < dVar7)) || (dVar6 < dVar7))
+  goto LAB_822a9490;
+  *param_8 = fVar4;
+  param_8[1] = fVar1;
+  fVar2 = (float)((double)param_3->w * dVar8);
+  if (fVar4 <= fVar2) {
+    bVar5 = false;
+    if (fVar4 < (float)((double)param_3->w * -0.5)) {
+      *param_8 = -(fVar2 / fVar4) * fVar4;
+      param_8[1] = -(fVar2 / fVar4) * fVar1;
       goto LAB_822a9430;
     }
   }
   else {
-    *pfVar17 = (fVar2 / fVar6) * fVar6;
-    pfVar17[1] = (fVar2 / fVar6) * fVar1;
+    *param_8 = (fVar2 / fVar4) * fVar4;
+    param_8[1] = (fVar2 / fVar4) * fVar1;
 LAB_822a9430:
-    uVar7 = 1;
+    bVar5 = true;
   }
-  fVar2 = (float)((double)*(float *)(iVar4 + 0xc) * dVar20);
-  fVar3 = pfVar17[1];
+  fVar2 = (float)((double)param_3->h * dVar8);
+  fVar3 = param_8[1];
   if (fVar3 <= fVar2) {
-    if ((float)((double)*(float *)(iVar4 + 0xc) * -0.5) <= fVar3) goto LAB_822a9490;
-    *pfVar17 = *pfVar17 * -(fVar2 / fVar3);
-    pfVar17[1] = fVar3 * -(fVar2 / fVar3);
+    if ((float)((double)param_3->h * -0.5) <= fVar3) goto LAB_822a9490;
+    *param_8 = *param_8 * -(fVar2 / fVar3);
+    param_8[1] = fVar3 * -(fVar2 / fVar3);
   }
   else {
-    *pfVar17 = *pfVar17 * (fVar2 / fVar3);
-    pfVar17[1] = fVar3 * (fVar2 / fVar3);
+    *param_8 = *param_8 * (fVar2 / fVar3);
+    param_8[1] = fVar3 * (fVar2 / fVar3);
   }
-  uVar7 = 1;
+  bVar5 = true;
 LAB_822a9490:
-  if ((uVar15 & 0xffffffff) != 0) {
-    *(float *)uVar15 = fVar6;
-    ((float *)uVar15)[1] = fVar1;
+  if (param_7 != (float *)0x0) {
+    *param_7 = fVar4;
+    param_7[1] = fVar1;
   }
-  uVar9 = __restgprlr_22(uVar7);
-  return (bool)uVar9;
+  return bVar5;
 }
 
 
 // 822A94B0  CG_CompassCalcDimensions  (cgame/cg_compass.cpp:367)
 
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
@@ -489,156 +458,122 @@ void CG_CompassCalcDimensions
   float fVar4;
   float fVar5;
   dvar_t *pdVar6;
-  int iVar7;
-  ulonglong uVar8;
-  ulonglong uVar9;
-  ulonglong uVar10;
-  float *pfVar11;
-  ulonglong uVar12;
-  float *pfVar13;
-  ulonglong uVar14;
-  float *pfVar15;
-  ulonglong uVar16;
-  float *pfVar17;
-  ulonglong uVar18;
-  float *pfVar19;
-  float *pfVar20;
-  float *pfVar21;
-  double dVar22;
+  double dVar7;
   
-  uVar18 = (ulonglong)(int)param_8;
-  uVar16 = (ulonglong)(int)param_7;
-  uVar14 = (ulonglong)(int)param_6;
-  uVar12 = (ulonglong)(int)param_5;
-  uVar10 = (ulonglong)(int)param_4;
-  uVar9 = (ulonglong)(int)param_3;
-  uVar8 = (ulonglong)(int)param_2;
-  iVar7 = __savegprlr_22(param_1);
-  if ((uVar8 & 0xffffffff) == 0) {
+  if (param_2 == (cg_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_compass.cpp",0x170,0,
                     "%s");
   }
-  if ((uVar9 & 0xffffffff) == 0) {
+  if (param_3 == (rectDef_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_compass.cpp",0x171,0,
                     "%s");
   }
-  if ((uVar10 & 0xffffffff) == 0) {
+  if (param_4 == (rectDef_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_compass.cpp",0x172,0,
                     "%s");
   }
-  if ((uVar12 & 0xffffffff) == 0) {
+  if (param_5 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_compass.cpp",0x173,0,
                     "%s");
   }
-  if ((uVar14 & 0xffffffff) == 0) {
+  if (param_6 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_compass.cpp",0x174,0,
                     "%s");
   }
-  if ((uVar16 & 0xffffffff) == 0) {
+  if (param_7 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_compass.cpp",0x175,0,
                     "%s");
   }
-  if ((uVar18 & 0xffffffff) == 0) {
+  if (param_8 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_compass.cpp",0x176,0,
                     "%s");
   }
-  pfVar13 = (float *)uVar12;
-  pfVar15 = (float *)uVar14;
-  pfVar17 = (float *)uVar16;
-  pfVar19 = (float *)uVar18;
-  pfVar11 = (float *)uVar10;
-  if (iVar7 == 0) {
-    *pfVar13 = *pfVar11;
-    *pfVar15 = pfVar11[1];
+  if (param_1 == COMPASS_TYPE_PARTIAL) {
+    *param_5 = param_4->x;
+    *param_6 = param_4->y;
     pdVar6 = compassSize;
-    *pfVar17 = pfVar11[2] * (compassSize->current).value;
-    *pfVar19 = pfVar11[3] * (pdVar6->current).value;
-    CG_ApplySplitScreenCompassScale(COMPASS_TYPE_PARTIAL,pfVar13,pfVar15,pfVar17,pfVar19);
-    if ((*pfVar17 <= 0.0) || (*pfVar19 <= 0.0)) {
+    *param_7 = param_4->w * (compassSize->current).value;
+    *param_8 = param_4->h * (pdVar6->current).value;
+    CG_ApplySplitScreenCompassScale(COMPASS_TYPE_PARTIAL,param_5,param_6,param_7,param_8);
+    if ((*param_7 <= 0.0) || (*param_8 <= 0.0)) {
       Com_Error(ERR_FATAL,"Compass ownerdraw had width or height of 0");
-      __restgprlr_22();
       return;
     }
   }
   else {
-    dVar22 = 0.0;
-    if ((pfVar11[2] <= 0.0) || (pfVar11[3] <= 0.0)) {
+    dVar7 = 0.0;
+    if ((param_4->w <= 0.0) || (param_4->h <= 0.0)) {
       Com_Error(ERR_FATAL,"Compass ownerdraw had width or height of 0");
     }
-    if ((double)pfVar11[2] == dVar22) {
+    if ((double)param_4->w == dVar7) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_compass.cpp",0x195,
                       0,"%s");
     }
-    if ((double)pfVar11[3] == dVar22) {
+    if ((double)param_4->h == dVar7) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_compass.cpp",0x196,
                       0,"%s");
     }
-    pfVar20 = (float *)((int)uVar8 + 0x79800);
-    if ((double)*pfVar20 == dVar22) {
+    if ((double)param_2->compassMapWorldSize[0] == dVar7) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_compass.cpp",0x197,
                       0,"%s");
     }
-    pfVar21 = (float *)((int)uVar8 + 0x79804);
-    if ((double)*pfVar21 == dVar22) {
+    if ((double)param_2->compassMapWorldSize[1] == dVar7) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_compass.cpp",0x198,
                       0,"%s");
     }
-    fVar2 = pfVar11[2] / pfVar11[3];
-    fVar3 = *pfVar20 / *pfVar21;
-    fVar4 = *(float *)uVar9 + *pfVar11;
-    fVar5 = ((float *)uVar9)[1] + pfVar11[1];
+    fVar2 = param_4->w / param_4->h;
+    fVar3 = param_2->compassMapWorldSize[0] / param_2->compassMapWorldSize[1];
+    fVar4 = param_3->x + param_4->x;
+    fVar5 = param_3->y + param_4->y;
     if (fVar3 <= fVar2) {
-      fVar2 = (fVar3 / fVar2) * pfVar11[2];
-      *pfVar13 = -(fVar2 * 0.5 - (pfVar11[2] * 0.5 + fVar4));
-      *pfVar15 = fVar5;
-      *pfVar17 = fVar2;
-      *pfVar19 = pfVar11[3];
+      fVar2 = (fVar3 / fVar2) * param_4->w;
+      *param_5 = -(fVar2 * 0.5 - (param_4->w * 0.5 + fVar4));
+      *param_6 = fVar5;
+      *param_7 = fVar2;
+      *param_8 = param_4->h;
     }
     else {
-      fVar1 = pfVar11[3];
-      *pfVar13 = fVar4;
+      fVar1 = param_4->h;
+      *param_5 = fVar4;
       fVar2 = (fVar2 / fVar3) * fVar1;
-      *pfVar15 = -(fVar2 * 0.5 - (fVar1 * 0.5 + fVar5));
-      *pfVar17 = pfVar11[2];
-      *pfVar19 = fVar2;
+      *param_6 = -(fVar2 * 0.5 - (fVar1 * 0.5 + fVar5));
+      *param_7 = param_4->w;
+      *param_8 = fVar2;
     }
     fVar2 = (cg_hudMapBorderWidth->current).value;
-    if (*pfVar17 * 0.25 < (cg_hudMapBorderWidth->current).value) {
-      fVar2 = *pfVar17 * 0.25;
+    if (*param_7 * 0.25 < (cg_hudMapBorderWidth->current).value) {
+      fVar2 = *param_7 * 0.25;
     }
-    if (*pfVar19 * 0.25 < fVar2) {
-      fVar2 = *pfVar19 * 0.25;
+    if (*param_8 * 0.25 < fVar2) {
+      fVar2 = *param_8 * 0.25;
     }
-    *pfVar13 = *pfVar13 + fVar2;
-    *pfVar15 = *pfVar15 + fVar2;
-    *pfVar17 = *pfVar17 - fVar2 * 2.0;
-    *pfVar19 = *pfVar19 - fVar2 * 2.0;
+    *param_5 = *param_5 + fVar2;
+    *param_6 = *param_6 + fVar2;
+    *param_7 = *param_7 - fVar2 * 2.0;
+    *param_8 = *param_8 - fVar2 * 2.0;
   }
-  __restgprlr_22();
   return;
 }
 
 
 // 822A9880  CG_FadeCompass  (cgame/cg_compass.cpp:454)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 float CG_FadeCompass(LocalClientNum_t param_1,int param_2,CompassType param_3)
 
 {
-  LocalClientNum_t LVar1;
-  double dVar2;
-  float fVar3;
+  double dVar1;
+  float fVar2;
   
-  LVar1 = __savegprlr_29(param_1);
   if (param_3 != COMPASS_TYPE_PARTIAL) {
-    dVar2 = (double)__restgprlr_29(0x3ff0000000000000);
-    return (float)dVar2;
+    return 1.0;
   }
-  dVar2 = floor((double)((hud_fade_compass->current).value * 1000.0 + 0.5));
-  fVar3 = CG_FadeHudMenu(LVar1,hud_fade_compass,param_2,(int)dVar2);
-  dVar2 = (double)__restgprlr_29((double)fVar3);
-  return (float)dVar2;
+  dVar1 = floor((double)((hud_fade_compass->current).value * 1000.0 + 0.5));
+  fVar2 = CG_FadeHudMenu(param_1,hud_fade_compass,param_2,(int)dVar1);
+  return fVar2;
 }
 
 
@@ -669,6 +604,8 @@ float Compass_GetIconFadeAlpha(LocalClientNum_t param_1,int param_2,CompassType 
 
 // 822A9970  CG_CompassDrawPlayerBack  (cgame/cg_compass.cpp:485)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -678,38 +615,39 @@ void CG_CompassDrawPlayerBack
                Material *param_5,float *param_6)
 
 {
-  LocalClientNum_t LVar1;
-  cg_s *pcVar2;
-  ScreenPlacement *pSVar3;
-  Material *pMVar4;
-  double dVar5;
-  float fVar6;
+  cg_s *pcVar1;
+  ScreenPlacement *pSVar2;
+  Material *pMVar3;
+  double dVar4;
+  float fVar5;
   undefined1 local_60 [4];
   float local_5c;
   undefined8 local_58;
   
-  LVar1 = __savegprlr_25(param_1);
-  pcVar2 = CG_GetLocalClientGlobals(LVar1);
-  fVar6 = CG_FadeCompass(LVar1,pcVar2->compassFadeTime,param_2);
-  param_6[3] = fVar6;
-  dVar5 = 0.0;
-  if (fVar6 != 0.0) {
-    pMVar4 = (Material *)local_60;
+  pcVar1 = CG_GetLocalClientGlobals(param_1);
+  fVar5 = CG_FadeCompass(param_1,pcVar1->compassFadeTime,param_2);
+  param_6[3] = fVar5;
+  dVar4 = 0.0;
+  if (fVar5 != 0.0) {
+    pMVar3 = (Material *)local_60;
     CG_CompassCalcDimensions
-              (param_2,pcVar2,param_3,param_4,(float *)pMVar4,&local_5c,(float *)&local_58,
+              (param_2,pcVar1,param_3,param_4,(float *)pMVar3,&local_5c,(float *)&local_58,
                (float *)((int)&local_58 + 4));
-    pSVar3 = ScrPlace_GetActivePlacement(LVar1);
-    CL_DrawStretchPic(pSVar3,(float)local_60,local_5c,(float)local_58._0_4_,(float)local_58._4_4_,
-                      (int)pcVar2,(int)param_3,(float)dVar5,(float)dVar5,1.0,1.0,&param_4->x,pMVar4)
+    pSVar2 = ScrPlace_GetActivePlacement(param_1);
+    CL_DrawStretchPic(pSVar2,(float)local_60,local_5c,(float)local_58._0_4_,(float)local_58._4_4_,
+                      (int)pcVar1,(int)param_3,(float)dVar4,(float)dVar4,1.0,1.0,&param_4->x,pMVar3)
     ;
   }
-  __restgprlr_25();
   return;
 }
 
 
 // 822A9A48  CG_CompassDrawPlayerNorthCoord  (cgame/cg_compass.cpp:504)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -719,15 +657,15 @@ void CG_CompassDrawPlayerNorthCoord
                Font_s *param_5,Material *param_6,float *param_7,int param_8)
 
 {
-  LocalClientNum_t LVar1;
-  cg_s *pcVar2;
-  int iVar3;
-  ScreenPlacement *pSVar4;
-  char *pcVar5;
-  longlong lVar6;
+  cg_s *pcVar1;
+  int iVar2;
+  ScreenPlacement *pSVar3;
+  char *pcVar4;
+  longlong lVar5;
+  int iVar6;
   int iVar7;
-  int iVar8;
-  float *pfVar9;
+  float *pfVar8;
+  double dVar9;
   double dVar10;
   double dVar11;
   double dVar12;
@@ -737,79 +675,78 @@ void CG_CompassDrawPlayerNorthCoord
   double dVar16;
   double dVar17;
   double dVar18;
-  double dVar19;
-  float fVar20;
+  float fVar19;
   longlong local_b0;
   float local_a8;
   float local_a4;
   longlong local_a0 [20];
   
-  __savegprlr_24(param_1);
-  LVar1 = __savefpr_23();
   if (param_2 != COMPASS_TYPE_PARTIAL) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_compass.cpp",0x208,0,
                     "%s");
   }
-  pcVar2 = CG_GetLocalClientGlobals(LVar1);
-  fVar20 = CG_FadeCompass(LVar1,pcVar2->compassFadeTime,param_2);
-  param_7[3] = fVar20;
-  if (fVar20 != 0.0) {
+  pcVar1 = CG_GetLocalClientGlobals(param_1);
+  fVar19 = CG_FadeCompass(param_1,pcVar1->compassFadeTime,param_2);
+  param_7[3] = fVar19;
+  if (fVar19 != 0.0) {
     CG_CompassCalcDimensions
-              (param_2,pcVar2,param_3,param_4,(float *)local_a0,&local_a8,(float *)&local_b0,
+              (param_2,pcVar1,param_3,param_4,(float *)local_a0,&local_a8,(float *)&local_b0,
                &local_a4);
-    iVar8 = -0x7d5f0000;
-    dVar12 = (double)((pcVar2->compassNorth[1] * (pcVar2->refdef).view.org[1] +
-                      pcVar2->compassNorth[0] * (pcVar2->refdef).view.org[0]) /
+    iVar7 = -0x7d5f0000;
+    dVar11 = (double)((pcVar1->compassNorth[1] * (pcVar1->refdef).view.org[1] +
+                      pcVar1->compassNorth[0] * (pcVar1->refdef).view.org[0]) /
                       (compassCoords->current).vector[2] + (compassCoords->current).vector[1]);
-    iVar3 = R_TextHeight(param_5);
-    lVar6 = (longlong)iVar3;
-    dVar18 = (double)local_b0._0_4_;
-    dVar16 = 0.800000011920929;
-    dVar11 = (double)(float)(dVar18 / (double)lVar6);
-    dVar10 = (double)(float)(dVar11 * 0.800000011920929);
-    local_b0 = lVar6;
-    pSVar4 = ScrPlace_GetActivePlacement(LVar1);
-    iVar7 = (int)lVar6;
-    local_b0 = (longlong)(int)dVar12;
-    pcVar5 = va("%i ");
-    iVar3 = R_TextWidth(pcVar5,10,param_5);
-    local_b0 = (longlong)iVar3;
-    pfVar9 = (float *)(uint)param_4->vertAlign;
-    dVar13 = (double)local_a0[0]._0_4_;
-    dVar19 = -90.0;
-    dVar14 = (double)local_a8;
-    dVar15 = (double)local_a4;
-    dVar17 = (double)(float)((double)local_b0 * dVar10);
-    CL_DrawTextRotate(pSVar4,pcVar5,0x28,param_5,(float)(dVar18 * dVar16 + dVar13),
-                      (float)(dVar14 + dVar15),-90.0,iVar7,iVar8,(float)dVar10,(float)dVar10,
+    iVar2 = R_TextHeight(param_5);
+    lVar5 = (longlong)iVar2;
+    dVar17 = (double)local_b0._0_4_;
+    dVar15 = 0.800000011920929;
+    dVar10 = (double)(float)(dVar17 / (double)lVar5);
+    dVar9 = (double)(float)(dVar10 * 0.800000011920929);
+    local_b0 = lVar5;
+    pSVar3 = ScrPlace_GetActivePlacement(param_1);
+    iVar6 = (int)lVar5;
+    local_b0 = (longlong)(int)dVar11;
+    pcVar4 = va("%i ");
+    iVar2 = R_TextWidth(pcVar4,10,param_5);
+    local_b0 = (longlong)iVar2;
+    pfVar8 = (float *)(uint)param_4->vertAlign;
+    dVar12 = (double)local_a0[0]._0_4_;
+    dVar18 = -90.0;
+    dVar13 = (double)local_a8;
+    dVar14 = (double)local_a4;
+    dVar16 = (double)(float)((double)local_b0 * dVar9);
+    CL_DrawTextRotate(pSVar3,pcVar4,0x28,param_5,(float)(dVar17 * dVar15 + dVar12),
+                      (float)(dVar13 + dVar14),-90.0,iVar6,iVar7,(float)dVar9,(float)dVar9,
                       (float *)(uint)param_4->vertAlign,(uint)param_4->horzAlign);
-    iVar8 = 0x51eb0000;
-    iVar7 = 0x51eb851f;
-    dVar16 = (double)(float)(dVar14 - dVar17);
-    pcVar5 = va("%i ");
-    iVar3 = R_TextWidth(pcVar5,10,param_5);
-    local_a0[0] = (longlong)iVar3;
-    dVar17 = (double)(float)(dVar13 + dVar18);
-    dVar14 = (double)(float)((double)local_a0[0] * dVar11);
-    CL_DrawTextRotate(pSVar4,pcVar5,0x28,param_5,(float)(dVar13 + dVar18),(float)(dVar16 + dVar15),
-                      (float)dVar19,iVar7,iVar8,(float)dVar11,(float)dVar11,pfVar9,
+    iVar7 = 0x51eb0000;
+    iVar6 = 0x51eb851f;
+    dVar15 = (double)(float)(dVar13 - dVar16);
+    pcVar4 = va("%i ");
+    iVar2 = R_TextWidth(pcVar4,10,param_5);
+    local_a0[0] = (longlong)iVar2;
+    dVar16 = (double)(float)(dVar12 + dVar17);
+    dVar13 = (double)(float)((double)local_a0[0] * dVar10);
+    CL_DrawTextRotate(pSVar3,pcVar4,0x28,param_5,(float)(dVar12 + dVar17),(float)(dVar15 + dVar14),
+                      (float)dVar18,iVar6,iVar7,(float)dVar10,(float)dVar10,pfVar8,
                       (uint)param_4->horzAlign);
-    local_a0[0] = (longlong)(int)dVar12;
-    dVar11 = (double)(float)(dVar16 - dVar14);
-    pfVar9 = (float *)0x82010000;
-    pcVar5 = va("%.4f");
-    CL_DrawTextRotate(pSVar4,pcVar5 + 2,0x28,param_5,(float)dVar17,(float)(dVar11 + dVar15),
-                      (float)dVar19,iVar7,(uint)param_4->vertAlign,(float)dVar10,(float)dVar10,
-                      pfVar9,(uint)param_4->horzAlign);
+    local_a0[0] = (longlong)(int)dVar11;
+    dVar10 = (double)(float)(dVar15 - dVar13);
+    pfVar8 = (float *)0x82010000;
+    pcVar4 = va("%.4f");
+    CL_DrawTextRotate(pSVar3,pcVar4 + 2,0x28,param_5,(float)dVar16,(float)(dVar10 + dVar14),
+                      (float)dVar18,iVar6,(uint)param_4->vertAlign,(float)dVar9,(float)dVar9,pfVar8,
+                      (uint)param_4->horzAlign);
   }
-  __restfpr_23();
-  __restgprlr_24();
   return;
 }
 
 
 // 822A9D28  CG_CompassDrawPlayerEastCoord  (cgame/cg_compass.cpp:557)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -820,85 +757,84 @@ void CG_CompassDrawPlayerEastCoord
 
 {
   int iVar1;
-  LocalClientNum_t LVar2;
-  cg_s *pcVar3;
-  ScreenPlacement *pSVar4;
-  int iVar5;
-  char *pcVar6;
+  cg_s *pcVar2;
+  ScreenPlacement *pSVar3;
+  int iVar4;
+  char *pcVar5;
+  int iVar6;
   int iVar7;
-  int iVar8;
+  double dVar8;
   double dVar9;
   double dVar10;
   double dVar11;
   double dVar12;
   double dVar13;
   double dVar14;
-  double dVar15;
-  float fVar16;
+  float fVar15;
   float local_a0;
   float local_9c;
   float local_98 [2];
   longlong local_90 [18];
   
-  __savegprlr_24(param_1);
-  LVar2 = __savefpr_25();
-  pcVar3 = CG_GetLocalClientGlobals(LVar2);
+  pcVar2 = CG_GetLocalClientGlobals(param_1);
   if (param_2 != COMPASS_TYPE_PARTIAL) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_compass.cpp",0x240,0,
                     "%s");
   }
-  fVar16 = CG_FadeCompass(LVar2,pcVar3->compassFadeTime,param_2);
-  param_7[3] = fVar16;
-  if (fVar16 != 0.0) {
+  fVar15 = CG_FadeCompass(param_1,pcVar2->compassFadeTime,param_2);
+  param_7[3] = fVar15;
+  if (fVar15 != 0.0) {
     CG_CompassCalcDimensions
-              (param_2,pcVar3,param_3,param_4,local_98,&local_9c,(float *)local_90,&local_a0);
-    iVar8 = 0x797f0;
-    iVar7 = 0x797ec;
-    dVar10 = (double)(((pcVar3->refdef).view.org[1] * -pcVar3->compassNorth[0] +
-                      (pcVar3->refdef).view.org[0] * pcVar3->compassNorth[1]) /
-                      (compassCoords->current).vector[2] + (compassCoords->current).value);
-    pSVar4 = ScrPlace_GetActivePlacement(LVar2);
-    iVar5 = R_TextHeight(param_5);
-    dVar15 = (double)local_a0;
-    iVar1 = (int)dVar10;
+              (param_2,pcVar2,param_3,param_4,local_98,&local_9c,(float *)local_90,&local_a0);
+    iVar7 = 0x797f0;
+    iVar6 = 0x797ec;
+    dVar9 = (double)(((pcVar2->refdef).view.org[1] * -pcVar2->compassNorth[0] +
+                     (pcVar2->refdef).view.org[0] * pcVar2->compassNorth[1]) /
+                     (compassCoords->current).vector[2] + (compassCoords->current).value);
+    pSVar3 = ScrPlace_GetActivePlacement(param_1);
+    iVar4 = R_TextHeight(param_5);
+    dVar14 = (double)local_a0;
+    iVar1 = (int)dVar9;
     local_90[0] = (longlong)iVar1;
-    dVar13 = 0.8500000238418579;
-    dVar9 = (double)(float)(dVar15 / (double)(longlong)iVar5);
-    dVar10 = (double)(float)(dVar9 * 0.8500000238418579);
-    pcVar6 = va("%i ");
-    iVar5 = R_TextWidth(pcVar6,10,param_5);
-    local_90[0] = (longlong)iVar5;
-    dVar12 = (double)local_9c;
-    dVar11 = (double)local_98[0];
-    dVar14 = (double)(float)((double)local_90[0] * dVar10);
-    CL_DrawText(pSVar4,pcVar6,0x28,param_5,local_98[0],(float)(dVar15 * dVar13 + dVar12),iVar7,iVar8
-                ,(float)dVar10,(float)dVar10,(float *)(uint)param_4->horzAlign,
+    dVar12 = 0.8500000238418579;
+    dVar8 = (double)(float)(dVar14 / (double)(longlong)iVar4);
+    dVar9 = (double)(float)(dVar8 * 0.8500000238418579);
+    pcVar5 = va("%i ");
+    iVar4 = R_TextWidth(pcVar5,10,param_5);
+    local_90[0] = (longlong)iVar4;
+    dVar11 = (double)local_9c;
+    dVar10 = (double)local_98[0];
+    dVar13 = (double)(float)((double)local_90[0] * dVar9);
+    CL_DrawText(pSVar3,pcVar5,0x28,param_5,local_98[0],(float)(dVar14 * dVar12 + dVar11),iVar6,iVar7
+                ,(float)dVar9,(float)dVar9,(float *)(uint)param_4->horzAlign,
                 (uint)param_4->vertAlign);
-    dVar13 = (double)(float)(dVar14 + dVar11);
-    iVar8 = 0x51eb851f;
-    iVar7 = (int)((ulonglong)((longlong)iVar1 * 0x51eb851f) >> 0x20);
-    pcVar6 = va("%i ");
-    iVar5 = R_TextWidth(pcVar6,10,param_5);
-    local_90[0] = (longlong)iVar5;
-    dVar14 = (double)(float)(dVar12 + dVar15);
-    dVar11 = (double)(float)((double)local_90[0] * dVar9);
-    CL_DrawText(pSVar4,pcVar6,0x28,param_5,(float)dVar13,(float)(dVar12 + dVar15),iVar7,iVar8,
-                (float)dVar9,(float)dVar9,(float *)(uint)param_4->horzAlign,(uint)param_4->vertAlign
+    dVar12 = (double)(float)(dVar13 + dVar10);
+    iVar7 = 0x51eb851f;
+    iVar6 = (int)((ulonglong)((longlong)iVar1 * 0x51eb851f) >> 0x20);
+    pcVar5 = va("%i ");
+    iVar4 = R_TextWidth(pcVar5,10,param_5);
+    local_90[0] = (longlong)iVar4;
+    dVar13 = (double)(float)(dVar11 + dVar14);
+    dVar10 = (double)(float)((double)local_90[0] * dVar8);
+    CL_DrawText(pSVar3,pcVar5,0x28,param_5,(float)dVar12,(float)(dVar11 + dVar14),iVar6,iVar7,
+                (float)dVar8,(float)dVar8,(float *)(uint)param_4->horzAlign,(uint)param_4->vertAlign
                );
     local_90[0] = (longlong)iVar1;
-    dVar9 = (double)(float)(dVar11 + dVar13);
-    pcVar6 = va("%.4f");
-    CL_DrawText(pSVar4,pcVar6 + 2,0x28,param_5,(float)dVar9,(float)dVar14,iVar7,iVar8,(float)dVar10,
-                (float)dVar10,(float *)(uint)param_4->horzAlign,(uint)param_4->vertAlign);
+    dVar8 = (double)(float)(dVar10 + dVar12);
+    pcVar5 = va("%.4f");
+    CL_DrawText(pSVar3,pcVar5 + 2,0x28,param_5,(float)dVar8,(float)dVar13,iVar6,iVar7,(float)dVar9,
+                (float)dVar9,(float *)(uint)param_4->horzAlign,(uint)param_4->vertAlign);
   }
-  __restfpr_25();
-  __restgprlr_24();
   return;
 }
 
 
 // 822A9FF0  CG_CompassDrawPlayerNCoordScroll  (cgame/cg_compass.cpp:614)
 
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -910,13 +846,13 @@ void CG_CompassDrawPlayerNCoordScroll
 {
   byte bVar1;
   byte bVar2;
-  LocalClientNum_t LVar3;
-  cg_s *pcVar4;
-  int iVar5;
-  char *pcVar6;
-  int iVar7;
-  ScreenPlacement *pSVar8;
-  int iVar9;
+  cg_s *pcVar3;
+  int iVar4;
+  char *pcVar5;
+  int iVar6;
+  ScreenPlacement *pSVar7;
+  int iVar8;
+  double dVar9;
   double dVar10;
   double dVar11;
   double dVar12;
@@ -924,82 +860,81 @@ void CG_CompassDrawPlayerNCoordScroll
   double dVar14;
   double dVar15;
   double dVar16;
-  double dVar17;
-  float fVar18;
+  float fVar17;
   float local_c0 [2];
   longlong local_b8;
   longlong local_b0;
   longlong local_a8 [21];
   
-  __savegprlr_22(param_1);
-  LVar3 = __savefpr_24();
   if (param_2 != COMPASS_TYPE_PARTIAL) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_compass.cpp",0x276,0,
                     "%s");
   }
-  pcVar4 = CG_GetLocalClientGlobals(LVar3);
-  fVar18 = CG_FadeCompass(LVar3,pcVar4->compassFadeTime,param_2);
-  param_7[3] = fVar18;
-  if (fVar18 != 0.0) {
+  pcVar3 = CG_GetLocalClientGlobals(param_1);
+  fVar17 = CG_FadeCompass(param_1,pcVar3->compassFadeTime,param_2);
+  param_7[3] = fVar17;
+  if (fVar17 != 0.0) {
     CG_CompassCalcDimensions
-              (param_2,pcVar4,param_3,param_4,(float *)local_a8,(float *)&local_b8,
+              (param_2,pcVar3,param_3,param_4,(float *)local_a8,(float *)&local_b8,
                (float *)&local_b0,local_c0);
-    dVar16 = 1.0;
-    fVar18 = 1.0 / (compassCoords->current).vector[2];
-    dVar14 = (double)local_b8._0_4_;
-    dVar13 = (double)local_c0[0];
-    dVar15 = (double)(float)((double)((compassCoords->current).vector[2] /
-                                     (compassMaxRange->current).value) * dVar13);
-    fVar18 = (compassMaxRange->current).value * fVar18 * 0.5 +
-             (pcVar4->compassNorth[1] * (pcVar4->refdef).view.org[1] +
-             (pcVar4->refdef).view.org[0] * pcVar4->compassNorth[0]) * fVar18 +
+    dVar15 = 1.0;
+    fVar17 = 1.0 / (compassCoords->current).vector[2];
+    dVar13 = (double)local_b8._0_4_;
+    dVar12 = (double)local_c0[0];
+    dVar14 = (double)(float)((double)((compassCoords->current).vector[2] /
+                                     (compassMaxRange->current).value) * dVar12);
+    fVar17 = (compassMaxRange->current).value * fVar17 * 0.5 +
+             (pcVar3->compassNorth[1] * (pcVar3->refdef).view.org[1] +
+             (pcVar3->refdef).view.org[0] * pcVar3->compassNorth[0]) * fVar17 +
              (compassCoords->current).vector[1];
-    dVar10 = (double)fVar18;
-    local_b8 = (longlong)(int)fVar18;
-    dVar11 = (double)(1.0 - (float)(dVar10 - (double)local_b8));
-    dVar17 = -(double)(float)(dVar11 * dVar15 - dVar14);
-    dVar10 = (double)(float)(dVar11 + dVar10);
-    iVar5 = R_TextWidth("99",2,param_5);
-    dVar12 = (double)local_b0._0_4_;
-    dVar11 = (double)(float)(dVar12 / (double)(longlong)iVar5);
-    local_b0 = (longlong)iVar5;
-    iVar5 = R_TextHeight(param_5);
-    local_b0 = (longlong)iVar5;
-    for (; dVar17 < (double)(float)((double)(float)((double)local_b0 * dVar11) + dVar14);
-        dVar17 = (double)(float)(dVar17 + dVar15)) {
-      dVar10 = (double)(float)(dVar10 - dVar16);
+    dVar9 = (double)fVar17;
+    local_b8 = (longlong)(int)fVar17;
+    dVar10 = (double)(1.0 - (float)(dVar9 - (double)local_b8));
+    dVar16 = -(double)(float)(dVar10 * dVar14 - dVar13);
+    dVar9 = (double)(float)(dVar10 + dVar9);
+    iVar4 = R_TextWidth("99",2,param_5);
+    dVar11 = (double)local_b0._0_4_;
+    dVar10 = (double)(float)(dVar11 / (double)(longlong)iVar4);
+    local_b0 = (longlong)iVar4;
+    iVar4 = R_TextHeight(param_5);
+    local_b0 = (longlong)iVar4;
+    for (; dVar16 < (double)(float)((double)(float)((double)local_b0 * dVar10) + dVar13);
+        dVar16 = (double)(float)(dVar16 + dVar14)) {
+      dVar9 = (double)(float)(dVar9 - dVar15);
     }
-    dVar11 = (double)(float)(dVar14 + dVar13);
-    if (dVar17 < dVar11) {
-      dVar13 = (double)local_a8[0]._0_4_;
+    dVar10 = (double)(float)(dVar13 + dVar12);
+    if (dVar16 < dVar10) {
+      dVar12 = (double)local_a8[0]._0_4_;
       do {
-        iVar5 = (int)dVar10;
-        local_a8[0] = (longlong)iVar5;
-        iVar9 = (int)((ulonglong)((longlong)iVar5 * 0x51eb851f) >> 0x20);
-        iVar5 = iVar5 / 100 + (iVar5 >> 0x1f);
-        iVar5 = iVar5 - (iVar5 >> 0x1f);
-        pcVar6 = va("%2i");
-        iVar7 = R_TextWidth(pcVar6,10,param_5);
-        local_b0 = (longlong)iVar7;
+        iVar4 = (int)dVar9;
+        local_a8[0] = (longlong)iVar4;
+        iVar8 = (int)((ulonglong)((longlong)iVar4 * 0x51eb851f) >> 0x20);
+        iVar4 = iVar4 / 100 + (iVar4 >> 0x1f);
+        iVar4 = iVar4 - (iVar4 >> 0x1f);
+        pcVar5 = va("%2i");
+        iVar6 = R_TextWidth(pcVar5,10,param_5);
+        local_b0 = (longlong)iVar6;
         bVar1 = param_4->vertAlign;
         bVar2 = param_4->horzAlign;
-        dVar14 = (double)(float)(dVar12 / (double)local_b0);
-        pSVar8 = ScrPlace_GetActivePlacement(LVar3);
-        CL_DrawText(pSVar8,pcVar6,0x28,param_5,(float)dVar13,(float)dVar17,iVar5,iVar9,(float)dVar14
-                    ,(float)dVar14,(float *)(uint)bVar2,(uint)bVar1);
-        dVar17 = (double)(float)(dVar17 + dVar15);
-        dVar10 = (double)(float)(dVar10 - dVar16);
-      } while (dVar17 < dVar11);
+        dVar13 = (double)(float)(dVar11 / (double)local_b0);
+        pSVar7 = ScrPlace_GetActivePlacement(param_1);
+        CL_DrawText(pSVar7,pcVar5,0x28,param_5,(float)dVar12,(float)dVar16,iVar4,iVar8,(float)dVar13
+                    ,(float)dVar13,(float *)(uint)bVar2,(uint)bVar1);
+        dVar16 = (double)(float)(dVar16 + dVar14);
+        dVar9 = (double)(float)(dVar9 - dVar15);
+      } while (dVar16 < dVar10);
     }
   }
-  __restfpr_24();
-  __restgprlr_22();
   return;
 }
 
 
 // 822AA290  CG_CompassDrawPlayerECoordScroll  (cgame/cg_compass.cpp:675)
 
+/* WARNING: Function: __savegprlr_21 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_21 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -1012,61 +947,58 @@ void CG_CompassDrawPlayerECoordScroll
   double dVar1;
   byte bVar2;
   byte bVar3;
-  LocalClientNum_t LVar5;
-  cg_s *pcVar6;
-  int iVar7;
+  cg_s *pcVar5;
+  int iVar6;
   longlong lVar4;
-  char *pcVar8;
-  ScreenPlacement *pSVar9;
-  longlong lVar11;
+  char *pcVar7;
+  ScreenPlacement *pSVar8;
+  longlong lVar10;
+  double dVar11;
   double dVar12;
   double dVar13;
   double dVar14;
   double dVar15;
   double dVar16;
   double dVar17;
-  double dVar18;
-  float fVar19;
+  float fVar18;
   float local_c0 [2];
   longlong local_b8;
   longlong local_b0;
   float local_a8 [42];
-  bool bVar10;
+  bool bVar9;
   
-  __savegprlr_21(param_1);
-  LVar5 = __savefpr_25();
   if (param_2 != COMPASS_TYPE_PARTIAL) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_compass.cpp",0x2b4,0,
                     "%s");
   }
-  pcVar6 = CG_GetLocalClientGlobals(LVar5);
-  fVar19 = CG_FadeCompass(LVar5,pcVar6->compassFadeTime,param_2);
-  param_7[3] = fVar19;
-  if (fVar19 != 0.0) {
+  pcVar5 = CG_GetLocalClientGlobals(param_1);
+  fVar18 = CG_FadeCompass(param_1,pcVar5->compassFadeTime,param_2);
+  param_7[3] = fVar18;
+  if (fVar18 != 0.0) {
     CG_CompassCalcDimensions
-              (param_2,pcVar6,param_3,param_4,(float *)&local_b8,local_a8,local_c0,
+              (param_2,pcVar5,param_3,param_4,(float *)&local_b8,local_a8,local_c0,
                (float *)&local_b0);
-    dVar15 = (double)local_b8._0_4_;
-    dVar14 = (double)local_c0[0];
-    fVar19 = 1.0 / (compassCoords->current).vector[2];
-    dVar17 = (double)(float)((double)((compassCoords->current).vector[2] /
-                                     (compassMaxRange->current).value) * dVar14);
-    fVar19 = -((compassMaxRange->current).value * fVar19 * 0.5 -
-              (((pcVar6->refdef).view.org[1] * -pcVar6->compassNorth[0] +
-               (pcVar6->refdef).view.org[0] * pcVar6->compassNorth[1]) * fVar19 +
+    dVar14 = (double)local_b8._0_4_;
+    dVar13 = (double)local_c0[0];
+    fVar18 = 1.0 / (compassCoords->current).vector[2];
+    dVar16 = (double)(float)((double)((compassCoords->current).vector[2] /
+                                     (compassMaxRange->current).value) * dVar13);
+    fVar18 = -((compassMaxRange->current).value * fVar18 * 0.5 -
+              (((pcVar5->refdef).view.org[1] * -pcVar5->compassNorth[0] +
+               (pcVar5->refdef).view.org[0] * pcVar5->compassNorth[1]) * fVar18 +
               (compassCoords->current).value));
-    local_b8 = (longlong)(int)fVar19;
-    dVar18 = -(double)(float)((double)(fVar19 - (float)local_b8) * dVar17 - dVar15);
-    iVar7 = R_TextHeight(param_5);
-    dVar12 = (double)local_b0._0_4_;
-    dVar16 = (double)(float)(dVar12 / (double)(longlong)iVar7);
-    local_b0 = (longlong)iVar7;
-    iVar7 = R_TextWidth("99",2,param_5);
-    lVar11 = (longlong)iVar7;
-    dVar13 = (double)(float)((double)lVar11 * dVar16);
-    local_b0 = lVar11;
-    bVar10 = CL_IsRenderingSplitScreen();
-    lVar4 = (longlong)bVar10;
+    local_b8 = (longlong)(int)fVar18;
+    dVar17 = -(double)(float)((double)(fVar18 - (float)local_b8) * dVar16 - dVar14);
+    iVar6 = R_TextHeight(param_5);
+    dVar11 = (double)local_b0._0_4_;
+    dVar15 = (double)(float)(dVar11 / (double)(longlong)iVar6);
+    local_b0 = (longlong)iVar6;
+    iVar6 = R_TextWidth("99",2,param_5);
+    lVar10 = (longlong)iVar6;
+    dVar12 = (double)(float)((double)lVar10 * dVar15);
+    local_b0 = lVar10;
+    bVar9 = CL_IsRenderingSplitScreen();
+    lVar4 = (longlong)bVar9;
     if (lVar4 == 0) {
       dVar1 = (double)(compassSize->current).value * (double)(compassECoordCutoff->current).value;
     }
@@ -1074,30 +1006,32 @@ void CG_CompassDrawPlayerECoordScroll
       dVar1 = (double)((cg_hudSplitscreenCompassScale->current).value * (compassSize->current).value
                       ) * (double)(compassECoordCutoff->current).value;
     }
-    for (; dVar18 < (double)(float)(dVar1 + dVar15); dVar18 = (double)(float)(dVar18 + dVar17)) {
+    for (; dVar17 < (double)(float)(dVar1 + dVar14); dVar17 = (double)(float)(dVar17 + dVar16)) {
     }
-    dVar13 = (double)(float)((double)(float)(dVar15 + dVar14) - dVar13);
-    if (dVar18 < dVar13) {
-      dVar12 = (double)(float)((double)local_a8[0] + dVar12);
+    dVar12 = (double)(float)((double)(float)(dVar14 + dVar13) - dVar12);
+    if (dVar17 < dVar12) {
+      dVar11 = (double)(float)((double)local_a8[0] + dVar11);
       do {
-        pcVar8 = va("%2i");
+        pcVar7 = va("%2i");
         bVar2 = param_4->vertAlign;
         bVar3 = param_4->horzAlign;
-        pSVar9 = ScrPlace_GetActivePlacement(LVar5);
-        CL_DrawText(pSVar9,pcVar8,0x28,param_5,(float)dVar18,(float)dVar12,(int)lVar4,(int)lVar11,
-                    (float)dVar16,(float)dVar16,(float *)(uint)bVar3,(uint)bVar2);
-        dVar18 = (double)(float)(dVar18 + dVar17);
-      } while (dVar18 < dVar13);
+        pSVar8 = ScrPlace_GetActivePlacement(param_1);
+        CL_DrawText(pSVar8,pcVar7,0x28,param_5,(float)dVar17,(float)dVar11,(int)lVar4,(int)lVar10,
+                    (float)dVar15,(float)dVar15,(float *)(uint)bVar3,(uint)bVar2);
+        dVar17 = (double)(float)(dVar17 + dVar16);
+      } while (dVar17 < dVar12);
     }
   }
-  __restfpr_25();
-  __restgprlr_21();
   return;
 }
 
 
 // 822AA560  CG_CompassDrawPlayerMap  (cgame/cg_compass.cpp:745)
 
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -1108,95 +1042,94 @@ void CG_CompassDrawPlayerMap
 
 {
   float fVar1;
-  LocalClientNum_t LVar2;
-  cg_s *pcVar3;
-  ScreenPlacement *pSVar4;
+  cg_s *pcVar2;
+  ScreenPlacement *pSVar3;
+  rectDef_s *prVar4;
   rectDef_s *prVar5;
-  rectDef_s *prVar6;
+  float *pfVar6;
   float *pfVar7;
-  float *pfVar8;
+  double dVar8;
   double dVar9;
   double dVar10;
   double dVar11;
   double dVar12;
   double dVar13;
-  double dVar14;
-  float fVar15;
+  float fVar14;
   float local_a0;
   float local_9c;
   float local_98;
   float local_94 [37];
   
-  __savegprlr_22(param_1);
-  LVar2 = __savefpr_26();
-  pcVar3 = CG_GetLocalClientGlobals(LVar2);
-  fVar15 = CG_FadeCompass(LVar2,pcVar3->compassFadeTime,param_2);
-  param_6[3] = fVar15;
-  dVar14 = 0.0;
-  if (fVar15 != 0.0) {
-    pfVar8 = pcVar3->compassMapWorldSize;
-    if (*pfVar8 == 0.0) {
+  pcVar2 = CG_GetLocalClientGlobals(param_1);
+  fVar14 = CG_FadeCompass(param_1,pcVar2->compassFadeTime,param_2);
+  param_6[3] = fVar14;
+  dVar13 = 0.0;
+  if (fVar14 != 0.0) {
+    pfVar7 = pcVar2->compassMapWorldSize;
+    if (*pfVar7 == 0.0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_compass.cpp",0x2ff,
                       0,"%s");
     }
-    pfVar7 = pcVar3->compassMapWorldSize + 1;
-    if ((double)*pfVar7 == dVar14) {
+    pfVar6 = pcVar2->compassMapWorldSize + 1;
+    if ((double)*pfVar6 == dVar13) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_compass.cpp",0x300,
                       0,"%s");
     }
     if (param_2 == COMPASS_TYPE_PARTIAL) {
-      fVar15 = (pcVar3->refdef).view.org[1] - pcVar3->compassMapUpperLeft[1];
-      fVar1 = (pcVar3->refdef).view.org[0] - pcVar3->compassMapUpperLeft[0];
-      dVar9 = (double)((fVar1 * pcVar3->compassNorth[1] + fVar15 * -pcVar3->compassNorth[0]) /
-                      *pfVar8);
-      dVar10 = (double)((fVar1 * -pcVar3->compassNorth[0] + fVar15 * -pcVar3->compassNorth[1]) /
-                       *pfVar7);
-      if (*pfVar8 <= *pfVar7) {
-        dVar13 = (double)(((compassMaxRange->current).value / *pfVar7) * 0.5);
-        dVar12 = (double)(float)((double)(*pfVar7 / *pfVar8) * dVar13);
+      fVar14 = (pcVar2->refdef).view.org[1] - pcVar2->compassMapUpperLeft[1];
+      fVar1 = (pcVar2->refdef).view.org[0] - pcVar2->compassMapUpperLeft[0];
+      dVar8 = (double)((fVar1 * pcVar2->compassNorth[1] + fVar14 * -pcVar2->compassNorth[0]) /
+                      *pfVar7);
+      dVar9 = (double)((fVar1 * -pcVar2->compassNorth[0] + fVar14 * -pcVar2->compassNorth[1]) /
+                      *pfVar6);
+      if (*pfVar7 <= *pfVar6) {
+        dVar12 = (double)(((compassMaxRange->current).value / *pfVar6) * 0.5);
+        dVar11 = (double)(float)((double)(*pfVar6 / *pfVar7) * dVar12);
       }
       else {
-        dVar12 = (double)(((compassMaxRange->current).value / *pfVar8) * 0.5);
-        dVar13 = (double)(float)((double)(*pfVar8 / *pfVar7) * dVar12);
+        dVar11 = (double)(((compassMaxRange->current).value / *pfVar7) * 0.5);
+        dVar12 = (double)(float)((double)(*pfVar7 / *pfVar6) * dVar11);
       }
-      dVar11 = dVar14;
+      dVar10 = dVar13;
       if ((compassRotation->current).enabled != false) {
-        dVar11 = -(double)(pcVar3->refdefViewAngles[1] - pcVar3->compassNorthYaw);
+        dVar10 = -(double)(pcVar2->refdefViewAngles[1] - pcVar2->compassNorthYaw);
       }
-      prVar5 = param_3;
-      prVar6 = param_4;
+      prVar4 = param_3;
+      prVar5 = param_4;
       CG_CompassCalcDimensions
-                (COMPASS_TYPE_PARTIAL,pcVar3,param_3,param_4,&local_a0,&local_9c,&local_98,local_94)
+                (COMPASS_TYPE_PARTIAL,pcVar2,param_3,param_4,&local_a0,&local_9c,&local_98,local_94)
       ;
-      pSVar4 = ScrPlace_GetActivePlacement(LVar2);
+      pSVar3 = ScrPlace_GetActivePlacement(param_1);
       CL_DrawStretchPicRotatedST
-                (pSVar4,local_a0,local_9c,local_98,local_94[0],(int)pcVar3,(int)prVar5,(float)dVar9,
-                 (float)dVar10,(float)dVar12,(float)dVar13,(float)dVar14,1.0,(float)dVar14,1.0,
-                 (float)dVar11,&prVar6->x,(Material *)0x82010000);
+                (pSVar3,local_a0,local_9c,local_98,local_94[0],(int)pcVar2,(int)prVar4,(float)dVar8,
+                 (float)dVar9,(float)dVar11,(float)dVar12,(float)dVar13,1.0,(float)dVar13,1.0,
+                 (float)dVar10,&prVar5->x,(Material *)0x82010000);
     }
     else {
       if (param_2 != COMPASS_TYPE_FULL) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_compass.cpp",
                         0x324,0,"%s");
       }
-      prVar5 = param_3;
-      prVar6 = param_4;
+      prVar4 = param_3;
+      prVar5 = param_4;
       CG_CompassCalcDimensions
-                (param_2,pcVar3,param_3,param_4,&local_a0,&local_9c,&local_98,local_94);
-      pSVar4 = ScrPlace_GetActivePlacement(LVar2);
-      CL_DrawStretchPic(pSVar4,local_a0,local_9c,local_98,local_94[0],(int)pcVar3,(int)prVar5,
-                        (float)dVar14,(float)dVar14,1.0,1.0,&prVar6->x,(Material *)0x82010000);
+                (param_2,pcVar2,param_3,param_4,&local_a0,&local_9c,&local_98,local_94);
+      pSVar3 = ScrPlace_GetActivePlacement(param_1);
+      CL_DrawStretchPic(pSVar3,local_a0,local_9c,local_98,local_94[0],(int)pcVar2,(int)prVar4,
+                        (float)dVar13,(float)dVar13,1.0,1.0,&prVar5->x,(Material *)0x82010000);
     }
-    CG_CompassDrawRadarEffects(LVar2,param_2,param_3,param_4,param_6);
+    CG_CompassDrawRadarEffects(param_1,param_2,param_3,param_4,param_6);
   }
-  __restfpr_26();
-  __restgprlr_22();
   return;
 }
 
 
 // 822AA880  CG_CompassDrawSimple  (cgame/cg_compass.cpp:818)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -1205,42 +1138,40 @@ void CG_CompassDrawSimple
                (LocalClientNum_t param_1,rectDef_s *param_2,Material *param_3,float *param_4)
 
 {
-  LocalClientNum_t LVar1;
-  cg_s *pcVar2;
-  ScreenPlacement *pSVar3;
-  rectDef_s *prVar4;
+  cg_s *pcVar1;
+  ScreenPlacement *pSVar2;
+  rectDef_s *prVar3;
   Material *in_r7;
+  double dVar4;
   double dVar5;
   double dVar6;
   double dVar7;
   double dVar8;
   double dVar9;
-  double dVar10;
   
-  __savegprlr_27(param_1);
-  LVar1 = __savefpr_26();
-  prVar4 = param_2;
-  pcVar2 = CG_GetLocalClientGlobals(LVar1);
-  dVar10 = 0.0;
-  dVar9 = dVar10;
+  prVar3 = param_2;
+  pcVar1 = CG_GetLocalClientGlobals(param_1);
+  dVar9 = 0.0;
+  dVar8 = dVar9;
   if ((compassRotation->current).enabled != false) {
-    dVar9 = -(double)(pcVar2->refdefViewAngles[1] - pcVar2->compassNorthYaw);
+    dVar8 = -(double)(pcVar1->refdefViewAngles[1] - pcVar1->compassNorthYaw);
   }
-  dVar8 = (double)param_2->x;
-  dVar7 = (double)param_2->y;
-  dVar6 = (double)param_2->w;
-  dVar5 = (double)param_2->h;
-  pSVar3 = ScrPlace_GetActivePlacement(LVar1);
+  dVar7 = (double)param_2->x;
+  dVar6 = (double)param_2->y;
+  dVar5 = (double)param_2->w;
+  dVar4 = (double)param_2->h;
+  pSVar2 = ScrPlace_GetActivePlacement(param_1);
   CL_DrawStretchPicRotatedST
-            (pSVar3,(float)dVar8,(float)dVar7,(float)dVar6,(float)dVar5,(int)prVar4,(int)param_3,0.5
-             ,0.5,0.5,0.5,(float)dVar10,1.0,(float)dVar10,1.0,(float)dVar9,param_4,in_r7);
-  __restfpr_26();
-  __restgprlr_27();
+            (pSVar2,(float)dVar7,(float)dVar6,(float)dVar5,(float)dVar4,(int)prVar3,(int)param_3,0.5
+             ,0.5,0.5,0.5,(float)dVar9,1.0,(float)dVar9,1.0,(float)dVar8,param_4,in_r7);
   return;
 }
 
 
 // 822AA968  CG_CompassCalcLocationSelectorQuads  (cgame/cg_compass.cpp:841)
+
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 
 void CG_CompassCalcLocationSelectorQuads
                (rectDef_s *param_1,float *param_2,float *param_3,float *param_4,float *param_5,
@@ -1248,90 +1179,71 @@ void CG_CompassCalcLocationSelectorQuads
 
 {
   float fVar1;
-  float *pfVar2;
-  ulonglong uVar3;
-  float *pfVar4;
-  ulonglong uVar5;
-  float *pfVar6;
-  ulonglong uVar7;
-  float *pfVar8;
-  ulonglong uVar9;
-  ulonglong uVar10;
-  float *pfVar11;
-  double extraout_f1;
-  double dVar12;
+  double dVar2;
   
-  uVar10 = (ulonglong)(int)param_6;
-  uVar9 = (ulonglong)(int)param_5;
-  uVar7 = (ulonglong)(int)param_4;
-  uVar5 = (ulonglong)(int)param_3;
-  uVar3 = (ulonglong)(int)param_2;
-  pfVar2 = (float *)__savegprlr_24((double)param_7,param_1);
-  dVar12 = extraout_f1;
-  if (pfVar2 == (float *)0x0) {
+  dVar2 = (double)param_7;
+  if (param_1 == (rectDef_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_compass.cpp",0x34a,0,
                     "%s");
   }
-  if ((uVar3 & 0xffffffff) == 0) {
+  if (param_2 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_compass.cpp",0x34b,0,
                     "%s");
   }
-  if ((uVar5 & 0xffffffff) == 0) {
+  if (param_3 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_compass.cpp",0x34c,0,
                     "%s");
   }
-  if ((uVar7 & 0xffffffff) == 0) {
+  if (param_4 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_compass.cpp",0x34d,0,
                     "%s");
   }
-  if ((uVar9 & 0xffffffff) == 0) {
+  if (param_5 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_compass.cpp",0x34e,0,
                     "%s");
   }
-  if ((uVar10 & 0xffffffff) == 0) {
+  if (param_6 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_compass.cpp",0x34f,0,
                     "%s");
   }
-  pfVar4 = (float *)uVar3;
-  fVar1 = (float)(1.0 / dVar12);
-  pfVar6 = (float *)uVar5;
-  *pfVar6 = (*pfVar2 - *pfVar4) * fVar1 + 0.5;
-  pfVar6[1] = (pfVar2[1] - pfVar4[1]) * fVar1 + 0.5;
-  pfVar8 = (float *)uVar7;
-  *pfVar8 = ((*pfVar2 + pfVar2[2]) - *pfVar4) * fVar1 + 0.5;
-  pfVar8[1] = ((pfVar2[3] + pfVar2[1]) - pfVar4[1]) * fVar1 + 0.5;
-  pfVar4 = (float *)uVar9;
-  *pfVar4 = *pfVar2;
-  pfVar4[1] = pfVar2[1];
-  pfVar11 = (float *)uVar10;
-  *pfVar11 = *pfVar2 + pfVar2[2];
-  pfVar11[1] = pfVar2[3] + pfVar2[1];
-  fVar1 = *pfVar6;
+  fVar1 = (float)(1.0 / dVar2);
+  *param_3 = (param_1->x - *param_2) * fVar1 + 0.5;
+  param_3[1] = (param_1->y - param_2[1]) * fVar1 + 0.5;
+  *param_4 = ((param_1->x + param_1->w) - *param_2) * fVar1 + 0.5;
+  param_4[1] = ((param_1->h + param_1->y) - param_2[1]) * fVar1 + 0.5;
+  *param_5 = param_1->x;
+  param_5[1] = param_1->y;
+  *param_6 = param_1->x + param_1->w;
+  param_6[1] = param_1->h + param_1->y;
+  fVar1 = *param_3;
   if (fVar1 < 0.0) {
-    *pfVar4 = (-fVar1 / (*pfVar8 - fVar1)) * (*pfVar11 - *pfVar4) + *pfVar4;
-    *pfVar6 = 0.0;
+    *param_5 = (-fVar1 / (*param_4 - fVar1)) * (*param_6 - *param_5) + *param_5;
+    *param_3 = 0.0;
   }
-  fVar1 = pfVar6[1];
+  fVar1 = param_3[1];
   if (fVar1 < 0.0) {
-    pfVar4[1] = (-fVar1 / (pfVar8[1] - fVar1)) * (pfVar11[1] - pfVar4[1]) + pfVar4[1];
-    pfVar6[1] = 0.0;
+    param_5[1] = (-fVar1 / (param_4[1] - fVar1)) * (param_6[1] - param_5[1]) + param_5[1];
+    param_3[1] = 0.0;
   }
-  if (1.0 < *pfVar8) {
-    *pfVar11 = ((1.0 - *pfVar6) / (*pfVar8 - *pfVar6)) * (*pfVar11 - *pfVar4) + *pfVar4;
-    *pfVar8 = 1.0;
+  if (1.0 < *param_4) {
+    *param_6 = ((1.0 - *param_3) / (*param_4 - *param_3)) * (*param_6 - *param_5) + *param_5;
+    *param_4 = 1.0;
   }
-  if (1.0 < pfVar8[1]) {
-    pfVar11[1] = ((1.0 - pfVar6[1]) / (pfVar8[1] - pfVar6[1])) * (pfVar11[1] - pfVar4[1]) +
-                 pfVar4[1];
-    pfVar8[1] = 1.0;
+  if (1.0 < param_4[1]) {
+    param_6[1] = ((1.0 - param_3[1]) / (param_4[1] - param_3[1])) * (param_6[1] - param_5[1]) +
+                 param_5[1];
+    param_4[1] = 1.0;
   }
-  __restgprlr_24();
   return;
 }
 
 
 // 822AAC08  CG_CompassDrawPlayerMapLocationSelector  (cgame/cg_compass.cpp:884)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_20 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_20 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -1343,17 +1255,17 @@ void CG_CompassDrawPlayerMapLocationSelector
 {
   float fVar1;
   uint uVar2;
-  LocalClientNum_t LVar3;
-  cg_s *pcVar4;
-  char *pcVar5;
-  bool bVar7;
-  ScreenPlacement *pSVar6;
+  cg_s *pcVar3;
+  char *pcVar4;
+  bool bVar6;
+  ScreenPlacement *pSVar5;
+  float *pfVar7;
   float *pfVar8;
-  ulonglong uVar9;
-  float *pfVar10;
-  ulonglong uVar11;
-  IMAGE_DOS_HEADER *pIVar12;
-  IMAGE_DOS_HEADER *pIVar13;
+  IMAGE_DOS_HEADER *pIVar9;
+  IMAGE_DOS_HEADER *pIVar10;
+  double dVar11;
+  double dVar12;
+  double dVar13;
   double dVar14;
   double dVar15;
   double dVar16;
@@ -1364,9 +1276,6 @@ void CG_CompassDrawPlayerMapLocationSelector
   double dVar21;
   double dVar22;
   double dVar23;
-  double dVar24;
-  double dVar25;
-  double dVar26;
   float local_f0;
   float local_ec;
   float local_e8;
@@ -1377,15 +1286,11 @@ void CG_CompassDrawPlayerMapLocationSelector
   undefined1 local_d0 [16];
   rectDef_s local_c0 [9];
   
-  uVar11 = (ulonglong)(int)param_4;
-  uVar9 = (ulonglong)(int)param_3;
-  __savegprlr_24(param_1);
-  LVar3 = __savefpr_20();
-  if ((uVar9 & 0xffffffff) == 0) {
+  if (param_3 == (rectDef_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_compass.cpp",900,0,
                     "%s");
   }
-  if ((uVar11 & 0xffffffff) == 0) {
+  if (param_4 == (rectDef_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_compass.cpp",0x385,0,
                     "%s");
   }
@@ -1393,93 +1298,91 @@ void CG_CompassDrawPlayerMapLocationSelector
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_compass.cpp",0x387,0,
                     "%s");
   }
-  pcVar4 = CG_GetLocalClientGlobals(LVar3);
-  dVar24 = 0.0;
-  if (pcVar4->compassMapWorldSize[0] == 0.0) {
+  pcVar3 = CG_GetLocalClientGlobals(param_1);
+  dVar21 = 0.0;
+  if (pcVar3->compassMapWorldSize[0] == 0.0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_compass.cpp",0x38b,0,
                     "%s");
   }
-  if ((double)pcVar4->compassMapWorldSize[1] == dVar24) {
+  if ((double)pcVar3->compassMapWorldSize[1] == dVar21) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_compass.cpp",0x38c,0,
                     "%s");
   }
-  if ((pcVar4->predictedPlayerState).locationSelectionInfo != 0) {
+  if ((pcVar3->predictedPlayerState).locationSelectionInfo != 0) {
     CG_CompassCalcDimensions
-              (param_2,pcVar4,(rectDef_s *)uVar9,(rectDef_s *)uVar11,&local_c0[0].x,&local_c0[0].y,
-               &local_c0[0].w,&local_c0[0].h);
-    uVar2 = (pcVar4->predictedPlayerState).locationSelectionInfo & 3;
+              (param_2,pcVar3,param_3,param_4,&local_c0[0].x,&local_c0[0].y,&local_c0[0].w,
+               &local_c0[0].h);
+    uVar2 = (pcVar3->predictedPlayerState).locationSelectionInfo & 3;
     if (2 < uVar2 - 1) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_compass.cpp",0x394,
                       0,"mtlIndex doesn\'t index LOC_SEL_MTL_MASK\n\t%i not in [0, %i)");
     }
-    pcVar5 = CL_GetConfigString(uVar2 + 0x400);
-    Material_RegisterHandle(pcVar5,7);
+    pcVar4 = CL_GetConfigString(uVar2 + 0x400);
+    Material_RegisterHandle(pcVar4,7);
     local_d0._0_8_ =
-         (ulonglong)(uint)((pcVar4->predictedPlayerState).locationSelectionInfo >> 2) & 0x1f;
-    if (dVar24 < (double)((float)local_d0._0_8_ * 0.032258064)) {
-      dVar24 = (double)local_c0[0].h;
-      dVar25 = (double)(float)(dVar24 * (double)((float)local_d0._0_8_ * 0.032258064));
-      bVar7 = CL_Demo_IsPlaying(LVar3);
-      if (bVar7) {
-        fVar1 = (pcVar4->selectedLocation[0] - pcVar4->selectedLocationPrev[0]) *
-                pcVar4->frameInterpolation + pcVar4->selectedLocationPrev[0];
-        dVar24 = (double)((pcVar4->selectedLocation[1] - pcVar4->selectedLocationPrev[1]) *
-                          pcVar4->frameInterpolation + pcVar4->selectedLocationPrev[1]) * dVar24 +
+         (ulonglong)(uint)((pcVar3->predictedPlayerState).locationSelectionInfo >> 2) & 0x1f;
+    if (dVar21 < (double)((float)local_d0._0_8_ * 0.032258064)) {
+      dVar21 = (double)local_c0[0].h;
+      dVar22 = (double)(float)(dVar21 * (double)((float)local_d0._0_8_ * 0.032258064));
+      bVar6 = CL_Demo_IsPlaying(param_1);
+      if (bVar6) {
+        fVar1 = (pcVar3->selectedLocation[0] - pcVar3->selectedLocationPrev[0]) *
+                pcVar3->frameInterpolation + pcVar3->selectedLocationPrev[0];
+        dVar21 = (double)((pcVar3->selectedLocation[1] - pcVar3->selectedLocationPrev[1]) *
+                          pcVar3->frameInterpolation + pcVar3->selectedLocationPrev[1]) * dVar21 +
                  (double)local_c0[0].y;
       }
       else {
-        fVar1 = pcVar4->selectedLocation[0];
-        dVar24 = (double)pcVar4->selectedLocation[1] * dVar24 + (double)local_c0[0].y;
+        fVar1 = pcVar3->selectedLocation[0];
+        dVar21 = (double)pcVar3->selectedLocation[1] * dVar21 + (double)local_c0[0].y;
       }
-      local_ec = (float)dVar24;
+      local_ec = (float)dVar21;
       local_f0 = fVar1 * local_c0[0].w + local_c0[0].x;
-      pIVar13 = (IMAGE_DOS_HEADER *)&local_e8;
-      pIVar12 = (IMAGE_DOS_HEADER *)local_d0;
-      pfVar10 = &local_d8;
-      pfVar8 = &local_f0;
+      pIVar10 = (IMAGE_DOS_HEADER *)&local_e8;
+      pIVar9 = (IMAGE_DOS_HEADER *)local_d0;
+      pfVar8 = &local_d8;
+      pfVar7 = &local_f0;
       CG_CompassCalcLocationSelectorQuads
-                (local_c0,pfVar8,pfVar10,(float *)pIVar12,(float *)pIVar13,(float *)&local_e0,
-                 (float)dVar25);
-      dVar23 = (double)local_e4;
-      dVar21 = (double)local_e8;
-      dVar22 = (double)(float)((double)(float)local_e0.packed._4_4_ - dVar23);
-      dVar20 = (double)(float)((double)(float)local_e0.packed._0_4_ - dVar21);
-      pSVar6 = ScrPlace_GetActivePlacement(LVar3);
-      dVar18 = (double)local_d8;
-      dVar17 = (double)local_d4;
-      dVar25 = (double)(float)local_d0._0_4_;
-      dVar24 = (double)(float)local_d0._4_4_;
-      CL_DrawStretchPic(pSVar6,(float)dVar21,(float)dVar23,(float)dVar20,(float)dVar22,(int)pfVar8,
-                        (int)pfVar10,local_d8,local_d4,(float)local_d0._0_4_,(float)local_d0._4_4_,
-                        (float *)pIVar12,(Material *)pIVar13);
-      if (((pcVar4->predictedPlayerState).locationSelectionInfo >> 7 & 1U) != 0) {
-        bVar7 = CL_Demo_IsPlaying(LVar3);
-        dVar26 = 0.5;
-        if (bVar7) {
-          dVar19 = (double)pcVar4->frameInterpolation;
-          pIVar13 = &IMAGE_DOS_HEADER_82000000;
-          dVar16 = (double)pcVar4->selectedLocationAnglePrev;
-          dVar15 = (double)((float)((double)pcVar4->selectedLocationAngle - dVar16) * 0.0027777778);
-          dVar14 = floor((double)(float)(dVar15 + 0.5));
-          pIVar12 = &IMAGE_DOS_HEADER_82000000;
-          fVar1 = (float)((double)(float)((double)(float)(dVar15 - (double)(float)dVar14) * dVar19)
-                          * 360.0 + dVar16);
+                (local_c0,pfVar7,pfVar8,(float *)pIVar9,(float *)pIVar10,(float *)&local_e0,
+                 (float)dVar22);
+      dVar20 = (double)local_e4;
+      dVar18 = (double)local_e8;
+      dVar19 = (double)(float)((double)(float)local_e0.packed._4_4_ - dVar20);
+      dVar17 = (double)(float)((double)(float)local_e0.packed._0_4_ - dVar18);
+      pSVar5 = ScrPlace_GetActivePlacement(param_1);
+      dVar15 = (double)local_d8;
+      dVar14 = (double)local_d4;
+      dVar22 = (double)(float)local_d0._0_4_;
+      dVar21 = (double)(float)local_d0._4_4_;
+      CL_DrawStretchPic(pSVar5,(float)dVar18,(float)dVar20,(float)dVar17,(float)dVar19,(int)pfVar7,
+                        (int)pfVar8,local_d8,local_d4,(float)local_d0._0_4_,(float)local_d0._4_4_,
+                        (float *)pIVar9,(Material *)pIVar10);
+      if (((pcVar3->predictedPlayerState).locationSelectionInfo >> 7 & 1U) != 0) {
+        bVar6 = CL_Demo_IsPlaying(param_1);
+        dVar23 = 0.5;
+        if (bVar6) {
+          dVar16 = (double)pcVar3->frameInterpolation;
+          pIVar10 = &IMAGE_DOS_HEADER_82000000;
+          dVar13 = (double)pcVar3->selectedLocationAnglePrev;
+          dVar12 = (double)((float)((double)pcVar3->selectedLocationAngle - dVar13) * 0.0027777778);
+          dVar11 = floor((double)(float)(dVar12 + 0.5));
+          pIVar9 = &IMAGE_DOS_HEADER_82000000;
+          fVar1 = (float)((double)(float)((double)(float)(dVar12 - (double)(float)dVar11) * dVar16)
+                          * 360.0 + dVar13);
         }
         else {
-          fVar1 = pcVar4->selectedLocationAngle;
+          fVar1 = pcVar3->selectedLocationAngle;
         }
-        dVar14 = (double)fVar1;
-        pSVar6 = ScrPlace_GetActivePlacement(LVar3);
+        dVar11 = (double)fVar1;
+        pSVar5 = ScrPlace_GetActivePlacement(param_1);
         CL_DrawStretchPicRotatedST
-                  (pSVar6,(float)dVar21,(float)dVar23,(float)dVar20,(float)dVar22,(int)pfVar8,
-                   (int)pfVar10,(float)dVar26,(float)dVar26,(float)dVar26,(float)dVar26,
-                   (float)dVar18,(float)dVar25,(float)dVar17,(float)dVar24,(float)dVar14,
-                   (float *)pIVar12,(Material *)pIVar13);
+                  (pSVar5,(float)dVar18,(float)dVar20,(float)dVar17,(float)dVar19,(int)pfVar7,
+                   (int)pfVar8,(float)dVar23,(float)dVar23,(float)dVar23,(float)dVar23,(float)dVar15
+                   ,(float)dVar22,(float)dVar14,(float)dVar21,(float)dVar11,(float *)pIVar9,
+                   (Material *)pIVar10);
       }
     }
   }
-  __restfpr_20();
-  __restgprlr_24();
   return;
 }
 
@@ -1518,6 +1421,10 @@ float GetObjectiveFade(rectDef_s *param_1,float param_2,float param_3,float para
 
 // 822AB098  CG_CompassDrawPlayer  (cgame/cg_compass.cpp:1011)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -1527,15 +1434,15 @@ void CG_CompassDrawPlayer
                float *param_5)
 
 {
-  LocalClientNum_t LVar1;
-  cg_s *pcVar2;
-  bool bVar5;
-  int iVar3;
-  ScreenPlacement *pSVar4;
-  cg_s *pcVar6;
-  rectDef_s *prVar7;
+  cg_s *pcVar1;
+  bool bVar4;
+  int iVar2;
+  ScreenPlacement *pSVar3;
+  cg_s *pcVar5;
+  rectDef_s *prVar6;
+  IMAGE_DOS_HEADER *pIVar7;
   IMAGE_DOS_HEADER *pIVar8;
-  IMAGE_DOS_HEADER *pIVar9;
+  double dVar9;
   double dVar10;
   double dVar11;
   double dVar12;
@@ -1543,109 +1450,108 @@ void CG_CompassDrawPlayer
   double dVar14;
   double dVar15;
   double dVar16;
-  double dVar17;
-  float fVar18;
+  float fVar17;
   float local_a0 [2];
   undefined1 local_98 [8];
   rectDef_s local_90 [7];
   
-  __savegprlr_24(param_1);
-  LVar1 = __savefpr_26();
-  pcVar2 = CG_GetLocalClientGlobals(LVar1);
-  fVar18 = CG_FadeCompass(LVar1,pcVar2->compassFadeTime,param_2);
-  dVar11 = (double)fVar18;
-  bVar5 = CG_ClientHasAntiJammer(LVar1);
-  if (bVar5) {
-    fVar18 = 1.0;
+  pcVar1 = CG_GetLocalClientGlobals(param_1);
+  fVar17 = CG_FadeCompass(param_1,pcVar1->compassFadeTime,param_2);
+  dVar10 = (double)fVar17;
+  bVar4 = CG_ClientHasAntiJammer(param_1);
+  if (bVar4) {
+    fVar17 = 1.0;
   }
   else {
-    fVar18 = CG_GetRadarJamLevel(LVar1);
-    fVar18 = 1.0 - fVar18;
+    fVar17 = CG_GetRadarJamLevel(param_1);
+    fVar17 = 1.0 - fVar17;
   }
-  dVar13 = 0.0;
-  fVar18 = (float)((double)fVar18 * dVar11) * param_5[3];
-  param_5[3] = fVar18;
-  if (fVar18 != 0.0) {
+  dVar12 = 0.0;
+  fVar17 = (float)((double)fVar17 * dVar10) * param_5[3];
+  param_5[3] = fVar17;
+  if (fVar17 != 0.0) {
     CG_CompassCalcDimensions
-              (param_2,pcVar2,param_3,param_4,&local_90[0].x,&local_90[0].y,&local_90[0].w,
+              (param_2,pcVar1,param_3,param_4,&local_90[0].x,&local_90[0].y,&local_90[0].w,
                &local_90[0].h);
-    dVar17 = 0.5;
-    dVar12 = (double)(local_90[0].w * 0.5 + local_90[0].x);
-    dVar11 = (double)(local_90[0].h * 0.5 + local_90[0].y);
+    dVar16 = 0.5;
+    dVar11 = (double)(local_90[0].w * 0.5 + local_90[0].x);
+    dVar10 = (double)(local_90[0].h * 0.5 + local_90[0].y);
     if (param_2 == COMPASS_TYPE_FULL) {
-      local_98._0_4_ = (undefined4)dVar13;
-      local_98._4_4_ = (undefined4)dVar13;
-      pIVar9 = (IMAGE_DOS_HEADER *)(pcVar2->predictedPlayerState).origin;
-      pIVar8 = (IMAGE_DOS_HEADER *)0x0;
-      prVar7 = local_90;
-      dVar14 = (double)(cg_hudMapPlayerHeight->current).value;
-      dVar15 = (double)(cg_hudMapPlayerWidth->current).value;
-      pcVar6 = pcVar2;
+      local_98._0_4_ = (undefined4)dVar12;
+      local_98._4_4_ = (undefined4)dVar12;
+      pIVar8 = (IMAGE_DOS_HEADER *)(pcVar1->predictedPlayerState).origin;
+      pIVar7 = (IMAGE_DOS_HEADER *)0x0;
+      prVar6 = local_90;
+      dVar13 = (double)(cg_hudMapPlayerHeight->current).value;
+      dVar14 = (double)(cg_hudMapPlayerWidth->current).value;
+      pcVar5 = pcVar1;
       CG_WorldPosToCompass
-                (COMPASS_TYPE_FULL,pcVar2,prVar7,(float *)0x0,(float *)pIVar9,(float *)pIVar9,
+                (COMPASS_TYPE_FULL,pcVar1,prVar6,(float *)0x0,(float *)pIVar8,(float *)pIVar8,
                  (float *)0x0,(float *)local_98);
-      dVar10 = (double)(float)local_98._0_4_;
-      dVar16 = (double)(float)local_98._4_4_;
+      dVar9 = (double)(float)local_98._0_4_;
+      dVar15 = (double)(float)local_98._4_4_;
     }
     else {
-      dVar10 = dVar13;
+      dVar9 = dVar12;
       if (param_2 != COMPASS_TYPE_PARTIAL) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_compass.cpp",
                         0x41b,0,"%s");
-        dVar10 = dVar13;
+        dVar9 = dVar12;
       }
       local_a0[0] = (compassPlayerWidth->current).value * (compassSize->current).value;
-      dVar16 = (double)local_a0[0];
+      dVar15 = (double)local_a0[0];
       local_98._0_4_ = (compassPlayerHeight->current).value * (compassSize->current).value;
-      dVar13 = (double)(float)local_98._0_4_;
+      dVar12 = (double)(float)local_98._0_4_;
       if (cg_hudSplitscreenCompassElementScale == (dvar_t *)0x0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_compass.cpp",
                         0x421,0,"%s");
       }
-      bVar5 = CL_IsRenderingSplitScreen();
-      if (bVar5) {
-        local_a0[0] = (float)((double)(cg_hudSplitscreenCompassElementScale->current).value * dVar16
+      bVar4 = CL_IsRenderingSplitScreen();
+      if (bVar4) {
+        local_a0[0] = (float)((double)(cg_hudSplitscreenCompassElementScale->current).value * dVar15
                              );
         local_98._0_4_ =
-             (undefined4)((double)(cg_hudSplitscreenCompassElementScale->current).value * dVar13);
+             (undefined4)((double)(cg_hudSplitscreenCompassElementScale->current).value * dVar12);
       }
-      pIVar9 = (IMAGE_DOS_HEADER *)local_98;
-      pIVar8 = (IMAGE_DOS_HEADER *)local_a0;
-      prVar7 = (rectDef_s *)0x0;
-      pcVar6 = (cg_s *)0x0;
+      pIVar8 = (IMAGE_DOS_HEADER *)local_98;
+      pIVar7 = (IMAGE_DOS_HEADER *)local_a0;
+      prVar6 = (rectDef_s *)0x0;
+      pcVar5 = (cg_s *)0x0;
       CG_ApplySplitScreenCompassScale
-                (param_2,(float *)0x0,(float *)0x0,(float *)pIVar8,(float *)pIVar9);
-      dVar15 = (double)local_a0[0];
-      dVar14 = (double)(float)local_98._0_4_;
-      dVar16 = dVar10;
-      dVar13 = dVar10;
+                (param_2,(float *)0x0,(float *)0x0,(float *)pIVar7,(float *)pIVar8);
+      dVar14 = (double)local_a0[0];
+      dVar13 = (double)(float)local_98._0_4_;
+      dVar15 = dVar9;
+      dVar12 = dVar9;
     }
-    dVar12 = (double)(float)(-(double)(float)(dVar15 * dVar17 - dVar12) + dVar10);
-    dVar11 = (double)(float)(-(double)(float)(dVar14 * dVar17 - dVar11) + dVar16);
+    dVar11 = (double)(float)(-(double)(float)(dVar14 * dVar16 - dVar11) + dVar9);
+    dVar10 = (double)(float)(-(double)(float)(dVar13 * dVar16 - dVar10) + dVar15);
     if ((param_2 != COMPASS_TYPE_PARTIAL) || ((compassRotation->current).enabled == false)) {
-      pIVar9 = &IMAGE_DOS_HEADER_82000000;
-      dVar10 = (double)((pcVar2->compassNorthYaw - pcVar2->refdefViewAngles[1]) * 0.0027777778);
-      dVar13 = floor((double)(float)(dVar10 + dVar17));
       pIVar8 = &IMAGE_DOS_HEADER_82000000;
-      dVar13 = (double)((float)(dVar10 - (double)(float)dVar13) * 360.0);
+      dVar9 = (double)((pcVar1->compassNorthYaw - pcVar1->refdefViewAngles[1]) * 0.0027777778);
+      dVar12 = floor((double)(float)(dVar9 + dVar16));
+      pIVar7 = &IMAGE_DOS_HEADER_82000000;
+      dVar12 = (double)((float)(dVar9 - (double)(float)dVar12) * 360.0);
     }
-    iVar3 = CL_ControllerIndexFromClientNum(LVar1);
-    bVar5 = GamerProfile_IsColorBlind(iVar3);
-    if ((bVar5) && (cgMedia.compass[1].self_arrow != (Material *)0x0)) {
+    iVar2 = CL_ControllerIndexFromClientNum(param_1);
+    bVar4 = GamerProfile_IsColorBlind(iVar2);
+    if ((bVar4) && (cgMedia.compass[1].self_arrow != (Material *)0x0)) {
       Material_IsDefault(cgMedia.compass[1].self_arrow);
     }
-    pSVar4 = ScrPlace_GetActivePlacement(LVar1);
-    CG_DrawRotatedPic(pSVar4,(float)dVar12,(float)dVar11,(float)dVar15,(float)dVar14,(int)pcVar6,
-                      (int)prVar7,(float)dVar13,(float *)pIVar8,(Material *)pIVar9);
+    pSVar3 = ScrPlace_GetActivePlacement(param_1);
+    CG_DrawRotatedPic(pSVar3,(float)dVar11,(float)dVar10,(float)dVar14,(float)dVar13,(int)pcVar5,
+                      (int)prVar6,(float)dVar12,(float *)pIVar7,(Material *)pIVar8);
   }
-  __restfpr_26();
-  __restgprlr_24();
   return;
 }
 
 
 // 822AB3B8  CG_CompassDrawBorder  (cgame/cg_compass.cpp:1086)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_19 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_19 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -1655,10 +1561,10 @@ void CG_CompassDrawBorder
                Material *param_5,float *param_6)
 
 {
-  LocalClientNum_t LVar1;
-  cg_s *pcVar2;
-  ScreenPlacement *pSVar3;
-  Material *pMVar4;
+  cg_s *pcVar1;
+  ScreenPlacement *pSVar2;
+  Material *pMVar3;
+  double dVar4;
   double dVar5;
   double dVar6;
   double dVar7;
@@ -1673,81 +1579,76 @@ void CG_CompassDrawBorder
   double dVar16;
   double dVar17;
   double dVar18;
-  double dVar19;
-  float fVar20;
+  float fVar19;
   undefined1 local_c0 [4];
   float local_bc;
   undefined8 local_b8;
   
-  __savegprlr_25(param_1);
-  LVar1 = __savefpr_19();
   if (param_2 != COMPASS_TYPE_FULL) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_compass.cpp",0x445,0,
                     "%s");
   }
-  dVar16 = 0.0;
-  dVar18 = (double)(cg_hudMapBorderWidth->current).value;
-  if (0.0 < dVar18) {
-    pcVar2 = CG_GetLocalClientGlobals(LVar1);
-    fVar20 = CG_FadeCompass(LVar1,pcVar2->compassFadeTime,param_2);
-    param_6[3] = fVar20;
-    if ((double)fVar20 != dVar16) {
-      pMVar4 = (Material *)local_c0;
+  dVar15 = 0.0;
+  dVar17 = (double)(cg_hudMapBorderWidth->current).value;
+  if (0.0 < dVar17) {
+    pcVar1 = CG_GetLocalClientGlobals(param_1);
+    fVar19 = CG_FadeCompass(param_1,pcVar1->compassFadeTime,param_2);
+    param_6[3] = fVar19;
+    if ((double)fVar19 != dVar15) {
+      pMVar3 = (Material *)local_c0;
       CG_CompassCalcDimensions
-                (param_2,pcVar2,param_3,param_4,(float *)pMVar4,&local_bc,(float *)&local_b8,
+                (param_2,pcVar1,param_3,param_4,(float *)pMVar3,&local_bc,(float *)&local_b8,
                  (float *)((int)&local_b8 + 4));
-      dVar19 = 0.5;
-      dVar10 = (double)(float)local_b8._0_4_;
-      if ((double)(float)(dVar10 * 0.5) < dVar18) {
-        dVar18 = (double)(float)(dVar10 * 0.5);
+      dVar18 = 0.5;
+      dVar9 = (double)(float)local_b8._0_4_;
+      if ((double)(float)(dVar9 * 0.5) < dVar17) {
+        dVar17 = (double)(float)(dVar9 * 0.5);
       }
-      dVar11 = (double)(float)local_b8._4_4_;
-      if ((double)(float)(dVar11 * 0.5) < dVar18) {
-        dVar18 = (double)(float)(dVar11 * 0.5);
+      dVar10 = (double)(float)local_b8._4_4_;
+      if ((double)(float)(dVar10 * 0.5) < dVar17) {
+        dVar17 = (double)(float)(dVar10 * 0.5);
       }
-      dVar9 = (double)(float)(dVar18 * 2.0);
-      pSVar3 = ScrPlace_GetActivePlacement(LVar1);
-      dVar14 = (double)local_bc;
-      dVar13 = (double)(float)local_c0;
-      dVar8 = (double)(float)(dVar13 - dVar18);
-      dVar17 = 1.0;
-      fVar20 = (float)((double)(float)(dVar14 + dVar11) - dVar18);
-      dVar7 = (double)fVar20;
-      CL_DrawStretchPic(pSVar3,(float)(dVar13 - dVar18),fVar20,(float)dVar9,(float)dVar9,(int)pcVar2
-                        ,(int)param_3,(float)dVar16,(float)dVar19,(float)dVar19,1.0,&param_4->x,
-                        pMVar4);
-      dVar6 = (double)(float)(dVar14 - dVar18);
-      CL_DrawStretchPic(pSVar3,(float)dVar8,(float)(dVar14 - dVar18),(float)dVar9,(float)dVar9,
-                        (int)pcVar2,(int)param_3,(float)dVar16,(float)dVar16,(float)dVar19,
-                        (float)dVar19,&param_4->x,pMVar4);
-      fVar20 = (float)((double)(float)(dVar13 + dVar10) - dVar18);
-      dVar5 = (double)fVar20;
-      CL_DrawStretchPic(pSVar3,fVar20,(float)dVar7,(float)dVar9,(float)dVar9,(int)pcVar2,
-                        (int)param_3,(float)dVar19,(float)dVar19,(float)dVar17,(float)dVar17,
-                        &param_4->x,pMVar4);
-      CL_DrawStretchPic(pSVar3,(float)dVar5,(float)dVar6,(float)dVar9,(float)dVar9,(int)pcVar2,
-                        (int)param_3,(float)dVar19,(float)dVar16,(float)dVar17,(float)dVar19,
-                        &param_4->x,pMVar4);
-      dVar12 = (double)(float)(dVar11 - dVar9);
-      dVar15 = (double)(float)(dVar14 + dVar18);
-      CL_DrawStretchPic(pSVar3,(float)dVar8,(float)(dVar14 + dVar18),(float)dVar9,
-                        (float)(dVar11 - dVar9),(int)pcVar2,(int)param_3,(float)dVar16,(float)dVar19
-                        ,(float)dVar19,(float)dVar19,&param_4->x,pMVar4);
-      CL_DrawStretchPic(pSVar3,(float)dVar5,(float)dVar15,(float)dVar9,(float)dVar12,(int)pcVar2,
-                        (int)param_3,(float)dVar19,(float)dVar19,(float)dVar17,(float)dVar19,
-                        &param_4->x,pMVar4);
-      dVar11 = (double)(float)(dVar10 - dVar9);
-      dVar5 = (double)(float)(dVar13 + dVar18);
-      CL_DrawStretchPic(pSVar3,(float)(dVar13 + dVar18),(float)dVar6,(float)(dVar10 - dVar9),
-                        (float)dVar9,(int)pcVar2,(int)param_3,(float)dVar19,(float)dVar16,
-                        (float)dVar19,(float)dVar19,&param_4->x,pMVar4);
-      CL_DrawStretchPic(pSVar3,(float)dVar5,(float)dVar7,(float)dVar11,(float)dVar9,(int)pcVar2,
-                        (int)param_3,(float)dVar19,(float)dVar19,(float)dVar19,(float)dVar17,
-                        &param_4->x,pMVar4);
+      dVar8 = (double)(float)(dVar17 * 2.0);
+      pSVar2 = ScrPlace_GetActivePlacement(param_1);
+      dVar13 = (double)local_bc;
+      dVar12 = (double)(float)local_c0;
+      dVar7 = (double)(float)(dVar12 - dVar17);
+      dVar16 = 1.0;
+      fVar19 = (float)((double)(float)(dVar13 + dVar10) - dVar17);
+      dVar6 = (double)fVar19;
+      CL_DrawStretchPic(pSVar2,(float)(dVar12 - dVar17),fVar19,(float)dVar8,(float)dVar8,(int)pcVar1
+                        ,(int)param_3,(float)dVar15,(float)dVar18,(float)dVar18,1.0,&param_4->x,
+                        pMVar3);
+      dVar5 = (double)(float)(dVar13 - dVar17);
+      CL_DrawStretchPic(pSVar2,(float)dVar7,(float)(dVar13 - dVar17),(float)dVar8,(float)dVar8,
+                        (int)pcVar1,(int)param_3,(float)dVar15,(float)dVar15,(float)dVar18,
+                        (float)dVar18,&param_4->x,pMVar3);
+      fVar19 = (float)((double)(float)(dVar12 + dVar9) - dVar17);
+      dVar4 = (double)fVar19;
+      CL_DrawStretchPic(pSVar2,fVar19,(float)dVar6,(float)dVar8,(float)dVar8,(int)pcVar1,
+                        (int)param_3,(float)dVar18,(float)dVar18,(float)dVar16,(float)dVar16,
+                        &param_4->x,pMVar3);
+      CL_DrawStretchPic(pSVar2,(float)dVar4,(float)dVar5,(float)dVar8,(float)dVar8,(int)pcVar1,
+                        (int)param_3,(float)dVar18,(float)dVar15,(float)dVar16,(float)dVar18,
+                        &param_4->x,pMVar3);
+      dVar11 = (double)(float)(dVar10 - dVar8);
+      dVar14 = (double)(float)(dVar13 + dVar17);
+      CL_DrawStretchPic(pSVar2,(float)dVar7,(float)(dVar13 + dVar17),(float)dVar8,
+                        (float)(dVar10 - dVar8),(int)pcVar1,(int)param_3,(float)dVar15,(float)dVar18
+                        ,(float)dVar18,(float)dVar18,&param_4->x,pMVar3);
+      CL_DrawStretchPic(pSVar2,(float)dVar4,(float)dVar14,(float)dVar8,(float)dVar11,(int)pcVar1,
+                        (int)param_3,(float)dVar18,(float)dVar18,(float)dVar16,(float)dVar18,
+                        &param_4->x,pMVar3);
+      dVar10 = (double)(float)(dVar9 - dVar8);
+      dVar4 = (double)(float)(dVar12 + dVar17);
+      CL_DrawStretchPic(pSVar2,(float)(dVar12 + dVar17),(float)dVar5,(float)(dVar9 - dVar8),
+                        (float)dVar8,(int)pcVar1,(int)param_3,(float)dVar18,(float)dVar15,
+                        (float)dVar18,(float)dVar18,&param_4->x,pMVar3);
+      CL_DrawStretchPic(pSVar2,(float)dVar4,(float)dVar6,(float)dVar10,(float)dVar8,(int)pcVar1,
+                        (int)param_3,(float)dVar18,(float)dVar18,(float)dVar18,(float)dVar16,
+                        &param_4->x,pMVar3);
     }
   }
-  __restfpr_19();
-  __restgprlr_25();
   return;
 }
 
@@ -1773,27 +1674,22 @@ void CG_CompassUpYawVector(cg_s *param_1,float *param_2)
 
 // 822AB718  CalcCompassPointerSize  (cgame/cg_compass.cpp:1150)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 void CalcCompassPointerSize(CompassType param_1,float *param_2,float *param_3)
 
 {
   dvar_t *pdVar1;
   dvar_t *pdVar2;
   dvar_t *pdVar3;
-  int iVar4;
-  bool bVar5;
-  ulonglong uVar6;
-  float *pfVar7;
-  ulonglong uVar8;
-  float *pfVar9;
+  bool bVar4;
   
-  uVar8 = (ulonglong)(int)param_3;
-  uVar6 = (ulonglong)(int)param_2;
-  iVar4 = __savegprlr_26(param_1);
-  if ((uVar6 & 0xffffffff) == 0) {
+  if (param_2 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_compass.cpp",0x47f,0,
                     "%s");
   }
-  if ((uVar8 & 0xffffffff) == 0) {
+  if (param_3 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_compass.cpp",0x480,0,
                     "%s");
   }
@@ -1804,41 +1700,38 @@ void CalcCompassPointerSize(CompassType param_1,float *param_2,float *param_3)
   pdVar3 = compassObjectiveHeight;
   pdVar2 = compassObjectiveIconHeight;
   pdVar1 = compassSize;
-  pfVar7 = (float *)uVar6;
-  pfVar9 = (float *)uVar8;
-  if (iVar4 == 0) {
-    *pfVar7 = (compassObjectiveWidth->current).value * (compassSize->current).value;
-    *pfVar9 = (pdVar3->current).value * (pdVar1->current).value;
+  if (param_1 == COMPASS_TYPE_PARTIAL) {
+    *param_2 = (compassObjectiveWidth->current).value * (compassSize->current).value;
+    *param_3 = (pdVar3->current).value * (pdVar1->current).value;
   }
   else {
-    *pfVar7 = (float)(compassObjectiveIconWidth->current).integer;
-    *pfVar9 = (float)(pdVar2->current).integer;
+    *param_2 = (float)(compassObjectiveIconWidth->current).integer;
+    *param_3 = (float)(pdVar2->current).integer;
   }
-  bVar5 = CL_IsRenderingSplitScreen();
+  bVar4 = CL_IsRenderingSplitScreen();
   pdVar1 = cg_hudSplitscreenCompassElementScale;
-  if ((bVar5) && (iVar4 == 0)) {
-    *pfVar7 = (cg_hudSplitscreenCompassElementScale->current).value * *pfVar7;
-    *pfVar9 = (pdVar1->current).value * *pfVar9;
-    CG_ApplySplitScreenCompassScale(COMPASS_TYPE_PARTIAL,(float *)0x0,(float *)0x0,pfVar7,pfVar9);
+  if ((bVar4) && (param_1 == COMPASS_TYPE_PARTIAL)) {
+    *param_2 = (cg_hudSplitscreenCompassElementScale->current).value * *param_2;
+    *param_3 = (pdVar1->current).value * *param_3;
+    CG_ApplySplitScreenCompassScale(COMPASS_TYPE_PARTIAL,(float *)0x0,(float *)0x0,param_2,param_3);
   }
-  __restgprlr_26();
   return;
 }
 
 
 // 822AB880  CG_BuildCompassDistanceString  (cgame/cg_compass.cpp:1263)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void CG_BuildCompassDistanceString(float param_1,char *param_2,int param_3)
 
 {
-  int iVar1;
-  ulonglong uVar2;
   int in_r5;
-  double dVar3;
+  double dVar1;
   
-  uVar2 = (ulonglong)param_3;
-  dVar3 = (double)__savegprlr_28((double)param_1,param_2);
-  if ((uVar2 & 0xffffffff) == 0) {
+  dVar1 = (double)param_1;
+  if (param_3 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_compass.cpp",0x4f0,0,
                     "%s");
   }
@@ -1846,19 +1739,21 @@ void CG_BuildCompassDistanceString(float param_1,char *param_2,int param_3)
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_compass.cpp",0x4f1,0,
                     "%s");
   }
-  if (dVar3 < (double)(compassObjectiveDetailDist->current).value) {
-    iVar1 = Com_sprintf((char *)uVar2,in_r5,"%.1fm");
-    __restgprlr_28(iVar1);
+  if (dVar1 < (double)(compassObjectiveDetailDist->current).value) {
+    Com_sprintf((char *)param_3,in_r5,"%.1fm");
     return;
   }
-  iVar1 = Com_sprintf((char *)uVar2,in_r5,"%im");
-  __restgprlr_28(iVar1);
+  Com_sprintf((char *)param_3,in_r5,"%im");
   return;
 }
 
 
 // 822AB990  DrawIconDistanceText  (cgame/cg_compass.cpp:1275)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void DrawIconDistanceText
@@ -1869,44 +1764,38 @@ void DrawIconDistanceText
   byte bVar1;
   byte bVar2;
   char *pcVar3;
-  char *pcVar4;
-  int iVar5;
-  ScreenPlacement *pSVar6;
-  ulonglong in_r8;
-  IMAGE_DOS_HEADER *pIVar7;
+  int iVar4;
+  ScreenPlacement *pSVar5;
+  int in_r8;
+  IMAGE_DOS_HEADER *pIVar6;
   Font_s *in_r10;
-  double extraout_f1;
+  double dVar7;
   double dVar8;
   double dVar9;
   double dVar10;
   double dVar11;
-  double dVar12;
   char acStack_90 [144];
   
-  dVar11 = (double)param_9;
-  dVar10 = (double)param_5;
-  dVar9 = (double)param_4;
-  dVar8 = (double)param_3;
-  __savegprlr_28((double)param_2,param_1,param_6,param_7,param_8,param_10);
-  pcVar3 = (char *)__savefpr_27();
-  dVar12 = extraout_f1;
-  pcVar4 = pcVar3;
-  if ((in_r8 & 0xffffffff) == 0) {
-    pcVar4 = "c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_compass.cpp";
+  dVar10 = (double)param_9;
+  dVar9 = (double)param_5;
+  dVar8 = (double)param_4;
+  dVar11 = (double)param_2;
+  dVar7 = (double)param_3;
+  pcVar3 = (char *)param_1;
+  if (in_r8 == 0) {
+    pcVar3 = "c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_compass.cpp";
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_compass.cpp",0x503,0,
                     "%s");
   }
-  CG_BuildCompassDistanceString((float)dVar12,pcVar4,(int)acStack_90);
-  iVar5 = UI_TextWidth(acStack_90,0x14,in_r10,(float)dVar11);
-  pIVar7 = &IMAGE_DOS_HEADER_82000000;
-  bVar1 = *(byte *)((int)in_r8 + 0x11);
-  bVar2 = *(byte *)((int)in_r8 + 0x10);
-  dVar12 = -(double)(float)((double)(longlong)iVar5 * 0.5 - dVar8);
-  pSVar6 = ScrPlace_GetActivePlacement((LocalClientNum_t)pcVar3);
-  UI_DrawTextNoSnap(pSVar6,acStack_90,0x7fffffff,in_r10,(float)dVar12,(float)(dVar9 + dVar10) + 2.0,
-                    -0x7e000000,(int)pIVar7,(float)dVar11,(float *)(uint)bVar2,(uint)bVar1);
-  __restfpr_27();
-  __restgprlr_28();
+  CG_BuildCompassDistanceString((float)dVar11,pcVar3,(int)acStack_90);
+  iVar4 = UI_TextWidth(acStack_90,0x14,in_r10,(float)dVar10);
+  pIVar6 = &IMAGE_DOS_HEADER_82000000;
+  bVar1 = *(byte *)(in_r8 + 0x11);
+  bVar2 = *(byte *)(in_r8 + 0x10);
+  dVar11 = -(double)(float)((double)(longlong)iVar4 * 0.5 - dVar7);
+  pSVar5 = ScrPlace_GetActivePlacement(param_1);
+  UI_DrawTextNoSnap(pSVar5,acStack_90,0x7fffffff,in_r10,(float)dVar11,(float)(dVar8 + dVar9) + 2.0,
+                    -0x7e000000,(int)pIVar6,(float)dVar10,(float *)(uint)bVar2,(uint)bVar1);
   return;
 }
 
@@ -1928,6 +1817,10 @@ void DrawNearObjectiveText
 
 // 822ABAD0  CG_CompassDrawTickertape  (cgame/cg_compass.cpp:1333)
 
+/* WARNING: Function: __savegprlr_19 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_19 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -1938,17 +1831,16 @@ void CG_CompassDrawTickertape
                bool param_10)
 
 {
-  LocalClientNum_t LVar1;
-  cg_s *pcVar2;
-  ScreenPlacement *pSVar3;
-  centity_s *pcVar4;
-  rectDef_s *prVar5;
-  float *pfVar6;
+  cg_s *pcVar1;
+  ScreenPlacement *pSVar2;
+  centity_s *pcVar3;
+  rectDef_s *prVar4;
+  float *pfVar5;
+  longlong lVar6;
   longlong lVar7;
   longlong lVar8;
-  longlong lVar9;
-  int *piVar10;
-  double extraout_f1;
+  int *piVar9;
+  double dVar10;
   double dVar11;
   double dVar12;
   double dVar13;
@@ -1967,8 +1859,7 @@ void CG_CompassDrawTickertape
   double dVar26;
   double dVar27;
   double dVar28;
-  double dVar29;
-  float fVar30;
+  float fVar29;
   char in_stack_0000005f;
   float local_120;
   float local_11c;
@@ -1979,114 +1870,111 @@ void CG_CompassDrawTickertape
   float local_108;
   float local_104;
   
-  lVar7 = (longlong)(int)param_4;
-  LVar1 = __savegprlr_19((double)param_8,param_1);
-  dVar11 = extraout_f1;
-  __savefpr();
+  dVar10 = (double)param_8;
+  lVar6 = (longlong)(int)param_4;
   if (param_2 != COMPASS_TYPE_PARTIAL) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_compass.cpp",0x552,0,
                     "%s");
   }
-  pcVar2 = CG_GetLocalClientGlobals(LVar1);
-  fVar30 = CG_FadeCompass(LVar1,pcVar2->compassFadeTime,param_2);
-  dVar12 = (double)fVar30;
-  dVar24 = 0.0;
-  if (dVar12 != 0.0) {
-    if ((double)param_6[3] < dVar12) {
-      dVar12 = (double)param_6[3];
+  pcVar1 = CG_GetLocalClientGlobals(param_1);
+  fVar29 = CG_FadeCompass(param_1,pcVar1->compassFadeTime,param_2);
+  dVar11 = (double)fVar29;
+  dVar23 = 0.0;
+  if (dVar11 != 0.0) {
+    if ((double)param_6[3] < dVar11) {
+      dVar11 = (double)param_6[3];
     }
     local_110 = *param_6;
     local_10c = param_6[1];
     local_108 = param_6[2];
-    local_104 = (float)dVar12;
-    dVar29 = -(double)(pcVar2->refdefViewAngles[1] - pcVar2->compassNorthYaw);
-    dVar22 = 0.5;
-    lVar8 = ZEXT48(&stack0x00000000) - 0x120;
-    fVar30 = (compassTickertapeStretch->current).value * 0.5;
-    dVar21 = (double)((float)(dVar29 * 0.0027777778450399637) - fVar30);
-    dVar19 = (double)(fVar30 + (float)(dVar29 * 0.0027777778450399637));
+    local_104 = (float)dVar11;
+    dVar28 = -(double)(pcVar1->refdefViewAngles[1] - pcVar1->compassNorthYaw);
+    dVar21 = 0.5;
+    lVar7 = ZEXT48(&stack0x00000000) - 0x120;
+    fVar29 = (compassTickertapeStretch->current).value * 0.5;
+    dVar20 = (double)((float)(dVar28 * 0.0027777778450399637) - fVar29);
+    dVar18 = (double)(fVar29 + (float)(dVar28 * 0.0027777778450399637));
     CG_CompassCalcDimensions
-              (param_2,pcVar2,param_3,(rectDef_s *)lVar7,(float *)lVar8,&local_11c,&local_118,
-               &local_114);
-    pSVar3 = ScrPlace_GetActivePlacement(LVar1);
-    dVar16 = (double)local_120;
-    dVar27 = (double)local_11c;
-    dVar15 = (double)local_118;
-    dVar25 = (double)local_114;
-    dVar23 = 1.0;
-    CL_DrawStretchPic(pSVar3,local_120,local_11c,local_118,local_114,(int)&local_110,-0x7dff0000,
-                      (float)dVar21,(float)dVar24,(float)dVar19,1.0,(float *)lVar7,(Material *)lVar8
+              (param_2,pcVar1,param_3,param_4,(float *)lVar7,&local_11c,&local_118,&local_114);
+    pSVar2 = ScrPlace_GetActivePlacement(param_1);
+    dVar15 = (double)local_120;
+    dVar26 = (double)local_11c;
+    dVar14 = (double)local_118;
+    dVar24 = (double)local_114;
+    dVar22 = 1.0;
+    CL_DrawStretchPic(pSVar2,local_120,local_11c,local_118,local_114,(int)&local_110,-0x7dff0000,
+                      (float)dVar20,(float)dVar23,(float)dVar18,1.0,(float *)lVar6,(Material *)lVar7
                      );
     if (in_stack_0000005f != '\0') {
       CalcCompassPointerSize(param_2,&local_118,&local_114);
-      dVar20 = (double)(float)(dVar25 * dVar22 + dVar27);
-      dVar18 = (double)((compassTickertapeStretch->current).value * 180.0);
-      dVar26 = (double)local_114;
-      dVar17 = -(double)(float)(dVar26 * dVar22 - dVar20);
-      fVar30 = AngleNormalize360((float)-dVar29);
-      dVar21 = (double)fVar30;
-      dVar29 = (double)local_118;
-      piVar10 = &(pcVar2->predictedPlayerState).objective[0].entNum;
-      lVar9 = 0x20;
-      dVar19 = 3.4028234663852886e+38;
-      dVar25 = 2.0;
-      dVar27 = 57.2957763671875;
+      dVar19 = (double)(float)(dVar24 * dVar21 + dVar26);
+      dVar17 = (double)((compassTickertapeStretch->current).value * 180.0);
+      dVar25 = (double)local_114;
+      dVar16 = -(double)(float)(dVar25 * dVar21 - dVar19);
+      fVar29 = AngleNormalize360((float)-dVar28);
+      dVar20 = (double)fVar29;
+      dVar28 = (double)local_118;
+      piVar9 = &(pcVar1->predictedPlayerState).objective[0].entNum;
+      lVar8 = 0x20;
+      dVar18 = 3.4028234663852886e+38;
+      dVar24 = 2.0;
+      dVar26 = 57.2957763671875;
       do {
-        if ((((objective_t *)(piVar10 + -4))->state == OBJST_CURRENT) ||
-           (((objective_t *)(piVar10 + -4))->state == OBJST_ACTIVE)) {
-          if (*piVar10 == 0x7ff) {
-            pfVar6 = (float *)(piVar10 + -3);
+        if ((((objective_t *)(piVar9 + -4))->state == OBJST_CURRENT) ||
+           (((objective_t *)(piVar9 + -4))->state == OBJST_ACTIVE)) {
+          if (*piVar9 == 0x7ff) {
+            pfVar5 = (float *)(piVar9 + -3);
           }
           else {
-            pcVar4 = CG_GetEntity(LVar1,*piVar10);
-            pfVar6 = (pcVar4->pose).origin;
+            pcVar3 = CG_GetEntity(param_1,*piVar9);
+            pfVar5 = (pcVar3->pose).origin;
           }
-          local_104 = (float)dVar12;
-          if ((((double)*pfVar6 != dVar24) || ((double)pfVar6[1] != dVar24)) ||
-             ((double)pfVar6[2] != dVar24)) {
-            dVar14 = (double)(float)((double)*pfVar6 - (double)(pcVar2->refdef).view.org[0]);
-            dVar13 = (double)(pfVar6[1] - (pcVar2->refdef).view.org[1]);
-            dVar28 = (double)(SQRT((float)(dVar13 * dVar13 + (double)(float)(dVar14 * dVar14))) *
+          local_104 = (float)dVar11;
+          if ((((double)*pfVar5 != dVar23) || ((double)pfVar5[1] != dVar23)) ||
+             ((double)pfVar5[2] != dVar23)) {
+            dVar13 = (double)(float)((double)*pfVar5 - (double)(pcVar1->refdef).view.org[0]);
+            dVar12 = (double)(pfVar5[1] - (pcVar1->refdef).view.org[1]);
+            dVar27 = (double)(SQRT((float)(dVar12 * dVar12 + (double)(float)(dVar13 * dVar13))) *
                              0.0254);
-            if (dVar28 < dVar19) {
-              dVar19 = dVar28;
+            if (dVar27 < dVar18) {
+              dVar18 = dVar27;
             }
-            dVar13 = atan2(dVar13,dVar14);
-            fVar30 = AngleNormalize360((float)((double)(float)dVar13 * dVar27) -
-                                       pcVar2->compassNorthYaw);
-            fVar30 = AngleDelta(fVar30,(float)dVar21);
-            dVar14 = -(double)fVar30;
-            dVar13 = dVar24;
-            if ((-dVar18 <= dVar14) && (dVar13 = dVar23, dVar14 <= dVar18)) {
-              dVar13 = (double)((float)(dVar14 + dVar18) / (float)(dVar18 * dVar25));
+            dVar12 = atan2(dVar12,dVar13);
+            fVar29 = AngleNormalize360((float)((double)(float)dVar12 * dVar26) -
+                                       pcVar1->compassNorthYaw);
+            fVar29 = AngleDelta(fVar29,(float)dVar20);
+            dVar13 = -(double)fVar29;
+            dVar12 = dVar23;
+            if ((-dVar17 <= dVar13) && (dVar12 = dVar22, dVar13 <= dVar17)) {
+              dVar12 = (double)((float)(dVar13 + dVar17) / (float)(dVar17 * dVar24));
             }
-            pfVar6 = (float *)0x0;
-            prVar5 = (rectDef_s *)piVar10[4];
-            CG_ObjectiveIcon(LVar1,(int)prVar5,0);
-            dVar13 = (double)(float)(dVar13 * dVar15 + dVar16);
-            pSVar3 = ScrPlace_GetActivePlacement(LVar1);
-            CL_DrawStretchPic(pSVar3,-(float)(dVar29 * dVar22 - dVar13),(float)dVar17,(float)dVar29,
-                              (float)dVar26,(int)prVar5,(int)pfVar6,(float)dVar24,(float)dVar24,
-                              (float)dVar23,(float)dVar23,(float *)lVar7,(Material *)lVar8);
-            local_104 = (float)dVar12;
+            pfVar5 = (float *)0x0;
+            prVar4 = (rectDef_s *)piVar9[4];
+            CG_ObjectiveIcon(param_1,(int)prVar4,0);
+            dVar12 = (double)(float)(dVar12 * dVar14 + dVar15);
+            pSVar2 = ScrPlace_GetActivePlacement(param_1);
+            CL_DrawStretchPic(pSVar2,-(float)(dVar28 * dVar21 - dVar12),(float)dVar16,(float)dVar28,
+                              (float)dVar25,(int)prVar4,(int)pfVar5,(float)dVar23,(float)dVar23,
+                              (float)dVar22,(float)dVar22,(float *)lVar6,(Material *)lVar7);
+            local_104 = (float)dVar11;
             DrawIconDistanceText
-                      (LVar1,(float)dVar28,(float)dVar13,(float)dVar20,(float)dVar26,prVar5,pfVar6,
-                       (Font_s *)lVar7,(float)dVar11,(int)lVar8);
+                      (param_1,(float)dVar27,(float)dVar12,(float)dVar19,(float)dVar25,prVar4,pfVar5
+                       ,(Font_s *)lVar6,(float)dVar10,(int)lVar7);
           }
         }
-        lVar9 = lVar9 + -1;
-        piVar10 = piVar10 + 9;
-      } while (lVar9 != 0);
+        lVar8 = lVar8 + -1;
+        piVar9 = piVar9 + 9;
+      } while (lVar8 != 0);
     }
   }
-  __restfpr();
-  __restgprlr_19();
   return;
 }
 
 
 // 822ABE78  CG_GetHudAlphaCompass  (cgame/cg_compass.cpp:1570)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -2095,18 +1983,15 @@ float CG_GetHudAlphaCompass(LocalClientNum_t param_1)
 
 {
   int iVar1;
-  LocalClientNum_t LVar2;
-  cg_s *pcVar3;
-  double dVar4;
-  float fVar5;
+  cg_s *pcVar2;
+  double dVar3;
+  float fVar4;
   
-  LVar2 = __savegprlr_29(param_1);
-  pcVar3 = CG_GetLocalClientGlobals(LVar2);
-  iVar1 = pcVar3->compassFadeTime;
-  dVar4 = floor((double)((hud_fade_compass->current).value * 1000.0 + 0.5));
-  fVar5 = CG_FadeHudMenu(LVar2,hud_fade_compass,iVar1,(int)dVar4);
-  dVar4 = (double)__restgprlr_29((double)fVar5);
-  return (float)dVar4;
+  pcVar2 = CG_GetLocalClientGlobals(param_1);
+  iVar1 = pcVar2->compassFadeTime;
+  dVar3 = floor((double)((hud_fade_compass->current).value * 1000.0 + 0.5));
+  fVar4 = CG_FadeHudMenu(param_1,hud_fade_compass,iVar1,(int)dVar3);
+  return fVar4;
 }
 
 
@@ -2125,27 +2010,22 @@ void CG_CompassDrawGoalDistance
 
 // 822ABEF0  CalcCompassFriendlySize  (cgame/cg_compass.cpp:1637)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 void CalcCompassFriendlySize(CompassType param_1,float *param_2,float *param_3)
 
 {
   dvar_t *pdVar1;
   dvar_t *pdVar2;
   dvar_t *pdVar3;
-  int iVar4;
-  bool bVar5;
-  ulonglong uVar6;
-  float *pfVar7;
-  ulonglong uVar8;
-  float *pfVar9;
+  bool bVar4;
   
-  uVar8 = (ulonglong)(int)param_3;
-  uVar6 = (ulonglong)(int)param_2;
-  iVar4 = __savegprlr_26(param_1);
-  if ((uVar6 & 0xffffffff) == 0) {
+  if (param_2 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_compass.cpp",0x666,0,
                     "%s");
   }
-  if ((uVar8 & 0xffffffff) == 0) {
+  if (param_3 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_compass.cpp",0x667,0,
                     "%s");
   }
@@ -2156,30 +2036,31 @@ void CalcCompassFriendlySize(CompassType param_1,float *param_2,float *param_3)
   pdVar3 = cg_hudMapFriendlyHeight;
   pdVar2 = compassSize;
   pdVar1 = compassFriendlyHeight;
-  pfVar7 = (float *)uVar6;
-  pfVar9 = (float *)uVar8;
-  if (iVar4 == 0) {
-    *pfVar7 = (compassFriendlyWidth->current).value * (compassSize->current).value;
-    *pfVar9 = (pdVar1->current).value * (pdVar2->current).value;
+  if (param_1 == COMPASS_TYPE_PARTIAL) {
+    *param_2 = (compassFriendlyWidth->current).value * (compassSize->current).value;
+    *param_3 = (pdVar1->current).value * (pdVar2->current).value;
   }
   else {
-    *pfVar7 = (float)(cg_hudMapFriendlyWidth->current).integer;
-    *pfVar9 = (float)(pdVar3->current).integer;
+    *param_2 = (float)(cg_hudMapFriendlyWidth->current).integer;
+    *param_3 = (float)(pdVar3->current).integer;
   }
-  bVar5 = CL_IsRenderingSplitScreen();
+  bVar4 = CL_IsRenderingSplitScreen();
   pdVar1 = cg_hudSplitscreenCompassElementScale;
-  if ((bVar5) && (iVar4 == 0)) {
-    *pfVar7 = (cg_hudSplitscreenCompassElementScale->current).value * *pfVar7;
-    *pfVar9 = (pdVar1->current).value * *pfVar9;
-    CG_ApplySplitScreenCompassScale(COMPASS_TYPE_PARTIAL,(float *)0x0,(float *)0x0,pfVar7,pfVar9);
+  if ((bVar4) && (param_1 == COMPASS_TYPE_PARTIAL)) {
+    *param_2 = (cg_hudSplitscreenCompassElementScale->current).value * *param_2;
+    *param_3 = (pdVar1->current).value * *param_3;
+    CG_ApplySplitScreenCompassScale(COMPASS_TYPE_PARTIAL,(float *)0x0,(float *)0x0,param_2,param_3);
   }
-  __restgprlr_26();
   return;
 }
 
 
 // 822AC058  CG_CompassDrawPlayerPointers_MP  (cgame/cg_compass.cpp:1673)
 
+/* WARNING: Function: __savegprlr_17 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_17 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -2190,18 +2071,18 @@ void CG_CompassDrawPlayerPointers_MP
 
 {
   float fVar1;
-  LocalClientNum_t LVar2;
-  cg_s *pcVar3;
-  bool bVar7;
-  char *pcVar4;
-  centity_s *pcVar5;
-  ScreenPlacement *pSVar6;
+  cg_s *pcVar2;
+  bool bVar6;
+  char *pcVar3;
+  centity_s *pcVar4;
+  ScreenPlacement *pSVar5;
+  int iVar7;
   int iVar8;
-  int iVar9;
-  float *pfVar10;
-  Material *pMVar11;
-  longlong lVar12;
-  int *piVar13;
+  float *pfVar9;
+  Material *pMVar10;
+  longlong lVar11;
+  int *piVar12;
+  double dVar13;
   double dVar14;
   double dVar15;
   double dVar16;
@@ -2219,8 +2100,7 @@ void CG_CompassDrawPlayerPointers_MP
   double dVar28;
   double dVar29;
   double dVar30;
-  double dVar31;
-  float fVar32;
+  float fVar31;
   float local_17c;
   float local_178 [2];
   float local_170;
@@ -2238,144 +2118,140 @@ void CG_CompassDrawPlayerPointers_MP
   float local_134;
   rectDef_s local_130 [15];
   
-  LVar2 = __savegprlr_17(param_1);
-  __savefpr();
-  pcVar3 = CG_GetLocalClientGlobals(LVar2);
-  fVar32 = CG_FadeCompass(LVar2,pcVar3->compassFadeTime,param_2);
-  dVar18 = (double)fVar32;
-  bVar7 = CG_ClientHasAntiJammer(LVar2);
-  if (bVar7) {
-    dVar29 = 1.0;
+  pcVar2 = CG_GetLocalClientGlobals(param_1);
+  fVar31 = CG_FadeCompass(param_1,pcVar2->compassFadeTime,param_2);
+  dVar17 = (double)fVar31;
+  bVar6 = CG_ClientHasAntiJammer(param_1);
+  if (bVar6) {
+    dVar28 = 1.0;
   }
   else {
-    fVar32 = CG_GetRadarJamLevel(LVar2);
-    dVar29 = (double)(1.0 - fVar32);
+    fVar31 = CG_GetRadarJamLevel(param_1);
+    dVar28 = (double)(1.0 - fVar31);
   }
-  dVar30 = 1.0;
-  dVar18 = (double)(float)(dVar29 * dVar18);
-  dVar29 = 0.0;
-  if (dVar18 != 0.0) {
-    pcVar4 = (char *)param_2;
+  dVar29 = 1.0;
+  dVar17 = (double)(float)(dVar28 * dVar17);
+  dVar28 = 0.0;
+  if (dVar17 != 0.0) {
+    pcVar3 = (char *)param_2;
     CG_CompassCalcDimensions
-              (param_2,pcVar3,param_3,param_4,&local_130[0].x,&local_130[0].y,&local_130[0].w,
+              (param_2,pcVar2,param_3,param_4,&local_130[0].x,&local_130[0].y,&local_130[0].w,
                &local_130[0].h);
-    dVar19 = 0.5;
-    dVar15 = (double)local_130[0].w;
-    dVar16 = (double)local_130[0].x;
-    dVar17 = (double)local_130[0].y;
-    dVar21 = (double)(float)(dVar15 * 0.5 + dVar16);
-    dVar20 = (double)(float)((double)local_130[0].h * 0.5 + dVar17);
-    if (0x11 < (uint)(pcVar3->predictedPlayerState).clientNum) {
-      pcVar4 = "c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_compass.cpp";
+    dVar18 = 0.5;
+    dVar14 = (double)local_130[0].w;
+    dVar15 = (double)local_130[0].x;
+    dVar16 = (double)local_130[0].y;
+    dVar20 = (double)(float)(dVar14 * 0.5 + dVar15);
+    dVar19 = (double)(float)((double)local_130[0].h * 0.5 + dVar16);
+    if (0x11 < (uint)(pcVar2->predictedPlayerState).clientNum) {
+      pcVar3 = "c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_compass.cpp";
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_compass.cpp",0x6ad,
                       0,"ps->clientNum doesn\'t index MAX_CLIENTS\n\t%i not in [0, %i)");
     }
-    if ((pcVar3->bgs).clientinfo[(pcVar3->predictedPlayerState).clientNum].infoValid != 0) {
+    if ((pcVar2->bgs).clientinfo[(pcVar2->predictedPlayerState).clientNum].infoValid != 0) {
       if ((compassRotation->current).enabled == false) {
-        local_160 = pcVar3->compassNorth[0];
-        local_15c = pcVar3->compassNorth[1];
+        local_160 = pcVar2->compassNorth[0];
+        local_15c = pcVar2->compassNorth[1];
       }
       else {
-        YawVectors2D(pcVar3->refdefViewAngles[1],(float *)pcVar4,&local_160);
+        YawVectors2D(pcVar2->refdefViewAngles[1],(float *)pcVar3,&local_160);
       }
-      piVar13 = &(pcVar3->predictedPlayerState).objective[0].entNum;
-      lVar12 = 0x20;
-      dVar14 = 2.0;
+      piVar12 = &(pcVar2->predictedPlayerState).objective[0].entNum;
+      lVar11 = 0x20;
+      dVar13 = 2.0;
       do {
-        if ((((objective_t *)(piVar13 + -4))->state == OBJST_CURRENT) ||
-           (((objective_t *)(piVar13 + -4))->state == OBJST_ACTIVE)) {
-          if (*piVar13 == 0x7ff) {
-            local_158 = (float)piVar13[-3];
-            local_154 = (float)piVar13[-2];
-            local_150 = (float)piVar13[-1];
+        if ((((objective_t *)(piVar12 + -4))->state == OBJST_CURRENT) ||
+           (((objective_t *)(piVar12 + -4))->state == OBJST_ACTIVE)) {
+          if (*piVar12 == 0x7ff) {
+            local_158 = (float)piVar12[-3];
+            local_154 = (float)piVar12[-2];
+            local_150 = (float)piVar12[-1];
           }
           else {
-            pcVar5 = CG_GetEntity(LVar2,*piVar13);
-            local_158 = (pcVar5->pose).origin[0];
-            local_154 = (pcVar5->pose).origin[1];
-            local_150 = (pcVar5->pose).origin[2];
+            pcVar4 = CG_GetEntity(param_1,*piVar12);
+            local_158 = (pcVar4->pose).origin[0];
+            local_154 = (pcVar4->pose).origin[1];
+            local_150 = (pcVar4->pose).origin[2];
           }
-          pMVar11 = (Material *)(pcVar3->refdef).view.org;
-          fVar32 = local_158 - (pcVar3->refdef).view.org[0];
+          pMVar10 = (Material *)(pcVar2->refdef).view.org;
+          fVar31 = local_158 - (pcVar2->refdef).view.org[0];
           local_140 = *param_6;
           local_13c = param_6[1];
           local_138 = param_6[2];
-          fVar1 = local_154 - (pcVar3->refdef).view.org[1];
-          fVar32 = SQRT(fVar1 * fVar1 + fVar32 * fVar32);
-          if ((compassMaxRange->current).value < fVar32) {
+          fVar1 = local_154 - (pcVar2->refdef).view.org[1];
+          fVar31 = SQRT(fVar1 * fVar1 + fVar31 * fVar31);
+          if ((compassMaxRange->current).value < fVar31) {
             fVar1 = (compassObjectiveMaxRange->current).value;
-            if (fVar32 < fVar1) {
-              dVar22 = dVar29;
-              if ((double)(fVar1 - (compassMaxRange->current).value) != dVar29) {
-                dVar22 = (double)((fVar32 - (compassMaxRange->current).value) /
+            if (fVar31 < fVar1) {
+              dVar21 = dVar28;
+              if ((double)(fVar1 - (compassMaxRange->current).value) != dVar28) {
+                dVar21 = (double)((fVar31 - (compassMaxRange->current).value) /
                                  (fVar1 - (compassMaxRange->current).value));
               }
-              local_134 = -(float)((double)(float)(dVar30 - (double)(compassObjectiveMinAlpha->
-                                                                    current).value) * dVar22 -
-                                  dVar30);
+              local_134 = -(float)((double)(float)(dVar29 - (double)(compassObjectiveMinAlpha->
+                                                                    current).value) * dVar21 -
+                                  dVar29);
             }
             else {
               local_134 = (compassObjectiveMinAlpha->current).value;
             }
           }
           else {
-            local_134 = (float)dVar30;
+            local_134 = (float)dVar29;
           }
-          local_170 = (float)dVar29;
-          local_16c = (float)dVar29;
-          pfVar10 = &local_160;
+          local_170 = (float)dVar28;
+          local_16c = (float)dVar28;
+          pfVar9 = &local_160;
           CG_WorldPosToCompass
-                    (param_2,pcVar3,local_130,pfVar10,(float *)pMVar11,&local_158,&local_168,
+                    (param_2,pcVar2,local_130,pfVar9,(float *)pMVar10,&local_158,&local_168,
                      &local_170);
-          local_168 = (float)((double)local_168 + dVar21);
-          dVar28 = (double)local_168;
-          local_164 = (float)((double)local_164 + dVar20);
-          dVar31 = (double)local_164;
-          dVar23 = (double)(float)((double)local_170 + dVar21);
-          dVar22 = (double)(float)((double)local_16c + dVar20);
+          local_168 = (float)((double)local_168 + dVar20);
+          dVar27 = (double)local_168;
+          local_164 = (float)((double)local_164 + dVar19);
+          dVar30 = (double)local_164;
+          dVar22 = (double)(float)((double)local_170 + dVar20);
+          dVar21 = (double)(float)((double)local_16c + dVar19);
           CalcCompassPointerSize(param_2,local_178,&local_17c);
-          iVar9 = 0;
-          iVar8 = piVar13[4];
-          CG_ObjectiveIcon(LVar2,iVar8,0);
-          dVar30 = (double)local_134;
-          if (dVar18 < (double)local_134) {
-            local_134 = (float)dVar18;
-            dVar30 = dVar18;
+          iVar8 = 0;
+          iVar7 = piVar12[4];
+          CG_ObjectiveIcon(param_1,iVar7,0);
+          dVar29 = (double)local_134;
+          if (dVar17 < (double)local_134) {
+            local_134 = (float)dVar17;
+            dVar29 = dVar17;
           }
-          dVar27 = (double)local_17c;
-          dVar25 = (double)local_178[0];
-          dVar26 = (double)(float)(dVar27 * dVar19);
-          dVar24 = (double)(float)(dVar25 * dVar19);
-          fVar32 = GetObjectiveFade(local_130,(float)(dVar28 - dVar24),(float)(dVar31 - dVar26),
+          dVar26 = (double)local_17c;
+          dVar24 = (double)local_178[0];
+          dVar25 = (double)(float)(dVar26 * dVar18);
+          dVar23 = (double)(float)(dVar24 * dVar18);
+          fVar31 = GetObjectiveFade(local_130,(float)(dVar27 - dVar23),(float)(dVar30 - dVar25),
                                     local_178[0],local_17c);
-          if ((dVar29 < (double)fVar32) && (((objective_t *)(piVar13 + -4))->state == OBJST_CURRENT)
+          if ((dVar28 < (double)fVar31) && (((objective_t *)(piVar12 + -4))->state == OBJST_CURRENT)
              ) {
-            local_134 = (float)((double)fVar32 * dVar30);
-            if ((dVar17 <= dVar31) && (dVar31 <= (double)(float)((double)local_130[0].h + dVar17)))
+            local_134 = (float)((double)fVar31 * dVar29);
+            if ((dVar16 <= dVar30) && (dVar30 <= (double)(float)((double)local_130[0].h + dVar16)))
             {
-              pSVar6 = ScrPlace_GetActivePlacement(LVar2);
-              UI_DrawHandlePic(pSVar6,(float)dVar16,(float)(dVar31 - 1.0),(float)dVar15,
-                               (float)dVar14,iVar8,iVar9,pfVar10,pMVar11);
+              pSVar5 = ScrPlace_GetActivePlacement(param_1);
+              UI_DrawHandlePic(pSVar5,(float)dVar15,(float)(dVar30 - 1.0),(float)dVar14,
+                               (float)dVar13,iVar7,iVar8,pfVar9,pMVar10);
             }
-            if ((dVar16 <= dVar28) && (dVar28 <= (double)(float)(dVar15 + dVar16))) {
-              pSVar6 = ScrPlace_GetActivePlacement(LVar2);
-              CG_DrawVLine(pSVar6,(float)dVar28,(float)dVar17,(float)dVar14,local_130[0].h,iVar8,
-                           iVar9,pfVar10,pMVar11);
+            if ((dVar15 <= dVar27) && (dVar27 <= (double)(float)(dVar14 + dVar15))) {
+              pSVar5 = ScrPlace_GetActivePlacement(param_1);
+              CG_DrawVLine(pSVar5,(float)dVar27,(float)dVar16,(float)dVar13,local_130[0].h,iVar7,
+                           iVar8,pfVar9,pMVar10);
             }
-            local_134 = (float)dVar30;
+            local_134 = (float)dVar29;
           }
-          pSVar6 = ScrPlace_GetActivePlacement(LVar2);
-          UI_DrawHandlePic(pSVar6,(float)(dVar23 - dVar24),(float)(dVar22 - dVar26),(float)dVar25,
-                           (float)dVar27,iVar8,iVar9,pfVar10,pMVar11);
-          dVar30 = 1.0;
+          pSVar5 = ScrPlace_GetActivePlacement(param_1);
+          UI_DrawHandlePic(pSVar5,(float)(dVar22 - dVar23),(float)(dVar21 - dVar25),(float)dVar24,
+                           (float)dVar26,iVar7,iVar8,pfVar9,pMVar10);
+          dVar29 = 1.0;
         }
-        lVar12 = lVar12 + -1;
-        piVar13 = piVar13 + 9;
-      } while (lVar12 != 0);
+        lVar11 = lVar11 + -1;
+        piVar12 = piVar12 + 9;
+      } while (lVar11 != 0);
     }
   }
-  __restfpr();
-  __restgprlr_17();
   return;
 }
 

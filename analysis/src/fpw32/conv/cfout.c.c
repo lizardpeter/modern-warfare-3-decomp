@@ -2,33 +2,30 @@
 
 // 82927EF0  _fltout2  (<external>/bt/278379/vctools/crt/src/fpw32/conv/cfout.c:32)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 _strflt * _fltout2(_CRT_DOUBLE param_1,_strflt *param_2,char *param_3,uint param_4)
 
 {
-  int *piVar1;
-  int iVar2;
-  _strflt *p_Var3;
-  longlong lVar4;
-  double dStack00000010;
+  int iVar1;
+  _CRT_DOUBLE _Stack00000010;
   _LDOUBLE in_stack_ffffff6a;
   _LDOUBLE local_50;
   short local_40;
   char local_3e;
   char acStack_3c [60];
   
-  lVar4 = (longlong)(int)param_2;
-  dStack00000010 = (double)__savegprlr_29();
-  __dtold(&local_50,&stack0x00000010);
-  iVar2 = I10_OUTPUT(in_stack_ffffff6a,local_50.ld._4_4_,0,(_FloatOutStruct *)0x11);
-  piVar1 = (int *)lVar4;
-  piVar1[2] = iVar2;
-  piVar1[1] = (int)local_40;
-  *piVar1 = (int)local_3e;
-  iVar2 = strcpy_s(param_3,param_4,acStack_3c);
-  if (iVar2 == 0) {
-    piVar1[3] = (int)param_3;
-    p_Var3 = (_strflt *)__restgprlr_29(lVar4);
-    return p_Var3;
+  _Stack00000010.x = param_1.x;
+  __dtold(&local_50,&stack0x00000010.x);
+  iVar1 = I10_OUTPUT(in_stack_ffffff6a,local_50.ld._4_4_,0,(_FloatOutStruct *)0x11);
+  param_2->flag = iVar1;
+  param_2->decpt = (int)local_40;
+  param_2->sign = (int)local_3e;
+  iVar1 = strcpy_s(param_3,param_4,acStack_3c);
+  if (iVar1 == 0) {
+    param_2->mantissa = param_3;
+    return param_2;
   }
                     /* WARNING: Subroutine does not return */
   _invoke_watson((wchar_t *)0x0,(wchar_t *)0x0,(wchar_t *)0x0,0,0);

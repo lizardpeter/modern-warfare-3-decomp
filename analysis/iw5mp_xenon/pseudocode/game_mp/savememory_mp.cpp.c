@@ -60,20 +60,17 @@ void SaveMemory_InitializeSaveSystem(void)
 
 // 824BB928  SaveMemory_LoadRead  (game_mp/savememory_mp.cpp:109)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void SaveMemory_LoadRead(void *param_1,int param_2,SaveGame *param_3)
 
 {
-  void *pvVar1;
-  ulonglong uVar2;
-  
-  uVar2 = (ulonglong)(int)param_3;
-  pvVar1 = (void *)__savegprlr_29(param_1);
-  if ((uVar2 & 0xffffffff) == 0) {
+  if (param_3 == (SaveGame *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\savememory_mp.cpp",
-                    0x6e,(int)uVar2,"%s");
+                    0x6e,0,"%s");
   }
-  MemFile_ReadData((MemoryFile *)((int)uVar2 + 0x480),param_2,pvVar1);
-  __restgprlr_29();
+  MemFile_ReadData(&param_3->memFile,param_2,param_1);
   return;
 }
 

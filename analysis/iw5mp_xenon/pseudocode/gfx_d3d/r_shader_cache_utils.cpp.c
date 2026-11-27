@@ -14,6 +14,9 @@ uint Com_BlockChecksum32(void *param_1,uint param_2)
 
 // 8277A210  Material_BuildCacheFileName  (gfx_d3d/r_shader_cache_utils.cpp:11)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 void Material_BuildCacheFileName
                (char *param_1,char *param_2,char *param_3,uint param_4,char *param_5,char *param_6,
                bool param_7)
@@ -21,138 +24,126 @@ void Material_BuildCacheFileName
 {
   char cVar1;
   char *pcVar2;
-  int iVar3;
-  ulonglong uVar4;
-  longlong lVar5;
-  char *pcVar7;
-  longlong lVar6;
-  char *pcVar8;
-  char *pcVar9;
+  char *pcVar3;
+  char *pcVar4;
+  char *pcVar5;
   char local_150 [16];
   char local_140 [320];
   
-  uVar4 = (ulonglong)param_7;
-  lVar6 = (longlong)(int)param_6;
-  lVar5 = (longlong)(int)param_5;
-  __savegprlr_26(param_1);
   Com_BlockChecksumKey32(param_3,param_4,0);
   sprintf(local_140,"%s/shadercache%d/");
-  uVar4 = uVar4 & 0xff;
-  if (uVar4 != 0) {
+  if (param_7) {
     _mkdir(local_140);
   }
   pcVar2 = local_140;
   do {
-    pcVar8 = pcVar2;
-    pcVar2 = pcVar8 + 1;
-  } while (*pcVar8 != '\0');
+    pcVar4 = pcVar2;
+    pcVar2 = pcVar4 + 1;
+  } while (*pcVar4 != '\0');
   do {
-    cVar1 = *(char *)lVar5;
-    lVar5 = lVar5 + 1;
-    *pcVar8 = cVar1;
-    pcVar8 = pcVar8 + 1;
+    cVar1 = *param_5;
+    param_5 = param_5 + 1;
+    *pcVar4 = cVar1;
+    pcVar4 = pcVar4 + 1;
   } while (cVar1 != '\0');
-  pcVar8 = "/";
+  pcVar4 = "/";
   pcVar2 = local_140;
   do {
-    pcVar9 = pcVar2;
-    pcVar7 = pcVar8;
-    pcVar2 = pcVar9 + 1;
-  } while (*pcVar9 != '\0');
+    pcVar5 = pcVar2;
+    pcVar3 = pcVar4;
+    pcVar2 = pcVar5 + 1;
+  } while (*pcVar5 != '\0');
   do {
-    cVar1 = *pcVar7;
-    *pcVar9 = cVar1;
-    pcVar9 = pcVar9 + 1;
-    pcVar7 = pcVar7 + 1;
+    cVar1 = *pcVar3;
+    *pcVar5 = cVar1;
+    pcVar5 = pcVar5 + 1;
+    pcVar3 = pcVar3 + 1;
   } while (cVar1 != '\0');
-  if (uVar4 != 0) {
+  if (param_7) {
     _mkdir(local_140);
   }
   pcVar2 = local_140;
   do {
-    pcVar7 = pcVar2;
-    pcVar2 = pcVar7 + 1;
-  } while (*pcVar7 != '\0');
+    pcVar3 = pcVar2;
+    pcVar2 = pcVar3 + 1;
+  } while (*pcVar3 != '\0');
   do {
-    cVar1 = *(char *)lVar6;
-    lVar6 = lVar6 + 1;
-    *pcVar7 = cVar1;
-    pcVar7 = pcVar7 + 1;
+    cVar1 = *param_6;
+    param_6 = param_6 + 1;
+    *pcVar3 = cVar1;
+    pcVar3 = pcVar3 + 1;
   } while (cVar1 != '\0');
   pcVar2 = local_140;
   do {
-    pcVar9 = pcVar2;
-    pcVar7 = pcVar8;
-    pcVar2 = pcVar9 + 1;
-  } while (*pcVar9 != '\0');
+    pcVar5 = pcVar2;
+    pcVar3 = pcVar4;
+    pcVar2 = pcVar5 + 1;
+  } while (*pcVar5 != '\0');
   do {
-    cVar1 = *pcVar7;
-    *pcVar9 = cVar1;
-    pcVar9 = pcVar9 + 1;
-    pcVar7 = pcVar7 + 1;
+    cVar1 = *pcVar3;
+    *pcVar5 = cVar1;
+    pcVar5 = pcVar5 + 1;
+    pcVar3 = pcVar3 + 1;
   } while (cVar1 != '\0');
-  if (uVar4 != 0) {
+  if (param_7) {
     _mkdir(local_140);
   }
   sprintf(local_150,"%2.2x");
-  pcVar7 = local_150;
+  pcVar3 = local_150;
   pcVar2 = local_140;
   do {
-    pcVar9 = pcVar2;
-    pcVar2 = pcVar9 + 1;
-  } while (*pcVar9 != '\0');
+    pcVar5 = pcVar2;
+    pcVar2 = pcVar5 + 1;
+  } while (*pcVar5 != '\0');
   do {
-    cVar1 = *pcVar7;
-    pcVar7 = pcVar7 + 1;
-    *pcVar9 = cVar1;
-    pcVar9 = pcVar9 + 1;
+    cVar1 = *pcVar3;
+    pcVar3 = pcVar3 + 1;
+    *pcVar5 = cVar1;
+    pcVar5 = pcVar5 + 1;
   } while (cVar1 != '\0');
   pcVar2 = local_140;
   do {
-    pcVar7 = pcVar2;
-    pcVar2 = pcVar7 + 1;
-  } while (*pcVar7 != '\0');
+    pcVar3 = pcVar2;
+    pcVar2 = pcVar3 + 1;
+  } while (*pcVar3 != '\0');
   do {
-    cVar1 = *pcVar8;
-    pcVar8 = pcVar8 + 1;
-    *pcVar7 = cVar1;
-    pcVar7 = pcVar7 + 1;
+    cVar1 = *pcVar4;
+    pcVar4 = pcVar4 + 1;
+    *pcVar3 = cVar1;
+    pcVar3 = pcVar3 + 1;
   } while (cVar1 != '\0');
-  if (uVar4 != 0) {
+  if (param_7) {
     _mkdir(local_140);
   }
-  iVar3 = sprintf(param_2,"%s%8.8x");
-  __restgprlr_26(iVar3);
+  sprintf(param_2,"%s%8.8x");
   return;
 }
 
 
 // 8277A418  Material_CacheShader  (gfx_d3d/r_shader_cache_utils.cpp:38)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void Material_CacheShader(char *param_1,uint param_2,char *param_3,void *param_4,uint param_5)
 
 {
-  void *pvVar1;
-  _iobuf *p_Var2;
-  int iVar3;
+  _iobuf *p_Var1;
   uint uStack0000001c;
   uint uStack00000034;
   
   uStack0000001c = param_2;
   uStack00000034 = param_5;
-  pvVar1 = (void *)__savegprlr_28(param_1);
-  p_Var2 = fopen(param_3,"wb");
-  if (p_Var2 == (_iobuf *)0x0) {
-    iVar3 = printf("Material_CacheShader: Failed to open \'%s\'\n");
-    __restgprlr_28(iVar3);
+  p_Var1 = fopen(param_3,"wb");
+  if (p_Var1 == (_iobuf *)0x0) {
+    printf("Material_CacheShader: Failed to open \'%s\'\n");
     return;
   }
-  fwrite(&stack0x0000001c,4,1,p_Var2);
-  fwrite(pvVar1,1,uStack0000001c,p_Var2);
-  fwrite(&stack0x00000034,4,1,p_Var2);
-  fwrite(param_4,1,uStack00000034,p_Var2);
-  iVar3 = fclose(p_Var2);
-  __restgprlr_28(iVar3);
+  fwrite(&stack0x0000001c,4,1,p_Var1);
+  fwrite(param_1,1,uStack0000001c,p_Var1);
+  fwrite(&stack0x00000034,4,1,p_Var1);
+  fwrite(param_4,1,uStack00000034,p_Var1);
+  fclose(p_Var1);
   return;
 }
 

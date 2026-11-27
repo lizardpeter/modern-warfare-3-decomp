@@ -2,69 +2,84 @@
 
 // 8225A1E8  mp_init_multi  (line unknown)
 
-/* WARNING: Restarted to delay deadcode elimination for space: stack */
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 
-void mp_init_multi(void)
+undefined8
+mp_init_multi(int *param_1,undefined8 param_2,undefined8 param_3,undefined8 param_4,
+             undefined8 param_5,undefined8 param_6,undefined8 param_7,undefined8 param_8)
 
 {
   int *piVar1;
   undefined1 *puVar2;
-  int *piVar3;
-  void *pvVar4;
+  void *pvVar3;
+  int iVar4;
   int iVar5;
   int iVar6;
-  int iVar7;
-  longlong lVar8;
+  longlong lVar7;
+  int *piStack00000014;
+  undefined8 uStack00000018;
+  undefined8 uStack00000020;
+  undefined8 uStack00000028;
+  undefined8 uStack00000030;
+  undefined8 uStack00000038;
+  undefined8 uStack00000040;
+  undefined8 uStack00000048;
   
-  piVar3 = (int *)__savegprlr_27();
-  iVar7 = 0;
-  puVar2 = &stack0x00000018;
-  piVar1 = piVar3;
+  iVar6 = 0;
+  puVar2 = (undefined1 *)&stack0x00000018;
+  uStack00000018 = param_2;
+  uStack00000020 = param_3;
+  uStack00000028 = param_4;
+  uStack00000030 = param_5;
+  uStack00000038 = param_6;
+  uStack00000040 = param_7;
+  uStack00000048 = param_8;
+  piStack00000014 = param_1;
   while( true ) {
-    if (piVar1 == (int *)0x0) {
-      __restgprlr_27(0);
-      return;
+    if (param_1 == (int *)0x0) {
+      return 0;
     }
-    pvVar4 = tom_game_malloc(0x100);
-    piVar1[3] = (int)pvVar4;
-    if (pvVar4 == (void *)0x0) break;
-    lVar8 = 0x40;
-    iVar5 = 0;
+    pvVar3 = tom_game_malloc(0x100);
+    param_1[3] = (int)pvVar3;
+    if (pvVar3 == (void *)0x0) break;
+    lVar7 = 0x40;
+    iVar4 = 0;
     do {
-      *(undefined4 *)(iVar5 + piVar1[3]) = 0;
-      iVar5 = iVar5 + 4;
-      lVar8 = lVar8 + -1;
-    } while (lVar8 != 0);
-    *piVar1 = 0;
-    piVar1[1] = 0x40;
-    iVar7 = iVar7 + 1;
-    piVar1[2] = 0;
+      *(undefined4 *)(iVar4 + param_1[3]) = 0;
+      iVar4 = iVar4 + 4;
+      lVar7 = lVar7 + -1;
+    } while (lVar7 != 0);
+    *param_1 = 0;
+    param_1[1] = 0x40;
+    iVar6 = iVar6 + 1;
+    param_1[2] = 0;
+    param_1 = *(int **)(puVar2 + 4);
+    puVar2 = puVar2 + 8;
+  }
+  puVar2 = (undefined1 *)&stack0x00000018;
+  piVar1 = piStack00000014;
+  while (iVar6 != 0) {
+    iVar6 = iVar6 + -1;
+    if (piVar1[3] != 0) {
+      iVar4 = 0;
+      if (0 < *piVar1) {
+        iVar5 = 0;
+        do {
+          iVar4 = iVar4 + 1;
+          *(undefined4 *)(iVar5 + piVar1[3]) = 0;
+          iVar5 = iVar5 + 4;
+        } while (iVar4 < *piVar1);
+      }
+      tom_game_free((void *)piVar1[3]);
+      piVar1[3] = 0;
+      *piVar1 = 0;
+      piVar1[1] = 0;
+      piVar1[2] = 0;
+    }
     piVar1 = *(int **)(puVar2 + 4);
     puVar2 = puVar2 + 8;
   }
-  puVar2 = &stack0x00000018;
-  while (iVar7 != 0) {
-    iVar7 = iVar7 + -1;
-    if (piVar3[3] != 0) {
-      iVar5 = 0;
-      if (0 < *piVar3) {
-        iVar6 = 0;
-        do {
-          iVar5 = iVar5 + 1;
-          *(undefined4 *)(iVar6 + piVar3[3]) = 0;
-          iVar6 = iVar6 + 4;
-        } while (iVar5 < *piVar3);
-      }
-      tom_game_free((void *)piVar3[3]);
-      piVar3[3] = 0;
-      *piVar3 = 0;
-      piVar3[1] = 0;
-      piVar3[2] = 0;
-    }
-    piVar3 = *(int **)(puVar2 + 4);
-    puVar2 = puVar2 + 8;
-  }
-  __restgprlr_27(0xfffffffffffffffe);
-  return;
+  return 0xfffffffffffffffe;
 }
 

@@ -98,71 +98,61 @@ void vp8_subtract_mbuv_c(short *param_1,uchar *param_2,uchar *param_3,uchar *par
 
 // 82821DF8  vp8_subtract_mby_c  (WebM_atvi_opt/vpx/vp8/encoder/encodemb.c:89)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void vp8_subtract_mby_c(short *param_1,uchar *param_2,uchar *param_3,int param_4)
 
 {
-  byte *pbVar1;
-  byte *pbVar2;
-  int iVar3;
-  int iVar4;
-  longlong lVar5;
+  int iVar1;
+  int iVar2;
+  uchar *puVar3;
+  short *psVar4;
+  int iVar5;
   longlong lVar6;
   longlong lVar7;
-  short *psVar8;
-  int iVar9;
-  longlong lVar10;
-  longlong lVar11;
   
-  lVar6 = (longlong)param_4;
-  lVar5 = (longlong)(int)param_3;
-  lVar7 = (longlong)(int)param_2;
-  iVar4 = __savegprlr_27(param_1);
-  psVar8 = (short *)(iVar4 + 4);
-  lVar7 = lVar7 + 2;
-  lVar10 = 0x10;
+  psVar4 = param_1 + 2;
+  puVar3 = param_2 + 2;
+  lVar6 = 0x10;
   do {
-    iVar3 = (int)lVar5;
-    iVar4 = (int)lVar7;
-    iVar9 = 0;
-    lVar11 = 4;
+    iVar5 = 0;
+    lVar7 = 4;
     do {
-      psVar8[-2] = (ushort)*(byte *)(iVar4 + -2 + iVar9) - (ushort)*(byte *)(iVar9 + iVar3);
-      psVar8[-1] = (ushort)*(byte *)(iVar4 + -1 + iVar9) - (ushort)*(byte *)(iVar3 + 1 + iVar9);
-      *psVar8 = (ushort)*(byte *)(iVar4 + iVar9) - (ushort)*(byte *)(iVar3 + 2 + iVar9);
-      pbVar1 = (byte *)(iVar3 + 3 + iVar9);
-      pbVar2 = (byte *)(iVar4 + 1 + iVar9);
-      iVar9 = iVar9 + 4;
-      psVar8[1] = (ushort)*pbVar2 - (ushort)*pbVar1;
-      psVar8 = psVar8 + 4;
-      lVar11 = lVar11 + -1;
-    } while (lVar11 != 0);
-    lVar10 = lVar10 + -1;
-    lVar5 = lVar5 + 0x10;
-    lVar7 = lVar7 + lVar6;
-  } while (lVar10 != 0);
-  __restgprlr_27();
+      psVar4[-2] = (ushort)puVar3[iVar5 + -2] - (ushort)param_3[iVar5];
+      psVar4[-1] = (ushort)puVar3[iVar5 + -1] - (ushort)param_3[iVar5 + 1];
+      *psVar4 = (ushort)puVar3[iVar5] - (ushort)param_3[iVar5 + 2];
+      iVar2 = iVar5 + 3;
+      iVar1 = iVar5 + 1;
+      iVar5 = iVar5 + 4;
+      psVar4[1] = (ushort)puVar3[iVar1] - (ushort)param_3[iVar2];
+      psVar4 = psVar4 + 4;
+      lVar7 = lVar7 + -1;
+    } while (lVar7 != 0);
+    lVar6 = lVar6 + -1;
+    param_3 = param_3 + 0x10;
+    puVar3 = puVar3 + param_4;
+  } while (lVar6 != 0);
   return;
 }
 
 
 // 82821EA0  vp8_subtract_mb  (WebM_atvi_opt/vpx/vp8/encoder/encodemb.c:106)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void vp8_subtract_mb(VP8_ENCODER_RTCD *param_1,MACROBLOCK *param_2)
 
 {
-  int iVar1;
-  int iVar2;
-  longlong lVar3;
+  uchar *puVar1;
   
-  lVar3 = (longlong)(int)param_2;
-  iVar2 = __savegprlr_29(param_1);
-  iVar1 = (int)lVar3;
-  (**(code **)(iVar2 + 200))
-            (lVar3,*(undefined4 *)(iVar1 + 0xb08),lVar3 + 0xe50,*(undefined4 *)(iVar1 + 0xaf8));
-  (**(code **)(iVar2 + 0xcc))
-            (lVar3,*(undefined4 *)(iVar1 + 0xb0c),*(undefined4 *)(iVar1 + 0xb10),lVar3 + 0xe50,
-             *(undefined4 *)(iVar1 + 0xb04));
-  __restgprlr_29();
+  puVar1 = (param_2->e_mbd).predictor;
+  (*(param_1->encodemb).submby)
+            (param_2->src_diff,(param_2->src).y_buffer,puVar1,(param_2->src).y_stride);
+  (*(param_1->encodemb).submbuv)
+            (param_2->src_diff,(param_2->src).u_buffer,(param_2->src).v_buffer,puVar1,
+             (param_2->src).uv_stride);
   return;
 }
 
@@ -191,146 +181,147 @@ void vp8_build_dcblock(MACROBLOCK *param_1)
 
 // 82821F28  vp8_transform_mbuv  (WebM_atvi_opt/vpx/vp8/encoder/encodemb.c:123)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void vp8_transform_mbuv(MACROBLOCK *param_1)
 
 {
   undefined4 *puVar1;
-  int iVar2;
-  longlong lVar3;
-  undefined4 *puVar4;
+  longlong lVar2;
+  short **ppsVar3;
   
-  iVar2 = __savegprlr_29(param_1);
-  puVar4 = (undefined4 *)(iVar2 + 0x8e4);
-  lVar3 = 4;
+  ppsVar3 = &param_1->block[0xe].coeff;
+  lVar2 = 4;
   do {
-    puVar1 = puVar4 + 0x17;
-    puVar4 = puVar4 + 0x18;
-    (**(code **)(iVar2 + 0xbfc8))(*puVar1,*puVar4,0x10);
-    lVar3 = lVar3 + -1;
-  } while (lVar3 != 0);
-  __restgprlr_29();
+    puVar1 = ppsVar3 + 0x17;
+    ppsVar3 = ppsVar3 + 0x18;
+    (*param_1->vp8_short_fdct8x4)((short *)*puVar1,*ppsVar3,0x10);
+    lVar2 = lVar2 + -1;
+  } while (lVar2 != 0);
   return;
 }
 
 
 // 82821F70  vp8_transform_intra_mby  (WebM_atvi_opt/vpx/vp8/encoder/encodemb.c:135)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void vp8_transform_intra_mby(MACROBLOCK *param_1)
 
 {
-  undefined4 *puVar1;
-  int iVar2;
-  undefined2 *puVar3;
-  undefined2 *puVar4;
-  longlong lVar5;
-  undefined4 *puVar6;
+  BLOCK *pBVar1;
+  short *psVar2;
+  short *psVar3;
+  longlong lVar4;
+  short **ppsVar5;
   
-  iVar2 = __savegprlr_28(param_1);
-  puVar6 = (undefined4 *)(iVar2 + 0x5e4);
-  lVar5 = 8;
+  ppsVar5 = (short **)(param_1->coeff + 0x162);
+  lVar4 = 8;
   do {
-    puVar1 = puVar6 + 0x17;
-    puVar6 = puVar6 + 0x18;
-    (**(code **)(iVar2 + 0xbfc8))(*puVar1,*puVar6,0x20);
-    lVar5 = lVar5 + -1;
-  } while (lVar5 != 0);
-  puVar4 = (undefined2 *)(iVar2 + 0x300);
-  puVar3 = (undefined2 *)(iVar2 + 0x2fe);
-  lVar5 = 0x10;
+    pBVar1 = (BLOCK *)(ppsVar5 + 0x17);
+    ppsVar5 = ppsVar5 + 0x18;
+    (*param_1->vp8_short_fdct8x4)(pBVar1->src_diff,*ppsVar5,0x20);
+    lVar4 = lVar4 + -1;
+  } while (lVar4 != 0);
+  psVar3 = param_1->src_diff + 0x180;
+  psVar2 = param_1->src_diff + 0x17f;
+  lVar4 = 0x10;
   do {
-    puVar4 = puVar4 + 0x10;
-    puVar3 = puVar3 + 1;
-    *puVar3 = *puVar4;
-    lVar5 = lVar5 + -1;
-  } while (lVar5 != 0);
-  (**(code **)(iVar2 + 0xbfcc))(*(undefined4 *)(iVar2 + 0xac0),*(undefined4 *)(iVar2 + 0xac4),8);
-  __restgprlr_28();
+    psVar3 = psVar3 + 0x10;
+    psVar2 = psVar2 + 1;
+    *psVar2 = *psVar3;
+    lVar4 = lVar4 + -1;
+  } while (lVar4 != 0);
+  (*param_1->short_walsh4x4)(param_1->block[0x18].src_diff,param_1->block[0x18].coeff,8);
   return;
 }
 
 
 // 82821FF8  vp8_transform_mb  (WebM_atvi_opt/vpx/vp8/encoder/encodemb.c:155)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void vp8_transform_mb(MACROBLOCK *param_1)
 
 {
-  undefined4 *puVar1;
-  int iVar2;
-  undefined2 *puVar3;
-  undefined2 *puVar4;
+  BLOCK *pBVar1;
+  undefined4 *puVar2;
+  short *psVar3;
+  short *psVar4;
   longlong lVar5;
-  undefined4 *puVar6;
+  short **ppsVar6;
   
-  iVar2 = __savegprlr_28(param_1);
-  puVar6 = (undefined4 *)(iVar2 + 0x5e4);
+  ppsVar6 = (short **)(param_1->coeff + 0x162);
   lVar5 = 8;
   do {
-    puVar1 = puVar6 + 0x17;
-    puVar6 = puVar6 + 0x18;
-    (**(code **)(iVar2 + 0xbfc8))(*puVar1,*puVar6,0x20);
+    pBVar1 = (BLOCK *)(ppsVar6 + 0x17);
+    ppsVar6 = ppsVar6 + 0x18;
+    (*param_1->vp8_short_fdct8x4)(pBVar1->src_diff,*ppsVar6,0x20);
     lVar5 = lVar5 + -1;
   } while (lVar5 != 0);
-  if (**(int **)(iVar2 + 0x1c70) != 9) {
-    puVar4 = (undefined2 *)(iVar2 + 0x300);
-    puVar3 = (undefined2 *)(iVar2 + 0x2fe);
+  if ((((param_1->e_mbd).mode_info_context)->mbmi).mode != SPLITMV) {
+    psVar4 = param_1->src_diff + 0x180;
+    psVar3 = param_1->src_diff + 0x17f;
     lVar5 = 0x10;
     do {
-      puVar4 = puVar4 + 0x10;
-      puVar3 = puVar3 + 1;
-      *puVar3 = *puVar4;
+      psVar4 = psVar4 + 0x10;
+      psVar3 = psVar3 + 1;
+      *psVar3 = *psVar4;
       lVar5 = lVar5 + -1;
     } while (lVar5 != 0);
   }
-  puVar6 = (undefined4 *)(iVar2 + 0x8e4);
+  ppsVar6 = &param_1->block[0xe].coeff;
   lVar5 = 4;
   do {
-    puVar1 = puVar6 + 0x17;
-    puVar6 = puVar6 + 0x18;
-    (**(code **)(iVar2 + 0xbfc8))(*puVar1,*puVar6,0x10);
+    puVar2 = ppsVar6 + 0x17;
+    ppsVar6 = ppsVar6 + 0x18;
+    (*param_1->vp8_short_fdct8x4)((short *)*puVar2,*ppsVar6,0x10);
     lVar5 = lVar5 + -1;
   } while (lVar5 != 0);
-  if (**(int **)(iVar2 + 0x1c70) != 9) {
-    (**(code **)(iVar2 + 0xbfcc))(*(undefined4 *)(iVar2 + 0xac0),*(undefined4 *)(iVar2 + 0xac4),8);
+  if ((((param_1->e_mbd).mode_info_context)->mbmi).mode != SPLITMV) {
+    (*param_1->short_walsh4x4)(param_1->block[0x18].src_diff,param_1->block[0x18].coeff,8);
   }
-  __restgprlr_28();
   return;
 }
 
 
 // 828220C8  vp8_transform_mby  (WebM_atvi_opt/vpx/vp8/encoder/encodemb.c:182)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void vp8_transform_mby(MACROBLOCK *param_1)
 
 {
-  undefined4 *puVar1;
-  int iVar2;
-  undefined2 *puVar3;
-  undefined2 *puVar4;
-  longlong lVar5;
-  undefined4 *puVar6;
+  BLOCK *pBVar1;
+  short *psVar2;
+  short *psVar3;
+  longlong lVar4;
+  short **ppsVar5;
   
-  iVar2 = __savegprlr_28(param_1);
-  puVar6 = (undefined4 *)(iVar2 + 0x5e4);
-  lVar5 = 8;
+  ppsVar5 = (short **)(param_1->coeff + 0x162);
+  lVar4 = 8;
   do {
-    puVar1 = puVar6 + 0x17;
-    puVar6 = puVar6 + 0x18;
-    (**(code **)(iVar2 + 0xbfc8))(*puVar1,*puVar6,0x20);
-    lVar5 = lVar5 + -1;
-  } while (lVar5 != 0);
-  if (**(int **)(iVar2 + 0x1c70) != 9) {
-    puVar4 = (undefined2 *)(iVar2 + 0x300);
-    puVar3 = (undefined2 *)(iVar2 + 0x2fe);
-    lVar5 = 0x10;
+    pBVar1 = (BLOCK *)(ppsVar5 + 0x17);
+    ppsVar5 = ppsVar5 + 0x18;
+    (*param_1->vp8_short_fdct8x4)(pBVar1->src_diff,*ppsVar5,0x20);
+    lVar4 = lVar4 + -1;
+  } while (lVar4 != 0);
+  if ((((param_1->e_mbd).mode_info_context)->mbmi).mode != SPLITMV) {
+    psVar3 = param_1->src_diff + 0x180;
+    psVar2 = param_1->src_diff + 0x17f;
+    lVar4 = 0x10;
     do {
-      puVar4 = puVar4 + 0x10;
-      puVar3 = puVar3 + 1;
-      *puVar3 = *puVar4;
-      lVar5 = lVar5 + -1;
-    } while (lVar5 != 0);
-    (**(code **)(iVar2 + 0xbfcc))(*(undefined4 *)(iVar2 + 0xac0),*(undefined4 *)(iVar2 + 0xac4),8);
+      psVar3 = psVar3 + 0x10;
+      psVar2 = psVar2 + 1;
+      *psVar2 = *psVar3;
+      lVar4 = lVar4 + -1;
+    } while (lVar4 != 0);
+    (*param_1->short_walsh4x4)(param_1->block[0x18].src_diff,param_1->block[0x18].coeff,8);
   }
-  __restgprlr_28();
   return;
 }
 
@@ -347,120 +338,112 @@ void vp8_stuff_inter16x16(MACROBLOCK *param_1)
 
 // 82822168  vp8_encode_inter16x16  (WebM_atvi_opt/vpx/vp8/encoder/encodemb.c:632)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void vp8_encode_inter16x16(VP8_ENCODER_RTCD *param_1,MACROBLOCK *param_2)
 
 {
-  MACROBLOCK *pMVar1;
-  int *piVar2;
-  MACROBLOCKD *pMVar3;
-  longlong lVar4;
+  uchar *puVar1;
+  MACROBLOCKD *pMVar2;
   
-  lVar4 = (longlong)(int)param_2;
-  piVar2 = (int *)__savegprlr_28(param_1);
-  pMVar3 = (MACROBLOCKD *)(lVar4 + 0xb30);
-  vp8_build_inter_predictors_mb(pMVar3);
-  pMVar1 = (MACROBLOCK *)lVar4;
-  (*(code *)piVar2[0x32])(lVar4,(pMVar1->src).y_buffer,lVar4 + 0xe50,(pMVar1->src).y_stride);
-  (*(code *)piVar2[0x33])
-            (lVar4,(pMVar1->src).u_buffer,(pMVar1->src).v_buffer,lVar4 + 0xe50,
-             (pMVar1->src).uv_stride);
-  vp8_transform_mb(pMVar1);
-  vp8_quantize_mb(pMVar1);
-  vp8_inverse_transform_mb((vp8_idct_rtcd_vtable_t *)*piVar2,pMVar3);
-  (**(code **)(*piVar2 + 0x2c))(*piVar2 + 0x14,lVar4 + 0xb30);
-  __restgprlr_28();
+  pMVar2 = &param_2->e_mbd;
+  vp8_build_inter_predictors_mb(pMVar2);
+  puVar1 = (param_2->e_mbd).predictor;
+  (*(param_1->encodemb).submby)
+            (param_2->src_diff,(param_2->src).y_buffer,puVar1,(param_2->src).y_stride);
+  (*(param_1->encodemb).submbuv)
+            (param_2->src_diff,(param_2->src).u_buffer,(param_2->src).v_buffer,puVar1,
+             (param_2->src).uv_stride);
+  vp8_transform_mb(param_2);
+  vp8_quantize_mb(param_2);
+  vp8_inverse_transform_mb(&param_1->common->idct,pMVar2);
+  (*(param_1->common->recon).recon_mb)(&param_1->common->recon,pMVar2);
   return;
 }
 
 
 // 82822208  vp8_encode_inter16x16y  (WebM_atvi_opt/vpx/vp8/encoder/encodemb.c:655)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void vp8_encode_inter16x16y(VP8_ENCODER_RTCD *param_1,MACROBLOCK *param_2)
 
 {
-  MACROBLOCK *pMVar1;
-  int *piVar2;
-  MACROBLOCKD *pMVar3;
-  longlong lVar4;
+  MACROBLOCKD *pMVar1;
   
-  lVar4 = (longlong)(int)param_2;
-  piVar2 = (int *)__savegprlr_29(param_1);
-  pMVar3 = (MACROBLOCKD *)(lVar4 + 0xb30);
-  vp8_build_inter_predictors_mby(pMVar3);
-  pMVar1 = (MACROBLOCK *)lVar4;
-  (*(code *)piVar2[0x32])(lVar4,(pMVar1->src).y_buffer,lVar4 + 0xe50,(pMVar1->src).y_stride);
-  vp8_transform_mby(pMVar1);
-  vp8_quantize_mby(pMVar1);
-  vp8_inverse_transform_mby((vp8_idct_rtcd_vtable_t *)*piVar2,pMVar3);
-  (**(code **)(*piVar2 + 0x30))(*piVar2 + 0x14,lVar4 + 0xb30);
-  __restgprlr_29();
+  pMVar1 = &param_2->e_mbd;
+  vp8_build_inter_predictors_mby(pMVar1);
+  (*(param_1->encodemb).submby)
+            (param_2->src_diff,(param_2->src).y_buffer,(param_2->e_mbd).predictor,
+             (param_2->src).y_stride);
+  vp8_transform_mby(param_2);
+  vp8_quantize_mby(param_2);
+  vp8_inverse_transform_mby(&param_1->common->idct,pMVar1);
+  (*(param_1->common->recon).recon_mby)(&param_1->common->recon,pMVar1);
   return;
 }
 
 
 // 82822280  vp8_encode_inter16x16uv  (WebM_atvi_opt/vpx/vp8/encoder/encodemb.c:672)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 void vp8_encode_inter16x16uv(VP8_ENCODER_RTCD *param_1,MACROBLOCK *param_2)
 
 {
-  int iVar1;
-  MACROBLOCK *pMVar2;
-  int *piVar3;
-  MACROBLOCKD *pMVar4;
-  longlong lVar5;
-  longlong lVar6;
+  undefined4 *puVar1;
+  MACROBLOCKD *pMVar2;
+  longlong lVar3;
+  short **ppsVar4;
   
-  lVar6 = (longlong)(int)param_2;
-  piVar3 = (int *)__savegprlr_26(param_1);
-  pMVar2 = (MACROBLOCK *)lVar6;
-  pMVar4 = &pMVar2->e_mbd;
-  vp8_build_inter_predictors_mbuv(pMVar4);
-  (*(code *)piVar3[0x33])
-            (lVar6,(pMVar2->src).u_buffer,(pMVar2->src).v_buffer,lVar6 + 0xe50,
-             (pMVar2->src).uv_stride);
-  lVar6 = lVar6 + 0x8e4;
-  lVar5 = 4;
+  pMVar2 = &param_2->e_mbd;
+  vp8_build_inter_predictors_mbuv(pMVar2);
+  (*(param_1->encodemb).submbuv)
+            (param_2->src_diff,(param_2->src).u_buffer,(param_2->src).v_buffer,
+             (param_2->e_mbd).predictor,(param_2->src).uv_stride);
+  ppsVar4 = &param_2->block[0xe].coeff;
+  lVar3 = 4;
   do {
-    iVar1 = (int)lVar6;
-    lVar6 = lVar6 + 0x60;
-    (*pMVar2->vp8_short_fdct8x4)(*(short **)(iVar1 + 0x5c),(short *)*(undefined4 *)lVar6,0x10);
-    lVar5 = lVar5 + -1;
-  } while (lVar5 != 0);
-  vp8_quantize_mbuv(pMVar2);
-  vp8_inverse_transform_mbuv((vp8_idct_rtcd_vtable_t *)*piVar3,pMVar4);
-  vp8_recon_intra_mbuv((vp8_recon_rtcd_vtable *)(*piVar3 + 0x14),pMVar4);
-  __restgprlr_26();
+    puVar1 = ppsVar4 + 0x17;
+    ppsVar4 = ppsVar4 + 0x18;
+    (*param_2->vp8_short_fdct8x4)((short *)*puVar1,*ppsVar4,0x10);
+    lVar3 = lVar3 + -1;
+  } while (lVar3 != 0);
+  vp8_quantize_mbuv(param_2);
+  vp8_inverse_transform_mbuv(&param_1->common->idct,pMVar2);
+  vp8_recon_intra_mbuv(&param_1->common->recon,pMVar2);
   return;
 }
 
 
 // 82822320  vp8_encode_inter16x16uvrd  (WebM_atvi_opt/vpx/vp8/encoder/encodemb.c:688)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void vp8_encode_inter16x16uvrd(VP8_ENCODER_RTCD *param_1,MACROBLOCK *param_2)
 
 {
-  MACROBLOCK *pMVar1;
-  int iVar2;
-  longlong lVar3;
-  longlong lVar4;
+  undefined4 *puVar1;
+  longlong lVar2;
+  short **ppsVar3;
   
-  lVar4 = (longlong)(int)param_2;
-  iVar2 = __savegprlr_28(param_1);
-  pMVar1 = (MACROBLOCK *)lVar4;
-  vp8_build_inter_predictors_mbuv(&pMVar1->e_mbd);
-  (**(code **)(iVar2 + 0xcc))
-            (lVar4,(pMVar1->src).u_buffer,(pMVar1->src).v_buffer,lVar4 + 0xe50,
-             (pMVar1->src).uv_stride);
-  lVar4 = lVar4 + 0x8e4;
-  lVar3 = 4;
+  vp8_build_inter_predictors_mbuv(&param_2->e_mbd);
+  (*(param_1->encodemb).submbuv)
+            (param_2->src_diff,(param_2->src).u_buffer,(param_2->src).v_buffer,
+             (param_2->e_mbd).predictor,(param_2->src).uv_stride);
+  ppsVar3 = &param_2->block[0xe].coeff;
+  lVar2 = 4;
   do {
-    iVar2 = (int)lVar4;
-    lVar4 = lVar4 + 0x60;
-    (*pMVar1->vp8_short_fdct8x4)(*(short **)(iVar2 + 0x5c),(short *)*(undefined4 *)lVar4,0x10);
-    lVar3 = lVar3 + -1;
-  } while (lVar3 != 0);
-  vp8_quantize_mbuv(pMVar1);
-  __restgprlr_28();
+    puVar1 = ppsVar3 + 0x17;
+    ppsVar3 = ppsVar3 + 0x18;
+    (*param_2->vp8_short_fdct8x4)((short *)*puVar1,*ppsVar3,0x10);
+    lVar2 = lVar2 + -1;
+  } while (lVar2 != 0);
+  vp8_quantize_mbuv(param_2);
   return;
 }
 

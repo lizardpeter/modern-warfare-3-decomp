@@ -2,6 +2,9 @@
 
 // 828A05F8  TileVolume  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/xgraphics/tile/volume.cpp:75)
 
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
+
 void XGRAPHICS::TileVolume
                (void *param_1,uint param_2,uint param_3,uint param_4,_XGPOINT3D *param_5,
                void *param_6,uint param_7,uint param_8,_D3DBOX *param_9,uint param_10)
@@ -15,24 +18,17 @@ void XGRAPHICS::TileVolume
   int iVar6;
   int iVar7;
   int iVar8;
-  ulonglong uVar9;
-  void *pvVar10;
-  ulonglong uVar11;
-  int *piVar12;
-  void *pvVar13;
-  ulong uVar14;
-  uint uVar15;
-  ulonglong uVar16;
-  uint uVar17;
+  void *pvVar9;
+  ulong uVar10;
+  uint uVar11;
+  uint uVar12;
   void *pvStack0000003c;
   uint uStack00000044;
   uint uStack0000004c;
   int *in_stack_00000054;
   uint in_stack_0000005c;
   uint local_f0;
-  int local_c0;
-  undefined4 local_bc;
-  undefined4 local_b8;
+  _XGPOINT3D local_c0;
   int local_b0;
   undefined4 local_ac;
   uint local_a8;
@@ -40,20 +36,13 @@ void XGRAPHICS::TileVolume
   undefined4 local_a0;
   uint local_9c;
   
-  uVar16 = (ulonglong)(int)param_6;
-  uVar11 = (ulonglong)(int)param_5;
-  uVar9 = (ulonglong)(int)param_1;
-  uStack0000004c = param_8;
-  __savegprlr();
-  piVar12 = (int *)uVar11;
-  pvVar13 = (void *)uVar16;
   if (in_stack_00000054 == (int *)0x0) {
+    local_a8 = param_2;
     in_stack_00000054 = &local_b0;
+    local_a4 = param_3;
     local_b0 = 0;
     local_ac = 0;
     local_a0 = 0;
-    local_a8 = param_2;
-    local_a4 = param_3;
     local_9c = param_4;
   }
   iVar1 = in_stack_00000054[2];
@@ -62,49 +51,49 @@ void XGRAPHICS::TileVolume
   iVar4 = in_stack_00000054[5];
   iVar5 = in_stack_00000054[1];
   iVar6 = in_stack_00000054[4];
-  if ((uVar11 & 0xffffffff) == 0) {
-    local_c0 = 0;
-    piVar12 = &local_c0;
-    local_bc = 0;
-    local_b8 = 0;
+  if (param_5 == (_XGPOINT3D *)0x0) {
+    local_c0.x = 0;
+    param_5 = &local_c0;
+    local_c0.y = 0;
+    local_c0.z = 0;
   }
-  pvStack0000003c = pvVar13;
+  pvVar9 = param_6;
+  pvStack0000003c = param_6;
   uStack00000044 = param_7;
-  if ((uVar16 & 0xffffffff) == (uVar9 & 0xffffffff)) {
-    uVar14 = (param_4 + 3 & 0xfffffffc) * (param_3 + 0x1f & 0xffffffe0) *
+  uStack0000004c = param_8;
+  if (param_6 == param_1) {
+    uVar10 = (param_4 + 3 & 0xfffffffc) * (param_3 + 0x1f & 0xffffffe0) *
              (param_2 + 0x1f & 0xffffffe0) * in_stack_0000005c;
-    pvVar10 = XMemAlloc(uVar14,0x24870000);
-    CopyMemoryCachedDst(pvVar10,pvVar13,uVar14);
-    pvVar13 = pvVar10;
+    pvVar9 = XMemAlloc(uVar10,0x24870000);
+    CopyMemoryCachedDst(pvVar9,param_6,uVar10);
   }
-  iVar7 = *piVar12;
+  iVar7 = param_5->x;
   iVar8 = 1 << (((in_stack_0000005c >> 4) - (in_stack_0000005c >> 2)) + 3 & 0x3f);
   local_f0 = 0;
   if (iVar4 != iVar6) {
     do {
-      uVar15 = 0;
+      uVar11 = 0;
       if (iVar3 != iVar5) {
         do {
           memcpy();
-          for (uVar17 = (iVar7 + iVar8 & ~(iVar8 - 1U)) - iVar7;
-              (int)uVar17 < (int)((iVar7 + (iVar1 - iVar2) & ~(iVar8 - 1U)) - iVar7);
-              uVar17 = uVar17 + iVar8) {
+          for (uVar12 = (iVar7 + iVar8 & ~(iVar8 - 1U)) - iVar7;
+              (int)uVar12 < (int)((iVar7 + (iVar1 - iVar2) & ~(iVar8 - 1U)) - iVar7);
+              uVar12 = uVar12 + iVar8) {
             memcpy();
           }
-          if (uVar17 < (uint)(iVar1 - iVar2)) {
+          if (uVar12 < (uint)(iVar1 - iVar2)) {
             memcpy();
           }
-          uVar15 = uVar15 + 1;
-        } while (uVar15 < (uint)(iVar3 - iVar5));
-        uVar16 = ZEXT48(pvStack0000003c);
+          uVar11 = uVar11 + 1;
+          param_6 = pvStack0000003c;
+        } while (uVar11 < (uint)(iVar3 - iVar5));
       }
       local_f0 = local_f0 + 1;
     } while (local_f0 < (uint)(iVar4 - iVar6));
   }
-  if ((uVar16 & 0xffffffff) == (uVar9 & 0xffffffff)) {
-    XMemFree(pvVar13,0x24870000);
+  if (param_6 == param_1) {
+    XMemFree(pvVar9,0x24870000);
   }
-  __restgprlr();
   return;
 }
 
@@ -127,6 +116,9 @@ void XGTileVolume(void *param_1,uint param_2,uint param_3,uint param_4,_XGPOINT3
 
 // 828A0AC0  XGTileVolumeTextureLevel  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/xgraphics/tile/volume.cpp:549)
 
+/* WARNING: Function: __savegprlr_16 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_16 replaced with injection: xenon_save_restore */
+
 void XGTileVolumeTextureLevel
                (uint param_1,uint param_2,uint param_3,uint param_4,ulong param_5,ulong param_6,
                void *param_7,_XGPOINT3D *param_8,void *param_9,uint param_10,uint param_11,
@@ -139,18 +131,13 @@ void XGTileVolumeTextureLevel
   long lVar4;
   long lVar5;
   uint uVar6;
-  uint uVar7;
-  ulonglong uVar8;
-  ulonglong uVar9;
-  int iVar10;
-  ulonglong uVar11;
-  uint uVar12;
+  int iVar7;
+  uint uVar8;
+  uint uVar9;
+  uint uVar10;
+  uint uVar11;
+  _XGPOINT3D *p_Var12;
   uint uVar13;
-  uint uVar14;
-  uint uVar15;
-  _XGPOINT3D *p_Var16;
-  uint uVar17;
-  uint uVar18;
   void *in_stack_00000054;
   uint in_stack_0000005c;
   uint in_stack_00000064;
@@ -168,39 +155,33 @@ void XGTileVolumeTextureLevel
   uint local_90;
   uint local_8c;
   
-  uVar11 = (ulonglong)(int)param_8;
-  uVar9 = (ulonglong)(int)param_6;
-  uVar8 = (ulonglong)(int)param_4;
-  uVar6 = __savegprlr_16(param_1);
-  p_Var16 = (_XGPOINT3D *)uVar11;
   XGGetBlockDimensions(param_5,&local_d0,&local_cc);
   uVar1 = 0x1f - (int)LZCOUNT(local_d0);
-  uVar7 = 0x1f - (int)LZCOUNT(local_cc);
-  uVar2 = (uint)uVar9 & 2;
-  uVar15 = (uint)((uVar9 & 0xffffffff) >> 1) & 1;
-  uVar18 = (uint)uVar8;
-  if ((uVar8 & 0xffffffff) == 0) {
-    uVar14 = (local_d0 + uVar6) - 1 >> (uVar1 & 0x3f);
-    uVar17 = (local_cc + param_2) - 1 >> (uVar7 & 0x3f);
-    uVar15 = param_3;
+  uVar6 = 0x1f - (int)LZCOUNT(local_cc);
+  uVar2 = param_6 & 2;
+  uVar11 = param_6 >> 1 & 1;
+  if (param_4 == 0) {
+    uVar10 = (local_d0 + param_1) - 1 >> (uVar1 & 0x3f);
+    uVar13 = (local_cc + param_2) - 1 >> (uVar6 & 0x3f);
+    uVar11 = param_3;
   }
   else {
-    iVar10 = (1 << ((uVar15 - (int)LZCOUNT((uVar6 - uVar2) + -1)) + 0x20 & 0x3f)) >> (uVar18 & 0x3f)
-    ;
-    if (iVar10 < 2) {
-      iVar10 = 1;
+    iVar7 = (1 << ((uVar11 - (int)LZCOUNT((param_1 - uVar2) + -1)) + 0x20 & 0x3f)) >>
+            (param_4 & 0x3f);
+    if (iVar7 < 2) {
+      iVar7 = 1;
     }
-    uVar14 = (iVar10 + local_d0) - 1 >> (uVar1 & 0x3f);
-    iVar10 = (1 << ((uVar15 - (int)LZCOUNT((param_2 - uVar2) + -1)) + 0x20 & 0x3f)) >>
-             (uVar18 & 0x3f);
-    if (iVar10 < 2) {
-      iVar10 = 1;
+    uVar10 = (iVar7 + local_d0) - 1 >> (uVar1 & 0x3f);
+    iVar7 = (1 << ((uVar11 - (int)LZCOUNT((param_2 - uVar2) + -1)) + 0x20 & 0x3f)) >>
+            (param_4 & 0x3f);
+    if (iVar7 < 2) {
+      iVar7 = 1;
     }
-    uVar17 = (iVar10 + local_cc) - 1 >> (uVar7 & 0x3f);
-    uVar15 = (1 << ((uVar15 - (int)LZCOUNT((param_3 - uVar2) + -1)) + 0x20 & 0x3f)) >>
-             (uVar18 & 0x3f);
-    if ((int)uVar15 < 2) {
-      uVar15 = 1;
+    uVar13 = (iVar7 + local_cc) - 1 >> (uVar6 & 0x3f);
+    uVar11 = (1 << ((uVar11 - (int)LZCOUNT((param_3 - uVar2) + -1)) + 0x20 & 0x3f)) >>
+             (param_4 & 0x3f);
+    if ((int)uVar11 < 2) {
+      uVar11 = 1;
     }
   }
   local_c8.x = 0;
@@ -209,18 +190,18 @@ void XGTileVolumeTextureLevel
   if (in_stack_0000006c == (uint *)0x0) {
     local_a0 = 0;
     local_9c = 0;
-    uVar12 = uVar6 - uVar2 >> (uVar18 & 0x3f);
-    if (uVar12 < 2) {
-      uVar12 = 1;
+    uVar8 = param_1 - uVar2 >> (param_4 & 0x3f);
+    if (uVar8 < 2) {
+      uVar8 = 1;
     }
-    uVar13 = param_2 - uVar2 >> (uVar18 & 0x3f);
-    local_98 = (uVar12 + uVar2 + local_d0) - 1 >> (uVar1 & 0x3f);
-    if (uVar13 < 2) {
-      uVar13 = 1;
+    uVar9 = param_2 - uVar2 >> (param_4 & 0x3f);
+    local_98 = (uVar8 + uVar2 + local_d0) - 1 >> (uVar1 & 0x3f);
+    if (uVar9 < 2) {
+      uVar9 = 1;
     }
     local_90 = 0;
-    local_8c = param_3 - uVar2 >> (uVar18 & 0x3f);
-    local_94 = (uVar13 + uVar2 + local_cc) - 1 >> (uVar7 & 0x3f);
+    local_8c = param_3 - uVar2 >> (param_4 & 0x3f);
+    local_94 = (uVar9 + uVar2 + local_cc) - 1 >> (uVar6 & 0x3f);
     if (local_8c < 2) {
       local_8c = 1;
     }
@@ -230,32 +211,32 @@ void XGTileVolumeTextureLevel
     local_90 = in_stack_0000006c[4];
     local_8c = in_stack_0000006c[5];
     local_a0 = *in_stack_0000006c >> (uVar1 & 0x3f);
-    local_9c = in_stack_0000006c[1] >> (uVar7 & 0x3f);
+    local_9c = in_stack_0000006c[1] >> (uVar6 & 0x3f);
     local_98 = (in_stack_0000006c[2] + local_d0) - 1 >> (uVar1 & 0x3f);
-    local_94 = (in_stack_0000006c[3] + local_cc) - 1 >> (uVar7 & 0x3f);
+    local_94 = (in_stack_0000006c[3] + local_cc) - 1 >> (uVar6 & 0x3f);
   }
-  if ((uVar11 & 0xffffffff) != 0) {
-    local_c8.z = p_Var16->z;
-    local_c8.x = p_Var16->x >> (uVar1 & 0x3f);
-    local_c8.y = p_Var16->y >> (uVar7 & 0x3f);
-    p_Var16 = &local_c8;
+  p_Var12 = (_XGPOINT3D *)0x0;
+  if (param_8 != (_XGPOINT3D *)0x0) {
+    local_c8.z = param_8->z;
+    local_c8.x = param_8->x >> (uVar1 & 0x3f);
+    local_c8.y = param_8->y >> (uVar6 & 0x3f);
+    p_Var12 = &local_c8;
   }
   lVar5 = local_c8.z;
   lVar4 = local_c8.y;
   lVar3 = local_c8.x;
-  if ((uVar9 & 1) == 0) {
-    uVar7 = XGRAPHICS::GetMipTailLevelOffsetCoords
-                      (uVar6,param_2,param_3,uVar18,param_5,1,(uint)uVar9 >> 1 & 1,local_b8);
-    param_7 = (void *)((int)param_7 - uVar7);
+  if ((param_6 & 1) == 0) {
+    uVar6 = XGRAPHICS::GetMipTailLevelOffsetCoords
+                      (param_1,param_2,param_3,param_4,param_5,1,param_6 >> 1 & 1,local_b8);
+    param_7 = (void *)((int)param_7 - uVar6);
     local_c8.x = local_b8[0].x + lVar3;
     local_c8.y = local_b8[0].y + lVar4;
     local_c8.z = local_b8[0].z + lVar5;
-    p_Var16 = &local_c8;
+    p_Var12 = &local_c8;
   }
   XGRAPHICS::TileVolume
-            (param_7,uVar14,uVar17,uVar15,p_Var16,in_stack_00000054,in_stack_0000005c,
+            (param_7,uVar10,uVar13,uVar11,p_Var12,in_stack_00000054,in_stack_0000005c,
              in_stack_00000064,in_stack_fffffed8,in_stack_fffffedc);
-  __restgprlr_16();
   return;
 }
 

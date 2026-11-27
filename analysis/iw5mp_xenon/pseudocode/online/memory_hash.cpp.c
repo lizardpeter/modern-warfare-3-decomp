@@ -106,103 +106,101 @@ MemoryHashInfo * MemoryHashInfo::RequestHash(void)
 
 // 82715248  OpenAsCRC32  (online/memory_hash.cpp:240)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 int __thiscall
 MemoryHashInfo::OpenAsCRC32(MemoryHashInfo *this,uint param_1,uint param_2,ulong64 param_3)
 
 {
   undefined8 uVar1;
-  int *piVar2;
-  int iVar3;
   
-  piVar2 = (int *)__savegprlr_28(this);
-  if (*piVar2 != 0) {
+  if (this->type != CT_TYPE_INVALID) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\online\\memory_hash.cpp",0xf2,0
                     ,"%s");
   }
   uVar1 = TBLr;
-  piVar2[1] = param_1;
-  piVar2[7] = 0;
-  piVar2[6] = (int)uVar1;
-  *piVar2 = 1;
-  piVar2[3] = 0;
-  piVar2[2] = param_2;
-  piVar2[4] = 0x2000;
-  *(ulong64 *)(piVar2 + 8) = param_3;
-  iVar3 = __restgprlr_28(1);
-  return iVar3;
+  this->start = param_1;
+  this->cumulativeProcessingTime = 0;
+  this->startProcessingTime = (uint)uVar1;
+  this->type = CT_TYPE_CRC32;
+  this->position = 0;
+  this->length = param_2;
+  this->blockSize = 0x2000;
+  this->state = param_3;
+  return 1;
 }
 
 
 // 827152D0  OpenAsCRC32Split  (online/memory_hash.cpp:265)
+
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 
 int __thiscall
 MemoryHashInfo::OpenAsCRC32Split(MemoryHashInfo *this,uint param_1,uint param_2,ulong64 param_3)
 
 {
   undefined8 uVar1;
-  int *piVar2;
-  int iVar3;
   
-  piVar2 = (int *)__savegprlr_28(this);
-  if (*piVar2 != 0) {
+  if (this->type != CT_TYPE_INVALID) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\online\\memory_hash.cpp",0x10b,
                     0,"%s");
   }
   uVar1 = TBLr;
-  piVar2[1] = param_1;
-  piVar2[7] = 0;
-  piVar2[6] = (int)uVar1;
-  *piVar2 = 5;
-  piVar2[3] = 0;
-  piVar2[2] = param_2;
-  piVar2[4] = 0x2000;
-  *(ulong64 *)(piVar2 + 8) = param_3;
-  iVar3 = __restgprlr_28(1);
-  return iVar3;
+  this->start = param_1;
+  this->cumulativeProcessingTime = 0;
+  this->startProcessingTime = (uint)uVar1;
+  this->type = CT_TYPE_CRC32_SPLIT;
+  this->position = 0;
+  this->length = param_2;
+  this->blockSize = 0x2000;
+  this->state = param_3;
+  return 1;
 }
 
 
 // 82715358  OpenAsMD4  (online/memory_hash.cpp:290)
+
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 
 int __thiscall
 MemoryHashInfo::OpenAsMD4(MemoryHashInfo *this,uint param_1,uint param_2,ulong64 param_3)
 
 {
   undefined8 uVar1;
-  int *piVar2;
-  int iVar3;
   
-  piVar2 = (int *)__savegprlr_28(this);
-  if (*piVar2 != 0) {
+  if (this->type != CT_TYPE_INVALID) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\online\\memory_hash.cpp",0x124,
                     0,"%s");
   }
   uVar1 = TBLr;
-  piVar2[1] = param_1;
-  piVar2[7] = 0;
-  piVar2[6] = (int)uVar1;
-  *piVar2 = 2;
-  piVar2[3] = 0;
-  piVar2[2] = param_2;
-  piVar2[4] = 0x800;
-  *(ulong64 *)(piVar2 + 8) = param_3;
-  iVar3 = __restgprlr_28(1);
-  return iVar3;
+  this->start = param_1;
+  this->cumulativeProcessingTime = 0;
+  this->startProcessingTime = (uint)uVar1;
+  this->type = CT_TYPE_MD4;
+  this->position = 0;
+  this->length = param_2;
+  this->blockSize = 0x800;
+  this->state = param_3;
+  return 1;
 }
 
 
 // 827153E0  OpenAsSHATomCrypt  (online/memory_hash.cpp:315)
+
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 
 int __thiscall
 MemoryHashInfo::OpenAsSHATomCrypt(MemoryHashInfo *this,uint param_1,uint param_2,ulong64 param_3)
 
 {
   undefined8 uVar1;
-  int *piVar2;
-  int iVar3;
+  int iVar2;
   ulong64 uStack00000028;
   
-  piVar2 = (int *)__savegprlr_25(this);
   uStack00000028 = param_3;
   if (libTomCryptSHA1Index < 0) {
     libTomCryptSHA1Index = register_hash(0xffffffff8221d7c0);
@@ -211,183 +209,177 @@ MemoryHashInfo::OpenAsSHATomCrypt(MemoryHashInfo *this,uint param_1,uint param_2
                       0x142,0,"%s");
     }
   }
-  if (*piVar2 != 0) {
+  if (this->type != CT_TYPE_INVALID) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\online\\memory_hash.cpp",0x146,
                     0,"%s");
   }
-  iVar3 = libTomCryptSHA1Index;
+  iVar2 = libTomCryptSHA1Index;
   uVar1 = TBLr;
-  piVar2[1] = param_1;
-  piVar2[2] = param_2;
-  piVar2[6] = (int)uVar1;
-  piVar2[7] = 0;
-  *piVar2 = 3;
-  piVar2[3] = 0;
-  piVar2[4] = 0x1000;
-  *(ulong64 *)(piVar2 + 8) = uStack00000028;
-  iVar3 = (**(code **)(&DAT_8489619c + iVar3 * 0x68))(piVar2 + 10);
-  if ((iVar3 == 0) &&
-     (iVar3 = (**(code **)(&DAT_848961a0 + libTomCryptSHA1Index * 0x68))
-                        (piVar2 + 10,&stack0x00000028,8), iVar3 == 0)) {
-    iVar3 = __restgprlr_25(1);
-    return iVar3;
+  this->start = param_1;
+  this->length = param_2;
+  this->startProcessingTime = (uint)uVar1;
+  this->cumulativeProcessingTime = 0;
+  this->type = CT_TYPE_SHA_TOMCRYPT;
+  this->position = 0;
+  this->blockSize = 0x1000;
+  this->state = uStack00000028;
+  iVar2 = (**(code **)(&DAT_8489619c + iVar2 * 0x68))((longlong)(int)this + 0x28);
+  if ((iVar2 == 0) &&
+     (iVar2 = (**(code **)(&DAT_848961a0 + libTomCryptSHA1Index * 0x68))
+                        ((longlong)(int)this + 0x28,&stack0x00000028,8), iVar2 == 0)) {
+    return 1;
   }
   MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\online\\memory_hash.cpp",0x15b,0,
                   "%s");
-  *piVar2 = 0;
-  iVar3 = __restgprlr_25(0);
-  return iVar3;
+  this->type = CT_TYPE_INVALID;
+  return 0;
 }
 
 
 // 82715548  OpenAs8WayProbe  (online/memory_hash.cpp:362)
+
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 
 int __thiscall
 MemoryHashInfo::OpenAs8WayProbe(MemoryHashInfo *this,uint param_1,uint param_2,ulong64 param_3)
 
 {
   undefined8 uVar1;
-  int *piVar2;
-  int iVar3;
-  ulonglong uVar4;
   
-  uVar4 = (ulonglong)(int)param_2;
-  piVar2 = (int *)__savegprlr_28(this);
-  if (*piVar2 != 0) {
+  if (this->type != CT_TYPE_INVALID) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\online\\memory_hash.cpp",0x16c,
                     0,"%s");
   }
   uVar1 = TBLr;
-  piVar2[1] = param_1;
-  piVar2[7] = 0;
-  piVar2[6] = (int)uVar1;
-  *piVar2 = 4;
-  piVar2[3] = 0;
-  piVar2[2] = (int)((uVar4 & 0xffffffff) >> 3);
-  piVar2[4] = 0x2000;
-  *(ulong64 *)(piVar2 + 8) = param_3;
-  *(ulong64 *)(piVar2 + 10) = param_3;
-  piVar2[0xc] = 0;
-  piVar2[0xd] = 0;
-  piVar2[5] = 0;
-  iVar3 = __restgprlr_28(1);
-  return iVar3;
+  this->start = param_1;
+  this->cumulativeProcessingTime = 0;
+  this->startProcessingTime = (uint)uVar1;
+  this->type = CT_TYPE_8WAY;
+  this->position = 0;
+  this->length = param_2 >> 3;
+  this->blockSize = 0x2000;
+  this->state = param_3;
+  (this->field9_0x28).eightWayState.initialKey = param_3;
+  (this->field9_0x28).eightWayState.cumulativeState = 0;
+  this->index = 0;
+  return 1;
 }
 
 
 // 827155E0  Continue  (online/memory_hash.cpp:392)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
+
 int __thiscall MemoryHashInfo::Continue(MemoryHashInfo *this)
 
 {
-  int iVar1;
+  challengeTest_t cVar1;
   undefined8 uVar2;
   undefined8 uVar3;
-  int *piVar5;
   ulong64 uVar4;
-  uint uVar6;
+  uint uVar5;
+  int iVar6;
   char *pcVar7;
-  int iVar8;
-  uint uVar9;
-  byte *pbVar10;
-  ulonglong uVar11;
-  uchar *puVar12;
-  ulonglong uVar13;
+  uint uVar8;
+  byte *pbVar9;
+  ulonglong uVar10;
+  uchar *puVar11;
+  ulonglong uVar12;
   
-  piVar5 = (int *)__savegprlr_25(this);
-  if (*piVar5 == 0) {
+  if (this->type == CT_TYPE_INVALID) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\online\\memory_hash.cpp",0x18e,
                     0,"%s");
   }
   uVar2 = TBLr;
-  if ((ulonglong)(uint)piVar5[2] <= (ulonglong)(uint)piVar5[3]) {
-LAB_827157d4:
-    iVar8 = __restgprlr_25(1);
-    return iVar8;
+  if ((ulonglong)this->length <= (ulonglong)this->position) {
+    return 1;
   }
-  uVar13 = (ulonglong)(uint)piVar5[2] - (ulonglong)(uint)piVar5[3];
-  if (piVar5[4] <= (int)uVar13) {
-    uVar13 = (ulonglong)(uint)piVar5[4];
+  uVar12 = (ulonglong)this->length - (ulonglong)this->position;
+  if ((int)this->blockSize <= (int)uVar12) {
+    uVar12 = (ulonglong)this->blockSize;
   }
-  if ((uVar13 & 0xffffffff) == 0) {
+  if ((uVar12 & 0xffffffff) == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\online\\memory_hash.cpp",0x198,
                     0,"%s");
   }
-  iVar8 = *piVar5;
-  iVar1 = piVar5[3];
-  puVar12 = (uchar *)(iVar1 + piVar5[1]);
-  if (iVar8 - 1U < 5) {
-    uVar9 = (uint)uVar13;
-    if (iVar8 == 2) {
-      uVar6 = Com_BlockChecksumKey32(puVar12,uVar9,(uint)*(undefined8 *)(piVar5 + 8));
-      *(ulonglong *)(piVar5 + 8) = (ulonglong)uVar6;
-      piVar5[3] = uVar9 + piVar5[3];
+  cVar1 = this->type;
+  uVar5 = this->position;
+  puVar11 = (uchar *)(uVar5 + this->start);
+  if (cVar1 - CT_TYPE_CRC32 < 5) {
+    uVar8 = (uint)uVar12;
+    if (cVar1 == CT_TYPE_MD4) {
+      uVar5 = Com_BlockChecksumKey32(puVar11,uVar8,(uint)this->state);
+      this->state = (ulonglong)uVar5;
+      this->position = uVar8 + this->position;
     }
-    else if (iVar8 == 3) {
+    else if (cVar1 == CT_TYPE_SHA_TOMCRYPT) {
       if (libTomCryptSHA1Index < 0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\online\\memory_hash.cpp",
                         0x1b2,0,"%s");
       }
-      iVar8 = (**(code **)(&DAT_848961a0 + libTomCryptSHA1Index * 0x68))(piVar5 + 10,puVar12,uVar13)
-      ;
-      if (iVar8 != 0) {
+      iVar6 = (**(code **)(&DAT_848961a0 + libTomCryptSHA1Index * 0x68))
+                        ((longlong)(int)this + 0x28,puVar11,uVar12);
+      if (iVar6 != 0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\online\\memory_hash.cpp",
                         0x1b7,0,"%s");
-        goto LAB_827157d4;
+        return 1;
       }
-      piVar5[3] = uVar9 + piVar5[3];
+      this->position = uVar8 + this->position;
     }
-    else if (iVar8 == 4) {
-      uVar11 = *(ulonglong *)(piVar5 + 8) & 0xffffffff;
-      if (uVar9 != 0) {
-        pbVar10 = puVar12 + -1;
+    else if (cVar1 == CT_TYPE_8WAY) {
+      uVar10 = this->state & 0xffffffff;
+      if (uVar8 != 0) {
+        pbVar9 = puVar11 + -1;
         do {
-          pbVar10 = pbVar10 + 1;
-          uVar11 = (ulonglong)
-                   *(uint *)((int)crc32_table + (int)((uVar11 & 0xff ^ (ulonglong)*pbVar10) << 2)) ^
-                   uVar11 >> 8;
-          uVar13 = uVar13 - 1;
-        } while (uVar13 != 0);
+          pbVar9 = pbVar9 + 1;
+          uVar10 = (ulonglong)
+                   *(uint *)((int)crc32_table + (int)((uVar10 & 0xff ^ (ulonglong)*pbVar9) << 2)) ^
+                   uVar10 >> 8;
+          uVar12 = uVar12 - 1;
+        } while (uVar12 != 0);
       }
-      piVar5[3] = iVar1 + uVar9;
-      *(ulonglong *)(piVar5 + 8) = uVar11;
-      if ((uint)piVar5[2] < iVar1 + uVar9) {
+      this->position = uVar5 + uVar8;
+      this->state = uVar10;
+      if (this->length < uVar5 + uVar8) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\online\\memory_hash.cpp",
                         0x1c3,0,"%s");
       }
-      if (piVar5[3] == piVar5[2]) {
-        uVar13 = *(ulonglong *)(piVar5 + 8);
-        uVar9 = piVar5[5];
-        *(ulonglong *)(piVar5 + 0xc) =
-             (uVar13 >> 0x18 & 0xff ^ uVar13 >> 0x10 & 0xff ^ uVar13 >> 8 & 0xff ^ uVar13 & 0xff) <<
-             (((ulonglong)uVar9 & 0xf) << 3) | *(ulonglong *)(piVar5 + 0xc);
-        if ((ulonglong)uVar9 < 7) {
-          piVar5[5] = uVar9 + 1;
-          piVar5[3] = 0;
-          piVar5[1] = piVar5[2] + piVar5[1];
-          *(undefined8 *)(piVar5 + 8) = *(undefined8 *)(piVar5 + 10);
+      if (this->position == this->length) {
+        uVar12 = this->state;
+        uVar5 = this->index;
+        (this->field9_0x28).eightWayState.cumulativeState =
+             (uVar12 >> 0x18 & 0xff ^ uVar12 >> 0x10 & 0xff ^ uVar12 >> 8 & 0xff ^ uVar12 & 0xff) <<
+             (((ulonglong)uVar5 & 0xf) << 3) | (this->field9_0x28).eightWayState.cumulativeState;
+        if ((ulonglong)uVar5 < 7) {
+          uVar4 = (this->field9_0x28).eightWayState.initialKey;
+          this->index = uVar5 + 1;
+          this->position = 0;
+          this->start = this->length + this->start;
+          this->state = uVar4;
         }
       }
     }
-    else if (iVar8 == 1) {
-      uVar11 = *(ulonglong *)(piVar5 + 8) & 0xffffffff;
-      if (uVar9 != 0) {
-        pbVar10 = puVar12 + -1;
+    else if (cVar1 == CT_TYPE_CRC32) {
+      uVar10 = this->state & 0xffffffff;
+      if (uVar8 != 0) {
+        pbVar9 = puVar11 + -1;
         do {
-          pbVar10 = pbVar10 + 1;
-          uVar11 = (ulonglong)
-                   *(uint *)((int)crc32_table + (int)((uVar11 & 0xff ^ (ulonglong)*pbVar10) << 2)) ^
-                   uVar11 >> 8;
-          uVar13 = uVar13 - 1;
-        } while (uVar13 != 0);
+          pbVar9 = pbVar9 + 1;
+          uVar10 = (ulonglong)
+                   *(uint *)((int)crc32_table + (int)((uVar10 & 0xff ^ (ulonglong)*pbVar9) << 2)) ^
+                   uVar10 >> 8;
+          uVar12 = uVar12 - 1;
+        } while (uVar12 != 0);
       }
-      *(ulonglong *)(piVar5 + 8) = uVar11;
-      piVar5[3] = iVar1 + uVar9;
+      this->state = uVar10;
+      this->position = uVar5 + uVar8;
     }
     else {
-      uVar4 = MemoryHash_GenerateCRC32ChecksumSplitDual(puVar12,uVar9,*(ulong64 *)(piVar5 + 8));
-      *(ulong64 *)(piVar5 + 8) = uVar4;
-      piVar5[3] = iVar1 + uVar9;
+      uVar4 = MemoryHash_GenerateCRC32ChecksumSplitDual(puVar11,uVar8,this->state);
+      this->state = uVar4;
+      this->position = uVar5 + uVar8;
     }
   }
   else if (alwaysfails == 0) {
@@ -396,13 +388,12 @@ LAB_827157d4:
                     0,pcVar7);
   }
   uVar3 = TBLr;
-  piVar5[7] = (piVar5[7] - (int)uVar2) + (int)uVar3;
-  if ((uint)piVar5[2] < (uint)piVar5[3]) {
+  this->cumulativeProcessingTime = (this->cumulativeProcessingTime - (int)uVar2) + (int)uVar3;
+  if (this->length < this->position) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\online\\memory_hash.cpp",0x1de,
                     0,"%s");
   }
-  iVar8 = __restgprlr_25(-((ulonglong)((uint)piVar5[3] < (uint)piVar5[2]) - 1));
-  return iVar8;
+  return -((this->position < this->length) - 1);
 }
 
 
@@ -419,25 +410,27 @@ int __thiscall MemoryHashInfo::Cancel(MemoryHashInfo *this)
 
 // 82715998  Complete  (online/memory_hash.cpp:503)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 void __thiscall MemoryHashInfo::Complete(MemoryHashInfo *this,ulong64 *param_1)
 
 {
-  undefined8 uVar1;
+  challengeTest_t cVar1;
   undefined8 uVar2;
-  int *piVar3;
+  undefined8 uVar3;
   int iVar4;
   undefined1 auStack_50 [80];
   
-  piVar3 = (int *)__savegprlr_26(this);
-  if (*piVar3 == 0) {
+  if (this->type == CT_TYPE_INVALID) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\online\\memory_hash.cpp",0x1fd,
                     0,"%s");
   }
-  uVar1 = TBLr;
-  iVar4 = *piVar3;
-  if (4 < iVar4 - 1U) goto LAB_82715afc;
-  if (iVar4 != 2) {
-    if (iVar4 == 3) {
+  uVar2 = TBLr;
+  cVar1 = this->type;
+  if (4 < cVar1 - CT_TYPE_CRC32) goto LAB_82715afc;
+  if (cVar1 != CT_TYPE_MD4) {
+    if (cVar1 == CT_TYPE_SHA_TOMCRYPT) {
       if (*(int *)(&DAT_84896150 + libTomCryptSHA1Index * 0x68) != 0x14) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\online\\memory_hash.cpp",
                         0x20f,0,"%s");
@@ -447,7 +440,8 @@ void __thiscall MemoryHashInfo::Complete(MemoryHashInfo *this,ulong64 *param_1)
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\online\\memory_hash.cpp",
                         0x213,0,"%s");
       }
-      iVar4 = (**(code **)(&DAT_848961a4 + libTomCryptSHA1Index * 0x68))(piVar3 + 10,auStack_50);
+      iVar4 = (**(code **)(&DAT_848961a4 + libTomCryptSHA1Index * 0x68))
+                        ((longlong)(int)this + 0x28,auStack_50);
       if (iVar4 == 0) {
         Com_Memcpy(param_1,auStack_50,8);
       }
@@ -457,17 +451,16 @@ void __thiscall MemoryHashInfo::Complete(MemoryHashInfo *this,ulong64 *param_1)
       }
       goto LAB_82715afc;
     }
-    if (iVar4 == 4) {
-      *param_1 = *(ulong64 *)(piVar3 + 0xc);
+    if (cVar1 == CT_TYPE_8WAY) {
+      *param_1 = (this->field9_0x28).eightWayState.cumulativeState;
       goto LAB_82715afc;
     }
   }
-  *param_1 = *(ulong64 *)(piVar3 + 8);
+  *param_1 = this->state;
 LAB_82715afc:
-  uVar2 = TBLr;
-  *piVar3 = 0;
-  piVar3[7] = (piVar3[7] - (int)uVar1) + (int)uVar2;
-  __restgprlr_26();
+  uVar3 = TBLr;
+  this->type = CT_TYPE_INVALID;
+  this->cumulativeProcessingTime = (this->cumulativeProcessingTime - (int)uVar2) + (int)uVar3;
   return;
 }
 

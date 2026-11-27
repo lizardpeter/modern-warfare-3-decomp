@@ -2,28 +2,26 @@
 
 // 82864618  AlignTextureDimensions  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/texture.cpp:31)
 
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
+
 ulong D3D::AlignTextureDimensions
                 (ulong *param_1,ulong *param_2,ulong *param_3,ulong param_4,ulong param_5,
                 ulong param_6,int param_7)
 
 {
   ulonglong uVar1;
-  uint *puVar2;
-  ulong uVar3;
+  int iVar2;
+  int iVar3;
   int iVar4;
   uint uVar5;
-  int iVar6;
-  int iVar7;
-  ulonglong uVar8;
   ulong local_60;
   ulong local_5c [23];
   
-  uVar8 = (ulonglong)(int)param_6;
-  puVar2 = (uint *)__savegprlr_22(param_1);
-  iVar6 = 0x20;
-  iVar7 = 4;
-  if ((uVar8 & 0xffffffff) != 2) {
-    iVar7 = 1;
+  iVar3 = 0x20;
+  iVar4 = 4;
+  if (param_6 != 2) {
+    iVar4 = 1;
   }
   BlockSizeOfGpuFormat(param_5,local_5c,&local_60);
   if (param_7 == 0) {
@@ -31,28 +29,30 @@ ulong D3D::AlignTextureDimensions
     if (uVar1 != 0) {
       trapWord(6,uVar1,0);
       if (0x1f < 0x100 / uVar1) {
-        iVar6 = (int)(0x100 / uVar1);
+        iVar3 = (int)(0x100 / uVar1);
       }
     }
   }
-  iVar4 = local_60 * ((-(uint)(uVar8 != 0) & 0x1f) + 1);
-  *puVar2 = (*puVar2 + local_5c[0] * iVar6) - 1 & ~(local_5c[0] * iVar6 - 1);
-  *param_2 = (*param_2 + iVar4) - 1 & ~(iVar4 - 1U);
-  uVar5 = (*param_3 + iVar7) - 1 & ~(iVar7 - 1U);
+  iVar2 = local_60 * ((-(uint)(param_6 != 0) & 0x1f) + 1);
+  *param_1 = (*param_1 + local_5c[0] * iVar3) - 1 & ~(local_5c[0] * iVar3 - 1);
+  *param_2 = (*param_2 + iVar2) - 1 & ~(iVar2 - 1U);
+  uVar5 = (*param_3 + iVar4) - 1 & ~(iVar4 - 1U);
   *param_3 = uVar5;
-  iVar6 = (int)(((longlong)(int)*puVar2 * (longlong)(int)param_4 & 0xffffffffU) >> 3) * *param_2;
-  if ((uVar8 & 0xffffffff) == 2) {
-    uVar8 = (longlong)(int)uVar5 * (longlong)iVar6 + 0xfffU & 0xfffff000;
+  iVar3 = (*param_1 * param_4 >> 3) * *param_2;
+  if (param_6 == 2) {
+    uVar5 = uVar5 * iVar3 + 0xfff & 0xfffff000;
   }
   else {
-    uVar8 = (longlong)(int)(iVar6 + 0xfffU & 0xfffff000) * (longlong)(int)uVar5;
+    uVar5 = (iVar3 + 0xfffU & 0xfffff000) * uVar5;
   }
-  uVar3 = __restgprlr_22(uVar8);
-  return uVar3;
+  return uVar5;
 }
 
 
 // 82864748  FindTextureSize  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/texture.cpp:106)
+
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
 
 ulong D3D::FindTextureSize
                 (ulong param_1,ulong param_2,ulong param_3,ulong param_4,ulong param_5,ulong param_6
@@ -62,26 +62,22 @@ ulong D3D::FindTextureSize
 {
   byte bVar1;
   uint uVar2;
-  longlong lVar3;
-  ulong uVar4;
-  longlong lVar5;
-  ulonglong uVar6;
-  ulong uVar7;
-  ulonglong uVar8;
-  uint uVar9;
-  int iVar10;
+  ulong uVar3;
+  uint uVar4;
+  int iVar5;
+  longlong lVar6;
+  longlong lVar7;
+  int iVar8;
+  ulonglong uVar9;
+  ulonglong uVar10;
   ulonglong uVar11;
-  int iVar12;
+  uint uVar12;
   ulonglong uVar13;
   ulonglong uVar14;
   ulonglong uVar15;
-  uint uVar16;
+  ulonglong uVar16;
   ulonglong uVar17;
-  ulonglong uVar18;
-  ulonglong uVar19;
-  ulonglong uVar20;
-  ulonglong uVar21;
-  int iStack00000024;
+  ulong uStack00000024;
   int iStack0000004c;
   uint in_stack_00000054;
   uint in_stack_00000064;
@@ -94,16 +90,10 @@ ulong D3D::FindTextureSize
   uint local_a4;
   ulong local_a0 [40];
   
-  uVar8 = (ulonglong)(int)param_6;
-  uVar11 = (ulonglong)(int)param_5;
-  uVar6 = (ulonglong)(int)param_4;
-  uVar18 = (ulonglong)(int)param_3;
-  lVar5 = (longlong)(int)param_2;
-  lVar3 = (longlong)(int)param_1;
-  __savegprlr();
-  iStack00000024 = (int)uVar18;
-  iVar12 = 0;
-  if (((uVar8 & 0xffffffff) == 1) && (1 < (uVar18 & 0xffffffff))) {
+  lVar6 = (longlong)(int)param_4;
+  uVar14 = (ulonglong)(int)param_3;
+  iVar8 = 0;
+  if ((param_6 == 1) && (1 < param_3)) {
     local_a0[0] = 1;
 LAB_828647b0:
     local_a8 = 1;
@@ -111,204 +101,201 @@ LAB_828647b0:
   else {
     local_a0[0] = 0;
     local_a8 = 0;
-    if ((uVar8 & 0xffffffff) == 3) goto LAB_828647b0;
+    if (param_6 == 3) goto LAB_828647b0;
   }
   if (local_a8 != 0) {
-    uVar18 = 1;
+    uVar14 = 1;
   }
-  uVar21 = (ulonglong)in_stack_00000054;
-  uVar15 = (ulonglong)in_stack_00000054 & 0x7fffffff;
-  uVar13 = lVar3 + uVar15 * -2;
-  uVar14 = lVar5 + uVar15 * -2;
-  iVar10 = (int)uVar13;
-  bVar1 = *(byte *)((int)g_FormatTable + (int)((uVar11 & 0xffffffff) << 1) + 1);
-  uVar19 = (uVar21 - LZCOUNT(iVar10 + -1)) + 0x20;
-  uVar20 = (uVar21 - LZCOUNT((int)uVar14 + -1)) + 0x20;
-  if ((uVar8 & 0xffffffff) == 2) {
-    uVar15 = uVar18 + uVar15 * -2;
-    uVar17 = (ulonglong)in_stack_00000064;
-    uVar9 = (in_stack_00000054 - (int)LZCOUNT((int)uVar15 + -1)) + 0x20;
+  uVar17 = (ulonglong)in_stack_00000054;
+  uVar11 = (ulonglong)in_stack_00000054 & 0x7fffffff;
+  uVar9 = (longlong)(int)param_1 + uVar11 * -2;
+  uVar10 = (longlong)(int)param_2 + uVar11 * -2;
+  iVar5 = (int)uVar9;
+  bVar1 = *(byte *)((int)g_FormatTable + param_5 * 2 + 1);
+  uVar15 = (uVar17 - LZCOUNT(iVar5 + -1)) + 0x20;
+  uVar16 = (uVar17 - LZCOUNT((int)uVar10 + -1)) + 0x20;
+  if (param_6 == 2) {
+    uVar11 = uVar14 + uVar11 * -2;
+    uVar13 = (ulonglong)in_stack_00000064;
+    uVar4 = (in_stack_00000054 - (int)LZCOUNT((int)uVar11 + -1)) + 0x20;
   }
   else {
-    uVar15 = 1;
-    uVar9 = 0;
-    uVar17 = -(ulonglong)(uVar8 != 0) & (ulonglong)in_stack_00000064;
+    uVar11 = 1;
+    uVar4 = 0;
+    uVar13 = -(ulonglong)(param_6 != 0) & (ulonglong)in_stack_00000064;
   }
-  uVar16 = (uint)uVar17;
-  local_b0 = 1 << (uVar9 & 0x3f);
-  local_a4 = 1 << ((uint)uVar19 & 0x3f);
-  local_ac = 1 << ((uint)uVar20 & 0x3f);
+  uVar12 = (uint)uVar13;
+  local_b0 = 1 << (uVar4 & 0x3f);
+  local_a4 = 1 << ((uint)uVar15 & 0x3f);
+  local_ac = 1 << ((uint)uVar16 & 0x3f);
   if (((0x10 < local_a4) && (0x10 < local_ac)) || (param_8 == 0)) {
-    if (uVar17 == 0) {
-      local_a4 = (uint)lVar3;
-    }
-    else {
+    local_a4 = param_1;
+    if (uVar13 != 0) {
       trapWord(6,(ulonglong)bVar1,0);
-      local_a4 = (uint)(((uVar17 & 0x1fffffff) << 3) / (ulonglong)bVar1);
+      local_a4 = (uint)(((uVar13 & 0x1fffffff) << 3) / (ulonglong)bVar1);
     }
-    local_b0 = (ulong)uVar18;
-    local_ac = (uint)lVar5;
+    local_b0 = (ulong)uVar14;
+    local_ac = param_2;
   }
-  uVar7 = (ulong)uVar11;
+  uStack00000024 = param_3;
   iStack0000004c = param_8;
-  AlignTextureDimensions(&local_a4,&local_ac,&local_b0,(uint)bVar1,uVar7,(ulong)uVar8,param_7);
-  uVar9 = local_a4;
-  if (uVar17 == 0) {
-    uVar16 = local_a4 * bVar1 >> 3;
+  AlignTextureDimensions(&local_a4,&local_ac,&local_b0,(uint)bVar1,param_5,param_6,param_7);
+  uVar4 = local_a4;
+  if (uVar13 == 0) {
+    uVar12 = local_a4 * bVar1 >> 3;
   }
   if ((param_7 == 0) && (local_a8 == 0)) {
-    if ((uVar8 & 0xffffffff) == 2) {
+    if (param_6 == 2) {
 LAB_82864974:
-      uVar16 = uVar16 * local_b0 * local_ac + 0xfff & 0xfffff000;
+      uVar12 = uVar12 * local_b0 * local_ac + 0xfff & 0xfffff000;
       goto LAB_8286498c;
     }
-    if ((((uVar8 & 0xffffffff) == 1) && ((uVar6 & 0xffffffff) == 1)) &&
-       ((iStack0000004c == 0 && (uVar21 == 0)))) {
-      BlockSizeOfGpuFormat(uVar7,&local_a4,local_a0);
-      uVar16 = ((local_a0[0] + (uint)lVar5) - 1 & ~(local_a0[0] - 1)) * uVar16;
+    if (((param_6 == 1) && (param_4 == 1)) && ((iStack0000004c == 0 && (uVar17 == 0)))) {
+      BlockSizeOfGpuFormat(param_5,&local_a4,local_a0);
+      uVar12 = ((local_a0[0] + param_2) - 1 & ~(local_a0[0] - 1)) * uVar12;
       goto LAB_82864abc;
     }
-    uVar16 = uVar16 * local_b0 * local_ac;
+    uVar12 = uVar12 * local_b0 * local_ac;
   }
   else {
-    if ((uVar8 & 0xffffffff) == 2) goto LAB_82864974;
-    uVar16 = (uVar16 * local_ac + 0xfff & 0xfffff000) * local_b0;
+    if (param_6 == 2) goto LAB_82864974;
+    uVar12 = (uVar12 * local_ac + 0xfff & 0xfffff000) * local_b0;
 LAB_8286498c:
     if (local_a8 != 0) {
-      uVar16 = uVar16 * iStack00000024;
+      uVar12 = uVar12 * uStack00000024;
     }
   }
-  if ((1 < (uVar6 & 0xffffffff)) || ((uVar6 & 0xffffffff) == 0)) {
-    uVar11 = uVar14;
-    if ((uVar14 & 0xffffffff) <= (uVar15 & 0xffffffff)) {
-      uVar11 = uVar15;
+  if ((1 < param_4) || (param_4 == 0)) {
+    uVar17 = uVar10;
+    if ((uVar10 & 0xffffffff) <= (uVar11 & 0xffffffff)) {
+      uVar17 = uVar11;
     }
-    if (((uVar13 & 0xffffffff) <= (uVar11 & 0xffffffff)) &&
-       (iVar10 = (int)uVar14, (uVar14 & 0xffffffff) <= (uVar15 & 0xffffffff))) {
-      iVar10 = (int)uVar15;
+    if (((uVar9 & 0xffffffff) <= (uVar17 & 0xffffffff)) &&
+       (iVar5 = (int)uVar10, (uVar10 & 0xffffffff) <= (uVar11 & 0xffffffff))) {
+      iVar5 = (int)uVar11;
     }
-    uVar11 = uVar6;
-    if ((uVar6 & 0xffffffff) == 0) {
-      uVar11 = 0x20 - LZCOUNT(iVar10);
-      uVar6 = uVar11;
+    lVar7 = lVar6;
+    if (param_4 == 0) {
+      lVar6 = 0x20 - LZCOUNT(iVar5);
+      lVar7 = lVar6;
     }
-    while ((uVar11 - 1 != 0 &&
-           ((iStack0000004c == 0 || ((4 < (uVar19 & 0xffffffff) && (4 < (uVar20 & 0xffffffff))))))))
-    {
-      if ((uVar19 & 0xffffffff) != 0) {
-        uVar19 = uVar19 - 1;
+    while( true ) {
+      param_4 = (ulong)lVar7;
+      lVar6 = lVar6 + -1;
+      if ((lVar6 == 0) ||
+         ((iStack0000004c != 0 && (((uVar15 & 0xffffffff) < 5 || ((uVar16 & 0xffffffff) < 5))))))
+      break;
+      if ((uVar15 & 0xffffffff) != 0) {
+        uVar15 = uVar15 - 1;
       }
-      if ((uVar20 & 0xffffffff) != 0) {
-        uVar20 = uVar20 - 1;
+      if ((uVar16 & 0xffffffff) != 0) {
+        uVar16 = uVar16 - 1;
       }
-      if (1 < (uVar18 & 0xffffffff)) {
-        uVar18 = (uVar18 & 0xffffffff) >> 1;
+      if (1 < (uVar14 & 0xffffffff)) {
+        uVar14 = (uVar14 & 0xffffffff) >> 1;
       }
-      local_b0 = 1 << ((uint)uVar19 & 0x3f);
-      local_a4 = (uint)uVar18;
-      local_ac = 1 << ((uint)uVar20 & 0x3f);
-      uVar4 = AlignTextureDimensions
-                        (&local_b0,&local_ac,&local_a4,(uint)bVar1,uVar7,(ulong)uVar8,param_7);
-      iVar12 = uVar4 + iVar12;
-      uVar11 = uVar11 - 1;
+      local_b0 = 1 << ((uint)uVar15 & 0x3f);
+      local_a4 = (uint)uVar14;
+      local_ac = 1 << ((uint)uVar16 & 0x3f);
+      uVar3 = AlignTextureDimensions
+                        (&local_b0,&local_ac,&local_a4,(uint)bVar1,param_5,param_6,param_7);
+      iVar8 = uVar3 + iVar8;
     }
     if (local_a8 != 0) {
       uVar2 = -(uint)(local_a0[0] != 0) & 3;
-      iVar12 = (uVar2 + iStack00000024 & ~uVar2) * iVar12;
+      iVar8 = (uVar2 + uStack00000024 & ~uVar2) * iVar8;
     }
   }
 LAB_82864abc:
-  *in_stack_0000006c = uVar9;
-  *in_stack_00000074 = uVar16;
-  *in_stack_0000007c = iVar12;
-  uVar7 = (ulong)uVar6;
-  __restgprlr();
-  return uVar7;
+  *in_stack_0000006c = uVar4;
+  *in_stack_00000074 = uVar12;
+  *in_stack_0000007c = iVar8;
+  return param_4;
 }
 
 
 // 82864430  BlockSizeOfGpuFormat  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/xgshared.hpp:353)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void D3D::BlockSizeOfGpuFormat(ulong param_1,ulong *param_2,ulong *param_3)
 
 {
-  uint uVar1;
-  ulong uVar2;
+  ulong uVar1;
   
-  uVar1 = __savegprlr_29(param_1);
-  if (uVar1 < 0x2d) {
-    if (uVar1 == 0x2c) {
+  if (param_1 < 0x2d) {
+    if (param_1 == 0x2c) {
 LAB_8286449c:
-      uVar2 = 4;
-LAB_8286448c:
-      *param_2 = uVar2;
-      *param_3 = 1;
-      goto LAB_828644e0;
+      uVar1 = 4;
+      goto LAB_8286448c;
     }
-    if (10 < uVar1) {
-      if (uVar1 < 0xd) {
+    if (10 < param_1) {
+      if (param_1 < 0xd) {
 LAB_82864488:
-        uVar2 = 2;
-        goto LAB_8286448c;
+        uVar1 = 2;
+LAB_8286448c:
+        *param_2 = uVar1;
+        *param_3 = 1;
+        return;
       }
-      if (0x11 < uVar1) {
-        if (uVar1 < 0x15) goto LAB_828644d4;
-        if (uVar1 == 0x27) goto LAB_8286449c;
-        if (uVar1 == 0x28) goto LAB_82864488;
+      if (0x11 < param_1) {
+        if (param_1 < 0x15) goto LAB_828644d4;
+        if (param_1 == 0x27) goto LAB_8286449c;
+        if (param_1 == 0x28) goto LAB_82864488;
       }
     }
-LAB_828644cc:
-    uVar2 = 1;
   }
-  else {
-    if ((uVar1 != 0x31) &&
-       ((uVar1 < 0x33 || ((0x35 < uVar1 && ((uVar1 < 0x3a || (0x3d < uVar1))))))))
-    goto LAB_828644cc;
+  else if ((param_1 == 0x31) ||
+          ((0x32 < param_1 && ((param_1 < 0x36 || ((0x39 < param_1 && (param_1 < 0x3e)))))))) {
 LAB_828644d4:
-    uVar2 = 4;
+    uVar1 = 4;
+    goto LAB_828644d8;
   }
-  *param_2 = uVar2;
-  *param_3 = uVar2;
-LAB_828644e0:
-  __restgprlr_29();
+  uVar1 = 1;
+LAB_828644d8:
+  *param_2 = uVar1;
+  *param_3 = uVar1;
   return;
 }
 
 
 // 828642A8  GetTextureDimensions  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/texture.cpp:452)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void D3D::GetTextureDimensions(D3DBaseTexture *param_1,ulong *param_2,ulong *param_3,ulong *param_4)
 
 {
   uint uVar1;
   int iVar2;
-  int iVar3;
   
-  iVar2 = __savegprlr_28(param_1);
-  uVar1 = *(uint *)(iVar2 + 0x30) >> 9 & 3;
-  iVar3 = (*(uint *)(iVar2 + 0x28) >> 0x1e & 2) + 1;
+  uVar1 = (param_1->Format).dword[5] >> 9 & 3;
+  iVar2 = ((param_1->Format).dword[3] >> 0x1e & 2) + 1;
   if (uVar1 == 0) {
-    *param_2 = (*(uint *)(iVar2 + 0x24) & 0xffffff) + iVar3;
+    *param_2 = ((param_1->Format).dword[2] & 0xffffff) + iVar2;
     *param_3 = 1;
   }
   else {
     if (uVar1 == 2) {
-      *param_2 = (*(uint *)(iVar2 + 0x24) & 0x7ff) + iVar3;
-      *param_3 = (*(uint *)(iVar2 + 0x24) >> 0xb & 0x7ff) + iVar3;
-      *param_4 = (*(uint *)(iVar2 + 0x24) >> 0x16) + iVar3;
-      goto LAB_8286435c;
+      *param_2 = ((param_1->Format).dword[2] & 0x7ff) + iVar2;
+      *param_3 = ((param_1->Format).dword[2] >> 0xb & 0x7ff) + iVar2;
+      *param_4 = ((param_1->Format).dword[2] >> 0x16) + iVar2;
+      return;
     }
-    *param_2 = (*(uint *)(iVar2 + 0x24) & 0x1fff) + iVar3;
-    *param_3 = (*(uint *)(iVar2 + 0x24) >> 0xd & 0x1fff) + iVar3;
+    *param_2 = ((param_1->Format).dword[2] & 0x1fff) + iVar2;
+    *param_3 = ((param_1->Format).dword[2] >> 0xd & 0x1fff) + iVar2;
   }
   *param_4 = 1;
-LAB_8286435c:
-  __restgprlr_28();
   return;
 }
 
 
 // 82864368  GetGpuTextureDimensions  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/texture.cpp:486)
+
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 
 void D3D::GetGpuTextureDimensions
                (GPUTEXTURE_FETCH_CONSTANT *param_1,ulong *param_2,ulong *param_3,ulong *param_4)
@@ -316,36 +303,36 @@ void D3D::GetGpuTextureDimensions
 {
   uint uVar1;
   int iVar2;
-  int iVar3;
-  ulong uVar4;
+  ulong uVar3;
   
-  iVar2 = __savegprlr_28(param_1);
-  uVar1 = *(uint *)(iVar2 + 0x14) >> 9 & 3;
-  iVar3 = (*(uint *)(iVar2 + 0xc) >> 0x1e & 2) + 1;
+  uVar1 = param_1->dword[5] >> 9 & 3;
+  iVar2 = (param_1->dword[3] >> 0x1e & 2) + 1;
   if (uVar1 == 0) {
-    *param_2 = (*(uint *)(iVar2 + 8) & 0xffffff) + iVar3;
+    *param_2 = (param_1->dword[2] & 0xffffff) + iVar2;
     *param_3 = 1;
     *param_4 = 1;
   }
   else {
     if (uVar1 == 2) {
-      *param_2 = (*(uint *)(iVar2 + 8) & 0x7ff) + iVar3;
-      *param_3 = (*(uint *)(iVar2 + 8) >> 0xb & 0x7ff) + iVar3;
-      uVar4 = (*(uint *)(iVar2 + 8) >> 0x16) + iVar3;
+      *param_2 = (param_1->dword[2] & 0x7ff) + iVar2;
+      *param_3 = (param_1->dword[2] >> 0xb & 0x7ff) + iVar2;
+      uVar3 = (param_1->dword[2] >> 0x16) + iVar2;
     }
     else {
-      *param_2 = (*(uint *)(iVar2 + 8) & 0x1fff) + iVar3;
-      *param_3 = (*(uint *)(iVar2 + 8) >> 0xd & 0x1fff) + iVar3;
-      uVar4 = (*(uint *)(iVar2 + 8) >> 0x1a) + 1;
+      *param_2 = (param_1->dword[2] & 0x1fff) + iVar2;
+      *param_3 = (param_1->dword[2] >> 0xd & 0x1fff) + iVar2;
+      uVar3 = (param_1->dword[2] >> 0x1a) + 1;
     }
-    *param_4 = uVar4;
+    *param_4 = uVar3;
   }
-  __restgprlr_28();
   return;
 }
 
 
 // 82864AE8  GetMipTailLevelOffsetCoords  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/texture.cpp:524)
+
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 
 ulong D3D::GetMipTailLevelOffsetCoords
                 (ulong param_1,ulong param_2,ulong param_3,ulong param_4,ulong param_5,ulong param_6
@@ -355,112 +342,90 @@ ulong D3D::GetMipTailLevelOffsetCoords
   byte bVar1;
   uint uVar2;
   ulonglong uVar3;
-  ulong uVar4;
-  ulonglong uVar5;
-  ulonglong uVar6;
-  uint uVar7;
+  ulonglong uVar4;
+  uint uVar5;
   uint *in_stack_00000054;
   int *in_stack_0000005c;
   uint local_70;
   uint local_6c;
   uint local_68 [26];
   
-  uVar5 = (ulonglong)(int)param_7;
-  uVar3 = __savegprlr_24(param_1);
   local_68[2] = 0;
   local_68[3] = 0;
   local_68[4] = 0;
-  bVar1 = *(byte *)((int)g_FormatTable + (int)((uVar5 & 0xffffffff) << 1) + 1);
-  BlockSizeOfGpuFormat((ulong)uVar5,&local_70,&local_6c);
-  uVar6 = 0x20 - LZCOUNT(param_2 - 1);
-  uVar5 = 0x20 - LZCOUNT(param_3 - 1);
-  local_68[0] = 1 << ((uint)uVar6 & 0x3f);
-  uVar2 = -(uint)(uVar5 < uVar6) & 1;
-  local_68[1] = 1 << ((uint)uVar5 & 0x3f);
-  if ((uVar3 & 0xffffffff) < 3) {
-    local_68[uVar2 + 2] = 0x10 >> ((uint)uVar3 & 0x3f);
-    uVar7 = local_68[4];
+  bVar1 = *(byte *)((int)g_FormatTable + param_7 * 2 + 1);
+  BlockSizeOfGpuFormat(param_7,&local_70,&local_6c);
+  uVar4 = 0x20 - LZCOUNT(param_2 - 1);
+  uVar3 = 0x20 - LZCOUNT(param_3 - 1);
+  local_68[0] = 1 << ((uint)uVar4 & 0x3f);
+  uVar2 = -(uint)(uVar3 < uVar4) & 1;
+  local_68[1] = 1 << ((uint)uVar3 & 0x3f);
+  if (param_1 < 3) {
+    local_68[uVar2 + 2] = 0x10 >> (param_1 & 0x3f);
   }
   else {
-    uVar7 = uVar2 * 4 ^ 4;
-    uVar2 = *(uint *)((int)local_68 + uVar7) >> ((uint)uVar3 - 2 & 0x3f);
-    *(uint *)((int)local_68 + uVar7 + 8) = uVar2;
-    uVar7 = local_68[4];
+    uVar5 = uVar2 * 4 ^ 4;
+    uVar2 = *(uint *)((int)local_68 + uVar5) >> (param_1 - 2 & 0x3f);
+    *(uint *)((int)local_68 + uVar5 + 8) = uVar2;
     if (uVar2 < 4) {
-      uVar3 = (0x20 - LZCOUNT(param_4 - 1)) - uVar3;
+      uVar3 = (0x20 - LZCOUNT(param_4 - 1)) - (longlong)(int)param_1;
       if ((uVar3 & 0xffffffff) < 2) {
         uVar3 = 1;
       }
-      uVar7 = (int)((uVar3 & 0xffffffff) << 2);
+      local_68[4] = (uint)((uVar3 & 0xffffffff) << 2);
     }
   }
   trapWord(6,(ulonglong)local_70,0);
   *param_8 = local_68[2] / local_70;
   *in_stack_00000054 = local_68[3] / local_6c;
-  *in_stack_0000005c = uVar7;
+  *in_stack_0000005c = local_68[4];
   trapWord(6,(ulonglong)local_6c,0);
-  uVar4 = __restgprlr_24((((longlong)(int)(local_70 * bVar1) * (longlong)(int)local_68[2] &
-                          0xffffffffU) >> 3) + (longlong)(int)local_68[3] * (longlong)(int)param_5 +
-                         (longlong)(int)uVar7 * (longlong)(int)param_6);
-  return uVar4;
+  return (local_70 * bVar1 * local_68[2] >> 3) + local_68[3] * param_5 + local_68[4] * param_6;
 }
 
 
 // 828644F0  GetMaxMipLevels  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/xgshared.hpp:581)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 ulong D3D::GetMaxMipLevels(ulong param_1,ulong param_2,ulong param_3,ulong param_4)
 
 {
-  longlong lVar1;
-  ulong uVar2;
-  longlong lVar3;
-  longlong lVar4;
-  ulonglong uVar5;
-  ulonglong uVar6;
-  int iVar7;
-  ulonglong uVar8;
-  ulonglong uVar9;
-  ulonglong uVar10;
-  int iVar11;
+  uint uVar1;
+  uint uVar2;
+  uint uVar3;
+  uint uVar4;
   
-  uVar10 = (ulonglong)(int)param_4;
-  lVar4 = (longlong)(int)param_3;
-  lVar3 = (longlong)(int)param_2;
-  lVar1 = __savegprlr_28(param_1);
-  uVar10 = uVar10 & 0x7fffffff;
-  uVar6 = lVar4 + uVar10 * -2;
-  iVar7 = (int)uVar6;
-  uVar9 = uVar6;
-  if (iVar7 < 2) {
-    uVar9 = 1;
+  uVar2 = param_3 + param_4 * -2;
+  uVar4 = uVar2;
+  if ((int)uVar2 < 2) {
+    uVar4 = 1;
   }
-  uVar5 = lVar3 + uVar10 * -2;
-  uVar8 = uVar5;
-  if (((uVar5 & 0xffffffff) <= (uVar9 & 0xffffffff)) && (uVar8 = uVar6, iVar7 < 2)) {
-    uVar8 = 1;
+  uVar1 = param_2 + param_4 * -2;
+  uVar3 = uVar1;
+  if ((uVar1 <= uVar4) && (uVar3 = uVar2, (int)uVar2 < 2)) {
+    uVar3 = 1;
   }
-  uVar10 = lVar1 + uVar10 * -2;
-  iVar11 = (int)uVar10;
-  if ((uVar10 & 0xffffffff) <= (uVar8 & 0xffffffff)) {
-    if (iVar7 < 2) {
-      uVar6 = 1;
+  uVar4 = param_1 + param_4 * -2;
+  if (uVar4 <= uVar3) {
+    uVar3 = uVar2;
+    if ((int)uVar2 < 2) {
+      uVar3 = 1;
     }
-    if ((uVar6 & 0xffffffff) < (uVar5 & 0xffffffff)) {
-      iVar11 = (int)uVar5;
-    }
-    else {
-      iVar11 = iVar7;
-      if (iVar7 < 2) {
-        iVar11 = 1;
-      }
+    uVar4 = uVar1;
+    if ((uVar1 <= uVar3) && (uVar4 = uVar2, (int)uVar2 < 2)) {
+      uVar4 = 1;
     }
   }
-  uVar2 = __restgprlr_28(0x20 - LZCOUNT(iVar11));
-  return uVar2;
+  return 0x20 - (int)LZCOUNT(uVar4);
 }
 
 
 // 82864C50  GetMipTailLevelOffset  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/texture.cpp:583)
+
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 
 ulong D3D::GetMipTailLevelOffset
                 (ulong param_1,ulong param_2,ulong param_3,ulong param_4,ulong param_5,ulong param_6
@@ -472,42 +437,39 @@ ulong D3D::GetMipTailLevelOffset
   uint *in_stack_ffffff5c;
   uint auStack_48 [18];
   
-  uVar1 = __savegprlr_25(param_1);
   uVar1 = GetMipTailLevelOffsetCoords
-                    (uVar1,param_2,param_3,param_4,param_5,param_6,param_7,auStack_48,
+                    (param_1,param_2,param_3,param_4,param_5,param_6,param_7,auStack_48,
                      in_stack_ffffff58,in_stack_ffffff5c);
-  uVar1 = __restgprlr_25(uVar1);
   return uVar1;
 }
 
 
 // 828645A0  GetMipTailBaseLevel  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/xgshared.hpp:593)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 ulong D3D::GetMipTailBaseLevel(ulong param_1,ulong param_2,ulong param_3)
 
 {
-  int iVar1;
-  int iVar2;
-  ulong uVar3;
-  longlong lVar4;
-  longlong lVar5;
-  ulonglong uVar6;
+  uint uVar1;
+  longlong lVar2;
+  longlong lVar3;
   
-  uVar6 = (ulonglong)(int)param_3;
-  iVar2 = __savegprlr_29(param_1);
-  iVar1 = (int)((uVar6 & 0xffffffff) << 1);
-  lVar5 = (uVar6 - LZCOUNT((iVar2 - iVar1) + -1)) + 0x20;
-  lVar4 = (uVar6 - LZCOUNT((param_2 - iVar1) + -1)) + 0x20;
-  if ((int)lVar4 <= (int)lVar5) {
-    lVar5 = lVar4;
+  lVar3 = ((longlong)(int)param_3 - LZCOUNT(param_1 + param_3 * -2 + -1)) + 0x20;
+  lVar2 = ((longlong)(int)param_3 - LZCOUNT(param_2 + param_3 * -2 + -1)) + 0x20;
+  if ((int)lVar2 <= (int)lVar3) {
+    lVar3 = lVar2;
   }
-  uVar6 = lVar5 - 4;
-  uVar3 = __restgprlr_29((((uVar6 & 0xffffffff) >> 0x1f) - 1) + (ulonglong)(uVar6 == 0) & uVar6);
-  return uVar3;
+  uVar1 = (uint)(lVar3 + -4);
+  return (-1 - ((int)uVar1 >> 0x1f)) + (uint)(lVar3 + -4 == 0) & uVar1;
 }
 
 
 // 82864CC8  GetLevelSize  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/texture.cpp:605)
+
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
 
 void D3D::GetLevelSize(D3DBaseTexture *param_1,ulong param_2,ulong *param_3,ulong *param_4,
                       ulong *param_5,ulong *param_6,ulong *param_7)
@@ -517,156 +479,150 @@ void D3D::GetLevelSize(D3DBaseTexture *param_1,ulong param_2,ulong *param_3,ulon
   uint uVar2;
   uint uVar3;
   uint uVar4;
-  int iVar5;
-  uint uVar6;
-  int iVar7;
-  _D3DRESOURCETYPE _Var8;
-  ulong uVar9;
-  ulonglong uVar10;
+  uint uVar5;
+  int iVar6;
+  uint uVar7;
+  int iVar8;
+  _D3DRESOURCETYPE _Var9;
+  ulong uVar10;
   uint uVar11;
   uint uVar12;
-  uint uVar13;
-  uint uVar14;
+  ulong uVar13;
+  ulong uVar14;
   uint uVar15;
   ulong *puStack0000003c;
-  uint *puStack00000044;
+  ulong *puStack00000044;
   ulong local_c0;
   ulong local_bc;
   ulong local_b8;
-  uint local_b4;
+  ulong local_b4;
   uint local_b0;
-  uint local_ac;
+  ulong local_ac;
   _D3DRESOURCETYPE local_a8;
   
-  uVar10 = (ulonglong)(int)param_2;
-  __savegprlr();
-  uVar4 = (param_1->Format).dword[1] & 0x3f;
-  bVar1 = *(byte *)((int)g_FormatTable + uVar4 * 2 + 1);
+  uVar5 = (param_1->Format).dword[1] & 0x3f;
+  bVar1 = *(byte *)((int)g_FormatTable + uVar5 * 2 + 1);
   puStack0000003c = param_6;
   puStack00000044 = param_7;
-  _Var8 = D3DResource_GetType((D3DResource *)param_1);
-  local_a8 = _Var8;
-  if (_Var8 == D3DRTYPE_SURFACE) {
+  _Var9 = D3DResource_GetType((D3DResource *)param_1);
+  local_a8 = _Var9;
+  if (_Var9 == D3DRTYPE_SURFACE) {
     GetTextureDimensions(param_1,&local_b4,&local_b0,&local_ac);
-    uVar9 = ((param_1->Format).dword[0] >> 0x16 & 0x1ff) * (uint)bVar1 * 4;
+    uVar10 = ((param_1->Format).dword[0] >> 0x16 & 0x1ff) * (uint)bVar1 * 4;
     local_b8 = local_b4;
     local_c0 = local_b0;
     local_bc = local_ac;
     AlignTextureDimensions
-              (&local_b8,&local_c0,&local_bc,(uint)bVar1,uVar4,(param_1->Format).dword[5] >> 9 & 3,
+              (&local_b8,&local_c0,&local_bc,(uint)bVar1,uVar5,(param_1->Format).dword[5] >> 9 & 3,
                (param_1->Format).dword[0] >> 0x1f);
+    local_a8 = _Var9;
     uVar14 = local_b4;
     uVar15 = local_b0;
     uVar13 = local_ac;
   }
   else {
-    iVar7 = (int)(param_1->Format).dword[3] >> 0x1f;
-    uVar9 = -iVar7;
-    iVar5 = iVar7 * -2;
+    iVar8 = (int)(param_1->Format).dword[3] >> 0x1f;
+    uVar10 = -iVar8;
+    iVar6 = iVar8 * -2;
     GetTextureDimensions(param_1,&local_b4,&local_b0,&local_ac);
     uVar13 = local_ac;
-    uVar11 = (param_1->Format).dword[5];
-    uVar6 = uVar11 >> 9 & 3;
-    uVar14 = local_b4 + iVar7 * 2;
-    uVar15 = local_b0 + iVar7 * 2;
-    uVar2 = 1 << ((uVar9 - (int)LZCOUNT(uVar14 - 1)) + 0x20 & 0x3f);
-    uVar3 = 1 << ((uVar9 - (int)LZCOUNT(uVar15 - 1)) + 0x20 & 0x3f);
-    if (uVar6 == 2) {
-      uVar12 = 1 << ((uVar9 - (int)LZCOUNT(local_ac + iVar7 * 2 + -1)) + 0x20 & 0x3f);
+    uVar2 = (param_1->Format).dword[5];
+    uVar7 = uVar2 >> 9 & 3;
+    uVar11 = local_b4 + iVar8 * 2;
+    uVar15 = local_b0 + iVar8 * 2;
+    uVar3 = 1 << ((uVar10 - (int)LZCOUNT(uVar11 - 1)) + 0x20 & 0x3f);
+    uVar4 = 1 << ((uVar10 - (int)LZCOUNT(uVar15 - 1)) + 0x20 & 0x3f);
+    if (uVar7 == 2) {
+      uVar12 = 1 << ((uVar10 - (int)LZCOUNT(local_ac + iVar8 * 2 + -1)) + 0x20 & 0x3f);
     }
     else {
       uVar12 = 1;
     }
-    local_c0 = uVar3;
+    local_c0 = uVar4;
     local_bc = uVar12;
-    local_b8 = uVar2;
-    if ((uVar10 & 0xffffffff) == 0) {
-      if (((0x10 < uVar2) && (0x10 < uVar3)) || ((uVar11 & 0x800) == 0)) {
+    local_b8 = uVar3;
+    if (param_2 == 0) {
+      if (((0x10 < uVar3) && (0x10 < uVar4)) || ((uVar2 & 0x800) == 0)) {
         local_b8 = local_b4;
         local_c0 = local_b0;
         local_bc = local_ac;
       }
-      uVar2 = (param_1->Format).dword[0];
-      iVar5 = -((int)uVar2 >> 0x1f);
-      AlignTextureDimensions(&local_b8,&local_c0,&local_bc,(uint)bVar1,uVar4,uVar6,iVar5);
-      if ((((iVar5 == 0) && (((param_1->Format).dword[1] & 0x400) == 0)) &&
-          (((uVar11 & 0x800) == 0 && ((uVar6 == 1 && (((param_1->Format).dword[4] & 0x3c0) == 0)))))
-          ) && (uVar9 == 0)) {
+      uVar3 = (param_1->Format).dword[0];
+      iVar6 = -((int)uVar3 >> 0x1f);
+      AlignTextureDimensions(&local_b8,&local_c0,&local_bc,(uint)bVar1,uVar5,uVar7,iVar6);
+      if ((((iVar6 == 0) && (((param_1->Format).dword[1] & 0x400) == 0)) &&
+          (((uVar2 & 0x800) == 0 && ((uVar7 == 1 && (((param_1->Format).dword[4] & 0x3c0) == 0))))))
+         && (uVar10 == 0)) {
         BlockSizeOfGpuFormat((param_1->Format).dword[1] & 0x3f,&local_b0,&local_ac);
         local_c0 = (local_ac + local_b0) - 1 & ~(local_ac - 1);
       }
-      uVar9 = (uVar2 >> 0x16 & 0x1ff) * (uint)bVar1 * 4;
-      _Var8 = local_a8;
+      uVar10 = (uVar3 >> 0x16 & 0x1ff) * (uint)bVar1 * 4;
       uVar14 = local_b4;
       uVar15 = local_b0;
       param_7 = puStack00000044;
     }
     else {
-      uVar13 = (uint)uVar10;
-      uVar14 = uVar14 >> (uVar13 & 0x3f);
-      if (uVar14 < 2) {
-        uVar14 = 1;
+      uVar11 = uVar11 >> (param_2 & 0x3f);
+      if (uVar11 < 2) {
+        uVar11 = 1;
       }
-      uVar15 = uVar15 >> (uVar13 & 0x3f);
-      uVar14 = uVar14 + iVar5;
+      uVar15 = uVar15 >> (param_2 & 0x3f);
+      uVar14 = uVar11 + iVar6;
       if (uVar15 < 2) {
         uVar15 = 1;
       }
-      uVar15 = uVar15 + iVar5;
-      if (uVar6 == 2) {
-        uVar13 = local_ac + iVar7 * 2 >> (uVar13 & 0x3f);
-        if (uVar13 < 2) {
-          uVar13 = 1;
+      uVar15 = uVar15 + iVar6;
+      if (uVar7 == 2) {
+        uVar11 = local_ac + iVar8 * 2 >> (param_2 & 0x3f);
+        if (uVar11 < 2) {
+          uVar11 = 1;
         }
-        uVar13 = uVar13 + iVar5;
+        uVar13 = uVar11 + iVar6;
       }
       else {
         uVar13 = 1;
       }
-      if ((uVar11 & 0x800) != 0) {
-        uVar9 = GetMipTailBaseLevel(local_b4,local_b0,uVar9);
-        if ((ulonglong)uVar9 <= (uVar10 & 0xffffffff)) {
-          uVar10 = (longlong)(int)uVar9;
-        }
+      if (((uVar2 & 0x800) != 0) &&
+         (uVar10 = GetMipTailBaseLevel(local_b4,local_b0,uVar10), uVar10 <= param_2)) {
+        param_2 = uVar10;
       }
-      uVar11 = (uint)uVar10;
-      local_b8 = uVar2 >> (uVar11 & 0x3f);
+      local_b8 = uVar3 >> (param_2 & 0x3f);
       if (local_b8 < 2) {
         local_b8 = 1;
       }
-      local_c0 = uVar3 >> (uVar11 & 0x3f);
+      local_c0 = uVar4 >> (param_2 & 0x3f);
       if (local_c0 < 2) {
         local_c0 = 1;
       }
-      local_bc = uVar12 >> (uVar11 & 0x3f);
+      local_bc = uVar12 >> (param_2 & 0x3f);
       if (local_bc < 2) {
         local_bc = 1;
       }
       AlignTextureDimensions
-                (&local_b8,&local_c0,&local_bc,(uint)bVar1,uVar4,uVar6,
+                (&local_b8,&local_c0,&local_bc,(uint)bVar1,uVar5,uVar7,
                  (param_1->Format).dword[0] >> 0x1f);
-      uVar9 = (ulong)(((longlong)(int)local_b8 * (longlong)(int)(uint)bVar1 & 0xffffffffU) >> 3);
-      _Var8 = local_a8;
+      uVar10 = (ulong)(((longlong)(int)local_b8 * (longlong)(int)(uint)bVar1 & 0xffffffffU) >> 3);
       param_7 = puStack00000044;
     }
   }
   *param_3 = uVar14;
   *param_4 = uVar15;
   *param_5 = uVar13;
-  *puStack0000003c = uVar9;
-  *param_7 = uVar9 * local_c0;
-  if ((((((param_1->Format).dword[0] & 0x80000000) != 0) || (1 < (uVar10 & 0xffffffff))) ||
-      ((_Var8 != D3DRTYPE_TEXTURE && (_Var8 != D3DRTYPE_LINETEXTURE)))) &&
+  *puStack0000003c = uVar10;
+  *param_7 = uVar10 * local_c0;
+  if ((((((param_1->Format).dword[0] & 0x80000000) != 0) || (1 < param_2)) ||
+      ((local_a8 != D3DRTYPE_TEXTURE && (local_a8 != D3DRTYPE_LINETEXTURE)))) &&
      (((param_1->Format).dword[5] & 0x600) != 0x400)) {
-    *param_7 = uVar9 * local_c0 + 0xfff & 0xfffff000;
+    *param_7 = uVar10 * local_c0 + 0xfff & 0xfffff000;
   }
-  __restgprlr();
   return;
 }
 
 
 // 82865038  Get2DSurfaceDesc  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/texture.cpp:767)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 
 void D3D::Get2DSurfaceDesc(D3DBaseTexture *param_1,uint param_2,_D3DSURFACE_DESC *param_3)
@@ -674,38 +630,37 @@ void D3D::Get2DSurfaceDesc(D3DBaseTexture *param_1,uint param_2,_D3DSURFACE_DESC
 {
   uint uVar1;
   uint uVar2;
-  D3DBaseTexture *pDVar3;
-  _D3DRESOURCETYPE _Var4;
+  _D3DRESOURCETYPE _Var3;
   uint local_40;
   uint local_3c;
   ulong uStack_38;
   ulong uStack_34;
   ulong auStack_30 [12];
   
-  pDVar3 = (D3DBaseTexture *)__savegprlr_29(param_1);
-  GetLevelSize(pDVar3,param_2,&local_40,&local_3c,auStack_30,&uStack_34,&uStack_38);
-  uVar1 = (pDVar3->Format).dword[3];
-  uVar2 = (pDVar3->Format).dword[0];
+  GetLevelSize(param_1,param_2,&local_40,&local_3c,auStack_30,&uStack_34,&uStack_38);
+  uVar1 = (param_1->Format).dword[3];
+  uVar2 = (param_1->Format).dword[0];
   param_3->Format =
        ((((((((((uVar1 >> 7 & 0x38 | uVar1 >> 7 & 7) << 3 | uVar1 >> 4 & 7) << 3 | uVar1 >> 1 & 7)
               << 1 | uVar1 & 1) << 2 | uVar2 >> 8 & 3) << 2 | uVar2 >> 6 & 3) << 2 | uVar2 >> 4 & 3)
-          << 2 | uVar2 >> 2 & 3) << 1 | uVar2 >> 0x1f) << 2 | (pDVar3->Format).dword[1] >> 6 & 3) <<
-       6 | (pDVar3->Format).dword[1] & 0x3f;
-  _Var4 = D3DResource_GetType((D3DResource *)pDVar3);
-  param_3->Type = _Var4;
+          << 2 | uVar2 >> 2 & 3) << 1 | uVar2 >> 0x1f) << 2 | (param_1->Format).dword[1] >> 6 & 3)
+       << 6 | (param_1->Format).dword[1] & 0x3f;
+  _Var3 = D3DResource_GetType((D3DResource *)param_1);
+  param_3->Type = _Var3;
   param_3->Usage = 0;
   param_3->Pool = 0;
   param_3->MultiSampleQuality = 0;
   param_3->Width = local_40;
   param_3->Height = local_3c;
   param_3->MultiSampleType = D3DMULTISAMPLE_NONE;
-  __restgprlr_29();
   return;
 }
 
 
 // 82865138  Get3DSurfaceDesc  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/texture.cpp:798)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 
 void D3D::Get3DSurfaceDesc(D3DBaseTexture *param_1,uint param_2,_D3DVOLUME_DESC *param_3)
@@ -713,36 +668,36 @@ void D3D::Get3DSurfaceDesc(D3DBaseTexture *param_1,uint param_2,_D3DVOLUME_DESC 
 {
   uint uVar1;
   uint uVar2;
-  D3DBaseTexture *pDVar3;
-  _D3DRESOURCETYPE _Var4;
+  _D3DRESOURCETYPE _Var3;
   uint local_40;
   uint local_3c;
   uint local_38;
   ulong uStack_34;
   ulong auStack_30 [12];
   
-  pDVar3 = (D3DBaseTexture *)__savegprlr_29(param_1);
-  GetLevelSize(pDVar3,param_2,&local_40,&local_3c,&local_38,auStack_30,&uStack_34);
-  uVar1 = (pDVar3->Format).dword[3];
-  uVar2 = (pDVar3->Format).dword[0];
+  GetLevelSize(param_1,param_2,&local_40,&local_3c,&local_38,auStack_30,&uStack_34);
+  uVar1 = (param_1->Format).dword[3];
+  uVar2 = (param_1->Format).dword[0];
   param_3->Format =
        ((((((((((uVar1 >> 7 & 0x38 | uVar1 >> 7 & 7) << 3 | uVar1 >> 4 & 7) << 3 | uVar1 >> 1 & 7)
               << 1 | uVar1 & 1) << 2 | uVar2 >> 8 & 3) << 2 | uVar2 >> 6 & 3) << 2 | uVar2 >> 4 & 3)
-          << 2 | uVar2 >> 2 & 3) << 1 | uVar2 >> 0x1f) << 2 | (pDVar3->Format).dword[1] >> 6 & 3) <<
-       6 | (pDVar3->Format).dword[1] & 0x3f;
-  _Var4 = D3DResource_GetType((D3DResource *)pDVar3);
-  param_3->Type = _Var4;
+          << 2 | uVar2 >> 2 & 3) << 1 | uVar2 >> 0x1f) << 2 | (param_1->Format).dword[1] >> 6 & 3)
+       << 6 | (param_1->Format).dword[1] & 0x3f;
+  _Var3 = D3DResource_GetType((D3DResource *)param_1);
+  param_3->Type = _Var3;
   param_3->Usage = 0;
   param_3->Pool = 0;
   param_3->Width = local_40;
   param_3->Height = local_3c;
   param_3->Depth = local_38;
-  __restgprlr_29();
   return;
 }
 
 
 // 82865238  FindSurfaceWithinTexture  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/texture.cpp:835)
+
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
 
 void D3D::FindSurfaceWithinTexture
                (D3DBaseTexture *param_1,uint param_2,uint param_3,ulong *param_4,ulong *param_5,
@@ -769,14 +724,14 @@ void D3D::FindSurfaceWithinTexture
   ulong uVar17;
   uint uVar18;
   uint uVar19;
-  ulonglong uVar20;
+  longlong lVar20;
   ulonglong uVar21;
   ulonglong uVar22;
   ulonglong uVar23;
   uint uStack0000001c;
-  uint *puStack0000002c;
-  uint *puStack00000034;
-  uint *puStack0000003c;
+  ulong *puStack0000002c;
+  ulong *puStack00000034;
+  ulong *puStack0000003c;
   ulong *puStack00000044;
   ulong *puStack0000004c;
   uint *in_stack_00000054;
@@ -792,8 +747,7 @@ void D3D::FindSurfaceWithinTexture
   ulong local_a4;
   uint local_a0 [40];
   
-  uVar20 = (ulonglong)(int)param_3;
-  __savegprlr();
+  lVar20 = (longlong)(int)param_3;
   uVar18 = (param_1->Format).dword[0];
   local_a4 = 0;
   iVar9 = (int)(param_1->Format).dword[3] >> 0x1f;
@@ -824,7 +778,7 @@ void D3D::FindSurfaceWithinTexture
      (bVar7 = true, ((param_1->Format).dword[5] & 0x800) == 0)) {
     bVar7 = false;
   }
-  if (((uVar20 & 0xffffffff) == 0) || (bVar7)) {
+  if ((param_3 == 0) || (bVar7)) {
     local_b8 = (param_1->Format).dword[1];
   }
   else {
@@ -832,20 +786,19 @@ void D3D::FindSurfaceWithinTexture
   }
   local_b8 = local_b8 & 0xfffff000;
   uVar16 = (uint)bVar1;
-  if (((uVar20 & 0xffffffff) != 0) || (bVar7)) {
-    uVar18 = (uint)uVar20;
-    uVar12 = uVar12 >> (uVar18 & 0x3f);
+  if ((param_3 != 0) || (bVar7)) {
+    uVar12 = uVar12 >> (param_3 & 0x3f);
     if (uVar12 < 2) {
       uVar12 = 1;
     }
-    uVar13 = uVar13 >> (uVar18 & 0x3f);
+    uVar13 = uVar13 >> (param_3 & 0x3f);
     local_ac = uVar12 + iVar6;
     if (uVar13 < 2) {
       uVar13 = 1;
     }
     local_a8 = uVar13 + iVar6;
     if (uVar14 == 2) {
-      uVar18 = local_b4 + iVar9 * 2 >> (uVar18 & 0x3f);
+      uVar18 = local_b4 + iVar9 * 2 >> (param_3 & 0x3f);
       if (uVar18 < 2) {
         uVar18 = 1;
       }
@@ -872,9 +825,10 @@ void D3D::FindSurfaceWithinTexture
       uVar23 = -LZCOUNT(uVar17) + 0x20;
     }
     else {
-      uVar20 = uVar20 - 1;
+      lVar20 = lVar20 + -1;
     }
-    if (-1 < (int)uVar20) {
+    local_c0 = uVar17;
+    if (-1 < (int)lVar20) {
       uVar15 = (param_1->Format).dword[0];
       uVar12 = (param_1->Format).dword[5];
       uVar13 = (param_1->Format).dword[1] & 0x3f;
@@ -901,15 +855,14 @@ void D3D::FindSurfaceWithinTexture
         local_a0[0] = local_b0 * uVar16 >> 3;
         if (((uVar17 < 0x11) || (uVar3 < 0x11)) && ((uVar12 & 0x800) != 0)) {
           local_a4 = GetMipTailLevelOffset
-                               ((ulong)uVar20,uVar17,uVar3,uVar4,local_a0[0],local_a0[0] * local_bc,
+                               ((ulong)lVar20,uVar17,uVar3,uVar4,local_a0[0],local_a0[0] * local_bc,
                                 uVar13);
           local_b8 = local_b8 + local_a4;
-          uVar17 = local_c0;
-          param_5 = puStack00000034;
           param_6 = puStack0000003c;
+          param_5 = puStack00000034;
           break;
         }
-        if (0 < (int)(ulong)uVar20) {
+        if (0 < (int)(ulong)lVar20) {
           if (uVar14 == 2) {
             uVar14 = local_a0[0] * local_c0 * local_bc + 0xfff & 0xfffff000;
           }
@@ -918,11 +871,10 @@ void D3D::FindSurfaceWithinTexture
           }
           local_b8 = uVar14 * uVar18 + local_b8;
         }
-        uVar20 = uVar20 - 1;
-        uVar17 = local_c0;
-        param_5 = puStack00000034;
+        lVar20 = lVar20 + -1;
         param_6 = puStack0000003c;
-      } while (-1 < (longlong)uVar20);
+        param_5 = puStack00000034;
+      } while (-1 < lVar20);
     }
   }
   else {
@@ -942,7 +894,6 @@ void D3D::FindSurfaceWithinTexture
       BlockSizeOfGpuFormat(uVar13,local_a0,&local_bc);
       uVar19 = (local_bc + uVar10) - 1 & ~(local_bc - 1);
     }
-    uVar17 = local_c0;
     if (uVar14 == 0) {
       local_a0[0] = local_b0 * uVar16 >> 3;
     }
@@ -956,10 +907,10 @@ void D3D::FindSurfaceWithinTexture
   *puStack0000002c = local_a0[0];
   if (((param_1->Format).dword[5] & 0x600) == 0x400) {
     *param_5 = uVar19;
-    uVar15 = uVar19 * uVar17 + 0xfff & 0xfffff000;
+    uVar15 = uVar19 * local_c0 + 0xfff & 0xfffff000;
   }
   else {
-    uVar15 = uVar18 * uVar17;
+    uVar15 = uVar18 * local_c0;
     *param_5 = uVar18;
   }
   *param_6 = uVar15;
@@ -967,19 +918,20 @@ void D3D::FindSurfaceWithinTexture
   *in_stack_00000054 = local_a8;
   *in_stack_0000005c = local_b4;
   *puStack00000044 = local_a4;
-  __restgprlr();
   return;
 }
 
 
 // 82865718  LockSurface  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/texture.cpp:1079)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
+
 void D3D::LockSurface(D3DBaseTexture *param_1,ulong64 param_2,uint param_3,uint param_4,
                      ulong param_5,ulong *param_6,ulong *param_7,ulong *param_8,ulong *param_9)
 
 {
-  D3DBaseTexture *pDVar1;
-  void *pvVar2;
+  void *pvVar1;
   ulong *in_stack_00000054;
   ulong *in_stack_ffffff38;
   ulong *in_stack_ffffff3c;
@@ -988,53 +940,51 @@ void D3D::LockSurface(D3DBaseTexture *param_1,ulong64 param_2,uint param_3,uint 
   ulong local_5c [2];
   ulong auStack_54 [21];
   
-  pDVar1 = (D3DBaseTexture *)__savegprlr_23(param_1);
   FindSurfaceWithinTexture
-            (pDVar1,param_3,param_4,param_7,param_8,&local_60,in_stack_00000054,auStack_54,
+            (param_1,param_3,param_4,param_7,param_8,&local_60,in_stack_00000054,auStack_54,
              in_stack_ffffff38,in_stack_ffffff3c,in_stack_ffffff40);
-  BlockSizeOfGpuFormat((pDVar1->Format).dword[1] & 0x3f,auStack_54,local_5c);
+  BlockSizeOfGpuFormat((param_1->Format).dword[1] & 0x3f,auStack_54,local_5c);
   *param_7 = *param_7 * local_5c[0];
-  pvVar2 = LockResource((D3DResource *)pDVar1,param_2,D3DBLOCKTYPE_TEXTURE_LOCK,param_4,
-                        (pDVar1->Format).dword[1] & 0xfffff000,
-                        (pDVar1->Format).dword[5] & 0xfffff000,*param_6 - *in_stack_00000054,
+  pvVar1 = LockResource((D3DResource *)param_1,param_2,D3DBLOCKTYPE_TEXTURE_LOCK,param_4,
+                        (param_1->Format).dword[1] & 0xfffff000,
+                        (param_1->Format).dword[5] & 0xfffff000,*param_6 - *in_stack_00000054,
                         local_60,(ulong)in_stack_ffffff38,(ulong)in_stack_ffffff3c);
-  *param_6 = *in_stack_00000054 + (int)pvVar2;
-  __restgprlr_23();
+  *param_6 = *in_stack_00000054 + (int)pvVar1;
   return;
 }
 
 
 // 82865800  Lock2DSurface  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/texture.cpp:1139)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
+
 void D3D::Lock2DSurface(D3DBaseTexture *param_1,ulong64 param_2,uint param_3,uint param_4,
                        _D3DLOCKED_RECT *param_5,tagRECT *param_6,ulong param_7)
 
 {
-  D3DBaseTexture *pDVar1;
-  ulonglong uVar2;
   ulong *in_stack_ffffff58;
   void *local_50;
   ulong local_4c [2];
   ulong auStack_44 [17];
   
-  uVar2 = (ulonglong)(int)param_6;
-  pDVar1 = (D3DBaseTexture *)__savegprlr_25(param_1);
-  LockSurface(pDVar1,param_2,param_3,param_4,param_7,(ulong *)&local_50,local_4c,auStack_44,
+  LockSurface(param_1,param_2,param_3,param_4,param_7,(ulong *)&local_50,local_4c,auStack_44,
               in_stack_ffffff58);
-  if ((uVar2 & 0xffffffff) != 0) {
+  if (param_6 != (tagRECT *)0x0) {
     local_50 = (void *)(((uint)*(byte *)((int)g_FormatTable +
-                                        ((pDVar1->Format).dword[1] & 0x3f) * 2 + 1) * *(int *)uVar2
-                        >> 3) + ((int *)uVar2)[1] * local_4c[0] + (int)local_50);
+                                        ((param_1->Format).dword[1] & 0x3f) * 2 + 1) * param_6->left
+                        >> 3) + param_6->top * local_4c[0] + (int)local_50);
   }
   param_5->Pitch = local_4c[0];
   param_5->pBits = local_50;
-  __restgprlr_25();
   return;
 }
 
 
 // 828658B8  SetTextureHeader  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/texture.cpp:1331)
 
+/* WARNING: Function: __savegprlr_19 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_19 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 
 void D3D::SetTextureHeader
@@ -1043,21 +993,16 @@ void D3D::SetTextureHeader
                uint param_11,D3DBaseTexture *param_12,ulong *param_13,ulong *param_14)
 
 {
-  uint uVar1;
-  int iVar2;
-  int iVar3;
+  int iVar1;
+  uint uVar2;
+  longlong lVar3;
   ulong uVar4;
   longlong lVar5;
-  longlong lVar6;
-  ulong uVar7;
-  ulonglong uVar8;
-  ulonglong uVar9;
-  uint uVar10;
-  uint uVar11;
-  uint uVar12;
-  longlong lVar13;
-  ulonglong uVar14;
-  ulong uVar15;
+  uint uVar6;
+  uint uVar7;
+  uint uVar8;
+  longlong lVar9;
+  ulong uVar10;
   ulong in_stack_00000054;
   uint in_stack_0000005c;
   uint *in_stack_0000006c;
@@ -1073,92 +1018,85 @@ void D3D::SetTextureHeader
   undefined4 local_7c;
   ulong local_78;
   
-  uVar14 = (ulonglong)(int)param_8;
-  uVar9 = (ulonglong)(int)param_6;
-  uVar8 = (ulonglong)(int)param_5;
-  lVar6 = (longlong)(int)param_4;
-  lVar5 = (longlong)(int)param_3;
-  iVar3 = __savegprlr_19(param_1);
-  uVar7 = (ulong)lVar6;
-  lVar13 = ((ulonglong)in_stack_00000054 & 0x7fffffff) * 2 + 1;
-  uVar4 = uVar7;
-  if (iVar3 == 3) {
+  lVar5 = (longlong)(int)param_4;
+  lVar3 = (longlong)(int)param_3;
+  lVar9 = ((ulonglong)in_stack_00000054 & 0x7fffffff) * 2 + 1;
+  uVar4 = param_4;
+  if (param_1 == D3DRTYPE_TEXTURE) {
 LAB_8286596c:
-    uVar15 = 1;
+    uVar10 = 1;
 LAB_82865978:
-    if (iVar3 != 0x11) {
+    if (param_1 != D3DRTYPE_VOLUMETEXTURE) {
 LAB_82865980:
       uVar4 = 1;
     }
   }
   else {
-    if (iVar3 != 0x11) {
-      if (iVar3 == 0x12) {
-        uVar15 = 3;
+    if (param_1 != D3DRTYPE_VOLUMETEXTURE) {
+      if (param_1 == D3DRTYPE_CUBETEXTURE) {
+        uVar10 = 3;
       }
       else {
-        if (iVar3 == 0x13) goto LAB_8286596c;
-        uVar15 = local_78;
-        if (iVar3 != 0x14) goto LAB_82865978;
-        uVar15 = 0;
-        uVar14 = 0;
+        if (param_1 == D3DRTYPE_ARRAYTEXTURE) goto LAB_8286596c;
+        uVar10 = local_78;
+        if (param_1 != D3DRTYPE_LINETEXTURE) goto LAB_82865978;
+        uVar10 = 0;
+        param_8 = MIPPACKING_DISABLED;
       }
       goto LAB_82865980;
     }
-    uVar15 = 2;
+    uVar10 = 2;
   }
-  if ((uVar8 & 0xffffffff) == 0) {
-    uVar4 = GetMaxMipLevels(param_2,(ulong)lVar5,uVar4,in_stack_00000054);
-    uVar8 = (ulonglong)(int)uVar4;
+  if (param_5 == 0) {
+    param_5 = GetMaxMipLevels(param_2,param_3,uVar4,in_stack_00000054);
   }
-  if ((int)uVar14 == 2) {
-    uVar14 = -(ulonglong)(1 < uVar8) & 1;
+  if (param_8 == MIPPACKING_DEFAULT) {
+    param_8 = -(uint)(1 < (ulonglong)(longlong)(int)param_5) & MIPPACKING_ENABLED;
   }
-  FindTextureSize(param_2,(ulong)lVar5,uVar7,(ulong)uVar8,param_7 & 0x3f,uVar15,param_7 >> 8 & 1,
-                  (int)uVar14,in_stack_ffffff08,in_stack_ffffff0c,in_stack_ffffff10,
-                  in_stack_ffffff14,in_stack_ffffff18,in_stack_ffffff1c);
-  uVar12 = 0x100003;
-  if ((uVar9 & 4) != 0) {
-    uVar12 = 0x300003;
+  FindTextureSize(param_2,param_3,param_4,param_5,param_7 & 0x3f,uVar10,param_7 >> 8 & 1,param_8,
+                  in_stack_ffffff08,in_stack_ffffff0c,in_stack_ffffff10,in_stack_ffffff14,
+                  in_stack_ffffff18,in_stack_ffffff1c);
+  uVar8 = 0x100003;
+  if ((param_6 & 4) != 0) {
+    uVar8 = 0x300003;
   }
-  if ((uVar9 & 0x200) != 0) {
-    uVar12 = uVar12 | 0x400000;
+  if ((param_6 & 0x200) != 0) {
+    uVar8 = uVar8 | 0x400000;
   }
-  *in_stack_0000006c = uVar12;
-  uVar12 = in_stack_0000006c[0xc];
+  *in_stack_0000006c = uVar8;
+  uVar8 = in_stack_0000006c[0xc];
   in_stack_0000006c[1] = 1;
-  uVar1 = (uVar15 & 3) << 9;
+  uVar2 = (uVar10 & 3) << 9;
   in_stack_0000006c[5] = 0xffff0000;
   in_stack_0000006c[6] = 0xffff0000;
   in_stack_0000006c[2] = 0;
-  in_stack_0000006c[0xc] = uVar1 | uVar12 & 0xfffff9ff;
-  iVar2 = (int)lVar13;
-  if (uVar15 == 0) {
-    uVar10 = in_stack_0000006c[9] & 0xff000000 | param_2 - iVar2 & 0xffffff;
+  in_stack_0000006c[0xc] = uVar2 | uVar8 & 0xfffff9ff;
+  iVar1 = (int)lVar9;
+  if (uVar10 == 0) {
+    uVar6 = in_stack_0000006c[9] & 0xff000000 | param_2 - iVar1 & 0xffffff;
 LAB_82865ad8:
-    in_stack_0000006c[9] = uVar10;
+    in_stack_0000006c[9] = uVar6;
   }
   else {
-    if (uVar15 == 1) {
-      in_stack_0000006c[9] = in_stack_0000006c[9] & 0xffffe000 | param_2 - iVar2 & 0x1fff;
-      uVar11 = (uint)((lVar5 - lVar13 & 0xffffffffU) << 0xd) & 0x3ffe000 |
-               (uint)((lVar6 - 1U & 0xffffffff) << 0x1a);
-      uVar10 = in_stack_0000006c[9] & 0x1fff;
+    if (uVar10 == 1) {
+      in_stack_0000006c[9] = in_stack_0000006c[9] & 0xffffe000 | param_2 - iVar1 & 0x1fff;
+      uVar7 = (uint)((lVar3 - lVar9 & 0xffffffffU) << 0xd) & 0x3ffe000 |
+              (uint)((lVar5 - 1U & 0xffffffff) << 0x1a);
+      uVar6 = in_stack_0000006c[9] & 0x1fff;
     }
     else {
-      if (2 < uVar15) {
-        if (uVar15 != 3) goto LAB_82865adc;
-        uVar10 = (uint)((lVar6 - 1U & 0xffffffff) << 0x1a) |
-                 (uint)((lVar5 - lVar13 & 0xffffffffU) << 0xd) & 0x3ffe000 |
-                 param_2 - iVar2 & 0x1fff;
+      if (2 < uVar10) {
+        if (uVar10 != 3) goto LAB_82865adc;
+        uVar6 = (uint)((lVar5 - 1U & 0xffffffff) << 0x1a) |
+                (uint)((lVar3 - lVar9 & 0xffffffffU) << 0xd) & 0x3ffe000 | param_2 - iVar1 & 0x1fff;
         goto LAB_82865ad8;
       }
-      in_stack_0000006c[9] = in_stack_0000006c[9] & 0xfffff800 | param_2 - iVar2 & 0x7ff;
-      uVar10 = param_2 - iVar2 & 0x7ff;
-      uVar11 = (uint)((lVar5 - lVar13 & 0xffffffffU) << 0xb) & 0x3ff800 |
-               (uint)((lVar6 - lVar13 & 0xffffffffU) << 0x16);
+      in_stack_0000006c[9] = in_stack_0000006c[9] & 0xfffff800 | param_2 - iVar1 & 0x7ff;
+      uVar6 = param_2 - iVar1 & 0x7ff;
+      uVar7 = (uint)((lVar3 - lVar9 & 0xffffffffU) << 0xb) & 0x3ff800 |
+              (uint)((lVar5 - lVar9 & 0xffffffffU) << 0x16);
     }
-    in_stack_0000006c[9] = uVar11 | uVar10;
+    in_stack_0000006c[9] = uVar7 | uVar6;
   }
 LAB_82865adc:
   in_stack_0000006c[7] =
@@ -1167,24 +1105,25 @@ LAB_82865adc:
        ((((int)param_7 >> 8) << 0xe | local_80 & 0x3fff) & 0x7fe0) << 0x11 |
        in_stack_0000006c[7] & 0x3ffc00 | 2;
   in_stack_0000006c[0xb] =
-       (uint)((uVar8 - 1 & 0xffffffff) << 6) & 0x3c0 | in_stack_0000006c[0xb] & 0xfffffc3f;
+       (uint)(((longlong)(int)param_5 - 1U & 0xffffffff) << 6) & 0x3c0 |
+       in_stack_0000006c[0xb] & 0xfffffc3f;
   in_stack_0000006c[8] =
-       (uint)(iVar3 == 0x13) << 10 |
+       (uint)(param_1 == D3DRTYPE_ARRAYTEXTURE) << 10 |
        ((int)param_7 >> 6 & 3U) << 6 | in_stack_0000006c[8] & 0xfffffb00 | param_7 & 0x3f;
-  in_stack_0000006c[0xc] =
-       (uint)((uVar14 & 0xffffffff) << 0xb) & 0x800 | uVar1 | uVar12 & 0xfffff1ff;
+  in_stack_0000006c[0xc] = (param_8 & MIPPACKING_ENABLED) << 0xb | uVar2 | uVar8 & 0xfffff1ff;
   in_stack_0000006c[10] =
        (in_stack_0000005c & 0x3f | in_stack_00000054 << 0x12) << 0xd |
        (int)param_7 >> 0x11 & 0x1fffU | in_stack_0000006c[10] & 0x7ff80000;
   *in_stack_00000074 = local_7c;
   *in_stack_0000007c = local_78;
-  __restgprlr_19();
   return;
 }
 
 
 // 82865BB8  SetSurfaceHeader  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/texture.cpp:1536)
 
+/* WARNING: Function: __savegprlr_19 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_19 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 
 void D3D::SetSurfaceHeader
@@ -1192,113 +1131,97 @@ void D3D::SetSurfaceHeader
                _D3DSURFACE_PARAMETERS *param_5,D3DSurface *param_6,ulong *param_7,ulong *param_8)
 
 {
-  uint *puVar1;
-  ulonglong uVar2;
-  ushort uVar3;
-  bool bVar4;
-  longlong lVar5;
-  uint uVar6;
-  uint uVar7;
-  longlong lVar8;
+  uint uVar1;
+  ushort uVar2;
+  bool bVar3;
+  uint uVar4;
+  uint uVar5;
+  ulonglong uVar6;
+  ulong uVar7;
+  uint uVar8;
   ulonglong uVar9;
-  _D3DFORMAT _Var10;
-  _D3DMULTISAMPLE_TYPE _Var11;
-  ulonglong uVar12;
-  ulonglong uVar13;
-  uint uVar14;
-  uint uVar15;
-  ulonglong uVar16;
-  ulonglong uVar17;
-  ulonglong uVar18;
+  ulonglong uVar10;
+  ulonglong uVar11;
   
-  uVar12 = (ulonglong)(int)param_5;
-  uVar16 = (ulonglong)(int)param_4;
-  uVar9 = (ulonglong)(int)param_3;
-  lVar8 = (longlong)(int)param_2;
-  lVar5 = __savegprlr_19(param_1);
-  uVar18 = uVar9 & 0x3f;
-  if ((uVar18 == 0x16) || (bVar4 = false, uVar18 == 0x17)) {
-    bVar4 = true;
+  uVar11 = (ulonglong)param_3 & 0x3f;
+  if ((uVar11 == 0x16) || (bVar3 = false, uVar11 == 0x17)) {
+    bVar3 = true;
   }
-  if (uVar18 == 0x36) {
-    uVar18 = 7;
+  if (uVar11 == 0x36) {
+    uVar11 = 7;
   }
   param_6->_padding_ = 1;
   param_6->_padding_ = 4;
   param_6->_padding_ = -0x10000;
-  uVar17 = 0xffffffffffffffff;
-  _Var10 = (_D3DFORMAT)uVar9;
-  _Var11 = (_D3DMULTISAMPLE_TYPE)uVar16;
-  uVar6 = XGSurfaceSize((uint)lVar5,(uint)lVar8,_Var10,_Var11);
-  if (bVar4) {
-    uVar7 = XGHierarchicalZSize((uint)lVar5,(uint)lVar8,_Var11);
+  uVar10 = 0xffffffffffffffff;
+  uVar4 = XGSurfaceSize(param_1,param_2,param_3,param_4);
+  if (bVar3) {
+    uVar5 = XGHierarchicalZSize(param_1,param_2,param_4);
   }
   else {
-    uVar7 = 0;
+    uVar5 = 0;
   }
-  puVar1 = (uint *)uVar12;
-  if ((uVar12 & 0xffffffff) == 0) {
-    uVar14 = 0;
-    uVar13 = 0;
-    if (bVar4) {
-      uVar17 = -(ulonglong)(g_HiZAllocated != 0);
+  if (param_5 == (_D3DSURFACE_PARAMETERS *)0x0) {
+    uVar7 = 0;
+    uVar6 = 0;
+    if (bVar3) {
+      uVar10 = -(ulonglong)(g_HiZAllocated != 0);
     }
   }
   else {
-    uVar14 = *puVar1;
-    uVar17 = (ulonglong)puVar1[1];
-    uVar13 = (ulonglong)puVar1[2];
+    uVar7 = param_5->Base;
+    uVar10 = (ulonglong)param_5->HierarchicalZBase;
+    uVar6 = (ulonglong)(uint)param_5->ColorExpBias;
   }
-  if ((_Var11 == D3DMULTISAMPLE_NONE) || (_Var11 == D3DMULTISAMPLE_2_SAMPLES)) {
-    uVar15 = (int)((lVar5 + 0x4fU & 0xffffffff) / 0x50) * 0x50;
-    uVar2 = lVar5 + 0x1fU & 0xffffffe0;
+  if ((param_4 == D3DMULTISAMPLE_NONE) || (param_4 == D3DMULTISAMPLE_2_SAMPLES)) {
+    uVar8 = ((param_1 + 0x4f) / 0x50) * 0x50;
+    uVar1 = param_1 + 0x1f & 0xffffffe0;
   }
   else {
-    uVar15 = (int)((lVar5 + 0x27U & 0xffffffff) / 0x28) * 0x28;
-    uVar2 = lVar5 + 0xfU & 0xfffffff0;
+    uVar8 = ((param_1 + 0x27) / 0x28) * 0x28;
+    uVar1 = param_1 + 0xf & 0xfffffff0;
   }
-  (param_6->field6_0x18)._s_0.Format = _Var10;
+  (param_6->field6_0x18)._s_0.Format = param_3;
   *(uint *)((int)&param_6->field6_0x18 + 0xc) =
-       (uint)((lVar8 - 1U & 0xffffffff) << 3) & 0x3fff8 |
-       (uint)((lVar5 - 1U & 0xffffffff) << 0x12) | *(uint *)((int)&param_6->field6_0x18 + 0xc) & 7;
+       (param_2 - 1) * 8 & 0x3fff8 |
+       (param_1 - 1) * 0x40000 | *(uint *)((int)&param_6->field6_0x18 + 0xc) & 7;
   (param_6->field6_0x18)._s_1.Parent =
        (D3DBaseTexture *)
-       ((uint)(((uVar2 & 0x3fffffff) << 2 | uVar16 & 3) << 0x10) | uVar15 & 0x3fff);
-  uVar3 = *(ushort *)((int)g_FormatTable + (int)(uVar18 << 1)) >> 8;
-  uVar16 = (ulonglong)uVar3 & 0xf;
-  if (bVar4) {
+       ((uVar1 << 2 | param_4 & (D3DMULTISAMPLE_4_SAMPLES|D3DMULTISAMPLE_2_SAMPLES)) << 0x10 |
+       uVar8 & 0x3fff);
+  uVar2 = *(ushort *)((int)g_FormatTable + (int)(uVar11 << 1)) >> 8;
+  uVar9 = (ulonglong)uVar2 & 0xf;
+  if (bVar3) {
     (param_6->field6_0x18)._s_0._u_4 =
-         (D3DSurface_u_24_s_0_u_4)((uint)(uVar16 << 0x10) & 0x10000 | uVar14 & 0xfff);
-    if ((int)uVar17 == -1) {
+         (D3DSurface_u_24_s_0_u_4)((uint)(uVar9 << 0x10) & 0x10000 | uVar7 & 0xfff);
+    if ((int)uVar10 == -1) {
       (param_6->field6_0x18)._s_0.HiControl.dword = 0;
     }
     else {
-      if (((uVar12 & 0xffffffff) == 0) || (puVar1[3] == 0)) {
-        uVar18 = (uVar18 - 0x16) - ((uVar18 - 0x17) + (ulonglong)(uVar18 - 0x16 == 0));
+      if ((param_5 == (_D3DSURFACE_PARAMETERS *)0x0) || (param_5->HiZFunc == D3DHIZFUNC_DEFAULT)) {
+        uVar11 = (uVar11 - 0x16) - ((uVar11 - 0x17) + (ulonglong)(uVar11 - 0x16 == 0));
       }
       else {
-        uVar18 = (ulonglong)puVar1[3] - 1;
+        uVar11 = (ulonglong)param_5->HiZFunc - 1;
       }
       (param_6->field6_0x18)._s_0.HiControl.dword =
-           (uint)((uVar18 & 1 | (uVar17 & 0x7ffff) << 0xd) << 4) | 1;
+           (uint)((uVar11 & 1 | (uVar10 & 0x7ffff) << 0xd) << 4) | 1;
     }
   }
   else {
-    if ((uVar3 & 0xf) == 0) {
-      if (((((uVar9 & 0x20000) == 0) && ((_Var10 & 0x600) == 0x600)) &&
-          ((_Var10 & 0x1800) == 0x1800)) &&
-         (((_Var10 & 0x6000) == 0x6000 && ((uVar9 & 0x18000) == 0)))) {
-        uVar16 = 1;
+    if ((uVar2 & 0xf) == 0) {
+      if (((((param_3 & 0x20000) == D3DFMT_LE_INDEX16) && ((param_3 & 0x600) == 0x600)) &&
+          ((param_3 & 0x1800) == 0x1800)) &&
+         (((param_3 & 0x6000) == 0x6000 && ((param_3 & 0x18000) == D3DFMT_LE_INDEX16)))) {
+        uVar9 = 1;
       }
     }
     (param_6->field6_0x18)._s_0._u_4 =
-         (D3DSurface_u_24_s_0_u_4)((uint)(((uVar13 & 0x3f) << 4 | uVar16) << 0x10) | uVar14 & 0xfff)
-    ;
+         (D3DSurface_u_24_s_0_u_4)((uint)(((uVar6 & 0x3f) << 4 | uVar9) << 0x10) | uVar7 & 0xfff);
   }
-  (param_6->field6_0x18)._s_0.Size = uVar6 * 0x1400;
-  *param_7 = uVar6;
-  *param_8 = uVar7;
-  __restgprlr_19();
+  (param_6->field6_0x18)._s_0.Size = uVar4 * 0x1400;
+  *param_7 = uVar4;
+  *param_8 = uVar5;
   return;
 }
 
@@ -1314,32 +1237,30 @@ ulong D3DBaseTexture_GetLevelCount(D3DBaseTexture *param_1)
 
 // 82865E50  D3DTexture_GetLevelDesc  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/texture.cpp:1997)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 
 void D3DTexture_GetLevelDesc(D3DTexture *param_1,uint param_2,_D3DSURFACE_DESC *param_3)
 
 {
-  D3DBaseTexture *pDVar1;
-  
-  pDVar1 = (D3DBaseTexture *)__savegprlr_29(param_1);
-  D3D::Get2DSurfaceDesc(pDVar1,param_2,param_3);
-  __restgprlr_29();
+  D3D::Get2DSurfaceDesc((D3DBaseTexture *)param_1,param_2,param_3);
   return;
 }
 
 
 // 82865E88  D3DTexture_GetSurfaceLevel  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/texture.cpp:2007)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 
 D3DSurface * D3DTexture_GetSurfaceLevel(D3DTexture *param_1,uint param_2)
 
 {
-  uint uVar1;
-  D3DBaseTexture *pDVar2;
-  uint *puVar3;
-  D3DSurface *pDVar4;
-  ulonglong uVar5;
+  D3DSurface_u_24_s_0_u_4 DVar1;
+  uint uVar2;
+  D3DSurface *pDVar3;
   ulong *in_stack_ffffff58;
   ulong *in_stack_ffffff5c;
   ulong *in_stack_ffffff60;
@@ -1349,41 +1270,39 @@ D3DSurface * D3DTexture_GetSurfaceLevel(D3DTexture *param_1,uint param_2)
   ulong uStack_28;
   ulong auStack_24 [9];
   
-  uVar5 = (ulonglong)(int)param_2;
-  pDVar2 = (D3DBaseTexture *)__savegprlr_29(param_1);
   D3D::FindSurfaceWithinTexture
-            (pDVar2,0,(uint)uVar5,auStack_24,&uStack_28,&uStack_2c,&uStack_30,&uStack_34,
-             in_stack_ffffff58,in_stack_ffffff5c,in_stack_ffffff60);
-  puVar3 = XMemAlloc(0x30,0x64800000);
-  if (puVar3 == (uint *)0x0) {
-    puVar3 = (uint *)0x0;
+            ((D3DBaseTexture *)param_1,0,param_2,auStack_24,&uStack_28,&uStack_2c,&uStack_30,
+             &uStack_34,in_stack_ffffff58,in_stack_ffffff5c,in_stack_ffffff60);
+  pDVar3 = XMemAlloc(0x30,0x64800000);
+  if (pDVar3 == (D3DSurface *)0x0) {
+    pDVar3 = (D3DSurface *)0x0;
   }
   else {
-    uVar1 = pDVar2->_padding_;
-    puVar3[6] = (uint)pDVar2;
-    *puVar3 = uVar1 & 0x200000 | 0x40100004;
-    puVar3[1] = 1;
-    puVar3[5] = 0xffff0000;
-    puVar3[7] = puVar3[7] & 0x3fffff | (uint)((uVar5 & 0xffffffff) << 0x1c);
-    D3DResource_AddRef((D3DResource *)pDVar2);
+    DVar1 = (pDVar3->field6_0x18)._s_0._u_4;
+    uVar2 = *(uint *)param_1;
+    (pDVar3->field6_0x18)._s_1.Parent = (D3DBaseTexture *)param_1;
+    pDVar3->_padding_ = uVar2 & 0x200000 | 0x40100004;
+    pDVar3->_padding_ = 1;
+    pDVar3->_padding_ = -0x10000;
+    (pDVar3->field6_0x18)._s_0._u_4 =
+         (D3DSurface_u_24_s_0_u_4)((uint)DVar1 & 0x3fffff | param_2 << 0x1c);
+    D3DResource_AddRef((D3DResource *)param_1);
   }
-  pDVar4 = (D3DSurface *)__restgprlr_29(puVar3);
-  return pDVar4;
+  return pDVar3;
 }
 
 
 // 82865F50  D3DTexture_LockRect  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/texture.cpp:2069)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void D3DTexture_LockRect(D3DTexture *param_1,uint param_2,_D3DLOCKED_RECT *param_3,tagRECT *param_4,
                         ulong param_5)
 
 {
-  D3DBaseTexture *pDVar1;
-  
-  pDVar1 = (D3DBaseTexture *)__savegprlr_27(param_1);
   PIXAddPixOpWithData(0x800012,0,(void *)0x0);
-  D3D::Lock2DSurface(pDVar1,0,0,param_2,param_3,param_4,param_5);
-  __restgprlr_27();
+  D3D::Lock2DSurface((D3DBaseTexture *)param_1,0,0,param_2,param_3,param_4,param_5);
   return;
 }
 
@@ -1402,70 +1321,64 @@ void D3DTexture_UnlockRect(D3DTexture *param_1,uint param_2)
 
 // 82866018  D3DCubeTexture_GetLevelDesc  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/texture.cpp:2127)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 
 void D3DCubeTexture_GetLevelDesc(D3DCubeTexture *param_1,uint param_2,_D3DSURFACE_DESC *param_3)
 
 {
-  D3DBaseTexture *pDVar1;
-  
-  pDVar1 = (D3DBaseTexture *)__savegprlr_29(param_1);
-  D3D::Get2DSurfaceDesc(pDVar1,param_2,param_3);
-  __restgprlr_29();
+  D3D::Get2DSurfaceDesc((D3DBaseTexture *)param_1,param_2,param_3);
   return;
 }
 
 
 // 82866050  D3DArrayTexture_GetLevelDesc  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/texture.cpp:2260)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 
 void D3DArrayTexture_GetLevelDesc(D3DArrayTexture *param_1,uint param_2,_D3DSURFACE_DESC *param_3)
 
 {
-  D3DBaseTexture *pDVar1;
-  
-  pDVar1 = (D3DBaseTexture *)__savegprlr_29(param_1);
-  D3D::Get2DSurfaceDesc(pDVar1,param_2,param_3);
-  __restgprlr_29();
+  D3D::Get2DSurfaceDesc((D3DBaseTexture *)param_1,param_2,param_3);
   return;
 }
 
 
 // 82866088  D3DVolumeTexture_GetLevelDesc  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/texture.cpp:2384)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 
 void D3DVolumeTexture_GetLevelDesc(D3DVolumeTexture *param_1,uint param_2,_D3DVOLUME_DESC *param_3)
 
 {
-  D3DBaseTexture *pDVar1;
-  
-  pDVar1 = (D3DBaseTexture *)__savegprlr_29(param_1);
-  D3D::Get3DSurfaceDesc(pDVar1,param_2,param_3);
-  __restgprlr_29();
+  D3D::Get3DSurfaceDesc((D3DBaseTexture *)param_1,param_2,param_3);
   return;
 }
 
 
 // 828660C0  D3DLineTexture_GetLevelDesc  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/texture.cpp:2483)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 
 void D3DLineTexture_GetLevelDesc(D3DLineTexture *param_1,uint param_2,_D3DSURFACE_DESC *param_3)
 
 {
-  D3DBaseTexture *pDVar1;
-  
-  pDVar1 = (D3DBaseTexture *)__savegprlr_29(param_1);
-  D3D::Get2DSurfaceDesc(pDVar1,param_2,param_3);
-  __restgprlr_29();
+  D3D::Get2DSurfaceDesc((D3DBaseTexture *)param_1,param_2,param_3);
   return;
 }
 
 
 // 828660F8  D3DDevice_CreateTexture  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/texture.cpp:2617)
 
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 
 D3DBaseTexture *
@@ -1474,12 +1387,11 @@ D3DDevice_CreateTexture
           ulong param_7,_D3DRESOURCETYPE param_8)
 
 {
-  uint uVar1;
+  D3DBaseTexture *pDVar1;
   D3DBaseTexture *pDVar2;
-  D3DBaseTexture *pDVar3;
-  void *pvVar4;
+  void *pvVar3;
+  uint uVar4;
   ulong uVar5;
-  ulonglong uVar6;
   ulong in_stack_ffffff28;
   int in_stack_ffffff2c;
   uint in_stack_ffffff30;
@@ -1489,47 +1401,44 @@ D3DDevice_CreateTexture
   ulong local_60;
   ulong local_5c;
   
-  uVar6 = (ulonglong)(int)param_5;
-  uVar1 = __savegprlr_22(param_1);
-  pvVar4 = (void *)0x0;
-  pDVar2 = XMemAlloc(0x34,0x64800000);
-  if (pDVar2 != (D3DBaseTexture *)0x0) {
+  pvVar3 = (void *)0x0;
+  pDVar1 = XMemAlloc(0x34,0x64800000);
+  if (pDVar1 != (D3DBaseTexture *)0x0) {
     D3D::SetTextureHeader
-              (param_8,uVar1,param_2,param_3,param_4,(ulong)uVar6,param_6,MIPPACKING_DEFAULT,
+              (param_8,param_1,param_2,param_3,param_4,param_5,param_6,MIPPACKING_DEFAULT,
                in_stack_ffffff28,in_stack_ffffff2c,in_stack_ffffff30,in_stack_ffffff34,
                in_stack_ffffff38,in_stack_ffffff3c);
-    uVar1 = (uint)(((~uVar6 & 0xffffffff) >> 2 & 1 | 2) << 0x1c) | 0x8c800000;
+    uVar4 = (uint)(((~(longlong)(int)param_5 & 0xffffffffU) >> 2 & 1 | 2) << 0x1c) | 0x8c800000;
     D3D::g_DrPixMemAllocPhysicalCount = D3D::g_DrPixMemAllocPhysicalCount + 1;
-    pDVar3 = XMemAlloc(local_60,uVar1);
-    if (pDVar3 != (D3DBaseTexture *)0x0) {
-      if (local_5c != 0) {
-        D3D::g_DrPixMemAllocPhysicalCount = D3D::g_DrPixMemAllocPhysicalCount + 1;
-        pvVar4 = XMemAlloc(local_5c,uVar1);
-        if (pvVar4 == (void *)0x0) {
-          XMemFree(pDVar2,0x24800000);
-          uVar5 = 0xb1800000;
-          goto LAB_828661d0;
-        }
-      }
-      (pDVar2->Format).dword[1] = (uint)pDVar3 & 0xfffff000 | (pDVar2->Format).dword[1] & 0xfff;
-      (pDVar2->Format).dword[5] = (uint)pvVar4 & 0xfffff000 | (pDVar2->Format).dword[5] & 0xfff;
-      PIXReportNewTextureInternal(pDVar2,1,0);
-      goto LAB_82866248;
+    pDVar2 = XMemAlloc(local_60,uVar4);
+    if (pDVar2 == (D3DBaseTexture *)0x0) {
+      uVar5 = 0x24800000;
+      pDVar2 = pDVar1;
     }
-    uVar5 = 0x24800000;
-    pDVar3 = pDVar2;
-LAB_828661d0:
-    XMemFree(pDVar3,uVar5);
+    else {
+      if (local_5c == 0) {
+LAB_82866218:
+        (pDVar1->Format).dword[1] = (uint)pDVar2 & 0xfffff000 | (pDVar1->Format).dword[1] & 0xfff;
+        (pDVar1->Format).dword[5] = (uint)pvVar3 & 0xfffff000 | (pDVar1->Format).dword[5] & 0xfff;
+        PIXReportNewTextureInternal(pDVar1,1,0);
+        return pDVar1;
+      }
+      D3D::g_DrPixMemAllocPhysicalCount = D3D::g_DrPixMemAllocPhysicalCount + 1;
+      pvVar3 = XMemAlloc(local_5c,uVar4);
+      if (pvVar3 != (void *)0x0) goto LAB_82866218;
+      XMemFree(pDVar1,0x24800000);
+      uVar5 = 0xb1800000;
+    }
+    XMemFree(pDVar2,uVar5);
   }
-  pDVar2 = (D3DBaseTexture *)0x0;
-LAB_82866248:
-  pDVar2 = (D3DBaseTexture *)__restgprlr_22(pDVar2);
-  return pDVar2;
+  return (D3DBaseTexture *)0x0;
 }
 
 
 // 82866250  D3DDevice_CreateSurface  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/texture.cpp:2752)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 
 D3DSurface *
@@ -1541,56 +1450,49 @@ D3DDevice_CreateSurface
   _D3DFORMAT _Var1;
   bool bVar2;
   ulong uVar3;
-  uint uVar4;
-  D3DSurface *pDVar5;
-  int iVar6;
-  ulonglong uVar7;
+  D3DSurface *pDVar4;
+  int iVar5;
   ulong local_40;
   ulong auStack_3c [15];
   
-  uVar7 = (ulonglong)(int)param_5;
-  uVar4 = __savegprlr_26(param_1);
-  pDVar5 = XMemAlloc(0x30,0x64800000);
-  if (pDVar5 != (D3DSurface *)0x0) {
-    D3D::SetSurfaceHeader
-              (uVar4,param_2,param_3,param_4,(_D3DSURFACE_PARAMETERS *)uVar7,pDVar5,&local_40,
-               auStack_3c);
+  pDVar4 = XMemAlloc(0x30,0x64800000);
+  if (pDVar4 != (D3DSurface *)0x0) {
+    D3D::SetSurfaceHeader(param_1,param_2,param_3,param_4,param_5,pDVar4,&local_40,auStack_3c);
     uVar3 = local_40;
-    pDVar5->_padding_ = pDVar5->_padding_ | 0x100000;
-    if ((uVar7 & 0xffffffff) != 0) goto LAB_8286638c;
-    _Var1 = (pDVar5->field6_0x18)._s_0.Format & 0x3f;
+    pDVar4->_padding_ = pDVar4->_padding_ | 0x100000;
+    if (param_5 != (_D3DSURFACE_PARAMETERS *)0x0) {
+      return pDVar4;
+    }
+    _Var1 = (pDVar4->field6_0x18)._s_0.Format & 0x3f;
     if ((_Var1 == 0x16) || (bVar2 = false, _Var1 == 0x17)) {
       bVar2 = true;
     }
-    iVar6 = D3D::AllocateEdramMemory(local_40,&local_40);
-    if (iVar6 != 0) {
+    iVar5 = D3D::AllocateEdramMemory(local_40,&local_40);
+    if (iVar5 != 0) {
       if (local_40 + uVar3 < 0x801) {
-        pDVar5->_padding_ = pDVar5->_padding_ | 0x80000000;
-        if (bVar2) {
-          (pDVar5->field6_0x18)._s_0._u_4 =
+        pDVar4->_padding_ = pDVar4->_padding_ | 0x80000000;
+        if (!bVar2) {
+          (pDVar4->field6_0x18)._s_0._u_4 =
                (D3DSurface_u_24_s_0_u_4)
-               ((uint)(pDVar5->field6_0x18)._s_0._u_4 & 0xfffff000 | local_40 & 0xfff);
-          if (D3D::g_HiZAllocated == 0) {
-            D3D::g_HiZAllocated = 1;
-            (pDVar5->field6_0x18)._s_0.HiControl.dword =
-                 (pDVar5->field6_0x18)._s_0.HiControl.dword & 0x1ffff;
-          }
+               ((uint)(pDVar4->field6_0x18)._s_0._u_4 & 0xfffff000 | local_40 & 0xfff);
+          return pDVar4;
         }
-        else {
-          (pDVar5->field6_0x18)._s_0._u_4 =
-               (D3DSurface_u_24_s_0_u_4)
-               ((uint)(pDVar5->field6_0x18)._s_0._u_4 & 0xfffff000 | local_40 & 0xfff);
+        (pDVar4->field6_0x18)._s_0._u_4 =
+             (D3DSurface_u_24_s_0_u_4)
+             ((uint)(pDVar4->field6_0x18)._s_0._u_4 & 0xfffff000 | local_40 & 0xfff);
+        if (D3D::g_HiZAllocated != 0) {
+          return pDVar4;
         }
-        goto LAB_8286638c;
+        D3D::g_HiZAllocated = 1;
+        (pDVar4->field6_0x18)._s_0.HiControl.dword =
+             (pDVar4->field6_0x18)._s_0.HiControl.dword & 0x1ffff;
+        return pDVar4;
       }
       D3D::FreeEdramMemory(local_40,uVar3);
     }
-    XMemFree(pDVar5,0x24800000);
+    XMemFree(pDVar4,0x24800000);
   }
-  pDVar5 = (D3DSurface *)0x0;
-LAB_8286638c:
-  pDVar5 = (D3DSurface *)__restgprlr_26(pDVar5);
-  return pDVar5;
+  return (D3DSurface *)0x0;
 }
 
 
@@ -1639,120 +1541,112 @@ void D3DVolume_GetDesc(D3DVolume *param_1,_D3DVOLUME_DESC *param_2)
 
 // 828664A0  D3DDevice_SetTexture  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/texture.cpp:2990)
 
+/* WARNING: Function: __savegprlr_20 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_20 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 
 void D3DDevice_SetTexture(D3DDevice *param_1,ulong param_2,D3DBaseTexture *param_3,ulong64 param_4)
 
 {
-  byte bVar1;
+  uint uVar1;
   uint uVar2;
   uint uVar3;
-  uint uVar4;
-  uint *puVar5;
-  int iVar6;
-  uint *puVar7;
-  BufferResource BVar8;
-  int iVar9;
-  int iVar10;
-  int iVar11;
+  uint *puVar4;
+  BufferResource BVar5;
   undefined8 in_r0;
-  CDevice *pCVar12;
-  BufferResource *pBVar13;
-  longlong lVar14;
-  uint uVar16;
-  uint uVar17;
-  ulonglong uVar15;
-  uint uVar18;
-  ulonglong uVar19;
+  BufferResource *pBVar6;
+  uint uVar7;
+  uint uVar8;
+  uint uVar9;
+  _func___cdecl_ulong_D3DDevice_ptr_ulong **pp_Var10;
+  ulonglong uVar11;
   uint local_70;
   
-  uVar15 = (ulonglong)(int)param_3;
-  lVar14 = (longlong)(int)param_2;
-  pCVar12 = (CDevice *)__savegprlr_20(param_1);
-  iVar6 = (int)uVar15;
-  if ((uVar15 & 0xffffffff) != 0) {
-    uVar2 = -(*(int *)(iVar6 + 0x1c) >> 0x1f);
-    uVar3 = *(uint *)(iVar6 + 0x30) >> 9 & 3;
-    uVar19 = 1L << ((ulonglong)*(uint *)(iVar6 + 0x20) & 0x3f);
-    if (((*(uint *)(iVar6 + 0x20) & 0x400) != 0) && (uVar3 != 1)) {
+  if (param_3 != (D3DBaseTexture *)0x0) {
+    uVar1 = -((int)(param_3->Format).dword[0] >> 0x1f);
+    uVar2 = (param_3->Format).dword[5] >> 9 & 3;
+    uVar11 = 1L << ((ulonglong)(param_3->Format).dword[1] & 0x3f);
+    if ((((param_3->Format).dword[1] & 0x400) != 0) && (uVar2 != 1)) {
       DbgPrint(0xffffffff821f39a8);
       trapWord(0x1f,in_r0,0x16);
     }
-    if ((uVar2 != 0) && (uVar3 == 0)) {
+    if ((uVar1 != 0) && (uVar2 == 0)) {
       DbgPrint(0xffffffff821f3948);
       trapWord(0x1f,in_r0,0x16);
     }
-    if ((uVar19 & 0xc200000000202000) != 0) {
+    if ((uVar11 & 0xc200000000202000) != 0) {
       DbgPrint(0xffffffff821f3910);
       trapWord(0x1f,in_r0,0x16);
     }
-    if ((uVar3 == 0) && ((uVar19 & 0x1f98000001800) != 0)) {
+    if ((uVar2 == 0) && ((uVar11 & 0x1f98000001800) != 0)) {
       DbgPrint(0xffffffff821f38b0);
       trapWord(0x1f,in_r0,0x16);
     }
-    if ((uVar2 != uVar3) && ((uVar19 & 3) != 0)) {
+    if ((uVar1 != uVar2) && ((uVar11 & 3) != 0)) {
       DbgPrint(0xffffffff821f3848);
       trapWord(0x1f,in_r0,0x16);
     }
   }
-  iVar9 = (int)((lVar14 + 0xc7eU & 0xffffffff) << 2);
-  iVar10 = (int)lVar14;
-  iVar11 = iVar10 * 0x18;
-  puVar5 = *(uint **)(&pCVar12->field_0x0 + iVar9);
-  if ((uVar15 & 0xffffffff) == 0) {
-    *(uint *)(&pCVar12->field_0x480 + iVar11) =
-         *(uint *)(&pCVar12->field_0x480 + iVar11) & 0xfffffffc;
+  puVar4 = *(uint **)((int)&param_1[1].m_Constants.field0_0x0 + param_2 * 4 + 0x278);
+  if (param_3 == (D3DBaseTexture *)0x0) {
+    param_1->m_GetSamplerStateCall[param_2 * 6 + 0x32] =
+         (_func___cdecl_ulong_D3DDevice_ptr_ulong *)
+         ((uint)param_1->m_GetSamplerStateCall[param_2 * 6 + 0x32] & 0xfffffffc);
   }
   else {
-    uVar2 = *(uint *)(iVar6 + 0x20);
-    puVar7 = (uint *)(&pCVar12->field_0x480 + iVar11);
-    uVar3 = *(uint *)(iVar6 + 0x30);
-    uVar18 = *(uint *)(iVar6 + 0x2c);
-    uVar17 = *(uint *)(iVar6 + 0x1c);
-    uVar4 = *(uint *)(iVar6 + 0x28);
-    puVar7[2] = *(uint *)(iVar6 + 0x24);
-    puVar7[1] = puVar7[1] & 0x800 |
-                ((uVar2 >> 0x14) + 0x200 & 0x1000) + (uVar2 & 0x1fffffff) & 0xfffff7ff;
-    uVar2 = puVar7[4] & 0xfffffc03;
-    uVar16 = (uint)pCVar12->m_MaxMipLevel[iVar10];
-    puVar7[4] = uVar2 | uVar18 & 0x3fc;
-    *puVar7 = *puVar7 & 0x3ffc00 | uVar17 & 0xffc003ff;
-    puVar7[3] = puVar7[3] & 0x7ff80000 | uVar4 & 0x8007ffff;
-    puVar7[5] = puVar7[5] & 0x1ff | ((uVar3 >> 0x14) + 0x200 & 0x1000) + (uVar3 & 0x1ffffe00);
-    if (uVar16 < (uVar18 >> 2 & 0xf)) {
-      uVar16 = uVar18 >> 2 & 0xf;
+    uVar1 = (param_3->Format).dword[1];
+    pp_Var10 = param_1->m_GetSamplerStateCall + param_2 * 6 + 0x32;
+    uVar2 = (param_3->Format).dword[5];
+    uVar3 = (param_3->Format).dword[4];
+    uVar9 = (param_3->Format).dword[0];
+    uVar8 = (param_3->Format).dword[3];
+    *(<unnamed_type_Size> *)(pp_Var10 + 2) = (param_3->Format)._s_0.Size;
+    pp_Var10[1] = (_func___cdecl_ulong_D3DDevice_ptr_ulong *)
+                  ((uint)pp_Var10[1] & 0x800 |
+                  ((uVar1 >> 0x14) + 0x200 & 0x1000) + (uVar1 & 0x1fffffff) & 0xfffff7ff);
+    uVar1 = (uint)pp_Var10[4] & 0xfffffc03;
+    uVar7 = (uint)*(byte *)((int)&param_1[1].m_Constants.field0_0x0 + param_2 + 0x44);
+    pp_Var10[4] = (_func___cdecl_ulong_D3DDevice_ptr_ulong *)(uVar1 | uVar3 & 0x3fc);
+    *pp_Var10 = (_func___cdecl_ulong_D3DDevice_ptr_ulong *)
+                ((uint)*pp_Var10 & 0x3ffc00 | uVar9 & 0xffc003ff);
+    pp_Var10[3] = (_func___cdecl_ulong_D3DDevice_ptr_ulong *)
+                  ((uint)pp_Var10[3] & 0x7ff80000 | uVar8 & 0x8007ffff);
+    pp_Var10[5] = (_func___cdecl_ulong_D3DDevice_ptr_ulong *)
+                  ((uint)pp_Var10[5] & 0x1ff |
+                  ((uVar2 >> 0x14) + 0x200 & 0x1000) + (uVar2 & 0x1ffffe00));
+    if (uVar7 < (uVar3 >> 2 & 0xf)) {
+      uVar7 = uVar3 >> 2 & 0xf;
     }
-    uVar3 = (uVar16 & 0xf) << 2;
-    bVar1 = pCVar12->m_MinMipLevel[iVar10];
-    uVar17 = *(uint *)(iVar6 + 0x2c) >> 6 & 0xf;
-    puVar7[4] = uVar3 | uVar2 | uVar18 & 0x3c0;
-    uVar18 = (uint)bVar1;
-    if (uVar17 < bVar1) {
-      uVar18 = uVar17;
+    uVar2 = (uVar7 & 0xf) << 2;
+    uVar9 = (uint)*(byte *)((int)&param_1[1].m_Constants.field0_0x0 + param_2 + 0x5e);
+    uVar8 = (param_3->Format).dword[4] >> 6 & 0xf;
+    pp_Var10[4] = (_func___cdecl_ulong_D3DDevice_ptr_ulong *)(uVar2 | uVar1 | uVar3 & 0x3c0);
+    if (uVar8 < uVar9) {
+      uVar9 = uVar8;
     }
-    uVar15 = *(ulonglong *)&pCVar12->field_0x18;
-    puVar7[4] = (uVar18 & 0xf) << 6 | uVar3 | uVar2;
-    *(ulonglong *)&pCVar12->field_0x18 = uVar15 | param_4;
+    uVar11 = (param_1->m_Pending).m_Mask[3];
+    pp_Var10[4] = (_func___cdecl_ulong_D3DDevice_ptr_ulong *)((uVar9 & 0xf) << 6 | uVar2 | uVar1);
+    (param_1->m_Pending).m_Mask[3] = uVar11 | param_4;
   }
-  *(int *)(&pCVar12->field_0x0 + iVar9) = iVar6;
-  if (puVar5 != (uint *)0x0) {
-    if (pCVar12->m_CpuFence == 0) {
-      if ((pCVar12->m_CommandBufferTimeStampMask & *puVar5) != 0) {
-        pBVar13 = pCVar12->m_pBufferResource;
-        if (pCVar12->m_pBufferResourceEnd <= pBVar13) {
-          pBVar13 = D3D::MakeBufferResourceSpace(pCVar12);
+  *(D3DBaseTexture **)((int)&param_1[1].m_Constants.field0_0x0 + param_2 * 4 + 0x278) = param_3;
+  if (puVar4 != (uint *)0x0) {
+    uVar1 = *(uint *)((int)param_1[1].m_Pending.m_Mask + 0x1c);
+    if (uVar1 == 0) {
+      if ((*(uint *)(param_1[1].m_Pending.m_Mask + 4) & *puVar4) != 0) {
+        pBVar6 = *(BufferResource **)((int)&param_1[1].m_Constants.field1_0x300 + 0x37c);
+        if (*(BufferResource **)((int)&param_1[1].m_Constants.field1_0x300 + 0x380) <= pBVar6) {
+          pBVar6 = D3D::MakeBufferResourceSpace((CDevice *)param_1);
         }
-        BVar8._0_4_ = (uint)puVar5 >> 2 | local_70 & 0x80000000;
-        BVar8.m_PredicationMask = 0xffffffff;
-        *pBVar13 = BVar8;
-        pCVar12->m_pBufferResource = pBVar13 + 1;
+        BVar5._0_4_ = (uint)puVar4 >> 2 | local_70 & 0x80000000;
+        BVar5.m_PredicationMask = 0xffffffff;
+        *pBVar6 = BVar5;
+        *(BufferResource **)((int)&param_1[1].m_Constants.field1_0x300 + 0x37c) = pBVar6 + 1;
       }
     }
     else {
-      puVar5[2] = pCVar12->m_CpuFence;
+      puVar4[2] = uVar1;
     }
   }
-  __restgprlr_20();
   return;
 }
 

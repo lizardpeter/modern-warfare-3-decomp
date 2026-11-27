@@ -14,12 +14,14 @@ bdDispatcher * __thiscall bdDispatcher::bdDispatcher(bdDispatcher *this)
 
 // 82930018  process  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdconnection/bddispatch/bddispatcher.cpp:24)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void __thiscall bdDispatcher::process(bdDispatcher *this,bdReference<bdConnection> param_1)
 
 {
   int *piVar1;
   bool bVar2;
-  bdFastArray<bdDispatchInterceptor_*> *this_00;
   bdDispatchInterceptor **ppbVar3;
   char cVar4;
   longlong lVar5;
@@ -27,24 +29,22 @@ void __thiscall bdDispatcher::process(bdDispatcher *this,bdReference<bdConnectio
   uint uVar7;
   char in_RESERVE;
   code *pcVar8;
-  bdConnection *pbStack0000001c;
+  bdReference<bdConnection> bStack0000001c;
   bdReference<bdMessage> local_40;
   uint local_3c;
   bdMessage *local_38 [2];
   bdReceivedMessage abStack_30 [6];
   
-  this_00 = (bdFastArray<bdDispatchInterceptor_*> *)__savegprlr_28(this);
   local_40.m_ptr = (bdMessage *)0x0;
   piVar1 = (int *)(param_1.m_ptr)->_padding_;
   pcVar8 = *(code **)(*piVar1 + 0xc);
-  pbStack0000001c = param_1.m_ptr;
+  bStack0000001c.m_ptr = param_1.m_ptr;
   do {
     cVar4 = (*pcVar8)(piVar1,&local_40);
     if (cVar4 == '\0') {
       bdReference<bdMessage>::~bdReference<bdMessage>(&local_40);
       bdReference<bdConnection>::~bdReference<bdConnection>
                 ((bdReference<bdConnection> *)param_1.m_ptr);
-      __restgprlr_28();
       return;
     }
     local_3c = (param_1.m_ptr)->_padding_;
@@ -76,8 +76,8 @@ void __thiscall bdDispatcher::process(bdDispatcher *this,bdReference<bdConnectio
     ;
     uVar7 = 0;
     do {
-      if (this_00->m_size <= uVar7) break;
-      ppbVar3 = bdFastArray<bdDispatchInterceptor_*>::operator[](this_00,uVar7);
+      if ((this->m_interceptors).m_size <= uVar7) break;
+      ppbVar3 = bdFastArray<bdDispatchInterceptor_*>::operator[](&this->m_interceptors,uVar7);
       cVar4 = (**(code **)((int)**ppbVar3 + 4))(*ppbVar3,abStack_30);
       uVar7 = uVar7 + 1;
     } while (cVar4 == '\0');

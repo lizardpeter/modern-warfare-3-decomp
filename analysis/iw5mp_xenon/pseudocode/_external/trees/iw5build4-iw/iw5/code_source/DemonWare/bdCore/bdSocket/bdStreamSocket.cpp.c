@@ -21,55 +21,52 @@ void __thiscall bdStreamSocket::~bdStreamSocket(bdStreamSocket *this)
 
 // 8292D5D8  create  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdsocket/bdstreamsocket.cpp:26)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 bool __thiscall bdStreamSocket::create(bdStreamSocket *this,bool param_1)
 
 {
-  int *piVar1;
-  int iVar2;
-  undefined1 uVar3;
-  longlong lVar4;
+  int iVar1;
   
-  piVar1 = (int *)__savegprlr_28(this);
-  if (*piVar1 != -1) {
+  if (this->m_handle != -1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdCore\\bdSocket\\bdStreamSocket.cpp"
                     ,0x1c,0,"%s\n\t%s");
   }
-  iVar2 = bdPlatformStreamSocket::create(param_1);
-  lVar4 = (longlong)iVar2 + 1;
-  *piVar1 = iVar2;
-  if (iVar2 == -1) {
+  iVar1 = bdPlatformStreamSocket::create(param_1);
+  this->m_handle = iVar1;
+  if (iVar1 == -1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdCore\\bdSocket\\bdStreamSocket.cpp"
                     ,0x21,0,"%s\n\t%s");
   }
-  uVar3 = __restgprlr_28(lVar4 - ((longlong)iVar2 + (ulonglong)(lVar4 == 0)));
-  return (bool)uVar3;
+  return (bool)((char)((longlong)iVar1 + 1) - ((char)iVar1 + ((longlong)iVar1 + 1 == 0)));
 }
 
 
 // 8292D688  connect  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdsocket/bdstreamsocket.cpp:54)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 bdSocketStatusCode __thiscall bdStreamSocket::connect(bdStreamSocket *this,bdAddr param_1)
 
 {
-  int *piVar1;
-  bdInAddr bVar2;
-  ushort uVar4;
-  bdSocketStatusCode bVar3;
+  bdInAddr bVar1;
+  ushort uVar3;
+  bdSocketStatusCode bVar2;
   bdAddr *this_00;
   bdAddr *pbStack0000001c;
   bdInetAddr abStack_30 [12];
   
   this_00 = param_1._4_4_;
-  piVar1 = (int *)__savegprlr_28(this);
   pbStack0000001c = this_00;
   bdAddr::getAddress(this_00);
-  bVar2 = bdInetAddr::getInAddr(abStack_30);
-  uVar4 = bdAddr::getPort(this_00);
-  bVar3 = bdPlatformStreamSocket::connect
-                    (*piVar1,(bdInAddr)*(<unnamed_type_inUn> *)bVar2.inUn,uVar4);
+  bVar1 = bdInetAddr::getInAddr(abStack_30);
+  uVar3 = bdAddr::getPort(this_00);
+  bVar2 = bdPlatformStreamSocket::connect
+                    (this->m_handle,(bdInAddr)*(<unnamed_type_inUn> *)bVar1.inUn,uVar3);
   bdInetAddr::~bdInetAddr(&this_00->m_address);
-  bVar3 = __restgprlr_28(bVar3);
-  return bVar3;
+  return bVar2;
 }
 
 

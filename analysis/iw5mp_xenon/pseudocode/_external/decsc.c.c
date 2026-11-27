@@ -2,6 +2,11 @@
 
 // 828C6E40  unquantize  (<external>/Xenon/mar09/core/private/xam/codecs/nci/dec/src/decsc.c:134)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void unquantize(tagDecode_mblk *param_1,int *param_2,float *param_3,PARAM_SC *param_4)
 
 {
@@ -9,35 +14,28 @@ void unquantize(tagDecode_mblk *param_1,int *param_2,float *param_3,PARAM_SC *pa
   float fVar2;
   uint uVar3;
   ulonglong uVar4;
-  int iVar5;
-  longlong lVar6;
-  uint *puVar7;
-  ulonglong uVar8;
-  SUBFRAME_PARAM_SC *pSVar9;
+  ulonglong uVar5;
+  SUBFRAME_PARAM_SC *pSVar6;
+  double dVar7;
+  double dVar8;
+  double dVar9;
   double dVar10;
   double dVar11;
   double dVar12;
   double dVar13;
-  double dVar14;
-  double dVar15;
-  double dVar16;
   
-  lVar6 = (longlong)(int)param_2;
-  __savegprlr_27(param_1,lVar6,param_3);
-  puVar7 = (uint *)lVar6;
-  iVar5 = __savefpr_26();
-  fVar1 = *(float *)(iVar5 + 0x70);
-  dVar12 = (double)fVar1;
-  uVar4 = (ulonglong)puVar7[1] & 8;
-  dVar13 = (double)*(float *)(iVar5 + 0x6c);
-  dVar16 = (double)*(float *)(iVar5 + 0x2c);
-  uVar8 = puVar7[1] - uVar4;
-  dVar15 = (double)*(float *)(iVar5 + 0x3c);
-  dVar14 = (double)*(float *)(iVar5 + 0x30);
-  dVar11 = (double)*(float *)(iVar5 + 0x40);
-  pSVar9 = param_4->SubParam + 1;
+  fVar1 = (param_1->PrevSubParam).Pv;
+  dVar9 = (double)fVar1;
+  uVar4 = (ulonglong)(uint)param_2[1] & 8;
+  dVar10 = (double)(param_1->PrevSubParam).Pitch;
+  dVar13 = (double)param_1->fPitchWarp;
+  uVar5 = (uint)param_2[1] - uVar4;
+  dVar12 = (double)param_1->fRoboSquash;
+  dVar11 = (double)param_1->fPitchOffset;
+  dVar8 = (double)param_1->fPvScaleFactor;
+  pSVar6 = param_4->SubParam + 1;
   fVar2 = *(float *)((int)PvCodeBook +
-                    (int)((-(((uVar8 & 0xffffffff) >> 0x1f) + (ulonglong)(uVar8 < 8)) & uVar8 &
+                    (int)((-(((uVar5 & 0xffffffff) >> 0x1f) + (ulonglong)(uVar5 < 8)) & uVar5 &
                           0xffffffff) << 2));
   param_4->SubParam[1].Pv = fVar2;
   if ((int)uVar4 == 0) {
@@ -46,46 +44,47 @@ void unquantize(tagDecode_mblk *param_1,int *param_2,float *param_3,PARAM_SC *pa
   else {
     param_4->SubParam[0].Pv = fVar2;
   }
-  dVar10 = exp(-(double)((float)(longlong)(int)puVar7[2] * 0.01174797 - 5.075174));
-  fVar1 = 8000.0 / (float)((double)(float)((double)(8000.0 / (float)dVar10) * dVar15) * dVar16 +
-                          dVar14);
-  pSVar9->Pitch = fVar1;
+  dVar7 = exp(-(double)((float)(longlong)param_2[2] * 0.01174797 - 5.075174));
+  fVar1 = 8000.0 / (float)((double)(float)((double)(8000.0 / (float)dVar7) * dVar12) * dVar13 +
+                          dVar11);
+  pSVar6->Pitch = fVar1;
   if (fVar1 < 8.0) {
-    pSVar9->Pitch = 8.0;
+    pSVar6->Pitch = 8.0;
   }
-  if (160.0 < pSVar9->Pitch) {
-    pSVar9->Pitch = 160.0;
+  if (160.0 < pSVar6->Pitch) {
+    pSVar6->Pitch = 160.0;
   }
-  dVar15 = (double)pSVar9->Pitch;
-  dVar14 = (double)param_4->SubParam[1].Pv;
-  if (((double)(float)(dVar13 * 1.25) < dVar15) ||
-     (dVar15 < (double)(float)(dVar13 * 0.800000011920929))) {
-    dVar16 = dVar15;
-    if (dVar14 < dVar12) {
-      dVar16 = dVar13;
-      dVar14 = dVar12;
+  dVar12 = (double)pSVar6->Pitch;
+  dVar11 = (double)param_4->SubParam[1].Pv;
+  if (((double)(float)(dVar10 * 1.25) < dVar12) ||
+     (dVar12 < (double)(float)(dVar10 * 0.800000011920929))) {
+    dVar13 = dVar12;
+    if (dVar11 < dVar9) {
+      dVar13 = dVar10;
+      dVar11 = dVar9;
     }
-    if (((dVar16 < 30.0) && ((float)(dVar14 * dVar16) * 0.5 < 1.0)) &&
-       (dVar16 = dVar13, dVar13 < dVar15)) {
-      dVar16 = dVar15;
+    if (((dVar13 < 30.0) && ((float)(dVar11 * dVar13) * 0.5 < 1.0)) &&
+       (dVar13 = dVar10, dVar10 < dVar12)) {
+      dVar13 = dVar12;
     }
   }
   else {
-    dVar16 = (double)((float)(dVar15 + dVar13) * 0.5);
+    dVar13 = (double)((float)(dVar12 + dVar10) * 0.5);
   }
-  uVar3 = *puVar7;
-  param_4->SubParam[0].Pitch = (float)dVar16;
+  uVar3 = *param_2;
+  param_4->SubParam[0].Pitch = (float)dVar13;
   param_4->fLog2Gain = GainCodeBook[-(-((int)uVar3 >> 0x1f) + (uint)(uVar3 < 0x40)) & uVar3];
-  NellyMSVQDecPred((int *)(puVar7 + 3),param_4->pfASK,0xc,param_4->SubParam[1].Pv,
+  NellyMSVQDecPred(param_2 + 3,param_4->pfASK,0xc,param_4->SubParam[1].Pv,
                    (float *)-((int)uVar3 >> 0x1f));
-  param_4->SubParam[1].Pv = (float)((double)param_4->SubParam[1].Pv * dVar11);
-  __restfpr_26();
-  __restgprlr_27();
+  param_4->SubParam[1].Pv = (float)((double)param_4->SubParam[1].Pv * dVar8);
   return;
 }
 
 
 // 828C7048  NellyDecodeSase3200  (<external>/Xenon/mar09/core/private/xam/codecs/nci/dec/src/decsc.c:228)
+
+/* WARNING: Function: __savegprlr_20 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_20 replaced with injection: xenon_save_restore */
 
 void NellyDecodeSase3200(void *param_1,short *param_2,ushort *param_3,uchar *param_4,ushort param_5,
                         ushort *param_6,uchar *param_7,float *param_8,float *param_9,float *param_10
@@ -97,12 +96,11 @@ void NellyDecodeSase3200(void *param_1,short *param_2,ushort *param_3,uchar *par
   ushort uVar3;
   float *pfVar4;
   float fVar5;
-  tagDecode_mblk *ptVar6;
-  float *pfVar7;
-  longlong lVar8;
-  int iVar9;
-  longlong lVar10;
-  ulonglong uVar11;
+  float *pfVar6;
+  longlong lVar7;
+  int iVar8;
+  short *psVar9;
+  ulonglong uVar10;
   float *in_stack_0000005c;
   byte local_140 [4];
   uint local_13c;
@@ -116,139 +114,135 @@ void NellyDecodeSase3200(void *param_1,short *param_2,ushort *param_3,uchar *par
   float afStack_ec [15];
   float local_b0 [44];
   
-  lVar10 = (longlong)(int)param_2;
-  ptVar6 = (tagDecode_mblk *)__savegprlr_20(param_1);
   uVar3 = *param_6;
   uVar2 = *param_7;
-  pfVar4 = ptVar6->pMemoryBlock;
+  pfVar4 = *(float **)((int)param_1 + 4);
   local_13c = 0;
-  iVar9 = 0;
+  iVar8 = 0;
   local_120.pBuffer = param_4;
   local_120.wBufferSize = param_5;
   local_120.pBufferReadByteOffset = param_6;
   local_120.pBufferReadBitOffset = param_7;
   do {
-    BitUnpackCBuffer(&local_120,local_140,*(int *)((int)BitTable_SC3 + iVar9));
-    *(uint *)((int)local_b0 + iVar9) = (uint)local_140[0];
-    iVar9 = iVar9 + 4;
-  } while (iVar9 < 0x44);
-  lVar8 = ZEXT48(&stack0x00000000) - 0x100;
-  pfVar7 = local_b0;
-  unquantize(ptVar6,(int *)pfVar7,pfVar4,(PARAM_SC *)lVar8);
-  if (ptVar6->iNewFrame == 1) {
-    NellyAskToEnv(afStack_ec,local_f0,pfVar7,ptVar6->fSpectrumWarp,(short)ptVar6->pMemoryBlock,
-                  (short)lVar8,(float *)(uint)(ushort)ptVar6->wSpectrumOffset,
-                  (float *)(uint)(ushort)ptVar6->wSpectrumLedge);
+    BitUnpackCBuffer(&local_120,local_140,*(int *)((int)BitTable_SC3 + iVar8));
+    *(uint *)((int)local_b0 + iVar8) = (uint)local_140[0];
+    iVar8 = iVar8 + 4;
+  } while (iVar8 < 0x44);
+  lVar7 = ZEXT48(&stack0x00000000) - 0x100;
+  pfVar6 = local_b0;
+  unquantize(param_1,(int *)pfVar6,pfVar4,(PARAM_SC *)lVar7);
+  if (*(short *)((int)param_1 + 0x5c) == 1) {
+    NellyAskToEnv(afStack_ec,local_f0,pfVar6,*(float *)((int)param_1 + 0x34),
+                  (short)*(undefined4 *)((int)param_1 + 4),(short)lVar7,
+                  (float *)(uint)*(ushort *)((int)param_1 + 0x38),
+                  (float *)(uint)*(ushort *)((int)param_1 + 0x3a));
   }
-  SubFrameSynth(ptVar6,auStack_100,(short *)lVar10,(int *)&local_13c);
+  SubFrameSynth(param_1,auStack_100,param_2,(int *)&local_13c);
   *param_3 = 0x50;
   *in_stack_0000005c = local_f0;
-  if (ptVar6->iNewFrame == 0) {
-    ptVar6->iNewFrame = 1;
-    (*memcpyfunc)(&ptVar6->PrevSubParam,&stack0x00000000 + -0xf8,8);
+  if (*(short *)((int)param_1 + 0x5c) == 0) {
+    *(undefined2 *)((int)param_1 + 0x5c) = 1;
+    (*memcpyfunc)((void *)((int)param_1 + 0x6c),&stack0x00000000 + -0xf8,8);
   }
   else {
-    uVar11 = (ulonglong)local_13c;
-    ptVar6->iNewFrame = 0;
+    uVar10 = (ulonglong)local_13c;
+    *(undefined2 *)((int)param_1 + 0x5c) = 0;
     *param_6 = uVar3;
     *param_7 = uVar2;
     local_138 = (longlong)(int)(local_13c - 1);
     fVar5 = (float)local_138;
-    if (ptVar6->iSilenceInjectionMode == 1) {
-      iVar9 = 0;
-      ptVar6->iSilenceInjectionMode = 0;
+    if (*(short *)((int)param_1 + 0x5e) == 1) {
+      iVar8 = 0;
+      *(undefined2 *)((int)param_1 + 0x5e) = 0;
       if (0 < (int)local_13c) {
-        lVar10 = lVar10 + -2;
+        psVar9 = param_2 + -1;
         do {
-          local_130 = (longlong)*(short *)((int)lVar10 + 2);
-          local_138 = (longlong)iVar9;
-          iVar9 = iVar9 + 1;
+          local_130 = (longlong)psVar9[1];
+          local_138 = (longlong)iVar8;
+          iVar8 = iVar8 + 1;
           iVar1 = (int)((float)local_130 * (float)local_138 * (1.0 / fVar5));
-          local_128._6_2_ = (undefined2)iVar1;
-          lVar10 = lVar10 + 2;
-          *(undefined2 *)lVar10 = local_128._6_2_;
-          uVar11 = uVar11 - 1;
+          local_128._6_2_ = (short)iVar1;
+          psVar9 = psVar9 + 1;
+          *psVar9 = local_128._6_2_;
+          uVar10 = uVar10 - 1;
           local_128 = (longlong)iVar1;
-        } while (uVar11 != 0);
+        } while (uVar10 != 0);
       }
     }
   }
-  (*memcpyfunc)(ptVar6->pfEnv_1,pfVar4 + 0x202,0x104);
-  (*memcpyfunc)(ptVar6->pfPhase_1,pfVar4 + 0x243,0x104);
-  __restgprlr_20();
+  (*memcpyfunc)(*(void **)((int)param_1 + 0xc),pfVar4 + 0x202,0x104);
+  (*memcpyfunc)(*(void **)((int)param_1 + 0x10),pfVar4 + 0x243,0x104);
   return;
 }
 
 
 // 828C7240  NellyInitDecodeSase3200  (<external>/Xenon/mar09/core/private/xam/codecs/nci/dec/src/decsc.c:1212)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 ushort NellyInitDecodeSase3200(void **param_1)
 
 {
-  undefined4 *puVar1;
-  void **ppvVar2;
-  void *pvVar3;
-  int iVar4;
-  ushort uVar5;
-  bool bVar6;
+  void **ppvVar1;
+  void *pvVar2;
+  int iVar3;
   
-  puVar1 = (undefined4 *)__savegprlr_28(param_1);
-  if (puVar1 != (undefined4 *)0x0) {
-    *puVar1 = 0;
-    ppvVar2 = (*callocfunc)(1,0x74);
-    if (ppvVar2 != (void **)0x0) {
-      *puVar1 = ppvVar2;
-      *ppvVar2 = (void *)0x0;
-      ppvVar2[1] = (void *)0x0;
-      ppvVar2[2] = (void *)0x0;
-      ppvVar2[3] = (void *)0x0;
-      ppvVar2[8] = (void *)0x46fffe00;
-      ppvVar2[4] = (void *)0x0;
-      ppvVar2[5] = (void *)0x0;
-      ppvVar2[6] = (void *)0x0;
-      ppvVar2[0x16] = (void *)0x0;
-      ppvVar2[7] = (void *)0x3f800000;
-      *(undefined2 *)(ppvVar2 + 0xe) = 0;
-      ppvVar2[9] = (void *)0x0;
-      *(undefined2 *)((int)ppvVar2 + 0x3a) = 0;
-      ppvVar2[10] = (void *)0x3f800000;
-      *(undefined2 *)(ppvVar2 + 0x17) = 1;
-      ppvVar2[0xb] = (void *)0x3f800000;
-      ppvVar2[0x15] = (void *)0x0;
-      ppvVar2[0xc] = (void *)0x0;
-      ppvVar2[0x1a] = (void *)0x1;
-      ppvVar2[0xd] = (void *)0x3f800000;
-      *(undefined2 *)((int)ppvVar2 + 0x5e) = 0;
-      ppvVar2[0xf] = (void *)0x3f800000;
-      *(undefined2 *)(ppvVar2 + 0x18) = 100;
-      ppvVar2[0x10] = (void *)0x3f800000;
-      ppvVar2[0x19] = (void *)0x1;
-      ppvVar2[0x11] = (void *)0x3f800000;
-      ppvVar2[0x12] = (void *)0x3f800000;
-      ppvVar2[0x13] = (void *)0x42a00000;
-      ppvVar2[0x14] = (void *)0x0;
-      ppvVar2[0x1b] = (void *)0x42c80000;
-      pvVar3 = (*callocfunc)(0x284,4);
-      ppvVar2[1] = pvVar3;
-      if (pvVar3 != (void *)0x0) {
-        pvVar3 = (*callocfunc)(0x50,4);
-        ppvVar2[2] = pvVar3;
-        if (pvVar3 != (void *)0x0) {
-          pvVar3 = (*callocfunc)(0x41,4);
-          ppvVar2[3] = pvVar3;
-          if (pvVar3 != (void *)0x0) {
-            pvVar3 = (*callocfunc)(0x41,4);
-            ppvVar2[4] = pvVar3;
-            if (pvVar3 != (void *)0x0) {
-              pvVar3 = (*callocfunc)(0x66,4);
-              ppvVar2[5] = pvVar3;
-              if (pvVar3 != (void *)0x0) {
-                pvVar3 = (*callocfunc)(0x68,4);
-                ppvVar2[6] = pvVar3;
-                if (pvVar3 != (void *)0x0) {
-                  iVar4 = NellyInitHFRegen(ppvVar2);
-                  bVar6 = iVar4 != 0;
-                  goto LAB_828c7404;
+  if (param_1 != (void **)0x0) {
+    *param_1 = (void *)0x0;
+    ppvVar1 = (*callocfunc)(1,0x74);
+    if (ppvVar1 != (void **)0x0) {
+      *param_1 = ppvVar1;
+      *ppvVar1 = (void *)0x0;
+      ppvVar1[1] = (void *)0x0;
+      ppvVar1[2] = (void *)0x0;
+      ppvVar1[3] = (void *)0x0;
+      ppvVar1[8] = (void *)0x46fffe00;
+      ppvVar1[4] = (void *)0x0;
+      ppvVar1[5] = (void *)0x0;
+      ppvVar1[6] = (void *)0x0;
+      ppvVar1[0x16] = (void *)0x0;
+      ppvVar1[7] = (void *)0x3f800000;
+      *(undefined2 *)(ppvVar1 + 0xe) = 0;
+      ppvVar1[9] = (void *)0x0;
+      *(undefined2 *)((int)ppvVar1 + 0x3a) = 0;
+      ppvVar1[10] = (void *)0x3f800000;
+      *(undefined2 *)(ppvVar1 + 0x17) = 1;
+      ppvVar1[0xb] = (void *)0x3f800000;
+      ppvVar1[0x15] = (void *)0x0;
+      ppvVar1[0xc] = (void *)0x0;
+      ppvVar1[0x1a] = (void *)0x1;
+      ppvVar1[0xd] = (void *)0x3f800000;
+      *(undefined2 *)((int)ppvVar1 + 0x5e) = 0;
+      ppvVar1[0xf] = (void *)0x3f800000;
+      *(undefined2 *)(ppvVar1 + 0x18) = 100;
+      ppvVar1[0x10] = (void *)0x3f800000;
+      ppvVar1[0x19] = (void *)0x1;
+      ppvVar1[0x11] = (void *)0x3f800000;
+      ppvVar1[0x12] = (void *)0x3f800000;
+      ppvVar1[0x13] = (void *)0x42a00000;
+      ppvVar1[0x14] = (void *)0x0;
+      ppvVar1[0x1b] = (void *)0x42c80000;
+      pvVar2 = (*callocfunc)(0x284,4);
+      ppvVar1[1] = pvVar2;
+      if (pvVar2 != (void *)0x0) {
+        pvVar2 = (*callocfunc)(0x50,4);
+        ppvVar1[2] = pvVar2;
+        if (pvVar2 != (void *)0x0) {
+          pvVar2 = (*callocfunc)(0x41,4);
+          ppvVar1[3] = pvVar2;
+          if (pvVar2 != (void *)0x0) {
+            pvVar2 = (*callocfunc)(0x41,4);
+            ppvVar1[4] = pvVar2;
+            if (pvVar2 != (void *)0x0) {
+              pvVar2 = (*callocfunc)(0x66,4);
+              ppvVar1[5] = pvVar2;
+              if (pvVar2 != (void *)0x0) {
+                pvVar2 = (*callocfunc)(0x68,4);
+                ppvVar1[6] = pvVar2;
+                if (pvVar2 != (void *)0x0) {
+                  iVar3 = NellyInitHFRegen(ppvVar1);
+                  return (ushort)(iVar3 != 0);
                 }
               }
             }
@@ -257,24 +251,21 @@ ushort NellyInitDecodeSase3200(void **param_1)
       }
     }
   }
-  bVar6 = true;
-LAB_828c7404:
-  uVar5 = __restgprlr_28(bVar6);
-  return uVar5;
+  return 1;
 }
 
 
 // 828C7410  NellyFreeDecodeSase3200  (<external>/Xenon/mar09/core/private/xam/codecs/nci/dec/src/decsc.c:1280)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 ushort NellyFreeDecodeSase3200(void **param_1)
 
 {
   void **ppvVar1;
-  undefined4 *puVar2;
-  ushort uVar3;
   
-  puVar2 = (undefined4 *)__savegprlr_29(param_1);
-  ppvVar1 = (void **)*puVar2;
+  ppvVar1 = *param_1;
   if (ppvVar1 != (void **)0x0) {
     if (ppvVar1[1] != (void *)0x0) {
       (*freefunc)(ppvVar1[1]);
@@ -303,7 +294,6 @@ ushort NellyFreeDecodeSase3200(void **param_1)
     }
     (*freefunc)(ppvVar1);
   }
-  uVar3 = __restgprlr_29(0);
-  return uVar3;
+  return 0;
 }
 

@@ -2,6 +2,8 @@
 
 // 8286C6B8  GPUTimingMarkerSmall  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/pix.hpp:97)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 
 GPUTimingMarkerSmall * __thiscall
@@ -11,14 +13,11 @@ D3D::GPUTimingMarkerSmall::GPUTimingMarkerSmall
 {
   _PixSmallOpcodesType *p_Var1;
   ulonglong uVar2;
-  undefined4 *puVar3;
-  GPUTimingMarkerSmall *pGVar4;
   int in_r13;
   
-  puVar3 = (undefined4 *)__savegprlr_29(this);
-  *puVar3 = param_2;
+  this->m_pDevice = param_2;
   if (param_2->m_TimingCaptureActive != 0) {
-    puVar3[1] = param_1;
+    this->m_Opcode = param_1;
     p_Var1 = *(_PixSmallOpcodesType **)(in_r13 + 0x2b0);
     if (p_Var1 < *(_PixSmallOpcodesType **)(in_r13 + 0x2b4)) {
       uVar2 = TBLr;
@@ -29,8 +28,7 @@ D3D::GPUTimingMarkerSmall::GPUTimingMarkerSmall
       PixCpuAddSmall_Next(param_1);
     }
   }
-  pGVar4 = (GPUTimingMarkerSmall *)__restgprlr_29(puVar3);
-  return pGVar4;
+  return this;
 }
 
 
@@ -65,189 +63,199 @@ void __thiscall D3D::GPUTimingMarkerSmall::~GPUTimingMarkerSmall(GPUTimingMarker
 
 // 8286C8E8  D3DDevice_BeginVertices  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/draw.cpp:154)
 
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 
 void * D3DDevice_BeginVertices
                  (D3DDevice *param_1,_D3DPRIMITIVETYPE param_2,uint param_3,uint param_4)
 
 {
-  uchar uVar1;
-  uint *puVar2;
-  undefined2 uVar3;
-  uint uVar4;
-  CDevice *this;
-  ulong *puVar5;
+  byte bVar1;
+  undefined1 uVar2;
+  uint *puVar3;
+  ulonglong uVar4;
+  uint uVar5;
   ulong *puVar6;
   ulong *puVar7;
-  void *pvVar8;
+  ulong *puVar8;
   ulong64 uVar9;
   ulong uVar10;
-  ulonglong uVar11;
-  ulonglong uVar12;
-  _D3DPRIMITIVETYPE *p_Var13;
+  _D3DPRIMITIVETYPE *p_Var11;
   int in_r13;
-  ulonglong uVar14;
-  ulonglong uVar15;
-  ulong64 uVar16;
-  ulong64 uVar17;
+  ulonglong uVar12;
+  ulonglong uVar13;
+  ulong64 uVar14;
+  ulong64 uVar15;
   
-  uVar12 = (ulonglong)(int)param_4;
-  uVar11 = (ulonglong)(int)param_3;
-  this = (CDevice *)__savegprlr_22(param_1);
-  if (this->m_TimingCaptureActive != 0) {
-    puVar2 = *(uint **)(in_r13 + 0x2b0);
-    if (puVar2 < *(uint **)(in_r13 + 0x2b4)) {
-      uVar14 = TBLr;
-      *puVar2 = (uint)((uVar14 & 0xffffffff) << 7) | 6;
-      *(uint **)(in_r13 + 0x2b0) = puVar2 + 1;
+  if ((param_1[1].m_MiscPacket.SampleCountAddress & 0x80000000) != 0) {
+    puVar3 = *(uint **)(in_r13 + 0x2b0);
+    if (puVar3 < *(uint **)(in_r13 + 0x2b4)) {
+      uVar4 = TBLr;
+      *puVar3 = (uint)((uVar4 & 0xffffffff) << 7) | 6;
+      *(uint **)(in_r13 + 0x2b0) = puVar3 + 1;
     }
     else {
       D3D::PixCpuAddSmall_Next(PIXSMALL_BeginVertices);
     }
   }
-  uVar14 = (uVar12 & 0xffffffff) >> 2;
-  uVar1 = (this->field11115_0x31e8).m_StreamStride[0];
-  (this->field11115_0x31e8).m_StreamStride[0] = (uchar)uVar14;
-  uVar12 = ((longlong)(int)uVar11 * (longlong)(int)uVar12 & 0xffffffffU) >> 2;
-  if (((uVar14 & 0xff) != (ulonglong)(this->field11073_0x2f68).m_CurrentVertexShaderStride[0]) &&
-     (this->m_pVertexShader != (CVertexShader *)0x0)) {
-    *(ulonglong *)&this->field_0x10 = *(ulonglong *)&this->field_0x10 | 0x80000;
+  bVar1 = param_1[1].field_0x468;
+  uVar2 = *(undefined1 *)((int)&param_1[1].m_Constants.field0_0x0 + 0x268);
+  *(char *)((int)&param_1[1].m_Constants.field0_0x0 + 0x268) = (char)(param_4 >> 2);
+  uVar4 = ((longlong)(int)param_3 * (longlong)(int)param_4 & 0xffffffffU) >> 2;
+  if (((param_4 >> 2 & 0xff) != (uint)bVar1) &&
+     (*(int *)((int)&param_1[1].m_Constants.field1_0x300 + 0x10) != 0)) {
+    (param_1->m_Pending).m_Mask[2] = (param_1->m_Pending).m_Mask[2] | 0x80000;
   }
-  *(ulonglong *)&this->field_0x18 = *(ulonglong *)&this->field_0x18 & 0xfffffffffffffffe;
-  uVar9 = *(ulong64 *)this;
-  uVar3 = (this->m_CpuDrPix).DrawApiCalls;
-  uVar14 = *(ulonglong *)&this->field_0x20;
-  uVar15 = *(ulonglong *)&this->field_0x18;
-  uVar17 = *(ulong64 *)&this->field_0x10;
-  uVar16 = *(ulong64 *)&this->field_0x8;
-  (this->m_CpuDrPix).DrawApiCalls = uVar3 + 1;
+  (param_1->m_Pending).m_Mask[3] = (param_1->m_Pending).m_Mask[3] & 0xfffffffffffffffe;
+  uVar9 = (param_1->m_Pending).m_Mask[0];
+  uVar12 = (param_1->m_Pending).m_Mask[4];
+  uVar13 = (param_1->m_Pending).m_Mask[3];
+  uVar15 = (param_1->m_Pending).m_Mask[2];
+  uVar14 = (param_1->m_Pending).m_Mask[1];
+  *(short *)&param_1[1].field_0x2ada = (short)*(undefined4 *)&param_1[1].field_0x2ad8 + 1;
   if (uVar9 != 0) {
-    D3D::SetPending_AluConstants(this,uVar9,0x4000,&this->field_0x780);
-    *(undefined8 *)this = 0;
-  }
-  if (uVar16 != 0) {
-    D3D::SetPending_AluConstants(this,uVar16,0x4400,&this->field_0x1780);
-    *(undefined8 *)&this->field_0x8 = 0;
-  }
-  if (uVar17 != 0) {
-    if ((uVar17 & 0x1e0000) != 0) {
-      uVar17 = D3D::SetPending_Shaders(this,uVar17);
-    }
-    if ((*(ulonglong *)&this->field_0x28 & uVar17) != 0) {
-      uVar17 = D3D::SetPending_Predicated(this,uVar17,*(ulong *)&this->field_0x2940);
-    }
-    if ((uVar17 & 0xfff) != 0) {
-      D3D::SetPending_RenderStates(this,uVar17 << 0x34,0x2200,&this->field_0x2934);
-    }
-    if ((uVar17 & 0x1f000) != 0) {
-      D3D::SetPending_RenderStates(this,(uVar17 & 0x1f000) << 0x2f,0x2180,&this->field_0x2920);
-    }
-    if ((uVar17 & 0x3fffc0000000000) != 0) {
-      D3D::SetPending_RenderStates
-                (this,(uVar17 & 0x3fffc0000000000) << 6,0x2000,&this->field_0x2880);
-    }
-    if ((uVar17 & 0x3ffffe00000) != 0) {
-      D3D::SetPending_RenderStates(this,(uVar17 & 0x3ffffe00000) << 0x16,0x2100,&this->field_0x28cc)
-      ;
-    }
-    *(undefined8 *)&this->field_0x10 = 0;
-  }
-  if (uVar15 != 0) {
-    if ((uVar15 & 0xffffffff) != 0) {
-      D3D::SetPending_FetchConstants(this,uVar15 << 0x20);
-    }
-    if ((uVar15 & 0x7ffffc00000000) != 0) {
-      D3D::SetPending_RenderStates(this,(uVar15 & 0x7ffffc00000000) << 9,0x2280,&this->field_0x2964)
-      ;
-    }
-    *(undefined8 *)&this->field_0x18 = 0;
+    D3D::SetPending_AluConstants
+              ((CDevice *)param_1,uVar9,0x4000,&(param_1->m_Constants).field1_0x300);
+    (param_1->m_Pending).m_Mask[0] = 0;
   }
   if (uVar14 != 0) {
-    if ((uVar14 & 0x3fc000000000) != 0) {
+    D3D::SetPending_AluConstants
+              ((CDevice *)param_1,uVar14,0x4400,
+               (void *)((int)&(param_1->m_Constants).field1_0x300 + 0x1000));
+    (param_1->m_Pending).m_Mask[1] = 0;
+  }
+  if (uVar15 != 0) {
+    if ((uVar15 & 0x1e0000) != 0) {
+      uVar15 = D3D::SetPending_Shaders((CDevice *)param_1,uVar15);
+    }
+    if ((param_1->m_Predicated_PendingMask2 & uVar15) != 0) {
+      uVar15 = D3D::SetPending_Predicated
+                         ((CDevice *)param_1,uVar15,(param_1->m_ControlPacket).HiControl.dword);
+    }
+    if ((uVar15 & 0xfff) != 0) {
       D3D::SetPending_RenderStates
-                (this,(uVar14 & 0x3fc000000000) << 0x12,0x2380,&this->field_0x2a50);
+                ((CDevice *)param_1,uVar15 << 0x34,0x2200,&param_1->m_ControlPacket);
     }
-    if ((uVar14 & 0x7e000000000000) != 0) {
-      D3D::SetPending_ClipPlanes(this,(uVar14 & 0x7e000000000000) << 9);
+    if ((uVar15 & 0x1f000) != 0) {
+      D3D::SetPending_RenderStates
+                ((CDevice *)param_1,(uVar15 & 0x1f000) << 0x2f,0x2180,&param_1->m_ProgramPacket);
     }
-    if ((uVar14 & 0x100000000000000) != 0) {
-      D3D::SetPending_RenderStates(this,0xffffffffff000000,0x4900,&this->field_0x2780);
+    if ((uVar15 & 0x3fffc0000000000) != 0) {
+      D3D::SetPending_RenderStates
+                ((CDevice *)param_1,(uVar15 & 0x3fffc0000000000) << 6,0x2000,
+                 &param_1->m_DestinationPacket);
     }
-    if ((uVar14 & 0x3fffffffff) != 0) {
-      D3D::SetPending_RenderStates(this,uVar14 << 0x1a,0x2300,&this->field_0x29b8);
+    if ((uVar15 & 0x3ffffe00000) != 0) {
+      D3D::SetPending_RenderStates
+                ((CDevice *)param_1,(uVar15 & 0x3ffffe00000) << 0x16,0x2100,&param_1->m_ValuesPacket
+                );
     }
-    if ((uVar14 & 0xc000000000000000) != 0) {
-      if ((this->m_WaitUntilIdleRequired) || (this->m_FlushAllCaches)) {
-        D3D::WaitUntilIdleOrFlushCaches(this);
+    (param_1->m_Pending).m_Mask[2] = 0;
+  }
+  if (uVar13 != 0) {
+    if ((uVar13 & 0xffffffff) != 0) {
+      D3D::SetPending_FetchConstants((CDevice *)param_1,uVar13 << 0x20);
+    }
+    if ((uVar13 & 0x7ffffc00000000) != 0) {
+      D3D::SetPending_RenderStates
+                ((CDevice *)param_1,(uVar13 & 0x7ffffc00000000) << 9,0x2280,
+                 &param_1->m_TessellatorPacket);
+    }
+    (param_1->m_Pending).m_Mask[3] = 0;
+  }
+  if (uVar12 != 0) {
+    if ((uVar12 & 0x3fc000000000) != 0) {
+      D3D::SetPending_RenderStates
+                ((CDevice *)param_1,(uVar12 & 0x3fc000000000) << 0x12,0x2380,&param_1->m_PointPacket
+                );
+    }
+    if ((uVar12 & 0x7e000000000000) != 0) {
+      D3D::SetPending_ClipPlanes((CDevice *)param_1,(uVar12 & 0x7e000000000000) << 9);
+    }
+    if ((uVar12 & 0x100000000000000) != 0) {
+      D3D::SetPending_RenderStates
+                ((CDevice *)param_1,0xffffffffff000000,0x4900,&(param_1->m_Constants).field2_0x2300)
+      ;
+    }
+    if ((uVar12 & 0x3fffffffff) != 0) {
+      D3D::SetPending_RenderStates((CDevice *)param_1,uVar12 << 0x1a,0x2300,&param_1->m_MiscPacket);
+    }
+    if ((uVar12 & 0xc000000000000000) != 0) {
+      if ((((uint)param_1[1].m_SetRenderStateCall[0] & 0x80000000) != 0) ||
+         (((uint)param_1[1].m_SetRenderStateCall[0] & 0x40000000) != 0)) {
+        D3D::WaitUntilIdleOrFlushCaches((CDevice *)param_1);
       }
     }
-    *(undefined8 *)&this->field_0x20 = 0;
+    (param_1->m_Pending).m_Mask[4] = 0;
   }
-  puVar5 = *(ulong **)&this->field_0x30;
-  (this->field11115_0x31e8).m_StreamStride[0] = uVar1;
-  if (*(ulong **)&this->field_0x38 < puVar5) {
-    puVar5 = D3D::CDevice::KickOff(this);
+  puVar7 = param_1->m_pRingGuarantee;
+  puVar6 = param_1->m_pRing;
+  *(undefined1 *)((int)&param_1[1].m_Constants.field0_0x0 + 0x268) = uVar2;
+  if (puVar7 < puVar6) {
+    puVar6 = D3D::CDevice::KickOff((CDevice *)param_1);
   }
-  uVar10 = (ulong)uVar12;
-  puVar6 = D3D::CDevice::BeginRingAlloc(this,uVar10,0x10);
-  if (puVar6 == (ulong *)0x0) {
-    *(ulong **)&this->field_0x30 = puVar5;
-    puVar6 = (ulong *)0x0;
+  uVar10 = (ulong)uVar4;
+  puVar7 = D3D::CDevice::BeginRingAlloc((CDevice *)param_1,uVar10,0x10);
+  if (puVar7 == (ulong *)0x0) {
+    param_1->m_pRing = puVar6;
+    puVar7 = (ulong *)0x0;
   }
   else {
-    puVar5[1] = 0x2102;
-    puVar5[2] = 0;
-    puVar5[3] = 0x548ba;
-    puVar5[4] = *(ulong *)&this->field_0x768;
-    puVar5[5] = *(ulong *)&this->field_0x76c;
-    puVar5[6] = *(ulong *)&this->field_0x770;
-    puVar5[7] = *(ulong *)&this->field_0x774;
-    puVar5[8] = (((uint)puVar6 >> 0x14) + 0x200 & 0x1000) + ((uint)puVar6 & 0x1fffffff) | 3;
-    puVar5[9] = (uint)(uVar12 << 2) & 0x3fffffc | 0x10000002;
-    puVar5[10] = 0x25000;
-    puVar5[0xb] = 0;
-    puVar5[0xc] = 0;
-    puVar5[0xd] = 0;
-    puVar5[0xe] = 0x57e;
-    puVar5[0xf] = 0x10005;
-    uVar4 = CONCAT11(this->m_ConditionalRenderStackIndex != 0,
-                     this->m_ConditionalRenderStack[this->m_ConditionalRenderStackIndex]) &
+    puVar6[1] = 0x2102;
+    puVar6[2] = 0;
+    puVar6[3] = 0x548ba;
+    puVar6[4] = *(ulong *)((int)&(param_1->m_Constants).field0_0x0 + 0x2e8);
+    puVar6[5] = *(ulong *)((int)&(param_1->m_Constants).field0_0x0 + 0x2ec);
+    puVar6[6] = *(ulong *)((int)&(param_1->m_Constants).field0_0x0 + 0x2f0);
+    puVar6[7] = *(ulong *)((int)&(param_1->m_Constants).field0_0x0 + 0x2f4);
+    puVar6[8] = (((uint)puVar7 >> 0x14) + 0x200 & 0x1000) + ((uint)puVar7 & 0x1fffffff) | 3;
+    puVar6[9] = (uint)(uVar4 << 2) & 0x3fffffc | 0x10000002;
+    puVar6[10] = 0x25000;
+    puVar6[0xb] = 0;
+    puVar6[0xc] = 0;
+    puVar6[0xd] = 0;
+    puVar6[0xe] = 0x57e;
+    puVar6[0xf] = 0x10005;
+    bVar1 = *(byte *)((int)&param_1[1].m_Constants.field0_0x0 + 0x113);
+    uVar5 = CONCAT11(bVar1 != 0,
+                     *(undefined1 *)((int)&param_1[1].m_Constants.field0_0x0 + bVar1 + 0xd2)) &
             0xffffff3f;
-    if (this->m_PredicateDrawPrims) {
-      puVar7 = (this->m_Patches).m_pData;
-      if ((this->m_Patches).m_pDataLimit < puVar7 + 4) {
-        puVar7 = D3D::CRingAllocList::MakeSpace(&this->m_Patches);
-      }
-      *puVar7 = (ulong)(puVar5 + 0xf);
-      (this->m_Patches).m_pData = puVar7 + 4;
-      puVar5[0x10] = 0xc0006000;
-      puVar5[0x11] = 0xffffffff;
-      puVar5[0x12] = 0xc0012201;
-      puVar5[0x13] = uVar4;
-      puVar5[0x14] = param_2 & 0x3f | (_D3DPRIMITIVETYPE)((uVar11 & 0xffffffff) << 0x10) | 0x80;
-      puVar5[0x15] = 0xc0006000;
-      puVar5[0x16] = 0x80000000;
-      puVar5[0x17] = 0xc0015a01;
-      puVar5[0x18] = 0x1a;
-      puVar5[0x19] = (((uint)(puVar7 + 1) >> 0x14) + 0x200 & 0x1000) +
-                     ((uint)(puVar7 + 1) & 0x1ffffffe) | 1;
-      puVar5[0x1a] = 0xc0004601;
-      p_Var13 = puVar5 + 0x1b;
-      *p_Var13 = 0x19;
+    if ((param_1[1].m_ReferenceCount & 0x1000000) == 0) {
+      puVar6[0x10] = 0xc0012201;
+      puVar6[0x11] = uVar5;
+      p_Var11 = puVar6 + 0x12;
+      *p_Var11 = param_2 & 0x3f | param_3 << 0x10 | 0x80;
     }
     else {
-      puVar5[0x10] = 0xc0012201;
-      puVar5[0x11] = uVar4;
-      p_Var13 = puVar5 + 0x12;
-      *p_Var13 = param_2 & 0x3f | (_D3DPRIMITIVETYPE)((uVar11 & 0xffffffff) << 0x10) | 0x80;
+      puVar8 = *(ulong **)((int)&param_1[1].m_Constants.field1_0x300 + 0x23c);
+      if (*(ulong **)((int)&param_1[1].m_Constants.field1_0x300 + 0x240) < puVar8 + 4) {
+        puVar8 = D3D::CRingAllocList::MakeSpace
+                           ((CRingAllocList *)(param_1[1].m_Constants.field1_0x300.Alu + 0x23));
+      }
+      *puVar8 = (ulong)(puVar6 + 0xf);
+      *(ulong **)((int)&param_1[1].m_Constants.field1_0x300 + 0x23c) = puVar8 + 4;
+      puVar6[0x10] = 0xc0006000;
+      puVar6[0x11] = 0xffffffff;
+      puVar6[0x12] = 0xc0012201;
+      puVar6[0x13] = uVar5;
+      puVar6[0x14] = param_2 & 0x3f | param_3 << 0x10 | 0x80;
+      puVar6[0x15] = 0xc0006000;
+      puVar6[0x16] = 0x80000000;
+      puVar6[0x17] = 0xc0015a01;
+      puVar6[0x18] = 0x1a;
+      puVar6[0x19] = (((uint)(puVar8 + 1) >> 0x14) + 0x200 & 0x1000) +
+                     ((uint)(puVar8 + 1) & 0x1ffffffe) | 1;
+      puVar6[0x1a] = 0xc0004601;
+      p_Var11 = puVar6 + 0x1b;
+      *p_Var11 = 0x19;
     }
-    *(ulonglong *)&this->field_0x18 = *(ulonglong *)&this->field_0x18 | 1;
-    (this->m_BeginVertices).pRing = p_Var13;
-    (this->m_BeginVertices).pVertexData = puVar6;
-    (this->m_BeginVertices).VertexDwords = uVar10;
+    (param_1->m_Pending).m_Mask[3] = (param_1->m_Pending).m_Mask[3] | 1;
+    *(_D3DPRIMITIVETYPE **)((int)&param_1[1].m_Constants.field1_0x300 + 0x314) = p_Var11;
+    *(ulong **)((int)&param_1[1].m_Constants.field1_0x300 + 0x318) = puVar7;
+    *(ulong *)((int)&param_1[1].m_Constants.field1_0x300 + 800) = uVar10;
   }
-  pvVar8 = (void *)__restgprlr_22(puVar6);
-  return pvVar8;
+  return puVar7;
 }
 
 
@@ -283,6 +291,8 @@ void D3DDevice_EndVertices(D3DDevice *param_1)
 
 // 8286CE30  D3DDevice_DrawVerticesUP  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/draw.cpp:414)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 
 void D3DDevice_DrawVerticesUP
@@ -290,37 +300,32 @@ void D3DDevice_DrawVerticesUP
                )
 
 {
-  CDevice *this;
   ulong *puVar1;
   void *pvVar2;
-  longlong lVar3;
-  longlong lVar4;
   TimingMarker local_40 [16];
   
-  lVar4 = (longlong)(int)param_3;
-  lVar3 = (longlong)(int)param_2;
-  this = (CDevice *)__savegprlr_27(param_1,lVar3,lVar4,param_4);
   D3D::TimingMarker::TimingMarker(local_40,PIXOP_DrawVertUP,PIXGROUP_GraphicsTiming);
-  puVar1 = *(ulong **)&this->field_0x30;
-  if (*(ulong **)&this->field_0x38 < puVar1) {
-    puVar1 = D3D::CDevice::KickOff(this);
+  puVar1 = param_1->m_pRing;
+  if (param_1->m_pRingGuarantee < puVar1) {
+    puVar1 = D3D::CDevice::KickOff((CDevice *)param_1);
   }
   puVar1[1] = 0x57e;
   puVar1[2] = 0x10003;
-  *(ulong **)&this->field_0x30 = puVar1 + 2;
-  pvVar2 = D3DDevice_BeginVertices((D3DDevice *)this,(_D3DPRIMITIVETYPE)lVar3,(uint)lVar4,param_5);
+  param_1->m_pRing = puVar1 + 2;
+  pvVar2 = D3DDevice_BeginVertices(param_1,param_2,param_3,param_5);
   if (pvVar2 != (void *)0x0) {
     memcpy();
-    D3DDevice_EndVertices((D3DDevice *)this);
+    D3DDevice_EndVertices(param_1);
   }
   PIXAddPixOpWithData(local_40[0].m_EventID | 0x400000,0,(void *)0x0);
-  __restgprlr_27();
   return;
 }
 
 
 // 8286CEE8  D3DDevice_BeginIndexedVertices  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/draw.cpp:454)
 
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 
 undefined4
@@ -329,8 +334,8 @@ D3DDevice_BeginIndexedVertices
           _D3DFORMAT param_6,uint param_7,void **param_8,void **param_9)
 
 {
-  uchar uVar1;
-  undefined2 uVar2;
+  byte bVar1;
+  undefined1 uVar2;
   ulonglong uVar3;
   ulong *puVar4;
   ulong *puVar5;
@@ -339,131 +344,123 @@ D3DDevice_BeginIndexedVertices
   undefined4 uVar8;
   ulong64 uVar9;
   ulong uVar10;
-  ulonglong uVar11;
-  ulonglong uVar12;
-  uint uVar13;
-  uint uVar14;
-  ulong uVar15;
+  uint uVar11;
+  uint uVar12;
+  ulong uVar13;
+  ulonglong uVar14;
+  uint uVar15;
   ulonglong uVar16;
-  uint uVar17;
-  ulonglong uVar18;
+  ulong64 uVar17;
+  _D3DPRIMITIVETYPE _Var18;
   ulong64 uVar19;
-  _D3DPRIMITIVETYPE _Var20;
-  ulong64 uVar21;
   undefined4 *in_stack_00000054;
   
-  uVar16 = (ulonglong)(int)param_7;
-  uVar12 = (ulonglong)(int)param_6;
-  uVar11 = (ulonglong)(int)param_5;
-  __savegprlr();
-  uVar17 = (uint)uVar11;
-  if (param_1->m_TimingCaptureActive != 0) {
+  if ((param_1[1].m_MiscPacket.SampleCountAddress & 0x80000000) != 0) {
     PIXAddPixOpWithData(0x900049,0,(void *)0x0);
   }
-  uVar3 = ((longlong)(int)param_4 * (longlong)(int)uVar16 & 0xffffffffU) >> 2;
-  uVar13 = uVar17;
-  if ((uVar12 & 4) == 0) {
-    uVar13 = uVar17 + 1 >> 1;
+  uVar3 = ((longlong)(int)param_4 * (longlong)(int)param_7 & 0xffffffffU) >> 2;
+  uVar11 = param_5;
+  if ((param_6 & D3DFMT_LE_INDEX32) == D3DFMT_LE_INDEX16) {
+    uVar11 = param_5 + 1 >> 1;
   }
-  uVar16 = (uVar16 & 0xffffffff) >> 2;
-  uVar1 = (((CDevice *)param_1)->field11115_0x31e8).m_StreamStride[0];
-  (((CDevice *)param_1)->field11115_0x31e8).m_StreamStride[0] = (uchar)uVar16;
-  if (((uVar16 & 0xff) !=
-       (ulonglong)(((CDevice *)param_1)->field11073_0x2f68).m_CurrentVertexShaderStride[0]) &&
-     (((CDevice *)param_1)->m_pVertexShader != (CVertexShader *)0x0)) {
-    *(ulonglong *)&((CDevice *)param_1)->field_0x10 =
-         *(ulonglong *)&((CDevice *)param_1)->field_0x10 | 0x80000;
+  bVar1 = param_1[1].field_0x468;
+  uVar2 = *(undefined1 *)((int)&param_1[1].m_Constants.field0_0x0 + 0x268);
+  *(char *)((int)&param_1[1].m_Constants.field0_0x0 + 0x268) = (char)(param_7 >> 2);
+  if (((param_7 >> 2 & 0xff) != (uint)bVar1) &&
+     (*(int *)((int)&param_1[1].m_Constants.field1_0x300 + 0x10) != 0)) {
+    (param_1->m_Pending).m_Mask[2] = (param_1->m_Pending).m_Mask[2] | 0x80000;
   }
-  uVar2 = (((CDevice *)param_1)->m_CpuDrPix).DrawApiCalls;
-  uVar9 = *(ulong64 *)param_1;
-  uVar16 = *(ulonglong *)&((CDevice *)param_1)->field_0x20;
-  uVar18 = *(ulonglong *)&((CDevice *)param_1)->field_0x18;
-  uVar21 = *(ulong64 *)&((CDevice *)param_1)->field_0x10;
-  uVar19 = *(ulong64 *)&((CDevice *)param_1)->field_0x8;
-  (((CDevice *)param_1)->m_CpuDrPix).DrawApiCalls = uVar2 + 1;
+  uVar9 = (param_1->m_Pending).m_Mask[0];
+  uVar14 = (param_1->m_Pending).m_Mask[4];
+  uVar16 = (param_1->m_Pending).m_Mask[3];
+  uVar19 = (param_1->m_Pending).m_Mask[2];
+  uVar17 = (param_1->m_Pending).m_Mask[1];
+  *(short *)&param_1[1].field_0x2ada = (short)*(undefined4 *)&param_1[1].field_0x2ad8 + 1;
   if (uVar9 != 0) {
-    D3D::SetPending_AluConstants((CDevice *)param_1,uVar9,0x4000,&((CDevice *)param_1)->field_0x780)
-    ;
-    *(undefined8 *)param_1 = 0;
+    D3D::SetPending_AluConstants
+              ((CDevice *)param_1,uVar9,0x4000,&(param_1->m_Constants).field1_0x300);
+    (param_1->m_Pending).m_Mask[0] = 0;
+  }
+  if (uVar17 != 0) {
+    D3D::SetPending_AluConstants
+              ((CDevice *)param_1,uVar17,0x4400,
+               (void *)((int)&(param_1->m_Constants).field1_0x300 + 0x1000));
+    (param_1->m_Pending).m_Mask[1] = 0;
   }
   if (uVar19 != 0) {
-    D3D::SetPending_AluConstants
-              ((CDevice *)param_1,uVar19,0x4400,&((CDevice *)param_1)->field_0x1780);
-    *(undefined8 *)&((CDevice *)param_1)->field_0x8 = 0;
-  }
-  if (uVar21 != 0) {
-    if ((uVar21 & 0x1e0000) != 0) {
-      uVar21 = D3D::SetPending_Shaders((CDevice *)param_1,uVar21);
+    if ((uVar19 & 0x1e0000) != 0) {
+      uVar19 = D3D::SetPending_Shaders((CDevice *)param_1,uVar19);
     }
-    if ((*(ulonglong *)&((CDevice *)param_1)->field_0x28 & uVar21) != 0) {
-      uVar21 = D3D::SetPending_Predicated
-                         ((CDevice *)param_1,uVar21,*(ulong *)&((CDevice *)param_1)->field_0x2940);
+    if ((param_1->m_Predicated_PendingMask2 & uVar19) != 0) {
+      uVar19 = D3D::SetPending_Predicated
+                         ((CDevice *)param_1,uVar19,(param_1->m_ControlPacket).HiControl.dword);
     }
-    if ((uVar21 & 0xfff) != 0) {
+    if ((uVar19 & 0xfff) != 0) {
       D3D::SetPending_RenderStates
-                ((CDevice *)param_1,uVar21 << 0x34,0x2200,&((CDevice *)param_1)->field_0x2934);
+                ((CDevice *)param_1,uVar19 << 0x34,0x2200,&param_1->m_ControlPacket);
     }
-    if ((uVar21 & 0x1f000) != 0) {
+    if ((uVar19 & 0x1f000) != 0) {
       D3D::SetPending_RenderStates
-                ((CDevice *)param_1,(uVar21 & 0x1f000) << 0x2f,0x2180,
-                 &((CDevice *)param_1)->field_0x2920);
+                ((CDevice *)param_1,(uVar19 & 0x1f000) << 0x2f,0x2180,&param_1->m_ProgramPacket);
     }
-    if ((uVar21 & 0x3fffc0000000000) != 0) {
+    if ((uVar19 & 0x3fffc0000000000) != 0) {
       D3D::SetPending_RenderStates
-                ((CDevice *)param_1,(uVar21 & 0x3fffc0000000000) << 6,0x2000,
-                 &((CDevice *)param_1)->field_0x2880);
+                ((CDevice *)param_1,(uVar19 & 0x3fffc0000000000) << 6,0x2000,
+                 &param_1->m_DestinationPacket);
     }
-    if ((uVar21 & 0x3ffffe00000) != 0) {
+    if ((uVar19 & 0x3ffffe00000) != 0) {
       D3D::SetPending_RenderStates
-                ((CDevice *)param_1,(uVar21 & 0x3ffffe00000) << 0x16,0x2100,
-                 &((CDevice *)param_1)->field_0x28cc);
+                ((CDevice *)param_1,(uVar19 & 0x3ffffe00000) << 0x16,0x2100,&param_1->m_ValuesPacket
+                );
     }
-    *(undefined8 *)&((CDevice *)param_1)->field_0x10 = 0;
-  }
-  if (uVar18 != 0) {
-    if ((uVar18 & 0xffffffff) != 0) {
-      D3D::SetPending_FetchConstants((CDevice *)param_1,uVar18 << 0x20);
-    }
-    if ((uVar18 & 0x7ffffc00000000) != 0) {
-      D3D::SetPending_RenderStates
-                ((CDevice *)param_1,(uVar18 & 0x7ffffc00000000) << 9,0x2280,
-                 &((CDevice *)param_1)->field_0x2964);
-    }
-    *(undefined8 *)&((CDevice *)param_1)->field_0x18 = 0;
+    (param_1->m_Pending).m_Mask[2] = 0;
   }
   if (uVar16 != 0) {
-    if ((uVar16 & 0x3fc000000000) != 0) {
+    if ((uVar16 & 0xffffffff) != 0) {
+      D3D::SetPending_FetchConstants((CDevice *)param_1,uVar16 << 0x20);
+    }
+    if ((uVar16 & 0x7ffffc00000000) != 0) {
       D3D::SetPending_RenderStates
-                ((CDevice *)param_1,(uVar16 & 0x3fc000000000) << 0x12,0x2380,
-                 &((CDevice *)param_1)->field_0x2a50);
+                ((CDevice *)param_1,(uVar16 & 0x7ffffc00000000) << 9,0x2280,
+                 &param_1->m_TessellatorPacket);
     }
-    if ((uVar16 & 0x7e000000000000) != 0) {
-      D3D::SetPending_ClipPlanes((CDevice *)param_1,(uVar16 & 0x7e000000000000) << 9);
-    }
-    if ((uVar16 & 0x100000000000000) != 0) {
+    (param_1->m_Pending).m_Mask[3] = 0;
+  }
+  if (uVar14 != 0) {
+    if ((uVar14 & 0x3fc000000000) != 0) {
       D3D::SetPending_RenderStates
-                ((CDevice *)param_1,0xffffffffff000000,0x4900,&((CDevice *)param_1)->field_0x2780);
+                ((CDevice *)param_1,(uVar14 & 0x3fc000000000) << 0x12,0x2380,&param_1->m_PointPacket
+                );
     }
-    if ((uVar16 & 0x3fffffffff) != 0) {
+    if ((uVar14 & 0x7e000000000000) != 0) {
+      D3D::SetPending_ClipPlanes((CDevice *)param_1,(uVar14 & 0x7e000000000000) << 9);
+    }
+    if ((uVar14 & 0x100000000000000) != 0) {
       D3D::SetPending_RenderStates
-                ((CDevice *)param_1,uVar16 << 0x1a,0x2300,&((CDevice *)param_1)->field_0x29b8);
+                ((CDevice *)param_1,0xffffffffff000000,0x4900,&(param_1->m_Constants).field2_0x2300)
+      ;
     }
-    if (((uVar16 & 0xc000000000000000) != 0) &&
-       ((param_1->m_WaitUntilIdleRequired || (param_1->m_FlushAllCaches)))) {
+    if ((uVar14 & 0x3fffffffff) != 0) {
+      D3D::SetPending_RenderStates((CDevice *)param_1,uVar14 << 0x1a,0x2300,&param_1->m_MiscPacket);
+    }
+    if (((uVar14 & 0xc000000000000000) != 0) &&
+       ((((uint)param_1[1].m_SetRenderStateCall[0] & 0x80000000) != 0 ||
+        (((uint)param_1[1].m_SetRenderStateCall[0] & 0x40000000) != 0)))) {
       D3D::WaitUntilIdleOrFlushCaches((CDevice *)param_1);
     }
-    *(undefined8 *)&((CDevice *)param_1)->field_0x20 = 0;
+    (param_1->m_Pending).m_Mask[4] = 0;
   }
-  puVar4 = *(ulong **)&((CDevice *)param_1)->field_0x30;
-  (((CDevice *)param_1)->field11115_0x31e8).m_StreamStride[0] = uVar1;
-  if (*(ulong **)&((CDevice *)param_1)->field_0x38 < puVar4) {
+  puVar5 = param_1->m_pRingGuarantee;
+  puVar4 = param_1->m_pRing;
+  *(undefined1 *)((int)&param_1[1].m_Constants.field0_0x0 + 0x268) = uVar2;
+  if (puVar5 < puVar4) {
     puVar4 = D3D::CDevice::KickOff((CDevice *)param_1);
   }
   uVar10 = (ulong)uVar3;
   puVar5 = D3D::CDevice::BeginRingAlloc((CDevice *)param_1,uVar10,0x10);
-  puVar6 = D3D::CDevice::BeginRingAlloc((CDevice *)param_1,uVar13,0x10);
+  puVar6 = D3D::CDevice::BeginRingAlloc((CDevice *)param_1,uVar11,0x10);
   if ((puVar5 == (ulong *)0x0) || (puVar6 == (ulong *)0x0)) {
-    *(ulong **)&((CDevice *)param_1)->field_0x30 = puVar4;
+    param_1->m_pRing = puVar4;
     *param_8 = (void *)0x0;
     *in_stack_00000054 = 0;
     uVar8 = 0x8007000e;
@@ -475,10 +472,10 @@ D3DDevice_BeginIndexedVertices
     puVar4[4] = 0;
     puVar4[5] = 0;
     puVar4[6] = 0;
-    uVar15 = (((uint)puVar6 >> 0x14) + 0x200 & 0x1000) + ((uint)puVar6 & 0x1fffffff);
+    uVar13 = (((uint)puVar6 >> 0x14) + 0x200 & 0x1000) + ((uint)puVar6 & 0x1fffffff);
     puVar4[7] = 0;
-    _Var20 = param_2 & 0x3f | (_D3DPRIMITIVETYPE)((uVar11 & 0xffffffff) << 0x10);
-    uVar17 = uVar17 & 0xffffff;
+    _Var18 = param_2 & 0x3f | param_5 << 0x10;
+    uVar15 = param_5 & 0xffffff;
     puVar4[8] = (((uint)puVar5 >> 0x14) + 0x200 & 0x1000) + ((uint)puVar5 & 0x1fffffff) | 3;
     puVar4[9] = (uint)(uVar3 << 2) & 0x3fffffc | 0x10000002;
     puVar4[10] = 0x25000;
@@ -487,28 +484,37 @@ D3DDevice_BeginIndexedVertices
     puVar4[0xd] = 0;
     puVar4[0xe] = 0x57e;
     puVar4[0xf] = 0x10006;
-    uVar14 = (uint)(((CDevice *)param_1)->m_ConditionalRenderStackIndex != 0) << 8 |
-             ((CDevice *)param_1)->m_ConditionalRenderStack
-             [((CDevice *)param_1)->m_ConditionalRenderStackIndex] & 0x3f;
-    if ((int)(uVar12 & 4) != 0) {
-      uVar17 = (uint)((uVar11 & 0xffffffff) << 1) & 0xfffffe;
-      _Var20 = _Var20 | 0x800;
+    bVar1 = *(byte *)((int)&param_1[1].m_Constants.field0_0x0 + 0x113);
+    uVar12 = (uint)(bVar1 != 0) << 8 |
+             *(byte *)((int)&param_1[1].m_Constants.field0_0x0 + bVar1 + 0xd2) & 0x3f;
+    if ((param_6 & D3DFMT_LE_INDEX32) != D3DFMT_LE_INDEX16) {
+      uVar15 = (param_5 & 0x7fffff) << 1;
+      _Var18 = _Var18 | 0x800;
     }
-    uVar17 = uVar17 | (uint)((uVar12 & 0xffffffff) << 0x1e);
-    if (param_1->m_PredicateDrawPrims) {
-      puVar7 = (((CDevice *)param_1)->m_Patches).m_pData;
-      if ((((CDevice *)param_1)->m_Patches).m_pDataLimit < puVar7 + 4) {
-        puVar7 = D3D::CRingAllocList::MakeSpace(&((CDevice *)param_1)->m_Patches);
+    uVar15 = uVar15 | param_6 << 0x1e;
+    if ((param_1[1].m_ReferenceCount & 0x1000000) == 0) {
+      puVar4[0x10] = 0xc0032201;
+      puVar4[0x11] = uVar12;
+      puVar4[0x12] = _Var18;
+      puVar4[0x13] = uVar13;
+      puVar4 = puVar4 + 0x14;
+      *puVar4 = uVar15;
+    }
+    else {
+      puVar7 = *(ulong **)((int)&param_1[1].m_Constants.field1_0x300 + 0x23c);
+      if (*(ulong **)((int)&param_1[1].m_Constants.field1_0x300 + 0x240) < puVar7 + 4) {
+        puVar7 = D3D::CRingAllocList::MakeSpace
+                           ((CRingAllocList *)(param_1[1].m_Constants.field1_0x300.Alu + 0x23));
       }
       *puVar7 = (ulong)(puVar4 + 0xf);
-      (((CDevice *)param_1)->m_Patches).m_pData = puVar7 + 4;
+      *(ulong **)((int)&param_1[1].m_Constants.field1_0x300 + 0x23c) = puVar7 + 4;
       puVar4[0x10] = 0xc0006000;
       puVar4[0x11] = 0xffffffff;
       puVar4[0x12] = 0xc0032201;
-      puVar4[0x13] = uVar14;
-      puVar4[0x14] = _Var20;
-      puVar4[0x15] = uVar15;
-      puVar4[0x16] = uVar17;
+      puVar4[0x13] = uVar12;
+      puVar4[0x14] = _Var18;
+      puVar4[0x15] = uVar13;
+      puVar4[0x16] = uVar15;
       puVar4[0x17] = 0xc0006000;
       puVar4[0x18] = 0x80000000;
       puVar4[0x19] = 0xc0015a01;
@@ -519,26 +525,16 @@ D3DDevice_BeginIndexedVertices
       puVar4 = puVar4 + 0x1d;
       *puVar4 = 0x19;
     }
-    else {
-      puVar4[0x10] = 0xc0032201;
-      puVar4[0x11] = uVar14;
-      puVar4[0x12] = _Var20;
-      puVar4[0x13] = uVar15;
-      puVar4 = puVar4 + 0x14;
-      *puVar4 = uVar17;
-    }
-    *(ulonglong *)&((CDevice *)param_1)->field_0x18 =
-         *(ulonglong *)&((CDevice *)param_1)->field_0x18 | 1;
-    (((CDevice *)param_1)->m_BeginVertices).pRing = puVar4;
-    (((CDevice *)param_1)->m_BeginVertices).pVertexData = puVar5;
-    (((CDevice *)param_1)->m_BeginVertices).pIndexData = puVar6;
-    (((CDevice *)param_1)->m_BeginVertices).VertexDwords = uVar10;
-    (((CDevice *)param_1)->m_BeginVertices).IndexDwords = uVar13;
+    (param_1->m_Pending).m_Mask[3] = (param_1->m_Pending).m_Mask[3] | 1;
+    *(ulong **)((int)&param_1[1].m_Constants.field1_0x300 + 0x314) = puVar4;
+    *(ulong **)((int)&param_1[1].m_Constants.field1_0x300 + 0x318) = puVar5;
+    *(ulong **)((int)&param_1[1].m_Constants.field1_0x300 + 0x31c) = puVar6;
+    *(ulong *)((int)&param_1[1].m_Constants.field1_0x300 + 800) = uVar10;
+    *(uint *)((int)&param_1[1].m_Constants.field1_0x300 + 0x324) = uVar11;
     *in_stack_00000054 = puVar5;
     *param_8 = puVar6;
     uVar8 = 0;
   }
-  __restgprlr();
   return uVar8;
 }
 
@@ -564,6 +560,8 @@ void D3DDevice_EndIndexedVertices(D3DDevice *param_1)
 
 // 8286D488  D3DDevice_DrawIndexedVerticesUP  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/draw.cpp:758)
 
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 
 void D3DDevice_DrawIndexedVerticesUP
@@ -571,7 +569,6 @@ void D3DDevice_DrawIndexedVerticesUP
                void *param_6,_D3DFORMAT param_7,void *param_8,uint param_9)
 
 {
-  CDevice *this;
   ulong *puVar1;
   int iVar2;
   uint in_stack_00000054;
@@ -579,43 +576,42 @@ void D3DDevice_DrawIndexedVerticesUP
   void *local_6c;
   TimingMarker local_68 [26];
   
-  this = (CDevice *)__savegprlr_22(param_1);
   D3D::TimingMarker::TimingMarker(local_68,PIXOP_DrawIVertUP,PIXGROUP_GraphicsTiming);
-  puVar1 = *(ulong **)&this->field_0x30;
-  if (*(ulong **)&this->field_0x38 < puVar1) {
-    puVar1 = D3D::CDevice::KickOff(this);
+  puVar1 = param_1->m_pRing;
+  if (param_1->m_pRingGuarantee < puVar1) {
+    puVar1 = D3D::CDevice::KickOff((CDevice *)param_1);
   }
   puVar1[1] = 0x57e;
   puVar1[2] = 0x10004;
-  *(ulong **)&this->field_0x30 = puVar1 + 2;
+  param_1->m_pRing = puVar1 + 2;
   iVar2 = D3DDevice_BeginIndexedVertices
-                    ((D3DDevice *)this,param_2,-param_3,param_4,param_5,param_7,in_stack_00000054,
-                     &local_6c,in_stack_ffffff38);
+                    (param_1,param_2,-param_3,param_4,param_5,param_7,in_stack_00000054,&local_6c,
+                     in_stack_ffffff38);
   if (iVar2 == 0) {
     memcpy();
     memcpy();
-    D3DDevice_EndIndexedVertices((D3DDevice *)this);
+    D3DDevice_EndIndexedVertices(param_1);
   }
   PIXAddPixOpWithData(local_68[0].m_EventID | 0x400000,0,(void *)0x0);
-  __restgprlr_22();
   return;
 }
 
 
 // 8286D5A0  D3DDevice_DrawVertices  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/draw.cpp:817)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 
 void D3DDevice_DrawVertices(D3DDevice *param_1,_D3DPRIMITIVETYPE param_2,uint param_3,uint param_4)
 
 {
-  undefined2 uVar1;
+  byte bVar1;
   uint uVar2;
-  CDevice *this;
   ulong *puVar3;
   ulong *puVar4;
-  ulonglong uVar5;
-  ulong64 uVar6;
+  ulong64 uVar5;
+  _D3DPRIMITIVETYPE *p_Var6;
   longlong lVar7;
   ulonglong uVar8;
   ulonglong uVar9;
@@ -626,106 +622,125 @@ void D3DDevice_DrawVertices(D3DDevice *param_1,_D3DPRIMITIVETYPE param_2,uint pa
   
   uVar8 = (ulonglong)(int)param_4;
   lVar7 = (longlong)(int)param_3;
-  uVar5 = (ulonglong)(int)param_2;
-  this = (CDevice *)__savegprlr_23(param_1);
-  D3D::GPUTimingMarkerSmall::GPUTimingMarkerSmall(aGStack_60,PIXSMALL_BeginDrawVertices,this);
-  uVar1 = (this->m_CpuDrPix).DrawApiCalls;
-  uVar6 = *(ulong64 *)this;
-  (this->m_CpuDrPix).DrawApiCalls = uVar1 + 1;
-  uVar9 = *(ulonglong *)&this->field_0x20;
-  uVar10 = *(ulonglong *)&this->field_0x18;
-  uVar12 = *(ulong64 *)&this->field_0x10;
-  uVar11 = *(ulong64 *)&this->field_0x8;
-  if (uVar6 != 0) {
-    D3D::SetPending_AluConstants(this,uVar6,0x4000,&this->field_0x780);
-    *(undefined8 *)this = 0;
+  D3D::GPUTimingMarkerSmall::GPUTimingMarkerSmall
+            (aGStack_60,PIXSMALL_BeginDrawVertices,(CDevice *)param_1);
+  uVar5 = (param_1->m_Pending).m_Mask[0];
+  *(short *)&param_1[1].field_0x2ada = (short)*(undefined4 *)&param_1[1].field_0x2ad8 + 1;
+  uVar9 = (param_1->m_Pending).m_Mask[4];
+  uVar10 = (param_1->m_Pending).m_Mask[3];
+  uVar12 = (param_1->m_Pending).m_Mask[2];
+  uVar11 = (param_1->m_Pending).m_Mask[1];
+  if (uVar5 != 0) {
+    D3D::SetPending_AluConstants
+              ((CDevice *)param_1,uVar5,0x4000,&(param_1->m_Constants).field1_0x300);
+    (param_1->m_Pending).m_Mask[0] = 0;
   }
   if (uVar11 != 0) {
-    D3D::SetPending_AluConstants(this,uVar11,0x4400,&this->field_0x1780);
-    *(undefined8 *)&this->field_0x8 = 0;
+    D3D::SetPending_AluConstants
+              ((CDevice *)param_1,uVar11,0x4400,
+               (void *)((int)&(param_1->m_Constants).field1_0x300 + 0x1000));
+    (param_1->m_Pending).m_Mask[1] = 0;
   }
   if (uVar12 != 0) {
     if ((uVar12 & 0x1e0000) != 0) {
-      uVar12 = D3D::SetPending_Shaders(this,uVar12);
+      uVar12 = D3D::SetPending_Shaders((CDevice *)param_1,uVar12);
     }
-    if ((*(ulonglong *)&this->field_0x28 & uVar12) != 0) {
-      uVar12 = D3D::SetPending_Predicated(this,uVar12,*(ulong *)&this->field_0x2940);
+    if ((param_1->m_Predicated_PendingMask2 & uVar12) != 0) {
+      uVar12 = D3D::SetPending_Predicated
+                         ((CDevice *)param_1,uVar12,(param_1->m_ControlPacket).HiControl.dword);
     }
     if ((uVar12 & 0xfff) != 0) {
-      D3D::SetPending_RenderStates(this,uVar12 << 0x34,0x2200,&this->field_0x2934);
+      D3D::SetPending_RenderStates
+                ((CDevice *)param_1,uVar12 << 0x34,0x2200,&param_1->m_ControlPacket);
     }
     if ((uVar12 & 0x1f000) != 0) {
-      D3D::SetPending_RenderStates(this,(uVar12 & 0x1f000) << 0x2f,0x2180,&this->field_0x2920);
+      D3D::SetPending_RenderStates
+                ((CDevice *)param_1,(uVar12 & 0x1f000) << 0x2f,0x2180,&param_1->m_ProgramPacket);
     }
     if ((uVar12 & 0x3fffc0000000000) != 0) {
       D3D::SetPending_RenderStates
-                (this,(uVar12 & 0x3fffc0000000000) << 6,0x2000,&this->field_0x2880);
+                ((CDevice *)param_1,(uVar12 & 0x3fffc0000000000) << 6,0x2000,
+                 &param_1->m_DestinationPacket);
     }
     if ((uVar12 & 0x3ffffe00000) != 0) {
-      D3D::SetPending_RenderStates(this,(uVar12 & 0x3ffffe00000) << 0x16,0x2100,&this->field_0x28cc)
-      ;
+      D3D::SetPending_RenderStates
+                ((CDevice *)param_1,(uVar12 & 0x3ffffe00000) << 0x16,0x2100,&param_1->m_ValuesPacket
+                );
     }
-    *(undefined8 *)&this->field_0x10 = 0;
+    (param_1->m_Pending).m_Mask[2] = 0;
   }
   if (uVar10 != 0) {
     if ((uVar10 & 0xffffffff) != 0) {
-      D3D::SetPending_FetchConstants(this,uVar10 << 0x20);
+      D3D::SetPending_FetchConstants((CDevice *)param_1,uVar10 << 0x20);
     }
     if ((uVar10 & 0x7ffffc00000000) != 0) {
-      D3D::SetPending_RenderStates(this,(uVar10 & 0x7ffffc00000000) << 9,0x2280,&this->field_0x2964)
-      ;
+      D3D::SetPending_RenderStates
+                ((CDevice *)param_1,(uVar10 & 0x7ffffc00000000) << 9,0x2280,
+                 &param_1->m_TessellatorPacket);
     }
-    *(undefined8 *)&this->field_0x18 = 0;
+    (param_1->m_Pending).m_Mask[3] = 0;
   }
   if (uVar9 != 0) {
     if ((uVar9 & 0x3fc000000000) != 0) {
-      D3D::SetPending_RenderStates(this,(uVar9 & 0x3fc000000000) << 0x12,0x2380,&this->field_0x2a50)
+      D3D::SetPending_RenderStates
+                ((CDevice *)param_1,(uVar9 & 0x3fc000000000) << 0x12,0x2380,&param_1->m_PointPacket)
       ;
     }
     if ((uVar9 & 0x7e000000000000) != 0) {
-      D3D::SetPending_ClipPlanes(this,(uVar9 & 0x7e000000000000) << 9);
+      D3D::SetPending_ClipPlanes((CDevice *)param_1,(uVar9 & 0x7e000000000000) << 9);
     }
     if ((uVar9 & 0x100000000000000) != 0) {
-      D3D::SetPending_RenderStates(this,0xffffffffff000000,0x4900,&this->field_0x2780);
+      D3D::SetPending_RenderStates
+                ((CDevice *)param_1,0xffffffffff000000,0x4900,&(param_1->m_Constants).field2_0x2300)
+      ;
     }
     if ((uVar9 & 0x3fffffffff) != 0) {
-      D3D::SetPending_RenderStates(this,uVar9 << 0x1a,0x2300,&this->field_0x29b8);
+      D3D::SetPending_RenderStates((CDevice *)param_1,uVar9 << 0x1a,0x2300,&param_1->m_MiscPacket);
     }
     if (((uVar9 & 0xc000000000000000) != 0) &&
-       ((this->m_WaitUntilIdleRequired || (this->m_FlushAllCaches)))) {
-      D3D::WaitUntilIdleOrFlushCaches(this);
+       ((((uint)param_1[1].m_SetRenderStateCall[0] & 0x80000000) != 0 ||
+        (((uint)param_1[1].m_SetRenderStateCall[0] & 0x40000000) != 0)))) {
+      D3D::WaitUntilIdleOrFlushCaches((CDevice *)param_1);
     }
-    *(undefined8 *)&this->field_0x20 = 0;
+    (param_1->m_Pending).m_Mask[4] = 0;
   }
   while( true ) {
-    puVar3 = *(ulong **)&this->field_0x30;
-    if (*(ulong **)&this->field_0x38 < puVar3) {
-      puVar3 = D3D::CDevice::KickOff(this);
+    puVar3 = param_1->m_pRing;
+    if (param_1->m_pRingGuarantee < puVar3) {
+      puVar3 = D3D::CDevice::KickOff((CDevice *)param_1);
     }
     puVar3[1] = 0x2102;
     puVar3[2] = (ulong)lVar7;
     uVar9 = uVar8;
     if (0xffff < (uVar8 & 0xffffffff)) {
-      uVar2 = *(uint *)((int)D3DPRIMITIVEVERTEXCOUNT[0] + (int)((uVar5 & 0xffffffff) << 3));
+      uVar2 = D3DPRIMITIVEVERTEXCOUNT[param_2][0];
       trapWord(6,(ulonglong)uVar2,0);
       uVar9 = (longlong)(int)((uint)(0xffff / (ulonglong)uVar2) & 0xfffffffe) * (longlong)(int)uVar2
       ;
     }
-    uVar2 = CONCAT11(this->m_ConditionalRenderStackIndex != 0,
-                     this->m_ConditionalRenderStack[this->m_ConditionalRenderStackIndex]) &
+    bVar1 = *(byte *)((int)&param_1[1].m_Constants.field0_0x0 + 0x113);
+    uVar2 = CONCAT11(bVar1 != 0,
+                     *(undefined1 *)((int)&param_1[1].m_Constants.field0_0x0 + bVar1 + 0xd2)) &
             0xffffff3f;
-    if (this->m_PredicateDrawPrims) {
-      puVar4 = (this->m_Patches).m_pData;
-      if ((this->m_Patches).m_pDataLimit < puVar4 + 4) {
-        puVar4 = D3D::CRingAllocList::MakeSpace(&this->m_Patches);
+    if ((param_1[1].m_ReferenceCount & 0x1000000) == 0) {
+      puVar3[3] = 0xc0012201;
+      puVar3[4] = uVar2;
+      p_Var6 = puVar3 + 5;
+      *p_Var6 = (_D3DPRIMITIVETYPE)((uVar9 & 0xffffffff) << 0x10) | param_2 & 0x3f | 0x80;
+    }
+    else {
+      puVar4 = *(ulong **)((int)&param_1[1].m_Constants.field1_0x300 + 0x23c);
+      if (*(ulong **)((int)&param_1[1].m_Constants.field1_0x300 + 0x240) < puVar4 + 4) {
+        puVar4 = D3D::CRingAllocList::MakeSpace
+                           ((CRingAllocList *)(param_1[1].m_Constants.field1_0x300.Alu + 0x23));
       }
       *puVar4 = (ulong)(puVar3 + 2);
-      (this->m_Patches).m_pData = puVar4 + 4;
+      *(ulong **)((int)&param_1[1].m_Constants.field1_0x300 + 0x23c) = puVar4 + 4;
       puVar3[3] = 0xc0006000;
       puVar3[4] = 0xffffffff;
       puVar3[5] = 0xc0012201;
       puVar3[6] = uVar2;
-      puVar3[7] = (uint)((uVar9 & 0xffffffff) << 0x10) | (uint)uVar5 & 0x3f | 0x80;
+      puVar3[7] = (_D3DPRIMITIVETYPE)((uVar9 & 0xffffffff) << 0x10) | param_2 & 0x3f | 0x80;
       puVar3[8] = 0xc0006000;
       puVar3[9] = 0x80000000;
       puVar3[10] = 0xc0015a01;
@@ -733,177 +748,188 @@ void D3DDevice_DrawVertices(D3DDevice *param_1,_D3DPRIMITIVETYPE param_2,uint pa
       puVar3[0xc] = (((uint)(puVar4 + 1) >> 0x14) + 0x200 & 0x1000) +
                     ((uint)(puVar4 + 1) & 0x1ffffffe) | 1;
       puVar3[0xd] = 0xc0004601;
-      puVar3 = puVar3 + 0xe;
-      *puVar3 = 0x19;
+      p_Var6 = puVar3 + 0xe;
+      *p_Var6 = 0x19;
     }
-    else {
-      puVar3[3] = 0xc0012201;
-      puVar3[4] = uVar2;
-      puVar3 = puVar3 + 5;
-      *puVar3 = (uint)((uVar9 & 0xffffffff) << 0x10) | (uint)uVar5 & 0x3f | 0x80;
-    }
-    *(ulong **)&this->field_0x30 = puVar3;
+    param_1->m_pRing = p_Var6;
     if (uVar8 - uVar9 == 0) break;
-    uVar10 = (ulonglong)
-             *(uint *)((int)D3DPRIMITIVEVERTEXCOUNT[0] + (int)((uVar5 & 0xffffffff) << 3) + 4);
-    uVar8 = uVar10 + (uVar8 - uVar9);
-    lVar7 = (uVar9 - uVar10) + lVar7;
+    uVar8 = (ulonglong)D3DPRIMITIVEVERTEXCOUNT[param_2][1] + (uVar8 - uVar9);
+    lVar7 = (uVar9 - D3DPRIMITIVEVERTEXCOUNT[param_2][1]) + lVar7;
   }
   D3D::GPUTimingMarkerSmall::~GPUTimingMarkerSmall(aGStack_60);
-  __restgprlr_23();
   return;
 }
 
 
 // 8286D9E8  D3DDevice_DrawIndexedVertices  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/draw.cpp:973)
 
+/* WARNING: Function: __savegprlr_17 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_17 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 
 void D3DDevice_DrawIndexedVertices
                (D3DDevice *param_1,_D3DPRIMITIVETYPE param_2,int param_3,uint param_4,uint param_5)
 
 {
-  undefined2 uVar2;
-  D3DIndexBuffer *pDVar1;
+  byte bVar1;
+  uint *puVar2;
   uint uVar3;
-  CDevice *this;
   ulong *puVar4;
   ulong *puVar5;
-  ulonglong uVar6;
-  ulong64 uVar7;
+  ulong64 uVar6;
+  ulonglong uVar7;
   ulonglong uVar8;
   ulonglong uVar9;
-  ulonglong uVar10;
-  uint uVar11;
+  uint uVar10;
+  ulonglong uVar11;
   ulonglong uVar12;
-  ulonglong uVar13;
-  ulong uVar14;
-  ulong64 uVar15;
-  uint uVar16;
-  ulong64 uVar17;
-  ulong uVar18;
+  ulong uVar13;
+  ulong64 uVar14;
+  uint uVar15;
+  ulong64 uVar16;
+  _D3DPRIMITIVETYPE _Var17;
   GPUTimingMarkerSmall aGStack_90 [18];
   
-  uVar9 = (ulonglong)(int)param_5;
-  uVar10 = (ulonglong)(int)param_4;
-  uVar6 = (ulonglong)(int)param_2;
-  this = (CDevice *)__savegprlr_17(param_1);
-  D3D::GPUTimingMarkerSmall::GPUTimingMarkerSmall(aGStack_90,PIXSMALL_BeginDrawIndexedVertices,this)
-  ;
-  uVar2 = (this->m_CpuDrPix).DrawApiCalls;
-  uVar7 = *(ulong64 *)this;
-  (this->m_CpuDrPix).DrawApiCalls = uVar2 + 1;
-  uVar12 = *(ulonglong *)&this->field_0x20;
-  uVar13 = *(ulonglong *)&this->field_0x18;
-  uVar17 = *(ulong64 *)&this->field_0x10;
-  uVar15 = *(ulong64 *)&this->field_0x8;
-  if (uVar7 != 0) {
-    D3D::SetPending_AluConstants(this,uVar7,0x4000,&this->field_0x780);
-    *(undefined8 *)this = 0;
+  uVar8 = (ulonglong)(int)param_5;
+  uVar9 = (ulonglong)(int)param_4;
+  D3D::GPUTimingMarkerSmall::GPUTimingMarkerSmall
+            (aGStack_90,PIXSMALL_BeginDrawIndexedVertices,(CDevice *)param_1);
+  uVar6 = (param_1->m_Pending).m_Mask[0];
+  *(short *)&param_1[1].field_0x2ada = (short)*(undefined4 *)&param_1[1].field_0x2ad8 + 1;
+  uVar11 = (param_1->m_Pending).m_Mask[4];
+  uVar12 = (param_1->m_Pending).m_Mask[3];
+  uVar16 = (param_1->m_Pending).m_Mask[2];
+  uVar14 = (param_1->m_Pending).m_Mask[1];
+  if (uVar6 != 0) {
+    D3D::SetPending_AluConstants
+              ((CDevice *)param_1,uVar6,0x4000,&(param_1->m_Constants).field1_0x300);
+    (param_1->m_Pending).m_Mask[0] = 0;
   }
-  if (uVar15 != 0) {
-    D3D::SetPending_AluConstants(this,uVar15,0x4400,&this->field_0x1780);
-    *(undefined8 *)&this->field_0x8 = 0;
+  if (uVar14 != 0) {
+    D3D::SetPending_AluConstants
+              ((CDevice *)param_1,uVar14,0x4400,
+               (void *)((int)&(param_1->m_Constants).field1_0x300 + 0x1000));
+    (param_1->m_Pending).m_Mask[1] = 0;
   }
-  if (uVar17 != 0) {
-    if ((uVar17 & 0x1e0000) != 0) {
-      uVar17 = D3D::SetPending_Shaders(this,uVar17);
+  if (uVar16 != 0) {
+    if ((uVar16 & 0x1e0000) != 0) {
+      uVar16 = D3D::SetPending_Shaders((CDevice *)param_1,uVar16);
     }
-    if ((*(ulonglong *)&this->field_0x28 & uVar17) != 0) {
-      uVar17 = D3D::SetPending_Predicated(this,uVar17,*(ulong *)&this->field_0x2940);
+    if ((param_1->m_Predicated_PendingMask2 & uVar16) != 0) {
+      uVar16 = D3D::SetPending_Predicated
+                         ((CDevice *)param_1,uVar16,(param_1->m_ControlPacket).HiControl.dword);
     }
-    if ((uVar17 & 0xfff) != 0) {
-      D3D::SetPending_RenderStates(this,uVar17 << 0x34,0x2200,&this->field_0x2934);
-    }
-    if ((uVar17 & 0x1f000) != 0) {
-      D3D::SetPending_RenderStates(this,(uVar17 & 0x1f000) << 0x2f,0x2180,&this->field_0x2920);
-    }
-    if ((uVar17 & 0x3fffc0000000000) != 0) {
+    if ((uVar16 & 0xfff) != 0) {
       D3D::SetPending_RenderStates
-                (this,(uVar17 & 0x3fffc0000000000) << 6,0x2000,&this->field_0x2880);
+                ((CDevice *)param_1,uVar16 << 0x34,0x2200,&param_1->m_ControlPacket);
     }
-    if ((uVar17 & 0x3ffffe00000) != 0) {
-      D3D::SetPending_RenderStates(this,(uVar17 & 0x3ffffe00000) << 0x16,0x2100,&this->field_0x28cc)
-      ;
+    if ((uVar16 & 0x1f000) != 0) {
+      D3D::SetPending_RenderStates
+                ((CDevice *)param_1,(uVar16 & 0x1f000) << 0x2f,0x2180,&param_1->m_ProgramPacket);
     }
-    *(undefined8 *)&this->field_0x10 = 0;
-  }
-  if (uVar13 != 0) {
-    if ((uVar13 & 0xffffffff) != 0) {
-      D3D::SetPending_FetchConstants(this,uVar13 << 0x20);
+    if ((uVar16 & 0x3fffc0000000000) != 0) {
+      D3D::SetPending_RenderStates
+                ((CDevice *)param_1,(uVar16 & 0x3fffc0000000000) << 6,0x2000,
+                 &param_1->m_DestinationPacket);
     }
-    if ((uVar13 & 0x7ffffc00000000) != 0) {
-      D3D::SetPending_RenderStates(this,(uVar13 & 0x7ffffc00000000) << 9,0x2280,&this->field_0x2964)
-      ;
+    if ((uVar16 & 0x3ffffe00000) != 0) {
+      D3D::SetPending_RenderStates
+                ((CDevice *)param_1,(uVar16 & 0x3ffffe00000) << 0x16,0x2100,&param_1->m_ValuesPacket
+                );
     }
-    *(undefined8 *)&this->field_0x18 = 0;
+    (param_1->m_Pending).m_Mask[2] = 0;
   }
   if (uVar12 != 0) {
-    if ((uVar12 & 0x3fc000000000) != 0) {
+    if ((uVar12 & 0xffffffff) != 0) {
+      D3D::SetPending_FetchConstants((CDevice *)param_1,uVar12 << 0x20);
+    }
+    if ((uVar12 & 0x7ffffc00000000) != 0) {
       D3D::SetPending_RenderStates
-                (this,(uVar12 & 0x3fc000000000) << 0x12,0x2380,&this->field_0x2a50);
+                ((CDevice *)param_1,(uVar12 & 0x7ffffc00000000) << 9,0x2280,
+                 &param_1->m_TessellatorPacket);
     }
-    if ((uVar12 & 0x7e000000000000) != 0) {
-      D3D::SetPending_ClipPlanes(this,(uVar12 & 0x7e000000000000) << 9);
+    (param_1->m_Pending).m_Mask[3] = 0;
+  }
+  if (uVar11 != 0) {
+    if ((uVar11 & 0x3fc000000000) != 0) {
+      D3D::SetPending_RenderStates
+                ((CDevice *)param_1,(uVar11 & 0x3fc000000000) << 0x12,0x2380,&param_1->m_PointPacket
+                );
     }
-    if ((uVar12 & 0x100000000000000) != 0) {
-      D3D::SetPending_RenderStates(this,0xffffffffff000000,0x4900,&this->field_0x2780);
+    if ((uVar11 & 0x7e000000000000) != 0) {
+      D3D::SetPending_ClipPlanes((CDevice *)param_1,(uVar11 & 0x7e000000000000) << 9);
     }
-    if ((uVar12 & 0x3fffffffff) != 0) {
-      D3D::SetPending_RenderStates(this,uVar12 << 0x1a,0x2300,&this->field_0x29b8);
+    if ((uVar11 & 0x100000000000000) != 0) {
+      D3D::SetPending_RenderStates
+                ((CDevice *)param_1,0xffffffffff000000,0x4900,&(param_1->m_Constants).field2_0x2300)
+      ;
     }
-    if ((uVar12 & 0xc000000000000000) != 0) {
-      if ((this->m_WaitUntilIdleRequired) || (this->m_FlushAllCaches)) {
-        D3D::WaitUntilIdleOrFlushCaches(this);
+    if ((uVar11 & 0x3fffffffff) != 0) {
+      D3D::SetPending_RenderStates((CDevice *)param_1,uVar11 << 0x1a,0x2300,&param_1->m_MiscPacket);
+    }
+    if ((uVar11 & 0xc000000000000000) != 0) {
+      if ((((uint)param_1[1].m_SetRenderStateCall[0] & 0x80000000) != 0) ||
+         (((uint)param_1[1].m_SetRenderStateCall[0] & 0x40000000) != 0)) {
+        D3D::WaitUntilIdleOrFlushCaches((CDevice *)param_1);
       }
     }
-    *(undefined8 *)&this->field_0x20 = 0;
+    (param_1->m_Pending).m_Mask[4] = 0;
   }
-  pDVar1 = this->m_pIndexBuffer;
+  puVar2 = *(uint **)((int)&param_1[1].m_Constants.field0_0x0 + 0x20c);
   while( true ) {
-    puVar4 = *(ulong **)&this->field_0x30;
-    if (*(ulong **)&this->field_0x38 < puVar4) {
-      puVar4 = D3D::CDevice::KickOff(this);
+    puVar4 = param_1->m_pRing;
+    if (param_1->m_pRingGuarantee < puVar4) {
+      puVar4 = D3D::CDevice::KickOff((CDevice *)param_1);
     }
     puVar4[1] = 0x2102;
     puVar4[2] = param_3;
-    uVar12 = uVar9;
-    if (0xffff < (uVar9 & 0xffffffff)) {
-      uVar3 = *(uint *)((int)D3DPRIMITIVEVERTEXCOUNT[0] + (int)((uVar6 & 0xffffffff) << 3));
+    uVar11 = uVar8;
+    if (0xffff < (uVar8 & 0xffffffff)) {
+      uVar3 = D3DPRIMITIVEVERTEXCOUNT[param_2][0];
       trapWord(6,(ulonglong)uVar3,0);
-      uVar12 = (longlong)(int)((uint)(0xffff / (ulonglong)uVar3) & 0xfffffffe) *
+      uVar11 = (longlong)(int)((uint)(0xffff / (ulonglong)uVar3) & 0xfffffffe) *
                (longlong)(int)uVar3;
     }
-    uVar13 = (ulonglong)pDVar1->Address;
-    uVar8 = (uVar10 & 0x7fffffff) * 2 + uVar13;
-    uVar3 = pDVar1->_padding_;
-    uVar16 = (uint)uVar12 & 0xffffff;
-    uVar11 = (uint)(this->m_ConditionalRenderStackIndex != 0) << 8 |
-             this->m_ConditionalRenderStack[this->m_ConditionalRenderStackIndex] & 0x3f;
-    uVar18 = (uint)((uVar12 & 0xffffffff) << 0x10) | (uint)uVar6 & 0x3f;
-    uVar14 = ((int)((uVar8 & 0xffffffff) >> 0x14) + 0x200U & 0x1000) + ((uint)uVar8 & 0x1fffffff);
+    uVar12 = (ulonglong)puVar2[6];
+    bVar1 = *(byte *)((int)&param_1[1].m_Constants.field0_0x0 + 0x113);
+    uVar7 = (uVar9 & 0x7fffffff) * 2 + uVar12;
+    uVar3 = *puVar2;
+    uVar15 = (uint)uVar11 & 0xffffff;
+    uVar10 = (uint)(bVar1 != 0) << 8 |
+             *(byte *)((int)&param_1[1].m_Constants.field0_0x0 + bVar1 + 0xd2) & 0x3f;
+    _Var17 = (_D3DPRIMITIVETYPE)((uVar11 & 0xffffffff) << 0x10) | param_2 & 0x3f;
+    uVar13 = ((int)((uVar7 & 0xffffffff) >> 0x14) + 0x200U & 0x1000) + ((uint)uVar7 & 0x1fffffff);
     if ((uVar3 & 0x80000000) != 0) {
-      uVar16 = (uint)((uVar12 & 0xffffffff) << 1) & 0xfffffe;
-      uVar13 = (uVar10 & 0x3fffffff) * 4 + uVar13;
-      uVar18 = uVar18 | 0x800;
-      uVar14 = ((int)((uVar13 & 0xffffffff) >> 0x14) + 0x200U & 0x1000) +
-               ((uint)uVar13 & 0x1fffffff);
+      uVar15 = (uint)((uVar11 & 0xffffffff) << 1) & 0xfffffe;
+      uVar12 = (uVar9 & 0x3fffffff) * 4 + uVar12;
+      _Var17 = _Var17 | 0x800;
+      uVar13 = ((int)((uVar12 & 0xffffffff) >> 0x14) + 0x200U & 0x1000) +
+               ((uint)uVar12 & 0x1fffffff);
     }
-    uVar16 = uVar16 | (uVar3 & 0x60000000) << 1;
-    if (this->m_PredicateDrawPrims) {
-      puVar5 = (this->m_Patches).m_pData;
-      if ((this->m_Patches).m_pDataLimit < puVar5 + 4) {
-        puVar5 = D3D::CRingAllocList::MakeSpace(&this->m_Patches);
+    uVar15 = uVar15 | (uVar3 & 0x60000000) << 1;
+    if ((param_1[1].m_ReferenceCount & 0x1000000) == 0) {
+      puVar4[3] = 0xc0032201;
+      puVar4[4] = uVar10;
+      puVar4[5] = _Var17;
+      puVar4[6] = uVar13;
+      puVar4 = puVar4 + 7;
+      *puVar4 = uVar15;
+    }
+    else {
+      puVar5 = *(ulong **)((int)&param_1[1].m_Constants.field1_0x300 + 0x23c);
+      if (*(ulong **)((int)&param_1[1].m_Constants.field1_0x300 + 0x240) < puVar5 + 4) {
+        puVar5 = D3D::CRingAllocList::MakeSpace
+                           ((CRingAllocList *)(param_1[1].m_Constants.field1_0x300.Alu + 0x23));
       }
       *puVar5 = (ulong)(puVar4 + 2);
-      (this->m_Patches).m_pData = puVar5 + 4;
+      *(ulong **)((int)&param_1[1].m_Constants.field1_0x300 + 0x23c) = puVar5 + 4;
       puVar4[3] = 0xc0006000;
       puVar4[4] = 0xffffffff;
       puVar4[5] = 0xc0032201;
-      puVar4[6] = uVar11;
-      puVar4[7] = uVar18;
-      puVar4[8] = uVar14;
-      puVar4[9] = uVar16;
+      puVar4[6] = uVar10;
+      puVar4[7] = _Var17;
+      puVar4[8] = uVar13;
+      puVar4[9] = uVar15;
       puVar4[10] = 0xc0006000;
       puVar4[0xb] = 0x80000000;
       puVar4[0xc] = 0xc0015a01;
@@ -914,23 +940,12 @@ void D3DDevice_DrawIndexedVertices
       puVar4 = puVar4 + 0x10;
       *puVar4 = 0x19;
     }
-    else {
-      puVar4[3] = 0xc0032201;
-      puVar4[4] = uVar11;
-      puVar4[5] = uVar18;
-      puVar4[6] = uVar14;
-      puVar4 = puVar4 + 7;
-      *puVar4 = uVar16;
-    }
-    *(ulong **)&this->field_0x30 = puVar4;
-    if (uVar9 - uVar12 == 0) break;
-    uVar13 = (ulonglong)
-             *(uint *)((int)D3DPRIMITIVEVERTEXCOUNT[0] + (int)((uVar6 & 0xffffffff) << 3) + 4);
-    uVar9 = uVar13 + (uVar9 - uVar12);
-    uVar10 = (uVar12 - uVar13) + uVar10;
+    param_1->m_pRing = puVar4;
+    if (uVar8 - uVar11 == 0) break;
+    uVar8 = (ulonglong)D3DPRIMITIVEVERTEXCOUNT[param_2][1] + (uVar8 - uVar11);
+    uVar9 = (uVar11 - D3DPRIMITIVEVERTEXCOUNT[param_2][1]) + uVar9;
   }
   D3D::GPUTimingMarkerSmall::~GPUTimingMarkerSmall(aGStack_90);
-  __restgprlr_17();
   return;
 }
 

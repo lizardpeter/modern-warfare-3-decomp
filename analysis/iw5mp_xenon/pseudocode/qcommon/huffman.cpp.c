@@ -144,6 +144,9 @@ void Huff_offsetReceive(nodetype *param_1,int *param_2,uchar *param_3,int *param
 
 // 82501F40  huffman_send  (qcommon/huffman.cpp:113)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void huffman_send(nodetype *param_1,nodetype *param_2,uchar *param_3)
 
 {
@@ -152,28 +155,23 @@ void huffman_send(nodetype *param_1,nodetype *param_2,uchar *param_3)
   uint uVar3;
   int iVar4;
   uint uVar5;
-  nodetype *pnVar6;
-  ulonglong uVar7;
   int *in_r13;
   
-  uVar7 = (ulonglong)(int)param_2;
-  pnVar6 = (nodetype *)__savegprlr_29(param_1);
-  if (pnVar6->parent != (nodetype *)0x0) {
-    huffman_send(pnVar6->parent,pnVar6,param_3);
+  if (param_1->parent != (nodetype *)0x0) {
+    huffman_send(param_1->parent,param_1,param_3);
   }
-  if ((uVar7 & 0xffffffff) != 0) {
+  if (param_2 != (nodetype *)0x0) {
     iVar2 = *in_r13;
     uVar3 = *(uint *)(iVar2 + 0x14);
     uVar5 = uVar3 & 7;
     iVar4 = (int)uVar3 >> 3;
-    if (ZEXT48(pnVar6->right) == (uVar7 & 0xffffffff)) {
+    if (param_1->right == param_2) {
       if (uVar5 == 0) {
         param_3[iVar4] = '\0';
       }
       bVar1 = param_3[iVar4];
       *(uint *)(iVar2 + 0x14) = uVar3 + 1;
       param_3[iVar4] = (byte)(1 << uVar5) | bVar1;
-      __restgprlr_29();
       return;
     }
     if (uVar5 == 0) {
@@ -181,9 +179,8 @@ void huffman_send(nodetype *param_1,nodetype *param_2,uchar *param_3)
     }
     bVar1 = param_3[iVar4];
     *(uint *)(iVar2 + 0x14) = uVar3 + 1;
-    param_3[iVar4] = (byte)(0 << uVar5) | bVar1;
+    param_3[iVar4] = (byte)(0 << (uVar3 & 7)) | bVar1;
   }
-  __restgprlr_29();
   return;
 }
 
@@ -208,34 +205,29 @@ int huffman_bitCountForNode(nodetype *param_1,nodetype *param_2)
 
 // 82502060  Huff_bitCount  (qcommon/huffman.cpp:151)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 int Huff_bitCount(huff_t *param_1,int param_2)
 
 {
   nodetype *pnVar1;
-  nodetype *pnVar2;
-  int iVar3;
-  int iVar4;
-  ulonglong uVar5;
+  int iVar2;
   
-  uVar5 = (ulonglong)param_2;
-  iVar4 = __savegprlr_29(param_1);
-  if (0xff < (uVar5 & 0xffffffff)) {
+  if (0xff < (uint)param_2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\huffman.cpp",0x98,0,
                     "ch doesn\'t index 256\n\t%i not in [0, %i)");
   }
-  iVar3 = (int)((uVar5 + 3 & 0xffffffff) << 2);
-  if (*(int *)(iVar3 + iVar4) == 0) {
+  if (param_1->loc[param_2] == (nodetype *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\huffman.cpp",0x99,0,
                     "%s");
   }
-  pnVar2 = *(nodetype **)(iVar3 + iVar4);
-  iVar4 = 0;
-  pnVar1 = pnVar2->parent;
+  iVar2 = 0;
+  pnVar1 = param_1->loc[param_2]->parent;
   if (pnVar1 != (nodetype *)0x0) {
-    iVar4 = huffman_bitCountForNode(pnVar1,pnVar2);
+    iVar2 = huffman_bitCountForNode(pnVar1,param_1->loc[param_2]);
   }
-  iVar4 = __restgprlr_29(iVar4);
-  return iVar4;
+  return iVar2;
 }
 
 
@@ -283,27 +275,23 @@ void Huff_transmit(huff_t *param_1,int param_2,uchar *param_3)
 
 // 825021C8  Huff_offsetTransmit  (qcommon/huffman.cpp:182)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void Huff_offsetTransmit(huff_t *param_1,int param_2,uchar *param_3,int *param_4)
 
 {
   int iVar1;
   nodetype *pnVar2;
-  nodetype *pnVar3;
-  int iVar4;
-  longlong lVar5;
   int *in_r13;
   
-  lVar5 = (longlong)param_2;
-  iVar4 = __savegprlr_29(param_1);
   iVar1 = *in_r13;
   *(int *)(iVar1 + 0x14) = *param_4;
-  pnVar3 = *(nodetype **)((int)((lVar5 + 3U & 0xffffffff) << 2) + iVar4);
-  pnVar2 = pnVar3->parent;
+  pnVar2 = param_1->loc[param_2]->parent;
   if (pnVar2 != (nodetype *)0x0) {
-    huffman_send(pnVar2,pnVar3,param_3);
+    huffman_send(pnVar2,param_1->loc[param_2],param_3);
   }
   *param_4 = *(int *)(iVar1 + 0x14);
-  __restgprlr_29();
   return;
 }
 
@@ -361,130 +349,128 @@ int nodeCmp(void *param_1,void *param_2)
 
 // 82502310  Huff_BuildFromData  (qcommon/huffman.cpp:227)
 
+/* WARNING: Function: __savegprlr_19 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_19 replaced with injection: xenon_save_restore */
+
 void Huff_BuildFromData(huff_t *param_1,int *param_2)
 
 {
   int iVar1;
-  int *piVar2;
+  int iVar2;
   undefined4 *puVar3;
   int iVar4;
   int iVar5;
-  int *piVar6;
-  int *piVar7;
+  nodetype *pnVar6;
+  nodetype *pnVar7;
   int *piVar8;
-  longlong lVar9;
+  int iVar9;
   int iVar10;
-  int iVar11;
-  int **ppiVar12;
+  longlong lVar11;
+  nodetype **ppnVar12;
   undefined4 auStack_47c [3];
-  int *local_470;
-  int local_46c [283];
+  nodetype *local_470 [284];
   
-  lVar9 = (longlong)(int)param_2;
-  piVar2 = (int *)__savegprlr_19(param_1);
-  iVar10 = (int)lVar9;
   puVar3 = auStack_47c;
-  lVar9 = lVar9 + 8;
+  piVar8 = param_2 + 2;
+  iVar9 = 0;
   iVar5 = 2;
   do {
-    iVar11 = *piVar2;
-    piVar7 = (int *)lVar9;
-    iVar1 = piVar7[-2];
-    *piVar2 = iVar11 + 1;
-    piVar2[iVar11 * 5 + 0x105] = 0;
-    piVar2[iVar11 * 5 + 0x108] = iVar1;
-    piVar2[iVar11 * 5 + 0x109] = iVar5 + -2;
-    piVar2[iVar11 * 5 + 0x106] = 0;
-    piVar2[iVar11 * 5 + 0x107] = 0;
-    *(int **)((4 - iVar10) + (int)piVar7 + (int)piVar2) = piVar2 + iVar11 * 5 + 0x105;
-    iVar1 = piVar7[-1];
-    iVar4 = *piVar2;
-    puVar3[3] = piVar2 + iVar11 * 5 + 0x105;
-    *piVar2 = iVar4 + 1;
-    piVar6 = piVar2 + iVar4 * 5 + 0x105;
-    piVar2[iVar4 * 5 + 0x109] = iVar5 + -1;
-    piVar2[iVar4 * 5 + 0x108] = iVar1;
-    *piVar6 = 0;
-    piVar2[iVar4 * 5 + 0x106] = 0;
-    piVar2[iVar4 * 5 + 0x107] = 0;
-    *(int **)((8 - iVar10) + (int)piVar7 + (int)piVar2) = piVar6;
-    iVar11 = *piVar7;
-    iVar1 = *piVar2;
+    iVar10 = param_1->blocNode;
+    iVar1 = piVar8[-2];
+    param_1->blocNode = iVar10 + 1;
+    iVar2 = (0x10 - (int)param_2) + (int)piVar8;
+    param_1->nodeList[iVar10].left = (nodetype *)0x0;
+    param_1->nodeList[iVar10].weight = iVar1;
+    param_1->nodeList[iVar10].symbol = iVar5 + -2;
+    param_1->nodeList[iVar10].right = (nodetype *)0x0;
+    param_1->nodeList[iVar10].parent = (nodetype *)0x0;
+    *(nodetype **)((4 - (int)param_2) + (int)piVar8 + (int)param_1) = param_1->nodeList + iVar10;
+    iVar1 = piVar8[-1];
+    iVar4 = param_1->blocNode;
+    puVar3[3] = param_1->nodeList + iVar10;
+    param_1->blocNode = iVar4 + 1;
+    pnVar6 = param_1->nodeList + iVar4;
+    param_1->nodeList[iVar4].symbol = iVar5 + -1;
+    param_1->nodeList[iVar4].weight = iVar1;
+    pnVar6->left = (nodetype *)0x0;
+    param_1->nodeList[iVar4].right = (nodetype *)0x0;
+    param_1->nodeList[iVar4].parent = (nodetype *)0x0;
+    *(nodetype **)((8 - (int)param_2) + (int)piVar8 + (int)param_1) = pnVar6;
+    iVar10 = *piVar8;
+    iVar1 = param_1->blocNode;
     puVar3 = puVar3 + 4;
-    *puVar3 = piVar6;
-    *piVar2 = iVar1 + 1;
-    piVar6 = piVar2 + iVar1 * 5 + 0x105;
-    piVar2[iVar1 * 5 + 0x109] = iVar5;
-    piVar2[iVar1 * 5 + 0x108] = iVar11;
-    *piVar6 = 0;
+    *puVar3 = pnVar6;
+    param_1->blocNode = iVar1 + 1;
+    pnVar6 = param_1->nodeList + iVar1;
+    param_1->nodeList[iVar1].symbol = iVar5;
+    param_1->nodeList[iVar1].weight = iVar10;
+    pnVar6->left = (nodetype *)0x0;
     iVar4 = iVar5 + 2;
-    piVar2[iVar1 * 5 + 0x106] = 0;
-    piVar2[iVar1 * 5 + 0x107] = 0;
-    *(int **)((0xc - iVar10) + (int)piVar7 + (int)piVar2) = piVar6;
-    iVar11 = piVar7[1];
-    iVar1 = *piVar2;
-    *(int **)(((int)&local_470 - iVar10) + (int)piVar7) = piVar6;
-    *piVar2 = iVar1 + 1;
-    piVar6 = piVar2 + iVar1 * 5 + 0x105;
-    piVar2[iVar1 * 5 + 0x109] = iVar5 + 1;
-    piVar2[iVar1 * 5 + 0x108] = iVar11;
-    *piVar6 = 0;
-    piVar2[iVar1 * 5 + 0x106] = 0;
-    piVar2[iVar1 * 5 + 0x107] = 0;
-    *(int **)(((int)local_46c - iVar10) + (int)piVar7) = piVar6;
-    lVar9 = lVar9 + 0x10;
-    *(int **)((0x10 - iVar10) + (int)piVar7 + (int)piVar2) = piVar6;
+    param_1->nodeList[iVar1].right = (nodetype *)0x0;
+    param_1->nodeList[iVar1].parent = (nodetype *)0x0;
+    *(nodetype **)((0xc - (int)param_2) + (int)piVar8 + (int)param_1) = pnVar6;
+    iVar10 = piVar8[1];
+    iVar1 = param_1->blocNode;
+    *(nodetype **)(((int)local_470 - (int)param_2) + (int)piVar8) = pnVar6;
+    param_1->blocNode = iVar1 + 1;
+    pnVar6 = param_1->nodeList + iVar1;
+    param_1->nodeList[iVar1].symbol = iVar5 + 1;
+    param_1->nodeList[iVar1].weight = iVar10;
+    pnVar6->left = (nodetype *)0x0;
+    param_1->nodeList[iVar1].right = (nodetype *)0x0;
+    param_1->nodeList[iVar1].parent = (nodetype *)0x0;
+    *(nodetype **)((int)local_470 + (4 - (int)param_2) + (int)piVar8) = pnVar6;
+    piVar8 = piVar8 + 4;
+    *(nodetype **)(iVar2 + (int)param_1) = pnVar6;
     iVar5 = iVar5 + 4;
   } while (iVar4 < 0x100);
-  qsort(&local_470,0x100,4,nodeCmp);
-  iVar10 = *piVar2;
-  *piVar2 = iVar10 + 1;
-  ppiVar12 = &local_470;
-  iVar11 = 0;
-  piVar7 = piVar2 + iVar10 * 5 + 0x105;
-  lVar9 = 0xff;
-  piVar2[iVar10 * 5 + 0x105] = 0;
-  piVar2[iVar10 * 5 + 0x106] = 0;
-  piVar2[iVar10 * 5 + 0x108] = 1;
-  piVar2[iVar10 * 5 + 0x109] = 0x101;
-  piVar2[iVar10 * 5 + 0x107] = 0;
-  piVar2[0x104] = (int)piVar7;
-  iVar5 = piVar2[2];
-  piVar2[iVar10 * 5 + 0x105] = iVar5;
-  piVar2[iVar10 * 5 + 0x106] = (int)local_470;
-  *(int **)(iVar5 + 8) = piVar7;
-  *(int **)(piVar2[iVar10 * 5 + 0x106] + 8) = piVar7;
-  piVar2[iVar10 * 5 + 0x108] =
-       *(int *)(piVar2[iVar10 * 5 + 0x105] + 0xc) + *(int *)(piVar2[iVar10 * 5 + 0x106] + 0xc);
+  qsort(local_470,0x100,4,nodeCmp);
+  iVar5 = param_1->blocNode;
+  param_1->blocNode = iVar5 + 1;
+  ppnVar12 = local_470;
   iVar10 = 0;
-  local_470 = piVar7;
+  pnVar7 = param_1->nodeList + iVar5;
+  lVar11 = 0xff;
+  param_1->nodeList[iVar5].left = (nodetype *)0x0;
+  param_1->nodeList[iVar5].right = (nodetype *)0x0;
+  param_1->nodeList[iVar5].weight = 1;
+  param_1->nodeList[iVar5].symbol = 0x101;
+  param_1->nodeList[iVar5].parent = (nodetype *)0x0;
+  param_1->freelist = &pnVar7->left;
+  pnVar6 = param_1->tree;
+  param_1->nodeList[iVar5].left = pnVar6;
+  param_1->nodeList[iVar5].right = local_470[0];
+  pnVar6->parent = pnVar7;
+  (param_1->nodeList[iVar5].right)->parent = pnVar7;
+  param_1->nodeList[iVar5].weight =
+       (param_1->nodeList[iVar5].left)->weight + (param_1->nodeList[iVar5].right)->weight;
+  local_470[0] = pnVar7;
   do {
-    qsort(ppiVar12,0x100 - iVar10,4,nodeCmp);
-    iVar5 = *piVar2;
-    *piVar2 = iVar5 + 1;
-    lVar9 = lVar9 + -1;
-    piVar8 = piVar2 + iVar5 * 5 + 0x105;
-    piVar2[iVar5 * 5 + 0x106] = 0;
-    piVar2[iVar5 * 5 + 0x105] = 0;
-    piVar2[iVar5 * 5 + 0x109] = 0x101;
-    piVar2[iVar5 * 5 + 0x107] = 0;
-    piVar2[iVar5 * 5 + 0x108] = 1;
-    piVar2[0x104] = (int)piVar8;
-    piVar7 = *ppiVar12;
-    piVar2[iVar5 * 5 + 0x105] = (int)piVar7;
-    piVar6 = (int *)((int)local_46c + iVar11);
-    iVar11 = (iVar10 + 1) * 4;
-    piVar2[iVar5 * 5 + 0x106] = *piVar6;
-    piVar7[2] = (int)piVar8;
-    ppiVar12 = &local_470 + iVar10 + 1;
-    *(int **)(piVar2[iVar5 * 5 + 0x106] + 8) = piVar8;
-    piVar2[iVar5 * 5 + 0x108] =
-         *(int *)(piVar2[iVar5 * 5 + 0x105] + 0xc) + *(int *)(piVar2[iVar5 * 5 + 0x106] + 0xc);
-    *ppiVar12 = piVar8;
-    iVar10 = iVar10 + 1;
-  } while (lVar9 != 0);
-  piVar2[2] = (int)piVar8;
-  __restgprlr_19();
+    qsort(ppnVar12,0x100 - iVar9,4,nodeCmp);
+    iVar5 = param_1->blocNode;
+    param_1->blocNode = iVar5 + 1;
+    iVar9 = iVar9 + 1;
+    lVar11 = lVar11 + -1;
+    pnVar7 = param_1->nodeList + iVar5;
+    param_1->nodeList[iVar5].right = (nodetype *)0x0;
+    param_1->nodeList[iVar5].left = (nodetype *)0x0;
+    param_1->nodeList[iVar5].symbol = 0x101;
+    param_1->nodeList[iVar5].parent = (nodetype *)0x0;
+    param_1->nodeList[iVar5].weight = 1;
+    param_1->freelist = &pnVar7->left;
+    pnVar6 = *ppnVar12;
+    param_1->nodeList[iVar5].left = pnVar6;
+    iVar1 = iVar10 + 4;
+    iVar10 = iVar9 * 4;
+    param_1->nodeList[iVar5].right = *(nodetype **)((int)local_470 + iVar1);
+    pnVar6->parent = pnVar7;
+    ppnVar12 = local_470 + iVar9;
+    (param_1->nodeList[iVar5].right)->parent = pnVar7;
+    param_1->nodeList[iVar5].weight =
+         (param_1->nodeList[iVar5].left)->weight + (param_1->nodeList[iVar5].right)->weight;
+    *ppnVar12 = pnVar7;
+  } while (lVar11 != 0);
+  param_1->tree = pnVar7;
   return;
 }
 

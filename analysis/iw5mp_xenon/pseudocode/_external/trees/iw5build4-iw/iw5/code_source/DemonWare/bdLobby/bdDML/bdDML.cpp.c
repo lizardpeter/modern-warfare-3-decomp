@@ -21,121 +21,123 @@ void __thiscall bdDML::~bdDML(bdDML *this)
 
 // 82903E18  recordIP  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bddml/bddml.cpp:27)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 bdReference<bdRemoteTask> __thiscall bdDML::recordIP(bdDML *this,uint param_1)
 
 {
-  bdReference<bdRemoteTask> *pbVar2;
-  bdTaskByteBuffer *pbVar3;
+  bdTaskByteBuffer *pbVar2;
   ulonglong uVar1;
-  bool bVar6;
-  bdLobbyErrorCode bVar4;
-  bdRemoteTask *pbVar5;
+  bool bVar4;
+  bdLobbyErrorCode bVar3;
   uint in_r5;
-  uint uVar7;
-  char *pcVar8;
-  uint *puVar9;
+  uint uVar5;
+  char *pcVar6;
+  uint *puVar7;
   char in_RESERVE;
-  byte bVar10;
-  bdReference<bdRemoteTask> *pbStack00000014;
+  byte bVar8;
+  bdDML *pbStack00000014;
   bdReference<bdTaskByteBuffer> local_40;
   undefined4 local_3c;
   bdTaskByteBuffer *local_38;
   
-  pbVar2 = (bdReference<bdRemoteTask> *)__savegprlr_27(this);
-  pbVar2->m_ptr = (bdRemoteTask *)0x0;
+  this->m_remoteTaskManager = (bdRemoteTaskManager *)0x0;
   local_3c = 1;
-  pbStack00000014 = pbVar2;
+  pbStack00000014 = this;
   local_38 = bdMemory::allocate(0x2c);
-  bVar10 = (local_38 == (bdTaskByteBuffer *)0x0) << 1;
+  bVar8 = (local_38 == (bdTaskByteBuffer *)0x0) << 1;
   if (local_38 == (bdTaskByteBuffer *)0x0) {
     uVar1 = 0;
   }
   else {
-    pbVar3 = bdTaskByteBuffer::bdTaskByteBuffer(local_38,0x45,true);
-    uVar1 = (ulonglong)(int)pbVar3;
+    pbVar2 = bdTaskByteBuffer::bdTaskByteBuffer(local_38,0x45,true);
+    uVar1 = (ulonglong)(int)pbVar2;
   }
   local_40.m_ptr = (bdTaskByteBuffer *)uVar1;
   if ((uVar1 & 0xffffffff) != 0) {
     do {
-      puVar9 = (uint *)(uVar1 + 4);
+      puVar7 = (uint *)(uVar1 + 4);
       if (in_RESERVE != '\0') {
-        uVar7 = storeWordConditionalIndexed((ulonglong)*puVar9 + 1,0,uVar1 + 4);
-        *puVar9 = uVar7;
-        bVar10 = 2;
+        uVar5 = storeWordConditionalIndexed((ulonglong)*puVar7 + 1,0,uVar1 + 4);
+        *puVar7 = uVar5;
+        bVar8 = 2;
       }
-    } while (!(bool)(bVar10 >> 1 & 1));
+    } while (!(bool)(bVar8 >> 1 & 1));
   }
   bdRemoteTaskManager::initTaskBuffer(&local_40,'\x1b','\x01');
-  bVar6 = bdByteBuffer::writeUInt32((bdByteBuffer *)local_40.m_ptr,in_r5);
-  if (bVar6) {
-    bVar4 = bdRemoteTaskManager::startTask(*(bdRemoteTaskManager **)param_1,pbVar2,&local_40);
-    if (bVar4 == BD_NO_ERROR) goto LAB_82903f3c;
-    pcVar8 = "Failed to start task: Error %i";
-    uVar7 = 0x28;
+  bVar4 = bdByteBuffer::writeUInt32((bdByteBuffer *)local_40.m_ptr,in_r5);
+  if (bVar4) {
+    bVar3 = bdRemoteTaskManager::startTask
+                      (*(bdRemoteTaskManager **)param_1,(bdReference<bdRemoteTask> *)this,&local_40)
+    ;
+    if (bVar3 == BD_NO_ERROR) goto LAB_82903f3c;
+    pcVar6 = "Failed to start task: Error %i";
+    uVar5 = 0x28;
   }
   else {
-    pcVar8 = "Failed to write ip addr %u into buffer";
-    uVar7 = 0x2d;
+    pcVar6 = "Failed to write ip addr %u into buffer";
+    uVar5 = 0x2d;
   }
   bdLogMessage(BD_LOG_WARNING,"warn/","dml",
                "c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdLobby\\bdDML\\bdDML.cpp",
-               "bdDML::recordIP",uVar7,pcVar8);
+               "bdDML::recordIP",uVar5,pcVar6);
 LAB_82903f3c:
   bdReference<bdTaskByteBuffer>::~bdReference<bdTaskByteBuffer>(&local_40);
-  pbVar5 = (bdRemoteTask *)__restgprlr_27(pbVar2);
-  return (bdReference<bdRemoteTask>)pbVar5;
+  return (bdReference<bdRemoteTask>)(bdRemoteTask *)this;
 }
 
 
 // 82903FE8  getUserData  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bddml/bddml.cpp:52)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 bdReference<bdRemoteTask> __thiscall bdDML::getUserData(bdDML *this,bdDMLInfo *param_1)
 
 {
   uint uVar1;
-  bdReference<bdRemoteTask> *pbVar3;
-  bdTaskByteBuffer *pbVar4;
+  bdTaskByteBuffer *pbVar3;
   ulonglong uVar2;
-  bdLobbyErrorCode bVar5;
-  bdRemoteTask *pbVar6;
+  bdLobbyErrorCode bVar4;
   bdTaskResult *in_r5;
-  uint *puVar7;
+  uint *puVar5;
   char in_RESERVE;
-  byte bVar8;
-  bdReference<bdRemoteTask> *pbStack00000014;
+  byte bVar6;
+  bdDML *pbStack00000014;
   bdReference<bdTaskByteBuffer> local_40;
   undefined4 local_3c;
   bdTaskByteBuffer *local_38;
   
-  pbVar3 = (bdReference<bdRemoteTask> *)__savegprlr_27(this);
-  pbVar3->m_ptr = (bdRemoteTask *)0x0;
+  this->m_remoteTaskManager = (bdRemoteTaskManager *)0x0;
   local_3c = 1;
-  pbStack00000014 = pbVar3;
+  pbStack00000014 = this;
   local_38 = bdMemory::allocate(0x2c);
-  bVar8 = (local_38 == (bdTaskByteBuffer *)0x0) << 1;
+  bVar6 = (local_38 == (bdTaskByteBuffer *)0x0) << 1;
   if (local_38 == (bdTaskByteBuffer *)0x0) {
     uVar2 = 0;
   }
   else {
-    pbVar4 = bdTaskByteBuffer::bdTaskByteBuffer(local_38,0x40,true);
-    uVar2 = (ulonglong)(int)pbVar4;
+    pbVar3 = bdTaskByteBuffer::bdTaskByteBuffer(local_38,0x40,true);
+    uVar2 = (ulonglong)(int)pbVar3;
   }
   local_40.m_ptr = (bdTaskByteBuffer *)uVar2;
   if ((uVar2 & 0xffffffff) != 0) {
     do {
-      puVar7 = (uint *)(uVar2 + 4);
+      puVar5 = (uint *)(uVar2 + 4);
       if (in_RESERVE != '\0') {
-        uVar1 = storeWordConditionalIndexed((ulonglong)*puVar7 + 1,0,uVar2 + 4);
-        *puVar7 = uVar1;
-        bVar8 = 2;
+        uVar1 = storeWordConditionalIndexed((ulonglong)*puVar5 + 1,0,uVar2 + 4);
+        *puVar5 = uVar1;
+        bVar6 = 2;
       }
-    } while (!(bool)(bVar8 >> 1 & 1));
+    } while (!(bool)(bVar6 >> 1 & 1));
   }
   bdRemoteTaskManager::initTaskBuffer(&local_40,'\x1b','\x02');
-  bVar5 = bdRemoteTaskManager::startTask((bdRemoteTaskManager *)param_1->_padding_,pbVar3,&local_40)
-  ;
-  if (bVar5 == BD_NO_ERROR) {
-    bdRemoteTask::setTaskResult(pbVar3->m_ptr,in_r5,1);
+  bVar4 = bdRemoteTaskManager::startTask
+                    ((bdRemoteTaskManager *)param_1->_padding_,(bdReference<bdRemoteTask> *)this,
+                     &local_40);
+  if (bVar4 == BD_NO_ERROR) {
+    bdRemoteTask::setTaskResult((bdRemoteTask *)this->m_remoteTaskManager,in_r5,1);
   }
   else {
     bdLogMessage(BD_LOG_WARNING,"warn/","dml",
@@ -143,7 +145,6 @@ bdReference<bdRemoteTask> __thiscall bdDML::getUserData(bdDML *this,bdDMLInfo *p
                  "bdDML::getUserData",0x3d,"Failed to start task: Error %i");
   }
   bdReference<bdTaskByteBuffer>::~bdReference<bdTaskByteBuffer>(&local_40);
-  pbVar6 = (bdRemoteTask *)__restgprlr_27(pbVar3);
-  return (bdReference<bdRemoteTask>)pbVar6;
+  return (bdReference<bdRemoteTask>)(bdRemoteTask *)this;
 }
 

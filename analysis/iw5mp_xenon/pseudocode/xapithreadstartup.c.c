@@ -2,21 +2,19 @@
 
 // 828B5A50  XapiThreadStartup  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/xrtl/xapithreadstartup.c:38)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+
 void XapiThreadStartup(_func___cdecl_void_void_ptr *param_1,void *param_2)
 
 {
-  code *pcVar1;
-  undefined4 uVar2;
-  _EXCEPTION_POINTERS *p_Var3;
-  longlong lVar4;
+  undefined4 uVar1;
+  _EXCEPTION_POINTERS *p_Var2;
   
-  lVar4 = (longlong)(int)param_2;
-  pcVar1 = (code *)__savegprlr_29(param_1,lVar4);
   XapiCallThreadNotifyRoutines(1);
-  uVar2 = (*pcVar1)(lVar4);
+  uVar1 = (*param_1)(param_2);
   XapiCallThreadNotifyRoutines(0);
-  p_Var3 = (_EXCEPTION_POINTERS *)ExTerminateThread(uVar2);
-  UnhandledExceptionFilter(p_Var3);
+  p_Var2 = (_EXCEPTION_POINTERS *)ExTerminateThread(uVar1);
+  UnhandledExceptionFilter(p_Var2);
   return;
 }
 

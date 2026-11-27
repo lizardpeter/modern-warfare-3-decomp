@@ -97,28 +97,24 @@ undefined4 XAudioQueryEffectManagerSize(XAUDIOFXMGRINIT *param_1,ulong *param_2)
 
 // 828D68F8  XAudioCreateEffectManager  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/effectmanager.cpp:100)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 undefined4
 XAudioCreateEffectManager
           (XAUDIOFXMGRINIT *param_1,IXAudioBatchAllocator *param_2,IXAudioEffectManager **param_3)
 
 {
-  XAUDIOFXMGRINIT *pXVar1;
-  CEffectManager *pCVar2;
-  undefined4 uVar3;
-  longlong lVar4;
+  CEffectManager *pCVar1;
   
-  lVar4 = (longlong)(int)param_2;
-  pXVar1 = (XAUDIOFXMGRINIT *)__savegprlr_29(param_1);
-  pCVar2 = (CEffectManager *)(**(code **)((int)*(IXAudioBatchAllocator *)lVar4 + 0x14))(lVar4,0x18);
-  if ((pCVar2 != (CEffectManager *)0x0) &&
-     (pCVar2 = XAUDIO::CEffectManager::CEffectManager(pCVar2,pXVar1,(IXAudioBatchAllocator *)lVar4),
-     pCVar2 != (CEffectManager *)0x0)) {
-    *param_3 = (IXAudioEffectManager *)&pCVar2->m_StaticEffectTable;
-    uVar3 = __restgprlr_29(0);
-    return uVar3;
+  pCVar1 = (CEffectManager *)(**(code **)((int)*param_2 + 0x14))(param_2,0x18);
+  if ((pCVar1 != (CEffectManager *)0x0) &&
+     (pCVar1 = XAUDIO::CEffectManager::CEffectManager(pCVar1,param_1,param_2),
+     pCVar1 != (CEffectManager *)0x0)) {
+    *param_3 = (IXAudioEffectManager *)&pCVar1->m_StaticEffectTable;
+    return 0;
   }
-  uVar3 = __restgprlr_29(0xffffffff8007000e);
-  return uVar3;
+  return 0x8007000e;
 }
 
 
@@ -355,98 +351,103 @@ LAB_828d6444:
 
 // 828D6468  RegisterEffects  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/effectmanager.cpp:329)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
+
 undefined4 __thiscall
 XAUDIO::CEffectManager::RegisterEffects(CEffectManager *this,XAUDIOFXREGISTER *param_1)
 
 {
   bool bVar1;
-  undefined4 *puVar2;
+  XAUDIOFXMGRFXTABLEENTRY *pXVar2;
   int iVar3;
-  int iVar4;
-  undefined4 uVar5;
-  void *pvVar6;
-  ulonglong uVar7;
-  int iVar8;
-  int iVar9;
-  longlong lVar10;
-  uchar *puVar11;
-  int *piVar13;
-  ulonglong uVar12;
-  ulonglong uVar14;
+  XAUDIOFXMGRFXTABLEENTRY *pXVar4;
+  ulonglong uVar5;
+  int iVar6;
+  int iVar7;
+  longlong lVar8;
+  uchar *puVar9;
+  ulonglong uVar10;
+  ulonglong uVar11;
   
-  iVar4 = __savegprlr_25(this);
-  uVar7 = (ulonglong)param_1->EffectCount;
-  uVar14 = 0;
-  piVar13 = (int *)0x0;
-  if (uVar7 != 0) {
-    iVar8 = 0;
+  uVar5 = (ulonglong)param_1->EffectCount;
+  uVar11 = 0;
+  pXVar4 = (XAUDIOFXMGRFXTABLEENTRY *)0x0;
+  if (uVar5 != 0) {
+    iVar6 = 0;
     do {
-      bVar1 = piVar13 == (int *)0x0;
-      piVar13 = piVar13 + 2;
+      bVar1 = pXVar4 == (XAUDIOFXMGRFXTABLEENTRY *)0x0;
+      pXVar4 = pXVar4 + 1;
       if (bVar1) {
-        piVar13 = *(int **)(iVar4 + 0x14);
+        pXVar4 = (this->m_DynamicEffectTable).paEffects;
       }
-      if ((int *)(*(int *)(iVar4 + 0x10) * 8 + *(int *)(iVar4 + 0x14)) <= piVar13) break;
-      while ((piVar13[1] != 0 || (*piVar13 != 0))) {
-        piVar13 = piVar13 + 2;
-        if ((int *)(*(int *)(iVar4 + 0x10) * 8 + *(int *)(iVar4 + 0x14)) <= piVar13)
-        goto LAB_828d6534;
+      pXVar2 = (this->m_DynamicEffectTable).paEffects;
+      if (pXVar2 + (this->m_DynamicEffectTable).EffectCount <= pXVar4) break;
+      while ((pXVar4->pfnCreateEffect !=
+              (_func___cdecl_T_HRESULT_XAUDIOFXINIT_ptr_IXAudioBatchAllocator_ptr_IXAudioEffect_ptr_ptr
+               *)0x0 ||
+             (pXVar4->pfnQueryEffectSize !=
+              (_func___cdecl_T_HRESULT_XAUDIOFXINIT_ptr_ulong_ptr *)0x0))) {
+        pXVar4 = pXVar4 + 1;
+        if ((this->m_DynamicEffectTable).paEffects + (this->m_DynamicEffectTable).EffectCount <=
+            pXVar4) goto LAB_828d6534;
       }
-      uVar14 = uVar14 + 1;
-      puVar11 = &param_1->paEffects->EffectId + iVar8;
-      iVar8 = iVar8 + 0xc;
-      *puVar11 = (char)((int)piVar13 - *(int *)(iVar4 + 0x14) >> 3) + 0x80;
-      *piVar13 = (int)*(_func___cdecl_T_HRESULT_XAUDIOFXINIT_ptr_ulong_ptr **)(puVar11 + 4);
-      piVar13[1] = (int)*(_func___cdecl_T_HRESULT_XAUDIOFXINIT_ptr_IXAudioBatchAllocator_ptr_IXAudioEffect_ptr_ptr
-                          **)(puVar11 + 8);
-      uVar7 = (ulonglong)param_1->EffectCount;
-    } while ((uVar14 & 0xffffffff) < uVar7);
+      uVar11 = uVar11 + 1;
+      puVar9 = &param_1->paEffects->EffectId + iVar6;
+      iVar6 = iVar6 + 0xc;
+      *puVar9 = (char)((int)pXVar4 - (int)pXVar2 >> 3) + 0x80;
+      pXVar4->pfnQueryEffectSize =
+           *(_func___cdecl_T_HRESULT_XAUDIOFXINIT_ptr_ulong_ptr **)(puVar9 + 4);
+      pXVar4->pfnCreateEffect =
+           *(_func___cdecl_T_HRESULT_XAUDIOFXINIT_ptr_IXAudioBatchAllocator_ptr_IXAudioEffect_ptr_ptr
+             **)(puVar9 + 8);
+      uVar5 = (ulonglong)param_1->EffectCount;
+    } while ((uVar11 & 0xffffffff) < uVar5);
   }
 LAB_828d6534:
-  uVar7 = uVar7 - uVar14;
-  if (uVar7 == 0) {
-    uVar5 = __restgprlr_25(0);
-    return uVar5;
+  uVar5 = uVar5 - uVar11;
+  if (uVar5 == 0) {
+    return 0;
   }
-  uVar12 = *(uint *)(iVar4 + 0x10) + uVar7;
-  if ((uVar12 & 0xffffffff) < 0x81) {
-    pvVar6 = CXMemMemoryManager::XMemAlloc
-                       (&g_MemoryManager,(ulong)((uVar12 & 0xffffffff) << 3),0x61820004);
-    if (pvVar6 != (void *)0x0) {
-      if (*(int *)(iVar4 + 0x10) != 0) {
+  uVar10 = (this->m_DynamicEffectTable).EffectCount + uVar5;
+  if ((uVar10 & 0xffffffff) < 0x81) {
+    pXVar4 = CXMemMemoryManager::XMemAlloc
+                       (&g_MemoryManager,(ulong)((uVar10 & 0xffffffff) << 3),0x61820004);
+    if (pXVar4 != (XAUDIOFXMGRFXTABLEENTRY *)0x0) {
+      if ((this->m_DynamicEffectTable).EffectCount != 0) {
         memcpy();
-        if (*(void **)(iVar4 + 0x14) != (void *)0x0) {
-          CXMemMemoryManager::XMemFree(&g_MemoryManager,*(void **)(iVar4 + 0x14),0x61820004);
-          *(undefined4 *)(iVar4 + 0x14) = 0;
+        pXVar2 = (this->m_DynamicEffectTable).paEffects;
+        if (pXVar2 != (XAUDIOFXMGRFXTABLEENTRY *)0x0) {
+          CXMemMemoryManager::XMemFree(&g_MemoryManager,pXVar2,0x61820004);
+          (this->m_DynamicEffectTable).paEffects = (XAUDIOFXMGRFXTABLEENTRY *)0x0;
         }
       }
-      iVar9 = 0;
-      *(void **)(iVar4 + 0x14) = pvVar6;
-      iVar8 = (int)uVar7;
-      *(int *)(iVar4 + 0x10) = *(int *)(iVar4 + 0x10) + iVar8;
-      if ((uVar7 & 0xffffffff) != 0) {
-        lVar10 = (uVar14 + (uVar14 & 0x7fffffff) * 2 & 0x3fffffff) << 2;
+      iVar7 = 0;
+      (this->m_DynamicEffectTable).paEffects = pXVar4;
+      iVar6 = (int)uVar5;
+      (this->m_DynamicEffectTable).EffectCount = (this->m_DynamicEffectTable).EffectCount + iVar6;
+      if ((uVar5 & 0xffffffff) != 0) {
+        lVar8 = (uVar11 + (uVar11 & 0x7fffffff) * 2 & 0x3fffffff) << 2;
         do {
-          iVar3 = (*(int *)(iVar4 + 0x10) - iVar8) + iVar9;
-          puVar11 = &param_1->paEffects->EffectId + (int)lVar10;
-          iVar9 = iVar9 + 1;
-          puVar2 = (undefined4 *)(iVar3 * 8 + (int)pvVar6);
-          lVar10 = lVar10 + 0xc;
-          *puVar11 = (char)((int)puVar2 - *(int *)(iVar4 + 0x14) >> 3) + 0x80;
-          *puVar2 = *(_func___cdecl_T_HRESULT_XAUDIOFXINIT_ptr_ulong_ptr **)(puVar11 + 4);
-          puVar2[1] = *(_func___cdecl_T_HRESULT_XAUDIOFXINIT_ptr_IXAudioBatchAllocator_ptr_IXAudioEffect_ptr_ptr
-                        **)(puVar11 + 8);
-          uVar7 = uVar7 - 1;
-        } while (uVar7 != 0);
+          iVar3 = ((this->m_DynamicEffectTable).EffectCount - iVar6) + iVar7;
+          puVar9 = &param_1->paEffects->EffectId + (int)lVar8;
+          iVar7 = iVar7 + 1;
+          pXVar2 = pXVar4 + iVar3;
+          lVar8 = lVar8 + 0xc;
+          *puVar9 = (char)((int)pXVar2 - (int)(this->m_DynamicEffectTable).paEffects >> 3) + 0x80;
+          pXVar2->pfnQueryEffectSize =
+               *(_func___cdecl_T_HRESULT_XAUDIOFXINIT_ptr_ulong_ptr **)(puVar9 + 4);
+          pXVar2->pfnCreateEffect =
+               *(_func___cdecl_T_HRESULT_XAUDIOFXINIT_ptr_IXAudioBatchAllocator_ptr_IXAudioEffect_ptr_ptr
+                 **)(puVar9 + 8);
+          uVar5 = uVar5 - 1;
+        } while (uVar5 != 0);
       }
-      uVar5 = __restgprlr_25(0);
-      return uVar5;
+      return 0;
     }
-    uVar5 = __restgprlr_25(0xffffffff8007000e);
-    return uVar5;
+    return 0x8007000e;
   }
-  uVar5 = __restgprlr_25(0xffffffff8007000e);
-  return uVar5;
+  return 0x8007000e;
 }
 
 

@@ -2,6 +2,11 @@
 
 // 828C8048  EstOnset  (<external>/Xenon/mar09/core/private/xam/codecs/nci/enc/src/estonset.c:62)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
+
 int EstOnset(void *param_1,void *param_2,int param_3,int param_4,float *param_5)
 
 {
@@ -10,98 +15,85 @@ int EstOnset(void *param_1,void *param_2,int param_3,int param_4,float *param_5)
   float fVar3;
   float fVar4;
   int iVar5;
-  int iVar6;
+  float fVar6;
   float fVar7;
-  float fVar8;
+  uint uVar8;
+  int iVar9;
   int iVar10;
-  ulonglong uVar9;
-  uint uVar11;
+  int iVar11;
   int iVar12;
-  int iVar13;
-  int iVar14;
-  int iVar15;
-  longlong lVar16;
-  longlong lVar17;
+  longlong lVar13;
+  double dVar14;
+  double dVar15;
+  double dVar16;
+  double dVar17;
   double dVar18;
   double dVar19;
   double dVar20;
-  double dVar21;
-  double dVar22;
-  double dVar23;
-  double dVar24;
   
-  lVar16 = (longlong)(int)param_5;
-  __savegprlr_24(param_1);
-  iVar10 = __savefpr_26();
-  iVar6 = iVar10 + 0x10;
-  iVar14 = *(int *)(iVar10 + 0x28);
-  iVar5 = *(int *)(iVar10 + 0x2c);
-  dVar22 = (double)*(float *)(iVar10 + 0x20);
-  dVar21 = (double)*(float *)(iVar10 + 0x24);
-  dVar20 = 1.0;
-  dVar19 = 0.1599999964237213;
-  dVar24 = (double)*(float *)(iVar14 * 4 + iVar10);
-  iVar15 = 0;
-  dVar23 = (double)*(float *)(iVar14 * 4 + iVar6);
-  GetFrameSpCBM(param_2,param_3,0xa1,(float *)lVar16);
-  iVar13 = 0;
-  lVar17 = 0x50;
+  iVar11 = *(int *)((int)param_1 + 0x28);
+  iVar5 = *(int *)((int)param_1 + 0x2c);
+  dVar18 = (double)*(float *)((int)param_1 + 0x20);
+  dVar17 = (double)*(float *)((int)param_1 + 0x24);
+  dVar16 = 1.0;
+  dVar15 = 0.1599999964237213;
+  dVar20 = (double)*(float *)(iVar11 * 4 + (int)param_1);
+  iVar12 = 0;
+  dVar19 = (double)*(float *)((int)param_1 + iVar11 * 4 + 0x10);
+  GetFrameSpCBM(param_2,param_3,0xa1,param_5);
+  iVar10 = 0;
+  lVar13 = 0x50;
   do {
-    fVar3 = *(float *)lVar16;
-    fVar4 = fVar3 * 0.03100586;
-    uVar11 = iVar14 + 1;
-    iVar14 = uVar11 + (((int)uVar11 >> 2) + (uint)((int)uVar11 < 0 && (uVar11 & 3) != 0) &
-                      0x3fffffff) * -4;
-    fVar7 = fVar3 * fVar4 + (float)(dVar24 * 0.968994140625);
-    dVar24 = (double)fVar7;
-    fVar8 = ((float *)lVar16)[1] * fVar4 + (float)(dVar23 * 0.968994140625);
-    dVar23 = (double)fVar8;
-    iVar12 = iVar14 * 4;
-    fVar3 = *(float *)(iVar12 + iVar10);
-    fVar4 = *(float *)(iVar12 + iVar6);
-    *(float *)(iVar12 + iVar10) = fVar7;
-    *(float *)(iVar12 + iVar6) = fVar8;
-    dVar1 = dVar21 * dVar24;
-    dVar2 = dVar22 * dVar24;
-    dVar18 = dVar22 * dVar23;
-    fVar3 = (float)(dVar22 + dVar24) - fVar3;
-    dVar22 = (double)fVar3;
-    fVar4 = (float)(dVar21 + dVar23) - fVar4;
-    dVar21 = (double)fVar4;
-    dVar18 = ABS((double)(float)(dVar18 - (double)(float)dVar1));
-    if (iVar5 + -0x96 <= iVar13) {
-      if ((int)(float)((double)(float)dVar2 * dVar19) < (int)(float)(dVar18 * dVar20)) {
-        dVar19 = dVar18;
-        dVar20 = (double)(float)dVar2;
-        iVar15 = iVar13;
+    fVar3 = *param_5 * 0.03100586;
+    uVar8 = iVar11 + 1;
+    iVar11 = uVar8 + (((int)uVar8 >> 2) + (uint)((int)uVar8 < 0 && (uVar8 & 3) != 0) & 0x3fffffff) *
+                     -4;
+    fVar6 = *param_5 * fVar3 + (float)(dVar20 * 0.968994140625);
+    dVar20 = (double)fVar6;
+    fVar7 = param_5[1] * fVar3 + (float)(dVar19 * 0.968994140625);
+    dVar19 = (double)fVar7;
+    iVar9 = iVar11 * 4;
+    fVar3 = *(float *)(iVar9 + (int)param_1);
+    fVar4 = *(float *)((int)param_1 + iVar9 + 0x10);
+    *(float *)(iVar9 + (int)param_1) = fVar6;
+    *(float *)((int)param_1 + iVar9 + 0x10) = fVar7;
+    dVar1 = dVar17 * dVar20;
+    dVar2 = dVar18 * dVar20;
+    dVar14 = dVar18 * dVar19;
+    fVar3 = (float)(dVar18 + dVar20) - fVar3;
+    dVar18 = (double)fVar3;
+    fVar4 = (float)(dVar17 + dVar19) - fVar4;
+    dVar17 = (double)fVar4;
+    dVar14 = ABS((double)(float)(dVar14 - (double)(float)dVar1));
+    if (iVar5 + -0x96 <= iVar10) {
+      if ((int)(float)((double)(float)dVar2 * dVar15) < (int)(float)(dVar14 * dVar16)) {
+        dVar15 = dVar14;
+        dVar16 = (double)(float)dVar2;
+        iVar12 = iVar10;
       }
     }
-    iVar13 = iVar13 + 2;
-    lVar16 = lVar16 + 8;
-    lVar17 = lVar17 + -1;
-  } while (lVar17 != 0);
-  *(float *)(iVar10 + 0x20) = fVar3;
-  *(float *)(iVar10 + 0x24) = fVar4;
-  *(int *)(iVar10 + 0x2c) = iVar15;
-  *(int *)(iVar10 + 0x28) = iVar14;
-  iVar14 = param_3 - (param_4 >> 1);
-  if (iVar15 < 0x51) {
-    uVar9 = -(ulonglong)(uint)(int)((float)(longlong)(iVar14 * iVar15) * 0.0125 + 0.5);
-    if ((int)uVar9 < -0x28) {
-      uVar9 = 0xffffffffffffffd8;
+    iVar10 = iVar10 + 2;
+    param_5 = param_5 + 2;
+    lVar13 = lVar13 + -1;
+  } while (lVar13 != 0);
+  *(float *)((int)param_1 + 0x20) = fVar3;
+  *(float *)((int)param_1 + 0x24) = fVar4;
+  *(int *)((int)param_1 + 0x2c) = iVar12;
+  *(int *)((int)param_1 + 0x28) = iVar11;
+  iVar11 = param_3 - (param_4 >> 1);
+  if (iVar12 < 0x51) {
+    iVar11 = -(int)((float)(longlong)(iVar11 * iVar12) * 0.0125 + 0.5);
+    if (iVar11 < -0x28) {
+      iVar11 = -0x28;
     }
   }
   else {
-    uVar11 = (uint)((float)((double)(longlong)iVar14 * (double)(longlong)(0xa0 - iVar15)) * 0.0125 +
-                   0.5);
-    uVar9 = (ulonglong)uVar11;
-    if (0x28 < (int)uVar11) {
-      uVar9 = 0x28;
+    iVar11 = (int)((float)(longlong)iVar11 * (float)(longlong)(0xa0 - iVar12) * 0.0125 + 0.5);
+    if (0x28 < iVar11) {
+      iVar11 = 0x28;
     }
   }
-  __restfpr_26(uVar9);
-  iVar14 = __restgprlr_24();
-  return iVar14;
+  return iVar11;
 }
 
 

@@ -2,38 +2,27 @@
 
 // 828A2D70  ReadFileEx  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/xapi/readfileex.c:103)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 int ReadFileEx(void *param_1,void *param_2,ulong param_3,_OVERLAPPED *param_4,
               _func___cdecl_void_ulong_ulong__OVERLAPPED_ptr *param_5)
 
 {
   bool bVar1;
-  _IO_STATUS_BLOCK *p_Var2;
-  void *pvVar3;
-  uint uVar4;
-  int iVar5;
-  longlong lVar6;
-  longlong lVar7;
-  longlong lVar8;
-  longlong lVar9;
+  uint uVar2;
   _LARGE_INTEGER local_40 [8];
   
-  lVar9 = (longlong)(int)param_5;
-  lVar8 = (longlong)(int)param_4;
-  lVar7 = (longlong)(int)param_3;
-  lVar6 = (longlong)(int)param_2;
-  pvVar3 = (void *)__savegprlr_27(param_1,lVar6,lVar7,lVar8,lVar9);
-  p_Var2 = (_IO_STATUS_BLOCK *)lVar8;
-  local_40[0]._4_4_ = p_Var2[1].field0_0x0;
-  local_40[0]._0_4_ = p_Var2[1].Information;
-  uVar4 = (*_fileIoHooks->NtReadFile)
-                    (pvVar3,(void *)0x0,
-                     (_func___cdecl_void_void_ptr__IO_STATUS_BLOCK_ptr_ulong *)0x828ac329,
-                     (void *)lVar9,p_Var2,(void *)lVar6,(ulong)lVar7,local_40);
-  bVar1 = (uVar4 & 0xc0000000) != 0xc0000000;
+  local_40[0]._4_4_ = param_4->Offset;
+  local_40[0]._0_4_ = param_4->OffsetHigh;
+  uVar2 = (*_fileIoHooks->NtReadFile)
+                    (param_1,(void *)0x0,
+                     (_func___cdecl_void_void_ptr__IO_STATUS_BLOCK_ptr_ulong *)0x828ac329,param_5,
+                     (_IO_STATUS_BLOCK *)param_4,param_2,param_3,local_40);
+  bVar1 = (uVar2 & 0xc0000000) != 0xc0000000;
   if (!bVar1) {
-    XapiSetLastNTError(uVar4);
+    XapiSetLastNTError(uVar2);
   }
-  iVar5 = __restgprlr_27(bVar1);
-  return iVar5;
+  return (int)bVar1;
 }
 

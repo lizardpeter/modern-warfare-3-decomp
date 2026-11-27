@@ -2,6 +2,8 @@
 
 // 822CA3E0  CG_Obituary  (cgame/cg_event.cpp:55)
 
+/* WARNING: Function: __savegprlr_19 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_19 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
@@ -15,51 +17,49 @@ void CG_Obituary(LocalClientNum_t param_1,entityState_s *param_2,uint param_3)
   WeaponDef *pWVar3;
   uint uVar4;
   Weapon WVar5;
-  LocalClientNum_t LVar6;
-  cg_s *pcVar7;
-  meansOfDeath_t mVar8;
-  Material *pMVar9;
-  Weapon WVar10;
+  cg_s *pcVar6;
+  meansOfDeath_t mVar7;
+  Material *pMVar8;
+  Weapon WVar9;
+  char cVar11;
   char cVar12;
-  char cVar13;
-  char *pcVar11;
-  bool bVar14;
-  uint uVar15;
-  ulonglong uVar16;
-  undefined1 uVar17;
-  longlong lVar18;
-  clientInfo_t *pcVar19;
+  char *pcVar10;
+  bool bVar13;
+  uint uVar14;
+  ulonglong uVar15;
+  undefined1 uVar16;
+  longlong lVar17;
+  clientInfo_t *pcVar18;
+  double dVar19;
   double dVar20;
   double dVar21;
-  double dVar22;
   char local_4f0 [48];
   char acStack_4c0 [48];
   char acStack_490 [1168];
   
-  LVar6 = __savegprlr_19(param_1);
   uVar1 = param_2->otherEntityNum;
-  uVar15 = param_2->attackerEntityNum;
-  pcVar7 = CG_GetLocalClientGlobals(LVar6);
-  dVar20 = 1.399999976158142;
-  dVar21 = dVar20;
-  dVar22 = dVar20;
+  uVar14 = param_2->attackerEntityNum;
+  pcVar6 = CG_GetLocalClientGlobals(param_1);
+  dVar19 = 1.399999976158142;
+  dVar20 = dVar19;
+  dVar21 = dVar19;
   if (0xff < (int)param_3) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\../bgame/bg_weapons.h",
                     0x67,0,"%s");
   }
-  pcVar11 = "killicondied";
+  pcVar10 = "killicondied";
   if ((int)param_3 < 0xf0) {
     WVar5.data = param_3 & 0xff;
-    lVar18 = 0;
-    WVar10 = BG_GetAlternateWeapon(WVar5,false);
-    pWVar3 = bg_weaponDefs[WVar10.data & 0xff];
-    WVar10 = BG_GetAlternateWeapon(WVar5,false);
-    pMVar9 = bg_weaponCompleteDefs[WVar10.data & 0xff]->killIcon;
-    if (pMVar9 == (Material *)0x0) goto LAB_822ca478;
+    lVar17 = 0;
+    WVar9 = BG_GetAlternateWeapon(WVar5,false);
+    pWVar3 = bg_weaponDefs[WVar9.data & 0xff];
+    WVar9 = BG_GetAlternateWeapon(WVar5,false);
+    pMVar8 = bg_weaponCompleteDefs[WVar9.data & 0xff]->killIcon;
+    if (pMVar8 == (Material *)0x0) goto LAB_822ca478;
     wVar2 = pWVar3->killIconRatio;
     if (wVar2 != WEAPON_ICON_RATIO_1TO1) {
       if (wVar2 == WEAPON_ICON_RATIO_2TO1) {
-        dVar22 = 2.799999952316284;
+        dVar21 = 2.799999952316284;
       }
       else {
         if (wVar2 != WEAPON_ICON_RATIO_4TO1) {
@@ -68,39 +68,39 @@ void CG_Obituary(LocalClientNum_t param_1,entityState_s *param_2,uint param_3)
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_event.cpp",0x78
                           ,0,"%s\n\t%s");
         }
-        dVar22 = 2.799999952316284;
-        dVar20 = 0.699999988079071;
+        dVar21 = 2.799999952316284;
+        dVar19 = 0.699999988079071;
       }
     }
   }
   else {
-    mVar8 = BG_Obituary_GetMODFromWeaponIndex(param_3);
-    lVar18 = (longlong)(int)mVar8;
+    mVar7 = BG_Obituary_GetMODFromWeaponIndex(param_3);
+    lVar17 = (longlong)(int)mVar7;
 LAB_822ca478:
-    pMVar9 = Material_RegisterHandle("killicondied",7);
+    pMVar8 = Material_RegisterHandle("killicondied",7);
   }
-  if ((lVar18 - 8U & 0xffffffff) < 8) {
-    if ((int)(lVar18 - 8U) == 0) {
-      pcVar11 = "killiconmelee";
+  if ((lVar17 - 8U & 0xffffffff) < 8) {
+    if ((int)(lVar17 - 8U) == 0) {
+      pcVar10 = "killiconmelee";
     }
-    else if (lVar18 == 9) {
-      pcVar11 = "killiconheadshot";
+    else if (lVar17 == 9) {
+      pcVar10 = "killiconheadshot";
     }
-    else if (lVar18 == 10) {
-      pcVar11 = "killiconcrush";
+    else if (lVar17 == 10) {
+      pcVar10 = "killiconcrush";
     }
-    else if (lVar18 == 0xb) {
-      pcVar11 = "killiconfalling";
+    else if (lVar17 == 0xb) {
+      pcVar10 = "killiconfalling";
     }
-    else if (lVar18 == 0xc) {
-      pcVar11 = "killiconsuicide";
+    else if (lVar17 == 0xc) {
+      pcVar10 = "killiconsuicide";
     }
-    else if (lVar18 != 0xd) {
-      if (lVar18 == 0xe) goto LAB_822ca5f8;
-      pcVar11 = "killiconimpact";
+    else if (lVar17 != 0xd) {
+      if (lVar17 == 0xe) goto LAB_822ca5f8;
+      pcVar10 = "killiconimpact";
     }
-    pMVar9 = Material_RegisterHandle(pcVar11,7);
-    dVar22 = dVar21;
+    pMVar8 = Material_RegisterHandle(pcVar10,7);
+    dVar21 = dVar20;
   }
 LAB_822ca5f8:
   if (((int)uVar1 < 0) || (0x11 < (int)uVar1)) {
@@ -110,115 +110,115 @@ LAB_822ca5f8:
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_event.cpp",0xa6,0,
                     "target doesn\'t index MAX_CLIENTS\n\t%i not in [0, %i)");
   }
-  if ((pcVar7->bgs).clientinfo[uVar1].infoValid != 0) {
-    cVar12 = CG_DrawScoreboard_GetTeamColorIndex((pcVar7->bgs).clientinfo[uVar1].oldteam,LVar6);
-    CL_GetClientNameColorize(LVar6,uVar1,acStack_4c0,0x2a,cVar12);
-    if (0x11 < (uint)pcVar7->clientNum) {
+  if ((pcVar6->bgs).clientinfo[uVar1].infoValid != 0) {
+    cVar11 = CG_DrawScoreboard_GetTeamColorIndex((pcVar6->bgs).clientinfo[uVar1].oldteam,param_1);
+    CL_GetClientNameColorize(param_1,uVar1,acStack_4c0,0x2a,cVar11);
+    if (0x11 < (uint)pcVar6->clientNum) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_event.cpp",0xae,0,
                       "cgameGlob->clientNum doesn\'t index MAX_CLIENTS\n\t%i not in [0, %i)");
     }
-    uVar4 = (pcVar7->bgs).clientinfo[pcVar7->clientNum].infoValid;
-    uVar16 = (ulonglong)uVar4;
+    uVar4 = (pcVar6->bgs).clientinfo[pcVar6->clientNum].infoValid;
+    uVar15 = (ulonglong)uVar4;
     if (uVar4 != 0) {
-      if (((int)uVar15 < 0) || (0x11 < (int)uVar15)) {
-        uVar15 = 0x7fe;
+      if (((int)uVar14 < 0) || (0x11 < (int)uVar14)) {
+        uVar14 = 0x7fe;
         local_4f0[0] = '\0';
-        pcVar19 = (clientInfo_t *)0x0;
-        cVar13 = '7';
+        pcVar18 = (clientInfo_t *)0x0;
+        cVar12 = '7';
       }
       else {
-        if (0x11 < uVar15) {
+        if (0x11 < uVar14) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_event.cpp",0xbc
                           ,0,"attacker doesn\'t index MAX_CLIENTS\n\t%i not in [0, %i)");
         }
-        pcVar19 = (pcVar7->bgs).clientinfo + uVar15;
-        if (pcVar19->infoValid == 0) goto LAB_822ca938;
-        cVar13 = CG_DrawScoreboard_GetTeamColorIndex((pcVar7->bgs).clientinfo[uVar15].oldteam,LVar6)
-        ;
-        CL_GetClientNameColorize(LVar6,uVar15,local_4f0,0x2a,cVar13);
+        pcVar18 = (pcVar6->bgs).clientinfo + uVar14;
+        if (pcVar18->infoValid == 0) {
+          return;
+        }
+        cVar12 = CG_DrawScoreboard_GetTeamColorIndex
+                           ((pcVar6->bgs).clientinfo[uVar14].oldteam,param_1);
+        CL_GetClientNameColorize(param_1,uVar14,local_4f0,0x2a,cVar12);
       }
-      if (uVar15 == uVar1) {
+      if (uVar14 == uVar1) {
         local_4f0[0] = '\0';
       }
-      else if (uVar15 == pcVar7->clientNum) {
-        if ((pcVar19->oldteam == TEAM_FREE) ||
-           ((pcVar7->bgs).clientinfo[uVar1].oldteam != pcVar19->oldteam)) {
-          pcVar11 = va("CGAME_YOUKILLED\x15%s");
+      else if (uVar14 == pcVar6->clientNum) {
+        if ((pcVar18->oldteam == TEAM_FREE) ||
+           ((pcVar6->bgs).clientinfo[uVar1].oldteam != pcVar18->oldteam)) {
+          pcVar10 = va("CGAME_YOUKILLED\x15%s");
         }
         else {
-          pcVar11 = va("CGAME_YOUKILLED\x15^1&&2^7 %s^7\x14%s");
+          pcVar10 = va("CGAME_YOUKILLED\x15^1&&2^7 %s^7\x14%s");
         }
-        CG_PriorityCenterPrint(LVar6,pcVar11,0);
-        uVar4 = pcVar7->recentVictimIndex;
+        CG_PriorityCenterPrint(param_1,pcVar10,0);
+        uVar4 = pcVar6->recentVictimIndex;
         if (7 < uVar4) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_event.cpp",0xd5
                           ,0,
                           "victimIndex doesn\'t index ARRAY_COUNT( cgameGlob->recentVictimClientNums )\n\t%i not in [0, %i)"
                          );
         }
-        uVar16 = ((ulonglong)(uVar4 + 0x42123) & 0x3fffffff) << 2;
-        *(uint *)((int)(pcVar7->predictedPlayerState).origin + (int)uVar16 + -0x1c) = uVar1;
-        pcVar7->recentVictimTimes[uVar4] = pcVar7->time;
-        pcVar7->recentVictimIndex = uVar4 + 1 & 7;
+        uVar15 = ((ulonglong)(uVar4 + 0x42123) & 0x3fffffff) << 2;
+        *(uint *)((int)(pcVar6->predictedPlayerState).origin + (int)uVar15 + -0x1c) = uVar1;
+        pcVar6->recentVictimTimes[uVar4] = pcVar6->time;
+        pcVar6->recentVictimIndex = uVar4 + 1 & 7;
       }
-      else if ((uVar1 == pcVar7->clientNum) && (pcVar19 != (clientInfo_t *)0x0)) {
-        if ((pcVar19->oldteam == TEAM_FREE) ||
-           ((pcVar7->bgs).clientinfo[uVar1].oldteam != pcVar19->oldteam)) {
-          pcVar11 = va("CGAME_YOUWEREKILLED\x15%s");
+      else if ((uVar1 == pcVar6->clientNum) && (pcVar18 != (clientInfo_t *)0x0)) {
+        if ((pcVar18->oldteam == TEAM_FREE) ||
+           ((pcVar6->bgs).clientinfo[uVar1].oldteam != pcVar18->oldteam)) {
+          pcVar10 = va("CGAME_YOUWEREKILLED\x15%s");
         }
         else {
-          pcVar11 = va("CGAME_YOUWEREKILLED\x15^1&&2^7 %s^7\x14%s");
+          pcVar10 = va("CGAME_YOUWEREKILLED\x15^1&&2^7 %s^7\x14%s");
         }
-        CG_PriorityCenterPrint(LVar6,pcVar11,0);
-        uVar16 = 0x108484;
-        pcVar7->recentKilledByClientNum = uVar15;
-        pcVar7->recentKilledByTime = pcVar7->time;
+        CG_PriorityCenterPrint(param_1,pcVar10,0);
+        uVar15 = 0x108484;
+        pcVar6->recentKilledByClientNum = uVar14;
+        pcVar6->recentKilledByTime = pcVar6->time;
       }
-      uVar17 = (undefined1)uVar16;
-      bVar14 = CL_Demo_IsRecording(LVar6);
-      if ((bVar14) && (pcVar7->inKillCam == 0)) {
-        if (((int)uVar15 < 0) || (0x11 < (int)uVar15)) {
-          uVar15 = uVar1;
+      uVar16 = (undefined1)uVar15;
+      bVar13 = CL_Demo_IsRecording(param_1);
+      if ((bVar13) && (pcVar6->inKillCam == 0)) {
+        if (((int)uVar14 < 0) || (0x11 < (int)uVar14)) {
+          uVar14 = uVar1;
         }
-        CL_Demo_AddBookmark(LVar6,pcVar7->time,uVar1,uVar15);
+        CL_Demo_AddBookmark(param_1,pcVar6->time,uVar1,uVar14);
       }
-      if (pcVar7->inKillCam == 0) {
+      if (pcVar6->inKillCam == 0) {
         CL_DeathMessagePrint
-                  (LVar6,local_4f0,cVar13,acStack_4c0,cVar12,pMVar9,(float)dVar22,(float)dVar20,
-                   (bool)uVar17);
+                  (param_1,local_4f0,cVar12,acStack_4c0,cVar11,pMVar8,(float)dVar21,(float)dVar19,
+                   (bool)uVar16);
       }
     }
   }
-LAB_822ca938:
-  __restgprlr_19();
   return;
 }
 
 
 // 822CA368  BG_Obituary_GetMODFromWeaponIndex  (bgame/bg_weapons.h:110)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 meansOfDeath_t BG_Obituary_GetMODFromWeaponIndex(int param_1)
 
 {
-  longlong lVar1;
-  meansOfDeath_t mVar2;
-  
-  lVar1 = __savegprlr_29(param_1);
-  if (0xff < (int)lVar1) {
+  if (0xff < param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\../bgame/bg_weapons.h",
                     0x67,0,"%s");
   }
-  if ((int)lVar1 < 0xf0) {
+  if (param_1 < 0xf0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\../bgame/bg_weapons.h",
                     0x6f,0,"%s");
   }
-  mVar2 = __restgprlr_29(lVar1 + -0xf0);
-  return mVar2;
+  return param_1 - 0xf0;
 }
 
 
 // 822CA950  CG_ItemPickup  (cgame/cg_event.cpp:251)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -228,39 +228,26 @@ void CG_ItemPickup(LocalClientNum_t param_1,Weapon param_2)
 
 {
   WeaponDef *pWVar1;
-  LocalClientNum_t LVar3;
-  Weapon WVar4;
-  longlong lVar2;
-  weapClass_t wVar6;
-  cg_s *pcVar7;
-  bool bVar8;
-  int iVar5;
+  Weapon WVar2;
+  int iVar3;
+  weapClass_t wVar4;
+  cg_s *pcVar5;
   
-  LVar3 = __savegprlr_29(param_1);
-  WVar4 = BG_GetAlternateWeapon(param_2,false);
-  pWVar1 = bg_weaponDefs[WVar4.data & 0xff];
-  iVar5 = BG_IsScavengerPickup(param_2);
-  lVar2 = (longlong)iVar5;
-  if (iVar5 == 0) {
-    wVar6 = BG_GetWeaponClass(param_2,false);
-    lVar2 = (longlong)(int)wVar6;
-    if (wVar6 != WEAPCLASS_ITEM) {
-      pcVar7 = CG_GetLocalClientGlobals(LVar3);
-      lVar2 = (longlong)(int)pcVar7;
-      if (pWVar1->offhandClass == OFFHAND_CLASS_NONE) {
-        if ((pcVar7->weaponSelect)._s_0.weaponIdx == 0) {
-          bVar8 = CG_SelectWeapon(LVar3,param_2,0);
-          lVar2 = (longlong)bVar8;
-        }
-      }
-      else if ((pcVar7->equippedOffHand)._s_0.weaponIdx == 0) {
-        CG_SetEquippedOffHand(LVar3,param_2);
-        __restgprlr_29();
-        return;
+  WVar2 = BG_GetAlternateWeapon(param_2,false);
+  pWVar1 = bg_weaponDefs[WVar2.data & 0xff];
+  iVar3 = BG_IsScavengerPickup(param_2);
+  if ((iVar3 == 0) && (wVar4 = BG_GetWeaponClass(param_2,false), wVar4 != WEAPCLASS_ITEM)) {
+    pcVar5 = CG_GetLocalClientGlobals(param_1);
+    if (pWVar1->offhandClass == OFFHAND_CLASS_NONE) {
+      if ((pcVar5->weaponSelect)._s_0.weaponIdx == 0) {
+        CG_SelectWeapon(param_1,param_2,0);
       }
     }
+    else if ((pcVar5->equippedOffHand)._s_0.weaponIdx == 0) {
+      CG_SetEquippedOffHand(param_1,param_2);
+      return;
+    }
   }
-  __restgprlr_29(lVar2);
   return;
 }
 
@@ -319,68 +306,61 @@ void CG_EquipmentSound(LocalClientNum_t param_1,int param_2,bool param_3,Equipme
 
 // 822CABB8  CG_GetBoneIndex  (cgame/cg_event.cpp:349)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 int CG_GetBoneIndex(LocalClientNum_t param_1,int param_2,uint param_3,uchar *param_4)
 
 {
-  LocalClientNum_t LVar1;
-  DObj *pDVar2;
-  int iVar3;
-  ulonglong uVar4;
+  DObj *pDVar1;
+  int iVar2;
   
-  uVar4 = (ulonglong)param_2;
-  LVar1 = __savegprlr_28(param_1);
-  if (0x801 < (uVar4 & 0xffffffff)) {
+  if (0x801 < (uint)param_2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_event.cpp",0x160,0,
                     "dobjHandle doesn\'t index CLIENT_DOBJ_HANDLE_MAX\n\t%i not in [0, %i)");
   }
-  pDVar2 = Com_GetClientDObj((int)uVar4,LVar1);
-  if (pDVar2 == (DObj *)0x0) {
-    iVar3 = __restgprlr_28();
-    return iVar3;
+  pDVar1 = Com_GetClientDObj(param_2,param_1);
+  if (pDVar1 == (DObj *)0x0) {
+    return 0;
   }
-  iVar3 = DObjGetBoneIndex(pDVar2,param_3,param_4);
-  iVar3 = __restgprlr_28(iVar3);
-  return iVar3;
+  iVar2 = DObjGetBoneIndex(pDVar1,param_3,param_4);
+  return iVar2;
 }
 
 
 // 822CAC30  CG_GetTagOrientation  (cgame/cg_event.cpp:362)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 bool CG_GetTagOrientation(LocalClientNum_t param_1,int param_2,uint param_3,orientation_t *param_4)
 
 {
-  LocalClientNum_t LVar1;
-  DObj *pDVar2;
-  int iVar3;
-  undefined1 uVar4;
-  bool bVar5;
-  ulonglong uVar6;
+  DObj *pDVar1;
+  int iVar2;
+  bool bVar3;
   byte local_30 [48];
   
-  uVar6 = (ulonglong)param_2;
-  LVar1 = __savegprlr_28(param_1);
   local_30[0] = 0xfe;
-  if (0x801 < (uVar6 & 0xffffffff)) {
+  if (0x801 < (uint)param_2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_event.cpp",0x160,0,
                     "dobjHandle doesn\'t index CLIENT_DOBJ_HANDLE_MAX\n\t%i not in [0, %i)");
   }
-  pDVar2 = Com_GetClientDObj((int)uVar6,LVar1);
-  if ((pDVar2 != (DObj *)0x0) && (iVar3 = DObjGetBoneIndex(pDVar2,param_3,local_30), iVar3 != 0)) {
-    bVar5 = FX_GetBoneOrientation(LVar1,(int)uVar6,(uint)local_30[0],param_4);
-    uVar4 = __restgprlr_28(bVar5);
-    return (bool)uVar4;
+  pDVar1 = Com_GetClientDObj(param_2,param_1);
+  if ((pDVar1 != (DObj *)0x0) && (iVar2 = DObjGetBoneIndex(pDVar1,param_3,local_30), iVar2 != 0)) {
+    bVar3 = FX_GetBoneOrientation(param_1,param_2,(uint)local_30[0],param_4);
+    return (bool)('\x01' - !bVar3);
   }
-  uVar4 = __restgprlr_28(0);
-  return (bool)uVar4;
+  return false;
 }
 
 
 // 822CACE0  CG_PlayBoltedEffect  (cgame/cg_event.cpp:379)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -388,32 +368,29 @@ bool CG_GetTagOrientation(LocalClientNum_t param_1,int param_2,uint param_3,orie
 void CG_PlayBoltedEffect(LocalClientNum_t param_1,FxEffectDef *param_2,int param_3,uint param_4)
 
 {
-  LocalClientNum_t LVar1;
-  DObj *pDVar2;
-  int iVar3;
-  cg_s *pcVar4;
-  ulonglong uVar5;
+  DObj *pDVar1;
+  int iVar2;
+  cg_s *pcVar3;
   byte local_30 [48];
   
-  uVar5 = (ulonglong)param_3;
-  LVar1 = __savegprlr_28(param_1);
   local_30[0] = 0xfe;
-  if (0x801 < (uVar5 & 0xffffffff)) {
+  if (0x801 < (uint)param_3) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_event.cpp",0x160,0,
                     "dobjHandle doesn\'t index CLIENT_DOBJ_HANDLE_MAX\n\t%i not in [0, %i)");
   }
-  pDVar2 = Com_GetClientDObj((int)uVar5,LVar1);
-  if ((pDVar2 != (DObj *)0x0) && (iVar3 = DObjGetBoneIndex(pDVar2,param_4,local_30), iVar3 != 0)) {
-    pcVar4 = CG_GetLocalClientGlobals(LVar1);
-    FX_PlayBoltedEffect(LVar1,param_2,pcVar4->time,(int)uVar5,(uint)local_30[0]);
+  pDVar1 = Com_GetClientDObj(param_3,param_1);
+  if ((pDVar1 != (DObj *)0x0) && (iVar2 = DObjGetBoneIndex(pDVar1,param_4,local_30), iVar2 != 0)) {
+    pcVar3 = CG_GetLocalClientGlobals(param_1);
+    FX_PlayBoltedEffect(param_1,param_2,pcVar3->time,param_3,(uint)local_30[0]);
   }
-  __restgprlr_28();
   return;
 }
 
 
 // 822CAD88  CG_PlayBoltedEffectOnSecondTag  (cgame/cg_event.cpp:398)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -422,69 +399,61 @@ void CG_PlayBoltedEffectOnSecondTag
                (LocalClientNum_t param_1,FxEffectDef *param_2,int param_3,uint param_4)
 
 {
-  LocalClientNum_t LVar1;
-  DObj *pDVar2;
-  int iVar4;
-  cg_s *pcVar5;
-  ulonglong uVar6;
+  DObj *pDVar1;
+  int iVar2;
+  cg_s *pcVar3;
   byte local_40 [64];
-  int iVar3;
   
-  uVar6 = (ulonglong)param_3;
-  LVar1 = __savegprlr_27(param_1);
-  if (0x801 < (uVar6 & 0xffffffff)) {
+  if (0x801 < (uint)param_3) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_event.cpp",0x193,0,
                     "dobjHandle doesn\'t index CLIENT_DOBJ_HANDLE_MAX\n\t%i not in [0, %i)");
   }
-  iVar3 = (int)uVar6;
-  pDVar2 = Com_GetClientDObj(iVar3,LVar1);
-  if (pDVar2 != (DObj *)0x0) {
+  pDVar1 = Com_GetClientDObj(param_3,param_1);
+  if (pDVar1 != (DObj *)0x0) {
     local_40[0] = 0xfe;
-    iVar4 = CG_GetBoneIndex(LVar1,iVar3,param_4,local_40);
-    if (iVar4 != 0) {
-      local_40[0] = DObjGetNextBoneIndex(pDVar2,param_4,local_40[0]);
+    iVar2 = CG_GetBoneIndex(param_1,param_3,param_4,local_40);
+    if (iVar2 != 0) {
+      local_40[0] = DObjGetNextBoneIndex(pDVar1,param_4,local_40[0]);
       if (local_40[0] != 0xff) {
-        pcVar5 = CG_GetLocalClientGlobals(LVar1);
-        FX_PlayBoltedEffect(LVar1,param_2,pcVar5->time,iVar3,(uint)local_40[0]);
+        pcVar3 = CG_GetLocalClientGlobals(param_1);
+        FX_PlayBoltedEffect(param_1,param_2,pcVar3->time,param_3,(uint)local_40[0]);
       }
     }
   }
-  __restgprlr_27();
   return;
 }
 
 
 // 822CAE60  CG_StopBoltedEffects  (cgame/cg_event.cpp:428)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void CG_StopBoltedEffects(LocalClientNum_t param_1,FxEffectDef *param_2,int param_3,uint param_4)
 
 {
-  LocalClientNum_t LVar1;
-  DObj *pDVar2;
-  int iVar3;
-  ulonglong uVar4;
+  DObj *pDVar1;
+  int iVar2;
   byte local_30 [48];
   
-  uVar4 = (ulonglong)param_3;
-  LVar1 = __savegprlr_28(param_1);
   local_30[0] = 0xfe;
-  if (0x801 < (uVar4 & 0xffffffff)) {
+  if (0x801 < (uint)param_3) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_event.cpp",0x160,0,
                     "dobjHandle doesn\'t index CLIENT_DOBJ_HANDLE_MAX\n\t%i not in [0, %i)");
   }
-  pDVar2 = Com_GetClientDObj((uint)uVar4,LVar1);
-  if ((pDVar2 != (DObj *)0x0) && (iVar3 = DObjGetBoneIndex(pDVar2,param_4,local_30), iVar3 != 0)) {
-    FX_StopBoltedEffects(LVar1,param_2,(uint)uVar4,(uint)local_30[0]);
+  pDVar1 = Com_GetClientDObj(param_3,param_1);
+  if ((pDVar1 != (DObj *)0x0) && (iVar2 = DObjGetBoneIndex(pDVar1,param_4,local_30), iVar2 != 0)) {
+    FX_StopBoltedEffects(param_1,param_2,param_3,(uint)local_30[0]);
   }
-  __restgprlr_28();
   return;
 }
 
 
 // 822CAEF8  CG_PlayFx  (cgame/cg_event.cpp:516)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
@@ -494,11 +463,9 @@ void CG_PlayFx(LocalClientNum_t param_1,centity_s *param_2,float *param_3)
 {
   uint uVar1;
   FxEffectDef *pFVar2;
-  LocalClientNum_t LVar3;
-  cg_s *pcVar4;
+  cg_s *pcVar3;
   float afStack_50 [20];
   
-  LVar3 = __savegprlr_28(param_1);
   uVar1 = (param_2->nextState).eventParm;
   if ((0 < (int)uVar1) && ((int)uVar1 < 0x100)) {
     pFVar2 = cgMedia.fxs[uVar1];
@@ -507,41 +474,39 @@ void CG_PlayFx(LocalClientNum_t param_1,centity_s *param_2,float *param_3)
                       "%s");
     }
     AnglesToAxis(param_3,(float (*) [3])afStack_50);
-    pcVar4 = CG_GetLocalClientGlobals(LVar3);
+    pcVar3 = CG_GetLocalClientGlobals(param_1);
     FX_PlayOrientedEffect
-              (LVar3,pFVar2,pcVar4->time,(param_2->pose).origin,(float (*) [3])afStack_50);
-    __restgprlr_28();
+              (param_1,pFVar2,pcVar3->time,(param_2->pose).origin,(float (*) [3])afStack_50);
     return;
   }
   Com_PrintError(0x15,"ERROR: CG_PlayFx called with invalid effect id %i\n");
-  __restgprlr_28();
   return;
 }
 
 
 // 822CAFB8  CG_PlayFxOnTag  (cgame/cg_event.cpp:557)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void CG_PlayFxOnTag(LocalClientNum_t param_1,centity_s *param_2,int param_3)
 
 {
-  LocalClientNum_t LVar1;
-  
-  LVar1 = __savegprlr_29(param_1);
   if ((param_3 < 1) || (0xff < param_3)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_event.cpp",0x22f,0,
                     "eventParm not in [1, MAX_EFFECT_TAGS-1]\n\t%i not in [%i, %i]");
   }
-  CG_PlayBoltedFxFromConfigstring(LVar1,(param_2->nextState).number,param_3 + 0xaa4);
-  __restgprlr_29();
+  CG_PlayBoltedFxFromConfigstring(param_1,(param_2->nextState).number,param_3 + 0xaa4);
   return;
 }
 
 
 // 822CB020  CG_PlayFxOnTagForClients  (cgame/cg_event.cpp:566)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "ConfigString": Some values do not have unique names */
@@ -553,103 +518,98 @@ void CG_PlayFxOnTagForClients(LocalClientNum_t param_1,centity_s *param_2,int pa
   char cVar1;
   int iVar2;
   FxEffectDef *pFVar3;
-  LocalClientNum_t LVar4;
-  char *pcVar5;
-  uint uVar6;
-  cg_s *pcVar7;
-  char *pcVar9;
-  ulonglong uVar8;
-  ConfigString CVar10;
+  char *pcVar4;
+  uint uVar5;
+  cg_s *pcVar6;
+  char *pcVar8;
+  ulonglong uVar7;
+  ConfigString CVar9;
   ushort local_50 [2];
   uint local_4c;
   
-  LVar4 = __savegprlr_24(param_1);
   if ((param_3 < 1) || (0xff < param_3)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_event.cpp",0x24b,0,
                     "eventParm not in [1, MAX_EFFECT_TAGS-1]\n\t%i not in [%i, %i]");
   }
-  CVar10 = param_3 + CS_EFFECT_TAGS;
-  if (0xeea < (int)CVar10) {
+  CVar9 = param_3 + CS_EFFECT_TAGS;
+  if (0xeea < (int)CVar9) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\../bgame/bg_public.h"
                     ,0x285,0,"%s");
   }
-  pcVar5 = CL_GetConfigString(CVar10);
-  pcVar9 = pcVar5;
+  pcVar4 = CL_GetConfigString(CVar9);
+  pcVar8 = pcVar4;
   do {
-    cVar1 = *pcVar9;
-    pcVar9 = pcVar9 + 1;
+    cVar1 = *pcVar8;
+    pcVar8 = pcVar8 + 1;
   } while (cVar1 != '\0');
-  if (pcVar9 + (-1 - (int)pcVar5) < (char *)0xc) {
-    uVar6 = SV_GetConfigstringConst(CVar10);
-    SL_ConvertToString(uVar6);
+  if (pcVar8 + (-1 - (int)pcVar4) < (char *)0xc) {
+    uVar5 = SV_GetConfigstringConst(CVar9);
+    SL_ConvertToString(uVar5);
     va("clientsTagAndEffect: \'%s\', server: \'%s\'");
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_event.cpp",0x24f,0,
                     "%s\n\t%s");
   }
-  if (pcVar5[8] == '\0') {
-    uVar6 = SV_GetConfigstringConst(CVar10);
-    SL_ConvertToString(uVar6);
+  if (pcVar4[8] == '\0') {
+    uVar5 = SV_GetConfigstringConst(CVar9);
+    SL_ConvertToString(uVar5);
     va("tagAndEffect: \'%s\', server: \'%s\'");
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_event.cpp",0x251,0,
                     "%s\n\t%s");
   }
-  if (pcVar5[9] == '\0') {
-    uVar6 = SV_GetConfigstringConst(CVar10);
-    SL_ConvertToString(uVar6);
+  if (pcVar4[9] == '\0') {
+    uVar5 = SV_GetConfigstringConst(CVar9);
+    SL_ConvertToString(uVar5);
     va("tagAndEffect: \'%s\', server: \'%s\'");
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_event.cpp",0x252,0,
                     "%s\n\t%s");
   }
-  if (pcVar5[10] == '\0') {
-    uVar6 = SV_GetConfigstringConst(CVar10);
-    SL_ConvertToString(uVar6);
+  if (pcVar4[10] == '\0') {
+    uVar5 = SV_GetConfigstringConst(CVar9);
+    SL_ConvertToString(uVar5);
     va("tagAndEffect: \'%s\', server: \'%s\'");
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_event.cpp",0x253,0,
                     "%s\n\t%s");
   }
-  uVar8 = ((longlong)pcVar5[8] + ((longlong)pcVar5[8] & 0x3fffffffU) * 4 & 0x7fffffff) * 2 +
-          (longlong)pcVar5[9];
-  uVar8 = ((uVar8 + (uVar8 & 0x3fffffff) * 4 & 0x7fffffff) * 2 + (longlong)pcVar5[10]) - 0x14d0;
-  if (((longlong)uVar8 < 1) || (0xff < (int)uVar8)) {
+  uVar7 = ((longlong)pcVar4[8] + ((longlong)pcVar4[8] & 0x3fffffffU) * 4 & 0x7fffffff) * 2 +
+          (longlong)pcVar4[9];
+  uVar7 = ((uVar7 + (uVar7 & 0x3fffffff) * 4 & 0x7fffffff) * 2 + (longlong)pcVar4[10]) - 0x14d0;
+  if (((longlong)uVar7 < 1) || (0xff < (int)uVar7)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_event.cpp",0x255,0,
                     "%s");
   }
-  sscanf(pcVar5,"%08x");
-  pcVar7 = CG_GetLocalClientGlobals(LVar4);
-  if ((1 << ((pcVar7->predictedPlayerState).clientNum & 0x3fU) & local_4c) != 0) {
-    pFVar3 = *(FxEffectDef **)((int)cgMedia.fxs + (int)((uVar8 & 0xffffffff) << 2));
+  sscanf(pcVar4,"%08x");
+  pcVar6 = CG_GetLocalClientGlobals(param_1);
+  if ((1 << ((pcVar6->predictedPlayerState).clientNum & 0x3fU) & local_4c) != 0) {
+    pFVar3 = *(FxEffectDef **)((int)cgMedia.fxs + (int)((uVar7 & 0xffffffff) << 2));
     if (pFVar3 == (FxEffectDef *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_event.cpp",0x262,0,
                       "%s");
     }
     iVar2 = (param_2->nextState).number;
-    uVar6 = SL_GetString(pcVar5 + 0xb,0);
-    local_50[0] = (ushort)uVar6;
-    CG_PlayBoltedEffect(LVar4,pFVar3,iVar2,uVar6 & 0xffff);
+    uVar5 = SL_GetString(pcVar4 + 0xb,0);
+    local_50[0] = (ushort)uVar5;
+    CG_PlayBoltedEffect(param_1,pFVar3,iVar2,uVar5 & 0xffff);
     Scr_SetString(local_50,0);
   }
-  __restgprlr_24();
   return;
 }
 
 
 // 822CB318  CG_StopFxOnTag  (cgame/cg_event.cpp:631)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void CG_StopFxOnTag(LocalClientNum_t param_1,centity_s *param_2,int param_3)
 
 {
-  LocalClientNum_t LVar1;
-  
-  LVar1 = __savegprlr_29(param_1);
   if ((param_3 < 1) || (0xff < param_3)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_event.cpp",0x279,0,
                     "eventParm not in [1, MAX_EFFECT_TAGS-1]\n\t%i not in [%i, %i]");
   }
-  CG_StopBoltedFxFromConfigstring(LVar1,(param_2->nextState).number,param_3 + 0xaa4);
-  __restgprlr_29();
+  CG_StopBoltedFxFromConfigstring(param_1,(param_2->nextState).number,param_3 + 0xaa4);
   return;
 }
 
@@ -725,6 +685,8 @@ void CG_SetInvalidStanceHint(cg_s *param_1,invalid_cmd_hint_t param_2,Weapon par
 
 // 822CB4E8  CG_StopWeaponSound  (cgame/cg_event.cpp:673)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
@@ -733,65 +695,56 @@ void CG_StopWeaponSound(LocalClientNum_t param_1,bool param_2,WeaponDef *param_3
 
 {
   bool bVar1;
-  LocalClientNum_t LVar2;
-  ulonglong uVar3;
-  longlong lVar4;
+  longlong lVar2;
   
-  lVar4 = (longlong)(int)param_5;
-  uVar3 = (ulonglong)param_2;
-  LVar2 = __savegprlr_29(param_1);
-  if ((lVar4 - 8U & 0xffffffff) < 5) {
-    bVar1 = (int)(lVar4 - 8U) != 0;
-    if (lVar4 != 9 || !bVar1) {
-      if ((lVar4 == 10 && bVar1) || (lVar4 == 0xb && bVar1)) {
-        if ((uVar3 & 0xff) != 0) {
-          CG_StopSoundAlias(LVar2,param_4,param_3->reloadStartSoundPlayer);
-          __restgprlr_29();
+  lVar2 = (longlong)(int)param_5;
+  if ((lVar2 - 8U & 0xffffffff) < 5) {
+    bVar1 = (int)(lVar2 - 8U) != 0;
+    if (lVar2 != 9 || !bVar1) {
+      if ((lVar2 == 10 && bVar1) || (lVar2 == 0xb && bVar1)) {
+        if (!param_2) {
+          CG_StopSoundAlias(param_1,param_4,param_3->reloadStartSound);
           return;
         }
-        CG_StopSoundAlias(LVar2,param_4,param_3->reloadStartSound);
-        __restgprlr_29();
+        CG_StopSoundAlias(param_1,param_4,param_3->reloadStartSoundPlayer);
         return;
       }
       if (bVar1) {
-        if ((uVar3 & 0xff) != 0) {
-          CG_StopSoundAlias(LVar2,param_4,param_3->reloadEndSoundPlayer);
-          __restgprlr_29();
+        if (!param_2) {
+          CG_StopSoundAlias(param_1,param_4,param_3->reloadEndSound);
           return;
         }
-        CG_StopSoundAlias(LVar2,param_4,param_3->reloadEndSound);
-        goto LAB_822cb610;
+        CG_StopSoundAlias(param_1,param_4,param_3->reloadEndSoundPlayer);
+        return;
       }
     }
-    if ((uVar3 & 0xff) == 0) {
-      if (param_3->reloadEmptySound != (snd_alias_list_t *)0x0) {
-        CG_StopSoundAlias(LVar2,param_4,param_3->reloadEmptySound);
+    if (param_2) {
+      if (param_3->reloadEmptySoundPlayer != (snd_alias_list_t *)0x0) {
+        CG_StopSoundAlias(param_1,param_4,param_3->reloadEmptySoundPlayer);
       }
-      if (param_3->reloadSound != (snd_alias_list_t *)0x0) {
-        CG_StopSoundAlias(LVar2,param_4,param_3->reloadSound);
-        __restgprlr_29();
+      if (param_3->reloadSoundPlayer != (snd_alias_list_t *)0x0) {
+        CG_StopSoundAlias(param_1,param_4,param_3->reloadSoundPlayer);
         return;
       }
     }
     else {
-      if (param_3->reloadEmptySoundPlayer != (snd_alias_list_t *)0x0) {
-        CG_StopSoundAlias(LVar2,param_4,param_3->reloadEmptySoundPlayer);
+      if (param_3->reloadEmptySound != (snd_alias_list_t *)0x0) {
+        CG_StopSoundAlias(param_1,param_4,param_3->reloadEmptySound);
       }
-      if (param_3->reloadSoundPlayer != (snd_alias_list_t *)0x0) {
-        CG_StopSoundAlias(LVar2,param_4,param_3->reloadSoundPlayer);
-        __restgprlr_29();
+      if (param_3->reloadSound != (snd_alias_list_t *)0x0) {
+        CG_StopSoundAlias(param_1,param_4,param_3->reloadSound);
         return;
       }
     }
   }
-LAB_822cb610:
-  __restgprlr_29();
   return;
 }
 
 
 // 822CB618  CG_HandleTurretFire  (cgame/cg_event.cpp:709)
 
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
@@ -800,50 +753,41 @@ void CG_HandleTurretFire(LocalClientNum_t param_1,centity_s *param_2,uint param_
                         ushort param_5,bool param_6)
 
 {
-  LocalClientNum_t LVar1;
-  centity_s *pcVar2;
-  cg_s *pcVar3;
-  int iVar4;
-  ulonglong uVar5;
-  centity_s *pcVar6;
-  ulonglong uVar7;
-  float *pfVar8;
+  centity_s *pcVar1;
+  cg_s *pcVar2;
+  int iVar3;
+  float *pfVar4;
   
-  uVar7 = (ulonglong)(int)param_3;
-  uVar5 = (ulonglong)(int)param_2;
-  LVar1 = __savegprlr_22(param_1);
-  pcVar6 = (centity_s *)uVar5;
-  pcVar2 = pcVar6;
-  if ((uVar5 & 0xffffffff) == 0) {
-    pcVar2 = (centity_s *)0x2c9;
+  pcVar1 = param_2;
+  if (param_2 == (centity_s *)0x0) {
+    pcVar1 = (centity_s *)0x2c9;
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_event.cpp",0x2c9,0,
                     "%s");
   }
-  pfVar8 = (pcVar6->pose).origin;
-  CG_StartShakeCamera(LVar1,0.05,(int)pcVar2,(float *)0x64,100.0);
-  CG_FireWeapon(LVar1,pcVar6,(int)uVar7,-1,param_5,(Weapon)0x0,false,param_6);
-  if ((uVar7 & 0xffffffff) == 0x38) {
+  pfVar4 = (param_2->pose).origin;
+  CG_StartShakeCamera(param_1,0.05,(int)pcVar1,(float *)0x64,100.0);
+  CG_FireWeapon(param_1,param_2,param_3,-1,param_5,(Weapon)0x0,false,param_6);
+  if (param_3 == 0x38) {
 LAB_822cb6f0:
-    if ((uVar7 & 0xffffffff) != 0x37) goto LAB_822cb74c;
+    if (param_3 != 0x37) goto LAB_822cb74c;
   }
-  else if ((uVar7 & 0xffffffff) != 0x37) {
-    if ((uVar7 & 0xffffffff) != 0x36) {
+  else if (param_3 != 0x37) {
+    if (param_3 != 0x36) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_event.cpp",0x2e5,0,
                       "%s");
     }
     goto LAB_822cb6f0;
   }
-  pcVar2 = CG_GetEntity(LVar1,param_4);
-  if ((((pcVar2->flags & 1U) != 0) && ((pcVar2->nextState).eType == 1)) &&
-     (pcVar3 = CG_GetLocalClientGlobals(LVar1), pcVar3->clientNum != param_4)) {
-    CG_CompassAddWeaponPingInfo(LVar1,pcVar2,pfVar8,0x32);
+  pcVar1 = CG_GetEntity(param_1,param_4);
+  if ((((pcVar1->flags & 1U) != 0) && ((pcVar1->nextState).eType == 1)) &&
+     (pcVar2 = CG_GetLocalClientGlobals(param_1), pcVar2->clientNum != param_4)) {
+    CG_CompassAddWeaponPingInfo(param_1,pcVar1,pfVar4,0x32);
   }
 LAB_822cb74c:
-  iVar4 = CG_CompassTurretIsPingType(pcVar6);
-  if (iVar4 != 0) {
-    CG_CompassAddWeaponPingInfo(LVar1,pcVar6,pfVar8,0x32);
+  iVar3 = CG_CompassTurretIsPingType(param_2);
+  if (iVar3 != 0) {
+    CG_CompassAddWeaponPingInfo(param_1,param_2,pfVar4,0x32);
   }
-  __restgprlr_22();
   return;
 }
 
@@ -896,6 +840,8 @@ void HandleRumbleEventsInternal
 
 // 822CB808  CG_HandleRumbleEvents  (cgame/cg_event.cpp:796)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void CG_HandleRumbleEvents
@@ -903,64 +849,55 @@ void CG_HandleRumbleEvents
                float *param_6)
 
 {
-  LocalClientNum_t LVar1;
-  ulonglong uVar2;
-  
-  uVar2 = (ulonglong)param_3;
-  LVar1 = __savegprlr_27(param_1);
-  if ((uVar2 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_event.cpp",0x31d,
-                    (int)(char *)uVar2,"%s");
+  if (param_3 == 0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_event.cpp",0x31d,0,
+                    "%s");
   }
-  HandleRumbleEventsInternal(LVar1,param_2,(char *)uVar2,(int)param_4,(float *)param_5);
-  __restgprlr_27();
+  HandleRumbleEventsInternal(param_1,param_2,(char *)param_3,(int)param_4,(float *)param_5);
   return;
 }
 
 
 // 822CB870  CG_HandleSimulatedBulletStartPos  (cgame/cg_event.cpp:823)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void CG_HandleSimulatedBulletStartPos
                (LocalClientNum_t param_1,int param_2,Weapon param_3,bool param_4,float *param_5)
 
 {
-  LocalClientNum_t LVar1;
-  ushort uVar2;
-  ulonglong uVar3;
-  float *pfVar4;
-  double dVar5;
+  ushort uVar1;
+  double dVar2;
   
-  uVar3 = (ulonglong)(int)param_5;
-  LVar1 = __savegprlr_26(param_1);
-  if ((uVar3 & 0xffffffff) == 0) {
+  if (param_5 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_event.cpp",0x33a,0,
                     "%s");
   }
-  pfVar4 = (float *)uVar3;
-  dVar5 = 0.0;
-  if (*pfVar4 != 0.0) {
+  dVar2 = 0.0;
+  if (*param_5 != 0.0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_event.cpp",0x33b,0,
                     "%s\n\t(out_Point[0]) = %g");
   }
-  if ((double)pfVar4[1] != dVar5) {
+  if ((double)param_5[1] != dVar2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_event.cpp",0x33c,0,
                     "%s\n\t(out_Point[1]) = %g");
   }
-  if ((double)pfVar4[2] != dVar5) {
+  if ((double)param_5[2] != dVar2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_event.cpp",0x33d,0,
                     "%s\n\t(out_Point[2]) = %g");
   }
-  uVar2 = BG_GetWeaponFlashTagname(param_3,param_4);
-  CG_CalcMuzzlePoint(LVar1,param_2,(uint)uVar2,pfVar4);
-  __restgprlr_26();
+  uVar1 = BG_GetWeaponFlashTagname(param_3,param_4);
+  CG_CalcMuzzlePoint(param_1,param_2,(uint)uVar1,param_5);
   return;
 }
 
 
 // 822CB998  PlayTrophyEffects  (cgame/cg_event.cpp:838)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
@@ -969,61 +906,58 @@ void CG_HandleSimulatedBulletStartPos
 void PlayTrophyEffects(LocalClientNum_t param_1,float *param_2,float (*param_3) [3],int param_4)
 
 {
-  LocalClientNum_t LVar1;
-  centity_s *pcVar2;
-  VehicleClient *pVVar3;
-  VehicleDef *pVVar4;
-  cg_s *pcVar5;
-  DObj *pDVar6;
+  centity_s *pcVar1;
+  VehicleClient *pVVar2;
+  VehicleDef *pVVar3;
+  cg_s *pcVar4;
+  DObj *pDVar5;
+  uint uVar6;
   uint uVar7;
-  uint uVar8;
-  ushort *puVar9;
+  ushort *puVar8;
+  double dVar9;
   double dVar10;
   double dVar11;
-  double dVar12;
   float local_70;
   float local_6c;
   float local_68;
   
-  LVar1 = __savegprlr_24(param_1);
-  pcVar2 = CG_GetEntity(LVar1,param_4);
-  if (pcVar2 != (centity_s *)0x0) {
-    pVVar3 = VehicleCl_GetClient(LVar1,pcVar2);
-    pVVar4 = VehicleCl_GetClientDef(pVVar3);
-    if (pVVar4->trophyExplodeFx != (FxEffectDef *)0x0) {
-      pcVar5 = CG_GetLocalClientGlobals(LVar1);
-      FX_PlayOrientedEffect(LVar1,pVVar4->trophyExplodeFx,pcVar5->time,param_2,param_3);
+  pcVar1 = CG_GetEntity(param_1,param_4);
+  if (pcVar1 != (centity_s *)0x0) {
+    pVVar2 = VehicleCl_GetClient(param_1,pcVar1);
+    pVVar3 = VehicleCl_GetClientDef(pVVar2);
+    if (pVVar3->trophyExplodeFx != (FxEffectDef *)0x0) {
+      pcVar4 = CG_GetLocalClientGlobals(param_1);
+      FX_PlayOrientedEffect(param_1,pVVar3->trophyExplodeFx,pcVar4->time,param_2,param_3);
     }
-    if ((pVVar4->trophyFlashFx != (FxEffectDef *)0x0) &&
-       (pDVar6 = Com_GetClientDObj(param_4,LVar1), pDVar6 != (DObj *)0x0)) {
+    if ((pVVar3->trophyFlashFx != (FxEffectDef *)0x0) &&
+       (pDVar5 = Com_GetClientDObj(param_4,param_1), pDVar5 != (DObj *)0x0)) {
+      uVar6 = 0;
       uVar7 = 0;
-      uVar8 = 0;
-      puVar9 = pVVar4->trophyTags;
-      dVar11 = 3.4028234663852886e+38;
-      dVar12 = dVar11;
+      puVar8 = pVVar3->trophyTags;
+      dVar10 = 3.4028234663852886e+38;
+      dVar11 = dVar10;
       do {
-        if (*puVar9 == 0) break;
-        CG_DObjGetWorldTagPos(&pcVar2->pose,pDVar6,(uint)*puVar9,&local_70);
-        dVar10 = (double)((param_2[1] - local_6c) * (param_2[1] - local_6c) +
-                         (*param_2 - local_70) * (*param_2 - local_70) +
-                         (param_2[2] - local_68) * (param_2[2] - local_68));
-        if (dVar10 < dVar12) {
-          uVar7 = (uint)*puVar9;
-          dVar12 = dVar10;
+        if (*puVar8 == 0) break;
+        CG_DObjGetWorldTagPos(&pcVar1->pose,pDVar5,(uint)*puVar8,&local_70);
+        dVar9 = (double)((param_2[1] - local_6c) * (param_2[1] - local_6c) +
+                        (*param_2 - local_70) * (*param_2 - local_70) +
+                        (param_2[2] - local_68) * (param_2[2] - local_68));
+        if (dVar9 < dVar11) {
+          uVar6 = (uint)*puVar8;
+          dVar11 = dVar9;
         }
-        uVar8 = uVar8 + 1;
-        puVar9 = puVar9 + 1;
-      } while (uVar8 < 4);
-      if (dVar12 != dVar11) {
-        if (pVVar4->trophyFlashFx == (FxEffectDef *)0x0) {
+        uVar7 = uVar7 + 1;
+        puVar8 = puVar8 + 1;
+      } while (uVar7 < 4);
+      if (dVar11 != dVar10) {
+        if (pVVar3->trophyFlashFx == (FxEffectDef *)0x0) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_event.cpp",
                           0x376,0,"%s");
         }
-        CG_PlayBoltedEffect(LVar1,pVVar4->trophyFlashFx,(pcVar2->nextState).number,uVar7);
+        CG_PlayBoltedEffect(param_1,pVVar3->trophyFlashFx,(pcVar1->nextState).number,uVar6);
       }
     }
   }
-  __restgprlr_24();
   return;
 }
 
@@ -1106,6 +1040,8 @@ snd_alias_list_t * GetFirstRaiseEventSound(WeaponDef *param_1,bool param_2)
 
 // 822CBC88  CG_GrabWeapon  (cgame/cg_event.cpp:961)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
 
@@ -1113,48 +1049,48 @@ void CG_GrabWeapon(LocalClientNum_t param_1,int param_2,int param_3,Weapon param
 
 {
   WeaponDef *pWVar1;
-  LocalClientNum_t LVar2;
-  Weapon WVar3;
-  snd_alias_list_t *psVar4;
-  ulonglong uVar5;
-  ulonglong uVar6;
+  Weapon WVar2;
+  snd_alias_list_t *psVar3;
   
-  uVar6 = (ulonglong)param_5;
-  uVar5 = (ulonglong)(int)param_4.data;
-  LVar2 = __savegprlr_27(param_1);
-  if (((uVar5 & 0xff) == 0) || (0xef < (uVar5 & 0xff))) goto LAB_822cbd40;
-  WVar3 = BG_GetAlternateWeapon((uint)uVar5,false);
-  pWVar1 = bg_weaponDefs[WVar3.data & 0xff];
+  if ((param_4.data & 0xff) == 0) {
+    return;
+  }
+  if (0xef < (param_4.data & 0xff)) {
+    return;
+  }
+  WVar2 = BG_GetAlternateWeapon(param_4,false);
+  pWVar1 = bg_weaponDefs[WVar2.data & 0xff];
   if (param_3 == 10) {
-    if ((uVar6 & 0xff) == 0) {
-      psVar4 = pWVar1->pickupSound;
+    if (param_5) {
+      psVar3 = pWVar1->pickupSoundPlayer;
     }
     else {
-      psVar4 = pWVar1->pickupSoundPlayer;
+      psVar3 = pWVar1->pickupSound;
     }
-LAB_822cbd1c:
-    CG_PlayEntitySoundAlias(LVar2,param_2,psVar4);
   }
-  else if (param_3 == 0xb) {
-    if ((uVar6 & 0xff) == 0) {
-      psVar4 = pWVar1->ammoPickupSound;
+  else {
+    if (param_3 != 0xb) goto LAB_822cbd28;
+    if (param_5) {
+      psVar3 = pWVar1->ammoPickupSoundPlayer;
     }
     else {
-      psVar4 = pWVar1->ammoPickupSoundPlayer;
+      psVar3 = pWVar1->ammoPickupSound;
     }
-    goto LAB_822cbd1c;
   }
-  if ((uVar6 & 0xff) != 0) {
-    CG_ItemPickup(LVar2,(Weapon)(uint)uVar5);
+  CG_PlayEntitySoundAlias(param_1,param_2,psVar3);
+LAB_822cbd28:
+  if (param_5) {
+    CG_ItemPickup(param_1,param_4);
   }
-LAB_822cbd40:
-  __restgprlr_27();
   return;
 }
 
 
 // 822CBD48  CG_EntityEvent  (cgame/cg_event.cpp:979)
 
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
+/* WARNING: Type propagation algorithm not settling */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
@@ -1182,29 +1118,27 @@ void CG_EntityEvent(LocalClientNum_t param_1,centity_s *param_2,int param_3,int 
   GfxBrushModel *pGVar15;
   char *pcVar16;
   uint uVar19;
-  ulonglong uVar20;
-  float *pfVar21;
-  float *pfVar22;
-  bool bVar23;
-  float **ppfVar24;
+  float *pfVar20;
+  bool bVar21;
+  float **ppfVar22;
   char *in_r7;
-  LerpEntityStateTypeUnion *pLVar25;
-  IMAGE_DOS_HEADER *pIVar26;
-  float *pfVar27;
-  float *pfVar28;
-  IMAGE_DOS_HEADER *pIVar29;
-  uint uVar30;
-  ulonglong uVar31;
-  ulonglong uVar32;
-  uint *puVar34;
-  ulonglong uVar33;
-  uint uVar35;
-  char *pcVar36;
-  Weapon WVar37;
-  entityState_s *peVar38;
+  IMAGE_DOS_HEADER *pIVar23;
+  float *pfVar24;
+  IMAGE_DOS_HEADER *pIVar25;
+  uint uVar26;
+  uint uVar27;
+  ulonglong uVar28;
+  uint *puVar30;
+  ulonglong uVar29;
+  uint uVar31;
+  float *pfVar32;
+  char *pcVar33;
+  Weapon WVar34;
+  LerpEntityStateTypeUnion *pLVar35;
+  entityState_s *peVar36;
+  double dVar37;
+  double dVar38;
   double dVar39;
-  double dVar40;
-  double dVar41;
   int in_stack_fffffde8;
   int in_stack_fffffdec;
   uchar in_stack_fffffdf3;
@@ -1234,165 +1168,152 @@ void CG_EntityEvent(LocalClientNum_t param_1,centity_s *param_2,int param_3,int 
   trace_t local_f0 [4];
   dvar_t *pdVar3;
   
-  uVar31 = (ulonglong)param_4;
-  uVar20 = (ulonglong)param_3;
-  __savegprlr();
-  pfVar21 = (float *)uVar20;
-  if (pfVar21 == (float *)0x0) {
+  if (param_3 == 0) {
     if (((cg_debugEvents->current).integer == 0xba) ||
        (bVar18 = false, (cg_debugEvents->current).integer == 0)) {
       bVar18 = true;
     }
-    if (bVar18) {
-      Com_Printf(0x15,"CG_EntityEvent:ZERO EVENT\n");
-      __restgprlr();
+    if (!bVar18) {
       return;
     }
-    goto switchD_822cc20c_caseD_c;
+    Com_Printf(0x15,"CG_EntityEvent:ZERO EVENT\n");
+    return;
   }
-  pfVar22 = pfVar21;
-  if ((int)pfVar21 < 1) {
+  pfVar20 = (float *)param_3;
+  if (param_3 < 1) {
     in_r7 = "(event > 0)";
-    pfVar22 = (float *)0x0;
+    pfVar20 = (float *)0x0;
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_event.cpp",0x3f3,0,
                     "%s\n\t(event) = %i");
   }
-  if (0xb9 < (int)pfVar21) {
+  if (0xb9 < param_3) {
     in_r7 = "(event < EV_MAX_EVENTS)";
-    pfVar22 = (float *)0x0;
+    pfVar20 = (float *)0x0;
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_event.cpp",0x3f4,0,
                     "%s\n\t(event) = %i");
   }
   WVar9 = (Weapon)(param_2->nextState).eventParm;
-  uVar32 = (ulonglong)WVar9.data;
-  peVar38 = &param_2->nextState;
-  pfVar28 = (param_2->pose).origin;
-  uVar31 = uVar31 & 1;
-  if (((float *)(cg_debugEvents->current).integer == (float *)0xba) ||
-     (bVar18 = false, (float *)(cg_debugEvents->current).integer == pfVar21)) {
+  uVar28 = (ulonglong)WVar9.data;
+  peVar36 = &param_2->nextState;
+  pfVar32 = (param_2->pose).origin;
+  uVar27 = param_4 & 1;
+  if (((cg_debugEvents->current).integer == 0xba) ||
+     (bVar18 = false, (cg_debugEvents->current).integer == param_3)) {
     bVar18 = true;
   }
   if (bVar18) {
     in_r7 = (char *)WVar9;
     Com_Printf(0x15,"ent:%3i  event:%3i  params:%3i  ");
-    pfVar22 = *(float **)(&eventnames + (int)((uVar20 & 0xffffffff) << 2));
+    pfVar20 = *(float **)(&eventnames + param_3 * 4);
     Com_Printf(0x15,"CG_EntityEvent:%s\n");
   }
   pcVar5 = CG_GetLocalClientGlobals(param_1);
   if (pcVar5 == (cg_s *)0x0) {
-    pfVar22 = (float *)0x0;
+    pfVar20 = (float *)0x0;
     in_r7 = "ps";
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_event.cpp",0x406,0,
                     "%s");
   }
-  if (uVar31 == 0) {
-    WVar37 = (param_2->nextState).weapon;
-    uVar35 = (uint)((param_2->nextState).inAltWeaponMode != 0);
+  if ((param_4 & 1U) == 0) {
+    WVar34 = (param_2->nextState).weapon;
+    uVar31 = (uint)((param_2->nextState).inAltWeaponMode != 0);
   }
   else {
-    WVar37 = (pcVar5->predictedPlayerState).weapCommon.weapon;
-    uVar35 = (uint)(pcVar5->predictedPlayerState).weapCommon.weapFlags >> 0xf & 1;
+    WVar34 = (pcVar5->predictedPlayerState).weapCommon.weapon;
+    uVar31 = (uint)(pcVar5->predictedPlayerState).weapCommon.weapFlags >> 0xf & 1;
     bVar18 = CG_KillCamEntityEnabled(param_1);
     if (bVar18) {
-      uVar31 = 0;
+      uVar27 = 0;
     }
   }
   bVar18 = CL_Demo_IsFollowCamera(param_1);
   if ((bVar18) || (bVar18 = CL_Demo_IsFreeCamera(param_1), bVar18)) {
-    uVar31 = 0;
+    uVar27 = 0;
   }
-  pcVar36 = (char *)(param_2->nextState).clientNum;
-  if (((int)pcVar36 < 0) || (0x11 < (int)pcVar36)) {
-    pcVar36 = (char *)0x0;
+  pcVar33 = (char *)(param_2->nextState).clientNum;
+  if (((int)pcVar33 < 0) || (0x11 < (int)pcVar33)) {
+    pcVar33 = (char *)0x0;
   }
-  bVar18 = SUB41(uVar35,0);
-  WVar6 = BG_GetAlternateWeapon(WVar37,bVar18);
+  bVar18 = SUB41(uVar31,0);
+  WVar6 = BG_GetAlternateWeapon(WVar34,bVar18);
   pWVar4 = bg_weaponDefs[WVar6.data & 0xff];
-  uVar19 = uVar35;
-  uVar17 = BG_GetWeaponFlashTagname(WVar37,bVar18);
+  uVar19 = uVar31;
+  uVar17 = BG_GetWeaponFlashTagname(WVar34,bVar18);
   pcVar7 = CG_GetLocalClientGlobals(param_1);
-  puVar34 = (pcVar7->bgs).clientinfo[(int)pcVar36].perks;
-  if (puVar34 == (uint *)0x0) {
+  puVar30 = (pcVar7->bgs).clientinfo[(int)pcVar33].perks;
+  if (puVar30 == (uint *)0x0) {
     in_r7 = "perks";
-    pfVar22 = (float *)0x0;
+    pfVar20 = (float *)0x0;
     uVar19 = 0x4f;
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\../bgame/bg_perks.h",
                     0x4f,0,"%s");
   }
-  uVar1 = *puVar34;
-  uVar30 = uVar1 & 0x20000000;
-  pfVar27 = (float *)-uVar30;
-  uVar33 = -(ulonglong)((uVar1 & 0x20000000) != 0);
-  pcVar16 = (char *)uVar33;
-  uVar33 = uVar33 & 0x1f;
-  if ((0x79 < (int)pfVar21) && ((int)pfVar21 < 0x99)) {
-    iVar8 = (int)((uVar33 + uVar20 & 0x3fffffff) << 2);
-    if (uVar31 != 0) {
+  uVar1 = *puVar30;
+  uVar26 = uVar1 & 0x20000000;
+  pfVar24 = (float *)-uVar26;
+  uVar29 = -(ulonglong)((uVar1 & 0x20000000) != 0);
+  pcVar16 = (char *)uVar29;
+  uVar29 = uVar29 & 0x1f;
+  if ((0x79 < param_3) && (param_3 < 0x99)) {
+    iVar8 = (int)((uVar29 + (longlong)param_3 & 0x3fffffff) << 2);
+    if (uVar27 == 0) {
       CG_PlayEntitySoundAlias
-                (param_1,peVar38->number,
-                 *(snd_alias_list_t **)((int)cgMedia.stepProneSoundPlayer + iVar8 + 8));
-      local_1a0 = (ulonglong)WVar9.data;
-      pcVar5->landTime = pcVar5->time;
-      pcVar5->landChange = -(float)local_1a0;
-      __restgprlr();
+                (param_1,peVar36->number,
+                 *(snd_alias_list_t **)((int)cgMedia.stepProneSound + iVar8 + 8));
       return;
     }
     CG_PlayEntitySoundAlias
-              (param_1,peVar38->number,
-               *(snd_alias_list_t **)((int)cgMedia.stepProneSound + iVar8 + 8));
-    __restgprlr();
+              (param_1,peVar36->number,
+               *(snd_alias_list_t **)((int)cgMedia.stepProneSoundPlayer + iVar8 + 8));
+    pcVar5->landTime = pcVar5->time;
+    pcVar5->landChange = -(float)WVar9;
     return;
   }
-  if ((0x98 < (int)pfVar21) && ((int)pfVar21 < 0xb8)) {
+  if ((0x98 < param_3) && (param_3 < 0xb8)) {
     local_1a0 = (ulonglong)WVar9.data & 0xffffff7f;
-    dVar39 = (double)((float)local_1a0 * 0.01);
-    iVar8 = (int)(((uVar33 + uVar20) - 0x99 & 0x3fffffff) << 2);
-    if (uVar31 == 0) {
+    dVar37 = (double)((float)local_1a0 * 0.01);
+    iVar8 = (int)(((uVar29 + (longlong)param_3) - 0x99 & 0x3fffffff) << 2);
+    if (uVar27 == 0) {
       CG_PlayEntitySoundAlias
-                (param_1,peVar38->number,*(snd_alias_list_t **)((int)cgMedia.landSound + iVar8));
-      if ((WVar9.data & 0x80) == 0) {
-        CG_PlayEntitySoundAlias(param_1,peVar38->number,cgMedia.landDmgSound);
-        __restgprlr();
+                (param_1,peVar36->number,*(snd_alias_list_t **)((int)cgMedia.landSound + iVar8));
+      if ((WVar9.data & 0x80) != 0) {
         return;
       }
+      CG_PlayEntitySoundAlias(param_1,peVar36->number,cgMedia.landDmgSound);
+      return;
     }
-    else {
-      CG_PlayEntitySoundAlias
-                (param_1,peVar38->number,
-                 *(snd_alias_list_t **)((int)cgMedia.landSoundPlayer + iVar8));
-      pdVar2 = bg_softLandingMaxHeight;
-      pdVar3 = bg_softLandingMinHeight;
-      if ((WVar9.data & 0x80) == 0) {
-        CG_PlayEntitySoundAlias(param_1,peVar38->number,cgMedia.landDmgSoundPlayer);
-        pdVar2 = bg_fallDamageMaxHeight;
-        pdVar3 = bg_fallDamageMinHeight;
-      }
-      iVar8 = BG_GetViewDip((float)((double)(float)((double)(pdVar2->current).value -
-                                                   (double)(pdVar3->current).value) * dVar39 +
-                                   (double)(pdVar3->current).value));
-      if (0 < iVar8) {
-        local_1a0 = (ulonglong)iVar8;
-        pcVar5->landTime = pcVar5->time;
-        pcVar5->landChange = -(float)(longlong)local_1a0;
-        __restgprlr();
-        return;
-      }
+    CG_PlayEntitySoundAlias
+              (param_1,peVar36->number,*(snd_alias_list_t **)((int)cgMedia.landSoundPlayer + iVar8))
+    ;
+    pdVar2 = bg_softLandingMaxHeight;
+    pdVar3 = bg_softLandingMinHeight;
+    if ((WVar9.data & 0x80) == 0) {
+      CG_PlayEntitySoundAlias(param_1,peVar36->number,cgMedia.landDmgSoundPlayer);
+      pdVar2 = bg_fallDamageMaxHeight;
+      pdVar3 = bg_fallDamageMinHeight;
     }
-    goto switchD_822cc20c_caseD_c;
+    iVar8 = BG_GetViewDip((float)((double)(float)((double)(pdVar2->current).value -
+                                                 (double)(pdVar3->current).value) * dVar37 +
+                                 (double)(pdVar3->current).value));
+    if (iVar8 < 1) {
+      return;
+    }
+    pcVar5->landTime = pcVar5->time;
+    pcVar5->landChange = -(float)(longlong)iVar8;
+    return;
   }
-  bVar23 = SUB81(uVar31,0);
-  switch((int)pfVar21 - 1) {
+  bVar21 = SUB41(uVar27,0);
+  switch(param_3 + -1) {
   case 0:
-    iVar8 = peVar38->number;
+    iVar8 = peVar36->number;
     psVar13 = cgMedia.foliageMovement;
     goto LAB_822cc770;
   case 1:
-    CG_StopWeaponSound(param_1,bVar23,pWVar4,peVar38->number,WVar9.data);
-    __restgprlr();
+    CG_StopWeaponSound(param_1,bVar21,pWVar4,peVar36->number,WVar9.data);
     return;
   case 2:
-    if (uVar32 != 0) {
-      if (0x17f < uVar32) {
+    if (uVar28 != 0) {
+      if (0x17f < uVar28) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_event.cpp",0x7e8,
                         0,"eventParm doesn\'t index MAX_SOUNDALIASES\n\t%i not in [0, %i)");
       }
@@ -1407,82 +1328,73 @@ void CG_EntityEvent(LocalClientNum_t param_1,centity_s *param_2,int param_3,int 
         local_14c = (param_2->nextState).lerp.pos.trBase[1];
         local_148 = (param_2->nextState).lerp.pos.trBase[2];
       }
-      CG_PlaySoundAliasByName(param_1,peVar38->number,&local_150,WVar9.data);
-      __restgprlr();
+      CG_PlaySoundAliasByName(param_1,peVar36->number,&local_150,WVar9.data);
       return;
     }
     break;
   case 3:
-    if (uVar32 != 0) {
-      if (0x17f < uVar32) {
+    if (uVar28 != 0) {
+      if (0x17f < uVar28) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_event.cpp",0x800,
                         0,"eventParm doesn\'t index MAX_SOUNDALIASES\n\t%i not in [0, %i)");
       }
       CG_PlaySoundAliasAsMasterByName
-                (param_1,peVar38->number,(param_2->nextState).lerp.pos.trBase,WVar9.data);
-      __restgprlr();
+                (param_1,peVar36->number,(param_2->nextState).lerp.pos.trBase,WVar9.data);
       return;
     }
     break;
   case 4:
-    if (uVar32 != 0) {
+    if (uVar28 != 0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_event.cpp",0x834,0,
                       "%s");
     }
-    CG_StopSoundsOnEnt(param_1,peVar38->number);
-    __restgprlr();
+    CG_StopSoundsOnEnt(param_1,peVar36->number);
     return;
   case 5:
-    if (pcVar36 == (char *)(pcVar5->predictedPlayerState).clientNum) {
+    if (pcVar33 == (char *)(pcVar5->predictedPlayerState).clientNum) {
       CL_SetStance(param_1,CL_STANCE_STAND);
-      __restgprlr();
       return;
     }
     goto LAB_822cc794;
   case 6:
-    if (pcVar36 == (char *)(pcVar5->predictedPlayerState).clientNum) {
+    if (pcVar33 == (char *)(pcVar5->predictedPlayerState).clientNum) {
       CL_SetStance(param_1,CL_STANCE_CROUCH);
-      __restgprlr();
       return;
     }
     goto LAB_822cc794;
   case 7:
-    if (pcVar36 != (char *)(pcVar5->predictedPlayerState).clientNum) goto LAB_822cc794;
+    if (pcVar33 != (char *)(pcVar5->predictedPlayerState).clientNum) goto LAB_822cc794;
     CL_SetStance(param_1,CL_STANCE_PRONE);
     iVar8 = CG_ForceSwitchToValidWeapon(param_1);
     if (iVar8 != 0) {
       CG_SetInvalidStanceHint(pcVar5,WVar9.data,(pcVar5->predictedPlayerState).weapCommon.weapon);
-      __restgprlr();
       return;
     }
     break;
   case 8:
-    if (pcVar36 != (char *)(pcVar5->predictedPlayerState).clientNum) goto LAB_822cc794;
-    if ((uVar31 != 0) && (((pcVar5->predictedPlayerState).pm_flags & 4U) == 0)) {
+    if (pcVar33 != (char *)(pcVar5->predictedPlayerState).clientNum) goto LAB_822cc794;
+    if ((uVar27 != 0) && (((pcVar5->predictedPlayerState).pm_flags & 4U) == 0)) {
       CG_SetInvalidStanceHint(pcVar5,WVar9.data,(pcVar5->predictedPlayerState).weapCommon.weapon);
-      __restgprlr();
       return;
     }
     break;
   case 9:
   case 10:
-    CG_GrabWeapon(param_1,peVar38->number,(int)pfVar21,WVar9,bVar23);
-    __restgprlr();
+    CG_GrabWeapon(param_1,peVar36->number,param_3,WVar9,bVar21);
     return;
   case 0xb:
-    iVar8 = BG_ShouldTakeWeaponWhenEmpty(WVar37,bVar18);
+    iVar8 = BG_ShouldTakeWeaponWhenEmpty(WVar34,bVar18);
     if ((iVar8 == 0) && (pWVar4->cancelAutoHolsterWhenEmpty == false)) {
-      if (uVar31 == 0) {
+      if (uVar27 == 0) {
         psVar13 = pWVar4->emptyFireSound;
       }
       else {
         psVar13 = pWVar4->emptyFireSoundPlayer;
       }
-      CG_PlayEntitySoundAlias(param_1,peVar38->number,psVar13);
+      CG_PlayEntitySoundAlias(param_1,peVar36->number,psVar13);
     }
-    if (uVar31 != 0) {
+    if (uVar27 != 0) {
       CG_OutOfAmmoChange(param_1);
-      __restgprlr();
       return;
     }
     break;
@@ -1495,139 +1407,114 @@ void CG_EntityEvent(LocalClientNum_t param_1,centity_s *param_2,int param_3,int 
     break;
   case 0xd:
   case 0xe:
-    if (pcVar36 != (char *)(pcVar5->predictedPlayerState).clientNum) goto LAB_822cc794;
-    if (uVar31 != 0) {
+    if (pcVar33 != (char *)(pcVar5->predictedPlayerState).clientNum) goto LAB_822cc794;
+    if (uVar27 != 0) {
       CG_MenuShowNotify(param_1,3);
       CG_SwitchOffHandCmd(param_1);
-      __restgprlr();
       return;
     }
     break;
   case 0x10:
-    if (pcVar36 != (char *)(pcVar5->predictedPlayerState).clientNum) goto LAB_822cc794;
-    if (uVar31 != 0) {
+    if (pcVar33 != (char *)(pcVar5->predictedPlayerState).clientNum) goto LAB_822cc794;
+    if (uVar27 != 0) {
       CL_SetADS(param_1,false);
-      __restgprlr();
       return;
     }
     break;
   case 0x11:
-    if (uVar31 != 0) {
-      CG_PlayEntitySoundAlias(param_1,peVar38->number,pWVar4->reloadSoundPlayer);
-      __restgprlr();
+    if (uVar27 == 0) {
+      CG_PlayEntitySoundAlias(param_1,peVar36->number,pWVar4->reloadSound);
       return;
     }
-    CG_PlayEntitySoundAlias(param_1,peVar38->number,pWVar4->reloadSound);
-    __restgprlr();
+    CG_PlayEntitySoundAlias(param_1,peVar36->number,pWVar4->reloadSoundPlayer);
     return;
   case 0x12:
-    if (uVar31 != 0) {
-      CG_PlayEntitySoundAlias(param_1,peVar38->number,pWVar4->reloadEmptySoundPlayer);
-      __restgprlr();
+    if (uVar27 == 0) {
+      CG_PlayEntitySoundAlias(param_1,peVar36->number,pWVar4->reloadEmptySound);
       return;
     }
-    CG_PlayEntitySoundAlias(param_1,peVar38->number,pWVar4->reloadEmptySound);
-    __restgprlr();
+    CG_PlayEntitySoundAlias(param_1,peVar36->number,pWVar4->reloadEmptySoundPlayer);
     return;
   case 0x13:
-    if (uVar31 != 0) {
-      CG_PlayEntitySoundAlias(param_1,peVar38->number,pWVar4->reloadStartSoundPlayer);
-      __restgprlr();
+    if (uVar27 == 0) {
+      CG_PlayEntitySoundAlias(param_1,peVar36->number,pWVar4->reloadStartSound);
       return;
     }
-    CG_PlayEntitySoundAlias(param_1,peVar38->number,pWVar4->reloadStartSound);
-    __restgprlr();
+    CG_PlayEntitySoundAlias(param_1,peVar36->number,pWVar4->reloadStartSoundPlayer);
     return;
   case 0x14:
-    if (uVar31 != 0) {
-      CG_PlayEntitySoundAlias(param_1,peVar38->number,pWVar4->reloadEndSoundPlayer);
-      __restgprlr();
+    if (uVar27 == 0) {
+      CG_PlayEntitySoundAlias(param_1,peVar36->number,pWVar4->reloadEndSound);
       return;
     }
-    CG_PlayEntitySoundAlias(param_1,peVar38->number,pWVar4->reloadEndSound);
-    __restgprlr();
+    CG_PlayEntitySoundAlias(param_1,peVar36->number,pWVar4->reloadEndSoundPlayer);
     return;
   case 0x17:
-    if (uVar31 != 0) {
-      CG_PlayEntitySoundAlias(param_1,peVar38->number,pWVar4->raiseSoundPlayer);
-      __restgprlr();
+    if (uVar27 == 0) {
+      CG_PlayEntitySoundAlias(param_1,peVar36->number,pWVar4->raiseSound);
       return;
     }
-    CG_PlayEntitySoundAlias(param_1,peVar38->number,pWVar4->raiseSound);
-    __restgprlr();
+    CG_PlayEntitySoundAlias(param_1,peVar36->number,pWVar4->raiseSoundPlayer);
     return;
   case 0x18:
-    psVar13 = GetFirstRaiseEventSound(pWVar4,bVar23);
-    CG_PlayEntitySoundAlias(param_1,peVar38->number,psVar13);
-    __restgprlr();
+    psVar13 = GetFirstRaiseEventSound(pWVar4,bVar21);
+    CG_PlayEntitySoundAlias(param_1,peVar36->number,psVar13);
     return;
   case 0x19:
-    if (uVar31 != 0) {
-      CG_PlayEntitySoundAlias(param_1,peVar38->number,pWVar4->putawaySoundPlayer);
-      __restgprlr();
+    if (uVar27 == 0) {
+      CG_PlayEntitySoundAlias(param_1,peVar36->number,pWVar4->putawaySound);
       return;
     }
-    CG_PlayEntitySoundAlias(param_1,peVar38->number,pWVar4->putawaySound);
-    __restgprlr();
+    CG_PlayEntitySoundAlias(param_1,peVar36->number,pWVar4->putawaySoundPlayer);
     return;
   case 0x1a:
-    if (uVar31 != 0) {
-      CG_PlayEntitySoundAlias(param_1,peVar38->number,pWVar4->altSwitchSoundPlayer);
-      __restgprlr();
+    if (uVar27 == 0) {
+      CG_PlayEntitySoundAlias(param_1,peVar36->number,pWVar4->altSwitchSound);
       return;
     }
-    CG_PlayEntitySoundAlias(param_1,peVar38->number,pWVar4->altSwitchSound);
-    __restgprlr();
+    CG_PlayEntitySoundAlias(param_1,peVar36->number,pWVar4->altSwitchSoundPlayer);
     return;
   case 0x1c:
-    if (uVar31 != 0) {
-      CG_PlayEntitySoundAlias(param_1,peVar38->number,pWVar4->pullbackSoundPlayer);
-      __restgprlr();
+    if (uVar27 == 0) {
+      CG_PlayEntitySoundAlias(param_1,peVar36->number,pWVar4->pullbackSound);
       return;
     }
-    CG_PlayEntitySoundAlias(param_1,peVar38->number,pWVar4->pullbackSound);
-    __restgprlr();
+    CG_PlayEntitySoundAlias(param_1,peVar36->number,pWVar4->pullbackSoundPlayer);
     return;
   case 0x1d:
   case 0x1e:
   case 0x22:
   case 0x23:
-    if (uVar31 == 0) {
-      CG_FireWeapon(param_1,param_2,(int)pfVar21,-1,uVar17,(Weapon)0x0,false,false);
-      __restgprlr();
+    if (uVar27 == 0) {
+      CG_FireWeapon(param_1,param_2,param_3,-1,uVar17,(Weapon)0x0,false,false);
       return;
     }
     break;
   case 0x1f:
 switchD_822cc20c_caseD_1f:
-    CG_FireWeapon(param_1,param_2,(int)pfVar21,-1,uVar17,(Weapon)0x0,false,bVar23);
-    __restgprlr();
+    CG_FireWeapon(param_1,param_2,param_3,-1,uVar17,(Weapon)0x0,false,bVar21);
     return;
   case 0x20:
-    if (uVar31 != 0) {
-      CG_PlayEntitySoundAlias(param_1,peVar38->number,pWVar4->rechamberSoundPlayer);
-      __restgprlr();
+    if (uVar27 == 0) {
+      CG_PlayEntitySoundAlias(param_1,peVar36->number,pWVar4->rechamberSound);
       return;
     }
-    CG_PlayEntitySoundAlias(param_1,peVar38->number,pWVar4->rechamberSound);
-    __restgprlr();
+    CG_PlayEntitySoundAlias(param_1,peVar36->number,pWVar4->rechamberSoundPlayer);
     return;
   case 0x21:
   case 0x24:
-    CG_EjectWeaponBrass(param_1,peVar38,(int)pfVar21,bVar18);
-    __restgprlr();
+    CG_EjectWeaponBrass(param_1,peVar36,param_3,bVar18);
     return;
   case 0x25:
   case 0x26:
   case 0x27:
   case 0x28:
-    if (0x11 < uVar32) {
+    if (0x11 < uVar28) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_event.cpp",0x577,0,
                       "%s");
     }
-    if (uVar31 == 0) {
-      CG_FireWeapon(param_1,param_2,(int)pfVar21,WVar9.data,uVar17,(Weapon)0x0,false,false);
-      __restgprlr();
+    if (uVar27 == 0) {
+      CG_FireWeapon(param_1,param_2,param_3,WVar9.data,uVar17,(Weapon)0x0,false,false);
       return;
     }
     break;
@@ -1635,167 +1522,143 @@ switchD_822cc20c_caseD_1f:
   case 0x2a:
   case 0x2b:
   case 0x2c:
-    if (pcVar36 != (char *)(pcVar5->predictedPlayerState).clientNum) goto LAB_822cc794;
-    if (uVar31 != 0) goto switchD_822cc20c_caseD_1f;
+    if (pcVar33 != (char *)(pcVar5->predictedPlayerState).clientNum) goto LAB_822cc794;
+    if (uVar27 != 0) goto switchD_822cc20c_caseD_1f;
     break;
   case 0x2d:
-    if (uVar31 != 0) {
-      CG_PlayEntitySoundAlias(param_1,peVar38->number,pWVar4->meleeSwipeSoundPlayer);
-      __restgprlr();
+    if (uVar27 == 0) {
+      CG_PlayEntitySoundAlias(param_1,peVar36->number,pWVar4->meleeSwipeSound);
       return;
     }
-    CG_PlayEntitySoundAlias(param_1,peVar38->number,pWVar4->meleeSwipeSound);
-    __restgprlr();
+    CG_PlayEntitySoundAlias(param_1,peVar36->number,pWVar4->meleeSwipeSoundPlayer);
     return;
   case 0x2e:
-    DynEntCl_MeleeEvent(param_1,peVar38->number,bVar18);
-    CG_Glass_MeleeEvent(param_1,peVar38->number);
-    __restgprlr();
+    DynEntCl_MeleeEvent(param_1,peVar36->number,bVar18);
+    CG_Glass_MeleeEvent(param_1,peVar36->number);
     return;
   case 0x2f:
-    CG_PrepOffHand(param_1,peVar38,WVar9,bVar23);
-    __restgprlr();
+    CG_PrepOffHand(param_1,peVar36,WVar9,bVar21);
     return;
   case 0x30:
-    CG_UseOffHand(param_1,param_2,WVar9,bVar18,bVar23);
-    __restgprlr();
+    CG_UseOffHand(param_1,param_2,WVar9,bVar18,bVar21);
     return;
   case 0x31:
-    if (pcVar36 != (char *)(pcVar5->predictedPlayerState).clientNum) goto LAB_822cc794;
-    if (uVar31 != 0) {
+    if (pcVar33 != (char *)(pcVar5->predictedPlayerState).clientNum) goto LAB_822cc794;
+    if (uVar27 != 0) {
       CG_SetEquippedOffHand(param_1,WVar9);
-      __restgprlr();
       return;
     }
     break;
   case 0x32:
     iVar8 = (param_2->nextState).otherEntityNum;
     if ((WVar9.data & 1) != 0) {
-      if ((WVar9.data & 2) != 0) {
-        CG_PlayEntitySoundAlias(param_1,iVar8,cgMedia.meleeKnifeHitShield);
-        __restgprlr();
+      if ((WVar9.data & 2) == 0) {
+        CG_PlayEntitySoundAlias(param_1,iVar8,cgMedia.meleeKnifeHit);
         return;
       }
-      CG_PlayEntitySoundAlias(param_1,iVar8,cgMedia.meleeKnifeHit);
-      __restgprlr();
+      CG_PlayEntitySoundAlias(param_1,iVar8,cgMedia.meleeKnifeHitShield);
       return;
     }
     psVar13 = pWVar4->meleeHitSound;
     if (pWVar4->meleeHitSound == (snd_alias_list_t *)0x0) {
       CG_PlayEntitySoundAlias(param_1,iVar8,cgMedia.meleeHit);
-      __restgprlr();
       return;
     }
 LAB_822cc770:
     CG_PlayEntitySoundAlias(param_1,iVar8,psVar13);
-    __restgprlr();
     return;
   case 0x33:
     iVar8 = (param_2->nextState).otherEntityNum;
-    if ((WVar9.data & 1) != 0) {
-      CG_PlaySoundAlias(param_1,iVar8,pfVar28,cgMedia.meleeKnifeHitOther);
-      __restgprlr();
+    if ((WVar9.data & 1) == 0) {
+      psVar13 = pWVar4->meleeMissSound;
+      if (pWVar4->meleeMissSound == (snd_alias_list_t *)0x0) {
+        psVar13 = cgMedia.meleeHitOther;
+      }
+      CG_PlaySoundAlias(param_1,iVar8,pfVar32,psVar13);
       return;
     }
-    psVar13 = pWVar4->meleeMissSound;
-    if (pWVar4->meleeMissSound == (snd_alias_list_t *)0x0) {
-      psVar13 = cgMedia.meleeHitOther;
-    }
-    CG_PlaySoundAlias(param_1,iVar8,pfVar28,psVar13);
-    __restgprlr();
+    CG_PlaySoundAlias(param_1,iVar8,pfVar32,cgMedia.meleeKnifeHitOther);
     return;
   case 0x34:
-    if (pcVar36 != (char *)(pcVar5->predictedPlayerState).clientNum) goto LAB_822cc794;
-    if (uVar31 != 0) {
+    if (pcVar33 != (char *)(pcVar5->predictedPlayerState).clientNum) goto LAB_822cc794;
+    if (uVar27 != 0) {
       CG_MeleeBloodEvent(param_1,param_2,WVar9.data);
-      __restgprlr();
       return;
     }
     break;
   case 0x35:
-    if (pcVar36 == (char *)(pcVar5->predictedPlayerState).clientNum) {
+    if (pcVar33 == (char *)(pcVar5->predictedPlayerState).clientNum) {
       g_processDelayedEntTurretFire = g_processDelayedEntTurretFire + 1;
-      __restgprlr();
       return;
     }
 LAB_822cc794:
     Com_DPrintf(0x15,"Event %s just for client %i was sent to other clients (%i)\n");
-    __restgprlr();
     return;
   case 0x36:
   case 0x37:
     if ((((((pcVar5->predictedPlayerState).eFlags & 0x2000U) == 0) ||
-         ((pcVar5->predictedPlayerState).viewlocked_entNum != peVar38->number)) ||
+         ((pcVar5->predictedPlayerState).viewlocked_entNum != peVar36->number)) ||
         (pcVar5->inKillCam != 0)) ||
        ((((pcVar5->predictedPlayerState).otherFlags & 0x800U) != 0 ||
         (bVar18 = CL_Demo_IsPlaying(param_1), bVar18)))) {
-      CG_HandleTurretFire(param_1,param_2,(uint)pfVar21,WVar9.data,uVar17,bVar23);
-      __restgprlr();
+      CG_HandleTurretFire(param_1,param_2,param_3,WVar9.data,uVar17,bVar21);
       return;
     }
     break;
   case 0x38:
-    CG_FireWeapon(param_1,param_2,(int)pfVar21,-1,scr_const.tag_flash,(Weapon)0x0,false,bVar23);
-    CG_FireWeapon(param_1,param_2,(int)pfVar21,-1,scr_const.tag_flash_11,(Weapon)0x0,false,bVar23);
-    __restgprlr();
+    CG_FireWeapon(param_1,param_2,param_3,-1,scr_const.tag_flash,(Weapon)0x0,false,bVar21);
+    CG_FireWeapon(param_1,param_2,param_3,-1,scr_const.tag_flash_11,(Weapon)0x0,false,bVar21);
     return;
   case 0x39:
-    CG_FireWeapon(param_1,param_2,(int)pfVar21,-1,scr_const.tag_flash_2,(Weapon)0x0,false,bVar23);
-    CG_FireWeapon(param_1,param_2,(int)pfVar21,-1,scr_const.tag_flash_22,(Weapon)0x0,false,bVar23);
-    __restgprlr();
+    CG_FireWeapon(param_1,param_2,param_3,-1,scr_const.tag_flash_2,(Weapon)0x0,false,bVar21);
+    CG_FireWeapon(param_1,param_2,param_3,-1,scr_const.tag_flash_22,(Weapon)0x0,false,bVar21);
     return;
   case 0x3a:
   case 0x3b:
   case 0x3c:
     ByteToDir(WVar9.data,afStack_108);
-    pLVar25 = &(param_2->nextState).lerp.u;
+    pLVar35 = &(param_2->nextState).lerp.u;
     CG_HandleSimulatedBulletStartPos
               (param_1,(param_2->nextState).otherEntityNum,(param_2->nextState).weapon,bVar18,
-               &(pLVar25->soundBlend).lerp);
+               &(pLVar35->soundBlend).lerp);
     iVar8 = (param_2->nextState).un1.eventParm2;
     if ((iVar8 < 0) || (0x10 < iVar8)) {
       (param_2->nextState).un1.eventParm2 = 0;
     }
     CG_BulletHitEvent(param_1,(param_2->nextState).otherEntityNum,
                       (param_2->nextState).groundEntityNum,(param_2->nextState).weapon,bVar18,
-                      &(pLVar25->soundBlend).lerp,pfVar28,afStack_108,in_stack_fffffde8,
+                      &(pLVar35->soundBlend).lerp,pfVar32,afStack_108,in_stack_fffffde8,
                       in_stack_fffffdec,in_stack_fffffdf3,in_stack_fffffdf4);
-    __restgprlr();
     return;
   case 0x3d:
   case 0x3e:
   case 0x3f:
-    pLVar25 = &(param_2->nextState).lerp.u;
+    pLVar35 = &(param_2->nextState).lerp.u;
     CG_HandleSimulatedBulletStartPos
               (param_1,(param_2->nextState).otherEntityNum,(param_2->nextState).weapon,bVar18,
-               &(pLVar25->soundBlend).lerp);
+               &(pLVar35->soundBlend).lerp);
     CG_BulletHitClientEvent
               (param_1,(param_2->nextState).otherEntityNum,(param_2->nextState).weapon,bVar18,
-               &(pLVar25->soundBlend).lerp,pfVar28,(param_2->nextState).surfType,(int)pfVar21,
+               &(pLVar35->soundBlend).lerp,pfVar32,(param_2->nextState).surfType,param_3,
                (uchar)in_stack_fffffde8);
-    __restgprlr();
     return;
   case 0x40:
     CG_BulletHitClientShieldEvent
               (param_1,(param_2->nextState).otherEntityNum,(param_2->nextState).weapon,bVar18,
-               (param_2->nextState).surfType,(int)pfVar21,WVar9.data);
-    __restgprlr();
+               (param_2->nextState).surfType,param_3,WVar9.data);
     return;
   case 0x41:
     FX_ClearViewmodelMarks(param_1);
-    __restgprlr();
     return;
   case 0x42:
-    if (uVar31 != 0) {
+    if (uVar27 != 0) {
       CG_ExplosiveImpactOnShieldEvent(param_1);
-      __restgprlr();
       return;
     }
     break;
   case 0x43:
-    if (uVar31 != 0) {
+    if (uVar27 != 0) {
       CG_ExplosiveSplashOnShieldEvent(param_1,WVar9.data);
-      __restgprlr();
       return;
     }
     break;
@@ -1810,16 +1673,16 @@ switchD_822cc20c_caseD_44:
                       "es->surfType doesn\'t index SURF_TYPECOUNT\n\t%i not in [0, %i)");
     }
     if (pWVar4->bounceSound != (snd_alias_list_t **)0x0) {
-      CG_PlaySoundAlias(param_1,0x7fe,pfVar28,pWVar4->bounceSound[(param_2->nextState).surfType]);
+      CG_PlaySoundAlias(param_1,0x7fe,pfVar32,pWVar4->bounceSound[(param_2->nextState).surfType]);
     }
-    wVar10 = BG_GetWeaponClass(WVar37,bVar18);
-    if ((wVar10 == WEAPCLASS_THROWINGKNIFE) && (pfVar21 == (float *)0x46)) {
+    wVar10 = BG_GetWeaponClass(WVar34,bVar18);
+    if ((wVar10 == WEAPCLASS_THROWINGKNIFE) && (param_3 == 0x46)) {
       pFVar14 = (cgMedia.fx)->table[0xb].nonflesh[(param_2->nextState).surfType];
       AngleVectors((param_2->nextState).lerp.apos.trBase,&local_130,(float *)0x0,(float *)0x0);
       local_160 = local_130 * 10.0 + (param_2->nextState).lerp.pos.trBase[0];
       local_15c = local_12c * 10.0 + (param_2->nextState).lerp.pos.trBase[1];
       local_158 = local_128 * 10.0 + (param_2->nextState).lerp.pos.trBase[2];
-      CG_LocationalTrace(local_f0,(param_2->nextState).lerp.pos.trBase,&local_160,peVar38->number,
+      CG_LocationalTrace(local_f0,(param_2->nextState).lerp.pos.trBase,&local_160,peVar36->number,
                          0x2806091);
       local_140 = (param_2->nextState).lerp.pos.trBase[0];
       local_13c = (param_2->nextState).lerp.pos.trBase[1];
@@ -1839,7 +1702,6 @@ LAB_822cd978:
       Vec3Basis_RightHanded(afStack_190,afStack_184,afStack_178);
       pcVar5 = CG_GetLocalClientGlobals(param_1);
       FX_PlayOrientedEffect(param_1,pFVar14,pcVar5->time,&local_140,&afStack_190);
-      __restgprlr();
       return;
     }
     break;
@@ -1849,31 +1711,30 @@ LAB_822cd978:
                       "es->surfType doesn\'t index SURF_TYPECOUNT\n\t%i not in [0, %i)");
     }
     if (pWVar4->rollingSound != (snd_alias_list_t **)0x0) {
-      CG_PlaySoundAlias(param_1,0x7fe,pfVar28,pWVar4->rollingSound[(param_2->nextState).surfType]);
-      __restgprlr();
+      CG_PlaySoundAlias(param_1,0x7fe,pfVar32,pWVar4->rollingSound[(param_2->nextState).surfType]);
       return;
     }
     break;
   case 0x48:
-    if ((uVar35 != 0) || (bVar18 = false, (WVar37.data & 0x18000) != 0)) {
+    if ((uVar31 != 0) || (bVar18 = false, (WVar34.data & 0x18000) != 0)) {
       bVar18 = true;
     }
-    psVar13 = BG_ProjExplosionSound(WVar37,bVar18);
-    pFVar14 = BG_ProjExplosionEffect(WVar37,bVar18);
-    iVar8 = BG_ExplosionRadius(WVar37,bVar18);
+    psVar13 = BG_ProjExplosionSound(WVar34,bVar18);
+    pFVar14 = BG_ProjExplosionEffect(WVar34,bVar18);
+    iVar8 = BG_ExplosionRadius(WVar34,bVar18);
     local_168 = (longlong)iVar8;
-    ppfVar24 = local_1a8;
-    dVar39 = (double)local_168;
-    BG_GetExplosionInnerAndOuterDamage(WVar37,bVar18,(int *)local_198,(int *)ppfVar24);
-    pIVar29 = &IMAGE_DOS_HEADER_82000000;
-    pIVar26 = &IMAGE_DOS_HEADER_82000000;
-    dVar40 = 1.0;
-    dVar41 = 0.0;
+    ppfVar22 = local_1a8;
+    dVar37 = (double)local_168;
+    BG_GetExplosionInnerAndOuterDamage(WVar34,bVar18,(int *)local_198,(int *)ppfVar22);
+    pIVar25 = &IMAGE_DOS_HEADER_82000000;
+    pIVar23 = &IMAGE_DOS_HEADER_82000000;
+    dVar38 = 1.0;
+    dVar39 = 0.0;
     Ragdoll_ExplosionEvent
-              (param_1,false,pfVar28,0.0,(float)dVar39,(float *)ppfVar24,1.0,-0x7e000000);
+              (param_1,false,pfVar32,0.0,(float)dVar37,(float *)ppfVar22,1.0,-0x7e000000);
     DynEntCl_ExplosionEvent
-              (param_1,false,pfVar28,(float)dVar41,(float)dVar39,(float *)0x0,(float)dVar40,
-               (int)pIVar26,-0x7de86028,(int)pIVar29);
+              (param_1,false,pfVar32,(float)dVar39,(float)dVar37,(float *)0x0,(float)dVar38,
+               (int)pIVar23,-0x7de86028,(int)pIVar25);
     if (0x1e < (uint)(param_2->nextState).surfType) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_event.cpp",0x6bb,0,
                       "es->surfType doesn\'t index SURF_TYPECOUNT\n\t%i not in [0, %i)");
@@ -1881,52 +1742,49 @@ LAB_822cd978:
     ByteToDir(WVar9.data,afStack_190);
     Vec3Basis_RightHanded(afStack_190,afStack_184,afStack_178);
     CG_GetImpactEffectForWeapon
-              (param_1,peVar38->number,WVar37,bVar18,(param_2->nextState).surfType,0,&local_1ac,
+              (param_1,peVar36->number,WVar34,bVar18,(param_2->nextState).surfType,0,&local_1ac,
                (snd_alias_list_t **)&local_1a0);
     if (local_1ac != (FxEffectDef *)0x0) {
       pcVar5 = CG_GetLocalClientGlobals(param_1);
-      FX_PlayOrientedEffect(param_1,local_1ac,pcVar5->time,pfVar28,&afStack_190);
+      FX_PlayOrientedEffect(param_1,local_1ac,pcVar5->time,pfVar32,&afStack_190);
     }
     if (local_1a0._0_4_ != (snd_alias_list_t *)0x0) {
-      CG_PlaySoundAlias(param_1,0x7fe,pfVar28,local_1a0._0_4_);
+      CG_PlaySoundAlias(param_1,0x7fe,pfVar32,local_1a0._0_4_);
     }
     if (pFVar14 != (FxEffectDef *)0x0) {
       pcVar5 = CG_GetLocalClientGlobals(param_1);
-      FX_PlayOrientedEffect(param_1,pFVar14,pcVar5->time,pfVar28,&afStack_190);
+      FX_PlayOrientedEffect(param_1,pFVar14,pcVar5->time,pfVar32,&afStack_190);
     }
     if (psVar13 != (snd_alias_list_t *)0x0) {
-      CG_PlaySoundAlias(param_1,0x7fe,pfVar28,psVar13);
-      __restgprlr();
+      CG_PlaySoundAlias(param_1,0x7fe,pfVar32,psVar13);
       return;
     }
     break;
   case 0x49:
     param_2->flags = param_2->flags | 0x40;
-    __restgprlr();
     return;
   case 0x4a:
     param_2->flags = param_2->flags & 0xffffffbf;
-    __restgprlr();
     return;
   case 0x4b:
   case 0x4c:
-    if ((uVar35 != 0) || (bVar18 = false, (WVar37.data & 0x18000) != 0)) {
+    if ((uVar31 != 0) || (bVar18 = false, (WVar34.data & 0x18000) != 0)) {
       bVar18 = true;
     }
-    psVar13 = BG_ProjExplosionSound(WVar37,bVar18);
-    pFVar14 = BG_ProjExplosionEffect(WVar37,bVar18);
-    iVar8 = BG_ExplosionRadius(WVar37,bVar18);
+    psVar13 = BG_ProjExplosionSound(WVar34,bVar18);
+    pFVar14 = BG_ProjExplosionEffect(WVar34,bVar18);
+    iVar8 = BG_ExplosionRadius(WVar34,bVar18);
     local_168 = (longlong)iVar8;
-    ppfVar24 = local_1a8;
-    dVar39 = (double)local_168;
-    BG_GetExplosionInnerAndOuterDamage(WVar37,bVar18,(int *)&local_1a0,(int *)ppfVar24);
-    pIVar26 = &IMAGE_DOS_HEADER_82000000;
-    dVar41 = 1.0;
+    ppfVar22 = local_1a8;
+    dVar37 = (double)local_168;
+    BG_GetExplosionInnerAndOuterDamage(WVar34,bVar18,(int *)&local_1a0,(int *)ppfVar22);
+    pIVar23 = &IMAGE_DOS_HEADER_82000000;
+    dVar39 = 1.0;
     Ragdoll_ExplosionEvent
-              (param_1,false,pfVar28,(float)dVar39,(float)dVar39,(float *)ppfVar24,1.0,(int)in_r7);
+              (param_1,false,pfVar32,(float)dVar37,(float)dVar37,(float *)ppfVar22,1.0,(int)in_r7);
     DynEntCl_ExplosionEvent
-              (param_1,false,pfVar28,(float)dVar39,(float)dVar39,local_1a8[0],(float)dVar41,0,
-               -0x7de86028,(int)pIVar26);
+              (param_1,false,pfVar32,(float)dVar37,(float)dVar37,local_1a8[0],(float)dVar39,0,
+               -0x7de86028,(int)pIVar23);
     if (0x1e < (uint)(param_2->nextState).surfType) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_event.cpp",0x6f6,0,
                       "es->surfType doesn\'t index SURF_TYPECOUNT\n\t%i not in [0, %i)");
@@ -1934,73 +1792,71 @@ LAB_822cd978:
     ByteToDir(WVar9.data,afStack_190);
     Vec3Basis_RightHanded(afStack_190,afStack_184,afStack_178);
     CG_GetImpactEffectForWeapon
-              (param_1,peVar38->number,WVar37,bVar18,(param_2->nextState).surfType,0,&local_1ac,
+              (param_1,peVar36->number,WVar34,bVar18,(param_2->nextState).surfType,0,&local_1ac,
                local_198);
     if (local_1ac != (FxEffectDef *)0x0) {
       pcVar5 = CG_GetLocalClientGlobals(param_1);
-      FX_PlayOrientedEffect(param_1,local_1ac,pcVar5->time,pfVar28,&afStack_190);
+      FX_PlayOrientedEffect(param_1,local_1ac,pcVar5->time,pfVar32,&afStack_190);
     }
     if (local_198[0] != (snd_alias_list_t *)0x0) {
-      CG_PlaySoundAlias(param_1,0x7fe,pfVar28,local_198[0]);
+      CG_PlaySoundAlias(param_1,0x7fe,pfVar32,local_198[0]);
     }
     if (pFVar14 != (FxEffectDef *)0x0) {
       pcVar5 = CG_GetLocalClientGlobals(param_1);
-      FX_PlayOrientedEffect(param_1,pFVar14,pcVar5->time,pfVar28,&afStack_190);
+      FX_PlayOrientedEffect(param_1,pFVar14,pcVar5->time,pfVar32,&afStack_190);
     }
     if (psVar13 != (snd_alias_list_t *)0x0) {
-      CG_PlaySoundAlias(param_1,0x7fe,pfVar28,psVar13);
-      __restgprlr();
+      CG_PlaySoundAlias(param_1,0x7fe,pfVar32,psVar13);
       return;
     }
     break;
   case 0x4d:
-    if ((uVar35 != 0) || (bVar18 = false, (WVar37.data & 0x18000) != 0)) {
+    if ((uVar31 != 0) || (bVar18 = false, (WVar34.data & 0x18000) != 0)) {
       bVar18 = true;
     }
-    psVar13 = BG_ProjExplosionSound(WVar37,bVar18);
-    pFVar14 = BG_ProjExplosionEffect(WVar37,bVar18);
+    psVar13 = BG_ProjExplosionSound(WVar34,bVar18);
+    pFVar14 = BG_ProjExplosionEffect(WVar34,bVar18);
     ByteToDir(WVar9.data,afStack_190);
     Vec3Basis_RightHanded(afStack_190,afStack_184,afStack_178);
     if (pFVar14 != (FxEffectDef *)0x0) {
       pcVar5 = CG_GetLocalClientGlobals(param_1);
-      FX_PlayOrientedEffect(param_1,pFVar14,pcVar5->time,pfVar28,&afStack_190);
+      FX_PlayOrientedEffect(param_1,pFVar14,pcVar5->time,pfVar32,&afStack_190);
     }
     if (psVar13 != (snd_alias_list_t *)0x0) {
-      CG_PlaySoundAlias(param_1,0x7fe,pfVar28,psVar13);
-      __restgprlr();
+      CG_PlaySoundAlias(param_1,0x7fe,pfVar32,psVar13);
       return;
     }
     break;
   case 0x4e:
   case 0x4f:
-    if ((uVar35 != 0) || (bVar18 = false, (WVar37.data & 0x18000) != 0)) {
+    if ((uVar31 != 0) || (bVar18 = false, (WVar34.data & 0x18000) != 0)) {
       bVar18 = true;
     }
-    psVar13 = BG_ProjExplosionSound(WVar37,bVar18);
-    pFVar14 = BG_ProjExplosionEffect(WVar37,bVar18);
-    iVar8 = BG_ExplosionRadius(WVar37,bVar18);
+    psVar13 = BG_ProjExplosionSound(WVar34,bVar18);
+    pFVar14 = BG_ProjExplosionEffect(WVar34,bVar18);
+    iVar8 = BG_ExplosionRadius(WVar34,bVar18);
     local_168 = (longlong)iVar8;
-    ppfVar24 = local_1a8;
-    dVar39 = (double)local_168;
-    BG_GetExplosionInnerAndOuterDamage(WVar37,bVar18,(int *)&local_1a0,(int *)ppfVar24);
-    pIVar26 = &IMAGE_DOS_HEADER_82000000;
-    dVar41 = 1.0;
+    ppfVar22 = local_1a8;
+    dVar37 = (double)local_168;
+    BG_GetExplosionInnerAndOuterDamage(WVar34,bVar18,(int *)&local_1a0,(int *)ppfVar22);
+    pIVar23 = &IMAGE_DOS_HEADER_82000000;
+    dVar39 = 1.0;
     Ragdoll_ExplosionEvent
-              (param_1,false,pfVar28,(float)dVar39,(float)dVar39,(float *)ppfVar24,1.0,(int)in_r7);
+              (param_1,false,pfVar32,(float)dVar37,(float)dVar37,(float *)ppfVar22,1.0,(int)in_r7);
     DynEntCl_ExplosionEvent
-              (param_1,false,pfVar28,(float)dVar39,(float)dVar39,local_1a8[0],(float)dVar41,0,
-               -0x7de86028,(int)pIVar26);
+              (param_1,false,pfVar32,(float)dVar37,(float)dVar37,local_1a8[0],(float)dVar39,0,
+               -0x7de86028,(int)pIVar23);
     ByteToDir(WVar9.data,afStack_190);
     Vec3Basis_RightHanded(afStack_190,afStack_184,afStack_178);
     CG_GetImpactEffectForWeapon
-              (param_1,peVar38->number,WVar37,bVar18,(param_2->nextState).surfType,0,&local_1ac,
+              (param_1,peVar36->number,WVar34,bVar18,(param_2->nextState).surfType,0,&local_1ac,
                local_198);
     if (local_1ac != (FxEffectDef *)0x0) {
       pcVar5 = CG_GetLocalClientGlobals(param_1);
-      FX_PlayOrientedEffect(param_1,local_1ac,pcVar5->time,pfVar28,&afStack_190);
+      FX_PlayOrientedEffect(param_1,local_1ac,pcVar5->time,pfVar32,&afStack_190);
     }
     if (local_198[0] != (snd_alias_list_t *)0x0) {
-      CG_PlaySoundAlias(param_1,0x7fe,pfVar28,local_198[0]);
+      CG_PlaySoundAlias(param_1,0x7fe,pfVar32,local_198[0]);
     }
     if (pFVar14 != (FxEffectDef *)0x0) {
       Com_Printf(0xe,"Playing smoke grenade at %i at ( %f, %f, %f )\n");
@@ -2012,8 +1868,7 @@ LAB_822cd978:
        ((((param_2->nextState).lerp.eFlags & 0x40U) == 0 ||
         (pcVar5 = CG_GetLocalClientGlobals(param_1),
         pcVar5->time - (param_2->nextState).lerp.u.player.movementDir < 200)))) {
-      CG_PlaySoundAlias(param_1,0x7fe,pfVar28,psVar13);
-      __restgprlr();
+      CG_PlaySoundAlias(param_1,0x7fe,pfVar32,psVar13);
       return;
     }
     break;
@@ -2023,153 +1878,142 @@ LAB_822cd978:
     if ((cgMedia.fx)->table[0xe].nonflesh[0] != (FxEffectDef *)0x0) {
       pcVar5 = CG_GetLocalClientGlobals(param_1);
       FX_PlayOrientedEffect
-                (param_1,(cgMedia.fx)->table[0xe].nonflesh[0],pcVar5->time,pfVar28,&afStack_190);
-      __restgprlr();
+                (param_1,(cgMedia.fx)->table[0xe].nonflesh[0],pcVar5->time,pfVar32,&afStack_190);
       return;
     }
     break;
   case 0x51:
-    if ((uVar35 != 0) || (bVar18 = false, (WVar37.data & 0x18000) != 0)) {
+    if ((uVar31 != 0) || (bVar18 = false, (WVar34.data & 0x18000) != 0)) {
       bVar18 = true;
     }
-    psVar13 = BG_ProjDudSound(WVar37,bVar18);
-    pFVar14 = BG_ProjDudEffect(WVar37,bVar18);
-    psVar11 = BG_ProjExplosionSound(WVar37,bVar18);
-    pFVar12 = BG_ProjExplosionEffect(WVar37,bVar18);
+    psVar13 = BG_ProjDudSound(WVar34,bVar18);
+    pFVar14 = BG_ProjDudEffect(WVar34,bVar18);
+    psVar11 = BG_ProjExplosionSound(WVar34,bVar18);
+    pFVar12 = BG_ProjExplosionEffect(WVar34,bVar18);
     if (0x1e < (uint)(param_2->nextState).surfType) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_event.cpp",0x778,0,
                       "es->surfType doesn\'t index SURF_TYPECOUNT\n\t%i not in [0, %i)");
     }
     ByteToDir(WVar9.data,afStack_190);
     Vec3Basis_RightHanded(afStack_190,afStack_184,afStack_178);
-    CG_PlaySoundAlias(param_1,0x7fe,pfVar28,
+    CG_PlaySoundAlias(param_1,0x7fe,pfVar32,
                       cgMedia.bulletHitLargeSound[(param_2->nextState).surfType]);
     if ((cgMedia.fx)->table[0xe].nonflesh[(param_2->nextState).surfType] != (FxEffectDef *)0x0) {
       pcVar5 = CG_GetLocalClientGlobals(param_1);
       FX_PlayOrientedEffect
                 (param_1,(cgMedia.fx)->table[0xe].nonflesh[(param_2->nextState).surfType],
-                 pcVar5->time,pfVar28,&afStack_190);
+                 pcVar5->time,pfVar32,&afStack_190);
     }
     if (pFVar12 != (FxEffectDef *)0x0) {
       pcVar5 = CG_GetLocalClientGlobals(param_1);
-      FX_PlayOrientedEffect(param_1,pFVar12,pcVar5->time,pfVar28,&afStack_190);
+      FX_PlayOrientedEffect(param_1,pFVar12,pcVar5->time,pfVar32,&afStack_190);
     }
     if (psVar11 != (snd_alias_list_t *)0x0) {
-      CG_PlaySoundAlias(param_1,0x7fe,pfVar28,psVar11);
+      CG_PlaySoundAlias(param_1,0x7fe,pfVar32,psVar11);
     }
     if (pFVar14 != (FxEffectDef *)0x0) {
       pcVar5 = CG_GetLocalClientGlobals(param_1);
-      FX_PlayOrientedEffect(param_1,pFVar14,pcVar5->time,pfVar28,&afStack_190);
+      FX_PlayOrientedEffect(param_1,pFVar14,pcVar5->time,pfVar32,&afStack_190);
     }
     if (psVar13 != (snd_alias_list_t *)0x0) {
-      CG_PlaySoundAlias(param_1,0x7fe,pfVar28,psVar13);
-      __restgprlr();
+      CG_PlaySoundAlias(param_1,0x7fe,pfVar32,psVar13);
       return;
     }
     break;
   case 0x52:
-    if ((uVar35 != 0) || (bVar18 = false, (WVar37.data & 0x18000) != 0)) {
+    if ((uVar31 != 0) || (bVar18 = false, (WVar34.data & 0x18000) != 0)) {
       bVar18 = true;
     }
-    psVar13 = BG_ProjDudSound(WVar37,bVar18);
-    pFVar14 = BG_ProjDudEffect(WVar37,bVar18);
+    psVar13 = BG_ProjDudSound(WVar34,bVar18);
+    pFVar14 = BG_ProjDudEffect(WVar34,bVar18);
     if (0x1e < (uint)(param_2->nextState).surfType) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_event.cpp",0x7a4,0,
                       "es->surfType doesn\'t index SURF_TYPECOUNT\n\t%i not in [0, %i)");
     }
     ByteToDir(WVar9.data,afStack_190);
     Vec3Basis_RightHanded(afStack_190,afStack_184,afStack_178);
-    CG_PlaySoundAlias(param_1,0x7fe,pfVar28,
+    CG_PlaySoundAlias(param_1,0x7fe,pfVar32,
                       cgMedia.bulletHitLargeSound[(param_2->nextState).surfType]);
     if ((cgMedia.fx)->table[0xe].nonflesh[(param_2->nextState).surfType] != (FxEffectDef *)0x0) {
       pcVar5 = CG_GetLocalClientGlobals(param_1);
       FX_PlayOrientedEffect
                 (param_1,(cgMedia.fx)->table[0xe].nonflesh[(param_2->nextState).surfType],
-                 pcVar5->time,pfVar28,&afStack_190);
+                 pcVar5->time,pfVar32,&afStack_190);
     }
     if (pFVar14 != (FxEffectDef *)0x0) {
       pcVar5 = CG_GetLocalClientGlobals(param_1);
-      FX_PlayOrientedEffect(param_1,pFVar14,pcVar5->time,pfVar28,&afStack_190);
+      FX_PlayOrientedEffect(param_1,pFVar14,pcVar5->time,pfVar32,&afStack_190);
     }
     if (psVar13 != (snd_alias_list_t *)0x0) {
-      CG_PlaySoundAlias(param_1,0x7fe,pfVar28,psVar13);
-      __restgprlr();
+      CG_PlaySoundAlias(param_1,0x7fe,pfVar32,psVar13);
       return;
     }
     break;
   case 0x53:
-    iVar8 = BG_ExplosionRadius(WVar37,bVar18);
+    iVar8 = BG_ExplosionRadius(WVar34,bVar18);
     local_168 = (longlong)iVar8;
-    ppfVar24 = local_1a8;
-    dVar39 = (double)local_168;
-    BG_GetExplosionInnerAndOuterDamage(WVar37,bVar18,(int *)&local_1a0,(int *)ppfVar24);
-    pIVar26 = &IMAGE_DOS_HEADER_82000000;
-    dVar41 = 1.0;
+    ppfVar22 = local_1a8;
+    dVar37 = (double)local_168;
+    BG_GetExplosionInnerAndOuterDamage(WVar34,bVar18,(int *)&local_1a0,(int *)ppfVar22);
+    pIVar23 = &IMAGE_DOS_HEADER_82000000;
+    dVar39 = 1.0;
     Ragdoll_ExplosionEvent
-              (param_1,false,pfVar28,(float)dVar39,(float)dVar39,(float *)ppfVar24,1.0,(int)in_r7);
+              (param_1,false,pfVar32,(float)dVar37,(float)dVar37,(float *)ppfVar22,1.0,(int)in_r7);
     DynEntCl_ExplosionEvent
-              (param_1,false,pfVar28,(float)dVar39,(float)dVar39,local_1a8[0],(float)dVar41,0,
-               -0x7de86028,(int)pIVar26);
+              (param_1,false,pfVar32,(float)dVar37,(float)dVar37,local_1a8[0],(float)dVar39,0,
+               -0x7de86028,(int)pIVar23);
     ByteToDir(WVar9.data,afStack_190);
     Vec3Basis_RightHanded(afStack_190,afStack_184,afStack_178);
-    PlayTrophyEffects(param_1,pfVar28,&afStack_190,(param_2->nextState).otherEntityNum);
-    CG_PlaySoundAlias(param_1,0x7fe,pfVar28,cgMedia.trophyExplodeSound);
-    __restgprlr();
+    PlayTrophyEffects(param_1,pfVar32,&afStack_190,(param_2->nextState).otherEntityNum);
+    CG_PlaySoundAlias(param_1,0x7fe,pfVar32,cgMedia.trophyExplodeSound);
     return;
   default:
     Com_Error(ERR_DROP,"\x15Unknown event: \'%s\'");
     break;
   case 0x55:
     CG_PlayFx(param_1,param_2,(param_2->nextState).lerp.apos.trBase);
-    __restgprlr();
     return;
   case 0x56:
     CG_PlayFxOnTag(param_1,param_2,WVar9.data);
-    __restgprlr();
     return;
   case 0x57:
     CG_StopFxOnTag(param_1,param_2,WVar9.data);
-    __restgprlr();
     return;
   case 0x58:
     CG_PlayFxOnTagForClients(param_1,param_2,WVar9.data);
-    __restgprlr();
     return;
   case 0x59:
     Ragdoll_ExplosionEvent
-              (param_1,false,pfVar28,(param_2->nextState).lerp.u.turret.gunAngles[0],
+              (param_1,false,pfVar32,(param_2->nextState).lerp.u.turret.gunAngles[0],
                (param_2->nextState).lerp.u.turret.gunAngles[1],(float *)pcVar16,
                (param_2->nextState).lerp.u.turret.gunAngles[2],(int)in_r7);
     DynEntCl_ExplosionEvent
-              (param_1,false,pfVar28,(param_2->nextState).lerp.u.turret.gunAngles[0],
+              (param_1,false,pfVar32,(param_2->nextState).lerp.u.turret.gunAngles[0],
                (param_2->nextState).lerp.u.turret.gunAngles[1],(float *)pcVar16,
-               (param_2->nextState).lerp.u.turret.gunAngles[2],(int)in_r7,-0x7de86028,uVar30);
-    __restgprlr();
+               (param_2->nextState).lerp.u.turret.gunAngles[2],(int)in_r7,-0x7de86028,uVar26);
     return;
   case 0x5a:
     Ragdoll_ExplosionEvent
-              (param_1,true,pfVar28,(param_2->nextState).lerp.u.turret.gunAngles[0],
+              (param_1,true,pfVar32,(param_2->nextState).lerp.u.turret.gunAngles[0],
                (param_2->nextState).lerp.u.turret.gunAngles[1],(float *)pcVar16,
                (param_2->nextState).lerp.u.turret.gunAngles[2],(int)in_r7);
     DynEntCl_ExplosionEvent
-              (param_1,true,pfVar28,(param_2->nextState).lerp.u.turret.gunAngles[0],
+              (param_1,true,pfVar32,(param_2->nextState).lerp.u.turret.gunAngles[0],
                (param_2->nextState).lerp.u.turret.gunAngles[1],(float *)pcVar16,
-               (param_2->nextState).lerp.u.turret.gunAngles[2],(int)in_r7,-0x7de86028,uVar30);
-    __restgprlr();
+               (param_2->nextState).lerp.u.turret.gunAngles[2],(int)in_r7,-0x7de86028,uVar26);
     return;
   case 0x5b:
-    dVar39 = 1.0;
+    dVar37 = 1.0;
     Ragdoll_ExplosionEvent
-              (param_1,true,pfVar28,(param_2->nextState).lerp.u.turret.gunAngles[0],
+              (param_1,true,pfVar32,(param_2->nextState).lerp.u.turret.gunAngles[0],
                (param_2->nextState).lerp.u.turret.gunAngles[1],(float *)pcVar16,1.0,(int)in_r7);
     DynEntCl_ExplosionEvent
-              (param_1,true,pfVar28,(param_2->nextState).lerp.u.turret.gunAngles[0],
-               (param_2->nextState).lerp.u.turret.gunAngles[1],(float *)pcVar16,(float)dVar39,
-               (int)in_r7,(int)((int)&(param_2->nextState).lerp.u + 8),uVar30);
-    __restgprlr();
+              (param_1,true,pfVar32,(param_2->nextState).lerp.u.turret.gunAngles[0],
+               (param_2->nextState).lerp.u.turret.gunAngles[1],(float *)pcVar16,(float)dVar37,
+               (int)in_r7,(int)((int)&(param_2->nextState).lerp.u + 8),uVar26);
     return;
   case 0x5c:
-    dVar39 = 0.0;
+    dVar37 = 0.0;
     if ((param_2->nextState).lerp.u.turret.gunAngles[0] < 0.0) {
       pcVar16 = "%s\n\t(es->lerp.u.radiusDamage.range) = %g";
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_event.cpp",0x865,0,
@@ -2186,77 +2030,67 @@ LAB_822cd978:
                       "%s\n\t(es->lerp.u.radiusDamage.damageMin) = %i");
     }
     DynEntCl_ExplosionEvent
-              (param_1,false,pfVar28,(float)dVar39,(param_2->nextState).lerp.u.turret.gunAngles[0],
-               (float *)pcVar16,(float)dVar39,0,-0x7de86028,-0x7de80000);
-    __restgprlr();
+              (param_1,false,pfVar32,(float)dVar37,(param_2->nextState).lerp.u.turret.gunAngles[0],
+               (float *)pcVar16,(float)dVar37,0,-0x7de86028,-0x7de80000);
     return;
   case 0x5d:
     DynEntCl_JitterEvent
-              (param_1,pfVar28,(param_2->nextState).lerp.u.turret.gunAngles[0],
+              (param_1,pfVar32,(param_2->nextState).lerp.u.turret.gunAngles[0],
                (param_2->nextState).lerp.u.turret.gunAngles[1],
                (param_2->nextState).lerp.u.turret.gunAngles[2],
                (param_2->nextState).lerp.u.primaryLight.cosHalfFovOuter);
-    __restgprlr();
     return;
   case 0x5e:
     CG_StartShakeCamera(param_1,(param_2->nextState).lerp.u.turret.gunAngles[0],uVar19,
                         (float *)(param_2->nextState).lerp.u.turret.gunAngles[2],
                         (param_2->nextState).lerp.u.turret.gunAngles[1]);
-    __restgprlr();
     return;
   case 0x60:
-    if (uVar31 != 0) {
-      if (pcVar5 == (cg_s *)0x0) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_event.cpp",0x60d,
-                        0,"%s");
-      }
-      WVar9 = BG_GetViewmodelWeapon(&pcVar5->predictedPlayerState);
-      WVar9 = BG_GetAlternateWeapon(WVar9,bVar18);
-      CG_PlayEntitySoundAlias
-                (param_1,peVar38->number,bg_weaponDefs[WVar9.data & 0xff]->detonateSoundPlayer);
-      __restgprlr();
+    if (uVar27 == 0) {
+      CG_PlayEntitySoundAlias(param_1,peVar36->number,pWVar4->detonateSound);
       return;
     }
-    CG_PlayEntitySoundAlias(param_1,peVar38->number,pWVar4->detonateSound);
-    __restgprlr();
+    if (pcVar5 == (cg_s *)0x0) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_event.cpp",0x60d,0,
+                      "%s");
+    }
+    WVar9 = BG_GetViewmodelWeapon(&pcVar5->predictedPlayerState);
+    WVar9 = BG_GetAlternateWeapon(WVar9,bVar18);
+    CG_PlayEntitySoundAlias
+              (param_1,peVar36->number,bg_weaponDefs[WVar9.data & 0xff]->detonateSoundPlayer);
     return;
   case 0x61:
-    if (uVar31 != 0) {
+    if (uVar27 != 0) {
       if ((((pcVar5->predictedPlayerState).eFlags & 0x3800U) != 0) ||
          (iVar8 = BG_ViewModelAnimExists
-                            (&pcVar5->predictedPlayerState,WVar37,WEAP_ANIM_NIGHTVISION_WEAR,
+                            (&pcVar5->predictedPlayerState,WVar34,WEAP_ANIM_NIGHTVISION_WEAR,
                              WEAPON_HAND_DEFAULT), iVar8 != 0)) {
         CG_PlayClientSoundAlias(param_1,cgMedia.nightVisionOn);
       }
-      if (uVar31 != 0) {
-        CG_PlayEntitySoundAlias(param_1,peVar38->number,pWVar4->nightVisionWearSoundPlayer);
-        __restgprlr();
+      if (uVar27 != 0) {
+        CG_PlayEntitySoundAlias(param_1,peVar36->number,pWVar4->nightVisionWearSoundPlayer);
         return;
       }
     }
-    CG_PlayEntitySoundAlias(param_1,peVar38->number,pWVar4->nightVisionWearSound);
-    __restgprlr();
+    CG_PlayEntitySoundAlias(param_1,peVar36->number,pWVar4->nightVisionWearSound);
     return;
   case 0x62:
-    if (uVar31 != 0) {
+    if (uVar27 != 0) {
       if ((((pcVar5->predictedPlayerState).eFlags & 0x3800U) != 0) ||
          (iVar8 = BG_ViewModelAnimExists
-                            (&pcVar5->predictedPlayerState,WVar37,WEAP_ANIM_NIGHTVISION_REMOVE,
+                            (&pcVar5->predictedPlayerState,WVar34,WEAP_ANIM_NIGHTVISION_REMOVE,
                              WEAPON_HAND_DEFAULT), iVar8 != 0)) {
         CG_PlayClientSoundAlias(param_1,cgMedia.nightVisionOff);
       }
-      if (uVar31 != 0) {
-        CG_PlayEntitySoundAlias(param_1,peVar38->number,pWVar4->nightVisionRemoveSoundPlayer);
-        __restgprlr();
+      if (uVar27 != 0) {
+        CG_PlayEntitySoundAlias(param_1,peVar36->number,pWVar4->nightVisionRemoveSoundPlayer);
         return;
       }
     }
-    CG_PlayEntitySoundAlias(param_1,peVar38->number,pWVar4->nightVisionRemoveSound);
-    __restgprlr();
+    CG_PlayEntitySoundAlias(param_1,peVar36->number,pWVar4->nightVisionRemoveSound);
     return;
   case 99:
-    RemoteMissileBoostEvent(param_1,param_2,(int)pfVar22);
-    __restgprlr();
+    RemoteMissileBoostEvent(param_1,param_2,(int)pfVar20);
     return;
   case 100:
   case 0x65:
@@ -2265,25 +2099,22 @@ LAB_822cd978:
   case 0x68:
   case 0x69:
     pcVar16 = CL_GetConfigString(WVar9.data + 0x3d9);
-    CG_HandleRumbleEvents(param_1,(int)pfVar21,(int)pcVar16,pcVar36,(int)pfVar28,pfVar27);
-    __restgprlr();
+    CG_HandleRumbleEvents(param_1,param_3,(int)pcVar16,pcVar33,(int)pfVar32,pfVar24);
     return;
   case 0x6a:
-    if (pcVar36 != (char *)(pcVar5->predictedPlayerState).clientNum) goto LAB_822cc794;
-    if (uVar31 != 0) {
-      CG_PlaySoundAlias(param_1,peVar38->number,pfVar28,pWVar4->changeVariableZoomSound);
-      __restgprlr();
+    if (pcVar33 != (char *)(pcVar5->predictedPlayerState).clientNum) goto LAB_822cc794;
+    if (uVar27 != 0) {
+      CG_PlaySoundAlias(param_1,peVar36->number,pfVar32,pWVar4->changeVariableZoomSound);
       return;
     }
     break;
   case 0x6b:
-    CG_Obituary(param_1,peVar38,
+    CG_Obituary(param_1,peVar36,
                 (uint)*(byte *)((int)&(param_2->nextState).un1 + 3) << 8 | WVar9.data & 0xff);
-    __restgprlr();
     return;
   case 0x6c:
-    if (pcVar36 != (char *)(pcVar5->predictedPlayerState).clientNum) goto LAB_822cc794;
-    if (uVar31 != 0) {
+    if (pcVar33 != (char *)(pcVar5->predictedPlayerState).clientNum) goto LAB_822cc794;
+    if (uVar27 != 0) {
       if (pcVar5->invalidCmdHintType != INVALID_CMD_NO_AMMO_GRENADE) {
         pcVar5->invalidCmdHintType = INVALID_CMD_NO_AMMO_GRENADE;
         pcVar5->invalidCmdHintTime = pcVar5->time;
@@ -2292,13 +2123,12 @@ LAB_822cd978:
                         (&pcVar5->predictedPlayerState,
                          (pcVar5->predictedPlayerState).weapCommon.offhandPrimary);
       pcVar5->invalidCmdHintWeapon = WVar9;
-      __restgprlr();
       return;
     }
     break;
   case 0x6d:
-    if (pcVar36 != (char *)(pcVar5->predictedPlayerState).clientNum) goto LAB_822cc794;
-    if (uVar31 != 0) {
+    if (pcVar33 != (char *)(pcVar5->predictedPlayerState).clientNum) goto LAB_822cc794;
+    if (uVar27 != 0) {
       if (pcVar5->invalidCmdHintType != INVALID_CMD_NO_AMMO_SPECIAL) {
         pcVar5->invalidCmdHintType = INVALID_CMD_NO_AMMO_SPECIAL;
         pcVar5->invalidCmdHintTime = pcVar5->time;
@@ -2307,114 +2137,102 @@ LAB_822cd978:
                         (&pcVar5->predictedPlayerState,
                          (pcVar5->predictedPlayerState).weapCommon.offhandSecondary);
       pcVar5->invalidCmdHintWeapon = WVar9;
-      __restgprlr();
       return;
     }
     break;
   case 0x6e:
-    if (pcVar36 != (char *)(pcVar5->predictedPlayerState).clientNum) goto LAB_822cc794;
-    if ((uVar31 != 0) && (pcVar5->invalidCmdHintType != INVALID_CMD_TARGET_TOO_CLOSE)) {
+    if (pcVar33 != (char *)(pcVar5->predictedPlayerState).clientNum) goto LAB_822cc794;
+    if ((uVar27 != 0) && (pcVar5->invalidCmdHintType != INVALID_CMD_TARGET_TOO_CLOSE)) {
       pcVar5->invalidCmdHintType = INVALID_CMD_TARGET_TOO_CLOSE;
       pcVar5->invalidCmdHintTime = pcVar5->time;
-      __restgprlr();
       return;
     }
     break;
   case 0x6f:
-    if (pcVar36 != (char *)(pcVar5->predictedPlayerState).clientNum) goto LAB_822cc794;
-    if ((uVar31 != 0) && (pcVar5->invalidCmdHintType != INVALID_CMD_NOT_ENOUGH_CLEARANCE)) {
+    if (pcVar33 != (char *)(pcVar5->predictedPlayerState).clientNum) goto LAB_822cc794;
+    if ((uVar27 != 0) && (pcVar5->invalidCmdHintType != INVALID_CMD_NOT_ENOUGH_CLEARANCE)) {
       pcVar5->invalidCmdHintType = INVALID_CMD_NOT_ENOUGH_CLEARANCE;
       pcVar5->invalidCmdHintTime = pcVar5->time;
-      __restgprlr();
       return;
     }
     break;
   case 0x70:
-    if (pcVar36 != (char *)(pcVar5->predictedPlayerState).clientNum) goto LAB_822cc794;
-    if ((uVar31 != 0) && (pcVar5->invalidCmdHintType != INVALID_CMD_LOCKON_REQUIRED)) {
+    if (pcVar33 != (char *)(pcVar5->predictedPlayerState).clientNum) goto LAB_822cc794;
+    if ((uVar27 != 0) && (pcVar5->invalidCmdHintType != INVALID_CMD_LOCKON_REQUIRED)) {
       pcVar5->invalidCmdHintType = INVALID_CMD_LOCKON_REQUIRED;
       pcVar5->invalidCmdHintTime = pcVar5->time;
-      __restgprlr();
       return;
     }
     break;
   case 0x71:
   case 0x72:
   case 0x73:
-    VehicleCl_EntityEvent(param_1,param_2,(int)pfVar21,WVar9.data);
-    __restgprlr();
+    VehicleCl_EntityEvent(param_1,param_2,param_3,WVar9.data);
     return;
   case 0x74:
     if ((cg_footsteps->current).enabled != false) {
       iVar8 = -0x7d5c6650;
-      if (uVar31 == 0) {
+      if (uVar27 == 0) {
         iVar8 = -0x7d5c6748;
       }
       CG_PlayEntitySoundAliasFootstep
                 (param_1,param_2,
-                 *(snd_alias_list_t **)((int)((uVar33 + uVar32 & 0xffffffff) << 2) + iVar8),bVar23);
+                 *(snd_alias_list_t **)((int)((uVar29 + uVar28 & 0xffffffff) << 2) + iVar8),bVar21);
     }
-    CG_EquipmentSound(param_1,peVar38->number,bVar23,(-(uint)(uVar33 != 0) & 3) + EQS_SPRINTING);
-    __restgprlr();
+    CG_EquipmentSound(param_1,peVar36->number,bVar21,(-(uint)(uVar29 != 0) & 3) + EQS_SPRINTING);
     return;
   case 0x75:
     if ((cg_footsteps->current).enabled != false) {
       iVar8 = -0x7d5c6460;
-      if (uVar31 == 0) {
+      if (uVar27 == 0) {
         iVar8 = -0x7d5c6558;
       }
       CG_PlayEntitySoundAliasFootstep
                 (param_1,param_2,
-                 *(snd_alias_list_t **)((int)((uVar33 + uVar32 & 0xffffffff) << 2) + iVar8),bVar23);
+                 *(snd_alias_list_t **)((int)((uVar29 + uVar28 & 0xffffffff) << 2) + iVar8),bVar21);
     }
-    CG_EquipmentSound(param_1,peVar38->number,bVar23,(-(uint)(uVar33 != 0) & 3) + EQS_RUNNING);
-    __restgprlr();
+    CG_EquipmentSound(param_1,peVar36->number,bVar21,(-(uint)(uVar29 != 0) & 3) + EQS_RUNNING);
     return;
   case 0x76:
     if ((cg_footsteps->current).enabled != false) {
       iVar8 = -0x7d5c6270;
-      if (uVar31 == 0) {
+      if (uVar27 == 0) {
         iVar8 = -0x7d5c6368;
       }
       CG_PlayEntitySoundAliasFootstep
                 (param_1,param_2,
-                 *(snd_alias_list_t **)((int)((uVar33 + uVar32 & 0xffffffff) << 2) + iVar8),bVar23);
+                 *(snd_alias_list_t **)((int)((uVar29 + uVar28 & 0xffffffff) << 2) + iVar8),bVar21);
     }
-    CG_EquipmentSound(param_1,peVar38->number,bVar23,-(uint)(uVar33 != 0) & EQS_QWALKING);
-    __restgprlr();
+    CG_EquipmentSound(param_1,peVar36->number,bVar21,-(uint)(uVar29 != 0) & EQS_QWALKING);
     return;
   case 0x77:
     if ((cg_footsteps->current).enabled != false) {
       iVar8 = -0x7d5c6080;
-      if (uVar31 == 0) {
+      if (uVar27 == 0) {
         iVar8 = -0x7d5c6178;
       }
       CG_PlayEntitySoundAliasFootstep
                 (param_1,param_2,
-                 *(snd_alias_list_t **)((int)((uVar33 + uVar32 & 0xffffffff) << 2) + iVar8),bVar23);
+                 *(snd_alias_list_t **)((int)((uVar29 + uVar28 & 0xffffffff) << 2) + iVar8),bVar21);
     }
-    CG_EquipmentSound(param_1,peVar38->number,bVar23,-(uint)(uVar33 != 0) & EQS_QWALKING);
-    __restgprlr();
+    CG_EquipmentSound(param_1,peVar36->number,bVar21,-(uint)(uVar29 != 0) & EQS_QWALKING);
     return;
   case 0x78:
     iVar8 = -0x7d5c6460;
-    if (uVar31 == 0) {
+    if (uVar27 == 0) {
       iVar8 = -0x7d5c6558;
     }
     CG_PlayEntitySoundAlias
-              (param_1,peVar38->number,
-               *(snd_alias_list_t **)((int)((uVar33 + uVar32 & 0xffffffff) << 2) + iVar8));
-    CG_EquipmentSound(param_1,peVar38->number,bVar23,(-(uint)(uVar33 != 0) & 3) + EQS_RUNNING);
-    __restgprlr();
+              (param_1,peVar36->number,
+               *(snd_alias_list_t **)((int)((uVar29 + uVar28 & 0xffffffff) << 2) + iVar8));
+    CG_EquipmentSound(param_1,peVar36->number,bVar21,(-(uint)(uVar29 != 0) & 3) + EQS_RUNNING);
     return;
   case 0xb7:
-    if (uVar31 != 0) {
-      CG_PlayEntitySoundAliasByName2(param_1,peVar38->number,"gear_rattle_plr_mantle");
-      __restgprlr();
+    if (uVar27 == 0) {
+      CG_PlayEntitySoundAliasByName2(param_1,peVar36->number,"gear_rattle_mantle");
       return;
     }
-    CG_PlayEntitySoundAliasByName2(param_1,peVar38->number,"gear_rattle_mantle");
-    __restgprlr();
+    CG_PlayEntitySoundAliasByName2(param_1,peVar36->number,"gear_rattle_plr_mantle");
     return;
   case 0xb8:
     local_120.midPoint[0] = 0.0;
@@ -2423,18 +2241,17 @@ LAB_822cd978:
     local_120.halfSize[0] = 1.0;
     local_120.halfSize[1] = 1.0;
     local_120.halfSize[2] = 1.0;
-    CG_DebugBox(pfVar28,&local_120,0.0,pfVar22,-0x7de7e818,0);
-    __restgprlr();
+    CG_DebugBox(pfVar32,&local_120,0.0,pfVar20,-0x7de7e818,0);
     return;
   }
-switchD_822cc20c_caseD_c:
-  __restgprlr();
   return;
 }
 
 
 // 822CEBA8  CG_CheckEvents  (cgame/cg_event.cpp:2229)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
@@ -2442,10 +2259,8 @@ void CG_CheckEvents(LocalClientNum_t param_1,centity_s *param_2)
 
 {
   int iVar1;
-  LocalClientNum_t LVar2;
-  char *pcVar3;
+  char *pcVar2;
   
-  LVar2 = __savegprlr_29(param_1);
   if ((param_2->nextState).eType < 0x13) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_event.cpp",0x8bc,0,
                     "%s\n\t(cent->nextState.eType) = %i");
@@ -2457,19 +2272,20 @@ void CG_CheckEvents(LocalClientNum_t param_1,centity_s *param_2)
   if (param_2->previousEventSequence == 0) {
     iVar1 = (param_2->nextState).eType;
     param_2->previousEventSequence = 1;
-    pcVar3 = BG_GetEntityTypeName(iVar1);
-    PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffff,pcVar3);
-    CG_CalcEntityLerpPositions(LVar2,param_2);
-    CG_EntityEvent(LVar2,param_2,(param_2->nextState).eType + -0x12,0);
+    pcVar2 = BG_GetEntityTypeName(iVar1);
+    PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffff,pcVar2);
+    CG_CalcEntityLerpPositions(param_1,param_2);
+    CG_EntityEvent(param_1,param_2,(param_2->nextState).eType + -0x12,0);
     PIXEndNamedEvent();
   }
-  __restgprlr_29();
   return;
 }
 
 
 // 822CEC78  CG_CheckEntEvents  (cgame/cg_event.cpp:2272)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
@@ -2478,49 +2294,45 @@ void CG_CheckEntEvents(LocalClientNum_t param_1,centity_s *param_2,int param_3)
 {
   uint uVar1;
   int iVar2;
-  LocalClientNum_t LVar3;
-  char *pcVar4;
+  char *pcVar3;
+  uint uVar4;
   uint uVar5;
-  uint uVar6;
   
-  LVar3 = __savegprlr_25(param_1);
   if (0x11 < (param_2->nextState).eType) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_event.cpp",0x8e6,0,
                     "%s\n\t(cent->nextState.eType) = %i");
   }
-  uVar5 = param_2->previousEventSequence;
-  uVar6 = (param_2->nextState).eventSequence;
-  if (uVar5 != uVar6) {
-    if (uVar6 == 0) {
+  uVar4 = param_2->previousEventSequence;
+  uVar5 = (param_2->nextState).eventSequence;
+  if (uVar4 != uVar5) {
+    if (uVar5 == 0) {
       param_2->previousEventSequence = 0;
-      __restgprlr_25();
       return;
     }
-    if ((int)(uVar6 + 0x400000) < (int)uVar5) {
-      uVar5 = uVar5 - 0x1000000;
+    if ((int)(uVar5 + 0x400000) < (int)uVar4) {
+      uVar4 = uVar4 - 0x1000000;
     }
-    param_2->previousEventSequence = uVar5;
-    if (4 < (int)(uVar6 - uVar5)) {
-      param_2->previousEventSequence = uVar6 - 4;
+    param_2->previousEventSequence = uVar4;
+    if (4 < (int)(uVar5 - uVar4)) {
+      param_2->previousEventSequence = uVar5 - 4;
     }
-    uVar5 = param_2->previousEventSequence;
-    if ((int)uVar5 < (int)uVar6) {
+    uVar4 = param_2->previousEventSequence;
+    if ((int)uVar4 < (int)uVar5) {
       uVar1 = (param_2->nextState).eventParm;
       do {
-        iVar2 = (param_2->nextState).events[uVar5 & 3];
-        (param_2->nextState).eventParm = (param_2->nextState).eventParms[uVar5 & 3];
-        pcVar4 = BG_GetEntityTypeName(iVar2 + 0x12);
-        PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffff,pcVar4);
-        CG_EntityEvent(LVar3,param_2,iVar2,param_3);
+        iVar2 = (param_2->nextState).events[uVar4 & 3];
+        (param_2->nextState).eventParm = (param_2->nextState).eventParms[uVar4 & 3];
+        pcVar3 = BG_GetEntityTypeName(iVar2 + 0x12);
+        PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffff,pcVar3);
+        CG_EntityEvent(param_1,param_2,iVar2,param_3);
         PIXEndNamedEvent();
-        uVar6 = (param_2->nextState).eventSequence;
-        uVar5 = uVar5 + 1;
-      } while (uVar5 != uVar6);
+        uVar5 = (param_2->nextState).eventSequence;
+        uVar4 = uVar4 + 1;
+      } while (uVar4 != uVar5);
       (param_2->nextState).eventParm = uVar1;
     }
-    param_2->previousEventSequence = uVar6;
+    param_2->previousEventSequence = uVar5;
   }
-  __restgprlr_25();
   return;
 }
 

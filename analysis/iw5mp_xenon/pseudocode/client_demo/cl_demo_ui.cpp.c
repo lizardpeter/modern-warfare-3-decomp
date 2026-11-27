@@ -2,6 +2,8 @@
 
 // 827DEE20  CL_Demo_GetConnectionTimeInfoForPlayer  (client_demo/cl_demo_ui.cpp:48)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -11,45 +13,41 @@ void CL_Demo_GetConnectionTimeInfoForPlayer(LocalClientNum_t param_1,int *param_
 
 {
   int iVar1;
-  uint uVar2;
-  int iVar3;
-  LocalClientNum_t LVar4;
-  cg_s *pcVar5;
-  clientConnection_t *pcVar6;
-  clientActive_t *pcVar7;
-  bool bVar8;
-  int iVar9;
-  int *piVar10;
+  int iVar2;
+  cg_s *pcVar3;
+  clientConnection_t *pcVar4;
+  clientActive_t *pcVar5;
+  bool bVar6;
+  uint uVar7;
+  int iVar8;
+  int *piVar9;
   
-  LVar4 = __savegprlr_27(param_1);
-  pcVar5 = CG_GetLocalClientGlobals(LVar4);
-  pcVar6 = CL_GetLocalClientConnection(LVar4);
-  pcVar7 = CL_GetLocalClientGlobals(LVar4);
-  iVar1 = (pcVar7->snap).serverTime;
-  bVar8 = CL_Demo_IsFollowCamera(LVar4);
-  if (bVar8) {
-    uVar2 = (cl_demo_client->current).integer;
+  pcVar3 = CG_GetLocalClientGlobals(param_1);
+  pcVar4 = CL_GetLocalClientConnection(param_1);
+  pcVar5 = CL_GetLocalClientGlobals(param_1);
+  iVar1 = (pcVar5->snap).serverTime;
+  bVar6 = CL_Demo_IsFollowCamera(param_1);
+  if (bVar6) {
+    uVar7 = (cl_demo_client->current).integer;
   }
   else {
-    uVar2 = pcVar5->clientNum;
+    uVar7 = pcVar3->clientNum;
   }
-  iVar9 = 0;
-  iVar3 = (pcVar6->clientDemo).footer.numConnectedPlayers;
-  if (0 < iVar3) {
-    piVar10 = &(pcVar6->clientDemo).footer.connectedPlayers[0].connectTime;
-    while (((*(uchar *)((int)piVar10 + -0xf) != uVar2 || (iVar1 < *piVar10)) || (piVar10[1] < iVar1)
-           )) {
-      iVar9 = iVar9 + 1;
-      piVar10 = piVar10 + 6;
-      if (iVar3 <= iVar9) {
-        __restgprlr_27();
+  iVar8 = 0;
+  iVar2 = (pcVar4->clientDemo).footer.numConnectedPlayers;
+  if (0 < iVar2) {
+    piVar9 = &(pcVar4->clientDemo).footer.connectedPlayers[0].connectTime;
+    while (((*(uchar *)((int)piVar9 + -0xf) != uVar7 || (iVar1 < *piVar9)) || (piVar9[1] < iVar1)))
+    {
+      iVar8 = iVar8 + 1;
+      piVar9 = piVar9 + 6;
+      if (iVar2 <= iVar8) {
         return;
       }
     }
-    *param_2 = (pcVar6->clientDemo).footer.connectedPlayers[iVar9].connectTime;
-    *param_3 = (pcVar6->clientDemo).footer.connectedPlayers[iVar9].disconnectTime;
+    *param_2 = (pcVar4->clientDemo).footer.connectedPlayers[iVar8].connectTime;
+    *param_3 = (pcVar4->clientDemo).footer.connectedPlayers[iVar8].disconnectTime;
   }
-  __restgprlr_27();
   return;
 }
 
@@ -91,6 +89,8 @@ int CL_Demo_GetPlayerIndexForClientNum(LocalClientNum_t param_1,int param_2,int 
 
 // 827DEFC8  CL_Demo_GetNextBookmarkForPlayer  (client_demo/cl_demo_ui.cpp:118)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
@@ -101,72 +101,65 @@ int CL_Demo_GetNextBookmarkForPlayer
 
 {
   float fVar1;
-  uint uVar2;
-  byte *pbVar3;
-  LocalClientNum_t LVar4;
-  clientConnection_t *pcVar5;
-  clientActive_t *pcVar6;
-  cg_s *pcVar7;
-  bool bVar10;
-  int iVar8;
+  int iVar2;
+  uint uVar3;
+  clientConnection_t *pcVar4;
+  clientActive_t *pcVar5;
+  cg_s *pcVar6;
+  bool bVar8;
+  int iVar7;
   int iVar9;
-  ulonglong uVar11;
-  longlong lVar12;
-  float *pfVar13;
+  uchar *puVar10;
+  float *pfVar11;
   
-  lVar12 = (longlong)param_2;
-  LVar4 = __savegprlr_25(param_1);
-  pcVar5 = CL_GetLocalClientConnection(LVar4);
-  pcVar6 = CL_GetLocalClientGlobals(LVar4);
-  pcVar7 = CG_GetLocalClientGlobals(LVar4);
-  iVar9 = (pcVar6->snap).serverTime;
-  if (pcVar7->inKillCam == 0) {
-    bVar10 = CL_Demo_IsFollowCamera(LVar4);
-    if (bVar10) {
-      uVar2 = (cl_demo_client->current).integer;
+  pcVar4 = CL_GetLocalClientConnection(param_1);
+  pcVar5 = CL_GetLocalClientGlobals(param_1);
+  pcVar6 = CG_GetLocalClientGlobals(param_1);
+  iVar2 = (pcVar5->snap).serverTime;
+  if (pcVar6->inKillCam == 0) {
+    bVar8 = CL_Demo_IsFollowCamera(param_1);
+    if (bVar8) {
+      uVar3 = (cl_demo_client->current).integer;
     }
     else {
-      uVar2 = pcVar7->clientNum;
+      uVar3 = pcVar6->clientNum;
     }
-    iVar8 = CL_Demo_GetPlayerIndexForClientNum(LVar4,uVar2,iVar9);
-    uVar11 = lVar12 + 1;
-    iVar9 = (pcVar5->clientDemo).footer.numBookmarks;
-    if ((int)uVar11 < iVar9) {
-      lVar12 = (uVar11 & 0x1fffffff) * 8 + (longlong)(int)pcVar5 + 0x43899;
+    iVar7 = CL_Demo_GetPlayerIndexForClientNum(param_1,uVar3,iVar2);
+    iVar9 = param_2 + 1;
+    iVar2 = (pcVar4->clientDemo).footer.numBookmarks;
+    if (iVar9 < iVar2) {
+      puVar10 = &(pcVar4->clientDemo).footer.bookmarks[param_2 + 1].clientNum2;
       do {
-        if (-1 < iVar8) {
-          pbVar3 = (byte *)lVar12;
-          if (((pcVar5->clientDemo).footer.connectedPlayers[iVar8].connectTime <=
-               *(int *)(pbVar3 + 3)) &&
-             (*(int *)(pbVar3 + 3) <=
-              (pcVar5->clientDemo).footer.connectedPlayers[iVar8].disconnectTime)) {
-            if ((*pbVar3 == uVar2) && ((uint)*pbVar3 != (uint)pbVar3[-1])) {
-              pfVar13 = colorGreen;
+        if (-1 < iVar7) {
+          if (((pcVar4->clientDemo).footer.connectedPlayers[iVar7].connectTime <=
+               *(int *)(puVar10 + 3)) &&
+             (*(int *)(puVar10 + 3) <=
+              (pcVar4->clientDemo).footer.connectedPlayers[iVar7].disconnectTime)) {
+            if ((*puVar10 == uVar3) &&
+               ((uint)*puVar10 != (uint)((clientDemoBookmark_t *)(puVar10 + -1))->clientNum1)) {
+              pfVar11 = colorGreen;
               fVar1 = 0.0;
 LAB_827df11c:
               (*param_4)[0] = fVar1;
-              (*param_4)[1] = pfVar13[1];
-              (*param_4)[2] = pfVar13[2];
-              (*param_4)[3] = pfVar13[3];
-              *param_3 = *(int *)((int)&(pcVar5->clientDemo).footer.bookmarks[0].time +
-                                 (int)((uVar11 & 0xffffffff) << 3));
-              iVar9 = __restgprlr_25(uVar11);
+              (*param_4)[1] = pfVar11[1];
+              (*param_4)[2] = pfVar11[2];
+              (*param_4)[3] = pfVar11[3];
+              *param_3 = (pcVar4->clientDemo).footer.bookmarks[iVar9].time;
               return iVar9;
             }
-            if (pbVar3[-1] == uVar2) {
-              pfVar13 = colorRed;
+            if (((clientDemoBookmark_t *)(puVar10 + -1))->clientNum1 == uVar3) {
+              pfVar11 = colorRed;
               fVar1 = 1.0;
               goto LAB_827df11c;
             }
           }
         }
-        uVar11 = uVar11 + 1;
-        lVar12 = lVar12 + 8;
-      } while ((int)uVar11 < iVar9);
+        iVar9 = iVar9 + 1;
+        puVar10 = puVar10 + 8;
+      } while (iVar9 < iVar2);
     }
   }
-  iVar9 = __restgprlr_25(0xffffffffffffffff);
-  return iVar9;
+  return -1;
 }
 
 
@@ -188,6 +181,8 @@ void CL_Demo_ReportError(LocalClientNum_t param_1,char *param_2)
 
 // 827DF160  CL_Demo_KeyboardCallback  (client_demo/cl_demo_ui.cpp:212)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
@@ -195,172 +190,155 @@ void CL_Demo_ReportError(LocalClientNum_t param_1,char *param_2)
 void CL_Demo_KeyboardCallback(LocalClientNum_t param_1,bool param_2,char *param_3)
 
 {
-  LocalClientNum_t LVar1;
+  char cVar1;
   clientDemoPlayback_t *pcVar2;
   bool bVar7;
   char *pcVar3;
   int iVar4;
   UiContext *pUVar5;
   UILocalVar *pUVar6;
-  ulonglong uVar8;
-  longlong lVar9;
-  char *pcVar11;
-  longlong lVar10;
   
-  lVar9 = (longlong)(int)param_3;
-  uVar8 = (ulonglong)param_2;
-  LVar1 = __savegprlr_26(param_1);
-  if (s_clientDemoKeyboard.active == false) {
+  if (!s_clientDemoKeyboard.active) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_demo\\cl_demo_ui.cpp",
                     0xd7,0,"%s");
   }
-  if ((uVar8 & 0xff) != 0) {
+  if (param_2) {
     if (s_clientDemoKeyboard.mode - 1U < 8) {
-      pcVar3 = (char *)lVar9;
       if (s_clientDemoKeyboard.mode == 2) {
         pcVar2 = CL_Demo_GetPlaybackData();
-        I_strncpyz((pcVar2->clipRecordInfo).name,pcVar3,s_clientDemoKeyboard.textSize);
+        I_strncpyz((pcVar2->clipRecordInfo).name,param_3,s_clientDemoKeyboard.textSize);
         (pcVar2->clipRecordInfo).isModifiedName = true;
         s_clientDemoKeyboard.active = false;
-        __restgprlr_26();
         return;
       }
       if (s_clientDemoKeyboard.mode == 3) {
         pcVar2 = CL_Demo_GetPlaybackData();
-        I_strncpyz((pcVar2->clipRecordInfo).description,pcVar3,s_clientDemoKeyboard.textSize);
+        I_strncpyz((pcVar2->clipRecordInfo).description,param_3,s_clientDemoKeyboard.textSize);
         (pcVar2->clipRecordInfo).isModifiedDescription = true;
         s_clientDemoKeyboard.active = false;
-        __restgprlr_26();
         return;
       }
       if (s_clientDemoKeyboard.mode == 4) {
         pcVar2 = CL_Demo_GetPlaybackData();
-        I_strncpyz((pcVar2->screenshotInfo).name,pcVar3,s_clientDemoKeyboard.textSize);
+        I_strncpyz((pcVar2->screenshotInfo).name,param_3,s_clientDemoKeyboard.textSize);
         (pcVar2->screenshotInfo).isModifiedName = true;
         s_clientDemoKeyboard.active = false;
-        __restgprlr_26();
         return;
       }
       if (s_clientDemoKeyboard.mode == 5) {
         pcVar2 = CL_Demo_GetPlaybackData();
-        I_strncpyz((pcVar2->screenshotInfo).description,pcVar3,s_clientDemoKeyboard.textSize);
+        I_strncpyz((pcVar2->screenshotInfo).description,param_3,s_clientDemoKeyboard.textSize);
         (pcVar2->screenshotInfo).isModifiedDescription = true;
         s_clientDemoKeyboard.active = false;
-        __restgprlr_26();
         return;
       }
       if (s_clientDemoKeyboard.mode == 6) {
-        pUVar5 = UI_GetClientDC(LVar1);
+        pUVar5 = UI_GetClientDC(param_1);
         pUVar6 = UILocalVar_FindOrCreate(&pUVar5->localVars,"ui_filename");
-        lVar10 = lVar9;
+        pcVar3 = param_3;
         do {
-          pcVar11 = (char *)lVar10;
-          lVar10 = lVar10 + 1;
-        } while (*pcVar11 != '\0');
-        if ((ulonglong)(uint)s_clientDemoKeyboard.textSize <= ((lVar10 - lVar9) - 1U & 0xffffffff))
-        {
+          cVar1 = *pcVar3;
+          pcVar3 = pcVar3 + 1;
+        } while (cVar1 != '\0');
+        if ((uint)s_clientDemoKeyboard.textSize <= pcVar3 + (-1 - (int)param_3)) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_demo\\cl_demo_ui.cpp"
                           ,0x10a,0,"%s");
         }
-        UILocalVar_SetString(pUVar6,pcVar3);
+        UILocalVar_SetString(pUVar6,param_3);
         s_clientDemoKeyboard.active = false;
-        __restgprlr_26();
         return;
       }
       if (s_clientDemoKeyboard.mode == 7) {
-        pUVar5 = UI_GetClientDC(LVar1);
+        pUVar5 = UI_GetClientDC(param_1);
         pUVar6 = UILocalVar_FindOrCreate(&pUVar5->localVars,"ui_filedesc");
-        lVar10 = lVar9;
+        pcVar3 = param_3;
         do {
-          pcVar11 = (char *)lVar10;
-          lVar10 = lVar10 + 1;
-        } while (*pcVar11 != '\0');
-        if ((ulonglong)(uint)s_clientDemoKeyboard.textSize < ((lVar10 - lVar9) - 1U & 0xffffffff)) {
+          cVar1 = *pcVar3;
+          pcVar3 = pcVar3 + 1;
+        } while (cVar1 != '\0');
+        if ((uint)s_clientDemoKeyboard.textSize < pcVar3 + (-1 - (int)param_3)) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_demo\\cl_demo_ui.cpp"
                           ,0x113,0,"%s");
         }
-        UILocalVar_SetString(pUVar6,pcVar3);
+        UILocalVar_SetString(pUVar6,param_3);
         s_clientDemoKeyboard.active = false;
-        __restgprlr_26();
         return;
       }
       if (s_clientDemoKeyboard.mode == 1) {
         pcVar2 = CL_Demo_GetPlaybackData();
-        I_strncpyz(pcVar2->segments[s_clientDemoKeyboard.currentProcessingSegmentIndex].name,pcVar3,
-                   s_clientDemoKeyboard.textSize);
-        bVar7 = Menu_IsMenuOpenAndVisible(LVar1,"demo_save_segment");
+        I_strncpyz(pcVar2->segments[s_clientDemoKeyboard.currentProcessingSegmentIndex].name,param_3
+                   ,s_clientDemoKeyboard.textSize);
+        bVar7 = Menu_IsMenuOpenAndVisible(param_1,"demo_save_segment");
         if (bVar7) {
           pcVar3 = va("cl_demo_savesegment 0");
-          iVar4 = CL_ControllerIndexFromClientNum(LVar1);
-          Cmd_ExecuteSingleCommand(LVar1,iVar4,pcVar3);
-          Key_RemoveCatcher(LVar1,-0x11);
-          UI_CloseMenu(LVar1,"demo_save_segment");
+          iVar4 = CL_ControllerIndexFromClientNum(param_1);
+          Cmd_ExecuteSingleCommand(param_1,iVar4,pcVar3);
+          Key_RemoveCatcher(param_1,-0x11);
+          UI_CloseMenu(param_1,"demo_save_segment");
           s_clientDemoKeyboard.active = false;
-          __restgprlr_26();
           return;
         }
       }
       else {
-        Facebook_SetCaption(pcVar3);
+        Facebook_SetCaption(param_3);
       }
     }
   }
   s_clientDemoKeyboard.active = false;
-  __restgprlr_26();
   return;
 }
 
 
 // 827E0758  CL_Demo_KeyboardComplete  (client_demo/cl_demo_ui.cpp:301)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void CL_Demo_KeyboardComplete(LocalClientNum_t param_1)
 
 {
-  LocalClientNum_t LVar1;
-  bool bVar4;
-  ulong uVar2;
-  int iVar3;
-  char *pcVar5;
+  bool bVar3;
+  ulong uVar1;
+  int iVar2;
+  char *pcVar4;
   char acStack_130 [255];
   undefined1 local_31;
   
-  LVar1 = __savegprlr_28(param_1);
-  if (((s_clientDemoKeyboard.active != false) && (bVar4 = Sys_IsMainThread(), bVar4)) &&
-     (uVar2 = XGetOverlappedResult(&guideKeyboard_pOverlapped,(ulong *)0x0,1), uVar2 != 0x3e4)) {
-    if (uVar2 == 0) {
-      iVar3 = WideCharToMultiByte(0,0,guideKeyboard_Buffer,-1,acStack_130,0x100,(char *)0x0,
+  if (((s_clientDemoKeyboard.active) && (bVar3 = Sys_IsMainThread(), bVar3)) &&
+     (uVar1 = XGetOverlappedResult(&guideKeyboard_pOverlapped,(ulong *)0x0,1), uVar1 != 0x3e4)) {
+    if (uVar1 == 0) {
+      iVar2 = WideCharToMultiByte(0,0,guideKeyboard_Buffer,-1,acStack_130,0x100,(char *)0x0,
                                   (int *)0x0);
       local_31 = 0;
       Com_Printf(0x10,"%s\n");
-      if ((iVar3 == 1) || (bVar4 = UI_VerifyString(acStack_130,guideKeyboard_Buffer), !bVar4)) {
-        pcVar5 = "MENU_INVALIDCHARS";
+      if ((iVar2 == 1) || (bVar3 = UI_VerifyString(acStack_130,guideKeyboard_Buffer), !bVar3)) {
+        pcVar4 = "MENU_INVALIDCHARS";
       }
       else {
         if (s_clientDemoKeyboard.checkForProfanity == false) {
 LAB_827e0860:
-          CL_Demo_KeyboardCallback(LVar1,true,acStack_130);
-          __restgprlr_28();
+          CL_Demo_KeyboardCallback(param_1,true,acStack_130);
           return;
         }
-        iVar3 = CL_ControllerIndexFromClientNum(LVar1);
-        bVar4 = ProfanityFilter_IsBadWord(iVar3,acStack_130);
-        if (!bVar4) goto LAB_827e0860;
+        iVar2 = CL_ControllerIndexFromClientNum(param_1);
+        bVar3 = ProfanityFilter_IsBadWord(iVar2,acStack_130);
+        if (!bVar3) goto LAB_827e0860;
         Com_PrintError(0xe,"Offensive text (curse words, etc) detected in user input.\n");
-        pcVar5 = "MENU_OFFENSIVETEXT";
+        pcVar4 = "MENU_OFFENSIVETEXT";
       }
-      CL_Demo_Error(LVar1,"MENU_ERROR",pcVar5);
+      CL_Demo_Error(param_1,"MENU_ERROR",pcVar4);
     }
-    CL_Demo_KeyboardCallback(LVar1,false,"");
+    CL_Demo_KeyboardCallback(param_1,false,"");
   }
-  __restgprlr_28();
   return;
 }
 
 
 // 827DF4A0  CL_Demo_Keyboard  (client_demo/cl_demo_ui.cpp:447)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
@@ -368,68 +346,70 @@ LAB_827e0860:
 void CL_Demo_Keyboard(LocalClientNum_t param_1,char *param_2)
 
 {
-  LocalClientNum_t LVar1;
-  int iVar2;
-  bool bVar6;
-  clientDemoPlayback_t *pcVar3;
-  int iVar4;
-  ulong uVar5;
-  bool *pbVar7;
-  char **ppcVar8;
-  longlong lVar9;
+  int iVar1;
+  bool bVar5;
+  clientDemoPlayback_t *pcVar2;
+  int iVar3;
+  ulong uVar4;
+  bool *pbVar6;
+  char **ppcVar7;
+  longlong lVar8;
   Operand aOStack_d0 [2];
   char acStack_c0 [192];
   
-  LVar1 = __savegprlr_26(param_1);
-  if (s_clientDemoKeyboard.active != false) {
+  if (s_clientDemoKeyboard.active) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_demo\\cl_demo_ui.cpp",
                     0x1ce,0,"%s");
   }
-  pbVar7 = &s_clientDemoCancelRendering;
-  lVar9 = 7;
+  pbVar6 = &s_clientDemoCancelRendering;
+  lVar8 = 7;
   do {
-    pbVar7 = pbVar7 + 4;
-    pbVar7[0] = false;
-    pbVar7[1] = false;
-    pbVar7[2] = false;
-    pbVar7[3] = false;
-    lVar9 = lVar9 + -1;
-  } while (lVar9 != 0);
+    pbVar6 = pbVar6 + 4;
+    pbVar6[0] = false;
+    pbVar6[1] = false;
+    pbVar6[2] = false;
+    pbVar6[3] = false;
+    lVar8 = lVar8 + -1;
+  } while (lVar8 != 0);
   s_clientDemoKeyboard.currentProcessingSegmentIndex = -1;
   if (s_clientDemoKeyboard.active != false) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_demo\\cl_demo_ui.cpp",
                     0x1d3,0,"%s");
   }
-  iVar4 = 0;
-  ppcVar8 = clientDemoKeyboardModeNames;
+  iVar3 = 0;
+  ppcVar7 = clientDemoKeyboardModeNames;
   do {
-    iVar2 = I_stricmp(param_2,*ppcVar8);
-    if (iVar2 == 0) {
-      s_clientDemoKeyboard.mode = iVar4;
+    iVar1 = I_stricmp(param_2,*ppcVar7);
+    if (iVar1 == 0) {
+      s_clientDemoKeyboard.mode = iVar3;
     }
-    ppcVar8 = ppcVar8 + 1;
-    iVar4 = iVar4 + 1;
-  } while ((int)ppcVar8 < -0x7d65c7e0);
+    ppcVar7 = ppcVar7 + 1;
+    iVar3 = iVar3 + 1;
+  } while ((int)ppcVar7 < -0x7d65c7e0);
   if ((s_clientDemoKeyboard.mode < 1) || (8 < s_clientDemoKeyboard.mode)) {
     Com_Printf(0,"Error: Unknown demo keyboard mode.\n");
   }
   else {
-    bVar6 = CL_Demo_IsPlaybackMemoryAllocated();
-    if (bVar6) {
-      pcVar3 = CL_Demo_GetPlaybackData();
+    bVar5 = CL_Demo_IsPlaybackMemoryAllocated();
+    if (bVar5) {
+      pcVar2 = CL_Demo_GetPlaybackData();
     }
     else {
-      pcVar3 = (clientDemoPlayback_t *)0x0;
+      pcVar2 = (clientDemoPlayback_t *)0x0;
     }
     if (s_clientDemoKeyboard.mode - 1U < 8) {
       if ((s_clientDemoKeyboard.mode == 2) || (s_clientDemoKeyboard.mode == 3)) {
-        if (pcVar3 == (clientDemoPlayback_t *)0x0) goto LAB_827df880;
+        if (pcVar2 == (clientDemoPlayback_t *)0x0) {
+          return;
+        }
         s_clientDemoKeyboard.title = UI_SafeTranslateString("MENU_DEMO_CLIP");
         s_clientDemoKeyboard.textSize = 0x16;
         s_clientDemoKeyboard.defaultText = "";
       }
       else if ((s_clientDemoKeyboard.mode == 4) || (s_clientDemoKeyboard.mode == 5)) {
-        if (pcVar3 == (clientDemoPlayback_t *)0x0) goto LAB_827df880;
+        if (pcVar2 == (clientDemoPlayback_t *)0x0) {
+          return;
+        }
         s_clientDemoKeyboard.title = UI_SafeTranslateString("MENU_DEMO_SCREENSHOT");
         s_clientDemoKeyboard.textSize = 0x16;
         s_clientDemoKeyboard.defaultText = "";
@@ -440,16 +420,18 @@ void CL_Demo_Keyboard(LocalClientNum_t param_1,char *param_2)
         s_clientDemoKeyboard.textSize = 0x16;
       }
       else if (s_clientDemoKeyboard.mode == 7) {
-        iVar4 = CL_ControllerIndexFromClientNum(LVar1);
-        OnlineVault_FeederGetDataForSelectedIndex(iVar4,"isCustomGameMode",aOStack_d0);
+        iVar3 = CL_ControllerIndexFromClientNum(param_1);
+        OnlineVault_FeederGetDataForSelectedIndex(iVar3,"isCustomGameMode",aOStack_d0);
         s_clientDemoKeyboard.title = UI_SafeTranslateString("MENU_ONLINEVAULT_EDITDESC");
         s_clientDemoKeyboard.defaultText = "";
         s_clientDemoKeyboard.textSize = (-(uint)(aOStack_d0[0].internals.intVal != 0) & 0x2a) + 0x16
         ;
       }
       else if (s_clientDemoKeyboard.mode == 1) {
-        if (pcVar3 == (clientDemoPlayback_t *)0x0) goto LAB_827df880;
-        s_clientDemoKeyboard.currentProcessingSegmentIndex = pcVar3->segmentCount;
+        if (pcVar2 == (clientDemoPlayback_t *)0x0) {
+          return;
+        }
+        s_clientDemoKeyboard.currentProcessingSegmentIndex = pcVar2->segmentCount;
         s_clientDemoKeyboard.title = UI_SafeTranslateString("MENU_DEMO_SEGMENT");
         s_clientDemoKeyboard.textSize = 0x16;
         s_clientDemoKeyboard.defaultText = "";
@@ -465,31 +447,26 @@ void CL_Demo_Keyboard(LocalClientNum_t param_1,char *param_2)
       I_strncpyz(acStack_c0,s_clientDemoKeyboard.defaultText,0x80);
       MultiByteToWideChar(0xfde9,0,acStack_c0,-1,(ushort *)defaultStr,0x80);
       defaultStr[0x7f] = L'\0';
-      iVar2 = Language_IsAsian();
-      iVar4 = s_clientDemoKeyboard.textSize;
-      uVar5 = CL_ControllerIndexFromClientNum(LVar1);
-      uVar5 = XShowKeyboardUI(uVar5,(-(uint)(iVar2 != 0) & 0x3f) + 1,defaultStr,guideKeyboardTitle,
-                              (wchar_t *)0x0,(ushort *)guideKeyboard_Buffer,iVar4,
+      iVar1 = Language_IsAsian();
+      iVar3 = s_clientDemoKeyboard.textSize;
+      uVar4 = CL_ControllerIndexFromClientNum(param_1);
+      uVar4 = XShowKeyboardUI(uVar4,(-(uint)(iVar1 != 0) & 0x3f) + 1,defaultStr,guideKeyboardTitle,
+                              (wchar_t *)0x0,(ushort *)guideKeyboard_Buffer,iVar3,
                               &guideKeyboard_pOverlapped);
-      if (uVar5 != 0x3e5) {
-        Com_Printf(0x10,"Error Bringing up Guide Keyboard\n");
-        __restgprlr_26();
-        return;
-      }
-      if (s_clientDemoKeyboard.mode != 8) {
+      if (uVar4 == 0x3e5) {
+        if (s_clientDemoKeyboard.mode == 8) {
+          s_clientDemoKeyboard.checkForProfanity = false;
+          s_clientDemoKeyboard.active = true;
+          return;
+        }
         s_clientDemoKeyboard.checkForProfanity = (bool)(-(s_clientDemoKeyboard.mode != 1) & 1);
         s_clientDemoKeyboard.active = true;
-        __restgprlr_26();
         return;
       }
-      s_clientDemoKeyboard.checkForProfanity = false;
-      s_clientDemoKeyboard.active = true;
-      __restgprlr_26();
+      Com_Printf(0x10,"Error Bringing up Guide Keyboard\n");
       return;
     }
   }
-LAB_827df880:
-  __restgprlr_26();
   return;
 }
 
@@ -513,38 +490,37 @@ void CL_Demo_GetStartAndEndTime(LocalClientNum_t param_1,int *param_2,int *param
 
 // 827DF8E0  CL_Demo_GetActivatedColorForButton  (client_demo/cl_demo_ui.cpp:649)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 bool CL_Demo_GetActivatedColorForButton(int param_1,float (*param_2) [4])
 
 {
-  int iVar1;
-  bool bVar4;
-  clientDemoPlayback_t *pcVar2;
-  int iVar3;
-  undefined1 uVar5;
+  bool bVar3;
+  clientDemoPlayback_t *pcVar1;
+  int iVar2;
   
-  iVar1 = __savegprlr_29(param_1);
-  bVar4 = CL_Demo_IsPlaybackMemoryAllocated();
-  if (bVar4) {
-    pcVar2 = CL_Demo_GetPlaybackData();
-    if ((pcVar2->buttonPressTime[iVar1] != 0) &&
-       (iVar3 = Sys_Milliseconds(), iVar3 - pcVar2->buttonPressTime[iVar1] < 0x65)) {
+  bVar3 = CL_Demo_IsPlaybackMemoryAllocated();
+  if (bVar3) {
+    pcVar1 = CL_Demo_GetPlaybackData();
+    if ((pcVar1->buttonPressTime[param_1] != 0) &&
+       (iVar2 = Sys_Milliseconds(), iVar2 - pcVar1->buttonPressTime[param_1] < 0x65)) {
       (*param_2)[0] = 1.0;
       (*param_2)[1] = 1.0;
       (*param_2)[2] = 0.0;
       (*param_2)[3] = 1.0;
-      uVar5 = __restgprlr_29(1);
-      return (bool)uVar5;
+      return true;
     }
   }
-  uVar5 = __restgprlr_29(0);
-  return (bool)uVar5;
+  return false;
 }
 
 
 // 827DF978  CL_Demo_DrawVerticalLine  (client_demo/cl_demo_ui.cpp:677)
 
+/* WARNING: Function: __savefpr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void CL_Demo_DrawVerticalLine
@@ -553,48 +529,40 @@ void CL_Demo_DrawVerticalLine
                float *param_12,Material *param_13)
 
 {
-  LocalClientNum_t LVar1;
-  ScreenPlacement *pSVar2;
-  Material *pMVar3;
+  ScreenPlacement *pSVar1;
+  Material *pMVar2;
   int in_r8;
   int in_r9;
-  double extraout_f1;
+  double dVar3;
   double dVar4;
   double dVar5;
   double dVar6;
   double dVar7;
   double dVar8;
-  double dVar9;
-  double dVar10;
   char *pcStack0000001c;
   undefined4 uStack00000024;
   float fStack0000002c;
   float fStack00000034;
   
-  dVar8 = (double)param_10;
-  dVar9 = (double)param_11;
-  dVar6 = (double)param_8;
-  dVar7 = (double)param_9;
-  dVar5 = (double)param_5;
-  dVar10 = (double)param_4;
-  dVar4 = (double)param_3;
-  LVar1 = __savefpr_27((double)param_2,param_1,param_6,param_7,param_12,param_13);
-  pcStack0000001c = (char *)(float)extraout_f1;
-  uStack00000024 = (undefined4)dVar4;
-  fStack0000002c = (float)dVar10;
-  fStack00000034 = (float)dVar5;
-  pSVar2 = ScrPlace_GetActivePlacement(LVar1);
-  dVar10 = (double)fStack0000002c;
-  pMVar3 = (Material *)&stack0x0000001c;
-  ScrPlace_ApplyRect(pSVar2,(float *)pMVar3,(float *)&stack0x00000024,&stack0x0000002c,
+  dVar6 = (double)param_10;
+  dVar7 = (double)param_11;
+  dVar4 = (double)param_8;
+  dVar5 = (double)param_9;
+  pcStack0000001c = (char *)param_2;
+  uStack00000024 = param_3;
+  fStack0000002c = param_4;
+  fStack00000034 = param_5;
+  pSVar1 = ScrPlace_GetActivePlacement(param_1);
+  dVar8 = (double)fStack0000002c;
+  pMVar2 = (Material *)&stack0x0000001c;
+  ScrPlace_ApplyRect(pSVar1,(float *)pMVar2,(float *)&stack0x00000024,&stack0x0000002c,
                      &stack0x00000034,in_r8,in_r9);
-  dVar4 = floor((double)((float)pcStack0000001c + 0.5));
-  fStack0000002c = (float)dVar10;
-  pcStack0000001c = (char *)(float)(longlong)(int)dVar4;
+  dVar3 = floor((double)((float)pcStack0000001c + 0.5));
+  fStack0000002c = (float)dVar8;
+  pcStack0000001c = (char *)(float)(longlong)(int)dVar3;
   CL_DrawStretchPicPhysical
-            ((float)pcStack0000001c,(float)uStack00000024,(float)dVar10,fStack00000034,(float)dVar6,
-             (float)dVar7,(float)dVar8,(float)dVar9,pSVar2->scaleVirtualToReal,pMVar3);
-  __restfpr_27();
+            ((float)pcStack0000001c,(float)uStack00000024,(float)dVar8,fStack00000034,(float)dVar4,
+             (float)dVar5,(float)dVar6,(float)dVar7,pSVar1->scaleVirtualToReal,pMVar2);
   return;
 }
 
@@ -668,74 +636,71 @@ char * CL_Demo_GetSegmentTransition(int param_1)
 
 // 827DFBB0  CL_Demo_GetSegmentInformation  (client_demo/cl_demo_ui.cpp:762)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 char * CL_Demo_GetSegmentInformation(int param_1,char *param_2)
 
 {
-  int iVar1;
-  bool bVar5;
-  clientDemoPlayback_t *pcVar2;
-  int iVar3;
-  char *pcVar4;
+  bool bVar4;
+  clientDemoPlayback_t *pcVar1;
+  int iVar2;
+  char *pcVar3;
+  int iVar5;
   char local_40 [64];
   
-  iVar1 = __savegprlr_28(param_1);
   local_40[0] = '\0';
   memset();
-  bVar5 = CL_Demo_IsPlaybackMemoryAllocated();
-  if (bVar5) {
-    pcVar2 = CL_Demo_GetPlaybackData();
-    iVar3 = I_stricmp(param_2,"name");
-    if (iVar3 == 0) {
-      pcVar4 = (char *)__restgprlr_28((longlong)iVar1 * 0x100a8 + (longlong)(int)pcVar2 + 0x51e8b8);
-      return pcVar4;
+  bVar4 = CL_Demo_IsPlaybackMemoryAllocated();
+  if (bVar4) {
+    pcVar1 = CL_Demo_GetPlaybackData();
+    iVar2 = I_stricmp(param_2,"name");
+    if (iVar2 == 0) {
+      return pcVar1->segments[param_1].name;
     }
-    iVar3 = I_stricmp(param_2,"duration");
-    if (iVar3 == 0) {
+    iVar2 = I_stricmp(param_2,"duration");
+    if (iVar2 == 0) {
       Com_sprintf(local_40,0xc,"%02i:%02i");
-      pcVar4 = va("%s");
-      pcVar4 = (char *)__restgprlr_28(pcVar4);
-      return pcVar4;
+      pcVar3 = va("%s");
+      return pcVar3;
     }
-    iVar3 = I_stricmp(param_2,"durationLocString");
-    if (iVar3 == 0) {
-      pcVar4 = UI_SafeTranslateString("MENU_DEMO_DURATION");
+    iVar2 = I_stricmp(param_2,"durationLocString");
+    if (iVar2 == 0) {
+      pcVar3 = UI_SafeTranslateString("MENU_DEMO_DURATION");
       Com_sprintf(local_40,0xc,"%02i:%02i");
-      pcVar4 = UI_ReplaceConversionString(pcVar4,local_40);
-      pcVar4 = (char *)__restgprlr_28(pcVar4);
-      return pcVar4;
+      pcVar3 = UI_ReplaceConversionString(pcVar3,local_40);
+      return pcVar3;
     }
-    iVar3 = I_stricmp(param_2,"transition");
-    if (iVar3 == 0) {
-      pcVar4 = CL_Demo_GetSegmentTransition(iVar1);
-      pcVar4 = (char *)__restgprlr_28(pcVar4);
-      return pcVar4;
+    iVar2 = I_stricmp(param_2,"transition");
+    if (iVar2 == 0) {
+      pcVar3 = CL_Demo_GetSegmentTransition(param_1);
+      return pcVar3;
     }
-    iVar1 = I_stricmp(param_2,"totalClipDurationLocString");
-    if (iVar1 == 0) {
-      iVar3 = 0;
-      iVar1 = CL_Demo_GetSegmentCount();
-      if (0 < iVar1) {
+    iVar2 = I_stricmp(param_2,"totalClipDurationLocString");
+    if (iVar2 == 0) {
+      iVar5 = 0;
+      iVar2 = CL_Demo_GetSegmentCount();
+      if (0 < iVar2) {
         do {
-          iVar3 = iVar3 + 1;
-          iVar1 = CL_Demo_GetSegmentCount();
-        } while (iVar3 < iVar1);
+          iVar5 = iVar5 + 1;
+          iVar2 = CL_Demo_GetSegmentCount();
+        } while (iVar5 < iVar2);
       }
-      pcVar4 = UI_SafeTranslateString("MENU_DEMO_TOTAL_CLIP_DURATION");
+      pcVar3 = UI_SafeTranslateString("MENU_DEMO_TOTAL_CLIP_DURATION");
       Com_sprintf(local_40,0xc,"%02i:%02i");
-      pcVar4 = UI_ReplaceConversionString(pcVar4,local_40);
-      pcVar4 = (char *)__restgprlr_28(pcVar4);
-      return pcVar4;
+      pcVar3 = UI_ReplaceConversionString(pcVar3,local_40);
+      return pcVar3;
     }
   }
-  pcVar4 = (char *)__restgprlr_28(0xffffffff820068af);
-  return pcVar4;
+  return "";
 }
 
 
 // 827E08B0  CL_Demo_GetRecentGamesFeederDataForSelectedIndex  (client_demo/cl_demo_ui.cpp:817)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 
@@ -743,18 +708,17 @@ void CL_Demo_GetRecentGamesFeederDataForSelectedIndex(int param_1,char *param_2,
 
 {
   int iVar1;
-  int iVar2;
   
-  iVar1 = __savegprlr_29(param_1);
-  iVar2 = CL_Demo_EnumGetIndex(iVar1);
-  CL_Demo_GetRecentGamesFeederData(iVar1,param_2,iVar2,param_3);
-  __restgprlr_29();
+  iVar1 = CL_Demo_EnumGetIndex(param_1);
+  CL_Demo_GetRecentGamesFeederData(param_1,param_2,iVar1,param_3);
   return;
 }
 
 
 // 827DFE10  CL_Demo_GetRecentGamesFeederData  (client_demo/cl_demo_ui.cpp:829)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 
@@ -762,9 +726,9 @@ void CL_Demo_GetRecentGamesFeederData(int param_1,char *param_2,int param_3,Oper
 
 {
   demoEnumMatchResult dVar1;
-  int iVar2;
-  clientDemoDeviceEnumInfo_t *pcVar3;
+  clientDemoDeviceEnumInfo_t *pcVar2;
   bool bVar7;
+  int iVar3;
   char *pcVar4;
   char *pcVar5;
   uint uVar6;
@@ -773,27 +737,29 @@ void CL_Demo_GetRecentGamesFeederData(int param_1,char *param_2,int param_3,Oper
   ConversionArguments local_460;
   char acStack_430 [1072];
   
-  iVar2 = __savegprlr_27(param_1);
   Operand_SetString(param_4,"");
-  pcVar3 = CL_Demo_GetDeviceEnumInfo(iVar2);
-  if (pcVar3 == (clientDemoDeviceEnumInfo_t *)0x0) goto LAB_827e0368;
+  pcVar2 = CL_Demo_GetDeviceEnumInfo(param_1);
+  if (pcVar2 == (clientDemoDeviceEnumInfo_t *)0x0) {
+    return;
+  }
   if ((param_3 < 0) || (0x32 < param_3)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client_demo\\cl_demo_ui.cpp",
                     0x34e,0,"index not in [0, MAX_CLIENT_DEMO_ENUM_COUNT]\n\t%i not in [%i, %i]");
   }
-  if ((pcVar3->metaInfo[param_3].corruptFile == false) &&
-     (pcVar3->metaInfo[param_3].exists != false)) {
-    pcVar5 = pcVar3->metaInfo[param_3].mapName;
+  if ((pcVar2->metaInfo[param_3].corruptFile == false) &&
+     (pcVar2->metaInfo[param_3].exists != false)) {
+    pcVar5 = pcVar2->metaInfo[param_3].mapName;
     bVar7 = UI_GetIndexForMapName(pcVar5,local_4a0);
-    if (!bVar7) goto LAB_827e0368;
-    iVar2 = I_stricmp(param_2,"mapImage");
-    if (iVar2 == 0) {
-      Operand_SetString(param_4,sharedUiInfo.mapList[local_4a0[0]].mapLoadImage);
-      __restgprlr_27();
+    if (!bVar7) {
       return;
     }
-    iVar2 = I_stricmp(param_2,"GameTypeOnMapName");
-    if (iVar2 == 0) {
+    iVar3 = I_stricmp(param_2,"mapImage");
+    if (iVar3 == 0) {
+      Operand_SetString(param_4,sharedUiInfo.mapList[local_4a0[0]].mapLoadImage);
+      return;
+    }
+    iVar3 = I_stricmp(param_2,"GameTypeOnMapName");
+    if (iVar3 == 0) {
       pcVar4 = UI_SafeTranslateString("MENU_GAMETYPE_ON_MAP");
       local_460.args[1] = (char *)0x0;
       local_460.args[2] = (char *)0x0;
@@ -805,107 +771,96 @@ void CL_Demo_GetRecentGamesFeederData(int param_1,char *param_2,int param_3,Oper
       local_460.args[8] = (char *)0x0;
       local_460.args[0] = (char *)0x0;
       local_460.argCount = 2;
-      local_460.args[0] = UI_GetGameTypeDisplayName(pcVar3->metaInfo[param_3].gameType);
+      local_460.args[0] = UI_GetGameTypeDisplayName(pcVar2->metaInfo[param_3].gameType);
       pcVar5 = UI_GetMapDisplayName(pcVar5);
       local_460.args[1] = pcVar5;
       UI_ReplaceConversions(pcVar4,&local_460,acStack_430,0x400);
       Operand_SetString(param_4,acStack_430);
-      __restgprlr_27();
       return;
     }
-    iVar2 = I_stricmp(param_2,"mapDisplayName");
-    if (iVar2 == 0) {
+    iVar3 = I_stricmp(param_2,"mapDisplayName");
+    if (iVar3 == 0) {
       pcVar5 = UI_GetMapDisplayName(pcVar5);
       Operand_SetString(param_4,pcVar5);
-      __restgprlr_27();
       return;
     }
-    iVar2 = I_stricmp(param_2,"gametypeIsFFA");
-    if (iVar2 == 0) {
-      pcVar5 = pcVar3->metaInfo[param_3].gameType;
-      iVar2 = I_stricmp(pcVar5,"dm");
-      if ((((iVar2 != 0) && (iVar2 = I_stricmp(pcVar5,"oic"), iVar2 != 0)) &&
-          (iVar2 = I_stricmp(pcVar5,"gun"), iVar2 != 0)) &&
-         (iVar2 = I_stricmp(pcVar5,"jugg"), iVar2 != 0)) {
+    iVar3 = I_stricmp(param_2,"gametypeIsFFA");
+    if (iVar3 == 0) {
+      pcVar5 = pcVar2->metaInfo[param_3].gameType;
+      iVar3 = I_stricmp(pcVar5,"dm");
+      if ((((iVar3 != 0) && (iVar3 = I_stricmp(pcVar5,"oic"), iVar3 != 0)) &&
+          (iVar3 = I_stricmp(pcVar5,"gun"), iVar3 != 0)) &&
+         (iVar3 = I_stricmp(pcVar5,"jugg"), iVar3 != 0)) {
         Operand_SetInt(param_4,0);
-        __restgprlr_27();
         return;
       }
       Operand_SetInt(param_4,1);
-      __restgprlr_27();
       return;
     }
-    iVar2 = I_stricmp(param_2,"gametypeDisplayName");
-    if (iVar2 == 0) {
-      pcVar5 = UI_GetGameTypeDisplayName(pcVar3->metaInfo[param_3].gameType);
+    iVar3 = I_stricmp(param_2,"gametypeDisplayName");
+    if (iVar3 == 0) {
+      pcVar5 = UI_GetGameTypeDisplayName(pcVar2->metaInfo[param_3].gameType);
       Operand_SetString(param_4,pcVar5);
-      __restgprlr_27();
       return;
     }
-    iVar2 = I_stricmp(param_2,"duration");
-    if (iVar2 == 0) {
+    iVar3 = I_stricmp(param_2,"duration");
+    if (iVar3 == 0) {
       Com_sprintf(acStack_430,0x400,"%02i:%02i");
       Operand_SetString(param_4,acStack_430);
-      __restgprlr_27();
       return;
     }
-    iVar2 = I_stricmp(param_2,"createTime");
-    if (iVar2 == 0) {
-      iVar2 = pcVar3->metaInfo[param_3].createTime;
+    iVar3 = I_stricmp(param_2,"createTime");
+    if (iVar3 == 0) {
+      iVar3 = pcVar2->metaInfo[param_3].createTime;
       bVar7 = LiveStorage_IsTimeSynced();
       if (bVar7) {
         uVar6 = LiveStorage_GetUTCOffset();
-        iVar2 = uVar6 + iVar2;
+        iVar3 = uVar6 + iVar3;
       }
-      Com_RealTime(iVar2,&qStack_490);
+      Com_RealTime(iVar3,&qStack_490);
       Com_sprintf(acStack_430,0x400,"%d/%d/%d  %.2d:%.2d");
       Operand_SetString(param_4,acStack_430);
-      __restgprlr_27();
       return;
     }
-    iVar2 = I_stricmp(param_2,"author");
-    if (iVar2 == 0) {
-      Operand_SetString(param_4,pcVar3->metaInfo[param_3].authorName);
-      __restgprlr_27();
+    iVar3 = I_stricmp(param_2,"author");
+    if (iVar3 == 0) {
+      Operand_SetString(param_4,pcVar2->metaInfo[param_3].authorName);
       return;
     }
-    iVar2 = I_stricmp(param_2,"kills");
-    if (iVar2 == 0) {
+    iVar3 = I_stricmp(param_2,"kills");
+    if (iVar3 == 0) {
       pcVar5 = va("%d");
       Operand_SetString(param_4,pcVar5);
-      __restgprlr_27();
       return;
     }
-    iVar2 = I_stricmp(param_2,"deaths");
-    if (iVar2 == 0) {
+    iVar3 = I_stricmp(param_2,"deaths");
+    if (iVar3 == 0) {
       pcVar5 = va("%d");
       Operand_SetString(param_4,pcVar5);
-      __restgprlr_27();
       return;
     }
-    iVar2 = I_stricmp(param_2,"ourTeamScore");
-    if (iVar2 == 0) {
+    iVar3 = I_stricmp(param_2,"ourTeamScore");
+    if (iVar3 == 0) {
       pcVar5 = va("%d");
       Operand_SetString(param_4,pcVar5);
-      __restgprlr_27();
       return;
     }
-    iVar2 = I_stricmp(param_2,"otherTeamScore");
-    if (iVar2 == 0) {
+    iVar3 = I_stricmp(param_2,"otherTeamScore");
+    if (iVar3 == 0) {
       pcVar5 = va("%d");
       Operand_SetString(param_4,pcVar5);
-      __restgprlr_27();
       return;
     }
-    iVar2 = I_stricmp(param_2,"matchResultInt");
-    if (iVar2 == 0) {
-      Operand_SetInt(param_4,pcVar3->metaInfo[param_3].matchResult);
-      __restgprlr_27();
+    iVar3 = I_stricmp(param_2,"matchResultInt");
+    if (iVar3 == 0) {
+      Operand_SetInt(param_4,pcVar2->metaInfo[param_3].matchResult);
       return;
     }
-    iVar2 = I_stricmp(param_2,"matchResult");
-    if (iVar2 != 0) goto LAB_827e0368;
-    dVar1 = pcVar3->metaInfo[param_3].matchResult;
+    iVar3 = I_stricmp(param_2,"matchResult");
+    if (iVar3 != 0) {
+      return;
+    }
+    dVar1 = pcVar2->metaInfo[param_3].matchResult;
     if (dVar1 == MATCH_RESULT_DRAW) {
       pcVar5 = "MPUI_TIED_CAPS";
     }
@@ -915,21 +870,20 @@ void CL_Demo_GetRecentGamesFeederData(int param_1,char *param_2,int param_3,Oper
     else {
       if (MATCH_RESULT_LOSS < dVar1) {
         Operand_SetString(param_4,"");
-        __restgprlr_27();
         return;
       }
       pcVar5 = "MPUI_VAULT_RESULT_DEFEAT";
     }
   }
   else {
-    iVar2 = I_stricmp(param_2,"GameTypeOnMapName");
-    if (iVar2 != 0) goto LAB_827e0368;
+    iVar3 = I_stricmp(param_2,"GameTypeOnMapName");
+    if (iVar3 != 0) {
+      return;
+    }
     pcVar5 = "MENU_DEMO_CORRUPT_FILE";
   }
   pcVar5 = UI_SafeTranslateString(pcVar5);
   Operand_SetString(param_4,pcVar5);
-LAB_827e0368:
-  __restgprlr_27();
   return;
 }
 
@@ -951,37 +905,34 @@ char * CL_Demo_RecentGames_FeederItemText(int param_1,int param_2)
 
 // 827E03A8  CL_Demo_IsPauseMenuOpen  (client_demo/cl_demo_ui.cpp:973)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 bool CL_Demo_IsPauseMenuOpen(LocalClientNum_t param_1)
 
 {
   char *pcVar1;
-  LocalClientNum_t LVar2;
-  bool bVar3;
-  undefined1 uVar4;
-  char **ppcVar5;
-  int iVar6;
+  bool bVar2;
+  char **ppcVar3;
+  int iVar4;
   
-  LVar2 = __savegprlr_29(param_1);
-  bVar3 = Key_IsCatcherActive(LVar2,0x10);
-  if (bVar3) {
-    iVar6 = 0;
-    ppcVar5 = ingameMenuNames;
+  bVar2 = Key_IsCatcherActive(param_1,0x10);
+  if (bVar2) {
+    iVar4 = 0;
+    ppcVar3 = ingameMenuNames;
     pcVar1 = ingameMenuNames[0];
     while (pcVar1 != (char *)0x0) {
-      bVar3 = Menu_IsMenuOpenAndVisible(LVar2,*ppcVar5);
-      if (bVar3) {
-        uVar4 = __restgprlr_29(1);
-        return (bool)uVar4;
+      bVar2 = Menu_IsMenuOpenAndVisible(param_1,*ppcVar3);
+      if (bVar2) {
+        return true;
       }
-      iVar6 = iVar6 + 1;
-      ppcVar5 = ingameMenuNames + iVar6;
-      pcVar1 = *ppcVar5;
+      iVar4 = iVar4 + 1;
+      ppcVar3 = ingameMenuNames + iVar4;
+      pcVar1 = *ppcVar3;
     }
   }
-  uVar4 = __restgprlr_29(0);
-  return (bool)uVar4;
+  return false;
 }
 
 
@@ -1012,37 +963,34 @@ void CL_Demo_OpenSavePopUp(LocalClientNum_t param_1,int param_2)
 
 // 827E04C0  CL_Demo_IsSaveDialogOpen  (client_demo/cl_demo_ui.cpp:1014)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 bool CL_Demo_IsSaveDialogOpen(LocalClientNum_t param_1)
 
 {
   char *pcVar1;
-  LocalClientNum_t LVar2;
-  bool bVar3;
-  undefined1 uVar4;
-  char **ppcVar5;
-  int iVar6;
+  bool bVar2;
+  char **ppcVar3;
+  int iVar4;
   
-  LVar2 = __savegprlr_29(param_1);
-  bVar3 = Key_IsCatcherActive(LVar2,0x10);
-  if (bVar3) {
-    iVar6 = 0;
-    ppcVar5 = demoSavePopupMenuNames;
+  bVar2 = Key_IsCatcherActive(param_1,0x10);
+  if (bVar2) {
+    iVar4 = 0;
+    ppcVar3 = demoSavePopupMenuNames;
     pcVar1 = demoSavePopupMenuNames[0];
     while (pcVar1 != (char *)0x0) {
-      bVar3 = Menu_IsMenuOpenAndVisible(LVar2,*ppcVar5);
-      if (bVar3) {
-        uVar4 = __restgprlr_29(1);
-        return (bool)uVar4;
+      bVar2 = Menu_IsMenuOpenAndVisible(param_1,*ppcVar3);
+      if (bVar2) {
+        return true;
       }
-      iVar6 = iVar6 + 1;
-      ppcVar5 = demoSavePopupMenuNames + iVar6;
-      pcVar1 = *ppcVar5;
+      iVar4 = iVar4 + 1;
+      ppcVar3 = demoSavePopupMenuNames + iVar4;
+      pcVar1 = *ppcVar3;
     }
   }
-  uVar4 = __restgprlr_29(0);
-  return (bool)uVar4;
+  return false;
 }
 
 

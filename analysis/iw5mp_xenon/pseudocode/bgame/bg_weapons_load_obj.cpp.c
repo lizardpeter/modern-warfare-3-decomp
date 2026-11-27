@@ -80,6 +80,8 @@ char * BG_GetWeaponInventoryTypeName(weapInventoryType_t param_1)
 
 // 82291E40  BG_LoadWeaponStrings  (bgame/bg_weapons_load_obj.cpp:2743)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void BG_LoadWeaponStrings(void)
@@ -88,7 +90,6 @@ void BG_LoadWeaponStrings(void)
   int *piVar1;
   uint uVar2;
   
-  __savegprlr_29();
   uVar2 = 0;
   if (DAT_829d7f4c != 0) {
     piVar1 = &surfaceTypeSoundListCount;
@@ -98,50 +99,48 @@ void BG_LoadWeaponStrings(void)
       uVar2 = uVar2 + 1;
     } while (uVar2 < DAT_829d7f4c);
   }
-  __restgprlr_29();
   return;
 }
 
 
 // 82291E90  Weapon_GetStringArrayIndex  (bgame/bg_weapons_load_obj.cpp:2753)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 int Weapon_GetStringArrayIndex(char *param_1,char **param_2,int param_3)
 
 {
-  char *pcVar1;
+  int iVar1;
   int iVar2;
-  longlong lVar3;
-  ulonglong uVar4;
   
-  uVar4 = (ulonglong)(int)param_2;
-  pcVar1 = (char *)__savegprlr_27(param_1);
-  if (pcVar1 == (char *)0x0) {
+  if (param_1 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_weapons_load_obj.cpp"
                     ,0xac4,0,"%s");
   }
-  if ((uVar4 & 0xffffffff) == 0) {
+  if (param_2 == (char **)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_weapons_load_obj.cpp"
                     ,0xac5,0,"%s");
   }
-  lVar3 = 0;
+  iVar2 = 0;
   if (0 < param_3) {
     do {
-      iVar2 = I_stricmp(pcVar1,(char *)*(undefined4 *)uVar4);
-      if (iVar2 == 0) {
-        iVar2 = __restgprlr_27(lVar3);
+      iVar1 = I_stricmp(param_1,*param_2);
+      if (iVar1 == 0) {
         return iVar2;
       }
-      lVar3 = lVar3 + 1;
-      uVar4 = uVar4 + 4;
-    } while ((int)lVar3 < param_3);
+      iVar2 = iVar2 + 1;
+      param_2 = param_2 + 1;
+    } while (iVar2 < param_3);
   }
-  iVar2 = __restgprlr_27(0xffffffffffffffff);
-  return iVar2;
+  return -1;
 }
 
 
 // 82291F48  BG_LoadPlayerAnimTypes  (bgame/bg_weapons_load_obj.cpp:2778)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void BG_LoadPlayerAnimTypes(void)
@@ -154,7 +153,6 @@ void BG_LoadPlayerAnimTypes(void)
   char *local_40 [2];
   LargeLocal aLStack_38 [7];
   
-  __savegprlr_28();
   LargeLocal::LargeLocal(aLStack_38,0x18000);
   pcVar2 = LargeLocal::GetBuf(aLStack_38);
   DAT_829d7f4c = 0;
@@ -189,7 +187,6 @@ void BG_LoadPlayerAnimTypes(void)
   Com_EndParseSession();
   g_playerAnimTypeIndexHold = Weapon_GetStringArrayIndex("hold",g_playerAnimTypeNames,DAT_829d7f4c);
   LargeLocal::~LargeLocal(aLStack_38);
-  __restgprlr_28();
   return;
 }
 

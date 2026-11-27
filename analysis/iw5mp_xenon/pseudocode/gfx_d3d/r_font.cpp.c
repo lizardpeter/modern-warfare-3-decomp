@@ -107,223 +107,88 @@ uint FindUnicodeToAsianMapping(UnicodeToAsianCodePage *param_1,int param_2,int p
 
 // 8273EC78  GetGlyphFromUTF8  (gfx_d3d/r_font.cpp:9623)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 int GetGlyphFromUTF8(uchar *param_1,int *param_2)
 
 {
-  byte *pbVar1;
-  int iVar2;
-  uint uVar3;
-  undefined4 *puVar4;
-  ulonglong uVar5;
+  byte bVar1;
+  uint uVar2;
+  ulonglong uVar3;
   
-  uVar5 = (ulonglong)(int)param_2;
-  pbVar1 = (byte *)__savegprlr_28(param_1);
-  if (pbVar1 == (byte *)0x0) {
+  if (param_1 == (uchar *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_font.cpp",0x259a,0,
                     "%s");
   }
-  if ((uVar5 & 0xffffffff) == 0) {
+  if (param_2 == (int *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_font.cpp",0x259b,0,
                     "%s");
   }
-  puVar4 = (undefined4 *)uVar5;
-  *puVar4 = 0;
-  uVar5 = (ulonglong)*pbVar1;
-  if ((*pbVar1 & 0x80) != 0) {
-    if ((uVar5 & 0xe0) == 0xc0) {
-      if (0x7f < (pbVar1[1] & 0x7f | (uint)((uVar5 & 0x1f) << 6))) {
-        *puVar4 = 2;
-        iVar2 = __restgprlr_28();
-        return iVar2;
+  *param_2 = 0;
+  bVar1 = *param_1;
+  uVar3 = (ulonglong)bVar1;
+  if ((bVar1 & 0x80) != 0) {
+    if ((uVar3 & 0xe0) == 0xc0) {
+      uVar2 = param_1[1] & 0x7f | (bVar1 & 0x1f) << 6;
+      if (0x7f < uVar2) {
+        *param_2 = 2;
+        return uVar2;
       }
     }
-    else if ((uVar5 & 0xf0) == 0xe0) {
-      uVar3 = (uint)(((uVar5 & 0xf) << 6 | (ulonglong)pbVar1[1]) << 6) | pbVar1[2] & 0x7f;
-      if ((0x7ff < uVar3) && ((uVar3 < 0xd800 || (0xdfff < uVar3)))) {
-        *puVar4 = 3;
-        iVar2 = __restgprlr_28();
-        return iVar2;
+    else if ((uVar3 & 0xf0) == 0xe0) {
+      uVar2 = (uint)(((uVar3 & 0xf) << 6 | (ulonglong)param_1[1]) << 6) | param_1[2] & 0x7f;
+      if ((0x7ff < uVar2) && ((uVar2 < 0xd800 || (0xdfff < uVar2)))) {
+        *param_2 = 3;
+        return uVar2;
       }
     }
-    else if ((((uVar5 & 0xf8) == 0xf0) &&
-             (uVar3 = (uint)((((uVar5 & 0xf) << 6 | (ulonglong)pbVar1[1]) << 6 |
-                             (ulonglong)pbVar1[2]) << 6) | pbVar1[3] & 0x7f, 0xffff < uVar3)) &&
-            (uVar3 < 0x10ffff)) {
-      *puVar4 = 4;
-      iVar2 = __restgprlr_28();
-      return iVar2;
+    else if ((((uVar3 & 0xf8) == 0xf0) &&
+             (uVar2 = (uint)((((uVar3 & 0xf) << 6 | (ulonglong)param_1[1]) << 6 |
+                             (ulonglong)param_1[2]) << 6) | param_1[3] & 0x7f, 0xffff < uVar2)) &&
+            (uVar2 < 0x10ffff)) {
+      *param_2 = 4;
+      return uVar2;
     }
-    iVar2 = __restgprlr_28(0xffffffffffffffff);
-    return iVar2;
+    return -1;
   }
-  *puVar4 = 1;
-  iVar2 = __restgprlr_28(uVar5);
-  return iVar2;
+  *param_2 = 1;
+  return (int)bVar1;
 }
 
 
 // 8273EE18  MakeUTF8NameSafeForAllLanguages  (gfx_d3d/r_font.cpp:9666)
 
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
+
 bool MakeUTF8NameSafeForAllLanguages(char *param_1,int param_2)
 
 {
-  longlong lVar1;
-  uchar uVar2;
-  uchar *puVar3;
-  ushort uVar4;
-  int iVar5;
-  uchar *puVar6;
-  uint uVar7;
-  undefined1 uVar8;
-  longlong lVar9;
-  int iVar10;
-  int iVar11;
-  uint uVar12;
-  int iVar13;
-  ulonglong uVar14;
-  longlong lVar15;
-  UnicodeToCodePage *pUVar16;
-  ulonglong uVar17;
-  uchar *puVar18;
+  uchar uVar1;
+  uchar *puVar2;
+  ushort uVar3;
+  bool bVar4;
+  uint uVar5;
+  int iVar6;
+  int iVar7;
+  uint uVar8;
+  int iVar9;
+  UnicodeToCodePage *pUVar10;
+  uchar *puVar11;
+  int local_470 [3];
+  uchar auStack_461 [1121];
   
-  lVar9 = (longlong)param_2;
-  puVar6 = (uchar *)__savegprlr_22(param_1);
-  lVar1 = ZEXT48(&stack0x00000000) - 0x4c0;
-  iVar5 = (int)lVar1;
-  *(BADSPACEBASE **)iVar5 = register0x0000000c;
-  if (puVar6 == (uchar *)0x0) {
+  if (param_1 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_font.cpp",0x25cd,0,
                     "%s");
   }
-  if (0x400 < (int)lVar9) {
+  if (0x400 < param_2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_font.cpp",0x25ce,0,
                     "%s");
   }
-  lVar15 = 0;
-  uVar17 = ZEXT48(&stack0x00000000) - 0x460;
-  puVar18 = (uchar *)uVar17;
-  uVar14 = lVar9 + lVar1 + 0x5f;
-  if ((loc_language->current).integer == 6) {
-    pUVar16 = unicodeToRussian;
-  }
-  else if ((loc_language->current).integer == 7) {
-    pUVar16 = unicodeToPolish;
-  }
-  else {
-    pUVar16 = unicodeToDefault;
-  }
-  uVar2 = *puVar6;
-  puVar3 = puVar6;
-  do {
-    if (((uVar2 == '\0') ||
-        (puVar18 = (uchar *)uVar17, (uVar14 & 0xffffffff) <= (uVar17 & 0xffffffff))) ||
-       (uVar7 = GetGlyphFromUTF8(puVar3,(int *)(iVar5 + 0x50)), uVar7 == 0xffffffff)) {
-      *puVar18 = '\0';
-      if (lVar15 != 0) {
-        I_strncpyz((char *)puVar6,(char *)(iVar5 + 0x60),(int)lVar9);
-      }
-      uVar8 = __restgprlr_22(lVar15);
-      return (bool)uVar8;
-    }
-    iVar10 = 0;
-    if ((loc_language->current).integer == 10) {
-      iVar11 = 0x1eea;
-      do {
-        uVar12 = iVar10 + iVar11;
-        iVar13 = ((int)uVar12 >> 1) + (uint)((int)uVar12 < 0 && (uVar12 & 1) != 0);
-        if (unicodeToJapanese[iVar13].unicode == uVar7) {
-          uVar4 = unicodeToJapanese[iVar13].val;
-          if (uVar4 != 0) {
-            if (((uVar4 != 0x5f) && (uVar4 != 0x20)) && (uVar4 != 0x2e)) {
-              lVar15 = 1;
-            }
-            if (0x100 < uVar4) {
-              *puVar18 = (uchar)(uVar4 >> 8);
-              uVar17 = uVar17 + 1;
-            }
-            if ((uVar14 & 0xffffffff) <= (uVar17 & 0xffffffff)) goto LAB_8273ef64;
-            *(undefined1 *)uVar17 = (char)uVar4;
-            goto LAB_8273ef60;
-          }
-          break;
-        }
-        if ((int)(uint)unicodeToJapanese[iVar13].unicode < (int)uVar7) {
-          iVar10 = iVar13 + 1;
-        }
-        else {
-          iVar11 = iVar13 + -1;
-        }
-      } while (iVar10 <= iVar11);
-    }
-    else {
-      iVar11 = 0xff;
-      do {
-        uVar12 = iVar10 + iVar11;
-        iVar13 = ((int)uVar12 >> 1) + (uint)((int)uVar12 < 0 && (uVar12 & 1) != 0);
-        uVar12 = (uint)pUVar16[iVar13].unicode;
-        if (uVar12 == uVar7) {
-          uVar2 = pUVar16[iVar13].val;
-          *puVar18 = uVar2;
-          if (((uVar2 != '_') && (uVar2 != ' ')) && (uVar2 != '.')) {
-            lVar15 = 1;
-          }
-          goto LAB_8273ef60;
-        }
-        if ((int)uVar12 < (int)uVar7) {
-          iVar10 = iVar13 + 1;
-        }
-        else {
-          iVar11 = iVar13 + -1;
-        }
-      } while (iVar10 <= iVar11);
-    }
-    *puVar18 = '_';
-LAB_8273ef60:
-    uVar17 = uVar17 + 1;
-LAB_8273ef64:
-    puVar18 = (uchar *)uVar17;
-    puVar3 = puVar3 + *(int *)(iVar5 + 0x50);
-    uVar2 = *puVar3;
-  } while( true );
-}
-
-
-// 8273F060  MakeWideCharNameSafeForAllLanguages  (gfx_d3d/r_font.cpp:9758)
-
-bool MakeWideCharNameSafeForAllLanguages(char *param_1,wchar_t *param_2,int param_3)
-
-{
-  uchar uVar1;
-  short sVar2;
-  ushort uVar3;
-  ushort uVar4;
-  ulonglong uVar5;
-  undefined8 uVar6;
-  undefined1 uVar8;
-  ulonglong uVar9;
-  UnicodeToCodePage *pUVar10;
-  longlong lVar11;
-  int iVar12;
-  int iVar13;
-  uint uVar14;
-  int iVar15;
-  ulonglong uVar16;
-  uchar *puVar7;
-  
-  lVar11 = (longlong)param_3;
-  uVar9 = (ulonglong)(int)param_2;
-  uVar5 = __savegprlr_27(param_1);
-  puVar7 = (uchar *)uVar5;
-  if ((uVar9 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_font.cpp",0x2625,0,
-                    "%s");
-  }
-  if ((uVar5 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_font.cpp",0x2626,0,
-                    "%s");
-  }
-  uVar6 = 0;
-  uVar16 = (uVar5 + lVar11) - 1;
+  bVar4 = false;
+  puVar11 = auStack_461 + 1;
   if ((loc_language->current).integer == 6) {
     pUVar10 = unicodeToRussian;
   }
@@ -333,74 +198,184 @@ bool MakeWideCharNameSafeForAllLanguages(char *param_1,wchar_t *param_2,int para
   else {
     pUVar10 = unicodeToDefault;
   }
-  sVar2 = *(short *)uVar9;
+  uVar1 = *param_1;
+  puVar2 = (uchar *)param_1;
   do {
-    if ((sVar2 == 0) || (puVar7 = (uchar *)uVar5, (uVar16 & 0xffffffff) <= (uVar5 & 0xffffffff))) {
-      *puVar7 = '\0';
-      uVar8 = __restgprlr_27(uVar6);
-      return (bool)uVar8;
+    if (((uVar1 == '\0') || (auStack_461 + param_2 <= puVar11)) ||
+       (uVar5 = GetGlyphFromUTF8(puVar2,local_470), uVar5 == 0xffffffff)) {
+      *puVar11 = '\0';
+      if (bVar4) {
+        I_strncpyz(param_1,(char *)(auStack_461 + 1),param_2);
+      }
+      return bVar4;
     }
-    iVar12 = 0;
-    uVar3 = *(ushort *)uVar9;
+    iVar6 = 0;
     if ((loc_language->current).integer == 10) {
-      iVar13 = 0x1eea;
+      iVar7 = 0x1eea;
       do {
-        uVar14 = iVar12 + iVar13;
-        iVar15 = ((int)uVar14 >> 1) + (uint)((int)uVar14 < 0 && (uVar14 & 1) != 0);
-        if (unicodeToJapanese[iVar15].unicode == uVar3) {
-          uVar3 = unicodeToJapanese[iVar15].val;
+        uVar8 = iVar6 + iVar7;
+        iVar9 = ((int)uVar8 >> 1) + (uint)((int)uVar8 < 0 && (uVar8 & 1) != 0);
+        if (unicodeToJapanese[iVar9].unicode == uVar5) {
+          uVar3 = unicodeToJapanese[iVar9].val;
           if (uVar3 != 0) {
             if (((uVar3 != 0x5f) && (uVar3 != 0x20)) && (uVar3 != 0x2e)) {
-              uVar6 = 1;
+              bVar4 = true;
             }
             if (0x100 < uVar3) {
-              *puVar7 = (uchar)(uVar3 >> 8);
-              uVar5 = uVar5 + 1;
+              *puVar11 = (uchar)(uVar3 >> 8);
+              puVar11 = puVar11 + 1;
             }
-            if ((uVar16 & 0xffffffff) <= (uVar5 & 0xffffffff)) goto LAB_8273f194;
-            *(undefined1 *)uVar5 = (char)uVar3;
+            if (auStack_461 + param_2 <= puVar11) goto LAB_8273ef64;
+            *puVar11 = (uchar)uVar3;
+            goto LAB_8273ef60;
+          }
+          break;
+        }
+        if ((int)(uint)unicodeToJapanese[iVar9].unicode < (int)uVar5) {
+          iVar6 = iVar9 + 1;
+        }
+        else {
+          iVar7 = iVar9 + -1;
+        }
+      } while (iVar6 <= iVar7);
+    }
+    else {
+      iVar7 = 0xff;
+      do {
+        uVar8 = iVar6 + iVar7;
+        iVar9 = ((int)uVar8 >> 1) + (uint)((int)uVar8 < 0 && (uVar8 & 1) != 0);
+        uVar8 = (uint)pUVar10[iVar9].unicode;
+        if (uVar8 == uVar5) {
+          uVar1 = pUVar10[iVar9].val;
+          *puVar11 = uVar1;
+          if (((uVar1 != '_') && (uVar1 != ' ')) && (uVar1 != '.')) {
+            bVar4 = true;
+          }
+          goto LAB_8273ef60;
+        }
+        if ((int)uVar8 < (int)uVar5) {
+          iVar6 = iVar9 + 1;
+        }
+        else {
+          iVar7 = iVar9 + -1;
+        }
+      } while (iVar6 <= iVar7);
+    }
+    *puVar11 = '_';
+LAB_8273ef60:
+    puVar11 = puVar11 + 1;
+LAB_8273ef64:
+    puVar2 = puVar2 + local_470[0];
+    uVar1 = *puVar2;
+  } while( true );
+}
+
+
+// 8273F060  MakeWideCharNameSafeForAllLanguages  (gfx_d3d/r_font.cpp:9758)
+
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
+bool MakeWideCharNameSafeForAllLanguages(char *param_1,wchar_t *param_2,int param_3)
+
+{
+  uchar uVar1;
+  wchar_t wVar2;
+  wchar_t wVar3;
+  ushort uVar4;
+  bool bVar5;
+  UnicodeToCodePage *pUVar6;
+  int iVar7;
+  int iVar8;
+  uint uVar9;
+  int iVar10;
+  uchar *puVar11;
+  
+  if (param_2 == (wchar_t *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_font.cpp",0x2625,0,
+                    "%s");
+  }
+  if (param_1 == (char *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_font.cpp",0x2626,0,
+                    "%s");
+  }
+  bVar5 = false;
+  puVar11 = (uchar *)(param_1 + param_3 + -1);
+  if ((loc_language->current).integer == 6) {
+    pUVar6 = unicodeToRussian;
+  }
+  else if ((loc_language->current).integer == 7) {
+    pUVar6 = unicodeToPolish;
+  }
+  else {
+    pUVar6 = unicodeToDefault;
+  }
+  wVar2 = *param_2;
+  do {
+    if ((wVar2 == L'\0') || (puVar11 <= param_1)) {
+      *param_1 = '\0';
+      return bVar5;
+    }
+    iVar7 = 0;
+    wVar2 = *param_2;
+    if ((loc_language->current).integer == 10) {
+      iVar8 = 0x1eea;
+      do {
+        uVar9 = iVar7 + iVar8;
+        iVar10 = ((int)uVar9 >> 1) + (uint)((int)uVar9 < 0 && (uVar9 & 1) != 0);
+        if (unicodeToJapanese[iVar10].unicode == wVar2) {
+          uVar4 = unicodeToJapanese[iVar10].val;
+          if (uVar4 != 0) {
+            if (((uVar4 != 0x5f) && (uVar4 != 0x20)) && (uVar4 != 0x2e)) {
+              bVar5 = true;
+            }
+            if (0x100 < uVar4) {
+              *param_1 = (uchar)(uVar4 >> 8);
+              param_1 = param_1 + 1;
+            }
+            if (puVar11 <= param_1) goto LAB_8273f194;
+            *param_1 = (uchar)uVar4;
             goto LAB_8273f190;
           }
           break;
         }
-        if (unicodeToJapanese[iVar15].unicode < uVar3) {
-          iVar12 = iVar15 + 1;
+        if (unicodeToJapanese[iVar10].unicode < (ushort)wVar2) {
+          iVar7 = iVar10 + 1;
         }
         else {
-          iVar13 = iVar15 + -1;
+          iVar8 = iVar10 + -1;
         }
-      } while (iVar12 <= iVar13);
+      } while (iVar7 <= iVar8);
     }
     else {
-      iVar13 = 0xff;
+      iVar8 = 0xff;
       do {
-        uVar14 = iVar12 + iVar13;
-        iVar15 = ((int)uVar14 >> 1) + (uint)((int)uVar14 < 0 && (uVar14 & 1) != 0);
-        uVar4 = pUVar10[iVar15].unicode;
-        if (uVar4 == uVar3) {
-          uVar1 = pUVar10[iVar15].val;
-          *puVar7 = uVar1;
-          uVar5 = uVar5 + 1;
+        uVar9 = iVar7 + iVar8;
+        iVar10 = ((int)uVar9 >> 1) + (uint)((int)uVar9 < 0 && (uVar9 & 1) != 0);
+        wVar3 = pUVar6[iVar10].unicode;
+        if (wVar3 == wVar2) {
+          uVar1 = pUVar6[iVar10].val;
+          *param_1 = uVar1;
+          param_1 = param_1 + 1;
           if (((uVar1 != '_') && (uVar1 != ' ')) && (uVar1 != '.')) {
-            uVar6 = 1;
+            bVar5 = true;
           }
           goto LAB_8273f194;
         }
-        if (uVar4 < uVar3) {
-          iVar12 = iVar15 + 1;
+        if ((ushort)wVar3 < (ushort)wVar2) {
+          iVar7 = iVar10 + 1;
         }
         else {
-          iVar13 = iVar15 + -1;
+          iVar8 = iVar10 + -1;
         }
-      } while (iVar12 <= iVar13);
+      } while (iVar7 <= iVar8);
     }
-    *puVar7 = '_';
+    *param_1 = '_';
 LAB_8273f190:
-    uVar5 = uVar5 + 1;
+    param_1 = param_1 + 1;
 LAB_8273f194:
-    puVar7 = (uchar *)uVar5;
-    uVar9 = uVar9 + 2;
-    sVar2 = *(short *)uVar9;
+    param_2 = param_2 + 1;
+    wVar2 = *param_2;
   } while( true );
 }
 
@@ -471,26 +446,24 @@ Font_s * R_RegisterFont(char *param_1,int param_2)
 
 // 8273F2F8  R_NormalizedTextScale  (gfx_d3d/r_font.cpp:9919)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 float R_NormalizedTextScale(Font_s *param_1,float param_2)
 
 {
-  int iVar1;
-  double extraout_f1;
-  double dVar2;
+  double dVar1;
   
-  iVar1 = __savegprlr_29((double)param_2,param_1);
-  dVar2 = extraout_f1;
-  if (iVar1 == 0) {
+  dVar1 = (double)param_2;
+  if (param_1 == (Font_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_font.cpp",0x26c0,0,
                     "%s");
   }
-  if (*(int *)(iVar1 + 4) < 1) {
+  if (param_1->pixelHeight < 1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_font.cpp",0x26c1,0,
                     "%s");
   }
-  dVar2 = (double)__restgprlr_29((double)((float)(dVar2 * 48.0) /
-                                         (float)(longlong)*(int *)(iVar1 + 4)));
-  return (float)dVar2;
+  return (float)(dVar1 * 48.0) / (float)(longlong)param_1->pixelHeight;
 }
 
 
@@ -508,92 +481,89 @@ int R_LetterWidth(uint param_1,Font_s *param_2)
 
 // 8273F3D0  R_TextWidthModCase  (gfx_d3d/r_font.cpp:9933)
 
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
+
 int R_TextWidthModCase(char *param_1,int param_2,Font_s *param_3,int param_4)
 
 {
   char cVar1;
-  int iVar2;
-  uint uVar3;
+  uint uVar2;
+  int iVar3;
   int iVar4;
-  ulonglong uVar5;
-  int iVar6;
+  Glyph *pGVar5;
+  uint uVar6;
   int iVar7;
   int iVar8;
-  uint uVar9;
+  int iVar9;
   int iVar10;
-  longlong lVar11;
-  longlong lVar12;
   char *pcStack00000014;
   
-  uVar5 = (ulonglong)(int)param_3;
-  pcStack00000014 = (char *)__savegprlr_22(param_1);
-  if (pcStack00000014 == (char *)0x0) {
+  pcStack00000014 = param_1;
+  if (param_1 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_font.cpp",0x26d3,0,
                     "%s");
   }
-  if ((uVar5 & 0xffffffff) == 0) {
+  if (param_3 == (Font_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_font.cpp",0x26d4,0,
                     "%s");
   }
-  lVar12 = 0;
-  lVar11 = 0;
+  iVar10 = 0;
+  iVar9 = 0;
   if (param_2 < 1) {
     param_2 = 0x7fffffff;
   }
   cVar1 = *pcStack00000014;
-  iVar4 = 0;
+  iVar8 = 0;
   do {
-    if ((cVar1 == '\0') || (param_2 <= iVar4)) {
-      iVar4 = __restgprlr_22(lVar11);
-      return iVar4;
+    if ((cVar1 == '\0') || (param_2 <= iVar8)) {
+      return iVar9;
     }
-    uVar3 = SEH_ReadCharFromStringModCase(&stack0x00000014,(int *)0x0,param_4);
-    if ((uVar3 == 0xd) || (uVar3 == 10)) {
-      lVar12 = 0;
+    uVar2 = SEH_ReadCharFromStringModCase(&stack0x00000014,(int *)0x0,param_4);
+    if ((uVar2 == 0xd) || (uVar2 == 10)) {
+      iVar10 = 0;
     }
     else {
-      iVar2 = (int)uVar5;
-      if (uVar3 == 0x5e) {
+      if (uVar2 == 0x5e) {
         if ((((pcStack00000014 != (char *)0x0) && (cVar1 = *pcStack00000014, cVar1 != '^')) &&
             ('/' < cVar1)) && (cVar1 < '<')) {
           pcStack00000014 = pcStack00000014 + 1;
           goto LAB_8273f5b8;
         }
 LAB_8273f4f4:
-        iVar8 = (uVar3 - 0x20) * 0x18;
-        iVar7 = iVar8 + *(int *)(iVar2 + 0x14);
-        if (*(ushort *)(iVar8 + *(int *)(iVar2 + 0x14)) != uVar3) {
+        pGVar5 = param_3->glyphs + (uVar2 - 0x20);
+        if (param_3->glyphs[uVar2 - 0x20].letter != uVar2) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_font.cpp",
                           0x254f,0,"%s");
         }
       }
       else {
-        if ((0x1f < uVar3) && (uVar3 < 0x80)) goto LAB_8273f4f4;
-        iVar8 = 0x60;
-        iVar6 = *(int *)(iVar2 + 8) + -1;
-        if (0x5f < iVar6) {
+        if ((0x1f < uVar2) && (uVar2 < 0x80)) goto LAB_8273f4f4;
+        iVar3 = 0x60;
+        iVar4 = param_3->glyphCount + -1;
+        if (0x5f < iVar4) {
           do {
-            uVar9 = iVar8 + iVar6;
-            iVar10 = ((int)uVar9 >> 1) + (uint)((int)uVar9 < 0 && (uVar9 & 1) != 0);
-            iVar7 = iVar10 * 0x18 + *(int *)(iVar2 + 0x14);
-            uVar9 = (uint)*(ushort *)(iVar10 * 0x18 + *(int *)(iVar2 + 0x14));
-            if (uVar9 == uVar3) goto LAB_8273f598;
-            if (uVar9 < uVar3) {
-              iVar8 = iVar10 + 1;
+            uVar6 = iVar3 + iVar4;
+            iVar7 = ((int)uVar6 >> 1) + (uint)((int)uVar6 < 0 && (uVar6 & 1) != 0);
+            pGVar5 = param_3->glyphs + iVar7;
+            uVar6 = (uint)param_3->glyphs[iVar7].letter;
+            if (uVar6 == uVar2) goto LAB_8273f598;
+            if (uVar6 < uVar2) {
+              iVar3 = iVar7 + 1;
             }
             else {
-              iVar6 = iVar10 + -1;
+              iVar4 = iVar7 + -1;
             }
-          } while (iVar8 <= iVar6);
+          } while (iVar3 <= iVar4);
         }
-        iVar7 = *(int *)(iVar2 + 0x14) + 0x150;
+        pGVar5 = param_3->glyphs + 0xe;
       }
 LAB_8273f598:
-      lVar12 = (ulonglong)*(byte *)(iVar7 + 4) + lVar12;
-      if ((int)lVar11 < (int)lVar12) {
-        lVar11 = lVar12;
+      iVar10 = (uint)pGVar5->dx + iVar10;
+      if (iVar9 < iVar10) {
+        iVar9 = iVar10;
       }
-      iVar4 = iVar4 + 1;
+      iVar8 = iVar8 + 1;
     }
 LAB_8273f5b8:
     cVar1 = *pcStack00000014;
@@ -642,64 +612,62 @@ bool R_CanWordWrapBeforeLetter(int param_1)
 
 // 8273F678  R_TextLineWrapPositionModCase  (gfx_d3d/r_font.cpp:9994)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
+
 char * R_TextLineWrapPositionModCase
                  (char *param_1,int param_2,int param_3,Font_s *param_4,float param_5,int param_6)
 
 {
   char cVar1;
   bool bVar2;
-  char *pcVar3;
-  uint uVar4;
-  Glyph *pGVar5;
-  int iVar6;
-  char *pcVar7;
-  ulonglong uVar8;
+  uint uVar3;
+  Glyph *pGVar4;
+  int iVar5;
+  char *pcVar6;
   int in_r8;
-  char *pcVar9;
-  char *pcVar10;
-  int iVar11;
-  double extraout_f1;
-  double dVar12;
+  char *pcVar7;
+  char *pcVar8;
+  int iVar9;
+  double dVar10;
   char *local_70 [2];
   longlong local_68;
   longlong local_60;
   
-  uVar8 = (ulonglong)(int)param_4;
-  pcVar3 = (char *)__savegprlr_23((double)param_5,param_1);
-  dVar12 = extraout_f1;
-  if (pcVar3 == (char *)0x0) {
+  dVar10 = (double)param_5;
+  if (param_1 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_font.cpp",0x2711,0,
                     "%s");
   }
-  iVar11 = 0;
+  iVar9 = 0;
   if (param_2 < 1) {
     param_2 = 0x7fffffff;
   }
-  pcVar9 = (char *)0x0;
-  cVar1 = *pcVar3;
-  local_70[0] = pcVar3;
-  pcVar10 = (char *)0x0;
-  while (pcVar7 = local_70[0], local_70[0] = pcVar7, cVar1 != '\0') {
-    uVar4 = SEH_ReadCharFromStringModCase(local_70,(int *)0x0,in_r8);
-    pcVar10 = pcVar7;
-    if (uVar4 == 0xd) {
-      iVar11 = 0;
+  pcVar7 = (char *)0x0;
+  cVar1 = *param_1;
+  pcVar6 = param_1;
+  pcVar8 = (char *)0x0;
+  while (cVar1 != '\0') {
+    local_70[0] = pcVar6;
+    uVar3 = SEH_ReadCharFromStringModCase(local_70,(int *)0x0,in_r8);
+    pcVar8 = pcVar6;
+    if (uVar3 == 0xd) {
+      iVar9 = 0;
     }
     else {
-      if (uVar4 == 10) {
-        pcVar3 = (char *)__restgprlr_23(local_70[0]);
-        return pcVar3;
+      if (uVar3 == 10) {
+        return local_70[0];
       }
-      if (uVar4 == 0x5e) {
+      if (uVar3 == 0x5e) {
         if ((((local_70[0] == (char *)0x0) || (cVar1 = *local_70[0], cVar1 == '^')) || (cVar1 < '0')
             ) || (';' < cVar1)) {
           if ((*local_70[0] != '\x01') && (*local_70[0] != '\x02')) goto LAB_8273f7d8;
-          if ((uVar8 & 0xffffffff) != 0) {
-            uVar4 = (local_70[0][1] + -0x10) * ((Font_s *)uVar8)->pixelHeight + 0x10;
-            iVar11 = ((int)uVar4 >> 5) + (uint)((int)uVar4 < 0 && (uVar4 & 0x1f) != 0) + iVar11;
+          if (param_4 != (Font_s *)0x0) {
+            uVar3 = (local_70[0][1] + -0x10) * param_4->pixelHeight + 0x10;
+            iVar9 = ((int)uVar3 >> 5) + (uint)((int)uVar3 < 0 && (uVar3 & 0x1f) != 0) + iVar9;
           }
-          if (pcVar7 != pcVar3) {
-            pcVar9 = pcVar7;
+          if (pcVar6 != param_1) {
+            pcVar7 = pcVar6;
           }
           local_70[0] = local_70[0] + local_70[0][3] + 4;
         }
@@ -709,47 +677,45 @@ char * R_TextLineWrapPositionModCase
       }
       else {
 LAB_8273f7d8:
-        if ((uVar8 & 0xffffffff) != 0) {
-          pGVar5 = R_GetCharacterGlyph((Font_s *)uVar8,uVar4);
-          iVar11 = (uint)pGVar5->dx + iVar11;
+        if (param_4 != (Font_s *)0x0) {
+          pGVar4 = R_GetCharacterGlyph(param_4,uVar3);
+          iVar9 = (uint)pGVar4->dx + iVar9;
         }
-        if (pcVar7 != pcVar3) {
-          if (uVar4 < 0x100) {
-            iVar6 = isspace(uVar4);
+        if (pcVar6 != param_1) {
+          if (uVar3 < 0x100) {
+            iVar5 = isspace(uVar3);
             bVar2 = true;
-            if (iVar6 == 0) goto LAB_8273f820;
+            if (iVar5 == 0) goto LAB_8273f820;
           }
           else {
 LAB_8273f820:
             bVar2 = false;
           }
           if (bVar2) {
-            pcVar9 = pcVar7;
+            pcVar7 = pcVar6;
           }
         }
       }
-      if (pcVar9 != (char *)0x0) {
+      if (pcVar7 != (char *)0x0) {
         local_60 = (longlong)param_3;
-        local_68 = (longlong)iVar11;
-        if ((float)local_60 < (float)((double)local_68 * dVar12)) {
-          pcVar3 = (char *)__restgprlr_23(pcVar9);
-          return pcVar3;
+        local_68 = (longlong)iVar9;
+        if ((float)local_60 < (float)((double)local_68 * dVar10)) {
+          return pcVar7;
         }
       }
-      if (param_2 < (int)local_70[0] - (int)pcVar3) goto LAB_8273f8c4;
+      if (param_2 < (int)local_70[0] - (int)param_1) goto LAB_8273f8c4;
     }
+    pcVar6 = local_70[0];
     cVar1 = *local_70[0];
   }
-  if ((int)pcVar7 - (int)pcVar3 == param_2) {
+  if ((int)pcVar6 - (int)param_1 == param_2) {
 LAB_8273f8c4:
-    pcVar7 = pcVar9;
-    if (pcVar7 == (char *)0x0) {
-      pcVar3 = (char *)__restgprlr_23(pcVar10);
-      return pcVar3;
+    pcVar6 = pcVar7;
+    if (pcVar6 == (char *)0x0) {
+      return pcVar8;
     }
   }
-  pcVar3 = (char *)__restgprlr_23(pcVar7);
-  return pcVar3;
+  return pcVar6;
 }
 
 
@@ -768,6 +734,9 @@ char * R_TextLineWrapPosition(char *param_1,int param_2,int param_3,Font_s *para
 
 // 8273F8E8  R_TextLineBreakPositionModCase  (gfx_d3d/r_font.cpp:10067)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
+
 char * R_TextLineBreakPositionModCase
                  (char *param_1,int param_2,Font_s *param_3,float param_4,int *param_5,int param_6)
 
@@ -776,47 +745,37 @@ char * R_TextLineBreakPositionModCase
   char *pcVar2;
   uint uVar3;
   Glyph *pGVar4;
-  longlong lVar5;
-  ulonglong uVar6;
-  ulonglong uVar7;
-  int *piVar8;
   int in_r8;
-  int iVar9;
-  double extraout_f1;
-  double dVar10;
+  int iVar5;
+  double dVar6;
   char *local_60 [2];
   longlong local_58;
   longlong local_50;
   
-  uVar7 = (ulonglong)param_6;
-  uVar6 = (ulonglong)(int)param_3;
-  lVar5 = (longlong)param_2;
-  pcVar2 = (char *)__savegprlr_25((double)param_4,param_1,lVar5,uVar6,param_5);
-  dVar10 = extraout_f1;
-  if (pcVar2 == (char *)0x0) {
+  dVar6 = (double)param_4;
+  if (param_1 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_font.cpp",0x2759,0,
                     "%s");
   }
-  if ((uVar6 & 0xffffffff) == 0) {
+  if (param_3 == (Font_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_font.cpp",0x275a,0,
                     "%s");
   }
-  if ((uVar7 & 0xffffffff) == 0) {
+  if (param_6 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_font.cpp",0x275b,0,
                     "%s");
   }
-  iVar9 = 0;
-  piVar8 = (int *)uVar7;
-  *piVar8 = 0;
-  local_60[0] = pcVar2;
-  if (*pcVar2 != '\0') {
+  iVar5 = 0;
+  *(undefined4 *)param_6 = 0;
+  local_60[0] = param_1;
+  if (*param_1 != '\0') {
     while ((pcVar2 = local_60[0], uVar3 = SEH_ReadCharFromStringModCase(local_60,(int *)0x0,in_r8),
-           uVar3 != 10 && (uVar3 != 0xd))) {
+           param_1 = local_60[0], uVar3 != 10 && (uVar3 != 0xd))) {
       if (uVar3 == 0x5e) {
         if ((((local_60[0] == (char *)0x0) || (cVar1 = *local_60[0], cVar1 == '^')) || (cVar1 < '0')
             ) || (';' < cVar1)) {
           if ((*local_60[0] != '\x01') && (*local_60[0] != '\x02')) goto LAB_8273fa60;
-          uVar3 = (local_60[0][1] + -0x10) * ((Font_s *)uVar6)->pixelHeight + 0x10;
+          uVar3 = (local_60[0][1] + -0x10) * param_3->pixelHeight + 0x10;
           local_60[0] = local_60[0] + local_60[0][3] + 4;
           uVar3 = ((int)uVar3 >> 5) + (uint)((int)uVar3 < 0 && (uVar3 & 0x1f) != 0);
           goto LAB_8273fa70;
@@ -825,26 +784,23 @@ char * R_TextLineBreakPositionModCase
       }
       else {
 LAB_8273fa60:
-        pGVar4 = R_GetCharacterGlyph((Font_s *)uVar6,uVar3);
+        pGVar4 = R_GetCharacterGlyph(param_3,uVar3);
         uVar3 = (uint)pGVar4->dx;
 LAB_8273fa70:
-        iVar9 = uVar3 + iVar9;
-        local_58 = (longlong)(int)lVar5;
-        local_50 = (longlong)iVar9;
-        if ((float)local_58 < (float)((double)local_50 * dVar10)) {
-          pcVar2 = (char *)__restgprlr_25(pcVar2);
+        iVar5 = uVar3 + iVar5;
+        local_58 = (longlong)param_2;
+        local_50 = (longlong)iVar5;
+        if ((float)local_58 < (float)((double)local_50 * dVar6)) {
           return pcVar2;
         }
-        *piVar8 = *piVar8 + 1;
+        *(int *)param_6 = *(int *)param_6 + 1;
       }
       if (*local_60[0] == '\0') {
-        pcVar2 = (char *)__restgprlr_25(local_60[0]);
-        return pcVar2;
+        return local_60[0];
       }
     }
   }
-  pcVar2 = (char *)__restgprlr_25(local_60[0]);
-  return pcVar2;
+  return param_1;
 }
 
 
@@ -863,67 +819,54 @@ char * R_TextLineBreakPosition(char *param_1,int param_2,Font_s *param_3,float p
 
 // 8273FB00  R_ConsoleTextWidth  (gfx_d3d/r_font.cpp:10122)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 int R_ConsoleTextWidth(char *param_1,int param_2,int param_3,int param_4,Font_s *param_5)
 
 {
   char cVar1;
   uint uVar2;
   uint uVar3;
-  longlong lVar4;
-  uint uVar5;
-  Glyph *pGVar6;
-  int iVar7;
-  char *pcVar9;
-  ulonglong uVar8;
-  longlong lVar10;
-  ulonglong uVar11;
-  ulonglong uVar12;
-  uint local_40 [16];
+  Glyph *pGVar4;
+  char *pcVar5;
+  int iVar6;
+  uint uVar7;
+  int local_40 [16];
   
-  uVar12 = (ulonglong)param_3;
-  lVar10 = (longlong)param_2;
-  lVar4 = __savegprlr_26(param_1);
-  uVar11 = lVar10 - 1;
-  uVar2 = (uint)uVar11;
-  if ((uVar2 & (uint)lVar10) != 0) {
+  uVar7 = param_2 - 1;
+  if ((uVar7 & param_2) != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_font.cpp",0x2792,0,
                     "%s");
   }
-  uVar5 = (uint)uVar12;
-  uVar3 = uVar5 + param_4;
-  lVar10 = 0;
+  uVar2 = param_3 + param_4;
+  iVar6 = 0;
+joined_r0x8273fb60:
   do {
-    if (uVar5 == (uVar3 & uVar2)) {
-      iVar7 = __restgprlr_26(lVar10);
-      return iVar7;
+    if (param_3 == (uVar2 & uVar7)) {
+      return iVar6;
     }
-    iVar7 = (int)lVar4;
-    uVar5 = SEH_DecodeLetter((int)*(char *)((int)uVar12 + iVar7),
-                             (int)*(char *)(((int)uVar12 + 1U & uVar2) + iVar7),(int *)local_40,
+    uVar3 = SEH_DecodeLetter((int)param_1[param_3],(int)param_1[param_3 + 1U & uVar7],local_40,
                              (int *)0x0);
-    uVar12 = local_40[0] + uVar12 & uVar11;
-    if (uVar5 == 0x5e) {
-      pcVar9 = (char *)(uVar12 + lVar4);
-      if ((((uVar12 + lVar4 == 0) || (cVar1 = *pcVar9, cVar1 == '^')) || (cVar1 < '0')) ||
-         (';' < cVar1)) {
-        cVar1 = *pcVar9;
-        if ((cVar1 != '\x01') && (cVar1 != '\x02')) goto LAB_8273fc34;
-        uVar5 = (*(char *)(((int)uVar12 + 1U & uVar2) + iVar7) + -0x10) * param_5->pixelHeight +
-                0x10;
-        uVar12 = (longlong)*(char *)(((int)uVar12 + 3U & uVar2) + iVar7) + uVar12 + 4 & uVar11;
-        uVar8 = (longlong)((int)uVar5 >> 5) + (ulonglong)((int)uVar5 < 0 && (uVar5 & 0x1f) != 0);
-        goto LAB_8273fc40;
+    param_3 = local_40[0] + param_3 & uVar7;
+    if (uVar3 == 0x5e) {
+      pcVar5 = param_1 + param_3;
+      if ((((pcVar5 != (char *)0x0) && (cVar1 = *pcVar5, cVar1 != '^')) && ('/' < cVar1)) &&
+         (cVar1 < '<')) {
+        param_3 = param_3 + 1U & uVar7;
+        goto joined_r0x8273fb60;
       }
-      uVar12 = uVar12 + 1 & uVar11;
+      if ((*pcVar5 != '\x01') && (*pcVar5 != '\x02')) goto LAB_8273fc34;
+      uVar3 = (param_1[param_3 + 1U & uVar7] + -0x10) * param_5->pixelHeight + 0x10;
+      param_3 = param_1[param_3 + 3U & uVar7] + param_3 + 4U & uVar7;
+      uVar3 = ((int)uVar3 >> 5) + (uint)((int)uVar3 < 0 && (uVar3 & 0x1f) != 0);
     }
     else {
 LAB_8273fc34:
-      pGVar6 = R_GetCharacterGlyph(param_5,uVar5);
-      uVar8 = (ulonglong)pGVar6->dx;
-LAB_8273fc40:
-      lVar10 = uVar8 + lVar10;
+      pGVar4 = R_GetCharacterGlyph(param_5,uVar3);
+      uVar3 = (uint)pGVar4->dx;
     }
-    uVar5 = (uint)uVar12;
+    iVar6 = uVar3 + iVar6;
   } while( true );
 }
 

@@ -23,14 +23,19 @@ bool CM_IsEdgeWalkable(int param_1,int param_2)
 
 // 824C4490  CM_TracePointThroughTriangle  (qcommon/cm_mesh.cpp:137)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_20 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_20 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void CM_TracePointThroughTriangle
                (traceWork_t *param_1,ushort *param_2,float (*param_3) [3],trace_t *param_4)
 
 {
-  int iVar1;
+  float (*pafVar1) [3];
   float (*pafVar2) [3];
   float (*pafVar3) [3];
-  float (*pafVar4) [3];
+  double dVar4;
   double dVar5;
   double dVar6;
   double dVar7;
@@ -42,7 +47,6 @@ void CM_TracePointThroughTriangle
   double dVar13;
   double dVar14;
   double dVar15;
-  double dVar16;
   float local_b0;
   float local_ac;
   float local_a8;
@@ -53,65 +57,62 @@ void CM_TracePointThroughTriangle
   float local_8c;
   float local_88;
   
-  __savegprlr_29(param_1);
-  iVar1 = __savefpr_20();
-  pafVar4 = param_3 + *param_2;
-  pafVar3 = param_3 + param_2[1];
-  pafVar2 = param_3 + param_2[2];
-  local_b0 = (*pafVar4)[0] - (*pafVar3)[0];
-  dVar11 = (double)local_b0;
-  local_ac = (*pafVar4)[1] - (*pafVar3)[1];
-  dVar10 = (double)local_ac;
-  local_a8 = (*pafVar4)[2] - (*pafVar3)[2];
-  dVar9 = (double)local_a8;
-  local_a0 = (*pafVar4)[0] - (*pafVar2)[0];
-  dVar7 = (double)local_a0;
-  local_9c = (*pafVar4)[1] - (*pafVar2)[1];
-  dVar6 = (double)local_9c;
-  local_98 = (*pafVar4)[2] - (*pafVar2)[2];
-  dVar5 = (double)local_98;
+  pafVar3 = param_3 + *param_2;
+  pafVar2 = param_3 + param_2[1];
+  pafVar1 = param_3 + param_2[2];
+  local_b0 = (*pafVar3)[0] - (*pafVar2)[0];
+  dVar10 = (double)local_b0;
+  local_ac = (*pafVar3)[1] - (*pafVar2)[1];
+  dVar9 = (double)local_ac;
+  local_a8 = (*pafVar3)[2] - (*pafVar2)[2];
+  dVar8 = (double)local_a8;
+  local_a0 = (*pafVar3)[0] - (*pafVar1)[0];
+  dVar6 = (double)local_a0;
+  local_9c = (*pafVar3)[1] - (*pafVar1)[1];
+  dVar5 = (double)local_9c;
+  local_98 = (*pafVar3)[2] - (*pafVar1)[2];
+  dVar4 = (double)local_98;
   Vec3Cross(&local_a0,&local_b0,&local_90);
-  dVar16 = 0.0;
-  dVar15 = (double)local_90;
-  dVar14 = (double)local_8c;
-  dVar13 = (double)local_88;
-  dVar12 = (double)(float)((double)*(float *)(iVar1 + 0x78) * dVar13 +
-                          (double)(float)((double)*(float *)(iVar1 + 0x74) * dVar14 +
-                                         (double)(float)((double)*(float *)(iVar1 + 0x70) * dVar15))
-                          );
-  if (dVar12 < 0.0) {
-    local_90 = (*pafVar4)[0] - *(float *)(iVar1 + 0x40);
-    local_8c = (*pafVar4)[1] - *(float *)(iVar1 + 0x44);
-    local_88 = (*pafVar4)[2] - *(float *)(iVar1 + 0x48);
-    dVar8 = (double)(float)((double)local_88 * dVar13 +
-                           (double)(float)((double)local_8c * dVar14 +
-                                          (double)(float)((double)local_90 * dVar15)));
-    if ((dVar8 <= 0.0) && ((double)(float)((double)param_4->fraction * dVar12) < dVar8)) {
-      Vec3Cross((float *)(iVar1 + 0x70),&local_90,&local_a0);
-      dVar9 = (double)(float)((double)local_98 * dVar9 +
-                             (double)(float)((double)local_9c * dVar10 +
-                                            (double)(float)((double)local_a0 * dVar11)));
-      if ((dVar9 <= dVar16) &&
-         (((dVar12 <= dVar9 &&
-           (dVar5 = (double)(float)((double)local_98 * dVar5 +
-                                   (double)(float)((double)local_9c * dVar6 +
-                                                  (double)(float)((double)local_a0 * dVar7))),
-           dVar16 <= dVar5)) && (dVar12 <= (double)(float)(dVar9 - dVar5))))) {
-        dVar6 = (double)(float)(dVar8 / dVar12);
+  dVar15 = 0.0;
+  dVar14 = (double)local_90;
+  dVar13 = (double)local_8c;
+  dVar12 = (double)local_88;
+  dVar11 = (double)(float)((double)param_1->delta[2] * dVar12 +
+                          (double)(float)((double)param_1->delta[1] * dVar13 +
+                                         (double)(float)((double)param_1->delta[0] * dVar14)));
+  if (dVar11 < 0.0) {
+    local_90 = (*pafVar3)[0] - (param_1->extents).start[0];
+    local_8c = (*pafVar3)[1] - (param_1->extents).start[1];
+    local_88 = (*pafVar3)[2] - (param_1->extents).start[2];
+    dVar7 = (double)(float)((double)local_88 * dVar12 +
+                           (double)(float)((double)local_8c * dVar13 +
+                                          (double)(float)((double)local_90 * dVar14)));
+    if ((dVar7 <= 0.0) && ((double)(float)((double)param_4->fraction * dVar11) < dVar7)) {
+      Vec3Cross(param_1->delta,&local_90,&local_a0);
+      dVar8 = (double)(float)((double)local_98 * dVar8 +
+                             (double)(float)((double)local_9c * dVar9 +
+                                            (double)(float)((double)local_a0 * dVar10)));
+      if ((dVar8 <= dVar15) &&
+         (((dVar11 <= dVar8 &&
+           (dVar4 = (double)(float)((double)local_98 * dVar4 +
+                                   (double)(float)((double)local_9c * dVar5 +
+                                                  (double)(float)((double)local_a0 * dVar6))),
+           dVar15 <= dVar4)) && (dVar11 <= (double)(float)(dVar8 - dVar4))))) {
+        dVar5 = (double)(float)(dVar7 / dVar11);
         param_4->walkable = false;
-        dVar7 = (double)SQRT((float)(dVar15 * dVar15 +
-                                    (double)(float)(dVar14 * dVar14 +
-                                                   (double)(float)(dVar13 * dVar13))));
-        dVar5 = 1.0;
-        if (-dVar7 < 0.0) {
-          dVar5 = dVar7;
+        dVar6 = (double)SQRT((float)(dVar14 * dVar14 +
+                                    (double)(float)(dVar13 * dVar13 +
+                                                   (double)(float)(dVar12 * dVar12))));
+        dVar4 = 1.0;
+        if (-dVar6 < 0.0) {
+          dVar4 = dVar6;
         }
-        dVar5 = (double)(float)(1.0 / dVar5);
-        param_4->normal[0] = (float)(dVar5 * dVar15);
-        param_4->normal[1] = (float)(dVar14 * dVar5);
-        param_4->normal[2] = (float)(dVar13 * dVar5);
-        param_4->fraction = (float)(dVar8 / dVar12);
-        if ((dVar6 < dVar16) || (1.0 < dVar6)) {
+        dVar4 = (double)(float)(1.0 / dVar4);
+        param_4->normal[0] = (float)(dVar4 * dVar14);
+        param_4->normal[1] = (float)(dVar13 * dVar4);
+        param_4->normal[2] = (float)(dVar12 * dVar4);
+        param_4->fraction = (float)(dVar7 / dVar11);
+        if ((dVar5 < dVar15) || (1.0 < dVar5)) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_mesh.cpp",
                           0xc3,1,"%s\n\t(trace->fraction) = %g");
         }
@@ -119,13 +120,16 @@ void CM_TracePointThroughTriangle
       }
     }
   }
-  __restfpr_20();
-  __restgprlr_29();
   return;
 }
 
 
 // 824C46E0  CM_TraceSphereThroughEdge  (qcommon/cm_mesh.cpp:211)
+
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_18 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_18 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 
 SphereEdgeTraceResult
 CM_TraceSphereThroughEdge
@@ -138,9 +142,9 @@ CM_TraceSphereThroughEdge
   float fVar4;
   float fVar5;
   float fVar6;
-  int iVar7;
-  SphereEdgeTraceResult SVar8;
-  float *pfVar9;
+  float *pfVar7;
+  double dVar8;
+  double dVar9;
   double dVar10;
   double dVar11;
   double dVar12;
@@ -154,8 +158,6 @@ CM_TraceSphereThroughEdge
   double dVar20;
   double dVar21;
   double dVar22;
-  double dVar23;
-  double dVar24;
   float local_c0;
   float local_bc;
   float local_b8;
@@ -163,124 +165,118 @@ CM_TraceSphereThroughEdge
   float local_ac;
   float local_a8;
   
-  __savegprlr_28(param_1);
-  iVar7 = __savefpr_18();
-  pfVar9 = (float *)(iVar7 + 0x70);
+  pfVar7 = param_1->delta;
   local_b0 = *param_2 - *param_3;
-  dVar19 = (double)local_b0;
+  dVar17 = (double)local_b0;
   local_ac = param_2[1] - param_3[1];
-  dVar18 = (double)local_ac;
+  dVar16 = (double)local_ac;
   local_a8 = param_2[2] - param_3[2];
-  dVar17 = (double)local_a8;
-  Vec3Cross(param_4,pfVar9,&local_c0);
-  dVar15 = (double)(*(float *)(iVar7 + 0xb0) + 0.125);
-  dVar24 = 0.0;
-  dVar22 = (double)local_c0;
-  dVar21 = (double)local_b8;
-  dVar20 = (double)local_bc;
-  fVar3 = (float)(dVar21 * dVar17 +
-                 (double)(float)(dVar20 * dVar18 + (double)(float)(dVar19 * dVar22)));
-  dVar14 = (double)(float)(dVar22 * dVar22 +
-                          (double)(float)(dVar20 * dVar20 + (double)(float)(dVar21 * dVar21)));
-  dVar12 = (double)(fVar3 * fVar3);
-  dVar10 = (double)(float)((double)(float)(dVar15 * dVar15) * dVar14 - dVar12);
-  if (0.0 < dVar10) {
-    dVar13 = 1.0;
-    dVar11 = (double)(float)(1.0 / dVar14);
-    dVar23 = (double)(param_4[2] * param_4[2] + *param_4 * *param_4 + param_4[1] * param_4[1]);
-    dVar16 = (double)(float)((double)SQRT((float)(dVar23 * dVar10)) * dVar11);
+  dVar15 = (double)local_a8;
+  Vec3Cross(param_4,pfVar7,&local_c0);
+  dVar13 = (double)(param_1->radius + 0.125);
+  dVar22 = 0.0;
+  dVar20 = (double)local_c0;
+  dVar19 = (double)local_b8;
+  dVar18 = (double)local_bc;
+  fVar3 = (float)(dVar19 * dVar15 +
+                 (double)(float)(dVar18 * dVar16 + (double)(float)(dVar17 * dVar20)));
+  dVar12 = (double)(float)(dVar20 * dVar20 +
+                          (double)(float)(dVar18 * dVar18 + (double)(float)(dVar19 * dVar19)));
+  dVar10 = (double)(fVar3 * fVar3);
+  dVar8 = (double)(float)((double)(float)(dVar13 * dVar13) * dVar12 - dVar10);
+  if (0.0 < dVar8) {
+    dVar11 = 1.0;
+    dVar9 = (double)(float)(1.0 / dVar12);
+    dVar21 = (double)(param_4[2] * param_4[2] + *param_4 * *param_4 + param_4[1] * param_4[1]);
+    dVar14 = (double)(float)((double)SQRT((float)(dVar21 * dVar8)) * dVar9);
     Vec3Cross(&local_b0,param_4,&local_c0);
-    dVar10 = (double)(float)((double)local_b8 * dVar21 +
-                            (double)(float)((double)local_bc * dVar20 +
-                                           (double)(float)((double)local_c0 * dVar22)));
-    if ((dVar24 <= (double)(float)((double)(float)(dVar11 * dVar10) + dVar16)) &&
-       (dVar20 = (double)(float)((double)(float)(dVar11 * dVar10) - dVar16),
-       dVar20 < (double)param_5->fraction)) {
-      if (dVar24 <= dVar20) {
-        fVar3 = (float)((double)*pfVar9 * dVar20 + dVar19);
-        fVar4 = (float)((double)*(float *)(iVar7 + 0x74) * dVar20 + dVar18);
+    dVar8 = (double)(float)((double)local_b8 * dVar19 +
+                           (double)(float)((double)local_bc * dVar18 +
+                                          (double)(float)((double)local_c0 * dVar20)));
+    if ((dVar22 <= (double)(float)((double)(float)(dVar9 * dVar8) + dVar14)) &&
+       (dVar18 = (double)(float)((double)(float)(dVar9 * dVar8) - dVar14),
+       dVar18 < (double)param_5->fraction)) {
+      if (dVar22 <= dVar18) {
+        fVar3 = (float)((double)*pfVar7 * dVar18 + dVar17);
+        fVar4 = (float)((double)param_1->delta[1] * dVar18 + dVar16);
         fVar1 = param_4[1];
-        fVar5 = (float)((double)*(float *)(iVar7 + 0x78) * dVar20 + dVar17);
+        fVar5 = (float)((double)param_1->delta[2] * dVar18 + dVar15);
         fVar6 = param_4[2];
-        dVar10 = -(double)(fVar6 * fVar5 + fVar1 * fVar4 + *param_4 * fVar3);
-        if (dVar24 < dVar10) {
-          if (dVar10 < dVar23) {
-            fVar2 = (float)(dVar10 / dVar23);
-            dVar10 = (double)(float)(dVar13 / dVar15);
-            param_5->normal[0] = (float)(dVar10 * (double)(fVar2 * *param_4 + fVar3));
-            param_5->normal[1] = (float)(dVar10 * (double)(fVar2 * fVar1 + fVar4));
-            param_5->normal[2] = (float)(dVar10 * (double)(fVar2 * fVar6 + fVar5));
-            if (1e+06 < (float)(dVar10 * dVar23)) {
-              dVar24 = 0.004999999888241291;
-            }
-            if ((float)(dVar24 * 2.0 + 0.006000000052154064) <=
-                ABS((float)((double)(param_5->normal[2] * param_5->normal[2] +
-                                    param_5->normal[0] * param_5->normal[0] +
-                                    param_5->normal[1] * param_5->normal[1]) - dVar13))) {
-              va(
-                "(%.8g %.8g %.8g) from (%.8g %.8g %.8g) / %.8g;\n\t\tdelta (%.8g %.8g %.8g), scale %.8g / %.8g, edge (%.8g %.8g %.8g)"
-                );
-              MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_mesh.cpp"
-                              ,0x17e,0,"%s\n\t%s");
-            }
-            param_5->fraction = (float)dVar20;
-LAB_824c4a90:
-            Trace_SetHitId(param_5,TRACE_HITTYPE_ENTITY,0x7fe);
-            __restfpr_18(0);
-            SVar8 = __restgprlr_28();
-            return SVar8;
+        dVar8 = -(double)(fVar6 * fVar5 + fVar1 * fVar4 + *param_4 * fVar3);
+        if (dVar22 < dVar8) {
+          if (dVar21 <= dVar8) {
+            return SPHERE_MAY_HIT_V1;
           }
-LAB_824c486c:
-          __restfpr_18(3);
-          SVar8 = __restgprlr_28();
-          return SVar8;
+          fVar2 = (float)(dVar8 / dVar21);
+          dVar8 = (double)(float)(dVar11 / dVar13);
+          param_5->normal[0] = (float)(dVar8 * (double)(fVar2 * *param_4 + fVar3));
+          param_5->normal[1] = (float)(dVar8 * (double)(fVar2 * fVar1 + fVar4));
+          param_5->normal[2] = (float)(dVar8 * (double)(fVar2 * fVar6 + fVar5));
+          if (1e+06 < (float)(dVar8 * dVar21)) {
+            dVar22 = 0.004999999888241291;
+          }
+          if ((float)(dVar22 * 2.0 + 0.006000000052154064) <=
+              ABS((float)((double)(param_5->normal[2] * param_5->normal[2] +
+                                  param_5->normal[0] * param_5->normal[0] +
+                                  param_5->normal[1] * param_5->normal[1]) - dVar11))) {
+            va(
+              "(%.8g %.8g %.8g) from (%.8g %.8g %.8g) / %.8g;\n\t\tdelta (%.8g %.8g %.8g), scale %.8g / %.8g, edge (%.8g %.8g %.8g)"
+              );
+            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_mesh.cpp",
+                            0x17e,0,"%s\n\t%s");
+          }
+          param_5->fraction = (float)dVar18;
+          goto LAB_824c4a90;
         }
       }
       else {
-        dVar15 = -(double)(float)((double)param_4[2] * dVar17 +
-                                 (double)(float)((double)param_4[1] * dVar18 +
-                                                (double)(float)((double)*param_4 * dVar19)));
-        if (dVar24 < dVar15) {
-          if (dVar23 <= dVar15) goto LAB_824c486c;
-          dVar15 = (double)(float)(dVar15 / dVar23);
-          fVar3 = (float)(dVar15 * (double)*param_4 + dVar19);
-          fVar4 = (float)(dVar15 * (double)param_4[1] + dVar18);
-          fVar5 = (float)(dVar15 * (double)param_4[2] + dVar17);
-          if ((double)(*(float *)(iVar7 + 0x78) * fVar5 +
-                      *(float *)(iVar7 + 0x74) * fVar4 + *pfVar9 * fVar3) < dVar24) {
-            dVar17 = (double)SQRT(fVar5 * fVar5 + fVar3 * fVar3 + fVar4 * fVar4);
-            dVar15 = dVar13;
-            if (-dVar17 < 0.0) {
-              dVar15 = dVar17;
-            }
-            fVar1 = (float)(dVar13 / dVar15);
-            param_5->normal[0] = fVar1 * fVar3;
-            param_5->normal[1] = fVar1 * fVar4;
-            param_5->normal[2] = fVar1 * fVar5;
-            param_5->fraction = (float)dVar24;
-            param_5->startsolid =
-                 (float)(dVar10 * dVar10) <
-                 (float)((double)(float)((double)(*(float *)(iVar7 + 0xb0) *
-                                                 *(float *)(iVar7 + 0xb0)) * dVar14 - dVar12) *
-                        dVar23);
-            goto LAB_824c4a90;
+        dVar13 = -(double)(float)((double)param_4[2] * dVar15 +
+                                 (double)(float)((double)param_4[1] * dVar16 +
+                                                (double)(float)((double)*param_4 * dVar17)));
+        if (dVar22 < dVar13) {
+          if (dVar21 <= dVar13) {
+            return SPHERE_MAY_HIT_V1;
           }
-          goto LAB_824c479c;
+          dVar13 = (double)(float)(dVar13 / dVar21);
+          fVar3 = (float)(dVar13 * (double)*param_4 + dVar17);
+          fVar4 = (float)(dVar13 * (double)param_4[1] + dVar16);
+          fVar5 = (float)(dVar13 * (double)param_4[2] + dVar15);
+          if (dVar22 <= (double)(param_1->delta[2] * fVar5 +
+                                param_1->delta[1] * fVar4 + *pfVar7 * fVar3)) {
+            return SPHERE_MISSES_EDGE;
+          }
+          dVar15 = (double)SQRT(fVar5 * fVar5 + fVar3 * fVar3 + fVar4 * fVar4);
+          dVar13 = dVar11;
+          if (-dVar15 < 0.0) {
+            dVar13 = dVar15;
+          }
+          fVar1 = (float)(dVar11 / dVar13);
+          param_5->normal[0] = fVar1 * fVar3;
+          param_5->normal[1] = fVar1 * fVar4;
+          param_5->normal[2] = fVar1 * fVar5;
+          param_5->fraction = (float)dVar22;
+          param_5->startsolid =
+               (float)(dVar8 * dVar8) <
+               (float)((double)(float)((double)(param_1->radius * param_1->radius) * dVar12 - dVar10
+                                      ) * dVar21);
+LAB_824c4a90:
+          Trace_SetHitId(param_5,TRACE_HITTYPE_ENTITY,0x7fe);
+          return SPHERE_HITS_EDGE;
         }
       }
-      __restfpr_18(2);
-      SVar8 = __restgprlr_28();
-      return SVar8;
+      return SPHERE_MAY_HIT_V0;
     }
   }
-LAB_824c479c:
-  __restfpr_18(1);
-  SVar8 = __restgprlr_28();
-  return SVar8;
+  return SPHERE_MISSES_EDGE;
 }
 
 
 // 824C4AB8  CM_TraceSphereThroughVertex  (qcommon/cm_mesh.cpp:390)
+
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 
 void CM_TraceSphereThroughVertex
                (traceWork_t *param_1,bool param_2,float *param_3,float *param_4,trace_t *param_5)
@@ -289,7 +285,7 @@ void CM_TraceSphereThroughVertex
   float fVar1;
   float fVar2;
   float fVar3;
-  int iVar4;
+  double dVar4;
   double dVar5;
   double dVar6;
   double dVar7;
@@ -297,44 +293,44 @@ void CM_TraceSphereThroughVertex
   double dVar9;
   double dVar10;
   double dVar11;
-  double dVar12;
   
-  __savegprlr_27(param_1);
-  iVar4 = __savefpr_24();
-  dVar11 = (double)(param_3[1] - param_4[1]);
-  dVar10 = (double)(*param_3 - *param_4);
-  dVar9 = (double)(param_3[2] - param_4[2]);
-  dVar6 = 0.0;
-  dVar8 = (double)(float)((double)*(float *)(iVar4 + 0x78) * dVar9 +
-                         (double)(float)((double)*(float *)(iVar4 + 0x70) * dVar10 +
-                                        (double)(float)((double)*(float *)(iVar4 + 0x74) * dVar11)))
-  ;
-  if (dVar8 < 0.0) {
-    dVar12 = (double)(float)(dVar9 * dVar9 +
-                            (double)(float)(dVar11 * dVar11 + (double)(float)(dVar10 * dVar10)));
-    if (dVar12 <= 0.0) {
+  dVar10 = (double)(param_3[1] - param_4[1]);
+  dVar9 = (double)(*param_3 - *param_4);
+  dVar8 = (double)(param_3[2] - param_4[2]);
+  dVar5 = 0.0;
+  dVar7 = (double)(float)((double)param_1->delta[2] * dVar8 +
+                         (double)(float)((double)param_1->delta[0] * dVar9 +
+                                        (double)(float)((double)param_1->delta[1] * dVar10)));
+  if (dVar7 < 0.0) {
+    dVar11 = (double)(float)(dVar8 * dVar8 +
+                            (double)(float)(dVar10 * dVar10 + (double)(float)(dVar9 * dVar9)));
+    if (dVar11 <= 0.0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_mesh.cpp",0x1b5,0
                       ,"%s\n\t(deltaLenSq) = %g");
     }
-    dVar7 = 0.125;
-    dVar5 = (double)(*(float *)(iVar4 + 0xb0) + 0.125);
-    dVar5 = -(double)(float)(dVar5 * dVar5 - dVar12);
-    if (dVar6 < dVar5) {
-      dVar12 = (double)*(float *)(iVar4 + 0x80);
-      if (dVar12 <= dVar6) {
+    dVar6 = 0.125;
+    dVar4 = (double)(param_1->radius + 0.125);
+    dVar4 = -(double)(float)(dVar4 * dVar4 - dVar11);
+    if (dVar5 < dVar4) {
+      dVar11 = (double)param_1->deltaLenSq;
+      if (dVar11 <= dVar5) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_mesh.cpp",0x1c5
                         ,0,"%s\n\t(a) = %g");
       }
-      fVar1 = -(float)(dVar12 * dVar5 - (double)(float)(dVar8 * dVar8));
-      if ((fVar1 < (float)((double)(float)(dVar8 * dVar8) * 0.0010000000474974513)) ||
-         (dVar8 = (double)(float)((double)(float)(-(double)SQRT(fVar1) - dVar8) / dVar12),
-         (double)param_5->fraction <= dVar8)) goto LAB_824c4e2c;
-      fVar1 = (float)((double)*(float *)(iVar4 + 0x70) * dVar8 + dVar10);
+      fVar1 = -(float)(dVar11 * dVar4 - (double)(float)(dVar7 * dVar7));
+      if (fVar1 < (float)((double)(float)(dVar7 * dVar7) * 0.0010000000474974513)) {
+        return;
+      }
+      dVar7 = (double)(float)((double)(float)(-(double)SQRT(fVar1) - dVar7) / dVar11);
+      if ((double)param_5->fraction <= dVar7) {
+        return;
+      }
+      fVar1 = (float)((double)param_1->delta[0] * dVar7 + dVar9);
       param_5->normal[0] = fVar1;
-      param_5->normal[1] = (float)((double)*(float *)(iVar4 + 0x74) * dVar8 + dVar11);
-      dVar10 = 1.0;
-      param_5->normal[2] = (float)((double)*(float *)(iVar4 + 0x78) * dVar8 + dVar9);
-      fVar3 = 1.0 / (float)((double)*(float *)(iVar4 + 0xb0) + dVar7);
+      param_5->normal[1] = (float)((double)param_1->delta[1] * dVar7 + dVar10);
+      dVar9 = 1.0;
+      param_5->normal[2] = (float)((double)param_1->delta[2] * dVar7 + dVar8);
+      fVar3 = 1.0 / (float)((double)param_1->radius + dVar6);
       fVar1 = fVar1 * fVar3;
       param_5->normal[0] = fVar1;
       fVar2 = param_5->normal[1] * fVar3;
@@ -353,34 +349,36 @@ void CM_TraceSphereThroughVertex
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_mesh.cpp",0x1dd
                         ,0,"%s\n\t%s");
       }
-      param_5->fraction = (float)dVar8;
+      param_5->fraction = (float)dVar7;
       param_5->walkable = param_2;
-      if ((dVar8 < dVar6) || (dVar10 < dVar8)) {
+      if ((dVar7 < dVar5) || (dVar9 < dVar7)) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_mesh.cpp",0x1e1
                         ,1,"%s\n\t(trace->fraction) = %g");
       }
     }
     else {
-      dVar8 = (double)(1.0 / (float)SQRT(dVar12));
-      param_5->normal[0] = (float)(dVar10 * dVar8);
-      param_5->normal[1] = (float)(dVar11 * dVar8);
-      param_5->normal[2] = (float)(dVar9 * dVar8);
-      param_5->fraction = (float)dVar6;
+      dVar7 = (double)(1.0 / (float)SQRT(dVar11));
+      param_5->normal[0] = (float)(dVar9 * dVar7);
+      param_5->normal[1] = (float)(dVar10 * dVar7);
+      param_5->normal[2] = (float)(dVar8 * dVar7);
+      param_5->fraction = (float)dVar5;
       param_5->walkable = param_2;
-      if (dVar12 < (double)(*(float *)(iVar4 + 0xb0) * *(float *)(iVar4 + 0xb0))) {
+      if (dVar11 < (double)(param_1->radius * param_1->radius)) {
         param_5->startsolid = true;
       }
     }
     Trace_SetHitId(param_5,TRACE_HITTYPE_ENTITY,0x7fe);
   }
-LAB_824c4e2c:
-  __restfpr_24();
-  __restgprlr_27();
   return;
 }
 
 
 // 824C4E40  CM_TraceCapsuleThroughTriangle  (qcommon/cm_mesh.cpp:487)
+
+/* WARNING: Function: __savegprlr_19 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_15 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_15 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_19 replaced with injection: xenon_save_restore */
 
 void CM_TraceCapsuleThroughTriangle
                (traceWork_t *param_1,int param_2,ushort *param_3,float (*param_4) [3],
@@ -390,23 +388,23 @@ void CM_TraceCapsuleThroughTriangle
   float fVar1;
   float fVar2;
   float fVar3;
-  int iVar4;
-  float *pfVar5;
-  float *pfVar6;
-  float *pfVar7;
-  bool bVar8;
+  bool bVar4;
+  bool bVar5;
+  SphereEdgeTraceResult SVar6;
+  uint uVar7;
+  float (*pafVar8) [3];
   bool bVar9;
-  traceWork_t *ptVar10;
-  SphereEdgeTraceResult SVar11;
-  ulonglong uVar12;
-  longlong lVar13;
-  uint uVar14;
-  ulonglong uVar15;
-  bool bVar16;
-  ulonglong uVar17;
-  ulonglong uVar18;
-  ulonglong uVar19;
-  bool bVar20;
+  float (*pafVar10) [3];
+  float (*pafVar11) [3];
+  float (*pafVar12) [3];
+  bool bVar13;
+  double dVar14;
+  double dVar15;
+  double dVar16;
+  double dVar17;
+  double dVar18;
+  double dVar19;
+  double dVar20;
   double dVar21;
   double dVar22;
   double dVar23;
@@ -418,13 +416,6 @@ void CM_TraceCapsuleThroughTriangle
   double dVar29;
   double dVar30;
   double dVar31;
-  double dVar32;
-  double dVar33;
-  double dVar34;
-  double dVar35;
-  double dVar36;
-  double dVar37;
-  double dVar38;
   float local_150;
   float local_14c;
   float local_148;
@@ -441,203 +432,186 @@ void CM_TraceCapsuleThroughTriangle
   float local_10c;
   float local_108;
   
-  lVar13 = (longlong)(int)param_4;
-  uVar12 = (ulonglong)param_2;
-  __savegprlr_19(param_1);
-  ptVar10 = (traceWork_t *)__savefpr_15();
-  uVar19 = (ulonglong)*param_3 * 0xc + lVar13;
-  uVar18 = (ulonglong)param_3[1] * 0xc + lVar13;
-  uVar17 = (ulonglong)param_3[2] * 0xc + lVar13;
-  iVar4 = (int)lVar13;
-  local_130 = *(float *)((int)((ulonglong)*param_3 * 0xc) + iVar4);
-  local_120 = local_130 - *(float *)((int)((ulonglong)param_3[2] * 0xc) + iVar4);
-  dVar25 = (double)local_120;
-  pfVar5 = (float *)uVar19;
-  local_130 = local_130 - *(float *)((int)((ulonglong)param_3[1] * 0xc) + iVar4);
-  dVar29 = (double)local_130;
-  pfVar6 = (float *)uVar18;
-  local_12c = pfVar5[1] - pfVar6[1];
-  dVar28 = (double)local_12c;
-  pfVar7 = (float *)uVar17;
-  local_128 = pfVar5[2] - pfVar6[2];
-  dVar27 = (double)local_128;
-  local_11c = pfVar5[1] - pfVar7[1];
-  dVar24 = (double)local_11c;
-  local_118 = pfVar5[2] - pfVar7[2];
-  dVar23 = (double)local_118;
+  pafVar12 = param_4 + *param_3;
+  pafVar11 = param_4 + param_3[1];
+  pafVar10 = param_4 + param_3[2];
+  local_120 = param_4[*param_3][0] - param_4[param_3[2]][0];
+  dVar18 = (double)local_120;
+  local_130 = param_4[*param_3][0] - param_4[param_3[1]][0];
+  dVar22 = (double)local_130;
+  local_12c = (*pafVar12)[1] - (*pafVar11)[1];
+  dVar21 = (double)local_12c;
+  local_128 = (*pafVar12)[2] - (*pafVar11)[2];
+  dVar20 = (double)local_128;
+  local_11c = (*pafVar12)[1] - (*pafVar10)[1];
+  dVar17 = (double)local_11c;
+  local_118 = (*pafVar12)[2] - (*pafVar10)[2];
+  dVar16 = (double)local_118;
   Vec3Cross(&local_120,&local_130,&local_140);
-  dVar37 = 0.0;
-  dVar26 = (double)(ptVar10->delta[2] * local_138 +
-                   ptVar10->delta[1] * local_13c + ptVar10->delta[0] * local_140);
-  if (dVar26 < 0.0) {
-    fVar2 = (ptVar10->extents).start[0];
-    dVar34 = (double)fVar2;
-    fVar3 = (ptVar10->extents).start[1];
-    dVar33 = (double)fVar3;
-    dVar32 = (double)(ptVar10->extents).start[2];
-    dVar30 = 1.0;
-    dVar31 = (double)SQRT(local_140 * local_140 + local_13c * local_13c + local_138 * local_138);
-    dVar35 = dVar30;
-    if (-dVar31 < 0.0) {
-      dVar35 = dVar31;
+  dVar30 = 0.0;
+  dVar19 = (double)(param_1->delta[2] * local_138 +
+                   param_1->delta[1] * local_13c + param_1->delta[0] * local_140);
+  if (dVar19 < 0.0) {
+    fVar2 = (param_1->extents).start[0];
+    dVar27 = (double)fVar2;
+    fVar3 = (param_1->extents).start[1];
+    dVar26 = (double)fVar3;
+    dVar25 = (double)(param_1->extents).start[2];
+    dVar23 = 1.0;
+    dVar24 = (double)SQRT(local_140 * local_140 + local_13c * local_13c + local_138 * local_138);
+    dVar28 = dVar23;
+    if (-dVar24 < 0.0) {
+      dVar28 = dVar24;
     }
-    fVar1 = (float)(1.0 / dVar35);
-    dVar36 = (double)(fVar1 * local_140);
-    dVar35 = (double)(local_13c * fVar1);
-    dVar38 = (double)(local_138 * fVar1);
+    fVar1 = (float)(1.0 / dVar28);
+    dVar29 = (double)(fVar1 * local_140);
+    dVar28 = (double)(local_13c * fVar1);
+    dVar31 = (double)(local_138 * fVar1);
     local_140 = fVar2;
     local_13c = fVar3;
-    if (ptVar10->offset[2] < 0.0) {
+    if (param_1->offset[2] < 0.0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_mesh.cpp",0x216,0
                       ,"%s");
     }
-    bVar16 = true;
-    dVar22 = -(double)ptVar10->radius;
-    dVar21 = (double)ptVar10->offset[2];
-    if (dVar38 < 0.0) {
-      dVar21 = -(double)ptVar10->offset[2];
+    bVar9 = true;
+    dVar15 = -(double)param_1->radius;
+    dVar14 = (double)param_1->offset[2];
+    if (dVar31 < 0.0) {
+      dVar14 = -(double)param_1->offset[2];
     }
-    local_138 = (float)(dVar32 - dVar21);
-    local_150 = (float)((double)(float)(dVar22 * dVar36 + dVar34) - (double)*pfVar5);
-    local_14c = (float)((double)(float)(dVar35 * dVar22 + dVar33) - (double)pfVar5[1]);
-    local_148 = (float)((double)(float)(dVar22 * dVar38 + (double)local_138) - (double)pfVar5[2]);
-    dVar32 = (double)(float)((double)local_148 * dVar38 +
-                            (double)(float)((double)local_14c * dVar35 +
-                                           (double)(float)((double)local_150 * dVar36)));
-    if (dVar37 <= dVar32) {
-      dVar31 = -(double)(float)((double)(float)((double)(float)(dVar32 - 0.125) / dVar26) * dVar31);
-      if ((double)param_5->fraction <= dVar31) goto LAB_824c549c;
-      bVar9 = false;
+    local_138 = (float)(dVar25 - dVar14);
+    local_150 = (float)((double)(float)(dVar15 * dVar29 + dVar27) - (double)(*pafVar12)[0]);
+    local_14c = (float)((double)(float)(dVar28 * dVar15 + dVar26) - (double)(*pafVar12)[1]);
+    local_148 = (float)((double)(float)(dVar15 * dVar31 + (double)local_138) -
+                       (double)(*pafVar12)[2]);
+    dVar25 = (double)(float)((double)local_148 * dVar31 +
+                            (double)(float)((double)local_14c * dVar28 +
+                                           (double)(float)((double)local_150 * dVar29)));
+    if (dVar30 <= dVar25) {
+      dVar24 = -(double)(float)((double)(float)((double)(float)(dVar25 - 0.125) / dVar19) * dVar24);
+      if ((double)param_5->fraction <= dVar24) {
+        return;
+      }
+      bVar5 = false;
     }
     else {
-      dVar32 = (double)(float)(dVar34 - (double)*pfVar5);
-      dVar34 = (double)(float)(dVar33 - (double)pfVar5[1]);
-      dVar33 = (double)(float)((double)local_138 - (double)pfVar5[2]);
-      dVar31 = (double)(float)(dVar33 * dVar38 +
-                              (double)(float)(dVar34 * dVar35 + (double)(float)(dVar32 * dVar36)));
-      if (ptVar10->radius * ptVar10->radius <= (float)(dVar31 * dVar31)) goto LAB_824c549c;
-      dVar31 = -dVar31;
-      bVar9 = true;
-      local_150 = (float)(dVar31 * dVar36 + dVar32);
-      local_14c = (float)(dVar35 * dVar31 + dVar34);
-      local_148 = (float)(dVar31 * dVar38 + dVar33);
-      dVar31 = dVar37;
-    }
-    Vec3Cross(ptVar10->delta,&local_150,&local_110);
-    bVar8 = false;
-    bVar20 = true;
-    uVar15 = 0;
-    dVar34 = (double)local_110;
-    dVar33 = (double)local_10c;
-    dVar32 = (double)local_108;
-    dVar27 = (double)(float)(dVar32 * dVar27 +
-                            (double)(float)(dVar33 * dVar28 + (double)(float)(dVar34 * dVar29)));
-    iVar4 = (int)uVar12;
-    if (dVar27 < dVar37) {
-      bVar8 = true;
-      SVar11 = CM_TraceSphereThroughEdge(ptVar10,&local_140,pfVar5,&local_130,param_5);
-      if (SVar11 == SPHERE_HITS_EDGE) {
-        uVar14 = iVar4 * 3 + 2;
-        param_5->walkable =
-             (bool)('\x01' - ((1 << (uVar14 & 7) & (uint)cm.triEdgeIsWalkable[(int)uVar14 >> 3]) ==
-                             0));
-        __restfpr_15();
-        __restgprlr_19();
+      dVar25 = (double)(float)(dVar27 - (double)(*pafVar12)[0]);
+      dVar27 = (double)(float)(dVar26 - (double)(*pafVar12)[1]);
+      dVar26 = (double)(float)((double)local_138 - (double)(*pafVar12)[2]);
+      dVar24 = (double)(float)(dVar26 * dVar31 +
+                              (double)(float)(dVar27 * dVar28 + (double)(float)(dVar25 * dVar29)));
+      if (param_1->radius * param_1->radius <= (float)(dVar24 * dVar24)) {
         return;
       }
-      if (SVar11 != SPHERE_MISSES_EDGE) {
-        uVar15 = uVar19;
-        if (SVar11 != SPHERE_MAY_HIT_V0) {
-          uVar15 = uVar18;
-        }
-        uVar14 = iVar4 + (int)((uVar12 & 0xffffffff) << 1) + 2;
-        bVar20 = (1 << (uVar14 & 7) & (uint)cm.triEdgeIsWalkable[(int)uVar14 >> 3]) != 0;
-      }
+      dVar24 = -dVar24;
+      bVar5 = true;
+      local_150 = (float)(dVar24 * dVar29 + dVar25);
+      local_14c = (float)(dVar28 * dVar24 + dVar27);
+      local_148 = (float)(dVar24 * dVar31 + dVar26);
+      dVar24 = dVar30;
     }
-    dVar23 = (double)(float)(dVar32 * dVar23 +
-                            (double)(float)(dVar33 * dVar24 + (double)(float)(dVar34 * dVar25)));
-    if (dVar37 < dVar23) {
-      bVar8 = true;
-      SVar11 = CM_TraceSphereThroughEdge(ptVar10,&local_140,pfVar5,&local_120,param_5);
-      if (SVar11 == SPHERE_HITS_EDGE) {
-        uVar14 = iVar4 * 3 + 1;
+    Vec3Cross(param_1->delta,&local_150,&local_110);
+    bVar4 = false;
+    bVar13 = true;
+    pafVar8 = (float (*) [3])0x0;
+    dVar27 = (double)local_110;
+    dVar26 = (double)local_10c;
+    dVar25 = (double)local_108;
+    dVar20 = (double)(float)(dVar25 * dVar20 +
+                            (double)(float)(dVar26 * dVar21 + (double)(float)(dVar27 * dVar22)));
+    if (dVar20 < dVar30) {
+      bVar4 = true;
+      SVar6 = CM_TraceSphereThroughEdge(param_1,&local_140,*pafVar12,&local_130,param_5);
+      if (SVar6 == SPHERE_HITS_EDGE) {
+        uVar7 = param_2 * 3 + 2;
         param_5->walkable =
-             (bool)('\x01' - ((1 << (uVar14 & 7) & (uint)cm.triEdgeIsWalkable[(int)uVar14 >> 3]) ==
-                             0));
-        __restfpr_15();
-        __restgprlr_19();
+             (bool)('\x01' - ((1 << (uVar7 & 7) & (uint)cm.triEdgeIsWalkable[(int)uVar7 >> 3]) == 0)
+                   );
         return;
       }
-      if (SVar11 != SPHERE_MISSES_EDGE) {
-        uVar15 = uVar19;
-        if (SVar11 != SPHERE_MAY_HIT_V0) {
-          uVar15 = uVar17;
+      if (SVar6 != SPHERE_MISSES_EDGE) {
+        pafVar8 = pafVar12;
+        if (SVar6 != SPHERE_MAY_HIT_V0) {
+          pafVar8 = pafVar11;
         }
-        uVar14 = iVar4 + (int)((uVar12 & 0xffffffff) << 1) + 1;
-        bVar20 = (bool)((1 << (uVar14 & 7) & (uint)cm.triEdgeIsWalkable[(int)uVar14 >> 3]) != 0 &
-                       bVar20);
+        uVar7 = param_2 * 3 + 2;
+        bVar13 = (1 << (uVar7 & 7) & (uint)cm.triEdgeIsWalkable[(int)uVar7 >> 3]) != 0;
       }
     }
-    if ((double)(float)(dVar23 - dVar27) < dVar26) {
-      local_110 = *pfVar6 - *pfVar7;
-      local_10c = pfVar6[1] - pfVar7[1];
-      local_108 = pfVar6[2] - pfVar7[2];
-      bVar8 = true;
-      SVar11 = CM_TraceSphereThroughEdge(ptVar10,&local_140,pfVar6,&local_110,param_5);
-      if (SVar11 == SPHERE_HITS_EDGE) {
+    dVar16 = (double)(float)(dVar25 * dVar16 +
+                            (double)(float)(dVar26 * dVar17 + (double)(float)(dVar27 * dVar18)));
+    if (dVar30 < dVar16) {
+      bVar4 = true;
+      SVar6 = CM_TraceSphereThroughEdge(param_1,&local_140,*pafVar12,&local_120,param_5);
+      if (SVar6 == SPHERE_HITS_EDGE) {
+        uVar7 = param_2 * 3 + 1;
         param_5->walkable =
-             (bool)('\x01' - ((1 << (iVar4 * 3 & 7U) & (uint)cm.triEdgeIsWalkable[iVar4 * 3 >> 3])
-                             == 0));
-        __restfpr_15();
-        __restgprlr_19();
+             (bool)('\x01' - ((1 << (uVar7 & 7) & (uint)cm.triEdgeIsWalkable[(int)uVar7 >> 3]) == 0)
+                   );
         return;
       }
-      if (SVar11 != SPHERE_MISSES_EDGE) {
-        uVar15 = uVar18;
-        if (SVar11 != SPHERE_MAY_HIT_V0) {
-          uVar15 = uVar17;
+      if (SVar6 != SPHERE_MISSES_EDGE) {
+        pafVar8 = pafVar12;
+        if (SVar6 != SPHERE_MAY_HIT_V0) {
+          pafVar8 = pafVar10;
         }
-        uVar14 = iVar4 + (int)((uVar12 & 0xffffffff) << 1);
-        bVar20 = (bool)(1U - ((1 << (uVar14 & 7) & (uint)cm.triEdgeIsWalkable[(int)uVar14 >> 3]) ==
-                             0) & bVar20);
+        uVar7 = param_2 * 3 + 1;
+        bVar13 = (bool)((1 << (uVar7 & 7) & (uint)cm.triEdgeIsWalkable[(int)uVar7 >> 3]) != 0 &
+                       bVar13);
       }
     }
-    if (!bVar8) {
-      param_5->normal[0] = (float)dVar36;
-      param_5->normal[1] = (float)dVar35;
-      param_5->normal[2] = (float)dVar38;
-      if (0.002 <= ABS((float)((double)((float)(dVar35 * dVar35 + (double)(float)(dVar38 * dVar38))
-                                       + (float)(dVar36 * dVar36)) - dVar30))) {
+    if ((double)(float)(dVar16 - dVar20) < dVar19) {
+      local_110 = (*pafVar11)[0] - (*pafVar10)[0];
+      local_10c = (*pafVar11)[1] - (*pafVar10)[1];
+      local_108 = (*pafVar11)[2] - (*pafVar10)[2];
+      bVar4 = true;
+      SVar6 = CM_TraceSphereThroughEdge(param_1,&local_140,*pafVar11,&local_110,param_5);
+      if (SVar6 == SPHERE_HITS_EDGE) {
+        param_5->walkable =
+             (bool)('\x01' - ((1 << (param_2 * 3 & 7U) &
+                              (uint)cm.triEdgeIsWalkable[param_2 * 3 >> 3]) == 0));
+        return;
+      }
+      if (SVar6 != SPHERE_MISSES_EDGE) {
+        pafVar8 = pafVar11;
+        if (SVar6 != SPHERE_MAY_HIT_V0) {
+          pafVar8 = pafVar10;
+        }
+        bVar13 = (bool)(1U - ((1 << (param_2 * 3 & 7U) &
+                              (uint)cm.triEdgeIsWalkable[param_2 * 3 >> 3]) == 0) & bVar13);
+      }
+    }
+    if (!bVar4) {
+      param_5->normal[0] = (float)dVar29;
+      param_5->normal[1] = (float)dVar28;
+      param_5->normal[2] = (float)dVar31;
+      if (0.002 <= ABS((float)((double)((float)(dVar28 * dVar28 + (double)(float)(dVar31 * dVar31))
+                                       + (float)(dVar29 * dVar29)) - dVar23))) {
         va("(%g %g %g) len %g");
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_mesh.cpp",0x26f
                         ,0,"%s\n\t%s");
       }
       param_5->walkable = false;
-      dVar23 = dVar37;
-      if (-dVar31 < 0.0) {
-        dVar23 = dVar31;
+      dVar16 = dVar30;
+      if (-dVar24 < 0.0) {
+        dVar16 = dVar24;
       }
-      param_5->fraction = (float)dVar23;
-      if ((param_5->startsolid == false) && (!bVar9)) {
-        bVar16 = false;
+      param_5->fraction = (float)dVar16;
+      if ((param_5->startsolid == false) && (!bVar5)) {
+        bVar9 = false;
       }
-      param_5->startsolid = bVar16;
-      if ((dVar23 < dVar37) || (dVar30 < dVar23)) {
+      param_5->startsolid = bVar9;
+      if ((dVar16 < dVar30) || (dVar23 < dVar16)) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_mesh.cpp",0x273
                         ,1,"%s\n\t(trace->fraction) = %g");
       }
       Trace_SetHitId(param_5,TRACE_HITTYPE_ENTITY,0x7fe);
-      __restfpr_15();
-      __restgprlr_19();
       return;
     }
-    if ((uVar15 & 0xffffffff) != 0) {
-      CM_TraceSphereThroughVertex(ptVar10,bVar20,&local_140,(float *)uVar15,param_5);
+    if (pafVar8 != (float (*) [3])0x0) {
+      CM_TraceSphereThroughVertex(param_1,bVar13,&local_140,*pafVar8,param_5);
     }
   }
-LAB_824c549c:
-  __restfpr_15();
-  __restgprlr_19();
   return;
 }
 
@@ -886,6 +860,11 @@ LAB_824c59e8:
 
 // 824C5B18  CM_DoesCapsuleIntersectTriangle  (qcommon/cm_mesh.cpp:1066)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 bool CM_DoesCapsuleIntersectTriangle
                (float *param_1,float *param_2,float param_3,ushort *param_4,float (*param_5) [3])
 
@@ -893,16 +872,15 @@ bool CM_DoesCapsuleIntersectTriangle
   int iVar1;
   int iVar2;
   float *pfVar3;
-  float *pfVar4;
-  bool bVar5;
-  undefined1 uVar6;
-  longlong lVar7;
-  float *pfVar8;
-  float *pfVar9;
+  bool bVar4;
+  float *pfVar5;
   int in_r7;
-  ulonglong uVar10;
-  float *pfVar11;
-  double extraout_f1;
+  ulonglong uVar6;
+  float *pfVar7;
+  double dVar8;
+  double dVar9;
+  double dVar10;
+  double dVar11;
   double dVar12;
   double dVar13;
   double dVar14;
@@ -919,11 +897,7 @@ bool CM_DoesCapsuleIntersectTriangle
   double dVar25;
   double dVar26;
   double dVar27;
-  double dVar28;
-  double dVar29;
-  double dVar30;
-  double dVar31;
-  float fVar32;
+  float fVar28;
   float local_f0;
   float local_ec;
   float local_e8;
@@ -934,111 +908,110 @@ bool CM_DoesCapsuleIntersectTriangle
   float local_cc;
   float local_c8;
   
-  lVar7 = (longlong)(int)param_2;
-  pfVar4 = (float *)__savegprlr_27((double)param_3,param_1,lVar7,param_4);
-  pfVar8 = (float *)lVar7;
-  dVar12 = extraout_f1;
-  __savefpr();
-  pfVar11 = (float *)((uint)*(ushort *)((int)*param_5 + 2) * 0xc + in_r7);
+  dVar8 = (double)param_3;
+  pfVar7 = (float *)((uint)*(ushort *)((int)*param_5 + 2) * 0xc + in_r7);
   iVar1 = (uint)*(ushort *)(*param_5 + 1) * 0xc;
   iVar2 = (uint)*(ushort *)*param_5 * 0xc;
   pfVar3 = (float *)(iVar1 + in_r7);
-  pfVar9 = (float *)(iVar2 + in_r7);
+  pfVar5 = (float *)(iVar2 + in_r7);
   local_e0 = *(float *)(iVar2 + in_r7);
-  local_f0 = *pfVar11 - local_e0;
-  dVar30 = (double)local_f0;
+  local_f0 = *pfVar7 - local_e0;
+  dVar26 = (double)local_f0;
   local_e0 = *(float *)(iVar1 + in_r7) - local_e0;
-  dVar28 = (double)local_e0;
-  local_ec = pfVar11[1] - pfVar9[1];
-  dVar29 = (double)local_ec;
-  local_e8 = pfVar11[2] - pfVar9[2];
-  dVar27 = (double)local_e8;
-  local_dc = pfVar3[1] - pfVar9[1];
-  dVar26 = (double)local_dc;
-  local_d8 = pfVar3[2] - pfVar9[2];
-  dVar25 = (double)local_d8;
+  dVar24 = (double)local_e0;
+  local_ec = pfVar7[1] - pfVar5[1];
+  dVar25 = (double)local_ec;
+  local_e8 = pfVar7[2] - pfVar5[2];
+  dVar23 = (double)local_e8;
+  local_dc = pfVar3[1] - pfVar5[1];
+  dVar22 = (double)local_dc;
+  local_d8 = pfVar3[2] - pfVar5[2];
+  dVar21 = (double)local_d8;
   Vec3Cross(&local_f0,&local_e0,&local_d0);
-  dVar24 = (double)local_cc;
-  dVar23 = (double)local_d0;
-  dVar21 = (double)*pfVar4;
-  dVar20 = (double)*pfVar8;
-  dVar17 = (double)pfVar4[1];
-  dVar19 = (double)pfVar8[1];
-  dVar22 = (double)local_c8;
-  dVar16 = (double)pfVar4[2];
-  dVar18 = (double)pfVar8[2];
-  dVar14 = (double)(float)((double)pfVar9[2] * dVar22 +
-                          (double)(float)((double)*pfVar9 * dVar23 +
-                                         (double)(float)((double)pfVar9[1] * dVar24)));
-  dVar31 = (double)(float)(dVar16 * dVar22 +
-                          (double)(float)(dVar17 * dVar24 + (double)(float)(dVar21 * dVar23))) -
-           dVar14;
-  dVar14 = (double)(float)(dVar18 * dVar22 +
-                          (double)(float)(dVar19 * dVar24 + (double)(float)(dVar20 * dVar23))) -
-           dVar14;
-  if (0.0 <= dVar14 * dVar31) {
-    dVar22 = (double)(float)(dVar23 * dVar23 +
-                            (double)(float)(dVar24 * dVar24 + (double)(float)(dVar22 * dVar22))) *
-             dVar12;
-    bVar5 = dVar31 * dVar31 < dVar22;
-    uVar10 = (ulonglong)(dVar14 * dVar14 < dVar22);
-    if (uVar10 == 0 && !bVar5) goto LAB_824c5e90;
-    dVar13 = (double)(float)(dVar25 * dVar27 +
-                            (double)(float)(dVar28 * dVar30 + (double)(float)(dVar26 * dVar29)));
-    dVar27 = (double)(float)(dVar27 * dVar27 +
-                            (double)(float)(dVar30 * dVar30 + (double)(float)(dVar29 * dVar29)));
-    dVar25 = (double)(float)(dVar25 * dVar25 +
-                            (double)(float)(dVar26 * dVar26 + (double)(float)(dVar28 * dVar28)));
-    dVar26 = dVar25 * dVar27 - dVar13 * dVar13;
+  dVar20 = (double)local_cc;
+  dVar19 = (double)local_d0;
+  dVar17 = (double)*param_1;
+  dVar16 = (double)*param_2;
+  dVar13 = (double)param_1[1];
+  dVar15 = (double)param_2[1];
+  dVar18 = (double)local_c8;
+  dVar12 = (double)param_1[2];
+  dVar14 = (double)param_2[2];
+  dVar10 = (double)(float)((double)pfVar5[2] * dVar18 +
+                          (double)(float)((double)*pfVar5 * dVar19 +
+                                         (double)(float)((double)pfVar5[1] * dVar20)));
+  dVar27 = (double)(float)(dVar12 * dVar18 +
+                          (double)(float)(dVar13 * dVar20 + (double)(float)(dVar17 * dVar19))) -
+           dVar10;
+  dVar10 = (double)(float)(dVar14 * dVar18 +
+                          (double)(float)(dVar15 * dVar20 + (double)(float)(dVar16 * dVar19))) -
+           dVar10;
+  if (0.0 <= dVar10 * dVar27) {
+    dVar18 = (double)(float)(dVar19 * dVar19 +
+                            (double)(float)(dVar20 * dVar20 + (double)(float)(dVar18 * dVar18))) *
+             dVar8;
+    bVar4 = dVar27 * dVar27 < dVar18;
+    uVar6 = (ulonglong)(dVar10 * dVar10 < dVar18);
+    if (uVar6 == 0 && !bVar4) {
+      return false;
+    }
+    dVar9 = (double)(float)(dVar21 * dVar23 +
+                           (double)(float)(dVar24 * dVar26 + (double)(float)(dVar22 * dVar25)));
+    dVar23 = (double)(float)(dVar23 * dVar23 +
+                            (double)(float)(dVar26 * dVar26 + (double)(float)(dVar25 * dVar25)));
+    dVar21 = (double)(float)(dVar21 * dVar21 +
+                            (double)(float)(dVar22 * dVar22 + (double)(float)(dVar24 * dVar24)));
+    dVar22 = dVar21 * dVar23 - dVar9 * dVar9;
   }
   else {
-    dVar15 = (double)(float)(dVar31 / (dVar31 - dVar14));
-    dVar13 = (double)(float)(dVar25 * dVar27 +
-                            (double)(float)(dVar28 * dVar30 + (double)(float)(dVar26 * dVar29)));
-    dVar27 = (double)(float)(dVar27 * dVar27 +
-                            (double)(float)(dVar30 * dVar30 + (double)(float)(dVar29 * dVar29)));
-    dVar25 = (double)(float)(dVar25 * dVar25 +
-                            (double)(float)(dVar26 * dVar26 + (double)(float)(dVar28 * dVar28)));
-    local_d0 = (float)((double)(float)(dVar20 - dVar21) * dVar15 + dVar21);
-    local_cc = (float)((double)(float)(dVar19 - dVar17) * dVar15 + dVar17);
-    local_c8 = (float)((double)(float)(dVar18 - dVar16) * dVar15 + dVar16);
-    dVar26 = dVar25 * dVar27 - dVar13 * dVar13;
-    bVar5 = CM_IsPointOverTriangle(&local_d0,pfVar9,&local_f0,&local_e0,dVar27,dVar13,dVar25,dVar26)
-    ;
-    if (bVar5) goto LAB_824c5ccc;
-    dVar22 = (double)(float)(dVar23 * dVar23 +
-                            (double)(float)(dVar24 * dVar24 + (double)(float)(dVar22 * dVar22))) *
-             dVar12;
-    bVar5 = dVar31 * dVar31 < dVar22;
-    uVar10 = (ulonglong)(dVar14 * dVar14 < dVar22);
-  }
-  if (((!bVar5) ||
-      (bVar5 = CM_IsPointOverTriangle(pfVar4,pfVar9,&local_f0,&local_e0,dVar27,dVar13,dVar25,dVar26)
-      , !bVar5)) &&
-     (((uVar10 & 0xff) == 0 ||
-      (bVar5 = CM_IsPointOverTriangle(pfVar8,pfVar9,&local_f0,&local_e0,dVar27,dVar13,dVar25,dVar26)
-      , !bVar5)))) {
-    local_d0 = (float)(dVar20 - dVar21);
-    local_cc = (float)(dVar19 - dVar17);
-    local_c8 = (float)(dVar18 - dVar16);
-    fVar32 = CM_DistanceSquaredBetweenSegments(pfVar4,&local_d0,pfVar9,&local_f0);
-    if ((dVar12 <= (double)fVar32) &&
-       (fVar32 = CM_DistanceSquaredBetweenSegments(pfVar4,&local_d0,pfVar9,&local_e0),
-       dVar12 <= (double)fVar32)) {
-      local_e0 = *pfVar3 - *pfVar11;
-      local_dc = pfVar3[1] - pfVar11[1];
-      local_d8 = pfVar3[2] - pfVar11[2];
-      CM_DistanceSquaredBetweenSegments(pfVar4,&local_d0,pfVar11,&local_e0);
-LAB_824c5e90:
-      __restfpr();
-      uVar6 = __restgprlr_27();
-      return (bool)uVar6;
+    dVar11 = (double)(float)(dVar27 / (dVar27 - dVar10));
+    dVar9 = (double)(float)(dVar21 * dVar23 +
+                           (double)(float)(dVar24 * dVar26 + (double)(float)(dVar22 * dVar25)));
+    dVar23 = (double)(float)(dVar23 * dVar23 +
+                            (double)(float)(dVar26 * dVar26 + (double)(float)(dVar25 * dVar25)));
+    dVar21 = (double)(float)(dVar21 * dVar21 +
+                            (double)(float)(dVar22 * dVar22 + (double)(float)(dVar24 * dVar24)));
+    local_d0 = (float)((double)(float)(dVar16 - dVar17) * dVar11 + dVar17);
+    local_cc = (float)((double)(float)(dVar15 - dVar13) * dVar11 + dVar13);
+    local_c8 = (float)((double)(float)(dVar14 - dVar12) * dVar11 + dVar12);
+    dVar22 = dVar21 * dVar23 - dVar9 * dVar9;
+    bVar4 = CM_IsPointOverTriangle(&local_d0,pfVar5,&local_f0,&local_e0,dVar23,dVar9,dVar21,dVar22);
+    if (bVar4) {
+      return true;
     }
+    dVar18 = (double)(float)(dVar19 * dVar19 +
+                            (double)(float)(dVar20 * dVar20 + (double)(float)(dVar18 * dVar18))) *
+             dVar8;
+    bVar4 = dVar27 * dVar27 < dVar18;
+    uVar6 = (ulonglong)(dVar10 * dVar10 < dVar18);
   }
-LAB_824c5ccc:
-  __restfpr();
-  uVar6 = __restgprlr_27();
-  return (bool)uVar6;
+  if (((bVar4) &&
+      (bVar4 = CM_IsPointOverTriangle(param_1,pfVar5,&local_f0,&local_e0,dVar23,dVar9,dVar21,dVar22)
+      , bVar4)) ||
+     (((uVar6 & 0xff) != 0 &&
+      (bVar4 = CM_IsPointOverTriangle(param_2,pfVar5,&local_f0,&local_e0,dVar23,dVar9,dVar21,dVar22)
+      , bVar4)))) {
+    return true;
+  }
+  local_d0 = (float)(dVar16 - dVar17);
+  local_cc = (float)(dVar15 - dVar13);
+  local_c8 = (float)(dVar14 - dVar12);
+  fVar28 = CM_DistanceSquaredBetweenSegments(param_1,&local_d0,pfVar5,&local_f0);
+  if ((double)fVar28 < dVar8) {
+    return true;
+  }
+  fVar28 = CM_DistanceSquaredBetweenSegments(param_1,&local_d0,pfVar5,&local_e0);
+  if (dVar8 <= (double)fVar28) {
+    local_e0 = *pfVar3 - *pfVar7;
+    local_dc = pfVar3[1] - pfVar7[1];
+    local_d8 = pfVar3[2] - pfVar7[2];
+    fVar28 = CM_DistanceSquaredBetweenSegments(param_1,&local_d0,pfVar7,&local_e0);
+    if (dVar8 <= (double)fVar28) {
+      return false;
+    }
+    return true;
+  }
+  return true;
 }
 
 
@@ -1178,16 +1151,21 @@ bool DoesChordIntersectCylinder
 
 // 824C6108  CM_TraceCapsuleThroughBorder  (qcommon/cm_mesh.cpp:1271)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void CM_TraceCapsuleThroughBorder(traceWork_t *param_1,CollisionBorder *param_2,trace_t *param_3)
 
 {
   float fVar1;
   float fVar2;
   float fVar3;
-  traceWork_t *ptVar4;
-  bool bVar5;
-  int iVar6;
-  trace_t *ptVar7;
+  bool bVar4;
+  int iVar5;
+  trace_t *ptVar6;
+  double dVar7;
   double dVar8;
   double dVar9;
   double dVar10;
@@ -1198,233 +1176,240 @@ void CM_TraceCapsuleThroughBorder(traceWork_t *param_1,CollisionBorder *param_2,
   double dVar15;
   double dVar16;
   double dVar17;
-  double dVar18;
   
-  __savegprlr_27(param_1);
-  ptVar4 = (traceWork_t *)__savefpr_27();
-  dVar12 = (double)ptVar4->delta[1];
-  dVar13 = (double)param_2->distEq[1];
-  dVar8 = (double)param_2->distEq[0];
-  dVar11 = (double)ptVar4->delta[0];
-  dVar17 = 0.0;
-  fVar1 = (float)(dVar11 * dVar8 + (double)(float)(dVar12 * dVar13));
-  if (0.0 <= fVar1) goto LAB_824c6a84;
-  dVar15 = (double)(ptVar4->extents).start[1];
-  dVar14 = (double)(ptVar4->extents).start[0];
-  fVar2 = ptVar4->radius;
-  dVar9 = (double)(fVar2 + 0.125);
-  fVar3 = (float)(dVar14 * dVar8 + (double)(float)(dVar15 * dVar13)) - param_2->distEq[2];
-  dVar18 = (double)((float)(dVar9 - (double)fVar3) / fVar1);
-  if (((double)param_3->fraction <= dVar18) ||
-     ((double)(float)((double)ptVar4->delta2DLen * dVar18) < -dVar9)) goto LAB_824c6a84;
-  dVar10 = (double)param_2->start;
-  dVar16 = (double)(float)((double)ptVar4->delta[2] * dVar18 + (double)(ptVar4->extents).start[2]);
-  fVar1 = (float)((double)(float)(dVar13 * (double)(float)(dVar11 * dVar18 + dVar14) -
-                                 (double)(float)(dVar8 * (double)(float)(dVar12 * dVar18 + dVar15)))
-                 - dVar10);
-  dVar13 = (double)fVar1;
-  ptVar7 = param_3;
-  if (0.0 <= dVar13) {
-    dVar10 = (double)param_2->length;
-    if (dVar13 <= dVar10) {
-      if ((0.0 <= dVar18) ||
-         (dVar18 = dVar17,
-         bVar5 = DoesChordIntersectCylinder(ptVar4,fVar2 + 0.125,fVar3,fVar1,param_2), !bVar5))
-      goto LAB_824c647c;
-      param_3->fraction = (float)dVar17;
-      param_3->walkable = false;
-      fVar1 = param_2->distEq[1];
-      fVar2 = param_2->distEq[0];
-      param_3->normal[1] = fVar1;
-      param_3->normal[0] = fVar2;
-      param_3->normal[2] = (float)dVar17;
-      if (0.002 <= ABS((fVar1 * fVar1 + (float)(dVar17 * dVar17) + fVar2 * fVar2) - 1.0)) {
-        va("(%g %g %g) len %g");
-        iVar6 = 0x57e;
-LAB_824c6a6c:
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_mesh.cpp",iVar6
-                        ,0,"%s\n\t%s");
-      }
-    }
-    else {
-      dVar13 = (double)(float)((double)param_2->start + dVar10);
-      dVar18 = (double)(float)(dVar14 - (double)(float)((double)param_2->distEq[1] * dVar13 +
-                                                       (double)(float)((double)param_2->distEq[2] *
-                                                                      dVar8)));
-      dVar13 = (double)(float)(dVar15 - (double)(float)((double)param_2->distEq[2] *
-                                                        (double)param_2->distEq[1] -
-                                                       (double)(float)(dVar13 * dVar8)));
-      dVar8 = (double)(float)(dVar11 * dVar18 + (double)(float)(dVar12 * dVar13));
-      if (0.0 <= dVar8) goto LAB_824c6a84;
-      dVar11 = (double)(float)(dVar13 * dVar13 + (double)(float)(dVar18 * dVar18));
-      fVar1 = -(float)(dVar9 * dVar9 - dVar11);
-      if (0.0 < fVar1) {
-        dVar11 = (double)(float)(dVar8 * dVar8 - (double)(ptVar4->delta2DLenSq * fVar1));
-        if (dVar11 < 0.0) goto LAB_824c6a84;
-        if (ptVar4->delta2DLenSq <= 0.0) {
-          ptVar7 = (trace_t *)0x0;
-          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_mesh.cpp",
-                          0x56a,0,"%s\n\t(tw->delta2DLenSq) = %g");
-        }
-        dVar18 = (double)((float)(-dVar8 - (double)(float)SQRT(dVar11)) / ptVar4->delta2DLenSq);
-        if ((double)param_3->fraction <= dVar18) goto LAB_824c6a84;
-        if (dVar18 < dVar17) {
-          ptVar7 = (trace_t *)0x0;
-          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_mesh.cpp",
-                          0x56e,0,"%s\n\t(t) = %g");
-        }
-        fVar1 = ptVar4->delta[2];
-        fVar2 = (ptVar4->extents).start[2];
-        dVar13 = (double)param_2->length;
-        goto LAB_824c6478;
-      }
-      dVar8 = (double)(float)((double)param_2->zSlope * dVar10 + (double)param_2->zBase);
-      if (0.001 <= ABS((ptVar4->offset[2] + fVar2) - ptVar4->radiusOffset[2])) {
-        va("tw->offsetZ: %f, tw->radiusOffset[2]: %f, tw->radius: %f");
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_mesh.cpp",0x557
-                        ,0,"%s\n\t%s");
-      }
-      if ((double)ptVar4->offset[2] < dVar17) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_mesh.cpp",0x558
-                        ,0,"%s");
-      }
-      if (ptVar4->offset[2] < ABS((float)((double)(ptVar4->extents).start[2] - dVar8)))
-      goto LAB_824c6a84;
-      param_3->normal[1] = (float)(dVar13 * (double)(1.0 / (float)SQRT(dVar11)));
-      param_3->normal[0] = (float)((double)(1.0 / (float)SQRT(dVar11)) * dVar18);
-      param_3->normal[2] = (float)dVar17;
-      if (0.002 <= ABS((param_3->normal[1] * param_3->normal[1] + (float)(dVar17 * dVar17) +
-                       param_3->normal[0] * param_3->normal[0]) - 1.0)) {
-        va("(%g %g %g) len %g");
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_mesh.cpp",0x55e
-                        ,0,"%s\n\t%s");
-      }
-      param_3->fraction = (float)dVar17;
-      param_3->walkable = false;
-      if (dVar11 < (double)(ptVar4->radius * ptVar4->radius)) {
-        param_3->startsolid = true;
-      }
-    }
+  dVar11 = (double)param_1->delta[1];
+  dVar12 = (double)param_2->distEq[1];
+  dVar7 = (double)param_2->distEq[0];
+  dVar10 = (double)param_1->delta[0];
+  dVar16 = 0.0;
+  fVar1 = (float)(dVar10 * dVar7 + (double)(float)(dVar11 * dVar12));
+  if (0.0 <= fVar1) {
+    return;
   }
-  else {
-    dVar18 = (double)(float)(dVar15 - (double)(float)((double)param_2->distEq[2] *
-                                                      (double)param_2->distEq[1] -
-                                                     (double)(float)(dVar10 * dVar8)));
-    dVar13 = (double)(float)(dVar14 - (double)(float)((double)param_2->distEq[1] * dVar10 +
-                                                     (double)(float)((double)param_2->distEq[2] *
-                                                                    dVar8)));
-    dVar8 = (double)(float)(dVar11 * dVar13 + (double)(float)(dVar12 * dVar18));
-    if (0.0 <= dVar8) goto LAB_824c6a84;
-    dVar11 = (double)(float)(dVar18 * dVar18 + (double)(float)(dVar13 * dVar13));
-    fVar1 = -(float)(dVar9 * dVar9 - dVar11);
-    if (0.0 < fVar1) {
-      dVar11 = (double)(float)(dVar8 * dVar8 - (double)(ptVar4->delta2DLenSq * fVar1));
-      if (dVar11 < 0.0) goto LAB_824c6a84;
-      dVar13 = dVar17;
-      if (ptVar4->delta2DLenSq <= 0.0) {
-        ptVar7 = (trace_t *)0x0;
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_mesh.cpp",0x541
-                        ,0,"%s\n\t(tw->delta2DLenSq) = %g");
-        dVar13 = dVar17;
+  dVar14 = (double)(param_1->extents).start[1];
+  dVar13 = (double)(param_1->extents).start[0];
+  fVar2 = param_1->radius;
+  dVar8 = (double)(fVar2 + 0.125);
+  fVar3 = (float)(dVar13 * dVar7 + (double)(float)(dVar14 * dVar12)) - param_2->distEq[2];
+  dVar17 = (double)((float)(dVar8 - (double)fVar3) / fVar1);
+  if ((double)param_3->fraction <= dVar17) {
+    return;
+  }
+  if ((double)(float)((double)param_1->delta2DLen * dVar17) < -dVar8) {
+    return;
+  }
+  dVar9 = (double)param_2->start;
+  dVar15 = (double)(float)((double)param_1->delta[2] * dVar17 + (double)(param_1->extents).start[2])
+  ;
+  fVar1 = (float)((double)(float)(dVar12 * (double)(float)(dVar10 * dVar17 + dVar13) -
+                                 (double)(float)(dVar7 * (double)(float)(dVar11 * dVar17 + dVar14)))
+                 - dVar9);
+  dVar12 = (double)fVar1;
+  ptVar6 = param_3;
+  if (0.0 <= dVar12) {
+    dVar9 = (double)param_2->length;
+    if (dVar9 < dVar12) {
+      dVar12 = (double)(float)((double)param_2->start + dVar9);
+      dVar17 = (double)(float)(dVar13 - (double)(float)((double)param_2->distEq[1] * dVar12 +
+                                                       (double)(float)((double)param_2->distEq[2] *
+                                                                      dVar7)));
+      dVar12 = (double)(float)(dVar14 - (double)(float)((double)param_2->distEq[2] *
+                                                        (double)param_2->distEq[1] -
+                                                       (double)(float)(dVar12 * dVar7)));
+      dVar7 = (double)(float)(dVar10 * dVar17 + (double)(float)(dVar11 * dVar12));
+      if (0.0 <= dVar7) {
+        return;
       }
-      dVar18 = (double)((float)(-dVar8 - (double)(float)SQRT(dVar11)) / ptVar4->delta2DLenSq);
-      if ((double)param_3->fraction <= dVar18) goto LAB_824c6a84;
-      if (dVar18 < dVar13) {
-        ptVar7 = (trace_t *)0x0;
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_mesh.cpp",0x545
+      dVar10 = (double)(float)(dVar12 * dVar12 + (double)(float)(dVar17 * dVar17));
+      fVar1 = -(float)(dVar8 * dVar8 - dVar10);
+      if (fVar1 <= 0.0) {
+        dVar7 = (double)(float)((double)param_2->zSlope * dVar9 + (double)param_2->zBase);
+        if (0.001 <= ABS((param_1->offset[2] + fVar2) - param_1->radiusOffset[2])) {
+          va("tw->offsetZ: %f, tw->radiusOffset[2]: %f, tw->radius: %f");
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_mesh.cpp",
+                          0x557,0,"%s\n\t%s");
+        }
+        if ((double)param_1->offset[2] < dVar16) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_mesh.cpp",
+                          0x558,0,"%s");
+        }
+        if (param_1->offset[2] < ABS((float)((double)(param_1->extents).start[2] - dVar7))) {
+          return;
+        }
+        param_3->normal[1] = (float)(dVar12 * (double)(1.0 / (float)SQRT(dVar10)));
+        param_3->normal[0] = (float)((double)(1.0 / (float)SQRT(dVar10)) * dVar17);
+        param_3->normal[2] = (float)dVar16;
+        if (0.002 <= ABS((param_3->normal[1] * param_3->normal[1] + (float)(dVar16 * dVar16) +
+                         param_3->normal[0] * param_3->normal[0]) - 1.0)) {
+          va("(%g %g %g) len %g");
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_mesh.cpp",
+                          0x55e,0,"%s\n\t%s");
+        }
+        param_3->fraction = (float)dVar16;
+        param_3->walkable = false;
+        if (dVar10 < (double)(param_1->radius * param_1->radius)) {
+          param_3->startsolid = true;
+        }
+        goto LAB_824c6a74;
+      }
+      dVar10 = (double)(float)(dVar7 * dVar7 - (double)(param_1->delta2DLenSq * fVar1));
+      if (dVar10 < 0.0) {
+        return;
+      }
+      if (param_1->delta2DLenSq <= 0.0) {
+        ptVar6 = (trace_t *)0x0;
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_mesh.cpp",0x56a
+                        ,0,"%s\n\t(tw->delta2DLenSq) = %g");
+      }
+      dVar17 = (double)((float)(-dVar7 - (double)(float)SQRT(dVar10)) / param_1->delta2DLenSq);
+      if ((double)param_3->fraction <= dVar17) {
+        return;
+      }
+      if (dVar17 < dVar16) {
+        ptVar6 = (trace_t *)0x0;
+        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_mesh.cpp",0x56e
                         ,0,"%s\n\t(t) = %g");
       }
-      fVar1 = ptVar4->delta[2];
-      fVar2 = (ptVar4->extents).start[2];
-      dVar17 = dVar13;
-LAB_824c6478:
-      dVar16 = (double)(float)((double)fVar1 * dVar18 + (double)fVar2);
-LAB_824c647c:
-      dVar8 = (double)(float)((double)(float)((double)param_2->zSlope * dVar13 +
-                                             (double)param_2->zBase) - dVar16);
-      if (0.001 <= ABS((ptVar4->offset[2] + ptVar4->radius) - ptVar4->radiusOffset[2])) {
-        va("tw->offsetZ: %f, tw->radiusOffset[2]: %f, tw->radius: %f");
-        ptVar7 = (trace_t *)0x0;
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_mesh.cpp",0x58f
-                        ,0,"%s\n\t%s");
-      }
-      if ((double)ptVar4->offset[2] < dVar17) {
-        ptVar7 = (trace_t *)0x0;
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_mesh.cpp",0x590
-                        ,0,"%s");
-      }
-      dVar11 = (double)ptVar4->offset[2];
-      if (dVar11 < dVar8) {
-        if (dVar8 < (double)(float)((double)ptVar4->radius + dVar11)) {
-          CM_TraceSphereThroughBorder(ptVar4,param_2,ptVar4->offset[2],ptVar7);
-          __restfpr_27();
-          __restgprlr_27();
-          return;
-        }
-        goto LAB_824c6a84;
-      }
-      dVar11 = -dVar11;
-      if (dVar8 < dVar11) {
-        if ((double)(float)(dVar11 - (double)ptVar4->radius) < dVar8) {
-          CM_TraceSphereThroughBorder(ptVar4,param_2,(float)dVar11,ptVar7);
-          __restfpr_27();
-          __restgprlr_27();
-          return;
-        }
-        goto LAB_824c6a84;
-      }
-      param_3->fraction = (float)dVar18;
-      dVar8 = 1.0;
-      if ((dVar18 < dVar17) || (1.0 < dVar18)) {
-        MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_mesh.cpp",0x59e
-                        ,1,"%s\n\t(trace->fraction) = %g");
-      }
-      param_3->walkable = false;
-      fVar1 = param_2->distEq[1];
-      fVar2 = param_2->distEq[0];
-      param_3->normal[1] = fVar1;
-      param_3->normal[0] = fVar2;
-      param_3->normal[2] = (float)dVar17;
-      if (0.002 <= ABS((float)((double)(fVar1 * fVar1 + (float)(dVar17 * dVar17) + fVar2 * fVar2) -
-                              dVar8))) {
-        va("(%g %g %g) len %g");
-        iVar6 = 0x5a1;
-        goto LAB_824c6a6c;
-      }
+      fVar1 = param_1->delta[2];
+      fVar2 = (param_1->extents).start[2];
+      dVar12 = (double)param_2->length;
+      goto LAB_824c6478;
     }
-    else {
-      dVar8 = (double)param_2->zBase;
-      if (0.001 <= ABS((ptVar4->offset[2] + fVar2) - ptVar4->radiusOffset[2])) {
+    if ((0.0 <= dVar17) ||
+       (dVar17 = dVar16,
+       bVar4 = DoesChordIntersectCylinder(param_1,fVar2 + 0.125,fVar3,fVar1,param_2), !bVar4))
+    goto LAB_824c647c;
+    param_3->fraction = (float)dVar16;
+    param_3->walkable = false;
+    fVar1 = param_2->distEq[1];
+    fVar2 = param_2->distEq[0];
+    param_3->normal[1] = fVar1;
+    param_3->normal[0] = fVar2;
+    param_3->normal[2] = (float)dVar16;
+    if (ABS((fVar1 * fVar1 + (float)(dVar16 * dVar16) + fVar2 * fVar2) - 1.0) < 0.002)
+    goto LAB_824c6a74;
+    va("(%g %g %g) len %g");
+    iVar5 = 0x57e;
+  }
+  else {
+    dVar17 = (double)(float)(dVar14 - (double)(float)((double)param_2->distEq[2] *
+                                                      (double)param_2->distEq[1] -
+                                                     (double)(float)(dVar9 * dVar7)));
+    dVar12 = (double)(float)(dVar13 - (double)(float)((double)param_2->distEq[1] * dVar9 +
+                                                     (double)(float)((double)param_2->distEq[2] *
+                                                                    dVar7)));
+    dVar7 = (double)(float)(dVar10 * dVar12 + (double)(float)(dVar11 * dVar17));
+    if (0.0 <= dVar7) {
+      return;
+    }
+    dVar10 = (double)(float)(dVar17 * dVar17 + (double)(float)(dVar12 * dVar12));
+    fVar1 = -(float)(dVar8 * dVar8 - dVar10);
+    if (fVar1 <= 0.0) {
+      dVar7 = (double)param_2->zBase;
+      if (0.001 <= ABS((param_1->offset[2] + fVar2) - param_1->radiusOffset[2])) {
         va("tw->offsetZ: %f, tw->radiusOffset[2]: %f, tw->radius: %f");
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_mesh.cpp",0x52d
                         ,0,"%s\n\t%s");
       }
-      if ((double)ptVar4->offset[2] < dVar17) {
+      if ((double)param_1->offset[2] < dVar16) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_mesh.cpp",0x52e
                         ,0,"%s");
       }
-      if (ptVar4->offset[2] < ABS((float)(dVar8 - (double)(ptVar4->extents).start[2])))
-      goto LAB_824c6a84;
-      param_3->normal[1] = (float)(dVar18 * (double)(1.0 / (float)SQRT(dVar11)));
-      param_3->normal[0] = (float)((double)(1.0 / (float)SQRT(dVar11)) * dVar13);
-      param_3->normal[2] = (float)dVar17;
-      if (0.002 <= ABS((param_3->normal[1] * param_3->normal[1] + (float)(dVar17 * dVar17) +
+      if (param_1->offset[2] < ABS((float)(dVar7 - (double)(param_1->extents).start[2]))) {
+        return;
+      }
+      param_3->normal[1] = (float)(dVar17 * (double)(1.0 / (float)SQRT(dVar10)));
+      param_3->normal[0] = (float)((double)(1.0 / (float)SQRT(dVar10)) * dVar12);
+      param_3->normal[2] = (float)dVar16;
+      if (0.002 <= ABS((param_3->normal[1] * param_3->normal[1] + (float)(dVar16 * dVar16) +
                        param_3->normal[0] * param_3->normal[0]) - 1.0)) {
         va("(%g %g %g) len %g");
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_mesh.cpp",0x534
                         ,0,"%s\n\t%s");
       }
-      param_3->fraction = (float)dVar17;
+      param_3->fraction = (float)dVar16;
       param_3->walkable = false;
-      if (dVar11 < (double)(ptVar4->radius * ptVar4->radius)) {
+      if (dVar10 < (double)(param_1->radius * param_1->radius)) {
         param_3->startsolid = true;
       }
+      goto LAB_824c6a74;
     }
+    dVar10 = (double)(float)(dVar7 * dVar7 - (double)(param_1->delta2DLenSq * fVar1));
+    if (dVar10 < 0.0) {
+      return;
+    }
+    dVar12 = dVar16;
+    if (param_1->delta2DLenSq <= 0.0) {
+      ptVar6 = (trace_t *)0x0;
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_mesh.cpp",0x541,0
+                      ,"%s\n\t(tw->delta2DLenSq) = %g");
+      dVar12 = dVar16;
+    }
+    dVar17 = (double)((float)(-dVar7 - (double)(float)SQRT(dVar10)) / param_1->delta2DLenSq);
+    if ((double)param_3->fraction <= dVar17) {
+      return;
+    }
+    if (dVar17 < dVar12) {
+      ptVar6 = (trace_t *)0x0;
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_mesh.cpp",0x545,0
+                      ,"%s\n\t(t) = %g");
+    }
+    fVar1 = param_1->delta[2];
+    fVar2 = (param_1->extents).start[2];
+    dVar16 = dVar12;
+LAB_824c6478:
+    dVar15 = (double)(float)((double)fVar1 * dVar17 + (double)fVar2);
+LAB_824c647c:
+    dVar7 = (double)(float)((double)(float)((double)param_2->zSlope * dVar12 +
+                                           (double)param_2->zBase) - dVar15);
+    if (0.001 <= ABS((param_1->offset[2] + param_1->radius) - param_1->radiusOffset[2])) {
+      va("tw->offsetZ: %f, tw->radiusOffset[2]: %f, tw->radius: %f");
+      ptVar6 = (trace_t *)0x0;
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_mesh.cpp",0x58f,0
+                      ,"%s\n\t%s");
+    }
+    if ((double)param_1->offset[2] < dVar16) {
+      ptVar6 = (trace_t *)0x0;
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_mesh.cpp",0x590,0
+                      ,"%s");
+    }
+    dVar10 = (double)param_1->offset[2];
+    if (dVar10 < dVar7) {
+      if ((double)(float)((double)param_1->radius + dVar10) <= dVar7) {
+        return;
+      }
+      CM_TraceSphereThroughBorder(param_1,param_2,param_1->offset[2],ptVar6);
+      return;
+    }
+    dVar10 = -dVar10;
+    if (dVar7 < dVar10) {
+      if (dVar7 <= (double)(float)(dVar10 - (double)param_1->radius)) {
+        return;
+      }
+      CM_TraceSphereThroughBorder(param_1,param_2,(float)dVar10,ptVar6);
+      return;
+    }
+    param_3->fraction = (float)dVar17;
+    dVar7 = 1.0;
+    if ((dVar17 < dVar16) || (1.0 < dVar17)) {
+      MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_mesh.cpp",0x59e,1
+                      ,"%s\n\t(trace->fraction) = %g");
+    }
+    param_3->walkable = false;
+    fVar1 = param_2->distEq[1];
+    fVar2 = param_2->distEq[0];
+    param_3->normal[1] = fVar1;
+    param_3->normal[0] = fVar2;
+    param_3->normal[2] = (float)dVar16;
+    if (ABS((float)((double)(fVar1 * fVar1 + (float)(dVar16 * dVar16) + fVar2 * fVar2) - dVar7)) <
+        0.002) goto LAB_824c6a74;
+    va("(%g %g %g) len %g");
+    iVar5 = 0x5a1;
   }
+  MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_mesh.cpp",iVar5,0,
+                  "%s\n\t%s");
+LAB_824c6a74:
   Trace_SetHitId(param_3,TRACE_HITTYPE_ENTITY,0x7fe);
-LAB_824c6a84:
-  __restfpr_27();
-  __restgprlr_27();
   return;
 }
 
@@ -1449,68 +1434,70 @@ bool CM_PartitionChecked(traceWork_t *param_1,uint param_2)
 
 // 824C6AC8  CM_TraceThroughAabbTree_Hit  (qcommon/cm_mesh.cpp:1487)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
+
 void CM_TraceThroughAabbTree_Hit(traceWork_t *param_1,CollisionAabbTree *param_2,trace_t *param_3)
 
 {
   int *piVar1;
-  traceWork_t *ptVar2;
-  float (*pafVar3) [3];
-  int iVar4;
-  CollisionPartition *pCVar6;
-  ulonglong uVar5;
-  ushort *puVar7;
-  int iVar8;
+  float (*pafVar2) [3];
+  int iVar3;
+  CollisionPartition *pCVar5;
+  ulonglong uVar4;
+  ushort *puVar6;
+  int iVar7;
   
-  ptVar2 = (traceWork_t *)__savegprlr_25(param_1);
-  iVar4 = (param_2->u).firstChildIndex;
-  piVar1 = (ptVar2->threadInfo).checkcount.partitions;
-  iVar8 = (ptVar2->threadInfo).checkcount.global;
-  if (piVar1[iVar4] != iVar8) {
-    piVar1[iVar4] = iVar8;
-    pCVar6 = cm.partitions + iVar4;
-    iVar4 = pCVar6->firstTri;
-    pafVar3 = cm.verts + (uint)pCVar6->firstVertSegment * 0x400;
-    puVar7 = cm.triIndices + iVar4 * 3;
-    if (ptVar2->isPoint == false) {
-      uVar5 = (ulonglong)pCVar6->triCount;
-      if (pCVar6->triCount != 0) {
+  iVar3 = (param_2->u).firstChildIndex;
+  piVar1 = (param_1->threadInfo).checkcount.partitions;
+  iVar7 = (param_1->threadInfo).checkcount.global;
+  if (piVar1[iVar3] != iVar7) {
+    piVar1[iVar3] = iVar7;
+    pCVar5 = cm.partitions + iVar3;
+    iVar3 = pCVar5->firstTri;
+    pafVar2 = cm.verts + (uint)pCVar5->firstVertSegment * 0x400;
+    puVar6 = cm.triIndices + iVar3 * 3;
+    if (param_1->isPoint == false) {
+      uVar4 = (ulonglong)pCVar5->triCount;
+      if (pCVar5->triCount != 0) {
         do {
-          CM_TraceCapsuleThroughTriangle(ptVar2,iVar4,puVar7,pafVar3,param_3);
-          uVar5 = uVar5 - 1;
-          puVar7 = puVar7 + 3;
-          iVar4 = iVar4 + 1;
-        } while (uVar5 != 0);
+          CM_TraceCapsuleThroughTriangle(param_1,iVar3,puVar6,pafVar2,param_3);
+          uVar4 = uVar4 - 1;
+          puVar6 = puVar6 + 3;
+          iVar3 = iVar3 + 1;
+        } while (uVar4 != 0);
       }
-      if ((((ptVar2->delta[0] != 0.0) || (ptVar2->delta[1] != 0.0)) && (ptVar2->offset[2] != 0.0))
-         && ((pCVar6->borderCount != '\0' && (iVar4 = 0, pCVar6->borderCount != '\0')))) {
-        iVar8 = 0;
+      if ((((param_1->delta[0] != 0.0) || (param_1->delta[1] != 0.0)) && (param_1->offset[2] != 0.0)
+          ) && ((pCVar5->borderCount != '\0' && (iVar3 = 0, pCVar5->borderCount != '\0')))) {
+        iVar7 = 0;
         do {
           CM_TraceCapsuleThroughBorder
-                    (ptVar2,(CollisionBorder *)((int)pCVar6->borders->distEq + iVar8),param_3);
-          iVar4 = iVar4 + 1;
-          iVar8 = iVar8 + 0x1c;
-        } while (iVar4 < (int)(uint)pCVar6->borderCount);
+                    (param_1,(CollisionBorder *)((int)pCVar5->borders->distEq + iVar7),param_3);
+          iVar3 = iVar3 + 1;
+          iVar7 = iVar7 + 0x1c;
+        } while (iVar3 < (int)(uint)pCVar5->borderCount);
       }
     }
     else {
-      uVar5 = (ulonglong)pCVar6->triCount;
-      if (pCVar6->triCount != 0) {
+      uVar4 = (ulonglong)pCVar5->triCount;
+      if (pCVar5->triCount != 0) {
         do {
-          CM_TracePointThroughTriangle(ptVar2,puVar7,pafVar3,param_3);
-          uVar5 = uVar5 - 1;
-          puVar7 = puVar7 + 3;
-        } while (uVar5 != 0);
-        __restgprlr_25();
+          CM_TracePointThroughTriangle(param_1,puVar6,pafVar2,param_3);
+          uVar4 = uVar4 - 1;
+          puVar6 = puVar6 + 3;
+        } while (uVar4 != 0);
         return;
       }
     }
   }
-  __restgprlr_25();
   return;
 }
 
 
 // 824C6C50  CM_TraceThroughAabbTree_Iterate  (qcommon/cm_mesh.cpp:1598)
+
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
 
 void CM_TraceThroughAabbTree_Iterate
                (traceWork_t *param_1,CollisionAabbTree *param_2,trace_t *param_3)
@@ -1519,14 +1506,14 @@ void CM_TraceThroughAabbTree_Iterate
   bool bVar1;
   ushort uVar2;
   int iVar3;
-  ushort *puVar4;
-  ulonglong uVar5;
-  ulonglong uVar6;
-  uint *puVar7;
-  int iVar8;
-  longlong lVar9;
-  __vector4_u_0 _Var10;
-  __vector4_u_0 _Var11;
+  CollisionAabbTree *pCVar4;
+  undefined4 *puVar5;
+  int iVar6;
+  ushort *puVar7;
+  __vector4_u_0 _Var8;
+  __vector4_u_0 _Var9;
+  undefined1 auVar10 [16];
+  undefined1 auVar11 [16];
   undefined1 auVar12 [16];
   undefined1 auVar13 [16];
   undefined1 auVar14 [16];
@@ -1536,66 +1523,49 @@ void CM_TraceThroughAabbTree_Iterate
   undefined1 auVar18 [16];
   undefined1 auVar19 [16];
   undefined1 auVar20 [16];
-  undefined1 auVar21 [16];
-  undefined4 in_register_000049f0;
-  undefined4 in_register_000049f4;
-  undefined4 in_register_000049f8;
-  undefined4 in_v127;
-  undefined1 auVar22 [16];
-  uint auStack_2b4 [129];
-  undefined4 uStack_b0;
-  undefined4 uStack_ac;
-  undefined4 uStack_a8;
-  undefined4 uStack_a4;
+  undefined4 auStack_2b4 [173];
   
-  uVar5 = (ulonglong)(int)param_2;
-  __savegprlr();
-  uStack_b0 = in_register_000049f0;
-  uStack_ac = in_register_000049f4;
-  uStack_a8 = in_register_000049f8;
-  uStack_a4 = in_v127;
-  iVar8 = 0;
-  uVar6 = uVar5 + 0x20;
-  _Var10 = g_YZXW.field0_0x0;
-  _Var11 = g_ZXYW.field0_0x0;
+  iVar6 = 0;
+  pCVar4 = param_2 + 1;
+  _Var8 = g_YZXW.field0_0x0;
+  _Var9 = g_ZXYW.field0_0x0;
   while( true ) {
-    bVar1 = (uVar5 & 0xffffffff) == (uVar6 & 0xffffffff);
+    bVar1 = param_2 == pCVar4;
     if (!bVar1) {
-      auVar22 = vectorSplatImmediateSignedWord(0xff);
-      puVar7 = auStack_2b4 + iVar8 * 2;
-      lVar9 = uVar5 + 0xe;
+      auVar20 = vectorSplatImmediateSignedWord(0xff);
+      puVar5 = auStack_2b4 + iVar6 * 2;
+      puVar7 = &param_2->childCount;
       do {
-        puVar4 = (ushort *)lVar9;
-        auVar21 = *(undefined1 (*) [16])((uint)(param_1->extents).halfDeltaAbs & 0xfffffff0);
-        auVar18 = vectorShiftLeftWord128(auVar22,auVar22);
-        auVar20 = vectorAddFloatingPoint128
-                            (*(undefined1 (*) [16])((uint)(puVar4 + 1) & 0xfffffff0) &
+        auVar19 = *(undefined1 (*) [16])((uint)(param_1->extents).halfDeltaAbs & 0xfffffff0);
+        auVar16 = vectorShiftLeftWord128(auVar20,auVar20);
+        auVar18 = vectorAddFloatingPoint128
+                            (*(undefined1 (*) [16])((uint)(puVar7 + 1) & 0xfffffff0) &
                              (undefined1  [16])g_keepXYZ.field0_0x0,
                              *(undefined1 (*) [16])((uint)param_1->size & 0xfffffff0));
-        auVar19 = vectorSubtractFloatingPoint128
+        auVar17 = vectorSubtractFloatingPoint128
                             (*(undefined1 (*) [16])((uint)param_1 & 0xfffffff0),
-                             *(undefined1 (*) [16])((uint)(puVar4 + -7) & 0xfffffff0) &
+                             *(undefined1 (*) [16])((uint)(puVar7 + -7) & 0xfffffff0) &
                              (undefined1  [16])g_keepXYZ.field0_0x0);
-        auVar17 = vectorAddFloatingPoint128(auVar20,auVar21);
-        vectorCompareGreaterThanFloatingPoint128(auVar19 & ~auVar18,auVar17);
+        auVar15 = vectorAddFloatingPoint128(auVar18,auVar19);
+        vectorCompareGreaterThanFloatingPoint128(auVar17 & ~auVar16,auVar15);
         if (bVar1) {
           if (param_1->axialCullOnly == false) {
-            auVar16 = vectorPermute128(auVar21,auVar21,(undefined1  [16])_Var10);
-            auVar15 = vectorShiftLeftWord128(auVar22,auVar22);
-            auVar21 = vectorPermute128(auVar21,auVar21,(undefined1  [16])_Var11);
-            auVar17 = *(undefined1 (*) [16])((uint)(param_1->extents).halfDelta & 0xfffffff0);
-            auVar14 = vectorPermute128(auVar19,auVar19,(undefined1  [16])_Var10);
-            auVar13 = vectorPermute128(auVar19,auVar19,(undefined1  [16])_Var11);
-            auVar12 = vectorPermute128(auVar17,auVar17,(undefined1  [16])_Var11);
-            auVar19 = vectorPermute128(auVar17,auVar17,(undefined1  [16])_Var10);
-            auVar18 = vectorPermute128(auVar20,auVar20,(undefined1  [16])_Var11);
-            auVar17 = vectorPermute128(auVar20,auVar20,(undefined1  [16])_Var10);
-            auVar20 = vectorMultiplyFloatingPoint(auVar12,auVar14);
-            auVar19 = vectorMultiplyFloatingPoint(auVar19,auVar13);
-            auVar18 = vectorMultiplyFloatingPoint(auVar18,auVar16);
-            auVar19 = vectorSubtractFloatingPoint128(auVar19,auVar20);
-            auVar17 = vectorMultiplyAddFloatingPoint(auVar17,auVar21,auVar18);
-            vectorCompareGreaterThanFloatingPoint128(auVar19 & ~auVar15,auVar17);
+            auVar14 = vectorPermute128(auVar19,auVar19,(undefined1  [16])_Var8);
+            auVar13 = vectorShiftLeftWord128(auVar20,auVar20);
+            auVar19 = vectorPermute128(auVar19,auVar19,(undefined1  [16])_Var9);
+            auVar15 = *(undefined1 (*) [16])((uint)(param_1->extents).halfDelta & 0xfffffff0);
+            auVar12 = vectorPermute128(auVar17,auVar17,(undefined1  [16])_Var8);
+            auVar11 = vectorPermute128(auVar17,auVar17,(undefined1  [16])_Var9);
+            auVar10 = vectorPermute128(auVar15,auVar15,(undefined1  [16])_Var9);
+            auVar17 = vectorPermute128(auVar15,auVar15,(undefined1  [16])_Var8);
+            auVar16 = vectorPermute128(auVar18,auVar18,(undefined1  [16])_Var9);
+            auVar15 = vectorPermute128(auVar18,auVar18,(undefined1  [16])_Var8);
+            auVar18 = vectorMultiplyFloatingPoint(auVar10,auVar12);
+            auVar17 = vectorMultiplyFloatingPoint(auVar17,auVar11);
+            auVar16 = vectorMultiplyFloatingPoint(auVar16,auVar14);
+            auVar17 = vectorSubtractFloatingPoint128(auVar17,auVar18);
+            auVar15 = vectorMultiplyAddFloatingPoint(auVar15,auVar19,auVar16);
+            vectorCompareGreaterThanFloatingPoint128(auVar17 & ~auVar13,auVar15);
           }
           bVar1 = false;
         }
@@ -1603,89 +1573,90 @@ void CM_TraceThroughAabbTree_Iterate
           bVar1 = true;
         }
         if (!bVar1) {
-          if (*puVar4 == 0) {
-            CM_TraceThroughAabbTree_Hit(param_1,(CollisionAabbTree *)(puVar4 + -7),param_3);
-            _Var10 = g_YZXW.field0_0x0;
-            _Var11 = g_ZXYW.field0_0x0;
+          if (*puVar7 == 0) {
+            CM_TraceThroughAabbTree_Hit(param_1,(CollisionAabbTree *)(puVar7 + -7),param_3);
+            _Var8 = g_YZXW.field0_0x0;
+            _Var9 = g_ZXYW.field0_0x0;
           }
           else {
-            if (0x2f < iVar8) {
+            if (0x2f < iVar6) {
               MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_mesh.cpp"
                               ,0x668,0,"%s\n\t(stackEndIndex) = %i");
-              _Var10 = g_YZXW.field0_0x0;
-              _Var11 = g_ZXYW.field0_0x0;
+              _Var8 = g_YZXW.field0_0x0;
+              _Var9 = g_ZXYW.field0_0x0;
             }
-            iVar3 = *(int *)(puVar4 + 7);
-            iVar8 = iVar8 + 1;
-            uVar2 = *puVar4;
-            puVar7[1] = (uint)(cm.aabbTrees + iVar3);
-            puVar7 = puVar7 + 2;
-            *puVar7 = (uint)(cm.aabbTrees + iVar3 + uVar2);
+            iVar3 = ((CollisionAabbTreeIndex *)(puVar7 + 7))->firstChildIndex;
+            iVar6 = iVar6 + 1;
+            uVar2 = *puVar7;
+            puVar5[1] = cm.aabbTrees + iVar3;
+            puVar5 = puVar5 + 2;
+            *puVar5 = cm.aabbTrees + iVar3 + uVar2;
           }
         }
-        bVar1 = (lVar9 + 0x12U & 0xffffffff) == (uVar6 & 0xffffffff);
-        lVar9 = lVar9 + 0x20;
+        bVar1 = (CollisionAabbTree *)(puVar7 + 9) == pCVar4;
+        puVar7 = puVar7 + 0x10;
       } while (!bVar1);
     }
-    if (iVar8 == 0) break;
-    iVar8 = iVar8 + -1;
-    uVar5 = (ulonglong)auStack_2b4[iVar8 * 2 + 1];
-    uVar6 = (ulonglong)auStack_2b4[iVar8 * 2 + 2];
+    if (iVar6 == 0) break;
+    iVar6 = iVar6 + -1;
+    param_2 = (CollisionAabbTree *)auStack_2b4[iVar6 * 2 + 1];
+    pCVar4 = (CollisionAabbTree *)auStack_2b4[iVar6 * 2 + 2];
   }
-  __restgprlr();
   return;
 }
 
 
 // 824C6E58  CM_PositionTestInAabbTreeLeaf  (qcommon/cm_mesh.cpp:1664)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void CM_PositionTestInAabbTreeLeaf(traceWork_t *param_1,int param_2,trace_t *param_3)
 
 {
   int *piVar1;
   int iVar2;
-  CollisionPartition *pCVar3;
-  int iVar4;
-  traceWork_t *ptVar5;
-  float (*pafVar6) [3];
-  ushort *puVar7;
-  ulonglong uVar8;
+  float (*pafVar3) [3];
+  CollisionPartition *pCVar4;
+  ushort *puVar5;
+  ulonglong uVar6;
   
-  uVar8 = (ulonglong)param_2;
-  ptVar5 = (traceWork_t *)__savegprlr_27(param_1);
-  piVar1 = (ptVar5->threadInfo).checkcount.partitions;
-  iVar4 = (int)((uVar8 & 0xffffffff) << 2);
-  iVar2 = (ptVar5->threadInfo).checkcount.global;
-  if (*(int *)((int)piVar1 + iVar4) != iVar2) {
-    *(int *)((int)piVar1 + iVar4) = iVar2;
-    pCVar3 = cm.partitions + (int)uVar8;
-    uVar8 = (ulonglong)pCVar3->triCount;
-    puVar7 = cm.triIndices + pCVar3->firstTri * 3;
-    pafVar6 = cm.verts + (uint)pCVar3->firstVertSegment * 0x400;
-    if (pCVar3->triCount != 0) {
+  piVar1 = (param_1->threadInfo).checkcount.partitions;
+  iVar2 = (param_1->threadInfo).checkcount.global;
+  if (piVar1[param_2] != iVar2) {
+    piVar1[param_2] = iVar2;
+    pCVar4 = cm.partitions + param_2;
+    uVar6 = (ulonglong)pCVar4->triCount;
+    puVar5 = cm.triIndices + pCVar4->firstTri * 3;
+    pafVar3 = cm.verts + (uint)pCVar4->firstVertSegment * 0x400;
+    if (pCVar4->triCount != 0) {
       do {
-        CM_PositionTestCapsuleInTriangle(ptVar5,puVar7,pafVar6,param_3);
-        if (param_3->startsolid != false) break;
-        uVar8 = uVar8 - 1;
-        puVar7 = puVar7 + 3;
-      } while (uVar8 != 0);
+        CM_PositionTestCapsuleInTriangle(param_1,puVar5,pafVar3,param_3);
+        if (param_3->startsolid != false) {
+          return;
+        }
+        uVar6 = uVar6 - 1;
+        puVar5 = puVar5 + 3;
+      } while (uVar6 != 0);
     }
   }
-  __restgprlr_27();
   return;
 }
 
 
 // 824C6F30  CM_PositionTestInAabbTree_r  (qcommon/cm_mesh.cpp:1718)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void CM_PositionTestInAabbTree_r(traceWork_t *param_1,CollisionAabbTree *param_2,trace_t *param_3)
 
 {
   bool bVar1;
-  traceWork_t *ptVar2;
-  int iVar3;
-  CollisionAabbTree *pCVar4;
+  int iVar2;
+  CollisionAabbTree *pCVar3;
   byte in_cr6;
+  undefined1 auVar4 [16];
   undefined1 auVar5 [16];
   undefined1 auVar6 [16];
   undefined1 auVar7 [16];
@@ -1695,40 +1666,38 @@ void CM_PositionTestInAabbTree_r(traceWork_t *param_1,CollisionAabbTree *param_2
   undefined1 auVar11 [16];
   undefined1 auVar12 [16];
   undefined1 auVar13 [16];
-  undefined1 auVar14 [16];
   
-  ptVar2 = (traceWork_t *)__savegprlr_27(param_1);
-  auVar14 = vectorSplatImmediateSignedWord(0xff);
-  auVar10 = vectorShiftLeftWord128(auVar14,auVar14);
-  auVar12 = *(undefined1 (*) [16])((uint)(ptVar2->extents).halfDeltaAbs & 0xfffffff0);
-  auVar11 = vectorAddFloatingPoint128
+  auVar13 = vectorSplatImmediateSignedWord(0xff);
+  auVar9 = vectorShiftLeftWord128(auVar13,auVar13);
+  auVar11 = *(undefined1 (*) [16])((uint)(param_1->extents).halfDeltaAbs & 0xfffffff0);
+  auVar10 = vectorAddFloatingPoint128
                       (*(undefined1 (*) [16])((uint)param_2->halfSize & 0xfffffff0) &
                        (undefined1  [16])g_keepXYZ.field0_0x0,
-                       *(undefined1 (*) [16])((uint)ptVar2->size & 0xfffffff0));
-  auVar13 = vectorSubtractFloatingPoint128
-                      (*(undefined1 (*) [16])((uint)ptVar2 & 0xfffffff0),
+                       *(undefined1 (*) [16])((uint)param_1->size & 0xfffffff0));
+  auVar12 = vectorSubtractFloatingPoint128
+                      (*(undefined1 (*) [16])((uint)param_1 & 0xfffffff0),
                        *(undefined1 (*) [16])((uint)param_2 & 0xfffffff0) &
                        (undefined1  [16])g_keepXYZ.field0_0x0);
-  auVar9 = vectorAddFloatingPoint128(auVar11,auVar12);
-  vectorCompareGreaterThanFloatingPoint128(auVar13 & ~auVar10,auVar9);
+  auVar8 = vectorAddFloatingPoint128(auVar10,auVar11);
+  vectorCompareGreaterThanFloatingPoint128(auVar12 & ~auVar9,auVar8);
   if ((bool)(in_cr6 >> 1 & 1)) {
-    if (ptVar2->axialCullOnly == false) {
-      auVar8 = vectorShiftLeftWord128(auVar14,auVar14);
-      auVar9 = *(undefined1 (*) [16])((uint)(ptVar2->extents).halfDelta & 0xfffffff0);
-      auVar7 = vectorPermute128(auVar13,auVar13,(undefined1  [16])g_YZXW.field0_0x0);
-      auVar6 = vectorPermute128(auVar9,auVar9,(undefined1  [16])g_YZXW.field0_0x0);
-      auVar10 = vectorPermute128(auVar13,auVar13,(undefined1  [16])g_ZXYW.field0_0x0);
-      auVar9 = vectorPermute128(auVar9,auVar9,(undefined1  [16])g_ZXYW.field0_0x0);
-      auVar5 = vectorPermute128(auVar12,auVar12,(undefined1  [16])g_YZXW.field0_0x0);
-      auVar14 = vectorPermute128(auVar11,auVar11,(undefined1  [16])g_ZXYW.field0_0x0);
-      auVar13 = vectorMultiplyFloatingPoint(auVar6,auVar10);
-      auVar10 = vectorPermute128(auVar12,auVar12,(undefined1  [16])g_ZXYW.field0_0x0);
-      auVar12 = vectorMultiplyFloatingPoint(auVar9,auVar7);
-      auVar9 = vectorPermute128(auVar11,auVar11,(undefined1  [16])g_YZXW.field0_0x0);
-      auVar11 = vectorMultiplyFloatingPoint(auVar14,auVar5);
-      auVar12 = vectorSubtractFloatingPoint128(auVar13,auVar12);
-      auVar9 = vectorMultiplyAddFloatingPoint(auVar9,auVar10,auVar11);
-      vectorCompareGreaterThanFloatingPoint128(auVar12 & ~auVar8,auVar9);
+    if (param_1->axialCullOnly == false) {
+      auVar7 = vectorShiftLeftWord128(auVar13,auVar13);
+      auVar8 = *(undefined1 (*) [16])((uint)(param_1->extents).halfDelta & 0xfffffff0);
+      auVar6 = vectorPermute128(auVar12,auVar12,(undefined1  [16])g_YZXW.field0_0x0);
+      auVar5 = vectorPermute128(auVar8,auVar8,(undefined1  [16])g_YZXW.field0_0x0);
+      auVar9 = vectorPermute128(auVar12,auVar12,(undefined1  [16])g_ZXYW.field0_0x0);
+      auVar8 = vectorPermute128(auVar8,auVar8,(undefined1  [16])g_ZXYW.field0_0x0);
+      auVar4 = vectorPermute128(auVar11,auVar11,(undefined1  [16])g_YZXW.field0_0x0);
+      auVar13 = vectorPermute128(auVar10,auVar10,(undefined1  [16])g_ZXYW.field0_0x0);
+      auVar12 = vectorMultiplyFloatingPoint(auVar5,auVar9);
+      auVar9 = vectorPermute128(auVar11,auVar11,(undefined1  [16])g_ZXYW.field0_0x0);
+      auVar11 = vectorMultiplyFloatingPoint(auVar8,auVar6);
+      auVar8 = vectorPermute128(auVar10,auVar10,(undefined1  [16])g_YZXW.field0_0x0);
+      auVar10 = vectorMultiplyFloatingPoint(auVar13,auVar4);
+      auVar11 = vectorSubtractFloatingPoint128(auVar12,auVar11);
+      auVar8 = vectorMultiplyAddFloatingPoint(auVar8,auVar9,auVar10);
+      vectorCompareGreaterThanFloatingPoint128(auVar11 & ~auVar7,auVar8);
     }
     bVar1 = false;
   }
@@ -1737,24 +1706,22 @@ void CM_PositionTestInAabbTree_r(traceWork_t *param_1,CollisionAabbTree *param_2
   }
   if (!bVar1) {
     if (param_2->childCount == 0) {
-      CM_PositionTestInAabbTreeLeaf(ptVar2,(param_2->u).firstChildIndex,param_3);
+      CM_PositionTestInAabbTreeLeaf(param_1,(param_2->u).firstChildIndex,param_3);
     }
     else {
-      iVar3 = 0;
-      pCVar4 = cm.aabbTrees + (param_2->u).firstChildIndex;
+      iVar2 = 0;
+      pCVar3 = cm.aabbTrees + (param_2->u).firstChildIndex;
       if (param_2->childCount != 0) {
-        while (CM_PositionTestInAabbTree_r(ptVar2,pCVar4,param_3), param_3->startsolid == false) {
-          iVar3 = iVar3 + 1;
-          pCVar4 = pCVar4 + 1;
-          if ((int)(uint)param_2->childCount <= iVar3) {
-            __restgprlr_27();
+        while (CM_PositionTestInAabbTree_r(param_1,pCVar3,param_3), param_3->startsolid == false) {
+          iVar2 = iVar2 + 1;
+          pCVar3 = pCVar3 + 1;
+          if ((int)(uint)param_2->childCount <= iVar2) {
             return;
           }
         }
       }
     }
   }
-  __restgprlr_27();
   return;
 }
 
@@ -1796,6 +1763,8 @@ void CM_SightTraceThroughAabbTree(traceWork_t *param_1,CollisionAabbTree *param_
 
 // 824C7188  CM_MeshTestInLeaf  (qcommon/cm_mesh.cpp:1809)
 
+/* WARNING: Function: __savegprlr_17 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_17 replaced with injection: xenon_save_restore */
 /* WARNING: Removing unreachable block (ram,0x824c72d0) */
 /* WARNING: Removing unreachable block (ram,0x824c72dc) */
 /* WARNING: Removing unreachable block (ram,0x824c7328) */
@@ -1810,16 +1779,14 @@ void CM_SightTraceThroughAabbTree(traceWork_t *param_1,CollisionAabbTree *param_
 void CM_MeshTestInLeaf(traceWork_t *param_1,cLeaf_t *param_2,trace_t *param_3)
 
 {
-  uint uVar1;
-  int iVar2;
-  ClipMaterial *pCVar3;
-  CollisionAabbTree *pCVar4;
+  int iVar1;
+  ClipMaterial *pCVar2;
+  CollisionAabbTree *pCVar3;
+  undefined1 auVar4 [16];
   undefined1 auVar5 [16];
   undefined1 auVar6 [16];
-  undefined1 auVar7 [16];
   
-  uVar1 = __savegprlr_17(param_1);
-  if (*(char *)(uVar1 + 0xa8) != '\0') {
+  if (param_1->isPoint != false) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_mesh.cpp",0x71d,0,
                     "%s");
   }
@@ -1827,64 +1794,62 @@ void CM_MeshTestInLeaf(traceWork_t *param_1,cLeaf_t *param_2,trace_t *param_3)
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\cm_mesh.cpp",0x71e,0,
                     "%s");
   }
-  iVar2 = 0;
-  if (param_2->collAabbCount == 0) {
-LAB_824c73e8:
-    __restgprlr_17();
+  iVar1 = 0;
+  if (param_2->collAabbCount != 0) {
+    do {
+      pCVar3 = cm.aabbTrees + (uint)param_2->firstCollAabbIndex + iVar1;
+      pCVar2 = cm.info.materials + pCVar3->materialIndex;
+      if ((param_1->contents & pCVar2->contents) != 0) {
+        auVar5 = vectorSplatImmediateSignedWord(0xff);
+        auVar4 = vectorShiftLeftWord128(auVar5,auVar5);
+        auVar5 = vectorAddFloatingPoint128
+                           (*(undefined1 (*) [16])((uint)pCVar3->halfSize & 0xfffffff0) &
+                            (undefined1  [16])g_keepXYZ.field0_0x0,
+                            *(undefined1 (*) [16])((uint)param_1->size & 0xfffffff0));
+        auVar6 = vectorSubtractFloatingPoint128
+                           (*(undefined1 (*) [16])((uint)param_1 & 0xfffffff0),
+                            *(undefined1 (*) [16])((uint)pCVar3 & 0xfffffff0) &
+                            (undefined1  [16])g_keepXYZ.field0_0x0);
+        auVar5 = vectorAddFloatingPoint128
+                           (auVar5,*(undefined1 (*) [16])
+                                    ((uint)(param_1->extents).halfDeltaAbs & 0xfffffff0));
+        vectorCompareGreaterThanFloatingPoint128(auVar6 & ~auVar4,auVar5);
+        if (param_3->allsolid != false) {
+          param_3->surfaceFlags = pCVar2->surfaceFlags;
+          param_3->contents = pCVar2->contents;
+          param_3->material = pCVar2->name;
+          return;
+        }
+      }
+      iVar1 = iVar1 + 1;
+    } while (iVar1 < (int)(uint)param_2->collAabbCount);
     return;
   }
-  do {
-    pCVar4 = cm.aabbTrees + (uint)param_2->firstCollAabbIndex + iVar2;
-    pCVar3 = cm.info.materials + pCVar4->materialIndex;
-    if ((*(uint *)(uVar1 + 0xa4) & pCVar3->contents) != 0) {
-      auVar6 = vectorSplatImmediateSignedWord(0xff);
-      auVar5 = vectorShiftLeftWord128(auVar6,auVar6);
-      auVar6 = vectorAddFloatingPoint128
-                         (*(undefined1 (*) [16])((uint)pCVar4->halfSize & 0xfffffff0) &
-                          (undefined1  [16])g_keepXYZ.field0_0x0,
-                          *(undefined1 (*) [16])(uVar1 + 0x60 & 0xfffffff0));
-      auVar7 = vectorSubtractFloatingPoint128
-                         (*(undefined1 (*) [16])(uVar1 & 0xfffffff0),
-                          *(undefined1 (*) [16])((uint)pCVar4 & 0xfffffff0) &
-                          (undefined1  [16])g_keepXYZ.field0_0x0);
-      auVar6 = vectorAddFloatingPoint128(auVar6,*(undefined1 (*) [16])(uVar1 + 0x20 & 0xfffffff0));
-      vectorCompareGreaterThanFloatingPoint128(auVar7 & ~auVar5,auVar6);
-      if (param_3->allsolid != false) {
-        param_3->surfaceFlags = pCVar3->surfaceFlags;
-        param_3->contents = pCVar3->contents;
-        param_3->material = pCVar3->name;
-        goto LAB_824c73e8;
-      }
-    }
-    iVar2 = iVar2 + 1;
-    if ((int)(uint)param_2->collAabbCount <= iVar2) {
-      __restgprlr_17();
-      return;
-    }
-  } while( true );
+  return;
 }
 
 
 // 824C73F0  CM_RayTriangleIntersect  (qcommon/cm_mesh.cpp:1854)
+
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 
 bool CM_RayTriangleIntersect
                (float *param_1,float *param_2,float *param_3,float *param_4,float *param_5,
                float *param_6,float *param_7,float *param_8)
 
 {
-  float *pfVar1;
-  undefined1 uVar2;
-  ulonglong uVar3;
-  ulonglong uVar4;
+  double dVar1;
+  double dVar2;
+  double dVar3;
+  double dVar4;
   double dVar5;
   double dVar6;
   double dVar7;
   double dVar8;
   double dVar9;
-  double dVar10;
-  double dVar11;
-  double dVar12;
-  double dVar13;
   float local_a0;
   float local_9c;
   float local_98;
@@ -1895,61 +1860,53 @@ bool CM_RayTriangleIntersect
   float local_7c;
   float local_78;
   
-  uVar4 = (ulonglong)(int)param_8;
-  uVar3 = (ulonglong)(int)param_7;
-  __savegprlr_26(param_1);
-  pfVar1 = (float *)__savefpr_26();
   local_a0 = *param_5 - *param_3;
-  dVar10 = (double)local_a0;
+  dVar6 = (double)local_a0;
   local_9c = param_5[1] - param_3[1];
-  dVar9 = (double)local_9c;
+  dVar5 = (double)local_9c;
   local_98 = param_5[2] - param_3[2];
-  dVar8 = (double)local_98;
+  dVar4 = (double)local_98;
   local_80 = *param_4 - *param_3;
-  dVar13 = (double)local_80;
+  dVar9 = (double)local_80;
   local_7c = param_4[1] - param_3[1];
-  dVar12 = (double)local_7c;
+  dVar8 = (double)local_7c;
   local_78 = param_4[2] - param_3[2];
-  dVar11 = (double)local_78;
+  dVar7 = (double)local_78;
   Vec3Cross(param_2,&local_a0,&local_90);
-  dVar7 = (double)local_90;
-  dVar6 = (double)local_8c;
-  dVar5 = (double)local_88;
-  dVar11 = (double)(float)(dVar5 * dVar11 +
-                          (double)(float)(dVar6 * dVar12 + (double)(float)(dVar13 * dVar7)));
-  if (0.0010000000474974513 <= dVar11) {
-    local_90 = *pfVar1 - *param_3;
-    local_8c = pfVar1[1] - param_3[1];
-    local_88 = pfVar1[2] - param_3[2];
-    dVar12 = 0.0;
-    dVar5 = (double)(float)((double)local_88 * dVar5 +
-                           (double)(float)((double)local_8c * dVar6 +
-                                          (double)(float)((double)local_90 * dVar7)));
-    if ((0.0 <= dVar5) && (dVar5 <= dVar11)) {
+  dVar3 = (double)local_90;
+  dVar2 = (double)local_8c;
+  dVar1 = (double)local_88;
+  dVar7 = (double)(float)(dVar1 * dVar7 +
+                         (double)(float)(dVar2 * dVar8 + (double)(float)(dVar9 * dVar3)));
+  if (0.0010000000474974513 <= dVar7) {
+    local_90 = *param_1 - *param_3;
+    local_8c = param_1[1] - param_3[1];
+    local_88 = param_1[2] - param_3[2];
+    dVar8 = 0.0;
+    dVar1 = (double)(float)((double)local_88 * dVar1 +
+                           (double)(float)((double)local_8c * dVar2 +
+                                          (double)(float)((double)local_90 * dVar3)));
+    if ((0.0 <= dVar1) && (dVar1 <= dVar7)) {
       Vec3Cross(&local_90,&local_80,&local_a0);
-      dVar6 = (double)(float)((double)param_2[2] * (double)local_98 +
+      dVar2 = (double)(float)((double)param_2[2] * (double)local_98 +
                              (double)(float)((double)param_2[1] * (double)local_9c +
                                             (double)(float)((double)*param_2 * (double)local_a0)));
-      if ((dVar12 <= dVar6) && ((double)(float)(dVar6 + dVar5) <= dVar11)) {
-        dVar7 = (double)(float)(1.0 / dVar11);
-        *param_6 = (float)((double)(float)((double)local_98 * dVar8 +
-                                          (double)(float)((double)local_9c * dVar9 +
-                                                         (double)(float)((double)local_a0 * dVar10))
-                                          ) * dVar7);
-        if ((uVar3 & 0xffffffff) != 0) {
-          *(float *)uVar3 = (float)(dVar7 * dVar5);
+      if ((dVar8 <= dVar2) && ((double)(float)(dVar2 + dVar1) <= dVar7)) {
+        dVar3 = (double)(float)(1.0 / dVar7);
+        *param_6 = (float)((double)(float)((double)local_98 * dVar4 +
+                                          (double)(float)((double)local_9c * dVar5 +
+                                                         (double)(float)((double)local_a0 * dVar6)))
+                          * dVar3);
+        if (param_7 != (float *)0x0) {
+          *param_7 = (float)(dVar3 * dVar1);
         }
-        if ((uVar4 & 0xffffffff) != 0) {
-          *(float *)uVar4 = (float)(dVar7 * dVar6);
+        if (param_8 != (float *)0x0) {
+          *param_8 = (float)(dVar3 * dVar2);
         }
-        __restfpr_26(1);
-        uVar2 = __restgprlr_26();
-        return (bool)uVar2;
+        return true;
       }
     }
   }
-  __restfpr_26(0);
-  uVar2 = __restgprlr_26();
-  return (bool)uVar2;
+  return false;
 }
 

@@ -2,56 +2,52 @@
 
 // 82302E08  CG_RegisterSurfaceTypeSounds  (cgame/cg_sound.cpp:20)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 void CG_RegisterSurfaceTypeSounds(char *param_1,snd_alias_list_t **param_2,bool param_3)
 
 {
-  char *pcVar1;
+  snd_alias_list_t *psVar1;
   snd_alias_list_t *psVar2;
-  snd_alias_list_t *psVar3;
-  ulonglong uVar4;
+  snd_alias_list_t **ppsVar3;
+  int iVar4;
   longlong lVar5;
-  int iVar6;
-  longlong lVar7;
   char acStack_140 [320];
   
-  uVar4 = (ulonglong)param_3;
-  lVar5 = (longlong)(int)param_2;
-  pcVar1 = (char *)__savegprlr_26(param_1);
-  if (pcVar1 == (char *)0x0) {
+  if (param_1 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_sound.cpp",0x19,0,
                     "%s");
   }
-  if (*pcVar1 == '\0') {
-    psVar2 = Com_FindSoundAlias("collision_default");
-    lVar5 = lVar5 + -4;
-    lVar7 = 0x1f;
+  if (*param_1 == '\0') {
+    psVar1 = Com_FindSoundAlias("collision_default");
+    ppsVar3 = param_2 + -1;
+    lVar5 = 0x1f;
     do {
-      lVar5 = lVar5 + 4;
-      *(undefined4 *)lVar5 = psVar2;
-      lVar7 = lVar7 + -1;
-    } while (lVar7 != 0);
-    __restgprlr_26();
+      ppsVar3 = ppsVar3 + 1;
+      *ppsVar3 = psVar1;
+      lVar5 = lVar5 + -1;
+    } while (lVar5 != 0);
     return;
   }
   sprintf(acStack_140,"%s_default");
-  psVar2 = Com_FindSoundAlias(acStack_140);
-  iVar6 = 0;
+  psVar1 = Com_FindSoundAlias(acStack_140);
+  iVar4 = 0;
   do {
-    if ((uVar4 & 0xff) == 0) {
-LAB_82302ee8:
-      *(undefined4 *)lVar5 = psVar2;
+    if (param_3) {
+      Com_SurfaceTypeToName(iVar4);
+      sprintf(acStack_140,"%s_%s");
+      psVar2 = Com_FindSoundAlias(acStack_140);
+      *param_2 = psVar2;
+      if (psVar2 == (snd_alias_list_t *)0x0) goto LAB_82302ee8;
     }
     else {
-      Com_SurfaceTypeToName(iVar6);
-      sprintf(acStack_140,"%s_%s");
-      psVar3 = Com_FindSoundAlias(acStack_140);
-      *(undefined4 *)lVar5 = psVar3;
-      if (psVar3 == (snd_alias_list_t *)0x0) goto LAB_82302ee8;
+LAB_82302ee8:
+      *param_2 = psVar1;
     }
-    iVar6 = iVar6 + 1;
-    lVar5 = lVar5 + 4;
-    if (0x1e < iVar6) {
-      __restgprlr_26();
+    iVar4 = iVar4 + 1;
+    param_2 = param_2 + 1;
+    if (0x1e < iVar4) {
       return;
     }
   } while( true );
@@ -60,127 +56,118 @@ LAB_82302ee8:
 
 // 82302F08  CG_RegisterWhizbySounds  (cgame/cg_sound.cpp:56)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
+
 void CG_RegisterWhizbySounds
                (char *param_1,snd_alias_list_t **param_2,snd_alias_list_t **param_3,int *param_4)
 
 {
   int iVar1;
   snd_alias_list_t *psVar2;
-  ulonglong uVar3;
-  ulonglong uVar4;
-  int iVar5;
+  int iVar3;
   char acStack_250 [256];
   char acStack_150 [336];
   
-  uVar4 = (ulonglong)(int)param_3;
-  uVar3 = (ulonglong)(int)param_2;
-  iVar1 = __savegprlr_23(param_1);
-  if (iVar1 == 0) {
+  if (param_1 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_sound.cpp",0x3c,0,
                     "%s");
   }
-  if ((uVar3 & 0xffffffff) == 0) {
+  if (param_2 == (snd_alias_list_t **)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_sound.cpp",0x3d,0,
                     "%s");
   }
-  if ((uVar4 & 0xffffffff) == 0) {
+  if (param_3 == (snd_alias_list_t **)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_sound.cpp",0x3e,0,
                     "%s");
   }
-  iVar5 = 0;
+  iVar3 = 0;
   *param_4 = 0;
-  iVar1 = (int)uVar4;
+  iVar1 = (int)param_2 - (int)param_3;
   do {
     sprintf(acStack_150,"%s_%02d");
     sprintf(acStack_250,"%s_L");
     psVar2 = Com_TryFindSoundAlias(acStack_250);
-    *(snd_alias_list_t **)(((int)(undefined4 *)uVar3 - iVar1) + (int)(undefined4 *)uVar4) = psVar2;
+    *(snd_alias_list_t **)(iVar1 + (int)param_3) = psVar2;
     if (psVar2 == (snd_alias_list_t *)0x0) break;
     *param_4 = *param_4 + 1;
     sprintf(acStack_250,"%s_R");
     psVar2 = Com_FindSoundAlias(acStack_250);
-    iVar5 = iVar5 + 1;
-    *(undefined4 *)uVar4 = psVar2;
-    uVar4 = uVar4 + 4;
-  } while (iVar5 < 0x10);
+    iVar3 = iVar3 + 1;
+    *param_3 = psVar2;
+    param_3 = param_3 + 1;
+  } while (iVar3 < 0x10);
   if (*param_4 == 0) {
     *param_4 = 1;
     psVar2 = Com_FindSoundAlias("whizby");
-    *(undefined4 *)uVar3 = psVar2;
+    *param_2 = psVar2;
   }
-  __restgprlr_23();
   return;
 }
 
 
 // 82303060  CG_AddAudioPhysicsClass  (cgame/cg_sound.cpp:112)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void CG_AddAudioPhysicsClass(PhysPreset *param_1,char (*param_2) [64],int *param_3)
 
 {
   int iVar1;
   int iVar2;
-  ulonglong uVar3;
-  ulonglong uVar4;
-  int *piVar5;
-  int iVar6;
+  char (*pacVar3) [64];
   
-  uVar4 = (ulonglong)(int)param_3;
-  uVar3 = (ulonglong)(int)param_2;
-  iVar1 = __savegprlr_27(param_1);
-  if (iVar1 == 0) {
+  if (param_1 == (PhysPreset *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_sound.cpp",0x73,0,
                     "%s");
   }
-  if (*(int *)(iVar1 + 0x1c) == 0) {
+  if (param_1->sndAliasPrefix == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_sound.cpp",0x74,0,
                     "%s");
   }
-  if ((uVar4 & 0xffffffff) == 0) {
+  if (param_3 == (int *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_sound.cpp",0x75,0,
                     "%s");
   }
-  if ((uVar3 & 0xffffffff) == 0) {
+  if (param_2 == (char (*) [64])0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_sound.cpp",0x76,0,
                     "%s");
   }
-  piVar5 = (int *)uVar4;
-  iVar6 = 0;
-  uVar4 = uVar3;
-  if (0 < *piVar5) {
+  iVar2 = 0;
+  pacVar3 = param_2;
+  if (0 < *param_3) {
     do {
-      iVar2 = I_stricmp(*(char **)(iVar1 + 0x1c),(char *)uVar4);
-      if (iVar2 == 0) {
-        *(int *)(iVar1 + 4) = iVar6;
-        __restgprlr_27();
+      iVar1 = I_stricmp(param_1->sndAliasPrefix,*pacVar3);
+      if (iVar1 == 0) {
+        param_1->type = iVar2;
         return;
       }
-      iVar6 = iVar6 + 1;
-      uVar4 = uVar4 + 0x40;
-    } while (iVar6 < *piVar5);
+      iVar2 = iVar2 + 1;
+      pacVar3 = pacVar3 + 1;
+    } while (iVar2 < *param_3);
   }
-  iVar6 = *piVar5;
-  *(int *)(iVar1 + 4) = iVar6;
-  cgMedia.physCollisionSoundInfo[iVar6].minMomentum = *(float *)(iVar1 + 0x28);
-  cgMedia.physCollisionSoundInfo[*(int *)(iVar1 + 4)].maxMomentum = *(float *)(iVar1 + 0x2c);
-  cgMedia.physCollisionSoundInfo[*(int *)(iVar1 + 4)].minPitch = *(float *)(iVar1 + 0x30);
-  cgMedia.physCollisionSoundInfo[*(int *)(iVar1 + 4)].maxPitch = *(float *)(iVar1 + 0x34);
-  cgMedia.physCollisionSoundInfo[*(int *)(iVar1 + 4)].volumeType =
-       *(PhysPresetScaling *)(iVar1 + 0x38);
-  cgMedia.physCollisionSoundInfo[*(int *)(iVar1 + 4)].pitchType =
-       *(PhysPresetScaling *)(iVar1 + 0x3c);
+  iVar2 = *param_3;
+  param_1->type = iVar2;
+  cgMedia.physCollisionSoundInfo[iVar2].minMomentum = param_1->minMomentum;
+  cgMedia.physCollisionSoundInfo[param_1->type].maxMomentum = param_1->maxMomentum;
+  cgMedia.physCollisionSoundInfo[param_1->type].minPitch = param_1->minPitch;
+  cgMedia.physCollisionSoundInfo[param_1->type].maxPitch = param_1->maxPitch;
+  cgMedia.physCollisionSoundInfo[param_1->type].volumeType = param_1->volumeType;
+  cgMedia.physCollisionSoundInfo[param_1->type].pitchType = param_1->pitchType;
   CG_RegisterSurfaceTypeSounds
-            (*(char **)(iVar1 + 0x1c),cgMedia.physCollisionSoundInfo[*(int *)(iVar1 + 4)].sound,
-             *(bool *)(iVar1 + 0x41));
-  I_strncpyz((char *)(*piVar5 * 0x40 + (int)uVar3),*(char **)(iVar1 + 0x1c),0x40);
-  *piVar5 = *piVar5 + 1;
-  __restgprlr_27();
+            (param_1->sndAliasPrefix,cgMedia.physCollisionSoundInfo[param_1->type].sound,
+             param_1->perSurfaceSndAlias);
+  I_strncpyz(param_2[*param_3],param_1->sndAliasPrefix,0x40);
+  *param_3 = *param_3 + 1;
   return;
 }
 
 
 // 82303230  CG_RegisterPhysicsSounds_FastFile  (cgame/cg_sound.cpp:147)
 
+/* WARNING: Function: __savegprlr_20 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_20 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "XAssetType": Some values do not have unique names */
 /* WARNING: Enum "nodeType": Some values do not have unique names */
@@ -202,7 +189,6 @@ void CG_RegisterPhysicsSounds_FastFile(void)
   XAssetHeader local_1170 [64];
   char acStack_1070 [4208];
   
-  __savegprlr_20();
   iVar7 = 0;
   iVar2 = DB_GetAllXAssetOfType(ASSET_TYPE_PHYSPRESET,local_1170,0x40);
   lVar4 = (longlong)iVar2;
@@ -250,7 +236,6 @@ LAB_823033b8:
       pXVar5 = pXVar5 + 1;
     } while (lVar4 != 0);
   }
-  __restgprlr_20();
   return;
 }
 

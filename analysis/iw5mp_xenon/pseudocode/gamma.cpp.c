@@ -68,162 +68,157 @@ float D3D::Gamma_Standard(float param_1,float param_2,int param_3)
 
 // 82883FA8  GetCurrentGammaTable  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/gamma.cpp:104)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 ushort * D3D::GetCurrentGammaTable(int param_1)
 
 {
-  longlong lVar1;
-  undefined8 uVar2;
+  undefined8 uVar1;
   D3D *this;
-  ushort *puVar3;
-  undefined2 *puVar4;
-  int iVar5;
-  int iVar6;
-  bool bVar7;
+  int iVar2;
+  undefined2 *puVar3;
+  int iVar4;
+  bool bVar5;
+  double dVar6;
+  double dVar7;
   double dVar8;
   double dVar9;
-  double dVar10;
-  double dVar11;
-  float fVar12;
+  float fVar10;
   ulong local_60;
   float local_5c;
   longlong local_58;
   longlong local_50;
   
-  lVar1 = __savegprlr_28(param_1);
-  bVar7 = lVar1 != 0;
-  uVar2 = VdGetCurrentDisplayGamma(&local_60,&local_5c);
-  if ((gammaType[bVar7] != local_60) || (gammaValue[bVar7] != local_5c)) {
-    gammaValue[bVar7] = local_5c;
-    gammaType[bVar7] = local_60;
-    iVar6 = 0;
-    puVar4 = (undefined2 *)((int)gammaValue + (uint)bVar7 * 0x800 + 6);
-    dVar10 = 0.5;
-    dVar11 = 1023.0;
-    dVar9 = 0.0009775171056389809;
+  bVar5 = param_1 != 0;
+  uVar1 = VdGetCurrentDisplayGamma(&local_60,&local_5c);
+  if ((gammaType[bVar5] != local_60) || (gammaValue[bVar5] != local_5c)) {
+    gammaValue[bVar5] = local_5c;
+    gammaType[bVar5] = local_60;
+    iVar4 = 0;
+    puVar3 = (undefined2 *)((int)gammaValue + (uint)bVar5 * 0x800 + 6);
+    dVar8 = 0.5;
+    dVar9 = 1023.0;
+    dVar7 = 0.0009775171056389809;
     do {
-      local_58 = (longlong)iVar6;
-      iVar5 = (int)lVar1;
-      fVar12 = (float)((double)local_58 * dVar9);
-      if (iVar5 == 0) {
-        fVar12 = Gamma_sRGB((D3D *)uVar2,fVar12,1);
+      local_58 = (longlong)iVar4;
+      fVar10 = (float)((double)local_58 * dVar7);
+      if (param_1 == 0) {
+        fVar10 = Gamma_sRGB((D3D *)uVar1,fVar10,1);
       }
-      this = (D3D *)uVar2;
+      this = (D3D *)uVar1;
       if (local_60 == 1) {
-        fVar12 = Gamma_sRGB(this,fVar12,iVar5);
-        dVar8 = (double)fVar12;
+        fVar10 = Gamma_sRGB(this,fVar10,param_1);
+        dVar6 = (double)fVar10;
       }
       else if ((local_60 == 2) || (local_60 != 3)) {
-        fVar12 = Gamma_TV(this,fVar12,iVar5);
-        dVar8 = (double)fVar12;
+        fVar10 = Gamma_TV(this,fVar10,param_1);
+        dVar6 = (double)fVar10;
       }
       else {
-        fVar12 = Gamma_Standard(fVar12,local_5c,(int)this);
-        dVar8 = (double)fVar12;
+        fVar10 = Gamma_Standard(fVar10,local_5c,(int)this);
+        dVar6 = (double)fVar10;
       }
-      if (iVar5 != 0) {
-        fVar12 = Gamma_sRGB((D3D *)uVar2,(float)dVar8,0);
-        dVar8 = (double)fVar12;
+      if (param_1 != 0) {
+        fVar10 = Gamma_sRGB((D3D *)uVar1,(float)dVar6,0);
+        dVar6 = (double)fVar10;
       }
-      iVar5 = (int)(dVar8 * dVar11 + dVar10);
-      local_50 = (longlong)iVar5;
-      if (iVar5 < 0) {
-        iVar5 = 0;
+      iVar2 = (int)(dVar6 * dVar9 + dVar8);
+      local_50 = (longlong)iVar2;
+      if (iVar2 < 0) {
+        iVar2 = 0;
       }
-      else if (0x3ff < iVar5) {
-        iVar5 = 0x3ff;
+      else if (0x3ff < iVar2) {
+        iVar2 = 0x3ff;
       }
-      iVar6 = iVar6 + 1;
-      puVar4 = puVar4 + 1;
-      *puVar4 = (short)iVar5;
-    } while (iVar6 < 0x400);
+      iVar4 = iVar4 + 1;
+      puVar3 = puVar3 + 1;
+      *puVar3 = (short)iVar2;
+    } while (iVar4 < 0x400);
   }
-  puVar3 = (ushort *)__restgprlr_28(gammaTable + bVar7);
-  return puVar3;
+  return gammaTable[bVar5];
 }
 
 
 // 82884128  GammaRampCorrected  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/gamma.cpp:178)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void D3D::GammaRampCorrected(_D3DGAMMARAMP *param_1,_D3DGAMMARAMP *param_2,int param_3)
 
 {
-  int iVar1;
+  ushort *puVar1;
   ushort *puVar2;
-  longlong lVar3;
+  ushort *puVar3;
   longlong lVar4;
-  short *psVar5;
-  longlong lVar6;
   
-  lVar3 = (longlong)(int)param_2;
-  iVar1 = __savegprlr_29(param_1);
-  puVar2 = GetCurrentGammaTable(param_3);
-  lVar4 = lVar3 + 0x3fe;
-  psVar5 = (short *)(iVar1 + 0x200);
-  lVar6 = 0x100;
+  puVar1 = GetCurrentGammaTable(param_3);
+  puVar2 = param_2->green + 0xff;
+  puVar3 = param_1->green;
+  lVar4 = 0x100;
   do {
-    psVar5[-0x100] =
-         *(short *)((*(ushort *)((int)lVar4 + -0x3fe) >> 5 & 0x7fffffe) + (int)puVar2) << 6;
-    *psVar5 = *(short *)((*(ushort *)(((int)lVar3 - iVar1) + (int)psVar5) >> 5 & 0x7fffffe) +
-                        (int)puVar2) << 6;
-    lVar4 = lVar4 + 2;
-    psVar5[0x100] = *(short *)((*(ushort *)lVar4 >> 5 & 0x7fffffe) + (int)puVar2) << 6;
-    psVar5 = psVar5 + 1;
-    lVar6 = lVar6 + -1;
-  } while (lVar6 != 0);
-  __restgprlr_29();
+    ((_D3DGAMMARAMP *)(puVar3 + -0x100))->red[0] =
+         *(short *)((((_D3DGAMMARAMP *)(puVar2 + -0x1ff))->red[0] >> 5 & 0x7fffffe) + (int)puVar1)
+         << 6;
+    *puVar3 = *(short *)((*(ushort *)(((int)param_2 - (int)param_1) + (int)puVar3) >> 5 & 0x7fffffe)
+                        + (int)puVar1) << 6;
+    puVar2 = puVar2 + 1;
+    puVar3[0x100] = *(short *)((*puVar2 >> 5 & 0x7fffffe) + (int)puVar1) << 6;
+    puVar3 = puVar3 + 1;
+    lVar4 = lVar4 + -1;
+  } while (lVar4 != 0);
   return;
 }
 
 
 // 82883D08  AdjustPWLGamma  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/gamma.cpp:214)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void D3D::AdjustPWLGamma(_D3DPWLGAMMAENTRY *param_1,_D3DPWLGAMMAENTRY *param_2,ushort *param_3)
 
 {
   ushort uVar1;
-  short *psVar2;
-  uint uVar3;
+  uint uVar2;
   
-  psVar2 = (short *)__savegprlr_29(param_1);
   uVar1 = param_2->Base >> 6;
-  uVar3 = (uint)(param_2->Delta >> 6) + (uint)uVar1;
-  if (0x3ff < uVar3) {
-    uVar3 = 0x3ff;
+  uVar2 = (uint)(param_2->Delta >> 6) + (uint)uVar1;
+  if (0x3ff < uVar2) {
+    uVar2 = 0x3ff;
   }
-  *psVar2 = param_3[uVar1] << 6;
-  psVar2[1] = (param_3[uVar3] - param_3[uVar1]) * 0x40;
-  __restgprlr_29();
+  param_1->Base = param_3[uVar1] << 6;
+  param_1->Delta = (param_3[uVar2] - param_3[uVar1]) * 0x40;
   return;
 }
 
 
 // 828841B0  GammaPWLCorrected  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/gamma.cpp:234)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void D3D::GammaPWLCorrected(_D3DPWLGAMMA *param_1,_D3DPWLGAMMA *param_2,int param_3)
 
 {
   int iVar1;
-  int iVar2;
-  ushort *puVar3;
-  longlong lVar4;
-  longlong lVar5;
-  _D3DPWLGAMMAENTRY *p_Var6;
+  ushort *puVar2;
+  longlong lVar3;
+  _D3DPWLGAMMAENTRY *p_Var4;
   
-  lVar5 = (longlong)(int)param_2;
-  iVar2 = __savegprlr_27(param_1);
-  puVar3 = GetCurrentGammaTable(param_3);
-  p_Var6 = (_D3DPWLGAMMAENTRY *)(iVar2 + 0x200);
-  iVar1 = (int)lVar5;
-  lVar4 = 0x80;
+  puVar2 = GetCurrentGammaTable(param_3);
+  p_Var4 = param_1->green;
+  iVar1 = (int)param_2 - (int)param_1;
+  lVar3 = 0x80;
   do {
-    AdjustPWLGamma(p_Var6 + -0x80,(_D3DPWLGAMMAENTRY *)lVar5,puVar3);
-    AdjustPWLGamma(p_Var6,(_D3DPWLGAMMAENTRY *)((iVar1 - iVar2) + (int)p_Var6),puVar3);
-    AdjustPWLGamma(p_Var6 + 0x80,(_D3DPWLGAMMAENTRY *)lVar5 + 0x100,puVar3);
-    lVar4 = lVar4 + -1;
-    lVar5 = lVar5 + 4;
-    p_Var6 = p_Var6 + 1;
-  } while (lVar4 != 0);
-  __restgprlr_27();
+    AdjustPWLGamma(p_Var4 + -0x80,param_2->red,puVar2);
+    AdjustPWLGamma(p_Var4,(_D3DPWLGAMMAENTRY *)(iVar1 + (int)p_Var4),puVar2);
+    AdjustPWLGamma(p_Var4 + 0x80,param_2->blue,puVar2);
+    lVar3 = lVar3 + -1;
+    param_2 = (_D3DPWLGAMMA *)(param_2->red + 1);
+    p_Var4 = p_Var4 + 1;
+  } while (lVar3 != 0);
   return;
 }
 
@@ -280,24 +275,23 @@ void D3D::SetRawGammaRamp(CDevice *param_1,_D3DGAMMARAMP *param_2)
 
 // 82884330  SetRawPWLGamma  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/gamma.cpp:314)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 
 void D3D::SetRawPWLGamma(CDevice *param_1,_D3DPWLGAMMA *param_2)
 
 {
-  int iVar1;
-  CDevice *this;
+  undefined2 *puVar1;
   ulong *puVar2;
   ulong uVar3;
-  longlong lVar4;
+  ushort *puVar4;
   longlong lVar5;
   
-  lVar4 = (longlong)(int)param_2;
-  this = (CDevice *)__savegprlr_28(param_1);
-  puVar2 = CDevice::BeginRingBig(this,0x585);
+  puVar2 = CDevice::BeginRingBig(param_1,0x585);
   puVar2[1] = 0x11921;
   uVar3 = 0;
-  lVar4 = lVar4 + 0x3fe;
+  puVar4 = &param_2->green[0x7f].Delta;
   puVar2[2] = 1;
   lVar5 = 0x80;
   puVar2[3] = 0;
@@ -306,12 +300,12 @@ void D3D::SetRawPWLGamma(CDevice *param_1,_D3DPWLGAMMA *param_2)
   *puVar2 = 7;
   do {
     puVar2[1] = 0x29924;
-    iVar1 = (int)lVar4;
-    puVar2[2] = CONCAT22(*(undefined2 *)(iVar1 + -0x3fc),*(undefined2 *)(iVar1 + -0x3fe));
+    puVar2[2] = CONCAT22(puVar4[-0x1fe],puVar4[-0x1ff]);
     uVar3 = uVar3 + 1;
-    puVar2[3] = CONCAT22(*(undefined2 *)(iVar1 + -0x1fc),*(undefined2 *)(iVar1 + -0x1fe));
-    lVar4 = lVar4 + 4;
-    puVar2[4] = CONCAT22(*(undefined2 *)lVar4,*(undefined2 *)(iVar1 + 2));
+    puVar2[3] = CONCAT22(puVar4[-0xfe],puVar4[-0xff]);
+    puVar1 = puVar4 + 1;
+    puVar4 = puVar4 + 2;
+    puVar2[4] = CONCAT22(*puVar4,*puVar1);
     puVar2[5] = 0xc0054500;
     puVar2[6] = 7;
     puVar2[7] = 0x1924;
@@ -322,8 +316,7 @@ void D3D::SetRawPWLGamma(CDevice *param_1,_D3DPWLGAMMA *param_2)
     *puVar2 = uVar3;
     lVar5 = lVar5 + -1;
   } while (lVar5 != 0);
-  *(ulong **)&this->field_0x30 = puVar2;
-  __restgprlr_28();
+  *(ulong **)&param_1->field_0x30 = puVar2;
   return;
 }
 

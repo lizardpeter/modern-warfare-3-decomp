@@ -2,42 +2,40 @@
 
 // 82459438  ClientScr_SetRadarMode  (game/g_client_fields.cpp:29)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 
 void ClientScr_SetRadarMode(gclient_s *param_1,client_fields_s *param_2)
 
 {
-  int iVar1;
-  uint uVar2;
-  char *pcVar3;
-  undefined4 uVar4;
+  uint uVar1;
+  char *pcVar2;
+  int iVar3;
   
-  iVar1 = __savegprlr_29(param_1,param_2);
-  if (iVar1 == 0) {
+  if (param_1 == (gclient_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_client_fields.cpp",0x20
                     ,0,"%s");
   }
-  uVar2 = Scr_GetConstString(0);
-  uVar2 = uVar2 & 0xffff;
-  if (uVar2 == scr_const.normal_radar) {
-    uVar4 = 0;
+  uVar1 = Scr_GetConstString(0);
+  uVar1 = uVar1 & 0xffff;
+  if (uVar1 == scr_const.normal_radar) {
+    iVar3 = 0;
   }
   else {
-    if (uVar2 != scr_const.fast_radar) {
+    if (uVar1 != scr_const.fast_radar) {
       SL_ConvertToString((uint)scr_const.fast_radar);
       SL_ConvertToString((uint)scr_const.normal_radar);
-      SL_ConvertToString(uVar2);
-      pcVar3 = va("\'%s\' is an illegal radar mode.  Must be \'%s\' or \'%s\'");
-      Scr_Error(pcVar3);
-      __restgprlr_29();
+      SL_ConvertToString(uVar1);
+      pcVar2 = va("\'%s\' is an illegal radar mode.  Must be \'%s\' or \'%s\'");
+      Scr_Error(pcVar2);
       return;
     }
-    uVar4 = 1;
+    iVar3 = 1;
   }
-  *(undefined4 *)(iVar1 + 0x34c4) = uVar4;
-  ClientUserinfoChanged((iVar1 - (int)level.clients) / 0x3980);
-  __restgprlr_29();
+  (param_1->sess).radarMode = iVar3;
+  ClientUserinfoChanged(((int)param_1 - (int)level.clients) / 0x3980);
   return;
 }
 
@@ -75,63 +73,59 @@ void ClientScr_GetRadarMode(gclient_s *param_1,client_fields_s *param_2)
 
 // 824595E8  ClientScr_SetSessionTeam  (game/g_client_fields.cpp:65)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 
 void ClientScr_SetSessionTeam(gclient_s *param_1,client_fields_s *param_2)
 
 {
-  int iVar1;
-  uint uVar2;
-  bool bVar4;
-  char *pcVar3;
-  undefined4 uVar5;
+  uint uVar1;
+  bool bVar3;
+  char *pcVar2;
+  team_t tVar4;
   
-  iVar1 = __savegprlr_27(param_1,param_2);
-  if (iVar1 == 0) {
+  if (param_1 == (gclient_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_client_fields.cpp",0x44
                     ,0,"%s");
   }
-  uVar2 = Scr_GetConstString(0);
-  uVar2 = uVar2 & 0xffff;
-  if (uVar2 == scr_const.axis) {
-    uVar5 = 1;
+  uVar1 = Scr_GetConstString(0);
+  uVar1 = uVar1 & 0xffff;
+  if (uVar1 == scr_const.axis) {
+    tVar4 = TEAM_AXIS;
   }
-  else if (uVar2 == scr_const.allies) {
-    uVar5 = 2;
+  else if (uVar1 == scr_const.allies) {
+    tVar4 = TEAM_ALLIES;
   }
-  else if (uVar2 == scr_const.spectator) {
-    uVar5 = 3;
+  else if (uVar1 == scr_const.spectator) {
+    tVar4 = TEAM_SPECTATOR;
   }
   else {
-    if (uVar2 != scr_const.none) {
-      SL_ConvertToString(uVar2);
-      pcVar3 = va(
+    if (uVar1 != scr_const.none) {
+      SL_ConvertToString(uVar1);
+      pcVar2 = va(
                  "\'%s\' is an illegal sessionteam string. Must be allies, axis, none, or spectator."
                  );
-      Scr_Error(pcVar3);
-      __restgprlr_27();
+      Scr_Error(pcVar2);
       return;
     }
-    uVar5 = 0;
+    tVar4 = TEAM_FREE;
   }
-  if (0x11 < (iVar1 - (int)level.clients) / 0x3980) {
+  if (0x11 < ((int)param_1 - (int)level.clients) / 0x3980) {
     Scr_Error("client is not pointing to the level.clients array");
-    __restgprlr_27();
     return;
   }
-  bVar4 = SV_HasAssignedTeam(*(uint *)(iVar1 + 0x33d0));
-  if (!bVar4) {
-    *(undefined4 *)(iVar1 + 0x33d4) = uVar5;
-    ClientUserinfoChanged((iVar1 - (int)level.clients) / 0x3980);
+  bVar3 = SV_HasAssignedTeam((param_1->sess).cs.clientIndex);
+  if (!bVar3) {
+    (param_1->sess).cs.team = tVar4;
+    ClientUserinfoChanged(((int)param_1 - (int)level.clients) / 0x3980);
     CalculateRanks();
-    __restgprlr_27();
     return;
   }
-  SL_ConvertToString(uVar2);
-  pcVar3 = va("\'%s\' failed to set sessionteam string.");
-  Scr_Error(pcVar3);
-  __restgprlr_27();
+  SL_ConvertToString(uVar1);
+  pcVar2 = va("\'%s\' failed to set sessionteam string.");
+  Scr_Error(pcVar2);
   return;
 }
 
@@ -173,98 +167,90 @@ void ClientScr_GetSessionTeam(gclient_s *param_1,client_fields_s *param_2)
 
 // 824597F0  ClientScr_SetSessionState  (game/g_client_fields.cpp:141)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 
 void ClientScr_SetSessionState(gclient_s *param_1,client_fields_s *param_2)
 
 {
-  int iVar1;
-  uint uVar2;
-  char *pcVar3;
+  uint uVar1;
+  char *pcVar2;
   
-  iVar1 = __savegprlr_29(param_1,param_2);
-  if (iVar1 == 0) {
+  if (param_1 == (gclient_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_client_fields.cpp",0x90
                     ,0,"%s");
   }
-  if (*(int *)(iVar1 + 0x332c) == 0) {
+  if ((param_1->sess).connected == CON_DISCONNECTED) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_client_fields.cpp",0x91
                     ,0,"%s");
   }
-  uVar2 = Scr_GetConstString(0);
-  uVar2 = uVar2 & 0xffff;
-  if (uVar2 == scr_const.playing) {
-    *(undefined4 *)(iVar1 + 0x3300) = 0;
-    __restgprlr_29();
+  uVar1 = Scr_GetConstString(0);
+  uVar1 = uVar1 & 0xffff;
+  if (uVar1 == scr_const.playing) {
+    (param_1->sess).sessionState = SESS_STATE_PLAYING;
     return;
   }
-  if (uVar2 == scr_const.dead) {
-    *(undefined4 *)(iVar1 + 0x3300) = 1;
-    __restgprlr_29();
+  if (uVar1 == scr_const.dead) {
+    (param_1->sess).sessionState = SESS_STATE_DEAD;
     return;
   }
-  if (uVar2 == scr_const.spectator) {
-    *(undefined4 *)(iVar1 + 0x3300) = 2;
-    __restgprlr_29();
+  if (uVar1 == scr_const.spectator) {
+    (param_1->sess).sessionState = SESS_STATE_SPECTATOR;
     return;
   }
-  if (uVar2 == scr_const.intermission) {
-    *(undefined4 *)(iVar1 + 0x3300) = 3;
-    *(uint *)(iVar1 + 0xf8) = *(uint *)(iVar1 + 0xf8) ^ 2;
-    __restgprlr_29();
+  if (uVar1 == scr_const.intermission) {
+    uVar1 = (param_1->ps).eFlags;
+    (param_1->sess).sessionState = SESS_STATE_INTERMISSION;
+    (param_1->ps).eFlags = uVar1 ^ 2;
     return;
   }
-  SL_ConvertToString(uVar2);
-  pcVar3 = va(
+  SL_ConvertToString(uVar1);
+  pcVar2 = va(
              "\'%s\' is an illegal sessionstate string. Must be playing, dead, spectator, or intermission."
              );
-  Scr_Error(pcVar3);
-  __restgprlr_29();
+  Scr_Error(pcVar2);
   return;
 }
 
 
 // 82459910  ClientScr_GetSessionState  (game/g_client_fields.cpp:177)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 
 void ClientScr_GetSessionState(gclient_s *param_1,client_fields_s *param_2)
 
 {
-  uint uVar1;
-  int iVar2;
+  sessionState_t sVar1;
   
-  iVar2 = __savegprlr_29(param_1,param_2);
-  if (iVar2 == 0) {
+  if (param_1 == (gclient_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_client_fields.cpp",0xb2
                     ,0,"%s");
   }
-  if (*(int *)(iVar2 + 0x332c) == 0) {
+  if ((param_1->sess).connected == CON_DISCONNECTED) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_client_fields.cpp",0xb3
                     ,0,"%s");
   }
-  uVar1 = *(uint *)(iVar2 + 0x3300);
-  if (uVar1 < 4) {
-    if (uVar1 == 1) {
+  sVar1 = (param_1->sess).sessionState;
+  if (sVar1 < 4) {
+    if (sVar1 == SESS_STATE_DEAD) {
       Scr_AddConstString((uint)scr_const.dead);
-      __restgprlr_29();
       return;
     }
-    if (uVar1 == 2) {
+    if (sVar1 == SESS_STATE_SPECTATOR) {
       Scr_AddConstString((uint)scr_const.spectator);
-      __restgprlr_29();
       return;
     }
-    if (uVar1 == 0) {
+    if (sVar1 == SESS_STATE_PLAYING) {
       Scr_AddConstString((uint)scr_const.playing);
-      __restgprlr_29();
       return;
     }
     Scr_AddConstString((uint)scr_const.intermission);
   }
-  __restgprlr_29();
   return;
 }
 
@@ -408,6 +394,8 @@ void ClientScr_SetStatusIcon(gclient_s *param_1,client_fields_s *param_2)
 
 // 82459CF8  ClientScr_GetStatusIcon  (game/g_client_fields.cpp:318)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "ConfigString": Some values do not have unique names */
@@ -419,28 +407,27 @@ void ClientScr_GetStatusIcon(gclient_s *param_1,client_fields_s *param_2)
   ConfigString CVar2;
   char acStack_420 [1056];
   
-  iVar1 = __savegprlr_29(param_1,param_2);
-  if (iVar1 == 0) {
+  if (param_1 == (gclient_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_client_fields.cpp",
                     0x13f,0,"%s");
   }
-  if ((*(int *)(iVar1 + 0x3310) < 0) || (8 < *(int *)(iVar1 + 0x3310))) {
+  iVar1 = (param_1->sess).status_icon;
+  if ((iVar1 < 0) || (8 < iVar1)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_client_fields.cpp",
                     0x141,0,"%s");
   }
-  if (*(int *)(iVar1 + 0x3310) == 0) {
+  iVar1 = (param_1->sess).status_icon;
+  if (iVar1 == 0) {
     Scr_AddString("");
-    __restgprlr_29();
     return;
   }
-  CVar2 = *(int *)(iVar1 + 0x3310) + CS_WEAPONFILES_LAST;
+  CVar2 = iVar1 + CS_WEAPONFILES_LAST;
   if (0xeea < (int)CVar2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\../bgame/bg_public.h",
                     0x285,0,"%s");
   }
   SV_GetConfigstring(CVar2,acStack_420,0x400);
   Scr_AddString(acStack_420);
-  __restgprlr_29();
   return;
 }
 
@@ -684,36 +671,35 @@ void ClientScr_GetName(gclient_s *param_1,client_fields_s *param_2)
 
 // 8245A3B0  ClientScr_ReadOnly  (game/g_client_fields.cpp:514)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 
 void ClientScr_ReadOnly(gclient_s *param_1,client_fields_s *param_2)
 
 {
-  int iVar1;
-  char *pcVar2;
-  ulonglong uVar3;
+  char *pcVar1;
   
-  uVar3 = (ulonglong)(int)param_2;
-  iVar1 = __savegprlr_29(param_1);
-  if (iVar1 == 0) {
+  if (param_1 == (gclient_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_client_fields.cpp",
                     0x203,0,"%s");
   }
-  if ((uVar3 & 0xffffffff) == 0) {
+  if (param_2 == (client_fields_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_client_fields.cpp",
                     0x204,0,"%s");
   }
-  SL_ConvertToString((uint)*(ushort *)*(undefined4 *)uVar3);
-  pcVar2 = va("player field %s is read-only");
-  Scr_Error(pcVar2);
-  __restgprlr_29();
+  SL_ConvertToString((uint)*param_2->name);
+  pcVar1 = va("player field %s is read-only");
+  Scr_Error(pcVar1);
   return;
 }
 
 
 // 8245A440  GScr_AddFieldsForClient  (game/g_client_fields.cpp:892)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -725,7 +711,6 @@ void GScr_AddFieldsForClient(void)
   int iVar2;
   client_fields_s *pcVar3;
   
-  __savegprlr_23();
   pcVar3 = fields;
   iVar2 = 0;
   do {
@@ -742,95 +727,76 @@ void GScr_AddFieldsForClient(void)
     pcVar3 = pcVar3 + 1;
     iVar2 = iVar2 + 0x18;
   } while (pcVar3->name != (ushort *)0x0);
-  __restgprlr_23();
   return;
 }
 
 
 // 8245A508  Scr_SetClientField  (game/g_client_fields.cpp:910)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 
 void Scr_SetClientField(gclient_s *param_1,int param_2)
 
 {
-  int iVar1;
-  ulonglong uVar2;
-  ulonglong uVar3;
-  longlong lVar4;
-  
-  uVar3 = (ulonglong)param_2;
-  uVar2 = __savegprlr_28(param_1);
-  if ((uVar2 & 0xffffffff) == 0) {
+  if (param_1 == (gclient_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_client_fields.cpp",
                     0x391,0,"%s");
   }
-  if (0x15 < (uVar3 & 0xffffffff)) {
+  if (0x15 < (uint)param_2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_client_fields.cpp",
                     0x392,0,"%s");
   }
-  if ((int)uVar3 < 0) {
+  if (param_2 < 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_client_fields.cpp",
                     0x393,0,"%s");
   }
-  lVar4 = (uVar3 + (uVar3 & 0x7fffffff) * 2 & 0x1fffffff) * 8 + -0x7df93fc0;
-  iVar1 = (int)lVar4;
-  if (*(code **)(iVar1 + 0x10) != (code *)0x0) {
-    (**(code **)(iVar1 + 0x10))(uVar2,lVar4);
-    __restgprlr_28();
+  if (fields[param_2].setter != (_func___cdecl_void_gclient_s_ptr_client_fields_s_ptr *)0x0) {
+    (*fields[param_2].setter)(param_1,fields + param_2);
     return;
   }
-  if (*(int *)(iVar1 + 8) == 0) {
+  if (fields[param_2].ofs == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_client_fields.cpp",
                     0x39d,0,"%s");
   }
-  Scr_SetGenericField((uchar *)uVar2,*(fieldtype_t *)(iVar1 + 0xc),*(int *)(iVar1 + 8));
-  __restgprlr_28();
+  Scr_SetGenericField((uchar *)param_1,fields[param_2].type,fields[param_2].ofs);
   return;
 }
 
 
 // 8245A618  Scr_GetClientField  (game/g_client_fields.cpp:936)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 
 void Scr_GetClientField(gclient_s *param_1,int param_2)
 
 {
-  int iVar1;
-  ulonglong uVar2;
-  ulonglong uVar3;
-  longlong lVar4;
-  
-  uVar3 = (ulonglong)param_2;
-  uVar2 = __savegprlr_28(param_1);
-  if ((uVar2 & 0xffffffff) == 0) {
+  if (param_1 == (gclient_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_client_fields.cpp",
                     0x3ab,0,"%s");
   }
-  if (0x15 < (uVar3 & 0xffffffff)) {
+  if (0x15 < (uint)param_2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_client_fields.cpp",
                     0x3ac,0,"%s");
   }
-  if ((int)uVar3 < 0) {
+  if (param_2 < 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_client_fields.cpp",
                     0x3ad,0,"%s");
   }
-  lVar4 = (uVar3 + (uVar3 & 0x7fffffff) * 2 & 0x1fffffff) * 8 + -0x7df93fc0;
-  iVar1 = (int)lVar4;
-  if (*(code **)(iVar1 + 0x14) != (code *)0x0) {
-    (**(code **)(iVar1 + 0x14))(uVar2,lVar4);
-    __restgprlr_28();
+  if (fields[param_2].getter != (_func___cdecl_void_gclient_s_ptr_client_fields_s_ptr *)0x0) {
+    (*fields[param_2].getter)(param_1,fields + param_2);
     return;
   }
-  if (*(int *)(iVar1 + 8) == 0) {
+  if (fields[param_2].ofs == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_client_fields.cpp",
                     0x3b7,0,"%s");
   }
-  Scr_GetGenericField((uchar *)uVar2,*(fieldtype_t *)(iVar1 + 0xc),*(int *)(iVar1 + 8));
-  __restgprlr_28();
+  Scr_GetGenericField((uchar *)param_1,fields[param_2].type,fields[param_2].ofs);
   return;
 }
 

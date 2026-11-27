@@ -2,64 +2,55 @@
 
 // 8291A718  _vsnprintf_helper  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/vsprintf.c:107)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
+
 int _vsnprintf_helper(_func___cdecl_int__iobuf_ptr_char_ptr_localeinfo_struct_ptr_char_ptr *param_1,
                      char *param_2,uint param_3,char *param_4,localeinfo_struct *param_5,
                      char *param_6)
 
 {
-  code *pcVar2;
-  int *piVar3;
-  longlong lVar1;
-  int iVar4;
-  ulonglong uVar5;
-  ulonglong uVar6;
-  longlong lVar7;
-  ulonglong uVar8;
-  char *pcVar9;
+  int *piVar1;
+  int iVar2;
+  int iVar3;
+  ulonglong uVar4;
   _iobuf local_60 [3];
   
-  lVar7 = (longlong)(int)param_6;
-  lVar1 = (longlong)(int)param_5;
-  uVar6 = (ulonglong)(int)param_4;
-  uVar5 = (ulonglong)(int)param_3;
-  uVar8 = (ulonglong)(int)param_2;
-  pcVar2 = (code *)__savegprlr_25(param_1);
   local_60[0]._ptr = (char *)0x0;
   memset();
-  if (((uVar6 & 0xffffffff) == 0) || (((uVar5 & 0xffffffff) != 0 && ((uVar8 & 0xffffffff) == 0)))) {
-    piVar3 = _errno();
-    *piVar3 = 0x16;
+  if ((param_4 == (char *)0x0) || ((param_3 != 0 && (param_2 == (char *)0x0)))) {
+    piVar1 = _errno();
+    *piVar1 = 0x16;
     _invalid_parameter_noinfo();
-    lVar1 = -1;
+    iVar2 = -1;
   }
   else {
     local_60[0]._cnt = 0x7fffffff;
-    if ((uVar5 & 0xffffffff) < 0x80000000) {
-      local_60[0]._cnt = (uint)uVar5;
+    if (param_3 < 0x80000000) {
+      local_60[0]._cnt = param_3;
     }
-    pcVar9 = (char *)uVar8;
     local_60[0]._flag = 0x42;
-    local_60[0]._ptr = pcVar9;
-    local_60[0]._base = pcVar9;
-    lVar1 = (*pcVar2)(local_60,uVar6,lVar1,lVar7);
-    if ((uVar8 & 0xffffffff) != 0) {
-      if (-1 < (int)lVar1) {
-        uVar8 = (ulonglong)(uint)local_60[0]._cnt;
-        local_60[0]._cnt = (int)(uVar8 - 1);
-        if (-1 < (longlong)(uVar8 - 1)) {
+    local_60[0]._ptr = param_2;
+    local_60[0]._base = param_2;
+    iVar2 = (*param_1)(local_60,param_4,param_5,param_6);
+    if (param_2 != (char *)0x0) {
+      if (-1 < iVar2) {
+        uVar4 = (ulonglong)(uint)local_60[0]._cnt;
+        local_60[0]._cnt = (int)(uVar4 - 1);
+        if (-1 < (longlong)(uVar4 - 1)) {
           *local_60[0]._ptr = '\0';
-          goto LAB_8291a830;
+          return iVar2;
         }
-        iVar4 = _flsbuf(0,local_60);
-        if (iVar4 != -1) goto LAB_8291a830;
+        iVar3 = _flsbuf(0,local_60);
+        if (iVar3 != -1) {
+          return iVar2;
+        }
       }
-      pcVar9[(uint)uVar5 - 1] = '\0';
-      lVar1 = ((ulonglong)((int)LZCOUNT(local_60[0]._cnt) == 0) ^ 1) - 2;
+      param_2[param_3 - 1] = '\0';
+      iVar2 = ((uint)LZCOUNT((int)LZCOUNT(local_60[0]._cnt)) >> 5 ^ 1) - 2;
     }
   }
-LAB_8291a830:
-  iVar4 = __restgprlr_25(lVar1);
-  return iVar4;
+  return iVar2;
 }
 
 
@@ -106,84 +97,79 @@ int vsprintf_s(char *param_1,uint param_2,char *param_3,char *param_4)
 
 // 8291A8E0  _vsnprintf_s_l  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/vsprintf.c:272)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
+
 int _vsnprintf_s_l(char *param_1,uint param_2,uint param_3,char *param_4,localeinfo_struct *param_5,
                   char *param_6)
 
 {
-  char *pcVar1;
-  int *piVar2;
+  int *piVar1;
+  int iVar2;
   int iVar3;
-  int iVar4;
-  ulonglong uVar5;
-  ulonglong uVar6;
-  ulonglong uVar7;
   
-  uVar7 = (ulonglong)(int)param_4;
-  uVar6 = (ulonglong)(int)param_3;
-  uVar5 = (ulonglong)(int)param_2;
-  pcVar1 = (char *)__savegprlr_24(param_1);
-  if ((uVar7 & 0xffffffff) == 0) {
-LAB_8291a90c:
-    piVar2 = _errno();
-    iVar3 = 0x16;
-LAB_8291a914:
-    *piVar2 = iVar3;
-    _invalid_parameter_noinfo();
-  }
-  else {
-    if ((uVar6 & 0xffffffff) != 0) {
-      if (pcVar1 != (char *)0x0) goto LAB_8291a950;
-      goto LAB_8291a90c;
-    }
-    if (pcVar1 == (char *)0x0) {
-      if ((uVar5 & 0xffffffff) == 0) {
-        iVar4 = 0;
-        goto LAB_8291a920;
-      }
-      goto LAB_8291a90c;
-    }
-LAB_8291a950:
-    if ((uVar5 & 0xffffffff) == 0) goto LAB_8291a90c;
-    if ((uVar5 & 0xffffffff) <= (uVar6 & 0xffffffff)) {
-      piVar2 = _errno();
-      iVar3 = *piVar2;
-      iVar4 = _vsnprintf_helper(_output_s_l,pcVar1,(uint)uVar5,(char *)uVar7,param_5,param_6);
-      (pcVar1 + (uint)uVar5)[-1] = '\0';
-      if (iVar4 != -2) goto LAB_8291aa0c;
-      if ((int)uVar6 == -1) {
-        piVar2 = _errno();
-        if (*piVar2 == 0x22) {
-          piVar2 = _errno();
-          *piVar2 = iVar3;
+  if (param_4 != (char *)0x0) {
+    if (param_3 == 0) {
+      if (param_1 == (char *)0x0) {
+        if (param_2 == 0) {
+          return 0;
         }
-        goto LAB_8291a91c;
       }
-LAB_8291aa14:
-      *pcVar1 = '\0';
-      if (iVar4 != -2) goto LAB_8291a91c;
-      piVar2 = _errno();
-      iVar3 = 0x22;
-      goto LAB_8291a914;
-    }
-    piVar2 = _errno();
-    iVar3 = *piVar2;
-    iVar4 = _vsnprintf_helper(_output_s_l,pcVar1,(int)uVar6 + 1,(char *)uVar7,param_5,param_6);
-    if (iVar4 != -2) {
+      else {
+LAB_8291a950:
+        if (param_2 != 0) {
+          if (param_3 < param_2) {
+            piVar1 = _errno();
+            iVar3 = *piVar1;
+            iVar2 = _vsnprintf_helper(_output_s_l,param_1,param_3 + 1,param_4,param_5,param_6);
+            if (iVar2 == -2) {
+              piVar1 = _errno();
+              if (*piVar1 != 0x22) {
+                return -1;
+              }
+              piVar1 = _errno();
+              *piVar1 = iVar3;
+              return -1;
+            }
 LAB_8291aa0c:
-      if (-1 < iVar4) goto LAB_8291a920;
-      goto LAB_8291aa14;
+            if (-1 < iVar2) {
+              return iVar2;
+            }
+          }
+          else {
+            piVar1 = _errno();
+            iVar3 = *piVar1;
+            iVar2 = _vsnprintf_helper(_output_s_l,param_1,param_2,param_4,param_5,param_6);
+            param_1[param_2 - 1] = '\0';
+            if (iVar2 != -2) goto LAB_8291aa0c;
+            if (param_3 == 0xffffffff) {
+              piVar1 = _errno();
+              if (*piVar1 != 0x22) {
+                return -1;
+              }
+              piVar1 = _errno();
+              *piVar1 = iVar3;
+              return -1;
+            }
+          }
+          *param_1 = '\0';
+          if (iVar2 != -2) {
+            return -1;
+          }
+          piVar1 = _errno();
+          iVar3 = 0x22;
+          goto LAB_8291a914;
+        }
+      }
     }
-    piVar2 = _errno();
-    if (*piVar2 == 0x22) {
-      piVar2 = _errno();
-      *piVar2 = iVar3;
-    }
+    else if (param_1 != (char *)0x0) goto LAB_8291a950;
   }
-LAB_8291a91c:
-  iVar4 = -1;
-LAB_8291a920:
-  iVar3 = __restgprlr_24(iVar4);
-  return iVar3;
+  piVar1 = _errno();
+  iVar3 = 0x16;
+LAB_8291a914:
+  *piVar1 = iVar3;
+  _invalid_parameter_noinfo();
+  return -1;
 }
 
 

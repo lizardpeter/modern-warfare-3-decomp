@@ -2,39 +2,38 @@
 
 // 828D7D48  CreateObject  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/submixvoice.cpp:41)
 
-undefined4
-XAUDIO::CSubmixVoice::CreateObject
-          (XAUDIOSUBMIXVOICEINIT *param_1,IXAudioBatchAllocator *param_2,CSubmixVoice **param_3)
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
+int XAUDIO::CSubmixVoice::CreateObject
+              (XAUDIOSUBMIXVOICEINIT *param_1,IXAudioBatchAllocator *param_2,CSubmixVoice **param_3)
 
 {
-  XAUDIOSUBMIXVOICEINIT *pXVar1;
-  int iVar2;
-  CSubmixVoice *pCVar3;
-  undefined4 uVar4;
+  int iVar1;
+  CSubmixVoice *pCVar2;
   IXAudioBatchAllocator *pIStack0000001c;
   ulong local_60 [4];
   XAUDIOROUTEDVOICEINIT aXStack_50 [2];
   
   pIStack0000001c = param_2;
-  pXVar1 = (XAUDIOSUBMIXVOICEINIT *)__savegprlr_28(param_1);
-  ConvertInit(pXVar1,aXStack_50);
-  iVar2 = CRoutedVoice::GetObjectAdditionalSize(aXStack_50,local_60);
-  if (-1 < iVar2) {
+  ConvertInit(param_1,aXStack_50);
+  iVar1 = CRoutedVoice::GetObjectAdditionalSize(aXStack_50,local_60);
+  if (-1 < iVar1) {
     local_60[0] = local_60[0] + 0x50;
-    iVar2 = XAudioPrepareBatchAllocator(0x61820006,local_60[0],&stack0x0000001c);
-    if (-1 < iVar2) {
-      pCVar3 = (CSubmixVoice *)(**(code **)((int)*pIStack0000001c + 0x14))(pIStack0000001c,0x50);
-      if ((pCVar3 == (CSubmixVoice *)0x0) ||
-         (pCVar3 = CSubmixVoice(pCVar3,pXVar1,pIStack0000001c), pCVar3 == (CSubmixVoice *)0x0)) {
-        iVar2 = -0x7ff8fff2;
+    iVar1 = XAudioPrepareBatchAllocator(0x61820006,local_60[0],&stack0x0000001c);
+    if (-1 < iVar1) {
+      pCVar2 = (CSubmixVoice *)(**(code **)((int)*pIStack0000001c + 0x14))(pIStack0000001c,0x50);
+      if ((pCVar2 == (CSubmixVoice *)0x0) ||
+         (pCVar2 = CSubmixVoice(pCVar2,param_1,pIStack0000001c), pCVar2 == (CSubmixVoice *)0x0)) {
+        iVar1 = -0x7ff8fff2;
       }
       else {
-        iVar2 = Initialize(pCVar3,pXVar1);
-        if (iVar2 < 0) {
-          (**(code **)(pCVar3->_padding_ + 0xc))(pCVar3);
+        iVar1 = Initialize(pCVar2,param_1);
+        if (iVar1 < 0) {
+          (**(code **)(pCVar2->_padding_ + 0xc))(pCVar2);
         }
         else {
-          *param_3 = pCVar3;
+          *param_3 = pCVar2;
         }
       }
     }
@@ -42,12 +41,14 @@ XAUDIO::CSubmixVoice::CreateObject
   if (pIStack0000001c != (IXAudioBatchAllocator *)0x0) {
     (**(code **)((int)*pIStack0000001c + 4))();
   }
-  uVar4 = __restgprlr_28(iVar2);
-  return uVar4;
+  return iVar1;
 }
 
 
 // 828D7C08  CSubmixVoice  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/submixvoice.cpp:125)
+
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 
 CSubmixVoice * __thiscall
 XAUDIO::CSubmixVoice::CSubmixVoice
@@ -55,48 +56,44 @@ XAUDIO::CSubmixVoice::CSubmixVoice
 
 {
   byte bVar1;
-  CRoutedVoice *this_00;
   CRoutedVoice *pCVar2;
-  uchar uVar4;
-  CSubmixVoice *pCVar3;
-  undefined4 *puVar6;
-  ulonglong uVar5;
+  uchar uVar3;
+  undefined4 *puVar5;
+  ulonglong uVar4;
   void *in_r13;
-  void *pvVar7;
-  CEngineVoiceList *pCVar8;
+  void *pvVar6;
+  CEngineVoiceList *pCVar7;
   
-  this_00 = (CRoutedVoice *)__savegprlr_27(this);
-  pCVar2 = CRoutedVoice::CRoutedVoice(this_00,param_2,'\x01');
-  this_00->_padding_ = (int)&_vftable_;
+  pCVar2 = CRoutedVoice::CRoutedVoice((CRoutedVoice *)this,param_2,'\x01');
+  this->_padding_ = (int)&_vftable_;
   bVar1 = param_1->SubmixStage;
-  *(byte *)&this_00[1]._padding_ = bVar1;
-  pCVar8 = g_pEngine->m_paSubmixVoiceLists + bVar1;
-  uVar4 = KeRaiseIrqlToDpcLevel(pCVar2);
-  pvVar7 = in_r13;
+  this->m_SubmixStage = bVar1;
+  pCVar7 = g_pEngine->m_paSubmixVoiceLists + bVar1;
+  uVar3 = KeRaiseIrqlToDpcLevel(pCVar2);
+  pvVar6 = in_r13;
   if ((g_XAudioSpinLock.m_LockCount == 0) || (in_r13 != g_XAudioSpinLock.m_pOwningThread)) {
     KeAcquireSpinLockAtRaisedIrql(0xffffffff848958d8);
     g_XAudioSpinLock.m_pOwningThread = in_r13;
-    g_XAudioSpinLock.m_PreviousIrql = uVar4;
+    g_XAudioSpinLock.m_PreviousIrql = uVar3;
   }
   g_XAudioSpinLock.m_LockCount = g_XAudioSpinLock.m_LockCount + 1;
-  puVar6 = (undefined4 *)((int)&this_00->_padding_ + *(int *)&(pCVar8->m_Master).field_0x8);
-  *puVar6 = pCVar8;
-  puVar6[1] = *(undefined4 *)&(pCVar8->m_Master).field_0x4;
-  *(undefined4 **)&(pCVar8->m_Master).field_0x4 = puVar6;
-  *(undefined4 **)puVar6[1] = puVar6;
-  uVar4 = g_XAudioSpinLock.m_PreviousIrql;
-  uVar5 = (ulonglong)(uint)g_XAudioSpinLock.m_LockCount;
-  if ((g_XAudioSpinLock.m_LockCount != 0) && (pvVar7 == g_XAudioSpinLock.m_pOwningThread)) {
-    g_XAudioSpinLock.m_LockCount = (long)(uVar5 - 1);
-    if (uVar5 - 1 == 0) {
+  puVar5 = (undefined4 *)((int)&this->_padding_ + *(int *)&(pCVar7->m_Master).field_0x8);
+  *puVar5 = pCVar7;
+  puVar5[1] = *(undefined4 *)&(pCVar7->m_Master).field_0x4;
+  *(undefined4 **)&(pCVar7->m_Master).field_0x4 = puVar5;
+  *(undefined4 **)puVar5[1] = puVar5;
+  uVar3 = g_XAudioSpinLock.m_PreviousIrql;
+  uVar4 = (ulonglong)(uint)g_XAudioSpinLock.m_LockCount;
+  if ((g_XAudioSpinLock.m_LockCount != 0) && (pvVar6 == g_XAudioSpinLock.m_pOwningThread)) {
+    g_XAudioSpinLock.m_LockCount = (long)(uVar4 - 1);
+    if (uVar4 - 1 == 0) {
       g_XAudioSpinLock.m_pOwningThread = (void *)0x0;
       g_XAudioSpinLock.m_PreviousIrql = '\0';
       KeReleaseSpinLockFromRaisedIrql(0xffffffff848958d8);
-      KfLowerIrql(uVar4);
+      KfLowerIrql(uVar3);
     }
   }
-  pCVar3 = (CSubmixVoice *)__restgprlr_27(this_00);
-  return pCVar3;
+  return this;
 }
 
 
@@ -112,12 +109,14 @@ undefined4 __thiscall XAUDIO::CVoice::GetVoiceState(CVoice *this,uchar *param_1)
 
 // 828D7AD0  ~CSubmixVoice  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/submixvoice.cpp:155)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void __thiscall XAUDIO::CSubmixVoice::~CSubmixVoice(CSubmixVoice *this)
 
 {
   byte bVar1;
   CEngineVoiceList *pCVar2;
-  CRoutedVoice *this_00;
   T_HRESULT TVar3;
   uchar uVar4;
   ulonglong uVar5;
@@ -125,10 +124,9 @@ void __thiscall XAUDIO::CSubmixVoice::~CSubmixVoice(CSubmixVoice *this)
   void *in_r13;
   void *pvVar7;
   
-  this_00 = (CRoutedVoice *)__savegprlr_27(this);
-  this_00->_padding_ = (int)&_vftable_;
-  TVar3 = CVoice::Stop((CVoice *)this_00,'\x01');
-  bVar1 = *(byte *)&this_00[1]._padding_;
+  this->_padding_ = (int)&_vftable_;
+  TVar3 = CVoice::Stop((CVoice *)this,'\x01');
+  bVar1 = this->m_SubmixStage;
   pCVar2 = g_pEngine->m_paSubmixVoiceLists;
   uVar4 = KeRaiseIrqlToDpcLevel(TVar3);
   pvVar7 = in_r13;
@@ -139,7 +137,7 @@ void __thiscall XAUDIO::CSubmixVoice::~CSubmixVoice(CSubmixVoice *this)
   }
   uVar5 = (ulonglong)(uint)g_XAudioSpinLock.m_LockCount + 1;
   g_XAudioSpinLock.m_LockCount = (long)uVar5;
-  piVar6 = (int *)((int)&this_00->_padding_ + *(int *)&pCVar2[bVar1].m_Master.field_0x8);
+  piVar6 = (int *)((int)&this->_padding_ + *(int *)&pCVar2[bVar1].m_Master.field_0x8);
   if ((int *)*piVar6 != piVar6) {
     ((int *)*piVar6)[1] = piVar6[1];
     *(int *)piVar6[1] = *piVar6;
@@ -157,8 +155,7 @@ void __thiscall XAUDIO::CSubmixVoice::~CSubmixVoice(CSubmixVoice *this)
       KfLowerIrql(uVar4);
     }
   }
-  CRoutedVoice::~CRoutedVoice(this_00);
-  __restgprlr_27();
+  CRoutedVoice::~CRoutedVoice((CRoutedVoice *)this);
   return;
 }
 

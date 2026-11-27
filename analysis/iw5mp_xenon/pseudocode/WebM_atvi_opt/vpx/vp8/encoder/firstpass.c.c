@@ -28,40 +28,36 @@ void Scale2Ratio(int param_1,int *param_2,int *param_3)
 
 // 82823C90  vp8_encode_intra  (WebM_atvi_opt/vpx/vp8/encoder/firstpass.c:78)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 int vp8_encode_intra(VP8_COMP *param_1,MACROBLOCK *param_2,int param_3)
 
 {
-  MACROBLOCK *pMVar1;
-  int iVar2;
-  longlong lVar3;
+  uint uVar1;
+  BLOCK *pBVar2;
+  BLOCKD *pBVar3;
   longlong lVar4;
-  longlong lVar5;
-  longlong lVar6;
   
-  lVar3 = (longlong)(int)param_2;
-  iVar2 = __savegprlr_26(param_1);
-  pMVar1 = (MACROBLOCK *)lVar3;
   if (param_3 == 0) {
-    lVar4 = lVar3 + 0x640;
-    lVar5 = lVar3 + 0x162c;
-    lVar6 = 0x10;
+    pBVar2 = param_2->block;
+    pBVar3 = (param_2->e_mbd).block;
+    lVar4 = 0x10;
     do {
-      vp8_encode_intra4x4block
-                ((VP8_ENCODER_RTCD *)(iVar2 + 0x304c8),pMVar1,(BLOCK *)lVar4,(BLOCKD *)lVar5,0);
-      lVar6 = lVar6 + -1;
-      lVar5 = lVar5 + 0x3c;
-      lVar4 = lVar4 + 0x30;
-    } while (lVar6 != 0);
+      vp8_encode_intra4x4block(&param_1->rtcd,param_2,pBVar2,pBVar3,0);
+      lVar4 = lVar4 + -1;
+      pBVar3 = pBVar3 + 1;
+      pBVar2 = pBVar2 + 1;
+    } while (lVar4 != 0);
   }
   else {
-    (((pMVar1->e_mbd).mode_info_context)->mbmi).mode = DC_PRED;
-    (((pMVar1->e_mbd).mode_info_context)->mbmi).uv_mode = DC_PRED;
-    (((pMVar1->e_mbd).mode_info_context)->mbmi).ref_frame = INTRA_FRAME;
-    vp8_encode_intra16x16mby((VP8_ENCODER_RTCD *)(iVar2 + 0x304c8),pMVar1);
+    (((param_2->e_mbd).mode_info_context)->mbmi).mode = DC_PRED;
+    (((param_2->e_mbd).mode_info_context)->mbmi).uv_mode = DC_PRED;
+    (((param_2->e_mbd).mode_info_context)->mbmi).ref_frame = INTRA_FRAME;
+    vp8_encode_intra16x16mby(&param_1->rtcd,param_2);
   }
-  (**(code **)(iVar2 + 0x30518))(lVar3);
-  iVar2 = __restgprlr_26();
-  return iVar2;
+  uVar1 = (*(param_1->rtcd).variance.getmbss)(param_2->src_diff);
+  return uVar1;
 }
 
 
@@ -371,24 +367,24 @@ void vp8_advance_fpmm(VP8_COMP *param_1,int param_2)
 
 // 828244E8  vp8_input_fpmm  (WebM_atvi_opt/vpx/vp8/encoder/firstpass.c:395)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 void vp8_input_fpmm(VP8_COMP *param_1)
 
 {
-  int iVar1;
-  ulonglong uVar2;
+  ulonglong uVar1;
   
-  iVar1 = __savegprlr_26(param_1);
-  uVar2 = (ulonglong)*(uint *)(iVar1 + 0x26ef4);
-  if (0 < (int)*(uint *)(iVar1 + 0x26ef4)) {
+  uVar1 = (ulonglong)(uint)param_1->active_arnr_frames;
+  if (0 < param_1->active_arnr_frames) {
     do {
       memcpy();
-      uVar2 = uVar2 - 1;
-      *(int *)(iVar1 + 0x2e7d4) =
-           (*(int *)(iVar1 + 0x1e704) + 0x87U & 0xfffffff8) + *(int *)(iVar1 + 0x2e7d4);
-    } while (uVar2 != 0);
+      uVar1 = uVar1 - 1;
+      param_1->fp_motion_map_stats =
+           param_1->fp_motion_map_stats + ((param_1->common).MBs + 0x87U & 0xfffffff8);
+    } while (uVar1 != 0);
   }
-  *(undefined4 *)(iVar1 + 0x30e04) = 1;
-  __restgprlr_26();
+  param_1->use_weighted_temporal_filter = 1;
   return;
 }
 
@@ -463,6 +459,9 @@ void vp8_zz_motion_search
 
 // 828246C0  vp8_first_pass_motion_search  (WebM_atvi_opt/vpx/vp8/encoder/firstpass.c:459)
 
+/* WARNING: Function: __savegprlr_20 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_20 replaced with injection: xenon_save_restore */
+
 void vp8_first_pass_motion_search
                (VP8_COMP *param_1,MACROBLOCK *param_2,MV *param_3,MV *param_4,
                YV12_BUFFER_CONFIG *param_5,int *param_6,int param_7)
@@ -471,77 +470,75 @@ void vp8_first_pass_motion_search
   int iVar1;
   int iVar2;
   int iVar3;
-  longlong lVar4;
-  longlong lVar5;
-  undefined4 *puVar6;
-  undefined4 *puVar7;
-  ulonglong uVar8;
-  uint uVar9;
-  longlong lVar10;
-  short local_a0;
-  short local_9e;
-  uint local_9c [2];
-  undefined4 auStack_94 [2];
-  undefined4 local_8c;
+  BLOCKD *pBVar4;
+  undefined4 *puVar5;
+  _func___cdecl_void_uchar_ptr_int_uchar_ptr_ptr_int_uint_ptr **pp_Var6;
+  longlong lVar7;
+  vp8_variance_fn_ptr_t *in_stack_fffffef8;
+  int **in_stack_fffffefc;
+  int **in_stack_ffffff00;
+  MV local_a0;
+  int local_9c [2];
+  undefined4 uStack_94;
+  _func___cdecl_uint_uchar_ptr_int_uchar_ptr_int_uint_ptr *local_90 [36];
   
-  lVar5 = (longlong)(int)param_3;
-  lVar4 = (longlong)(int)param_2;
-  iVar2 = __savegprlr_20(param_1,lVar4,lVar5);
-  puVar6 = auStack_94;
-  lVar10 = 9;
-  local_a0 = 0;
-  local_9e = 0;
-  puVar7 = (undefined4 *)(iVar2 + 0x30278);
+  puVar5 = &uStack_94;
+  lVar7 = 9;
+  local_a0.row = 0;
+  local_a0.col = 0;
+  pBVar4 = (param_2->e_mbd).block;
+  pp_Var6 = &param_1->fn_ptr[3].sdx4df;
   do {
-    puVar7 = puVar7 + 1;
-    puVar6 = puVar6 + 1;
-    *puVar6 = *puVar7;
-    lVar10 = lVar10 + -1;
-  } while (lVar10 != 0);
-  iVar1 = (int)lVar4;
-  local_8c = *(undefined4 *)(iVar2 + 0x3051c);
-  *(uchar **)(iVar1 + 0x1c20) = param_5->y_buffer + param_7;
-  iVar3 = (**(code **)(iVar2 + 0x301e8))
-                    (lVar4,lVar4 + 0x640,lVar4 + 0x162c,lVar5,&local_a0,3,
-                     *(undefined4 *)(iVar1 + 0x1cf8),local_9c);
-  uVar9 = local_9c[0];
-  if (iVar3 < 0x7ffffeff) {
-    iVar3 = iVar3 + 0x100;
+    pp_Var6 = pp_Var6 + 1;
+    puVar5 = puVar5 + 1;
+    *puVar5 = *pp_Var6;
+    lVar7 = lVar7 + -1;
+  } while (lVar7 != 0);
+  local_90[1] = (param_1->rtcd).variance.mse16x16;
+  (param_2->e_mbd).pre.y_buffer = param_5->y_buffer + param_7;
+  iVar2 = (*param_1->diamond_search_sad)
+                    (param_2,param_2->block,pBVar4,param_3,&local_a0,3,param_2->errorperbit,local_9c
+                     ,in_stack_fffffef8,in_stack_fffffefc,in_stack_ffffff00);
+  iVar1 = local_9c[0];
+  if (iVar2 < 0x7ffffeff) {
+    iVar2 = iVar2 + 0x100;
   }
-  if (iVar3 < *param_6) {
-    *param_6 = iVar3;
-    param_4->row = local_a0;
-    param_4->col = local_9e;
+  if (iVar2 < *param_6) {
+    *param_6 = iVar2;
+    param_4->row = local_a0.row;
+    param_4->col = local_a0.col;
   }
-  uVar8 = (ulonglong)local_9c[0];
   local_9c[0] = 0;
-  while ((int)uVar9 < 4) {
+  while (iVar1 < 4) {
+    iVar2 = iVar1 + 1;
     if (local_9c[0] == 0) {
-      iVar3 = (**(code **)(iVar2 + 0x301e8))
-                        (lVar4,lVar4 + 0x640,lVar4 + 0x162c,lVar5,&local_a0,uVar8 + 4,
-                         *(undefined4 *)(iVar1 + 0x1cf8),local_9c);
+      iVar3 = (*param_1->diamond_search_sad)
+                        (param_2,param_2->block,pBVar4,param_3,&local_a0,iVar1 + 4,
+                         param_2->errorperbit,local_9c,in_stack_fffffef8,in_stack_fffffefc,
+                         in_stack_ffffff00);
       if (iVar3 < 0x7ffffeff) {
         iVar3 = iVar3 + 0x100;
       }
+      iVar1 = iVar2;
       if (iVar3 < *param_6) {
         *param_6 = iVar3;
-        param_4->row = local_a0;
-        param_4->col = local_9e;
+        param_4->row = local_a0.row;
+        param_4->col = local_a0.col;
       }
     }
     else {
-      local_9c[0] = local_9c[0] - 1;
+      local_9c[0] = local_9c[0] + -1;
+      iVar1 = iVar2;
     }
-    uVar9 = (uint)(uVar8 + 1);
-    uVar8 = uVar8 + 1;
   }
-  __restgprlr_20();
   return;
 }
 
 
 // 82824860  vp8_first_pass  (WebM_atvi_opt/vpx/vp8/encoder/firstpass.c:519)
 
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
 /* WARNING: Type propagation algorithm not settling */
 
 void vp8_first_pass(VP8_COMP *param_1)
@@ -549,38 +546,38 @@ void vp8_first_pass(VP8_COMP *param_1)
 {
   short sVar1;
   int iVar2;
-  uint uVar3;
-  uchar *puVar4;
+  int iVar3;
+  int iVar4;
   uchar *puVar5;
-  FIRSTPASS_STATS *pFVar6;
-  uint uVar7;
-  uint uVar8;
-  int iVar9;
-  mv_context *pmVar10;
-  MV *pMVar11;
-  int iVar12;
-  VP8_COMP *pVVar13;
-  longlong lVar14;
-  MACROBLOCK *pMVar15;
-  YV12_BUFFER_CONFIG *pYVar16;
+  uint uVar6;
+  uchar *puVar7;
+  FIRSTPASS_STATS *pFVar8;
+  uint uVar9;
+  uint uVar10;
+  int *piVar11;
+  int *piVar12;
+  int *piVar13;
+  YV12_BUFFER_CONFIG *pYVar14;
+  int iVar15;
+  mv_context *pmVar16;
   int iVar17;
-  int iVar18;
-  YV12_BUFFER_CONFIG *pYVar19;
-  int iVar20;
+  <unnamed_tag_0000B727> *p<Var18;
+  int iVar19;
+  ulonglong uVar20;
   int iVar21;
   int iVar22;
   int iVar23;
   YV12_BUFFER_CONFIG *pYVar24;
   uchar *puVar25;
-  longlong lVar26;
-  ulonglong uVar27;
-  undefined4 *puVar28;
-  int iVar29;
-  longlong lVar30;
-  int iVar31;
-  ulonglong uVar32;
+  YV12_BUFFER_CONFIG *pYVar26;
+  longlong lVar27;
+  ulonglong uVar28;
+  YV12_BUFFER_CONFIG **ppYVar29;
+  int iVar30;
+  longlong lVar31;
+  int iVar32;
   ulonglong uVar33;
-  ulonglong uVar34;
+  MACROBLOCK *pMVar34;
   double dVar35;
   int local_230;
   MV local_220;
@@ -605,26 +602,23 @@ void vp8_first_pass(VP8_COMP *param_1)
   int local_1c8;
   MV local_1c4;
   YV12_BUFFER_CONFIG *local_1c0;
-  uint local_1bc;
+  int *local_1bc;
   int *local_1b8;
-  uint local_1b4;
-  uint local_1b0;
-  undefined4 *local_1ac;
+  int *local_1b4;
+  int *local_1b0;
+  YV12_BUFFER_CONFIG **local_1ac;
   FIRSTPASS_STATS local_1a0;
   vpx_codec_cx_pkt local_120 [2];
   
-  lVar14 = (longlong)(int)param_1;
-  __savegprlr();
-  pVVar13 = (VP8_COMP *)lVar14;
   local_1f4 = 0;
   local_1e4 = 0;
   local_1c8 = 0;
-  uVar27 = lVar14 + 0x22a38;
+  ppYVar29 = &param_1->Source;
   local_1f0 = 0;
-  pMVar15 = &pVVar13->mb;
-  iVar12 = (pVVar13->common).lst_fb_idx * 0x34;
-  puVar28 = (undefined4 *)uVar27;
-  puVar25 = pVVar13->fp_motion_map;
+  iVar2 = (param_1->common).lst_fb_idx;
+  pMVar34 = &param_1->mb;
+  iVar3 = (param_1->common).new_fb_idx;
+  puVar25 = param_1->fp_motion_map;
   local_1fc = 0;
   local_20c = 0;
   local_210 = 0;
@@ -633,471 +627,453 @@ void vp8_first_pass(VP8_COMP *param_1)
   local_1dc = 0;
   local_1e0 = 0;
   local_230 = 0;
-  pYVar19 = (YV12_BUFFER_CONFIG *)((int)(pVVar13->common).yv12_fb + iVar12);
-  iVar9 = (pVVar13->common).new_fb_idx * 0x34;
-  iVar2 = *(int *)((int)(pVVar13->common).yv12_fb + iVar12 + 8U);
-  iVar23 = *(int *)((int)(pVVar13->common).yv12_fb + iVar12 + 0x14U);
+  pYVar26 = (param_1->common).yv12_fb + iVar2;
+  iVar4 = (param_1->common).yv12_fb[iVar2].y_stride;
+  iVar23 = (param_1->common).yv12_fb[iVar2].uv_stride;
   local_1c4.row = 0;
   local_1c4.col = 0;
-  pYVar24 = (YV12_BUFFER_CONFIG *)
-            ((int)(pVVar13->common).yv12_fb + (pVVar13->common).gld_fb_idx * 0x34);
-  pYVar16 = (YV12_BUFFER_CONFIG *)((int)(pVVar13->common).yv12_fb + iVar9);
+  pYVar24 = (param_1->common).yv12_fb + (param_1->common).gld_fb_idx;
+  pYVar14 = (param_1->common).yv12_fb + iVar3;
   local_1c0 = pYVar24;
-  local_1ac = puVar28;
+  local_1ac = ppYVar29;
   memcpy();
   memcpy();
   memcpy();
-  (pVVar13->mb).partition_info = (pVVar13->mb).pi;
-  *(MODE_INFO **)((int)&(pVVar13->mb).e_mbd + 0x1140) = (pVVar13->common).mi;
-  vp8_build_block_offsets(pMVar15);
-  vp8_setup_block_dptrs(&(pVVar13->mb).e_mbd);
-  vp8_setup_block_ptrs(pMVar15);
-  vp8_setup_intra_recon(pYVar16);
-  vp8cx_frame_init_quantizer(pVVar13);
+  (param_1->mb).partition_info = (param_1->mb).pi;
+  (param_1->mb).e_mbd.mode_info_context = (param_1->common).mi;
+  vp8_build_block_offsets(pMVar34);
+  vp8_setup_block_dptrs(&(param_1->mb).e_mbd);
+  vp8_setup_block_ptrs(pMVar34);
+  vp8_setup_intra_recon(pYVar14);
+  vp8cx_frame_init_quantizer(param_1);
   local_218 = 0x100000001;
-  iVar17 = vp8_dc_quant((pVVar13->common).base_qindex,(pVVar13->common).y1dc_delta_q);
-  vp8_initialize_rd_consts(pVVar13,iVar17);
-  pmVar10 = (mv_context *)((int)&(pVVar13->common).fc + 0x433);
-  vpx_memcpy(pmVar10,vp8_default_mv_context,0x26);
+  iVar15 = vp8_dc_quant((param_1->common).base_qindex,(param_1->common).y1dc_delta_q);
+  vp8_initialize_rd_consts(param_1,iVar15);
+  pmVar16 = (param_1->common).fc.mvc;
+  vpx_memcpy(pmVar16,vp8_default_mv_context,0x26);
   vp8_build_component_cost_table
-            ((pVVar13->mb).mvcost,(pVVar13->mb).mvsadcost,pmVar10,(int *)&local_218);
-  lVar26 = 0;
-  iVar17 = 0;
-  if ((pVVar13->common).mb_rows < 1) {
-LAB_82824fec:
-    local_1d0 = (longlong)(local_1f4 >> 8);
-    local_218 = (longlong)(local_1e4 >> 8);
-    local_1a0.intra_error = (double)local_1d0;
-    dVar35 = (double)local_218;
-    local_1a0.frame = (double)(pVVar13->common).current_video_frame;
-    local_1a0.coded_error = dVar35;
-    local_1a0.ssim_weighted_pred_err = vp8_simple_weight((YV12_BUFFER_CONFIG *)*puVar28);
-    if (local_1a0.ssim_weighted_pred_err < 0.1) {
-      local_1a0.ssim_weighted_pred_err = 0.1;
-    }
-    local_218 = (longlong)local_1dc;
-    local_1a0.ssim_weighted_pred_err = dVar35 * local_1a0.ssim_weighted_pred_err;
-    local_1d0 = (longlong)local_1e0;
-    local_1a0.pcnt_inter = (double)(longlong)(pVVar13->common).MBs;
-    local_1a0.pcnt_motion = 0.0;
-    local_1a0.MVr = 0.0;
-    local_1a0.mvr_abs = 0.0;
-    local_1a0.MVc = 0.0;
-    local_1a0.mvc_abs = 0.0;
-    local_1a0.MVrv = 0.0;
-    local_1a0.MVcv = 0.0;
-    local_1a0.pcnt_second_ref = (double)local_1d0 / local_1a0.pcnt_inter;
-    local_1a0.mv_in_out_count = 0.0;
-    local_1a0.pcnt_inter = (double)local_218 / local_1a0.pcnt_inter;
-    local_1a0.count = 1.0;
-    if (0 < iVar17) {
-      local_218 = (longlong)(pVVar13->common).MBs;
-      local_1d0 = (longlong)(iVar17 << 1);
-      local_1a0.MVrv = (double)(longlong)iVar17;
-      local_1a0.MVc = (double)(longlong)local_1f0 / local_1a0.MVrv;
-      local_1a0.MVr = (double)(longlong)local_1c8 / local_1a0.MVrv;
-      local_1a0.mv_in_out_count = (double)(longlong)local_230 / (double)local_1d0;
-      local_1a0.mvc_abs = (double)(longlong)(int)local_20c / local_1a0.MVrv;
-      local_1a0.mvr_abs = (double)(longlong)local_1fc / local_1a0.MVrv;
-      local_1a0.pcnt_motion = local_1a0.MVrv / (double)local_218;
-      local_1a0.MVcv =
-           ((double)(longlong)local_1e8 - (local_1a0.MVc * local_1a0.MVc) / local_1a0.MVrv) /
-           local_1a0.MVrv;
-      local_1a0.MVrv =
-           ((double)(longlong)local_210 - (local_1a0.MVr * local_1a0.MVr) / local_1a0.MVrv) /
-           local_1a0.MVrv;
-    }
-    local_1a0.duration = (double)(pVVar13->source_end_time_stamp - pVVar13->source_time_stamp);
-    memcpy();
-    memcpy();
-    local_120[0].data._0_4_ = pVVar13->this_frame_stats;
-    local_120[0].kind = VPX_CODEC_STATS_PKT;
-    local_120[0].data._4_4_ = (pVVar13->common).MBs + 0x87U & 0xfffffff8;
-    vpx_codec_pkt_list_add(pVVar13->output_pkt_list,local_120);
-    vp8_accumulate_stats(pVVar13->total_stats,&local_1a0);
-    if ((((pVVar13->common).current_video_frame != 0) &&
-        (pFVar6 = pVVar13->this_frame_stats, 0.2 < pFVar6->pcnt_inter)) &&
-       (2.0 < pFVar6->intra_error / pFVar6->coded_error)) {
-      (*vp8_yv12_copy_frame_ptr)(pYVar19,pYVar24);
-    }
-    vp8_swap_yv12_buffer(pYVar19,pYVar16);
-    vp8_yv12_extend_frame_borders(pYVar19);
-    if ((pVVar13->common).current_video_frame == 0) {
-      (*vp8_yv12_copy_frame_ptr)(pYVar19,pYVar24);
-    }
-    (pVVar13->common).current_video_frame = (pVVar13->common).current_video_frame + 1;
-    __restgprlr();
-    return;
-  }
-  local_1ec = 0;
-  local_1f8 = 0;
-  local_218 = CONCAT44(iVar23 << 3,local_218._4_4_);
-  iVar23 = -0x10;
-  local_1d0 = CONCAT44(iVar2 << 4,local_1d0._4_4_);
-LAB_82824a10:
-  iVar2 = (int)lVar26;
-  lVar30 = 0;
-  local_220.row = 0;
-  local_220.col = 0;
-  *(uint *)((int)&(pVVar13->mb).e_mbd + 0x114c) = (uint)(lVar26 != 0);
-  if (0 < (pVVar13->common).mb_cols) {
-    uVar34 = lVar14 + 0x19d98;
-    uVar33 = lVar14 + 0x19d9c;
-    uVar27 = lVar14 + 0x19da0;
-    local_1b0 = (uint)uVar34;
-    local_1b8 = &(pVVar13->mb).mv_row_max;
-    local_1bc = (uint)uVar33;
-    local_1b4 = (uint)uVar27;
-    iVar17 = local_1f8;
-    iVar29 = local_1ec;
+            ((param_1->mb).mvcost,(param_1->mb).mvsadcost,pmVar16,(int *)&local_218);
+  lVar27 = 0;
+  iVar15 = 0;
+  if (0 < (param_1->common).mb_rows) {
+    local_1ec = 0;
+    local_1f8 = 0;
+    local_218 = CONCAT44(iVar23 << 3,local_218._4_4_);
+    iVar23 = -0x10;
+    local_1d0 = CONCAT44(iVar4 << 4,local_1d0._4_4_);
     do {
-      iVar31 = (int)lVar30;
-      local_200 = 0x7fffffff;
-      if (iVar31 == 0) {
-        if (iVar2 != 0) goto LAB_82824a90;
-LAB_82824c20:
-        iVar18 = 0;
-      }
-      else {
-        if (iVar2 != 0) goto LAB_82824c20;
+      iVar4 = (int)lVar27;
+      lVar31 = 0;
+      local_220.row = 0;
+      local_220.col = 0;
+      (param_1->mb).e_mbd.up_available = (uint)(lVar27 != 0);
+      if (0 < (param_1->common).mb_cols) {
+        local_1b0 = &(param_1->mb).mv_col_min;
+        local_1bc = &(param_1->mb).mv_col_max;
+        local_1b4 = &(param_1->mb).mv_row_min;
+        local_1b8 = &(param_1->mb).mv_row_max;
+        iVar15 = local_1f8;
+        iVar30 = local_1ec;
+        do {
+          piVar13 = local_1b0;
+          piVar12 = local_1b4;
+          piVar11 = local_1bc;
+          iVar32 = (int)lVar31;
+          local_200 = 0x7fffffff;
+          if (iVar32 == 0) {
+            if (iVar4 == 0) goto LAB_82824c20;
 LAB_82824a90:
-        iVar18 = 1;
-      }
-      *(uchar **)((int)&(pVVar13->mb).e_mbd + 0x1124) =
-           (uchar *)(*(int *)((int)(pVVar13->common).yv12_fb + iVar9 + 0x18U) + iVar17);
-      *(uchar **)((int)&(pVVar13->mb).e_mbd + 0x1128) =
-           (uchar *)(iVar29 + *(int *)((int)(pVVar13->common).yv12_fb + iVar9 + 0x1cU));
-      iVar21 = *(int *)((int)(pVVar13->common).yv12_fb + iVar9 + 0x20U);
-      *(uint *)((int)&(pVVar13->mb).e_mbd + 0x1150) = (uint)(lVar30 != 0);
-      *(uchar **)((int)&(pVVar13->mb).e_mbd + 0x112c) = (uchar *)(iVar21 + iVar29);
-      iVar18 = vp8_encode_intra(pVVar13,pMVar15,iVar18);
-      *puVar25 = '\0';
-      uVar32 = (longlong)iVar18 + 0x100;
-      *(undefined4 *)uVar34 = (int)((-lVar30 - 1U & 0xffffffff) << 4);
-      uVar3 = (pVVar13->common).mb_cols;
-      *(int *)uVar27 = iVar23;
-      iVar18 = (int)uVar32;
-      local_1f4 = iVar18 + local_1f4;
-      *(undefined4 *)uVar33 = (int)(((ulonglong)uVar3 - lVar30 & 0xffffffff) << 4);
-      *local_1b8 = (int)(((ulonglong)(uint)(pVVar13->common).mb_rows - lVar26 & 0xffffffff) << 4);
-      if ((pVVar13->common).current_video_frame != 0) {
-        local_21c = 0x7fffffff;
-        iVar21 = *(int *)((int)(pVVar13->mb).block + 0x24);
-        puVar4 = **(uchar ***)((int)(pVVar13->mb).block + 0x20);
-        iVar22 = *(int *)((int)(pVVar13->mb).block + 0x28);
-        iVar20 = *(int *)((int)&(pVVar13->mb).e_mbd + 0xb1c);
-        *(uchar **)((int)&(pVVar13->mb).e_mbd + 0x10f0) =
-             (uchar *)(*(int *)((int)(pVVar13->common).yv12_fb + iVar12 + 0x18U) + iVar17);
-        local_208.row = 0;
-        local_208.col = 0;
-        (**(_func___cdecl_uint_uchar_ptr_int_uchar_ptr_int_uint_ptr **)
-           ((int)&(pVVar13->rtcd).variance + 0x50))
-                  (puVar4 + iVar21,iVar22,
-                   **(uchar ***)((int)&(pVVar13->mb).e_mbd + 0xb14) +
-                   *(int *)((int)&(pVVar13->mb).e_mbd + 0xb18),iVar20,&local_21c);
-        uVar3 = local_21c;
-        (((<unnamed_tag_0000B727> *)((int)&(pVVar13->mb).e_mbd + 0xb34))->as_mv).row = 0;
-        pMVar11 = (MV *)((int)&(pVVar13->mb).e_mbd + 0xb34);
-        *(undefined2 *)((int)&(pVVar13->mb).e_mbd + 0xb36) = 0;
-        uVar27 = (ulonglong)local_21c;
-        vp8_first_pass_motion_search
-                  (pVVar13,pMVar15,&local_220,pMVar11,pYVar19,(int *)&local_21c,iVar17);
-        if ((local_220.col == 0) && (local_220.row == 0)) {
-          uVar33 = (ulonglong)local_21c;
-        }
-        else {
-          local_204 = 0x7fffffff;
-          vp8_first_pass_motion_search
-                    (pVVar13,pMVar15,&local_1c4,&local_208,pYVar19,(int *)&local_204,iVar17);
-          uVar33 = (ulonglong)local_21c;
-          if ((int)local_204 < (int)local_21c) {
-            local_21c = local_204;
-            pMVar11->row = local_208.row;
-            *(short *)((int)&(pVVar13->mb).e_mbd + 0xb36) = local_208.col;
-            uVar33 = (ulonglong)local_204;
-          }
-        }
-        if (1 < (pVVar13->common).current_video_frame) {
-          vp8_first_pass_motion_search
-                    (pVVar13,pMVar15,&local_1c4,&local_208,local_1c0,&local_200,iVar17);
-          uVar33 = (ulonglong)local_21c;
-          if ((local_200 < (int)local_21c) && (local_200 < iVar18)) {
-            local_1e0 = local_1e0 + 1;
-          }
-          *(uchar **)((int)&(pVVar13->mb).e_mbd + 0x10f0) =
-               (uchar *)(*(int *)((int)(pVVar13->common).yv12_fb + iVar12 + 0x18U) + iVar17);
-          *(uchar **)((int)&(pVVar13->mb).e_mbd + 0x10f4) =
-               (uchar *)(*(int *)((int)(pVVar13->common).yv12_fb + iVar12 + 0x1cU) + iVar29);
-          *(uchar **)((int)&(pVVar13->mb).e_mbd + 0x10f8) =
-               (uchar *)(*(int *)((int)(pVVar13->common).yv12_fb + iVar12 + 0x20U) + iVar29);
-        }
-        iVar21 = (int)uVar33;
-        if (iVar18 < iVar21) {
-          local_220.row = 0;
-          local_220.col = 0;
-        }
-        else {
-          sVar1 = pMVar11->row;
-          *(short *)((int)&(pVVar13->mb).e_mbd + 0xb36) =
-               *(short *)((int)&(pVVar13->mb).e_mbd + 0xb36) << 3;
-          pMVar11->row = sVar1 << 3;
-          vp8_set_mbmode_and_mvs(pMVar15,NEWMV,pMVar11);
-          vp8_encode_inter16x16y(&pVVar13->rtcd,pMVar15);
-          local_220.row = pMVar11->row;
-          local_200 = local_1f0;
-          local_1dc = local_1dc + 1;
-          local_204 = local_20c;
-          local_220.col = *(short *)((int)&(pVVar13->mb).e_mbd + 0xb36);
-          uVar7 = (int)local_220.row >> 0x1f;
-          iVar22 = (int)local_220.row;
-          uVar8 = (int)local_220.col >> 0x1f;
-          local_1c8 = local_220.row + local_1c8;
-          local_1fc = (((int)local_220.row ^ uVar7) - uVar7) + local_1fc;
-          local_1f0 = local_220.col + local_1f0;
-          local_20c = (((int)local_220.col ^ uVar8) - uVar8) + local_20c;
-          iVar18 = (int)local_220.col;
-          local_210 = iVar22 * iVar22 + local_210;
-          local_1e8 = local_220.col * iVar18 + local_1e8;
-          uVar32 = uVar33;
-          if ((local_220.row == 0) && (iVar18 == 0)) {
-            if ((int)uVar3 < 50000) {
-              *puVar25 = '\x02';
-            }
-            else {
-LAB_82824ecc:
-              *puVar25 = '\x01';
-            }
+            iVar17 = 1;
           }
           else {
-            uVar7 = (pVVar13->common).mb_rows;
-            local_1d8 = local_1d8 + 1;
-            iVar20 = ((int)uVar7 >> 1) + (uint)((int)uVar7 < 0 && (uVar7 & 1) != 0);
-            if (iVar2 < iVar20) {
-              if (iVar22 < 1) {
-                if (iVar22 < 0) {
-                  local_230 = local_230 + 1;
-                }
-              }
-              else {
-LAB_82824e18:
-                local_230 = local_230 + -1;
-              }
-            }
-            else if (iVar20 < iVar2) {
-              if (iVar22 < 1) {
-                if (iVar22 < 0) goto LAB_82824e18;
-              }
-              else {
-                local_230 = local_230 + 1;
-              }
-            }
-            uVar7 = (pVVar13->common).mb_cols;
-            iVar22 = ((int)uVar7 >> 1) + (uint)((int)uVar7 < 0 && (uVar7 & 1) != 0);
-            if (iVar31 < iVar22) {
-              if (iVar18 < 1) {
-                if (iVar18 < 0) {
-                  local_230 = local_230 + 1;
-                }
-              }
-              else {
-LAB_82824e6c:
-                local_230 = local_230 + -1;
-              }
-            }
-            else if (iVar22 < iVar31) {
-              if (iVar18 < 1) {
-                if (iVar18 < 0) goto LAB_82824e6c;
-              }
-              else {
-                local_230 = local_230 + 1;
-              }
-            }
-            if ((int)uVar3 < 50000) {
-              uVar27 = (uVar27 + ((ulonglong)uVar3 & 0x3fffffff) * 4 & 0x7fffffff) * 2 +
-                       (longlong)(iVar21 >> 1) + (ulonglong)(iVar21 < 0 && (uVar33 & 1) != 0);
-              uVar33 = (iVar21 == 0) + uVar33;
-              trapWord(6,uVar33,0);
-              trapWord(5,uVar33 & ~(((uVar27 & 0x7fffffff) << 1 | (uVar27 & 0xffffffff) >> 0x1f) - 1
-                                   ),0xffff);
-              if ((int)uVar27 / (int)uVar33 < 0xc) goto LAB_82824ecc;
-            }
-            *puVar25 = '\0';
+            if (iVar4 == 0) goto LAB_82824a90;
+LAB_82824c20:
+            iVar17 = 0;
           }
-        }
+          (param_1->mb).e_mbd.dst.y_buffer = (param_1->common).yv12_fb[iVar3].y_buffer + iVar15;
+          (param_1->mb).e_mbd.dst.u_buffer = (param_1->common).yv12_fb[iVar3].u_buffer + iVar30;
+          puVar5 = (param_1->common).yv12_fb[iVar3].v_buffer;
+          (param_1->mb).e_mbd.left_available = (uint)(lVar31 != 0);
+          (param_1->mb).e_mbd.dst.v_buffer = puVar5 + iVar30;
+          iVar17 = vp8_encode_intra(param_1,pMVar34,iVar17);
+          *puVar25 = '\0';
+          uVar33 = (longlong)iVar17 + 0x100;
+          *piVar13 = (int)((-lVar31 - 1U & 0xffffffff) << 4);
+          uVar6 = (param_1->common).mb_cols;
+          *piVar12 = iVar23;
+          iVar17 = (int)uVar33;
+          local_1f4 = iVar17 + local_1f4;
+          *piVar11 = (int)(((ulonglong)uVar6 - lVar31 & 0xffffffff) << 4);
+          *local_1b8 = (int)(((ulonglong)(uint)(param_1->common).mb_rows - lVar27 & 0xffffffff) << 4
+                            );
+          if ((param_1->common).current_video_frame != 0) {
+            local_21c = 0x7fffffff;
+            iVar21 = (param_1->mb).block[0].src;
+            puVar5 = *(param_1->mb).block[0].base_src;
+            iVar22 = (param_1->mb).block[0].src_stride;
+            iVar19 = (param_1->mb).e_mbd.block[0].pre_stride;
+            (param_1->mb).e_mbd.pre.y_buffer = (param_1->common).yv12_fb[iVar2].y_buffer + iVar15;
+            local_208.row = 0;
+            local_208.col = 0;
+            (*(param_1->rtcd).variance.mse16x16)
+                      (puVar5 + iVar21,iVar22,
+                       *(param_1->mb).e_mbd.block[0].base_pre + (param_1->mb).e_mbd.block[0].pre,
+                       iVar19,&local_21c);
+            uVar6 = local_21c;
+            (param_1->mb).e_mbd.block[0].bmi.mv.as_mv.row = 0;
+            p<Var18 = &(param_1->mb).e_mbd.block[0].bmi.mv;
+            (param_1->mb).e_mbd.block[0].bmi.mv.as_mv.col = 0;
+            uVar28 = (ulonglong)local_21c;
+            vp8_first_pass_motion_search
+                      (param_1,pMVar34,&local_220,&p<Var18->as_mv,pYVar26,(int *)&local_21c,iVar15);
+            if ((local_220.col == 0) && (local_220.row == 0)) {
+              uVar20 = (ulonglong)local_21c;
+            }
+            else {
+              local_204 = 0x7fffffff;
+              vp8_first_pass_motion_search
+                        (param_1,pMVar34,&local_1c4,&local_208,pYVar26,(int *)&local_204,iVar15);
+              uVar20 = (ulonglong)local_21c;
+              if ((int)local_204 < (int)local_21c) {
+                local_21c = local_204;
+                (p<Var18->as_mv).row = local_208.row;
+                (param_1->mb).e_mbd.block[0].bmi.mv.as_mv.col = local_208.col;
+                uVar20 = (ulonglong)local_204;
+              }
+            }
+            if (1 < (param_1->common).current_video_frame) {
+              vp8_first_pass_motion_search
+                        (param_1,pMVar34,&local_1c4,&local_208,local_1c0,&local_200,iVar15);
+              uVar20 = (ulonglong)local_21c;
+              if ((local_200 < (int)local_21c) && (local_200 < iVar17)) {
+                local_1e0 = local_1e0 + 1;
+              }
+              (param_1->mb).e_mbd.pre.y_buffer = (param_1->common).yv12_fb[iVar2].y_buffer + iVar15;
+              (param_1->mb).e_mbd.pre.u_buffer = (param_1->common).yv12_fb[iVar2].u_buffer + iVar30;
+              (param_1->mb).e_mbd.pre.v_buffer = (param_1->common).yv12_fb[iVar2].v_buffer + iVar30;
+            }
+            iVar21 = (int)uVar20;
+            if (iVar17 < iVar21) {
+              local_220.row = 0;
+              local_220.col = 0;
+            }
+            else {
+              sVar1 = (p<Var18->as_mv).row;
+              (param_1->mb).e_mbd.block[0].bmi.mv.as_mv.col =
+                   (param_1->mb).e_mbd.block[0].bmi.mv.as_mv.col << 3;
+              (p<Var18->as_mv).row = sVar1 << 3;
+              vp8_set_mbmode_and_mvs(pMVar34,NEWMV,&p<Var18->as_mv);
+              vp8_encode_inter16x16y(&param_1->rtcd,pMVar34);
+              local_220.row = (p<Var18->as_mv).row;
+              local_200 = local_1f0;
+              local_1dc = local_1dc + 1;
+              local_204 = local_20c;
+              local_220.col = (param_1->mb).e_mbd.block[0].bmi.mv.as_mv.col;
+              uVar9 = (int)local_220.row >> 0x1f;
+              iVar22 = (int)local_220.row;
+              uVar10 = (int)local_220.col >> 0x1f;
+              local_1c8 = local_220.row + local_1c8;
+              local_1fc = (((int)local_220.row ^ uVar9) - uVar9) + local_1fc;
+              local_1f0 = local_220.col + local_1f0;
+              local_20c = (((int)local_220.col ^ uVar10) - uVar10) + local_20c;
+              iVar17 = (int)local_220.col;
+              local_210 = iVar22 * iVar22 + local_210;
+              local_1e8 = local_220.col * iVar17 + local_1e8;
+              uVar33 = uVar20;
+              if ((local_220.row == 0) && (iVar17 == 0)) {
+                if ((int)uVar6 < 50000) {
+                  *puVar25 = '\x02';
+                }
+                else {
+LAB_82824ecc:
+                  *puVar25 = '\x01';
+                }
+              }
+              else {
+                uVar9 = (param_1->common).mb_rows;
+                local_1d8 = local_1d8 + 1;
+                iVar19 = ((int)uVar9 >> 1) + (uint)((int)uVar9 < 0 && (uVar9 & 1) != 0);
+                if (iVar4 < iVar19) {
+                  if (iVar22 < 1) {
+                    if (iVar22 < 0) {
+                      local_230 = local_230 + 1;
+                    }
+                  }
+                  else {
+LAB_82824e18:
+                    local_230 = local_230 + -1;
+                  }
+                }
+                else if (iVar19 < iVar4) {
+                  if (iVar22 < 1) {
+                    if (iVar22 < 0) goto LAB_82824e18;
+                  }
+                  else {
+                    local_230 = local_230 + 1;
+                  }
+                }
+                uVar9 = (param_1->common).mb_cols;
+                iVar22 = ((int)uVar9 >> 1) + (uint)((int)uVar9 < 0 && (uVar9 & 1) != 0);
+                if (iVar32 < iVar22) {
+                  if (iVar17 < 1) {
+                    if (iVar17 < 0) {
+                      local_230 = local_230 + 1;
+                    }
+                  }
+                  else {
+LAB_82824e6c:
+                    local_230 = local_230 + -1;
+                  }
+                }
+                else if (iVar22 < iVar32) {
+                  if (iVar17 < 1) {
+                    if (iVar17 < 0) goto LAB_82824e6c;
+                  }
+                  else {
+                    local_230 = local_230 + 1;
+                  }
+                }
+                if ((int)uVar6 < 50000) {
+                  uVar28 = (uVar28 + ((ulonglong)uVar6 & 0x3fffffff) * 4 & 0x7fffffff) * 2 +
+                           (longlong)(iVar21 >> 1) + (ulonglong)(iVar21 < 0 && (uVar20 & 1) != 0);
+                  uVar20 = (iVar21 == 0) + uVar20;
+                  trapWord(6,uVar20,0);
+                  trapWord(5,uVar20 & ~(((uVar28 & 0x7fffffff) << 1 | (uVar28 & 0xffffffff) >> 0x1f)
+                                       - 1),0xffff);
+                  if ((int)uVar28 / (int)uVar20 < 0xc) goto LAB_82824ecc;
+                }
+                *puVar25 = '\0';
+              }
+            }
+          }
+          lVar31 = lVar31 + 1;
+          puVar5 = (param_1->mb).src.v_buffer;
+          iVar15 = iVar15 + 0x10;
+          puVar7 = (param_1->mb).src.u_buffer;
+          (param_1->mb).src.y_buffer = (param_1->mb).src.y_buffer + 0x10;
+          local_1e4 = (int)uVar33 + local_1e4;
+          (param_1->mb).src.v_buffer = puVar5 + 8;
+          iVar30 = iVar30 + 8;
+          (param_1->mb).src.u_buffer = puVar7 + 8;
+          puVar25 = puVar25 + 1;
+          ppYVar29 = local_1ac;
+        } while ((int)lVar31 < (param_1->common).mb_cols);
       }
-      lVar30 = lVar30 + 1;
-      puVar4 = *(uchar **)((int)&(pVVar13->mb).src + 0x20);
-      iVar17 = iVar17 + 0x10;
-      puVar5 = *(uchar **)((int)&(pVVar13->mb).src + 0x1c);
-      *(uchar **)((int)&(pVVar13->mb).src + 0x18) =
-           *(uchar **)((int)&(pVVar13->mb).src + 0x18) + 0x10;
-      local_1e4 = (int)uVar32 + local_1e4;
-      *(uchar **)((int)&(pVVar13->mb).src + 0x20) = puVar4 + 8;
-      iVar29 = iVar29 + 8;
-      *(uchar **)((int)&(pVVar13->mb).src + 0x1c) = puVar5 + 8;
-      puVar25 = puVar25 + 1;
-      if ((pVVar13->common).mb_cols <= (int)lVar30) goto code_r0x82824f34;
-      uVar34 = (ulonglong)local_1b0;
-      uVar33 = (ulonglong)local_1bc;
-      uVar27 = (ulonglong)local_1b4;
-    } while( true );
+      uVar33 = (ulonglong)(uint)(param_1->mb).src.uv_stride;
+      puVar5 = (param_1->mb).src.u_buffer;
+      puVar7 = (param_1->mb).src.v_buffer;
+      (param_1->mb).src.y_buffer =
+           (param_1->mb).src.y_buffer +
+           ((param_1->mb).src.y_stride - (param_1->common).mb_cols) * 0x10;
+      (param_1->mb).src.u_buffer =
+           puVar5 + (int)((uVar33 - (uint)(param_1->common).mb_cols & 0xffffffff) << 3);
+      (param_1->mb).src.v_buffer =
+           puVar7 + (int)((uVar33 - (uint)(param_1->common).mb_cols & 0xffffffff) << 3);
+      vp8_extend_mb_row(pYVar14,(param_1->mb).e_mbd.dst.y_buffer + 0x10,
+                        (param_1->mb).e_mbd.dst.u_buffer + 8,(param_1->mb).e_mbd.dst.v_buffer + 8);
+      lVar27 = lVar27 + 1;
+      iVar23 = iVar23 + -0x10;
+      local_1f8 = local_1d0._0_4_ + local_1f8;
+      local_1ec = local_218._0_4_ + local_1ec;
+      iVar15 = local_1d8;
+      pYVar24 = local_1c0;
+    } while ((int)lVar27 < (param_1->common).mb_rows);
   }
-  goto LAB_82824f38;
-code_r0x82824f34:
-  uVar27 = ZEXT48(local_1ac);
-LAB_82824f38:
-  puVar28 = (undefined4 *)uVar27;
-  uVar33 = (ulonglong)(uint)*(int *)((int)&(pVVar13->mb).src + 0x14);
-  puVar4 = *(uchar **)((int)&(pVVar13->mb).src + 0x1c);
-  puVar5 = *(uchar **)((int)&(pVVar13->mb).src + 0x20);
-  *(uchar **)((int)&(pVVar13->mb).src + 0x18) =
-       *(uchar **)((int)&(pVVar13->mb).src + 0x18) +
-       (*(int *)((int)&(pVVar13->mb).src + 8) - (pVVar13->common).mb_cols) * 0x10;
-  *(uchar **)((int)&(pVVar13->mb).src + 0x1c) =
-       puVar4 + (int)((uVar33 - (uint)(pVVar13->common).mb_cols & 0xffffffff) << 3);
-  *(uchar **)((int)&(pVVar13->mb).src + 0x20) =
-       puVar5 + (int)((uVar33 - (uint)(pVVar13->common).mb_cols & 0xffffffff) << 3);
-  vp8_extend_mb_row(pYVar16,*(uchar **)((int)&(pVVar13->mb).e_mbd + 0x1124) + 0x10,
-                    *(uchar **)((int)&(pVVar13->mb).e_mbd + 0x1128) + 8,
-                    *(uchar **)((int)&(pVVar13->mb).e_mbd + 0x112c) + 8);
-  lVar26 = lVar26 + 1;
-  iVar23 = iVar23 + -0x10;
-  local_1f8 = local_1d0._0_4_ + local_1f8;
-  local_1ec = local_218._0_4_ + local_1ec;
-  iVar17 = local_1d8;
-  pYVar24 = local_1c0;
-  if ((pVVar13->common).mb_rows <= (int)lVar26) goto LAB_82824fec;
-  goto LAB_82824a10;
+  local_1d0 = (longlong)(local_1f4 >> 8);
+  local_218 = (longlong)(local_1e4 >> 8);
+  local_1a0.intra_error = (double)local_1d0;
+  dVar35 = (double)local_218;
+  local_1a0.frame = (double)(param_1->common).current_video_frame;
+  local_1a0.coded_error = dVar35;
+  local_1a0.ssim_weighted_pred_err = vp8_simple_weight(*ppYVar29);
+  if (local_1a0.ssim_weighted_pred_err < 0.1) {
+    local_1a0.ssim_weighted_pred_err = 0.1;
+  }
+  local_218 = (longlong)local_1dc;
+  local_1a0.ssim_weighted_pred_err = dVar35 * local_1a0.ssim_weighted_pred_err;
+  local_1d0 = (longlong)local_1e0;
+  local_1a0.pcnt_inter = (double)(longlong)(param_1->common).MBs;
+  local_1a0.pcnt_motion = 0.0;
+  local_1a0.MVr = 0.0;
+  local_1a0.mvr_abs = 0.0;
+  local_1a0.MVc = 0.0;
+  local_1a0.mvc_abs = 0.0;
+  local_1a0.MVrv = 0.0;
+  local_1a0.MVcv = 0.0;
+  local_1a0.pcnt_second_ref = (double)local_1d0 / local_1a0.pcnt_inter;
+  local_1a0.mv_in_out_count = 0.0;
+  local_1a0.pcnt_inter = (double)local_218 / local_1a0.pcnt_inter;
+  local_1a0.count = 1.0;
+  if (0 < iVar15) {
+    local_218 = (longlong)(param_1->common).MBs;
+    local_1d0 = (longlong)(iVar15 << 1);
+    local_1a0.MVrv = (double)(longlong)iVar15;
+    local_1a0.MVc = (double)(longlong)local_1f0 / local_1a0.MVrv;
+    local_1a0.MVr = (double)(longlong)local_1c8 / local_1a0.MVrv;
+    local_1a0.mv_in_out_count = (double)(longlong)local_230 / (double)local_1d0;
+    local_1a0.mvc_abs = (double)(longlong)(int)local_20c / local_1a0.MVrv;
+    local_1a0.mvr_abs = (double)(longlong)local_1fc / local_1a0.MVrv;
+    local_1a0.pcnt_motion = local_1a0.MVrv / (double)local_218;
+    local_1a0.MVcv =
+         ((double)(longlong)local_1e8 - (local_1a0.MVc * local_1a0.MVc) / local_1a0.MVrv) /
+         local_1a0.MVrv;
+    local_1a0.MVrv =
+         ((double)(longlong)local_210 - (local_1a0.MVr * local_1a0.MVr) / local_1a0.MVrv) /
+         local_1a0.MVrv;
+  }
+  local_1a0.duration = (double)(param_1->source_end_time_stamp - param_1->source_time_stamp);
+  memcpy();
+  memcpy();
+  local_120[0].data._0_4_ = param_1->this_frame_stats;
+  local_120[0].kind = VPX_CODEC_STATS_PKT;
+  local_120[0].data._4_4_ = (param_1->common).MBs + 0x87U & 0xfffffff8;
+  vpx_codec_pkt_list_add(param_1->output_pkt_list,local_120);
+  vp8_accumulate_stats(param_1->total_stats,&local_1a0);
+  if ((((param_1->common).current_video_frame != 0) &&
+      (pFVar8 = param_1->this_frame_stats, 0.2 < pFVar8->pcnt_inter)) &&
+     (2.0 < pFVar8->intra_error / pFVar8->coded_error)) {
+    (*vp8_yv12_copy_frame_ptr)(pYVar26,pYVar24);
+  }
+  vp8_swap_yv12_buffer(pYVar26,pYVar14);
+  vp8_yv12_extend_frame_borders(pYVar26);
+  if ((param_1->common).current_video_frame == 0) {
+    (*vp8_yv12_copy_frame_ptr)(pYVar26,pYVar24);
+  }
+  (param_1->common).current_video_frame = (param_1->common).current_video_frame + 1;
+  return;
 }
 
 
 // 82825348  estimate_max_q  (WebM_atvi_opt/vpx/vp8/encoder/firstpass.c:899)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 int estimate_max_q(VP8_COMP *param_1,double param_2,int param_3,int param_4,int param_5)
 
 {
-  ulonglong uVar1;
-  int iVar2;
-  ulonglong uVar3;
-  int iVar4;
+  int iVar1;
+  ulonglong uVar2;
   int in_r7;
-  uint uVar6;
-  ulonglong uVar5;
-  int iVar7;
-  longlong lVar8;
-  int *piVar9;
+  uint uVar4;
+  ulonglong uVar3;
+  int iVar5;
+  int iVar6;
+  int *piVar7;
+  double dVar8;
+  double dVar9;
   double dVar10;
   double dVar11;
-  double extraout_f1;
   double dVar12;
   double dVar13;
   double dVar14;
   double dVar15;
   double dVar16;
   double dVar17;
-  double dVar18;
-  double dVar19;
   
-  uVar3 = (ulonglong)param_4;
-  __savegprlr_26(param_1,param_3);
-  iVar2 = __savefpr_24();
-  uVar6 = param_5 * in_r7;
-  uVar5 = (longlong)((int)uVar6 >> 8) + (ulonglong)((int)uVar6 < 0 && (uVar6 & 0xff) != 0);
-  iVar7 = (int)uVar5;
-  iVar4 = (int)uVar3;
-  dVar14 = 1.0;
-  if (iVar4 < 1) {
-    __restfpr_24(0x7f);
-    iVar2 = __restgprlr_26();
-    return iVar2;
+  uVar4 = param_5 * in_r7;
+  uVar3 = (longlong)((int)uVar4 >> 8) + (ulonglong)((int)uVar4 < 0 && (uVar4 & 0xff) != 0);
+  iVar5 = (int)uVar3;
+  dVar12 = 1.0;
+  if (param_4 < 1) {
+    return 0x7f;
   }
-  trapWord(6,uVar5,0);
-  if (iVar4 < 0x100000) {
-    uVar1 = (uVar3 & 0x7fffff) << 10 | (uVar3 & 0x7fffff) >> 0x16;
-    iVar4 = (int)((uVar3 & 0x7fffff) << 9) / iVar7;
+  trapWord(6,uVar3,0);
+  if (param_4 < 0x100000) {
+    uVar2 = ((ulonglong)(uint)param_4 & 0x7fffff) << 10 |
+            ((ulonglong)(uint)param_4 & 0x7fffff) >> 0x16;
+    iVar6 = (int)(((ulonglong)(uint)param_4 & 0x7fffff) << 9) / iVar5;
   }
   else {
-    uVar1 = (uVar3 & 0xffffffff) << 1 | (uVar3 & 0xffffffff) >> 0x1f;
-    iVar4 = iVar4 / iVar7 << 9;
+    uVar2 = CONCAT44(param_4,param_4) << 1 | (ulonglong)((uint)param_4 >> 0x1f);
+    iVar6 = param_4 / iVar5 << 9;
   }
-  trapWord(5,uVar5 & ~((uVar1 & 0xffffffff) - 1),0xffff);
-  if (((double)(longlong)*(int *)(iVar2 + 0x26f9c) <= 0.0) ||
-     (*(int *)(iVar2 + 0x26fbc) <= *(int *)(iVar2 + 0x26fc0))) goto LAB_828254c8;
-  dVar10 = (double)(longlong)*(int *)(iVar2 + 0x26fa0) / (double)(longlong)*(int *)(iVar2 + 0x26f9c)
-  ;
-  if (0.95 <= dVar10) {
-    if (1.05 < dVar10) {
-      dVar10 = *(double *)(iVar2 + 0x26ea0) + 0.005;
+  trapWord(5,uVar3 & ~((uVar2 & 0xffffffff) - 1),0xffff);
+  if (((double)(longlong)param_1->rolling_target_bits <= 0.0) ||
+     (param_1->worst_quality <= param_1->active_worst_quality)) goto LAB_828254c8;
+  dVar8 = (double)(longlong)param_1->rolling_actual_bits /
+          (double)(longlong)param_1->rolling_target_bits;
+  if (0.95 <= dVar8) {
+    if (1.05 < dVar8) {
+      dVar8 = param_1->est_max_qcorrection_factor + 0.005;
       goto LAB_82825494;
     }
   }
   else {
-    dVar10 = *(double *)(iVar2 + 0x26ea0) - 0.005;
+    dVar8 = param_1->est_max_qcorrection_factor - 0.005;
 LAB_82825494:
-    *(double *)(iVar2 + 0x26ea0) = dVar10;
+    param_1->est_max_qcorrection_factor = dVar8;
   }
-  dVar11 = *(double *)(iVar2 + 0x26ea0);
-  dVar10 = 0.1;
-  if ((dVar11 < 0.1) || (dVar10 = 10.0, 10.0 < dVar11)) {
-    dVar11 = dVar10;
+  dVar9 = param_1->est_max_qcorrection_factor;
+  dVar8 = 0.1;
+  if ((dVar9 < 0.1) || (dVar8 = 10.0, 10.0 < dVar9)) {
+    dVar9 = dVar8;
   }
-  *(double *)(iVar2 + 0x26ea0) = dVar11;
+  param_1->est_max_qcorrection_factor = dVar9;
 LAB_828254c8:
-  if ((*(int *)(iVar2 + 0x2e7f4) == 3) || (*(int *)(iVar2 + 0x2e7f4) == 1)) {
-    if (*(int *)(iVar2 + 0x229a4) < 6) {
-      dVar14 = (double)(longlong)*(int *)(iVar2 + 0x229a4) * 0.04 + 1.04;
+  if ((param_1->compressor_speed == 3) || (param_1->compressor_speed == 1)) {
+    iVar1 = (param_1->oxcf).cpu_used;
+    if (iVar1 < 6) {
+      dVar12 = (double)(longlong)iVar1 * 0.04 + 1.04;
     }
     else {
-      dVar14 = 1.25;
+      dVar12 = 1.25;
     }
   }
-  dVar18 = (extraout_f1 / (double)(longlong)iVar7) * 0.006666666666666667;
-  dVar11 = pow(dVar18,0.9);
-  dVar19 = 0.05;
-  dVar15 = 5.0;
-  dVar10 = dVar19;
-  if ((0.05 <= dVar11) && (dVar10 = dVar11, 5.0 < dVar11)) {
-    dVar10 = dVar15;
+  dVar16 = (param_2 / (double)(longlong)iVar5) * 0.006666666666666667;
+  dVar9 = pow(dVar16,0.9);
+  dVar17 = 0.05;
+  dVar13 = 5.0;
+  dVar8 = dVar17;
+  if ((0.05 <= dVar9) && (dVar8 = dVar9, 5.0 < dVar9)) {
+    dVar8 = dVar13;
   }
-  dVar16 = 0.4;
-  dVar11 = 0.5;
-  lVar8 = 0;
-  dVar17 = 0.01;
-  piVar9 = vp8_bits_per_mb[1];
-  do {
-    dVar13 = dVar10;
-    if ((((int)lVar8 < 0x32) &&
-        (dVar12 = pow(dVar18,(double)(longlong)(int)lVar8 * dVar17 + dVar16), dVar13 = dVar19,
-        dVar19 <= dVar12)) && (dVar13 = dVar12, dVar15 < dVar12)) {
-      dVar13 = dVar15;
+  dVar14 = 0.4;
+  dVar9 = 0.5;
+  iVar5 = 0;
+  dVar15 = 0.01;
+  piVar7 = vp8_bits_per_mb[1];
+  while( true ) {
+    dVar11 = dVar8;
+    if (((iVar5 < 0x32) &&
+        (dVar10 = pow(dVar16,(double)(longlong)iVar5 * dVar15 + dVar14), dVar11 = dVar17,
+        dVar17 <= dVar10)) && (dVar11 = dVar10, dVar13 < dVar10)) {
+      dVar11 = dVar13;
     }
-    if ((int)((double)(longlong)*piVar9 * *(double *)(iVar2 + 0x304c0) *
-              *(double *)(iVar2 + 0x26ea0) * dVar13 * dVar14 + dVar11) <= iVar4) break;
-    piVar9 = piVar9 + 1;
-    lVar8 = lVar8 + 1;
-  } while ((int)piVar9 < -0x7de12ed4);
-  __restfpr_24(lVar8);
-  iVar2 = __restgprlr_26();
-  return iVar2;
+    if ((int)((double)(longlong)*piVar7 * param_1->section_max_qfactor *
+              param_1->est_max_qcorrection_factor * dVar11 * dVar12 + dVar9) <= iVar6) break;
+    piVar7 = piVar7 + 1;
+    iVar5 = iVar5 + 1;
+    if (-0x7de12ed5 < (int)piVar7) {
+      return iVar5;
+    }
+  }
+  return iVar5;
 }
 
 
 // 82825658  estimate_q  (WebM_atvi_opt/vpx/vp8/encoder/firstpass.c:975)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 int estimate_q(VP8_COMP *param_1,double param_2,int param_3,int param_4,int param_5)
 
 {
-  ulonglong uVar1;
-  int iVar2;
-  ulonglong uVar3;
+  int iVar1;
+  ulonglong uVar2;
   int in_r7;
-  uint uVar5;
-  ulonglong uVar4;
+  uint uVar4;
+  ulonglong uVar3;
+  int iVar5;
   int iVar6;
-  int iVar7;
-  longlong lVar8;
-  int *piVar9;
-  double extraout_f1;
+  int *piVar7;
+  double dVar8;
+  double dVar9;
   double dVar10;
   double dVar11;
   double dVar12;
@@ -1106,182 +1082,184 @@ int estimate_q(VP8_COMP *param_1,double param_2,int param_3,int param_4,int para
   double dVar15;
   double dVar16;
   double dVar17;
-  double dVar18;
-  double dVar19;
   
-  uVar3 = (ulonglong)param_4;
-  __savegprlr_27(param_1,param_3);
-  iVar2 = __savefpr_24();
-  uVar5 = param_5 * in_r7;
-  uVar4 = (longlong)((int)uVar5 >> 8) + (ulonglong)((int)uVar5 < 0 && (uVar5 & 0xff) != 0);
-  iVar6 = (int)uVar4;
-  dVar13 = 1.0;
-  trapWord(6,uVar4,0);
-  if ((int)uVar3 < 0x100000) {
-    uVar1 = (uVar3 & 0x7fffff) << 10 | (uVar3 & 0x7fffff) >> 0x16;
-    iVar7 = (int)((uVar3 & 0x7fffff) << 9) / iVar6;
+  uVar4 = param_5 * in_r7;
+  uVar3 = (longlong)((int)uVar4 >> 8) + (ulonglong)((int)uVar4 < 0 && (uVar4 & 0xff) != 0);
+  iVar5 = (int)uVar3;
+  dVar11 = 1.0;
+  trapWord(6,uVar3,0);
+  if (param_4 < 0x100000) {
+    uVar2 = ((ulonglong)(uint)param_4 & 0x7fffff) << 10 |
+            ((ulonglong)(uint)param_4 & 0x7fffff) >> 0x16;
+    iVar6 = (int)(((ulonglong)(uint)param_4 & 0x7fffff) << 9) / iVar5;
   }
   else {
-    uVar1 = (uVar3 & 0xffffffff) << 1 | (uVar3 & 0xffffffff) >> 0x1f;
-    iVar7 = (int)uVar3 / iVar6 << 9;
+    uVar2 = CONCAT44(param_4,param_4) << 1 | (ulonglong)((uint)param_4 >> 0x1f);
+    iVar6 = param_4 / iVar5 << 9;
   }
-  trapWord(5,uVar4 & ~((uVar1 & 0xffffffff) - 1),0xffff);
-  if ((*(int *)(iVar2 + 0x2e7f4) == 3) || (*(int *)(iVar2 + 0x2e7f4) == 1)) {
-    if (*(int *)(iVar2 + 0x229a4) < 6) {
-      dVar13 = (double)(longlong)*(int *)(iVar2 + 0x229a4) * 0.04 + 1.04;
+  trapWord(5,uVar3 & ~((uVar2 & 0xffffffff) - 1),0xffff);
+  if ((param_1->compressor_speed == 3) || (param_1->compressor_speed == 1)) {
+    iVar1 = (param_1->oxcf).cpu_used;
+    if (iVar1 < 6) {
+      dVar11 = (double)(longlong)iVar1 * 0.04 + 1.04;
     }
     else {
-      dVar13 = 1.25;
+      dVar11 = 1.25;
     }
   }
-  dVar17 = (extraout_f1 / (double)(longlong)iVar6) * 0.006666666666666667;
-  dVar10 = pow(dVar17,0.9);
-  dVar19 = 0.05;
-  dVar14 = 5.0;
-  dVar18 = dVar19;
-  if ((0.05 <= dVar10) && (dVar18 = dVar10, 5.0 < dVar10)) {
-    dVar18 = dVar14;
+  dVar15 = (param_2 / (double)(longlong)iVar5) * 0.006666666666666667;
+  dVar8 = pow(dVar15,0.9);
+  dVar17 = 0.05;
+  dVar12 = 5.0;
+  dVar16 = dVar17;
+  if ((0.05 <= dVar8) && (dVar16 = dVar8, 5.0 < dVar8)) {
+    dVar16 = dVar12;
   }
-  dVar15 = 0.4;
-  lVar8 = 0;
-  dVar10 = 0.5;
-  piVar9 = vp8_bits_per_mb[1];
-  dVar16 = 0.01;
-  do {
-    dVar12 = dVar18;
-    if ((((int)lVar8 < 0x32) &&
-        (dVar11 = pow(dVar17,(double)(longlong)(int)lVar8 * dVar16 + dVar15), dVar12 = dVar19,
-        dVar19 <= dVar11)) && (dVar12 = dVar11, dVar14 < dVar11)) {
-      dVar12 = dVar14;
+  dVar13 = 0.4;
+  iVar5 = 0;
+  dVar8 = 0.5;
+  piVar7 = vp8_bits_per_mb[1];
+  dVar14 = 0.01;
+  while( true ) {
+    dVar10 = dVar16;
+    if (((iVar5 < 0x32) &&
+        (dVar9 = pow(dVar15,(double)(longlong)iVar5 * dVar14 + dVar13), dVar10 = dVar17,
+        dVar17 <= dVar9)) && (dVar10 = dVar9, dVar12 < dVar9)) {
+      dVar10 = dVar12;
     }
-    if ((int)((double)(longlong)*piVar9 * *(double *)(iVar2 + 0x26ea0) * dVar12 * dVar13 + dVar10)
-        <= iVar7) break;
-    piVar9 = piVar9 + 1;
-    lVar8 = lVar8 + 1;
-  } while ((int)piVar9 < -0x7de12ed4);
-  __restfpr_24(lVar8);
-  iVar2 = __restgprlr_27();
-  return iVar2;
+    if ((int)((double)(longlong)*piVar7 * param_1->est_max_qcorrection_factor * dVar10 * dVar11 +
+             dVar8) <= iVar6) break;
+    piVar7 = piVar7 + 1;
+    iVar5 = iVar5 + 1;
+    if (-0x7de12ed5 < (int)piVar7) {
+      return iVar5;
+    }
+  }
+  return iVar5;
 }
 
 
 // 82825858  estimate_kf_group_q  (WebM_atvi_opt/vpx/vp8/encoder/firstpass.c:1026)
+
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 
 int estimate_kf_group_q(VP8_COMP *param_1,double param_2,int param_3,int param_4,int param_5,
                        double param_6)
 
 {
   int iVar1;
-  int iVar2;
-  ulonglong uVar3;
-  ulonglong uVar4;
   int in_r7;
-  uint uVar6;
-  ulonglong uVar5;
-  int *piVar7;
-  longlong lVar8;
+  uint uVar3;
+  ulonglong uVar2;
+  int iVar4;
+  int *piVar5;
+  int iVar6;
+  double dVar7;
+  double dVar8;
   double dVar9;
   double dVar10;
-  double extraout_f1;
   double dVar11;
   double dVar12;
   double dVar13;
   double dVar14;
   double dVar15;
   double dVar16;
-  double dVar17;
-  double dVar18;
   
-  uVar4 = (ulonglong)param_4;
-  __savegprlr_28(param_1,param_3);
-  iVar1 = __savefpr_24();
-  uVar6 = param_5 * in_r7;
-  uVar5 = (longlong)((int)uVar6 >> 8) + (ulonglong)((int)uVar6 < 0 && (uVar6 & 0xff) != 0);
-  uVar3 = (uVar4 & 0x7fffff) << 9;
-  dVar15 = 0.01;
-  dVar9 = (double)(longlong)*(int *)(iVar1 + 0x229f0) * 0.01;
-  iVar2 = (int)uVar3 / (int)uVar5;
-  uVar4 = uVar5 & ~(((uVar3 & 0x7fffffff) << 1 | (uVar4 & 0x7fffff) >> 0x16) - 1);
-  trapWord(6,uVar5,0);
-  dVar14 = 1.0;
-  trapWord(5,uVar4,0xffff);
-  if (0.6 <= dVar9) {
-    dVar13 = 0.9;
+  uVar3 = param_5 * in_r7;
+  uVar2 = (longlong)((int)uVar3 >> 8) + (ulonglong)((int)uVar3 < 0 && (uVar3 & 0xff) != 0);
+  dVar13 = 0.01;
+  dVar7 = (double)(longlong)(param_1->oxcf).two_pass_vbrbias * 0.01;
+  iVar1 = (int)(((ulonglong)(uint)param_4 & 0x7fffff) << 9) / (int)uVar2;
+  trapWord(6,uVar2,0);
+  dVar12 = 1.0;
+  trapWord(5,uVar2 & ~((((ulonglong)(uint)param_4 & 0x3fffff) << 10 |
+                       ((ulonglong)(uint)param_4 & 0x7fffff) >> 0x16) - 1),0xffff);
+  if (0.6 <= dVar7) {
+    dVar11 = 0.9;
   }
   else {
-    dVar13 = dVar9 + 0.3;
+    dVar11 = dVar7 + 0.3;
   }
-  if (0.7 <= dVar9) {
-    dVar9 = 0.8;
-  }
-  else {
-    dVar9 = dVar9 + 0.1;
-  }
-  if (iVar2 < 1) {
-    __restfpr_24(0xfe,*(int *)(iVar1 + 0x229f0),uVar4);
-    iVar2 = __restgprlr_28();
-    return iVar2;
-  }
-  if (*(int *)(iVar1 + 0x26fa4) < 1) {
-    dVar11 = 10.0;
+  if (0.7 <= dVar7) {
+    dVar7 = 0.8;
   }
   else {
-    dVar11 = 10.0;
-    dVar10 = (double)(longlong)*(int *)(iVar1 + 0x26fa8) /
-             (double)(longlong)*(int *)(iVar1 + 0x26fa4);
-    if ((dVar10 <= 10.0) && (dVar11 = dVar10, dVar10 < 0.1)) {
-      dVar11 = 0.1;
-    }
+    dVar7 = dVar7 + 0.1;
   }
-  dVar16 = 0.5;
-  dVar10 = -((param_6 - 6.0) * 0.1 - 1.0);
-  if (dVar10 < 0.5) {
-    dVar10 = dVar16;
-  }
-  if ((*(int *)(iVar1 + 0x2e7f4) == 3) || (*(int *)(iVar1 + 0x2e7f4) == 1)) {
-    if (*(int *)(iVar1 + 0x229a4) < 6) {
-      dVar14 = (double)(longlong)*(int *)(iVar1 + 0x229a4) * 0.04 + 1.04;
+  if (0 < iVar1) {
+    if (param_1->long_rolling_target_bits < 1) {
+      dVar9 = 10.0;
     }
     else {
-      dVar14 = 1.25;
+      dVar9 = 10.0;
+      dVar8 = (double)(longlong)param_1->long_rolling_actual_bits /
+              (double)(longlong)param_1->long_rolling_target_bits;
+      if ((dVar8 <= 10.0) && (dVar9 = dVar8, dVar8 < 0.1)) {
+        dVar9 = 0.1;
+      }
     }
-  }
-  dVar17 = (extraout_f1 / (double)(longlong)(int)uVar5) * 0.006666666666666667;
-  dVar14 = dVar10 * dVar11 * dVar14;
-  dVar11 = pow(dVar17,dVar13);
-  dVar18 = 0.05;
-  dVar10 = 5.0;
-  dVar13 = dVar18;
-  if ((0.05 <= dVar11) && (dVar13 = dVar11, 5.0 < dVar11)) {
-    dVar13 = dVar10;
-  }
-  lVar8 = 0;
-  piVar7 = vp8_bits_per_mb[1];
-  do {
-    dVar11 = dVar13;
-    if ((((int)lVar8 < 0x14) &&
-        (dVar12 = pow(dVar17,(double)(longlong)(int)lVar8 * dVar15 + dVar9), dVar11 = dVar18,
-        dVar18 <= dVar12)) && (dVar11 = dVar12, dVar10 < dVar12)) {
-      dVar11 = dVar10;
+    dVar14 = 0.5;
+    dVar8 = -((param_6 - 6.0) * 0.1 - 1.0);
+    if (dVar8 < 0.5) {
+      dVar8 = dVar14;
     }
-    iVar1 = (int)((double)(longlong)*piVar7 * dVar11 * dVar14 + dVar16);
-    if (iVar1 <= iVar2) goto LAB_82825b64;
-    piVar7 = piVar7 + 1;
-    lVar8 = lVar8 + 1;
-  } while ((int)piVar7 < -0x7de12ed4);
-  do {
-    if (0xfd < (int)lVar8) break;
-    lVar8 = lVar8 + 1;
-    iVar1 = (int)((double)(longlong)iVar1 * 0.96);
-  } while (iVar2 < iVar1);
-LAB_82825b64:
-  __restfpr_24(lVar8);
-  iVar2 = __restgprlr_28();
-  return iVar2;
+    if ((param_1->compressor_speed == 3) || (param_1->compressor_speed == 1)) {
+      iVar6 = (param_1->oxcf).cpu_used;
+      if (iVar6 < 6) {
+        dVar12 = (double)(longlong)iVar6 * 0.04 + 1.04;
+      }
+      else {
+        dVar12 = 1.25;
+      }
+    }
+    dVar15 = (param_2 / (double)(longlong)(int)uVar2) * 0.006666666666666667;
+    dVar12 = dVar8 * dVar9 * dVar12;
+    dVar9 = pow(dVar15,dVar11);
+    dVar16 = 0.05;
+    dVar8 = 5.0;
+    dVar11 = dVar16;
+    if ((0.05 <= dVar9) && (dVar11 = dVar9, 5.0 < dVar9)) {
+      dVar11 = dVar8;
+    }
+    iVar6 = 0;
+    piVar5 = vp8_bits_per_mb[1];
+    while( true ) {
+      dVar9 = dVar11;
+      if (((iVar6 < 0x14) &&
+          (dVar10 = pow(dVar15,(double)(longlong)iVar6 * dVar13 + dVar7), dVar9 = dVar16,
+          dVar16 <= dVar10)) && (dVar9 = dVar10, dVar8 < dVar10)) {
+        dVar9 = dVar8;
+      }
+      iVar4 = (int)((double)(longlong)*piVar5 * dVar9 * dVar12 + dVar14);
+      if (iVar4 <= iVar1) break;
+      piVar5 = piVar5 + 1;
+      iVar6 = iVar6 + 1;
+      if (-0x7de12ed5 < (int)piVar5) {
+        do {
+          if (0xfd < iVar6) {
+            return iVar6;
+          }
+          iVar6 = iVar6 + 1;
+          iVar4 = (int)((double)(longlong)iVar4 * 0.96);
+        } while (iVar1 < iVar4);
+        return iVar6;
+      }
+    }
+    return iVar6;
+  }
+  return 0xfe;
 }
 
 
 // 82825B78  vp8_init_second_pass  (WebM_atvi_opt/vpx/vp8/encoder/firstpass.c:1123)
+
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
 
 void vp8_init_second_pass(VP8_COMP *param_1)
 
@@ -1291,42 +1269,39 @@ void vp8_init_second_pass(VP8_COMP *param_1)
   FIRSTPASS_STATS *pFVar3;
   FIRSTPASS_STATS *pFVar4;
   int iVar5;
-  VP8_COMP *pVVar6;
-  longlong lVar7;
-  FIRSTPASS_STATS **ppFVar8;
-  long64 *plVar9;
-  double *pdVar10;
-  FIRSTPASS_STATS **ppFVar11;
-  int *piVar12;
-  FIRSTPASS_STATS **ppFVar13;
+  longlong lVar6;
+  FIRSTPASS_STATS **ppFVar7;
+  long64 *plVar8;
+  double *pdVar9;
+  FIRSTPASS_STATS **ppFVar10;
+  int *piVar11;
+  FIRSTPASS_STATS **ppFVar12;
+  double dVar13;
   double dVar14;
   double dVar15;
   double dVar16;
   double dVar17;
   double dVar18;
-  double dVar19;
   double local_f8;
   double local_f0;
   double local_e8;
   
-  __savegprlr_22(param_1);
-  pVVar6 = (VP8_COMP *)__savefpr_27();
-  piVar12 = &(pVVar6->oxcf).target_bandwidth;
-  iVar5 = (pVVar6->oxcf).two_pass_vbrmin_section;
-  ppFVar11 = &pVVar6->total_stats;
-  iVar1 = *piVar12;
-  pFVar2 = *ppFVar11;
-  dVar16 = 0.0;
+  piVar11 = &(param_1->oxcf).target_bandwidth;
+  iVar5 = (param_1->oxcf).two_pass_vbrmin_section;
+  ppFVar10 = &param_1->total_stats;
+  iVar1 = *piVar11;
+  pFVar2 = *ppFVar10;
+  dVar15 = 0.0;
   pFVar2->frame = 0.0;
   pFVar2->intra_error = 0.0;
   pFVar2->coded_error = 0.0;
   pFVar2->ssim_weighted_pred_err = 0.0;
   pFVar2->pcnt_inter = 0.0;
   pFVar2->pcnt_motion = 0.0;
-  ppFVar8 = &pVVar6->stats_in_end;
+  ppFVar7 = &param_1->stats_in_end;
   pFVar2->pcnt_second_ref = 0.0;
   pFVar2->MVr = 0.0;
-  dVar17 = 1.0;
+  dVar16 = 1.0;
   pFVar2->mvr_abs = 0.0;
   pFVar2->MVc = 0.0;
   pFVar2->mvc_abs = 0.0;
@@ -1335,91 +1310,89 @@ void vp8_init_second_pass(VP8_COMP *param_1)
   pFVar2->mv_in_out_count = 0.0;
   pFVar2->count = 0.0;
   pFVar2->duration = 1.0;
-  dVar18 = (double)(longlong)((iVar5 * iVar1) / 100);
-  if (*ppFVar8 != (FIRSTPASS_STATS *)0x0) {
+  dVar17 = (double)(longlong)((iVar5 * iVar1) / 100);
+  if (*ppFVar7 != (FIRSTPASS_STATS *)0x0) {
     memcpy();
-    pFVar2 = *ppFVar11;
-    dVar15 = pFVar2->ssim_weighted_pred_err;
-    pVVar6->total_error_left = dVar15;
-    pVVar6->total_intra_error_left = pFVar2->intra_error;
-    pVVar6->total_coded_error_left = pFVar2->coded_error;
-    pVVar6->start_tot_err_left = dVar15;
-    vp8_new_frame_rate(pVVar6,(pFVar2->count / pFVar2->duration) * 10000000.0);
-    iVar1 = *piVar12;
-    pFVar2 = *ppFVar11;
-    pVVar6->output_frame_rate = (pVVar6->oxcf).frame_rate;
-    plVar9 = &pVVar6->bits_left;
-    *plVar9 = (longlong)((double)(longlong)iVar1 * pFVar2->duration * 1e-07);
-    lVar7 = *plVar9 - (longlong)(dVar18 * pFVar2->duration * 1e-07);
-    *plVar9 = lVar7;
-    pVVar6->clip_bits_total = lVar7;
+    pFVar2 = *ppFVar10;
+    dVar14 = pFVar2->ssim_weighted_pred_err;
+    param_1->total_error_left = dVar14;
+    param_1->total_intra_error_left = pFVar2->intra_error;
+    param_1->total_coded_error_left = pFVar2->coded_error;
+    param_1->start_tot_err_left = dVar14;
+    vp8_new_frame_rate(param_1,(pFVar2->count / pFVar2->duration) * 10000000.0);
+    iVar1 = *piVar11;
+    pFVar2 = *ppFVar10;
+    param_1->output_frame_rate = (param_1->oxcf).frame_rate;
+    plVar8 = &param_1->bits_left;
+    *plVar8 = (longlong)((double)(longlong)iVar1 * pFVar2->duration * 1e-07);
+    lVar6 = *plVar8 - (longlong)(dVar17 * pFVar2->duration * 1e-07);
+    *plVar8 = lVar6;
+    param_1->clip_bits_total = lVar6;
     vp8_avg_stats(pFVar2);
-    ppFVar13 = &pVVar6->stats_in;
-    dVar19 = 20.0;
-    dVar15 = 1e-06;
-    pFVar2 = *ppFVar13;
-    pFVar3 = *ppFVar8;
-    dVar18 = dVar16;
-    while (pFVar4 = *ppFVar13, pFVar4 < pFVar3) {
+    ppFVar12 = &param_1->stats_in;
+    dVar18 = 20.0;
+    dVar14 = 1e-06;
+    pFVar2 = *ppFVar12;
+    pFVar3 = *ppFVar7;
+    dVar17 = dVar15;
+    while (pFVar4 = *ppFVar12, pFVar4 < pFVar3) {
       memcpy();
-      *ppFVar13 = (FIRSTPASS_STATS *)
-                  ((int)&pFVar4->frame + ((pVVar6->common).MBs + 0x87U & 0xfffffff8));
-      dVar14 = local_f0 + dVar15;
+      *ppFVar12 = (FIRSTPASS_STATS *)
+                  ((int)&pFVar4->frame + ((param_1->common).MBs + 0x87U & 0xfffffff8));
+      dVar13 = local_f0 + dVar14;
       if (local_f0 < 0.0) {
-        dVar14 = local_f0 - dVar15;
+        dVar13 = local_f0 - dVar14;
       }
-      dVar14 = local_f8 / dVar14;
-      if (dVar17 <= dVar14) {
-        if (dVar19 < dVar14) {
-          dVar14 = dVar19;
+      dVar13 = local_f8 / dVar13;
+      if (dVar16 <= dVar13) {
+        if (dVar18 < dVar13) {
+          dVar13 = dVar18;
         }
-        dVar16 = dVar14 + dVar16;
+        dVar15 = dVar13 + dVar15;
       }
       else {
-        dVar16 = dVar17 + dVar16;
+        dVar15 = dVar16 + dVar15;
       }
     }
-    dVar17 = (*ppFVar11)->count;
-    if (dVar18 <= dVar17) {
-      dVar17 = dVar17 + dVar15;
+    dVar16 = (*ppFVar10)->count;
+    if (dVar17 <= dVar16) {
+      dVar16 = dVar16 + dVar14;
     }
     else {
-      dVar17 = dVar17 - dVar15;
+      dVar16 = dVar16 - dVar14;
     }
-    *ppFVar13 = pFVar2;
-    pdVar10 = &pVVar6->modified_error_total;
-    pVVar6->avg_iiratio = dVar16 / dVar17;
-    pVVar6->modified_error_used = dVar18;
-    *pdVar10 = dVar18;
-    dVar16 = 0.01;
-    while (pFVar3 = *ppFVar13, pFVar3 < *ppFVar8) {
+    *ppFVar12 = pFVar2;
+    pdVar9 = &param_1->modified_error_total;
+    param_1->avg_iiratio = dVar15 / dVar16;
+    param_1->modified_error_used = dVar17;
+    *pdVar9 = dVar17;
+    dVar15 = 0.01;
+    while (pFVar3 = *ppFVar12, pFVar3 < *ppFVar7) {
       memcpy();
-      iVar1 = (pVVar6->oxcf).two_pass_vbrbias;
-      *ppFVar13 = (FIRSTPASS_STATS *)
-                  ((int)&pFVar3->frame + ((pVVar6->common).MBs + 0x87U & 0xfffffff8));
-      dVar19 = (*ppFVar11)->ssim_weighted_pred_err;
-      dVar17 = dVar19 + dVar15;
-      if (dVar19 < 0.0) {
-        dVar17 = dVar19 - dVar15;
+      iVar1 = (param_1->oxcf).two_pass_vbrbias;
+      *ppFVar12 = (FIRSTPASS_STATS *)
+                  ((int)&pFVar3->frame + ((param_1->common).MBs + 0x87U & 0xfffffff8));
+      dVar18 = (*ppFVar10)->ssim_weighted_pred_err;
+      dVar16 = dVar18 + dVar14;
+      if (dVar18 < 0.0) {
+        dVar16 = dVar18 - dVar14;
       }
-      dVar17 = pow(local_e8 / dVar17,(double)(longlong)iVar1 * dVar16);
-      *pdVar10 = *pdVar10 + dVar17 * dVar19;
+      dVar16 = pow(local_e8 / dVar16,(double)(longlong)iVar1 * dVar15);
+      *pdVar9 = *pdVar9 + dVar16 * dVar18;
     }
-    dVar16 = *pdVar10;
-    *ppFVar13 = pFVar2;
-    pVVar6->modified_error_left = dVar16;
-    if (dVar18 <= dVar16) {
-      dVar16 = dVar16 + dVar15;
+    dVar15 = *pdVar9;
+    *ppFVar12 = pFVar2;
+    param_1->modified_error_left = dVar15;
+    if (dVar17 <= dVar15) {
+      dVar15 = dVar15 + dVar14;
     }
     else {
-      dVar16 = dVar16 - dVar15;
+      dVar15 = dVar15 - dVar14;
     }
-    pVVar6->fp_motion_map_stats = (uchar *)pFVar2;
-    pVVar6->clip_bpe = (double)*plVar9 / dVar16;
-    pVVar6->observed_bpe = (double)*plVar9 / dVar16;
+    param_1->fp_motion_map_stats = (uchar *)pFVar2;
+    param_1->clip_bpe = (double)*plVar8 / dVar15;
+    param_1->observed_bpe = (double)*plVar8 / dVar15;
   }
-  __restfpr_27();
-  __restgprlr_22();
   return;
 }
 
@@ -1434,6 +1407,11 @@ void vp8_end_second_pass(VP8_COMP *param_1)
 
 
 // 82825F28  define_gf_group  (WebM_atvi_opt/vpx/vp8/encoder/firstpass.c:1211)
+
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
 
 void define_gf_group(VP8_COMP *param_1,FIRSTPASS_STATS *param_2)
 
@@ -1493,8 +1471,6 @@ void define_gf_group(VP8_COMP *param_1,FIRSTPASS_STATS *param_2)
   FIRSTPASS_STATS local_230;
   FIRSTPASS_STATS aFStack_1b0 [3];
   
-  __savegprlr();
-  __savefpr();
   dVar45 = 0.0;
   dVar37 = 1.0;
   local_280 = 0.0;
@@ -1935,13 +1911,14 @@ void define_gf_group(VP8_COMP *param_1,FIRSTPASS_STATS *param_2)
     *ppFVar23 = pFVar2;
   }
   *ppuVar19 = puVar3;
-  __restfpr();
-  __restgprlr();
   return;
 }
 
 
 // 82826E00  assign_std_frame_bits  (WebM_atvi_opt/vpx/vp8/encoder/firstpass.c:1782)
+
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 
 void assign_std_frame_bits(VP8_COMP *param_1,FIRSTPASS_STATS *param_2)
 
@@ -1949,248 +1926,250 @@ void assign_std_frame_bits(VP8_COMP *param_1,FIRSTPASS_STATS *param_2)
   uint uVar1;
   int iVar2;
   uint uVar3;
-  VP8_COMP *pVVar4;
-  int iVar5;
-  longlong lVar6;
-  ulonglong uVar7;
+  int iVar4;
+  longlong lVar5;
+  ulonglong uVar6;
+  double dVar7;
   double dVar8;
-  double dVar9;
   
-  pVVar4 = (VP8_COMP *)__savegprlr_28(param_1);
-  iVar5 = frame_max_bits(pVVar4);
-  if ((int)(pVVar4->total_stats->count - (double)(pVVar4->common).current_video_frame) <=
-      pVVar4->frames_till_gf_update_due) {
-    lVar6 = pVVar4->bits_left;
-    if (lVar6 < 1) {
-      lVar6 = 0;
+  iVar4 = frame_max_bits(param_1);
+  if ((int)(param_1->total_stats->count - (double)(param_1->common).current_video_frame) <=
+      param_1->frames_till_gf_update_due) {
+    lVar5 = param_1->bits_left;
+    if (lVar5 < 1) {
+      lVar5 = 0;
     }
-    pVVar4->gf_group_bits = (int)lVar6;
+    param_1->gf_group_bits = (int)lVar5;
   }
-  dVar9 = calculate_modified_err(pVVar4,param_2);
-  iVar2 = pVVar4->gf_group_error_left;
+  dVar8 = calculate_modified_err(param_1,param_2);
+  iVar2 = param_1->gf_group_error_left;
   if (iVar2 < 1) {
-    dVar8 = 0.0;
+    dVar7 = 0.0;
   }
   else {
-    dVar8 = dVar9 / (double)(longlong)iVar2;
+    dVar7 = dVar8 / (double)(longlong)iVar2;
   }
-  uVar3 = pVVar4->gf_group_bits;
-  uVar1 = (uint)((double)(longlong)(int)uVar3 * dVar8);
+  uVar3 = param_1->gf_group_bits;
+  uVar1 = (uint)((double)(longlong)(int)uVar3 * dVar7);
   if ((int)uVar1 < 0) {
-    uVar7 = 0;
+    uVar6 = 0;
   }
   else {
-    uVar7 = (ulonglong)uVar1;
-    if (iVar5 < (int)uVar1) {
-      uVar7 = (longlong)iVar5;
+    uVar6 = (ulonglong)uVar1;
+    if (iVar4 < (int)uVar1) {
+      uVar6 = (longlong)iVar4;
     }
-    if ((int)uVar3 < (int)uVar7) {
-      uVar7 = (ulonglong)uVar3;
+    if ((int)uVar3 < (int)uVar6) {
+      uVar6 = (ulonglong)uVar3;
     }
   }
-  lVar6 = uVar3 - uVar7;
-  pVVar4->gf_group_bits = (int)lVar6;
-  pVVar4->gf_group_error_left = (int)((double)(longlong)iVar2 - dVar9);
-  if (lVar6 < 0) {
-    pVVar4->gf_group_bits = 0;
+  lVar5 = uVar3 - uVar6;
+  param_1->gf_group_bits = (int)lVar5;
+  param_1->gf_group_error_left = (int)((double)(longlong)iVar2 - dVar8);
+  if (lVar5 < 0) {
+    param_1->gf_group_bits = 0;
   }
-  uVar1 = pVVar4->baseline_gf_interval;
-  iVar5 = pVVar4->min_frame_bandwidth + (int)uVar7;
-  if ((pVVar4->common).frames_since_golden ==
+  uVar1 = param_1->baseline_gf_interval;
+  iVar4 = param_1->min_frame_bandwidth + (int)uVar6;
+  if ((param_1->common).frames_since_golden ==
       ((int)uVar1 >> 1) + (uint)((int)uVar1 < 0 && (uVar1 & 1) != 0)) {
-    pVVar4->per_frame_bandwidth = pVVar4->mid_gf_extra_bits + iVar5;
-    __restgprlr_28();
+    param_1->per_frame_bandwidth = param_1->mid_gf_extra_bits + iVar4;
     return;
   }
-  pVVar4->per_frame_bandwidth = iVar5;
-  __restgprlr_28();
+  param_1->per_frame_bandwidth = iVar4;
   return;
 }
 
 
 // 828280F8  vp8_second_pass  (WebM_atvi_opt/vpx/vp8/encoder/firstpass.c:1834)
 
+/* WARNING: Function: __savegprlr_21 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_21 replaced with injection: xenon_save_restore */
+
 void vp8_second_pass(VP8_COMP *param_1)
 
 {
   uchar *puVar1;
   FRAME_TYPE FVar2;
-  VP8_COMP *pVVar3;
-  int iVar4;
+  int iVar3;
+  ulonglong uVar4;
   ulonglong uVar5;
-  ulonglong uVar6;
-  uint uVar7;
-  ulonglong uVar8;
+  uint uVar6;
+  ulonglong uVar7;
+  int *piVar8;
   int *piVar9;
-  int *piVar10;
-  uint *puVar11;
-  int iVar12;
+  uint *puVar10;
+  int iVar11;
+  double dVar12;
   double dVar13;
   double dVar14;
   double dVar15;
   double dVar16;
   double dVar17;
-  double dVar18;
   FIRSTPASS_STATS FStack_210;
   FIRSTPASS_STATS FStack_190;
   FIRSTPASS_STATS aFStack_110 [2];
   
-  __savegprlr_21(param_1);
-  pVVar3 = (VP8_COMP *)__savefpr_27();
-  puVar11 = &(pVVar3->common).current_video_frame;
-  iVar12 = (int)(pVVar3->total_stats->count - (double)*puVar11);
-  if (pVVar3->stats_in == (FIRSTPASS_STATS *)0x0) goto LAB_828286c0;
-  iVar4 = vp8_input_stats(pVVar3,&FStack_210);
-  if (iVar4 == -1) goto LAB_828286c0;
-  piVar10 = &(pVVar3->common).MBs;
-  vpx_memset(pVVar3->fp_motion_map,0,(pVVar3->oxcf).arnr_max_frames * *piVar10);
-  iVar4 = *piVar10;
-  dVar15 = 1.0;
-  puVar1 = pVVar3->fp_motion_map_stats;
-  piVar10 = &pVVar3->frames_to_key;
-  pVVar3->fp_motion_map_stats_save = puVar1;
-  pVVar3->fp_motion_map_stats = puVar1 + (iVar4 + 0x87U & 0xfffffff8);
-  pVVar3->motion_speed = (int)(ABS(FStack_210.MVc) + ABS(FStack_210.MVr));
-  pVVar3->motion_var = (int)(ABS(FStack_210.MVcv) + ABS(FStack_210.MVrv));
-  pVVar3->inter_lvl = (int)(FStack_210.pcnt_inter * 100.0);
-  pVVar3->intra_lvl = (int)((1.0 - FStack_210.pcnt_inter) * 100.0);
-  pVVar3->motion_lvl = (int)(FStack_210.pcnt_motion * 100.0);
-  dVar14 = FStack_210.ssim_weighted_pred_err;
-  dVar16 = FStack_210.intra_error;
-  dVar18 = FStack_210.coded_error;
-  if (*piVar10 == 0) {
+  puVar10 = &(param_1->common).current_video_frame;
+  iVar11 = (int)(param_1->total_stats->count - (double)*puVar10);
+  if (param_1->stats_in == (FIRSTPASS_STATS *)0x0) {
+    return;
+  }
+  iVar3 = vp8_input_stats(param_1,&FStack_210);
+  if (iVar3 == -1) {
+    return;
+  }
+  piVar9 = &(param_1->common).MBs;
+  vpx_memset(param_1->fp_motion_map,0,(param_1->oxcf).arnr_max_frames * *piVar9);
+  iVar3 = *piVar9;
+  dVar14 = 1.0;
+  puVar1 = param_1->fp_motion_map_stats;
+  piVar9 = &param_1->frames_to_key;
+  param_1->fp_motion_map_stats_save = puVar1;
+  param_1->fp_motion_map_stats = puVar1 + (iVar3 + 0x87U & 0xfffffff8);
+  param_1->motion_speed = (int)(ABS(FStack_210.MVc) + ABS(FStack_210.MVr));
+  param_1->motion_var = (int)(ABS(FStack_210.MVcv) + ABS(FStack_210.MVrv));
+  param_1->inter_lvl = (int)(FStack_210.pcnt_inter * 100.0);
+  param_1->intra_lvl = (int)((1.0 - FStack_210.pcnt_inter) * 100.0);
+  param_1->motion_lvl = (int)(FStack_210.pcnt_motion * 100.0);
+  dVar13 = FStack_210.ssim_weighted_pred_err;
+  dVar15 = FStack_210.intra_error;
+  dVar17 = FStack_210.coded_error;
+  if (*piVar9 == 0) {
     vpx_memcpy(&FStack_190,&FStack_210,0x80);
-    vp8_find_next_key_frame(pVVar3,&FStack_190);
-    dVar14 = FStack_210.ssim_weighted_pred_err;
-    dVar16 = FStack_210.intra_error;
-    dVar18 = FStack_210.coded_error;
-    if ((pVVar3->oxcf).error_resilient_mode != 0) {
-      pVVar3->source_alt_ref_pending = 0;
-      pVVar3->baseline_gf_interval = *piVar10;
-      pVVar3->frames_till_gf_update_due = *piVar10;
-      pVVar3->gf_group_bits = (int)pVVar3->kf_group_bits;
-      pVVar3->gf_group_error_left = (int)pVVar3->kf_group_error_left;
+    vp8_find_next_key_frame(param_1,&FStack_190);
+    dVar13 = FStack_210.ssim_weighted_pred_err;
+    dVar15 = FStack_210.intra_error;
+    dVar17 = FStack_210.coded_error;
+    if ((param_1->oxcf).error_resilient_mode != 0) {
+      param_1->source_alt_ref_pending = 0;
+      param_1->baseline_gf_interval = *piVar9;
+      param_1->frames_till_gf_update_due = *piVar9;
+      param_1->gf_group_bits = (int)param_1->kf_group_bits;
+      param_1->gf_group_error_left = (int)param_1->kf_group_error_left;
     }
   }
-  if (pVVar3->frames_till_gf_update_due == 0) {
-    if (*puVar11 != 0) {
-      pVVar3->observed_bpe =
-           (double)(pVVar3->clip_bits_total - pVVar3->bits_left) / pVVar3->modified_error_used;
+  if (param_1->frames_till_gf_update_due == 0) {
+    if (*puVar10 != 0) {
+      param_1->observed_bpe =
+           (double)(param_1->clip_bits_total - param_1->bits_left) / param_1->modified_error_used;
     }
     vpx_memcpy(&FStack_190,&FStack_210,0x80);
-    define_gf_group(pVVar3,&FStack_190);
-    if (pVVar3->source_alt_ref_pending != 0) {
-      FVar2 = (pVVar3->common).frame_type;
+    define_gf_group(param_1,&FStack_190);
+    if (param_1->source_alt_ref_pending != 0) {
+      FVar2 = (param_1->common).frame_type;
 LAB_828283d4:
       if (FVar2 != KEY_FRAME) goto LAB_828283d8;
     }
   }
   else {
-    if ((pVVar3->oxcf).error_resilient_mode != 0) {
-      pVVar3->frames_till_gf_update_due = *piVar10;
-      FVar2 = (pVVar3->common).frame_type;
+    if ((param_1->oxcf).error_resilient_mode != 0) {
+      param_1->frames_till_gf_update_due = *piVar9;
+      FVar2 = (param_1->common).frame_type;
       goto LAB_828283d4;
     }
 LAB_828283d8:
     vpx_memcpy(&FStack_190,&FStack_210,0x80);
-    assign_std_frame_bits(pVVar3,&FStack_190);
+    assign_std_frame_bits(param_1,&FStack_190);
   }
-  dVar17 = 1e-06;
-  dVar13 = dVar18 + 1e-06;
-  if (dVar18 < 0.0) {
-    dVar13 = dVar18 - 1e-06;
+  dVar16 = 1e-06;
+  dVar12 = dVar17 + 1e-06;
+  if (dVar17 < 0.0) {
+    dVar12 = dVar17 - 1e-06;
   }
-  pVVar3->this_iiratio = (uint)(longlong)(dVar16 / dVar13);
-  iVar4 = lookup_next_frame_stats(pVVar3,aFStack_110);
-  if (iVar4 != -1) {
-    dVar13 = aFStack_110[0].coded_error + dVar17;
+  param_1->this_iiratio = (uint)(longlong)(dVar15 / dVar12);
+  iVar3 = lookup_next_frame_stats(param_1,aFStack_110);
+  if (iVar3 != -1) {
+    dVar12 = aFStack_110[0].coded_error + dVar16;
     if (aFStack_110[0].coded_error < 0.0) {
-      dVar13 = aFStack_110[0].coded_error - dVar17;
+      dVar12 = aFStack_110[0].coded_error - dVar16;
     }
-    pVVar3->next_iiratio = (uint)(longlong)(aFStack_110[0].intra_error / dVar13);
+    param_1->next_iiratio = (uint)(longlong)(aFStack_110[0].intra_error / dVar12);
   }
-  iVar4 = (int)((double)(longlong)pVVar3->per_frame_bandwidth * pVVar3->output_frame_rate);
-  pVVar3->target_bandwidth = iVar4;
-  if (iVar4 < 0) {
-    pVVar3->target_bandwidth = 0;
+  iVar3 = (int)((double)(longlong)param_1->per_frame_bandwidth * param_1->output_frame_rate);
+  param_1->target_bandwidth = iVar3;
+  if (iVar3 < 0) {
+    param_1->target_bandwidth = 0;
   }
-  uVar7 = *puVar11;
-  if (uVar7 == 0) {
-    uVar8 = pVVar3->bits_left;
-    pVVar3->est_max_qcorrection_factor = dVar15;
-    uVar6 = (ulonglong)iVar12;
-    uVar5 = uVar6 & ~((uVar8 << 1 | uVar8 >> 0x3f) - 1);
-    trapDoubleWordImmediate(6,uVar6,0);
-    trapDoubleWordImmediate(5,uVar5,0xffff);
-    iVar4 = estimate_max_q(pVVar3,pVVar3->total_coded_error_left / (double)(longlong)iVar12,
-                           (int)uVar5,(int)((longlong)uVar8 / (longlong)uVar6),
-                           (pVVar3->common).Height);
-    iVar12 = pVVar3->worst_quality;
-    if (iVar4 < iVar12) {
-      pVVar3->ni_av_qi = iVar4;
-      pVVar3->active_worst_quality = iVar4;
+  uVar6 = *puVar10;
+  if (uVar6 == 0) {
+    uVar7 = param_1->bits_left;
+    param_1->est_max_qcorrection_factor = dVar14;
+    uVar5 = (ulonglong)iVar11;
+    uVar4 = uVar5 & ~((uVar7 << 1 | uVar7 >> 0x3f) - 1);
+    trapDoubleWordImmediate(6,uVar5,0);
+    trapDoubleWordImmediate(5,uVar4,0xffff);
+    iVar3 = estimate_max_q(param_1,param_1->total_coded_error_left / (double)(longlong)iVar11,
+                           (int)uVar4,(int)((longlong)uVar7 / (longlong)uVar5),
+                           (param_1->common).Height);
+    iVar11 = param_1->worst_quality;
+    if (iVar3 < iVar11) {
+      param_1->ni_av_qi = iVar3;
+      param_1->active_worst_quality = iVar3;
     }
     else {
-      pVVar3->active_worst_quality = iVar12;
-      pVVar3->ni_av_qi = iVar12;
+      param_1->active_worst_quality = iVar11;
+      param_1->ni_av_qi = iVar11;
     }
+    goto LAB_82828680;
   }
-  else {
-    uVar6 = (ulonglong)pVVar3->total_stats->count;
-    uVar5 = uVar6 & 0xffffffff;
-    if (((ulonglong)uVar7 < ((uVar6 & 0xffffff) * 0x100 - uVar5 & 0xffffffff) >> 8) &&
-       (pVVar3->baseline_gf_interval + uVar7 < uVar5)) {
-      if (iVar12 < 1) {
-        iVar12 = 1;
-      }
-      uVar6 = pVVar3->bits_left;
-      uVar5 = (ulonglong)iVar12;
-      trapDoubleWordImmediate(6,uVar5,0);
-      trapDoubleWordImmediate(5,uVar5 & ~((uVar6 << 1 | uVar6 >> 0x3f) - 1),0xffff);
-      iVar4 = estimate_max_q(pVVar3,pVVar3->total_coded_error_left / (double)(longlong)iVar12,
-                             0x1e580,(int)((longlong)uVar6 / (longlong)uVar5),
-                             (pVVar3->common).Height);
-      piVar9 = &pVVar3->active_worst_quality;
-      iVar12 = *piVar9;
-      if (iVar12 < iVar4) {
-        iVar12 = iVar12 + 1;
+  uVar5 = (ulonglong)param_1->total_stats->count;
+  uVar4 = uVar5 & 0xffffffff;
+  if ((((uVar5 & 0xffffff) * 0x100 - uVar4 & 0xffffffff) >> 8 <= (ulonglong)uVar6) ||
+     (uVar4 <= param_1->baseline_gf_interval + uVar6)) goto LAB_82828680;
+  if (iVar11 < 1) {
+    iVar11 = 1;
+  }
+  uVar5 = param_1->bits_left;
+  uVar4 = (ulonglong)iVar11;
+  trapDoubleWordImmediate(6,uVar4,0);
+  trapDoubleWordImmediate(5,uVar4 & ~((uVar5 << 1 | uVar5 >> 0x3f) - 1),0xffff);
+  iVar3 = estimate_max_q(param_1,param_1->total_coded_error_left / (double)(longlong)iVar11,0x1e580,
+                         (int)((longlong)uVar5 / (longlong)uVar4),(param_1->common).Height);
+  piVar8 = &param_1->active_worst_quality;
+  iVar11 = *piVar8;
+  if (iVar11 < iVar3) {
+    iVar11 = iVar11 + 1;
 LAB_82828630:
-        *piVar9 = iVar12;
-      }
-      else if (iVar4 < iVar12) {
-        iVar12 = iVar12 + -1;
-        goto LAB_82828630;
-      }
-      uVar7 = *piVar9 * 3 + iVar4 + 2;
-      iVar12 = pVVar3->worst_quality;
-      iVar4 = ((int)uVar7 >> 2) + (uint)((int)uVar7 < 0 && (uVar7 & 3) != 0);
-      *piVar9 = iVar4;
-      if ((iVar12 < iVar4) || (iVar12 = pVVar3->best_quality, iVar4 < iVar12)) {
-        *piVar9 = iVar12;
-      }
-    }
+    *piVar8 = iVar11;
   }
-  pVVar3->total_coded_error_left = pVVar3->total_coded_error_left - dVar18;
-  *piVar10 = *piVar10 + -1;
-  pVVar3->total_error_left = pVVar3->total_error_left - dVar14;
-  pVVar3->total_intra_error_left = pVVar3->total_intra_error_left - dVar16;
-LAB_828286c0:
-  __restfpr_27();
-  __restgprlr_21();
+  else if (iVar3 < iVar11) {
+    iVar11 = iVar11 + -1;
+    goto LAB_82828630;
+  }
+  uVar6 = *piVar8 * 3 + iVar3 + 2;
+  iVar11 = param_1->worst_quality;
+  iVar3 = ((int)uVar6 >> 2) + (uint)((int)uVar6 < 0 && (uVar6 & 3) != 0);
+  *piVar8 = iVar3;
+  if ((iVar11 < iVar3) || (iVar11 = param_1->best_quality, iVar3 < iVar11)) {
+    *piVar8 = iVar11;
+  }
+LAB_82828680:
+  param_1->total_coded_error_left = param_1->total_coded_error_left - dVar17;
+  *piVar9 = *piVar9 + -1;
+  param_1->total_error_left = param_1->total_error_left - dVar13;
+  param_1->total_intra_error_left = param_1->total_intra_error_left - dVar15;
   return;
 }
 
 
 // 82826FB8  test_candidate_kf  (WebM_atvi_opt/vpx/vp8/encoder/firstpass.c:2039)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_19 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_19 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 int test_candidate_kf(VP8_COMP *param_1,FIRSTPASS_STATS *param_2,FIRSTPASS_STATS *param_3,
                      FIRSTPASS_STATS *param_4)
 
 {
   FIRSTPASS_STATS *pFVar1;
-  VP8_COMP *pVVar2;
+  int iVar2;
   int iVar3;
-  int iVar4;
+  double dVar4;
   double dVar5;
   double dVar6;
   double dVar7;
@@ -2205,99 +2184,107 @@ int test_candidate_kf(VP8_COMP *param_1,FIRSTPASS_STATS *param_2,FIRSTPASS_STATS
   double dVar16;
   double dVar17;
   double dVar18;
-  double dVar19;
   FIRSTPASS_STATS aFStack_110 [2];
   
-  __savegprlr_28(param_1);
-  pVVar2 = (VP8_COMP *)__savefpr_19();
-  if ((0.1 <= param_3->pcnt_second_ref) || (0.1 <= param_4->pcnt_second_ref)) goto LAB_82827230;
-  dVar10 = 0.05;
-  dVar13 = 1e-06;
-  dVar6 = 0.0;
+  if (0.1 <= param_3->pcnt_second_ref) {
+    return 0;
+  }
+  if (0.1 <= param_4->pcnt_second_ref) {
+    return 0;
+  }
+  dVar9 = 0.05;
+  dVar12 = 1e-06;
+  dVar5 = 0.0;
   if (0.05 <= param_3->pcnt_inter) {
-    if (0.25 <= param_3->pcnt_inter) goto LAB_82827230;
-    dVar5 = param_3->coded_error;
-    if (0.0 <= dVar5) {
-      dVar8 = dVar5 + 1e-06;
+    if (0.25 <= param_3->pcnt_inter) {
+      return 0;
+    }
+    dVar4 = param_3->coded_error;
+    if (0.0 <= dVar4) {
+      dVar7 = dVar4 + 1e-06;
     }
     else {
-      dVar8 = dVar5 - 1e-06;
+      dVar7 = dVar4 - 1e-06;
     }
-    dVar7 = param_3->intra_error;
-    if (2.5 <= dVar7 / dVar8) goto LAB_82827230;
-    if (0.0 <= dVar5) {
-      dVar8 = dVar5 + 1e-06;
+    dVar6 = param_3->intra_error;
+    if (2.5 <= dVar6 / dVar7) {
+      return 0;
+    }
+    if (0.0 <= dVar4) {
+      dVar7 = dVar4 + 1e-06;
     }
     else {
-      dVar8 = dVar5 - 1e-06;
+      dVar7 = dVar4 - 1e-06;
     }
-    if (ABS(param_2->coded_error - dVar5) / dVar8 <= 0.4) {
-      if (0.0 <= dVar7) {
-        dVar5 = dVar7 + 1e-06;
+    if (ABS(param_2->coded_error - dVar4) / dVar7 <= 0.4) {
+      if (0.0 <= dVar6) {
+        dVar4 = dVar6 + 1e-06;
       }
       else {
-        dVar5 = dVar7 - 1e-06;
+        dVar4 = dVar6 - 1e-06;
       }
-      if (ABS(param_2->intra_error - dVar7) / dVar5 <= 0.4) {
-        dVar5 = param_4->coded_error;
-        if (0.0 <= dVar5) {
-          dVar5 = dVar5 + 1e-06;
+      if (ABS(param_2->intra_error - dVar6) / dVar4 <= 0.4) {
+        dVar4 = param_4->coded_error;
+        if (0.0 <= dVar4) {
+          dVar4 = dVar4 + 1e-06;
         }
         else {
-          dVar5 = dVar5 - 1e-06;
+          dVar4 = dVar4 - 1e-06;
         }
-        if (param_4->intra_error / dVar5 <= 3.5) goto LAB_82827230;
+        if (param_4->intra_error / dVar4 <= 3.5) {
+          return 0;
+        }
       }
     }
   }
-  dVar19 = 1.0;
-  dVar5 = dVar6;
+  dVar18 = 1.0;
+  dVar4 = dVar5;
   vpx_memcpy(aFStack_110,param_4,0x80);
-  dVar8 = 200.0;
-  dVar7 = 3.0;
-  dVar11 = 0.2;
-  dVar12 = 1.5;
-  iVar4 = 0;
-  dVar16 = 0.5;
-  dVar14 = 0.85;
-  dVar17 = 14.0;
-  dVar15 = 1.4;
-  pFVar1 = pVVar2->stats_in;
+  dVar7 = 200.0;
+  dVar6 = 3.0;
+  dVar10 = 0.2;
+  dVar11 = 1.5;
+  iVar3 = 0;
+  dVar15 = 0.5;
+  dVar13 = 0.85;
+  dVar16 = 14.0;
+  dVar14 = 1.4;
+  pFVar1 = param_1->stats_in;
   do {
-    dVar9 = aFStack_110[0].coded_error + dVar13;
+    dVar8 = aFStack_110[0].coded_error + dVar12;
     if (aFStack_110[0].coded_error < 0.0) {
-      dVar9 = aFStack_110[0].coded_error - dVar13;
+      dVar8 = aFStack_110[0].coded_error - dVar12;
     }
-    dVar9 = (aFStack_110[0].intra_error * dVar15) / dVar9;
-    if (dVar17 < dVar9) {
-      dVar9 = dVar17;
+    dVar8 = (aFStack_110[0].intra_error * dVar14) / dVar8;
+    if (dVar16 < dVar8) {
+      dVar8 = dVar16;
     }
-    dVar18 = aFStack_110[0].pcnt_inter;
-    if (aFStack_110[0].pcnt_inter <= dVar14) {
-      dVar18 = (aFStack_110[0].pcnt_inter + dVar14) * dVar16;
+    dVar17 = aFStack_110[0].pcnt_inter;
+    if (aFStack_110[0].pcnt_inter <= dVar13) {
+      dVar17 = (aFStack_110[0].pcnt_inter + dVar13) * dVar15;
     }
-    dVar19 = dVar18 * dVar19;
-    dVar18 = dVar9 * dVar19 + dVar5;
-    dVar5 = dVar18;
-  } while ((((dVar10 <= aFStack_110[0].pcnt_inter) && (dVar12 <= dVar9)) &&
-           ((dVar11 <= aFStack_110[0].pcnt_inter || (dVar7 <= dVar9)))) &&
-          ((((dVar16 <= dVar18 - dVar6 && (dVar8 <= aFStack_110[0].intra_error)) &&
-            (iVar3 = vp8_input_stats(pVVar2,aFStack_110), iVar3 != -1)) &&
-           (iVar4 = iVar4 + 1, dVar6 = dVar18, iVar4 < 0x10))));
-  if ((5.0 < dVar5) && (3 < iVar4)) {
-    __restfpr_19(1);
-    iVar4 = __restgprlr_28();
-    return iVar4;
+    dVar18 = dVar17 * dVar18;
+    dVar17 = dVar8 * dVar18 + dVar4;
+    dVar4 = dVar17;
+  } while ((((dVar9 <= aFStack_110[0].pcnt_inter) && (dVar11 <= dVar8)) &&
+           ((dVar10 <= aFStack_110[0].pcnt_inter || (dVar6 <= dVar8)))) &&
+          ((((dVar15 <= dVar17 - dVar5 && (dVar7 <= aFStack_110[0].intra_error)) &&
+            (iVar2 = vp8_input_stats(param_1,aFStack_110), iVar2 != -1)) &&
+           (iVar3 = iVar3 + 1, dVar5 = dVar17, iVar3 < 0x10))));
+  if ((5.0 < dVar4) && (3 < iVar3)) {
+    return 1;
   }
-  pVVar2->stats_in = pFVar1;
-LAB_82827230:
-  __restfpr_19(0);
-  iVar4 = __restgprlr_28();
-  return iVar4;
+  param_1->stats_in = pFVar1;
+  return 0;
 }
 
 
 // 82827240  vp8_find_next_key_frame  (WebM_atvi_opt/vpx/vp8/encoder/firstpass.c:2125)
+
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_15 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_15 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
 
 void vp8_find_next_key_frame(VP8_COMP *param_1,FIRSTPASS_STATS *param_2)
 
@@ -2307,38 +2294,38 @@ void vp8_find_next_key_frame(VP8_COMP *param_1,FIRSTPASS_STATS *param_2)
   FIRSTPASS_STATS *pFVar3;
   FIRSTPASS_STATS *pFVar4;
   int iVar5;
-  VP8_COMP *pVVar6;
+  int iVar6;
   int iVar7;
-  int iVar8;
+  ulonglong uVar8;
   ulonglong uVar9;
   ulonglong uVar10;
+  uint uVar12;
+  int *piVar13;
   ulonglong uVar11;
-  uint uVar13;
-  int *piVar14;
-  ulonglong uVar12;
-  int iVar15;
+  int iVar14;
+  longlong lVar15;
   longlong lVar16;
-  longlong lVar17;
-  int iVar18;
-  uint uVar19;
-  int iVar20;
-  long64 *plVar21;
+  int iVar17;
+  uint uVar18;
+  int iVar19;
+  long64 *plVar20;
+  int *piVar21;
   int *piVar22;
   int *piVar23;
-  int *piVar24;
-  FIRSTPASS_STATS **ppFVar25;
+  FIRSTPASS_STATS **ppFVar24;
+  int *piVar25;
   int *piVar26;
-  int *piVar27;
-  double *pdVar28;
-  FIRSTPASS_STATS **ppFVar29;
-  int *piVar30;
-  int iVar31;
+  double *pdVar27;
+  FIRSTPASS_STATS **ppFVar28;
+  int *piVar29;
+  int iVar30;
+  double dVar31;
   double dVar32;
   double dVar33;
   double dVar34;
   double dVar35;
-  double dVar36;
-  longlong lVar37;
+  longlong lVar36;
+  double dVar37;
   double dVar38;
   double dVar39;
   double dVar40;
@@ -2352,7 +2339,6 @@ void vp8_find_next_key_frame(VP8_COMP *param_1,FIRSTPASS_STATS *param_2)
   double dVar48;
   double dVar49;
   double dVar50;
-  double dVar51;
   FIRSTPASS_STATS local_320;
   FIRSTPASS_STATS FStack_2a0;
   undefined1 auStack_220 [8];
@@ -2360,451 +2346,449 @@ void vp8_find_next_key_frame(VP8_COMP *param_1,FIRSTPASS_STATS *param_2)
   double local_210;
   FIRSTPASS_STATS aFStack_1a0 [3];
   
-  __savegprlr();
-  pVVar6 = (VP8_COMP *)__savefpr_15();
-  dVar42 = 0.0;
-  dVar40 = dVar42;
-  dVar41 = dVar42;
-  dVar51 = dVar42;
-  dVar36 = dVar42;
+  dVar41 = 0.0;
+  dVar39 = dVar41;
+  dVar40 = dVar41;
+  dVar50 = dVar41;
+  dVar35 = dVar41;
   vpx_memset(&FStack_2a0,0,0x80);
-  piVar22 = &pVVar6->frames_to_key;
-  pVVar6->frames_till_gf_update_due = 0;
-  *piVar22 = 1;
-  (pVVar6->common).frame_type = KEY_FRAME;
-  ppFVar29 = &pVVar6->stats_in;
-  pVVar6->source_alt_ref_active = 0;
-  pFVar2 = *ppFVar29;
+  piVar21 = &param_1->frames_to_key;
+  param_1->frames_till_gf_update_due = 0;
+  *piVar21 = 1;
+  (param_1->common).frame_type = KEY_FRAME;
+  ppFVar28 = &param_1->stats_in;
+  param_1->source_alt_ref_active = 0;
+  pFVar2 = *ppFVar28;
   vpx_memcpy(auStack_220,param_2,0x80);
-  plVar21 = &pVVar6->kf_group_bits;
-  *plVar21 = 0;
-  pVVar6->kf_group_error_left = 0;
-  dVar34 = calculate_modified_err(pVVar6,param_2);
-  ppFVar25 = &pVVar6->stats_in_end;
-  dVar43 = 1e-06;
-  if (*ppFVar29 < *ppFVar25) {
-    dVar49 = 0.01;
+  plVar20 = &param_1->kf_group_bits;
+  *plVar20 = 0;
+  param_1->kf_group_error_left = 0;
+  dVar33 = calculate_modified_err(param_1,param_2);
+  ppFVar24 = &param_1->stats_in_end;
+  dVar42 = 1e-06;
+  if (*ppFVar28 < *ppFVar24) {
+    dVar48 = 0.01;
     do {
-      dVar50 = pVVar6->total_stats->ssim_weighted_pred_err;
-      dVar35 = dVar50 + dVar43;
-      if (dVar50 < 0.0) {
-        dVar35 = dVar50 - dVar43;
+      dVar49 = param_1->total_stats->ssim_weighted_pred_err;
+      dVar34 = dVar49 + dVar42;
+      if (dVar49 < 0.0) {
+        dVar34 = dVar49 - dVar42;
       }
-      dVar35 = pow(param_2->ssim_weighted_pred_err / dVar35,
-                   (double)(longlong)(pVVar6->oxcf).two_pass_vbrbias * dVar49);
-      dVar40 = param_2->intra_error + dVar40;
-      dVar42 = param_2->coded_error + dVar42;
-      dVar41 = dVar35 * dVar50 + dVar41;
+      dVar34 = pow(param_2->ssim_weighted_pred_err / dVar34,
+                   (double)(longlong)(param_1->oxcf).two_pass_vbrbias * dVar48);
+      dVar39 = param_2->intra_error + dVar39;
+      dVar41 = param_2->coded_error + dVar41;
+      dVar40 = dVar34 * dVar49 + dVar40;
       vpx_memcpy(aFStack_1a0,param_2,0x80);
-      iVar7 = (pVVar6->common).MBs;
-      if (*ppFVar29 < *ppFVar25) {
+      iVar6 = (param_1->common).MBs;
+      if (*ppFVar28 < *ppFVar24) {
         memcpy();
-        *ppFVar29 = (FIRSTPASS_STATS *)((int)&(*ppFVar29)->frame + (iVar7 + 0x87U & 0xfffffff8));
+        *ppFVar28 = (FIRSTPASS_STATS *)((int)&(*ppFVar28)->frame + (iVar6 + 0x87U & 0xfffffff8));
       }
-      if (((pVVar6->oxcf).auto_key == 0) || (*ppFVar25 <= *ppFVar29)) {
-        *piVar22 = *piVar22 + 1;
+      if (((param_1->oxcf).auto_key == 0) || (*ppFVar24 <= *ppFVar28)) {
+        *piVar21 = *piVar21 + 1;
       }
       else {
         memcpy();
-        iVar7 = test_candidate_kf(pVVar6,aFStack_1a0,param_2,&FStack_2a0);
-        if ((iVar7 != 0) ||
-           (iVar7 = *piVar22, *piVar22 = iVar7 + 1,
-           (int)(pVVar6->key_frame_frequency << 1) <= iVar7 + 1)) break;
+        iVar6 = test_candidate_kf(param_1,aFStack_1a0,param_2,&FStack_2a0);
+        if ((iVar6 != 0) ||
+           (iVar6 = *piVar21, *piVar21 = iVar6 + 1,
+           (int)(param_1->key_frame_frequency << 1) <= iVar6 + 1)) break;
       }
-    } while (*ppFVar29 < *ppFVar25);
+    } while (*ppFVar28 < *ppFVar24);
   }
-  if (((pVVar6->oxcf).auto_key != 0) &&
-     (uVar19 = *piVar22, (int)pVVar6->key_frame_frequency < (int)uVar19)) {
-    *piVar22 = ((int)uVar19 >> 1) + (uint)((int)uVar19 < 0 && (uVar19 & 1) != 0);
-    dVar41 = dVar41 * 0.5;
+  if (((param_1->oxcf).auto_key != 0) &&
+     (uVar18 = *piVar21, (int)param_1->key_frame_frequency < (int)uVar18)) {
+    *piVar21 = ((int)uVar18 >> 1) + (uint)((int)uVar18 < 0 && (uVar18 & 1) != 0);
     dVar40 = dVar40 * 0.5;
-    dVar42 = dVar42 * 0.5;
+    dVar39 = dVar39 * 0.5;
+    dVar41 = dVar41 * 0.5;
   }
-  if (*ppFVar25 <= *ppFVar29) {
-    dVar49 = calculate_modified_err(pVVar6,param_2);
-    dVar41 = dVar49 + dVar41;
-    dVar40 = param_2->intra_error + dVar40;
-    dVar42 = param_2->coded_error + dVar42;
+  if (*ppFVar24 <= *ppFVar28) {
+    dVar48 = calculate_modified_err(param_1,param_2);
+    dVar40 = dVar48 + dVar40;
+    dVar39 = param_2->intra_error + dVar39;
+    dVar41 = param_2->coded_error + dVar41;
   }
-  lVar16 = pVVar6->bits_left;
-  if ((lVar16 < 1) || (dVar49 = pVVar6->modified_error_left, (int)dVar49 < 1)) {
-    *plVar21 = 0;
+  lVar15 = param_1->bits_left;
+  if ((lVar15 < 1) || (dVar48 = param_1->modified_error_left, (int)dVar48 < 1)) {
+    *plVar20 = 0;
   }
   else {
-    iVar7 = frame_max_bits(pVVar6);
-    lVar17 = (longlong)iVar7 * (longlong)*piVar22;
-    lVar37 = (longlong)((dVar41 / dVar49) * (double)lVar16);
-    *plVar21 = lVar37;
-    if (lVar17 < lVar37) {
-      *plVar21 = lVar17;
+    iVar6 = frame_max_bits(param_1);
+    lVar16 = (longlong)iVar6 * (longlong)*piVar21;
+    lVar36 = (longlong)((dVar40 / dVar48) * (double)lVar15);
+    *plVar20 = lVar36;
+    if (lVar16 < lVar36) {
+      *plVar20 = lVar16;
     }
-    if ((pVVar6->oxcf).end_usage == 0) {
-      iVar7 = (pVVar6->oxcf).optimal_buffer_level;
-      iVar31 = pVVar6->buffer_level;
-      if (iVar7 <= iVar31) {
-        lVar17 = (longlong)pVVar6->av_per_frame_bandwidth * (longlong)*piVar22;
-        iVar18 = (pVVar6->oxcf).maximum_buffer_size + iVar7 >> 1;
-        if (iVar31 < iVar18) {
-          lVar37 = *plVar21;
-          if (lVar37 < lVar17) {
-            *plVar21 = (longlong)
-                       (((double)(lVar17 - lVar37) * (double)(longlong)(iVar31 - iVar7)) /
-                       (double)(longlong)(iVar18 - iVar7)) + lVar37;
+    if ((param_1->oxcf).end_usage == 0) {
+      iVar6 = (param_1->oxcf).optimal_buffer_level;
+      iVar30 = param_1->buffer_level;
+      if (iVar6 <= iVar30) {
+        lVar16 = (longlong)param_1->av_per_frame_bandwidth * (longlong)*piVar21;
+        iVar17 = (param_1->oxcf).maximum_buffer_size + iVar6 >> 1;
+        if (iVar30 < iVar17) {
+          lVar36 = *plVar20;
+          if (lVar36 < lVar16) {
+            *plVar20 = (longlong)
+                       (((double)(lVar16 - lVar36) * (double)(longlong)(iVar30 - iVar6)) /
+                       (double)(longlong)(iVar17 - iVar6)) + lVar36;
           }
         }
         else {
-          lVar17 = (iVar31 - iVar18) + lVar17;
-          if (*plVar21 < lVar17) {
-            *plVar21 = lVar17;
+          lVar16 = (iVar30 - iVar17) + lVar16;
+          if (*plVar20 < lVar16) {
+            *plVar20 = lVar16;
           }
         }
       }
     }
   }
-  iVar7 = *piVar22;
-  *ppFVar29 = pFVar2;
-  iVar31 = 0;
-  dVar35 = 1.0;
-  dVar49 = dVar51;
-  if (0 < iVar7) {
-    pFVar3 = *ppFVar25;
-    dVar45 = 0.1;
-    dVar44 = 0.004;
-    dVar47 = 0.05;
-    dVar48 = 14.0;
-    dVar46 = 1.5;
-    dVar50 = dVar35;
-    while (pFVar4 = *ppFVar29, pFVar4 < pFVar3) {
-      dVar33 = FStack_2a0.pcnt_motion;
+  iVar6 = *piVar21;
+  *ppFVar28 = pFVar2;
+  iVar30 = 0;
+  dVar34 = 1.0;
+  dVar48 = dVar50;
+  if (0 < iVar6) {
+    pFVar3 = *ppFVar24;
+    dVar44 = 0.1;
+    dVar43 = 0.004;
+    dVar46 = 0.05;
+    dVar47 = 14.0;
+    dVar45 = 1.5;
+    dVar49 = dVar34;
+    while (pFVar4 = *ppFVar28, pFVar4 < pFVar3) {
+      dVar32 = FStack_2a0.pcnt_motion;
       memcpy();
-      *ppFVar29 = (FIRSTPASS_STATS *)
-                  ((int)&pFVar4->frame + ((pVVar6->common).MBs + 0x87U & 0xfffffff8));
-      dVar38 = FStack_2a0.coded_error + dVar43;
+      *ppFVar28 = (FIRSTPASS_STATS *)
+                  ((int)&pFVar4->frame + ((param_1->common).MBs + 0x87U & 0xfffffff8));
+      dVar37 = FStack_2a0.coded_error + dVar42;
       if (FStack_2a0.coded_error < 0.0) {
-        dVar38 = FStack_2a0.coded_error - dVar43;
+        dVar37 = FStack_2a0.coded_error - dVar42;
       }
-      dVar38 = (FStack_2a0.intra_error * dVar46) / dVar38;
-      if (dVar48 < dVar38) {
-        dVar38 = dVar48;
+      dVar37 = (FStack_2a0.intra_error * dVar45) / dVar37;
+      if (dVar47 < dVar37) {
+        dVar37 = dVar47;
       }
-      dVar32 = -(dVar33 * dVar47 - dVar35);
-      dVar39 = FStack_2a0.pcnt_inter;
-      if (dVar32 < FStack_2a0.pcnt_inter) {
-        dVar39 = dVar32;
+      dVar31 = -(dVar32 * dVar46 - dVar34);
+      dVar38 = FStack_2a0.pcnt_inter;
+      if (dVar31 < FStack_2a0.pcnt_inter) {
+        dVar38 = dVar31;
       }
-      dVar32 = SQRT(ABS(FStack_2a0.mvc_abs * dVar33) * ABS(FStack_2a0.mvc_abs * dVar33) +
-                    ABS(FStack_2a0.mvr_abs * dVar33) * ABS(FStack_2a0.mvr_abs * dVar33)) * dVar44;
-      dVar33 = dVar51;
-      if (dVar32 <= dVar35) {
-        dVar33 = dVar35 - dVar32;
+      dVar31 = SQRT(ABS(FStack_2a0.mvc_abs * dVar32) * ABS(FStack_2a0.mvc_abs * dVar32) +
+                    ABS(FStack_2a0.mvr_abs * dVar32) * ABS(FStack_2a0.mvr_abs * dVar32)) * dVar43;
+      dVar32 = dVar50;
+      if (dVar31 <= dVar34) {
+        dVar32 = dVar34 - dVar31;
       }
-      if (dVar33 < dVar39) {
-        dVar39 = dVar33;
+      if (dVar32 < dVar38) {
+        dVar38 = dVar32;
       }
-      dVar50 = dVar39 * dVar50;
-      if (dVar50 < dVar45) {
-        dVar50 = dVar45;
+      dVar49 = dVar38 * dVar49;
+      if (dVar49 < dVar44) {
+        dVar49 = dVar44;
       }
-      dVar49 = dVar38 * dVar50 + dVar49;
-      if (((4 < iVar31) && (dVar49 - dVar36 < dVar35)) ||
-         (iVar31 = iVar31 + 1, dVar36 = dVar49, *piVar22 <= iVar31)) break;
+      dVar48 = dVar37 * dVar49 + dVar48;
+      if (((4 < iVar30) && (dVar48 - dVar35 < dVar34)) ||
+         (iVar30 = iVar30 + 1, dVar35 = dVar48, *piVar21 <= iVar30)) break;
     }
   }
-  *ppFVar29 = pFVar2;
-  iVar31 = 0;
-  local_320.frame = dVar51;
-  local_320.intra_error = dVar51;
-  local_320.coded_error = dVar51;
-  local_320.ssim_weighted_pred_err = dVar51;
-  local_320.pcnt_inter = dVar51;
-  local_320.pcnt_motion = dVar51;
-  local_320.pcnt_second_ref = dVar51;
-  local_320.MVr = dVar51;
-  local_320.mvr_abs = dVar51;
-  local_320.MVc = dVar51;
-  local_320.mvc_abs = dVar51;
-  local_320.MVrv = dVar51;
-  local_320.MVcv = dVar51;
-  local_320.mv_in_out_count = dVar51;
-  local_320.duration = dVar35;
-  local_320.count = dVar51;
-  if (0 < iVar7) {
-    pFVar3 = *ppFVar25;
+  *ppFVar28 = pFVar2;
+  iVar30 = 0;
+  local_320.frame = dVar50;
+  local_320.intra_error = dVar50;
+  local_320.coded_error = dVar50;
+  local_320.ssim_weighted_pred_err = dVar50;
+  local_320.pcnt_inter = dVar50;
+  local_320.pcnt_motion = dVar50;
+  local_320.pcnt_second_ref = dVar50;
+  local_320.MVr = dVar50;
+  local_320.mvr_abs = dVar50;
+  local_320.MVc = dVar50;
+  local_320.mvc_abs = dVar50;
+  local_320.MVrv = dVar50;
+  local_320.MVcv = dVar50;
+  local_320.mv_in_out_count = dVar50;
+  local_320.duration = dVar34;
+  local_320.count = dVar50;
+  if (0 < iVar6) {
+    pFVar3 = *ppFVar24;
     do {
-      pFVar4 = *ppFVar29;
+      pFVar4 = *ppFVar28;
       if (pFVar4 < pFVar3) {
         memcpy();
-        *ppFVar29 = (FIRSTPASS_STATS *)
-                    ((int)&pFVar4->frame + ((pVVar6->common).MBs + 0x87U & 0xfffffff8));
+        *ppFVar28 = (FIRSTPASS_STATS *)
+                    ((int)&pFVar4->frame + ((param_1->common).MBs + 0x87U & 0xfffffff8));
       }
       vp8_accumulate_stats(&local_320,&FStack_2a0);
-      iVar31 = iVar31 + 1;
-    } while (iVar31 < *piVar22);
+      iVar30 = iVar30 + 1;
+    } while (iVar30 < *piVar21);
   }
   vp8_avg_stats(&local_320);
-  dVar36 = local_320.coded_error + dVar43;
+  dVar35 = local_320.coded_error + dVar42;
   if (local_320.coded_error < 0.0) {
-    dVar36 = local_320.coded_error - dVar43;
+    dVar35 = local_320.coded_error - dVar42;
   }
-  pVVar6->section_intra_rating = (uint)(longlong)(local_320.intra_error / dVar36);
-  dVar36 = -((local_320.intra_error / dVar36 - 10.0) * 0.025 - dVar35);
-  pVVar6->section_max_qfactor = dVar36;
-  if (dVar36 < 0.8) {
-    pVVar6->section_max_qfactor = 0.8;
+  param_1->section_intra_rating = (uint)(longlong)(local_320.intra_error / dVar35);
+  dVar35 = -((local_320.intra_error / dVar35 - 10.0) * 0.025 - dVar34);
+  param_1->section_max_qfactor = dVar35;
+  if (dVar35 < 0.8) {
+    param_1->section_max_qfactor = 0.8;
   }
-  iVar31 = (pVVar6->oxcf).end_usage;
-  if (iVar31 == 0) {
-    iVar18 = pVVar6->buffer_level;
-    dVar36 = dVar51;
-    if (pVVar6->drop_frames_allowed == 0) {
-      if (0 < iVar18) {
-        dVar36 = (double)(longlong)pVVar6->av_per_frame_bandwidth;
-        if (dVar51 <= dVar36) {
-          dVar36 = dVar36 + dVar43;
+  iVar30 = (param_1->oxcf).end_usage;
+  if (iVar30 == 0) {
+    iVar17 = param_1->buffer_level;
+    dVar35 = dVar50;
+    if (param_1->drop_frames_allowed == 0) {
+      if (0 < iVar17) {
+        dVar35 = (double)(longlong)param_1->av_per_frame_bandwidth;
+        if (dVar50 <= dVar35) {
+          dVar35 = dVar35 + dVar42;
         }
         else {
-          dVar36 = dVar36 - dVar43;
+          dVar35 = dVar35 - dVar42;
         }
-        dVar36 = ((double)(longlong)((iVar18 << 1) / 3) * 16.0) / dVar36;
+        dVar35 = ((double)(longlong)((iVar17 << 1) / 3) * 16.0) / dVar35;
       }
     }
     else {
-      iVar20 = ((pVVar6->oxcf).optimal_buffer_level / 100) * (pVVar6->oxcf).drop_frames_water_mark;
-      if (iVar20 < iVar18) {
-        dVar36 = (double)(longlong)pVVar6->av_per_frame_bandwidth;
-        if (dVar51 <= dVar36) {
-          dVar36 = dVar36 + dVar43;
+      iVar19 = ((param_1->oxcf).optimal_buffer_level / 100) * (param_1->oxcf).drop_frames_water_mark
+      ;
+      if (iVar19 < iVar17) {
+        dVar35 = (double)(longlong)param_1->av_per_frame_bandwidth;
+        if (dVar50 <= dVar35) {
+          dVar35 = dVar35 + dVar42;
         }
         else {
-          dVar36 = dVar36 - dVar43;
+          dVar35 = dVar35 - dVar42;
         }
-        dVar36 = ((double)(longlong)(((iVar18 - iVar20) * 2) / 3) * 16.0) / dVar36;
+        dVar35 = ((double)(longlong)(((iVar17 - iVar19) * 2) / 3) * 16.0) / dVar35;
       }
     }
-    if (dVar36 < dVar49) {
-      dVar49 = dVar36;
+    if (dVar35 < dVar48) {
+      dVar48 = dVar35;
     }
   }
-  iVar18 = (int)dVar49;
-  *ppFVar29 = pFVar2;
-  iVar20 = (pVVar6->common).lst_fb_idx;
-  if ((iVar18 < 0x30) && (iVar18 = (iVar7 + 1 >> 1) + iVar18, 0x30 < iVar18)) {
-    iVar18 = 0x30;
+  iVar17 = (int)dVar48;
+  *ppFVar28 = pFVar2;
+  iVar19 = (param_1->common).lst_fb_idx;
+  if ((iVar17 < 0x30) && (iVar17 = (iVar6 + 1 >> 1) + iVar17, 0x30 < iVar17)) {
+    iVar17 = 0x30;
   }
-  uVar11 = (longlong)(pVVar6->common).yv12_fb[iVar20].y_height *
-           (longlong)(pVVar6->common).yv12_fb[iVar20].y_width;
-  iVar7 = (int)uVar11;
-  if (iVar7 < 0x12c01) {
-    if (iVar7 < 0x12c00) {
-      trapWord(6,uVar11,0);
-      iVar18 = iVar18 - 0x4b000 / iVar7;
+  uVar10 = (longlong)(param_1->common).yv12_fb[iVar19].y_height *
+           (longlong)(param_1->common).yv12_fb[iVar19].y_width;
+  iVar6 = (int)uVar10;
+  if (iVar6 < 0x12c01) {
+    if (iVar6 < 0x12c00) {
+      trapWord(6,uVar10,0);
+      iVar17 = iVar17 - 0x4b000 / iVar6;
     }
   }
   else {
-    iVar18 = (int)((uVar11 & 0xffffffff) << 1) / 0x12c00 + iVar18;
+    iVar17 = (int)((uVar10 & 0xffffffff) << 1) / 0x12c00 + iVar17;
   }
-  uVar19 = (vp8_kf_boost_qadjustment[pVVar6->ni_av_qi] *
-           ((int)((double)(longlong)iVar18 * 100.0) >> 4)) / 100;
-  if ((int)uVar19 < 0xfa) {
-    uVar19 = 0xfa;
+  uVar18 = (vp8_kf_boost_qadjustment[param_1->ni_av_qi] *
+           ((int)((double)(longlong)iVar17 * 100.0) >> 4)) / 100;
+  if ((int)uVar18 < 0xfa) {
+    uVar18 = 0xfa;
   }
-  iVar7 = *piVar22;
-  uVar13 = (iVar7 * 100 + uVar19) - 100;
-  for (; 1000 < (int)uVar19;
-      uVar19 = ((int)uVar19 >> 1) + (uint)((int)uVar19 < 0 && (uVar19 & 1) != 0)) {
-    uVar13 = ((int)uVar13 >> 1) + (uint)((int)uVar13 < 0 && (uVar13 & 1) != 0);
+  iVar6 = *piVar21;
+  uVar12 = (iVar6 * 100 + uVar18) - 100;
+  for (; 1000 < (int)uVar18;
+      uVar18 = ((int)uVar18 >> 1) + (uint)((int)uVar18 < 0 && (uVar18 & 1) != 0)) {
+    uVar12 = ((int)uVar12 >> 1) + (uint)((int)uVar12 < 0 && (uVar12 & 1) != 0);
   }
-  lVar17 = *plVar21;
-  if (lVar17 < 0) {
-    lVar17 = 0;
+  lVar16 = *plVar20;
+  if (lVar16 < 0) {
+    lVar16 = 0;
   }
-  *plVar21 = lVar17;
-  piVar14 = &pVVar6->kf_bits;
-  iVar18 = (int)(((double)lVar17 / (double)(longlong)(int)uVar13) * (double)(longlong)(int)uVar19);
-  *piVar14 = iVar18;
-  if ((iVar31 == 0) && (iVar20 = pVVar6->buffer_level * 3 >> 2, iVar20 < iVar18)) {
-    *piVar14 = iVar20;
+  *plVar20 = lVar16;
+  piVar13 = &param_1->kf_bits;
+  iVar17 = (int)(((double)lVar16 / (double)(longlong)(int)uVar12) * (double)(longlong)(int)uVar18);
+  *piVar13 = iVar17;
+  if ((iVar30 == 0) && (iVar19 = param_1->buffer_level * 3 >> 2, iVar19 < iVar17)) {
+    *piVar13 = iVar19;
   }
-  dVar36 = pVVar6->modified_error_left;
-  dVar49 = dVar41 / (double)(longlong)iVar7;
-  if (dVar49 <= dVar34) {
-    if (dVar51 <= dVar36) {
-      dVar50 = dVar36 + dVar43;
+  dVar35 = param_1->modified_error_left;
+  dVar48 = dVar40 / (double)(longlong)iVar6;
+  if (dVar48 <= dVar33) {
+    if (dVar50 <= dVar35) {
+      dVar49 = dVar35 + dVar42;
     }
     else {
-      dVar50 = dVar36 - dVar43;
+      dVar49 = dVar35 - dVar42;
     }
-    iVar18 = (int)((dVar34 / dVar50) * (double)lVar16);
-    bVar1 = *piVar14 < iVar18;
+    iVar17 = (int)((dVar33 / dVar49) * (double)lVar15);
+    bVar1 = *piVar13 < iVar17;
   }
   else {
-    if (dVar51 <= dVar36) {
-      dVar50 = dVar36 + dVar43;
+    if (dVar50 <= dVar35) {
+      dVar49 = dVar35 + dVar42;
     }
     else {
-      dVar50 = dVar36 - dVar43;
+      dVar49 = dVar35 - dVar42;
     }
-    iVar18 = (int)((((((double)(longlong)iVar7 * dVar34) / dVar50) * (double)lVar16) /
-                   (double)(longlong)(int)uVar13) * (double)(longlong)(int)uVar19);
-    bVar1 = iVar18 < *piVar14;
+    iVar17 = (int)((((((double)(longlong)iVar6 * dVar33) / dVar49) * (double)lVar15) /
+                   (double)(longlong)(int)uVar12) * (double)(longlong)(int)uVar18);
+    bVar1 = iVar17 < *piVar13;
   }
   if (bVar1) {
-    *piVar14 = iVar18;
+    *piVar13 = iVar17;
   }
-  pVVar6->modified_error_left = dVar36 - dVar41;
-  lVar16 = *plVar21 - (longlong)*piVar14;
-  iVar20 = pVVar6->min_frame_bandwidth + *piVar14;
-  *plVar21 = lVar16;
-  *piVar14 = iVar20;
-  iVar18 = (pVVar6->oxcf).allow_spatial_resampling;
-  pVVar6->per_frame_bandwidth = iVar20;
-  pVVar6->kf_group_error_left = (longlong)(int)(dVar41 - dVar34);
-  pVVar6->target_bandwidth = (int)(pVVar6->output_frame_rate * (double)(longlong)iVar20);
-  if (iVar18 == 0) goto LAB_828280e8;
-  piVar27 = &(pVVar6->oxcf).Width;
-  piVar14 = &(pVVar6->common).Width;
-  piVar26 = &(pVVar6->oxcf).Height;
-  iVar18 = *piVar27;
+  param_1->modified_error_left = dVar35 - dVar40;
+  lVar15 = *plVar20 - (longlong)*piVar13;
+  iVar19 = param_1->min_frame_bandwidth + *piVar13;
+  *plVar20 = lVar15;
+  *piVar13 = iVar19;
+  iVar17 = (param_1->oxcf).allow_spatial_resampling;
+  param_1->per_frame_bandwidth = iVar19;
+  param_1->kf_group_error_left = (longlong)(int)(dVar40 - dVar33);
+  param_1->target_bandwidth = (int)(param_1->output_frame_rate * (double)(longlong)iVar19);
+  if (iVar17 == 0) {
+    return;
+  }
+  piVar26 = &(param_1->oxcf).Width;
+  piVar13 = &(param_1->common).Width;
+  piVar25 = &(param_1->oxcf).Height;
+  iVar17 = *piVar26;
   bVar1 = false;
-  iVar20 = *piVar26;
-  dVar40 = (dVar40 - local_218) / (dVar42 - local_210);
-  if ((*piVar14 != iVar18) || ((pVVar6->common).Height != iVar20)) {
+  iVar19 = *piVar25;
+  dVar39 = (dVar39 - local_218) / (dVar41 - local_210);
+  if ((*piVar13 != iVar17) || ((param_1->common).Height != iVar19)) {
     bVar1 = true;
   }
-  pdVar28 = &(pVVar6->oxcf).frame_rate;
-  piVar23 = &(pVVar6->common).horiz_scale;
-  piVar24 = &(pVVar6->common).vert_scale;
-  dVar41 = *pdVar28;
+  pdVar27 = &(param_1->oxcf).frame_rate;
+  piVar22 = &(param_1->common).horiz_scale;
+  piVar23 = &(param_1->common).vert_scale;
+  dVar40 = *pdVar27;
+  *piVar22 = 0;
   *piVar23 = 0;
-  *piVar24 = 0;
-  if (dVar51 <= dVar41) {
-    dVar41 = dVar41 + dVar43;
+  if (dVar50 <= dVar40) {
+    dVar40 = dVar40 + dVar42;
   }
   else {
-    dVar41 = dVar41 - dVar43;
+    dVar40 = dVar40 - dVar42;
   }
-  piVar30 = &(pVVar6->oxcf).target_bandwidth;
-  iVar15 = *piVar30;
-  dVar41 = (double)(longlong)iVar15 / dVar41;
-  if (iVar31 == 0) {
+  piVar29 = &(param_1->oxcf).target_bandwidth;
+  iVar14 = *piVar29;
+  dVar40 = (double)(longlong)iVar14 / dVar40;
+  if (iVar30 == 0) {
 LAB_82827d90:
-    dVar36 = dVar41;
+    dVar35 = dVar40;
   }
   else {
-    uVar12 = *plVar21;
-    uVar11 = (ulonglong)iVar7;
-    trapDoubleWordImmediate(6,uVar11,0);
-    trapDoubleWordImmediate(5,uVar11 & ~((uVar12 << 1 | uVar12 >> 0x3f) - 1),0xffff);
-    dVar36 = (double)((longlong)uVar12 / (longlong)uVar11);
-    if ((double)((longlong)uVar12 / (longlong)uVar11) < dVar41) goto LAB_82827d90;
+    uVar11 = *plVar20;
+    uVar10 = (ulonglong)iVar6;
+    trapDoubleWordImmediate(6,uVar10,0);
+    trapDoubleWordImmediate(5,uVar10 & ~((uVar11 << 1 | uVar11 >> 0x3f) - 1),0xffff);
+    dVar35 = (double)((longlong)uVar11 / (longlong)uVar10);
+    if ((double)((longlong)uVar11 / (longlong)uVar10) < dVar40) goto LAB_82827d90;
   }
-  dVar34 = (double)(longlong)(((pVVar6->oxcf).two_pass_vbrmin_section * iVar15) / 100);
-  if (dVar36 < dVar34) {
-    dVar36 = dVar34;
+  dVar33 = (double)(longlong)(((param_1->oxcf).two_pass_vbrmin_section * iVar14) / 100);
+  if (dVar35 < dVar33) {
+    dVar35 = dVar33;
   }
-  iVar7 = (int)dVar36;
-  iVar8 = estimate_kf_group_q(pVVar6,dVar49,(int)lVar16,iVar7,iVar20,dVar40);
-  iVar31 = pVVar6->worst_quality;
-  for (iVar15 = iVar8; iVar31 < iVar15; iVar15 = iVar15 + -1) {
-    dVar36 = dVar36 * 1.04;
+  iVar6 = (int)dVar35;
+  iVar7 = estimate_kf_group_q(param_1,dVar48,(int)lVar15,iVar6,iVar19,dVar39);
+  iVar30 = param_1->worst_quality;
+  for (iVar14 = iVar7; iVar30 < iVar14; iVar14 = iVar14 + -1) {
+    dVar35 = dVar35 * 1.04;
   }
-  iVar15 = pVVar6->buffer_level - (int)((dVar36 - dVar41) * (double)(longlong)*piVar22);
-  if ((pVVar6->oxcf).end_usage == 0) {
-    iVar5 = (pVVar6->oxcf).optimal_buffer_level;
-    if ((iVar15 < ((pVVar6->oxcf).resample_down_water_mark * iVar5) / 100) ||
-       ((bVar1 && (iVar15 < ((pVVar6->oxcf).resample_up_water_mark * iVar5) / 100)))) {
+  iVar14 = param_1->buffer_level - (int)((dVar35 - dVar40) * (double)(longlong)*piVar21);
+  if ((param_1->oxcf).end_usage == 0) {
+    iVar5 = (param_1->oxcf).optimal_buffer_level;
+    if ((((param_1->oxcf).resample_down_water_mark * iVar5) / 100 <= iVar14) &&
+       ((!bVar1 || (((param_1->oxcf).resample_up_water_mark * iVar5) / 100 <= iVar14))))
+    goto LAB_828280c0;
 LAB_82827f3c:
-      if (iVar31 <= iVar8) goto LAB_82827f44;
-    }
+    if (iVar7 < iVar30) goto LAB_828280c0;
   }
   else {
-    dVar41 = *pdVar28;
-    if (dVar51 <= dVar41) {
-      dVar41 = dVar41 + dVar43;
+    dVar40 = *pdVar27;
+    if (dVar50 <= dVar40) {
+      dVar40 = dVar40 + dVar42;
     }
     else {
-      dVar41 = dVar41 - dVar43;
+      dVar40 = dVar40 - dVar42;
     }
-    if ((bVar1) && (iVar31 < iVar8)) {
-LAB_82827f44:
-      dVar41 = 0.25;
-      dVar51 = 3.0;
-      iVar31 = 0;
-      do {
-        if (0x17 < iVar31) break;
-        *piVar24 = *(int *)((int)vscale_lookup + iVar31 + 4);
-        uVar19 = *(uint *)((int)hscale_lookup + iVar31 + 4);
-        *piVar23 = uVar19;
-        if ((uVar19 < 4) && (uVar19 != 0)) {
-          if (uVar19 == 1) {
-            iVar18 = 4;
-            uVar11 = 5;
-          }
-          else {
-            if (uVar19 != 2) {
-              uVar11 = 2;
-              goto LAB_82827fc4;
-            }
-            iVar18 = 3;
-            uVar11 = 5;
-          }
+    if ((!bVar1) || (iVar7 <= iVar30)) {
+      if ((iVar7 <= iVar30) ||
+         ((longlong)((param_1->oxcf).starting_buffer_level - param_1->buffer_level) <=
+          (longlong)((param_1->total_stats->count / dVar40) * (double)(longlong)*piVar29) / 0x14))
+      goto LAB_828280c0;
+      goto LAB_82827f3c;
+    }
+  }
+  dVar40 = 0.25;
+  dVar50 = 3.0;
+  iVar30 = 0;
+  do {
+    if (0x17 < iVar30) break;
+    *piVar23 = *(int *)((int)vscale_lookup + iVar30 + 4);
+    uVar18 = *(uint *)((int)hscale_lookup + iVar30 + 4);
+    *piVar22 = uVar18;
+    if ((uVar18 < 4) && (uVar18 != 0)) {
+      if (uVar18 == 1) {
+        iVar17 = 4;
+        uVar10 = 5;
+      }
+      else {
+        if (uVar18 != 2) {
+          uVar10 = 2;
+          goto LAB_82827fc4;
         }
-        else {
-          uVar11 = 1;
+        iVar17 = 3;
+        uVar10 = 5;
+      }
+    }
+    else {
+      uVar10 = 1;
 LAB_82827fc4:
-          iVar18 = 1;
-        }
-        uVar19 = *piVar24;
-        if ((uVar19 < 4) && (uVar19 != 0)) {
-          if (uVar19 == 1) {
-            iVar20 = 4;
-            uVar12 = 5;
-          }
-          else {
-            if (uVar19 != 2) {
-              uVar12 = 2;
-              goto LAB_82828010;
-            }
-            iVar20 = 3;
-            uVar12 = 5;
-          }
-        }
-        else {
-          uVar12 = 1;
-LAB_82828010:
-          iVar20 = 1;
-        }
-        iVar15 = *piVar27;
-        trapWord(6,uVar11,0);
-        iVar8 = *piVar26;
-        uVar9 = ((longlong)iVar15 * (longlong)iVar18 + uVar11) - 1;
-        uVar10 = ((longlong)iVar8 * (longlong)iVar20 + uVar12) - 1;
-        iVar18 = (int)uVar9 / (int)uVar11;
-        iVar20 = (int)uVar10 / (int)uVar12;
-        uVar10 = ((uVar10 & 0x7fffffff) << 1 | (uVar10 & 0xffffffff) >> 0x1f) - 1;
-        trapWord(6,uVar12,0);
-        trapWord(5,uVar11 & ~(((uVar9 & 0x7fffffff) << 1 | (uVar9 & 0xffffffff) >> 0x1f) - 1),0xffff
-                );
-        trapWord(5,uVar12 & ~uVar10,0xffff);
-        iVar15 = estimate_kf_group_q(pVVar6,(((double)(longlong)(iVar20 * iVar18) /
-                                             (double)(longlong)(iVar8 * iVar15)) * dVar51 + dVar35)
-                                            * dVar41 * dVar49,(int)uVar10,iVar7,iVar20,dVar40);
-        iVar31 = iVar31 + 4;
-      } while (pVVar6->worst_quality <= iVar15);
+      iVar17 = 1;
     }
-    else if ((iVar31 < iVar8) &&
-            ((longlong)((pVVar6->total_stats->count / dVar41) * (double)(longlong)*piVar30) / 0x14 <
-             (longlong)((pVVar6->oxcf).starting_buffer_level - pVVar6->buffer_level)))
-    goto LAB_82827f3c;
+    uVar18 = *piVar23;
+    if ((uVar18 < 4) && (uVar18 != 0)) {
+      if (uVar18 == 1) {
+        iVar19 = 4;
+        uVar11 = 5;
+      }
+      else {
+        if (uVar18 != 2) {
+          uVar11 = 2;
+          goto LAB_82828010;
+        }
+        iVar19 = 3;
+        uVar11 = 5;
+      }
+    }
+    else {
+      uVar11 = 1;
+LAB_82828010:
+      iVar19 = 1;
+    }
+    iVar14 = *piVar26;
+    trapWord(6,uVar10,0);
+    iVar7 = *piVar25;
+    uVar8 = ((longlong)iVar14 * (longlong)iVar17 + uVar10) - 1;
+    uVar9 = ((longlong)iVar7 * (longlong)iVar19 + uVar11) - 1;
+    iVar17 = (int)uVar8 / (int)uVar10;
+    iVar19 = (int)uVar9 / (int)uVar11;
+    uVar9 = ((uVar9 & 0x7fffffff) << 1 | (uVar9 & 0xffffffff) >> 0x1f) - 1;
+    trapWord(6,uVar11,0);
+    trapWord(5,uVar10 & ~(((uVar8 & 0x7fffffff) << 1 | (uVar8 & 0xffffffff) >> 0x1f) - 1),0xffff);
+    trapWord(5,uVar11 & ~uVar9,0xffff);
+    iVar14 = estimate_kf_group_q(param_1,(((double)(longlong)(iVar19 * iVar17) /
+                                          (double)(longlong)(iVar7 * iVar14)) * dVar50 + dVar34) *
+                                         dVar40 * dVar48,(int)uVar9,iVar6,iVar19,dVar39);
+    iVar30 = iVar30 + 4;
+  } while (param_1->worst_quality <= iVar14);
+LAB_828280c0:
+  if ((*piVar13 != iVar17) || ((param_1->common).Height != iVar19)) {
+    *piVar13 = iVar17;
+    (param_1->common).Height = iVar19;
+    vp8_alloc_compressor_data(param_1);
   }
-  if ((*piVar14 != iVar18) || ((pVVar6->common).Height != iVar20)) {
-    *piVar14 = iVar18;
-    (pVVar6->common).Height = iVar20;
-    vp8_alloc_compressor_data(pVVar6);
-  }
-LAB_828280e8:
-  __restfpr_15();
-  __restgprlr();
   return;
 }
 

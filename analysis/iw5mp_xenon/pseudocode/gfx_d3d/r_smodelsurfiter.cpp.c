@@ -2,31 +2,31 @@
 
 // 8277B070  SkipToNextDrawGroup  (gfx_d3d/r_smodelsurfiter.cpp:9)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void GfxSModelSurfIter::SkipToNextDrawGroup(GfxSModelSurfIter *param_1)
 
 {
   byte bVar1;
   ushort uVar2;
   ushort uVar3;
-  int iVar4;
-  ushort *puVar5;
+  ushort *puVar4;
   
-  iVar4 = __savegprlr_27(param_1);
-  puVar5 = *(ushort **)(iVar4 + 4);
-  uVar2 = *puVar5;
-  bVar1 = *(byte *)(puVar5 + 1);
+  puVar4 = (ushort *)param_1->current;
+  uVar2 = *puVar4;
+  bVar1 = *(byte *)(puVar4 + 1);
   do {
-    uVar3 = *puVar5;
-    *(ushort **)(iVar4 + 4) = puVar5 + (uVar3 >> 0xc) + 3;
-    if (*(ushort **)(iVar4 + 8) < puVar5 + (uVar3 >> 0xc) + 3) {
+    uVar3 = *puVar4;
+    param_1->current = (uchar *)(puVar4 + (uVar3 >> 0xc) + 3);
+    if (param_1->end < puVar4 + (uVar3 >> 0xc) + 3) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_smodelsurfiter_inline.h"
                       ,0xa6,0,"%s");
     }
-    puVar5 = *(ushort **)(iVar4 + 4);
-  } while ((puVar5 != *(ushort **)(iVar4 + 8)) &&
-          ((((ulonglong)*puVar5 & 0xfff) << 10 | (ulonglong)*(byte *)(puVar5 + 1)) << 8 ==
+    puVar4 = (ushort *)param_1->current;
+  } while ((puVar4 != (ushort *)param_1->end) &&
+          ((((ulonglong)*puVar4 & 0xfff) << 10 | (ulonglong)*(byte *)(puVar4 + 1)) << 8 ==
            (((ulonglong)uVar2 & 0xfff) << 10 | (ulonglong)bVar1) << 8));
-  __restgprlr_27();
   return;
 }
 

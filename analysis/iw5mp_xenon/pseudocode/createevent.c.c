@@ -2,34 +2,29 @@
 
 // 828A92C0  CreateEventA  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/xrtl/createevent.c:80)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void * CreateEventA(void *param_1,int param_2,int param_3,char *param_4)
 
 {
   _OBJECT_ATTRIBUTES *p_Var1;
   long lVar2;
   long lVar3;
-  void *pvVar4;
-  longlong lVar5;
-  ulonglong uVar6;
-  ulonglong uVar7;
-  undefined4 local_40 [2];
+  void *local_40 [2];
   _STRING _Stack_38;
   _OBJECT_ATTRIBUTES a_Stack_30 [4];
   
-  uVar7 = (ulonglong)(int)param_4;
-  uVar6 = (ulonglong)param_3;
-  lVar5 = (longlong)param_2;
-  __savegprlr_29(param_1,lVar5,uVar6);
-  if ((uVar7 & 0xffffffff) == 0) {
+  if (param_4 == (char *)0x0) {
     p_Var1 = (_OBJECT_ATTRIBUTES *)0x0;
   }
   else {
-    p_Var1 = XapiFormatObjectAttributes(a_Stack_30,&_Stack_38,(uchar *)uVar7);
+    p_Var1 = XapiFormatObjectAttributes(a_Stack_30,&_Stack_38,(uchar *)param_4);
   }
-  lVar2 = NtCreateEvent(local_40,p_Var1,(int)lVar5 == 0,uVar6 & 0xff);
+  lVar2 = NtCreateEvent(local_40,p_Var1,param_2 == 0,param_3 & 0xff);
   if (lVar2 < 0) {
     RtlSetLastNTError(lVar2);
-    local_40[0] = 0;
+    local_40[0] = (void *)0x0;
   }
   else {
     lVar3 = 0xb7;
@@ -38,7 +33,6 @@ void * CreateEventA(void *param_1,int param_2,int param_3,char *param_4)
     }
     RtlSetLastError(lVar3);
   }
-  pvVar4 = (void *)__restgprlr_29(local_40[0]);
-  return pvVar4;
+  return local_40[0];
 }
 

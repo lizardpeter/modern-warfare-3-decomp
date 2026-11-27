@@ -21,54 +21,50 @@ undefined8 sha256_init(undefined8 *param_1)
 
 // 82251D28  sha256_process  (line unknown)
 
-void sha256_process(undefined8 param_1,longlong param_2,ulonglong param_3)
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
+undefined8 sha256_process(longlong *param_1,longlong param_2,ulonglong param_3)
 
 {
-  longlong *plVar2;
   undefined8 uVar1;
-  int iVar3;
-  ulonglong uVar4;
+  int iVar2;
+  ulonglong uVar3;
   
-  plVar2 = (longlong *)__savegprlr_27();
-  if (0x40 < *(uint *)(plVar2 + 5)) {
-    __restgprlr_27(0x10);
-    return;
+  if (0x40 < *(uint *)(param_1 + 5)) {
+    return 0x10;
   }
 joined_r0x82251d5c:
   if ((param_3 & 0xffffffff) == 0) {
-    uVar1 = 0;
+    return 0;
   }
-  else {
-    if (((ulonglong)*(uint *)(plVar2 + 5) != 0) || ((param_3 & 0xffffffff) < 0x40))
-    goto LAB_82251d98;
-    uVar1 = sha256_compress(plVar2,param_2);
-    if ((int)uVar1 == 0) {
-      param_2 = param_2 + 0x40;
-      param_3 = param_3 - 0x40;
-      goto LAB_82251df0;
-    }
+  if (((ulonglong)*(uint *)(param_1 + 5) != 0) || ((param_3 & 0xffffffff) < 0x40))
+  goto LAB_82251d98;
+  uVar1 = sha256_compress(param_1,param_2);
+  if ((int)uVar1 != 0) {
+    return uVar1;
   }
-  goto LAB_82251e08;
+  param_2 = param_2 + 0x40;
+  param_3 = param_3 - 0x40;
+  goto LAB_82251df0;
 LAB_82251d98:
-  uVar4 = 0x40 - (ulonglong)*(uint *)(plVar2 + 5);
-  if ((param_3 & 0xffffffff) < (uVar4 & 0xffffffff)) {
-    uVar4 = param_3;
+  uVar3 = 0x40 - (ulonglong)*(uint *)(param_1 + 5);
+  if ((param_3 & 0xffffffff) < (uVar3 & 0xffffffff)) {
+    uVar3 = param_3;
   }
   memcpy();
-  param_2 = uVar4 + param_2;
-  iVar3 = (int)uVar4 + *(int *)(plVar2 + 5);
-  param_3 = param_3 - uVar4;
-  *(int *)(plVar2 + 5) = iVar3;
-  if (iVar3 == 0x40) {
-    uVar1 = sha256_compress(plVar2,(int)plVar2 + 0x2c);
+  param_2 = uVar3 + param_2;
+  iVar2 = (int)uVar3 + *(int *)(param_1 + 5);
+  param_3 = param_3 - uVar3;
+  *(int *)(param_1 + 5) = iVar2;
+  if (iVar2 == 0x40) {
+    uVar1 = sha256_compress(param_1,(int)param_1 + 0x2c);
     if ((int)uVar1 != 0) {
-LAB_82251e08:
-      __restgprlr_27(uVar1);
-      return;
+      return uVar1;
     }
-    *(undefined4 *)(plVar2 + 5) = 0;
+    *(undefined4 *)(param_1 + 5) = 0;
 LAB_82251df0:
-    *plVar2 = *plVar2 + 0x200;
+    *param_1 = *param_1 + 0x200;
   }
   goto joined_r0x82251d5c;
 }
@@ -76,82 +72,81 @@ LAB_82251df0:
 
 // 82251E10  sha256_done  (line unknown)
 
-void sha256_done(undefined8 param_1,undefined1 *param_2)
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
+undefined8 sha256_done(longlong *param_1,undefined1 *param_2)
 
 {
   int iVar1;
-  longlong *plVar2;
-  uint uVar3;
+  uint uVar2;
   
-  plVar2 = (longlong *)__savegprlr_29();
-  uVar3 = *(uint *)(plVar2 + 5);
-  if (0x3f < uVar3) {
-    __restgprlr_29(0x10);
-    return;
+  uVar2 = *(uint *)(param_1 + 5);
+  if (0x3f < uVar2) {
+    return 0x10;
   }
-  *plVar2 = ((ulonglong)uVar3 & 0x1fffffff) * 8 + *plVar2;
-  ((undefined1 *)(uVar3 + (int)plVar2))[0x2c] = 0x80;
-  uVar3 = *(int *)(plVar2 + 5) + 1;
-  *(uint *)(plVar2 + 5) = uVar3;
-  if (0x38 < uVar3) {
-    while (uVar3 < 0x40) {
-      ((undefined1 *)((int)plVar2 + *(int *)(plVar2 + 5)))[0x2c] = 0;
-      iVar1 = *(int *)(plVar2 + 5);
-      *(int *)(plVar2 + 5) = iVar1 + 1;
-      uVar3 = iVar1 + 1;
+  *param_1 = ((ulonglong)uVar2 & 0x1fffffff) * 8 + *param_1;
+  *(undefined1 *)((int)param_1 + uVar2 + 0x2c) = 0x80;
+  uVar2 = *(int *)(param_1 + 5) + 1;
+  *(uint *)(param_1 + 5) = uVar2;
+  if (0x38 < uVar2) {
+    while (uVar2 < 0x40) {
+      *(undefined1 *)((int)param_1 + *(int *)(param_1 + 5) + 0x2c) = 0;
+      iVar1 = *(int *)(param_1 + 5);
+      *(int *)(param_1 + 5) = iVar1 + 1;
+      uVar2 = iVar1 + 1;
     }
-    sha256_compress(plVar2,(undefined1 *)((int)plVar2 + 0x2c));
-    *(undefined4 *)(plVar2 + 5) = 0;
+    sha256_compress(param_1,(undefined1 *)((int)param_1 + 0x2c));
+    *(undefined4 *)(param_1 + 5) = 0;
   }
-  uVar3 = *(uint *)(plVar2 + 5);
-  while (uVar3 < 0x38) {
-    ((undefined1 *)((int)plVar2 + *(int *)(plVar2 + 5)))[0x2c] = 0;
-    uVar3 = *(int *)(plVar2 + 5) + 1;
-    *(uint *)(plVar2 + 5) = uVar3;
+  uVar2 = *(uint *)(param_1 + 5);
+  while (uVar2 < 0x38) {
+    *(undefined1 *)((int)param_1 + *(int *)(param_1 + 5) + 0x2c) = 0;
+    uVar2 = *(int *)(param_1 + 5) + 1;
+    *(uint *)(param_1 + 5) = uVar2;
   }
-  *(undefined1 *)((int)plVar2 + 100) = *(undefined1 *)plVar2;
-  *(undefined1 *)((int)plVar2 + 0x65) = *(undefined1 *)((int)plVar2 + 1);
-  *(undefined1 *)((int)plVar2 + 0x66) = *(undefined1 *)((int)plVar2 + 2);
-  *(undefined1 *)((int)plVar2 + 0x67) = *(undefined1 *)((int)plVar2 + 3);
-  *(undefined1 *)(plVar2 + 0xd) = *(undefined1 *)((int)plVar2 + 4);
-  *(undefined1 *)((int)plVar2 + 0x69) = *(undefined1 *)((int)plVar2 + 5);
-  *(undefined1 *)((int)plVar2 + 0x6a) = *(undefined1 *)((int)plVar2 + 6);
-  *(char *)((int)plVar2 + 0x6b) = (char)*plVar2;
-  sha256_compress(plVar2,(undefined1 *)((int)plVar2 + 0x2c));
-  *param_2 = *(undefined1 *)(plVar2 + 1);
-  param_2[1] = *(undefined1 *)((int)plVar2 + 9);
-  param_2[2] = *(undefined1 *)((int)plVar2 + 10);
-  param_2[3] = (char)*(undefined4 *)(plVar2 + 1);
-  param_2[4] = *(undefined1 *)((int)plVar2 + 0xc);
-  param_2[5] = *(undefined1 *)((int)plVar2 + 0xd);
-  param_2[6] = *(undefined1 *)((int)plVar2 + 0xe);
-  param_2[7] = (char)*(undefined4 *)((int)plVar2 + 0xc);
-  param_2[8] = *(undefined1 *)(plVar2 + 2);
-  param_2[9] = *(undefined1 *)((int)plVar2 + 0x11);
-  param_2[10] = *(undefined1 *)((int)plVar2 + 0x12);
-  param_2[0xb] = (char)*(undefined4 *)(plVar2 + 2);
-  param_2[0xc] = *(undefined1 *)((int)plVar2 + 0x14);
-  param_2[0xd] = *(undefined1 *)((int)plVar2 + 0x15);
-  param_2[0xe] = *(undefined1 *)((int)plVar2 + 0x16);
-  param_2[0xf] = (char)*(undefined4 *)((int)plVar2 + 0x14);
-  param_2[0x10] = *(undefined1 *)(plVar2 + 3);
-  param_2[0x11] = *(undefined1 *)((int)plVar2 + 0x19);
-  param_2[0x12] = *(undefined1 *)((int)plVar2 + 0x1a);
-  param_2[0x13] = (char)*(undefined4 *)(plVar2 + 3);
-  param_2[0x14] = *(undefined1 *)((int)plVar2 + 0x1c);
-  param_2[0x15] = *(undefined1 *)((int)plVar2 + 0x1d);
-  param_2[0x16] = *(undefined1 *)((int)plVar2 + 0x1e);
-  param_2[0x17] = (char)*(undefined4 *)((int)plVar2 + 0x1c);
-  param_2[0x18] = *(undefined1 *)(plVar2 + 4);
-  param_2[0x19] = *(undefined1 *)((int)plVar2 + 0x21);
-  param_2[0x1a] = *(undefined1 *)((int)plVar2 + 0x22);
-  param_2[0x1b] = (char)*(undefined4 *)(plVar2 + 4);
-  param_2[0x1c] = *(undefined1 *)((int)plVar2 + 0x24);
-  param_2[0x1d] = *(undefined1 *)((int)plVar2 + 0x25);
-  param_2[0x1e] = *(undefined1 *)((int)plVar2 + 0x26);
-  param_2[0x1f] = (char)*(undefined4 *)((int)plVar2 + 0x24);
-  __restgprlr_29(0);
-  return;
+  *(undefined1 *)((int)param_1 + 100) = *(undefined1 *)param_1;
+  *(undefined1 *)((int)param_1 + 0x65) = *(undefined1 *)((int)param_1 + 1);
+  *(undefined1 *)((int)param_1 + 0x66) = *(undefined1 *)((int)param_1 + 2);
+  *(undefined1 *)((int)param_1 + 0x67) = *(undefined1 *)((int)param_1 + 3);
+  *(undefined1 *)(param_1 + 0xd) = *(undefined1 *)((int)param_1 + 4);
+  *(undefined1 *)((int)param_1 + 0x69) = *(undefined1 *)((int)param_1 + 5);
+  *(undefined1 *)((int)param_1 + 0x6a) = *(undefined1 *)((int)param_1 + 6);
+  *(char *)((int)param_1 + 0x6b) = (char)*param_1;
+  sha256_compress(param_1,(undefined1 *)((int)param_1 + 0x2c));
+  *param_2 = *(undefined1 *)(param_1 + 1);
+  param_2[1] = *(undefined1 *)((int)param_1 + 9);
+  param_2[2] = *(undefined1 *)((int)param_1 + 10);
+  param_2[3] = (char)*(undefined4 *)(param_1 + 1);
+  param_2[4] = *(undefined1 *)((int)param_1 + 0xc);
+  param_2[5] = *(undefined1 *)((int)param_1 + 0xd);
+  param_2[6] = *(undefined1 *)((int)param_1 + 0xe);
+  param_2[7] = (char)*(undefined4 *)((int)param_1 + 0xc);
+  param_2[8] = *(undefined1 *)(param_1 + 2);
+  param_2[9] = *(undefined1 *)((int)param_1 + 0x11);
+  param_2[10] = *(undefined1 *)((int)param_1 + 0x12);
+  param_2[0xb] = (char)*(undefined4 *)(param_1 + 2);
+  param_2[0xc] = *(undefined1 *)((int)param_1 + 0x14);
+  param_2[0xd] = *(undefined1 *)((int)param_1 + 0x15);
+  param_2[0xe] = *(undefined1 *)((int)param_1 + 0x16);
+  param_2[0xf] = (char)*(undefined4 *)((int)param_1 + 0x14);
+  param_2[0x10] = *(undefined1 *)(param_1 + 3);
+  param_2[0x11] = *(undefined1 *)((int)param_1 + 0x19);
+  param_2[0x12] = *(undefined1 *)((int)param_1 + 0x1a);
+  param_2[0x13] = (char)*(undefined4 *)(param_1 + 3);
+  param_2[0x14] = *(undefined1 *)((int)param_1 + 0x1c);
+  param_2[0x15] = *(undefined1 *)((int)param_1 + 0x1d);
+  param_2[0x16] = *(undefined1 *)((int)param_1 + 0x1e);
+  param_2[0x17] = (char)*(undefined4 *)((int)param_1 + 0x1c);
+  param_2[0x18] = *(undefined1 *)(param_1 + 4);
+  param_2[0x19] = *(undefined1 *)((int)param_1 + 0x21);
+  param_2[0x1a] = *(undefined1 *)((int)param_1 + 0x22);
+  param_2[0x1b] = (char)*(undefined4 *)(param_1 + 4);
+  param_2[0x1c] = *(undefined1 *)((int)param_1 + 0x24);
+  param_2[0x1d] = *(undefined1 *)((int)param_1 + 0x25);
+  param_2[0x1e] = *(undefined1 *)((int)param_1 + 0x26);
+  param_2[0x1f] = (char)*(undefined4 *)((int)param_1 + 0x24);
+  return 0;
 }
 
 

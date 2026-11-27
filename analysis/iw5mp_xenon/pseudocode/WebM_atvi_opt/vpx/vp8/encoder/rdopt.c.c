@@ -40,30 +40,30 @@ int vp8_cost_token(char *param_1,uchar *param_2,vp8_token_struct *param_3)
 
 // 82837B00  fill_token_costs  (WebM_atvi_opt/vpx/vp8/encoder/rdopt.c:161)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 void fill_token_costs(uint (*param_1) [8] [3] [12],uchar (*param_2) [8] [3] [11])
 
 {
-  int iVar1;
-  longlong lVar2;
+  longlong lVar1;
+  int iVar2;
   int iVar3;
-  int iVar4;
   
-  iVar1 = __savegprlr_26(param_1);
-  iVar3 = 0;
+  iVar2 = 0;
   do {
-    lVar2 = 8;
+    lVar1 = 8;
     do {
-      iVar4 = 0;
+      iVar3 = 0;
       do {
-        vp8_cost_tokens((int *)((iVar3 + iVar4) * 0x30 + iVar1),(*param_2)[0][iVar3 + iVar4],
+        vp8_cost_tokens((int *)((*param_1)[0] + iVar2 + iVar3),(*param_2)[0][iVar2 + iVar3],
                         &vp8_coef_tree);
-        iVar4 = iVar4 + 1;
-      } while (iVar4 < 3);
-      lVar2 = lVar2 + -1;
-      iVar3 = iVar3 + 3;
-    } while (lVar2 != 0);
-  } while (iVar3 < 0x60);
-  __restgprlr_26();
+        iVar3 = iVar3 + 1;
+      } while (iVar3 < 3);
+      lVar1 = lVar1 + -1;
+      iVar2 = iVar2 + 3;
+    } while (lVar1 != 0);
+  } while (iVar2 < 0x60);
   return;
 }
 
@@ -81,98 +81,98 @@ void vp8cx_initialize_me_consts(VP8_COMP *param_1,int param_2)
 
 // 82837BB0  vp8_initialize_rd_consts  (WebM_atvi_opt/vpx/vp8/encoder/rdopt.c:228)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void vp8_initialize_rd_consts(VP8_COMP *param_1,int param_2)
 
 {
-  VP8_COMP *pVVar1;
-  ulonglong uVar2;
-  int iVar3;
+  ulonglong uVar1;
+  int iVar2;
+  int *piVar3;
   int *piVar4;
-  int *piVar5;
-  longlong lVar6;
-  double dVar7;
+  longlong lVar5;
+  double dVar6;
   
-  pVVar1 = (VP8_COMP *)__savegprlr_27(param_1);
   if (param_2 < 0xa0) {
-    dVar7 = (double)(longlong)param_2;
+    dVar6 = (double)(longlong)param_2;
   }
   else {
-    dVar7 = 160.0;
+    dVar6 = 160.0;
   }
-  piVar5 = &pVVar1->RDMULT;
-  *piVar5 = (int)(dVar7 * dVar7 * 3.0);
-  if (0 < pVVar1->zbin_over_quant) {
-    dVar7 = (double)(longlong)
-                    (int)(((double)(longlong)pVVar1->zbin_over_quant * 0.0015625 + 1.0) * dVar7);
-    *piVar5 = (int)(dVar7 * dVar7 * 3.0);
+  piVar4 = &param_1->RDMULT;
+  *piVar4 = (int)(dVar6 * dVar6 * 3.0);
+  if (0 < param_1->zbin_over_quant) {
+    dVar6 = (double)(longlong)
+                    (int)(((double)(longlong)param_1->zbin_over_quant * 0.0015625 + 1.0) * dVar6);
+    *piVar4 = (int)(dVar6 * dVar6 * 3.0);
   }
-  if ((pVVar1->pass == 2) && ((pVVar1->common).frame_type != KEY_FRAME)) {
-    iVar3 = *piVar5;
-    if (pVVar1->next_iiratio < 0x20) {
-      *piVar5 = (rd_iifactor[pVVar1->next_iiratio] * iVar3 >> 4) + iVar3;
+  if ((param_1->pass == 2) && ((param_1->common).frame_type != KEY_FRAME)) {
+    iVar2 = *piVar4;
+    if (param_1->next_iiratio < 0x20) {
+      *piVar4 = (rd_iifactor[param_1->next_iiratio] * iVar2 >> 4) + iVar2;
     }
     else {
-      *piVar5 = (iVar3 * rd_iifactor[0x1f] >> 4) + iVar3;
+      *piVar4 = (iVar2 * rd_iifactor[0x1f] >> 4) + iVar2;
     }
   }
-  if (*piVar5 < 0x7d) {
-    *piVar5 = 0x7d;
+  if (*piVar4 < 0x7d) {
+    *piVar4 = 0x7d;
   }
-  iVar3 = *piVar5;
-  piVar4 = &(pVVar1->mb).errorperbit;
-  *piVar4 = iVar3 / 100;
-  if (iVar3 / 100 < 1) {
-    *piVar4 = 1;
+  iVar2 = *piVar4;
+  piVar3 = &(param_1->mb).errorperbit;
+  *piVar3 = iVar2 / 100;
+  if (iVar2 / 100 < 1) {
+    *piVar3 = 1;
   }
-  vp8_set_speed_features(pVVar1);
-  if ((pVVar1->common).simpler_lpf != 0) {
-    (pVVar1->common).filter_type = SIMPLE_LOOPFILTER;
+  vp8_set_speed_features(param_1);
+  if ((param_1->common).simpler_lpf != 0) {
+    (param_1->common).filter_type = SIMPLE_LOOPFILTER;
   }
-  dVar7 = pow((double)(longlong)param_2,1.25);
-  uVar2 = (ulonglong)(uint)(int)dVar7;
-  if ((int)dVar7 < 8) {
-    uVar2 = 8;
+  dVar6 = pow((double)(longlong)param_2,1.25);
+  uVar1 = (ulonglong)(uint)(int)dVar6;
+  if ((int)dVar6 < 8) {
+    uVar1 = 8;
   }
-  iVar3 = (int)uVar2;
-  if (*piVar5 < 0x3e9) {
-    lVar6 = 0x14;
-    pVVar1->RDDIV = 100;
-    trapWord(6,uVar2,0);
-    piVar5 = pVVar1->rd_thresh_mult + 0x13;
+  iVar2 = (int)uVar1;
+  if (*piVar4 < 0x3e9) {
+    lVar5 = 0x14;
+    param_1->RDDIV = 100;
+    trapWord(6,uVar1,0);
+    piVar4 = param_1->rd_thresh_mult + 0x13;
     do {
-      if (piVar5[0x3105] < 0x7fffffff / iVar3) {
-        piVar5[0x15] = piVar5[0x3105] * iVar3;
+      if (piVar4[0x3105] < 0x7fffffff / iVar2) {
+        piVar4[0x15] = piVar4[0x3105] * iVar2;
       }
       else {
-        piVar5[0x15] = 0x7fffffff;
+        piVar4[0x15] = 0x7fffffff;
       }
-      piVar4 = piVar5 + 0x15;
-      piVar5 = piVar5 + 1;
-      *piVar5 = *piVar4;
-      lVar6 = lVar6 + -1;
-    } while (lVar6 != 0);
+      piVar3 = piVar4 + 0x15;
+      piVar4 = piVar4 + 1;
+      *piVar4 = *piVar3;
+      lVar5 = lVar5 + -1;
+    } while (lVar5 != 0);
   }
   else {
-    lVar6 = 0x14;
-    *piVar5 = *piVar5 / 100;
-    piVar5 = pVVar1->rd_thresh_mult + 0x13;
-    pVVar1->RDDIV = 1;
+    lVar5 = 0x14;
+    *piVar4 = *piVar4 / 100;
+    piVar4 = param_1->rd_thresh_mult + 0x13;
+    param_1->RDDIV = 1;
     do {
-      if (piVar5[0x3105] < 0x7fffffff) {
-        piVar5[0x15] = (piVar5[0x3105] * iVar3) / 100;
+      if (piVar4[0x3105] < 0x7fffffff) {
+        piVar4[0x15] = (piVar4[0x3105] * iVar2) / 100;
       }
       else {
-        piVar5[0x15] = 0x7fffffff;
+        piVar4[0x15] = 0x7fffffff;
       }
-      piVar4 = piVar5 + 0x15;
-      piVar5 = piVar5 + 1;
-      *piVar5 = *piVar4;
-      lVar6 = lVar6 + -1;
-    } while (lVar6 != 0);
+      piVar3 = piVar4 + 0x15;
+      piVar4 = piVar4 + 1;
+      *piVar4 = *piVar3;
+      lVar5 = lVar5 + -1;
+    } while (lVar5 != 0);
   }
-  fill_token_costs((pVVar1->mb).token_costs,(pVVar1->common).fc.coef_probs);
-  vp8_init_mode_costs(pVVar1);
-  __restgprlr_27();
+  fill_token_costs((param_1->mb).token_costs,(param_1->common).fc.coef_probs);
+  vp8_init_mode_costs(param_1);
   return;
 }
 
@@ -238,225 +238,213 @@ void vp8_auto_select_speed(VP8_COMP *param_1)
 
 // 82837FD8  vp8_block_error_c  (WebM_atvi_opt/vpx/vp8/encoder/rdopt.c:424)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 int vp8_block_error_c(short *param_1,short *param_2)
 
 {
   short *psVar1;
   short *psVar2;
-  short *psVar3;
+  int iVar3;
   int iVar4;
-  longlong lVar5;
-  longlong lVar6;
-  longlong lVar7;
-  longlong lVar8;
-  longlong lVar9;
-  short *psVar10;
-  longlong lVar11;
-  int iVar12;
-  longlong lVar13;
+  int iVar5;
+  int iVar6;
+  short *psVar7;
+  short *psVar8;
+  int iVar9;
+  longlong lVar10;
   
-  lVar5 = (longlong)(int)param_2;
-  iVar4 = __savegprlr_26(param_1);
-  lVar9 = 0;
-  lVar6 = 0;
-  lVar7 = 0;
-  lVar8 = 0;
-  lVar13 = 4;
-  psVar10 = (short *)(iVar4 + -2);
-  lVar11 = lVar5 + 2;
+  iVar6 = 0;
+  iVar3 = 0;
+  iVar4 = 0;
+  iVar5 = 0;
+  lVar10 = 4;
+  psVar7 = param_1 + -1;
+  psVar8 = param_2 + 1;
   do {
-    psVar1 = psVar10 + 1;
-    psVar2 = (short *)lVar11;
-    psVar3 = psVar10 + 3;
-    psVar10 = psVar10 + 4;
-    iVar12 = (int)*(short *)((iVar4 - (int)lVar5) + (int)psVar2) - (int)*psVar2;
-    lVar9 = (longlong)((int)*psVar1 - (int)psVar2[-1]) * (longlong)((int)*psVar1 - (int)psVar2[-1])
-            + lVar9;
-    lVar8 = (longlong)iVar12 * (longlong)iVar12 + lVar8;
-    lVar7 = (longlong)((int)*psVar3 - (int)psVar2[1]) * (longlong)((int)*psVar3 - (int)psVar2[1]) +
-            lVar7;
-    lVar6 = (longlong)((int)*psVar10 - (int)psVar2[2]) * (longlong)((int)*psVar10 - (int)psVar2[2])
-            + lVar6;
-    lVar11 = lVar11 + 8;
-    lVar13 = lVar13 + -1;
-  } while (lVar13 != 0);
-  iVar4 = __restgprlr_26(lVar6 + lVar7 + lVar8 + lVar9);
-  return iVar4;
+    psVar1 = psVar7 + 1;
+    psVar2 = psVar7 + 3;
+    psVar7 = psVar7 + 4;
+    iVar9 = (int)*(short *)(((int)param_1 - (int)param_2) + (int)psVar8) - (int)*psVar8;
+    iVar6 = ((int)*psVar1 - (int)psVar8[-1]) * ((int)*psVar1 - (int)psVar8[-1]) + iVar6;
+    iVar5 = iVar9 * iVar9 + iVar5;
+    iVar4 = ((int)*psVar2 - (int)psVar8[1]) * ((int)*psVar2 - (int)psVar8[1]) + iVar4;
+    iVar3 = ((int)*psVar7 - (int)psVar8[2]) * ((int)*psVar7 - (int)psVar8[2]) + iVar3;
+    psVar8 = psVar8 + 4;
+    lVar10 = lVar10 + -1;
+  } while (lVar10 != 0);
+  return iVar3 + iVar4 + iVar5 + iVar6;
 }
 
 
 // 82838090  vp8_mbblock_error_c  (WebM_atvi_opt/vpx/vp8/encoder/rdopt.c:438)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
+
 int vp8_mbblock_error_c(MACROBLOCK *param_1,int param_2)
 
 {
-  int iVar2;
-  longlong lVar1;
-  ulonglong uVar3;
-  longlong lVar4;
-  longlong lVar5;
-  int iVar6;
-  longlong lVar7;
-  longlong lVar8;
+  int iVar1;
+  ulonglong uVar2;
+  int iVar3;
+  int iVar4;
+  int iVar5;
+  longlong lVar6;
+  int iVar7;
+  int iVar8;
   int iVar9;
   longlong lVar10;
-  longlong lVar11;
-  int iVar12;
+  BLOCKD *pBVar11;
+  BLOCK *pBVar12;
   ulonglong uVar13;
   
-  uVar3 = (ulonglong)param_2;
-  iVar2 = __savegprlr_25(param_1);
-  lVar1 = 0;
-  iVar12 = iVar2 + 0x162c;
-  iVar2 = iVar2 + 0x640;
+  uVar2 = (ulonglong)param_2;
+  iVar1 = 0;
+  pBVar11 = (param_1->e_mbd).block;
+  pBVar12 = param_1->block;
   lVar10 = 0x10;
   do {
-    lVar5 = 0;
-    lVar4 = 0;
-    lVar11 = 0;
-    if ((int)uVar3 < 0x10) {
-      uVar13 = uVar3;
-      if (1 < 0x10 - (int)uVar3) {
-        lVar8 = (uVar3 & 0x7fffffff) << 1;
-        lVar7 = ((0xe - uVar3 & 0xffffffff) >> 1) + 1;
-        uVar13 = (lVar7 * 2 & 0xfffffffeU) + uVar3;
+    iVar4 = 0;
+    iVar3 = 0;
+    iVar7 = 0;
+    if (param_2 < 0x10) {
+      uVar13 = uVar2;
+      if (1 < 0x10 - param_2) {
+        lVar6 = ((0xe - uVar2 & 0xffffffff) >> 1) + 1;
+        uVar13 = (lVar6 * 2 & 0xfffffffeU) + uVar2;
+        iVar8 = param_2 << 1;
         do {
-          iVar6 = (int)lVar8;
-          lVar8 = lVar8 + 4;
-          iVar9 = (int)*(short *)(*(int *)(iVar2 + 4) + iVar6) -
-                  (int)*(short *)(*(int *)(iVar12 + 4) + iVar6);
-          iVar6 = (int)*(short *)(*(int *)(iVar2 + 4) + iVar6 + 2) -
-                  (int)*(short *)(*(int *)(iVar12 + 4) + iVar6 + 2);
-          lVar5 = (longlong)iVar9 * (longlong)iVar9 + lVar5;
-          lVar4 = (longlong)iVar6 * (longlong)iVar6 + lVar4;
-          lVar7 = lVar7 + -1;
-        } while (lVar7 != 0);
+          iVar9 = (int)*(short *)((int)pBVar12->coeff + iVar8) -
+                  (int)*(short *)((int)pBVar11->dqcoeff + iVar8);
+          iVar5 = (int)*(short *)((int)pBVar12->coeff + iVar8 + 2) -
+                  (int)*(short *)((int)pBVar11->dqcoeff + iVar8 + 2);
+          iVar4 = iVar9 * iVar9 + iVar4;
+          iVar3 = iVar5 * iVar5 + iVar3;
+          lVar6 = lVar6 + -1;
+          iVar8 = iVar8 + 4;
+        } while (lVar6 != 0);
       }
       if ((int)uVar13 < 0x10) {
-        iVar6 = (int)((uVar13 & 0xffffffff) << 1);
-        iVar6 = (int)*(short *)(*(int *)(iVar2 + 4) + iVar6) -
-                (int)*(short *)(*(int *)(iVar12 + 4) + iVar6);
-        lVar11 = (longlong)iVar6 * (longlong)iVar6;
+        iVar7 = (int)((uVar13 & 0xffffffff) << 1);
+        iVar7 = (int)*(short *)((int)pBVar12->coeff + iVar7) -
+                (int)*(short *)((int)pBVar11->dqcoeff + iVar7);
+        iVar7 = iVar7 * iVar7;
       }
-      lVar11 = lVar4 + lVar5 + lVar11;
+      iVar7 = iVar3 + iVar4 + iVar7;
     }
     lVar10 = lVar10 + -1;
-    lVar1 = lVar11 + lVar1;
-    iVar2 = iVar2 + 0x30;
-    iVar12 = iVar12 + 0x3c;
+    iVar1 = iVar7 + iVar1;
+    pBVar12 = pBVar12 + 1;
+    pBVar11 = pBVar11 + 1;
   } while (lVar10 != 0);
-  iVar2 = __restgprlr_25(lVar1);
-  return iVar2;
+  return iVar1;
 }
 
 
 // 82838188  vp8_mbuverror_c  (WebM_atvi_opt/vpx/vp8/encoder/rdopt.c:464)
 
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
+
 int vp8_mbuverror_c(MACROBLOCK *param_1)
 
 {
-  int iVar1;
+  short *psVar1;
   short *psVar2;
-  short *psVar3;
+  int iVar3;
+  int iVar4;
   int iVar5;
-  longlong lVar4;
-  longlong lVar6;
-  longlong lVar7;
-  longlong lVar8;
+  int iVar6;
+  int iVar7;
+  int iVar8;
   int iVar9;
-  int iVar10;
-  int iVar11;
-  int iVar12;
-  longlong lVar13;
-  int *piVar14;
-  int *piVar15;
-  int iVar16;
-  int iVar17;
-  longlong lVar18;
-  longlong lVar19;
+  longlong lVar10;
+  short **ppsVar11;
+  short **ppsVar12;
+  int iVar13;
+  int iVar14;
+  int iVar15;
+  longlong lVar16;
   
-  iVar5 = __savegprlr_22(param_1);
-  lVar4 = 0;
-  piVar15 = (int *)(iVar5 + 0x944);
-  piVar14 = (int *)(iVar5 + 0x19f0);
-  lVar13 = 8;
+  iVar3 = 0;
+  ppsVar12 = &param_1->block[0x10].coeff;
+  ppsVar11 = &(param_1->e_mbd).block[0x10].dqcoeff;
+  lVar10 = 8;
   do {
-    iVar5 = *piVar14;
-    iVar1 = *piVar15;
-    lVar8 = 0;
-    lVar18 = 0;
-    lVar6 = 0;
-    lVar7 = 0;
-    iVar10 = 0;
-    lVar19 = 4;
+    psVar1 = *ppsVar11;
+    psVar2 = *ppsVar12;
+    iVar6 = 0;
+    iVar15 = 0;
+    iVar4 = 0;
+    iVar5 = 0;
+    lVar16 = 4;
+    iVar7 = 0;
     do {
-      iVar9 = iVar10 + 6;
-      psVar2 = (short *)(iVar1 + iVar10);
-      iVar11 = iVar5 + iVar10;
-      psVar3 = (short *)(iVar5 + iVar10);
-      iVar16 = iVar10 + 4;
-      iVar12 = iVar1 + iVar10;
-      iVar10 = iVar10 + 8;
-      iVar17 = (int)*(short *)(iVar12 + 2) - (int)*(short *)(iVar11 + 2);
-      iVar16 = (int)*(short *)(iVar1 + iVar16) - (int)*(short *)(iVar5 + iVar16);
-      iVar12 = (int)*psVar2 - (int)*psVar3;
-      iVar11 = (int)*(short *)(iVar1 + iVar9) - (int)*(short *)(iVar5 + iVar9);
-      lVar8 = (longlong)iVar12 * (longlong)iVar12 + lVar8;
-      lVar7 = (longlong)iVar17 * (longlong)iVar17 + lVar7;
-      lVar6 = (longlong)iVar16 * (longlong)iVar16 + lVar6;
-      lVar18 = (longlong)iVar11 * (longlong)iVar11 + lVar18;
-      lVar19 = lVar19 + -1;
-    } while (lVar19 != 0);
-    lVar13 = lVar13 + -1;
-    piVar15 = piVar15 + 0xc;
-    piVar14 = piVar14 + 0xf;
-    lVar4 = lVar18 + lVar6 + lVar7 + lVar8 + lVar4;
-  } while (lVar13 != 0);
-  iVar5 = __restgprlr_22(lVar4);
-  return iVar5;
+      iVar14 = (int)*(short *)((int)psVar2 + iVar7 + 2) - (int)*(short *)((int)psVar1 + iVar7 + 2);
+      iVar13 = (int)*(short *)((int)psVar2 + iVar7 + 4) - (int)*(short *)((int)psVar1 + iVar7 + 4);
+      iVar9 = (int)*(short *)((int)psVar2 + iVar7) - (int)*(short *)((int)psVar1 + iVar7);
+      iVar8 = (int)*(short *)((int)psVar2 + iVar7 + 6) - (int)*(short *)((int)psVar1 + iVar7 + 6);
+      iVar6 = iVar9 * iVar9 + iVar6;
+      iVar5 = iVar14 * iVar14 + iVar5;
+      iVar4 = iVar13 * iVar13 + iVar4;
+      iVar15 = iVar8 * iVar8 + iVar15;
+      lVar16 = lVar16 + -1;
+      iVar7 = iVar7 + 8;
+    } while (lVar16 != 0);
+    lVar10 = lVar10 + -1;
+    ppsVar12 = ppsVar12 + 0xc;
+    ppsVar11 = ppsVar11 + 0xf;
+    iVar3 = iVar15 + iVar4 + iVar5 + iVar6 + iVar3;
+  } while (lVar10 != 0);
+  return iVar3;
 }
 
 
 // 82838278  VP8_UVSSE  (WebM_atvi_opt/vpx/vp8/encoder/rdopt.c:485)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
+
 int VP8_UVSSE(MACROBLOCK *param_1,vp8_variance_rtcd_vtable_t *param_2)
 
 {
-  int iVar1;
-  int iVar2;
+  short sVar1;
+  short sVar2;
   int iVar3;
-  int iVar4;
-  int iVar5;
+  uchar *puVar4;
+  uchar *puVar5;
   int iVar6;
-  uint uVar7;
-  uint uVar8;
-  int iVar9;
-  int iVar10;
-  int iVar11;
+  int iVar7;
+  int iVar8;
+  uchar *puVar9;
+  uint uVar10;
+  uint uVar11;
+  int iVar12;
   uint local_50;
   uint local_4c [19];
   
-  iVar10 = __savegprlr_24(param_1);
-  iVar11 = *(int *)(iVar10 + 0x964);
-  iVar1 = **(int **)(iVar10 + 0x960);
-  iVar2 = **(int **)(iVar10 + 0xa20);
+  iVar3 = param_1->block[0x10].src;
+  puVar4 = *param_1->block[0x10].base_src;
+  puVar5 = *param_1->block[0x14].base_src;
   local_50 = 0;
   local_4c[0] = 0;
-  iVar3 = *(int *)(iVar10 + 0xa24);
-  iVar4 = *(int *)(iVar10 + 0x968);
-  iVar5 = *(int *)(iVar10 + 0x1a0c);
-  vp8_build_uvmvs((MACROBLOCKD *)(iVar10 + 0xb30),0);
-  iVar6 = *(int *)(iVar10 + 0x1c28);
-  iVar9 = ((int)*(short *)(iVar10 + 0x1a24) >> 3) * iVar5 + ((int)*(short *)(iVar10 + 0x1a26) >> 3);
-  uVar8 = (uint)*(short *)(iVar10 + 0x1a24) & 7;
-  uVar7 = (uint)*(short *)(iVar10 + 0x1a26) & 7;
+  iVar6 = param_1->block[0x14].src;
+  iVar7 = param_1->block[0x10].src_stride;
+  iVar8 = (param_1->e_mbd).block[0x10].pre_stride;
+  vp8_build_uvmvs(&param_1->e_mbd,0);
+  sVar1 = (param_1->e_mbd).block[0x10].bmi.mv.as_mv.row;
+  sVar2 = (param_1->e_mbd).block[0x10].bmi.mv.as_mv.col;
+  puVar9 = (param_1->e_mbd).pre.v_buffer;
+  iVar12 = ((int)sVar1 >> 3) * iVar8 + ((int)sVar2 >> 3);
+  uVar11 = (uint)sVar1 & 7;
+  uVar10 = (uint)sVar2 & 7;
   (*param_2->subpixvar8x8)
-            ((uchar *)(*(int *)(iVar10 + 0x1c24) + iVar9),iVar5,uVar7,uVar8,
-             (uchar *)(iVar1 + iVar11),iVar4,local_4c);
-  (*param_2->subpixvar8x8)
-            ((uchar *)(iVar6 + iVar9),iVar5,uVar7,uVar8,(uchar *)(iVar2 + iVar3),iVar4,&local_50);
-  iVar11 = __restgprlr_24((ulonglong)local_4c[0] + (ulonglong)local_50);
-  return iVar11;
+            ((param_1->e_mbd).pre.u_buffer + iVar12,iVar8,uVar10,uVar11,puVar4 + iVar3,iVar7,
+             local_4c);
+  (*param_2->subpixvar8x8)(puVar9 + iVar12,iVar8,uVar10,uVar11,puVar5 + iVar6,iVar7,&local_50);
+  return local_4c[0] + local_50;
 }
 
 

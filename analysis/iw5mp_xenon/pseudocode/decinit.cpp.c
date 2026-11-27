@@ -2,73 +2,67 @@
 
 // 828B5F98  init_decompression_memory_context  (<external>/Xenon/XDK-Main-FEB11/core/private/corelibs/compression/codec/lzx/decoder/decinit.cpp:70)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
+
 void XCOMPRESS::init_decompression_memory_context
                (void *param_1,ulong *param_2,int param_3,uint param_4,ulong param_5)
 
 {
   byte bVar1;
-  int iVar2;
-  ulong uVar3;
-  t_decoder_context *ptVar4;
+  uint uVar2;
+  uchar *puVar3;
+  int iVar4;
   int iVar5;
-  ulonglong uVar6;
-  ulonglong uVar7;
-  uint uVar8;
-  uchar *puVar9;
-  int iVar10;
+  t_decoder_context *ptVar6;
   
-  uVar7 = (ulonglong)(int)param_5;
-  uVar6 = (ulonglong)param_3;
-  iVar5 = __savegprlr_25(param_1);
-  uVar3 = (ulong)uVar6;
-  iVar2 = uVar3 + 0x105 + param_4;
-  iVar10 = iVar2 + 0x3010;
-  if ((uVar7 & 1) == 0) {
-    if ((uVar7 & 0x80000000) != 0) {
-      iVar10 = iVar2 + 0xb010;
+  iVar4 = param_3 + 0x105 + param_4;
+  iVar5 = iVar4 + 0x3010;
+  if ((param_5 & 1) == 0) {
+    if ((param_5 & 0x80000000) != 0) {
+      iVar5 = iVar4 + 0xb010;
     }
   }
   else {
-    iVar10 = iVar2 + 0xc81a;
+    iVar5 = iVar4 + 0xc81a;
   }
-  *param_2 = iVar10 + 0x8000;
-  if (iVar5 != 0) {
-    ptVar4 = (t_decoder_context *)(iVar5 + param_4);
-    build_global_tables(ptVar4);
-    uVar8 = 4;
-    ptVar4->dec_window_size = uVar3;
-    ptVar4->dec_malloc = (_func___cdecl_void_ptr_ulong *)0x0;
-    ptVar4->dec_free = (_func___cdecl_void_void_ptr *)0x0;
-    ptVar4->dec_window_mask = uVar3 - 1;
-    ptVar4->dec_memory = (void *)0x0;
-    ptVar4->dec_num_position_slots = '\x04';
+  *param_2 = iVar5 + 0x8000;
+  if (param_1 != (void *)0x0) {
+    ptVar6 = (t_decoder_context *)((int)param_1 + param_4);
+    build_global_tables(ptVar6);
+    uVar2 = 4;
+    ptVar6->dec_window_size = param_3;
+    ptVar6->dec_malloc = (_func___cdecl_void_ptr_ulong *)0x0;
+    ptVar6->dec_free = (_func___cdecl_void_void_ptr *)0x0;
+    ptVar6->dec_window_mask = param_3 - 1;
+    ptVar6->dec_memory = (void *)0x0;
+    ptVar6->dec_num_position_slots = '\x04';
     do {
-      bVar1 = ptVar4->dec_extra_bits_table[ptVar4->dec_num_position_slots];
-      ptVar4->dec_num_position_slots = ptVar4->dec_num_position_slots + 1;
-      uVar8 = (1 << (bVar1 & 0x3f)) + uVar8;
-    } while ((ulonglong)uVar8 < (uVar6 & 0xffffffff));
-    puVar9 = (uchar *)((int)ptVar4[1].dec_main_tree_table + uVar3 + 0xed);
-    ptVar4->dec_mem_window = (uchar *)(ptVar4 + 1);
-    (ptVar4->field39_0x2fec)._s_0.dec_dest_staging_offset = 0;
-    ptVar4->dec_dest_staging_buffer = puVar9;
-    puVar9 = puVar9 + 0x8000;
-    (ptVar4->field39_0x2fec)._s_0.dec_dest_staging_size = 0;
-    (ptVar4->field39_0x2fec)._s_0.dec_source_staging_buffer = (uchar *)0x0;
-    (ptVar4->field39_0x2fec)._s_0.dec_source_staging_size = 0;
-    (ptVar4->field39_0x2fec)._s_1.dec_td_last_source_offset = 0;
-    ptVar4->dec_td_last_decoded_size = 0;
-    ptVar4->dec_td_last_stage_offset = 0;
-    ptVar4->dec_td_last_stage_size = 0;
-    if ((uVar7 & 1) == 0) {
-      if ((uVar7 & 0x80000000) != 0) {
-        ptVar4->dec_td_staging_buffer = puVar9;
+      bVar1 = ptVar6->dec_extra_bits_table[ptVar6->dec_num_position_slots];
+      ptVar6->dec_num_position_slots = ptVar6->dec_num_position_slots + 1;
+      uVar2 = (1 << (bVar1 & 0x3f)) + uVar2;
+    } while (uVar2 < (uint)param_3);
+    puVar3 = (uchar *)((int)ptVar6[1].dec_main_tree_table + param_3 + 0xed);
+    ptVar6->dec_mem_window = (uchar *)(ptVar6 + 1);
+    (ptVar6->field39_0x2fec)._s_0.dec_dest_staging_offset = 0;
+    ptVar6->dec_dest_staging_buffer = puVar3;
+    puVar3 = puVar3 + 0x8000;
+    (ptVar6->field39_0x2fec)._s_0.dec_dest_staging_size = 0;
+    (ptVar6->field39_0x2fec)._s_0.dec_source_staging_buffer = (uchar *)0x0;
+    (ptVar6->field39_0x2fec)._s_0.dec_source_staging_size = 0;
+    (ptVar6->field39_0x2fec)._s_1.dec_td_last_source_offset = 0;
+    ptVar6->dec_td_last_decoded_size = 0;
+    ptVar6->dec_td_last_stage_offset = 0;
+    ptVar6->dec_td_last_stage_size = 0;
+    if ((param_5 & 1) == 0) {
+      if ((param_5 & 0x80000000) != 0) {
+        ptVar6->dec_td_staging_buffer = puVar3;
       }
     }
     else {
-      (ptVar4->field39_0x2fec)._s_0.dec_source_staging_buffer = puVar9;
+      (ptVar6->field39_0x2fec)._s_0.dec_source_staging_buffer = puVar3;
     }
   }
-  __restgprlr_25();
   return;
 }
 

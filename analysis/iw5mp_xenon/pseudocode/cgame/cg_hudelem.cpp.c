@@ -2,6 +2,8 @@
 
 // 822D0640  CG_HudElemRegisterDvars  (cgame/cg_hudelem.cpp:103)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void CG_HudElemRegisterDvars(void)
@@ -13,7 +15,6 @@ void CG_HudElemRegisterDvars(void)
   double dVar4;
   double dVar5;
   
-  __savegprlr_28();
   waypointDebugDraw = Dvar_RegisterBool("waypointDebugDraw",false,0,"");
   pcVar2 = "c\\cgame_mp\\cg_local_mp.h";
   uVar1 = 0;
@@ -103,32 +104,27 @@ void CG_HudElemRegisterDvars(void)
   objectiveTextOffsetY =
        Dvar_RegisterFloat("objectiveTextOffsetY",-5.33,(float)dVar3,(float)dVar5,0,
                           "c\\cgame_mp\\cg_local_mp.h");
-  __restgprlr_28();
   return;
 }
 
 
 // 822D0B48  CG_TranslateHudElemMessage  (cgame/cg_hudelem.cpp:157)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void CG_TranslateHudElemMessage
                (LocalClientNum_t param_1,char *param_2,char *param_3,char *param_4,int param_5)
 
 {
-  LocalClientNum_t LVar1;
-  char *pcVar2;
-  ulonglong uVar3;
-  ulonglong uVar4;
+  char *pcVar1;
   
-  uVar4 = (ulonglong)(int)param_4;
-  uVar3 = (ulonglong)(int)param_2;
-  LVar1 = __savegprlr_25(param_1);
-  if ((uVar3 & 0xffffffff) == 0) {
+  if (param_2 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_hudelem.cpp",0xa0,0,
                     "%s");
   }
-  if ((uVar4 & 0xffffffff) == 0) {
+  if (param_4 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_hudelem.cpp",0xa1,0,
                     "%s");
   }
@@ -136,35 +132,31 @@ void CG_TranslateHudElemMessage
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_hudelem.cpp",0xa2,0,
                     "%s");
   }
-  pcVar2 = SEH_LocalizeTextMessage((char *)uVar3,param_3,LOCMSG_SAFE);
-  UI_ReplaceDirective(LVar1,pcVar2,(char *)uVar4,param_5);
-  __restgprlr_25();
+  pcVar1 = SEH_LocalizeTextMessage(param_2,param_3,LOCMSG_SAFE);
+  UI_ReplaceDirective(param_1,pcVar1,param_4,param_5);
   return;
 }
 
 
 // 822D0C10  SafeTranslateHudElemString  (cgame/cg_hudelem.cpp:170)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void SafeTranslateHudElemString(LocalClientNum_t param_1,int param_2,char *param_3,int param_4)
 
 {
-  LocalClientNum_t LVar1;
-  char *pcVar2;
-  ulonglong uVar3;
+  char *pcVar1;
   
-  uVar3 = (ulonglong)(int)param_3;
-  LVar1 = __savegprlr_28(param_1);
-  if ((uVar3 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_hudelem.cpp",0xab,
-                    (int)(char *)uVar3,"%s");
+  if (param_3 == (char *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_hudelem.cpp",0xab,0,
+                    "%s");
   }
   if (param_2 != 0) {
-    pcVar2 = CL_GetConfigString(param_2 + 0x1d6);
-    CG_TranslateHudElemMessage(LVar1,pcVar2,"hudelem string",(char *)uVar3,param_4);
+    pcVar1 = CL_GetConfigString(param_2 + 0x1d6);
+    CG_TranslateHudElemMessage(param_1,pcVar1,"hudelem string",param_3,param_4);
   }
-  __restgprlr_28();
   return;
 }
 
@@ -315,75 +307,71 @@ float HudElemMaterialSpecifiedHeight
 
 // 822D10A0  HudElemMaterialWidth  (cgame/cg_hudelem.cpp:295)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 float HudElemMaterialWidth(ScreenPlacement *param_1,hudelem_s *param_2,cg_hudelem_t *param_3)
 
 {
-  ScreenPlacement *pSVar1;
-  int iVar2;
+  int iVar1;
+  double dVar2;
   double dVar3;
   double dVar4;
-  double dVar5;
-  float fVar6;
+  float fVar5;
   
-  pSVar1 = (ScreenPlacement *)__savegprlr_28(param_1);
-  fVar6 = HudElemMaterialSpecifiedWidth(pSVar1,param_2->alignScreen,param_2->width,param_3);
-  dVar3 = (double)fVar6;
+  fVar5 = HudElemMaterialSpecifiedWidth(param_1,param_2->alignScreen,param_2->width,param_3);
+  dVar2 = (double)fVar5;
   if ((0 < param_2->scaleTime) &&
-     (iVar2 = param_3->timeNow - param_2->scaleStartTime, iVar2 < param_2->scaleTime)) {
-    fVar6 = HudElemMaterialSpecifiedWidth
-                      (pSVar1,param_2->fromAlignScreen,param_2->fromWidth,param_3);
-    dVar4 = (double)fVar6;
-    if (iVar2 < 1) {
-      dVar3 = (double)__restgprlr_28(dVar4);
-      return (float)dVar3;
+     (iVar1 = param_3->timeNow - param_2->scaleStartTime, iVar1 < param_2->scaleTime)) {
+    fVar5 = HudElemMaterialSpecifiedWidth
+                      (param_1,param_2->fromAlignScreen,param_2->fromWidth,param_3);
+    dVar3 = (double)fVar5;
+    if (iVar1 < 1) {
+      return fVar5;
     }
-    dVar5 = (double)((float)(longlong)iVar2 / (float)(longlong)param_2->scaleTime);
-    if ((dVar5 < 0.0) || (1.0 < dVar5)) {
+    dVar4 = (double)((float)(longlong)iVar1 / (float)(longlong)param_2->scaleTime);
+    if ((dVar4 < 0.0) || (1.0 < dVar4)) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_hudelem.cpp",0x13a,
                       1,"lerp not in [0.0f, 1.0f]\n\t%g not in [%g, %g]");
     }
-    dVar3 = (double)__restgprlr_28((double)(float)((double)(float)(dVar3 - dVar4) * dVar5 + dVar4));
-    return (float)dVar3;
+    return (float)((double)(float)(dVar2 - dVar3) * dVar4 + dVar3);
   }
-  dVar3 = (double)__restgprlr_28(dVar3);
-  return (float)dVar3;
+  return fVar5;
 }
 
 
 // 822D11F8  HudElemMaterialHeight  (cgame/cg_hudelem.cpp:320)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 float HudElemMaterialHeight(ScreenPlacement *param_1,hudelem_s *param_2,cg_hudelem_t *param_3)
 
 {
-  ScreenPlacement *pSVar1;
-  int iVar2;
+  int iVar1;
+  double dVar2;
   double dVar3;
   double dVar4;
-  double dVar5;
-  float fVar6;
+  float fVar5;
   
-  pSVar1 = (ScreenPlacement *)__savegprlr_28(param_1);
-  fVar6 = HudElemMaterialSpecifiedHeight(pSVar1,param_2->alignScreen,param_2->height,param_3);
-  dVar3 = (double)fVar6;
+  fVar5 = HudElemMaterialSpecifiedHeight(param_1,param_2->alignScreen,param_2->height,param_3);
+  dVar2 = (double)fVar5;
   if ((0 < param_2->scaleTime) &&
-     (iVar2 = param_3->timeNow - param_2->scaleStartTime, iVar2 < param_2->scaleTime)) {
-    fVar6 = HudElemMaterialSpecifiedHeight
-                      (pSVar1,param_2->fromAlignScreen,param_2->fromHeight,param_3);
-    dVar4 = (double)fVar6;
-    if (iVar2 < 1) {
-      dVar3 = (double)__restgprlr_28(dVar4);
-      return (float)dVar3;
+     (iVar1 = param_3->timeNow - param_2->scaleStartTime, iVar1 < param_2->scaleTime)) {
+    fVar5 = HudElemMaterialSpecifiedHeight
+                      (param_1,param_2->fromAlignScreen,param_2->fromHeight,param_3);
+    dVar3 = (double)fVar5;
+    if (iVar1 < 1) {
+      return fVar5;
     }
-    dVar5 = (double)((float)(longlong)iVar2 / (float)(longlong)param_2->scaleTime);
-    if ((dVar5 < 0.0) || (1.0 < dVar5)) {
+    dVar4 = (double)((float)(longlong)iVar1 / (float)(longlong)param_2->scaleTime);
+    if ((dVar4 < 0.0) || (1.0 < dVar4)) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_hudelem.cpp",0x153,
                       1,"lerp not in [0.0f, 1.0f]\n\t%g not in [%g, %g]");
     }
-    dVar3 = (double)__restgprlr_28((double)(float)((double)(float)(dVar3 - dVar4) * dVar5 + dVar4));
-    return (float)dVar3;
+    return (float)((double)(float)(dVar2 - dVar3) * dVar4 + dVar3);
   }
-  dVar3 = (double)__restgprlr_28(dVar3);
-  return (float)dVar3;
+  return fVar5;
 }
 
 
@@ -504,50 +492,45 @@ float AlignHudElemY(int param_1,float param_2,float param_3)
 
 // 822D16B8  GetHudElemOrg  (cgame/cg_hudelem.cpp:455)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
+
 void GetHudElemOrg(ScreenPlacement *param_1,int param_2,int param_3,float param_4,float param_5,
                   float param_6,float param_7,float *param_8,float *param_9)
 
 {
-  ScreenPlacement *pSVar1;
-  longlong lVar2;
-  int iVar3;
-  int iVar4;
-  ulonglong in_r10;
-  double extraout_f1;
+  int iVar1;
+  float *in_r10;
+  double dVar2;
+  double dVar3;
+  double dVar4;
   double dVar5;
-  double dVar6;
-  double dVar7;
-  double dVar8;
-  float fVar9;
+  float fVar6;
   float *in_stack_00000054;
   
-  dVar7 = (double)param_7;
-  dVar6 = (double)param_6;
-  dVar5 = (double)param_5;
-  lVar2 = (longlong)param_2;
-  __savegprlr_25((double)param_4,param_1,lVar2,param_3,param_8,param_9);
-  iVar3 = (int)lVar2;
-  pSVar1 = (ScreenPlacement *)__savefpr_28();
-  dVar8 = extraout_f1;
-  iVar4 = iVar3;
-  if ((in_r10 & 0xffffffff) == 0) {
-    iVar4 = 0x1cd;
+  dVar5 = (double)param_7;
+  dVar4 = (double)param_6;
+  dVar3 = (double)param_5;
+  dVar2 = (double)param_4;
+  iVar1 = param_2;
+  if (in_r10 == (float *)0x0) {
+    iVar1 = 0x1cd;
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_hudelem.cpp",0x1cd,0,
                     "%s");
   }
   if (in_stack_00000054 == (float *)0x0) {
-    iVar4 = 0x1ce;
+    iVar1 = 0x1ce;
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_hudelem.cpp",0x1ce,0,
                     "%s");
   }
-  fVar9 = ScrPlace_ApplyX(pSVar1,(float)dVar8,iVar4);
-  fVar9 = AlignHudElemX(iVar3,fVar9,(float)dVar6);
-  *(float *)in_r10 = fVar9;
-  fVar9 = ScrPlace_ApplyY(pSVar1,(float)dVar5,iVar4);
-  fVar9 = AlignHudElemY(iVar3,fVar9,(float)dVar7);
-  *in_stack_00000054 = fVar9;
-  __restfpr_28();
-  __restgprlr_25();
+  fVar6 = ScrPlace_ApplyX(param_1,(float)dVar2,iVar1);
+  fVar6 = AlignHudElemX(param_2,fVar6,(float)dVar4);
+  *in_r10 = fVar6;
+  fVar6 = ScrPlace_ApplyY(param_1,(float)dVar3,iVar1);
+  fVar6 = AlignHudElemY(param_2,fVar6,(float)dVar5);
+  *in_stack_00000054 = fVar6;
   return;
 }
 
@@ -595,87 +578,78 @@ bool IsFontScaleLerping(hudelem_s *param_1,int param_2)
 
 // 822D1840  SetHudElemPos  (cgame/cg_hudelem.cpp:504)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void SetHudElemPos(ScreenPlacement *param_1,hudelem_s *param_2,cg_hudelem_t *param_3)
 
 {
   int iVar1;
   uint uVar2;
-  int iVar3;
-  float *pfVar4;
-  ScreenPlacement *pSVar5;
-  ulonglong uVar6;
   float *in_r6;
   char *in_r7;
-  longlong lVar7;
-  int iVar9;
-  ulonglong uVar8;
-  double dVar10;
-  double dVar11;
+  longlong lVar3;
+  int iVar5;
+  ulonglong uVar4;
+  double dVar6;
+  double dVar7;
   float local_50;
   float local_4c;
   undefined8 local_48;
   
-  uVar6 = (ulonglong)(int)param_3;
-  uVar8 = (ulonglong)(int)param_2;
-  pSVar5 = (ScreenPlacement *)__savegprlr_27(param_1);
-  if ((uVar8 & 0xffffffff) == 0) {
+  if (param_2 == (hudelem_s *)0x0) {
     in_r7 = "elem";
     in_r6 = (float *)"%s";
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_hudelem.cpp",0x1fd,0,
                     "%s");
   }
-  if ((uVar6 & 0xffffffff) == 0) {
+  if (param_3 == (cg_hudelem_t *)0x0) {
     in_r7 = "cghe";
     in_r6 = (float *)"%s";
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_hudelem.cpp",0x1fe,0,
                     "%s");
   }
-  iVar3 = (int)uVar8;
-  iVar1 = *(int *)(iVar3 + 0x74);
-  pfVar4 = (float *)uVar6;
+  iVar1 = param_2->moveTime;
   if (0 < iVar1) {
-    lVar7 = (ulonglong)(uint)pfVar4[0x8d] - (ulonglong)*(uint *)(iVar3 + 0x70);
-    if (lVar7 < 1) {
-      dVar10 = 0.0;
+    lVar3 = (ulonglong)(uint)param_3->timeNow - (ulonglong)(uint)param_2->moveStartTime;
+    if (lVar3 < 1) {
+      dVar6 = 0.0;
 LAB_822d18d8:
-      GetHudElemOrg(pSVar5,*(int *)(iVar3 + 0x68),*(int *)(iVar3 + 0x6c),*(float *)(iVar3 + 0x60),
-                    *(float *)(iVar3 + 100),pfVar4[2],pfVar4[3],in_r6,(float *)in_r7);
-      GetHudElemOrg(pSVar5,*(int *)(iVar3 + 0x28),*(int *)(iVar3 + 0x2c),*(float *)(iVar3 + 4),
-                    *(float *)(iVar3 + 8),pfVar4[2],pfVar4[3],in_r6,(float *)in_r7);
-      *pfVar4 = (float)((double)(float)((double)local_48._0_4_ - (double)local_50) * dVar10 +
-                       (double)local_50);
-      pfVar4[1] = (float)((double)(float)((double)local_48._4_4_ - (double)local_4c) * dVar10 +
-                         (double)local_4c);
-      goto LAB_822d1958;
+      GetHudElemOrg(param_1,param_2->fromAlignOrg,param_2->fromAlignScreen,param_2->fromX,
+                    param_2->fromY,param_3->width,param_3->height,in_r6,(float *)in_r7);
+      GetHudElemOrg(param_1,param_2->alignOrg,param_2->alignScreen,param_2->x,param_2->y,
+                    param_3->width,param_3->height,in_r6,(float *)in_r7);
+      param_3->x = (float)((double)(float)((double)local_48._0_4_ - (double)local_50) * dVar6 +
+                          (double)local_50);
+      param_3->y = (float)((double)(float)((double)local_48._4_4_ - (double)local_4c) * dVar6 +
+                          (double)local_4c);
+      return;
     }
-    iVar9 = (int)lVar7;
-    if (iVar9 < iVar1) {
-      local_48 = (longlong)iVar9;
-      dVar10 = (double)((float)local_48 / (float)(longlong)iVar1);
-      if (dVar10 != 1.0) goto LAB_822d18d8;
+    iVar5 = (int)lVar3;
+    if (iVar5 < iVar1) {
+      local_48 = (longlong)iVar5;
+      dVar6 = (double)((float)local_48 / (float)(longlong)iVar1);
+      if (dVar6 != 1.0) goto LAB_822d18d8;
     }
   }
-  GetHudElemOrg(pSVar5,*(int *)(iVar3 + 0x28),*(int *)(iVar3 + 0x2c),*(float *)(iVar3 + 4),
-                *(float *)(iVar3 + 8),pfVar4[2],pfVar4[3],in_r6,(float *)in_r7);
-  uVar2 = *(uint *)(iVar3 + 0x20);
+  GetHudElemOrg(param_1,param_2->alignOrg,param_2->alignScreen,param_2->x,param_2->y,param_3->width,
+                param_3->height,in_r6,(float *)in_r7);
+  uVar2 = param_2->fontScaleTime;
   if ((int)uVar2 < 1) {
-    uVar8 = 0;
+    uVar4 = 0;
   }
   else {
-    uVar8 = (ulonglong)(uint)pfVar4[0x8d] - (ulonglong)*(uint *)(iVar3 + 0x1c);
-    uVar8 = ((~(uVar2 ^ uVar8) & 0xffffffff) >> 0x1f) + (ulonglong)(uVar2 <= uVar8) & 1;
+    uVar4 = (ulonglong)(uint)param_3->timeNow - (ulonglong)(uint)param_2->fontScaleStartTime;
+    uVar4 = ((~(uVar2 ^ uVar4) & 0xffffffff) >> 0x1f) + (ulonglong)(uVar2 <= uVar4) & 1;
   }
-  if (uVar8 == 0) {
-    dVar11 = 0.5;
-    dVar10 = floor((double)(*pfVar4 + 0.5));
-    *pfVar4 = (float)(longlong)(int)dVar10;
-    dVar10 = floor((double)(float)((double)pfVar4[1] + dVar11));
-    pfVar4[1] = (float)(longlong)(int)dVar10;
-    __restgprlr_27();
+  if (uVar4 != 0) {
     return;
   }
-LAB_822d1958:
-  __restgprlr_27();
+  dVar7 = 0.5;
+  dVar6 = floor((double)(param_3->x + 0.5));
+  param_3->x = (float)(longlong)(int)dVar6;
+  dVar6 = floor((double)(float)((double)param_3->y + dVar7));
+  param_3->y = (float)(longlong)(int)dVar6;
   return;
 }
 
@@ -719,111 +693,105 @@ LAB_822d1b74:
 
 // 822D1B88  ConsolidateHudElemText  (cgame/cg_hudelem.cpp:551)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void ConsolidateHudElemText(cg_hudelem_t *param_1,char *param_2)
 
 {
   char cVar1;
-  undefined1 *puVar2;
+  int iVar2;
   int iVar3;
   int iVar4;
-  int iVar5;
-  int iVar6;
-  double dVar7;
-  float fVar8;
+  char *pcVar5;
+  double dVar6;
+  float fVar7;
   
-  iVar3 = __savegprlr_28(param_1);
-  puVar2 = (undefined1 *)(iVar3 + 0x10);
-  iVar6 = 0;
+  pcVar5 = param_1->hudElemLabel;
+  iVar2 = 0;
   iVar4 = 0;
   do {
-    cVar1 = puVar2[iVar4];
+    cVar1 = pcVar5[iVar4];
     if (cVar1 == '\0') break;
-    if (((cVar1 == '&') && (*(char *)(iVar4 + iVar3 + 0x11) == '&')) &&
-       (*(char *)(iVar4 + iVar3 + 0x12) == '1')) {
+    if (((cVar1 == '&') && (param_1->hudElemLabel[iVar4 + 1] == '&')) &&
+       (param_1->hudElemLabel[iVar4 + 2] == '1')) {
       iVar4 = iVar4 + 3;
       break;
     }
-    iVar6 = iVar6 + 1;
+    iVar2 = iVar2 + 1;
     param_2[iVar4] = cVar1;
     iVar4 = iVar4 + 1;
-  } while (iVar6 < 0xff);
-  iVar5 = 0;
-  if (iVar6 < 0xff) {
-    do {
-      cVar1 = *(char *)(iVar3 + 0x114 + iVar5);
-      if (cVar1 == '\0') {
-        if (iVar6 < 0xff) goto LAB_822d1c3c;
-        break;
-      }
-      param_2[iVar6] = cVar1;
-      iVar6 = iVar6 + 1;
-      iVar5 = iVar5 + 1;
-    } while (iVar6 < 0xff);
+  } while (iVar2 < 0xff);
+  iVar3 = 0;
+  for (; iVar2 < 0xff; iVar2 = iVar2 + 1) {
+    if (param_1->hudElemText[iVar3] == '\0') {
+      if (iVar2 < 0xff) goto LAB_822d1c3c;
+      break;
+    }
+    param_2[iVar2] = param_1->hudElemText[iVar3];
+    iVar3 = iVar3 + 1;
   }
   goto LAB_822d1c5c;
   while( true ) {
-    param_2[iVar6] = puVar2[iVar4];
-    iVar6 = iVar6 + 1;
+    param_2[iVar2] = pcVar5[iVar4];
+    iVar2 = iVar2 + 1;
     iVar4 = iVar4 + 1;
-    if (0xfe < iVar6) break;
+    if (0xfe < iVar2) break;
 LAB_822d1c3c:
-    if (puVar2[iVar4] == '\0') break;
+    if (pcVar5[iVar4] == '\0') break;
   }
 LAB_822d1c5c:
-  param_2[iVar6] = '\0';
+  param_2[iVar2] = '\0';
   memcpy();
-  iVar4 = UI_TextWidth((char *)(iVar3 + 0x114),0,*(Font_s **)(iVar3 + 0x218),
-                       *(float *)(iVar3 + 0x21c));
-  dVar7 = (double)(longlong)iVar4;
-  fVar8 = CL_GetScreenAspectRatioDisplayPixel();
-  *(float *)(iVar3 + 0x214) = (float)(dVar7 / (double)fVar8);
-  *puVar2 = 0;
-  *(float *)(iVar3 + 0x110) = 0.0;
-  __restgprlr_28();
+  iVar2 = UI_TextWidth(param_1->hudElemText,0,param_1->font,param_1->fontScale);
+  dVar6 = (double)(longlong)iVar2;
+  fVar7 = CL_GetScreenAspectRatioDisplayPixel();
+  param_1->textWidth = (float)(dVar6 / (double)fVar7);
+  *pcVar5 = '\0';
+  param_1->labelWidth = 0.0;
   return;
 }
 
 
 // 822D1CC0  CopyStringToHudElemString  (cgame/cg_hudelem.cpp:590)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void CopyStringToHudElemString(char *param_1,char *param_2)
 
 {
   char cVar1;
   char *pcVar2;
-  ulonglong uVar3;
-  char *pcVar4;
   
-  uVar3 = (ulonglong)(int)param_2;
-  pcVar2 = (char *)__savegprlr_28(param_1);
-  if (pcVar2 == (char *)0x0) {
+  if (param_1 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_hudelem.cpp",0x251,0,
                     "%s");
   }
-  pcVar4 = pcVar2;
-  if ((uVar3 & 0xffffffff) == 0) {
+  pcVar2 = param_1;
+  if (param_2 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_hudelem.cpp",0x252,0,
                     "%s");
   }
   do {
-    cVar1 = *pcVar4;
-    pcVar4 = pcVar4 + 1;
+    cVar1 = *pcVar2;
+    pcVar2 = pcVar2 + 1;
   } while (cVar1 != '\0');
-  if ((int)(pcVar4 + (-1 - (int)pcVar2)) < 0x100) {
+  if ((int)(pcVar2 + (-1 - (int)param_1)) < 0x100) {
     memcpy();
-    (pcVar4 + (-1 - (int)pcVar2))[(int)uVar3] = '\0';
-    __restgprlr_28();
+    param_2[(int)(pcVar2 + (-1 - (int)param_1))] = '\0';
     return;
   }
   pcVar2 = va("Hud elem string too long, %s");
   Com_Error(ERR_DROP,pcVar2);
-  __restgprlr_28();
   return;
 }
 
 
 // 822D1D98  DrawSingleHudElem2d_GetHudElemInfo  (cgame/cg_hudelem.cpp:612)
 
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -833,54 +801,52 @@ void DrawSingleHudElem2d_GetHudElemInfo
 
 {
   uint uVar1;
-  LocalClientNum_t LVar2;
-  ScreenPlacement *pSVar3;
-  Font_s *pFVar4;
-  int iVar5;
-  cg_s *pcVar6;
+  ScreenPlacement *pSVar2;
+  Font_s *pFVar3;
+  int iVar4;
+  cg_s *pcVar5;
+  char *pcVar6;
   char *pcVar7;
   char *pcVar8;
-  char *pcVar9;
+  double dVar9;
   double dVar10;
-  double dVar11;
-  float fVar12;
+  float fVar11;
   float local_80 [2];
   longlong local_78;
   
-  LVar2 = __savegprlr_22(param_1);
-  pSVar3 = ScrPlace_GetActivePlacement(LVar2);
+  pSVar2 = ScrPlace_GetActivePlacement(param_1);
   uVar1 = param_2->font;
   if (uVar1 < 8) {
     if (uVar1 == 0) goto LAB_822d1e84;
     if (uVar1 == 1) {
-      iVar5 = 4;
-      dVar11 = 0.5833333134651184;
+      iVar4 = 4;
+      dVar10 = 0.5833333134651184;
       goto LAB_822d1e90;
     }
     if (uVar1 == 2) {
-      iVar5 = 5;
-      dVar11 = 0.375;
+      iVar4 = 5;
+      dVar10 = 0.375;
       goto LAB_822d1e90;
     }
     if (uVar1 == 3) {
-      iVar5 = 6;
+      iVar4 = 6;
     }
     else if (uVar1 == 4) {
-      iVar5 = 2;
+      iVar4 = 2;
     }
     else {
       if (uVar1 != 5) {
         if (uVar1 == 6) {
-          iVar5 = 9;
-          dVar11 = 0.5833333134651184;
+          iVar4 = 9;
+          dVar10 = 0.5833333134651184;
         }
         else {
-          iVar5 = 10;
-          dVar11 = 0.375;
+          iVar4 = 10;
+          dVar10 = 0.375;
         }
         goto LAB_822d1e90;
       }
-      iVar5 = 3;
+      iVar4 = 3;
     }
   }
   else {
@@ -889,108 +855,111 @@ void DrawSingleHudElem2d_GetHudElemInfo
                       0,"invalid case");
     }
 LAB_822d1e84:
-    iVar5 = 0;
+    iVar4 = 0;
   }
-  dVar11 = 0.25;
+  dVar10 = 0.25;
 LAB_822d1e90:
   BG_LerpFontScale(param_2,param_3->timeNow,local_80);
-  dVar11 = (double)((float)((double)local_80[0] * dVar11) * cg_hudSplitscreenScale);
-  fVar12 = ScrPlace_HiResGetScaleY();
-  fVar12 = pSVar3->scaleVirtualToReal[1] * (float)((double)fVar12 * dVar11);
-  param_3->fontScale = fVar12;
-  pFVar4 = UI_GetFontHandle(pSVar3,iVar5,fVar12);
-  param_3->font = pFVar4;
-  iVar5 = UI_TextHeight(pFVar4,param_3->fontScale);
-  local_78 = (longlong)iVar5;
+  dVar10 = (double)((float)((double)local_80[0] * dVar10) * cg_hudSplitscreenScale);
+  fVar11 = ScrPlace_HiResGetScaleY();
+  fVar11 = pSVar2->scaleVirtualToReal[1] * (float)((double)fVar11 * dVar10);
+  param_3->fontScale = fVar11;
+  pFVar3 = UI_GetFontHandle(pSVar2,iVar4,fVar11);
+  param_3->font = pFVar3;
+  iVar4 = UI_TextHeight(pFVar3,param_3->fontScale);
+  local_78 = (longlong)iVar4;
   param_3->hudElemLabel[0] = '\0';
-  pcVar8 = param_3->hudElemLabel;
+  pcVar7 = param_3->hudElemLabel;
   param_3->fontHeight = (float)local_78;
   if (param_2->label != 0) {
-    SafeTranslateHudElemString(LVar2,param_2->label,pcVar8,0x100);
+    SafeTranslateHudElemString(param_1,param_2->label,pcVar7,0x100);
   }
   param_3->hudElemText[0] = '\0';
-  pcVar9 = param_3->hudElemText;
+  pcVar8 = param_3->hudElemText;
   switch(param_2->type) {
   case HE_TYPE_TEXT:
     if (param_2->text != 0) {
-      SafeTranslateHudElemString(LVar2,param_2->text,pcVar9,0x100);
+      SafeTranslateHudElemString(param_1,param_2->text,pcVar8,0x100);
     }
     break;
   case HE_TYPE_VALUE:
-    Com_sprintf(pcVar9,0x100,"%g");
+    Com_sprintf(pcVar8,0x100,"%g");
     break;
   case HE_TYPE_PLAYERNAME:
-    dVar11 = floor((double)(param_2->value + 0.5));
-    uVar1 = (uint)dVar11;
+    dVar10 = floor((double)(param_2->value + 0.5));
+    uVar1 = (uint)dVar10;
     local_78 = (longlong)(int)uVar1;
     if ((-1 < (int)uVar1) && ((int)uVar1 < 0x12)) {
-      pcVar6 = CG_GetLocalClientGlobals(LVar2);
+      pcVar5 = CG_GetLocalClientGlobals(param_1);
       if (0x11 < uVar1) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_hudelem.cpp",
                         0x2aa,0,"namedClientIndex doesn\'t index MAX_CLIENTS\n\t%i not in [0, %i)");
       }
-      if ((pcVar6->bgs).clientinfo[uVar1].infoValid == 0) {
-        pcVar7 = UI_SafeTranslateString("MP_UNKNOWN_PLAYER");
-        I_strncpyz(pcVar9,pcVar7,0x100);
+      if ((pcVar5->bgs).clientinfo[uVar1].infoValid == 0) {
+        pcVar6 = UI_SafeTranslateString("MP_UNKNOWN_PLAYER");
+        I_strncpyz(pcVar8,pcVar6,0x100);
       }
       else {
-        pcVar7 = (pcVar6->bgs).clientinfo[uVar1].name;
-        if (*pcVar7 == '\0') {
+        pcVar6 = (pcVar5->bgs).clientinfo[uVar1].name;
+        if (*pcVar6 == '\0') {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_hudelem.cpp",
                           0x2ae,0,"%s");
         }
-        I_strncpyz(pcVar9,pcVar7,0x100);
+        I_strncpyz(pcVar8,pcVar6,0x100);
       }
     }
     break;
   case HE_TYPE_TIMER_DOWN:
   case HE_TYPE_TIMER_UP:
   case HE_TYPE_TIMER_STATIC:
-    pcVar7 = HudElemTimerString(param_2,param_3->timeNow);
-    CopyStringToHudElemString(pcVar7,pcVar9);
+    pcVar6 = HudElemTimerString(param_2,param_3->timeNow);
+    CopyStringToHudElemString(pcVar6,pcVar8);
     break;
   case HE_TYPE_TENTHS_TIMER_DOWN:
   case HE_TYPE_TENTHS_TIMER_UP:
   case HE_TYPE_TENTHS_TIMER_STATIC:
-    pcVar7 = HudElemTenthsTimerString(param_2,param_3->timeNow);
-    CopyStringToHudElemString(pcVar7,pcVar9);
+    pcVar6 = HudElemTenthsTimerString(param_2,param_3->timeNow);
+    CopyStringToHudElemString(pcVar6,pcVar8);
   }
-  if ((*pcVar8 != '\0') && (*pcVar9 != '\0')) {
+  if ((*pcVar7 != '\0') && (*pcVar8 != '\0')) {
     ConsolidateHudElemText(param_3,param_4);
   }
-  dVar11 = 0.0;
-  if (*pcVar8 == '\0') {
+  dVar10 = 0.0;
+  if (*pcVar7 == '\0') {
     param_3->labelWidth = 0.0;
   }
   else {
-    iVar5 = UI_TextWidth(pcVar8,0,param_3->font,param_3->fontScale);
-    local_78 = (longlong)iVar5;
-    dVar10 = (double)local_78;
-    fVar12 = CL_GetScreenAspectRatioDisplayPixel();
-    param_3->labelWidth = (float)(dVar10 / (double)fVar12);
+    iVar4 = UI_TextWidth(pcVar7,0,param_3->font,param_3->fontScale);
+    local_78 = (longlong)iVar4;
+    dVar9 = (double)local_78;
+    fVar11 = CL_GetScreenAspectRatioDisplayPixel();
+    param_3->labelWidth = (float)(dVar9 / (double)fVar11);
   }
-  if (*pcVar9 == '\0') {
-    param_3->textWidth = (float)dVar11;
+  if (*pcVar8 == '\0') {
+    param_3->textWidth = (float)dVar10;
   }
   else {
-    iVar5 = UI_TextWidth(pcVar9,0,param_3->font,param_3->fontScale);
-    local_78 = (longlong)iVar5;
-    dVar11 = (double)local_78;
-    fVar12 = CL_GetScreenAspectRatioDisplayPixel();
-    param_3->textWidth = (float)(dVar11 / (double)fVar12);
+    iVar4 = UI_TextWidth(pcVar8,0,param_3->font,param_3->fontScale);
+    local_78 = (longlong)iVar4;
+    dVar10 = (double)local_78;
+    fVar11 = CL_GetScreenAspectRatioDisplayPixel();
+    param_3->textWidth = (float)(dVar10 / (double)fVar11);
   }
-  fVar12 = HudElemWidth(pSVar3,param_2,param_3);
-  param_3->width = fVar12;
-  fVar12 = HudElemHeight(pSVar3,param_2,param_3);
-  param_3->height = fVar12;
-  SetHudElemPos(pSVar3,param_2,param_3);
-  __restgprlr_22();
+  fVar11 = HudElemWidth(pSVar2,param_2,param_3);
+  param_3->width = fVar11;
+  fVar11 = HudElemHeight(pSVar2,param_2,param_3);
+  param_3->height = fVar11;
+  SetHudElemPos(pSVar2,param_2,param_3);
   return;
 }
 
 
 // 822D21D8  HudElemColorToVec4  (cgame/cg_hudelem.cpp:747)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void HudElemColorToVec4(LocalClientNum_t param_1,hudelem_color_t *param_2,float *param_3)
@@ -998,13 +967,10 @@ void HudElemColorToVec4(LocalClientNum_t param_1,hudelem_color_t *param_2,float 
 {
   float fVar1;
   dvar_t *pdVar2;
-  LocalClientNum_t LVar3;
-  uiMenuCommand_t uVar4;
+  uiMenuCommand_t uVar3;
+  double dVar4;
   double dVar5;
-  double dVar6;
   
-  __savegprlr_25(param_1);
-  LVar3 = __savefpr_28();
   if (hudElemPausedBrightness == (dvar_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_hudelem.cpp",0x2ec,0,
                     "%s");
@@ -1018,38 +984,41 @@ void HudElemColorToVec4(LocalClientNum_t param_1,hudelem_color_t *param_2,float 
   param_3[1] = (float)(param_2->_s_0).g * 0.003921569;
   param_3[2] = (float)(param_2->_s_0).b * 0.003921569;
   param_3[3] = (float)(param_2->_s_0).a * 0.003921569;
-  if (((pdVar2->current).integer != 0) && (uVar4 = UI_GetActiveMenu(LVar3), uVar4 != UIMENU_NONE)) {
+  if (((pdVar2->current).integer != 0) && (uVar3 = UI_GetActiveMenu(param_1), uVar3 != UIMENU_NONE))
+  {
     fVar1 = (hudElemPausedBrightness->current).value;
     *param_3 = *param_3 * fVar1;
     param_3[1] = param_3[1] * fVar1;
     param_3[2] = param_3[2] * fVar1;
   }
-  dVar6 = 0.0;
-  dVar5 = 1.0000009536743164;
+  dVar5 = 0.0;
+  dVar4 = 1.0000009536743164;
   if ((*param_3 < 0.0) || (1.000001 < *param_3)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_hudelem.cpp",0x2f7,0,
                     "resultColor[0] not in [0.0f, 1.000001f]\n\t%g not in [%g, %g]");
   }
-  if (((double)param_3[1] < dVar6) || (dVar5 < (double)param_3[1])) {
+  if (((double)param_3[1] < dVar5) || (dVar4 < (double)param_3[1])) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_hudelem.cpp",0x2f8,0,
                     "resultColor[1] not in [0.0f, 1.000001f]\n\t%g not in [%g, %g]");
   }
-  if (((double)param_3[2] < dVar6) || (dVar5 < (double)param_3[2])) {
+  if (((double)param_3[2] < dVar5) || (dVar4 < (double)param_3[2])) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_hudelem.cpp",0x2f9,0,
                     "resultColor[2] not in [0.0f, 1.000001f]\n\t%g not in [%g, %g]");
   }
-  if (((double)param_3[3] < dVar6) || (dVar5 < (double)param_3[3])) {
+  if (((double)param_3[3] < dVar5) || (dVar4 < (double)param_3[3])) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_hudelem.cpp",0x2fa,0,
                     "resultColor[3] not in [0.0f, 1.000001f]\n\t%g not in [%g, %g]");
   }
-  __restfpr_28();
-  __restgprlr_25();
   return;
 }
 
 
 // 822D2488  DrawHudElemString  (cgame/cg_hudelem.cpp:767)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -1058,193 +1027,174 @@ void DrawHudElemString(LocalClientNum_t param_1,char *param_2,hudelem_s *param_3
                       cg_hudelem_t *param_4)
 
 {
-  cg_hudelem_t *pcVar1;
-  LocalClientNum_t LVar2;
-  ScreenPlacement *pSVar3;
-  hudelem_s *phVar4;
-  cg_s *pcVar5;
-  int iVar6;
-  ulonglong uVar7;
-  char *pcVar8;
-  ulonglong uVar9;
-  ulonglong uVar10;
-  int iVar11;
-  double dVar12;
-  double dVar13;
-  double dVar14;
-  double dVar15;
-  float fVar16;
+  ScreenPlacement *pSVar1;
+  cg_s *pcVar2;
+  int iVar3;
+  int iVar4;
+  double dVar5;
+  double dVar6;
+  double dVar7;
+  double dVar8;
+  float fVar9;
   int in_stack_ffffff18;
   int in_stack_ffffff1c;
   int in_stack_ffffff20;
   int in_stack_ffffff24;
   
-  uVar10 = (ulonglong)(int)param_4;
-  uVar9 = (ulonglong)(int)param_3;
-  uVar7 = (ulonglong)(int)param_2;
-  __savegprlr_25(param_1);
-  LVar2 = __savefpr_28();
-  if ((uVar7 & 0xffffffff) == 0) {
+  if (param_2 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_hudelem.cpp",0x309,0,
                     "%s");
   }
-  pcVar8 = (char *)uVar7;
-  if (*pcVar8 == '\0') {
+  if (*param_2 == '\0') {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_hudelem.cpp",0x30a,0,
                     "%s");
   }
-  if ((uVar9 & 0xffffffff) == 0) {
+  if (param_3 == (hudelem_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_hudelem.cpp",0x30b,0,
                     "%s");
   }
-  if ((uVar10 & 0xffffffff) == 0) {
+  if (param_4 == (cg_hudelem_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_hudelem.cpp",0x30c,0,
                     "%s");
   }
-  pcVar1 = (cg_hudelem_t *)uVar10;
-  if (pcVar1->color[3] == 0.0) {
+  if (param_4->color[3] == 0.0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_hudelem.cpp",0x30e,0,
                     "%s");
   }
-  pSVar3 = ScrPlace_GetActivePlacement(LVar2);
-  phVar4 = (hudelem_s *)uVar9;
-  fVar16 = OffsetHudElemY(phVar4,pcVar1,-(pcVar1->height - pcVar1->fontHeight));
-  dVar12 = (double)fVar16;
-  fVar16 = R_NormalizedTextScale(pcVar1->font,pcVar1->fontScale);
-  dVar13 = (double)fVar16;
-  dVar14 = (double)(float)(dVar13 / (double)cg_hudSplitscreenScale);
-  fVar16 = ScrPlace_HiResGetScaleY();
-  dVar14 = (double)(pSVar3->scaleRealToVirtual[1] * (float)(dVar14 / (double)fVar16) *
-                   cg_hudSplitscreenScale);
-  fVar16 = ScrPlace_HiResGetScaleX();
-  iVar11 = phVar4->fxBirthTime;
-  dVar15 = (double)pcVar1->fontHeight;
-  dVar14 = (double)(pSVar3->scaleVirtualToReal[0] * (float)((double)fVar16 * dVar14));
-  if ((iVar11 != 0) && (pcVar1->timeNow < iVar11)) {
-    iVar11 = pcVar1->timeNow;
+  pSVar1 = ScrPlace_GetActivePlacement(param_1);
+  fVar9 = OffsetHudElemY(param_3,param_4,-(param_4->height - param_4->fontHeight));
+  dVar5 = (double)fVar9;
+  fVar9 = R_NormalizedTextScale(param_4->font,param_4->fontScale);
+  dVar6 = (double)fVar9;
+  dVar7 = (double)(float)(dVar6 / (double)cg_hudSplitscreenScale);
+  fVar9 = ScrPlace_HiResGetScaleY();
+  dVar7 = (double)(pSVar1->scaleRealToVirtual[1] * (float)(dVar7 / (double)fVar9) *
+                  cg_hudSplitscreenScale);
+  fVar9 = ScrPlace_HiResGetScaleX();
+  iVar4 = param_3->fxBirthTime;
+  dVar8 = (double)param_4->fontHeight;
+  dVar7 = (double)(pSVar1->scaleVirtualToReal[0] * (float)((double)fVar9 * dVar7));
+  if ((iVar4 != 0) && (param_4->timeNow < iVar4)) {
+    iVar4 = param_4->timeNow;
   }
-  HudElemColorToVec4(LVar2,&phVar4->glowColor,glowColor);
-  if (iVar11 != 0) {
-    pcVar5 = CG_GetLocalClientGlobals(LVar2);
-    iVar6 = SEH_PrintStrlen(pcVar8);
+  HudElemColorToVec4(param_1,&param_3->glowColor,glowColor);
+  if (iVar4 != 0) {
+    pcVar2 = CG_GetLocalClientGlobals(param_1);
+    iVar3 = SEH_PrintStrlen(param_2);
     CL_PlayTextFXPulseSounds
-              (LVar2,pcVar1->timeNow,iVar6,iVar11,phVar4->fxLetterTime,phVar4->fxDecayStartTime,
-               &pcVar5->hudElemSound[phVar4->soundID].lastPlayedTime);
+              (param_1,param_4->timeNow,iVar3,iVar4,param_3->fxLetterTime,param_3->fxDecayStartTime,
+               &pcVar2->hudElemSound[param_3->soundID].lastPlayedTime);
   }
   CL_DrawTextPhysicalWithEffects
-            (pcVar8,0x7fffffff,pcVar1->font,pcVar1->x,(float)(dVar15 + dVar12),(float)dVar14,
-             (float)dVar13,(float *)phVar4->fxLetterTime,-0x7c085650,
-             (float *)phVar4->fxDecayStartTime,sharedUiInfo.assets.textDecodeCharacters,
-             (Material *)pcVar1->color,in_stack_ffffff18,in_stack_ffffff1c,in_stack_ffffff20,
+            (param_2,0x7fffffff,param_4->font,param_4->x,(float)(dVar8 + dVar5),(float)dVar7,
+             (float)dVar6,(float *)param_3->fxLetterTime,-0x7c085650,
+             (float *)param_3->fxDecayStartTime,sharedUiInfo.assets.textDecodeCharacters,
+             (Material *)param_4->color,in_stack_ffffff18,in_stack_ffffff1c,in_stack_ffffff20,
              in_stack_ffffff24);
-  __restfpr_28();
-  __restgprlr_25();
   return;
 }
 
 
 // 822D26F0  DrawHudElemClock  (cgame/cg_hudelem.cpp:813)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void DrawHudElemClock(LocalClientNum_t param_1,hudelem_s *param_2,cg_hudelem_t *param_3)
 
 {
-  LocalClientNum_t LVar1;
-  int iVar2;
-  ScreenPlacement *pSVar3;
+  int iVar1;
+  ScreenPlacement *pSVar2;
+  cg_hudelem_t *pcVar3;
   cg_hudelem_t *pcVar4;
-  cg_hudelem_t *pcVar5;
+  double dVar5;
   double dVar6;
   double dVar7;
   double dVar8;
   double dVar9;
-  double dVar10;
-  float fVar11;
+  float fVar10;
   char acStack_a0 [160];
   
-  __savegprlr_27(param_1);
-  LVar1 = __savefpr_27();
-  dVar10 = 0.0;
+  dVar9 = 0.0;
   if (param_3->color[3] == 0.0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_hudelem.cpp",0x338,0,
                     "%s");
   }
-  iVar2 = CG_ServerMaterialName(LVar1,param_2->materialIndex,acStack_a0,0x3a);
-  if (iVar2 != 0) {
+  iVar1 = CG_ServerMaterialName(param_1,param_2->materialIndex,acStack_a0,0x3a);
+  if (iVar1 != 0) {
     Material_RegisterHandle(acStack_a0,7);
     I_strncat(acStack_a0,0x40,"needle");
     Material_RegisterHandle(acStack_a0,7);
-    iVar2 = GetHudElemTime(param_2,param_3->timeNow);
+    iVar1 = GetHudElemTime(param_2,param_3->timeNow);
     if (param_2->duration == 0) {
-      fVar11 = (float)(longlong)iVar2 * 0.006;
+      fVar10 = (float)(longlong)iVar1 * 0.006;
     }
     else {
-      fVar11 = ((float)(longlong)iVar2 * 360.0) / (float)(longlong)param_2->duration;
+      fVar10 = ((float)(longlong)iVar1 * 360.0) / (float)(longlong)param_2->duration;
     }
-    fVar11 = AngleNormalize360(fVar11);
-    dVar6 = (double)fVar11;
-    pSVar3 = ScrPlace_GetActivePlacement(LVar1);
-    fVar11 = HudElemMaterialWidth(pSVar3,param_2,param_3);
-    dVar7 = (double)fVar11;
-    pcVar5 = param_3;
-    fVar11 = HudElemMaterialHeight(pSVar3,param_2,param_3);
-    dVar8 = (double)fVar11;
+    fVar10 = AngleNormalize360(fVar10);
+    dVar5 = (double)fVar10;
+    pSVar2 = ScrPlace_GetActivePlacement(param_1);
+    fVar10 = HudElemMaterialWidth(pSVar2,param_2,param_3);
+    dVar6 = (double)fVar10;
     pcVar4 = param_3;
-    fVar11 = OffsetHudElemY(param_2,param_3,-(float)((double)param_3->height - dVar8));
-    dVar9 = (double)fVar11;
+    fVar10 = HudElemMaterialHeight(pSVar2,param_2,param_3);
+    dVar7 = (double)fVar10;
+    pcVar3 = param_3;
+    fVar10 = OffsetHudElemY(param_2,param_3,-(float)((double)param_3->height - dVar7));
+    dVar8 = (double)fVar10;
     CL_DrawStretchPicPhysical
-              (param_3->x,fVar11,(float)dVar7,(float)dVar8,(float)dVar10,(float)dVar10,1.0,1.0,
-               (float *)param_2,(Material *)pcVar4);
+              (param_3->x,fVar10,(float)dVar6,(float)dVar7,(float)dVar9,(float)dVar9,1.0,1.0,
+               (float *)param_2,(Material *)pcVar3);
     CG_DrawRotatedPicPhysical
-              (pSVar3,param_3->x,(float)dVar9,(float)dVar7,(float)dVar8,(float)dVar6,&pcVar4->x,
-               (Material *)pcVar5);
+              (pSVar2,param_3->x,(float)dVar8,(float)dVar6,(float)dVar7,(float)dVar5,&pcVar3->x,
+               (Material *)pcVar4);
   }
-  __restfpr_27();
-  __restgprlr_27();
   return;
 }
 
 
 // 822D28C8  DrawHudElemMaterial  (cgame/cg_hudelem.cpp:859)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void DrawHudElemMaterial(LocalClientNum_t param_1,hudelem_s *param_2,cg_hudelem_t *param_3)
 
 {
-  LocalClientNum_t LVar1;
-  int iVar2;
-  ScreenPlacement *pSVar3;
-  cg_hudelem_t *pcVar4;
+  int iVar1;
+  ScreenPlacement *pSVar2;
+  cg_hudelem_t *pcVar3;
+  double dVar4;
   double dVar5;
   double dVar6;
-  double dVar7;
-  float fVar8;
+  float fVar7;
   char acStack_80 [128];
   
-  LVar1 = __savegprlr_28(param_1);
-  dVar7 = 0.0;
+  dVar6 = 0.0;
   if (param_3->color[3] == 0.0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_hudelem.cpp",0x362,0,
                     "%s");
   }
-  iVar2 = CG_ServerMaterialName(LVar1,param_2->materialIndex,acStack_80,0x40);
-  if (iVar2 != 0) {
+  iVar1 = CG_ServerMaterialName(param_1,param_2->materialIndex,acStack_80,0x40);
+  if (iVar1 != 0) {
     Material_RegisterHandle(acStack_80,7);
-    pSVar3 = ScrPlace_GetActivePlacement(LVar1);
-    fVar8 = HudElemMaterialWidth(pSVar3,param_2,param_3);
-    dVar5 = (double)fVar8;
-    pSVar3 = ScrPlace_GetActivePlacement(LVar1);
-    fVar8 = HudElemMaterialHeight(pSVar3,param_2,param_3);
-    dVar6 = (double)fVar8;
-    pcVar4 = param_3;
-    fVar8 = OffsetHudElemY(param_2,param_3,-(float)((double)param_3->height - dVar6));
+    pSVar2 = ScrPlace_GetActivePlacement(param_1);
+    fVar7 = HudElemMaterialWidth(pSVar2,param_2,param_3);
+    dVar4 = (double)fVar7;
+    pSVar2 = ScrPlace_GetActivePlacement(param_1);
+    fVar7 = HudElemMaterialHeight(pSVar2,param_2,param_3);
+    dVar5 = (double)fVar7;
+    pcVar3 = param_3;
+    fVar7 = OffsetHudElemY(param_2,param_3,-(float)((double)param_3->height - dVar5));
     CL_DrawStretchPicPhysical
-              (param_3->x,fVar8,(float)dVar5,(float)dVar6,(float)dVar7,(float)dVar7,1.0,1.0,
-               (float *)param_2,(Material *)pcVar4);
+              (param_3->x,fVar7,(float)dVar4,(float)dVar5,(float)dVar6,(float)dVar6,1.0,1.0,
+               (float *)param_2,(Material *)pcVar3);
   }
-  __restgprlr_28();
   return;
 }
 
@@ -1286,6 +1236,10 @@ float HudElemWaypointHeight(LocalClientNum_t param_1,hudelem_s *param_2)
 
 // 822D2B38  ClampScreenPosToEdges  (cgame/cg_hudelem.cpp:907)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 bool ClampScreenPosToEdges
@@ -1293,166 +1247,145 @@ bool ClampScreenPosToEdges
                float param_6,float *param_7,float *param_8)
 
 {
-  bool bVar1;
-  LocalClientNum_t LVar2;
-  ScreenPlacement *pSVar3;
-  undefined1 uVar4;
-  longlong lVar5;
+  float fVar1;
+  bool bVar2;
+  bool bVar3;
+  bool bVar4;
+  ScreenPlacement *pSVar5;
   Material *pMVar6;
-  Material *pMVar7;
   float *in_r9;
-  ulonglong in_r10;
-  bool bVar8;
-  bool bVar9;
+  float *in_r10;
+  double dVar7;
+  double dVar8;
+  double dVar9;
   double dVar10;
-  double extraout_f1;
   double dVar11;
   double dVar12;
   double dVar13;
   double dVar14;
-  double dVar15;
-  double dVar16;
-  double dVar17;
-  double dVar18;
-  float fVar19;
+  float fVar15;
   float local_90;
   float local_8c;
   float local_88;
   float local_84;
-  char *local_80;
+  float local_80;
   float local_7c;
   
-  dVar12 = (double)param_6;
-  dVar13 = (double)param_5;
-  dVar16 = (double)param_4;
-  lVar5 = (longlong)(int)param_2;
-  __savegprlr_25((double)param_3,param_1,lVar5,param_7,param_8);
-  pMVar6 = (Material *)lVar5;
-  LVar2 = __savefpr_26();
-  dVar15 = extraout_f1;
-  pMVar7 = pMVar6;
-  if ((in_r10 & 0xffffffff) == 0) {
-    pMVar7 = (Material *)0x396;
+  dVar8 = (double)param_6;
+  dVar9 = (double)param_5;
+  dVar11 = (double)param_3;
+  dVar12 = (double)param_4;
+  pMVar6 = (Material *)param_2;
+  if (in_r10 == (float *)0x0) {
+    pMVar6 = (Material *)0x396;
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_hudelem.cpp",0x396,0,
                     "%s");
   }
-  pSVar3 = ScrPlace_GetActivePlacement(LVar2);
-  bVar1 = false;
-  local_80 = (pMVar6->info).name;
-  local_7c = *(float *)&(pMVar6->info).gameFlags;
-  dVar17 = (double)(pSVar3->realViewportSize[1] * 0.5);
-  dVar18 = (double)(pSVar3->realViewportSize[0] * 0.5);
-  *(float *)&(pMVar6->info).gameFlags = (float)((double)local_7c - dVar17);
-  dVar10 = (double)(float)((double)(float)local_80 - dVar18);
-  (pMVar6->info).name = (char *)(float)((double)(float)local_80 - dVar18);
-  dVar11 = (double)(float)((double)pSVar3->realAdjustableMin[0] + dVar15);
-  dVar15 = (double)(float)(dVar11 - dVar18);
-  dVar13 = (double)(float)((double)(float)((double)pSVar3->realAdjustableMin[1] + dVar13) - dVar17);
-  dVar14 = (double)(float)(dVar18 - (double)(float)((double)(pSVar3->realViewportSize[0] -
-                                                            pSVar3->realAdjustableMax[0]) + dVar16))
+  pSVar5 = ScrPlace_GetActivePlacement(param_1);
+  bVar3 = false;
+  local_80 = *param_2;
+  local_7c = param_2[1];
+  dVar13 = (double)(pSVar5->realViewportSize[1] * 0.5);
+  dVar14 = (double)(pSVar5->realViewportSize[0] * 0.5);
+  param_2[1] = (float)((double)local_7c - dVar13);
+  dVar7 = (double)(float)((double)local_80 - dVar14);
+  *param_2 = (float)((double)local_80 - dVar14);
+  dVar11 = (double)(float)((double)(float)((double)pSVar5->realAdjustableMin[0] + dVar11) - dVar14);
+  dVar9 = (double)(float)((double)(float)((double)pSVar5->realAdjustableMin[1] + dVar9) - dVar13);
+  dVar10 = (double)(float)(dVar14 - (double)(float)((double)(pSVar5->realViewportSize[0] -
+                                                            pSVar5->realAdjustableMax[0]) + dVar12))
   ;
-  dVar12 = (double)(float)(dVar17 - (double)(float)((double)(pSVar3->realViewportSize[1] -
-                                                            pSVar3->realAdjustableMax[1]) + dVar12))
-  ;
-  dVar16 = dVar15;
-  if ((dVar10 < dVar15) || (dVar16 = dVar14, dVar14 < dVar10)) {
-    *(float *)&(pMVar6->info).gameFlags =
-         (float)((double)(float)((double)local_7c - dVar17) * (double)(float)(dVar16 / dVar10));
-    (pMVar6->info).name = (char *)(float)(dVar10 * (double)(float)(dVar16 / dVar10));
-    bVar1 = true;
+  dVar8 = (double)(float)(dVar13 - (double)(float)((double)(pSVar5->realViewportSize[1] -
+                                                           pSVar5->realAdjustableMax[1]) + dVar8));
+  dVar12 = dVar11;
+  if ((dVar7 < dVar11) || (dVar12 = dVar10, dVar10 < dVar7)) {
+    param_2[1] = (float)((double)(float)((double)local_7c - dVar13) *
+                        (double)(float)(dVar12 / dVar7));
+    *param_2 = (float)(dVar7 * (double)(float)(dVar12 / dVar7));
+    bVar3 = true;
   }
-  dVar10 = (double)*(float *)&(pMVar6->info).gameFlags;
-  dVar16 = dVar13;
-  if ((dVar10 < dVar13) || (dVar16 = dVar12, dVar12 < dVar10)) {
-    *(float *)&(pMVar6->info).gameFlags = (float)(dVar10 * (double)(float)(dVar16 / dVar10));
-    (pMVar6->info).name =
-         (char *)(float)((double)(float)(pMVar6->info).name * (double)(float)(dVar16 / dVar10));
-    bVar1 = true;
+  dVar7 = (double)param_2[1];
+  dVar12 = dVar9;
+  if ((dVar7 < dVar9) || (dVar12 = dVar8, dVar8 < dVar7)) {
+    param_2[1] = (float)(dVar7 * (double)(float)(dVar12 / dVar7));
+    *param_2 = (float)((double)*param_2 * (double)(float)(dVar12 / dVar7));
+    bVar3 = true;
   }
   if ((waypointOffscreenRoundedCorners->current).enabled == false) goto LAB_822d2eb4;
-  dVar10 = 0.0;
-  bVar8 = 0.0 <= (float)(pMVar6->info).name;
-  dVar16 = (double)((pSVar3->scaleVirtualToReal[1] + pSVar3->scaleVirtualToReal[0]) *
+  fVar15 = *param_2;
+  dVar7 = 0.0;
+  dVar12 = (double)((pSVar5->scaleVirtualToReal[1] + pSVar5->scaleVirtualToReal[0]) *
                     (waypointOffscreenCornerRadius->current).value * 0.5);
-  bVar9 = 0.0 <= *(float *)&(pMVar6->info).gameFlags;
-  if (bVar8) {
-    dVar15 = dVar14 - dVar16;
+  fVar1 = param_2[1];
+  if (0.0 <= fVar15) {
+    dVar11 = dVar10 - dVar12;
   }
   else {
-    dVar15 = dVar16 + dVar15;
+    dVar11 = dVar12 + dVar11;
   }
-  local_90 = (float)dVar15;
-  dVar15 = (double)local_90;
-  if (bVar9) {
-    dVar13 = dVar12 - dVar16;
+  local_90 = (float)dVar11;
+  dVar11 = (double)local_90;
+  if (0.0 <= fVar1) {
+    dVar9 = dVar8 - dVar12;
   }
   else {
-    dVar13 = dVar16 + dVar13;
+    dVar9 = dVar12 + dVar9;
   }
-  local_8c = (float)dVar13;
-  dVar13 = (double)local_8c;
+  local_8c = (float)dVar9;
+  dVar9 = (double)local_8c;
   if ((waypointDebugDraw->current).enabled != false) {
-    dVar12 = 3.0;
-    dVar11 = 1.0;
+    dVar8 = 3.0;
+    dVar10 = 1.0;
     CL_DrawStretchPicPhysical
-              ((float)(dVar15 + dVar18) - 1.0,(float)(dVar13 + dVar17) - 1.0,3.0,3.0,0.0,0.0,1.0,1.0
-               ,pSVar3->scaleVirtualToReal,pMVar7);
+              ((float)(dVar11 + dVar14) - 1.0,(float)(dVar9 + dVar13) - 1.0,3.0,3.0,0.0,0.0,1.0,1.0,
+               pSVar5->scaleVirtualToReal,pMVar6);
     CL_DrawStretchPicPhysical
-              ((float)((double)(float)((double)(float)(pMVar6->info).name + dVar18) - dVar11),
-               (float)((double)(float)((double)*(float *)&(pMVar6->info).gameFlags + dVar17) -
-                      dVar11),(float)dVar12,(float)dVar12,(float)dVar10,(float)dVar10,(float)dVar11,
-               (float)dVar11,pSVar3->scaleVirtualToReal,pMVar7);
-    dVar13 = (double)local_8c;
-    dVar15 = (double)local_90;
+              ((float)((double)(float)((double)*param_2 + dVar14) - dVar10),
+               (float)((double)(float)((double)param_2[1] + dVar13) - dVar10),(float)dVar8,
+               (float)dVar8,(float)dVar7,(float)dVar7,(float)dVar10,(float)dVar10,
+               pSVar5->scaleVirtualToReal,pMVar6);
+    dVar9 = (double)local_8c;
+    dVar11 = (double)local_90;
   }
-  local_88 = (float)((double)(float)(pMVar6->info).name - dVar15);
-  local_84 = (float)((double)*(float *)&(pMVar6->info).gameFlags - dVar13);
-  fVar19 = Vec2Normalize(&local_88);
-  dVar11 = (double)fVar19;
-  if (bVar8) {
-    if ((double)local_88 <= dVar10) goto LAB_822d2e2c;
+  local_88 = (float)((double)*param_2 - dVar11);
+  local_84 = (float)((double)param_2[1] - dVar9);
+  Vec2Normalize(&local_88);
+  if (0.0 <= fVar15) {
+    if ((double)local_88 <= dVar7) goto LAB_822d2e2c;
 LAB_822d2e24:
-    bVar8 = true;
+    bVar4 = true;
   }
   else {
-    if ((double)local_88 < dVar10) goto LAB_822d2e24;
+    if ((double)local_88 < dVar7) goto LAB_822d2e24;
 LAB_822d2e2c:
-    bVar8 = false;
+    bVar4 = false;
   }
-  if (bVar9) {
-    if ((double)local_84 <= dVar10) goto LAB_822d2e60;
+  if (0.0 <= fVar1) {
+    if ((double)local_84 <= dVar7) goto LAB_822d2e60;
 LAB_822d2e58:
-    bVar9 = true;
+    bVar2 = true;
   }
   else {
-    if ((double)local_84 < dVar10) goto LAB_822d2e58;
+    if ((double)local_84 < dVar7) goto LAB_822d2e58;
 LAB_822d2e60:
-    bVar9 = false;
+    bVar2 = false;
   }
-  if ((bVar8) && (bVar9)) {
-    fVar19 = Vec2Distance(&local_90,(float *)pMVar6);
-    dVar11 = (double)fVar19;
-    if (dVar16 < dVar11) {
-      bVar1 = true;
-      (pMVar6->info).name = (char *)(float)((double)local_88 * dVar16 + (double)local_90);
-      *(float *)&(pMVar6->info).gameFlags = (float)((double)local_84 * dVar16 + (double)local_8c);
-    }
+  if (((bVar4) && (bVar2)) && (fVar15 = Vec2Distance(&local_90,param_2), dVar12 < (double)fVar15)) {
+    bVar3 = true;
+    *param_2 = (float)((double)local_88 * dVar12 + (double)local_90);
+    param_2[1] = (float)((double)local_84 * dVar12 + (double)local_8c);
   }
 LAB_822d2eb4:
-  (pMVar6->info).name = (char *)(float)((double)(float)(pMVar6->info).name + dVar18);
-  *(float *)&(pMVar6->info).gameFlags =
-       (float)((double)*(float *)&(pMVar6->info).gameFlags + dVar17);
-  if (bVar1) {
-    fVar19 = Vec2Distance((float *)pMVar6,(float *)&local_80);
-    *(float *)in_r10 = fVar19;
-    *in_r9 = (float)local_80 - (float)(pMVar6->info).name;
-    in_r9[1] = local_7c - *(float *)&(pMVar6->info).gameFlags;
-    fVar19 = Vec2Normalize(in_r9);
-    dVar11 = (double)fVar19;
+  *param_2 = (float)((double)*param_2 + dVar14);
+  param_2[1] = (float)((double)param_2[1] + dVar13);
+  if (bVar3) {
+    fVar15 = Vec2Distance(param_2,&local_80);
+    *in_r10 = fVar15;
+    *in_r9 = local_80 - *param_2;
+    in_r9[1] = local_7c - param_2[1];
+    Vec2Normalize(in_r9);
   }
-  __restfpr_26(dVar11,bVar1);
-  uVar4 = __restgprlr_25();
-  return (bool)uVar4;
+  return (bool)('\x01' - !bVar3);
 }
 
 
@@ -1494,6 +1427,8 @@ float GetScaleForDistance(LocalClientNum_t param_1,float *param_2)
 
 // 822D3030  GetStanceHeightFromDObj  (cgame/cg_hudelem.cpp:1030)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
@@ -1501,44 +1436,34 @@ bool GetStanceHeightFromDObj(centity_s *param_1,float *param_2)
 
 {
   ushort uVar1;
-  cpose_t *pcVar2;
-  DObj *pDVar3;
-  undefined1 uVar5;
-  int iVar4;
-  ulonglong uVar6;
-  float *pfVar7;
+  DObj *pDVar2;
+  int iVar3;
   float afStack_40 [2];
   float local_38;
   
-  uVar6 = (ulonglong)(int)param_2;
-  pcVar2 = (cpose_t *)__savegprlr_28(param_1);
-  if (pcVar2 == (cpose_t *)0x0) {
+  if (param_1 == (centity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_hudelem.cpp",0x40c,0,
                     "%s");
   }
-  if ((uVar6 & 0xffffffff) == 0) {
+  if (param_2 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_hudelem.cpp",0x40d,0,
                     "%s");
   }
   uVar1 = scr_const.aim_highest_bone;
-  pDVar3 = Com_GetClientDObj(pcVar2[2].killcamRagdollHandle,g_cgameClientNum);
-  pfVar7 = (float *)uVar6;
-  if (pDVar3 == (DObj *)0x0) {
-    *pfVar7 = 0.0;
-    uVar5 = __restgprlr_28();
-    return (bool)uVar5;
+  pDVar2 = Com_GetClientDObj((param_1->nextState).number,g_cgameClientNum);
+  if (pDVar2 == (DObj *)0x0) {
+    *param_2 = 0.0;
+    return false;
   }
-  iVar4 = CG_DObjGetWorldTagPos(pcVar2,pDVar3,(uint)uVar1,afStack_40);
-  if (iVar4 == 0) {
+  iVar3 = CG_DObjGetWorldTagPos(&param_1->pose,pDVar2,(uint)uVar1,afStack_40);
+  if (iVar3 == 0) {
     SL_ConvertToString((uint)uVar1);
     Com_PrintWarning(0xe,"Cannot find tag [%s] on entity for objective marker.\n");
-    *pfVar7 = 0.0;
-    uVar5 = __restgprlr_28(0);
-    return (bool)uVar5;
+    *param_2 = 0.0;
+    return false;
   }
-  *pfVar7 = (local_38 - pcVar2->origin[2]) + MY_BUMP;
-  uVar5 = __restgprlr_28(1);
-  return (bool)uVar5;
+  *param_2 = (local_38 - (param_1->pose).origin[2]) + MY_BUMP;
+  return true;
 }
 
 
@@ -1582,6 +1507,8 @@ float CG_GetWaypointOffsetForStance(centity_s *param_1)
 
 // 822D3258  GetWaypointEntPos  (cgame/cg_hudelem.cpp:1095)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -1590,71 +1517,63 @@ bool GetWaypointEntPos(LocalClientNum_t param_1,hudelem_s *param_2,float *param_
 
 {
   float fVar1;
-  LocalClientNum_t LVar2;
-  undefined1 uVar5;
-  cg_s *pcVar3;
-  centity_s *pcVar4;
-  ulonglong uVar6;
-  int *piVar7;
-  float fVar8;
+  cg_s *pcVar2;
+  centity_s *pcVar3;
+  float fVar4;
   
-  uVar6 = (ulonglong)(int)param_2;
-  LVar2 = __savegprlr_27(param_1);
-  if ((uVar6 & 0xffffffff) == 0) {
+  if (param_2 == (hudelem_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_hudelem.cpp",1099,0,
                     "%s");
   }
-  piVar7 = (int *)uVar6;
-  if (*piVar7 != 0xd) {
+  if (param_2->type != HE_TYPE_WAYPOINT) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_hudelem.cpp",0x44c,0,
                     "%s");
   }
-  if (piVar7[4] == 0x7ff) {
-    fVar8 = (float)piVar7[3];
-    fVar1 = (float)piVar7[2];
-    *param_3 = (float)piVar7[1];
+  if (param_2->targetEntNum == 0x7ff) {
+    fVar4 = param_2->z;
+    fVar1 = param_2->y;
+    *param_3 = param_2->x;
     param_3[1] = fVar1;
-    param_3[2] = fVar8;
-    uVar5 = __restgprlr_27(1);
-    return (bool)uVar5;
+    param_3[2] = fVar4;
+    return true;
   }
-  pcVar3 = CG_GetLocalClientGlobals(LVar2);
-  if (piVar7[4] != (pcVar3->predictedPlayerEntity->nextState).number) {
-    pcVar4 = CG_GetEntity(LVar2,piVar7[4]);
-    if ((pcVar4->flags & 1U) != 0) {
-      *param_3 = (pcVar4->pose).origin[0];
-      param_3[1] = (pcVar4->pose).origin[1];
-      param_3[2] = (pcVar4->pose).origin[2];
-      fVar8 = CG_GetWaypointOffsetForStance(pcVar4);
-      param_3[2] = fVar8 + param_3[2];
-      uVar5 = __restgprlr_27(1);
-      return (bool)uVar5;
-    }
+  pcVar2 = CG_GetLocalClientGlobals(param_1);
+  if ((param_2->targetEntNum != (pcVar2->predictedPlayerEntity->nextState).number) &&
+     (pcVar3 = CG_GetEntity(param_1,param_2->targetEntNum), (pcVar3->flags & 1U) != 0)) {
+    *param_3 = (pcVar3->pose).origin[0];
+    param_3[1] = (pcVar3->pose).origin[1];
+    param_3[2] = (pcVar3->pose).origin[2];
+    fVar4 = CG_GetWaypointOffsetForStance(pcVar3);
+    param_3[2] = fVar4 + param_3[2];
+    return true;
   }
-  uVar5 = __restgprlr_27(0);
-  return (bool)uVar5;
+  return false;
 }
 
 
 // 822D3370  CG_DrawWaypoint  (cgame/cg_hudelem.cpp:1290)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_21 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_21 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void CG_DrawWaypoint(LocalClientNum_t param_1,WaypointDrawArgs *param_2)
 
 {
   float fVar1;
-  uchar *puVar2;
-  LocalClientNum_t LVar3;
-  ScreenPlacement *pSVar4;
-  bool bVar7;
-  Font_s *pFVar5;
-  int iVar6;
-  ulonglong uVar8;
-  int *piVar9;
-  Material *pMVar10;
-  float *pfVar11;
-  float *pfVar12;
+  ScreenPlacement *pSVar2;
+  bool bVar6;
+  float *pfVar3;
+  Font_s *pFVar4;
+  int iVar5;
+  Material *pMVar7;
+  float *pfVar8;
+  float *pfVar9;
+  double dVar10;
+  double dVar11;
+  double dVar12;
   double dVar13;
   double dVar14;
   double dVar15;
@@ -1663,10 +1582,7 @@ void CG_DrawWaypoint(LocalClientNum_t param_1,WaypointDrawArgs *param_2)
   double dVar18;
   double dVar19;
   double dVar20;
-  double dVar21;
-  double dVar22;
-  double dVar23;
-  float fVar24;
+  float fVar21;
   float local_e0;
   float local_dc;
   float local_d8;
@@ -1678,205 +1594,193 @@ void CG_DrawWaypoint(LocalClientNum_t param_1,WaypointDrawArgs *param_2)
   undefined1 local_b4 [4];
   float local_b0;
   GfxDrawSurf local_ac;
-  uchar local_a0 [4];
-  uchar local_9c [4];
-  uchar local_98 [4];
+  float local_a0;
+  float local_9c;
+  float local_98;
   float local_94;
-  uchar local_90 [4];
-  uchar local_8c [4];
-  uchar local_88 [4];
+  float local_90;
+  float local_8c;
+  float local_88;
   float local_84;
   
-  uVar8 = (ulonglong)(int)param_2;
-  __savegprlr_28(param_1);
-  LVar3 = __savefpr_21();
-  if ((uVar8 & 0xffffffff) == 0) {
+  if (param_2 == (WaypointDrawArgs *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_hudelem.cpp",0x526,0,
                     "%s");
   }
-  piVar9 = (int *)uVar8;
-  if (*piVar9 == 0) {
+  if (param_2->worldPos == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_hudelem.cpp",0x527,0,
                     "%s");
   }
-  if (piVar9[2] == 0) {
+  if (param_2->color4 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_hudelem.cpp",0x528,0,
                     "%s");
   }
-  if (piVar9[5] == 0) {
+  if (param_2->arrowMaterial == (Material *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_hudelem.cpp",0x529,0,
                     "%s");
   }
-  pSVar4 = ScrPlace_GetActivePlacement(LVar3);
-  dVar19 = 0.5;
-  local_dc = (waypointIconWidth->current).value * pSVar4->scaleVirtualToReal[0];
-  dVar13 = (double)((pSVar4->scaleVirtualToReal[0] + pSVar4->scaleVirtualToReal[1]) * 0.5);
-  local_e0 = (waypointIconHeight->current).value * pSVar4->scaleVirtualToReal[1];
-  local_d4 = (float)piVar9[6] * pSVar4->scaleVirtualToReal[0];
-  dVar20 = (double)(float)((double)(float)piVar9[9] * dVar13);
-  local_d8 = (float)piVar9[7] * pSVar4->scaleVirtualToReal[1];
-  dVar14 = (double)(float)((double)(waypointOffscreenDistanceThresholdAlpha->current).value * dVar13
+  pSVar2 = ScrPlace_GetActivePlacement(param_1);
+  dVar16 = 0.5;
+  local_dc = (waypointIconWidth->current).value * pSVar2->scaleVirtualToReal[0];
+  dVar10 = (double)((pSVar2->scaleVirtualToReal[0] + pSVar2->scaleVirtualToReal[1]) * 0.5);
+  local_e0 = (waypointIconHeight->current).value * pSVar2->scaleVirtualToReal[1];
+  local_d4 = param_2->arrowWidth * pSVar2->scaleVirtualToReal[0];
+  dVar17 = (double)(float)((double)param_2->arrowFadeDistance * dVar10);
+  local_d8 = param_2->arrowHeight * pSVar2->scaleVirtualToReal[1];
+  dVar11 = (double)(float)((double)(waypointOffscreenDistanceThresholdAlpha->current).value * dVar10
                           );
-  if (dVar14 < 0.10000000149011612) {
-    dVar14 = 0.10000000149011612;
+  if (dVar11 < 0.10000000149011612) {
+    dVar11 = 0.10000000149011612;
   }
-  fVar24 = (float)((double)local_d8 * 0.5 + dVar20);
-  fVar1 = pSVar4->scaleVirtualToReal[1];
-  dVar23 = (double)((float)piVar9[4] * fVar1);
-  dVar18 = (double)((waypointOffscreenPadLeft->current).value * pSVar4->scaleVirtualToReal[0] +
-                   fVar24);
-  dVar17 = (double)((waypointOffscreenPadRight->current).value * pSVar4->scaleVirtualToReal[0] +
-                   fVar24);
-  dVar16 = (double)((waypointOffscreenPadTop->current).value * fVar1 + fVar24);
-  dVar15 = (double)((waypointOffscreenPadBottom->current).value * fVar1 + fVar24);
-  bVar7 = CL_IsRenderingSplitScreen();
-  if (bVar7) {
+  fVar21 = (float)((double)local_d8 * 0.5 + dVar17);
+  fVar1 = pSVar2->scaleVirtualToReal[1];
+  dVar20 = (double)(param_2->offsetY * fVar1);
+  dVar15 = (double)((waypointOffscreenPadLeft->current).value * pSVar2->scaleVirtualToReal[0] +
+                   fVar21);
+  dVar14 = (double)((waypointOffscreenPadRight->current).value * pSVar2->scaleVirtualToReal[0] +
+                   fVar21);
+  dVar13 = (double)((waypointOffscreenPadTop->current).value * fVar1 + fVar21);
+  dVar12 = (double)((waypointOffscreenPadBottom->current).value * fVar1 + fVar21);
+  bVar6 = CL_IsRenderingSplitScreen();
+  if (bVar6) {
     local_dc = (waypointSplitscreenScale->current).value * local_dc;
     local_e0 = (waypointSplitscreenScale->current).value * local_e0;
     local_d4 = (waypointSplitscreenScale->current).value * local_d4;
     local_d8 = (waypointSplitscreenScale->current).value * local_d8;
-    dVar20 = (double)(float)((double)(waypointSplitscreenScale->current).value * dVar20);
+    dVar17 = (double)(float)((double)(waypointSplitscreenScale->current).value * dVar17);
   }
-  puVar2 = (uchar *)piVar9[2];
-  pfVar12 = &local_b0;
-  pfVar11 = (float *)*piVar9;
-  local_a0 = *(uchar (*) [4])puVar2;
-  local_9c = *(uchar (*) [4])(puVar2 + 4);
-  local_98 = *(uchar (*) [4])(puVar2 + 8);
-  local_94 = *(float *)(puVar2 + 0xc);
-  CG_WorldPosToScreenPosReal(LVar3,pSVar4,pfVar11,pfVar12);
-  local_c4._0_4_ = (undefined4)((double)(float)local_ac.packed._0_4_ + dVar23);
+  pfVar3 = param_2->color4;
+  pfVar9 = &local_b0;
+  pfVar8 = param_2->worldPos;
+  local_a0 = *pfVar3;
+  local_9c = pfVar3[1];
+  local_98 = pfVar3[2];
+  local_94 = pfVar3[3];
+  CG_WorldPosToScreenPosReal(param_1,pSVar2,pfVar8,pfVar9);
+  local_c4._0_4_ = (undefined4)((double)(float)local_ac.packed._0_4_ + dVar20);
   local_c8 = local_b0;
-  dVar21 = 0.0;
-  dVar23 = dVar21;
-  dVar22 = dVar21;
+  dVar18 = 0.0;
+  dVar20 = dVar18;
+  dVar19 = dVar18;
   local_ac.packed._0_4_ = local_c4._0_4_;
-  if (*(char *)(piVar9 + 0xb) == '\0') {
-    bVar7 = false;
+  if (param_2->pinToEdge == false) {
+    bVar6 = false;
   }
   else {
-    bVar7 = ClampScreenPosToEdges
-                      (LVar3,&local_c8,(float)dVar18,(float)dVar17,(float)dVar16,(float)dVar15,
-                       pfVar11,pfVar12);
-    dVar21 = (double)local_d0._0_4_;
+    bVar6 = ClampScreenPosToEdges
+                      (param_1,&local_c8,(float)dVar15,(float)dVar14,(float)dVar13,(float)dVar12,
+                       pfVar8,pfVar9);
+    dVar18 = (double)local_d0._0_4_;
   }
-  dVar15 = 1.0;
-  if ((bVar7 != false) && (dVar22 < dVar21)) {
-    if (*(char *)(piVar9 + 10) == '\0') {
+  dVar12 = 1.0;
+  if ((bVar6 != false) && (dVar19 < dVar18)) {
+    if (param_2->rotateAtEdge == false) {
       local_84 = local_94;
-      local_90[0] = local_a0[0];
-      local_90[1] = local_a0[1];
-      local_90[2] = local_a0[2];
-      local_90[3] = local_a0[3];
-      local_8c[0] = local_9c[0];
-      local_8c[1] = local_9c[1];
-      local_8c[2] = local_9c[2];
-      local_8c[3] = local_9c[3];
-      local_88[0] = local_98[0];
-      local_88[1] = local_98[1];
-      local_88[2] = local_98[2];
-      local_88[3] = local_98[3];
-      dVar16 = (double)local_94;
-      if (*(char *)(piVar9 + 8) != '\0') {
+      local_90 = local_a0;
+      local_8c = local_9c;
+      local_88 = local_98;
+      dVar13 = (double)local_94;
+      if (param_2->arrowForceFullAlpha != false) {
         local_84 = 1.0;
-        dVar16 = dVar15;
+        dVar13 = dVar12;
       }
-      if (dVar14 <= dVar21) {
-        if (*(char *)((int)piVar9 + 0x29) != '\0') {
-          local_94 = (float)dVar22;
+      if (dVar11 <= dVar18) {
+        if (param_2->fadeAtEdge != false) {
+          local_94 = (float)dVar19;
         }
       }
       else {
-        local_84 = (float)((double)(float)(dVar16 / dVar14) * dVar21);
-        if (*(char *)((int)piVar9 + 0x29) != '\0') {
+        local_84 = (float)((double)(float)(dVar13 / dVar11) * dVar18);
+        if (param_2->fadeAtEdge != false) {
           local_94 = 1.0 - local_84;
         }
       }
-      dVar14 = (double)(float)((double)(waypointOffscreenScaleLength->current).value * dVar13);
-      if (dVar14 <= dVar21) {
-        fVar24 = (waypointOffscreenScaleSmallest->current).value;
+      dVar11 = (double)(float)((double)(waypointOffscreenScaleLength->current).value * dVar10);
+      if (dVar11 <= dVar18) {
+        fVar21 = (waypointOffscreenScaleSmallest->current).value;
       }
       else {
-        fVar24 = (float)(dVar21 / dVar14);
-        fVar24 = (waypointOffscreenScaleSmallest->current).value * fVar24 + (1.0 - fVar24);
+        fVar21 = (float)(dVar18 / dVar11);
+        fVar21 = (waypointOffscreenScaleSmallest->current).value * fVar21 + (1.0 - fVar21);
       }
-      local_dc = fVar24 * local_dc;
-      local_e0 = fVar24 * local_e0;
-      dVar14 = atan2((double)(float)local_c4._4_4_,-(double)(float)local_bc._0_4_);
-      local_bc._4_4_ = (undefined4)((double)(float)local_c4._4_4_ * dVar20 + (double)local_c8);
+      local_dc = fVar21 * local_dc;
+      local_e0 = fVar21 * local_e0;
+      dVar11 = atan2((double)(float)local_c4._4_4_,-(double)(float)local_bc._0_4_);
+      local_bc._4_4_ = (undefined4)((double)(float)local_c4._4_4_ * dVar17 + (double)local_c8);
       local_b4 = (undefined1  [4])
-                 (float)((double)(float)local_bc._0_4_ * dVar20 + (double)(float)local_c4._0_4_);
-      pfVar12 = &local_d8;
-      pMVar10 = (Material *)local_b4;
-      pfVar11 = (float *)((int)&local_bc + 4);
-      dVar14 = (double)((float)dVar14 * 57.295776);
-      ScrPlace_HiResApplyRect(pfVar11,(float *)pMVar10,&local_d4,pfVar12);
+                 (float)((double)(float)local_bc._0_4_ * dVar17 + (double)(float)local_c4._0_4_);
+      pfVar9 = &local_d8;
+      pMVar7 = (Material *)local_b4;
+      pfVar3 = (float *)((int)&local_bc + 4);
+      dVar11 = (double)((float)dVar11 * 57.295776);
+      ScrPlace_HiResApplyRect(pfVar3,(float *)pMVar7,&local_d4,pfVar9);
       CL_DrawStretchPicPhysicalRotateXY
-                (-(float)((double)local_d4 * dVar19 - (double)(float)local_bc._4_4_),
-                 -(float)((double)local_d8 * dVar19 - (double)(float)local_b4),local_d4,local_d8,
-                 (float)dVar22,(float)dVar22,(float)dVar15,(float)dVar15,(float)dVar14,pfVar11,
-                 pMVar10);
+                (-(float)((double)local_d4 * dVar16 - (double)(float)local_bc._4_4_),
+                 -(float)((double)local_d8 * dVar16 - (double)(float)local_b4),local_d4,local_d8,
+                 (float)dVar19,(float)dVar19,(float)dVar12,(float)dVar12,(float)dVar11,pfVar3,pMVar7
+                );
     }
     else {
-      dVar14 = atan2((double)(float)local_c4._4_4_,-(double)(float)local_bc._0_4_);
-      dVar23 = (double)((float)dVar14 * 57.295776 + 180.0);
+      dVar11 = atan2((double)(float)local_c4._4_4_,-(double)(float)local_bc._0_4_);
+      dVar20 = (double)((float)dVar11 * 57.295776 + 180.0);
     }
   }
-  if (*(char *)((int)piVar9 + 0x2b) == '\0') {
-    if ((bVar7 == false) && (*(char *)((int)piVar9 + 0x2a) != '\0')) goto LAB_822d3994;
+  if (param_2->alwaysDrawIcon == false) {
+    if ((bVar6 == false) && (param_2->drawOffscreenOnly != false)) {
+      return;
+    }
   }
   else {
-    puVar2 = (uchar *)piVar9[2];
+    pfVar3 = param_2->color4;
     local_c8 = local_b0;
     local_c4._0_4_ = local_ac.packed._0_4_;
-    local_a0 = *(uchar (*) [4])puVar2;
-    local_9c = *(uchar (*) [4])(puVar2 + 4);
-    local_98 = *(uchar (*) [4])(puVar2 + 8);
-    local_94 = *(float *)(puVar2 + 0xc);
+    local_a0 = *pfVar3;
+    local_9c = pfVar3[1];
+    local_98 = pfVar3[2];
+    local_94 = pfVar3[3];
   }
-  if (*(char *)((int)piVar9 + 0x2d) == '\0') {
-    fVar24 = GetScaleForDistance(LVar3,(float *)*piVar9);
-    local_dc = fVar24 * local_dc;
-    local_e0 = fVar24 * local_e0;
+  if (param_2->isConstantSize == false) {
+    fVar21 = GetScaleForDistance(param_1,param_2->worldPos);
+    local_dc = fVar21 * local_dc;
+    local_e0 = fVar21 * local_e0;
   }
-  if (piVar9[1] != 0) {
-    pfVar12 = &local_e0;
-    pMVar10 = (Material *)local_c4;
-    pfVar11 = &local_c8;
-    ScrPlace_HiResApplyRect(pfVar11,(float *)pMVar10,&local_dc,pfVar12);
+  if (param_2->iconMaterial != (Material *)0x0) {
+    pfVar9 = &local_e0;
+    pMVar7 = (Material *)local_c4;
+    pfVar3 = &local_c8;
+    ScrPlace_HiResApplyRect(pfVar3,(float *)pMVar7,&local_dc,pfVar9);
     CL_DrawStretchPicPhysicalRotateXY
-              (-(float)((double)local_dc * dVar19 - (double)local_c8),
-               -(float)((double)local_e0 * dVar19 - (double)(float)local_c4._0_4_),local_dc,local_e0
-               ,(float)dVar22,(float)dVar22,(float)dVar15,(float)dVar15,(float)dVar23,pfVar11,
-               pMVar10);
+              (-(float)((double)local_dc * dVar16 - (double)local_c8),
+               -(float)((double)local_e0 * dVar16 - (double)(float)local_c4._0_4_),local_dc,local_e0
+               ,(float)dVar19,(float)dVar19,(float)dVar12,(float)dVar12,(float)dVar20,pfVar3,pMVar7)
+    ;
   }
-  if (piVar9[3] != 0) {
-    dVar13 = (double)((objectiveTextOffsetY->current).value * pSVar4->scaleVirtualToReal[1]);
-    dVar14 = (double)*(float *)(DAT_82a22d10 + 0xc);
-    pFVar5 = UI_GetFontHandle(pSVar4,6,*(float *)(DAT_82a22d10 + 0xc));
-    local_c4._0_4_ = (undefined4)(dVar13 + (double)(float)local_c4._0_4_);
-    dVar13 = (double)(float)(dVar14 * (double)cg_hudSplitscreenScale);
-    fVar24 = ScrPlace_HiResGetScaleX();
-    dVar20 = (double)(float)(dVar14 * (double)cg_hudSplitscreenScale);
-    dVar14 = (double)(pSVar4->scaleVirtualToReal[0] * (float)((double)fVar24 * dVar13));
-    fVar24 = ScrPlace_HiResGetScaleY();
-    dVar13 = (double)((float)((double)fVar24 * dVar20) * pSVar4->scaleVirtualToReal[1]);
-    iVar6 = R_TextWidth((char *)piVar9[3],0x7fffffff,pFVar5);
-    local_d0 = (longlong)iVar6;
-    CL_DrawTextPhysical((char *)piVar9[3],0x7fffffff,pFVar5,
-                        -(float)((double)(float)((double)local_d0 * dVar14) * dVar19 -
-                                (double)local_c8),(float)local_c4._0_4_,(float)dVar14,(float)dVar13,
-                        pfVar12,3);
+  if (param_2->label != (char *)0x0) {
+    dVar10 = (double)((objectiveTextOffsetY->current).value * pSVar2->scaleVirtualToReal[1]);
+    dVar11 = (double)*(float *)(DAT_82a22d10 + 0xc);
+    pFVar4 = UI_GetFontHandle(pSVar2,6,*(float *)(DAT_82a22d10 + 0xc));
+    local_c4._0_4_ = (undefined4)(dVar10 + (double)(float)local_c4._0_4_);
+    dVar10 = (double)(float)(dVar11 * (double)cg_hudSplitscreenScale);
+    fVar21 = ScrPlace_HiResGetScaleX();
+    dVar17 = (double)(float)(dVar11 * (double)cg_hudSplitscreenScale);
+    dVar11 = (double)(pSVar2->scaleVirtualToReal[0] * (float)((double)fVar21 * dVar10));
+    fVar21 = ScrPlace_HiResGetScaleY();
+    dVar10 = (double)((float)((double)fVar21 * dVar17) * pSVar2->scaleVirtualToReal[1]);
+    iVar5 = R_TextWidth(param_2->label,0x7fffffff,pFVar4);
+    local_d0 = (longlong)iVar5;
+    CL_DrawTextPhysical(param_2->label,0x7fffffff,pFVar4,
+                        -(float)((double)(float)((double)local_d0 * dVar11) * dVar16 -
+                                (double)local_c8),(float)local_c4._0_4_,(float)dVar11,(float)dVar10,
+                        pfVar9,3);
   }
-LAB_822d3994:
-  __restfpr_21();
-  __restgprlr_28();
   return;
 }
 
 
 // 822D39A8  DrawViewableWaypoint  (cgame/cg_hudelem.cpp:1487)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -1885,51 +1789,44 @@ void DrawViewableWaypoint(LocalClientNum_t param_1,hudelem_s *param_2)
 
 {
   uint uVar1;
-  LocalClientNum_t LVar2;
-  int iVar3;
-  cg_s *pcVar4;
-  bool bVar5;
-  ulonglong uVar6;
-  hudelem_s *phVar7;
+  int iVar2;
+  cg_s *pcVar3;
+  bool bVar4;
   hudelem_color_t ahStack_d0 [4];
   WaypointDrawArgs local_c0;
   float afStack_90 [4];
   float afStack_80 [4];
   char acStack_70 [112];
   
-  uVar6 = (ulonglong)(int)param_2;
-  LVar2 = __savegprlr_28(param_1);
-  if ((uVar6 & 0xffffffff) == 0) {
+  if (param_2 == (hudelem_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_hudelem.cpp",0x5d9,0,
                     "%s");
   }
-  phVar7 = (hudelem_s *)uVar6;
-  if (phVar7->type != HE_TYPE_WAYPOINT) {
+  if (param_2->type != HE_TYPE_WAYPOINT) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_hudelem.cpp",0x5da,0,
                     "%s");
   }
-  if ((phVar7->flags & 0x400U) != 0) {
+  if ((param_2->flags & 0x400U) != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_hudelem.cpp",0x5dd,0,
                     "%s");
   }
-  iVar3 = CG_GetFlashbangedRemainingTime(LVar2);
-  if (iVar3 == 0) {
-    pcVar4 = CG_GetLocalClientGlobals(LVar2);
-    BG_LerpHudColors(phVar7,pcVar4->time,ahStack_d0);
+  iVar2 = CG_GetFlashbangedRemainingTime(param_1);
+  if (iVar2 == 0) {
+    pcVar3 = CG_GetLocalClientGlobals(param_1);
+    BG_LerpHudColors(param_2,pcVar3->time,ahStack_d0);
     if (ahStack_d0[0]._s_0.a != '\0') {
-      HudElemColorToVec4(LVar2,ahStack_d0,afStack_80);
-      iVar3 = CG_ServerMaterialName(LVar2,phVar7->materialIndex,acStack_70,0x40);
-      if (iVar3 != 0) {
+      HudElemColorToVec4(param_1,ahStack_d0,afStack_80);
+      iVar2 = CG_ServerMaterialName(param_1,param_2->materialIndex,acStack_70,0x40);
+      if (iVar2 != 0) {
         local_c0.iconMaterial = Material_RegisterHandle(acStack_70,7);
-        bVar5 = Material_Is2D(local_c0.iconMaterial);
-        if (!bVar5) {
+        bVar4 = Material_Is2D(local_c0.iconMaterial);
+        if (!bVar4) {
           Com_PrintError(0xd,"Error: attempting to draw 3D material \'%s\' as a 2D waypoint\n");
-          __restgprlr_28();
           return;
         }
-        bVar5 = GetWaypointEntPos(LVar2,phVar7,afStack_90);
-        if (bVar5) {
-          uVar1 = phVar7->flags;
+        bVar4 = GetWaypointEntPos(param_1,param_2,afStack_90);
+        if (bVar4) {
+          uVar1 = param_2->flags;
           local_c0.worldPos = afStack_90;
           local_c0.color4 = afStack_80;
           local_c0.rotateAtEdge = (bool)((byte)(uVar1 >> 5) & 1);
@@ -1945,18 +1842,19 @@ void DrawViewableWaypoint(LocalClientNum_t param_1,hudelem_s *param_2)
           local_c0.label = (char *)0x0;
           local_c0.arrowMaterial = cgMedia.offscreenObjectivePointer;
           local_c0.arrowForceFullAlpha = false;
-          CG_DrawWaypoint(LVar2,&local_c0);
+          CG_DrawWaypoint(param_1,&local_c0);
         }
       }
     }
   }
-  __restgprlr_28();
   return;
 }
 
 
 // 822D3BB8  DrawSingleHudElem2d  (cgame/cg_hudelem.cpp:1558)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -1964,26 +1862,23 @@ void DrawViewableWaypoint(LocalClientNum_t param_1,hudelem_s *param_2)
 void DrawSingleHudElem2d(LocalClientNum_t param_1,hudelem_s *param_2)
 
 {
-  LocalClientNum_t LVar1;
-  cg_s *pcVar2;
+  cg_s *pcVar1;
   hudelem_color_t ahStack_370 [4];
   cg_hudelem_t local_360;
   char acStack_120 [288];
   
-  LVar1 = __savegprlr_29(param_1);
   if (param_2->type == HE_TYPE_WAYPOINT) {
     if ((param_2->flags & 0x400U) == 0) {
-      DrawViewableWaypoint(LVar1,param_2);
-      __restgprlr_29();
+      DrawViewableWaypoint(param_1,param_2);
       return;
     }
   }
   else {
-    pcVar2 = CG_GetLocalClientGlobals(LVar1);
-    local_360.timeNow = pcVar2->time;
-    pcVar2 = CG_GetLocalClientGlobals(LVar1);
-    if (pcVar2->nextSnap->serverTime < param_2->fadeStartTime) {
-      CG_GetLocalClientGlobals(LVar1);
+    pcVar1 = CG_GetLocalClientGlobals(param_1);
+    local_360.timeNow = pcVar1->time;
+    pcVar1 = CG_GetLocalClientGlobals(param_1);
+    if (pcVar1->nextSnap->serverTime < param_2->fadeStartTime) {
+      CG_GetLocalClientGlobals(param_1);
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_hudelem.cpp",0x639,
                       0,
                       "elem->fadeStartTime <= CG_GetLocalClientGlobals( localClientNum )->nextSnap->serverTime\n\t%i, %i"
@@ -1991,10 +1886,10 @@ void DrawSingleHudElem2d(LocalClientNum_t param_1,hudelem_s *param_2)
     }
     BG_LerpHudColors(param_2,local_360.timeNow,ahStack_370);
     if (ahStack_370[0]._s_0.a != '\0') {
-      HudElemColorToVec4(LVar1,ahStack_370,local_360.color);
-      DrawSingleHudElem2d_GetHudElemInfo(LVar1,param_2,&local_360,acStack_120);
+      HudElemColorToVec4(param_1,ahStack_370,local_360.color);
+      DrawSingleHudElem2d_GetHudElemInfo(param_1,param_2,&local_360,acStack_120);
       if (local_360.hudElemLabel[0] != '\0') {
-        DrawHudElemString(LVar1,local_360.hudElemLabel,param_2,&local_360);
+        DrawHudElemString(param_1,local_360.hudElemLabel,param_2,&local_360);
         local_360.x = local_360.x + local_360.labelWidth;
       }
       switch(param_2->type) {
@@ -2008,19 +1903,16 @@ void DrawSingleHudElem2d(LocalClientNum_t param_1,hudelem_s *param_2)
       case HE_TYPE_TENTHS_TIMER_UP:
       case HE_TYPE_TENTHS_TIMER_STATIC:
         if (local_360.hudElemText[0] != '\0') {
-          DrawHudElemString(LVar1,local_360.hudElemText,param_2,&local_360);
-          __restgprlr_29();
+          DrawHudElemString(param_1,local_360.hudElemText,param_2,&local_360);
           return;
         }
         break;
       case HE_TYPE_MATERIAL:
-        DrawHudElemMaterial(LVar1,param_2,&local_360);
-        __restgprlr_29();
+        DrawHudElemMaterial(param_1,param_2,&local_360);
         return;
       case HE_TYPE_CLOCK_DOWN:
       case HE_TYPE_CLOCK_UP:
-        DrawHudElemClock(LVar1,param_2,&local_360);
-        __restgprlr_29();
+        DrawHudElemClock(param_1,param_2,&local_360);
         return;
       default:
         if (alwaysfails == 0) {
@@ -2030,7 +1922,6 @@ void DrawSingleHudElem2d(LocalClientNum_t param_1,hudelem_s *param_2)
       }
     }
   }
-  __restgprlr_29();
   return;
 }
 
@@ -2123,6 +2014,8 @@ uint GetSortedHudElems(LocalClientNum_t param_1,hudelem_s **param_2)
 
 // 822D3EF8  CG_Draw2dHudElems  (cgame/cg_hudelem.cpp:1709)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -2130,66 +2023,66 @@ uint GetSortedHudElems(LocalClientNum_t param_1,hudelem_s **param_2)
 void CG_Draw2dHudElems(LocalClientNum_t param_1,int param_2)
 
 {
-  LocalClientNum_t LVar1;
-  cg_s *pcVar2;
-  uint uVar3;
-  bool bVar5;
-  int iVar4;
-  ulonglong uVar6;
-  longlong lVar7;
-  hudelem_s **pphVar8;
+  cg_s *pcVar1;
+  uint uVar2;
+  bool bVar4;
+  int iVar3;
+  ulonglong uVar5;
+  longlong lVar6;
+  hudelem_s **pphVar7;
   hudelem_s *local_1040 [1040];
   
-  LVar1 = __savegprlr_25(param_1);
-  pcVar2 = CG_GetLocalClientGlobals(LVar1);
-  uVar3 = GetSortedHudElems(LVar1,local_1040);
-  lVar7 = (longlong)(int)uVar3;
-  bVar5 = CL_Demo_IsFollowCamera(LVar1);
-  if (((!bVar5) && (bVar5 = CL_Demo_IsFreeCamera(LVar1), !bVar5)) && (uVar3 != 0)) {
+  pcVar1 = CG_GetLocalClientGlobals(param_1);
+  uVar2 = GetSortedHudElems(param_1,local_1040);
+  lVar6 = (longlong)(int)uVar2;
+  bVar4 = CL_Demo_IsFollowCamera(param_1);
+  if (((!bVar4) && (bVar4 = CL_Demo_IsFreeCamera(param_1), !bVar4)) && (uVar2 != 0)) {
     ScrPlace_SetLegacySplitscreenScaling();
-    uVar6 = (ulonglong)(uint)(pcVar2->predictedPlayerState).pm_type;
-    if (0 < (int)uVar3) {
-      pphVar8 = local_1040;
+    uVar5 = (ulonglong)(uint)(pcVar1->predictedPlayerState).pm_type;
+    if (0 < (int)uVar2) {
+      pphVar7 = local_1040;
       do {
-        if ((((((~uVar6 & 0xffffffff) >> 0x1f) + (ulonglong)(7 < uVar6) & 1) != 0) ||
-            (((*pphVar8)->flags & 2U) == 0)) &&
-           ((pcVar2->renderingThirdPerson == 0 || (((*pphVar8)->flags & 0x800U) == 0)))) {
+        if ((((((~uVar5 & 0xffffffff) >> 0x1f) + (ulonglong)(7 < uVar5) & 1) != 0) ||
+            (((*pphVar7)->flags & 2U) == 0)) &&
+           ((pcVar1->renderingThirdPerson == 0 || (((*pphVar7)->flags & 0x800U) == 0)))) {
           if (param_2 == 0) {
-            if (((*pphVar8)->flags & 0x100U) != 0) {
+            if (((*pphVar7)->flags & 0x100U) != 0) {
 LAB_822d4040:
-              if (((((*pphVar8)->flags & 4U) == 0) || (iVar4 = UI_AnyMenuActive(LVar1), iVar4 == 0))
-                 && ((bVar5 = CL_Demo_IsPlaying(LVar1), !bVar5 ||
-                     (((*pphVar8)->flags & 0x1000U) == 0)))) {
-                DrawSingleHudElem2d(LVar1,*pphVar8);
+              if (((((*pphVar7)->flags & 4U) == 0) ||
+                  (iVar3 = UI_AnyMenuActive(param_1), iVar3 == 0)) &&
+                 ((bVar4 = CL_Demo_IsPlaying(param_1), !bVar4 ||
+                  (((*pphVar7)->flags & 0x1000U) == 0)))) {
+                DrawSingleHudElem2d(param_1,*pphVar7);
               }
             }
           }
           else if (param_2 == 2) {
-            uVar3 = (*pphVar8)->flags;
-            if ((uVar3 & 1) != 0) {
+            uVar2 = (*pphVar7)->flags;
+            if ((uVar2 & 1) != 0) {
 joined_r0x822d403c:
-              if ((uVar3 & 0x100) == 0) goto LAB_822d4040;
+              if ((uVar2 & 0x100) == 0) goto LAB_822d4040;
             }
           }
           else {
             if (param_2 != 1) goto LAB_822d4040;
-            uVar3 = (*pphVar8)->flags;
-            if ((uVar3 & 1) == 0) goto joined_r0x822d403c;
+            uVar2 = (*pphVar7)->flags;
+            if ((uVar2 & 1) == 0) goto joined_r0x822d403c;
           }
         }
-        lVar7 = lVar7 + -1;
-        pphVar8 = pphVar8 + 1;
-      } while (lVar7 != 0);
+        lVar6 = lVar6 + -1;
+        pphVar7 = pphVar7 + 1;
+      } while (lVar6 != 0);
     }
     ScrPlace_SetNormalSplitscreenScaling();
   }
-  __restgprlr_25();
   return;
 }
 
 
 // 822D40B0  AddDrawSurfForHudElemWaypoint  (cgame/cg_hudelem.cpp:1765)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -2197,92 +2090,87 @@ joined_r0x822d403c:
 void AddDrawSurfForHudElemWaypoint(LocalClientNum_t param_1,hudelem_s *param_2)
 
 {
-  LocalClientNum_t LVar1;
-  cg_s *pcVar2;
-  int iVar3;
-  Material *pMVar4;
-  bool bVar5;
+  cg_s *pcVar1;
+  int iVar2;
+  Material *pMVar3;
+  bool bVar4;
+  double dVar5;
   double dVar6;
-  double dVar7;
-  float fVar8;
+  float fVar7;
   hudelem_color_t local_b0 [4];
   FxSprite local_a0;
   char acStack_80 [128];
   
-  LVar1 = __savegprlr_28(param_1);
-  pcVar2 = CG_GetLocalClientGlobals(LVar1);
-  BG_LerpHudColors(param_2,pcVar2->time,local_b0);
+  pcVar1 = CG_GetLocalClientGlobals(param_1);
+  BG_LerpHudColors(param_2,pcVar1->time,local_b0);
   if (((local_b0[0]._s_0.a != '\0') && ((param_2->flags & 0x400U) != 0)) &&
-     (iVar3 = CG_ServerMaterialName(LVar1,param_2->materialIndex,acStack_80,0x40), iVar3 != 0)) {
-    pMVar4 = Material_RegisterHandle(acStack_80,7);
-    bVar5 = Material_Is2D(pMVar4);
-    if (bVar5) {
+     (iVar2 = CG_ServerMaterialName(param_1,param_2->materialIndex,acStack_80,0x40), iVar2 != 0)) {
+    pMVar3 = Material_RegisterHandle(acStack_80,7);
+    bVar4 = Material_Is2D(pMVar3);
+    if (bVar4) {
       Com_PrintError(0xd,"Error: attempting to draw 2D material \'%s\' as a 3D waypoint\n");
-      __restgprlr_28();
       return;
     }
-    fVar8 = HudElemWaypointHeight(LVar1,param_2);
-    dVar7 = (double)fVar8;
-    dVar6 = 0.0;
-    if (dVar7 != 0.0) {
+    fVar7 = HudElemWaypointHeight(param_1,param_2);
+    dVar6 = (double)fVar7;
+    dVar5 = 0.0;
+    if (dVar6 != 0.0) {
       if (((uint)param_2->flags >> 9 & 1) == 0) {
-        iVar3 = 0;
+        iVar2 = 0;
       }
       else {
-        iVar3 = 3;
-        dVar7 = (double)(float)(dVar7 * 0.00430000014603138);
+        iVar2 = 3;
+        dVar6 = (double)(float)(dVar6 * 0.00430000014603138);
       }
-      bVar5 = GetWaypointEntPos(LVar1,param_2,local_a0.pos);
-      if (bVar5) {
-        local_a0.radius = (float)dVar7;
-        local_a0.minScreenRadius = (float)dVar6;
-        local_a0.material = pMVar4;
-        local_a0.flags = iVar3;
+      bVar4 = GetWaypointEntPos(param_1,param_2,local_a0.pos);
+      if (bVar4) {
+        local_a0.radius = (float)dVar6;
+        local_a0.minScreenRadius = (float)dVar5;
+        local_a0.material = pMVar3;
+        local_a0.flags = iVar2;
         FX_SpriteAdd(&local_a0);
       }
     }
   }
-  __restgprlr_28();
   return;
 }
 
 
 // 822D4218  CG_AddDrawSurfsFor3dHudElems  (cgame/cg_hudelem.cpp:1836)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void CG_AddDrawSurfsFor3dHudElems(LocalClientNum_t param_1)
 
 {
-  LocalClientNum_t LVar1;
-  bool bVar3;
-  uint uVar2;
-  longlong lVar4;
-  hudelem_s **pphVar5;
+  bool bVar2;
+  uint uVar1;
+  longlong lVar3;
+  hudelem_s **pphVar4;
   hudelem_s *local_120 [72];
   
-  LVar1 = __savegprlr_29(param_1);
-  bVar3 = CG_ShouldDrawHud(LVar1);
-  if (((bVar3) && (bVar3 = CL_Demo_IsFollowCamera(LVar1), !bVar3)) &&
-     (bVar3 = CL_Demo_IsFreeCamera(LVar1), !bVar3)) {
-    uVar2 = GetSortedHudElems(LVar1,local_120);
-    lVar4 = (longlong)(int)uVar2;
-    if (0x3e < uVar2) {
+  bVar2 = CG_ShouldDrawHud(param_1);
+  if (((bVar2) && (bVar2 = CL_Demo_IsFollowCamera(param_1), !bVar2)) &&
+     (bVar2 = CL_Demo_IsFreeCamera(param_1), !bVar2)) {
+    uVar1 = GetSortedHudElems(param_1,local_120);
+    lVar3 = (longlong)(int)uVar1;
+    if (0x3e < uVar1) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_hudelem.cpp",0x73c,
                       0,"elemCount not in [0, ARRAY_COUNT( elems )]\n\t%i not in [0, %i]");
     }
-    if (uVar2 != 0) {
-      pphVar5 = local_120;
+    if (uVar1 != 0) {
+      pphVar4 = local_120;
       do {
-        if ((*pphVar5)->type == HE_TYPE_WAYPOINT) {
-          AddDrawSurfForHudElemWaypoint(LVar1,*pphVar5);
+        if ((*pphVar4)->type == HE_TYPE_WAYPOINT) {
+          AddDrawSurfForHudElemWaypoint(param_1,*pphVar4);
         }
-        lVar4 = lVar4 + -1;
-        pphVar5 = pphVar5 + 1;
-      } while (lVar4 != 0);
+        lVar3 = lVar3 + -1;
+        pphVar4 = pphVar4 + 1;
+      } while (lVar3 != 0);
     }
   }
-  __restgprlr_29();
   return;
 }
 

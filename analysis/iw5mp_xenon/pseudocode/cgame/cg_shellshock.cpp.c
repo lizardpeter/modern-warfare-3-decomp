@@ -15,40 +15,43 @@ float CubicInterpolate(float param_1,float param_2,float param_3,float param_4,f
 
 // 822FF130  PerturbationPoint  (cgame/cg_shellshock.cpp:179)
 
+/* WARNING: Function: __savefpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_28 replaced with injection: xenon_save_restore */
+
 void PerturbationPoint(float *param_1,float *param_2,float param_3)
 
 {
-  float *pfVar1;
-  double extraout_f1;
+  double dVar1;
   double dVar2;
   double dVar3;
   double dVar4;
   double dVar5;
-  double dVar6;
-  float fVar7;
+  float fVar6;
   
-  pfVar1 = (float *)__savefpr_28((double)param_3,param_1);
-  dVar5 = (double)(float)(extraout_f1 * extraout_f1);
-  dVar6 = 3.1415927410125732;
+  dVar4 = (double)(param_3 * param_3);
+  dVar5 = 3.1415927410125732;
   do {
-    fVar7 = crandom();
-    dVar4 = (double)(float)((double)fVar7 * dVar6);
-    dVar2 = sin(dVar4);
-    dVar3 = (double)(float)dVar2;
-    dVar2 = cos(dVar4);
-    dVar2 = (double)(float)dVar2;
-    fVar7 = random();
-    *param_2 = (float)((double)fVar7 * dVar2);
-    param_2[1] = (float)((double)fVar7 * dVar3);
-    fVar7 = Vec2DistanceSq(pfVar1,param_2);
-  } while ((double)fVar7 < dVar5);
-  __restfpr_28();
+    fVar6 = crandom();
+    dVar3 = (double)(float)((double)fVar6 * dVar5);
+    dVar1 = sin(dVar3);
+    dVar2 = (double)(float)dVar1;
+    dVar1 = cos(dVar3);
+    dVar1 = (double)(float)dVar1;
+    fVar6 = random();
+    *param_2 = (float)((double)fVar6 * dVar1);
+    param_2[1] = (float)((double)fVar6 * dVar2);
+    fVar6 = Vec2DistanceSq(param_1,param_2);
+  } while ((double)fVar6 < dVar4);
   return;
 }
 
 
 // 822FF1C8  CG_PrintPerturbationPoints  (cgame/cg_shellshock.cpp:198)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void CG_PrintPerturbationPoints(void)
@@ -66,8 +69,6 @@ void CG_PrintPerturbationPoints(void)
   float local_440 [2];
   float local_438 [270];
   
-  __savegprlr_29();
-  __savefpr_28();
   PerturbationPoint(vec3_origin,local_440,0.5);
   lVar1 = 0x7f;
   dVar7 = 0.25;
@@ -95,8 +96,6 @@ void CG_PrintPerturbationPoints(void)
     Com_Printf(0x11,"\t{%f, %f},\n");
     lVar1 = lVar1 + -1;
   } while (lVar1 != 0);
-  __restfpr_28();
-  __restgprlr_29();
   return;
 }
 
@@ -222,6 +221,8 @@ int CG_GetShellShockBlendTime(LocalClientNum_t param_1)
 
 // 822FF550  CG_DrawShellShockSavedScreenBlendBlurred  (cgame/cg_shellshock.cpp:284)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -229,35 +230,30 @@ int CG_GetShellShockBlendTime(LocalClientNum_t param_1)
 void CG_DrawShellShockSavedScreenBlendBlurred(LocalClientNum_t param_1,int param_2)
 
 {
-  LocalClientNum_t LVar1;
-  cg_s *pcVar2;
-  ClientViewParams *pCVar3;
-  int iVar4;
-  int *piVar5;
+  cg_s *pcVar1;
+  ClientViewParams *pCVar2;
+  int iVar3;
+  int *piVar4;
   
-  LVar1 = __savegprlr_28(param_1);
-  iVar4 = param_2;
-  pcVar2 = CG_GetLocalClientGlobals(LVar1);
+  iVar3 = param_2;
+  pcVar1 = CG_GetLocalClientGlobals(param_1);
   if (param_2 < 1) {
-    (pcVar2->shellshock).hasSavedScreen = 0;
-    (pcVar2->shellshock).wantSavedScreen = 0;
-    __restgprlr_28();
+    (pcVar1->shellshock).hasSavedScreen = 0;
+    (pcVar1->shellshock).wantSavedScreen = 0;
     return;
   }
-  piVar5 = &(pcVar2->shellshock).hasSavedScreen;
-  if (*piVar5 != 0) {
-    pCVar3 = CG_GetLocalClientViewParams(LVar1);
+  piVar4 = &(pcVar1->shellshock).hasSavedScreen;
+  if (*piVar4 != 0) {
+    pCVar2 = CG_GetLocalClientViewParams(param_1);
     R_AddCmdBlendSavedScreenShockBlurred
-              (param_2,pCVar3->x,pCVar3->y,pCVar3->width,pCVar3->height,iVar4);
+              (param_2,pCVar2->x,pCVar2->y,pCVar2->width,pCVar2->height,iVar3);
   }
-  if ((pcVar2->shellshock).hasScissor != 0) {
-    (pcVar2->shellshock).wantSavedScreen = 1;
-    __restgprlr_28();
+  if ((pcVar1->shellshock).hasScissor != 0) {
+    (pcVar1->shellshock).wantSavedScreen = 1;
     return;
   }
-  SaveScreenToBuffer(LVar1);
-  *piVar5 = 1;
-  __restgprlr_28();
+  SaveScreenToBuffer(param_1);
+  *piVar4 = 1;
   return;
 }
 
@@ -282,6 +278,8 @@ float BlendSmooth(float param_1)
 
 // 822FF688  CG_DrawShellShockSavedScreenBlendFlashed  (cgame/cg_shellshock.cpp:324)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -294,59 +292,53 @@ void CG_DrawShellShockSavedScreenBlendFlashed(LocalClientNum_t param_1)
   uint uVar3;
   float fVar4;
   float fVar5;
-  LocalClientNum_t LVar6;
-  cg_s *pcVar7;
-  ClientViewParams *pCVar8;
-  longlong lVar9;
-  int *piVar10;
+  cg_s *pcVar6;
+  ClientViewParams *pCVar7;
+  longlong lVar8;
+  int *piVar9;
+  double dVar10;
   double dVar11;
-  double dVar12;
-  float fVar13;
+  float fVar12;
   
-  LVar6 = __savegprlr_29(param_1);
-  pcVar7 = CG_GetLocalClientGlobals(LVar6);
-  uVar1 = (pcVar7->shellshock).startTime;
-  psVar2 = (pcVar7->shellshock).parms;
-  uVar3 = (pcVar7->shellshock).duration;
+  pcVar6 = CG_GetLocalClientGlobals(param_1);
+  uVar1 = (pcVar6->shellshock).startTime;
+  psVar2 = (pcVar6->shellshock).parms;
+  uVar3 = (pcVar6->shellshock).duration;
   if (((uVar1 == 0) || ((int)uVar3 < 1)) ||
-     (lVar9 = ((ulonglong)uVar3 - (ulonglong)(uint)pcVar7->time) + (ulonglong)uVar1, lVar9 < 1)) {
-    (pcVar7->shellshock).hasSavedScreen = 0;
-    (pcVar7->shellshock).wantSavedScreen = 0;
-    __restgprlr_29();
+     (lVar8 = ((ulonglong)uVar3 - (ulonglong)(uint)pcVar6->time) + (ulonglong)uVar1, lVar8 < 1)) {
+    (pcVar6->shellshock).hasSavedScreen = 0;
+    (pcVar6->shellshock).wantSavedScreen = 0;
     return;
   }
-  fVar13 = (float)(longlong)(int)lVar9;
-  dVar12 = 1.0;
+  fVar12 = (float)(longlong)(int)lVar8;
+  dVar11 = 1.0;
   fVar4 = (float)(longlong)(psVar2->screenBlend).flashWhiteFadeTime;
   fVar5 = (float)(longlong)(psVar2->screenBlend).flashShotFadeTime;
-  dVar11 = dVar12;
-  if (fVar13 < fVar4) {
-    dVar11 = (double)(fVar13 / fVar4);
+  dVar10 = dVar11;
+  if (fVar12 < fVar4) {
+    dVar10 = (double)(fVar12 / fVar4);
   }
-  if (fVar13 < fVar5) {
-    dVar12 = (double)(fVar13 / fVar5);
+  if (fVar12 < fVar5) {
+    dVar11 = (double)(fVar12 / fVar5);
   }
-  fVar13 = BlendSmooth((float)dVar11);
-  dVar11 = (double)fVar13;
-  fVar13 = BlendSmooth((float)dVar12);
-  dVar12 = (double)fVar13;
-  piVar10 = &(pcVar7->shellshock).hasSavedScreen;
-  if (*piVar10 == 0) {
-    if ((pcVar7->shellshock).hasScissor == 0) {
-      SaveScreenToBuffer(LVar6);
-      *piVar10 = 1;
-      __restgprlr_29();
+  fVar12 = BlendSmooth((float)dVar10);
+  dVar10 = (double)fVar12;
+  fVar12 = BlendSmooth((float)dVar11);
+  dVar11 = (double)fVar12;
+  piVar9 = &(pcVar6->shellshock).hasSavedScreen;
+  if (*piVar9 == 0) {
+    if ((pcVar6->shellshock).hasScissor == 0) {
+      SaveScreenToBuffer(param_1);
+      *piVar9 = 1;
       return;
     }
-    (pcVar7->shellshock).wantSavedScreen = 1;
-    __restgprlr_29();
+    (pcVar6->shellshock).wantSavedScreen = 1;
     return;
   }
   CG_EndSceneCmds();
-  pCVar8 = CG_GetLocalClientViewParams(LVar6);
+  pCVar7 = CG_GetLocalClientViewParams(param_1);
   R_AddCmdBlendSavedScreenShockFlashed
-            ((float)dVar11,(float)dVar12,pCVar8->x,pCVar8->y,pCVar8->width,pCVar8->height);
-  __restgprlr_29();
+            ((float)dVar10,(float)dVar11,pCVar7->x,pCVar7->y,pCVar7->width,pCVar7->height);
   return;
 }
 
@@ -466,6 +458,8 @@ void EndShellShock(LocalClientNum_t param_1)
 
 // 822FFA98  UpdateShellShockSound  (cgame/cg_shellshock.cpp:472)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -476,129 +470,112 @@ void UpdateShellShockSound
 {
   float fVar1;
   int iVar2;
-  int iVar3;
-  LocalClientNum_t LVar4;
-  snd_alias_t *psVar5;
-  snd_alias_t *psVar6;
+  snd_alias_t *psVar3;
+  snd_alias_t *psVar4;
+  SndEntHandle SVar5;
+  cg_s *pcVar6;
   SndEntHandle SVar7;
-  cg_s *pcVar8;
-  char *pcVar9;
-  ulonglong uVar10;
-  longlong lVar11;
-  longlong lVar12;
-  SndEntHandle SVar13;
-  longlong lVar14;
-  float *pfVar15;
-  int *piVar16;
-  longlong lVar17;
-  int iVar19;
-  longlong lVar18;
-  int iVar20;
-  int iVar21;
-  double dVar22;
-  double dVar23;
+  float *pfVar8;
+  int *piVar9;
+  int iVar11;
+  longlong lVar10;
+  double dVar12;
+  double dVar13;
   
-  lVar18 = (longlong)param_4;
-  lVar11 = (longlong)param_3;
-  uVar10 = (ulonglong)(int)param_2;
-  LVar4 = __savegprlr_24(param_1);
-  lVar17 = -0x7dfff068;
-  lVar12 = lVar11;
-  lVar14 = lVar18;
-  if ((uVar10 & 0xffffffff) == 0) {
-    lVar12 = 0;
+  SVar7.handle = param_3;
+  pfVar8 = (float *)param_4;
+  if (param_2 == (shellshock_parms_t *)0x0) {
+    SVar7.handle = 0;
+    pfVar8 = (float *)"%s";
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_shellshock.cpp",0x1df
                     ,0,"%s");
-    lVar14 = lVar17;
   }
-  pfVar15 = (float *)lVar14;
-  SVar13.handle = (int)lVar12;
-  iVar20 = (int)lVar11;
-  if (iVar20 < 0) {
-    SVar13.handle = 0;
-    pfVar15 = (float *)"%s";
+  if (param_3 < 0) {
+    SVar7.handle = 0;
+    pfVar8 = (float *)"%s";
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_shellshock.cpp",0x1e0
                     ,0,"%s");
   }
-  iVar21 = (int)lVar18;
-  if (iVar21 < 0) {
-    SVar13.handle = 0;
-    pfVar15 = (float *)"%s";
+  if (param_4 < 0) {
+    SVar7.handle = 0;
+    pfVar8 = (float *)"%s";
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_shellshock.cpp",0x1e1
                     ,0,"%s");
   }
-  iVar3 = (int)uVar10;
-  if (*(char *)(iVar3 + 0x20) == '\0') {
-    EndShellShockSound(LVar4);
-    __restgprlr_24();
-    return;
-  }
-  iVar2 = *(int *)(iVar3 + 0x128);
-  iVar19 = (*(int *)(iVar3 + 0x244) - iVar20) + iVar2 + iVar21;
-  if (iVar20 < *(int *)(iVar3 + 0x124)) {
-    SND_SetEnvironmentEffects
-              (2,(char *)(iVar3 + 0x134),*(float *)(iVar3 + 300),*(float *)(iVar3 + 0x130),
-               SVar13.handle);
-    SVar13.handle = *(int *)(iVar3 + 0x124) - iVar20;
-    SND_SetChannelVolumes(3,(float *)(iVar3 + 0x144),SVar13.handle);
-  }
-  else if (iVar2 < iVar19) {
-    SND_SetEnvironmentEffects
-              (2,(char *)(iVar3 + 0x134),*(float *)(iVar3 + 300),*(float *)(iVar3 + 0x130),
-               SVar13.handle);
-    SVar13.handle = 0;
-    SND_SetChannelVolumes(3,(float *)(iVar3 + 0x144),0);
-  }
-  else if ((-1 < iVar19) && (iVar19 < iVar2)) {
-    SND_DeactivateEnvironmentEffects(2,iVar19);
-    SND_DeactivateChannelVolumes(3,iVar19);
-  }
-  lVar18 = ((ulonglong)*(uint *)(iVar3 + 0x248) - lVar11) + (ulonglong)*(uint *)(iVar3 + 0x24c) +
-           lVar18;
-  if (0 < lVar18) {
-    psVar5 = CL_PickSoundAlias((char *)(iVar3 + 0x21));
-    psVar6 = CL_PickSoundAlias((char *)(iVar3 + 0x61));
-    iVar2 = *(int *)(iVar3 + 0x248);
-    dVar22 = 1.0;
-    if ((iVar2 == 0) || (iVar19 = (int)lVar18, iVar2 < iVar19)) {
-      fVar1 = 0.0;
+  if ((param_2->sound).affect != false) {
+    iVar2 = (param_2->sound).fadeOutTime;
+    iVar11 = ((param_2->sound).modEndDelay - param_3) + iVar2 + param_4;
+    if (param_3 < (param_2->sound).fadeInTime) {
+      SND_SetEnvironmentEffects
+                (2,(param_2->sound).roomtype,(param_2->sound).drylevel,(param_2->sound).wetlevel,
+                 SVar7.handle);
+      SVar7.handle = (param_2->sound).fadeInTime - param_3;
+      SND_SetChannelVolumes(3,(param_2->sound).channelvolume,SVar7.handle);
+    }
+    else if (iVar2 < iVar11) {
+      SND_SetEnvironmentEffects
+                (2,(param_2->sound).roomtype,(param_2->sound).drylevel,(param_2->sound).wetlevel,
+                 SVar7.handle);
+      SVar7.handle = 0;
+      SND_SetChannelVolumes(3,(param_2->sound).channelvolume,0);
+    }
+    else if ((-1 < iVar11) && (iVar11 < iVar2)) {
+      SND_DeactivateEnvironmentEffects(2,iVar11);
+      SND_DeactivateChannelVolumes(3,iVar11);
+    }
+    lVar10 = ((ulonglong)(uint)(param_2->sound).loopFadeTime - (longlong)param_3) +
+             (ulonglong)(uint)(param_2->sound).loopEndDelay + (longlong)param_4;
+    if (0 < lVar10) {
+      psVar3 = CL_PickSoundAlias((param_2->sound).loop);
+      psVar4 = CL_PickSoundAlias((param_2->sound).loopSilent);
+      iVar2 = (param_2->sound).loopFadeTime;
+      dVar12 = 1.0;
+      if ((iVar2 == 0) || (iVar11 = (int)lVar10, iVar2 < iVar11)) {
+        fVar1 = 0.0;
+      }
+      else {
+        fVar1 = 1.0 - (float)(longlong)iVar11 / (float)(longlong)iVar2;
+      }
+      dVar13 = (double)fVar1;
+      SVar5 = CG_GenerateSndEntHandle(param_1,0x7ff);
+      SND_PlayBlendedSoundAliases
+                (psVar3,psVar4,(float)dVar13,(float)dVar12,SVar7,pfVar8,SVar5.handle,0x82179fd8);
+    }
+    pcVar6 = CG_GetLocalClientGlobals(param_1);
+    iVar2 = pcVar6->time;
+    iVar11 = (iVar2 - param_3) + (param_2->sound).loopEndDelay + param_4;
+    piVar9 = &(pcVar6->shellshock).loopEndTime;
+    if (iVar2 < iVar11) {
+      if (*piVar9 == 0) {
+        return;
+      }
+      iVar11 = 0;
+      *piVar9 = 0;
+      SVar7 = CG_GenerateSndEntHandle(param_1,0x7ff);
+      iVar2 = 0xe1;
     }
     else {
-      fVar1 = 1.0 - (float)(longlong)iVar19 / (float)(longlong)iVar2;
+      if (iVar11 == *piVar9) {
+        return;
+      }
+      *piVar9 = iVar11;
+      SVar7 = CG_GenerateSndEntHandle(param_1,0x7ff);
+      iVar2 = 0xa1;
+      iVar11 = pcVar6->time - iVar11;
     }
-    dVar23 = (double)fVar1;
-    SVar7 = CG_GenerateSndEntHandle(LVar4,0x7ff);
-    SND_PlayBlendedSoundAliases
-              (psVar5,psVar6,(float)dVar23,(float)dVar22,SVar13,pfVar15,SVar7.handle,0x82179fd8);
+    psVar3 = CL_PickSoundAlias((param_2->sound).loop + iVar2 + -0x21);
+    SND_PlaySoundAlias(psVar3,SVar7,vec3_origin,iVar11,SASYS_CGAME);
+    return;
   }
-  pcVar8 = CG_GetLocalClientGlobals(LVar4);
-  iVar2 = pcVar8->time;
-  iVar21 = (iVar2 - iVar20) + *(int *)(iVar3 + 0x24c) + iVar21;
-  piVar16 = &(pcVar8->shellshock).loopEndTime;
-  if (iVar2 < iVar21) {
-    if (*piVar16 == 0) goto LAB_822ffd6c;
-    iVar21 = 0;
-    *piVar16 = 0;
-    SVar13 = CG_GenerateSndEntHandle(LVar4,0x7ff);
-    pcVar9 = (char *)(iVar3 + 0xe1);
-  }
-  else {
-    if (iVar21 == *piVar16) goto LAB_822ffd6c;
-    *piVar16 = iVar21;
-    SVar13 = CG_GenerateSndEntHandle(LVar4,0x7ff);
-    pcVar9 = (char *)(iVar3 + 0xa1);
-    iVar21 = pcVar8->time - iVar21;
-  }
-  psVar5 = CL_PickSoundAlias(pcVar9);
-  pcVar8 = (cg_s *)SND_PlaySoundAlias(psVar5,SVar13,vec3_origin,iVar21,SASYS_CGAME);
-LAB_822ffd6c:
-  __restgprlr_24(pcVar8);
+  EndShellShockSound(param_1);
   return;
 }
 
 
 // 822FFD80  UpdateShellShockLookControl  (cgame/cg_shellshock.cpp:558)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -607,17 +584,14 @@ void UpdateShellShockLookControl
                (LocalClientNum_t param_1,shellshock_parms_t *param_2,int param_3,int param_4)
 
 {
-  int iVar1;
-  LocalClientNum_t LVar2;
+  float fVar1;
+  int iVar2;
   cg_s *pcVar3;
-  ulonglong uVar4;
-  int iVar5;
+  int iVar4;
+  double dVar5;
   double dVar6;
-  double dVar7;
   
-  uVar4 = (ulonglong)(int)param_2;
-  LVar2 = __savegprlr_26(param_1);
-  if ((uVar4 & 0xffffffff) == 0) {
+  if (param_2 == (shellshock_parms_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_shellshock.cpp",0x232
                     ,0,"%s");
   }
@@ -629,43 +603,42 @@ void UpdateShellShockLookControl
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_shellshock.cpp",0x234
                     ,0,"%s");
   }
-  iVar1 = (int)uVar4;
-  if (*(char *)(iVar1 + 0x250) == '\0') {
-    pcVar3 = CG_GetLocalClientGlobals(LVar2);
+  if ((param_2->lookControl).affect == false) {
+    pcVar3 = CG_GetLocalClientGlobals(param_1);
     (pcVar3->shellshock).sensitivity = 1.0;
-    CL_CapTurnRate(LVar2,0.0,0.0);
-    __restgprlr_26();
+    CL_CapTurnRate(param_1,0.0,0.0);
     return;
   }
-  iVar5 = param_4 - param_3;
-  dVar7 = 1.0;
-  dVar6 = dVar7;
-  if (iVar5 < *(int *)(iVar1 + 0x254)) {
-    if (iVar5 < 1) {
-      EndShellShockLookControl(LVar2);
-      __restgprlr_26();
+  iVar2 = (param_2->lookControl).fadeTime;
+  iVar4 = param_4 - param_3;
+  dVar6 = 1.0;
+  dVar5 = dVar6;
+  if (iVar4 < iVar2) {
+    if (iVar4 < 1) {
+      EndShellShockLookControl(param_1);
       return;
     }
-    dVar6 = (double)((float)(longlong)iVar5 / (float)(longlong)*(int *)(iVar1 + 0x254));
+    dVar5 = (double)((float)(longlong)iVar4 / (float)(longlong)iVar2);
   }
-  pcVar3 = CG_GetLocalClientGlobals(LVar2);
-  if (dVar6 != dVar7) {
+  pcVar3 = CG_GetLocalClientGlobals(param_1);
+  fVar1 = (param_2->lookControl).mouseSensitivity;
+  if (dVar5 != dVar6) {
     (pcVar3->shellshock).sensitivity =
-         (float)((double)(float)((double)*(float *)(iVar1 + 600) - dVar7) * dVar6 + dVar7);
-    CL_CapTurnRate(LVar2,*(float *)(iVar1 + 0x25c) * (float)(dVar7 / dVar6),
-                   *(float *)(iVar1 + 0x260) * (float)(dVar7 / dVar6));
-    __restgprlr_26();
+         (float)((double)(float)((double)fVar1 - dVar6) * dVar5 + dVar6);
+    CL_CapTurnRate(param_1,(param_2->lookControl).maxPitchSpeed * (float)(dVar6 / dVar5),
+                   (param_2->lookControl).maxYawSpeed * (float)(dVar6 / dVar5));
     return;
   }
-  (pcVar3->shellshock).sensitivity = *(float *)(iVar1 + 600);
-  CL_CapTurnRate(LVar2,*(float *)(iVar1 + 0x25c),*(float *)(iVar1 + 0x260));
-  __restgprlr_26();
+  (pcVar3->shellshock).sensitivity = fVar1;
+  CL_CapTurnRate(param_1,(param_2->lookControl).maxPitchSpeed,(param_2->lookControl).maxYawSpeed);
   return;
 }
 
 
 // 822FFF50  UpdateShellShockCamera  (cgame/cg_shellshock.cpp:601)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -677,78 +650,66 @@ void UpdateShellShockCamera
   float fVar1;
   int iVar2;
   uint uVar3;
-  LocalClientNum_t LVar4;
-  cg_s *pcVar5;
-  ulonglong uVar6;
-  longlong lVar7;
-  longlong lVar8;
-  int iVar9;
+  cg_s *pcVar4;
+  int iVar5;
+  double dVar6;
+  double dVar7;
+  double dVar8;
+  double dVar9;
   double dVar10;
-  double dVar11;
-  double dVar12;
-  double dVar13;
-  double dVar14;
   
-  lVar8 = (longlong)param_4;
-  lVar7 = (longlong)param_3;
-  uVar6 = (ulonglong)(int)param_2;
-  LVar4 = __savegprlr_27(param_1);
-  if (lVar8 - lVar7 < 1) {
-    pcVar5 = CG_GetLocalClientGlobals(LVar4);
-    (pcVar5->shellshock).viewDelta[0] = 0.0;
-    (pcVar5->shellshock).viewDelta[1] = 0.0;
-    __restgprlr_27();
+  if ((longlong)param_4 - (longlong)param_3 < 1) {
+    pcVar4 = CG_GetLocalClientGlobals(param_1);
+    (pcVar4->shellshock).viewDelta[0] = 0.0;
+    (pcVar4->shellshock).viewDelta[1] = 0.0;
     return;
   }
-  if ((uVar6 & 0xffffffff) == 0) {
+  if (param_2 == (shellshock_parms_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_shellshock.cpp",0x272
                     ,0,"%s");
   }
-  iVar2 = (int)uVar6;
-  iVar9 = (int)(lVar8 - lVar7);
+  iVar2 = (param_2->view).fadeTime;
+  iVar5 = (int)((longlong)param_4 - (longlong)param_3);
   fVar1 = 1.0;
-  if (iVar9 < *(int *)(iVar2 + 0x14)) {
-    fVar1 = (float)(longlong)iVar9 / (float)(longlong)*(int *)(iVar2 + 0x14);
+  if (iVar5 < iVar2) {
+    fVar1 = (float)(longlong)iVar5 / (float)(longlong)iVar2;
   }
-  dVar12 = (double)(*(float *)(iVar2 + 0x18) * (float)(longlong)(int)lVar7);
-  dVar14 = (double)(-(fVar1 * 2.0 - 3.0) * fVar1 * fVar1 * *(float *)(iVar2 + 0x1c));
-  dVar10 = floor(dVar12);
-  uVar3 = (int)lVar8 * 0x3d + (int)dVar10 & 0x7f;
-  dVar13 = (double)(float)(dVar12 - (double)(longlong)(int)dVar10);
-  pcVar5 = CG_GetLocalClientGlobals(LVar4);
-  dVar11 = (double)cg_perturbations[uVar3 + 1][0];
-  dVar12 = (double)cg_perturbations[uVar3][0];
-  dVar10 = (double)(float)((double)(float)((double)(float)((double)cg_perturbations[uVar3 + 3][0] -
-                                                          (double)cg_perturbations[uVar3 + 2][0]) +
-                                          dVar11) - dVar12);
-  (pcVar5->shellshock).viewDelta[0] =
-       (float)((double)(float)((double)(float)((double)(float)(dVar10 * dVar13 +
-                                                              (double)(float)((double)(float)(dVar12
-                                                                                             - 
-                                                  dVar11) - dVar10)) * dVar13 +
+  dVar8 = (double)((param_2->view).kickRate * (float)(longlong)param_3);
+  dVar10 = (double)(-(fVar1 * 2.0 - 3.0) * fVar1 * fVar1 * (param_2->view).kickRadius);
+  dVar6 = floor(dVar8);
+  uVar3 = param_4 * 0x3d + (int)dVar6 & 0x7f;
+  dVar9 = (double)(float)(dVar8 - (double)(longlong)(int)dVar6);
+  pcVar4 = CG_GetLocalClientGlobals(param_1);
+  dVar7 = (double)cg_perturbations[uVar3 + 1][0];
+  dVar8 = (double)cg_perturbations[uVar3][0];
+  dVar6 = (double)(float)((double)(float)((double)(float)((double)cg_perturbations[uVar3 + 3][0] -
+                                                         (double)cg_perturbations[uVar3 + 2][0]) +
+                                         dVar7) - dVar8);
+  (pcVar4->shellshock).viewDelta[0] =
+       (float)((double)(float)((double)(float)((double)(float)(dVar6 * dVar9 +
+                                                              (double)(float)((double)(float)(dVar8 
+                                                  - dVar7) - dVar6)) * dVar9 +
                                               (double)(float)((double)cg_perturbations[uVar3 + 2][0]
-                                                             - dVar12)) * dVar13 + dVar11) * dVar14)
-  ;
-  dVar11 = (double)cg_perturbations[uVar3 + 1][1];
-  dVar12 = (double)cg_perturbations[uVar3][1];
-  dVar10 = (double)(float)((double)(float)((double)(float)((double)cg_perturbations[uVar3 + 3][1] -
-                                                          (double)cg_perturbations[uVar3 + 2][1]) +
-                                          dVar11) - dVar12);
-  (pcVar5->shellshock).viewDelta[1] =
-       (float)((double)(float)((double)(float)((double)(float)(dVar10 * dVar13 +
-                                                              (double)(float)((double)(float)(dVar12
-                                                                                             - 
-                                                  dVar11) - dVar10)) * dVar13 +
+                                                             - dVar8)) * dVar9 + dVar7) * dVar10);
+  dVar7 = (double)cg_perturbations[uVar3 + 1][1];
+  dVar8 = (double)cg_perturbations[uVar3][1];
+  dVar6 = (double)(float)((double)(float)((double)(float)((double)cg_perturbations[uVar3 + 3][1] -
+                                                         (double)cg_perturbations[uVar3 + 2][1]) +
+                                         dVar7) - dVar8);
+  (pcVar4->shellshock).viewDelta[1] =
+       (float)((double)(float)((double)(float)((double)(float)(dVar6 * dVar9 +
+                                                              (double)(float)((double)(float)(dVar8 
+                                                  - dVar7) - dVar6)) * dVar9 +
                                               (double)(float)((double)cg_perturbations[uVar3 + 2][1]
-                                                             - dVar12)) * dVar13 + dVar11) * dVar14)
-  ;
-  __restgprlr_27();
+                                                             - dVar8)) * dVar9 + dVar7) * dVar10);
   return;
 }
 
 
 // 82300148  CG_UpdateShellShock  (cgame/cg_shellshock.cpp:647)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -757,33 +718,28 @@ void CG_UpdateShellShock(LocalClientNum_t param_1,shellshock_parms_t *param_2,in
                         int param_4)
 
 {
-  LocalClientNum_t LVar1;
-  cg_s *pcVar2;
-  bool bVar3;
-  int iVar4;
+  cg_s *pcVar1;
+  bool bVar2;
+  int iVar3;
   
-  LVar1 = __savegprlr_28(param_1);
-  pcVar2 = CG_GetLocalClientGlobals(LVar1);
-  iVar4 = pcVar2->time - param_3;
-  if ((param_3 == 0) || (iVar4 < 0)) {
-    EndShellShock(LVar1);
-    __restgprlr_28();
+  pcVar1 = CG_GetLocalClientGlobals(param_1);
+  iVar3 = pcVar1->time - param_3;
+  if ((param_3 == 0) || (iVar3 < 0)) {
+    EndShellShock(param_1);
     return;
   }
-  bVar3 = CL_Demo_IsFollowCamera(LVar1);
-  if ((!bVar3) && (bVar3 = CL_Demo_IsFreeCamera(LVar1), !bVar3)) {
-    UpdateShellShockSound(LVar1,param_2,iVar4,param_4);
-    UpdateShellShockLookControl(LVar1,param_2,iVar4,param_4);
-    UpdateShellShockCamera(LVar1,param_2,iVar4,param_4);
-    __restgprlr_28();
+  bVar2 = CL_Demo_IsFollowCamera(param_1);
+  if ((!bVar2) && (bVar2 = CL_Demo_IsFreeCamera(param_1), !bVar2)) {
+    UpdateShellShockSound(param_1,param_2,iVar3,param_4);
+    UpdateShellShockLookControl(param_1,param_2,iVar3,param_4);
+    UpdateShellShockCamera(param_1,param_2,iVar3,param_4);
     return;
   }
-  EndShellShockLookControl(LVar1);
-  pcVar2 = CG_GetLocalClientGlobals(LVar1);
-  (pcVar2->shellshock).viewDelta[0] = 0.0;
-  (pcVar2->shellshock).viewDelta[1] = 0.0;
-  EndShellShockScreen(LVar1);
-  __restgprlr_28();
+  EndShellShockLookControl(param_1);
+  pcVar1 = CG_GetLocalClientGlobals(param_1);
+  (pcVar1->shellshock).viewDelta[0] = 0.0;
+  (pcVar1->shellshock).viewDelta[1] = 0.0;
+  EndShellShockScreen(param_1);
   return;
 }
 

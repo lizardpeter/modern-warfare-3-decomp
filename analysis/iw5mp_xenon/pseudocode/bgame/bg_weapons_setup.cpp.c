@@ -13,57 +13,51 @@ void TRACK_bg_weapons(void)
 
 // 822920F0  BG_GetPointerToWeaponDef  (bgame/bg_weapons_setup.cpp:69)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
 
 WeaponDef * BG_GetPointerToWeaponDef(uint param_1)
 
 {
-  uint uVar1;
-  WeaponDef *pWVar2;
-  
-  uVar1 = __savegprlr_27(param_1);
-  if (bg_lastParsedWeaponIndex < uVar1) {
+  if (bg_lastParsedWeaponIndex < param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_weapons_setup.cpp",
                     0x46,0,"weaponIndex not in [0, bg_lastParsedWeaponIndex]\n\t%i not in [0, %i]");
   }
-  if (bg_weaponDefs[uVar1] == (WeaponDef *)0x0) {
+  if (bg_weaponDefs[param_1] == (WeaponDef *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_weapons_setup.cpp",
                     0x47,0,"%s");
   }
-  if (bg_weaponCompleteDefs[uVar1] == (WeaponCompleteDef *)0x0) {
+  if (bg_weaponCompleteDefs[param_1] == (WeaponCompleteDef *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_weapons_setup.cpp",
                     0x48,0,"%s");
   }
-  if (bg_weaponDefs[uVar1] != bg_weaponCompleteDefs[uVar1]->weapDef) {
+  if (bg_weaponDefs[param_1] != bg_weaponCompleteDefs[param_1]->weapDef) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_weapons_setup.cpp",
                     0x49,0,"%s");
   }
-  pWVar2 = (WeaponDef *)__restgprlr_27(bg_weaponDefs[uVar1]);
-  return pWVar2;
+  return bg_weaponDefs[param_1];
 }
 
 
 // 822921E0  BG_GetPointerToWeaponCompleteDef  (bgame/bg_weapons_setup.cpp:80)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
 
 WeaponCompleteDef * BG_GetPointerToWeaponCompleteDef(uint param_1)
 
 {
-  uint uVar1;
-  WeaponCompleteDef *pWVar2;
-  
-  uVar1 = __savegprlr_29(param_1);
-  if (bg_lastParsedWeaponIndex < uVar1) {
+  if (bg_lastParsedWeaponIndex < param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_weapons_setup.cpp",
                     0x51,0,"weaponIndex not in [0, bg_lastParsedWeaponIndex]\n\t%i not in [0, %i]");
   }
-  if (bg_weaponCompleteDefs[uVar1] == (WeaponCompleteDef *)0x0) {
+  if (bg_weaponCompleteDefs[param_1] == (WeaponCompleteDef *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_weapons_setup.cpp",
                     0x52,0,"%s");
   }
-  pWVar2 = (WeaponCompleteDef *)__restgprlr_29(bg_weaponCompleteDefs[uVar1]);
-  return pWVar2;
+  return bg_weaponCompleteDefs[param_1];
 }
 
 
@@ -87,66 +81,65 @@ void BG_StringCopy(uchar *param_1,char *param_2)
 
 // 82292288  BG_ParsePenetrationDepthTable  (bgame/bg_weapons_setup.cpp:97)
 
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
+
 void BG_ParsePenetrationDepthTable(char *param_1,float *param_2,char *param_3)
 
 {
   int iVar1;
   int iVar2;
-  ulonglong uVar3;
-  ulonglong uVar4;
-  char *pcVar5;
-  undefined4 *puVar6;
+  char *pcVar3;
+  undefined4 *puVar4;
   undefined4 uStack_2154;
   cspField_t local_2150 [31];
   char acStack_1f60 [8032];
   
-  uVar4 = (ulonglong)(int)param_3;
-  uVar3 = (ulonglong)(int)param_2;
-  iVar1 = __savegprlr_22(param_1);
-  if (iVar1 == 0) {
+  if (param_1 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_weapons_setup.cpp",
                     0x66,0,"%s");
   }
-  if ((uVar3 & 0xffffffff) == 0) {
+  if (param_2 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_weapons_setup.cpp",
                     0x67,0,"%s");
   }
-  if ((uVar4 & 0xffffffff) == 0) {
+  if (param_3 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_weapons_setup.cpp",
                     0x68,0,"%s");
   }
-  puVar6 = &uStack_2154;
-  iVar1 = 0;
-  pcVar5 = acStack_1f60;
+  puVar4 = &uStack_2154;
+  iVar2 = 0;
+  pcVar3 = acStack_1f60;
   do {
-    Com_SurfaceTypeToName(iVar1);
-    iVar2 = Com_sprintf(pcVar5,0x100,"%s_%s");
-    if (iVar2 < 0) {
-      Com_SurfaceTypeToName(iVar1);
+    Com_SurfaceTypeToName(iVar2);
+    iVar1 = Com_sprintf(pcVar3,0x100,"%s_%s");
+    if (iVar1 < 0) {
+      Com_SurfaceTypeToName(iVar2);
       Com_Error(ERR_DROP,"\x15Bullet penetration table param name [%s_%s] is to long.\n");
     }
-    iVar2 = iVar1 << 2;
-    puVar6[1] = pcVar5;
-    iVar1 = iVar1 + 1;
-    puVar6[3] = 7;
-    puVar6[2] = iVar2;
-    pcVar5 = pcVar5 + 0x100;
-    puVar6 = puVar6 + 4;
-    *puVar6 = 0;
-  } while (iVar1 < 0x1f);
-  iVar1 = ParseConfigStringToStruct
-                    ((uchar *)uVar3,local_2150,0x1f,(char *)uVar4,0,
+    iVar1 = iVar2 << 2;
+    puVar4[1] = pcVar3;
+    iVar2 = iVar2 + 1;
+    puVar4[3] = 7;
+    puVar4[2] = iVar1;
+    pcVar3 = pcVar3 + 0x100;
+    puVar4 = puVar4 + 4;
+    *puVar4 = 0;
+  } while (iVar2 < 0x1f);
+  iVar2 = ParseConfigStringToStruct
+                    ((uchar *)param_2,local_2150,0x1f,param_3,0,
                      (_func_int_uchar_ptr_char_ptr_int_int *)0x0,BG_StringCopy);
-  if (iVar1 == 0) {
+  if (iVar2 == 0) {
     Com_Error(ERR_DROP,"\x15Error parsing bullet penetration table [%s].\n");
   }
-  __restgprlr_22();
   return;
 }
 
 
 // 82292400  BG_LoadPenetrationDepthTable  (bgame/bg_weapons_setup.cpp:123)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void BG_LoadPenetrationDepthTable(void)
@@ -155,8 +148,7 @@ void BG_LoadPenetrationDepthTable(void)
   char *pcVar1;
   char acStack_2020 [8224];
   
-  __savegprlr_29();
-  if (penetrationDepthTableLoaded == false) {
+  if (!penetrationDepthTableLoaded) {
     pcVar1 = Com_LoadInfoString("info/bullet_penetration_mp","bullet penetration table",
                                 "BULLET_PEN_TABLE",acStack_2020);
     Com_Memset(penetrationDepthTable,0,0x1f0);
@@ -165,13 +157,14 @@ void BG_LoadPenetrationDepthTable(void)
     BG_ParsePenetrationDepthTable("large",penetrationDepthTable[3],pcVar1);
     penetrationDepthTableLoaded = true;
   }
-  __restgprlr_29();
   return;
 }
 
 
 // 822924B0  BG_GetSurfacePenetrationDepth  (bgame/bg_weapons_setup.cpp:143)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
 
 float BG_GetSurfacePenetrationDepth(Weapon param_1,bool param_2,int param_3)
@@ -179,57 +172,47 @@ float BG_GetSurfacePenetrationDepth(Weapon param_1,bool param_2,int param_3)
 {
   WeaponDef *pWVar1;
   Weapon WVar2;
-  Weapon WVar3;
-  ulonglong uVar4;
-  ulonglong uVar5;
-  double dVar6;
+  PenetrateType PVar3;
+  double dVar4;
   WeaponAttachment *local_50;
   WeaponAttachment *local_4c;
   WeaponAttachment *local_48 [18];
   
-  uVar4 = (ulonglong)param_3;
-  WVar2.data = __savegprlr_26(param_1.data);
-  if (0x1e < (uVar4 & 0xffffffff)) {
+  if (0x1e < (uint)param_3) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_weapons_setup.cpp",
                     0x98,0,"surfaceType doesn\'t index SURF_TYPECOUNT\n\t%i not in [0, %i)");
   }
-  if ((int)uVar4 == 0) {
-    dVar6 = (double)__restgprlr_26(0);
-    return (float)dVar6;
+  if (param_3 == 0) {
+    return 0.0;
   }
-  if ((WVar2.data & 0xff) == 0) {
+  if ((param_1.data & 0xff) == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_weapons_setup.cpp",
                     0x9c,0,"%s");
   }
-  WVar3 = BG_GetAlternateWeapon(WVar2,param_2);
-  pWVar1 = bg_weaponDefs[WVar3.data & 0xff];
-  WVar3 = BG_GetAlternateWeapon(WVar2,param_2);
-  uVar5 = (ulonglong)pWVar1->penetrateType;
-  dVar6 = (double)bg_weaponCompleteDefs[WVar3.data & 0xff]->penetrateMultiplier;
-  BG_GetWeaponAttachments(WVar2,param_2,&local_50,&local_4c,local_48);
+  WVar2 = BG_GetAlternateWeapon(param_1,param_2);
+  pWVar1 = bg_weaponDefs[WVar2.data & 0xff];
+  WVar2 = BG_GetAlternateWeapon(param_1,param_2);
+  PVar3 = pWVar1->penetrateType;
+  dVar4 = (double)bg_weaponCompleteDefs[WVar2.data & 0xff]->penetrateMultiplier;
+  BG_GetWeaponAttachments(param_1,param_2,&local_50,&local_4c,local_48);
   if ((((local_50 != (WeaponAttachment *)0x0) && (local_50->ammogeneral != (AttAmmoGeneral *)0x0))
       || ((local_4c != (WeaponAttachment *)0x0 &&
           (local_50 = local_4c, local_4c->ammogeneral != (AttAmmoGeneral *)0x0)))) ||
      ((local_48[0] != (WeaponAttachment *)0x0 &&
       (local_50 = local_48[0], local_48[0]->ammogeneral != (AttAmmoGeneral *)0x0)))) {
-    uVar5 = (ulonglong)local_50->ammogeneral->penetrateType;
-    dVar6 = (double)local_50->ammogeneral->penetrateMultiplier;
+    PVar3 = local_50->ammogeneral->penetrateType;
+    dVar4 = (double)local_50->ammogeneral->penetrateMultiplier;
   }
-  if ((int)uVar5 == 0) {
+  if (PVar3 == PENETRATE_TYPE_NONE) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_weapons_setup.cpp",
                     0xb4,0,"%s");
   }
-  else if (3 < uVar5) {
+  else if (PENETRATE_TYPE_LARGE < PVar3) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_weapons_setup.cpp",
                     0xb5,0,"penetrateType doesn\'t index PENETRATE_TYPE_COUNT\n\t%i not in [0, %i)")
     ;
   }
-  dVar6 = (double)__restgprlr_26((double)(float)((double)*(float *)((int)penetrationDepthTable[0] +
-                                                                   (int)((((uVar5 & 0x7ffffff) *
-                                                                           0x20 - uVar5) + uVar4 &
-                                                                         0xffffffff) << 2)) * dVar6)
-                                );
-  return (float)dVar6;
+  return (float)((double)penetrationDepthTable[PVar3][param_3] * dVar4);
 }
 
 
@@ -291,6 +274,8 @@ WeaponCompleteDef * BG_LoadWeaponCompleteDef(char *param_1)
 
 // 82292E98  BG_SetupAmmoIndexes  (bgame/bg_weapons_setup.cpp:317)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
 
 void BG_SetupAmmoIndexes(Weapon param_1)
@@ -300,116 +285,111 @@ void BG_SetupAmmoIndexes(Weapon param_1)
   char cVar2;
   uint uVar3;
   bool bVar4;
-  Weapon WVar5;
+  WeaponDef *pWVar5;
   WeaponDef *pWVar6;
-  WeaponDef *pWVar7;
+  char *pcVar7;
   char *pcVar8;
-  char *pcVar9;
-  uint uVar10;
+  uint uVar9;
   char acStack_830 [1024];
   char acStack_430 [1072];
   
-  WVar5.data = __savegprlr_28(param_1.data);
-  uVar3 = WVar5.data & 0xff;
-  pWVar6 = BG_GetPointerToWeaponDef(uVar3);
-  if (pWVar6->sharedAmmo != false) {
-    uVar10 = 1;
+  uVar3 = param_1.data & 0xff;
+  pWVar5 = BG_GetPointerToWeaponDef(uVar3);
+  if (pWVar5->sharedAmmo != false) {
+    uVar9 = 1;
     if (1 < uVar3) {
       do {
-        pWVar7 = BG_GetPointerToWeaponDef(uVar10);
-        if (pWVar7->sharedAmmo != false) {
-          pcVar9 = pWVar7->szAmmoName;
+        pWVar6 = BG_GetPointerToWeaponDef(uVar9);
+        if (pWVar6->sharedAmmo != false) {
           pcVar8 = pWVar6->szAmmoName;
+          pcVar7 = pWVar5->szAmmoName;
           do {
-            cVar1 = *pcVar9;
-            cVar2 = *pcVar8;
+            cVar1 = *pcVar8;
+            cVar2 = *pcVar7;
             if (cVar1 == '\0') break;
-            pcVar9 = pcVar9 + 1;
             pcVar8 = pcVar8 + 1;
+            pcVar7 = pcVar7 + 1;
           } while (cVar1 == cVar2);
           if (cVar1 == cVar2) {
             if ((weap_printSharedAmmo != (dvar_t *)0x0) &&
                ((weap_printSharedAmmo->current).enabled != false)) {
-              BG_GetWeaponNameComplete((Weapon)(uVar10 & 0xff),false,acStack_830,0x400);
-              BG_GetWeaponNameComplete(WVar5,false,acStack_430,0x400);
+              BG_GetWeaponNameComplete((Weapon)(uVar9 & 0xff),false,acStack_830,0x400);
+              BG_GetWeaponNameComplete(param_1,false,acStack_430,0x400);
               Com_Printf(0x10,
                          "Weapon %s shares ammo with weapon %s - both are using ammo type \'%s\'\n")
               ;
             }
-            pWVar6->iAmmoIndex = uVar10;
-            __restgprlr_28();
+            pWVar5->iAmmoIndex = uVar9;
             return;
           }
         }
-        uVar10 = uVar10 + 1;
-      } while (uVar10 < uVar3);
+        uVar9 = uVar9 + 1;
+      } while (uVar9 < uVar3);
     }
   }
-  pcVar9 = bg_weaponCompleteDefs[WVar5.data & 0xff]->szInternalName;
-  if ((((*pcVar9 != 'i') || (pcVar9[1] != 'w')) || (pcVar9[2] != '5')) ||
-     (bVar4 = true, pcVar9[3] != '_')) {
+  pcVar8 = bg_weaponCompleteDefs[uVar3]->szInternalName;
+  if ((((*pcVar8 != 'i') || (pcVar8[1] != 'w')) || (pcVar8[2] != '5')) ||
+     (bVar4 = true, pcVar8[3] != '_')) {
     bVar4 = false;
   }
   if (!bVar4) {
-    pWVar6->iAmmoIndex = uVar3;
+    pWVar5->iAmmoIndex = uVar3;
   }
-  __restgprlr_28();
   return;
 }
 
 
 // 82292FF8  BG_SetupSharedAmmoIndexes  (bgame/bg_weapons_setup.cpp:410)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
 
 void BG_SetupSharedAmmoIndexes(Weapon param_1)
 
 {
   uint uVar1;
-  Weapon WVar2;
+  WeaponDef *pWVar2;
   WeaponDef *pWVar3;
-  WeaponDef *pWVar4;
-  int iVar5;
-  uint uVar6;
+  int iVar4;
+  uint uVar5;
   char acStack_840 [1024];
   char acStack_440 [1088];
   
-  WVar2.data = __savegprlr_26(param_1.data);
-  uVar1 = WVar2.data & 0xff;
-  pWVar3 = BG_GetPointerToWeaponDef(uVar1);
-  pWVar3->iSharedAmmoCapIndex = -1;
-  if (*pWVar3->szSharedAmmoCapName != '\0') {
-    uVar6 = 1;
+  uVar1 = param_1.data & 0xff;
+  pWVar2 = BG_GetPointerToWeaponDef(uVar1);
+  pWVar2->iSharedAmmoCapIndex = -1;
+  if (*pWVar2->szSharedAmmoCapName != '\0') {
+    uVar5 = 1;
     if (1 < uVar1) {
       do {
-        pWVar4 = BG_GetPointerToWeaponDef(uVar6);
-        iVar5 = I_stricmp(pWVar4->szSharedAmmoCapName,pWVar3->szSharedAmmoCapName);
-        if (iVar5 == 0) {
-          pWVar3->iSharedAmmoCapIndex = uVar6;
-          if (pWVar4->iSharedAmmoCap != pWVar3->iSharedAmmoCap) {
-            BG_GetWeaponNameComplete((Weapon)(uVar6 & 0xff),false,acStack_840,0x400);
-            BG_GetWeaponNameComplete(WVar2,false,acStack_440,0x400);
-            Com_Error(ERR_DROP,
-                      "\x15Shared ammo cap mismatch for \"%s\" shared ammo cap: \'%s\" set it to %i, but \"%s\" already set it to %i.\n"
-                     );
-            __restgprlr_26();
+        pWVar3 = BG_GetPointerToWeaponDef(uVar5);
+        iVar4 = I_stricmp(pWVar3->szSharedAmmoCapName,pWVar2->szSharedAmmoCapName);
+        if (iVar4 == 0) {
+          pWVar2->iSharedAmmoCapIndex = uVar5;
+          if (pWVar3->iSharedAmmoCap == pWVar2->iSharedAmmoCap) {
             return;
           }
-          goto LAB_8229307c;
+          BG_GetWeaponNameComplete((Weapon)(uVar5 & 0xff),false,acStack_840,0x400);
+          BG_GetWeaponNameComplete(param_1,false,acStack_440,0x400);
+          Com_Error(ERR_DROP,
+                    "\x15Shared ammo cap mismatch for \"%s\" shared ammo cap: \'%s\" set it to %i, but \"%s\" already set it to %i.\n"
+                   );
+          return;
         }
-        uVar6 = uVar6 + 1;
-      } while (uVar6 < uVar1);
+        uVar5 = uVar5 + 1;
+      } while (uVar5 < uVar1);
     }
-    pWVar3->iSharedAmmoCapIndex = uVar1;
+    pWVar2->iSharedAmmoCapIndex = uVar1;
   }
-LAB_8229307c:
-  __restgprlr_26();
   return;
 }
 
 
 // 822930F0  BG_SetupClipIndexes  (bgame/bg_weapons_setup.cpp:451)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
 
 void BG_SetupClipIndexes(Weapon *param_1)
@@ -418,109 +398,105 @@ void BG_SetupClipIndexes(Weapon *param_1)
   char cVar1;
   char cVar2;
   bool bVar3;
-  Weapon_s_0 *pWVar4;
+  WeaponDef *pWVar4;
   WeaponDef *pWVar5;
-  WeaponDef *pWVar6;
+  char *pcVar6;
   char *pcVar7;
-  char *pcVar8;
-  uint uVar9;
+  uint uVar8;
   char acStack_840 [1024];
   char acStack_440 [1088];
   
-  pWVar4 = (Weapon_s_0 *)__savegprlr_25(param_1);
-  pWVar5 = BG_GetPointerToWeaponDef((uint)pWVar4->weaponIdx);
-  if (pWVar5 == (WeaponDef *)0x0) {
+  pWVar4 = BG_GetPointerToWeaponDef((uint)(param_1->_s_0).weaponIdx);
+  if (pWVar4 == (WeaponDef *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_weapons_setup.cpp",
                     0x1c9,0,"%s");
   }
-  if (pWVar5->szClipName == (char *)0x0) {
+  if (pWVar4->szClipName == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_weapons_setup.cpp",
                     0x1ca,0,"%s");
   }
-  if ((pWVar5->sharedAmmo != false) && (uVar9 = 1, 1 < pWVar4->weaponIdx)) {
+  if ((pWVar4->sharedAmmo != false) && (uVar8 = 1, 1 < (param_1->_s_0).weaponIdx)) {
     do {
-      pWVar6 = BG_GetPointerToWeaponDef(uVar9);
-      if (pWVar6->sharedAmmo != false) {
-        if (pWVar6->szClipName == (char *)0x0) {
+      pWVar5 = BG_GetPointerToWeaponDef(uVar8);
+      if (pWVar5->sharedAmmo != false) {
+        if (pWVar5->szClipName == (char *)0x0) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_weapons_setup.cpp"
                           ,0x1d5,0,"%s");
         }
+        pcVar6 = pWVar4->szClipName;
         pcVar7 = pWVar5->szClipName;
-        pcVar8 = pWVar6->szClipName;
         do {
-          cVar1 = *pcVar8;
-          cVar2 = *pcVar7;
+          cVar1 = *pcVar7;
+          cVar2 = *pcVar6;
           if (cVar1 == '\0') break;
-          pcVar8 = pcVar8 + 1;
           pcVar7 = pcVar7 + 1;
+          pcVar6 = pcVar6 + 1;
         } while (cVar1 == cVar2);
         if (cVar1 == cVar2) {
           if ((weap_printSharedClips != (dvar_t *)0x0) &&
              ((weap_printSharedClips->current).enabled != false)) {
-            BG_GetWeaponNameComplete((Weapon)(uVar9 & 0xff),false,acStack_840,0x400);
-            BG_GetWeaponNameComplete((Weapon)*pWVar4,false,acStack_440,0x400);
+            BG_GetWeaponNameComplete((Weapon)(uVar8 & 0xff),false,acStack_840,0x400);
+            BG_GetWeaponNameComplete(*param_1,false,acStack_440,0x400);
             Com_Printf(0x10,
                        "Weapon %s shares clip ammo with weapon %s - both are using clip ammo type \'%s\'\n"
                       );
           }
-          pWVar5->iClipIndex = uVar9;
-          __restgprlr_25();
+          pWVar4->iClipIndex = uVar8;
           return;
         }
       }
-      uVar9 = uVar9 + 1;
-    } while (uVar9 < pWVar4->weaponIdx);
+      uVar8 = uVar8 + 1;
+    } while (uVar8 < (param_1->_s_0).weaponIdx);
   }
-  pcVar7 = bg_weaponCompleteDefs[(uint)*pWVar4 & 0xff]->szInternalName;
-  if ((((*pcVar7 != 'i') || (pcVar7[1] != 'w')) || (pcVar7[2] != '5')) ||
-     (bVar3 = true, pcVar7[3] != '_')) {
+  pcVar6 = bg_weaponCompleteDefs[param_1->data & 0xff]->szInternalName;
+  if ((((*pcVar6 != 'i') || (pcVar6[1] != 'w')) || (pcVar6[2] != '5')) ||
+     (bVar3 = true, pcVar6[3] != '_')) {
     bVar3 = false;
   }
   if (!bVar3) {
-    pWVar5->iClipIndex = (uint)*pWVar4 & 0xff;
+    pWVar4->iClipIndex = param_1->data & 0xff;
   }
-  __restgprlr_25();
   return;
 }
 
 
 // 822932F0  BG_SetupWeaponAlts  (bgame/bg_weapons_setup.cpp:496)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
 
 void BG_SetupWeaponAlts(Weapon param_1,_func___cdecl_void_uint *param_2)
 
 {
-  Weapon WVar1;
-  WeaponCompleteDef *pWVar2;
-  Weapon WVar3;
+  WeaponCompleteDef *pWVar1;
+  Weapon WVar2;
   char acStack_420 [1056];
   
-  WVar1.data = __savegprlr_29(param_1.data);
-  pWVar2 = BG_GetPointerToWeaponCompleteDef(WVar1.data & 0xff);
-  pWVar2->altWeapon = 0;
-  if (*pWVar2->szAltWeaponName != '\0') {
-    WVar3 = BG_GetWeaponForName(pWVar2->szAltWeaponName,param_2);
-    if ((WVar3.data & 0xff) == 0) {
-      BG_GetWeaponNameComplete(WVar1,false,acStack_420,0x400);
+  pWVar1 = BG_GetPointerToWeaponCompleteDef(param_1.data & 0xff);
+  pWVar1->altWeapon = 0;
+  if (*pWVar1->szAltWeaponName != '\0') {
+    WVar2 = BG_GetWeaponForName(pWVar1->szAltWeaponName,param_2);
+    if ((WVar2.data & 0xff) == 0) {
+      BG_GetWeaponNameComplete(param_1,false,acStack_420,0x400);
       Com_Error(ERR_DROP,"\x15could not find altWeapon \'%s\' for weapon \'%s\'");
     }
-    pWVar2->altWeapon = (int)WVar3;
+    pWVar1->altWeapon = (int)WVar2;
   }
-  __restgprlr_29();
   return;
 }
 
 
 // 82292708  BG_ClearWeaponDef  (bgame/bg_weapons_setup.cpp:518)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
 
 void BG_ClearWeaponDef(void)
 
 {
-  __savegprlr_28();
   if (bg_lastParsedWeaponIndex != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_weapons_setup.cpp",
                     0x207,0,"%s");
@@ -535,13 +511,14 @@ void BG_ClearWeaponDef(void)
   bg_weaponDefs[0] = bg_weaponCompleteDefs[0]->weapDef;
   BG_LoadPlayerAnimTypes();
   BG_InitWeaponStrings();
-  __restgprlr_28();
   return;
 }
 
 
 // 82293378  BG_SetupWeaponIndex  (bgame/bg_weapons_setup.cpp:538)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
 
 void BG_SetupWeaponIndex(Weapon param_1,bool param_2)
@@ -549,14 +526,10 @@ void BG_SetupWeaponIndex(Weapon param_1,bool param_2)
 {
   WeaponDef *pWVar1;
   uint uVar2;
-  Weapon WVar3;
-  ulonglong uVar4;
   Weapon WStack00000014;
   
-  uVar4 = (ulonglong)param_2;
-  WVar3.data = __savegprlr_26(param_1.data);
-  uVar2 = WVar3.data & 0xff;
-  WStack00000014.data = WVar3.data;
+  uVar2 = param_1.data & 0xff;
+  WStack00000014 = param_1;
   if (bg_weaponCompleteDefs[uVar2] == (WeaponCompleteDef *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_weapons_setup.cpp",
                     0x21b,0,"%s");
@@ -567,32 +540,26 @@ void BG_SetupWeaponIndex(Weapon param_1,bool param_2)
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_weapons_setup.cpp",
                     0x21d,0,"%s");
   }
-  BG_SetupSharedAmmoIndexes(WVar3);
-  if ((uVar4 & 0xff) == 0) {
+  BG_SetupSharedAmmoIndexes(param_1);
+  if (!param_2) {
     BG_SetupClipIndexes(&stack0x00000014);
-    BG_SetupAmmoIndexes(WVar3);
+    BG_SetupAmmoIndexes(param_1);
   }
-  __restgprlr_26();
   return;
 }
 
 
 // 82293438  BG_SetupWeaponDef  (bgame/bg_weapons_setup.cpp:551)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
 
 Weapon BG_SetupWeaponDef(WeaponCompleteDef *param_1,_func___cdecl_void_uint *param_2,bool param_3)
 
 {
-  undefined1 uVar1;
-  WeaponCompleteDef *pWVar2;
-  uint uVar3;
-  ulonglong uVar4;
-  ulonglong uVar5;
+  uint uVar1;
   
-  uVar5 = (ulonglong)param_3;
-  uVar4 = (ulonglong)(int)param_2;
-  pWVar2 = (WeaponCompleteDef *)__savegprlr_28(param_1);
   bg_lastParsedWeaponIndex = bg_lastParsedWeaponIndex + 1;
   if (0xef < bg_lastParsedWeaponIndex) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_weapons_setup.cpp",
@@ -600,23 +567,23 @@ Weapon BG_SetupWeaponDef(WeaponCompleteDef *param_1,_func___cdecl_void_uint *par
                     "bg_lastParsedWeaponIndex doesn\'t index ARRAY_COUNT( bg_weaponCompleteDefs )\n\t%i not in [0, %i)"
                    );
   }
-  uVar3 = bg_lastParsedWeaponIndex;
-  uVar1 = (undefined1)bg_lastParsedWeaponIndex;
-  bg_weaponCompleteDefs[bg_lastParsedWeaponIndex & 0xff] = pWVar2;
-  BG_SetupWeaponIndex((Weapon)(uVar3 & 0xff),SUB81(uVar5,0));
-  if ((uVar5 & 0xff) == 0) {
-    BG_SetupWeaponAlts((Weapon)(uVar3 & 0xff),(_func___cdecl_void_uint *)uVar4);
+  uVar1 = bg_lastParsedWeaponIndex;
+  bg_weaponCompleteDefs[bg_lastParsedWeaponIndex & 0xff] = param_1;
+  BG_SetupWeaponIndex((Weapon)(uVar1 & 0xff),param_3);
+  if (!param_3) {
+    BG_SetupWeaponAlts((Weapon)(uVar1 & 0xff),param_2);
   }
-  if ((uVar4 & 0xffffffff) != 0) {
-    (*(_func___cdecl_void_uint *)uVar4)((uint)uVar3);
+  if (param_2 != (_func___cdecl_void_uint *)0x0) {
+    (*param_2)(uVar1 & 0xff);
   }
-  uVar3 = __restgprlr_28(uVar1);
-  return (Weapon)uVar3;
+  return (Weapon)(uVar1 & 0xff);
 }
 
 
 // 822934E8  BG_FillInAllWeaponItems  (bgame/bg_weapons_setup.cpp:583)
 
+/* WARNING: Function: __savegprlr_20 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_20 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
 
@@ -630,7 +597,6 @@ void BG_FillInAllWeaponItems(void)
   uint uVar5;
   char acStack_470 [1136];
   
-  __savegprlr_20();
   if (bg_weaponCompleteDefs[0] == (WeaponCompleteDef *)0x0) {
     bg_weaponDefs[0] = (WeaponDef *)0x0;
   }
@@ -667,13 +633,14 @@ void BG_FillInAllWeaponItems(void)
       uVar5 = uVar5 & 0xff;
     } while (uVar5 < uVar3);
   }
-  __restgprlr_20();
   return;
 }
 
 
 // 822927C8  BG_GetWeaponNameComplete  (bgame/bg_weapons_setup.cpp:602)
 
+/* WARNING: Function: __savegprlr_15 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_15 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
 
 char * BG_GetWeaponNameComplete(Weapon param_1,bool param_2,char *param_3,uint param_4)
@@ -681,256 +648,242 @@ char * BG_GetWeaponNameComplete(Weapon param_1,bool param_2,char *param_3,uint p
 {
   byte bVar1;
   byte bVar2;
-  undefined4 *puVar3;
+  WeaponAttachment *pWVar3;
   WeaponCompleteDef *pWVar4;
-  char *pcVar5;
+  undefined4 *puVar5;
   bool bVar6;
-  ulonglong uVar7;
-  Weapon WVar8;
+  Weapon WVar7;
+  byte *pbVar8;
   char *pcVar9;
-  ulonglong uVar10;
-  longlong lVar11;
-  ulonglong uVar12;
+  byte *pbVar10;
+  uint uVar11;
+  byte *pbVar12;
   byte *pbVar13;
   byte *pbVar14;
-  ulonglong uVar15;
+  byte *pbVar15;
   byte *pbVar16;
-  ulonglong uVar17;
-  byte *pbVar18;
-  byte *pbVar19;
-  byte *pbVar20;
-  byte *pbVar21;
-  uint uVar22;
-  ulonglong uVar23;
-  ulonglong uVar24;
-  int iVar25;
-  int iVar26;
+  uint uVar17;
+  ulonglong uVar18;
+  uint uVar19;
+  uint uVar20;
   
-  lVar11 = (longlong)(int)param_4;
-  uVar10 = (ulonglong)(int)param_3;
-  uVar7 = __savegprlr_15(param_1.data);
-  if ((uVar10 & 0xffffffff) == 0) {
+  if (param_3 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_weapons_setup.cpp",
                     0x263,0,"%s");
   }
-  WVar8 = BG_GetAlternateWeapon((uint)uVar7,param_2);
-  uVar17 = lVar11 - 1;
-  pbVar18 = (byte *)0x0;
-  pbVar21 = (byte *)0x0;
+  WVar7 = BG_GetAlternateWeapon(param_1,param_2);
+  pbVar13 = (byte *)0x0;
   pbVar16 = (byte *)0x0;
-  pWVar4 = bg_weaponCompleteDefs[WVar8.data & 0xff];
-  uVar23 = 0;
+  pbVar12 = (byte *)0x0;
+  pWVar4 = bg_weaponCompleteDefs[WVar7.data & 0xff];
+  uVar19 = 0;
   pcVar9 = pWVar4->szInternalName;
-  pcVar5 = (char *)uVar10;
-  iVar26 = 0;
-  if (uVar17 != 0) {
+  if (param_4 != 1) {
     do {
       if (*pcVar9 == '\0') break;
-      pcVar5[(int)uVar23] = *pcVar9;
-      uVar23 = uVar23 + 1;
+      param_3[uVar19] = *pcVar9;
+      uVar19 = uVar19 + 1;
       pcVar9 = pcVar9 + 1;
-    } while ((uVar23 & 0xffffffff) < (uVar17 & 0xffffffff));
-    iVar26 = (int)uVar23;
-    if ((((4 < (uVar23 & 0xffffffff)) && (*pcVar5 == 'i')) && (pcVar5[1] == 'w')) &&
-       ((pcVar5[2] == '5' && (pcVar5[3] == '_')))) {
-      uVar15 = (uVar7 & 0xffffffff) >> 0xc & 7;
-      if (uVar15 != 0) {
-        puVar3 = *(undefined4 **)((int)pWVar4->scopes + (int)(uVar15 << 2) + -4);
-        if (puVar3 == (undefined4 *)0x0) {
+    } while (uVar19 < param_4 - 1);
+    if ((((4 < uVar19) && (*param_3 == 'i')) && (param_3[1] == 'w')) &&
+       ((param_3[2] == '5' && (param_3[3] == '_')))) {
+      uVar11 = param_1.data >> 0xc & 7;
+      if ((param_1.data >> 0xc & 7) != 0) {
+        pWVar3 = pWVar4->scopes[uVar11 - 1];
+        if (pWVar3 == (WeaponAttachment *)0x0) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_weapons_setup.cpp"
                           ,0x275,0,"%s");
         }
-        pbVar18 = (byte *)*puVar3;
+        pbVar13 = (byte *)pWVar3->szInternalName;
       }
-      uVar12 = (uVar7 & 0xffffffff) >> 0xf & 3;
-      if (uVar12 != 0) {
-        puVar3 = *(undefined4 **)((int)pWVar4->underBarrels + (int)(uVar12 << 2) + -4);
-        if (puVar3 == (undefined4 *)0x0) {
+      if ((param_1.data >> 0xf & 3) != 0) {
+        pWVar3 = pWVar4->underBarrels[(param_1.data >> 0xf & 3) - 1];
+        if (pWVar3 == (WeaponAttachment *)0x0) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_weapons_setup.cpp"
                           ,0x27c,0,"%s");
         }
-        if (pbVar18 == (byte *)0x0) {
-          pbVar18 = (byte *)*puVar3;
+        if (pbVar13 == (byte *)0x0) {
+          pbVar13 = (byte *)pWVar3->szInternalName;
         }
         else {
-          pbVar21 = (byte *)*puVar3;
+          pbVar16 = (byte *)pWVar3->szInternalName;
         }
       }
-      if (((uVar7 & 0xffffffff) >> 0x11 & 0xf) != 0) {
-        uVar12 = 1;
-        uVar22 = 0;
+      if ((param_1.data >> 0x11 & 0xf) != 0) {
+        uVar20 = 1;
+        uVar17 = 0;
         do {
-          if (((uVar7 & 0xffffffff) >> 0x11 & uVar12 & 0xf) != 0) {
-            if (pbVar16 != (byte *)0x0) {
+          if ((param_1.data >> 0x11 & uVar20 & 0xf) != 0) {
+            if (pbVar12 != (byte *)0x0) {
               MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_weapons_setup.cpp"
                               ,0x28c,0,"%s");
             }
-            puVar3 = *(undefined4 **)((int)pWVar4->others + uVar22);
-            if (puVar3 == (undefined4 *)0x0) {
+            puVar5 = *(undefined4 **)((int)pWVar4->others + uVar17);
+            if (puVar5 == (undefined4 *)0x0) {
               MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_weapons_setup.cpp"
                               ,0x28e,0,"%s");
             }
-            if (pbVar18 == (byte *)0x0) {
-              pbVar18 = (byte *)*puVar3;
+            if (pbVar13 == (byte *)0x0) {
+              pbVar13 = (byte *)*puVar5;
             }
-            else if (pbVar21 == (byte *)0x0) {
-              pbVar21 = (byte *)*puVar3;
+            else if (pbVar16 == (byte *)0x0) {
+              pbVar16 = (byte *)*puVar5;
             }
             else {
-              pbVar16 = (byte *)*puVar3;
+              pbVar12 = (byte *)*puVar5;
             }
           }
-          uVar22 = uVar22 + 4;
-          uVar12 = (uVar12 & 0x7fffffff) << 1;
-        } while (uVar22 < 0x10);
+          uVar17 = uVar17 + 4;
+          uVar20 = uVar20 << 1;
+        } while (uVar17 < 0x10);
       }
       do {
         bVar6 = false;
-        pbVar19 = pbVar18;
-        pbVar20 = pbVar21;
-        if (pbVar18 == (byte *)0x0) {
+        pbVar14 = pbVar13;
+        pbVar15 = pbVar16;
+        if (pbVar13 == (byte *)0x0) {
 LAB_82292a44:
-          pbVar21 = pbVar20;
-          pbVar18 = pbVar19;
-          if ((pbVar20 != (byte *)0x0) &&
-             (pbVar19 = pbVar20, pbVar14 = pbVar16, pbVar16 != (byte *)0x0)) {
+          pbVar16 = pbVar15;
+          pbVar13 = pbVar14;
+          if ((pbVar15 != (byte *)0x0) &&
+             (pbVar14 = pbVar15, pbVar10 = pbVar12, pbVar12 != (byte *)0x0)) {
             do {
-              bVar1 = *pbVar19;
-              bVar2 = *pbVar14;
+              bVar1 = *pbVar14;
+              bVar2 = *pbVar10;
               if (bVar1 == 0) break;
-              pbVar19 = pbVar19 + 1;
               pbVar14 = pbVar14 + 1;
+              pbVar10 = pbVar10 + 1;
             } while ((uint)bVar1 == (uint)bVar2);
             if (0 < (int)((uint)bVar1 - (uint)bVar2)) {
               bVar6 = true;
-              pbVar21 = pbVar16;
-              pbVar16 = pbVar20;
+              pbVar16 = pbVar12;
+              pbVar12 = pbVar15;
             }
           }
         }
         else {
-          pbVar14 = pbVar18;
-          pbVar13 = pbVar21;
-          if (pbVar21 != (byte *)0x0) {
+          pbVar10 = pbVar13;
+          pbVar8 = pbVar16;
+          if (pbVar16 != (byte *)0x0) {
             do {
-              bVar1 = *pbVar14;
-              bVar2 = *pbVar13;
+              bVar1 = *pbVar10;
+              bVar2 = *pbVar8;
               if (bVar1 == 0) break;
-              pbVar14 = pbVar14 + 1;
-              pbVar13 = pbVar13 + 1;
+              pbVar10 = pbVar10 + 1;
+              pbVar8 = pbVar8 + 1;
             } while ((uint)bVar1 == (uint)bVar2);
             if (0 < (int)((uint)bVar1 - (uint)bVar2)) {
               bVar6 = true;
-              pbVar19 = pbVar21;
-              pbVar20 = pbVar18;
+              pbVar14 = pbVar16;
+              pbVar15 = pbVar13;
             }
             goto LAB_82292a44;
           }
         }
       } while (bVar6);
-      if ((pbVar18 != (byte *)0x0) && ((uVar23 & 0xffffffff) < (uVar17 & 0xffffffff))) {
-        pcVar5[iVar26] = '_';
-        uVar23 = uVar23 + 1;
-        if ((uVar23 & 0xffffffff) < (uVar17 & 0xffffffff)) {
-          iVar26 = (int)uVar23;
+      if ((pbVar13 != (byte *)0x0) && (uVar19 < param_4 - 1)) {
+        param_3[uVar19] = '_';
+        uVar20 = uVar19 + 1;
+        uVar19 = uVar20;
+        if (uVar20 < param_4 - 1) {
           do {
-            if (pbVar18[(int)uVar23 - iVar26] == 0) break;
-            pcVar5[(int)uVar23] = pbVar18[(int)uVar23 - iVar26];
-            uVar23 = uVar23 + 1;
-          } while ((uVar23 & 0xffffffff) < (uVar17 & 0xffffffff));
+            if (pbVar13[uVar19 - uVar20] == 0) break;
+            param_3[uVar19] = pbVar13[uVar19 - uVar20];
+            uVar19 = uVar19 + 1;
+          } while (uVar19 < param_4 - 1);
         }
       }
-      if ((pbVar21 != (byte *)0x0) && ((uVar23 & 0xffffffff) < (uVar17 & 0xffffffff))) {
-        pcVar5[(int)uVar23] = '_';
-        uVar23 = uVar23 + 1;
-        if ((uVar23 & 0xffffffff) < (uVar17 & 0xffffffff)) {
-          iVar26 = (int)uVar23;
+      if ((pbVar16 != (byte *)0x0) && (uVar19 < param_4 - 1)) {
+        param_3[uVar19] = '_';
+        uVar20 = uVar19 + 1;
+        uVar19 = uVar20;
+        if (uVar20 < param_4 - 1) {
           do {
-            if (pbVar21[(int)uVar23 - iVar26] == 0) break;
-            pcVar5[(int)uVar23] = pbVar21[(int)uVar23 - iVar26];
-            uVar23 = uVar23 + 1;
-          } while ((uVar23 & 0xffffffff) < (uVar17 & 0xffffffff));
+            if (pbVar16[uVar19 - uVar20] == 0) break;
+            param_3[uVar19] = pbVar16[uVar19 - uVar20];
+            uVar19 = uVar19 + 1;
+          } while (uVar19 < param_4 - 1);
         }
       }
-      if ((pbVar16 != (byte *)0x0) && ((uVar23 & 0xffffffff) < (uVar17 & 0xffffffff))) {
-        pcVar5[(int)uVar23] = '_';
-        uVar23 = uVar23 + 1;
-        if ((uVar23 & 0xffffffff) < (uVar17 & 0xffffffff)) {
-          iVar26 = (int)uVar23;
+      if ((pbVar12 != (byte *)0x0) && (uVar19 < param_4 - 1)) {
+        param_3[uVar19] = '_';
+        uVar20 = uVar19 + 1;
+        uVar19 = uVar20;
+        if (uVar20 < param_4 - 1) {
           do {
-            if (pbVar16[(int)uVar23 - iVar26] == 0) break;
-            pcVar5[(int)uVar23] = pbVar16[(int)uVar23 - iVar26];
-            uVar23 = uVar23 + 1;
-          } while ((uVar23 & 0xffffffff) < (uVar17 & 0xffffffff));
+            if (pbVar12[uVar19 - uVar20] == 0) break;
+            param_3[uVar19] = pbVar12[uVar19 - uVar20];
+            uVar19 = uVar19 + 1;
+          } while (uVar19 < param_4 - 1);
         }
       }
-      uVar12 = (uVar7 & 0xffffffff) >> 8 & 0xf;
-      if (uVar12 != 0) {
-        if (0xf < uVar12) {
+      uVar18 = (ulonglong)(param_1.data >> 8) & 0xf;
+      uVar20 = uVar19;
+      if ((param_1.data >> 8 & 0xf) != 0) {
+        if (0xf < uVar18) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_weapons_setup.cpp"
                           ,0x2dc,0,"%s");
         }
         pcVar9 = camoString;
-        uVar24 = uVar23;
-        if ((uVar23 & 0xffffffff) < (uVar17 & 0xffffffff)) {
-          pcVar5[(int)uVar23] = *camoString;
-          uVar24 = uVar23 + 1;
-          if ((uVar24 & 0xffffffff) < (uVar17 & 0xffffffff)) {
-            pcVar5[(int)uVar24] = pcVar9[1];
-            uVar24 = uVar23 + 2;
-            if ((uVar24 & 0xffffffff) < (uVar17 & 0xffffffff)) {
-              pcVar5[(int)uVar24] = pcVar9[2];
-              uVar24 = uVar23 + 3;
-              if ((uVar24 & 0xffffffff) < (uVar17 & 0xffffffff)) {
-                pcVar5[(int)uVar24] = pcVar9[3];
-                uVar24 = uVar23 + 4;
-                if ((uVar24 & 0xffffffff) < (uVar17 & 0xffffffff)) {
-                  pcVar5[(int)uVar24] = pcVar9[4];
-                  uVar24 = uVar23 + 5;
+        uVar17 = uVar19;
+        if (uVar19 < param_4 - 1) {
+          param_3[uVar19] = *camoString;
+          uVar17 = uVar19 + 1;
+          if (uVar17 < param_4 - 1) {
+            param_3[uVar17] = pcVar9[1];
+            uVar17 = uVar19 + 2;
+            if (uVar17 < param_4 - 1) {
+              param_3[uVar17] = pcVar9[2];
+              uVar17 = uVar19 + 3;
+              if (uVar17 < param_4 - 1) {
+                param_3[uVar17] = pcVar9[3];
+                uVar17 = uVar19 + 4;
+                if (uVar17 < param_4 - 1) {
+                  param_3[uVar17] = pcVar9[4];
+                  uVar17 = uVar19 + 5;
                 }
               }
             }
           }
         }
-        uVar23 = uVar24;
-        if ((uVar24 & 0xffffffff) < (uVar17 & 0xffffffff)) {
-          pcVar5[(int)uVar24] = (char)(uVar12 / 10) + '0';
-          uVar23 = uVar24 + 1;
-          if ((uVar23 & 0xffffffff) < (uVar17 & 0xffffffff)) {
-            pcVar5[(int)uVar23] = (char)uVar12 + (char)(uVar12 / 10) * -10 + '0';
-            uVar23 = uVar24 + 2;
+        uVar20 = uVar17;
+        if (uVar17 < param_4 - 1) {
+          param_3[uVar17] = (char)(uVar18 / 10) + '0';
+          uVar20 = uVar17 + 1;
+          if (uVar20 < param_4 - 1) {
+            param_3[uVar20] = (char)uVar18 + (char)(uVar18 / 10) * -10 + '0';
+            uVar20 = uVar17 + 2;
           }
         }
       }
-      iVar25 = (int)uVar23;
-      iVar26 = iVar25;
-      if ((uVar15 != 0) && (uVar7 = (uVar7 & 0xffffffff) >> 0x15 & 7, uVar7 != 0)) {
-        if (7 < uVar7) {
+      uVar19 = uVar20;
+      if ((uVar11 != 0) && (uVar11 = param_1.data >> 0x15 & 7, uVar11 != 0)) {
+        if (7 < uVar11) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_weapons_setup.cpp"
                           ,0x2f1,0,"%s");
         }
         pcVar9 = scopeString;
-        if ((uVar23 & 0xffffffff) < (uVar17 & 0xffffffff)) {
-          pcVar5[iVar25] = *scopeString;
-          iVar26 = (int)(uVar23 + 1);
-          if ((uVar23 + 1 & 0xffffffff) < (uVar17 & 0xffffffff)) {
-            pcVar5[iVar26] = pcVar9[1];
-            iVar26 = (int)(uVar23 + 2);
-            if ((uVar23 + 2 & 0xffffffff) < (uVar17 & 0xffffffff)) {
-              pcVar5[iVar26] = pcVar9[2];
-              iVar26 = (int)(uVar23 + 3);
-              if ((uVar23 + 3 & 0xffffffff) < (uVar17 & 0xffffffff)) {
-                pcVar5[iVar26] = pcVar9[3];
-                iVar26 = (int)(uVar23 + 4);
-                if ((uVar23 + 4 & 0xffffffff) < (uVar17 & 0xffffffff)) {
-                  pcVar5[iVar26] = pcVar9[4];
-                  iVar26 = (int)(uVar23 + 5);
-                  if ((uVar23 + 5 & 0xffffffff) < (uVar17 & 0xffffffff)) {
-                    pcVar5[iVar26] = pcVar9[5];
-                    iVar26 = (int)(uVar23 + 6);
-                    if ((uVar23 + 6 & 0xffffffff) < (uVar17 & 0xffffffff)) {
-                      pcVar5[iVar26] = (char)uVar7 + '0';
-                      iVar26 = iVar25 + 7;
+        if (uVar20 < param_4 - 1) {
+          param_3[uVar20] = *scopeString;
+          uVar19 = uVar20 + 1;
+          if (uVar19 < param_4 - 1) {
+            param_3[uVar19] = pcVar9[1];
+            uVar19 = uVar20 + 2;
+            if (uVar19 < param_4 - 1) {
+              param_3[uVar19] = pcVar9[2];
+              uVar19 = uVar20 + 3;
+              if (uVar19 < param_4 - 1) {
+                param_3[uVar19] = pcVar9[3];
+                uVar19 = uVar20 + 4;
+                if (uVar19 < param_4 - 1) {
+                  param_3[uVar19] = pcVar9[4];
+                  uVar19 = uVar20 + 5;
+                  if (uVar19 < param_4 - 1) {
+                    param_3[uVar19] = pcVar9[5];
+                    uVar19 = uVar20 + 6;
+                    if (uVar19 < param_4 - 1) {
+                      param_3[uVar19] = (char)uVar11 + '0';
+                      uVar19 = uVar20 + 7;
                     }
                   }
                 }
@@ -941,9 +894,8 @@ LAB_82292a44:
       }
     }
   }
-  pcVar5[iVar26] = '\0';
-  pcVar9 = (char *)__restgprlr_15(uVar10);
-  return pcVar9;
+  param_3[uVar19] = '\0';
+  return param_3;
 }
 
 
@@ -961,52 +913,53 @@ char * BG_GetWeaponName(Weapon param_1,char *param_2,uint param_3)
 
 // 82293640  BG_FindWeaponForName  (bgame/bg_weapons_setup.cpp:778)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 Weapon BG_FindWeaponForName(char *param_1)
 
 {
   char *pcVar1;
-  char *pcVar2;
-  int iVar3;
-  uint uVar4;
-  Weapon WVar5;
+  int iVar2;
+  uint uVar3;
+  Weapon WVar4;
   char acStack_430 [1072];
   
-  pcVar1 = (char *)__savegprlr_27(param_1);
-  if (pcVar1 != (char *)0x0) {
-    uVar4 = bg_lastFoundWeaponIndex & 0xff;
-    if ((uVar4 != 0) && (uVar4 < bg_lastParsedWeaponIndex + 1)) {
-      pcVar2 = BG_GetWeaponNameComplete
+  uVar3 = bg_lastFoundWeaponIndex;
+  if (param_1 != (char *)0x0) {
+    if (((bg_lastFoundWeaponIndex & 0xff) != 0) &&
+       ((bg_lastFoundWeaponIndex & 0xff) < bg_lastParsedWeaponIndex + 1)) {
+      pcVar1 = BG_GetWeaponNameComplete
                          ((Weapon)(bg_lastFoundWeaponIndex & 0xff),false,acStack_430,0x400);
-      iVar3 = I_stricmp(pcVar1,pcVar2);
-      if (iVar3 == 0) {
-        uVar4 = __restgprlr_27(uVar4);
-        return (Weapon)uVar4;
+      iVar2 = I_stricmp(param_1,pcVar1);
+      if (iVar2 == 0) {
+        return (Weapon)(uVar3 & 0xff);
       }
     }
-    WVar5.data = 1;
-    uVar4 = 1;
+    WVar4.data = 1;
+    uVar3 = 1;
     if (1 < bg_lastParsedWeaponIndex + 1) {
       do {
-        pcVar2 = BG_GetWeaponNameComplete(WVar5,false,acStack_430,0x400);
-        iVar3 = I_stricmp(pcVar1,pcVar2);
-        if (iVar3 == 0) {
-          bg_lastFoundWeaponIndex = uVar4;
-          uVar4 = __restgprlr_27(WVar5.data);
-          return (Weapon)uVar4;
+        pcVar1 = BG_GetWeaponNameComplete(WVar4,false,acStack_430,0x400);
+        iVar2 = I_stricmp(param_1,pcVar1);
+        if (iVar2 == 0) {
+          bg_lastFoundWeaponIndex = uVar3;
+          return (Weapon)WVar4.data;
         }
-        uVar4 = WVar5.data + 1;
-        WVar5.data = uVar4 & 0xff;
-        uVar4 = uVar4 & 0xff;
-      } while (uVar4 < bg_lastParsedWeaponIndex + 1);
+        uVar3 = WVar4.data + 1;
+        WVar4.data = uVar3 & 0xff;
+        uVar3 = uVar3 & 0xff;
+      } while (uVar3 < bg_lastParsedWeaponIndex + 1);
     }
   }
-  uVar4 = __restgprlr_27(0);
-  return (Weapon)uVar4;
+  return (Weapon)0;
 }
 
 
 // 82293738  BG_GetWeaponForName  (bgame/bg_weapons_setup.cpp:812)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "XAssetType": Some values do not have unique names */
 /* WARNING: Enum "nodeType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
@@ -1016,44 +969,37 @@ Weapon BG_FindWeaponForName(char *param_1)
 Weapon BG_GetWeaponForName(char *param_1,_func___cdecl_void_uint *param_2)
 
 {
-  char *pcVar1;
-  int iVar2;
-  Weapon WVar3;
-  XAssetHeader XVar4;
-  uint uVar5;
-  bool bVar6;
+  int iVar1;
+  Weapon WVar2;
+  XAssetHeader XVar3;
+  bool bVar4;
   
-  pcVar1 = (char *)__savegprlr_29(param_1);
-  if ((*pcVar1 == '\0') || (iVar2 = I_stricmp(pcVar1,"none"), iVar2 == 0)) {
-    WVar3.data = 0;
+  if ((*param_1 == '\0') || (iVar1 = I_stricmp(param_1,"none"), iVar1 == 0)) {
+    WVar2.data = 0;
   }
   else {
-    WVar3 = BG_FindWeaponForName(pcVar1);
-    if ((WVar3.data & 0xff) == 0) {
-      if ((*pcVar1 != '\0') &&
-         (XVar4 = DB_FindXAssetHeader(ASSET_TYPE_WEAPON,pcVar1,1),
-         XVar4.physPreset != (PhysPreset *)0x0)) {
-        DB_FindXAssetHeader(ASSET_TYPE_WEAPON,pcVar1,1);
-        iVar2 = DB_IsXAssetDefault(ASSET_TYPE_WEAPON,pcVar1);
-        if (iVar2 != 0) {
-          uVar5 = __restgprlr_29(0);
-          return (Weapon)uVar5;
+    WVar2 = BG_FindWeaponForName(param_1);
+    if ((WVar2.data & 0xff) == 0) {
+      if ((*param_1 != '\0') &&
+         (XVar3 = DB_FindXAssetHeader(ASSET_TYPE_WEAPON,param_1,1),
+         XVar3.physPreset != (PhysPreset *)0x0)) {
+        DB_FindXAssetHeader(ASSET_TYPE_WEAPON,param_1,1);
+        iVar1 = DB_IsXAssetDefault(ASSET_TYPE_WEAPON,param_1);
+        if (iVar1 != 0) {
+          return (Weapon)0;
         }
-        if ((((*pcVar1 != 'i') || (pcVar1[1] != 'w')) || (pcVar1[2] != '5')) ||
-           (bVar6 = true, pcVar1[3] != '_')) {
-          bVar6 = false;
+        if ((((*param_1 != 'i') || (param_1[1] != 'w')) || (param_1[2] != '5')) ||
+           (bVar4 = true, param_1[3] != '_')) {
+          bVar4 = false;
         }
-        WVar3 = BG_SetupWeaponDef(XVar4.weapon,param_2,bVar6);
-        uVar5 = __restgprlr_29(WVar3.data);
-        return (Weapon)uVar5;
+        WVar2 = BG_SetupWeaponDef(XVar3.weapon,param_2,bVar4);
+        return (Weapon)WVar2.data;
       }
       Com_DPrintf(0x11,"Couldn\'t find weapon \"%s\"\n");
-      uVar5 = __restgprlr_29(0);
-      return (Weapon)uVar5;
+      return (Weapon)0;
     }
   }
-  uVar5 = __restgprlr_29(WVar3.data);
-  return (Weapon)uVar5;
+  return (Weapon)WVar2.data;
 }
 
 
@@ -1096,53 +1042,46 @@ uint BG_GetNumWeapons(void)
 
 // 82292D78  BG_GetVariableZoomLevelForEquippedWeapon  (bgame/bg_weapons_setup.cpp:874)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
 float BG_GetVariableZoomLevelForEquippedWeapon(playerState_s *param_1,Weapon param_2)
 
 {
   uint uVar1;
-  playerState_s *ppVar2;
-  Weapon WVar3;
-  int iVar4;
-  PlayerEquippedWeaponState *pPVar5;
-  ulonglong uVar7;
-  double dVar8;
+  bool bVar4;
+  int iVar2;
+  PlayerEquippedWeaponState *pPVar3;
   float local_30;
   int local_2c;
   int local_28;
-  bool bVar6;
   
-  uVar7 = (ulonglong)(int)param_2.data;
-  ppVar2 = (playerState_s *)__savegprlr_29(param_1);
   local_30 = (float)(bg_weapon_vzscope_fov1->current).integer;
   local_2c = (bg_weapon_vzscope_fov2->current).integer;
   local_28 = (bg_weapon_vzscope_fov3->current).integer;
-  if ((uVar7 & 0xff) != 0) {
-    if ((ppVar2 == (playerState_s *)0x0) ||
-       (bVar6 = true, ((ppVar2->weapCommon).weapFlags & 0x8000U) == 0)) {
-      bVar6 = false;
+  if ((param_2.data & 0xff) != 0) {
+    if ((param_1 == (playerState_s *)0x0) ||
+       (bVar4 = true, ((param_1->weapCommon).weapFlags & 0x8000U) == 0)) {
+      bVar4 = false;
     }
-    WVar3.data = (uint)uVar7;
-    bVar6 = BG_CanVariableZoom(WVar3,bVar6);
-    if (bVar6) {
-      iVar4 = BG_GetEquippedWeaponIndex(ppVar2,WVar3);
-      if (iVar4 == -1) {
+    bVar4 = BG_CanVariableZoom(param_2,bVar4);
+    if (bVar4) {
+      iVar2 = BG_GetEquippedWeaponIndex(param_1,param_2);
+      if (iVar2 == -1) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_weapons_setup.cpp"
                         ,0x378,0,"%s");
       }
-      pPVar5 = BG_GetEquippedWeaponState(ppVar2,WVar3);
-      uVar1 = pPVar5->zoomLevelIndex;
+      pPVar3 = BG_GetEquippedWeaponState(param_1,param_2);
+      uVar1 = pPVar3->zoomLevelIndex;
       if (2 < uVar1) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_weapons_setup.cpp"
                         ,0x37a,0,
                         "zoomLvl doesn\'t index WEAPON_VZSCOPE_MAXFOVS\n\t%i not in [0, %i)");
       }
-      dVar8 = (double)__restgprlr_29((double)(&local_30)[uVar1]);
-      return (float)dVar8;
+      return (&local_30)[uVar1];
     }
   }
-  dVar8 = (double)__restgprlr_29(0);
-  return (float)dVar8;
+  return 0.0;
 }
 

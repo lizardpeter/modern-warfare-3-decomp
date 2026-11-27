@@ -2,13 +2,15 @@
 
 // 82911048  getInstance  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdcontainers/bdsingleton.inl:11)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 bdSingletonRegistryImpl * bdSingleton<bdSingletonRegistryImpl>::getInstance(void)
 
 {
-  bdSingletonRegistryImpl *pbVar1;
-  bool bVar2;
+  bdSingletonRegistryImpl *this;
+  bool bVar1;
   
-  __savegprlr_29();
   if (m_instance == (bdSingletonRegistryImpl *)0x0) {
     m_instance = bdMemory::allocate(0x14);
     if (m_instance == (bdSingletonRegistryImpl *)0x0) {
@@ -28,9 +30,9 @@ bdSingletonRegistryImpl * bdSingleton<bdSingletonRegistryImpl>::getInstance(void
       }
     }
     else {
-      pbVar1 = getInstance();
-      bVar2 = bdSingletonRegistryImpl::add(pbVar1,destroyInstance);
-      if (!bVar2) {
+      this = getInstance();
+      bVar1 = bdSingletonRegistryImpl::add(this,destroyInstance);
+      if (!bVar1) {
         if (alwaysfails == 0) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdCore/bdContainers/bdSingleton.inl"
                           ,0x14,0,"error");
@@ -42,8 +44,7 @@ bdSingletonRegistryImpl * bdSingleton<bdSingletonRegistryImpl>::getInstance(void
       }
     }
   }
-  pbVar1 = (bdSingletonRegistryImpl *)__restgprlr_29(m_instance);
-  return pbVar1;
+  return m_instance;
 }
 
 
@@ -125,63 +126,59 @@ bdQueue<bdPendingBufferTransfer>::peek(bdQueue<bdPendingBufferTransfer> *this)
 
 // 82910300  bdByteBuffer  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdcontainers/bdbytebuffer.inl:36)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 bdByteBuffer * __thiscall
 bdByteBuffer::bdByteBuffer(bdByteBuffer *this,void *param_1,uint param_2,bool param_3)
 
 {
-  undefined4 *puVar1;
-  void *pvVar2;
-  bdByteBuffer *pbVar3;
-  ulonglong uVar4;
-  undefined4 *puStack00000014;
+  uchar *puVar1;
+  bdByteBuffer *pbStack00000014;
   
-  uVar4 = (ulonglong)(int)param_2;
-  puVar1 = (undefined4 *)__savegprlr_28(this,param_1);
-  puVar1[1] = 0;
-  puVar1[2] = (uint)uVar4;
-  *(bool *)(puVar1 + 6) = param_3;
-  *(bool *)((int)puVar1 + 0x19) = param_3;
-  puVar1[3] = 0;
-  *(undefined1 *)((int)puVar1 + 0x1a) = 0;
-  *puVar1 = &_vftable_;
-  puStack00000014 = puVar1;
-  if ((uVar4 & 0xffffffff) != 0) {
-    pvVar2 = bdMemory::allocate((uint)uVar4);
-    puVar1[3] = pvVar2;
-    *(undefined1 *)((int)puVar1 + 0x1a) = 1;
+  this->_padding_ = 0;
+  this->m_size = param_2;
+  this->m_typeChecked = param_3;
+  this->m_typeCheckedCopy = param_3;
+  this->m_data = (uchar *)0x0;
+  this->m_allocatedData = false;
+  this->_padding_ = (int)&_vftable_;
+  if (param_2 != 0) {
+    pbStack00000014 = this;
+    puVar1 = bdMemory::allocate(param_2);
+    this->m_data = puVar1;
+    this->m_allocatedData = true;
     memcpy();
   }
-  puVar1[5] = puVar1[3];
-  puVar1[4] = puVar1[3];
-  pbVar3 = (bdByteBuffer *)__restgprlr_28(puVar1);
-  return pbVar3;
+  this->m_writePtr = this->m_data;
+  this->m_readPtr = this->m_data;
+  return this;
 }
 
 
 // 82911188  clear  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdcontainers/bdlinkedlist.inl:39)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void __thiscall
 bdLinkedList<bdPendingBufferTransfer>::clear(bdLinkedList<bdPendingBufferTransfer> *this)
 
 {
-  bdPendingBufferTransfer *this_00;
-  int iVar1;
-  int *piVar2;
+  Node *this_00;
+  Node *pNVar1;
   
-  piVar2 = (int *)__savegprlr_29(this);
-  while( true ) {
-    if (*piVar2 == 0) break;
-    this_00 = (bdPendingBufferTransfer *)*piVar2;
-    iVar1 = this_00[1]._padding_;
-    if (this_00 != (bdPendingBufferTransfer *)0x0) {
-      bdPendingBufferTransfer::~bdPendingBufferTransfer(this_00);
+  while (this->m_head != (Node *)0x0) {
+    this_00 = this->m_head;
+    pNVar1 = this_00->m_next;
+    if (this_00 != (Node *)0x0) {
+      bdPendingBufferTransfer::~bdPendingBufferTransfer(&this_00->m_data);
       bdMemory::deallocate(this_00);
     }
-    *piVar2 = iVar1;
+    this->m_head = pNVar1;
   }
-  piVar2[1] = 0;
-  piVar2[2] = 0;
-  __restgprlr_29();
+  this->m_tail = (Node *)0x0;
+  this->m_size = 0;
   return;
 }
 
@@ -507,37 +504,40 @@ bdReference<bdByteBuffer>::operator=<bdTaskByteBuffer>
 
 // 829109D8  increaseCapacity  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdcontainers/bdfastarray.inl:113)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void __thiscall
 bdFastArray<void_(__cdecl*)(void)>::increaseCapacity
           (bdFastArray<void_(__cdecl*)(void)> *this,uint param_1)
 
 {
-  undefined4 *puVar1;
-  void *pvVar2;
+  _func___cdecl_void **pp_Var1;
+  ulonglong uVar2;
   ulonglong uVar3;
-  ulonglong uVar4;
   
-  uVar3 = (ulonglong)(int)param_1;
-  puVar1 = (undefined4 *)__savegprlr_29(this);
-  uVar4 = (ulonglong)(uint)puVar1[1];
-  if ((uVar3 & 0xffffffff) <= uVar4) {
-    uVar3 = uVar4;
+  uVar3 = (ulonglong)this->m_capacity;
+  uVar2 = (longlong)(int)param_1;
+  if (param_1 <= uVar3) {
+    uVar2 = uVar3;
   }
-  uVar4 = uVar4 + uVar3;
-  pvVar2 = (void *)0x0;
-  if ((uVar4 != 0) &&
-     (pvVar2 = bdMemory::allocate((uint)((uVar4 & 0xffffffff) << 2)), puVar1[2] != 0)) {
+  uVar3 = uVar3 + uVar2;
+  pp_Var1 = (_func___cdecl_void **)0x0;
+  if ((uVar3 != 0) &&
+     (pp_Var1 = bdMemory::allocate((uint)((uVar3 & 0xffffffff) << 2)), this->m_size != 0)) {
     memcpy();
   }
-  bdMemory::deallocate((void *)*puVar1);
-  *puVar1 = pvVar2;
-  puVar1[1] = (int)uVar4;
-  __restgprlr_29();
+  bdMemory::deallocate(this->m_data);
+  this->m_data = pp_Var1;
+  this->m_capacity = (uint)uVar3;
   return;
 }
 
 
 // 829113A8  bdLobbyConnection  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdlobbyconnection.cpp:134)
+
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 
 bdLobbyConnection * __thiscall
 bdLobbyConnection::bdLobbyConnection
@@ -545,42 +545,38 @@ bdLobbyConnection::bdLobbyConnection
           bdLobbyConnectionListener *param_4)
 
 {
-  undefined4 *puVar1;
-  bdLobbyConnection *pbVar2;
   bdInetAddr *this_00;
-  undefined4 *puStack00000014;
+  bdLobbyConnection *pbStack00000014;
   bdInetAddr *pbStack0000001c;
   
   this_00 = param_1._4_4_;
-  puVar1 = (undefined4 *)__savegprlr_27(this);
-  puVar1[1] = 0;
-  *puVar1 = &_vftable_;
-  puVar1[2] = 0;
-  puVar1[3] = param_2;
-  puVar1[4] = param_3;
-  puVar1[5] = 0;
-  puVar1[7] = 0;
-  *(undefined1 *)(puVar1 + 8) = 0;
-  puVar1[9] = 0;
-  puVar1[10] = 0;
-  puVar1[0xb] = 0;
-  puVar1[0xc] = 0;
-  puVar1[0xd] = 0;
-  puVar1[0xe] = 0;
-  puStack00000014 = puVar1;
+  this->_padding_ = 0;
+  this->_padding_ = (int)&_vftable_;
+  (this->m_addr).m_ptr = (bdCommonAddr *)0x0;
+  this->m_maxSendMessageSize = param_2;
+  this->m_maxRecvMessageSize = param_3;
+  this->m_recvState = BD_READ_INIT;
+  this->m_recvCount = 0;
+  this->m_recvEncryptType = '\0';
+  this->m_messageSize = 0;
+  (this->m_recvMessage).m_ptr = (bdTaskByteBuffer *)0x0;
+  (this->m_recvTransfer).m_ptr = (bdPendingBufferTransfer *)0x0;
+  (this->m_outgoingBuffers).m_list.m_head = (Node *)0x0;
+  (this->m_outgoingBuffers).m_list.m_tail = (Node *)0x0;
+  (this->m_outgoingBuffers).m_list.m_size = 0;
+  pbStack00000014 = this;
   pbStack0000001c = this_00;
-  bdStreamSocket::bdStreamSocket((bdStreamSocket *)(puVar1 + 0xf));
-  puVar1[0x11] = param_4;
-  bdAddr::bdAddr((bdAddr *)(puVar1 + 0x14));
-  bdStopwatch::bdStopwatch((bdStopwatch *)(puVar1 + 0x16));
-  bdStopwatch::bdStopwatch((bdStopwatch *)(puVar1 + 0x18));
-  bdStopwatch::bdStopwatch((bdStopwatch *)(puVar1 + 0x1a));
-  *(<unnamed_type_inUn> *)(puVar1 + 0x14) = (this_00->m_addr).inUn;
-  *(<unnamed_type_inUn> *)(puVar1 + 0x15) = this_00[1].m_addr.inUn;
-  bdStreamSocket::create((bdStreamSocket *)(puVar1 + 0xf),false);
+  bdStreamSocket::bdStreamSocket(&this->m_socket);
+  this->m_connectionListener = param_4;
+  bdAddr::bdAddr(&this->m_serverAddr);
+  bdStopwatch::bdStopwatch(&this->m_keepAliveTimer);
+  bdStopwatch::bdStopwatch(&this->m_lastReceivedTimer);
+  bdStopwatch::bdStopwatch(&this->m_asyncConnectTimer);
+  (this->m_serverAddr).m_address.m_addr.inUn = (this_00->m_addr).inUn;
+  *(<unnamed_type_inUn> *)&(this->m_serverAddr).m_port = this_00[1].m_addr.inUn;
+  bdStreamSocket::create(&this->m_socket,false);
   bdInetAddr::~bdInetAddr(this_00);
-  pbVar2 = (bdLobbyConnection *)__restgprlr_27(puVar1);
-  return pbVar2;
+  return this;
 }
 
 
@@ -600,27 +596,25 @@ void __thiscall bdSingletonRegistryImpl::~bdSingletonRegistryImpl(bdSingletonReg
 
 // 829115F0  ~bdLobbyConnection  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdlobbyconnection.cpp:155)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void __thiscall bdLobbyConnection::~bdLobbyConnection(bdLobbyConnection *this)
 
 {
-  bdReferencable *this_00;
-  bdReferencable *pbStack00000014;
+  bdLobbyConnection *pbStack00000014;
   
-  this_00 = (bdReferencable *)__savegprlr_29(this);
-  this_00->_padding_ = (int)&_vftable_;
-  pbStack00000014 = this_00;
-  bdStreamSocket::close((bdStreamSocket *)&this_00[7].m_refCount);
-  bdInetAddr::~bdInetAddr((bdInetAddr *)(this_00 + 10));
-  bdStreamSocket::~bdStreamSocket((bdStreamSocket *)&this_00[7].m_refCount);
-  bdLinkedList<bdPendingBufferTransfer>::clear
-            ((bdLinkedList<bdPendingBufferTransfer> *)(this_00 + 6));
-  bdReference<bdPendingBufferTransfer>::~bdReference<bdPendingBufferTransfer>
-            ((bdReference<bdPendingBufferTransfer> *)&this_00[5].m_refCount);
-  bdReference<bdTaskByteBuffer>::~bdReference<bdTaskByteBuffer>
-            ((bdReference<bdTaskByteBuffer> *)(this_00 + 5));
-  bdReference<bdCommonAddr>::~bdReference<bdCommonAddr>((bdReference<bdCommonAddr> *)(this_00 + 1));
-  bdReferencable::~bdReferencable(this_00);
-  __restgprlr_29();
+  this->_padding_ = (int)&_vftable_;
+  pbStack00000014 = this;
+  bdStreamSocket::close(&this->m_socket);
+  bdInetAddr::~bdInetAddr(&(this->m_serverAddr).m_address);
+  bdStreamSocket::~bdStreamSocket(&this->m_socket);
+  bdLinkedList<bdPendingBufferTransfer>::clear(&(this->m_outgoingBuffers).m_list);
+  bdReference<bdPendingBufferTransfer>::~bdReference<bdPendingBufferTransfer>(&this->m_recvTransfer)
+  ;
+  bdReference<bdTaskByteBuffer>::~bdReference<bdTaskByteBuffer>(&this->m_recvMessage);
+  bdReference<bdCommonAddr>::~bdReference<bdCommonAddr>(&this->m_addr);
+  bdReferencable::~bdReferencable((bdReferencable *)this);
   return;
 }
 
@@ -636,6 +630,8 @@ Status __thiscall bdLobbyConnection::getStatus(bdLobbyConnection *this)
 
 // 82911BC8  sendTask  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdlobbyconnection.cpp:169)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Type propagation algorithm not settling */
 
 bool __thiscall
@@ -645,92 +641,83 @@ bdLobbyConnection::sendTask
 {
   uint uVar1;
   int iVar2;
-  bdLobbyConnection *this_00;
   uchar *puVar3;
   bool bVar4;
-  undefined1 uVar5;
-  bdReference<bdTaskByteBuffer> *this_01;
-  ulonglong uVar6;
-  undefined1 *puVar7;
-  int iVar8;
-  longlong lVar9;
-  uint *puVar10;
-  longlong lVar11;
+  bool bVar5;
+  undefined1 *puVar6;
+  int iVar7;
+  uint *puVar8;
   char in_RESERVE;
-  bdReference<bdTaskByteBuffer> *pbStack0000001c;
+  longlong lVar9;
+  bdReference<bdTaskByteBuffer> bStack0000001c;
   undefined1 local_60 [4];
   uint local_5c;
-  bdTaskByteBuffer *local_58;
+  uint local_58;
   undefined1 auStack_54 [3];
   undefined1 local_51 [81];
   
-  uVar6 = (ulonglong)(int)param_2;
-  lVar11 = (longlong)(int)param_1.m_ptr;
-  this_00 = (bdLobbyConnection *)__savegprlr_26(this,lVar11,uVar6,param_3);
-  this_01 = (bdReference<bdTaskByteBuffer> *)lVar11;
-  lVar11 = 0;
-  pbStack0000001c = this_01;
-  if ((ulonglong)this_00->m_maxSendMessageSize < (uVar6 & 0xffffffff)) {
+  bVar4 = false;
+  bStack0000001c.m_ptr = param_1.m_ptr;
+  if (this->m_maxSendMessageSize < param_2) {
     bdLogMessage(BD_LOG_ERROR,"err/","bdLobby/bdLobbyConnection",
                  "c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdLobby\\bdLobbyConnection.cpp"
                  ,"bdLobbyConnection::sendTask",0xae,"Message too big for outgoing buffer");
     goto LAB_82911d54;
   }
-  if ((this_00->m_status != BD_CONNECTED) && (this_00->m_status != BD_CONNECTING))
-  goto LAB_82911d54;
-  local_58 = (bdTaskByteBuffer *)((int)uVar6 + 1);
-  bdTaskByteBuffer::setHeaderSize(this_01->m_ptr,5);
-  puVar3 = bdTaskByteBuffer::getHeaderStart(this_01->m_ptr);
+  if ((this->m_status != BD_CONNECTED) && (this->m_status != BD_CONNECTING)) goto LAB_82911d54;
+  local_58 = param_2 + 1;
+  bdTaskByteBuffer::setHeaderSize((bdTaskByteBuffer *)(param_1.m_ptr)->_padding_,5);
+  puVar3 = bdTaskByteBuffer::getHeaderStart((bdTaskByteBuffer *)(param_1.m_ptr)->_padding_);
   local_5c = 0;
-  iVar8 = 0;
-  puVar7 = (undefined1 *)((int)local_51 + 1);
-  lVar11 = 4;
+  iVar7 = 0;
+  puVar6 = (undefined1 *)((int)local_51 + 1);
+  lVar9 = 4;
   do {
-    iVar2 = iVar8 + -4;
-    iVar8 = iVar8 + 1;
-    puVar7 = puVar7 + -1;
-    *puVar7 = auStack_54[iVar2];
-    lVar11 = lVar11 + -1;
-  } while (lVar11 != 0);
+    iVar2 = iVar7 + -4;
+    iVar7 = iVar7 + 1;
+    puVar6 = puVar6 + -1;
+    *puVar6 = auStack_54[iVar2];
+    lVar9 = lVar9 + -1;
+  } while (lVar9 != 0);
   bVar4 = bdBytePacker::appendBuffer(puVar3,5,0,&local_5c,auStack_54,4);
   if (bVar4) {
     local_60[0] = 0;
-    bVar4 = bdBytePacker::appendBuffer(puVar3,5,local_5c,&local_5c,local_60,1);
-    lVar11 = 1;
-    if (!bVar4) goto LAB_82911cec;
+    bVar5 = bdBytePacker::appendBuffer(puVar3,5,local_5c,&local_5c,local_60,1);
+    bVar4 = true;
+    if (!bVar5) goto LAB_82911cec;
   }
   else {
 LAB_82911cec:
-    lVar11 = 0;
+    bVar4 = false;
   }
-  bVar4 = lVar11 == 0;
-  if (!bVar4) {
-    local_58 = this_01->m_ptr;
-    if (ZEXT48(local_58) != 0) {
-      lVar9 = ZEXT48(local_58) + 4;
+  bVar5 = !bVar4;
+  if (!bVar5) {
+    local_58 = (param_1.m_ptr)->_padding_;
+    if ((ulonglong)local_58 != 0) {
+      lVar9 = (ulonglong)local_58 + 4;
       do {
-        puVar10 = (uint *)lVar9;
+        puVar8 = (uint *)lVar9;
         if (in_RESERVE != '\0') {
-          uVar1 = storeWordConditionalIndexed((ulonglong)*puVar10 + 1,0,lVar9);
-          *puVar10 = uVar1;
-          bVar4 = true;
+          uVar1 = storeWordConditionalIndexed((ulonglong)*puVar8 + 1,0,lVar9);
+          *puVar8 = uVar1;
+          bVar5 = true;
         }
-      } while (!bVar4);
+      } while (!bVar5);
     }
     bdPendingBufferTransfer::bdPendingBufferTransfer
               ((bdPendingBufferTransfer *)((int)local_51 + 1),(bdTaskByteBuffer *)&local_58,
-               (int)uVar6 + 5);
+               param_2 + 5);
     bdLinkedList<bdPendingBufferTransfer>::insertAfter
-              (&(this_00->m_outgoingBuffers).m_list,(this_00->m_outgoingBuffers).m_list.m_tail,
+              (&(this->m_outgoingBuffers).m_list,(this->m_outgoingBuffers).m_list.m_tail,
                (bdPendingBufferTransfer *)((int)local_51 + 1));
     bdPendingBufferTransfer::~bdPendingBufferTransfer
               ((bdPendingBufferTransfer *)((int)local_51 + 1));
   }
 LAB_82911d54:
-  pump(this_00);
-  bdReference<bdTaskByteBuffer>::~bdReference<bdTaskByteBuffer>(this_01);
-  uVar5 = __restgprlr_26(lVar11);
-  return (bool)uVar5;
+  pump(this);
+  bdReference<bdTaskByteBuffer>::~bdReference<bdTaskByteBuffer>
+            ((bdReference<bdTaskByteBuffer> *)param_1.m_ptr);
+  return bVar4;
 }
 
 
@@ -790,83 +777,77 @@ bdFastArray<void_(__cdecl*)(void)>::pushBack
 
 // 829103C0  send  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdlobbyconnection.cpp:307)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 bool __thiscall
 bdLobbyConnection::send(bdLobbyConnection *this,uchar *param_1,uint param_2,bool param_3)
 
 {
   uint uVar1;
-  int *piVar4;
-  bdTaskByteBuffer *pbVar5;
+  bdTaskByteBuffer *pbVar3;
   ulonglong uVar2;
-  undefined8 uVar3;
-  undefined1 uVar6;
-  longlong lVar7;
-  longlong lVar8;
-  longlong lVar9;
-  uint *puVar10;
+  undefined1 uVar4;
+  uint *puVar5;
   char in_RESERVE;
-  byte bVar11;
+  byte bVar6;
   undefined1 local_40 [4];
   bdReference<bdTaskByteBuffer> local_3c [15];
   
-  lVar9 = (longlong)param_3;
-  lVar8 = (longlong)(int)param_2;
-  lVar7 = (longlong)(int)param_1;
-  piVar4 = (int *)__savegprlr_27(this,lVar7,lVar8,lVar9);
   local_3c[0].m_ptr = bdMemory::allocate(0x2c);
-  bVar11 = (local_3c[0].m_ptr == (bdTaskByteBuffer *)0x0) << 1;
+  bVar6 = (local_3c[0].m_ptr == (bdTaskByteBuffer *)0x0) << 1;
   if (local_3c[0].m_ptr == (bdTaskByteBuffer *)0x0) {
     uVar2 = 0;
   }
   else {
-    pbVar5 = bdTaskByteBuffer::bdTaskByteBuffer(local_3c[0].m_ptr,(void *)lVar7,(uint)lVar8,false);
-    uVar2 = (ulonglong)(int)pbVar5;
+    pbVar3 = bdTaskByteBuffer::bdTaskByteBuffer(local_3c[0].m_ptr,param_1,param_2,false);
+    uVar2 = (ulonglong)(int)pbVar3;
   }
   local_3c[0].m_ptr = (bdTaskByteBuffer *)uVar2;
   if ((uVar2 & 0xffffffff) != 0) {
     do {
-      puVar10 = (uint *)(uVar2 + 4);
+      puVar5 = (uint *)(uVar2 + 4);
       if (in_RESERVE != '\0') {
-        uVar1 = storeWordConditionalIndexed((ulonglong)*puVar10 + 1,0,uVar2 + 4);
-        *puVar10 = uVar1;
-        bVar11 = 2;
+        uVar1 = storeWordConditionalIndexed((ulonglong)*puVar5 + 1,0,uVar2 + 4);
+        *puVar5 = uVar1;
+        bVar6 = 2;
       }
-    } while (!(bool)(bVar11 >> 1 & 1));
+    } while (!(bool)(bVar6 >> 1 & 1));
   }
   if ((uVar2 & 0xffffffff) != 0) {
     do {
-      puVar10 = (uint *)(uVar2 + 4);
+      puVar5 = (uint *)(uVar2 + 4);
       if (in_RESERVE != '\0') {
-        uVar1 = storeWordConditionalIndexed((ulonglong)*puVar10 + 1,0,uVar2 + 4);
-        *puVar10 = uVar1;
-        bVar11 = 2;
+        uVar1 = storeWordConditionalIndexed((ulonglong)*puVar5 + 1,0,uVar2 + 4);
+        *puVar5 = uVar1;
+        bVar6 = 2;
       }
-    } while (!(bool)(bVar11 >> 1 & 1));
+    } while (!(bool)(bVar6 >> 1 & 1));
   }
-  uVar3 = (**(code **)(*piVar4 + 4))(piVar4,local_40,lVar8,lVar9);
+  uVar4 = (**(code **)(this->_padding_ + 4))(this,local_40,param_2,param_3);
   bdReference<bdTaskByteBuffer>::~bdReference<bdTaskByteBuffer>(local_3c);
-  uVar6 = __restgprlr_27(uVar3);
-  return (bool)uVar6;
+  return (bool)uVar4;
 }
 
 
 // 82911DC8  sendRaw  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdlobbyconnection.cpp:315)
+
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 
 void __thiscall
 bdLobbyConnection::sendRaw(bdLobbyConnection *this,bdReference<bdByteBuffer> param_1,uint param_2)
 
 {
   uint uVar1;
-  bdLobbyConnection *this_00;
   longlong lVar2;
   uint *puVar3;
   char in_RESERVE;
   byte in_cr0;
-  bdByteBuffer *pbStack0000001c;
+  bdReference<bdByteBuffer> bStack0000001c;
   uint local_50 [4];
   bdPendingBufferTransfer abStack_40 [3];
   
-  this_00 = (bdLobbyConnection *)__savegprlr_29(this);
   local_50[0] = (param_1.m_ptr)->_padding_;
   if ((ulonglong)local_50[0] != 0) {
     lVar2 = (ulonglong)local_50[0] + 4;
@@ -879,20 +860,21 @@ bdLobbyConnection::sendRaw(bdLobbyConnection *this,bdReference<bdByteBuffer> par
       }
     } while (!(bool)(in_cr0 >> 1 & 1));
   }
-  pbStack0000001c = param_1.m_ptr;
+  bStack0000001c.m_ptr = param_1.m_ptr;
   bdPendingBufferTransfer::bdPendingBufferTransfer(abStack_40,(bdByteBuffer *)local_50,param_2);
   bdLinkedList<bdPendingBufferTransfer>::insertAfter
-            (&(this_00->m_outgoingBuffers).m_list,(this_00->m_outgoingBuffers).m_list.m_tail,
-             abStack_40);
-  pump(this_00);
+            (&(this->m_outgoingBuffers).m_list,(this->m_outgoingBuffers).m_list.m_tail,abStack_40);
+  pump(this);
   bdPendingBufferTransfer::~bdPendingBufferTransfer(abStack_40);
   bdReference<bdByteBuffer>::~bdReference<bdByteBuffer>((bdReference<bdByteBuffer> *)param_1.m_ptr);
-  __restgprlr_29();
   return;
 }
 
 
 // 82910E48  insertAfter  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdcore/bdcontainers/bdlinkedlist.inl:346)
+
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 
 void __thiscall
 bdLinkedList<bdPendingBufferTransfer>::insertAfter
@@ -900,56 +882,53 @@ bdLinkedList<bdPendingBufferTransfer>::insertAfter
           bdPendingBufferTransfer *param_2)
 
 {
-  int iVar1;
-  int iVar2;
-  undefined4 *puVar3;
-  bdPendingBufferTransfer *pbVar4;
-  ulonglong uVar5;
+  Node *pNVar1;
+  bdPendingBufferTransfer *this_00;
+  Node *pNVar2;
   
-  uVar5 = (ulonglong)(int)param_1;
-  puVar3 = (undefined4 *)__savegprlr_29(this);
-  pbVar4 = bdMemory::allocate(0x1c);
-  if (pbVar4 == (bdPendingBufferTransfer *)0x0) {
-    pbVar4 = (bdPendingBufferTransfer *)0x0;
+  this_00 = bdMemory::allocate(0x1c);
+  if (this_00 == (bdPendingBufferTransfer *)0x0) {
+    pNVar2 = (Node *)0x0;
   }
   else {
-    pbVar4 = bdPendingBufferTransfer::bdPendingBufferTransfer(pbVar4,param_2);
+    pNVar2 = (Node *)bdPendingBufferTransfer::bdPendingBufferTransfer(this_00,param_2);
   }
-  if ((uVar5 & 0xffffffff) == 0) {
-    pbVar4[1]._padding_ = 0;
-    pbVar4[1]._padding_ = puVar3[1];
-    if (puVar3[1] == 0) {
-      *puVar3 = pbVar4;
+  if (param_1 == (void *)0x0) {
+    pNVar2->m_next = (Node *)0x0;
+    pNVar2->m_prev = this->m_tail;
+    if (this->m_tail == (Node *)0x0) {
+      this->m_head = pNVar2;
     }
     else {
-      *(bdPendingBufferTransfer **)(puVar3[1] + 0x14) = pbVar4;
+      this->m_tail->m_next = pNVar2;
     }
-    puVar3[1] = pbVar4;
+    this->m_tail = pNVar2;
   }
   else {
-    iVar2 = (int)uVar5;
-    iVar1 = *(int *)(iVar2 + 0x14);
-    pbVar4[1]._padding_ = iVar2;
-    pbVar4[1]._padding_ = iVar1;
-    if (*(int *)(iVar2 + 0x14) == 0) {
-      if ((uVar5 & 0xffffffff) != (ulonglong)(uint)puVar3[1]) {
+    pNVar1 = *(Node **)((int)param_1 + 0x14);
+    pNVar2->m_prev = param_1;
+    pNVar2->m_next = pNVar1;
+    if (*(int *)((int)param_1 + 0x14) == 0) {
+      if (param_1 != this->m_tail) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdCore/bdContainers/bdLinkedList.inl"
                         ,0x16b,0,"%s\n\t%s");
       }
-      puVar3[1] = pbVar4;
+      this->m_tail = pNVar2;
     }
     else {
-      *(bdPendingBufferTransfer **)(*(int *)(iVar2 + 0x14) + 0x18) = pbVar4;
+      *(Node **)(*(int *)((int)param_1 + 0x14) + 0x18) = pNVar2;
     }
-    *(bdPendingBufferTransfer **)(iVar2 + 0x14) = pbVar4;
+    *(Node **)((int)param_1 + 0x14) = pNVar2;
   }
-  puVar3[2] = puVar3[2] + 1;
-  __restgprlr_29();
+  this->m_size = this->m_size + 1;
   return;
 }
 
 
 // 829123F0  getMessageToDispatch  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdlobbyconnection.cpp:347)
+
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
 
 bool __thiscall
 bdLobbyConnection::getMessageToDispatch
@@ -957,284 +936,273 @@ bdLobbyConnection::getMessageToDispatch
 
 {
   uint uVar1;
-  bdLobbyConnection *this_00;
   bool bVar3;
   uchar *puVar2;
   bool bVar4;
-  undefined1 uVar5;
   uchar local_60 [4];
   uint local_5c [23];
   
-  this_00 = (bdLobbyConnection *)__savegprlr_23(this);
-  if (this_00->m_status == BD_DISCONNECTED) {
+  if (this->m_status == BD_DISCONNECTED) {
     bVar4 = false;
   }
   else {
-    pump(this_00);
+    pump(this);
     bVar4 = false;
-    if (((this_00->m_status == BD_CONNECTED) && (bVar3 = recvMessageData(this_00), bVar3)) &&
-       (this_00->m_recvState == BD_READ_COMPLETE)) {
+    if (((this->m_status == BD_CONNECTED) && (bVar3 = recvMessageData(this), bVar3)) &&
+       (this->m_recvState == BD_READ_COMPLETE)) {
       bVar4 = true;
-      puVar2 = bdTaskByteBuffer::getHeaderStart((this_00->m_recvMessage).m_ptr);
-      uVar1 = this_00->m_messageSize;
+      puVar2 = bdTaskByteBuffer::getHeaderStart((this->m_recvMessage).m_ptr);
+      uVar1 = this->m_messageSize;
       local_5c[0] = 0;
-      if (this_00->m_recvEncryptType == '\x01') {
+      if (this->m_recvEncryptType == '\x01') {
         if (alwaysfails == 0) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdLobby\\bdLobbyConnection.cpp"
                           ,0x193,0,"Should never be called.");
         }
       }
       else {
-        if (((this_00->m_recvMessage).m_ptr)->_padding_ != uVar1 - 2) {
+        if (((this->m_recvMessage).m_ptr)->_padding_ != uVar1 - 2) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdLobby\\bdLobbyConnection.cpp"
                           ,0x19b,0,"%s\n\t%s");
         }
         bVar4 = bdBytePacker::removeBuffer(puVar2,uVar1 - 1,0,local_5c,local_60,1);
         if (bVar4) {
           *param_1 = local_60[0];
-          bdReference<bdByteBuffer>::operator=<bdTaskByteBuffer>(param_2,&this_00->m_recvMessage);
+          bdReference<bdByteBuffer>::operator=<bdTaskByteBuffer>(param_2,&this->m_recvMessage);
         }
       }
-      this_00->m_recvState = BD_READ_INIT;
+      this->m_recvState = BD_READ_INIT;
     }
   }
-  uVar5 = __restgprlr_23(bVar4);
-  return (bool)uVar5;
+  return bVar4;
 }
 
 
 // 82912160  recvMessageData  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdlobbyconnection.cpp:428)
+
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
 
 bool __thiscall bdLobbyConnection::recvMessageData(bdLobbyConnection *this)
 
 {
   Status SVar1;
   bdPendingBufferTransfer *pbVar2;
-  bdLobbyConnection *this_00;
   uint uVar3;
   uint uVar4;
   bdLogMessageType bVar5;
-  bool bVar6;
-  undefined1 uVar7;
-  char *pcVar8;
-  char *pcVar9;
-  RecvState RVar10;
+  char *pcVar6;
+  char *pcVar7;
+  RecvState RVar8;
   
-  this_00 = (bdLobbyConnection *)__savegprlr_22(this);
-  SVar1 = this_00->m_status;
+  SVar1 = this->m_status;
   do {
     if (SVar1 != BD_CONNECTED) {
-      bVar6 = false;
-LAB_829123e4:
-      uVar7 = __restgprlr_22(bVar6);
-      return (bool)uVar7;
+      return false;
     }
-    RVar10 = this_00->m_recvState;
-    if (RVar10 == BD_READ_INIT) {
-      this_00->m_recvCount = 0;
-      this_00->m_recvEncryptType = '\0';
-      this_00->m_messageSize = 0;
-      bdReference<bdTaskByteBuffer>::operator=(&this_00->m_recvMessage,(bdTaskByteBuffer *)0x0);
+    RVar8 = this->m_recvState;
+    if (RVar8 == BD_READ_INIT) {
+      this->m_recvCount = 0;
+      this->m_recvEncryptType = '\0';
+      this->m_messageSize = 0;
+      bdReference<bdTaskByteBuffer>::operator=(&this->m_recvMessage,(bdTaskByteBuffer *)0x0);
       bdReference<bdPendingBufferTransfer>::operator=
-                (&this_00->m_recvTransfer,(bdPendingBufferTransfer *)0x0);
-      RVar10 = BD_READ_INIT;
-      this_00->m_recvState = BD_READ_SIZE;
+                (&this->m_recvTransfer,(bdPendingBufferTransfer *)0x0);
+      RVar8 = BD_READ_INIT;
+      this->m_recvState = BD_READ_SIZE;
 LAB_82912260:
-      uVar3 = recvMessageSize(this_00);
+      uVar3 = recvMessageSize(this);
 LAB_8291226c:
       if (0 < (int)uVar3) {
-        bdStopwatch::reset(&this_00->m_lastReceivedTimer);
-        bdStopwatch::start(&this_00->m_lastReceivedTimer);
+        bdStopwatch::reset(&this->m_lastReceivedTimer);
+        bdStopwatch::start(&this->m_lastReceivedTimer);
       }
     }
     else {
-      if (RVar10 == BD_READ_SIZE) goto LAB_82912260;
-      if (RVar10 < BD_READ_MESSAGE) {
-        uVar3 = recvEncryptType(this_00);
+      if (RVar8 == BD_READ_SIZE) goto LAB_82912260;
+      if (RVar8 < BD_READ_MESSAGE) {
+        uVar3 = recvEncryptType(this);
         goto LAB_8291226c;
       }
-      if (RVar10 != BD_READ_MESSAGE) {
-        bVar6 = true;
-        goto LAB_829123e4;
+      if (RVar8 != BD_READ_MESSAGE) {
+        return true;
       }
-      if (((this_00->m_recvTransfer).m_ptr)->m_txAvail == 0) {
+      if (((this->m_recvTransfer).m_ptr)->m_txAvail == 0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdLobby\\bdLobbyConnection.cpp"
                         ,0x1cc,0,"%s\n\t%s");
       }
-      pbVar2 = (this_00->m_recvTransfer).m_ptr;
-      uVar3 = bdStreamSocket::recv(&this_00->m_socket,pbVar2->m_txPtr,pbVar2->m_txAvail);
+      pbVar2 = (this->m_recvTransfer).m_ptr;
+      uVar3 = bdStreamSocket::recv(&this->m_socket,pbVar2->m_txPtr,pbVar2->m_txAvail);
       if (0 < (int)uVar3) {
-        uVar4 = bdPendingBufferTransfer::updateTransfer((this_00->m_recvTransfer).m_ptr,uVar3);
+        uVar4 = bdPendingBufferTransfer::updateTransfer((this->m_recvTransfer).m_ptr,uVar3);
         if (uVar4 == 0) {
-          this_00->m_recvState = BD_READ_COMPLETE;
+          this->m_recvState = BD_READ_COMPLETE;
         }
         goto LAB_8291226c;
       }
     }
-    if (this_00->m_recvState == RVar10) {
-      if (((((int)uVar3 < 1) && (this_00->m_recvState != BD_READ_COMPLETE)) && (uVar3 != 0xfffffff5)
-          ) && ((uVar3 != 0xfffffff7 && (uVar3 != 0xfffffff8)))) {
-        if (uVar3 == 0xfffffffa) {
-          pcVar9 = "Couldn\'t receive message. Buffer too small?";
-          pcVar8 = "warn/";
-          uVar3 = 0x1fb;
-          bVar5 = BD_LOG_WARNING;
-LAB_829123c4:
-          bdLogMessage(bVar5,pcVar8,"bdLobby/bdLobbyConnection",
-                       "c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdLobby\\bdLobbyConnection.cpp"
-                       ,"bdLobbyConnection::recvMessageData",uVar3,pcVar9);
-        }
-        else if (uVar3 == 0xfffffffb) {
+    if (this->m_recvState == RVar8) {
+      if ((((0 < (int)uVar3) || (this->m_recvState == BD_READ_COMPLETE)) || (uVar3 == 0xfffffff5))
+         || ((uVar3 == 0xfffffff7 || (uVar3 == 0xfffffff8)))) goto LAB_829123d4;
+      if (uVar3 == 0xfffffffa) {
+        pcVar7 = "Couldn\'t receive message. Buffer too small?";
+        pcVar6 = "warn/";
+        uVar3 = 0x1fb;
+        bVar5 = BD_LOG_WARNING;
+      }
+      else {
+        if (uVar3 == 0xfffffffb) {
           bdLogMessage(BD_LOG_INFO,"info/","bdLobby/bdLobbyConnection",
                        "c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdLobby\\bdLobbyConnection.cpp"
                        ,"bdLobbyConnection::recvMessageData",0x1f6,
                        "Received \'connection reset\'. Closing connection.");
-          close(this_00);
+          close(this);
+          goto LAB_829123d4;
         }
-        else if (uVar3 != 0xfffffffe) {
-          if (uVar3 == 0) {
-            this_00->m_status = BD_DISCONNECTING;
-            callListenersDisconnect(this_00);
-            this_00->m_status = BD_DISCONNECTED;
-            pcVar9 = "Received \'connection closed\'. Closing connection.";
-            pcVar8 = "info/";
-            uVar3 = 0x1f1;
-            bVar5 = BD_LOG_INFO;
-            goto LAB_829123c4;
-          }
+        if (uVar3 == 0xfffffffe) goto LAB_829123d4;
+        if (uVar3 != 0) {
           bdLogMessage(BD_LOG_WARNING,"warn/","bdLobby/bdLobbyConnection",
                        "c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdLobby\\bdLobbyConnection.cpp"
                        ,"bdLobbyConnection::recvMessageData",0x208,"net error. status : %i");
+          goto LAB_829123d4;
         }
+        this->m_status = BD_DISCONNECTING;
+        callListenersDisconnect(this);
+        this->m_status = BD_DISCONNECTED;
+        pcVar7 = "Received \'connection closed\'. Closing connection.";
+        pcVar6 = "info/";
+        uVar3 = 0x1f1;
+        bVar5 = BD_LOG_INFO;
       }
-      bVar6 = this_00->m_status == BD_CONNECTED;
-      goto LAB_829123e4;
+      bdLogMessage(bVar5,pcVar6,"bdLobby/bdLobbyConnection",
+                   "c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdLobby\\bdLobbyConnection.cpp"
+                   ,"bdLobbyConnection::recvMessageData",uVar3,pcVar7);
+LAB_829123d4:
+      return this->m_status == BD_CONNECTED;
     }
-    SVar1 = this_00->m_status;
+    SVar1 = this->m_status;
   } while( true );
 }
 
 
 // 82911EA8  recvMessageSize  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdlobbyconnection.cpp:529)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 int __thiscall bdLobbyConnection::recvMessageSize(bdLobbyConnection *this)
 
 {
-  bdLobbyConnection *this_00;
   int iVar1;
   uint uVar2;
   uint local_40 [16];
   
-  this_00 = (bdLobbyConnection *)__savegprlr_27(this);
-  if ((this_00->m_messageSize != 0) || (3 < this_00->m_recvCount)) {
+  if ((this->m_messageSize != 0) || (3 < this->m_recvCount)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdLobby\\bdLobbyConnection.cpp"
                     ,0x212,0,"%s\n\t%s");
   }
   iVar1 = bdStreamSocket::recv
-                    (&this_00->m_socket,this_00->m_msgSizeBuffer + this_00->m_recvCount,
-                     4 - this_00->m_recvCount);
-  if ((0 < iVar1) &&
-     (uVar2 = iVar1 + this_00->m_recvCount, this_00->m_recvCount = uVar2, uVar2 == 4)) {
+                    (&this->m_socket,this->m_msgSizeBuffer + this->m_recvCount,4 - this->m_recvCount
+                    );
+  if ((0 < iVar1) && (uVar2 = iVar1 + this->m_recvCount, this->m_recvCount = uVar2, uVar2 == 4)) {
     local_40[0] = 0;
     bdBytePacker::removeBasicType<unsigned_int>
-              (this_00->m_msgSizeBuffer,4,0,local_40,&this_00->m_messageSize);
-    uVar2 = this_00->m_messageSize;
+              (this->m_msgSizeBuffer,4,0,local_40,&this->m_messageSize);
+    uVar2 = this->m_messageSize;
     if (uVar2 == 0) {
-      this_00->m_recvState = BD_READ_INIT;
+      this->m_recvState = BD_READ_INIT;
     }
-    else if (this_00->m_maxRecvMessageSize < uVar2) {
+    else if (this->m_maxRecvMessageSize < uVar2) {
       bdLogMessage(BD_LOG_WARNING,"warn/","bdLobby/bdLobbyConnection",
                    "c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdLobby\\bdLobbyConnection.cpp"
                    ,"bdLobbyConnection::recvMessageSize",0x226,
                    "Message received is too large to fit in the receive buffer.");
-      close(this_00);
+      close(this);
       iVar1 = -0xb;
     }
     else {
-      this_00->m_recvState = BD_READ_ENCRYPT;
+      this->m_recvState = BD_READ_ENCRYPT;
     }
   }
-  iVar1 = __restgprlr_27(iVar1);
   return iVar1;
 }
 
 
 // 82910A50  recvEncryptType  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdlobbyconnection.cpp:565)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
+
 int __thiscall bdLobbyConnection::recvEncryptType(bdLobbyConnection *this)
 
 {
   bool bVar1;
   int iVar2;
-  int iVar3;
   bdReference<bdTaskByteBuffer> *this_00;
-  bdTaskByteBuffer *pbVar4;
-  bdPendingBufferTransfer *pbVar5;
-  char *pcVar6;
-  longlong lVar7;
-  uint *puVar8;
-  uint uVar9;
+  bdTaskByteBuffer *pbVar3;
+  bdPendingBufferTransfer *pbVar4;
+  uchar *puVar5;
+  longlong lVar6;
+  uint *puVar7;
+  uint uVar8;
   char in_RESERVE;
   bdTaskByteBuffer *local_50;
   bdPendingBufferTransfer *local_4c;
   
-  iVar2 = __savegprlr_24(this);
-  pcVar6 = (char *)(iVar2 + 0x20);
-  iVar3 = bdStreamSocket::recv((bdStreamSocket *)(iVar2 + 0x3c),pcVar6,1);
-  if (0 < iVar3) {
-    this_00 = (bdReference<bdTaskByteBuffer> *)(iVar2 + 0x28);
-    if ((*(int *)(iVar2 + 0x28) != 0) || (*(int *)(iVar2 + 0x2c) != 0)) {
+  puVar5 = &this->m_recvEncryptType;
+  iVar2 = bdStreamSocket::recv(&this->m_socket,puVar5,1);
+  if (0 < iVar2) {
+    this_00 = &this->m_recvMessage;
+    if (((this->m_recvMessage).m_ptr != (bdTaskByteBuffer *)0x0) ||
+       ((this->m_recvTransfer).m_ptr != (bdPendingBufferTransfer *)0x0)) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdLobby\\bdLobbyConnection.cpp"
                       ,0x239,0,"%s\n\t%s");
     }
-    if (*pcVar6 != '\0') {
+    if (*puVar5 != '\0') {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdLobby\\bdLobbyConnection.cpp"
                       ,0x23b,0,"%s\n\t%s");
     }
-    uVar9 = 1;
-    if (*pcVar6 == '\x01') {
-      uVar9 = 9;
+    uVar8 = 1;
+    if (*puVar5 == '\x01') {
+      uVar8 = 9;
     }
-    if (*(uint *)(iVar2 + 0x24) < uVar9 + 1) {
+    if (this->m_messageSize < uVar8 + 1) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdLobby\\bdLobbyConnection.cpp"
                       ,0x24d,0,"%s\n\t%s");
     }
     local_50 = bdMemory::allocate(0x2c);
     if (local_50 == (bdTaskByteBuffer *)0x0) {
-      pbVar4 = (bdTaskByteBuffer *)0x0;
+      pbVar3 = (bdTaskByteBuffer *)0x0;
     }
     else {
-      pbVar4 = bdTaskByteBuffer::bdTaskByteBuffer
-                         (local_50,*(int *)(iVar2 + 0x24) - (uVar9 + 1),true);
+      pbVar3 = bdTaskByteBuffer::bdTaskByteBuffer(local_50,this->m_messageSize - (uVar8 + 1),true);
     }
-    bdReference<bdTaskByteBuffer>::operator=(this_00,pbVar4);
-    bdTaskByteBuffer::setHeaderSize(this_00->m_ptr,uVar9);
+    bdReference<bdTaskByteBuffer>::operator=(this_00,pbVar3);
+    bdTaskByteBuffer::setHeaderSize(this_00->m_ptr,uVar8);
     local_4c = bdMemory::allocate(0x14);
     if (local_4c == (bdPendingBufferTransfer *)0x0) {
-      pbVar5 = (bdPendingBufferTransfer *)0x0;
+      pbVar4 = (bdPendingBufferTransfer *)0x0;
     }
     else {
       local_50 = this_00->m_ptr;
       if (ZEXT48(local_50) != 0) {
-        lVar7 = ZEXT48(local_50) + 4;
+        lVar6 = ZEXT48(local_50) + 4;
         bVar1 = false;
         do {
-          puVar8 = (uint *)lVar7;
+          puVar7 = (uint *)lVar6;
           if (in_RESERVE != '\0') {
-            uVar9 = storeWordConditionalIndexed((ulonglong)*puVar8 + 1,0,lVar7);
-            *puVar8 = uVar9;
+            uVar8 = storeWordConditionalIndexed((ulonglong)*puVar7 + 1,0,lVar6);
+            *puVar7 = uVar8;
             bVar1 = true;
           }
         } while (!bVar1);
       }
-      pbVar5 = bdPendingBufferTransfer::bdPendingBufferTransfer
-                         (local_4c,(bdTaskByteBuffer *)&local_50,*(int *)(iVar2 + 0x24) - 1);
+      pbVar4 = bdPendingBufferTransfer::bdPendingBufferTransfer
+                         (local_4c,(bdTaskByteBuffer *)&local_50,this->m_messageSize - 1);
     }
-    bdReference<bdPendingBufferTransfer>::operator=
-              ((bdReference<bdPendingBufferTransfer> *)(iVar2 + 0x2c),pbVar5);
-    *(undefined4 *)(iVar2 + 0x14) = 3;
+    bdReference<bdPendingBufferTransfer>::operator=(&this->m_recvTransfer,pbVar4);
+    this->m_recvState = BD_READ_MESSAGE;
   }
-  iVar2 = __restgprlr_24(iVar3);
   return iVar2;
 }
 
@@ -1250,54 +1218,49 @@ uint __thiscall bdLobbyConnection::getReceiveBufferSize(bdLobbyConnection *this)
 
 // 82911FD0  connect  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdlobbyconnection.cpp:613)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 bool __thiscall bdLobbyConnection::connect(bdLobbyConnection *this,bdAuthInfo *param_1)
 
 {
-  bdLobbyConnection *this_00;
-  bdInetAddr *pbVar2;
-  bdNetImpl *this_01;
-  bdAddr *pbVar3;
-  bdSocketStatusCode bVar4;
-  undefined8 uVar1;
-  undefined1 uVar5;
+  bdInetAddr *pbVar1;
+  bdNetImpl *this_00;
+  bdAddr *pbVar2;
+  bdSocketStatusCode bVar3;
   <unnamed_type_S_un> local_50 [2];
   bdAddr abStack_48 [9];
   
-  this_00 = (bdLobbyConnection *)__savegprlr_26(this,param_1);
-  pbVar3 = &this_00->m_serverAddr;
-  this_00->m_status = BD_CONNECTING;
-  pbVar2 = bdAddr::getAddress(pbVar3);
-  bdInetAddr::toUInt32(pbVar2);
+  pbVar2 = &this->m_serverAddr;
+  this->m_status = BD_CONNECTING;
+  pbVar1 = bdAddr::getAddress(pbVar2);
+  bdInetAddr::toUInt32(pbVar1);
   bdLogMessage(BD_LOG_INFO,"info/","bdLobby/bdLobbyConnection",
                "c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdLobby\\bdLobbyConnection.cpp"
                ,"bdLobbyConnection::connect",0x28b,"Registering = [%x]\n");
-  pbVar2 = bdAddr::getAddress(pbVar3);
-  local_50[0].S_addr = bdInetAddr::toUInt32(pbVar2);
-  this_01 = bdSingleton<bdNetImpl>::getInstance();
-  bdNetImpl::registerSecureAddr(this_01,(in_addr *)&local_50[0].S_un_b,false);
-  pbVar3 = bdAddr::bdAddr(abStack_48,pbVar3);
-  bVar4 = bdStreamSocket::connect(&this_00->m_socket,(bdAddr)(longlong)(int)pbVar3);
-  if (bVar4 == BD_NET_WOULD_BLOCK) {
-    bdStopwatch::reset(&this_00->m_asyncConnectTimer);
-    bdStopwatch::start(&this_00->m_asyncConnectTimer);
+  pbVar1 = bdAddr::getAddress(pbVar2);
+  local_50[0].S_addr = bdInetAddr::toUInt32(pbVar1);
+  this_00 = bdSingleton<bdNetImpl>::getInstance();
+  bdNetImpl::registerSecureAddr(this_00,(in_addr *)&local_50[0].S_un_b,false);
+  pbVar2 = bdAddr::bdAddr(abStack_48,pbVar2);
+  bVar3 = bdStreamSocket::connect(&this->m_socket,(bdAddr)(longlong)(int)pbVar2);
+  if (bVar3 == BD_NET_WOULD_BLOCK) {
+    bdStopwatch::reset(&this->m_asyncConnectTimer);
+    bdStopwatch::start(&this->m_asyncConnectTimer);
   }
   else {
-    if (bVar4 != BD_NET_SUCCESS) {
+    if (bVar3 != BD_NET_SUCCESS) {
       bdLogMessage(BD_LOG_INFO,"info/","bdLobby/bdLobbyConnection",
                    "c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdLobby\\bdLobbyConnection.cpp"
                    ,"bdLobbyConnection::connect",0x2af,
                    "bdLobbyConnection::connect() handling status %d. Closing connection.");
-      close(this_00);
-      uVar1 = 0;
-      goto LAB_829120f0;
+      close(this);
+      return false;
     }
-    this_00->m_status = BD_CONNECTED;
-    callListenersConnect(this_00,true);
+    this->m_status = BD_CONNECTED;
+    callListenersConnect(this,true);
   }
-  uVar1 = 1;
-LAB_829120f0:
-  uVar5 = __restgprlr_26(uVar1);
-  return (bool)uVar5;
+  return true;
 }
 
 
@@ -1427,143 +1390,136 @@ void __thiscall bdLobbyConnection::callListenersDisconnect(bdLobbyConnection *th
 
 // 82911848  pump  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdlobbyconnection.cpp:761)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Switch with 1 destination removed at 0x82911a70 */
 
 bool __thiscall bdLobbyConnection::pump(bdLobbyConnection *this)
 
 {
-  bdLobbyConnection *this_00;
   bool bVar2;
-  bdPendingBufferTransfer *this_01;
+  bdPendingBufferTransfer *this_00;
   uint uVar1;
-  undefined1 uVar3;
-  char *pcVar4;
-  float fVar5;
+  char *pcVar3;
+  float fVar4;
   Status local_30 [12];
   
-  this_00 = (bdLobbyConnection *)__savegprlr_28(this);
-  if (this_00->m_status == BD_CONNECTING) {
-    local_30[0] = this_00->m_status;
-    bVar2 = bdStreamSocket::isWritable(&this_00->m_socket,local_30);
-    if (bVar2) {
-      if (local_30[0] == BD_CONNECTING) {
-        this_00->m_status = BD_CONNECTED;
-        callListenersConnect(this_00,true);
-        goto LAB_82911998;
-      }
-LAB_829118a4:
-      if (local_30[0] == ~BD_CONNECTING) goto LAB_829118f0;
-      bdLogMessage(BD_LOG_WARNING,"warn/","bdLobby/bdLobbyConnection",
-                   "c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdLobby\\bdLobbyConnection.cpp"
-                   ,"bdLobbyConnection::pump",0x307,
-                   "Failed to establish connection due to socket error %d");
-    }
-    else {
-      if (local_30[0] != BD_CONNECTING) goto LAB_829118a4;
-LAB_829118f0:
-      fVar5 = bdStopwatch::getElapsedTimeInSeconds(&this_00->m_asyncConnectTimer);
-      if (fVar5 <= 30.0) goto LAB_82911a34;
-      bdLogMessage(BD_LOG_WARNING,"warn/","bdLobby/bdLobbyConnection",
-                   "c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdLobby\\bdLobbyConnection.cpp"
-                   ,"bdLobbyConnection::pump",0x30d,"Failed to establish connection due to timeout")
-      ;
-    }
-    close(this_00);
-    bVar2 = false;
-  }
-  else {
+  if (this->m_status != BD_CONNECTING) {
 LAB_82911998:
-    while ((this_00->m_status == BD_CONNECTED && ((this_00->m_outgoingBuffers).m_list.m_size != 0)))
-    {
-      this_01 = bdQueue<bdPendingBufferTransfer>::peek(&this_00->m_outgoingBuffers);
-      uVar1 = bdStreamSocket::send(&this_00->m_socket,this_01->m_txPtr,this_01->m_txAvail);
+    while ((this->m_status == BD_CONNECTED && ((this->m_outgoingBuffers).m_list.m_size != 0))) {
+      this_00 = bdQueue<bdPendingBufferTransfer>::peek(&this->m_outgoingBuffers);
+      uVar1 = bdStreamSocket::send(&this->m_socket,this_00->m_txPtr,this_00->m_txAvail);
       if ((longlong)(int)uVar1 < 1) {
         if (((longlong)(int)uVar1 + 0xbU & 0xffffffff) < 0xb) {
-          pcVar4 = "net subsystem error! Closing connection.";
+          pcVar3 = "net subsystem error! Closing connection.";
           uVar1 = 0x32c;
         }
         else {
           uVar1 = 0x350;
-          pcVar4 = "unknown error. Closing connection.";
+          pcVar3 = "unknown error. Closing connection.";
         }
         bdLogMessage(BD_LOG_WARNING,"warn/","bdLobby/bdLobbyConnection",
                      "c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdLobby\\bdLobbyConnection.cpp"
-                     ,"bdLobbyConnection::pump",uVar1,pcVar4);
-        close(this_00);
-        bVar2 = this_00->m_status == BD_CONNECTED;
-        goto LAB_82911a38;
+                     ,"bdLobbyConnection::pump",uVar1,pcVar3);
+        close(this);
+        return this->m_status == BD_CONNECTED;
       }
-      bdStopwatch::start(&this_00->m_keepAliveTimer);
-      uVar1 = bdPendingBufferTransfer::updateTransfer(this_01,uVar1);
+      bdStopwatch::start(&this->m_keepAliveTimer);
+      uVar1 = bdPendingBufferTransfer::updateTransfer(this_00,uVar1);
       if (uVar1 == 0) {
-        bdQueue<bdPendingBufferTransfer>::dequeue(&this_00->m_outgoingBuffers);
+        bdQueue<bdPendingBufferTransfer>::dequeue(&this->m_outgoingBuffers);
       }
     }
-    fVar5 = bdStopwatch::getElapsedTimeInSeconds(&this_00->m_keepAliveTimer);
-    if (40.0 < fVar5) {
+    fVar4 = bdStopwatch::getElapsedTimeInSeconds(&this->m_keepAliveTimer);
+    if (40.0 < fVar4) {
       local_30[0] = BD_NOT_CONNECTED;
-      bdStreamSocket::send(&this_00->m_socket,local_30,4);
-      bdStopwatch::start(&this_00->m_keepAliveTimer);
+      bdStreamSocket::send(&this->m_socket,local_30,4);
+      bdStopwatch::start(&this->m_keepAliveTimer);
     }
-    fVar5 = bdStopwatch::getElapsedTimeInSeconds(&this_00->m_lastReceivedTimer);
-    if (120.0 < fVar5) {
+    fVar4 = bdStopwatch::getElapsedTimeInSeconds(&this->m_lastReceivedTimer);
+    if (fVar4 <= 120.0) {
+      return true;
+    }
+    bdLogMessage(BD_LOG_WARNING,"warn/","bdLobby/bdLobbyConnection",
+                 "c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdLobby\\bdLobbyConnection.cpp"
+                 ,"bdLobbyConnection::pump",0x361,"Connection timed out\n");
+    close(this);
+    return true;
+  }
+  local_30[0] = this->m_status;
+  bVar2 = bdStreamSocket::isWritable(&this->m_socket,local_30);
+  if (bVar2) {
+    if (local_30[0] == BD_CONNECTING) {
+      this->m_status = BD_CONNECTED;
+      callListenersConnect(this,true);
+      goto LAB_82911998;
+    }
+LAB_829118a4:
+    if (local_30[0] != ~BD_CONNECTING) {
       bdLogMessage(BD_LOG_WARNING,"warn/","bdLobby/bdLobbyConnection",
                    "c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdLobby\\bdLobbyConnection.cpp"
-                   ,"bdLobbyConnection::pump",0x361,"Connection timed out\n");
-      close(this_00);
+                   ,"bdLobbyConnection::pump",0x307,
+                   "Failed to establish connection due to socket error %d");
+      goto LAB_829118e0;
     }
-LAB_82911a34:
-    bVar2 = true;
   }
-LAB_82911a38:
-  uVar3 = __restgprlr_28(bVar2);
-  return (bool)uVar3;
+  else if (local_30[0] != BD_CONNECTING) goto LAB_829118a4;
+  fVar4 = bdStopwatch::getElapsedTimeInSeconds(&this->m_asyncConnectTimer);
+  if (fVar4 <= 30.0) {
+    return true;
+  }
+  bdLogMessage(BD_LOG_WARNING,"warn/","bdLobby/bdLobbyConnection",
+               "c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdLobby\\bdLobbyConnection.cpp"
+               ,"bdLobbyConnection::pump",0x30d,"Failed to establish connection due to timeout");
+LAB_829118e0:
+  close(this);
+  return false;
 }
 
 
 // 82910660  bdPendingBufferTransfer  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdlobbyconnection.cpp:881)
+
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 
 bdPendingBufferTransfer * __thiscall
 bdPendingBufferTransfer::bdPendingBufferTransfer
           (bdPendingBufferTransfer *this,bdReference<bdTaskByteBuffer> param_1,uint param_2)
 
 {
-  uint uVar1;
-  undefined4 *puVar2;
+  bdByteBuffer *pbVar1;
+  uint uVar2;
   uchar *puVar3;
-  bdPendingBufferTransfer *pbVar4;
-  longlong lVar5;
-  uint *puVar6;
+  longlong lVar4;
+  uint *puVar5;
   char in_RESERVE;
   byte in_cr0;
-  undefined4 *puStack00000014;
-  bdTaskByteBuffer *pbStack0000001c;
+  bdPendingBufferTransfer *pbStack00000014;
+  bdReference<bdTaskByteBuffer> bStack0000001c;
   
-  puVar2 = (undefined4 *)__savegprlr_28(this);
-  puVar2[1] = 0;
-  *puVar2 = &_vftable_;
-  uVar1 = (param_1.m_ptr)->_padding_;
-  puVar2[2] = uVar1;
-  if ((ulonglong)uVar1 != 0) {
-    lVar5 = (ulonglong)uVar1 + 4;
+  this->_padding_ = 0;
+  this->_padding_ = (int)&_vftable_;
+  pbVar1 = (bdByteBuffer *)(param_1.m_ptr)->_padding_;
+  (this->m_buffer).m_ptr = pbVar1;
+  if (ZEXT48(pbVar1) != 0) {
+    lVar4 = ZEXT48(pbVar1) + 4;
     do {
-      puVar6 = (uint *)lVar5;
+      puVar5 = (uint *)lVar4;
       if (in_RESERVE != '\0') {
-        uVar1 = storeWordConditionalIndexed((ulonglong)*puVar6 + 1,0,lVar5);
-        *puVar6 = uVar1;
+        uVar2 = storeWordConditionalIndexed((ulonglong)*puVar5 + 1,0,lVar4);
+        *puVar5 = uVar2;
         in_cr0 = 2;
       }
     } while (!(bool)(in_cr0 >> 1 & 1));
   }
-  puStack00000014 = puVar2;
-  pbStack0000001c = param_1.m_ptr;
+  pbStack00000014 = this;
+  bStack0000001c.m_ptr = param_1.m_ptr;
   puVar3 = bdTaskByteBuffer::getHeaderStart((bdTaskByteBuffer *)(param_1.m_ptr)->_padding_);
-  puVar2[3] = puVar3;
-  puVar2[4] = -(uint)(puVar3 != (uchar *)0x0) & param_2;
+  this->m_txPtr = puVar3;
+  this->m_txAvail = -(uint)(puVar3 != (uchar *)0x0) & param_2;
   bdReference<bdTaskByteBuffer>::~bdReference<bdTaskByteBuffer>
             ((bdReference<bdTaskByteBuffer> *)param_1.m_ptr);
-  pbVar4 = (bdPendingBufferTransfer *)__restgprlr_28(puVar2);
-  return pbVar4;
+  return this;
 }
 
 

@@ -2,54 +2,52 @@
 
 // 82873B08  SetTileAndDepthClear  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/resolve.cpp:54)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 
-void D3D::SetTileAndDepthClear
-               (CDevice *param_1,_D3DRESOLVE_PARAMETERSEX *param_2,float param_3,ulong param_4)
+void __thiscall
+D3D::SetTileAndDepthClear
+          (D3D *this,CDevice *param_1,_D3DRESOLVE_PARAMETERSEX *param_2,float param_3,ulong param_4)
 
 {
-  D3D *this;
   uint uVar1;
-  ulonglong uVar2;
-  ulonglong in_r6;
-  double extraout_f1;
   uint uStack_3c;
   uint uStack_34;
   
-  uVar2 = (ulonglong)(int)param_2;
-  this = (D3D *)__savegprlr_29((double)param_3,param_1,uVar2,param_4);
-  if ((uVar2 & 0xffffffff) == 0) {
+  if (param_1 == (CDevice *)0x0) {
     if ((*(ushort *)(this + 0x2888) & 1) != 0) {
 LAB_82873bd0:
-      uVar1 = ConvertD32FS8ToD24FS8(this,(float)extraout_f1,(ulong)in_r6);
+      uVar1 = ConvertD32FS8ToD24FS8(this,param_3,param_4);
       uStack_34 = uVar1 >> 0x15;
       goto LAB_82873be0;
     }
-    uStack_3c = (uint)(longlong)(extraout_f1 * 16777215.0);
+    uStack_3c = (uint)(longlong)(param_3 * 16777215.0);
     uVar1 = uStack_3c;
-    uStack_3c = (uint)(longlong)(extraout_f1 * 2047.0);
+    uStack_3c = (uint)(longlong)(param_3 * 2047.0);
     uStack_34 = uStack_3c;
     uStack_3c = uVar1;
   }
   else {
-    if ((g_FormatTable[*(uint *)((int)uVar2 + 8) & 0x3f] & 0xf00) != 0) goto LAB_82873bd0;
-    uStack_3c = (uint)(longlong)(extraout_f1 * 16777215.0);
-    uStack_34 = (uint)(longlong)(extraout_f1 * 2047.0);
+    if ((g_FormatTable[*(uint *)&param_1->field_0x8 & 0x3f] & 0xf00) != 0) goto LAB_82873bd0;
+    uStack_3c = (uint)(longlong)(param_3 * 16777215.0);
+    uStack_34 = (uint)(longlong)(param_3 * 2047.0);
   }
-  uVar1 = uStack_3c << 8 | (ulong)in_r6;
+  uVar1 = uStack_3c << 8 | param_4;
 LAB_82873be0:
   *(uint *)(this + 0x2a2c) = uVar1;
   *(uint *)(this + 0x2a28) =
-       (uint)(in_r6 != (byte)this[0x2942]) << 0xb ^ (~*(uint *)(this + 0x2940) & 0x20) << 6 |
+       (uint)(param_4 != (byte)this[0x2942]) << 0xb ^ (~*(uint *)(this + 0x2940) & 0x20) << 6 |
        uStack_34;
   *(ulonglong *)(this + 0x20) = *(ulonglong *)(this + 0x20) | 0x300;
-  __restgprlr_29();
   return;
 }
 
 
 // 82873C30  ComputeClearColor  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/resolve.cpp:128)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Restarted to delay deadcode elimination for space: stack */
 
 ulong D3D::ComputeClearColor
@@ -58,154 +56,147 @@ ulong D3D::ComputeClearColor
 {
   byte bVar1;
   ulonglong uVar2;
-  ulonglong uVar3;
-  ulong uVar4;
-  ulonglong uVar5;
-  int iVar6;
+  longlong lVar3;
+  int iVar4;
+  int iVar5;
+  uint uVar6;
   int iVar7;
-  ulonglong uVar8;
-  int iVar9;
-  __vector4 *p_Var10;
+  ulong uVar8;
+  uint uVar9;
+  ulong uVar10;
   uint uVar11;
-  undefined8 uVar12;
-  uint uVar13;
-  longlong lVar14;
+  longlong lVar12;
+  double dVar13;
+  double dVar14;
   double dVar15;
   double dVar16;
-  double dVar17;
-  double dVar18;
   undefined1 in_vs33 [16];
+  undefined1 auVar17 [16];
+  undefined1 auVar18 [16];
   undefined1 auVar19 [16];
   undefined1 auVar20 [16];
-  undefined1 auVar21 [16];
-  undefined1 auVar22 [16];
-  float fVar23;
+  float fVar21;
   uint uStack00000020;
   uint uStack00000024;
-  __vector4_u_0 in_stack_ffffff38;
+  __vector4 in_stack_ffffff38;
   undefined1 local_80 [16];
   undefined1 local_70 [16];
   float local_60 [24];
-  __vector4 *__return_storage_ptr__;
   
-  uVar5 = (ulonglong)(int)param_2;
+  lVar3 = (longlong)(int)param_1;
   uVar2 = ZEXT48(&stack0x00000000);
-  uVar3 = __savegprlr_26(param_1);
-  __return_storage_ptr__ = (__vector4 *)uVar3;
-  uVar12 = 0x20;
-  if ((uVar5 & 0xffffffff) != 0) {
-    iVar6 = 0;
-    uVar13 = *(uint *)(local_80 + ((uint)uVar5 >> 3 & 4));
-    lVar14 = 4;
+  uVar10 = 0x20;
+  if (param_2 != 0) {
+    iVar4 = 0;
+    uVar11 = *(uint *)(local_80 + (param_2 >> 3 & 4));
+    lVar12 = 4;
     do {
-      uVar11 = *(uint *)(local_80 + iVar6) >> 0x17;
-      uVar8 = (ulonglong)uVar11 & 0xff;
-      if (((uVar11 & 0xff) != 0) && ((uint)uVar8 < 0xff)) {
-        uVar8 = uVar8 + (uVar13 | uVar5);
-        iVar9 = (int)uVar8;
-        iVar7 = iVar9;
-        if (iVar9 < 2) {
-          iVar7 = 1;
+      uVar9 = *(uint *)(local_80 + iVar4) >> 0x17;
+      uVar6 = uVar9 & 0xff;
+      if (((uVar9 & 0xff) != 0) && (uVar6 < 0xff)) {
+        iVar7 = uVar6 + (uVar11 | param_2);
+        iVar5 = iVar7;
+        if (iVar7 < 2) {
+          iVar5 = 1;
         }
-        if (iVar7 < 0xfe) {
-          if (iVar9 < 2) {
-            uVar8 = 1;
+        if (iVar5 < 0xfe) {
+          if (iVar7 < 2) {
+            iVar7 = 1;
           }
         }
         else {
-          uVar8 = 0xfe;
+          iVar7 = 0xfe;
         }
-        *(uint *)(local_70 + iVar6) =
-             (uint)((uVar8 & 0xffffffff) << 0x17) | *(uint *)(local_80 + iVar6) & 0x807fffff;
+        *(uint *)(local_70 + iVar4) = iVar7 << 0x17 | *(uint *)(local_80 + iVar4) & 0x807fffff;
         local_70 = in_vs33;
       }
-      iVar6 = iVar6 + 4;
-      lVar14 = lVar14 + -1;
+      iVar4 = iVar4 + 4;
+      lVar12 = lVar12 + -1;
       local_80 = in_vs33;
-    } while (lVar14 != 0);
+    } while (lVar12 != 0);
   }
   uStack00000020 = in_vs33._0_4_;
-  switch(__return_storage_ptr__) {
-  case (__vector4 *)0x1:
-    ConvertLinearToGamma(__return_storage_ptr__,(__vector4)in_stack_ffffff38);
-  case (__vector4 *)0x0:
-  case (__vector4 *)0x2:
-  case (__vector4 *)0xa:
-    p_Var10 = (__vector4 *)0x2;
-    if ((uVar3 & 0xffffffff) != 10) {
-      p_Var10 = __return_storage_ptr__;
+  switch(param_1) {
+  case 1:
+    ConvertLinearToGamma((__vector4 *)param_1,in_stack_ffffff38);
+  case 0:
+  case 2:
+  case 10:
+    uVar8 = 2;
+    if (param_1 != 10) {
+      uVar8 = param_1;
     }
-    auVar20 = vectorSplatImmediateSignedWord(0);
-    bVar1 = *(byte *)&p_Var10[-0x7de0bb4].field0_0x0;
-    fVar23 = (float)(longlong)(1 << (bVar1 & 0x3f)) - 1.0;
-    auVar19 = vectorMultiplyFloatingPoint(in_vs33,local_70);
-    auVar19 = vectorMaximumFloatingPoint128(auVar20,auVar19);
-    auVar19 = vectorMinimumFloatingPoint128(local_70,auVar19);
-    auVar19 = vectorRoundToFloatingPointIntegerNearest(auVar19);
-    auVar19 = vectorConvertToSignedFixedPointWordSaturate128(auVar19,0);
-    storeVectorLeftIndexed(auVar19,uVar2 - 0x70);
-    storeVectorRightIndexed(auVar19,uVar2 - 0x60);
+    auVar18 = vectorSplatImmediateSignedWord(0);
+    bVar1 = "\b\b\n\n"[uVar8];
+    fVar21 = (float)(longlong)(1 << (bVar1 & 0x3f)) - 1.0;
+    auVar17 = vectorMultiplyFloatingPoint(in_vs33,local_70);
+    auVar17 = vectorMaximumFloatingPoint128(auVar18,auVar17);
+    auVar17 = vectorMinimumFloatingPoint128(local_70,auVar17);
+    auVar17 = vectorRoundToFloatingPointIntegerNearest(auVar17);
+    auVar17 = vectorConvertToSignedFixedPointWordSaturate128(auVar17,0);
+    storeVectorLeftIndexed(auVar17,uVar2 - 0x70);
+    storeVectorRightIndexed(auVar17,uVar2 - 0x60);
     uStack00000024 =
-         (int)((float)(longlong)(1 << (*(byte *)((int)&p_Var10[-0x7de0bb4].field0_0x0 + 4) & 0x3f))
-              - 1.0) << ((uint)bVar1 * 3 & 0x3f) | (int)fVar23 << ((bVar1 & 0x1f) << 1) |
-         (int)fVar23 << (bVar1 & 0x3f) | (uint)fVar23;
+         (int)((float)(longlong)(1 << ("\b\b\x02\x02"[uVar8] & 0x3f)) - 1.0) <<
+         ((uint)bVar1 * 3 & 0x3f) | (int)fVar21 << ((bVar1 & 0x1f) << 1) |
+         (int)fVar21 << (bVar1 & 0x3f) | (uint)fVar21;
     uStack00000020 = uStack00000024;
     break;
-  case (__vector4 *)0x3:
-  case (__vector4 *)0xc:
-    uVar13 = 0;
-    dVar18 = 0.0;
+  case 3:
+  case 0xc:
+    uVar11 = 0;
+    dVar16 = 0.0;
     do {
-      fVar23 = ldexp(*(float *)((int)local_60 + uVar13),(int)uVar3);
-      fVar23 = (float)((int)fVar23 + 0x8000);
-      if (((uint)fVar23 & 0x7c000000) == 0) {
-        uVar11 = (uint)fVar23 >> 0x10 & 0x3ff;
+      fVar21 = ldexp(*(float *)((int)local_60 + uVar11),(int)lVar3);
+      fVar21 = (float)((int)fVar21 + 0x8000);
+      if (((uint)fVar21 & 0x7c000000) == 0) {
+        uVar9 = (uint)fVar21 >> 0x10 & 0x3ff;
       }
       else {
-        uVar11 = 0x3ff;
-        if (dVar18 <= (double)fVar23) {
-          uVar11 = 0x1ff;
+        uVar9 = 0x3ff;
+        if (dVar16 <= (double)fVar21) {
+          uVar9 = 0x1ff;
         }
       }
-      *(uint *)(local_70 + uVar13) = uVar11;
-      uVar13 = uVar13 + 4;
-    } while (uVar13 < 0xc);
-    dVar16 = 3.0;
+      *(uint *)(local_70 + uVar11) = uVar9;
+      uVar11 = uVar11 + 4;
+    } while (uVar11 < 0xc);
+    dVar14 = 3.0;
     local_60[3] = in_vs33._12_4_;
-    dVar15 = (double)(local_60[3] * 3.0);
-    dVar17 = dVar18;
-    if (dVar18 < dVar15) {
-      dVar17 = dVar15;
+    dVar13 = (double)(local_60[3] * 3.0);
+    dVar15 = dVar16;
+    if (dVar16 < dVar13) {
+      dVar15 = dVar13;
     }
-    if ((dVar17 < 3.0) && (dVar16 = dVar15, dVar15 <= dVar18)) {
-      dVar16 = dVar18;
+    if ((dVar15 < 3.0) && (dVar14 = dVar13, dVar13 <= dVar16)) {
+      dVar14 = dVar16;
     }
     uStack00000024 =
-         (uint)(((((((longlong)(dVar16 + 0.5) & 0x3fffffU) << 10 | (ulonglong)(uint)local_70._8_4_)
+         (uint)(((((((longlong)(dVar14 + 0.5) & 0x3fffffU) << 10 | (ulonglong)(uint)local_70._8_4_)
                   & 0x3fffff) << 10 | (ulonglong)(uint)local_70._4_4_) & 0x3fffff) << 10) |
          local_70._0_4_;
     uStack00000020 = uStack00000024;
     break;
-  case (__vector4 *)0x4:
-  case (__vector4 *)0x5:
-    auVar20 = loadVectorLeftIndexed(0xffffffff82013714);
-    auVar19 = loadVectorLeftIndexed(0xffffffff8200139c);
-    auVar22 = vectorSplatWord(auVar20,0);
-    auVar21 = vectorSplatWord(auVar19,0);
-    auVar20 = loadVectorLeftIndexed(0xffffffff82000f10);
-    auVar19 = vectorMultiplyFloatingPoint(in_vs33,auVar22);
-    auVar20 = vectorSplatWord(auVar20,0);
-    auVar19 = vectorMaximumFloatingPoint128(auVar21,auVar19);
-    auVar19 = vectorMinimumFloatingPoint128(auVar20,auVar19);
-    auVar19 = vectorMultiplyAddFloatingPoint
-                        (auVar19,(undefined1  [16])scale.field0_0x0,
+  case 4:
+  case 5:
+    auVar18 = loadVectorLeftIndexed(0xffffffff82013714);
+    auVar17 = loadVectorLeftIndexed(0xffffffff8200139c);
+    auVar20 = vectorSplatWord(auVar18,0);
+    auVar19 = vectorSplatWord(auVar17,0);
+    auVar18 = loadVectorLeftIndexed(0xffffffff82000f10);
+    auVar17 = vectorMultiplyFloatingPoint(in_vs33,auVar20);
+    auVar18 = vectorSplatWord(auVar18,0);
+    auVar17 = vectorMaximumFloatingPoint128(auVar19,auVar17);
+    auVar17 = vectorMinimumFloatingPoint128(auVar18,auVar17);
+    auVar17 = vectorMultiplyAddFloatingPoint
+                        (auVar17,(undefined1  [16])scale.field0_0x0,
                          (undefined1  [16])offset.field0_0x0);
-    auVar19 = vectorRoundToFloatingPointIntegerNearest(auVar19);
-    auVar19 = vectorConvertToSignedFixedPointWordSaturate128(auVar19,0);
-    storeVectorLeftIndexed(auVar19 ^ (undefined1  [16])sign.field0_0x0,uVar2 - 0x70);
-    storeVectorRightIndexed(auVar19 ^ (undefined1  [16])sign.field0_0x0,uVar2 - 0x60);
-    if ((uVar3 & 0xffffffff) == 5) {
-      uVar12 = 0x40;
+    auVar17 = vectorRoundToFloatingPointIntegerNearest(auVar17);
+    auVar17 = vectorConvertToSignedFixedPointWordSaturate128(auVar17,0);
+    storeVectorLeftIndexed(auVar17 ^ (undefined1  [16])sign.field0_0x0,uVar2 - 0x70);
+    storeVectorRightIndexed(auVar17 ^ (undefined1  [16])sign.field0_0x0,uVar2 - 0x60);
+    if (param_1 == 5) {
+      uVar10 = 0x40;
       uStack00000024 = local_70._12_4_ << 0x10 | local_70._8_4_;
       uStack00000020 = local_70._4_4_ << 0x10 | local_70._0_4_;
     }
@@ -214,22 +205,22 @@ ulong D3D::ComputeClearColor
       uStack00000020 = uStack00000024;
     }
     break;
-  case (__vector4 *)0x6:
-    auVar19 = vectorSplatImmediateSignedWord(0);
-    auVar19 = vectorPackD3Dtype(auVar19,in_vs33,0xd,3);
-    auVar19 = vectorSplatWord(auVar19,0);
-    storeVectorElementWordIndexed(auVar19,uVar2 - 0x80);
+  case 6:
+    auVar17 = vectorSplatImmediateSignedWord(0);
+    auVar17 = vectorPackD3Dtype(auVar17,in_vs33,0xd,3);
+    auVar17 = vectorSplatWord(auVar17,0);
+    storeVectorElementWordIndexed(auVar17,uVar2 - 0x80);
     uStack00000024 = CONCAT22(local_80._2_2_,local_80._0_2_);
     uStack00000020 = uStack00000024;
     break;
-  case (__vector4 *)0x7:
-    auVar19 = vectorSplatImmediateSignedWord(0);
-    uVar12 = 0x40;
-    auVar20 = vectorPackD3Dtype(auVar19,in_vs33,0x16,2);
-    auVar19 = vectorSplatWord(auVar20,0);
-    auVar20 = vectorSplatWord(auVar20,1);
-    storeVectorElementWordIndexed(auVar19,uVar2 - 0x80);
-    storeVectorElementWordIndexed(auVar20,uVar2 - 0x7c);
+  case 7:
+    auVar17 = vectorSplatImmediateSignedWord(0);
+    uVar10 = 0x40;
+    auVar18 = vectorPackD3Dtype(auVar17,in_vs33,0x16,2);
+    auVar17 = vectorSplatWord(auVar18,0);
+    auVar18 = vectorSplatWord(auVar18,1);
+    storeVectorElementWordIndexed(auVar17,uVar2 - 0x80);
+    storeVectorElementWordIndexed(auVar18,uVar2 - 0x7c);
     uStack00000024 = CONCAT22(local_80._6_2_,local_80._4_2_);
     uStack00000020 = CONCAT22(local_80._2_2_,local_80._0_2_);
     break;
@@ -237,17 +228,16 @@ ulong D3D::ComputeClearColor
     uStack00000024 = local_80._0_4_;
     uStack00000020 = 0;
     break;
-  case (__vector4 *)0xe:
+  case 0xe:
     uStack00000024 = uStack00000020;
     break;
-  case (__vector4 *)0xf:
-    uVar12 = 0x40;
+  case 0xf:
+    uVar10 = 0x40;
     uStack00000024 = in_vs33._4_4_;
   }
   *param_4 = uStack00000024;
   *param_5 = uStack00000020;
-  uVar4 = __restgprlr_26(uVar12);
-  return uVar4;
+  return uVar10;
 }
 
 
@@ -265,6 +255,8 @@ float ldexpf(float param_1,int param_2)
 
 // 828740B0  SetColorClear  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/resolve.cpp:320)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 
 void D3D::SetColorClear(CDevice *param_1,_D3DRESOLVE_PARAMETERSEX *param_2,ulong param_3,
@@ -274,135 +266,128 @@ void D3D::SetColorClear(CDevice *param_1,_D3DRESOLVE_PARAMETERSEX *param_2,ulong
   byte bVar1;
   ushort uVar2;
   uint uVar3;
-  int iVar4;
-  int iVar5;
-  ulong uVar6;
-  ulonglong uVar7;
-  ulonglong uVar8;
-  uint uVar9;
-  __vector4_u_0 in_stack_ffffff78;
+  uint *puVar4;
+  _D3DFORMAT _Var5;
+  __vector4 in_stack_ffffff78;
   ulong local_40;
   ulong local_3c [15];
   
-  uVar8 = (ulonglong)(int)param_3;
-  uVar7 = (ulonglong)(int)param_2;
-  iVar5 = __savegprlr_29(param_1);
-  if ((uVar8 & 0xffffffff) == 0) {
-    iVar4 = 0x2884;
+  if (param_3 == 0) {
+    puVar4 = (uint *)&param_1->field_0x2884;
   }
   else {
-    iVar4 = ((int)uVar8 + 0xa22) * 4;
+    puVar4 = (uint *)(&param_1->field_0x2888 + param_3 * 4);
   }
-  uVar3 = *(uint *)(iVar5 + iVar4) >> 0x10 & 0xf;
-  if ((uVar7 & 0xffffffff) == 0) {
-    uVar6 = ComputeClearColor(uVar3,*(uint *)(iVar5 + iVar4) >> 0x14 & 0x3f,
-                              (__vector4)in_stack_ffffff78,&local_40,local_3c);
+  uVar3 = *puVar4 >> 0x10 & 0xf;
+  if (param_2 == (_D3DRESOLVE_PARAMETERSEX *)0x0) {
+    ComputeClearColor(uVar3,*puVar4 >> 0x14 & 0x3f,in_stack_ffffff78,&local_40,local_3c);
   }
   else {
-    uVar9 = *(uint *)uVar7 & 0x3f;
+    _Var5 = param_2->ColorFormat & 0x3f;
     bVar1 = *(byte *)((int)g_FormatTable +
                      (uint)*(byte *)((int)&`unsigned_long___cdecl_D3D::GetGpuFormatFromEDRAMColorFormat(unsigned_long)'
                                            ::__l2::formatMap + uVar3) * 2 + 1);
-    if (uVar9 == 0x36) {
-      uVar9 = 7;
+    if (_Var5 == 0x36) {
+      _Var5 = D3DFMT_INDEX32|D3DFMT_INDEX16;
     }
-    uVar2 = g_FormatTable[uVar9];
-    uVar6 = ComputeClearColor(uVar2 >> 8 & 0xf,((uint *)uVar7)[1],(__vector4)in_stack_ffffff78,
-                              &local_40,local_3c);
+    uVar2 = g_FormatTable[_Var5];
+    ComputeClearColor(uVar2 >> 8 & 0xf,param_2->ColorExpBias,in_stack_ffffff78,&local_40,local_3c);
     if ((uVar2 & 0xff) < (ushort)bVar1) {
       local_3c[0] = local_40;
     }
   }
-  *(ulong *)(iVar5 + 0x2a30) = local_40;
-  *(ulong *)(iVar5 + 0x2a34) = local_3c[0];
-  *(ulonglong *)(iVar5 + 0x20) = *(ulonglong *)(iVar5 + 0x20) | 0xc0;
-  __restgprlr_29(uVar6);
+  *(ulong *)&param_1->field_0x2a30 = local_40;
+  *(ulong *)&param_1->field_0x2a34 = local_3c[0];
+  *(ulonglong *)&param_1->field_0x20 = *(ulonglong *)&param_1->field_0x20 | 0xc0;
   return;
 }
 
 
 // 828741B8  SetPendingState_NoInline  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/resolve.cpp:400)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 
 void D3D::SetPendingState_NoInline(CDevice *param_1,LazyPrim param_2)
 
 {
   undefined2 uVar1;
-  CDevice *pCVar2;
-  ulong64 uVar3;
+  ulong64 uVar2;
+  ulonglong uVar3;
   ulonglong uVar4;
-  ulonglong uVar5;
+  ulong64 uVar5;
   ulong64 uVar6;
-  ulong64 uVar7;
   
-  pCVar2 = (CDevice *)__savegprlr_26(param_1,param_2);
-  uVar1 = (pCVar2->m_CpuDrPix).DrawApiCalls;
-  uVar3 = *(ulong64 *)pCVar2;
-  uVar4 = *(ulonglong *)&pCVar2->field_0x20;
-  uVar5 = *(ulonglong *)&pCVar2->field_0x18;
-  uVar7 = *(ulong64 *)&pCVar2->field_0x10;
-  uVar6 = *(ulong64 *)&pCVar2->field_0x8;
-  (pCVar2->m_CpuDrPix).DrawApiCalls = uVar1 + 1;
-  if (uVar3 != 0) {
-    SetPending_AluConstants(pCVar2,uVar3,0x4000,&pCVar2->field_0x780);
-    *(undefined8 *)pCVar2 = 0;
-  }
-  if (uVar6 != 0) {
-    SetPending_AluConstants(pCVar2,uVar6,0x4400,&pCVar2->field_0x1780);
-    *(undefined8 *)&pCVar2->field_0x8 = 0;
-  }
-  if (uVar7 != 0) {
-    if ((uVar7 & 0x1e0000) != 0) {
-      uVar7 = SetPending_Shaders(pCVar2,uVar7);
-    }
-    if ((*(ulonglong *)&pCVar2->field_0x28 & uVar7) != 0) {
-      uVar7 = SetPending_Predicated(pCVar2,uVar7,*(ulong *)&pCVar2->field_0x2940);
-    }
-    if ((uVar7 & 0xfff) != 0) {
-      SetPending_RenderStates(pCVar2,uVar7 << 0x34,0x2200,&pCVar2->field_0x2934);
-    }
-    if ((uVar7 & 0x1f000) != 0) {
-      SetPending_RenderStates(pCVar2,(uVar7 & 0x1f000) << 0x2f,0x2180,&pCVar2->field_0x2920);
-    }
-    if ((uVar7 & 0x3fffc0000000000) != 0) {
-      SetPending_RenderStates(pCVar2,(uVar7 & 0x3fffc0000000000) << 6,0x2000,&pCVar2->field_0x2880);
-    }
-    if ((uVar7 & 0x3ffffe00000) != 0) {
-      SetPending_RenderStates(pCVar2,(uVar7 & 0x3ffffe00000) << 0x16,0x2100,&pCVar2->field_0x28cc);
-    }
-    *(undefined8 *)&pCVar2->field_0x10 = 0;
+  uVar1 = (param_1->m_CpuDrPix).DrawApiCalls;
+  uVar2 = *(ulong64 *)param_1;
+  uVar3 = *(ulonglong *)&param_1->field_0x20;
+  uVar4 = *(ulonglong *)&param_1->field_0x18;
+  uVar6 = *(ulong64 *)&param_1->field_0x10;
+  uVar5 = *(ulong64 *)&param_1->field_0x8;
+  (param_1->m_CpuDrPix).DrawApiCalls = uVar1 + 1;
+  if (uVar2 != 0) {
+    SetPending_AluConstants(param_1,uVar2,0x4000,&param_1->field_0x780);
+    *(undefined8 *)param_1 = 0;
   }
   if (uVar5 != 0) {
-    if ((uVar5 & 0xffffffff) != 0) {
-      SetPending_FetchConstants(pCVar2,uVar5 << 0x20);
+    SetPending_AluConstants(param_1,uVar5,0x4400,&param_1->field_0x1780);
+    *(undefined8 *)&param_1->field_0x8 = 0;
+  }
+  if (uVar6 != 0) {
+    if ((uVar6 & 0x1e0000) != 0) {
+      uVar6 = SetPending_Shaders(param_1,uVar6);
     }
-    if ((uVar5 & 0x7ffffc00000000) != 0) {
-      SetPending_RenderStates(pCVar2,(uVar5 & 0x7ffffc00000000) << 9,0x2280,&pCVar2->field_0x2964);
+    if ((*(ulonglong *)&param_1->field_0x28 & uVar6) != 0) {
+      uVar6 = SetPending_Predicated(param_1,uVar6,*(ulong *)&param_1->field_0x2940);
     }
-    *(undefined8 *)&pCVar2->field_0x18 = 0;
+    if ((uVar6 & 0xfff) != 0) {
+      SetPending_RenderStates(param_1,uVar6 << 0x34,0x2200,&param_1->field_0x2934);
+    }
+    if ((uVar6 & 0x1f000) != 0) {
+      SetPending_RenderStates(param_1,(uVar6 & 0x1f000) << 0x2f,0x2180,&param_1->field_0x2920);
+    }
+    if ((uVar6 & 0x3fffc0000000000) != 0) {
+      SetPending_RenderStates
+                (param_1,(uVar6 & 0x3fffc0000000000) << 6,0x2000,&param_1->field_0x2880);
+    }
+    if ((uVar6 & 0x3ffffe00000) != 0) {
+      SetPending_RenderStates(param_1,(uVar6 & 0x3ffffe00000) << 0x16,0x2100,&param_1->field_0x28cc)
+      ;
+    }
+    *(undefined8 *)&param_1->field_0x10 = 0;
   }
   if (uVar4 != 0) {
-    if ((uVar4 & 0x3fc000000000) != 0) {
-      SetPending_RenderStates(pCVar2,(uVar4 & 0x3fc000000000) << 0x12,0x2380,&pCVar2->field_0x2a50);
+    if ((uVar4 & 0xffffffff) != 0) {
+      SetPending_FetchConstants(param_1,uVar4 << 0x20);
     }
-    if ((uVar4 & 0x7e000000000000) != 0) {
-      SetPending_ClipPlanes(pCVar2,(uVar4 & 0x7e000000000000) << 9);
+    if ((uVar4 & 0x7ffffc00000000) != 0) {
+      SetPending_RenderStates(param_1,(uVar4 & 0x7ffffc00000000) << 9,0x2280,&param_1->field_0x2964)
+      ;
     }
-    if ((uVar4 & 0x100000000000000) != 0) {
-      SetPending_RenderStates(pCVar2,0xffffffffff000000,0x4900,&pCVar2->field_0x2780);
+    *(undefined8 *)&param_1->field_0x18 = 0;
+  }
+  if (uVar3 != 0) {
+    if ((uVar3 & 0x3fc000000000) != 0) {
+      SetPending_RenderStates
+                (param_1,(uVar3 & 0x3fc000000000) << 0x12,0x2380,&param_1->field_0x2a50);
     }
-    if ((uVar4 & 0x3fffffffff) != 0) {
-      SetPending_RenderStates(pCVar2,uVar4 << 0x1a,0x2300,&pCVar2->field_0x29b8);
+    if ((uVar3 & 0x7e000000000000) != 0) {
+      SetPending_ClipPlanes(param_1,(uVar3 & 0x7e000000000000) << 9);
     }
-    if ((uVar4 & 0xc000000000000000) != 0) {
-      if ((pCVar2->m_WaitUntilIdleRequired) || (pCVar2->m_FlushAllCaches)) {
-        WaitUntilIdleOrFlushCaches(pCVar2);
+    if ((uVar3 & 0x100000000000000) != 0) {
+      SetPending_RenderStates(param_1,0xffffffffff000000,0x4900,&param_1->field_0x2780);
+    }
+    if ((uVar3 & 0x3fffffffff) != 0) {
+      SetPending_RenderStates(param_1,uVar3 << 0x1a,0x2300,&param_1->field_0x29b8);
+    }
+    if ((uVar3 & 0xc000000000000000) != 0) {
+      if ((param_1->m_WaitUntilIdleRequired) || (param_1->m_FlushAllCaches)) {
+        WaitUntilIdleOrFlushCaches(param_1);
       }
     }
-    *(undefined8 *)&pCVar2->field_0x20 = 0;
+    *(undefined8 *)&param_1->field_0x20 = 0;
   }
-  __restgprlr_26();
   return;
 }
 
@@ -421,6 +406,8 @@ float ldexp(float param_1,int param_2)
 
 // 82874430  D3DDevice_ResolveEx  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/resolve.cpp:429)
 
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 /* WARNING: Enum "ERareInstruction": Some values do not have unique names */
 
@@ -430,50 +417,46 @@ void D3DDevice_ResolveEx(D3DDevice *param_1,ulong param_2,_D3DRECT *param_3,uint
                         _D3DRESOLVE_PARAMETERSEX *param_13)
 
 {
-  float fVar1;
-  D3DSurface *pDVar2;
-  uint uVar3;
+  char cVar1;
+  byte bVar2;
+  float fVar3;
   uint uVar4;
-  undefined2 uVar5;
-  ulonglong uVar6;
-  CDevice *this;
-  float fVar7;
+  CCommandBuffer *this;
+  uint uVar5;
+  float fVar6;
+  __vector4 _Var7;
   uint uVar8;
   bool bVar9;
   bool bVar10;
-  __vector4 _Var11;
-  int iVar13;
-  ulong64 uVar12;
-  ulong *puVar14;
-  float *pfVar15;
-  BufferResource *pBVar16;
-  PIXMetaResolveDestTextureData *pPVar17;
-  ulonglong uVar18;
-  ulonglong uVar19;
-  _D3DPOINT *p_Var21;
-  ulonglong uVar20;
-  undefined4 uVar22;
-  ulonglong uVar23;
-  uint uVar24;
-  undefined4 uVar25;
-  int iVar26;
-  int iVar27;
+  int iVar12;
+  ulong64 uVar11;
+  ulong *puVar13;
+  float *pfVar14;
+  BufferResource *pBVar15;
+  _D3DRESOLVE_PARAMETERSEX *p_Var16;
+  ulonglong uVar17;
+  GPU_COPYMASK GVar18;
+  ulong uVar19;
+  GPU_COPYREF GVar20;
+  int iVar22;
+  ulonglong uVar21;
+  ulong uVar23;
+  int iVar24;
+  uint uVar25;
+  ulonglong uVar26;
+  uint uVar27;
   uint uVar28;
-  ulonglong uVar29;
-  int iVar30;
-  ulonglong uVar31;
-  ulonglong uVar32;
-  uint uVar33;
-  ulong uVar34;
-  int iVar37;
-  ulonglong uVar35;
-  longlong lVar36;
-  ulong uVar38;
-  double dVar39;
-  int iStack00000034;
+  int iVar29;
+  uint uVar30;
+  int *piVar31;
+  uint uVar32;
+  double dVar33;
+  uint uStack00000034;
   uint uStack0000004c;
   uint in_stack_00000054;
-  _D3DRESOLVE_PARAMETERSEX *in_stack_00000074;
+  int in_stack_0000005c;
+  ulong in_stack_0000006c;
+  CDevice *in_stack_00000074;
   ulong *in_stack_fffffe58;
   ulong *in_stack_fffffe5c;
   ulong *in_stack_fffffe60;
@@ -486,7 +469,7 @@ void D3DDevice_ResolveEx(D3DDevice *param_1,ulong param_2,_D3DRECT *param_3,uint
   int local_124;
   uint local_120;
   int local_11c;
-  ulong local_118;
+  uint local_118;
   uint local_114;
   ulonglong local_110;
   longlong local_108;
@@ -494,507 +477,516 @@ void D3DDevice_ResolveEx(D3DDevice *param_1,ulong param_2,_D3DRECT *param_3,uint
   BufferResource local_f0;
   ulong local_e8;
   int local_e4;
-  GPUTimingMarkerFull local_e0 [4];
-  PIXMetaResolveDestTextureData local_c0 [6];
+  GPUTimingMarkerFull local_e0 [2];
+  undefined4 local_d0;
+  undefined4 uStack_cc;
+  undefined4 uStack_c8;
+  undefined4 uStack_c4;
+  _D3DRESOLVE_PARAMETERSEX local_c0 [5];
   
-  dVar39 = (double)param_11;
-  uVar23 = (ulonglong)(int)param_8;
-  uVar19 = (ulonglong)(int)param_7;
-  uVar35 = (ulonglong)(int)param_5;
-  uVar18 = (ulonglong)(int)param_4;
-  uVar32 = (ulonglong)(int)param_3;
-  uVar29 = (ulonglong)(int)param_2;
-  lVar36 = (longlong)(int)param_1;
-  __savegprlr();
-  pBVar16 = (BufferResource *)uVar32;
-  p_Var21 = (_D3DPOINT *)uVar19;
-  iStack00000034 = (int)uVar35;
-  uVar24 = (uint)uVar23;
-  if (((uVar29 & 0x4000) == 0) || (D3D__NoSkipWaitAfterResolve != 0)) {
+  dVar33 = (double)param_11;
+  if (((param_2 & 0x4000) == 0) || (D3D__NoSkipWaitAfterResolve != 0)) {
     local_11c = 0;
   }
   else {
     local_11c = 1;
   }
-  if (((uVar29 & 0x8000) == 0) || (D3D__NoSkipStateBeforeResolve != 0)) {
+  if (((param_2 & 0x8000) == 0) || (D3D__NoSkipStateBeforeResolve != 0)) {
     local_124 = 0;
   }
   else {
     local_124 = 1;
   }
-  this = (CDevice *)lVar36;
   local_e0[0].m_EventID = PIXOP_Resolve;
-  uStack0000004c = uVar24;
-  local_e0[0].m_pDevice = this;
-  if (this->m_TimingCaptureActive != 0) {
+  uStack00000034 = param_5;
+  uStack0000004c = param_8;
+  local_e0[0].m_pDevice = (CDevice *)param_1;
+  if ((param_1[1].m_MiscPacket.SampleCountAddress & 0x80000000) != 0) {
     PIXAddPixOpWithData(0x900017,0,(void *)0x0);
   }
-  local_118 = (ulong)(uVar29 & 7);
-  if ((uVar29 & 0x70) == 0) {
-    if ((uVar29 & 7) == 4) {
-      pDVar2 = this->m_pDepthStencilSurface;
+  local_118 = param_2 & 7;
+  if ((param_2 & 0x70) == 0) {
+    if (local_118 == 4) {
+      iVar22 = *(int *)((int)&param_1[1].m_Constants.field0_0x0 + 0x220);
     }
     else {
-      pDVar2 = this->m_pRenderTarget[local_118];
+      iVar22 = *(int *)((int)&param_1[1].m_Constants.field0_0x0 + local_118 * 4 + 0x210);
     }
-    if ((*(ushort *)&pDVar2->field6_0x18 & 3) == 0) {
-      uVar29 = uVar29 | 0x10;
+    if ((*(ushort *)(iVar22 + 0x18) & 3) == 0) {
+      param_2 = param_2 | 0x10;
     }
-    else if ((*(ushort *)&pDVar2->field6_0x18 & 3) == 1) {
-      uVar29 = uVar29 | 0x50;
+    else if ((*(ushort *)(iVar22 + 0x18) & 3) == 1) {
+      param_2 = param_2 | 0x50;
     }
     else {
-      uVar29 = uVar29 | 0x70;
+      param_2 = param_2 | 0x70;
     }
   }
-  uVar3 = (param_6->Format).dword[2];
-  iVar26 = ((param_6->Format).dword[3] >> 0x1e & 2) + 1;
+  if (in_stack_0000005c == 0) {
+    local_d0 = 0;
+    uStack_cc = 0;
+    uStack_c8 = 0;
+    uStack_c4 = 0;
+  }
+  uVar25 = (param_6->Format).dword[2];
+  iVar22 = ((param_6->Format).dword[3] >> 0x1e & 2) + 1;
   if (((param_6->Format).dword[5] & 0x600) == 0x400) {
-    uVar28 = uVar3 & 0x7ff;
-    iVar30 = 8;
-    uVar3 = uVar3 >> 0xb & 0x7ff;
+    uVar32 = uVar25 & 0x7ff;
+    iVar24 = 8;
+    uVar25 = uVar25 >> 0xb & 0x7ff;
   }
   else {
-    uVar28 = uVar3 & 0x1fff;
-    iVar30 = 1;
-    uVar3 = uVar3 >> 0xd & 0x1fff;
+    uVar32 = uVar25 & 0x1fff;
+    iVar24 = 1;
+    uVar25 = uVar25 >> 0xd & 0x1fff;
   }
   uVar4 = (param_6->Format).dword[1];
-  iVar37 = uVar3 + iVar26;
-  local_128 = uVar28 + iVar26;
-  local_12c = iVar37;
+  iVar29 = uVar25 + iVar22;
+  local_128 = uVar32 + iVar22;
+  local_12c = iVar29;
   D3D::BlockSizeOfGpuFormat(uVar4 & 0x3f,&local_114,(ulong *)&local_110);
-  uVar20 = (ulonglong)uVar4 & 0xfffff000;
-  local_120 = (uint)uVar20;
-  uVar3 = local_110._0_4_;
-  uVar31 = (ulonglong)local_110._0_4_;
-  uVar6 = ((longlong)(int)(*(byte *)((int)D3D::g_FormatTable + (uVar4 & 0x3f) * 2 + 1) * local_114)
-           * (longlong)(int)local_110._0_4_ & 0xffffffffU) >> 3;
-  uVar28 = (uint)(((ulonglong)((param_6->Format).dword[0] >> 0x11) & 0x3fe0) / (ulonglong)local_114)
+  uVar17 = (ulonglong)uVar4 & 0xfffff000;
+  local_120 = (uint)uVar17;
+  uVar25 = local_110._0_4_;
+  uVar26 = (ulonglong)local_110._0_4_;
+  uVar21 = ((longlong)(int)(*(byte *)((int)D3D::g_FormatTable + (uVar4 & 0x3f) * 2 + 1) * local_114)
+            * (longlong)(int)local_110._0_4_ & 0xffffffffU) >> 3;
+  uVar32 = (uint)(((ulonglong)((param_6->Format).dword[0] >> 0x11) & 0x3fe0) / (ulonglong)local_114)
   ;
   trapWord(6,(ulonglong)local_114,0);
-  if (((uVar23 & 0xffffffff) != 0) || (in_stack_00000054 != 0)) {
+  if ((param_8 != 0) || (in_stack_00000054 != 0)) {
     D3D::FindSurfaceWithinTexture
-              (param_6,in_stack_00000054 & ~(iVar30 - 1U),uVar24,(ulong *)&local_110,
+              (param_6,in_stack_00000054 & ~(iVar24 - 1U),param_8,(ulong *)&local_110,
                (ulong *)&local_f0,(ulong *)local_100,(ulong *)&local_108,&local_128,
                in_stack_fffffe58,in_stack_fffffe5c,in_stack_fffffe60);
-    uVar20 = (ulonglong)local_120;
-    trapWord(6,uVar6,0);
-    uVar28 = (uint)((local_110 >> 0x20) / uVar6);
-    iVar37 = local_12c;
+    uVar17 = (ulonglong)local_120;
+    trapWord(6,uVar21,0);
+    uVar32 = (uint)((local_110 >> 0x20) / uVar21);
+    iVar29 = local_12c;
   }
-  if ((uVar32 & 0xffffffff) == 0) {
-    pBVar16 = &local_f0;
+  if (param_3 == (_D3DRECT *)0x0) {
+    param_3 = (_D3DRECT *)&local_f0;
+    local_e4 = iVar29;
     local_f0 = (BufferResource)0x0;
     local_e8 = local_128;
-    local_e4 = iVar37;
   }
-  if ((uVar19 & 0xffffffff) == 0) {
-    p_Var21 = &destPoint;
+  if (param_7 == (_D3DPOINT *)0x0) {
+    param_7 = &destPoint;
   }
-  iVar26 = p_Var21->y;
-  uVar4 = pBVar16->m_PredicationMask;
-  local_130 = *(ulong **)&this->field_0x30;
-  trapWord(6,uVar31,0);
-  iVar27 = ((iVar26 - uVar4) * uVar28 + (p_Var21->x - pBVar16->m_dwResourceAddress) * 0x20) *
-           (int)uVar6 + ((int)(uVar20 >> 0x14) + 0x200U & 0x1000) + ((uint)uVar20 & 0x1fffffff);
-  if (*(ulong **)&this->field_0x38 < local_130) {
-    local_130 = D3D::CDevice::KickOff(this);
+  iVar22 = param_7->y;
+  uVar4 = param_3->y1;
+  local_130 = param_1->m_pRing;
+  trapWord(6,uVar26,0);
+  uVar23 = ((iVar22 - uVar4) * uVar32 + (param_7->x - param_3->x1) * 0x20) * (int)uVar21 +
+           ((int)(uVar17 >> 0x14) + 0x200U & 0x1000) + ((uint)uVar17 & 0x1fffffff);
+  if (param_1->m_pRingGuarantee < local_130) {
+    local_130 = D3D::CDevice::KickOff((CDevice *)param_1);
   }
-  local_c0[0].Level = uVar24;
+  local_c0[0].ColorExpBias = param_8;
   memcpy();
-  pPVar17 = (PIXMetaResolveDestTextureData *)0x10000;
-  local_c0[0].Texture._4_4_ =
-       local_c0[0].Texture.dword[1] & 0xfff |
-       (((uint)local_c0[0].Texture._4_4_ >> 0x14) + 0x200 & 0x1000) +
-       (local_c0[0].Texture.dword[1] & 0x1ffff000);
-  D3D::CDevice::PutPix(this,&local_130,PIXMeta_SetResolveDestTexture,local_c0,0x20);
-  if ((uVar35 & 0xffffffff) != 0) {
+  p_Var16 = (_D3DRESOLVE_PARAMETERSEX *)0x10000;
+  local_c0[0].BinaryCopyControl.CmpFuncRed =
+       local_c0[0].BinaryCopyControl.CmpFuncRed & 0xfff |
+       ((local_c0[0].BinaryCopyControl.CmpFuncRed >> 0x14) + 0x200 & 0x1000) +
+       (local_c0[0].BinaryCopyControl.CmpFuncRed & 0x1ffff000);
+  D3D::CDevice::PutPix((CDevice *)param_1,&local_130,PIXMeta_SetResolveDestTexture,local_c0,0x20);
+  if (param_5 != 0) {
     local_130[1] = 0x57e;
     local_130 = local_130 + 2;
     *local_130 = 0x10047;
   }
-  this->m_RTHasTrackedTexturesSinceLastSwap = true;
-  *(ulong **)&this->field_0x30 = local_130;
-  if (this->m_RTTrackTextures != false) {
-    if (this->m_pCommandBuffer == (CCommandBuffer *)0x0) {
-      if (this->m_RTTrackMipUsage == false) {
-        D3D::CRTTextureTracker::HandleResolve(g_RTGlobal.m_pTextureTracker,local_c0);
+  cVar1 = *(char *)((int)&param_1[1].m_Constants.field1_0x300 + 0x360);
+  *(undefined1 *)((int)&param_1[1].m_Constants.field1_0x300 + 0x363) = 1;
+  param_1->m_pRing = local_130;
+  if (cVar1 != '\0') {
+    this = *(CCommandBuffer **)((int)&param_1[1].m_Constants.field1_0x300 + 0x374);
+    if (this == (CCommandBuffer *)0x0) {
+      if (*(char *)((int)&param_1[1].m_Constants.field1_0x300 + 0x361) == '\0') {
+        D3D::CRTTextureTracker::HandleResolve
+                  (g_RTGlobal.m_pTextureTracker,(PIXMetaResolveDestTextureData *)local_c0);
       }
     }
     else {
-      pPVar17 = local_c0;
-      D3D::CCommandBuffer::AddRTListData(this->m_pCommandBuffer,0x10000,pPVar17,0x20);
+      p_Var16 = local_c0;
+      D3D::CCommandBuffer::AddRTListData(this,0x10000,p_Var16,0x20);
     }
   }
-  uVar24 = (param_6->Format).dword[3];
-  uVar33 = (param_6->Format).dword[1];
-  uVar32 = (ulonglong)uVar33 & 0x3f;
+  uVar5 = (param_6->Format).dword[3];
+  uVar28 = (param_6->Format).dword[1];
+  uVar27 = uVar28 & 0x3f;
   uVar8 = (param_6->Format).dword[0] >> 2 & 3;
-  if (uVar32 == 0x36) {
-    uVar32 = 7;
+  if (uVar27 == 0x36) {
+    uVar27 = 7;
   }
-  else if (uVar32 == 0x37) {
-    uVar32 = 0x10;
+  else if (uVar27 == 0x37) {
+    uVar27 = 0x10;
   }
-  else if (uVar32 == 0x38) {
-    uVar32 = 0x11;
+  else if (uVar27 == 0x38) {
+    uVar27 = 0x11;
   }
-  else if (uVar32 == 0x1b) {
-    uVar32 = 0x1e;
+  else if (uVar27 == 0x1b) {
+    uVar27 = 0x1e;
   }
-  else if (uVar32 == 0x1c) {
-    uVar32 = 0x1f;
+  else if (uVar27 == 0x1c) {
+    uVar27 = 0x1f;
   }
-  else if (uVar32 == 0x1d) {
-    uVar32 = 0x20;
+  else if (uVar27 == 0x1d) {
+    uVar27 = 0x20;
   }
-  else if ((uVar32 == 0x16) || (uVar32 == 0x17)) {
-    uVar32 = 6;
+  else if ((uVar27 == 0x16) || (uVar27 == 0x17)) {
+    uVar27 = 6;
   }
-  if ((uVar24 & 1) == 1) {
-    uVar35 = (ulonglong)(uVar8 == 1) + 2;
+  if ((uVar5 & 1) == 1) {
+    uVar30 = (uVar8 == 1) + 2;
   }
   else {
-    uVar35 = (ulonglong)(uVar8 == 1);
+    uVar30 = (uint)(uVar8 == 1);
   }
-  iVar13 = D3D::IsFloatGpuFormat((ulong)uVar32);
-  if (iVar13 != 0) {
-    uVar35 = 7;
+  iVar12 = D3D::IsFloatGpuFormat(uVar27);
+  if (iVar12 != 0) {
+    uVar30 = 7;
   }
-  uVar24 = (uint)(((((ulonglong)((uVar24 & 0xe) != 0) << 8 | (uVar29 & 0xffffffff) >> 0x1a) << 3 |
-                   uVar35) << 6 | uVar32) << 7) | uVar33 >> 6 & 3;
+  uVar19 = ((((uint)((uVar5 & 0xe) != 0) << 8 | param_2 >> 0x1a) << 3 | uVar30) << 6 | uVar27) << 7
+           | uVar28 >> 6 & 3;
   if (((param_6->Format).dword[5] & 0x600) == 0x400) {
-    *(uint *)&this->field_0x2a44 = uVar28 * local_12c;
-    *(ulonglong *)&this->field_0x20 = *(ulonglong *)&this->field_0x20 | 4;
-    uVar24 = (iVar30 - 1U & in_stack_00000054 & 7) << 4 | uVar24 | 8;
+    (param_1->m_MiscPacket).CopySurfaceSlice = uVar32 * local_12c;
+    (param_1->m_Pending).m_Mask[4] = (param_1->m_Pending).m_Mask[4] | 4;
+    uVar19 = (iVar24 - 1U & in_stack_00000054 & 7) << 4 | uVar19 | 8;
   }
-  iVar30 = 1;
-  if ((uVar29 & 0x2000) == 0) {
+  iVar24 = 1;
+  if ((param_2 & 0x2000) == 0) {
     if (local_118 == 4) {
-      iVar30 = 0;
+      iVar24 = 0;
     }
-    else if (uVar32 == 0x3d) {
-      iVar30 = 2;
+    else if (uVar27 == 0x3d) {
+      iVar24 = 2;
     }
   }
   else {
-    iVar30 = 3;
+    iVar24 = 3;
   }
-  *(int *)&this->field_0x2a1c = iVar27;
-  uVar33 = ((uint)uVar29 & 0x377) - 0x10;
-  *(uint *)&this->field_0x2a20 =
-       (uint)(((ulonglong)(uint)(iVar37 - iVar26) / (ulonglong)uVar3 + (ulonglong)uVar4 & 0xffffffff
-              ) << 0x10) & 0x3fff0000 | uVar28 & 0x3fff;
-  *(uint *)&this->field_0x2a24 = uVar24;
-  *(uint *)&this->field_0x2a18 = iVar30 << 0x14 | uVar33;
-  *(ulonglong *)&this->field_0x20 = *(ulonglong *)&this->field_0x20 | 0x3c00;
-  if (uVar32 == 0x3d) {
-    if (in_stack_00000074 == (_D3DRESOLVE_PARAMETERSEX *)0x0) {
-      uVar24 = 0x1111;
-      uVar25 = 0x80808080;
-      uVar22 = 0xffffffff;
+  (param_1->m_MiscPacket).CopyDestBase = uVar23;
+  uVar5 = (param_2 & 0x377) - 0x10;
+  (param_1->m_MiscPacket).CopyDestPitch.dword =
+       (uint)(((ulonglong)(uint)(iVar29 - iVar22) / (ulonglong)uVar25 + (ulonglong)uVar4 &
+              0xffffffff) << 0x10) & 0x3fff0000 | uVar32 & 0x3fff;
+  (param_1->m_MiscPacket).CopyDestInfo.dword = uVar19;
+  (param_1->m_MiscPacket).CopyControl.dword = iVar24 << 0x14 | uVar5;
+  (param_1->m_Pending).m_Mask[4] = (param_1->m_Pending).m_Mask[4] | 0x3c00;
+  if (uVar27 == 0x3d) {
+    if (in_stack_00000074 == (CDevice *)0x0) {
+      uVar19 = 0x1111;
+      GVar20.dword = 0x80808080;
+      GVar18.dword = 0xffffffff;
     }
     else {
-      pPVar17 = (PIXMetaResolveDestTextureData *)(in_stack_00000074->BinaryCopyControl).CmpFuncRed;
-      uVar24 = ((((in_stack_00000074->BinaryCopyControl).CmpFuncAlpha & D3DCMP_ALWAYS) << 4 |
-                (in_stack_00000074->BinaryCopyControl).CmpFuncBlue & D3DCMP_ALWAYS) << 4 |
-               (in_stack_00000074->BinaryCopyControl).CmpFuncGreen & D3DCMP_ALWAYS) << 4 |
-               (uint)pPVar17 & 7;
-      uVar25 = CONCAT31(CONCAT21(CONCAT11(*(undefined1 *)&(in_stack_00000074->BinaryCopyControl).Ref
-                                          ,(char)(in_stack_00000074->BinaryCopyControl).Ref),
-                                 *(undefined1 *)
-                                  ((int)&(in_stack_00000074->BinaryCopyControl).Ref + 2)),
-                        *(undefined1 *)((int)&(in_stack_00000074->BinaryCopyControl).Ref + 1));
-      uVar22 = CONCAT31(CONCAT21(CONCAT11(*(undefined1 *)
-                                           &(in_stack_00000074->BinaryCopyControl).Mask,
-                                          (char)(in_stack_00000074->BinaryCopyControl).Mask),
-                                 *(undefined1 *)
-                                  ((int)&(in_stack_00000074->BinaryCopyControl).Mask + 2)),
-                        *(undefined1 *)((int)&(in_stack_00000074->BinaryCopyControl).Mask + 1));
+      GVar20._s_0.CopyRefAlpha = in_stack_00000074->field_0x1c;
+      GVar20._s_0.CopyRefBlue = in_stack_00000074->field_0x1f;
+      GVar18._s_0.CopyMaskAlpha = in_stack_00000074->field_0x20;
+      GVar18._s_0.CopyMaskBlue = in_stack_00000074->field_0x23;
+      p_Var16 = *(_D3DRESOLVE_PARAMETERSEX **)&in_stack_00000074->field_0xc;
+      GVar20._s_0.CopyRefGreen = in_stack_00000074->field_0x1e;
+      GVar18._s_0.CopyMaskGreen = in_stack_00000074->field_0x22;
+      uVar19 = (((*(uint *)&in_stack_00000074->field_0x18 & 7) << 4 |
+                *(uint *)&in_stack_00000074->field_0x14 & 7) << 4 |
+               *(uint *)&in_stack_00000074->field_0x10 & 7) << 4 | (uint)p_Var16 & 7;
+      GVar20._s_0.CopyRefRed = in_stack_00000074->field_0x1d;
+      GVar18._s_0.CopyMaskRed = in_stack_00000074->field_0x21;
     }
-    *(undefined4 *)&this->field_0x2a3c = uVar25;
-    *(uint *)&this->field_0x2a38 = uVar24;
-    *(undefined4 *)&this->field_0x2a40 = uVar22;
-    uVar32 = *(ulonglong *)&this->field_0x20;
-    *(ulonglong *)&this->field_0x20 = uVar32 | 0x3c;
-    *(ulonglong *)&this->field_0x20 = uVar32 | 0x3e;
-    *(ulonglong *)&this->field_0x20 = uVar32 | 0x3f;
+    (param_1->m_MiscPacket).CopyRef = GVar20;
+    (param_1->m_MiscPacket).CopyFunc.dword = uVar19;
+    (param_1->m_MiscPacket).CopyMask = GVar18;
+    uVar17 = (param_1->m_Pending).m_Mask[4];
+    (param_1->m_Pending).m_Mask[4] = uVar17 | 0x3c;
+    (param_1->m_Pending).m_Mask[4] = uVar17 | 0x3e;
+    (param_1->m_Pending).m_Mask[4] = uVar17 | 0x3f;
   }
-  if ((uVar29 & 0x200) != 0) {
-    D3D::SetTileAndDepthClear(this,in_stack_00000074,(float)dVar39,(ulong)pPVar17);
+  if ((param_2 & 0x200) != 0) {
+    D3D::SetTileAndDepthClear
+              ((D3D *)param_1,in_stack_00000074,p_Var16,(float)dVar33,in_stack_0000006c);
   }
-  if ((uVar29 & 0x100) != 0) {
-    _Var11.field0_0x0.vector4_f32[0] = (float)in_stack_fffffe58;
-    _Var11.field0_0x0.vector4_f32[1] = (float)in_stack_fffffe5c;
-    _Var11.field0_0x0.vector4_f32[2] = (float)in_stack_fffffe60;
-    _Var11.field0_0x0.vector4_f32[3] = (float)in_stack_fffffe64;
-    D3D::SetColorClear(this,in_stack_00000074,uVar33 & 7,_Var11);
+  if ((param_2 & 0x100) != 0) {
+    _Var7.field0_0x0.vector4_f32[0] = (float)in_stack_fffffe58;
+    _Var7.field0_0x0.vector4_f32[1] = (float)in_stack_fffffe5c;
+    _Var7.field0_0x0.vector4_f32[2] = (float)in_stack_fffffe60;
+    _Var7.field0_0x0.vector4_f32[3] = (float)in_stack_fffffe64;
+    D3D::SetColorClear((CDevice *)param_1,(_D3DRESOLVE_PARAMETERSEX *)in_stack_00000074,uVar5 & 7,
+                       _Var7);
   }
   bVar10 = false;
-  uVar24 = *(uint *)&this->field_0x28c4;
-  iVar26 = *(int *)pBVar16;
-  uVar34 = pBVar16->m_PredicationMask;
-  uVar3 = *(int *)(pBVar16 + 1) + 7U & 0xfffffff8;
-  uVar4 = pBVar16[1].m_PredicationMask + 7 & 0xfffffff8;
-  if ((((iVar26 < (int)(uVar24 << 0x11 | uVar24 >> 0xf) >> 0x11) ||
-       ((int)uVar34 < (int)(uVar24 << 1 | uVar24 >> 0x1f) >> 0x11)) ||
-      (uVar24 = *(uint *)&this->field_0x28c8,
-      (int)(uVar24 << 0x11 | uVar24 >> 0xf) >> 0x11 < (int)uVar3)) ||
-     ((int)(uVar24 << 1 | uVar24 >> 0x1f) >> 0x11 < (int)uVar4)) {
-    D3D::SetSurfaceClip(this,iVar26,uVar34,uVar3,uVar4);
+  uVar25 = (param_1->m_WindowPacket).WindowScissorTL.dword;
+  iVar22 = param_3->x1;
+  uVar19 = param_3->y1;
+  uVar4 = param_3->x2 + 7U & 0xfffffff8;
+  uVar5 = param_3->y2 + 7U & 0xfffffff8;
+  if ((((iVar22 < (int)(uVar25 << 0x11 | uVar25 >> 0xf) >> 0x11) ||
+       ((int)uVar19 < (int)(uVar25 << 1 | uVar25 >> 0x1f) >> 0x11)) ||
+      (uVar25 = (param_1->m_WindowPacket).WindowScissorBR.dword,
+      (int)(uVar25 << 0x11 | uVar25 >> 0xf) >> 0x11 < (int)uVar4)) ||
+     ((int)(uVar25 << 1 | uVar25 >> 0x1f) >> 0x11 < (int)uVar5)) {
+    D3D::SetSurfaceClip((CDevice *)param_1,iVar22,uVar19,uVar4,uVar5);
     bVar10 = true;
   }
-  if (iStack00000034 == 0) {
-    uVar5 = (this->m_CpuDrPix).DrawApiCalls;
-    uVar32 = *(ulonglong *)&this->field_0x10;
-    (this->m_CpuDrPix).DrawApiCalls = uVar5 + 1;
-    if (uVar32 != 0) {
-      if ((*(ulonglong *)&this->field_0x28 & uVar32) != 0) {
-        uVar12 = D3D::SetPending_Predicated(this,uVar32,*(ulong *)&this->field_0x2940);
-        *(ulong64 *)&this->field_0x10 = uVar12;
+  if (uStack00000034 == 0) {
+    uVar17 = (param_1->m_Pending).m_Mask[2];
+    *(short *)&param_1[1].field_0x2ada = (short)*(undefined4 *)&param_1[1].field_0x2ad8 + 1;
+    if (uVar17 != 0) {
+      if ((param_1->m_Predicated_PendingMask2 & uVar17) != 0) {
+        uVar11 = D3D::SetPending_Predicated
+                           ((CDevice *)param_1,uVar17,(param_1->m_ControlPacket).HiControl.dword);
+        (param_1->m_Pending).m_Mask[2] = uVar11;
       }
-      if ((*(ulonglong *)&this->field_0x10 & 0xfff) != 0) {
+      uVar17 = (param_1->m_Pending).m_Mask[2];
+      if ((uVar17 & 0xfff) != 0) {
         D3D::SetPending_RenderStates
-                  (this,*(ulonglong *)&this->field_0x10 << 0x34,0x2200,&this->field_0x2934);
-        *(ulonglong *)&this->field_0x10 = *(ulonglong *)&this->field_0x10 & 0xfffffffffffff000;
+                  ((CDevice *)param_1,uVar17 << 0x34,0x2200,&param_1->m_ControlPacket);
+        (param_1->m_Pending).m_Mask[2] = (param_1->m_Pending).m_Mask[2] & 0xfffffffffffff000;
       }
-      if ((*(ulonglong *)&this->field_0x10 & 0x1f000) != 0) {
+      uVar17 = (param_1->m_Pending).m_Mask[2];
+      if ((uVar17 & 0x1f000) != 0) {
         D3D::SetPending_RenderStates
-                  (this,(*(ulonglong *)&this->field_0x10 & 0x1f000) << 0x2f,0x2180,
-                   &this->field_0x2920);
-        *(ulonglong *)&this->field_0x10 = *(ulonglong *)&this->field_0x10 & 0xfffffffffffe0fff;
+                  ((CDevice *)param_1,(uVar17 & 0x1f000) << 0x2f,0x2180,&param_1->m_ProgramPacket);
+        (param_1->m_Pending).m_Mask[2] = (param_1->m_Pending).m_Mask[2] & 0xfffffffffffe0fff;
       }
-      if ((*(ulonglong *)&this->field_0x10 & 0x3fffc0000000000) != 0) {
+      uVar17 = (param_1->m_Pending).m_Mask[2];
+      if ((uVar17 & 0x3fffc0000000000) != 0) {
         D3D::SetPending_RenderStates
-                  (this,(*(ulonglong *)&this->field_0x10 & 0x3fffc0000000000) << 6,0x2000,
-                   &this->field_0x2880);
-        *(ulonglong *)&this->field_0x10 = *(ulonglong *)&this->field_0x10 & 0xfc0003ffffffffff;
+                  ((CDevice *)param_1,(uVar17 & 0x3fffc0000000000) << 6,0x2000,
+                   &param_1->m_DestinationPacket);
+        (param_1->m_Pending).m_Mask[2] = (param_1->m_Pending).m_Mask[2] & 0xfc0003ffffffffff;
       }
-      if ((*(ulonglong *)&this->field_0x10 & 0x3ffffe00000) != 0) {
+      uVar17 = (param_1->m_Pending).m_Mask[2];
+      if ((uVar17 & 0x3ffffe00000) != 0) {
         D3D::SetPending_RenderStates
-                  (this,(*(ulonglong *)&this->field_0x10 & 0x3ffffe00000) << 0x16,0x2100,
-                   &this->field_0x28cc);
-        *(ulonglong *)&this->field_0x10 = *(ulonglong *)&this->field_0x10 & 0xfffffc00001fffff;
+                  ((CDevice *)param_1,(uVar17 & 0x3ffffe00000) << 0x16,0x2100,
+                   &param_1->m_ValuesPacket);
+        (param_1->m_Pending).m_Mask[2] = (param_1->m_Pending).m_Mask[2] & 0xfffffc00001fffff;
       }
     }
-    uVar32 = *(ulonglong *)&this->field_0x18;
-    if ((uVar32 != 0) && ((uVar32 & 0x7ffffc00000000) != 0)) {
-      D3D::SetPending_RenderStates(this,(uVar32 & 0x7ffffc00000000) << 9,0x2280,&this->field_0x2964)
-      ;
-      *(ulonglong *)&this->field_0x18 = *(ulonglong *)&this->field_0x18 & 0xff800003ffffffff;
+    uVar17 = (param_1->m_Pending).m_Mask[3];
+    if ((uVar17 != 0) && ((uVar17 & 0x7ffffc00000000) != 0)) {
+      D3D::SetPending_RenderStates
+                ((CDevice *)param_1,(uVar17 & 0x7ffffc00000000) << 9,0x2280,
+                 &param_1->m_TessellatorPacket);
+      (param_1->m_Pending).m_Mask[3] = (param_1->m_Pending).m_Mask[3] & 0xff800003ffffffff;
     }
-    uVar32 = *(ulonglong *)&this->field_0x20;
-    if ((uVar32 != 0) && ((uVar32 & 0x3fffffffff) != 0)) {
-      D3D::SetPending_RenderStates(this,uVar32 << 0x1a,0x2300,&this->field_0x29b8);
-      *(ulonglong *)&this->field_0x20 = *(ulonglong *)&this->field_0x20 & 0xffffffc000000000;
+    uVar17 = (param_1->m_Pending).m_Mask[4];
+    if ((uVar17 != 0) && ((uVar17 & 0x3fffffffff) != 0)) {
+      D3D::SetPending_RenderStates((CDevice *)param_1,uVar17 << 0x1a,0x2300,&param_1->m_MiscPacket);
+      (param_1->m_Pending).m_Mask[4] = (param_1->m_Pending).m_Mask[4] & 0xffffffc000000000;
     }
   }
   else {
-    D3D::SetPendingState_NoInline(this,LazyPrim_Regular);
-    if ((uVar18 & 0xffffffff) != 0) {
-      puVar14 = *(ulong **)&this->field_0x30;
-      if (*(ulong **)&this->field_0x38 < puVar14) {
-        puVar14 = D3D::CDevice::KickOff(this);
+    D3D::SetPendingState_NoInline((CDevice *)param_1,LazyPrim_Regular);
+    if (param_4 != 0) {
+      puVar13 = param_1->m_pRing;
+      if (param_1->m_pRingGuarantee < puVar13) {
+        puVar13 = D3D::CDevice::KickOff((CDevice *)param_1);
       }
-      puVar14[1] = 0x2102;
-      local_130 = puVar14 + 2;
-      *local_130 = (ulong)uVar18;
-      *(ulong **)&this->field_0x30 = local_130;
+      puVar13[1] = 0x2102;
+      local_130 = puVar13 + 2;
+      *local_130 = param_4;
+      param_1->m_pRing = local_130;
     }
   }
-  if (this->m_TilingSurfaceOverride) {
-    bVar9 = true;
-  }
-  else if ((((this->m_TilingBracket) &&
-            ((this->m_pTileSurfaces[0] == this->m_pRenderTarget[0] ||
-             (this->m_pRenderTarget[0] == (D3DSurface *)0x0)))) &&
-           ((this->m_pTileSurfaces[1] == this->m_pRenderTarget[1] ||
-            (this->m_pRenderTarget[1] == (D3DSurface *)0x0)))) &&
-          ((((this->m_pTileSurfaces[2] == this->m_pRenderTarget[2] ||
-             (this->m_pRenderTarget[2] == (D3DSurface *)0x0)) &&
-            ((this->m_pTileSurfaces[3] == this->m_pRenderTarget[3] ||
-             (this->m_pRenderTarget[3] == (D3DSurface *)0x0)))) &&
-           ((this->m_pTileDepthSurface == this->m_pDepthStencilSurface ||
-            (this->m_pDepthStencilSurface == (D3DSurface *)0x0)))))) {
-    bVar9 = true;
+  if ((param_1[1].m_ReferenceCount & 0x10000000) == 0) {
+    if (((((param_1[1].m_ReferenceCount & 0x20000000) == 0) ||
+         ((iVar24 = *(int *)((int)&param_1[1].m_Constants.field0_0x0 + 0x210),
+          *(int *)((int)&param_1[1].m_Constants.field1_0x300 + 0x30) != iVar24 && (iVar24 != 0))))
+        || ((iVar24 = *(int *)((int)&param_1[1].m_Constants.field0_0x0 + 0x214),
+            *(int *)((int)&param_1[1].m_Constants.field1_0x300 + 0x34) != iVar24 && (iVar24 != 0))))
+       || ((((iVar24 = *(int *)((int)&param_1[1].m_Constants.field0_0x0 + 0x218),
+             *(int *)((int)&param_1[1].m_Constants.field1_0x300 + 0x38) != iVar24 && (iVar24 != 0))
+            || ((iVar24 = *(int *)((int)&param_1[1].m_Constants.field0_0x0 + 0x21c),
+                *(int *)((int)&param_1[1].m_Constants.field1_0x300 + 0x3c) != iVar24 &&
+                (iVar24 != 0)))) ||
+           ((iVar24 = *(int *)((int)&param_1[1].m_Constants.field0_0x0 + 0x220),
+            *(int *)((int)&param_1[1].m_Constants.field1_0x300 + 0x40) != iVar24 && (iVar24 != 0))))
+          )) {
+      bVar9 = false;
+    }
+    else {
+      bVar9 = true;
+    }
   }
   else {
-    bVar9 = false;
+    bVar9 = true;
   }
   if (bVar9) {
-    puVar14 = *(ulong **)&this->field_0x30;
-    if (*(ulong **)&this->field_0x38 < puVar14) {
-      puVar14 = D3D::CDevice::KickOff(this);
+    puVar13 = param_1->m_pRing;
+    if (param_1->m_pRingGuarantee < puVar13) {
+      puVar13 = D3D::CDevice::KickOff((CDevice *)param_1);
     }
-    uVar24 = 0;
-    puVar14[1] = 0xc0006100;
-    local_130 = puVar14 + 2;
+    uVar25 = 0;
+    puVar13[1] = 0xc0006100;
+    local_130 = puVar13 + 2;
     *local_130 = 0;
-    if (this->m_Tiles != 0) {
-      uVar33 = 0;
-      lVar36 = lVar36 + 0x33b8;
+    if (*(int *)((int)&param_1[1].m_Constants.field1_0x300 + 0x44) != 0) {
+      uVar28 = 0;
+      piVar31 = (int *)((int)&param_1[1].m_Constants.field1_0x300 + 0x138);
       do {
-        iVar30 = *(int *)lVar36;
-        iVar37 = ((int *)lVar36)[1];
+        iVar24 = *piVar31;
+        iVar29 = piVar31[1];
         local_130[1] = 0xc0006000;
-        local_130[2] = 3 << (uVar33 & 0x3f);
+        local_130[2] = 3 << (uVar28 & 0x3f);
         local_130[3] = 0xc0012d01;
         local_130[4] = 0x40319;
         local_130 = local_130 + 5;
-        *local_130 = (iVar37 * uVar28 + iVar30 * 0x20) * (int)uVar6 + iVar27;
-        *(ulong **)&this->field_0x30 = local_130;
-        if (*(ulong **)&this->field_0x38 < local_130) {
-          local_130 = D3D::CDevice::KickOff(this);
+        *local_130 = (iVar29 * uVar32 + iVar24 * 0x20) * (int)uVar21 + uVar23;
+        param_1->m_pRing = local_130;
+        if (param_1->m_pRingGuarantee < local_130) {
+          local_130 = D3D::CDevice::KickOff((CDevice *)param_1);
         }
-        uVar24 = uVar24 + 1;
-        lVar36 = lVar36 + 8;
-        uVar33 = uVar33 + 2;
-      } while (uVar24 < this->m_Tiles);
+        uVar25 = uVar25 + 1;
+        piVar31 = piVar31 + 2;
+        uVar28 = uVar28 + 2;
+      } while (uVar25 < *(uint *)((int)&param_1[1].m_Constants.field1_0x300 + 0x44));
     }
     local_130[1] = 0xc0006000;
-    local_130[2] = this->m_PredicationMaskLo;
+    local_130[2] = *(ulong *)((int)&param_1[1].m_Constants.field1_0x300 + 0x1c);
     local_130[3] = 0xc0006100;
     local_130 = local_130 + 4;
-    *local_130 = this->m_PredicationMaskHi;
-    *(ulong **)&this->field_0x30 = local_130;
+    *local_130 = *(ulong *)((int)&param_1[1].m_Constants.field1_0x300 + 0x20);
+    param_1->m_pRing = local_130;
   }
-  puVar14 = *(ulong **)&this->field_0x30;
-  if (*(ulong **)&this->field_0x38 < puVar14) {
-    puVar14 = D3D::CDevice::KickOff(this);
+  puVar13 = param_1->m_pRing;
+  if (param_1->m_pRingGuarantee < puVar13) {
+    puVar13 = D3D::CDevice::KickOff((CDevice *)param_1);
   }
-  iVar37 = local_124;
-  iVar30 = iStack00000034;
-  if (this->m_FlushCacheBeforeResolve) {
-    puVar14[1] = 0xc0004600;
-    puVar14[2] = 6;
-    puVar14[3] = 0xc0004600;
-    puVar14[4] = 6;
-    puVar14[5] = 0xc0004600;
-    puVar14 = puVar14 + 6;
-    *puVar14 = 6;
-    this->m_FlushCacheBeforeResolve = false;
+  iVar24 = local_124;
+  uVar25 = uStack00000034;
+  if ((param_1[1].m_ReferenceCount & 0x800) != 0) {
+    puVar13[1] = 0xc0004600;
+    puVar13[2] = 6;
+    puVar13[3] = 0xc0004600;
+    puVar13[4] = 6;
+    puVar13[5] = 0xc0004600;
+    puVar13 = puVar13 + 6;
+    *puVar13 = 6;
+    *(byte *)((int)&param_1[1].m_ReferenceCount + 2) =
+         *(byte *)((int)&param_1[1].m_ReferenceCount + 2) & 0xf7;
   }
-  if ((iStack00000034 == 0) && (local_124 == 0)) {
-    puVar14[1] = 0xc0003b00;
-    puVar14[2] = 0x100;
-    puVar14[3] = 0xc0102b00;
-    puVar14[4] = 0;
-    local_130 = puVar14 + 5;
+  if ((uStack00000034 == 0) && (local_124 == 0)) {
+    puVar13[1] = 0xc0003b00;
+    puVar13[2] = 0x100;
+    puVar13[3] = 0xc0102b00;
+    puVar13[4] = 0;
+    local_130 = puVar13 + 5;
     *local_130 = 0xf;
     memcpy();
     local_130[0x10] = 0x12180;
     local_130[0x11] = 0x10002;
-    puVar14 = local_130 + 0x12;
-    *puVar14 = 0;
+    puVar13 = local_130 + 0x12;
+    *puVar13 = 0;
   }
-  puVar14[1] = 0x2208;
-  uVar38 = 0;
-  puVar14[2] = 6;
-  puVar14[3] = 0x2200;
-  local_130 = puVar14 + 4;
+  puVar13[1] = 0x2208;
+  uVar23 = 0;
+  puVar13[2] = 6;
+  puVar13[3] = 0x2200;
+  local_130 = puVar13 + 4;
   *local_130 = 0;
-  if ((uVar29 & 0x200) != 0) {
-    this->m_PendingHiZFlush = true;
-    uVar38 = (uint)(((ulonglong)((byte)this->field_0x2b3e >> 2) & 8 |
-                    (ulonglong)(byte)this->field_0x2b3e & 0xfffffffffffffff7) >> 3) & 5 |
-             *(uint *)&this->field_0x2940 & 0xfffffff0;
-    *(ulonglong *)&this->field_0x10 = *(ulonglong *)&this->field_0x10 | 0x20000;
+  if ((param_2 & 0x200) != 0) {
+    bVar2 = *(byte *)((int)&param_1[1].m_ReferenceCount + 2);
+    uVar32 = (param_1->m_ControlPacket).HiControl.dword;
+    *(byte *)((int)&param_1[1].m_ReferenceCount + 1) =
+         *(byte *)((int)&param_1[1].m_ReferenceCount + 1) | 4;
+    uVar23 = (uint)(((ulonglong)(bVar2 >> 2) & 8 | (ulonglong)bVar2 & 0xfffffffffffffff7) >> 3) & 5
+             | uVar32 & 0xfffffff0;
+    (param_1->m_Pending).m_Mask[2] = (param_1->m_Pending).m_Mask[2] | 0x20000;
   }
-  *(ulong **)&this->field_0x30 = local_130;
-  if ((iVar37 == 0) || (this->m_WaitUntilIdleRequired)) {
-    D3D::WaitUntilIdleOrFlushCaches(this);
+  param_1->m_pRing = local_130;
+  if ((iVar24 == 0) || (((uint)param_1[1].m_SetRenderStateCall[0] & 0x80000000) != 0)) {
+    D3D::WaitUntilIdleOrFlushCaches((CDevice *)param_1);
   }
-  D3D::SetPending_Predicated(this,0x100,uVar38);
-  if (iVar37 == 0) {
-    puVar14 = *(ulong **)&this->field_0x30;
-    if (*(ulong **)&this->field_0x38 < puVar14) {
-      puVar14 = D3D::CDevice::KickOff(this);
+  D3D::SetPending_Predicated((CDevice *)param_1,0x100,uVar23);
+  if (iVar24 == 0) {
+    puVar13 = param_1->m_pRing;
+    if (param_1->m_pRingGuarantee < puVar13) {
+      puVar13 = D3D::CDevice::KickOff((CDevice *)param_1);
     }
-    puVar14[1] = 0x22100;
-    puVar14[2] = 0xffff;
-    puVar14[3] = 0;
-    puVar14[4] = 0;
-    puVar14[5] = 0x2293;
-    puVar14[6] = 0;
-    puVar14[7] = 0x22204;
-    puVar14[8] = 0x10000;
-    puVar14[9] = 0x10000;
-    puVar14[10] = 0x300;
-    puVar14[0xb] = 0x2312;
-    puVar14[0xc] = 0xffff;
-    puVar14[0xd] = 0x200d;
-    local_130 = puVar14 + 0xe;
+    puVar13[1] = 0x22100;
+    puVar13[2] = 0xffff;
+    puVar13[3] = 0;
+    puVar13[4] = 0;
+    puVar13[5] = 0x2293;
+    puVar13[6] = 0;
+    puVar13[7] = 0x22204;
+    puVar13[8] = 0x10000;
+    puVar13[9] = 0x10000;
+    puVar13[10] = 0x300;
+    puVar13[0xb] = 0x2312;
+    puVar13[0xc] = 0xffff;
+    puVar13[0xd] = 0x200d;
+    local_130 = puVar13 + 0xe;
     *local_130 = 0;
-    *(ulong **)&this->field_0x30 = local_130;
+    param_1->m_pRing = local_130;
   }
-  iVar37 = local_11c;
+  iVar24 = local_11c;
   if (local_11c == 0) {
-    uVar29 = *(ulonglong *)&this->field_0x10;
-    *(ulonglong *)&this->field_0x10 = uVar29 | 0x20000000000;
-    *(ulonglong *)&this->field_0x10 = uVar29 | 0x30000000000;
-    *(ulonglong *)&this->field_0x10 = uVar29 | 0x38000000000;
-    *(ulonglong *)&this->field_0x18 = *(ulonglong *)&this->field_0x18 | 0x800000000;
-    uVar29 = *(ulonglong *)&this->field_0x10;
-    *(ulonglong *)&this->field_0x10 = uVar29 | 0x80;
-    *(ulonglong *)&this->field_0x10 = uVar29 | 0xc0;
-    *(ulonglong *)&this->field_0x10 = uVar29 | 0xe0;
-    *(ulonglong *)&this->field_0x20 = *(ulonglong *)&this->field_0x20 | 0x80000;
-    *(ulonglong *)&this->field_0x10 = *(ulonglong *)&this->field_0x10 | 0x100000000000;
+    uVar21 = (param_1->m_Pending).m_Mask[2];
+    (param_1->m_Pending).m_Mask[2] = uVar21 | 0x20000000000;
+    (param_1->m_Pending).m_Mask[2] = uVar21 | 0x30000000000;
+    (param_1->m_Pending).m_Mask[2] = uVar21 | 0x38000000000;
+    (param_1->m_Pending).m_Mask[3] = (param_1->m_Pending).m_Mask[3] | 0x800000000;
+    uVar21 = (param_1->m_Pending).m_Mask[2];
+    (param_1->m_Pending).m_Mask[2] = uVar21 | 0x80;
+    (param_1->m_Pending).m_Mask[2] = uVar21 | 0xc0;
+    (param_1->m_Pending).m_Mask[2] = uVar21 | 0xe0;
+    (param_1->m_Pending).m_Mask[4] = (param_1->m_Pending).m_Mask[4] | 0x80000;
+    (param_1->m_Pending).m_Mask[2] = (param_1->m_Pending).m_Mask[2] | 0x100000000000;
   }
   if ((uVar8 == 3) && (local_118 != 4)) {
-    iVar27 = 0;
+    iVar29 = 0;
     if (local_118 != 0) {
-      iVar27 = local_118 + 1;
+      iVar29 = local_118 + 1;
     }
-    uVar24 = *(uint *)(&this->field_0x2884 + iVar27 * 4);
-    if ((uVar24 & 0xf0000) == 0x10000) {
-      puVar14 = *(ulong **)&this->field_0x30;
-      if (*(ulong **)&this->field_0x38 < puVar14) {
-        puVar14 = D3D::CDevice::KickOff(this);
+    uVar32 = (param_1->m_ValuesPacket).Unused[iVar29 + -0x1b];
+    if ((uVar32 & 0xf0000) == 0x10000) {
+      puVar13 = param_1->m_pRing;
+      if (param_1->m_pRingGuarantee < puVar13) {
+        puVar13 = D3D::CDevice::KickOff((CDevice *)param_1);
       }
-      puVar14[1] = iVar27 + 0x2001;
-      iVar13 = ((int)(iVar27 + 0x20107U) >> 0x10) * 8;
-      local_130 = puVar14 + 2;
-      *local_130 = uVar24 & 0x3f00fff;
-      *(ulonglong *)(&this->field_0x0 + iVar13) =
-           0x8000000000000000U >> (iVar27 + 0x20107U & 0x7f) |
-           *(ulonglong *)(&this->field_0x0 + iVar13);
-      *(ulong **)&this->field_0x30 = local_130;
+      puVar13[1] = iVar29 + 0x2001;
+      iVar12 = (int)(iVar29 + 0x20107U) >> 0x10;
+      local_130 = puVar13 + 2;
+      *local_130 = uVar32 & 0x3f00fff;
+      (param_1->m_Pending).m_Mask[iVar12] =
+           0x8000000000000000U >> (iVar29 + 0x20107U & 0x7f) | (param_1->m_Pending).m_Mask[iVar12];
+      param_1->m_pRing = local_130;
     }
   }
-  iVar27 = iVar30;
-  if (iVar30 == 0) {
-    puVar14 = *(ulong **)&this->field_0x30;
-    if (*(ulong **)&this->field_0x38 < puVar14) {
-      puVar14 = D3D::CDevice::KickOff(this);
+  uVar32 = uVar25;
+  if (uVar25 == 0) {
+    puVar13 = param_1->m_pRing;
+    if (param_1->m_pRingGuarantee < puVar13) {
+      puVar13 = D3D::CDevice::KickOff((CDevice *)param_1);
     }
-    local_130 = puVar14;
-    pfVar15 = (float *)D3D::CDevice::BeginRingAlloc(this,6,4);
-    if (pfVar15 == (float *)0x0) {
-      *(ulong **)&this->field_0x30 = local_130;
+    local_130 = puVar13;
+    pfVar14 = (float *)D3D::CDevice::BeginRingAlloc((CDevice *)param_1,6,4);
+    if (pfVar14 == (float *)0x0) {
+      param_1->m_pRing = local_130;
       goto LAB_82875714;
     }
-    if ((*(uint *)&this->field_0x29c0 & 1) == 0) {
-      fVar1 = 0.5;
+    if (((param_1->m_MiscPacket).VtxControl.dword & 1) == 0) {
+      fVar3 = 0.5;
     }
     else {
-      fVar1 = 0.0;
+      fVar3 = 0.0;
     }
-    local_f0 = (BufferResource)(longlong)iVar26;
-    local_100[0] = (longlong)(int)uVar34;
-    local_110 = (ulonglong)(int)(uVar4 - uVar34);
-    local_108 = (longlong)(int)(uVar3 - iVar26);
-    *pfVar15 = (float)(longlong)local_f0 - fVar1;
-    fVar7 = (float)local_100[0] - fVar1;
-    pfVar15[1] = fVar7;
-    fVar1 = (float)local_108 + ((float)(longlong)local_f0 - fVar1);
-    pfVar15[2] = fVar1;
-    pfVar15[3] = fVar7;
-    pfVar15[4] = fVar1;
-    pfVar15[5] = (float)(longlong)local_110 + fVar7;
+    local_f0 = (BufferResource)(longlong)iVar22;
+    local_100[0] = (longlong)(int)uVar19;
+    local_110 = (ulonglong)(int)(uVar5 - uVar19);
+    local_108 = (longlong)(int)(uVar4 - iVar22);
+    *pfVar14 = (float)(longlong)local_f0 - fVar3;
+    fVar6 = (float)local_100[0] - fVar3;
+    pfVar14[1] = fVar6;
+    fVar3 = (float)local_108 + ((float)(longlong)local_f0 - fVar3);
+    pfVar14[2] = fVar3;
+    pfVar14[3] = fVar6;
+    pfVar14[4] = fVar3;
+    pfVar14[5] = (float)(longlong)local_110 + fVar6;
     local_130[1] = 0x54800;
-    local_130[2] = (((uint)pfVar15 >> 0x14) + 0x200 & 0x1000) + ((uint)pfVar15 & 0x1fffffff) | 3;
+    local_130[2] = (((uint)pfVar14 >> 0x14) + 0x200 & 0x1000) + ((uint)pfVar14 & 0x1fffffff) | 3;
     local_130[3] = 0x1000001a;
     local_130[4] = 0;
     local_130[5] = 0;
@@ -1005,39 +997,39 @@ void D3DDevice_ResolveEx(D3DDevice *param_1,ulong param_2,_D3DRECT *param_3,uint
     local_130[10] = 0;
     local_130 = local_130 + 0xb;
     *local_130 = 0;
-    *(ulong **)&this->field_0x30 = local_130;
-    iVar27 = 3;
+    param_1->m_pRing = local_130;
+    uVar32 = 3;
   }
-  puVar14 = *(ulong **)&this->field_0x30;
-  if (*(ulong **)&this->field_0x38 < puVar14) {
-    puVar14 = D3D::CDevice::KickOff(this);
+  puVar13 = param_1->m_pRing;
+  if (param_1->m_pRingGuarantee < puVar13) {
+    puVar13 = D3D::CDevice::KickOff((CDevice *)param_1);
   }
-  puVar14[1] = this->m_GpuPacket3Predication | 0xc0003600;
-  puVar14[2] = iVar27 << 0x10 | 0x88;
-  puVar14[3] = 0xc0004600;
-  puVar14[4] = 6;
-  puVar14[5] = 0x2007;
-  local_130 = puVar14 + 6;
-  *local_130 = *(ulong *)&this->field_0x289c;
-  *(ulong **)&this->field_0x30 = local_130;
+  puVar13[1] = *(uint *)((int)&param_1[1].m_Constants.field1_0x300 + 0x24) | 0xc0003600;
+  puVar13[2] = uVar32 << 0x10 | 0x88;
+  puVar13[3] = 0xc0004600;
+  puVar13[4] = 6;
+  puVar13[5] = 0x2007;
+  local_130 = puVar13 + 6;
+  *local_130 = (param_1->m_DestinationPacket).CoherDestBase1;
+  param_1->m_pRing = local_130;
   if (bVar10) {
-    uVar24 = *(uint *)&this->field_0x28c8;
-    uVar3 = *(uint *)&this->field_0x28c4;
-    D3D::SetSurfaceClip(this,(int)(uVar3 << 0x11 | uVar3 >> 0xf) >> 0x11,
-                        (int)(uVar3 << 1 | uVar3 >> 0x1f) >> 0x11,
-                        (int)(uVar24 << 0x11 | uVar24 >> 0xf) >> 0x11,
-                        (int)(uVar24 << 1 | uVar24 >> 0x1f) >> 0x11);
+    uVar32 = (param_1->m_WindowPacket).WindowScissorBR.dword;
+    uVar4 = (param_1->m_WindowPacket).WindowScissorTL.dword;
+    D3D::SetSurfaceClip((CDevice *)param_1,(int)(uVar4 << 0x11 | uVar4 >> 0xf) >> 0x11,
+                        (int)(uVar4 << 1 | uVar4 >> 0x1f) >> 0x11,
+                        (int)(uVar32 << 0x11 | uVar32 >> 0xf) >> 0x11,
+                        (int)(uVar32 << 1 | uVar32 >> 0x1f) >> 0x11);
   }
-  param_6->_padding_ = this->m_CpuFence;
-  if (iVar30 == 0) {
-    *(ulonglong *)&this->field_0x10 = *(ulonglong *)&this->field_0x10 | 0x80000;
-    *(ulonglong *)&this->field_0x18 = *(ulonglong *)&this->field_0x18 | 0x80000000;
-    *(ulonglong *)&this->field_0x10 = *(ulonglong *)&this->field_0x10 | 0x18000;
+  param_6->_padding_ = *(int *)((int)param_1[1].m_Pending.m_Mask + 0x1c);
+  if (uVar25 == 0) {
+    (param_1->m_Pending).m_Mask[2] = (param_1->m_Pending).m_Mask[2] | 0x80000;
+    (param_1->m_Pending).m_Mask[3] = (param_1->m_Pending).m_Mask[3] | 0x80000000;
+    (param_1->m_Pending).m_Mask[2] = (param_1->m_Pending).m_Mask[2] | 0x18000;
   }
-  uVar29 = *(ulonglong *)&this->field_0x10;
-  *(ulonglong *)&this->field_0x10 = uVar29 | 8;
-  *(ulonglong *)&this->field_0x10 = uVar29 | 0x808;
-  *(ulonglong *)&this->field_0x10 = uVar29 | 0x908;
+  uVar21 = (param_1->m_Pending).m_Mask[2];
+  (param_1->m_Pending).m_Mask[2] = uVar21 | 8;
+  (param_1->m_Pending).m_Mask[2] = uVar21 | 0x808;
+  (param_1->m_Pending).m_Mask[2] = uVar21 | 0x908;
   D3D::GetGpuTextureDimensions(&param_6->Format,&local_118,&local_114,(ulong *)&local_110);
   D3D::FindTextureSize
             (local_118,local_114,local_110._0_4_,((param_6->Format).dword[4] >> 6 & 0xf) + 1,
@@ -1045,73 +1037,71 @@ void D3DDevice_ResolveEx(D3DDevice *param_1,ulong param_2,_D3DRECT *param_3,uint
              (param_6->Format).dword[0] >> 0x1f,(param_6->Format).dword[5] >> 0xb & 1,
              (ulong)in_stack_fffffe58,(int)in_stack_fffffe5c,(ulong)in_stack_fffffe60,
              in_stack_fffffe64,in_stack_fffffe68,in_stack_fffffe6c);
-  if ((uStack0000004c == 0) || (uVar24 = (param_6->Format).dword[5], (uVar24 & 0xfffff000) == 0)) {
-    uVar34 = (((param_6->Format).dword[1] >> 0x14) + 0x200 & 0x1000) +
+  if ((uStack0000004c == 0) || (uVar25 = (param_6->Format).dword[5], (uVar25 & 0xfffff000) == 0)) {
+    uVar23 = (((param_6->Format).dword[1] >> 0x14) + 0x200 & 0x1000) +
              ((param_6->Format).dword[1] & 0x1ffff000);
-    iVar26 = local_124;
+    iVar22 = local_124;
   }
   else {
-    uVar34 = ((uVar24 >> 0x14) + 0x200 & 0x1000) + (uVar24 & 0x1ffff000);
-    iVar26 = local_11c;
+    uVar23 = ((uVar25 >> 0x14) + 0x200 & 0x1000) + (uVar25 & 0x1ffff000);
+    iVar22 = local_11c;
   }
-  puVar14 = *(ulong **)&this->field_0x30;
-  if (*(ulong **)&this->field_0x38 < puVar14) {
-    puVar14 = D3D::CDevice::KickOff(this);
+  puVar13 = param_1->m_pRing;
+  if (param_1->m_pRingGuarantee < puVar13) {
+    puVar13 = D3D::CDevice::KickOff((CDevice *)param_1);
   }
   if (D3D__NoLazyWaitAfterResolve == 0) {
-    if (iVar37 == 0) {
-      this->m_FlushAllCaches = true;
-      this->m_WaitUntilIdleRequired = true;
-      *(ulonglong *)&this->field_0x20 = *(ulonglong *)&this->field_0x20 | 0xc000000000000000;
+    if (iVar24 == 0) {
+      *(byte *)param_1[1].m_SetRenderStateCall = *(byte *)param_1[1].m_SetRenderStateCall | 0xc0;
+      (param_1->m_Pending).m_Mask[4] = (param_1->m_Pending).m_Mask[4] | 0xc000000000000000;
     }
   }
-  else if (iVar37 == 0) {
-    puVar14[1] = 0xa31;
-    puVar14[2] = 0x3000000;
-    puVar14[3] = 0x10a2f;
-    puVar14[4] = iVar26 + 0x1fffU & 0xfffff000;
-    puVar14[5] = uVar34;
-    puVar14[6] = 0xc0043c00;
-    puVar14[7] = 3;
-    puVar14[8] = 0xa31;
-    puVar14[9] = 0;
-    puVar14[10] = 0x80000000;
-    puVar14[0xb] = 8;
-    puVar14[0xc] = 0x5c8;
-    puVar14 = puVar14 + 0xd;
-    *puVar14 = 0x20000;
+  else if (iVar24 == 0) {
+    puVar13[1] = 0xa31;
+    puVar13[2] = 0x3000000;
+    puVar13[3] = 0x10a2f;
+    puVar13[4] = iVar22 + 0x1fffU & 0xfffff000;
+    puVar13[5] = uVar23;
+    puVar13[6] = 0xc0043c00;
+    puVar13[7] = 3;
+    puVar13[8] = 0xa31;
+    puVar13[9] = 0;
+    puVar13[10] = 0x80000000;
+    puVar13[0xb] = 8;
+    puVar13[0xc] = 0x5c8;
+    puVar13 = puVar13 + 0xd;
+    *puVar13 = 0x20000;
   }
-  puVar14[1] = 0x57e;
-  puVar14[2] = 0x10001;
-  *(undefined4 *)&this->field_0x2a18 = 0;
-  *(undefined4 *)&this->field_0x2a24 = 0;
-  puVar14[3] = 0x2318;
-  puVar14[4] = 0;
-  puVar14[5] = 0x231b;
-  local_130 = puVar14 + 6;
+  puVar13[1] = 0x57e;
+  puVar13[2] = 0x10001;
+  (param_1->m_MiscPacket).CopyControl.dword = 0;
+  (param_1->m_MiscPacket).CopyDestInfo.dword = 0;
+  puVar13[3] = 0x2318;
+  puVar13[4] = 0;
+  puVar13[5] = 0x231b;
+  local_130 = puVar13 + 6;
   *local_130 = 0;
-  uVar34 = this->m_CpuFence;
-  *(ulong **)&this->field_0x30 = local_130;
-  if (uVar34 == 0) {
-    if ((this->m_CommandBufferTimeStampMask & param_6->_padding_) != 0) {
-      pBVar16 = this->m_pBufferResource;
-      if (this->m_pBufferResourceEnd <= pBVar16) {
-        pBVar16 = D3D::MakeBufferResourceSpace(this);
+  iVar22 = *(int *)((int)param_1[1].m_Pending.m_Mask + 0x1c);
+  param_1->m_pRing = local_130;
+  if (iVar22 == 0) {
+    if ((*(uint *)(param_1[1].m_Pending.m_Mask + 4) & param_6->_padding_) != 0) {
+      pBVar15 = *(BufferResource **)((int)&param_1[1].m_Constants.field1_0x300 + 0x37c);
+      if (*(BufferResource **)((int)&param_1[1].m_Constants.field1_0x300 + 0x380) <= pBVar15) {
+        pBVar15 = D3D::MakeBufferResourceSpace((CDevice *)param_1);
       }
       local_f0 = (BufferResource)
                  (CONCAT44((uint)param_6 >> 2 | local_f0._0_4_ & 0xc0000000,0xffffffff) |
                  0x4000000000000000);
-      *pBVar16 = local_f0;
-      this->m_pBufferResource = pBVar16 + 1;
+      *pBVar15 = local_f0;
+      *(BufferResource **)((int)&param_1[1].m_Constants.field1_0x300 + 0x37c) = pBVar15 + 1;
     }
   }
   else {
-    param_6->_padding_ = uVar34;
-    param_6->_padding_ = uVar34;
+    param_6->_padding_ = iVar22;
+    param_6->_padding_ = iVar22;
   }
 LAB_82875714:
   D3D::GPUTimingMarkerFull::~GPUTimingMarkerFull(local_e0);
-  __restgprlr();
   return;
 }
 
@@ -1235,6 +1225,8 @@ ulong __thiscall D3D::ConvertD32FS8ToD24FS8(D3D *this,float param_1,ulong param_
 
 // 82875730  D3DDevice_Resolve  (<external>/Xenon/XDK-Main-FEB11/core/private/xtl/graphics/d3d/api/resolve.cpp:1727)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 
 void D3DDevice_Resolve(D3DDevice *param_1,ulong param_2,_D3DRECT *param_3,D3DBaseTexture *param_4,
@@ -1242,17 +1234,13 @@ void D3DDevice_Resolve(D3DDevice *param_1,ulong param_2,_D3DRECT *param_3,D3DBas
                       ulong param_10,_D3DRESOLVE_PARAMETERS *param_11)
 
 {
-  D3DDevice *pDVar1;
-  double extraout_f1;
   uint in_stack_ffffff38;
   __vector4 *in_stack_ffffff3c;
   ulong in_stack_ffffff40;
   _D3DRESOLVE_PARAMETERSEX *in_stack_ffffff44;
   
-  pDVar1 = (D3DDevice *)__savegprlr_24((double)param_9,param_1);
-  D3DDevice_ResolveEx(pDVar1,param_2,param_3,0,0,param_4,param_5,param_6,in_stack_ffffff38,
-                      in_stack_ffffff3c,(float)extraout_f1,in_stack_ffffff40,in_stack_ffffff44);
-  __restgprlr_24();
+  D3DDevice_ResolveEx(param_1,param_2,param_3,0,0,param_4,param_5,param_6,in_stack_ffffff38,
+                      in_stack_ffffff3c,param_9,in_stack_ffffff40,in_stack_ffffff44);
   return;
 }
 

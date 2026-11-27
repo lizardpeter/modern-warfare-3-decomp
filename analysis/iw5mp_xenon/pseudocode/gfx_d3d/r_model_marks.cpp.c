@@ -13,6 +13,8 @@ bool R_ShouldDrawFxModelVerts(void)
 
 // 8275C5A8  R_GenerateMarkVertsForDynamicModels  (gfx_d3d/r_model_marks.cpp:57)
 
+/* WARNING: Function: __savegprlr_18 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_18 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void R_GenerateMarkVertsForDynamicModels
@@ -23,91 +25,88 @@ void R_GenerateMarkVertsForDynamicModels
   ushort uVar1;
   uchar *puVar2;
   uint uVar3;
-  FxMarksSystem *pFVar4;
-  ushort *puVar5;
-  int iVar6;
-  GfxSceneEntityInfo *pGVar7;
-  ushort **ppuVar8;
-  GfxPlacement *pGVar9;
+  ushort *puVar4;
+  int iVar5;
+  GfxSceneEntityInfo *pGVar6;
+  ushort **ppuVar7;
+  GfxPlacement *pGVar8;
   DObj *in_stack_ffffff28;
   DObj *in_stack_ffffff2c;
   
-  pFVar4 = (FxMarksSystem *)__savegprlr_18(param_1);
   puVar2 = param_3->dObjVisData;
   if (puVar2 == (uchar *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_model_marks.cpp",
                     0x55,0,"%s");
   }
-  iVar6 = 0;
+  iVar5 = 0;
   if (param_3->dObjCount != 0) {
-    pGVar7 = &scene.sceneDObj[0].info;
+    pGVar6 = &scene.sceneDObj[0].info;
     do {
-      if ((puVar2[iVar6] & 1) != 0) {
-        uVar3 = (uint)pGVar7[-2].pose >> 0xd & 0xfff;
-        if ((iVar6 == param_3->dObjViewmodelIndex) || (uVar3 < param_3->entnumOrdinaryEnd)) {
-          puVar5 = CG_GetPoseLightingHandle(pGVar7->pose);
-          if (iVar6 == param_3->dObjViewmodelIndex) {
+      if ((puVar2[iVar5] & 1) != 0) {
+        uVar3 = (uint)pGVar6[-2].pose >> 0xd & 0xfff;
+        if ((iVar5 == param_3->dObjViewmodelIndex) || (uVar3 < param_3->entnumOrdinaryEnd)) {
+          puVar4 = CG_GetPoseLightingHandle(pGVar6->pose);
+          if (iVar5 == param_3->dObjViewmodelIndex) {
             FX_GenerateMarkVertsForViewmodelDObj
-                      (pFVar4,param_2,param_3->dpvsLocalClientNum,param_5,param_4,*puVar5,
-                       *(uchar *)(pGVar7 + 1),*(uchar *)((int)pGVar7 + 5),in_stack_ffffff28);
+                      (param_1,param_2,param_3->dpvsLocalClientNum,param_5,param_4,*puVar4,
+                       *(uchar *)(pGVar6 + 1),*(uchar *)((int)pGVar6 + 5),in_stack_ffffff28);
           }
           else {
             FX_GenerateMarkVertsForEntDObj
-                      (pFVar4,param_2,param_3->dpvsLocalClientNum,uVar3,param_4,*puVar5,
-                       *(uchar *)(pGVar7 + 1),*(uchar *)((int)pGVar7 + 5),in_stack_ffffff28);
+                      (param_1,param_2,param_3->dpvsLocalClientNum,uVar3,param_4,*puVar4,
+                       *(uchar *)(pGVar6 + 1),*(uchar *)((int)pGVar6 + 5),in_stack_ffffff28);
           }
         }
       }
-      iVar6 = iVar6 + 1;
-      pGVar7 = pGVar7 + 0x1e;
-    } while (iVar6 != param_3->dObjCount);
+      iVar5 = iVar5 + 1;
+      pGVar6 = pGVar6 + 0x1e;
+    } while (iVar5 != param_3->dObjCount);
   }
   puVar2 = param_3->modelVisData;
   if (puVar2 == (uchar *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_model_marks.cpp",
                     0x85,0,"%s");
   }
-  iVar6 = 0;
+  iVar5 = 0;
   if (param_3->modelCount != 0) {
-    ppuVar8 = &scene.sceneModel[0].cachedLightingHandle;
+    ppuVar7 = &scene.sceneModel[0].cachedLightingHandle;
     do {
-      if ((puVar2[iVar6] & 1) != 0) {
-        uVar3 = (uint)ppuVar8[-2] >> 0xd & 0xfff;
-        if ((uVar3 < param_3->entnumOrdinaryEnd) && ((DObj *)ppuVar8[-0xb] != (DObj *)0x0)) {
-          if (*ppuVar8 == (ushort *)0x0) {
+      if ((puVar2[iVar5] & 1) != 0) {
+        uVar3 = (uint)ppuVar7[-2] >> 0xd & 0xfff;
+        if ((uVar3 < param_3->entnumOrdinaryEnd) && ((DObj *)ppuVar7[-0xb] != (DObj *)0x0)) {
+          if (*ppuVar7 == (ushort *)0x0) {
             MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_model_marks.cpp"
                             ,0x9a,0,"%s");
           }
           FX_GenerateMarkVertsForEntXModel
-                    (pFVar4,param_2,param_3->dpvsLocalClientNum,uVar3,param_4,**ppuVar8,
-                     *(uchar *)(ppuVar8 + 4),*(uchar *)((int)ppuVar8 + 0x12),
+                    (param_1,param_2,param_3->dpvsLocalClientNum,uVar3,param_4,**ppuVar7,
+                     *(uchar *)(ppuVar7 + 4),*(uchar *)((int)ppuVar7 + 0x12),
                      (GfxScaledPlacement *)in_stack_ffffff28,in_stack_ffffff2c);
         }
       }
-      iVar6 = iVar6 + 1;
-      ppuVar8 = ppuVar8 + 0x12;
-    } while (iVar6 != param_3->modelCount);
+      iVar5 = iVar5 + 1;
+      ppuVar7 = ppuVar7 + 0x12;
+    } while (iVar5 != param_3->modelCount);
   }
   puVar2 = param_3->brushVisData;
   if (puVar2 == (uchar *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_model_marks.cpp",
                     0xad,0,"%s");
   }
-  iVar6 = 0;
+  iVar5 = 0;
   if (param_3->brushCount != 0) {
-    pGVar9 = &scene.sceneBrush[0].placement;
+    pGVar8 = &scene.sceneBrush[0].placement;
     do {
-      if (((puVar2[iVar6] & 1) != 0) &&
-         (uVar1 = *(ushort *)((int)pGVar9[-1].origin + 6), uVar1 < param_3->entnumOrdinaryEnd)) {
+      if (((puVar2[iVar5] & 1) != 0) &&
+         (uVar1 = *(ushort *)((int)pGVar8[-1].origin + 6), uVar1 < param_3->entnumOrdinaryEnd)) {
         FX_GenerateMarkVertsForEntBrush
-                  (pFVar4,param_2,param_3->dpvsLocalClientNum,(uint)uVar1,param_4,
-                   *(uchar *)pGVar9[1].quat,pGVar9);
+                  (param_1,param_2,param_3->dpvsLocalClientNum,(uint)uVar1,param_4,
+                   *(uchar *)pGVar8[1].quat,pGVar8);
       }
-      iVar6 = iVar6 + 1;
-      pGVar9 = (GfxPlacement *)(pGVar9[1].quat + 3);
-    } while (iVar6 != param_3->brushCount);
+      iVar5 = iVar5 + 1;
+      pGVar8 = (GfxPlacement *)(pGVar8[1].quat + 3);
+    } while (iVar5 != param_3->brushCount);
   }
-  __restgprlr_18();
   return;
 }
 

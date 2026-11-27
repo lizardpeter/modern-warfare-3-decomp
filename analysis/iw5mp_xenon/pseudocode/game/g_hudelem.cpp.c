@@ -99,85 +99,84 @@ void HudElem_SetDefaults(game_hudelem_s *param_1)
 
 // 82470780  HudElem_Alloc  (game/g_hudelem.cpp:528)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
+
 game_hudelem_s * HudElem_Alloc(int param_1,int param_2)
 
 {
-  int iVar1;
-  game_hudelem_s *pgVar2;
-  int iVar3;
-  ulonglong uVar4;
+  game_hudelem_s *pgVar1;
+  int iVar2;
+  ulonglong uVar3;
   
-  iVar1 = __savegprlr_25(param_1);
-  pgVar2 = g_hudelems;
-  iVar3 = 0;
-  uVar4 = 0;
+  pgVar1 = g_hudelems;
+  iVar2 = 0;
+  uVar3 = 0;
   do {
-    if ((pgVar2->elem).type == HE_TYPE_FREE) {
-      pgVar2 = g_hudelems + iVar3;
-      if (pgVar2 == (game_hudelem_s *)0x0) {
+    if ((pgVar1->elem).type == HE_TYPE_FREE) {
+      pgVar1 = g_hudelems + iVar2;
+      if (pgVar1 == (game_hudelem_s *)0x0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_hudelem.cpp",0x1e1,
                         0,"%s");
       }
-      if (0x3ff < (uint)((iVar3 * 0xb4) / 0xb4)) {
+      if (0x3ff < (uint)((iVar2 * 0xb4) / 0xb4)) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_hudelem.cpp",0x1e2,
                         0,
                         "hud - g_hudelems doesn\'t index ARRAY_COUNT( g_hudelems )\n\t%i not in [0, %i)"
                        );
       }
-      g_hudelems[iVar3].elem.font = 0;
-      g_hudelems[iVar3].elem.alignOrg = 0;
-      g_hudelems[iVar3].elem.alignScreen = 0;
-      g_hudelems[iVar3].elem.glowColor.rgba = 0;
-      g_hudelems[iVar3].elem.fromColor.rgba = 0;
-      g_hudelems[iVar3].elem.x = 0.0;
-      (pgVar2->elem).type = HE_TYPE_TEXT;
-      g_hudelems[iVar3].elem.y = 0.0;
-      g_hudelems[iVar3].elem.targetEntNum = 0x7ff;
-      g_hudelems[iVar3].elem.z = 0.0;
-      g_hudelems[iVar3].elem.color.rgba = -1;
-      g_hudelems[iVar3].elem.sort = 0.0;
-      g_hudelems[iVar3].elem.fadeStartTime = 0;
-      g_hudelems[iVar3].elem.fontScale = 0.0;
-      g_hudelems[iVar3].elem.fadeTime = 0;
-      g_hudelems[iVar3].elem.fromFontScale = 0.0;
-      g_hudelems[iVar3].elem.label = 0;
-      g_hudelems[iVar3].elem.fromX = 0.0;
-      g_hudelems[iVar3].elem.flags = 0;
-      g_hudelems[iVar3].elem.fromY = 0.0;
-      g_hudelems[iVar3].elem.fxBirthTime = 0;
-      g_hudelems[iVar3].elem.value = 0.0;
-      g_hudelems[iVar3].elem.fxLetterTime = 0;
-      g_hudelems[iVar3].elem.fxDecayStartTime = 0;
-      g_hudelems[iVar3].elem.fxDecayDuration = 0;
-      g_hudelems[iVar3].elem.soundID = 0;
-      g_hudelems[iVar3].elem.moveStartTime = 0;
-      g_hudelems[iVar3].elem.moveTime = 0;
-      g_hudelems[iVar3].archived = 1;
-      g_hudelems[iVar3].elem.fontScaleStartTime = 0;
-      g_hudelems[iVar3].elem.fontScaleTime = 0;
-      g_hudelems[iVar3].elem.width = 0;
-      g_hudelems[iVar3].elem.height = 0;
-      g_hudelems[iVar3].elem.materialIndex = 0;
-      g_hudelems[iVar3].elem.fromAlignOrg = 0;
-      g_hudelems[iVar3].elem.fromAlignScreen = 0;
-      g_hudelems[iVar3].elem.fromWidth = 0;
-      g_hudelems[iVar3].elem.fromHeight = 0;
-      g_hudelems[iVar3].elem.scaleStartTime = 0;
-      g_hudelems[iVar3].elem.scaleTime = 0;
-      g_hudelems[iVar3].elem.time = 0;
-      g_hudelems[iVar3].elem.duration = 0;
-      g_hudelems[iVar3].elem.text = 0;
-      g_hudelems[iVar3].clientNum = iVar1;
-      g_hudelems[iVar3].team = param_2;
-      pgVar2 = (game_hudelem_s *)__restgprlr_25(pgVar2);
-      return pgVar2;
+      g_hudelems[iVar2].elem.font = 0;
+      g_hudelems[iVar2].elem.alignOrg = 0;
+      g_hudelems[iVar2].elem.alignScreen = 0;
+      g_hudelems[iVar2].elem.glowColor.rgba = 0;
+      g_hudelems[iVar2].elem.fromColor.rgba = 0;
+      g_hudelems[iVar2].elem.x = 0.0;
+      (pgVar1->elem).type = HE_TYPE_TEXT;
+      g_hudelems[iVar2].elem.y = 0.0;
+      g_hudelems[iVar2].elem.targetEntNum = 0x7ff;
+      g_hudelems[iVar2].elem.z = 0.0;
+      g_hudelems[iVar2].elem.color.rgba = -1;
+      g_hudelems[iVar2].elem.sort = 0.0;
+      g_hudelems[iVar2].elem.fadeStartTime = 0;
+      g_hudelems[iVar2].elem.fontScale = 0.0;
+      g_hudelems[iVar2].elem.fadeTime = 0;
+      g_hudelems[iVar2].elem.fromFontScale = 0.0;
+      g_hudelems[iVar2].elem.label = 0;
+      g_hudelems[iVar2].elem.fromX = 0.0;
+      g_hudelems[iVar2].elem.flags = 0;
+      g_hudelems[iVar2].elem.fromY = 0.0;
+      g_hudelems[iVar2].elem.fxBirthTime = 0;
+      g_hudelems[iVar2].elem.value = 0.0;
+      g_hudelems[iVar2].elem.fxLetterTime = 0;
+      g_hudelems[iVar2].elem.fxDecayStartTime = 0;
+      g_hudelems[iVar2].elem.fxDecayDuration = 0;
+      g_hudelems[iVar2].elem.soundID = 0;
+      g_hudelems[iVar2].elem.moveStartTime = 0;
+      g_hudelems[iVar2].elem.moveTime = 0;
+      g_hudelems[iVar2].archived = 1;
+      g_hudelems[iVar2].elem.fontScaleStartTime = 0;
+      g_hudelems[iVar2].elem.fontScaleTime = 0;
+      g_hudelems[iVar2].elem.width = 0;
+      g_hudelems[iVar2].elem.height = 0;
+      g_hudelems[iVar2].elem.materialIndex = 0;
+      g_hudelems[iVar2].elem.fromAlignOrg = 0;
+      g_hudelems[iVar2].elem.fromAlignScreen = 0;
+      g_hudelems[iVar2].elem.fromWidth = 0;
+      g_hudelems[iVar2].elem.fromHeight = 0;
+      g_hudelems[iVar2].elem.scaleStartTime = 0;
+      g_hudelems[iVar2].elem.scaleTime = 0;
+      g_hudelems[iVar2].elem.time = 0;
+      g_hudelems[iVar2].elem.duration = 0;
+      g_hudelems[iVar2].elem.text = 0;
+      g_hudelems[iVar2].clientNum = param_1;
+      g_hudelems[iVar2].team = param_2;
+      return pgVar1;
     }
-    uVar4 = uVar4 + 0xb4;
-    iVar3 = iVar3 + 1;
-    pgVar2 = pgVar2 + 1;
-  } while ((uVar4 & 0xffffffff) < 0x2d000);
-  pgVar2 = (game_hudelem_s *)__restgprlr_25(0);
-  return pgVar2;
+    uVar3 = uVar3 + 0xb4;
+    iVar2 = iVar2 + 1;
+    pgVar1 = pgVar1 + 1;
+  } while ((uVar3 & 0xffffffff) < 0x2d000);
+  return (game_hudelem_s *)0x0;
 }
 
 
@@ -210,6 +209,8 @@ void HudElem_Free(game_hudelem_s *param_1)
 
 // 82470A00  HudElem_ClientDisconnect  (game/g_hudelem.cpp:591)
 
+/* WARNING: Function: __savegprlr_19 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_19 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
@@ -217,43 +218,42 @@ void HudElem_ClientDisconnect(gentity_s *param_1)
 
 {
   he_type_t hVar1;
-  int *piVar2;
-  uint uVar3;
-  game_hudelem_s *pgVar4;
+  uint uVar2;
+  game_hudelem_s *pgVar3;
   
-  piVar2 = (int *)__savegprlr_19(param_1);
-  uVar3 = 0;
+  uVar2 = 0;
   do {
-    pgVar4 = (game_hudelem_s *)((int)&g_hudelems[0].elem.type + uVar3);
-    if ((*(int *)((int)&g_hudelems[0].elem.type + uVar3) != 0) &&
-       (*(int *)((int)&g_hudelems[0].clientNum + uVar3) == *piVar2)) {
-      if (pgVar4 == (game_hudelem_s *)0x0) {
+    pgVar3 = (game_hudelem_s *)((int)&g_hudelems[0].elem.type + uVar2);
+    if ((*(int *)((int)&g_hudelems[0].elem.type + uVar2) != 0) &&
+       (*(int *)((int)&g_hudelems[0].clientNum + uVar2) == (param_1->s).number)) {
+      if (pgVar3 == (game_hudelem_s *)0x0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_hudelem.cpp",0x23b,
                         0,"%s");
       }
-      if (0x3ff < (uint)((int)uVar3 / 0xb4)) {
+      if (0x3ff < (uint)((int)uVar2 / 0xb4)) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_hudelem.cpp",0x23c,
                         0,
                         "hud - g_hudelems doesn\'t index ARRAY_COUNT( g_hudelems )\n\t%i not in [0, %i)"
                        );
       }
-      hVar1 = (pgVar4->elem).type;
+      hVar1 = (pgVar3->elem).type;
       if (((int)hVar1 < 1) || (0xd < (int)hVar1)) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_hudelem.cpp",0x23d,
                         0,"%s\n\t(hud->elem.type) = %i");
       }
-      Scr_FreeHudElem(pgVar4);
-      (pgVar4->elem).type = HE_TYPE_FREE;
+      Scr_FreeHudElem(pgVar3);
+      (pgVar3->elem).type = HE_TYPE_FREE;
     }
-    uVar3 = uVar3 + 0xb4;
-  } while (uVar3 < 0x2d000);
-  __restgprlr_19();
+    uVar2 = uVar2 + 0xb4;
+  } while (uVar2 < 0x2d000);
   return;
 }
 
 
 // 82470B10  HudElem_DestroyAll  (game/g_hudelem.cpp:608)
 
+/* WARNING: Function: __savegprlr_20 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_20 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void HudElem_DestroyAll(void)
@@ -264,7 +264,6 @@ void HudElem_DestroyAll(void)
   int iVar3;
   game_hudelem_s *pgVar4;
   
-  __savegprlr_20();
   pgVar4 = g_hudelems;
   iVar3 = 0;
   lVar2 = 0x400;
@@ -293,110 +292,97 @@ void HudElem_DestroyAll(void)
     iVar3 = iVar3 + 0xb4;
   } while (lVar2 != 0);
   memset();
-  __restgprlr_20();
   return;
 }
 
 
 // 82470C20  HudElem_SetEnumString  (game/g_hudelem.cpp:624)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
+
 void HudElem_SetEnumString
                (game_hudelem_s *param_1,game_hudelem_field_t *param_2,char **param_3,int param_4)
 
 {
   int iVar1;
-  undefined4 *puVar2;
+  char *pcVar2;
   int iVar3;
-  char *pcVar4;
+  uint uVar4;
   int iVar5;
-  ulonglong uVar6;
-  uint uVar7;
-  ulonglong uVar8;
-  int iVar9;
-  int iVar11;
-  longlong lVar10;
+  longlong lVar6;
   char acStack_850 [2047];
   undefined1 local_51;
   
-  lVar10 = (longlong)param_4;
-  uVar8 = (ulonglong)(int)param_3;
-  uVar6 = (ulonglong)(int)param_2;
-  iVar3 = __savegprlr_23(param_1);
-  if (iVar3 == 0) {
+  lVar6 = (longlong)param_4;
+  if (param_1 == (game_hudelem_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_hudelem.cpp",0x276,0,
                     "%s");
   }
-  if ((uVar6 & 0xffffffff) == 0) {
+  if (param_2 == (game_hudelem_field_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_hudelem.cpp",0x277,0,
                     "%s");
   }
-  if ((uVar8 & 0xffffffff) == 0) {
+  if (param_3 == (char **)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_hudelem.cpp",0x278,0,
                     "%s");
   }
-  iVar11 = (int)lVar10;
-  if (iVar11 < 1) {
+  if (param_4 < 1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_hudelem.cpp",0x279,0,
                     "%s\n\t(nameCount) = %i");
   }
-  puVar2 = (undefined4 *)uVar6;
-  iVar1 = puVar2[2];
-  pcVar4 = Scr_GetString(0);
-  iVar9 = 0;
-  if (0 < iVar11) {
+  iVar1 = param_2->ofs;
+  pcVar2 = Scr_GetString(0);
+  iVar5 = 0;
+  if (0 < param_4) {
     do {
-      iVar5 = I_stricmp(pcVar4,(char *)*(undefined4 *)uVar8);
-      if (iVar5 == 0) {
-        uVar7 = *(uint *)(iVar1 + iVar3) & ~(puVar2[4] << (puVar2[5] & 0x3f));
-        *(uint *)(iVar1 + iVar3) = uVar7;
-        *(uint *)(iVar1 + iVar3) = iVar9 << (puVar2[5] & 0x3f) | uVar7;
-        __restgprlr_23();
+      iVar3 = I_stricmp(pcVar2,*param_3);
+      if (iVar3 == 0) {
+        uVar4 = *(uint *)((int)&(param_1->elem).type + iVar1) &
+                ~(param_2->mask << (param_2->shift & 0x3fU));
+        *(uint *)((int)&(param_1->elem).type + iVar1) = uVar4;
+        *(uint *)((int)&(param_1->elem).type + iVar1) = iVar5 << (param_2->shift & 0x3fU) | uVar4;
         return;
       }
-      iVar9 = iVar9 + 1;
-      uVar8 = uVar8 + 4;
-    } while (iVar9 < iVar11);
+      iVar5 = iVar5 + 1;
+      param_3 = param_3 + 1;
+    } while (iVar5 < param_4);
   }
-  SL_ConvertToString((uint)*(ushort *)*puVar2);
+  SL_ConvertToString((uint)*param_2->name);
   sprintf(acStack_850,"\"%s\" is not a valid value for hudelem field \"%s\"\nShould be one of:");
-  if (0 < iVar11) {
+  if (0 < param_4) {
     do {
-      pcVar4 = va(" %s");
-      strncat(acStack_850,pcVar4,0x800);
-      lVar10 = lVar10 + -1;
+      pcVar2 = va(" %s");
+      strncat(acStack_850,pcVar2,0x800);
+      lVar6 = lVar6 + -1;
       local_51 = 0;
-    } while (lVar10 != 0);
+    } while (lVar6 != 0);
   }
   Scr_Error(acStack_850);
-  __restgprlr_23();
   return;
 }
 
 
 // 82470DD0  HudElem_GetEnumString  (game/g_hudelem.cpp:658)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 void HudElem_GetEnumString
                (game_hudelem_s *param_1,game_hudelem_field_t *param_2,char **param_3,int param_4)
 
 {
-  int iVar1;
-  int iVar2;
-  ulonglong uVar3;
-  ulonglong uVar4;
-  uint uVar5;
+  uint uVar1;
   
-  uVar4 = (ulonglong)(int)param_3;
-  uVar3 = (ulonglong)(int)param_2;
-  iVar2 = __savegprlr_26(param_1);
-  if (iVar2 == 0) {
+  if (param_1 == (game_hudelem_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_hudelem.cpp",0x296,0,
                     "%s");
   }
-  if ((uVar3 & 0xffffffff) == 0) {
+  if (param_2 == (game_hudelem_field_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_hudelem.cpp",0x297,0,
                     "%s");
   }
-  if ((uVar4 & 0xffffffff) == 0) {
+  if (param_3 == (char **)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_hudelem.cpp",0x298,0,
                     "%s");
   }
@@ -404,15 +390,13 @@ void HudElem_GetEnumString
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_hudelem.cpp",0x299,0,
                     "%s\n\t(nameCount) = %i");
   }
-  iVar1 = (int)uVar3;
-  uVar5 = *(int *)(*(int *)(iVar1 + 8) + iVar2) >> (*(uint *)(iVar1 + 0x14) & 0x3f) &
-          *(uint *)(iVar1 + 0x10);
-  if (((int)uVar5 < 0) || (param_4 <= (int)uVar5)) {
+  uVar1 = *(int *)((int)&(param_1->elem).type + param_2->ofs) >> (param_2->shift & 0x3fU) &
+          param_2->mask;
+  if (((int)uVar1 < 0) || (param_4 <= (int)uVar1)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_hudelem.cpp",0x29d,0,
                     "%s\n\t(index) = %i");
   }
-  Scr_AddString(*(char **)(uVar5 * 4 + (int)uVar4));
-  __restgprlr_26();
+  Scr_AddString(param_3[uVar1]);
   return;
 }
 
@@ -444,27 +428,25 @@ void HudElem_GetLocalizedString(game_hudelem_s *param_1,int param_2)
 
 // 82470F60  HudElem_SetFlag  (game/g_hudelem.cpp:708)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void HudElem_SetFlag(game_hudelem_s *param_1,int param_2,int param_3)
 
 {
   int iVar1;
   uint uVar2;
   int iVar3;
-  int iVar4;
-  ulonglong uVar5;
-  uint uVar6;
+  uint uVar4;
   
-  uVar5 = (ulonglong)param_2;
-  iVar3 = __savegprlr_29(param_1);
-  iVar1 = *(int *)((int)&fields[0].ofs + (int)((uVar5 & 0xffffffff) << 5));
-  iVar4 = Scr_GetInt(0);
-  uVar2 = *(uint *)(iVar1 + iVar3);
-  uVar6 = uVar2 | param_3;
-  if (iVar4 == 0) {
-    uVar6 = uVar2 & ~param_3;
+  iVar1 = fields[param_2].ofs;
+  iVar3 = Scr_GetInt(0);
+  uVar2 = *(uint *)((int)&(param_1->elem).type + iVar1);
+  uVar4 = uVar2 | param_3;
+  if (iVar3 == 0) {
+    uVar4 = uVar2 & ~param_3;
   }
-  *(uint *)(iVar1 + iVar3) = uVar6;
-  __restgprlr_29();
+  *(uint *)((int)&(param_1->elem).type + iVar1) = uVar4;
   return;
 }
 
@@ -690,61 +672,59 @@ void HudElem_GetFlagHideWhenInDemo(game_hudelem_s *param_1,int param_2)
 
 // 82471338  HudElem_SetColor  (game/g_hudelem.cpp:838)
 
+/* WARNING: Function: __savefpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_28 replaced with injection: xenon_save_restore */
+
 void HudElem_SetColor(game_hudelem_s *param_1,int param_2)
 
 {
-  int iVar1;
-  ulonglong uVar2;
+  double dVar1;
+  double dVar2;
   double dVar3;
   double dVar4;
   double dVar5;
   double dVar6;
-  double dVar7;
-  double dVar8;
   float local_48;
   float local_44;
   float local_40;
   
-  uVar2 = (ulonglong)param_2;
-  iVar1 = __savefpr_28(param_1);
-  if (*(int *)((int)&fields[0].ofs + (int)((uVar2 & 0xffffffff) << 5)) != 0x30) {
+  if (fields[param_2].ofs != 0x30) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_hudelem.cpp",0x349,0,
                     "%s");
   }
   Scr_GetVector(0,&local_48);
-  dVar8 = 1.0;
-  dVar7 = 0.0;
-  dVar6 = 255.0;
-  dVar5 = 0.5;
-  dVar4 = dVar8;
+  dVar6 = 1.0;
+  dVar5 = 0.0;
+  dVar4 = 255.0;
+  dVar3 = 0.5;
+  dVar2 = dVar6;
   if ((float)((double)local_48 - 1.0) < 0.0) {
-    dVar4 = (double)local_48;
+    dVar2 = (double)local_48;
   }
-  dVar3 = dVar7;
-  if (-dVar4 < 0.0) {
-    dVar3 = dVar4;
+  dVar1 = dVar5;
+  if (-dVar2 < 0.0) {
+    dVar1 = dVar2;
   }
-  dVar3 = floor((double)(float)(dVar3 * 255.0 + 0.5));
-  dVar4 = dVar8;
-  if ((float)((double)local_44 - dVar8) < 0.0) {
-    dVar4 = (double)local_44;
+  dVar1 = floor((double)(float)(dVar1 * 255.0 + 0.5));
+  dVar2 = dVar6;
+  if ((float)((double)local_44 - dVar6) < 0.0) {
+    dVar2 = (double)local_44;
   }
-  *(char *)(iVar1 + 0x30) = (char)(int)dVar3;
-  dVar3 = dVar7;
-  if (-dVar4 < 0.0) {
-    dVar3 = dVar4;
+  (param_1->elem).color._s_0.r = (uchar)(int)dVar1;
+  dVar1 = dVar5;
+  if (-dVar2 < 0.0) {
+    dVar1 = dVar2;
   }
-  dVar4 = floor((double)(float)(dVar3 * dVar6 + dVar5));
-  if ((float)((double)local_40 - dVar8) < 0.0) {
-    dVar8 = (double)local_40;
+  dVar2 = floor((double)(float)(dVar1 * dVar4 + dVar3));
+  if ((float)((double)local_40 - dVar6) < 0.0) {
+    dVar6 = (double)local_40;
   }
-  *(char *)(iVar1 + 0x31) = (char)(int)dVar4;
-  if (-dVar8 < 0.0) {
-    dVar7 = dVar8;
+  (param_1->elem).color._s_0.g = (uchar)(int)dVar2;
+  if (-dVar6 < 0.0) {
+    dVar5 = dVar6;
   }
-  dVar8 = floor((double)(float)(dVar7 * dVar6 + dVar5));
-  *(char *)(iVar1 + 0x32) = (char)(int)dVar8;
-  __restfpr_28();
+  dVar6 = floor((double)(float)(dVar5 * dVar4 + dVar3));
+  (param_1->elem).color._s_0.b = (uchar)(int)dVar6;
   return;
 }
 
@@ -814,61 +794,59 @@ void HudElem_GetAlpha(game_hudelem_s *param_1,int param_2)
 
 // 82471690  HudElem_SetGlowColor  (game/g_hudelem.cpp:883)
 
+/* WARNING: Function: __savefpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_28 replaced with injection: xenon_save_restore */
+
 void HudElem_SetGlowColor(game_hudelem_s *param_1,int param_2)
 
 {
-  int iVar1;
-  ulonglong uVar2;
+  double dVar1;
+  double dVar2;
   double dVar3;
   double dVar4;
   double dVar5;
   double dVar6;
-  double dVar7;
-  double dVar8;
   float local_48;
   float local_44;
   float local_40;
   
-  uVar2 = (ulonglong)param_2;
-  iVar1 = __savefpr_28(param_1);
-  if (*(int *)((int)&fields[0].ofs + (int)((uVar2 & 0xffffffff) << 5)) != 0x8c) {
+  if (fields[param_2].ofs != 0x8c) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_hudelem.cpp",0x376,0,
                     "%s");
   }
   Scr_GetVector(0,&local_48);
-  dVar8 = 1.0;
-  dVar7 = 0.0;
-  dVar6 = 255.0;
-  dVar5 = 0.5;
-  dVar4 = dVar8;
+  dVar6 = 1.0;
+  dVar5 = 0.0;
+  dVar4 = 255.0;
+  dVar3 = 0.5;
+  dVar2 = dVar6;
   if ((float)((double)local_48 - 1.0) < 0.0) {
-    dVar4 = (double)local_48;
+    dVar2 = (double)local_48;
   }
-  dVar3 = dVar7;
-  if (-dVar4 < 0.0) {
-    dVar3 = dVar4;
+  dVar1 = dVar5;
+  if (-dVar2 < 0.0) {
+    dVar1 = dVar2;
   }
-  dVar3 = floor((double)(float)(dVar3 * 255.0 + 0.5));
-  dVar4 = dVar8;
-  if ((float)((double)local_44 - dVar8) < 0.0) {
-    dVar4 = (double)local_44;
+  dVar1 = floor((double)(float)(dVar1 * 255.0 + 0.5));
+  dVar2 = dVar6;
+  if ((float)((double)local_44 - dVar6) < 0.0) {
+    dVar2 = (double)local_44;
   }
-  *(char *)(iVar1 + 0x8c) = (char)(int)dVar3;
-  dVar3 = dVar7;
-  if (-dVar4 < 0.0) {
-    dVar3 = dVar4;
+  (param_1->elem).glowColor._s_0.r = (uchar)(int)dVar1;
+  dVar1 = dVar5;
+  if (-dVar2 < 0.0) {
+    dVar1 = dVar2;
   }
-  dVar4 = floor((double)(float)(dVar3 * dVar6 + dVar5));
-  if ((float)((double)local_40 - dVar8) < 0.0) {
-    dVar8 = (double)local_40;
+  dVar2 = floor((double)(float)(dVar1 * dVar4 + dVar3));
+  if ((float)((double)local_40 - dVar6) < 0.0) {
+    dVar6 = (double)local_40;
   }
-  *(char *)(iVar1 + 0x8d) = (char)(int)dVar4;
-  if (-dVar8 < 0.0) {
-    dVar7 = dVar8;
+  (param_1->elem).glowColor._s_0.g = (uchar)(int)dVar2;
+  if (-dVar6 < 0.0) {
+    dVar5 = dVar6;
   }
-  dVar8 = floor((double)(float)(dVar7 * dVar6 + dVar5));
-  *(char *)(iVar1 + 0x8e) = (char)(int)dVar8;
-  __restfpr_28();
+  dVar6 = floor((double)(float)(dVar5 * dVar4 + dVar3));
+  (param_1->elem).glowColor._s_0.b = (uchar)(int)dVar6;
   return;
 }
 
@@ -1073,6 +1051,8 @@ void HudElem_GetVertAlign(game_hudelem_s *param_1,int param_2)
 
 // 82471C48  HudElem_DumpHudElems  (game/g_hudelem.cpp:1061)
 
+/* WARNING: Function: __savegprlr_15 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_15 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "ConfigString": Some values do not have unique names */
 
@@ -1084,7 +1064,6 @@ void HudElem_DumpHudElems(void)
   int *piVar3;
   char acStack_490 [1168];
   
-  __savegprlr_15();
   piVar3 = &g_hudelems[0].clientNum;
   lVar2 = 0x400;
   do {
@@ -1122,69 +1101,56 @@ void HudElem_DumpHudElems(void)
     piVar3 = piVar3 + 0x2d;
   } while (lVar2 != 0);
   Com_Printf(0x17,"\n%i archived + %i current = %i hud elems\n");
-  __restgprlr_15();
   return;
 }
 
 
 // 82471E20  Scr_GetHudElemField  (game/g_hudelem.cpp:1115)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void Scr_GetHudElemField(int param_1,int param_2)
 
 {
-  int iVar1;
-  uint uVar2;
-  ulonglong uVar3;
-  
-  uVar3 = (ulonglong)param_2;
-  uVar2 = __savegprlr_28(param_1);
-  if (0x15 < (uVar3 & 0xffffffff)) {
+  if (0x15 < (uint)param_2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_hudelem.cpp",0x45f,0,
                     "%s");
   }
-  if (0x3ff < uVar2) {
+  if (0x3ff < (uint)param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_hudelem.cpp",0x460,0,
                     "%s");
   }
-  iVar1 = (int)uVar3;
-  if (fields[iVar1].getter != (_func___cdecl_void_game_hudelem_s_ptr_int *)0x0) {
-    (*fields[iVar1].getter)(g_hudelems + uVar2,iVar1);
-    __restgprlr_28();
+  if (fields[param_2].getter != (_func___cdecl_void_game_hudelem_s_ptr_int *)0x0) {
+    (*fields[param_2].getter)(g_hudelems + param_1,param_2);
     return;
   }
-  Scr_GetGenericField((uchar *)(g_hudelems + uVar2),fields[iVar1].type,fields[iVar1].ofs);
-  __restgprlr_28();
+  Scr_GetGenericField((uchar *)(g_hudelems + param_1),fields[param_2].type,fields[param_2].ofs);
   return;
 }
 
 
 // 82471EE0  Scr_SetHudElemField  (game/g_hudelem.cpp:1136)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void Scr_SetHudElemField(int param_1,int param_2)
 
 {
-  int iVar1;
-  uint uVar2;
-  ulonglong uVar3;
-  
-  uVar3 = (ulonglong)param_2;
-  uVar2 = __savegprlr_28(param_1);
-  if (0x15 < (uVar3 & 0xffffffff)) {
+  if (0x15 < (uint)param_2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_hudelem.cpp",0x474,0,
                     "%s");
   }
-  if (0x3ff < uVar2) {
+  if (0x3ff < (uint)param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_hudelem.cpp",0x475,0,
                     "%s");
   }
-  iVar1 = (int)uVar3;
-  if (fields[iVar1].setter != (_func___cdecl_void_game_hudelem_s_ptr_int *)0x0) {
-    (*fields[iVar1].setter)(g_hudelems + uVar2,iVar1);
-    __restgprlr_28();
+  if (fields[param_2].setter != (_func___cdecl_void_game_hudelem_s_ptr_int *)0x0) {
+    (*fields[param_2].setter)(g_hudelems + param_1,param_2);
     return;
   }
-  Scr_SetGenericField((uchar *)(g_hudelems + uVar2),fields[iVar1].type,fields[iVar1].ofs);
-  __restgprlr_28();
+  Scr_SetGenericField((uchar *)(g_hudelems + param_1),fields[param_2].type,fields[param_2].ofs);
   return;
 }
 
@@ -1229,6 +1195,8 @@ void GScr_NewHudElem(void)
 
 // 82472068  GScr_NewClientHudElem  (game/g_hudelem.cpp:1203)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
@@ -1239,7 +1207,6 @@ void GScr_NewClientHudElem(void)
   gentity_s *pgVar1;
   game_hudelem_s *pgVar2;
   
-  __savegprlr_29();
   pgVar1 = Scr_GetEntity(0);
   if (pgVar1 == (gentity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_hudelem.cpp",0x4b8,0,
@@ -1257,7 +1224,6 @@ void GScr_NewClientHudElem(void)
     Scr_Error("out of hudelems");
   }
   Scr_AddHudElem(pgVar2);
-  __restgprlr_29();
   return;
 }
 
@@ -1302,6 +1268,8 @@ void GScr_NewTeamHudElem(void)
 
 // 824721F8  GScr_AddFieldsForHudElems  (game/g_hudelem.cpp:1271)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void GScr_AddFieldsForHudElems(void)
@@ -1311,7 +1279,6 @@ void GScr_AddFieldsForHudElems(void)
   int iVar2;
   game_hudelem_field_t *pgVar3;
   
-  __savegprlr_24();
   pgVar3 = fields;
   iVar2 = 0;
   do {
@@ -1328,7 +1295,6 @@ void GScr_AddFieldsForHudElems(void)
     pgVar3 = pgVar3 + 1;
     iVar2 = iVar2 + 0x20;
   } while (pgVar3->name != (ushort *)0x0);
-  __restgprlr_24();
   return;
 }
 
@@ -1394,100 +1360,99 @@ void HECmd_SetText(scr_entref_t param_1)
 
 // 82472400  HECmd_ClearAllTextAfterHudElem  (game/g_hudelem.cpp:1339)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "ConfigString": Some values do not have unique names */
 
 void HECmd_ClearAllTextAfterHudElem(scr_entref_t param_1)
 
 {
   int iVar1;
-  scr_entref_t sVar2;
-  game_hudelem_s *pgVar3;
-  ConfigString CVar4;
+  game_hudelem_s *pgVar2;
+  ConfigString CVar3;
   
-  sVar2 = (scr_entref_t)__savegprlr_27(param_1);
-  pgVar3 = HECmd_GetHudElem(sVar2);
-  if ((pgVar3->elem).text == 0) {
+  pgVar2 = HECmd_GetHudElem(param_1);
+  if ((pgVar2->elem).text == 0) {
     Scr_Error(
              "Hud elem doesn\'t reference any text.  Make sure to call setText before using clearAllTextAfterHudElem."
              );
   }
-  iVar1 = (pgVar3->elem).text;
+  iVar1 = (pgVar2->elem).text;
   if (iVar1 + 1 < 0x1ff) {
-    CVar4 = iVar1 + (CS_LOCALIZED_STRINGS|CS_SYSTEMINFO);
+    CVar3 = iVar1 + (CS_LOCALIZED_STRINGS|CS_SYSTEMINFO);
     do {
-      if (0xeea < (int)CVar4) {
+      if (0xeea < (int)CVar3) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\../bgame/bg_public.h"
                         ,0x285,0,"%s");
       }
-      SV_SetConfigstring(CVar4,"");
-      CVar4 = CVar4 + CS_SYSTEMINFO;
-    } while ((int)CVar4 < 0x3d5);
+      SV_SetConfigstring(CVar3,"");
+      CVar3 = CVar3 + CS_SYSTEMINFO;
+    } while ((int)CVar3 < 0x3d5);
   }
-  __restgprlr_27();
   return;
 }
 
 
 // 824724A0  HECmd_SetMaterial  (game/g_hudelem.cpp:1370)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void HECmd_SetMaterial(scr_entref_t param_1)
 
 {
-  scr_entref_t sVar1;
-  game_hudelem_s *pgVar2;
-  uint uVar3;
-  char *pcVar4;
+  game_hudelem_s *pgVar1;
+  uint uVar2;
+  char *pcVar3;
+  int iVar4;
   int iVar5;
   int iVar6;
-  int iVar7;
   
-  sVar1 = (scr_entref_t)__savegprlr_27(param_1);
-  pgVar2 = HECmd_GetHudElem(sVar1);
-  uVar3 = Scr_GetNumParam();
-  if ((uVar3 != 1) && (uVar3 != 3)) {
+  pgVar1 = HECmd_GetHudElem(param_1);
+  uVar2 = Scr_GetNumParam();
+  if ((uVar2 != 1) && (uVar2 != 3)) {
     Scr_Error("USAGE: <hudelem> setShader(\"materialname\"[, optional_width, optional_height]);");
   }
-  pcVar4 = Scr_GetString(0);
-  if (*pcVar4 == '\0') {
+  pcVar3 = Scr_GetString(0);
+  if (*pcVar3 == '\0') {
     Scr_ParamError(0,"Trying to set the material to an empty string");
+    iVar4 = 0;
+  }
+  else {
+    iVar4 = G_MaterialIndex(pcVar3);
+  }
+  if (uVar2 == 1) {
     iVar5 = 0;
-  }
-  else {
-    iVar5 = G_MaterialIndex(pcVar4);
-  }
-  if (uVar3 == 1) {
     iVar6 = 0;
-    iVar7 = 0;
   }
   else {
-    iVar6 = Scr_GetInt(1);
-    if (iVar6 < 0) {
-      pcVar4 = va("width %i < 0");
-      Scr_ParamError(1,pcVar4);
+    iVar5 = Scr_GetInt(1);
+    if (iVar5 < 0) {
+      pcVar3 = va("width %i < 0");
+      Scr_ParamError(1,pcVar3);
     }
-    iVar7 = Scr_GetInt(2);
-    if (iVar7 < 0) {
-      pcVar4 = va("height %i < 0");
-      Scr_ParamError(2,pcVar4);
+    iVar6 = Scr_GetInt(2);
+    if (iVar6 < 0) {
+      pcVar3 = va("height %i < 0");
+      Scr_ParamError(2,pcVar3);
     }
   }
-  (pgVar2->elem).materialIndex = iVar5;
-  (pgVar2->elem).width = iVar6;
-  (pgVar2->elem).height = iVar7;
-  (pgVar2->elem).fromAlignOrg = 0;
-  (pgVar2->elem).fromAlignScreen = 0;
-  (pgVar2->elem).fromWidth = 0;
-  (pgVar2->elem).fromX = 0.0;
-  (pgVar2->elem).fromHeight = 0;
-  (pgVar2->elem).fromY = 0.0;
-  (pgVar2->elem).scaleStartTime = 0;
-  (pgVar2->elem).value = 0.0;
-  (pgVar2->elem).scaleTime = 0;
-  (pgVar2->elem).time = 0;
-  (pgVar2->elem).duration = 0;
-  (pgVar2->elem).text = 0;
-  (pgVar2->elem).type = HE_TYPE_MATERIAL;
-  __restgprlr_27();
+  (pgVar1->elem).materialIndex = iVar4;
+  (pgVar1->elem).width = iVar5;
+  (pgVar1->elem).height = iVar6;
+  (pgVar1->elem).fromAlignOrg = 0;
+  (pgVar1->elem).fromAlignScreen = 0;
+  (pgVar1->elem).fromWidth = 0;
+  (pgVar1->elem).fromX = 0.0;
+  (pgVar1->elem).fromHeight = 0;
+  (pgVar1->elem).fromY = 0.0;
+  (pgVar1->elem).scaleStartTime = 0;
+  (pgVar1->elem).value = 0.0;
+  (pgVar1->elem).scaleTime = 0;
+  (pgVar1->elem).time = 0;
+  (pgVar1->elem).duration = 0;
+  (pgVar1->elem).text = 0;
+  (pgVar1->elem).type = HE_TYPE_MATERIAL;
   return;
 }
 
@@ -1526,6 +1491,8 @@ void HECmd_ClearTargetEnt(scr_entref_t param_1)
 
 // 82472648  HECmd_SetTimer_Internal  (game/g_hudelem.cpp:1469)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 
@@ -1533,156 +1500,143 @@ void HECmd_SetTimer_Internal(scr_entref_t param_1,he_type_t param_2,char *param_
 
 {
   int iVar1;
-  scr_entref_t sVar2;
-  game_hudelem_s *pgVar3;
-  uint uVar4;
-  char *pcVar5;
-  longlong lVar6;
-  he_type_t hVar7;
-  double dVar8;
-  float fVar9;
+  game_hudelem_s *pgVar2;
+  uint uVar3;
+  char *pcVar4;
+  double dVar5;
+  float fVar6;
   
-  lVar6 = (longlong)(int)param_2;
-  sVar2 = (scr_entref_t)__savegprlr_29(param_1,lVar6,param_3);
-  pgVar3 = HECmd_GetHudElem(sVar2);
-  hVar7 = (he_type_t)lVar6;
-  if (((((hVar7 != HE_TYPE_TIMER_DOWN) && (hVar7 != HE_TYPE_TIMER_UP)) &&
-       (hVar7 != HE_TYPE_TIMER_STATIC)) &&
-      ((hVar7 != HE_TYPE_TENTHS_TIMER_DOWN && (hVar7 != HE_TYPE_TENTHS_TIMER_UP)))) &&
-     (hVar7 != HE_TYPE_TENTHS_TIMER_STATIC)) {
+  pgVar2 = HECmd_GetHudElem(param_1);
+  if (((((param_2 != HE_TYPE_TIMER_DOWN) && (param_2 != HE_TYPE_TIMER_UP)) &&
+       (param_2 != HE_TYPE_TIMER_STATIC)) &&
+      ((param_2 != HE_TYPE_TENTHS_TIMER_DOWN && (param_2 != HE_TYPE_TENTHS_TIMER_UP)))) &&
+     (param_2 != HE_TYPE_TENTHS_TIMER_STATIC)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_hudelem.cpp",0x5c2,0,
                     "%s\n\t(type) = %i");
   }
-  uVar4 = Scr_GetNumParam();
-  if (uVar4 != 1) {
-    pcVar5 = va("USAGE: <hudelem> %s(time_in_seconds);\n");
-    Scr_Error(pcVar5);
+  uVar3 = Scr_GetNumParam();
+  if (uVar3 != 1) {
+    pcVar4 = va("USAGE: <hudelem> %s(time_in_seconds);\n");
+    Scr_Error(pcVar4);
   }
-  fVar9 = Scr_GetFloat(0);
-  dVar8 = ceil((double)(fVar9 * 1000.0));
-  iVar1 = (int)dVar8;
-  if (((iVar1 < 1) && (hVar7 != HE_TYPE_TIMER_UP)) && (hVar7 != HE_TYPE_TENTHS_TIMER_UP)) {
-    pcVar5 = va("time %g should be > 0");
-    Scr_ParamError(0,pcVar5);
+  fVar6 = Scr_GetFloat(0);
+  dVar5 = ceil((double)(fVar6 * 1000.0));
+  iVar1 = (int)dVar5;
+  if (((iVar1 < 1) && (param_2 != HE_TYPE_TIMER_UP)) && (param_2 != HE_TYPE_TENTHS_TIMER_UP)) {
+    pcVar4 = va("time %g should be > 0");
+    Scr_ParamError(0,pcVar4);
   }
-  (pgVar3->elem).type = hVar7;
-  (pgVar3->elem).width = 0;
-  (pgVar3->elem).height = 0;
-  (pgVar3->elem).materialIndex = 0;
-  (pgVar3->elem).fromX = 0.0;
-  (pgVar3->elem).fromAlignOrg = 0;
-  (pgVar3->elem).fromY = 0.0;
-  (pgVar3->elem).fromAlignScreen = 0;
-  (pgVar3->elem).value = 0.0;
-  (pgVar3->elem).fromWidth = 0;
-  (pgVar3->elem).fromHeight = 0;
-  (pgVar3->elem).scaleStartTime = 0;
-  (pgVar3->elem).scaleTime = 0;
-  (pgVar3->elem).time = 0;
-  (pgVar3->elem).duration = 0;
-  (pgVar3->elem).text = 0;
-  if ((hVar7 != HE_TYPE_TIMER_STATIC) && (hVar7 != HE_TYPE_TENTHS_TIMER_STATIC)) {
-    (pgVar3->elem).time = level.time + iVar1;
-    __restgprlr_29();
+  (pgVar2->elem).type = param_2;
+  (pgVar2->elem).width = 0;
+  (pgVar2->elem).height = 0;
+  (pgVar2->elem).materialIndex = 0;
+  (pgVar2->elem).fromX = 0.0;
+  (pgVar2->elem).fromAlignOrg = 0;
+  (pgVar2->elem).fromY = 0.0;
+  (pgVar2->elem).fromAlignScreen = 0;
+  (pgVar2->elem).value = 0.0;
+  (pgVar2->elem).fromWidth = 0;
+  (pgVar2->elem).fromHeight = 0;
+  (pgVar2->elem).scaleStartTime = 0;
+  (pgVar2->elem).scaleTime = 0;
+  (pgVar2->elem).time = 0;
+  (pgVar2->elem).duration = 0;
+  (pgVar2->elem).text = 0;
+  if ((param_2 != HE_TYPE_TIMER_STATIC) && (param_2 != HE_TYPE_TENTHS_TIMER_STATIC)) {
+    (pgVar2->elem).time = level.time + iVar1;
     return;
   }
-  (pgVar3->elem).time = iVar1;
-  __restgprlr_29();
+  (pgVar2->elem).time = iVar1;
   return;
 }
 
 
 // 824727E0  HECmd_SetClock_Internal  (game/g_hudelem.cpp:1494)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 
 void HECmd_SetClock_Internal(scr_entref_t param_1,he_type_t param_2,char *param_3)
 
 {
-  scr_entref_t sVar1;
-  game_hudelem_s *pgVar2;
-  uint uVar3;
-  char *pcVar4;
+  game_hudelem_s *pgVar1;
+  uint uVar2;
+  char *pcVar3;
+  int iVar4;
   int iVar5;
   int iVar6;
   int iVar7;
-  longlong lVar8;
-  int iVar9;
-  he_type_t hVar10;
-  double dVar11;
-  double dVar12;
-  float fVar13;
+  double dVar8;
+  double dVar9;
+  float fVar10;
   
-  lVar8 = (longlong)(int)param_2;
-  sVar1 = (scr_entref_t)__savegprlr_24(param_1,lVar8,param_3);
-  pgVar2 = HECmd_GetHudElem(sVar1);
-  hVar10 = (he_type_t)lVar8;
-  if ((hVar10 != HE_TYPE_CLOCK_DOWN) && (hVar10 != HE_TYPE_CLOCK_UP)) {
+  pgVar1 = HECmd_GetHudElem(param_1);
+  if ((param_2 != HE_TYPE_CLOCK_DOWN) && (param_2 != HE_TYPE_CLOCK_UP)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_hudelem.cpp",0x5e0,0,
                     "%s\n\t(type) = %i");
   }
-  uVar3 = Scr_GetNumParam();
-  if ((uVar3 != 3) && (uVar3 != 5)) {
-    pcVar4 = va(
+  uVar2 = Scr_GetNumParam();
+  if ((uVar2 != 3) && (uVar2 != 5)) {
+    pcVar3 = va(
                "USAGE: <hudelem> %s(time_in_seconds, total_clock_time_in_seconds, shadername[, width, height]);\n"
                );
-    Scr_Error(pcVar4);
+    Scr_Error(pcVar3);
   }
-  fVar13 = Scr_GetFloat(0);
-  dVar12 = 1000.0;
-  dVar11 = ceil((double)(fVar13 * 1000.0));
-  if (((int)dVar11 < 1) && (hVar10 != HE_TYPE_CLOCK_UP)) {
-    pcVar4 = va("time %g should be > 0");
-    Scr_ParamError(0,pcVar4);
+  fVar10 = Scr_GetFloat(0);
+  dVar9 = 1000.0;
+  dVar8 = ceil((double)(fVar10 * 1000.0));
+  if (((int)dVar8 < 1) && (param_2 != HE_TYPE_CLOCK_UP)) {
+    pcVar3 = va("time %g should be > 0");
+    Scr_ParamError(0,pcVar3);
   }
-  fVar13 = Scr_GetFloat(1);
-  dVar12 = ceil((double)(float)((double)fVar13 * dVar12));
-  if ((int)dVar12 < 1) {
-    pcVar4 = va("duration %g should be > 0");
-    Scr_ParamError(1,pcVar4);
+  fVar10 = Scr_GetFloat(1);
+  dVar9 = ceil((double)(float)((double)fVar10 * dVar9));
+  if ((int)dVar9 < 1) {
+    pcVar3 = va("duration %g should be > 0");
+    Scr_ParamError(1,pcVar3);
   }
-  pcVar4 = Scr_GetString(2);
-  iVar5 = G_MaterialIndex(pcVar4);
-  if (uVar3 == 3) {
+  pcVar3 = Scr_GetString(2);
+  iVar4 = G_MaterialIndex(pcVar3);
+  if (uVar2 == 3) {
+    iVar5 = 0;
     iVar6 = 0;
-    iVar7 = 0;
   }
   else {
-    iVar6 = Scr_GetInt(3);
-    if (iVar6 < 0) {
-      pcVar4 = va("width %i < 0");
-      Scr_ParamError(3,pcVar4);
+    iVar5 = Scr_GetInt(3);
+    if (iVar5 < 0) {
+      pcVar3 = va("width %i < 0");
+      Scr_ParamError(3,pcVar3);
     }
-    iVar7 = Scr_GetInt(4);
-    if (iVar7 < 0) {
-      pcVar4 = va("height %i < 0");
-      Scr_ParamError(4,pcVar4);
+    iVar6 = Scr_GetInt(4);
+    if (iVar6 < 0) {
+      pcVar3 = va("height %i < 0");
+      Scr_ParamError(4,pcVar3);
     }
   }
-  (pgVar2->elem).width = 0;
-  (pgVar2->elem).height = 0;
-  (pgVar2->elem).materialIndex = 0;
-  (pgVar2->elem).time = 0;
-  (pgVar2->elem).duration = 0;
-  (pgVar2->elem).type = hVar10;
-  (pgVar2->elem).fromAlignOrg = 0;
-  (pgVar2->elem).fromX = 0.0;
-  (pgVar2->elem).fromAlignScreen = 0;
-  (pgVar2->elem).fromY = 0.0;
-  (pgVar2->elem).fromWidth = 0;
-  (pgVar2->elem).value = 0.0;
-  (pgVar2->elem).fromHeight = 0;
-  (pgVar2->elem).scaleStartTime = 0;
-  (pgVar2->elem).scaleTime = 0;
-  (pgVar2->elem).text = 0;
-  iVar9 = level.time + (int)dVar11;
-  (pgVar2->elem).duration = (int)dVar12;
-  (pgVar2->elem).materialIndex = iVar5;
-  (pgVar2->elem).width = iVar6;
-  (pgVar2->elem).time = iVar9;
-  (pgVar2->elem).height = iVar7;
-  __restgprlr_24();
+  (pgVar1->elem).width = 0;
+  (pgVar1->elem).height = 0;
+  (pgVar1->elem).materialIndex = 0;
+  (pgVar1->elem).time = 0;
+  (pgVar1->elem).duration = 0;
+  (pgVar1->elem).type = param_2;
+  (pgVar1->elem).fromAlignOrg = 0;
+  (pgVar1->elem).fromX = 0.0;
+  (pgVar1->elem).fromAlignScreen = 0;
+  (pgVar1->elem).fromY = 0.0;
+  (pgVar1->elem).fromWidth = 0;
+  (pgVar1->elem).value = 0.0;
+  (pgVar1->elem).fromHeight = 0;
+  (pgVar1->elem).scaleStartTime = 0;
+  (pgVar1->elem).scaleTime = 0;
+  (pgVar1->elem).text = 0;
+  iVar7 = level.time + (int)dVar8;
+  (pgVar1->elem).duration = (int)dVar9;
+  (pgVar1->elem).materialIndex = iVar4;
+  (pgVar1->elem).width = iVar5;
+  (pgVar1->elem).time = iVar7;
+  (pgVar1->elem).height = iVar6;
   return;
 }
 
@@ -2135,6 +2089,8 @@ LAB_82473380:
 
 // 824733E8  HECmd_ScaleOverTime  (game/g_hudelem.cpp:1924)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 
@@ -2143,44 +2099,41 @@ void HECmd_ScaleOverTime(scr_entref_t param_1)
 {
   int iVar1;
   int iVar2;
-  scr_entref_t sVar3;
-  game_hudelem_s *pgVar4;
-  uint uVar5;
-  char *pcVar6;
+  game_hudelem_s *pgVar3;
+  uint uVar4;
+  char *pcVar5;
+  int iVar6;
   int iVar7;
-  int iVar8;
-  double dVar9;
-  float fVar10;
+  double dVar8;
+  float fVar9;
   
-  sVar3 = (scr_entref_t)__savegprlr_29(param_1);
-  pgVar4 = HECmd_GetHudElem(sVar3);
-  uVar5 = Scr_GetNumParam();
-  if (uVar5 != 3) {
+  pgVar3 = HECmd_GetHudElem(param_1);
+  uVar4 = Scr_GetNumParam();
+  if (uVar4 != 3) {
     Scr_Error("hudelem scaleOverTime(time_in_seconds, new_width, new_height)");
   }
-  fVar10 = Scr_GetFloat(0);
-  dVar9 = (double)fVar10;
-  if (0.0 < dVar9) {
-    if (dVar9 <= 60.0) goto LAB_82473480;
-    pcVar6 = va("scale time %g > 60");
+  fVar9 = Scr_GetFloat(0);
+  dVar8 = (double)fVar9;
+  if (0.0 < dVar8) {
+    if (dVar8 <= 60.0) goto LAB_82473480;
+    pcVar5 = va("scale time %g > 60");
   }
   else {
-    pcVar6 = va("scale time %g <= 0");
+    pcVar5 = va("scale time %g <= 0");
   }
-  Scr_ParamError(0,pcVar6);
+  Scr_ParamError(0,pcVar5);
 LAB_82473480:
-  iVar7 = Scr_GetInt(1);
-  iVar8 = Scr_GetInt(2);
-  (pgVar4->elem).scaleStartTime = level.time;
-  dVar9 = floor((double)(float)(dVar9 * 1000.0 + 0.5));
-  iVar1 = (pgVar4->elem).width;
-  iVar2 = (pgVar4->elem).height;
-  (pgVar4->elem).width = iVar7;
-  (pgVar4->elem).height = iVar8;
-  (pgVar4->elem).fromWidth = iVar1;
-  (pgVar4->elem).fromHeight = iVar2;
-  (pgVar4->elem).scaleTime = (int)dVar9;
-  __restgprlr_29();
+  iVar6 = Scr_GetInt(1);
+  iVar7 = Scr_GetInt(2);
+  (pgVar3->elem).scaleStartTime = level.time;
+  dVar8 = floor((double)(float)(dVar8 * 1000.0 + 0.5));
+  iVar1 = (pgVar3->elem).width;
+  iVar2 = (pgVar3->elem).height;
+  (pgVar3->elem).width = iVar6;
+  (pgVar3->elem).height = iVar7;
+  (pgVar3->elem).fromWidth = iVar1;
+  (pgVar3->elem).fromHeight = iVar2;
+  (pgVar3->elem).scaleTime = (int)dVar8;
   return;
 }
 
@@ -2309,6 +2262,8 @@ int GetIntGTZero(uint param_1)
 
 // 824737A0  HECmd_SetPulseFX  (game/g_hudelem.cpp:2166)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 
@@ -2317,64 +2272,62 @@ void HECmd_SetPulseFX(scr_entref_t param_1)
 {
   int iVar1;
   gclient_s *pgVar2;
-  scr_entref_t sVar3;
-  uint uVar4;
-  game_hudelem_s *pgVar5;
-  int iVar6;
-  char *pcVar7;
-  ulonglong uVar8;
-  longlong lVar9;
+  uint uVar3;
+  game_hudelem_s *pgVar4;
+  int iVar5;
+  char *pcVar6;
+  ulonglong uVar7;
+  longlong lVar8;
   
-  sVar3 = (scr_entref_t)__savegprlr_28(param_1);
-  uVar4 = Scr_GetNumParam();
-  if (uVar4 != 3) {
+  uVar3 = Scr_GetNumParam();
+  if (uVar3 != 3) {
     Scr_Error("USAGE: <hudelem> SetPulseFX( <speed>, <decayStart>, <decayDuration> );\n");
   }
-  pgVar5 = HECmd_GetHudElem(sVar3);
-  (pgVar5->elem).fxBirthTime = level.time;
-  iVar6 = Scr_GetInt(0);
-  if (iVar6 < 0) {
-    pcVar7 = va("Time (%i) must be greater than zero.");
-    Scr_ParamError(0,pcVar7);
+  pgVar4 = HECmd_GetHudElem(param_1);
+  (pgVar4->elem).fxBirthTime = level.time;
+  iVar5 = Scr_GetInt(0);
+  if (iVar5 < 0) {
+    pcVar6 = va("Time (%i) must be greater than zero.");
+    Scr_ParamError(0,pcVar6);
   }
-  (pgVar5->elem).fxLetterTime = iVar6;
-  iVar6 = Scr_GetInt(1);
-  if (iVar6 < 0) {
-    pcVar7 = va("Time (%i) must be greater than zero.");
-    Scr_ParamError(1,pcVar7);
+  (pgVar4->elem).fxLetterTime = iVar5;
+  iVar5 = Scr_GetInt(1);
+  if (iVar5 < 0) {
+    pcVar6 = va("Time (%i) must be greater than zero.");
+    Scr_ParamError(1,pcVar6);
   }
-  (pgVar5->elem).fxDecayStartTime = iVar6;
-  iVar6 = Scr_GetInt(2);
-  if (iVar6 < 0) {
-    pcVar7 = va("Time (%i) must be greater than zero.");
-    Scr_ParamError(2,pcVar7);
+  (pgVar4->elem).fxDecayStartTime = iVar5;
+  iVar5 = Scr_GetInt(2);
+  if (iVar5 < 0) {
+    pcVar6 = va("Time (%i) must be greater than zero.");
+    Scr_ParamError(2,pcVar6);
   }
-  iVar1 = pgVar5->clientNum;
-  (pgVar5->elem).fxDecayDuration = iVar6;
+  iVar1 = pgVar4->clientNum;
+  (pgVar4->elem).fxDecayDuration = iVar5;
   pgVar2 = level.clients;
   if (iVar1 != 0x7ff) {
-    uVar8 = (ulonglong)(uint)level.clients[iVar1].hudElemLastAssignedSoundID + 1;
-    lVar9 = uVar8 + ((longlong)((int)uVar8 >> 4) + (ulonglong)((int)uVar8 < 0 && (uVar8 & 0xf) != 0)
+    uVar7 = (ulonglong)(uint)level.clients[iVar1].hudElemLastAssignedSoundID + 1;
+    lVar8 = uVar7 + ((longlong)((int)uVar7 >> 4) + (ulonglong)((int)uVar7 < 0 && (uVar7 & 0xf) != 0)
                     & 0xfffffff) * -0x10;
-    level.clients[iVar1].hudElemLastAssignedSoundID = (int)lVar9;
-    if (lVar9 == 0) {
+    level.clients[iVar1].hudElemLastAssignedSoundID = (int)lVar8;
+    if (lVar8 == 0) {
       pgVar2[iVar1].hudElemLastAssignedSoundID = 1;
     }
-    (pgVar5->elem).soundID = pgVar2[iVar1].hudElemLastAssignedSoundID;
-    __restgprlr_28();
+    (pgVar4->elem).soundID = pgVar2[iVar1].hudElemLastAssignedSoundID;
     return;
   }
-  uVar4 = level.hudElemLastAssignedSoundID + 1;
+  uVar3 = level.hudElemLastAssignedSoundID + 1;
   level.hudElemLastAssignedSoundID =
-       uVar4 + (((int)uVar4 >> 4) + (uint)((int)uVar4 < 0 && (uVar4 & 0xf) != 0) & 0xfffffff) *
-               -0x10;
-  (pgVar5->elem).soundID = level.hudElemLastAssignedSoundID + 0x10;
-  __restgprlr_28();
+       uVar3 + (((int)uVar3 >> 4) + (uint)((int)uVar3 < 0 && (uVar3 & 0xf) != 0)) * -0x10;
+  (pgVar4->elem).soundID = level.hudElemLastAssignedSoundID + 0x10;
   return;
 }
 
 
 // 824738F8  HudElem_GetMethod  (game/g_hudelem.cpp:2239)
+
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 
 uint HudElem_GetMethod(char **param_1)
 
@@ -2382,52 +2335,47 @@ uint HudElem_GetMethod(char **param_1)
   char cVar1;
   char cVar2;
   uint *puVar3;
-  undefined4 *puVar4;
-  uint uVar5;
-  int iVar6;
-  BuiltinMethodDef *pBVar7;
+  uint uVar4;
+  int iVar5;
+  BuiltinMethodDef *pBVar6;
+  char *pcVar7;
   char *pcVar8;
-  char *pcVar9;
-  longlong lVar10;
-  int *piVar11;
+  longlong lVar9;
+  int *piVar10;
   
-  puVar4 = (undefined4 *)__savegprlr_29(param_1);
-  if (puVar4 == (undefined4 *)0x0) {
-    lVar10 = 0x1a;
-    piVar11 = &fields[0x16].shift;
+  if (param_1 == (char **)0x0) {
+    lVar9 = 0x1a;
+    piVar10 = &fields[0x16].shift;
     do {
-      puVar3 = (uint *)(piVar11 + 4);
-      piVar11 = piVar11 + 3;
-      Scr_RegisterFunction(*puVar3,0,*piVar11);
-      lVar10 = lVar10 + -1;
-    } while (lVar10 != 0);
-    uVar5 = __restgprlr_29(0);
-    return uVar5;
+      puVar3 = (uint *)(piVar10 + 4);
+      piVar10 = piVar10 + 3;
+      Scr_RegisterFunction(*puVar3,0,*piVar10);
+      lVar9 = lVar9 + -1;
+    } while (lVar9 != 0);
+    return 0;
   }
-  pBVar7 = methods;
-  iVar6 = 0;
-  uVar5 = 0;
+  pBVar6 = methods;
+  iVar5 = 0;
+  uVar4 = 0;
   do {
-    pcVar8 = *(char **)(&g_scr_meth_names + (pBVar7->name - 0x8000) * 4);
-    pcVar9 = (char *)*puVar4;
+    pcVar7 = *(char **)(&g_scr_meth_names + (pBVar6->name - 0x8000) * 4);
+    pcVar8 = *param_1;
     do {
-      cVar1 = *pcVar9;
-      cVar2 = *pcVar8;
+      cVar1 = *pcVar8;
+      cVar2 = *pcVar7;
       if (cVar1 == '\0') break;
-      pcVar9 = pcVar9 + 1;
       pcVar8 = pcVar8 + 1;
+      pcVar7 = pcVar7 + 1;
     } while (cVar1 == cVar2);
     if (cVar1 == cVar2) {
-      *puVar4 = *(undefined4 *)(&g_scr_meth_names + (methods[iVar6].name - 0x8000) * 4);
-      uVar5 = __restgprlr_29(methods[iVar6].name);
-      return uVar5;
+      *param_1 = *(char **)(&g_scr_meth_names + (methods[iVar5].name - 0x8000) * 4);
+      return methods[iVar5].name;
     }
-    uVar5 = uVar5 + 0xc;
-    iVar6 = iVar6 + 1;
-    pBVar7 = pBVar7 + 1;
-    if (0x137 < uVar5) {
-      uVar5 = __restgprlr_29(0);
-      return uVar5;
+    uVar4 = uVar4 + 0xc;
+    iVar5 = iVar5 + 1;
+    pBVar6 = pBVar6 + 1;
+    if (0x137 < uVar4) {
+      return 0;
     }
   } while( true );
 }
@@ -2435,198 +2383,189 @@ uint HudElem_GetMethod(char **param_1)
 
 // 824739F0  HudElem_UpdateClient  (game/g_hudelem.cpp:2285)
 
+/* WARNING: Function: __savegprlr_21 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_21 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 
 void HudElem_UpdateClient(gclient_s *param_1,int param_2,hudelem_update_t param_3)
 
 {
-  int iVar1;
-  ulonglong uVar2;
+  hudelem_s *phVar1;
+  hudelem_s *phVar2;
   int iVar3;
-  ulonglong uVar4;
-  hudelem_s *phVar5;
-  byte *pbVar6;
+  longlong lVar4;
+  <unnamed_type_hud> *p<Var5;
+  int iVar6;
   int iVar7;
-  longlong lVar8;
-  void *pvVar9;
-  void *pvVar10;
-  int iVar11;
-  int *piVar12;
-  byte *pbVar13;
+  int *piVar8;
+  hudelem_s *phVar9;
   
-  uVar4 = (ulonglong)(int)param_3;
-  uVar2 = (ulonglong)param_2;
-  iVar1 = __savegprlr_21(param_1);
-  iVar3 = (int)uVar2;
-  if ((iVar3 < 0) || (level.maxclients <= iVar3)) {
+  if ((param_2 < 0) || (level.maxclients <= param_2)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_hudelem.cpp",0x8f4,0,
                     "%s\n\t(clientNum) = %i");
   }
-  if (*(char *)((int)((level.gentities)->r).box.midPoint +
-               (int)((uVar2 + (uVar2 & 0x3fffffff) * 4 & 0xffffffff) << 7) + -1) == '\0') {
+  if (level.gentities[param_2].r.isInUse == '\0') {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_hudelem.cpp",0x8f5,0,
                     "%s");
   }
-  if (iVar1 == 0) {
+  if (param_1 == (gclient_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_hudelem.cpp",0x8f6,0,
                     "%s");
   }
-  iVar11 = 0;
   iVar7 = 0;
-  piVar12 = &g_hudelems[0].clientNum;
-  pvVar10 = (void *)(iVar1 + 0xa14);
-  pvVar9 = (void *)(iVar1 + 0x1e6c);
-  lVar8 = 0x400;
+  iVar3 = 0;
+  piVar8 = &g_hudelems[0].clientNum;
+  p<Var5 = &(param_1->ps).hud;
+  phVar9 = (param_1->ps).hud.archival;
+  lVar4 = 0x400;
   do {
-    if ((((((game_hudelem_s *)(piVar12 + -0x2a))->elem).type != HE_TYPE_FREE) &&
-        ((piVar12[1] == 0 || (piVar12[1] == *(int *)(iVar1 + 0x33d4))))) &&
-       ((*piVar12 == 0x7ff || (*piVar12 == iVar3)))) {
-      if (piVar12[2] == 0) {
-        if (((uVar4 & 2) != 0) && (iVar7 < 0x1f)) {
-          Com_Memcpy(pvVar10,(game_hudelem_s *)(piVar12 + -0x2a),0xa8);
-          iVar7 = iVar7 + 1;
-          pvVar10 = (void *)((int)pvVar10 + 0xa8);
+    if ((((((game_hudelem_s *)(piVar8 + -0x2a))->elem).type != HE_TYPE_FREE) &&
+        ((piVar8[1] == TEAM_FREE || (piVar8[1] == (param_1->sess).cs.team)))) &&
+       ((*piVar8 == 0x7ff || (*piVar8 == param_2)))) {
+      if (piVar8[2] == 0) {
+        if (((param_3 & HUDELEM_UPDATE_CURRENT) != 0) && (iVar3 < 0x1f)) {
+          Com_Memcpy(p<Var5,(game_hudelem_s *)(piVar8 + -0x2a),0xa8);
+          iVar3 = iVar3 + 1;
+          p<Var5 = (<unnamed_type_hud> *)(p<Var5->current + 1);
         }
       }
-      else if (((uVar4 & 1) != 0) && (iVar11 < 0x1f)) {
-        Com_Memcpy(pvVar9,(game_hudelem_s *)(piVar12 + -0x2a),0xa8);
-        iVar11 = iVar11 + 1;
-        pvVar9 = (void *)((int)pvVar9 + 0xa8);
+      else if (((param_3 & HUDELEM_UPDATE_ARCHIVAL) != 0) && (iVar7 < 0x1f)) {
+        Com_Memcpy(phVar9,(game_hudelem_s *)(piVar8 + -0x2a),0xa8);
+        iVar7 = iVar7 + 1;
+        phVar9 = phVar9 + 1;
       }
     }
-    lVar8 = lVar8 + -1;
-    piVar12 = piVar12 + 0x2d;
-  } while (lVar8 != 0);
-  if (((uVar4 & 1) != 0) && (iVar11 < 0x1f)) {
-    piVar12 = (int *)(iVar11 * 0xa8 + iVar1 + 0x1e6c);
+    lVar4 = lVar4 + -1;
+    piVar8 = piVar8 + 0x2d;
+  } while (lVar4 != 0);
+  if (((param_3 & HUDELEM_UPDATE_ARCHIVAL) != 0) && (iVar7 < 0x1f)) {
+    phVar9 = (param_1->ps).hud.archival + iVar7;
     do {
-      if (*piVar12 == 0) {
-        if (iVar11 < 0x1f) {
-          iVar3 = 0x1f - iVar11;
-          pbVar13 = (byte *)(iVar11 * 0xa8 + iVar1 + 0x1e6c);
+      if (phVar9->type == HE_TYPE_FREE) {
+        if (iVar7 < 0x1f) {
+          iVar6 = 0x1f - iVar7;
+          phVar9 = (param_1->ps).hud.archival + iVar7;
           do {
-            phVar5 = &g_dummyHudCurrent;
-            pbVar6 = pbVar13;
+            phVar1 = &g_dummyHudCurrent;
+            phVar2 = phVar9;
             do {
-              lVar8 = (ulonglong)*pbVar6 - (ulonglong)(byte)*(undefined1 *)&phVar5->type;
-              if (lVar8 != 0) break;
-              pbVar6 = pbVar6 + 1;
-              phVar5 = (hudelem_s *)((int)&phVar5->type + 1);
-            } while (pbVar6 != pbVar13 + 0xa8);
-            if ((int)lVar8 != 0) {
+              lVar4 = (ulonglong)(byte)*(undefined1 *)&phVar2->type -
+                      (ulonglong)(byte)*(undefined1 *)&phVar1->type;
+              if (lVar4 != 0) break;
+              phVar2 = (hudelem_s *)((int)&phVar2->type + 1);
+              phVar1 = (hudelem_s *)((int)&phVar1->type + 1);
+            } while (phVar2 != phVar9 + 1);
+            if ((int)lVar4 != 0) {
               MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_hudelem.cpp",
                               0x926,0,"%s");
             }
-            iVar3 = iVar3 + -1;
-            pbVar13 = pbVar13 + 0xa8;
-          } while (iVar3 != 0);
+            iVar6 = iVar6 + -1;
+            phVar9 = phVar9 + 1;
+          } while (iVar6 != 0);
         }
         break;
       }
-      Com_Memset(piVar12,0,0xa8);
-      if (*piVar12 != 0) {
+      Com_Memset(phVar9,0,0xa8);
+      if (phVar9->type != HE_TYPE_FREE) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_hudelem.cpp",0x91f,
                         0,"%s");
       }
-      iVar11 = iVar11 + 1;
-      piVar12 = piVar12 + 0x2a;
-    } while (iVar11 < 0x1f);
+      iVar7 = iVar7 + 1;
+      phVar9 = phVar9 + 1;
+    } while (iVar7 < 0x1f);
   }
-  if (((uVar4 & 2) != 0) && (iVar7 < 0x1f)) {
-    piVar12 = (int *)(iVar7 * 0xa8 + iVar1 + 0xa14);
-    while (*piVar12 != 0) {
-      Com_Memset(piVar12,0,0xa8);
-      if (*piVar12 != 0) {
+  if (((param_3 & HUDELEM_UPDATE_CURRENT) != 0) && (iVar3 < 0x1f)) {
+    phVar9 = (param_1->ps).hud.current + iVar3;
+    while (phVar9->type != HE_TYPE_FREE) {
+      Com_Memset(phVar9,0,0xa8);
+      if (phVar9->type != HE_TYPE_FREE) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_hudelem.cpp",0x931,
                         0,"%s");
       }
-      iVar7 = iVar7 + 1;
-      piVar12 = piVar12 + 0x2a;
-      if (0x1e < iVar7) {
-        __restgprlr_21();
+      iVar3 = iVar3 + 1;
+      phVar9 = phVar9 + 1;
+      if (0x1e < iVar3) {
         return;
       }
     }
-    if (iVar7 < 0x1f) {
-      iVar3 = 0x1f - iVar7;
-      pbVar13 = (byte *)(iVar7 * 0xa8 + iVar1 + 0xa14);
+    if (iVar3 < 0x1f) {
+      iVar7 = 0x1f - iVar3;
+      phVar9 = (param_1->ps).hud.current + iVar3;
       do {
-        phVar5 = &g_dummyHudCurrent;
-        pbVar6 = pbVar13;
+        phVar1 = &g_dummyHudCurrent;
+        phVar2 = phVar9;
         do {
-          lVar8 = (ulonglong)*pbVar6 - (ulonglong)(byte)*(undefined1 *)&phVar5->type;
-          if (lVar8 != 0) break;
-          pbVar6 = pbVar6 + 1;
-          phVar5 = (hudelem_s *)((int)&phVar5->type + 1);
-        } while (pbVar6 != pbVar13 + 0xa8);
-        if ((int)lVar8 != 0) {
+          lVar4 = (ulonglong)(byte)*(undefined1 *)&phVar2->type -
+                  (ulonglong)(byte)*(undefined1 *)&phVar1->type;
+          if (lVar4 != 0) break;
+          phVar2 = (hudelem_s *)((int)&phVar2->type + 1);
+          phVar1 = (hudelem_s *)((int)&phVar1->type + 1);
+        } while (phVar2 != phVar9 + 1);
+        if ((int)lVar4 != 0) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_hudelem.cpp",
                           0x938,0,"%s");
         }
-        iVar3 = iVar3 + -1;
-        pbVar13 = pbVar13 + 0xa8;
-      } while (iVar3 != 0);
+        iVar7 = iVar7 + -1;
+        phVar9 = phVar9 + 1;
+      } while (iVar7 != 0);
     }
   }
-  __restgprlr_21();
   return;
 }
 
 
 // 82473D80  HudElem_ClearClientSingle  (game/g_hudelem.cpp:2368)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
+
 void HudElem_ClearClientSingle(hudelem_s *param_1,int param_2)
 
 {
   longlong lVar1;
-  int iVar2;
+  hudelem_s *phVar2;
   hudelem_s *phVar3;
-  longlong lVar4;
-  longlong lVar5;
-  longlong lVar6;
+  hudelem_s *phVar4;
+  int iVar5;
   
-  lVar5 = (longlong)param_2;
-  lVar1 = __savegprlr_25(param_1);
-  lVar6 = 0;
-  iVar2 = (int)lVar5;
-  lVar4 = lVar1;
-  if (0 < iVar2) {
-    while (*(int *)lVar4 != 0) {
+  iVar5 = 0;
+  phVar4 = param_1;
+  if (0 < param_2) {
+    while (phVar4->type != HE_TYPE_FREE) {
       memset();
-      if (*(int *)lVar4 != 0) {
+      if (phVar4->type != HE_TYPE_FREE) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_hudelem.cpp",0x946,
                         0,"%s");
       }
-      lVar6 = lVar6 + 1;
-      lVar4 = lVar4 + 0xa8;
-      if (iVar2 <= (int)lVar6) {
-        __restgprlr_25();
+      iVar5 = iVar5 + 1;
+      phVar4 = phVar4 + 1;
+      if (param_2 <= iVar5) {
         return;
       }
     }
-    if ((int)lVar6 < iVar2) {
-      lVar1 = lVar6 * 0xa8 + lVar1;
-      lVar5 = lVar5 - lVar6;
+    if (iVar5 < param_2) {
+      phVar4 = param_1 + iVar5;
+      iVar5 = param_2 - iVar5;
       do {
-        lVar4 = lVar1;
-        phVar3 = &g_dummyHudCurrent;
+        phVar2 = &g_dummyHudCurrent;
+        phVar3 = phVar4;
         do {
-          lVar6 = (ulonglong)*(byte *)lVar4 - (ulonglong)(byte)*(undefined1 *)&phVar3->type;
-          if (lVar6 != 0) break;
-          lVar4 = lVar4 + 1;
+          lVar1 = (ulonglong)(byte)*(undefined1 *)&phVar3->type -
+                  (ulonglong)(byte)*(undefined1 *)&phVar2->type;
+          if (lVar1 != 0) break;
           phVar3 = (hudelem_s *)((int)&phVar3->type + 1);
-        } while ((int)lVar4 != (int)lVar1 + 0xa8);
-        if ((int)lVar6 != 0) {
+          phVar2 = (hudelem_s *)((int)&phVar2->type + 1);
+        } while (phVar3 != phVar4 + 1);
+        if ((int)lVar1 != 0) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_hudelem.cpp",
                           0x94d,0,"%s");
         }
-        lVar5 = lVar5 + -1;
-        lVar1 = lVar1 + 0xa8;
-      } while (lVar5 != 0);
+        iVar5 = iVar5 + -1;
+        phVar4 = phVar4 + 1;
+      } while (iVar5 != 0);
     }
   }
-  __restgprlr_25();
   return;
 }
 

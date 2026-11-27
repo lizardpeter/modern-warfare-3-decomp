@@ -2,6 +2,8 @@
 
 // 824DCC10  Com_LoadInfoString_FastFile  (qcommon/com_loadutils.cpp:50)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "XAssetType": Some values do not have unique names */
 /* WARNING: Enum "nodeType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
@@ -11,39 +13,36 @@
 char * Com_LoadInfoString_FastFile(char *param_1,char *param_2,char *param_3,char *param_4)
 
 {
-  char *pcVar2;
-  XAssetHeader XVar3;
-  int iVar4;
-  longlong lVar1;
-  longlong lVar5;
-  longlong lVar6;
-  longlong lVar7;
+  char cVar1;
+  XAssetHeader XVar2;
+  int iVar3;
+  char *pcVar4;
+  char *pcVar5;
   
-  lVar6 = (longlong)(int)param_4;
-  lVar5 = (longlong)(int)param_3;
-  pcVar2 = (char *)__savegprlr_27(param_1,param_2);
-  XVar3 = DB_FindXAssetHeader(ASSET_TYPE_RAWFILE,pcVar2,1);
-  iVar4 = DB_IsXAssetDefault(ASSET_TYPE_RAWFILE,pcVar2);
-  if (iVar4 != 0) {
+  XVar2 = DB_FindXAssetHeader(ASSET_TYPE_RAWFILE,param_1,1);
+  iVar3 = DB_IsXAssetDefault(ASSET_TYPE_RAWFILE,param_1);
+  if (iVar3 != 0) {
     Com_Error(ERR_DROP,"\x15Could not load %s file [%s]\n");
   }
-  DB_GetRawBuffer(XVar3.rawfile,(char *)lVar6,0x2000);
-  lVar7 = lVar5;
+  DB_GetRawBuffer(XVar2.rawfile,param_4,0x2000);
+  pcVar5 = param_3;
   do {
-    pcVar2 = (char *)lVar7;
-    lVar7 = lVar7 + 1;
-  } while (*pcVar2 != '\0');
-  lVar1 = lVar6;
+    cVar1 = *pcVar5;
+    pcVar5 = pcVar5 + 1;
+  } while (cVar1 != '\0');
+  pcVar4 = param_4;
   strncmp();
-  if ((int)lVar1 != 0) {
+  if (pcVar4 != (char *)0x0) {
     Com_Error(ERR_DROP,"\x15File [%s] is not a %s file\n");
   }
-  pcVar2 = (char *)__restgprlr_27(((lVar7 - lVar5) - 1U & 0xffffffff) + lVar6);
-  return pcVar2;
+  return param_4 + (int)(pcVar5 + (-1 - (int)param_3));
 }
 
 
 // 824DCCD8  Com_LoadInfoString  (qcommon/com_loadutils.cpp:69)
+
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 
 char * Com_LoadInfoString(char *param_1,char *param_2,char *param_3,char *param_4)
 
@@ -51,19 +50,19 @@ char * Com_LoadInfoString(char *param_1,char *param_2,char *param_3,char *param_
   char *pcVar1;
   int iVar2;
   
-  pcVar1 = (char *)__savegprlr_29(param_1);
-  pcVar1 = Com_LoadInfoString_FastFile(pcVar1,param_2,param_3,param_4);
+  pcVar1 = Com_LoadInfoString_FastFile(param_1,param_2,param_3,param_4);
   iVar2 = Info_Validate(pcVar1);
   if (iVar2 == 0) {
     Com_Error(ERR_DROP,"\x15File [%s] is not a valid %s\n");
   }
-  pcVar1 = (char *)__restgprlr_29(pcVar1);
   return pcVar1;
 }
 
 
 // 824DCD28  Com_LoadRawTextFile_FastFile  (qcommon/com_loadutils.cpp:112)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "XAssetType": Some values do not have unique names */
 /* WARNING: Enum "nodeType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
@@ -73,27 +72,23 @@ char * Com_LoadInfoString(char *param_1,char *param_2,char *param_3,char *param_
 char * Com_LoadRawTextFile_FastFile(char *param_1,char *param_2,int param_3)
 
 {
-  char *pcVar1;
-  XAssetHeader XVar2;
-  int iVar3;
-  longlong lVar4;
+  XAssetHeader XVar1;
+  int iVar2;
   
-  lVar4 = (longlong)(int)param_2;
-  pcVar1 = (char *)__savegprlr_28(param_1);
-  XVar2 = DB_FindXAssetHeader(ASSET_TYPE_RAWFILE,pcVar1,1);
-  iVar3 = DB_IsXAssetDefault(ASSET_TYPE_RAWFILE,pcVar1);
-  if (iVar3 != 0) {
-    pcVar1 = (char *)__restgprlr_28(0);
-    return pcVar1;
+  XVar1 = DB_FindXAssetHeader(ASSET_TYPE_RAWFILE,param_1,1);
+  iVar2 = DB_IsXAssetDefault(ASSET_TYPE_RAWFILE,param_1);
+  if (iVar2 != 0) {
+    return (char *)0x0;
   }
-  DB_GetRawBuffer(XVar2.rawfile,(char *)lVar4,param_3);
-  pcVar1 = (char *)__restgprlr_28(lVar4);
-  return pcVar1;
+  DB_GetRawBuffer(XVar1.rawfile,param_2,param_3);
+  return param_2;
 }
 
 
 // 824DCD30  Com_LoadRawTextFile  (qcommon/com_loadutils.cpp:119)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "XAssetType": Some values do not have unique names */
 /* WARNING: Enum "nodeType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
@@ -103,21 +98,15 @@ char * Com_LoadRawTextFile_FastFile(char *param_1,char *param_2,int param_3)
 char * Com_LoadRawTextFile(char *param_1,char *param_2,int param_3)
 
 {
-  char *pcVar1;
-  XAssetHeader XVar2;
-  int iVar3;
-  longlong lVar4;
+  XAssetHeader XVar1;
+  int iVar2;
   
-  lVar4 = (longlong)(int)param_2;
-  pcVar1 = (char *)__savegprlr_28(param_1);
-  XVar2 = DB_FindXAssetHeader(ASSET_TYPE_RAWFILE,pcVar1,1);
-  iVar3 = DB_IsXAssetDefault(ASSET_TYPE_RAWFILE,pcVar1);
-  if (iVar3 != 0) {
-    pcVar1 = (char *)__restgprlr_28(0);
-    return pcVar1;
+  XVar1 = DB_FindXAssetHeader(ASSET_TYPE_RAWFILE,param_1,1);
+  iVar2 = DB_IsXAssetDefault(ASSET_TYPE_RAWFILE,param_1);
+  if (iVar2 != 0) {
+    return (char *)0x0;
   }
-  DB_GetRawBuffer(XVar2.rawfile,(char *)lVar4,param_3);
-  pcVar1 = (char *)__restgprlr_28(lVar4);
-  return pcVar1;
+  DB_GetRawBuffer(XVar1.rawfile,param_2,param_3);
+  return param_2;
 }
 

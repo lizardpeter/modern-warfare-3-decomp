@@ -2,102 +2,95 @@
 
 // 829221E8  _close  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/close.c:41)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 int _close(int param_1)
 
 {
   int iVar1;
-  uint uVar3;
-  ulong *puVar4;
-  int *piVar5;
-  ulonglong uVar2;
-  int iVar6;
-  uint uStack00000014;
-  uint local_40;
+  ulong *puVar2;
+  int *piVar3;
+  int iVar4;
+  int iStack00000014;
+  int local_40;
   
-  uVar3 = __savegprlr_27(param_1);
-  uStack00000014 = uVar3;
-  if (uVar3 == 0xfffffffe) {
-    puVar4 = __doserrno();
-    *puVar4 = 0;
-    piVar5 = _errno();
-    uVar2 = 0xffffffffffffffff;
-    *piVar5 = 9;
+  iStack00000014 = param_1;
+  if (param_1 == -2) {
+    puVar2 = __doserrno();
+    *puVar2 = 0;
+    piVar3 = _errno();
+    *piVar3 = 9;
   }
   else {
-    if ((-1 < (int)uVar3) && (uVar3 < (uint)_nhandle)) {
-      iVar6 = ((int)uVar3 >> 5) * 4;
-      iVar1 = (uVar3 & 0x1f) * 0x48;
-      if ((*(byte *)(*(int *)(&__pioinfo + iVar6) + iVar1 + 4) & 1) != 0) {
-        __lock_fhandle(uVar3);
-        if ((*(byte *)(*(int *)(&__pioinfo + iVar6) + iVar1 + 4) & 1) == 0) {
-          piVar5 = _errno();
-          *piVar5 = 9;
-          local_40 = 0xffffffff;
+    if ((-1 < param_1) && ((uint)param_1 < (uint)_nhandle)) {
+      iVar1 = (param_1 >> 5) * 4;
+      iVar4 = (param_1 & 0x1fU) * 0x48;
+      if ((*(byte *)(*(int *)(&__pioinfo + iVar1) + iVar4 + 4) & 1) != 0) {
+        __lock_fhandle(param_1);
+        if ((*(byte *)(*(int *)(&__pioinfo + iVar1) + iVar4 + 4) & 1) == 0) {
+          piVar3 = _errno();
+          *piVar3 = 9;
+          local_40 = -1;
         }
         else {
-          local_40 = _close_nolock(uVar3);
+          local_40 = _close_nolock(param_1);
         }
         FUN_82922310();
-        uVar2 = (ulonglong)local_40;
-        goto LAB_829222e8;
+        return local_40;
       }
     }
-    puVar4 = __doserrno();
-    *puVar4 = 0;
-    piVar5 = _errno();
-    *piVar5 = 9;
+    puVar2 = __doserrno();
+    *puVar2 = 0;
+    piVar3 = _errno();
+    *piVar3 = 9;
     _invalid_parameter_noinfo();
-    uVar2 = 0xffffffffffffffff;
   }
-LAB_829222e8:
-  iVar6 = __restgprlr_27(uVar2);
-  return iVar6;
+  return -1;
 }
 
 
 // 82922100  _close_nolock  (<external>/bt/278379/core/public/xbox/xdk/df-src/crt/close.c:71)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 int _close_nolock(int param_1)
 
 {
-  uint uVar2;
-  int iVar3;
-  int iVar4;
-  void *pvVar5;
-  ulong uVar6;
-  undefined8 uVar1;
+  int iVar1;
+  int iVar2;
+  void *pvVar3;
+  ulong uVar4;
   
-  uVar2 = __savegprlr_29(param_1);
-  iVar3 = _get_osfhandle(uVar2);
-  if (iVar3 != -1) {
-    if (((uVar2 == 1) && ((*(byte *)(___pioinfo + 0x94) & 1) != 0)) ||
-       ((uVar2 == 2 && ((*(byte *)(___pioinfo + 0x4c) & 1) != 0)))) {
-      iVar3 = _get_osfhandle(2);
-      iVar4 = _get_osfhandle(1);
-      if (iVar4 == iVar3) goto LAB_8292218c;
+  iVar1 = _get_osfhandle(param_1);
+  if (iVar1 != -1) {
+    if (((param_1 == 1) && ((*(byte *)(___pioinfo + 0x94) & 1) != 0)) ||
+       ((param_1 == 2 && ((*(byte *)(___pioinfo + 0x4c) & 1) != 0)))) {
+      iVar1 = _get_osfhandle(2);
+      iVar2 = _get_osfhandle(1);
+      if (iVar2 == iVar1) goto LAB_8292218c;
     }
-    pvVar5 = (void *)_get_osfhandle(uVar2);
-    iVar3 = CloseHandle(pvVar5);
-    if (iVar3 == 0) {
-      uVar6 = GetLastError();
+    pvVar3 = (void *)_get_osfhandle(param_1);
+    iVar1 = CloseHandle(pvVar3);
+    if (iVar1 == 0) {
+      uVar4 = GetLastError();
       goto LAB_82922190;
     }
   }
 LAB_8292218c:
-  uVar6 = 0;
+  uVar4 = 0;
 LAB_82922190:
-  _free_osfhnd(uVar2);
-  *(undefined1 *)(*(int *)(&__pioinfo + ((int)uVar2 >> 5) * 4) + (uVar2 & 0x1f) * 0x48 + 4) = 0;
-  if (uVar6 == 0) {
-    uVar1 = 0;
+  _free_osfhnd(param_1);
+  *(undefined1 *)(*(int *)(&__pioinfo + (param_1 >> 5) * 4) + (param_1 & 0x1fU) * 0x48 + 4) = 0;
+  if (uVar4 == 0) {
+    iVar1 = 0;
   }
   else {
-    _dosmaperr(uVar6);
-    uVar1 = 0xffffffffffffffff;
+    _dosmaperr(uVar4);
+    iVar1 = -1;
   }
-  iVar3 = __restgprlr_29(uVar1);
-  return iVar3;
+  return iVar1;
 }
 

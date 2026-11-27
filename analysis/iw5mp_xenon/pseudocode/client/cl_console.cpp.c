@@ -14,6 +14,8 @@ void TRACK_cl_console(void)
 
 // 82334178  Con_ToggleConsole  (client/cl_console.cpp:312)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void Con_ToggleConsole(void)
@@ -23,7 +25,6 @@ void Con_ToggleConsole(void)
   uint uVar2;
   int *piVar3;
   
-  __savegprlr_27();
   Field_Clear(&g_consoleField);
   if ((conDrawInputGlob.matchIndex < 0) ||
      (bVar1 = true, conDrawInputGlob.autoCompleteChoice[0] == '\0')) {
@@ -51,7 +52,6 @@ void Con_ToggleConsole(void)
   clientUIActives[1].keyCatchers = clientUIActives[1].keyCatchers ^ 1;
   clientUIActives[2].keyCatchers = clientUIActives[2].keyCatchers ^ 1;
   clientUIActives[3].keyCatchers = clientUIActives[3].keyCatchers ^ 1;
-  __restgprlr_27();
   return;
 }
 
@@ -109,132 +109,131 @@ void Con_CloseConsole(LocalClientNum_t param_1)
 
 // 8232DBD8  Con_GetTextCopy  (client/cl_console.cpp:418)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void Con_GetTextCopy(char *param_1,int param_2)
 
 {
-  undefined1 *puVar1;
-  int iVar2;
-  longlong lVar3;
-  int iVar4;
-  uint uVar5;
+  int iVar1;
+  longlong lVar2;
+  int iVar3;
+  uint uVar4;
   
-  puVar1 = (undefined1 *)__savegprlr_27(param_1);
   if (con.consoleWindow.activeLineCount == 0) {
-    *puVar1 = 0;
-    __restgprlr_27();
+    *param_1 = '\0';
     return;
   }
-  uVar5 = con.consoleWindow.lines[con.consoleWindow.firstLineIndex].textBufPos;
-  lVar3 = (ulonglong)(uint)con.consoleWindow.textBufPos - (ulonglong)uVar5;
-  if (lVar3 < 0) {
-    lVar3 = (ulonglong)(uint)con.consoleWindow.textBufSize + lVar3;
+  uVar4 = con.consoleWindow.lines[con.consoleWindow.firstLineIndex].textBufPos;
+  lVar2 = (ulonglong)(uint)con.consoleWindow.textBufPos - (ulonglong)uVar4;
+  if (lVar2 < 0) {
+    lVar2 = (ulonglong)(uint)con.consoleWindow.textBufSize + lVar2;
   }
-  iVar2 = param_2 + -1;
-  iVar4 = (int)lVar3;
-  if ((iVar2 < iVar4) &&
-     (uVar5 = (iVar4 - param_2) + uVar5 + 1, iVar4 = iVar2,
-     con.consoleWindow.textBufSize < (int)uVar5)) {
-    uVar5 = uVar5 - con.consoleWindow.textBufSize;
+  iVar1 = param_2 + -1;
+  iVar3 = (int)lVar2;
+  if ((iVar1 < iVar3) &&
+     (uVar4 = (iVar3 - param_2) + uVar4 + 1, iVar3 = iVar1,
+     con.consoleWindow.textBufSize < (int)uVar4)) {
+    uVar4 = uVar4 - con.consoleWindow.textBufSize;
   }
-  if (con.consoleWindow.textBufPos <= (int)uVar5) {
+  if (con.consoleWindow.textBufPos <= (int)uVar4) {
     memcpy();
     memcpy();
-    puVar1[iVar4] = 0;
-    __restgprlr_27();
+    param_1[iVar3] = '\0';
     return;
   }
   memcpy();
-  puVar1[iVar4] = 0;
-  __restgprlr_27();
+  param_1[iVar3] = '\0';
   return;
 }
 
 
 // 8232DCC0  Con_ResetMessageWindowTimes  (client/cl_console.cpp:458)
 
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
+
 void Con_ResetMessageWindowTimes(MessageWindow *param_1,int param_2)
 
 {
   uint uVar1;
-  int iVar2;
+  MessageLine *pMVar2;
   int iVar3;
-  int *piVar4;
+  ulonglong uVar4;
   ulonglong uVar5;
-  ulonglong uVar6;
-  int *piVar7;
-  longlong lVar8;
-  ulonglong uVar9;
+  Message *pMVar6;
+  longlong lVar7;
+  ulonglong uVar8;
   
-  piVar4 = (int *)__savegprlr_22(param_1);
-  lVar8 = 0;
-  if (0 < piVar4[0xb]) {
+  lVar7 = 0;
+  if (0 < param_1->activeLineCount) {
     do {
-      if (piVar4[4] < 1) {
+      if (param_1->lineCount < 1) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",
                         0x1d3,0,"%s\n\t(msgwnd->lineCount) = %i");
       }
-      uVar1 = piVar4[4];
-      uVar5 = (ulonglong)uVar1;
-      uVar6 = lVar8 + (ulonglong)(uint)piVar4[10];
-      trapWord(6,uVar5,0);
-      uVar9 = uVar6 - (longlong)((int)uVar6 / (int)uVar1) * (longlong)(int)uVar1;
-      trapWord(5,uVar5 & ~(((uVar6 & 0x7fffffff) << 1 | (uVar6 & 0xffffffff) >> 0x1f) - 1),0xffff);
-      if (uVar5 <= (uVar9 & 0xffffffff)) {
+      uVar1 = param_1->lineCount;
+      uVar4 = (ulonglong)uVar1;
+      uVar5 = lVar7 + (ulonglong)(uint)param_1->firstLineIndex;
+      trapWord(6,uVar4,0);
+      uVar8 = uVar5 - (longlong)((int)uVar5 / (int)uVar1) * (longlong)(int)uVar1;
+      trapWord(5,uVar4 & ~(((uVar5 & 0x7fffffff) << 1 | (uVar5 & 0xffffffff) >> 0x1f) - 1),0xffff);
+      if (uVar4 <= (uVar8 & 0xffffffff)) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",
                         0x1d6,0,"lineIndex doesn\'t index msgwnd->lineCount\n\t%i not in [0, %i)");
       }
-      iVar2 = *piVar4;
-      iVar3 = (int)((uVar9 + (uVar9 & 0x7fffffff) * 2 & 0xffffffff) << 3);
-      if ((uint)piVar4[4] <= *(uint *)(iVar3 + iVar2)) {
+      pMVar2 = param_1->lines;
+      iVar3 = (int)((uVar8 + (uVar8 & 0x7fffffff) * 2 & 0xffffffff) << 3);
+      if ((uint)param_1->lineCount <= *(uint *)((int)&pMVar2->messageIndex + iVar3)) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",
                         0x1d9,0,
                         "line->messageIndex doesn\'t index msgwnd->lineCount\n\t%i not in [0, %i)");
       }
-      lVar8 = lVar8 + 1;
-      piVar7 = (int *)(*(int *)(iVar3 + iVar2) * 8 + piVar4[1]);
-      iVar2 = *piVar7;
-      *piVar7 = param_2;
-      piVar7[1] = (piVar7[1] - iVar2) + param_2;
-    } while ((int)lVar8 < piVar4[0xb]);
+      lVar7 = lVar7 + 1;
+      pMVar6 = param_1->messages + *(int *)((int)&pMVar2->messageIndex + iVar3);
+      iVar3 = pMVar6->startTime;
+      pMVar6->startTime = param_2;
+      pMVar6->endTime = (pMVar6->endTime - iVar3) + param_2;
+    } while ((int)lVar7 < param_1->activeLineCount);
   }
-  __restgprlr_22();
   return;
 }
 
 
 // 8232DDF0  Con_TimeJumped  (client/cl_console.cpp:484)
 
+/* WARNING: Function: __savegprlr_19 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_19 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void Con_TimeJumped(LocalClientNum_t param_1,int param_2)
 
 {
   uint uVar1;
-  int iVar2;
+  MessageLine *pMVar2;
   int iVar3;
   ulonglong uVar4;
   ulonglong uVar5;
-  int *piVar6;
+  Message *pMVar6;
   longlong lVar7;
   longlong lVar8;
   ulonglong uVar9;
-  uint *puVar10;
+  int *piVar10;
   
-  iVar3 = __savegprlr_19(param_1);
   Con_ResetMessageWindowTimes(&con.consoleWindow,param_2);
-  puVar10 = (uint *)(iVar3 * 0x4858 + -0x7d5762e8);
+  piVar10 = &con.messageBuffer[param_1].gamemsgWindows[0].lineCount;
   lVar7 = 4;
   do {
     lVar8 = 0;
-    if (0 < (int)puVar10[7]) {
+    if (0 < piVar10[7]) {
       do {
-        if ((int)*puVar10 < 1) {
+        if (*piVar10 < 1) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",
                           0x1d3,0,"%s\n\t(msgwnd->lineCount) = %i");
         }
-        uVar1 = *puVar10;
+        uVar1 = *piVar10;
         uVar4 = (ulonglong)uVar1;
-        uVar5 = (ulonglong)puVar10[6] + lVar8;
+        uVar5 = (ulonglong)(uint)piVar10[6] + lVar8;
         trapWord(6,uVar4,0);
         uVar9 = uVar5 - (longlong)((int)uVar5 / (int)uVar1) * (longlong)(int)uVar1;
         trapWord(5,uVar4 & ~(((uVar5 & 0x7fffffff) << 1 | (uVar5 & 0xffffffff) >> 0x1f) - 1),0xffff)
@@ -244,107 +243,107 @@ void Con_TimeJumped(LocalClientNum_t param_1,int param_2)
                           0x1d6,0,"lineIndex doesn\'t index msgwnd->lineCount\n\t%i not in [0, %i)")
           ;
         }
-        uVar1 = puVar10[-4];
-        iVar2 = (int)((uVar9 + (uVar9 & 0x7fffffff) * 2 & 0xffffffff) << 3);
-        if (*puVar10 <= *(uint *)(iVar2 + uVar1)) {
+        pMVar2 = ((MessageWindow *)(piVar10 + -4))->lines;
+        iVar3 = (int)((uVar9 + (uVar9 & 0x7fffffff) * 2 & 0xffffffff) << 3);
+        if ((uint)*piVar10 <= *(uint *)((int)&pMVar2->messageIndex + iVar3)) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",
                           0x1d9,0,
                           "line->messageIndex doesn\'t index msgwnd->lineCount\n\t%i not in [0, %i)"
                          );
         }
         lVar8 = lVar8 + 1;
-        piVar6 = (int *)(puVar10[-3] + *(int *)(iVar2 + uVar1) * 8);
-        iVar2 = *piVar6;
-        *piVar6 = param_2;
-        piVar6[1] = (piVar6[1] - iVar2) + param_2;
-      } while ((int)lVar8 < (int)puVar10[7]);
+        pMVar6 = (Message *)piVar10[-3] + *(int *)((int)&pMVar2->messageIndex + iVar3);
+        iVar3 = pMVar6->startTime;
+        pMVar6->startTime = param_2;
+        pMVar6->endTime = (pMVar6->endTime - iVar3) + param_2;
+      } while ((int)lVar8 < piVar10[7]);
     }
     lVar7 = lVar7 + -1;
-    puVar10 = puVar10 + 0xd;
+    piVar10 = piVar10 + 0xd;
   } while (lVar7 != 0);
-  Con_ResetMessageWindowTimes(&con.messageBuffer[iVar3].miniconWindow,param_2);
-  Con_ResetMessageWindowTimes(&con.messageBuffer[iVar3].errorWindow,param_2);
-  __restgprlr_19();
+  Con_ResetMessageWindowTimes(&con.messageBuffer[param_1].miniconWindow,param_2);
+  Con_ResetMessageWindowTimes(&con.messageBuffer[param_1].errorWindow,param_2);
   return;
 }
 
 
 // 8232DF78  Con_NudgeMessageWindowTimes  (client/cl_console.cpp:501)
 
+/* WARNING: Function: __savegprlr_19 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_19 replaced with injection: xenon_save_restore */
+
 void Con_NudgeMessageWindowTimes(MessageWindow *param_1,int param_2,int param_3)
 
 {
   uint uVar1;
-  int iVar2;
-  int *piVar3;
-  longlong lVar4;
-  ulonglong uVar5;
-  int iVar6;
-  ulonglong uVar7;
-  longlong lVar8;
+  MessageLine *pMVar2;
+  int iVar3;
+  ulonglong uVar4;
+  int iVar5;
+  ulonglong uVar6;
+  longlong lVar7;
+  int iVar8;
   int iVar9;
-  int iVar10;
-  int *piVar11;
-  longlong lVar12;
-  ulonglong uVar13;
+  Message *pMVar10;
+  longlong lVar11;
+  ulonglong uVar12;
   
-  lVar4 = (longlong)param_2;
-  piVar3 = (int *)__savegprlr_19(param_1);
-  iVar6 = -1;
-  lVar12 = 0;
-  if (0 < piVar3[0xb]) {
+  iVar5 = -1;
+  lVar11 = 0;
+  if (0 < param_1->activeLineCount) {
     do {
-      if (piVar3[4] < 1) {
+      if (param_1->lineCount < 1) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",
                         0x200,0,"%s\n\t(msgwnd->lineCount) = %i");
       }
-      uVar1 = piVar3[4];
-      uVar5 = (ulonglong)uVar1;
-      uVar7 = lVar12 + (ulonglong)(uint)piVar3[10];
-      trapWord(6,uVar5,0);
-      uVar13 = uVar7 - (longlong)((int)uVar7 / (int)uVar1) * (longlong)(int)uVar1;
-      trapWord(5,uVar5 & ~(((uVar7 & 0x7fffffff) << 1 | (uVar7 & 0xffffffff) >> 0x1f) - 1),0xffff);
-      if (uVar5 <= (uVar13 & 0xffffffff)) {
+      uVar1 = param_1->lineCount;
+      uVar4 = (ulonglong)uVar1;
+      uVar6 = lVar11 + (ulonglong)(uint)param_1->firstLineIndex;
+      trapWord(6,uVar4,0);
+      uVar12 = uVar6 - (longlong)((int)uVar6 / (int)uVar1) * (longlong)(int)uVar1;
+      trapWord(5,uVar4 & ~(((uVar6 & 0x7fffffff) << 1 | (uVar6 & 0xffffffff) >> 0x1f) - 1),0xffff);
+      if (uVar4 <= (uVar12 & 0xffffffff)) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",
                         0x203,0,"lineIndex doesn\'t index msgwnd->lineCount\n\t%i not in [0, %i)");
       }
-      iVar2 = *piVar3;
-      iVar9 = (int)((uVar13 + (uVar13 & 0x7fffffff) * 2 & 0xffffffff) << 3);
-      if ((uint)piVar3[4] <= *(uint *)(iVar9 + iVar2)) {
+      pMVar2 = param_1->lines;
+      iVar3 = (int)((uVar12 + (uVar12 & 0x7fffffff) * 2 & 0xffffffff) << 3);
+      if ((uint)param_1->lineCount <= *(uint *)((int)&pMVar2->messageIndex + iVar3)) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",
                         0x206,0,
                         "line->messageIndex doesn\'t index msgwnd->lineCount\n\t%i not in [0, %i)");
       }
-      iVar2 = *(int *)(iVar9 + iVar2);
-      if (iVar2 != iVar6) {
-        piVar11 = (int *)(iVar2 * 8 + piVar3[1]);
-        lVar8 = lVar4 + (ulonglong)*(uint *)(iVar2 * 8 + piVar3[1]);
-        iVar6 = piVar11[1] + (int)lVar4;
-        iVar9 = (int)lVar8;
-        *piVar11 = iVar9;
-        piVar11[1] = iVar6;
-        if (lVar8 < 0) {
-          *piVar11 = 0;
-          piVar11[1] = iVar6 - iVar9;
+      iVar3 = *(int *)((int)&pMVar2->messageIndex + iVar3);
+      if (iVar3 != iVar5) {
+        pMVar10 = param_1->messages + iVar3;
+        lVar7 = (longlong)param_2 + (ulonglong)(uint)param_1->messages[iVar3].startTime;
+        iVar5 = pMVar10->endTime + param_2;
+        iVar8 = (int)lVar7;
+        pMVar10->startTime = iVar8;
+        pMVar10->endTime = iVar5;
+        if (lVar7 < 0) {
+          pMVar10->startTime = 0;
+          pMVar10->endTime = iVar5 - iVar8;
         }
-        iVar9 = *piVar11;
-        iVar10 = param_3 + 1000;
-        iVar6 = iVar2;
-        if (iVar10 < iVar9) {
-          *piVar11 = iVar10;
-          piVar11[1] = iVar10 + (piVar11[1] - iVar9);
+        iVar8 = pMVar10->startTime;
+        iVar9 = param_3 + 1000;
+        iVar5 = iVar3;
+        if (iVar9 < iVar8) {
+          pMVar10->startTime = iVar9;
+          pMVar10->endTime = iVar9 + (pMVar10->endTime - iVar8);
         }
       }
-      lVar12 = lVar12 + 1;
-    } while ((int)lVar12 < piVar3[0xb]);
+      lVar11 = lVar11 + 1;
+    } while ((int)lVar11 < param_1->activeLineCount);
   }
-  __restgprlr_19();
   return;
 }
 
 
 // 8232E0F8  Con_TimeNudged  (client/cl_console.cpp:544)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -353,93 +352,88 @@ void Con_TimeNudged(LocalClientNum_t param_1,int param_2)
 
 {
   int iVar1;
-  LocalClientNum_t LVar2;
-  clientActive_t *pcVar3;
-  uint uVar4;
+  clientActive_t *pcVar2;
+  uint uVar3;
   
-  LVar2 = __savegprlr_27(param_1);
-  pcVar3 = CL_GetLocalClientGlobals(LVar2);
-  iVar1 = pcVar3->serverTime;
+  pcVar2 = CL_GetLocalClientGlobals(param_1);
+  iVar1 = pcVar2->serverTime;
   Con_NudgeMessageWindowTimes(&con.consoleWindow,param_2,iVar1);
-  uVar4 = 0;
+  uVar3 = 0;
   do {
     Con_NudgeMessageWindowTimes
-              ((MessageWindow *)((int)&con.messageBuffer[LVar2].gamemsgWindows[0].lines + uVar4),
+              ((MessageWindow *)((int)&con.messageBuffer[param_1].gamemsgWindows[0].lines + uVar3),
                param_2,iVar1);
-    uVar4 = uVar4 + 0x34;
-  } while (uVar4 < 0xd0);
-  Con_NudgeMessageWindowTimes(&con.messageBuffer[LVar2].miniconWindow,param_2,iVar1);
-  Con_NudgeMessageWindowTimes(&con.messageBuffer[LVar2].errorWindow,param_2,iVar1);
-  __restgprlr_27();
+    uVar3 = uVar3 + 0x34;
+  } while (uVar3 < 0xd0);
+  Con_NudgeMessageWindowTimes(&con.messageBuffer[param_1].miniconWindow,param_2,iVar1);
+  Con_NudgeMessageWindowTimes(&con.messageBuffer[param_1].errorWindow,param_2,iVar1);
   return;
 }
 
 
 // 8232E198  Con_ClearMessageWindow  (client/cl_console.cpp:564)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void Con_ClearMessageWindow(MessageWindow *param_1)
 
 {
-  int *piVar1;
-  
-  piVar1 = (int *)__savegprlr_29(param_1);
-  if (piVar1 == (int *)0x0) {
+  if (param_1 == (MessageWindow *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",0x235,0
                     ,"%s");
   }
-  if (piVar1[1] == 0) {
+  if (param_1->messages == (Message *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",0x236,0
                     ,"%s");
   }
-  if (*piVar1 == 0) {
+  if (param_1->lines == (MessageLine *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",0x237,0
                     ,"%s");
   }
-  piVar1[9] = 0;
-  piVar1[0xc] = 0;
-  piVar1[10] = 0;
-  piVar1[0xb] = 0;
-  __restgprlr_29();
+  param_1->textBufPos = 0;
+  param_1->messageIndex = 0;
+  param_1->firstLineIndex = 0;
+  param_1->activeLineCount = 0;
   return;
 }
 
 
 // 8232E248  Con_ClearNotify  (client/cl_console.cpp:577)
 
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void Con_ClearNotify(LocalClientNum_t param_1)
 
 {
-  int iVar1;
+  uint uVar1;
   uint uVar2;
-  uint uVar3;
-  int *piVar4;
+  int *piVar3;
   
-  iVar1 = __savegprlr_22(param_1);
-  uVar2 = 0;
+  uVar1 = 0;
   do {
-    piVar4 = (int *)(uVar2 + iVar1 * 0x4858 + -0x7d5762f8);
-    if (piVar4 == (int *)0x0) {
+    piVar3 = (int *)((int)&con.messageBuffer[param_1].gamemsgWindows[0].lines + uVar1);
+    if (piVar3 == (int *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",0x235
                       ,0,"%s");
     }
-    if (*(int *)((int)&con.messageBuffer[iVar1].gamemsgWindows[0].messages + uVar2) == 0) {
+    if (*(int *)((int)&con.messageBuffer[param_1].gamemsgWindows[0].messages + uVar1) == 0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",0x236
                       ,0,"%s");
     }
-    if (*piVar4 == 0) {
+    if (*piVar3 == 0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",0x237
                       ,0,"%s");
     }
-    uVar3 = uVar2 + 0x34;
-    *(undefined4 *)((int)&con.messageBuffer[iVar1].gamemsgWindows[0].textBufPos + uVar2) = 0;
-    *(undefined4 *)((int)&con.messageBuffer[iVar1].gamemsgWindows[0].messageIndex + uVar2) = 0;
-    *(undefined4 *)((int)&con.messageBuffer[iVar1].gamemsgWindows[0].firstLineIndex + uVar2) = 0;
-    *(undefined4 *)((int)&con.messageBuffer[iVar1].gamemsgWindows[0].activeLineCount + uVar2) = 0;
-    uVar2 = uVar3;
-  } while (uVar3 < 0xd0);
-  __restgprlr_22();
+    uVar2 = uVar1 + 0x34;
+    *(undefined4 *)((int)&con.messageBuffer[param_1].gamemsgWindows[0].textBufPos + uVar1) = 0;
+    *(undefined4 *)((int)&con.messageBuffer[param_1].gamemsgWindows[0].messageIndex + uVar1) = 0;
+    *(undefined4 *)((int)&con.messageBuffer[param_1].gamemsgWindows[0].firstLineIndex + uVar1) = 0;
+    *(undefined4 *)((int)&con.messageBuffer[param_1].gamemsgWindows[0].activeLineCount + uVar1) = 0;
+    uVar1 = uVar2;
+  } while (uVar2 < 0xd0);
   return;
 }
 
@@ -470,6 +464,8 @@ void Con_ClearErrors(LocalClientNum_t param_1)
 
 // 8232E368  Con_CheckResize  (client/cl_console.cpp:599)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 
@@ -477,27 +473,25 @@ void Con_CheckResize(ScreenPlacement *param_1)
 
 {
   uint uVar1;
-  ScreenPlacement *pSVar3;
   ulonglong uVar2;
   int in_r4;
+  double dVar3;
   double dVar4;
-  double dVar5;
-  float fVar6;
+  float fVar5;
   
-  pSVar3 = (ScreenPlacement *)__savegprlr_29(param_1);
-  fVar6 = ScrPlace_ApplyX(pSVar3,4.0,in_r4);
-  dVar4 = floor((double)fVar6);
-  con.screenMin[0] = (float)dVar4;
-  fVar6 = ScrPlace_ApplyY(pSVar3,4.0,in_r4);
-  dVar4 = floor((double)fVar6);
-  con.screenMin[1] = (float)dVar4;
-  dVar5 = -4.0;
-  fVar6 = ScrPlace_ApplyX(pSVar3,-4.0,in_r4);
-  dVar4 = floor((double)fVar6);
-  con.screenMax[0] = (float)dVar4;
-  fVar6 = ScrPlace_ApplyY(pSVar3,(float)dVar5,0x10000);
-  dVar4 = floor((double)fVar6);
-  con.screenMax[1] = (float)dVar4;
+  fVar5 = ScrPlace_ApplyX(param_1,4.0,in_r4);
+  dVar3 = floor((double)fVar5);
+  con.screenMin[0] = (float)dVar3;
+  fVar5 = ScrPlace_ApplyY(param_1,4.0,in_r4);
+  dVar3 = floor((double)fVar5);
+  con.screenMin[1] = (float)dVar3;
+  dVar4 = -4.0;
+  fVar5 = ScrPlace_ApplyX(param_1,-4.0,in_r4);
+  dVar3 = floor((double)fVar5);
+  con.screenMax[0] = (float)dVar3;
+  fVar5 = ScrPlace_ApplyY(param_1,(float)dVar4,0x10000);
+  dVar3 = floor((double)fVar5);
+  con.screenMax[1] = (float)dVar3;
   if (cls.consoleFont != (Font_s *)0x0) {
     con.fontHeight = R_TextHeight(cls.consoleFont);
     uVar2 = (ulonglong)con.fontHeight;
@@ -509,40 +503,37 @@ void Con_CheckResize(ScreenPlacement *param_1)
     trapWord(6,uVar2,0);
     uVar1 = (uint)(((con.screenMax[1] - con.screenMin[1]) -
                    (float)(longlong)(int)((uVar2 & 0xffffffff) << 1)) - 24.0);
-    con.visiblePixelWidth = (int)(((con.screenMax[0] - con.screenMin[0]) - 10.0) - 18.0);
     con.visibleLineCount = (int)uVar1 / (int)uVar2;
     trapWord(5,uVar2 & ~((((ulonglong)uVar1 & 0x7fffffff) << 1 | (ulonglong)(uVar1 >> 0x1f)) - 1),
              0xffff);
-    __restgprlr_29();
+    con.visiblePixelWidth = (int)(((con.screenMax[0] - con.screenMin[0]) - 10.0) - 18.0);
     return;
   }
   con.fontHeight = 0;
   con.visibleLineCount = 0;
   con.visiblePixelWidth = 0;
-  __restgprlr_29();
   return;
 }
 
 
 // 8232E580  Con_InitMessageWindow  (client/cl_console.cpp:623)
 
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
+
 void Con_InitMessageWindow
                (MessageWindow *param_1,Message *param_2,MessageLine *param_3,char *param_4,
                int param_5,int param_6,int param_7,int param_8,int param_9,int param_10)
 
 {
-  undefined4 *puVar1;
-  ulonglong uVar2;
-  undefined4 in_stack_00000054;
-  undefined4 in_stack_0000005c;
+  int in_stack_00000054;
+  int in_stack_0000005c;
   
-  uVar2 = (ulonglong)(int)param_3;
-  puVar1 = (undefined4 *)__savegprlr_22(param_1);
-  if (puVar1 == (undefined4 *)0x0) {
+  if (param_1 == (MessageWindow *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",0x270,0
                     ,"%s");
   }
-  if ((uVar2 & 0xffffffff) == 0) {
+  if (param_3 == (MessageLine *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",0x271,0
                     ,"%s");
   }
@@ -550,20 +541,19 @@ void Con_InitMessageWindow
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",0x272,0
                     ,"lineCount >= padding\n\t%i, %i");
   }
-  *puVar1 = (int)uVar2;
-  puVar1[1] = param_2;
-  puVar1[2] = param_4;
-  puVar1[9] = 0;
-  puVar1[3] = param_7;
-  puVar1[10] = 0;
-  puVar1[0xb] = 0;
-  puVar1[0xc] = 0;
-  puVar1[4] = param_5;
-  puVar1[5] = param_6;
-  puVar1[6] = param_8;
-  puVar1[7] = in_stack_00000054;
-  puVar1[8] = in_stack_0000005c;
-  __restgprlr_22();
+  param_1->lines = param_3;
+  param_1->messages = param_2;
+  param_1->circularTextBuffer = param_4;
+  param_1->textBufPos = 0;
+  param_1->textBufSize = param_7;
+  param_1->firstLineIndex = 0;
+  param_1->activeLineCount = 0;
+  param_1->messageIndex = 0;
+  param_1->lineCount = param_5;
+  param_1->padding = param_6;
+  param_1->scrollTime = param_8;
+  param_1->fadeIn = in_stack_00000054;
+  param_1->fadeOut = in_stack_0000005c;
   return;
 }
 
@@ -584,6 +574,8 @@ void Con_Clear_f(void)
 
 // 8232E6D0  Con_Init  (client/cl_console.cpp:660)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void Con_Init(void)
@@ -593,7 +585,6 @@ void Con_Init(void)
   float fVar2;
   int *piVar3;
   
-  __savegprlr_26();
   con_restricted = Dvar_RegisterBool("monkeytoy",false,0,"Restrict console access");
   con_matchPrefixOnly =
        Dvar_RegisterBool("con_matchPrefixOnly",true,0,
@@ -616,7 +607,6 @@ void Con_Init(void)
   } while ((int)piVar3 < -0x7d55e624);
   conDrawInputGlob.matchIndex = -1;
   Cmd_AddCommandInternal("clear",Con_Clear_f,&Con_Clear_f_VAR);
-  __restgprlr_26();
   return;
 }
 
@@ -687,6 +677,8 @@ int Con_GetDefaultMsgDuration(print_msg_dest_t param_1)
 
 // 8232E978  Con_UpdateMessage  (client/cl_console.cpp:742)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -695,49 +687,44 @@ void Con_UpdateMessage(LocalClientNum_t param_1,MessageWindow *param_2,int param
 
 {
   uint uVar1;
-  LocalClientNum_t LVar3;
   ulonglong uVar2;
-  clientActive_t *pcVar4;
-  ulonglong uVar5;
-  int iVar6;
-  int *piVar7;
+  clientActive_t *pcVar3;
+  ulonglong uVar4;
+  int iVar5;
+  int *piVar6;
   
-  uVar2 = (ulonglong)(int)param_2;
-  LVar3 = __savegprlr_27(param_1);
-  if ((uVar2 & 0xffffffff) == 0) {
+  if (param_2 == (MessageWindow *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",0x2e9,0
                     ,"%s");
   }
-  iVar6 = (int)uVar2;
-  if (*(uint *)(iVar6 + 0x10) != 0) {
-    if (*(uint *)(iVar6 + 0x10) <= *(uint *)(iVar6 + 0x30)) {
+  if (param_2->lineCount != 0) {
+    if ((uint)param_2->lineCount <= (uint)param_2->messageIndex) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",0x2ee
                       ,0,
                       "msgwnd->messageIndex doesn\'t index msgwnd->lineCount\n\t%i not in [0, %i)");
     }
-    if (*(int *)(iVar6 + 0x10) == 0) {
+    if (param_2->lineCount == 0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",0x2f1
                       ,0,"%s");
     }
-    uVar1 = *(uint *)(iVar6 + 0x10);
-    uVar5 = (ulonglong)*(uint *)(iVar6 + 0x30) + 1;
+    uVar1 = param_2->lineCount;
+    uVar4 = (ulonglong)(uint)param_2->messageIndex + 1;
     trapWord(6,(ulonglong)uVar1,0);
-    uVar2 = uVar5 - (longlong)((int)uVar5 / (int)uVar1) * (longlong)(int)uVar1;
-    *(int *)(iVar6 + 0x30) = (int)uVar2;
-    piVar7 = (int *)((int)((uVar2 & 0xffffffff) << 3) + *(int *)(iVar6 + 4));
-    trapWord(5,(ulonglong)uVar1 & ~(((uVar5 & 0x7fffffff) << 1 | (uVar5 & 0xffffffff) >> 0x1f) - 1),
+    uVar2 = uVar4 - (longlong)((int)uVar4 / (int)uVar1) * (longlong)(int)uVar1;
+    param_2->messageIndex = (int)uVar2;
+    piVar6 = (int *)((int)&param_2->messages->startTime + (int)((uVar2 & 0xffffffff) << 3));
+    trapWord(5,(ulonglong)uVar1 & ~(((uVar4 & 0x7fffffff) << 1 | (uVar4 & 0xffffffff) >> 0x1f) - 1),
              0xffff);
-    if ((int)LVar3 < cl_maxLocalClients) {
-      pcVar4 = CL_GetLocalClientGlobals(LVar3);
-      iVar6 = pcVar4->serverTime;
+    if ((int)param_1 < cl_maxLocalClients) {
+      pcVar3 = CL_GetLocalClientGlobals(param_1);
+      iVar5 = pcVar3->serverTime;
     }
     else {
-      iVar6 = 0;
+      iVar5 = 0;
     }
-    *piVar7 = iVar6;
-    piVar7[1] = iVar6 + param_3;
+    *piVar6 = iVar5;
+    piVar6[1] = iVar5 + param_3;
   }
-  __restgprlr_27();
   return;
 }
 
@@ -775,90 +762,85 @@ void Con_FreeFirstMessageWindowLine(MessageWindow *param_1)
 
 // 8232EB98  Con_NeedToFreeMessageWindowLine  (client/cl_console.cpp:786)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 bool Con_NeedToFreeMessageWindowLine(MessageWindow *param_1,int param_2)
 
 {
   int iVar1;
-  int iVar2;
-  int *piVar3;
-  undefined1 uVar4;
-  uint uVar5;
-  undefined8 uVar6;
+  MessageLine *pMVar2;
+  uint uVar3;
+  bool bVar4;
   
-  piVar3 = (int *)__savegprlr_27(param_1);
-  if (piVar3[0xb] == 0) {
-    uVar4 = __restgprlr_27(0);
-    return (bool)uVar4;
+  if (param_1->activeLineCount == 0) {
+    return false;
   }
-  if (piVar3[4] < 1) {
+  if (param_1->lineCount < 1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",0x319,0
                     ,"%s");
   }
-  if ((uint)piVar3[4] <= (uint)piVar3[10]) {
+  if ((uint)param_1->lineCount <= (uint)param_1->firstLineIndex) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",0x31a,0
                     ,"msgwnd->firstLineIndex doesn\'t index msgwnd->lineCount\n\t%i not in [0, %i)")
     ;
   }
-  iVar1 = piVar3[10];
-  iVar2 = *piVar3;
-  if ((piVar3[3] - 1U & piVar3[3]) != 0) {
+  iVar1 = param_1->firstLineIndex;
+  pMVar2 = param_1->lines;
+  if ((param_1->textBufSize - 1U & param_1->textBufSize) != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",0x31d,0
                     ,"%s");
   }
-  uVar5 = piVar3[9] + param_2 & piVar3[3] - 1U;
-  iVar1 = *(int *)(iVar1 * 0x18 + iVar2 + 4);
-  if ((int)uVar5 < piVar3[9]) {
-    if ((piVar3[9] <= iVar1) || (uVar6 = 0, iVar1 < (int)uVar5)) {
-      uVar6 = 1;
+  uVar3 = param_1->textBufPos + param_2 & param_1->textBufSize - 1U;
+  iVar1 = pMVar2[iVar1].textBufPos;
+  if ((int)uVar3 < param_1->textBufPos) {
+    if ((param_1->textBufPos <= iVar1) || (bVar4 = false, iVar1 < (int)uVar3)) {
+      bVar4 = true;
     }
   }
-  else if ((iVar1 < piVar3[9]) || (uVar6 = 1, (int)uVar5 <= iVar1)) {
-    uVar4 = __restgprlr_27(0);
-    return (bool)uVar4;
+  else if ((iVar1 < param_1->textBufPos) || (bVar4 = true, (int)uVar3 <= iVar1)) {
+    return false;
   }
-  uVar4 = __restgprlr_27(uVar6);
-  return (bool)uVar4;
+  return bVar4;
 }
 
 
 // 8232ECD8  Con_CopyCurrentConsoleLineText  (client/cl_console.cpp:807)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 void Con_CopyCurrentConsoleLineText(MessageWindow *param_1,MessageLine *param_2)
 
 {
-  MessageWindow *pMVar1;
-  bool bVar3;
-  uint uVar2;
-  ulonglong uVar4;
+  bool bVar2;
+  uint uVar1;
   
-  uVar4 = (ulonglong)(int)param_2;
-  pMVar1 = (MessageWindow *)__savegprlr_26(param_1);
-  if ((uVar4 & 0xffffffff) == 0) {
+  if (param_2 == (MessageLine *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",0x32a,0
                     ,"%s");
   }
-  bVar3 = Con_NeedToFreeMessageWindowLine(pMVar1,con.lineOffset + 1);
-  if (bVar3) {
+  bVar2 = Con_NeedToFreeMessageWindowLine(param_1,con.lineOffset + 1);
+  if (bVar2) {
     do {
-      Con_FreeFirstMessageWindowLine(pMVar1);
-      bVar3 = Con_NeedToFreeMessageWindowLine(pMVar1,con.lineOffset + 1);
-    } while (bVar3);
+      Con_FreeFirstMessageWindowLine(param_1);
+      bVar2 = Con_NeedToFreeMessageWindowLine(param_1,con.lineOffset + 1);
+    } while (bVar2);
   }
-  if ((uint)(pMVar1->textBufSize - pMVar1->textBufPos) < con.lineOffset) {
+  if ((uint)(param_1->textBufSize - param_1->textBufPos) < con.lineOffset) {
     memcpy();
   }
   memcpy();
-  *(int *)((int)uVar4 + 4) = pMVar1->textBufPos;
-  *(uint *)((int)uVar4 + 8) = con.lineOffset;
-  if ((pMVar1->textBufSize - 1U & pMVar1->textBufSize) != 0) {
+  param_2->textBufPos = param_1->textBufPos;
+  param_2->textBufSize = con.lineOffset;
+  if ((param_1->textBufSize - 1U & param_1->textBufSize) != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",0x33d,0
                     ,"%s");
   }
-  uVar2 = pMVar1->textBufPos + con.lineOffset & pMVar1->textBufSize - 1U;
-  pMVar1->textBufPos = uVar2;
-  pMVar1->circularTextBuffer[uVar2] = '\n';
-  pMVar1->textBufPos = pMVar1->textBufSize - 1U & pMVar1->textBufPos + 1U;
-  __restgprlr_26();
+  uVar1 = param_1->textBufPos + con.lineOffset & param_1->textBufSize - 1U;
+  param_1->textBufPos = uVar1;
+  param_1->circularTextBuffer[uVar1] = '\n';
+  param_1->textBufPos = param_1->textBufSize - 1U & param_1->textBufPos + 1U;
   return;
 }
 
@@ -897,44 +879,44 @@ int LatestActiveTypewrittenLineIdx(MessageWindow *param_1)
 
 // 8232EEE8  PrintableCharsCount  (client/cl_console.cpp:869)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 int PrintableCharsCount(MessageWindow *param_1,MessageLine *param_2)
 
 {
   char cVar1;
-  int iVar2;
+  uint uVar2;
   uint uVar3;
-  uint uVar4;
-  longlong lVar5;
-  int iVar6;
+  int iVar4;
+  int iVar5;
   int local_30 [12];
   
-  iVar2 = __savegprlr_28(param_1);
   if ((param_2->textBufSize != 0) &&
-     ((uint)LZCOUNT(*(uint *)(iVar2 + 0xc) - 1 & *(uint *)(iVar2 + 0xc)) >> 5 == 0)) {
+     ((uint)LZCOUNT(param_1->textBufSize - 1U & param_1->textBufSize) >> 5 == 0)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",0x369,0
                     ,"%s");
   }
-  lVar5 = 0;
-  iVar6 = 0;
+  iVar4 = 0;
+  iVar5 = 0;
   if (0 < param_2->textBufSize) {
     do {
-      uVar4 = iVar6 + param_2->textBufPos;
-      uVar3 = *(int *)(iVar2 + 0xc) - 1;
-      uVar3 = SEH_DecodeLetter((int)*(char *)((uVar3 & uVar4) + *(int *)(iVar2 + 8)),
-                               (int)*(char *)((uVar4 + 1 & uVar3) + *(int *)(iVar2 + 8)),local_30,
+      uVar3 = iVar5 + param_2->textBufPos;
+      uVar2 = param_1->textBufSize - 1;
+      uVar2 = SEH_DecodeLetter((int)param_1->circularTextBuffer[uVar2 & uVar3],
+                               (int)param_1->circularTextBuffer[uVar3 + 1 & uVar2],local_30,
                                (int *)0x0);
-      lVar5 = lVar5 + 1;
-      iVar6 = local_30[0] + iVar6;
-      if ((((uVar3 == 0x5e) &&
-           (cVar1 = *(char *)((iVar6 + param_2->textBufPos & *(int *)(iVar2 + 0xc) - 1U) +
-                             *(int *)(iVar2 + 8)), cVar1 != '^')) && ('/' < cVar1)) && (cVar1 < '<')
-         ) {
-        iVar6 = iVar6 + 1;
+      iVar4 = iVar4 + 1;
+      iVar5 = local_30[0] + iVar5;
+      if ((((uVar2 == 0x5e) &&
+           (cVar1 = param_1->circularTextBuffer
+                    [iVar5 + param_2->textBufPos & param_1->textBufSize - 1U], cVar1 != '^')) &&
+          ('/' < cVar1)) && (cVar1 < '<')) {
+        iVar5 = iVar5 + 1;
       }
-    } while (iVar6 < param_2->textBufSize);
+    } while (iVar5 < param_2->textBufSize);
   }
-  iVar2 = __restgprlr_28(lVar5);
-  return iVar2;
+  return iVar4;
 }
 
 
@@ -1010,6 +992,8 @@ int GetNextValidPrintTimeForLine(LocalClientNum_t param_1,MessageWindow *param_2
 
 // 8232F178  Con_UpdateMessageWindowLine  (client/cl_console.cpp:960)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -1020,100 +1004,94 @@ void Con_UpdateMessageWindowLine
 {
   uint uVar1;
   MessageLine *pMVar2;
-  MessageWindow *pMVar3;
-  LocalClientNum_t LVar4;
-  clientActive_t *pcVar5;
-  int iVar6;
-  ulonglong uVar7;
-  ulonglong uVar8;
-  longlong lVar9;
-  int iVar10;
-  ulonglong uVar11;
-  Message *pMVar12;
+  clientActive_t *pcVar3;
+  int iVar4;
+  ulonglong uVar5;
+  ulonglong uVar6;
+  longlong lVar7;
+  int iVar8;
+  ulonglong uVar9;
+  Message *pMVar10;
   
-  uVar7 = (ulonglong)(int)param_2;
-  LVar4 = __savegprlr_25(param_1);
-  if ((uVar7 & 0xffffffff) == 0) {
+  if (param_2 == (MessageWindow *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",0x3c7,0
                     ,"%s");
   }
-  pMVar3 = (MessageWindow *)uVar7;
-  if (pMVar3->lineCount != 0) {
-    if ((uint)pMVar3->lineCount <= (uint)pMVar3->firstLineIndex) {
+  if (param_2->lineCount != 0) {
+    if ((uint)param_2->lineCount <= (uint)param_2->firstLineIndex) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",0x3cc
                       ,0,
                       "msgwnd->firstLineIndex doesn\'t index msgwnd->lineCount\n\t%i not in [0, %i)"
                      );
     }
-    if ((uint)pMVar3->lineCount <= (uint)pMVar3->messageIndex) {
+    if ((uint)param_2->lineCount <= (uint)param_2->messageIndex) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",0x3cd
                       ,0,
                       "msgwnd->messageIndex doesn\'t index msgwnd->lineCount\n\t%i not in [0, %i)");
     }
-    if ((int)LVar4 < cl_maxLocalClients) {
-      pcVar5 = CL_GetLocalClientGlobals(LVar4);
-      iVar10 = pcVar5->serverTime;
+    if ((int)param_1 < cl_maxLocalClients) {
+      pcVar3 = CL_GetLocalClientGlobals(param_1);
+      iVar8 = pcVar3->serverTime;
     }
     else {
-      iVar10 = 0;
+      iVar8 = 0;
     }
-    uVar1 = pMVar3->lineCount;
-    uVar7 = (ulonglong)(uint)pMVar3->activeLineCount + (ulonglong)(uint)pMVar3->firstLineIndex;
+    uVar1 = param_2->lineCount;
+    uVar5 = (ulonglong)(uint)param_2->activeLineCount + (ulonglong)(uint)param_2->firstLineIndex;
     trapWord(6,(ulonglong)uVar1,0);
-    iVar6 = (int)uVar7 - ((int)uVar7 / (int)uVar1) * uVar1;
-    trapWord(5,(ulonglong)uVar1 & ~(((uVar7 & 0x7fffffff) << 1 | (uVar7 & 0xffffffff) >> 0x1f) - 1),
+    iVar4 = (int)uVar5 - ((int)uVar5 / (int)uVar1) * uVar1;
+    trapWord(5,(ulonglong)uVar1 & ~(((uVar5 & 0x7fffffff) << 1 | (uVar5 & 0xffffffff) >> 0x1f) - 1),
              0xffff);
-    pMVar2 = pMVar3->lines + iVar6;
-    pMVar3->lines[iVar6].messageIndex = pMVar3->messageIndex;
+    pMVar2 = param_2->lines + iVar4;
+    param_2->lines[iVar4].messageIndex = param_2->messageIndex;
     pMVar2->lastTypingSoundTime = 0;
     pMVar2->typingStartTime = 0;
     pMVar2->flags = param_4;
-    iVar6 = GetNextValidPrintTimeForLine(LVar4,pMVar3,param_4);
-    pMVar2->typingStartTime = iVar6;
-    if (iVar6 != 0) {
-      iVar6 = PrintTimeTotal(pMVar3,pMVar2);
-      pMVar3->messages[pMVar2->messageIndex].endTime = iVar6 + pMVar2->typingStartTime;
+    iVar4 = GetNextValidPrintTimeForLine(param_1,param_2,param_4);
+    pMVar2->typingStartTime = iVar4;
+    if (iVar4 != 0) {
+      iVar4 = PrintTimeTotal(param_2,pMVar2);
+      param_2->messages[pMVar2->messageIndex].endTime = iVar4 + pMVar2->typingStartTime;
     }
-    Con_CopyCurrentConsoleLineText(pMVar3,pMVar2);
+    Con_CopyCurrentConsoleLineText(param_2,pMVar2);
     if (param_3 != 0) {
-      if (pMVar3->activeLineCount == pMVar3->lineCount) {
-        Con_FreeFirstMessageWindowLine(pMVar3);
+      if (param_2->activeLineCount == param_2->lineCount) {
+        Con_FreeFirstMessageWindowLine(param_2);
       }
-      uVar1 = pMVar3->lineCount;
-      uVar7 = (ulonglong)uVar1;
-      lVar9 = (ulonglong)(uint)pMVar3->activeLineCount + 1;
-      pMVar3->activeLineCount = (int)lVar9;
-      lVar9 = ((uint)pMVar3->padding - uVar7) + lVar9;
-      if (0 < lVar9) {
-        trapWord(6,uVar7,0);
-        uVar8 = ((ulonglong)(uint)pMVar3->firstLineIndex + lVar9) - 1;
-        uVar11 = uVar8 - (longlong)((int)uVar8 / (int)uVar1) * (longlong)(int)uVar1;
-        trapWord(5,uVar7 & ~(((uVar8 & 0x7fffffff) << 1 | (uVar8 & 0xffffffff) >> 0x1f) - 1),0xffff)
+      uVar1 = param_2->lineCount;
+      uVar5 = (ulonglong)uVar1;
+      lVar7 = (ulonglong)(uint)param_2->activeLineCount + 1;
+      param_2->activeLineCount = (int)lVar7;
+      lVar7 = ((uint)param_2->padding - uVar5) + lVar7;
+      if (0 < lVar7) {
+        trapWord(6,uVar5,0);
+        uVar6 = ((ulonglong)(uint)param_2->firstLineIndex + lVar7) - 1;
+        uVar9 = uVar6 - (longlong)((int)uVar6 / (int)uVar1) * (longlong)(int)uVar1;
+        trapWord(5,uVar5 & ~(((uVar6 & 0x7fffffff) << 1 | (uVar6 & 0xffffffff) >> 0x1f) - 1),0xffff)
         ;
-        if (uVar7 <= (uVar11 & 0xffffffff)) {
+        if (uVar5 <= (uVar9 & 0xffffffff)) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",
                           0x3eb,0,"imod doesn\'t index msgwnd->lineCount\n\t%i not in [0, %i)");
         }
-        pMVar2 = pMVar3->lines;
-        iVar6 = (int)((uVar11 + (uVar11 & 0x7fffffff) * 2 & 0xffffffff) << 3);
-        if ((uint)pMVar3->lineCount <= *(uint *)((int)&pMVar2->messageIndex + iVar6)) {
+        pMVar2 = param_2->lines;
+        iVar4 = (int)((uVar9 + (uVar9 & 0x7fffffff) * 2 & 0xffffffff) << 3);
+        if ((uint)param_2->lineCount <= *(uint *)((int)&pMVar2->messageIndex + iVar4)) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",
                           0x3ed,0,
                           "line->messageIndex doesn\'t index msgwnd->lineCount\n\t%i not in [0, %i)"
                          );
         }
-        pMVar12 = pMVar3->messages + *(int *)((int)&pMVar2->messageIndex + iVar6);
-        if (iVar10 < pMVar12->endTime - pMVar3->fadeOut) {
-          if (pMVar12->endTime < pMVar12->startTime) {
+        pMVar10 = param_2->messages + *(int *)((int)&pMVar2->messageIndex + iVar4);
+        if (iVar8 < pMVar10->endTime - param_2->fadeOut) {
+          if (pMVar10->endTime < pMVar10->startTime) {
             MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp"
                             ,0x3f2,0,"message->endTime >= message->startTime\n\t%i, %i");
           }
-          pMVar12->endTime = pMVar3->fadeOut + iVar10;
+          pMVar10->endTime = param_2->fadeOut + iVar8;
         }
       }
     }
   }
-  __restgprlr_25();
   return;
 }
 
@@ -1150,6 +1128,8 @@ MessageWindow * Con_GetDestWindow(LocalClientNum_t param_1,print_msg_dest_t para
 
 // 8232F4F0  Con_UpdateNotifyMessageWindow  (client/cl_console.cpp:1040)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "print_msg_dest_t": Some values do not have unique names */
 
@@ -1158,93 +1138,91 @@ void Con_UpdateNotifyMessageWindow
                print_msg_dest_t param_5)
 
 {
-  LocalClientNum_t LVar1;
-  bool bVar3;
-  MessageWindow *pMVar2;
+  bool bVar2;
+  MessageWindow *pMVar1;
   
-  LVar1 = __savegprlr_29(param_1);
-  bVar3 = Con_IsChannelVisible(param_5,param_2,param_4);
-  if (bVar3) {
+  bVar2 = Con_IsChannelVisible(param_5,param_2,param_4);
+  if (bVar2) {
     if (param_3 == 0) {
       param_3 = Con_GetDefaultMsgDuration(param_5);
     }
-    pMVar2 = Con_GetDestWindow(LVar1,param_5);
-    Con_UpdateMessage(LVar1,pMVar2,-(param_3 >> 0x1f) - 1U & param_3);
+    pMVar1 = Con_GetDestWindow(param_1,param_5);
+    Con_UpdateMessage(param_1,pMVar1,-(param_3 >> 0x1f) - 1U & param_3);
   }
-  __restgprlr_29();
   return;
 }
 
 
 // 8232F568  Con_UpdateNotifyMessage  (client/cl_console.cpp:1055)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "print_msg_dest_t": Some values do not have unique names */
 
 void Con_UpdateNotifyMessage(LocalClientNum_t param_1,int param_2,int param_3,int param_4)
 
 {
-  LocalClientNum_t LVar1;
-  bool bVar4;
-  uint uVar2;
-  MessageWindow *pMVar3;
-  print_msg_dest_t pVar5;
+  bool bVar3;
+  uint uVar1;
+  MessageWindow *pMVar2;
+  print_msg_dest_t pVar4;
+  double dVar5;
   double dVar6;
   double dVar7;
-  double dVar8;
   
-  LVar1 = __savegprlr_23(param_1);
-  bVar4 = Con_IsChannelOpen(param_2);
-  if (!bVar4) {
+  bVar3 = Con_IsChannelOpen(param_2);
+  if (!bVar3) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",0x422,0
                     ,"%s");
   }
-  bVar4 = Con_IsChannelVisible(CON_DEST_MINICON,param_2,param_4);
-  dVar7 = 0.5;
-  dVar8 = 1000.0;
-  if (bVar4) {
-    uVar2 = param_3;
+  bVar3 = Con_IsChannelVisible(CON_DEST_MINICON,param_2,param_4);
+  dVar6 = 0.5;
+  dVar7 = 1000.0;
+  if (bVar3) {
+    uVar1 = param_3;
     if (param_3 == 0) {
-      dVar6 = floor((double)((con_minicontime->current).value * 1000.0 + 0.5));
-      uVar2 = (uint)dVar6;
+      dVar5 = floor((double)((con_minicontime->current).value * 1000.0 + 0.5));
+      uVar1 = (uint)dVar5;
     }
-    Con_UpdateMessage(LVar1,&con.messageBuffer[LVar1].miniconWindow,
-                      -((int)uVar2 >> 0x1f) - 1U & uVar2);
+    Con_UpdateMessage(param_1,&con.messageBuffer[param_1].miniconWindow,
+                      -((int)uVar1 >> 0x1f) - 1U & uVar1);
   }
-  pVar5 = CON_DEST_GAME1;
+  pVar4 = CON_DEST_GAME1;
   do {
-    bVar4 = Con_IsChannelVisible(pVar5,param_2,param_4);
-    if (bVar4) {
-      uVar2 = param_3;
+    bVar3 = Con_IsChannelVisible(pVar4,param_2,param_4);
+    if (bVar3) {
+      uVar1 = param_3;
       if (param_3 == 0) {
-        uVar2 = Con_GetDefaultMsgDuration(pVar5);
+        uVar1 = Con_GetDefaultMsgDuration(pVar4);
       }
-      pMVar3 = Con_GetDestWindow(LVar1,pVar5);
-      Con_UpdateMessage(LVar1,pMVar3,-((int)uVar2 >> 0x1f) - 1U & uVar2);
+      pMVar2 = Con_GetDestWindow(param_1,pVar4);
+      Con_UpdateMessage(param_1,pMVar2,-((int)uVar1 >> 0x1f) - 1U & uVar1);
     }
-    pVar5 = pVar5 + CON_DEST_MINICON;
-  } while (pVar5 < CON_DEST_COUNT);
+    pVar4 = pVar4 + CON_DEST_MINICON;
+  } while (pVar4 < CON_DEST_COUNT);
   if (com_developer == (dvar_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",0x42b,0
                     ,"%s");
   }
   if (((com_developer->current).integer != 0) &&
-     (bVar4 = Con_IsChannelVisible(CON_DEST_ERROR,param_2,param_4), bVar4)) {
+     (bVar3 = Con_IsChannelVisible(CON_DEST_ERROR,param_2,param_4), bVar3)) {
     if (param_3 == 0) {
-      dVar7 = floor((double)(float)((double)(float)((double)*(float *)(DAT_82a7787c + 0xc) * dVar8)
-                                   + dVar7));
-      param_3 = (int)dVar7;
+      dVar6 = floor((double)(float)((double)(float)((double)*(float *)(DAT_82a7787c + 0xc) * dVar7)
+                                   + dVar6));
+      param_3 = (int)dVar6;
     }
-    Con_UpdateMessage(LVar1,&con.messageBuffer[LVar1].errorWindow,-(param_3 >> 0x1f) - 1U & param_3)
-    ;
+    Con_UpdateMessage(param_1,&con.messageBuffer[param_1].errorWindow,
+                      -(param_3 >> 0x1f) - 1U & param_3);
   }
-  __restgprlr_23();
   return;
 }
 
 
 // 8232F780  Con_UpdateNotifyLineWindow  (client/cl_console.cpp:1075)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "print_msg_dest_t": Some values do not have unique names */
 
@@ -1253,70 +1231,64 @@ void Con_UpdateNotifyLineWindow
                print_msg_dest_t param_5)
 
 {
-  LocalClientNum_t LVar1;
-  bool bVar3;
-  MessageWindow *pMVar2;
-  uint uVar4;
+  bool bVar2;
+  MessageWindow *pMVar1;
   
-  uVar4 = (uint)param_3;
-  LVar1 = __savegprlr_28(param_1);
-  bVar3 = Con_IsChannelVisible(param_5,param_2,param_4);
-  if (bVar3) {
-    pMVar2 = Con_GetDestWindow(LVar1,param_5);
-    Con_UpdateMessageWindowLine(LVar1,pMVar2,uVar4 & 0xff,param_4);
+  bVar2 = Con_IsChannelVisible(param_5,param_2,param_4);
+  if (bVar2) {
+    pMVar1 = Con_GetDestWindow(param_1,param_5);
+    Con_UpdateMessageWindowLine(param_1,pMVar1,(uint)param_3,param_4);
   }
-  __restgprlr_28();
   return;
 }
 
 
 // 8232F7E0  Con_UpdateNotifyLine  (client/cl_console.cpp:1084)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "print_msg_dest_t": Some values do not have unique names */
 
 void Con_UpdateNotifyLine(LocalClientNum_t param_1,int param_2,bool param_3,int param_4)
 
 {
-  LocalClientNum_t LVar1;
-  bool bVar3;
-  MessageWindow *pMVar2;
-  uint uVar4;
-  print_msg_dest_t pVar5;
+  bool bVar2;
+  MessageWindow *pMVar1;
+  print_msg_dest_t pVar3;
   
-  uVar4 = (uint)param_3;
-  LVar1 = __savegprlr_24(param_1);
-  bVar3 = Con_IsChannelOpen(param_2);
-  if (!bVar3) {
+  bVar2 = Con_IsChannelOpen(param_2);
+  if (!bVar2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",0x43f,0
                     ,"%s");
   }
-  bVar3 = Con_IsChannelVisible(CON_DEST_CONSOLE,param_2,param_4);
-  if (bVar3) {
-    Con_UpdateMessageWindowLine(LVar1,&con.consoleWindow,uVar4 & 0xff,param_4);
+  bVar2 = Con_IsChannelVisible(CON_DEST_CONSOLE,param_2,param_4);
+  if (bVar2) {
+    Con_UpdateMessageWindowLine(param_1,&con.consoleWindow,(uint)param_3,param_4);
   }
-  bVar3 = Con_IsChannelVisible(CON_DEST_MINICON,param_2,param_4);
-  if (bVar3) {
-    Con_UpdateMessageWindowLine(LVar1,&con.messageBuffer[LVar1].miniconWindow,uVar4 & 0xff,param_4);
+  bVar2 = Con_IsChannelVisible(CON_DEST_MINICON,param_2,param_4);
+  if (bVar2) {
+    Con_UpdateMessageWindowLine
+              (param_1,&con.messageBuffer[param_1].miniconWindow,(uint)param_3,param_4);
   }
-  pVar5 = CON_DEST_GAME1;
+  pVar3 = CON_DEST_GAME1;
   do {
-    bVar3 = Con_IsChannelVisible(pVar5,param_2,param_4);
-    if (bVar3) {
-      pMVar2 = Con_GetDestWindow(LVar1,pVar5);
-      Con_UpdateMessageWindowLine(LVar1,pMVar2,uVar4 & 0xff,param_4);
+    bVar2 = Con_IsChannelVisible(pVar3,param_2,param_4);
+    if (bVar2) {
+      pMVar1 = Con_GetDestWindow(param_1,pVar3);
+      Con_UpdateMessageWindowLine(param_1,pMVar1,(uint)param_3,param_4);
     }
-    pVar5 = pVar5 + CON_DEST_MINICON;
-  } while (pVar5 < CON_DEST_COUNT);
+    pVar3 = pVar3 + CON_DEST_MINICON;
+  } while (pVar3 < CON_DEST_COUNT);
   if (com_developer == (dvar_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",0x449,0
                     ,"%s");
   }
   if (((com_developer->current).integer != 0) &&
-     (bVar3 = Con_IsChannelVisible(CON_DEST_ERROR,param_2,param_4), bVar3)) {
-    Con_UpdateMessageWindowLine(LVar1,&con.messageBuffer[LVar1].errorWindow,uVar4 & 0xff,param_4);
+     (bVar2 = Con_IsChannelVisible(CON_DEST_ERROR,param_2,param_4), bVar2)) {
+    Con_UpdateMessageWindowLine
+              (param_1,&con.messageBuffer[param_1].errorWindow,(uint)param_3,param_4);
   }
-  __restgprlr_24();
   return;
 }
 
@@ -1339,6 +1311,8 @@ void Con_Linefeed(LocalClientNum_t param_1,int param_2,int param_3)
 
 // 8232F9F0  Con_InitMessageBuffer  (client/cl_console.cpp:1117)
 
+/* WARNING: Function: __savegprlr_16 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_16 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void Con_InitMessageBuffer(void)
@@ -1357,7 +1331,6 @@ void Con_InitMessageBuffer(void)
   int in_stack_ffffff08;
   int in_stack_ffffff0c;
   
-  __savegprlr_16();
   pMVar2 = con.messageBuffer[0].gamemsgMessages[0];
   dVar9 = 0.5;
   dVar10 = 1000.0;
@@ -1399,13 +1372,16 @@ void Con_InitMessageBuffer(void)
                in_stack_ffffff08,in_stack_ffffff0c);
     pMVar2 = pMVar2 + 0x90b;
   } while ((int)pMVar2 < -0x7d563c48);
-  __restgprlr_16();
   return;
 }
 
 
 // 8232FBD8  Con_OneTimeInit  (client/cl_console.cpp:1152)
 
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void Con_OneTimeInit(void)
@@ -1433,8 +1409,6 @@ void Con_OneTimeInit(void)
   int in_stack_fffffe78;
   int in_stack_fffffe7c;
   
-  __savegprlr();
-  __savefpr_23();
   dVar13 = 0.25;
   dVar18 = 1.0;
   dVar17 = 0.0;
@@ -1690,8 +1664,6 @@ void Con_OneTimeInit(void)
   con.color[1] = 1.0;
   con.color[2] = 1.0;
   con.color[3] = 1.0;
-  __restfpr_23();
-  __restgprlr();
   return;
 }
 
@@ -1724,6 +1696,8 @@ char * CL_TextLineWrapPosition
 
 // 82330770  CL_ConsolePrint_AddLine  (client/cl_console.cpp:1253)
 
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -1733,99 +1707,84 @@ char CL_ConsolePrint_AddLine
                char param_6,int param_7)
 
 {
-  byte bVar1;
+  char cVar1;
   bool bVar2;
   ScreenPlacement *pSVar3;
   Font_s *pFVar4;
   char *pcVar5;
+  uint uVar6;
   uint uVar7;
-  longlong lVar8;
+  uint uVar8;
   int iVar9;
-  ulonglong uVar10;
-  uint uVar11;
-  uint uVar12;
-  ulonglong uVar13;
-  char cVar14;
-  ulonglong uVar15;
-  int iVar16;
-  double dVar17;
-  float fVar18;
+  double dVar10;
+  float fVar11;
   LocalClientNum_t LStack00000014;
   int iStack00000034;
   int iStack00000044;
-  byte *local_b0;
+  char *local_b0;
   char *local_ac;
-  byte *pbVar6;
   
-  uVar13 = (ulonglong)param_6;
-  uVar10 = (ulonglong)(int)param_3;
-  lVar8 = (longlong)param_2;
-  __savegprlr();
-  cVar14 = (char)uVar13;
   LStack00000014 = param_1;
   iStack00000034 = param_5;
   iStack00000044 = param_7;
-  if ((uVar10 & 0xffffffff) == 0) {
+  if (param_3 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",0x4f2,0
                     ,"%s");
   }
   local_ac = "color not in [COLOR_FIRST, COLOR_LAST]\n\t%i not in [%i, %i]";
-  if ((cVar14 < '0') || (';' < cVar14)) {
+  if ((param_6 < '0') || (';' < param_6)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",0x4f3,0
                     ,"color not in [COLOR_FIRST, COLOR_LAST]\n\t%i not in [%i, %i]");
   }
   if (callDepth == 0) {
     callDepth = 1;
-    iVar9 = (int)lVar8;
-    Con_UpdateNotifyMessage(param_1,iVar9,param_4,param_7);
-    if ((iVar9 != con.prevChannel) && (con.lineOffset != 0)) {
+    Con_UpdateNotifyMessage(param_1,param_2,param_4,param_7);
+    if ((param_2 != con.prevChannel) && (con.lineOffset != 0)) {
       Con_Linefeed(param_1,con.prevChannel,param_7);
     }
-    if (((iVar9 == 2) || (iVar9 == 3)) || (bVar2 = false, iVar9 == 4)) {
+    if (((param_2 == 2) || (param_2 == 3)) || (bVar2 = false, param_2 == 4)) {
       bVar2 = true;
     }
     if (bVar2) {
       pSVar3 = ScrPlace_GetFullPlacement();
-      dVar17 = 0.3333333432674408;
-      pFVar4 = UI_GetFontHandle(pSVar3,-(uint)(lVar8 == 3) & 4,0.33333334);
-      fVar18 = R_NormalizedTextScale(pFVar4,(float)dVar17);
+      dVar10 = 0.3333333432674408;
+      pFVar4 = UI_GetFontHandle(pSVar3,-(uint)(param_2 == 3) & 4,0.33333334);
+      fVar11 = R_NormalizedTextScale(pFVar4,(float)dVar10);
     }
     else {
-      fVar18 = 1.0;
+      fVar11 = 1.0;
       pFVar4 = cls.consoleFont;
     }
-    dVar17 = (double)fVar18;
+    dVar10 = (double)fVar11;
     if (param_5 == 0) {
       iStack00000034 = con.visiblePixelWidth;
       param_5 = con.visiblePixelWidth;
     }
-    pbVar6 = (byte *)uVar10;
-    pcVar5 = R_TextLineWrapPosition((char *)pbVar6,0x200 - con.lineOffset,param_5,pFVar4,fVar18);
+    pcVar5 = R_TextLineWrapPosition(param_3,0x200 - con.lineOffset,param_5,pFVar4,fVar11);
     if (pcVar5 == (char *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",0x4de
                       ,0,"%s");
     }
-    uVar15 = -(ulonglong)(*pcVar5 != '\0') & (longlong)(int)pcVar5;
-    if (((uVar10 & 0xffffffff) == (uVar15 & 0xffffffff)) && (con.lineOffset != 0)) {
-      Con_Linefeed(param_1,iVar9,param_7);
-      pcVar5 = R_TextLineWrapPosition
-                         ((char *)pbVar6,0x200 - con.lineOffset,param_5,pFVar4,(float)dVar17);
+    pcVar5 = (char *)(-(uint)(*pcVar5 != '\0') & (uint)pcVar5);
+    if ((param_3 == pcVar5) && (con.lineOffset != 0)) {
+      Con_Linefeed(param_1,param_2,param_7);
+      pcVar5 = R_TextLineWrapPosition(param_3,0x200 - con.lineOffset,param_5,pFVar4,(float)dVar10);
       if (pcVar5 == (char *)0x0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",
                         0x4de,0,"%s");
       }
-      uVar15 = -(ulonglong)(*pcVar5 != '\0') & (longlong)(int)pcVar5;
+      pcVar5 = (char *)(-(uint)(*pcVar5 != '\0') & (uint)pcVar5);
     }
     bVar2 = false;
-    bVar1 = *pbVar6;
-    local_b0 = pbVar6;
-    while (bVar1 != 0) {
-      uVar7 = SEH_ReadCharFromString((char **)&local_b0,(int *)0x0);
-      if (uVar7 == 10) {
-        if ((uVar15 & 0xffffffff) != 0) {
+    cVar1 = *param_3;
+    local_b0 = param_3;
+    while (cVar1 != '\0') {
+      uVar6 = SEH_ReadCharFromString(&local_b0,(int *)0x0);
+      if (uVar6 == 10) {
+        if (pcVar5 != (char *)0x0) {
           if (pFVar4 != (Font_s *)0x0) {
-            if ((uVar15 & 0xffffffff) == ZEXT48(local_b0)) goto LAB_82330e28;
-            if (*local_b0 != 0) {
+            if (pcVar5 == local_b0) goto LAB_82330e28;
+            if (*local_b0 != '\0') {
               va("font is %s, wrapPosition is %s, text is %s, txt is %s");
               MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp"
                               ,0x529,0,"%s\n\t%s");
@@ -1834,48 +1793,43 @@ char CL_ConsolePrint_AddLine
           goto LAB_82330e1c;
         }
 LAB_82330e28:
-        Con_UpdateNotifyLine(LStack00000014,iVar9,true,iStack00000044);
+        Con_UpdateNotifyLine(LStack00000014,param_2,true,iStack00000044);
         con.lineOffset = 0;
         if (con.displayLineOffset == con.consoleWindow.activeLineCount + -1) {
           con.displayLineOffset = con.displayLineOffset + 1;
         }
-        if (uVar7 != 10) {
-          cVar14 = (char)uVar13;
-          bVar2 = true;
-          if (cVar14 != '7') {
-            if (((cVar14 < '0') || (';' < cVar14)) &&
-               (MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp"
-                                ,0x567,0,local_ac), 0x1fe < con.lineOffset)) {
-              MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp"
-                              ,0x568,0,
-                              "con.lineOffset doesn\'t index sizeof( con.textTempLine ) - 1\n\t%i not in [0, %i)"
-                             );
-            }
-            con.textTempLine[con.lineOffset] = '^';
-            con.textTempLine[con.lineOffset + 1] = cVar14;
-            uVar12 = con.lineOffset + 2;
-            uVar7 = con.lineOffset + 2;
-            con.lineOffset = uVar12;
-            if (0x200 < uVar7) {
-              MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp"
-                              ,0x56c,0,
-                              "con.lineOffset doesn\'t index sizeof( con.textTempLine ) + 1\n\t%i not in [0, %i)"
-                             );
-            }
+        if ((uVar6 != 10) && (bVar2 = true, param_6 != '7')) {
+          if (((param_6 < '0') || (';' < param_6)) &&
+             (MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp"
+                              ,0x567,0,local_ac), 0x1fe < con.lineOffset)) {
+            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp"
+                            ,0x568,0,
+                            "con.lineOffset doesn\'t index sizeof( con.textTempLine ) - 1\n\t%i not in [0, %i)"
+                           );
+          }
+          con.textTempLine[con.lineOffset] = '^';
+          con.textTempLine[con.lineOffset + 1] = param_6;
+          uVar8 = con.lineOffset + 2;
+          uVar6 = con.lineOffset + 2;
+          con.lineOffset = uVar8;
+          if (0x200 < uVar6) {
+            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp"
+                            ,0x56c,0,
+                            "con.lineOffset doesn\'t index sizeof( con.textTempLine ) + 1\n\t%i not in [0, %i)"
+                           );
           }
         }
         pcVar5 = CL_TextLineWrapPosition
-                           ((char *)local_b0,0x200 - con.lineOffset,iStack00000034,pFVar4,
-                            (float)dVar17,con.lineOffset);
-        uVar15 = (ulonglong)(int)pcVar5;
+                           (local_b0,0x200 - con.lineOffset,iStack00000034,pFVar4,(float)dVar10,
+                            con.lineOffset);
       }
       else {
-        if (uVar7 == 0x5e) {
-          if (((local_b0 == (byte *)0x0) || (bVar1 = *local_b0, bVar1 == 0x5e)) ||
-             (((char)bVar1 < '0' || (';' < (char)bVar1)))) {
-            if ((*local_b0 != 1) && (*local_b0 != 2)) goto LAB_82330d2c;
-            iVar16 = (char)local_b0[3] + 4;
-            if (0x200U - iVar16 <= con.lineOffset) {
+        if (uVar6 == 0x5e) {
+          if (((local_b0 == (char *)0x0) || (cVar1 = *local_b0, cVar1 == '^')) ||
+             ((cVar1 < '0' || (';' < cVar1)))) {
+            if ((*local_b0 != '\x01') && (*local_b0 != '\x02')) goto LAB_82330d2c;
+            iVar9 = local_b0[3] + 4;
+            if (0x200U - iVar9 <= con.lineOffset) {
               MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp"
                               ,0x53c,0,
                               "con.lineOffset doesn\'t index sizeof( con.textTempLine ) - hudiconCmdLen\n\t%i not in [0, %i)"
@@ -1884,8 +1838,8 @@ LAB_82330e28:
             con.textTempLine[con.lineOffset] = '^';
             con.lineOffset = con.lineOffset + 1;
             memcpy();
-            local_b0 = local_b0 + iVar16;
-            con.lineOffset = con.lineOffset + iVar16;
+            local_b0 = local_b0 + iVar9;
+            con.lineOffset = con.lineOffset + iVar9;
             if (0x200 < con.lineOffset) {
               MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp"
                               ,0x541,0,
@@ -1901,12 +1855,11 @@ LAB_82330e28:
                               "con.lineOffset doesn\'t index sizeof( con.textTempLine ) - 1\n\t%i not in [0, %i)"
                              );
             }
-            bVar1 = *local_b0;
-            uVar13 = (ulonglong)bVar1;
+            param_6 = *local_b0;
             con.textTempLine[con.lineOffset] = '^';
-            iVar16 = con.lineOffset + 1;
+            iVar9 = con.lineOffset + 1;
             con.lineOffset = con.lineOffset + 1;
-            con.textTempLine[iVar16] = bVar1;
+            con.textTempLine[iVar9] = param_6;
             con.lineOffset = con.lineOffset + 1;
             if (0x200 < con.lineOffset) {
               MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp"
@@ -1919,22 +1872,22 @@ LAB_82330e28:
           }
         }
         else {
-          if (uVar7 == 0x20) {
+          if (uVar6 == 0x20) {
             if (bVar2) goto LAB_82330e1c;
           }
-          else if (0xff < (int)uVar7) {
+          else if (0xff < (int)uVar6) {
             if (0x1ff < con.lineOffset) {
               MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp"
                               ,0x550,0,
                               "con.lineOffset doesn\'t index sizeof( con.textTempLine )\n\t%i not in [0, %i)"
                              );
             }
-            con.textTempLine[con.lineOffset] = (char)(uVar7 >> 8);
-            uVar7 = uVar7 & 0xff;
-            uVar11 = con.lineOffset + 1;
-            uVar12 = con.lineOffset + 1;
-            con.lineOffset = uVar11;
-            if (0x200 < uVar12) {
+            con.textTempLine[con.lineOffset] = (char)(uVar6 >> 8);
+            uVar6 = uVar6 & 0xff;
+            uVar7 = con.lineOffset + 1;
+            uVar8 = con.lineOffset + 1;
+            con.lineOffset = uVar7;
+            if (0x200 < uVar8) {
               MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp"
                               ,0x554,0,
                               "con.lineOffset doesn\'t index sizeof( con.textTempLine ) + 1\n\t%i not in [0, %i)"
@@ -1948,7 +1901,7 @@ LAB_82330d2c:
                             "con.lineOffset doesn\'t index sizeof( con.textTempLine )\n\t%i not in [0, %i)"
                            );
           }
-          con.textTempLine[con.lineOffset] = (char)uVar7;
+          con.textTempLine[con.lineOffset] = (char)uVar6;
           con.lineOffset = con.lineOffset + 1;
           if (0x200 < con.lineOffset) {
             MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp"
@@ -1959,32 +1912,32 @@ LAB_82330d2c:
           bVar2 = false;
         }
 LAB_82330e1c:
-        if (ZEXT48(local_b0) == (uVar15 & 0xffffffff)) goto LAB_82330e28;
+        if (local_b0 == pcVar5) goto LAB_82330e28;
       }
-      cVar14 = (char)uVar13;
-      bVar1 = *local_b0;
+      cVar1 = *local_b0;
     }
     if (con.lineOffset != 0) {
-      if (((iVar9 == 2) || (iVar9 == 3)) || (bVar2 = false, iVar9 == 4)) {
+      if (((param_2 == 2) || (param_2 == 3)) || (bVar2 = false, param_2 == 4)) {
         bVar2 = true;
       }
       if (bVar2) {
-        Con_Linefeed(LStack00000014,iVar9,iStack00000044);
+        Con_Linefeed(LStack00000014,param_2,iStack00000044);
       }
       else {
-        Con_UpdateNotifyLine(LStack00000014,iVar9,false,iStack00000044);
+        Con_UpdateNotifyLine(LStack00000014,param_2,false,iStack00000044);
       }
     }
     callDepth = callDepth + -1;
-    con.prevChannel = iVar9;
+    con.prevChannel = param_2;
   }
-  __restgprlr();
-  return cVar14;
+  return param_6;
 }
 
 
 // 82331020  CL_ConsolePrint  (client/cl_console.cpp:1413)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "print_msg_dest_t": Some values do not have unique names */
 
@@ -1992,49 +1945,43 @@ void CL_ConsolePrint(LocalClientNum_t param_1,int param_2,char *param_3,int para
                     int param_6)
 
 {
-  LocalClientNum_t LVar1;
-  bool bVar2;
-  char *pcVar4;
-  ulonglong uVar3;
+  bool bVar1;
+  char *pcVar2;
   
-  uVar3 = (ulonglong)(int)param_3;
-  LVar1 = __savegprlr_26(param_1);
-  pcVar4 = (char *)uVar3;
-  if ((uVar3 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",0x591,
-                    (int)pcVar4,"%s");
+  if (param_3 == (char *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",0x591,0
+                    ,"%s");
   }
   if (((cl_noprint != (dvar_t *)0x0) && ((cl_noprint->current).enabled == false)) && (param_2 != 6))
   {
     Sys_EnterCriticalSection(CRITSECT_CONSOLE);
-    CL_ConsolePrint_AddLine(LVar1,param_2,pcVar4,param_4,param_5,'7',param_6);
+    CL_ConsolePrint_AddLine(param_1,param_2,param_3,param_4,param_5,'7',param_6);
     Sys_LeaveCriticalSection(CRITSECT_CONSOLE);
-    bVar2 = Con_IsChannelVisible(CON_DEST_CONSOLE,param_2,param_6);
-    if (bVar2) {
-      RConsWriteTextToRemote(pcVar4);
+    bVar1 = Con_IsChannelVisible(CON_DEST_CONSOLE,param_2,param_6);
+    if (bVar1) {
+      RConsWriteTextToRemote(param_3);
     }
     if (param_2 == 5) {
       NET_RemoteDbgHostWriteToLog(5,"(Obituary) ");
-      bVar2 = false;
+      bVar1 = false;
     }
     else if (((param_2 == 2) || (param_2 == 3)) || (param_2 == 4)) {
-      bVar2 = true;
+      bVar1 = true;
     }
     else {
-      bVar2 = false;
+      bVar1 = false;
     }
-    if ((bVar2) || (param_2 == 5)) {
-      NET_RemoteDbgHostWriteToLog(param_2,pcVar4);
+    if ((bVar1) || (param_2 == 5)) {
+      NET_RemoteDbgHostWriteToLog(param_2,param_3);
       do {
-        pcVar4 = (char *)uVar3;
-        uVar3 = uVar3 + 1;
-      } while (*pcVar4 != '\0');
-      if (*(char *)((int)uVar3 + -2) != '\n') {
+        pcVar2 = param_3;
+        param_3 = pcVar2 + 1;
+      } while (*pcVar2 != '\0');
+      if (pcVar2[-1] != '\n') {
         NET_RemoteDbgHostWriteToLog(param_2,"\n");
       }
     }
   }
-  __restgprlr_26();
   return;
 }
 
@@ -2073,65 +2020,56 @@ void CL_ConsoleFixPosition(void)
 
 // 82331280  CL_AddDeathMessageChar  (client/cl_console.cpp:1493)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
+
 int CL_AddDeathMessageChar(char *param_1,uint param_2,uint param_3,char param_4)
 
 {
-  int iVar1;
-  longlong lVar2;
-  ulonglong uVar3;
-  
-  uVar3 = (ulonglong)(int)param_3;
-  lVar2 = (longlong)(int)param_2;
-  iVar1 = __savegprlr_25(param_1);
   if (param_4 == '\0') {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",0x5d6,0
                     ,"%s");
   }
-  if ((uVar3 & 0xffffffff) < (lVar2 + 1U & 0xffffffff)) {
+  if (param_3 < param_2 + 1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",0x5d7,0
                     ,"%s");
   }
-  *(char *)(iVar1 + (int)lVar2) = param_4;
-  iVar1 = __restgprlr_25(lVar2 + 1U);
-  return iVar1;
+  param_1[param_2] = param_4;
+  return param_2 + 1;
 }
 
 
 // 82331310  CL_AddDeathMessageString  (client/cl_console.cpp:1503)
 
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
+
 int CL_AddDeathMessageString(char *param_1,uint param_2,uint param_3,char *param_4)
 
 {
   char cVar1;
-  longlong lVar2;
-  int iVar3;
-  ulonglong uVar4;
-  longlong lVar5;
-  longlong lVar6;
+  char *pcVar2;
+  uint uVar3;
   
-  uVar4 = (ulonglong)(int)param_3;
-  lVar6 = (longlong)(int)param_2;
-  lVar2 = __savegprlr_22(param_1);
+  uVar3 = param_2;
   if (*param_4 != '\0') {
-    lVar5 = lVar2 + lVar6;
-    iVar3 = (int)lVar6;
+    pcVar2 = param_1 + param_2;
     do {
-      cVar1 = param_4[(int)lVar6 - iVar3];
+      cVar1 = param_4[uVar3 - param_2];
       if (cVar1 == '\0') {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",
                         0x5d6,0,"%s");
       }
-      if ((uVar4 & 0xffffffff) < ((1 - lVar2) + lVar5 & 0xffffffffU)) {
+      if (param_3 < pcVar2 + (1 - (int)param_1)) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",
                         0x5d7,0,"%s");
       }
-      lVar6 = lVar6 + 1;
-      *(char *)lVar5 = cVar1;
-      lVar5 = lVar5 + 1;
-    } while (param_4[(int)lVar6 - iVar3] != '\0');
+      uVar3 = uVar3 + 1;
+      *pcVar2 = cVar1;
+      pcVar2 = pcVar2 + 1;
+    } while (param_4[uVar3 - param_2] != '\0');
   }
-  iVar3 = __restgprlr_22(lVar6);
-  return iVar3;
+  return uVar3;
 }
 
 
@@ -2159,70 +2097,68 @@ uchar CL_DeathMessageIconDimension(float param_1)
 
 // 82331430  CL_AddDeathMessageIcon  (client/cl_console.cpp:1520)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
+
 int CL_AddDeathMessageIcon
               (char *param_1,uint param_2,uint param_3,Material *param_4,float param_5,float param_6
               ,bool param_7)
 
 {
   char cVar1;
+  bool bVar6;
   char *pcVar2;
-  bool bVar7;
-  char *pcVar3;
-  int iVar4;
-  uint uVar5;
-  uchar uVar8;
-  char *pcVar6;
-  longlong lVar9;
-  ulonglong in_r9;
-  double extraout_f1;
+  uint uVar3;
+  uchar uVar7;
+  char *pcVar4;
+  int iVar5;
+  char in_r9;
+  double dVar8;
+  double dVar9;
   double dVar10;
-  double dVar11;
-  double dVar12;
   
-  dVar10 = (double)param_6;
-  lVar9 = (longlong)(int)param_2;
-  pcVar2 = (char *)__savegprlr_25((double)param_5,param_1);
-  dVar12 = 0.0;
-  dVar11 = extraout_f1;
-  if (extraout_f1 <= 0.0) {
+  dVar9 = (double)param_6;
+  dVar8 = (double)param_5;
+  dVar10 = 0.0;
+  if (dVar8 <= 0.0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",0x5f3,0
                     ,"%s");
   }
-  if (dVar10 <= dVar12) {
+  if (dVar9 <= dVar10) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",0x5f4,0
                     ,"%s");
   }
-  bVar7 = IsValidMaterialHandle(param_4);
-  if (!bVar7) {
+  bVar6 = IsValidMaterialHandle(param_4);
+  if (!bVar6) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",0x5f6,0
                     ,"%s");
   }
-  pcVar3 = Material_GetName(param_4);
-  pcVar6 = pcVar3;
+  pcVar2 = Material_GetName(param_4);
+  pcVar4 = pcVar2;
   do {
-    cVar1 = *pcVar6;
-    pcVar6 = pcVar6 + 1;
+    cVar1 = *pcVar4;
+    pcVar4 = pcVar4 + 1;
   } while (cVar1 != '\0');
-  if (0xff < (int)(pcVar6 + (-1 - (int)pcVar3))) {
-    iVar4 = __restgprlr_25(lVar9);
-    return iVar4;
+  if (0xff < (int)(pcVar4 + (-1 - (int)pcVar2))) {
+    return param_2;
   }
-  uVar5 = CL_AddDeathMessageChar(pcVar2,(uint)lVar9,param_3,'^');
-  uVar5 = CL_AddDeathMessageChar(pcVar2,uVar5,param_3,((in_r9 & 0xff) != 0) + '\x01');
-  uVar8 = CL_DeathMessageIconDimension((float)dVar11);
-  uVar5 = CL_AddDeathMessageChar(pcVar2,uVar5,param_3,uVar8);
-  uVar8 = CL_DeathMessageIconDimension((float)dVar10);
-  uVar5 = CL_AddDeathMessageChar(pcVar2,uVar5,param_3,uVar8);
-  uVar5 = CL_AddDeathMessageChar(pcVar2,uVar5,param_3,(char)(pcVar6 + (-1 - (int)pcVar3)));
-  pcVar6 = Material_GetName(param_4);
-  iVar4 = CL_AddDeathMessageString(pcVar2,uVar5,param_3,pcVar6);
-  iVar4 = __restgprlr_25(iVar4);
-  return iVar4;
+  uVar3 = CL_AddDeathMessageChar(param_1,param_2,param_3,'^');
+  uVar3 = CL_AddDeathMessageChar(param_1,uVar3,param_3,(in_r9 != '\0') + '\x01');
+  uVar7 = CL_DeathMessageIconDimension((float)dVar8);
+  uVar3 = CL_AddDeathMessageChar(param_1,uVar3,param_3,uVar7);
+  uVar7 = CL_DeathMessageIconDimension((float)dVar9);
+  uVar3 = CL_AddDeathMessageChar(param_1,uVar3,param_3,uVar7);
+  uVar3 = CL_AddDeathMessageChar(param_1,uVar3,param_3,(char)(pcVar4 + (-1 - (int)pcVar2)));
+  pcVar4 = Material_GetName(param_4);
+  iVar5 = CL_AddDeathMessageString(param_1,uVar3,param_3,pcVar4);
+  return iVar5;
 }
 
 
 // 82331600  CL_DeathMessagePrint  (client/cl_console.cpp:1547)
 
+/* WARNING: Function: __savegprlr_21 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_21 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void CL_DeathMessagePrint
@@ -2230,152 +2166,131 @@ void CL_DeathMessagePrint
                Material *param_6,float param_7,float param_8,bool param_9)
 
 {
-  LocalClientNum_t LVar1;
-  uint uVar2;
-  ulonglong uVar3;
-  ulonglong uVar4;
-  char cVar5;
-  double extraout_f1;
-  double dVar6;
-  double dVar7;
+  uint uVar1;
+  char cVar2;
+  double dVar3;
+  double dVar4;
   char acStack_470 [1136];
   
-  dVar6 = (double)param_8;
-  uVar4 = (ulonglong)(int)param_4;
-  uVar3 = (ulonglong)(int)param_2;
-  LVar1 = __savegprlr_21((double)param_7,param_1);
-  dVar7 = extraout_f1;
-  cVar5 = param_5;
-  if ((uVar3 & 0xffffffff) == 0) {
-    cVar5 = '\x18';
+  dVar3 = (double)param_7;
+  dVar4 = (double)param_8;
+  cVar2 = param_5;
+  if (param_2 == (char *)0x0) {
+    cVar2 = '\x18';
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",0x610,0
                     ,"%s");
   }
-  if ((uVar4 & 0xffffffff) == 0) {
-    cVar5 = '\x04';
+  if (param_4 == (char *)0x0) {
+    cVar2 = '\x04';
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",0x611,0
                     ,"%s");
   }
   if (((param_5 == '^') || (param_5 < '0')) || (';' < param_5)) {
-    cVar5 = -0x20;
+    cVar2 = -0x20;
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",0x612,0
                     ,"%s");
   }
   if (((param_3 == '^') || (param_3 < '0')) || (';' < param_3)) {
-    cVar5 = -0x48;
+    cVar2 = -0x48;
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",0x613,0
                     ,"%s");
   }
   if ((cl_noprint == (dvar_t *)0x0) || ((cl_noprint->current).enabled == false)) {
-    uVar2 = 0;
+    uVar1 = 0;
     if (con.lineOffset != 0) {
-      Con_Linefeed(LVar1,con.prevChannel,0);
+      Con_Linefeed(param_1,con.prevChannel,0);
     }
-    if (*(char *)uVar3 != '\0') {
+    if (*param_2 != '\0') {
       if ((param_3 < '0') || (';' < param_3)) {
-        cVar5 = param_3;
+        cVar2 = param_3;
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",
                         0x622,0,
                         "attackerColorIndex not in [COLOR_FIRST, COLOR_LAST]\n\t%i not in [%i, %i]")
         ;
       }
-      uVar2 = CL_AddDeathMessageChar(acStack_470,0,0x400,'^');
-      uVar2 = CL_AddDeathMessageChar(acStack_470,uVar2,0x400,param_3);
-      uVar2 = CL_AddDeathMessageString(acStack_470,uVar2,0x400,(char *)uVar3);
-      uVar2 = CL_AddDeathMessageChar(acStack_470,uVar2,0x400,'^');
-      uVar2 = CL_AddDeathMessageChar(acStack_470,uVar2,0x400,'7');
-      uVar2 = CL_AddDeathMessageChar(acStack_470,uVar2,0x400,' ');
+      uVar1 = CL_AddDeathMessageChar(acStack_470,0,0x400,'^');
+      uVar1 = CL_AddDeathMessageChar(acStack_470,uVar1,0x400,param_3);
+      uVar1 = CL_AddDeathMessageString(acStack_470,uVar1,0x400,param_2);
+      uVar1 = CL_AddDeathMessageChar(acStack_470,uVar1,0x400,'^');
+      uVar1 = CL_AddDeathMessageChar(acStack_470,uVar1,0x400,'7');
+      uVar1 = CL_AddDeathMessageChar(acStack_470,uVar1,0x400,' ');
     }
-    uVar2 = CL_AddDeathMessageIcon
-                      (acStack_470,uVar2,0x400,param_6,(float)dVar7,(float)dVar6,(bool)cVar5);
+    uVar1 = CL_AddDeathMessageIcon
+                      (acStack_470,uVar1,0x400,param_6,(float)dVar3,(float)dVar4,(bool)cVar2);
     if ((param_5 < '0') || (';' < param_5)) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",0x62d
                       ,0,"victimColorIndex not in [COLOR_FIRST, COLOR_LAST]\n\t%i not in [%i, %i]");
     }
-    uVar2 = CL_AddDeathMessageChar(acStack_470,uVar2,0x400,' ');
-    uVar2 = CL_AddDeathMessageChar(acStack_470,uVar2,0x400,'^');
-    uVar2 = CL_AddDeathMessageChar(acStack_470,uVar2,0x400,param_5);
-    uVar2 = CL_AddDeathMessageString(acStack_470,uVar2,0x400,(char *)uVar4);
-    uVar2 = CL_AddDeathMessageChar(acStack_470,uVar2,0x400,'\n');
-    if (0x3ff < uVar2) {
+    uVar1 = CL_AddDeathMessageChar(acStack_470,uVar1,0x400,' ');
+    uVar1 = CL_AddDeathMessageChar(acStack_470,uVar1,0x400,'^');
+    uVar1 = CL_AddDeathMessageChar(acStack_470,uVar1,0x400,param_5);
+    uVar1 = CL_AddDeathMessageString(acStack_470,uVar1,0x400,param_4);
+    uVar1 = CL_AddDeathMessageChar(acStack_470,uVar1,0x400,'\n');
+    if (0x3ff < uVar1) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",0x634
                       ,0,"deathMsgLen < ARRAY_COUNT( deathMsg )\n\t%i, %i");
     }
-    acStack_470[uVar2] = '\0';
+    acStack_470[uVar1] = '\0';
     if (cl_deathMessageWidth == (dvar_t *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",0x638
                       ,0,"%s");
     }
-    CL_ConsolePrint(LVar1,5,acStack_470,0,(cl_deathMessageWidth->current).integer,0);
+    CL_ConsolePrint(param_1,5,acStack_470,0,(cl_deathMessageWidth->current).integer,0);
   }
-  __restgprlr_21();
   return;
 }
 
 
 // 82331960  Con_AutoCompleteFromList  (client/cl_console.cpp:1648)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
+
 void Con_AutoCompleteFromList(char **param_1,uint param_2,char *param_3,char *param_4,uint param_5)
 
 {
-  char *pcVar1;
-  ulonglong uVar2;
-  undefined4 *puVar4;
-  int iVar5;
-  longlong lVar6;
-  longlong lVar7;
-  char *pcVar10;
-  longlong lVar8;
-  ulonglong uVar9;
-  ulonglong uVar11;
+  char cVar1;
+  char *pcVar2;
   int iVar3;
+  char *pcVar4;
+  char *pcVar5;
+  char *pcVar6;
+  longlong lVar7;
   
-  lVar7 = (longlong)(int)param_4;
-  lVar6 = (longlong)(int)param_3;
-  uVar11 = (ulonglong)(int)param_2;
-  puVar4 = (undefined4 *)__savegprlr_24(param_1);
-  lVar8 = lVar6;
+  lVar7 = (longlong)(int)param_2;
+  pcVar5 = param_3;
   do {
-    pcVar10 = (char *)lVar8;
-    lVar8 = lVar8 + 1;
-  } while (*pcVar10 != '\0');
-  uVar9 = (lVar8 - lVar6) - 1;
-  pcVar10 = (char *)lVar7;
-  *pcVar10 = '\0';
-  uVar2 = uVar9 & 0xffffffff;
-  iVar3 = (int)uVar9;
-  uVar9 = uVar11 & 0xffffffff;
-  do {
-    if (uVar9 == 0) {
-      __restgprlr_24();
-      return;
-    }
-    pcVar1 = (char *)*puVar4;
-    iVar5 = I_strnicmp((char *)lVar6,pcVar1,iVar3);
-    if (iVar5 == 0) {
-      if (*pcVar10 == '\0') {
-        I_strncpyz(pcVar10,pcVar1,param_5);
-      }
-      else {
-        lVar8 = uVar2 + lVar7;
-        iVar5 = iVar3;
-        if (pcVar1[iVar3] == pcVar10[iVar3]) {
-          uVar9 = uVar2;
-          do {
-            iVar5 = (int)uVar9;
-            if (*(char *)lVar8 == '\0') break;
-            lVar8 = lVar8 + 1;
-            uVar9 = uVar9 + 1;
-            iVar5 = (int)uVar9;
-          } while (((char *)lVar8)[(int)pcVar1 - (int)pcVar10] == *(char *)lVar8);
+    cVar1 = *pcVar5;
+    pcVar5 = pcVar5 + 1;
+  } while (cVar1 != '\0');
+  pcVar5 = pcVar5 + (-1 - (int)param_3);
+  *param_4 = '\0';
+  if (param_2 != 0) {
+    do {
+      pcVar2 = *param_1;
+      iVar3 = I_strnicmp(param_3,pcVar2,(int)pcVar5);
+      if (iVar3 == 0) {
+        if (*param_4 == '\0') {
+          I_strncpyz(param_4,pcVar2,param_5);
         }
-        pcVar10[iVar5] = '\0';
+        else {
+          pcVar6 = param_4 + (int)pcVar5;
+          pcVar4 = pcVar5;
+          if (pcVar2[(int)pcVar5] == param_4[(int)pcVar5]) {
+            do {
+              if (*pcVar6 == '\0') break;
+              pcVar6 = pcVar6 + 1;
+              pcVar4 = pcVar4 + 1;
+            } while (pcVar6[(int)pcVar2 - (int)param_4] == *pcVar6);
+          }
+          param_4[(int)pcVar4] = '\0';
+        }
       }
-    }
-    uVar11 = uVar11 - 1;
-    puVar4 = puVar4 + 1;
-    uVar9 = uVar11;
-  } while( true );
+      lVar7 = lVar7 + -1;
+      param_1 = param_1 + 1;
+    } while (lVar7 != 0);
+  }
+  return;
 }
 
 
@@ -2405,6 +2320,8 @@ char * Con_TokenizeInput(void)
 
 // 82331AC8  Con_AnySpaceAfterCommand  (client/cl_console.cpp:1691)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 bool Con_AnySpaceAfterCommand(void)
@@ -2412,35 +2329,31 @@ bool Con_AnySpaceAfterCommand(void)
 {
   char cVar1;
   int iVar2;
-  undefined1 uVar3;
-  char *pcVar4;
-  int iVar5;
+  char *pcVar3;
+  int iVar4;
   
-  __savegprlr_29();
-  iVar5 = 0;
+  iVar4 = 0;
   iVar2 = isspace((int)g_consoleField.buffer[0]);
   if (iVar2 != 0) {
-    pcVar4 = g_consoleField.buffer;
+    pcVar3 = g_consoleField.buffer;
     do {
-      pcVar4 = pcVar4 + 1;
-      iVar5 = iVar5 + 1;
-      iVar2 = isspace((int)*pcVar4);
+      pcVar3 = pcVar3 + 1;
+      iVar4 = iVar4 + 1;
+      iVar2 = isspace((int)*pcVar3);
     } while (iVar2 != 0);
   }
-  pcVar4 = g_consoleField.buffer + iVar5;
-  cVar1 = *pcVar4;
+  pcVar3 = g_consoleField.buffer + iVar4;
+  cVar1 = *pcVar3;
   while( true ) {
     if (cVar1 == '\0') {
-      uVar3 = __restgprlr_29(0);
-      return (bool)uVar3;
+      return false;
     }
-    iVar2 = isspace((int)*pcVar4);
+    iVar2 = isspace((int)*pcVar3);
     if (iVar2 != 0) break;
-    pcVar4 = pcVar4 + 1;
-    cVar1 = *pcVar4;
+    pcVar3 = pcVar3 + 1;
+    cVar1 = *pcVar3;
   }
-  uVar3 = __restgprlr_29(1);
-  return (bool)uVar3;
+  return true;
 }
 
 
@@ -2484,23 +2397,21 @@ void ConDrawInput_Text(char *param_1,float *param_2)
 
 // 82331C90  ConDrawInput_TextLimitChars  (client/cl_console.cpp:1729)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 
 void ConDrawInput_TextLimitChars(char *param_1,int param_2,float *param_3)
 
 {
-  char *pcVar1;
-  
-  pcVar1 = (char *)__savegprlr_29(param_1);
-  if (pcVar1 == (char *)0x0) {
+  if (param_1 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",0x6c2,0
                     ,"%s");
   }
-  R_AddCmdDrawText(pcVar1,param_2,cls.consoleFont,conDrawInputGlob.x,
+  R_AddCmdDrawText(param_1,param_2,cls.consoleFont,conDrawInputGlob.x,
                    conDrawInputGlob.fontHeight + conDrawInputGlob.y,1.0,1.0,0.0,
                    (float *)&IMAGE_DOS_HEADER_82000000,-0x7d588b50);
-  __restgprlr_29();
   return;
 }
 
@@ -2530,81 +2441,76 @@ void ConDrawInput_Over(int param_1)
 
 // 82331D88  ConDrawInput_TextAndOver  (client/cl_console.cpp:1749)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 
 void ConDrawInput_TextAndOver(char *param_1,float *param_2)
 
 {
-  char *pcVar1;
-  int iVar2;
+  int iVar1;
   
-  pcVar1 = (char *)__savegprlr_28(param_1);
-  if (pcVar1 == (char *)0x0) {
+  if (param_1 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",0x6d6,0
                     ,"%s");
   }
-  ConDrawInput_Text(pcVar1,param_2);
-  if (pcVar1 == (char *)0x0) {
+  ConDrawInput_Text(param_1,param_2);
+  if (param_1 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",0x6b4,0
                     ,"%s");
   }
-  iVar2 = R_TextWidth(pcVar1,0,cls.consoleFont);
-  conDrawInputGlob.x = (float)(longlong)iVar2 + conDrawInputGlob.x;
-  __restgprlr_28();
+  iVar1 = R_TextWidth(param_1,0,cls.consoleFont);
+  conDrawInputGlob.x = (float)(longlong)iVar1 + conDrawInputGlob.x;
   return;
 }
 
 
 // 82331E48  ConDraw_Box  (client/cl_console.cpp:1758)
 
+/* WARNING: Function: __savefpr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 
 void ConDraw_Box(float param_1,float param_2,float param_3,float param_4,float *param_5)
 
 {
-  float *pfVar1;
   Material *in_r4;
   float *in_r7;
-  double extraout_f1;
+  double dVar1;
   double dVar2;
   double dVar3;
   double dVar4;
   double dVar5;
   double dVar6;
-  double dVar7;
   char *local_60;
   float local_5c;
   GfxDrawSurf local_58 [8];
   
   dVar4 = (double)param_4;
+  dVar1 = (double)param_1;
   dVar2 = (double)param_2;
   dVar3 = (double)param_3;
-  pfVar1 = (float *)__savefpr_26((double)param_1,param_5);
-  dVar7 = 0.0;
-  dVar5 = extraout_f1;
-  R_AddCmdDrawStretchPic
-            ((float)extraout_f1,(float)dVar2,(float)dVar3,(float)dVar4,0.0,0.0,0.0,0.0,pfVar1,in_r4)
-  ;
-  dVar6 = 2.0;
+  dVar6 = 0.0;
+  R_AddCmdDrawStretchPic(param_1,param_2,param_3,param_4,0.0,0.0,0.0,0.0,param_5,in_r4);
+  dVar5 = 2.0;
   local_60 = (char *)(*in_r7 * 0.5);
   local_5c = in_r7[1] * 0.5;
   local_58[0]._4_4_ = in_r7[3];
   local_58[0]._0_4_ = in_r7[2] * 0.5;
   R_AddCmdDrawStretchPic
-            ((float)dVar5,(float)dVar2,2.0,(float)dVar4,(float)dVar7,(float)dVar7,(float)dVar7,
-             (float)dVar7,pfVar1,in_r4);
+            ((float)dVar1,(float)dVar2,2.0,(float)dVar4,(float)dVar6,(float)dVar6,(float)dVar6,
+             (float)dVar6,param_5,in_r4);
   R_AddCmdDrawStretchPic
-            ((float)((double)(float)(dVar5 + dVar3) - dVar6),(float)dVar2,(float)dVar6,(float)dVar4,
-             (float)dVar7,(float)dVar7,(float)dVar7,(float)dVar7,pfVar1,in_r4);
+            ((float)((double)(float)(dVar1 + dVar3) - dVar5),(float)dVar2,(float)dVar5,(float)dVar4,
+             (float)dVar6,(float)dVar6,(float)dVar6,(float)dVar6,param_5,in_r4);
   R_AddCmdDrawStretchPic
-            ((float)dVar5,(float)dVar2,(float)dVar3,(float)dVar6,(float)dVar7,(float)dVar7,
-             (float)dVar7,(float)dVar7,pfVar1,in_r4);
+            ((float)dVar1,(float)dVar2,(float)dVar3,(float)dVar5,(float)dVar6,(float)dVar6,
+             (float)dVar6,(float)dVar6,param_5,in_r4);
   R_AddCmdDrawStretchPic
-            ((float)dVar5,(float)((double)(float)(dVar2 + dVar4) - dVar6),(float)dVar3,(float)dVar6,
-             (float)dVar7,(float)dVar7,(float)dVar7,(float)dVar7,pfVar1,(Material *)&local_60);
-  __restfpr_26();
+            ((float)dVar1,(float)((double)(float)(dVar2 + dVar4) - dVar5),(float)dVar3,(float)dVar5,
+             (float)dVar6,(float)dVar6,(float)dVar6,(float)dVar6,param_5,(Material *)&local_60);
   return;
 }
 
@@ -2624,30 +2530,27 @@ void ConDrawInput_Box(int param_1,float *param_2)
 
 // 82332070  Con_GetAutoCompleteColorCodedStringDiscontiguous  (client/cl_console.cpp:1791)
 
+/* WARNING: Function: __savegprlr_20 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_20 replaced with injection: xenon_save_restore */
+
 int Con_GetAutoCompleteColorCodedStringDiscontiguous
               (char *param_1,char *param_2,int param_3,char *param_4)
 
 {
   char cVar1;
   bool bVar2;
-  char *pcVar3;
+  int iVar3;
   int iVar4;
-  int iVar5;
-  ulonglong uVar6;
-  longlong lVar7;
-  char *pcVar8;
-  bool bVar9;
-  longlong lVar10;
-  int iVar11;
+  char *pcVar5;
+  bool bVar6;
+  char *pcVar7;
+  int iVar8;
   
-  lVar7 = (longlong)(int)param_4;
-  uVar6 = (ulonglong)(int)param_2;
-  pcVar3 = (char *)__savegprlr_20(param_1);
-  if (pcVar3 == (char *)0x0) {
+  if (param_1 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",0x707,0
                     ,"%s");
   }
-  if ((uVar6 & 0xffffffff) == 0) {
+  if (param_2 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",0x708,0
                     ,"%s");
   }
@@ -2655,89 +2558,77 @@ int Con_GetAutoCompleteColorCodedStringDiscontiguous
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",0x709,0
                     ,"%s");
   }
-  bVar9 = false;
-  iVar11 = 0;
-  iVar4 = tolower((int)*(char *)uVar6);
-  if (*pcVar3 != '\0') {
-    lVar10 = lVar7;
+  bVar6 = false;
+  iVar8 = 0;
+  iVar3 = tolower((int)*param_2);
+  if (*param_1 != '\0') {
+    pcVar7 = param_4;
     do {
-      iVar5 = tolower((int)*pcVar3);
-      bVar2 = iVar4 == iVar5;
+      iVar4 = tolower((int)*param_1);
+      bVar2 = iVar3 == iVar4;
       if (bVar2) {
-        uVar6 = uVar6 + 1;
-        iVar4 = tolower((int)*(char *)uVar6);
+        param_2 = param_2 + 1;
+        iVar3 = tolower((int)*param_2);
       }
-      if (bVar2 != bVar9) {
-        pcVar8 = "^2";
+      if (bVar2 != bVar6) {
+        pcVar5 = "^2";
         if (!bVar2) {
-          pcVar8 = "^7";
+          pcVar5 = "^7";
         }
-        iVar5 = (int)lVar10 - (int)pcVar8;
+        iVar4 = (int)pcVar7 - (int)pcVar5;
         do {
-          cVar1 = *pcVar8;
-          pcVar8[iVar5] = cVar1;
-          pcVar8 = pcVar8 + 1;
+          cVar1 = *pcVar5;
+          pcVar5[iVar4] = cVar1;
+          pcVar5 = pcVar5 + 1;
         } while (cVar1 != '\0');
-        iVar11 = iVar11 + 2;
-        lVar10 = lVar10 + 2;
-        bVar9 = bVar2;
+        iVar8 = iVar8 + 2;
+        pcVar7 = pcVar7 + 2;
+        bVar6 = bVar2;
       }
-      iVar11 = iVar11 + 1;
-      *(char *)lVar10 = *pcVar3;
-      lVar10 = lVar10 + 1;
-      pcVar3 = pcVar3 + 1;
-    } while (*pcVar3 != '\0');
+      iVar8 = iVar8 + 1;
+      *pcVar7 = *param_1;
+      pcVar7 = pcVar7 + 1;
+      param_1 = param_1 + 1;
+    } while (*param_1 != '\0');
   }
-  iVar4 = (int)lVar7;
-  *(undefined1 *)(iVar11 + iVar4) = 0x5e;
-  *(undefined1 *)(iVar11 + iVar4 + 1) = 0x37;
-  *(undefined1 *)(iVar11 + iVar4 + 2) = 0;
-  *(undefined1 *)(iVar11 + 2 + iVar4) = 0x20;
-  *(undefined1 *)(iVar11 + 3 + iVar4) = 0;
-  lVar10 = lVar7;
+  builtin_strncpy(param_4 + iVar8,"^7 ",4);
+  pcVar7 = param_4;
   do {
-    pcVar3 = (char *)lVar10;
-    lVar10 = lVar10 + 1;
-  } while (*pcVar3 != '\0');
-  if (((lVar10 - lVar7) - 1U & 0xffffffff) == 0) {
+    cVar1 = *pcVar7;
+    pcVar7 = pcVar7 + 1;
+  } while (cVar1 != '\0');
+  if ((int)pcVar7 - (int)param_4 == 1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",0x728,0
                     ,"%s");
   }
-  iVar4 = __restgprlr_20(iVar11 + 3);
-  return iVar4;
+  return iVar8 + 3;
 }
 
 
 // 82332260  Con_GetAutoCompleteColorCodedStringContiguous  (client/cl_console.cpp:1838)
+
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 
 int Con_GetAutoCompleteColorCodedStringContiguous
               (char *param_1,char *param_2,int param_3,char *param_4)
 
 {
   char cVar1;
-  ulonglong uVar2;
+  int iVar2;
   char *pcVar3;
-  int iVar5;
-  uint uVar6;
-  longlong lVar7;
-  longlong lVar8;
-  longlong lVar9;
-  ulonglong uVar10;
-  ulonglong uVar11;
-  char *pcVar13;
-  longlong lVar12;
-  longlong lVar14;
-  longlong lVar15;
   char *pcVar4;
+  char *pcVar5;
+  char *pcVar6;
+  char *pcVar7;
+  uint uVar8;
+  char *pcVar9;
   
-  lVar7 = (longlong)(int)param_4;
-  uVar10 = (ulonglong)(int)param_2;
-  uVar2 = __savegprlr_25(param_1);
-  if ((uVar2 & 0xffffffff) == 0) {
+  if (param_1 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",0x733,0
                     ,"%s");
   }
-  if ((uVar10 & 0xffffffff) == 0) {
+  if (param_2 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",0x734,0
                     ,"%s");
   }
@@ -2745,133 +2636,116 @@ int Con_GetAutoCompleteColorCodedStringContiguous
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",0x735,0
                     ,"%s");
   }
-  lVar14 = 0;
-  pcVar4 = (char *)uVar2;
-  pcVar3 = I_stristr(pcVar4,(char *)uVar10);
-  pcVar13 = (char *)lVar7;
-  uVar11 = uVar2;
-  lVar12 = lVar7;
+  pcVar9 = (char *)0x0;
+  pcVar3 = I_stristr(param_1,param_2);
+  pcVar4 = param_1;
+  pcVar7 = param_4;
   if (pcVar3 == (char *)0x0) {
     do {
-      pcVar3 = (char *)uVar11;
-      uVar11 = uVar11 + 1;
-    } while (*pcVar3 != '\0');
-    if (((uVar11 - uVar2) - 1 & 0xffffffff) == 0) {
+      cVar1 = *pcVar4;
+      pcVar4 = pcVar4 + 1;
+    } while (cVar1 != '\0');
+    if ((int)pcVar4 - (int)param_1 == 1) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",0x74e
                       ,0,"%s");
     }
+    iVar2 = (int)param_4 - (int)param_1;
     do {
-      cVar1 = *(char *)uVar2;
-      ((char *)uVar2)[(int)pcVar13 - (int)pcVar4] = cVar1;
-      uVar2 = uVar2 + 1;
+      cVar1 = *param_1;
+      param_1[iVar2] = cVar1;
+      param_1 = param_1 + 1;
     } while (cVar1 != '\0');
   }
   else {
-    lVar15 = (longlong)(int)pcVar3 - uVar2;
-    uVar6 = (uint)lVar15;
-    strncpy(pcVar13,pcVar4,uVar6);
-    lVar15 = lVar15 + 2;
-    pcVar13[uVar6] = '^';
-    pcVar13[uVar6 + 1] = '2';
-    pcVar13[uVar6 + 2] = '\0';
-    uVar2 = uVar10;
+    uVar8 = (int)pcVar3 - (int)param_1;
+    strncpy(param_4,param_1,uVar8);
+    param_4[uVar8] = '^';
+    param_4[uVar8 + 1] = '2';
+    param_4[uVar8 + 2] = '\0';
+    pcVar4 = param_2;
     do {
-      pcVar4 = (char *)uVar2;
-      uVar2 = uVar2 + 1;
-    } while (*pcVar4 != '\0');
-    uVar10 = (uVar2 - uVar10) - 1;
-    uVar2 = uVar10 & 0xffffffff;
-    strncpy(pcVar13 + (int)lVar15,pcVar3,(uint)uVar10);
-    lVar15 = uVar2 + lVar15;
-    iVar5 = (int)lVar15;
-    lVar8 = uVar2 + (longlong)(int)pcVar3;
-    pcVar13[iVar5] = '^';
-    lVar15 = lVar15 + 2;
-    pcVar13[iVar5 + 1] = '7';
-    pcVar13[iVar5 + 2] = '\0';
-    lVar14 = lVar8;
+      cVar1 = *pcVar4;
+      pcVar4 = pcVar4 + 1;
+    } while (cVar1 != '\0');
+    pcVar4 = pcVar4 + (-1 - (int)param_2);
+    strncpy(param_4 + uVar8 + 2,pcVar3,(uint)pcVar4);
+    pcVar6 = pcVar4 + uVar8 + 2;
+    pcVar3 = pcVar3 + (int)pcVar4;
+    param_4[(int)pcVar6] = '^';
+    param_4[(int)(pcVar6 + 1)] = '7';
+    param_4[(int)(pcVar6 + 2)] = '\0';
+    pcVar4 = pcVar3;
     do {
-      cVar1 = *(char *)lVar14;
-      ((char *)lVar14)[(int)(pcVar13 + ((int)lVar15 - (int)lVar8))] = cVar1;
-      lVar14 = lVar14 + 1;
-      lVar9 = lVar8;
+      cVar1 = *pcVar4;
+      pcVar4[(int)(param_4 + (int)(pcVar6 + (2 - (int)pcVar3)))] = cVar1;
+      pcVar4 = pcVar4 + 1;
+      pcVar5 = pcVar3;
     } while (cVar1 != '\0');
     do {
-      pcVar3 = (char *)lVar9;
-      lVar9 = lVar9 + 1;
-    } while (*pcVar3 != '\0');
-    lVar15 = ((lVar9 - lVar8) - 1U & 0xffffffff) + lVar15;
-    lVar14 = lVar15 + 1;
-    pcVar13[(int)lVar15] = ' ';
-    pcVar13[(int)lVar14] = '\0';
+      cVar1 = *pcVar5;
+      pcVar5 = pcVar5 + 1;
+    } while (cVar1 != '\0');
+    pcVar9 = pcVar5 + (int)(pcVar6 + (1 - (int)pcVar3)) + 1;
+    param_4[(int)(pcVar5 + (int)(pcVar6 + (1 - (int)pcVar3)))] = ' ';
+    param_4[(int)pcVar9] = '\0';
   }
   do {
-    pcVar13 = (char *)lVar12;
-    lVar12 = lVar12 + 1;
-  } while (*pcVar13 != '\0');
-  if (((lVar12 - lVar7) - 1U & 0xffffffff) == 0) {
+    cVar1 = *pcVar7;
+    pcVar7 = pcVar7 + 1;
+  } while (cVar1 != '\0');
+  if ((int)pcVar7 - (int)param_4 == 1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",0x752,0
                     ,"%s");
   }
-  iVar5 = __restgprlr_25(lVar14);
-  return iVar5;
+  return (int)pcVar9;
 }
 
 
 // 823324C8  Con_GetAutoCompleteColorCodedString  (client/cl_console.cpp:1880)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 int Con_GetAutoCompleteColorCodedString
               (char *param_1,char *param_2,int param_3,bool param_4,char *param_5,char *param_6)
 
 {
-  char *pcVar1;
+  int iVar1;
   int iVar2;
-  ulonglong uVar3;
-  longlong lVar4;
   
-  uVar3 = (ulonglong)param_4;
-  pcVar1 = (char *)__savegprlr_27(param_1);
-  if ((uVar3 & 0xff) == 0) {
-    lVar4 = 0;
+  if (param_4) {
+    iVar1 = sprintf(param_6,"^2%s ");
   }
   else {
-    iVar2 = sprintf(param_6,"^2%s ");
-    lVar4 = (longlong)iVar2;
+    iVar1 = 0;
   }
   if ((con_matchPrefixOnly->current).enabled != false) {
-    iVar2 = Con_GetAutoCompleteColorCodedStringContiguous
-                      (pcVar1,param_2,param_3,param_6 + (int)lVar4);
-    iVar2 = __restgprlr_27(iVar2 + lVar4);
-    return iVar2;
+    iVar2 = Con_GetAutoCompleteColorCodedStringContiguous(param_1,param_2,param_3,param_6 + iVar1);
+    return iVar2 + iVar1;
   }
-  iVar2 = Con_GetAutoCompleteColorCodedStringDiscontiguous
-                    (pcVar1,param_2,param_3,param_6 + (int)lVar4);
-  iVar2 = __restgprlr_27(iVar2 + lVar4);
-  return iVar2;
+  iVar2 = Con_GetAutoCompleteColorCodedStringDiscontiguous(param_1,param_2,param_3,param_6 + iVar1);
+  return iVar2 + iVar1;
 }
 
 
 // 82332558  Con_IsAutoCompleteMatch  (client/cl_console.cpp:1896)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 bool Con_IsAutoCompleteMatch(char *param_1,char *param_2,int param_3)
 
 {
-  char *pcVar1;
+  int iVar1;
   int iVar2;
-  undefined1 uVar4;
-  int iVar3;
-  ulonglong uVar5;
-  char *pcVar6;
-  char cVar7;
-  int iVar8;
+  char cVar3;
+  int iVar4;
   
-  uVar5 = (ulonglong)(int)param_2;
-  pcVar1 = (char *)__savegprlr_26(param_1);
-  if (pcVar1 == (char *)0x0) {
+  if (param_1 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",0x76d,0
                     ,"%s");
   }
-  if ((uVar5 & 0xffffffff) == 0) {
+  if (param_2 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",0x76e,0
                     ,"%s");
   }
@@ -2879,38 +2753,34 @@ bool Con_IsAutoCompleteMatch(char *param_1,char *param_2,int param_3)
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",0x76f,0
                     ,"%s");
   }
-  pcVar6 = (char *)uVar5;
   if ((con_ignoreMatchPrefixOnly == false) && ((con_matchPrefixOnly->current).enabled != false)) {
-    iVar2 = I_strnicmp(pcVar1,pcVar6,param_3);
-    uVar4 = __restgprlr_26(iVar2 == 0);
-    return (bool)uVar4;
+    iVar1 = I_strnicmp(param_1,param_2,param_3);
+    return iVar1 == 0;
   }
-  iVar8 = 0;
-  iVar2 = tolower((int)*pcVar6);
-  cVar7 = *pcVar1;
+  iVar4 = 0;
+  iVar1 = tolower((int)*param_2);
+  cVar3 = *param_1;
   do {
-    if (cVar7 == '\0') {
-      uVar4 = __restgprlr_26(0);
-      return (bool)uVar4;
+    if (cVar3 == '\0') {
+      return false;
     }
-    iVar3 = tolower((int)*pcVar1);
-    if (iVar3 == iVar2) {
-      iVar8 = iVar8 + 1;
-      if (iVar8 == param_3) {
-        uVar4 = __restgprlr_26(1);
-        return (bool)uVar4;
+    iVar2 = tolower((int)*param_1);
+    if (iVar2 == iVar1) {
+      iVar4 = iVar4 + 1;
+      if (iVar4 == param_3) {
+        return true;
       }
-      cVar7 = pcVar6[iVar8];
+      cVar3 = param_2[iVar4];
 LAB_82332698:
-      iVar2 = tolower((int)cVar7);
+      iVar1 = tolower((int)cVar3);
     }
-    else if (((con_matchPrefixOnly->current).enabled != false) && (iVar8 != 0)) {
-      cVar7 = *pcVar6;
-      iVar8 = 0;
+    else if (((con_matchPrefixOnly->current).enabled != false) && (iVar4 != 0)) {
+      cVar3 = *param_2;
+      iVar4 = 0;
       goto LAB_82332698;
     }
-    pcVar1 = pcVar1 + 1;
-    cVar7 = *pcVar1;
+    param_1 = param_1 + 1;
+    cVar3 = *param_1;
   } while( true );
 }
 
@@ -2950,27 +2820,28 @@ void ConDrawInput_IncrMatchCounter(char *param_1)
 
 // 82332778  ConDrawInput_DvarMatch  (client/cl_console.cpp:1951)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void ConDrawInput_DvarMatch(char *param_1)
 
 {
-  char *pcVar1;
   bool bVar2;
+  char *pcVar1;
   
-  pcVar1 = (char *)__savegprlr_29(param_1);
-  if (pcVar1 == (char *)0x0) {
+  if (param_1 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",0x7a0,0
                     ,"%s");
   }
-  bVar2 = Con_IsAutoCompleteMatch(pcVar1,conDrawInputGlob.inputText,conDrawInputGlob.inputTextLen);
+  bVar2 = Con_IsAutoCompleteMatch(param_1,conDrawInputGlob.inputText,conDrawInputGlob.inputTextLen);
   if (bVar2) {
-    ConDrawInput_TextLimitChars(pcVar1,0x1c,con_inputDvarMatchColor);
+    ConDrawInput_TextLimitChars(param_1,0x1c,con_inputDvarMatchColor);
     conDrawInputGlob.x = conDrawInputGlob.x + 290.0;
-    pcVar1 = Dvar_GetVariantString(pcVar1);
+    pcVar1 = Dvar_GetVariantString(param_1);
     ConDrawInput_TextLimitChars(pcVar1,0x28,con_inputDvarValueColor);
     conDrawInputGlob.y = conDrawInputGlob.y + conDrawInputGlob.fontHeight;
     conDrawInputGlob.x = conDrawInputGlob.leftX;
   }
-  __restgprlr_29();
   return;
 }
 
@@ -2989,47 +2860,49 @@ int ConDrawInput_CompareStrings(void *param_1,void *param_2)
 
 // 82332848  ConDrawInput_TextFieldFirstArgChar  (client/cl_console.cpp:1971)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 int ConDrawInput_TextFieldFirstArgChar(void)
 
 {
   int iVar1;
-  int iVar2;
-  char *pcVar3;
+  char *pcVar2;
+  int iVar3;
   
-  __savegprlr_29();
-  iVar2 = 0;
+  iVar3 = 0;
   iVar1 = isspace((int)g_consoleField.buffer[0]);
   if (iVar1 != 0) {
-    pcVar3 = g_consoleField.buffer;
+    pcVar2 = g_consoleField.buffer;
     do {
-      pcVar3 = pcVar3 + 1;
-      iVar2 = iVar2 + 1;
-      iVar1 = isspace((int)*pcVar3);
+      pcVar2 = pcVar2 + 1;
+      iVar3 = iVar3 + 1;
+      iVar1 = isspace((int)*pcVar2);
     } while (iVar1 != 0);
   }
-  pcVar3 = g_consoleField.buffer + iVar2;
-  iVar1 = isspace((int)g_consoleField.buffer[iVar2]);
+  pcVar2 = g_consoleField.buffer + iVar3;
+  iVar1 = isspace((int)g_consoleField.buffer[iVar3]);
   while (iVar1 == 0) {
-    pcVar3 = pcVar3 + 1;
-    iVar2 = iVar2 + 1;
-    iVar1 = isspace((int)*pcVar3);
+    pcVar2 = pcVar2 + 1;
+    iVar3 = iVar3 + 1;
+    iVar1 = isspace((int)*pcVar2);
   }
-  pcVar3 = g_consoleField.buffer + iVar2;
-  iVar1 = isspace((int)g_consoleField.buffer[iVar2]);
+  pcVar2 = g_consoleField.buffer + iVar3;
+  iVar1 = isspace((int)g_consoleField.buffer[iVar3]);
   while (iVar1 != 0) {
-    pcVar3 = pcVar3 + 1;
-    iVar2 = iVar2 + 1;
-    iVar1 = isspace((int)*pcVar3);
+    pcVar2 = pcVar2 + 1;
+    iVar3 = iVar3 + 1;
+    iVar1 = isspace((int)*pcVar2);
   }
-  iVar2 = __restgprlr_29(iVar2);
-  return iVar2;
+  return iVar3;
 }
 
 
 // 82332908  ConDrawInput_AutoCompleteArg  (client/cl_console.cpp:1987)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 
@@ -3041,99 +2914,99 @@ void ConDrawInput_AutoCompleteArg(char **param_1,int param_2)
   float fVar3;
   float fVar4;
   Font_s *pFVar5;
-  undefined4 *puVar6;
-  char *pcVar7;
+  char *pcVar6;
+  int iVar7;
   int iVar8;
-  int iVar9;
+  char *pcVar9;
   char *pcVar10;
-  char *pcVar11;
-  int iVar12;
-  undefined4 *puVar13;
-  ulonglong uVar14;
-  uint uVar15;
-  char *pcVar16;
+  int iVar11;
+  undefined4 *puVar12;
+  ulonglong uVar13;
+  uint uVar14;
+  char *pcVar15;
+  double dVar16;
   double dVar17;
-  double dVar18;
   undefined4 uStack_4a4;
   undefined4 local_4a0 [16];
   char acStack_460 [1120];
   
-  puVar6 = (undefined4 *)__savegprlr_23(param_1);
-  pcVar7 = Cmd_Argv(1);
-  pcVar10 = pcVar7;
+  pcVar6 = Cmd_Argv(1);
+  pcVar9 = pcVar6;
   do {
-    cVar1 = *pcVar10;
-    pcVar10 = pcVar10 + 1;
+    cVar1 = *pcVar9;
+    pcVar9 = pcVar9 + 1;
   } while (cVar1 != '\0');
-  if (pcVar10 + (-1 - (int)pcVar7) != (char *)0x0) {
-    uVar14 = 0;
-    pcVar16 = (char *)0x0;
-    iVar12 = 0;
-    iVar9 = 0;
+  if (pcVar9 + (-1 - (int)pcVar6) != (char *)0x0) {
+    uVar13 = 0;
+    pcVar15 = (char *)0x0;
+    iVar11 = 0;
+    iVar8 = 0;
     if (0 < param_2) {
-      puVar13 = local_4a0;
+      puVar12 = local_4a0;
       do {
-        iVar8 = I_strnicmp(pcVar7,(char *)*puVar6,(int)(pcVar10 + (-1 - (int)pcVar7)));
-        if (iVar8 == 0) {
-          if ((uVar14 & 0xffffffff) == 0x10) goto LAB_82332b60;
-          pcVar2 = (char *)*puVar6;
-          pcVar11 = pcVar2;
-          do {
-            cVar1 = *pcVar11;
-            pcVar11 = pcVar11 + 1;
-          } while (cVar1 != '\0');
-          if ((char *)0x3ff < pcVar11 + (int)(pcVar16 + (-1 - (int)pcVar2))) goto LAB_82332b60;
-          *puVar13 = acStack_460 + (int)pcVar16;
-          Com_StripExtension(pcVar2,acStack_460 + (int)pcVar16);
-          pcVar2 = (char *)*puVar13;
-          pcVar11 = pcVar2;
-          do {
-            cVar1 = *pcVar11;
-            pcVar11 = pcVar11 + 1;
-          } while (cVar1 != '\0');
-          pcVar16 = pcVar11 + ((int)pcVar16 - (int)pcVar2);
-          iVar8 = ConDrawInput_TextWidth(pcVar2);
-          if (iVar12 < iVar8) {
-            iVar12 = iVar8;
+        iVar7 = I_strnicmp(pcVar6,*param_1,(int)(pcVar9 + (-1 - (int)pcVar6)));
+        if (iVar7 == 0) {
+          if ((uVar13 & 0xffffffff) == 0x10) {
+            return;
           }
-          uVar14 = uVar14 + 1;
-          puVar13 = puVar13 + 1;
-        }
-        iVar9 = iVar9 + 1;
-        puVar6 = puVar6 + 1;
-      } while (iVar9 < param_2);
-      uVar15 = (uint)uVar14;
-      if (uVar15 != 0) {
-        qsort(local_4a0,uVar15,4,ConDrawInput_CompareStrings);
-        pFVar5 = cls.consoleFont;
-        iVar9 = ConDrawInput_TextFieldFirstArgChar();
-        iVar9 = R_TextWidth(g_consoleField.buffer,iVar9,pFVar5);
-        fVar3 = conDrawInputGlob.fontHeight + con.screenMin[1] + 6.0;
-        dVar18 = (double)fVar3;
-        fVar4 = ((float)(longlong)iVar9 + conDrawInputGlob.leftX) - 6.0;
-        dVar17 = (double)fVar4;
-        ConDraw_Box(fVar4,fVar3,(float)(longlong)iVar12 + 12.0,
-                    (float)(longlong)(int)uVar15 * conDrawInputGlob.fontHeight + 12.0,
-                    (float *)0x10254);
-        conDrawInputGlob.x = (float)(dVar17 + 6.0);
-        conDrawInputGlob.y = (float)(dVar18 + 6.0);
-        conDrawInputGlob.leftX = conDrawInputGlob.x;
-        if (0 < (int)uVar15) {
-          puVar6 = &uStack_4a4;
+          pcVar2 = *param_1;
+          pcVar10 = pcVar2;
           do {
-            puVar6 = puVar6 + 1;
+            cVar1 = *pcVar10;
+            pcVar10 = pcVar10 + 1;
+          } while (cVar1 != '\0');
+          if ((char *)0x3ff < pcVar10 + (int)(pcVar15 + (-1 - (int)pcVar2))) {
+            return;
+          }
+          *puVar12 = acStack_460 + (int)pcVar15;
+          Com_StripExtension(pcVar2,acStack_460 + (int)pcVar15);
+          pcVar2 = (char *)*puVar12;
+          pcVar10 = pcVar2;
+          do {
+            cVar1 = *pcVar10;
+            pcVar10 = pcVar10 + 1;
+          } while (cVar1 != '\0');
+          pcVar15 = pcVar10 + ((int)pcVar15 - (int)pcVar2);
+          iVar7 = ConDrawInput_TextWidth(pcVar2);
+          if (iVar11 < iVar7) {
+            iVar11 = iVar7;
+          }
+          uVar13 = uVar13 + 1;
+          puVar12 = puVar12 + 1;
+        }
+        iVar8 = iVar8 + 1;
+        param_1 = param_1 + 1;
+      } while (iVar8 < param_2);
+      uVar14 = (uint)uVar13;
+      if (uVar14 != 0) {
+        qsort(local_4a0,uVar14,4,ConDrawInput_CompareStrings);
+        pFVar5 = cls.consoleFont;
+        iVar8 = ConDrawInput_TextFieldFirstArgChar();
+        iVar8 = R_TextWidth(g_consoleField.buffer,iVar8,pFVar5);
+        fVar3 = conDrawInputGlob.fontHeight + con.screenMin[1] + 6.0;
+        dVar17 = (double)fVar3;
+        fVar4 = ((float)(longlong)iVar8 + conDrawInputGlob.leftX) - 6.0;
+        dVar16 = (double)fVar4;
+        ConDraw_Box(fVar4,fVar3,(float)(longlong)iVar11 + 12.0,
+                    (float)(longlong)(int)uVar14 * conDrawInputGlob.fontHeight + 12.0,
+                    (float *)0x10254);
+        conDrawInputGlob.x = (float)(dVar16 + 6.0);
+        conDrawInputGlob.y = (float)(dVar17 + 6.0);
+        conDrawInputGlob.leftX = conDrawInputGlob.x;
+        if (0 < (int)uVar14) {
+          puVar12 = &uStack_4a4;
+          do {
+            puVar12 = puVar12 + 1;
             conDrawInputGlob.x = conDrawInputGlob.leftX;
-            ConDrawInput_Text((char *)*puVar6,con_inputDvarInfoColor);
-            uVar14 = uVar14 - 1;
+            ConDrawInput_Text((char *)*puVar12,con_inputDvarInfoColor);
+            uVar13 = uVar13 - 1;
             conDrawInputGlob.y = conDrawInputGlob.y + conDrawInputGlob.fontHeight;
             conDrawInputGlob.x = conDrawInputGlob.leftX;
-          } while (uVar14 != 0);
+          } while (uVar13 != 0);
         }
       }
     }
   }
-LAB_82332b60:
-  __restgprlr_23();
   return;
 }
 
@@ -3178,12 +3051,15 @@ int ConDrawInput_GetDvarDescriptionLines(dvar_t *param_1)
 
 // 82332C18  ConDrawInput_DetailedDvarMatch  (client/cl_console.cpp:2071)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 void ConDrawInput_DetailedDvarMatch(char *param_1)
 
 {
-  char *pcVar1;
   bool bVar4;
-  dvar_t *pdVar2;
+  dvar_t *pdVar1;
+  char *pcVar2;
   int iVar3;
   longlong lVar5;
   longlong lVar6;
@@ -3191,57 +3067,56 @@ void ConDrawInput_DetailedDvarMatch(char *param_1)
   int local_450 [4];
   char acStack_440 [1088];
   
-  pcVar1 = (char *)__savegprlr_26(param_1);
-  if (pcVar1 == (char *)0x0) {
+  if (param_1 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",0x822,0
                     ,"%s");
   }
-  bVar4 = Con_IsAutoCompleteMatch(pcVar1,conDrawInputGlob.inputText,conDrawInputGlob.inputTextLen);
+  bVar4 = Con_IsAutoCompleteMatch(param_1,conDrawInputGlob.inputText,conDrawInputGlob.inputTextLen);
   if ((bVar4) &&
-     ((conDrawInputGlob.hasExactMatch == false || (pcVar1[conDrawInputGlob.inputTextLen] == '\0'))))
-  {
-    pdVar2 = Dvar_FindVar(pcVar1);
-    if (pdVar2 == (dvar_t *)0x0) {
+     ((conDrawInputGlob.hasExactMatch == false || (param_1[conDrawInputGlob.inputTextLen] == '\0')))
+     ) {
+    pdVar1 = Dvar_FindVar(param_1);
+    if (pdVar1 == (dvar_t *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",0x82a
                       ,0,"%s");
     }
-    bVar4 = Dvar_HasLatchedValue(pdVar2);
+    bVar4 = Dvar_HasLatchedValue(pdVar1);
     ConDrawInput_Box(((uint)LZCOUNT((uint)bVar4) >> 5 ^ 1) + 2,
                      &(con_inputHintBoxColor->current).value);
-    ConDrawInput_TextLimitChars(pcVar1,0x1c,con_inputDvarMatchColor);
+    ConDrawInput_TextLimitChars(param_1,0x1c,con_inputDvarMatchColor);
     dVar7 = 290.0;
     conDrawInputGlob.x = conDrawInputGlob.x + 290.0;
-    pcVar1 = Dvar_DisplayableValue(pdVar2);
-    ConDrawInput_TextLimitChars(pcVar1,0x28,con_inputDvarValueColor);
+    pcVar2 = Dvar_DisplayableValue(pdVar1);
+    ConDrawInput_TextLimitChars(pcVar2,0x28,con_inputDvarValueColor);
     conDrawInputGlob.y = conDrawInputGlob.y + conDrawInputGlob.fontHeight;
     conDrawInputGlob.x = conDrawInputGlob.leftX;
     if (bVar4 != 0) {
       ConDrawInput_Text("  latched value",con_inputDvarInactiveValueColor);
       conDrawInputGlob.x = (float)((double)conDrawInputGlob.x + dVar7);
-      pcVar1 = Dvar_DisplayableLatchedValue(pdVar2);
-      ConDrawInput_TextLimitChars(pcVar1,0x28,con_inputDvarInactiveValueColor);
+      pcVar2 = Dvar_DisplayableLatchedValue(pdVar1);
+      ConDrawInput_TextLimitChars(pcVar2,0x28,con_inputDvarInactiveValueColor);
       conDrawInputGlob.y = conDrawInputGlob.y + conDrawInputGlob.fontHeight;
     }
     conDrawInputGlob.x = conDrawInputGlob.leftX;
     ConDrawInput_Text("  default",con_inputDvarInactiveValueColor);
     conDrawInputGlob.x = (float)((double)conDrawInputGlob.x + dVar7);
-    pcVar1 = Dvar_DisplayableResetValue(pdVar2);
-    ConDrawInput_TextLimitChars(pcVar1,0x28,con_inputDvarInactiveValueColor);
+    pcVar2 = Dvar_DisplayableResetValue(pdVar1);
+    ConDrawInput_TextLimitChars(pcVar2,0x28,con_inputDvarInactiveValueColor);
     conDrawInputGlob.x = conDrawInputGlob.leftX;
     conDrawInputGlob.y =
          conDrawInputGlob.y + conDrawInputGlob.fontHeight + conDrawInputGlob.fontHeight;
-    Dvar_DomainToString_GetLines(pdVar2->type,pdVar2->domain,acStack_440,0x400,local_450);
-    if (pdVar2->description == (char *)0x0) {
+    Dvar_DomainToString_GetLines(pdVar1->type,pdVar1->domain,acStack_440,0x400,local_450);
+    if (pdVar1->description == (char *)0x0) {
       lVar6 = 0;
     }
     else {
-      iVar3 = ConDrawInput_GetDvarDescriptionLines(pdVar2);
+      iVar3 = ConDrawInput_GetDvarDescriptionLines(pdVar1);
       lVar6 = (longlong)iVar3;
     }
     iVar3 = (int)lVar6;
     ConDrawInput_Box(iVar3 + local_450[0] + 1,&(con_inputHintBoxColor->current).value);
-    if (pdVar2->description != (char *)0x0) {
-      ConDrawInput_Text(pdVar2->description,con_inputDvarDescriptionColor);
+    if (pdVar1->description != (char *)0x0) {
+      ConDrawInput_Text(pdVar1->description,con_inputDvarDescriptionColor);
       lVar5 = 0;
       if (7 < iVar3) {
         do {
@@ -3266,12 +3141,11 @@ void ConDrawInput_DetailedDvarMatch(char *param_1)
     ConDrawInput_Text(acStack_440,con_inputDvarInfoColor);
     conDrawInputGlob.y = conDrawInputGlob.y + conDrawInputGlob.fontHeight;
     conDrawInputGlob.x = conDrawInputGlob.leftX;
-    if ((pdVar2->type == '\x06') && (iVar3 = Cmd_Argc(), iVar3 == 2)) {
+    if ((pdVar1->type == '\x06') && (iVar3 = Cmd_Argc(), iVar3 == 2)) {
       ConDrawInput_AutoCompleteArg
-                ((pdVar2->domain).enumeration.strings,(pdVar2->domain).enumeration.stringCount);
+                ((pdVar1->domain).enumeration.strings,(pdVar1->domain).enumeration.stringCount);
     }
   }
-  __restgprlr_26();
   return;
 }
 
@@ -3323,6 +3197,8 @@ void ConDrawInput_CmdMatch(char *param_1)
 
 // 82333098  Con_DrawAutoCompleteChoice  (client/cl_console.cpp:2193)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void Con_DrawAutoCompleteChoice(LocalClientNum_t param_1,bool param_2,char *param_3)
@@ -3331,34 +3207,31 @@ void Con_DrawAutoCompleteChoice(LocalClientNum_t param_1,bool param_2,char *para
   int iVar1;
   int iVar2;
   char cVar3;
-  LocalClientNum_t LVar4;
-  int iVar5;
-  char *pcVar6;
+  int iVar4;
+  char *pcVar5;
   int in_stack_fffffe58;
   char local_140 [320];
   
-  LVar4 = __savegprlr_26(param_1);
   Con_GetAutoCompleteColorCodedString
             (conDrawInputGlob.autoCompleteChoice,conDrawInputGlob.inputText,
              conDrawInputGlob.inputTextLen,param_2,param_3,local_140);
   iVar1 = (int)conDrawInputGlob.x;
   iVar2 = (int)conDrawInputGlob.y;
-  pcVar6 = local_140;
+  pcVar5 = local_140;
   do {
-    cVar3 = *pcVar6;
-    pcVar6 = pcVar6 + 1;
+    cVar3 = *pcVar5;
+    pcVar5 = pcVar5 + 1;
   } while (cVar3 != '\0');
-  if ((int)pcVar6 - (int)local_140 == 1) {
+  if ((int)pcVar5 - (int)local_140 == 1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",0x89c,0
                     ,"%s");
   }
-  iVar5 = SEH_PrintStrlen(local_140);
-  if (iVar5 < 1) {
+  iVar4 = SEH_PrintStrlen(local_140);
+  if (iVar4 < 1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",0x89e,0
                     ,"%s\n\t(colorCodedLine) = %s");
   }
-  Field_DrawTextOverride(LVar4,&g_consoleField,iVar1,iVar2,5,5,local_140,iVar5,in_stack_fffffe58);
-  __restgprlr_26();
+  Field_DrawTextOverride(param_1,&g_consoleField,iVar1,iVar2,5,5,local_140,iVar4,in_stack_fffffe58);
   return;
 }
 
@@ -3409,6 +3282,8 @@ bool Con_IsDvarCommand(char *param_1)
 
 // 82334320  Con_DrawInput  (client/cl_console.cpp:2242)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -3417,69 +3292,72 @@ void Con_DrawInput(LocalClientNum_t param_1)
 
 {
   char cVar1;
-  LocalClientNum_t LVar2;
+  bool bVar4;
+  char *pcVar2;
+  int iVar3;
   bool bVar5;
-  char *pcVar3;
-  int iVar4;
-  bool bVar6;
-  char *pcVar7;
+  char *pcVar6;
   
-  LVar2 = __savegprlr_24(param_1);
-  bVar5 = Sys_IsMainThread();
-  if ((!bVar5) && (bVar5 = Sys_IsRenderThread(), !bVar5)) {
+  bVar4 = Sys_IsMainThread();
+  if ((!bVar4) && (bVar4 = Sys_IsRenderThread(), !bVar4)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",0x8ca,0
                     ,"%s");
   }
-  bVar5 = Key_IsCatcherActive(LVar2,1);
-  if ((!bVar5) || (bVar5 = Sys_IsMainThread(), !bVar5)) goto LAB_823347a0;
-  pcVar3 = va("%s: %s> ");
-  iVar4 = R_TextHeight(cls.consoleFont);
-  conDrawInputGlob.fontHeight = (float)(longlong)iVar4;
+  bVar4 = Key_IsCatcherActive(param_1,1);
+  if (!bVar4) {
+    return;
+  }
+  bVar4 = Sys_IsMainThread();
+  if (!bVar4) {
+    return;
+  }
+  pcVar2 = va("%s: %s> ");
+  iVar3 = R_TextHeight(cls.consoleFont);
+  conDrawInputGlob.fontHeight = (float)(longlong)iVar3;
   conDrawInputGlob.x = con.screenMin[0] + 6.0;
   conDrawInputGlob.y = con.screenMin[1] + 6.0;
   conDrawInputGlob.leftX = conDrawInputGlob.x;
   ConDrawInput_Box(1,&(con_inputBoxColor->current).value);
-  ConDrawInput_TextAndOver(pcVar3,con_versionColor);
-  iVar4 = conDrawInputGlob.inputTextLen;
+  ConDrawInput_TextAndOver(pcVar2,con_versionColor);
+  iVar3 = conDrawInputGlob.inputTextLen;
   conDrawInputGlob.leftX = conDrawInputGlob.x;
   g_consoleField.widthInPixels = (int)((con.screenMax[0] - 6.0) - conDrawInputGlob.x);
   conDrawInputGlob.inputText = Con_TokenizeInput();
-  pcVar3 = conDrawInputGlob.inputText;
+  pcVar2 = conDrawInputGlob.inputText;
   do {
-    cVar1 = *pcVar3;
-    pcVar3 = pcVar3 + 1;
+    cVar1 = *pcVar2;
+    pcVar2 = pcVar2 + 1;
   } while (cVar1 != '\0');
-  conDrawInputGlob.inputTextLen = (int)(pcVar3 + (-1 - (int)conDrawInputGlob.inputText));
+  conDrawInputGlob.inputTextLen = (int)(pcVar2 + (-1 - (int)conDrawInputGlob.inputText));
   conDrawInputGlob.autoCompleteChoice[0] = '\0';
-  if (iVar4 != conDrawInputGlob.inputTextLen) {
+  if (iVar3 != conDrawInputGlob.inputTextLen) {
     Con_CancelAutoComplete();
   }
-  pcVar3 = conDrawInputGlob.inputText;
+  pcVar2 = conDrawInputGlob.inputText;
   if (conDrawInputGlob.inputTextLen == 0) goto LAB_823344d0;
-  iVar4 = Cmd_Argc();
-  if (iVar4 < 2) {
+  iVar3 = Cmd_Argc();
+  if (iVar3 < 2) {
 LAB_82334514:
-    bVar5 = false;
+    bVar4 = false;
   }
   else {
-    bVar6 = Con_IsDvarCommand(conDrawInputGlob.inputText);
-    bVar5 = true;
-    if (!bVar6) goto LAB_82334514;
+    bVar5 = Con_IsDvarCommand(conDrawInputGlob.inputText);
+    bVar4 = true;
+    if (!bVar5) goto LAB_82334514;
   }
-  if (bVar5) {
+  if (bVar4) {
     conDrawInputGlob.inputText = Cmd_Argv(1);
-    pcVar7 = conDrawInputGlob.inputText;
+    pcVar6 = conDrawInputGlob.inputText;
     do {
-      cVar1 = *pcVar7;
-      pcVar7 = pcVar7 + 1;
+      cVar1 = *pcVar6;
+      pcVar6 = pcVar6 + 1;
     } while (cVar1 != '\0');
-    conDrawInputGlob.inputTextLen = (int)(pcVar7 + (-1 - (int)conDrawInputGlob.inputText));
+    conDrawInputGlob.inputTextLen = (int)(pcVar6 + (-1 - (int)conDrawInputGlob.inputText));
     if ((char *)conDrawInputGlob.inputTextLen == (char *)0x0) {
 LAB_823344d0:
       conDrawInputGlob.mayAutoComplete = false;
-      Con_DrawInputPrompt(LVar2);
+      Con_DrawInputPrompt(param_1);
       Cmd_EndTokenizedString();
-      __restgprlr_24();
       return;
     }
   }
@@ -3491,21 +3369,20 @@ LAB_82334634:
     conDrawInputGlob.hasExactMatch = false;
     conDrawInputGlob.matchCount = 0;
     Dvar_ForEachName(ConDrawInput_IncrMatchCounter);
-    if (!bVar5) {
+    if (!bVar4) {
       Cmd_ForEach(ConDrawInput_IncrMatchCounter);
     }
 LAB_82334650:
     if (conDrawInputGlob.matchCount == 0) {
-      Con_DrawInputPrompt(LVar2);
+      Con_DrawInputPrompt(param_1);
       Cmd_EndTokenizedString();
-      __restgprlr_24();
       return;
     }
   }
   else {
     con_ignoreMatchPrefixOnly = true;
     Dvar_ForEachName(ConDrawInput_IncrMatchCounter);
-    if (!bVar5) {
+    if (!bVar4) {
       Cmd_ForEach(ConDrawInput_IncrMatchCounter);
     }
     if (conDrawInputGlob.matchCount <= con_inputMaxMatchesShown) goto LAB_82334650;
@@ -3519,48 +3396,46 @@ LAB_82334650:
       goto LAB_82334634;
     }
   }
-  iVar4 = conDrawInputGlob.matchCount;
+  iVar3 = conDrawInputGlob.matchCount;
   if ((conDrawInputGlob.matchIndex < conDrawInputGlob.matchCount) &&
      (conDrawInputGlob.autoCompleteChoice[0] != '\0')) {
-    if (conDrawInputGlob.matchIndex < 0) goto LAB_8233468c;
-    Con_DrawAutoCompleteChoice(LVar2,bVar5,pcVar3);
+    if (-1 < conDrawInputGlob.matchIndex) {
+      Con_DrawAutoCompleteChoice(param_1,bVar4,pcVar2);
+      goto LAB_82334694;
+    }
   }
   else {
     conDrawInputGlob.matchIndex = -1;
-LAB_8233468c:
-    Con_DrawInputPrompt(LVar2);
   }
+  Con_DrawInputPrompt(param_1);
+LAB_82334694:
   conDrawInputGlob.x = conDrawInputGlob.leftX;
   conDrawInputGlob.y =
        conDrawInputGlob.y + conDrawInputGlob.fontHeight + conDrawInputGlob.fontHeight;
-  if (con_inputMaxMatchesShown < iVar4) {
-    pcVar3 = va("%i matches (too many to show here, press shift+tilde to open full console)");
+  if (con_inputMaxMatchesShown < iVar3) {
+    pcVar2 = va("%i matches (too many to show here, press shift+tilde to open full console)");
     ConDrawInput_Box(1,&(con_inputHintBoxColor->current).value);
-    ConDrawInput_Text(pcVar3,con_inputDvarMatchColor);
+    ConDrawInput_Text(pcVar2,con_inputDvarMatchColor);
     Cmd_EndTokenizedString();
-    __restgprlr_24();
     return;
   }
-  if ((iVar4 == 1) ||
-     ((conDrawInputGlob.hasExactMatch != false && (bVar6 = Con_AnySpaceAfterCommand(), bVar6)))) {
+  if ((iVar3 == 1) ||
+     ((conDrawInputGlob.hasExactMatch != false && (bVar5 = Con_AnySpaceAfterCommand(), bVar5)))) {
     Dvar_ForEachName(ConDrawInput_DetailedDvarMatch);
-    if (!bVar5) {
+    if (!bVar4) {
       Cmd_ForEach(ConDrawInput_DetailedCmdMatch);
     }
   }
   else {
-    ConDrawInput_Box(iVar4,&(con_inputHintBoxColor->current).value);
+    ConDrawInput_Box(iVar3,&(con_inputHintBoxColor->current).value);
     Dvar_ForEachName(ConDrawInput_DvarMatch);
-    if (!bVar5) {
+    if (!bVar4) {
       Cmd_ForEach(ConDrawInput_CmdMatch);
       Cmd_EndTokenizedString();
-      __restgprlr_24();
       return;
     }
   }
   Cmd_EndTokenizedString();
-LAB_823347a0:
-  __restgprlr_24();
   return;
 }
 
@@ -3615,62 +3490,60 @@ bool Con_HasActiveAutoComplete(void)
 
 // 823347A8  Con_CommitToAutoComplete  (client/cl_console.cpp:2403)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 bool Con_CommitToAutoComplete(void)
 
 {
   char cVar1;
-  undefined1 uVar3;
   char *pcVar2;
-  bool bVar4;
-  int iVar5;
-  char *pcVar6;
+  bool bVar3;
+  int iVar4;
+  char *pcVar5;
   
-  __savegprlr_29();
   if ((conDrawInputGlob.matchIndex < 0) ||
-     (bVar4 = true, conDrawInputGlob.autoCompleteChoice[0] == '\0')) {
-    bVar4 = false;
+     (bVar3 = true, conDrawInputGlob.autoCompleteChoice[0] == '\0')) {
+    bVar3 = false;
   }
-  if (!bVar4) {
-    uVar3 = __restgprlr_29(0);
-    return (bool)uVar3;
+  if (!bVar3) {
+    return false;
   }
   pcVar2 = Con_TokenizeInput();
-  bVar4 = Con_IsDvarCommand(pcVar2);
-  if (bVar4) {
+  bVar3 = Con_IsDvarCommand(pcVar2);
+  if (bVar3) {
     Com_sprintf(g_consoleField.buffer,0x100,"%s %s");
   }
   else {
-    iVar5 = 0;
+    iVar4 = 0;
     do {
-      cVar1 = conDrawInputGlob.autoCompleteChoice[iVar5];
-      g_consoleField.buffer[iVar5] = cVar1;
-      iVar5 = iVar5 + 1;
+      cVar1 = conDrawInputGlob.autoCompleteChoice[iVar4];
+      g_consoleField.buffer[iVar4] = cVar1;
+      iVar4 = iVar4 + 1;
     } while (cVar1 != '\0');
   }
   Cmd_EndTokenizedString();
   pcVar2 = g_consoleField.buffer;
   do {
-    pcVar6 = pcVar2;
-    pcVar2 = pcVar6 + 1;
-  } while (*pcVar6 != '\0');
-  g_consoleField.cursor = (int)(pcVar6 + 0x7d564ed8);
-  *pcVar6 = ' ';
-  iVar5 = g_consoleField.cursor + 1;
+    pcVar5 = pcVar2;
+    pcVar2 = pcVar5 + 1;
+  } while (*pcVar5 != '\0');
+  g_consoleField.cursor = (int)(pcVar5 + 0x7d564ed8);
+  *pcVar5 = ' ';
+  iVar4 = g_consoleField.cursor + 1;
   g_consoleField.cursor = g_consoleField.cursor + 1;
-  g_consoleField.buffer[iVar5] = '\0';
+  g_consoleField.buffer[iVar4] = '\0';
   g_consoleField.drawWidth = SEH_PrintStrlen(g_consoleField.buffer);
   if ((conDrawInputGlob.matchIndex < 0) ||
-     (bVar4 = true, conDrawInputGlob.autoCompleteChoice[0] == '\0')) {
-    bVar4 = false;
+     (bVar3 = true, conDrawInputGlob.autoCompleteChoice[0] == '\0')) {
+    bVar3 = false;
   }
-  if (bVar4) {
+  if (bVar3) {
     conDrawInputGlob.matchIndex = -1;
     conDrawInputGlob.autoCompleteChoice[0] = '\0';
   }
-  uVar3 = __restgprlr_29(1);
-  return (bool)uVar3;
+  return true;
 }
 
 
@@ -3708,31 +3581,28 @@ void Con_AllowAutoCompleteCycling(bool param_1)
 
 // 82333460  LineVisible  (client/cl_console.cpp:2447)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 bool LineVisible(MessageWindow *param_1,int param_2,int param_3)
 
 {
   uint uVar1;
-  int *piVar2;
-  undefined1 uVar3;
-  longlong lVar4;
-  ulonglong uVar5;
   
-  uVar5 = (ulonglong)param_3;
-  lVar4 = (longlong)param_2;
-  piVar2 = (int *)__savegprlr_29(param_1,lVar4,uVar5);
-  if (piVar2 == (int *)0x0) {
+  if (param_1 == (MessageWindow *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",0x992,0
                     ,"%s");
   }
-  uVar1 = *(uint *)((int)lVar4 * 0x18 + *piVar2 + 0xc);
-  uVar3 = __restgprlr_29((ulonglong)(uVar1 >> 0x1f) + (longlong)((int)uVar5 >> 0x1f) +
-                         (ulonglong)(uVar1 <= uVar5));
-  return (bool)uVar3;
+  uVar1 = param_1->lines[param_2].typingStartTime;
+  return (bool)(((char)(param_3 >> 0x1f) - (char)((int)uVar1 >> 0x1f)) +
+               ((ulonglong)uVar1 <= (ulonglong)(longlong)param_3));
 }
 
 
 // 82334900  TypewriterSounds  (client/cl_console.cpp:2461)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -3740,24 +3610,23 @@ bool LineVisible(MessageWindow *param_1,int param_2,int param_3)
 void TypewriterSounds(LocalClientNum_t param_1,MessageWindow *param_2,MessageLine *param_3)
 
 {
-  LocalClientNum_t LVar1;
-  int iVar2;
-  clientActive_t *pcVar3;
+  int iVar1;
+  clientActive_t *pcVar2;
   
-  LVar1 = __savegprlr_29(param_1);
-  iVar2 = PrintableCharsCount(param_2,param_3);
-  pcVar3 = CL_GetLocalClientGlobals(LVar1);
+  iVar1 = PrintableCharsCount(param_2,param_3);
+  pcVar2 = CL_GetLocalClientGlobals(param_1);
   CL_PlayTextFXPulseSounds
-            (LVar1,pcVar3->serverTime,iVar2,param_3->typingStartTime,
+            (param_1,pcVar2->serverTime,iVar1,param_3->typingStartTime,
              (con_typewriterPrintSpeed->current).integer,
              (con_typewriterDecayStartTime->current).integer,&param_3->lastTypingSoundTime);
-  __restgprlr_29();
   return;
 }
 
 
 // 82334968  Con_DrawMessageLineOnHUD  (client/cl_console.cpp:2472)
 
+/* WARNING: Function: __savegprlr_21 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_21 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -3769,13 +3638,11 @@ void Con_DrawMessageLineOnHUD
 
 {
   uint uVar1;
-  LocalClientNum_t LVar2;
-  clientActive_t *pcVar3;
-  int iVar4;
-  MessageLine *pMVar5;
-  double extraout_f1;
+  clientActive_t *pcVar2;
+  int iVar3;
+  MessageLine *pMVar4;
+  double dVar5;
   double dVar6;
-  double dVar7;
   MessageWindow *in_stack_00000054;
   int in_stack_0000005c;
   int in_stack_00000064;
@@ -3795,136 +3662,134 @@ void Con_DrawMessageLineOnHUD
   float local_78;
   float local_74;
   
-  LVar2 = __savegprlr_21((double)param_13,param_1);
-  dVar7 = extraout_f1;
-  pcVar3 = CL_GetLocalClientGlobals(LVar2);
-  uVar1 = pcVar3->serverTime;
+  dVar5 = (double)param_13;
+  pcVar2 = CL_GetLocalClientGlobals(param_1);
+  uVar1 = pcVar2->serverTime;
   if (in_stack_00000054 == (MessageWindow *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",0x992,0
                     ,"%s");
   }
-  pMVar5 = in_stack_00000054->lines + in_stack_0000005c;
-  if (((((int)uVar1 >> 0x1f) - (pMVar5->typingStartTime >> 0x1f)) +
-       (uint)((uint)pMVar5->typingStartTime <= uVar1) & 0xff) != 0) {
+  pMVar4 = in_stack_00000054->lines + in_stack_0000005c;
+  if (((((int)uVar1 >> 0x1f) - (pMVar4->typingStartTime >> 0x1f)) +
+       (uint)((uint)pMVar4->typingStartTime <= uVar1) & 0xff) != 0) {
     dVar6 = 1.0;
-    if ((pMVar5->flags & 1U) != 0) {
+    if ((pMVar4->flags & 1U) != 0) {
       param_8 = UI_GetFontHandle((ScreenPlacement *)0x0,6,1.0);
     }
     local_80 = (longlong)param_5;
     local_a0 = R_NormalizedTextScale
-                         (param_8,(float)((double)((float)local_80 * 0.020833334) * dVar7));
+                         (param_8,(float)((double)((float)local_80 * 0.020833334) * dVar5));
     local_9c = local_a0;
     if ((in_stack_0000007c & 3) == 1) {
-      iVar4 = R_ConsoleTextWidth(in_stack_00000054->circularTextBuffer,
-                                 in_stack_00000054->textBufSize,pMVar5->textBufPos,
-                                 pMVar5->textBufSize,param_8);
-      iVar4 = (int)((float)(longlong)iVar4 * local_9c * 0.5);
-      local_80 = (longlong)iVar4;
-      param_3 = param_3 - iVar4;
+      iVar3 = R_ConsoleTextWidth(in_stack_00000054->circularTextBuffer,
+                                 in_stack_00000054->textBufSize,pMVar4->textBufPos,
+                                 pMVar4->textBufSize,param_8);
+      iVar3 = (int)((float)(longlong)iVar3 * local_9c * 0.5);
+      local_80 = (longlong)iVar3;
+      param_3 = param_3 - iVar3;
     }
     else if ((in_stack_0000007c & 3) == 2) {
-      iVar4 = R_ConsoleTextWidth(in_stack_00000054->circularTextBuffer,
-                                 in_stack_00000054->textBufSize,pMVar5->textBufPos,
-                                 pMVar5->textBufSize,param_8);
-      local_80 = (longlong)(int)((float)(longlong)iVar4 * local_9c);
-      param_3 = param_3 - (int)((float)(longlong)iVar4 * local_9c);
+      iVar3 = R_ConsoleTextWidth(in_stack_00000054->circularTextBuffer,
+                                 in_stack_00000054->textBufSize,pMVar4->textBufPos,
+                                 pMVar4->textBufSize,param_8);
+      local_80 = (longlong)(int)((float)(longlong)iVar3 * local_9c);
+      param_3 = param_3 - (int)((float)(longlong)iVar3 * local_9c);
     }
     if ((in_stack_0000007c & 0xc) == 4) {
-      iVar4 = R_TextHeight(param_8);
-      param_4 = (int)((float)(longlong)iVar4 * local_a0) + param_4;
+      iVar3 = R_TextHeight(param_8);
+      param_4 = (int)((float)(longlong)iVar3 * local_a0) + param_4;
     }
     else if ((in_stack_0000007c & 0xc) == 8) {
-      iVar4 = R_TextHeight(param_8);
-      param_4 = param_4 - (int)((float)(longlong)iVar4 * local_a0 * -0.5);
+      iVar3 = R_TextHeight(param_8);
+      param_4 = param_4 - (int)((float)(longlong)iVar3 * local_a0 * -0.5);
     }
     local_80 = (longlong)param_4;
     local_98[0] = (float)local_80;
-    _local_90 = CONCAT44((float)(longlong)param_3,param_3);
+    local_90 = (float)(longlong)param_3;
+    iStack_8c = param_3;
     ScrPlace_ApplyRect(param_2,&local_90,local_98,&local_9c,&local_a0,param_6,param_7);
-    if ((pMVar5->flags & 1U) != 0) {
+    if ((pMVar4->flags & 1U) != 0) {
       local_80 = *(longlong *)&con_typewriterColorBase->current;
       local_78 = (con_typewriterColorBase->current).vector[2];
       local_74 = (float)dVar6;
-      TypewriterSounds(LVar2,in_stack_00000054,pMVar5);
+      TypewriterSounds(param_1,in_stack_00000054,pMVar4);
       R_AddCmdDrawConsoleTextPulseFX
                 (in_stack_00000054->circularTextBuffer,in_stack_00000054->textBufSize,
-                 pMVar5->textBufPos,pMVar5->textBufSize,param_8,local_90,local_98[0],local_9c,
+                 pMVar4->textBufPos,pMVar4->textBufSize,param_8,local_90,local_98[0],local_9c,
                  local_a0,(float *)(con_typewriterDecayDuration->current).string,
                  (con_typewriterPrintSpeed->current).integer,
                  (float *)(con_typewriterDecayStartTime->current).string,in_stack_fffffec8,
                  in_stack_fffffecc,in_stack_fffffed0,in_stack_fffffed4,in_stack_fffffed8,
                  in_stack_fffffedc);
-      __restgprlr_21();
       return;
     }
-    if ((pMVar5->flags & 0x20U) != 0) {
+    if ((pMVar4->flags & 0x20U) != 0) {
       R_AddCmdDrawConsoleTextSubtitle
                 (in_stack_00000054->circularTextBuffer,in_stack_00000054->textBufSize,
-                 pMVar5->textBufPos,pMVar5->textBufSize,param_8,local_90,local_98[0],local_9c,
+                 pMVar4->textBufPos,pMVar4->textBufSize,param_8,local_90,local_98[0],local_9c,
                  local_a0,MY_GLOWCOLOR,in_stack_00000064,(float *)__xri_a);
-      __restgprlr_21();
       return;
     }
     R_AddCmdDrawConsoleText
               (in_stack_00000054->circularTextBuffer,in_stack_00000054->textBufSize,
-               pMVar5->textBufPos,pMVar5->textBufSize,param_8,local_90,local_98[0],local_9c,local_a0
+               pMVar4->textBufPos,pMVar4->textBufSize,param_8,local_90,local_98[0],local_9c,local_a0
                ,(float *)param_6,0);
   }
-  __restgprlr_21();
   return;
 }
 
 
 // 823334D0  Con_CullFinishedLines  (client/cl_console.cpp:2555)
 
+/* WARNING: Function: __savegprlr_21 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_21 replaced with injection: xenon_save_restore */
+
 void Con_CullFinishedLines(int param_1,MessageWindow *param_2)
 
 {
-  int iVar1;
+  MessageLine *pMVar1;
   int iVar2;
-  int *piVar3;
-  longlong lVar4;
-  ulonglong uVar5;
   
-  uVar5 = (ulonglong)(int)param_2;
-  lVar4 = __savegprlr_21(param_1);
-  if ((uVar5 & 0xffffffff) == 0) {
+  if (param_2 == (MessageWindow *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",0x9ff,0
                     ,"%s");
   }
-  piVar3 = (int *)uVar5;
-  if (piVar3[4] < 1) {
+  if (param_2->lineCount < 1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",0xa00,0
                     ,"%s");
   }
-  iVar1 = piVar3[0xb];
-  while (iVar1 != 0) {
-    if ((uint)piVar3[4] <= (uint)piVar3[10]) {
+  iVar2 = param_2->activeLineCount;
+  while( true ) {
+    if (iVar2 == 0) {
+      return;
+    }
+    if ((uint)param_2->lineCount <= (uint)param_2->firstLineIndex) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",0xa04
                       ,0,
                       "msgwnd->firstLineIndex doesn\'t index msgwnd->lineCount\n\t%i not in [0, %i)"
                      );
     }
-    iVar1 = piVar3[10];
-    iVar2 = *piVar3;
-    if ((uint)piVar3[4] <= *(uint *)(iVar1 * 0x18 + iVar2)) {
+    iVar2 = param_2->firstLineIndex;
+    pMVar1 = param_2->lines;
+    if ((uint)param_2->lineCount <= (uint)pMVar1[iVar2].messageIndex) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",0xa07
                       ,0,"line->messageIndex doesn\'t index msgwnd->lineCount\n\t%i not in [0, %i)")
       ;
     }
-    if ((longlong)(lVar4 - (ulonglong)*(uint *)(*(int *)(iVar1 * 0x18 + iVar2) * 8 + piVar3[1] + 4))
+    if ((longlong)
+        ((longlong)param_1 - (ulonglong)(uint)param_2->messages[pMVar1[iVar2].messageIndex].endTime)
         < 0) break;
-    if (piVar3[0xb] < 1) {
+    if (param_2->activeLineCount < 1) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",0x2ff
                       ,0,"%s");
     }
-    iVar1 = piVar3[10];
-    piVar3[0xb] = piVar3[0xb] + -1;
-    piVar3[10] = iVar1 + 1;
-    if (iVar1 + 1 == piVar3[4]) {
-      piVar3[10] = 0;
+    iVar2 = param_2->firstLineIndex + 1;
+    param_2->activeLineCount = param_2->activeLineCount + -1;
+    param_2->firstLineIndex = iVar2;
+    if (iVar2 == param_2->lineCount) {
+      param_2->firstLineIndex = 0;
     }
-    if (((uVar5 & 0xffffffff) == ZEXT48(&con)) &&
+    if (((Console *)param_2 == &con) &&
        (con.displayLineOffset = con.displayLineOffset + -1,
        con.displayLineOffset < con.visibleLineCount)) {
       if (con.consoleWindow.activeLineCount < con.visibleLineCount) {
@@ -3934,78 +3799,73 @@ void Con_CullFinishedLines(int param_1,MessageWindow *param_2)
         con.displayLineOffset = con.visibleLineCount;
       }
     }
-    iVar1 = piVar3[0xb];
+    iVar2 = param_2->activeLineCount;
   }
-  __restgprlr_21();
   return;
 }
 
 
 // 823336A8  Con_GetMessageAlpha  (client/cl_console.cpp:2578)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 float Con_GetMessageAlpha(Message *param_1,MessageWindow *param_2,int param_3,bool param_4)
 
 {
   int iVar1;
-  int iVar2;
+  float fVar2;
   int iVar3;
-  float fVar4;
-  int *piVar5;
-  ulonglong uVar6;
-  ulonglong uVar7;
-  int iVar8;
-  double dVar9;
-  double dVar10;
+  int iVar4;
+  double dVar5;
+  double dVar6;
   
-  uVar7 = (ulonglong)param_4;
-  uVar6 = (ulonglong)(int)param_2;
-  piVar5 = (int *)__savegprlr_26(param_1);
-  dVar10 = 1.0;
-  if (piVar5 == (int *)0x0) {
+  dVar6 = 1.0;
+  if (param_1 == (Message *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",0xa15,0
                     ,"%s");
   }
-  if ((uVar6 & 0xffffffff) == 0) {
+  if (param_2 == (MessageWindow *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",0xa16,0
                     ,"%s");
   }
-  iVar3 = (int)uVar6;
-  iVar1 = *(int *)(iVar3 + 0x20);
-  if ((0 < iVar1) && (piVar5[1] - param_3 < iVar1)) {
-    dVar10 = (double)((float)(longlong)(piVar5[1] - param_3) / (float)(longlong)iVar1);
+  iVar1 = param_2->fadeOut;
+  if ((0 < iVar1) && (iVar4 = param_1->endTime - param_3, iVar4 < iVar1)) {
+    dVar6 = (double)((float)(longlong)iVar4 / (float)(longlong)iVar1);
   }
-  iVar1 = *(int *)(iVar3 + 0x1c);
-  if (iVar1 < 1) goto LAB_82333844;
-  if ((uVar7 & 0xff) == 0) {
-LAB_82333804:
-    if (iVar1 <= param_3 - *piVar5) goto LAB_82333844;
-    fVar4 = (float)(longlong)(param_3 - *piVar5) / (float)(longlong)iVar1;
-  }
-  else {
-    iVar2 = *(int *)(iVar3 + 0x18);
-    if (iVar2 <= iVar1) goto LAB_82333804;
-    iVar8 = param_3 - *piVar5;
-    if (iVar2 <= iVar8) goto LAB_82333844;
-    if (iVar8 <= iVar2 - iVar1) {
-      dVar10 = (double)__restgprlr_26(0);
-      return (float)dVar10;
+  iVar1 = param_2->fadeIn;
+  if (0 < iVar1) {
+    if ((param_4) && (iVar4 = param_2->scrollTime, iVar1 < iVar4)) {
+      iVar3 = param_3 - param_1->startTime;
+      if (iVar4 <= iVar3) goto LAB_82333844;
+      if (iVar3 <= iVar4 - iVar1) {
+        return 0.0;
+      }
+      fVar2 = (float)(longlong)(((param_2->fadeIn - param_1->startTime) - iVar4) + param_3) /
+              (float)(longlong)param_2->fadeIn;
     }
-    fVar4 = (float)(longlong)(((*(int *)(iVar3 + 0x1c) - *piVar5) - iVar2) + param_3) /
-            (float)(longlong)*(int *)(iVar3 + 0x1c);
+    else {
+      iVar4 = param_3 - param_1->startTime;
+      if (iVar1 <= iVar4) goto LAB_82333844;
+      fVar2 = (float)(longlong)iVar4 / (float)(longlong)iVar1;
+    }
+    dVar6 = (double)(float)((double)fVar2 * dVar6);
   }
-  dVar10 = (double)(float)((double)fVar4 * dVar10);
 LAB_82333844:
-  dVar9 = 0.0;
-  if (-dVar10 < 0.0) {
-    dVar9 = dVar10;
+  dVar5 = 0.0;
+  if (-dVar6 < 0.0) {
+    dVar5 = dVar6;
   }
-  dVar10 = (double)__restgprlr_26(dVar9);
-  return (float)dVar10;
+  return (float)dVar5;
 }
 
 
 // 82334DB0  Con_DrawMessageWindowNewToOld  (client/cl_console.cpp:2626)
 
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __savefpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -4019,28 +3879,22 @@ void Con_DrawMessageWindowNewToOld
   uint uVar1;
   uint uVar2;
   MessageLine *pMVar3;
-  LocalClientNum_t LVar4;
+  int iVar4;
   clientActive_t *pcVar5;
   ScreenPlacement *pSVar6;
-  MessageWindow *pMVar7;
-  longlong lVar8;
+  ulonglong uVar7;
+  int iVar8;
   ulonglong uVar9;
-  ulonglong uVar10;
-  int iVar11;
+  longlong lVar10;
+  ulonglong uVar11;
   ulonglong uVar12;
-  int iVar13;
-  longlong lVar14;
-  longlong lVar15;
-  ulonglong uVar16;
-  ulonglong uVar17;
+  double dVar13;
+  double dVar14;
+  double dVar15;
+  double dVar16;
+  double dVar17;
   double dVar18;
-  double extraout_f1;
   double dVar19;
-  double dVar20;
-  double dVar21;
-  double dVar22;
-  double dVar23;
-  double dVar24;
   Font_s *in_stack_00000054;
   MessageWindow *in_stack_fffffe88;
   int in_stack_fffffe8c;
@@ -4048,125 +3902,115 @@ void Con_DrawMessageWindowNewToOld
   int in_stack_fffffe94;
   int in_stack_fffffe98;
   
-  uVar9 = (ulonglong)param_8;
-  lVar8 = (longlong)param_5;
-  lVar14 = (longlong)param_4;
-  uVar12 = (ulonglong)(int)param_2;
-  __savegprlr();
-  LVar4 = __savefpr_28();
-  dVar21 = extraout_f1;
-  if ((uVar12 & 0xffffffff) == 0) {
+  dVar14 = (double)param_12;
+  if (param_2 == (MessageWindow *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",0xa4d,0
                     ,"%s");
   }
-  pcVar5 = CL_GetLocalClientGlobals(LVar4);
+  pcVar5 = CL_GetLocalClientGlobals(param_1);
   uVar1 = pcVar5->serverTime;
-  pMVar7 = (MessageWindow *)uVar12;
-  Con_CullFinishedLines(uVar1,pMVar7);
-  uVar9 = uVar9 & 0xff;
-  if (uVar9 == 0) {
-    lVar14 = lVar14 - lVar8;
+  Con_CullFinishedLines(uVar1,param_2);
+  if (!param_8) {
+    param_4 = param_4 - param_5;
   }
-  uVar2 = pMVar7->activeLineCount;
-  lVar15 = 0;
-  iVar13 = (int)lVar8;
+  uVar2 = param_2->activeLineCount;
+  lVar10 = 0;
   if (0 < (int)uVar2) {
-    dVar23 = 0.5;
-    dVar22 = 0.0;
-    dVar24 = 1.0;
+    dVar18 = 0.5;
+    dVar17 = 0.0;
+    dVar19 = 1.0;
     do {
-      if (pMVar7->lineCount < 1) {
+      if (param_2->lineCount < 1) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",
                         0xa58,0,"%s");
       }
-      uVar2 = pMVar7->lineCount;
-      uVar12 = (ulonglong)uVar2;
-      uVar10 = (ulonglong)(uint)pMVar7->firstLineIndex + lVar15;
-      trapWord(6,uVar12,0);
-      uVar16 = uVar10 - (longlong)((int)uVar10 / (int)uVar2) * (longlong)(int)uVar2;
-      trapWord(5,uVar12 & ~(((uVar10 & 0x7fffffff) << 1 | (uVar10 & 0xffffffff) >> 0x1f) - 1),0xffff
-              );
-      if (uVar12 <= (uVar16 & 0xffffffff)) {
+      uVar2 = param_2->lineCount;
+      uVar9 = (ulonglong)uVar2;
+      uVar7 = (ulonglong)(uint)param_2->firstLineIndex + lVar10;
+      trapWord(6,uVar9,0);
+      uVar11 = uVar7 - (longlong)((int)uVar7 / (int)uVar2) * (longlong)(int)uVar2;
+      trapWord(5,uVar9 & ~(((uVar7 & 0x7fffffff) << 1 | (uVar7 & 0xffffffff) >> 0x1f) - 1),0xffff);
+      if (uVar9 <= (uVar11 & 0xffffffff)) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",
                         0xa5a,0,"imod doesn\'t index msgwnd->lineCount\n\t%i not in [0, %i)");
       }
-      pMVar3 = pMVar7->lines;
-      iVar11 = (int)((uVar16 + (uVar16 & 0x7fffffff) * 2 & 0xffffffff) << 3);
-      if ((uint)pMVar7->lineCount <= *(uint *)((int)&pMVar3->messageIndex + iVar11)) {
+      pMVar3 = param_2->lines;
+      iVar8 = (int)((uVar11 + (uVar11 & 0x7fffffff) * 2 & 0xffffffff) << 3);
+      if ((uint)param_2->lineCount <= *(uint *)((int)&pMVar3->messageIndex + iVar8)) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",
                         0xa5c,0,
                         "line->messageIndex doesn\'t index msgwnd->lineCount\n\t%i not in [0, %i)");
       }
-      iVar11 = uVar1 - pMVar7->messages[*(int *)((int)&pMVar3->messageIndex + iVar11)].startTime;
-      if (iVar11 < pMVar7->scrollTime) {
-        dVar20 = (double)(float)(dVar24 - (double)((float)(longlong)iVar11 /
-                                                  (float)(longlong)pMVar7->scrollTime));
-        dVar19 = dVar24;
-        if ((float)(dVar20 - dVar24) < 0.0) {
-          dVar19 = dVar20;
+      iVar8 = uVar1 - param_2->messages[*(int *)((int)&pMVar3->messageIndex + iVar8)].startTime;
+      if (iVar8 < param_2->scrollTime) {
+        dVar16 = (double)(float)(dVar19 - (double)((float)(longlong)iVar8 /
+                                                  (float)(longlong)param_2->scrollTime));
+        dVar15 = dVar19;
+        if ((float)(dVar16 - dVar19) < 0.0) {
+          dVar15 = dVar16;
         }
-        dVar18 = dVar22;
-        if (-dVar20 < 0.0) {
-          dVar18 = dVar19;
+        dVar13 = dVar17;
+        if (-dVar16 < 0.0) {
+          dVar13 = dVar15;
         }
-        if (uVar9 == 0) {
-          dVar19 = floor((double)(float)((double)(longlong)iVar13 * dVar18 + dVar23));
-          lVar14 = lVar14 - (ulonglong)(uint)(int)dVar19;
+        if (param_8) {
+          dVar15 = floor((double)(float)((double)(longlong)param_5 * dVar13 + dVar18));
+          param_4 = (int)dVar15 + param_4;
         }
         else {
-          dVar19 = floor((double)(float)((double)(longlong)iVar13 * dVar18 + dVar23));
-          lVar14 = (ulonglong)(uint)(int)dVar19 + lVar14;
+          dVar15 = floor((double)(float)((double)(longlong)param_5 * dVar13 + dVar18));
+          param_4 = param_4 - (int)dVar15;
         }
       }
-      uVar2 = pMVar7->activeLineCount;
-      lVar15 = lVar15 + 1;
-    } while ((int)lVar15 < (int)uVar2);
+      uVar2 = param_2->activeLineCount;
+      lVar10 = lVar10 + 1;
+    } while ((int)lVar10 < (int)uVar2);
   }
-  uVar12 = (ulonglong)uVar2;
-  while (uVar12 = uVar12 - 1, -1 < (longlong)uVar12) {
-    uVar2 = pMVar7->lineCount;
-    uVar10 = (ulonglong)uVar2;
-    uVar16 = (uint)pMVar7->firstLineIndex + uVar12;
-    trapWord(6,uVar10,0);
-    uVar17 = uVar16 - (longlong)((int)uVar16 / (int)uVar2) * (longlong)(int)uVar2;
-    trapWord(5,uVar10 & ~(((uVar16 & 0x7fffffff) << 1 | (uVar16 & 0xffffffff) >> 0x1f) - 1),0xffff);
-    if (uVar10 <= (uVar17 & 0xffffffff)) {
+  uVar9 = (ulonglong)uVar2;
+  while (uVar9 = uVar9 - 1, -1 < (longlong)uVar9) {
+    uVar2 = param_2->lineCount;
+    uVar7 = (ulonglong)uVar2;
+    uVar11 = (uint)param_2->firstLineIndex + uVar9;
+    trapWord(6,uVar7,0);
+    uVar12 = uVar11 - (longlong)((int)uVar11 / (int)uVar2) * (longlong)(int)uVar2;
+    trapWord(5,uVar7 & ~(((uVar11 & 0x7fffffff) << 1 | (uVar11 & 0xffffffff) >> 0x1f) - 1),0xffff);
+    if (uVar7 <= (uVar12 & 0xffffffff)) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",0xa75
                       ,0,"imod doesn\'t index msgwnd->lineCount\n\t%i not in [0, %i)");
     }
-    pMVar3 = pMVar7->lines;
-    iVar11 = (int)((uVar17 + (uVar17 & 0x7fffffff) * 2 & 0xffffffff) << 3);
-    if ((uint)pMVar7->lineCount <= *(uint *)((int)&pMVar3->messageIndex + iVar11)) {
+    pMVar3 = param_2->lines;
+    iVar8 = (int)((uVar12 + (uVar12 & 0x7fffffff) * 2 & 0xffffffff) << 3);
+    if ((uint)param_2->lineCount <= *(uint *)((int)&pMVar3->messageIndex + iVar8)) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",0xa78
                       ,0,"line->messageIndex doesn\'t index msgwnd->lineCount\n\t%i not in [0, %i)")
       ;
     }
-    lVar15 = lVar8;
-    if (uVar9 != 0) {
-      lVar15 = -lVar8;
+    iVar4 = param_5;
+    if (param_8) {
+      iVar4 = -param_5;
     }
-    lVar14 = lVar14 + lVar15;
+    param_4 = param_4 + iVar4;
     if ((longlong)
         ((ulonglong)uVar1 -
-        (ulonglong)(uint)pMVar7->messages[*(int *)((int)&pMVar3->messageIndex + iVar11)].endTime) <
+        (ulonglong)(uint)param_2->messages[*(int *)((int)&pMVar3->messageIndex + iVar8)].endTime) <
         0) {
-      Con_GetMessageAlpha(pMVar7->messages + *(int *)((int)&pMVar3->messageIndex + iVar11),pMVar7,
+      Con_GetMessageAlpha(param_2->messages + *(int *)((int)&pMVar3->messageIndex + iVar8),param_2,
                           uVar1,true);
-      pSVar6 = ScrPlace_GetActivePlacement(LVar4);
+      pSVar6 = ScrPlace_GetActivePlacement(param_1);
       Con_DrawMessageLineOnHUD
-                (LVar4,pSVar6,param_3,(int)lVar14,iVar13,param_6,param_7,in_stack_00000054,
+                (param_1,pSVar6,param_3,param_4,param_5,param_6,param_7,in_stack_00000054,
                  in_stack_fffffe88,in_stack_fffffe8c,in_stack_fffffe90,in_stack_fffffe94,
-                 (float)dVar21,in_stack_fffffe98);
+                 (float)dVar14,in_stack_fffffe98);
     }
   }
-  __restfpr_28();
-  __restgprlr();
   return;
 }
 
 
 // 82335170  Con_DrawMessageWindowOldToNew  (client/cl_console.cpp:2700)
 
+/* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -4183,20 +4027,15 @@ void Con_DrawMessageWindowOldToNew
   uint uVar4;
   clientActive_t *pcVar5;
   ScreenPlacement *pSVar6;
-  MessageWindow *pMVar7;
-  longlong lVar8;
-  int iVar9;
-  ulonglong uVar10;
-  ulonglong uVar11;
-  ulonglong uVar12;
-  longlong lVar13;
-  ulonglong uVar14;
-  Message *pMVar15;
-  longlong lVar16;
-  int iVar17;
-  double dVar18;
-  double dVar19;
-  double dVar20;
+  ulonglong uVar7;
+  ulonglong uVar8;
+  ulonglong uVar9;
+  Message *pMVar10;
+  longlong lVar11;
+  int iVar12;
+  double dVar13;
+  double dVar14;
+  double dVar15;
   Font_s *in_stack_00000054;
   MessageWindow *in_stack_fffffe68;
   int in_stack_fffffe6c;
@@ -4205,99 +4044,89 @@ void Con_DrawMessageWindowOldToNew
   int in_stack_fffffe78;
   uint local_120;
   
-  dVar18 = (double)param_12;
-  uVar12 = (ulonglong)param_8;
-  lVar8 = (longlong)param_5;
-  lVar13 = (longlong)param_4;
-  uVar10 = (ulonglong)(int)param_2;
-  __savegprlr();
-  if ((uVar10 & 0xffffffff) == 0) {
+  dVar13 = (double)param_12;
+  if (param_2 == (MessageWindow *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",0xa96,0
                     ,"%s");
   }
   pcVar5 = CL_GetLocalClientGlobals(param_1);
   uVar1 = pcVar5->serverTime;
-  pMVar7 = (MessageWindow *)uVar10;
-  Con_CullFinishedLines(uVar1,pMVar7);
-  uVar12 = uVar12 & 0xff;
-  if (uVar12 != 0) {
-    lVar13 = lVar13 - lVar8;
+  Con_CullFinishedLines(uVar1,param_2);
+  if (param_8) {
+    param_4 = param_4 - param_5;
   }
   local_120 = 0;
-  if (0 < pMVar7->activeLineCount) {
-    dVar20 = 0.5;
+  if (0 < param_2->activeLineCount) {
+    dVar15 = 0.5;
     do {
-      if (pMVar7->lineCount < 1) {
+      if (param_2->lineCount < 1) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",
                         0xaa4,0,"%s");
       }
-      uVar2 = pMVar7->lineCount;
-      uVar10 = (ulonglong)uVar2;
-      uVar11 = (ulonglong)(uint)pMVar7->firstLineIndex + (ulonglong)local_120;
-      trapWord(6,uVar10,0);
-      uVar14 = uVar11 - (longlong)((int)uVar11 / (int)uVar2) * (longlong)(int)uVar2;
-      trapWord(5,uVar10 & ~(((uVar11 & 0x7fffffff) << 1 | (uVar11 & 0xffffffff) >> 0x1f) - 1),0xffff
-              );
-      if (uVar10 <= (uVar14 & 0xffffffff)) {
+      uVar2 = param_2->lineCount;
+      uVar7 = (ulonglong)uVar2;
+      uVar8 = (ulonglong)(uint)param_2->firstLineIndex + (ulonglong)local_120;
+      trapWord(6,uVar7,0);
+      uVar9 = uVar8 - (longlong)((int)uVar8 / (int)uVar2) * (longlong)(int)uVar2;
+      trapWord(5,uVar7 & ~(((uVar8 & 0x7fffffff) << 1 | (uVar8 & 0xffffffff) >> 0x1f) - 1),0xffff);
+      if (uVar7 <= (uVar9 & 0xffffffff)) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",
                         0xaa6,0,"imod doesn\'t index msgwnd->lineCount\n\t%i not in [0, %i)");
       }
-      pMVar3 = pMVar7->lines;
-      iVar9 = (int)((uVar14 + (uVar14 & 0x7fffffff) * 2 & 0xffffffff) << 3);
-      if ((uint)pMVar7->lineCount <= *(uint *)((int)&pMVar3->messageIndex + iVar9)) {
+      pMVar3 = param_2->lines;
+      iVar12 = (int)((uVar9 + (uVar9 & 0x7fffffff) * 2 & 0xffffffff) << 3);
+      if ((uint)param_2->lineCount <= *(uint *)((int)&pMVar3->messageIndex + iVar12)) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",
                         0xaa8,0,
                         "line->messageIndex doesn\'t index msgwnd->lineCount\n\t%i not in [0, %i)");
       }
-      iVar9 = *(int *)((int)&pMVar3->messageIndex + iVar9);
-      pMVar15 = pMVar7->messages + iVar9;
-      if (pMVar7->messages[iVar9].startTime < 0) {
+      iVar12 = *(int *)((int)&pMVar3->messageIndex + iVar12);
+      pMVar10 = param_2->messages + iVar12;
+      if (param_2->messages[iVar12].startTime < 0) {
         MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",
                         0xaab,0,"%s\n\t(message->startTime) = %i");
       }
-      if (pMVar15->startTime < (int)(uVar1 + 1000)) {
-        uVar2 = pMVar15->endTime;
+      if (pMVar10->startTime < (int)(uVar1 + 1000)) {
+        uVar2 = pMVar10->endTime;
         if ((int)uVar1 <= (int)uVar2) {
-          uVar4 = pMVar7->scrollTime;
-          iVar9 = (int)lVar8;
+          uVar4 = param_2->scrollTime;
           if (((int)(uVar2 - uVar4) < (int)uVar1) &&
-             (lVar16 = ((ulonglong)uVar4 - (ulonglong)uVar2) + (ulonglong)uVar1, 0 < lVar16)) {
+             (lVar11 = ((ulonglong)uVar4 - (ulonglong)uVar2) + (ulonglong)uVar1, 0 < lVar11)) {
             if ((int)uVar4 < 1) {
               MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp"
                               ,0xab9,0,"%s\n\t(msgwnd->scrollTime) = %i");
             }
-            iVar17 = (int)lVar16;
-            if (uVar12 == 0) {
-              dVar19 = floor((double)(float)((double)(((float)(longlong)iVar17 /
-                                                      (float)(longlong)pMVar7->scrollTime) *
-                                                     (float)(longlong)iVar9) + dVar20));
-              lVar13 = lVar13 - (ulonglong)(uint)(int)dVar19;
+            iVar12 = (int)lVar11;
+            if (param_8) {
+              dVar14 = floor((double)(float)((double)(((float)(longlong)iVar12 /
+                                                      (float)(longlong)param_2->scrollTime) *
+                                                     (float)(longlong)param_5) + dVar15));
+              param_4 = (int)dVar14 + param_4;
             }
             else {
-              dVar19 = floor((double)(float)((double)(((float)(longlong)iVar17 /
-                                                      (float)(longlong)pMVar7->scrollTime) *
-                                                     (float)(longlong)iVar9) + dVar20));
-              lVar13 = (ulonglong)(uint)(int)dVar19 + lVar13;
+              dVar14 = floor((double)(float)((double)(((float)(longlong)iVar12 /
+                                                      (float)(longlong)param_2->scrollTime) *
+                                                     (float)(longlong)param_5) + dVar15));
+              param_4 = param_4 - (int)dVar14;
             }
           }
-          Con_GetMessageAlpha(pMVar15,pMVar7,uVar1,false);
+          Con_GetMessageAlpha(pMVar10,param_2,uVar1,false);
           pSVar6 = ScrPlace_GetActivePlacement(param_1);
           Con_DrawMessageLineOnHUD
-                    (param_1,pSVar6,param_3,(int)lVar13,iVar9,param_6,param_7,in_stack_00000054,
+                    (param_1,pSVar6,param_3,param_4,param_5,param_6,param_7,in_stack_00000054,
                      in_stack_fffffe68,in_stack_fffffe6c,in_stack_fffffe70,in_stack_fffffe74,
-                     (float)dVar18,in_stack_fffffe78);
-          if (uVar12 == 0) {
-            lVar13 = lVar13 + lVar8;
+                     (float)dVar13,in_stack_fffffe78);
+          if (param_8) {
+            param_4 = param_4 - param_5;
           }
           else {
-            lVar13 = lVar13 - lVar8;
+            param_4 = param_4 + param_5;
           }
         }
       }
       local_120 = local_120 + 1;
-    } while ((int)local_120 < pMVar7->activeLineCount);
+    } while ((int)local_120 < param_2->activeLineCount);
   }
-  __restgprlr();
   return;
 }
 
@@ -4324,6 +4153,8 @@ bool CL_ShouldntDrawMessageWindow(LocalClientNum_t param_1)
 
 // 82335560  Con_DrawMessageWindow  (client/cl_console.cpp:2782)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -4335,30 +4166,25 @@ void Con_DrawMessageWindow
 
 {
   bool bVar1;
-  LocalClientNum_t LVar2;
-  clientActive_t *pcVar3;
-  bool bVar4;
-  ulonglong uVar5;
-  double extraout_f1;
-  double dVar6;
+  clientActive_t *pcVar2;
+  bool bVar3;
+  double dVar4;
   uint in_stack_0000006c;
   Font_s *in_stack_ffffff38;
   float *in_stack_ffffff3c;
   int in_stack_ffffff40;
   int in_stack_ffffff44;
   
-  uVar5 = (ulonglong)(int)param_2;
-  LVar2 = __savegprlr_23((double)param_11,param_1);
-  dVar6 = extraout_f1;
-  if ((uVar5 & 0xffffffff) == 0) {
+  dVar4 = (double)param_11;
+  if (param_2 == (MessageWindow *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",0xadf,0
                     ,"%s");
   }
-  pcVar3 = CL_GetLocalClientGlobals(LVar2);
-  if ((pcVar3->snap).ps.pm_type != 6) {
-    bVar4 = CL_ShouldDisplayHud(LVar2);
+  pcVar2 = CL_GetLocalClientGlobals(param_1);
+  if ((pcVar2->snap).ps.pm_type != 6) {
+    bVar3 = CL_ShouldDisplayHud(param_1);
     bVar1 = true;
-    if (!bVar4) goto LAB_823355f4;
+    if (!bVar3) goto LAB_823355f4;
   }
   bVar1 = false;
 LAB_823355f4:
@@ -4366,17 +4192,15 @@ LAB_823355f4:
     if (in_stack_0000006c < 4) {
       if ((in_stack_0000006c != 0) && ((in_stack_0000006c == 1 || (in_stack_0000006c == 2)))) {
         Con_DrawMessageWindowNewToOld
-                  (LVar2,(MessageWindow *)uVar5,param_3,param_4,param_5,param_6,param_7,
-                   in_stack_0000006c == 1,in_stack_ffffff38,in_stack_ffffff3c,in_stack_ffffff40,
-                   (float)dVar6,in_stack_ffffff44);
-        __restgprlr_23();
+                  (param_1,param_2,param_3,param_4,param_5,param_6,param_7,in_stack_0000006c == 1,
+                   in_stack_ffffff38,in_stack_ffffff3c,in_stack_ffffff40,(float)dVar4,
+                   in_stack_ffffff44);
         return;
       }
       Con_DrawMessageWindowOldToNew
-                (LVar2,(MessageWindow *)uVar5,param_3,param_4,param_5,param_6,param_7,
-                 in_stack_0000006c == 3,in_stack_ffffff38,in_stack_ffffff3c,in_stack_ffffff40,
-                 (float)dVar6,in_stack_ffffff44);
-      __restgprlr_23();
+                (param_1,param_2,param_3,param_4,param_5,param_6,param_7,in_stack_0000006c == 3,
+                 in_stack_ffffff38,in_stack_ffffff3c,in_stack_ffffff40,(float)dVar4,
+                 in_stack_ffffff44);
       return;
     }
     if (alwaysfails == 0) {
@@ -4384,13 +4208,14 @@ LAB_823355f4:
                       ,0,"unhandled case");
     }
   }
-  __restgprlr_23();
   return;
 }
 
 
 // 82335708  Con_DrawGameMessageWindow  (client/cl_console.cpp:2807)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void Con_DrawGameMessageWindow
@@ -4400,92 +4225,87 @@ void Con_DrawGameMessageWindow
 
 {
   float fVar1;
-  LocalClientNum_t LVar2;
-  bool bVar3;
-  ulonglong uVar4;
-  double extraout_f1;
-  double dVar5;
-  double dVar6;
+  bool bVar2;
+  double dVar3;
+  double dVar4;
   float *in_stack_ffffff18;
   int in_stack_ffffff1c;
   msgwnd_mode_t in_stack_ffffff20;
   int in_stack_ffffff24;
   
-  uVar4 = (ulonglong)param_2;
-  LVar2 = __savegprlr_23((double)param_8,param_1);
+  dVar3 = (double)param_8;
   if ((cg_paused->current).integer == 0) {
-    dVar5 = extraout_f1;
-    bVar3 = CL_IsRenderingSplitScreen();
-    if (bVar3) {
-      fVar1 = *(float *)(*(int *)((int)&DAT_82a773c4 + (int)((uVar4 & 0xffffffff) << 2)) + 0xc);
+    bVar2 = CL_IsRenderingSplitScreen();
+    if (bVar2) {
+      fVar1 = *(float *)((&DAT_82a773c4)[param_2] + 0xc);
     }
     else {
       fVar1 = 1.0;
     }
-    dVar6 = (double)fVar1;
-    dVar5 = floor((double)(float)(dVar5 * 48.0 + 0.5));
-    if (3 < (uVar4 & 0xffffffff)) {
+    dVar4 = (double)fVar1;
+    dVar3 = floor((double)(float)(dVar3 * 48.0 + 0.5));
+    if (3 < (uint)param_2) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",0xb0e
                       ,0,"windowIndex doesn\'t index GAMEMSG_WINDOW_COUNT\n\t%i not in [0, %i)");
     }
     Con_DrawMessageWindow
-              (LVar2,con.messageBuffer[LVar2].gamemsgWindows + (int)uVar4,param_3,param_4,(int)dVar5
-               ,param_5,param_6,param_7,in_stack_ffffff18,in_stack_ffffff1c,(float)dVar6,
+              (param_1,con.messageBuffer[param_1].gamemsgWindows + param_2,param_3,param_4,
+               (int)dVar3,param_5,param_6,param_7,in_stack_ffffff18,in_stack_ffffff1c,(float)dVar4,
                in_stack_ffffff20,in_stack_ffffff24);
   }
-  __restgprlr_23();
   return;
 }
 
 
 // 82335848  Con_DrawMiniConsole  (client/cl_console.cpp:2837)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void Con_DrawMiniConsole(LocalClientNum_t param_1,int param_2,int param_3,float param_4)
 
 {
-  LocalClientNum_t LVar1;
-  bool bVar4;
-  ScreenPlacement *pSVar2;
-  Font_s *pFVar3;
+  bool bVar3;
+  ScreenPlacement *pSVar1;
+  Font_s *pFVar2;
+  double dVar4;
   double dVar5;
-  double dVar6;
   float *in_stack_ffffff28;
   int in_stack_ffffff2c;
   msgwnd_mode_t in_stack_ffffff30;
   int in_stack_ffffff34;
   
-  LVar1 = __savegprlr_26((double)param_4,param_1);
-  bVar4 = CL_IsRenderingSplitScreen();
-  dVar6 = 1.0;
-  dVar5 = dVar6;
-  if (bVar4) {
-    dVar5 = (double)*(float *)(DAT_82a77268 + 0xc);
+  bVar3 = CL_IsRenderingSplitScreen();
+  dVar5 = 1.0;
+  dVar4 = dVar5;
+  if (bVar3) {
+    dVar4 = (double)*(float *)(DAT_82a77268 + 0xc);
   }
   if ((con_miniconlines->current).integer != 0) {
-    pSVar2 = ScrPlace_GetActivePlacement(LVar1);
-    pFVar3 = UI_GetFontHandle(pSVar2,0,(float)dVar6);
+    pSVar1 = ScrPlace_GetActivePlacement(param_1);
+    pFVar2 = UI_GetFontHandle(pSVar1,0,(float)dVar5);
     if (((con_miniconlines->current).integer < 0) || (100 < (con_miniconlines->current).integer)) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",0xb28
                       ,0,"%s\n\t(con_miniconlines->current.integer) = %i");
     }
     if (con.messageBuffer[0].miniconWindow.lineCount != (con_miniconlines->current).integer) {
       con.messageBuffer[0].miniconWindow.lineCount = (con_miniconlines->current).integer;
-      Con_ClearMessageWindow(&con.messageBuffer[LVar1].miniconWindow);
+      Con_ClearMessageWindow(&con.messageBuffer[param_1].miniconWindow);
     }
     Con_DrawMessageWindow
-              (LVar1,&con.messageBuffer[LVar1].miniconWindow,param_2,param_3,0xc,1,1,pFVar3,
-               in_stack_ffffff28,in_stack_ffffff2c,(float)dVar5,in_stack_ffffff30,in_stack_ffffff34)
+              (param_1,&con.messageBuffer[param_1].miniconWindow,param_2,param_3,0xc,1,1,pFVar2,
+               in_stack_ffffff28,in_stack_ffffff2c,(float)dVar4,in_stack_ffffff30,in_stack_ffffff34)
     ;
   }
-  __restgprlr_26();
   return;
 }
 
 
 // 823359C0  Con_DrawErrors  (client/cl_console.cpp:2868)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -4494,41 +4314,37 @@ void Con_DrawErrors(LocalClientNum_t param_1,int param_2,int param_3,float param
 
 {
   bool bVar1;
-  longlong lVar2;
-  ScreenPlacement *pSVar3;
-  clientActive_t *pcVar5;
-  bool bVar6;
-  double dVar7;
+  ScreenPlacement *pSVar2;
+  clientActive_t *pcVar3;
+  bool bVar4;
+  longlong lVar5;
+  double dVar6;
   Font_s *in_stack_ffffff38;
   float *in_stack_ffffff3c;
   int in_stack_ffffff40;
   int in_stack_ffffff44;
-  LocalClientNum_t LVar4;
   
-  lVar2 = __savegprlr_27((double)param_4,param_1);
-  LVar4 = (LocalClientNum_t)lVar2;
-  pSVar3 = ScrPlace_GetActivePlacement(LVar4);
-  dVar7 = 1.0;
-  UI_GetFontHandle(pSVar3,0,1.0);
-  lVar2 = lVar2 * 0x4858 + -0x7d573b74;
-  if (lVar2 == 0) {
+  pSVar2 = ScrPlace_GetActivePlacement(param_1);
+  dVar6 = 1.0;
+  UI_GetFontHandle(pSVar2,0,1.0);
+  lVar5 = (longlong)(int)param_1 * 0x4858 + -0x7d573b74;
+  if (lVar5 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",0xadf,0
                     ,"%s");
   }
-  pcVar5 = CL_GetLocalClientGlobals(LVar4);
-  if ((pcVar5->snap).ps.pm_type != 6) {
-    bVar6 = CL_ShouldDisplayHud(LVar4);
+  pcVar3 = CL_GetLocalClientGlobals(param_1);
+  if ((pcVar3->snap).ps.pm_type != 6) {
+    bVar4 = CL_ShouldDisplayHud(param_1);
     bVar1 = true;
-    if (!bVar6) goto LAB_82335a80;
+    if (!bVar4) goto LAB_82335a80;
   }
   bVar1 = false;
 LAB_82335a80:
   if (!bVar1) {
     Con_DrawMessageWindowOldToNew
-              (LVar4,(MessageWindow *)lVar2,param_2,param_3,0x10,1,1,false,in_stack_ffffff38,
-               in_stack_ffffff3c,in_stack_ffffff40,(float)dVar7,in_stack_ffffff44);
+              (param_1,(MessageWindow *)lVar5,param_2,param_3,0x10,1,1,false,in_stack_ffffff38,
+               in_stack_ffffff3c,in_stack_ffffff40,(float)dVar6,in_stack_ffffff44);
   }
-  __restgprlr_27();
   return;
 }
 
@@ -4579,58 +4395,59 @@ void Con_ToggleConsoleOutput(void)
 
 // 82333998  Con_DrawOutputScrollBar  (client/cl_console.cpp:2947)
 
+/* WARNING: Function: __savefpr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_27 replaced with injection: xenon_save_restore */
+
 void Con_DrawOutputScrollBar(float param_1,float param_2,float param_3,float param_4)
 
 {
   double dVar1;
   float fVar2;
-  float *pfVar3;
-  double extraout_f1;
+  float *in_r3;
+  double dVar3;
   double dVar4;
   double dVar5;
   double dVar6;
   double dVar7;
   double dVar8;
   double dVar9;
-  double dVar10;
   
-  dVar6 = (double)param_4;
-  dVar10 = (double)param_3;
-  dVar5 = (double)param_2;
-  pfVar3 = (float *)__savefpr_27((double)param_1);
-  fVar2 = (float)(extraout_f1 + dVar10) - 10.0;
-  dVar10 = (double)fVar2;
-  ConDraw_Box(fVar2,(float)dVar5,10.0,(float)dVar6,pfVar3);
+  dVar5 = (double)param_4;
+  dVar4 = (double)param_2;
+  fVar2 = (param_1 + param_3) - 10.0;
+  dVar9 = (double)fVar2;
+  ConDraw_Box(fVar2,param_2,10.0,param_4,in_r3);
   if (con.visibleLineCount < con.consoleWindow.activeLineCount) {
-    pfVar3 = (float *)(con.displayLineOffset - con.visibleLineCount);
+    in_r3 = (float *)(con.displayLineOffset - con.visibleLineCount);
     fVar2 = (float)(1.0 / (double)(longlong)
                                   (con.consoleWindow.activeLineCount - con.visibleLineCount));
-    dVar9 = (double)((float)(longlong)(int)pfVar3 * fVar2);
-    dVar8 = 1.0;
-    if ((float)(dVar9 - 1.0) < 0.0) {
-      dVar8 = dVar9;
-    }
-    dVar4 = ceil((double)(float)((double)((float)(longlong)con.visibleLineCount * fVar2) * dVar6));
-    dVar1 = dVar5 + dVar6;
-    dVar7 = 0.0;
-    if (-dVar9 < 0.0) {
+    dVar8 = (double)((float)(longlong)(int)in_r3 * fVar2);
+    dVar7 = 1.0;
+    if ((float)(dVar8 - 1.0) < 0.0) {
       dVar7 = dVar8;
     }
-    dVar6 = 10.0;
-    if ((float)(10.0 - (double)(float)dVar4) < 0.0) {
-      dVar6 = (double)(float)dVar4;
+    dVar3 = ceil((double)(float)((double)((float)(longlong)con.visibleLineCount * fVar2) * dVar5));
+    dVar1 = dVar4 + dVar5;
+    dVar6 = 0.0;
+    if (-dVar8 < 0.0) {
+      dVar6 = dVar7;
     }
-    dVar5 = (double)(float)((double)(float)((double)(float)((double)(float)dVar1 - dVar6) - dVar5) *
-                            dVar7 + dVar5);
+    dVar5 = 10.0;
+    if ((float)(10.0 - (double)(float)dVar3) < 0.0) {
+      dVar5 = (double)(float)dVar3;
+    }
+    dVar4 = (double)(float)((double)(float)((double)(float)((double)(float)dVar1 - dVar5) - dVar4) *
+                            dVar6 + dVar4);
   }
-  ConDraw_Box((float)dVar10,(float)dVar5,10.0,(float)dVar6,pfVar3);
-  __restfpr_27();
+  ConDraw_Box((float)dVar9,(float)dVar4,10.0,(float)dVar5,in_r3);
   return;
 }
 
 
 // 82333AF0  Con_DrawOutputText  (client/cl_console.cpp:2971)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -4651,8 +4468,8 @@ void Con_DrawOutputText(float param_1,float param_2,float param_3,float param_4)
   double dVar11;
   float afStack_60 [24];
   
+  dVar9 = (double)param_1;
   dVar11 = (double)param_2;
-  dVar9 = (double)__savegprlr_26((double)param_1,dVar11,(double)param_3,(double)param_4);
   CL_LookupColor(LOCAL_CLIENT_0,'7',afStack_60);
   if (con.fontHeight == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",0xba5,0
@@ -4689,7 +4506,6 @@ void Con_DrawOutputText(float param_1,float param_2,float param_3,float param_4)
       lVar8 = lVar8 + 1;
     } while ((int)lVar8 < iVar5);
   }
-  __restgprlr_26();
   return;
 }
 
@@ -4732,6 +4548,8 @@ void Con_DrawOutputVersion(float param_1,float param_2,float param_3,float param
 
 // 82333D68  Con_DrawOuputWindow  (client/cl_console.cpp:3020)
 
+/* WARNING: Function: __savefpr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restfpr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void Con_DrawOuputWindow(void)
@@ -4748,7 +4566,6 @@ void Con_DrawOuputWindow(void)
   double dVar9;
   double dVar10;
   
-  __savefpr_27();
   dVar9 = (double)con.screenMin[0];
   dVar7 = (double)(float)((double)con.screenMax[0] - dVar9);
   dVar5 = (double)(con.screenMin[1] + 32.0);
@@ -4767,7 +4584,6 @@ void Con_DrawOuputWindow(void)
   dVar3 = (double)(float)dVar4;
   Con_DrawOutputScrollBar((float)dVar10,(float)dVar6,(float)(dVar7 - dVar8),(float)dVar4);
   Con_DrawOutputText((float)dVar10,(float)dVar6,(float)dVar2,(float)dVar3);
-  __restfpr_27();
   return;
 }
 
@@ -4882,21 +4698,21 @@ void Con_Bottom(void)
 
 // 82333F60  Con_Close  (client/cl_console.cpp:3118)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void Con_Close(LocalClientNum_t param_1)
 
 {
   bool bVar1;
-  LocalClientNum_t LVar2;
   
-  LVar2 = __savegprlr_29(param_1);
-  if (LOCAL_CLIENT_3 < LVar2) {
+  if (LOCAL_CLIENT_3 < param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\../client_mp/client_mp.h"
                     ,0x47f,0,
                     "localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)");
   }
-  if (clientUIActives[LVar2].isRunning != false) {
+  if (clientUIActives[param_1].isRunning != false) {
     Field_Clear(&g_consoleField);
     if ((conDrawInputGlob.matchIndex < 0) ||
        (bVar1 = true, conDrawInputGlob.autoCompleteChoice[0] == '\0')) {
@@ -4906,15 +4722,14 @@ void Con_Close(LocalClientNum_t param_1)
       conDrawInputGlob.matchIndex = -1;
       conDrawInputGlob.autoCompleteChoice[0] = '\0';
     }
-    Con_ClearNotify(LVar2);
-    Con_ClearMessageWindow(&con.messageBuffer[LVar2].miniconWindow);
-    Con_ClearMessageWindow(&con.messageBuffer[LVar2].errorWindow);
+    Con_ClearNotify(param_1);
+    Con_ClearMessageWindow(&con.messageBuffer[param_1].miniconWindow);
+    Con_ClearMessageWindow(&con.messageBuffer[param_1].errorWindow);
     clientUIActives[0].keyCatchers = clientUIActives[0].keyCatchers & 0xfffffffe;
     clientUIActives[1].keyCatchers = clientUIActives[1].keyCatchers & 0xfffffffe;
     clientUIActives[2].keyCatchers = clientUIActives[2].keyCatchers & 0xfffffffe;
     clientUIActives[3].keyCatchers = clientUIActives[3].keyCatchers & 0xfffffffe;
   }
-  __restgprlr_29();
   return;
 }
 
@@ -4935,6 +4750,8 @@ bool Con_IsActive(LocalClientNum_t param_1)
 
 // 823340A0  CL_PlayTextFXPulseSounds  (client/cl_console.cpp:3151)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void CL_PlayTextFXPulseSounds
@@ -4942,49 +4759,46 @@ void CL_PlayTextFXPulseSounds
                ,int *param_7)
 
 {
-  LocalClientNum_t LVar1;
-  longlong lVar2;
-  char *pcVar3;
-  longlong lVar4;
-  ulonglong uVar5;
-  int iVar6;
-  int iVar7;
-  int iVar8;
-  ulonglong uVar9;
-  int iVar10;
+  int iVar1;
+  char *pcVar2;
+  int iVar3;
+  ulonglong uVar4;
+  int iVar5;
   
-  uVar5 = (ulonglong)param_5;
-  lVar4 = (longlong)param_4;
-  lVar2 = (longlong)param_2;
-  LVar1 = __savegprlr_26(param_1);
-  iVar6 = (int)uVar5;
-  iVar7 = param_3 * iVar6;
-  iVar8 = *param_7 - (int)lVar4;
-  uVar9 = lVar2 - lVar4;
-  if (param_6 < iVar7) {
-    param_6 = iVar7;
+  iVar1 = *param_7;
+  iVar3 = param_3 * param_5;
+  uVar4 = (longlong)param_2 - (longlong)param_4;
+  if (param_6 < iVar3) {
+    param_6 = iVar3;
   }
-  iVar10 = (int)uVar9;
-  if (iVar10 < 0) goto LAB_82334170;
-  if (param_6 < iVar10) {
-    if (param_6 <= iVar8) goto LAB_82334170;
-    pcVar3 = "ui_pulse_text_delete";
+  iVar5 = (int)uVar4;
+  if (iVar5 < 0) {
+    return;
+  }
+  if (param_6 < iVar5) {
+    if (param_6 <= iVar1 - param_4) {
+      return;
+    }
+    pcVar2 = "ui_pulse_text_delete";
   }
   else {
-    if (iVar7 <= iVar10) goto LAB_82334170;
-    if (iVar6 == 0) {
+    if (iVar3 <= iVar5) {
+      return;
+    }
+    if (param_5 == 0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\client\\cl_console.cpp",0xc70
                       ,0,"%s");
     }
-    trapWord(6,uVar5,0);
-    trapWord(5,uVar5 & ~(((uVar9 & 0x7fffffff) << 1 | (uVar9 & 0xffffffff) >> 0x1f) - 1),0xffff);
-    if ((iVar10 / iVar6) * iVar6 <= iVar8) goto LAB_82334170;
-    pcVar3 = "ui_pulse_text_type";
+    trapWord(6,(longlong)param_5,0);
+    trapWord(5,(longlong)param_5 & ~(((uVar4 & 0x7fffffff) << 1 | (uVar4 & 0xffffffff) >> 0x1f) - 1)
+             ,0xffff);
+    if ((iVar5 / param_5) * param_5 <= iVar1 - param_4) {
+      return;
+    }
+    pcVar2 = "ui_pulse_text_type";
   }
-  SND_PlayLocalSoundAliasByName(LVar1,pcVar3,SASYS_CGAME);
-  *param_7 = (int)lVar2;
-LAB_82334170:
-  __restgprlr_26();
+  SND_PlayLocalSoundAliasByName(param_1,pcVar2,SASYS_CGAME);
+  *param_7 = param_2;
   return;
 }
 

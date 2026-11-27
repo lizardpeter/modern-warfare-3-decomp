@@ -2,72 +2,67 @@
 
 // 822558F8  der_decode_integer  (line unknown)
 
-void der_decode_integer(undefined8 param_1,ulonglong param_2,void *param_3)
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
+int der_decode_integer(byte *param_1,uint param_2,void *param_3)
 
 {
   byte bVar1;
   byte *pbVar2;
   int iVar3;
   int iVar4;
-  ulonglong uVar5;
-  longlong lVar6;
-  ulonglong uVar7;
+  uint uVar5;
+  uint uVar6;
   void *local_30 [12];
   
-  pbVar2 = (byte *)__savegprlr_28();
-  if ((2 < (param_2 & 0xffffffff)) && ((*pbVar2 & 0x1f) == 2)) {
-    bVar1 = pbVar2[1];
-    lVar6 = 2;
+  if ((2 < param_2) && ((*param_1 & 0x1f) == 2)) {
+    bVar1 = param_1[1];
     iVar4 = 2;
     if ((bVar1 & 0x80) == 0) {
-      if ((ulonglong)bVar1 + 2 <= (param_2 & 0xffffffff)) {
-        iVar3 = (*ltc_mp.unsigned_read)(param_3,pbVar2 + 2,(uint)bVar1);
+      if (bVar1 + 2 <= param_2) {
+        iVar3 = (*ltc_mp.unsigned_read)(param_3,param_1 + 2,(uint)bVar1);
         if (iVar3 != 0) {
-          __restgprlr_28();
-          return;
+          return iVar3;
         }
 LAB_822559dc:
-        if ((pbVar2[iVar4] & 0x80) != 0) {
-          iVar4 = (*ltc_mp.init)(local_30);
-          if (iVar4 == 0) {
-            iVar4 = (*ltc_mp.count_bits)(param_3);
-            iVar4 = (*ltc_mp.twoexpt)(local_30[0],iVar4);
-            if ((iVar4 == 0) && (iVar4 = (*ltc_mp.sub)(param_3,local_30[0],param_3), iVar4 == 0)) {
-              (*ltc_mp.deinit)(local_30[0]);
-              goto LAB_82255a60;
-            }
-            (*ltc_mp.deinit)(local_30[0]);
-          }
-          __restgprlr_28(0xd);
-          return;
+        if ((param_1[iVar4] & 0x80) == 0) {
+          return 0;
         }
-LAB_82255a60:
-        __restgprlr_28(0);
-        return;
+        iVar4 = (*ltc_mp.init)(local_30);
+        if (iVar4 == 0) {
+          iVar4 = (*ltc_mp.count_bits)(param_3);
+          iVar4 = (*ltc_mp.twoexpt)(local_30[0],iVar4);
+          if ((iVar4 == 0) && (iVar4 = (*ltc_mp.sub)(param_3,local_30[0],param_3), iVar4 == 0)) {
+            (*ltc_mp.deinit)(local_30[0]);
+            return 0;
+          }
+          (*ltc_mp.deinit)(local_30[0]);
+        }
+        return 0xd;
       }
     }
     else {
-      uVar7 = (ulonglong)bVar1 & 0x7f;
-      if (((uVar7 + 2 <= (param_2 & 0xffffffff)) && (uVar7 < 5)) && ((bVar1 & 0x7f) != 0)) {
+      uVar6 = bVar1 & 0x7f;
+      if (((uVar6 + 2 <= param_2) && (uVar6 < 5)) && ((bVar1 & 0x7f) != 0)) {
         uVar5 = 0;
+        iVar4 = 2;
         do {
-          iVar3 = (int)lVar6;
-          lVar6 = lVar6 + 1;
-          iVar4 = (int)lVar6;
-          uVar5 = (ulonglong)pbVar2[iVar3] | (uVar5 & 0xffffff) << 8;
-          uVar7 = uVar7 - 1;
-        } while (uVar7 != 0);
-        if ((uVar5 + lVar6 & 0xffffffff) <= (param_2 & 0xffffffff)) {
-          iVar3 = (*ltc_mp.unsigned_read)(param_3,pbVar2 + iVar4,(ulong)uVar5);
-          if (iVar3 != 0) goto LAB_82255a8c;
+          pbVar2 = param_1 + iVar4;
+          iVar4 = iVar4 + 1;
+          uVar5 = (uint)*pbVar2 | uVar5 << 8;
+          uVar6 = uVar6 - 1;
+        } while (uVar6 != 0);
+        if (uVar5 + iVar4 <= param_2) {
+          iVar3 = (*ltc_mp.unsigned_read)(param_3,param_1 + iVar4,uVar5);
+          if (iVar3 != 0) {
+            return iVar3;
+          }
           goto LAB_822559dc;
         }
       }
     }
   }
-  iVar3 = 7;
-LAB_82255a8c:
-  __restgprlr_28(iVar3);
-  return;
+  return 7;
 }
 

@@ -2,80 +2,74 @@
 
 // 824F3128  LiveStorage_DownloadStats  (qcommon/com_storage_download.cpp:61)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
+
 void LiveStorage_DownloadStats(int param_1)
 
 {
-  uint uVar1;
-  bool bVar2;
-  int iVar4;
-  bool bVar8;
+  bool bVar1;
+  bool bVar5;
   bdLobbyService *this;
-  Status SVar5;
-  int iVar6;
-  longlong lVar3;
-  overlappedTask *poVar7;
-  dwFileTask **ppdVar9;
+  Status SVar2;
+  int iVar3;
+  overlappedTask *poVar4;
+  dwFileTask **ppdVar6;
   
-  iVar4 = __savegprlr_25(param_1);
-  bVar2 = false;
-  controllerStatData[iVar4].playerStats[0].statsFetched = false;
-  bVar8 = TaskManager_TaskIsInProgressForController(&storageTasks,6,iVar4);
-  lVar3 = (longlong)bVar8;
-  if (lVar3 != 0) goto LAB_824f32d4;
-  bVar8 = LiveStorage_MaySetPersistentData_ControllerIndex(iVar4);
-  lVar3 = 0;
-  if (!bVar8) goto LAB_824f32d4;
-  bVar8 = Live_IsUserSignedInToLive(iVar4);
-  lVar3 = 0;
-  if (!bVar8) goto LAB_824f32d4;
-  this = dwGetLobbyService(iVar4);
-  if (this != (bdLobbyService *)0x0) {
-    SVar5 = bdLobbyService::getStatus(this);
-    lVar3 = (longlong)(int)SVar5;
-    if (SVar5 != BD_CONNECTED) goto LAB_824f32d4;
+  bVar1 = false;
+  controllerStatData[param_1].playerStats[0].statsFetched = false;
+  bVar5 = TaskManager_TaskIsInProgressForController(&storageTasks,6,param_1);
+  if (bVar5) {
+    return;
   }
-  iVar6 = Sys_Milliseconds();
-  uVar1 = (iVar6 - g_LastFetchUserStatsAttemptTime) / 1000;
-  lVar3 = (longlong)(int)uVar1;
-  if (g_NumFetchUserStatsAttempts == 0) {
-LAB_824f3204:
-    bVar2 = true;
+  bVar5 = LiveStorage_MaySetPersistentData_ControllerIndex(param_1);
+  if (!bVar5) {
+    return;
   }
-  else {
-    bVar8 = Live_GetShouldDemonwareRetry(uVar1,g_NumFetchUserStatsAttempts,0x3c);
-    lVar3 = (longlong)bVar8;
-    if (lVar3 != 0) goto LAB_824f3204;
+  bVar5 = Live_IsUserSignedInToLive(param_1);
+  if (!bVar5) {
+    return;
   }
-  if (bVar2) {
+  this = dwGetLobbyService(param_1);
+  if ((this != (bdLobbyService *)0x0) &&
+     (SVar2 = bdLobbyService::getStatus(this), SVar2 != BD_CONNECTED)) {
+    return;
+  }
+  iVar3 = Sys_Milliseconds();
+  if ((g_NumFetchUserStatsAttempts == 0) ||
+     (bVar5 = Live_GetShouldDemonwareRetry
+                        ((iVar3 - g_LastFetchUserStatsAttemptTime) / 1000,
+                         g_NumFetchUserStatsAttempts,0x3c), bVar5)) {
+    bVar1 = true;
+  }
+  if (bVar1) {
     g_NumFetchUserStatsAttempts = g_NumFetchUserStatsAttempts + 1;
-    g_LastFetchUserStatsAttemptTime = iVar6;
-    poVar7 = TaskManager_GetOpenTaskSlot(&storageTasks,iVar4,6);
-    if (poVar7 == (overlappedTask *)0x0) {
+    g_LastFetchUserStatsAttemptTime = iVar3;
+    poVar4 = TaskManager_GetOpenTaskSlot(&storageTasks,param_1,6);
+    if (poVar4 == (overlappedTask *)0x0) {
       Com_PrintWarning(0x10,"Couldn\'t allocate task for storage download");
-      __restgprlr_25();
       return;
     }
     Com_DPrintf(0x10,"Requesting on-line stats for controller %d\n");
-    ppdVar9 = &controllerStatData[iVar4].fileTask;
-    if (*ppdVar9 == (dwFileTask *)0x0) {
+    ppdVar6 = &controllerStatData[param_1].fileTask;
+    if (*ppdVar6 == (dwFileTask *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage_download.cpp"
                       ,0x84,0,"%s");
     }
-    (*ppdVar9)->m_filename = "mpdata";
-    (*ppdVar9)->m_bufferSize = 0x3000;
-    (*ppdVar9)->m_buffer = controllerStatData + iVar4;
-    poVar7->data = *ppdVar9;
-    iVar4 = dwFetchUserFile(poVar7,*ppdVar9);
-    lVar3 = (longlong)iVar4;
+    (*ppdVar6)->m_filename = "mpdata";
+    (*ppdVar6)->m_bufferSize = 0x3000;
+    (*ppdVar6)->m_buffer = controllerStatData + param_1;
+    poVar4->data = *ppdVar6;
+    dwFetchUserFile(poVar4,*ppdVar6);
   }
-LAB_824f32d4:
-  __restgprlr_25(lVar3);
   return;
 }
 
 
 // 824F32E0  LiveStorage_StatsReadComplete  (qcommon/com_storage_download.cpp:202)
 
+/* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 taskCompleteResults LiveStorage_StatsReadComplete(int param_1)
@@ -83,155 +77,147 @@ taskCompleteResults LiveStorage_StatsReadComplete(int param_1)
 {
   byte bVar1;
   dwFileTask *pdVar2;
-  int iVar5;
-  bdLobbyService *pbVar6;
-  Status SVar7;
-  taskCompleteResults tVar8;
-  bool bVar10;
-  StatsSource SVar9;
+  bdLobbyService *pbVar5;
+  Status SVar6;
+  bool bVar9;
+  taskCompleteResults tVar7;
+  StatsSource SVar8;
   ulong64 uVar3;
   ulong64 uVar4;
   undefined8 local_60;
   undefined8 local_58;
   
-  iVar5 = __savegprlr_23(param_1);
-  if (storageTasks.tasks[iVar5].active == false) {
+  if (storageTasks.tasks[param_1].active == false) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage_download.cpp"
                     ,0xdd,0,"%s");
   }
-  if (storageTasks.tasks[iVar5].type != 6) {
+  if (storageTasks.tasks[param_1].type != 6) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage_download.cpp"
                     ,0xde,0,"%s");
   }
-  pbVar6 = dwGetLobbyService((uint)storageTasks.tasks[iVar5].controllerIndex);
-  if (pbVar6 != (bdLobbyService *)0x0) {
-    pbVar6 = dwGetLobbyService((uint)storageTasks.tasks[iVar5].controllerIndex);
-    SVar7 = bdLobbyService::getStatus(pbVar6);
-    if (SVar7 != BD_CONNECTED) goto LAB_824f338c;
+  pbVar5 = dwGetLobbyService((uint)storageTasks.tasks[param_1].controllerIndex);
+  if (pbVar5 != (bdLobbyService *)0x0) {
+    pbVar5 = dwGetLobbyService((uint)storageTasks.tasks[param_1].controllerIndex);
+    SVar6 = bdLobbyService::getStatus(pbVar5);
+    if (SVar6 != BD_CONNECTED) {
+      return TASK_NOTCOMPLETE;
+    }
   }
-  bVar1 = storageTasks.tasks[iVar5].controllerIndex;
-  bVar10 = LiveStorage_DoWeHaveStatsForSource((uint)bVar1,STATS_ONLINE);
-  if (bVar10) {
+  bVar1 = storageTasks.tasks[param_1].controllerIndex;
+  bVar9 = LiveStorage_DoWeHaveStatsForSource((uint)bVar1,STATS_ONLINE);
+  if (bVar9) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage_download.cpp"
                     ,0xe8,0,"%s");
   }
   pdVar2 = controllerStatData[bVar1].fileTask;
-  tVar8 = dwFetchFileComplete(storageTasks.tasks + iVar5,pdVar2);
-  if (tVar8 != TASK_NOTCOMPLETE) {
-    if (tVar8 == TASK_COMPLETE) {
-      g_NumFetchUserStatsAttempts = 0;
-    }
-    ClosePopupGettingData(LOCAL_CLIENT_0);
-    TaskManager_ClearTask(storageTasks.tasks + iVar5);
-    bVar10 = LiveStorage_MaySetPersistentData_ControllerIndex((uint)bVar1);
-    if (!bVar10) {
-      Com_PrintWarning(0x10,
-                       "Refusing to accept on-line stats for controller %d because we are connected to a server\n"
-                      );
-      tVar8 = __restgprlr_23(2);
-      return tVar8;
-    }
-    SVar9 = LiveStorage_GetActiveStatsSource((uint)bVar1);
-    if (SVar9 != STATS_ONLINE) {
-      Com_PrintWarning(0x10,
-                       "Refusing to accept on-line stats for controller %d because we are in an off-line area of the game\n"
-                      );
-      tVar8 = __restgprlr_23(2);
-      return tVar8;
-    }
-    if (tVar8 == TASK_ERROR) {
-      if (pdVar2->m_error == BD_NO_FILE) {
-        controllerStatData[bVar1].playerStats[0].statsFetched = true;
-        controllerStatData[bVar1].playerStats[0].firstTimeRunning = true;
-        controllerStatData[bVar1].createFile = true;
-        Com_Printf(0x10,"No stats found for controller %d, zeroing out stats buffer\n");
-        LiveStorage_ResetStats((uint)bVar1,STATS_ONLINE);
-        tVar8 = __restgprlr_23(1);
-        return tVar8;
-      }
-      Com_PrintError(0x10,"Unable to retrieve stats data for controller %d\n");
-      LiveStorage_DownloadStats((uint)bVar1);
-      tVar8 = __restgprlr_23(2);
-      return tVar8;
-    }
-    if (tVar8 != TASK_COMPLETE) {
+  tVar7 = dwFetchFileComplete(storageTasks.tasks + param_1,pdVar2);
+  if (tVar7 == TASK_NOTCOMPLETE) {
+    return TASK_NOTCOMPLETE;
+  }
+  if (tVar7 == TASK_COMPLETE) {
+    g_NumFetchUserStatsAttempts = 0;
+  }
+  ClosePopupGettingData(LOCAL_CLIENT_0);
+  TaskManager_ClearTask(storageTasks.tasks + param_1);
+  bVar9 = LiveStorage_MaySetPersistentData_ControllerIndex((uint)bVar1);
+  if (!bVar9) {
+    Com_PrintWarning(0x10,
+                     "Refusing to accept on-line stats for controller %d because we are connected to a server\n"
+                    );
+    return TASK_ERROR;
+  }
+  SVar8 = LiveStorage_GetActiveStatsSource((uint)bVar1);
+  if (SVar8 != STATS_ONLINE) {
+    Com_PrintWarning(0x10,
+                     "Refusing to accept on-line stats for controller %d because we are in an off-line area of the game\n"
+                    );
+    return TASK_ERROR;
+  }
+  if (tVar7 != TASK_ERROR) {
+    if (tVar7 != TASK_COMPLETE) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\com_storage_download.cpp"
                       ,0x115,0,"%s\n\t(result) = %i");
     }
-    if (pdVar2->m_bufferSize < pdVar2->m_fileSize) {
+    if (pdVar2->m_fileSize <= pdVar2->m_bufferSize) {
+      controllerStatData[bVar1].playerStats[0].firstTimeRunning = false;
       controllerStatData[bVar1].playerStats[0].statsFetched = true;
-      controllerStatData[bVar1].playerStats[0].firstTimeRunning = true;
-      controllerStatData[bVar1].createFile = true;
-      LiveStorage_ResetStatsWithConfirmation
-                ((uint)bVar1,STATS_ONLINE,RESET_STATS_REASON_CORRUPT_ONLINE);
-      tVar8 = __restgprlr_23(2);
-      return tVar8;
-    }
-    controllerStatData[bVar1].playerStats[0].firstTimeRunning = false;
-    controllerStatData[bVar1].playerStats[0].statsFetched = true;
-    controllerStatData[bVar1].createFile = false;
-    Com_Printf(0x10,"Read %i bytes of stats data for controller %d\n");
-    LiveStorage_FinalizeStatsRead((uint)bVar1,STATS_ONLINE,(StructuredDataDef *)0x0);
-    local_60 = 0;
-    dwGetConnectionID((uint)bVar1,&local_60);
-    local_58 = LiveAntiCheat_GetConsoleID();
-    if (controllerStatData[bVar1].playerStats[0].statsFetched != false) {
-      LiveStorage_PlayerDataSetIntByName((uint)bVar1,"connectionIDChunkLow",local_60._0_4_);
-      LiveStorage_PlayerDataSetIntByName((uint)bVar1,"connectionIDChunkHigh",local_60._4_4_);
-      LiveStorage_PlayerDataSetIntByName((uint)bVar1,"consoleIDChunkLow",local_58._0_4_);
-      LiveStorage_PlayerDataSetIntByName((uint)bVar1,"consoleIDChunkHigh",local_58._4_4_);
-      bVar10 = Live_IsUserSignedInToLive((uint)bVar1);
-      if (bVar10) {
-        uVar3 = Live_GetXuid((uint)bVar1);
-        uVar4 = LiveStorage_ReadXuidFromStats((uint)bVar1);
-        if (uVar3 != uVar4) {
-          Com_PrintError(0x10,
-                         "Stats were saved with an XUID of 0x%llx and the current user has XUID of 0x%llx\n"
-                        );
-          LiveAntiCheat_ReportPlayer((uint)bVar1,REPORT_FAILED_STATS_XUID_RECEIVER,uVar3);
-          if (uVar4 != 0) {
-            LiveAntiCheat_ReportPlayer((uint)bVar1,REPORT_FAILED_STATS_XUID_GIVER,uVar4);
+      controllerStatData[bVar1].createFile = false;
+      Com_Printf(0x10,"Read %i bytes of stats data for controller %d\n");
+      LiveStorage_FinalizeStatsRead((uint)bVar1,STATS_ONLINE,(StructuredDataDef *)0x0);
+      local_60 = 0;
+      dwGetConnectionID((uint)bVar1,&local_60);
+      local_58 = LiveAntiCheat_GetConsoleID();
+      if (controllerStatData[bVar1].playerStats[0].statsFetched != false) {
+        LiveStorage_PlayerDataSetIntByName((uint)bVar1,"connectionIDChunkLow",local_60._0_4_);
+        LiveStorage_PlayerDataSetIntByName((uint)bVar1,"connectionIDChunkHigh",local_60._4_4_);
+        LiveStorage_PlayerDataSetIntByName((uint)bVar1,"consoleIDChunkLow",local_58._0_4_);
+        LiveStorage_PlayerDataSetIntByName((uint)bVar1,"consoleIDChunkHigh",local_58._4_4_);
+        bVar9 = Live_IsUserSignedInToLive((uint)bVar1);
+        if (bVar9) {
+          uVar3 = Live_GetXuid((uint)bVar1);
+          uVar4 = LiveStorage_ReadXuidFromStats((uint)bVar1);
+          if (uVar3 != uVar4) {
+            Com_PrintError(0x10,
+                           "Stats were saved with an XUID of 0x%llx and the current user has XUID of 0x%llx\n"
+                          );
+            LiveAntiCheat_ReportPlayer((uint)bVar1,REPORT_FAILED_STATS_XUID_RECEIVER,uVar3);
+            if (uVar4 != 0) {
+              LiveAntiCheat_ReportPlayer((uint)bVar1,REPORT_FAILED_STATS_XUID_GIVER,uVar4);
+            }
+            LiveStorage_WriteXuidToStats((uint)bVar1,uVar3);
           }
-          LiveStorage_WriteXuidToStats((uint)bVar1,uVar3);
         }
       }
+      return TASK_COMPLETE;
     }
-    tVar8 = __restgprlr_23(1);
-    return tVar8;
+    controllerStatData[bVar1].playerStats[0].statsFetched = true;
+    controllerStatData[bVar1].playerStats[0].firstTimeRunning = true;
+    controllerStatData[bVar1].createFile = true;
+    LiveStorage_ResetStatsWithConfirmation
+              ((uint)bVar1,STATS_ONLINE,RESET_STATS_REASON_CORRUPT_ONLINE);
+    return TASK_ERROR;
   }
-LAB_824f338c:
-  tVar8 = __restgprlr_23(0);
-  return tVar8;
+  if (pdVar2->m_error != BD_NO_FILE) {
+    Com_PrintError(0x10,"Unable to retrieve stats data for controller %d\n");
+    LiveStorage_DownloadStats((uint)bVar1);
+    return TASK_ERROR;
+  }
+  controllerStatData[bVar1].playerStats[0].statsFetched = true;
+  controllerStatData[bVar1].playerStats[0].firstTimeRunning = true;
+  controllerStatData[bVar1].createFile = true;
+  Com_Printf(0x10,"No stats found for controller %d, zeroing out stats buffer\n");
+  LiveStorage_ResetStats((uint)bVar1,STATS_ONLINE);
+  return TASK_COMPLETE;
 }
 
 
 // 824F36C8  LiveStorage_FinishDownloadingStats  (qcommon/com_storage_download.cpp:446)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 void LiveStorage_FinishDownloadingStats(int param_1)
 
 {
-  uint uVar1;
-  taskCompleteResults tVar2;
-  int iVar3;
-  bool *pbVar4;
+  taskCompleteResults tVar1;
+  int iVar2;
+  bool *pbVar3;
   
-  uVar1 = __savegprlr_27(param_1);
-  iVar3 = 0;
-  pbVar4 = &storageTasks.tasks[0].active;
+  iVar2 = 0;
+  pbVar3 = &storageTasks.tasks[0].active;
   do {
-    if (((*pbVar4 != false) && (pbVar4[1] == uVar1)) && (*(int *)(pbVar4 + -4) == 6)) {
+    if (((*pbVar3 != false) && ((uint)pbVar3[1] == param_1)) && (*(int *)(pbVar3 + -4) == 6)) {
       do {
-        tVar2 = LiveStorage_StatsReadComplete(iVar3);
-        if (tVar2 == TASK_ERROR) {
+        tVar1 = LiveStorage_StatsReadComplete(iVar2);
+        if (tVar1 == TASK_ERROR) {
           Com_PrintError(0x10,"Error getting stats\n");
         }
-        else if (tVar2 == TASK_COMPLETE) break;
-      } while (*pbVar4 != false);
+        else if (tVar1 == TASK_COMPLETE) break;
+      } while (*pbVar3 != false);
     }
-    pbVar4 = pbVar4 + 0xa0;
-    iVar3 = iVar3 + 1;
-    if (-0x7c9a2f2d < (int)pbVar4) {
-      __restgprlr_27();
+    pbVar3 = pbVar3 + 0xa0;
+    iVar2 = iVar2 + 1;
+    if (-0x7c9a2f2d < (int)pbVar3) {
       return;
     }
   } while( true );

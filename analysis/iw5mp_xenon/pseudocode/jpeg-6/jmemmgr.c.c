@@ -16,276 +16,266 @@ void out_of_memory(jpeg_common_struct *param_1,int param_2)
 
 // 827C8398  alloc_small  (jpeg-6/jmemmgr.c:261)
 
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
+
 void * alloc_small(jpeg_common_struct *param_1,int param_2,uint param_3)
 
 {
   jpeg_memory_mgr *pjVar1;
   int iVar2;
   int iVar3;
-  undefined4 *puVar4;
-  undefined4 *puVar5;
-  jpeg_common_struct *pjVar6;
-  undefined4 *puVar7;
-  void *pvVar8;
-  uint *puVar9;
+  _func___cdecl_void_ptr_jpeg_common_struct_ptr_int_uint *p_Var4;
+  _func___cdecl_void_ptr_jpeg_common_struct_ptr_int_uint *p_Var5;
+  _func___cdecl_void_ptr_jpeg_common_struct_ptr_int_uint *p_Var6;
+  uint *puVar7;
+  ulonglong uVar8;
+  ulonglong uVar9;
   ulonglong uVar10;
-  ulonglong uVar11;
-  int iVar13;
-  ulonglong uVar12;
-  int iVar14;
+  int iVar11;
   
-  uVar11 = (ulonglong)(int)param_3;
-  uVar12 = (ulonglong)param_2;
-  pjVar6 = (jpeg_common_struct *)__savegprlr_22(param_1);
-  pjVar1 = pjVar6->mem;
-  if (0x3b9ac9f0 < (uVar11 & 0xffffffff)) {
-    pjVar6->err->msg_code = 0x36;
-    (pjVar6->err->msg_parm).i[0] = 1;
-    (*pjVar6->err->error_exit)(pjVar6);
+  uVar9 = (ulonglong)(int)param_3;
+  pjVar1 = param_1->mem;
+  if (0x3b9ac9f0 < param_3) {
+    param_1->err->msg_code = 0x36;
+    (param_1->err->msg_parm).i[0] = 1;
+    (*param_1->err->error_exit)(param_1);
   }
-  if ((uVar11 & 7) != 0) {
-    uVar11 = (uVar11 - (uVar11 & 7)) + 8;
+  if ((param_3 & 7) != 0) {
+    uVar9 = (uVar9 - ((ulonglong)param_3 & 7)) + 8;
   }
-  iVar13 = (int)uVar12;
-  if ((iVar13 < 0) || (1 < iVar13)) {
-    pjVar6->err->msg_code = 0xe;
-    (pjVar6->err->msg_parm).i[0] = iVar13;
-    (*pjVar6->err->error_exit)(pjVar6);
+  if ((param_2 < 0) || (1 < param_2)) {
+    param_1->err->msg_code = 0xe;
+    (param_1->err->msg_parm).i[0] = param_2;
+    (*param_1->err->error_exit)(param_1);
   }
-  iVar13 = (int)((uVar12 + 0xd & 0xffffffff) << 2);
-  puVar5 = *(undefined4 **)((int)&pjVar1->alloc_small + iVar13);
-  puVar4 = (undefined4 *)0x0;
-  while (puVar7 = puVar5, iVar3 = (int)uVar11, puVar7 != (undefined4 *)0x0) {
-    if ((uVar11 & 0xffffffff) <= (ulonglong)(uint)puVar7[2]) goto LAB_827c8548;
-    puVar4 = puVar7;
-    puVar5 = (undefined4 *)*puVar7;
+  iVar3 = (int)uVar9;
+  p_Var5 = (&pjVar1[1].alloc_small)[param_2];
+  p_Var4 = (_func___cdecl_void_ptr_jpeg_common_struct_ptr_int_uint *)0x0;
+  while (p_Var6 = p_Var5, p_Var6 != (_func___cdecl_void_ptr_jpeg_common_struct_ptr_int_uint *)0x0) {
+    if ((uVar9 & 0xffffffff) <= (ulonglong)*(uint *)(p_Var6 + 8)) goto LAB_827c8548;
+    p_Var4 = p_Var6;
+    p_Var5 = *(_func___cdecl_void_ptr_jpeg_common_struct_ptr_int_uint **)p_Var6;
   }
-  if (puVar4 == (undefined4 *)0x0) {
-    puVar9 = first_pool_slop;
+  if (p_Var4 == (_func___cdecl_void_ptr_jpeg_common_struct_ptr_int_uint *)0x0) {
+    puVar7 = first_pool_slop;
   }
   else {
-    puVar9 = extra_pool_slop;
+    puVar7 = extra_pool_slop;
   }
-  uVar12 = (ulonglong)*(uint *)((int)((uVar12 & 0xffffffff) << 2) + (int)puVar9);
-  uVar10 = 1000000000 - (uVar11 + 0x10);
-  if ((uVar10 & 0xffffffff) < uVar12) {
-    uVar12 = uVar10;
+  uVar8 = 1000000000 - (uVar9 + 0x10);
+  uVar10 = (ulonglong)puVar7[param_2];
+  if ((uVar8 & 0xffffffff) < (ulonglong)puVar7[param_2]) {
+    uVar10 = uVar8;
   }
-  iVar14 = (int)uVar12;
-  iVar2 = (int)(uVar11 + 0x10);
-  puVar7 = jpeg_get_small(pjVar6,iVar14 + iVar2);
-  while (puVar7 == (undefined4 *)0x0) {
-    uVar12 = (uVar12 & 0xffffffff) >> 1;
-    iVar14 = (int)uVar12;
-    if (uVar12 < 0x32) {
-      pjVar6->err->msg_code = 0x36;
-      (pjVar6->err->msg_parm).i[0] = 2;
-      (*pjVar6->err->error_exit)(pjVar6);
+  iVar11 = (int)uVar10;
+  iVar2 = (int)(uVar9 + 0x10);
+  p_Var6 = jpeg_get_small(param_1,iVar11 + iVar2);
+  while (p_Var6 == (_func___cdecl_void_ptr_jpeg_common_struct_ptr_int_uint *)0x0) {
+    uVar10 = (uVar10 & 0xffffffff) >> 1;
+    iVar11 = (int)uVar10;
+    if (uVar10 < 0x32) {
+      param_1->err->msg_code = 0x36;
+      (param_1->err->msg_parm).i[0] = 2;
+      (*param_1->err->error_exit)(param_1);
     }
-    puVar7 = jpeg_get_small(pjVar6,iVar14 + iVar2);
+    p_Var6 = jpeg_get_small(param_1,iVar11 + iVar2);
   }
-  pjVar1[1].realize_virt_arrays = pjVar1[1].realize_virt_arrays + iVar2 + iVar14;
-  *puVar7 = 0;
-  puVar7[1] = 0;
-  puVar7[2] = iVar14 + iVar3;
-  if (puVar4 == (undefined4 *)0x0) {
-    *(undefined4 **)((int)&pjVar1->alloc_small + iVar13) = puVar7;
+  pjVar1[1].realize_virt_arrays = pjVar1[1].realize_virt_arrays + iVar2 + iVar11;
+  *(undefined4 *)p_Var6 = 0;
+  *(undefined4 *)(p_Var6 + 4) = 0;
+  *(int *)(p_Var6 + 8) = iVar11 + iVar3;
+  if (p_Var4 == (_func___cdecl_void_ptr_jpeg_common_struct_ptr_int_uint *)0x0) {
+    (&pjVar1[1].alloc_small)[param_2] = p_Var6;
   }
   else {
-    *puVar4 = puVar7;
+    *(_func___cdecl_void_ptr_jpeg_common_struct_ptr_int_uint **)p_Var4 = p_Var6;
   }
 LAB_827c8548:
-  iVar13 = puVar7[1];
-  puVar7[1] = iVar13 + iVar3;
-  puVar7[2] = puVar7[2] - iVar3;
-  pvVar8 = (void *)__restgprlr_22((int)puVar7 + iVar13 + 0x10);
-  return pvVar8;
+  iVar11 = *(int *)(p_Var6 + 4);
+  *(int *)(p_Var6 + 4) = iVar11 + iVar3;
+  *(int *)(p_Var6 + 8) = *(int *)(p_Var6 + 8) - iVar3;
+  return p_Var6 + iVar11 + 0x10;
 }
 
 
 // 827C8570  alloc_large  (jpeg-6/jmemmgr.c:346)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 void * alloc_large(jpeg_common_struct *param_1,int param_2,uint param_3)
 
 {
   jpeg_memory_mgr *pjVar1;
-  undefined4 uVar2;
-  jpeg_common_struct *pjVar3;
-  undefined4 *puVar4;
-  void *pvVar5;
-  longlong lVar6;
-  ulonglong uVar7;
-  int iVar8;
-  int iVar9;
+  _func___cdecl_uchar_ptr_ptr_jpeg_common_struct_ptr_int_uint_uint *p_Var2;
+  _func___cdecl_uchar_ptr_ptr_jpeg_common_struct_ptr_int_uint_uint *p_Var3;
   
-  uVar7 = (ulonglong)(int)param_3;
-  lVar6 = (longlong)param_2;
-  pjVar3 = (jpeg_common_struct *)__savegprlr_26(param_1);
-  iVar9 = (int)uVar7;
-  pjVar1 = pjVar3->mem;
-  if (0x3b9ac9f0 < (uVar7 & 0xffffffff)) {
-    pjVar3->err->msg_code = 0x36;
-    (pjVar3->err->msg_parm).i[0] = 3;
-    (*pjVar3->err->error_exit)(pjVar3);
+  pjVar1 = param_1->mem;
+  if (0x3b9ac9f0 < param_3) {
+    param_1->err->msg_code = 0x36;
+    (param_1->err->msg_parm).i[0] = 3;
+    (*param_1->err->error_exit)(param_1);
   }
-  if ((uVar7 & 7) != 0) {
-    iVar9 = (iVar9 - (int)(uVar7 & 7)) + 8;
+  if ((param_3 & 7) != 0) {
+    param_3 = (param_3 - (param_3 & 7)) + 8;
   }
-  iVar8 = (int)lVar6;
-  if ((iVar8 < 0) || (1 < iVar8)) {
-    pjVar3->err->msg_code = 0xe;
-    (pjVar3->err->msg_parm).i[0] = iVar8;
-    (*pjVar3->err->error_exit)(pjVar3);
+  if ((param_2 < 0) || (1 < param_2)) {
+    param_1->err->msg_code = 0xe;
+    (param_1->err->msg_parm).i[0] = param_2;
+    (*param_1->err->error_exit)(param_1);
   }
-  puVar4 = jpeg_get_large(pjVar3,iVar9 + 0x10);
-  if (puVar4 == (undefined4 *)0x0) {
-    pjVar3->err->msg_code = 0x36;
-    (pjVar3->err->msg_parm).i[0] = 4;
-    (*pjVar3->err->error_exit)(pjVar3);
+  p_Var3 = jpeg_get_large(param_1,param_3 + 0x10);
+  if (p_Var3 == (_func___cdecl_uchar_ptr_ptr_jpeg_common_struct_ptr_int_uint_uint *)0x0) {
+    param_1->err->msg_code = 0x36;
+    (param_1->err->msg_parm).i[0] = 4;
+    (*param_1->err->error_exit)(param_1);
   }
-  iVar8 = (int)((lVar6 + 0xfU & 0xffffffff) << 2);
-  pjVar1[1].realize_virt_arrays = pjVar1[1].realize_virt_arrays + iVar9 + 0x10;
-  uVar2 = *(undefined4 *)((int)&pjVar1->alloc_small + iVar8);
-  puVar4[1] = iVar9;
-  puVar4[2] = 0;
-  *puVar4 = uVar2;
-  *(undefined4 **)((int)&pjVar1->alloc_small + iVar8) = puVar4;
-  pvVar5 = (void *)__restgprlr_26((longlong)(int)puVar4 + 0x10);
-  return pvVar5;
+  pjVar1[1].realize_virt_arrays = pjVar1[1].realize_virt_arrays + param_3 + 0x10;
+  p_Var2 = (&pjVar1[1].alloc_sarray)[param_2];
+  *(uint *)(p_Var3 + 4) = param_3;
+  *(undefined4 *)(p_Var3 + 8) = 0;
+  *(_func___cdecl_uchar_ptr_ptr_jpeg_common_struct_ptr_int_uint_uint **)p_Var3 = p_Var2;
+  (&pjVar1[1].alloc_sarray)[param_2] = p_Var3;
+  return p_Var3 + 0x10;
 }
 
 
 // 827C8690  alloc_sarray  (jpeg-6/jmemmgr.c:400)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Type propagation algorithm not settling */
+
 uchar ** alloc_sarray(jpeg_common_struct *param_1,int param_2,uint param_3,uint param_4)
 
 {
   jpeg_memory_mgr *pjVar1;
-  jpeg_common_struct *pjVar3;
+  uchar **ppuVar3;
   void *pvVar4;
-  void *pvVar5;
   longlong lVar2;
-  uchar **ppuVar6;
-  ulonglong uVar7;
-  ulonglong uVar8;
-  longlong lVar9;
-  ulonglong uVar10;
-  ulonglong uVar11;
-  ulonglong uVar13;
-  int iVar12;
+  uchar **ppuVar5;
+  _func___cdecl_uchar_ptr_ptr_jpeg_common_struct_ptr_jvirt_sarray_control_ptr_uint_uint_uchar
+  *p_Var6;
+  _func___cdecl_uchar_ptr_ptr_jpeg_common_struct_ptr_jvirt_sarray_control_ptr_uint_uint_uchar
+  *p_Var7;
+  _func___cdecl_uchar_ptr_ptr_jpeg_common_struct_ptr_jvirt_sarray_control_ptr_uint_uint_uchar
+  *p_Var8;
+  _func___cdecl_uchar_ptr_ptr_jpeg_common_struct_ptr_jvirt_sarray_control_ptr_uint_uint_uchar
+  *p_Var9;
   
-  uVar8 = (ulonglong)(int)param_4;
-  uVar7 = (ulonglong)(int)param_3;
-  pjVar3 = (jpeg_common_struct *)__savegprlr_25(param_1);
-  pjVar1 = pjVar3->mem;
-  uVar11 = 0x3b9ac9f0 / (uVar7 & 0xffffffff);
-  iVar12 = (int)uVar11;
-  trapWord(6,uVar7,0);
-  if (iVar12 == 0) {
-    pjVar3->err->msg_code = 0x46;
-    (*pjVar3->err->error_exit)(pjVar3);
+  pjVar1 = param_1->mem;
+  p_Var8 = (_func___cdecl_uchar_ptr_ptr_jpeg_common_struct_ptr_jvirt_sarray_control_ptr_uint_uint_uchar
+            *)(0x3b9ac9f0 / param_3);
+  trapWord(6,(longlong)(int)param_3,0);
+  if (p_Var8 == (_func___cdecl_uchar_ptr_ptr_jpeg_common_struct_ptr_jvirt_sarray_control_ptr_uint_uint_uchar
+                 *)0x0) {
+    param_1->err->msg_code = 0x46;
+    (*param_1->err->error_exit)(param_1);
   }
-  if ((int)uVar8 <= iVar12) {
-    uVar11 = uVar8;
+  if ((int)param_4 <= (int)p_Var8) {
+    p_Var8 = (_func___cdecl_uchar_ptr_ptr_jpeg_common_struct_ptr_jvirt_sarray_control_ptr_uint_uint_uchar
+              *)param_4;
   }
-  pjVar1[1].access_virt_sarray =
-       (_func___cdecl_uchar_ptr_ptr_jpeg_common_struct_ptr_jvirt_sarray_control_ptr_uint_uint_uchar
-        *)uVar11;
-  pvVar4 = alloc_small(pjVar3,param_2,(uint)((uVar8 & 0xffffffff) << 2));
-  uVar10 = 0;
-  if ((uVar8 & 0xffffffff) != 0) {
+  pjVar1[1].access_virt_sarray = p_Var8;
+  ppuVar3 = alloc_small(param_1,param_2,param_4 << 2);
+  p_Var6 = (_func___cdecl_uchar_ptr_ptr_jpeg_common_struct_ptr_jvirt_sarray_control_ptr_uint_uint_uchar
+            *)0x0;
+  if (param_4 != 0) {
     do {
-      if ((uVar8 - uVar10 & 0xffffffff) <= (uVar11 & 0xffffffff)) {
-        uVar11 = uVar8 - uVar10;
+      if ((_func___cdecl_uchar_ptr_ptr_jpeg_common_struct_ptr_jvirt_sarray_control_ptr_uint_uint_uchar
+           *)(param_4 - (int)p_Var6) <= p_Var8) {
+        p_Var8 = (_func___cdecl_uchar_ptr_ptr_jpeg_common_struct_ptr_jvirt_sarray_control_ptr_uint_uint_uchar
+                  *)(param_4 - (int)p_Var6);
       }
-      pvVar5 = alloc_large(pjVar3,param_2,(int)uVar11 * (int)uVar7);
-      lVar2 = (longlong)(int)pvVar5;
-      if ((uVar11 & 0xffffffff) != 0) {
-        uVar13 = uVar10 & 0x3fffffff;
-        uVar10 = uVar10 + uVar11;
-        lVar9 = uVar13 * 4 + (longlong)(int)pvVar4 + -4;
-        uVar13 = uVar11;
+      pvVar4 = alloc_large(param_1,param_2,(int)p_Var8 * param_3);
+      lVar2 = (longlong)(int)pvVar4;
+      if (p_Var8 != (_func___cdecl_uchar_ptr_ptr_jpeg_common_struct_ptr_jvirt_sarray_control_ptr_uint_uint_uchar
+                     *)0x0) {
+        p_Var7 = p_Var6 + (int)p_Var8;
+        ppuVar5 = ppuVar3 + (int)(p_Var6 + -1);
+        p_Var9 = p_Var8;
         do {
-          lVar9 = lVar9 + 4;
-          *(undefined4 *)lVar9 = (int)lVar2;
-          lVar2 = lVar2 + uVar7;
-          uVar13 = uVar13 - 1;
-        } while (uVar13 != 0);
+          ppuVar5 = ppuVar5 + 1;
+          *ppuVar5 = (uchar *)lVar2;
+          lVar2 = lVar2 + (int)param_3;
+          p_Var9 = p_Var9 + -1;
+          p_Var6 = p_Var7;
+        } while (p_Var9 != (_func___cdecl_uchar_ptr_ptr_jpeg_common_struct_ptr_jvirt_sarray_control_ptr_uint_uint_uchar
+                            *)0x0);
       }
-    } while ((uVar10 & 0xffffffff) < (uVar8 & 0xffffffff));
+    } while (p_Var6 < param_4);
   }
-  ppuVar6 = (uchar **)__restgprlr_25((longlong)(int)pvVar4);
-  return ppuVar6;
+  return ppuVar3;
 }
 
 
 // 827C8770  alloc_barray  (jpeg-6/jmemmgr.c:448)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
+
 short (**) [64] alloc_barray(jpeg_common_struct *param_1,int param_2,uint param_3,uint param_4)
 
 {
   jpeg_memory_mgr *pjVar1;
-  jpeg_common_struct *pjVar3;
+  short (**ppasVar3) [64];
   void *pvVar4;
-  void *pvVar5;
   longlong lVar2;
-  short (**ppasVar6) [64];
+  ulonglong uVar5;
+  longlong lVar6;
   ulonglong uVar7;
   ulonglong uVar8;
-  longlong lVar9;
-  ulonglong uVar10;
-  ulonglong uVar11;
-  int iVar13;
-  ulonglong uVar12;
-  ulonglong uVar14;
+  int iVar10;
+  ulonglong uVar9;
   
-  uVar8 = (ulonglong)(int)param_4;
-  uVar7 = (ulonglong)(int)param_3;
-  pjVar3 = (jpeg_common_struct *)__savegprlr_24(param_1);
-  pjVar1 = pjVar3->mem;
-  uVar10 = (uVar7 & 0x1ffffff) * 0x80;
-  iVar13 = (int)(0x3b9ac9f0 / uVar10);
-  trapWord(6,uVar10,0);
-  if (iVar13 == 0) {
-    pjVar3->err->msg_code = 0x46;
-    (*pjVar3->err->error_exit)(pjVar3);
+  pjVar1 = param_1->mem;
+  uVar7 = ((ulonglong)param_3 & 0x1ffffff) * 0x80;
+  iVar10 = (int)(0x3b9ac9f0 / uVar7);
+  trapWord(6,uVar7,0);
+  if (iVar10 == 0) {
+    param_1->err->msg_code = 0x46;
+    (*param_1->err->error_exit)(param_1);
   }
-  uVar12 = 0x3b9ac9f0 / uVar10;
-  if ((int)uVar8 <= iVar13) {
-    uVar12 = uVar8;
+  uVar9 = 0x3b9ac9f0 / uVar7;
+  if ((int)param_4 <= iVar10) {
+    uVar9 = (longlong)(int)param_4;
   }
   pjVar1[1].access_virt_sarray =
        (_func___cdecl_uchar_ptr_ptr_jpeg_common_struct_ptr_jvirt_sarray_control_ptr_uint_uint_uchar
-        *)uVar12;
-  pvVar4 = alloc_small(pjVar3,param_2,(uint)((uVar8 & 0xffffffff) << 2));
-  uVar11 = 0;
-  if ((uVar8 & 0xffffffff) != 0) {
+        *)uVar9;
+  ppasVar3 = alloc_small(param_1,param_2,param_4 << 2);
+  uVar8 = 0;
+  if (param_4 != 0) {
     do {
-      if ((uVar8 - uVar11 & 0xffffffff) <= (uVar12 & 0xffffffff)) {
-        uVar12 = uVar8 - uVar11;
+      uVar5 = (longlong)(int)param_4 - uVar8;
+      if ((uVar5 & 0xffffffff) <= (uVar9 & 0xffffffff)) {
+        uVar9 = uVar5;
       }
-      pvVar5 = alloc_large(pjVar3,param_2,(int)uVar12 * (int)uVar7 * 0x80);
-      lVar2 = (longlong)(int)pvVar5;
-      if ((uVar12 & 0xffffffff) != 0) {
-        uVar14 = uVar11 & 0x3fffffff;
-        uVar11 = uVar11 + uVar12;
-        lVar9 = uVar14 * 4 + (longlong)(int)pvVar4 + -4;
-        uVar14 = uVar12;
+      pvVar4 = alloc_large(param_1,param_2,(int)uVar9 * param_3 * 0x80);
+      lVar2 = (longlong)(int)pvVar4;
+      if ((uVar9 & 0xffffffff) != 0) {
+        uVar5 = uVar8 & 0x3fffffff;
+        uVar8 = uVar8 + uVar9;
+        lVar6 = uVar5 * 4 + (longlong)(int)ppasVar3 + -4;
+        uVar5 = uVar9;
         do {
-          lVar9 = lVar9 + 4;
-          *(undefined4 *)lVar9 = (int)lVar2;
-          lVar2 = uVar10 + lVar2;
-          uVar14 = uVar14 - 1;
-        } while (uVar14 != 0);
+          lVar6 = lVar6 + 4;
+          *(undefined4 *)lVar6 = (int)lVar2;
+          lVar2 = uVar7 + lVar2;
+          uVar5 = uVar5 - 1;
+        } while (uVar5 != 0);
       }
-    } while ((uVar11 & 0xffffffff) < (uVar8 & 0xffffffff));
+    } while ((uVar8 & 0xffffffff) < (ulonglong)param_4);
   }
-  ppasVar6 = (short (**) [64])__restgprlr_24((longlong)(int)pvVar4);
-  return ppasVar6;
+  return ppasVar3;
 }
 
 
 // 827C8858  request_virt_sarray  (jpeg-6/jmemmgr.c:529)
+
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 
 jvirt_sarray_control *
 request_virt_sarray(jpeg_common_struct *param_1,int param_2,uchar param_3,uint param_4,uint param_5,
@@ -293,34 +283,33 @@ request_virt_sarray(jpeg_common_struct *param_1,int param_2,uchar param_3,uint p
 
 {
   jpeg_memory_mgr *pjVar1;
-  jpeg_common_struct *pjVar2;
-  _func___cdecl_jvirt_sarray_control_ptr_jpeg_common_struct_ptr_int_uchar_uint_uint_uint *p_Var3;
-  jvirt_sarray_control *pjVar4;
+  jvirt_sarray_control *pjVar2;
   
-  pjVar2 = (jpeg_common_struct *)__savegprlr_25(param_1);
-  pjVar1 = pjVar2->mem;
+  pjVar1 = param_1->mem;
   if (param_2 != 1) {
-    pjVar2->err->msg_code = 0xe;
-    (pjVar2->err->msg_parm).i[0] = param_2;
-    (*pjVar2->err->error_exit)(pjVar2);
+    param_1->err->msg_code = 0xe;
+    (param_1->err->msg_parm).i[0] = param_2;
+    (*param_1->err->error_exit)(param_1);
   }
-  p_Var3 = alloc_small(pjVar2,param_2,0x78);
-  *(uint *)(p_Var3 + 4) = param_5;
-  *(undefined4 *)p_Var3 = 0;
-  *(uint *)(p_Var3 + 8) = param_4;
-  *(uint *)(p_Var3 + 0xc) = param_6;
-  p_Var3[0x20] = (_func___cdecl_jvirt_sarray_control_ptr_jpeg_common_struct_ptr_int_uchar_uint_uint_uint
-                  )param_3;
-  p_Var3[0x22] = (code)0x0;
-  *(_func___cdecl_jvirt_sarray_control_ptr_jpeg_common_struct_ptr_int_uchar_uint_uint_uint **)
-   (p_Var3 + 0x24) = pjVar1[1].request_virt_sarray;
-  pjVar1[1].request_virt_sarray = p_Var3;
-  pjVar4 = (jvirt_sarray_control *)__restgprlr_25();
-  return pjVar4;
+  pjVar2 = alloc_small(param_1,param_2,0x78);
+  pjVar2->rows_in_array = param_5;
+  pjVar2->mem_buffer = (uchar **)0x0;
+  pjVar2->samplesperrow = param_4;
+  pjVar2->maxaccess = param_6;
+  pjVar2->pre_zero = param_3;
+  pjVar2->b_s_open = '\0';
+  pjVar2->next = (jvirt_sarray_control *)pjVar1[1].request_virt_sarray;
+  pjVar1[1].request_virt_sarray =
+       (_func___cdecl_jvirt_sarray_control_ptr_jpeg_common_struct_ptr_int_uchar_uint_uint_uint *)
+       pjVar2;
+  return pjVar2;
 }
 
 
 // 827C88F0  request_virt_barray  (jpeg-6/jmemmgr.c:559)
+
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 
 jvirt_barray_control *
 request_virt_barray(jpeg_common_struct *param_1,int param_2,uchar param_3,uint param_4,uint param_5,
@@ -328,34 +317,33 @@ request_virt_barray(jpeg_common_struct *param_1,int param_2,uchar param_3,uint p
 
 {
   jpeg_memory_mgr *pjVar1;
-  jpeg_common_struct *pjVar2;
-  _func___cdecl_jvirt_barray_control_ptr_jpeg_common_struct_ptr_int_uchar_uint_uint_uint *p_Var3;
-  jvirt_barray_control *pjVar4;
+  jvirt_barray_control *pjVar2;
   
-  pjVar2 = (jpeg_common_struct *)__savegprlr_25(param_1);
-  pjVar1 = pjVar2->mem;
+  pjVar1 = param_1->mem;
   if (param_2 != 1) {
-    pjVar2->err->msg_code = 0xe;
-    (pjVar2->err->msg_parm).i[0] = param_2;
-    (*pjVar2->err->error_exit)(pjVar2);
+    param_1->err->msg_code = 0xe;
+    (param_1->err->msg_parm).i[0] = param_2;
+    (*param_1->err->error_exit)(param_1);
   }
-  p_Var3 = alloc_small(pjVar2,param_2,0x78);
-  *(uint *)(p_Var3 + 4) = param_5;
-  *(undefined4 *)p_Var3 = 0;
-  *(uint *)(p_Var3 + 8) = param_4;
-  *(uint *)(p_Var3 + 0xc) = param_6;
-  p_Var3[0x20] = (_func___cdecl_jvirt_barray_control_ptr_jpeg_common_struct_ptr_int_uchar_uint_uint_uint
-                  )param_3;
-  p_Var3[0x22] = (code)0x0;
-  *(_func___cdecl_jvirt_barray_control_ptr_jpeg_common_struct_ptr_int_uchar_uint_uint_uint **)
-   (p_Var3 + 0x24) = pjVar1[1].request_virt_barray;
-  pjVar1[1].request_virt_barray = p_Var3;
-  pjVar4 = (jvirt_barray_control *)__restgprlr_25();
-  return pjVar4;
+  pjVar2 = alloc_small(param_1,param_2,0x78);
+  pjVar2->rows_in_array = param_5;
+  pjVar2->mem_buffer = (short (**) [64])0x0;
+  pjVar2->blocksperrow = param_4;
+  pjVar2->maxaccess = param_6;
+  pjVar2->pre_zero = param_3;
+  pjVar2->b_s_open = '\0';
+  pjVar2->next = (jvirt_barray_control *)pjVar1[1].request_virt_barray;
+  pjVar1[1].request_virt_barray =
+       (_func___cdecl_jvirt_barray_control_ptr_jpeg_common_struct_ptr_int_uchar_uint_uint_uint *)
+       pjVar2;
+  return pjVar2;
 }
 
 
 // 827C8988  realize_virt_arrays  (jpeg-6/jmemmgr.c:587)
+
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 
 void realize_virt_arrays(jpeg_common_struct *param_1)
 
@@ -363,26 +351,24 @@ void realize_virt_arrays(jpeg_common_struct *param_1)
   jpeg_memory_mgr *pjVar1;
   _func___cdecl_jvirt_sarray_control_ptr_jpeg_common_struct_ptr_int_uchar_uint_uint_uint *p_Var2;
   _func___cdecl_jvirt_barray_control_ptr_jpeg_common_struct_ptr_int_uchar_uint_uint_uint *p_Var3;
-  jpeg_common_struct *pjVar4;
-  uint uVar5;
-  uchar **ppuVar6;
-  short (**ppasVar7) [64];
-  int iVar8;
-  ulonglong uVar9;
-  int iVar10;
+  uint uVar4;
+  uchar **ppuVar5;
+  short (**ppasVar6) [64];
+  int iVar7;
+  ulonglong uVar8;
+  int iVar9;
   
-  pjVar4 = (jpeg_common_struct *)__savegprlr_26(param_1);
-  pjVar1 = pjVar4->mem;
-  uVar9 = 0;
-  iVar8 = 0;
+  pjVar1 = param_1->mem;
+  uVar8 = 0;
+  iVar7 = 0;
   for (p_Var2 = pjVar1[1].request_virt_sarray;
       p_Var2 != (_func___cdecl_jvirt_sarray_control_ptr_jpeg_common_struct_ptr_int_uchar_uint_uint_uint
                  *)0x0;
       p_Var2 = *(_func___cdecl_jvirt_sarray_control_ptr_jpeg_common_struct_ptr_int_uchar_uint_uint_uint
                  **)(p_Var2 + 0x24)) {
     if (*(int *)p_Var2 == 0) {
-      uVar9 = (longlong)*(int *)(p_Var2 + 0xc) * (longlong)*(int *)(p_Var2 + 8) + uVar9;
-      iVar8 = *(int *)(p_Var2 + 4) * *(int *)(p_Var2 + 8) + iVar8;
+      uVar8 = (longlong)*(int *)(p_Var2 + 0xc) * (longlong)*(int *)(p_Var2 + 8) + uVar8;
+      iVar7 = *(int *)(p_Var2 + 4) * *(int *)(p_Var2 + 8) + iVar7;
     }
   }
   for (p_Var3 = pjVar1[1].request_virt_barray;
@@ -391,25 +377,25 @@ void realize_virt_arrays(jpeg_common_struct *param_1)
       p_Var3 = *(_func___cdecl_jvirt_barray_control_ptr_jpeg_common_struct_ptr_int_uchar_uint_uint_uint
                  **)(p_Var3 + 0x24)) {
     if (*(int *)p_Var3 == 0) {
-      uVar9 = ((longlong)*(int *)(p_Var3 + 0xc) * (longlong)*(int *)(p_Var3 + 8) & 0x1ffffffU) *
-              0x80 + uVar9;
-      iVar8 = *(int *)(p_Var3 + 4) * *(int *)(p_Var3 + 8) * 0x80 + iVar8;
+      uVar8 = ((longlong)*(int *)(p_Var3 + 0xc) * (longlong)*(int *)(p_Var3 + 8) & 0x1ffffffU) *
+              0x80 + uVar8;
+      iVar7 = *(int *)(p_Var3 + 4) * *(int *)(p_Var3 + 8) * 0x80 + iVar7;
     }
   }
-  iVar10 = (int)uVar9;
-  if (0 < iVar10) {
-    uVar5 = jpeg_mem_available(pjVar4,iVar10,iVar8,(long)pjVar1[1].realize_virt_arrays);
-    if ((int)uVar5 < iVar8) {
-      iVar10 = (int)uVar5 / iVar10;
-      trapWord(6,uVar9,0);
-      trapWord(5,uVar9 & ~((((ulonglong)uVar5 & 0x7fffffff) << 1 | (ulonglong)(uVar5 >> 0x1f)) - 1),
+  iVar9 = (int)uVar8;
+  if (0 < iVar9) {
+    uVar4 = jpeg_mem_available(param_1,iVar9,iVar7,(long)pjVar1[1].realize_virt_arrays);
+    if ((int)uVar4 < iVar7) {
+      iVar9 = (int)uVar4 / iVar9;
+      trapWord(6,uVar8,0);
+      trapWord(5,uVar8 & ~((((ulonglong)uVar4 & 0x7fffffff) << 1 | (ulonglong)(uVar4 >> 0x1f)) - 1),
                0xffff);
-      if (iVar10 < 1) {
-        iVar10 = 1;
+      if (iVar9 < 1) {
+        iVar9 = 1;
       }
     }
     else {
-      iVar10 = 1000000000;
+      iVar9 = 1000000000;
     }
     for (p_Var2 = pjVar1[1].request_virt_sarray;
         p_Var2 != (_func___cdecl_jvirt_sarray_control_ptr_jpeg_common_struct_ptr_int_uchar_uint_uint_uint
@@ -417,20 +403,20 @@ void realize_virt_arrays(jpeg_common_struct *param_1)
         p_Var2 = *(_func___cdecl_jvirt_sarray_control_ptr_jpeg_common_struct_ptr_int_uchar_uint_uint_uint
                    **)(p_Var2 + 0x24)) {
       if (*(int *)p_Var2 == 0) {
-        iVar8 = *(int *)(p_Var2 + 4);
-        uVar5 = *(uint *)(p_Var2 + 0xc);
-        trapWord(6,(ulonglong)uVar5,0);
-        if (iVar10 < (int)((iVar8 - 1U) / uVar5 + 1)) {
-          *(uint *)(p_Var2 + 0x10) = uVar5 * iVar10;
+        iVar7 = *(int *)(p_Var2 + 4);
+        uVar4 = *(uint *)(p_Var2 + 0xc);
+        trapWord(6,(ulonglong)uVar4,0);
+        if (iVar9 < (int)((iVar7 - 1U) / uVar4 + 1)) {
+          *(uint *)(p_Var2 + 0x10) = uVar4 * iVar9;
           jpeg_open_backing_store
-                    (pjVar4,(backing_store_struct *)(p_Var2 + 0x28),*(int *)(p_Var2 + 8) * iVar8);
+                    (param_1,(backing_store_struct *)(p_Var2 + 0x28),*(int *)(p_Var2 + 8) * iVar7);
           p_Var2[0x22] = (code)0x1;
         }
         else {
-          *(int *)(p_Var2 + 0x10) = iVar8;
+          *(int *)(p_Var2 + 0x10) = iVar7;
         }
-        ppuVar6 = alloc_sarray(pjVar4,1,*(uint *)(p_Var2 + 8),*(uint *)(p_Var2 + 0x10));
-        *(uchar ***)p_Var2 = ppuVar6;
+        ppuVar5 = alloc_sarray(param_1,1,*(uint *)(p_Var2 + 8),*(uint *)(p_Var2 + 0x10));
+        *(uchar ***)p_Var2 = ppuVar5;
         *(_func___cdecl_uchar_ptr_ptr_jpeg_common_struct_ptr_jvirt_sarray_control_ptr_uint_uint_uchar
           **)(p_Var2 + 0x14) = pjVar1[1].access_virt_sarray;
         *(int *)(p_Var2 + 0x18) = 0;
@@ -444,21 +430,21 @@ void realize_virt_arrays(jpeg_common_struct *param_1)
         p_Var3 = *(_func___cdecl_jvirt_barray_control_ptr_jpeg_common_struct_ptr_int_uchar_uint_uint_uint
                    **)(p_Var3 + 0x24)) {
       if (*(int *)p_Var3 == 0) {
-        iVar8 = *(int *)(p_Var3 + 4);
-        uVar5 = *(uint *)(p_Var3 + 0xc);
-        trapWord(6,(ulonglong)uVar5,0);
-        if (iVar10 < (int)((iVar8 - 1U) / uVar5 + 1)) {
-          *(uint *)(p_Var3 + 0x10) = uVar5 * iVar10;
+        iVar7 = *(int *)(p_Var3 + 4);
+        uVar4 = *(uint *)(p_Var3 + 0xc);
+        trapWord(6,(ulonglong)uVar4,0);
+        if (iVar9 < (int)((iVar7 - 1U) / uVar4 + 1)) {
+          *(uint *)(p_Var3 + 0x10) = uVar4 * iVar9;
           jpeg_open_backing_store
-                    (pjVar4,(backing_store_struct *)(p_Var3 + 0x28),
-                     *(int *)(p_Var3 + 8) * iVar8 * 0x80);
+                    (param_1,(backing_store_struct *)(p_Var3 + 0x28),
+                     *(int *)(p_Var3 + 8) * iVar7 * 0x80);
           p_Var3[0x22] = (code)0x1;
         }
         else {
-          *(int *)(p_Var3 + 0x10) = iVar8;
+          *(int *)(p_Var3 + 0x10) = iVar7;
         }
-        ppasVar7 = alloc_barray(pjVar4,1,*(uint *)(p_Var3 + 8),*(uint *)(p_Var3 + 0x10));
-        *(short (***) [64])p_Var3 = ppasVar7;
+        ppasVar6 = alloc_barray(param_1,1,*(uint *)(p_Var3 + 8),*(uint *)(p_Var3 + 0x10));
+        *(short (***) [64])p_Var3 = ppasVar6;
         *(_func___cdecl_uchar_ptr_ptr_jpeg_common_struct_ptr_jvirt_sarray_control_ptr_uint_uint_uchar
           **)(p_Var3 + 0x14) = pjVar1[1].access_virt_sarray;
         *(int *)(p_Var3 + 0x18) = 0;
@@ -467,214 +453,204 @@ void realize_virt_arrays(jpeg_common_struct *param_1)
       }
     }
   }
-  __restgprlr_26();
   return;
 }
 
 
 // 827C8BC0  do_sarray_io  (jpeg-6/jmemmgr.c:694)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
+
 void do_sarray_io(jpeg_common_struct *param_1,jvirt_sarray_control *param_2,uchar param_3)
 
 {
-  int iVar1;
-  code *pcVar2;
-  int *piVar3;
-  undefined8 uVar4;
-  longlong lVar5;
-  ulonglong uVar6;
+  uint uVar1;
+  _func___cdecl_void_jpeg_common_struct_ptr_backing_store_struct_ptr_void_ptr_long_long *p_Var2;
+  uint uVar3;
+  int iVar4;
+  uint uVar5;
+  int iVar6;
   int iVar7;
-  int iVar8;
-  longlong lVar9;
-  longlong lVar10;
-  int iVar11;
   
-  uVar6 = (ulonglong)(char)param_3;
-  lVar5 = (longlong)(int)param_2;
-  uVar4 = __savegprlr_25(param_1);
-  piVar3 = (int *)lVar5;
-  iVar1 = piVar3[2];
-  iVar7 = piVar3[4];
-  iVar11 = 0;
-  lVar9 = (longlong)piVar3[6] * (longlong)iVar1;
-  if (0 < iVar7) {
+  uVar1 = param_2->samplesperrow;
+  uVar3 = param_2->rows_in_mem;
+  iVar7 = 0;
+  iVar6 = param_2->cur_start_row * uVar1;
+  if (0 < (int)uVar3) {
     do {
-      iVar8 = iVar7 - iVar11;
-      if (piVar3[5] < iVar7 - iVar11) {
-        iVar8 = piVar3[5];
+      uVar5 = uVar3 - iVar7;
+      if ((int)param_2->rowsperchunk < (int)(uVar3 - iVar7)) {
+        uVar5 = param_2->rowsperchunk;
       }
-      iVar7 = piVar3[7] - (piVar3[6] + iVar11);
-      if (iVar7 <= iVar8) {
-        iVar8 = iVar7;
+      iVar4 = param_2->cur_start_row + iVar7;
+      uVar3 = param_2->first_undef_row - iVar4;
+      if ((int)uVar3 <= (int)uVar5) {
+        uVar5 = uVar3;
       }
-      iVar7 = piVar3[1] - (piVar3[6] + iVar11);
-      if (iVar7 <= iVar8) {
-        iVar8 = iVar7;
+      uVar3 = param_2->rows_in_array - iVar4;
+      if ((int)uVar3 <= (int)uVar5) {
+        uVar5 = uVar3;
       }
-      if (iVar8 < 1) break;
-      lVar10 = (longlong)iVar8 * (longlong)iVar1;
-      if ((uVar6 & 0xff) == 0) {
-        pcVar2 = (code *)piVar3[10];
+      if ((int)uVar5 < 1) {
+        return;
+      }
+      iVar4 = uVar5 * uVar1;
+      if (param_3 == '\0') {
+        p_Var2 = (param_2->b_s_info).read_backing_store;
       }
       else {
-        pcVar2 = (code *)piVar3[0xb];
+        p_Var2 = (param_2->b_s_info).write_backing_store;
       }
-      (*pcVar2)(uVar4,lVar5 + 0x28,*(undefined4 *)(iVar11 * 4 + *piVar3),lVar9,lVar10);
-      lVar9 = lVar10 + lVar9;
-      iVar7 = piVar3[4];
-      iVar11 = iVar11 + piVar3[5];
-    } while (iVar11 < iVar7);
+      (*p_Var2)(param_1,&param_2->b_s_info,param_2->mem_buffer[iVar7],iVar6,iVar4);
+      iVar6 = iVar4 + iVar6;
+      uVar3 = param_2->rows_in_mem;
+      iVar7 = iVar7 + param_2->rowsperchunk;
+    } while (iVar7 < (int)uVar3);
   }
-  __restgprlr_25();
   return;
 }
 
 
 // 827C8CA0  do_barray_io  (jpeg-6/jmemmgr.c:727)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
+
 void do_barray_io(jpeg_common_struct *param_1,jvirt_barray_control *param_2,uchar param_3)
 
 {
-  int iVar1;
-  code *pcVar2;
-  int *piVar3;
-  undefined8 uVar4;
-  longlong lVar5;
-  ulonglong uVar6;
+  _func___cdecl_void_jpeg_common_struct_ptr_backing_store_struct_ptr_void_ptr_long_long *p_Var1;
+  int iVar2;
+  uint uVar3;
+  int iVar4;
+  uint uVar5;
+  int iVar6;
   int iVar7;
-  int iVar8;
-  longlong lVar9;
-  longlong lVar10;
-  int iVar11;
   
-  uVar6 = (ulonglong)(char)param_3;
-  lVar5 = (longlong)(int)param_2;
-  uVar4 = __savegprlr_25(param_1);
-  piVar3 = (int *)lVar5;
-  iVar1 = piVar3[2];
-  iVar7 = piVar3[4];
-  iVar11 = 0;
-  lVar9 = (longlong)(iVar1 << 7) * (longlong)piVar3[6];
-  if (0 < iVar7) {
+  uVar3 = param_2->rows_in_mem;
+  iVar2 = param_2->blocksperrow * 0x80;
+  iVar7 = 0;
+  iVar6 = iVar2 * param_2->cur_start_row;
+  if (0 < (int)uVar3) {
     do {
-      iVar8 = iVar7 - iVar11;
-      if (piVar3[5] < iVar7 - iVar11) {
-        iVar8 = piVar3[5];
+      uVar5 = uVar3 - iVar7;
+      if ((int)param_2->rowsperchunk < (int)(uVar3 - iVar7)) {
+        uVar5 = param_2->rowsperchunk;
       }
-      iVar7 = piVar3[7] - (iVar11 + piVar3[6]);
-      if (iVar7 <= iVar8) {
-        iVar8 = iVar7;
+      iVar4 = iVar7 + param_2->cur_start_row;
+      uVar3 = param_2->first_undef_row - iVar4;
+      if ((int)uVar3 <= (int)uVar5) {
+        uVar5 = uVar3;
       }
-      iVar7 = piVar3[1] - (iVar11 + piVar3[6]);
-      if (iVar7 <= iVar8) {
-        iVar8 = iVar7;
+      uVar3 = param_2->rows_in_array - iVar4;
+      if ((int)uVar3 <= (int)uVar5) {
+        uVar5 = uVar3;
       }
-      if (iVar8 < 1) break;
-      lVar10 = (longlong)iVar8 * (longlong)(iVar1 << 7);
-      if ((uVar6 & 0xff) == 0) {
-        pcVar2 = (code *)piVar3[10];
+      if ((int)uVar5 < 1) {
+        return;
+      }
+      iVar4 = uVar5 * iVar2;
+      if (param_3 == '\0') {
+        p_Var1 = (param_2->b_s_info).read_backing_store;
       }
       else {
-        pcVar2 = (code *)piVar3[0xb];
+        p_Var1 = (param_2->b_s_info).write_backing_store;
       }
-      (*pcVar2)(uVar4,lVar5 + 0x28,*(undefined4 *)(iVar11 * 4 + *piVar3),lVar9,lVar10);
-      lVar9 = lVar10 + lVar9;
-      iVar7 = piVar3[4];
-      iVar11 = piVar3[5] + iVar11;
-    } while (iVar11 < iVar7);
+      (*p_Var1)(param_1,&param_2->b_s_info,param_2->mem_buffer[iVar7],iVar6,iVar4);
+      iVar6 = iVar4 + iVar6;
+      uVar3 = param_2->rows_in_mem;
+      iVar7 = param_2->rowsperchunk + iVar7;
+    } while (iVar7 < (int)uVar3);
   }
-  __restgprlr_25();
   return;
 }
 
 
 // 827C8D88  access_virt_sarray  (jpeg-6/jmemmgr.c:764)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 uchar ** access_virt_sarray(jpeg_common_struct *param_1,jvirt_sarray_control *param_2,uint param_3,
                            uint param_4,uchar param_5)
 
 {
   uint uVar1;
-  jpeg_common_struct *pjVar2;
-  uchar **ppuVar3;
-  ulonglong uVar4;
+  ulonglong uVar2;
+  ulonglong uVar3;
+  longlong lVar4;
   ulonglong uVar5;
-  ulonglong uVar6;
-  longlong lVar7;
-  ulonglong uVar8;
-  longlong lVar9;
+  longlong lVar6;
   
-  uVar5 = (ulonglong)(char)param_5;
-  uVar6 = (ulonglong)(int)param_4;
-  uVar4 = (ulonglong)(int)param_3;
-  pjVar2 = (jpeg_common_struct *)__savegprlr_26(param_1);
-  uVar8 = uVar4 + uVar6;
-  if ((((ulonglong)param_2->rows_in_array < (uVar8 & 0xffffffff)) ||
-      ((ulonglong)param_2->maxaccess < (uVar6 & 0xffffffff))) ||
-     (param_2->mem_buffer == (uchar **)0x0)) {
-    pjVar2->err->msg_code = 0x16;
-    (*pjVar2->err->error_exit)(pjVar2);
+  uVar2 = (ulonglong)(int)param_3;
+  uVar5 = uVar2 + (longlong)(int)param_4;
+  if ((((ulonglong)param_2->rows_in_array < (uVar5 & 0xffffffff)) || (param_2->maxaccess < param_4))
+     || (param_2->mem_buffer == (uchar **)0x0)) {
+    param_1->err->msg_code = 0x16;
+    (*param_1->err->error_exit)(param_1);
   }
-  if (((uVar4 & 0xffffffff) < (ulonglong)param_2->cur_start_row) ||
-     ((ulonglong)(param_2->rows_in_mem + param_2->cur_start_row) < (uVar8 & 0xffffffff))) {
+  if ((param_3 < param_2->cur_start_row) ||
+     ((ulonglong)(param_2->rows_in_mem + param_2->cur_start_row) < (uVar5 & 0xffffffff))) {
     if (param_2->b_s_open == '\0') {
-      pjVar2->err->msg_code = 0x45;
-      (*pjVar2->err->error_exit)(pjVar2);
+      param_1->err->msg_code = 0x45;
+      (*param_1->err->error_exit)(param_1);
     }
     if (param_2->dirty != '\0') {
-      do_sarray_io(pjVar2,param_2,'\x01');
+      do_sarray_io(param_1,param_2,'\x01');
       param_2->dirty = '\0';
     }
-    if ((ulonglong)param_2->cur_start_row < (uVar4 & 0xffffffff)) {
-      param_2->cur_start_row = (uint)uVar4;
+    if (param_2->cur_start_row < param_3) {
+      param_2->cur_start_row = param_3;
     }
     else {
-      uVar1 = (uint)uVar8 - param_2->rows_in_mem;
+      uVar1 = (uint)uVar5 - param_2->rows_in_mem;
       param_2->cur_start_row = -((int)uVar1 >> 0x1f) - 1U & uVar1;
     }
-    do_sarray_io(pjVar2,param_2,'\0');
+    do_sarray_io(param_1,param_2,'\0');
   }
-  uVar6 = (ulonglong)param_2->first_undef_row;
-  if (uVar6 < (uVar8 & 0xffffffff)) {
-    if ((uVar6 < (uVar4 & 0xffffffff)) && (uVar6 = uVar4, (uVar5 & 0xff) != 0)) {
-      pjVar2->err->msg_code = 0x16;
-      (*pjVar2->err->error_exit)(pjVar2);
+  uVar3 = (ulonglong)param_2->first_undef_row;
+  if (uVar3 < (uVar5 & 0xffffffff)) {
+    if ((uVar3 < param_3) && (uVar3 = uVar2, param_5 != '\0')) {
+      param_1->err->msg_code = 0x16;
+      (*param_1->err->error_exit)(param_1);
     }
-    if ((uVar5 & 0xff) != 0) {
-      param_2->first_undef_row = (uint)uVar8;
+    if (param_5 != '\0') {
+      param_2->first_undef_row = (uint)uVar5;
     }
     if (param_2->pre_zero == '\0') {
-      if ((uVar5 & 0xff) == 0) {
-        pjVar2->err->msg_code = 0x16;
-        (*pjVar2->err->error_exit)(pjVar2);
+      if (param_5 == '\0') {
+        param_1->err->msg_code = 0x16;
+        (*param_1->err->error_exit)(param_1);
       }
     }
     else {
       uVar1 = param_2->samplesperrow;
-      uVar6 = uVar6 - param_2->cur_start_row;
-      uVar8 = uVar8 - param_2->cur_start_row;
-      if ((uVar6 & 0xffffffff) < (uVar8 & 0xffffffff)) {
-        lVar7 = (uVar6 & 0x3fffffff) << 2;
-        lVar9 = uVar8 - uVar6;
+      uVar3 = uVar3 - param_2->cur_start_row;
+      uVar5 = uVar5 - param_2->cur_start_row;
+      if ((uVar3 & 0xffffffff) < (uVar5 & 0xffffffff)) {
+        lVar4 = (uVar3 & 0x3fffffff) << 2;
+        lVar6 = uVar5 - uVar3;
         do {
-          jzero_far(*(void **)((int)param_2->mem_buffer + (int)lVar7),uVar1);
-          lVar9 = lVar9 + -1;
-          lVar7 = lVar7 + 4;
-        } while (lVar9 != 0);
+          jzero_far(*(void **)((int)param_2->mem_buffer + (int)lVar4),uVar1);
+          lVar6 = lVar6 + -1;
+          lVar4 = lVar4 + 4;
+        } while (lVar6 != 0);
       }
     }
   }
-  if ((uVar5 & 0xff) != 0) {
+  if (param_5 != '\0') {
     param_2->dirty = '\x01';
   }
-  ppuVar3 = (uchar **)
-            __restgprlr_26((uVar4 - param_2->cur_start_row & 0x3fffffff) * 4 +
-                           ZEXT48(param_2->mem_buffer));
-  return ppuVar3;
+  return (uchar **)
+         ((int)((uVar2 - param_2->cur_start_row & 0xffffffff) << 2) + (int)param_2->mem_buffer);
 }
 
 
 // 827C8F88  access_virt_barray  (jpeg-6/jmemmgr.c:849)
+
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 
 short (**) [64]
 access_virt_barray(jpeg_common_struct *param_1,jvirt_barray_control *param_2,uint param_3,
@@ -682,86 +658,80 @@ access_virt_barray(jpeg_common_struct *param_1,jvirt_barray_control *param_2,uin
 
 {
   uint uVar1;
-  jpeg_common_struct *pjVar2;
-  short (**ppasVar3) [64];
-  ulonglong uVar4;
+  ulonglong uVar2;
+  ulonglong uVar3;
+  longlong lVar4;
   ulonglong uVar5;
-  ulonglong uVar6;
-  longlong lVar7;
-  ulonglong uVar8;
-  longlong lVar9;
+  longlong lVar6;
   
-  uVar5 = (ulonglong)(char)param_5;
-  uVar6 = (ulonglong)(int)param_4;
-  uVar4 = (ulonglong)(int)param_3;
-  pjVar2 = (jpeg_common_struct *)__savegprlr_26(param_1);
-  uVar8 = uVar4 + uVar6;
-  if ((((ulonglong)param_2->rows_in_array < (uVar8 & 0xffffffff)) ||
-      ((ulonglong)param_2->maxaccess < (uVar6 & 0xffffffff))) ||
-     (param_2->mem_buffer == (short (**) [64])0x0)) {
-    pjVar2->err->msg_code = 0x16;
-    (*pjVar2->err->error_exit)(pjVar2);
+  uVar2 = (ulonglong)(int)param_3;
+  uVar5 = uVar2 + (longlong)(int)param_4;
+  if ((((ulonglong)param_2->rows_in_array < (uVar5 & 0xffffffff)) || (param_2->maxaccess < param_4))
+     || (param_2->mem_buffer == (short (**) [64])0x0)) {
+    param_1->err->msg_code = 0x16;
+    (*param_1->err->error_exit)(param_1);
   }
-  if (((uVar4 & 0xffffffff) < (ulonglong)param_2->cur_start_row) ||
-     ((ulonglong)(param_2->rows_in_mem + param_2->cur_start_row) < (uVar8 & 0xffffffff))) {
+  if ((param_3 < param_2->cur_start_row) ||
+     ((ulonglong)(param_2->rows_in_mem + param_2->cur_start_row) < (uVar5 & 0xffffffff))) {
     if (param_2->b_s_open == '\0') {
-      pjVar2->err->msg_code = 0x45;
-      (*pjVar2->err->error_exit)(pjVar2);
+      param_1->err->msg_code = 0x45;
+      (*param_1->err->error_exit)(param_1);
     }
     if (param_2->dirty != '\0') {
-      do_barray_io(pjVar2,param_2,'\x01');
+      do_barray_io(param_1,param_2,'\x01');
       param_2->dirty = '\0';
     }
-    if ((ulonglong)param_2->cur_start_row < (uVar4 & 0xffffffff)) {
-      param_2->cur_start_row = (uint)uVar4;
+    if (param_2->cur_start_row < param_3) {
+      param_2->cur_start_row = param_3;
     }
     else {
-      uVar1 = (uint)uVar8 - param_2->rows_in_mem;
+      uVar1 = (uint)uVar5 - param_2->rows_in_mem;
       param_2->cur_start_row = -((int)uVar1 >> 0x1f) - 1U & uVar1;
     }
-    do_barray_io(pjVar2,param_2,'\0');
+    do_barray_io(param_1,param_2,'\0');
   }
-  uVar6 = (ulonglong)param_2->first_undef_row;
-  if (uVar6 < (uVar8 & 0xffffffff)) {
-    if ((uVar6 < (uVar4 & 0xffffffff)) && (uVar6 = uVar4, (uVar5 & 0xff) != 0)) {
-      pjVar2->err->msg_code = 0x16;
-      (*pjVar2->err->error_exit)(pjVar2);
+  uVar3 = (ulonglong)param_2->first_undef_row;
+  if (uVar3 < (uVar5 & 0xffffffff)) {
+    if ((uVar3 < param_3) && (uVar3 = uVar2, param_5 != '\0')) {
+      param_1->err->msg_code = 0x16;
+      (*param_1->err->error_exit)(param_1);
     }
-    if ((uVar5 & 0xff) != 0) {
-      param_2->first_undef_row = (uint)uVar8;
+    if (param_5 != '\0') {
+      param_2->first_undef_row = (uint)uVar5;
     }
     if (param_2->pre_zero == '\0') {
-      if ((uVar5 & 0xff) == 0) {
-        pjVar2->err->msg_code = 0x16;
-        (*pjVar2->err->error_exit)(pjVar2);
+      if (param_5 == '\0') {
+        param_1->err->msg_code = 0x16;
+        (*param_1->err->error_exit)(param_1);
       }
     }
     else {
       uVar1 = param_2->blocksperrow;
-      uVar6 = uVar6 - param_2->cur_start_row;
-      uVar8 = uVar8 - param_2->cur_start_row;
-      if ((uVar6 & 0xffffffff) < (uVar8 & 0xffffffff)) {
-        lVar7 = (uVar6 & 0x3fffffff) << 2;
-        lVar9 = uVar8 - uVar6;
+      uVar3 = uVar3 - param_2->cur_start_row;
+      uVar5 = uVar5 - param_2->cur_start_row;
+      if ((uVar3 & 0xffffffff) < (uVar5 & 0xffffffff)) {
+        lVar4 = (uVar3 & 0x3fffffff) << 2;
+        lVar6 = uVar5 - uVar3;
         do {
-          jzero_far(*(void **)((int)param_2->mem_buffer + (int)lVar7),uVar1 << 7);
-          lVar9 = lVar9 + -1;
-          lVar7 = lVar7 + 4;
-        } while (lVar9 != 0);
+          jzero_far(*(void **)((int)param_2->mem_buffer + (int)lVar4),uVar1 << 7);
+          lVar6 = lVar6 + -1;
+          lVar4 = lVar4 + 4;
+        } while (lVar6 != 0);
       }
     }
   }
-  if ((uVar5 & 0xff) != 0) {
+  if (param_5 != '\0') {
     param_2->dirty = '\x01';
   }
-  ppasVar3 = (short (**) [64])
-             __restgprlr_26((uVar4 - param_2->cur_start_row & 0x3fffffff) * 4 +
-                            ZEXT48(param_2->mem_buffer));
-  return ppasVar3;
+  return (short (**) [64])
+         ((int)((uVar2 - param_2->cur_start_row & 0xffffffff) << 2) + (int)param_2->mem_buffer);
 }
 
 
 // 827C9188  free_pool  (jpeg-6/jmemmgr.c:933)
+
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 
 void free_pool(jpeg_common_struct *param_1,int param_2)
 
@@ -771,21 +741,16 @@ void free_pool(jpeg_common_struct *param_1,int param_2)
   _func___cdecl_jvirt_barray_control_ptr_jpeg_common_struct_ptr_int_uchar_uint_uint_uint *p_Var3;
   undefined4 *puVar4;
   undefined4 *puVar5;
-  jpeg_common_struct *pjVar6;
-  longlong lVar7;
-  int iVar8;
-  uint uVar9;
+  int iVar6;
+  uint uVar7;
   
-  lVar7 = (longlong)param_2;
-  pjVar6 = (jpeg_common_struct *)__savegprlr_26(param_1);
-  pjVar1 = pjVar6->mem;
-  iVar8 = (int)lVar7;
-  if ((iVar8 < 0) || (1 < iVar8)) {
-    pjVar6->err->msg_code = 0xe;
-    (pjVar6->err->msg_parm).i[0] = iVar8;
-    (*pjVar6->err->error_exit)(pjVar6);
+  pjVar1 = param_1->mem;
+  if ((param_2 < 0) || (1 < param_2)) {
+    param_1->err->msg_code = 0xe;
+    (param_1->err->msg_parm).i[0] = param_2;
+    (*param_1->err->error_exit)(param_1);
   }
-  if (iVar8 == 1) {
+  if (param_2 == 1) {
     for (p_Var2 = pjVar1[1].request_virt_sarray;
         p_Var2 != (_func___cdecl_jvirt_sarray_control_ptr_jpeg_common_struct_ptr_int_uchar_uint_uint_uint
                    *)0x0;
@@ -795,7 +760,7 @@ void free_pool(jpeg_common_struct *param_1,int param_2)
           (_func___cdecl_jvirt_sarray_control_ptr_jpeg_common_struct_ptr_int_uchar_uint_uint_uint)
           0x0) {
         p_Var2[0x22] = (code)0x0;
-        (**(code **)(p_Var2 + 0x30))(pjVar6,p_Var2 + 0x28);
+        (**(code **)(p_Var2 + 0x30))(param_1,p_Var2 + 0x28);
       }
     }
     p_Var3 = pjVar1[1].request_virt_barray;
@@ -810,39 +775,41 @@ void free_pool(jpeg_common_struct *param_1,int param_2)
           (_func___cdecl_jvirt_barray_control_ptr_jpeg_common_struct_ptr_int_uchar_uint_uint_uint)
           0x0) {
         p_Var3[0x22] = (code)0x0;
-        (**(code **)(p_Var3 + 0x30))(pjVar6,p_Var3 + 0x28);
+        (**(code **)(p_Var3 + 0x30))(param_1,p_Var3 + 0x28);
       }
     }
     pjVar1[1].request_virt_barray =
          (_func___cdecl_jvirt_barray_control_ptr_jpeg_common_struct_ptr_int_uchar_uint_uint_uint *)
          0x0;
   }
-  iVar8 = (int)((lVar7 + 0xfU & 0xffffffff) << 2);
-  puVar5 = *(undefined4 **)((int)&pjVar1->alloc_small + iVar8);
-  *(undefined4 *)((int)&pjVar1->alloc_small + iVar8) = 0;
+  iVar6 = (int)(((longlong)param_2 + 0xfU & 0xffffffff) << 2);
+  puVar5 = *(undefined4 **)((int)&pjVar1->alloc_small + iVar6);
+  *(undefined4 *)((int)&pjVar1->alloc_small + iVar6) = 0;
   while (puVar5 != (undefined4 *)0x0) {
     puVar4 = (undefined4 *)*puVar5;
-    uVar9 = puVar5[2] + puVar5[1] + 0x10;
-    jpeg_free_large(pjVar6,puVar5,uVar9);
-    pjVar1[1].realize_virt_arrays = pjVar1[1].realize_virt_arrays + -uVar9;
+    uVar7 = puVar5[2] + puVar5[1] + 0x10;
+    jpeg_free_large(param_1,puVar5,uVar7);
+    pjVar1[1].realize_virt_arrays = pjVar1[1].realize_virt_arrays + -uVar7;
     puVar5 = puVar4;
   }
-  iVar8 = (int)((lVar7 + 0xdU & 0xffffffff) << 2);
-  puVar5 = *(undefined4 **)((int)&pjVar1->alloc_small + iVar8);
-  *(undefined4 *)((int)&pjVar1->alloc_small + iVar8) = 0;
+  iVar6 = (int)(((longlong)param_2 + 0xdU & 0xffffffff) << 2);
+  puVar5 = *(undefined4 **)((int)&pjVar1->alloc_small + iVar6);
+  *(undefined4 *)((int)&pjVar1->alloc_small + iVar6) = 0;
   while (puVar5 != (undefined4 *)0x0) {
     puVar4 = (undefined4 *)*puVar5;
-    uVar9 = puVar5[2] + puVar5[1] + 0x10;
-    jpeg_free_small(pjVar6,puVar5,uVar9);
-    pjVar1[1].realize_virt_arrays = pjVar1[1].realize_virt_arrays + -uVar9;
+    uVar7 = puVar5[2] + puVar5[1] + 0x10;
+    jpeg_free_small(param_1,puVar5,uVar7);
+    pjVar1[1].realize_virt_arrays = pjVar1[1].realize_virt_arrays + -uVar7;
     puVar5 = puVar4;
   }
-  __restgprlr_26();
   return;
 }
 
 
 // 827C9310  self_destruct  (jpeg-6/jmemmgr.c:1005)
+
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 
 void self_destruct(jpeg_common_struct *param_1)
 
@@ -852,22 +819,20 @@ void self_destruct(jpeg_common_struct *param_1)
   _func___cdecl_jvirt_barray_control_ptr_jpeg_common_struct_ptr_int_uchar_uint_uint_uint *p_Var3;
   undefined4 *puVar4;
   undefined4 *puVar5;
-  jpeg_common_struct *pjVar6;
-  longlong lVar7;
-  int iVar8;
-  uint uVar9;
+  longlong lVar6;
+  int iVar7;
+  uint uVar8;
   
-  pjVar6 = (jpeg_common_struct *)__savegprlr_25(param_1);
-  lVar7 = 1;
+  lVar6 = 1;
   do {
-    pjVar1 = pjVar6->mem;
-    iVar8 = (int)lVar7;
-    if ((iVar8 < 0) || (1 < iVar8)) {
-      pjVar6->err->msg_code = 0xe;
-      (pjVar6->err->msg_parm).i[0] = iVar8;
-      (*pjVar6->err->error_exit)(pjVar6);
+    pjVar1 = param_1->mem;
+    iVar7 = (int)lVar6;
+    if ((iVar7 < 0) || (1 < iVar7)) {
+      param_1->err->msg_code = 0xe;
+      (param_1->err->msg_parm).i[0] = iVar7;
+      (*param_1->err->error_exit)(param_1);
     }
-    if (iVar8 == 1) {
+    if (iVar7 == 1) {
       for (p_Var2 = pjVar1[1].request_virt_sarray;
           p_Var2 != (_func___cdecl_jvirt_sarray_control_ptr_jpeg_common_struct_ptr_int_uchar_uint_uint_uint
                      *)0x0;
@@ -877,7 +842,7 @@ void self_destruct(jpeg_common_struct *param_1)
             (_func___cdecl_jvirt_sarray_control_ptr_jpeg_common_struct_ptr_int_uchar_uint_uint_uint)
             0x0) {
           p_Var2[0x22] = (code)0x0;
-          (**(code **)(p_Var2 + 0x30))(pjVar6,p_Var2 + 0x28);
+          (**(code **)(p_Var2 + 0x30))(param_1,p_Var2 + 0x28);
         }
       }
       p_Var3 = pjVar1[1].request_virt_barray;
@@ -892,89 +857,88 @@ void self_destruct(jpeg_common_struct *param_1)
             (_func___cdecl_jvirt_barray_control_ptr_jpeg_common_struct_ptr_int_uchar_uint_uint_uint)
             0x0) {
           p_Var3[0x22] = (code)0x0;
-          (**(code **)(p_Var3 + 0x30))(pjVar6,p_Var3 + 0x28);
+          (**(code **)(p_Var3 + 0x30))(param_1,p_Var3 + 0x28);
         }
       }
       pjVar1[1].request_virt_barray =
            (_func___cdecl_jvirt_barray_control_ptr_jpeg_common_struct_ptr_int_uchar_uint_uint_uint *
            )0x0;
     }
-    iVar8 = (int)((lVar7 + 0xfU & 0xffffffff) << 2);
-    puVar5 = *(undefined4 **)((int)&pjVar1->alloc_small + iVar8);
-    *(undefined4 *)((int)&pjVar1->alloc_small + iVar8) = 0;
+    iVar7 = (int)((lVar6 + 0xfU & 0xffffffff) << 2);
+    puVar5 = *(undefined4 **)((int)&pjVar1->alloc_small + iVar7);
+    *(undefined4 *)((int)&pjVar1->alloc_small + iVar7) = 0;
     while (puVar5 != (undefined4 *)0x0) {
       puVar4 = (undefined4 *)*puVar5;
-      uVar9 = puVar5[2] + puVar5[1] + 0x10;
-      jpeg_free_large(pjVar6,puVar5,uVar9);
-      pjVar1[1].realize_virt_arrays = pjVar1[1].realize_virt_arrays + -uVar9;
+      uVar8 = puVar5[2] + puVar5[1] + 0x10;
+      jpeg_free_large(param_1,puVar5,uVar8);
+      pjVar1[1].realize_virt_arrays = pjVar1[1].realize_virt_arrays + -uVar8;
       puVar5 = puVar4;
     }
-    iVar8 = (int)((lVar7 + 0xdU & 0xffffffff) << 2);
-    puVar5 = *(undefined4 **)((int)&pjVar1->alloc_small + iVar8);
-    *(undefined4 *)((int)&pjVar1->alloc_small + iVar8) = 0;
+    iVar7 = (int)((lVar6 + 0xdU & 0xffffffff) << 2);
+    puVar5 = *(undefined4 **)((int)&pjVar1->alloc_small + iVar7);
+    *(undefined4 *)((int)&pjVar1->alloc_small + iVar7) = 0;
     while (puVar5 != (undefined4 *)0x0) {
       puVar4 = (undefined4 *)*puVar5;
-      uVar9 = puVar5[2] + puVar5[1] + 0x10;
-      jpeg_free_small(pjVar6,puVar5,uVar9);
-      pjVar1[1].realize_virt_arrays = pjVar1[1].realize_virt_arrays + -uVar9;
+      uVar8 = puVar5[2] + puVar5[1] + 0x10;
+      jpeg_free_small(param_1,puVar5,uVar8);
+      pjVar1[1].realize_virt_arrays = pjVar1[1].realize_virt_arrays + -uVar8;
       puVar5 = puVar4;
     }
-    lVar7 = lVar7 + -1;
-  } while (-1 < lVar7);
-  jpeg_free_small(pjVar6,pjVar6->mem,0x54);
-  pjVar6->mem = (jpeg_memory_mgr *)0x0;
-  jpeg_mem_term(pjVar6);
-  __restgprlr_25();
+    lVar6 = lVar6 + -1;
+  } while (-1 < lVar6);
+  jpeg_free_small(param_1,param_1->mem,0x54);
+  param_1->mem = (jpeg_memory_mgr *)0x0;
+  jpeg_mem_term(param_1);
   return;
 }
 
 
 // 827C94B8  jinit_memory_mgr  (jpeg-6/jmemmgr.c:1031)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+
 void jinit_memory_mgr(jpeg_common_struct *param_1)
 
 {
-  jpeg_common_struct *pjVar1;
-  long lVar2;
-  jpeg_memory_mgr *pjVar3;
+  long lVar1;
+  jpeg_memory_mgr *pjVar2;
   
-  pjVar1 = (jpeg_common_struct *)__savegprlr_26(param_1);
-  pjVar1->mem = (jpeg_memory_mgr *)0x0;
-  lVar2 = jpeg_mem_init(pjVar1);
-  pjVar3 = jpeg_get_small(pjVar1,0x54);
-  if (pjVar3 == (jpeg_memory_mgr *)0x0) {
-    jpeg_mem_term(pjVar1);
-    pjVar1->err->msg_code = 0x36;
-    (pjVar1->err->msg_parm).i[0] = 0;
-    (*pjVar1->err->error_exit)(pjVar1);
+  param_1->mem = (jpeg_memory_mgr *)0x0;
+  lVar1 = jpeg_mem_init(param_1);
+  pjVar2 = jpeg_get_small(param_1,0x54);
+  if (pjVar2 == (jpeg_memory_mgr *)0x0) {
+    jpeg_mem_term(param_1);
+    param_1->err->msg_code = 0x36;
+    (param_1->err->msg_parm).i[0] = 0;
+    (*param_1->err->error_exit)(param_1);
   }
-  pjVar3->max_memory_to_use = lVar2;
-  pjVar3->alloc_small = alloc_small;
-  pjVar3->alloc_large = alloc_large;
-  pjVar3->alloc_sarray = alloc_sarray;
-  pjVar3->alloc_barray = alloc_barray;
-  pjVar3->request_virt_sarray = request_virt_sarray;
-  pjVar3->request_virt_barray = request_virt_barray;
-  pjVar3->realize_virt_arrays = realize_virt_arrays;
-  pjVar3->access_virt_sarray = access_virt_sarray;
-  pjVar3->access_virt_barray = access_virt_barray;
-  pjVar3->free_pool = free_pool;
-  pjVar3->self_destruct = self_destruct;
-  pjVar3->max_alloc_chunk = 1000000000;
-  pjVar3[1].alloc_large = (_func___cdecl_void_ptr_jpeg_common_struct_ptr_int_uint *)0x0;
-  pjVar3[1].alloc_barray =
+  pjVar2->max_memory_to_use = lVar1;
+  pjVar2->alloc_small = alloc_small;
+  pjVar2->alloc_large = alloc_large;
+  pjVar2->alloc_sarray = alloc_sarray;
+  pjVar2->alloc_barray = alloc_barray;
+  pjVar2->request_virt_sarray = request_virt_sarray;
+  pjVar2->request_virt_barray = request_virt_barray;
+  pjVar2->realize_virt_arrays = realize_virt_arrays;
+  pjVar2->access_virt_sarray = access_virt_sarray;
+  pjVar2->access_virt_barray = access_virt_barray;
+  pjVar2->free_pool = free_pool;
+  pjVar2->self_destruct = self_destruct;
+  pjVar2->max_alloc_chunk = 1000000000;
+  pjVar2[1].alloc_large = (_func___cdecl_void_ptr_jpeg_common_struct_ptr_int_uint *)0x0;
+  pjVar2[1].alloc_barray =
        (_func___cdecl_short_64__ptr_ptr_jpeg_common_struct_ptr_int_uint_uint *)0x0;
-  pjVar3[1].alloc_small = (_func___cdecl_void_ptr_jpeg_common_struct_ptr_int_uint *)0x0;
-  pjVar3[1].alloc_sarray = (_func___cdecl_uchar_ptr_ptr_jpeg_common_struct_ptr_int_uint_uint *)0x0;
-  pjVar3[1].request_virt_sarray =
+  pjVar2[1].alloc_small = (_func___cdecl_void_ptr_jpeg_common_struct_ptr_int_uint *)0x0;
+  pjVar2[1].alloc_sarray = (_func___cdecl_uchar_ptr_ptr_jpeg_common_struct_ptr_int_uint_uint *)0x0;
+  pjVar2[1].request_virt_sarray =
        (_func___cdecl_jvirt_sarray_control_ptr_jpeg_common_struct_ptr_int_uchar_uint_uint_uint *)0x0
   ;
-  pjVar3[1].request_virt_barray =
+  pjVar2[1].request_virt_barray =
        (_func___cdecl_jvirt_barray_control_ptr_jpeg_common_struct_ptr_int_uchar_uint_uint_uint *)0x0
   ;
-  pjVar3[1].realize_virt_arrays = (_func___cdecl_void_jpeg_common_struct_ptr *)0x54;
-  pjVar1->mem = pjVar3;
-  __restgprlr_26();
+  pjVar2[1].realize_virt_arrays = (_func___cdecl_void_jpeg_common_struct_ptr *)0x54;
+  param_1->mem = pjVar2;
   return;
 }
 

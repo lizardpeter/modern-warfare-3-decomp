@@ -2,36 +2,34 @@
 
 // 8283C628  cost  (WebM_atvi_opt/vpx/vp8/encoder/treewriter.c:25)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
+
 void cost(int *param_1,char *param_2,uchar *param_3,int param_4,int param_5)
 
 {
   byte bVar1;
   char cVar2;
-  int *piVar3;
-  ulonglong uVar4;
-  uint uVar5;
-  ulonglong uVar6;
+  uint uVar3;
+  uint uVar4;
   
-  uVar6 = (ulonglong)param_4;
-  piVar3 = (int *)__savegprlr_25(param_1);
-  bVar1 = param_3[(int)uVar6 >> 1];
-  uVar4 = uVar6 & 1;
+  bVar1 = param_3[param_4 >> 1];
+  uVar3 = param_4 & 1;
   do {
-    cVar2 = param_2[(int)uVar6];
-    uVar5 = 0xff - bVar1;
-    if ((int)uVar4 == 0) {
-      uVar5 = (uint)bVar1;
+    cVar2 = param_2[param_4];
+    uVar4 = 0xff - bVar1;
+    if (uVar3 == 0) {
+      uVar4 = (uint)bVar1;
     }
     if (cVar2 < 1) {
-      piVar3[-(int)cVar2] = vp8_prob_cost[uVar5] + param_5;
+      param_1[-(int)cVar2] = vp8_prob_cost[uVar4] + param_5;
     }
     else {
-      cost(piVar3,param_2,param_3,(int)cVar2,vp8_prob_cost[uVar5] + param_5);
+      cost(param_1,param_2,param_3,(int)cVar2,vp8_prob_cost[uVar4] + param_5);
     }
-    uVar6 = uVar6 + 1;
-    uVar4 = uVar6 & 1;
-  } while ((int)uVar4 != 0);
-  __restgprlr_25();
+    param_4 = param_4 + 1;
+    uVar3 = param_4 & 1;
+  } while (uVar3 != 0);
   return;
 }
 

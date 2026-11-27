@@ -93,6 +93,9 @@ bdReference<bdAddrHandle>::operator=
 
 // 8292CAA0  addrToCommonAddr  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdsocket/bdaddressmap-xbox.cpp:154)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 bool __thiscall
 bdAddressMap::addrToCommonAddr
           (bdAddressMap *this,bdReference<bdAddrHandle> *param_1,bdReference<bdCommonAddr> *param_2,
@@ -100,59 +103,57 @@ bdAddressMap::addrToCommonAddr
 
 {
   bool bVar1;
-  uint *puVar2;
+  bool bVar2;
   int iVar3;
   bdCommonAddr *pbVar4;
-  undefined1 uVar5;
-  uint uVar6;
-  char *pcVar7;
-  longlong lVar8;
+  uint uVar5;
+  char *pcVar6;
+  longlong lVar7;
+  uint *puVar8;
   char in_RESERVE;
-  uint local_70;
+  bdCommonAddr *local_70;
   bdCommonAddr *local_6c;
   XNADDR aXStack_60 [2];
   
-  puVar2 = (uint *)__savegprlr_27(this);
   iVar3 = XNetInAddrToXnAddr((in_addr)(param_1->m_ptr->m_addr).S_un.S_un_b,aXStack_60,param_3);
-  if (iVar3 == 0) {
-    if (*puVar2 != 0) {
+  bVar1 = iVar3 == 0;
+  if (bVar1) {
+    if ((this->m_me).m_ptr != (bdCommonAddr *)0x0) {
       local_6c = bdMemory::allocate(0x3c);
       if (local_6c == (bdCommonAddr *)0x0) {
         pbVar4 = (bdCommonAddr *)0x0;
       }
       else {
-        local_70 = *puVar2;
-        if ((ulonglong)local_70 != 0) {
-          lVar8 = (ulonglong)local_70 + 4;
-          bVar1 = false;
+        local_70 = (this->m_me).m_ptr;
+        if (ZEXT48(local_70) != 0) {
+          lVar7 = ZEXT48(local_70) + 4;
+          bVar2 = false;
           do {
-            puVar2 = (uint *)lVar8;
+            puVar8 = (uint *)lVar7;
             if (in_RESERVE != '\0') {
-              uVar6 = storeWordConditionalIndexed((ulonglong)*puVar2 + 1,0,lVar8);
-              *puVar2 = uVar6;
-              bVar1 = true;
+              uVar5 = storeWordConditionalIndexed((ulonglong)*puVar8 + 1,0,lVar7);
+              *puVar8 = uVar5;
+              bVar2 = true;
             }
-          } while (!bVar1);
+          } while (!bVar2);
         }
         pbVar4 = bdCommonAddr::bdCommonAddr
                            (local_6c,(bdCommonAddr *)&local_70,aXStack_60,param_1->m_ptr->m_port);
       }
       bdReference<bdCommonAddr>::operator=(param_2,pbVar4);
-      goto LAB_8292cba8;
+      return bVar1;
     }
-    pcVar7 = "Invalid addr.";
-    uVar6 = 0xa7;
+    pcVar6 = "Invalid addr.";
+    uVar5 = 0xa7;
   }
   else {
-    pcVar7 = "Invalid addr handle.";
-    uVar6 = 0xac;
+    pcVar6 = "Invalid addr handle.";
+    uVar5 = 0xac;
   }
   bdLogMessage(BD_LOG_WARNING,"warn/","addressmap",
                "c:\\trees\\iw5build4-iw\\iw5\\code_source\\DemonWare\\bdSocket\\bdAddressMap-xbox.cpp"
-               ,"bdAddressMap::addrToCommonAddr",uVar6,pcVar7);
-LAB_8292cba8:
-  uVar5 = __restgprlr_27(iVar3 == 0);
-  return (bool)uVar5;
+               ,"bdAddressMap::addrToCommonAddr",uVar5,pcVar6);
+  return bVar1;
 }
 
 

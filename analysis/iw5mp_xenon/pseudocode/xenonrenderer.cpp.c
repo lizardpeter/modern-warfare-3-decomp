@@ -53,40 +53,34 @@ undefined4 __thiscall XAUDIO::CXenonRenderer::GetInfo(CXenonRenderer *this,XAUDI
 
 // 828D2248  XAudioCreateNativeRenderEffect  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/xenonrenderer.cpp:81)
 
-undefined4
-XAudioCreateNativeRenderEffect
-          (XAUDIOFXINIT *param_1,IXAudioBatchAllocator *param_2,IXAudioEffect **param_3)
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
+int XAudioCreateNativeRenderEffect
+              (XAUDIOFXINIT *param_1,IXAudioBatchAllocator *param_2,IXAudioEffect **param_3)
 
 {
-  XAUDIORENDERFXINIT *pXVar1;
   CXenonRenderer *this;
-  int iVar2;
-  undefined4 uVar3;
-  longlong lVar4;
+  int iVar1;
   
-  lVar4 = (longlong)(int)param_2;
-  pXVar1 = (XAUDIORENDERFXINIT *)__savegprlr_27(param_1);
-  this = (CXenonRenderer *)(**(code **)((int)*(IXAudioBatchAllocator *)lVar4 + 0x14))(lVar4,0x1c);
+  this = (CXenonRenderer *)(**(code **)((int)*param_2 + 0x14))(param_2,0x1c);
   if (this == (CXenonRenderer *)0x0) {
-    uVar3 = __restgprlr_27(0xffffffff8007000e);
-    return uVar3;
+    return 0x8007000e;
   }
   this->_padding_ = 1;
   this->_padding_ = (int)&XAUDIO::CEffect::_vftable_;
-  this->_padding_ = (int)(pXVar1->EffectHeader).pContext;
+  this->_padding_ = (int)param_1->pContext;
   this->_padding_ = (int)&XAUDIO::CXenonRenderer::_vftable__for__IXAudioRenderEffect__;
   this->m_pXBMSampleDestPrev = (void *)0x0;
   this->_padding_ = (int)&XAUDIO::CXenonRenderer::_vftable__for__XAUDIO__CEffect__;
   this->m_XBMSampleCount = 0;
-  iVar2 = XAUDIO::CXenonRenderer::Initialize(this,pXVar1,(IXAudioBatchAllocator *)lVar4);
-  if (-1 < iVar2) {
+  iVar1 = XAUDIO::CXenonRenderer::Initialize(this,(XAUDIORENDERFXINIT *)param_1,param_2);
+  if (-1 < iVar1) {
     *param_3 = (IXAudioEffect *)this;
-    uVar3 = __restgprlr_27();
-    return uVar3;
+    return iVar1;
   }
   (**(code **)(this->_padding_ + 0xc))(&this->_padding_);
-  uVar3 = __restgprlr_27(iVar2);
-  return uVar3;
+  return iVar1;
 }
 
 
@@ -234,34 +228,32 @@ XAUDIO::CXenonRenderer::Process
 
 // 828D1E48  SetCallback  (<external>/Xenon/mar09/core/private/xtl/audio/xaudio/xenonrenderer.cpp:277)
 
-undefined4 __thiscall
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
+int __thiscall
 XAUDIO::CXenonRenderer::SetCallback
           (CXenonRenderer *this,_func___cdecl_void_XAUDIORENDERFXCALLBACK_ptr *param_1)
 
 {
-  int iVar2;
-  undefined8 uVar1;
-  undefined4 uVar3;
-  ulonglong uVar4;
-  undefined4 local_30;
-  undefined4 local_2c;
+  int iVar1;
+  _func___cdecl_void_XAUDIORENDERFXCALLBACK_ptr *local_30;
+  int local_2c;
   
-  uVar4 = (ulonglong)(int)param_1;
-  iVar2 = __savegprlr_29(this);
-  uVar1 = 0;
-  if (*(int *)(iVar2 + 0x18) != 0) {
-    uVar1 = XAudioUnregisterRenderDriverClient(*(int *)(iVar2 + 0x18));
-    if ((int)uVar1 < 0) goto LAB_828d1ea8;
-    *(undefined4 *)(iVar2 + 0x18) = 0;
+  iVar1 = 0;
+  if (this->m_hDriverClient != (void *)0x0) {
+    iVar1 = XAudioUnregisterRenderDriverClient(this->m_hDriverClient);
+    if (iVar1 < 0) {
+      return iVar1;
+    }
+    this->m_hDriverClient = (void *)0x0;
   }
-  if ((uVar4 & 0xffffffff) != 0) {
-    local_2c = *(undefined4 *)(iVar2 + 0xc);
-    local_30 = (undefined4)uVar4;
-    uVar1 = XAudioRegisterRenderDriverClient(&local_30,(undefined4 *)(iVar2 + 0x18));
+  if (param_1 != (_func___cdecl_void_XAUDIORENDERFXCALLBACK_ptr *)0x0) {
+    local_2c = this->_padding_;
+    local_30 = param_1;
+    iVar1 = XAudioRegisterRenderDriverClient(&local_30,&this->m_hDriverClient);
   }
-LAB_828d1ea8:
-  uVar3 = __restgprlr_29(uVar1);
-  return uVar3;
+  return iVar1;
 }
 
 

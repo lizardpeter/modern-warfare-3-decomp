@@ -32,71 +32,67 @@ void __thiscall bdDMLInfo::~bdDMLInfo(bdDMLInfo *this)
 
 // 82904290  deserialize  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bddml/bddmlinfo.cpp:28)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 bool __thiscall bdDMLInfo::deserialize(bdDMLInfo *this,bdReference<bdByteBuffer> param_1)
 
 {
-  int iVar1;
+  bool bVar1;
   bool bVar2;
-  bool bVar3;
-  undefined1 uVar4;
-  undefined8 uVar5;
-  bdByteBuffer *pbStack0000001c;
+  bdReference<bdByteBuffer> bStack0000001c;
   
-  iVar1 = __savegprlr_29(this);
-  pbStack0000001c = param_1.m_ptr;
-  bVar2 = bdByteBuffer::readString((bdByteBuffer *)(param_1.m_ptr)->_padding_,(char *)(iVar1 + 4),3)
+  bStack0000001c.m_ptr = param_1.m_ptr;
+  bVar1 = bdByteBuffer::readString((bdByteBuffer *)(param_1.m_ptr)->_padding_,this->m_countryCode,3)
   ;
-  if (bVar2) {
-    bVar3 = bdByteBuffer::readString
-                      ((bdByteBuffer *)(param_1.m_ptr)->_padding_,(char *)(iVar1 + 7),0x41);
-    bVar2 = true;
-    if (!bVar3) goto LAB_829042e0;
+  if (bVar1) {
+    bVar2 = bdByteBuffer::readString
+                      ((bdByteBuffer *)(param_1.m_ptr)->_padding_,this->m_country,0x41);
+    bVar1 = true;
+    if (!bVar2) goto LAB_829042e0;
   }
   else {
 LAB_829042e0:
-    bVar2 = false;
+    bVar1 = false;
   }
-  if (bVar2) {
-    bVar3 = bdByteBuffer::readString
-                      ((bdByteBuffer *)(param_1.m_ptr)->_padding_,(char *)(iVar1 + 0x48),0x41);
-    bVar2 = true;
-    if (!bVar3) goto LAB_82904308;
+  if (bVar1) {
+    bVar2 = bdByteBuffer::readString((bdByteBuffer *)(param_1.m_ptr)->_padding_,this->m_region,0x41)
+    ;
+    bVar1 = true;
+    if (!bVar2) goto LAB_82904308;
   }
   else {
 LAB_82904308:
-    bVar2 = false;
+    bVar1 = false;
   }
-  if (bVar2) {
-    bVar3 = bdByteBuffer::readString
-                      ((bdByteBuffer *)(param_1.m_ptr)->_padding_,(char *)(iVar1 + 0x89),0x81);
-    bVar2 = true;
-    if (!bVar3) goto LAB_82904330;
+  if (bVar1) {
+    bVar2 = bdByteBuffer::readString((bdByteBuffer *)(param_1.m_ptr)->_padding_,this->m_city,0x81);
+    bVar1 = true;
+    if (!bVar2) goto LAB_82904330;
   }
   else {
 LAB_82904330:
-    bVar2 = false;
+    bVar1 = false;
   }
-  if (bVar2) {
-    bVar3 = bdByteBuffer::readFloat32
-                      ((bdByteBuffer *)(param_1.m_ptr)->_padding_,(float *)(iVar1 + 0x10c));
-    bVar2 = true;
-    if (!bVar3) goto LAB_82904354;
+  if (bVar1) {
+    bVar2 = bdByteBuffer::readFloat32((bdByteBuffer *)(param_1.m_ptr)->_padding_,&this->m_latitude);
+    bVar1 = true;
+    if (!bVar2) goto LAB_82904354;
   }
   else {
 LAB_82904354:
-    bVar2 = false;
+    bVar1 = false;
   }
-  if (bVar2) {
-    bVar2 = bdByteBuffer::readFloat32
-                      ((bdByteBuffer *)(param_1.m_ptr)->_padding_,(float *)(iVar1 + 0x110));
-    uVar5 = 1;
-    if (bVar2) goto LAB_8290437c;
+  if (bVar1) {
+    bVar1 = bdByteBuffer::readFloat32((bdByteBuffer *)(param_1.m_ptr)->_padding_,&this->m_longitude)
+    ;
+    bVar2 = true;
+    if (bVar1) goto LAB_8290437c;
   }
-  uVar5 = 0;
+  bVar2 = false;
 LAB_8290437c:
   bdReference<bdByteBuffer>::~bdReference<bdByteBuffer>((bdReference<bdByteBuffer> *)param_1.m_ptr);
-  uVar4 = __restgprlr_29(uVar5);
-  return (bool)uVar4;
+  return bVar2;
 }
 
 

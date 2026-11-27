@@ -13,79 +13,67 @@ void TRACK_ui_utils(void)
 
 // 825D2248  Window_SetDynamicFlags  (ui/ui_utils.cpp:49)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void Window_SetDynamicFlags(LocalClientNum_t param_1,windowDef_t *param_2,int param_3)
 
 {
-  uint uVar1;
-  ulonglong uVar2;
-  
-  uVar2 = (ulonglong)param_3;
-  uVar1 = __savegprlr_28(param_1);
-  if (3 < uVar1) {
+  if (LOCAL_CLIENT_3 < param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_utils.cpp",0x32,0,
                     "localClientNum doesn\'t index MAX_POSSIBLE_LOCAL_CLIENTS\n\t%i not in [0, %i)")
     ;
   }
-  if (((int)uVar2 != 0) && ((uVar2 & 0xfffff) == 0)) {
+  if ((param_3 != 0) && ((param_3 & 0xfffffU) == 0)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_utils.cpp",0x33,0,
                     "%s\n\t(flags) = %i");
   }
-  if ((uVar2 & 0xfff00000) != 0) {
+  if ((param_3 & 0xfff00000U) != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_utils.cpp",0x34,0,"%s");
   }
-  param_2->dynamicFlags[uVar1] = (int)uVar2;
-  __restgprlr_28();
+  param_2->dynamicFlags[param_1] = param_3;
   return;
 }
 
 
 // 825D2308  Window_AddDynamicFlags  (ui/ui_utils.cpp:64)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void Window_AddDynamicFlags(LocalClientNum_t param_1,windowDef_t *param_2,int param_3)
 
 {
-  LocalClientNum_t LVar1;
-  
-  LVar1 = __savegprlr_29(param_1);
-  if (LOCAL_CLIENT_3 < LVar1) {
+  if (LOCAL_CLIENT_3 < param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_utils.h",0x21,0,
                     "localClientNum doesn\'t index MAX_POSSIBLE_LOCAL_CLIENTS\n\t%i not in [0, %i)")
     ;
   }
-  Window_SetDynamicFlags(LVar1,param_2,param_2->dynamicFlags[LVar1] | param_3);
-  __restgprlr_29();
+  Window_SetDynamicFlags(param_1,param_2,param_2->dynamicFlags[param_1] | param_3);
   return;
 }
 
 
 // 825D2370  Window_RemoveDynamicFlags  (ui/ui_utils.cpp:73)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void Window_RemoveDynamicFlags(LocalClientNum_t param_1,windowDef_t *param_2,int param_3)
 
 {
-  LocalClientNum_t LVar1;
-  ulonglong uVar2;
-  uint uVar3;
-  
-  uVar2 = (ulonglong)param_3;
-  LVar1 = __savegprlr_29(param_1);
-  uVar3 = (uint)uVar2;
-  if (LOCAL_CLIENT_3 < LVar1) {
+  if (LOCAL_CLIENT_3 < param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_utils.h",0x21,0,
                     "localClientNum doesn\'t index MAX_POSSIBLE_LOCAL_CLIENTS\n\t%i not in [0, %i)")
     ;
   }
-  if ((uVar2 & 4) != 0) {
-    uVar3 = uVar3 | 2;
+  if ((param_3 & 4U) != 0) {
+    param_3 = param_3 | 2;
   }
-  Window_SetDynamicFlags(LVar1,param_2,param_2->dynamicFlags[LVar1] & ~uVar3);
-  __restgprlr_29();
+  Window_SetDynamicFlags(param_1,param_2,param_2->dynamicFlags[param_1] & ~param_3);
   return;
 }
 
@@ -105,29 +93,28 @@ int Window_IsDecoration(windowDef_t *param_1)
 
 // 825D23F0  Window_SetStaticFlags  (ui/ui_utils.cpp:88)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void Window_SetStaticFlags(windowDef_t *param_1,int param_2)
 
 {
-  int iVar1;
-  ulonglong uVar2;
-  
-  uVar2 = (ulonglong)param_2;
-  iVar1 = __savegprlr_29(param_1);
-  if (((int)uVar2 != 0) && ((uVar2 & 0xfff00000) == 0)) {
+  if ((param_2 != 0) && ((param_2 & 0xfff00000U) == 0)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_utils.cpp",0x59,0,
                     "%s\n\t(flags) = %i");
   }
-  if ((uVar2 & 0xfffff) != 0) {
+  if ((param_2 & 0xfffffU) != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_utils.cpp",0x5a,0,"%s");
   }
-  *(int *)(iVar1 + 0x44) = (int)uVar2;
-  __restgprlr_29();
+  param_1->staticFlags = param_2;
   return;
 }
 
 
 // 825D2480  Menu_SetCursorItem  (ui/ui_utils.cpp:96)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
@@ -135,27 +122,23 @@ void Window_SetStaticFlags(windowDef_t *param_1,int param_2)
 void Menu_SetCursorItem(LocalClientNum_t param_1,menuDef_t *param_2,int param_3)
 
 {
-  uint uVar1;
-  ulonglong uVar2;
-  
-  uVar2 = (ulonglong)(int)param_2;
-  uVar1 = __savegprlr_28(param_1);
-  if (3 < uVar1) {
+  if (LOCAL_CLIENT_3 < param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_utils.cpp",0x61,0,
                     "localClientNum doesn\'t index MAX_POSSIBLE_LOCAL_CLIENTS\n\t%i not in [0, %i)")
     ;
   }
-  if ((uVar2 & 0xffffffff) == 0) {
+  if (param_2 == (menuDef_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_utils.cpp",0x62,0,"%s");
   }
-  *(int *)((uVar1 + 0x1a) * 4 + *(int *)uVar2) = param_3;
-  __restgprlr_28();
+  param_2->data->cursorItem[param_1] = param_3;
   return;
 }
 
 
 // 825D3270  Menu_IsPrevCursorItemLeft  (ui/ui_utils.cpp:111)
 
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
@@ -165,56 +148,52 @@ bool Menu_IsPrevCursorItemLeft(LocalClientNum_t param_1,menuDef_t *param_2)
 {
   uint uVar1;
   itemDef_t *piVar2;
-  LocalClientNum_t LVar4;
-  int iVar5;
-  undefined1 uVar6;
-  undefined8 uVar3;
-  longlong lVar7;
-  ulonglong uVar8;
-  double dVar9;
+  int iVar3;
+  longlong lVar4;
+  ulonglong uVar5;
+  double dVar6;
   
-  LVar4 = __savegprlr_25(param_1);
-  if (LOCAL_CLIENT_3 < LVar4) {
+  if (LOCAL_CLIENT_3 < param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_utils.h",0x2e,0,
                     "localClientNum doesn\'t index MAX_POSSIBLE_LOCAL_CLIENTS\n\t%i not in [0, %i)")
     ;
   }
-  uVar1 = param_2->data->cursorItem[LVar4];
+  uVar1 = param_2->data->cursorItem[param_1];
   if ((-1 < (int)uVar1) && ((int)uVar1 < param_2->itemCount)) {
-    uVar8 = (ulonglong)uVar1 - 1;
+    uVar5 = (ulonglong)uVar1 - 1;
     piVar2 = param_2->items[uVar1];
-    dVar9 = (double)((piVar2->window).rect.h * 0.5 + (piVar2->window).rect.y);
-    if (-1 < (longlong)uVar8) {
-      lVar7 = (uVar8 & 0x3fffffff) << 2;
+    dVar6 = (double)((piVar2->window).rect.h * 0.5 + (piVar2->window).rect.y);
+    if (-1 < (longlong)uVar5) {
+      lVar4 = (uVar5 & 0x3fffffff) << 2;
       while( true ) {
-        if (param_2->itemCount <= (int)uVar8) {
+        if (param_2->itemCount <= (int)uVar5) {
           MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_utils.cpp",0x7b,0,
                           "leftCursor < menu->itemCount\n\t%i, %i");
         }
-        iVar5 = Item_CanHaveFocus(LVar4,*(itemDef_t **)((int)lVar7 + (int)param_2->items));
-        if (iVar5 != 0) break;
-        uVar8 = uVar8 - 1;
-        lVar7 = lVar7 + -4;
-        if ((longlong)uVar8 < 0) {
-          uVar6 = __restgprlr_25();
-          return (bool)uVar6;
+        iVar3 = Item_CanHaveFocus(param_1,*(itemDef_t **)((int)lVar4 + (int)param_2->items));
+        if (iVar3 != 0) break;
+        uVar5 = uVar5 - 1;
+        lVar4 = lVar4 + -4;
+        if ((longlong)uVar5 < 0) {
+          return false;
         }
       }
-      iVar5 = *(int *)((int)((uVar8 & 0xffffffff) << 2) + (int)param_2->items);
-      if ((((double)*(float *)(iVar5 + 8) < dVar9) &&
-          (dVar9 < (double)(float)((double)*(float *)(iVar5 + 0x10) + (double)*(float *)(iVar5 + 8))
-          )) && (uVar3 = 1, *(float *)(iVar5 + 4) < (piVar2->window).rect.x)) goto LAB_825d33a8;
+      iVar3 = *(int *)((int)((uVar5 & 0xffffffff) << 2) + (int)param_2->items);
+      if ((((double)*(float *)(iVar3 + 8) < dVar6) &&
+          (dVar6 < (double)(float)((double)*(float *)(iVar3 + 0x10) + (double)*(float *)(iVar3 + 8))
+          )) && (*(float *)(iVar3 + 4) < (piVar2->window).rect.x)) {
+        return true;
+      }
     }
   }
-  uVar3 = 0;
-LAB_825d33a8:
-  uVar6 = __restgprlr_25(uVar3);
-  return (bool)uVar6;
+  return false;
 }
 
 
 // 825D33B8  Menu_IsNextCursorItemRight  (ui/ui_utils.cpp:142)
 
+/* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
@@ -224,54 +203,46 @@ bool Menu_IsNextCursorItemRight(LocalClientNum_t param_1,menuDef_t *param_2)
 {
   itemDef_t *piVar1;
   itemDef_t *piVar2;
-  LocalClientNum_t LVar4;
+  int iVar3;
+  int iVar4;
   int iVar5;
-  undefined1 uVar6;
-  undefined8 uVar3;
-  int iVar7;
-  int iVar8;
-  double dVar9;
-  double dVar10;
+  double dVar6;
+  double dVar7;
   
-  LVar4 = __savegprlr_24(param_1);
-  if (LOCAL_CLIENT_3 < LVar4) {
+  if (LOCAL_CLIENT_3 < param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_utils.h",0x2e,0,
                     "localClientNum doesn\'t index MAX_POSSIBLE_LOCAL_CLIENTS\n\t%i not in [0, %i)")
     ;
   }
-  iVar7 = param_2->data->cursorItem[LVar4];
-  if (-1 < iVar7) {
-    if (iVar7 < param_2->itemCount) {
-      iVar8 = iVar7 + 1;
-      piVar1 = param_2->items[iVar7];
-      dVar10 = (double)((piVar1->window).rect.h * 0.5 + (piVar1->window).rect.y);
-      if (iVar8 < param_2->itemCount) {
-        iVar7 = iVar8 * 4;
-        while( true ) {
-          if (iVar8 < 0) {
-            MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_utils.cpp",0x99,
-                            0,"%s\n\t(rightCursor) = %i");
-          }
-          iVar5 = Item_CanHaveFocus(LVar4,*(itemDef_t **)(iVar7 + (int)param_2->items));
-          if (iVar5 != 0) break;
-          iVar8 = iVar8 + 1;
-          iVar7 = iVar7 + 4;
-          if (param_2->itemCount <= iVar8) {
-            uVar6 = __restgprlr_24();
-            return (bool)uVar6;
-          }
+  iVar4 = param_2->data->cursorItem[param_1];
+  if ((-1 < iVar4) && (iVar4 < param_2->itemCount)) {
+    iVar5 = iVar4 + 1;
+    piVar1 = param_2->items[iVar4];
+    dVar7 = (double)((piVar1->window).rect.h * 0.5 + (piVar1->window).rect.y);
+    if (iVar5 < param_2->itemCount) {
+      iVar4 = iVar5 * 4;
+      while( true ) {
+        if (iVar5 < 0) {
+          MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_utils.cpp",0x99,0,
+                          "%s\n\t(rightCursor) = %i");
         }
-        piVar2 = param_2->items[iVar8];
-        dVar9 = (double)(piVar2->window).rect.y;
-        if (((dVar9 < dVar10) && (dVar10 < (double)(float)((double)(piVar2->window).rect.h + dVar9))
-            ) && (uVar3 = 1, (piVar1->window).rect.x < (piVar2->window).rect.x)) goto LAB_825d3504;
+        iVar3 = Item_CanHaveFocus(param_1,*(itemDef_t **)(iVar4 + (int)param_2->items));
+        if (iVar3 != 0) break;
+        iVar5 = iVar5 + 1;
+        iVar4 = iVar4 + 4;
+        if (param_2->itemCount <= iVar5) {
+          return false;
+        }
+      }
+      piVar2 = param_2->items[iVar5];
+      dVar6 = (double)(piVar2->window).rect.y;
+      if (((dVar6 < dVar7) && (dVar7 < (double)(float)((double)(piVar2->window).rect.h + dVar6))) &&
+         ((piVar1->window).rect.x < (piVar2->window).rect.x)) {
+        return true;
       }
     }
   }
-  uVar3 = 0;
-LAB_825d3504:
-  uVar6 = __restgprlr_24(uVar3);
-  return (bool)uVar6;
+  return false;
 }
 
 
@@ -351,49 +322,46 @@ int Item_CanHaveFocus(LocalClientNum_t param_1,itemDef_t *param_2)
 
 // 825D2580  Item_EnableShowViaDvar  (ui/ui_utils.cpp:220)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 
 int Item_EnableShowViaDvar(itemDef_t *param_1,int param_2)
 
 {
-  int iVar1;
-  char *pcVar2;
-  int iVar3;
-  ulonglong uVar4;
+  char *pcVar1;
+  int iVar2;
   char *local_430 [4];
   char local_420;
   char local_41f;
   
-  uVar4 = (ulonglong)param_2;
-  iVar1 = __savegprlr_29(param_1,uVar4);
-  if (iVar1 == 0) {
+  if (param_1 == (itemDef_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_utils.cpp",0xe1,0,"%s");
   }
-  if ((((*(char **)(iVar1 + 0x168) != (char *)0x0) && (**(char **)(iVar1 + 0x168) != '\0')) &&
-      (pcVar2 = *(char **)(iVar1 + 0x160), pcVar2 != (char *)0x0)) && (*pcVar2 != '\0')) {
-    pcVar2 = Dvar_GetVariantString(pcVar2);
-    local_430[0] = *(char **)(iVar1 + 0x168);
-    iVar3 = String_Parse(local_430,&local_420,0x400);
+  if ((((param_1->enableDvar != (char *)0x0) && (*param_1->enableDvar != '\0')) &&
+      (pcVar1 = param_1->dvarTest, pcVar1 != (char *)0x0)) && (*pcVar1 != '\0')) {
+    pcVar1 = Dvar_GetVariantString(pcVar1);
+    local_430[0] = param_1->enableDvar;
+    iVar2 = String_Parse(local_430,&local_420,0x400);
     while( true ) {
-      if (iVar3 == 0) {
-        iVar1 = __restgprlr_29((*(uint *)(iVar1 + 0x170) & (uint)uVar4) == 0);
-        return iVar1;
+      if (iVar2 == 0) {
+        return (uint)LZCOUNT(param_1->dvarFlags & param_2) >> 5;
       }
       if (((local_420 != ';') || (local_41f != '\0')) &&
-         (iVar3 = I_stricmp(pcVar2,&local_420), iVar3 == 0)) break;
-      iVar3 = String_Parse(local_430,&local_420,0x400);
+         (iVar2 = I_stricmp(pcVar1,&local_420), iVar2 == 0)) break;
+      iVar2 = String_Parse(local_430,&local_420,0x400);
     }
-    iVar1 = __restgprlr_29((*(uint *)(iVar1 + 0x170) & uVar4) != 0);
-    return iVar1;
+    return (uint)((param_1->dvarFlags & param_2) != 0);
   }
-  iVar1 = __restgprlr_29(1);
-  return iVar1;
+  return 1;
 }
 
 
 // 825D2698  Item_SetTextRect  (ui/ui_utils.cpp:251)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
@@ -401,51 +369,46 @@ int Item_EnableShowViaDvar(itemDef_t *param_1,int param_2)
 void Item_SetTextRect(LocalClientNum_t param_1,itemDef_t *param_2,rectDef_s *param_3)
 
 {
-  ulonglong uVar1;
-  ulonglong uVar2;
-  ulonglong uVar3;
-  longlong lVar4;
-  longlong lVar5;
-  longlong lVar6;
+  uchar *puVar1;
+  uchar *puVar2;
+  longlong lVar3;
   
-  uVar3 = (ulonglong)(int)param_3;
-  uVar2 = (ulonglong)(int)param_2;
-  uVar1 = __savegprlr_27(param_1);
-  if (3 < (uVar1 & 0xffffffff)) {
+  if (LOCAL_CLIENT_3 < param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_utils.cpp",0xfc,0,
                     "localClientNum doesn\'t index MAX_POSSIBLE_LOCAL_CLIENTS\n\t%i not in [0, %i)")
     ;
   }
-  if ((uVar2 & 0xffffffff) == 0) {
+  if (param_2 == (itemDef_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_utils.cpp",0xfd,0,"%s");
   }
-  if ((uVar3 & 0xffffffff) == 0) {
+  if (param_3 == (rectDef_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_utils.cpp",0xfe,0,"%s");
   }
-  if (10 < *(byte *)((int)uVar3 + 0x10)) {
+  if (10 < param_3->horzAlign) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_utils.cpp",0xff,0,
                     "%s\n\t(textRect->horzAlign) = %i");
   }
-  if (10 < *(byte *)((int)uVar3 + 0x11)) {
+  if (10 < param_3->vertAlign) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_utils.cpp",0x100,0,
                     "%s\n\t(textRect->vertAlign) = %i");
   }
-  lVar4 = uVar3 - 4;
-  lVar6 = 5;
-  lVar5 = (uVar1 + (uVar1 & 0x3fffffff) * 4 & 0x3fffffff) * 4 + uVar2 + 0xac;
+  puVar1 = &param_3[-1].horzAlign;
+  lVar3 = 5;
+  puVar2 = &param_2->textRect[param_1 - LOCAL_CLIENT_1].horzAlign;
   do {
-    lVar4 = lVar4 + 4;
-    lVar5 = lVar5 + 4;
-    *(undefined4 *)lVar5 = *(undefined4 *)lVar4;
-    lVar6 = lVar6 + -1;
-  } while (lVar6 != 0);
-  __restgprlr_27();
+    puVar1 = puVar1 + 4;
+    puVar2 = puVar2 + 4;
+    *(undefined4 *)puVar2 = *(undefined4 *)puVar1;
+    lVar3 = lVar3 + -1;
+  } while (lVar3 != 0);
   return;
 }
 
 
 // 825D27C0  Item_GetCursorPosOffset  (ui/ui_utils.cpp:269)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
@@ -454,59 +417,51 @@ int Item_GetCursorPosOffset(LocalClientNum_t param_1,itemDef_t *param_2,char *pa
 
 {
   char cVar1;
-  char *pcVar2;
-  uint uVar4;
-  ulonglong uVar3;
-  int iVar5;
-  int iVar6;
-  longlong lVar7;
-  ulonglong uVar8;
-  longlong lVar9;
+  int iVar2;
+  int iVar3;
+  char *pcVar4;
   
-  lVar9 = (longlong)param_4;
-  lVar7 = (longlong)(int)param_3;
-  uVar4 = __savegprlr_28(param_1);
-  if (3 < uVar4) {
+  if (LOCAL_CLIENT_3 < param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_utils.cpp",0x110,0,
                     "localClientNum doesn\'t index MAX_POSSIBLE_LOCAL_CLIENTS\n\t%i not in [0, %i)")
     ;
   }
-  uVar3 = (ulonglong)(uint)param_2->cursorPos[uVar4];
-  iVar6 = (int)lVar7;
-  if ((int)lVar9 < 1) {
-    if (param_2->cursorPos[uVar4] != 0) {
-      uVar8 = (uVar3 + lVar7) - 2;
+  iVar3 = param_2->cursorPos[param_1];
+  if (param_4 < 1) {
+    if (iVar3 != 0) {
+      pcVar4 = param_3 + iVar3 + -2;
+      iVar2 = iVar3;
       do {
-        if ((int)lVar9 == 0) break;
-        iVar5 = (int)uVar3;
-        if (((((iVar5 < 2) || ((uVar8 & 0xffffffff) == 0)) || (*(char *)(iVar5 + iVar6 + -2) != '^')
-             ) || ((cVar1 = *(char *)(iVar5 + iVar6 + -1), cVar1 == '\0' || (cVar1 == '^')))) ||
+        if (param_4 == 0) {
+          return iVar2;
+        }
+        if (((((iVar2 < 2) || (pcVar4 == (char *)0x0)) || (param_3[iVar2 + -2] != '^')) ||
+            ((cVar1 = param_3[iVar2 + -1], cVar1 == '\0' || (cVar1 == '^')))) ||
            ((cVar1 < '0' || (';' < cVar1)))) {
-          uVar3 = uVar3 - 1;
-          uVar8 = uVar8 - 1;
-          lVar9 = lVar9 + 1;
+          iVar2 = iVar2 + -1;
+          pcVar4 = pcVar4 + -1;
+          param_4 = param_4 + 1;
         }
         else {
-          uVar3 = uVar3 - 2;
-          uVar8 = uVar8 - 2;
+          iVar2 = iVar2 + -2;
+          pcVar4 = pcVar4 + -2;
         }
-      } while ((int)uVar3 != 0);
+        iVar3 = 0;
+      } while (iVar2 != 0);
     }
   }
   else {
     while( true ) {
-      while ((((pcVar2 = (char *)(uVar3 + lVar7), uVar3 + lVar7 != 0 && (*pcVar2 == '^')) &&
-              (cVar1 = *(char *)((int)uVar3 + iVar6 + 1), cVar1 != '\0')) &&
-             (((cVar1 != '^' && ('/' < cVar1)) && (cVar1 < '<'))))) {
-        uVar3 = uVar3 + 2;
+      for (; (((pcVar4 = param_3 + iVar3, pcVar4 != (char *)0x0 && (*pcVar4 == '^')) &&
+              (cVar1 = param_3[iVar3 + 1], cVar1 != '\0')) &&
+             (((cVar1 != '^' && ('/' < cVar1)) && (cVar1 < '<')))); iVar3 = iVar3 + 2) {
       }
-      if ((*pcVar2 == '\0') || ((int)lVar9 == 0)) break;
-      uVar3 = uVar3 + 1;
-      lVar9 = lVar9 + -1;
+      if ((*pcVar4 == '\0') || (param_4 == 0)) break;
+      iVar3 = iVar3 + 1;
+      param_4 = param_4 + -1;
     }
   }
-  iVar6 = __restgprlr_28();
-  return iVar6;
+  return iVar3;
 }
 
 
@@ -544,6 +499,8 @@ bool ListBox_HasValidCursorPos(LocalClientNum_t param_1,itemDef_t *param_2)
 
 // 825D2918  Item_SetScreenCoords  (ui/ui_utils.cpp:324)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
@@ -555,76 +512,68 @@ void Item_SetScreenCoords
 {
   uchar uVar1;
   float fVar2;
-  itemDef_t *piVar3;
-  LocalClientNum_t LVar4;
-  rectDef_s *prVar5;
-  ulonglong uVar6;
+  rectDef_s *prVar3;
   uint in_r7;
   uint in_r8;
-  undefined4 *puVar7;
-  longlong lVar8;
-  uchar *puVar9;
-  longlong lVar10;
-  double extraout_f1;
-  double dVar11;
+  itemDef_t *piVar4;
+  undefined4 *puVar5;
+  uchar *puVar6;
+  longlong lVar7;
   undefined4 uStack_54;
   rectDef_s local_50 [4];
   
-  dVar11 = (double)param_4;
-  uVar6 = (ulonglong)(int)param_2;
-  LVar4 = __savegprlr_27((double)param_3,param_1,uVar6,param_5,param_6);
-  if ((uVar6 & 0xffffffff) == 0) {
+  if (param_2 == (itemDef_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_utils.cpp",0x148,0,"%s")
     ;
-    __restgprlr_27();
     return;
   }
-  piVar3 = (itemDef_t *)uVar6;
-  prVar5 = &(piVar3->window).rect;
-  lVar8 = uVar6 + 0x14;
-  lVar10 = 5;
+  prVar3 = &(param_2->window).rect;
+  puVar6 = &(param_2->window).rect.horzAlign;
+  lVar7 = 5;
+  piVar4 = param_2;
   do {
-    lVar8 = lVar8 + 4;
-    uVar6 = uVar6 + 4;
-    *(undefined4 *)uVar6 = *(undefined4 *)lVar8;
-    lVar10 = lVar10 + -1;
-  } while (lVar10 != 0);
-  uVar1 = (piVar3->window).rect.horzAlign;
-  fVar2 = (piVar3->window).rect.y;
-  prVar5->x = (float)((double)prVar5->x + extraout_f1);
-  (piVar3->window).rect.y = (float)((double)fVar2 + dVar11);
-  if ((uVar1 == '\0') && ((piVar3->window).rect.vertAlign == '\0')) {
-    (piVar3->window).rect.vertAlign = (uchar)in_r8;
-    (piVar3->window).rect.horzAlign = (uchar)in_r7;
+    puVar6 = puVar6 + 4;
+    piVar4 = (itemDef_t *)&(piVar4->window).rect;
+    ((rectDef_s *)piVar4)->x = *(float *)puVar6;
+    lVar7 = lVar7 + -1;
+  } while (lVar7 != 0);
+  uVar1 = (param_2->window).rect.horzAlign;
+  fVar2 = (param_2->window).rect.y;
+  prVar3->x = prVar3->x + param_3;
+  (param_2->window).rect.y = fVar2 + param_4;
+  if ((uVar1 == '\0') && ((param_2->window).rect.vertAlign == '\0')) {
+    (param_2->window).rect.vertAlign = (uchar)in_r8;
+    (param_2->window).rect.horzAlign = (uchar)in_r7;
     if ((in_r7 & 0xff) != in_r7) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_utils.cpp",0x155,0,
                       "%s");
     }
-    if ((piVar3->window).rect.vertAlign != in_r8) {
+    if ((param_2->window).rect.vertAlign != in_r8) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_utils.cpp",0x156,0,
                       "%s");
     }
   }
-  prVar5 = Item_GetTextRect(LVar4,piVar3);
-  puVar7 = &uStack_54;
-  puVar9 = &prVar5[-1].horzAlign;
-  lVar8 = 5;
+  prVar3 = Item_GetTextRect(param_1,param_2);
+  puVar5 = &uStack_54;
+  puVar6 = &prVar3[-1].horzAlign;
+  lVar7 = 5;
   do {
-    puVar9 = puVar9 + 4;
-    puVar7 = puVar7 + 1;
-    *puVar7 = *(undefined4 *)puVar9;
-    lVar8 = lVar8 + -1;
-  } while (lVar8 != 0);
+    puVar6 = puVar6 + 4;
+    puVar5 = puVar5 + 1;
+    *puVar5 = *(undefined4 *)puVar6;
+    lVar7 = lVar7 + -1;
+  } while (lVar7 != 0);
   local_50[0].w = 0.0;
   local_50[0].h = 0.0;
-  Item_SetTextRect(LVar4,piVar3,local_50);
-  __restgprlr_27();
+  Item_SetTextRect(param_1,param_2,local_50);
   return;
 }
 
 
 // 825D2A70  Menu_UpdatePosition  (ui/ui_utils.cpp:355)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
@@ -632,53 +581,48 @@ void Item_SetScreenCoords
 void Menu_UpdatePosition(LocalClientNum_t param_1,menuDef_t *param_2)
 
 {
-  int iVar1;
-  LocalClientNum_t LVar2;
-  ulonglong uVar3;
   undefined8 in_r5;
   undefined8 in_r6;
-  undefined8 uVar4;
-  int iVar5;
-  int iVar6;
-  double dVar7;
-  double dVar8;
+  undefined8 uVar1;
+  int iVar2;
+  int iVar3;
+  double dVar4;
+  double dVar5;
+  double dVar6;
   
-  uVar3 = (ulonglong)(int)param_2;
-  LVar2 = __savegprlr_27(param_1);
-  if ((uVar3 & 0xffffffff) != 0) {
-    uVar4 = 0xffffffff82000f98;
-    if (uVar3 == 0xfffffffffffffffc) {
+  if (param_2 != (menuDef_t *)0x0) {
+    uVar1 = 0xffffffff82000f98;
+    if (param_2 == (menuDef_t *)0xfffffffc) {
       in_r5 = 0;
-      in_r6 = uVar4;
+      in_r6 = uVar1;
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_utils_api.h",0x24,0,
                       "%s");
     }
-    iVar1 = (int)uVar3;
-    dVar8 = (double)*(float *)(iVar1 + 8);
-    dVar7 = (double)*(float *)(iVar1 + 0xc);
-    if (*(int *)(iVar1 + 0x38) != 0) {
-      dVar8 = (double)(float)((double)*(float *)(iVar1 + 0x44) + dVar8);
-      dVar7 = (double)(float)((double)*(float *)(iVar1 + 0x44) + dVar7);
+    dVar6 = (double)(param_2->window).rect.x;
+    dVar5 = (double)(param_2->window).rect.y;
+    if ((param_2->window).border != 0) {
+      dVar4 = (double)(param_2->window).borderSize;
+      dVar6 = (double)(float)(dVar4 + dVar6);
+      dVar5 = (double)(float)(dVar4 + dVar5);
     }
-    if ((*(int *)(iVar1 + 0xb4) != 0) && (*(int *)(iVar1 + 0xb8) == 0)) {
+    if ((param_2->itemCount != 0) && (param_2->items == (itemDef_t **)0x0)) {
       in_r5 = 0;
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_utils.cpp",0x176,0,
                       "%s");
-      in_r6 = uVar4;
+      in_r6 = uVar1;
     }
-    iVar5 = 0;
-    if (0 < *(int *)(iVar1 + 0xb4)) {
-      iVar6 = 0;
+    iVar2 = 0;
+    if (0 < param_2->itemCount) {
+      iVar3 = 0;
       do {
         Item_SetScreenCoords
-                  (LVar2,*(itemDef_t **)(*(int *)(iVar1 + 0xb8) + iVar6),(float)dVar8,(float)dVar7,
+                  (param_1,*(itemDef_t **)((int)param_2->items + iVar3),(float)dVar6,(float)dVar5,
                    (int)in_r5,(int)in_r6);
-        iVar5 = iVar5 + 1;
-        iVar6 = iVar6 + 4;
-      } while (iVar5 < *(int *)(iVar1 + 0xb4));
+        iVar2 = iVar2 + 1;
+        iVar3 = iVar3 + 4;
+      } while (iVar2 < param_2->itemCount);
     }
   }
-  __restgprlr_27();
   return;
 }
 
@@ -789,30 +733,27 @@ newsTickerDef_s * Item_GetNewsTickerDef(itemDef_t *param_1)
 
 // 825D2DD8  Item_GetTextScrollDef  (ui/ui_utils.cpp:440)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 
 textScrollDef_s * Item_GetTextScrollDef(itemDef_t *param_1)
 
 {
-  int iVar1;
-  textScrollDef_s *ptVar2;
-  
-  iVar1 = __savegprlr_29(param_1);
-  if (iVar1 == 0) {
+  if (param_1 == (itemDef_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_utils.cpp",0x1b9,0,"%s")
     ;
   }
-  if (*(int *)(iVar1 + 0x104) != 0x15) {
+  if (param_1->dataType != 0x15) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_utils.cpp",0x1ba,0,
                     "%s\n\t(item->dataType) = %i");
   }
-  if (*(int *)(iVar1 + 0x18c) == 0) {
+  if ((param_1->typeData).listBox == (listBoxDef_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_utils.cpp",0x1bb,0,"%s")
     ;
   }
-  ptVar2 = (textScrollDef_s *)__restgprlr_29(*(undefined4 *)(iVar1 + 0x18c));
-  return ptVar2;
+  return (param_1->typeData).scroll;
 }
 
 
@@ -836,31 +777,30 @@ int Int_Parse(char **param_1,int *param_2)
 
 // 825D2EE8  Float_Parse  (ui/ui_utils.cpp:567)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 int Float_Parse(char **param_1,float *param_2)
 
 {
-  char **ppcVar1;
-  char *pcVar2;
-  int iVar3;
-  double dVar4;
+  char *pcVar1;
+  int iVar2;
+  double dVar3;
   
-  ppcVar1 = (char **)__savegprlr_29(param_1);
-  pcVar2 = Com_ParseOnLine(ppcVar1);
-  iVar3 = I_strcmp(pcVar2,"-");
-  if (iVar3 == 0) {
-    pcVar2 = Com_ParseOnLine(ppcVar1);
+  pcVar1 = Com_ParseOnLine(param_1);
+  iVar2 = I_strcmp(pcVar1,"-");
+  if (iVar2 == 0) {
+    pcVar1 = Com_ParseOnLine(param_1);
   }
-  if ((pcVar2 != (char *)0x0) && (*pcVar2 != '\0')) {
-    dVar4 = atof(pcVar2);
-    *param_2 = (float)dVar4;
-    if (iVar3 == 0) {
-      *param_2 = (float)dVar4 * -1.0;
+  if ((pcVar1 != (char *)0x0) && (*pcVar1 != '\0')) {
+    dVar3 = atof(pcVar1);
+    *param_2 = (float)dVar3;
+    if (iVar2 == 0) {
+      *param_2 = (float)dVar3 * -1.0;
     }
-    iVar3 = __restgprlr_29(1);
-    return iVar3;
+    return 1;
   }
-  iVar3 = __restgprlr_29(0);
-  return iVar3;
+  return 0;
 }
 
 

@@ -19,6 +19,8 @@ void Transition_RunTrigger(UiContext *param_1,menuDef_t *param_2,int param_3)
 
 // 825D15C8  Transition_CheckEndTrigger  (ui/ui_transitions.cpp:45)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
@@ -26,37 +28,31 @@ void Transition_RunTrigger(UiContext *param_1,menuDef_t *param_2,int param_3)
 int Transition_CheckEndTrigger(UiContext *param_1,menuDef_t *param_2,menuTransition *param_3)
 
 {
-  UiContext *pUVar1;
-  int iVar2;
-  int iVar3;
-  ulonglong uVar4;
+  int iVar1;
   
-  uVar4 = (ulonglong)(int)param_3;
-  pUVar1 = (UiContext *)__savegprlr_29(param_1);
-  iVar2 = (int)uVar4;
-  if ((uVar4 & 0xffffffff) == 0) {
-    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_transitions.cpp",0x30,
-                    iVar2,"%s");
+  if (param_3 == (menuTransition *)0x0) {
+    MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_transitions.cpp",0x30,0,
+                    "%s");
   }
-  if (*(int *)(iVar2 + 0x14) != 0) {
-    iVar3 = Sys_Milliseconds();
-    if (*(float *)(iVar2 + 0x10) < (float)(longlong)(iVar3 - *(int *)(iVar2 + 4)) * 0.001) {
-      if (*(int *)(iVar2 + 0x14) == 1) {
-        Menus_ForceClose(pUVar1,param_2);
+  if (param_3->endTriggerType != 0) {
+    iVar1 = Sys_Milliseconds();
+    if (param_3->time < (float)(longlong)(iVar1 - param_3->startTime) * 0.001) {
+      if (param_3->endTriggerType == 1) {
+        Menus_ForceClose(param_1,param_2);
       }
-      *(undefined4 *)(iVar2 + 0x14) = 0;
-      *(undefined4 *)(iVar2 + 4) = 0;
-      iVar2 = __restgprlr_29(1);
-      return iVar2;
+      param_3->endTriggerType = 0;
+      param_3->startTime = 0;
+      return 1;
     }
   }
-  iVar2 = __restgprlr_29(0);
-  return iVar2;
+  return 0;
 }
 
 
 // 825D2090  Menu_RunTransitionTriggers  (ui/ui_transitions.cpp:66)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
@@ -64,40 +60,35 @@ int Transition_CheckEndTrigger(UiContext *param_1,menuDef_t *param_2,menuTransit
 int Menu_RunTransitionTriggers(UiContext *param_1,menuDef_t *param_2)
 
 {
-  UiContext *pUVar1;
-  bool bVar5;
+  bool bVar3;
+  uint uVar1;
   uint uVar2;
-  uint uVar3;
-  int iVar4;
   
-  pUVar1 = (UiContext *)__savegprlr_29(param_1);
-  uVar2 = 0;
-  bVar5 = Menu_HasScaleTransition(pUVar1->localClientNum,param_2);
-  if (bVar5) {
+  uVar1 = 0;
+  bVar3 = Menu_HasScaleTransition(param_1->localClientNum,param_2);
+  if (bVar3) {
+    uVar1 = Transition_CheckEndTrigger
+                      (param_1,param_2,param_2->data->scaleTransition + param_1->localClientNum);
+  }
+  bVar3 = Menu_HasAlphaTransition(param_1->localClientNum,param_2);
+  if (bVar3) {
     uVar2 = Transition_CheckEndTrigger
-                      (pUVar1,param_2,param_2->data->scaleTransition + pUVar1->localClientNum);
+                      (param_1,param_2,param_2->data->alphaTransition + param_1->localClientNum);
+    uVar1 = uVar2 | uVar1;
   }
-  bVar5 = Menu_HasAlphaTransition(pUVar1->localClientNum,param_2);
-  if (bVar5) {
-    uVar3 = Transition_CheckEndTrigger
-                      (pUVar1,param_2,param_2->data->alphaTransition + pUVar1->localClientNum);
-    uVar2 = uVar3 | uVar2;
+  bVar3 = Menu_HasXTransition(param_1->localClientNum,param_2);
+  if (bVar3) {
+    uVar2 = Transition_CheckEndTrigger
+                      (param_1,param_2,param_2->data->xTransition + param_1->localClientNum);
+    uVar1 = uVar2 | uVar1;
   }
-  bVar5 = Menu_HasXTransition(pUVar1->localClientNum,param_2);
-  if (bVar5) {
-    uVar3 = Transition_CheckEndTrigger
-                      (pUVar1,param_2,param_2->data->xTransition + pUVar1->localClientNum);
-    uVar2 = uVar3 | uVar2;
+  bVar3 = Menu_HasYTransition(param_1->localClientNum,param_2);
+  if (bVar3) {
+    uVar2 = Transition_CheckEndTrigger
+                      (param_1,param_2,param_2->data->yTransition + param_1->localClientNum);
+    return uVar2 | uVar1;
   }
-  bVar5 = Menu_HasYTransition(pUVar1->localClientNum,param_2);
-  if (bVar5) {
-    uVar3 = Transition_CheckEndTrigger
-                      (pUVar1,param_2,param_2->data->yTransition + pUVar1->localClientNum);
-    iVar4 = __restgprlr_29(uVar3 | uVar2);
-    return iVar4;
-  }
-  iVar4 = __restgprlr_29(uVar2);
-  return iVar4;
+  return uVar1;
 }
 
 
@@ -198,33 +189,27 @@ bool Menu_HasYTransition(LocalClientNum_t param_1,menuDef_t *param_2)
 
 // 825D1970  MenuParse_ParseTransitionDetails  (ui/ui_transitions.cpp:147)
 
+/* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
+
 bool MenuParse_ParseTransitionDetails(char **param_1,float *param_2,float *param_3,float *param_4)
 
 {
   bool bVar1;
   bool bVar2;
   bool bVar3;
-  char **ppcVar4;
-  int iVar5;
-  undefined1 uVar6;
-  ulonglong uVar7;
-  ulonglong uVar8;
-  ulonglong uVar9;
+  int iVar4;
   char acStack_460 [1120];
   
-  uVar9 = (ulonglong)(int)param_4;
-  uVar8 = (ulonglong)(int)param_3;
-  uVar7 = (ulonglong)(int)param_2;
-  ppcVar4 = (char **)__savegprlr_22(param_1);
-  if ((uVar9 & 0xffffffff) == 0) {
+  if (param_4 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_transitions.cpp",0x99,0,
                     "%s");
   }
-  if ((uVar7 & 0xffffffff) == 0) {
+  if (param_2 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_transitions.cpp",0x9a,0,
                     "%s");
   }
-  if ((uVar8 & 0xffffffff) == 0) {
+  if (param_3 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_transitions.cpp",0x9b,0,
                     "%s");
   }
@@ -233,37 +218,35 @@ bool MenuParse_ParseTransitionDetails(char **param_1,float *param_2,float *param
   bVar3 = false;
   while( true ) {
     if (((bVar1) && (bVar2)) && (bVar3)) {
-      uVar6 = __restgprlr_22(1);
-      return (bool)uVar6;
+      return true;
     }
-    iVar5 = String_Parse(ppcVar4,acStack_460,0x400);
-    if (iVar5 == 0) break;
-    iVar5 = I_stricmp(acStack_460,"from");
-    if (iVar5 == 0) {
-      iVar5 = Float_Parse(ppcVar4,(float *)uVar7);
-      if (iVar5 == 0) break;
+    iVar4 = String_Parse(param_1,acStack_460,0x400);
+    if (iVar4 == 0) break;
+    iVar4 = I_stricmp(acStack_460,"from");
+    if (iVar4 == 0) {
+      iVar4 = Float_Parse(param_1,param_2);
+      if (iVar4 == 0) break;
       bVar1 = true;
     }
     else {
-      iVar5 = I_stricmp(acStack_460,"to");
-      if (iVar5 == 0) {
-        iVar5 = Float_Parse(ppcVar4,(float *)uVar8);
-        if (iVar5 == 0) break;
+      iVar4 = I_stricmp(acStack_460,"to");
+      if (iVar4 == 0) {
+        iVar4 = Float_Parse(param_1,param_3);
+        if (iVar4 == 0) break;
         bVar2 = true;
       }
       else {
-        iVar5 = I_stricmp(acStack_460,"over");
-        if (iVar5 == 0) {
-          iVar5 = Float_Parse(ppcVar4,(float *)uVar9);
-          if (iVar5 == 0) break;
+        iVar4 = I_stricmp(acStack_460,"over");
+        if (iVar4 == 0) {
+          iVar4 = Float_Parse(param_1,param_4);
+          if (iVar4 == 0) break;
           bVar3 = true;
         }
       }
     }
   }
   Com_PrintError(0xd,"Incomplete transition block\n");
-  uVar6 = __restgprlr_22(0);
-  return (bool)uVar6;
+  return false;
 }
 
 
@@ -278,6 +261,8 @@ int Transition_FindEndTime(menuTransition *param_1)
 
 // 825D1B48  Transition_FindLongestTransition  (ui/ui_transitions.cpp:207)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
@@ -285,63 +270,61 @@ int Transition_FindEndTime(menuTransition *param_1)
 menuTransition * Transition_FindLongestTransition(LocalClientNum_t param_1,menuDef_t *param_2)
 
 {
-  LocalClientNum_t LVar1;
-  int iVar2;
-  bool bVar5;
-  menuTransition *pmVar3;
+  int iVar1;
+  bool bVar2;
+  int iVar3;
   menuTransition *pmVar4;
-  int iVar6;
-  double dVar7;
+  menuTransition *pmVar5;
+  double dVar6;
   
-  LVar1 = __savegprlr_28(param_1);
-  if (LOCAL_CLIENT_3 < LVar1) {
+  if (LOCAL_CLIENT_3 < param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_transitions.cpp",0xd5,0,
                     "localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)");
   }
-  iVar2 = Sys_Milliseconds();
-  bVar5 = Menu_HasScaleTransition(LVar1,param_2);
-  dVar7 = -1000.0;
-  pmVar4 = (menuTransition *)0x0;
-  if (bVar5) {
-    pmVar3 = param_2->data->scaleTransition + LVar1;
-    iVar6 = pmVar3->startTime - (int)(pmVar3->time * -1000.0);
-    if (iVar2 < iVar6) {
-      iVar2 = iVar6;
-      pmVar4 = pmVar3;
+  iVar1 = Sys_Milliseconds();
+  bVar2 = Menu_HasScaleTransition(param_1,param_2);
+  dVar6 = -1000.0;
+  pmVar5 = (menuTransition *)0x0;
+  if (bVar2) {
+    pmVar4 = param_2->data->scaleTransition + param_1;
+    iVar3 = pmVar4->startTime - (int)(pmVar4->time * -1000.0);
+    if (iVar1 < iVar3) {
+      iVar1 = iVar3;
+      pmVar5 = pmVar4;
     }
   }
-  bVar5 = Menu_HasAlphaTransition(LVar1,param_2);
-  if (bVar5) {
-    pmVar3 = param_2->data->alphaTransition + LVar1;
-    iVar6 = pmVar3->startTime - (int)((double)pmVar3->time * dVar7);
-    if (iVar2 < iVar6) {
-      iVar2 = iVar6;
-      pmVar4 = pmVar3;
+  bVar2 = Menu_HasAlphaTransition(param_1,param_2);
+  if (bVar2) {
+    pmVar4 = param_2->data->alphaTransition + param_1;
+    iVar3 = pmVar4->startTime - (int)((double)pmVar4->time * dVar6);
+    if (iVar1 < iVar3) {
+      iVar1 = iVar3;
+      pmVar5 = pmVar4;
     }
   }
-  bVar5 = Menu_HasXTransition(LVar1,param_2);
-  if (bVar5) {
-    pmVar3 = param_2->data->xTransition + LVar1;
-    iVar6 = pmVar3->startTime - (int)((double)pmVar3->time * dVar7);
-    if (iVar2 < iVar6) {
-      iVar2 = iVar6;
-      pmVar4 = pmVar3;
+  bVar2 = Menu_HasXTransition(param_1,param_2);
+  if (bVar2) {
+    pmVar4 = param_2->data->xTransition + param_1;
+    iVar3 = pmVar4->startTime - (int)((double)pmVar4->time * dVar6);
+    if (iVar1 < iVar3) {
+      iVar1 = iVar3;
+      pmVar5 = pmVar4;
     }
   }
-  bVar5 = Menu_HasYTransition(LVar1,param_2);
-  if (bVar5) {
-    pmVar3 = param_2->data->yTransition + LVar1;
-    if (iVar2 < pmVar3->startTime - (int)((double)pmVar3->time * dVar7)) goto LAB_825d1d0c;
+  bVar2 = Menu_HasYTransition(param_1,param_2);
+  if ((bVar2) &&
+     (pmVar4 = param_2->data->yTransition + param_1,
+     iVar1 < pmVar4->startTime - (int)((double)pmVar4->time * dVar6))) {
+    return pmVar4;
   }
-  pmVar3 = pmVar4;
-LAB_825d1d0c:
-  pmVar4 = (menuTransition *)__restgprlr_28(pmVar3);
-  return pmVar4;
+  return pmVar5;
 }
 
 
 // 825D1D18  Transition_ClearTransitions  (ui/ui_transitions.cpp:262)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
@@ -350,41 +333,42 @@ void Transition_ClearTransitions(LocalClientNum_t param_1,menuDef_t *param_2)
 
 {
   int iVar1;
-  ulonglong uVar2;
-  ulonglong uVar3;
-  int *piVar4;
+  longlong lVar2;
   
-  uVar3 = (ulonglong)(int)param_2;
-  uVar2 = __savegprlr_29(param_1);
-  if ((uVar3 & 0xffffffff) == 0) {
+  lVar2 = (longlong)(int)param_1;
+  if (param_2 == (menuDef_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_transitions.cpp",0x107,0
                     ,"%s");
   }
-  if (3 < (uVar2 & 0xffffffff)) {
+  if (LOCAL_CLIENT_3 < param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_transitions.cpp",0x108,0
                     ,"localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)");
   }
-  piVar4 = (int *)uVar3;
-  *(undefined4 *)((int)((uVar2 + 5 + (uVar2 + 5 & 0x7fffffff) * 2 & 0xffffffff) << 3) + *piVar4) = 0
-  ;
-  iVar1 = (int)((uVar2 + (uVar2 & 0x7fffffff) * 2 & 0x1fffffff) << 3);
-  *(undefined4 *)(iVar1 + *piVar4 + 0x8c) = 0;
-  *(undefined4 *)((int)((uVar2 + 9 + (uVar2 + 9 & 0x7fffffff) * 2 & 0xffffffff) << 3) + *piVar4) = 0
-  ;
-  *(undefined4 *)(iVar1 + *piVar4 + 0xec) = 0;
-  *(undefined4 *)((int)((uVar2 + 0xd + (uVar2 + 0xd & 0x7fffffff) * 2 & 0xffffffff) << 3) + *piVar4)
-       = 0;
-  *(undefined4 *)(iVar1 + *piVar4 + 0x14c) = 0;
   *(undefined4 *)
-   ((int)((uVar2 + 0x11 + (uVar2 + 0x11 & 0x7fffffff) * 2 & 0xffffffff) << 3) + *piVar4) = 0;
-  *(undefined4 *)(iVar1 + *piVar4 + 0x1ac) = 0;
-  __restgprlr_29();
+   ((int)param_2->data->focusColor +
+   (int)((lVar2 + 5U + (lVar2 + 5U & 0x7fffffff) * 2 & 0xffffffff) << 3) + -0x3c) = 0;
+  iVar1 = (int)((lVar2 + ((ulonglong)param_1 & 0x7fffffff) * 2 & 0x1fffffff) << 3);
+  *(undefined4 *)((int)&param_2->data->scaleTransition[0].endTriggerType + iVar1) = 0;
+  *(undefined4 *)
+   ((int)param_2->data->focusColor +
+   (int)((lVar2 + 9U + (lVar2 + 9U & 0x7fffffff) * 2 & 0xffffffff) << 3) + -0x3c) = 0;
+  *(undefined4 *)((int)&param_2->data->alphaTransition[0].endTriggerType + iVar1) = 0;
+  *(undefined4 *)
+   ((int)param_2->data->focusColor +
+   (int)((lVar2 + 0xdU + (lVar2 + 0xdU & 0x7fffffff) * 2 & 0xffffffff) << 3) + -0x3c) = 0;
+  *(undefined4 *)((int)&param_2->data->xTransition[0].endTriggerType + iVar1) = 0;
+  *(undefined4 *)
+   ((int)param_2->data->focusColor +
+   (int)((lVar2 + 0x11U + (lVar2 + 0x11U & 0x7fffffff) * 2 & 0xffffffff) << 3) + -0x3c) = 0;
+  *(undefined4 *)((int)&param_2->data->yTransition[0].endTriggerType + iVar1) = 0;
   return;
 }
 
 
 // 825D1E30  Transition_CloseWhenDone  (ui/ui_transitions.cpp:281)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
@@ -392,36 +376,32 @@ void Transition_ClearTransitions(LocalClientNum_t param_1,menuDef_t *param_2)
 void Transition_CloseWhenDone(LocalClientNum_t param_1,menuDef_t *param_2)
 
 {
-  LocalClientNum_t LVar1;
-  menuTransition *pmVar2;
-  UiContext *pUVar3;
-  ulonglong uVar4;
+  menuTransition *pmVar1;
+  UiContext *pUVar2;
   
-  uVar4 = (ulonglong)(int)param_2;
-  LVar1 = __savegprlr_29(param_1);
-  if ((uVar4 & 0xffffffff) == 0) {
+  if (param_2 == (menuDef_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_transitions.cpp",0x11a,0
                     ,"%s");
   }
-  if (LOCAL_CLIENT_3 < LVar1) {
+  if (LOCAL_CLIENT_3 < param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ui\\ui_transitions.cpp",0x11b,0
                     ,"localClientNum doesn\'t index STATIC_MAX_LOCAL_CLIENTS\n\t%i not in [0, %i)");
   }
-  pmVar2 = Transition_FindLongestTransition(LVar1,(menuDef_t *)uVar4);
-  if (pmVar2 == (menuTransition *)0x0) {
-    pUVar3 = UI_GetClientDC(LVar1);
-    Menus_ForceClose(pUVar3,(menuDef_t *)uVar4);
-    __restgprlr_29();
+  pmVar1 = Transition_FindLongestTransition(param_1,param_2);
+  if (pmVar1 == (menuTransition *)0x0) {
+    pUVar2 = UI_GetClientDC(param_1);
+    Menus_ForceClose(pUVar2,param_2);
     return;
   }
-  pmVar2->endTriggerType = 1;
-  __restgprlr_29();
+  pmVar1->endTriggerType = 1;
   return;
 }
 
 
 // 825D1ED8  MenuParse_ParseLerp  (ui/ui_transitions.cpp:299)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
@@ -429,70 +409,60 @@ void Transition_CloseWhenDone(LocalClientNum_t param_1,menuDef_t *param_2)
 void MenuParse_ParseLerp(UiContext *param_1,menuDef_t *param_2,char **param_3)
 
 {
-  int iVar1;
+  LocalClientNum_t LVar1;
   menuData_t *pmVar2;
-  int *piVar3;
-  int iVar4;
-  bool bVar5;
+  int iVar3;
   char acStack_420 [1056];
   
-  piVar3 = (int *)__savegprlr_29(param_1);
-  iVar1 = *piVar3;
-  iVar4 = String_Parse(param_3,acStack_420,0x400);
-  if (iVar4 != 0) {
-    iVar4 = I_stricmp(acStack_420,"scale");
-    if (iVar4 == 0) {
+  LVar1 = param_1->localClientNum;
+  iVar3 = String_Parse(param_3,acStack_420,0x400);
+  if (iVar3 != 0) {
+    iVar3 = I_stricmp(acStack_420,"scale");
+    if (iVar3 == 0) {
       pmVar2 = param_2->data;
-      pmVar2->scaleTransition[iVar1].transitionType = 1;
-      iVar4 = Sys_Milliseconds();
-      pmVar2->scaleTransition[iVar1].startTime = iVar4;
-      bVar5 = MenuParse_ParseTransitionDetails
-                        (param_3,&pmVar2->scaleTransition[iVar1].startVal,
-                         &pmVar2->scaleTransition[iVar1].endVal,&pmVar2->scaleTransition[iVar1].time
-                        );
-      __restgprlr_29(bVar5);
+      pmVar2->scaleTransition[LVar1].transitionType = 1;
+      iVar3 = Sys_Milliseconds();
+      pmVar2->scaleTransition[LVar1].startTime = iVar3;
+      MenuParse_ParseTransitionDetails
+                (param_3,&pmVar2->scaleTransition[LVar1].startVal,
+                 &pmVar2->scaleTransition[LVar1].endVal,&pmVar2->scaleTransition[LVar1].time);
       return;
     }
-    iVar4 = I_stricmp(acStack_420,"alpha");
-    if (iVar4 == 0) {
+    iVar3 = I_stricmp(acStack_420,"alpha");
+    if (iVar3 == 0) {
       pmVar2 = param_2->data;
-      pmVar2->alphaTransition[iVar1].transitionType = 1;
-      iVar4 = Sys_Milliseconds();
-      pmVar2->alphaTransition[iVar1].startTime = iVar4;
-      bVar5 = MenuParse_ParseTransitionDetails
-                        (param_3,&pmVar2->alphaTransition[iVar1].startVal,
-                         &pmVar2->alphaTransition[iVar1].endVal,&pmVar2->alphaTransition[iVar1].time
-                        );
-      __restgprlr_29(bVar5);
+      pmVar2->alphaTransition[LVar1].transitionType = 1;
+      iVar3 = Sys_Milliseconds();
+      pmVar2->alphaTransition[LVar1].startTime = iVar3;
+      MenuParse_ParseTransitionDetails
+                (param_3,&pmVar2->alphaTransition[LVar1].startVal,
+                 &pmVar2->alphaTransition[LVar1].endVal,&pmVar2->alphaTransition[LVar1].time);
       return;
     }
-    iVar4 = I_stricmp(acStack_420,"x");
-    if (iVar4 == 0) {
+    iVar3 = I_stricmp(acStack_420,"x");
+    if (iVar3 == 0) {
       pmVar2 = param_2->data;
-      pmVar2->xTransition[iVar1].transitionType = 1;
-      iVar4 = Sys_Milliseconds();
-      pmVar2->xTransition[iVar1].startTime = iVar4;
-      bVar5 = MenuParse_ParseTransitionDetails
-                        (param_3,&pmVar2->xTransition[iVar1].startVal,
-                         &pmVar2->xTransition[iVar1].endVal,&pmVar2->xTransition[iVar1].time);
-      __restgprlr_29(bVar5);
+      pmVar2->xTransition[LVar1].transitionType = 1;
+      iVar3 = Sys_Milliseconds();
+      pmVar2->xTransition[LVar1].startTime = iVar3;
+      MenuParse_ParseTransitionDetails
+                (param_3,&pmVar2->xTransition[LVar1].startVal,&pmVar2->xTransition[LVar1].endVal,
+                 &pmVar2->xTransition[LVar1].time);
       return;
     }
-    iVar4 = I_stricmp(acStack_420,"y");
-    if (iVar4 == 0) {
+    iVar3 = I_stricmp(acStack_420,"y");
+    if (iVar3 == 0) {
       pmVar2 = param_2->data;
-      pmVar2->yTransition[iVar1].transitionType = 1;
-      iVar4 = Sys_Milliseconds();
-      pmVar2->yTransition[iVar1].startTime = iVar4;
-      bVar5 = MenuParse_ParseTransitionDetails
-                        (param_3,&pmVar2->yTransition[iVar1].startVal,
-                         &pmVar2->yTransition[iVar1].endVal,&pmVar2->yTransition[iVar1].time);
-      __restgprlr_29(bVar5);
+      pmVar2->yTransition[LVar1].transitionType = 1;
+      iVar3 = Sys_Milliseconds();
+      pmVar2->yTransition[LVar1].startTime = iVar3;
+      MenuParse_ParseTransitionDetails
+                (param_3,&pmVar2->yTransition[LVar1].startVal,&pmVar2->yTransition[LVar1].endVal,
+                 &pmVar2->yTransition[LVar1].time);
       return;
     }
   }
   Com_PrintError(0xd,"Incomplete transition lerp block\n");
-  __restgprlr_29();
   return;
 }
 

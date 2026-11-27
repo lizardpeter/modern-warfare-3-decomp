@@ -14,20 +14,19 @@ bdTimeStamp * __thiscall bdTimeStamp::bdTimeStamp(bdTimeStamp *this)
 
 // 828FDAA0  deserialize  (<external>///infinityward.net/shared/builds/src/iw5/x360/patch/452/demonware/bdlobby/bdtitleutilities/bdtimestamp.cpp:18)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 bool __thiscall bdTimeStamp::deserialize(bdTimeStamp *this,bdReference<bdByteBuffer> param_1)
 
 {
-  int iVar1;
-  bool bVar2;
-  undefined1 uVar3;
-  bdByteBuffer *pbStack0000001c;
+  bool bVar1;
+  bdReference<bdByteBuffer> bStack0000001c;
   
-  iVar1 = __savegprlr_29(this);
-  pbStack0000001c = param_1.m_ptr;
-  bVar2 = bdByteBuffer::readUInt32((bdByteBuffer *)(param_1.m_ptr)->_padding_,(uint *)(iVar1 + 4));
+  bStack0000001c.m_ptr = param_1.m_ptr;
+  bVar1 = bdByteBuffer::readUInt32((bdByteBuffer *)(param_1.m_ptr)->_padding_,&this->m_timeStamp);
   bdReference<bdByteBuffer>::~bdReference<bdByteBuffer>((bdReference<bdByteBuffer> *)param_1.m_ptr);
-  uVar3 = __restgprlr_29(bVar2);
-  return (bool)uVar3;
+  return bVar1;
 }
 
 

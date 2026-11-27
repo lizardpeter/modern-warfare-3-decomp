@@ -2,38 +2,38 @@
 
 // 82257B08  mp_lcm  (line unknown)
 
-void mp_lcm(undefined8 param_1,undefined8 param_2,undefined8 param_3)
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
+undefined8 mp_lcm(undefined8 param_1,undefined8 param_2,int param_3)
 
 {
   undefined8 uVar1;
-  undefined8 uVar2;
-  int iVar3;
+  int iVar2;
   undefined1 auStack_50 [16];
   undefined1 auStack_40 [64];
   
-  uVar1 = __savegprlr_28();
-  uVar2 = mp_init_multi(auStack_40,auStack_50,0);
-  if ((int)uVar2 == 0) {
-    uVar2 = mp_gcd(uVar1,param_2,auStack_40);
-    if ((int)uVar2 == 0) {
-      iVar3 = mp_cmp_mag(uVar1,param_2);
-      if (iVar3 == -1) {
-        uVar2 = mp_div(uVar1,auStack_40,auStack_50,0);
-        iVar3 = (int)uVar2;
+  uVar1 = mp_init_multi(auStack_40,auStack_50,0);
+  if ((int)uVar1 == 0) {
+    uVar1 = mp_gcd(param_1,param_2,auStack_40);
+    if ((int)uVar1 == 0) {
+      iVar2 = mp_cmp_mag(param_1,param_2);
+      if (iVar2 == -1) {
+        uVar1 = mp_div(param_1,auStack_40,auStack_50,0);
+        iVar2 = (int)uVar1;
       }
       else {
-        uVar2 = mp_div(param_2,auStack_40,auStack_50,0);
-        iVar3 = (int)uVar2;
-        param_2 = uVar1;
+        uVar1 = mp_div(param_2,auStack_40,auStack_50,0);
+        iVar2 = (int)uVar1;
+        param_2 = param_1;
       }
-      if (iVar3 == 0) {
-        uVar2 = mp_mul(param_2,auStack_50,param_3);
-        *(undefined4 *)((int)param_3 + 8) = 0;
+      if (iVar2 == 0) {
+        uVar1 = mp_mul(param_2,auStack_50,param_3);
+        *(undefined4 *)(param_3 + 8) = 0;
       }
     }
     mp_clear_multi(auStack_40,auStack_50,0);
   }
-  __restgprlr_28(uVar2);
-  return;
+  return uVar1;
 }
 

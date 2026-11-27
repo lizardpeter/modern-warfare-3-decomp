@@ -23,6 +23,8 @@ void SetSpectatorPersoness(bool param_1)
 
 // 822CEDF8  CG_HandleSpectatorInput  (cgame_mp/cg_gamepad.cpp:37)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -31,88 +33,84 @@ void CG_HandleSpectatorInput(LocalClientNum_t param_1,int *param_2)
 
 {
   uint uVar1;
-  LocalClientNum_t LVar2;
-  cg_s *pcVar3;
+  cg_s *pcVar2;
+  bool bVar3;
   bool bVar4;
   bool bVar5;
-  bool bVar6;
-  int iVar7;
+  int iVar6;
   
-  LVar2 = __savegprlr_26(param_1);
-  pcVar3 = CG_GetLocalClientGlobals(LVar2);
-  if (((pcVar3->predictedPlayerState).pm_type != 5) &&
-     (((pcVar3->predictedPlayerState).otherFlags & 0x800U) == 0)) {
+  pcVar2 = CG_GetLocalClientGlobals(param_1);
+  if (((pcVar2->predictedPlayerState).pm_type != 5) &&
+     (((pcVar2->predictedPlayerState).otherFlags & 0x800U) == 0)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_gamepad.cpp",0x2c,
                     0,"%s");
   }
   *param_2 = *param_2 & 0xffffdff9;
-  bVar4 = CL_KeyActiveOrPressed(LVar2,0xe);
-  bVar6 = (cg_thirdPersonSpectator->current).enabled;
-  if (bVar4) {
-    bVar5 = CL_IsRenderingSplitScreen();
-    bVar4 = true;
-    if (bVar5) goto LAB_822cee9c;
+  bVar3 = CL_KeyActiveOrPressed(param_1,0xe);
+  bVar5 = (cg_thirdPersonSpectator->current).enabled;
+  if (bVar3) {
+    bVar4 = CL_IsRenderingSplitScreen();
+    bVar3 = true;
+    if (bVar4) goto LAB_822cee9c;
   }
   else {
 LAB_822cee9c:
-    bVar4 = false;
+    bVar3 = false;
   }
-  if (bVar6 == false) {
+  if (bVar5 == false) {
 LAB_822ceec4:
-    bVar6 = false;
+    bVar5 = false;
   }
   else {
-    bVar5 = CL_IsRenderingSplitScreen();
-    bVar6 = true;
-    if (bVar5) goto LAB_822ceec4;
+    bVar4 = CL_IsRenderingSplitScreen();
+    bVar5 = true;
+    if (bVar4) goto LAB_822ceec4;
   }
-  uVar1 = (pcVar3->predictedPlayerState).otherFlags;
+  uVar1 = (pcVar2->predictedPlayerState).otherFlags;
   if ((uVar1 & 0x4000) == 0) {
     if ((uVar1 & 0x800) == 0) {
-      if (bVar4) {
-        bVar6 = true;
+      if (bVar3) {
+        bVar5 = true;
       }
-      iVar7 = 0x2000;
+      iVar6 = 0x2000;
       goto LAB_822cef50;
     }
-    if (bVar4) {
-      bVar6 = pcVar3->renderingThirdPerson == 0;
-      CG_ResetSpectatorViewAngles(LVar2);
+    if (bVar3) {
+      bVar5 = pcVar2->renderingThirdPerson == 0;
+      CG_ResetSpectatorViewAngles(param_1);
     }
   }
   else {
-    if ((!bVar4) || (pcVar3->renderingThirdPerson == 0)) {
-      iVar7 = 4;
+    if ((!bVar3) || (pcVar2->renderingThirdPerson == 0)) {
+      iVar6 = 4;
       goto LAB_822cef50;
     }
-    bVar6 = false;
+    bVar5 = false;
   }
-  iVar7 = 0;
+  iVar6 = 0;
 LAB_822cef50:
-  CL_UpdateCmdButton(LVar2,param_2,0xe,iVar7);
-  bVar4 = false;
+  CL_UpdateCmdButton(param_1,param_2,0xe,iVar6);
+  bVar3 = false;
   if ((camera_thirdPerson->current).enabled == false) {
-    bVar4 = bVar6;
+    bVar3 = bVar5;
   }
-  SetSpectatorPersoness(bVar4);
-  if (((pcVar3->predictedPlayerState).otherFlags & 0x800U) == 0) {
-    CL_UpdateCmdButton(LVar2,param_2,0x10,0);
-    CL_UpdateCmdButton(LVar2,param_2,0xf,0);
+  SetSpectatorPersoness(bVar3);
+  if (((pcVar2->predictedPlayerState).otherFlags & 0x800U) == 0) {
+    CL_UpdateCmdButton(param_1,param_2,0x10,0);
+    CL_UpdateCmdButton(param_1,param_2,0xf,0);
   }
   else {
-    bVar6 = CL_KeyActiveOrPressed(LVar2,0x10);
-    if ((bVar6) || (bVar6 = CL_KeyActiveOrPressed(LVar2,0xf), bVar6)) {
-      CG_ResetSpectatorViewAngles(LVar2);
+    bVar5 = CL_KeyActiveOrPressed(param_1,0x10);
+    if ((bVar5) || (bVar5 = CL_KeyActiveOrPressed(param_1,0xf), bVar5)) {
+      CG_ResetSpectatorViewAngles(param_1);
     }
-    CL_UpdateCmdButton(LVar2,param_2,0x10,2);
-    CL_UpdateCmdButton(LVar2,param_2,0xf,0x2000);
-    if ((pcVar3->renderingThirdPerson != 0) && ((pcVar3->predictedPlayerState).deltaTime == 0)) {
-      CL_ClampViewAngle(LVar2,0,-90.0,90.0);
-      __restgprlr_26();
+    CL_UpdateCmdButton(param_1,param_2,0x10,2);
+    CL_UpdateCmdButton(param_1,param_2,0xf,0x2000);
+    if ((pcVar2->renderingThirdPerson != 0) && ((pcVar2->predictedPlayerState).deltaTime == 0)) {
+      CL_ClampViewAngle(param_1,0,-90.0,90.0);
       return;
     }
   }
-  __restgprlr_26();
   return;
 }
 
@@ -180,6 +178,8 @@ bool CG_GamepadCheckStartAndBack(LocalClientNum_t param_1,int param_2,int param_
 
 // 822CF1A8  CG_GamepadSpectatorInput  (cgame_mp/cg_gamepad.cpp:158)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -187,36 +187,29 @@ bool CG_GamepadCheckStartAndBack(LocalClientNum_t param_1,int param_2,int param_
 bool CG_GamepadSpectatorInput(LocalClientNum_t param_1,int param_2,int param_3)
 
 {
-  LocalClientNum_t LVar1;
-  cg_s *pcVar2;
-  undefined1 uVar3;
-  bool bVar4;
+  cg_s *pcVar1;
+  bool bVar2;
   
-  LVar1 = __savegprlr_29(param_1);
-  pcVar2 = CG_GetLocalClientGlobals(LVar1);
-  if (((pcVar2->predictedPlayerState).pm_type != 5) &&
-     (((pcVar2->predictedPlayerState).otherFlags & 0x800U) == 0)) {
+  pcVar1 = CG_GetLocalClientGlobals(param_1);
+  if (((pcVar1->predictedPlayerState).pm_type != 5) &&
+     (((pcVar1->predictedPlayerState).otherFlags & 0x800U) == 0)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_gamepad.cpp",0xa3,
                     0,"%s");
   }
   if (param_2 == 1) {
-    CL_SpecPrev(LVar1,1);
-    uVar3 = __restgprlr_29(1);
-    return (bool)uVar3;
+    CL_SpecPrev(param_1,1);
+    return true;
   }
   if (param_2 == 2) {
-    CL_SpecNext(LVar1,2);
-    uVar3 = __restgprlr_29(1);
-    return (bool)uVar3;
+    CL_SpecNext(param_1,2);
+    return true;
   }
   if (param_2 == 4) {
-    CL_ToggleSpec(LVar1,4);
-    uVar3 = __restgprlr_29(1);
-    return (bool)uVar3;
+    CL_ToggleSpec(param_1,4);
+    return true;
   }
-  bVar4 = CG_GamepadCheckStartAndBack(LVar1,param_2,param_3);
-  uVar3 = __restgprlr_29(bVar4);
-  return (bool)uVar3;
+  bVar2 = CG_GamepadCheckStartAndBack(param_1,param_2,param_3);
+  return bVar2;
 }
 
 
@@ -240,6 +233,8 @@ bool CG_GamepadKillCamInput(LocalClientNum_t param_1,int param_2,int param_3)
 
 // 822CF2B0  CG_TranslateGamepadButton  (cgame_mp/cg_gamepad.cpp:198)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
@@ -247,13 +242,10 @@ bool CG_GamepadKillCamInput(LocalClientNum_t param_1,int param_2,int param_3)
 bool CG_TranslateGamepadButton(LocalClientNum_t param_1,int param_2,int param_3)
 
 {
-  LocalClientNum_t LVar1;
-  int iVar2;
-  undefined1 uVar4;
-  cg_s *pcVar3;
-  bool bVar5;
+  int iVar1;
+  cg_s *pcVar2;
+  bool bVar3;
   
-  LVar1 = __savegprlr_27(param_1);
   if (param_2 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_gamepad.cpp",0xc9,
                     0,"%s");
@@ -262,27 +254,23 @@ bool CG_TranslateGamepadButton(LocalClientNum_t param_1,int param_2,int param_3)
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame_mp\\cg_gamepad.cpp",0xca,
                     0,"%s");
   }
-  iVar2 = CL_IsCgameInitialized(LVar1);
-  if (iVar2 != 0) {
-    pcVar3 = CG_GetLocalClientGlobals(LVar1);
-    if (pcVar3->inKillCam != 0) {
+  iVar1 = CL_IsCgameInitialized(param_1);
+  if (iVar1 != 0) {
+    pcVar2 = CG_GetLocalClientGlobals(param_1);
+    if (pcVar2->inKillCam != 0) {
       if (param_2 == 3) {
-        CL_UseReload(LVar1,3);
-        uVar4 = __restgprlr_27(1);
-        return (bool)uVar4;
+        CL_UseReload(param_1,3);
+        return true;
       }
-      bVar5 = CG_GamepadCheckStartAndBack(LVar1,param_2,param_3);
-      uVar4 = __restgprlr_27(bVar5);
-      return (bool)uVar4;
+      bVar3 = CG_GamepadCheckStartAndBack(param_1,param_2,param_3);
+      return bVar3;
     }
-    if (((pcVar3->predictedPlayerState).pm_type == 5) ||
-       (((pcVar3->predictedPlayerState).otherFlags & 0x800U) != 0)) {
-      bVar5 = CG_GamepadSpectatorInput(LVar1,param_2,param_3);
-      uVar4 = __restgprlr_27(bVar5);
-      return (bool)uVar4;
+    if (((pcVar2->predictedPlayerState).pm_type == 5) ||
+       (((pcVar2->predictedPlayerState).otherFlags & 0x800U) != 0)) {
+      bVar3 = CG_GamepadSpectatorInput(param_1,param_2,param_3);
+      return bVar3;
     }
   }
-  uVar4 = __restgprlr_27(0);
-  return (bool)uVar4;
+  return false;
 }
 

@@ -68,6 +68,9 @@ void LiveRegionInfo_Init(void)
 
 // 826ED6F8  LiveRegionInfo_Pump  (DW/dwRegionInfo.cpp:103)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 void LiveRegionInfo_Pump(int param_1)
 
 {
@@ -81,7 +84,6 @@ void LiveRegionInfo_Pump(int param_1)
   char *pcVar8;
   char local_70 [112];
   
-  __savegprlr_29(param_1);
   iVar3 = CL_GetLocalClientActiveCount();
   iVar4 = 0;
   if (iVar3 != 0) {
@@ -91,13 +93,14 @@ void LiveRegionInfo_Pump(int param_1)
       ) && (s_dmlState == DML_STATE_COMPLETE)) {
     s_dmlState = DML_STATE_IDLE;
   }
-  else if (DML_STATE_ERROR < s_dmlState) goto LAB_826ed94c;
+  else if (DML_STATE_ERROR < s_dmlState) {
+    return;
+  }
   if (s_dmlState == DML_STATE_RECORDING_IP) {
     tVar6 = dwReportIPComplete(&s_task);
     if (tVar6 == TASK_COMPLETE) {
       iVar4 = dwRetrieveRegion(&s_task);
       s_dmlState = (-(uint)(iVar4 != 0) & 0xfffffffe) + DML_STATE_ERROR;
-      __restgprlr_29();
       return;
     }
   }
@@ -110,13 +113,12 @@ void LiveRegionInfo_Pump(int param_1)
              (bVar2 = true, 60000 < retry_count)) {
             bVar2 = false;
           }
-          if (bVar2) {
-            iVar4 = dwReportIP(&s_task);
-            s_dmlState = (-(uint)(iVar4 != 0) & 0xfffffffd) + DML_STATE_ERROR;
-            __restgprlr_29();
+          if (!bVar2) {
             return;
           }
-          goto LAB_826ed94c;
+          iVar4 = dwReportIP(&s_task);
+          s_dmlState = (-(uint)(iVar4 != 0) & 0xfffffffd) + DML_STATE_ERROR;
+          return;
         }
         retry_count = retry_count << 1;
         uVar7 = retry_count;
@@ -129,7 +131,7 @@ void LiveRegionInfo_Pump(int param_1)
       }
       dwClearTask(&s_task);
       s_task.active = false;
-      goto LAB_826ed94c;
+      return;
     }
     tVar6 = dwRetrieveRegionComplete(&s_task);
     if (tVar6 == TASK_COMPLETE) {
@@ -146,22 +148,21 @@ void LiveRegionInfo_Pump(int param_1)
       pcVar8 = va("region_info region: %s countrycode: %s country: %s");
       LSP_LogStringToDW(0,pcVar8,DW_STRING_EVENT_LSP_LOG_MATCHMAKING_DATA);
       s_dmlState = DML_STATE_COMPLETE;
-      __restgprlr_29();
       return;
     }
   }
-  if (tVar6 == TASK_ERROR) {
-    s_dmlState = DML_STATE_ERROR;
-    __restgprlr_29();
+  if (tVar6 != TASK_ERROR) {
     return;
   }
-LAB_826ed94c:
-  __restgprlr_29();
+  s_dmlState = DML_STATE_ERROR;
   return;
 }
 
 
 // 826ED1C0  dwReportIP  (DW/dwRegionInfo.cpp:292)
+
+/* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
 
 int dwReportIP(overlappedTask *param_1)
 
@@ -169,301 +170,292 @@ int dwReportIP(overlappedTask *param_1)
   <unnamed_type_S_un> <Var1;
   <unnamed_type_S_un> <Var2;
   int iVar3;
-  int iVar4;
-  DWOnlineStatus DVar5;
-  int iVar6;
-  bdDML *pbVar7;
-  XNADDR *pXVar8;
-  bdReference<bdRemoteTask> bVar9;
-  undefined8 uVar10;
+  DWOnlineStatus DVar4;
+  int iVar5;
+  bdDML *pbVar6;
+  XNADDR *pXVar7;
+  bdReference<bdRemoteTask> bVar8;
+  int iVar9;
   <unnamed_type_S_un> local_50;
   bdReference<bdRemoteTask> local_4c [19];
   
-  iVar3 = __savegprlr_25(param_1);
-  if (iVar3 == 0) {
+  if (param_1 == (overlappedTask *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DW\\dwRegionInfo.cpp",0x125,0,
                     "%s");
   }
-  uVar10 = 0;
-  iVar4 = CL_GetLocalClientActiveCount();
-  if (iVar4 == 0) {
-    iVar4 = 0;
+  iVar9 = 0;
+  iVar3 = CL_GetLocalClientActiveCount();
+  if (iVar3 == 0) {
+    iVar3 = 0;
   }
   else {
-    iVar4 = CL_GetFirstActiveControllerIndex();
+    iVar3 = CL_GetFirstActiveControllerIndex();
   }
-  DVar5 = dwGetLogOnStatus(iVar4);
-  if (((DVar5 == DW_LIVE_CONNECTED) && (iVar6 = Sys_Milliseconds(), retry_time <= iVar6)) &&
+  DVar4 = dwGetLogOnStatus(iVar3);
+  if (((DVar4 == DW_LIVE_CONNECTED) && (iVar5 = Sys_Milliseconds(), retry_time <= iVar5)) &&
      (retry_count < 0xea61)) {
-    pbVar7 = dwGetDML(iVar4);
+    pbVar6 = dwGetDML(iVar3);
     local_4c[0].m_ptr = (bdRemoteTask *)0x0;
-    if (pbVar7 == (bdDML *)0x0) {
+    if (pbVar6 == (bdDML *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DW\\dwRegionInfo.cpp",0x145,0
                       ,"%s");
     }
-    if ((iVar3 != 0) && (pbVar7 != (bdDML *)0x0)) {
-      pXVar8 = Xenon_GetXNAddrForLive();
-      *(char *)(iVar3 + 0x95) = (char)iVar4;
-      if (pXVar8 != (XNADDR *)0x0) {
-        <Var1 = (<unnamed_type_S_un>)*(<unnamed_type_S_un> *)&(pXVar8->inaOnline).S_un.S_un_b;
+    if ((param_1 != (overlappedTask *)0x0) && (pbVar6 != (bdDML *)0x0)) {
+      pXVar7 = Xenon_GetXNAddrForLive();
+      param_1->controllerIndex = (uchar)iVar3;
+      if (pXVar7 != (XNADDR *)0x0) {
+        <Var1 = (<unnamed_type_S_un>)*(<unnamed_type_S_un> *)&(pXVar7->inaOnline).S_un.S_un_b;
         <Var2 = current_ip.S_un;
         local_50 = <Var1;
         if ((enable_random_ip_testing->current).enabled != false) {
-          iVar6 = rand();
-          iVar4 = iVar6 / 10 + (iVar6 >> 0x1f);
-          current_ip_test_array_index = iVar6 + ((iVar4 - (iVar4 >> 0x1f)) * 5 & 0x7fffffffU) * -2;
+          iVar5 = rand();
+          iVar3 = iVar5 / 10 + (iVar5 >> 0x1f);
+          current_ip_test_array_index = iVar5 + ((iVar3 - (iVar3 >> 0x1f)) * 5 & 0x7fffffffU) * -2;
           <Var2 = <Var1;
           if (-1 < current_ip_test_array_index) {
             local_50.S_addr = inet_addr(ip_list[current_ip_test_array_index]);
-            iVar4 = rand();
+            iVar3 = rand();
             local_50.S_un_b.s_b4 =
-                 (char)iVar4 +
-                 (((char)(iVar4 / 0xff) + (char)(iVar4 >> 0x1f)) -
-                 (char)((longlong)iVar4 * 0x80808081 >> 0x3f));
+                 (char)iVar3 +
+                 (((char)(iVar3 / 0xff) + (char)(iVar3 >> 0x1f)) -
+                 (char)((longlong)iVar3 * 0x80808081 >> 0x3f));
             <Var2 = local_50;
           }
         }
         current_ip.S_un = (<unnamed_type_S_un>)(<unnamed_type_S_un>)<Var2.S_un_b;
         Com_Printf(0x19,"Reporting IP to Demonware : %02d.%02d.%02d.%02d\n");
-        bVar9 = bdDML::recordIP((bdDML *)&local_50.S_un_b,(uint)pbVar7);
-        bdReference<bdRemoteTask>::operator=(local_4c,(bdReference<bdRemoteTask> *)bVar9.m_ptr);
+        bVar8 = bdDML::recordIP((bdDML *)&local_50.S_un_b,(uint)pbVar6);
+        bdReference<bdRemoteTask>::operator=(local_4c,(bdReference<bdRemoteTask> *)bVar8.m_ptr);
         bdReference<bdRemoteTask>::~bdReference<bdRemoteTask>
                   ((bdReference<bdRemoteTask> *)&local_50.S_un_b);
         if (local_4c[0].m_ptr != (bdRemoteTask *)0x0) {
-          bdReference<bdRemoteTask>::operator=((bdReference<bdRemoteTask> *)(iVar3 + 8),local_4c);
-          uVar10 = 1;
-          *(undefined1 *)(iVar3 + 0x94) = 1;
+          bdReference<bdRemoteTask>::operator=(&(param_1->u).remoteTask,local_4c);
+          iVar9 = 1;
+          param_1->active = true;
         }
       }
     }
     bdReference<bdRemoteTask>::~bdReference<bdRemoteTask>(local_4c);
-    iVar3 = __restgprlr_25(uVar10);
-    return iVar3;
+    return iVar9;
   }
-  iVar3 = __restgprlr_25(0);
-  return iVar3;
+  return 0;
 }
 
 
 // 826ED3E0  dwRetrieveRegion  (DW/dwRegionInfo.cpp:376)
+
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 
 int dwRetrieveRegion(overlappedTask *param_1)
 
 {
   int iVar1;
   int iVar2;
-  int iVar3;
-  DWOnlineStatus DVar4;
-  bdDMLInfo *pbVar5;
-  bdReference<bdRemoteTask> bVar6;
-  undefined8 uVar7;
+  DWOnlineStatus DVar3;
+  bdDMLInfo *pbVar4;
+  bdReference<bdRemoteTask> bVar5;
+  int iVar6;
   bdReference<bdRemoteTask> local_40;
   bdReference<bdRemoteTask> abStack_3c [15];
   
-  iVar1 = __savegprlr_26(param_1);
-  if (iVar1 == 0) {
+  if (param_1 == (overlappedTask *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DW\\dwRegionInfo.cpp",0x179,0,
                     "%s");
   }
-  iVar3 = 0;
-  uVar7 = 0;
+  iVar2 = 0;
+  iVar6 = 0;
   local_40.m_ptr = (bdRemoteTask *)0x0;
-  iVar2 = CL_GetLocalClientActiveCount();
-  if (iVar2 != 0) {
-    iVar3 = CL_GetFirstActiveControllerIndex();
+  iVar1 = CL_GetLocalClientActiveCount();
+  if (iVar1 != 0) {
+    iVar2 = CL_GetFirstActiveControllerIndex();
   }
-  DVar4 = dwGetLogOnStatus(iVar3);
-  if (((DVar4 == DW_LIVE_CONNECTED) && (iVar2 = Sys_Milliseconds(), retry_time <= iVar2)) &&
+  DVar3 = dwGetLogOnStatus(iVar2);
+  if (((DVar3 == DW_LIVE_CONNECTED) && (iVar1 = Sys_Milliseconds(), retry_time <= iVar1)) &&
      (retry_count < 0xea61)) {
-    pbVar5 = (bdDMLInfo *)dwGetDML(iVar3);
-    if (pbVar5 == (bdDMLInfo *)0x0) {
+    pbVar4 = (bdDMLInfo *)dwGetDML(iVar2);
+    if (pbVar4 == (bdDMLInfo *)0x0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DW\\dwRegionInfo.cpp",0x19a,0
                       ,"%s");
     }
-    if ((iVar1 != 0) && (pbVar5 != (bdDMLInfo *)0x0)) {
-      *(char *)(iVar1 + 0x95) = (char)iVar3;
-      bVar6 = bdDML::getUserData((bdDML *)abStack_3c,pbVar5);
-      bdReference<bdRemoteTask>::operator=(&local_40,(bdReference<bdRemoteTask> *)bVar6.m_ptr);
+    if ((param_1 != (overlappedTask *)0x0) && (pbVar4 != (bdDMLInfo *)0x0)) {
+      param_1->controllerIndex = (uchar)iVar2;
+      bVar5 = bdDML::getUserData((bdDML *)abStack_3c,pbVar4);
+      bdReference<bdRemoteTask>::operator=(&local_40,(bdReference<bdRemoteTask> *)bVar5.m_ptr);
       bdReference<bdRemoteTask>::~bdReference<bdRemoteTask>(abStack_3c);
       if (local_40.m_ptr != (bdRemoteTask *)0x0) {
-        bdReference<bdRemoteTask>::operator=((bdReference<bdRemoteTask> *)(iVar1 + 8),&local_40);
-        uVar7 = 1;
+        bdReference<bdRemoteTask>::operator=(&(param_1->u).remoteTask,&local_40);
+        iVar6 = 1;
       }
     }
     bdReference<bdRemoteTask>::~bdReference<bdRemoteTask>(&local_40);
-    iVar1 = __restgprlr_26(uVar7);
-    return iVar1;
+    return iVar6;
   }
   bdReference<bdRemoteTask>::~bdReference<bdRemoteTask>(&local_40);
-  iVar1 = __restgprlr_26(0);
-  return iVar1;
+  return 0;
 }
 
 
 // 826ED528  dwReportIPComplete  (DW/dwRegionInfo.cpp:430)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 taskCompleteResults dwReportIPComplete(overlappedTask *param_1)
 
 {
-  overlappedTask *poVar1;
-  DWOnlineStatus DVar2;
-  bdDML *pbVar3;
-  bdStatus bVar4;
-  bdLobbyErrorCode bVar5;
-  taskCompleteResults tVar6;
+  DWOnlineStatus DVar1;
+  bdDML *pbVar2;
+  bdStatus bVar3;
+  bdLobbyErrorCode bVar4;
+  taskCompleteResults tVar5;
   
-  poVar1 = (overlappedTask *)__savegprlr_29(param_1);
-  if (poVar1 == (overlappedTask *)0x0) {
+  if (param_1 == (overlappedTask *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DW\\dwRegionInfo.cpp",0x1af,0,
                     "%s");
   }
-  DVar2 = dwGetLogOnStatus((uint)poVar1->controllerIndex);
-  if (DVar2 == DW_LIVE_CONNECTED) {
-    if (((poVar1->u).remoteTask.m_ptr != (bdRemoteTask *)0x0) &&
-       (pbVar3 = dwGetDML((uint)poVar1->controllerIndex), pbVar3 != (bdDML *)0x0)) {
-      bVar4 = (**(code **)(((poVar1->u).remoteTask.m_ptr)->_padding_ + 4))();
-      bVar5 = bdRemoteTask::getErrorCode((poVar1->u).remoteTask.m_ptr);
-      if ((bVar4 == BD_DONE) && (bVar5 != BD_NO_ERROR)) {
-        dwRegionHandleTaskError(poVar1,bVar5);
+  DVar1 = dwGetLogOnStatus((uint)param_1->controllerIndex);
+  if (DVar1 == DW_LIVE_CONNECTED) {
+    if (((param_1->u).remoteTask.m_ptr != (bdRemoteTask *)0x0) &&
+       (pbVar2 = dwGetDML((uint)param_1->controllerIndex), pbVar2 != (bdDML *)0x0)) {
+      bVar3 = (**(code **)(((param_1->u).remoteTask.m_ptr)->_padding_ + 4))();
+      bVar4 = bdRemoteTask::getErrorCode((param_1->u).remoteTask.m_ptr);
+      if ((bVar3 == BD_DONE) && (bVar4 != BD_NO_ERROR)) {
+        dwRegionHandleTaskError(param_1,bVar4);
       }
-      tVar6 = dwTaskStatusConvert(bVar4,bVar5);
-      tVar6 = __restgprlr_29(tVar6);
-      return tVar6;
+      tVar5 = dwTaskStatusConvert(bVar3,bVar4);
+      return tVar5;
     }
     Com_Printf(0x10,"Failed to report IP\n");
-    dwRegionHandleTaskError(poVar1,BD_HANDLE_TASK_FAILED);
+    dwRegionHandleTaskError(param_1,BD_HANDLE_TASK_FAILED);
   }
-  tVar6 = __restgprlr_29(2);
-  return tVar6;
+  return TASK_ERROR;
 }
 
 
 // 826ED610  dwRetrieveRegionComplete  (DW/dwRegionInfo.cpp:459)
 
+/* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+
 taskCompleteResults dwRetrieveRegionComplete(overlappedTask *param_1)
 
 {
-  overlappedTask *poVar1;
-  DWOnlineStatus DVar2;
-  bdDML *pbVar3;
-  bdStatus bVar4;
-  bdLobbyErrorCode bVar5;
-  taskCompleteResults tVar6;
+  DWOnlineStatus DVar1;
+  bdDML *pbVar2;
+  bdStatus bVar3;
+  bdLobbyErrorCode bVar4;
+  taskCompleteResults tVar5;
   
-  poVar1 = (overlappedTask *)__savegprlr_29(param_1);
-  if (poVar1 == (overlappedTask *)0x0) {
+  if (param_1 == (overlappedTask *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DW\\dwRegionInfo.cpp",0x1cc,0,
                     "%s");
   }
-  DVar2 = dwGetLogOnStatus((uint)poVar1->controllerIndex);
-  if (DVar2 == DW_LIVE_CONNECTED) {
-    if (((poVar1->u).remoteTask.m_ptr != (bdRemoteTask *)0x0) &&
-       (pbVar3 = dwGetDML((uint)poVar1->controllerIndex), pbVar3 != (bdDML *)0x0)) {
-      bVar4 = (**(code **)(((poVar1->u).remoteTask.m_ptr)->_padding_ + 4))();
-      bVar5 = bdRemoteTask::getErrorCode((poVar1->u).remoteTask.m_ptr);
-      if ((bVar4 == BD_DONE) && (bVar5 != BD_NO_ERROR)) {
-        dwRegionHandleTaskError(poVar1,bVar5);
+  DVar1 = dwGetLogOnStatus((uint)param_1->controllerIndex);
+  if (DVar1 == DW_LIVE_CONNECTED) {
+    if (((param_1->u).remoteTask.m_ptr != (bdRemoteTask *)0x0) &&
+       (pbVar2 = dwGetDML((uint)param_1->controllerIndex), pbVar2 != (bdDML *)0x0)) {
+      bVar3 = (**(code **)(((param_1->u).remoteTask.m_ptr)->_padding_ + 4))();
+      bVar4 = bdRemoteTask::getErrorCode((param_1->u).remoteTask.m_ptr);
+      if ((bVar3 == BD_DONE) && (bVar4 != BD_NO_ERROR)) {
+        dwRegionHandleTaskError(param_1,bVar4);
       }
-      tVar6 = dwTaskStatusConvert(bVar4,bVar5);
-      tVar6 = __restgprlr_29(tVar6);
-      return tVar6;
+      tVar5 = dwTaskStatusConvert(bVar3,bVar4);
+      return tVar5;
     }
     Com_Printf(0x10,"Failed to report IP\n");
-    dwRegionHandleTaskError(poVar1,BD_HANDLE_TASK_FAILED);
+    dwRegionHandleTaskError(param_1,BD_HANDLE_TASK_FAILED);
   }
-  tVar6 = __restgprlr_29(2);
-  return tVar6;
+  return TASK_ERROR;
 }
 
 
 // 826ECC00  LiveRegionInfo_GetCountryCode  (DW/dwRegionInfo.cpp:488)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 int LiveRegionInfo_GetCountryCode(uint *param_1)
 
 {
-  uint *puVar1;
-  int iVar2;
-  uint uVar3;
+  int iVar1;
+  uint uVar2;
   
-  puVar1 = (uint *)__savegprlr_28(param_1);
-  if (puVar1 == (uint *)0x0) {
+  if (param_1 == (uint *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DW\\dwRegionInfo.cpp",0x1e9,0,
                     "%s");
   }
-  *puVar1 = 0;
-  iVar2 = I_strcmp("-",s_regionInfo.m_countryCode);
-  if (iVar2 == 0) {
-    iVar2 = __restgprlr_28();
-    return iVar2;
+  *param_1 = 0;
+  iVar1 = I_strcmp("-",s_regionInfo.m_countryCode);
+  if (iVar1 == 0) {
+    return 0;
   }
-  uVar3 = s_regionInfo.m_countryCode[1] * 0x100 + (int)s_regionInfo.m_countryCode[0];
-  *puVar1 = uVar3;
-  if (0xffff < uVar3) {
+  uVar2 = s_regionInfo.m_countryCode[1] * 0x100 + (int)s_regionInfo.m_countryCode[0];
+  *param_1 = uVar2;
+  if (0xffff < uVar2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DW\\dwRegionInfo.cpp",500,1,
                     "%s");
   }
-  iVar2 = __restgprlr_28(1);
-  return iVar2;
+  return 1;
 }
 
 
 // 826ECCC0  LiveRegionInfo_GetCountryCodeAndRegion  (DW/dwRegionInfo.cpp:506)
 
+/* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+
 int LiveRegionInfo_GetCountryCodeAndRegion(uint *param_1)
 
 {
-  int *piVar1;
-  int iVar2;
+  int iVar1;
   
-  piVar1 = (int *)__savegprlr_27(param_1);
-  if (piVar1 == (int *)0x0) {
+  if (param_1 == (uint *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DW\\dwRegionInfo.cpp",0x1fb,0,
                     "%s");
   }
-  *piVar1 = 0;
-  iVar2 = I_strcmp("-",s_regionInfo.m_countryCode);
-  if ((iVar2 != 0) && (iVar2 = I_strcmp("-",s_regionInfo.m_region), iVar2 != 0)) {
+  *param_1 = 0;
+  iVar1 = I_strcmp("-",s_regionInfo.m_countryCode);
+  if ((iVar1 != 0) && (iVar1 = I_strcmp("-",s_regionInfo.m_region), iVar1 != 0)) {
     if (s_regionCountryHash < 0) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DW\\dwRegionInfo.cpp",0x202,0
                       ,"%s\n\t%s");
     }
-    iVar2 = s_regionCountryHash;
-    *piVar1 = s_regionCountryHash;
-    if (0x7fffffff < (uint)iVar2) {
+    iVar1 = s_regionCountryHash;
+    *param_1 = s_regionCountryHash;
+    if (0x7fffffff < (uint)iVar1) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DW\\dwRegionInfo.cpp",0x205,1
                       ,"%s");
     }
-    iVar2 = __restgprlr_27(1);
-    return iVar2;
+    return 1;
   }
-  iVar2 = __restgprlr_27(0);
-  return iVar2;
+  return 0;
 }
 
 
 // 826ECDC8  dwRegionHandleTaskError  (DW/dwRegionInfo.cpp:523)
 
+/* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+
 void dwRegionHandleTaskError(overlappedTask *param_1,bdLobbyErrorCode param_2)
 
 {
-  overlappedTask *poVar1;
   char acStack_70 [112];
   
-  poVar1 = (overlappedTask *)__savegprlr_28(param_1);
-  if (poVar1 == (overlappedTask *)0x0) {
+  if (param_1 == (overlappedTask *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DW\\dwRegionInfo.cpp",0x20c,0,
                     "%s");
   }
   Com_Printf(0x10,"%s()\n");
   dwLobbyErrorCodeToString(param_2,acStack_70,0x40);
   Com_PrintError(0x10,"\t DW region info task type %d errorCode %i - \'%s\'\n");
-  dwClearTask(poVar1);
-  poVar1->active = false;
+  dwClearTask(param_1);
+  param_1->active = false;
   if (param_2 == BD_TOO_MANY_TASKS) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\DW\\dwRegionInfo.cpp",0x21b,0,
                     "%s");
   }
-  __restgprlr_28();
   return;
 }
 
@@ -503,6 +495,8 @@ int LiveRegionInfo_GetMaxHilbert(void)
 
 // 826ECEE8  LiveRegionInfo_SetHilbert  (DW/dwRegionInfo.cpp:566)
 
+/* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
 
 void LiveRegionInfo_SetHilbert(void)
@@ -521,7 +515,6 @@ void LiveRegionInfo_SetHilbert(void)
   uint uVar11;
   uint local_c0 [48];
   
-  __savegprlr_26();
   local_c0[0x11] = 0;
   local_c0[0x13] = 0;
   local_c0[0x16] = 0;
@@ -570,7 +563,6 @@ void LiveRegionInfo_SetHilbert(void)
                  ((((((((local_c0[uVar11] << 2 | local_c0[iVar3]) << 2 | local_c0[iVar4]) << 2 |
                       local_c0[iVar5]) << 2 | local_c0[iVar6]) << 2 | local_c0[iVar7]) << 2 |
                    local_c0[iVar8]) << 2 | local_c0[iVar9]) << 2 | local_c0[iVar10]) << 2;
-  __restgprlr_26();
   return;
 }
 
